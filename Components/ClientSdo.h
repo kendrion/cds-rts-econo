@@ -17,7 +17,7 @@
 #ifndef _CLIENT_SDO_H_
 #define _CLIENT_SDO_H_
 
-#define SDO_PRIO 1
+#define SDO_PRIO 2
 #define DEFAULT_SDO_TIMEOUT			(1000000UL) /* 1 Sec Timeout in uSec */
 #define SDO_EVENT			(8001)
 

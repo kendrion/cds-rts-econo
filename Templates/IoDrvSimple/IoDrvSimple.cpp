@@ -29,7 +29,6 @@
 
 
 
-
 RTS_HANDLE CDECL CIoDrvSimple::IIoDrvCreate(RTS_HANDLE hIIoDrv, CLASSID ClassId, int iId, RTS_RESULT *pResult)
 {
 	hIoDrvSimple = IoDrvCreate(hIIoDrv,ClassId,iId,pResult);

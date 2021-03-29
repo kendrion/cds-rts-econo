@@ -5,14 +5,14 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2019 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2021 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 SET_COMPONENT_NAME(`SysTarget')
 COMPONENT_SOURCES(`SysTarget.c')
 COMPONENT_SYSSOURCES(`SysTarget*.c')
 
-COMPONENT_VERSION(`0x03050E28')
+COMPONENT_VERSION(`0x03051028')
 COMPONENT_VENDORID(`RTS_VENDORID_3S')
 
 CATEGORY(`System')
@@ -27,7 +27,10 @@ USE_ITF(`CmpSIL2Itf.m4')
 USE_ITF(`CmpChecksumItf.m4')
 USE_ITF(`CmpEventMgrItf.m4')
 USE_ITF(`SysSocketItf.m4')
+USE_ITF(`SysTimeItf.m4')
+USE_ITF(`CmpCryptoItf.m4')
 
+#include "SysTarget.h"
 IMPLEMENT_ITF(`SysTargetItf.m4')
 
 OPTIONAL_IMPORTS(
@@ -35,6 +38,7 @@ SIL2CheckCallerContext,
 CRC32Init,
 CRC32Update,
 CRC32Finish,
+CryptoGenerateRandomNumber,
 EventCreate3,
 EventDelete,
 EventPost2,
@@ -43,7 +47,9 @@ EventClose,
 EventRegisterCallbackFunction,
 EventUnregisterCallbackFunction,
 SysSockGetFirstAdapterInfo,
-SysSockGetNextAdapterInfo)
+SysSockGetNextAdapterInfo,
+SysTimeGetMs,
+SysTimeGetUs)
 
 REQUIRED_IMPORTS(
 CMUtlSafeStrCpy,
@@ -58,6 +64,7 @@ CMUtlUtf8ToW,
 SettgGetWStringValue,
 SettgGetStringValue,
 SettgGetIntValue,
+SettgSetStringValue,
 SettgSetWStringValue,
 SettgRemoveKey,
 SysMemSwap,
@@ -66,4 +73,5 @@ SysMemFreeData,
 SysTargetGetConfiguredNodeName,
 SysTargetGetType,
 SysTargetGetId,
-SysTargetGetVersion)
+SysTargetGetVersion,
+SysTargetSetNodeName)

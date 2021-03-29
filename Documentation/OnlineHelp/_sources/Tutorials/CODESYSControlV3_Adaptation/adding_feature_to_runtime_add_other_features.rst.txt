@@ -1,0 +1,52 @@
+.. _adding_feature_to_runtime_add_other_features:
+
+Add other Features
+------------------
+
+Debugging Support
+~~~~~~~~~~~~~~~~~
+
+Additional Components:
+
+-  CmpAppBP
+
+-  CmpAppForce
+
+Note, that the component *CmpAppBP* relies on a correct breakpoint
+handling in the component SysCpuHandling. Maybe you didn’t implement
+this in the first shot.
+
+The component *CmpAppForce* adds support to force monitored variables to
+a specific value. It needs no special support from the system layer.
+
+Full Trace Support
+~~~~~~~~~~~~~~~~~~
+
+Additional Components:
+
+-  CmpTraceMgr
+
+Dependencies:
+
+-  SysTimeRtc
+
+Currently CODESYS supports two different kinds of traces. The default
+one creates a child application and reads the trace values with the
+usual monitoring service. For this trace, you need no special support in
+the runtime. But this one is also limited in it’s functionality. For
+examples: You are not able to trace device parameters, you can’t
+configure a trace from an IEC application and you can’t store/restore it
+on the PLC.
+
+| The full trace is enabled with the following setting in the device
+  description:
+| <ts:TargetSettings>
+| <ts:section name=”trace”>
+| <ts:setting name=”tracemanager” type=”boolean” access=”visible”>
+| <ts:value>1</ts:value>
+| </ts:setting>Then, you will need the additional component
+  *CmpTraceMgr*, which is dependent on the system component
+  *SysTimeRtc*. At least, you need to implement the following function:
+
+-  | SysTimeRtcGet()
+   | Return a localized UNIX timestamp.

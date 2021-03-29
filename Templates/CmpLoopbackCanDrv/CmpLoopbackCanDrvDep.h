@@ -8,7 +8,7 @@
  *  <description> 
  *  </description>
  *  <copyright>
- *  Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ *  Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
 #ifndef _CMPLOOPBACKCANDRVDEP_H_
@@ -25,9 +25,9 @@
 #define CMPID_CmpLoopbackCanDrv 0x2000
 
 
-#define CMP_VERSION         UINT32_C(0x03050E00)
-#define CMP_VERSION_STRING "3.5.14.0"
-#define CMP_VERSION_RC      3,5,14,0
+#define CMP_VERSION         UINT32_C(0x03051000)
+#define CMP_VERSION_STRING "3.5.16.0"
+#define CMP_VERSION_RC      3,5,16,0
 #define CMP_VENDORID       RTS_VENDORID_3S
 
 #ifndef WIN32_RESOURCES
@@ -42,6 +42,10 @@
 
 
 
+
+/**
+ * \file CmpLoopbackCanDrvItf.h
+ */
 #include "CmpLoopbackCanDrvItf.h"
 
 
@@ -273,7 +277,7 @@
 #else
 #define EXPORT_EXTREF2_STMT
 #endif
-#if !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
+#if !defined(CMPLOOPBACKCANDRV_DISABLE_CMPITF) && !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
 #define EXPORT_CMPITF_STMT \
     {\
         { (RTS_VOID_FCTPTR)Loopback_CanMiniDriver_Handler, "Loopback_CanMiniDriver_Handler", 0, 0 },\

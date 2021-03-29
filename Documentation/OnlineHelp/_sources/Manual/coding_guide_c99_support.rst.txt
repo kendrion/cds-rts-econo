@@ -1,0 +1,299 @@
+.. _coding_guidelines_c99_support:
+
+C99 Support
+-----------
+
+We presume C99 support for the C-Compiler to build the runtime system. But we don't use all features of the C99 standard (details see below).
+
+.. note::
+
+   Only use C99 features for new components or for components, for which a C99 feature is required! So don't change existing components to C99 without a necessity!
+    
+
+**Used** features of C99 in the runtime system
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    - Inline functions:
+    
+      .. code-block:: C
+      
+            static inline void swap(int *m, int *n)
+            {
+              int temp = *m;
+              *m = *n;
+              *n = temp;
+            }
+    
+    - Intermingled declarations and code:
+    
+      Variable declaration is no longer restricted to file scope or the start of a compound statement (block).
+    
+    - Several new data types, including long long int, optional extended integer types, an explicit boolean data type, and a complex type to represent complex numbers:
+
+      .. code-block:: C
+      
+            - _Bool:
+            
+                Boolean type
+            
+            - long long, long long int, signed long long, signed long long int:
+            
+                Signed 64 bit types
+                
+            - unsigned long long, unsigned long long int:
+            
+                Unsigned 64 bit types
+        
+    - Type-generic math (macro) functions, in <tgmath.h>, which select a math library function based upon float, double, or long double arguments, etc.:
+    
+      .. code-block:: C
+      
+            float_t, double_t:
+
+                defined in <math.h>. Correspond to the types used for the intermediate results of floating-point expressions when FLT_EVAL_METHOD is 0, 1, or 2.
+                These types may be wider than long double. 
+            
+            float _Complex, double _Complex, long double _Complex: 
+    
+    - Flexible array members:
+    
+      .. code-block:: C
+      
+            struct vectord
+            {
+                size_t len;
+                double arr[]; /* the flexible array member must be last */
+            };
+      
+            struct vectord *vector = malloc(sizeof(vectord) + array_len * sizeof(double));
+            vector->len = array_len;
+            
+            for (int i = 0; i < vector->len; i++)
+                 vector->arr[i] = ...;
+       
+    - New library functions, such as snprintf / vsnprintf:
+    
+      vsnprint() is already used in the runtime system in the following macro:          
+      
+      .. code-block:: C
+
+            #define RTS_VSNPRINTF       vsnprintf
+           
+    - New headers:
+    
+      .. code-block:: C
+      
+            <inttypes.h>
+            <stdbool.h>
+    
+      We use an own typesystem based on inttypes.h in the runtime system (see :ref:`coding_guide_datatypes`)
+    
+    - Designated initializers:
+
+      .. code-block:: C
+      
+            int a[6] = {[4] = 29, [2] = 15 }; or
+            int a[6] = {[4]29 , [2]15 };
+
+      Equivalent to:
+
+      .. code-block:: C
+      
+            int a[6] = { 0, 0, 15, 0, 29, 0 };
+
+      Initialize a range of elements to the same value:
+      
+      .. code-block:: C
+      
+            int a[] = {[0 ... 9] = 1, [10 ... 99] = 2, [100] = 3 };
+
+    - Non-constant initializers:
+    
+      .. code-block:: C
+          
+            uint8_t g(void)
+            {
+                return 0x12;
+            }
+
+            uint8_t h(void)
+            {
+                return 0x34;
+            }
+      
+            int foo(uint8_t data)
+            {
+                   const uint8_t cmd[] = { 0x50, data, g(), h() };
+                   return send(cmd, sizeof(cmd));
+            }
+
+      .. note::
+      
+        Be careful because the calling order of initializer functions (example of g() and h()) is not defined and so avoid side effects in these initializing functions!
+
+    - Compound literals (for instance, it is possible to construct structures in function calls:
+
+      .. code-block:: C
+      
+            function((struct x) {1, 2}))]
+    
+    - Support for variadic macros (macros with a variable number of arguments):
+    
+      .. code-block:: C
+    
+            #define dbgprintf(...)  MyDebugOutput(__FILE__, __LINE__, __VA_ARGS__)
+       
+
+**Unused** features of C99 in the runtime system
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    .. note::
+    
+        These features are not supported on the main targets of the runtime system, so they are prohibited in the code!
+
+    - Variable-length arrays (although subsequently relegated in C11 to a conditional feature that implementations are not required to support)
+    
+      .. code-block:: C
+        
+            float read_and_process(int n)
+            {
+                float vals[n];
+
+                for (int i = 0; i < n; ++i)
+                    vals[i] = read_val();
+
+                return process(n, vals);
+            }
+            
+    - New headers:
+    
+      .. code-block:: C
+      
+            <complex.h>
+            
+            <tgmath.h>
+
+
+    - Single-line comments beginning with "//":
+    
+      Reason: There are some compilers which still have problems with single-line comments! So only use standard C comments /* */ in the code!
+         
+      .. code-block:: C
+      
+            int nCounter = 0;   // Single comment line
+
+    - Improved support for IEEE floating point
+  
+    - Universal character names, which allows user variables to contain other characters than the standard character set ("\u" and "\U")     
+
+    - Restrict qualification allows more aggressive code optimization, removing compile-time array access advantages:
+    
+      With the keyword restrict you can mark 2 pointers for the compiler, that the memory location is different.
+           
+      .. code-block:: C
+      
+            void updatePtrs(size_t *ptrA, size_t *ptrB, size_t *val)
+            {
+              *ptrA += *val;
+              *ptrB += *val;
+            }
+
+            void updatePtrs(size_t *restrict ptrA, size_t *restrict ptrB, size_t *restrict val);   
+    
+    - Keyword static in array indices in parameter declarations:
+    
+      .. code-block:: C
+      
+            void foo(int arr [static 10]);       /* arr points to the first of at least
+                                                       10 ints                           */
+            void foo(int arr [const 10]);        /* arr is a const pointer               */
+            void foo(int arr [static const i]);  /* arr points to at least i ints;
+                                                       i is computed at runtime.         */
+            void foo(int arr [const static i]);  /* alternate syntax to previous example */
+            void foo(int arr [const]);           /* const pointer to int                 */
+
+
+
+Tested C99-support of some C-Compilers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We checked some C-Compilers with the coverage of the C99 standard (state: 2019):
+
++---------------+---------------------------------+----------------------------------+----------------------------------------------------------------+
+| Shortname     | Platform                        | Compiler Flags                   | Comment                                                        |
++===============+=================================+==================================+================================================================+
+| TIDSP         | TI DSP TIC28x                   | ti arm -O2                       |                                                                |
++---------------+---------------------------------+----------------------------------+----------------------------------------------------------------+
+| LINGCC        | Linux  x64                      | gcc -O0                          | Requires extern keyword for PURE_INLINE due to O0              |
++---------------+---------------------------------+----------------------------------+----------------------------------------------------------------+
+| CE6           | Win CE6                         | Visual Studio 2005               | not tested                                                     |
++---------------+---------------------------------+----------------------------------+----------------------------------------------------------------+
+| CE7++         | Win CE7                         | Visual Studio 2008, build as C++ | Requires fix in test_helper.h (inline)                         |
++---------------+---------------------------------+----------------------------------+----------------------------------------------------------------+
+| CE8++         | Win CE8                         | Visual Studio 2013, build as C++ |                                                                |
++---------------+---------------------------------+----------------------------------+----------------------------------------------------------------+
+| Aurix         | Tricore Aurix TC299             | Tasking VX v6.2r2                | with Standard compiler flags                                   |
++---------------+---------------------------------+----------------------------------+----------------------------------------------------------------+
+| STM32Keil     | Keil v5.06 ARM Compiler         | --C99                            |                                                                |
++---------------+---------------------------------+----------------------------------+----------------------------------------------------------------+
+| VX 6.x        | gcc 4.1.2                       | --std=C99                        | Possible compliant with gcc c99 status                         |
+|               +---------------------------------+----------------------------------+----------------------------------------------------------------+
+|               | gcc 4.3.3                       |                                  |                                                                |
++---------------+---------------------------------+----------------------------------+----------------------------------------------------------------+
+| VX 7.x        | gcc 4.8.1                       | --std=C99                        | Possible compliant with gcc c99 status                         |
++---------------+---------------------------------+----------------------------------+----------------------------------------------------------------+
+| LLVM-5.0.1    | llvm-5.0.1 / cygwin x64, win10  |                                  | requires extern keyword, requires fix for main() prototype     |
++---------------+---------------------------------+----------------------------------+----------------------------------------------------------------+
+| VS2015        | Windows 10 64bit                | Visual Studio 2015 - SP3         |                                                                |
++---------------+---------------------------------+----------------------------------+----------------------------------------------------------------+
+
+
+Here are the results:
+
++---------------+---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+| Number        | Feature                         | TIDSP | LINGCC | CE7++ | CE8++ | Aurix | STM32Keil | VX 6.8 | LLVM-5.01 | VS2015 |
++===============+=================================+=======+========+=======+=======+=======+===========+========+===========+========+
+| A.0           | CPP_COMMENTS                    | y     | y      | y     | y     | y     | y         | y      | y         | y      |
++---------------+---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+| B.0           | PURE_INLINE_FUNCTIONS           | y     | n      | n     | y     | y     | y         | y      | y         | y      |
+|               +---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+|               | STATIC_INLINE_FUNCTIONS         | y     | y      | n     | y     | y     | y         | y      | y         | y      |
++---------------+---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+| C.0, C.1      | MIXED_CODE_AND_DECLARATIONS     | y     | y      | y     | y     | y     | y         | y      | y         | y      |
+|               +---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+|               | FOR_LOOP_INITIALIZERS           | y     | y      | y     | y     | y     | y         | y      | y         | y      |
++---------------+---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+| D.0, D.1, ..  | DATATYPE_BOOL                   | y     | y      | n     | n     | y     | y         | y      | y         | y      |
+|               +---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+|               | DATATYPE_LONG_LONG              | y     | y      | y     | y     | y     | y         | y      | y         | y      |
++---------------+---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+| E.0, E.1      | VAR_LEN_ARRAYS                  | ---   | ---    | n     | n     | ---   | ---       | ---    | ---       | n      |
+|               +---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+|               | FLEXIBLE_ARRAY_MEMBERS          | y     | y      | n     | y     | y     | y         | y      | y         | y      |
++---------------+---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+| F.0, F.1, ..  | INCLUDE_INTTYPES                | y     | y      | n     | n     | y     | y         | y      | y         | y      |
+|               +---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+|               | INCLUDE_STDBOOL                 | y     | y      | n     | n     | y     | y         | y      | y         | y      |
+|               +---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+|               | INCLUDE_COMPLEX                 | n     | ---    | n     | n     | y     | y         | ---    | ---       | y      |
+|               +---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+|               | INCLUDE_TGMATH                  | n     | ---    | n     | n     | y     | y         | ---    | ---       | n      |
++---------------+---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+| G.0           | TGMATH                          | n     | ---    | n     | ---   | ---   | ---       | ---    | ---       | n      |
++---------------+---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+| H.0           | IEEE_FLOAT                      | ---   | ---    | n     | ---   | ---   | ---       | ---    | ---       | n      |
++---------------+---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+| I.0, I.1      | DESIGNATE_INITIALIZERS          | y     | y      | n     | n     | y     | y         | y      | y         | y      |
+|               +---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+|               | NONCONST_INITIALIZERS           | y     | y      | y     | y     | y     | y         | y      | y         | y      |
++---------------+---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+| K.0           | COMPOUND_LITERALS               | y     | y      | n     | n     | y     | y         | y      | y         | y      |
++---------------+---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+| L.0           | VAR_MACROS                      | y     | y      | n     | n     | y     | y         | y      | y         | y      |
++---------------+---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+| M.0           | RESTRICT                        | y     | y      | n     | n     | y     | y         | y      | y         | n      |
++---------------+---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+| N.0           | UNIVERSAL_CHARACTERS            | y     | n      | n     | n     | n     | y         | ---    | ---       | y      |
++---------------+---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+
+| O.0           | STATIC_ARRAY_INDEX              | y     | y      | n     | n     | y     | y         | y      | y         | n      |
++---------------+---------------------------------+-------+--------+-------+-------+-------+-----------+--------+-----------+--------+

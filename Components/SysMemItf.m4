@@ -2,11 +2,11 @@
  * <interfacename>SysMem</interfacename>
  * <description> 
  *	<p>The SysMem interface is projected to get access to heap memory or special
- *	memory areas for the plc program.</p>
+ *	memory areas for the PLC program.</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -73,7 +73,7 @@ SET_INTERFACE_NAME(`SysMem')
 
 /**
  * <category>Area Types</category>
- * <description>Application Area Type: Non Safety data within Safity SIL2 systems</description>
+ * <description>Application Area Type: Non Safety data within Safety SIL2 systems</description>
  */
 #define DA_NONSAFETY	0x0800
 
@@ -140,10 +140,15 @@ SET_INTERFACE_NAME(`SysMem')
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>Avoid paging of all the RAM that is used by the process of the CoDeSys Runtime</description>
+ * <description>Avoid paging of RAM that is used by the CODESYS runtime process.
+ * This is only useful if the application has real-time requirements</description>
  */
 #define SYSMEMKEY_INT_LINUX_MEMLOCK					"Linux.Memlock"
-#define SYSMEMKEY_INT_LINUX_MEMLOCK_DEFAULT		1
+#if defined (CMPAPP_NOTIMPLEMENTED) || SYSTARGET_DEVICE_TYPE==SYSTARGET_TYPE_HMI
+ #define SYSMEMKEY_INT_LINUX_MEMLOCK_DEFAULT		0
+#else
+ #define SYSMEMKEY_INT_LINUX_MEMLOCK_DEFAULT		1
+#endif
 
 /**
  * <category>Settings</category>
@@ -247,7 +252,7 @@ typedef struct tagsysmemcpy_struct
 DEF_API(`void',`CDECL',`sysmemcpy',`(sysmemcpy_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x4B2D0668),0x03050C00)
 
 /**
- * Routine to force swapping memory independant of the byteorder of the system!
+ * Routine to force swapping memory independent of the byte-order of the system!
  * RETURN: Number of bytes swapped:
  *	+ -1 = failed (size too large)
  *	+ >0 = Number of bytes swapped
@@ -337,7 +342,7 @@ typedef struct tagsysmemmove_struct
 {
 	RTS_IEC_BYTE *pDest;				/* VAR_INPUT */	/* Pointer to memory address to be moved to (target) */
 	RTS_IEC_BYTE *pSrc;					/* VAR_INPUT */	/* Pointer to memory address to be moved from (source) */
-	RTS_IEC_XWORD udiCount;				/* VAR_INPUT */	/* Number of bytes to be moveed */
+	RTS_IEC_XWORD udiCount;				/* VAR_INPUT */	/* Number of bytes to be moved */
 	RTS_IEC_BYTE *SysMemMove;			/* VAR_OUTPUT */	
 } sysmemmove_struct;
 
@@ -376,12 +381,12 @@ typedef struct tagsysmemset_struct
 DEF_API(`void',`CDECL',`sysmemset',`(sysmemset_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x663CE5DB),0x03050C00)
 
 /**
- * Routine to swap memory into littel endian. If little endian (intel) byteorder is received and platform has
- * big endian (motorola) byteorder. On little endian byteorder platforms, routine does nothing
+ * Routine to swap memory into little endian. If little endian (Intel) byte-order is received and platform has
+ * big endian (Motorola) byte-order. On little endian byte-order platforms, routine does nothing
  * RETURN: Number of bytes swapped:
  *	+ -1 = failed (iSize too large)
- *	+ 0 = no swapping necessary (little endian byteorder)
- *	+ >0 = Number of bytes swapped (big endian byteorder)
+ *	+ 0 = no swapping necessary (little endian byte-order)
+ *	+ >0 = Number of bytes swapped (big endian byte-order)
  */
 typedef struct tagsysmemswap_struct
 {
@@ -407,9 +412,9 @@ extern "C" {
 /********** Functions **********/
 
 /**
- * <description>Init routines for OS specific modules</description>
- * <param name="pInit" type="IN">Init Struct for OS specific modules</param>
- * <result>Result of Initialisation.</result>
+ * <description>Initialization routines for OS specific modules</description>
+ * <param name="pInit" type="IN">Initialization structure for OS specific modules</param>
+ * <result>Result of initialization.</result>
  */
 RTS_RESULT CDECL SysMemOSInit(INIT_STRUCT *pInit);
 /**
@@ -458,7 +463,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysMemFreeData',`(char *pszComponentName, void
 
 /**
  * <description>
- *	Allocates any kind of memory area for an IEC application. See category "Area Types" for detailled description!
+ *	Allocates any kind of memory area for an IEC application. See category "Area Types" for detailed description!
  *	Can be used to set an application area to a still existing memory location.
  *
  *  IMPLEMENTATION NOTE:
@@ -483,12 +488,12 @@ DEF_ITF_API(`void*',`CDECL',`SysMemAllocArea',`(char *pszComponentName, unsigned
 /**
  * <description>
  * <p>Release data area of an application.</p>
- * <p>Note: On SIL2 Runtimes, this function may generate an exception, when called in SAFE-Mode.</p>
+ * <p>Note: On SIL2 runtime this function may generate an exception, when called in SAFE-Mode.</p>
  * </description>
  * <param name="pszComponentName" type="IN" range="[NULL,VALID_COMPONENT_NAME]">Name of the component</param>
  * <param name="pData" type="IN" range="[NULL,VALID_AREA_POINTER,INVALID_AREA_POINTER]">Pointer to area to free</param>
  * <parampseudo name="OperationMode" type="IN" range="[RTS_SIL2_OPMODE_SAFE,RTS_SIL2_OPMODE_DEBUG]">Specifies the current operation mode of the PLC</parampseudo>
- * <parampseudo name="bExceptionGenerated" type="OUT" range="[TRUE,FALSE]">Specifies, if an exception occured, or not</parampseudo>
+ * <parampseudo name="bExceptionGenerated" type="OUT" range="[TRUE,FALSE]">Specifies, if an exception occurred, or not</parampseudo>
  * <result>error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">Memory Area could be freed</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">The memory area could not be freed (wrong area pointer, or area is not allocated)</errorcode>
@@ -539,24 +544,24 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysMemIsValidPointer',`(void* ptr, RTS_SIZE ul
 
 /**
  * <description>
- *	Routine to swap memory. If little endian (intel) byteorder is received and platform has
- *	big endian (motorola) byteorder. On little endian byteorder platforms, routine does nothing.
+ *	Routine to swap memory. If little endian (Intel) byte-order is received and platform has
+ *	big endian (Motorola) byte-order. On little endian byte-order platforms, routine does nothing.
  * </description>
  * <param name="pbyBuffer" type="IN">Pointer to data to swap. You can check, which order is selected by 
  *									calling the routine with pbyBuffer=NULL</param>
  * <param name="iSize" type="IN">Size of one element to swap</param>
  * <param name="iCount" type="IN">Number of elements to swap</param>
  * <result>	-1 = failed (iSize too large)
- *    		 0 = no swapping necessary (little endian byteorder)
- *			>0 = Number of bytes swapped (big endian byteorder)
- *			 1 = big endian byteorder, if pbyBuffer=NULL
+ *    		 0 = no swapping necessary (little endian byte-order)
+ *			>0 = Number of bytes swapped (big endian byte-order)
+ *			 1 = big endian byte-order, if pbyBuffer=NULL
  * </result>
  */
 DEF_ITF_API(`int',`CDECL',`SysMemSwap',`(unsigned char *pbyBuffer, int iSize, int iCount)')
 
 /**
  * <description>
- *	Routine to force swapping memory independant of the byteorder of the system!
+ *	Routine to force swapping memory independent of the byte-order of the system!
  * </description>
  * <param name="pbyBuffer" type="IN">Pointer to data to swap. You can check, which order is selected by 
  *									calling the routine with pbyBuffer=NULL</param>
@@ -578,6 +583,33 @@ DEF_ITF_API(`int',`CDECL',`SysMemForceSwap',`(unsigned char *pbyBuffer, int iSiz
  * <result>Size of the memory in bytes that is currently allocated from the heap</result>
  */
 DEF_ITF_API(`RTS_SIZE',`CDECL',`SysMemGetCurrentHeapSize',`(RTS_RESULT *pResult)')
+
+/**
+ * <description>
+ *	C-Library compatible malloc() function! Is internally mapped to SysMemAllocData()!
+ * </description>
+ * <param name="size" type="IN">Size in bytes of the heap buffer to allocate</param>
+ * <result>Pointer to the allocated heap buffer</result>
+ */
+DEF_API(`void *',`CDECL',`SysMemMalloc',`(RTS_SIZE size)')
+
+/**
+ * <description>
+ *	C-Library compatible realloc() function! Is internally mapped to SysMemReallocData()!
+ * </description>
+ * <param name="pMem" type="IN">Pointer to buffer to be reallocated</param>
+ * <param name="size" type="IN">Size in bytes of the heap buffer to allocate</param>
+ * <result>Pointer to the reallocated heap buffer</result>
+ */
+DEF_API(`void *',`CDECL',`SysMemRealloc',`(void *pMem, RTS_SIZE size)')
+
+/**
+ * <description>
+ *	C-Library compatible free() function! Is internally mapped to SysMemFreeData()!
+ * </description>
+ * <param name="pMem" type="IN">Pointer to buffer to release/free</param>
+ */
+DEF_API(`void',`CDECL',`SysMemFree',`(void *pMem)')
 
 #ifdef __cplusplus
 }

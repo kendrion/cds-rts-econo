@@ -8,23 +8,24 @@
  *	by implementing this interface and replacing the default component based on IP protocols.
  *	There are two different kinds of data exchange:
  *	<ul>
- *		<li>Sending and receiving synchronisation messages</li>
+ *		<li>Sending and receiving synchronization messages</li>
  *		<li>Sending and receiving data messages</li>
  *	</ul>
  *	</p>
- *	<p> Synchronisation messages are used during redundant operation. They are exchanged every task cycle.
- *	Data messages are used during synchronisation phase. They are used to transmit the boot application file, and global data.
+ *	<p> Synchronization messages are used during redundant operation. They are exchanged every task cycle.
+ *	Data messages are used during synchronization phase. They are used to transmit the boot application file, and global data.
  *	</p>
- *	<p> Default implementation is using UDP for synchronisation messages, and TCP for data messages.
+ *	<p> Default implementation is using UDP for synchronization messages, and TCP for data messages.
  *	</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
 SET_INTERFACE_NAME(`CmpRedundancyConnection')
+SET_PLACEHOLDER_NAME(`CmpRedundancyConnection Implementation')
 
 #include "CmpItf.h"
 
@@ -34,23 +35,23 @@ extern "C" {
 
 /**
  * <description>
- *	Open a redundancy connection for synchronisation. This connection will be used to receive data from redundancy partner. Synchronisation messages
- *	are quite small, but must be transmitted in realtime.
+ *	Open a redundancy connection for synchronization. This connection will be used to receive data from redundancy partner. Synchronization messages
+ *	are quite small, but must be transmitted in real-time.
  * </description>
  * <param name="mode" type="IN">Indicates if the socked was opened in sync mode or data mode, and if used for send or received, or server or client.
  *	The following modes apply:
  *	RCOM_SyncReceive: Open a redundancy connection for sync messages receive.
- *		A UDP socket is opend and bind to local address in default implementation.
+ *		A UDP socket is opened and bind to local address in default implementation.
  *	RCOM_SyncSend: Open a redundancy connection for sync messages transmit.
- *		A UDP socket is opend in default implementation.
+ *		A UDP socket is opened in default implementation.
  *	RCOM_DataClient: Open a redundancy connection for data exchange. This connection will be used as client side for data transfer.
  *		The standby partner is playing the role of the communication client.
  *		Data transfer messages are quite big, and should be transmitted as fast as possible.
- *		A TCP socket is opend in default implementation, and connect to partner.
+ *		A TCP socket is opened in default implementation, and connect to partner.
  *	RCOM_DataServer: Open a redundancy connection for data exchange. This connection will be used as server side for data transfer.
  *		The standalone and active partner is playing the role of the communication server.
  *		Data transfer messages are quite big, and should be transmitted as fast as possible.
- *		A TCP socket is opend in default implementation, and bind and listen. This socket is waiting for a client connection.
+ *		A TCP socket is opened in default implementation, and bind and listen. This socket is waiting for a client connection.
  * </param>
  * <result>Handle of connection, for example socket number. Will be used to send and receive data. In case of error RTS_INVALID_HANDLE will be returned.</result>
  */
@@ -79,7 +80,7 @@ DEF_ITF_API(`RTS_UI32',`CDECL',`RdcyConnectionGetOwnAddress',`(void)')
 
 /**
  * <description>
- *	Receive synchronisation data from partner device. 
+ *	Receive synchronization data from partner device. 
  * </description>
  * <param name="hConnection" type="IN">Handle to the connection, previously opened with RdcyConnectionOpen</param>
  * <param name="pbyData" type="IN">Buffer to receive the received data</param>
@@ -101,7 +102,7 @@ DEF_ITF_API(`RTS_UI32',`CDECL',`RdcyConnectionGetReceiveSize',`(RTS_HANDLE hConn
 
 /**
  * <description>
- *	Send synchronisation data to partner device. 
+ *	Send synchronization data to partner device. 
  * </description>
  * <param name="hConnection" type="IN">Handle to the connection, previously opened with RdcyConnectionOpen</param>
  * <param name="pbyData" type="IN">Buffer with data to send</param>
@@ -139,7 +140,7 @@ DEF_ITF_API(`RTS_UI32',`CDECL',`RdcyConnectionSendData',`(RTS_HANDLE hConnection
 
 /**
  * <description>
- *	Called when initializing the redundancy component with the redundancy connection settings from the CODESYS control config file.
+ *	Called when initializing the redundancy component with the redundancy connection settings from the CODESYS control configuration file.
  *	Connection settings are for e.g. IP / MAC / ... addresses of the redundancy partners, ports, timeouts, ... depending on the used communication.
  * </description>
  * <result>ERR_OK in case of success, ERR_FAILED in case of error.</result>
@@ -148,7 +149,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`RdcyConnectionReadSettings',`(void)')
 
 /**
  * <description>
- *	Called when service is received to read the redundancy settings from the CODESYS control config file.
+ *	Called when service is received to read the redundancy settings from the CODESYS control configuration file.
  * </description>
  * <param name="pwriter" type="IN">Pointer to the writer to write the settings to.</param>
  * <result>ERR_OK in case of success, ERR_FAILED in case of error.</result>
@@ -157,7 +158,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`RdcyConnectionSrvReadSettings',`(BINTAGWRITER 
 
 /**
  * <description>
- *	Called when service is received to write the redundancy settings from CODESYS into the CODESYS control config file.
+ *	Called when service is received to write the redundancy settings from CODESYS into the CODESYS control configuration file.
  * </description>
  * <param name="preader" type="IN">Pointer to the reader from which the settings can be read.</param>
  * <result>ERR_OK in case of success, ERR_FAILED in case of error.</result>
@@ -181,6 +182,34 @@ DEF_ITF_API(`RTS_UI32',`CDECL',`RdcyConnectionGetSyncMessageSize',`(void)')
  * <result>Data message size.</result>
  */
 DEF_ITF_API(`RTS_UI32',`CDECL',`RdcyConnectionGetDataMessageSize',`(void)')
+
+
+/**
+ * <description>REDU_IP_CONNECTION_INFO</description>
+ */
+typedef struct tagREDUNDANCY_CONNECTION_INFO
+{
+	RTS_IEC_INT nConnectionsConfigured;		/* Number of configured  connections (1 or 2) */
+	RTS_IEC_INT nConnectionsWorking;		/* Number of working connections */
+	RTS_IEC_UDINT diTickSend;		/* Tick count of message sent */
+	RTS_IEC_BOOL bConnectionStatusLink1;		/* Status of link 1. TRUE in case connected. */
+	RTS_IEC_BOOL bConnectionStatusLink2;		/* Status of link 2. TRUE in case connected. */
+} REDUNDANCY_CONNECTION_INFO;
+
+/**
+ * <description>getconnectioninfo</description>
+ */
+typedef struct taggetconnectioninfo_struct
+{
+	REDUNDANCY_CONNECTION_INFO *pConnectionInfo;	/* VAR_INPUT */	/* Pointer to connection info structure */
+	RTS_IEC_RESULT GetConnectionInfo;	/* VAR_OUTPUT */	
+} getconnectioninfo_struct;
+
+DEF_API(`void',`CDECL',`getconnectioninfo',`(getconnectioninfo_struct *p)',1,0x2F0D4581,0x03050F00)
+
+#ifdef __cplusplus
+}
+#endif
 
 #ifdef __cplusplus
 }

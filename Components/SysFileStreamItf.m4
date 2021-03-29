@@ -1,5 +1,5 @@
 /**
- * <interfacename>SysFileStream23</interfacename>
+ * <interfacename>SysFileStream</interfacename>
  * <description></description>
  *
  * <copyright></copyright>

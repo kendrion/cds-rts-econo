@@ -1,0 +1,228 @@
+.. _tutorial_creating_components_libraries_iodrivers_appendix_a:
+
+A: [Step by Step] Creating a new Component
+==========================================
+
+To create a new component, the CmpTemplateEmpty component can be used as
+a starting point. The CmpTemplateEmpty is included in the runtime system
+delivery.
+
+To copy and rename the files, you have two possiblities:
+
+1) (recommended method): you can use the Python script
+gen_cmp_from_temp.py. To run the script, you need Python installed. The
+script can be used like this:
+
+   gen_cmp_from_temp [-h] [-t TEMPLATE] [-c CMPNAME] [-a TRGARCH]
+
+   TEMPLATE is the template component name which is used for generating
+   component/driver.
+
+   CMPNAME is the name for the target component
+
+   TRGARCH is the target architecture, options (only capital letter):
+   X86 \| PPC \| ARM \| CORTEX.
+
+-  Open a command prompt (DOS/shell) and go to the runtime Templates
+      folder (e.g. D:\SVN\CodesysSpV3\trunk\CodesysSpV3\Templates)
+
+-  Run >gen_cmp_from_temp -t CmpTemplateEmpty –c CmpTest
+
+..
+
+   This will create a new folder with the given name.
+
+2) copy and rename the files by hand, please follow these steps:
+
+-  Copy the CmpTemplateEmpty folder and rename the folder to the new
+   component name.
+
+   | Delete all files from your component folder, except:
+   | CmpTemplateEmpty.c
+   | CmpTemplateEmptyDep.m4
+
+   | CmpTemplateEmptyItf.m4
+   | CmpTemplateEmptyItf_m4.bat
+
+   CmpTemplateEmptyItf_m4.bat
+
+-  | Rename all files to the new component name (e.g. CmpTest):
+   | CmpTemplateEmpty.c -> CmpTest.c
+   | CmpTemplateEmptyDep.m4 -> CmpTestDep.m4
+   | CmpTemplateEmptyItf.m4 -> CmpTestItf.m4
+   | CmpTemplateEmptyDep_m4.bat -> CmpTestDep_m4.bat
+   | CmpTemplateEmptyItf_m4.bat -> CmpTestItf_m4.bat
+
+-  | Open the CmpTestItf_m4.bat file and replace the CmpTemplate
+     component name with the new component name. If you have changed the
+     directory structure, you have to adapt the path to the m4 build
+     utils in the \*.bat files, too.
+   | **Note:** If you change the path to the “BuildUtils”, make sure to
+     be aware of the two different kind of slashes (‘/’ and ‘\’) which
+     are used. If you are using absolute paths, you can use syntax like
+     this for the paths with the forward slashes:
+     d:/CODESYSSpV3/BuildUtils/.../...
+   | **Note:** The M4 tools need an empty directory named “etc” in
+     “BuildUtils/msys/etc”. If this doesn’t exist, you need to create
+     it.
+
+Now, execute the modified CmpTestItf.bat file. This will generate a
+new, non-empty \*Itf.h file. If there is now new \*Itf.h file or the
+file is empty, the component name or the path to the m4 build utils
+is not correct.
+
+-  Do the same with the CmpTemplateDep_m4.bat file. If everything is
+   correct, you will get a new \*Dep.h and a new \*.cpp file. Both files
+   must not be empty.
+
+-  Change the Component Information in \*Dep.m4:
+
+   a. Set the new component name in the SET_COMPONENT_NAME macro.
+
+   b. Set the name of the c file in the COMPONENT_SOURCES macro. List
+      all c files separated with commas.
+
+   c. Set the component version in the COMPONENT_VERSION macro.
+
+   d. | Set the component vendor ID.
+      | **Note:** Every vendor gets an ID from 3S. The value 0x0000 is
+        the 3S vendor Id and should not be used.
+
+   e. Rename and set the CMPID\_ (component Id), CLASSID\_ (class Id)
+      and ITFID\_ (interface Id) of your new component.
+
+   f. Remove the category macro, it is not needed at the beginning.
+
+   g. | Set the implemented interfaces in the IMPLEMENT_ITF macro.
+      | At the beginning the component will implement only its own
+        interface.
+
+   h. If your component uses the interface of another component, you
+      have to add the component in the USE_ITF list. Remove all unused
+      USE_ITF definitions. For more information, see the documentation
+      of the m4 mechanism.
+
+   i. In addition to the USE_ITF macro, you have to add every function,
+      which is used by your new component, to the REQUIRED_IMPORTS
+      macro. Remove all unused functions.
+
+Our Example may now look like this:
+
+.. code-block:: c#
+
+   /**
+   * <name>Component Template</name>
+   * <description>
+   * An example on how to implement a component.
+   * This component does no useful work and it exports no functions
+   * which are intended to be used for anything. Use at your own risk.
+   * </description>
+   * <copyright>
+   * (c) 2009 3S-Smart Software Solutions
+   * </copyright>
+   */
+   SET_COMPONENT_NAME(`CmpTest')
+   COMPONENT_SOURCES(`CmpTest.c')
+  
+   COMPONENT_VERSION(`0x11223344')
+   
+   /* NOTE: REPLACE 0x0000 BY YOUR VENDORID */
+   COMPONENT_VENDORID(`0x5678')
+
+   #define CMPID_CmpTest 0x2000
+   #define CLASSID_CCmpTest 0x2000
+   #define ITFID_ICmpTest 0x2000
+
+   CATEGORY(`Customer')
+
+   IMPLEMENT_ITF(`CmpTestItf.m4')
+
+   USE_ITF(`SysTimeItf.m4')
+
+   REQUIRED_IMPORTS(
+   SysTimeGetMs)
+		 
+
+Open the \*Itf.m4 file and set the interface name in the
+SET_INTERFACE_NAME macro.
+The \*Itf.m4 file may look like this:
+		
+.. code-block:: c#
+
+   /**
+   * <interfacename>test</interfacename>
+   * <description></description>
+   *
+   * <copyright></copyright>
+   */
+   SET_INTERFACE_NAME(`CmpTest')
+
+   /** EXTERN LIB SECTION BEGIN **/
+   #ifdef __cplusplus
+      extern "C" {
+   #endif
+		
+   /**
+   * <description>myexternalfunction</description>
+   */
+   typedef struct tagmyexternalfunction_struct
+   {
+      RTS_IEC_INT MyExternalFunction; /* VAR_OUTPUT */
+   } myexternalfunction_struct;
+
+   DEF_API(`void',`CDECL',`myexternalfunction',
+   `(myexternalfunction_struct*p)',1,0xE1C6D757,0x3040000)
+
+   #ifdef __cplusplus
+   }
+   #endif
+
+   /** EXTERN LIB SECTION END **/
+
+
+Execute the \*Dep_m4.bat and the \*Itf_m4.bat to generate the new
+header files. If you want to edit the header files afterwards, you
+have to edit the m4 file and then you have to create the header
+files using the bat files.
+
+   a. Never change the header files directly!
+
+   b. Always generate both header files! (even if you change only one of
+      them)
+
+If you want to implement an external function (defined in an own
+IEC Library), add it now to your C File (CmpTest.c). You can copy
+the declaration from the header file \*Itf.h.
+
+For example:
+
+   a. | If you have the following Declaration in your M4 file (generated from CODESYS):
+
+      .. code-block:: c#
+
+         DEF_API(`void',`CDECL',`myexternalfunction',
+         `(myexternalfunction_struct *p)',1,0xFFADC096,0x1000000)
+
+   b. | Executing the corresponding batch file will create the following definition in your \*Itf.h:
+
+      .. code-block:: c#
+
+         void CDECL CDECL_EXT myexternalfunction(myexternalfunction_struct *p);
+
+   c. | Then you can create the following declaration in your C-File
+        (CmpTest.c):
+
+      .. code-block:: c#
+
+         void CDECL CDECL_EXT myexternalfunction(myexternalfunction_struct *p)
+         {
+            /* function body */
+         }
+
+
+   d. When implementing the function, make sure you are using the CAL\_
+      macros instead of calling functions of other components directly.
+      Add the newly references functions to the list of REQUIRED_IMPORTS
+      or OPTIONAL_IMPORTS, and add a section USE_ITF if a component is
+      references newly.
+

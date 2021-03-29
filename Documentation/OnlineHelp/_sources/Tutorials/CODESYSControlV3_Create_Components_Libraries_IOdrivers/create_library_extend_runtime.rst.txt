@@ -1,0 +1,41 @@
+.. _create_library_extend_runtime:
+
+Extend the Runtime System Component
+===================================
+
+Start with a runtime component as explained in chapter 3.
+
+With the menu command “Generate runtime system files”, an interface file
+(Cmp*Ift.m4) is created. It will contain the interface of the library,
+mainly the list of exported functions.
+
+This menu command also generates a .c file with empty function
+declarations, corresponding to the IEC function interfaces of the
+library.
+
+You will edit this file by adding the function implementation in C code,
+and by adding the runtime component interface to your C file.
+
+The runtime component frame code is the set of functions common for all
+components: These functions are ComponentEntry, CreateInstance,
+DeleteInstance, ExportFunctions, ImportFunctions, CmpGetVersion,
+HookFunction and QueryInterface. Examples are provided in the delivery,
+and you can copy these functions from the CmpTemplate (or other)
+component, and adapt the component names.
+
+The menu command also creates a dependency (Cmp*Dep.m4) file. The
+dependency file contains the dependencies of your component. These are
+component interfaces and functions used from other components. The
+dependency file also contains the identification (name, id, and version)
+of your component.
+
+With the m4 macro preprocessor, you generate C header files (Cmp*Dep.h
+and Cmp*Dep.h) from the interface and dependency files.
+
+You will include these generated C header files in your C source file.
+Your C compiler will be used to compile the components C source file.
+
+The compiled component is then added to the runtime system
+configuration. Now you can download a CODESYS application calling your C
+code functions.
+   

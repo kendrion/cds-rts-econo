@@ -1,12 +1,11 @@
  /**
  * <interfacename>SysInt</interfacename>
  * <description> 
- *	<p>The SysInt interface is projected to get access to the hardware interrupts of 
- *	the system.</p>
+ *	<p>The SysInt interface is projected to get access to the hardware interrupts of the system.</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -108,7 +107,7 @@ typedef struct
 #define EVT_INTERRUPT_255					MAKE_EVENTID(EVTCLASS_INTERRUPT, 255)
 
 /**
- * <description>Sys Int Callback Info Struct</description>
+ * <description>Sys Interrupt Callback Info</description>
  * <param name="pCallback">Pointer to Callback for Sys Int Callback Info</param>
  * <param name="ulType">Type of Sys Int Callback Info</param>
  * <param name="ulAdditionalInfo">Additional Info for Sys Int Callback Info</param>
@@ -121,7 +120,7 @@ typedef struct
 }SYS_INT_CALLBACK_INFO;
 
 /**
- * <description>Sys Int Info Struct</description>
+ * <description>Sys Interrupt Info</description>
  * <param name="pszName">Name for Sys Int Info</param>
  * <param name="pSysData">SysData Pointer for Sys Int Info</param>
  * <param name="hCallbackPool">Handle for CallbackPool for Sys Int Info</param>
@@ -212,7 +211,7 @@ typedef struct tagSYS_INT_DESCRIPTION
 {
 	RTS_IEC_UDINT BusType;		/* <param name="BusType">Bus type (architecture specific). See "BusTypes" for details.</param> */
 	RTS_IEC_UDINT InterruptMode;		/* <param name="InterruptMode">Interrupt mode</param> */
-	BusSpecific busSpecific;		/* <param name="busSpecific">Pci bus specific definitions</param> */
+	BusSpecific busSpecific;		/* <param name="busSpecific">PCI bus specific definitions</param> */
 } SYS_INT_DESCRIPTION;
 
 typedef struct
@@ -342,7 +341,7 @@ typedef void (CDECL CDECL_EXT* PFSYSINTDISABLE_IEC) (sysintdisable_struct *p);
  */
 typedef struct tagsysintdisableall_struct
 {
-	RTS_IEC_UXINT *pulParam;			/* VAR_INPUT */	/* <param name="pulParam" type="IN">Parameter for the target to return the actual masled interrupts to use after in SysIntEnableAll().</param> */
+	RTS_IEC_UXINT *pulParam;			/* VAR_INPUT */	/* <param name="pulParam" type="IN">Parameter for the target to return the actual masked interrupts to use after in SysIntEnableAll().</param> */
 	RTS_IEC_RESULT SysIntDisableAll;	/* VAR_OUTPUT */	
 } sysintdisableall_struct;
 
@@ -953,7 +952,7 @@ extern "C" {
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Interrupt could be opened, a valid Handle is returned</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Interrupt could not be opened, an invalid Handle is returned</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">Invalid ulInterrupt Parameter</errorcode>
- * <result>Handle to interrupt, is RTS_INVALID_HANDLE if error occured, see Errorcodes.</result>
+ * <result>Handle to interrupt, is RTS_INVALID_HANDLE if error occurred, see error codes.</result>
  */
 RTS_HANDLE CDECL SysIntOpen(unsigned long ulInterrupt, SYS_INT_DESCRIPTION *pIntDescription, RTS_RESULT *pResult);
 typedef RTS_HANDLE (CDECL * PFSYSINTOPEN) (unsigned long ulInterrupt, SYS_INT_DESCRIPTION *pIntDescription, RTS_RESULT *pResult);

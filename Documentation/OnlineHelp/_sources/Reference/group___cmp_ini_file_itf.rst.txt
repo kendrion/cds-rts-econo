@@ -1,0 +1,875 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_ini_file_itf:
+
+=============
+CmpIniFileItf
+=============
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpIniFile.
+
+Detailed Description
+--------------------
+
+Interface to parse and manage ini-files.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Ini-file options <group___cmp_ini_file_itf___ini-fileoptions>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpIniFile_C <struct_i_cmp_ini_file___c>`
+
+Macros
+------
+
+- #define :ref:`USE_IniOpen <group___cmp_ini_file_itf_1ga0823a754c5977c9f5fbd864eae6614b0>` :ref:`PFINIOPEN <group___cmp_ini_file_itf_1gad656bb591a1648647a0a8441c73fd352>` pfIniOpen;
+
+- #define :ref:`EXT_IniOpen <group___cmp_ini_file_itf_1gac6af34360b865b63c7cf66ac684d0528>` extern :ref:`PFINIOPEN <group___cmp_ini_file_itf_1gad656bb591a1648647a0a8441c73fd352>` pfIniOpen;
+
+- #define :ref:`GET_IniOpen <group___cmp_ini_file_itf_1ga77c1ed2565ccdc2da4500084f7fead16>` s_pfCMGetAPI2( "IniOpen", (RTS_VOID_FCTPTR *)&pfIniOpen, (fl), 0, 0)
+
+- #define :ref:`CAL_IniOpen <group___cmp_ini_file_itf_1gab187df7f7c02d6cba1bca646db094f94>` pfIniOpen
+
+- #define :ref:`CHK_IniOpen <group___cmp_ini_file_itf_1ga382caf169108a75bd5c142f63fa49b8b>` (pfIniOpen != NULL)
+
+- #define :ref:`EXP_IniOpen <group___cmp_ini_file_itf_1ga1bce4d264b2db3b4ccefd200c59e34e7>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniOpen", (RTS_UINTPTR) :ref:`IniOpen <group___cmp_ini_file_itf_1ga9d11c23fd216e8827d4cd4f8151db182>` , 0, 0)
+
+- #define :ref:`USE_IniClose <group___cmp_ini_file_itf_1ga9b52e61010cfa4b08785c9e0d240406e>` :ref:`PFINICLOSE <group___cmp_ini_file_itf_1ga3bd547eaf3496e99dba048ef7629b057>` pfIniClose;
+
+- #define :ref:`EXT_IniClose <group___cmp_ini_file_itf_1ga3f03bbef775d4ae4d9c6137251fe487f>` extern :ref:`PFINICLOSE <group___cmp_ini_file_itf_1ga3bd547eaf3496e99dba048ef7629b057>` pfIniClose;
+
+- #define :ref:`GET_IniClose <group___cmp_ini_file_itf_1ga277847e5f6aa873563b31d085bce508c>` s_pfCMGetAPI2( "IniClose", (RTS_VOID_FCTPTR *)&pfIniClose, (fl), 0, 0)
+
+- #define :ref:`CAL_IniClose <group___cmp_ini_file_itf_1ga69e39b7ebab8c880f778ab5d308e7582>` pfIniClose
+
+- #define :ref:`CHK_IniClose <group___cmp_ini_file_itf_1ga3354c425a1a3067af152598ed26249e2>` (pfIniClose != NULL)
+
+- #define :ref:`EXP_IniClose <group___cmp_ini_file_itf_1gae2cea39c865b3b5e3501a0642a2fb65e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniClose", (RTS_UINTPTR) :ref:`IniClose <group___cmp_ini_file_itf_1ga0747d8fdd75600cffe7997b780529464>` , 0, 0)
+
+- #define :ref:`USE_IniDelete <group___cmp_ini_file_itf_1gaf0d1d5755ad75d67aaf9b2bce3fddd6e>` :ref:`PFINIDELETE <group___cmp_ini_file_itf_1ga7deaaec472cc65e75848c9157dc712f2>` pfIniDelete;
+
+- #define :ref:`EXT_IniDelete <group___cmp_ini_file_itf_1ga5b65a287b667b983d41d93797104ce9e>` extern :ref:`PFINIDELETE <group___cmp_ini_file_itf_1ga7deaaec472cc65e75848c9157dc712f2>` pfIniDelete;
+
+- #define :ref:`GET_IniDelete <group___cmp_ini_file_itf_1gad658d9fb02403235b9aa7b9fafe7033f>` s_pfCMGetAPI2( "IniDelete", (RTS_VOID_FCTPTR *)&pfIniDelete, (fl), 0, 0)
+
+- #define :ref:`CAL_IniDelete <group___cmp_ini_file_itf_1ga5da6a891d15319c3aa89851fdf15d0be>` pfIniDelete
+
+- #define :ref:`CHK_IniDelete <group___cmp_ini_file_itf_1ga6c5acd46c938a38e370f09babb27ad36>` (pfIniDelete != NULL)
+
+- #define :ref:`EXP_IniDelete <group___cmp_ini_file_itf_1ga998d41eb0435b73ad7b84a7ec042b9ff>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniDelete", (RTS_UINTPTR) :ref:`IniDelete <group___cmp_ini_file_itf_1ga370f0e9411c8419eb18f4212823b3905>` , 0, 0)
+
+- #define :ref:`USE_IniReadValue <group___cmp_ini_file_itf_1ga53718b82370049903efd4097e385f5ed>` :ref:`PFINIREADVALUE <group___cmp_ini_file_itf_1gaa6aa0379f6c40595c108fd599b76242f>` pfIniReadValue;
+
+- #define :ref:`EXT_IniReadValue <group___cmp_ini_file_itf_1ga766c753c9b5b49abc7a71994a891e5c0>` extern :ref:`PFINIREADVALUE <group___cmp_ini_file_itf_1gaa6aa0379f6c40595c108fd599b76242f>` pfIniReadValue;
+
+- #define :ref:`GET_IniReadValue <group___cmp_ini_file_itf_1ga48aa38006b5a25d51b3dc66ea32fe2c6>` s_pfCMGetAPI2( "IniReadValue", (RTS_VOID_FCTPTR *)&pfIniReadValue, (fl), 0, 0)
+
+- #define :ref:`CAL_IniReadValue <group___cmp_ini_file_itf_1ga24b0bf46f0d3dd13877d36f5fb909407>` pfIniReadValue
+
+- #define :ref:`CHK_IniReadValue <group___cmp_ini_file_itf_1gaf070a46024619efc22ba606417a114e6>` (pfIniReadValue != NULL)
+
+- #define :ref:`EXP_IniReadValue <group___cmp_ini_file_itf_1ga4938ef31a53e27c37b57eb607218b1f3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniReadValue", (RTS_UINTPTR) :ref:`IniReadValue <group___cmp_ini_file_itf_1ga524629c864b1ea5991d9b084ff6e78d2>` , 0, 0)
+
+- #define :ref:`USE_IniWriteValue <group___cmp_ini_file_itf_1ga54edb94261802eab59579e4faec86075>` :ref:`PFINIWRITEVALUE <group___cmp_ini_file_itf_1ga1de6a2577ad49477e3a510d4bc6b6c7a>` pfIniWriteValue;
+
+- #define :ref:`EXT_IniWriteValue <group___cmp_ini_file_itf_1gaab264a2289469d57f3d7ebf1d7b715c5>` extern :ref:`PFINIWRITEVALUE <group___cmp_ini_file_itf_1ga1de6a2577ad49477e3a510d4bc6b6c7a>` pfIniWriteValue;
+
+- #define :ref:`GET_IniWriteValue <group___cmp_ini_file_itf_1ga0039e36dd7f129804891ab40a905910b>` s_pfCMGetAPI2( "IniWriteValue", (RTS_VOID_FCTPTR *)&pfIniWriteValue, (fl), 0, 0)
+
+- #define :ref:`CAL_IniWriteValue <group___cmp_ini_file_itf_1gacb16f6301f2e489caeeaaac9ee6198a4>` pfIniWriteValue
+
+- #define :ref:`CHK_IniWriteValue <group___cmp_ini_file_itf_1ga5a3ccf93f581b8e6528beac9a1f878f4>` (pfIniWriteValue != NULL)
+
+- #define :ref:`EXP_IniWriteValue <group___cmp_ini_file_itf_1ga3c6707ee73c30aaa997922e2fe414059>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniWriteValue", (RTS_UINTPTR) :ref:`IniWriteValue <group___cmp_ini_file_itf_1ga7b10d4836cef6d2dd5b242dfa5d7d2f1>` , 0, 0)
+
+- #define :ref:`USE_IniRemoveKey <group___cmp_ini_file_itf_1gafc2ba169a7e73e9c1bf3da0434473ca1>` :ref:`PFINIREMOVEKEY <group___cmp_ini_file_itf_1gad434103f2464fd1ff5e58904c589e2e2>` pfIniRemoveKey;
+
+- #define :ref:`EXT_IniRemoveKey <group___cmp_ini_file_itf_1gad909133a5148a17649301770a826d225>` extern :ref:`PFINIREMOVEKEY <group___cmp_ini_file_itf_1gad434103f2464fd1ff5e58904c589e2e2>` pfIniRemoveKey;
+
+- #define :ref:`GET_IniRemoveKey <group___cmp_ini_file_itf_1gae75abf3707d154a56eb55f950f33b17d>` s_pfCMGetAPI2( "IniRemoveKey", (RTS_VOID_FCTPTR *)&pfIniRemoveKey, (fl), 0, 0)
+
+- #define :ref:`CAL_IniRemoveKey <group___cmp_ini_file_itf_1gac3f62e438b253b9cf8ec86413d77f433>` pfIniRemoveKey
+
+- #define :ref:`CHK_IniRemoveKey <group___cmp_ini_file_itf_1gabe934bc3d86b6765ba2350e62ea4cfec>` (pfIniRemoveKey != NULL)
+
+- #define :ref:`EXP_IniRemoveKey <group___cmp_ini_file_itf_1gad08c2924ebecfe120a521748f3c09dda>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniRemoveKey", (RTS_UINTPTR) :ref:`IniRemoveKey <group___cmp_ini_file_itf_1ga14108e46da7b62e6084001e26dee288e>` , 0, 0)
+
+- #define :ref:`USE_IniRemoveAllKeys <group___cmp_ini_file_itf_1ga469c96556bec27dc3de3be20be6967bf>` :ref:`PFINIREMOVEALLKEYS <group___cmp_ini_file_itf_1ga62c42a380fecf4dbb5549092bb33cdf1>` pfIniRemoveAllKeys;
+
+- #define :ref:`EXT_IniRemoveAllKeys <group___cmp_ini_file_itf_1ga872f787540155e5483281abb1527c237>` extern :ref:`PFINIREMOVEALLKEYS <group___cmp_ini_file_itf_1ga62c42a380fecf4dbb5549092bb33cdf1>` pfIniRemoveAllKeys;
+
+- #define :ref:`GET_IniRemoveAllKeys <group___cmp_ini_file_itf_1ga0da2fe7e2668179a6440f3843e6abdfe>` s_pfCMGetAPI2( "IniRemoveAllKeys", (RTS_VOID_FCTPTR *)&pfIniRemoveAllKeys, (fl), 0, 0)
+
+- #define :ref:`CAL_IniRemoveAllKeys <group___cmp_ini_file_itf_1ga60a98e20ec29c11c674c959229d10fd0>` pfIniRemoveAllKeys
+
+- #define :ref:`CHK_IniRemoveAllKeys <group___cmp_ini_file_itf_1ga76ccecdcc6de1b7f1d46affc98150eb8>` (pfIniRemoveAllKeys != NULL)
+
+- #define :ref:`EXP_IniRemoveAllKeys <group___cmp_ini_file_itf_1gacc7e4f3aa25b2bb09467cf5e7d923332>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniRemoveAllKeys", (RTS_UINTPTR) :ref:`IniRemoveAllKeys <group___cmp_ini_file_itf_1ga559666e033d3c23566e4adbe276aba1a>` , 0, 0)
+
+- #define :ref:`USE_IniIsWriteProtected <group___cmp_ini_file_itf_1ga290dc5109877fb884a92d7e49494560b>` :ref:`PFINIISWRITEPROTECTED <group___cmp_ini_file_itf_1ga3e82b8dd87951e2e2b6a21759ff64e3d>` pfIniIsWriteProtected;
+
+- #define :ref:`EXT_IniIsWriteProtected <group___cmp_ini_file_itf_1ga64c8c264ef66803415c4b70dc7e81e95>` extern :ref:`PFINIISWRITEPROTECTED <group___cmp_ini_file_itf_1ga3e82b8dd87951e2e2b6a21759ff64e3d>` pfIniIsWriteProtected;
+
+- #define :ref:`GET_IniIsWriteProtected <group___cmp_ini_file_itf_1ga2aaf975b863ff480ad9fbafa12487d71>` s_pfCMGetAPI2( "IniIsWriteProtected", (RTS_VOID_FCTPTR *)&pfIniIsWriteProtected, (fl), 0, 0)
+
+- #define :ref:`CAL_IniIsWriteProtected <group___cmp_ini_file_itf_1gae8a3994032fef0539c9fa0f652b4f3db>` pfIniIsWriteProtected
+
+- #define :ref:`CHK_IniIsWriteProtected <group___cmp_ini_file_itf_1gae7da89efbb1e036c2c1356adbdd8c8f5>` (pfIniIsWriteProtected != NULL)
+
+- #define :ref:`EXP_IniIsWriteProtected <group___cmp_ini_file_itf_1gab0d3093f5fb5e70e1a741b8af97ca962>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniIsWriteProtected", (RTS_UINTPTR) :ref:`IniIsWriteProtected <group___cmp_ini_file_itf_1ga18ff6f1688762c2bdd92cc175dd5a41a>` , 0, 0)
+
+- #define :ref:`USE_IniSetFilter <group___cmp_ini_file_itf_1ga920ac17cc6c45cdc98d9d59b3837910c>` :ref:`PFINISETFILTER <group___cmp_ini_file_itf_1ga544131d8fc69cb7f269ebe801bb4d131>` pfIniSetFilter;
+
+- #define :ref:`EXT_IniSetFilter <group___cmp_ini_file_itf_1ga94db96eab51ccfa98555df3adadf6a91>` extern :ref:`PFINISETFILTER <group___cmp_ini_file_itf_1ga544131d8fc69cb7f269ebe801bb4d131>` pfIniSetFilter;
+
+- #define :ref:`GET_IniSetFilter <group___cmp_ini_file_itf_1ga03de7df6372efd8364a3d6f27ffc4ca8>` s_pfCMGetAPI2( "IniSetFilter", (RTS_VOID_FCTPTR *)&pfIniSetFilter, (fl), 0, 0)
+
+- #define :ref:`CAL_IniSetFilter <group___cmp_ini_file_itf_1gaf9dc7cff0e65d591f5cf99e1d5f67191>` pfIniSetFilter
+
+- #define :ref:`CHK_IniSetFilter <group___cmp_ini_file_itf_1gadcbb55555087130ff760e7de4d22e0de>` (pfIniSetFilter != NULL)
+
+- #define :ref:`EXP_IniSetFilter <group___cmp_ini_file_itf_1ga5fddd3325891596054261799da6e8352>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniSetFilter", (RTS_UINTPTR) :ref:`IniSetFilter <group___cmp_ini_file_itf_1ga9219bdfb12f2ce6546575450415c9684>` , 0, 0)
+
+- #define :ref:`USE_IniCheckFilter <group___cmp_ini_file_itf_1ga51bb9b5023d6a5ff3a4fe80aedfbca97>` :ref:`PFINICHECKFILTER <group___cmp_ini_file_itf_1ga24f33a19d20d226d08cc8ab715d9e14c>` pfIniCheckFilter;
+
+- #define :ref:`EXT_IniCheckFilter <group___cmp_ini_file_itf_1ga5392d998448482ee5c8dc8a7ab0b766a>` extern :ref:`PFINICHECKFILTER <group___cmp_ini_file_itf_1ga24f33a19d20d226d08cc8ab715d9e14c>` pfIniCheckFilter;
+
+- #define :ref:`GET_IniCheckFilter <group___cmp_ini_file_itf_1ga4248e3883e5e9a8dd485ee1fbd282211>` s_pfCMGetAPI2( "IniCheckFilter", (RTS_VOID_FCTPTR *)&pfIniCheckFilter, (fl), 0, 0)
+
+- #define :ref:`CAL_IniCheckFilter <group___cmp_ini_file_itf_1ga5509bdd9db28ddd6e28365886e5b9d32>` pfIniCheckFilter
+
+- #define :ref:`CHK_IniCheckFilter <group___cmp_ini_file_itf_1ga68c4020702c1a126f4a8b61e68c33193>` (pfIniCheckFilter != NULL)
+
+- #define :ref:`EXP_IniCheckFilter <group___cmp_ini_file_itf_1ga79d643c73b5295e0a719e05d8c301853>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniCheckFilter", (RTS_UINTPTR) :ref:`IniCheckFilter <group___cmp_ini_file_itf_1gaa8a39c5801104e49448c27a1db186418>` , 0, 0)
+
+- #define :ref:`ITF_CmpIniFile <group___cmp_ini_file_itf_1gae6265364141f59f022eec901bf4d79d4>`
+
+- #define :ref:`EXTITF_CmpIniFile <group___cmp_ini_file_itf_1gace87896f4fee1912af0d31318c0a67e7>`
+
+Typedefs
+--------
+
+- typedef RTS_HANDLE(* :ref:`PFINIOPEN <group___cmp_ini_file_itf_1gad656bb591a1648647a0a8441c73fd352>`)(const char *pszFileName, RTS_UI32 options, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFINICLOSE <group___cmp_ini_file_itf_1ga3bd547eaf3496e99dba048ef7629b057>`)(RTS_HANDLE hIniFile)
+
+- typedef RTS_RESULT(* :ref:`PFINIDELETE <group___cmp_ini_file_itf_1ga7deaaec472cc65e75848c9157dc712f2>`)(RTS_HANDLE hIniFile)
+
+- typedef RTS_RESULT(* :ref:`PFINIREADVALUE <group___cmp_ini_file_itf_1gaa6aa0379f6c40595c108fd599b76242f>`)(RTS_HANDLE hIniFile, const char *pszSection, char *pszKey, char *pszValue, RTS_I32 *piMaxLen)
+
+- typedef RTS_RESULT(* :ref:`PFINIWRITEVALUE <group___cmp_ini_file_itf_1ga1de6a2577ad49477e3a510d4bc6b6c7a>`)(RTS_HANDLE hIniFile, const char *pszSection, char *pszKey, char *pszValue, RTS_I32 iLen)
+
+- typedef RTS_RESULT(* :ref:`PFINIREMOVEKEY <group___cmp_ini_file_itf_1gad434103f2464fd1ff5e58904c589e2e2>`)(RTS_HANDLE hIniFile, const char *pszSection, const char *pszKey)
+
+- typedef RTS_RESULT(* :ref:`PFINIREMOVEALLKEYS <group___cmp_ini_file_itf_1ga62c42a380fecf4dbb5549092bb33cdf1>`)(RTS_HANDLE hIniFile, const char *pszSection)
+
+- typedef RTS_BOOL(* :ref:`PFINIISWRITEPROTECTED <group___cmp_ini_file_itf_1ga3e82b8dd87951e2e2b6a21759ff64e3d>`)(RTS_HANDLE hIniFile, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFINISETFILTER <group___cmp_ini_file_itf_1ga544131d8fc69cb7f269ebe801bb4d131>`)(RTS_HANDLE hIniFile, char *pszFilter)
+
+- typedef RTS_RESULT(* :ref:`PFINICHECKFILTER <group___cmp_ini_file_itf_1ga24f33a19d20d226d08cc8ab715d9e14c>`)(RTS_HANDLE hIniFile, const char *pszSection)
+
+- typedef :ref:`ICmpIniFile_C <struct_i_cmp_ini_file___c>` :ref:`ICmpIniFile <group___cmp_ini_file_itf_1gae94ee3f5d95a7e69c529062fb227d593>`
+
+Functions
+---------
+
+- RTS_HANDLE :ref:`IniOpen <group___cmp_ini_file_itf_1ga9d11c23fd216e8827d4cd4f8151db182>` (const char * pszFileName, RTS_UI32 options, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`IniClose <group___cmp_ini_file_itf_1ga0747d8fdd75600cffe7997b780529464>` (RTS_HANDLE hIniFile)
+
+- RTS_RESULT :ref:`IniDelete <group___cmp_ini_file_itf_1ga370f0e9411c8419eb18f4212823b3905>` (RTS_HANDLE hIniFile)
+
+- RTS_RESULT :ref:`IniReadValue <group___cmp_ini_file_itf_1ga524629c864b1ea5991d9b084ff6e78d2>` (RTS_HANDLE hIniFile, const char * pszSection, char * pszKey, char * pszValue, RTS_I32 * piMaxLen)
+
+- RTS_RESULT :ref:`IniWriteValue <group___cmp_ini_file_itf_1ga7b10d4836cef6d2dd5b242dfa5d7d2f1>` (RTS_HANDLE hIniFile, const char * pszSection, char * pszKey, char * pszValue, RTS_I32 iLen)
+
+- RTS_RESULT :ref:`IniRemoveKey <group___cmp_ini_file_itf_1ga14108e46da7b62e6084001e26dee288e>` (RTS_HANDLE hIniFile, const char * pszSection, const char * pszKey)
+
+- RTS_RESULT :ref:`IniRemoveAllKeys <group___cmp_ini_file_itf_1ga559666e033d3c23566e4adbe276aba1a>` (RTS_HANDLE hIniFile, const char * pszSection)
+
+- RTS_BOOL :ref:`IniIsWriteProtected <group___cmp_ini_file_itf_1ga18ff6f1688762c2bdd92cc175dd5a41a>` (RTS_HANDLE hIniFile, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`IniSetFilter <group___cmp_ini_file_itf_1ga9219bdfb12f2ce6546575450415c9684>` (RTS_HANDLE hIniFile, char * pszFilter)
+
+- RTS_RESULT :ref:`IniCheckFilter <group___cmp_ini_file_itf_1gaa8a39c5801104e49448c27a1db186418>` (RTS_HANDLE hIniFile, const char * pszSection)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_ini_file_itf_1ga0823a754c5977c9f5fbd864eae6614b0:
+
+#define USE_IniOpen :ref:`PFINIOPEN <group___cmp_ini_file_itf_1gad656bb591a1648647a0a8441c73fd352>` pfIniOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gac6af34360b865b63c7cf66ac684d0528:
+
+#define EXT_IniOpen extern :ref:`PFINIOPEN <group___cmp_ini_file_itf_1gad656bb591a1648647a0a8441c73fd352>` pfIniOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga77c1ed2565ccdc2da4500084f7fead16:
+
+#define GET_IniOpen s_pfCMGetAPI2( "IniOpen", (RTS_VOID_FCTPTR *)&pfIniOpen, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gab187df7f7c02d6cba1bca646db094f94:
+
+#define CAL_IniOpen pfIniOpen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga382caf169108a75bd5c142f63fa49b8b:
+
+#define CHK_IniOpen (pfIniOpen != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga1bce4d264b2db3b4ccefd200c59e34e7:
+
+#define EXP_IniOpen s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniOpen", (RTS_UINTPTR) :ref:`IniOpen <group___cmp_ini_file_itf_1ga9d11c23fd216e8827d4cd4f8151db182>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga9b52e61010cfa4b08785c9e0d240406e:
+
+#define USE_IniClose :ref:`PFINICLOSE <group___cmp_ini_file_itf_1ga3bd547eaf3496e99dba048ef7629b057>` pfIniClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga3f03bbef775d4ae4d9c6137251fe487f:
+
+#define EXT_IniClose extern :ref:`PFINICLOSE <group___cmp_ini_file_itf_1ga3bd547eaf3496e99dba048ef7629b057>` pfIniClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga277847e5f6aa873563b31d085bce508c:
+
+#define GET_IniClose s_pfCMGetAPI2( "IniClose", (RTS_VOID_FCTPTR *)&pfIniClose, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga69e39b7ebab8c880f778ab5d308e7582:
+
+#define CAL_IniClose pfIniClose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga3354c425a1a3067af152598ed26249e2:
+
+#define CHK_IniClose (pfIniClose != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gae2cea39c865b3b5e3501a0642a2fb65e:
+
+#define EXP_IniClose s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniClose", (RTS_UINTPTR) :ref:`IniClose <group___cmp_ini_file_itf_1ga0747d8fdd75600cffe7997b780529464>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gaf0d1d5755ad75d67aaf9b2bce3fddd6e:
+
+#define USE_IniDelete :ref:`PFINIDELETE <group___cmp_ini_file_itf_1ga7deaaec472cc65e75848c9157dc712f2>` pfIniDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga5b65a287b667b983d41d93797104ce9e:
+
+#define EXT_IniDelete extern :ref:`PFINIDELETE <group___cmp_ini_file_itf_1ga7deaaec472cc65e75848c9157dc712f2>` pfIniDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gad658d9fb02403235b9aa7b9fafe7033f:
+
+#define GET_IniDelete s_pfCMGetAPI2( "IniDelete", (RTS_VOID_FCTPTR *)&pfIniDelete, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga5da6a891d15319c3aa89851fdf15d0be:
+
+#define CAL_IniDelete pfIniDelete
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga6c5acd46c938a38e370f09babb27ad36:
+
+#define CHK_IniDelete (pfIniDelete != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga998d41eb0435b73ad7b84a7ec042b9ff:
+
+#define EXP_IniDelete s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniDelete", (RTS_UINTPTR) :ref:`IniDelete <group___cmp_ini_file_itf_1ga370f0e9411c8419eb18f4212823b3905>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga53718b82370049903efd4097e385f5ed:
+
+#define USE_IniReadValue :ref:`PFINIREADVALUE <group___cmp_ini_file_itf_1gaa6aa0379f6c40595c108fd599b76242f>` pfIniReadValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga766c753c9b5b49abc7a71994a891e5c0:
+
+#define EXT_IniReadValue extern :ref:`PFINIREADVALUE <group___cmp_ini_file_itf_1gaa6aa0379f6c40595c108fd599b76242f>` pfIniReadValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga48aa38006b5a25d51b3dc66ea32fe2c6:
+
+#define GET_IniReadValue s_pfCMGetAPI2( "IniReadValue", (RTS_VOID_FCTPTR *)&pfIniReadValue, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga24b0bf46f0d3dd13877d36f5fb909407:
+
+#define CAL_IniReadValue pfIniReadValue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gaf070a46024619efc22ba606417a114e6:
+
+#define CHK_IniReadValue (pfIniReadValue != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga4938ef31a53e27c37b57eb607218b1f3:
+
+#define EXP_IniReadValue s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniReadValue", (RTS_UINTPTR) :ref:`IniReadValue <group___cmp_ini_file_itf_1ga524629c864b1ea5991d9b084ff6e78d2>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga54edb94261802eab59579e4faec86075:
+
+#define USE_IniWriteValue :ref:`PFINIWRITEVALUE <group___cmp_ini_file_itf_1ga1de6a2577ad49477e3a510d4bc6b6c7a>` pfIniWriteValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gaab264a2289469d57f3d7ebf1d7b715c5:
+
+#define EXT_IniWriteValue extern :ref:`PFINIWRITEVALUE <group___cmp_ini_file_itf_1ga1de6a2577ad49477e3a510d4bc6b6c7a>` pfIniWriteValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga0039e36dd7f129804891ab40a905910b:
+
+#define GET_IniWriteValue s_pfCMGetAPI2( "IniWriteValue", (RTS_VOID_FCTPTR *)&pfIniWriteValue, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gacb16f6301f2e489caeeaaac9ee6198a4:
+
+#define CAL_IniWriteValue pfIniWriteValue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga5a3ccf93f581b8e6528beac9a1f878f4:
+
+#define CHK_IniWriteValue (pfIniWriteValue != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga3c6707ee73c30aaa997922e2fe414059:
+
+#define EXP_IniWriteValue s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniWriteValue", (RTS_UINTPTR) :ref:`IniWriteValue <group___cmp_ini_file_itf_1ga7b10d4836cef6d2dd5b242dfa5d7d2f1>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gafc2ba169a7e73e9c1bf3da0434473ca1:
+
+#define USE_IniRemoveKey :ref:`PFINIREMOVEKEY <group___cmp_ini_file_itf_1gad434103f2464fd1ff5e58904c589e2e2>` pfIniRemoveKey;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gad909133a5148a17649301770a826d225:
+
+#define EXT_IniRemoveKey extern :ref:`PFINIREMOVEKEY <group___cmp_ini_file_itf_1gad434103f2464fd1ff5e58904c589e2e2>` pfIniRemoveKey;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gae75abf3707d154a56eb55f950f33b17d:
+
+#define GET_IniRemoveKey s_pfCMGetAPI2( "IniRemoveKey", (RTS_VOID_FCTPTR *)&pfIniRemoveKey, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gac3f62e438b253b9cf8ec86413d77f433:
+
+#define CAL_IniRemoveKey pfIniRemoveKey
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gabe934bc3d86b6765ba2350e62ea4cfec:
+
+#define CHK_IniRemoveKey (pfIniRemoveKey != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gad08c2924ebecfe120a521748f3c09dda:
+
+#define EXP_IniRemoveKey s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniRemoveKey", (RTS_UINTPTR) :ref:`IniRemoveKey <group___cmp_ini_file_itf_1ga14108e46da7b62e6084001e26dee288e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga469c96556bec27dc3de3be20be6967bf:
+
+#define USE_IniRemoveAllKeys :ref:`PFINIREMOVEALLKEYS <group___cmp_ini_file_itf_1ga62c42a380fecf4dbb5549092bb33cdf1>` pfIniRemoveAllKeys;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga872f787540155e5483281abb1527c237:
+
+#define EXT_IniRemoveAllKeys extern :ref:`PFINIREMOVEALLKEYS <group___cmp_ini_file_itf_1ga62c42a380fecf4dbb5549092bb33cdf1>` pfIniRemoveAllKeys;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga0da2fe7e2668179a6440f3843e6abdfe:
+
+#define GET_IniRemoveAllKeys s_pfCMGetAPI2( "IniRemoveAllKeys", (RTS_VOID_FCTPTR *)&pfIniRemoveAllKeys, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga60a98e20ec29c11c674c959229d10fd0:
+
+#define CAL_IniRemoveAllKeys pfIniRemoveAllKeys
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga76ccecdcc6de1b7f1d46affc98150eb8:
+
+#define CHK_IniRemoveAllKeys (pfIniRemoveAllKeys != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gacc7e4f3aa25b2bb09467cf5e7d923332:
+
+#define EXP_IniRemoveAllKeys s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniRemoveAllKeys", (RTS_UINTPTR) :ref:`IniRemoveAllKeys <group___cmp_ini_file_itf_1ga559666e033d3c23566e4adbe276aba1a>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga290dc5109877fb884a92d7e49494560b:
+
+#define USE_IniIsWriteProtected :ref:`PFINIISWRITEPROTECTED <group___cmp_ini_file_itf_1ga3e82b8dd87951e2e2b6a21759ff64e3d>` pfIniIsWriteProtected;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga64c8c264ef66803415c4b70dc7e81e95:
+
+#define EXT_IniIsWriteProtected extern :ref:`PFINIISWRITEPROTECTED <group___cmp_ini_file_itf_1ga3e82b8dd87951e2e2b6a21759ff64e3d>` pfIniIsWriteProtected;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga2aaf975b863ff480ad9fbafa12487d71:
+
+#define GET_IniIsWriteProtected s_pfCMGetAPI2( "IniIsWriteProtected", (RTS_VOID_FCTPTR *)&pfIniIsWriteProtected, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gae8a3994032fef0539c9fa0f652b4f3db:
+
+#define CAL_IniIsWriteProtected pfIniIsWriteProtected
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gae7da89efbb1e036c2c1356adbdd8c8f5:
+
+#define CHK_IniIsWriteProtected (pfIniIsWriteProtected != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gab0d3093f5fb5e70e1a741b8af97ca962:
+
+#define EXP_IniIsWriteProtected s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniIsWriteProtected", (RTS_UINTPTR) :ref:`IniIsWriteProtected <group___cmp_ini_file_itf_1ga18ff6f1688762c2bdd92cc175dd5a41a>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga920ac17cc6c45cdc98d9d59b3837910c:
+
+#define USE_IniSetFilter :ref:`PFINISETFILTER <group___cmp_ini_file_itf_1ga544131d8fc69cb7f269ebe801bb4d131>` pfIniSetFilter;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga94db96eab51ccfa98555df3adadf6a91:
+
+#define EXT_IniSetFilter extern :ref:`PFINISETFILTER <group___cmp_ini_file_itf_1ga544131d8fc69cb7f269ebe801bb4d131>` pfIniSetFilter;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga03de7df6372efd8364a3d6f27ffc4ca8:
+
+#define GET_IniSetFilter s_pfCMGetAPI2( "IniSetFilter", (RTS_VOID_FCTPTR *)&pfIniSetFilter, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gaf9dc7cff0e65d591f5cf99e1d5f67191:
+
+#define CAL_IniSetFilter pfIniSetFilter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gadcbb55555087130ff760e7de4d22e0de:
+
+#define CHK_IniSetFilter (pfIniSetFilter != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga5fddd3325891596054261799da6e8352:
+
+#define EXP_IniSetFilter s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniSetFilter", (RTS_UINTPTR) :ref:`IniSetFilter <group___cmp_ini_file_itf_1ga9219bdfb12f2ce6546575450415c9684>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga51bb9b5023d6a5ff3a4fe80aedfbca97:
+
+#define USE_IniCheckFilter :ref:`PFINICHECKFILTER <group___cmp_ini_file_itf_1ga24f33a19d20d226d08cc8ab715d9e14c>` pfIniCheckFilter;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga5392d998448482ee5c8dc8a7ab0b766a:
+
+#define EXT_IniCheckFilter extern :ref:`PFINICHECKFILTER <group___cmp_ini_file_itf_1ga24f33a19d20d226d08cc8ab715d9e14c>` pfIniCheckFilter;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga4248e3883e5e9a8dd485ee1fbd282211:
+
+#define GET_IniCheckFilter s_pfCMGetAPI2( "IniCheckFilter", (RTS_VOID_FCTPTR *)&pfIniCheckFilter, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga5509bdd9db28ddd6e28365886e5b9d32:
+
+#define CAL_IniCheckFilter pfIniCheckFilter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga68c4020702c1a126f4a8b61e68c33193:
+
+#define CHK_IniCheckFilter (pfIniCheckFilter != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga79d643c73b5295e0a719e05d8c301853:
+
+#define EXP_IniCheckFilter s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IniCheckFilter", (RTS_UINTPTR) :ref:`IniCheckFilter <group___cmp_ini_file_itf_1gaa8a39c5801104e49448c27a1db186418>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gae6265364141f59f022eec901bf4d79d4:
+
+#define ITF_CmpIniFile
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gace87896f4fee1912af0d31318c0a67e7:
+
+#define EXTITF_CmpIniFile
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_ini_file_itf_1gad656bb591a1648647a0a8441c73fd352:
+
+typedef RTS_HANDLE( *  PFINIOPEN) (const char *pszFileName, RTS_UI32 options, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga3bd547eaf3496e99dba048ef7629b057:
+
+typedef RTS_RESULT( *  PFINICLOSE) (RTS_HANDLE hIniFile)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga7deaaec472cc65e75848c9157dc712f2:
+
+typedef RTS_RESULT( *  PFINIDELETE) (RTS_HANDLE hIniFile)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gaa6aa0379f6c40595c108fd599b76242f:
+
+typedef RTS_RESULT( *  PFINIREADVALUE) (RTS_HANDLE hIniFile, const char *pszSection, char *pszKey, char *pszValue, RTS_I32 *piMaxLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga1de6a2577ad49477e3a510d4bc6b6c7a:
+
+typedef RTS_RESULT( *  PFINIWRITEVALUE) (RTS_HANDLE hIniFile, const char *pszSection, char *pszKey, char *pszValue, RTS_I32 iLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gad434103f2464fd1ff5e58904c589e2e2:
+
+typedef RTS_RESULT( *  PFINIREMOVEKEY) (RTS_HANDLE hIniFile, const char *pszSection, const char *pszKey)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga62c42a380fecf4dbb5549092bb33cdf1:
+
+typedef RTS_RESULT( *  PFINIREMOVEALLKEYS) (RTS_HANDLE hIniFile, const char *pszSection)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga3e82b8dd87951e2e2b6a21759ff64e3d:
+
+typedef RTS_BOOL( *  PFINIISWRITEPROTECTED) (RTS_HANDLE hIniFile, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga544131d8fc69cb7f269ebe801bb4d131:
+
+typedef RTS_RESULT( *  PFINISETFILTER) (RTS_HANDLE hIniFile, char *pszFilter)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1ga24f33a19d20d226d08cc8ab715d9e14c:
+
+typedef RTS_RESULT( *  PFINICHECKFILTER) (RTS_HANDLE hIniFile, const char *pszSection)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ini_file_itf_1gae94ee3f5d95a7e69c529062fb227d593:
+
+typedef ICmpIniFile_C ICmpIniFile
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_ini_file_itf_1ga9d11c23fd216e8827d4cd4f8151db182:
+
+RTS_HANDLE IniOpen (const char *pszFileName, RTS_UI32 options, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to open an ini-file
+
+**Parameters**
+
++---------+-------------+-----------------------------------------------------------+
+| [in]    | pszFileName | Name and path of the ini-file                             |
++---------+-------------+-----------------------------------------------------------+
+| [in]    | options     | Options to open ini-file. See category "Ini-file options" |
++---------+-------------+-----------------------------------------------------------+
+| [out]   | pResult     | Error code                                                |
++---------+-------------+-----------------------------------------------------------+
+
+**Return values**
+
++---------------+-------------------------------------------------------------------------------------+
+| ERR_OK        | Ini file can be opened                                                              |
++---------------+-------------------------------------------------------------------------------------+
+| ERR_NO_OBJECT | Ini file cannot be opened (not existing, see INI_OPTION_NONE)                       |
++---------------+-------------------------------------------------------------------------------------+
+| ERR_FAILED    | Ini file cannot be created (see INI_OPTION_CREATE or INI_OPTION_OVERWRITE_EXISTING) |
++---------------+-------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the opened ini-file or RTS_INVALID_HANDLE if failed
+
+.. _group___cmp_ini_file_itf_1ga0747d8fdd75600cffe7997b780529464:
+
+RTS_RESULT IniClose (RTS_HANDLE hIniFile)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to close an ini-file opened via :ref:`IniOpen() <group___cmp_ini_file_itf_1ga9d11c23fd216e8827d4cd4f8151db182>`
+
+**Parameters**
+
++---------+----------+------------------------+
+| [in]    | hIniFile | Handle to the ini file |
++---------+----------+------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+------------------------+
+| ERR_OK        | Ini file can be closed |
++---------------+------------------------+
+| ERR_PARAMETER | Invalid parameter      |
++---------------+------------------------+
+
+.. _group___cmp_ini_file_itf_1ga370f0e9411c8419eb18f4212823b3905:
+
+RTS_RESULT IniDelete (RTS_HANDLE hIniFile)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to delete an ini-file opened via :ref:`IniOpen() <group___cmp_ini_file_itf_1ga9d11c23fd216e8827d4cd4f8151db182>`
+
+**Parameters**
+
++---------+----------+------------------------+
+| [in]    | hIniFile | Handle to the ini file |
++---------+----------+------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+-------------------------+
+| ERR_OK        | Ini file can be deleted |
++---------------+-------------------------+
+| ERR_PARAMETER | Invalid parameter       |
++---------------+-------------------------+
+
+.. _group___cmp_ini_file_itf_1ga524629c864b1ea5991d9b084ff6e78d2:
+
+RTS_RESULT IniReadValue (RTS_HANDLE hIniFile, const char *pszSection, char *pszKey, char *pszValue, RTS_I32 *piMaxLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to read an entry from ini file
+
+**Parameters**
+
++---------+------------+-----------------------------------------------------------+
+| [in]    | hIniFile   | Handle to the ini file                                    |
++---------+------------+-----------------------------------------------------------+
+| [in]    | pszSection | Section name                                              |
++---------+------------+-----------------------------------------------------------+
+| [in]    | pszKey     | Key name                                                  |
++---------+------------+-----------------------------------------------------------+
+| [out]   | pszValue   | Pointer to value string to get value                      |
++---------+------------+-----------------------------------------------------------+
+| [inout] | piMaxLen   | Pointer to max length of string. Length read is returned. |
++---------+------------+-----------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+----------------------------+
+| ERR_OK        | Ini file entry can be read |
++---------------+----------------------------+
+| ERR_PARAMETER | Invalid parameter          |
++---------------+----------------------------+
+
+.. _group___cmp_ini_file_itf_1ga7b10d4836cef6d2dd5b242dfa5d7d2f1:
+
+RTS_RESULT IniWriteValue (RTS_HANDLE hIniFile, const char *pszSection, char *pszKey, char *pszValue, RTS_I32 iLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to write an entry to ini file
+
+**Parameters**
+
++---------+------------+------------------------------------------------+
+| [in]    | hIniFile   | Handle to the ini file                         |
++---------+------------+------------------------------------------------+
+| [in]    | pszSection | Section name                                   |
++---------+------------+------------------------------------------------+
+| [in]    | pszKey     | Key name                                       |
++---------+------------+------------------------------------------------+
+| [out]   | pszValue   | Pointer to value string that should be written |
++---------+------------+------------------------------------------------+
+| [inout] | iLen       | Length of value string to write                |
++---------+------------+------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+-------------------------------+
+| ERR_OK        | Ini file entry can be written |
++---------------+-------------------------------+
+| ERR_PARAMETER | Invalid parameter             |
++---------------+-------------------------------+
+
+.. _group___cmp_ini_file_itf_1ga14108e46da7b62e6084001e26dee288e:
+
+RTS_RESULT IniRemoveKey (RTS_HANDLE hIniFile, const char *pszSection, const char *pszKey)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to remove an entry from ini file
+
+**Parameters**
+
++---------+------------+------------------------+
+| [in]    | hIniFile   | Handle to the ini file |
++---------+------------+------------------------+
+| [in]    | pszSection | Section name           |
++---------+------------+------------------------+
+| [in]    | pszKey     | Key name               |
++---------+------------+------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+-------------------------------+
+| ERR_OK        | Ini file entry can be removed |
++---------------+-------------------------------+
+| ERR_PARAMETER | Invalid parameter             |
++---------------+-------------------------------+
+
+.. _group___cmp_ini_file_itf_1ga559666e033d3c23566e4adbe276aba1a:
+
+RTS_RESULT IniRemoveAllKeys (RTS_HANDLE hIniFile, const char *pszSection)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to remove all key from the specified section
+
+**Parameters**
+
++---------+------------+------------------------+
+| [in]    | hIniFile   | Handle to the ini file |
++---------+------------+------------------------+
+| [in]    | pszSection | Section name           |
++---------+------------+------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+---------------------------------+
+| ERR_OK        | Ini file entries can be removed |
++---------------+---------------------------------+
+| ERR_PARAMETER | Invalid parameter               |
++---------------+---------------------------------+
+
+.. _group___cmp_ini_file_itf_1ga18ff6f1688762c2bdd92cc175dd5a41a:
+
+RTS_BOOL IniIsWriteProtected (RTS_HANDLE hIniFile, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to check, if ini file is write protected
+
+**Parameters**
+
++---------+------------+------------------------+
+| [in]    | hIniFile   | Handle to the ini file |
++---------+------------+------------------------+
+| [in]    | pszSection | Section name           |
++---------+------------+------------------------+
+
+**Returns:**
+
+BOOL return value
+
+**Return values**
+
++-------+---------------------------------+
+| TRUE  | Ini file is write protected     |
++-------+---------------------------------+
+| FALSE | Ini file is not write protected |
++-------+---------------------------------+
+
+.. _group___cmp_ini_file_itf_1ga9219bdfb12f2ce6546575450415c9684:
+
+RTS_RESULT IniSetFilter (RTS_HANDLE hIniFile, char *pszFilter)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to set a filter/section list for the ini file! If such a filter list is specified, only these sections can be stored in the ini file!
+
+**Parameters**
+
++---------+-----------+--------------------------------------------------------------------------------+
+| [in]    | hIniFile  | Handle to the ini file                                                         |
++---------+-----------+--------------------------------------------------------------------------------+
+| [in]    | pszFilter | List of sections with a comma separated list: Example: "[CmpApp], [CmpDevice]" |
++---------+-----------+--------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+----------------------------+
+| ERR_OK        | Ini file filter can be set |
++---------------+----------------------------+
+| ERR_PARAMETER | Invalid parameter          |
++---------------+----------------------------+
+
+.. _group___cmp_ini_file_itf_1gaa8a39c5801104e49448c27a1db186418:
+
+RTS_RESULT IniCheckFilter (RTS_HANDLE hIniFile, const char *pszSection)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to set check, if a filter of the specified section is set for this ini file!
+
+**Parameters**
+
++---------+------------+------------------------+
+| [in]    | hIniFile   | Handle to the ini file |
++---------+------------+------------------------+
+| [in]    | pszSection | Section name           |
++---------+------------+------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+-----------------------------------------------+
+| ERR_OK        | Ini file filter for the section is valid      |
++---------------+-----------------------------------------------+
+| ERR_PARAMETER | Invalid parameter                             |
++---------------+-----------------------------------------------+
+| ERR_FAILED    | Ini file filter for the section is not valid! |
++---------------+-----------------------------------------------+
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

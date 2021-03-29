@@ -1,0 +1,57 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of struct.rst template
+
+.. _structtagiomgrlockenter__struct:
+
+=========================================
+tagiomgrlockenter_struct Struct Reference
+=========================================
+
+| #include ":ref:`CmpIoMgrItf.h <_cmp_io_mgr_itf_8h>`"
+
+Data Fields
+-----------
+
+- RTS_IEC_HANDLE :ref:`hIoDrv <group___cmp_io_mgr_itf_1ga8b6dff313efaf39ac13c30f76c729eba>`
+- RTS_IEC_DWORD :ref:`dwLockScope <group___cmp_io_mgr_itf_1ga1736097d576fa584fee6fbde7bac8324>`
+- RTS_IEC_RESULT :ref:`IoMgrLockEnter <group___cmp_io_mgr_itf_1gafcc61890c6bbe59a732658d9073f6dd0>`
+
+Detailed Description
+--------------------
+
+This function acquires the mutual-exclusion locks for the given operations for critical sections inside the I/O driver's implementation of :ref:`IoDrvReadInputs() <group___cmp_io_drv_itf_1ga48f414affb4bb84e803e08b48eaa1ea1>` , :ref:`IoDrvWriteOutputs() <group___cmp_io_drv_itf_1gae25ad6b1f53f6935b17125d9757aad45>` , and :ref:`IoDrvStartBusCycle() <group___cmp_io_drv_itf_1ga7712716bf87ce241c22958db3aa19bcc>` . The locks can be released with the function ``IoMgrLockLeave()``. While a lock is held, any other thread is blocked from acquiring the lock and waits until the lock is released.
+
+IMPLEMENTATION NOTE: The behavior of the ``dwLockScope`` parameter can't be implemented on all platforms. Platforms without synchronization functionality may not be able to implement this behavior. IoMgrEmbedded of the CODESYSControlEmbedded runtime system for example can only disable and enable all interrupts.
+
+:return: error code + ERR_OK: Locks were successfully acquired. + ERR_PARAMETER: The ``pbyIoDrv`` parameter is ``NULL`` (only implementations that use this parameter), or the ``dwLockScope`` parameter has none of the GVL LockScopes set (only implementations that use this parameter). + ERR_FAILED: No driver entry for pbyIoDrv found in device pool.
+
+Field Documentation
+-------------------
+
+.. _group___cmp_io_mgr_itf_1ga8b6dff313efaf39ac13c30f76c729eba:
+
+RTS_IEC_HANDLE tagiomgrlockenter_struct::hIoDrv
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_mgr_itf_1ga1736097d576fa584fee6fbde7bac8324:
+
+RTS_IEC_DWORD tagiomgrlockenter_struct::dwLockScope
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_mgr_itf_1gafcc61890c6bbe59a732658d9073f6dd0:
+
+RTS_IEC_RESULT tagiomgrlockenter_struct::IoMgrLockEnter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The documentation for this struct was generated from the following file:
+------------------------------------------------------------------------
+
+CmpIoMgrItf.h
+
+.. last line of struct.rst template
+.. last line of composition.rst template
+
+

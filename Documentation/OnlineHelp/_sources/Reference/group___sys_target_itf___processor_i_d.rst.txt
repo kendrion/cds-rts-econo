@@ -1,0 +1,125 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_target_itf___processor_i_d:
+
+============
+Processor ID
+============
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Macros
+------
+
+- #define :ref:`SYSTARGET_PROCESSORTABLE <group___sys_target_itf___processor_i_d_1gafca8fc0642e743cdc9fcc7988e3a7b3c>` {\
+{ 0, "---" },\
+{ 1, "x86" },\
+{ 2, "ARM" },\
+{ 3, "PPC" },\
+{ 4, "MIPS" },\
+{ 5, "SH" },\
+{ 6, "BLACKFIN" },\
+{ 7, "TRICORE" },\
+{ 8, "NIOS" },\
+{ 9, "C16X" },\
+{ 10, "CORTEX" },\
+{ 11, "DSP" },\
+{ 12, "V850" },\
+{ 13, "RX6" },\
+{ 14, "COLDFIRE" },\
+{ 0, NULL }\
+}
+
+- #define :ref:`SYSTARGET_GET_PROCESSORNAME <group___sys_target_itf___processor_i_d_1gab89c8c939ba549404dc0780d6b00e9c7>` {\
+int i;\
+RTS_ID_TO_NAME aProcNames[] = :ref:`SYSTARGET_PROCESSORTABLE <group___sys_target_itf___processor_i_d_1gafca8fc0642e743cdc9fcc7988e3a7b3c>` ;\
+pszProcessorName = aProcNames[0].pszName;\
+for (i = 0; aProcNames[i].pszName != NULL; i++)\
+{\
+if (aProcNames[i].id == procid)\
+{\
+pszProcessorName = aProcNames[i].pszName;\
+break;\
+}\
+}\
+}
+
+- #define :ref:`SYSTARGET_GET_CODING <group___sys_target_itf___processor_i_d_1ga348817641f822452966f83560c5c6d4f>` "C"
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_target_itf___processor_i_d_1gafca8fc0642e743cdc9fcc7988e3a7b3c:
+
+#define SYSTARGET_PROCESSORTABLE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Value:**
+
+.. parsed-literal::
+
+    {\\
+    { 0, "---" },\\
+    { 1, "x86" },\\
+    { 2, "ARM" },\\
+    { 3, "PPC" },\\
+    { 4, "MIPS" },\\
+    { 5, "SH" },\\
+    { 6, "BLACKFIN" },\\
+    { 7, "TRICORE" },\\
+    { 8, "NIOS" },\\
+    { 9, "C16X" },\\
+    { 10, "CORTEX" },\\
+    { 11, "DSP" },\\
+    { 12, "V850" },\\
+    { 13, "RX6" },\\
+    { 14, "COLDFIRE" },\\
+    { 0, NULL }\\
+    }
+
+Specifies which processor is used. With these defines, processor specific code can be managed. 80x86 processor used ARM processor used PowerPC processor used MIPS processor used Hitachi SH processor used BlackFin processor used Infineon TriCore processor used Altera NIOS processor used Infineon C16x processor used Cortex processor used DSP used Renesas V850 processor used Renesas RX6 processor used Freescale Coldfire processor used
+
+.. _group___sys_target_itf___processor_i_d_1gab89c8c939ba549404dc0780d6b00e9c7:
+
+#define SYSTARGET_GET_PROCESSORNAME
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Value:**
+
+.. parsed-literal::
+
+    {\\
+    int i;\\
+    RTS_ID_TO_NAME aProcNames[] = :ref:`SYSTARGET_PROCESSORTABLE <group___sys_target_itf___processor_i_d_1gafca8fc0642e743cdc9fcc7988e3a7b3c>` ;\\
+    pszProcessorName = aProcNames[0].pszName;\\
+    for (i = 0; aProcNames[i].pszName != NULL; i++)\\
+    {\\
+    if (aProcNames[i].id == procid)\\
+    {\\
+    pszProcessorName = aProcNames[i].pszName;\\
+    break;\\
+    }\\
+    }\\
+    }
+
+.. _group___sys_target_itf___processor_i_d_1ga348817641f822452966f83560c5c6d4f:
+
+#define SYSTARGET_GET_CODING "C"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

@@ -1,39 +1,53 @@
 /**
  * <name>CmpTraceMgrOEM.c</name>
  * <description> 
- *	Example to create a traceconfiguration and to handle and update a system variable.
- *	A so called device traceconfiguration is a trace, that is created by a RTS component or an IEC Program/FB. This trace can
- *	be uploaded in CODESYS an can be monitored without an Application.
- *	So this can be used to trace system variables resp. build in variables (like actual velocity of a drive or response time on a fieldbus).
-
- *	That such a system variable can be added in CODESYS to a user defined trace, this must be specified in the DeviceDescription with the attribute "TraceSystemRecord"
- *	at the IO-configuration parameter:
- *      <Parameter ParameterId="1073741826" type="std:DWORD">
- *         <!--16#40000002-->
- *         <Attributes offlineaccess="readwrite" download="true" functional="false" TraceSystemRecord="true" />
- *         <Default>0</Default>
- *         <Name>TestSystemVariable</Name>
- *         <Description>Test system variable for tracing</Description>
+ *	Example how to create a device trace-configuration that includes system variables and how to handle a system task as a trace context.
+ *
+ *	1. Device trace-configuration:
+ *	   A so called device trace-configuration is a trace, that is created by a RTS component or an IEC Program/FB. This trace can
+ *	   be uploaded in CODESYS an can be monitored without an Application.
+ *	   So this can be used to trace system variables resp. build in variables (like actual velocity of a drive or response time on a fieldbus).
+ *
+ *	   That such a system variable can be added in CODESYS to a user defined trace, this must be specified in the DeviceDescription with the attribute "TraceSystemRecord"
+ *	   at the IO-configuration parameter:
+ *		<Parameter ParameterId="1073741826" type="std:DWORD">
+ *			<!--16#40000002-->
+ *			<Attributes offlineaccess="readwrite" download="true" functional="false" TraceSystemRecord="true" />
+ *			<Default>0</Default>
+ *			<Name>TestSystemVariable</Name>
+ *			<Description>Test system variable for tracing</Description>
  *      </Parameter>
  *
- *	If you would like that the user can select a system task in which the trace is running, you have to specify this in the DeviceDescription too (:ref:`trace_systemtasks`):
- *	   <ts:section name="trace">
- *			...
+ *	2. Device task:
+ *	   If you would like that the user can select a system task in which the trace is running, you have to specify this in the DeviceDescription too (:ref:`trace_systemtasks`):
+ *		<ts:section name="trace">
+ *		  	...
  *			<ts:setting name="systemtasks" type="string" access="visible">
  *				<ts:value>SystemTask</ts:value>
  *			</ts:setting>
  *			...
- *		</ts:section>
+ *		 </ts:section>
+ *	   As an example see CyclicUpdateDeviceTaskTrace().
  *
  * </description>
  *
- * <copyright>(c) 2003-2016 3S-Smart Software Solutions</copyright>
+ * <copyright>
+ * Copyright (c) 2017-2019 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * </copyright>
  */
 
 #include "CmpStd.h"
 #include "CmpTraceMgrOEMDep.h"
 
 USE_STMT
+
+
+/* ONLY FOR TESTING */
+#if 0
+	#define TACEMGROEM_PRINTF	printf
+#else
+	#define TACEMGROEM_PRINTF
+#endif
 
 static RTS_HANDLE s_hPacket;
 static RTS_HANDLE s_hRecord;
@@ -48,6 +62,8 @@ static RTS_RESULT ExitTraceEvents(void);
 static RTS_RESULT CreateTraceConfiguration(void);
 static RTS_RESULT DeleteTraceConfiguration(void);
 static RTS_RESULT CycliceUpdateTrace(void);
+static RTS_RESULT CyclicReadTrace(void);
+static RTS_RESULT CyclicUpdateDeviceTaskTrace(void);
 static void CDECL CBTraceMgr(EventParam *pEventParam);
 
 
@@ -58,9 +74,9 @@ DLL_DECL int CDECL ComponentEntry(INIT_STRUCT *pInitStruct)
 		pfExportFunctions	OUT Pointer to function that exports component functions
 		pfImportFunctions	OUT Pointer to function that imports functions from other components
 		pfGetVersion		OUT Pointer to function to get component version
-		pfRegisterAPI		IN	Pointer to component mangager function to register a api function
-		pfGetAPI			IN	Pointer to component mangager function to get a api function
-		pfCallHook			IN	Pointer to component mangager function to call a hook function
+		pfRegisterAPI		IN	Pointer to component manager function to register a API function
+		pfGetAPI			IN	Pointer to component manager function to get a API function
+		pfCallHook			IN	Pointer to component manager function to call a hook function
 	Return					ERR_OK if library could be initialized, else error code
 */
 {
@@ -100,7 +116,7 @@ static IBase* CDECL CreateInstance(CLASSID cid, RTS_RESULT *pResult)
 	if (cid == CLASSID_CCmpTraceMgrOEM)
 	{
 		CCmpTraceMgrOEM *pCCmpTraceMgrOEM = static_cast<CCmpTraceMgrOEM *>(new CCmpTraceMgrOEM());
-		return (IBase*)pCCmpTraceMgrOEM->QueryInterface(pCCmpTraceMgrOEM, ITFID_IBase, pResult);
+		return (IBase*)pCCmpTraceMgrOEM->QueryInterface((ICmpTraceMgrOEM*)pCCmpTraceMgrOEM, ITFID_IBase, pResult);
 	}
 #endif
 	return NULL;
@@ -170,6 +186,8 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_
 		case CH_COMM_CYCLE:
 		{
 			CycliceUpdateTrace();
+			CyclicReadTrace();
+			CyclicUpdateDeviceTaskTrace();
 			break;
 		}
 
@@ -320,6 +338,68 @@ static RTS_RESULT CycliceUpdateTrace(void)
 	return ERR_OK;
 }
 
+static RTS_RESULT CyclicReadTrace(void)
+{
+	TraceState ts;
+	RTS_HANDLE hRecord;
+	RTS_UI32 ulRead = 0;
+	TraceRecordEntry *pTraceBuffer;
+	TraceRecordEntry *pEntry;
+	TracePacketConfiguration packetConf;
+	RTS_RESULT result = CAL_TraceMgrPacketReadBegin(s_hPacket);
+
+	if (result != ERR_OK)
+		return result;
+
+	result = CAL_TraceMgrPacketGetState(s_hPacket, &ts);
+	result = CAL_TraceMgrPacketGetConfig(s_hPacket, &packetConf);
+
+	TACEMGROEM_PRINTF("==== Packet = %s ====\n", packetConf.pszName);
+
+	hRecord = CAL_TraceMgrPacketReadFirst2(s_hPacket, NULL, 0, &ulRead, &result);
+	while (hRecord != RTS_INVALID_HANDLE)
+	{
+		TraceRecordConfiguration tRecConfig;
+		RTS_UI32 ulReadBytes = 0;
+		RTS_UI32 i;
+
+		CAL_TraceMgrRecordGetConfig(s_hPacket, hRecord, &tRecConfig);
+		
+		ulReadBytes = packetConf.ulBufferEntries * (tRecConfig.ulSize * sizeof(TraceRecordEntry));
+		pTraceBuffer = (TraceRecordEntry *)CAL_SysMemAllocData(COMPONENT_NAME, ulReadBytes, NULL);
+		CAL_TraceMgrPacketRead(s_hPacket, hRecord, pTraceBuffer, &ulReadBytes);
+		
+		pEntry = pTraceBuffer;
+
+		TACEMGROEM_PRINTF("---- Record = %s ----\n", tRecConfig.pszVariable);
+		for (i = 0; i < ulReadBytes && (RTS_UI8 *)pEntry < ((RTS_UI8 *)pTraceBuffer + ulReadBytes); i++)
+		{
+			RTS_UI32 value;		
+
+			memcpy(&value, &pEntry->Data, sizeof(value));
+			TACEMGROEM_PRINTF("timestampabsolute[us]=%"  PRI_I64 " : value=%ld\n", ts.tStartTime + (RTS_IEC_ULINT)pEntry->ulTimeRelative, value);
+
+			pEntry = (TraceRecordEntry *)((RTS_UI8 *)pEntry + (sizeof(pEntry->ulTimeRelative) + tRecConfig.ulSize));
+		}
+
+		CAL_SysMemFreeData(COMPONENT_NAME, pTraceBuffer);
+
+		hRecord = CAL_TraceMgrPacketReadNext2(s_hPacket, hRecord, NULL, 0, &ulRead, &result);
+	}
+
+	CAL_TraceMgrPacketReadEnd(s_hPacket);
+	return ERR_OK;
+}
+
+static RTS_RESULT CyclicUpdateDeviceTaskTrace(void)
+{
+	/* This is the test for a device task! Here all trace values are collected in the context of this task/call.
+	   The task must be specified in the Device Description of a PLC, that it can be selected for the trace task context.
+	 */
+	return CAL_TraceMgrDeviceTaskUpdate("SystemTask");
+}
+
+
 /**
  * <description>Callback function to handle trace manager event if our system variable is added in a trace configuration in CODESYS:
  *	- In the EVT_TRACEMGR_ADD_RECORD event we are notified, that the our system variable was added to a trace configuration in CODESYS
@@ -368,4 +448,8 @@ static void CDECL CBTraceMgr(EventParam *pEventParam)
 		default:
 			break;
 	}
+}
+
+static void CDECL EventCallback(RTS_HANDLE hTemplate, EventParam *pEventParam)
+{
 }

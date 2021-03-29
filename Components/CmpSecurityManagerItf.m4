@@ -6,8 +6,8 @@
  *
  *	The actual available security features (for which the level can be specified) are:
  *		1. Programming system communication: encrypted / unencrypted
- *		2. IEC application code and bootproject: signed / unsigned, encrypted / unencrypted 
- *		3. WebServer: http / https
+ *		2. IEC application code and boot application: signed / unsigned, encrypted / unencrypted 
+ *		3. WebServer: HTTP / HTTPS
  *
  *	NOTE:
  *		This list will be extended in the future, if new security features are available and the corresponding security level must be specified!
@@ -18,7 +18,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -29,7 +29,7 @@ REF_ITF(`CmpX509CertItf.m4')
 REF_ITF(`CmpSettingsItf.m4')
 
 #ifdef CMPSECURITYMANAGER_EXTERNAL
-	#error CmpSecurityManager must not be overloadable so defining CMPSECURITYMANAGER_EXTERNAL is forbidden because of security requirements!
+	#error CmpSecurityManager must not be over loadable so defining CMPSECURITYMANAGER_EXTERNAL is forbidden because of security requirements!
 #endif
 
 /**
@@ -108,7 +108,7 @@ typedef struct _SecuritySetting
 /**
  * <description>
  *	This structure stores a single entry of a selectable setting. Each 
- *  possible selection is a single struture element when registering the setting.
+ *  possible selection is a single structure element when registering the setting.
  *  The registration can be done using SecManRegisterSelectableSetting function. The 
  *  selected setting can be retrieved by using SecManGetSelectableSetting.
  * </description>
@@ -151,10 +151,10 @@ typedef union _SecuritySettingValue
 
 /**
  * <description>
- *	This structure stores a editable setting. The setting can be registerd using
- *  SecManRegisterEditableSetting function. The default value given when registring
+ *	This structure stores a editable setting. The setting can be registered using
+ *  SecManRegisterEditableSetting function. The default value given when registering
  *  will be returned until the setting has been changed by the someone. Then the
- *  changed value will be returned. To indicate if a string or an intager is stored
+ *  changed value will be returned. To indicate if a string or an integer is stored
  *  use either CMPSECMAN_FLAGS_STRINGSETTING or CMPSECMAN_FLAGS_INTSETTING. The
  *  corresponding field in the secValue union is then used.
  *  Use the function SecManGetEditableSetting to retrieve the valued stored.
@@ -171,7 +171,7 @@ typedef struct _SecurityEditableSetting
 
 /**
  * <category>SecuritySettings</category>
- * <description>Security setting to specify, if a selfsigned certificate should be created during startup if not available</description>
+ * <description>Security setting to specify, if a self-signed certificate should be created during startup if not available</description>
  */
 #define SECURITY_KEY_STRING_CREATE_SELFSIGNED_CERT			CMPSETTINGS_CATEGORY_SECURITY ".CreateSelfSignedCert"
 #define SECURITY_KEY_STRING_CREATE_SELFSIGNED_CERT_DESC		"Specifies if self signed certificate should automatically be created during startup!"
@@ -185,8 +185,8 @@ typedef struct _SecurityEditableSetting
 
 /**
  * <description>SecurityIDs</description>
- * <element name="CREATE_SELFSIGNED_CERT_ENABLE" type="IN">Create a selfsigned certificate at startup</element>
- * <element name="CREATE_SELFSIGNED_CERT_DISABLE" type="IN">Don't create a selfsigned certificate at startup</element>
+ * <element name="CREATE_SELFSIGNED_CERT_ENABLE" type="IN">Create a self-signed certificate at startup</element>
+ * <element name="CREATE_SELFSIGNED_CERT_DISABLE" type="IN">Don't create a self-signed certificate at startup</element>
  */
 typedef enum
 {
@@ -195,8 +195,8 @@ typedef enum
 } SECURITY_CREATESELFSIGNEDCERT_IDS;
 
 #define SECURITY_VALUE_CREATE_SELFSIGNED_CERT_LIST			{\
-																{(RTS_I32)CREATE_SELFSIGNED_CERT_YES, CMPSECMAN_SFLAGS_NONE, SECURITY_VALUE_CREATE_SELFSIGNED_CERT_YES, "Create a selfsigned cert"},\
-																{(RTS_I32)CREATE_SELFSIGNED_CERT_NO, CMPSECMAN_SFLAGS_NONE, SECURITY_VALUE_CREATE_SELFSIGNED_CERT_NO, "Don't create a selfsigned cert"}\
+																{(RTS_I32)CREATE_SELFSIGNED_CERT_YES, CMPSECMAN_SFLAGS_NONE, SECURITY_VALUE_CREATE_SELFSIGNED_CERT_YES, "Create a self-signed cert"},\
+																{(RTS_I32)CREATE_SELFSIGNED_CERT_NO, CMPSECMAN_SFLAGS_NONE, SECURITY_VALUE_CREATE_SELFSIGNED_CERT_NO, "Don't create a self-signed cert"}\
 															}
 
 
@@ -213,48 +213,98 @@ typedef enum
 	#define SECURITYMANAGER_VALUE_INT_CREATE_ALL_ON_STARTUP_DEFAULT		0
 #endif
 
+/**
+ * <category>Online services</category>
+ * <service group="SG_SECURITY_MANAGER" id="SRV_SECMAN_READ_SETTINGS" name=""
+ *  description="Online service to read all security setting.">
+ *	<request/>
+ *	<response>
+ *		<complextag id="TAGNEST_SECURITY_ENTRY" name="" cardinality="1..n"
+ *		 description="">
+ *			<complextag id="TAGNEST_SECURITY_ENTRY_INFO" name="" cardinality="1..?"
+ *			 description="">
+ *				<tag id="TAG_SECURITY_COMPONENT_ID" name="" cardinality="1..?" type="RTS_UI32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_ID" name="" cardinality="1..?" type="RTS_UI32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_NAME" name="" cardinality="1..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_DESCRIPTION" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_FLAGS" name="" cardinality="1..?" type="RTS_UI32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_SETTING_ID_SELECTED" name="" cardinality="0..?" type="RTS_UI32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_NUM_OF_SETTINGS" name="" cardinality="1..?" type="RTS_UI32"
+ *				 description="TODO"/>
+ *			</complextag>
+ *			<complextag id="TAGNEST_SECURITY_SETTING_SELECTABLE" name="" cardinality="0..n" alternate="true"
+ *			 description="">
+ *				<tag id="TAG_SECURITY_SETTING_ID" name="" cardinality="1..?" type="RTS_UI32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_SETTING_FLAGS" name="" cardinality="1..?" type="RTS_UI32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_SETTING_NAME" name="" cardinality="1..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_SETTING_DESCRIPTION" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *			</complextag>
+ *			<complextag id="TAGNEST_SECURITY_SETTING_EDITABLE" name="" cardinality="0..?" alternate="true"
+ *			 description="">
+ *				<tag id="TAG_SECURITY_SETTING_FLAGS" name="" cardinality="1..?" type="RTS_UI32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_SETTING_NAME" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_SETTING_DESCRIPTION" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_SETTING_VALUE_INT" name="" cardinality="0..?" type="RTS_I32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_SETTING_DEFAULTVALUE_INT" name="" cardinality="0..?" type="RTS_I32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_SETTING_VALUE_STRING" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_SETTING_DEFAULTVALUE_STRING" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *			</complextag>
+ *		</complextag>
+ *		<tag id="TAG_ERROR" name="" cardinality="1..?" type="RTS_I16"
+ *		 description="Result code of the complete operation"/>
+ *	</response>
+ * </service>
+ */
+#define SRV_SECMAN_READ_SETTINGS 0x01
 
 /**
  * <category>Online services</category>
- * <description>
- *	Online service to read all security setting.
- * </description>
- * <servicegroup name="SG_SECURITY_MANAGER">0x0023</servicegroup>
- * <service name="SRV_SECMAN_READ_SETTINGS">
- *	<Request>
- *		<No further tag>
- *	</Request>
- *	<Response>
- *		<tag[] name="TAGNEST_SECURITY_ENTRY" required="mandatory">Complex tag</tag>
- *			<tag name="TAGNEST_SECURITY_ENTRY_INFO" required="mandatory">Complex tag</tag>
- *				<tag name="TAG_SECURITY_COMPONENT_ID" required="mandatory">[RTS_UI32]: TODO</tag>
- *				<tag name="TAG_SECURITY_ID" required="mandatory">[RTS_UI32]: TODO</tag>
- *				<tag name="TAG_SECURITY_NAME" required="mandatory">[RTS_CSTRING::UTF-8]: TODO</tag>
- *				<tag name="TAG_SECURITY_DESCRIPTION" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *				<tag name="TAG_SECURITY_FLAGS" required="mandatory">[RTS_UI32]: TODO</tag>
- *				<tag name="TAG_SECURITY_SETTING_ID_SELECTED" required="optional">[RTS_UI32]: TODO</tag>
- *				<tag name="TAG_SECURITY_NUM_OF_SETTINGS" required="mandatory">[RTS_UI32]: TODO</tag>
- *
- *			<alternate tag[] name="TAGNEST_SECURITY_SETTING_SELECTABLE" required="optional">Complex tag</tag>
- *				<tag name="TAG_SECURITY_SETTING_ID" required="mandatory">[RTS_UI32]: TODO</tag>
- *				<tag name="TAG_SECURITY_SETTING_FLAGS" required="mandatory">[RTS_UI32]: TODO</tag>
- *				<tag name="TAG_SECURITY_SETTING_NAME" required="mandatory">[RTS_CSTRING::UTF-8]: TODO</tag>
- *				<tag name="TAG_SECURITY_SETTING_DESCRIPTION" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *
- *			<alternate tag name="TAGNEST_SECURITY_SETTING_EDITABLE" required="optional">Complex tag</tag>
- *				<tag name="TAG_SECURITY_SETTING_FLAGS" required="mandatory">[RTS_UI32]: TODO</tag>
- *				<tag name="TAG_SECURITY_SETTING_NAME" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *				<tag name="TAG_SECURITY_SETTING_DESCRIPTION" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *				<tag name="TAG_SECURITY_SETTING_VALUE_INT" required="optional">[RTS_I32]: TODO</tag>
- *				<tag name="TAG_SECURITY_SETTING_DEFAULTVALUE_INT" required="optional">[RTS_I32]: TODO</tag>
- *				<tag name="TAG_SECURITY_SETTING_VALUE_STRING" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *				<tag name="TAG_SECURITY_SETTING_DEFAULTVALUE_STRING" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *
- *		<tag name="TAG_ERROR" required="mandatory">[RTS_I16]: Result code of the complete operation</tag>
- *	</Response>
+ * <service group="SG_SECURITY_MANAGER" id="SRV_SECMAN_WRITE_SETTINGS" name=""
+ *  description="Online service to write changed security settings.">
+ *	<request/>
+ *	<response>
+ *		<complextag id="TAGNEST_SECURITY_ENTRY" name="" cardinality="1..n"
+ *		 description="">
+ *			<complextag id="TAGNEST_SECURITY_ENTRY_INFO" name="" cardinality="1..?"
+ *			 description="">
+ *				<tag id="TAG_SECURITY_COMPONENT_ID" name="" cardinality="1..?" type="RTS_UI32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_ID" name="" cardinality="1..?" type="RTS_UI32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_SETTING_ID_SELECTED" name="" cardinality="0..?" type="RTS_UI32"
+ *				 description="Is only sent, if it is a selectable setting!"/>
+ *			</complextag>
+ *			<complextag id="TAGNEST_SECURITY_SETTING_EDITABLE" name="" cardinality="0..?"
+ *			 description="">
+ *				<tag id="TAG_SECURITY_SETTING_VALUE_INT" name="" cardinality="0..?" type="RTS_I32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SECURITY_SETTING_VALUE_STRING" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *			</complextag>
+ *			<tag id="TAG_ERROR" name="" cardinality="1..?" type="RTS_I16"
+ *			 description="Result code of each write operation"/>
+ *		</complextag>
+ *	</response>
  * </service>
  */
-#define SRV_SECMAN_READ_SETTINGS						0x01
+#define SRV_SECMAN_WRITE_SETTINGS 0x02
 
 #define TAGNEST_SECURITY_ENTRY							0x81
 #define TAGNEST_SECURITY_ENTRY_INFO						0x82
@@ -278,34 +328,6 @@ typedef enum
 #define TAG_SECURITY_SETTING_DEFAULTVALUE_INT			0x31
 #define TAG_SECURITY_SETTING_VALUE_STRING				0x32
 #define TAG_SECURITY_SETTING_DEFAULTVALUE_STRING		0x33
-
-/**
- * <category>Online services</category>
- * <description>
- *	Online service to write changed security settings.
- * </description>
- * <servicegroup name="SG_SECURITY_MANAGER">0x0023</servicegroup>
- * <service name="SRV_SECMAN_WRITE_SETTINGS">
- *	<Request>
- *		<No further tag>
- *	</Request>
- *	<Response>
- *		<tag[] name="TAGNEST_SECURITY_ENTRY" required="mandatory">Complex tag</tag>
- *			<tag name="TAGNEST_SECURITY_ENTRY_INFO" required="mandatory">Complex tag</tag>
- *				<tag name="TAG_SECURITY_COMPONENT_ID" required="mandatory">[RTS_UI32]: TODO</tag>
- *				<tag name="TAG_SECURITY_ID" required="mandatory">[RTS_UI32]: TODO</tag>
- *				<tag name="TAG_SECURITY_SETTING_ID_SELECTED" required="optional">[RTS_UI32]: Is only sent, if it is a selectable setting!</tag>
- *
- *			<tag name="TAGNEST_SECMAN_SETTING_EDITABLE" required="optional">Complex tag</tag>
- *				<tag name="TAG_SECURITY_SETTING_VALUE_INT" required="optional">[RTS_I32]: TODO</tag>
- *				<tag name="TAG_SECURITY_SETTING_VALUE_STRING" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *
- *			<tag name="TAG_ERROR" required="mandatory">[RTS_I16]: Result code of each write operation</tag>
- *	</Response>
- * </service>
- */
-#define SRV_SECMAN_WRITE_SETTINGS							0x02
-
 
 #ifdef __cplusplus
 extern "C" {

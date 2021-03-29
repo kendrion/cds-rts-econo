@@ -8,7 +8,8 @@ int SysMem__Entry(INIT_STRUCT *pInitStruct); \
 int SysInternalLib__Entry(INIT_STRUCT *pInitStruct); \
 int SysInt__Entry(INIT_STRUCT *pInitStruct); \
 int SysFlash__Entry(INIT_STRUCT *pInitStruct); \
-int SysFileFlash__Entry(INIT_STRUCT *pInitStruct); \
+int SysFile__Entry(INIT_STRUCT *pInitStruct); \
+int SysDir__Entry(INIT_STRUCT *pInitStruct); \
 int SysExcept__Entry(INIT_STRUCT *pInitStruct); \
 int SysCpuHandling__Entry(INIT_STRUCT *pInitStruct); \
 int SysCom__Entry(INIT_STRUCT *pInitStruct); \
@@ -56,7 +57,8 @@ int SysCpuHandling__Entry(INIT_STRUCT *pInitStruct);
 {"SysInternalLib", SysInternalLib__Entry, 0}, \
 {"SysInt", SysInt__Entry, 0}, \
 {"SysFlash", SysFlash__Entry, 0}, \
-{"SysFileFlash", SysFileFlash__Entry, 0}, \
+{"SysFile", SysFile__Entry, 0}, \
+{"SysDir", SysDir__Entry, 0}, \
 {"SysExcept", SysExcept__Entry, 0}, \
 {"SysCpuHandling", SysCpuHandling__Entry, 0}, \
 {"SysCom", SysCom__Entry, 0}, \

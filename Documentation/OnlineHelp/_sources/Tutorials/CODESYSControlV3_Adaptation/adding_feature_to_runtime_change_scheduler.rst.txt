@@ -1,0 +1,169 @@
+.. _adding_feature_to_runtime_change_scheduler:
+
+Change the Scheduler
+--------------------
+
+You can use one of three schedulers, appropriate for your runtime system:
+
+    - :ref:`tutorial_cmpscheduleembedded`
+    
+    - :ref:`tutorial_cmpscheduletimer`
+    
+    - :ref:`tutorial_cmpschedule`
+
+Timer Scheduler
+~~~~~~~~~~~~~~~
+
+This feature depends on the new system interface “SysTimer”, which needs
+to be implemented for your platform. So copy SysTimerOS.c from the
+SysTemplates to SysTimerMyPlat.c in your adaptation. In generell this
+interface consists of the following API:
+
+-  | SysTimerOpen()
+   | Create a new timer handle, associated with a real system timer.
+
+-  | SysTimerClose()
+   | Free timer handle.
+
+-  | SysTimerGetContext()
+   | Get current context of one of the timers. This function is called
+     externally, not from within the timer context. [optional]
+
+-  | SysTimerFitTimer()
+   | Check if the passed timer handle matches the priority and interval
+     which is also passed to this function. This is used to reuse
+     existing timers for multiple tasks.
+
+-  | SysTimerStart()
+   | Start a specific timer and enable it’s interrupts.
+
+-  | SysTimerStop()
+   | Stop a specific timer or at least disable the generation of the
+     timer interrupts.
+
+-  | SysTimerGetTimeStamp()
+   | You should return the current timer value, if you have a readable
+     counter (incrementer or decrementer). [optional]
+
+-  | SysTimerSetInterval()
+   | Change the interval of an existing timer. [optional]
+
+-  SysTimerGetInterval()
+
+-  Return the configured interval of an existing timer.
+
+-  | SysTimerMaxTimer()
+   | Return number of available timers.
+
+-  | SysTimerGetMinResolution()
+   | Return the Minimum Resolution of a timer.
+
+-  | SysTimerRegisterBasePointer()
+   | This API is obsolete.
+
+-  | SysTimerDebugLeave()
+   | This API is obsolete.
+
+-  | SysTimerDebugEnter()
+   | This API is obsolete.
+
+Multitasking Scheduler
+~~~~~~~~~~~~~~~~~~~~~~
+
+This feature depends on the two system interfaces “SysTask” and
+“SysEvent”. The SysTask component assumes that you have a realtime
+priority based scheduler. The Events are used to schedule the tasks.
+That means that every IEC task has it’s own event on which it is waiting
+until the scheduler signals the event to wake the task up.
+
+The SysTask interface consists of the following system dependent API:
+
+-  | SysTaskCreate()
+   | Create a new task but keep it in suspended state.
+
+-  | SysTaskExit()
+   | Terminate a foreign task (no suicide), but give it enough time to
+     end it’s cycle.
+
+-  | SysTaskSetExit()
+   | Just set the flag TP.bExit in the task handle to true.
+
+-  | SysTaskDestroy()
+   | Force the task to end immediately.
+
+-  | SysTaskSuspend()
+   | Suspend a running task temporary.
+
+-  | SysTaskResume()
+   | Resume a previously suspended task.
+
+-  | SysTaskEnd()
+   | This function is for a suicide of the task itself.
+
+-  | SysTaskWaitSleep()
+   | This function lets the specified task sleep. It is enough to
+     execute this for the currently running task and to prohibit it for
+     foreign ones (what is easier on most systems).
+
+-  | SysTaskWaitInterval()
+   | Let the task sleep for one interval. This is only necessary if you
+     want to bypass the event based scheduler. [optional]
+
+-  | SysTaskGetCurrent()
+   | Return the handle for the currently running task.
+
+-  | SysTaskGetCurrentOSHandle()
+   | Return the current OS handle. This is necessary for the exception
+     handling.
+
+-  | SysTaskSetPriority()
+   | Change the priority of an existing task. [optional]
+
+-  | SysTaskSetProcessPriority()
+   | This function is only necessary for systems with interprocess
+     communication. [optional]
+
+-  | SysTaskGetPriority()
+   | Get the Tasks IEC priority. [optional]
+
+-  | SysTaskGetOSPriority()
+   | Get the real priority of the task. [optional]
+
+-  | SysTaskGetInfo()
+   | Return the Task_Info structure from a task handle (usually just a
+     cast).
+
+-  | SysTaskGetContext()
+   | Determine PC, SP and BP from the current (saved) task context.
+
+-  | SysTaskCheckStack()
+   | Hook to check the task stack. [optional]
+
+-  | SysTaskGetInterval()
+   | Get the task interval. [optional]
+
+-  | SysTaskSetInterval()
+   | Change the task interval. [optional]
+
+-  | SysTaskWaitSleepUs()
+   | Implement a precise sleep in microseconds. [optional]
+
+The Events should have an event counter. That means that if an event is
+missed, the task will execute two times directly after another.
+Otherwise we might miss a cycle. You need to implement the following
+API:
+
+-  | SysEventCreate()
+   | Create a new event or take one from a local event pool.
+
+-  | SysEventDelete()
+   | Delete an existing event or give it back to a local event pool.
+
+-  | SysEventSet()
+   | Signal an event (used by our scheduler, so maybe also from
+     Interrupt context).
+
+-  | SysEventWait()
+   | Wait on an event. This is obviously only called from the IEC tasks
+     to wait for the next cycle.
+

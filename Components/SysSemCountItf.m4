@@ -1,7 +1,7 @@
 /**
  * <interfacename>SysSemaphore</interfacename>
  * <description> 
- *	<p>The SysSemaphore interface is projected to handle synchonization objects for tasks and threads.
+ *	<p>The SysSemaphore interface is projected to handle synchronization objects for tasks and threads.
  *	The synchronization objects are called semaphores to synchronize concurrent access to single
  *	data resources.</p>
  *	<p>For example:</p>
@@ -22,7 +22,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -49,14 +49,14 @@ RTS_RESULT CDECL SysSemCountOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1
  * <param name="ui32InitialValue" type="IN">Initial semaphore value. Value is counted down by each SysSemCountEnter() call and blocks, if internal counter is 0!
  *	At each SysSemCountLeave() call, the counter is counting up. So the initial value is the number of critical sections, which can be entered at the same time!
  *  NOTE:
- *	A SysSemCount semaphore is typically not inversion safe and is not thread local (multiple eneter in one task blocks the semaphore, if internal counter reaches 0)!
+ *	A SysSemCount semaphore is typically not inversion safe and is not thread local (multiple enter in one task blocks the semaphore, if internal counter reaches 0)!
  * </param>
  * <param name="pResult" type="OUT">
  * One of:
  * ERR_OK: The semaphore was created.
  * ERR_PARAMETER: Error within the given parameters.
- * ERR_NOMEMORY: The needed ressources couldn't be allocated.
- * ERR_FAILED: An internal error occured.
+ * ERR_NOMEMORY: The needed resources couldn't be allocated.
+ * ERR_FAILED: An internal error occurred.
  * </param>
  * <result>Handle to the semaphore. RTS_INVALIDHANDLE in case of an error.</result>
  */
@@ -71,17 +71,17 @@ DEF_CREATEITF_API(`RTS_HANDLE',`CDECL',`SysSemCountCreate',`(RTS_UI32 ui32Initia
  * One of:
  * ERR_OK: The semaphore was deleted successful.
  * ERR_INVALID_HANDLE: The given semaphore isn't a valid semaphore handle.
- * ERR_FAILED: An internal error occured.
+ * ERR_FAILED: An internal error occurred.
  * </result>
  */
 DEF_DELETEITF_API(`RTS_RESULT',`CDECL',`SysSemCountDelete',`(RTS_HANDLE hSemaphore)')
 
 /**
  * <description>
- * Try to enter the semaphore. If semaphore is available, the function enteres the semaphore 
- * and returnes ERR_OK. If semaphore is not available, ERR_TIMEOUT is returned. The behavior of
+ * Try to enter the semaphore. If semaphore is available, the function enters the semaphore 
+ * and returns ERR_OK. If semaphore is not available, ERR_TIMEOUT is returned. The behavior of
  * the function  depends on the timeout value:
- * - RTS_TIMEOUT_NO_WAIT indicates that the function is nonblocking. If the semaphore is not available, the function will return immediatly
+ * - RTS_TIMEOUT_NO_WAIT indicates that the function is nonblocking. If the semaphore is not available, the function will return immediately
  * - RTS_TIMEOUT_INFINITE indicates that the function is blocking. The thread will be suspended until the semaphore is available.
  * - Any other value: The Function will block until the semaphore is available, but will return after the timeout if the 
  *   semaphore was not available. ERR_TIMEOUT will be returned in this case.
@@ -90,7 +90,7 @@ DEF_DELETEITF_API(`RTS_RESULT',`CDECL',`SysSemCountDelete',`(RTS_HANDLE hSemapho
  * <param name="ui32TimeoutMs">Timeout for the enter operation in ms</param>
  * <result>e
  * One of:
- * - ERR_OK: The semaphore was enterd.
+ * - ERR_OK: The semaphore was entered.
  * - ERR_FAILED: The semaphore couldn't be entered.
  * - ERR_TIMEOUT: The given timeout expired.
  * - ERR_INVALID_HANDLE: The given semaphore isn't a valid semaphore handle.

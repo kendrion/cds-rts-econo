@@ -1,8 +1,8 @@
 /**
- * <interfacename>SysMutex/interfacename>
+ * <interfacename>SysMutex</interfacename>
  * <description> 
- *	<p>The SysMutex interface is projected to handle synchonization objects for tasks and threads.
- *	The synchronization objects are called mutexes to synchronize concurrent access to single
+ *	<p>The SysMutex interface is projected to handle synchronization objects for tasks and threads.
+ *	The synchronization objects are called mutex to synchronize concurrent access to single
  *	data resources.</p>
  *	<p>For example:</p>
  *	<p>	Task1:
@@ -15,14 +15,14 @@
  *	</p>
  *	<p>
  *		IMPLEMENTATION NOTE:
- *		The mutexes must work recursive! That means, that a multiple call out of one task
+ *		The mutex must work recursive! That means, that a multiple call out of one task
  *		must not block the execution! For each SysMutexEnter() call, a corresponding SysMutexLeave()
  *		must be used!
  *	</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -35,7 +35,7 @@ SET_INTERFACE_NAME(`SysMutex')
 extern "C" {
 #endif
 
-/* Init routines for OS specific modules */
+/* Initialization routines for OS specific modules */
 RTS_RESULT CDECL SysMutexOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysMutexOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
@@ -46,7 +46,7 @@ RTS_RESULT CDECL SysMutexOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, R
  * <param name="pResult" type="OUT">Pointer to error code:
  * One of:
  * - ERR_OK: The mutex was created.
- * - ERR_NOMEMORY: The neede ressources couldn't be allocated.
+ * - ERR_NOMEMORY: The needed resources couldn't be allocated.
  * </param>
  * <result>Handle to the mutex</result>
  */
@@ -61,7 +61,7 @@ DEF_CREATEITF_API(`RTS_HANDLE',`CDECL',`SysMutexCreate',`(RTS_RESULT *pResult)')
  * One of:
  * ERR_OK: The mutex was deleted successful.
  * ERR_INVALID_HANDLE: The given mutex isn't a valid mutex handle.
- * ERR_FAILED: An internal error occured.</result>
+ * ERR_FAILED: An internal error occurred.</result>
  */
 DEF_DELETEITF_API(`RTS_RESULT',`CDECL',`SysMutexDelete',`(RTS_HANDLE hMutex)')
 
@@ -73,9 +73,9 @@ DEF_DELETEITF_API(`RTS_RESULT',`CDECL',`SysMutexDelete',`(RTS_HANDLE hMutex)')
  * <param name="hMutex" type="IN">Handle to the mutex that is provided from SysMutexCreate()</param>
  * <result>
  * One of:
- * ERR_OK: The mutex was enterd.
+ * ERR_OK: The mutex was entered.
  * ERR_INVALID_HANDLE: The given mutex isn't a valid mutex handle.
- * ERR_FAILED: An internal error occured. Mutex was no enterd.
+ * ERR_FAILED: An internal error occurred. Mutex was no entered.
  * </result>
  */
 DEF_HANDLEITF_API(`RTS_RESULT',`CDECL',`SysMutexTryEnter',`(RTS_HANDLE hMutex)')
@@ -86,14 +86,14 @@ DEF_HANDLEITF_API(`RTS_RESULT',`CDECL',`SysMutexTryEnter',`(RTS_HANDLE hMutex)')
  *	until the task1 has called SysMutexLeave().
  *
  *	IMPLEMENTATION NOTE:
- *		The mutexes must work recursive! That means, that a multiple call out of one task
+ *		The mutex must work recursive! That means, that a multiple call out of one task
  *		must not block the execution! For each SysMutexEnter() call, a corresponding SysMutexLeave()
  *		must be used!
  * </description>
  * <param name="hSem" type="IN">Handle to the mutex that is provided from SysMutexCreate()</param>
  * <result>
  * One of:
- * - ERR_OK: The mutex was enterd successful.
+ * - ERR_OK: The mutex was entered successful.
  * - ERR_INVALID_HANDLE: The given mutex isn't a valid mutex handle.
  * - ERR_FAILED: An internal error occurred.
  * </result>
@@ -109,7 +109,7 @@ DEF_HANDLEITF_API(`RTS_RESULT',`CDECL',`SysMutexEnter',`(RTS_HANDLE hMutex)')
  * One of:
  * - ERR_OK: The mutex was leafed successful.
  * - ERR_INVALID_HANDLE: The given mutex isn't a valid mutex handle.
- * - ERR_FAILED: An internal error occured.
+ * - ERR_FAILED: An internal error occurred.
  * </result>
  */
 DEF_HANDLEITF_API(`RTS_RESULT',`CDECL',`SysMutexLeave',`(RTS_HANDLE hMutex)')

@@ -1,0 +1,165 @@
+.. _create_io_driver_create_driver:
+
+Create an I/O Driver
+--------------------
+
+Please also look into CODESYSControlV3_Manual, chapter 10.3 Implementing
+own components.
+
+To create a new I/O driver, start with a template I/O driver component
+provided in the runtime toolkit delivery. You can use these templates:
+
+-  IODrvTemplate: I/O driver template component
+
+-  IODrvSimple: Quite simple I/O driver template component
+
+-  IODrvVerySimple: Minimal I/O driver template component
+
+-  IoDrvMasterTemplateIEC: Extensive example with
+
+   -  I/O driver library written in IEC
+
+   -  Device descriptions with comments and explanations
+
+   -  Examples for diagnosis
+
+   -  Several types of submodules
+
+   -  Documentation in the library
+
+   -  Example project
+
+-  IoDrvSubModulesFix: Device description example with fixed submodules
+
+-  IoDrvSubModulesVar: Device description example with var submodules
+
+-  IoDrvSubModulesSlot: Device description example with slot submodules
+
+Copy the template and adjust the file names and component name. A Python
+script (gen_cmp_from_temp.py) is provided that can help you with this
+task. Adjust vendor id and version.
+
+A step by step instruction is given in chapter “Appendix C: Step by
+Step: Creating a new I/O Driver”.
+
+The most important steps in an IODriver are:
+
+Initialization
+~~~~~~~~~~~~~~
+
+At startup, an instance of the driver is created and registered at the
+I/O manager. This is done in the HookFunction:
+
+.. code-block:: c#
+
+   case CH_INIT2:
+   {
+      RTS_HANDLE hIoDrv = 0;
+      void *pTmp;
+
+      /* first instance */
+      pTmp = CAL_IoDrvCreate(hIoDrv, CLASSID_CIoDrvVerySimple, 0, NULL);
+      s_pIBase = (IBase *)pTmp;
+      CAL_IoMgrRegisterInstance(s_pIBase, NULL);
+
+      break;
+   }
+
+I/O driver interface function IoDrvCreate is called in this case.
+
+From now on, the IOManager knows that our driver instance is available.
+In this example we create one instance, but it is possible to create and
+register more than one instances. This can be useful, e.g. when more
+than one IO-device respectively fieldbuscard is available.
+
+Download
+~~~~~~~~
+
+At download, loading of a bootapplication or at reset of an application,
+the I/O driver interface function IoDrvUpdateConfiguration is called.
+You have to differentiate between two cases:
+
+-  The parameter pConnectorList is NULL: if an application was loaded
+   before and is removed before the new download starts.
+
+-  The parameter pConnectorList is not NULL: then pConnectorList
+   contains the complete resource/connector tree as defined by the user,
+   including submodules, parameters and channels.
+
+I/O Manager helper functions can be used to read information from
+pConnectorList, for example IoMgrConfigGetFirstConnector.
+
+If a connector is found that our driver feels responsible for, it
+registers in that connector. This is done in this line:
+
+pConnector->hIoDrv = (RTS_IEC_HANDLE)pIBase;
+
+From now on, the I/O Manager knows that our driver is responsible for
+this connector.
+
+The driver can read information about child connectors (with
+IoMgrConfigGetFirstChild) and read parameter values (with
+IoMgrConfigGetParameter).
+
+The driver can also prepare for I/O update. The member dwDriverSpecific
+of the IoConfigParameter structure can be used to store any information.
+In our example, we store a pointer to global memory.
+
+pParameter->dwDriverSpecific = (RTS_IEC_BYTE \*)&s_ulyInputs[i];
+
+In real drivers, this memory could be refreshed by a low level driver to
+update physical I/Os.
+
+Our driver also write diagnostic information to the connector (with
+IoMgrConfigSetDiagnosis). This information will be used by CODESYS in
+online mode, to display the status of the modules in the device tree
+(indicated by green circles or red triangles).
+
+I/O driver interface function IoDrvUpdateMapping can be used to update
+and optimize the mapping of channels.
+
+Reading Inputs
+~~~~~~~~~~~~~~
+
+I/O driver interface function IoDrvReadInputs is called at the beginning
+of every IEC task. A list of all channels that need to be updated in
+this task is passed, together with a list of used I/O modules. This
+function shall copy the values of physical inputs to the IEC input area.
+We are using I/O manager function IoMgrCopyInputLE to copy from the
+physical to the logical memory.
+
+Use IoMgrCopyInputBE if the physical memory is big endian.
+
+Writing Outputs
+~~~~~~~~~~~~~~~
+
+Very similar to reading inputs. I/O driver interface function
+IoDrvWriteOutputs is called at the end of every IEC task. A list of all
+channels that need to be updated in this task is passed, together with a
+list of used I/O modules. This function shall copy the values of the IEC
+output area to physical outputs. We are using I/O manager
+IoMgrCopyOutputLE to copy from the physical to the logical memory.
+
+Use IoMgrCopyOutputBE if the physical memory is big endian.
+
+Start Bus Cycle
+~~~~~~~~~~~~~~~
+
+I/O driver interface function IoDrvStartBusCycle is called in one
+specific task, called the bus cycle task. This task can be specified by
+the user. E.g.: Fieldbus drivers can send telegrams to the fieldbus
+slaves here.
+
+Scan Modules
+~~~~~~~~~~~~
+
+I/O driver interface function IoDrvScanModules is called when the user
+executes the command “Scan for devices”. The function has to fill the
+ppConnectorList. It has to allocate the memory for this connectorlist.
+
+Diagnosis
+~~~~~~~~~
+
+I/O driver interface function IoDrvGetModuleDiagnosis is called to set
+diagnostic information. I/O manager function IoMgrConfigSetDiagnosis can
+be used to set the diagnostic information to a connector.

@@ -2,12 +2,12 @@
  * <interfacename>SysGraphicNative</interfacename>
  * <description> 
  *	<p>The SysGraphicNative interface is projected to provide access to the graphic library routines
- *	implemented based on a native implementation. Such a native implementation could be a direct framebuffer access of the usage 
+ *	implemented based on a native implementation. Such a native implementation could be a direct frame-buffer access of the usage 
  *	of a proprietary graphics chip/card. This is the system interface typically for the CoDeSys target visualization.</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -34,7 +34,7 @@ DEF_ITF_API(`RTS_HANDLE', `CDECL', `SysGraphicNativeGetDisplayDeviceContext', `(
 /**
  * <description>Releases a handle to the native display context that was returned by 
  *	<see>SysGraphicNativeGetDisplayDeviceContext</see>.</description>
- * <param name="hDisplayContext" type="IN">The native displaycontext to release</param>
+ * <param name="hDisplayContext" type="IN">The native display-context to release</param>
  * <result>An error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `SysGraphicNativeReleaseDisplayDeviceContext', `(RTS_HANDLE hDisplayContext)')
@@ -65,7 +65,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysGraphicNativeBufferWasUpdated', `(void)')
 /**
  * <description>This method can be called for retrieving the color of a pixel in the given device context.
  *	An implementation of this method is optional, as it is used only for automatic testing of the visualization.</description>
- * <param name="hDC" type="IN">The displaycontext to get a color from</param>
+ * <param name="hDC" type="IN">The display-context to get a color from</param>
  * <param name="sX" type="IN">The x coordinate to get the color from</param>
  * <param name="sY" type="IN">The y coordinate to get the color from</param>
  * <param name="pulColorValue" type="IN">Pointer that will return the determined color. The color will be in the

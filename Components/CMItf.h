@@ -7,7 +7,7 @@
  *	<ul>
  *		<li>startup and shutdown of the runtime system</li>
  *		<li>loading and unloading all components</li>
- *		<li>intializing all components</li>
+ *		<li>initializing all components</li>
  *		<li>linking all functions, including the external IEC library functions</li>
  *		<li>checking the consistency of calling a function (matching function prototypes)</li>
  *	</ul>
@@ -15,11 +15,11 @@
  *	<p>If the components are linked static, there are two different ways to specify the component list:</p>
  *	<ul>
  *		<li>Static list: The list of static loaded components can be specified as a calling option for the CMInit()
- *		interface method. The name of the component on the entry funtion of each component must be specified.
+ *		interface method. The name of the component on the entry function of each component must be specified.
  *		See the description of the CMInit() method for detailed information.</li>
  *		<li>Settings: The settings component has a settings interface, where the component list can be specified.
  *		Here only the component name must be specified. In this case, the function MainLoadComponent() must be
- *		impleemnted in the Main module and here all static linked components must be added to the list. The advantage
+ *		implemented in the Main module and here all static linked components must be added to the list. The advantage
  *		of this method is that in the settings you can specify, which static component can be loaded or not. This
  *		is quite flexible.</li>
  *	</ul>
@@ -32,7 +32,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -71,12 +71,12 @@
  *		<li>Complete dynamically linked runtime system (each component is a separate loadable module):
  *			-- Nothing must be specified in each component.</li>
  *		<li>Static linked runtime system, that can be extended via separate, dynamically linkable components
- *			and all interface functions should be overloadable:
+ *			and all interface functions should be over loadable:
  *			DYNAMIC_LINK must be specified for the runtime system.
  *			-- Nothing must be specified in the external component.</li>
  *		<li>C++ runtime system: 
  *			CPLUSPLUS must be specified always in each component, that is used in a C++ runtime system.
- *			This is independant, if the kernel or a separate component is linked (static or dynamically linked!</li>
+ *			This is independent, if the kernel or a separate component is linked (static or dynamically linked!</li>
  *	</ul>
  * </description>
  * <element name="STATIC_LINK">All components are linked statically to the component manager during compile time.
@@ -117,8 +117,8 @@
  *	Compiler switches to enable/disable single features in the component.
  * </description>
  * <element name="CM_SYSTARGET_DISABLE_OVERLOADABLE_FUNCTIONS">Switch to disable the possibility to overload the SysTarget functions</element>
- * <element name="CM_DISABLE_API_SIGNATURE_CHECK">Switch to disable the signature check of all api functions</element>
- * <element name="CM_DISABLE_API_VERSION_CHECK">Switch to disable the version check of all api functions</element>
+ * <element name="CM_DISABLE_API_SIGNATURE_CHECK">Switch to disable the signature check of all API functions</element>
+ * <element name="CM_DISABLE_API_VERSION_CHECK">Switch to disable the version check of all API functions</element>
  * <element name="CM_NO_EXIT">Switch to disable definite exit or shutdown process of the runtime system</element>
  * <element name="CM_NO_DYNAMIC_COMPONENTS">Switch to disable dynamic loadable components</element>
  */
@@ -127,7 +127,13 @@
 	#define CM_NO_DYNAMIC_COMPONENTS
 #endif
 
-
+/**
+ * <category>Static defines</category>
+ * <description>Timeout in [ms] to wait for executing CH_INIT_XXX or CH_EXIT_XXX hooks, if they are executed out of an own task (see options RTS_CMINIT_OPTION_INITTASK and RTS_CMINIT_OPTION_EXITTASK)</description>
+ */
+#ifndef RTS_CM_INIT_EXIT_HOOKS_TIMEOUT_MS
+	#define RTS_CM_INIT_EXIT_HOOKS_TIMEOUT_MS			300000
+#endif
 
 /**
  * <category>Static defines</category>
@@ -137,7 +143,7 @@
 
 /**
  * <category>Static defines</category>
- * <description>Maximum length of api function name</description>
+ * <description>Maximum length of API function name</description>
  */
 #define MAX_API_NAME							64
 
@@ -148,7 +154,7 @@
  */
 #ifndef CM_NUM_OF_STATIC_COMPONENTS
 	#if defined(CPLUSPLUS)
-		#define CM_NUM_OF_STATIC_COMPONENTS		110
+		#define CM_NUM_OF_STATIC_COMPONENTS		150
 	#else
 		#define CM_NUM_OF_STATIC_COMPONENTS		40
 	#endif
@@ -181,8 +187,8 @@
 /**
  * <category>Static defines</category>
  * <description>
- *	Significant mask to check different versions of an api function. If the significant
- *	parts of the version don't match, the api versions don't match!
+ *	Significant mask to check different versions of an API function. If the significant
+ *	parts of the version don't match, the API versions don't match!
  * </description>
  */
 #ifndef CM_API_VERSION_CHECK_MASK
@@ -192,7 +198,7 @@
 /**
  * <category>Static defines</category>
  * <description>
- *	Specifies the minimum supported version of all api functions.
+ *	Specifies the minimum supported version of all API functions.
  * </description>
  */
 #ifndef CM_API_VERSION_CHECK_MINIMUM
@@ -203,8 +209,8 @@
 /**
  * <category>Static defines</category>
  * <description>
- *	Significant mask to check different versions of an external library api function. If the significant
- *	parts of the version don't match, the api versions don't match!
+ *	Significant mask to check different versions of an external library API function. If the significant
+ *	parts of the version don't match, the API versions don't match!
  * </description>
  */
 #ifndef CM_EXTLIB_API_VERSION_CHECK_MASK
@@ -214,7 +220,7 @@
 /**
  * <category>Static defines</category>
  * <description>
- *	Specifies the minimum supported version of all external library api functions.
+ *	Specifies the minimum supported version of all external library API functions.
  * </description>
  */
 #ifndef CM_EXTLIB_API_VERSION_CHECK_MINIMUM
@@ -262,7 +268,7 @@
  * <type>Int</type>
  * <description>
  *	Setting to define the minimal interval (in ms) in which the function CMCallExtraCommCycleHook() calls on
- *  non-multitaskling systems the CommCycleHook additionally.
+ *  non-multitasking systems the CommCycleHook additionally.
  * </description>
  */
 #define CMPMGR_KEY_INT_MINIMAL_COMM_CYCLE_HOOK_INTERVAL					"MinimalCommCycleHookInterval"
@@ -270,17 +276,33 @@
 	#define CMPMGR_VALUE_INT_MINIMAL_COMM_CYCLE_HOOK_INTERVAL_DEFAULT	250
 #endif
 
+#ifdef SYSTARGET_OS_WINDOWS_CE
+	/**
+	 * <category>Settings</category>
+	 * <type>Int</type>
+	 * <description>
+	 *	Setting to define the sleep time (in ms) after each comm cycle on WinCE targets. 
+	 * </description>
+	 */
+	#define CMPMGR_KEY_INT_WINCE_COMM_CYCLE_INTERVAL						"WinCE.CommCycleInterval"
+	#ifndef CMPMGR_VALUE_INT_WINCE_COMM_CYCLE_INTERVAL_DEFAULT
+		#define CMPMGR_VALUE_INT_WINCE_COMM_CYCLE_INTERVAL_DEFAULT			9
+		#define CMPMGR_VALUE_COMM_CYCLE_INTERVAL_DEFAULT					CMPMGR_VALUE_INT_WINCE_COMM_CYCLE_INTERVAL_DEFAULT
+	#endif
+#endif
+
 /**
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Setting to define the sleep time (in ms) after each comm cycle on WinCE targets. 
+ *	Setting to specify the comm cycle interval in [ms] (interval in which CH_COMM_CYCLE hook is called). 
  * </description>
  */
-#define CMPMGR_KEY_INT_WINCE_COMM_CYCLE_INTERVAL						"WinCE.CommCycleInterval"
-#ifndef CMPMGR_VALUE_INT_WINCE_COMM_CYCLE_INTERVAL_DEFAULT
-	#define CMPMGR_VALUE_INT_WINCE_COMM_CYCLE_INTERVAL_DEFAULT			9
+#define CMPMGR_KEY_INT_COMM_CYCLE_INTERVAL									"CommCycleInterval"
+#ifndef CMPMGR_VALUE_COMM_CYCLE_INTERVAL_DEFAULT
+	#define CMPMGR_VALUE_COMM_CYCLE_INTERVAL_DEFAULT						10
 #endif
+
 
 /**
  * <category>Settings</category>
@@ -366,7 +388,7 @@ typedef struct
  * <category>Event parameter</category>
  * <element name="bLastCall" type="IN">This value will be != 0 for the last call of this event, otherwise 0.</element>
  * <element name="bFurtherCallNecessary" type="OUT">Callees of the event can set this value to <c>!= 0</c> if they expect a further call of
- *	the same event with inbetween comm cycle calls. It is not expected that a callee sets this value to <c>0</c>!</element>
+ *	the same event with in between comm cycle calls. It is not expected that a callee sets this value to <c>0</c>!</element>
  */
 typedef struct
 {
@@ -393,7 +415,12 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent before shutdown of the runtime system</description>
+ * <description>Event is sent before shutdown of the runtime system
+ *
+ *	NOTE:
+ *	The CH_COMM_CYCLE is still running during executing this event, if RTS_CMINIT_OPTION_COMMCYCLETASK was specified in CMInit3() at startup of the runtime!
+ *
+ * </description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpMgr_Shutdown</param>
  */
 #define EVT_CmpMgr_PrepareShutdown				MAKE_EVENTID(EVTCLASS_INFO, 1)
@@ -451,22 +478,30 @@ typedef struct
 
  /**
  * <category>Events</category>
- * <description>Event to get informed when a license was requrested. Only for informational use. 
- * No result of the event will be evaulated.</description>
+ * <description>Event to get informed when a license was requested. Only for informational use. 
+ * No result of the event will be evaluated.</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpMgr_LicenseRequest</param>
  */
 #define EVT_CmpMgr_LicenseRequest				MAKE_EVENTID(EVTCLASS_INFO, 8)
 
 /**
  * <category>CMInit options</category>
- * <element name="RTS_CMINIT_OPTION_SETTINGSFILEISOPTIONAL" type="IN">Specifies, if the Settingsfile is only used optional</element> 
+ * <element name="RTS_CMINIT_OPTION_SETTINGSFILEISOPTIONAL" type="IN">Specifies, if the settings file is only used optional</element> 
  * <element name="RTS_CMINIT_OPTION_DONTCALLINITHOOKS" type="IN">If this option is set, the CMInit sequence is stopped right after CH_INIT hook.
  *	To finish the startup sequence, you have to call CMInitEnd() afterwards.
- *	This can be used, if you have to do things first before before all other components, but you need here the runtime system components.
+ *	This can be used, if you have to do things first before all other components, but you need here the runtime system components.
  * </element> 
+ * <element name="RTS_CMINIT_OPTION_INITTASK" type="IN">Call CH_INIT_XXX hooks out of a SysTask</element> 
+ * <element name="RTS_CMINIT_OPTION_COMMCYCLETASK" type="IN">Call CH_COMM_CYCLE out of a SysTask</element> 
+ * <element name="RTS_CMINIT_OPTION_EXITTASK" type="IN">Call CH_EXIT_XXX hooks out of a SysTask</element> 
  */
 #define RTS_CMINIT_OPTION_SETTINGSFILEISOPTIONAL			UINT32_C(0x00000001)
 #define RTS_CMINIT_OPTION_DONTCALLINITHOOKS					UINT32_C(0x00000002)
+#define RTS_CMINIT_OPTION_INITTASK							UINT32_C(0x00000004)
+#define RTS_CMINIT_OPTION_COMMCYCLETASK						UINT32_C(0x00000008)
+#define RTS_CMINIT_OPTION_EXITTASK							UINT32_C(0x00000010)
+
+#define RTS_CMINIT_OPTION_STD								(RTS_CMINIT_OPTION_INITTASK | RTS_CMINIT_OPTION_EXITTASK | RTS_CMINIT_OPTION_COMMCYCLETASK)
 
 /**
  * <category>ComponentType</category>
@@ -603,7 +638,7 @@ typedef struct
 	IBase *pIBase;
 } InstanceEntry;
 
-/* Api list */
+/* API list */
 typedef struct tagApi_ENTRY
 {
 	char szAPIName[MAX_API_NAME];
@@ -760,35 +795,35 @@ typedef void (CDECL CDECL_EXT* PFCMADDCOMPONENT_IEC) (cmaddcomponent_struct *p);
 	#define GET_cmaddcomponent(fl)  CAL_CMGETAPI( "cmaddcomponent" ) 
 	#define CAL_cmaddcomponent  cmaddcomponent
 	#define CHK_cmaddcomponent  TRUE
-	#define EXP_cmaddcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent", (RTS_UINTPTR)cmaddcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x3FB931A6), 0x03050D00) 
+	#define EXP_cmaddcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent", (RTS_UINTPTR)cmaddcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x3FB931A6), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmaddcomponent
 	#define EXT_cmaddcomponent
 	#define GET_cmaddcomponent(fl)  CAL_CMGETAPI( "cmaddcomponent" ) 
 	#define CAL_cmaddcomponent  cmaddcomponent
 	#define CHK_cmaddcomponent  TRUE
-	#define EXP_cmaddcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent", (RTS_UINTPTR)cmaddcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x3FB931A6), 0x03050D00) 
+	#define EXP_cmaddcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent", (RTS_UINTPTR)cmaddcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x3FB931A6), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmaddcomponent
 	#define EXT_CMcmaddcomponent
 	#define GET_CMcmaddcomponent  ERR_OK
 	#define CAL_CMcmaddcomponent  cmaddcomponent
 	#define CHK_CMcmaddcomponent  TRUE
-	#define EXP_CMcmaddcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent", (RTS_UINTPTR)cmaddcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x3FB931A6), 0x03050D00) 
+	#define EXP_CMcmaddcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent", (RTS_UINTPTR)cmaddcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x3FB931A6), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmaddcomponent
 	#define EXT_cmaddcomponent
 	#define GET_cmaddcomponent(fl)  CAL_CMGETAPI( "cmaddcomponent" ) 
 	#define CAL_cmaddcomponent  cmaddcomponent
 	#define CHK_cmaddcomponent  TRUE
-	#define EXP_cmaddcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent", (RTS_UINTPTR)cmaddcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x3FB931A6), 0x03050D00) 
+	#define EXP_cmaddcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent", (RTS_UINTPTR)cmaddcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x3FB931A6), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmaddcomponent  PFCMADDCOMPONENT_IEC pfcmaddcomponent;
 	#define EXT_cmaddcomponent  extern PFCMADDCOMPONENT_IEC pfcmaddcomponent;
-	#define GET_cmaddcomponent(fl)  s_pfCMGetAPI2( "cmaddcomponent", (RTS_VOID_FCTPTR *)&pfcmaddcomponent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x3FB931A6), 0x03050D00)
+	#define GET_cmaddcomponent(fl)  s_pfCMGetAPI2( "cmaddcomponent", (RTS_VOID_FCTPTR *)&pfcmaddcomponent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x3FB931A6), 0x03051000)
 	#define CAL_cmaddcomponent  pfcmaddcomponent
 	#define CHK_cmaddcomponent  (pfcmaddcomponent != NULL)
-	#define EXP_cmaddcomponent   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent", (RTS_UINTPTR)cmaddcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x3FB931A6), 0x03050D00) 
+	#define EXP_cmaddcomponent   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent", (RTS_UINTPTR)cmaddcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x3FB931A6), 0x03051000) 
 #endif
 
 
@@ -819,35 +854,35 @@ typedef void (CDECL CDECL_EXT* PFCMADDCOMPONENT2_IEC) (cmaddcomponent2_struct *p
 	#define GET_cmaddcomponent2(fl)  CAL_CMGETAPI( "cmaddcomponent2" ) 
 	#define CAL_cmaddcomponent2  cmaddcomponent2
 	#define CHK_cmaddcomponent2  TRUE
-	#define EXP_cmaddcomponent2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent2", (RTS_UINTPTR)cmaddcomponent2, 1, 0x1057D488, 0x03050D00) 
+	#define EXP_cmaddcomponent2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent2", (RTS_UINTPTR)cmaddcomponent2, 1, 0x1057D488, 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmaddcomponent2
 	#define EXT_cmaddcomponent2
 	#define GET_cmaddcomponent2(fl)  CAL_CMGETAPI( "cmaddcomponent2" ) 
 	#define CAL_cmaddcomponent2  cmaddcomponent2
 	#define CHK_cmaddcomponent2  TRUE
-	#define EXP_cmaddcomponent2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent2", (RTS_UINTPTR)cmaddcomponent2, 1, 0x1057D488, 0x03050D00) 
+	#define EXP_cmaddcomponent2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent2", (RTS_UINTPTR)cmaddcomponent2, 1, 0x1057D488, 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmaddcomponent2
 	#define EXT_CMcmaddcomponent2
 	#define GET_CMcmaddcomponent2  ERR_OK
 	#define CAL_CMcmaddcomponent2  cmaddcomponent2
 	#define CHK_CMcmaddcomponent2  TRUE
-	#define EXP_CMcmaddcomponent2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent2", (RTS_UINTPTR)cmaddcomponent2, 1, 0x1057D488, 0x03050D00) 
+	#define EXP_CMcmaddcomponent2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent2", (RTS_UINTPTR)cmaddcomponent2, 1, 0x1057D488, 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmaddcomponent2
 	#define EXT_cmaddcomponent2
 	#define GET_cmaddcomponent2(fl)  CAL_CMGETAPI( "cmaddcomponent2" ) 
 	#define CAL_cmaddcomponent2  cmaddcomponent2
 	#define CHK_cmaddcomponent2  TRUE
-	#define EXP_cmaddcomponent2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent2", (RTS_UINTPTR)cmaddcomponent2, 1, 0x1057D488, 0x03050D00) 
+	#define EXP_cmaddcomponent2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent2", (RTS_UINTPTR)cmaddcomponent2, 1, 0x1057D488, 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmaddcomponent2  PFCMADDCOMPONENT2_IEC pfcmaddcomponent2;
 	#define EXT_cmaddcomponent2  extern PFCMADDCOMPONENT2_IEC pfcmaddcomponent2;
-	#define GET_cmaddcomponent2(fl)  s_pfCMGetAPI2( "cmaddcomponent2", (RTS_VOID_FCTPTR *)&pfcmaddcomponent2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x1057D488, 0x03050D00)
+	#define GET_cmaddcomponent2(fl)  s_pfCMGetAPI2( "cmaddcomponent2", (RTS_VOID_FCTPTR *)&pfcmaddcomponent2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x1057D488, 0x03051000)
 	#define CAL_cmaddcomponent2  pfcmaddcomponent2
 	#define CHK_cmaddcomponent2  (pfcmaddcomponent2 != NULL)
-	#define EXP_cmaddcomponent2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent2", (RTS_UINTPTR)cmaddcomponent2, 1, 0x1057D488, 0x03050D00) 
+	#define EXP_cmaddcomponent2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmaddcomponent2", (RTS_UINTPTR)cmaddcomponent2, 1, 0x1057D488, 0x03051000) 
 #endif
 
 
@@ -875,35 +910,35 @@ typedef void (CDECL CDECL_EXT* PFCMEXITCOMPONENT_IEC) (cmexitcomponent_struct *p
 	#define GET_cmexitcomponent(fl)  CAL_CMGETAPI( "cmexitcomponent" ) 
 	#define CAL_cmexitcomponent  cmexitcomponent
 	#define CHK_cmexitcomponent  TRUE
-	#define EXP_cmexitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmexitcomponent", (RTS_UINTPTR)cmexitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x0DDC8E7F), 0x03050D00) 
+	#define EXP_cmexitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmexitcomponent", (RTS_UINTPTR)cmexitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x0DDC8E7F), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmexitcomponent
 	#define EXT_cmexitcomponent
 	#define GET_cmexitcomponent(fl)  CAL_CMGETAPI( "cmexitcomponent" ) 
 	#define CAL_cmexitcomponent  cmexitcomponent
 	#define CHK_cmexitcomponent  TRUE
-	#define EXP_cmexitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmexitcomponent", (RTS_UINTPTR)cmexitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x0DDC8E7F), 0x03050D00) 
+	#define EXP_cmexitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmexitcomponent", (RTS_UINTPTR)cmexitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x0DDC8E7F), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmexitcomponent
 	#define EXT_CMcmexitcomponent
 	#define GET_CMcmexitcomponent  ERR_OK
 	#define CAL_CMcmexitcomponent  cmexitcomponent
 	#define CHK_CMcmexitcomponent  TRUE
-	#define EXP_CMcmexitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmexitcomponent", (RTS_UINTPTR)cmexitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x0DDC8E7F), 0x03050D00) 
+	#define EXP_CMcmexitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmexitcomponent", (RTS_UINTPTR)cmexitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x0DDC8E7F), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmexitcomponent
 	#define EXT_cmexitcomponent
 	#define GET_cmexitcomponent(fl)  CAL_CMGETAPI( "cmexitcomponent" ) 
 	#define CAL_cmexitcomponent  cmexitcomponent
 	#define CHK_cmexitcomponent  TRUE
-	#define EXP_cmexitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmexitcomponent", (RTS_UINTPTR)cmexitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x0DDC8E7F), 0x03050D00) 
+	#define EXP_cmexitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmexitcomponent", (RTS_UINTPTR)cmexitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x0DDC8E7F), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmexitcomponent  PFCMEXITCOMPONENT_IEC pfcmexitcomponent;
 	#define EXT_cmexitcomponent  extern PFCMEXITCOMPONENT_IEC pfcmexitcomponent;
-	#define GET_cmexitcomponent(fl)  s_pfCMGetAPI2( "cmexitcomponent", (RTS_VOID_FCTPTR *)&pfcmexitcomponent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x0DDC8E7F), 0x03050D00)
+	#define GET_cmexitcomponent(fl)  s_pfCMGetAPI2( "cmexitcomponent", (RTS_VOID_FCTPTR *)&pfcmexitcomponent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x0DDC8E7F), 0x03051000)
 	#define CAL_cmexitcomponent  pfcmexitcomponent
 	#define CHK_cmexitcomponent  (pfcmexitcomponent != NULL)
-	#define EXP_cmexitcomponent   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmexitcomponent", (RTS_UINTPTR)cmexitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x0DDC8E7F), 0x03050D00) 
+	#define EXP_cmexitcomponent   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmexitcomponent", (RTS_UINTPTR)cmexitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0x0DDC8E7F), 0x03051000) 
 #endif
 
 
@@ -932,35 +967,92 @@ typedef void (CDECL CDECL_EXT* PFCMGETCOMPONENTBYNAME_IEC) (cmgetcomponentbyname
 	#define GET_cmgetcomponentbyname(fl)  CAL_CMGETAPI( "cmgetcomponentbyname" ) 
 	#define CAL_cmgetcomponentbyname  cmgetcomponentbyname
 	#define CHK_cmgetcomponentbyname  TRUE
-	#define EXP_cmgetcomponentbyname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmgetcomponentbyname", (RTS_UINTPTR)cmgetcomponentbyname, 1, RTSITF_GET_SIGNATURE(0, 0x1C90B550), 0x03050D00) 
+	#define EXP_cmgetcomponentbyname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmgetcomponentbyname", (RTS_UINTPTR)cmgetcomponentbyname, 1, RTSITF_GET_SIGNATURE(0, 0x1C90B550), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmgetcomponentbyname
 	#define EXT_cmgetcomponentbyname
 	#define GET_cmgetcomponentbyname(fl)  CAL_CMGETAPI( "cmgetcomponentbyname" ) 
 	#define CAL_cmgetcomponentbyname  cmgetcomponentbyname
 	#define CHK_cmgetcomponentbyname  TRUE
-	#define EXP_cmgetcomponentbyname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmgetcomponentbyname", (RTS_UINTPTR)cmgetcomponentbyname, 1, RTSITF_GET_SIGNATURE(0, 0x1C90B550), 0x03050D00) 
+	#define EXP_cmgetcomponentbyname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmgetcomponentbyname", (RTS_UINTPTR)cmgetcomponentbyname, 1, RTSITF_GET_SIGNATURE(0, 0x1C90B550), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmgetcomponentbyname
 	#define EXT_CMcmgetcomponentbyname
 	#define GET_CMcmgetcomponentbyname  ERR_OK
 	#define CAL_CMcmgetcomponentbyname  cmgetcomponentbyname
 	#define CHK_CMcmgetcomponentbyname  TRUE
-	#define EXP_CMcmgetcomponentbyname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmgetcomponentbyname", (RTS_UINTPTR)cmgetcomponentbyname, 1, RTSITF_GET_SIGNATURE(0, 0x1C90B550), 0x03050D00) 
+	#define EXP_CMcmgetcomponentbyname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmgetcomponentbyname", (RTS_UINTPTR)cmgetcomponentbyname, 1, RTSITF_GET_SIGNATURE(0, 0x1C90B550), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmgetcomponentbyname
 	#define EXT_cmgetcomponentbyname
 	#define GET_cmgetcomponentbyname(fl)  CAL_CMGETAPI( "cmgetcomponentbyname" ) 
 	#define CAL_cmgetcomponentbyname  cmgetcomponentbyname
 	#define CHK_cmgetcomponentbyname  TRUE
-	#define EXP_cmgetcomponentbyname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmgetcomponentbyname", (RTS_UINTPTR)cmgetcomponentbyname, 1, RTSITF_GET_SIGNATURE(0, 0x1C90B550), 0x03050D00) 
+	#define EXP_cmgetcomponentbyname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmgetcomponentbyname", (RTS_UINTPTR)cmgetcomponentbyname, 1, RTSITF_GET_SIGNATURE(0, 0x1C90B550), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmgetcomponentbyname  PFCMGETCOMPONENTBYNAME_IEC pfcmgetcomponentbyname;
 	#define EXT_cmgetcomponentbyname  extern PFCMGETCOMPONENTBYNAME_IEC pfcmgetcomponentbyname;
-	#define GET_cmgetcomponentbyname(fl)  s_pfCMGetAPI2( "cmgetcomponentbyname", (RTS_VOID_FCTPTR *)&pfcmgetcomponentbyname, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x1C90B550), 0x03050D00)
+	#define GET_cmgetcomponentbyname(fl)  s_pfCMGetAPI2( "cmgetcomponentbyname", (RTS_VOID_FCTPTR *)&pfcmgetcomponentbyname, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x1C90B550), 0x03051000)
 	#define CAL_cmgetcomponentbyname  pfcmgetcomponentbyname
 	#define CHK_cmgetcomponentbyname  (pfcmgetcomponentbyname != NULL)
-	#define EXP_cmgetcomponentbyname   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmgetcomponentbyname", (RTS_UINTPTR)cmgetcomponentbyname, 1, RTSITF_GET_SIGNATURE(0, 0x1C90B550), 0x03050D00) 
+	#define EXP_cmgetcomponentbyname   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmgetcomponentbyname", (RTS_UINTPTR)cmgetcomponentbyname, 1, RTSITF_GET_SIGNATURE(0, 0x1C90B550), 0x03051000) 
+#endif
+
+
+/**
+ * <description>Get the core version of the runtime.</description>
+ * <result><p>RESULT: Returns the runtime system error code (see CmpErrors.library).</p></result>
+ */
+typedef struct tagcmgetcoreversion_struct
+{
+	RTS_IEC_UDINT *pudiCoreVersion;		/* VAR_INPUT */	/* <param name="pudiCoreVersion" type="OUT">Pointer to the core version of the runtime</param> */
+	RTS_IEC_RESULT CMGetCoreVersion;	/* VAR_OUTPUT */	
+} cmgetcoreversion_struct;
+
+void CDECL CDECL_EXT cmgetcoreversion(cmgetcoreversion_struct *p);
+typedef void (CDECL CDECL_EXT* PFCMGETCOREVERSION_IEC) (cmgetcoreversion_struct *p);
+#if defined(CM_NOTIMPLEMENTED) || defined(CMGETCOREVERSION_NOTIMPLEMENTED)
+	#define USE_cmgetcoreversion
+	#define EXT_cmgetcoreversion
+	#define GET_cmgetcoreversion(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_cmgetcoreversion(p0) 
+	#define CHK_cmgetcoreversion  FALSE
+	#define EXP_cmgetcoreversion  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_cmgetcoreversion
+	#define EXT_cmgetcoreversion
+	#define GET_cmgetcoreversion(fl)  CAL_CMGETAPI( "cmgetcoreversion" ) 
+	#define CAL_cmgetcoreversion  cmgetcoreversion
+	#define CHK_cmgetcoreversion  TRUE
+	#define EXP_cmgetcoreversion  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmgetcoreversion", (RTS_UINTPTR)cmgetcoreversion, 1, 0x83B57980, 0x03051000) 
+#elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
+	#define USE_cmgetcoreversion
+	#define EXT_cmgetcoreversion
+	#define GET_cmgetcoreversion(fl)  CAL_CMGETAPI( "cmgetcoreversion" ) 
+	#define CAL_cmgetcoreversion  cmgetcoreversion
+	#define CHK_cmgetcoreversion  TRUE
+	#define EXP_cmgetcoreversion  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmgetcoreversion", (RTS_UINTPTR)cmgetcoreversion, 1, 0x83B57980, 0x03051000) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CMcmgetcoreversion
+	#define EXT_CMcmgetcoreversion
+	#define GET_CMcmgetcoreversion  ERR_OK
+	#define CAL_CMcmgetcoreversion  cmgetcoreversion
+	#define CHK_CMcmgetcoreversion  TRUE
+	#define EXP_CMcmgetcoreversion  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmgetcoreversion", (RTS_UINTPTR)cmgetcoreversion, 1, 0x83B57980, 0x03051000) 
+#elif defined(CPLUSPLUS)
+	#define USE_cmgetcoreversion
+	#define EXT_cmgetcoreversion
+	#define GET_cmgetcoreversion(fl)  CAL_CMGETAPI( "cmgetcoreversion" ) 
+	#define CAL_cmgetcoreversion  cmgetcoreversion
+	#define CHK_cmgetcoreversion  TRUE
+	#define EXP_cmgetcoreversion  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmgetcoreversion", (RTS_UINTPTR)cmgetcoreversion, 1, 0x83B57980, 0x03051000) 
+#else /* DYNAMIC_LINK */
+	#define USE_cmgetcoreversion  PFCMGETCOREVERSION_IEC pfcmgetcoreversion;
+	#define EXT_cmgetcoreversion  extern PFCMGETCOREVERSION_IEC pfcmgetcoreversion;
+	#define GET_cmgetcoreversion(fl)  s_pfCMGetAPI2( "cmgetcoreversion", (RTS_VOID_FCTPTR *)&pfcmgetcoreversion, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x83B57980, 0x03051000)
+	#define CAL_cmgetcoreversion  pfcmgetcoreversion
+	#define CHK_cmgetcoreversion  (pfcmgetcoreversion != NULL)
+	#define EXP_cmgetcoreversion   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmgetcoreversion", (RTS_UINTPTR)cmgetcoreversion, 1, 0x83B57980, 0x03051000) 
 #endif
 
 
@@ -988,35 +1080,35 @@ typedef void (CDECL CDECL_EXT* PFCMINITCOMPONENT_IEC) (cminitcomponent_struct *p
 	#define GET_cminitcomponent(fl)  CAL_CMGETAPI( "cminitcomponent" ) 
 	#define CAL_cminitcomponent  cminitcomponent
 	#define CHK_cminitcomponent  TRUE
-	#define EXP_cminitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cminitcomponent", (RTS_UINTPTR)cminitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0xAD863340), 0x03050D00) 
+	#define EXP_cminitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cminitcomponent", (RTS_UINTPTR)cminitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0xAD863340), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cminitcomponent
 	#define EXT_cminitcomponent
 	#define GET_cminitcomponent(fl)  CAL_CMGETAPI( "cminitcomponent" ) 
 	#define CAL_cminitcomponent  cminitcomponent
 	#define CHK_cminitcomponent  TRUE
-	#define EXP_cminitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cminitcomponent", (RTS_UINTPTR)cminitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0xAD863340), 0x03050D00) 
+	#define EXP_cminitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cminitcomponent", (RTS_UINTPTR)cminitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0xAD863340), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcminitcomponent
 	#define EXT_CMcminitcomponent
 	#define GET_CMcminitcomponent  ERR_OK
 	#define CAL_CMcminitcomponent  cminitcomponent
 	#define CHK_CMcminitcomponent  TRUE
-	#define EXP_CMcminitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cminitcomponent", (RTS_UINTPTR)cminitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0xAD863340), 0x03050D00) 
+	#define EXP_CMcminitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cminitcomponent", (RTS_UINTPTR)cminitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0xAD863340), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cminitcomponent
 	#define EXT_cminitcomponent
 	#define GET_cminitcomponent(fl)  CAL_CMGETAPI( "cminitcomponent" ) 
 	#define CAL_cminitcomponent  cminitcomponent
 	#define CHK_cminitcomponent  TRUE
-	#define EXP_cminitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cminitcomponent", (RTS_UINTPTR)cminitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0xAD863340), 0x03050D00) 
+	#define EXP_cminitcomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cminitcomponent", (RTS_UINTPTR)cminitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0xAD863340), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cminitcomponent  PFCMINITCOMPONENT_IEC pfcminitcomponent;
 	#define EXT_cminitcomponent  extern PFCMINITCOMPONENT_IEC pfcminitcomponent;
-	#define GET_cminitcomponent(fl)  s_pfCMGetAPI2( "cminitcomponent", (RTS_VOID_FCTPTR *)&pfcminitcomponent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xAD863340), 0x03050D00)
+	#define GET_cminitcomponent(fl)  s_pfCMGetAPI2( "cminitcomponent", (RTS_VOID_FCTPTR *)&pfcminitcomponent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xAD863340), 0x03051000)
 	#define CAL_cminitcomponent  pfcminitcomponent
 	#define CHK_cminitcomponent  (pfcminitcomponent != NULL)
-	#define EXP_cminitcomponent   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cminitcomponent", (RTS_UINTPTR)cminitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0xAD863340), 0x03050D00) 
+	#define EXP_cminitcomponent   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cminitcomponent", (RTS_UINTPTR)cminitcomponent, 1, RTSITF_GET_SIGNATURE(0, 0xAD863340), 0x03051000) 
 #endif
 
 
@@ -1044,35 +1136,35 @@ typedef void (CDECL CDECL_EXT* PFCMREGISTERGETUSERLICENSEVALUE_IEC) (cmregisterg
 	#define GET_cmregistergetuserlicensevalue(fl)  CAL_CMGETAPI( "cmregistergetuserlicensevalue" ) 
 	#define CAL_cmregistergetuserlicensevalue  cmregistergetuserlicensevalue
 	#define CHK_cmregistergetuserlicensevalue  TRUE
-	#define EXP_cmregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregistergetuserlicensevalue", (RTS_UINTPTR)cmregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0x84364FC6), 0x03050D00) 
+	#define EXP_cmregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregistergetuserlicensevalue", (RTS_UINTPTR)cmregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0x84364FC6), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmregistergetuserlicensevalue
 	#define EXT_cmregistergetuserlicensevalue
 	#define GET_cmregistergetuserlicensevalue(fl)  CAL_CMGETAPI( "cmregistergetuserlicensevalue" ) 
 	#define CAL_cmregistergetuserlicensevalue  cmregistergetuserlicensevalue
 	#define CHK_cmregistergetuserlicensevalue  TRUE
-	#define EXP_cmregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregistergetuserlicensevalue", (RTS_UINTPTR)cmregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0x84364FC6), 0x03050D00) 
+	#define EXP_cmregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregistergetuserlicensevalue", (RTS_UINTPTR)cmregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0x84364FC6), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmregistergetuserlicensevalue
 	#define EXT_CMcmregistergetuserlicensevalue
 	#define GET_CMcmregistergetuserlicensevalue  ERR_OK
 	#define CAL_CMcmregistergetuserlicensevalue  cmregistergetuserlicensevalue
 	#define CHK_CMcmregistergetuserlicensevalue  TRUE
-	#define EXP_CMcmregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregistergetuserlicensevalue", (RTS_UINTPTR)cmregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0x84364FC6), 0x03050D00) 
+	#define EXP_CMcmregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregistergetuserlicensevalue", (RTS_UINTPTR)cmregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0x84364FC6), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmregistergetuserlicensevalue
 	#define EXT_cmregistergetuserlicensevalue
 	#define GET_cmregistergetuserlicensevalue(fl)  CAL_CMGETAPI( "cmregistergetuserlicensevalue" ) 
 	#define CAL_cmregistergetuserlicensevalue  cmregistergetuserlicensevalue
 	#define CHK_cmregistergetuserlicensevalue  TRUE
-	#define EXP_cmregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregistergetuserlicensevalue", (RTS_UINTPTR)cmregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0x84364FC6), 0x03050D00) 
+	#define EXP_cmregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregistergetuserlicensevalue", (RTS_UINTPTR)cmregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0x84364FC6), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmregistergetuserlicensevalue  PFCMREGISTERGETUSERLICENSEVALUE_IEC pfcmregistergetuserlicensevalue;
 	#define EXT_cmregistergetuserlicensevalue  extern PFCMREGISTERGETUSERLICENSEVALUE_IEC pfcmregistergetuserlicensevalue;
-	#define GET_cmregistergetuserlicensevalue(fl)  s_pfCMGetAPI2( "cmregistergetuserlicensevalue", (RTS_VOID_FCTPTR *)&pfcmregistergetuserlicensevalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x84364FC6), 0x03050D00)
+	#define GET_cmregistergetuserlicensevalue(fl)  s_pfCMGetAPI2( "cmregistergetuserlicensevalue", (RTS_VOID_FCTPTR *)&pfcmregistergetuserlicensevalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x84364FC6), 0x03051000)
 	#define CAL_cmregistergetuserlicensevalue  pfcmregistergetuserlicensevalue
 	#define CHK_cmregistergetuserlicensevalue  (pfcmregistergetuserlicensevalue != NULL)
-	#define EXP_cmregistergetuserlicensevalue   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregistergetuserlicensevalue", (RTS_UINTPTR)cmregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0x84364FC6), 0x03050D00) 
+	#define EXP_cmregistergetuserlicensevalue   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregistergetuserlicensevalue", (RTS_UINTPTR)cmregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0x84364FC6), 0x03051000) 
 #endif
 
 
@@ -1100,35 +1192,35 @@ typedef void (CDECL CDECL_EXT* PFCMREGISTERLICENSEFUNCTIONS_IEC) (cmregisterlice
 	#define GET_cmregisterlicensefunctions(fl)  CAL_CMGETAPI( "cmregisterlicensefunctions" ) 
 	#define CAL_cmregisterlicensefunctions  cmregisterlicensefunctions
 	#define CHK_cmregisterlicensefunctions  TRUE
-	#define EXP_cmregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregisterlicensefunctions", (RTS_UINTPTR)cmregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0xC18CCC88), 0x03050D00) 
+	#define EXP_cmregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregisterlicensefunctions", (RTS_UINTPTR)cmregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0xC18CCC88), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmregisterlicensefunctions
 	#define EXT_cmregisterlicensefunctions
 	#define GET_cmregisterlicensefunctions(fl)  CAL_CMGETAPI( "cmregisterlicensefunctions" ) 
 	#define CAL_cmregisterlicensefunctions  cmregisterlicensefunctions
 	#define CHK_cmregisterlicensefunctions  TRUE
-	#define EXP_cmregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregisterlicensefunctions", (RTS_UINTPTR)cmregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0xC18CCC88), 0x03050D00) 
+	#define EXP_cmregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregisterlicensefunctions", (RTS_UINTPTR)cmregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0xC18CCC88), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmregisterlicensefunctions
 	#define EXT_CMcmregisterlicensefunctions
 	#define GET_CMcmregisterlicensefunctions  ERR_OK
 	#define CAL_CMcmregisterlicensefunctions  cmregisterlicensefunctions
 	#define CHK_CMcmregisterlicensefunctions  TRUE
-	#define EXP_CMcmregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregisterlicensefunctions", (RTS_UINTPTR)cmregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0xC18CCC88), 0x03050D00) 
+	#define EXP_CMcmregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregisterlicensefunctions", (RTS_UINTPTR)cmregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0xC18CCC88), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmregisterlicensefunctions
 	#define EXT_cmregisterlicensefunctions
 	#define GET_cmregisterlicensefunctions(fl)  CAL_CMGETAPI( "cmregisterlicensefunctions" ) 
 	#define CAL_cmregisterlicensefunctions  cmregisterlicensefunctions
 	#define CHK_cmregisterlicensefunctions  TRUE
-	#define EXP_cmregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregisterlicensefunctions", (RTS_UINTPTR)cmregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0xC18CCC88), 0x03050D00) 
+	#define EXP_cmregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregisterlicensefunctions", (RTS_UINTPTR)cmregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0xC18CCC88), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmregisterlicensefunctions  PFCMREGISTERLICENSEFUNCTIONS_IEC pfcmregisterlicensefunctions;
 	#define EXT_cmregisterlicensefunctions  extern PFCMREGISTERLICENSEFUNCTIONS_IEC pfcmregisterlicensefunctions;
-	#define GET_cmregisterlicensefunctions(fl)  s_pfCMGetAPI2( "cmregisterlicensefunctions", (RTS_VOID_FCTPTR *)&pfcmregisterlicensefunctions, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC18CCC88), 0x03050D00)
+	#define GET_cmregisterlicensefunctions(fl)  s_pfCMGetAPI2( "cmregisterlicensefunctions", (RTS_VOID_FCTPTR *)&pfcmregisterlicensefunctions, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC18CCC88), 0x03051000)
 	#define CAL_cmregisterlicensefunctions  pfcmregisterlicensefunctions
 	#define CHK_cmregisterlicensefunctions  (pfcmregisterlicensefunctions != NULL)
-	#define EXP_cmregisterlicensefunctions   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregisterlicensefunctions", (RTS_UINTPTR)cmregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0xC18CCC88), 0x03050D00) 
+	#define EXP_cmregisterlicensefunctions   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmregisterlicensefunctions", (RTS_UINTPTR)cmregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0xC18CCC88), 0x03051000) 
 #endif
 
 
@@ -1156,35 +1248,35 @@ typedef void (CDECL CDECL_EXT* PFCMREMOVECOMPONENT_IEC) (cmremovecomponent_struc
 	#define GET_cmremovecomponent(fl)  CAL_CMGETAPI( "cmremovecomponent" ) 
 	#define CAL_cmremovecomponent  cmremovecomponent
 	#define CHK_cmremovecomponent  TRUE
-	#define EXP_cmremovecomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmremovecomponent", (RTS_UINTPTR)cmremovecomponent, 1, RTSITF_GET_SIGNATURE(0, 0xB53B03F4), 0x03050D00) 
+	#define EXP_cmremovecomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmremovecomponent", (RTS_UINTPTR)cmremovecomponent, 1, RTSITF_GET_SIGNATURE(0, 0xB53B03F4), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmremovecomponent
 	#define EXT_cmremovecomponent
 	#define GET_cmremovecomponent(fl)  CAL_CMGETAPI( "cmremovecomponent" ) 
 	#define CAL_cmremovecomponent  cmremovecomponent
 	#define CHK_cmremovecomponent  TRUE
-	#define EXP_cmremovecomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmremovecomponent", (RTS_UINTPTR)cmremovecomponent, 1, RTSITF_GET_SIGNATURE(0, 0xB53B03F4), 0x03050D00) 
+	#define EXP_cmremovecomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmremovecomponent", (RTS_UINTPTR)cmremovecomponent, 1, RTSITF_GET_SIGNATURE(0, 0xB53B03F4), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmremovecomponent
 	#define EXT_CMcmremovecomponent
 	#define GET_CMcmremovecomponent  ERR_OK
 	#define CAL_CMcmremovecomponent  cmremovecomponent
 	#define CHK_CMcmremovecomponent  TRUE
-	#define EXP_CMcmremovecomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmremovecomponent", (RTS_UINTPTR)cmremovecomponent, 1, RTSITF_GET_SIGNATURE(0, 0xB53B03F4), 0x03050D00) 
+	#define EXP_CMcmremovecomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmremovecomponent", (RTS_UINTPTR)cmremovecomponent, 1, RTSITF_GET_SIGNATURE(0, 0xB53B03F4), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmremovecomponent
 	#define EXT_cmremovecomponent
 	#define GET_cmremovecomponent(fl)  CAL_CMGETAPI( "cmremovecomponent" ) 
 	#define CAL_cmremovecomponent  cmremovecomponent
 	#define CHK_cmremovecomponent  TRUE
-	#define EXP_cmremovecomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmremovecomponent", (RTS_UINTPTR)cmremovecomponent, 1, RTSITF_GET_SIGNATURE(0, 0xB53B03F4), 0x03050D00) 
+	#define EXP_cmremovecomponent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmremovecomponent", (RTS_UINTPTR)cmremovecomponent, 1, RTSITF_GET_SIGNATURE(0, 0xB53B03F4), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmremovecomponent  PFCMREMOVECOMPONENT_IEC pfcmremovecomponent;
 	#define EXT_cmremovecomponent  extern PFCMREMOVECOMPONENT_IEC pfcmremovecomponent;
-	#define GET_cmremovecomponent(fl)  s_pfCMGetAPI2( "cmremovecomponent", (RTS_VOID_FCTPTR *)&pfcmremovecomponent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB53B03F4), 0x03050D00)
+	#define GET_cmremovecomponent(fl)  s_pfCMGetAPI2( "cmremovecomponent", (RTS_VOID_FCTPTR *)&pfcmremovecomponent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB53B03F4), 0x03051000)
 	#define CAL_cmremovecomponent  pfcmremovecomponent
 	#define CHK_cmremovecomponent  (pfcmremovecomponent != NULL)
-	#define EXP_cmremovecomponent   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmremovecomponent", (RTS_UINTPTR)cmremovecomponent, 1, RTSITF_GET_SIGNATURE(0, 0xB53B03F4), 0x03050D00) 
+	#define EXP_cmremovecomponent   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmremovecomponent", (RTS_UINTPTR)cmremovecomponent, 1, RTSITF_GET_SIGNATURE(0, 0xB53B03F4), 0x03051000) 
 #endif
 
 
@@ -1212,35 +1304,35 @@ typedef void (CDECL CDECL_EXT* PFCMSHUTDOWN_IEC) (cmshutdown_struct *p);
 	#define GET_cmshutdown(fl)  CAL_CMGETAPI( "cmshutdown" ) 
 	#define CAL_cmshutdown  cmshutdown
 	#define CHK_cmshutdown  TRUE
-	#define EXP_cmshutdown  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmshutdown", (RTS_UINTPTR)cmshutdown, 1, RTSITF_GET_SIGNATURE(0, 0x28C83A52), 0x03050D00) 
+	#define EXP_cmshutdown  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmshutdown", (RTS_UINTPTR)cmshutdown, 1, RTSITF_GET_SIGNATURE(0, 0x28C83A52), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmshutdown
 	#define EXT_cmshutdown
 	#define GET_cmshutdown(fl)  CAL_CMGETAPI( "cmshutdown" ) 
 	#define CAL_cmshutdown  cmshutdown
 	#define CHK_cmshutdown  TRUE
-	#define EXP_cmshutdown  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmshutdown", (RTS_UINTPTR)cmshutdown, 1, RTSITF_GET_SIGNATURE(0, 0x28C83A52), 0x03050D00) 
+	#define EXP_cmshutdown  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmshutdown", (RTS_UINTPTR)cmshutdown, 1, RTSITF_GET_SIGNATURE(0, 0x28C83A52), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmshutdown
 	#define EXT_CMcmshutdown
 	#define GET_CMcmshutdown  ERR_OK
 	#define CAL_CMcmshutdown  cmshutdown
 	#define CHK_CMcmshutdown  TRUE
-	#define EXP_CMcmshutdown  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmshutdown", (RTS_UINTPTR)cmshutdown, 1, RTSITF_GET_SIGNATURE(0, 0x28C83A52), 0x03050D00) 
+	#define EXP_CMcmshutdown  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmshutdown", (RTS_UINTPTR)cmshutdown, 1, RTSITF_GET_SIGNATURE(0, 0x28C83A52), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmshutdown
 	#define EXT_cmshutdown
 	#define GET_cmshutdown(fl)  CAL_CMGETAPI( "cmshutdown" ) 
 	#define CAL_cmshutdown  cmshutdown
 	#define CHK_cmshutdown  TRUE
-	#define EXP_cmshutdown  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmshutdown", (RTS_UINTPTR)cmshutdown, 1, RTSITF_GET_SIGNATURE(0, 0x28C83A52), 0x03050D00) 
+	#define EXP_cmshutdown  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmshutdown", (RTS_UINTPTR)cmshutdown, 1, RTSITF_GET_SIGNATURE(0, 0x28C83A52), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmshutdown  PFCMSHUTDOWN_IEC pfcmshutdown;
 	#define EXT_cmshutdown  extern PFCMSHUTDOWN_IEC pfcmshutdown;
-	#define GET_cmshutdown(fl)  s_pfCMGetAPI2( "cmshutdown", (RTS_VOID_FCTPTR *)&pfcmshutdown, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x28C83A52), 0x03050D00)
+	#define GET_cmshutdown(fl)  s_pfCMGetAPI2( "cmshutdown", (RTS_VOID_FCTPTR *)&pfcmshutdown, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x28C83A52), 0x03051000)
 	#define CAL_cmshutdown  pfcmshutdown
 	#define CHK_cmshutdown  (pfcmshutdown != NULL)
-	#define EXP_cmshutdown   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmshutdown", (RTS_UINTPTR)cmshutdown, 1, RTSITF_GET_SIGNATURE(0, 0x28C83A52), 0x03050D00) 
+	#define EXP_cmshutdown   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmshutdown", (RTS_UINTPTR)cmshutdown, 1, RTSITF_GET_SIGNATURE(0, 0x28C83A52), 0x03051000) 
 #endif
 
 
@@ -1268,35 +1360,35 @@ typedef void (CDECL CDECL_EXT* PFCMUNREGISTERGETUSERLICENSEVALUE_IEC) (cmunregis
 	#define GET_cmunregistergetuserlicensevalue(fl)  CAL_CMGETAPI( "cmunregistergetuserlicensevalue" ) 
 	#define CAL_cmunregistergetuserlicensevalue  cmunregistergetuserlicensevalue
 	#define CHK_cmunregistergetuserlicensevalue  TRUE
-	#define EXP_cmunregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregistergetuserlicensevalue", (RTS_UINTPTR)cmunregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0xE400F55F), 0x03050D00) 
+	#define EXP_cmunregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregistergetuserlicensevalue", (RTS_UINTPTR)cmunregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0xE400F55F), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmunregistergetuserlicensevalue
 	#define EXT_cmunregistergetuserlicensevalue
 	#define GET_cmunregistergetuserlicensevalue(fl)  CAL_CMGETAPI( "cmunregistergetuserlicensevalue" ) 
 	#define CAL_cmunregistergetuserlicensevalue  cmunregistergetuserlicensevalue
 	#define CHK_cmunregistergetuserlicensevalue  TRUE
-	#define EXP_cmunregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregistergetuserlicensevalue", (RTS_UINTPTR)cmunregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0xE400F55F), 0x03050D00) 
+	#define EXP_cmunregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregistergetuserlicensevalue", (RTS_UINTPTR)cmunregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0xE400F55F), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmunregistergetuserlicensevalue
 	#define EXT_CMcmunregistergetuserlicensevalue
 	#define GET_CMcmunregistergetuserlicensevalue  ERR_OK
 	#define CAL_CMcmunregistergetuserlicensevalue  cmunregistergetuserlicensevalue
 	#define CHK_CMcmunregistergetuserlicensevalue  TRUE
-	#define EXP_CMcmunregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregistergetuserlicensevalue", (RTS_UINTPTR)cmunregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0xE400F55F), 0x03050D00) 
+	#define EXP_CMcmunregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregistergetuserlicensevalue", (RTS_UINTPTR)cmunregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0xE400F55F), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmunregistergetuserlicensevalue
 	#define EXT_cmunregistergetuserlicensevalue
 	#define GET_cmunregistergetuserlicensevalue(fl)  CAL_CMGETAPI( "cmunregistergetuserlicensevalue" ) 
 	#define CAL_cmunregistergetuserlicensevalue  cmunregistergetuserlicensevalue
 	#define CHK_cmunregistergetuserlicensevalue  TRUE
-	#define EXP_cmunregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregistergetuserlicensevalue", (RTS_UINTPTR)cmunregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0xE400F55F), 0x03050D00) 
+	#define EXP_cmunregistergetuserlicensevalue  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregistergetuserlicensevalue", (RTS_UINTPTR)cmunregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0xE400F55F), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmunregistergetuserlicensevalue  PFCMUNREGISTERGETUSERLICENSEVALUE_IEC pfcmunregistergetuserlicensevalue;
 	#define EXT_cmunregistergetuserlicensevalue  extern PFCMUNREGISTERGETUSERLICENSEVALUE_IEC pfcmunregistergetuserlicensevalue;
-	#define GET_cmunregistergetuserlicensevalue(fl)  s_pfCMGetAPI2( "cmunregistergetuserlicensevalue", (RTS_VOID_FCTPTR *)&pfcmunregistergetuserlicensevalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xE400F55F), 0x03050D00)
+	#define GET_cmunregistergetuserlicensevalue(fl)  s_pfCMGetAPI2( "cmunregistergetuserlicensevalue", (RTS_VOID_FCTPTR *)&pfcmunregistergetuserlicensevalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xE400F55F), 0x03051000)
 	#define CAL_cmunregistergetuserlicensevalue  pfcmunregistergetuserlicensevalue
 	#define CHK_cmunregistergetuserlicensevalue  (pfcmunregistergetuserlicensevalue != NULL)
-	#define EXP_cmunregistergetuserlicensevalue   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregistergetuserlicensevalue", (RTS_UINTPTR)cmunregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0xE400F55F), 0x03050D00) 
+	#define EXP_cmunregistergetuserlicensevalue   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregistergetuserlicensevalue", (RTS_UINTPTR)cmunregistergetuserlicensevalue, 1, RTSITF_GET_SIGNATURE(0, 0xE400F55F), 0x03051000) 
 #endif
 
 
@@ -1324,35 +1416,35 @@ typedef void (CDECL CDECL_EXT* PFCMUNREGISTERLICENSEFUNCTIONS_IEC) (cmunregister
 	#define GET_cmunregisterlicensefunctions(fl)  CAL_CMGETAPI( "cmunregisterlicensefunctions" ) 
 	#define CAL_cmunregisterlicensefunctions  cmunregisterlicensefunctions
 	#define CHK_cmunregisterlicensefunctions  TRUE
-	#define EXP_cmunregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregisterlicensefunctions", (RTS_UINTPTR)cmunregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0x7144A275), 0x03050D00) 
+	#define EXP_cmunregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregisterlicensefunctions", (RTS_UINTPTR)cmunregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0x7144A275), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmunregisterlicensefunctions
 	#define EXT_cmunregisterlicensefunctions
 	#define GET_cmunregisterlicensefunctions(fl)  CAL_CMGETAPI( "cmunregisterlicensefunctions" ) 
 	#define CAL_cmunregisterlicensefunctions  cmunregisterlicensefunctions
 	#define CHK_cmunregisterlicensefunctions  TRUE
-	#define EXP_cmunregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregisterlicensefunctions", (RTS_UINTPTR)cmunregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0x7144A275), 0x03050D00) 
+	#define EXP_cmunregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregisterlicensefunctions", (RTS_UINTPTR)cmunregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0x7144A275), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmunregisterlicensefunctions
 	#define EXT_CMcmunregisterlicensefunctions
 	#define GET_CMcmunregisterlicensefunctions  ERR_OK
 	#define CAL_CMcmunregisterlicensefunctions  cmunregisterlicensefunctions
 	#define CHK_CMcmunregisterlicensefunctions  TRUE
-	#define EXP_CMcmunregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregisterlicensefunctions", (RTS_UINTPTR)cmunregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0x7144A275), 0x03050D00) 
+	#define EXP_CMcmunregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregisterlicensefunctions", (RTS_UINTPTR)cmunregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0x7144A275), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmunregisterlicensefunctions
 	#define EXT_cmunregisterlicensefunctions
 	#define GET_cmunregisterlicensefunctions(fl)  CAL_CMGETAPI( "cmunregisterlicensefunctions" ) 
 	#define CAL_cmunregisterlicensefunctions  cmunregisterlicensefunctions
 	#define CHK_cmunregisterlicensefunctions  TRUE
-	#define EXP_cmunregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregisterlicensefunctions", (RTS_UINTPTR)cmunregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0x7144A275), 0x03050D00) 
+	#define EXP_cmunregisterlicensefunctions  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregisterlicensefunctions", (RTS_UINTPTR)cmunregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0x7144A275), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmunregisterlicensefunctions  PFCMUNREGISTERLICENSEFUNCTIONS_IEC pfcmunregisterlicensefunctions;
 	#define EXT_cmunregisterlicensefunctions  extern PFCMUNREGISTERLICENSEFUNCTIONS_IEC pfcmunregisterlicensefunctions;
-	#define GET_cmunregisterlicensefunctions(fl)  s_pfCMGetAPI2( "cmunregisterlicensefunctions", (RTS_VOID_FCTPTR *)&pfcmunregisterlicensefunctions, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x7144A275), 0x03050D00)
+	#define GET_cmunregisterlicensefunctions(fl)  s_pfCMGetAPI2( "cmunregisterlicensefunctions", (RTS_VOID_FCTPTR *)&pfcmunregisterlicensefunctions, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x7144A275), 0x03051000)
 	#define CAL_cmunregisterlicensefunctions  pfcmunregisterlicensefunctions
 	#define CHK_cmunregisterlicensefunctions  (pfcmunregisterlicensefunctions != NULL)
-	#define EXP_cmunregisterlicensefunctions   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregisterlicensefunctions", (RTS_UINTPTR)cmunregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0x7144A275), 0x03050D00) 
+	#define EXP_cmunregisterlicensefunctions   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmunregisterlicensefunctions", (RTS_UINTPTR)cmunregisterlicensefunctions, 1, RTSITF_GET_SIGNATURE(0, 0x7144A275), 0x03051000) 
 #endif
 
 
@@ -1382,35 +1474,35 @@ typedef void (CDECL CDECL_EXT* PFCMUTLCWSTRCPY_IEC) (cmutlcwstrcpy_struct *p);
 	#define GET_cmutlcwstrcpy(fl)  CAL_CMGETAPI( "cmutlcwstrcpy" ) 
 	#define CAL_cmutlcwstrcpy  cmutlcwstrcpy
 	#define CHK_cmutlcwstrcpy  TRUE
-	#define EXP_cmutlcwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlcwstrcpy", (RTS_UINTPTR)cmutlcwstrcpy, 1, RTSITF_GET_SIGNATURE(0x09DB4923, 0xCCB6DDB5), 0x03050D00) 
+	#define EXP_cmutlcwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlcwstrcpy", (RTS_UINTPTR)cmutlcwstrcpy, 1, RTSITF_GET_SIGNATURE(0x09DB4923, 0xCCB6DDB5), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmutlcwstrcpy
 	#define EXT_cmutlcwstrcpy
 	#define GET_cmutlcwstrcpy(fl)  CAL_CMGETAPI( "cmutlcwstrcpy" ) 
 	#define CAL_cmutlcwstrcpy  cmutlcwstrcpy
 	#define CHK_cmutlcwstrcpy  TRUE
-	#define EXP_cmutlcwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlcwstrcpy", (RTS_UINTPTR)cmutlcwstrcpy, 1, RTSITF_GET_SIGNATURE(0x09DB4923, 0xCCB6DDB5), 0x03050D00) 
+	#define EXP_cmutlcwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlcwstrcpy", (RTS_UINTPTR)cmutlcwstrcpy, 1, RTSITF_GET_SIGNATURE(0x09DB4923, 0xCCB6DDB5), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmutlcwstrcpy
 	#define EXT_CMcmutlcwstrcpy
 	#define GET_CMcmutlcwstrcpy  ERR_OK
 	#define CAL_CMcmutlcwstrcpy  cmutlcwstrcpy
 	#define CHK_CMcmutlcwstrcpy  TRUE
-	#define EXP_CMcmutlcwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlcwstrcpy", (RTS_UINTPTR)cmutlcwstrcpy, 1, RTSITF_GET_SIGNATURE(0x09DB4923, 0xCCB6DDB5), 0x03050D00) 
+	#define EXP_CMcmutlcwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlcwstrcpy", (RTS_UINTPTR)cmutlcwstrcpy, 1, RTSITF_GET_SIGNATURE(0x09DB4923, 0xCCB6DDB5), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmutlcwstrcpy
 	#define EXT_cmutlcwstrcpy
 	#define GET_cmutlcwstrcpy(fl)  CAL_CMGETAPI( "cmutlcwstrcpy" ) 
 	#define CAL_cmutlcwstrcpy  cmutlcwstrcpy
 	#define CHK_cmutlcwstrcpy  TRUE
-	#define EXP_cmutlcwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlcwstrcpy", (RTS_UINTPTR)cmutlcwstrcpy, 1, RTSITF_GET_SIGNATURE(0x09DB4923, 0xCCB6DDB5), 0x03050D00) 
+	#define EXP_cmutlcwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlcwstrcpy", (RTS_UINTPTR)cmutlcwstrcpy, 1, RTSITF_GET_SIGNATURE(0x09DB4923, 0xCCB6DDB5), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmutlcwstrcpy  PFCMUTLCWSTRCPY_IEC pfcmutlcwstrcpy;
 	#define EXT_cmutlcwstrcpy  extern PFCMUTLCWSTRCPY_IEC pfcmutlcwstrcpy;
-	#define GET_cmutlcwstrcpy(fl)  s_pfCMGetAPI2( "cmutlcwstrcpy", (RTS_VOID_FCTPTR *)&pfcmutlcwstrcpy, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x09DB4923, 0xCCB6DDB5), 0x03050D00)
+	#define GET_cmutlcwstrcpy(fl)  s_pfCMGetAPI2( "cmutlcwstrcpy", (RTS_VOID_FCTPTR *)&pfcmutlcwstrcpy, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x09DB4923, 0xCCB6DDB5), 0x03051000)
 	#define CAL_cmutlcwstrcpy  pfcmutlcwstrcpy
 	#define CHK_cmutlcwstrcpy  (pfcmutlcwstrcpy != NULL)
-	#define EXP_cmutlcwstrcpy   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlcwstrcpy", (RTS_UINTPTR)cmutlcwstrcpy, 1, RTSITF_GET_SIGNATURE(0x09DB4923, 0xCCB6DDB5), 0x03050D00) 
+	#define EXP_cmutlcwstrcpy   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlcwstrcpy", (RTS_UINTPTR)cmutlcwstrcpy, 1, RTSITF_GET_SIGNATURE(0x09DB4923, 0xCCB6DDB5), 0x03051000) 
 #endif
 
 
@@ -1440,35 +1532,35 @@ typedef void (CDECL CDECL_EXT* PFCMUTLSAFESTRCPY_IEC) (cmutlsafestrcpy_struct *p
 	#define GET_cmutlsafestrcpy(fl)  CAL_CMGETAPI( "cmutlsafestrcpy" ) 
 	#define CAL_cmutlsafestrcpy  cmutlsafestrcpy
 	#define CHK_cmutlsafestrcpy  TRUE
-	#define EXP_cmutlsafestrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlsafestrcpy", (RTS_UINTPTR)cmutlsafestrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x794C4461), 0x03050D00) 
+	#define EXP_cmutlsafestrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlsafestrcpy", (RTS_UINTPTR)cmutlsafestrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x794C4461), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmutlsafestrcpy
 	#define EXT_cmutlsafestrcpy
 	#define GET_cmutlsafestrcpy(fl)  CAL_CMGETAPI( "cmutlsafestrcpy" ) 
 	#define CAL_cmutlsafestrcpy  cmutlsafestrcpy
 	#define CHK_cmutlsafestrcpy  TRUE
-	#define EXP_cmutlsafestrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlsafestrcpy", (RTS_UINTPTR)cmutlsafestrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x794C4461), 0x03050D00) 
+	#define EXP_cmutlsafestrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlsafestrcpy", (RTS_UINTPTR)cmutlsafestrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x794C4461), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmutlsafestrcpy
 	#define EXT_CMcmutlsafestrcpy
 	#define GET_CMcmutlsafestrcpy  ERR_OK
 	#define CAL_CMcmutlsafestrcpy  cmutlsafestrcpy
 	#define CHK_CMcmutlsafestrcpy  TRUE
-	#define EXP_CMcmutlsafestrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlsafestrcpy", (RTS_UINTPTR)cmutlsafestrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x794C4461), 0x03050D00) 
+	#define EXP_CMcmutlsafestrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlsafestrcpy", (RTS_UINTPTR)cmutlsafestrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x794C4461), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmutlsafestrcpy
 	#define EXT_cmutlsafestrcpy
 	#define GET_cmutlsafestrcpy(fl)  CAL_CMGETAPI( "cmutlsafestrcpy" ) 
 	#define CAL_cmutlsafestrcpy  cmutlsafestrcpy
 	#define CHK_cmutlsafestrcpy  TRUE
-	#define EXP_cmutlsafestrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlsafestrcpy", (RTS_UINTPTR)cmutlsafestrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x794C4461), 0x03050D00) 
+	#define EXP_cmutlsafestrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlsafestrcpy", (RTS_UINTPTR)cmutlsafestrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x794C4461), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmutlsafestrcpy  PFCMUTLSAFESTRCPY_IEC pfcmutlsafestrcpy;
 	#define EXT_cmutlsafestrcpy  extern PFCMUTLSAFESTRCPY_IEC pfcmutlsafestrcpy;
-	#define GET_cmutlsafestrcpy(fl)  s_pfCMGetAPI2( "cmutlsafestrcpy", (RTS_VOID_FCTPTR *)&pfcmutlsafestrcpy, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x794C4461), 0x03050D00)
+	#define GET_cmutlsafestrcpy(fl)  s_pfCMGetAPI2( "cmutlsafestrcpy", (RTS_VOID_FCTPTR *)&pfcmutlsafestrcpy, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x794C4461), 0x03051000)
 	#define CAL_cmutlsafestrcpy  pfcmutlsafestrcpy
 	#define CHK_cmutlsafestrcpy  (pfcmutlsafestrcpy != NULL)
-	#define EXP_cmutlsafestrcpy   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlsafestrcpy", (RTS_UINTPTR)cmutlsafestrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x794C4461), 0x03050D00) 
+	#define EXP_cmutlsafestrcpy   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlsafestrcpy", (RTS_UINTPTR)cmutlsafestrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x794C4461), 0x03051000) 
 #endif
 
 
@@ -1497,35 +1589,35 @@ typedef void (CDECL CDECL_EXT* PFCMUTLSTRICMP_IEC) (cmutlstricmp_struct *p);
 	#define GET_cmutlstricmp(fl)  CAL_CMGETAPI( "cmutlstricmp" ) 
 	#define CAL_cmutlstricmp  cmutlstricmp
 	#define CHK_cmutlstricmp  TRUE
-	#define EXP_cmutlstricmp  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlstricmp", (RTS_UINTPTR)cmutlstricmp, 1, RTSITF_GET_SIGNATURE(0, 0xF3161529), 0x03050D00) 
+	#define EXP_cmutlstricmp  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlstricmp", (RTS_UINTPTR)cmutlstricmp, 1, RTSITF_GET_SIGNATURE(0, 0xF3161529), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmutlstricmp
 	#define EXT_cmutlstricmp
 	#define GET_cmutlstricmp(fl)  CAL_CMGETAPI( "cmutlstricmp" ) 
 	#define CAL_cmutlstricmp  cmutlstricmp
 	#define CHK_cmutlstricmp  TRUE
-	#define EXP_cmutlstricmp  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlstricmp", (RTS_UINTPTR)cmutlstricmp, 1, RTSITF_GET_SIGNATURE(0, 0xF3161529), 0x03050D00) 
+	#define EXP_cmutlstricmp  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlstricmp", (RTS_UINTPTR)cmutlstricmp, 1, RTSITF_GET_SIGNATURE(0, 0xF3161529), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmutlstricmp
 	#define EXT_CMcmutlstricmp
 	#define GET_CMcmutlstricmp  ERR_OK
 	#define CAL_CMcmutlstricmp  cmutlstricmp
 	#define CHK_CMcmutlstricmp  TRUE
-	#define EXP_CMcmutlstricmp  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlstricmp", (RTS_UINTPTR)cmutlstricmp, 1, RTSITF_GET_SIGNATURE(0, 0xF3161529), 0x03050D00) 
+	#define EXP_CMcmutlstricmp  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlstricmp", (RTS_UINTPTR)cmutlstricmp, 1, RTSITF_GET_SIGNATURE(0, 0xF3161529), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmutlstricmp
 	#define EXT_cmutlstricmp
 	#define GET_cmutlstricmp(fl)  CAL_CMGETAPI( "cmutlstricmp" ) 
 	#define CAL_cmutlstricmp  cmutlstricmp
 	#define CHK_cmutlstricmp  TRUE
-	#define EXP_cmutlstricmp  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlstricmp", (RTS_UINTPTR)cmutlstricmp, 1, RTSITF_GET_SIGNATURE(0, 0xF3161529), 0x03050D00) 
+	#define EXP_cmutlstricmp  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlstricmp", (RTS_UINTPTR)cmutlstricmp, 1, RTSITF_GET_SIGNATURE(0, 0xF3161529), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmutlstricmp  PFCMUTLSTRICMP_IEC pfcmutlstricmp;
 	#define EXT_cmutlstricmp  extern PFCMUTLSTRICMP_IEC pfcmutlstricmp;
-	#define GET_cmutlstricmp(fl)  s_pfCMGetAPI2( "cmutlstricmp", (RTS_VOID_FCTPTR *)&pfcmutlstricmp, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xF3161529), 0x03050D00)
+	#define GET_cmutlstricmp(fl)  s_pfCMGetAPI2( "cmutlstricmp", (RTS_VOID_FCTPTR *)&pfcmutlstricmp, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xF3161529), 0x03051000)
 	#define CAL_cmutlstricmp  pfcmutlstricmp
 	#define CHK_cmutlstricmp  (pfcmutlstricmp != NULL)
-	#define EXP_cmutlstricmp   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlstricmp", (RTS_UINTPTR)cmutlstricmp, 1, RTSITF_GET_SIGNATURE(0, 0xF3161529), 0x03050D00) 
+	#define EXP_cmutlstricmp   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlstricmp", (RTS_UINTPTR)cmutlstricmp, 1, RTSITF_GET_SIGNATURE(0, 0xF3161529), 0x03051000) 
 #endif
 
 
@@ -1556,35 +1648,35 @@ typedef void (CDECL CDECL_EXT* PFCMUTLUTF8TOW_IEC) (cmutlutf8tow_struct *p);
 	#define GET_cmutlutf8tow(fl)  CAL_CMGETAPI( "cmutlutf8tow" ) 
 	#define CAL_cmutlutf8tow  cmutlutf8tow
 	#define CHK_cmutlutf8tow  TRUE
-	#define EXP_cmutlutf8tow  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlutf8tow", (RTS_UINTPTR)cmutlutf8tow, 1, RTSITF_GET_SIGNATURE(0xB78A45E0, 0x76EB6470), 0x03050D00) 
+	#define EXP_cmutlutf8tow  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlutf8tow", (RTS_UINTPTR)cmutlutf8tow, 1, RTSITF_GET_SIGNATURE(0xB78A45E0, 0x76EB6470), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmutlutf8tow
 	#define EXT_cmutlutf8tow
 	#define GET_cmutlutf8tow(fl)  CAL_CMGETAPI( "cmutlutf8tow" ) 
 	#define CAL_cmutlutf8tow  cmutlutf8tow
 	#define CHK_cmutlutf8tow  TRUE
-	#define EXP_cmutlutf8tow  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlutf8tow", (RTS_UINTPTR)cmutlutf8tow, 1, RTSITF_GET_SIGNATURE(0xB78A45E0, 0x76EB6470), 0x03050D00) 
+	#define EXP_cmutlutf8tow  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlutf8tow", (RTS_UINTPTR)cmutlutf8tow, 1, RTSITF_GET_SIGNATURE(0xB78A45E0, 0x76EB6470), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmutlutf8tow
 	#define EXT_CMcmutlutf8tow
 	#define GET_CMcmutlutf8tow  ERR_OK
 	#define CAL_CMcmutlutf8tow  cmutlutf8tow
 	#define CHK_CMcmutlutf8tow  TRUE
-	#define EXP_CMcmutlutf8tow  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlutf8tow", (RTS_UINTPTR)cmutlutf8tow, 1, RTSITF_GET_SIGNATURE(0xB78A45E0, 0x76EB6470), 0x03050D00) 
+	#define EXP_CMcmutlutf8tow  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlutf8tow", (RTS_UINTPTR)cmutlutf8tow, 1, RTSITF_GET_SIGNATURE(0xB78A45E0, 0x76EB6470), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmutlutf8tow
 	#define EXT_cmutlutf8tow
 	#define GET_cmutlutf8tow(fl)  CAL_CMGETAPI( "cmutlutf8tow" ) 
 	#define CAL_cmutlutf8tow  cmutlutf8tow
 	#define CHK_cmutlutf8tow  TRUE
-	#define EXP_cmutlutf8tow  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlutf8tow", (RTS_UINTPTR)cmutlutf8tow, 1, RTSITF_GET_SIGNATURE(0xB78A45E0, 0x76EB6470), 0x03050D00) 
+	#define EXP_cmutlutf8tow  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlutf8tow", (RTS_UINTPTR)cmutlutf8tow, 1, RTSITF_GET_SIGNATURE(0xB78A45E0, 0x76EB6470), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmutlutf8tow  PFCMUTLUTF8TOW_IEC pfcmutlutf8tow;
 	#define EXT_cmutlutf8tow  extern PFCMUTLUTF8TOW_IEC pfcmutlutf8tow;
-	#define GET_cmutlutf8tow(fl)  s_pfCMGetAPI2( "cmutlutf8tow", (RTS_VOID_FCTPTR *)&pfcmutlutf8tow, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0xB78A45E0, 0x76EB6470), 0x03050D00)
+	#define GET_cmutlutf8tow(fl)  s_pfCMGetAPI2( "cmutlutf8tow", (RTS_VOID_FCTPTR *)&pfcmutlutf8tow, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0xB78A45E0, 0x76EB6470), 0x03051000)
 	#define CAL_cmutlutf8tow  pfcmutlutf8tow
 	#define CHK_cmutlutf8tow  (pfcmutlutf8tow != NULL)
-	#define EXP_cmutlutf8tow   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlutf8tow", (RTS_UINTPTR)cmutlutf8tow, 1, RTSITF_GET_SIGNATURE(0xB78A45E0, 0x76EB6470), 0x03050D00) 
+	#define EXP_cmutlutf8tow   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlutf8tow", (RTS_UINTPTR)cmutlutf8tow, 1, RTSITF_GET_SIGNATURE(0xB78A45E0, 0x76EB6470), 0x03051000) 
 #endif
 
 
@@ -1614,35 +1706,35 @@ typedef void (CDECL CDECL_EXT* PFCMUTLWSTRCPY_IEC) (cmutlwstrcpy_struct *p);
 	#define GET_cmutlwstrcpy(fl)  CAL_CMGETAPI( "cmutlwstrcpy" ) 
 	#define CAL_cmutlwstrcpy  cmutlwstrcpy
 	#define CHK_cmutlwstrcpy  TRUE
-	#define EXP_cmutlwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwstrcpy", (RTS_UINTPTR)cmutlwstrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x92BF32B1), 0x03050D00) 
+	#define EXP_cmutlwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwstrcpy", (RTS_UINTPTR)cmutlwstrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x92BF32B1), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmutlwstrcpy
 	#define EXT_cmutlwstrcpy
 	#define GET_cmutlwstrcpy(fl)  CAL_CMGETAPI( "cmutlwstrcpy" ) 
 	#define CAL_cmutlwstrcpy  cmutlwstrcpy
 	#define CHK_cmutlwstrcpy  TRUE
-	#define EXP_cmutlwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwstrcpy", (RTS_UINTPTR)cmutlwstrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x92BF32B1), 0x03050D00) 
+	#define EXP_cmutlwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwstrcpy", (RTS_UINTPTR)cmutlwstrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x92BF32B1), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmutlwstrcpy
 	#define EXT_CMcmutlwstrcpy
 	#define GET_CMcmutlwstrcpy  ERR_OK
 	#define CAL_CMcmutlwstrcpy  cmutlwstrcpy
 	#define CHK_CMcmutlwstrcpy  TRUE
-	#define EXP_CMcmutlwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwstrcpy", (RTS_UINTPTR)cmutlwstrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x92BF32B1), 0x03050D00) 
+	#define EXP_CMcmutlwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwstrcpy", (RTS_UINTPTR)cmutlwstrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x92BF32B1), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmutlwstrcpy
 	#define EXT_cmutlwstrcpy
 	#define GET_cmutlwstrcpy(fl)  CAL_CMGETAPI( "cmutlwstrcpy" ) 
 	#define CAL_cmutlwstrcpy  cmutlwstrcpy
 	#define CHK_cmutlwstrcpy  TRUE
-	#define EXP_cmutlwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwstrcpy", (RTS_UINTPTR)cmutlwstrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x92BF32B1), 0x03050D00) 
+	#define EXP_cmutlwstrcpy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwstrcpy", (RTS_UINTPTR)cmutlwstrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x92BF32B1), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmutlwstrcpy  PFCMUTLWSTRCPY_IEC pfcmutlwstrcpy;
 	#define EXT_cmutlwstrcpy  extern PFCMUTLWSTRCPY_IEC pfcmutlwstrcpy;
-	#define GET_cmutlwstrcpy(fl)  s_pfCMGetAPI2( "cmutlwstrcpy", (RTS_VOID_FCTPTR *)&pfcmutlwstrcpy, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x92BF32B1), 0x03050D00)
+	#define GET_cmutlwstrcpy(fl)  s_pfCMGetAPI2( "cmutlwstrcpy", (RTS_VOID_FCTPTR *)&pfcmutlwstrcpy, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x92BF32B1), 0x03051000)
 	#define CAL_cmutlwstrcpy  pfcmutlwstrcpy
 	#define CHK_cmutlwstrcpy  (pfcmutlwstrcpy != NULL)
-	#define EXP_cmutlwstrcpy   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwstrcpy", (RTS_UINTPTR)cmutlwstrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x92BF32B1), 0x03050D00) 
+	#define EXP_cmutlwstrcpy   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwstrcpy", (RTS_UINTPTR)cmutlwstrcpy, 1, RTSITF_GET_SIGNATURE(0, 0x92BF32B1), 0x03051000) 
 #endif
 
 
@@ -1673,35 +1765,35 @@ typedef void (CDECL CDECL_EXT* PFCMUTLWTOUTF8_IEC) (cmutlwtoutf8_struct *p);
 	#define GET_cmutlwtoutf8(fl)  CAL_CMGETAPI( "cmutlwtoutf8" ) 
 	#define CAL_cmutlwtoutf8  cmutlwtoutf8
 	#define CHK_cmutlwtoutf8  TRUE
-	#define EXP_cmutlwtoutf8  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwtoutf8", (RTS_UINTPTR)cmutlwtoutf8, 1, RTSITF_GET_SIGNATURE(0xAE6E95C8, 0x61F1F05D), 0x03050D00) 
+	#define EXP_cmutlwtoutf8  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwtoutf8", (RTS_UINTPTR)cmutlwtoutf8, 1, RTSITF_GET_SIGNATURE(0xAE6E95C8, 0x61F1F05D), 0x03051000) 
 #elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
 	#define USE_cmutlwtoutf8
 	#define EXT_cmutlwtoutf8
 	#define GET_cmutlwtoutf8(fl)  CAL_CMGETAPI( "cmutlwtoutf8" ) 
 	#define CAL_cmutlwtoutf8  cmutlwtoutf8
 	#define CHK_cmutlwtoutf8  TRUE
-	#define EXP_cmutlwtoutf8  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwtoutf8", (RTS_UINTPTR)cmutlwtoutf8, 1, RTSITF_GET_SIGNATURE(0xAE6E95C8, 0x61F1F05D), 0x03050D00) 
+	#define EXP_cmutlwtoutf8  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwtoutf8", (RTS_UINTPTR)cmutlwtoutf8, 1, RTSITF_GET_SIGNATURE(0xAE6E95C8, 0x61F1F05D), 0x03051000) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CMcmutlwtoutf8
 	#define EXT_CMcmutlwtoutf8
 	#define GET_CMcmutlwtoutf8  ERR_OK
 	#define CAL_CMcmutlwtoutf8  cmutlwtoutf8
 	#define CHK_CMcmutlwtoutf8  TRUE
-	#define EXP_CMcmutlwtoutf8  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwtoutf8", (RTS_UINTPTR)cmutlwtoutf8, 1, RTSITF_GET_SIGNATURE(0xAE6E95C8, 0x61F1F05D), 0x03050D00) 
+	#define EXP_CMcmutlwtoutf8  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwtoutf8", (RTS_UINTPTR)cmutlwtoutf8, 1, RTSITF_GET_SIGNATURE(0xAE6E95C8, 0x61F1F05D), 0x03051000) 
 #elif defined(CPLUSPLUS)
 	#define USE_cmutlwtoutf8
 	#define EXT_cmutlwtoutf8
 	#define GET_cmutlwtoutf8(fl)  CAL_CMGETAPI( "cmutlwtoutf8" ) 
 	#define CAL_cmutlwtoutf8  cmutlwtoutf8
 	#define CHK_cmutlwtoutf8  TRUE
-	#define EXP_cmutlwtoutf8  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwtoutf8", (RTS_UINTPTR)cmutlwtoutf8, 1, RTSITF_GET_SIGNATURE(0xAE6E95C8, 0x61F1F05D), 0x03050D00) 
+	#define EXP_cmutlwtoutf8  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwtoutf8", (RTS_UINTPTR)cmutlwtoutf8, 1, RTSITF_GET_SIGNATURE(0xAE6E95C8, 0x61F1F05D), 0x03051000) 
 #else /* DYNAMIC_LINK */
 	#define USE_cmutlwtoutf8  PFCMUTLWTOUTF8_IEC pfcmutlwtoutf8;
 	#define EXT_cmutlwtoutf8  extern PFCMUTLWTOUTF8_IEC pfcmutlwtoutf8;
-	#define GET_cmutlwtoutf8(fl)  s_pfCMGetAPI2( "cmutlwtoutf8", (RTS_VOID_FCTPTR *)&pfcmutlwtoutf8, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0xAE6E95C8, 0x61F1F05D), 0x03050D00)
+	#define GET_cmutlwtoutf8(fl)  s_pfCMGetAPI2( "cmutlwtoutf8", (RTS_VOID_FCTPTR *)&pfcmutlwtoutf8, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0xAE6E95C8, 0x61F1F05D), 0x03051000)
 	#define CAL_cmutlwtoutf8  pfcmutlwtoutf8
 	#define CHK_cmutlwtoutf8  (pfcmutlwtoutf8 != NULL)
-	#define EXP_cmutlwtoutf8   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwtoutf8", (RTS_UINTPTR)cmutlwtoutf8, 1, RTSITF_GET_SIGNATURE(0xAE6E95C8, 0x61F1F05D), 0x03050D00) 
+	#define EXP_cmutlwtoutf8   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmutlwtoutf8", (RTS_UINTPTR)cmutlwtoutf8, 1, RTSITF_GET_SIGNATURE(0xAE6E95C8, 0x61F1F05D), 0x03051000) 
 #endif
 
 
@@ -1827,7 +1919,7 @@ typedef RTS_RESULT (CDECL * PFCMINIT) (char *pszSettingsFile, StaticComponent *p
  * </description>
  * <param name="pszSettingsFile" type="IN">Pointer to name of the configuration file</param>
  * <param name="pStaticComponents" type="IN">Pointer to list of components with name and entry routine to initialize without configuration</param>
- * <param name="bSettingsFileIsOptional" type="IN">Specifies, if the Settingsfile is only used optionally</param>
+ * <param name="bSettingsFileIsOptional" type="IN">Specifies, if the Settings file is only used optionally</param>
  * <result>error code</result>
  */
 RTS_RESULT CDECL CMInit2(char *pszSettingsFile, StaticComponent *pStaticComponents, int bSettingsFileIsOptional);
@@ -1885,7 +1977,7 @@ typedef RTS_RESULT (CDECL * PFCMINIT2) (char *pszSettingsFile, StaticComponent *
  * </description>
  * <param name="pszSettingsFile" type="IN">Pointer to name of the configuration file</param>
  * <param name="pStaticComponents" type="IN">Pointer to list of components with name and entry routine to initialize without configuration</param>
- * <param name="options" type="IN">Options for the init sequence of the component manager. See category "CMInit options" for details.</param>
+ * <param name="options" type="IN">Options for the initialize sequence of the component manager. See category "CMInit options" for details.</param>
  * <result>error code</result>
  */
 RTS_RESULT CDECL CMInit3(char *pszSettingsFile, StaticComponent *pStaticComponents, RTS_UI32 options);
@@ -1939,7 +2031,7 @@ typedef RTS_RESULT (CDECL * PFCMINIT3) (char *pszSettingsFile, StaticComponent *
 
 /**
  * <description> 
- *   Called to deinitialize the component manager
+ *   Called to release the component manager
  * </description>
  * <result>error code</result>
  */
@@ -2218,7 +2310,7 @@ typedef RTS_RESULT (CDECL * PFCMDEBUGOUTARG) (const char *szFormat, va_list *par
  * </description>
  * <param name="pExpTable" type="IN">Table of functions to be registered</param>
  * <param name="CmpId" type="IN">Component identifier</param>
- * <param name="bExternalLibrary" type="IN">Can be used as external library in the plc program</param>
+ * <param name="bExternalLibrary" type="IN">Can be used as external library in the PLC program</param>
  * <result>error code</result>
  */
 RTS_RESULT CDECL CMRegisterAPI(const CMP_EXT_FUNCTION_REF *pExpTable, RTS_UINTPTR dummy, int bExternalLibrary, RTS_UI32 cmpId);
@@ -2276,7 +2368,7 @@ typedef RTS_RESULT (CDECL * PFCMREGISTERAPI) (const CMP_EXT_FUNCTION_REF *pExpTa
  * </description>
  * <param name="pszAPIName" type="IN">Name of the API routine</param>
  * <param name="pfAPIFunction" type="IN">Function pointer of the API routine</param>
- * <param name="bExternalLibrary" type="IN">Can be used as external library in the plc program</param>
+ * <param name="bExternalLibrary" type="IN">Can be used as external library in the PLC program</param>
  * <param name="ulSignatureID" type="IN">SignatureID of the function prototype</param>
  * <param name="ulVersion" type="IN">Actual supported implementation version</param>
  * <result>error code</result>
@@ -2627,7 +2719,7 @@ typedef RTS_RESULT (CDECL * PFCMRELEASEAPI) (RTS_VOID_FCTPTR pfAPIFunction);
  * </description>
  * <param name="pszComponent" type="IN">Name of the component</param>
  * <param name="pResult" type="INOUT">Pointer to error code</param>
- * <result>Component handle or RTS_INVALID_HANDLE, if an error is occured</result>
+ * <result>Component handle or RTS_INVALID_HANDLE, if an error is occurred</result>
  */
 RTS_HANDLE CDECL CMLoadComponent(char *pszComponent, RTS_RESULT *pResult);
 typedef RTS_HANDLE (CDECL * PFCMLOADCOMPONENT) (char *pszComponent, RTS_RESULT *pResult);
@@ -2732,7 +2824,7 @@ typedef void (CDECL CDECL_EXT* PFCMLOADCOMPONENT_IEC) (cmloadcomponent_struct *p
  * <param name="pszComponent" type="IN">Name of the component</param>
  * <param name="iType" type="IN">Type of the component. See category "ComponentType" for details.</param>
  * <param name="pResult" type="INOUT">Pointer to error code</param>
- * <result>Component handle or RTS_INVALID_HANDLE, if an error is occured</result>
+ * <result>Component handle or RTS_INVALID_HANDLE, if an error is occurred</result>
  */
 RTS_HANDLE CDECL CMLoadComponent2(char *pszComponent, RTS_UI16 iType, RTS_RESULT *pResult);
 typedef RTS_HANDLE (CDECL * PFCMLOADCOMPONENT2) (char *pszComponent, RTS_UI16 iType, RTS_RESULT *pResult);
@@ -2792,7 +2884,7 @@ typedef RTS_HANDLE (CDECL * PFCMLOADCOMPONENT2) (char *pszComponent, RTS_UI16 iT
  * <param name="pszFilePath" type="IN">Complete file path of the component</param>
  * <param name="iType" type="IN">Type of the component. See category "ComponentType" for details.</param>
  * <param name="pResult" type="INOUT">Pointer to error code</param>
- * <result>Component handle or RTS_INVALID_HANDLE, if an error is occured</result>
+ * <result>Component handle or RTS_INVALID_HANDLE, if an error is occurred</result>
  */
 RTS_HANDLE CDECL CMLoadComponent3(char *pszComponent, char *pszFilePath, RTS_UI16 iType, RTS_RESULT *pResult);
 typedef RTS_HANDLE (CDECL * PFCMLOADCOMPONENT3) (char *pszComponent, char *pszFilePath, RTS_UI16 iType, RTS_RESULT *pResult);
@@ -3233,7 +3325,7 @@ typedef RTS_RESULT (CDECL * PFCMREMOVECOMPONENT) (RTS_HANDLE hComponent);
  * </description>
  * <param name="pszCmpName" type="IN">Name of the component</param>
  * <param name="pResult" type="INOUT">Pointer to error code</param>
- * <result>Component handle or RTS_INVALID_HANDLE, if an error is occured</result>
+ * <result>Component handle or RTS_INVALID_HANDLE, if an error is occurred</result>
  */
 RTS_HANDLE CDECL CMGetComponentByName(char *pszCmpName, RTS_RESULT *pResult);
 typedef RTS_HANDLE (CDECL * PFCMGETCOMPONENTBYNAME) (char *pszCmpName, RTS_RESULT *pResult);
@@ -3279,6 +3371,64 @@ typedef RTS_HANDLE (CDECL * PFCMGETCOMPONENTBYNAME) (char *pszCmpName, RTS_RESUL
 	#define CAL_CMGetComponentByName  pfCMGetComponentByName
 	#define CHK_CMGetComponentByName  (pfCMGetComponentByName != NULL)
 	#define EXP_CMGetComponentByName  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMGetComponentByName", (RTS_UINTPTR)CMGetComponentByName, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description> 
+ *	Get the core version of the runtime.
+ * </description>
+ * <param name="pui32CoreVersion" type="INOUT">Pointer to the core version of the runtime</param>
+ * <result>error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Core version successfully retrieved</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Could not retrieve core version, because pui32CoreVersion is NULL</errorcode>
+ */
+RTS_RESULT CDECL CMGetCoreVersion(RTS_UI32 *pui32CoreVersion);
+typedef RTS_RESULT (CDECL * PFCMGETCOREVERSION) (RTS_UI32 *pui32CoreVersion);
+#if defined(CM_NOTIMPLEMENTED) || defined(CMGETCOREVERSION_NOTIMPLEMENTED)
+	#define USE_CMGetCoreVersion
+	#define EXT_CMGetCoreVersion
+	#define GET_CMGetCoreVersion(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CMGetCoreVersion(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CMGetCoreVersion  FALSE
+	#define EXP_CMGetCoreVersion  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CMGetCoreVersion
+	#define EXT_CMGetCoreVersion
+	#define GET_CMGetCoreVersion(fl)  CAL_CMGETAPI( "CMGetCoreVersion" ) 
+	#define CAL_CMGetCoreVersion  CMGetCoreVersion
+	#define CHK_CMGetCoreVersion  TRUE
+	#define EXP_CMGetCoreVersion  CAL_CMEXPAPI( "CMGetCoreVersion" ) 
+#elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
+	#define USE_CMGetCoreVersion
+	#define EXT_CMGetCoreVersion
+	#define GET_CMGetCoreVersion(fl)  CAL_CMGETAPI( "CMGetCoreVersion" ) 
+	#define CAL_CMGetCoreVersion  CMGetCoreVersion
+	#define CHK_CMGetCoreVersion  TRUE
+	#define EXP_CMGetCoreVersion  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMGetCoreVersion", (RTS_UINTPTR)CMGetCoreVersion, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CMCMGetCoreVersion
+	#define EXT_CMCMGetCoreVersion
+	#define GET_CMCMGetCoreVersion  ERR_OK
+	#define CAL_CMCMGetCoreVersion pICM->ICMGetCoreVersion
+	#define CHK_CMCMGetCoreVersion (pICM != NULL)
+	#define EXP_CMCMGetCoreVersion  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CMGetCoreVersion
+	#define EXT_CMGetCoreVersion
+	#define GET_CMGetCoreVersion(fl)  CAL_CMGETAPI( "CMGetCoreVersion" ) 
+	#define CAL_CMGetCoreVersion pICM->ICMGetCoreVersion
+	#define CHK_CMGetCoreVersion (pICM != NULL)
+	#define EXP_CMGetCoreVersion  CAL_CMEXPAPI( "CMGetCoreVersion" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CMGetCoreVersion  PFCMGETCOREVERSION pfCMGetCoreVersion;
+	#define EXT_CMGetCoreVersion  extern PFCMGETCOREVERSION pfCMGetCoreVersion;
+	#define GET_CMGetCoreVersion(fl)  s_pfCMGetAPI2( "CMGetCoreVersion", (RTS_VOID_FCTPTR *)&pfCMGetCoreVersion, (fl), 0, 0)
+	#define CAL_CMGetCoreVersion  pfCMGetCoreVersion
+	#define CHK_CMGetCoreVersion  (pfCMGetCoreVersion != NULL)
+	#define EXP_CMGetCoreVersion  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMGetCoreVersion", (RTS_UINTPTR)CMGetCoreVersion, 0, 0) 
 #endif
 
 
@@ -3517,7 +3667,7 @@ typedef int (CDECL * PFCMGETNUMOFCOMPONENTS) (void);
  *	Returns the registered component specified by index
  * </description>
  * <param name="iIndex" type="IN">Index of the component in the list</param>
- * <result>Pointer to component or NULL if index ist out of range</result>
+ * <result>Pointer to component or NULL if index is out of range</result>
  */
 COMPONENT_ENTRY* CDECL CMGetComponentByIndex(int iIndex);
 typedef COMPONENT_ENTRY* (CDECL * PFCMGETCOMPONENTBYINDEX) (int iIndex);
@@ -3911,7 +4061,7 @@ typedef IBase* (CDECL * PFCMGETINSTANCE) (CLASSID ClassId, OBJID ObjId, RTS_RESU
 
 /**
  * <description>
- *	Register an exisiting instance to the component manager. 
+ *	Register an existing instance to the component manager. 
  * </description>
  * <param name="ClassId" type="IN">ClassId of the class to create an object</param>
  * <param name="ObjId" type="IN">Index number of the instance</param>
@@ -4086,8 +4236,8 @@ typedef RTS_RESULT (CDECL * PFCMGETINSTANCELIST) (ITFID ItfId, RTS_HANDLE hIBase
  *   Called to call all components with the specified hook
  * </description>
  * <param name="ulHook" type="IN">Hook (for definition, look into CmpItf.h)</param>
- * <param name="ulParam1" type="IN">First parameter. Hook dependant</param>
- * <param name="ulParam2" type="IN">Second parameter. Hook dependant</param>
+ * <param name="ulParam1" type="IN">First parameter. Hook dependent</param>
+ * <param name="ulParam2" type="IN">Second parameter. Hook dependent</param>
  * <param name="bReverse" type="IN">Called the components in the opposite order as they were loaded</param>
  * <result>error code</result>
  */
@@ -4146,9 +4296,9 @@ typedef RTS_RESULT (CDECL * PFCMCALLHOOK) (RTS_UI32 ulHook, RTS_UINTPTR ulParam1
  * </description>
  * <param name="usComponentTypeMask" type="IN" range="[CMPTYPE_ALL,CMPTYPE_SAFETY,CMPTYPE_STANDARD]">ComponentType mask. See corresponding category</param>
  * <param name="ulHook" type="IN" range="[CH_COMM_CYCLE,CMCALLHOOK_PSEUDOHOOK,RTS_UI32_MAX]">Hook (for definition, look into CmpItf.h)</param>
- * <param name="ulParam1" type="IN" range="[0,CMCALLHOOK_TEST1]">First parameter. Hook dependant</param>
- * <param name="ulParam2" type="IN" range="[0,CMCALLHOOK_TEST2]">Second parameter. Hook dependant</param>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Hookfunction successfully called</errorcode>
+ * <param name="ulParam1" type="IN" range="[0,CMCALLHOOK_TEST1]">First parameter. Hook dependent</param>
+ * <param name="ulParam2" type="IN" range="[0,CMCALLHOOK_TEST2]">Second parameter. Hook dependent</param>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Hook function successfully called</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Component Pool not initialized or any Component responded with some error</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PENDING">Any Component responded with ERR_PENDING</errorcode>
  * <result>error code</result>
@@ -4261,7 +4411,7 @@ typedef int (CDECL * PFCMISDEMO) (void);
  * <result>
  *  <ul>
  *   <li>ERR_OK</li>
- *   <li>ERR_DUPLICATE: If init end is still done, this error message will be returned</li>
+ *   <li>ERR_DUPLICATE: If initialization end is still done, this error message will be returned</li>
  *  </ul>
  * </result>
  */
@@ -4316,7 +4466,7 @@ typedef RTS_RESULT (CDECL * PFCMINITEND) (void);
 
 /**
  * <description>
- *	Functtion checks, if the SysTarget component is originally signed and was not modified.
+ *	Function checks, if the SysTarget component is originally signed and was not modified.
  * </description>
  * <result>error code: ERR_OK: SysTarget is signed, ERR_FAILED: SysTarget was modified or is unsigned</result>
  */
@@ -4545,8 +4695,8 @@ typedef int (CDECL * PFCMCONFDYNLICCHALLENGE) (RTS_UI32 ulLicenseID, RTS_UI32 ul
 
 /**
  * <description> 
- *   Function to call the CommCycleHook of all components from outside the CM, if neccessary. This function is 
- *   intended to be called on singletasking systems (with CmpScheduleTimer or CmpScheduleEmbedded) during long
+ *   Function to call the CommCycleHook of all components from outside the CM, if necessary. This function is 
+ *   intended to be called on single tasking systems (with CmpScheduleTimer or CmpScheduleEmbedded) during long
  *   lasting operations. For example SysFlash calls this function to keep the communication alive during writing
  *   long memory areas. 
  *   Before calling the CommCycleHook, the function internally checks the following conditions:
@@ -4557,7 +4707,7 @@ typedef int (CDECL * PFCMCONFDYNLICCHALLENGE) (RTS_UI32 ulLicenseID, RTS_UI32 ul
  *   On multitasking systems this function has no effect. Use AsyncServices instead.  
  * </description>
  * <param name="ulParam1" type="IN">Type of the COMM_CYCLE_HOOK. See CM_HOOK_TYPE... types.</param>
- * <param name="ulParam2" type="IN">Second parameter. Hook dependant, typically 0</param>
+ * <param name="ulParam2" type="IN">Second parameter. Hook dependent, typically 0</param>
  * <result>error code</result>
  */
 RTS_RESULT CDECL CMCallExtraCommCycleHook(RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
@@ -4799,6 +4949,410 @@ typedef RTS_RESULT (CDECL * PFCMPROFILING) (char *pszInfo, CMPID cmpId, char *ps
 
 
 
+/**
+ * <description> 
+ *   Function returns the cycle time ms of the last CH_COMM_CYCLE call.
+ * </description>
+ * <result>Last CommCycle time in [ms]</result>
+ */
+RTS_UI32 CDECL CMGetLastCommCycle(void);
+typedef RTS_UI32 (CDECL * PFCMGETLASTCOMMCYCLE) (void);
+#if defined(CM_NOTIMPLEMENTED) || defined(CMGETLASTCOMMCYCLE_NOTIMPLEMENTED)
+	#define USE_CMGetLastCommCycle
+	#define EXT_CMGetLastCommCycle
+	#define GET_CMGetLastCommCycle(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CMGetLastCommCycle()  (RTS_UI32)ERR_NOTIMPLEMENTED
+	#define CHK_CMGetLastCommCycle  FALSE
+	#define EXP_CMGetLastCommCycle  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CMGetLastCommCycle
+	#define EXT_CMGetLastCommCycle
+	#define GET_CMGetLastCommCycle(fl)  CAL_CMGETAPI( "CMGetLastCommCycle" ) 
+	#define CAL_CMGetLastCommCycle  CMGetLastCommCycle
+	#define CHK_CMGetLastCommCycle  TRUE
+	#define EXP_CMGetLastCommCycle  CAL_CMEXPAPI( "CMGetLastCommCycle" ) 
+#elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
+	#define USE_CMGetLastCommCycle
+	#define EXT_CMGetLastCommCycle
+	#define GET_CMGetLastCommCycle(fl)  CAL_CMGETAPI( "CMGetLastCommCycle" ) 
+	#define CAL_CMGetLastCommCycle  CMGetLastCommCycle
+	#define CHK_CMGetLastCommCycle  TRUE
+	#define EXP_CMGetLastCommCycle  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMGetLastCommCycle", (RTS_UINTPTR)CMGetLastCommCycle, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CMCMGetLastCommCycle
+	#define EXT_CMCMGetLastCommCycle
+	#define GET_CMCMGetLastCommCycle  ERR_OK
+	#define CAL_CMCMGetLastCommCycle pICM->ICMGetLastCommCycle
+	#define CHK_CMCMGetLastCommCycle (pICM != NULL)
+	#define EXP_CMCMGetLastCommCycle  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CMGetLastCommCycle
+	#define EXT_CMGetLastCommCycle
+	#define GET_CMGetLastCommCycle(fl)  CAL_CMGETAPI( "CMGetLastCommCycle" ) 
+	#define CAL_CMGetLastCommCycle pICM->ICMGetLastCommCycle
+	#define CHK_CMGetLastCommCycle (pICM != NULL)
+	#define EXP_CMGetLastCommCycle  CAL_CMEXPAPI( "CMGetLastCommCycle" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CMGetLastCommCycle  PFCMGETLASTCOMMCYCLE pfCMGetLastCommCycle;
+	#define EXT_CMGetLastCommCycle  extern PFCMGETLASTCOMMCYCLE pfCMGetLastCommCycle;
+	#define GET_CMGetLastCommCycle(fl)  s_pfCMGetAPI2( "CMGetLastCommCycle", (RTS_VOID_FCTPTR *)&pfCMGetLastCommCycle, (fl), 0, 0)
+	#define CAL_CMGetLastCommCycle  pfCMGetLastCommCycle
+	#define CHK_CMGetLastCommCycle  (pfCMGetLastCommCycle != NULL)
+	#define EXP_CMGetLastCommCycle  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMGetLastCommCycle", (RTS_UINTPTR)CMGetLastCommCycle, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description> 
+ *   Function to check if a CMInit3() option is available.
+ * </description>
+ * <param name="option" type="IN">Option to check if it is supported, See "CMInit options" for details.</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Option is supported</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">Option is not supported</errorcode>
+ */
+RTS_RESULT CDECL CMIsOptionSupported(RTS_UI32 option);
+typedef RTS_RESULT (CDECL * PFCMISOPTIONSUPPORTED) (RTS_UI32 option);
+#if defined(CM_NOTIMPLEMENTED) || defined(CMISOPTIONSUPPORTED_NOTIMPLEMENTED)
+	#define USE_CMIsOptionSupported
+	#define EXT_CMIsOptionSupported
+	#define GET_CMIsOptionSupported(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CMIsOptionSupported(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CMIsOptionSupported  FALSE
+	#define EXP_CMIsOptionSupported  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CMIsOptionSupported
+	#define EXT_CMIsOptionSupported
+	#define GET_CMIsOptionSupported(fl)  CAL_CMGETAPI( "CMIsOptionSupported" ) 
+	#define CAL_CMIsOptionSupported  CMIsOptionSupported
+	#define CHK_CMIsOptionSupported  TRUE
+	#define EXP_CMIsOptionSupported  CAL_CMEXPAPI( "CMIsOptionSupported" ) 
+#elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
+	#define USE_CMIsOptionSupported
+	#define EXT_CMIsOptionSupported
+	#define GET_CMIsOptionSupported(fl)  CAL_CMGETAPI( "CMIsOptionSupported" ) 
+	#define CAL_CMIsOptionSupported  CMIsOptionSupported
+	#define CHK_CMIsOptionSupported  TRUE
+	#define EXP_CMIsOptionSupported  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMIsOptionSupported", (RTS_UINTPTR)CMIsOptionSupported, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CMCMIsOptionSupported
+	#define EXT_CMCMIsOptionSupported
+	#define GET_CMCMIsOptionSupported  ERR_OK
+	#define CAL_CMCMIsOptionSupported pICM->ICMIsOptionSupported
+	#define CHK_CMCMIsOptionSupported (pICM != NULL)
+	#define EXP_CMCMIsOptionSupported  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CMIsOptionSupported
+	#define EXT_CMIsOptionSupported
+	#define GET_CMIsOptionSupported(fl)  CAL_CMGETAPI( "CMIsOptionSupported" ) 
+	#define CAL_CMIsOptionSupported pICM->ICMIsOptionSupported
+	#define CHK_CMIsOptionSupported (pICM != NULL)
+	#define EXP_CMIsOptionSupported  CAL_CMEXPAPI( "CMIsOptionSupported" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CMIsOptionSupported  PFCMISOPTIONSUPPORTED pfCMIsOptionSupported;
+	#define EXT_CMIsOptionSupported  extern PFCMISOPTIONSUPPORTED pfCMIsOptionSupported;
+	#define GET_CMIsOptionSupported(fl)  s_pfCMGetAPI2( "CMIsOptionSupported", (RTS_VOID_FCTPTR *)&pfCMIsOptionSupported, (fl), 0, 0)
+	#define CAL_CMIsOptionSupported  pfCMIsOptionSupported
+	#define CHK_CMIsOptionSupported  (pfCMIsOptionSupported != NULL)
+	#define EXP_CMIsOptionSupported  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMIsOptionSupported", (RTS_UINTPTR)CMIsOptionSupported, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description> 
+ *   Function to check if a CMInit3 option is set.
+ * </description>
+ * <param name="option" type="IN">Option to check if it is set, See "CMInit options" for details.</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Option is set</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Option is not set</errorcode>
+ */
+RTS_RESULT CDECL CMIsOptionSet(RTS_UI32 option);
+typedef RTS_RESULT (CDECL * PFCMISOPTIONSET) (RTS_UI32 option);
+#if defined(CM_NOTIMPLEMENTED) || defined(CMISOPTIONSET_NOTIMPLEMENTED)
+	#define USE_CMIsOptionSet
+	#define EXT_CMIsOptionSet
+	#define GET_CMIsOptionSet(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CMIsOptionSet(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CMIsOptionSet  FALSE
+	#define EXP_CMIsOptionSet  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CMIsOptionSet
+	#define EXT_CMIsOptionSet
+	#define GET_CMIsOptionSet(fl)  CAL_CMGETAPI( "CMIsOptionSet" ) 
+	#define CAL_CMIsOptionSet  CMIsOptionSet
+	#define CHK_CMIsOptionSet  TRUE
+	#define EXP_CMIsOptionSet  CAL_CMEXPAPI( "CMIsOptionSet" ) 
+#elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
+	#define USE_CMIsOptionSet
+	#define EXT_CMIsOptionSet
+	#define GET_CMIsOptionSet(fl)  CAL_CMGETAPI( "CMIsOptionSet" ) 
+	#define CAL_CMIsOptionSet  CMIsOptionSet
+	#define CHK_CMIsOptionSet  TRUE
+	#define EXP_CMIsOptionSet  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMIsOptionSet", (RTS_UINTPTR)CMIsOptionSet, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CMCMIsOptionSet
+	#define EXT_CMCMIsOptionSet
+	#define GET_CMCMIsOptionSet  ERR_OK
+	#define CAL_CMCMIsOptionSet pICM->ICMIsOptionSet
+	#define CHK_CMCMIsOptionSet (pICM != NULL)
+	#define EXP_CMCMIsOptionSet  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CMIsOptionSet
+	#define EXT_CMIsOptionSet
+	#define GET_CMIsOptionSet(fl)  CAL_CMGETAPI( "CMIsOptionSet" ) 
+	#define CAL_CMIsOptionSet pICM->ICMIsOptionSet
+	#define CHK_CMIsOptionSet (pICM != NULL)
+	#define EXP_CMIsOptionSet  CAL_CMEXPAPI( "CMIsOptionSet" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CMIsOptionSet  PFCMISOPTIONSET pfCMIsOptionSet;
+	#define EXT_CMIsOptionSet  extern PFCMISOPTIONSET pfCMIsOptionSet;
+	#define GET_CMIsOptionSet(fl)  s_pfCMGetAPI2( "CMIsOptionSet", (RTS_VOID_FCTPTR *)&pfCMIsOptionSet, (fl), 0, 0)
+	#define CAL_CMIsOptionSet  pfCMIsOptionSet
+	#define CHK_CMIsOptionSet  (pfCMIsOptionSet != NULL)
+	#define EXP_CMIsOptionSet  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMIsOptionSet", (RTS_UINTPTR)CMIsOptionSet, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description> 
+ *   Function to get the name of a hook.
+ * </description>
+ * <param name="hook" type="IN">Hook to the get the name. See CmpItf.h for hook definitions.</param>
+ * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <result>Pointer to hook name</result>
+ */
+char* CDECL CMGetHookName(RTS_UI32 hook, RTS_RESULT *pResult);
+typedef char* (CDECL * PFCMGETHOOKNAME) (RTS_UI32 hook, RTS_RESULT *pResult);
+#if defined(CM_NOTIMPLEMENTED) || defined(CMGETHOOKNAME_NOTIMPLEMENTED)
+	#define USE_CMGetHookName
+	#define EXT_CMGetHookName
+	#define GET_CMGetHookName(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CMGetHookName(p0,p1)  (char*)ERR_NOTIMPLEMENTED
+	#define CHK_CMGetHookName  FALSE
+	#define EXP_CMGetHookName  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CMGetHookName
+	#define EXT_CMGetHookName
+	#define GET_CMGetHookName(fl)  CAL_CMGETAPI( "CMGetHookName" ) 
+	#define CAL_CMGetHookName  CMGetHookName
+	#define CHK_CMGetHookName  TRUE
+	#define EXP_CMGetHookName  CAL_CMEXPAPI( "CMGetHookName" ) 
+#elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
+	#define USE_CMGetHookName
+	#define EXT_CMGetHookName
+	#define GET_CMGetHookName(fl)  CAL_CMGETAPI( "CMGetHookName" ) 
+	#define CAL_CMGetHookName  CMGetHookName
+	#define CHK_CMGetHookName  TRUE
+	#define EXP_CMGetHookName  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMGetHookName", (RTS_UINTPTR)CMGetHookName, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CMCMGetHookName
+	#define EXT_CMCMGetHookName
+	#define GET_CMCMGetHookName  ERR_OK
+	#define CAL_CMCMGetHookName pICM->ICMGetHookName
+	#define CHK_CMCMGetHookName (pICM != NULL)
+	#define EXP_CMCMGetHookName  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CMGetHookName
+	#define EXT_CMGetHookName
+	#define GET_CMGetHookName(fl)  CAL_CMGETAPI( "CMGetHookName" ) 
+	#define CAL_CMGetHookName pICM->ICMGetHookName
+	#define CHK_CMGetHookName (pICM != NULL)
+	#define EXP_CMGetHookName  CAL_CMEXPAPI( "CMGetHookName" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CMGetHookName  PFCMGETHOOKNAME pfCMGetHookName;
+	#define EXT_CMGetHookName  extern PFCMGETHOOKNAME pfCMGetHookName;
+	#define GET_CMGetHookName(fl)  s_pfCMGetAPI2( "CMGetHookName", (RTS_VOID_FCTPTR *)&pfCMGetHookName, (fl), 0, 0)
+	#define CAL_CMGetHookName  pfCMGetHookName
+	#define CHK_CMGetHookName  (pfCMGetHookName != NULL)
+	#define EXP_CMGetHookName  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMGetHookName", (RTS_UINTPTR)CMGetHookName, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description> 
+ * Get a list of hook entries from startHook to endHook (exclusive)
+ * </description>
+ * <param name="startHook" type="IN">Hook to start the table with</param>
+ * <param name="endHook" type="IN">Hook to end the table (exclusive)</param>
+ * <param name="pnEntries" type="OUT">Pointer to return the number of entries</param>
+ * <result>Pointer to hook entry table</result>
+ */
+const RTS_ID_TO_NAME* CDECL CMGetHookEntries(RTS_UI32 startHook, RTS_UI32 endHook, RTS_UI32 *pnEntries);
+typedef const RTS_ID_TO_NAME* (CDECL * PFCMGETHOOKENTRIES) (RTS_UI32 startHook, RTS_UI32 endHook, RTS_UI32 *pnEntries);
+#if defined(CM_NOTIMPLEMENTED) || defined(CMGETHOOKENTRIES_NOTIMPLEMENTED)
+	#define USE_CMGetHookEntries
+	#define EXT_CMGetHookEntries
+	#define GET_CMGetHookEntries(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CMGetHookEntries(p0,p1,p2)  (const RTS_ID_TO_NAME*)ERR_NOTIMPLEMENTED
+	#define CHK_CMGetHookEntries  FALSE
+	#define EXP_CMGetHookEntries  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CMGetHookEntries
+	#define EXT_CMGetHookEntries
+	#define GET_CMGetHookEntries(fl)  CAL_CMGETAPI( "CMGetHookEntries" ) 
+	#define CAL_CMGetHookEntries  CMGetHookEntries
+	#define CHK_CMGetHookEntries  TRUE
+	#define EXP_CMGetHookEntries  CAL_CMEXPAPI( "CMGetHookEntries" ) 
+#elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
+	#define USE_CMGetHookEntries
+	#define EXT_CMGetHookEntries
+	#define GET_CMGetHookEntries(fl)  CAL_CMGETAPI( "CMGetHookEntries" ) 
+	#define CAL_CMGetHookEntries  CMGetHookEntries
+	#define CHK_CMGetHookEntries  TRUE
+	#define EXP_CMGetHookEntries  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMGetHookEntries", (RTS_UINTPTR)CMGetHookEntries, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CMCMGetHookEntries
+	#define EXT_CMCMGetHookEntries
+	#define GET_CMCMGetHookEntries  ERR_OK
+	#define CAL_CMCMGetHookEntries pICM->ICMGetHookEntries
+	#define CHK_CMCMGetHookEntries (pICM != NULL)
+	#define EXP_CMCMGetHookEntries  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CMGetHookEntries
+	#define EXT_CMGetHookEntries
+	#define GET_CMGetHookEntries(fl)  CAL_CMGETAPI( "CMGetHookEntries" ) 
+	#define CAL_CMGetHookEntries pICM->ICMGetHookEntries
+	#define CHK_CMGetHookEntries (pICM != NULL)
+	#define EXP_CMGetHookEntries  CAL_CMEXPAPI( "CMGetHookEntries" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CMGetHookEntries  PFCMGETHOOKENTRIES pfCMGetHookEntries;
+	#define EXT_CMGetHookEntries  extern PFCMGETHOOKENTRIES pfCMGetHookEntries;
+	#define GET_CMGetHookEntries(fl)  s_pfCMGetAPI2( "CMGetHookEntries", (RTS_VOID_FCTPTR *)&pfCMGetHookEntries, (fl), 0, 0)
+	#define CAL_CMGetHookEntries  pfCMGetHookEntries
+	#define CHK_CMGetHookEntries  (pfCMGetHookEntries != NULL)
+	#define EXP_CMGetHookEntries  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMGetHookEntries", (RTS_UINTPTR)CMGetHookEntries, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description> 
+ * Calls a sequence of init-hooks
+ * NOTE: Use this function only if you know what you are doing!
+ * </description>
+ * <param name="paHookTable" type="IN">List of init-hook entries build up by CMGetHookEntries</param>
+ * <param name="nTableEntries" type="IN">Number of entries in paHookTable</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Sequence was successful</errorcode>
+ */
+RTS_RESULT CDECL CMInitSequence(const RTS_ID_TO_NAME *paHookTable, RTS_UI32 nTableEntries);
+typedef RTS_RESULT (CDECL * PFCMINITSEQUENCE) (const RTS_ID_TO_NAME *paHookTable, RTS_UI32 nTableEntries);
+#if defined(CM_NOTIMPLEMENTED) || defined(CMINITSEQUENCE_NOTIMPLEMENTED)
+	#define USE_CMInitSequence
+	#define EXT_CMInitSequence
+	#define GET_CMInitSequence(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CMInitSequence(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CMInitSequence  FALSE
+	#define EXP_CMInitSequence  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CMInitSequence
+	#define EXT_CMInitSequence
+	#define GET_CMInitSequence(fl)  CAL_CMGETAPI( "CMInitSequence" ) 
+	#define CAL_CMInitSequence  CMInitSequence
+	#define CHK_CMInitSequence  TRUE
+	#define EXP_CMInitSequence  CAL_CMEXPAPI( "CMInitSequence" ) 
+#elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
+	#define USE_CMInitSequence
+	#define EXT_CMInitSequence
+	#define GET_CMInitSequence(fl)  CAL_CMGETAPI( "CMInitSequence" ) 
+	#define CAL_CMInitSequence  CMInitSequence
+	#define CHK_CMInitSequence  TRUE
+	#define EXP_CMInitSequence  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMInitSequence", (RTS_UINTPTR)CMInitSequence, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CMCMInitSequence
+	#define EXT_CMCMInitSequence
+	#define GET_CMCMInitSequence  ERR_OK
+	#define CAL_CMCMInitSequence pICM->ICMInitSequence
+	#define CHK_CMCMInitSequence (pICM != NULL)
+	#define EXP_CMCMInitSequence  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CMInitSequence
+	#define EXT_CMInitSequence
+	#define GET_CMInitSequence(fl)  CAL_CMGETAPI( "CMInitSequence" ) 
+	#define CAL_CMInitSequence pICM->ICMInitSequence
+	#define CHK_CMInitSequence (pICM != NULL)
+	#define EXP_CMInitSequence  CAL_CMEXPAPI( "CMInitSequence" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CMInitSequence  PFCMINITSEQUENCE pfCMInitSequence;
+	#define EXT_CMInitSequence  extern PFCMINITSEQUENCE pfCMInitSequence;
+	#define GET_CMInitSequence(fl)  s_pfCMGetAPI2( "CMInitSequence", (RTS_VOID_FCTPTR *)&pfCMInitSequence, (fl), 0, 0)
+	#define CAL_CMInitSequence  pfCMInitSequence
+	#define CHK_CMInitSequence  (pfCMInitSequence != NULL)
+	#define EXP_CMInitSequence  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMInitSequence", (RTS_UINTPTR)CMInitSequence, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description> 
+ * Calls a sequence of exit-hooks
+ * NOTE: Use this function only if you know what you are doing!
+ * </description>
+ * <param name="paHookTable" type="IN">List of exit-hook entries build up by CMGetHookEntries</param>
+ * <param name="nTableEntries" type="IN">Number of entries in paHookTable</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Sequence was successful</errorcode>
+ */
+RTS_RESULT CDECL CMExitSequence(const RTS_ID_TO_NAME *paHookTable, RTS_UI32 nTableEntries);
+typedef RTS_RESULT (CDECL * PFCMEXITSEQUENCE) (const RTS_ID_TO_NAME *paHookTable, RTS_UI32 nTableEntries);
+#if defined(CM_NOTIMPLEMENTED) || defined(CMEXITSEQUENCE_NOTIMPLEMENTED)
+	#define USE_CMExitSequence
+	#define EXT_CMExitSequence
+	#define GET_CMExitSequence(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CMExitSequence(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CMExitSequence  FALSE
+	#define EXP_CMExitSequence  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CMExitSequence
+	#define EXT_CMExitSequence
+	#define GET_CMExitSequence(fl)  CAL_CMGETAPI( "CMExitSequence" ) 
+	#define CAL_CMExitSequence  CMExitSequence
+	#define CHK_CMExitSequence  TRUE
+	#define EXP_CMExitSequence  CAL_CMEXPAPI( "CMExitSequence" ) 
+#elif defined(MIXED_LINK) && !defined(CM_EXTERNAL)
+	#define USE_CMExitSequence
+	#define EXT_CMExitSequence
+	#define GET_CMExitSequence(fl)  CAL_CMGETAPI( "CMExitSequence" ) 
+	#define CAL_CMExitSequence  CMExitSequence
+	#define CHK_CMExitSequence  TRUE
+	#define EXP_CMExitSequence  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMExitSequence", (RTS_UINTPTR)CMExitSequence, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CMCMExitSequence
+	#define EXT_CMCMExitSequence
+	#define GET_CMCMExitSequence  ERR_OK
+	#define CAL_CMCMExitSequence pICM->ICMExitSequence
+	#define CHK_CMCMExitSequence (pICM != NULL)
+	#define EXP_CMCMExitSequence  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CMExitSequence
+	#define EXT_CMExitSequence
+	#define GET_CMExitSequence(fl)  CAL_CMGETAPI( "CMExitSequence" ) 
+	#define CAL_CMExitSequence pICM->ICMExitSequence
+	#define CHK_CMExitSequence (pICM != NULL)
+	#define EXP_CMExitSequence  CAL_CMEXPAPI( "CMExitSequence" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CMExitSequence  PFCMEXITSEQUENCE pfCMExitSequence;
+	#define EXT_CMExitSequence  extern PFCMEXITSEQUENCE pfCMExitSequence;
+	#define GET_CMExitSequence(fl)  s_pfCMGetAPI2( "CMExitSequence", (RTS_VOID_FCTPTR *)&pfCMExitSequence, (fl), 0, 0)
+	#define CAL_CMExitSequence  pfCMExitSequence
+	#define CHK_CMExitSequence  (pfCMExitSequence != NULL)
+	#define EXP_CMExitSequence  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMExitSequence", (RTS_UINTPTR)CMExitSequence, 0, 0) 
+#endif
+
+
+
+
 #ifdef __cplusplus
 }
 #endif
@@ -4833,6 +5387,7 @@ typedef struct
  	PFCMADDCOMPONENT ICMAddComponent;
  	PFCMREMOVECOMPONENT ICMRemoveComponent;
  	PFCMGETCOMPONENTBYNAME ICMGetComponentByName;
+ 	PFCMGETCOREVERSION ICMGetCoreVersion;
  	PFCMGETCMPID ICMGetCmpId;
  	PFCMGETCMPNAME ICMGetCmpName;
  	PFCMGETCOMPONENT ICMGetComponent;
@@ -4859,6 +5414,13 @@ typedef struct
  	PFCMGETCURRENTHOOK ICMGetCurrentHook;
  	PFCMISOPERATIONDISABLED ICMIsOperationDisabled;
  	PFCMPROFILING ICMProfiling;
+ 	PFCMGETLASTCOMMCYCLE ICMGetLastCommCycle;
+ 	PFCMISOPTIONSUPPORTED ICMIsOptionSupported;
+ 	PFCMISOPTIONSET ICMIsOptionSet;
+ 	PFCMGETHOOKNAME ICMGetHookName;
+ 	PFCMGETHOOKENTRIES ICMGetHookEntries;
+ 	PFCMINITSEQUENCE ICMInitSequence;
+ 	PFCMEXITSEQUENCE ICMExitSequence;
  } ICM_C;
 
 #ifdef CPLUSPLUS
@@ -4890,6 +5452,7 @@ class ICM : public IBase
 		virtual RTS_HANDLE CDECL ICMAddComponent(COMPONENT_ENTRY *pComponent, RTS_RESULT *pResult) =0;
 		virtual RTS_RESULT CDECL ICMRemoveComponent(RTS_HANDLE hComponent) =0;
 		virtual RTS_HANDLE CDECL ICMGetComponentByName(char *pszCmpName, RTS_RESULT *pResult) =0;
+		virtual RTS_RESULT CDECL ICMGetCoreVersion(RTS_UI32 *pui32CoreVersion) =0;
 		virtual RTS_RESULT CDECL ICMGetCmpId(char *pszCmpName, CMPID *pCmpId) =0;
 		virtual RTS_RESULT CDECL ICMGetCmpName(CMPID CmpId, char *pszCmpName, int iMaxCmpName) =0;
 		virtual COMPONENT_ENTRY* CDECL ICMGetComponent(CMPID CmpId) =0;
@@ -4916,6 +5479,13 @@ class ICM : public IBase
 		virtual RTS_UI32 CDECL ICMGetCurrentHook(void) =0;
 		virtual RTS_RESULT CDECL ICMIsOperationDisabled(CMPID cmpId, RTS_UI32 ulOperation, CMPID *pCmpIdDisabled) =0;
 		virtual RTS_RESULT CDECL ICMProfiling(char *pszInfo, CMPID cmpId, char *pszComponentName, char *pszModuleName, RTS_I32 nLine, RTS_I32 iID) =0;
+		virtual RTS_UI32 CDECL ICMGetLastCommCycle(void) =0;
+		virtual RTS_RESULT CDECL ICMIsOptionSupported(RTS_UI32 option) =0;
+		virtual RTS_RESULT CDECL ICMIsOptionSet(RTS_UI32 option) =0;
+		virtual char* CDECL ICMGetHookName(RTS_UI32 hook, RTS_RESULT *pResult) =0;
+		virtual const RTS_ID_TO_NAME* CDECL ICMGetHookEntries(RTS_UI32 startHook, RTS_UI32 endHook, RTS_UI32 *pnEntries) =0;
+		virtual RTS_RESULT CDECL ICMInitSequence(const RTS_ID_TO_NAME *paHookTable, RTS_UI32 nTableEntries) =0;
+		virtual RTS_RESULT CDECL ICMExitSequence(const RTS_ID_TO_NAME *paHookTable, RTS_UI32 nTableEntries) =0;
 };
 	#ifndef ITF_CM
 		#define ITF_CM static ICM *pICM = NULL;

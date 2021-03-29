@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -22,7 +22,7 @@ extern "C" {
  * <type>Int</type>
  * <description>
  *	Timeout in seconds after the CmpChannelClient (Gateway) signals the end of the network scan to the client. 
- *  All further incomming network scan answers for this scan request will be dropped. 
+ *  All further incoming network scan answers for this scan request will be dropped. 
  *  ATTENTION: This timeout should only be adapted, if there are nodes connected to the PLC network, which 
  *  need more than around 6 seconds to handle the scan request and return the answer. The only known reason 
  *  is, that the scan have to be forwarded into another network (non-3S-protocol).
@@ -66,7 +66,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`NSClientHandleData',`(RTS_HANDLE hRouter, RTS_
 
 /**
  * <description>
- *  A callback passed to the nameservice functions, that is called for each found node, on error or completion.
+ *  A callback passed to the name service functions, that is called for each found node, on error or completion.
  *  This version can return all fields of name service answer version V1.1 (NSVERSION_FIRST_IMPLEMENTATION).
  * <param name="nResult" type="IN">The result of the call. Might be ERR_OK or ERR_TIMEOUT.</param>
  * <param name="addrNode" type="IN">The address of the responding node.</param>
@@ -80,7 +80,7 @@ typedef void (CDECL *PFHANDLENSRESPONSE) (RTS_RESULT nResult, NODEADDRESS addrNo
 
 /**
  * <description>
- *	A callback passed to the nameservice functions, that is called for each found node, on error or completion.
+ *	A callback passed to the name service functions, that is called for each found node, on error or completion.
  *  This version can return all fields of name service answer versions <= V1.3 (NSVERSION_WITH_ADDRDIFFERENCE).
  * </description>
  * <param name="nResult" type="IN">The result of the call. Might be ERR_OK or ERR_TIMEOUT.</param>
@@ -95,7 +95,7 @@ typedef void (CDECL *PFHANDLENSRESPONSE2) (RTS_RESULT nResult, NODEADDRESS addrN
 
 /**
  * <description>
- *  A callback passed to the nameservice functions, that is called on for each found node, on error or completion.
+ *  A callback passed to the name service functions, that is called on for each found node, on error or completion.
  *  This version can return all fields of all name service answer versions. 
  *  Note: For online received name service answers < V4.0, the length of the returned node name, device name and vendor name
  *  may exceed the limits defined for NODEINFOPACKED3.   
@@ -136,7 +136,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`NSResolveName',`(const RTS_WCHAR * pwszName, R
  *  bFinishWithFirstNode to TRUE is useful, if the client want to connect to the first answering node without
  *  waiting for the timeout. Typically this is used, if unique node names in the network are assured.
  *  The end of the scan is only indicated by calling pfCallback with ERR_TIMEOUT, if bFinishWithFirstNode was set to FALSE
- *  or if no node has anwered the request.
+ *  or if no node has answered the request.
  *  In some cases the pfCallback might be called before this function returns. The caller must be prepared
  *  to deal with that situation.
  * </description>
@@ -198,7 +198,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`NSResolveAddress3',`(NODEADDRESS addrNode, RTS
 /**
  * <description>
  *	Retrieve the node information for the node with the given block driver address.
- *  This is specified by the block driver type and the address in the local network (e. g. ipaddress and port).
+ *  This is specified by the block driver type and the address in the local network (e. g. IP-address and port).
  *  If RTS_BLK_DRV_TYPE_NONE is passed, the function returns the address of the own runtime system.
  *  In this special use case the node info may not contain a valid node info.
  *	The result is returned asynchronously by calling the pfCallback2 function,
@@ -207,7 +207,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`NSResolveAddress3',`(NODEADDRESS addrNode, RTS
  *	must be prepared to deal with that situation.
  * </description>
  * <param name="byBlkDrvType" type="IN">
- *  The type of the block driver, which should should resolve the address. If set to RTS_BLK_DRV_TYPE_NONE, 
+ *  The type of the block driver, which should resolve the address. If set to RTS_BLK_DRV_TYPE_NONE, 
  *  the address of the own runtime system is returned.
  * </param>
  * <param name="byFlags" type="IN">
@@ -234,7 +234,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`NSResolveBlkDrvAddress2',`(RTS_UI8 byBlkDrvTyp
 /**
  * <description>
  *  Retrieve the node information for the node with the given block driver address.
- *  This is specified by the block driver type and the address in the local network (e. g. ipaddress and port).
+ *  This is specified by the block driver type and the address in the local network (e. g. IP-address and port).
  *  If RTS_BLK_DRV_TYPE_NONE is passed, the function returns the address of the own runtime system.
  *  In this special use case the node info may not contain a valid node info.
  *  The result is returned asynchronously by calling the pfCallback3 function,
@@ -243,7 +243,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`NSResolveBlkDrvAddress2',`(RTS_UI8 byBlkDrvTyp
  *  must be prepared to deal with that situation.
  * </description>
  * <param name="byBlkDrvType" type="IN">
- *  The type of the block driver, which should should resolve the address. If set to RTS_BLK_DRV_TYPE_NONE,
+ *  The type of the block driver, which should resolve the address. If set to RTS_BLK_DRV_TYPE_NONE,
  *  the address of the own runtime system is returned.
  * </param>
  * <param name="byFlags" type="IN">

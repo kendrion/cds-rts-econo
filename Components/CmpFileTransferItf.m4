@@ -7,7 +7,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -145,7 +145,7 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent at each begin and end of a filetransfer</description>
+ * <description>Event is sent at each begin and end of a file transfer</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpFileTransfer</param>
  */
 #define EVT_FileTransfer				MAKE_EVENTID(EVTCLASS_INFO, 1)
@@ -241,7 +241,7 @@ typedef struct
 /**
  * <category>Directory extra info flags</category>
  * <description>
- * Bits for the bitvector submitted via TAG_DIRECTORY_EXTRAINFO.
+ * Bits for the bit vector submitted via TAG_DIRECTORY_EXTRAINFO.
  * All other bits are reserved and may be used for future extensions.
  * </description>
  * <element name="TDEI_PLACEHOLDER" type="IN">Entry is a placeholder</element>
@@ -363,7 +363,7 @@ DEF_STATICITF_API(`RTS_SIZE', `CDECL', `FileTransferToTransmit', `(RTS_HANDLE hF
 DEF_STATICITF_API(`RTS_RESULT', `CDECL', `FileTransferSafeSignature', `(char *pszFileName, RTS_UI32 ulCRC32)')
 
 /**
- * <description>Get safed signature of a specified file to check consistency</description>
+ * <description>Get saved signature of a specified file to check consistency</description>
  * <param name="pszFileName" type="IN">File name (can have a file path)</param>
  * <param name="pulCRC32" type="OUT">Pointer to get CRC32 of the file</param>
  * <result>error code</result>

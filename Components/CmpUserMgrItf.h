@@ -6,20 +6,31 @@
  *  The user management in the runtime system is based on ACL (Access Control Lists). Here we have Users and UserGroups
  *  and access rights on objects.
  *
- *  Here are the principles of the user management:
+ *  The user manager requires some other interfaces to be implemented for full functionality:
  *
- *  1. There are users which are identified by its user name 
- *  2. A User can be a member of one or several UserGroups. But at least the user is a member of the group "Everyone".
- *  3. There are some predefined UserGroups, which covers the most typical use cases: 
- *     - "Administrator": Administrator group. A member of this groups has all access rights on all objects!
- *     - "Developer": Developer group. A member of this groups has all access to the IEC applications an all related stuff.
- *     - "Service": Service group. A member of this groups has all access to object for maintenance and service operations.
- *     - "Watch": Watch group. A member of this groups has read-only access to the objects.
- *     - "Everyone": Everyone group. A member of this groups has read-only access to the objects.
+ *  1. CmpUserDB: This interface contains the basic functions to authentica users and to upload users to the CODESYS IDE
+ *			in order to manage Groups. This interface has only read access to the database. No functions that can changed
+ *			a value are defined here. This is the first interface to start if there is an existing user management that
+ *			should be used by the CODESYS runtime system.
  *
- *  4. A UserGroup can be derived from another UserGroup an inherits all rights from the base group
- *  5. Every object in the runtime system, that must be protected with access rights is registered dynamically during startup of the runtime by the corresponding
+ *	2. CmpUserDBConfiguration: This interface is used by the UserManager to Change the content of the users database. If this is
+ *			not implemented it is not possible to manage the users and the corresponding credentials using the CODESYS IDE.
+ *
+ *	3. CmpUserGroupsDB: This interface provides access to existing user groups and users inside groups. This interface is
+ *			read only too. No changes to the database can be done using this interface.
+ * 
+ *  4. CmpUserGroupsDBConfiguration: This interface allows to configure the user groups and allows to assign members to groups.
+ *
+ * 	All of these four interfaces are defined as static interfaces. To allow the user manager to use these interfaces it is
+ *	required that the implementing component / components register the desired backends to the CmpUserMgr. It is possible to
+ *	replace only the User Authentication interface and to stay with the default user groups and right database. This allows
+ *	easy adoption of the CODESYS runtime to existing user databases.
+ * 
+ *  5. CmpUserObjectsDB:
+ *
+ *     Every object in the runtime system, that must be protected with access rights, is registered dynamically during startup of the runtime by the corresponding
  *     component under the appropriate folder.
+ *
  *     The objects in the runtime system are organized as a tree with 2 root nodes:
  *     - Runtime system object:
  *          "Device"
@@ -29,23 +40,34 @@
  *              |----- "Settings"
  *              |----- "UserManagement"	
  *
- *     - Filesystem objects:
+ *     - File system objects:
  *             "/"
  *              |----- "Temp"
  *              |----------- "Test.txt"
  *
- *  6. There are 5 different access rights that can be specified at every group for each object:
+ *     On every object there are assigned all user groups. And for every user group you can specify the appropriate access rights.
+ *          
+ *     There are 5 different access rights that can be specified at every group for each object:
+ *
  *     - USERDB_RIGHT_NONE: Access denied
+ *
  *     - USERDB_RIGHT_VIEW: Only view rights on the object. Object cannot be modified in any case!
+ *
  *     - USERDB_RIGHT_MODIFY: Object can be viewed and modified
+ *
  *     - USERDB_RIGHT_EXECUTE: Object can be executed
- *     - USERDB_RIGHT_ADD_REMOVE: It is allowed to add and remove objects or subobjects
+ *
+ *     - USERDB_RIGHT_ADD_REMOVE: It is allowed to add and remove objects or sub objects
+ *
  *     - USERDB_RIGHT_ALL: All rights allowed on the object
+ *
+ *     Not every access right is retrieved by an object. Which access rights are used are specified by each object and are masked in the user rights editor in the 
+ *     programming system!
  *
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -64,12 +86,20 @@
 
 
 
-#include "CmpUserDBItf.h"
 #include "CmpBinTagUtilItf.h"
 #include "CmpDeviceItf.h"
+#include "CmpCommunicationLibItf.h"
 
 #include "CmpItf.h"
 
+
+/**
+ * <category>Static defines</category>
+ * <description>Number of predefined static login credential contexts used for authentication</description>
+ */
+#ifndef USERMGR_NUM_OF_STATIC_CREDENTIAL_CONTEXTS
+	#define USERMGR_NUM_OF_STATIC_CREDENTIAL_CONTEXTS	4
+#endif
 
 /**
  * <category>Static defines</category>
@@ -79,67 +109,436 @@
 	#define USERMGR_NUM_OF_STATIC_SESSIONS			8
 #endif
 
+/**
+ * <category>Static defines</category>
+ * <description>Max. length of the passwords. This value is used as buffer size and includes the terminating NUL. </description>
+ */
+#define USERMGR_MAX_PASSWORD_LEN					60
+
+/**
+ * <category>Static defines</category>
+ * <description>Max. length of the user names. This value is used as buffer size and includes the terminating NUL. </description>
+ */
+#define USERMGR_MAX_USERNAME_LEN					60
+
+/**
+ * <category>Static defines</category>
+ * <description>Max. length of the user group names. This value is used as buffer size and includes the terminating NUL. </description>
+ */
+#define USERMGR_MAX_GROUPNAME_LEN					60
+
 
 /**
  * <category>Online services</category>
- * <description>
- *	Online service to read the user management.
- * </description>
- * <service name="SRV_READ_USER_MGMT">
- *	<Request>
- *		<No further tag>
- *	</Request>
- *	<Response>
- *		<tag name="TAG_PROPERTY_USERS" required="mandatory">[RTS_UI32]: User property</tag>
- *		<tag name="TAG_PROPERTY_GROUPS" required="mandatory">[RTS_UI32]: Group property</tag>
- *		<tag name="TAG_USER" required="mandatory">Top level tag may contain the following sub tags</tag>
- *			<tag name="TAG_NAME" required="optional">[char*]: NUL terminated name of the user</tag>
- *			<tag name="TAG_PASSWORD" required="optional">[char*]: Password as MD5 hash</tag>
- *			<tag name="TAG_PROPERTY" required="optional">[RTS_UI32]: User property</tag>
- *		<tag name="TAG_GROUP" required="mandatory">Top level tag may contain the following sub tags</tag>
- *			<tag name="TAG_NAME" required="optional">[char*]: NUL terminated name of the user</tag>
- *			<tag name="TAG_PASSWORD" required="optional">[char*]: Password as MD5 hash</tag>
- *			<tag name="TAG_PROPERTY" required="optional">[RTS_UI32]: User property</tag>
- *	</Response>
+ * <service group="SG_CMPUSERMGR" id="SRV_READ_USER_MGMT" name="Read user management">
+ * 	<description>
+ *		Online service to read the user management.
+ *
+ *		This service requires a read right the user management. Additional the last authentication must not
+ *		or than several minutes. It the last authentication is older than several minutes a OnlineAccessError with ERR_REAUTHENTICATE is returned.
+ * 	</description>
+ *	<request/>
+ *	<response>
+ *		<tag id="TAG_PROPERTY_USERS" name="UserDB Properties." cardinality="1" type="RTS_UI32" description="Properties of the user database."/>
+ *		<tag id="TAG_PROPERTY_GROUPS" name="GroupDB Properties." cardinality="1" type="RTS_UI32" description="Properties of the user group database."/>
+ *		<complextag id="TAG_USER" name="User" cardinality="0..n" description="This tag contains a user.">
+ *			<tag id="TAG_NAME" name="UserName" cardinality="1" type="RTS_UTF8STRING" description="The user name."/>
+ *			<tag id="TAG_PROPERTY" name="UserProperties" cardinality="1" type="RTS_UI32" description="The users properties"/>
+ *		</complextag>
+ *		<complextag id="TAG_GROUP" name="Group" cardinality="0..n" description="This tag contains a user group.">
+ *			<tag id="TAG_NAME" name="GroupName" cardinality="1" type="RTS_UTF8STRING" description="The name of the user group name."/>
+ *			<tag id="TAG_PROPERTY" name="GroupProperties" cardinality="1" type="RTS_UI32" description="The user groups properties"/>
+ *			<tag id="TAG_USER_MEMBER" name="UserMember" cardinality="0..1" type="RTS_UTF8STRING" description="A user that is member of this group."/>
+ *			<tag id="TAG_GROUP_MEMBER" name="GroupMember" cardinality="0..1" type="RTS_UTF8STRING" description="An other group that is member of this group./>
+ *		</complextag>
+ *	</response>
  * </service>
  */
 #define SRV_READ_USER_MGMT							0x01
 
 /**
  * <category>Online services</category>
- * <description>Online service to write the user management</description>
+ * <description>Online service to write the user management. This service is not supported since V3.5.16.0.</description>
  */
 #define SRV_WRITE_USER_MGMT							0x02
 
-/**
- * <category>Online services</category>
- * <description>Online service to read the user rights management</description>
- */
-#define SRV_READ_USER_RIGHTS_MGMT					0x03
 
 /**
  * <category>Online services</category>
- * <description>Online service to write the user rights management</description>
+ * <service group="SG_CMPUSERMGR" id="SRV_READ_USER_RIGHTS_MGMT" name="Read user rights management">
+ *	<description>
+ *		Online service to read the user rights management
+ *
+ *		This service requires a read right the user management. Additional the last authentication must not
+ *		or than several minutes. It the last authentication is older than several minutes a OnlineAccessError with ERR_REAUTHENTICATE is returned.
+ *	</description>
+ *	<request>
+ *		<tag id="TAG_OBJECT_HANDLE" name="GroupDB Properties." cardinality="0..1" type="Binary" description="Handle of the last object received."/>
+ *	</request>
+ *	<response>
+ *		<complextag id="TAG_OBJECT" name="Object" cardinality="0..n" description="An object of the user rights management.">
+ *			<tag id="TAG_ERROR" name="Serviceresult" cardinality="0..1" type="RTS_UI16" description="Errorcode of the operation"/>
+ *			<tag id="TAG_OBJECT_HANDLE" name="GroupDB Properties." cardinality="0..1" type="Binary" description="Handle of the last object transmitted. Send this within the next request to get the next bunch of objects."/>
+ *			<tag id="TAG_NAME" name="ObjectName" cardinality="1" type="RTS_UTF8STRING" description="The name of the object."/>
+ *			<tag id="TAG_ID" name="ID" cardinality="1" type="RTS_UI32" description="ID of the object."/>
+ *			<tag id="TAG_PARENT_ID" name="ParentID" cardinality="1" type="RTS_UI32" description="ID of the parent object."/>
+ *			<tag id="TAG_USED_RIGHTS" name="UsedRights" cardinality="0..1" type="RTS_UI32" description="The evaluated rights of this object."/>
+ *			<tag id="TAG_PROPERTY" name="ObjectProperty" cardinality="0..1" type="RTS_UI32" description="The properties of the object"/>
+ *			<complextag id="TAG_GROUP" name="Group" cardinality="0..n" description="A group that has configured rights on an object.">
+ *				<tag id="TAG_NAME" name="GroupName" cardinality="1" type="RTS_UTF8STRING" description="The name of the group"/>
+ *				<tag id="TAG_RIGHTS" name="GarntedRights" cardinality="0..1" type="RTS_UI32" description="The granted rights on that object."/>
+ *				<tag id="TAG_DENIED_RIGHTS" name="DeniedRights" cardinality="0..1" type="RTS_UI32" description="The denied rights on that object."/>
+ *			</complextag>
+ *		</complextag>
+ *		
+ *	</response>
+ * </service>
+ */
+#define SRV_READ_USER_RIGHTS_MGMT					0x03
+
+ /**
+ * <category>Online services</category>
+ * <service group="SG_CMPUSERMGR" id="SRV_READ_USER_RIGHTS_MGMT" name="Read user rights management">
+ *	<description>
+ *		Online service to write the user rights management
+ *
+ *		This service requires a modify right the user management. Additional the last authentication must not
+ *		or than several minutes. It the last authentication is older than several minutes a OnlineAccessError with ERR_REAUTHENTICATE is returned.
+ *	</description>
+ *	<request>
+ *		<complextag id="TAG_OBJECT" name="Object" cardinality="0..n" description="An object of the user rights management.">
+ *			<tag id="TAG_NAME" name="ObjectName" cardinality="1" type="RTS_UTF8STRING" description="The name of the object."/>
+ *			<tag id="TAG_ID" name="ID" cardinality="1" type="RTS_UI32" description="ID of the object."/>
+ *			<tag id="TAG_PARENT_ID" name="ParentID" cardinality="1" type="RTS_UI32" description="ID of the parent object."/>
+ *			<complextag id="TAG_GROUP" name="Group" cardinality="0..n" description="A group that has configured rights on an object.">
+ *				<tag id="TAG_NAME" name="GroupName" cardinality="1" type="RTS_UTF8STRING" description="The name of the group"/>
+ *				<tag id="TAG_RIGHTS" name="GarntedRights" cardinality="0..1" type="RTS_UI32" description="The granted rights on that object."/>
+ *				<tag id="TAG_DENIED_RIGHTS" name="DeniedRights" cardinality="0..1" type="RTS_UI32" description="The denied rights on that object."/>
+ *			</complextag>
+ *		</complextag>
+ *	</request>
+ *	<response>
+ *		<tag id="TAG_ERROR" name="Serviceresult" cardinality="0..1" type="RTS_UI16" description="Errorcode of the operation"/>
+ *	</response>
+ * </service>
  */
 #define SRV_WRITE_USER_RIGHTS_MGMT					0x04
 
 /**
  * <category>Online services</category>
- * <description>Online service to add a single user</description>
+ * <description>Online service to add a single user. This service is not supported since V3.5.16.0.</description>
  */
 #define SRV_USER_ADD								0x05
 
 /**
  * <category>Online services</category>
- * <description>Online service to add a single user</description>
+ * <description>Online service to delete a single user. This service is not supported since V3.5.16.0.</description>
  */
 #define SRV_USER_DELETE								0x06
 
 /**
  * <category>Online services</category>
- * <description>Online service to add a single user</description>
+ * <description>Online service to change the password of a single user. This service is not supported since V3.5.16.0.</description>
  */
 #define SRV_USER_CHANGE_PASSWORD					0x07
+
+/**
+ * <category>Online services</category>
+ * <service group="SG_CMPUSERMGR" id="SRV_UPDATE_CURRENT_USER_CREDENTIALS" name="Update current credentials">
+ *	 <description>Online service to change the credentials of the current user. This service is allowed to all authenticated users. This 
+ *				service will only affect the user that has logged into the current session. This service requires that the user authenticates
+ *				by using the existing credentials.</description>
+ *	<request>
+ *		<tag id="TAG_USERMGR_CRYPT_TYPE" name="LoginProtocolType" cardinality="1" type="RTS_UI32" description="Authentication type. Must match to the type negotiated by SRV_DEV_SESSION_CREATE."/>
+ *		<tag id="TAG_USERMGR_CRYPT_STEP" name="CurrentLoginProtocolStep" cardinality="0..1" type="RTS_UI32" description="Current step of login sequence."/>
+ *		<complextag id="TAG_USERMGR_CREDENTIALS" name="Credentials" cardinality="0..1" description="Top level tag. Contains the user credentials.">
+ *			<tag id="TAG_USERMGR_PASSWORD" name="Password" cardinality="0..1" type="Binary" description="Encrypted old password."/>
+ *			<tag id="TAG_USERMGR_NEW_PASSWORD" name="New Password" cardinality="0..1" type="Binary" description="Encrypted new password."/>
+ *		</complextag>
+ *	</request>
+ *	<response>
+ *		<tag id="TAG_USERMGR_CRYPT_PUB_KEY" name="PLC Public Key" cardinality="0..1" type="char*" description="Public key used for password encryption. Only sent for authentication type USERMGR_CRYPT_ASYMMETRIC."></tag>
+ *		<tag id="TAG_USERMGR_CRYPT_NONCE" name="Nonce" cardinality="0..1" type="char*" description="Nonce used for password encryption. Only sent for authentication type USERMGR_CRYPT_ASYMMETRIC."></tag>
+ *		<tag id="TAG_USERMGR_CRYPT_NONCE_NEW" name="NonceNew" cardinality="0..1" type="char*" description="Nonce used for encryption of the new password. Only sent for authentication type USERMGR_CRYPT_ASYMMETRIC."></tag>
+ *		<tag id="TAG_USERMGR_CRYPT_CHALLENGE" name="Challange" cardinality="0..1" type="char*" description="Challange used for password encryption. Only sent for authentication type USERMGR_CRYPT_XOR."></tag>
+ *		<tag id="TAG_USERMGR_CRYPT_CHALLENGE_NEW" name="ChallangeNew" cardinality="0..1" type="char*" description="Challange used for encryption of the new password. Only sent for authentication type USERMGR_CRYPT_XOR."></tag>
+ *		<tag id="TAG_ERROR" cardinality="1" result="true" name="Serviceresult" type="RTS_UI16">
+ *			<value define="ERR_OK" description="Password changed successfully" />
+ *			<value define="ERR_NOT_SUPPORTED" description="Changing the credentials is not possible." />
+ *			<value define="ERR_OPERATION_DENIED" description="The database is not configurable." />
+ *			<value define="ERR_FAILED" description="Password not changed successfully" />
+ *		</result>
+ *	</response>
+ * </service>
+ */
+#define SRV_UPDATE_CURRENT_USER_CREDENTIALS			0x08
+
+/**
+ * <category>Online services</category>
+ * <service group="SG_CMPUSERMGR" id="SRV_ADD_USER" name="Add User">
+ *	<description>
+ *		Online service to add a new user. 
+ *
+ *		To add a user two steps are required:
+ *		1. Request the runtime to add a new user. This service returns the required values depending on the login protocol used by the new user.
+ *		2. Request contains the actual user that should be added.
+ *
+ *		This service requires a modify right the user management. Additional the last authentication must not
+ *		or than several minutes. It the last authentication is older than several minutes a OnlineAccessError with ERR_REAUTHENTICATE is returned.
+ *	</description>
+ *	<request>
+ *		<tag id="TAG_USERMGR_CRYPT_TYPE" name="LoginProtocolType" cardinality="1" type="RTS_UI32" description="Authentication type. This defines the protocol type of the new user."/>
+ *		<tag id="TAG_USERMGR_CRYPT_STEP" name="CurrentLoginProtocolStep" cardinality="0..1" type="RTS_UI32" description="Current step of login sequence."/>
+ *		<tag id="TAG_USERMGR_USER" name="Username" cardinality="1" type="RTS_UTF8STRING" description="The name of the new user."/>
+ *		<tag id="TAG_PROPERTY" name="User Property" cardinality="1" type="RTS_UI32" description="Properties of the new user."/>
+ *		<tag id="TAG_USERMGR_CREDENTIALS" name="Credentials" cardinality="0..1" description="Top level tag. Contains the user credentials. This is transmitted in the second step.">
+ *			<tag id="TAG_USERMGR_NEW_PASSWORD" name="Password" cardinality="0..1" type="Binary" description="The encrypted password of the new user."/>
+ *		</tag>
+ *	</request>
+ *	<response>
+ *		<tag id="TAG_USERMGR_CRYPT_PUB_KEY" name="PLC Public Key" cardinality="0..1" type="char*" description="Public key used for password encryption. Only sent for authentication type USERMGR_CRYPT_ASYMMETRIC."/>
+ *		<tag id="TAG_USERMGR_CRYPT_NONCE_NEW" name="Nonce" cardinality="0..1" type="char*" description="Nonce used for password encryption. Only sent for authentication type USERMGR_CRYPT_ASYMMETRIC."/>
+ *		<tag id="TAG_USERMGR_CRYPT_CHALLENGE_NEW" name="Nonce" cardinality="0..1" type="char*" description="challange used for password encryption. Only sent for authentication type USERMGR_CRYPT_XOR."/>
+ *		<tag id="TAG_ERROR" cardinality="1" result="true" name="Serviceresult" type="RTS_UI16">
+ *			<value define="ERR_OK" description="User added successfully" />
+ *			<value define="ERR_DUPLICATE" description="The user is existing already. No changes made to the database." />
+ *			<value define="ERR_NOT_SUPPORTED" description="The requested login protocol is not supported by this PLC." />
+ *			<value define="ERR_OPERATION_DENIED" description="The database is not configurable." />
+ *		</tag>
+ *	</result>
+ *	</response>
+ * </service>
+ */
+#define SRV_ADD_USER 0x09
+
+/**
+ * <category>Online services</category>
+ * <service group="SG_CMPUSERMGR" id="SRV_REMOVE_USER" name="Remove User">
+ *	<description>
+ *		Remove a user from the database. Additional all group assignments of the user will be deleted. 
+ *
+ *		This service requires a modify right the user management. Additional the last authentication must not
+ *		or than several minutes. It the last authentication is older than several minutes a OnlineAccessError with ERR_REAUTHENTICATE is returned.
+ *	</description>
+ *	<request>
+ *		<tag id="TAG_USERMGR_USER" name="Username" cardinality="1" type="RTS_UTF8STRING" description="The name of the user."/>
+ *	</request>
+ *	<response>
+ *		<tag id="TAG_ERROR" cardinality="1" result="true" name="Serviceresult" type="RTS_UI16">
+ *			<value define="ERR_OK" description="User removedsuccessfully" />
+ *			<value define="ERR_NO_OBJECT" description="The user is not existing. No changes made to the database." />
+ *			<value define="ERR_NOT_SUPPORTED" description="Deleting the last administrator user is not possible." />
+ *			<value define="ERR_OPERATION_DENIED" description="The database is not configurable." />
+ *		</tag>
+ *	</result>
+ *	</response>
+ * </service>
+ */
+#define SRV_REMOVE_USER 0x0A
+
+
+/**
+ * <category>Online services</category>
+ * <service group="SG_CMPUSERMGR" id="SRV_SET_USER_PROPERTY" name="Set User Property">
+ *	<description>
+ *		Set the properies of a user.
+ *
+ *		This service requires a modify right the user management. Additional the last authentication must not
+ *		or than several minutes. It the last authentication is older than several minutes a OnlineAccessError with ERR_REAUTHENTICATE is returned.
+ *	</description>
+ *	<request>
+ *		<tag id="TAG_USERMGR_USER" name="Username" cardinality="1" type="RTS_UTF8STRING" description="The name of the user."/>
+ *		<tag id="TAG_PROPERTY" name="Properties" cardinality="1" type="RTS_UI32" description="The name of the user."/>
+ *	</request>
+ *	<response>
+ *		<tag id="TAG_ERROR" cardinality="1" result="true" name="Serviceresult" type="RTS_UI16">
+ *			<value define="ERR_OK" description="User removedsuccessfully" />
+ *			<value define="ERR_NO_OBJECT" description="The user is not existing. No changes made to the database." />
+ *			<value define="ERR_OPERATION_DENIED" description="The database is not configurable." />
+ *		</tag>
+ *	</result>
+ *	</response>
+ * </service>
+ */
+#define SRV_SET_USER_PROPERTY 0x0B
+
+/**
+ * <category>Online services</category>
+ * <service group="SG_CMPUSERMGR" id="SRV_SET_CREDENTIALS_USER" name="Set User Credentials">
+ *	<description>
+ *		Update the credentials of an existing user.  
+ *
+ *		This service requires a modify right the user management. Additional the last authentication must not
+ *		or than several minutes. It the last authentication is older than several minutes a OnlineAccessError with ERR_REAUTHENTICATE is returned.
+ *	</description>
+ *	<request>
+ *		<tag id="TAG_USERMGR_CRYPT_TYPE" name="LoginProtocolType" cardinality="1" type="RTS_UI32" description="Authentication type. Must match to the type negotiated by SRV_DEV_SESSION_CREATE."/>
+ *		<tag id="TAG_USERMGR_CRYPT_STEP" name="CurrentLoginProtocolStep" cardinality="0..1" type="RTS_UI32" description="Current step of login sequence."/>
+ *		<complextag id="TAG_USERMGR_CREDENTIALS" name="Credentials" cardinality="1" description="Top level tag. Contains the user credentials.">
+ *			<tag id="TAG_USERMGR_USER" name="Username" cardinality="1" type="RTS_UTF8STRING" description="The name of the user."/>
+ *			<tag id="TAG_USERMGR_PASSWORD" name="Password" cardinality="0..1" type="Binary" description="Encrypted password."/>
+ *		</complextag>
+ *	</request>
+ *	<response>
+ *		<tag id="TAG_USERMGR_CRYPT_PUB_KEY" name="PLC Public Key" cardinality="0..1" type="RTS_CSTRING" description="Public key used for password encryption. Only sent for authentication type USERMGR_CRYPT_ASYMMETRIC."/>
+ *		<tag id="TAG_USERMGR_CRYPT_NONCE_NEW" name="Nonce" cardinality="0..1" type="char*" description="Nonce used for password encryption. Only sent for authentication type USERMGR_CRYPT_ASYMMETRIC."/>
+ *		<tag id="TAG_USERMGR_CRYPT_CHALLENGE_NEW" name="Nonce" cardinality="0..1" type="char*" description="challange used for password encryption. Only sent for authentication type USERMGR_CRYPT_XOR."/>
+ *		<tag id="TAG_ERROR" cardinality="1" result="true" name="Serviceresult" type="RTS_UI16">
+ *			<value define="ERR_OK" description="Credentials changed successfully" />
+ *			<value define="ERR_NO_OBJECT" description="The user is not existing. No changes made to the database." />
+ *			<value define="ERR_NOT_SUPPORTED" description="The requested login protocol is not supported by this PLC." />
+ *			<value define="ERR_OPERATION_DENIED" description="The database is not configurable." />
+ *		</result>
+ *	</response>  
+ * </service>
+ */
+#define SRV_SET_CREDENTIALS_USER 0x0C
+
+/**
+ * <category>Online services</category>
+ * <service group="SG_CMPUSERMGR" id="SRV_ADD_GROUP" name="Add a user group">
+ *	<description>
+ *		Add a new user group to the runtime system. 
+ *
+ *		This service requires a modify right the user management. Additional the last authentication must not
+ *		or than several minutes. It the last authentication is older than several minutes a OnlineAccessError with ERR_REAUTHENTICATE is returned.
+ *	</description>
+ *	<request>
+ *		<tag id="TAG_NAME" name="Group Name" cardinality="1" type="RTS_UTF8STRING" description="The name of the new group."/>
+ *		<tag id="TAG_GROUP_MEMBER" name="Group Name" cardinality="0..1" type="RTS_UTF8STRING" description="The name of other groups that should be added to this group. Tag can occur 0..n times"/>
+ *		<tag id="TAG_USER_MEMBER" name="Group Name" cardinality="0..1" type="RTS_UTF8STRING" description="The name of users that should be added to this group. Tag can occur 0..n times."/>
+ *	</request>
+ *	<response>
+ *		<tag id="TAG_ERROR" cardinality="1" result="true" name="Serviceresult" type="RTS_UI16">
+ *			<value define="ERR_OK" description="Group added successfully" />
+  *			<value define="ERR_DUPLICATE" description="A group with this name is already existing." />
+ *			<value define="ERR_OPERATION_DENIED" description="The database is not configurable." />
+ *		</result>
+ *	</response>  
+ * </service>
+ */
+#define SRV_ADD_GROUP 0x0D
+
+/**
+ * <category>Online services</category>
+ * <service group="SG_CMPUSERMGR" id="SRV_REMOVE_GROUP" name="Remove a user group">
+ *	<description>
+ *		Remove an existing user group from the runtime system. Additional this group is removed from all other groups where it was a member.
+ *		
+ *		This service requires a modify right the user management. Additional the last authentication must not
+ *		or than several minutes. It the last authentication is older than several minutes a OnlineAccessError with ERR_REAUTHENTICATE is returned.
+ *	</description>
+ *	<request>
+ *		<tag id="TAG_NAME" name="Group Name" cardinality="1" type="RTS_UTF8STRING" description="The name of the new group."/>
+ *	</request>
+ *	<response>
+ *		<tag id="TAG_ERROR" cardinality="1" result="true" name="Serviceresult" type="RTS_UI16">
+ *			<value define="ERR_OK" description="The group was removed successfully" />
+ *			<value define="ERR_NO_OBJECT" description="The Group is not existing. No changes made to the database." />
+ *			<value define="ERR_NOT_SUPPORTED" description="The administrator group can not be delete." />
+ *			<value define="ERR_OPERATION_DENIED" description="The database is not configurable." />
+ *		</result>
+ *	</response>  
+ * </service>
+ */
+#define SRV_REMOVE_GROUP 0x0E
+
+
+/**
+ * <category>Online services</category>
+ * <service group="SG_CMPUSERMGR" id="SRV_SET_GROUP_CONFIG" name="Configure a user group">
+ *	<description>
+ *		Update the configuration of an existing user group. This service contains all users and groups that are member of the configured group.
+ *		In a first step the configuration of the group will be cleared. As a second step the new configuration is stored and activated.
+ *
+ *		This service requires a modify right the user management. Additional the last authentication must not
+ *		or than several minutes. It the last authentication is older than several minutes a OnlineAccessError with ERR_REAUTHENTICATE is returned.
+ *	</description>
+ *	<request>
+ *		<tag id="TAG_NAME" name="Group Name" cardinality="1" type="RTS_UTF8STRING" description="The name of the group to configure."/>
+ *		<tag id="TAG_GROUP_MEMBER" name="Group Name" cardinality="0..1" type="RTS_UTF8STRING" description="The name of other groups that should be added to this group. Tag can occur 0..n times"/>
+ *		<tag id="TAG_USER_MEMBER" name="Group Name" cardinality="0..1" type="RTS_UTF8STRING" description="The name of users that should be added to this group. Tag can occur 0..n times."/>
+ *	</request>
+ *	<response>
+ *		<tag id="TAG_ERROR" cardinality="1" result="true" name="Serviceresult" type="RTS_UI16">
+ *			<value define="ERR_OK" description="The group configuration has been successfully stored." />
+ *			<value define="ERR_NO_OBJECT" description="The group is not existing. No changes made to the database." />
+ *			<value define="ERR_OPERATION_DENIED" description="The database is not configurable." />
+ *		</result>
+ *	</response>  
+ * </service>
+ */
+#define SRV_SET_GROUP_CONFIG 0x0F
+
+/**
+ * <category>Online services</category>
+ * <service group="SG_CMPUSERMGR" id="SRV_EXPORT_USER_MGMT" name="Export the user management.">
+ *	<description>
+ *		The service exports the user management into a backup file which can be uploaded by the CODESYS IDE.
+ *		The backup contains the corresponding user database which can be restored to PLCs that contain the same
+ *		backend components.
+ *
+ *		To complete the service call two messages two messages in each direction are neccesarry. In the first step
+ *		the needed information to transmit the password which is used to secure the backup are collected from the device
+ *		The second step transmit the encrypted password and returns the path of the backup file.
+ *
+ *		This service requires read rights on the User Management object.
+ *	</description>
+ *	<request>
+ *		<tag id="TAG_USERMGR_CRYPT_TYPE" name="LoginProtocolType" cardinality="1" type="RTS_UI32" description="Authentication type. Must match to the type negotiated by SRV_DEV_SESSION_CREATE."/>
+ *		<tag id="TAG_USERMGR_CRYPT_STEP" name="CurrentLoginProtocolStep" cardinality="0..1" type="RTS_UI32" description="Current step of login sequence."/>
+ *		<complextag id="TAG_USERMGR_CREDENTIALS" name="Credentials" cardinality="1" description="Top level tag. Contains the password used to encrypt the backup file.">
+ *			<tag id="TAG_USERMGR_PASSWORD" name="Password" cardinality="0..1" type="Binary" description="Encrypted password."/>
+ *		</complextag>
+ *	</request>
+ *	<response>
+ *		<tag id="TAG_USERMGR_CRYPT_PUB_KEY" name="PLC Public Key" cardinality="0..1" type="RTS_CSTRING" description="Public key used for password encryption. Only sent for authentication type USERMGR_CRYPT_ASYMMETRIC."/>
+ *		<tag id="TAG_USERMGR_CRYPT_NONCE" name="Nonce" cardinality="0..1" type="char*" description="Nonce used for password encryption. Only sent for authentication type USERMGR_CRYPT_ASYMMETRIC."/>
+ *		<tag id="TAG_USERMGR_CRYPT_CHALLENGE" name="Nonce" cardinality="0..1" type="char*" description="challange used for password encryption. Only sent for authentication type USERMGR_CRYPT_XOR."/>
+ *		<tag id="TAG_USERMGR_BACKUP_FILE" cardinality="1" name="Backfile path" type="RTS_CSTRING" description="Path of the backup file on the PLC. Can be used by file transfer services to upload the file.">
+ *		<tag id="TAG_ERROR" cardinality="1" result="true" name="Serviceresult" type="RTS_UI16">
+ *			<value define="ERR_OK" description="The group configuration has been successfully stored." />
+ *			<value define="ERR_PENDING" description="The password exchange has not finished yet." />
+ *			<value define="ERR_OPERATION_DENIED" description="The database could not be exported." />
+ *		</result>
+ *	</response>  
+ * </service>
+ */
+#define SRV_EXPORT_USER_MGMT 0x10
+
+/**
+ * <category>Online services</category>
+ * <service group="SG_CMPUSERMGR" id="SRV_IMPORT_USER_MGMT" name="Import the user management.">
+ *	<description>
+ *		The service imports the user management from a backup file which can be downloaded by the CODESYS IDE.
+ *		The backup contains the corresponding user database which can be restored to PLCs that contain the same
+ *		backend components.
+ *
+ *		This service requires a modify right the user management. Additional the last authentication must not
+ *		or than several minutes. It the last authentication is older than several minutes a OnlineAccessError with ERR_REAUTHENTICATE is returned.
+ *	</description>
+ *	<request>
+ *		<tag id="TAG_USERMGR_CRYPT_TYPE" name="LoginProtocolType" cardinality="1" type="RTS_UI32" description="Authentication type. Must match to the type negotiated by SRV_DEV_SESSION_CREATE."/>
+ *		<tag id="TAG_USERMGR_CRYPT_STEP" name="CurrentLoginProtocolStep" cardinality="0..1" type="RTS_UI32" description="Current step of login sequence."/>
+ *		<complextag id="TAG_USERMGR_CREDENTIALS" name="Credentials" cardinality="1" description="Top level tag. Contains the password used to decrypt the backup file.">
+ *			<tag id="TAG_USERMGR_PASSWORD" name="Password" cardinality="0..1" type="Binary" description="Encrypted password."/>
+ *		</complextag>
+ *		<tag id="TAG_USERMGR_BACKUP_FILE" cardinality="1" name="Backfile path" type="RTS_CSTRING" description="Path on the PLC to backup file to restore.">
+ *	</request>
+ *	<response>
+ *		<tag id="TAG_USERMGR_CRYPT_PUB_KEY" name="PLC Public Key" cardinality="0..1" type="RTS_CSTRING" description="Public key used for password encryption. Only sent for authentication type USERMGR_CRYPT_ASYMMETRIC."/>
+ *		<tag id="TAG_USERMGR_CRYPT_NONCE" name="Nonce" cardinality="0..1" type="char*" description="Nonce used for password encryption. Only sent for authentication type USERMGR_CRYPT_ASYMMETRIC."/>
+ *		<tag id="TAG_USERMGR_CRYPT_CHALLENGE" name="Nonce" cardinality="0..1" type="char*" description="challange used for password encryption. Only sent for authentication type USERMGR_CRYPT_XOR."/>
+ *		<tag id="TAG_ERROR" cardinality="1" result="true" name="Serviceresult" type="RTS_UI16">
+ *			<value define="ERR_OK" description="The group configuration has been successfully stored." />
+ *			<value define="ERR_OPERATION_DENIED" description="The database could not be imported." />
+ *			<value define="ERR_PARAMETER" description="The file to be imported is not valid" />
+ *			<value define="ERR_SECURITY_CHECKS_FAILED" description="The password of the import file was not valid." />
+ *		</result>
+ *	</response>  
+ * </service>
+ */
+#define SRV_IMPORT_USER_MGMT 0x11
 
 
 /**
@@ -232,6 +631,7 @@
  */
 #define TAG_USRMGR_VERSION							0x0F
 
+
 /**
  * <category>Online tags</category>
  * <description>Contains user information</description>
@@ -256,28 +656,36 @@
 
 
 /**
- * <category>User management session entry</category>
- * <description>
- *	Contains the correlation between the SessionID of the connection and the logged in User.
- * </description>
- * <element name="ulSessionId" type="IN">SessionID of the connection</element>
- * <element name="hUser" type="IN">Handle of the logged in user on the SessionID</element>
+ * <category>Online tags</category>
+ * <description>Tags for login service </description>
  */
-typedef struct
-{
-	RTS_UI32 ulSessionId;
-	RTS_HANDLE hUser;
-} UserMgrSessionEntry;
+#define TAG_USERMGR_CRYPT_TYPE						0x22 
+#define TAG_USERMGR_CRYPT_CHALLENGE					0x23 
+/* #define TAG_DEV_REPLY_SETTINGS					0x24  not used here, but reserve value --> defined in CmpDeviceItf */ 
+#define TAG_USERMGR_CRYPT_STEP						0x25 
+#define TAG_USERMGR_CRYPT_NONCE						0x26 
+#define TAG_USERMGR_CRYPT_PUB_KEY					0x27 
+#define TAG_USERMGR_CRYPT_NONCE_NEW					0x28
+#define TAG_USERMGR_CRYPT_CHALLENGE_NEW					0x29 
+#define TAG_USRMGR_REPLY_LOGIN						TAG_DEV_REPLY_LOGIN /* 0x82*/
+#define TAG_USRMGR_REPLY_LOGIN_RESULT				TAG_DEV_REPLY_LOGIN_RESULT /* 0x20 */
 
+#define TAG_USERMGR_CREDENTIALS						0x81
+#define TAG_USERMGR_USER							0x10
+#define TAG_USERMGR_PASSWORD						0x11
+#define TAG_USERMGR_NEW_PASSWORD					0x12
+#define TAG_USERMGR_BACKUP_FILE						0x13
 
 /**
  * <category>Crypt types</category>
- * <description>Crypt types to chiffre the password</description>
+ * <description>Crypt types to cipher the password or alternative authentication algorithms. Values can be used as bit mask.</description>
  * <element name="USERMGR_CRYPT_INVALID" type="IN">Invalid of unknown crypt type</element>
  * <element name="USERMGR_CRYPT_XOR" type="IN">Disguise password with an XOR algorithm</element>
+ * <element name="USERMGR_CRYPT_ASYMMETRIC" type="IN">Transport password with public key encryption</element>
  */
 #define USERMGR_CRYPT_INVALID				0x00000000
 #define USERMGR_CRYPT_XOR					0x00000001
+#define USERMGR_CRYPT_ASYMMETRIC			0x00000002
 
 /**
  * <category>Static defines</category>
@@ -285,11 +693,20 @@ typedef struct
  */
 #define USERDB_OBJECT_USERMGMT		"Device.UserManagement"
 
+/**
+ * <category>Old database announcements</category>
+ * <description>A database announces an old database to the user management</description>
+ * <element name="USERMGR_OLDDATABASE_ANNOUNCE" type="IN">An old database is found and converting is requested. This may be denied.</element>
+ * <element name="USERMGR_OLDDATABASE_FINISH" type="IN">An old database is converted and adjustment may be processed now</element>
+ */
+#define USERMGR_OLDDATABASE_ANNOUNCE		0x00000001
+#define USERMGR_OLDDATABASE_FINISH			0x00000002
+
 
 /**
  * <category>Event parameter</category>
- * <element name="bUserManagementChanged" type="IN">TRUE: Usermanagement database changed; FALSE: Not changed</element>
- * <element name="bRightsManagementChanged" type="IN">TRUE: Rightsmanagement database changed; FALSE: Not changed</element>
+ * <element name="bUserManagementChanged" type="IN">TRUE: User management database changed; FALSE: Not changed</element>
+ * <element name="bRightsManagementChanged" type="IN">TRUE: Rights management database changed; FALSE: Not changed</element>
  */
 typedef struct
 {
@@ -302,95 +719,159 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent every time the usermanagement database or the userrights database was changed</description>
+ * <description>Event is sent every time the user management database or the user-rights database was changed</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpUserMgrDatabaseChanged</param>
  */
 #define EVT_UserMgrDatabaseChanged		MAKE_EVENTID(EVTCLASS_INFO, 1)
 
 /**
- * <category>Static defines</category>
- * <description>Number of unsuccessful login retries to limit failed user authentication
- * In case USERMGR_NUM_OF_LOGIN_RETRIES is set to 0 this security feature is disabled.
- * </description>
+ * <category>Event parameter</category>
+ * <element name="hUser" type="IN">Handle of a temprary administrator user, only valid with this event</element>
+ * <element name="Result" type="OUT">Result of the adjustment</element>
  */
-#ifndef USERMGR_NUM_OF_LOGIN_RETRIES
-	#define USERMGR_NUM_OF_LOGIN_RETRIES			3
-#endif
+typedef struct
+{
+	RTS_HANDLE hUser;
+	RTS_RESULT Result;
+} EVTPARAM_CmpUserMgrAdjustDatabase;
+
+#define EVTPARAMID_CmpUserMgrAdjustDatabase		0x0002
+#define EVTVERSION_CmpUserMgrAdjustDatabase		0x0001
+
+/**
+ * <category>Events</category>
+ * <description>
+ * Event is sent when a default user management is to be created, especially with user groups and object rights.
+ * The Result is preset with ERR_NOTIMPLEMENTED and in this standard case the user management creates the default database with user groups and object rights.
+ * A temporary administrator user handle is provided for operations that require this.
+ * With the Result set to ERR_OK a user management was successfully created within this event, or to any error if failed. 
+ * </description>
+ * <param name="pEventParam" type="IN">EVTPARAM_CmpUserMgrAdjustDatabase</param>
+ */
+#define EVT_UserMgrCreateDefaultDatabase		MAKE_EVENTID(EVTCLASS_INFO, 2)
+
+/**
+ * <category>Events</category>
+ * <description>
+ * Event is sent when an old user database is to be converted.
+ * The Result is preset with ERR_OK and in this standard case the user management is converted to the new format.
+ * With the Result set to ERR_OPERATION_DENIED this conversion is denied, that is as if there is no user database.
+ * hUser is not used in this case and preset with RTS_INVALID_HANDLE.
+ * NOTE: This event must be registered in CH_INIT2 because the database is loaded in CH_PRE_INIT3 already.
+ * </description>
+ * <param name="pEventParam" type="IN">EVTPARAM_CmpUserMgrAdjustDatabase</param>
+ */
+#define EVT_UserMgrConvertOldDatabaseAnnounce	MAKE_EVENTID(EVTCLASS_INFO, 3)
+
+/**
+ * <category>Events</category>
+ * <description>
+ * Event is sent when an old user database was successfully converted to the new format. The user database can be adjusted during this event.
+ * A temporary administrator user handle is provided for operations that require this.
+ * The Result is preset with ERR_OK.
+ * NOTE: This event is not send when EVT_UserMgrConvertOldDatabaseAnnounce is denied.
+ * NOTE: This event must be registered in CH_INIT2 because loading of the database is finished in CH_INIT3 already.
+ * </description>
+ * <param name="pEventParam" type="IN">EVTPARAM_CmpUserMgrAdjustDatabase</param>
+ */
+#define EVT_UserMgrConvertOldDatabaseFinish		MAKE_EVENTID(EVTCLASS_INFO, 4)
 
 /**
  * <category>Static defines</category>
- * <description>Timeout after USERMGR_NUM_OF_LOGIN_RETRIES unsuccessful login tries in seconds, i.e. the user is temporarily excluded
- * The maximal timeout value for user exclusion is 4233600 seconds which is equivalent to 49 days. But this is not persistent, i.e. a restart of the runtime resets the exclusion.
+ * <description>
+ *  Defines the update interval in ms for the key pair used by the asymmetric authentication algorithm. Whenever
+ *  this time elapses since the startup of the device or the last key generation, the CmpUserMgr generates
+ *  a new pair of keys in the background.
  * </description>
  */
-#ifdef USERMGR_TIMEOUT_OF_LOGIN_RETRIES
-	#define USERMGR_USERLOCK_TIME				USERMGR_TIMEOUT_OF_LOGIN_RETRIES
-#endif
-#ifndef USERMGR_USERLOCK_TIME
-	#define USERMGR_USERLOCK_TIME				60
+#ifndef USERMGR_ASYMMETRIC_KEY_UPDATE_INTERVAL
+	#define USERMGR_ASYMMETRIC_KEY_UPDATE_INTERVAL			(24*60*60*1000)	/* 24h */		
 #endif
 
+/**
+ * <category>Settings</category>
+ * <type>INT</type>
+ * <description>
+ *  This setting defines the startup behavior of the CmpUserMgr regarding key generation:
+ *  The CmpUserMgr provides a key pair for the asymmetric authentication algorithm. Depending on the CPU performance
+ *  of the device, the generation of this key pair may take about 2..100 seconds. As long as these keys are not available, 
+ *  no client (e. g. the CODESYS Development system) is allowed to login. 
+ *  Defined values (all other values are reserved for future use): 
+ *  0:  The key pair is never stored and must be newly generated on each start of the runtime system. The keys are only
+ *      kept in RAM.
+ *  1:  Fast startup: When ever a new key pair is generated, these are stored. During startup the stored keys are loaded 
+ *      to let the runtime system communicate immediately. If no keys exist (initial startup), then logins are blocked
+ *      until the keys are available.   
+ *  Independently of the settings the keys are updated regularly in the background. 
+ * </description>
+ */
+#define USERMGRKEY_INT_FAST_KEY_STARTUP						"FastKeyStartup"
+#ifndef USERMGRKEY_INT_FAST_KEY_STARTUP_DEFAULT
+	#define USERMGRKEY_INT_FAST_KEY_STARTUP_DEFAULT			1
+#endif
+
+/**
+ * <category>Settings</category>
+ * <type>String</type>
+ * <description>
+ *  Key identifier for asymmetric authentication. Used to handle stored keys for the asymmetric authentication algorithm.
+ *  This setting is managed by the CmpUserMgr and must not be set by hand.
+ * </description>
+ */
+#define USERMGR_KEY_STRING_ASYMMETRIC_AUTH_KEY				"AsymmetricAuthKey"
 
 /**
  * <category>SecuritySettings</category>
- * <description>Security setting of the behavior, if login authentication fails. Can be selected in CmpSecurityManager.
+ * <description>Security setting to select the authentication algorithm. Can be selected in CmpSecurityManager.
  *	NOTE:
  *		Security modes must be ordered in an descending sorting, i.e. the setting with the highest security level is found at the beginning of the list!
  * </description>
- */
-#define CMPUSERMGR_KEY_STRING_LOGIN				CMPSETTINGS_CATEGORY_SECURITY ".UserLogin_ErrorBehavior"
-#define CMPUSERMGR_KEY_STRING_LOGIN_DESC		"Behavior on user login errors"
+ */	
+#define CMPUSERMGR_KEY_STRING_LOGIN_AUTH_TYPE			CMPSETTINGS_CATEGORY_SECURITY ".UserLogin_AuthenticationType"
+#define CMPUSERMGR_KEY_STRING_LOGIN_AUTH_TYPE_DESC		"Authentication algorithm"
 
-#define CMPUSERMGR_VALUE_LOGIN_EXCLUSION		"EXCLUSION"
-#define CMPUSERMGR_VALUE_LOGIN_TIMEOUT			"TIMEOUT"
-#define CMPUSERMGR_VALUE_LOGIN_NOEXCLUSION		"NOEXCLUSION"
+#define CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_ASYMM			"ONLY_ASYMMETRIC"
+#define CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_AUTO			"AUTO_NEGOTIATE"
+#define CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_LEGACY			"ONLY_LEGACY"
 
-#ifndef CMPUSERMGR_VALUE_LOGIN_DEFAULT
-	#define CMPUSERMGR_VALUE_LOGIN_DEFAULT		CMPUSERMGR_VALUE_LOGIN_TIMEOUT
+#ifndef CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_DEFAULT
+	#define CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_DEFAULT	CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_AUTO
 #endif
 
 
 /**
  * <category>SecuritySettings</category>
- * <description>Security settings of the behavior when login authentication fails.
+ * <description>Security setting to select the authentication algorithm.
  * </description>
  */
 typedef enum
 {
-	UserMgrLoginErr_NoExclusion,
-	UserMgrLoginErr_Timeout,
-	UserMgrLoginErr_Exclusion
-} USERMGR_LOGIN_ERROR;
+	UserMgrLoginAuthType_Asymmetric,
+	UserMgrLoginAuthType_Auto,
+	UserMgrLoginAuthType_Legacy
+} USERMGR_LOGIN_AUTH_TYPE;
 
-#define CMPUSERMGR_VALUE_LOGIN_LIST				{ \
-													{(RTS_I32)UserMgrLoginErr_Exclusion, CMPSECMAN_SFLAGS_NONE, CMPUSERMGR_VALUE_LOGIN_EXCLUSION, "User is excluded permanently"},\
-													{(RTS_I32)UserMgrLoginErr_Timeout, CMPSECMAN_SFLAGS_NONE, CMPUSERMGR_VALUE_LOGIN_TIMEOUT, "User is excluded temporarily. See setting [UserLockTime] which specifies the locked time."},\
-													{(RTS_I32)UserMgrLoginErr_NoExclusion, CMPSECMAN_SFLAGS_NONE, CMPUSERMGR_VALUE_LOGIN_NOEXCLUSION, "No user exclusion"},\
-												}
+#define CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_LIST		{ \
+														{(RTS_I32)UserMgrLoginAuthType_Asymmetric, CMPSECMAN_SFLAGS_NONE, CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_ASYMM, "Password, asymmetric encryption"},\
+														{(RTS_I32)UserMgrLoginAuthType_Auto, CMPSECMAN_SFLAGS_NONE, CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_AUTO, "Negotiate authentication algorithm"},\
+														{(RTS_I32)UserMgrLoginAuthType_Legacy, CMPSECMAN_SFLAGS_NONE, CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_LEGACY, "Password, legacy encryption"},\
+													}
 
-/**
- * <category>SecuritySettings</category>
- * <description>Editable security setting: Maximal number of failed login retries
- * </description>
- */
-#define CMPUSERMGR_KEY_INT_MAXRETRIES				CMPSETTINGS_CATEGORY_SECURITY ".UserLogin_MaxRetries"
-#define CMPUSERMGR_KEY_INT_MAXRETRIES_DESC			"Maximal number of failed login retries"
-
-#ifndef CMPUSERMGR_VALUE_MAXRETRIES_DEFAULT
-	#define CMPUSERMGR_VALUE_MAXRETRIES_DEFAULT		USERMGR_NUM_OF_LOGIN_RETRIES
-#endif
 
 /**
  * <category>SecuritySettings</category>
- * <description>Editable security setting: Exclusion timeout in seconds in case the maximal number of failed login retries is reached
+ * <description>Editable security setting: RSA key length for asymmetric authentication algorithm. 
+ *  Minimal allowed value: MIN(CMPUSERMGR_VALUE_LOGIN_RSALEN_MIN, CMPSETTINGS_CATEGORY_SECURITY ".RSAMinKeyLen")
  * </description>
  */
-#define CMPUSERMGR_KEY_INT_LOCKTIME					CMPSETTINGS_CATEGORY_SECURITY ".User_LockTime"
-#define CMPUSERMGR_KEY_INT_LOCKTIME_DESC			"Time in [s] which the user is locked after a maximum number of failed login"
+#define CMPUSERMGR_KEY_INT_LOGIN_RSALEN				CMPSETTINGS_CATEGORY_SECURITY ".UserLogin_RSAKeyLen"
+#define CMPUSERMGR_KEY_INT_LOGIN_RSALEN_DESC		"RSA key length for asymmetric authentication algorithm"
 
-#ifndef CMPUSERMGR_VALUE_LOCKTIME_DEFAULT
-	#define CMPUSERMGR_VALUE_LOCKTIME_DEFAULT		USERMGR_USERLOCK_TIME
+#ifndef CMPUSERMGR_VALUE_LOGIN_RSALEN_DEFAULT
+	#define CMPUSERMGR_VALUE_LOGIN_RSALEN_DEFAULT	2048
 #endif
+
+#define CMPUSERMGR_VALUE_LOGIN_RSALEN_MIN			1024
 
 /**
  * <category>SecuritySettings</category>
@@ -424,46 +905,1029 @@ typedef enum
 													{(RTS_I32)UserMgmtEnforce_Yes, CMPSECMAN_SFLAGS_NONE, CMPUSERMGR_VALUE_ENFORCE_YES, "User management is enforced, i.e. no anonymous login possible"},\
 													{(RTS_I32)UserMgmtEnforce_No, CMPSECMAN_SFLAGS_NONE, CMPUSERMGR_VALUE_ENFORCE_NO, "User management is optional"}\
 												}
+												
+												
+/**
+ * <category>SecuritySettings</category>
+ * <description>Editable security setting: Maximum time in [s} between subsequent services calls to edit the user management. If the time is expired the user has to authenticate again.
+ * </description>
+ */
+#define CMPUSERMGR_KEY_INT_EDITTIMEOUT				CMPSETTINGS_CATEGORY_SECURITY ".UserMgrEditTimeout"
+#define CMPUSERMGR_KEY_INT_EDITTIMEOUT_DESC			"Maximum time in [s} between subsequent services calls to edit the user management. If the time is expired the user has to authenticate again."
 
+#ifndef CMPUSERMGR_VALUE_EDITTIMEOUT_DEFAULT
+	#define CMPUSERMGR_VALUE_EDITTIMEOUT_DEFAULT	300
+#endif
+
+/**
+ * <category>Predefined user groups</category>
+ * <description>Predefined user groups</description>
+ * <element name="USERDB_GROUP_ADMINISTRATOR" type="IN">Administrator group. A member of this groups has all access rights on all objects!</element>
+ * <element name="USERDB_GROUP_DEVELOPER" type="IN">Developer group. A member of this groups has all access to the IEC applications an all related stuff.</element>
+ * <element name="USERDB_GROUP_SERVICE" type="IN">Service group. A member of this groups has all access to object for maintenance and service operations.</element>
+ * <element name="USERDB_GROUP_WATCH" type="IN">Watch group. A member of this groups has read-only access to the objects.</element>
+ * <element name="USERDB_GROUP_EVERYONE" type="IN">Everyone group. This group is reserved for special further purposes and not be added to the user management.</element>
+ * </element>
+ */
+#ifndef USERDB_GROUP_ADMINISTRATOR
+	#define USERDB_GROUP_ADMINISTRATOR								"Administrator"
+#endif
+#ifndef USERDB_GROUP_DEVELOPER
+	#define USERDB_GROUP_DEVELOPER									"Developer"
+#endif
+#ifndef USERDB_GROUP_SERVICE
+	#define USERDB_GROUP_SERVICE									"Service"
+#endif
+#ifndef USERDB_GROUP_WATCH
+	#define USERDB_GROUP_WATCH										"Watch"
+#endif
+#ifndef USERDB_GROUP_EVERYONE
+	#define USERDB_GROUP_EVERYONE									"Everyone"
+#endif
+
+/**
+ * <category>User rights</category>
+ * <description>Defined rights that can fully control the access to an object</description>
+ * <element name="USERDB_RIGHT_NONE" type="IN">Access denied</element>
+ * <element name="USERDB_RIGHT_VIEW" type="IN">Only view rights on the object. Object cannot be modified in any way!</element>
+ * <element name="USERDB_RIGHT_MODIFY" type="IN">Object can be viewed and modified</element>
+ * <element name="USERDB_RIGHT_EXECUTE" type="IN">Object can be executed</element>
+ * <element name="USERDB_RIGHT_ADD_REMOVE" type="IN">It is allowed to add and remove sub objects</element>
+ * <element name="USERDB_RIGHT_OEM" type="IN">The upper 8 bits of the access rights are reserved for OEM specific access rights</element>
+ * <element name="USERDB_RIGHT_ALL" type="IN">All rights allowed on the object</element>
+ */
+#define USERDB_RIGHT_NONE					UINT32_C(0x00000000)
+#define USERDB_RIGHT_VIEW					UINT32_C(0x00000001)
+#define USERDB_RIGHT_MODIFY					UINT32_C(0x00000002)
+#define USERDB_RIGHT_EXECUTE				UINT32_C(0x00000004)
+#define USERDB_RIGHT_ADD_REMOVE				UINT32_C(0x00000008)
+#define USERDB_RIGHT_OEM					UINT32_C(0xFF000000)
+#define USERDB_RIGHT_ALL					UINT32_C(0xFFFFFFFF)
+
+/**
+ * <category>Properties</category>
+ * <description>These defines are used as properties of the UserDB Objects. Use as bit-mask.</description>
+ * <element name="USERDB_HIDE_OBJECT">Hides the object from being uploaded to the IDE.</element>
+ * <element name="USERDB_EXPLICIT_RIGHTS">Evaluates only the explicit configured rights on that object. Don't check the parent 
+ *	objects if no rights are configured. If no explicit rights are found access is denied.</element>
+ */
+#define USERDB_HIDE_OBJECT             1
+#define USERDB_EXPLICIT_RIGHTS         2
+
+/**
+ * <category>User and group properites</category>
+ * <description>Properties for a user.</description>
+ * <element name="USERMGR_ONLINE_PROP_PASSWORD_UP_TO_DATE" type="IN">The users password is up to date and must not be changed.</element>
+ * <element name="USERMGR_ONLINE_PROP_PASSWORD_EDITABLE" type="IN">The user is allowed to change the password.</element>
+ * <element name="USERMGR_ONLINE_PROP_ALL" type="IN">All properities set.</element>
+ */
+#define USERMGR_ONLINE_PROP_PASSWORD_UP_TO_DATE	UINT32_C(0x00001000)
+#define USERMGR_ONLINE_PROP_PASSWORD_EDITABLE	UINT32_C(0x00002000)
+#define USERMGR_ONLINE_PROP_ALL					UINT32_C(0xFFFFFF7F)
+
+#define USERMGR_USER_PROP_PASSWORD_EXPIRED		UINT32_C(0x00001000)
+#define USERMGR_USER_PROP_ALLOW_CHANGE_PASSWORD	UINT32_C(0x00002000)
+#define USERMGR_USER_PROP_DEFAULT USERMGR_USER_PROP_ALLOW_CHANGE_PASSWORD | USERMGR_USER_PROP_PASSWORD_EXPIRED
 
 
 /**
- * <category>User state</category>
- * <description>The bit definitions for UserMgrGetState
+ * <category>Login protocol types</category>
+ * <description>
+ *  There are different protocols that can be used to authenticae a user. The following list contains the supported 
+ *	credential types of the runtime system. It is not required that a runtime implements all available type. The available
+ *	types depend on the actual implementaion of different user authenticators.
+ *	<ul>
+ *		<li>UserMgrCredentials_Type_Password: This login protocol transmitts the users password in plaintext over a TLS authenticated connection. This method is suitable if the credentials have
+ *			to be forwarded to other databases such as LDAP, OS, or an OEM user database.</li>
+ *		<li>UserMgrCredentials_Type_AUCPACE: This login protocol checks the credentials without transmitting the users password to the PLC. 
+ *			It is suitable for embedded devices that have the CmpCryptoEmbedded available. A secure session is generated during login which can be used to protect further data within the session.</li>
+ *		<li>UserMgrCredentials_Type_X509: This login protocol uses client certificates to authenticate the user. 
+ *			A Nonce is digitally signed by the client with the users private key. Only suitable for lager systems with an implementation of CmpCrypto and CmpX509Cert</li>
+ *	</ul>
  * </description>
- * <element name="USERMGR_US_NONE" type="The user is known</element>
- * <element name="USERMGR_US_LOGGEDIN" type="OUT">The user has successfully logged in</element>
- * <element name="USERMGR_US_AUTHENTICATED" type="OUT">The user is authenticated e.g. by password verification</element>
  */
-#define USERMGR_US_NONE				UINT32_C(0x00000000)
-#define USERMGR_US_LOGGEDIN			UINT32_C(0x00000001)
-#define USERMGR_US_AUTHENTICATED	UINT32_C(0x00000002)
+#define UserMgrCredentials_Type_Password	UINT32_C(1)
+
+typedef struct
+{
+	char *pszPassword;
+} UserMgrCredentials_Password;
+
+#if 0
+typedef struct
+{
+	RtsByteString 	Nonce;
+	RtsByteString 	SignedData;
+	RTS_SIZE		noneOffset;
+	RTS_HANDLE		hClientCertificate;
+	RtsByteString 	ClientSignature;	
+} CmpUserMgr_X509_Parameter;
+#endif
+
+typedef union
+{
+	UserMgrCredentials_Password pwd;
+}UserMgrCredentials_Store;
+
+typedef struct
+{
+	RTS_UI32 credentialsType;
+	UserMgrCredentials_Store credential;
+}UserMgrCredentials;
+
+#define USERMGR_DATAEXCHANGE_FOLDER "$UserMgr$"
+#define USERMGR_USERGROUPS_EXCHANGE_FILE USERMGR_DATAEXCHANGE_FOLDER "/Users_Groups_export.dum2"
+#define USERMGR_USERGROUPS_BACKUP_FILE USERMGR_DATAEXCHANGE_FOLDER "/Backup.dum2"
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+
+
 /**
- * <description>Login user on the usermanagement
- * NOTE: The returned handle is not compatible with a handle from the UserDB, and these handles must not be mixed.
- * </description>
+ * <description>Register a user database to the user manager. Only one database can be registered. If not database is registred then 
+ * the user management will be deactivated if allowed.</description>
+ * <param name="hDatabase" type="IN">Handle to the database.</param>
+ * <param name="type" type="IN">The credentials type that the database supports.</param>
+ */
+RTS_RESULT CDECL UserMgrRegisterUserDB(RTS_HANDLE hDatabase, RTS_UI32 type);
+typedef RTS_RESULT (CDECL * PFUSERMGRREGISTERUSERDB) (RTS_HANDLE hDatabase, RTS_UI32 type);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRREGISTERUSERDB_NOTIMPLEMENTED)
+	#define USE_UserMgrRegisterUserDB
+	#define EXT_UserMgrRegisterUserDB
+	#define GET_UserMgrRegisterUserDB(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrRegisterUserDB(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrRegisterUserDB  FALSE
+	#define EXP_UserMgrRegisterUserDB  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrRegisterUserDB
+	#define EXT_UserMgrRegisterUserDB
+	#define GET_UserMgrRegisterUserDB(fl)  CAL_CMGETAPI( "UserMgrRegisterUserDB" ) 
+	#define CAL_UserMgrRegisterUserDB  UserMgrRegisterUserDB
+	#define CHK_UserMgrRegisterUserDB  TRUE
+	#define EXP_UserMgrRegisterUserDB  CAL_CMEXPAPI( "UserMgrRegisterUserDB" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrRegisterUserDB
+	#define EXT_UserMgrRegisterUserDB
+	#define GET_UserMgrRegisterUserDB(fl)  CAL_CMGETAPI( "UserMgrRegisterUserDB" ) 
+	#define CAL_UserMgrRegisterUserDB  UserMgrRegisterUserDB
+	#define CHK_UserMgrRegisterUserDB  TRUE
+	#define EXP_UserMgrRegisterUserDB  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserDB", (RTS_UINTPTR)UserMgrRegisterUserDB, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrRegisterUserDB
+	#define EXT_CmpUserMgrUserMgrRegisterUserDB
+	#define GET_CmpUserMgrUserMgrRegisterUserDB  ERR_OK
+	#define CAL_CmpUserMgrUserMgrRegisterUserDB pICmpUserMgr->IUserMgrRegisterUserDB
+	#define CHK_CmpUserMgrUserMgrRegisterUserDB (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrRegisterUserDB  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrRegisterUserDB
+	#define EXT_UserMgrRegisterUserDB
+	#define GET_UserMgrRegisterUserDB(fl)  CAL_CMGETAPI( "UserMgrRegisterUserDB" ) 
+	#define CAL_UserMgrRegisterUserDB pICmpUserMgr->IUserMgrRegisterUserDB
+	#define CHK_UserMgrRegisterUserDB (pICmpUserMgr != NULL)
+	#define EXP_UserMgrRegisterUserDB  CAL_CMEXPAPI( "UserMgrRegisterUserDB" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrRegisterUserDB  PFUSERMGRREGISTERUSERDB pfUserMgrRegisterUserDB;
+	#define EXT_UserMgrRegisterUserDB  extern PFUSERMGRREGISTERUSERDB pfUserMgrRegisterUserDB;
+	#define GET_UserMgrRegisterUserDB(fl)  s_pfCMGetAPI2( "UserMgrRegisterUserDB", (RTS_VOID_FCTPTR *)&pfUserMgrRegisterUserDB, (fl), 0, 0)
+	#define CAL_UserMgrRegisterUserDB  pfUserMgrRegisterUserDB
+	#define CHK_UserMgrRegisterUserDB  (pfUserMgrRegisterUserDB != NULL)
+	#define EXP_UserMgrRegisterUserDB  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserDB", (RTS_UINTPTR)UserMgrRegisterUserDB, 0, 0) 
+#endif
+
+
+
+/**
+ * <description>Unregister a user database from the user manager.</description>
+ * <param name="hDatabase" type="IN">Handle to the database.</param>
+ */
+RTS_RESULT CDECL UserMgrUnregisterUserDB(RTS_HANDLE hDatabase);
+typedef RTS_RESULT (CDECL * PFUSERMGRUNREGISTERUSERDB) (RTS_HANDLE hDatabase);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRUNREGISTERUSERDB_NOTIMPLEMENTED)
+	#define USE_UserMgrUnregisterUserDB
+	#define EXT_UserMgrUnregisterUserDB
+	#define GET_UserMgrUnregisterUserDB(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrUnregisterUserDB(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrUnregisterUserDB  FALSE
+	#define EXP_UserMgrUnregisterUserDB  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrUnregisterUserDB
+	#define EXT_UserMgrUnregisterUserDB
+	#define GET_UserMgrUnregisterUserDB(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserDB" ) 
+	#define CAL_UserMgrUnregisterUserDB  UserMgrUnregisterUserDB
+	#define CHK_UserMgrUnregisterUserDB  TRUE
+	#define EXP_UserMgrUnregisterUserDB  CAL_CMEXPAPI( "UserMgrUnregisterUserDB" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrUnregisterUserDB
+	#define EXT_UserMgrUnregisterUserDB
+	#define GET_UserMgrUnregisterUserDB(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserDB" ) 
+	#define CAL_UserMgrUnregisterUserDB  UserMgrUnregisterUserDB
+	#define CHK_UserMgrUnregisterUserDB  TRUE
+	#define EXP_UserMgrUnregisterUserDB  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserDB", (RTS_UINTPTR)UserMgrUnregisterUserDB, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrUnregisterUserDB
+	#define EXT_CmpUserMgrUserMgrUnregisterUserDB
+	#define GET_CmpUserMgrUserMgrUnregisterUserDB  ERR_OK
+	#define CAL_CmpUserMgrUserMgrUnregisterUserDB pICmpUserMgr->IUserMgrUnregisterUserDB
+	#define CHK_CmpUserMgrUserMgrUnregisterUserDB (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrUnregisterUserDB  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrUnregisterUserDB
+	#define EXT_UserMgrUnregisterUserDB
+	#define GET_UserMgrUnregisterUserDB(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserDB" ) 
+	#define CAL_UserMgrUnregisterUserDB pICmpUserMgr->IUserMgrUnregisterUserDB
+	#define CHK_UserMgrUnregisterUserDB (pICmpUserMgr != NULL)
+	#define EXP_UserMgrUnregisterUserDB  CAL_CMEXPAPI( "UserMgrUnregisterUserDB" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrUnregisterUserDB  PFUSERMGRUNREGISTERUSERDB pfUserMgrUnregisterUserDB;
+	#define EXT_UserMgrUnregisterUserDB  extern PFUSERMGRUNREGISTERUSERDB pfUserMgrUnregisterUserDB;
+	#define GET_UserMgrUnregisterUserDB(fl)  s_pfCMGetAPI2( "UserMgrUnregisterUserDB", (RTS_VOID_FCTPTR *)&pfUserMgrUnregisterUserDB, (fl), 0, 0)
+	#define CAL_UserMgrUnregisterUserDB  pfUserMgrUnregisterUserDB
+	#define CHK_UserMgrUnregisterUserDB  (pfUserMgrUnregisterUserDB != NULL)
+	#define EXP_UserMgrUnregisterUserDB  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserDB", (RTS_UINTPTR)UserMgrUnregisterUserDB, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Register a configuration database. If this interface is registered the online services can change the user database.</description>
+ * <param name="hDatabase" type="IN">Handle to the database.</param>
+ * <param name="type" type="IN">The credentials type that the database supports.</param>
+ */
+RTS_RESULT CDECL UserMgrRegisterUserDBConfig(RTS_HANDLE hDatabase, RTS_UI32 type);
+typedef RTS_RESULT (CDECL * PFUSERMGRREGISTERUSERDBCONFIG) (RTS_HANDLE hDatabase, RTS_UI32 type);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRREGISTERUSERDBCONFIG_NOTIMPLEMENTED)
+	#define USE_UserMgrRegisterUserDBConfig
+	#define EXT_UserMgrRegisterUserDBConfig
+	#define GET_UserMgrRegisterUserDBConfig(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrRegisterUserDBConfig(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrRegisterUserDBConfig  FALSE
+	#define EXP_UserMgrRegisterUserDBConfig  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrRegisterUserDBConfig
+	#define EXT_UserMgrRegisterUserDBConfig
+	#define GET_UserMgrRegisterUserDBConfig(fl)  CAL_CMGETAPI( "UserMgrRegisterUserDBConfig" ) 
+	#define CAL_UserMgrRegisterUserDBConfig  UserMgrRegisterUserDBConfig
+	#define CHK_UserMgrRegisterUserDBConfig  TRUE
+	#define EXP_UserMgrRegisterUserDBConfig  CAL_CMEXPAPI( "UserMgrRegisterUserDBConfig" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrRegisterUserDBConfig
+	#define EXT_UserMgrRegisterUserDBConfig
+	#define GET_UserMgrRegisterUserDBConfig(fl)  CAL_CMGETAPI( "UserMgrRegisterUserDBConfig" ) 
+	#define CAL_UserMgrRegisterUserDBConfig  UserMgrRegisterUserDBConfig
+	#define CHK_UserMgrRegisterUserDBConfig  TRUE
+	#define EXP_UserMgrRegisterUserDBConfig  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserDBConfig", (RTS_UINTPTR)UserMgrRegisterUserDBConfig, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrRegisterUserDBConfig
+	#define EXT_CmpUserMgrUserMgrRegisterUserDBConfig
+	#define GET_CmpUserMgrUserMgrRegisterUserDBConfig  ERR_OK
+	#define CAL_CmpUserMgrUserMgrRegisterUserDBConfig pICmpUserMgr->IUserMgrRegisterUserDBConfig
+	#define CHK_CmpUserMgrUserMgrRegisterUserDBConfig (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrRegisterUserDBConfig  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrRegisterUserDBConfig
+	#define EXT_UserMgrRegisterUserDBConfig
+	#define GET_UserMgrRegisterUserDBConfig(fl)  CAL_CMGETAPI( "UserMgrRegisterUserDBConfig" ) 
+	#define CAL_UserMgrRegisterUserDBConfig pICmpUserMgr->IUserMgrRegisterUserDBConfig
+	#define CHK_UserMgrRegisterUserDBConfig (pICmpUserMgr != NULL)
+	#define EXP_UserMgrRegisterUserDBConfig  CAL_CMEXPAPI( "UserMgrRegisterUserDBConfig" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrRegisterUserDBConfig  PFUSERMGRREGISTERUSERDBCONFIG pfUserMgrRegisterUserDBConfig;
+	#define EXT_UserMgrRegisterUserDBConfig  extern PFUSERMGRREGISTERUSERDBCONFIG pfUserMgrRegisterUserDBConfig;
+	#define GET_UserMgrRegisterUserDBConfig(fl)  s_pfCMGetAPI2( "UserMgrRegisterUserDBConfig", (RTS_VOID_FCTPTR *)&pfUserMgrRegisterUserDBConfig, (fl), 0, 0)
+	#define CAL_UserMgrRegisterUserDBConfig  pfUserMgrRegisterUserDBConfig
+	#define CHK_UserMgrRegisterUserDBConfig  (pfUserMgrRegisterUserDBConfig != NULL)
+	#define EXP_UserMgrRegisterUserDBConfig  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserDBConfig", (RTS_UINTPTR)UserMgrRegisterUserDBConfig, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Unregister a configuration database.</description>
+ * <param name="hDatabase" type="IN">Handle to the database.</param>
+ * <param name="type" type="IN">The credentials type that the database supports.</param>
+ */
+RTS_RESULT CDECL UserMgrUnregisterUserDBConfig(RTS_HANDLE hDatabase);
+typedef RTS_RESULT (CDECL * PFUSERMGRUNREGISTERUSERDBCONFIG) (RTS_HANDLE hDatabase);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRUNREGISTERUSERDBCONFIG_NOTIMPLEMENTED)
+	#define USE_UserMgrUnregisterUserDBConfig
+	#define EXT_UserMgrUnregisterUserDBConfig
+	#define GET_UserMgrUnregisterUserDBConfig(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrUnregisterUserDBConfig(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrUnregisterUserDBConfig  FALSE
+	#define EXP_UserMgrUnregisterUserDBConfig  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrUnregisterUserDBConfig
+	#define EXT_UserMgrUnregisterUserDBConfig
+	#define GET_UserMgrUnregisterUserDBConfig(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserDBConfig" ) 
+	#define CAL_UserMgrUnregisterUserDBConfig  UserMgrUnregisterUserDBConfig
+	#define CHK_UserMgrUnregisterUserDBConfig  TRUE
+	#define EXP_UserMgrUnregisterUserDBConfig  CAL_CMEXPAPI( "UserMgrUnregisterUserDBConfig" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrUnregisterUserDBConfig
+	#define EXT_UserMgrUnregisterUserDBConfig
+	#define GET_UserMgrUnregisterUserDBConfig(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserDBConfig" ) 
+	#define CAL_UserMgrUnregisterUserDBConfig  UserMgrUnregisterUserDBConfig
+	#define CHK_UserMgrUnregisterUserDBConfig  TRUE
+	#define EXP_UserMgrUnregisterUserDBConfig  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserDBConfig", (RTS_UINTPTR)UserMgrUnregisterUserDBConfig, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrUnregisterUserDBConfig
+	#define EXT_CmpUserMgrUserMgrUnregisterUserDBConfig
+	#define GET_CmpUserMgrUserMgrUnregisterUserDBConfig  ERR_OK
+	#define CAL_CmpUserMgrUserMgrUnregisterUserDBConfig pICmpUserMgr->IUserMgrUnregisterUserDBConfig
+	#define CHK_CmpUserMgrUserMgrUnregisterUserDBConfig (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrUnregisterUserDBConfig  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrUnregisterUserDBConfig
+	#define EXT_UserMgrUnregisterUserDBConfig
+	#define GET_UserMgrUnregisterUserDBConfig(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserDBConfig" ) 
+	#define CAL_UserMgrUnregisterUserDBConfig pICmpUserMgr->IUserMgrUnregisterUserDBConfig
+	#define CHK_UserMgrUnregisterUserDBConfig (pICmpUserMgr != NULL)
+	#define EXP_UserMgrUnregisterUserDBConfig  CAL_CMEXPAPI( "UserMgrUnregisterUserDBConfig" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrUnregisterUserDBConfig  PFUSERMGRUNREGISTERUSERDBCONFIG pfUserMgrUnregisterUserDBConfig;
+	#define EXT_UserMgrUnregisterUserDBConfig  extern PFUSERMGRUNREGISTERUSERDBCONFIG pfUserMgrUnregisterUserDBConfig;
+	#define GET_UserMgrUnregisterUserDBConfig(fl)  s_pfCMGetAPI2( "UserMgrUnregisterUserDBConfig", (RTS_VOID_FCTPTR *)&pfUserMgrUnregisterUserDBConfig, (fl), 0, 0)
+	#define CAL_UserMgrUnregisterUserDBConfig  pfUserMgrUnregisterUserDBConfig
+	#define CHK_UserMgrUnregisterUserDBConfig  (pfUserMgrUnregisterUserDBConfig != NULL)
+	#define EXP_UserMgrUnregisterUserDBConfig  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserDBConfig", (RTS_UINTPTR)UserMgrUnregisterUserDBConfig, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Register user group database.</description>
+ * <param name="hDatabase" type="IN">Handle to the database.</param>
+ */
+RTS_RESULT CDECL UserMgrRegisterUserGroupsDB(RTS_HANDLE hDatabase);
+typedef RTS_RESULT (CDECL * PFUSERMGRREGISTERUSERGROUPSDB) (RTS_HANDLE hDatabase);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRREGISTERUSERGROUPSDB_NOTIMPLEMENTED)
+	#define USE_UserMgrRegisterUserGroupsDB
+	#define EXT_UserMgrRegisterUserGroupsDB
+	#define GET_UserMgrRegisterUserGroupsDB(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrRegisterUserGroupsDB(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrRegisterUserGroupsDB  FALSE
+	#define EXP_UserMgrRegisterUserGroupsDB  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrRegisterUserGroupsDB
+	#define EXT_UserMgrRegisterUserGroupsDB
+	#define GET_UserMgrRegisterUserGroupsDB(fl)  CAL_CMGETAPI( "UserMgrRegisterUserGroupsDB" ) 
+	#define CAL_UserMgrRegisterUserGroupsDB  UserMgrRegisterUserGroupsDB
+	#define CHK_UserMgrRegisterUserGroupsDB  TRUE
+	#define EXP_UserMgrRegisterUserGroupsDB  CAL_CMEXPAPI( "UserMgrRegisterUserGroupsDB" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrRegisterUserGroupsDB
+	#define EXT_UserMgrRegisterUserGroupsDB
+	#define GET_UserMgrRegisterUserGroupsDB(fl)  CAL_CMGETAPI( "UserMgrRegisterUserGroupsDB" ) 
+	#define CAL_UserMgrRegisterUserGroupsDB  UserMgrRegisterUserGroupsDB
+	#define CHK_UserMgrRegisterUserGroupsDB  TRUE
+	#define EXP_UserMgrRegisterUserGroupsDB  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserGroupsDB", (RTS_UINTPTR)UserMgrRegisterUserGroupsDB, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrRegisterUserGroupsDB
+	#define EXT_CmpUserMgrUserMgrRegisterUserGroupsDB
+	#define GET_CmpUserMgrUserMgrRegisterUserGroupsDB  ERR_OK
+	#define CAL_CmpUserMgrUserMgrRegisterUserGroupsDB pICmpUserMgr->IUserMgrRegisterUserGroupsDB
+	#define CHK_CmpUserMgrUserMgrRegisterUserGroupsDB (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrRegisterUserGroupsDB  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrRegisterUserGroupsDB
+	#define EXT_UserMgrRegisterUserGroupsDB
+	#define GET_UserMgrRegisterUserGroupsDB(fl)  CAL_CMGETAPI( "UserMgrRegisterUserGroupsDB" ) 
+	#define CAL_UserMgrRegisterUserGroupsDB pICmpUserMgr->IUserMgrRegisterUserGroupsDB
+	#define CHK_UserMgrRegisterUserGroupsDB (pICmpUserMgr != NULL)
+	#define EXP_UserMgrRegisterUserGroupsDB  CAL_CMEXPAPI( "UserMgrRegisterUserGroupsDB" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrRegisterUserGroupsDB  PFUSERMGRREGISTERUSERGROUPSDB pfUserMgrRegisterUserGroupsDB;
+	#define EXT_UserMgrRegisterUserGroupsDB  extern PFUSERMGRREGISTERUSERGROUPSDB pfUserMgrRegisterUserGroupsDB;
+	#define GET_UserMgrRegisterUserGroupsDB(fl)  s_pfCMGetAPI2( "UserMgrRegisterUserGroupsDB", (RTS_VOID_FCTPTR *)&pfUserMgrRegisterUserGroupsDB, (fl), 0, 0)
+	#define CAL_UserMgrRegisterUserGroupsDB  pfUserMgrRegisterUserGroupsDB
+	#define CHK_UserMgrRegisterUserGroupsDB  (pfUserMgrRegisterUserGroupsDB != NULL)
+	#define EXP_UserMgrRegisterUserGroupsDB  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserGroupsDB", (RTS_UINTPTR)UserMgrRegisterUserGroupsDB, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Unregister user group database.</description>
+ * <param name="hDatabase" type="IN">Handle to the database.</param>
+ */
+RTS_RESULT CDECL UserMgrUnregisterUserGroupsDB(RTS_HANDLE hDatabase);
+typedef RTS_RESULT (CDECL * PFUSERMGRUNREGISTERUSERGROUPSDB) (RTS_HANDLE hDatabase);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRUNREGISTERUSERGROUPSDB_NOTIMPLEMENTED)
+	#define USE_UserMgrUnregisterUserGroupsDB
+	#define EXT_UserMgrUnregisterUserGroupsDB
+	#define GET_UserMgrUnregisterUserGroupsDB(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrUnregisterUserGroupsDB(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrUnregisterUserGroupsDB  FALSE
+	#define EXP_UserMgrUnregisterUserGroupsDB  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrUnregisterUserGroupsDB
+	#define EXT_UserMgrUnregisterUserGroupsDB
+	#define GET_UserMgrUnregisterUserGroupsDB(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserGroupsDB" ) 
+	#define CAL_UserMgrUnregisterUserGroupsDB  UserMgrUnregisterUserGroupsDB
+	#define CHK_UserMgrUnregisterUserGroupsDB  TRUE
+	#define EXP_UserMgrUnregisterUserGroupsDB  CAL_CMEXPAPI( "UserMgrUnregisterUserGroupsDB" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrUnregisterUserGroupsDB
+	#define EXT_UserMgrUnregisterUserGroupsDB
+	#define GET_UserMgrUnregisterUserGroupsDB(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserGroupsDB" ) 
+	#define CAL_UserMgrUnregisterUserGroupsDB  UserMgrUnregisterUserGroupsDB
+	#define CHK_UserMgrUnregisterUserGroupsDB  TRUE
+	#define EXP_UserMgrUnregisterUserGroupsDB  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserGroupsDB", (RTS_UINTPTR)UserMgrUnregisterUserGroupsDB, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrUnregisterUserGroupsDB
+	#define EXT_CmpUserMgrUserMgrUnregisterUserGroupsDB
+	#define GET_CmpUserMgrUserMgrUnregisterUserGroupsDB  ERR_OK
+	#define CAL_CmpUserMgrUserMgrUnregisterUserGroupsDB pICmpUserMgr->IUserMgrUnregisterUserGroupsDB
+	#define CHK_CmpUserMgrUserMgrUnregisterUserGroupsDB (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrUnregisterUserGroupsDB  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrUnregisterUserGroupsDB
+	#define EXT_UserMgrUnregisterUserGroupsDB
+	#define GET_UserMgrUnregisterUserGroupsDB(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserGroupsDB" ) 
+	#define CAL_UserMgrUnregisterUserGroupsDB pICmpUserMgr->IUserMgrUnregisterUserGroupsDB
+	#define CHK_UserMgrUnregisterUserGroupsDB (pICmpUserMgr != NULL)
+	#define EXP_UserMgrUnregisterUserGroupsDB  CAL_CMEXPAPI( "UserMgrUnregisterUserGroupsDB" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrUnregisterUserGroupsDB  PFUSERMGRUNREGISTERUSERGROUPSDB pfUserMgrUnregisterUserGroupsDB;
+	#define EXT_UserMgrUnregisterUserGroupsDB  extern PFUSERMGRUNREGISTERUSERGROUPSDB pfUserMgrUnregisterUserGroupsDB;
+	#define GET_UserMgrUnregisterUserGroupsDB(fl)  s_pfCMGetAPI2( "UserMgrUnregisterUserGroupsDB", (RTS_VOID_FCTPTR *)&pfUserMgrUnregisterUserGroupsDB, (fl), 0, 0)
+	#define CAL_UserMgrUnregisterUserGroupsDB  pfUserMgrUnregisterUserGroupsDB
+	#define CHK_UserMgrUnregisterUserGroupsDB  (pfUserMgrUnregisterUserGroupsDB != NULL)
+	#define EXP_UserMgrUnregisterUserGroupsDB  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserGroupsDB", (RTS_UINTPTR)UserMgrUnregisterUserGroupsDB, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Register user group configuration database.</description>
+ * <param name="hDatabase" type="IN">Handle to the database.</param>
+ */
+RTS_RESULT CDECL UserMgrRegisterUserGroupsDBConfig(RTS_HANDLE hDatabase);
+typedef RTS_RESULT (CDECL * PFUSERMGRREGISTERUSERGROUPSDBCONFIG) (RTS_HANDLE hDatabase);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRREGISTERUSERGROUPSDBCONFIG_NOTIMPLEMENTED)
+	#define USE_UserMgrRegisterUserGroupsDBConfig
+	#define EXT_UserMgrRegisterUserGroupsDBConfig
+	#define GET_UserMgrRegisterUserGroupsDBConfig(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrRegisterUserGroupsDBConfig(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrRegisterUserGroupsDBConfig  FALSE
+	#define EXP_UserMgrRegisterUserGroupsDBConfig  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrRegisterUserGroupsDBConfig
+	#define EXT_UserMgrRegisterUserGroupsDBConfig
+	#define GET_UserMgrRegisterUserGroupsDBConfig(fl)  CAL_CMGETAPI( "UserMgrRegisterUserGroupsDBConfig" ) 
+	#define CAL_UserMgrRegisterUserGroupsDBConfig  UserMgrRegisterUserGroupsDBConfig
+	#define CHK_UserMgrRegisterUserGroupsDBConfig  TRUE
+	#define EXP_UserMgrRegisterUserGroupsDBConfig  CAL_CMEXPAPI( "UserMgrRegisterUserGroupsDBConfig" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrRegisterUserGroupsDBConfig
+	#define EXT_UserMgrRegisterUserGroupsDBConfig
+	#define GET_UserMgrRegisterUserGroupsDBConfig(fl)  CAL_CMGETAPI( "UserMgrRegisterUserGroupsDBConfig" ) 
+	#define CAL_UserMgrRegisterUserGroupsDBConfig  UserMgrRegisterUserGroupsDBConfig
+	#define CHK_UserMgrRegisterUserGroupsDBConfig  TRUE
+	#define EXP_UserMgrRegisterUserGroupsDBConfig  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserGroupsDBConfig", (RTS_UINTPTR)UserMgrRegisterUserGroupsDBConfig, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrRegisterUserGroupsDBConfig
+	#define EXT_CmpUserMgrUserMgrRegisterUserGroupsDBConfig
+	#define GET_CmpUserMgrUserMgrRegisterUserGroupsDBConfig  ERR_OK
+	#define CAL_CmpUserMgrUserMgrRegisterUserGroupsDBConfig pICmpUserMgr->IUserMgrRegisterUserGroupsDBConfig
+	#define CHK_CmpUserMgrUserMgrRegisterUserGroupsDBConfig (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrRegisterUserGroupsDBConfig  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrRegisterUserGroupsDBConfig
+	#define EXT_UserMgrRegisterUserGroupsDBConfig
+	#define GET_UserMgrRegisterUserGroupsDBConfig(fl)  CAL_CMGETAPI( "UserMgrRegisterUserGroupsDBConfig" ) 
+	#define CAL_UserMgrRegisterUserGroupsDBConfig pICmpUserMgr->IUserMgrRegisterUserGroupsDBConfig
+	#define CHK_UserMgrRegisterUserGroupsDBConfig (pICmpUserMgr != NULL)
+	#define EXP_UserMgrRegisterUserGroupsDBConfig  CAL_CMEXPAPI( "UserMgrRegisterUserGroupsDBConfig" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrRegisterUserGroupsDBConfig  PFUSERMGRREGISTERUSERGROUPSDBCONFIG pfUserMgrRegisterUserGroupsDBConfig;
+	#define EXT_UserMgrRegisterUserGroupsDBConfig  extern PFUSERMGRREGISTERUSERGROUPSDBCONFIG pfUserMgrRegisterUserGroupsDBConfig;
+	#define GET_UserMgrRegisterUserGroupsDBConfig(fl)  s_pfCMGetAPI2( "UserMgrRegisterUserGroupsDBConfig", (RTS_VOID_FCTPTR *)&pfUserMgrRegisterUserGroupsDBConfig, (fl), 0, 0)
+	#define CAL_UserMgrRegisterUserGroupsDBConfig  pfUserMgrRegisterUserGroupsDBConfig
+	#define CHK_UserMgrRegisterUserGroupsDBConfig  (pfUserMgrRegisterUserGroupsDBConfig != NULL)
+	#define EXP_UserMgrRegisterUserGroupsDBConfig  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserGroupsDBConfig", (RTS_UINTPTR)UserMgrRegisterUserGroupsDBConfig, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Unregister user group configuration database.</description>
+ * <param name="hDatabase" type="IN">Handle to the database.</param>
+ */
+RTS_RESULT CDECL UserMgrUnregisterUserGroupsDBConfig(RTS_HANDLE hDatabase);
+typedef RTS_RESULT (CDECL * PFUSERMGRUNREGISTERUSERGROUPSDBCONFIG) (RTS_HANDLE hDatabase);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRUNREGISTERUSERGROUPSDBCONFIG_NOTIMPLEMENTED)
+	#define USE_UserMgrUnregisterUserGroupsDBConfig
+	#define EXT_UserMgrUnregisterUserGroupsDBConfig
+	#define GET_UserMgrUnregisterUserGroupsDBConfig(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrUnregisterUserGroupsDBConfig(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrUnregisterUserGroupsDBConfig  FALSE
+	#define EXP_UserMgrUnregisterUserGroupsDBConfig  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrUnregisterUserGroupsDBConfig
+	#define EXT_UserMgrUnregisterUserGroupsDBConfig
+	#define GET_UserMgrUnregisterUserGroupsDBConfig(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserGroupsDBConfig" ) 
+	#define CAL_UserMgrUnregisterUserGroupsDBConfig  UserMgrUnregisterUserGroupsDBConfig
+	#define CHK_UserMgrUnregisterUserGroupsDBConfig  TRUE
+	#define EXP_UserMgrUnregisterUserGroupsDBConfig  CAL_CMEXPAPI( "UserMgrUnregisterUserGroupsDBConfig" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrUnregisterUserGroupsDBConfig
+	#define EXT_UserMgrUnregisterUserGroupsDBConfig
+	#define GET_UserMgrUnregisterUserGroupsDBConfig(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserGroupsDBConfig" ) 
+	#define CAL_UserMgrUnregisterUserGroupsDBConfig  UserMgrUnregisterUserGroupsDBConfig
+	#define CHK_UserMgrUnregisterUserGroupsDBConfig  TRUE
+	#define EXP_UserMgrUnregisterUserGroupsDBConfig  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserGroupsDBConfig", (RTS_UINTPTR)UserMgrUnregisterUserGroupsDBConfig, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrUnregisterUserGroupsDBConfig
+	#define EXT_CmpUserMgrUserMgrUnregisterUserGroupsDBConfig
+	#define GET_CmpUserMgrUserMgrUnregisterUserGroupsDBConfig  ERR_OK
+	#define CAL_CmpUserMgrUserMgrUnregisterUserGroupsDBConfig pICmpUserMgr->IUserMgrUnregisterUserGroupsDBConfig
+	#define CHK_CmpUserMgrUserMgrUnregisterUserGroupsDBConfig (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrUnregisterUserGroupsDBConfig  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrUnregisterUserGroupsDBConfig
+	#define EXT_UserMgrUnregisterUserGroupsDBConfig
+	#define GET_UserMgrUnregisterUserGroupsDBConfig(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserGroupsDBConfig" ) 
+	#define CAL_UserMgrUnregisterUserGroupsDBConfig pICmpUserMgr->IUserMgrUnregisterUserGroupsDBConfig
+	#define CHK_UserMgrUnregisterUserGroupsDBConfig (pICmpUserMgr != NULL)
+	#define EXP_UserMgrUnregisterUserGroupsDBConfig  CAL_CMEXPAPI( "UserMgrUnregisterUserGroupsDBConfig" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrUnregisterUserGroupsDBConfig  PFUSERMGRUNREGISTERUSERGROUPSDBCONFIG pfUserMgrUnregisterUserGroupsDBConfig;
+	#define EXT_UserMgrUnregisterUserGroupsDBConfig  extern PFUSERMGRUNREGISTERUSERGROUPSDBCONFIG pfUserMgrUnregisterUserGroupsDBConfig;
+	#define GET_UserMgrUnregisterUserGroupsDBConfig(fl)  s_pfCMGetAPI2( "UserMgrUnregisterUserGroupsDBConfig", (RTS_VOID_FCTPTR *)&pfUserMgrUnregisterUserGroupsDBConfig, (fl), 0, 0)
+	#define CAL_UserMgrUnregisterUserGroupsDBConfig  pfUserMgrUnregisterUserGroupsDBConfig
+	#define CHK_UserMgrUnregisterUserGroupsDBConfig  (pfUserMgrUnregisterUserGroupsDBConfig != NULL)
+	#define EXP_UserMgrUnregisterUserGroupsDBConfig  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserGroupsDBConfig", (RTS_UINTPTR)UserMgrUnregisterUserGroupsDBConfig, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Register user objects database.</description>
+ * <param name="hDatabase" type="IN">Handle to the database.</param>
+ */
+RTS_RESULT CDECL UserMgrRegisterUserObjectsDB(RTS_HANDLE hDatabase);
+typedef RTS_RESULT (CDECL * PFUSERMGRREGISTERUSEROBJECTSDB) (RTS_HANDLE hDatabase);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRREGISTERUSEROBJECTSDB_NOTIMPLEMENTED)
+	#define USE_UserMgrRegisterUserObjectsDB
+	#define EXT_UserMgrRegisterUserObjectsDB
+	#define GET_UserMgrRegisterUserObjectsDB(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrRegisterUserObjectsDB(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrRegisterUserObjectsDB  FALSE
+	#define EXP_UserMgrRegisterUserObjectsDB  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrRegisterUserObjectsDB
+	#define EXT_UserMgrRegisterUserObjectsDB
+	#define GET_UserMgrRegisterUserObjectsDB(fl)  CAL_CMGETAPI( "UserMgrRegisterUserObjectsDB" ) 
+	#define CAL_UserMgrRegisterUserObjectsDB  UserMgrRegisterUserObjectsDB
+	#define CHK_UserMgrRegisterUserObjectsDB  TRUE
+	#define EXP_UserMgrRegisterUserObjectsDB  CAL_CMEXPAPI( "UserMgrRegisterUserObjectsDB" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrRegisterUserObjectsDB
+	#define EXT_UserMgrRegisterUserObjectsDB
+	#define GET_UserMgrRegisterUserObjectsDB(fl)  CAL_CMGETAPI( "UserMgrRegisterUserObjectsDB" ) 
+	#define CAL_UserMgrRegisterUserObjectsDB  UserMgrRegisterUserObjectsDB
+	#define CHK_UserMgrRegisterUserObjectsDB  TRUE
+	#define EXP_UserMgrRegisterUserObjectsDB  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserObjectsDB", (RTS_UINTPTR)UserMgrRegisterUserObjectsDB, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrRegisterUserObjectsDB
+	#define EXT_CmpUserMgrUserMgrRegisterUserObjectsDB
+	#define GET_CmpUserMgrUserMgrRegisterUserObjectsDB  ERR_OK
+	#define CAL_CmpUserMgrUserMgrRegisterUserObjectsDB pICmpUserMgr->IUserMgrRegisterUserObjectsDB
+	#define CHK_CmpUserMgrUserMgrRegisterUserObjectsDB (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrRegisterUserObjectsDB  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrRegisterUserObjectsDB
+	#define EXT_UserMgrRegisterUserObjectsDB
+	#define GET_UserMgrRegisterUserObjectsDB(fl)  CAL_CMGETAPI( "UserMgrRegisterUserObjectsDB" ) 
+	#define CAL_UserMgrRegisterUserObjectsDB pICmpUserMgr->IUserMgrRegisterUserObjectsDB
+	#define CHK_UserMgrRegisterUserObjectsDB (pICmpUserMgr != NULL)
+	#define EXP_UserMgrRegisterUserObjectsDB  CAL_CMEXPAPI( "UserMgrRegisterUserObjectsDB" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrRegisterUserObjectsDB  PFUSERMGRREGISTERUSEROBJECTSDB pfUserMgrRegisterUserObjectsDB;
+	#define EXT_UserMgrRegisterUserObjectsDB  extern PFUSERMGRREGISTERUSEROBJECTSDB pfUserMgrRegisterUserObjectsDB;
+	#define GET_UserMgrRegisterUserObjectsDB(fl)  s_pfCMGetAPI2( "UserMgrRegisterUserObjectsDB", (RTS_VOID_FCTPTR *)&pfUserMgrRegisterUserObjectsDB, (fl), 0, 0)
+	#define CAL_UserMgrRegisterUserObjectsDB  pfUserMgrRegisterUserObjectsDB
+	#define CHK_UserMgrRegisterUserObjectsDB  (pfUserMgrRegisterUserObjectsDB != NULL)
+	#define EXP_UserMgrRegisterUserObjectsDB  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserObjectsDB", (RTS_UINTPTR)UserMgrRegisterUserObjectsDB, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Unregister user objects database.</description>
+ * <param name="hDatabase" type="IN">Handle to the database.</param>
+ */
+RTS_RESULT CDECL UserMgrUnregisterUserObjectsDB(RTS_HANDLE hDatabase);
+typedef RTS_RESULT (CDECL * PFUSERMGRUNREGISTERUSEROBJECTSDB) (RTS_HANDLE hDatabase);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRUNREGISTERUSEROBJECTSDB_NOTIMPLEMENTED)
+	#define USE_UserMgrUnregisterUserObjectsDB
+	#define EXT_UserMgrUnregisterUserObjectsDB
+	#define GET_UserMgrUnregisterUserObjectsDB(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrUnregisterUserObjectsDB(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrUnregisterUserObjectsDB  FALSE
+	#define EXP_UserMgrUnregisterUserObjectsDB  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrUnregisterUserObjectsDB
+	#define EXT_UserMgrUnregisterUserObjectsDB
+	#define GET_UserMgrUnregisterUserObjectsDB(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserObjectsDB" ) 
+	#define CAL_UserMgrUnregisterUserObjectsDB  UserMgrUnregisterUserObjectsDB
+	#define CHK_UserMgrUnregisterUserObjectsDB  TRUE
+	#define EXP_UserMgrUnregisterUserObjectsDB  CAL_CMEXPAPI( "UserMgrUnregisterUserObjectsDB" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrUnregisterUserObjectsDB
+	#define EXT_UserMgrUnregisterUserObjectsDB
+	#define GET_UserMgrUnregisterUserObjectsDB(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserObjectsDB" ) 
+	#define CAL_UserMgrUnregisterUserObjectsDB  UserMgrUnregisterUserObjectsDB
+	#define CHK_UserMgrUnregisterUserObjectsDB  TRUE
+	#define EXP_UserMgrUnregisterUserObjectsDB  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserObjectsDB", (RTS_UINTPTR)UserMgrUnregisterUserObjectsDB, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrUnregisterUserObjectsDB
+	#define EXT_CmpUserMgrUserMgrUnregisterUserObjectsDB
+	#define GET_CmpUserMgrUserMgrUnregisterUserObjectsDB  ERR_OK
+	#define CAL_CmpUserMgrUserMgrUnregisterUserObjectsDB pICmpUserMgr->IUserMgrUnregisterUserObjectsDB
+	#define CHK_CmpUserMgrUserMgrUnregisterUserObjectsDB (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrUnregisterUserObjectsDB  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrUnregisterUserObjectsDB
+	#define EXT_UserMgrUnregisterUserObjectsDB
+	#define GET_UserMgrUnregisterUserObjectsDB(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserObjectsDB" ) 
+	#define CAL_UserMgrUnregisterUserObjectsDB pICmpUserMgr->IUserMgrUnregisterUserObjectsDB
+	#define CHK_UserMgrUnregisterUserObjectsDB (pICmpUserMgr != NULL)
+	#define EXP_UserMgrUnregisterUserObjectsDB  CAL_CMEXPAPI( "UserMgrUnregisterUserObjectsDB" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrUnregisterUserObjectsDB  PFUSERMGRUNREGISTERUSEROBJECTSDB pfUserMgrUnregisterUserObjectsDB;
+	#define EXT_UserMgrUnregisterUserObjectsDB  extern PFUSERMGRUNREGISTERUSEROBJECTSDB pfUserMgrUnregisterUserObjectsDB;
+	#define GET_UserMgrUnregisterUserObjectsDB(fl)  s_pfCMGetAPI2( "UserMgrUnregisterUserObjectsDB", (RTS_VOID_FCTPTR *)&pfUserMgrUnregisterUserObjectsDB, (fl), 0, 0)
+	#define CAL_UserMgrUnregisterUserObjectsDB  pfUserMgrUnregisterUserObjectsDB
+	#define CHK_UserMgrUnregisterUserObjectsDB  (pfUserMgrUnregisterUserObjectsDB != NULL)
+	#define EXP_UserMgrUnregisterUserObjectsDB  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserObjectsDB", (RTS_UINTPTR)UserMgrUnregisterUserObjectsDB, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Register user objects database configuration.</description>
+ * <param name="hDatabase" type="IN">Handle to the database.</param>
+ */
+RTS_RESULT CDECL UserMgrRegisterUserObjectsDBConfig(RTS_HANDLE hDatabase);
+typedef RTS_RESULT (CDECL * PFUSERMGRREGISTERUSEROBJECTSDBCONFIG) (RTS_HANDLE hDatabase);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRREGISTERUSEROBJECTSDBCONFIG_NOTIMPLEMENTED)
+	#define USE_UserMgrRegisterUserObjectsDBConfig
+	#define EXT_UserMgrRegisterUserObjectsDBConfig
+	#define GET_UserMgrRegisterUserObjectsDBConfig(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrRegisterUserObjectsDBConfig(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrRegisterUserObjectsDBConfig  FALSE
+	#define EXP_UserMgrRegisterUserObjectsDBConfig  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrRegisterUserObjectsDBConfig
+	#define EXT_UserMgrRegisterUserObjectsDBConfig
+	#define GET_UserMgrRegisterUserObjectsDBConfig(fl)  CAL_CMGETAPI( "UserMgrRegisterUserObjectsDBConfig" ) 
+	#define CAL_UserMgrRegisterUserObjectsDBConfig  UserMgrRegisterUserObjectsDBConfig
+	#define CHK_UserMgrRegisterUserObjectsDBConfig  TRUE
+	#define EXP_UserMgrRegisterUserObjectsDBConfig  CAL_CMEXPAPI( "UserMgrRegisterUserObjectsDBConfig" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrRegisterUserObjectsDBConfig
+	#define EXT_UserMgrRegisterUserObjectsDBConfig
+	#define GET_UserMgrRegisterUserObjectsDBConfig(fl)  CAL_CMGETAPI( "UserMgrRegisterUserObjectsDBConfig" ) 
+	#define CAL_UserMgrRegisterUserObjectsDBConfig  UserMgrRegisterUserObjectsDBConfig
+	#define CHK_UserMgrRegisterUserObjectsDBConfig  TRUE
+	#define EXP_UserMgrRegisterUserObjectsDBConfig  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserObjectsDBConfig", (RTS_UINTPTR)UserMgrRegisterUserObjectsDBConfig, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrRegisterUserObjectsDBConfig
+	#define EXT_CmpUserMgrUserMgrRegisterUserObjectsDBConfig
+	#define GET_CmpUserMgrUserMgrRegisterUserObjectsDBConfig  ERR_OK
+	#define CAL_CmpUserMgrUserMgrRegisterUserObjectsDBConfig pICmpUserMgr->IUserMgrRegisterUserObjectsDBConfig
+	#define CHK_CmpUserMgrUserMgrRegisterUserObjectsDBConfig (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrRegisterUserObjectsDBConfig  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrRegisterUserObjectsDBConfig
+	#define EXT_UserMgrRegisterUserObjectsDBConfig
+	#define GET_UserMgrRegisterUserObjectsDBConfig(fl)  CAL_CMGETAPI( "UserMgrRegisterUserObjectsDBConfig" ) 
+	#define CAL_UserMgrRegisterUserObjectsDBConfig pICmpUserMgr->IUserMgrRegisterUserObjectsDBConfig
+	#define CHK_UserMgrRegisterUserObjectsDBConfig (pICmpUserMgr != NULL)
+	#define EXP_UserMgrRegisterUserObjectsDBConfig  CAL_CMEXPAPI( "UserMgrRegisterUserObjectsDBConfig" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrRegisterUserObjectsDBConfig  PFUSERMGRREGISTERUSEROBJECTSDBCONFIG pfUserMgrRegisterUserObjectsDBConfig;
+	#define EXT_UserMgrRegisterUserObjectsDBConfig  extern PFUSERMGRREGISTERUSEROBJECTSDBCONFIG pfUserMgrRegisterUserObjectsDBConfig;
+	#define GET_UserMgrRegisterUserObjectsDBConfig(fl)  s_pfCMGetAPI2( "UserMgrRegisterUserObjectsDBConfig", (RTS_VOID_FCTPTR *)&pfUserMgrRegisterUserObjectsDBConfig, (fl), 0, 0)
+	#define CAL_UserMgrRegisterUserObjectsDBConfig  pfUserMgrRegisterUserObjectsDBConfig
+	#define CHK_UserMgrRegisterUserObjectsDBConfig  (pfUserMgrRegisterUserObjectsDBConfig != NULL)
+	#define EXP_UserMgrRegisterUserObjectsDBConfig  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserObjectsDBConfig", (RTS_UINTPTR)UserMgrRegisterUserObjectsDBConfig, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Unregister user objects database configuration.</description>
+ * <param name="hDatabase" type="IN">Handle to the database.</param>
+ */
+RTS_RESULT CDECL UserMgrUnregisterUserObjectsDBConfig(RTS_HANDLE hDatabase);
+typedef RTS_RESULT (CDECL * PFUSERMGRUNREGISTERUSEROBJECTSDBCONFIG) (RTS_HANDLE hDatabase);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRUNREGISTERUSEROBJECTSDBCONFIG_NOTIMPLEMENTED)
+	#define USE_UserMgrUnregisterUserObjectsDBConfig
+	#define EXT_UserMgrUnregisterUserObjectsDBConfig
+	#define GET_UserMgrUnregisterUserObjectsDBConfig(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrUnregisterUserObjectsDBConfig(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrUnregisterUserObjectsDBConfig  FALSE
+	#define EXP_UserMgrUnregisterUserObjectsDBConfig  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrUnregisterUserObjectsDBConfig
+	#define EXT_UserMgrUnregisterUserObjectsDBConfig
+	#define GET_UserMgrUnregisterUserObjectsDBConfig(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserObjectsDBConfig" ) 
+	#define CAL_UserMgrUnregisterUserObjectsDBConfig  UserMgrUnregisterUserObjectsDBConfig
+	#define CHK_UserMgrUnregisterUserObjectsDBConfig  TRUE
+	#define EXP_UserMgrUnregisterUserObjectsDBConfig  CAL_CMEXPAPI( "UserMgrUnregisterUserObjectsDBConfig" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrUnregisterUserObjectsDBConfig
+	#define EXT_UserMgrUnregisterUserObjectsDBConfig
+	#define GET_UserMgrUnregisterUserObjectsDBConfig(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserObjectsDBConfig" ) 
+	#define CAL_UserMgrUnregisterUserObjectsDBConfig  UserMgrUnregisterUserObjectsDBConfig
+	#define CHK_UserMgrUnregisterUserObjectsDBConfig  TRUE
+	#define EXP_UserMgrUnregisterUserObjectsDBConfig  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserObjectsDBConfig", (RTS_UINTPTR)UserMgrUnregisterUserObjectsDBConfig, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrUnregisterUserObjectsDBConfig
+	#define EXT_CmpUserMgrUserMgrUnregisterUserObjectsDBConfig
+	#define GET_CmpUserMgrUserMgrUnregisterUserObjectsDBConfig  ERR_OK
+	#define CAL_CmpUserMgrUserMgrUnregisterUserObjectsDBConfig pICmpUserMgr->IUserMgrUnregisterUserObjectsDBConfig
+	#define CHK_CmpUserMgrUserMgrUnregisterUserObjectsDBConfig (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrUnregisterUserObjectsDBConfig  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrUnregisterUserObjectsDBConfig
+	#define EXT_UserMgrUnregisterUserObjectsDBConfig
+	#define GET_UserMgrUnregisterUserObjectsDBConfig(fl)  CAL_CMGETAPI( "UserMgrUnregisterUserObjectsDBConfig" ) 
+	#define CAL_UserMgrUnregisterUserObjectsDBConfig pICmpUserMgr->IUserMgrUnregisterUserObjectsDBConfig
+	#define CHK_UserMgrUnregisterUserObjectsDBConfig (pICmpUserMgr != NULL)
+	#define EXP_UserMgrUnregisterUserObjectsDBConfig  CAL_CMEXPAPI( "UserMgrUnregisterUserObjectsDBConfig" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrUnregisterUserObjectsDBConfig  PFUSERMGRUNREGISTERUSEROBJECTSDBCONFIG pfUserMgrUnregisterUserObjectsDBConfig;
+	#define EXT_UserMgrUnregisterUserObjectsDBConfig  extern PFUSERMGRUNREGISTERUSEROBJECTSDBCONFIG pfUserMgrUnregisterUserObjectsDBConfig;
+	#define GET_UserMgrUnregisterUserObjectsDBConfig(fl)  s_pfCMGetAPI2( "UserMgrUnregisterUserObjectsDBConfig", (RTS_VOID_FCTPTR *)&pfUserMgrUnregisterUserObjectsDBConfig, (fl), 0, 0)
+	#define CAL_UserMgrUnregisterUserObjectsDBConfig  pfUserMgrUnregisterUserObjectsDBConfig
+	#define CHK_UserMgrUnregisterUserObjectsDBConfig  (pfUserMgrUnregisterUserObjectsDBConfig != NULL)
+	#define EXP_UserMgrUnregisterUserObjectsDBConfig  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserObjectsDBConfig", (RTS_UINTPTR)UserMgrUnregisterUserObjectsDBConfig, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Selects the authentication type out of the client proposals. Only to be called by CmpDevice.</description>
+ * <param name="ui32ClientFlags" type="IN">Flags describing the clients behavior during login</param>
+ * <param name="pui32AuthType" type="INOUT">In: Client proposed authentication type. Out: Selected authentication type.</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Login was successful</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pui32AuthType is NULL</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_TYPE_MISMATCH">Non of the proposed authentication types matches the runtime requirements.</errorcode>
+ */
+RTS_RESULT CDECL UserMgrSelectAuthType(RTS_UI32 ui32ClientFlags, RTS_UI32 *pui32AuthType);
+typedef RTS_RESULT (CDECL * PFUSERMGRSELECTAUTHTYPE) (RTS_UI32 ui32ClientFlags, RTS_UI32 *pui32AuthType);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRSELECTAUTHTYPE_NOTIMPLEMENTED)
+	#define USE_UserMgrSelectAuthType
+	#define EXT_UserMgrSelectAuthType
+	#define GET_UserMgrSelectAuthType(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrSelectAuthType(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrSelectAuthType  FALSE
+	#define EXP_UserMgrSelectAuthType  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrSelectAuthType
+	#define EXT_UserMgrSelectAuthType
+	#define GET_UserMgrSelectAuthType(fl)  CAL_CMGETAPI( "UserMgrSelectAuthType" ) 
+	#define CAL_UserMgrSelectAuthType  UserMgrSelectAuthType
+	#define CHK_UserMgrSelectAuthType  TRUE
+	#define EXP_UserMgrSelectAuthType  CAL_CMEXPAPI( "UserMgrSelectAuthType" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrSelectAuthType
+	#define EXT_UserMgrSelectAuthType
+	#define GET_UserMgrSelectAuthType(fl)  CAL_CMGETAPI( "UserMgrSelectAuthType" ) 
+	#define CAL_UserMgrSelectAuthType  UserMgrSelectAuthType
+	#define CHK_UserMgrSelectAuthType  TRUE
+	#define EXP_UserMgrSelectAuthType  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrSelectAuthType", (RTS_UINTPTR)UserMgrSelectAuthType, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrSelectAuthType
+	#define EXT_CmpUserMgrUserMgrSelectAuthType
+	#define GET_CmpUserMgrUserMgrSelectAuthType  ERR_OK
+	#define CAL_CmpUserMgrUserMgrSelectAuthType pICmpUserMgr->IUserMgrSelectAuthType
+	#define CHK_CmpUserMgrUserMgrSelectAuthType (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrSelectAuthType  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrSelectAuthType
+	#define EXT_UserMgrSelectAuthType
+	#define GET_UserMgrSelectAuthType(fl)  CAL_CMGETAPI( "UserMgrSelectAuthType" ) 
+	#define CAL_UserMgrSelectAuthType pICmpUserMgr->IUserMgrSelectAuthType
+	#define CHK_UserMgrSelectAuthType (pICmpUserMgr != NULL)
+	#define EXP_UserMgrSelectAuthType  CAL_CMEXPAPI( "UserMgrSelectAuthType" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrSelectAuthType  PFUSERMGRSELECTAUTHTYPE pfUserMgrSelectAuthType;
+	#define EXT_UserMgrSelectAuthType  extern PFUSERMGRSELECTAUTHTYPE pfUserMgrSelectAuthType;
+	#define GET_UserMgrSelectAuthType(fl)  s_pfCMGetAPI2( "UserMgrSelectAuthType", (RTS_VOID_FCTPTR *)&pfUserMgrSelectAuthType, (fl), 0, 0)
+	#define CAL_UserMgrSelectAuthType  pfUserMgrSelectAuthType
+	#define CHK_UserMgrSelectAuthType  (pfUserMgrSelectAuthType != NULL)
+	#define EXP_UserMgrSelectAuthType  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrSelectAuthType", (RTS_UINTPTR)UserMgrSelectAuthType, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Handles a UserMgr login request received by CmpDevice. Only to be called by CmpDevice.</description>
+ * <param name="SessionId" type="IN">SessionId of the device's online connection</param>
+ * <param name="SessionAuthType" type="IN">Authentication algorithm used for the online session</param>
+ * <param name="SessionFlags" type="IN">Flags describing the online session</param>
+ * <param name="pWriter" type="IN">Pointer the writer stream</param>
+ * <param name="pReader" type="IN">Pointer the reader stream</param>
+ * <param name="phUser" type="OUT">Pointer to return the user handle</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Login was successful</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PENDING">Login is in progress, further online services needed.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">At least one of the parameters is NULL</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_ACCESS_RIGHTS">Login was denied e. g. because of wrong user/password combination.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_TYPE_MISMATCH">Authentication type does not match the negotiated type</errorcode>
+ */
+RTS_RESULT CDECL UserMgrHandleLoginService(RTS_UI32 SessionId, RTS_UI32 SessionAuthType, RTS_UI32 SessionFlags, BINTAGWRITER *pWriter, BINTAGREADER *pReader, RTS_HANDLE *phUser);
+typedef RTS_RESULT (CDECL * PFUSERMGRHANDLELOGINSERVICE) (RTS_UI32 SessionId, RTS_UI32 SessionAuthType, RTS_UI32 SessionFlags, BINTAGWRITER *pWriter, BINTAGREADER *pReader, RTS_HANDLE *phUser);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRHANDLELOGINSERVICE_NOTIMPLEMENTED)
+	#define USE_UserMgrHandleLoginService
+	#define EXT_UserMgrHandleLoginService
+	#define GET_UserMgrHandleLoginService(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrHandleLoginService(p0,p1,p2,p3,p4,p5)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrHandleLoginService  FALSE
+	#define EXP_UserMgrHandleLoginService  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrHandleLoginService
+	#define EXT_UserMgrHandleLoginService
+	#define GET_UserMgrHandleLoginService(fl)  CAL_CMGETAPI( "UserMgrHandleLoginService" ) 
+	#define CAL_UserMgrHandleLoginService  UserMgrHandleLoginService
+	#define CHK_UserMgrHandleLoginService  TRUE
+	#define EXP_UserMgrHandleLoginService  CAL_CMEXPAPI( "UserMgrHandleLoginService" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrHandleLoginService
+	#define EXT_UserMgrHandleLoginService
+	#define GET_UserMgrHandleLoginService(fl)  CAL_CMGETAPI( "UserMgrHandleLoginService" ) 
+	#define CAL_UserMgrHandleLoginService  UserMgrHandleLoginService
+	#define CHK_UserMgrHandleLoginService  TRUE
+	#define EXP_UserMgrHandleLoginService  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrHandleLoginService", (RTS_UINTPTR)UserMgrHandleLoginService, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrHandleLoginService
+	#define EXT_CmpUserMgrUserMgrHandleLoginService
+	#define GET_CmpUserMgrUserMgrHandleLoginService  ERR_OK
+	#define CAL_CmpUserMgrUserMgrHandleLoginService pICmpUserMgr->IUserMgrHandleLoginService
+	#define CHK_CmpUserMgrUserMgrHandleLoginService (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrHandleLoginService  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrHandleLoginService
+	#define EXT_UserMgrHandleLoginService
+	#define GET_UserMgrHandleLoginService(fl)  CAL_CMGETAPI( "UserMgrHandleLoginService" ) 
+	#define CAL_UserMgrHandleLoginService pICmpUserMgr->IUserMgrHandleLoginService
+	#define CHK_UserMgrHandleLoginService (pICmpUserMgr != NULL)
+	#define EXP_UserMgrHandleLoginService  CAL_CMEXPAPI( "UserMgrHandleLoginService" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrHandleLoginService  PFUSERMGRHANDLELOGINSERVICE pfUserMgrHandleLoginService;
+	#define EXT_UserMgrHandleLoginService  extern PFUSERMGRHANDLELOGINSERVICE pfUserMgrHandleLoginService;
+	#define GET_UserMgrHandleLoginService(fl)  s_pfCMGetAPI2( "UserMgrHandleLoginService", (RTS_VOID_FCTPTR *)&pfUserMgrHandleLoginService, (fl), 0, 0)
+	#define CAL_UserMgrHandleLoginService  pfUserMgrHandleLoginService
+	#define CHK_UserMgrHandleLoginService  (pfUserMgrHandleLoginService != NULL)
+	#define EXP_UserMgrHandleLoginService  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrHandleLoginService", (RTS_UINTPTR)UserMgrHandleLoginService, 0, 0) 
+#endif
+
+
+
+
+RTS_RESULT CDECL UserMgrIsServiceAllowed(RTS_UI32 channelID, HEADER_TAG_EXT *pHeader, PROTOCOL_DATA_UNIT *pPduReply);
+typedef RTS_RESULT (CDECL * PFUSERMGRISSERVICEALLOWED) (RTS_UI32 channelID, HEADER_TAG_EXT *pHeader, PROTOCOL_DATA_UNIT *pPduReply);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRISSERVICEALLOWED_NOTIMPLEMENTED)
+	#define USE_UserMgrIsServiceAllowed
+	#define EXT_UserMgrIsServiceAllowed
+	#define GET_UserMgrIsServiceAllowed(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrIsServiceAllowed(p0,p1,p2)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrIsServiceAllowed  FALSE
+	#define EXP_UserMgrIsServiceAllowed  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrIsServiceAllowed
+	#define EXT_UserMgrIsServiceAllowed
+	#define GET_UserMgrIsServiceAllowed(fl)  CAL_CMGETAPI( "UserMgrIsServiceAllowed" ) 
+	#define CAL_UserMgrIsServiceAllowed  UserMgrIsServiceAllowed
+	#define CHK_UserMgrIsServiceAllowed  TRUE
+	#define EXP_UserMgrIsServiceAllowed  CAL_CMEXPAPI( "UserMgrIsServiceAllowed" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrIsServiceAllowed
+	#define EXT_UserMgrIsServiceAllowed
+	#define GET_UserMgrIsServiceAllowed(fl)  CAL_CMGETAPI( "UserMgrIsServiceAllowed" ) 
+	#define CAL_UserMgrIsServiceAllowed  UserMgrIsServiceAllowed
+	#define CHK_UserMgrIsServiceAllowed  TRUE
+	#define EXP_UserMgrIsServiceAllowed  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrIsServiceAllowed", (RTS_UINTPTR)UserMgrIsServiceAllowed, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrIsServiceAllowed
+	#define EXT_CmpUserMgrUserMgrIsServiceAllowed
+	#define GET_CmpUserMgrUserMgrIsServiceAllowed  ERR_OK
+	#define CAL_CmpUserMgrUserMgrIsServiceAllowed pICmpUserMgr->IUserMgrIsServiceAllowed
+	#define CHK_CmpUserMgrUserMgrIsServiceAllowed (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrIsServiceAllowed  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrIsServiceAllowed
+	#define EXT_UserMgrIsServiceAllowed
+	#define GET_UserMgrIsServiceAllowed(fl)  CAL_CMGETAPI( "UserMgrIsServiceAllowed" ) 
+	#define CAL_UserMgrIsServiceAllowed pICmpUserMgr->IUserMgrIsServiceAllowed
+	#define CHK_UserMgrIsServiceAllowed (pICmpUserMgr != NULL)
+	#define EXP_UserMgrIsServiceAllowed  CAL_CMEXPAPI( "UserMgrIsServiceAllowed" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrIsServiceAllowed  PFUSERMGRISSERVICEALLOWED pfUserMgrIsServiceAllowed;
+	#define EXT_UserMgrIsServiceAllowed  extern PFUSERMGRISSERVICEALLOWED pfUserMgrIsServiceAllowed;
+	#define GET_UserMgrIsServiceAllowed(fl)  s_pfCMGetAPI2( "UserMgrIsServiceAllowed", (RTS_VOID_FCTPTR *)&pfUserMgrIsServiceAllowed, (fl), 0, 0)
+	#define CAL_UserMgrIsServiceAllowed  pfUserMgrIsServiceAllowed
+	#define CHK_UserMgrIsServiceAllowed  (pfUserMgrIsServiceAllowed != NULL)
+	#define EXP_UserMgrIsServiceAllowed  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrIsServiceAllowed", (RTS_UINTPTR)UserMgrIsServiceAllowed, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Checks if the user management is active.</description>
+ * <result>TRUE: The user management is activated or enforced. FALSE: The user management is not activated.</result>
+ */
+RTS_BOOL CDECL UserMgrIsActive(void);
+typedef RTS_BOOL (CDECL * PFUSERMGRISACTIVE) (void);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRISACTIVE_NOTIMPLEMENTED)
+	#define USE_UserMgrIsActive
+	#define EXT_UserMgrIsActive
+	#define GET_UserMgrIsActive(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrIsActive()  (RTS_BOOL)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrIsActive  FALSE
+	#define EXP_UserMgrIsActive  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrIsActive
+	#define EXT_UserMgrIsActive
+	#define GET_UserMgrIsActive(fl)  CAL_CMGETAPI( "UserMgrIsActive" ) 
+	#define CAL_UserMgrIsActive  UserMgrIsActive
+	#define CHK_UserMgrIsActive  TRUE
+	#define EXP_UserMgrIsActive  CAL_CMEXPAPI( "UserMgrIsActive" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrIsActive
+	#define EXT_UserMgrIsActive
+	#define GET_UserMgrIsActive(fl)  CAL_CMGETAPI( "UserMgrIsActive" ) 
+	#define CAL_UserMgrIsActive  UserMgrIsActive
+	#define CHK_UserMgrIsActive  TRUE
+	#define EXP_UserMgrIsActive  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrIsActive", (RTS_UINTPTR)UserMgrIsActive, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrIsActive
+	#define EXT_CmpUserMgrUserMgrIsActive
+	#define GET_CmpUserMgrUserMgrIsActive  ERR_OK
+	#define CAL_CmpUserMgrUserMgrIsActive pICmpUserMgr->IUserMgrIsActive
+	#define CHK_CmpUserMgrUserMgrIsActive (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrIsActive  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrIsActive
+	#define EXT_UserMgrIsActive
+	#define GET_UserMgrIsActive(fl)  CAL_CMGETAPI( "UserMgrIsActive" ) 
+	#define CAL_UserMgrIsActive pICmpUserMgr->IUserMgrIsActive
+	#define CHK_UserMgrIsActive (pICmpUserMgr != NULL)
+	#define EXP_UserMgrIsActive  CAL_CMEXPAPI( "UserMgrIsActive" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrIsActive  PFUSERMGRISACTIVE pfUserMgrIsActive;
+	#define EXT_UserMgrIsActive  extern PFUSERMGRISACTIVE pfUserMgrIsActive;
+	#define GET_UserMgrIsActive(fl)  s_pfCMGetAPI2( "UserMgrIsActive", (RTS_VOID_FCTPTR *)&pfUserMgrIsActive, (fl), 0, 0)
+	#define CAL_UserMgrIsActive  pfUserMgrIsActive
+	#define CHK_UserMgrIsActive  (pfUserMgrIsActive != NULL)
+	#define EXP_UserMgrIsActive  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrIsActive", (RTS_UINTPTR)UserMgrIsActive, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Logs user in to the runtime system using an active user management.</description>
  * <param name="pszUser" type="IN">Name of the user</param>
+ * <param name="pszPassword" type="IN">Password (plain text)</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <errorcode name="RTS_RESULT" type="ERR_OK">User is available</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">If pszUser is NULL</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The user management is not initialized or it is not loaded yet</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT or ERR_PARAMETER">The user is not available in the user management</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">Could not store user information</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">User/password combination is valid</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_ACTIVATE_USERMGMT">The login was successful. But the user management is enforced and not active. Activate the user management.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_CHANGE_PASSWORD">The login was successful. But the user must change his password.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_USERMGMT">Login was not successful. The user management is not activated. Use empty user and password to login.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_ACCESS_RIGHTS">The login was not successful, because of another reason.</errorcode>
  * <result>Handle to the user or RTS_INVALID_HANDLE if not available</result>
  */
-RTS_HANDLE CDECL UserMgrLogin(char *pszUser, RTS_RESULT *pResult);
-typedef RTS_HANDLE (CDECL * PFUSERMGRLOGIN) (char *pszUser, RTS_RESULT *pResult);
+RTS_HANDLE CDECL UserMgrLogin(char *pszUser, char *pszPassword, RTS_RESULT *pResult);
+typedef RTS_HANDLE (CDECL * PFUSERMGRLOGIN) (char *pszUser, char *pszPassword, RTS_RESULT *pResult);
 #if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRLOGIN_NOTIMPLEMENTED)
 	#define USE_UserMgrLogin
 	#define EXT_UserMgrLogin
 	#define GET_UserMgrLogin(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_UserMgrLogin(p0,p1)  (RTS_HANDLE)RTS_INVALID_HANDLE
+	#define CAL_UserMgrLogin(p0,p1,p2)  (RTS_HANDLE)RTS_INVALID_HANDLE
 	#define CHK_UserMgrLogin  FALSE
 	#define EXP_UserMgrLogin  ERR_OK
 #elif defined(STATIC_LINK)
@@ -507,13 +1971,11 @@ typedef RTS_HANDLE (CDECL * PFUSERMGRLOGIN) (char *pszUser, RTS_RESULT *pResult)
 
 
 /**
- * <description>Logout specified by User
- * NOTE: The requred user handle is not compatible with a handle from the UserDB, and these handles must not be mixed.
- * </description>
+ * <description>Logout specified by the user</description>
  * <param name="hUser" type="IN">Handle to the user</param>
  * <result>Error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">User is available and logout succeeded</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">If user is not avilable</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">If user is not available</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">hUser is invalid or unknown</errorcode>
  */
 RTS_RESULT CDECL UserMgrLogout(RTS_HANDLE hUser);
@@ -566,187 +2028,70 @@ typedef RTS_RESULT (CDECL * PFUSERMGRLOGOUT) (RTS_HANDLE hUser);
 
 
 /**
- * <description>Logout specified by SessionID</description>
- * <param name="ulSessionId" type="IN">SessionID of the device online connection (see CmpDeviceItf.h)</param>
- * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">SessionID or user is available and logout succeeded</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">If SessionID or user is not avilable</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">Related user handle of the session is invalid or unknown</errorcode>
- */
- RTS_RESULT CDECL UserMgrLogoutBySessionId(RTS_UI32 ulSessionId);
-typedef RTS_RESULT (CDECL * PFUSERMGRLOGOUTBYSESSIONID) (RTS_UI32 ulSessionId);
-#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRLOGOUTBYSESSIONID_NOTIMPLEMENTED)
-	#define USE_UserMgrLogoutBySessionId
-	#define EXT_UserMgrLogoutBySessionId
-	#define GET_UserMgrLogoutBySessionId(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_UserMgrLogoutBySessionId(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_UserMgrLogoutBySessionId  FALSE
-	#define EXP_UserMgrLogoutBySessionId  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_UserMgrLogoutBySessionId
-	#define EXT_UserMgrLogoutBySessionId
-	#define GET_UserMgrLogoutBySessionId(fl)  CAL_CMGETAPI( "UserMgrLogoutBySessionId" ) 
-	#define CAL_UserMgrLogoutBySessionId  UserMgrLogoutBySessionId
-	#define CHK_UserMgrLogoutBySessionId  TRUE
-	#define EXP_UserMgrLogoutBySessionId  CAL_CMEXPAPI( "UserMgrLogoutBySessionId" ) 
-#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
-	#define USE_UserMgrLogoutBySessionId
-	#define EXT_UserMgrLogoutBySessionId
-	#define GET_UserMgrLogoutBySessionId(fl)  CAL_CMGETAPI( "UserMgrLogoutBySessionId" ) 
-	#define CAL_UserMgrLogoutBySessionId  UserMgrLogoutBySessionId
-	#define CHK_UserMgrLogoutBySessionId  TRUE
-	#define EXP_UserMgrLogoutBySessionId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrLogoutBySessionId", (RTS_UINTPTR)UserMgrLogoutBySessionId, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpUserMgrUserMgrLogoutBySessionId
-	#define EXT_CmpUserMgrUserMgrLogoutBySessionId
-	#define GET_CmpUserMgrUserMgrLogoutBySessionId  ERR_OK
-	#define CAL_CmpUserMgrUserMgrLogoutBySessionId pICmpUserMgr->IUserMgrLogoutBySessionId
-	#define CHK_CmpUserMgrUserMgrLogoutBySessionId (pICmpUserMgr != NULL)
-	#define EXP_CmpUserMgrUserMgrLogoutBySessionId  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_UserMgrLogoutBySessionId
-	#define EXT_UserMgrLogoutBySessionId
-	#define GET_UserMgrLogoutBySessionId(fl)  CAL_CMGETAPI( "UserMgrLogoutBySessionId" ) 
-	#define CAL_UserMgrLogoutBySessionId pICmpUserMgr->IUserMgrLogoutBySessionId
-	#define CHK_UserMgrLogoutBySessionId (pICmpUserMgr != NULL)
-	#define EXP_UserMgrLogoutBySessionId  CAL_CMEXPAPI( "UserMgrLogoutBySessionId" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_UserMgrLogoutBySessionId  PFUSERMGRLOGOUTBYSESSIONID pfUserMgrLogoutBySessionId;
-	#define EXT_UserMgrLogoutBySessionId  extern PFUSERMGRLOGOUTBYSESSIONID pfUserMgrLogoutBySessionId;
-	#define GET_UserMgrLogoutBySessionId(fl)  s_pfCMGetAPI2( "UserMgrLogoutBySessionId", (RTS_VOID_FCTPTR *)&pfUserMgrLogoutBySessionId, (fl), 0, 0)
-	#define CAL_UserMgrLogoutBySessionId  pfUserMgrLogoutBySessionId
-	#define CHK_UserMgrLogoutBySessionId  (pfUserMgrLogoutBySessionId != NULL)
-	#define EXP_UserMgrLogoutBySessionId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrLogoutBySessionId", (RTS_UINTPTR)UserMgrLogoutBySessionId, 0, 0) 
-#endif
-
-
-
-
-/**
- * <description>Check user password against credentials (authentication)!
- * NOTE: The requred user handle is not compatible with a handle from the UserDB, and these handles must not be mixed.
- * </description>
+ * <description>Re-logs user in to the runtime system using an active user management. The user name must match to the user name used for the initial login of the user.</description>
  * <param name="hUser" type="IN">Handle to the user</param>
- * <param name="pszPassword" type="IN">Pointer to the cleartext password!</param>
+ * <param name="pszUser" type="IN">Name of the user</param>
+ * <param name="pszPassword" type="IN">Password (plain text)</param>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">User is available</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">If user is not avilable</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_FAILED">If user password does not match credentials</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">User/password combination is valid</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pszUser is NULL</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The user management is not initialized or it is not loaded yet</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_RELOGIN">hUser known, but not logged in</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Password is wrong.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_USER_MISMATCH">User name does not match</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">hUser is invalid or unknown</errorcode>
  */
-RTS_RESULT CDECL UserMgrCheckPassword(RTS_HANDLE hUser, char *pszPassword);
-typedef RTS_RESULT (CDECL * PFUSERMGRCHECKPASSWORD) (RTS_HANDLE hUser, char *pszPassword);
-#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRCHECKPASSWORD_NOTIMPLEMENTED)
-	#define USE_UserMgrCheckPassword
-	#define EXT_UserMgrCheckPassword
-	#define GET_UserMgrCheckPassword(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_UserMgrCheckPassword(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_UserMgrCheckPassword  FALSE
-	#define EXP_UserMgrCheckPassword  ERR_OK
+RTS_RESULT CDECL UserMgrRelogin(RTS_HANDLE hUser, char *pszUser, char *pszPassword);
+typedef RTS_RESULT (CDECL * PFUSERMGRRELOGIN) (RTS_HANDLE hUser, char *pszUser, char *pszPassword);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRRELOGIN_NOTIMPLEMENTED)
+	#define USE_UserMgrRelogin
+	#define EXT_UserMgrRelogin
+	#define GET_UserMgrRelogin(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrRelogin(p0,p1,p2)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrRelogin  FALSE
+	#define EXP_UserMgrRelogin  ERR_OK
 #elif defined(STATIC_LINK)
-	#define USE_UserMgrCheckPassword
-	#define EXT_UserMgrCheckPassword
-	#define GET_UserMgrCheckPassword(fl)  CAL_CMGETAPI( "UserMgrCheckPassword" ) 
-	#define CAL_UserMgrCheckPassword  UserMgrCheckPassword
-	#define CHK_UserMgrCheckPassword  TRUE
-	#define EXP_UserMgrCheckPassword  CAL_CMEXPAPI( "UserMgrCheckPassword" ) 
+	#define USE_UserMgrRelogin
+	#define EXT_UserMgrRelogin
+	#define GET_UserMgrRelogin(fl)  CAL_CMGETAPI( "UserMgrRelogin" ) 
+	#define CAL_UserMgrRelogin  UserMgrRelogin
+	#define CHK_UserMgrRelogin  TRUE
+	#define EXP_UserMgrRelogin  CAL_CMEXPAPI( "UserMgrRelogin" ) 
 #elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
-	#define USE_UserMgrCheckPassword
-	#define EXT_UserMgrCheckPassword
-	#define GET_UserMgrCheckPassword(fl)  CAL_CMGETAPI( "UserMgrCheckPassword" ) 
-	#define CAL_UserMgrCheckPassword  UserMgrCheckPassword
-	#define CHK_UserMgrCheckPassword  TRUE
-	#define EXP_UserMgrCheckPassword  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrCheckPassword", (RTS_UINTPTR)UserMgrCheckPassword, 0, 0) 
+	#define USE_UserMgrRelogin
+	#define EXT_UserMgrRelogin
+	#define GET_UserMgrRelogin(fl)  CAL_CMGETAPI( "UserMgrRelogin" ) 
+	#define CAL_UserMgrRelogin  UserMgrRelogin
+	#define CHK_UserMgrRelogin  TRUE
+	#define EXP_UserMgrRelogin  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRelogin", (RTS_UINTPTR)UserMgrRelogin, 0, 0) 
 #elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpUserMgrUserMgrCheckPassword
-	#define EXT_CmpUserMgrUserMgrCheckPassword
-	#define GET_CmpUserMgrUserMgrCheckPassword  ERR_OK
-	#define CAL_CmpUserMgrUserMgrCheckPassword pICmpUserMgr->IUserMgrCheckPassword
-	#define CHK_CmpUserMgrUserMgrCheckPassword (pICmpUserMgr != NULL)
-	#define EXP_CmpUserMgrUserMgrCheckPassword  ERR_OK
+	#define USE_CmpUserMgrUserMgrRelogin
+	#define EXT_CmpUserMgrUserMgrRelogin
+	#define GET_CmpUserMgrUserMgrRelogin  ERR_OK
+	#define CAL_CmpUserMgrUserMgrRelogin pICmpUserMgr->IUserMgrRelogin
+	#define CHK_CmpUserMgrUserMgrRelogin (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrRelogin  ERR_OK
 #elif defined(CPLUSPLUS)
-	#define USE_UserMgrCheckPassword
-	#define EXT_UserMgrCheckPassword
-	#define GET_UserMgrCheckPassword(fl)  CAL_CMGETAPI( "UserMgrCheckPassword" ) 
-	#define CAL_UserMgrCheckPassword pICmpUserMgr->IUserMgrCheckPassword
-	#define CHK_UserMgrCheckPassword (pICmpUserMgr != NULL)
-	#define EXP_UserMgrCheckPassword  CAL_CMEXPAPI( "UserMgrCheckPassword" ) 
+	#define USE_UserMgrRelogin
+	#define EXT_UserMgrRelogin
+	#define GET_UserMgrRelogin(fl)  CAL_CMGETAPI( "UserMgrRelogin" ) 
+	#define CAL_UserMgrRelogin pICmpUserMgr->IUserMgrRelogin
+	#define CHK_UserMgrRelogin (pICmpUserMgr != NULL)
+	#define EXP_UserMgrRelogin  CAL_CMEXPAPI( "UserMgrRelogin" ) 
 #else /* DYNAMIC_LINK */
-	#define USE_UserMgrCheckPassword  PFUSERMGRCHECKPASSWORD pfUserMgrCheckPassword;
-	#define EXT_UserMgrCheckPassword  extern PFUSERMGRCHECKPASSWORD pfUserMgrCheckPassword;
-	#define GET_UserMgrCheckPassword(fl)  s_pfCMGetAPI2( "UserMgrCheckPassword", (RTS_VOID_FCTPTR *)&pfUserMgrCheckPassword, (fl), 0, 0)
-	#define CAL_UserMgrCheckPassword  pfUserMgrCheckPassword
-	#define CHK_UserMgrCheckPassword  (pfUserMgrCheckPassword != NULL)
-	#define EXP_UserMgrCheckPassword  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrCheckPassword", (RTS_UINTPTR)UserMgrCheckPassword, 0, 0) 
+	#define USE_UserMgrRelogin  PFUSERMGRRELOGIN pfUserMgrRelogin;
+	#define EXT_UserMgrRelogin  extern PFUSERMGRRELOGIN pfUserMgrRelogin;
+	#define GET_UserMgrRelogin(fl)  s_pfCMGetAPI2( "UserMgrRelogin", (RTS_VOID_FCTPTR *)&pfUserMgrRelogin, (fl), 0, 0)
+	#define CAL_UserMgrRelogin  pfUserMgrRelogin
+	#define CHK_UserMgrRelogin  (pfUserMgrRelogin != NULL)
+	#define EXP_UserMgrRelogin  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRelogin", (RTS_UINTPTR)UserMgrRelogin, 0, 0) 
 #endif
 
 
 
 
 /**
- * <description>Get properties of a user
- * NOTE: The requred user handle is not compatible with a handle from the UserDB, and these handles must not be mixed.
- * </description>
- * <param name="hUser" type="IN">Handle to the user</param>
- * <param name="pulProperty" type="OUT">Pointer to return the properties. For details see category "UserDB properties"</param>
- * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Properties could be retrieved</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Property pointer = NULL</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">hUser is invalid or unknown</errorcode>
- */
-RTS_RESULT CDECL UserMgrGetProperty(RTS_HANDLE hUser, RTS_UI32 *pulProperty);
-typedef RTS_RESULT (CDECL * PFUSERMGRGETPROPERTY) (RTS_HANDLE hUser, RTS_UI32 *pulProperty);
-#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRGETPROPERTY_NOTIMPLEMENTED)
-	#define USE_UserMgrGetProperty
-	#define EXT_UserMgrGetProperty
-	#define GET_UserMgrGetProperty(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_UserMgrGetProperty(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_UserMgrGetProperty  FALSE
-	#define EXP_UserMgrGetProperty  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_UserMgrGetProperty
-	#define EXT_UserMgrGetProperty
-	#define GET_UserMgrGetProperty(fl)  CAL_CMGETAPI( "UserMgrGetProperty" ) 
-	#define CAL_UserMgrGetProperty  UserMgrGetProperty
-	#define CHK_UserMgrGetProperty  TRUE
-	#define EXP_UserMgrGetProperty  CAL_CMEXPAPI( "UserMgrGetProperty" ) 
-#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
-	#define USE_UserMgrGetProperty
-	#define EXT_UserMgrGetProperty
-	#define GET_UserMgrGetProperty(fl)  CAL_CMGETAPI( "UserMgrGetProperty" ) 
-	#define CAL_UserMgrGetProperty  UserMgrGetProperty
-	#define CHK_UserMgrGetProperty  TRUE
-	#define EXP_UserMgrGetProperty  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGetProperty", (RTS_UINTPTR)UserMgrGetProperty, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpUserMgrUserMgrGetProperty
-	#define EXT_CmpUserMgrUserMgrGetProperty
-	#define GET_CmpUserMgrUserMgrGetProperty  ERR_OK
-	#define CAL_CmpUserMgrUserMgrGetProperty pICmpUserMgr->IUserMgrGetProperty
-	#define CHK_CmpUserMgrUserMgrGetProperty (pICmpUserMgr != NULL)
-	#define EXP_CmpUserMgrUserMgrGetProperty  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_UserMgrGetProperty
-	#define EXT_UserMgrGetProperty
-	#define GET_UserMgrGetProperty(fl)  CAL_CMGETAPI( "UserMgrGetProperty" ) 
-	#define CAL_UserMgrGetProperty pICmpUserMgr->IUserMgrGetProperty
-	#define CHK_UserMgrGetProperty (pICmpUserMgr != NULL)
-	#define EXP_UserMgrGetProperty  CAL_CMEXPAPI( "UserMgrGetProperty" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_UserMgrGetProperty  PFUSERMGRGETPROPERTY pfUserMgrGetProperty;
-	#define EXT_UserMgrGetProperty  extern PFUSERMGRGETPROPERTY pfUserMgrGetProperty;
-	#define GET_UserMgrGetProperty(fl)  s_pfCMGetAPI2( "UserMgrGetProperty", (RTS_VOID_FCTPTR *)&pfUserMgrGetProperty, (fl), 0, 0)
-	#define CAL_UserMgrGetProperty  pfUserMgrGetProperty
-	#define CHK_UserMgrGetProperty  (pfUserMgrGetProperty != NULL)
-	#define EXP_UserMgrGetProperty  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGetProperty", (RTS_UINTPTR)UserMgrGetProperty, 0, 0) 
-#endif
-
-
-
-
-/**
- * <description>Check if the a user is a member of the given group
- * NOTE: The requred user handle is not compatible with a handle from the UserDB, and these handles must not be mixed.
- * </description>
+ * <description>Checks if the a user is a member of the given group</description>
  * <param name="pszGroup" type="IN">Group name</param>
  * <param name="hUser" type="IN">Handle to the user</param>
  * <result>Error code</result>
@@ -804,73 +2149,67 @@ typedef RTS_RESULT (CDECL * PFUSERMGRISGROUPMEMBER) (char *pszGroup, RTS_HANDLE 
 
 
 /**
- * <description>Returns the user state
- * The returned bitfield shows whether the user is logged in and is authenticated (see category User state)
- * NOTE: The requred user handle is not compatible with a handle from the UserDB, and these handles must not be mixed.
- * </description>
+ * <description>Checks if the a user an administrator.</description>
  * <param name="hUser" type="IN">Handle to the user</param>
- * <param name="pResult" type="OUT">Pointer to error code</param>
- * <result>User state</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Success</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">hUser is invalid or unknown</errorcode>
+ * <result>TRUE: The user is an administrator, FALSE: The user is not an administrator.</result>
  */
-RTS_UI32 CDECL UserMgrGetState(RTS_HANDLE hUser, RTS_RESULT *pResult);
-typedef RTS_UI32 (CDECL * PFUSERMGRGETSTATE) (RTS_HANDLE hUser, RTS_RESULT *pResult);
-#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRGETSTATE_NOTIMPLEMENTED)
-	#define USE_UserMgrGetState
-	#define EXT_UserMgrGetState
-	#define GET_UserMgrGetState(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_UserMgrGetState(p0,p1)  (RTS_UI32)ERR_NOTIMPLEMENTED
-	#define CHK_UserMgrGetState  FALSE
-	#define EXP_UserMgrGetState  ERR_OK
+RTS_BOOL CDECL UserMgrIsAdministrator(RTS_HANDLE hUser);
+typedef RTS_BOOL (CDECL * PFUSERMGRISADMINISTRATOR) (RTS_HANDLE hUser);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRISADMINISTRATOR_NOTIMPLEMENTED)
+	#define USE_UserMgrIsAdministrator
+	#define EXT_UserMgrIsAdministrator
+	#define GET_UserMgrIsAdministrator(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrIsAdministrator(p0)  (RTS_BOOL)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrIsAdministrator  FALSE
+	#define EXP_UserMgrIsAdministrator  ERR_OK
 #elif defined(STATIC_LINK)
-	#define USE_UserMgrGetState
-	#define EXT_UserMgrGetState
-	#define GET_UserMgrGetState(fl)  CAL_CMGETAPI( "UserMgrGetState" ) 
-	#define CAL_UserMgrGetState  UserMgrGetState
-	#define CHK_UserMgrGetState  TRUE
-	#define EXP_UserMgrGetState  CAL_CMEXPAPI( "UserMgrGetState" ) 
+	#define USE_UserMgrIsAdministrator
+	#define EXT_UserMgrIsAdministrator
+	#define GET_UserMgrIsAdministrator(fl)  CAL_CMGETAPI( "UserMgrIsAdministrator" ) 
+	#define CAL_UserMgrIsAdministrator  UserMgrIsAdministrator
+	#define CHK_UserMgrIsAdministrator  TRUE
+	#define EXP_UserMgrIsAdministrator  CAL_CMEXPAPI( "UserMgrIsAdministrator" ) 
 #elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
-	#define USE_UserMgrGetState
-	#define EXT_UserMgrGetState
-	#define GET_UserMgrGetState(fl)  CAL_CMGETAPI( "UserMgrGetState" ) 
-	#define CAL_UserMgrGetState  UserMgrGetState
-	#define CHK_UserMgrGetState  TRUE
-	#define EXP_UserMgrGetState  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGetState", (RTS_UINTPTR)UserMgrGetState, 0, 0) 
+	#define USE_UserMgrIsAdministrator
+	#define EXT_UserMgrIsAdministrator
+	#define GET_UserMgrIsAdministrator(fl)  CAL_CMGETAPI( "UserMgrIsAdministrator" ) 
+	#define CAL_UserMgrIsAdministrator  UserMgrIsAdministrator
+	#define CHK_UserMgrIsAdministrator  TRUE
+	#define EXP_UserMgrIsAdministrator  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrIsAdministrator", (RTS_UINTPTR)UserMgrIsAdministrator, 0, 0) 
 #elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpUserMgrUserMgrGetState
-	#define EXT_CmpUserMgrUserMgrGetState
-	#define GET_CmpUserMgrUserMgrGetState  ERR_OK
-	#define CAL_CmpUserMgrUserMgrGetState pICmpUserMgr->IUserMgrGetState
-	#define CHK_CmpUserMgrUserMgrGetState (pICmpUserMgr != NULL)
-	#define EXP_CmpUserMgrUserMgrGetState  ERR_OK
+	#define USE_CmpUserMgrUserMgrIsAdministrator
+	#define EXT_CmpUserMgrUserMgrIsAdministrator
+	#define GET_CmpUserMgrUserMgrIsAdministrator  ERR_OK
+	#define CAL_CmpUserMgrUserMgrIsAdministrator pICmpUserMgr->IUserMgrIsAdministrator
+	#define CHK_CmpUserMgrUserMgrIsAdministrator (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrIsAdministrator  ERR_OK
 #elif defined(CPLUSPLUS)
-	#define USE_UserMgrGetState
-	#define EXT_UserMgrGetState
-	#define GET_UserMgrGetState(fl)  CAL_CMGETAPI( "UserMgrGetState" ) 
-	#define CAL_UserMgrGetState pICmpUserMgr->IUserMgrGetState
-	#define CHK_UserMgrGetState (pICmpUserMgr != NULL)
-	#define EXP_UserMgrGetState  CAL_CMEXPAPI( "UserMgrGetState" ) 
+	#define USE_UserMgrIsAdministrator
+	#define EXT_UserMgrIsAdministrator
+	#define GET_UserMgrIsAdministrator(fl)  CAL_CMGETAPI( "UserMgrIsAdministrator" ) 
+	#define CAL_UserMgrIsAdministrator pICmpUserMgr->IUserMgrIsAdministrator
+	#define CHK_UserMgrIsAdministrator (pICmpUserMgr != NULL)
+	#define EXP_UserMgrIsAdministrator  CAL_CMEXPAPI( "UserMgrIsAdministrator" ) 
 #else /* DYNAMIC_LINK */
-	#define USE_UserMgrGetState  PFUSERMGRGETSTATE pfUserMgrGetState;
-	#define EXT_UserMgrGetState  extern PFUSERMGRGETSTATE pfUserMgrGetState;
-	#define GET_UserMgrGetState(fl)  s_pfCMGetAPI2( "UserMgrGetState", (RTS_VOID_FCTPTR *)&pfUserMgrGetState, (fl), 0, 0)
-	#define CAL_UserMgrGetState  pfUserMgrGetState
-	#define CHK_UserMgrGetState  (pfUserMgrGetState != NULL)
-	#define EXP_UserMgrGetState  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGetState", (RTS_UINTPTR)UserMgrGetState, 0, 0) 
+	#define USE_UserMgrIsAdministrator  PFUSERMGRISADMINISTRATOR pfUserMgrIsAdministrator;
+	#define EXT_UserMgrIsAdministrator  extern PFUSERMGRISADMINISTRATOR pfUserMgrIsAdministrator;
+	#define GET_UserMgrIsAdministrator(fl)  s_pfCMGetAPI2( "UserMgrIsAdministrator", (RTS_VOID_FCTPTR *)&pfUserMgrIsAdministrator, (fl), 0, 0)
+	#define CAL_UserMgrIsAdministrator  pfUserMgrIsAdministrator
+	#define CHK_UserMgrIsAdministrator  (pfUserMgrIsAdministrator != NULL)
+	#define EXP_UserMgrIsAdministrator  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrIsAdministrator", (RTS_UINTPTR)UserMgrIsAdministrator, 0, 0) 
 #endif
 
 
 
 
 /**
- * <description>Check user access rights on the specified object (authorization)!</description>
+ * <description>Checks user access rights on the specified object (authorization)!</description>
  * <param name="pszObject" type="IN">Full object name (see object tree)</param>
  * <param name="ulSessionId" type="IN">SessionID of the device online connection (see CmpDeviceItf.h)</param>
  * <param name="ulRequestedRights" type="IN">Requested rights on that object</param>
  * <result>Error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">If user has the requested rights on the object or if no user management is configured</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">If SessionID or user is not avilable or the object does not exist</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">If SessionID or user is not available or the object does not exist</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">If something failed retrieving the access rights</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NO_ACCESS_RIGHTS">Explicitly denied rights</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">Related user handle of the session is invalid or unknown</errorcode>
@@ -934,7 +2273,7 @@ typedef RTS_RESULT (CDECL * PFUSERMGRHASACCESSRIGHTS) (char *pszObject, RTS_UI32
  *	 If the required right is denied _and_ admitted on the specified object, the denied right is more significant and so the access must be denied !!</param>
  * <result>Error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">If user has the requested rights on the object or if no user management is configured</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">If SessionID or user is not avilable or the object does not exist</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">If SessionID or user is not available or the object does not exist</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">If something failed retrieving the access rights</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NO_ACCESS_RIGHTS">Explicitly denied rights</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">Related user handle of the session is invalid or unknown</errorcode>
@@ -989,15 +2328,13 @@ typedef RTS_RESULT (CDECL * PFUSERMGRGETACCESSRIGHTS) (char *pszObject, RTS_UI32
 
 
 /**
- * <description>Check user access rights on the specified object (authorization)!
- * NOTE: The requred user handle is not compatible with a handle from the UserDB, and these handles must not be mixed.
- * </description>
+ * <description>Checks user access rights on the specified object (authorization)!</description>
  * <param name="pszObject" type="IN">Full object name (see object tree)</param>
  * <param name="hUser" type="IN">Handle to the user</param>
  * <param name="ulRequestedRights" type="IN">Requested rights on that object</param>
  * <result>Error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">If user has the requested rights on the object or if no user management is configured</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">If user is not avilable or the object does not exist</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">If user is not available or the object does not exist</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">If something failed retrieving the access rights</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NO_ACCESS_RIGHTS">Explicitly denied rights</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">hUser is invalid or unknown</errorcode>
@@ -1052,9 +2389,7 @@ typedef RTS_RESULT (CDECL * PFUSERMGRHASUSERACCESSRIGHTS) (char *pszObject, RTS_
 
 
 /**
- * <description>Get user access rights on the specified object (authorization)!
- * NOTE: The requred user handle is not compatible with a handle from the UserDB, and these handles must not be mixed.
- * </description>
+ * <description>Gets user access rights on the specified object (authorization)!</description>
  * <param name="pszObject" type="IN">Full object name (see object tree)</param>
  * <param name="hUser" type="IN">Handle to the user</param>
  * <param name="pulRights" type="IN">Pointer to get admitted rights</param>
@@ -1063,7 +2398,7 @@ typedef RTS_RESULT (CDECL * PFUSERMGRHASUSERACCESSRIGHTS) (char *pszObject, RTS_
  *	 If the required right is denied _and_ admitted on the specified object, the denied right is more significant and so the access must be denied !!</param>
  * <result>Error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">If user has the requested rights on the object or if no user management is configured</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">If user is not avilable or the object does not exist</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">If user is not available or the object does not exist</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">If something failed retrieving the access rights</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NO_ACCESS_RIGHTS">Explicitly denied rights</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">hUser is invalid or unknown</errorcode>
@@ -1118,188 +2453,9 @@ typedef RTS_RESULT (CDECL * PFUSERMGRGETUSERACCESSRIGHTS) (char *pszObject, RTS_
 
 
 /**
- * <description>Add online SessionID to the user (bind the user at this session)
- * NOTE: The requred user handle is not compatible with a handle from the UserDB, and these handles must not be mixed.
- * </description>
- * <param name="hUser" type="IN">Handle to the user</param>
- * <param name="ulSessionId" type="IN">SessionID of the device online connection (see CmpDeviceItf.h)</param>
- * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">If user has the requested rights on the object or if no user management is configured</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">If CmpUserMgr component is still not initialized</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">Could not store SessionID</errorcode>
- */
-RTS_RESULT CDECL UserMgrAddSessionId(RTS_HANDLE hUser, RTS_UI32 *pulSessionId);
-typedef RTS_RESULT (CDECL * PFUSERMGRADDSESSIONID) (RTS_HANDLE hUser, RTS_UI32 *pulSessionId);
-#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRADDSESSIONID_NOTIMPLEMENTED)
-	#define USE_UserMgrAddSessionId
-	#define EXT_UserMgrAddSessionId
-	#define GET_UserMgrAddSessionId(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_UserMgrAddSessionId(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_UserMgrAddSessionId  FALSE
-	#define EXP_UserMgrAddSessionId  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_UserMgrAddSessionId
-	#define EXT_UserMgrAddSessionId
-	#define GET_UserMgrAddSessionId(fl)  CAL_CMGETAPI( "UserMgrAddSessionId" ) 
-	#define CAL_UserMgrAddSessionId  UserMgrAddSessionId
-	#define CHK_UserMgrAddSessionId  TRUE
-	#define EXP_UserMgrAddSessionId  CAL_CMEXPAPI( "UserMgrAddSessionId" ) 
-#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
-	#define USE_UserMgrAddSessionId
-	#define EXT_UserMgrAddSessionId
-	#define GET_UserMgrAddSessionId(fl)  CAL_CMGETAPI( "UserMgrAddSessionId" ) 
-	#define CAL_UserMgrAddSessionId  UserMgrAddSessionId
-	#define CHK_UserMgrAddSessionId  TRUE
-	#define EXP_UserMgrAddSessionId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrAddSessionId", (RTS_UINTPTR)UserMgrAddSessionId, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpUserMgrUserMgrAddSessionId
-	#define EXT_CmpUserMgrUserMgrAddSessionId
-	#define GET_CmpUserMgrUserMgrAddSessionId  ERR_OK
-	#define CAL_CmpUserMgrUserMgrAddSessionId pICmpUserMgr->IUserMgrAddSessionId
-	#define CHK_CmpUserMgrUserMgrAddSessionId (pICmpUserMgr != NULL)
-	#define EXP_CmpUserMgrUserMgrAddSessionId  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_UserMgrAddSessionId
-	#define EXT_UserMgrAddSessionId
-	#define GET_UserMgrAddSessionId(fl)  CAL_CMGETAPI( "UserMgrAddSessionId" ) 
-	#define CAL_UserMgrAddSessionId pICmpUserMgr->IUserMgrAddSessionId
-	#define CHK_UserMgrAddSessionId (pICmpUserMgr != NULL)
-	#define EXP_UserMgrAddSessionId  CAL_CMEXPAPI( "UserMgrAddSessionId" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_UserMgrAddSessionId  PFUSERMGRADDSESSIONID pfUserMgrAddSessionId;
-	#define EXT_UserMgrAddSessionId  extern PFUSERMGRADDSESSIONID pfUserMgrAddSessionId;
-	#define GET_UserMgrAddSessionId(fl)  s_pfCMGetAPI2( "UserMgrAddSessionId", (RTS_VOID_FCTPTR *)&pfUserMgrAddSessionId, (fl), 0, 0)
-	#define CAL_UserMgrAddSessionId  pfUserMgrAddSessionId
-	#define CHK_UserMgrAddSessionId  (pfUserMgrAddSessionId != NULL)
-	#define EXP_UserMgrAddSessionId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrAddSessionId", (RTS_UINTPTR)UserMgrAddSessionId, 0, 0) 
-#endif
-
-
-
-
-/**
- * <description>Remove online SessionID from the user (unbind the user from this session)</description>
- * <param name="hUser" type="IN">Handle to the user</param>
- * <param name="ulSessionId" type="IN">SessionID of the device online connection (see CmpDeviceItf.h)</param>
- * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">If user has the requested rights on the object or if no user management is configured</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">If CmpUserMgr component is still not initialized</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">Could not store SessionID</errorcode>
- */
-RTS_RESULT CDECL UserMgrRemoveSessionId(RTS_UI32 ulSessionId);
-typedef RTS_RESULT (CDECL * PFUSERMGRREMOVESESSIONID) (RTS_UI32 ulSessionId);
-#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRREMOVESESSIONID_NOTIMPLEMENTED)
-	#define USE_UserMgrRemoveSessionId
-	#define EXT_UserMgrRemoveSessionId
-	#define GET_UserMgrRemoveSessionId(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_UserMgrRemoveSessionId(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_UserMgrRemoveSessionId  FALSE
-	#define EXP_UserMgrRemoveSessionId  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_UserMgrRemoveSessionId
-	#define EXT_UserMgrRemoveSessionId
-	#define GET_UserMgrRemoveSessionId(fl)  CAL_CMGETAPI( "UserMgrRemoveSessionId" ) 
-	#define CAL_UserMgrRemoveSessionId  UserMgrRemoveSessionId
-	#define CHK_UserMgrRemoveSessionId  TRUE
-	#define EXP_UserMgrRemoveSessionId  CAL_CMEXPAPI( "UserMgrRemoveSessionId" ) 
-#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
-	#define USE_UserMgrRemoveSessionId
-	#define EXT_UserMgrRemoveSessionId
-	#define GET_UserMgrRemoveSessionId(fl)  CAL_CMGETAPI( "UserMgrRemoveSessionId" ) 
-	#define CAL_UserMgrRemoveSessionId  UserMgrRemoveSessionId
-	#define CHK_UserMgrRemoveSessionId  TRUE
-	#define EXP_UserMgrRemoveSessionId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRemoveSessionId", (RTS_UINTPTR)UserMgrRemoveSessionId, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpUserMgrUserMgrRemoveSessionId
-	#define EXT_CmpUserMgrUserMgrRemoveSessionId
-	#define GET_CmpUserMgrUserMgrRemoveSessionId  ERR_OK
-	#define CAL_CmpUserMgrUserMgrRemoveSessionId pICmpUserMgr->IUserMgrRemoveSessionId
-	#define CHK_CmpUserMgrUserMgrRemoveSessionId (pICmpUserMgr != NULL)
-	#define EXP_CmpUserMgrUserMgrRemoveSessionId  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_UserMgrRemoveSessionId
-	#define EXT_UserMgrRemoveSessionId
-	#define GET_UserMgrRemoveSessionId(fl)  CAL_CMGETAPI( "UserMgrRemoveSessionId" ) 
-	#define CAL_UserMgrRemoveSessionId pICmpUserMgr->IUserMgrRemoveSessionId
-	#define CHK_UserMgrRemoveSessionId (pICmpUserMgr != NULL)
-	#define EXP_UserMgrRemoveSessionId  CAL_CMEXPAPI( "UserMgrRemoveSessionId" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_UserMgrRemoveSessionId  PFUSERMGRREMOVESESSIONID pfUserMgrRemoveSessionId;
-	#define EXT_UserMgrRemoveSessionId  extern PFUSERMGRREMOVESESSIONID pfUserMgrRemoveSessionId;
-	#define GET_UserMgrRemoveSessionId(fl)  s_pfCMGetAPI2( "UserMgrRemoveSessionId", (RTS_VOID_FCTPTR *)&pfUserMgrRemoveSessionId, (fl), 0, 0)
-	#define CAL_UserMgrRemoveSessionId  pfUserMgrRemoveSessionId
-	#define CHK_UserMgrRemoveSessionId  (pfUserMgrRemoveSessionId != NULL)
-	#define EXP_UserMgrRemoveSessionId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRemoveSessionId", (RTS_UINTPTR)UserMgrRemoveSessionId, 0, 0) 
-#endif
-
-
-
-
-/**
- * <description>Returns the user bound at the SessionID
- * NOTE: The returned handle is not compatible with a handle from the UserDB, and these handles must not be mixed.
- * </description>
- * <param name="ulSessionId" type="IN">SessionID of the device online connection (see CmpDeviceItf.h)</param>
- * <param name="pResult" type="OUT">Pointer to error code</param>
- * <errorcode name="RTS_RESULT" type="ERR_OK">User is available</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">If SessionID is invalid</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The user management is not initialized or it is not loaded yet</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT or ERR_PARAMETER">The user is not available in the user management</errorcode>
- * <result>Handle to the user or RTS_INVALID_HANDLE if not available</result>
- */
-RTS_HANDLE CDECL UserMgrFindUserBySessionId(RTS_UI32 ulSessionId, RTS_RESULT *pResult);
-typedef RTS_HANDLE (CDECL * PFUSERMGRFINDUSERBYSESSIONID) (RTS_UI32 ulSessionId, RTS_RESULT *pResult);
-#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRFINDUSERBYSESSIONID_NOTIMPLEMENTED)
-	#define USE_UserMgrFindUserBySessionId
-	#define EXT_UserMgrFindUserBySessionId
-	#define GET_UserMgrFindUserBySessionId(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_UserMgrFindUserBySessionId(p0,p1)  (RTS_HANDLE)RTS_INVALID_HANDLE
-	#define CHK_UserMgrFindUserBySessionId  FALSE
-	#define EXP_UserMgrFindUserBySessionId  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_UserMgrFindUserBySessionId
-	#define EXT_UserMgrFindUserBySessionId
-	#define GET_UserMgrFindUserBySessionId(fl)  CAL_CMGETAPI( "UserMgrFindUserBySessionId" ) 
-	#define CAL_UserMgrFindUserBySessionId  UserMgrFindUserBySessionId
-	#define CHK_UserMgrFindUserBySessionId  TRUE
-	#define EXP_UserMgrFindUserBySessionId  CAL_CMEXPAPI( "UserMgrFindUserBySessionId" ) 
-#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
-	#define USE_UserMgrFindUserBySessionId
-	#define EXT_UserMgrFindUserBySessionId
-	#define GET_UserMgrFindUserBySessionId(fl)  CAL_CMGETAPI( "UserMgrFindUserBySessionId" ) 
-	#define CAL_UserMgrFindUserBySessionId  UserMgrFindUserBySessionId
-	#define CHK_UserMgrFindUserBySessionId  TRUE
-	#define EXP_UserMgrFindUserBySessionId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrFindUserBySessionId", (RTS_UINTPTR)UserMgrFindUserBySessionId, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpUserMgrUserMgrFindUserBySessionId
-	#define EXT_CmpUserMgrUserMgrFindUserBySessionId
-	#define GET_CmpUserMgrUserMgrFindUserBySessionId  ERR_OK
-	#define CAL_CmpUserMgrUserMgrFindUserBySessionId pICmpUserMgr->IUserMgrFindUserBySessionId
-	#define CHK_CmpUserMgrUserMgrFindUserBySessionId (pICmpUserMgr != NULL)
-	#define EXP_CmpUserMgrUserMgrFindUserBySessionId  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_UserMgrFindUserBySessionId
-	#define EXT_UserMgrFindUserBySessionId
-	#define GET_UserMgrFindUserBySessionId(fl)  CAL_CMGETAPI( "UserMgrFindUserBySessionId" ) 
-	#define CAL_UserMgrFindUserBySessionId pICmpUserMgr->IUserMgrFindUserBySessionId
-	#define CHK_UserMgrFindUserBySessionId (pICmpUserMgr != NULL)
-	#define EXP_UserMgrFindUserBySessionId  CAL_CMEXPAPI( "UserMgrFindUserBySessionId" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_UserMgrFindUserBySessionId  PFUSERMGRFINDUSERBYSESSIONID pfUserMgrFindUserBySessionId;
-	#define EXT_UserMgrFindUserBySessionId  extern PFUSERMGRFINDUSERBYSESSIONID pfUserMgrFindUserBySessionId;
-	#define GET_UserMgrFindUserBySessionId(fl)  s_pfCMGetAPI2( "UserMgrFindUserBySessionId", (RTS_VOID_FCTPTR *)&pfUserMgrFindUserBySessionId, (fl), 0, 0)
-	#define CAL_UserMgrFindUserBySessionId  pfUserMgrFindUserBySessionId
-	#define CHK_UserMgrFindUserBySessionId  (pfUserMgrFindUserBySessionId != NULL)
-	#define EXP_UserMgrFindUserBySessionId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrFindUserBySessionId", (RTS_UINTPTR)UserMgrFindUserBySessionId, 0, 0) 
-#endif
-
-
-
-
-/**
- * <description>Adds an value to an logged in user. This can be used as some kind of chache that exists as long as the user is logged in.</description>
+ * <description>Adds an value to an logged in user. This can be used as some kind of cache that exists as long as the user is logged in.</description>
  * <param name="hUser" type="IN">Handle to the user.</param>
- * <param name="key" type="IN">Access key for the chace value. This has to be used at UserMgrGetInfoOfUser to access the value.</param>
+ * <param name="key" type="IN">Access key for the cache value. This has to be used at UserMgrGetInfoOfUser to access the value.</param>
  * <param name="pValue" type="IN">Value to cache at the user.</param>
  * <errorcode name="RTS_RESULT" type="ERR_OK">Value cached</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_DUPLICATE">The same key has been used already</errorcode>
@@ -1355,10 +2511,10 @@ typedef RTS_RESULT (CDECL * PFUSERMGRADDINFOTOUSER) (RTS_HANDLE hUser, RTS_SIZE 
 
 
 /**
- * <description>Removes a specific chace value from an user.</description>
+ * <description>Removes a specific cache value from an user.</description>
  * <param name="hUser" type="IN">Handle to the user.</param>
  * <param name="key" type="IN">Key of the cache value.</param>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Removing cache value successfull</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Removing cache value successful</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">No cache value with this key available.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Removing cache value failed</errorcode>
  */
@@ -1412,9 +2568,9 @@ typedef RTS_RESULT (CDECL * PFUSERMGRREMOVEINFOFROMUSER) (RTS_HANDLE hUser, RTS_
 
 
 /**
- * <description>Removes a specific chace value from all logged in users.</description>
+ * <description>Removes a specific cache value from all logged in users.</description>
  * <param name="key" type="IN">Key of the cache value.</param>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Removing cache value successfull</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Removing cache value successful</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Removing cache value failed</errorcode>
  */
 RTS_RESULT CDECL UserMgrRemoveInfoFromAllUsers(RTS_SIZE key);
@@ -1471,7 +2627,7 @@ typedef RTS_RESULT (CDECL * PFUSERMGRREMOVEINFOFROMALLUSERS) (RTS_SIZE key);
  * <param name="hUser" type="IN">Handle to the user.</param>
  * <param name="key" type="IN">Key of the cache value.</param>
  * <param name="pValue" type="IN">Value to cache at the user.</param>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Retrieving cache value successfull. Value copied to pValue.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Retrieving cache value successful. Value copied to pValue.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Some parameter is invalid</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">No cache value with this key available.</errorcode>
  */
@@ -1525,7 +2681,598 @@ typedef RTS_RESULT (CDECL * PFUSERMGRGETINFOOFUSER) (RTS_HANDLE hUser, RTS_SIZE 
 
 
 /**
- * <description>Add the error tag to the reply stream of an online service, if the service is denied because of a failed access right (authorization error)!</description>
+ * <description>Retrieves user name from a user handle.</description>
+ * <param name="hUser" type="IN">Handle to the user.</param>
+ * <param name="pName" type="IN">Pointer to the buffer where to store the name.</param>
+ * <param name="maxLen" type="IN">Maximum size of the user name.</param>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Retrieving cache value successful. Value copied to pValue.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">hUser was not a valid user handle.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pName was NULL.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_BUFFERSIZE">The buffer was too small.</errorcode>
+ */
+RTS_RESULT CDECL UserMgrGetUserName(RTS_HANDLE hUser, char *pName, RTS_UI32 maxLen);
+typedef RTS_RESULT (CDECL * PFUSERMGRGETUSERNAME) (RTS_HANDLE hUser, char *pName, RTS_UI32 maxLen);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRGETUSERNAME_NOTIMPLEMENTED)
+	#define USE_UserMgrGetUserName
+	#define EXT_UserMgrGetUserName
+	#define GET_UserMgrGetUserName(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrGetUserName(p0,p1,p2)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrGetUserName  FALSE
+	#define EXP_UserMgrGetUserName  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrGetUserName
+	#define EXT_UserMgrGetUserName
+	#define GET_UserMgrGetUserName(fl)  CAL_CMGETAPI( "UserMgrGetUserName" ) 
+	#define CAL_UserMgrGetUserName  UserMgrGetUserName
+	#define CHK_UserMgrGetUserName  TRUE
+	#define EXP_UserMgrGetUserName  CAL_CMEXPAPI( "UserMgrGetUserName" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrGetUserName
+	#define EXT_UserMgrGetUserName
+	#define GET_UserMgrGetUserName(fl)  CAL_CMGETAPI( "UserMgrGetUserName" ) 
+	#define CAL_UserMgrGetUserName  UserMgrGetUserName
+	#define CHK_UserMgrGetUserName  TRUE
+	#define EXP_UserMgrGetUserName  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGetUserName", (RTS_UINTPTR)UserMgrGetUserName, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrGetUserName
+	#define EXT_CmpUserMgrUserMgrGetUserName
+	#define GET_CmpUserMgrUserMgrGetUserName  ERR_OK
+	#define CAL_CmpUserMgrUserMgrGetUserName pICmpUserMgr->IUserMgrGetUserName
+	#define CHK_CmpUserMgrUserMgrGetUserName (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrGetUserName  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrGetUserName
+	#define EXT_UserMgrGetUserName
+	#define GET_UserMgrGetUserName(fl)  CAL_CMGETAPI( "UserMgrGetUserName" ) 
+	#define CAL_UserMgrGetUserName pICmpUserMgr->IUserMgrGetUserName
+	#define CHK_UserMgrGetUserName (pICmpUserMgr != NULL)
+	#define EXP_UserMgrGetUserName  CAL_CMEXPAPI( "UserMgrGetUserName" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrGetUserName  PFUSERMGRGETUSERNAME pfUserMgrGetUserName;
+	#define EXT_UserMgrGetUserName  extern PFUSERMGRGETUSERNAME pfUserMgrGetUserName;
+	#define GET_UserMgrGetUserName(fl)  s_pfCMGetAPI2( "UserMgrGetUserName", (RTS_VOID_FCTPTR *)&pfUserMgrGetUserName, (fl), 0, 0)
+	#define CAL_UserMgrGetUserName  pfUserMgrGetUserName
+	#define CHK_UserMgrGetUserName  (pfUserMgrGetUserName != NULL)
+	#define EXP_UserMgrGetUserName  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGetUserName", (RTS_UINTPTR)UserMgrGetUserName, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Get a group by it's name.</description>
+ * <param name="pszGroupName" type="IN">Name of the group.</param>
+ * <param name="pResult" type="OUT">Error code.</param>
+ * <return>Handle to the group</return>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Group found.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pszGroupName was NULL.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">There is not group with this name.</errorcode>
+ */
+RTS_HANDLE CDECL UserMgrGetGroup(char *pszGroupName, RTS_RESULT *pResult);
+typedef RTS_HANDLE (CDECL * PFUSERMGRGETGROUP) (char *pszGroupName, RTS_RESULT *pResult);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRGETGROUP_NOTIMPLEMENTED)
+	#define USE_UserMgrGetGroup
+	#define EXT_UserMgrGetGroup
+	#define GET_UserMgrGetGroup(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrGetGroup(p0,p1)  (RTS_HANDLE)RTS_INVALID_HANDLE
+	#define CHK_UserMgrGetGroup  FALSE
+	#define EXP_UserMgrGetGroup  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrGetGroup
+	#define EXT_UserMgrGetGroup
+	#define GET_UserMgrGetGroup(fl)  CAL_CMGETAPI( "UserMgrGetGroup" ) 
+	#define CAL_UserMgrGetGroup  UserMgrGetGroup
+	#define CHK_UserMgrGetGroup  TRUE
+	#define EXP_UserMgrGetGroup  CAL_CMEXPAPI( "UserMgrGetGroup" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrGetGroup
+	#define EXT_UserMgrGetGroup
+	#define GET_UserMgrGetGroup(fl)  CAL_CMGETAPI( "UserMgrGetGroup" ) 
+	#define CAL_UserMgrGetGroup  UserMgrGetGroup
+	#define CHK_UserMgrGetGroup  TRUE
+	#define EXP_UserMgrGetGroup  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGetGroup", (RTS_UINTPTR)UserMgrGetGroup, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrGetGroup
+	#define EXT_CmpUserMgrUserMgrGetGroup
+	#define GET_CmpUserMgrUserMgrGetGroup  ERR_OK
+	#define CAL_CmpUserMgrUserMgrGetGroup pICmpUserMgr->IUserMgrGetGroup
+	#define CHK_CmpUserMgrUserMgrGetGroup (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrGetGroup  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrGetGroup
+	#define EXT_UserMgrGetGroup
+	#define GET_UserMgrGetGroup(fl)  CAL_CMGETAPI( "UserMgrGetGroup" ) 
+	#define CAL_UserMgrGetGroup pICmpUserMgr->IUserMgrGetGroup
+	#define CHK_UserMgrGetGroup (pICmpUserMgr != NULL)
+	#define EXP_UserMgrGetGroup  CAL_CMEXPAPI( "UserMgrGetGroup" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrGetGroup  PFUSERMGRGETGROUP pfUserMgrGetGroup;
+	#define EXT_UserMgrGetGroup  extern PFUSERMGRGETGROUP pfUserMgrGetGroup;
+	#define GET_UserMgrGetGroup(fl)  s_pfCMGetAPI2( "UserMgrGetGroup", (RTS_VOID_FCTPTR *)&pfUserMgrGetGroup, (fl), 0, 0)
+	#define CAL_UserMgrGetGroup  pfUserMgrGetGroup
+	#define CHK_UserMgrGetGroup  (pfUserMgrGetGroup != NULL)
+	#define EXP_UserMgrGetGroup  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGetGroup", (RTS_UINTPTR)UserMgrGetGroup, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Checks if a user is member of a specific group.</description>
+ * <param name="hGroup" type="IN">Handle to the uroup.</param>
+ * <param name="hUser" type="IN">Handle to the user</param>
+ * <return>TRUE: The user is member of that group. FALSE: The user is not member.</return>
+ */
+RTS_BOOL CDECL UserMgrGroupHasUser(RTS_HANDLE hGroup, RTS_HANDLE hUser);
+typedef RTS_BOOL (CDECL * PFUSERMGRGROUPHASUSER) (RTS_HANDLE hGroup, RTS_HANDLE hUser);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRGROUPHASUSER_NOTIMPLEMENTED)
+	#define USE_UserMgrGroupHasUser
+	#define EXT_UserMgrGroupHasUser
+	#define GET_UserMgrGroupHasUser(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrGroupHasUser(p0,p1)  (RTS_BOOL)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrGroupHasUser  FALSE
+	#define EXP_UserMgrGroupHasUser  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrGroupHasUser
+	#define EXT_UserMgrGroupHasUser
+	#define GET_UserMgrGroupHasUser(fl)  CAL_CMGETAPI( "UserMgrGroupHasUser" ) 
+	#define CAL_UserMgrGroupHasUser  UserMgrGroupHasUser
+	#define CHK_UserMgrGroupHasUser  TRUE
+	#define EXP_UserMgrGroupHasUser  CAL_CMEXPAPI( "UserMgrGroupHasUser" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrGroupHasUser
+	#define EXT_UserMgrGroupHasUser
+	#define GET_UserMgrGroupHasUser(fl)  CAL_CMGETAPI( "UserMgrGroupHasUser" ) 
+	#define CAL_UserMgrGroupHasUser  UserMgrGroupHasUser
+	#define CHK_UserMgrGroupHasUser  TRUE
+	#define EXP_UserMgrGroupHasUser  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGroupHasUser", (RTS_UINTPTR)UserMgrGroupHasUser, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrGroupHasUser
+	#define EXT_CmpUserMgrUserMgrGroupHasUser
+	#define GET_CmpUserMgrUserMgrGroupHasUser  ERR_OK
+	#define CAL_CmpUserMgrUserMgrGroupHasUser pICmpUserMgr->IUserMgrGroupHasUser
+	#define CHK_CmpUserMgrUserMgrGroupHasUser (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrGroupHasUser  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrGroupHasUser
+	#define EXT_UserMgrGroupHasUser
+	#define GET_UserMgrGroupHasUser(fl)  CAL_CMGETAPI( "UserMgrGroupHasUser" ) 
+	#define CAL_UserMgrGroupHasUser pICmpUserMgr->IUserMgrGroupHasUser
+	#define CHK_UserMgrGroupHasUser (pICmpUserMgr != NULL)
+	#define EXP_UserMgrGroupHasUser  CAL_CMEXPAPI( "UserMgrGroupHasUser" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrGroupHasUser  PFUSERMGRGROUPHASUSER pfUserMgrGroupHasUser;
+	#define EXT_UserMgrGroupHasUser  extern PFUSERMGRGROUPHASUSER pfUserMgrGroupHasUser;
+	#define GET_UserMgrGroupHasUser(fl)  s_pfCMGetAPI2( "UserMgrGroupHasUser", (RTS_VOID_FCTPTR *)&pfUserMgrGroupHasUser, (fl), 0, 0)
+	#define CAL_UserMgrGroupHasUser  pfUserMgrGroupHasUser
+	#define CHK_UserMgrGroupHasUser  (pfUserMgrGroupHasUser != NULL)
+	#define EXP_UserMgrGroupHasUser  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGroupHasUser", (RTS_UINTPTR)UserMgrGroupHasUser, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Retrieves user name from a user group.</description>
+ * <param name="hUser" type="IN">Handle to the group.</param>
+ * <param name="pName" type="IN">Pointer to the buffer where to store the name.</param>
+ * <param name="maxLen" type="IN">Maximum size of the user name.</param>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Retrieving cache value successful. Value copied to pValue.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">hUser was not a valid user handle.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pName was NULL.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_BUFFERSIZE">The buffer was too small.</errorcode>
+ */
+RTS_RESULT CDECL UserMgrGroupGetName(RTS_HANDLE hGroup, char *pName, RTS_UI32 maxLen);
+typedef RTS_RESULT (CDECL * PFUSERMGRGROUPGETNAME) (RTS_HANDLE hGroup, char *pName, RTS_UI32 maxLen);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRGROUPGETNAME_NOTIMPLEMENTED)
+	#define USE_UserMgrGroupGetName
+	#define EXT_UserMgrGroupGetName
+	#define GET_UserMgrGroupGetName(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrGroupGetName(p0,p1,p2)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrGroupGetName  FALSE
+	#define EXP_UserMgrGroupGetName  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrGroupGetName
+	#define EXT_UserMgrGroupGetName
+	#define GET_UserMgrGroupGetName(fl)  CAL_CMGETAPI( "UserMgrGroupGetName" ) 
+	#define CAL_UserMgrGroupGetName  UserMgrGroupGetName
+	#define CHK_UserMgrGroupGetName  TRUE
+	#define EXP_UserMgrGroupGetName  CAL_CMEXPAPI( "UserMgrGroupGetName" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrGroupGetName
+	#define EXT_UserMgrGroupGetName
+	#define GET_UserMgrGroupGetName(fl)  CAL_CMGETAPI( "UserMgrGroupGetName" ) 
+	#define CAL_UserMgrGroupGetName  UserMgrGroupGetName
+	#define CHK_UserMgrGroupGetName  TRUE
+	#define EXP_UserMgrGroupGetName  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGroupGetName", (RTS_UINTPTR)UserMgrGroupGetName, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrGroupGetName
+	#define EXT_CmpUserMgrUserMgrGroupGetName
+	#define GET_CmpUserMgrUserMgrGroupGetName  ERR_OK
+	#define CAL_CmpUserMgrUserMgrGroupGetName pICmpUserMgr->IUserMgrGroupGetName
+	#define CHK_CmpUserMgrUserMgrGroupGetName (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrGroupGetName  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrGroupGetName
+	#define EXT_UserMgrGroupGetName
+	#define GET_UserMgrGroupGetName(fl)  CAL_CMGETAPI( "UserMgrGroupGetName" ) 
+	#define CAL_UserMgrGroupGetName pICmpUserMgr->IUserMgrGroupGetName
+	#define CHK_UserMgrGroupGetName (pICmpUserMgr != NULL)
+	#define EXP_UserMgrGroupGetName  CAL_CMEXPAPI( "UserMgrGroupGetName" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrGroupGetName  PFUSERMGRGROUPGETNAME pfUserMgrGroupGetName;
+	#define EXT_UserMgrGroupGetName  extern PFUSERMGRGROUPGETNAME pfUserMgrGroupGetName;
+	#define GET_UserMgrGroupGetName(fl)  s_pfCMGetAPI2( "UserMgrGroupGetName", (RTS_VOID_FCTPTR *)&pfUserMgrGroupGetName, (fl), 0, 0)
+	#define CAL_UserMgrGroupGetName  pfUserMgrGroupGetName
+	#define CHK_UserMgrGroupGetName  (pfUserMgrGroupGetName != NULL)
+	#define EXP_UserMgrGroupGetName  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGroupGetName", (RTS_UINTPTR)UserMgrGroupGetName, 0, 0) 
+#endif
+
+
+
+
+
+
+/**
+ * <description>Adds a user to user database</description>
+ * <param name="hUser" type="IN">Handle of user with the appropriate rights</param>
+ * <param name="pszUserName" type="IN">Name of the user.</param>
+ * <param name="pCredentials" type="IN">Credentials of the user.</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">User could be added</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pszUserName was NULL.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">No memory to add</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_DUPLICATE">pszUserName is already added.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_ACCESS_RIGHTS">User has no access rights</errorcode>
+ */
+RTS_RESULT CDECL UserMgrAddUser(RTS_HANDLE hUser, char *pszUserName, UserMgrCredentials *pCredentials);
+typedef RTS_RESULT (CDECL * PFUSERMGRADDUSER) (RTS_HANDLE hUser, char *pszUserName, UserMgrCredentials *pCredentials);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRADDUSER_NOTIMPLEMENTED)
+	#define USE_UserMgrAddUser
+	#define EXT_UserMgrAddUser
+	#define GET_UserMgrAddUser(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrAddUser(p0,p1,p2)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrAddUser  FALSE
+	#define EXP_UserMgrAddUser  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrAddUser
+	#define EXT_UserMgrAddUser
+	#define GET_UserMgrAddUser(fl)  CAL_CMGETAPI( "UserMgrAddUser" ) 
+	#define CAL_UserMgrAddUser  UserMgrAddUser
+	#define CHK_UserMgrAddUser  TRUE
+	#define EXP_UserMgrAddUser  CAL_CMEXPAPI( "UserMgrAddUser" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrAddUser
+	#define EXT_UserMgrAddUser
+	#define GET_UserMgrAddUser(fl)  CAL_CMGETAPI( "UserMgrAddUser" ) 
+	#define CAL_UserMgrAddUser  UserMgrAddUser
+	#define CHK_UserMgrAddUser  TRUE
+	#define EXP_UserMgrAddUser  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrAddUser", (RTS_UINTPTR)UserMgrAddUser, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrAddUser
+	#define EXT_CmpUserMgrUserMgrAddUser
+	#define GET_CmpUserMgrUserMgrAddUser  ERR_OK
+	#define CAL_CmpUserMgrUserMgrAddUser pICmpUserMgr->IUserMgrAddUser
+	#define CHK_CmpUserMgrUserMgrAddUser (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrAddUser  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrAddUser
+	#define EXT_UserMgrAddUser
+	#define GET_UserMgrAddUser(fl)  CAL_CMGETAPI( "UserMgrAddUser" ) 
+	#define CAL_UserMgrAddUser pICmpUserMgr->IUserMgrAddUser
+	#define CHK_UserMgrAddUser (pICmpUserMgr != NULL)
+	#define EXP_UserMgrAddUser  CAL_CMEXPAPI( "UserMgrAddUser" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrAddUser  PFUSERMGRADDUSER pfUserMgrAddUser;
+	#define EXT_UserMgrAddUser  extern PFUSERMGRADDUSER pfUserMgrAddUser;
+	#define GET_UserMgrAddUser(fl)  s_pfCMGetAPI2( "UserMgrAddUser", (RTS_VOID_FCTPTR *)&pfUserMgrAddUser, (fl), 0, 0)
+	#define CAL_UserMgrAddUser  pfUserMgrAddUser
+	#define CHK_UserMgrAddUser  (pfUserMgrAddUser != NULL)
+	#define EXP_UserMgrAddUser  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrAddUser", (RTS_UINTPTR)UserMgrAddUser, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Removes a user from user database</description>
+ * <param name="hUser" type="IN">Handle of user with the appropriate rights</param>
+ * <param name="pszUserName" type="IN">Name of the user.</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">User could be removed</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pszUserName was NULL.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_ACCESS_RIGHTS">User has no access rights</errorcode>
+ */
+RTS_RESULT CDECL UserMgrRemoveUser(RTS_HANDLE hUser, char *pszUserName);
+typedef RTS_RESULT (CDECL * PFUSERMGRREMOVEUSER) (RTS_HANDLE hUser, char *pszUserName);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRREMOVEUSER_NOTIMPLEMENTED)
+	#define USE_UserMgrRemoveUser
+	#define EXT_UserMgrRemoveUser
+	#define GET_UserMgrRemoveUser(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrRemoveUser(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrRemoveUser  FALSE
+	#define EXP_UserMgrRemoveUser  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrRemoveUser
+	#define EXT_UserMgrRemoveUser
+	#define GET_UserMgrRemoveUser(fl)  CAL_CMGETAPI( "UserMgrRemoveUser" ) 
+	#define CAL_UserMgrRemoveUser  UserMgrRemoveUser
+	#define CHK_UserMgrRemoveUser  TRUE
+	#define EXP_UserMgrRemoveUser  CAL_CMEXPAPI( "UserMgrRemoveUser" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrRemoveUser
+	#define EXT_UserMgrRemoveUser
+	#define GET_UserMgrRemoveUser(fl)  CAL_CMGETAPI( "UserMgrRemoveUser" ) 
+	#define CAL_UserMgrRemoveUser  UserMgrRemoveUser
+	#define CHK_UserMgrRemoveUser  TRUE
+	#define EXP_UserMgrRemoveUser  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRemoveUser", (RTS_UINTPTR)UserMgrRemoveUser, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrRemoveUser
+	#define EXT_CmpUserMgrUserMgrRemoveUser
+	#define GET_CmpUserMgrUserMgrRemoveUser  ERR_OK
+	#define CAL_CmpUserMgrUserMgrRemoveUser pICmpUserMgr->IUserMgrRemoveUser
+	#define CHK_CmpUserMgrUserMgrRemoveUser (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrRemoveUser  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrRemoveUser
+	#define EXT_UserMgrRemoveUser
+	#define GET_UserMgrRemoveUser(fl)  CAL_CMGETAPI( "UserMgrRemoveUser" ) 
+	#define CAL_UserMgrRemoveUser pICmpUserMgr->IUserMgrRemoveUser
+	#define CHK_UserMgrRemoveUser (pICmpUserMgr != NULL)
+	#define EXP_UserMgrRemoveUser  CAL_CMEXPAPI( "UserMgrRemoveUser" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrRemoveUser  PFUSERMGRREMOVEUSER pfUserMgrRemoveUser;
+	#define EXT_UserMgrRemoveUser  extern PFUSERMGRREMOVEUSER pfUserMgrRemoveUser;
+	#define GET_UserMgrRemoveUser(fl)  s_pfCMGetAPI2( "UserMgrRemoveUser", (RTS_VOID_FCTPTR *)&pfUserMgrRemoveUser, (fl), 0, 0)
+	#define CAL_UserMgrRemoveUser  pfUserMgrRemoveUser
+	#define CHK_UserMgrRemoveUser  (pfUserMgrRemoveUser != NULL)
+	#define EXP_UserMgrRemoveUser  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRemoveUser", (RTS_UINTPTR)UserMgrRemoveUser, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Adds a group to user group database</description>
+ * <param name="hUser" type="IN">Handle of user with the appropriate rights</param>
+ * <param name="pszGroupName" type="IN">Name of the group.</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Group could be added</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pszGroupName was NULL.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">No memory to add group</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_DUPLICATE">pszGroupName is already added.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Creating user or group lists failed</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_ACCESS_RIGHTS">User has no access rights</errorcode>
+ */
+RTS_RESULT CDECL UserMgrAddGroup(RTS_HANDLE hUser, char *pszGroupName);
+typedef RTS_RESULT (CDECL * PFUSERMGRADDGROUP) (RTS_HANDLE hUser, char *pszGroupName);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRADDGROUP_NOTIMPLEMENTED)
+	#define USE_UserMgrAddGroup
+	#define EXT_UserMgrAddGroup
+	#define GET_UserMgrAddGroup(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrAddGroup(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrAddGroup  FALSE
+	#define EXP_UserMgrAddGroup  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrAddGroup
+	#define EXT_UserMgrAddGroup
+	#define GET_UserMgrAddGroup(fl)  CAL_CMGETAPI( "UserMgrAddGroup" ) 
+	#define CAL_UserMgrAddGroup  UserMgrAddGroup
+	#define CHK_UserMgrAddGroup  TRUE
+	#define EXP_UserMgrAddGroup  CAL_CMEXPAPI( "UserMgrAddGroup" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrAddGroup
+	#define EXT_UserMgrAddGroup
+	#define GET_UserMgrAddGroup(fl)  CAL_CMGETAPI( "UserMgrAddGroup" ) 
+	#define CAL_UserMgrAddGroup  UserMgrAddGroup
+	#define CHK_UserMgrAddGroup  TRUE
+	#define EXP_UserMgrAddGroup  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrAddGroup", (RTS_UINTPTR)UserMgrAddGroup, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrAddGroup
+	#define EXT_CmpUserMgrUserMgrAddGroup
+	#define GET_CmpUserMgrUserMgrAddGroup  ERR_OK
+	#define CAL_CmpUserMgrUserMgrAddGroup pICmpUserMgr->IUserMgrAddGroup
+	#define CHK_CmpUserMgrUserMgrAddGroup (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrAddGroup  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrAddGroup
+	#define EXT_UserMgrAddGroup
+	#define GET_UserMgrAddGroup(fl)  CAL_CMGETAPI( "UserMgrAddGroup" ) 
+	#define CAL_UserMgrAddGroup pICmpUserMgr->IUserMgrAddGroup
+	#define CHK_UserMgrAddGroup (pICmpUserMgr != NULL)
+	#define EXP_UserMgrAddGroup  CAL_CMEXPAPI( "UserMgrAddGroup" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrAddGroup  PFUSERMGRADDGROUP pfUserMgrAddGroup;
+	#define EXT_UserMgrAddGroup  extern PFUSERMGRADDGROUP pfUserMgrAddGroup;
+	#define GET_UserMgrAddGroup(fl)  s_pfCMGetAPI2( "UserMgrAddGroup", (RTS_VOID_FCTPTR *)&pfUserMgrAddGroup, (fl), 0, 0)
+	#define CAL_UserMgrAddGroup  pfUserMgrAddGroup
+	#define CHK_UserMgrAddGroup  (pfUserMgrAddGroup != NULL)
+	#define EXP_UserMgrAddGroup  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrAddGroup", (RTS_UINTPTR)UserMgrAddGroup, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Removes a group from user group database</description>
+ * <param name="hUser" type="IN">Handle of user with the appropriate rights</param>
+ * <param name="pszGroupName" type="IN">Name of the group.</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Group was successfully removed</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pszGroupName was NULL.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_ACCESS_RIGHTS">User has no access rights</errorcode>
+ */
+RTS_RESULT CDECL UserMgrRemoveGroup(RTS_HANDLE hUser, char *pszGroupName);
+typedef RTS_RESULT (CDECL * PFUSERMGRREMOVEGROUP) (RTS_HANDLE hUser, char *pszGroupName);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRREMOVEGROUP_NOTIMPLEMENTED)
+	#define USE_UserMgrRemoveGroup
+	#define EXT_UserMgrRemoveGroup
+	#define GET_UserMgrRemoveGroup(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrRemoveGroup(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrRemoveGroup  FALSE
+	#define EXP_UserMgrRemoveGroup  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrRemoveGroup
+	#define EXT_UserMgrRemoveGroup
+	#define GET_UserMgrRemoveGroup(fl)  CAL_CMGETAPI( "UserMgrRemoveGroup" ) 
+	#define CAL_UserMgrRemoveGroup  UserMgrRemoveGroup
+	#define CHK_UserMgrRemoveGroup  TRUE
+	#define EXP_UserMgrRemoveGroup  CAL_CMEXPAPI( "UserMgrRemoveGroup" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrRemoveGroup
+	#define EXT_UserMgrRemoveGroup
+	#define GET_UserMgrRemoveGroup(fl)  CAL_CMGETAPI( "UserMgrRemoveGroup" ) 
+	#define CAL_UserMgrRemoveGroup  UserMgrRemoveGroup
+	#define CHK_UserMgrRemoveGroup  TRUE
+	#define EXP_UserMgrRemoveGroup  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRemoveGroup", (RTS_UINTPTR)UserMgrRemoveGroup, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrRemoveGroup
+	#define EXT_CmpUserMgrUserMgrRemoveGroup
+	#define GET_CmpUserMgrUserMgrRemoveGroup  ERR_OK
+	#define CAL_CmpUserMgrUserMgrRemoveGroup pICmpUserMgr->IUserMgrRemoveGroup
+	#define CHK_CmpUserMgrUserMgrRemoveGroup (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrRemoveGroup  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrRemoveGroup
+	#define EXT_UserMgrRemoveGroup
+	#define GET_UserMgrRemoveGroup(fl)  CAL_CMGETAPI( "UserMgrRemoveGroup" ) 
+	#define CAL_UserMgrRemoveGroup pICmpUserMgr->IUserMgrRemoveGroup
+	#define CHK_UserMgrRemoveGroup (pICmpUserMgr != NULL)
+	#define EXP_UserMgrRemoveGroup  CAL_CMEXPAPI( "UserMgrRemoveGroup" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrRemoveGroup  PFUSERMGRREMOVEGROUP pfUserMgrRemoveGroup;
+	#define EXT_UserMgrRemoveGroup  extern PFUSERMGRREMOVEGROUP pfUserMgrRemoveGroup;
+	#define GET_UserMgrRemoveGroup(fl)  s_pfCMGetAPI2( "UserMgrRemoveGroup", (RTS_VOID_FCTPTR *)&pfUserMgrRemoveGroup, (fl), 0, 0)
+	#define CAL_UserMgrRemoveGroup  pfUserMgrRemoveGroup
+	#define CHK_UserMgrRemoveGroup  (pfUserMgrRemoveGroup != NULL)
+	#define EXP_UserMgrRemoveGroup  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRemoveGroup", (RTS_UINTPTR)UserMgrRemoveGroup, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Adds a user to a group in the user group database</description>
+ * <param name="hUser" type="IN">Handle of user with the appropriate rights</param>
+ * <param name="pszGroupName" type="IN">Name of the group.</param>
+ * <param name="pszUserName" type="IN">Name of the user.</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">User could be added</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pszGroupName or pszUserName was NULL.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">No memory to add user to group</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_DUPLICATE">pszUserName is already added.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_ACCESS_RIGHTS">User has no access rights</errorcode>
+ */
+RTS_RESULT CDECL UserMgrGroupAddUser(RTS_HANDLE hUser, char *pszGroupName, char *pszUserName);
+typedef RTS_RESULT (CDECL * PFUSERMGRGROUPADDUSER) (RTS_HANDLE hUser, char *pszGroupName, char *pszUserName);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRGROUPADDUSER_NOTIMPLEMENTED)
+	#define USE_UserMgrGroupAddUser
+	#define EXT_UserMgrGroupAddUser
+	#define GET_UserMgrGroupAddUser(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrGroupAddUser(p0,p1,p2)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrGroupAddUser  FALSE
+	#define EXP_UserMgrGroupAddUser  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrGroupAddUser
+	#define EXT_UserMgrGroupAddUser
+	#define GET_UserMgrGroupAddUser(fl)  CAL_CMGETAPI( "UserMgrGroupAddUser" ) 
+	#define CAL_UserMgrGroupAddUser  UserMgrGroupAddUser
+	#define CHK_UserMgrGroupAddUser  TRUE
+	#define EXP_UserMgrGroupAddUser  CAL_CMEXPAPI( "UserMgrGroupAddUser" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrGroupAddUser
+	#define EXT_UserMgrGroupAddUser
+	#define GET_UserMgrGroupAddUser(fl)  CAL_CMGETAPI( "UserMgrGroupAddUser" ) 
+	#define CAL_UserMgrGroupAddUser  UserMgrGroupAddUser
+	#define CHK_UserMgrGroupAddUser  TRUE
+	#define EXP_UserMgrGroupAddUser  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGroupAddUser", (RTS_UINTPTR)UserMgrGroupAddUser, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrGroupAddUser
+	#define EXT_CmpUserMgrUserMgrGroupAddUser
+	#define GET_CmpUserMgrUserMgrGroupAddUser  ERR_OK
+	#define CAL_CmpUserMgrUserMgrGroupAddUser pICmpUserMgr->IUserMgrGroupAddUser
+	#define CHK_CmpUserMgrUserMgrGroupAddUser (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrGroupAddUser  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrGroupAddUser
+	#define EXT_UserMgrGroupAddUser
+	#define GET_UserMgrGroupAddUser(fl)  CAL_CMGETAPI( "UserMgrGroupAddUser" ) 
+	#define CAL_UserMgrGroupAddUser pICmpUserMgr->IUserMgrGroupAddUser
+	#define CHK_UserMgrGroupAddUser (pICmpUserMgr != NULL)
+	#define EXP_UserMgrGroupAddUser  CAL_CMEXPAPI( "UserMgrGroupAddUser" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrGroupAddUser  PFUSERMGRGROUPADDUSER pfUserMgrGroupAddUser;
+	#define EXT_UserMgrGroupAddUser  extern PFUSERMGRGROUPADDUSER pfUserMgrGroupAddUser;
+	#define GET_UserMgrGroupAddUser(fl)  s_pfCMGetAPI2( "UserMgrGroupAddUser", (RTS_VOID_FCTPTR *)&pfUserMgrGroupAddUser, (fl), 0, 0)
+	#define CAL_UserMgrGroupAddUser  pfUserMgrGroupAddUser
+	#define CHK_UserMgrGroupAddUser  (pfUserMgrGroupAddUser != NULL)
+	#define EXP_UserMgrGroupAddUser  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGroupAddUser", (RTS_UINTPTR)UserMgrGroupAddUser, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Removes user from a group in the user group database</description>
+ * <param name="hUser" type="IN">Handle of user with the appropriate rights</param>
+ * <param name="pszGroupName" type="IN">Name of the group.</param>
+ * <param name="pszUserName" type="IN">Name of the user.</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">User could be removed</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pszGroupName or pszUserName was NULL.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_ACCESS_RIGHTS">User has no access rights</errorcode>
+ */
+RTS_RESULT CDECL UserMgrGroupRemoveUser(RTS_HANDLE hUser, char *pszGroupName, char *pszUserName);
+typedef RTS_RESULT (CDECL * PFUSERMGRGROUPREMOVEUSER) (RTS_HANDLE hUser, char *pszGroupName, char *pszUserName);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRGROUPREMOVEUSER_NOTIMPLEMENTED)
+	#define USE_UserMgrGroupRemoveUser
+	#define EXT_UserMgrGroupRemoveUser
+	#define GET_UserMgrGroupRemoveUser(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrGroupRemoveUser(p0,p1,p2)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrGroupRemoveUser  FALSE
+	#define EXP_UserMgrGroupRemoveUser  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrGroupRemoveUser
+	#define EXT_UserMgrGroupRemoveUser
+	#define GET_UserMgrGroupRemoveUser(fl)  CAL_CMGETAPI( "UserMgrGroupRemoveUser" ) 
+	#define CAL_UserMgrGroupRemoveUser  UserMgrGroupRemoveUser
+	#define CHK_UserMgrGroupRemoveUser  TRUE
+	#define EXP_UserMgrGroupRemoveUser  CAL_CMEXPAPI( "UserMgrGroupRemoveUser" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrGroupRemoveUser
+	#define EXT_UserMgrGroupRemoveUser
+	#define GET_UserMgrGroupRemoveUser(fl)  CAL_CMGETAPI( "UserMgrGroupRemoveUser" ) 
+	#define CAL_UserMgrGroupRemoveUser  UserMgrGroupRemoveUser
+	#define CHK_UserMgrGroupRemoveUser  TRUE
+	#define EXP_UserMgrGroupRemoveUser  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGroupRemoveUser", (RTS_UINTPTR)UserMgrGroupRemoveUser, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrGroupRemoveUser
+	#define EXT_CmpUserMgrUserMgrGroupRemoveUser
+	#define GET_CmpUserMgrUserMgrGroupRemoveUser  ERR_OK
+	#define CAL_CmpUserMgrUserMgrGroupRemoveUser pICmpUserMgr->IUserMgrGroupRemoveUser
+	#define CHK_CmpUserMgrUserMgrGroupRemoveUser (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrGroupRemoveUser  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrGroupRemoveUser
+	#define EXT_UserMgrGroupRemoveUser
+	#define GET_UserMgrGroupRemoveUser(fl)  CAL_CMGETAPI( "UserMgrGroupRemoveUser" ) 
+	#define CAL_UserMgrGroupRemoveUser pICmpUserMgr->IUserMgrGroupRemoveUser
+	#define CHK_UserMgrGroupRemoveUser (pICmpUserMgr != NULL)
+	#define EXP_UserMgrGroupRemoveUser  CAL_CMEXPAPI( "UserMgrGroupRemoveUser" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrGroupRemoveUser  PFUSERMGRGROUPREMOVEUSER pfUserMgrGroupRemoveUser;
+	#define EXT_UserMgrGroupRemoveUser  extern PFUSERMGRGROUPREMOVEUSER pfUserMgrGroupRemoveUser;
+	#define GET_UserMgrGroupRemoveUser(fl)  s_pfCMGetAPI2( "UserMgrGroupRemoveUser", (RTS_VOID_FCTPTR *)&pfUserMgrGroupRemoveUser, (fl), 0, 0)
+	#define CAL_UserMgrGroupRemoveUser  pfUserMgrGroupRemoveUser
+	#define CHK_UserMgrGroupRemoveUser  (pfUserMgrGroupRemoveUser != NULL)
+	#define EXP_UserMgrGroupRemoveUser  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGroupRemoveUser", (RTS_UINTPTR)UserMgrGroupRemoveUser, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Adds the error tag to the reply stream of an online service, if the service is denied because of a failed access right (authorization error)!</description>
  * <param name="pWriter" type="IN">Pointer the writer stream</param>
  * <param name="Result" type="IN">Result code of the operation</param>
  * <param name="pszObject" type="IN">Pointer to name of the object, whose access was denied</param>
@@ -1586,9 +3333,9 @@ typedef RTS_RESULT (CDECL * PFUSERMGRADDONLINEACCESSERROR) (BINTAGWRITER *pWrite
 
 /**
  * <description>
- *	Add a new object to the user management, so the access rights can be configured on that object.
+ *	Adds a new object to the user management, so the access rights can be configured on that object.
  *	NOTE:
- *	The name of the object must include the full namespace with "Device" as the root node, e.g. "Device.MyObject" or if it's a filesystem object with "/" as the root node.
+ *	The name of the object must include the full name-space with "Device" as the root node, e.g. "Device.MyObject" or if it's a file system object with "/" as the root node.
  * </description>
  * <param name="pszObject" type="IN">Full object name (see object tree)</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
@@ -1648,7 +3395,7 @@ typedef RTS_HANDLE (CDECL * PFUSERMGROBJECTADD) (char *pszObject, RTS_RESULT *pR
 
 
 /**
- * <description>Remove an object from the user management and all its children</description>
+ * <description>Removes an object from the user management and all its children</description>
  * <param name="hObject" type="IN">Handle to object</param>
  * <result>Error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">Object could be removed</errorcode>
@@ -1705,7 +3452,7 @@ typedef RTS_RESULT (CDECL * PFUSERMGROBJECTREMOVE) (RTS_HANDLE hObject);
 
 /**
  * <description>
- *	Add a new object under a father object specified by its name to the user management, so the access rights can be configured on that object.
+ *	Adds a new object under a father object specified by its name to the user management, so the access rights can be configured on that object.
  * </description>
  * <param name="hFatherObject" type="IN">Handle to the father object, under which the object will be added</param>
  * <param name="pszObject" type="IN">Object name (see object tree)</param>
@@ -1767,7 +3514,7 @@ typedef RTS_HANDLE (CDECL * PFUSERMGROBJECTADDCHILD) (RTS_HANDLE hFatherObject, 
 
 /**
  * <description>
- *	Set the used access rights for the object specified by handle.
+ *	Sets the used access rights for the object specified by handle.
  *	The rights are additionally stored in an internal list. In case USERDB_RIGHT_NONE is passed for ulUsedRights the previously stored rights are retrieved for this object.
  * </description>
  * <param name="hObject" type="IN">Handle to the object</param>
@@ -1828,7 +3575,7 @@ typedef RTS_RESULT (CDECL * PFUSERMGROBJECTSETUSEDRIGHTS) (RTS_HANDLE hObject, R
 
 /**
  * <description>
- *	Get the used access rights for the object specified by handle.
+ *	Gets the used access rights for the object specified by handle.
  *	NOTE: In case the used rights are not set the function returns USERDB_RIGHT_ALL.
  * </description>
  * <param name="hObject" type="IN">Handle to the object</param>
@@ -1888,9 +3635,9 @@ typedef RTS_RESULT (CDECL * PFUSERMGROBJECTGETUSEDRIGHTS) (RTS_HANDLE hObject, R
 
 /**
  * <description>
- *	Open an existing object.
+ *	Opens an existing object.
  *	NOTE:
- *	The name of the object must include the full namespace with "Device" as the root node, e.g. "Device.MyObject" or if it's a filesystem object with "/" as the root node.
+ *	The name of the object must include the full name space with "Device" as the root node, e.g. "Device.MyObject" or if it's a file system object with "/" as the root node.
  * </description>
  * <param name="pszObject" type="IN">Full object name (see object tree)</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
@@ -2007,7 +3754,7 @@ typedef RTS_HANDLE (CDECL * PFUSERMGROBJECTOPEN2) (char *pszObject, RTS_HANDLE h
 
 
 /**
- * <description>Close an object</description>
+ * <description>Closes an object</description>
  * <param name="hObject" type="IN">Handle to object</param>
  * <result>Error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">Object could be closed</errorcode>
@@ -2062,182 +3809,876 @@ typedef RTS_RESULT (CDECL * PFUSERMGROBJECTCLOSE) (RTS_HANDLE hObject);
 
 
 
+
 /**
- * <description>Get a new challenge value to encrypt the password</description>
- * <param name="pulChallenge" type="OUT">Pointer to challenge to get the value</param>
- * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Challenge could be generated</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid parameter: pulChallenge = NULL</errorcode>
+ * <description>
+ *	Adds a new object to the object management, so the access rights can be configured on that object.
+ *	NOTE:
+ *	The name of the object must include the full name space with "Device" as the root node, e.g. "Device.MyObject" or if it's a file system object with "/" as the root node.
+ * </description>
+ * <param name="pszObject" type="IN">Full object name (see object tree)</param>
+ * <param name="properties" type="IN">Properties of the object. See Properties.</param>
+ * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Object could be added</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Object invalid = NULL or empty</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The user management is not initialized or it is not loaded yet</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">If memory could not be allocated to store this object</errorcode>
+ * <result>Handle to the object or RTS_INVALID_HANDLE if it could not be added</result>
  */
-RTS_RESULT CDECL UserMgrGetChallenge(RTS_UI32 *pulChallenge);
-typedef RTS_RESULT (CDECL * PFUSERMGRGETCHALLENGE) (RTS_UI32 *pulChallenge);
-#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRGETCHALLENGE_NOTIMPLEMENTED)
-	#define USE_UserMgrGetChallenge
-	#define EXT_UserMgrGetChallenge
-	#define GET_UserMgrGetChallenge(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_UserMgrGetChallenge(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_UserMgrGetChallenge  FALSE
-	#define EXP_UserMgrGetChallenge  ERR_OK
+RTS_HANDLE CDECL UserMgrObjectAdd2(char *pszObject, RTS_UI32 properties, RTS_RESULT *pResult);
+typedef RTS_HANDLE (CDECL * PFUSERMGROBJECTADD2) (char *pszObject, RTS_UI32 properties, RTS_RESULT *pResult);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGROBJECTADD2_NOTIMPLEMENTED)
+	#define USE_UserMgrObjectAdd2
+	#define EXT_UserMgrObjectAdd2
+	#define GET_UserMgrObjectAdd2(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrObjectAdd2(p0,p1,p2)  (RTS_HANDLE)RTS_INVALID_HANDLE
+	#define CHK_UserMgrObjectAdd2  FALSE
+	#define EXP_UserMgrObjectAdd2  ERR_OK
 #elif defined(STATIC_LINK)
-	#define USE_UserMgrGetChallenge
-	#define EXT_UserMgrGetChallenge
-	#define GET_UserMgrGetChallenge(fl)  CAL_CMGETAPI( "UserMgrGetChallenge" ) 
-	#define CAL_UserMgrGetChallenge  UserMgrGetChallenge
-	#define CHK_UserMgrGetChallenge  TRUE
-	#define EXP_UserMgrGetChallenge  CAL_CMEXPAPI( "UserMgrGetChallenge" ) 
+	#define USE_UserMgrObjectAdd2
+	#define EXT_UserMgrObjectAdd2
+	#define GET_UserMgrObjectAdd2(fl)  CAL_CMGETAPI( "UserMgrObjectAdd2" ) 
+	#define CAL_UserMgrObjectAdd2  UserMgrObjectAdd2
+	#define CHK_UserMgrObjectAdd2  TRUE
+	#define EXP_UserMgrObjectAdd2  CAL_CMEXPAPI( "UserMgrObjectAdd2" ) 
 #elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
-	#define USE_UserMgrGetChallenge
-	#define EXT_UserMgrGetChallenge
-	#define GET_UserMgrGetChallenge(fl)  CAL_CMGETAPI( "UserMgrGetChallenge" ) 
-	#define CAL_UserMgrGetChallenge  UserMgrGetChallenge
-	#define CHK_UserMgrGetChallenge  TRUE
-	#define EXP_UserMgrGetChallenge  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGetChallenge", (RTS_UINTPTR)UserMgrGetChallenge, 0, 0) 
+	#define USE_UserMgrObjectAdd2
+	#define EXT_UserMgrObjectAdd2
+	#define GET_UserMgrObjectAdd2(fl)  CAL_CMGETAPI( "UserMgrObjectAdd2" ) 
+	#define CAL_UserMgrObjectAdd2  UserMgrObjectAdd2
+	#define CHK_UserMgrObjectAdd2  TRUE
+	#define EXP_UserMgrObjectAdd2  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectAdd2", (RTS_UINTPTR)UserMgrObjectAdd2, 0, 0) 
 #elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpUserMgrUserMgrGetChallenge
-	#define EXT_CmpUserMgrUserMgrGetChallenge
-	#define GET_CmpUserMgrUserMgrGetChallenge  ERR_OK
-	#define CAL_CmpUserMgrUserMgrGetChallenge pICmpUserMgr->IUserMgrGetChallenge
-	#define CHK_CmpUserMgrUserMgrGetChallenge (pICmpUserMgr != NULL)
-	#define EXP_CmpUserMgrUserMgrGetChallenge  ERR_OK
+	#define USE_CmpUserMgrUserMgrObjectAdd2
+	#define EXT_CmpUserMgrUserMgrObjectAdd2
+	#define GET_CmpUserMgrUserMgrObjectAdd2  ERR_OK
+	#define CAL_CmpUserMgrUserMgrObjectAdd2 pICmpUserMgr->IUserMgrObjectAdd2
+	#define CHK_CmpUserMgrUserMgrObjectAdd2 (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrObjectAdd2  ERR_OK
 #elif defined(CPLUSPLUS)
-	#define USE_UserMgrGetChallenge
-	#define EXT_UserMgrGetChallenge
-	#define GET_UserMgrGetChallenge(fl)  CAL_CMGETAPI( "UserMgrGetChallenge" ) 
-	#define CAL_UserMgrGetChallenge pICmpUserMgr->IUserMgrGetChallenge
-	#define CHK_UserMgrGetChallenge (pICmpUserMgr != NULL)
-	#define EXP_UserMgrGetChallenge  CAL_CMEXPAPI( "UserMgrGetChallenge" ) 
+	#define USE_UserMgrObjectAdd2
+	#define EXT_UserMgrObjectAdd2
+	#define GET_UserMgrObjectAdd2(fl)  CAL_CMGETAPI( "UserMgrObjectAdd2" ) 
+	#define CAL_UserMgrObjectAdd2 pICmpUserMgr->IUserMgrObjectAdd2
+	#define CHK_UserMgrObjectAdd2 (pICmpUserMgr != NULL)
+	#define EXP_UserMgrObjectAdd2  CAL_CMEXPAPI( "UserMgrObjectAdd2" ) 
 #else /* DYNAMIC_LINK */
-	#define USE_UserMgrGetChallenge  PFUSERMGRGETCHALLENGE pfUserMgrGetChallenge;
-	#define EXT_UserMgrGetChallenge  extern PFUSERMGRGETCHALLENGE pfUserMgrGetChallenge;
-	#define GET_UserMgrGetChallenge(fl)  s_pfCMGetAPI2( "UserMgrGetChallenge", (RTS_VOID_FCTPTR *)&pfUserMgrGetChallenge, (fl), 0, 0)
-	#define CAL_UserMgrGetChallenge  pfUserMgrGetChallenge
-	#define CHK_UserMgrGetChallenge  (pfUserMgrGetChallenge != NULL)
-	#define EXP_UserMgrGetChallenge  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGetChallenge", (RTS_UINTPTR)UserMgrGetChallenge, 0, 0) 
+	#define USE_UserMgrObjectAdd2  PFUSERMGROBJECTADD2 pfUserMgrObjectAdd2;
+	#define EXT_UserMgrObjectAdd2  extern PFUSERMGROBJECTADD2 pfUserMgrObjectAdd2;
+	#define GET_UserMgrObjectAdd2(fl)  s_pfCMGetAPI2( "UserMgrObjectAdd2", (RTS_VOID_FCTPTR *)&pfUserMgrObjectAdd2, (fl), 0, 0)
+	#define CAL_UserMgrObjectAdd2  pfUserMgrObjectAdd2
+	#define CHK_UserMgrObjectAdd2  (pfUserMgrObjectAdd2 != NULL)
+	#define EXP_UserMgrObjectAdd2  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectAdd2", (RTS_UINTPTR)UserMgrObjectAdd2, 0, 0) 
+#endif
+
+
+ 
+
+/**
+ * <description>Adds a group to the specified object to manage access rights</description>
+ * <param name="hObject" type="IN">Handle to object</param>
+ * <param name="hGroup" type="IN">Handle to the group that should be attached</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Group could be added or is already added</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid handles</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">No memory to add group</errorcode>
+ */
+RTS_RESULT CDECL UserMgrObjectAddGroup(RTS_HANDLE hObject, RTS_HANDLE hGroup);
+typedef RTS_RESULT (CDECL * PFUSERMGROBJECTADDGROUP) (RTS_HANDLE hObject, RTS_HANDLE hGroup);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGROBJECTADDGROUP_NOTIMPLEMENTED)
+	#define USE_UserMgrObjectAddGroup
+	#define EXT_UserMgrObjectAddGroup
+	#define GET_UserMgrObjectAddGroup(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrObjectAddGroup(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrObjectAddGroup  FALSE
+	#define EXP_UserMgrObjectAddGroup  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrObjectAddGroup
+	#define EXT_UserMgrObjectAddGroup
+	#define GET_UserMgrObjectAddGroup(fl)  CAL_CMGETAPI( "UserMgrObjectAddGroup" ) 
+	#define CAL_UserMgrObjectAddGroup  UserMgrObjectAddGroup
+	#define CHK_UserMgrObjectAddGroup  TRUE
+	#define EXP_UserMgrObjectAddGroup  CAL_CMEXPAPI( "UserMgrObjectAddGroup" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrObjectAddGroup
+	#define EXT_UserMgrObjectAddGroup
+	#define GET_UserMgrObjectAddGroup(fl)  CAL_CMGETAPI( "UserMgrObjectAddGroup" ) 
+	#define CAL_UserMgrObjectAddGroup  UserMgrObjectAddGroup
+	#define CHK_UserMgrObjectAddGroup  TRUE
+	#define EXP_UserMgrObjectAddGroup  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectAddGroup", (RTS_UINTPTR)UserMgrObjectAddGroup, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrObjectAddGroup
+	#define EXT_CmpUserMgrUserMgrObjectAddGroup
+	#define GET_CmpUserMgrUserMgrObjectAddGroup  ERR_OK
+	#define CAL_CmpUserMgrUserMgrObjectAddGroup pICmpUserMgr->IUserMgrObjectAddGroup
+	#define CHK_CmpUserMgrUserMgrObjectAddGroup (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrObjectAddGroup  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrObjectAddGroup
+	#define EXT_UserMgrObjectAddGroup
+	#define GET_UserMgrObjectAddGroup(fl)  CAL_CMGETAPI( "UserMgrObjectAddGroup" ) 
+	#define CAL_UserMgrObjectAddGroup pICmpUserMgr->IUserMgrObjectAddGroup
+	#define CHK_UserMgrObjectAddGroup (pICmpUserMgr != NULL)
+	#define EXP_UserMgrObjectAddGroup  CAL_CMEXPAPI( "UserMgrObjectAddGroup" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrObjectAddGroup  PFUSERMGROBJECTADDGROUP pfUserMgrObjectAddGroup;
+	#define EXT_UserMgrObjectAddGroup  extern PFUSERMGROBJECTADDGROUP pfUserMgrObjectAddGroup;
+	#define GET_UserMgrObjectAddGroup(fl)  s_pfCMGetAPI2( "UserMgrObjectAddGroup", (RTS_VOID_FCTPTR *)&pfUserMgrObjectAddGroup, (fl), 0, 0)
+	#define CAL_UserMgrObjectAddGroup  pfUserMgrObjectAddGroup
+	#define CHK_UserMgrObjectAddGroup  (pfUserMgrObjectAddGroup != NULL)
+	#define EXP_UserMgrObjectAddGroup  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectAddGroup", (RTS_UINTPTR)UserMgrObjectAddGroup, 0, 0) 
 #endif
 
 
 
 
 /**
- * <description>Encrypt the password specified by crypt type</description>
- * <param name="pszPassword" type="IN">Cleartext password</param>
- * <param name="pszPasswordCrypted" type="OUT">Pointer to get the encrypted password</param>
- * <param name="pnPasswordCryptedSize" type="INOUT">Pointer to transmit the buffer length of pszPasswordCrypted or to return the necessary encrypted password length if result code is ERR_BUFFERSIZE</param>
- * <param name="ulCryptType" type="IN">Crypt type. See category "Crypt types" for details</param>
- * <param name="ulChallenge" type="IN">Challenge value to encrypt the password</param>
+ * <description>Removes a group from the specified object</description>
+ * <param name="hObject" type="IN">Handle to object</param>
+ * <param name="hGroup" type="IN">Handle to the group that should be removed</param>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Password could be encrypted</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">At least one parameter is invalid</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">Unsupported encryption type</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_BUFFERSIZE">Buffer for pszPasswordCrypted is too short, so the requested length is returned in *pnPasswordCryptedSize</errorcode> 
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Group could be removed</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid handles</errorcode>
  */
-RTS_RESULT CDECL UserMgrCryptPassword(char *pszPassword, char *pszPasswordCrypted, int *pnPasswordCryptedSize, RTS_UI32 ulCryptType, RTS_UI32 ulChallenge);
-typedef RTS_RESULT (CDECL * PFUSERMGRCRYPTPASSWORD) (char *pszPassword, char *pszPasswordCrypted, int *pnPasswordCryptedSize, RTS_UI32 ulCryptType, RTS_UI32 ulChallenge);
-#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRCRYPTPASSWORD_NOTIMPLEMENTED)
-	#define USE_UserMgrCryptPassword
-	#define EXT_UserMgrCryptPassword
-	#define GET_UserMgrCryptPassword(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_UserMgrCryptPassword(p0,p1,p2,p3,p4)  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_UserMgrCryptPassword  FALSE
-	#define EXP_UserMgrCryptPassword  ERR_OK
+RTS_RESULT CDECL UserMgrObjectRemoveGroup(RTS_HANDLE hObject, RTS_HANDLE hGroup);
+typedef RTS_RESULT (CDECL * PFUSERMGROBJECTREMOVEGROUP) (RTS_HANDLE hObject, RTS_HANDLE hGroup);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGROBJECTREMOVEGROUP_NOTIMPLEMENTED)
+	#define USE_UserMgrObjectRemoveGroup
+	#define EXT_UserMgrObjectRemoveGroup
+	#define GET_UserMgrObjectRemoveGroup(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrObjectRemoveGroup(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrObjectRemoveGroup  FALSE
+	#define EXP_UserMgrObjectRemoveGroup  ERR_OK
 #elif defined(STATIC_LINK)
-	#define USE_UserMgrCryptPassword
-	#define EXT_UserMgrCryptPassword
-	#define GET_UserMgrCryptPassword(fl)  CAL_CMGETAPI( "UserMgrCryptPassword" ) 
-	#define CAL_UserMgrCryptPassword  UserMgrCryptPassword
-	#define CHK_UserMgrCryptPassword  TRUE
-	#define EXP_UserMgrCryptPassword  CAL_CMEXPAPI( "UserMgrCryptPassword" ) 
+	#define USE_UserMgrObjectRemoveGroup
+	#define EXT_UserMgrObjectRemoveGroup
+	#define GET_UserMgrObjectRemoveGroup(fl)  CAL_CMGETAPI( "UserMgrObjectRemoveGroup" ) 
+	#define CAL_UserMgrObjectRemoveGroup  UserMgrObjectRemoveGroup
+	#define CHK_UserMgrObjectRemoveGroup  TRUE
+	#define EXP_UserMgrObjectRemoveGroup  CAL_CMEXPAPI( "UserMgrObjectRemoveGroup" ) 
 #elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
-	#define USE_UserMgrCryptPassword
-	#define EXT_UserMgrCryptPassword
-	#define GET_UserMgrCryptPassword(fl)  CAL_CMGETAPI( "UserMgrCryptPassword" ) 
-	#define CAL_UserMgrCryptPassword  UserMgrCryptPassword
-	#define CHK_UserMgrCryptPassword  TRUE
-	#define EXP_UserMgrCryptPassword  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrCryptPassword", (RTS_UINTPTR)UserMgrCryptPassword, 0, 0) 
+	#define USE_UserMgrObjectRemoveGroup
+	#define EXT_UserMgrObjectRemoveGroup
+	#define GET_UserMgrObjectRemoveGroup(fl)  CAL_CMGETAPI( "UserMgrObjectRemoveGroup" ) 
+	#define CAL_UserMgrObjectRemoveGroup  UserMgrObjectRemoveGroup
+	#define CHK_UserMgrObjectRemoveGroup  TRUE
+	#define EXP_UserMgrObjectRemoveGroup  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectRemoveGroup", (RTS_UINTPTR)UserMgrObjectRemoveGroup, 0, 0) 
 #elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpUserMgrUserMgrCryptPassword
-	#define EXT_CmpUserMgrUserMgrCryptPassword
-	#define GET_CmpUserMgrUserMgrCryptPassword  ERR_OK
-	#define CAL_CmpUserMgrUserMgrCryptPassword pICmpUserMgr->IUserMgrCryptPassword
-	#define CHK_CmpUserMgrUserMgrCryptPassword (pICmpUserMgr != NULL)
-	#define EXP_CmpUserMgrUserMgrCryptPassword  ERR_OK
+	#define USE_CmpUserMgrUserMgrObjectRemoveGroup
+	#define EXT_CmpUserMgrUserMgrObjectRemoveGroup
+	#define GET_CmpUserMgrUserMgrObjectRemoveGroup  ERR_OK
+	#define CAL_CmpUserMgrUserMgrObjectRemoveGroup pICmpUserMgr->IUserMgrObjectRemoveGroup
+	#define CHK_CmpUserMgrUserMgrObjectRemoveGroup (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrObjectRemoveGroup  ERR_OK
 #elif defined(CPLUSPLUS)
-	#define USE_UserMgrCryptPassword
-	#define EXT_UserMgrCryptPassword
-	#define GET_UserMgrCryptPassword(fl)  CAL_CMGETAPI( "UserMgrCryptPassword" ) 
-	#define CAL_UserMgrCryptPassword pICmpUserMgr->IUserMgrCryptPassword
-	#define CHK_UserMgrCryptPassword (pICmpUserMgr != NULL)
-	#define EXP_UserMgrCryptPassword  CAL_CMEXPAPI( "UserMgrCryptPassword" ) 
+	#define USE_UserMgrObjectRemoveGroup
+	#define EXT_UserMgrObjectRemoveGroup
+	#define GET_UserMgrObjectRemoveGroup(fl)  CAL_CMGETAPI( "UserMgrObjectRemoveGroup" ) 
+	#define CAL_UserMgrObjectRemoveGroup pICmpUserMgr->IUserMgrObjectRemoveGroup
+	#define CHK_UserMgrObjectRemoveGroup (pICmpUserMgr != NULL)
+	#define EXP_UserMgrObjectRemoveGroup  CAL_CMEXPAPI( "UserMgrObjectRemoveGroup" ) 
 #else /* DYNAMIC_LINK */
-	#define USE_UserMgrCryptPassword  PFUSERMGRCRYPTPASSWORD pfUserMgrCryptPassword;
-	#define EXT_UserMgrCryptPassword  extern PFUSERMGRCRYPTPASSWORD pfUserMgrCryptPassword;
-	#define GET_UserMgrCryptPassword(fl)  s_pfCMGetAPI2( "UserMgrCryptPassword", (RTS_VOID_FCTPTR *)&pfUserMgrCryptPassword, (fl), 0, 0)
-	#define CAL_UserMgrCryptPassword  pfUserMgrCryptPassword
-	#define CHK_UserMgrCryptPassword  (pfUserMgrCryptPassword != NULL)
-	#define EXP_UserMgrCryptPassword  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrCryptPassword", (RTS_UINTPTR)UserMgrCryptPassword, 0, 0) 
+	#define USE_UserMgrObjectRemoveGroup  PFUSERMGROBJECTREMOVEGROUP pfUserMgrObjectRemoveGroup;
+	#define EXT_UserMgrObjectRemoveGroup  extern PFUSERMGROBJECTREMOVEGROUP pfUserMgrObjectRemoveGroup;
+	#define GET_UserMgrObjectRemoveGroup(fl)  s_pfCMGetAPI2( "UserMgrObjectRemoveGroup", (RTS_VOID_FCTPTR *)&pfUserMgrObjectRemoveGroup, (fl), 0, 0)
+	#define CAL_UserMgrObjectRemoveGroup  pfUserMgrObjectRemoveGroup
+	#define CHK_UserMgrObjectRemoveGroup  (pfUserMgrObjectRemoveGroup != NULL)
+	#define EXP_UserMgrObjectRemoveGroup  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectRemoveGroup", (RTS_UINTPTR)UserMgrObjectRemoveGroup, 0, 0) 
 #endif
 
 
 
 
 /**
- * <description>Decrypt the password specified by crypt type</description>
- * <param name="pszPasswordCrypted" type="IN">Encrypted password</param>
- * <param name="nPasswordCryptedSize" type="IN">Lenght of the encrypted password</param>
- * <param name="ulCryptType" type="IN">Crypt type. See category "Crypt types" for details</param>
- * <param name="ulChallenge" type="IN">Challenge value to encrypt the password</param>
- * <param name="pszPassword" type="IN">Cleartext password</param>
- * <param name="pnMaxLenPassword" type="INOUT">Pointer to transmit the buffer length of pszPassword or to return the necessary decrypted password length if result code is ERR_BUFFERSIZE</param>
-  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Password could be decrypted</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">At least one parameter is invalid</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">Unsupported decryption type</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_BUFFERSIZE">Buffer for pszPassword is too short, so the requested length is returned in *pnMaxLenPassword</errorcode> 
+ * <description>Sets the access rights for the group at the specified object</description>
+ * <param name="hObject" type="IN">Handle to object</param>
+ * <param name="hGroup" type="IN">Handle to the group</param>
+ * <element name="ulRights" type="IN">Rights of the group. See category "User rights" for details</element>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Access rights could be set</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid handles</errorcode>
  */
-RTS_RESULT CDECL UserMgrDecryptPassword(char *pszPasswordCrypted, int nPasswordCryptedSize, RTS_UI32 ulCryptType, RTS_UI32 ulChallenge, char *pszPassword, int *pnMaxLenPassword);
-typedef RTS_RESULT (CDECL * PFUSERMGRDECRYPTPASSWORD) (char *pszPasswordCrypted, int nPasswordCryptedSize, RTS_UI32 ulCryptType, RTS_UI32 ulChallenge, char *pszPassword, int *pnMaxLenPassword);
-#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRDECRYPTPASSWORD_NOTIMPLEMENTED)
-	#define USE_UserMgrDecryptPassword
-	#define EXT_UserMgrDecryptPassword
-	#define GET_UserMgrDecryptPassword(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_UserMgrDecryptPassword(p0,p1,p2,p3,p4,p5)  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_UserMgrDecryptPassword  FALSE
-	#define EXP_UserMgrDecryptPassword  ERR_OK
+RTS_RESULT CDECL UserMgrObjectSetGroupRights(RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulRights);
+typedef RTS_RESULT (CDECL * PFUSERMGROBJECTSETGROUPRIGHTS) (RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulRights);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGROBJECTSETGROUPRIGHTS_NOTIMPLEMENTED)
+	#define USE_UserMgrObjectSetGroupRights
+	#define EXT_UserMgrObjectSetGroupRights
+	#define GET_UserMgrObjectSetGroupRights(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrObjectSetGroupRights(p0,p1,p2)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrObjectSetGroupRights  FALSE
+	#define EXP_UserMgrObjectSetGroupRights  ERR_OK
 #elif defined(STATIC_LINK)
-	#define USE_UserMgrDecryptPassword
-	#define EXT_UserMgrDecryptPassword
-	#define GET_UserMgrDecryptPassword(fl)  CAL_CMGETAPI( "UserMgrDecryptPassword" ) 
-	#define CAL_UserMgrDecryptPassword  UserMgrDecryptPassword
-	#define CHK_UserMgrDecryptPassword  TRUE
-	#define EXP_UserMgrDecryptPassword  CAL_CMEXPAPI( "UserMgrDecryptPassword" ) 
+	#define USE_UserMgrObjectSetGroupRights
+	#define EXT_UserMgrObjectSetGroupRights
+	#define GET_UserMgrObjectSetGroupRights(fl)  CAL_CMGETAPI( "UserMgrObjectSetGroupRights" ) 
+	#define CAL_UserMgrObjectSetGroupRights  UserMgrObjectSetGroupRights
+	#define CHK_UserMgrObjectSetGroupRights  TRUE
+	#define EXP_UserMgrObjectSetGroupRights  CAL_CMEXPAPI( "UserMgrObjectSetGroupRights" ) 
 #elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
-	#define USE_UserMgrDecryptPassword
-	#define EXT_UserMgrDecryptPassword
-	#define GET_UserMgrDecryptPassword(fl)  CAL_CMGETAPI( "UserMgrDecryptPassword" ) 
-	#define CAL_UserMgrDecryptPassword  UserMgrDecryptPassword
-	#define CHK_UserMgrDecryptPassword  TRUE
-	#define EXP_UserMgrDecryptPassword  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrDecryptPassword", (RTS_UINTPTR)UserMgrDecryptPassword, 0, 0) 
+	#define USE_UserMgrObjectSetGroupRights
+	#define EXT_UserMgrObjectSetGroupRights
+	#define GET_UserMgrObjectSetGroupRights(fl)  CAL_CMGETAPI( "UserMgrObjectSetGroupRights" ) 
+	#define CAL_UserMgrObjectSetGroupRights  UserMgrObjectSetGroupRights
+	#define CHK_UserMgrObjectSetGroupRights  TRUE
+	#define EXP_UserMgrObjectSetGroupRights  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectSetGroupRights", (RTS_UINTPTR)UserMgrObjectSetGroupRights, 0, 0) 
 #elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpUserMgrUserMgrDecryptPassword
-	#define EXT_CmpUserMgrUserMgrDecryptPassword
-	#define GET_CmpUserMgrUserMgrDecryptPassword  ERR_OK
-	#define CAL_CmpUserMgrUserMgrDecryptPassword pICmpUserMgr->IUserMgrDecryptPassword
-	#define CHK_CmpUserMgrUserMgrDecryptPassword (pICmpUserMgr != NULL)
-	#define EXP_CmpUserMgrUserMgrDecryptPassword  ERR_OK
+	#define USE_CmpUserMgrUserMgrObjectSetGroupRights
+	#define EXT_CmpUserMgrUserMgrObjectSetGroupRights
+	#define GET_CmpUserMgrUserMgrObjectSetGroupRights  ERR_OK
+	#define CAL_CmpUserMgrUserMgrObjectSetGroupRights pICmpUserMgr->IUserMgrObjectSetGroupRights
+	#define CHK_CmpUserMgrUserMgrObjectSetGroupRights (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrObjectSetGroupRights  ERR_OK
 #elif defined(CPLUSPLUS)
-	#define USE_UserMgrDecryptPassword
-	#define EXT_UserMgrDecryptPassword
-	#define GET_UserMgrDecryptPassword(fl)  CAL_CMGETAPI( "UserMgrDecryptPassword" ) 
-	#define CAL_UserMgrDecryptPassword pICmpUserMgr->IUserMgrDecryptPassword
-	#define CHK_UserMgrDecryptPassword (pICmpUserMgr != NULL)
-	#define EXP_UserMgrDecryptPassword  CAL_CMEXPAPI( "UserMgrDecryptPassword" ) 
+	#define USE_UserMgrObjectSetGroupRights
+	#define EXT_UserMgrObjectSetGroupRights
+	#define GET_UserMgrObjectSetGroupRights(fl)  CAL_CMGETAPI( "UserMgrObjectSetGroupRights" ) 
+	#define CAL_UserMgrObjectSetGroupRights pICmpUserMgr->IUserMgrObjectSetGroupRights
+	#define CHK_UserMgrObjectSetGroupRights (pICmpUserMgr != NULL)
+	#define EXP_UserMgrObjectSetGroupRights  CAL_CMEXPAPI( "UserMgrObjectSetGroupRights" ) 
 #else /* DYNAMIC_LINK */
-	#define USE_UserMgrDecryptPassword  PFUSERMGRDECRYPTPASSWORD pfUserMgrDecryptPassword;
-	#define EXT_UserMgrDecryptPassword  extern PFUSERMGRDECRYPTPASSWORD pfUserMgrDecryptPassword;
-	#define GET_UserMgrDecryptPassword(fl)  s_pfCMGetAPI2( "UserMgrDecryptPassword", (RTS_VOID_FCTPTR *)&pfUserMgrDecryptPassword, (fl), 0, 0)
-	#define CAL_UserMgrDecryptPassword  pfUserMgrDecryptPassword
-	#define CHK_UserMgrDecryptPassword  (pfUserMgrDecryptPassword != NULL)
-	#define EXP_UserMgrDecryptPassword  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrDecryptPassword", (RTS_UINTPTR)UserMgrDecryptPassword, 0, 0) 
+	#define USE_UserMgrObjectSetGroupRights  PFUSERMGROBJECTSETGROUPRIGHTS pfUserMgrObjectSetGroupRights;
+	#define EXT_UserMgrObjectSetGroupRights  extern PFUSERMGROBJECTSETGROUPRIGHTS pfUserMgrObjectSetGroupRights;
+	#define GET_UserMgrObjectSetGroupRights(fl)  s_pfCMGetAPI2( "UserMgrObjectSetGroupRights", (RTS_VOID_FCTPTR *)&pfUserMgrObjectSetGroupRights, (fl), 0, 0)
+	#define CAL_UserMgrObjectSetGroupRights  pfUserMgrObjectSetGroupRights
+	#define CHK_UserMgrObjectSetGroupRights  (pfUserMgrObjectSetGroupRights != NULL)
+	#define EXP_UserMgrObjectSetGroupRights  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectSetGroupRights", (RTS_UINTPTR)UserMgrObjectSetGroupRights, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Sets the denied access rights for the group at the specified object</description>
+ * <param name="hObject" type="IN">Handle to object</param>
+ * <param name="hGroup" type="IN">Handle to the group</param>
+ * <element name="ulDeniedRights" type="IN">Denied rights of the group. See category "User rights" for details</element>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Access rights could be set</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid handles</errorcode>
+ */
+RTS_RESULT CDECL UserMgrObjectSetGroupDeniedRights(RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulDeniedRights);
+typedef RTS_RESULT (CDECL * PFUSERMGROBJECTSETGROUPDENIEDRIGHTS) (RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulDeniedRights);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGROBJECTSETGROUPDENIEDRIGHTS_NOTIMPLEMENTED)
+	#define USE_UserMgrObjectSetGroupDeniedRights
+	#define EXT_UserMgrObjectSetGroupDeniedRights
+	#define GET_UserMgrObjectSetGroupDeniedRights(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrObjectSetGroupDeniedRights(p0,p1,p2)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrObjectSetGroupDeniedRights  FALSE
+	#define EXP_UserMgrObjectSetGroupDeniedRights  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrObjectSetGroupDeniedRights
+	#define EXT_UserMgrObjectSetGroupDeniedRights
+	#define GET_UserMgrObjectSetGroupDeniedRights(fl)  CAL_CMGETAPI( "UserMgrObjectSetGroupDeniedRights" ) 
+	#define CAL_UserMgrObjectSetGroupDeniedRights  UserMgrObjectSetGroupDeniedRights
+	#define CHK_UserMgrObjectSetGroupDeniedRights  TRUE
+	#define EXP_UserMgrObjectSetGroupDeniedRights  CAL_CMEXPAPI( "UserMgrObjectSetGroupDeniedRights" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrObjectSetGroupDeniedRights
+	#define EXT_UserMgrObjectSetGroupDeniedRights
+	#define GET_UserMgrObjectSetGroupDeniedRights(fl)  CAL_CMGETAPI( "UserMgrObjectSetGroupDeniedRights" ) 
+	#define CAL_UserMgrObjectSetGroupDeniedRights  UserMgrObjectSetGroupDeniedRights
+	#define CHK_UserMgrObjectSetGroupDeniedRights  TRUE
+	#define EXP_UserMgrObjectSetGroupDeniedRights  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectSetGroupDeniedRights", (RTS_UINTPTR)UserMgrObjectSetGroupDeniedRights, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrObjectSetGroupDeniedRights
+	#define EXT_CmpUserMgrUserMgrObjectSetGroupDeniedRights
+	#define GET_CmpUserMgrUserMgrObjectSetGroupDeniedRights  ERR_OK
+	#define CAL_CmpUserMgrUserMgrObjectSetGroupDeniedRights pICmpUserMgr->IUserMgrObjectSetGroupDeniedRights
+	#define CHK_CmpUserMgrUserMgrObjectSetGroupDeniedRights (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrObjectSetGroupDeniedRights  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrObjectSetGroupDeniedRights
+	#define EXT_UserMgrObjectSetGroupDeniedRights
+	#define GET_UserMgrObjectSetGroupDeniedRights(fl)  CAL_CMGETAPI( "UserMgrObjectSetGroupDeniedRights" ) 
+	#define CAL_UserMgrObjectSetGroupDeniedRights pICmpUserMgr->IUserMgrObjectSetGroupDeniedRights
+	#define CHK_UserMgrObjectSetGroupDeniedRights (pICmpUserMgr != NULL)
+	#define EXP_UserMgrObjectSetGroupDeniedRights  CAL_CMEXPAPI( "UserMgrObjectSetGroupDeniedRights" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrObjectSetGroupDeniedRights  PFUSERMGROBJECTSETGROUPDENIEDRIGHTS pfUserMgrObjectSetGroupDeniedRights;
+	#define EXT_UserMgrObjectSetGroupDeniedRights  extern PFUSERMGROBJECTSETGROUPDENIEDRIGHTS pfUserMgrObjectSetGroupDeniedRights;
+	#define GET_UserMgrObjectSetGroupDeniedRights(fl)  s_pfCMGetAPI2( "UserMgrObjectSetGroupDeniedRights", (RTS_VOID_FCTPTR *)&pfUserMgrObjectSetGroupDeniedRights, (fl), 0, 0)
+	#define CAL_UserMgrObjectSetGroupDeniedRights  pfUserMgrObjectSetGroupDeniedRights
+	#define CHK_UserMgrObjectSetGroupDeniedRights  (pfUserMgrObjectSetGroupDeniedRights != NULL)
+	#define EXP_UserMgrObjectSetGroupDeniedRights  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectSetGroupDeniedRights", (RTS_UINTPTR)UserMgrObjectSetGroupDeniedRights, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>This function clears all granted and denied rights for all groups on that object.</description>
+ * <param name="hObject" type="IN">Handle to object</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Access rights could be set</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid handles</errorcode>
+ */
+RTS_RESULT CDECL UserMgrObjectClearRights(RTS_HANDLE hObject);
+typedef RTS_RESULT (CDECL * PFUSERMGROBJECTCLEARRIGHTS) (RTS_HANDLE hObject);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGROBJECTCLEARRIGHTS_NOTIMPLEMENTED)
+	#define USE_UserMgrObjectClearRights
+	#define EXT_UserMgrObjectClearRights
+	#define GET_UserMgrObjectClearRights(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrObjectClearRights(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrObjectClearRights  FALSE
+	#define EXP_UserMgrObjectClearRights  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrObjectClearRights
+	#define EXT_UserMgrObjectClearRights
+	#define GET_UserMgrObjectClearRights(fl)  CAL_CMGETAPI( "UserMgrObjectClearRights" ) 
+	#define CAL_UserMgrObjectClearRights  UserMgrObjectClearRights
+	#define CHK_UserMgrObjectClearRights  TRUE
+	#define EXP_UserMgrObjectClearRights  CAL_CMEXPAPI( "UserMgrObjectClearRights" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrObjectClearRights
+	#define EXT_UserMgrObjectClearRights
+	#define GET_UserMgrObjectClearRights(fl)  CAL_CMGETAPI( "UserMgrObjectClearRights" ) 
+	#define CAL_UserMgrObjectClearRights  UserMgrObjectClearRights
+	#define CHK_UserMgrObjectClearRights  TRUE
+	#define EXP_UserMgrObjectClearRights  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectClearRights", (RTS_UINTPTR)UserMgrObjectClearRights, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrObjectClearRights
+	#define EXT_CmpUserMgrUserMgrObjectClearRights
+	#define GET_CmpUserMgrUserMgrObjectClearRights  ERR_OK
+	#define CAL_CmpUserMgrUserMgrObjectClearRights pICmpUserMgr->IUserMgrObjectClearRights
+	#define CHK_CmpUserMgrUserMgrObjectClearRights (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrObjectClearRights  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrObjectClearRights
+	#define EXT_UserMgrObjectClearRights
+	#define GET_UserMgrObjectClearRights(fl)  CAL_CMGETAPI( "UserMgrObjectClearRights" ) 
+	#define CAL_UserMgrObjectClearRights pICmpUserMgr->IUserMgrObjectClearRights
+	#define CHK_UserMgrObjectClearRights (pICmpUserMgr != NULL)
+	#define EXP_UserMgrObjectClearRights  CAL_CMEXPAPI( "UserMgrObjectClearRights" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrObjectClearRights  PFUSERMGROBJECTCLEARRIGHTS pfUserMgrObjectClearRights;
+	#define EXT_UserMgrObjectClearRights  extern PFUSERMGROBJECTCLEARRIGHTS pfUserMgrObjectClearRights;
+	#define GET_UserMgrObjectClearRights(fl)  s_pfCMGetAPI2( "UserMgrObjectClearRights", (RTS_VOID_FCTPTR *)&pfUserMgrObjectClearRights, (fl), 0, 0)
+	#define CAL_UserMgrObjectClearRights  pfUserMgrObjectClearRights
+	#define CHK_UserMgrObjectClearRights  (pfUserMgrObjectClearRights != NULL)
+	#define EXP_UserMgrObjectClearRights  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectClearRights", (RTS_UINTPTR)UserMgrObjectClearRights, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Gets object name</description>
+ * <param name="hObject" type="IN">Handle to the object</param>
+ * <param name="pszObject" type="OUT">Pointer to get object name</param>
+ * <param name="piMaxLen" type="INOUT">Pointer to length of buffer in pszObject. If pszObject = NULL, only the length of the object name is returned in *piMaxLen</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Object name is returned</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid object handle or pszObject = NULL and piMaxLen = NULL</errorcode>
+ */
+RTS_RESULT CDECL UserMgrObjectGetName(RTS_HANDLE hObject, char *pszObject, int *piMaxLen);
+typedef RTS_RESULT (CDECL * PFUSERMGROBJECTGETNAME) (RTS_HANDLE hObject, char *pszObject, int *piMaxLen);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGROBJECTGETNAME_NOTIMPLEMENTED)
+	#define USE_UserMgrObjectGetName
+	#define EXT_UserMgrObjectGetName
+	#define GET_UserMgrObjectGetName(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrObjectGetName(p0,p1,p2)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrObjectGetName  FALSE
+	#define EXP_UserMgrObjectGetName  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrObjectGetName
+	#define EXT_UserMgrObjectGetName
+	#define GET_UserMgrObjectGetName(fl)  CAL_CMGETAPI( "UserMgrObjectGetName" ) 
+	#define CAL_UserMgrObjectGetName  UserMgrObjectGetName
+	#define CHK_UserMgrObjectGetName  TRUE
+	#define EXP_UserMgrObjectGetName  CAL_CMEXPAPI( "UserMgrObjectGetName" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrObjectGetName
+	#define EXT_UserMgrObjectGetName
+	#define GET_UserMgrObjectGetName(fl)  CAL_CMGETAPI( "UserMgrObjectGetName" ) 
+	#define CAL_UserMgrObjectGetName  UserMgrObjectGetName
+	#define CHK_UserMgrObjectGetName  TRUE
+	#define EXP_UserMgrObjectGetName  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetName", (RTS_UINTPTR)UserMgrObjectGetName, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrObjectGetName
+	#define EXT_CmpUserMgrUserMgrObjectGetName
+	#define GET_CmpUserMgrUserMgrObjectGetName  ERR_OK
+	#define CAL_CmpUserMgrUserMgrObjectGetName pICmpUserMgr->IUserMgrObjectGetName
+	#define CHK_CmpUserMgrUserMgrObjectGetName (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrObjectGetName  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrObjectGetName
+	#define EXT_UserMgrObjectGetName
+	#define GET_UserMgrObjectGetName(fl)  CAL_CMGETAPI( "UserMgrObjectGetName" ) 
+	#define CAL_UserMgrObjectGetName pICmpUserMgr->IUserMgrObjectGetName
+	#define CHK_UserMgrObjectGetName (pICmpUserMgr != NULL)
+	#define EXP_UserMgrObjectGetName  CAL_CMEXPAPI( "UserMgrObjectGetName" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrObjectGetName  PFUSERMGROBJECTGETNAME pfUserMgrObjectGetName;
+	#define EXT_UserMgrObjectGetName  extern PFUSERMGROBJECTGETNAME pfUserMgrObjectGetName;
+	#define GET_UserMgrObjectGetName(fl)  s_pfCMGetAPI2( "UserMgrObjectGetName", (RTS_VOID_FCTPTR *)&pfUserMgrObjectGetName, (fl), 0, 0)
+	#define CAL_UserMgrObjectGetName  pfUserMgrObjectGetName
+	#define CHK_UserMgrObjectGetName  (pfUserMgrObjectGetName != NULL)
+	#define EXP_UserMgrObjectGetName  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetName", (RTS_UINTPTR)UserMgrObjectGetName, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Gets first child object in object tree of the specified father object</description>
+ * <param name="hFatherObject" type="IN">Handle to the father object</param>
+ * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">First child object available</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid parameter hFatherObject</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The user management is not initialized or it is not loaded yet</errorcode>
+ * <result>Handle to the child object or RTS_INVALID_HANDLE if failed</result>
+ */
+RTS_HANDLE CDECL UserMgrObjectGetFirstChild(RTS_HANDLE hFatherObject, RTS_RESULT *pResult);
+typedef RTS_HANDLE (CDECL * PFUSERMGROBJECTGETFIRSTCHILD) (RTS_HANDLE hFatherObject, RTS_RESULT *pResult);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGROBJECTGETFIRSTCHILD_NOTIMPLEMENTED)
+	#define USE_UserMgrObjectGetFirstChild
+	#define EXT_UserMgrObjectGetFirstChild
+	#define GET_UserMgrObjectGetFirstChild(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrObjectGetFirstChild(p0,p1)  (RTS_HANDLE)RTS_INVALID_HANDLE
+	#define CHK_UserMgrObjectGetFirstChild  FALSE
+	#define EXP_UserMgrObjectGetFirstChild  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrObjectGetFirstChild
+	#define EXT_UserMgrObjectGetFirstChild
+	#define GET_UserMgrObjectGetFirstChild(fl)  CAL_CMGETAPI( "UserMgrObjectGetFirstChild" ) 
+	#define CAL_UserMgrObjectGetFirstChild  UserMgrObjectGetFirstChild
+	#define CHK_UserMgrObjectGetFirstChild  TRUE
+	#define EXP_UserMgrObjectGetFirstChild  CAL_CMEXPAPI( "UserMgrObjectGetFirstChild" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrObjectGetFirstChild
+	#define EXT_UserMgrObjectGetFirstChild
+	#define GET_UserMgrObjectGetFirstChild(fl)  CAL_CMGETAPI( "UserMgrObjectGetFirstChild" ) 
+	#define CAL_UserMgrObjectGetFirstChild  UserMgrObjectGetFirstChild
+	#define CHK_UserMgrObjectGetFirstChild  TRUE
+	#define EXP_UserMgrObjectGetFirstChild  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetFirstChild", (RTS_UINTPTR)UserMgrObjectGetFirstChild, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrObjectGetFirstChild
+	#define EXT_CmpUserMgrUserMgrObjectGetFirstChild
+	#define GET_CmpUserMgrUserMgrObjectGetFirstChild  ERR_OK
+	#define CAL_CmpUserMgrUserMgrObjectGetFirstChild pICmpUserMgr->IUserMgrObjectGetFirstChild
+	#define CHK_CmpUserMgrUserMgrObjectGetFirstChild (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrObjectGetFirstChild  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrObjectGetFirstChild
+	#define EXT_UserMgrObjectGetFirstChild
+	#define GET_UserMgrObjectGetFirstChild(fl)  CAL_CMGETAPI( "UserMgrObjectGetFirstChild" ) 
+	#define CAL_UserMgrObjectGetFirstChild pICmpUserMgr->IUserMgrObjectGetFirstChild
+	#define CHK_UserMgrObjectGetFirstChild (pICmpUserMgr != NULL)
+	#define EXP_UserMgrObjectGetFirstChild  CAL_CMEXPAPI( "UserMgrObjectGetFirstChild" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrObjectGetFirstChild  PFUSERMGROBJECTGETFIRSTCHILD pfUserMgrObjectGetFirstChild;
+	#define EXT_UserMgrObjectGetFirstChild  extern PFUSERMGROBJECTGETFIRSTCHILD pfUserMgrObjectGetFirstChild;
+	#define GET_UserMgrObjectGetFirstChild(fl)  s_pfCMGetAPI2( "UserMgrObjectGetFirstChild", (RTS_VOID_FCTPTR *)&pfUserMgrObjectGetFirstChild, (fl), 0, 0)
+	#define CAL_UserMgrObjectGetFirstChild  pfUserMgrObjectGetFirstChild
+	#define CHK_UserMgrObjectGetFirstChild  (pfUserMgrObjectGetFirstChild != NULL)
+	#define EXP_UserMgrObjectGetFirstChild  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetFirstChild", (RTS_UINTPTR)UserMgrObjectGetFirstChild, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Gets next child object in object tree of the specified father object. Must be started with UserDBObjectGetFirstChild()</description>
+ * <param name="hFatherObject" type="IN">Handle to the father object</param>
+ * <param name="hPrevChildObject" type="IN">Handle to the previous child object retrieved by UserDBObjectGetFirstChild() or subsequent calls of UserDBObjectGetNextChild()</param>
+ * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Next child object available</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid parameter hFatherObject or hPrevChildObject</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The user management is not initialized or it is not loaded yet</errorcode>
+ * <result>Handle to the next child object or RTS_INVALID_HANDLE if failed</result>
+ */
+RTS_HANDLE CDECL UserMgrObjectGetNextChild(RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT *pResult);
+typedef RTS_HANDLE (CDECL * PFUSERMGROBJECTGETNEXTCHILD) (RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT *pResult);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGROBJECTGETNEXTCHILD_NOTIMPLEMENTED)
+	#define USE_UserMgrObjectGetNextChild
+	#define EXT_UserMgrObjectGetNextChild
+	#define GET_UserMgrObjectGetNextChild(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrObjectGetNextChild(p0,p1,p2)  (RTS_HANDLE)RTS_INVALID_HANDLE
+	#define CHK_UserMgrObjectGetNextChild  FALSE
+	#define EXP_UserMgrObjectGetNextChild  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrObjectGetNextChild
+	#define EXT_UserMgrObjectGetNextChild
+	#define GET_UserMgrObjectGetNextChild(fl)  CAL_CMGETAPI( "UserMgrObjectGetNextChild" ) 
+	#define CAL_UserMgrObjectGetNextChild  UserMgrObjectGetNextChild
+	#define CHK_UserMgrObjectGetNextChild  TRUE
+	#define EXP_UserMgrObjectGetNextChild  CAL_CMEXPAPI( "UserMgrObjectGetNextChild" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrObjectGetNextChild
+	#define EXT_UserMgrObjectGetNextChild
+	#define GET_UserMgrObjectGetNextChild(fl)  CAL_CMGETAPI( "UserMgrObjectGetNextChild" ) 
+	#define CAL_UserMgrObjectGetNextChild  UserMgrObjectGetNextChild
+	#define CHK_UserMgrObjectGetNextChild  TRUE
+	#define EXP_UserMgrObjectGetNextChild  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetNextChild", (RTS_UINTPTR)UserMgrObjectGetNextChild, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrObjectGetNextChild
+	#define EXT_CmpUserMgrUserMgrObjectGetNextChild
+	#define GET_CmpUserMgrUserMgrObjectGetNextChild  ERR_OK
+	#define CAL_CmpUserMgrUserMgrObjectGetNextChild pICmpUserMgr->IUserMgrObjectGetNextChild
+	#define CHK_CmpUserMgrUserMgrObjectGetNextChild (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrObjectGetNextChild  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrObjectGetNextChild
+	#define EXT_UserMgrObjectGetNextChild
+	#define GET_UserMgrObjectGetNextChild(fl)  CAL_CMGETAPI( "UserMgrObjectGetNextChild" ) 
+	#define CAL_UserMgrObjectGetNextChild pICmpUserMgr->IUserMgrObjectGetNextChild
+	#define CHK_UserMgrObjectGetNextChild (pICmpUserMgr != NULL)
+	#define EXP_UserMgrObjectGetNextChild  CAL_CMEXPAPI( "UserMgrObjectGetNextChild" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrObjectGetNextChild  PFUSERMGROBJECTGETNEXTCHILD pfUserMgrObjectGetNextChild;
+	#define EXT_UserMgrObjectGetNextChild  extern PFUSERMGROBJECTGETNEXTCHILD pfUserMgrObjectGetNextChild;
+	#define GET_UserMgrObjectGetNextChild(fl)  s_pfCMGetAPI2( "UserMgrObjectGetNextChild", (RTS_VOID_FCTPTR *)&pfUserMgrObjectGetNextChild, (fl), 0, 0)
+	#define CAL_UserMgrObjectGetNextChild  pfUserMgrObjectGetNextChild
+	#define CHK_UserMgrObjectGetNextChild  (pfUserMgrObjectGetNextChild != NULL)
+	#define EXP_UserMgrObjectGetNextChild  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetNextChild", (RTS_UINTPTR)UserMgrObjectGetNextChild, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Iteration interface to get the first group in the user rights management of the specified object</description>
+ * <param name="hObject" type="IN">Handle to the object</param>
+ * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">First group available</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">No group available</errorcode>
+ * <result>Handle to the first group of the object in the user rights management or RTS_INVALID_HANDLE if failed</result>
+ */
+RTS_HANDLE CDECL UserMgrObjectGetFirstGroup(RTS_HANDLE hObject, RTS_RESULT *pResult);
+typedef RTS_HANDLE (CDECL * PFUSERMGROBJECTGETFIRSTGROUP) (RTS_HANDLE hObject, RTS_RESULT *pResult);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGROBJECTGETFIRSTGROUP_NOTIMPLEMENTED)
+	#define USE_UserMgrObjectGetFirstGroup
+	#define EXT_UserMgrObjectGetFirstGroup
+	#define GET_UserMgrObjectGetFirstGroup(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrObjectGetFirstGroup(p0,p1)  (RTS_HANDLE)RTS_INVALID_HANDLE
+	#define CHK_UserMgrObjectGetFirstGroup  FALSE
+	#define EXP_UserMgrObjectGetFirstGroup  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrObjectGetFirstGroup
+	#define EXT_UserMgrObjectGetFirstGroup
+	#define GET_UserMgrObjectGetFirstGroup(fl)  CAL_CMGETAPI( "UserMgrObjectGetFirstGroup" ) 
+	#define CAL_UserMgrObjectGetFirstGroup  UserMgrObjectGetFirstGroup
+	#define CHK_UserMgrObjectGetFirstGroup  TRUE
+	#define EXP_UserMgrObjectGetFirstGroup  CAL_CMEXPAPI( "UserMgrObjectGetFirstGroup" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrObjectGetFirstGroup
+	#define EXT_UserMgrObjectGetFirstGroup
+	#define GET_UserMgrObjectGetFirstGroup(fl)  CAL_CMGETAPI( "UserMgrObjectGetFirstGroup" ) 
+	#define CAL_UserMgrObjectGetFirstGroup  UserMgrObjectGetFirstGroup
+	#define CHK_UserMgrObjectGetFirstGroup  TRUE
+	#define EXP_UserMgrObjectGetFirstGroup  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetFirstGroup", (RTS_UINTPTR)UserMgrObjectGetFirstGroup, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrObjectGetFirstGroup
+	#define EXT_CmpUserMgrUserMgrObjectGetFirstGroup
+	#define GET_CmpUserMgrUserMgrObjectGetFirstGroup  ERR_OK
+	#define CAL_CmpUserMgrUserMgrObjectGetFirstGroup pICmpUserMgr->IUserMgrObjectGetFirstGroup
+	#define CHK_CmpUserMgrUserMgrObjectGetFirstGroup (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrObjectGetFirstGroup  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrObjectGetFirstGroup
+	#define EXT_UserMgrObjectGetFirstGroup
+	#define GET_UserMgrObjectGetFirstGroup(fl)  CAL_CMGETAPI( "UserMgrObjectGetFirstGroup" ) 
+	#define CAL_UserMgrObjectGetFirstGroup pICmpUserMgr->IUserMgrObjectGetFirstGroup
+	#define CHK_UserMgrObjectGetFirstGroup (pICmpUserMgr != NULL)
+	#define EXP_UserMgrObjectGetFirstGroup  CAL_CMEXPAPI( "UserMgrObjectGetFirstGroup" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrObjectGetFirstGroup  PFUSERMGROBJECTGETFIRSTGROUP pfUserMgrObjectGetFirstGroup;
+	#define EXT_UserMgrObjectGetFirstGroup  extern PFUSERMGROBJECTGETFIRSTGROUP pfUserMgrObjectGetFirstGroup;
+	#define GET_UserMgrObjectGetFirstGroup(fl)  s_pfCMGetAPI2( "UserMgrObjectGetFirstGroup", (RTS_VOID_FCTPTR *)&pfUserMgrObjectGetFirstGroup, (fl), 0, 0)
+	#define CAL_UserMgrObjectGetFirstGroup  pfUserMgrObjectGetFirstGroup
+	#define CHK_UserMgrObjectGetFirstGroup  (pfUserMgrObjectGetFirstGroup != NULL)
+	#define EXP_UserMgrObjectGetFirstGroup  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetFirstGroup", (RTS_UINTPTR)UserMgrObjectGetFirstGroup, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Iteration interface to get next group in the user rights management of the specified object. Must be started with UserDBObjectGetFirstGroup()</description>
+ * <param name="hObject" type="IN">Handle to the object</param>
+ * <param name="hPrevGroup" type="IN">Handle to the previous group retrieved via UserDBObjectGetFirstGroup() or subsequent calls of UserDBObjectGetNextGroup()</param>
+ * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Next group available</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid handles</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">No next group available</errorcode>
+ * <result>Handle to the next group of the object in the user rights management or RTS_INVALID_HANDLE if failed</result>
+ */
+RTS_HANDLE CDECL UserMgrObjectGetNextGroup(RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT *pResult);
+typedef RTS_HANDLE (CDECL * PFUSERMGROBJECTGETNEXTGROUP) (RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT *pResult);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGROBJECTGETNEXTGROUP_NOTIMPLEMENTED)
+	#define USE_UserMgrObjectGetNextGroup
+	#define EXT_UserMgrObjectGetNextGroup
+	#define GET_UserMgrObjectGetNextGroup(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrObjectGetNextGroup(p0,p1,p2)  (RTS_HANDLE)RTS_INVALID_HANDLE
+	#define CHK_UserMgrObjectGetNextGroup  FALSE
+	#define EXP_UserMgrObjectGetNextGroup  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrObjectGetNextGroup
+	#define EXT_UserMgrObjectGetNextGroup
+	#define GET_UserMgrObjectGetNextGroup(fl)  CAL_CMGETAPI( "UserMgrObjectGetNextGroup" ) 
+	#define CAL_UserMgrObjectGetNextGroup  UserMgrObjectGetNextGroup
+	#define CHK_UserMgrObjectGetNextGroup  TRUE
+	#define EXP_UserMgrObjectGetNextGroup  CAL_CMEXPAPI( "UserMgrObjectGetNextGroup" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrObjectGetNextGroup
+	#define EXT_UserMgrObjectGetNextGroup
+	#define GET_UserMgrObjectGetNextGroup(fl)  CAL_CMGETAPI( "UserMgrObjectGetNextGroup" ) 
+	#define CAL_UserMgrObjectGetNextGroup  UserMgrObjectGetNextGroup
+	#define CHK_UserMgrObjectGetNextGroup  TRUE
+	#define EXP_UserMgrObjectGetNextGroup  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetNextGroup", (RTS_UINTPTR)UserMgrObjectGetNextGroup, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrObjectGetNextGroup
+	#define EXT_CmpUserMgrUserMgrObjectGetNextGroup
+	#define GET_CmpUserMgrUserMgrObjectGetNextGroup  ERR_OK
+	#define CAL_CmpUserMgrUserMgrObjectGetNextGroup pICmpUserMgr->IUserMgrObjectGetNextGroup
+	#define CHK_CmpUserMgrUserMgrObjectGetNextGroup (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrObjectGetNextGroup  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrObjectGetNextGroup
+	#define EXT_UserMgrObjectGetNextGroup
+	#define GET_UserMgrObjectGetNextGroup(fl)  CAL_CMGETAPI( "UserMgrObjectGetNextGroup" ) 
+	#define CAL_UserMgrObjectGetNextGroup pICmpUserMgr->IUserMgrObjectGetNextGroup
+	#define CHK_UserMgrObjectGetNextGroup (pICmpUserMgr != NULL)
+	#define EXP_UserMgrObjectGetNextGroup  CAL_CMEXPAPI( "UserMgrObjectGetNextGroup" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrObjectGetNextGroup  PFUSERMGROBJECTGETNEXTGROUP pfUserMgrObjectGetNextGroup;
+	#define EXT_UserMgrObjectGetNextGroup  extern PFUSERMGROBJECTGETNEXTGROUP pfUserMgrObjectGetNextGroup;
+	#define GET_UserMgrObjectGetNextGroup(fl)  s_pfCMGetAPI2( "UserMgrObjectGetNextGroup", (RTS_VOID_FCTPTR *)&pfUserMgrObjectGetNextGroup, (fl), 0, 0)
+	#define CAL_UserMgrObjectGetNextGroup  pfUserMgrObjectGetNextGroup
+	#define CHK_UserMgrObjectGetNextGroup  (pfUserMgrObjectGetNextGroup != NULL)
+	#define EXP_UserMgrObjectGetNextGroup  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetNextGroup", (RTS_UINTPTR)UserMgrObjectGetNextGroup, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Gets the rights and the denied rights of a group on a specified object</description>
+ * <param name="hObject" type="IN">Handle to object</param>
+ * <param name="hGroup" type="IN">Handle to the group which access rights are requested</param>
+ * <element name="pulRights" type="IN">Pointer to get rights of the group. See category "User rights" for details</element>
+ * <element name="pulDeniedRights" type="IN">Pointer to get denied rights of the group. See category "User rights" for details</element>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Access rights could be retrieved</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid handles</errorcode>
+ */
+RTS_RESULT CDECL UserMgrObjectGetGroupRights(RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights);
+typedef RTS_RESULT (CDECL * PFUSERMGROBJECTGETGROUPRIGHTS) (RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGROBJECTGETGROUPRIGHTS_NOTIMPLEMENTED)
+	#define USE_UserMgrObjectGetGroupRights
+	#define EXT_UserMgrObjectGetGroupRights
+	#define GET_UserMgrObjectGetGroupRights(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrObjectGetGroupRights(p0,p1,p2,p3)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrObjectGetGroupRights  FALSE
+	#define EXP_UserMgrObjectGetGroupRights  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrObjectGetGroupRights
+	#define EXT_UserMgrObjectGetGroupRights
+	#define GET_UserMgrObjectGetGroupRights(fl)  CAL_CMGETAPI( "UserMgrObjectGetGroupRights" ) 
+	#define CAL_UserMgrObjectGetGroupRights  UserMgrObjectGetGroupRights
+	#define CHK_UserMgrObjectGetGroupRights  TRUE
+	#define EXP_UserMgrObjectGetGroupRights  CAL_CMEXPAPI( "UserMgrObjectGetGroupRights" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrObjectGetGroupRights
+	#define EXT_UserMgrObjectGetGroupRights
+	#define GET_UserMgrObjectGetGroupRights(fl)  CAL_CMGETAPI( "UserMgrObjectGetGroupRights" ) 
+	#define CAL_UserMgrObjectGetGroupRights  UserMgrObjectGetGroupRights
+	#define CHK_UserMgrObjectGetGroupRights  TRUE
+	#define EXP_UserMgrObjectGetGroupRights  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetGroupRights", (RTS_UINTPTR)UserMgrObjectGetGroupRights, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrObjectGetGroupRights
+	#define EXT_CmpUserMgrUserMgrObjectGetGroupRights
+	#define GET_CmpUserMgrUserMgrObjectGetGroupRights  ERR_OK
+	#define CAL_CmpUserMgrUserMgrObjectGetGroupRights pICmpUserMgr->IUserMgrObjectGetGroupRights
+	#define CHK_CmpUserMgrUserMgrObjectGetGroupRights (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrObjectGetGroupRights  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrObjectGetGroupRights
+	#define EXT_UserMgrObjectGetGroupRights
+	#define GET_UserMgrObjectGetGroupRights(fl)  CAL_CMGETAPI( "UserMgrObjectGetGroupRights" ) 
+	#define CAL_UserMgrObjectGetGroupRights pICmpUserMgr->IUserMgrObjectGetGroupRights
+	#define CHK_UserMgrObjectGetGroupRights (pICmpUserMgr != NULL)
+	#define EXP_UserMgrObjectGetGroupRights  CAL_CMEXPAPI( "UserMgrObjectGetGroupRights" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrObjectGetGroupRights  PFUSERMGROBJECTGETGROUPRIGHTS pfUserMgrObjectGetGroupRights;
+	#define EXT_UserMgrObjectGetGroupRights  extern PFUSERMGROBJECTGETGROUPRIGHTS pfUserMgrObjectGetGroupRights;
+	#define GET_UserMgrObjectGetGroupRights(fl)  s_pfCMGetAPI2( "UserMgrObjectGetGroupRights", (RTS_VOID_FCTPTR *)&pfUserMgrObjectGetGroupRights, (fl), 0, 0)
+	#define CAL_UserMgrObjectGetGroupRights  pfUserMgrObjectGetGroupRights
+	#define CHK_UserMgrObjectGetGroupRights  (pfUserMgrObjectGetGroupRights != NULL)
+	#define EXP_UserMgrObjectGetGroupRights  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetGroupRights", (RTS_UINTPTR)UserMgrObjectGetGroupRights, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Storing the current user rights management into permanent database file</description>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Succeeded</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Error storing user rights database</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">Is not implemented perhaps the UserRights is fix</errorcode>
+ */
+RTS_RESULT CDECL UserMgrRightsStore(void);
+typedef RTS_RESULT (CDECL * PFUSERMGRRIGHTSSTORE) (void);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRRIGHTSSTORE_NOTIMPLEMENTED)
+	#define USE_UserMgrRightsStore
+	#define EXT_UserMgrRightsStore
+	#define GET_UserMgrRightsStore(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrRightsStore()  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrRightsStore  FALSE
+	#define EXP_UserMgrRightsStore  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrRightsStore
+	#define EXT_UserMgrRightsStore
+	#define GET_UserMgrRightsStore(fl)  CAL_CMGETAPI( "UserMgrRightsStore" ) 
+	#define CAL_UserMgrRightsStore  UserMgrRightsStore
+	#define CHK_UserMgrRightsStore  TRUE
+	#define EXP_UserMgrRightsStore  CAL_CMEXPAPI( "UserMgrRightsStore" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrRightsStore
+	#define EXT_UserMgrRightsStore
+	#define GET_UserMgrRightsStore(fl)  CAL_CMGETAPI( "UserMgrRightsStore" ) 
+	#define CAL_UserMgrRightsStore  UserMgrRightsStore
+	#define CHK_UserMgrRightsStore  TRUE
+	#define EXP_UserMgrRightsStore  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRightsStore", (RTS_UINTPTR)UserMgrRightsStore, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrRightsStore
+	#define EXT_CmpUserMgrUserMgrRightsStore
+	#define GET_CmpUserMgrUserMgrRightsStore  ERR_OK
+	#define CAL_CmpUserMgrUserMgrRightsStore pICmpUserMgr->IUserMgrRightsStore
+	#define CHK_CmpUserMgrUserMgrRightsStore (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrRightsStore  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrRightsStore
+	#define EXT_UserMgrRightsStore
+	#define GET_UserMgrRightsStore(fl)  CAL_CMGETAPI( "UserMgrRightsStore" ) 
+	#define CAL_UserMgrRightsStore pICmpUserMgr->IUserMgrRightsStore
+	#define CHK_UserMgrRightsStore (pICmpUserMgr != NULL)
+	#define EXP_UserMgrRightsStore  CAL_CMEXPAPI( "UserMgrRightsStore" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrRightsStore  PFUSERMGRRIGHTSSTORE pfUserMgrRightsStore;
+	#define EXT_UserMgrRightsStore  extern PFUSERMGRRIGHTSSTORE pfUserMgrRightsStore;
+	#define GET_UserMgrRightsStore(fl)  s_pfCMGetAPI2( "UserMgrRightsStore", (RTS_VOID_FCTPTR *)&pfUserMgrRightsStore, (fl), 0, 0)
+	#define CAL_UserMgrRightsStore  pfUserMgrRightsStore
+	#define CHK_UserMgrRightsStore  (pfUserMgrRightsStore != NULL)
+	#define EXP_UserMgrRightsStore  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRightsStore", (RTS_UINTPTR)UserMgrRightsStore, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>
+ * Checks if the given string fits in a buffer determined by the given length including the terminating NUL
+ * Returns TRUE if the string was shortened to handle this case
+ * </description>
+ * <param name="psz" type="IN">The string to check</param>
+ * <param name="len" type="IN">Maximum buffer length</param>
+ * <result>TRUE means the string was shortened</result>
+ */
+RTS_BOOL CDECL UserMgrCheckLen(char *psz, RTS_UI32 len);
+typedef RTS_BOOL (CDECL * PFUSERMGRCHECKLEN) (char *psz, RTS_UI32 len);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRCHECKLEN_NOTIMPLEMENTED)
+	#define USE_UserMgrCheckLen
+	#define EXT_UserMgrCheckLen
+	#define GET_UserMgrCheckLen(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrCheckLen(p0,p1)  (RTS_BOOL)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrCheckLen  FALSE
+	#define EXP_UserMgrCheckLen  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrCheckLen
+	#define EXT_UserMgrCheckLen
+	#define GET_UserMgrCheckLen(fl)  CAL_CMGETAPI( "UserMgrCheckLen" ) 
+	#define CAL_UserMgrCheckLen  UserMgrCheckLen
+	#define CHK_UserMgrCheckLen  TRUE
+	#define EXP_UserMgrCheckLen  CAL_CMEXPAPI( "UserMgrCheckLen" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrCheckLen
+	#define EXT_UserMgrCheckLen
+	#define GET_UserMgrCheckLen(fl)  CAL_CMGETAPI( "UserMgrCheckLen" ) 
+	#define CAL_UserMgrCheckLen  UserMgrCheckLen
+	#define CHK_UserMgrCheckLen  TRUE
+	#define EXP_UserMgrCheckLen  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrCheckLen", (RTS_UINTPTR)UserMgrCheckLen, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrCheckLen
+	#define EXT_CmpUserMgrUserMgrCheckLen
+	#define GET_CmpUserMgrUserMgrCheckLen  ERR_OK
+	#define CAL_CmpUserMgrUserMgrCheckLen pICmpUserMgr->IUserMgrCheckLen
+	#define CHK_CmpUserMgrUserMgrCheckLen (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrCheckLen  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrCheckLen
+	#define EXT_UserMgrCheckLen
+	#define GET_UserMgrCheckLen(fl)  CAL_CMGETAPI( "UserMgrCheckLen" ) 
+	#define CAL_UserMgrCheckLen pICmpUserMgr->IUserMgrCheckLen
+	#define CHK_UserMgrCheckLen (pICmpUserMgr != NULL)
+	#define EXP_UserMgrCheckLen  CAL_CMEXPAPI( "UserMgrCheckLen" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrCheckLen  PFUSERMGRCHECKLEN pfUserMgrCheckLen;
+	#define EXT_UserMgrCheckLen  extern PFUSERMGRCHECKLEN pfUserMgrCheckLen;
+	#define GET_UserMgrCheckLen(fl)  s_pfCMGetAPI2( "UserMgrCheckLen", (RTS_VOID_FCTPTR *)&pfUserMgrCheckLen, (fl), 0, 0)
+	#define CAL_UserMgrCheckLen  pfUserMgrCheckLen
+	#define CHK_UserMgrCheckLen  (pfUserMgrCheckLen != NULL)
+	#define EXP_UserMgrCheckLen  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrCheckLen", (RTS_UINTPTR)UserMgrCheckLen, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>
+ * Tells the UserManager that there is an old format database found:
+ * The announcement ANNOUNCE may return an error other than ERR_OK (ERR_OPERATION_DENIED is recommended) which indicates that the conversion of the old database is denied.
+ * The announcement FINISH tells the UserManager that an old database is converted and adjustment may be processed now.
+ * </description>
+ * <param name="info" type="IN">ANNOUNCE, FINISH, see Old database announcements</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Succeeded</errorcode>
+ */
+RTS_RESULT CDECL UserMgrAnnounceOldDatabase(RTS_UI32 info);
+typedef RTS_RESULT (CDECL * PFUSERMGRANNOUNCEOLDDATABASE) (RTS_UI32 info);
+#if defined(CMPUSERMGR_NOTIMPLEMENTED) || defined(USERMGRANNOUNCEOLDDATABASE_NOTIMPLEMENTED)
+	#define USE_UserMgrAnnounceOldDatabase
+	#define EXT_UserMgrAnnounceOldDatabase
+	#define GET_UserMgrAnnounceOldDatabase(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_UserMgrAnnounceOldDatabase(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_UserMgrAnnounceOldDatabase  FALSE
+	#define EXP_UserMgrAnnounceOldDatabase  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_UserMgrAnnounceOldDatabase
+	#define EXT_UserMgrAnnounceOldDatabase
+	#define GET_UserMgrAnnounceOldDatabase(fl)  CAL_CMGETAPI( "UserMgrAnnounceOldDatabase" ) 
+	#define CAL_UserMgrAnnounceOldDatabase  UserMgrAnnounceOldDatabase
+	#define CHK_UserMgrAnnounceOldDatabase  TRUE
+	#define EXP_UserMgrAnnounceOldDatabase  CAL_CMEXPAPI( "UserMgrAnnounceOldDatabase" ) 
+#elif defined(MIXED_LINK) && !defined(CMPUSERMGR_EXTERNAL)
+	#define USE_UserMgrAnnounceOldDatabase
+	#define EXT_UserMgrAnnounceOldDatabase
+	#define GET_UserMgrAnnounceOldDatabase(fl)  CAL_CMGETAPI( "UserMgrAnnounceOldDatabase" ) 
+	#define CAL_UserMgrAnnounceOldDatabase  UserMgrAnnounceOldDatabase
+	#define CHK_UserMgrAnnounceOldDatabase  TRUE
+	#define EXP_UserMgrAnnounceOldDatabase  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrAnnounceOldDatabase", (RTS_UINTPTR)UserMgrAnnounceOldDatabase, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpUserMgrUserMgrAnnounceOldDatabase
+	#define EXT_CmpUserMgrUserMgrAnnounceOldDatabase
+	#define GET_CmpUserMgrUserMgrAnnounceOldDatabase  ERR_OK
+	#define CAL_CmpUserMgrUserMgrAnnounceOldDatabase pICmpUserMgr->IUserMgrAnnounceOldDatabase
+	#define CHK_CmpUserMgrUserMgrAnnounceOldDatabase (pICmpUserMgr != NULL)
+	#define EXP_CmpUserMgrUserMgrAnnounceOldDatabase  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_UserMgrAnnounceOldDatabase
+	#define EXT_UserMgrAnnounceOldDatabase
+	#define GET_UserMgrAnnounceOldDatabase(fl)  CAL_CMGETAPI( "UserMgrAnnounceOldDatabase" ) 
+	#define CAL_UserMgrAnnounceOldDatabase pICmpUserMgr->IUserMgrAnnounceOldDatabase
+	#define CHK_UserMgrAnnounceOldDatabase (pICmpUserMgr != NULL)
+	#define EXP_UserMgrAnnounceOldDatabase  CAL_CMEXPAPI( "UserMgrAnnounceOldDatabase" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_UserMgrAnnounceOldDatabase  PFUSERMGRANNOUNCEOLDDATABASE pfUserMgrAnnounceOldDatabase;
+	#define EXT_UserMgrAnnounceOldDatabase  extern PFUSERMGRANNOUNCEOLDDATABASE pfUserMgrAnnounceOldDatabase;
+	#define GET_UserMgrAnnounceOldDatabase(fl)  s_pfCMGetAPI2( "UserMgrAnnounceOldDatabase", (RTS_VOID_FCTPTR *)&pfUserMgrAnnounceOldDatabase, (fl), 0, 0)
+	#define CAL_UserMgrAnnounceOldDatabase  pfUserMgrAnnounceOldDatabase
+	#define CHK_UserMgrAnnounceOldDatabase  (pfUserMgrAnnounceOldDatabase != NULL)
+	#define EXP_UserMgrAnnounceOldDatabase  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrAnnounceOldDatabase", (RTS_UINTPTR)UserMgrAnnounceOldDatabase, 0, 0) 
 #endif
 
 
@@ -2252,24 +4693,45 @@ typedef RTS_RESULT (CDECL * PFUSERMGRDECRYPTPASSWORD) (char *pszPasswordCrypted,
 typedef struct
 {
 	IBase_C *pBase;
-	PFUSERMGRLOGIN IUserMgrLogin;
+	PFUSERMGRREGISTERUSERDB IUserMgrRegisterUserDB;
+ 	PFUSERMGRUNREGISTERUSERDB IUserMgrUnregisterUserDB;
+ 	PFUSERMGRREGISTERUSERDBCONFIG IUserMgrRegisterUserDBConfig;
+ 	PFUSERMGRUNREGISTERUSERDBCONFIG IUserMgrUnregisterUserDBConfig;
+ 	PFUSERMGRREGISTERUSERGROUPSDB IUserMgrRegisterUserGroupsDB;
+ 	PFUSERMGRUNREGISTERUSERGROUPSDB IUserMgrUnregisterUserGroupsDB;
+ 	PFUSERMGRREGISTERUSERGROUPSDBCONFIG IUserMgrRegisterUserGroupsDBConfig;
+ 	PFUSERMGRUNREGISTERUSERGROUPSDBCONFIG IUserMgrUnregisterUserGroupsDBConfig;
+ 	PFUSERMGRREGISTERUSEROBJECTSDB IUserMgrRegisterUserObjectsDB;
+ 	PFUSERMGRUNREGISTERUSEROBJECTSDB IUserMgrUnregisterUserObjectsDB;
+ 	PFUSERMGRREGISTERUSEROBJECTSDBCONFIG IUserMgrRegisterUserObjectsDBConfig;
+ 	PFUSERMGRUNREGISTERUSEROBJECTSDBCONFIG IUserMgrUnregisterUserObjectsDBConfig;
+ 	PFUSERMGRSELECTAUTHTYPE IUserMgrSelectAuthType;
+ 	PFUSERMGRHANDLELOGINSERVICE IUserMgrHandleLoginService;
+ 	PFUSERMGRISSERVICEALLOWED IUserMgrIsServiceAllowed;
+ 	PFUSERMGRISACTIVE IUserMgrIsActive;
+ 	PFUSERMGRLOGIN IUserMgrLogin;
  	PFUSERMGRLOGOUT IUserMgrLogout;
- 	PFUSERMGRLOGOUTBYSESSIONID IUserMgrLogoutBySessionId;
- 	PFUSERMGRCHECKPASSWORD IUserMgrCheckPassword;
- 	PFUSERMGRGETPROPERTY IUserMgrGetProperty;
+ 	PFUSERMGRRELOGIN IUserMgrRelogin;
  	PFUSERMGRISGROUPMEMBER IUserMgrIsGroupMember;
- 	PFUSERMGRGETSTATE IUserMgrGetState;
+ 	PFUSERMGRISADMINISTRATOR IUserMgrIsAdministrator;
  	PFUSERMGRHASACCESSRIGHTS IUserMgrHasAccessRights;
  	PFUSERMGRGETACCESSRIGHTS IUserMgrGetAccessRights;
  	PFUSERMGRHASUSERACCESSRIGHTS IUserMgrHasUserAccessRights;
  	PFUSERMGRGETUSERACCESSRIGHTS IUserMgrGetUserAccessRights;
- 	PFUSERMGRADDSESSIONID IUserMgrAddSessionId;
- 	PFUSERMGRREMOVESESSIONID IUserMgrRemoveSessionId;
- 	PFUSERMGRFINDUSERBYSESSIONID IUserMgrFindUserBySessionId;
  	PFUSERMGRADDINFOTOUSER IUserMgrAddInfoToUser;
  	PFUSERMGRREMOVEINFOFROMUSER IUserMgrRemoveInfoFromUser;
  	PFUSERMGRREMOVEINFOFROMALLUSERS IUserMgrRemoveInfoFromAllUsers;
  	PFUSERMGRGETINFOOFUSER IUserMgrGetInfoOfUser;
+ 	PFUSERMGRGETUSERNAME IUserMgrGetUserName;
+ 	PFUSERMGRGETGROUP IUserMgrGetGroup;
+ 	PFUSERMGRGROUPHASUSER IUserMgrGroupHasUser;
+ 	PFUSERMGRGROUPGETNAME IUserMgrGroupGetName;
+ 	PFUSERMGRADDUSER IUserMgrAddUser;
+ 	PFUSERMGRREMOVEUSER IUserMgrRemoveUser;
+ 	PFUSERMGRADDGROUP IUserMgrAddGroup;
+ 	PFUSERMGRREMOVEGROUP IUserMgrRemoveGroup;
+ 	PFUSERMGRGROUPADDUSER IUserMgrGroupAddUser;
+ 	PFUSERMGRGROUPREMOVEUSER IUserMgrGroupRemoveUser;
  	PFUSERMGRADDONLINEACCESSERROR IUserMgrAddOnlineAccessError;
  	PFUSERMGROBJECTADD IUserMgrObjectAdd;
  	PFUSERMGROBJECTREMOVE IUserMgrObjectRemove;
@@ -2279,33 +4741,66 @@ typedef struct
  	PFUSERMGROBJECTOPEN IUserMgrObjectOpen;
  	PFUSERMGROBJECTOPEN2 IUserMgrObjectOpen2;
  	PFUSERMGROBJECTCLOSE IUserMgrObjectClose;
- 	PFUSERMGRGETCHALLENGE IUserMgrGetChallenge;
- 	PFUSERMGRCRYPTPASSWORD IUserMgrCryptPassword;
- 	PFUSERMGRDECRYPTPASSWORD IUserMgrDecryptPassword;
+ 	PFUSERMGROBJECTADD2 IUserMgrObjectAdd2;
+ 	PFUSERMGROBJECTADDGROUP IUserMgrObjectAddGroup;
+ 	PFUSERMGROBJECTREMOVEGROUP IUserMgrObjectRemoveGroup;
+ 	PFUSERMGROBJECTSETGROUPRIGHTS IUserMgrObjectSetGroupRights;
+ 	PFUSERMGROBJECTSETGROUPDENIEDRIGHTS IUserMgrObjectSetGroupDeniedRights;
+ 	PFUSERMGROBJECTCLEARRIGHTS IUserMgrObjectClearRights;
+ 	PFUSERMGROBJECTGETNAME IUserMgrObjectGetName;
+ 	PFUSERMGROBJECTGETFIRSTCHILD IUserMgrObjectGetFirstChild;
+ 	PFUSERMGROBJECTGETNEXTCHILD IUserMgrObjectGetNextChild;
+ 	PFUSERMGROBJECTGETFIRSTGROUP IUserMgrObjectGetFirstGroup;
+ 	PFUSERMGROBJECTGETNEXTGROUP IUserMgrObjectGetNextGroup;
+ 	PFUSERMGROBJECTGETGROUPRIGHTS IUserMgrObjectGetGroupRights;
+ 	PFUSERMGRRIGHTSSTORE IUserMgrRightsStore;
+ 	PFUSERMGRCHECKLEN IUserMgrCheckLen;
+ 	PFUSERMGRANNOUNCEOLDDATABASE IUserMgrAnnounceOldDatabase;
  } ICmpUserMgr_C;
 
 #ifdef CPLUSPLUS
 class ICmpUserMgr : public IBase
 {
 	public:
-		virtual RTS_HANDLE CDECL IUserMgrLogin(char *pszUser, RTS_RESULT *pResult) =0;
+		virtual RTS_RESULT CDECL IUserMgrRegisterUserDB(RTS_HANDLE hDatabase, RTS_UI32 type) =0;
+		virtual RTS_RESULT CDECL IUserMgrUnregisterUserDB(RTS_HANDLE hDatabase) =0;
+		virtual RTS_RESULT CDECL IUserMgrRegisterUserDBConfig(RTS_HANDLE hDatabase, RTS_UI32 type) =0;
+		virtual RTS_RESULT CDECL IUserMgrUnregisterUserDBConfig(RTS_HANDLE hDatabase) =0;
+		virtual RTS_RESULT CDECL IUserMgrRegisterUserGroupsDB(RTS_HANDLE hDatabase) =0;
+		virtual RTS_RESULT CDECL IUserMgrUnregisterUserGroupsDB(RTS_HANDLE hDatabase) =0;
+		virtual RTS_RESULT CDECL IUserMgrRegisterUserGroupsDBConfig(RTS_HANDLE hDatabase) =0;
+		virtual RTS_RESULT CDECL IUserMgrUnregisterUserGroupsDBConfig(RTS_HANDLE hDatabase) =0;
+		virtual RTS_RESULT CDECL IUserMgrRegisterUserObjectsDB(RTS_HANDLE hDatabase) =0;
+		virtual RTS_RESULT CDECL IUserMgrUnregisterUserObjectsDB(RTS_HANDLE hDatabase) =0;
+		virtual RTS_RESULT CDECL IUserMgrRegisterUserObjectsDBConfig(RTS_HANDLE hDatabase) =0;
+		virtual RTS_RESULT CDECL IUserMgrUnregisterUserObjectsDBConfig(RTS_HANDLE hDatabase) =0;
+		virtual RTS_RESULT CDECL IUserMgrSelectAuthType(RTS_UI32 ui32ClientFlags, RTS_UI32 *pui32AuthType) =0;
+		virtual RTS_RESULT CDECL IUserMgrHandleLoginService(RTS_UI32 SessionId, RTS_UI32 SessionAuthType, RTS_UI32 SessionFlags, BINTAGWRITER *pWriter, BINTAGREADER *pReader, RTS_HANDLE *phUser) =0;
+		virtual RTS_RESULT CDECL IUserMgrIsServiceAllowed(RTS_UI32 channelID, HEADER_TAG_EXT *pHeader, PROTOCOL_DATA_UNIT *pPduReply) =0;
+		virtual RTS_BOOL CDECL IUserMgrIsActive(void) =0;
+		virtual RTS_HANDLE CDECL IUserMgrLogin(char *pszUser, char *pszPassword, RTS_RESULT *pResult) =0;
 		virtual RTS_RESULT CDECL IUserMgrLogout(RTS_HANDLE hUser) =0;
-		virtual RTS_RESULT CDECL IUserMgrLogoutBySessionId(RTS_UI32 ulSessionId) =0;
-		virtual RTS_RESULT CDECL IUserMgrCheckPassword(RTS_HANDLE hUser, char *pszPassword) =0;
-		virtual RTS_RESULT CDECL IUserMgrGetProperty(RTS_HANDLE hUser, RTS_UI32 *pulProperty) =0;
+		virtual RTS_RESULT CDECL IUserMgrRelogin(RTS_HANDLE hUser, char *pszUser, char *pszPassword) =0;
 		virtual RTS_RESULT CDECL IUserMgrIsGroupMember(char *pszGroup, RTS_HANDLE hUser) =0;
-		virtual RTS_UI32 CDECL IUserMgrGetState(RTS_HANDLE hUser, RTS_RESULT *pResult) =0;
+		virtual RTS_BOOL CDECL IUserMgrIsAdministrator(RTS_HANDLE hUser) =0;
 		virtual RTS_RESULT CDECL IUserMgrHasAccessRights(char *pszObject, RTS_UI32 ulSessionId, RTS_UI32 ulRequestedRights) =0;
 		virtual RTS_RESULT CDECL IUserMgrGetAccessRights(char *pszObject, RTS_UI32 ulSessionId, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights) =0;
 		virtual RTS_RESULT CDECL IUserMgrHasUserAccessRights(char *pszObject, RTS_HANDLE hUser, RTS_UI32 ulRequestedRights) =0;
 		virtual RTS_RESULT CDECL IUserMgrGetUserAccessRights(char *pszObject, RTS_HANDLE hUser, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights) =0;
-		virtual RTS_RESULT CDECL IUserMgrAddSessionId(RTS_HANDLE hUser, RTS_UI32 *pulSessionId) =0;
-		virtual RTS_RESULT CDECL IUserMgrRemoveSessionId(RTS_UI32 ulSessionId) =0;
-		virtual RTS_HANDLE CDECL IUserMgrFindUserBySessionId(RTS_UI32 ulSessionId, RTS_RESULT *pResult) =0;
 		virtual RTS_RESULT CDECL IUserMgrAddInfoToUser(RTS_HANDLE hUser, RTS_SIZE key, RTS_TYPEDVALUE *pValue) =0;
 		virtual RTS_RESULT CDECL IUserMgrRemoveInfoFromUser(RTS_HANDLE hUser, RTS_SIZE key) =0;
 		virtual RTS_RESULT CDECL IUserMgrRemoveInfoFromAllUsers(RTS_SIZE key) =0;
 		virtual RTS_RESULT CDECL IUserMgrGetInfoOfUser(RTS_HANDLE hUser, RTS_SIZE key, RTS_TYPEDVALUE *pValue) =0;
+		virtual RTS_RESULT CDECL IUserMgrGetUserName(RTS_HANDLE hUser, char *pName, RTS_UI32 maxLen) =0;
+		virtual RTS_HANDLE CDECL IUserMgrGetGroup(char *pszGroupName, RTS_RESULT *pResult) =0;
+		virtual RTS_BOOL CDECL IUserMgrGroupHasUser(RTS_HANDLE hGroup, RTS_HANDLE hUser) =0;
+		virtual RTS_RESULT CDECL IUserMgrGroupGetName(RTS_HANDLE hGroup, char *pName, RTS_UI32 maxLen) =0;
+		virtual RTS_RESULT CDECL IUserMgrAddUser(RTS_HANDLE hUser, char *pszUserName, UserMgrCredentials *pCredentials) =0;
+		virtual RTS_RESULT CDECL IUserMgrRemoveUser(RTS_HANDLE hUser, char *pszUserName) =0;
+		virtual RTS_RESULT CDECL IUserMgrAddGroup(RTS_HANDLE hUser, char *pszGroupName) =0;
+		virtual RTS_RESULT CDECL IUserMgrRemoveGroup(RTS_HANDLE hUser, char *pszGroupName) =0;
+		virtual RTS_RESULT CDECL IUserMgrGroupAddUser(RTS_HANDLE hUser, char *pszGroupName, char *pszUserName) =0;
+		virtual RTS_RESULT CDECL IUserMgrGroupRemoveUser(RTS_HANDLE hUser, char *pszGroupName, char *pszUserName) =0;
 		virtual RTS_RESULT CDECL IUserMgrAddOnlineAccessError(BINTAGWRITER *pWriter, RTS_RESULT Result, char *pszObject, RTS_UI32 ulRequestedRights, RTS_UI32 ulSessionID) =0;
 		virtual RTS_HANDLE CDECL IUserMgrObjectAdd(char *pszObject, RTS_RESULT *pResult) =0;
 		virtual RTS_RESULT CDECL IUserMgrObjectRemove(RTS_HANDLE hObject) =0;
@@ -2315,9 +4810,21 @@ class ICmpUserMgr : public IBase
 		virtual RTS_HANDLE CDECL IUserMgrObjectOpen(char *pszObject, RTS_RESULT *pResult) =0;
 		virtual RTS_HANDLE CDECL IUserMgrObjectOpen2(char *pszObject, RTS_HANDLE hUser, RTS_RESULT *pResult) =0;
 		virtual RTS_RESULT CDECL IUserMgrObjectClose(RTS_HANDLE hObject) =0;
-		virtual RTS_RESULT CDECL IUserMgrGetChallenge(RTS_UI32 *pulChallenge) =0;
-		virtual RTS_RESULT CDECL IUserMgrCryptPassword(char *pszPassword, char *pszPasswordCrypted, int *pnPasswordCryptedSize, RTS_UI32 ulCryptType, RTS_UI32 ulChallenge) =0;
-		virtual RTS_RESULT CDECL IUserMgrDecryptPassword(char *pszPasswordCrypted, int nPasswordCryptedSize, RTS_UI32 ulCryptType, RTS_UI32 ulChallenge, char *pszPassword, int *pnMaxLenPassword) =0;
+		virtual RTS_HANDLE CDECL IUserMgrObjectAdd2(char *pszObject, RTS_UI32 properties, RTS_RESULT *pResult) =0;
+		virtual RTS_RESULT CDECL IUserMgrObjectAddGroup(RTS_HANDLE hObject, RTS_HANDLE hGroup) =0;
+		virtual RTS_RESULT CDECL IUserMgrObjectRemoveGroup(RTS_HANDLE hObject, RTS_HANDLE hGroup) =0;
+		virtual RTS_RESULT CDECL IUserMgrObjectSetGroupRights(RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulRights) =0;
+		virtual RTS_RESULT CDECL IUserMgrObjectSetGroupDeniedRights(RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulDeniedRights) =0;
+		virtual RTS_RESULT CDECL IUserMgrObjectClearRights(RTS_HANDLE hObject) =0;
+		virtual RTS_RESULT CDECL IUserMgrObjectGetName(RTS_HANDLE hObject, char *pszObject, int *piMaxLen) =0;
+		virtual RTS_HANDLE CDECL IUserMgrObjectGetFirstChild(RTS_HANDLE hFatherObject, RTS_RESULT *pResult) =0;
+		virtual RTS_HANDLE CDECL IUserMgrObjectGetNextChild(RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT *pResult) =0;
+		virtual RTS_HANDLE CDECL IUserMgrObjectGetFirstGroup(RTS_HANDLE hObject, RTS_RESULT *pResult) =0;
+		virtual RTS_HANDLE CDECL IUserMgrObjectGetNextGroup(RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT *pResult) =0;
+		virtual RTS_RESULT CDECL IUserMgrObjectGetGroupRights(RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights) =0;
+		virtual RTS_RESULT CDECL IUserMgrRightsStore(void) =0;
+		virtual RTS_BOOL CDECL IUserMgrCheckLen(char *psz, RTS_UI32 len) =0;
+		virtual RTS_RESULT CDECL IUserMgrAnnounceOldDatabase(RTS_UI32 info) =0;
 };
 	#ifndef ITF_CmpUserMgr
 		#define ITF_CmpUserMgr static ICmpUserMgr *pICmpUserMgr = NULL;

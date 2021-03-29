@@ -5,18 +5,13 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
 SET_INTERFACE_NAME(`CmpXMLParser')
 
-#include "CmpStd.h"
-
 /* Hook definitions (0..10000 reserved for core components) */
-
-typedef RTS_CWCHAR XML_Char;
-typedef RTS_CWCHAR XML_LChar;
 
 /**
  * <category>XML flags</category>
@@ -29,6 +24,9 @@ typedef RTS_CWCHAR XML_LChar;
 #define RTS_XML_EVENTFLAG_ASCII			0x00000001
 #define RTS_XML_EVENTFLAG_UNICODE		0x00000002
 
+#if !defined(CMPCRYPTO_NOTIMPLEMENTED)
+	#define HAVE_CODESYS_CRYPTO_ITF
+#endif
 
 /** EXTERN LIB SECTION BEGIN **/
 
@@ -163,29 +161,45 @@ DEF_API(`void',`CDECL',`parsexml2',`(parsexml2_struct *p)',1,0xC0F3799A,0x030505
  * <category>Encoding</category>
  * <description>Encoding to parse XML file</description>
  */
-#define RTS_XML_ENCODING_UTF8			"UTF-8"
-#define RTS_XML_ENCODING_UTF16			"UTF-16"
+#define RTS_XML_ENCODING_UTF8			RTS_CWTEXT("utf-8")
+#define RTS_XML_ENCODING_UTF16			RTS_CWTEXT("utf-16")
+#define RTS_XML_ENCODING_ISO_8859_1		RTS_CWTEXT("ISO-8859-1")
+#define RTS_XML_ENCODING_US_ASCII		RTS_CWTEXT("US-ASCII")
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/* atts is array of name/value pairs, terminated by 0;
-   names and values are 0 terminated. */
-typedef void (*PF_XML_StartElementHandler)(void *userData, XML_Char *name, XML_Char **atts);
+/**
+ * <description>Callback handler for start tags</description>
+ * <param name="pUserData" type="IN">Pointer to user data, that was specified in CreateXMLParser3()</param>
+ * <param name="pcwName" type="IN">Pointer to name of the tag</param>
+ * <param name="ppAttributes" type="IN">Pointer to list of name/value pairs, terminated by NULL. Names and values are 0 terminated!</param>
+ */
+typedef void (*PF_XML_StartElementHandler)(void *pUserData, RTS_CWCHAR *pcwName, RTS_CWCHAR **ppAttributes);
 
-typedef void (*PF_XML_EndElementHandler)(void *userData, XML_Char *name);
+/**
+ * <description>Callback handler for end tags</description>
+ * <param name="pUserData" type="IN">Pointer to user data, that was specified in CreateXMLParser3()</param>
+ * <param name="pcwName" type="IN">Pointer to name of the tag</param>
+ */
+typedef void (*PF_XML_EndElementHandler)(void *pUserData, RTS_CWCHAR *pcwName);
 
-/* s is not 0 terminated. */
-typedef void (*PF_XML_CharacterDataHandler)(void *userData, XML_Char *s, int len);
+/**
+ * <description>Callback handler for end tags</description>
+ * <param name="pUserData" type="IN">Pointer to user data, that was specified in CreateXMLParser3()</param>
+ * <param name="pcwValue" type="IN">Pointer to string of the content. *ps is not 0 terminated, so always us nLen!</param>
+ * <param name="nValueLen" type="IN">Length of string</param>
+ */
+typedef void (*PF_XML_CharacterDataHandler)(void *pUserData, RTS_CWCHAR *pcwValue, int nValueLen);
 
 /**
  * <description> Creates a XML parser </description>
  * <param name="pcwEncoding" type="IN">Optional encoding. See category "Encoding".</param>
  * <result>Handle to XML parser instance</result>
  */
-DEF_ITF_API(`RTS_HANDLE', `CDECL', `CreateXMLParser', `(const XML_Char *pcwEncoding)')
+DEF_ITF_API(`RTS_HANDLE', `CDECL', `CreateXMLParser', `(const RTS_CWCHAR *pcwEncoding)')
 
 /**
  * <description> Creates a XML parser </description>
@@ -194,17 +208,17 @@ DEF_ITF_API(`RTS_HANDLE', `CDECL', `CreateXMLParser', `(const XML_Char *pcwEncod
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <result>Handle to XML parser instance</result>
  */
-DEF_ITF_API(`RTS_HANDLE', `CDECL', `CreateXMLParser2', `(char *pszXMLFileName, const XML_Char *pcwEncoding, RTS_RESULT *pResult)')
+DEF_ITF_API(`RTS_HANDLE', `CDECL', `CreateXMLParser2', `(char *pszXMLFileName, const RTS_CWCHAR *pcwEncoding, RTS_RESULT *pResult)')
 
 /**
 * <description> Creates a XML parser </description>
 * <param name="pszXMLFileName" type="IN">Name of the XML file</param>
 * <param name="pcwEncoding" type="IN">Optional encoding. See category "Encoding".</param>
 * <param name="pResult" type="OUT">Pointer to error code</param>
-* <param name="UserData" type="OUT">User data is returned by each parser callback of this instance.</param>
+* <param name="pUserData" type="IN">Pointer to user data, that will be returned by each parser callback of this instance.</param>
 * <result>Handle to XML parser instance</result>
 */
-DEF_ITF_API(`RTS_HANDLE', `CDECL', `CreateXMLParser3', `(char *pszXMLFileName, const XML_Char *pcwEncoding, RTS_RESULT *pResult, void *UserData)')
+DEF_ITF_API(`RTS_HANDLE', `CDECL', `CreateXMLParser3', `(char *pszXMLFileName, const RTS_CWCHAR *pcwEncoding, RTS_RESULT *pResult, void *pUserData)')
 
 /**
  * <description> Frees the XML parser </description>

@@ -2,15 +2,15 @@
  * <interfacename>SysExcept</interfacename>
  * <description> 
  *	<p>The SysExcept interface is projected to handle all exceptions in the runtime system. All
- *	available exceptions on the target should be handled. Exception handling is typically cpu
- *	and operating system dependant.</p>
+ *	available exceptions on the target should be handled. Exception handling is typically CPU
+ *	and operating system dependent.</p>
  *	<p>All active code parts in the runtime system (tasks, timer, interrupt handler) must be protected
- *	against software errors, because this could lead to an unpredictable behaviour or crash of the
+ *	against software errors, because this could lead to an unpredictable behavior or crash of the
  *	complete runtime system.</p>
  *	<p>All exceptions are handled in this component as first level.
  *	If the first level handling is done in another component, the component has to call the 
  *	SysExceptGenerateException() routine to	enable second level handling. In this case, the first
- *	level handling must be disabled with a config setting (see below).</p>
+ *	level handling must be disabled with a configuration setting (see below).</p>
  *	<p>The SysExcept component forwards every exception to the component, that manages the active
  *	code, mostly the SysTask, SysTimer or SysInt component. These components must register exception
  *	handlers to the SysExcept component.</p>
@@ -19,38 +19,38 @@
  *	the structure and the layers of exception handling:</p>
  *
  * <pre>
- * . +----------------------------------------------------------+
- * . | XXX component:                       Code that generates |
- * . | Registered exceptionhandler          exception (1)       |
- * . | of component, is called. (4)                             |
- * . +----------------------------------------------------------+
- * .      ^                                                 | 
- * .      |                                                 | 
- * .      |                                                 | 
- * . +-----------------------------------------------+      | 
- * . | SysTask or SysTimer component:                |      | 
- * . | Registered exception handler is called (3)    |      | 
- * . +-----------------------------------------------+      | 
- * .      ^                                                 | 
- * .      |                                                 | 
- * .      |                                                 | 
- * . +-----------------------------------------------+      | 
- * . | SysExcept component:                          |      | 
- * . | ::SysExceptGenerateException() is called (2)  |      | 
- * . +-----------------------------------------------+      | 
- * .      ^                                                 | 
- * .      |                                                 | 
- * .      |                    Exception occurred (1a)      | 
- * .      |&lt;------------------------------------------------| 
- * .      |                                                 | 
- * . +-----------------------------------------------+      | 
- * . | OEM component:                                |      | (1b)
- * . | First level exception handling. If the        |      | 
- * . | exception is not in the OEM context, it is    |      | 
- * . | forwarded to the SysExcept component          |      | 
- * . +-----------------------------------------------+      | 
- * .      ^                                                 |
- * .      '-------------------------------------------------'
+ *   +----------------------------------------------------------+
+ *   | XXX component:                       Code that generates |
+ *   | Registered exception handler         exception (1)       |
+ *   | of component, is called. (4)                             |
+ *   +----------------------------------------------------------+
+ *        ^                                                 | 
+ *        |                                                 | 
+ *        |                                                 | 
+ *   +-----------------------------------------------+      | 
+ *   | SysTask or SysTimer component:                |      | 
+ *   | Registered exception handler is called (3)    |      | 
+ *   +-----------------------------------------------+      | 
+ *        ^                                                 | 
+ *        |                                                 | 
+ *        |                                                 | 
+ *   +-----------------------------------------------+      | 
+ *   | SysExcept component:                          |      | 
+ *   | ::SysExceptGenerateException() is called (2)  |      | 
+ *   +-----------------------------------------------+      | 
+ *        ^                                                 | 
+ *        |                                                 | 
+ *        |                    Exception occurred (1a)      | 
+ *        |&lt;------------------------------------------------| 
+ *        |                                                 | 
+ *   +-----------------------------------------------+      | 
+ *   | OEM component:                                |      | (1b)
+ *   | First level exception handling. If the        |      | 
+ *   | exception is not in the OEM context, it is    |      | 
+ *   | forwarded to the SysExcept component          |      | 
+ *   +-----------------------------------------------+      | 
+ *        ^                                                 |
+ *        '-------------------------------------------------'
  * </pre>
  * <p>If RTS_STRUCTURED_EXCEPTION_HANDLING is set as a define, the structured exception handling is activated.
  * To use this exception handling, the following functions must be imported:</p>
@@ -62,48 +62,48 @@
  * 
  * <p>Here is an example of the usage:</p>
  * <pre>
- * .    Variant 1:
- *.     ----------
- * .    rts_try
- * .    {
- * .        ...
- * .    }
- * .    rts_catch_exception(RTSEXCPT_DIVIDEBYZERO)
- * .    {
- * .        RTS_UI32 exceptionCode = EXCPT_GET_CODE();
- * .        RegContext *pExceptionContext = EXCPT_GET_CONTEXT();
- * .        ...
- * .    }
- * .    rts_catch_exception(RTSEXCPT_DIVIDEBYZERO)
- * .    {
- * .        ...
- * .    }
- * .    rts_catch
- * .    {
- * .        ...
- * .    }
- * .    rts_try_end
- * .   
- * .   
- * .    Variant 2:
- *.     ----------
- * .   
- * .    rts_try
- * .    {
- * .        ...
- * .    }
- * .    rts_catch
- * .    {
- * .        RTS_UI32 exceptionCode = EXCPT_GET_CODE();
- * .        RegContext *pExceptionContext = EXCPT_GET_CONTEXT();
- * .        ...
- * .    }
- * .    rts_try_end
+ *     Variant 1:
+ *     ----------
+ *     rts_try
+ *     {
+ *         ...
+ *     }
+ *     rts_catch_exception(RTSEXCPT_DIVIDEBYZERO)
+ *     {
+ *         RTS_UI32 exceptionCode = EXCPT_GET_CODE();
+ *         RegContext *pExceptionContext = EXCPT_GET_CONTEXT();
+ *         ...
+ *     }
+ *     rts_catch_exception(RTSEXCPT_DIVIDEBYZERO)
+ *     {
+ *         ...
+ *     }
+ *     rts_catch
+ *     {
+ *         ...
+ *     }
+ *     rts_try_end
+ *    
+ *    
+ *     Variant 2:
+ *     ----------
+ *    
+ *     rts_try
+ *     {
+ *         ...
+ *     }
+ *     rts_catch
+ *     {
+ *         RTS_UI32 exceptionCode = EXCPT_GET_CODE();
+ *         RegContext *pExceptionContext = EXCPT_GET_CONTEXT();
+ *         ...
+ *     }
+ *     rts_try_end
  * </pre>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -301,7 +301,7 @@ typedef void (CDECL*PFEXCEPTIONHANDLERIEC)(excpthandler_struct *p);
 
 /**
  * <category>Exception code</category>
- * <description>IO config error</description>
+ * <description>IO-configuration error</description>
  */
 #define RTSEXCPT_IO_CONFIG_ERROR			0x00000012
 
@@ -313,7 +313,7 @@ typedef void (CDECL*PFEXCEPTIONHANDLERIEC)(excpthandler_struct *p);
 
 /**
  * <category>Exception code</category>
- * <description>Fieldbus error</description>
+ * <description>Field-bus error</description>
  */
 #define RTSEXCPT_FIELDBUS_ERROR				0x00000014
 
@@ -379,7 +379,7 @@ typedef void (CDECL*PFEXCEPTIONHANDLERIEC)(excpthandler_struct *p);
 
 /**
  * <category>Exception code</category>
- * <description>Target of the bootproject doesn't match the current target</description>
+ * <description>Target of the boot application doesn't match the current target</description>
  */
 #define RTSEXCPT_BOOTPROJECTTARGETMISMATCH	0x00000021
 
@@ -397,7 +397,7 @@ typedef void (CDECL*PFEXCEPTIONHANDLERIEC)(excpthandler_struct *p);
 
 /**
  * <category>Exception code</category>
- * <description>Retain identity does not match to current bootproject program identity</description>
+ * <description>Retain identity does not match to current boot application program identity</description>
  */
 #define RTSEXCPT_RETAIN_IDENTITY_MISMATCH	0x00000024
 
@@ -476,7 +476,7 @@ typedef void (CDECL*PFEXCEPTIONHANDLERIEC)(excpthandler_struct *p);
 
 /**
  * <category>Exception code, hardware exceptions</category>
- * <description>Datatype misalignment</description>
+ * <description>Data type misalignment</description>
  */
 #define RTSEXCPT_MISALIGNMENT				0x00000100
 
@@ -519,7 +519,7 @@ typedef void (CDECL*PFEXCEPTIONHANDLERIEC)(excpthandler_struct *p);
 
 /**
  * <category>Exception code, hardware FPU exceptions</category>
- * <description>FPU: Denormal operand</description>
+ * <description>FPU: De normalized operand</description>
  */
 #define RTSEXCPT_FPU_DENORMAL_OPERAND		0x00000151
 
@@ -567,7 +567,7 @@ typedef void (CDECL*PFEXCEPTIONHANDLERIEC)(excpthandler_struct *p);
 
 /**
  * <category>Exception code</category>
- * <description>Masks all exeption codes so far</description>
+ * <description>Masks all exception codes so far</description>
  */
 #define RTSEXCPT_MASK						0x00000fff
 
@@ -595,7 +595,7 @@ typedef void (CDECL*PFEXCEPTIONHANDLERIEC)(excpthandler_struct *p);
 
 /**
  * <category>Exception code</category>
- * <description>Makro to test masked exeption codes</description>
+ * <description>Macro to test masked exception codes</description>
  */
 #define SysExcptIsException(e, exception)	((e & RTSEXCPT_MASK) == exception)
 
@@ -646,7 +646,7 @@ typedef struct
 extern "C" {
 #endif
 
-/* Init routines for OS specific modules */
+/* Initialization routines for OS specific modules */
 RTS_RESULT CDECL SysExceptOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysExceptOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
@@ -661,17 +661,17 @@ DEF_ITF_API(`RTS_UI32', `CDECL', `SysExceptMapException', `(RTS_UI32 ulOSExcepti
  * <description>
  * <p>Structured Exception Handling</p>
  * <p>This function is called from Exception handlers of the hardware,
- * operating systems or, in case of softerrors, within the task code.
+ * operating systems or, in case of soft-errors, within the task code.
  * </p>
  * <p>The structured exception handling calls every registered exception
  * handler, stops the IEC Tasks and prepares the task context of the
  * task that generated the exception, so that it can be read by the
- * CoDeSys programming system for analysation purposes.
+ * CoDeSys programming system for analysis purposes.
  * </p>
  * <p>OEM customers can use this function also from their own exception
  * handlers to propagate generic as well as customer specific exceptions
  * to the application. This way, they can profit from the debugging
- * infrastructure of CoDeSys to find the fault adress within the IEC
+ * infrastructure of CoDeSys to find the fault address within the IEC
  * application.</p>
  * <p><b>Note:</b> On SIL2 Platforms, this function will act only as
  * described above, when the PLC is currently in Debug-Mode. If it is
@@ -728,7 +728,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysExceptTry', `(SEHContext *context)')
 
 /**
  * <description>This function returns ERR_OK when the passed exception matches
- * the exception code that really occured.</description>
+ * the exception code that really occurred.</description>
  * <param name="context" type="IN">Context, describing one structured exception frame</param>
  * <param name="ui32ExceptionCode" type="IN">Exception code to match on</param>
  * <result>error code</result>

@@ -1,0 +1,140 @@
+.. _feature__o_p_c_u_a__client:
+
+
+.. _feature_opcua_client:
+
+OPC UA Client
+=============
+
+.. contents::
+    :local:
+    :depth: 1
+
+Overview
+--------
+
+The OPC UA client can be used to connect to other OPC UA servers and exchange
+data with them. The client itself is more like an SDK. There are no ready to
+use types of clients. Instead the client provides an API to connect to
+an OPC UA server and execute the different kind of OPC UA requests. An
+exception to this is the handling of subscriptions and monitored items.
+There are services to add and remove subscriptions as well as monitored
+items. The complete publishing is then handled by the client implementation
+automatically. Additionally the client detects connection interrupts on it's own
+and tries to reconnect to the server. However, if the session has a timeout,
+a reconnect is not done automatically.
+
+Supported features
+------------------
+
+The OPC UA client actually is a counterpart to the OPC UA server. This 
+results in the following supported services:
+
+Discovery
+~~~~~~~~~
+
+- GetEndpoints
+- FindServers
+- FindServersOnNetwork
+
+Session
+~~~~~~~
+
+- CreateSession
+- ActivateSession
+- DeleteSession
+
+View
+~~~~
+
+- Browse
+- BrowserNext
+- RegisterNodes
+- UnregisterNodes
+- TranslateBrowsePathsToNodeIds
+
+Attribute
+~~~~~~~~~
+
+- Read
+- Write
+
+Subscription
+~~~~~~~~~~~~
+
+- CreateSubscription
+- MofifySubscription
+- SetPublishing
+- Publish (Handled by the Runtime itself)
+- DeleteSubscription
+
+MonitoredItems
+~~~~~~~~~~~~~~
+
+The client is able to handle both types of monitored items (event and sampling).
+The only difference in handling is the callbacks that are called for both
+types. 
+
+- CreateMonitoredItems
+- DeleteMonitoredItems
+- ModifyMonitoredItems
+- SetMonitoringMode
+
+Security
+~~~~~~~~
+
+The OPC UA client uses the existing security related runtime interfaces
+to handle the encryption algorithms and certificates. The client registers
+itself to the certificate store for easy configuration of the client
+certificates.
+
+SecurityProfiles:
+^^^^^^^^^^^^^^^^^
+
+- None
+- Basic256Sha256 (Sign, Sign_and_Encrypt)
+
+User token policy:
+^^^^^^^^^^^^^^^^^
+- Anonymouse
+- Username
+
+Known restrictions
+------------------
+
+- The client is not able to handle republish right now.
+- The client does not support other user tokes then Anonymous and Username
+- The client does not support the security policies added with OPC UA 1.04
+
+Platforms
+---------
+
+As the OPC UA client is completely ported to the CODESYS runtime system
+the client works out of the box on all platforms that supports required
+components needed by this component. The current used resources depends
+on use cases implemented with this client SDK. The unterlying OPC UA 
+stack is identical for the server and the client components and is only 
+instantiated once.
+
+
+Required features
+-----------------
+
+- :ref:`feature__o_p_c_u_a`
+
+- :ref:`feature__runtime`
+
+Required target settings
+------------------------
+
+The following target settings are necessary for this feature:
+
+- :ref:`Components_CmpOPCUAClient_SourceDir`
+
+Required components
+-------------------
+
+The following runtime system components are necessary for this feature:
+
+- :ref:`CmpOPCUAClient <group___cmp_o_p_c_u_a_client_dep>`
+

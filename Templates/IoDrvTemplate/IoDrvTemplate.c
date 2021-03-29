@@ -66,9 +66,9 @@ DLL_DECL int CDECL ComponentEntry(INIT_STRUCT *pInitStruct)
 		pfExportFunctions	OUT Pointer to function that exports component functions
 		pfImportFunctions	OUT Pointer to function that imports functions from other components
 		pfGetVersion		OUT Pointer to function to get component version
-		pfRegisterAPI		IN	Pointer to component mangager function to register a api function
-		pfGetAPI			IN	Pointer to component mangager function to get a api function
-		pfCallHook			IN	Pointer to component mangager function to call a hook function
+		pfRegisterAPI		IN	Pointer to component manager function to register a API function
+		pfGetAPI			IN	Pointer to component manager function to get a API function
+		pfCallHook			IN	Pointer to component manager function to call a hook function
 	Return					ERR_OK if library could be initialized, else error code
 */
 {
@@ -172,16 +172,20 @@ static void *CDECL QueryInterface(IBase *pBase, ITFID iid, RTS_RESULT *pResult)
 	{
 		IoDrvTemplate *pC = (IoDrvTemplate *)pBase;
 		pC->IoDrv.pBase = pBase;
+
 		pC->IoDrv.IIoDrvCreate = IoDrvCreate;
 		pC->IoDrv.IIoDrvDelete = IoDrvDelete;
 		pC->IoDrv.IIoDrvGetInfo = IoDrvGetInfo;
+		pC->IoDrv.IIoDrvGetModuleDiagnosis = IoDrvGetModuleDiagnosis;
+		pC->IoDrv.IIoDrvIdentify = IoDrvIdentify;
+		pC->IoDrv.IIoDrvReadInputs = IoDrvReadInputs;
+		pC->IoDrv.IIoDrvScanModules = IoDrvScanModules;
+		pC->IoDrv.IIoDrvStartBusCycle = IoDrvStartBusCycle;
 		pC->IoDrv.IIoDrvUpdateConfiguration = IoDrvUpdateConfiguration;
 		pC->IoDrv.IIoDrvUpdateMapping = IoDrvUpdateMapping;
-		pC->IoDrv.IIoDrvReadInputs = IoDrvReadInputs;
+		pC->IoDrv.IIoDrvWatchdogTrigger = IoDrvWatchdogTrigger;
 		pC->IoDrv.IIoDrvWriteOutputs = IoDrvWriteOutputs;
-		pC->IoDrv.IIoDrvStartBusCycle = IoDrvStartBusCycle;
-		pC->IoDrv.IIoDrvScanModules = IoDrvScanModules;
-		pC->IoDrv.IIoDrvGetModuleDiagnosis = IoDrvGetModuleDiagnosis;
+
 		pC->pIoDrv = &pC->IoDrv;
 		pC->Base.iRefCount++;
 		RTS_SETRESULT(pResult, ERR_OK);
@@ -191,6 +195,7 @@ static void *CDECL QueryInterface(IBase *pBase, ITFID iid, RTS_RESULT *pResult)
 	{
 		IoDrvTemplate *pC = (IoDrvTemplate *)pBase;
 		pC->IoDrvParameter.pBase = pBase;
+
 		pC->IoDrvParameter.IIoDrvReadParameter = IoDrvReadParameter;
 		pC->IoDrvParameter.IIoDrvWriteParameter = IoDrvWriteParameter;
 		pC->pIoDrvParameter = &pC->IoDrvParameter;
@@ -349,8 +354,6 @@ STATICITF RTS_HANDLE CDECL IoDrvCreate(RTS_HANDLE hIIoDrv, CLASSID ClassId, int 
 	pInfo = &pIoDrvTemplate->Info;
 #else
 	pIoDrvTemplate = (IoDrvTemplate *)hIIoDrv;
-	pIoDrvTemplate->IoDrv.pBase = &pIoDrvTemplate->Base;
-	pIoDrvTemplate->IoDrvParameter.pBase = &pIoDrvTemplate->Base;
 	pInfo = &pIoDrvTemplate->Info;
 #endif
 
@@ -515,10 +518,43 @@ STATICITF RTS_RESULT CDECL IoDrvUpdateConfiguration(RTS_HANDLE hIoDrv, IoConfigC
 
 STATICITF RTS_RESULT CDECL IoDrvUpdateMapping(RTS_HANDLE hIoDrv, IoConfigTaskMap *pTaskMapList, int nCount)
 {
+	int i;
+
 	if (pTaskMapList == NULL)
 	{
 		/* TODO: Release stored task map list */
 		return ERR_OK;
+	}
+	for (i = 0; i < nCount; i++)
+	{
+		RTS_IEC_WORD j;
+		IoConfigTaskMap *pEntry = &pTaskMapList[i];
+
+		for (j = 0; j < pEntry->wNumOfConnectorMap; j++)
+		{
+			RTS_IEC_DWORD k;
+			IoConfigConnectorMap *pConnectorMap = &pEntry->pConnectorMapList[j];
+			
+			for (k = 0; k < pConnectorMap->dwNumOfChannels; k++)
+			{
+				/* IoConfigChannelMap *pChannel = &pConnectorMap->pChannelMapList[k]; */
+				if (pEntry->wType == TMT_INPUTS)
+				{
+					/* Here we have an input channel:
+						pChannel->wSize == 1: THis is a bit channel
+						pChannel->wSize >= 8: This is a BYTE, WORD, etc. channel
+					*/
+					
+				}
+				else if (pEntry->wType == TMT_OUTPUTS)
+				{
+					/* Here we have an output channel:
+						pChannel->wSize == 1: THis is a bit channel
+						pChannel->wSize >= 8: This is a BYTE, WORD, etc. channel
+					*/
+				}
+			}
+		}
 	}
 	return ERR_OK;
 }
@@ -527,6 +563,7 @@ STATICITF RTS_RESULT CDECL IoDrvReadInputs(RTS_HANDLE hIoDrv, IoConfigConnectorM
 {
 	int i;
 	unsigned long j;
+	/* TODO when DRVPROP_NO_SYNC is set: RTS_RESULT rResult; */
 
 	if (pConnectorMapList == NULL)
 		return ERR_PARAMETER;
@@ -535,7 +572,19 @@ STATICITF RTS_RESULT CDECL IoDrvReadInputs(RTS_HANDLE hIoDrv, IoConfigConnectorM
 	{
 		for (j=0; j<pConnectorMapList[i].dwNumOfChannels; j++)
 		{
+			/* TODO when DRVPROP_NO_SYNC is set:
+			rResult = CAL_IoMgrLockEnter(((IoDrvTemplate *)hIoDrv)->pIBase, IOMGR_LOCK_READ_INPUTS);
+			if (rResult != ERR_OK)
+			{
+				CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_ERROR, rResult, 0, "IoDrvReadInputs: IoMgrLockEnter failed");
+			} */
 			CAL_IoMgrCopyInputLE(&(pConnectorMapList[i].pChannelMapList[j]), (char *)pConnectorMapList[i].pChannelMapList[j].pParameter->dwDriverSpecific);
+			/* TODO when DRVPROP_NO_SYNC is set:
+			rResult = CAL_IoMgrLockLeave(((IoDrvTemplate *)hIoDrv)->pIBase, IOMGR_LOCK_READ_INPUTS);
+			if (rResult != ERR_OK)
+			{
+				CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_ERROR, rResult, 0, "IoDrvReadInputs: IoMgrLockLeave failed");
+			} */
 		}
 	}
 	return ERR_OK;
@@ -545,6 +594,7 @@ STATICITF RTS_RESULT CDECL IoDrvWriteOutputs(RTS_HANDLE hIoDrv, IoConfigConnecto
 {
 	int i;
 	unsigned long j;
+	/* TODO when DRVPROP_NO_SYNC is set: RTS_RESULT rResult; */
 
 	if (pConnectorMapList == NULL)
 		return ERR_PARAMETER;
@@ -553,7 +603,19 @@ STATICITF RTS_RESULT CDECL IoDrvWriteOutputs(RTS_HANDLE hIoDrv, IoConfigConnecto
 	{
 		for (j=0; j<pConnectorMapList[i].dwNumOfChannels; j++)
 		{
+			/* TODO when DRVPROP_NO_SYNC is set:
+			rResult = CAL_IoMgrLockEnter(((IoDrvTemplate *)hIoDrv)->pIBase, IOMGR_LOCK_WRITE_OUTPUTS);
+			if (rResult != ERR_OK)
+			{
+				CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_ERROR, rResult, 0, "IoDrvWriteOutputs: IoMgrLockEnter failed");
+			} */
 			CAL_IoMgrCopyOutputLE(&(pConnectorMapList[i].pChannelMapList[j]), (char *)pConnectorMapList[i].pChannelMapList[j].pParameter->dwDriverSpecific);
+			/* TODO when DRVPROP_NO_SYNC is set:
+			rResult = CAL_IoMgrLockLeave(((IoDrvTemplate *)hIoDrv)->pIBase, IOMGR_LOCK_WRITE_OUTPUTS);
+			if (rResult != ERR_OK)
+			{
+				CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_ERROR, rResult, 0, "IoDrvWriteOutputs: IoMgrLockLeave failed");
+			} */
 		}
 	}
 	return ERR_OK;
@@ -561,15 +623,30 @@ STATICITF RTS_RESULT CDECL IoDrvWriteOutputs(RTS_HANDLE hIoDrv, IoConfigConnecto
 
 STATICITF RTS_RESULT CDECL IoDrvStartBusCycle(RTS_HANDLE hIoDrv, IoConfigConnector *pConnector)
 {
+	/* TODO when DRVPROP_NO_SYNC is set: RTS_RESULT rResult; */
 	if (pConnector->wType != IODRV_TEMPLATE_MODULE_TYPE)
 		return ERR_OK;
 
+	/* TODO when DRVPROP_NO_SYNC is set:
+	rResult = CAL_IoMgrLockEnter(((IoDrvTemplate *)hIoDrv)->pIBase, IOMGR_LOCK_READ_INPUTS | IOMGR_LOCK_WRITE_OUTPUTS);
+	if (rResult != ERR_OK)
+	{
+		CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_ERROR, rResult, 0, "IoDrvStartBusCycle: IoMgrLockEnter failed");
+	} */
+
 	/* TODO: Start bus cycle (is available) or sync your cached IOs consistent to the physical IOs (see s_abyIO) */
+
+	/* TODO when DRVPROP_NO_SYNC is set:
+	rResult = CAL_IoMgrLockLeave(((IoDrvTemplate *)hIoDrv)->pIBase, IOMGR_LOCK_READ_INPUTS | IOMGR_LOCK_WRITE_OUTPUTS);
+	if (rResult != ERR_OK)
+	{
+		CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_ERROR, rResult, 0, "IoDrvStartBusCycle: IoMgrLockLeave failed");
+	} */
 	
-	/* TODO: Retrigger our watchdog (if available) via IoMgr at least watchdogtimeout / 2 ! */
+	/* TODO: Retrigger our watchdog (if available) via IoMgr at least watchdog timeout / 2 ! */
 	CAL_IoMgrWatchdogTrigger(pConnector);
 
-	/* Update diagnostic information at least every 4 seconds, if it is not supported by the backgground diagnostic task */
+	/* Update diagnostic information at least every 4 seconds, if it is not supported by the background diagnostic task */
 	if ((CAL_SysTimeGetMs() - s_ulLastDiagnosis) > 4000)
 		return IoDrvGetModuleDiagnosis(hIoDrv, pConnector);
 	return ERR_OK;

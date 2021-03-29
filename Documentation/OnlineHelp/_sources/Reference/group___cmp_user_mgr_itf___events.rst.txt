@@ -1,0 +1,92 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_user_mgr_itf___events:
+
+======
+Events
+======
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Macros
+------
+
+- #define :ref:`EVT_UserMgrDatabaseChanged <group___cmp_user_mgr_itf___events_1gaad6d687107c0789a49c947449bbdf36f>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`EVT_UserMgrCreateDefaultDatabase <group___cmp_user_mgr_itf___events_1ga560e944f09d740fedf3cfcc4df143596>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+
+- #define :ref:`EVT_UserMgrConvertOldDatabaseAnnounce <group___cmp_user_mgr_itf___events_1ga57f6cee497b4e726d13e451036bd9c81>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 3)
+
+- #define :ref:`EVT_UserMgrConvertOldDatabaseFinish <group___cmp_user_mgr_itf___events_1gaaa5ac658e1772c1071ae691febac697d>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 4)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_user_mgr_itf___events_1gaad6d687107c0789a49c947449bbdf36f:
+
+#define EVT_UserMgrDatabaseChanged :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event is sent every time the user management database or the user-rights database was changed
+
+**Parameters**
+
++---------+-------------+----------------------------------------------------------------------------------------------------+
+| [in]    | pEventParam | :ref:`EVTPARAM_CmpUserMgrDatabaseChanged <struct_e_v_t_p_a_r_a_m___cmp_user_mgr_database_changed>` |
++---------+-------------+----------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_user_mgr_itf___events_1ga560e944f09d740fedf3cfcc4df143596:
+
+#define EVT_UserMgrCreateDefaultDatabase :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event is sent when a default user management is to be created, especially with user groups and object rights. The Result is preset with ERR_NOTIMPLEMENTED and in this standard case the user management creates the default database with user groups and object rights. A temporary administrator user handle is provided for operations that require this. With the Result set to ERR_OK a user management was successfully created within this event, or to any error if failed.
+
+**Parameters**
+
++---------+-------------+--------------------------------------------------------------------------------------------------+
+| [in]    | pEventParam | :ref:`EVTPARAM_CmpUserMgrAdjustDatabase <struct_e_v_t_p_a_r_a_m___cmp_user_mgr_adjust_database>` |
++---------+-------------+--------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_user_mgr_itf___events_1ga57f6cee497b4e726d13e451036bd9c81:
+
+#define EVT_UserMgrConvertOldDatabaseAnnounce :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 3)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event is sent when an old user database is to be converted. The Result is preset with ERR_OK and in this standard case the user management is converted to the new format. With the Result set to ERR_OPERATION_DENIED this conversion is denied, that is as if there is no user database. hUser is not used in this case and preset with RTS_INVALID_HANDLE. NOTE: This event must be registered in CH_INIT2 because the database is loaded in CH_PRE_INIT3 already.
+
+**Parameters**
+
++---------+-------------+--------------------------------------------------------------------------------------------------+
+| [in]    | pEventParam | :ref:`EVTPARAM_CmpUserMgrAdjustDatabase <struct_e_v_t_p_a_r_a_m___cmp_user_mgr_adjust_database>` |
++---------+-------------+--------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_user_mgr_itf___events_1gaaa5ac658e1772c1071ae691febac697d:
+
+#define EVT_UserMgrConvertOldDatabaseFinish :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 4)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event is sent when an old user database was successfully converted to the new format. The user database can be adjusted during this event. A temporary administrator user handle is provided for operations that require this. The Result is preset with ERR_OK. NOTE: This event is not send when EVT_UserMgrConvertOldDatabaseAnnounce is denied. NOTE: This event must be registered in CH_INIT2 because loading of the database is finished in CH_INIT3 already.
+
+**Parameters**
+
++---------+-------------+--------------------------------------------------------------------------------------------------+
+| [in]    | pEventParam | :ref:`EVTPARAM_CmpUserMgrAdjustDatabase <struct_e_v_t_p_a_r_a_m___cmp_user_mgr_adjust_database>` |
++---------+-------------+--------------------------------------------------------------------------------------------------+
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

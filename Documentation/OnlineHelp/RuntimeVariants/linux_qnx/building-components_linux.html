@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>3.1.4. Extending CODESYS Control runtime with own components &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/theme.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3.2. Runtime Toolkit Embedded (SDK)" href="../RuntimeVariants_ToolkitEmbedded.html" />
+    <link rel="prev" title="3.1.3. Customizing CODESYS Control runtime with settings" href="runtime-settings_linux.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../RuntimeVariants_ToolkitEmbedded.html" title="3.2. Runtime Toolkit Embedded (SDK)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="runtime-settings_linux.html" title="3.1.3. Customizing CODESYS Control runtime with settings"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >3. Runtime Variants</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">3.1. Runtime Toolkit Linux/QNX (SDK)</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="runtime-settings_linux.html"
+                        title="previous chapter">3.1.3. Customizing CODESYS Control runtime with settings</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../RuntimeVariants_ToolkitEmbedded.html"
+                        title="next chapter">3.2. Runtime Toolkit Embedded (SDK)</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="extending-codesys-control-runtime-with-own-components">
+<h1>3.1.4. Extending CODESYS Control runtime with own components<a class="headerlink" href="#extending-codesys-control-runtime-with-own-components" title="Permalink to this headline">¶</a></h1>
+<p>The component-based architecture permits easy extensions to the CODESYS Control runtime. Available templates and examples for common use cases further simplify the extension process.</p>
+<div class="section" id="build-load-and-debug-your-first-component">
+<h2>3.1.4.1. Build, load and debug your first component<a class="headerlink" href="#build-load-and-debug-your-first-component" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="create-a-new-component-from-a-template">
+<h3>Create a new component from a template<a class="headerlink" href="#create-a-new-component-from-a-template" title="Permalink to this headline">¶</a></h3>
+<p>Navigate to the <code class="docutils literal notranslate"><span class="pre">Templates/</span></code> directory of your delivery and use our Python script to create a new component:</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">-t <em>specifies the template to use</em></div>
+<div class="line">-c <em>specifies the name of your component</em></div>
+<div class="line">-a <em>specifies the target CPU architecture</em> (X86 | PPC | ARM | CORTEX)</div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python gen_cmp_from_temp.py -t CmpTemplateEmpty -c CmpTutorial -a X86
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="adjust-cmpid-and-vendorid">
+<h3>Adjust CMPID and VENDORID<a class="headerlink" href="#adjust-cmpid-and-vendorid" title="Permalink to this headline">¶</a></h3>
+<p>Navigate to the new directory <code class="docutils literal notranslate"><span class="pre">CmpTutorial/</span></code> and adjust the IDs in <code class="docutils literal notranslate"><span class="pre">CmpTutorialDep.m4</span></code>:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>COMPONENT_VENDORID(`0x0001&#39;)        /* Replace with your vendor id */
+
+#define CMPID_CmpTutorial   0x2000  /* choose an arbitrary, unique CMPID */
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="build-your-new-component">
+<h3>Build your new component<a class="headerlink" href="#build-your-new-component" title="Permalink to this headline">¶</a></h3>
+<p>The following tools are required to build a custom component for your CODESYS Control runtime:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>cross compiler for your Linux target</p></li>
+<li><p>GNU m4</p></li>
+<li><p>GNU make</p></li>
+<li><p>fromdos (alternatively: dos2unix)</p></li>
+</ul>
+</div></blockquote>
+<p>Navigate to <code class="docutils literal notranslate"><span class="pre">CmpTutorial/Linux</span></code> and adjust the values in <code class="docutils literal notranslate"><span class="pre">Makefile</span></code></p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>...
+CC=arm-poky-linux-gnueabi-gcc   # Set to your cross-gcc for your target hardware
+CFLAGS +=                       # Add your custom compile flags
+
+...
+fromdos ../$(TARGET)Dep.m4    # optional: change to dos2unix
+
+...
+fromdos ../$(TARGET)Itf.m4    # optional: change to dos2unix
+</pre></div>
+</div>
+</div></blockquote>
+<p>Alternatively, you can just source your toolchain’s environment-file, if available:</p>
+<blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>. /path/to/toolchain/environment-setup
+</pre></div>
+</div>
+</div></blockquote>
+<p>Finally, build your component by typing</p>
+<blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make
+</pre></div>
+</div>
+</div></blockquote>
+<p>from within the <code class="docutils literal notranslate"><span class="pre">Linux/</span></code> directory. This will create a new file <code class="docutils literal notranslate"><span class="pre">libCmpTutorial.so</span></code>.</p>
+</div>
+<div class="section" id="load-your-new-component">
+<h3>Load your new component<a class="headerlink" href="#load-your-new-component" title="Permalink to this headline">¶</a></h3>
+<p>Copy your component to your target</p>
+<blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>scp libCmpTutorial.so root@192.168.0.1:codesys
+</pre></div>
+</div>
+</div></blockquote>
+<p>and add a new entry to your CODESYSControl.cfg:</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[ComponentManager]
+Component.0=CmpTutorial
+</pre></div>
+</div>
+</div></blockquote>
+<p>Start your CODESYS Control runtime by prepending <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code></p>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><em>LD_LIBRARY_PATH can contain multiple paths separated by a colon</em></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/root/codesys ./codesyscontrol -d CODESYSControl.cfg
+</pre></div>
+</div>
+</div></blockquote>
+<p>or export <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> as an environment variable:</p>
+<blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/root/codesys
+./codesyscontrol -d CODESYSControl.cfg
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="verify-your-new-component">
+<h3>Verify your new component<a class="headerlink" href="#verify-your-new-component" title="Permalink to this headline">¶</a></h3>
+<p>When starting your CODESYS Control runtime, it lists all loaded components. Dynamic components are listed after all static components. To verify your new component is loaded, look for this entry in the log:</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Cmp=CM, Class=1, Error=0, Info=10, pszInfo= Dynamic: &lt;cmp&gt;CmpTutorial&lt;/cmp&gt;, &lt;id&gt;0x00012000&lt;/id&gt; &lt;ver&gt;3.5.16.0&lt;/ver&gt;
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="common-pitfalls">
+<h3>Common pitfalls<a class="headerlink" href="#common-pitfalls" title="Permalink to this headline">¶</a></h3>
+<p>There are three common causes if you do not see your component on startup.</p>
+<p>Make sure you started CODESYS Control with the <code class="docutils literal notranslate"><span class="pre">-d</span></code> argument. If you see a message such as</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>libCmpTutorial.so: cannot open shared object file: No such file or directory
+</pre></div>
+</div>
+</div></blockquote>
+<p>at the very top of CODESYS Control’s output, it indicates that either <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> is not set correctly or you used the wrong compiler for your component. For example, you used an x86 compiler when your actual target architecture is ARM. Check your <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> and ensure that the correct compiler is set. You can verify the shared object with</p>
+<blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>file libCmpTutorial.so
+libCmpTutorial.so: ELF <span class="m">64</span>-bit LSB shared object, x86-64, version <span class="m">1</span> <span class="o">(</span>SYSV<span class="o">)</span>, statically linked
+</pre></div>
+</div>
+</div></blockquote>
+<p>If you do not see above error message, it means that no attempt is made to load your component. If that is the case, verify you correctly added your component to CODESYSControl.cfg.</p>
+</div>
+<div class="section" id="debugging-your-component">
+<h3>Debugging your component<a class="headerlink" href="#debugging-your-component" title="Permalink to this headline">¶</a></h3>
+<p>CODESYS Control runtime is fully debuggable with <code class="docutils literal notranslate"><span class="pre">gdb</span></code>. This also applies to all of your custom components.</p>
+<div class="section" id="debugging-locally">
+<h4>Debugging locally<a class="headerlink" href="#debugging-locally" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>gdb ./codesyscontrol
+(gdb) handle SIG40 noprint
+(gdb) break CmpTutorial.c:HookFunction
+No source file named CmpTutorial.c.
+Make breakpoint pending on future shared library load? (y or [n]) y
+Breakpoint 1 (CmpTutorial.c:HookFunction) pending.
+(gdb) run -d CODESYSControl.cfg
+</pre></div>
+</div>
+</div></blockquote>
+<p>As CODESYS Control runtime uses some signals internally, it is advisable to ignore these signals when attached with <code class="docutils literal notranslate"><span class="pre">gdb</span></code>. Initially it is enough to ignore <code class="docutils literal notranslate"><span class="pre">SIG40</span></code>, which is done by the first command. Next, a breakpoint is set in the <code class="docutils literal notranslate"><span class="pre">HookFunction</span></code> of your component. This function is called cyclically by the runtime, so expect the breakpoint to be hit a lot. Because the component is loaded as shared library, <code class="docutils literal notranslate"><span class="pre">gdb</span></code> is unaware where exactly to set the breakpoint at first. This is why it has to be set to <code class="docutils literal notranslate"><span class="pre">pending</span></code> at this point. Just after the <code class="docutils literal notranslate"><span class="pre">run</span></code> command, the breakpoint should be hit the first time:</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Breakpoint 1, HookFunction (ulHook=1, ulParam1=0, ulParam2=0) at ../CmpTutorial.c:98
+98              switch (ulHook)
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="debugging-remotely">
+<h4>Debugging remotely<a class="headerlink" href="#debugging-remotely" title="Permalink to this headline">¶</a></h4>
+<p>If your target has no native <code class="docutils literal notranslate"><span class="pre">gdb</span></code>, <code class="docutils literal notranslate"><span class="pre">gdbserver</span></code> can be used instead to debug from a remote computer:</p>
+<blockquote>
+<div><p><em>Important: Make sure your LD_LIBRARY_PATH references an absolute path in that case. Otherwise debugging symbols may not be available</em></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>gdbserver *:27015 ./codesyscontrol -d CODESYSControl.cfg
+Process ./codesyscontrol created; pid = 1798486
+Listening on port 27015
+</pre></div>
+</div>
+</div></blockquote>
+<p>This will trigger <code class="docutils literal notranslate"><span class="pre">gdbserver</span></code> to listen for remote connections from any IP on port 27015. On the host, run <code class="docutils literal notranslate"><span class="pre">gdb</span></code> and connect to your target:</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>gdb
+(gdb) target remote 192.168.0.1:27015
+(gdb) handle SIG40 noprint
+(gdb) break CmpTutorial.c:HookFunction
+No source file named CmpTutorial.c.
+Make breakpoint pending on future shared library load? (y or [n]) y
+Breakpoint 1 (CmpTutorial.c:HookFunction) pending.
+(gdb) continue
+Breakpoint 1, HookFunction (ulHook=1, ulParam1=0, ulParam2=0) at ../CmpTutorial.c:98
+98              switch (ulHook)
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="own-components-recommended-tutorials">
+<h3>Own components: Recommended Tutorials<a class="headerlink" href="#own-components-recommended-tutorials" title="Permalink to this headline">¶</a></h3>
+<p>Build a new statically linked runtime</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../RuntimeVariants_ToolkitEmbedded.html" title="3.2. Runtime Toolkit Embedded (SDK)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="runtime-settings_linux.html" title="3.1.3. Customizing CODESYS Control runtime with settings"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >3. Runtime Variants</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >3.1. Runtime Toolkit Linux/QNX (SDK)</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

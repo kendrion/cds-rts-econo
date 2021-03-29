@@ -1,0 +1,37 @@
+.. _summary_basic_concepts_architecture:
+
+Component based Architecture
+----------------------------
+
+The runtime system is component based. There is one specific component
+in the runtime system, which is called the component manager. It is in
+charge of initializing the components.
+
+Every component must have some component frame code. This is a set of
+functions, called by the component manager. Most of these functions are
+used for initialization.
+
+The functions are
+
+-  ComponentEntry
+
+-  ExportFunctions
+
+-  ImportFunctions
+
+-  CmpGetVersion
+
+-  HookFunction.
+
+Most of these functions make use of predefined macros, so you do not
+need to care about the implementation. You can re-use the implementation
+from the template components that are part of the runtime toolkit
+delivery.
+
+**When starting to write a component, use the template components
+provided in the toolkit as a starting point.**
+
+Probably, you will want to add your own init code into HookFunction.
+
+In the following, we call these functions “component frame code”.
+   

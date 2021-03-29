@@ -4,7 +4,7 @@
  *	<p>This is the interface of the IEC application manager. The manager is responsible for:
  *	<ul>
  *		<li>Handles and collects all IEC applications</li>
- *		<li>Application specific online communication to CoDeSys (debugging, forcing, etc.)</li>
+ *		<li>Application specific online communication to the programming system (debugging, forcing, etc.)</li>
  *		<li>Code and data handling (areas)</li>
  *		<li>Handling of non volatile data (retain handling)</li>
  *	</ul>
@@ -13,21 +13,21 @@
  *	PLC program. Each application is specified by its unique name.</p>
  *	<p>Applications can have relationships among each other. If one application e.g. A2 depends from another
  *	application A1, A1 is the parent and A2 the child. So A2 is derived from A1.</p>
- *	<p>Each application has two different kinde of states:
+ *	<p>Each application has two different kind of states:
  *	<ul>
  *		<li>Application state: run, stop, exception, etc.</li>
- *		<li>Operating state: storing bootproject, do online-change, etc.</li>
+ *		<li>Operating state: storing boot application, do online-change, etc.</li>
  *	</ul>
- *	The application state is used to specify, if the application is opertaing normal or not.
+ *	The application state is used to specify, if the application is operating normal or not.
  *	The operating state is used to specify, which job is executed in the moment on the application.</p>
  *	<p>An IEC application consists of one or more tasks. The IEC tasks are not handled directly by the
- *	application manager. This is provided by the the IEC task manager. See CmpIecTask for detailed information.</p>
+ *	application manager. This is provided by the IEC task manager. See CmpIecTask for detailed information.</p>
  *	<p>An application can have code and data. So the application manager needs for each application one or
  *	more memory areas in which the code and data will be administrated.</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -42,6 +42,7 @@ REF_ITF(`CmpEventMgrItf.m4')
 REF_ITF(`CmpCommunicationLibItf.m4')
 REF_ITF(`CmpRetainItf.m4')
 REF_ITF(`CmpSrvItf.m4')
+REF_ITF(`CmpDeviceManagementItf.m4')
 
 /**
  * <category>Compiler switch</category>
@@ -67,7 +68,7 @@ REF_ITF(`CmpSrvItf.m4')
 
 /**
  * <category>Static defines</category>
- * <description>Maximum length fo application name</description>
+ * <description>Maximum length for application name</description>
  */
 #define MAX_LEN_APPLNAME					60
 
@@ -97,7 +98,7 @@ REF_ITF(`CmpSrvItf.m4')
 
 /**
  * <category>Static defines</category>
- * <description>Number of possible static async services. Can be increased dynamically.</description>
+ * <description>Number of possible static asynchronous services. Can be increased dynamically.</description>
  */
 #ifndef APP_NUM_OF_STATIC_ASYNC_SERVICES
 	#define APP_NUM_OF_STATIC_ASYNC_SERVICES		8
@@ -125,7 +126,7 @@ REF_ITF(`CmpSrvItf.m4')
 
 /**
  * <category>Static defines</category>
- * <description>Bootproject file extension</description>
+ * <description>Boot application file extension</description>
  */
 #ifndef APP_BOOTPROJECT_FILE_EXTENSION
 	#define APP_BOOTPROJECT_FILE_EXTENSION			".app"
@@ -133,7 +134,7 @@ REF_ITF(`CmpSrvItf.m4')
 
 /**
  * <category>Static defines</category>
- * <description>Bootproject file extension to invalidate during download</description>
+ * <description>Boot application file extension to invalidate during download</description>
  */
 #ifndef APP_BOOTPROJECT_FILE_EXTENSION_INVALID
 	#define APP_BOOTPROJECT_FILE_EXTENSION_INVALID	".ap_"
@@ -141,7 +142,7 @@ REF_ITF(`CmpSrvItf.m4')
 
 /**
  * <category>Static defines</category>
- * <description>Bootproject file extension if file has an error</description>
+ * <description>Boot application file extension if file has an error</description>
  */
 #ifndef APP_BOOTPROJECT_FILE_EXTENSION_ERROR
 	#define APP_BOOTPROJECT_FILE_EXTENSION_ERROR	".err"
@@ -149,7 +150,7 @@ REF_ITF(`CmpSrvItf.m4')
 
 /**
  * <category>Static defines</category>
- * <description>File extension for bootproject crc checksum file</description>
+ * <description>File extension for boot application crc checksum file</description>
  */
 #ifndef APP_BOOTPROJECT_FILE_EXTENSION_CRC
 	#define APP_BOOTPROJECT_FILE_EXTENSION_CRC		".crc"
@@ -165,7 +166,7 @@ REF_ITF(`CmpSrvItf.m4')
 
 /**
  * <category>Static defines</category>
- * <description>File extension for symbol file matching to bootproject</description>
+ * <description>File extension for symbol file matching to boot application</description>
  */
 #ifndef APP_BOOTPROJECT_FILE_EXTENSION_SYMBOLS
 	#define APP_BOOTPROJECT_FILE_EXTENSION_SYMBOLS	".boot.xml"
@@ -176,9 +177,9 @@ REF_ITF(`CmpSrvItf.m4')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Setting to enable/disable creating bootproject implicit on download:
- *	1: Create bootproject implicit
- *	0: Don't create bootproject implicit
+ *	Setting to enable/disable creating boot application implicit on download:
+ *	1: Create boot application implicit
+ *	0: Don't create boot application implicit
  * </description>
  */
 #define APPKEY_INT_CREATE_BOOTPROJECT_ON_DOWNLOAD					"Bootproject.CreateOnDownload"
@@ -190,9 +191,9 @@ REF_ITF(`CmpSrvItf.m4')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Setting to enable/diable only storing bootproject implicit on download without storing in RAM:
- *	1: Store bootproject only on download
- *	0: Don't store bootproject only on download
+ *	Setting to enable/disable only storing boot application implicit on download without storing in RAM:
+ *	1: Store boot application only on download
+ *	0: Don't store boot application only on download
  * </description>
  */
 #define APPKEY_INT_STORE_BOOTPROJECT_ONLY_ON_DOWNLOAD				"Bootproject.StoreOnlyOnDownload"
@@ -201,8 +202,8 @@ REF_ITF(`CmpSrvItf.m4')
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>Setting to invalidate bootpoject by rename. If not, the key APPKEY_INT_LOAD_BOOTPROJECT
- *	can be used to invalidate the bootproject.</description>
+ * <description>Setting to invalidate boot application by rename. If not, the key APPKEY_INT_LOAD_BOOTPROJECT
+ *	can be used to invalidate the boot application.</description>
  */
 #define APPKEY_INT_BOOTPROJECT_INVALIDATE_BY_RENAME					"Bootproject.InvalidateByRename"
 #ifndef APPKEY_INT_BOOTPROJECT_INVALIDATE_BY_RENAME_DEFAULT
@@ -212,7 +213,7 @@ REF_ITF(`CmpSrvItf.m4')
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>Setting to invalidate bootpoject by setting (key APPKEY_INT_LOAD_BOOTPROJECT)</description>
+ * <description>Setting to invalidate boot application by setting (key APPKEY_INT_LOAD_BOOTPROJECT)</description>
  */
 #define APPKEY_INT_BOOTPROJECT_INVALIDATE_BY_SETTING				"Bootproject.InvalidateBySetting"
 #ifndef APPKEY_INT_BOOTPROJECT_INVALIDATE_BY_SETTING_DEFAULT
@@ -222,7 +223,7 @@ REF_ITF(`CmpSrvItf.m4')
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>Setting to disable invalidating bootpoject (1=disables both APPKEY_INT_BOOTPROJECT_INVALIDATE_BY_RENAME and APPKEY_INT_BOOTPROJECT_INVALIDATE_BY_SETTING)</description>
+ * <description>Setting to disable invalidating boot application (1=disables both APPKEY_INT_BOOTPROJECT_INVALIDATE_BY_RENAME and APPKEY_INT_BOOTPROJECT_INVALIDATE_BY_SETTING)</description>
  */
 #define APPKEY_INT_BOOTPROJECT_INVALIDATE_NEVER						"Bootproject.InvalidateNever"
 #ifndef APPKEY_INT_BOOTPROJECT_INVALIDATE_NEVER_DEFAULT
@@ -232,8 +233,8 @@ REF_ITF(`CmpSrvItf.m4')
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>Setting to invalidate bootpoject by rename. If not, the next key (APPKEY_INT_LOAD_BOOTPROJECT)
- *	can be used to invalidate the bootproject.</description>
+ * <description>Setting to invalidate boot application by rename. If not, the next key (APPKEY_INT_LOAD_BOOTPROJECT)
+ *	can be used to invalidate the boot application.</description>
  */
 #define APPKEY_INT_BOOTPROJECT_RUN_IN_FLASH							"Bootproject.RunInFlash"
 #ifndef APPKEY_INT_BOOTPROJECT_RUN_IN_FLASH_DEFAULT
@@ -243,7 +244,7 @@ REF_ITF(`CmpSrvItf.m4')
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>Setting to disable the bootproject. The application name must be used as prefix for this key!</description>
+ * <description>Setting to disable the boot application. The application name must be used as prefix for this key!</description>
  */
 #define APPKEY_INT_LOAD_BOOTPROJECT									".Load"
 #define APPKEY_INT_LOAD_BOOTPROJECT_DEFAULT							1
@@ -251,7 +252,7 @@ REF_ITF(`CmpSrvItf.m4')
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>Setting to specify wether the the bootproject should start on startup or not. The application name must be used as prefix for this key:
+ * <description>Setting to specify whether the boot application should start on startup or not. The application name must be used as prefix for this key:
  *	 e.g. Application.Start=0
  * </description>
  */
@@ -275,7 +276,7 @@ REF_ITF(`CmpSrvItf.m4')
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>Setting to initialize the retains during the first load of an offline bootproject. This key is automatically removed after the first load. The application name must be used as prefix for this key!</description>
+ * <description>Setting to initialize the retains during the first load of an offline boot application. This key is automatically removed after the first load. The application name must be used as prefix for this key!</description>
  */
 #define APPKEY_INT_FIRST_LOAD_INIT_RETAINS							".FirstLoadInitRetains"
 #define APPKEY_INT_FIRST_LOAD_INIT_RETAINS_DEFAULT					0
@@ -283,7 +284,7 @@ REF_ITF(`CmpSrvItf.m4')
 /**
  * <category>Settings</category>
  * <type>String</type>
- * <description>Setting to set the bootproject of an application. The application name must be used as prefix for this key:
+ * <description>Setting to set the boot application of an application. The application name must be used as prefix for this key:
  *	e.g. Application.Bootproject=App1
  * </description>
  */
@@ -315,8 +316,8 @@ REF_ITF(`CmpSrvItf.m4')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Setting to define the behaviour on loading boot project, if retains do not match.
- *	In this case, all retains are initialized and the bootproject will be started!
+ *	Setting to define the behavior on loading boot project, if retains do not match.
+ *	In this case, all retains are initialized and the boot application will be started!
  *	Both keys are equivalent!
  * </description>
  */
@@ -327,8 +328,8 @@ REF_ITF(`CmpSrvItf.m4')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Setting to define the behaviour on loading boot project, if retains do not match.
- *	In this case, the bootproject will remain in stop and in exception state! Only a manual reset can heal this state!
+ *	Setting to define the behavior on loading boot project, if retains do not match.
+ *	In this case, the boot application will remain in stop and in exception state! Only a manual reset can heal this state!
  * </description>
  */
 #define APPKEY_INT_BOOTPROJECT_RETAIN_MISMATCH_EXCEPTION			"Bootproject.RetainMismatch.Exception"
@@ -391,7 +392,7 @@ REF_ITF(`CmpSrvItf.m4')
  *	Defines specifies the synchronization mechanism of the online change code to the IEC tasks.
  *	CCO_DEFAULT defines the option, which mechanism is used to synchronize the online change code (copy code).</description>
  * <element name="CCO_SEMAPHORE" type="IN">OnlineChange code is synchronized via a semaphore</element>
- * <element name="CCO_TASK_GAP" type="IN">OnlineChange code is executed in the IEC task gap in the context of the scheduler tick (recommended machnism)</element>
+ * <element name="CCO_TASK_GAP" type="IN">OnlineChange code is executed in the IEC task gap in the context of the scheduler tick (recommended mechanism)</element>
  * <element name="CCO_INTERRUPT_LOCK" type="IN">OnlineChange code is synchronized via interrupt locks (most invasive mechanism)</element>
  * <element name="CCO_TASK_GAP_SEMAPHORE" type="IN">OnlineChange code is synchronized via a semaphore and is executed in the IEC task in the context of the scheduler tick</element>
  */
@@ -442,7 +443,7 @@ typedef void HUGEPTR(CDECL *PF_PROPERTY_CALL)(void *);
 
 /**
  * <description>
- *	Security settings for the IEC application code and bootproject
+ *	Security settings for the IEC application code and boot application
  * </description>
  * <element name="DownloadMode_NoSecurity" type="OUT">No support of signed and/or encrypted code</element>
  * <element name="DownloadMode_ALL" type="OUT">All types of application code accepted [DEFAULT]</element>
@@ -461,13 +462,13 @@ typedef enum
 
 /**
  * <category>SecuritySettings</category>
- * <description>Security settings of the application downloaded code and bootproject.
+ * <description>Security settings of the application downloaded code and boot application.
  *	NOTE:
  *		Security modes must be ordered in an descending sorting, that the setting with the highest security level is found at the beginning of the list!
  * </description>
  */
 #define CMPAPP_KEY_STRING_CODEPROTECTION						CMPSETTINGS_CATEGORY_SECURITY ".CodeProtection"
-#define CMPAPP_KEY_STRING_CODEPROTECTION_DESC					"Setting to specify the protection level of the downloaded IEC application code and bootproject."
+#define CMPAPP_KEY_STRING_CODEPROTECTION_DESC					"Setting to specify the protection level of the downloaded IEC application code and boot application."
 
 
 #define CMPAPP_VALUE_CODEPROTECTION_SIGNED_AND_ENCRYPTED		"SIGNED_AND_ENCRYPTED"
@@ -589,7 +590,7 @@ typedef struct
 /**
  * <category>Event parameter</category>
  * <element name="pApp" type="IN">Pointer to application description</element>
- * <element name="ulStop" type="IN">Reason for the stop, see corresponding category</element>
+ * <element name="ulStopReason" type="IN">Reason for the stop, see corresponding category</element>
  * <element name="bDeny" type="OUT">1=Stop is denied, 0=stop is executed</element>
  */
 typedef struct
@@ -617,7 +618,7 @@ typedef struct
 /**
  * <category>Event parameter</category>
  * <element name="pszAppName" type="IN">Name of the application</element>
- * <element name="bDeny" type="OUT">1=Load bootproject is denied, 0=loading bootproject is be executed</element>
+ * <element name="bDeny" type="OUT">1=Load boot application is denied, 0=loading boot application is be executed</element>
  */
 typedef struct
 {
@@ -695,7 +696,7 @@ typedef struct
 /**
  * <category>Event parameter</category>
  * <element name="pApp" type="IN">Pointer to application object. ulOpState contains the actual state!</element>
- * <element name="ulSessionId" type="IN">Online sessionid on the deive. Can be used to get the actual logged in User on this channel!</element>
+ * <element name="ulSessionId" type="IN">Online sessionid on the device. Can be used to get the actual logged in User on this channel!</element>
  * <element name="ulAppSessionId" type="IN">Online application sessionid that is provided during the client is logged in on the application</element>
  */
 typedef struct
@@ -738,12 +739,12 @@ typedef struct
 /**
  * <category>Event parameter</category>
  * <element name="pApp" type="IN">Pointer to application object. ulOpState contains the actual state!</element>
- * <element name="ulChannelId" type="IN">ChannelID of the actial online service</element>
- * <element name="ulToplevelTag" type="IN">ToplevelTag in the actial online service. NOTE: Highword must be the VendorID to have unique tags!</element>
+ * <element name="ulChannelId" type="IN">ChannelID of the actual online service</element>
+ * <element name="ulToplevelTag" type="IN">ToplevelTag in the actual online service. NOTE: Highword must be the VendorID to have unique tags!</element>
  * <element name="pHeaderTag" type="IN">Header of the actual online service</element>
  * <element name="pReader" type="IN">Reader of the actual service to read OEM specific tags (some tags could be still consumed by the kernel)</element>
  * <element name="pWriter" type="IN">Writer of the actual service to send back a reply of the consumed OEM tag</element>
- * <element name="Result" type="OUT">Result of the tag handling. If an error is returned here, the download service will be cancelled!</element>
+ * <element name="Result" type="OUT">Result of the tag handling. If an error is returned here, the download service will be canceled!</element>
  */
 typedef struct
 {
@@ -765,7 +766,7 @@ struct T_FUNCTION_INFO;
  * <element name="pApp" type="IN">Pointer to application object</element>
  * <element name="pInfo" type="IN">Pointer to function info.
  *	NOTE:
- *	The function pointer pointer can be retrieved with:
+ *	The function pointer to pointer can be retrieved with:
  *
  *	RTS_VOID_FCTPTR *ppfFunction = NULL;
  *	unsigned char *pucArea;
@@ -864,7 +865,7 @@ typedef struct
 /**
  * <category>Event parameter</category>
  * <element name="ulParam1" type="IN">Type of the COMM_CYCLE_HOOK. See CMItf.h, CM_HOOK_TYPE types.</element>
- * <element name="ulParam2" type="IN">Second parameter. Hook dependant, typically 0</element>
+ * <element name="ulParam2" type="IN">Second parameter. Hook dependent, typically 0</element>
  */
 typedef struct
 {
@@ -903,7 +904,7 @@ typedef struct
 
 /**
  * <category>Event parameter</category>
- * <element name="ulBlobID" type="IN">ID of Blob passed in from CompactBlobProvider Plugin</element>
+ * <element name="ulBlobID" type="IN">ID of Blob passed in from CompactBlobProvider plugin</element>
  * <element name="ulBlobSize" type="IN">Size of blob data (payload without header)</element>
  * <element name="pData" type="IN">Pointer to blob data</element>
  */
@@ -1113,14 +1114,14 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent after creating a bootproject of an application successfully</description>
+ * <description>Event is sent after creating a boot application successfully</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpApp</param>
  */
 #define EVT_CreateBootprojectDone			MAKE_EVENTID(EVTCLASS_INFO, 16)
 
 /**
  * <category>Events</category>
- * <description>Event is sent to deny loading a bootproject of an application.
+ * <description>Event is sent to deny loading a boot application.
  * </description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpAppDenyLoadBootproject</param>
  */
@@ -1128,21 +1129,21 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent before loading a bootproject of an application</description>
+ * <description>Event is sent before loading a boot application</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpAppPrepareLoadBootproject</param>
  */
 #define EVT_PrepareLoadBootproject			MAKE_EVENTID(EVTCLASS_INFO, 19)
 
 /**
  * <category>Events</category>
- * <description>Event is sent after loading a bootproject of an application successfully</description>
+ * <description>Event is sent after loading a boot application successfully</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpApp</param>
  */
 #define EVT_LoadBootprojectDone				MAKE_EVENTID(EVTCLASS_INFO, 17)
 
 /**
  * <category>Events</category>
- * <description>Event is sent to deny starting a bootproject of an application.
+ * <description>Event is sent to deny starting a boot application.
  * </description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpAppDenyStart</param>
  */
@@ -1150,14 +1151,14 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent before starting a bootproject of an application</description>
+ * <description>Event is sent before starting a boot application</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpApp</param>
  */
 #define EVT_PrepareStartBootproject			MAKE_EVENTID(EVTCLASS_INFO, 21)
 
 /**
  * <category>Events</category>
- * <description>Event is sent after starting a bootproject of an application</description>
+ * <description>Event is sent after starting a boot application</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpApp</param>
  */
 #define EVT_StartBootprojectDone			MAKE_EVENTID(EVTCLASS_INFO, 22)
@@ -1209,14 +1210,14 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent, if a new bootproject is registered</description>
+ * <description>Event is sent, if a new boot application is registered</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpAppRegisterBootproject</param>
  */
 #define EVT_RegisterBootproject				MAKE_EVENTID(EVTCLASS_INFO, 29)
 
 /**
  * <category>Events</category>
- * <description>Event is sent, if the bootproject file cannot be created.
+ * <description>Event is sent, if the boot application file cannot be created.
  *	NOTE: EVT_CreateBootprojectFailed is sent additionally in this case!</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpApp</param>
  */
@@ -1224,7 +1225,7 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent, if the creation of a bootproject failed. This can occur at creation of the bootproject
+ * <description>Event is sent, if the creation of a boot application failed. This can occur at creation of the boot application
  *	implicit at download or explicit by the user.</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpApp</param>
  */
@@ -1267,7 +1268,7 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent to deny deleting a bootproject of an application</description>
+ * <description>Event is sent to deny deleting a boot application</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpAppDenyDelete</param>
  */
 #define EVT_DenyDeleteBootproject			MAKE_EVENTID(EVTCLASS_INFO, 37)
@@ -1317,7 +1318,7 @@ typedef struct
  * <category>Events</category>
  * <description>Event is fired at the beginning and end of the atomic OnlineChange code execution
  *	NOTE:
- *	Be aware that you are in a very timecritical and realtime affected phase! Don't do blocking or time consuming operations here!!!
+ *	Be aware that you are in a very time critical and real-time affected phase! Don't do blocking or time consuming operations here!!!
  * </description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpApp_OnlineChangeExecution</param>
  */
@@ -1394,8 +1395,10 @@ typedef struct
 
 /**
  * <category>OperationID</category>
- * <description>Operation ID for the supervision of the RUN-STOP transition of an application</description>
- * <param name="RTS_OPID_Application_RunStop" type="IN">The OperationID is the ID of the application (see APPLICATION.iId for details)</param>
+ * <description>Operation ID for the supervision of the RUN-STOP transition of an application.
+ * The OperationID is the ID of the application (see APPLICATION.iId for details).
+ * </description>
+ * <param name="RTS_OPID_Application_RunStop" type="IN"></param>
  * <param name="RTS_OPID_Application_RunStop_Description" type="IN"></param>
  */
 #define RTS_OPID_Application_RunStop					-1
@@ -1411,7 +1414,8 @@ typedef struct
  *		<li>AS_STOP: Application in stop</li>
  *		<li>AS_DEBUG_HALT_ON_BP: Application halted on breakpoint</li>
  *		<li>AS_DEBUG_STEP: Not used actually</li>
- *		<li>AS_SYSTEM_APPLICATION: State of a system application</li>
+ *		<li>AS_SINGLE_CYCLE: Application is executing a single cycle at the moment. After single cycle is operated, the application goes in status AS_STOP.</li>
+ *		<li>AS_SYSTEM_APPLICATION: State of a system application. State of a system application is masked and has no dedicated state.</li>
  *	</ul>
  * </description>
  */
@@ -1431,22 +1435,24 @@ typedef struct
  *		<li>OS_PROGRAM_LOADED: Application is completely loaded</li>
  *		<li>OS_DOWNLOAD: Application download in progress</li>
  *		<li>OS_ONLINE_CHANGE: Application online-change in progress</li>
- *		<li>OS_STORE_BOOTPROJECT: Store bootproject in progress</li>
+ *		<li>OS_STORE_BOOTPROJECT: Store boot application in progress</li>
  *		<li>OS_FORCE_ACTIVE: Force values is active on the application</li>
  *		<li>OS_EXCEPTION: Application is in exception state (an exception occurred in this application)</li>
  *		<li>OS_RUN_AFTER_DOWNLOAD: Download code at the end of download is in progress (initialization of the application)</li>
- *		<li>OS_STORE_BOOTPROJECT_ONLY: Only the bootproject is stored at download</li>
+ *		<li>OS_STORE_BOOTPROJECT_ONLY: Only the boot application is stored at download</li>
  *		<li>OS_EXIT: Application exit is still executed (application is no longer active)</li>
- *		<li>OS_DELETE: Application is deleted (object is available, but the content is stil deleted)</li>
+ *		<li>OS_DELETE: Application is deleted (object is available, but the content is still deleted)</li>
  *		<li>OS_RESET: Application reset is in progress</li>
- *		<li>OS_RETAIN_MISMATCH: Retain mismatch occurred during loading the bootproject (retain data does not match to the application)</li>
- *		<li>OS_BOOTPROJECT_VALID: Bootproject available (bootproject matched to running application in RAM)</li>
- *		<li>OS_LOAD_BOOTPROJECT: Loading bootproject in progress</li>
+ *		<li>OS_RETAIN_MISMATCH: Retain mismatch occurred during loading the boot application (retain data does not match to the application)</li>
+ *		<li>OS_BOOTPROJECT_VALID: Boot application available (boot application matched to running application in RAM)</li>
+ *		<li>OS_LOAD_BOOTPROJECT: Loading boot application in progress</li>
  *		<li>OS_FLOW_ACTIVE: Flow control active</li>
  *		<li>OS_RESET_OUTPUTS: Forcing reset outputs if task cycle is called</li>
- *		<li>OS_COREDUMP_LOADED: This is never used in the runtime, but in the fake online app in CODESYS. So this is flag is included here to reserve its usage.</li>
- *      <li>OS_EXECUTIONPOINTS_ACTIVE: Executionpoints are active currently</li>
- *      <li>OS_COREDUMP_CREATING: A core dump is being created currently after the app crashed</li>
+ *		<li>OS_COREDUMP_LOADED: This is never used in the runtime, but in the fake online application in CODESYS. So this is flag is included here to reserve its usage.</li>
+ *      <li>OS_EXECUTIONPOINTS_ACTIVE: Execution points are active currently</li>
+ *      <li>OS_COREDUMP_CREATING: A core dump is being created currently after the application crashed</li>
+ *      <li>OS_SINGLE_CYCLE_ACTIVE: Single cycle is currently operated</li>
+ *      <li>OS_DISABLE_RESET: Reset operation is currently disabled</li>
  *	</ul>
  * </description>
  */
@@ -1486,8 +1492,8 @@ typedef struct
  *	Reason specifies the cause of the specific operation.
  * </description>
  *	<element name="APP_REASON_UNKNOWN" type="IN">Unknown reason</element>
- *	<element name="APP_REASON_SHUTDOWN" type="IN">Shutdown of the plc</element>
- *	<element name="APP_REASON_RESET" type="IN">Reset of the plc</element>
+ *	<element name="APP_REASON_SHUTDOWN" type="IN">Shutdown of the PLC</element>
+ *	<element name="APP_REASON_RESET" type="IN">Reset of the PLC</element>
  *	<element name="APP_REASON_EXCEPTION" type="IN">Exception occurred</element>
  *	<element name="APP_REASON_USER" type="IN">User operation</element>
  *	<element name="APP_REASON_IECPROGRAM" type="IN">IEC program caused the action</element>
@@ -1527,7 +1533,7 @@ typedef struct
  *	Reason to set the application in stop.
  * </description>
  *	<element name="APP_STOP_REASON_UNKNOWN" type="IN">Unknown reason</element>
- *	<element name="APP_STOP_REASON_SHUTDOWN" type="IN">Shutdown of the plc</element>
+ *	<element name="APP_STOP_REASON_SHUTDOWN" type="IN">Shutdown of the PLC</element>
  *	<element name="APP_STOP_REASON_RESET" type="IN">Reset will be done after stop the application</element>
  *	<element name="APP_STOP_REASON_EXCEPTION" type="IN">Exception occurred</element>
  *	<element name="APP_STOP_REASON_USER" type="IN">User stopped the application</element>
@@ -1553,8 +1559,8 @@ typedef struct
  *	Reason to exit the application.
  * </description>
  *	<element name="APP_EXIT_REASON_UNKNOWN" type="IN">Unknown reason</element>
- *	<element name="APP_EXIT_REASON_SHUTDOWN" type="IN">Shutdown of the plc</element>
- *	<element name="APP_EXIT_REASON_RESET" type="IN">Reset of the plc</element>
+ *	<element name="APP_EXIT_REASON_SHUTDOWN" type="IN">Shutdown of the PLC</element>
+ *	<element name="APP_EXIT_REASON_RESET" type="IN">Reset of the PLC</element>
  *	<element name="APP_EXIT_REASON_EXCEPTION" type="IN">Exception occurred during download of an application</element>
  *	<element name="APP_EXIT_REASON_DELETE" type="IN">Reason is deletion of the application</element>
  *	<element name="APP_EXIT_REASON_RUNSTOP_SWITCH" type="IN">Reason is the RunStop switch</element>
@@ -1594,7 +1600,7 @@ typedef struct
 #define USERDB_OBJECT_CMODULE_INTEGRATION		"__C-ModuleIntegration__"
 
 /* <SIL2/> 
- * <description>Typedef for Application info at download, containing GUIDs and Application name </description>
+ * <description>Typedef for Application info at download, containing GUIDs and Application name</description>
  */
 typedef struct _APPLICATION_DOWNLOAD_INFO
 {
@@ -2015,10 +2021,10 @@ typedef struct
  *	<element name="AF_SYSTEM_APPLICATION" type="IN">This is a system application</element>
  *	<element name="AF_IOCONFIG_BYTE_ADDRESSING" type="IN">Byte addressing for all IO channels is activated on the target.
  *		e.g. "%IW8" means byte 8 and not byte 16 in this case!</element>
- *	<element name="AF_IOCONFIG_BIT_WORD_ADDRESSING" type="IN">Bits are byte adressed.
+ *	<element name="AF_IOCONFIG_BIT_WORD_ADDRESSING" type="IN">Bits are byte addressed.
  *		e.g. "%IX2.3" means bit 3 in word 2 instead of in byte 2!</element>
  *	<element name="AF_KEEP_AT_PARENT_ONLINE_CHANGE" type="IN">This application will survive an online change of the parent application (not a download!)</element>
- *	<element name="AF_ALLOW_SYMBOLIC_VARIABLE_ACCESS_IN_SYNC_WITH_IEC_TASK" type="IN">This application allows the syncronized 
+ *	<element name="AF_ALLOW_SYMBOLIC_VARIABLE_ACCESS_IN_SYNC_WITH_IEC_TASK" type="IN">This application allows the synchronized 
  *      consistent access by CmpIecVarAccess online services (application accepts possible related jitter).</element>
  *	<element name="AF_SIGNED_APPLICATION" type="IN">The application was signed at download time. Only signed online changes are allowed in this application.</element>
  *	<element name="AF_ENCRYPTED_APPLICATION" type="IN">The application was encrypted at download time. Only encrypted online changes are allowed in this application.</element>
@@ -2075,7 +2081,7 @@ typedef enum
  *	<element name="DataGuid" type="IN">Unique identifier of the IEC data</element>
  *	<element name="ulState" type="IN">State of the application (see corresponding category)</element>
  *	<element name="ulOpState" type="IN">Operating state of the application (see corresponding category)</element>
- *	<element name="hBootproject" type="IN">Handle to the bootproject. Is valid, if actually bootproject will be loaded</element>
+ *	<element name="hBootproject" type="IN">Handle to the boot application. Is valid, if actually boot application will be loaded</element>
  *	<element name="hDebugTask" type="IN">Handle of the debug task (if debugging is active)</element>
  *	<element name="pfGlobalInit" type="IN">Function pointer to the global init routine</element>
  *	<element name="pfGlobalExit" type="IN">Function pointer to the global exit routine</element>
@@ -2085,27 +2091,27 @@ typedef enum
  *	<element name="szName" type="IN">Application name</element>
  *	<element name="ulPSVersion" type="IN">Version number of programming system (set in download)</element>
  *	<element name="ulTargetSettingVersion" type="IN">Version number of Target settings used by PS (set in download)</element>
- *	<element name="szBootprojectName" type="IN">Bootproject name of the application</element>
+ *	<element name="szBootprojectName" type="IN">Boot application name of the application</element>
  *	<element name="pcArea" type="IN">Pointer to data areas of this application</element>
  *	<element name="ausAreaType" type="IN">Area types. See category "Area Types" in SysMemItf.h.</element>
  *	<element name="aulAreaSize" type="IN">Area sizes</element>
  *	<element name="byForcePool" type="IN">Force pool. Only used, if CmpAppForce is available</element>
  *	<element name="byBPPool" type="IN">Breakpoint pool. Only used, if CmpAppBP is available</element>
  *	<element name="flowControl" type="IN">Flow control structure. Only used, if CmpAppBP is available and flow control is activated</element>
- *	<element name="SafedCodeGuid" type="IN">Safed GUID of IEC code from bootproject</element>
- *	<element name="SafedDataGuid" type="IN">Safed GUID of IEC data from bootproject</element>
+ *	<element name="SafedCodeGuid" type="IN">Saved GUID of IEC code from boot application</element>
+ *	<element name="SafedDataGuid" type="IN">Saved GUID of IEC data from boot application</element>
  *	<element name="rtRetainType" type="IN">Retain type of retain application data</element>
  *	<element name="ulException" type="IN">Actual exception, if an exception occurred. In this case, ulOpState is set to OS_EXCEPTION.</element>
  *	<element name="ApplicationInfo" type="IN">Application info</element>
  *	<element name="pouMemorySegmentInfo" type="IN">POU reference to the memory segment info</element>
  *	<element name="pouAppInfo" type="IN">Data Location of the application content information</element>
- *	<element name="ulCRCBootproject" type="IN">CRC of trhe bootproject. It is used temporary at creating the bootproject to calculate the CRC during the complete store process.</element>
- *	<element name="aAreaCRC" type="IN">List of CRCs for every memory area. The CRC is calculated over the content of the area (e.g. if it is a retain area, the CRC is calculated
+ *	<element name="ulCRCBootproject" type="IN">CRC of the boot application. It is used temporary at creating the boot application to calculate the CRC during the complete store process.</element>
+ *	<element name="aulAreaCRC" type="IN">List of CRCs for every memory area. The CRC is calculated over the content of the area (e.g. if it is a retain area, the CRC is calculated
  *			over the names and types of the retain variables). Additionally the CRC contains the application name to be always unique over all applications!</element>
  *	<element name="hBPConditionPool" type="IN">Handle a pool of breakpoint conditions.</element>
  *  <element name="pouCodeLocationInfo" type="IN"></element>
  *  <element name="ulCRCExecutionpoints" type="IN"></element>
- *  <element name="bLeaveExecutionpointsActive" type="IN">If true, all Executionpoints in the application will remain active after the logout</element>
+ *  <element name="bLeaveExecutionpointsActive" type="IN">If true, all execution points in the application will remain active after the logout</element>
  *  <element name="iHasCModule" type="IN">Number of linked C-Integration modules</element>
  *  <element name="pVendorExtension" type="IN">Pointer to store vendor specific informations at an application</element>
  *  <element name="hDynamicModulePool" type="IN">A memory pool containing all names of linked modules from the C-Integration</element>
@@ -2233,15 +2239,15 @@ typedef struct tagAPPLICATION
  *																	- TargetInfo
  *  </element>
  *	<element name="ulSizeFunctionTable" type="IN">Size in bytes of the function table segment</element>
- *	<element name="ulOffsetExternalFunctionTable" type="IN">Offset in bytes, where the external function table segment begins to link c functions against iec code</element>
+ *	<element name="ulOffsetExternalFunctionTable" type="IN">Offset in bytes, where the external function table segment begins to link c functions against IEC code</element>
  *	<element name="ulSizeExternalFunctionTable" type="IN">Size in bytes of the external function table segment</element>
- *	<element name="ulOffsetRegisterIecFunctionTable" type="IN">Offset in bytes, where the iec function table segment begins to link iec functions against the runtime system</element>
+ *	<element name="ulOffsetRegisterIecFunctionTable" type="IN">Offset in bytes, where the IEC function table segment begins to link IEC functions against the runtime system</element>
  *	<element name="ulSizeRegisterIecFunctionTable" type="IN">Size in bytes of the external function table segment</element>
  *	<element name="ulOffsetBlob" type="IN">Offset in bytes, where the optional blob segment begins</element>
  *	<element name="ulSizeBlob" type="IN">Size in bytes of the optional blob segment</element>
  *	<element name="ulCrc" type="IN">CRC32 of the complete download stream including the header with ulCRC written to 0!</element>
- *	<element name="ulOffsetAreaCRCTable" type="IN">Offset in bytes, where the area crc table segment begins</element>
- *	<element name="ulSizeAreaCRCTable" type="IN">Size in bytes of the area crc table segment</element>
+ *	<element name="ulOffsetAreaCRCTable" type="IN">Offset in bytes, where the area CRC table segment begins</element>
+ *	<element name="ulSizeAreaCRCTable" type="IN">Size in bytes of the area CRC table segment</element>
  */
 typedef struct _COMPACT_CODE_HEADER
 {
@@ -2322,7 +2328,7 @@ typedef struct
 /**
  * <category>Reset options</category>
  * <description>
- *	Warm reset. All gobal data except retain data is reset to their default values.
+ *	Warm reset. All global data except retain data is reset to their default values.
  * </description>
  */
 #define RTS_RESET					0
@@ -2330,7 +2336,7 @@ typedef struct
 /**
  * <category>Reset options</category>
  * <description>
- *	Cold reset. All gobal data AND retain data is reset to their default values.
+ *	Cold reset. All global data AND retain data is reset to their default values.
  * </description>
  */
 #define RTS_RESET_COLD				1
@@ -2338,8 +2344,8 @@ typedef struct
 /**
  * <category>Reset options</category>
  * <description>
- *	Origin reset. Delete the application, delete all application files (bootproject, etc.),
- *	reset all gobal and retain data. After this command, the controller doesn't know anything about
+ *	Origin reset. Delete the application, delete all application files (boot application, etc.),
+ *	reset all global and retain data. After this command, the controller doesn't know anything about
  *	the application.</description>
  */
 #define RTS_RESET_ORIGIN			2
@@ -2347,11 +2353,91 @@ typedef struct
 /**
  * <category>Reset options</category>
  * <description>
- *	Origin reset device. Delete all applications, delete all application files (bootproject, etc.),
- *	reset all gobal and retain data. Clear $visu$ and $PlcLogic$ folders. After this command, the
+ *	Origin reset device. Delete all applications, delete all application files (boot application, etc.),
+ *	reset all global and retain data. Clear $visu$ and $PlcLogic$ folders. After this command, the
  *	controller doesn't know anything about any application.</description>
  */
 #define RTS_RESET_ORIGIN_DEVICE		3
+
+/**
+ * <category>Online services</category>
+ * <service group="SG_APPLICATION" id="SRV_READ_STATUS" name="Read status">
+ *	<description>
+ *		ReadStatus service. Returns status information about the active Task of the current Application.
+ *		TAG_APPL_TASK_INDEX may be optionally transferred preceding TAG_APPL_ID to request a specific task.
+ *	</description>
+ *	<request>
+ *		<complextag id="TAG_APPL_APPLICATIONDESC" name="Application description" cardinality="1..?"
+ *		 description="">
+ *			<tag id="TAG_APPL_TASK_INDEX" name="Task index" cardinality="0..?" type="RTS_UI32"
+ *			 description="Task index"/>
+ *			<tag id="TAG_APPL_ID" name="ID" cardinality="1..?" type="RTS_UI32"
+ *			 description="Session ID; triggers READ_STATUS_RESULT, READ_STATUS_EXECUTIONPOSITION, READ_STATUS_BPHITCOUNT, READ_STATUS_BPHITCOUNTEX"/>
+ *			<tag id="READ_STATUS_VERSION" name="Version" cardinality="0..?" type=""
+ *			 description="triggers READ_STATUS_INSTANCEPOSITION, READ_STATUS_DEBUGTASK"/>
+ *			<tag id="READ_USER_NOTIFY" name="User notify" cardinality="0..?" type=""
+ *			 description="triggers READ_USER_NOTIFY"/>
+ *		</complextag>
+ *	</request>
+ *	<response>
+ *		<complextag id="READ_STATUS_REPLY" name="Read status reply" cardinality="1..?"
+ *		 description="Top level tag may contain the following sub tags">
+ *			<tag id="READ_STATUS_RESULT" name="Result" cardinality="0..?" type="RTS_UI16, RTS_UI32, RTS_UI32"
+ *			 description="Result code, App state, App OpState"/>
+ *			<tag id="READ_STATUS_EXECUTIONPOSITION" name="Execution position" cardinality="0..?" type="RTS_UI16, RTS_UI32"
+ *			 description="Area, Offset of callstackEntry"/>
+ *			<tag id="READ_STATUS_DATABP_POSITION" name="Data BP position" cardinality="0..?" type="RTS_UI16, RTS_UI32"
+ *			 description="Area, Offset of reached data breakpoint"/>
+ *			<tag id="READ_STATUS_BPHITCOUNT" name="BP hit count" cardinality="0..?" type="RTS_UI32"
+ *			 description="HitCount"/>
+ *			<tag id="READ_STATUS_BPHITCOUNTEX" name="BP hit count ex" cardinality="0..?" type="RTS_UI16, RTS_UI16, RTS_UI32, RTS_UI32"
+ *			 description="Area, state, Offset, current hitcount of BP"/>
+ *			<tag id="READ_STATUS_INSTANCEPOSITION" name="Instance position" cardinality="0..?" type="RTS_UI16, RTS_UI32"
+ *			 description="AreaInstance, OffsetInstance of callstackEntry"/>
+ *			<tag id="READ_STATUS_DEBUGTASK" name="Debug task" cardinality="0..?" type="RTS_UI16"
+ *			 description="DebugTaskIdx"/>
+ *			<tag id="READ_USER_NOTIFY" name="" cardinality="0..?" type="..."
+ *			 description="Response of SrvGetUserNotificationService2"/>
+ *			<tag id="READ_STATUS_LAST_CHANGE" name="Last change" cardinality="" type=""
+ *			 description=""/>
+ *		</complextag>
+ *		<tag id="TAG_OPERATION_MODE" name="Operation mode" cardinality="0..?" type="RTS_UI32"
+ *		 description="Device operation mode"/>
+ *	</response>
+ * </service>
+ */
+#define SRV_READ_STATUS 0x14
+
+/**
+ * <category>Online services</category>
+ * <service group="SG_APPLICATION" id="SRV_READ_CALLSTACK" name="">
+ *	<description>
+ *		ReadStatus service. Returns callstack information about the active Task of the current Application.
+ *		TAG_APPL_TASK_INDEX may be optionally transferred preceding TAG_APPL_ID to request a specific task.
+ *	</description>
+ *	<request>
+ *		<complextag id="TAG_APPL_APPLICATIONDESC" name="" cardinality="1..?"
+ *		 description="">
+ *			<tag id="TAG_APPL_TASK_INDEX" name="" cardinality="0..?" type="RTS_UI32"
+ *			 description="Task index"/>
+ *			<tag id="TAG_APPL_ID" name="" cardinality="1..?" type="RTS_UI32"
+ *			 description="Session ID"/>
+ *		</complextag>
+ *	</request>
+ *	<response>
+ *		<complextag id="READ_STATUS_REPLY" name="" cardinality="1..?"
+ *		 description="Top level tag may contain the following sub tags">
+ *			<tag id="READ_STATUS_STACKPOINTER" name="" cardinality="0..?" type="RTS_UINTPTR"
+ *			 description="Stackpointer"/>
+ *			<tag id="READ_STATUS_EXECUTIONPOSITION" name="" cardinality="0..?" type="RTS_UI16, RTS_UI32"
+ *			 description="Area, Offset of callstackEntry"/>
+ *			<tag id="READ_STATUS_INSTANCEPOSITION" name="" cardinality="0..?" type="RTS_UI16, RTS_UI32"
+ *			 description="AreaInstance, OffsetInstance of callstackEntry"/>
+ *		</complextag>
+ *	</response>
+ * </service>
+ */
+#define SRV_READ_CALLSTACK 0x16
 
 /**
  * <category>Online services</category>
@@ -2370,9 +2456,7 @@ typedef struct
 #define SRV_STOP						0x11
 #define SRV_RESET						0x12
 #define SRV_SETBP						0x13
-#define SRV_READ_STATUS					0x14
 #define SRV_DELETEBP					0x15
-#define SRV_READ_CALLSTACK				0x16
 #define SRV_GET_AREAOFFSET				0x17
 #define SRV_READ_APPLICATION_LIST		0x18
 #define SRV_SETNEXTSTATEMENT			0x19
@@ -2517,6 +2601,10 @@ typedef struct
 #define TAG_APPL_PARENT_APPLNAME		0x12
 #define TAG_APPL_RETAIN_FILENAME		0x13
 #define TAG_APPL_RETAIN_STATE			0x14
+#define TAG_APPL_CLIENT_TYPE			0x15
+#define TAG_APPL_CLIENT_USER			0x16
+#define TAG_APPL_CLIENT_NAME			0x17
+#define TAG_APPL_CLIENT_HOST_NAME		0x18
 
 #define TAG_PROJECT_NAME				0x01
 #define TAG_VERSION						0x02
@@ -2567,57 +2655,8 @@ typedef struct
 #define SRV_SETNEXT_POSITION			0x12
 #define SRV_SETNEXT_REGISTERINFO		0x13
 
-/**
- * <category>Online services</category>
- * <Description>
- *	ReadStatus service. Returns status information about the active Task of the current Application.
- *	TAG_APPL_TASK_INDEX may be optionally transferred preceding TAG_APPL_ID to request a specific task.
- * </Description>
- * <service name="SRV_READ_STATUS">
- *	<Request>
- *		<tag name="TAG_APPL_APPLICATIONDESC" required="mandatory">Top level tag</tag>
- *			<tag name="TAG_APPL_TASK_INDEX" required="optional">[RTS_UI32]: Task index</tag>
- *			<tag name="TAG_APPL_ID" required="mandatory">[RTS_UI32]: Session ID; triggers READ_STATUS_RESULT, READ_STATUS_EXECUTIONPOSITION, READ_STATUS_BPHITCOUNT, READ_STATUS_BPHITCOUNTEX</tag>
- *			<tag name="READ_STATUS_VERSION" required="optional">triggers READ_STATUS_INSTANCEPOSITION, READ_STATUS_DEBUGTASK</tag>
- *			<tag name="READ_USER_NOTIFY" required="optional">triggers READ_USER_NOTIFY</tag>
- *	</Request>
- *	<Response>
- *		<tag name="READ_STATUS_REPLY" required="mandatory">Top level tag may contain the following sub tags</tag>
- *			<tag name="READ_STATUS_RESULT" required="optional">[RTS_UI16, RTS_UI32, RTS_UI32]: Result code, App state, App OpState</tag>
- *			<tag name="READ_STATUS_EXECUTIONPOSITION" required="optional">[RTS_UI16, RTS_UI32]: Area, Offset of callstackEntry</tag>
- *			<tag name="READ_STATUS_DATABP_POSITION" required="optional">[RTS_UI16, RTS_UI32]: Area, Offset of reched data breakpoint</tag>
- *			<tag name="READ_STATUS_BPHITCOUNT" required="optional">[RTS_UI32]: HitCount</tag>
- *			<tag name="READ_STATUS_BPHITCOUNTEX" required="optional">[RTS_UI16, RTS_UI16, RTS_UI32, RTS_UI32]: Area, state, Offset, current hitcount of BP</tag>
- *			<tag name="READ_STATUS_INSTANCEPOSITION" required="optional">[RTS_UI16, RTS_UI32]: AreaInstance, OffsetInstance of callstackEntry</tag>
- *			<tag name="READ_STATUS_DEBUGTASK" required="optional">[RTS_UI16]: DebugTaskIdx</tag>
- *			<tag name="READ_USER_NOTIFY" required="optional">[...]: Response of SrvGetUserNotificationService2</tag>
- *		<tag name="TAG_OPERATION_MODE" required="optional">[RTS_UI32]: Device operation mode</tag>
- *	</Response>
- * </service>
- */
- 
-/**
- * <category>Online services</category>
- * <Description>
- *	ReadStatus service. Returns callstack information about the active Task of the current Application.
- *	TAG_APPL_TASK_INDEX may be optionally transferred preceding TAG_APPL_ID to request a specific task.
- * </Description>
- * <service name="SRV_READ_CALLSTACK">
- *	<Request>
- *		<tag name="TAG_APPL_APPLICATIONDESC" required="mandatory">Top level</tag>
- *			<tag name="TAG_APPL_TASK_INDEX" required="optional">[RTS_UI32]: Task index</tag>
- *			<tag name="TAG_APPL_ID" required="mandatory">[RTS_UI32]: Session ID</tag>
- *	</Request>
- *	<Response>
- *		<tag name="READ_STATUS_REPLY" required="mandatory">Top level tag may contain the following sub tags</tag>
- *			<tag name="READ_STATUS_STACKPOINTER" required="optional">[RTS_UINTPTR]: Stackpointer</tag>
- *			<tag name="READ_STATUS_EXECUTIONPOSITION" required="optional">[RTS_UI16, RTS_UI32]: Area, Offset of callstackEntry</tag>
- *			<tag name="READ_STATUS_INSTANCEPOSITION" required="optional">[RTS_UI16, RTS_UI32]: AreaInstance, OffsetInstance of callstackEntry</tag>
- *	</Response>
- * </service>
- */
 
- 
+
 /**
  * <category>Online reply tags</category>
  * <description>
@@ -2667,7 +2706,7 @@ typedef struct tagappcallgetproperty_struct
 	RTS_IEC_RESULT AppCallGetProperty;	/* VAR_OUTPUT */	
 } appcallgetproperty_struct;
 
-DEF_API(`void',`CDECL',`appcallgetproperty',`(appcallgetproperty_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xD99D7FC0),0x03050D00)
+DEF_API(`void',`CDECL',`appcallgetproperty',`(appcallgetproperty_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xD99D7FC0),0x03050F00)
 
 /**
  * <description>appcallgetproperty2</description>
@@ -2681,7 +2720,7 @@ typedef struct tagappcallgetproperty2_struct
 	RTS_IEC_RESULT AppCallGetProperty2;	/* VAR_OUTPUT */	
 } appcallgetproperty2_struct;
 
-DEF_API(`void',`CDECL',`appcallgetproperty2',`(appcallgetproperty2_struct *p)',1,RTSITF_GET_SIGNATURE(0xD878B9FD, 0x689760F7),0x03050D00)
+DEF_API(`void',`CDECL',`appcallgetproperty2',`(appcallgetproperty2_struct *p)',1,RTSITF_GET_SIGNATURE(0xD878B9FD, 0x689760F7),0x03050F00)
 
 /**
  * <description>appcallgetproperty2release</description>
@@ -2692,7 +2731,7 @@ typedef struct tagappcallgetproperty2release_struct
 	RTS_IEC_RESULT AppCallGetProperty2Release;	/* VAR_OUTPUT */	
 } appcallgetproperty2release_struct;
 
-DEF_API(`void',`CDECL',`appcallgetproperty2release',`(appcallgetproperty2release_struct *p)',1,0x664A62E3,0x03050D00)
+DEF_API(`void',`CDECL',`appcallgetproperty2release',`(appcallgetproperty2release_struct *p)',1,0x664A62E3,0x03050F00)
 
 /**
  * <description>appcallgetproperty3</description>
@@ -2707,7 +2746,7 @@ typedef struct tagappcallgetproperty3_struct
 	RTS_IEC_RESULT AppCallGetProperty3;	/* VAR_OUTPUT */	
 } appcallgetproperty3_struct;
 
-DEF_API(`void',`CDECL',`appcallgetproperty3',`(appcallgetproperty3_struct *p)',1,RTSITF_GET_SIGNATURE(0xBF6A68AE, 0x7B834B31),0x03050D00)
+DEF_API(`void',`CDECL',`appcallgetproperty3',`(appcallgetproperty3_struct *p)',1,RTSITF_GET_SIGNATURE(0xBF6A68AE, 0x7B834B31),0x03050F00)
 
 /**
  * <description>appcallsetproperty</description>
@@ -2721,7 +2760,7 @@ typedef struct tagappcallsetproperty_struct
 	RTS_IEC_RESULT AppCallSetProperty;	/* VAR_OUTPUT */	
 } appcallsetproperty_struct;
 
-DEF_API(`void',`CDECL',`appcallsetproperty',`(appcallsetproperty_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xF7790D93),0x03050D00)
+DEF_API(`void',`CDECL',`appcallsetproperty',`(appcallsetproperty_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xF7790D93),0x03050F00)
 
 /**
  * <description>appcallsetproperty2</description>
@@ -2736,7 +2775,7 @@ typedef struct tagappcallsetproperty2_struct
 	RTS_IEC_RESULT AppCallSetProperty2;	/* VAR_OUTPUT */	
 } appcallsetproperty2_struct;
 
-DEF_API(`void',`CDECL',`appcallsetproperty2',`(appcallsetproperty2_struct *p)',1,RTSITF_GET_SIGNATURE(0xBD1C4550, 0x55680C24),0x03050D00)
+DEF_API(`void',`CDECL',`appcallsetproperty2',`(appcallsetproperty2_struct *p)',1,RTSITF_GET_SIGNATURE(0xBD1C4550, 0x55680C24),0x03050F00)
 
 /**
  * <description>appfindapplicationbyname</description>
@@ -2748,7 +2787,7 @@ typedef struct tagappfindapplicationbyname_struct
 	APPLICATION *AppFindApplicationByName;	/* VAR_OUTPUT */	
 } appfindapplicationbyname_struct;
 
-DEF_API(`void',`CDECL',`appfindapplicationbyname',`(appfindapplicationbyname_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xDAD101B7),0x03050D00)
+DEF_API(`void',`CDECL',`appfindapplicationbyname',`(appfindapplicationbyname_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xDAD101B7),0x03050F00)
 
 /**
  * <description>appgenerateexception</description>
@@ -2760,7 +2799,7 @@ typedef struct tagappgenerateexception_struct
 	RTS_IEC_RESULT AppGenerateException;	/* VAR_OUTPUT */	
 } appgenerateexception_struct;
 
-DEF_API(`void',`CDECL',`appgenerateexception',`(appgenerateexception_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xCAFA8E41),0x03050D00)
+DEF_API(`void',`CDECL',`appgenerateexception',`(appgenerateexception_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xCAFA8E41),0x03050F00)
 
 /**
  * <description>appgetapplicationbyareaaddress</description>
@@ -2771,7 +2810,19 @@ typedef struct tagappgetapplicationbyareaaddress_struct
 	APPLICATION *AppGetApplicationByAreaAddress;	/* VAR_OUTPUT */	
 } appgetapplicationbyareaaddress_struct;
 
-DEF_API(`void',`CDECL',`appgetapplicationbyareaaddress',`(appgetapplicationbyareaaddress_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x7EE9B1A3),0x03050D00)
+DEF_API(`void',`CDECL',`appgetapplicationbyareaaddress',`(appgetapplicationbyareaaddress_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x7EE9B1A3),0x03050F00)
+
+/**
+ * <description>appgetapplicationflags</description>
+ */
+typedef struct tagappgetapplicationflags_struct
+{
+	APPLICATION *pApp;					/* VAR_INPUT */	
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
+	RTS_IEC_UDINT AppGetApplicationFlags;	/* VAR_OUTPUT */	
+} appgetapplicationflags_struct;
+
+DEF_API(`void',`CDECL',`appgetapplicationflags',`(appgetapplicationflags_struct *p)',1,0xE9465BFE,0x03050F00)
 
 /**
  * <description>appgetapplicationinfo</description>
@@ -2783,7 +2834,7 @@ typedef struct tagappgetapplicationinfo_struct
 	APPLICATION_INFO *AppGetApplicationInfo;	/* VAR_OUTPUT */	
 } appgetapplicationinfo_struct;
 
-DEF_API(`void',`CDECL',`appgetapplicationinfo',`(appgetapplicationinfo_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x49DD3432),0x03050D00)
+DEF_API(`void',`CDECL',`appgetapplicationinfo',`(appgetapplicationinfo_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x49DD3432),0x03050F00)
 
 /**
  * <description>appgetareaaddress</description>
@@ -2796,7 +2847,7 @@ typedef struct tagappgetareaaddress_struct
 	RTS_IEC_BYTE *AppGetAreaAddress;	/* VAR_OUTPUT */	
 } appgetareaaddress_struct;
 
-DEF_API(`void',`CDECL',`appgetareaaddress',`(appgetareaaddress_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x6C9E6C94),0x03050D00)
+DEF_API(`void',`CDECL',`appgetareaaddress',`(appgetareaaddress_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x6C9E6C94),0x03050F00)
 
 /**
  * <description>appgetareaoffsetbyaddress</description>
@@ -2810,7 +2861,7 @@ typedef struct tagappgetareaoffsetbyaddress_struct
 	RTS_IEC_RESULT AppGetAreaOffsetByAddress;	/* VAR_OUTPUT */	
 } appgetareaoffsetbyaddress_struct;
 
-DEF_API(`void',`CDECL',`appgetareaoffsetbyaddress',`(appgetareaoffsetbyaddress_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x356243D6),0x03050D00)
+DEF_API(`void',`CDECL',`appgetareaoffsetbyaddress',`(appgetareaoffsetbyaddress_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x356243D6),0x03050F00)
 
 /**
  * <description>appgetareapointer</description>
@@ -2823,7 +2874,7 @@ typedef struct tagappgetareapointer_struct
 	RTS_IEC_RESULT AppGetAreaPointer;	/* VAR_OUTPUT */	
 } appgetareapointer_struct;
 
-DEF_API(`void',`CDECL',`appgetareapointer',`(appgetareapointer_struct *p)',1,0x6AC4CD9A,0x03050D00)
+DEF_API(`void',`CDECL',`appgetareapointer',`(appgetareapointer_struct *p)',1,0x6AC4CD9A,0x03050F00)
 
 /**
  * <description>appgetareasize</description>
@@ -2836,7 +2887,7 @@ typedef struct tagappgetareasize_struct
 	RTS_IEC_XWORD AppGetAreaSize;		/* VAR_OUTPUT */	
 } appgetareasize_struct;
 
-DEF_API(`void',`CDECL',`appgetareasize',`(appgetareasize_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x362BAF2A),0x03050D00)
+DEF_API(`void',`CDECL',`appgetareasize',`(appgetareasize_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x362BAF2A),0x03050F00)
 
 /**
  * <description>appgetcurrent</description>
@@ -2847,7 +2898,7 @@ typedef struct tagappgetcurrent_struct
 	APPLICATION *AppGetCurrent;			/* VAR_OUTPUT */	
 } appgetcurrent_struct;
 
-DEF_API(`void',`CDECL',`appgetcurrent',`(appgetcurrent_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x9EE77745),0x03050D00)
+DEF_API(`void',`CDECL',`appgetcurrent',`(appgetcurrent_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x9EE77745),0x03050F00)
 
 /**
  * <description>appgetfirstapp</description>
@@ -2858,7 +2909,7 @@ typedef struct tagappgetfirstapp_struct
 	APPLICATION *AppGetFirstApp;		/* VAR_OUTPUT */	
 } appgetfirstapp_struct;
 
-DEF_API(`void',`CDECL',`appgetfirstapp',`(appgetfirstapp_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x75BD6F20),0x03050D00)
+DEF_API(`void',`CDECL',`appgetfirstapp',`(appgetfirstapp_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x75BD6F20),0x03050F00)
 
 /**
  * <description>appgetnextapp</description>
@@ -2870,7 +2921,7 @@ typedef struct tagappgetnextapp_struct
 	APPLICATION *AppGetNextApp;			/* VAR_OUTPUT */	
 } appgetnextapp_struct;
 
-DEF_API(`void',`CDECL',`appgetnextapp',`(appgetnextapp_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xD98C0DF3),0x03050D00)
+DEF_API(`void',`CDECL',`appgetnextapp',`(appgetnextapp_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xD98C0DF3),0x03050F00)
 
 /**
  * <description>appgetprojectinformation</description>
@@ -2882,7 +2933,7 @@ typedef struct tagappgetprojectinformation_struct
 	RTS_IEC_RESULT AppGetProjectInformation;	/* VAR_OUTPUT */	
 } appgetprojectinformation_struct;
 
-DEF_API(`void',`CDECL',`appgetprojectinformation',`(appgetprojectinformation_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xA736D4E6),0x03050D00)
+DEF_API(`void',`CDECL',`appgetprojectinformation',`(appgetprojectinformation_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xA736D4E6),0x03050F00)
 
 /**
  * <description>appgetsegment</description>
@@ -2895,12 +2946,12 @@ typedef struct tagappgetsegment_struct
 	APP_MEMORY_SEGMENT *AppGetSegment;	/* VAR_OUTPUT */	
 } appgetsegment_struct;
 
-DEF_API(`void',`CDECL',`appgetsegment',`(appgetsegment_struct *p)',1,0xE7291359,0x03050D00)
+DEF_API(`void',`CDECL',`appgetsegment',`(appgetsegment_struct *p)',1,0xE7291359,0x03050F00)
 
 /**
  * <description>
- *	This function retuns the start address of an IEC segment. All segments resides within an area.
- *	This is used to get access for example to the beginning of the output processimage segment (%Q = AreaType.DA_OUTPUT).
+ *	This function returns the start address of an IEC segment. All segments resides within an area.
+ *	This is used to get access for example to the beginning of the output process image segment (%Q = AreaType.DA_OUTPUT).
  * </description>
  * <param name="pApp" type="IN">Pointer to Application</param>
  * <param name="wType" type="IN">Area type</param>
@@ -2915,12 +2966,12 @@ typedef struct tagappgetsegmentaddress_struct
 	RTS_IEC_BYTE *AppGetSegmentAddress;	/* VAR_OUTPUT */	
 } appgetsegmentaddress_struct;
 
-DEF_API(`void',`CDECL',`appgetsegmentaddress',`(appgetsegmentaddress_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xA1837EC1),0x03050D00)
+DEF_API(`void',`CDECL',`appgetsegmentaddress',`(appgetsegmentaddress_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xA1837EC1),0x03050F00)
 
 /**
  * <description>
- *	This function retuns the start size of an IEC segment. All segments resides within an area.
- *	This is used to get access for example to the size of the output processimage segment (%Q = AreaType.DA_OUTPUT).
+ *	This function returns the start size of an IEC segment. All segments resides within an area.
+ *	This is used to get access for example to the size of the output process image segment (%Q = AreaType.DA_OUTPUT).
  * </description>
  * <param name="pApp" type="IN">Pointer to Application</param>
  * <param name="wType" type="IN">Area type</param>
@@ -2935,7 +2986,7 @@ typedef struct tagappgetsegmentsize_struct
 	RTS_IEC_UXINT AppGetSegmentSize;	/* VAR_OUTPUT */	
 } appgetsegmentsize_struct;
 
-DEF_API(`void',`CDECL',`appgetsegmentsize',`(appgetsegmentsize_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xC1200062),0x03050D00)
+DEF_API(`void',`CDECL',`appgetsegmentsize',`(appgetsegmentsize_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xC1200062),0x03050F00)
 
 /**
  * <description>appnumofactivesessions</description>
@@ -2947,7 +2998,7 @@ typedef struct tagappnumofactivesessions_struct
 	RTS_IEC_RESULT AppNumOfActiveSessions;	/* VAR_OUTPUT */	
 } appnumofactivesessions_struct;
 
-DEF_API(`void',`CDECL',`appnumofactivesessions',`(appnumofactivesessions_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x28A577B6),0x03050D00)
+DEF_API(`void',`CDECL',`appnumofactivesessions',`(appnumofactivesessions_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x28A577B6),0x03050F00)
 
 /**
  * <description>appregisterpropaccessfunctions</description>
@@ -2962,7 +3013,7 @@ typedef struct tagappregisterpropaccessfunctions_struct
 	RTS_IEC_RESULT AppRegisterPropAccessFunctions;	/* VAR_OUTPUT */	
 } appregisterpropaccessfunctions_struct;
 
-DEF_API(`void',`CDECL',`appregisterpropaccessfunctions',`(appregisterpropaccessfunctions_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xF72A3B0A),0x03050D00)
+DEF_API(`void',`CDECL',`appregisterpropaccessfunctions',`(appregisterpropaccessfunctions_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xF72A3B0A),0x03050F00)
 
 /**
  * <description>appreset</description>
@@ -2974,7 +3025,7 @@ typedef struct tagappreset_struct
 	RTS_IEC_RESULT AppReset;			/* VAR_OUTPUT */	
 } appreset_struct;
 
-DEF_API(`void',`CDECL',`appreset',`(appreset_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x03B85B28),0x03050D00)
+DEF_API(`void',`CDECL',`appreset',`(appreset_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x03B85B28),0x03050F00)
 
 /**
  * <description>apprestoreretainsfromfile</description>
@@ -2986,7 +3037,7 @@ typedef struct tagapprestoreretainsfromfile_struct
 	RTS_IEC_RESULT AppRestoreRetainsFromFile;	/* VAR_OUTPUT */	
 } apprestoreretainsfromfile_struct;
 
-DEF_API(`void',`CDECL',`apprestoreretainsfromfile',`(apprestoreretainsfromfile_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x32542AD7),0x03050D00)
+DEF_API(`void',`CDECL',`apprestoreretainsfromfile',`(apprestoreretainsfromfile_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x32542AD7),0x03050F00)
 
 /**
  * <description>appstartapplication</description>
@@ -2997,7 +3048,7 @@ typedef struct tagappstartapplication_struct
 	RTS_IEC_RESULT AppStartApplication;	/* VAR_OUTPUT */	
 } appstartapplication_struct;
 
-DEF_API(`void',`CDECL',`appstartapplication',`(appstartapplication_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x71CC8510),0x03050D00)
+DEF_API(`void',`CDECL',`appstartapplication',`(appstartapplication_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x71CC8510),0x03050F00)
 
 /**
  * <description>appstopapplication</description>
@@ -3008,7 +3059,7 @@ typedef struct tagappstopapplication_struct
 	RTS_IEC_RESULT AppStopApplication;	/* VAR_OUTPUT */	
 } appstopapplication_struct;
 
-DEF_API(`void',`CDECL',`appstopapplication',`(appstopapplication_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xEE13E070),0x03050D00)
+DEF_API(`void',`CDECL',`appstopapplication',`(appstopapplication_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xEE13E070),0x03050F00)
 
 /**
  * <description>appstoreretainsinfile</description>
@@ -3020,7 +3071,7 @@ typedef struct tagappstoreretainsinfile_struct
 	RTS_IEC_RESULT AppStoreRetainsInFile;	/* VAR_OUTPUT */	
 } appstoreretainsinfile_struct;
 
-DEF_API(`void',`CDECL',`appstoreretainsinfile',`(appstoreretainsinfile_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xCBCA082E),0x03050D00)
+DEF_API(`void',`CDECL',`appstoreretainsinfile',`(appstoreretainsinfile_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xCBCA082E),0x03050F00)
 
 #ifdef __cplusplus
 }
@@ -3070,7 +3121,7 @@ DEF_ITF_API(`APPLICATION*', `CDECL', `AppCreateApplication', `(char* pszAppName,
  * <description>Prepares a new download or online-change</description>
  * <param name="pApp" type="IN">Pointer to the specified application description</param>
  * <param name="bOnlineChange" type="IN">1=Online change, 0=Download</param>
- * <param name="bCreateBootproject" type="IN">1=Create implicitly a bootproject, 0=Create no bootproject</param>
+ * <param name="bCreateBootproject" type="IN">1=Create implicitly a boot application, 0=Create no boot application</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppPrepareDownload', `(APPLICATION* pApp, int bOnlineChange, int bCreateBootproject)')
@@ -3083,7 +3134,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppPrepareDownload', `(APPLICATION* pApp, in
  * <param name="pbyCode" type="IN">Pointer to code part</param>
  * <param name="ulCodeLen" type="IN">Code fragment length</param>
  * <param name="ulCodeOffset" type="IN">Code offset of the fragment, to write to</param>
- * <param name="bLoadBootproject" type="IN">1=Function is called at loading bootproject, 0=Else (e.g. at download sequence)</param>
+ * <param name="bLoadBootproject" type="IN">1=Function is called at loading boot application, 0=Else (e.g. at download sequence)</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppAppendCode', `(APPLICATION *pApp, RTS_UI8 *pbyCode, RTS_SIZE ulCodeLen, RTS_SIZE ulCodeOffset, int bLoadBootproject)')
@@ -3122,7 +3173,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppNumOfActiveSessions', `(APPLICATION *pApp
 
 /**
  * <description>Retrieves an application by name</description>
- * <param name="pszBootprojectName" type="IN">Pointer to name of the bootproject. Must not be the application name!</param>
+ * <param name="pszBootprojectName" type="IN">Pointer to name of the boot application. Must not be the application name!</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <result>Pointer to the application description</result>
  */
@@ -3152,7 +3203,7 @@ DEF_ITF_API(`APPLICATION*', `CDECL', `AppFindApplicationById', `(int iId, RTS_RE
 DEF_ITF_API(`int',  `CDECL', `AppGetNumOfApplications', `(void)')
 
 /**
- * <description>Retrieves an application description sepcified by index</description>
+ * <description>Retrieves an application description specified by index</description>
  * <param name="iIndex" type="IN" range="[0..APPL_NUM_OF_STATIC_APPLS-1,APPL_NUM_OF_STATIC_APPLS..INT_MAX]">Index of the application list.</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Application successfully retrieved</errorcode>
@@ -3163,10 +3214,10 @@ DEF_ITF_API(`APPLICATION*',  `CDECL', `AppGetApplicationByIndex', `(int iIndex, 
 
 
 /**
- * <description>Retrieves an application description which contains the specified memory address or NULL if failed (memory cannot be assiciated to an application)</description>
+ * <description>Retrieves an application description which contains the specified memory address or NULL if failed (memory cannot be associated to an application)</description>
  * <param name="pAddress" type="IN">Pointer to memory</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <result>Pointer to the application description or NULL if memory pointer cannot be assiciated to an application</result>
+ * <result>Pointer to the application description or NULL if memory pointer cannot be associated to an application</result>
  */
 DEF_ITF_API(`APPLICATION *', `CDECL', `AppGetApplicationByAreaAddress', `(void *pAddress, RTS_RESULT *pResult)')
 
@@ -3174,7 +3225,7 @@ DEF_ITF_API(`APPLICATION *', `CDECL', `AppGetApplicationByAreaAddress', `(void *
  * <description>Retrieves the pointer to a memory area specified by index</description>
  * <param name="pApp" type="IN" range="[NULL,VALID_PAPP]">Pointer to the specified application description</param>
  * <param name="iArea" type="IN" range="[-1,VALID_AREA_TYPE,(APPL_NUM_OF_STATIC_AREAS - 1)]">Area index</param>
- * <param name="ppucArea" type="OUT">Pointer pointer to the area</param>
+ * <param name="ppucArea" type="OUT">Pointer to pointer to the area</param>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">Pointer to Area successfully retrieved</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Parameter pApp may not be null, iArea may not be out of range: 0 - APPL_NUM_OF_STATIC_AREAS - 1</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Pointer to Area could not be retrieved</errorcode>
@@ -3186,7 +3237,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppGetAreaPointer', `(APPLICATION *pApp, int
  * <description>Retrieves the pointer and size of a memory area specified by index</description>
  * <param name="pApp" type="IN" range="[NULL,VALID_PAPP]">Pointer to the specified application description</param>
  * <param name="iArea" type="IN" range="[-1,VALID_AREA_TYPE,(APPL_NUM_OF_STATIC_AREAS - 1)]">Area index</param>
- * <param name="ppucArea" type="OUT">Pointer pointer to the area. Can be NULL to get only the area size.</param>
+ * <param name="ppucArea" type="OUT">Pointer to pointer to the area. Can be NULL to get only the area size.</param>
  * <param name="pulSize" type="OUT">Pointer to size to return the area size. Can be NULL to get only the area address.</param>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">Pointer to Area successfully retrieved</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Parameter pApp may not be null, iArea may not be out of range: 0 - APPL_NUM_OF_STATIC_AREAS - 1</errorcode>
@@ -3200,7 +3251,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppGetAreaPointer2', `(APPLICATION *pApp, RT
  * <param name="pszAppName" type="IN">Application name</param>
  * <param name="iArea" type="IN">Area index</param>
  * <param name="usType" type="IN">Area type. See category "Area Types" in SysMemItf.h.</param>
- * <param name="ppucArea" type="OUT">Pointer pointer to the area</param>
+ * <param name="ppucArea" type="OUT">Pointer to pointer to the area</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppGetAreaPointerByType', `(char* pszAppName, int iArea, RTS_UI16 usType, unsigned char **ppucArea)')
@@ -3278,7 +3329,7 @@ DEF_ITF_API(`unsigned long', `CDECL', `AppGetState', `(APPLICATION *pApp, RTS_RE
  * <description>Set the operating state of an application</description>
  * <param name="pApp" type="IN">Pointer to the specified application description</param>
  * <param name="ulOpState" type="IN">Operating state of an application. This is an information, which job or
- *	operating possibilities of the application are set actually. There could be several active opertating states 
+ *	operating possibilities of the application are set actually. There could be several active operating states 
  *	at the same time!</param>
  * <result>error code</result>
  */
@@ -3307,8 +3358,8 @@ DEF_ITF_API(`unsigned long', `CDECL', `AppGetOperatingState', `(APPLICATION *pAp
  * <description>Sets the code id of the application. The code id is a unique number that
  *	specifies the code content of an application.</description>
  * <param name="pApp" type="IN" range="[NULL,VALID_PAPP]">Pointer to the specified application description</param>
- * <param name="pCodeGuid" type="IN" range="[NULL,VALID_PCODEGUID]">Pointer to code guid</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Code Guid was set successful</errorcode>
+ * <param name="pCodeGuid" type="IN" range="[NULL,VALID_PCODEGUID]">Pointer to code GUID</param>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Code GUID was set successful</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Parameter may not be null</errorcode>
  * <result>error code</result>
  */
@@ -3318,8 +3369,8 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppSetCodeGuid', `(APPLICATION *pApp, RTS_GU
  * <description>Retrieves the code id of the application. The code id is a unique number that
  *	specifies the code content of an application.</description>
  * <param name="pApp" type="IN" range="[NULL,VALID_PAPP]">Pointer to the specified application description</param>
- * <param name="pCodeGuid" type="OUT" range="[NULL,VALID_PCODEGUID]">Pointer to code guid</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Code Guid was set successfully</errorcode>
+ * <param name="pCodeGuid" type="OUT" range="[NULL,VALID_PCODEGUID]">Pointer to code GUID</param>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Code GUID was set successfully</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Parameter may not be null</errorcode>
  * <result>error code</result>
  */
@@ -3329,8 +3380,8 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppGetCodeGuid', `(APPLICATION *pApp, RTS_GU
  * <description>Sets the data id of the application. The data id is a unique number that
  *	specifies the data configuration of an application.</description>
  * <param name="pApp" type="IN" range="[NULL,VALID_PAPP]">Pointer to the specified application description</param>
- * <param name="pDataGuid" type="IN" range="[NULL,VALID_PDATAGUID]">Pointer to data guid</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Data Guid was set successful</errorcode>
+ * <param name="pDataGuid" type="IN" range="[NULL,VALID_PDATAGUID]">Pointer to data GUID</param>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Data GUID was set successful</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Parameter may not be null</errorcode>
  * <result>error code</result>
  */
@@ -3340,19 +3391,19 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppSetDataGuid', `(APPLICATION *pApp, RTS_GU
  * <description>Retrieves the data id of the application. The data id is a unique number that
  *	specifies the data configuration of an application.</description>
  * <param name="pApp" type="IN" range="[NULL,VALID_PAPP]">Pointer to the specified application description</param>
- * <param name="pDataGuid" type="OUT" range="[NULL,VALID_PDATAGUID]">Pointer to data guid</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Get data Guid was successfully</errorcode>
+ * <param name="pDataGuid" type="OUT" range="[NULL,VALID_PDATAGUID]">Pointer to data GUID</param>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Get data GUID was successfully</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Parameter may not be null</errorcode>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppGetDataGuid', `(APPLICATION *pApp, RTS_GUID *pDataGuid)')
 
 /**
- * <description>Retrieves the code and data guid of the bootproject of the given application.
- *	This function can be used to compare the guids of the loaded application with the bootproject.</description>
+ * <description>Retrieves the code and data GUID of the boot application of the given application.
+ *	This function can be used to compare the GUIDS of the loaded application with the boot application.</description>
  * <param name="pApp" type="IN">Pointer to the specified application description</param>
- * <param name="pCodeGuid" type="OUT">Pointer to code guid</param>
- * <param name="pDataGuid" type="OUT">Pointer to data guid</param>
+ * <param name="pCodeGuid" type="OUT">Pointer to code GUID</param>
+ * <param name="pDataGuid" type="OUT">Pointer to data GUID</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppGetBootprojectGuids', `(APPLICATION *pApp, RTS_GUID *pCodeGuid, RTS_GUID *pDataGuid)')
@@ -3385,21 +3436,21 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppReset', `(APPLICATION* pApp, RTS_UI16 usR
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppResetAllApplications', `(RTS_UI16 usResetOption)')
 
 /**
- * <description>Load all registered bootprojects</description>
+ * <description>Load all registered boot applications</description>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppLoadBootprojects', `(void)')
 
 /**
- * <description>Start all registered bootprojects</description>
+ * <description>Start all registered boot applications</description>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppStartBootprojects', `(void)')
 
 /**
- * <description>Load a bootproject with the specified application name</description>
+ * <description>Load a boot application with the specified application name</description>
  * <param name="pszAppName" type="IN">Pointer to the NUL terminated application name</param>
- * <param name="pszFilePath" type="IN">File path for the bootproject</param>
+ * <param name="pszFilePath" type="IN">File path for the boot application</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppLoadBootproject', `(char *pszAppName, char *pszFilePath)')
@@ -3430,6 +3481,10 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppStartApplication', `(APPLICATION *pApp)')
  * <param name="ulTimeoutMs" type="IN">Timeout in milliseconds to wait for stop. RTS_TIMEOUT_DEFAULT can be used as the default value</param>
  * <param name="ulStopReason" type="IN">Stop reason, See corresponding category</param>
  * <result>error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Application could be stopped and is now in state AS_STOP</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid parameter</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_TIMEOUT">Application could not be stopped within the specified timeout</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Application failed to stop</errorcode>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppStopApplications', `(RTS_UI32 ulTimeoutMs, RTS_UI32 ulStopReason)')
 
@@ -3468,7 +3523,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppExitApplication2', `(APPLICATION *pApp, R
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppExitApplications', `(RTS_UI32 ulExitReason, RTS_UI32 ulTimeoutMs)')
 
 /**
- * <description>Delete an application. Bootproject will not deleted!</description>
+ * <description>Delete an application. Boot application will not deleted!</description>
  * <param name="pApp" type="IN">Pointer to the application</param>
  * <param name="ulDeleteReason" type="IN">Reason for the delete, see category "Operation reason" for details</param>
  * <result>error code</result>
@@ -3476,14 +3531,14 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppExitApplications', `(RTS_UI32 ulExitReaso
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppDeleteApplication', `(APPLICATION *pApp, RTS_UI32 ulDeleteReason)')
 
 /**
- * <description>Delete all applications. Bootprojects will not be deleted!</description>
+ * <description>Delete all applications. Boot applications will not be deleted!</description>
  * <param name="ulDeleteReason" type="IN">Reason for the delete, see category "Operation reason" for details</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppDeleteApplications', `(RTS_UI32 ulDeleteReason)')
 
 /**
- * <description>Delete a bootproject (corresponding loaded application will not be affected or deleted!)</description>
+ * <description>Delete a boot application (corresponding loaded application will not be affected or deleted!)</description>
  * <param name="pApp" type="IN">Pointer to the application</param>
  * <result>error code</result>
  */
@@ -3491,7 +3546,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppDeleteBootproject', `(APPLICATION *pApp)'
 
 /**
  * <description>Add the peer address of an existing data server. This can be used from clients, that wants to
- *	get symbolic access to IEC variables. If the symbolic infromation is not available here on the controller,
+ *	get symbolic access to IEC variables. If the symbolic information is not available here on the controller,
  *	the registered data server can be used for that.</description>
  * <param name="ulSessionId" type="IN">SessionId of the communication channel</param>
  * <param name="pPeerAddr" type="IN">Pointer to the peer address of the data server</param>
@@ -3508,18 +3563,18 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppRemoveAddrDataSrv', `(RTS_UI32 ulSessionI
 
 /**
  * <description>Retrieves the peer address of the first registered data server</description>
- * <param name="ppPeerAddr" type="OUT">Pointer pointer to the peer address</param>
+ * <param name="ppPeerAddr" type="OUT">Pointer to pointer to the peer address</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <result>Handle to get the next peer addresse of a registered data server, RTS_INVALID_HANDLE if not available</result>
+ * <result>Handle to get the next peer address of a registered data server, RTS_INVALID_HANDLE if not available</result>
  */
 DEF_ITF_API(`RTS_HANDLE', `CDECL', `AppGetFirstAddrDataSrv', `(PEERADDRESS **ppPeerAddr, RTS_RESULT *pResult)')
 
 /**
  * <description>Retrieves the peer address of the first registered data server</description>
  * <param name="hAddr" type="IN">Handle, that was retrieved by the AppGetFirstAddrDataSrv() function</param>
- * <param name="ppPeerAddr" type="OUT">Pointer pointer to the peer address</param>
+ * <param name="ppPeerAddr" type="OUT">Pointer to pointer to the peer address</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <result>Handle to get the next peer addresse of a registered data server, RTS_INVALID_HANDLE if not available</result>
+ * <result>Handle to get the next peer address of a registered data server, RTS_INVALID_HANDLE if not available</result>
  */
 DEF_ITF_API(`RTS_HANDLE', `CDECL', `AppGetNextAddrDataSrv', `(RTS_HANDLE hAddr, PEERADDRESS **ppPeerAddr, RTS_RESULT *pResult)')
 
@@ -3587,7 +3642,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppRestoreRetainsFromFile', `(APPLICATION *p
  * <description>Restores the retains of an application from a file</description>
  * <param name="pApp" type="IN">Pointer to application</param>
  * <param name="pszFilename" type="IN">Name of retain file</param>
- * <param name="bGenerateException" type="IN">Select behaviour on retain mismatch: 1=Generate exception, 0=Only return error code</param>
+ * <param name="bGenerateException" type="IN">Select behavior on retain mismatch: 1=Generate exception, 0=Only return error code</param>
  * <result>Error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppRestoreRetainsFromFile2', `(APPLICATION *pApp, RTS_IEC_STRING* pszFileName, int bGenerateException)')
@@ -3605,6 +3660,8 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppSaveRetainAreas', `(APPLICATION *pApp)')
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppSaveAllRetainAreas', `(void)')
 
+DEF_ITF_API(`RTS_RESULT', `CDECL', `AppSaveAllRetainAreas2', `(RTS_BOOL bBackup, RTS_UI16 nBackupState)')
+
 /**
  * <description>Restore retain areas the standard way</description>
  * <param name="pApp" type="IN">Pointer to application</param>
@@ -3613,7 +3670,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppSaveAllRetainAreas', `(void)')
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppRestoreRetainAreas', `(APPLICATION *pApp)')
 
 /**
- * <description>This function retuns the size of an application area</description>
+ * <description>This function returns the size of an application area</description>
  * <param name="pApp" type="IN">Pointer to Application</param>
  * <param name="usType" type="IN">Area type. See category "Area Types" in SysMemItf.h.</param>
  * <param name="pResult" type="OUT">Pointer to Result</param>
@@ -3622,11 +3679,11 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppRestoreRetainAreas', `(APPLICATION *pApp)
 DEF_ITF_API(`RTS_SIZE', `CDECL', `AppGetAreaSize', `(APPLICATION* pApp, RTS_UI16 usType, RTS_RESULT* pResult)')
 
 /**
- * <description>This function retuns the start address of an application area</description>
+ * <description>This function returns the start address of an application area</description>
  * <param name="pApp" type="IN" range="[NULL,VALID_PAPP]">Pointer to the specified application description</param>
  * <param name="usType" type="IN" range="[DA_NONE,VALID_DA,INVALID_DA]">Area type. See category "Area Types" in SysMemItf.h.</param>
  * <param name="pResult" type="OUT">Pointer to Result</param>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Areapointer successfully retrieved</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Area pointer successfully retrieved</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">Parameter pApp may not be null</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">No Area for given type found</errorcode> 
  * <result>Area start address</result>
@@ -3634,7 +3691,7 @@ DEF_ITF_API(`RTS_SIZE', `CDECL', `AppGetAreaSize', `(APPLICATION* pApp, RTS_UI16
 DEF_ITF_API(`RTS_UI8*', `CDECL', `AppGetAreaAddress', `(APPLICATION* pApp, RTS_UI16 usType, RTS_RESULT* pResult)')
 
 /**
- * <description>This function retuns the segment info specified by type</description>
+ * <description>This function returns the segment info specified by type</description>
  * <param name="pApp" type="IN">Pointer to Application</param>
  * <param name="usType" type="IN">Area type. See category "Area Types" in SysMemItf.h.</param>
  * <param name="pResult" type="OUT">Pointer to Result</param>
@@ -3643,7 +3700,7 @@ DEF_ITF_API(`RTS_UI8*', `CDECL', `AppGetAreaAddress', `(APPLICATION* pApp, RTS_U
 DEF_ITF_API(`APP_MEMORY_SEGMENT *', `CDECL', `AppGetSegment', `(APPLICATION* pApp, RTS_UI16 usType, RTS_RESULT *pResult)')
 
 /**
- * <description>This function retuns the segment info specified by address</description>
+ * <description>This function returns the segment info specified by address</description>
  * <param name="pApp" type="IN">Pointer to Application</param>
  * <param name="pAddress" type="IN">Pointer to segment data</param>
  * <param name="pResult" type="OUT">Pointer to Result</param>
@@ -3653,8 +3710,8 @@ DEF_ITF_API(`APP_MEMORY_SEGMENT *', `CDECL', `AppGetSegmentByAddress', `(APPLICA
 
 /**
  * <description>
- *	This function retuns the start size of an IEC segment. All segments resides within an area.
- *	This is used to get access for example to the size of the output processimage segment (%Q).
+ *	This function returns the start size of an IEC segment. All segments resides within an area.
+ *	This is used to get access for example to the size of the output process image segment (%Q).
  * </description>
  * <param name="pApp" type="IN">Pointer to Application</param>
  * <param name="usType" type="IN">Area type. See category "Area Types" in SysMemItf.h.</param>
@@ -3665,8 +3722,8 @@ DEF_ITF_API(`RTS_SIZE', `CDECL', `AppGetSegmentSize', `(APPLICATION* pApp, RTS_U
 
 /**
  * <description>
- *	This function retuns the start address of an IEC segment. All segments resides within an area.
- *	This is used to get access for example to the beginning of the output processimage segment (%Q).
+ *	This function returns the start address of an IEC segment. All segments resides within an area.
+ *	This is used to get access for example to the beginning of the output process image segment (%Q).
  * </description>
  * <param name="pApp" type="IN">Pointer to Application</param>
  * <param name="usType" type="IN">Area type. See category "Area Types" in SysMemItf.h.</param>
@@ -3697,7 +3754,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppRegisterPropAccessFunctions', `(APPLICATI
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppGetProjectInformation', `(APPLICATION* pApp, PROJECT_INFO* pInfo)')
 
 /**
- * <description>With this function you get access to the optional IEC function in the project, which contains boolean project infomration</description>
+ * <description>With this function you get access to the optional IEC function in the project, which contains boolean project information</description>
  * <param name="pApp" type="IN">Pointer to Application</param>
  * <param name="pBooleanProperty" type="INOUT">wszKey must be set with the key (RTS_IEC_WSTRING!), as defined in the project information dialog in CoDeSys.
  *	See category "Property keys" for predefined property keys.
@@ -3707,7 +3764,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppGetProjectInformation', `(APPLICATION* pA
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppGetBooleanProperty', `(APPLICATION *pApp, BOOLEANPROPERTY *pBooleanProperty)')
 
 /**
- * <description>With this function you get access to the optional IEC function in the project, which contains text project infomration</description>
+ * <description>With this function you get access to the optional IEC function in the project, which contains text project information</description>
  * <param name="pApp" type="IN">Pointer to Application</param>
  * <param name="pTextProperty" type="INOUT">wszKey must be set with the key (RTS_IEC_WSTRING!), as defined in the project information dialog in CoDeSys.
  *	See category "Property keys" for predefined property keys.
@@ -3717,7 +3774,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppGetBooleanProperty', `(APPLICATION *pApp,
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppGetTextProperty', `(APPLICATION *pApp, TEXTPROPERTY *pTextProperty)')
 
 /**
- * <description>With this function you get access to the optional IEC function in the project, which contains text project infomration</description>
+ * <description>With this function you get access to the optional IEC function in the project, which contains text project information</description>
  * <param name="pApp" type="IN">Pointer to Application</param>
  * <param name="pNumberProperty" type="INOUT">wszKey must be set with the key (RTS_IEC_WSTRING!), as defined in the project information dialog in CoDeSys.
  *	See category "Property keys" for predefined property keys.
@@ -3727,7 +3784,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppGetTextProperty', `(APPLICATION *pApp, TE
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppGetNumberProperty', `(APPLICATION *pApp, NUMBERPROPERTY *pNumberProperty)')
 
 /**
- * <description>With this function you get access to the optional IEC function in the project, which contains text project infomration</description>
+ * <description>With this function you get access to the optional IEC function in the project, which contains text project information</description>
  * <param name="pApp" type="IN">Pointer to Application</param>
  * <param name="pVersionProperty" type="INOUT">wszKey must be set with the key (RTS_IEC_WSTRING!), as defined in the project information dialog in CoDeSys.
  *	See category "Property keys" for predefined property keys.
@@ -3744,10 +3801,10 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppGetVersionProperty', `(APPLICATION *pApp,
 DEF_ITF_API(`APPLICATION*', `CDECL', `AppGetCurrent', `(RTS_RESULT *pResult)')
 
 /**
- * <description>Check the consistency of the specified application to the files of bootproject and project archive</description>
+ * <description>Check the consistency of the specified application to the files of boot application and project archive</description>
  * <param name="pApp" type="IN">Pointer to Application</param>
- * <param name="pBootprojectConsistency" type="OUT">Pointer to result of the bootproject consistency.
- *		ERR_OK: Bootproject matches the specified application</param>
+ * <param name="pBootprojectConsistency" type="OUT">Pointer to result of the boot application consistency.
+ *		ERR_OK: Boot application matches the specified application</param>
  * <param name="pArchiveConsistency" type="OUT">Pointer to result of the archive consistency.
  *		ERR_OK: Archive matches the specified application</param>
  * <result>error code</result>
@@ -3756,7 +3813,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppCheckFileConsistency', `(APPLICATION *pAp
 
 /**
  * <description>Generate an exception on the specified application.
- *	NOTE: pApp can be NULL, so the current applicaiton in program download sequence is used!</description>
+ *	NOTE: pApp can be NULL, so the current application in program download sequence is used!</description>
  * <param name="pApp" type="IN">Pointer to Application. Can be NULL!</param>
  * <param name="ulException" type="IN">Exception code. See SysExceptItf.h for details.</param>
  * <result>error code</result>
@@ -3764,15 +3821,15 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppCheckFileConsistency', `(APPLICATION *pAp
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppGenerateException', `(APPLICATION *pApp, RTS_UI32 ulException)')
 
 /**
- * <description>Function to register a bootproject to reload at the next startup</description>
- * <param name="pszAppName" type="IN">Name of the bootproject without ending or application name</param>
+ * <description>Function to register a boot application to reload at the next startup</description>
+ * <param name="pszAppName" type="IN">Name of the boot application without ending or application name</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppRegisterBootproject', `(char *pszBootproject)')
 
 /**
- * <description>Function to unregister a bootproject to avoid reload at the next startup</description>
- * <param name="pszAppName" type="IN">Name of the bootproject without ending or application name</param>
+ * <description>Function to unregister a boot application to avoid reload at the next startup</description>
+ * <param name="pszAppName" type="IN">Name of the boot application without ending or application name</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `AppUnregisterBootproject', `(char *pszBootproject)')
@@ -3883,9 +3940,17 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `AppHasAccessRights', `(char *pszApplication,
 DEF_ITF_API(`APPLICATION_INFO *', `CDECL', `AppGetApplicationInfo', `(APPLICATION *pApp, RTS_RESULT *pResult)')
 
 /**
- * <description>Function to get the first configured bootproject.
- * <p>This pre-check may be called prior to the loading of any bootproject when functions like AppGetFirstApp, AppGetNextApp, AppGetNumOfApplications are not yet initialized.</p>
- * <p>To get the next bootpoject, call AppGetNextConfiguredBootproject with the returned iteration handle.</p>
+ * <description>Get the application flags</description>
+ * <param name="pApp" type="IN">Pointer to Application</param>
+ * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <result>Application flags</result>
+ */
+DEF_ITF_API(`RTS_UI32', `CDECL', `AppGetApplicationFlags', `(APPLICATION *pApp, RTS_RESULT *pResult)')
+
+/**
+ * <description>Function to get the first configured boot application.
+ * <p>This pre-check may be called prior to the loading of any boot application when functions like AppGetFirstApp, AppGetNextApp, AppGetNumOfApplications are not yet initialized.</p>
+ * <p>To get the next boot application, call AppGetNextConfiguredBootproject with the returned iteration handle.</p>
  * <p>IMPLEMENTATION NOTE: This function may be called prior to CH_INIT_TASKS but after CH_INIT</p>
  * </description>
  * <param name="pszAppName" type="OUT">Pointer to the buffer for application name</param>
@@ -3895,12 +3960,12 @@ DEF_ITF_API(`APPLICATION_INFO *', `CDECL', `AppGetApplicationInfo', `(APPLICATIO
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">An application name is successfully found and returned.</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">Invalid parameter (pointer NULL or length 0)</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_END_OF_OBJECT">No more entries found.</errorcode>
- * <result>Interation handle</result>
+ * <result>Iteration handle</result>
  */
 DEF_ITF_API(`RTS_HANDLE', `CDECL', `AppGetFirstConfiguredBootproject', `(char *pszAppName, RTS_I32 nMaxAppName, RTS_BOOL bCheckFile, RTS_RESULT *pResult)')
 
 /**
- * <description>Function to get the next configured bootproject.
+ * <description>Function to get the next configured boot application.
  * <p>This function is called at first with the iteration handle of AppGetFirstConfiguredBootproject. The next call requires the iteration handle of the previous call of AppGetNextConfiguredBootproject.</p>
  * <p>For more information see AppGetFirstConfiguredBootproject.</p>
  * </description>
@@ -3912,7 +3977,7 @@ DEF_ITF_API(`RTS_HANDLE', `CDECL', `AppGetFirstConfiguredBootproject', `(char *p
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">An application name is successfully found and returned.</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">Invalid parameter (pointer NULL or length 0)</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_END_OF_OBJECT">No more entries found.</errorcode>
- * <result>Interation handle</result>
+ * <result>Iteration handle</result>
  */
 DEF_ITF_API(`RTS_HANDLE', `CDECL', `AppGetNextConfiguredBootproject', `(RTS_HANDLE hPrev, char *pszAppName, RTS_I32 nMaxAppName, RTS_BOOL bCheckFile, RTS_RESULT *pResult)')
 

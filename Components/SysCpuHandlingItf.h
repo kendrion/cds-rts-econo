@@ -1,13 +1,13 @@
  /**
  * <interfacename>SysCpuHandling</interfacename>
  * <description> 
- *	<p>The SysCpuHandling interface contains all cpu specific routines.</p>
+ *	<p>The SysCpuHandling interface contains all CPU specific routines.</p>
  *	<p>To detect, for which platform the component is compiled, there are special defines that must be set
- *	in sysdefines.h dependant of the compiler specific options (see category "Processor ID" in SysTargetItf.h)</p>
+ *	in sysdefines.h dependent of the compiler specific options (see category "Processor ID" in SysTargetItf.h)</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -38,7 +38,7 @@
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>for realtime requirements. opens /dev/cpu_dma_latency and writes a zero to it. This will prevent transitions to deep sleep states. Additionally it emulates the idle=poll behavior</description>
+ * <description>for real-time requirements. opens /dev/cpu_dma_latency and writes a zero to it. This will prevent transitions to deep sleep states. Additionally it emulates the idle=poll behavior</description>
  */
 #define SYSCPUHANDLINGKEY_INT_LINUX_DISABLE_CPU_DMA_LATENCY				"Linux.DisableCpuDmaLatency"
 #define SYSCPUHANDLINGKEY_INT_LINUX_DISABLE_CPU_DMA_LATENCY_DEFAULT		0
@@ -55,11 +55,11 @@
 
 
 /**
- * <category>Platform defines - IEC codegenerator specific!</category>
+ * <category>Platform defines - IEC code-generator specific!</category>
  * <description>
  *	Stack alignment.
  *	NOTE:
- *	Must match to the following Codegenerator TargetSetting in the DeviceDescription of the target:
+ *	Must match to the following code-generator TargetSetting in the DeviceDescription of the target:
  *		<ts:section name="codegenerator">
  *			<ts:section name="memory-layout">
  *				<ts:setting name="stack-alignment" type="integer" access="visible">
@@ -93,7 +93,7 @@
 
 
 /**
- * <category>Platform defines - IEC codegenerator specific!</category>
+ * <category>Platform defines - IEC code-generator specific!</category>
  * <description>
  *	Size of the register save area in number of saved registers! Is used for locating the return address
  *	of an external library call in SysCpuGetCallstackEntry2().
@@ -119,7 +119,7 @@
 
 
 /**
- * <category>Platform defines - IEC codegenerator specific!</category>
+ * <category>Platform defines - IEC code-generator specific!</category>
  * <description>
  *	Processor specific adjustment of offset for stack examination. 
  *  Is used for locating the return address of an external library 
@@ -133,7 +133,7 @@
 
 /**
  * <category>Platform defines</category>
- * <description>Nop opcode definitions. Is used by CmpSchedule to detect the breakpoint position after external library call to suspend task!</description>							  
+ * <description>NOP opcode definitions. Is used by CmpSchedule to detect the breakpoint position after external library call to suspend task!</description>							  
  */
 #ifndef SYSCPU_NOP_OPCODE
 	#if defined(TRG_X86)
@@ -215,7 +215,7 @@
 /**
  * <category>Register Offsets</category>
  * <description>
- *	The syscpudebughandler function stores the register context to stack on enty and calls
+ *	The syscpudebughandler function stores the register context to stack on entry and calls
  *	AppDebugHandler2() function with the register context, which is system specific.
  *	According to the currently used CPU one of those stored registers, which is addressed
  *	by register number, is tried to be set in the SysCpuSetRegisterValue() function.
@@ -381,7 +381,7 @@ typedef void (CDECL CDECL_EXT* PFSYSCPUATOMICADD64_IEC) (syscpuatomicadd64_struc
 typedef struct tagsyscpuatomiccompareandswap_struct
 {
 	RTS_IEC_BYTE *pAddress;				/* VAR_INPUT */	/* pointer to the value to test */
-	RTS_IEC_BYTE *pSwapValue;			/* VAR_INPUT */	/* pointer to new valie */
+	RTS_IEC_BYTE *pSwapValue;			/* VAR_INPUT */	/* pointer to new valid */
 	RTS_IEC_BYTE *pCompareValue;		/* VAR_INPUT */	/* pointer to compare value */
 	RTS_IEC_USINT valueSize;			/* VAR_INPUT */	/* size of the value */
 	RTS_IEC_RESULT SysCpuAtomicCompareAndSwap;	/* VAR_OUTPUT */	
@@ -439,7 +439,7 @@ typedef void (CDECL CDECL_EXT* PFSYSCPUATOMICCOMPAREANDSWAP_IEC) (syscpuatomicco
  * Since different CPU's/systems use different calling conventions, this function 
  * should be used as a wrapper.
  * IEC functions or methods of function block use all the same calling convention:
- * They have no return value and exactly one parameter, which is a pointer to a struct that contains all required
+ * They have no return value and exactly one parameter, which is a pointer to a structure that contains all required
  * IN and OUT parameters.
  * RETURN: Returns the runtime system error code (see CmpErrors.library)
  * <SIL2/>
@@ -447,7 +447,7 @@ typedef void (CDECL CDECL_EXT* PFSYSCPUATOMICCOMPAREANDSWAP_IEC) (syscpuatomicco
 typedef struct tagsyscpucalliecfuncwithparams_struct
 {
 	RTS_IEC_BYTE *pfIECFunc;			/* VAR_INPUT */	/* Pointer to the IEC function that should be called */
-	RTS_IEC_BYTE *pParam;				/* VAR_INPUT */	/* Pointer to the parameter struct that contains the function parameters. Can be 0 if not used. */
+	RTS_IEC_BYTE *pParam;				/* VAR_INPUT */	/* Pointer to the parameter structure that contains the function parameters. Can be 0 if not used. */
 	RTS_IEC_UDINT ulSize;				/* VAR_INPUT */	/* Size of the parameter structure to copy the content on stack. Can be 0. */
 	RTS_IEC_RESULT SysCpuCallIecFuncWithParams;	/* VAR_OUTPUT */	
 } syscpucalliecfuncwithparams_struct;
@@ -792,10 +792,10 @@ typedef int (CDECL * PFSYSCPUFLUSHINSTRUCTIONCACHE) (void * pBaseAddress, unsign
  *	Since different CPU's/systems use different calling conventions, this function 
  *	should be used as a wrapper. But this function respectively the IEC callback code is not synchronized against an OnlineChange of the corresponding application!</p>
  *
- *  <p>ATTENTION: To be safe on multitasking and muticore systems you have to use IecTaskCallIecFuncWithParams() instead (see CmpIecTaskItf.h)!</p>
+ *  <p>ATTENTION: To be safe on multitasking and multicore systems you have to use IecTaskCallIecFuncWithParams() instead (see CmpIecTaskItf.h)!</p>
  *
  *  <p>IEC functions or methods of function block use all the same calling convention:
- *	They have no return value and exactly one parameter, which is a pointer to a struct that contains all required
+ *	They have no return value and exactly one parameter, which is a pointer to a structure that contains all required
  *  IN and OUT parameters.</p>
  *
  *	<p>IMPLEMENTATION NOTE: The content of the parameter structure must be copied completely on the stack as 
@@ -809,10 +809,10 @@ typedef int (CDECL * PFSYSCPUFLUSHINSTRUCTIONCACHE) (void * pBaseAddress, unsign
  *	</p>
  * </description>
  * <param name="pfIECFunc" type="IN" range="[NULL,VALID_IEC_FUNC,INVALID_IEC_FUNC]">Pointer to the IEC function that should be called</param>
- * <param name="pParam" type="INOUT" range="[NULL,VALID_PARAMETER]">Pointer to the parameter struct that contains the function parameters. ATTENTION: Can be NULL!</param>
+ * <param name="pParam" type="INOUT" range="[NULL,VALID_PARAMETER]">Pointer to the parameter structure that contains the function parameters. ATTENTION: Can be NULL!</param>
  * <param name="iSize" type="IN" range="[0,VALID_SIZE]">Size of the parameter structure to copy the content on stack. ATTENTION: Can be 0!</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Parameter check was successfull and pfIECFunc was called</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">pfIECFunc is NULL or for a paramter size > 0 pParam is NULL</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Parameter check was successful and pfIECFunc was called</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">pfIECFunc is NULL or for a parameter size > 0 pParam is NULL</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_NOTIMPLEMENTED">Function is not implemented</errorcode>
  * <result>error code</result>
  */
@@ -934,7 +934,7 @@ typedef RTS_RESULT (CDECL * PFSYSCPUSETREGISTERVALUE) (RTS_UINTPTR *pRegBuff, RT
  * an Exception must be generated immediately! The Execution may not proceed to further debug mechanism!</p>
  * </description>
  * <parampseudo name="OperationMode" type="IN" range="[RTS_SIL2_OPMODE_SAFE,RTS_SIL2_OPMODE_DEBUG]">Specifies only that the function should be called</parampseudo>
- * <parampseudo name="bExceptionOccured" type="OUT" range="[TRUE,FALSE]">Specifies, if an exception should occure, or not</parampseudo>
+ * <parampseudo name="bExceptionOccured" type="OUT" range="[TRUE,FALSE]">Specifies, if an exception should occur or not</parampseudo>
  * <result>no return value</result>
  */
 void CDECL CDECL_EXT syscpudebughandler(void);
@@ -987,12 +987,12 @@ typedef void (CDECL CDECL_EXT* PFSYSCPUDEBUGHANDLER_IEC) (void);
 /**
  * <description>
  *	Routine retrieves the breakpoint opcode for IEC code debugging.
- *	This is cpu dependant and depends additionally on the 
- *	CoDeSys codegenerator.
+ *	This is CPU dependent and depends additionally on the 
+ *	CoDeSys code-generator.
  * </description>
  * <param name="pbyAreaStart" type="IN">Pointer to start of the area.</param>
  * <param name="pbyBPAddress" type="IN">Pointer to breakpoint address (where the breakpoint will be set).
- *	This parameter is used for breakpoints that uses absolut jumps.</param>
+ *	This parameter is used for breakpoints that uses absolute jumps.</param>
  * <param name="pbyOpCode" type="OUT">Pointer to get opcode</param>
  * <param name="piOpcodeSize" type="INOUT">Pointer to maximum size of opcode buffer and return the real size
  *	of the opcode</param>
@@ -1049,9 +1049,9 @@ typedef RTS_RESULT (CDECL * PFSYSCPUGETBREAKPOINTCODE) (unsigned char* pbyAreaSt
 
 /**
  * <description>
- * <p>Routine retrieves an IEC callstack entry, if the IEC code execution is stopped in the
- * IEC code (breakpoint, exception, etc.). The callstack can be investigated out of the stack frames of each
- * entered nested function. The first callstack entry is calculated outside this routine from the 
+ * <p>Routine retrieves an IEC call-stack entry, if the IEC code execution is stopped in the
+ * IEC code (breakpoint, exception, etc.). The call-stack can be investigated out of the stack frames of each
+ * entered nested function. The first call-stack entry is calculated outside this routine from the 
  * instruction pointer address (IP) that is provided for the AppDebugHandler() routine from syscpudebughandler().
  * All further entries are called from this routine.</p>
  * <p>IMPLEMENTATION NOTE: The stack frame has typically the following structure:</p>
@@ -1077,14 +1077,14 @@ typedef RTS_RESULT (CDECL * PFSYSCPUGETBREAKPOINTCODE) (unsigned char* pbyAreaSt
  * Inside Fct2 we do a halt (e.g. stop on breakpoint). If we take a look on the stack, we see the return 
  * addresses from Fct0 and Fct1 on the stack. At the entry of each function, the base- (or frame-) pointer
  * is pushed on the stack with the previous content. So you can see, the BP entries on the stack
- * are organized as a chained list from stackframe to stack frame.</p>
+ * are organized as a chained list from stack-frame to stack frame.</p>
  * <p>The first stack entry is the current position. This is calculated out of the IP address and cannot be 
  * investigated from stack.</p>
  * <p>The pulBP Parameter is a pointer, thats content is the address of the stack, where the BP entry resides.</p>
  * </description>
  * <param name="pBP" type="INOUT">Pointer to last base pointer entry (or frame pointer) and returns
  * the pointer to the next base pointer in the stack frame</param>
- * <param name="ppAddress" type="OUT">Pointer pointer to return address in the code of the caller</param>
+ * <param name="ppAddress" type="OUT">Pointer to pointer to return address in the code of the caller</param>
  * <result>error code</result>
  */
 RTS_RESULT CDECL SysCpuGetCallstackEntry(RTS_UINTPTR *pBP, void **ppAddress);
@@ -1137,21 +1137,21 @@ typedef RTS_RESULT (CDECL * PFSYSCPUGETCALLSTACKENTRY) (RTS_UINTPTR *pBP, void *
 
 
 /**
- * <description>Routine to retrieve a callstack entry. The additional parameter bIecCode specifies, if the callstack
+ * <description>Routine to retrieve a call-stack entry. The additional parameter bIecCode specifies, if the call-stack
  *	should be retrieved in IEC-code (bIecCode = 1) or in C-code of the runtime system (bIecCode = 0).
  *	IMPLEMENTATION NOTE:
- *	The callstack in C-code is sometimes compiler dependant and must be implemented here specific to the compiler.
- *  If ERR_NOTIMPLEMENTED is returned, the generic linear backtrace on stack is done in SysCpuHandling.c.
+ *	The call-stack in C-code is sometimes compiler dependent and must be implemented here specific to the compiler.
+ *  If ERR_NOTIMPLEMENTED is returned, the generic linear back-trace on stack is done in SysCpuHandling.c.
  * </description>
- * <param name="bIecCode" type="IN">Is callstack expected in IEC- or in runtime-code:
+ * <param name="bIecCode" type="IN">Is call-stack expected in IEC- or in runtime-code:
  *		bIecCode=1: Expected in IEC-code
  *		bIecCode=0: Expected in runtime-code (external library call)
  * </param>
  * <param name="pBP" type="INOUT">Pointer to last base pointer entry (or frame pointer) and returns
  *	the pointer to the next base pointer in the stack frame</param>
- * <param name="ppAddress" type="OUT">Pointer pointer to return address in the code of the caller</param>
+ * <param name="ppAddress" type="OUT">Pointer to pointer to return address in the code of the caller</param>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">If ERR_NOTIMPLEMENTED is returned, the generic linear backtrace on stack is done in SysCpuHandling.c</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">If ERR_NOTIMPLEMENTED is returned, the generic linear back-trace on stack is done in SysCpuHandling.c</errorcode>
  */
 RTS_RESULT CDECL SysCpuGetCallstackEntry2(RTS_I32 bIecCode, RTS_UINTPTR *pBP, void **ppAddress);
 typedef RTS_RESULT (CDECL * PFSYSCPUGETCALLSTACKENTRY2) (RTS_I32 bIecCode, RTS_UINTPTR *pBP, void **ppAddress);
@@ -1203,22 +1203,22 @@ typedef RTS_RESULT (CDECL * PFSYSCPUGETCALLSTACKENTRY2) (RTS_I32 bIecCode, RTS_U
 
 
 /**
- * <description>Routine to retrieve a callstack entry. The additional parameter bIecCode specifies, if the callstack
+ * <description>Routine to retrieve a call-stack entry. The additional parameter bIecCode specifies, if the call-stack
  *	should be retrieved in IEC-code (bIecCode = 1) or in C-code of the runtime system (bIecCode = 0).
  *  We use here first SysCpuGetCallstackEntry2() of the platform adaptation. If it is not implemented, we do a generic
- *	backtrace on the stack.
+ *	back-trace on the stack.
  * </description>
- * <param name="bIecCode" type="IN">Is callstack expected in IEC- or in runtime-code:
+ * <param name="bIecCode" type="IN">Is call-stack expected in IEC- or in runtime-code:
  *		bIecCode=1: Expected in IEC-code
  *		bIecCode=0: Expected in runtime-code (external library call)
  * </param>
  * <param name="pContext" type="INOUT">Pointer to last base context entry and returns
  *	the pointer to the next context of the stack frame</param>
- * <param name="ppAddress" type="OUT">Pointer pointer to return address in the code corresponding to the callstack entry</param>
+ * <param name="ppAddress" type="OUT">Pointer to pointer to return address in the code corresponding to the call-stack entry</param>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Callstack entry resp. the IEC caller could be detected</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_FAILED">Something failed during detecting the callstack</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">Callstack entry resp. the IEC caller could _not_ be detected. Perhaps there is no IEC caller or
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call-stack entry resp. the IEC caller could be detected</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Something failed during detecting the call-stack</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">Call-stack entry resp. the IEC caller could _not_ be detected. Perhaps there is no IEC caller or
  *	the necessary setting in the DeviceDescription is not set for the platform:
  *		 ARM, CortexM3, MIPS, PPC, SH, x86-64 and x86/WindowsCE
  *
@@ -1337,12 +1337,14 @@ typedef RTS_UINTPTR * (CDECL * PFSYSCPUSEARCHONSTACK_) (RTS_UINTPTR *pSP, RTS_UI
 
 
 /**
- * <description>Routine to retrieve the instance pointer of an FB. Is used to get an instance specific callstack.
- *	The position of the instance pointer depends on the CoDeSys codegenerator and is cpu dependant.</description>
- * <param name="pBP" type="INOUT">Pointer to last base pointer entry (or frame pointer) and returns
- *	the pointer to the next base pointer in the stack frame</param>
- * <param name="ppInstancePointer" type="OUT">Pointer pointer to the instance pointer of an FB</param>
+ * <description>Routine to retrieve the instance pointer of an FB. Is used to get an instance specific call-stack.
+ *	The position of the instance pointer depends on the CoDeSys code-generator and is CPU dependent.</description>
+ * <param name="pBP" type="IN">Pointer to base pointer entry (or frame pointer) </param>
+ * <param name="ppInstancePointer" type="OUT">Pointer to pointer to the instance pointer of an FB</param>
  * <result>error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">An instance pointer could be extracted</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">In case of invalid parameters, e.g. NULL pointers</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">In case the instance pointer could not be retrieved</errorcode>
  */
 RTS_RESULT CDECL SysCpuGetInstancePointer(RTS_UINTPTR *pBP, void** ppInstancePointer);
 typedef RTS_RESULT (CDECL * PFSYSCPUGETINSTANCEPOINTER) (RTS_UINTPTR *pBP, void** ppInstancePointer);
@@ -1582,26 +1584,29 @@ typedef RTS_RESULT (CDECL * PFSYSCPUTESTANDRESET) (RTS_UI32* pul, int iBit);
 
 /**
  * <description>
- *  <p>The function test and set or clear a bit in a variable in one processor step. This operation must be atomic to provide a multitasking save operation.</p>
+ *  <p>The function tests and sets or clears a bit in a variable in one processor step.
+ *  This operation must be atomic to provide a multitasking save operation.
+ *  The function returns ERR_FAILED if the bit was already set or reset.</p>
+ *  <p>This function is more efficient than the function SysCpuTestAndSetBit2 because it doesn't take care of the memory alignment,
+*   but rather expects that the memory pAddress points to is sizeof(int) aligned.</p>
  *	<p>IMPLEMENTATION NOTE: Try to use a processor opcode, that provides this operation. If such an opcode
- *	is not available, use SysCpuTestAndSetBitBase in your platform adaptation. The function returns ERR_FAILED if the bit was already set or reset.</p>
+ *	is not available, use SysCpuTestAndSetBitBase in your platform adaptation.</p>
  * </description>
- * <param name="pAddress" type="IN" range="[NULL,ADDR_ALIGN0,ADDR_ALIGN1,ADDR_ALIGN2,ADDR_ALIGN3]">Pointer to test and set or clear a bit inside in one atomic processor step.
- *									NOTE: The pointer must be natural aligned! nLen=2: pAddress must be 2Byte aligned; nLen=4: pAddress must be 4Byte aligned</param>
- * <param name="nLen" type="IN" range="[1,2,4,INVALID_LEN]">Size of the value behind the address. Can only be 1 (unsigned char), 2 (unsigned short) or 4 (unsigned long)</param>
- * <param name="iBit" type="IN" range="[INT_MIN..0,0..7,8..15,16..31,32..INT_MAX]">Bit number inside the variable to test and set or clear:
+ * <param name="pAddress" type="IN" range="[NULL,ADDR_ALIGN0,ADDR_ALIGN1,ADDR_ALIGN2,ADDR_ALIGN3]">Pointer to the memory to test and set or clear a bit inside in one atomic processor step.
+ *                                                                                                 NOTE: The memory pAddress points to must be sizeof(int) aligned!</param>
+ * <param name="nLen" type="IN" range="[1,2,4,INVALID_LEN]">Size of the value behind the address in chars. Can only be 1, 2, or 4.</param>
+ * <param name="iBit" type="IN" range="[INT_MIN..0,0..7,8..15,16..31,32..INT_MAX]">Zero-based position of the bit to test within the memory pointed to by pAddress (0=first bit, 31=last bit):
  *	<ul>
- *		<li>nLen = 1: iBit 0..7</li>
- *		<li>nLen = 2: iBit 0..15</li>
- *		<li>nLen = 4: iBit 0..31</li>
+ *		<li>nLen = 1: iBit 0..(CHAR_BIT-1)</li>
+ *		<li>nLen = 2: iBit 0..(2*CHAR_BIT-1)</li>
+ *		<li>nLen = 4: iBit 0..(4*CHAR_BIT-1)</li>
  *	</ul>
  * </param>
  * <param name="bSet" type="IN" range="[0,1]">1=Set bit, 0=Clear bit</param>
- * <param name="iBit" type="IN">Bit number inside the variable to test and set. 0=first bit, 31=last bit</param>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Bit could be set/reset successfully</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Bit could not be set/reset successfully, perhaps it already was set/reset</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pAddress may not be null or misaligned, nLen may only be 1,2,4, iBit must be in correct range</errorcode>
- * <result>Error code: returns if Bit could be set/reset successfully, or if any  problem occured</result>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pAddress may not be null and has to be sizeof(int) aligned, nLen may only be 1,2,4, iBit must be in correct range</errorcode>
+ * <result>Error code: returns if Bit could be set/reset successfully, or if any  problem occurred</result>
  */
 RTS_RESULT CDECL SysCpuTestAndSetBit(void* pAddress, int nLen, int iBit, int bSet);
 typedef RTS_RESULT (CDECL * PFSYSCPUTESTANDSETBIT) (void* pAddress, int nLen, int iBit, int bSet);
@@ -1647,6 +1652,81 @@ typedef RTS_RESULT (CDECL * PFSYSCPUTESTANDSETBIT) (void* pAddress, int nLen, in
 	#define CAL_SysCpuTestAndSetBit  pfSysCpuTestAndSetBit
 	#define CHK_SysCpuTestAndSetBit  (pfSysCpuTestAndSetBit != NULL)
 	#define EXP_SysCpuTestAndSetBit  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysCpuTestAndSetBit", (RTS_UINTPTR)SysCpuTestAndSetBit, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>
+ *  <p>The function tests and sets or clears a bit in a variable in one processor step.
+ *  This operation must be atomic to provide a multitasking save operation.
+ *  The function returns ERR_FAILED if the bit was already set or reset.</p>
+ *  <p>This function is less efficient than the function SysCpuTestAndSetBit because it doesn't expect that the memory pMemory points to is sizeof(int) aligned
+ *  and takes care of the memory alignment.</p>
+ *  <p>This function doesn't do any parameter checking.
+ *  It expects that the parameter pMemory is not NULL and that the parameter siBit is less than (siLen * CHAR_BIT).</p>
+ *	<p>IMPLEMENTATION NOTE: Handle memory alignment and call the function SysCpuTestAndSetBit.</p>
+ * </description>
+ * <param name="pMemory" type="IN">Pointer to the memory to test and set or clear a bit inside in one atomic processor step.
+ *                                    NOTE: There are no alignment requirements for the memory pMemory points to. SysCpuTestAndSetBit2 takes care of this itself. </param>
+ * <param name="siLen" type="IN">Size of the value behind the address in chars. Can only be 1, 2, or 4.</param>
+ * <param name="siBit" type="IN">Zero-based position of the bit to test within the memory pointed to by pMemory (0=first bit, 31=last bit):
+ *	<ul>
+ *		<li>nLen = 1: iBit 0..(CHAR_BIT-1)</li>
+ *		<li>nLen = 2: iBit 0..(2*CHAR_BIT-1)</li>
+ *		<li>nLen = 4: iBit 0..(4*CHAR_BIT-1)</li>
+ *	</ul>
+ * </param>
+ * <param name="bSet" type="IN">TRUE=Set bit, FALSE=Clear bit</param>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Bit could be set/reset successfully</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Bit could not be set/reset successfully, perhaps it already was set/reset</errorcode>
+ * <result>Error code: returns if Bit could be set/reset successfully, or if any  problem occurred</result>
+ */
+RTS_RESULT CDECL SysCpuTestAndSetBit2(void *pMemory, RTS_SIZE siLen, RTS_SIZE siBit, RTS_BOOL bSet);
+typedef RTS_RESULT (CDECL * PFSYSCPUTESTANDSETBIT2) (void *pMemory, RTS_SIZE siLen, RTS_SIZE siBit, RTS_BOOL bSet);
+#if defined(SYSCPUHANDLING_NOTIMPLEMENTED) || defined(SYSCPUTESTANDSETBIT2_NOTIMPLEMENTED)
+	#define USE_SysCpuTestAndSetBit2
+	#define EXT_SysCpuTestAndSetBit2
+	#define GET_SysCpuTestAndSetBit2(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_SysCpuTestAndSetBit2(p0,p1,p2,p3)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_SysCpuTestAndSetBit2  FALSE
+	#define EXP_SysCpuTestAndSetBit2  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_SysCpuTestAndSetBit2
+	#define EXT_SysCpuTestAndSetBit2
+	#define GET_SysCpuTestAndSetBit2(fl)  CAL_CMGETAPI( "SysCpuTestAndSetBit2" ) 
+	#define CAL_SysCpuTestAndSetBit2  SysCpuTestAndSetBit2
+	#define CHK_SysCpuTestAndSetBit2  TRUE
+	#define EXP_SysCpuTestAndSetBit2  CAL_CMEXPAPI( "SysCpuTestAndSetBit2" ) 
+#elif defined(MIXED_LINK) && !defined(SYSCPUHANDLING_EXTERNAL)
+	#define USE_SysCpuTestAndSetBit2
+	#define EXT_SysCpuTestAndSetBit2
+	#define GET_SysCpuTestAndSetBit2(fl)  CAL_CMGETAPI( "SysCpuTestAndSetBit2" ) 
+	#define CAL_SysCpuTestAndSetBit2  SysCpuTestAndSetBit2
+	#define CHK_SysCpuTestAndSetBit2  TRUE
+	#define EXP_SysCpuTestAndSetBit2  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysCpuTestAndSetBit2", (RTS_UINTPTR)SysCpuTestAndSetBit2, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysCpuHandlingSysCpuTestAndSetBit2
+	#define EXT_SysCpuHandlingSysCpuTestAndSetBit2
+	#define GET_SysCpuHandlingSysCpuTestAndSetBit2  ERR_OK
+	#define CAL_SysCpuHandlingSysCpuTestAndSetBit2 pISysCpuHandling->ISysCpuTestAndSetBit2
+	#define CHK_SysCpuHandlingSysCpuTestAndSetBit2 (pISysCpuHandling != NULL)
+	#define EXP_SysCpuHandlingSysCpuTestAndSetBit2  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_SysCpuTestAndSetBit2
+	#define EXT_SysCpuTestAndSetBit2
+	#define GET_SysCpuTestAndSetBit2(fl)  CAL_CMGETAPI( "SysCpuTestAndSetBit2" ) 
+	#define CAL_SysCpuTestAndSetBit2 pISysCpuHandling->ISysCpuTestAndSetBit2
+	#define CHK_SysCpuTestAndSetBit2 (pISysCpuHandling != NULL)
+	#define EXP_SysCpuTestAndSetBit2  CAL_CMEXPAPI( "SysCpuTestAndSetBit2" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_SysCpuTestAndSetBit2  PFSYSCPUTESTANDSETBIT2 pfSysCpuTestAndSetBit2;
+	#define EXT_SysCpuTestAndSetBit2  extern PFSYSCPUTESTANDSETBIT2 pfSysCpuTestAndSetBit2;
+	#define GET_SysCpuTestAndSetBit2(fl)  s_pfCMGetAPI2( "SysCpuTestAndSetBit2", (RTS_VOID_FCTPTR *)&pfSysCpuTestAndSetBit2, (fl), 0, 0)
+	#define CAL_SysCpuTestAndSetBit2  pfSysCpuTestAndSetBit2
+	#define CHK_SysCpuTestAndSetBit2  (pfSysCpuTestAndSetBit2 != NULL)
+	#define EXP_SysCpuTestAndSetBit2  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysCpuTestAndSetBit2", (RTS_UINTPTR)SysCpuTestAndSetBit2, 0, 0) 
 #endif
 
 
@@ -1711,16 +1791,16 @@ typedef RTS_RESULT (CDECL * PFSYSCPUGETCONTEXT) (RegContext *pContext);
 /**
  * <description>
  * <p>Function to increment the content of the given pointer by nSum in one atomic operation (task safe).</p>
- * <p>IMPLEMENTATION NOTE: Add or substract the value to/from the content of the pointer,
+ * <p>IMPLEMENTATION NOTE: Add or subtract the value to/from the content of the pointer,
  * and return the value after this operation atomically.</p>
  * </description>
  * <param name="piValue" type="INOUT" range="[NULL,VALID_ATOMICADD_ADDR]">Pointer to the value to increment</param>
  * <param name="nSum" type="IN" range="[RTS_RANGE_OF_RTS_I32]">Summand for the operation. greater 0 to increment, lower 0 to decrement</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <result>Returns the value after the increment operation in an atomic way!</result>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Call was sucessful</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Call was successful</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">piValue was NULL</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_NOTIMPLEMENTED">Function is not supported</errorcode>
+ * <result>Returns the value after the increment operation in an atomic way!</result>
  */
 RTS_I32 CDECL SysCpuAtomicAdd(RTS_I32 *piValue, RTS_I32 nSum, RTS_RESULT *pResult);
 typedef RTS_I32 (CDECL * PFSYSCPUATOMICADD) (RTS_I32 *piValue, RTS_I32 nSum, RTS_RESULT *pResult);
@@ -1774,16 +1854,16 @@ typedef RTS_I32 (CDECL * PFSYSCPUATOMICADD) (RTS_I32 *piValue, RTS_I32 nSum, RTS
 /**
  * <description>
  * <p>Function to increment the content of the given pointer by nSum in one atomic operation (task safe).</p>
- * <p>IMPLEMENTATION NOTE: Add or substract the value to/from the content of the pointer,
+ * <p>IMPLEMENTATION NOTE: Add or subtract the value to/from the content of the pointer,
  * and return the value after this operation atomically.</p>
  * </description>
  * <param name="pi64Value" type="INOUT">Pointer to the value to increment</param>
  * <param name="nSum" type="IN">Summand for the operation. greater 0 to increment, lower 0 to decrement</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <result>Returns the value after the increment operation in an atomic way!</result>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Call was sucessful</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Call was successful</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pi64Value was NULL</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Function is not supported</errorcode>
+ * <result>Returns the value after the increment operation in an atomic way!</result>
  */
 RTS_I64 CDECL SysCpuAtomicAdd64(RTS_I64 *pi64Value, RTS_I64 nSum, RTS_RESULT *pResult);
 typedef RTS_I64 (CDECL * PFSYSCPUATOMICADD64) (RTS_I64 *pi64Value, RTS_I64 nSum, RTS_RESULT *pResult);
@@ -1843,11 +1923,11 @@ typedef RTS_I64 (CDECL * PFSYSCPUATOMICADD64) (RTS_I64 *pi64Value, RTS_I64 nSum,
  * <param name="pSwapValue" type="IN">Pointer to the swap value</param>
  * <param name="pCompareValue" type="IN">Pointer to the compare value</param>
  * <param name="valueSize" type="IN">Size of the value in bytes (a valid valueSize is 4 or 8)</param>
- * <result>Returns errorcode</result>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Swap was successful</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Swap was not successful</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">At least one of the pointers was NULL</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Swap not supported for this byte size or on this platform</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Swap was successful</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Swap was not successful</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">At least one of the pointers was NULL</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">Swap not supported for this byte size or on this platform</errorcode>
+ * <result>Returns error code</result>
  */
 RTS_RESULT CDECL SysCpuAtomicCompareAndSwap(void *pAddress, void *pSwapValue, void *pCompareValue, RTS_UI8 valueSize);
 typedef RTS_RESULT (CDECL * PFSYSCPUATOMICCOMPAREANDSWAP) (void *pAddress, void *pSwapValue, void *pCompareValue, RTS_UI8 valueSize);
@@ -1904,10 +1984,10 @@ typedef RTS_RESULT (CDECL * PFSYSCPUATOMICCOMPAREANDSWAP) (void *pAddress, void 
  * </description>
  * <param name="pSrc" type="IN">Pointer to the value to read</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <result>Returns the read value</result>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Call was sucessful</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Call was successful</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pSrc is NULL</errorcode> 
  * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Atomic function is not supported!</errorcode>
+ * <result>Returns the read value</result>
  */
 RTS_I64 CDECL SysCpuReadInt64(RTS_I64 *pSrc, RTS_RESULT *pResult);
 typedef RTS_I64 (CDECL * PFSYSCPUREADINT64) (RTS_I64 *pSrc, RTS_RESULT *pResult);
@@ -1965,7 +2045,7 @@ typedef RTS_I64 (CDECL * PFSYSCPUREADINT64) (RTS_I64 *pSrc, RTS_RESULT *pResult)
  * <param name="pDest" type="IN">Pointer to the value to write</param>
  * <param name="i64Value" type="IN">Value to write</param>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessful</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pDest is NULL</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">Atomic function is not supported!</errorcode>
  */
@@ -2024,10 +2104,10 @@ typedef RTS_RESULT (CDECL * PFSYSCPUWRITEINT64) (RTS_I64 *pDest, RTS_I64 i64Valu
  * </description>
  * <param name="pSrc" type="IN">Pointer to the value to read</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <result>Returns the read value</result>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Call was sucessful</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Call was successful</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pSrc is NULL</errorcode> 
  * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Atomic function is not supported!</errorcode>
+ * <result>Returns the read value</result>
  */
 RTS_REAL64 CDECL SysCpuReadReal64(RTS_REAL64 *pSrc, RTS_RESULT *pResult);
 typedef RTS_REAL64 (CDECL * PFSYSCPUREADREAL64) (RTS_REAL64 *pSrc, RTS_RESULT *pResult);
@@ -2085,7 +2165,7 @@ typedef RTS_REAL64 (CDECL * PFSYSCPUREADREAL64) (RTS_REAL64 *pSrc, RTS_RESULT *p
  * <param name="pDest" type="IN">Pointer to the value to write</param>
  * <param name="r64Value" type="IN">Value to write</param>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessful</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pDest is NULL</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">Atomic function is not supported!</errorcode>
  */
@@ -2140,14 +2220,14 @@ typedef RTS_RESULT (CDECL * PFSYSCPUWRITEREAL64) (RTS_REAL64 *pDest, RTS_REAL64 
 
 /**
  * <description>
- * This function will write values with with 1, 2, 4 or 8 byte size as an atomic operation.
+ * This function will write values with 1, 2, 4 or 8 byte size as an atomic operation.
  * Note: pDest has to be aligned according to the nLen parameter. If the alignment isn't correct the function will fail.
  * </description>
  * <param name="pDest" type="IN">Pointer to the destination address. The value will be written to this address. The write operation to this address will be atomic.</param>
  * <param name="pSrc" type="IN">Pointer to the source address. The value will be read from this address.</param>
  * <param name="nLen" type="IN">Size of the value to be written. 1, 2, 4 and 8 will be accepted.</param>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessful</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pDest, pSrc is NULL or nLen isn't supported.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">Atomic function is not supported!</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_ALIGNMENT">pDest was not aligned according to nLen.</errorcode>
@@ -2203,14 +2283,14 @@ typedef RTS_RESULT (CDECL * PFSYSCPUWRITEVALUEATOMIC) (void* pDest, void* pSrc, 
 
 /**
  * <description>
- * This function will read values with with 1, 2, 4 or 8 byte size as an atomic operation.
+ * This function will read values with 1, 2, 4 or 8 byte size as an atomic operation.
  * Note: pSrc has to be aligned according to the nLen parameter. If the alignment isn't correct the function will fail.
  * </description>
  * <param name="pSrc" type="IN">Pointer to the source address. The value will be read from this address. The read operation from this address will be atomic.</param>
  * <param name="pDst" type="IN">Pointer to the destination address. The value will be written to this address.</param>
  * <param name="nLen" type="IN">Size of the value to be read. 1, 2, 4 and 8 will be accepted.</param>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessful</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pSrc or pDest is NULL or nLen isn't supported.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">Atomic function is not supported!</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_ALIGNMENT">pSrc was not aligned according to nLen.</errorcode>
@@ -2287,6 +2367,7 @@ typedef struct
  	PFSYSCPUTESTANDSET ISysCpuTestAndSet;
  	PFSYSCPUTESTANDRESET ISysCpuTestAndReset;
  	PFSYSCPUTESTANDSETBIT ISysCpuTestAndSetBit;
+ 	PFSYSCPUTESTANDSETBIT2 ISysCpuTestAndSetBit2;
  	PFSYSCPUGETCONTEXT ISysCpuGetContext;
  	PFSYSCPUATOMICADD ISysCpuAtomicAdd;
  	PFSYSCPUATOMICADD64 ISysCpuAtomicAdd64;
@@ -2316,6 +2397,7 @@ class ISysCpuHandling : public IBase
 		virtual RTS_RESULT CDECL ISysCpuTestAndSet(RTS_UI32* pul, int iBit) =0;
 		virtual RTS_RESULT CDECL ISysCpuTestAndReset(RTS_UI32* pul, int iBit) =0;
 		virtual RTS_RESULT CDECL ISysCpuTestAndSetBit(void* pAddress, int nLen, int iBit, int bSet) =0;
+		virtual RTS_RESULT CDECL ISysCpuTestAndSetBit2(void *pMemory, RTS_SIZE siLen, RTS_SIZE siBit, RTS_BOOL bSet) =0;
 		virtual RTS_RESULT CDECL ISysCpuGetContext(RegContext *pContext) =0;
 		virtual RTS_I32 CDECL ISysCpuAtomicAdd(RTS_I32 *piValue, RTS_I32 nSum, RTS_RESULT *pResult) =0;
 		virtual RTS_I64 CDECL ISysCpuAtomicAdd64(RTS_I64 *pi64Value, RTS_I64 nSum, RTS_RESULT *pResult) =0;

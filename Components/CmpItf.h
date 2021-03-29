@@ -8,6 +8,12 @@
 		#define DLL_DECL _declspec(dllexport)
 	#endif
 #endif
+#if defined(LINUX) || defined(QNX)
+	#ifdef _USRDLL
+		#define DLL_DECL __attribute__ ((visibility ("default")))
+	#endif
+#endif
+
 #if !defined(DLL_DECL)
 	#define DLL_DECL
 #endif
@@ -34,8 +40,10 @@ typedef	RTS_UI32	CLASSID;	/* Class ID to specify a specific class (C or C++) */
 typedef	RTS_UI32	OBJID;		/* Object ID, typically the instance index starting with 0 */
 typedef	RTS_UI32	ITFID;		/* Interface ID to specify a specific interface (C or C++) */
 
-#define RTS_VENDORID_3S						0x0000
-#define ADDVENDORID(VendorID, ID)			(((RTS_UI32)(VendorID) << 16 & UINT32_C(0xFFFF0000)) + (ID))
+#define RTS_VENDORID_3S							0x0000
+#define RTS_ADDVENDORID(VendorID, ID)			(((RTS_UI32)(VendorID) << 16 & UINT32_C(0xFFFF0000)) + (ID))
+#define ADDVENDORID								RTS_ADDVENDORID
+#define RTS_GETVENDORID(ID)						((RTS_UI32)(ID) >> 16 & UINT32_C(0x0000FFFF))
 #ifdef TRG_64BIT
 	#define RTSITF_GET_SIGNATURE(sign32bit, sign64bit)		sign64bit
 #else
@@ -46,6 +54,14 @@ typedef	RTS_UI32	ITFID;		/* Interface ID to specify a specific interface (C or C
 /* Function that can be used for all CAL_ macros to return ERR_NOTIMPLEMENTED */
 RTS_RESULT CDECL FUNCTION_NOTIMPLEMENTED(unsigned long dummy,...);
 RTS_RESULT CDECL FUNCTION_NOTIMPLEMENTED2(void *dummy,...);
+
+/* Structure to handle a mapping of an ID and a name */
+typedef struct RTS_ID_TO_NAME_
+{
+	RTS_UI32 id;
+	char *pszName;
+} RTS_ID_TO_NAME;
+
 
 struct tagIBase;
 
@@ -184,7 +200,8 @@ typedef struct tagIBase_IEC
 	typedef IBase_C		IBase;
 #endif
 
-/* Component IDs */
+
+/*=== Component IDs ===*/
 #define	CMPID_None					0x00000000
 #define	CMPID_CmpMgr				0x00000001
 #define	CMPID_CM					0x00000001
@@ -260,7 +277,7 @@ typedef struct tagIBase_IEC
 #define CMPID_CmpUserMgr			0x00000061
 #define CMPID_CmpGwCommDrvDirectCall			0x00000062
 #define CMPID_CmpGwClientCommDrvDirectCall		0x00000063
-#define CMPID_CmpUserDB				0x00000064
+#define CMPID__________________1	0x00000064	/* CMPID_CmpUserDB. This is obsolete since V3.5.16.0 */
 #define CMPID_CmpUserDBEmbedded		0x00000065
 #define CMPID_CmpIoDrvC				0x00000066
 #define CMPID_CmpSimulationRts		0x00000067
@@ -280,7 +297,7 @@ typedef struct tagIBase_IEC
 #define CMPID_CmpAppEmbedded		0x00000075
 #define CMPID_CmpIoMgrEmbedded		0x00000076
 #define CMPID_CmpLogEmbedded		0x00000077
-#define CMPID_CmpOpcServer          0x00000078
+#define CMPID_CmpOpcServer			0x00000078
 #define CMPID_CmpTargetVisuAutoTest	0x00000079
 #define CMPID_CmpCodeMeter			0x0000007A
 #define CMPID_CmpSysTest			0x0000007B
@@ -294,20 +311,29 @@ typedef struct tagIBase_IEC
 #define CMPID_CmpCoreDump			0x00000083
 #define CMPID_CmpAppBPEmbedded		0x00000084
 #define CMPID_AppCModuleIntegration	0x00000085	/* Is reserved for all application related C-Modules */
-#define CMPID_CmpBackup				0x00000086
+#define CMPID__________________3	0x00000086	/* CMPID_CmpBackup is obsolete */
 #define CMPID_CmpBeagleboneBlack	0x00000087
 #define CMPID_CmpPfcx00				0x00000088
 #define CMPID_CmpRasPi				0x00000089
 #define CMPID_CmpKbus				0x0000008A
 #define	CMPID_CmpEventMgrEmbedded	0x0000008B
 #define CMPID_CmpJanzemPC			0x0000008C
-#define CMPID_CmpOPCUAStack    		0x0000008D
-#define CMPID_CmpSecurityManager    0x0000008E
+#define CMPID_CmpOPCUAStack			0x0000008D
+#define CMPID_CmpSecurityManager	0x0000008E
 #define CMPID_CmpSupervisor			0x0000008F
 #define	CMPID_CmpSecureChannel		0x00000090
-#define	CMPID_CmpUserDBObjects		0x00000091
+#define	CMPID__________________2	0x00000091 /* CMPID_CmpUserDBObjects is obsolete since V3.5.16.0 */
 #define CMPID_CmpLinuxSL			0x00000092
 #define CMPID_CmpPLCnext			0x00000093
+#define CMPID_CmpWebSocketClient	0x00000094
+#define CMPID_CmpEdgeGateway		0x00000095
+#define CMPID_CmpOPCUAClient		0x00000096
+#define CMPID_CmpSessionInformation	0x00000097
+#define CMPID_CmpUserDBFile			0x00000098
+#define CMPID_CmpUserGroupsDBFile	0x00000099
+#define CMPID_CmpDeviceManagement	0x0000009A
+#define CMPID_CmpArchive			0x0000009B
+#define	CMPID_CmpUserObjectsDBFile	0x0000009C
 
 #define	CMPID_SysCom				0x00000100
 #define	CMPID_SysCpuHandling		0x00000101
@@ -372,38 +398,36 @@ typedef struct tagIBase_IEC
 #define CMPID_SysGraphicLightFramebuffer 0x0000013C
 #define CMPID_SysCpuMultiCore		0x0000013D
 #define CMPID_SysReadWriteLock		0x0000013E
+#define CMPID_SysServices			0x0000013F
+
 #define CMPID_IoDrvTarget			0x00000200
 #define CMPID_CmpHilscherCIFX		0x00000201
-#define CMPID_CmpHilscherCIFXlib		0x00000202
+#define CMPID_CmpHilscherCIFXlib	0x00000202
 #define CMPID_CmpCharDevice			0x00000300
 #define CMPID_SysDirEmbedded        0x00000301
 #define CMPID_SysFileEmbedded       0x00000302
 #define CMPID_SysUserDB		        0x00000303
 #define CMPID_CmpOpenCV 		0x00000304
 #define CMPID_SysCpuBreakpoints		0x00000305
-/* umy: CMPID_CmpBACnet was defined in CmpBACnetDep.m4, so I moved it here, but kept the value */
+#define CMPID_IoDrvUnsafeBridge		0x00000306
+#define CMPID_CmpSafetyProxy		0x00000307
+#define CMPID_SysSafetyProxy		0x00000308
+#define CMPID_SysSafetyProxyStarter	0x00000309
+#define CMPID_CmpSoftingProfibus	0x0000030B
+
+/* Dummy: CMPID_CmpBACnet was defined in CmpBACnetDep.m4, so I moved it here, but kept the value */
 #define CMPID_CmpBACnet				0x00000400
 
-/* IEC code components */
+/*  IEC code components: 
+	Range 0x1000 - 0x1FFF IS RESERVED FOR IEC COMPONENTS.
+	DO NOT ADD ANY IDs IN THIS HEADER FILE 
+	WITHOUT REGISTERING THEM IN EXTERNAL EXCEL FILE.
+	The component IDs must be unique.
+*/
 #define CMPID_IecCode				0x00001000
-#define	CMPID_CmpIoDrvHilscher		0x00001001
-#define	CMPID_CmpIoDrvCanConfig		0x00001002
-#define	CMPID_CmpIoDrvCanNode		0x00001003
-#define	CMPID_CmpIoDrvCifX			0x00001004
-#define CMPID_CmpIoDrvCifXProfiNetDevice 0x00001005
-#define CMPID_CmpSoftingProfibus	0x00001006
-#define CMPID_IecVarAccess			0x00001007
-#define CMPID_IECEL6631				0x000010A0
-#define	CMPID_CmpIoDrvModbus		0x000010A1
-#define	CMPID_Profinet				0x000010A2
-
-/*Safety SIL2 components*/
-#define CMPID_IoDrvUnsafeBridge		0x00001E00
-
-/*Safety SIL3 components*/
-#define CMPID_CmpSafetyProxy		0x00001F02
-#define CMPID_SysSafetyProxy		0x00001F80
-#define CMPID_SysSafetyProxyStarter	0x00001F81
+#define CMPID_IecCodeStart			CMPID_IecCode
+#define CMPID_IecCodeEnd			0x00001FFF
+/* End of IEC components */
 
 /* OEM specific components */
 #define	CMPID_CmpStartOEM			0x00002000
@@ -448,7 +472,7 @@ typedef struct tagIBase_IEC
 #define CMPID_CmpSocketCanDrv		0x00005F0D
 #define CMPID_CmpEMSCanDrv			0x00005F0E
 #define CMPID_CmpPCANBasicDrv		0x00005F0F
-#define CMPID_CmpCANFoxDrv	     	0x00005F10
+#define CMPID_CmpCANFoxDrv			0x00005F10
 #define CMPID_CmpIxxatCANDrv		0x00005F11
 
 #define	CMPID_CmpEndCMD				0x00005FFF
@@ -457,15 +481,15 @@ typedef struct tagIBase_IEC
 /* Test and verification */
 #define CMPID_CmpStartTest			0x00006000
 #define CMPID_CmpRuntimeTest		0x00006001
-
-#define CMPID_CmpEndTest            0x000060FF
+#define CMPID_CmpEndTest			0x000060FF
 
 /* Range reserved for IEC Applications that register as a component.
  * This is needed for logging purposes or for the certificate management */
 #define CMPID_CmpIecApplicationStart    0x00008000
 #define CMPID_CmpIecApplicationEnd      0x00008FFF
 
-/* C++ Class IDs */
+
+/*=== C++ Class IDs ===*/
 #define	CLASSID_INVALID					0x00000000
 #define	CLASSID_CCmpMgr					0x00000001
 #define	CLASSID_CCM						0x00000001
@@ -522,8 +546,8 @@ typedef struct tagIBase_IEC
 #define CLASSID_CCmpIecVarAccess		0x00000033
 #define CLASSID_CCmpBlkDrvLoopback      0x00000034 /* this component is obsolete so this id should no longer be used */
 #define CLASSID_CCmpUserMgr				0x00000035
-#define CLASSID_CCmpUserDB				0x00000036
-#define CLASSID______________________1	0x00000037	/*CLASSID_CCmpUserDBEmbedded*/
+#define CLASSID______________________2	0x00000036 /* CLASSID_CCmpUserDB. this is obsolete since V3.5.16.0 */
+#define CLASSID_CCmpUserDBEmbedded		0x00000037
 #define CLASSID_CCmpSimulationRts		0x00000038
 #define	CLASSID_CCmpNameServiceClientIec	0x00000039
 #define	CLASSID_CCmpIoDrvC				0x0000003A
@@ -555,7 +579,7 @@ typedef struct tagIBase_IEC
 #define CLASSID_CIecVarAccess5			0x00000054
 #define CLASSID_CCmpAppBP				0x00000055
 #define CLASSID_CCmpAppForce			0x00000056
-#define CLASSID______________________2	0x00000057	/*CLASSID_CCmpAppEmbedded*/
+#define CLASSID______________________7	0x00000057	/*CLASSID_CCmpAppEmbedded*/
 #define CLASSID_CCmpTargetVisuAutoTest	0x00000058
 #define	CLASSID_CCmpBlkDrvTcp			0x00000059
 #define CLASSID_CCmpCodeMeter			0x0000005A
@@ -564,7 +588,7 @@ typedef struct tagIBase_IEC
 #define CLASSID_CCmpSIL2				0x0000005D
 #define CLASSID_CCmpCAAStorage			0x0000005E
 #define CLASSID_CCmpIecStringUtils		0x0000005F
-#define CLASSID_CCmpObjectMgr		   	0x00000060
+#define CLASSID_CCmpObjectMgr			0x00000060
 #define CLASSID_CCMLock					0x00000061
 #define	CLASSID_CCmpBlkDrvDirectCall	0x00000062
 #define	CLASSID_CCmpMonitor2			0x00000063
@@ -575,15 +599,19 @@ typedef struct tagIBase_IEC
 #define CLASSID_CIecVarAccess_Itfs		0x00000068
 #define CLASSID_CCmpCoreDump			0x00000069
 #define CLASSID_CCmpAppBPEmbedded		0x0000006A
-#define CLASSID_CCmpBackup				0x0000006B
-#define CLASSID_CCmpCrypto              0x0000006C
+#define CLASSID______________________9	0x0000006B /* CLASSID_CCmpBackup is obsolete */
+#define CLASSID_CCmpCrypto				0x0000006C
 #define	CLASSID_CmpEventMgr				0x0000006D
 #define	CLASSID_CCmpSecurityManager		0x0000006E
 #define	CLASSID_CCmpSupervisor			0x0000006F
 #define	CLASSID_CCmpSecureChannel		0x00000070
 #define CLASSID_CCmpMemPoolHash			0x00000071
 #define CLASSID_CCMUtilsHash			0x00000072
-#define CLASSID_CCmpUserDBObjects		0x00000073
+#define CLASSID______________________8	0x00000073 /* CLASSID_CCmpUserDBObjects is obsolete since V3.5.16.0 */
+#define CLASSID_CCmpOPCUAClient			0x00000074
+#define CLASSID_CCmpUserDBFile			0x00000075
+#define CLASSID_CCmpUserGroupsDBFile	0x00000076
+#define CLASSID_CCmpUserObjectsDBFile	0x00000077
 
 #define	CLASSID_CSysCom					0x00000100
 #define	CLASSID_CSysCpuHandling			0x00000101
@@ -624,7 +652,7 @@ typedef struct tagIBase_IEC
 #define CLASSID_CCmpParamDevice			0x00000122
 #define CLASSID_CCmpVisuHandlerRemote	0x00000123
 #define CLASSID______________________4	0x00000124
-#define CLASSID______________________6  0x00000125
+#define CLASSID______________________6	0x00000125
 #define CLASSID______________________5	0x00000126
 #define CLASSID_CSysTimeRtc				0x00000127
 #define CLASSID_CSysGraphicGDIPlus		0x00000128
@@ -654,37 +682,50 @@ typedef struct tagIBase_IEC
 #define CLASSID_CCmpOpenCV 				0x00000143
 #define CLASSID_CSysReadWriteLock		0x00000144
 #define CLASSID_CSysCpuBreakpoints		0x00000145
-/* umy: CLASSID_CCmpBACnet was defined in CmpBACnetDep.m4, so I moved it here, but kept the value */
-#define CLASSID_CCmpBACnet				0x00000400
+#define CLASSID_CCmpWebSocketClient		0x00000146
+#define CLASSID_CCmpEdgeGateway			0x00000147
+#define CLASSID_CCmpSessionInformation	0x00000148
+#define	CLASSID_CCmpHilscherCIFX		0x00000201
+#define	CLASSID_CCmpHilscherCIFXlib		0x00000202
+#define	CLASSID_CCmpHalconIntegration	0x00000203
+#define	CLASSID_CCmpPlcShell			0x00000204
+#define CLASSID_CCmpRedundancy			0x00000205
+#define CLASSID_CCmpPfcx00				0x00000206
+#define CLASSID_CCmpRasPi				0x00000207
+#define CLASSID_CCmpBeagleboneBlack		0x00000208
+#define CLASSID_CCmpKbus				0x00000209
+#define CLASSID_CCmpLinuxSL				0x0000020A
+#define CLASSID_CCmpPLCnext				0x0000020B
+#define CLASSID_CCmpIniFile				0x0000020C
+#define CLASSID_CCmpDeviceManagement	0x0000020D
+#define CLASSID_CSysServices			0x0000020E
+#define CLASSID_CCmpArchive				0x0000020F
 
-/* No kernel classes */
-#define	CLASSID_CCmpIoDrvHilscher		0x00001001
-#define	CLASSID_CCmpIoDrvCanConfig		0x00001002
-#define	CLASSID_CCmpIoDrvCanNode		0x00001003
-#define	CLASSID_CCmpIoDrvCifX			0x00001004
-#define	CLASSID_CCmpHilscherCIFX		0x00001005
-#define	CLASSID_CCmpHalconIntegration	0x00001006
-#define	CLASSID_CCmpPlcShell			0x00001007
-#define CLASSID_CCmpRedundancy			0x00001008
-#define CLASSID_CmpSoftingProfibus		0x00001009
-#define CLASSID_CCmpPfcx00				0x0000100A
-#define CLASSID_CCmpRasPi				0x0000100B
-#define CLASSID_CCmpBeagleboneBlack		0x0000100C
-#define CLASSID_CCmpKbus				0x0000100D
-#define	CLASSID_CCmpHilscherCIFXlib		0x0000100E
-#define CLASSID_CCmpLinuxSL				0x0000100F
-#define CLASSID_CCmpPLCnext				0x00001010
 
-/*Safety SIL2 classes*/
-#define CLASSID_CIoDrvUnsafeBridge		0x00001E00
+#define CLASSID_CIoDrvUnsafeBridge		0x00000306
 
 /*Safety SIL3 classes*/
-#define CLASSID_CCmpSafetyIORouter		0x00001F01
-#define CLASSID_CCmpSafetyProxy			0x00001F02
+#define CLASSID_CCmpSafetyProxy			0x00000307
+#define CLASSID_CSysSafetyProxy			0x00000308
+#define CLASSID_CSysSafetyProxyStarter	0x00000309
+#define CLASSID_CCmpSafetyIORouter		0x0000030A
 
-#define CLASSID_CSysSafetyProxy			0x00001F80
-#define CLASSID_CSysSafetyProxyStarter	0x00001F81
-#define CLASSID_CSysSafetyIORouter		0x00001F83
+#define CLASSID_CmpSoftingProfibus		0x0000030B
+
+#define CLASSID_CSysSafetyIORouter		0x00000F83
+
+/* Dummy: CLASSID_CCmpBACnet was defined in CmpBACnetDep.m4, so I moved it here, but kept the value */
+#define CLASSID_CCmpBACnet				0x00000400
+
+/*  IEC code class IDs:
+	Range 0x1000 - 0x1FFF IS RESERVED FOR IEC COMPONENTS.
+	DO NOT ADD ANY IDs IN THIS HEADER FILE
+	WITHOUT REGISTERING THEM IN EXTERNAL EXCEL FILE.
+	The component IDs must be unique.
+*/
+#define	CLASSID_IecCodeStart			0x00001000
+#define	CLASSID_IecCodeEnd				0x00001FFFF
+/* END of IEC code class IDs */
 
 /* OEM specific start id */
 #define	CLASSID_CCmpStartOEM			0x00002000
@@ -738,11 +779,10 @@ typedef struct tagIBase_IEC
 
 /* Test and verification CLASS IDs*/
 #define CLASSID_CCmpStartTest			0x00006000
-#define CLASSID_CCmpRuntimeTest		    0x00006001
+#define CLASSID_CCmpRuntimeTest			0x00006001
+#define CLASSID_CCmpEndTest				0x000060FF
 
-#define CLASSID_CCmpEndTest             0x000060FF
-
-/* Interface IDs */
+/*=== Interface IDs ===*/
 #define ITFID_IBase						0x00000000
 #define ITFID_ICmpMgr					0x00000001
 #define ITFID_ICM						0x00000001
@@ -857,7 +897,7 @@ typedef struct tagIBase_IEC
 #define ITFID_ICmpHeapPool				0x0000006E
 #define ITFID_ICmpParamDevice			0x0000006F
 #define ITFID_IIecVarAccess8			0x00000070
-#define ITFID_ICmpBackup				0x00000071
+#define ITFID________________2			0x00000071 /* ITFID_ICmpBackup is obsolete */
 #define ITFID_IIecVarAccess9			0x00000072
 #define ITFID_ICmpPfcx00				0x00000073
 #define ITFID_ICmpRasPi					0x00000074
@@ -869,17 +909,43 @@ typedef struct tagIBase_IEC
 #define ITFID_ICmpIoDrvDPV1C2Master		0x00000099
 #define ITFID_ICmpSecurityManager		0x0000009A
 #define ITFID_ICmpSupervisor			0x0000009B
-#define ITFID_ISysSocket2external       0x0000009C
+#define ITFID_ISysSocket2external		0x0000009C
+#define ITFID_ISysSocket2_Implementation ITFID_ISysSocket2external
 #define ITFID_ICmpSecureChannel			0x0000009D
 #define ITFID_ICmpMemPoolHash			0x0000009E
 #define ITFID_ICMUtilsHash				0x0000009F
 #define ITFID_IIecVarAccess12			0x000000A0
 #define ITFID_ICmpOPCUAProviderAlarmConfiguration 0x000000A1
-#define ITFID_ICmpUserDBObjects			0x000000A2
+#define ITFID_ICmpUserObjectsDB			0x000000A2
 #define ITFID_ICmpLinuxSL				0x000000A3
 #define ITFID_IIecVarAccess13			0x000000A4
 #define ITFID_IIecVarAccess14			0x000000A5
 #define ITFID_ICmpPLCnext				0x000000A6
+#define ITFID_ICmpWebSocketClient		0x000000A7
+#define ITFID_ICmpEdgeGateway			0x000000A8
+#define ITFID_ICmpIecVarAccess_Implementation   0x000000A9
+#define ITFID_ICmpTls_Implementation	0x000000AA
+#define ITFID_ICmpCrypto_Implementation	0x000000AB
+#define ITFID_ISysSocket_Implementation	0x000000AC
+#define ITFID_ICmpX509Cert_Implementation	0x000000AD
+#define ITFID_ICmpOPCUAStack_Implementation 0x000000AE
+#define ITFID_ICmpSessionInformation	0x000000AF
+#define ITFID_ICmpCharDevice_Implementation	0x000000B0
+#define ITFID_ICmpOPCUAClient_Implementation 0x000000B1
+#define ITFID_ICmpUserDBConfiguration	0x000000B2
+#define ITFID_ICmpUserGroupsDB			0x000000B3
+#define ITFID_ICmpUserGroupsDBConfiguration 0x000000B4
+#define ITFID_ICmpIniFile				0x000000B5
+#define ITFID_ICmpDeviceManagement		0x000000B6
+#define ITFID_ICmpEventMgr_Implementation	0x000000B7
+#define ITFID_ICmpArchive				0x000000B8
+#define ITFID_ICmpUserObjectsDBConfiguration	0x000000B9
+#define ITFID_ISysTimeRtc_Implementation	0x000000BA
+#define ITFID_ISysSem_Implementation	0x000000BB
+#define ITFID_ISysShm_Implementation	0x000000BC
+#define ITFID_ISysProcess_Implementation	0x000000BD
+#define ITFID_ICmpUserMgr_Implementation	 0x000000C2
+
 
 /* The following block contains system interfaces */
 #define	ITFID_ISysCom					0x00000100
@@ -929,7 +995,7 @@ typedef struct tagIBase_IEC
 #define ITFID_ISysFileStream			0x00000132
 #define ITFID_ISysFramebuffer			0x00000133
 #define ITFID_ISysGraphicTestable		0x00000134
-#define ITFID_ICmpCrypto                0x00000135
+#define ITFID_ICmpCrypto				0x00000135
 #define ITFID_ISysSemCount				0x00000136
 #define ITFID_ISysMutex					0x00000137
 #define ITFID_ICmpX509Cert				0x00000138
@@ -938,18 +1004,25 @@ typedef struct tagIBase_IEC
 #define ITFID_ICmpOpenCV 				0x0000013F
 #define ITFID_ISysReadWriteLock			0x00000140
 #define ITFID_ISysCpuBreakpoints		0x00000141
-/* umy: ITFID_ICmpBACnet was defined in CmpBACnetDep.m4, so I moved it here, but kept the value */
-#define ITFID_ICmpBACnet				0x00000400
-
+#define ITFID_ISysServices				0x00000142
 
 /*Safety classes*/
-#define ITFID_ICmpSafetyIORouter		0x00001F01
-#define ITFID_ICmpSafetyProxy			0x00001F02
+#define ITFID_ICmpSafetyProxy			0x00000307
+#define ITFID_ISysSafetyProxy			0x00000308
+#define ITFID_ISysSafetyProxyStarter	0x00000309
+#define ITFID_ICmpSafetyIORouter		0x0000030A
+#define ITFID_ISysSafetyIORouter		0x0000030B
 
-#define ITFID_ISysSafetyProxy			0x00001F80
-#define ITFID_ISysSafetyProxyStarter	0x00001F81
-#define ITFID_ISysSafetyIORouter		0x00001F83
+/* Dummy: ITFID_ICmpBACnet was defined in CmpBACnetDep.m4, so I moved it here, but kept the value */
+#define ITFID_ICmpBACnet				0x00000400
 
+/*  IEC code components:
+	Range 0x1000 - 0x1FFF IS RESERVED FOR IEC COMPONENTS.
+	DO NOT ADD ANY IDs IN THIS HEADER FILE
+	WITHOUT REGISTERING THEM IN EXTERNAL EXCEL FILE.
+*/
+#define	ITFID_IIecCodeStart				0x00001000
+#define	ITFID_IIecCodeEnd				0x00001FFF
 
 /* OEM specific start id */
 #define	ITFID_ICmpStartOEM				0x00002000
@@ -1001,11 +1074,12 @@ typedef struct tagIBase_IEC
 #define	ITFID_ICmpEndCAA				0x00005FFF
 
 /* Test and verification Interface IDs*/
-#define ITFID_ICmpStartTest			    0x00006000
-#define ITFID_ICmpRuntimeTest		    0x00006001
+#define ITFID_ICmpStartTest				0x00006000
+#define ITFID_ICmpRuntimeTest			0x00006001
+#define ITFID_ICmpEndTest				0x000060FF
 
-#define ITFID_ICmpEndTest               0x000060FF
 
+/* Global function pointer declarations */
 typedef int (CDECL *PF_EXPORT_FUNCTIONS)(void);
 typedef int (CDECL *PF_IMPORT_FUNCTIONS)(void);
 typedef RTS_UI32 (CDECL *PF_GET_VERSION)(void);
@@ -1126,6 +1200,22 @@ typedef int (CDECL *PFMAINEXITLOOP)(RTS_UINTPTR ulPar);
 	ulParam2: Not used
 */
 
+#define CH_POST_INIT						200
+/*	Called right after CH_INIT. Use this hook to run initialization between 
+ 	highly related components (e.g. Register backends or providers to the corresponding components.).
+
+	ulParam1: Not used
+	ulParam2: Not used
+*/
+
+#define CH_PRE_INIT2						250
+/*	Called right before CH_INIT2. Use this hook to finish initialization of a component that is highly
+	related to an other components. E.g. finish initialization after the providers have registered.
+
+	ulParam1: Not used
+	ulParam2: Not used
+*/
+
 #define CH_INIT2							3
 /*	Called after CH_INIT. All components are initialized. Other components can be used.
 
@@ -1194,8 +1284,9 @@ typedef int (CDECL *PFMAINEXITLOOP)(RTS_UINTPTR ulPar);
 /*
 	CH_EXIT_XXX Hooks: Used for deinitialization of all components.
 */
+
 #define CH_EXIT_COMM						10
-/*	Called at the beginning of the shutdown sequence to disable all communication channels.
+/*	Called at the beginning of the shutdown sequence to disable all communication channels!
 	ulParam1: Not used
 	ulParam2: Not used
 */
@@ -1307,6 +1398,11 @@ typedef int (CDECL *PFMAINEXITLOOP)(RTS_UINTPTR ulPar);
 	have been registered to the runtime.
 */
 
+#define CH_ON_LICENSE_FCTS_REGISTERED2		290
+/*
+	Called after CH_ON_LICENSE_FCTS_REGISTERED.
+*/
+
 #define CH_ON_LICENSE_FCTS_LEGACY_REGISTERED 30
 /*
 	Called after the functionpointers from the license-library 
@@ -1327,6 +1423,58 @@ typedef int (CDECL *PFMAINEXITLOOP)(RTS_UINTPTR ulPar);
 	ulParam2: Not used
 */
 
+/**
+* <category>Hook table</category>
+* <description>
+*	This is the table of all hooks with its corresponding name (see CM_HOOK_TABLE).
+*
+*	NOTE:
+*	The init and exit hooks are defined here in the order they are executed during startup and shutdown!
+*
+* </description>
+*/
+#define CM_INIT_HOOK_TABLE				{ CH_INIT_SYSTEM,  "CH_INIT_SYSTEM" },\
+										{ CH_INIT_SYSTEM2, "CH_INIT_SYSTEM2" },\
+										{ CH_INIT, "CH_INIT" },\
+										{ CH_POST_INIT, "CH_POST_INIT" },\
+										{ CH_PRE_INIT2, "CH_PRE_INIT2" },\
+										{ CH_INIT2, "CH_INIT2" },\
+										{ CH_INIT201, "CH_INIT201" },\
+										{ CH_INIT3, "CH_INIT3" },\
+										{ CH_INIT_SYSTEM_TASKS, "CH_INIT_SYSTEM_TASKS" },\
+										{ CH_INIT_TASKS, "CH_INIT_TASKS" },\
+										{ CH_INIT_COMM, "CH_INIT_COMM" },\
+										{ CH_INIT_FINISHED, "CH_INIT_FINISHED" }
+
+#define CM_COMM_CYCLE_HOOK				{ CH_COMM_CYCLE, "CH_COMM_CYCLE" }
+
+#define CM_EXIT_HOOK_TABLE				{ CH_EXIT_COMM, "CH_EXIT_COMM" },\
+										{ CH_EXIT_TASKS, "CH_EXIT_TASKS" },\
+										{ CH_EXIT_SYSTEM_TASKS, "CH_EXIT_SYSTEM_TASKS" },\
+										{ CH_EXIT3, "CH_EXIT3" },\
+										{ CH_EXIT2, "CH_EXIT2" },\
+										{ CH_EXIT, "CH_EXIT" },\
+										{ CH_EXIT_SYSTEM2, "CH_EXIT_SYSTEM2" },\
+										{ CH_EXIT_SYSTEM, "CH_EXIT_SYSTEM" },\
+										{ CH_EXIT_GARBAGEMEMORY, "CH_EXIT_GARBAGEMEMORY" }
+
+#define CM_EXTENDED_HOOK_TABLE			{ CH_ON_IMPORT, "CH_ON_IMPORT" }, \
+										{ CH_ON_IMPORT_RELEASE, "CH_ON_IMPORT_RELEASE" }, \
+										{ CH_ON_LOAD_COMPONENT, "CH_ON_LOAD_COMPONENT" }, \
+										{ CH_ON_UNLOAD_COMPONENT, "CH_ON_UNLOAD_COMPONENT" }, \
+										{ CH_ON_REGISTER_INSTANCE, "CH_ON_REGISTER_INSTANCE" }, \
+										{ CH_ON_UNREGISTER_INSTANCE, "CH_ON_UNREGISTER_INSTANCE" }, \
+										{ CH_ON_LICENSE_FCTS_REGISTERED, "CH_ON_LICENSE_FCTS_REGISTERED" }, \
+										{ CH_ON_LICENSE_FCTS_REGISTERED2, "CH_ON_LICENSE_FCTS_REGISTERED2" }, \
+										{ CH_ON_LICENSE_FCTS_LEGACY_REGISTERED, "CH_ON_LICENSE_FCTS_LEGACY_REGISTERED" }, \
+										{ CH_SAFEMODE, "CH_SAFEMODE" } \
+
+#define CM_HOOK_TABLE					{\
+											CM_INIT_HOOK_TABLE,\
+											CM_COMM_CYCLE_HOOK,\
+											CM_EXIT_HOOK_TABLE,\
+											CM_EXTENDED_HOOK_TABLE\
+										}
 
 /**
  * <category>Single import of interface functions</category>

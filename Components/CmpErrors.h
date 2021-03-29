@@ -63,6 +63,12 @@
 #define ERR_CHANGE_PASSWORD		0x003F /* The password has to be changed */
 #define ERR_REAUTHENTICATE		0x0040 /* The user has to reauthenticate oneself */
 #define ERR_RELOGIN				0x0041 /* The user has to relogin */
+#define ERR_INVALID_URL			0x0042 /* An URL was not valid. */
+#define ERR_INVALID_STATE		0x0043 /* The component state does not allow to call this function. */
+#define ERR_USER_MISMATCH		0x0044 /* User mismatch */
+#define ERR_NOT_READY_YET		0x0045 /* The service is not ready yet. Try again later */
+#define ERR_ACTIVATE_USERMGMT	0x0046 /* The user management has to be activated. */
+#define ERR_NO_USERMGMT			0x0047 /* A login was done with a user name, but no user management is active. */
 
 /* General network errors 
   (range: 0x0100 - 0x010F)
@@ -215,6 +221,8 @@
 
 #define ERR_TLS_INTERNAL					0x0600		/* Internal Error of TLS component */
 #define ERR_TLS_RAND_NOT_INIT				0x0601		/* Random number generator was not seeded with enough entropy */
+#define ERR_TLS_INVALID_SOCKETTYPE			0x0602		/* The configured type of the socket does not allow this operation */
+#define ERR_TLS_ALREADY_STARTED				0x0603		/* The TLS handshake has already been done */
 /* IO operations */
 #define ERR_TLS_CONNECTION_CLOSED			0x0610		/* The TLS connection has been closed. */
 #define ERR_TLS_RETRY_OPERATION				0x0611		/* The same TLS operation should be called again */
@@ -334,6 +342,17 @@
 #define ERR_IECVARACC_NO_CHILD_NODE				0x0901	/* No child not available */
 #define ERR_IECVARACC_CONFIG_CHANGED			0x0902	/* Symbolconfiguration has changed */
 #define ERR_IECVARACC_SYNC_CONSISTENCY_DENIED	0x0903	/* AF_ALLOW_SYMBOLIC_VARIABLE_ACCESS_IN_SYNC_WITH_IEC_TASK is not set for all applications on the device*/
+
+#define ERR_EDGE_INVALID_MESSAGEID				0x0A00	/* A received message id was invalid. */
+#define ERR_EDGE_INVALID_STATE					0x0A01	/* A session is in an invalid state. */
+#define ERR_EDGE_SESSIONID_INVALID				0x0A02	/* Unknown session id requested */
+#define ERR_EDGE_PKGINVALID						0x0A03	/* The received package is not compliant with the service specification */
+#define ERR_EDGE_NOBUFFER						0x0A04	/* Not enough buffer to handle the request */
+#define ERR_EDGE_TIMEOUT						0x0A05	/* Timeout of the request */
+#define ERR_EDGE_VAR_MISMATCH					0x0A06	/* The requested variable type or size does not match, maybe out of date */
+#define ERR_EDGE_PLC_NOT_CONNECTED				0x0A07	/* The PLC state is not in state STATE_RUNNING */
+#define ERR_EDGE_PLC_NO_CYCLIC_LIST_DEFINED		0x0A08	/* Invalid variable list specified */
+#define ERR_EDGE_COMM_FATAL						0x0A09	/* Communication error occurred during symbol load */
 
 /* OEM specific error code range */
 #define IsOEMErrorCode(r)						((r & 0x8000) != 0)

@@ -1,12 +1,12 @@
  /**
  * <interfacename>SysWindow</interfacename>
  * <description> 
- *	<p>SysWindow interfaces is porjected to get access to the window manager of a graphical environment
- *	To handle the window of the target visualisation.</p>
+ *	<p>SysWindow interfaces is projected to get access to the window manager of a graphical environment
+ *	To handle the window of the target visualization.</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -43,7 +43,7 @@
  * <type>Int</type>
  * <description>
  *	For extensibility we define some flags that control some properties of a window. Any of these flags might 
- *	be releated to a special class of window (e.g. the editcontrol).
+ *	be released to a special class of window (e.g. the edit control).
  * </description>
  */	
 #define SYSWINCREATE_FLAGS_NONE			0x00000000
@@ -52,7 +52,7 @@
  * <category>Window Creation Flags</category>
  * <type>Int</type>
  * <description>
- *	If this flag is set, then the parentwindow handle is an OS handle and not a window handle returned by the SysWindow-Component.
+ *	If this flag is set, then the parent window handle is an OS handle and not a window handle returned by the SysWindow-Component.
  * </description>
  */	
 #define SYSWINCREATE_FLAGS_PARENTISOSHANDLE			0x00000001
@@ -102,12 +102,24 @@
  */
 #define SYSWINCREATE_FLAGS_CREATE_HIDDEN 0x00000020
 
+ /**
+ * <category>Window Creation Flags</category>
+ * <type>Int</type>
+ * <description>
+ *	If this flag is set, then the window will use a transparent background.
+ *  Please remark that this feature is only supported at the moment by Qt-Based implementations 
+ *  (an implementation supporting <see>SYSWINSUPPORT_FLAG_TRANSPARENT_BACKGROUND</see>)
+ * </description>
+ */
+#define SYSWINCREATE_FLAGS_TRANSPARENT_BACKGROUND 0x00000080
+
+
 /**
  * <category>Window create description</category>
  * <description>
  *	This structure describes a window that has to be created. 
  *	The parameters pszWindowName and pszClassName may be NULL
- *	If pszClassName == "EDIT", a new Editcontrol will be created.
+ *	If pszClassName == "EDIT", a new edit control will be created.
  * </description>
  * <element name="pszWindowName" type="IN">The name/title of the window that shall be created.</element>
  * <element name="pszClassName" type="IN">The type of window that shall be created. At the moment
@@ -188,7 +200,7 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent before a window is created. The information of the creation structure can be altered by the eventhandlers.
+ * <description>Event is sent before a window is created. The information of the creation structure can be altered by the event handlers.
  *	This event will only be raised when this is supported by the according operating system implementation.</description>
  * <param name="pEventParam" type="IN">EVTPARAM_SysWindowCreate</param>
  */
@@ -208,7 +220,7 @@ typedef struct
  * <type>Int</type>
  * <description>
  *	For extensibility we define some flags that control some properties of a window. Any of these flags might 
- *	be releated to a special class of window (e.g. the editcontrol).
+ *	be releated to a special class of window (e.g. the edit control).
  * </description>
  */	
 #define SYSWIN_FLAGS_NONE			0x00000000
@@ -237,8 +249,8 @@ typedef struct
  * <type>Int</type>
  * <description>
  *	Windows does support both modes of operation for the SysWindow Component (single- and multitasking). To 
- *	decide which one should be used, this setting can be used. 0 => Mulitasking, 2 using an externally provided window task (communication using
- *	the CmpEventMgr), otherwise => Singletasking
+ *	decide which one should be used, this setting can be used. 0 => Multitasking, 2 using an externally provided window task (communication using
+ *	the CmpEventMgr), otherwise => Single-tasking
  * (Only for Windows).
  *	Setting the mode to 2 requires that a component handles the event EVT_OnInvokeInWindowTask.
  * </description>
@@ -251,8 +263,8 @@ typedef struct
  * <type>Int</type>
  * <description>
  * (Only for Windows)
- *	You can decide with this setting whether the window should be closed when Alt+F4 is pressed by the user or if this keycode should be ignored.
- *	When this setting is activated (it is by default!), then the keyboard handling of the codesys visualization will not react to the key combination of Alt+F4!
+ *	You can decide with this setting whether the window should be closed when Alt+F4 is pressed by the user or if this key code should be ignored.
+ *	When this setting is activated (it is by default!), then the keyboard handling of the CODESYS visualization will not react to the key combination of Alt+F4!
  * </description>
  */	
 #define SYSWINDOW_INT_WINDOWS_ALLOWCLOSING_WITH_ALT_F4			"Windows.CloseOnAltF4"
@@ -311,20 +323,20 @@ typedef struct
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- * The Targetvisualization in Linux operating systems supports two different modes of operation. The classical mode (value == 0)
- * opens a window only while the targetvisualization is running. After a deletion of an application or between reset and start of
- * a targetvisu application, there is no open window. 
+ * The Target-visualization in Linux operating systems supports two different modes of operation. The classical mode (value == 0)
+ * opens a window only while the target-visualization is running. After a deletion of an application or between reset and start of
+ * a target-visualization application, there is no open window. 
  * Additionally it is possible to keep the main window open until shutdown of the application (value == 1). This prevents problems
- * on systems based on the Qt5 platform plugin "EGLFS" (for details see http://doc.qt.io/qt-5/embedded-linux.html for example).
- * Nevertheless in this mode there is no possibility for opening several concurrent targetvisu windows as it is possible at least
+ * on systems based on the Qt5 platform plug-in "EGLFS" (for details see http://doc.qt.io/qt-5/embedded-linux.html for example).
+ * Nevertheless in this mode there is no possibility for opening several concurrent target-visualization windows as it is possible at least
  * in X-server based installations using the classical mode (value == 0).
- * It is not recommended to use a value != 0 together with X-server based installations as the resulting behaviour will not be the
+ * It is not recommended to use a value != 0 together with X-server based installations as the resulting behavior will not be the
  * one that users of X-server based systems are expecting.
  * </description>
  */
-/* take care: if changing the following setting as there might be a copy of that value in the C++ part of the linux targetvisualization */
+/* take care: if changing the following setting as there might be a copy of that value in the C++ part of the Linux target-visualization */
 #define SYSWINDOW_INT_LINUX_KEEPMAINWINDOWOPEN				"Linux.KeepMainWindowOpen"
-/* take care: if changing the following default as there might be a copy of that value in the C++ part of the linux targetvisualization */
+/* take care: if changing the following default as there might be a copy of that value in the C++ part of the Linux target-visualization */
 #ifndef SYSWINDOW_INT_LINUX_KEEPMAINWINDOWOPEN_DEFAULT	
 	#define SYSWINDOW_INT_LINUX_KEEPMAINWINDOWOPEN_DEFAULT		0		
 #endif
@@ -334,22 +346,22 @@ typedef struct
  * <type>Int</type>
  * <description>
  * Only relevant if Linux.KeepMainWindowOpen == 1.
- * To reduce the number of states the targetvisualization window can be in (before showing the window, targetvisu displayed, targetvisu not displayed),
+ * To reduce the number of states the target-visualization window can be in (before showing the window, target-visualization displayed, target-visualization not displayed),
  * this setting can be used to remove the state "before showing the window". If this setting has the value 1, then
- * the window will be displayed immediately at startup without showing a targetvisualization yet. As this mode is recommended only for embedded devices
+ * the window will be displayed immediately at startup without showing a target-visualization yet. As this mode is recommended only for embedded devices
  * (see SYSWINDOW_INT_LINUX_KEEPMAINWINDOWOPEN too) the initial window is opened in full screen mode.
  * </description>
  */
 #define SYSWINDOW_INT_LINUX_KEEPMAINWINDOWOPEN_SHOW_IMMEDIATELY				"Linux.KeepMainWindowOpenShowImmediately"
-/* take care: if changing the following setting as there might be a copy of that value in the C++ part of the linux targetvisualization */
+/* take care: if changing the following setting as there might be a copy of that value in the C++ part of the Linux target-visualization */
 #ifndef SYSWINDOW_INT_LINUX_KEEPMAINWINDOWOPEN_SHOW_IMMEDIATELY_DEFAULT		
 	#define SYSWINDOW_INT_LINUX_KEEPMAINWINDOWOPEN_SHOW_IMMEDIATELY_DEFAULT		1
 #endif
 
 /**
  * <description>Notification code that can be sent to a window using <see>SysWindowNotify</see>. The intention of this notification is
- *	to trigger a refresh and repaint of the window. In case of a targetvisualization window, this notification will usually be sent,
- *	when there is new paintinformation available that should be retrieved by the window.
+ *	to trigger a refresh and repaint of the window. In case of a target-visualization window, this notification will usually be sent,
+ *	when there is new paint information available that should be retrieved by the window.
  *	The notification parameter is not used at the moment.</description>
  */
 #define SYSWINDOW_NOTIFICATION_REFRESH_REQUESTED			1
@@ -368,7 +380,7 @@ extern "C" {
 /**
  * <description>
  *	Function to check whether an implementation of SysWindow can work with windows that are created from
- *	several independant tasks. If several tasks are not supported, then the method <see>SysWindowInvokeInWindowTask</see>
+ *	several independent tasks. If several tasks are not supported, then the method <see>SysWindowInvokeInWindowTask</see>
  *	must be implemented. 
  * </description>
  * <result>ERR_OK if several tasks are allowed, otherwise a different error code</result>
@@ -428,7 +440,7 @@ typedef RTS_RESULT (CDECL * PFSYSWINDOWSUPPORTSSEVERALTASKS) (void);
  * <param name="pfToCall" type="IN">The function that shall be called from the window task</param>
  * <param name="ulParam" type="IN">A parameter that will be passed to the call to <see>pfToCall</see>. 
  *	If this parameter is a pointer to some object, then this object must be alive until the method is called.</param>
- * <result>An error code. Will return ERR_NOTIMPLEMENTED if the singletasking mode is not available.</result>
+ * <result>An error code. Will return ERR_NOTIMPLEMENTED if the single-tasking mode is not available.</result>
  */
 RTS_RESULT CDECL SysWindowInvokeInWindowTask(PFINVOKEINWINDOWTASK pfToCall, RTS_UINTPTR ulParam);
 typedef RTS_RESULT (CDECL * PFSYSWINDOWINVOKEINWINDOWTASK) (PFINVOKEINWINDOWTASK pfToCall, RTS_UINTPTR ulParam);
@@ -478,32 +490,32 @@ typedef RTS_RESULT (CDECL * PFSYSWINDOWINVOKEINWINDOWTASK) (PFINVOKEINWINDOWTASK
 
 
 /**
- * <description>A window handling the targetvisualization. This window must have the following behaviour:
+ * <description>A window handling the target-visualization. This window must have the following behavior:
  *	First of all during the creation of this window, a pointer to a structure of type <see>TargetvisuParams</see>
  *	will be given in the parameter ulParam of <see>SysWindowCreate</see>. This structure will be valid until
- *	the targetvisualization is closed. The window has to remember this structure because it contains all the information
- *	that is needed for working as a targetvisualization.
+ *	the target-visualization is closed. The window has to remember this structure because it contains all the information
+ *	that is needed for working as a target-visualization.
  *	One important member in this structure is the member <see>callback</see>. This substructure contains
- *	function pointers that must be called by the targetvisualization window. These callbacks handle for example
+ *	function pointers that must be called by the target-visualization window. These callbacks handle for example
  *	the mouse, updating etc.</description>
  */
 #define SYSWINDOW_CLASS_TARGETVISU_WINDOW			"TargetVisu_Window"
 
 /**
- * <description>An editcontrol that can be used by the targetvisualizaton. This
+ * <description>An edit control that can be used by the target-visualizaton. This
  *		control must react to the RETURN-Key and the ESCAPE-Key. As reaction to these keys it must call the 
  *	according callback in the <see>TargetvisuParams</see>.</description>
  */
 #define SYSWINDOW_CLASS_TARGETVISU_EDITCONTROL		"TargetVisu_EditControl"
 
-#define WCB_RETURN_ABORT		0x0001		/* if a callback returns this, the window will be killed and the messageloop leaved */
+#define WCB_RETURN_ABORT		0x0001		/* if a callback returns this, the window will be killed and the message loop leaved */
 
 /**
  * <description>
  *	Function to create a new window
  * </description>
  * <param name="pCreate" type="IN">The structure that describes the window that has to be created.</param>
- * <param name="ulParam" type="IN">A parameter that is dependant of the type of the window. Might be a 
+ * <param name="ulParam" type="IN">A parameter that is dependent of the type of the window. Might be a 
  *	Pointer pointing to a structure with further information for the creation of this window. In case
  *	of a pointer, this pointer must be valid until the window is destroyed.</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
@@ -618,8 +630,8 @@ typedef RTS_RESULT (CDECL * PFSYSWINDOWDESTROY) (RTS_HANDLE hWindow);
 
 /**
  * <description>
- *	Function to set some userdefined data for a window, can be used to retrieve information within a window callback. The window should
- *	just store this data in a way so that it can be retrieved lateron using the hWindow and calling <see>SysWindowGetUserData</see>
+ *	Function to set some user defined data for a window, can be used to retrieve information within a window callback. The window should
+ *	just store this data in a way so that it can be retrieved later on using the hWindow and calling <see>SysWindowGetUserData</see>
  * </description>
  * <param name="hWindow" type="IN">Handle to the window</param>
  * <param name="ulData" type="IN">User data</param>
@@ -733,7 +745,7 @@ typedef RTS_RESULT (CDECL * PFSYSWINDOWSHOW) (RTS_HANDLE hWindow, RTS_UI32 ulDat
 
 /**
  * <description>
- *	Function to get the userdefined data for a window. This data can be attached before using <see>SysWindowSetUserData</see>. At the moment, this
+ *	Function to get the user defined data for a window. This data can be attached before using <see>SysWindowSetUserData</see>. At the moment, this
  *	method is not called.
  * </description>
  * <param name="hWindow" type="IN">Handle to the window</param>
@@ -791,7 +803,7 @@ typedef RTS_RESULT (CDECL * PFSYSWINDOWGETUSERDATA) (RTS_HANDLE hWindow, RTS_UIN
 
 /**
  * <description>
- *	Function to replace the current window callback function of a window, can be used for subclassing controls
+ *	Function to replace the current window callback function of a window, can be used for sub-classing controls
  * </description>
  * <param name="hWindow" type="IN">Handle to the window</param>
  * <param name="ulCallback" type="IN">New callback address</param>
@@ -923,7 +935,7 @@ typedef int (CDECL *PFWINDOWCALLBACK)(RTS_HANDLE hWindow, WindowCallbacks wcb, R
  *	Register window handler callback
  * </description>
  *	<note>For Implementers: The platform independent part of the SysWindow component has a default implementation
- *	for this method. You can just add the following code in this implemenation:	
+ *	for this method. You can just add the following code in this implementation:	
  *		return InternRegisterCallback(hWindow, wcb, callback, ulParam);
  *	</note>
  * <param name="hWindow" type="IN">Handle to the window</param>
@@ -984,7 +996,7 @@ typedef RTS_RESULT (CDECL * PFSYSWINDOWREGISTERCALLBACK) (RTS_HANDLE hWindow, Wi
 /**
  * <description>Unregister window handler callback</description>
  *	<note>For Implementers: The platform independent part of the SysWindow component has a default implementation
- *	for this method. You can just add the following code in this implemenation:	
+ *	for this method. You can just add the following code in this implementation:	
  *		return InternUnregisterCallback(hWindow, wcb, callback);</note>
  * 
  * <param name="hWindow" type="IN">Handle to the window</param>
@@ -1446,7 +1458,7 @@ typedef RTS_RESULT (CDECL * PFSYSWINDOWSETFONT) (RTS_HANDLE hWindow, RTS_HANDLE 
 /**
  * <description>
  *	Function to get the font in a window. Please remember that this function is not yet completely defined.
- *	For the moment it is ok to have an empty implementation returning ERR_NOTIMPLEMENTED.
+ *	For the moment it is OK to have an empty implementation returning ERR_NOTIMPLEMENTED.
  * </description>
  * <param name="hWindow" type="IN">Handle to the window</param>
  * <param name="phFont" type="IN"></param>
@@ -1616,7 +1628,7 @@ typedef RTS_RESULT (CDECL * PFSYSWINDOWSETTEXT) (RTS_HANDLE hWindow, char* pszTe
 
 /**
  * <description>
- *	Function to set the unicode text in a window
+ *	Function to set the Unicode text in a window
  * </description>
  * <param name="hWindow" type="IN">Handle to the window</param>
  * <param name="pszText" type="IN"></param>
@@ -2286,6 +2298,14 @@ typedef RTS_RESULT (CDECL * PFSYSWINDOWNOTIFY) (RTS_HANDLE hWindow, RTS_UI32 not
 #define SYSWINSUPPORT_FLAG_MULTITOUCH	2
 
 /**
+ * <category>Window support flags</category>
+ * <type>Unsigned int</type>
+ * <description> Transparent backgrounds supported
+ * </description>
+ */	
+#define SYSWINSUPPORT_FLAG_TRANSPARENT_BACKGROUND	4
+
+/**
  * <description>Retrieves information about the support of specific features from the current window.</description>
  * <remarks>Implementations of this method should post an according message to the according window and return without waiting for
  *	evaluation of this message.</remarks>
@@ -2352,7 +2372,7 @@ typedef void (*SysWindowTimerCallback)(RTS_HANDLE hWindow, void* pParams);
  * <param name="hWindow" type="IN">Handle to the window</param>
  * <param name="interval" type="IN">The timer interval in milliseconds.</param>
  * <param name="callback" type="IN">The function to call after every interval.</param>
- * <param name="callbackParams" type="IN">The paramaters that should be passed to the callback function.</param>
+ * <param name="callbackParams" type="IN">The parameters that should be passed to the callback function.</param>
  * <result>Identifier for the timer that can be used to destroy it.</result>
  */
 RTS_HANDLE CDECL SysWindowCreateTimer(RTS_HANDLE hWindow, RTS_UI32 interval, SysWindowTimerCallback callback, void* pCallbackParams, RTS_RESULT* pResult);

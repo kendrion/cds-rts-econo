@@ -1,7 +1,7 @@
  /**
  * <interfacename>SysSemProcess</interfacename>
  * <description> 
- *	<p>The SysSemProcess interface is projected to handle synchonization objects for processes.
+ *	<p>The SysSemProcess interface is projected to handle synchronization objects for processes.
  *	The synchronization objects are called semaphores to synchronize concurrent access to single
  *	system global resources.</p>
  *	<p>For example:</p>
@@ -10,13 +10,13 @@
  *			SysSemProcessEnter(hSem);
  *			[Here you can accessed the protected global resource]
  *			SysSemProcessLeave(hSem);
- *			[After SysSemProcessLeave() you must not access the protected globale resource]
+ *			[After SysSemProcessLeave() you must not access the protected global resource]
  *			....
  *	</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -50,7 +50,7 @@ extern "C" {
 
 /**
  * <description>Create a new semaphore object to synchronize processes (global semaphores)</description>
- * <result><p>RESULT: Handle to the sempahore object</p></result>
+ * <result><p>RESULT: Handle to the semaphore object</p></result>
  */
 typedef struct tagsyssemprocesscreate_struct
 {
@@ -301,7 +301,7 @@ typedef void (CDECL CDECL_EXT* PFSYSSEMPROCESSLEAVE_IEC) (syssemprocessleave_str
 extern "C" {
 #endif
 
-/* Init routines for OS specific modules */
+/* Initialization routines for OS specific modules */
 RTS_RESULT CDECL SysSemProcessOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysSemProcessOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
@@ -311,7 +311,7 @@ RTS_RESULT CDECL SysSemProcessOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulPara
  * </description>
  * <param name="pszName" type="IN">Name of the semaphore</param>
  * <param name="pResult" type="OUT">ERR_OK or ERR_DUPLICATE if semaphore already exists</param>
- * <result>Handle to the sempahore object</result>
+ * <result>Handle to the semaphore object</result>
  */
 RTS_HANDLE CDECL SysSemProcessCreate(char *pszName, RTS_RESULT *pResult);
 typedef RTS_HANDLE (CDECL * PFSYSSEMPROCESSCREATE) (char *pszName, RTS_RESULT *pResult);

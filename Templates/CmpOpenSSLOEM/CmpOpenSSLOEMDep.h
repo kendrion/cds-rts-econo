@@ -9,7 +9,7 @@
  * A component implementing all interfaces for security issues (replaces the existing CmpOpenSSL component).
  * </description>
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 #ifndef _CMPOPENSSLOEMDEP_H_
@@ -23,9 +23,9 @@
 
 
 
-#define CMP_VERSION         UINT32_C(0x03050E00)
-#define CMP_VERSION_STRING "3.5.14.0"
-#define CMP_VERSION_RC      3,5,14,0
+#define CMP_VERSION         UINT32_C(0x0305101E)
+#define CMP_VERSION_STRING "3.5.16.30"
+#define CMP_VERSION_RC      3,5,16,30
 
 /* TODO: REPLACE 0x0001 BY YOUR VENDORID */
 #define CMP_VENDORID       0x0001
@@ -82,9 +82,25 @@
 
 
 
+
+/**
+ * \file CmpTlsItf.h
+ */
 #include "CmpTlsItf.h"
+
+/**
+ * \file SysSocket2Itf.h
+ */
 #include "SysSocket2Itf.h"
+
+/**
+ * \file CmpCryptoItf.h
+ */
 #include "CmpCryptoItf.h"
+
+/**
+ * \file CmpX509CertItf.h
+ */
 #include "CmpX509CertItf.h"
 
 
@@ -521,80 +537,20 @@
 
 #ifndef CMPOPENSSLOEM_DISABLE_EXTREF
 #define EXPORT_EXTREF_STMT \
-        { (RTS_VOID_FCTPTR)cmptlswrite, "cmptlswrite", RTSITF_GET_SIGNATURE(0xA1D9E8A7, 0xF01B2E0C), 0x03050A00 },\
-          { (RTS_VOID_FCTPTR)cmptlsshutdown, "cmptlsshutdown", 0x2AA5307D, 0x03050A00 },\
-          { (RTS_VOID_FCTPTR)cmptlsread, "cmptlsread", RTSITF_GET_SIGNATURE(0x7869515D, 0xC50DA073), 0x03050A00 },\
-          { (RTS_VOID_FCTPTR)cmptlsfreecontext, "cmptlsfreecontext", 0x4FCCCE44, 0x03050A00 },\
-          { (RTS_VOID_FCTPTR)cmptlscreatecontext, "cmptlscreatecontext", 0x9BD4354C, 0x03050A00 },\
-          { (RTS_VOID_FCTPTR)cmptlsconnect, "cmptlsconnect", 0xE8789C31, 0x03050A00 },\
-          { (RTS_VOID_FCTPTR)cmptlsclose, "cmptlsclose", 0xBD50D496, 0x03050A00 },\
-          { (RTS_VOID_FCTPTR)cmptlsbufferopen, "cmptlsbufferopen", 0x205777BB, 0x03050A00 },\
-          { (RTS_VOID_FCTPTR)cmptlsbufferdatatosendavailable, "cmptlsbufferdatatosendavailable", 0xFC0521B2, 0x03050A00 },\
-          { (RTS_VOID_FCTPTR)cmptlsbufferdatasent, "cmptlsbufferdatasent", 0xA15919C8, 0x03050A00 },\
-          { (RTS_VOID_FCTPTR)cmptlsbufferdatareceived, "cmptlsbufferdatareceived", 0x613BC278, 0x03050A00 },\
-          { (RTS_VOID_FCTPTR)cmptlsaccept, "cmptlsaccept", 0xE5016190, 0x03050A00 },\
-                                                                                                                            { (RTS_VOID_FCTPTR)cryptosymmetricencrypt, "cryptosymmetricencrypt", 0x8D659084, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptosymmetricdecrypt, "cryptosymmetricdecrypt", 0xF3963545, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptosignatureverify, "cryptosignatureverify", 0x3F425BB9, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptosignaturegenerate, "cryptosignaturegenerate", 0x0C2FBF80, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptortsbytestringinit, "cryptortsbytestringinit", 0xC1B4C2F9, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptortsbytestringexit, "cryptortsbytestringexit", 0x16B297C5, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptokeyinit, "cryptokeyinit", 0xE8E228B3, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptokeyexit, "cryptokeyexit", 0xD71ED5F3, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptohmacverify, "cryptohmacverify", 0x49EEB4A9, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptohmacsign, "cryptohmacsign", 0x931A9470, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptogetnextalgorithm, "cryptogetnextalgorithm", 0x79EC29C8, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptogetfirstalgorithm, "cryptogetfirstalgorithm", 0xC8A4A345, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptogetasymmetrickeylength, "cryptogetasymmetrickeylength", 0, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptogetalgorithmbyid, "cryptogetalgorithmbyid", 0x3D0776D3, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptogeneraterandomnumber, "cryptogeneraterandomnumber", 0xF9FC5437, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptogeneratehash, "cryptogeneratehash", 0x34E1A812, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptoasymmetricencrypt, "cryptoasymmetricencrypt", 0xC14613D0, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)cryptoasymmetricdecrypt, "cryptoasymmetricdecrypt", 0x126B86CC, 0x03050B00 },\
-                                                                                          { (RTS_VOID_FCTPTR)x509parsecertificate, "x509parsecertificate", 0x01B27207, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certverify, "x509certverify", 0x9822EB29, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certstoreunregister, "x509certstoreunregister", 0xE41C13F3, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certstoresearchgetnext, "x509certstoresearchgetnext", 0, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certstoresearchgetfirst, "x509certstoresearchgetfirst", 0, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certstoreremovecert, "x509certstoreremovecert", 0x0E795BC4, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certstoreregister, "x509certstoreregister", 0x35F7F607, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certstoreopen, "x509certstoreopen", 0xFE7CCE6C, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certstoregetregisteredcert, "x509certstoregetregisteredcert", 0x8C0F7D34, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certstoregetnextcert, "x509certstoregetnextcert", 0x894377FA, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certstoregetfirstcert, "x509certstoregetfirstcert", 0x9165907D, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certstoreclose, "x509certstoreclose", 0x048C3968, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certstoreaddcert, "x509certstoreaddcert", 0x690E5D79, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certkeyclose, "x509certkeyclose", 0x6A598D05, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certinfoinit, "x509certinfoinit", 0xD52F28DD, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certinfoexit, "x509certinfoexit", 0x4F4B0310, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certgetthumbprint, "x509certgetthumbprint", 0x5B1EA1C5, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certgetpublickey, "x509certgetpublickey", 0x35142E48, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certgetprivatekey, "x509certgetprivatekey", 0x279C9A63, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certgetcontent, "x509certgetcontent", 0xDA69570E, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certgetbinary, "x509certgetbinary", 0x6F7D6C42, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certcreateselfsigned, "x509certcreateselfsigned", 0x6765E8BD, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certcreatecsr, "x509certcreatecsr", 0xF64C1D04, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certcmsverify, "x509certcmsverify", 0x73653424, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certcmsdecrypt, "x509certcmsdecrypt", 0xCCAD85D1, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)x509certclose, "x509certclose", 0x150A5E6B, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)rtsoidgetname, "rtsoidgetname", 0xBEA6E204, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)rtsoidgetid, "rtsoidgetid", 0xB69D55FF, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)rtsoidcreate, "rtsoidcreate", 0xE11A70BD, 0x03050B00 },\
-          { (RTS_VOID_FCTPTR)rtsoidclear, "rtsoidclear", 0xB53A1CAF, 0x03050B00 },\
-          
+                                                                                                                                                                                                                                  
 #else
 #define EXPORT_EXTREF_STMT
 #endif
 #ifndef CMPOPENSSLOEM_DISABLE_EXTREF2
 #define EXPORT_EXTREF2_STMT \
-                                                                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                  
 #else
 #define EXPORT_EXTREF2_STMT
 #endif
-#if !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
+#if !defined(CMPOPENSSLOEM_DISABLE_CMPITF) && !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
 #define EXPORT_CMPITF_STMT \
     {\
-                                { (RTS_VOID_FCTPTR)TlsRandCheckStatus, "TlsRandCheckStatus", 0, 0 },\
+        { (RTS_VOID_FCTPTR)TlsRandCheckStatus, "TlsRandCheckStatus", 0, 0 },\
           { (RTS_VOID_FCTPTR)TlsRandAdd, "TlsRandAdd", 0, 0 },\
           { (RTS_VOID_FCTPTR)TlsClose, "TlsClose", 0, 0 },\
           { (RTS_VOID_FCTPTR)TlsShutdown, "TlsShutdown", 0, 0 },\
@@ -611,7 +567,10 @@
           { (RTS_VOID_FCTPTR)TlsCreateContext3, "TlsCreateContext3", 0, 0 },\
           { (RTS_VOID_FCTPTR)TlsCreateContext2, "TlsCreateContext2", 0, 0 },\
           { (RTS_VOID_FCTPTR)TlsCreateContext, "TlsCreateContext", 0, 0 },\
-                                                  { (RTS_VOID_FCTPTR)CryptoRtsByteStringExit, "CryptoRtsByteStringExit", 0, 0 },\
+                                                  { (RTS_VOID_FCTPTR)CryptoBase64Decode, "CryptoBase64Decode", 0, 0 },\
+          { (RTS_VOID_FCTPTR)CryptoBase64Encode, "CryptoBase64Encode", 0, 0 },\
+          { (RTS_VOID_FCTPTR)CryptoRtsByteStringExit, "CryptoRtsByteStringExit", 0, 0 },\
+          { (RTS_VOID_FCTPTR)CryptoRtsByteStringInit3, "CryptoRtsByteStringInit3", 0, 0 },\
           { (RTS_VOID_FCTPTR)CryptoRtsByteStringInit2, "CryptoRtsByteStringInit2", 0, 0 },\
           { (RTS_VOID_FCTPTR)CryptoRtsByteStringInit, "CryptoRtsByteStringInit", 0, 0 },\
           { (RTS_VOID_FCTPTR)CryptoKeyExit, "CryptoKeyExit", 0, 0 },\
@@ -621,7 +580,14 @@
           { (RTS_VOID_FCTPTR)CryptoSignatureGenerate, "CryptoSignatureGenerate", 0, 0 },\
           { (RTS_VOID_FCTPTR)CryptoHMACVerify, "CryptoHMACVerify", 0, 0 },\
           { (RTS_VOID_FCTPTR)CryptoHMACSign, "CryptoHMACSign", 0, 0 },\
+          { (RTS_VOID_FCTPTR)CryptoDeriveKey, "CryptoDeriveKey", 0, 0 },\
           { (RTS_VOID_FCTPTR)CryptoGenerateHash, "CryptoGenerateHash", 0, 0 },\
+          { (RTS_VOID_FCTPTR)CryptoDeletePrivateKey, "CryptoDeletePrivateKey", 0, 0 },\
+          { (RTS_VOID_FCTPTR)CryptoLoadPrivateKey, "CryptoLoadPrivateKey", 0, 0 },\
+          { (RTS_VOID_FCTPTR)CryptoStorePrivateKey, "CryptoStorePrivateKey", 0, 0 },\
+          { (RTS_VOID_FCTPTR)CryptoImportAsymmetricKey, "CryptoImportAsymmetricKey", 0, 0 },\
+          { (RTS_VOID_FCTPTR)CryptoExportAsymmetricKey, "CryptoExportAsymmetricKey", 0, 0 },\
+          { (RTS_VOID_FCTPTR)CryptoGenerateAsymmetricKeyPair, "CryptoGenerateAsymmetricKeyPair", 0, 0 },\
           { (RTS_VOID_FCTPTR)CryptoGetAsymmetricKeyLength, "CryptoGetAsymmetricKeyLength", 0, 0 },\
           { (RTS_VOID_FCTPTR)CryptoAsymmetricDecrypt, "CryptoAsymmetricDecrypt", 0, 0 },\
           { (RTS_VOID_FCTPTR)CryptoAsymmetricEncrypt, "CryptoAsymmetricEncrypt", 0, 0 },\
@@ -631,7 +597,7 @@
           { (RTS_VOID_FCTPTR)CryptoGetNextAlgorithm, "CryptoGetNextAlgorithm", 0, 0 },\
           { (RTS_VOID_FCTPTR)CryptoGetFirstAlgorithm, "CryptoGetFirstAlgorithm", 0, 0 },\
           { (RTS_VOID_FCTPTR)CryptoGetAlgorithmById, "CryptoGetAlgorithmById", 0, 0 },\
-                                              { (RTS_VOID_FCTPTR)X509CertStoreGetRegisteredCert, "X509CertStoreGetRegisteredCert", 0, 0 },\
+          { (RTS_VOID_FCTPTR)X509CertStoreGetRegisteredCert, "X509CertStoreGetRegisteredCert", 0, 0 },\
           { (RTS_VOID_FCTPTR)X509CertStoreUnregister, "X509CertStoreUnregister", 0, 0 },\
           { (RTS_VOID_FCTPTR)X509CertStoreRegister, "X509CertStoreRegister", 0, 0 },\
           { (RTS_VOID_FCTPTR)X509CertStoreGetNextCert, "X509CertStoreGetNextCert", 0, 0 },\
@@ -657,6 +623,8 @@
           { (RTS_VOID_FCTPTR)X509CertClose, "X509CertClose", 0, 0 },\
           { (RTS_VOID_FCTPTR)X509CertKeyClose, "X509CertKeyClose", 0, 0 },\
           { (RTS_VOID_FCTPTR)X509CertCompare, "X509CertCompare", 0, 0 },\
+          { (RTS_VOID_FCTPTR)X509CertCheckIP, "X509CertCheckIP", 0, 0 },\
+          { (RTS_VOID_FCTPTR)X509CertCheckHost, "X509CertCheckHost", 0, 0 },\
           { (RTS_VOID_FCTPTR)X509CertHasExtendedKeyUsage, "X509CertHasExtendedKeyUsage", 0, 0 },\
           { (RTS_VOID_FCTPTR)X509CertIsSelfSigned, "X509CertIsSelfSigned", 0, 0 },\
           { (RTS_VOID_FCTPTR)X509CertIsDateValid, "X509CertIsDateValid", 0, 0 },\
@@ -671,7 +639,7 @@
           { (RTS_VOID_FCTPTR)X509CertVerify, "X509CertVerify", 0, 0 },\
           { (RTS_VOID_FCTPTR)X509CertStoreClose, "X509CertStoreClose", 0, 0 },\
           { (RTS_VOID_FCTPTR)X509CertStoreOpen, "X509CertStoreOpen", 0, 0 },\
-                                                                      \
+          \
         { ((RTS_VOID_FCTPTR)(void *)0), "", 0, 0 }\
     }
 #else
@@ -1026,6 +994,8 @@ class CCmpOpenSSLOEM : public ICmpTls , public ISysSocket2 , public ICmpCrypto ,
         virtual RTS_BOOL CDECL IX509CertIsDateValid(RTS_HANDLE hCert, RTS_RESULT *pResult);
         virtual RTS_BOOL CDECL IX509CertIsSelfSigned(RTS_HANDLE hCert, RTS_RESULT *pResult);
         virtual RTS_BOOL CDECL IX509CertHasExtendedKeyUsage(RTS_HANDLE hCert, RTS_UI32 numOfExKeyUsages, RtsOID *pExKeyUsages, RTS_RESULT *pResult);
+        virtual RTS_BOOL CDECL IX509CertCheckHost(RTS_HANDLE hCert, char *pszHostName, RTSX509CERTCHECKFLAGS flags, RTS_RESULT *pResult);
+        virtual RTS_BOOL CDECL IX509CertCheckIP(RTS_HANDLE hCert, INADDR *pIP, RTSX509CERTCHECKFLAGS flags, RTS_RESULT *pResult);
         virtual RTS_BOOL CDECL IX509CertCompare(RTS_HANDLE hCert1, RTS_HANDLE hCert2);
         virtual RTS_RESULT CDECL IX509CertKeyClose(RtsCryptoKey* pKey);
         virtual RTS_RESULT CDECL IX509CertClose(RTS_HANDLE hCert);
@@ -1061,7 +1031,14 @@ class CCmpOpenSSLOEM : public ICmpTls , public ISysSocket2 , public ICmpCrypto ,
         virtual RTS_RESULT CDECL ICryptoAsymmetricEncrypt(RTS_HANDLE hAlgo, RtsByteString* pPlainText, RtsCryptoKey publicKey, RtsByteString* pCipherText);
         virtual RTS_RESULT CDECL ICryptoAsymmetricDecrypt(RTS_HANDLE hAlgo, RtsByteString* pCipherText, RtsCryptoKey privateKey, RtsByteString* pPlainText);
         virtual RTS_UI32 CDECL ICryptoGetAsymmetricKeyLength(RtsCryptoKey asymmetricKey, RTS_RESULT* pResult);
+        virtual RTS_RESULT CDECL ICryptoGenerateAsymmetricKeyPair(RTS_IEC_HANDLE hAlgo, RTS_IEC_UDINT ui32KeyLen, RtsCryptoKey *pKeyPair, RTS_BOOL bPrivateKeyExportable);
+        virtual RTS_RESULT CDECL ICryptoExportAsymmetricKey(RtsCryptoKey key, RTS_BOOL bBase64, RTS_BOOL bPrivateKey, RtsByteString *pData);
+        virtual RTS_RESULT CDECL ICryptoImportAsymmetricKey(RtsByteString data, RTS_BOOL bBase64, RTS_BOOL bPrivateKey, RtsCryptoKey *pKey);
+        virtual RTS_RESULT CDECL ICryptoStorePrivateKey(RtsCryptoKey key, RtsByteString *pKeyIdentifier);
+        virtual RTS_RESULT CDECL ICryptoLoadPrivateKey(RtsByteString keyIdentifier, RtsCryptoKey *pKey);
+        virtual RTS_RESULT CDECL ICryptoDeletePrivateKey(RtsByteString keyIdentifier);
         virtual RTS_RESULT CDECL ICryptoGenerateHash(RTS_HANDLE hAlgo, RtsByteString* pData, RtsByteString* pHash);
+        virtual RTS_RESULT CDECL ICryptoDeriveKey(RTS_HANDLE hAlgo, RtsByteString *pKey, RtsByteString *pSalt, RtsKdfParameter* pSpecificParameters, RtsByteString *pDerivedKey);
         virtual RTS_RESULT CDECL ICryptoHMACSign(RTS_HANDLE hAlgo, RtsByteString* pData, RtsCryptoKey key, RtsByteString* pSignature);
         virtual RTS_RESULT CDECL ICryptoHMACVerify(RTS_HANDLE hAlgo, RtsByteString* pData, RtsCryptoKey key, RtsByteString* pSignature);
         virtual RTS_RESULT CDECL ICryptoSignatureGenerate(RTS_HANDLE hAlgo, RtsByteString* pData, RtsCryptoKey privateKey, RtsByteString* pSignature);
@@ -1071,7 +1048,10 @@ class CCmpOpenSSLOEM : public ICmpTls , public ISysSocket2 , public ICmpCrypto ,
         virtual RTS_RESULT CDECL ICryptoKeyExit(RtsCryptoKey* pKey);
         virtual RTS_RESULT CDECL ICryptoRtsByteStringInit(RtsByteString* pByteString);
         virtual RTS_RESULT CDECL ICryptoRtsByteStringInit2(RtsByteString* pByteString, RTS_UI32 ui32BufferSize, RTS_UI8* pBuffer);
+        virtual RTS_RESULT CDECL ICryptoRtsByteStringInit3(RtsByteString* pByteString, RTS_UI32 ui32BufferSize, RTS_UI8* pBuffer, RTS_BOOL bEmptyBuffer);
         virtual RTS_RESULT CDECL ICryptoRtsByteStringExit(RtsByteString* pByteString);
+        virtual RTS_RESULT CDECL ICryptoBase64Encode(RtsByteString *input, RtsByteString* base64Output);
+        virtual RTS_RESULT CDECL ICryptoBase64Decode(RtsByteString *base64Input, RtsByteString *output);
         virtual RTS_HANDLE CDECL ISysSock2Create(RTS_HANDLE hISysSocket, CLASSID ClassId, SysSock_Parameter *pParameter, RTS_RESULT *pResult);
         virtual RTS_RESULT CDECL ISysSock2Close(void);
         virtual RTS_RESULT CDECL ISysSock2SetOption(RTS_I32 iLevel, RTS_I32 iOption, char *pcOptionValue, RTS_I32 iOptionLen);
@@ -1107,7 +1087,7 @@ class CCmpOpenSSLOEM : public ICmpTls , public ISysSocket2 , public ICmpCrypto ,
         virtual RTS_SSIZE CDECL ITlsWrite(RTS_HANDLE hTlsConn, RTS_UI8* pbyData, RTS_SSIZE ulDataSize, RTS_RESULT* pResult);
         virtual RTS_RESULT CDECL ITlsShutdown(RTS_HANDLE hTlsConn);
         virtual RTS_RESULT CDECL ITlsClose(RTS_HANDLE hTlsConn);
-        virtual void CDECL ITlsRandAdd(const RTS_UI8* pui8Buffer, RTS_I32 i32BufferSize, RTS_REAL64 r64Entroy);
+        virtual void CDECL ITlsRandAdd(const RTS_UI8* pui8Buffer, RTS_I32 i32BufferSize, RTS_REAL64 r64Entropy);
         virtual RTS_BOOL CDECL ITlsRandCheckStatus(void);
 
     public:

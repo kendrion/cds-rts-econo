@@ -1,0 +1,497 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_router_itf_8h:
+
+=============================
+CmpRouterItf.h File Reference
+=============================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpCommunicationLibItf.h <_cmp_communication_lib_itf_8h>`"
+| #include ":ref:`CmpBlkDrvItf.h <_cmp_blk_drv_itf_8h>`"
+
+Data Structures
+---------------
+
+- struct :ref:`NETWORKINTERFACEINFO <struct_n_e_t_w_o_r_k_i_n_t_e_r_f_a_c_e_i_n_f_o>`
+
+- struct :ref:`NETWORKINTERFACEINFO2 <struct_n_e_t_w_o_r_k_i_n_t_e_r_f_a_c_e_i_n_f_o2>`
+
+- struct :ref:`ONDEMANDNETWORKINTERFACE <struct_o_n_d_e_m_a_n_d_n_e_t_w_o_r_k_i_n_t_e_r_f_a_c_e>`
+
+- struct :ref:`tagRTR_AddrComponent <structtag_r_t_r___addr_component>`
+
+- struct :ref:`tagRTR_NodeAddress <structtag_r_t_r___node_address>`
+
+- struct :ref:`tagroutergetinstancebyname_struct <structtagroutergetinstancebyname__struct>`
+
+- struct :ref:`tagroutergetname_struct <structtagroutergetname__struct>`
+
+- struct :ref:`tagroutergethostaddress_struct <structtagroutergethostaddress__struct>`
+
+- struct :ref:`tagroutergetparentaddress_struct <structtagroutergetparentaddress__struct>`
+
+- struct :ref:`ICmpRouter_C <struct_i_cmp_router___c>`
+
+Macros
+------
+
+- #define :ref:`ROUTERKEY_INT_MAX_ROUTERS <group___cmp_router_itf___settings_1gaccdb9ce0de9b2bb9cc8ed6cc48e9d854>` "MaxRouters"
+
+- #define :ref:`ROUTERKEY_INT_MAX_ROUTERS_DEFAULT <group___cmp_router_itf___settings_1ga0a545edb5760949b05f6c97a575e48ad>` 7
+
+- #define :ref:`ROUTERKEY_INT_PARALLEL_ROUTING <group___cmp_router_itf___settings_1ga392903eb176d4dfe9a909d92ab9900b9>` "EnableParallelRouting"
+
+- #define :ref:`ROUTERKEY_INT_PARALLEL_ROUTING_DEFAULT <group___cmp_router_itf___settings_1ga2c123030997454c5cb51c449dd02b247>` 2
+
+- #define :ref:`ROUTERKEY_INT_LOOP_DETECTION <group___cmp_router_itf___settings_1ga1b3123601fe3d66533918d787cc83323>` "EnableLoopDetection"
+
+- #define :ref:`ROUTERKEY_INT_LOOP_DETECTION_DEFAULT <group___cmp_router_itf___settings_1ga7f237dc622254332af8ac2ef95fdcf9d>` 1
+
+- #define :ref:`ROUTERKEY_STRING_INSTANCE_NAME <group___cmp_router_itf___settings_1gaa77e77bd15284753f7eec56121ca5bd7>` "Name"
+
+- #define :ref:`ROUTERKEY_STRING_INSTANCE_NAME_DEFAULT_PREFIX <group___cmp_router_itf___settings_1ga527de130b1bdc87f5af76c61d909ab12>` "Router"
+
+- #define :ref:`ROUTERKEY_STRING_MAINNET <group___cmp_router_itf___settings_1ga7f5661b3ff618d7745d19c476c94b888>` "MainNet"
+
+- #define :ref:`ROUTERKEY_INT_NUMSUBNETS <group___cmp_router_itf___settings_1ga5ebb7fe1d9e075c77591a4b77b2349f0>` "NumSubnets"
+
+- #define :ref:`ROUTERKEY_INT_NUMSUBNETS_DEFAULT <group___cmp_router_itf___settings_1ga3e07e9a89ba4a818139f07c2429b15b2>` 0
+
+- #define :ref:`ROUTERKEY_STRING_SUBNET_PREFIX <group___cmp_router_itf___settings_1ga2332f144ff299ba7476c82415dd65158>` "Subnet"
+
+- #define :ref:`ROUTERKEY_STRING_SUBNET_INTERFACE <group___cmp_router_itf___settings_1ga1f82b8b83ef21f8227089998edaa284c>` "Interface"
+
+- #define :ref:`ROUTERKEY_INT_ADDR_UPDATE_INTERVAL <group___cmp_router_itf___settings_1ga67d1bffa828ef4304492b0be6535ae24>` "AddressUpdateInterval"
+
+- #define :ref:`ROUTERKEY_INT_ADDR_UPDATE_INTERVAL_DEFAULT <group___cmp_router_itf___settings_1ga288d74528f201c332e8c45f50784adcc>` 60
+
+- #define :ref:`MAX_ROUTERNAME <group___cmp_router_itf___settings_1gaffc241af03e44bb5c64abe103e0dd232>` 20
+
+- #define :ref:`MAX_BLOCKSIZE <group___cmp_router_itf___settings_1gaf8a1d2ed31f7c9a00fec46a798edb61b>` 512
+
+- #define :ref:`MAX_INTERFACE_NAME <group___cmp_router_itf___settings_1gac8c3dd7956a2b2686997b488768ef3a1>` 20
+
+- #define :ref:`USE_RouterRegisterNetworkInterface2 <group___cmp_router_itf_1gaa413a2d24ab476beda93635b888a5311>` :ref:`PFROUTERREGISTERNETWORKINTERFACE2 <group___cmp_router_itf_1ga74c4ff28edb16ed01c894a5fb8f0234f>` pfRouterRegisterNetworkInterface2;
+
+- #define :ref:`EXT_RouterRegisterNetworkInterface2 <group___cmp_router_itf_1ga00ef2a388c65be7f0ea262f10c001e22>` extern :ref:`PFROUTERREGISTERNETWORKINTERFACE2 <group___cmp_router_itf_1ga74c4ff28edb16ed01c894a5fb8f0234f>` pfRouterRegisterNetworkInterface2;
+
+- #define :ref:`GET_RouterRegisterNetworkInterface2 <group___cmp_router_itf_1gab7d969de486d2b9b42212a8f29c56c49>` s_pfCMGetAPI2( "RouterRegisterNetworkInterface2", (RTS_VOID_FCTPTR *)&pfRouterRegisterNetworkInterface2, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterRegisterNetworkInterface2 <group___cmp_router_itf_1gaed4ebcaa91499b914e8562c154d125e7>` pfRouterRegisterNetworkInterface2
+
+- #define :ref:`CHK_RouterRegisterNetworkInterface2 <group___cmp_router_itf_1ga258d256e559237433ecaaa2a57ade184>` (pfRouterRegisterNetworkInterface2 != NULL)
+
+- #define :ref:`EXP_RouterRegisterNetworkInterface2 <group___cmp_router_itf_1gaf3517a34e4a18c51e3741499d57e0d5c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterRegisterNetworkInterface2", (RTS_UINTPTR) :ref:`RouterRegisterNetworkInterface2 <group___cmp_router_itf_1ga4a8e0dbd5259cd81f3efaaf50c1d350f>` , 0, 0)
+
+- #define :ref:`USE_RouterRegisterNetworkInterface <group___cmp_router_itf_1gaceeae26beb73265e6f3822cc5f4cc5a8>` :ref:`PFROUTERREGISTERNETWORKINTERFACE <group___cmp_router_itf_1ga9e97982506eada2e8e0b4eb96191f451>` pfRouterRegisterNetworkInterface;
+
+- #define :ref:`EXT_RouterRegisterNetworkInterface <group___cmp_router_itf_1ga15e891231f8eac318a2ca7b4d77b4bc3>` extern :ref:`PFROUTERREGISTERNETWORKINTERFACE <group___cmp_router_itf_1ga9e97982506eada2e8e0b4eb96191f451>` pfRouterRegisterNetworkInterface;
+
+- #define :ref:`GET_RouterRegisterNetworkInterface <group___cmp_router_itf_1ga0144d7828c0c8d03569899fd4ff5c91c>` s_pfCMGetAPI2( "RouterRegisterNetworkInterface", (RTS_VOID_FCTPTR *)&pfRouterRegisterNetworkInterface, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterRegisterNetworkInterface <group___cmp_router_itf_1ga8a5e8d19f7afca01cd26a9d4f256ec7d>` pfRouterRegisterNetworkInterface
+
+- #define :ref:`CHK_RouterRegisterNetworkInterface <group___cmp_router_itf_1ga810d931d8fec3a7d6b11e6c94de01f14>` (pfRouterRegisterNetworkInterface != NULL)
+
+- #define :ref:`EXP_RouterRegisterNetworkInterface <group___cmp_router_itf_1ga52b9e55e5c947753a78bd0aa3e41e459>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterRegisterNetworkInterface", (RTS_UINTPTR) :ref:`RouterRegisterNetworkInterface <group___cmp_router_itf_1gaed00cb57cc02243dbbdd65d8eaafcfc9>` , 0, 0)
+
+- #define :ref:`USE_RouterRegisterOnDemandNWInterface <group___cmp_router_itf_1gaca86ffa0ca98f13aa3b6572de5cd353e>` :ref:`PFROUTERREGISTERONDEMANDNWINTERFACE <group___cmp_router_itf_1ga9bd9a01439835aa5e6a2d08cca8f8327>` pfRouterRegisterOnDemandNWInterface;
+
+- #define :ref:`EXT_RouterRegisterOnDemandNWInterface <group___cmp_router_itf_1gac1b6119a71718043a70885002d57fe9f>` extern :ref:`PFROUTERREGISTERONDEMANDNWINTERFACE <group___cmp_router_itf_1ga9bd9a01439835aa5e6a2d08cca8f8327>` pfRouterRegisterOnDemandNWInterface;
+
+- #define :ref:`GET_RouterRegisterOnDemandNWInterface <group___cmp_router_itf_1ga499fbd2487f092264cc1525410104ca8>` s_pfCMGetAPI2( "RouterRegisterOnDemandNWInterface", (RTS_VOID_FCTPTR *)&pfRouterRegisterOnDemandNWInterface, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterRegisterOnDemandNWInterface <group___cmp_router_itf_1ga38ddbc4ad771f3c279e082488395326e>` pfRouterRegisterOnDemandNWInterface
+
+- #define :ref:`CHK_RouterRegisterOnDemandNWInterface <group___cmp_router_itf_1gad534253a2507c40a609ab3d4749d6d95>` (pfRouterRegisterOnDemandNWInterface != NULL)
+
+- #define :ref:`EXP_RouterRegisterOnDemandNWInterface <group___cmp_router_itf_1ga0605d75cd3f137b374e47729fee99ff0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterRegisterOnDemandNWInterface", (RTS_UINTPTR) :ref:`RouterRegisterOnDemandNWInterface <group___cmp_router_itf_1gaf367a287b41041b9e981299ad2fb5c46>` , 0, 0)
+
+- #define :ref:`USE_RouterUnregisterNetworkInterface <group___cmp_router_itf_1ga478a44a5ae209c7ac153072c9a7e8985>` :ref:`PFROUTERUNREGISTERNETWORKINTERFACE <group___cmp_router_itf_1gabd179435debd257de7e9c274b778f669>` pfRouterUnregisterNetworkInterface;
+
+- #define :ref:`EXT_RouterUnregisterNetworkInterface <group___cmp_router_itf_1gaab753750517683763e508f3bb469e6d4>` extern :ref:`PFROUTERUNREGISTERNETWORKINTERFACE <group___cmp_router_itf_1gabd179435debd257de7e9c274b778f669>` pfRouterUnregisterNetworkInterface;
+
+- #define :ref:`GET_RouterUnregisterNetworkInterface <group___cmp_router_itf_1gaf429fef98e59d004c9e41340763072c6>` s_pfCMGetAPI2( "RouterUnregisterNetworkInterface", (RTS_VOID_FCTPTR *)&pfRouterUnregisterNetworkInterface, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterUnregisterNetworkInterface <group___cmp_router_itf_1gac84e4252832ad1df2cb29270a16813cd>` pfRouterUnregisterNetworkInterface
+
+- #define :ref:`CHK_RouterUnregisterNetworkInterface <group___cmp_router_itf_1ga9b5138e6ab7fdd22173805141ab0e7a0>` (pfRouterUnregisterNetworkInterface != NULL)
+
+- #define :ref:`EXP_RouterUnregisterNetworkInterface <group___cmp_router_itf_1ga3eaad64ef795973cc25dbf48165408bd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterUnregisterNetworkInterface", (RTS_UINTPTR) :ref:`RouterUnregisterNetworkInterface <group___cmp_router_itf_1gaf1867009769a6a83e21f67967531c4ad>` , 0, 0)
+
+- #define :ref:`USE_RouterHandleData <group___cmp_router_itf_1ga427ad72b80e711ea17695d56d08d3005>` :ref:`PFROUTERHANDLEDATA <group___cmp_router_itf_1gaa8ffc5a0bc35c36b70bf59f290a4b7c2>` pfRouterHandleData;
+
+- #define :ref:`EXT_RouterHandleData <group___cmp_router_itf_1ga28f3fd0d9bb0abb5f17e8b6780fd7c3c>` extern :ref:`PFROUTERHANDLEDATA <group___cmp_router_itf_1gaa8ffc5a0bc35c36b70bf59f290a4b7c2>` pfRouterHandleData;
+
+- #define :ref:`GET_RouterHandleData <group___cmp_router_itf_1gad1eb5970fde6a2408af2304326e966f2>` s_pfCMGetAPI2( "RouterHandleData", (RTS_VOID_FCTPTR *)&pfRouterHandleData, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterHandleData <group___cmp_router_itf_1ga135370a6fdf693bf22b6fef85de7b1f1>` pfRouterHandleData
+
+- #define :ref:`CHK_RouterHandleData <group___cmp_router_itf_1ga5bef012425c26c9ba669e7dc4fa984d8>` (pfRouterHandleData != NULL)
+
+- #define :ref:`EXP_RouterHandleData <group___cmp_router_itf_1ga22c50863b7475044b6dc4c9b4b6bdc11>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterHandleData", (RTS_UINTPTR) :ref:`RouterHandleData <group___cmp_router_itf_1ga099f9f21ad583d8759ee3bd8d496dcde>` , 0, 0)
+
+- #define :ref:`USE_RouterGetBlkAddresses <group___cmp_router_itf_1gaf6ed410e9f257cfa69cf8c96e98af699>` :ref:`PFROUTERGETBLKADDRESSES <group___cmp_router_itf_1ga9062a7114e6de73be677cab32244bd41>` pfRouterGetBlkAddresses;
+
+- #define :ref:`EXT_RouterGetBlkAddresses <group___cmp_router_itf_1gac21107cd451421d69d263a51b7d57f40>` extern :ref:`PFROUTERGETBLKADDRESSES <group___cmp_router_itf_1ga9062a7114e6de73be677cab32244bd41>` pfRouterGetBlkAddresses;
+
+- #define :ref:`GET_RouterGetBlkAddresses <group___cmp_router_itf_1ga1343be2517b6972a074848748a14b8ef>` s_pfCMGetAPI2( "RouterGetBlkAddresses", (RTS_VOID_FCTPTR *)&pfRouterGetBlkAddresses, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterGetBlkAddresses <group___cmp_router_itf_1ga09812c130596cb771623c9773a3459fe>` pfRouterGetBlkAddresses
+
+- #define :ref:`CHK_RouterGetBlkAddresses <group___cmp_router_itf_1gad1ce4f40cc845f26fade77e97297c521>` (pfRouterGetBlkAddresses != NULL)
+
+- #define :ref:`EXP_RouterGetBlkAddresses <group___cmp_router_itf_1ga1fe0144f257e62578d29aed16a19b383>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterGetBlkAddresses", (RTS_UINTPTR) :ref:`RouterGetBlkAddresses <group___cmp_router_itf_1gaad6754b5857bcf8626e64d1c13b1b531>` , 0, 0)
+
+- #define :ref:`USE_RouterCompareAddresses <group___cmp_router_itf_1ga3eac09c31d7c2baa89aa4ea9a46de77a>` :ref:`PFROUTERCOMPAREADDRESSES <group___cmp_router_itf_1gaa1ac55fe10a960dabe840308eb522f3e>` pfRouterCompareAddresses;
+
+- #define :ref:`EXT_RouterCompareAddresses <group___cmp_router_itf_1gac8056c0644bc6076d07ea2667d353b29>` extern :ref:`PFROUTERCOMPAREADDRESSES <group___cmp_router_itf_1gaa1ac55fe10a960dabe840308eb522f3e>` pfRouterCompareAddresses;
+
+- #define :ref:`GET_RouterCompareAddresses <group___cmp_router_itf_1ga90b31af096faf17d025c991213d6bb20>` s_pfCMGetAPI2( "RouterCompareAddresses", (RTS_VOID_FCTPTR *)&pfRouterCompareAddresses, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterCompareAddresses <group___cmp_router_itf_1gac03c0e4cbbb78704b9399fa5bb6eff17>` pfRouterCompareAddresses
+
+- #define :ref:`CHK_RouterCompareAddresses <group___cmp_router_itf_1ga07f54fcfbb707b05df21b18ebc732b31>` (pfRouterCompareAddresses != NULL)
+
+- #define :ref:`EXP_RouterCompareAddresses <group___cmp_router_itf_1ga88d88c7f7e6f91b8a405693c86f6f395>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterCompareAddresses", (RTS_UINTPTR) :ref:`RouterCompareAddresses <group___cmp_router_itf_1ga503d0632be2c141e13d69f7a3f495179>` , 0, 0)
+
+- #define :ref:`USE_RouterRegisterProtocolHandler <group___cmp_router_itf_1ga4092a082599b2db181e0b3e112399bdd>` :ref:`PFROUTERREGISTERPROTOCOLHANDLER <group___cmp_router_itf_1gadbd422e275cd8f0116654514ba11b2b6>` pfRouterRegisterProtocolHandler;
+
+- #define :ref:`EXT_RouterRegisterProtocolHandler <group___cmp_router_itf_1ga76d06318a9322362c5540f056c35f835>` extern :ref:`PFROUTERREGISTERPROTOCOLHANDLER <group___cmp_router_itf_1gadbd422e275cd8f0116654514ba11b2b6>` pfRouterRegisterProtocolHandler;
+
+- #define :ref:`GET_RouterRegisterProtocolHandler <group___cmp_router_itf_1ga1b292f1423d193d080cd6e9cdb80cfaf>` s_pfCMGetAPI2( "RouterRegisterProtocolHandler", (RTS_VOID_FCTPTR *)&pfRouterRegisterProtocolHandler, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterRegisterProtocolHandler <group___cmp_router_itf_1ga56ca83ec709e7dc8711b81804255ef7b>` pfRouterRegisterProtocolHandler
+
+- #define :ref:`CHK_RouterRegisterProtocolHandler <group___cmp_router_itf_1ga87c1c1aca28e296e537570c0b97006cb>` (pfRouterRegisterProtocolHandler != NULL)
+
+- #define :ref:`EXP_RouterRegisterProtocolHandler <group___cmp_router_itf_1ga033d41ab8e01ef2bfc2429057fe170df>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterRegisterProtocolHandler", (RTS_UINTPTR) :ref:`RouterRegisterProtocolHandler <group___cmp_router_itf_1gad09d8ff21768774ca1440e86d109387f>` , 0, 0)
+
+- #define :ref:`USE_RouterCalculateNodeAddr <group___cmp_router_itf_1gadb38db26254d3484fc7c436bb4509074>` :ref:`PFROUTERCALCULATENODEADDR <group___cmp_router_itf_1ga71efba2f79a97493347c2aff8d99ebea>` pfRouterCalculateNodeAddr;
+
+- #define :ref:`EXT_RouterCalculateNodeAddr <group___cmp_router_itf_1ga6660077249bd2774e61434764fa8ecf9>` extern :ref:`PFROUTERCALCULATENODEADDR <group___cmp_router_itf_1ga71efba2f79a97493347c2aff8d99ebea>` pfRouterCalculateNodeAddr;
+
+- #define :ref:`GET_RouterCalculateNodeAddr <group___cmp_router_itf_1ga98165c4eb4057cc4abb82880817a27dd>` s_pfCMGetAPI2( "RouterCalculateNodeAddr", (RTS_VOID_FCTPTR *)&pfRouterCalculateNodeAddr, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterCalculateNodeAddr <group___cmp_router_itf_1ga70e86a500648a9e15c8640c3c8341199>` pfRouterCalculateNodeAddr
+
+- #define :ref:`CHK_RouterCalculateNodeAddr <group___cmp_router_itf_1ga5355b0d29f31ee6b685db5ea075e17de>` (pfRouterCalculateNodeAddr != NULL)
+
+- #define :ref:`EXP_RouterCalculateNodeAddr <group___cmp_router_itf_1gaa3a3062a026979c5915df7c888ad8101>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterCalculateNodeAddr", (RTS_UINTPTR) :ref:`RouterCalculateNodeAddr <group___cmp_router_itf_1gab7988c68d4446055047ce15744a0bd4d>` , 0, 0)
+
+- #define :ref:`USE_RouterGetInstanceByName <group___cmp_router_itf_1ga931766349c66b2d159562d56e2ad6b69>` :ref:`PFROUTERGETINSTANCEBYNAME <group___cmp_router_itf_1ga36538645fe0bce92c949d9287d6df8bb>` pfRouterGetInstanceByName;
+
+- #define :ref:`EXT_RouterGetInstanceByName <group___cmp_router_itf_1ga6e9f4b6591245b663bb02dea5efa5af4>` extern :ref:`PFROUTERGETINSTANCEBYNAME <group___cmp_router_itf_1ga36538645fe0bce92c949d9287d6df8bb>` pfRouterGetInstanceByName;
+
+- #define :ref:`GET_RouterGetInstanceByName <group___cmp_router_itf_1ga39ec8a38ecf33b5dae4816a865143835>` s_pfCMGetAPI2( "RouterGetInstanceByName", (RTS_VOID_FCTPTR *)&pfRouterGetInstanceByName, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterGetInstanceByName <group___cmp_router_itf_1ga21881d0bac4e23a0c37a03a5d9738be1>` pfRouterGetInstanceByName
+
+- #define :ref:`CHK_RouterGetInstanceByName <group___cmp_router_itf_1gaba9dc43e32f35211541253d299634ace>` (pfRouterGetInstanceByName != NULL)
+
+- #define :ref:`EXP_RouterGetInstanceByName <group___cmp_router_itf_1gaa2423e187217c5c1ba9f7de53de5721e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterGetInstanceByName", (RTS_UINTPTR) :ref:`RouterGetInstanceByName <group___cmp_router_itf_1gaf71b2c18122a019f4a4d23d9b23ba9e5>` , 0, 0)
+
+- #define :ref:`USE_RouterGetName <group___cmp_router_itf_1gabdf6eaefa87e3c0e8740dfe8441e3d3e>` :ref:`PFROUTERGETNAME <group___cmp_router_itf_1gae5440ce54dce0843a7b572261fa25fe6>` pfRouterGetName;
+
+- #define :ref:`EXT_RouterGetName <group___cmp_router_itf_1ga70de9c90aa17db19cff35dc74404be50>` extern :ref:`PFROUTERGETNAME <group___cmp_router_itf_1gae5440ce54dce0843a7b572261fa25fe6>` pfRouterGetName;
+
+- #define :ref:`GET_RouterGetName <group___cmp_router_itf_1ga14f00b3210753eb4695a41eae6945600>` s_pfCMGetAPI2( "RouterGetName", (RTS_VOID_FCTPTR *)&pfRouterGetName, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterGetName <group___cmp_router_itf_1gaa61af03ab8ab67435d1458fcac013332>` pfRouterGetName
+
+- #define :ref:`CHK_RouterGetName <group___cmp_router_itf_1gab716509b9312611d5d8111e6f4c13cde>` (pfRouterGetName != NULL)
+
+- #define :ref:`EXP_RouterGetName <group___cmp_router_itf_1gaeeeabc0b08a95926650c046e5de005e5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterGetName", (RTS_UINTPTR) :ref:`RouterGetName <group___cmp_router_itf_1gade98256448bfe1371568ddb8935695c8>` , 0, 0)
+
+- #define :ref:`USE_RouterGetMaxMessageSize <group___cmp_router_itf_1ga85e5d5d47b08fc2850bc1603c801a4c4>` :ref:`PFROUTERGETMAXMESSAGESIZE <group___cmp_router_itf_1gabd8e3418dcd0bea9c84c0e0e0aae6aa2>` pfRouterGetMaxMessageSize;
+
+- #define :ref:`EXT_RouterGetMaxMessageSize <group___cmp_router_itf_1gab94a61ecbc5db57575227a61ccb0bb5e>` extern :ref:`PFROUTERGETMAXMESSAGESIZE <group___cmp_router_itf_1gabd8e3418dcd0bea9c84c0e0e0aae6aa2>` pfRouterGetMaxMessageSize;
+
+- #define :ref:`GET_RouterGetMaxMessageSize <group___cmp_router_itf_1ga650029d763868b726d6e2a20a6212791>` s_pfCMGetAPI2( "RouterGetMaxMessageSize", (RTS_VOID_FCTPTR *)&pfRouterGetMaxMessageSize, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterGetMaxMessageSize <group___cmp_router_itf_1ga9abe673d83dd51430c2904feb19d6553>` pfRouterGetMaxMessageSize
+
+- #define :ref:`CHK_RouterGetMaxMessageSize <group___cmp_router_itf_1ga3f42177a5dbef847d007317c4b6f59c9>` (pfRouterGetMaxMessageSize != NULL)
+
+- #define :ref:`EXP_RouterGetMaxMessageSize <group___cmp_router_itf_1ga1d222f58eb558b5f6b47f20aa9f1f3fc>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterGetMaxMessageSize", (RTS_UINTPTR) :ref:`RouterGetMaxMessageSize <group___cmp_router_itf_1ga9bde54e07d9eae770cb4f9c13898ac79>` , 0, 0)
+
+- #define :ref:`USE_RouterGetMaxMessageSizeByAddressLength <group___cmp_router_itf_1ga84f09f01cb7311ec6c80fe2d2b3df250>` :ref:`PFROUTERGETMAXMESSAGESIZEBYADDRESSLENGTH <group___cmp_router_itf_1gacdead7f594601f93068278c9c8d50947>` pfRouterGetMaxMessageSizeByAddressLength;
+
+- #define :ref:`EXT_RouterGetMaxMessageSizeByAddressLength <group___cmp_router_itf_1ga9aad05be990c27a99c0a7d463afdf2e5>` extern :ref:`PFROUTERGETMAXMESSAGESIZEBYADDRESSLENGTH <group___cmp_router_itf_1gacdead7f594601f93068278c9c8d50947>` pfRouterGetMaxMessageSizeByAddressLength;
+
+- #define :ref:`GET_RouterGetMaxMessageSizeByAddressLength <group___cmp_router_itf_1gac17bb4b638592c04adc8db9871daf36d>` s_pfCMGetAPI2( "RouterGetMaxMessageSizeByAddressLength", (RTS_VOID_FCTPTR *)&pfRouterGetMaxMessageSizeByAddressLength, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterGetMaxMessageSizeByAddressLength <group___cmp_router_itf_1ga828815a8ebdc5a7fcc9abf92c4469123>` pfRouterGetMaxMessageSizeByAddressLength
+
+- #define :ref:`CHK_RouterGetMaxMessageSizeByAddressLength <group___cmp_router_itf_1gafb3d45fc3649f8afbec5d01f4489216e>` (pfRouterGetMaxMessageSizeByAddressLength != NULL)
+
+- #define :ref:`EXP_RouterGetMaxMessageSizeByAddressLength <group___cmp_router_itf_1ga74781aee3d19918892d043b5b43d8407>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterGetMaxMessageSizeByAddressLength", (RTS_UINTPTR) :ref:`RouterGetMaxMessageSizeByAddressLength <group___cmp_router_itf_1gaddc7ba220e4caaddd5177bc3e32ed53a>` , 0, 0)
+
+- #define :ref:`USE_RouterGetMaxAddressSize <group___cmp_router_itf_1gae3fad3b2e76f9ba1df5b2069ea355ccf>` :ref:`PFROUTERGETMAXADDRESSSIZE <group___cmp_router_itf_1gadbbfabd14059ab9e7f0e6c5f2bee8a7a>` pfRouterGetMaxAddressSize;
+
+- #define :ref:`EXT_RouterGetMaxAddressSize <group___cmp_router_itf_1ga370a45895b5c3d00f7ede247ec42ac07>` extern :ref:`PFROUTERGETMAXADDRESSSIZE <group___cmp_router_itf_1gadbbfabd14059ab9e7f0e6c5f2bee8a7a>` pfRouterGetMaxAddressSize;
+
+- #define :ref:`GET_RouterGetMaxAddressSize <group___cmp_router_itf_1ga8d63a56773382f001fe88d797da182a6>` s_pfCMGetAPI2( "RouterGetMaxAddressSize", (RTS_VOID_FCTPTR *)&pfRouterGetMaxAddressSize, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterGetMaxAddressSize <group___cmp_router_itf_1gaadd6f15d17e57a0e7dcf0d6b9cf45bf1>` pfRouterGetMaxAddressSize
+
+- #define :ref:`CHK_RouterGetMaxAddressSize <group___cmp_router_itf_1ga88e4f37cdc284446e2265e4c04559085>` (pfRouterGetMaxAddressSize != NULL)
+
+- #define :ref:`EXP_RouterGetMaxAddressSize <group___cmp_router_itf_1ga2b6890422b80e4eca418e9bdf33b52df>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterGetMaxAddressSize", (RTS_UINTPTR) :ref:`RouterGetMaxAddressSize <group___cmp_router_itf_1gaf54771d2e3ff481f501361a0d12f6aed>` , 0, 0)
+
+- #define :ref:`USE_RouterSend2 <group___cmp_router_itf_1ga1c34e23c9abc3135e896f0cfbfefff91>` :ref:`PFROUTERSEND2 <group___cmp_router_itf_1gadf02d55f1dc5e15ad46a26190e729b83>` pfRouterSend2;
+
+- #define :ref:`EXT_RouterSend2 <group___cmp_router_itf_1ga88bd2f45541b44f6aa5c44754402b4e4>` extern :ref:`PFROUTERSEND2 <group___cmp_router_itf_1gadf02d55f1dc5e15ad46a26190e729b83>` pfRouterSend2;
+
+- #define :ref:`GET_RouterSend2 <group___cmp_router_itf_1gacbbf6fd12e60bc818fb912dbac815da3>` s_pfCMGetAPI2( "RouterSend2", (RTS_VOID_FCTPTR *)&pfRouterSend2, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterSend2 <group___cmp_router_itf_1ga4ef6c1d38eb736e10180a7df7ceec576>` pfRouterSend2
+
+- #define :ref:`CHK_RouterSend2 <group___cmp_router_itf_1ga2381e05e49019bb8255791e2ae36d43b>` (pfRouterSend2 != NULL)
+
+- #define :ref:`EXP_RouterSend2 <group___cmp_router_itf_1ga17d35bdeddf5b6ba3d13dcab34b8091f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterSend2", (RTS_UINTPTR) :ref:`RouterSend2 <group___cmp_router_itf_1ga6f543b372ca4ad0cc6a6d38254bab6b9>` , 0, 0)
+
+- #define :ref:`USE_RouterSend <group___cmp_router_itf_1ga8ecb4feae2f50bf46bd644b5d503b694>` :ref:`PFROUTERSEND <group___cmp_router_itf_1ga26407d498720e650f7fa1b71f3c52086>` pfRouterSend;
+
+- #define :ref:`EXT_RouterSend <group___cmp_router_itf_1ga2654f615aedf4b3fb8d2aa58c4f80b22>` extern :ref:`PFROUTERSEND <group___cmp_router_itf_1ga26407d498720e650f7fa1b71f3c52086>` pfRouterSend;
+
+- #define :ref:`GET_RouterSend <group___cmp_router_itf_1gaba1908b3a8f5322b97278f879fa570f3>` s_pfCMGetAPI2( "RouterSend", (RTS_VOID_FCTPTR *)&pfRouterSend, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterSend <group___cmp_router_itf_1ga565c5f6a48e0a9f0b567f7abee31a7a9>` pfRouterSend
+
+- #define :ref:`CHK_RouterSend <group___cmp_router_itf_1gae607e46954c606fc6c42e8148cb2c913>` (pfRouterSend != NULL)
+
+- #define :ref:`EXP_RouterSend <group___cmp_router_itf_1ga20393ff4d434ff12cced3dc423de626c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterSend", (RTS_UINTPTR) :ref:`RouterSend <group___cmp_router_itf_1ga1b733fb7e989710a3a61619bf9ab849f>` , 0, 0)
+
+- #define :ref:`USE_RouterGetHostAddress <group___cmp_router_itf_1ga3d262731b4c27c403db3a83653668f0e>` :ref:`PFROUTERGETHOSTADDRESS <group___cmp_router_itf_1gacc7265fbcfbcbe4e75f22dea6309fe64>` pfRouterGetHostAddress;
+
+- #define :ref:`EXT_RouterGetHostAddress <group___cmp_router_itf_1ga9dc93fd62086362fe5b18eed4b7b22f8>` extern :ref:`PFROUTERGETHOSTADDRESS <group___cmp_router_itf_1gacc7265fbcfbcbe4e75f22dea6309fe64>` pfRouterGetHostAddress;
+
+- #define :ref:`GET_RouterGetHostAddress <group___cmp_router_itf_1gad54f7a58760260b9d2ecc2876f39deba>` s_pfCMGetAPI2( "RouterGetHostAddress", (RTS_VOID_FCTPTR *)&pfRouterGetHostAddress, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterGetHostAddress <group___cmp_router_itf_1ga0000cbe3119fc755013fdfa765cd983c>` pfRouterGetHostAddress
+
+- #define :ref:`CHK_RouterGetHostAddress <group___cmp_router_itf_1ga61d3493167559c248a9d81129678bc62>` (pfRouterGetHostAddress != NULL)
+
+- #define :ref:`EXP_RouterGetHostAddress <group___cmp_router_itf_1ga9d9f7795d6a26326aaf3bd34fd2677af>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterGetHostAddress", (RTS_UINTPTR) :ref:`RouterGetHostAddress <group___cmp_router_itf_1ga586919e072bddc98b592c67d7e17e503>` , 0, 0)
+
+- #define :ref:`USE_RouterGetParentAddress <group___cmp_router_itf_1ga3b80888e231c53b4b305c1dc7cd56845>` :ref:`PFROUTERGETPARENTADDRESS <group___cmp_router_itf_1ga32a2ab64c02ce388cae6117cc4e2e401>` pfRouterGetParentAddress;
+
+- #define :ref:`EXT_RouterGetParentAddress <group___cmp_router_itf_1gab4145fcacb1f8c0993ee333f2dda3587>` extern :ref:`PFROUTERGETPARENTADDRESS <group___cmp_router_itf_1ga32a2ab64c02ce388cae6117cc4e2e401>` pfRouterGetParentAddress;
+
+- #define :ref:`GET_RouterGetParentAddress <group___cmp_router_itf_1ga0c9765c2aee3b82f2bd8b33172186f71>` s_pfCMGetAPI2( "RouterGetParentAddress", (RTS_VOID_FCTPTR *)&pfRouterGetParentAddress, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterGetParentAddress <group___cmp_router_itf_1gad283351feebec54f0a6269e17f31a1ef>` pfRouterGetParentAddress
+
+- #define :ref:`CHK_RouterGetParentAddress <group___cmp_router_itf_1ga152403388d06e6bf888c804104210055>` (pfRouterGetParentAddress != NULL)
+
+- #define :ref:`EXP_RouterGetParentAddress <group___cmp_router_itf_1gaaf2630688a0fbdfbd7e4b28805711e2c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterGetParentAddress", (RTS_UINTPTR) :ref:`RouterGetParentAddress <group___cmp_router_itf_1ga30cdc9f76f6d9304fcbfb56f285afdc6>` , 0, 0)
+
+- #define :ref:`USE_RouterGetBlkDrvType <group___cmp_router_itf_1gad89a32725072bb13efcfeb6a348afb99>` :ref:`PFROUTERGETBLKDRVTYPE <group___cmp_router_itf_1ga0935c9d3888c1330644bb8f036a0cc9e>` pfRouterGetBlkDrvType;
+
+- #define :ref:`EXT_RouterGetBlkDrvType <group___cmp_router_itf_1ga2e5bcd476bdb8e785eb369a0270b12d1>` extern :ref:`PFROUTERGETBLKDRVTYPE <group___cmp_router_itf_1ga0935c9d3888c1330644bb8f036a0cc9e>` pfRouterGetBlkDrvType;
+
+- #define :ref:`GET_RouterGetBlkDrvType <group___cmp_router_itf_1ga8a9d4f34088009ee07a66424b6315002>` s_pfCMGetAPI2( "RouterGetBlkDrvType", (RTS_VOID_FCTPTR *)&pfRouterGetBlkDrvType, (fl), 0, 0)
+
+- #define :ref:`CAL_RouterGetBlkDrvType <group___cmp_router_itf_1gaf0cdf70369fcbf8ffad6a319af980884>` pfRouterGetBlkDrvType
+
+- #define :ref:`CHK_RouterGetBlkDrvType <group___cmp_router_itf_1gace6b98b0df5a7763dea85edf3ef4f5f1>` (pfRouterGetBlkDrvType != NULL)
+
+- #define :ref:`EXP_RouterGetBlkDrvType <group___cmp_router_itf_1ga5760fddb35ecf5673b60331ba1410c5e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RouterGetBlkDrvType", (RTS_UINTPTR) :ref:`RouterGetBlkDrvType <group___cmp_router_itf_1ga9420a2b0e387f3d0b31572d80fe8e907>` , 0, 0)
+
+- #define :ref:`USE_routergetinstancebyname <group___cmp_router_itf_1ga12162d04e7f56d7daab2e592d2f817ef>` :ref:`PFROUTERGETINSTANCEBYNAME_IEC <group___cmp_router_itf_1ga58cd4920b2975e474cb70d8c32613eb2>` pfroutergetinstancebyname;
+
+- #define :ref:`EXT_routergetinstancebyname <group___cmp_router_itf_1ga8891866db31445786701cdf274c08e99>` extern :ref:`PFROUTERGETINSTANCEBYNAME_IEC <group___cmp_router_itf_1ga58cd4920b2975e474cb70d8c32613eb2>` pfroutergetinstancebyname;
+
+- #define :ref:`GET_routergetinstancebyname <group___cmp_router_itf_1gabb9e2b1598537154425a81242c4859ad>` s_pfCMGetAPI2( "routergetinstancebyname", (RTS_VOID_FCTPTR *)&pfroutergetinstancebyname, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xBA8CBF9D, 0x3020000)
+
+- #define :ref:`CAL_routergetinstancebyname <group___cmp_router_itf_1ga09dd6f157dc1e157981172aed24953c5>` pfroutergetinstancebyname
+
+- #define :ref:`CHK_routergetinstancebyname <group___cmp_router_itf_1ga0b0f91f080f3c3a507f6c65be2906380>` (pfroutergetinstancebyname != NULL)
+
+- #define :ref:`EXP_routergetinstancebyname <group___cmp_router_itf_1ga04adb6a784d7a622d972481de265231c>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"routergetinstancebyname", (RTS_UINTPTR) :ref:`routergetinstancebyname <group___cmp_router_itf_1ga5160f6953c94d7d5f31fe03025d7bc15>` , 1, 0xBA8CBF9D, 0x3020000)
+
+- #define :ref:`USE_routergetname <group___cmp_router_itf_1ga117e126e2f801fb33008145636773b68>` :ref:`PFROUTERGETNAME_IEC <group___cmp_router_itf_1gaa6b4c7e38975d886f4cb0d70c98fc61f>` pfroutergetname;
+
+- #define :ref:`EXT_routergetname <group___cmp_router_itf_1ga52c9583168cf59891a1521fd9282c4c5>` extern :ref:`PFROUTERGETNAME_IEC <group___cmp_router_itf_1gaa6b4c7e38975d886f4cb0d70c98fc61f>` pfroutergetname;
+
+- #define :ref:`GET_routergetname <group___cmp_router_itf_1ga60465fc36ff08353aa79614a5332b9cf>` s_pfCMGetAPI2( "routergetname", (RTS_VOID_FCTPTR *)&pfroutergetname, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE4FB4AAA, 0x3020000)
+
+- #define :ref:`CAL_routergetname <group___cmp_router_itf_1ga8b8ec33da70534521592f0d7947c4a27>` pfroutergetname
+
+- #define :ref:`CHK_routergetname <group___cmp_router_itf_1ga35e7e47b7357d5aeae50894217d43bc7>` (pfroutergetname != NULL)
+
+- #define :ref:`EXP_routergetname <group___cmp_router_itf_1gadb2749c8f2d8e73d700abf1be904a9fc>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"routergetname", (RTS_UINTPTR) :ref:`routergetname <group___cmp_router_itf_1ga24e4d57e7ce2546fea1f7db8fdcbe316>` , 1, 0xE4FB4AAA, 0x3020000)
+
+- #define :ref:`USE_routergethostaddress <group___cmp_router_itf_1ga9230948f64809c3a3a1b58b9c9cc252a>` :ref:`PFROUTERGETHOSTADDRESS_IEC <group___cmp_router_itf_1ga52db2f8546fe733218a7262d304b7845>` pfroutergethostaddress;
+
+- #define :ref:`EXT_routergethostaddress <group___cmp_router_itf_1gac0652d65f2694f6f3c945710380bff46>` extern :ref:`PFROUTERGETHOSTADDRESS_IEC <group___cmp_router_itf_1ga52db2f8546fe733218a7262d304b7845>` pfroutergethostaddress;
+
+- #define :ref:`GET_routergethostaddress <group___cmp_router_itf_1ga2a827c456f3aeaeb84db49b03a9eca31>` s_pfCMGetAPI2( "routergethostaddress", (RTS_VOID_FCTPTR *)&pfroutergethostaddress, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xC47F4C13, 0x3020000)
+
+- #define :ref:`CAL_routergethostaddress <group___cmp_router_itf_1gad5b7065ef252fa170671d99042810605>` pfroutergethostaddress
+
+- #define :ref:`CHK_routergethostaddress <group___cmp_router_itf_1gae602499ca2b2630aedbf729f6ff14c4e>` (pfroutergethostaddress != NULL)
+
+- #define :ref:`EXP_routergethostaddress <group___cmp_router_itf_1ga4d6b157bb0406c6527c160a3d6898ffd>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"routergethostaddress", (RTS_UINTPTR) :ref:`routergethostaddress <group___cmp_router_itf_1ga84ff57890fd3b39ec80f002e5a3822a0>` , 1, 0xC47F4C13, 0x3020000)
+
+- #define :ref:`USE_routergetparentaddress <group___cmp_router_itf_1ga2c1b7112e874b8be41ce1b5b8432a855>` :ref:`PFROUTERGETPARENTADDRESS_IEC <group___cmp_router_itf_1ga97760cafb0e803fef3655d102cbe32cc>` pfroutergetparentaddress;
+
+- #define :ref:`EXT_routergetparentaddress <group___cmp_router_itf_1ga45960218049a0d2935787d51446f8c42>` extern :ref:`PFROUTERGETPARENTADDRESS_IEC <group___cmp_router_itf_1ga97760cafb0e803fef3655d102cbe32cc>` pfroutergetparentaddress;
+
+- #define :ref:`GET_routergetparentaddress <group___cmp_router_itf_1ga3334bce923326ae603b0e8484e951cb5>` s_pfCMGetAPI2( "routergetparentaddress", (RTS_VOID_FCTPTR *)&pfroutergetparentaddress, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xD64907DE, 0x3020000)
+
+- #define :ref:`CAL_routergetparentaddress <group___cmp_router_itf_1ga6e50f90609e18d5adf15d1179b71ac41>` pfroutergetparentaddress
+
+- #define :ref:`CHK_routergetparentaddress <group___cmp_router_itf_1ga263df670cea90a96ae421d7de7a8d16e>` (pfroutergetparentaddress != NULL)
+
+- #define :ref:`EXP_routergetparentaddress <group___cmp_router_itf_1ga18fe385ca1c01beb8d878514f472bc3a>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"routergetparentaddress", (RTS_UINTPTR) :ref:`routergetparentaddress <group___cmp_router_itf_1gaad8d0c638b16b4db841acd0f269c07b6>` , 1, 0xD64907DE, 0x3020000)
+
+- #define :ref:`ITF_CmpRouter <group___cmp_router_itf_1gaa4605dcfddd506a26c8a51041bbaf4fd>`
+
+- #define :ref:`EXTITF_CmpRouter <group___cmp_router_itf_1ga71db5af2b668c51769d15d1e59eee093>`
+
+Typedefs
+--------
+
+- typedef enum :ref:`tagRouterPriority <group___cmp_router_itf___settings_1gae8c574dfd6504629d80b86ab809b861a>` :ref:`ROUTERPRIORITY <group___cmp_router_itf___settings_1ga6e7ba8bc86d3fb033fc474be5723bfa6>`
+
+- typedef RTS_RESULT(* :ref:`PFBDOPEN <group___cmp_router_itf_1ga4ded560ea032dd8d591299c4958e625f>`)(RTS_HANDLE hInterface)
+
+- typedef RTS_RESULT(* :ref:`PFBDCLOSE <group___cmp_router_itf_1ga3cc2aa07a3ce12553317291aa703581d>`)(RTS_HANDLE hInterface)
+
+- typedef RTS_RESULT(* :ref:`PFBDSEND <group___cmp_router_itf_1ga1a92e25ae3338f0685734a2d539ce005>`)(RTS_HANDLE hInterface, NETWORKADDRESS addrReceiver, PROTOCOL_DATA_UNIT pduData)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERREGISTERNETWORKINTERFACE2 <group___cmp_router_itf_1ga74c4ff28edb16ed01c894a5fb8f0234f>`)(NETWORKINTERFACEINFO2 *pInterfaceInfo, RTS_HANDLE *phSubnet)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERREGISTERNETWORKINTERFACE <group___cmp_router_itf_1ga9e97982506eada2e8e0b4eb96191f451>`)(NETWORKINTERFACEINFO *pInterfaceInfo, RTS_HANDLE *phSubnet)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERREGISTERONDEMANDNWINTERFACE <group___cmp_router_itf_1ga9bd9a01439835aa5e6a2d08cca8f8327>`)(NETWORKINTERFACEINFO *pInterfaceInfo, ONDEMANDNETWORKINTERFACE *pOnDemandInfo, RTS_HANDLE *phSubnet)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERUNREGISTERNETWORKINTERFACE <group___cmp_router_itf_1gabd179435debd257de7e9c274b778f669>`)(RTS_HANDLE hSubnet)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERHANDLEDATA <group___cmp_router_itf_1gaa8ffc5a0bc35c36b70bf59f290a4b7c2>`)(RTS_HANDLE phSubnet, NETWORKADDRESS sender, PROTOCOL_DATA_UNIT pduData, int bIsBroadcast)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERGETBLKADDRESSES <group___cmp_router_itf_1ga9062a7114e6de73be677cab32244bd41>`)(PROTOCOL_DATA_UNIT pduData, PEERADDRESS *pAddrReceiver, PEERADDRESS *pAddrSender, RTS_I32 *piDataOffset)
+
+- typedef RTS_BOOL(* :ref:`PFROUTERCOMPAREADDRESSES <group___cmp_router_itf_1gaa1ac55fe10a960dabe840308eb522f3e>`)(PEERADDRESS *pAddr1, PEERADDRESS *pAddr2)
+
+- typedef RTS_RESULT(* :ref:`PFPHHandleData <group___cmp_router_itf_1ga0a09b696cf1b5cd0cba828aa8df5e472>`)(RTS_HANDLE hRouter, int nServiceId, PEERADDRESS addrSender, PEERADDRESS addrReceiver, PROTOCOL_DATA_UNIT pduData, RTS_UI8 nMessageId, RTS_RESULT nRouterError)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERREGISTERPROTOCOLHANDLER <group___cmp_router_itf_1gadbd422e275cd8f0116654514ba11b2b6>`)(int nProtocolId, PFPHHandleData pfPHHandleData)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERCALCULATENODEADDR <group___cmp_router_itf_1ga71efba2f79a97493347c2aff8d99ebea>`)(RTS_UI16 usBlkDrvType, RTS_UI8 byNetworkAddressBitSize, NETWORKADDRESS *pNetworkAddr, NODEADDRESS *pNodeAddr)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERGETINSTANCEBYNAME <group___cmp_router_itf_1ga36538645fe0bce92c949d9287d6df8bb>`)(char *szName, RTS_HANDLE *phRouter)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERGETNAME <group___cmp_router_itf_1gae5440ce54dce0843a7b572261fa25fe6>`)(RTS_HANDLE hRouter, char *pszName, int nMaxLen)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERGETMAXMESSAGESIZE <group___cmp_router_itf_1gabd8e3418dcd0bea9c84c0e0e0aae6aa2>`)(RTS_HANDLE hRouter, PEERADDRESS addrPeer, RTS_UI16 *usMaxSize)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERGETMAXMESSAGESIZEBYADDRESSLENGTH <group___cmp_router_itf_1gacdead7f594601f93068278c9c8d50947>`)(RTS_HANDLE hRouter, RTS_UI16 usSumAddrLen, RTS_UI16 *usMaxSize)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERGETMAXADDRESSSIZE <group___cmp_router_itf_1gadbbfabd14059ab9e7f0e6c5f2bee8a7a>`)(RTS_HANDLE hRouter, PEERADDRESS addrPeer, RTS_UI8 *byMaxSize)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERSEND2 <group___cmp_router_itf_1gadf02d55f1dc5e15ad46a26190e729b83>`)(RTS_HANDLE hRouter, PEERADDRESS addrReceiver, int nProtocolId, RTS_UI8 byMessageId, ROUTERPRIORITY prio, PROTOCOL_DATA_UNIT pduData, RTS_BOOL bUseQueue)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERSEND <group___cmp_router_itf_1ga26407d498720e650f7fa1b71f3c52086>`)(RTS_HANDLE hRouter, PEERADDRESS addrReceiver, int nProtocolId, RTS_UI8 byMessageId, ROUTERPRIORITY prio, PROTOCOL_DATA_UNIT pduData)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERGETHOSTADDRESS <group___cmp_router_itf_1gacc7265fbcfbcbe4e75f22dea6309fe64>`)(RTS_HANDLE hRouter, NODEADDRESS *pAddrRouter)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERGETPARENTADDRESS <group___cmp_router_itf_1ga32a2ab64c02ce388cae6117cc4e2e401>`)(RTS_HANDLE hRouter, NODEADDRESS *pAddrParent)
+
+- typedef RTS_RESULT(* :ref:`PFROUTERGETBLKDRVTYPE <group___cmp_router_itf_1ga0935c9d3888c1330644bb8f036a0cc9e>`)(RTS_HANDLE hNetworkInterface, RTS_UI8 *pbyBlkDrvType)
+
+- typedef struct :ref:`tagRTR_AddrComponent <structtag_r_t_r___addr_component>` :ref:`RTR_AddrComponent <group___cmp_router_itf_1ga21d085846ffe3ac32f900ac3dded920a>`
+
+- typedef struct :ref:`tagRTR_NodeAddress <structtag_r_t_r___node_address>` :ref:`RTR_NodeAddress <group___cmp_router_itf_1ga5026bc2e3e07ff4fd7bc45e0ca4fa06e>`
+
+- typedef struct :ref:`tagroutergetinstancebyname_struct <structtagroutergetinstancebyname__struct>` :ref:`routergetinstancebyname_struct <group___cmp_router_itf_1gadcaf591e55ac1a50d2e4f2eb39feb414>`
+
+- typedef void(* :ref:`PFROUTERGETINSTANCEBYNAME_IEC <group___cmp_router_itf_1ga58cd4920b2975e474cb70d8c32613eb2>`)(routergetinstancebyname_struct *p)
+
+- typedef struct :ref:`tagroutergetname_struct <structtagroutergetname__struct>` :ref:`routergetname_struct <group___cmp_router_itf_1ga518e5bd131b0d2a9bb0c338c86f9e90a>`
+
+- typedef void(* :ref:`PFROUTERGETNAME_IEC <group___cmp_router_itf_1gaa6b4c7e38975d886f4cb0d70c98fc61f>`)(routergetname_struct *p)
+
+- typedef struct :ref:`tagroutergethostaddress_struct <structtagroutergethostaddress__struct>` :ref:`routergethostaddress_struct <group___cmp_router_itf_1ga26124f56c7513fe26f28e7b71a87712e>`
+
+- typedef void(* :ref:`PFROUTERGETHOSTADDRESS_IEC <group___cmp_router_itf_1ga52db2f8546fe733218a7262d304b7845>`)(routergethostaddress_struct *p)
+
+- typedef struct :ref:`tagroutergetparentaddress_struct <structtagroutergetparentaddress__struct>` :ref:`routergetparentaddress_struct <group___cmp_router_itf_1ga3b60af7efc2cba426a50219b3bb60a4f>`
+
+- typedef void(* :ref:`PFROUTERGETPARENTADDRESS_IEC <group___cmp_router_itf_1ga97760cafb0e803fef3655d102cbe32cc>`)(routergetparentaddress_struct *p)
+
+- typedef :ref:`ICmpRouter_C <struct_i_cmp_router___c>` :ref:`ICmpRouter <group___cmp_router_itf_1ga7f5ed3065055e63eff147a8f187ae172>`
+
+Enumerations
+------------
+
+- enum :ref:`tagProtocolId <group___cmp_router_itf___settings_1ga9f08c8a2241cc800efa1ceb4fb457b1c>` { :ref:`PID_ADDRESSREQUEST <group___cmp_router_itf___settings_1gga9f08c8a2241cc800efa1ceb4fb457b1caa8da13d09ba05501601cb7310c7f2753>`, :ref:`PID_ADDRESSNOTIFICATION <group___cmp_router_itf___settings_1gga9f08c8a2241cc800efa1ceb4fb457b1cab413fd524c7297398081216e14861df2>`, :ref:`PID_NAMINGREQUEST <group___cmp_router_itf___settings_1gga9f08c8a2241cc800efa1ceb4fb457b1ca9b35bdb354ca452cface8368605a5acb>`, :ref:`PID_NAMINGRESPONSE <group___cmp_router_itf___settings_1gga9f08c8a2241cc800efa1ceb4fb457b1cad638ec28b2a701cd5ef9d5dcbee0c944>`, :ref:`PID_LAYER4 <group___cmp_router_itf___settings_1gga9f08c8a2241cc800efa1ceb4fb457b1caf3189ea985614bfc71065d932e643887>`, :ref:`MAXPROTOCOLID <group___cmp_router_itf___settings_1gga9f08c8a2241cc800efa1ceb4fb457b1cad53e310ffc3eb1f8389aa2a22ac4f519>` }
+
+- enum :ref:`tagRouterPriority <group___cmp_router_itf___settings_1gae8c574dfd6504629d80b86ab809b861a>` { :ref:`RPRIO_LOW <group___cmp_router_itf___settings_1ggae8c574dfd6504629d80b86ab809b861aa2ef962a39511b141b1ee02e11bca0c85>`, :ref:`RPRIO_NORMAL <group___cmp_router_itf___settings_1ggae8c574dfd6504629d80b86ab809b861aaf101c9388278df6703bce4f04d731166>`, :ref:`RPRIO_HIGH <group___cmp_router_itf___settings_1ggae8c574dfd6504629d80b86ab809b861aadc2e42d687d6992f0b1c71bdbead230f>`, :ref:`RPRIO_EMERGENCY <group___cmp_router_itf___settings_1ggae8c574dfd6504629d80b86ab809b861aad3e498accfcad8adbc8bd55396a12e75>` }
+
+Functions
+---------
+
+- RTS_RESULT :ref:`RouterRegisterNetworkInterface2 <group___cmp_router_itf_1ga4a8e0dbd5259cd81f3efaaf50c1d350f>` (:ref:`NETWORKINTERFACEINFO2 <struct_n_e_t_w_o_r_k_i_n_t_e_r_f_a_c_e_i_n_f_o2>` * pInterfaceInfo, RTS_HANDLE * phSubnet)
+
+- RTS_RESULT :ref:`RouterRegisterNetworkInterface <group___cmp_router_itf_1gaed00cb57cc02243dbbdd65d8eaafcfc9>` (:ref:`NETWORKINTERFACEINFO <struct_n_e_t_w_o_r_k_i_n_t_e_r_f_a_c_e_i_n_f_o>` * pInterfaceInfo, RTS_HANDLE * phSubnet)
+
+- RTS_RESULT :ref:`RouterRegisterOnDemandNWInterface <group___cmp_router_itf_1gaf367a287b41041b9e981299ad2fb5c46>` (:ref:`NETWORKINTERFACEINFO <struct_n_e_t_w_o_r_k_i_n_t_e_r_f_a_c_e_i_n_f_o>` * pInterfaceInfo, :ref:`ONDEMANDNETWORKINTERFACE <struct_o_n_d_e_m_a_n_d_n_e_t_w_o_r_k_i_n_t_e_r_f_a_c_e>` * pOnDemandInfo, RTS_HANDLE * phSubnet)
+
+- RTS_RESULT :ref:`RouterUnregisterNetworkInterface <group___cmp_router_itf_1gaf1867009769a6a83e21f67967531c4ad>` (RTS_HANDLE hSubnet)
+
+- RTS_RESULT :ref:`RouterHandleData <group___cmp_router_itf_1ga099f9f21ad583d8759ee3bd8d496dcde>` (RTS_HANDLE phSubnet, :ref:`NETWORKADDRESS <struct_n_e_t_w_o_r_k_a_d_d_r_e_s_s>`  sender, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduData, int bIsBroadcast)
+
+- RTS_RESULT :ref:`RouterGetBlkAddresses <group___cmp_router_itf_1gaad6754b5857bcf8626e64d1c13b1b531>` (:ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduData, :ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>` * pAddrReceiver, :ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>` * pAddrSender, RTS_I32 * piDataOffset)
+
+- RTS_BOOL :ref:`RouterCompareAddresses <group___cmp_router_itf_1ga503d0632be2c141e13d69f7a3f495179>` (:ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>` * pAddr1, :ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>` * pAddr2)
+
+- RTS_RESULT :ref:`RouterRegisterProtocolHandler <group___cmp_router_itf_1gad09d8ff21768774ca1440e86d109387f>` (int nProtocolId, :ref:`PFPHHandleData <group___cmp_router_itf_1ga0a09b696cf1b5cd0cba828aa8df5e472>`  pfPHHandleData)
+
+- RTS_RESULT :ref:`RouterCalculateNodeAddr <group___cmp_router_itf_1gab7988c68d4446055047ce15744a0bd4d>` (RTS_UI16 usBlkDrvType, RTS_UI8 byNetworkAddressBitSize, :ref:`NETWORKADDRESS <struct_n_e_t_w_o_r_k_a_d_d_r_e_s_s>` * pNetworkAddr, :ref:`NODEADDRESS <struct_n_o_d_e_a_d_d_r_e_s_s>` * pNodeAddr)
+
+- RTS_RESULT :ref:`RouterGetInstanceByName <group___cmp_router_itf_1gaf71b2c18122a019f4a4d23d9b23ba9e5>` (char * szName, RTS_HANDLE * phRouter)
+
+- RTS_RESULT :ref:`RouterGetName <group___cmp_router_itf_1gade98256448bfe1371568ddb8935695c8>` (RTS_HANDLE hRouter, char * pszName, int nMaxLen)
+
+- RTS_RESULT :ref:`RouterGetMaxMessageSize <group___cmp_router_itf_1ga9bde54e07d9eae770cb4f9c13898ac79>` (RTS_HANDLE hRouter, :ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>`  addrPeer, RTS_UI16 * usMaxSize)
+
+- RTS_RESULT :ref:`RouterGetMaxMessageSizeByAddressLength <group___cmp_router_itf_1gaddc7ba220e4caaddd5177bc3e32ed53a>` (RTS_HANDLE hRouter, RTS_UI16 usSumAddrLen, RTS_UI16 * usMaxSize)
+
+- RTS_RESULT :ref:`RouterGetMaxAddressSize <group___cmp_router_itf_1gaf54771d2e3ff481f501361a0d12f6aed>` (RTS_HANDLE hRouter, :ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>`  addrPeer, RTS_UI8 * byMaxSize)
+
+- RTS_RESULT :ref:`RouterSend2 <group___cmp_router_itf_1ga6f543b372ca4ad0cc6a6d38254bab6b9>` (RTS_HANDLE hRouter, :ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>`  addrReceiver, int nProtocolId, RTS_UI8 byMessageId, :ref:`ROUTERPRIORITY <group___cmp_router_itf___settings_1ga6e7ba8bc86d3fb033fc474be5723bfa6>`  prio, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduData, RTS_BOOL bUseQueue)
+
+- RTS_RESULT :ref:`RouterSend <group___cmp_router_itf_1ga1b733fb7e989710a3a61619bf9ab849f>` (RTS_HANDLE hRouter, :ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>`  addrReceiver, int nProtocolId, RTS_UI8 byMessageId, :ref:`ROUTERPRIORITY <group___cmp_router_itf___settings_1ga6e7ba8bc86d3fb033fc474be5723bfa6>`  prio, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduData)
+
+- RTS_RESULT :ref:`RouterGetHostAddress <group___cmp_router_itf_1ga586919e072bddc98b592c67d7e17e503>` (RTS_HANDLE hRouter, :ref:`NODEADDRESS <struct_n_o_d_e_a_d_d_r_e_s_s>` * pAddrRouter)
+
+- RTS_RESULT :ref:`RouterGetParentAddress <group___cmp_router_itf_1ga30cdc9f76f6d9304fcbfb56f285afdc6>` (RTS_HANDLE hRouter, :ref:`NODEADDRESS <struct_n_o_d_e_a_d_d_r_e_s_s>` * pAddrParent)
+
+- RTS_RESULT :ref:`RouterGetBlkDrvType <group___cmp_router_itf_1ga9420a2b0e387f3d0b31572d80fe8e907>` (RTS_HANDLE hNetworkInterface, RTS_UI8 * pbyBlkDrvType)
+
+- void :ref:`routergetinstancebyname <group___cmp_router_itf_1ga5160f6953c94d7d5f31fe03025d7bc15>` (:ref:`routergetinstancebyname_struct <group___cmp_router_itf_1gadcaf591e55ac1a50d2e4f2eb39feb414>` * p)
+
+- void :ref:`routergetname <group___cmp_router_itf_1ga24e4d57e7ce2546fea1f7db8fdcbe316>` (:ref:`routergetname_struct <group___cmp_router_itf_1ga518e5bd131b0d2a9bb0c338c86f9e90a>` * p)
+
+- void :ref:`routergethostaddress <group___cmp_router_itf_1ga84ff57890fd3b39ec80f002e5a3822a0>` (:ref:`routergethostaddress_struct <group___cmp_router_itf_1ga26124f56c7513fe26f28e7b71a87712e>` * p)
+
+- void :ref:`routergetparentaddress <group___cmp_router_itf_1gaad8d0c638b16b4db841acd0f269c07b6>` (:ref:`routergetparentaddress_struct <group___cmp_router_itf_1ga3b60af7efc2cba426a50219b3bb60a4f>` * p)
+
+Detailed Description
+--------------------
+
+Definition in file CmpRouterItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

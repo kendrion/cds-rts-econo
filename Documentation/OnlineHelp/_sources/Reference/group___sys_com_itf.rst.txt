@@ -1,0 +1,1433 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_com_itf:
+
+=========
+SysComItf
+=========
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of SysCom.
+
+Detailed Description
+--------------------
+
+The SysCom interface is projected to connect to a serial COM port (RS232) and to send and receive data via this port.
+
+IMPLEMENTATION NODE: All routines must be realized asynchronous! You have to use the FIFO of the serial device! Don't block the read and write routines, until the operations are finished.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Baudrates <group___sys_com_itf___baudrates>`
+
+- :ref:`Com port extended settings <group___sys_com_itf___comportextendedsettings>`
+
+- :ref:`Com port settings <group___sys_com_itf___comportsettings>`
+
+- :ref:`Com ports <group___sys_com_itf___comports>`
+
+- :ref:`DTR control <group___sys_com_itf___d_t_rcontrol>`
+
+- :ref:`Event parameter <group___sys_com_itf___eventparameter>`
+
+- :ref:`Events <group___sys_com_itf___events>`
+
+- :ref:`Parity <group___sys_com_itf___parity>`
+
+- :ref:`RTS control <group___sys_com_itf___r_t_scontrol>`
+
+- :ref:`Settings <group___sys_com_itf___settings>`
+
+- :ref:`Stop bits <group___sys_com_itf___stopbits>`
+
+- :ref:`Timeouts <group___sys_com_itf___timeouts>`
+
+Data Structures
+---------------
+
+- struct :ref:`tagsyscomclose_struct <structtagsyscomclose__struct>`
+
+- struct :ref:`tagsyscomgetsettings_struct <structtagsyscomgetsettings__struct>`
+
+- struct :ref:`tagsyscomopen_struct <structtagsyscomopen__struct>`
+
+- struct :ref:`tagsyscomopen2_struct <structtagsyscomopen2__struct>`
+
+- struct :ref:`tagsyscompurge_struct <structtagsyscompurge__struct>`
+
+- struct :ref:`tagsyscomread_struct <structtagsyscomread__struct>`
+
+- struct :ref:`tagsyscomsetsettings_struct <structtagsyscomsetsettings__struct>`
+
+- struct :ref:`tagsyscomsettimeout_struct <structtagsyscomsettimeout__struct>`
+
+- struct :ref:`tagsyscomwrite_struct <structtagsyscomwrite__struct>`
+
+- struct :ref:`ISysCom_C <struct_i_sys_com___c>`
+
+Macros
+------
+
+- #define :ref:`USE_syscomclose <group___sys_com_itf_1ga751cda49b31a2a386b834104bb06c97e>` :ref:`PFSYSCOMCLOSE_IEC <group___sys_com_itf_1gae74f2d41d4a7e21c05070994288ce613>` pfsyscomclose;
+
+- #define :ref:`EXT_syscomclose <group___sys_com_itf_1ga0a571d5cfcac6a3c42bddab655c28bd5>` extern :ref:`PFSYSCOMCLOSE_IEC <group___sys_com_itf_1gae74f2d41d4a7e21c05070994288ce613>` pfsyscomclose;
+
+- #define :ref:`GET_syscomclose <group___sys_com_itf_1gad511665fceb8ddb9a4d3990545d5389a>` s_pfCMGetAPI2( "syscomclose", (RTS_VOID_FCTPTR *)&pfsyscomclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xACD27C01), 0x03050F00)
+
+- #define :ref:`CAL_syscomclose <group___sys_com_itf_1ga2c0220dd49b4cbcfa22314a712809f25>` pfsyscomclose
+
+- #define :ref:`CHK_syscomclose <group___sys_com_itf_1ga6c43a685937496b697d77dc58c4679b5>` (pfsyscomclose != NULL)
+
+- #define :ref:`EXP_syscomclose <group___sys_com_itf_1ga66f0123085d52b1c8a4d4f11a523a6db>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomclose", (RTS_UINTPTR) :ref:`syscomclose <group___sys_com_itf_1ga0df7b41fde082ecb1466b597d796de1d>` , 1, RTSITF_GET_SIGNATURE(0, 0xACD27C01), 0x03050F00)
+
+- #define :ref:`USE_syscomgetsettings <group___sys_com_itf_1gaf05f102b924606fd75b7eaf895b36a24>` :ref:`PFSYSCOMGETSETTINGS_IEC <group___sys_com_itf_1ga6334aee485705bccfea74e8e5dad3430>` pfsyscomgetsettings;
+
+- #define :ref:`EXT_syscomgetsettings <group___sys_com_itf_1ga15bcea8935d024e24acc476d2dce4c55>` extern :ref:`PFSYSCOMGETSETTINGS_IEC <group___sys_com_itf_1ga6334aee485705bccfea74e8e5dad3430>` pfsyscomgetsettings;
+
+- #define :ref:`GET_syscomgetsettings <group___sys_com_itf_1gaf2ec65a358a4440a12893f60f774500c>` s_pfCMGetAPI2( "syscomgetsettings", (RTS_VOID_FCTPTR *)&pfsyscomgetsettings, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
+
+- #define :ref:`CAL_syscomgetsettings <group___sys_com_itf_1gaca58fa174cc3654128358db0103e1194>` pfsyscomgetsettings
+
+- #define :ref:`CHK_syscomgetsettings <group___sys_com_itf_1ga74c37f593ca7a539b3b45ad703799523>` (pfsyscomgetsettings != NULL)
+
+- #define :ref:`EXP_syscomgetsettings <group___sys_com_itf_1gad910464f601770a52ec1a34c6116cbde>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomgetsettings", (RTS_UINTPTR) :ref:`syscomgetsettings <group___sys_com_itf_1gae11e26a5385ee5ec33a28629a61d8dd7>` , 1, 0, 0x03050F00)
+
+- #define :ref:`USE_syscomopen <group___sys_com_itf_1ga12cd7edc091e3377c5595782f4347ec7>` :ref:`PFSYSCOMOPEN_IEC <group___sys_com_itf_1ga4caeb95ecc1e2ce7b9711885908f7b36>` pfsyscomopen;
+
+- #define :ref:`EXT_syscomopen <group___sys_com_itf_1ga1ec6b08d0b48500e0899f8201f3b4e88>` extern :ref:`PFSYSCOMOPEN_IEC <group___sys_com_itf_1ga4caeb95ecc1e2ce7b9711885908f7b36>` pfsyscomopen;
+
+- #define :ref:`GET_syscomopen <group___sys_com_itf_1ga9c20bb65676373f0ab545ba25156ffe1>` s_pfCMGetAPI2( "syscomopen", (RTS_VOID_FCTPTR *)&pfsyscomopen, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x1CE3B492), 0x03050F00)
+
+- #define :ref:`CAL_syscomopen <group___sys_com_itf_1ga22fb627bd7df05db66d86ac8c5361f3d>` pfsyscomopen
+
+- #define :ref:`CHK_syscomopen <group___sys_com_itf_1ga5139a63272f7d1e41e12331541941bee>` (pfsyscomopen != NULL)
+
+- #define :ref:`EXP_syscomopen <group___sys_com_itf_1gac1b1ab6e754d0426ee8086431a283a69>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomopen", (RTS_UINTPTR) :ref:`syscomopen <group___sys_com_itf_1gac133791775821e103cef6e92ef824cb5>` , 1, RTSITF_GET_SIGNATURE(0, 0x1CE3B492), 0x03050F00)
+
+- #define :ref:`USE_syscomopen2 <group___sys_com_itf_1gad0c93896ca13f245d6332e9884c2f4f3>` :ref:`PFSYSCOMOPEN2_IEC <group___sys_com_itf_1ga9fcb0142b0f413120bc86940716648ec>` pfsyscomopen2;
+
+- #define :ref:`EXT_syscomopen2 <group___sys_com_itf_1ga4eabeea9f1152b9822fb58dfaff2adfd>` extern :ref:`PFSYSCOMOPEN2_IEC <group___sys_com_itf_1ga9fcb0142b0f413120bc86940716648ec>` pfsyscomopen2;
+
+- #define :ref:`GET_syscomopen2 <group___sys_com_itf_1ga9aedd38f5504afa6f0baed26d2729fa3>` s_pfCMGetAPI2( "syscomopen2", (RTS_VOID_FCTPTR *)&pfsyscomopen2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
+
+- #define :ref:`CAL_syscomopen2 <group___sys_com_itf_1gab588e84fe6dbff896a84043ec8879fe3>` pfsyscomopen2
+
+- #define :ref:`CHK_syscomopen2 <group___sys_com_itf_1gab946bae023b64f6d72b55f99bd83c7fd>` (pfsyscomopen2 != NULL)
+
+- #define :ref:`EXP_syscomopen2 <group___sys_com_itf_1gaabc90ec864047b8937c2a2dabe76fcd8>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomopen2", (RTS_UINTPTR) :ref:`syscomopen2 <group___sys_com_itf_1ga8d94f973e3cb339573241cb102f3b81e>` , 1, 0, 0x03050F00)
+
+- #define :ref:`USE_syscompurge <group___sys_com_itf_1ga146fa315ed2e0c6e03b111425eaa258b>` :ref:`PFSYSCOMPURGE_IEC <group___sys_com_itf_1ga27e4fb19f805125a11439086f1844ecc>` pfsyscompurge;
+
+- #define :ref:`EXT_syscompurge <group___sys_com_itf_1ga329b7be9cfb1260618e5fceabdc21c04>` extern :ref:`PFSYSCOMPURGE_IEC <group___sys_com_itf_1ga27e4fb19f805125a11439086f1844ecc>` pfsyscompurge;
+
+- #define :ref:`GET_syscompurge <group___sys_com_itf_1ga06b97961b127db60a50cdb59e6c8d432>` s_pfCMGetAPI2( "syscompurge", (RTS_VOID_FCTPTR *)&pfsyscompurge, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC2A013BE), 0x03050F00)
+
+- #define :ref:`CAL_syscompurge <group___sys_com_itf_1ga612768ac36317f8970201938ebb92ee5>` pfsyscompurge
+
+- #define :ref:`CHK_syscompurge <group___sys_com_itf_1ga832c6b2dd5951ccf823c3065ff8eafc8>` (pfsyscompurge != NULL)
+
+- #define :ref:`EXP_syscompurge <group___sys_com_itf_1ga4785ee41a9326214ad1ef5b2e0b52251>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscompurge", (RTS_UINTPTR) :ref:`syscompurge <group___sys_com_itf_1gacf81be248974e6f79adf9130dbd975d2>` , 1, RTSITF_GET_SIGNATURE(0, 0xC2A013BE), 0x03050F00)
+
+- #define :ref:`USE_syscomread <group___sys_com_itf_1gaf2b08f42965340a29df54c9f492436cf>` :ref:`PFSYSCOMREAD_IEC <group___sys_com_itf_1gaf93d07fffd0b9db04976dd60d9eeaa16>` pfsyscomread;
+
+- #define :ref:`EXT_syscomread <group___sys_com_itf_1gaea6fe157e6662b25ea2ecb4d5e563cb9>` extern :ref:`PFSYSCOMREAD_IEC <group___sys_com_itf_1gaf93d07fffd0b9db04976dd60d9eeaa16>` pfsyscomread;
+
+- #define :ref:`GET_syscomread <group___sys_com_itf_1ga9d3f45462a1a9fa05928c9092966cf84>` s_pfCMGetAPI2( "syscomread", (RTS_VOID_FCTPTR *)&pfsyscomread, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xDEDB5081), 0x03050F00)
+
+- #define :ref:`CAL_syscomread <group___sys_com_itf_1gaf06e16a11c74086f40fc92698b105a91>` pfsyscomread
+
+- #define :ref:`CHK_syscomread <group___sys_com_itf_1ga3a9996329d18a6e41efcc81ee1795712>` (pfsyscomread != NULL)
+
+- #define :ref:`EXP_syscomread <group___sys_com_itf_1ga5fe9e81e2ff3e69b3c18078046353943>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomread", (RTS_UINTPTR) :ref:`syscomread <group___sys_com_itf_1gac8ecb737346f72e608f02c515e5a09e5>` , 1, RTSITF_GET_SIGNATURE(0, 0xDEDB5081), 0x03050F00)
+
+- #define :ref:`USE_syscomsetsettings <group___sys_com_itf_1gafa2dc05950e8fcad9d6729abac79d510>` :ref:`PFSYSCOMSETSETTINGS_IEC <group___sys_com_itf_1ga1b6d4b86de0f522f4e0746bd07687c00>` pfsyscomsetsettings;
+
+- #define :ref:`EXT_syscomsetsettings <group___sys_com_itf_1gac77a56ac41030994598d511ec073c51e>` extern :ref:`PFSYSCOMSETSETTINGS_IEC <group___sys_com_itf_1ga1b6d4b86de0f522f4e0746bd07687c00>` pfsyscomsetsettings;
+
+- #define :ref:`GET_syscomsetsettings <group___sys_com_itf_1gaa4398a27265b00e6c5fb6322afb1a358>` s_pfCMGetAPI2( "syscomsetsettings", (RTS_VOID_FCTPTR *)&pfsyscomsetsettings, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
+
+- #define :ref:`CAL_syscomsetsettings <group___sys_com_itf_1ga7869a52e361ea8fa08e60caa3eb2efb1>` pfsyscomsetsettings
+
+- #define :ref:`CHK_syscomsetsettings <group___sys_com_itf_1ga9db5f4b36e4a00b43df142dfd15fd091>` (pfsyscomsetsettings != NULL)
+
+- #define :ref:`EXP_syscomsetsettings <group___sys_com_itf_1gad045976173079e8bb0106f5cbf439663>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomsetsettings", (RTS_UINTPTR) :ref:`syscomsetsettings <group___sys_com_itf_1gad571f4b8ba2e624dfddf0c989b0c950d>` , 1, 0, 0x03050F00)
+
+- #define :ref:`USE_syscomsettimeout <group___sys_com_itf_1gafec3da2866d061d96e0f2c1474dbb54a>` :ref:`PFSYSCOMSETTIMEOUT_IEC <group___sys_com_itf_1ga95bc4b80e6316123f768168e0ab81626>` pfsyscomsettimeout;
+
+- #define :ref:`EXT_syscomsettimeout <group___sys_com_itf_1ga3db8f62309d80727ba4a14ead3911923>` extern :ref:`PFSYSCOMSETTIMEOUT_IEC <group___sys_com_itf_1ga95bc4b80e6316123f768168e0ab81626>` pfsyscomsettimeout;
+
+- #define :ref:`GET_syscomsettimeout <group___sys_com_itf_1gac009f783b4c02003bc4da70c71fd461b>` s_pfCMGetAPI2( "syscomsettimeout", (RTS_VOID_FCTPTR *)&pfsyscomsettimeout, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x2E035E87), 0x03050F00)
+
+- #define :ref:`CAL_syscomsettimeout <group___sys_com_itf_1ga811da4904ee0eea82a9ab6398c79db77>` pfsyscomsettimeout
+
+- #define :ref:`CHK_syscomsettimeout <group___sys_com_itf_1ga80ce8936f2480659e000251e728ee3da>` (pfsyscomsettimeout != NULL)
+
+- #define :ref:`EXP_syscomsettimeout <group___sys_com_itf_1gabb66ab9aefdb253984f3b017d67eefb1>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomsettimeout", (RTS_UINTPTR) :ref:`syscomsettimeout <group___sys_com_itf_1ga2de2eb1038c3d1740378dff5179ebec0>` , 1, RTSITF_GET_SIGNATURE(0, 0x2E035E87), 0x03050F00)
+
+- #define :ref:`USE_syscomwrite <group___sys_com_itf_1ga44bfbbce17e289dca090cc658c469e64>` :ref:`PFSYSCOMWRITE_IEC <group___sys_com_itf_1gac7ae19f0674150f0214d2d5e521673b6>` pfsyscomwrite;
+
+- #define :ref:`EXT_syscomwrite <group___sys_com_itf_1ga11fb522c85d85158e88614c8722e7d18>` extern :ref:`PFSYSCOMWRITE_IEC <group___sys_com_itf_1gac7ae19f0674150f0214d2d5e521673b6>` pfsyscomwrite;
+
+- #define :ref:`GET_syscomwrite <group___sys_com_itf_1ga0611fc8168b38924210230e166ce6a81>` s_pfCMGetAPI2( "syscomwrite", (RTS_VOID_FCTPTR *)&pfsyscomwrite, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA00AEE60), 0x03050F00)
+
+- #define :ref:`CAL_syscomwrite <group___sys_com_itf_1ga56f3d46a74acee36e454930aa7376a54>` pfsyscomwrite
+
+- #define :ref:`CHK_syscomwrite <group___sys_com_itf_1ga96a017f82a175c9bdd38e55689978681>` (pfsyscomwrite != NULL)
+
+- #define :ref:`EXP_syscomwrite <group___sys_com_itf_1ga31cfd72e075d7a0dbfed118456661318>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomwrite", (RTS_UINTPTR) :ref:`syscomwrite <group___sys_com_itf_1ga53101f1df95b5fd10dce26ac552b188f>` , 1, RTSITF_GET_SIGNATURE(0, 0xA00AEE60), 0x03050F00)
+
+- #define :ref:`USE_SysComOpen <group___sys_com_itf_1gab1b5f44cf54b529d409b3aa2e860b5f7>` :ref:`PFSYSCOMOPEN <group___sys_com_itf_1ga426504ebb5091afe31dc6fa72ec18cc0>` pfSysComOpen;
+
+- #define :ref:`EXT_SysComOpen <group___sys_com_itf_1gac81f6755c135c4461a727a19d4386a03>` extern :ref:`PFSYSCOMOPEN <group___sys_com_itf_1ga426504ebb5091afe31dc6fa72ec18cc0>` pfSysComOpen;
+
+- #define :ref:`GET_SysComOpen <group___sys_com_itf_1ga16212a5ee3da20f9e24091f1adc8c7ee>` s_pfCMGetAPI2( "SysComOpen", (RTS_VOID_FCTPTR *)&pfSysComOpen, (fl), 0, 0)
+
+- #define :ref:`CAL_SysComOpen <group___sys_com_itf_1ga1d3a24dc8b6caadbf557be4e1e201e7c>` pfSysComOpen
+
+- #define :ref:`CHK_SysComOpen <group___sys_com_itf_1ga88ff9cea031250c20fdb9822b169e991>` (pfSysComOpen != NULL)
+
+- #define :ref:`EXP_SysComOpen <group___sys_com_itf_1gae38e152d8b60f1ca116a8453831016b1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComOpen", (RTS_UINTPTR) :ref:`SysComOpen <group___sys_com_itf_1gacf40acf2958ee6cb83c02cf0cfa75716>` , 0, 0)
+
+- #define :ref:`USE_SysComOpen2 <group___sys_com_itf_1gafa67fa4bc070c2439617869c01ea6667>` :ref:`PFSYSCOMOPEN2 <group___sys_com_itf_1ga18a419ea79afebfe8d0cef7ef7ba58b2>` pfSysComOpen2;
+
+- #define :ref:`EXT_SysComOpen2 <group___sys_com_itf_1ga8a634c33979707822988018aecc33089>` extern :ref:`PFSYSCOMOPEN2 <group___sys_com_itf_1ga18a419ea79afebfe8d0cef7ef7ba58b2>` pfSysComOpen2;
+
+- #define :ref:`GET_SysComOpen2 <group___sys_com_itf_1ga3c52f52ce3ed02ec07e68eb1cf8fed9d>` s_pfCMGetAPI2( "SysComOpen2", (RTS_VOID_FCTPTR *)&pfSysComOpen2, (fl), 0, 0)
+
+- #define :ref:`CAL_SysComOpen2 <group___sys_com_itf_1gac6c2067994cb755d4d3c52cbff321dc2>` pfSysComOpen2
+
+- #define :ref:`CHK_SysComOpen2 <group___sys_com_itf_1ga0918df79ccb8979ebb3963ae62f23d30>` (pfSysComOpen2 != NULL)
+
+- #define :ref:`EXP_SysComOpen2 <group___sys_com_itf_1gaa8191388b3e1760fb13d2201c49d5e55>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComOpen2", (RTS_UINTPTR) :ref:`SysComOpen2 <group___sys_com_itf_1gaa93601c1aa1c5c8d059f5c8b56bf9979>` , 0, 0)
+
+- #define :ref:`USE_SysComSetSettings <group___sys_com_itf_1ga7a5f07e4be979e343f88cb6787685cfc>` :ref:`PFSYSCOMSETSETTINGS <group___sys_com_itf_1gadbce4d0cc4f9edc9d2615b8f9c5ce291>` pfSysComSetSettings;
+
+- #define :ref:`EXT_SysComSetSettings <group___sys_com_itf_1ga66c23741ca084b196bd2717a51bd8ca6>` extern :ref:`PFSYSCOMSETSETTINGS <group___sys_com_itf_1gadbce4d0cc4f9edc9d2615b8f9c5ce291>` pfSysComSetSettings;
+
+- #define :ref:`GET_SysComSetSettings <group___sys_com_itf_1ga6c407c4fdcfa0763911efa041030ee60>` s_pfCMGetAPI2( "SysComSetSettings", (RTS_VOID_FCTPTR *)&pfSysComSetSettings, (fl), 0, 0)
+
+- #define :ref:`CAL_SysComSetSettings <group___sys_com_itf_1gaed3bfac88d4a6800716764ad044ed09a>` pfSysComSetSettings
+
+- #define :ref:`CHK_SysComSetSettings <group___sys_com_itf_1gab71397b99e687305f4fc073e59c5415b>` (pfSysComSetSettings != NULL)
+
+- #define :ref:`EXP_SysComSetSettings <group___sys_com_itf_1gad3121f9ef69840e7202eaa04abbbcc08>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComSetSettings", (RTS_UINTPTR) :ref:`SysComSetSettings <group___sys_com_itf_1gaa2ec4b3b0e9997b8bff7868322633507>` , 0, 0)
+
+- #define :ref:`USE_SysComGetSettings <group___sys_com_itf_1ga9632f0768e35d55e0f665aeeb59e7f11>` :ref:`PFSYSCOMGETSETTINGS <group___sys_com_itf_1ga5020e363cee59f2d2d1a2ac1bbb67f1e>` pfSysComGetSettings;
+
+- #define :ref:`EXT_SysComGetSettings <group___sys_com_itf_1gaf6af477ac2a501c83e76992135ecac6e>` extern :ref:`PFSYSCOMGETSETTINGS <group___sys_com_itf_1ga5020e363cee59f2d2d1a2ac1bbb67f1e>` pfSysComGetSettings;
+
+- #define :ref:`GET_SysComGetSettings <group___sys_com_itf_1ga876778042a2df3296d1ae6d3424fe2a3>` s_pfCMGetAPI2( "SysComGetSettings", (RTS_VOID_FCTPTR *)&pfSysComGetSettings, (fl), 0, 0)
+
+- #define :ref:`CAL_SysComGetSettings <group___sys_com_itf_1gab807da62cb73bd4fe518c8e45e5df845>` pfSysComGetSettings
+
+- #define :ref:`CHK_SysComGetSettings <group___sys_com_itf_1ga4b0fda172daa6b9fe6e46611683f0c80>` (pfSysComGetSettings != NULL)
+
+- #define :ref:`EXP_SysComGetSettings <group___sys_com_itf_1gaee1cead52a14e6157ad123b78fd4fa67>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComGetSettings", (RTS_UINTPTR) :ref:`SysComGetSettings <group___sys_com_itf_1gaf9ae02a6050322f89f029a419d63f83f>` , 0, 0)
+
+- #define :ref:`USE_SysComClose <group___sys_com_itf_1ga8cf03c3246b2b191817c2a640e6eec42>` :ref:`PFSYSCOMCLOSE <group___sys_com_itf_1ga7f2b17dbdc92dbca21141b66f110145b>` pfSysComClose;
+
+- #define :ref:`EXT_SysComClose <group___sys_com_itf_1ga13593144694f74ede19536b3341af135>` extern :ref:`PFSYSCOMCLOSE <group___sys_com_itf_1ga7f2b17dbdc92dbca21141b66f110145b>` pfSysComClose;
+
+- #define :ref:`GET_SysComClose <group___sys_com_itf_1gaeb337796860fab107a2cb3c5b89321ba>` s_pfCMGetAPI2( "SysComClose", (RTS_VOID_FCTPTR *)&pfSysComClose, (fl), 0, 0)
+
+- #define :ref:`CAL_SysComClose <group___sys_com_itf_1gaaef678f070c299a3abb5e5acbdd9c7f1>` pfSysComClose
+
+- #define :ref:`CHK_SysComClose <group___sys_com_itf_1ga75017509e01fe49e527d9436365f40d7>` (pfSysComClose != NULL)
+
+- #define :ref:`EXP_SysComClose <group___sys_com_itf_1gabf8d0322a5e2e274f2b01b529749cf85>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComClose", (RTS_UINTPTR) :ref:`SysComClose <group___sys_com_itf_1gae03e5ece86996b91333ca76ed0d7a634>` , 0, 0)
+
+- #define :ref:`USE_SysComRead <group___sys_com_itf_1gacec5145079cf8a8bd9022f7e7008db84>` :ref:`PFSYSCOMREAD <group___sys_com_itf_1ga28c3c1e34a5aaea949a54a17d71099ad>` pfSysComRead;
+
+- #define :ref:`EXT_SysComRead <group___sys_com_itf_1ga25272c8a48711bd190458a3401ea3e24>` extern :ref:`PFSYSCOMREAD <group___sys_com_itf_1ga28c3c1e34a5aaea949a54a17d71099ad>` pfSysComRead;
+
+- #define :ref:`GET_SysComRead <group___sys_com_itf_1gac4d4a2e80a7c1b9d00ad8f17a36e865c>` s_pfCMGetAPI2( "SysComRead", (RTS_VOID_FCTPTR *)&pfSysComRead, (fl), 0, 0)
+
+- #define :ref:`CAL_SysComRead <group___sys_com_itf_1ga1f7de92f3fb071e428f2cc2cc518425b>` pfSysComRead
+
+- #define :ref:`CHK_SysComRead <group___sys_com_itf_1gad36cdac96e8b759a595a1d4b2ae21f9e>` (pfSysComRead != NULL)
+
+- #define :ref:`EXP_SysComRead <group___sys_com_itf_1ga0ed7a38b991fbdfccf3af5f62b48dad9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComRead", (RTS_UINTPTR) :ref:`SysComRead <group___sys_com_itf_1gaa28663547298bb38140095bda09e653f>` , 0, 0)
+
+- #define :ref:`USE_SysComWrite <group___sys_com_itf_1gacbf4d9eb95ef25410d2cb61d66e818cb>` :ref:`PFSYSCOMWRITE <group___sys_com_itf_1gaa2af5d8e8da3bda2124dc196200181c1>` pfSysComWrite;
+
+- #define :ref:`EXT_SysComWrite <group___sys_com_itf_1ga583c4e1059cfa966749be0c4688920c8>` extern :ref:`PFSYSCOMWRITE <group___sys_com_itf_1gaa2af5d8e8da3bda2124dc196200181c1>` pfSysComWrite;
+
+- #define :ref:`GET_SysComWrite <group___sys_com_itf_1ga953c926227b4bc6877b93331e2a2ff81>` s_pfCMGetAPI2( "SysComWrite", (RTS_VOID_FCTPTR *)&pfSysComWrite, (fl), 0, 0)
+
+- #define :ref:`CAL_SysComWrite <group___sys_com_itf_1ga8b5892fe8f88335e1cb5b43bf8ecc0f4>` pfSysComWrite
+
+- #define :ref:`CHK_SysComWrite <group___sys_com_itf_1ga2ce83943a3e1fabeea090ff7e83a90d8>` (pfSysComWrite != NULL)
+
+- #define :ref:`EXP_SysComWrite <group___sys_com_itf_1ga8482048ae79033830bf1c91ca5310df4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComWrite", (RTS_UINTPTR) :ref:`SysComWrite <group___sys_com_itf_1ga6df7263b8cdb70b1ce1d944dbe167d18>` , 0, 0)
+
+- #define :ref:`USE_SysComPurge <group___sys_com_itf_1gaf80867aaa28567eba6ae50516ea32632>` :ref:`PFSYSCOMPURGE <group___sys_com_itf_1ga1a4e72ddf94286a0f4b11f7377858124>` pfSysComPurge;
+
+- #define :ref:`EXT_SysComPurge <group___sys_com_itf_1ga208ac479d982ea7c9a94270c622ffc8e>` extern :ref:`PFSYSCOMPURGE <group___sys_com_itf_1ga1a4e72ddf94286a0f4b11f7377858124>` pfSysComPurge;
+
+- #define :ref:`GET_SysComPurge <group___sys_com_itf_1ga85bb7286071a92bcd778859377b74933>` s_pfCMGetAPI2( "SysComPurge", (RTS_VOID_FCTPTR *)&pfSysComPurge, (fl), 0, 0)
+
+- #define :ref:`CAL_SysComPurge <group___sys_com_itf_1gad4e7776cb31c81f16ea3cdc22ab1ea9b>` pfSysComPurge
+
+- #define :ref:`CHK_SysComPurge <group___sys_com_itf_1ga4fb85470b602d26760edcef024c9b854>` (pfSysComPurge != NULL)
+
+- #define :ref:`EXP_SysComPurge <group___sys_com_itf_1gaf6a727d093d69dbec6a0f3e359e38af6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComPurge", (RTS_UINTPTR) :ref:`SysComPurge <group___sys_com_itf_1gaf299ca75a046c99de02e82a9afa1bacb>` , 0, 0)
+
+- #define :ref:`USE_SysComSetTimeout <group___sys_com_itf_1ga9303734875eb8bf4a9af7169c939de28>` :ref:`PFSYSCOMSETTIMEOUT <group___sys_com_itf_1gac95818439e7c787636ac53a2c4ea6bc2>` pfSysComSetTimeout;
+
+- #define :ref:`EXT_SysComSetTimeout <group___sys_com_itf_1ga2b8609fd4807b677eda36dd89ee697c4>` extern :ref:`PFSYSCOMSETTIMEOUT <group___sys_com_itf_1gac95818439e7c787636ac53a2c4ea6bc2>` pfSysComSetTimeout;
+
+- #define :ref:`GET_SysComSetTimeout <group___sys_com_itf_1gafe0569c0789ed6e16f7474934145095a>` s_pfCMGetAPI2( "SysComSetTimeout", (RTS_VOID_FCTPTR *)&pfSysComSetTimeout, (fl), 0, 0)
+
+- #define :ref:`CAL_SysComSetTimeout <group___sys_com_itf_1gaa913c0a3e2061c72a848ad573b47811e>` pfSysComSetTimeout
+
+- #define :ref:`CHK_SysComSetTimeout <group___sys_com_itf_1ga02ccd35e9660412851c87a067a6d127c>` (pfSysComSetTimeout != NULL)
+
+- #define :ref:`EXP_SysComSetTimeout <group___sys_com_itf_1gaae2c7e07ee698c58584f7dfc352d9a44>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComSetTimeout", (RTS_UINTPTR) :ref:`SysComSetTimeout <group___sys_com_itf_1ga9fa7a0c0d1ea82160e247351e6883958>` , 0, 0)
+
+- #define :ref:`ITF_SysCom <group___sys_com_itf_1gabfca817154b1019275366a1702820eef>`
+
+- #define :ref:`EXTITF_SysCom <group___sys_com_itf_1gaf6d44fd2e0ffb8d094d03e734870ed1e>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagsyscomclose_struct <structtagsyscomclose__struct>` :ref:`syscomclose_struct <group___sys_com_itf_1ga3308d78035caed2aef663e0bd8c7afd6>`
+
+- typedef void(* :ref:`PFSYSCOMCLOSE_IEC <group___sys_com_itf_1gae74f2d41d4a7e21c05070994288ce613>`)(syscomclose_struct *p)
+
+- typedef struct :ref:`tagsyscomgetsettings_struct <structtagsyscomgetsettings__struct>` :ref:`syscomgetsettings_struct <group___sys_com_itf_1ga7e26dd4ec2e7914f64f57e105442ca3c>`
+
+- typedef void(* :ref:`PFSYSCOMGETSETTINGS_IEC <group___sys_com_itf_1ga6334aee485705bccfea74e8e5dad3430>`)(syscomgetsettings_struct *p)
+
+- typedef struct :ref:`tagsyscomopen_struct <structtagsyscomopen__struct>` :ref:`syscomopen_struct <group___sys_com_itf_1gae0fb149d6fe5786904b1a985d3eea046>`
+
+- typedef void(* :ref:`PFSYSCOMOPEN_IEC <group___sys_com_itf_1ga4caeb95ecc1e2ce7b9711885908f7b36>`)(syscomopen_struct *p)
+
+- typedef struct :ref:`tagsyscomopen2_struct <structtagsyscomopen2__struct>` :ref:`syscomopen2_struct <group___sys_com_itf_1ga68d1dc1ba9f40cd4a23fa307ff994fe1>`
+
+- typedef void(* :ref:`PFSYSCOMOPEN2_IEC <group___sys_com_itf_1ga9fcb0142b0f413120bc86940716648ec>`)(syscomopen2_struct *p)
+
+- typedef struct :ref:`tagsyscompurge_struct <structtagsyscompurge__struct>` :ref:`syscompurge_struct <group___sys_com_itf_1gad21fe96acf909e0c0c4488f5af048986>`
+
+- typedef void(* :ref:`PFSYSCOMPURGE_IEC <group___sys_com_itf_1ga27e4fb19f805125a11439086f1844ecc>`)(syscompurge_struct *p)
+
+- typedef struct :ref:`tagsyscomread_struct <structtagsyscomread__struct>` :ref:`syscomread_struct <group___sys_com_itf_1ga5826d9f8571af91c22ffddc6fc615dc1>`
+
+- typedef void(* :ref:`PFSYSCOMREAD_IEC <group___sys_com_itf_1gaf93d07fffd0b9db04976dd60d9eeaa16>`)(syscomread_struct *p)
+
+- typedef struct :ref:`tagsyscomsetsettings_struct <structtagsyscomsetsettings__struct>` :ref:`syscomsetsettings_struct <group___sys_com_itf_1ga9d9a1056c695224dca3c30d419382463>`
+
+- typedef void(* :ref:`PFSYSCOMSETSETTINGS_IEC <group___sys_com_itf_1ga1b6d4b86de0f522f4e0746bd07687c00>`)(syscomsetsettings_struct *p)
+
+- typedef struct :ref:`tagsyscomsettimeout_struct <structtagsyscomsettimeout__struct>` :ref:`syscomsettimeout_struct <group___sys_com_itf_1ga4cdb08bbc06f84e0baf0ef3208cb9500>`
+
+- typedef void(* :ref:`PFSYSCOMSETTIMEOUT_IEC <group___sys_com_itf_1ga95bc4b80e6316123f768168e0ab81626>`)(syscomsettimeout_struct *p)
+
+- typedef struct :ref:`tagsyscomwrite_struct <structtagsyscomwrite__struct>` :ref:`syscomwrite_struct <group___sys_com_itf_1gae655e4f66c8b7201920833dc6e02c93d>`
+
+- typedef void(* :ref:`PFSYSCOMWRITE_IEC <group___sys_com_itf_1gac7ae19f0674150f0214d2d5e521673b6>`)(syscomwrite_struct *p)
+
+- typedef :ref:`SysComSettings <group___sys_com_itf___comportsettings_1gaa1c0e1f0770708023c3106844785a688>` :ref:`COMSettings <group___sys_com_itf_1gad158807f1203b8b521f43e1cf3fbdca1>`
+
+- typedef :ref:`SysComSettingsEx <group___sys_com_itf___comportextendedsettings_1gaf8ac3764b2b810b241b12680be7e2e9c>` :ref:`COMSettingsEx <group___sys_com_itf_1ga254991c25ec38bb097ff0a4bf324e405>`
+
+- typedef :ref:`SysComSettings <group___sys_com_itf___comportsettings_1gaa1c0e1f0770708023c3106844785a688>` :ref:`COM_Settings <group___sys_com_itf_1ga20e1cf97258c44fc0387800311370248>`
+
+- typedef :ref:`SysComSettingsEx <group___sys_com_itf___comportextendedsettings_1gaf8ac3764b2b810b241b12680be7e2e9c>` :ref:`COM_SettingsEx <group___sys_com_itf_1ga05316c5ff76d28a2d15df861e7d98a23>`
+
+- typedef RTS_HANDLE(* :ref:`PFSYSCOMOPEN <group___sys_com_itf_1ga426504ebb5091afe31dc6fa72ec18cc0>`)(short sPort, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSCOMOPEN2 <group___sys_com_itf_1ga18a419ea79afebfe8d0cef7ef7ba58b2>`)(SysComSettings *pSettings, SysComSettingsEx *pSettingsEx, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSCOMSETSETTINGS <group___sys_com_itf_1gadbce4d0cc4f9edc9d2615b8f9c5ce291>`)(RTS_HANDLE hCom, SysComSettings *pSettings, SysComSettingsEx *pSettingsEx)
+
+- typedef RTS_RESULT(* :ref:`PFSYSCOMGETSETTINGS <group___sys_com_itf_1ga5020e363cee59f2d2d1a2ac1bbb67f1e>`)(RTS_HANDLE hCom, SysComSettings *pSettings, SysComSettingsEx *pSettingsEx)
+
+- typedef RTS_RESULT(* :ref:`PFSYSCOMCLOSE <group___sys_com_itf_1ga7f2b17dbdc92dbca21141b66f110145b>`)(RTS_HANDLE hCom)
+
+- typedef RTS_UI32(* :ref:`PFSYSCOMREAD <group___sys_com_itf_1ga28c3c1e34a5aaea949a54a17d71099ad>`)(RTS_HANDLE hCom, unsigned char *pbyBuffer, RTS_UI32 uiSize, RTS_UI32 ulTimeout, RTS_RESULT *pResult)
+
+- typedef RTS_UI32(* :ref:`PFSYSCOMWRITE <group___sys_com_itf_1gaa2af5d8e8da3bda2124dc196200181c1>`)(RTS_HANDLE hCom, unsigned char *pbyBuffer, RTS_UI32 uiSize, RTS_UI32 ulTimeout, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSCOMPURGE <group___sys_com_itf_1ga1a4e72ddf94286a0f4b11f7377858124>`)(RTS_HANDLE hCom)
+
+- typedef RTS_RESULT(* :ref:`PFSYSCOMSETTIMEOUT <group___sys_com_itf_1gac95818439e7c787636ac53a2c4ea6bc2>`)(RTS_HANDLE hCom, RTS_UI32 ulTimeout)
+
+- typedef :ref:`ISysCom_C <struct_i_sys_com___c>` :ref:`ISysCom <group___sys_com_itf_1ga0b8fbec3154b167f3c6867a15ab44f88>`
+
+Functions
+---------
+
+- void :ref:`syscomclose <group___sys_com_itf_1ga0df7b41fde082ecb1466b597d796de1d>` (:ref:`syscomclose_struct <group___sys_com_itf_1ga3308d78035caed2aef663e0bd8c7afd6>` * p)
+
+- void :ref:`syscomgetsettings <group___sys_com_itf_1gae11e26a5385ee5ec33a28629a61d8dd7>` (:ref:`syscomgetsettings_struct <group___sys_com_itf_1ga7e26dd4ec2e7914f64f57e105442ca3c>` * p)
+
+- void :ref:`syscomopen <group___sys_com_itf_1gac133791775821e103cef6e92ef824cb5>` (:ref:`syscomopen_struct <group___sys_com_itf_1gae0fb149d6fe5786904b1a985d3eea046>` * p)
+
+- void :ref:`syscomopen2 <group___sys_com_itf_1ga8d94f973e3cb339573241cb102f3b81e>` (:ref:`syscomopen2_struct <group___sys_com_itf_1ga68d1dc1ba9f40cd4a23fa307ff994fe1>` * p)
+
+- void :ref:`syscompurge <group___sys_com_itf_1gacf81be248974e6f79adf9130dbd975d2>` (:ref:`syscompurge_struct <group___sys_com_itf_1gad21fe96acf909e0c0c4488f5af048986>` * p)
+
+- void :ref:`syscomread <group___sys_com_itf_1gac8ecb737346f72e608f02c515e5a09e5>` (:ref:`syscomread_struct <group___sys_com_itf_1ga5826d9f8571af91c22ffddc6fc615dc1>` * p)
+
+- void :ref:`syscomsetsettings <group___sys_com_itf_1gad571f4b8ba2e624dfddf0c989b0c950d>` (:ref:`syscomsetsettings_struct <group___sys_com_itf_1ga9d9a1056c695224dca3c30d419382463>` * p)
+
+- void :ref:`syscomsettimeout <group___sys_com_itf_1ga2de2eb1038c3d1740378dff5179ebec0>` (:ref:`syscomsettimeout_struct <group___sys_com_itf_1ga4cdb08bbc06f84e0baf0ef3208cb9500>` * p)
+
+- void :ref:`syscomwrite <group___sys_com_itf_1ga53101f1df95b5fd10dce26ac552b188f>` (:ref:`syscomwrite_struct <group___sys_com_itf_1gae655e4f66c8b7201920833dc6e02c93d>` * p)
+
+- RTS_RESULT :ref:`SysComOSInit <group___sys_com_itf_1ga5ed91811723c888f323839ae0fe24e96>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysComOSHookFunction <group___sys_com_itf_1gab10557427484ee710e95f247b3367057>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_HANDLE :ref:`SysComOpen <group___sys_com_itf_1gacf40acf2958ee6cb83c02cf0cfa75716>` (short sPort, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysComOpen2 <group___sys_com_itf_1gaa93601c1aa1c5c8d059f5c8b56bf9979>` (:ref:`SysComSettings <group___sys_com_itf___comportsettings_1gaa1c0e1f0770708023c3106844785a688>` * pSettings, :ref:`SysComSettingsEx <group___sys_com_itf___comportextendedsettings_1gaf8ac3764b2b810b241b12680be7e2e9c>` * pSettingsEx, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysComSetSettings <group___sys_com_itf_1gaa2ec4b3b0e9997b8bff7868322633507>` (RTS_HANDLE hCom, :ref:`SysComSettings <group___sys_com_itf___comportsettings_1gaa1c0e1f0770708023c3106844785a688>` * pSettings, :ref:`SysComSettingsEx <group___sys_com_itf___comportextendedsettings_1gaf8ac3764b2b810b241b12680be7e2e9c>` * pSettingsEx)
+
+- RTS_RESULT :ref:`SysComGetSettings <group___sys_com_itf_1gaf9ae02a6050322f89f029a419d63f83f>` (RTS_HANDLE hCom, :ref:`SysComSettings <group___sys_com_itf___comportsettings_1gaa1c0e1f0770708023c3106844785a688>` * pSettings, :ref:`SysComSettingsEx <group___sys_com_itf___comportextendedsettings_1gaf8ac3764b2b810b241b12680be7e2e9c>` * pSettingsEx)
+
+- RTS_RESULT :ref:`SysComClose <group___sys_com_itf_1gae03e5ece86996b91333ca76ed0d7a634>` (RTS_HANDLE hCom)
+
+- RTS_UI32 :ref:`SysComRead <group___sys_com_itf_1gaa28663547298bb38140095bda09e653f>` (RTS_HANDLE hCom, unsigned char * pbyBuffer, RTS_UI32 uiSize, RTS_UI32 ulTimeout, RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`SysComWrite <group___sys_com_itf_1ga6df7263b8cdb70b1ce1d944dbe167d18>` (RTS_HANDLE hCom, unsigned char * pbyBuffer, RTS_UI32 uiSize, RTS_UI32 ulTimeout, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysComPurge <group___sys_com_itf_1gaf299ca75a046c99de02e82a9afa1bacb>` (RTS_HANDLE hCom)
+
+- RTS_RESULT :ref:`SysComSetTimeout <group___sys_com_itf_1ga9fa7a0c0d1ea82160e247351e6883958>` (RTS_HANDLE hCom, RTS_UI32 ulTimeout)
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_com_itf_1ga751cda49b31a2a386b834104bb06c97e:
+
+#define USE_syscomclose :ref:`PFSYSCOMCLOSE_IEC <group___sys_com_itf_1gae74f2d41d4a7e21c05070994288ce613>` pfsyscomclose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga0a571d5cfcac6a3c42bddab655c28bd5:
+
+#define EXT_syscomclose extern :ref:`PFSYSCOMCLOSE_IEC <group___sys_com_itf_1gae74f2d41d4a7e21c05070994288ce613>` pfsyscomclose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gad511665fceb8ddb9a4d3990545d5389a:
+
+#define GET_syscomclose s_pfCMGetAPI2( "syscomclose", (RTS_VOID_FCTPTR *)&pfsyscomclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xACD27C01), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga2c0220dd49b4cbcfa22314a712809f25:
+
+#define CAL_syscomclose pfsyscomclose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga6c43a685937496b697d77dc58c4679b5:
+
+#define CHK_syscomclose (pfsyscomclose != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga66f0123085d52b1c8a4d4f11a523a6db:
+
+#define EXP_syscomclose s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomclose", (RTS_UINTPTR) :ref:`syscomclose <group___sys_com_itf_1ga0df7b41fde082ecb1466b597d796de1d>` , 1, RTSITF_GET_SIGNATURE(0, 0xACD27C01), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaf05f102b924606fd75b7eaf895b36a24:
+
+#define USE_syscomgetsettings :ref:`PFSYSCOMGETSETTINGS_IEC <group___sys_com_itf_1ga6334aee485705bccfea74e8e5dad3430>` pfsyscomgetsettings;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga15bcea8935d024e24acc476d2dce4c55:
+
+#define EXT_syscomgetsettings extern :ref:`PFSYSCOMGETSETTINGS_IEC <group___sys_com_itf_1ga6334aee485705bccfea74e8e5dad3430>` pfsyscomgetsettings;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaf2ec65a358a4440a12893f60f774500c:
+
+#define GET_syscomgetsettings s_pfCMGetAPI2( "syscomgetsettings", (RTS_VOID_FCTPTR *)&pfsyscomgetsettings, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaca58fa174cc3654128358db0103e1194:
+
+#define CAL_syscomgetsettings pfsyscomgetsettings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga74c37f593ca7a539b3b45ad703799523:
+
+#define CHK_syscomgetsettings (pfsyscomgetsettings != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gad910464f601770a52ec1a34c6116cbde:
+
+#define EXP_syscomgetsettings s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomgetsettings", (RTS_UINTPTR) :ref:`syscomgetsettings <group___sys_com_itf_1gae11e26a5385ee5ec33a28629a61d8dd7>` , 1, 0, 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga12cd7edc091e3377c5595782f4347ec7:
+
+#define USE_syscomopen :ref:`PFSYSCOMOPEN_IEC <group___sys_com_itf_1ga4caeb95ecc1e2ce7b9711885908f7b36>` pfsyscomopen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga1ec6b08d0b48500e0899f8201f3b4e88:
+
+#define EXT_syscomopen extern :ref:`PFSYSCOMOPEN_IEC <group___sys_com_itf_1ga4caeb95ecc1e2ce7b9711885908f7b36>` pfsyscomopen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga9c20bb65676373f0ab545ba25156ffe1:
+
+#define GET_syscomopen s_pfCMGetAPI2( "syscomopen", (RTS_VOID_FCTPTR *)&pfsyscomopen, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x1CE3B492), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga22fb627bd7df05db66d86ac8c5361f3d:
+
+#define CAL_syscomopen pfsyscomopen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga5139a63272f7d1e41e12331541941bee:
+
+#define CHK_syscomopen (pfsyscomopen != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gac1b1ab6e754d0426ee8086431a283a69:
+
+#define EXP_syscomopen s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomopen", (RTS_UINTPTR) :ref:`syscomopen <group___sys_com_itf_1gac133791775821e103cef6e92ef824cb5>` , 1, RTSITF_GET_SIGNATURE(0, 0x1CE3B492), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gad0c93896ca13f245d6332e9884c2f4f3:
+
+#define USE_syscomopen2 :ref:`PFSYSCOMOPEN2_IEC <group___sys_com_itf_1ga9fcb0142b0f413120bc86940716648ec>` pfsyscomopen2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga4eabeea9f1152b9822fb58dfaff2adfd:
+
+#define EXT_syscomopen2 extern :ref:`PFSYSCOMOPEN2_IEC <group___sys_com_itf_1ga9fcb0142b0f413120bc86940716648ec>` pfsyscomopen2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga9aedd38f5504afa6f0baed26d2729fa3:
+
+#define GET_syscomopen2 s_pfCMGetAPI2( "syscomopen2", (RTS_VOID_FCTPTR *)&pfsyscomopen2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gab588e84fe6dbff896a84043ec8879fe3:
+
+#define CAL_syscomopen2 pfsyscomopen2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gab946bae023b64f6d72b55f99bd83c7fd:
+
+#define CHK_syscomopen2 (pfsyscomopen2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaabc90ec864047b8937c2a2dabe76fcd8:
+
+#define EXP_syscomopen2 s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomopen2", (RTS_UINTPTR) :ref:`syscomopen2 <group___sys_com_itf_1ga8d94f973e3cb339573241cb102f3b81e>` , 1, 0, 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga146fa315ed2e0c6e03b111425eaa258b:
+
+#define USE_syscompurge :ref:`PFSYSCOMPURGE_IEC <group___sys_com_itf_1ga27e4fb19f805125a11439086f1844ecc>` pfsyscompurge;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga329b7be9cfb1260618e5fceabdc21c04:
+
+#define EXT_syscompurge extern :ref:`PFSYSCOMPURGE_IEC <group___sys_com_itf_1ga27e4fb19f805125a11439086f1844ecc>` pfsyscompurge;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga06b97961b127db60a50cdb59e6c8d432:
+
+#define GET_syscompurge s_pfCMGetAPI2( "syscompurge", (RTS_VOID_FCTPTR *)&pfsyscompurge, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC2A013BE), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga612768ac36317f8970201938ebb92ee5:
+
+#define CAL_syscompurge pfsyscompurge
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga832c6b2dd5951ccf823c3065ff8eafc8:
+
+#define CHK_syscompurge (pfsyscompurge != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga4785ee41a9326214ad1ef5b2e0b52251:
+
+#define EXP_syscompurge s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscompurge", (RTS_UINTPTR) :ref:`syscompurge <group___sys_com_itf_1gacf81be248974e6f79adf9130dbd975d2>` , 1, RTSITF_GET_SIGNATURE(0, 0xC2A013BE), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaf2b08f42965340a29df54c9f492436cf:
+
+#define USE_syscomread :ref:`PFSYSCOMREAD_IEC <group___sys_com_itf_1gaf93d07fffd0b9db04976dd60d9eeaa16>` pfsyscomread;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaea6fe157e6662b25ea2ecb4d5e563cb9:
+
+#define EXT_syscomread extern :ref:`PFSYSCOMREAD_IEC <group___sys_com_itf_1gaf93d07fffd0b9db04976dd60d9eeaa16>` pfsyscomread;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga9d3f45462a1a9fa05928c9092966cf84:
+
+#define GET_syscomread s_pfCMGetAPI2( "syscomread", (RTS_VOID_FCTPTR *)&pfsyscomread, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xDEDB5081), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaf06e16a11c74086f40fc92698b105a91:
+
+#define CAL_syscomread pfsyscomread
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga3a9996329d18a6e41efcc81ee1795712:
+
+#define CHK_syscomread (pfsyscomread != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga5fe9e81e2ff3e69b3c18078046353943:
+
+#define EXP_syscomread s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomread", (RTS_UINTPTR) :ref:`syscomread <group___sys_com_itf_1gac8ecb737346f72e608f02c515e5a09e5>` , 1, RTSITF_GET_SIGNATURE(0, 0xDEDB5081), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gafa2dc05950e8fcad9d6729abac79d510:
+
+#define USE_syscomsetsettings :ref:`PFSYSCOMSETSETTINGS_IEC <group___sys_com_itf_1ga1b6d4b86de0f522f4e0746bd07687c00>` pfsyscomsetsettings;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gac77a56ac41030994598d511ec073c51e:
+
+#define EXT_syscomsetsettings extern :ref:`PFSYSCOMSETSETTINGS_IEC <group___sys_com_itf_1ga1b6d4b86de0f522f4e0746bd07687c00>` pfsyscomsetsettings;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaa4398a27265b00e6c5fb6322afb1a358:
+
+#define GET_syscomsetsettings s_pfCMGetAPI2( "syscomsetsettings", (RTS_VOID_FCTPTR *)&pfsyscomsetsettings, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga7869a52e361ea8fa08e60caa3eb2efb1:
+
+#define CAL_syscomsetsettings pfsyscomsetsettings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga9db5f4b36e4a00b43df142dfd15fd091:
+
+#define CHK_syscomsetsettings (pfsyscomsetsettings != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gad045976173079e8bb0106f5cbf439663:
+
+#define EXP_syscomsetsettings s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomsetsettings", (RTS_UINTPTR) :ref:`syscomsetsettings <group___sys_com_itf_1gad571f4b8ba2e624dfddf0c989b0c950d>` , 1, 0, 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gafec3da2866d061d96e0f2c1474dbb54a:
+
+#define USE_syscomsettimeout :ref:`PFSYSCOMSETTIMEOUT_IEC <group___sys_com_itf_1ga95bc4b80e6316123f768168e0ab81626>` pfsyscomsettimeout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga3db8f62309d80727ba4a14ead3911923:
+
+#define EXT_syscomsettimeout extern :ref:`PFSYSCOMSETTIMEOUT_IEC <group___sys_com_itf_1ga95bc4b80e6316123f768168e0ab81626>` pfsyscomsettimeout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gac009f783b4c02003bc4da70c71fd461b:
+
+#define GET_syscomsettimeout s_pfCMGetAPI2( "syscomsettimeout", (RTS_VOID_FCTPTR *)&pfsyscomsettimeout, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x2E035E87), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga811da4904ee0eea82a9ab6398c79db77:
+
+#define CAL_syscomsettimeout pfsyscomsettimeout
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga80ce8936f2480659e000251e728ee3da:
+
+#define CHK_syscomsettimeout (pfsyscomsettimeout != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gabb66ab9aefdb253984f3b017d67eefb1:
+
+#define EXP_syscomsettimeout s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomsettimeout", (RTS_UINTPTR) :ref:`syscomsettimeout <group___sys_com_itf_1ga2de2eb1038c3d1740378dff5179ebec0>` , 1, RTSITF_GET_SIGNATURE(0, 0x2E035E87), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga44bfbbce17e289dca090cc658c469e64:
+
+#define USE_syscomwrite :ref:`PFSYSCOMWRITE_IEC <group___sys_com_itf_1gac7ae19f0674150f0214d2d5e521673b6>` pfsyscomwrite;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga11fb522c85d85158e88614c8722e7d18:
+
+#define EXT_syscomwrite extern :ref:`PFSYSCOMWRITE_IEC <group___sys_com_itf_1gac7ae19f0674150f0214d2d5e521673b6>` pfsyscomwrite;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga0611fc8168b38924210230e166ce6a81:
+
+#define GET_syscomwrite s_pfCMGetAPI2( "syscomwrite", (RTS_VOID_FCTPTR *)&pfsyscomwrite, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA00AEE60), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga56f3d46a74acee36e454930aa7376a54:
+
+#define CAL_syscomwrite pfsyscomwrite
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga96a017f82a175c9bdd38e55689978681:
+
+#define CHK_syscomwrite (pfsyscomwrite != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga31cfd72e075d7a0dbfed118456661318:
+
+#define EXP_syscomwrite s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syscomwrite", (RTS_UINTPTR) :ref:`syscomwrite <group___sys_com_itf_1ga53101f1df95b5fd10dce26ac552b188f>` , 1, RTSITF_GET_SIGNATURE(0, 0xA00AEE60), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gab1b5f44cf54b529d409b3aa2e860b5f7:
+
+#define USE_SysComOpen :ref:`PFSYSCOMOPEN <group___sys_com_itf_1ga426504ebb5091afe31dc6fa72ec18cc0>` pfSysComOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gac81f6755c135c4461a727a19d4386a03:
+
+#define EXT_SysComOpen extern :ref:`PFSYSCOMOPEN <group___sys_com_itf_1ga426504ebb5091afe31dc6fa72ec18cc0>` pfSysComOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga16212a5ee3da20f9e24091f1adc8c7ee:
+
+#define GET_SysComOpen s_pfCMGetAPI2( "SysComOpen", (RTS_VOID_FCTPTR *)&pfSysComOpen, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga1d3a24dc8b6caadbf557be4e1e201e7c:
+
+#define CAL_SysComOpen pfSysComOpen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga88ff9cea031250c20fdb9822b169e991:
+
+#define CHK_SysComOpen (pfSysComOpen != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gae38e152d8b60f1ca116a8453831016b1:
+
+#define EXP_SysComOpen s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComOpen", (RTS_UINTPTR) :ref:`SysComOpen <group___sys_com_itf_1gacf40acf2958ee6cb83c02cf0cfa75716>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gafa67fa4bc070c2439617869c01ea6667:
+
+#define USE_SysComOpen2 :ref:`PFSYSCOMOPEN2 <group___sys_com_itf_1ga18a419ea79afebfe8d0cef7ef7ba58b2>` pfSysComOpen2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga8a634c33979707822988018aecc33089:
+
+#define EXT_SysComOpen2 extern :ref:`PFSYSCOMOPEN2 <group___sys_com_itf_1ga18a419ea79afebfe8d0cef7ef7ba58b2>` pfSysComOpen2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga3c52f52ce3ed02ec07e68eb1cf8fed9d:
+
+#define GET_SysComOpen2 s_pfCMGetAPI2( "SysComOpen2", (RTS_VOID_FCTPTR *)&pfSysComOpen2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gac6c2067994cb755d4d3c52cbff321dc2:
+
+#define CAL_SysComOpen2 pfSysComOpen2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga0918df79ccb8979ebb3963ae62f23d30:
+
+#define CHK_SysComOpen2 (pfSysComOpen2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaa8191388b3e1760fb13d2201c49d5e55:
+
+#define EXP_SysComOpen2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComOpen2", (RTS_UINTPTR) :ref:`SysComOpen2 <group___sys_com_itf_1gaa93601c1aa1c5c8d059f5c8b56bf9979>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga7a5f07e4be979e343f88cb6787685cfc:
+
+#define USE_SysComSetSettings :ref:`PFSYSCOMSETSETTINGS <group___sys_com_itf_1gadbce4d0cc4f9edc9d2615b8f9c5ce291>` pfSysComSetSettings;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga66c23741ca084b196bd2717a51bd8ca6:
+
+#define EXT_SysComSetSettings extern :ref:`PFSYSCOMSETSETTINGS <group___sys_com_itf_1gadbce4d0cc4f9edc9d2615b8f9c5ce291>` pfSysComSetSettings;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga6c407c4fdcfa0763911efa041030ee60:
+
+#define GET_SysComSetSettings s_pfCMGetAPI2( "SysComSetSettings", (RTS_VOID_FCTPTR *)&pfSysComSetSettings, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaed3bfac88d4a6800716764ad044ed09a:
+
+#define CAL_SysComSetSettings pfSysComSetSettings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gab71397b99e687305f4fc073e59c5415b:
+
+#define CHK_SysComSetSettings (pfSysComSetSettings != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gad3121f9ef69840e7202eaa04abbbcc08:
+
+#define EXP_SysComSetSettings s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComSetSettings", (RTS_UINTPTR) :ref:`SysComSetSettings <group___sys_com_itf_1gaa2ec4b3b0e9997b8bff7868322633507>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga9632f0768e35d55e0f665aeeb59e7f11:
+
+#define USE_SysComGetSettings :ref:`PFSYSCOMGETSETTINGS <group___sys_com_itf_1ga5020e363cee59f2d2d1a2ac1bbb67f1e>` pfSysComGetSettings;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaf6af477ac2a501c83e76992135ecac6e:
+
+#define EXT_SysComGetSettings extern :ref:`PFSYSCOMGETSETTINGS <group___sys_com_itf_1ga5020e363cee59f2d2d1a2ac1bbb67f1e>` pfSysComGetSettings;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga876778042a2df3296d1ae6d3424fe2a3:
+
+#define GET_SysComGetSettings s_pfCMGetAPI2( "SysComGetSettings", (RTS_VOID_FCTPTR *)&pfSysComGetSettings, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gab807da62cb73bd4fe518c8e45e5df845:
+
+#define CAL_SysComGetSettings pfSysComGetSettings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga4b0fda172daa6b9fe6e46611683f0c80:
+
+#define CHK_SysComGetSettings (pfSysComGetSettings != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaee1cead52a14e6157ad123b78fd4fa67:
+
+#define EXP_SysComGetSettings s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComGetSettings", (RTS_UINTPTR) :ref:`SysComGetSettings <group___sys_com_itf_1gaf9ae02a6050322f89f029a419d63f83f>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga8cf03c3246b2b191817c2a640e6eec42:
+
+#define USE_SysComClose :ref:`PFSYSCOMCLOSE <group___sys_com_itf_1ga7f2b17dbdc92dbca21141b66f110145b>` pfSysComClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga13593144694f74ede19536b3341af135:
+
+#define EXT_SysComClose extern :ref:`PFSYSCOMCLOSE <group___sys_com_itf_1ga7f2b17dbdc92dbca21141b66f110145b>` pfSysComClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaeb337796860fab107a2cb3c5b89321ba:
+
+#define GET_SysComClose s_pfCMGetAPI2( "SysComClose", (RTS_VOID_FCTPTR *)&pfSysComClose, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaaef678f070c299a3abb5e5acbdd9c7f1:
+
+#define CAL_SysComClose pfSysComClose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga75017509e01fe49e527d9436365f40d7:
+
+#define CHK_SysComClose (pfSysComClose != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gabf8d0322a5e2e274f2b01b529749cf85:
+
+#define EXP_SysComClose s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComClose", (RTS_UINTPTR) :ref:`SysComClose <group___sys_com_itf_1gae03e5ece86996b91333ca76ed0d7a634>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gacec5145079cf8a8bd9022f7e7008db84:
+
+#define USE_SysComRead :ref:`PFSYSCOMREAD <group___sys_com_itf_1ga28c3c1e34a5aaea949a54a17d71099ad>` pfSysComRead;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga25272c8a48711bd190458a3401ea3e24:
+
+#define EXT_SysComRead extern :ref:`PFSYSCOMREAD <group___sys_com_itf_1ga28c3c1e34a5aaea949a54a17d71099ad>` pfSysComRead;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gac4d4a2e80a7c1b9d00ad8f17a36e865c:
+
+#define GET_SysComRead s_pfCMGetAPI2( "SysComRead", (RTS_VOID_FCTPTR *)&pfSysComRead, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga1f7de92f3fb071e428f2cc2cc518425b:
+
+#define CAL_SysComRead pfSysComRead
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gad36cdac96e8b759a595a1d4b2ae21f9e:
+
+#define CHK_SysComRead (pfSysComRead != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga0ed7a38b991fbdfccf3af5f62b48dad9:
+
+#define EXP_SysComRead s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComRead", (RTS_UINTPTR) :ref:`SysComRead <group___sys_com_itf_1gaa28663547298bb38140095bda09e653f>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gacbf4d9eb95ef25410d2cb61d66e818cb:
+
+#define USE_SysComWrite :ref:`PFSYSCOMWRITE <group___sys_com_itf_1gaa2af5d8e8da3bda2124dc196200181c1>` pfSysComWrite;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga583c4e1059cfa966749be0c4688920c8:
+
+#define EXT_SysComWrite extern :ref:`PFSYSCOMWRITE <group___sys_com_itf_1gaa2af5d8e8da3bda2124dc196200181c1>` pfSysComWrite;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga953c926227b4bc6877b93331e2a2ff81:
+
+#define GET_SysComWrite s_pfCMGetAPI2( "SysComWrite", (RTS_VOID_FCTPTR *)&pfSysComWrite, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga8b5892fe8f88335e1cb5b43bf8ecc0f4:
+
+#define CAL_SysComWrite pfSysComWrite
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga2ce83943a3e1fabeea090ff7e83a90d8:
+
+#define CHK_SysComWrite (pfSysComWrite != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga8482048ae79033830bf1c91ca5310df4:
+
+#define EXP_SysComWrite s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComWrite", (RTS_UINTPTR) :ref:`SysComWrite <group___sys_com_itf_1ga6df7263b8cdb70b1ce1d944dbe167d18>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaf80867aaa28567eba6ae50516ea32632:
+
+#define USE_SysComPurge :ref:`PFSYSCOMPURGE <group___sys_com_itf_1ga1a4e72ddf94286a0f4b11f7377858124>` pfSysComPurge;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga208ac479d982ea7c9a94270c622ffc8e:
+
+#define EXT_SysComPurge extern :ref:`PFSYSCOMPURGE <group___sys_com_itf_1ga1a4e72ddf94286a0f4b11f7377858124>` pfSysComPurge;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga85bb7286071a92bcd778859377b74933:
+
+#define GET_SysComPurge s_pfCMGetAPI2( "SysComPurge", (RTS_VOID_FCTPTR *)&pfSysComPurge, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gad4e7776cb31c81f16ea3cdc22ab1ea9b:
+
+#define CAL_SysComPurge pfSysComPurge
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga4fb85470b602d26760edcef024c9b854:
+
+#define CHK_SysComPurge (pfSysComPurge != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaf6a727d093d69dbec6a0f3e359e38af6:
+
+#define EXP_SysComPurge s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComPurge", (RTS_UINTPTR) :ref:`SysComPurge <group___sys_com_itf_1gaf299ca75a046c99de02e82a9afa1bacb>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga9303734875eb8bf4a9af7169c939de28:
+
+#define USE_SysComSetTimeout :ref:`PFSYSCOMSETTIMEOUT <group___sys_com_itf_1gac95818439e7c787636ac53a2c4ea6bc2>` pfSysComSetTimeout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga2b8609fd4807b677eda36dd89ee697c4:
+
+#define EXT_SysComSetTimeout extern :ref:`PFSYSCOMSETTIMEOUT <group___sys_com_itf_1gac95818439e7c787636ac53a2c4ea6bc2>` pfSysComSetTimeout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gafe0569c0789ed6e16f7474934145095a:
+
+#define GET_SysComSetTimeout s_pfCMGetAPI2( "SysComSetTimeout", (RTS_VOID_FCTPTR *)&pfSysComSetTimeout, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaa913c0a3e2061c72a848ad573b47811e:
+
+#define CAL_SysComSetTimeout pfSysComSetTimeout
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga02ccd35e9660412851c87a067a6d127c:
+
+#define CHK_SysComSetTimeout (pfSysComSetTimeout != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaae2c7e07ee698c58584f7dfc352d9a44:
+
+#define EXP_SysComSetTimeout s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysComSetTimeout", (RTS_UINTPTR) :ref:`SysComSetTimeout <group___sys_com_itf_1ga9fa7a0c0d1ea82160e247351e6883958>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gabfca817154b1019275366a1702820eef:
+
+#define ITF_SysCom
+^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaf6d44fd2e0ffb8d094d03e734870ed1e:
+
+#define EXTITF_SysCom
+^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___sys_com_itf_1ga3308d78035caed2aef663e0bd8c7afd6:
+
+typedef struct tagsyscomclose_struct  syscomclose_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Close a serial communication device.
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_com_itf_1gae74f2d41d4a7e21c05070994288ce613:
+
+typedef void( *  PFSYSCOMCLOSE_IEC) (syscomclose_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga7e26dd4ec2e7914f64f57e105442ca3c:
+
+typedef struct tagsyscomgetsettings_struct  syscomgetsettings_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the parameter of the interface specified by handle. Use SysComGetSettings2()! This function should only be used for backward compatibility!
+
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_com_itf_1ga6334aee485705bccfea74e8e5dad3430:
+
+typedef void( *  PFSYSCOMGETSETTINGS_IEC) (syscomgetsettings_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gae0fb149d6fe5786904b1a985d3eea046:
+
+typedef struct tagsyscomopen_struct  syscomopen_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Open a serial communication device.
+**Returns:**
+
+RESULT: Handle to the opened com port or RTS_INVALID_HANDLE if failed
+
+.. _group___sys_com_itf_1ga4caeb95ecc1e2ce7b9711885908f7b36:
+
+typedef void( *  PFSYSCOMOPEN_IEC) (syscomopen_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga68d1dc1ba9f40cd4a23fa307ff994fe1:
+
+typedef struct tagsyscomopen2_struct  syscomopen2_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Opens a serial communication device specified by settings
+**Returns:**
+
+RESULT: Handle to the opened com port or RTS_INVALID_HANDLE if failed
+
+.. _group___sys_com_itf_1ga9fcb0142b0f413120bc86940716648ec:
+
+typedef void( *  PFSYSCOMOPEN2_IEC) (syscomopen2_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gad21fe96acf909e0c0c4488f5af048986:
+
+typedef struct tagsyscompurge_struct  syscompurge_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Clear the fifo buffer of the serial interface
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_com_itf_1ga27e4fb19f805125a11439086f1844ecc:
+
+typedef void( *  PFSYSCOMPURGE_IEC) (syscompurge_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga5826d9f8571af91c22ffddc6fc615dc1:
+
+typedef struct tagsyscomread_struct  syscomread_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Reads the number of bytes from the receive buffer of the specified device.
+
+IMPLEMENTATION NOTE: If the timeout elapsed until the requested number of bytes are received, the function returns the number of bytes already received! This must be considered in the caller and the implementation!
+
+**Returns:**
+
+RESULT: Number of actual read bytes
+
+.. _group___sys_com_itf_1gaf93d07fffd0b9db04976dd60d9eeaa16:
+
+typedef void( *  PFSYSCOMREAD_IEC) (syscomread_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga9d9a1056c695224dca3c30d419382463:
+
+typedef struct tagsyscomsetsettings_struct  syscomsetsettings_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Set the parameter of the interface specified by handle. Use SysComSetSettings2()! This function should only be used for backward compatibility!
+
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_com_itf_1ga1b6d4b86de0f522f4e0746bd07687c00:
+
+typedef void( *  PFSYSCOMSETSETTINGS_IEC) (syscomsetsettings_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga4cdb08bbc06f84e0baf0ef3208cb9500:
+
+typedef struct tagsyscomsettimeout_struct  syscomsettimeout_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Set the timeout of the specified serial interface (hardware timeout). The Timeout is the time between two received or sent characters until the read or write operation will return. Typically this value should be 0 (returns immediately)
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_com_itf_1ga95bc4b80e6316123f768168e0ab81626:
+
+typedef void( *  PFSYSCOMSETTIMEOUT_IEC) (syscomsettimeout_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gae655e4f66c8b7201920833dc6e02c93d:
+
+typedef struct tagsyscomwrite_struct  syscomwrite_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Writes the number of bytes to the send buffer of the specified device.
+
+IMPLEMENTATION NOTE: If the timeout elapsed until the requested number of bytes are sent, the function returns the number of bytes already sent! This must be considered in the caller and the implementation!
+
+**Returns:**
+
+RESULT: Number of actual written bytes
+
+.. _group___sys_com_itf_1gac7ae19f0674150f0214d2d5e521673b6:
+
+typedef void( *  PFSYSCOMWRITE_IEC) (syscomwrite_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gad158807f1203b8b521f43e1cf3fbdca1:
+
+typedef SysComSettings COMSettings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION END
+
+.. _group___sys_com_itf_1ga254991c25ec38bb097ff0a4bf324e405:
+
+typedef SysComSettingsEx COMSettingsEx
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga20e1cf97258c44fc0387800311370248:
+
+typedef SysComSettings COM_Settings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga05316c5ff76d28a2d15df861e7d98a23:
+
+typedef SysComSettingsEx COM_SettingsEx
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga426504ebb5091afe31dc6fa72ec18cc0:
+
+typedef RTS_HANDLE( *  PFSYSCOMOPEN) (short sPort, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga18a419ea79afebfe8d0cef7ef7ba58b2:
+
+typedef RTS_HANDLE( *  PFSYSCOMOPEN2) (SysComSettings *pSettings, SysComSettingsEx *pSettingsEx, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gadbce4d0cc4f9edc9d2615b8f9c5ce291:
+
+typedef RTS_RESULT( *  PFSYSCOMSETSETTINGS) (RTS_HANDLE hCom, SysComSettings *pSettings, SysComSettingsEx *pSettingsEx)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga5020e363cee59f2d2d1a2ac1bbb67f1e:
+
+typedef RTS_RESULT( *  PFSYSCOMGETSETTINGS) (RTS_HANDLE hCom, SysComSettings *pSettings, SysComSettingsEx *pSettingsEx)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga7f2b17dbdc92dbca21141b66f110145b:
+
+typedef RTS_RESULT( *  PFSYSCOMCLOSE) (RTS_HANDLE hCom)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga28c3c1e34a5aaea949a54a17d71099ad:
+
+typedef RTS_UI32( *  PFSYSCOMREAD) (RTS_HANDLE hCom, unsigned char *pbyBuffer, RTS_UI32 uiSize, RTS_UI32 ulTimeout, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gaa2af5d8e8da3bda2124dc196200181c1:
+
+typedef RTS_UI32( *  PFSYSCOMWRITE) (RTS_HANDLE hCom, unsigned char *pbyBuffer, RTS_UI32 uiSize, RTS_UI32 ulTimeout, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga1a4e72ddf94286a0f4b11f7377858124:
+
+typedef RTS_RESULT( *  PFSYSCOMPURGE) (RTS_HANDLE hCom)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gac95818439e7c787636ac53a2c4ea6bc2:
+
+typedef RTS_RESULT( *  PFSYSCOMSETTIMEOUT) (RTS_HANDLE hCom, RTS_UI32 ulTimeout)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga0b8fbec3154b167f3c6867a15ab44f88:
+
+typedef ISysCom_C ISysCom
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___sys_com_itf_1ga0df7b41fde082ecb1466b597d796de1d:
+
+void syscomclose (syscomclose_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gae11e26a5385ee5ec33a28629a61d8dd7:
+
+void syscomgetsettings (syscomgetsettings_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gac133791775821e103cef6e92ef824cb5:
+
+void syscomopen (syscomopen_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga8d94f973e3cb339573241cb102f3b81e:
+
+void syscomopen2 (syscomopen2_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gacf81be248974e6f79adf9130dbd975d2:
+
+void syscompurge (syscompurge_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gac8ecb737346f72e608f02c515e5a09e5:
+
+void syscomread (syscomread_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gad571f4b8ba2e624dfddf0c989b0c950d:
+
+void syscomsetsettings (syscomsetsettings_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga2de2eb1038c3d1740378dff5179ebec0:
+
+void syscomsettimeout (syscomsettimeout_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga53101f1df95b5fd10dce26ac552b188f:
+
+void syscomwrite (syscomwrite_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1ga5ed91811723c888f323839ae0fe24e96:
+
+RTS_RESULT SysComOSInit (INIT_STRUCT *pInit)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gab10557427484ee710e95f247b3367057:
+
+RTS_RESULT SysComOSHookFunction (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_com_itf_1gacf40acf2958ee6cb83c02cf0cfa75716:
+
+RTS_HANDLE SysComOpen (short sPort, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Open a serial communication device
+
+**Parameters**
+
++---------+---------+-------------------------------------------------+
+| [in]    | sPort   | Number of the Port to open: 1=COM1, 2=COM2, ... |
++---------+---------+-------------------------------------------------+
+| [out]   | pResult | Pointer to error code                           |
++---------+---------+-------------------------------------------------+
+
+**Returns:**
+
+Handle to the interface or RTS_INVALID_HANDLE if failed
+
+.. _group___sys_com_itf_1gaa93601c1aa1c5c8d059f5c8b56bf9979:
+
+RTS_HANDLE SysComOpen2 (SysComSettings *pSettings, SysComSettingsEx *pSettingsEx, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Opens a serial communication device specified with settings
+
+**Parameters**
+
++---------+-------------+--------------------------------------------------------------------------------------------------+
+| [in]    | pSettings   | Settings for the communication device. See category "Com port settings" for detailed information |
++---------+-------------+--------------------------------------------------------------------------------------------------+
+| [in]    | pSettingsEx | Optional extended settings for the serial device. Can be NULL.                                   |
++---------+-------------+--------------------------------------------------------------------------------------------------+
+| [out]   | pResult     | Pointer to error code                                                                            |
++---------+-------------+--------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the interface or RTS_INVALID_HANDLE if failed
+
+.. _group___sys_com_itf_1gaa2ec4b3b0e9997b8bff7868322633507:
+
+RTS_RESULT SysComSetSettings (RTS_HANDLE hCom, SysComSettings *pSettings, SysComSettingsEx *pSettingsEx)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Set the parameter of the interface specified by handle
+
+**Parameters**
+
++---------+-------------+------------------------------+
+| [in]    | hCom        | Handle to Com Port           |
++---------+-------------+------------------------------+
+| [in]    | pSettings   | Pointer to new settings      |
++---------+-------------+------------------------------+
+| [in]    | pSettingsEx | Pointer to extended settings |
++---------+-------------+------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_com_itf_1gaf9ae02a6050322f89f029a419d63f83f:
+
+RTS_RESULT SysComGetSettings (RTS_HANDLE hCom, SysComSettings *pSettings, SysComSettingsEx *pSettingsEx)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the parameter of the interface specified by handle
+
+**Parameters**
+
++---------+-------------+------------------------------+
+| [in]    | hCom        | Handle to Com Port           |
++---------+-------------+------------------------------+
+| [in]    | pSettings   | Pointer to new settings      |
++---------+-------------+------------------------------+
+| [in]    | pSettingsEx | Pointer to extended settings |
++---------+-------------+------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_com_itf_1gae03e5ece86996b91333ca76ed0d7a634:
+
+RTS_RESULT SysComClose (RTS_HANDLE hCom)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Close a serial communication device
+
+**Parameters**
+
++---------+------+--------------------+
+| [in]    | hCom | Handle to com port |
++---------+------+--------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_com_itf_1gaa28663547298bb38140095bda09e653f:
+
+RTS_UI32 SysComRead (RTS_HANDLE hCom, unsigned char *pbyBuffer, RTS_UI32 uiSize, RTS_UI32 ulTimeout, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Reads a number bytes from the specified device to the receive buffer.
+
+IMPLEMENTATION NOTE: If the timeout elapsed until the requested number of bytes are received, the function returns with the bytes still received! This must be considered in the caller and the implementation!
+
+**Parameters**
+
++---------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hCom      | Handle to com port                                                                                                                                                                      |
++---------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pbyBuffer | Pointer to data buffer for received data                                                                                                                                                |
++---------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | uiSize    | Requested number of bytes to read. Must be less or equal the size of the receive buffer!                                                                                                |
++---------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulTimeout | Timeout to read data from the device. 0=Immediate return. If the timeout elapsed, the function returns with the still received data (could be less then the requested number of bytes!) |
++---------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pResult   | Pointer to error code, ERR_TIMEOUT if timeout elapsed                                                                                                                                   |
++---------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Number of actually read bytes
+
+.. _group___sys_com_itf_1ga6df7263b8cdb70b1ce1d944dbe167d18:
+
+RTS_UI32 SysComWrite (RTS_HANDLE hCom, unsigned char *pbyBuffer, RTS_UI32 uiSize, RTS_UI32 ulTimeout, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Writes a number bytes to the specified device from the sent buffer.
+
+IMPLEMENTATION NOTE: If the timeout elapsed until the requested number of bytes are sent, the function returns with the bytes still sent! This must be considered in the caller and the implementation!
+
+**Parameters**
+
++---------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hCom      | Handle to com port                                                                                                                                                                |
++---------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pbyBuffer | Pointer to data buffer for sent data                                                                                                                                              |
++---------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | uiSize    | Requested number of bytes to sent. Must be less or equal the size of the sent buffer!                                                                                             |
++---------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulTimeout | Timeout to sent data to the device. 0=Immediate return. If the timeout elapsed, the function returns with the still sent data (could be less then the requested number of bytes!) |
++---------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pResult   | Pointer to error code, ERR_TIMEOUT if timeout elapsed                                                                                                                             |
++---------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Number of actually written bytes
+
+.. _group___sys_com_itf_1gaf299ca75a046c99de02e82a9afa1bacb:
+
+RTS_RESULT SysComPurge (RTS_HANDLE hCom)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Clear the FIFO buffer of the serial interface
+
+**Parameters**
+
++---------+------+--------------------+
+| [in]    | hCom | Handle to com port |
++---------+------+--------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_com_itf_1ga9fa7a0c0d1ea82160e247351e6883958:
+
+RTS_RESULT SysComSetTimeout (RTS_HANDLE hCom, RTS_UI32 ulTimeout)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Set the timeout of the specified serial interface (hardware timeout). The Timeout is the time between two received or sent characters until the read or write operation will return. Typically this value should be 0 (returns immediately)
+
+**Parameters**
+
++---------+-----------+--------------------+
+| [in]    | hCom      | Handle to com port |
++---------+-----------+--------------------+
+| [in]    | ulTimeout | Timeout to set     |
++---------+-----------+--------------------+
+
+**Returns:**
+
+error code
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

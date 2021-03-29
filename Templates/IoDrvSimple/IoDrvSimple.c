@@ -47,9 +47,9 @@ DLL_DECL int CDECL ComponentEntry(INIT_STRUCT *pInitStruct)
 		pfExportFunctions	OUT Pointer to function that exports component functions
 		pfImportFunctions	OUT Pointer to function that imports functions from other components
 		pfGetVersion		OUT Pointer to function to get component version
-		pfRegisterAPI		IN	Pointer to component mangager function to register a api function
-		pfGetAPI			IN	Pointer to component mangager function to get a api function
-		pfCallHook			IN	Pointer to component mangager function to call a hook function
+		pfRegisterAPI		IN	Pointer to component manager function to register a API function
+		pfGetAPI			IN	Pointer to component manager function to get a API function
+		pfCallHook			IN	Pointer to component manager function to call a hook function
 	Return					ERR_OK if library could be initialized, else error code
 */
 {
@@ -145,16 +145,20 @@ static void *CDECL QueryInterface(IBase *pBase, ITFID iid, RTS_RESULT *pResult)
 	{
 		IoDrvSimple *pC = (IoDrvSimple *)pBase;
 		pC->IoDrv.pBase = pBase;
+
 		pC->IoDrv.IIoDrvCreate = IoDrvCreate;
 		pC->IoDrv.IIoDrvDelete = IoDrvDelete;
 		pC->IoDrv.IIoDrvGetInfo = IoDrvGetInfo;
+		pC->IoDrv.IIoDrvGetModuleDiagnosis = IoDrvGetModuleDiagnosis;
+		pC->IoDrv.IIoDrvIdentify = IoDrvIdentify;
+		pC->IoDrv.IIoDrvReadInputs = IoDrvReadInputs;
+		pC->IoDrv.IIoDrvScanModules = IoDrvScanModules;
+		pC->IoDrv.IIoDrvStartBusCycle = IoDrvStartBusCycle;
 		pC->IoDrv.IIoDrvUpdateConfiguration = IoDrvUpdateConfiguration;
 		pC->IoDrv.IIoDrvUpdateMapping = IoDrvUpdateMapping;
-		pC->IoDrv.IIoDrvReadInputs = IoDrvReadInputs;
+		pC->IoDrv.IIoDrvWatchdogTrigger = IoDrvWatchdogTrigger;
 		pC->IoDrv.IIoDrvWriteOutputs = IoDrvWriteOutputs;
-		pC->IoDrv.IIoDrvStartBusCycle = IoDrvStartBusCycle;
-		pC->IoDrv.IIoDrvScanModules = IoDrvScanModules;
-		pC->IoDrv.IIoDrvGetModuleDiagnosis = IoDrvGetModuleDiagnosis;
+
 		pC->pIoDrv = &pC->IoDrv;
 		pC->Base.iRefCount++;
 		RTS_SETRESULT(pResult, ERR_OK);
@@ -164,10 +168,12 @@ static void *CDECL QueryInterface(IBase *pBase, ITFID iid, RTS_RESULT *pResult)
 	{
 		IoDrvSimple *pC = (IoDrvSimple *)pBase;
 		pC->IoDrvParameter.pBase = pBase;
+        
 		pC->IoDrvParameter.IIoDrvReadParameter = IoDrvReadParameter;
 		pC->IoDrvParameter.IIoDrvWriteParameter = IoDrvWriteParameter;
-		pC->pIoDrvParameter = &pC->IoDrvParameter;
-		pC->Base.iRefCount++;
+		
+        pC->pIoDrvParameter = &pC->IoDrvParameter;		
+        pC->Base.iRefCount++;
 		RTS_SETRESULT(pResult, ERR_OK);
 		return &pC->IoDrvParameter;
 	}
@@ -266,13 +272,6 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_
 }
 
 /**
- * My External Function
- */
-void CDECL CDECL_EXT myexternalfunction(myexternalfunction_struct *p) {
-
-}
-
-/**
  * Implementation of the IoDrv Interface
  */
 /* Our Fake I/O Area */
@@ -305,8 +304,6 @@ STATICITF RTS_HANDLE CDECL IoDrvCreate(RTS_HANDLE hIIoDrv, CLASSID ClassId, int 
 	pInfo = &pIoDrvSimple->Info;
 #else
 	pIoDrvSimple = (IoDrvSimple *)hIIoDrv;
-	pIoDrvSimple->IoDrv.pBase = &pIoDrvSimple->Base;
-	pIoDrvSimple->IoDrvParameter.pBase = &pIoDrvSimple->Base;
 	pInfo = &pIoDrvSimple->Info;
 #endif
 

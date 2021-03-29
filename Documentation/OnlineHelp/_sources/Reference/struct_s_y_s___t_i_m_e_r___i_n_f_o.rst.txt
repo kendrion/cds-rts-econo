@@ -1,0 +1,165 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of struct.rst template
+
+.. _struct_s_y_s___t_i_m_e_r___i_n_f_o:
+
+===============================
+SYS_TIMER_INFO Struct Reference
+===============================
+
+| #include ":ref:`SysTimerItf.h <_sys_timer_itf_8h>`"
+
+Data Fields
+-----------
+
+- :ref:`PFTIMERCALLBACK <group___sys_timer_itf_1ga8e3005c645ca74ac5979873a429a1d4a>` :ref:`pTimerCallback <group___sys_timer_itf_1ga4fdd50a5addc2ba3daf3b9166ef8dea4>`
+- :ref:`PFTIMEREXCEPTIONHANDLER <group___sys_timer_itf_1gaa8a367a6a7299822ea22df5cac9589e8>` :ref:`pExceptionHandler <group___sys_timer_itf_1ga0476b124f86497cd8a66390ecb272751>`
+- RTS_HANDLE :ref:`hParam <group___sys_timer_itf_1ga78212ccf480516b5810f9dc902078a39>`
+- RTS_HANDLE :ref:`hSysTimer <group___sys_timer_itf_1ga3342eca9bc1d83bf610ad5c516a8a7b4>`
+- RTS_HANDLE :ref:`hTimerToReset <group___sys_timer_itf_1gaa5210aaf2be88e80ff69c382d1ee6603>`
+- :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` :ref:`tIntervalNs <group___sys_timer_itf_1ga8aebb7f999aff782871130625f98699b>`
+- :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` :ref:`tStartTime <group___sys_timer_itf_1gac29e8538d89584771e978678aae7d16e>`
+- :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` :ref:`tLastExecuteNs <group___sys_timer_itf_1ga964a4526f6b99dbad3f8fc9495958bf1>`
+- unsigned long :ref:`ulType <group___sys_timer_itf_1gac82d1e8bf7f2f9982a9274a715ffdb0c>`
+- unsigned long :ref:`ulPriority <group___sys_timer_itf_1ga0f31ae4a72b50d17b7b5bec974662768>`
+- :ref:`SYS_TIMER_CALL_CONTEXT <struct_s_y_s___t_i_m_e_r___c_a_l_l___c_o_n_t_e_x_t>` :ref:`tCallContext <group___sys_timer_itf_1ga94aee1297a402377dfd29e7f29a9d0bb>`
+- :ref:`SYS_TIMER_BP_CONTEXT <struct_s_y_s___t_i_m_e_r___b_p___c_o_n_t_e_x_t>` :ref:`tBPContext <group___sys_timer_itf_1ga55392f2564591dc6d3f6704b9c1b277a>`
+- int :ref:`bIECFunction <group___sys_timer_itf_1ga29cc6f77c2e2d28ce8f04de3051275bd>`
+- int :ref:`iState <group___sys_timer_itf_1ga1b276f5fac5cacb24ae25652cf6a618f>`
+- RTS_HANDLE :ref:`hEvent <group___sys_timer_itf_1gaf8a9c77c551a1fc6f1ae071d88d95bf5>`
+- unsigned long :ref:`ulIRQ <group___sys_timer_itf_1gae241e3062daf34955f59fe807de4b87c>`
+- :ref:`SEHContext <group___sys_except_itf___s_e_h_context_1ga1f27ab33af4d1aa88d9097c5d8215c22>` * :ref:`pSEHContextHead <group___sys_timer_itf_1ga5b29c399cb2f7beace42b9b59eaa23da>`
+
+Detailed Description
+--------------------
+
+Timer information structure that contains all information for the SysTimerOS implementation to handle one specific timer object.
+
+Field Documentation
+-------------------
+
+.. _group___sys_timer_itf_1ga4fdd50a5addc2ba3daf3b9166ef8dea4:
+
+PFTIMERCALLBACK SYS_TIMER_INFO::pTimerCallback
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga0476b124f86497cd8a66390ecb272751:
+
+PFTIMEREXCEPTIONHANDLER SYS_TIMER_INFO::pExceptionHandler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga78212ccf480516b5810f9dc902078a39:
+
+RTS_HANDLE SYS_TIMER_INFO::hParam
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Handle to a parameter, that must be transmitted as a parameter for the callback routine! Optional event to wake up the callback routine (task). This event is delivered in SysTimerCreateEvent.
+
+.. _group___sys_timer_itf_1ga3342eca9bc1d83bf610ad5c516a8a7b4:
+
+RTS_HANDLE SYS_TIMER_INFO::hSysTimer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Handle to the system timer object in the OS implementation
+
+.. _group___sys_timer_itf_1gaa5210aaf2be88e80ff69c382d1ee6603:
+
+RTS_HANDLE SYS_TIMER_INFO::hTimerToReset
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+SysTimer handle to the next timer that mast be activated at the return code of the actual timer callback
+
+.. _group___sys_timer_itf_1ga8aebb7f999aff782871130625f98699b:
+
+RTS_SYSTIME SYS_TIMER_INFO::tIntervalNs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Interval of the timer in nanoseconds
+
+.. _group___sys_timer_itf_1gac29e8538d89584771e978678aae7d16e:
+
+RTS_SYSTIME SYS_TIMER_INFO::tStartTime
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Start time of the timer event, when the callback is called
+
+.. _group___sys_timer_itf_1ga964a4526f6b99dbad3f8fc9495958bf1:
+
+RTS_SYSTIME SYS_TIMER_INFO::tLastExecuteNs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Last execution time of the timer
+
+.. _group___sys_timer_itf_1gac82d1e8bf7f2f9982a9274a715ffdb0c:
+
+unsigned long SYS_TIMER_INFO::ulType
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Timer type. See corresponding category.
+
+.. _group___sys_timer_itf_1ga0f31ae4a72b50d17b7b5bec974662768:
+
+unsigned long SYS_TIMER_INFO::ulPriority
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Priority of the timer object. Typically between [0..SYSTIMER_NUM_OF_TIMER_PRIOS - 1]: 0=highest priority, 255=lowest priority
+
+.. _group___sys_timer_itf_1ga94aee1297a402377dfd29e7f29a9d0bb:
+
+SYS_TIMER_CALL_CONTEXT SYS_TIMER_INFO::tCallContext
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Actual register context of the calling callback. Can be used to make a context switch.
+
+.. _group___sys_timer_itf_1ga55392f2564591dc6d3f6704b9c1b277a:
+
+SYS_TIMER_BP_CONTEXT SYS_TIMER_INFO::tBPContext
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Actual register context of the actual breakpoint position
+
+.. _group___sys_timer_itf_1ga29cc6f77c2e2d28ce8f04de3051275bd:
+
+int SYS_TIMER_INFO::bIECFunction
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Flag to mark, if callback function is an IEC function
+
+.. _group___sys_timer_itf_1ga1b276f5fac5cacb24ae25652cf6a618f:
+
+int SYS_TIMER_INFO::iState
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Actual state of the timer object
+
+.. _group___sys_timer_itf_1gaf8a9c77c551a1fc6f1ae071d88d95bf5:
+
+RTS_HANDLE SYS_TIMER_INFO::hEvent
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gae241e3062daf34955f59fe807de4b87c:
+
+unsigned long SYS_TIMER_INFO::ulIRQ
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Interrupt number of the corresponding timer object
+
+.. _group___sys_timer_itf_1ga5b29c399cb2f7beace42b9b59eaa23da:
+
+SEHContext* SYS_TIMER_INFO::pSEHContextHead
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Points to the head of the registered exception frames
+
+The documentation for this struct was generated from the following file:
+------------------------------------------------------------------------
+
+SysTimerItf.h
+
+.. last line of struct.rst template
+.. last line of composition.rst template
+
+

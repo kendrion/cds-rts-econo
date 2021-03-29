@@ -16,9 +16,9 @@
 
 
 /* NOTE: REPLACE 0x03040000 BY YOUR VERSION*/
-#define CMP_VERSION         UINT32_C(0x03050E00)
-#define CMP_VERSION_STRING "3.5.14.0"
-#define CMP_VERSION_RC      3,5,14,0
+#define CMP_VERSION         UINT32_C(0x03051000)
+#define CMP_VERSION_STRING "3.5.16.0"
+#define CMP_VERSION_RC      3,5,16,0
 
 /* NOTE: REPLACE 0xABCD BY YOUR VENDORID */
 #define CMP_VENDORID       0xABCD
@@ -41,6 +41,10 @@
 
 
 
+
+/**
+ * \file CmpLEDMgrItf.h
+ */
 #include "CmpLEDMgrItf.h"
 
 

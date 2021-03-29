@@ -1,0 +1,1269 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __sys_graphic_itf_8h:
+
+==============================
+SysGraphicItf.h File Reference
+==============================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`SysGraphicBase.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`SYS_TEXTMETRICS <struct_s_y_s___t_e_x_t_m_e_t_r_i_c_s>`
+
+- struct :ref:`_GradientData <struct___gradient_data>`
+
+- struct :ref:`ISysGraphic_C <struct_i_sys_graphic___c>`
+
+Macros
+------
+
+- #define :ref:`TF_LEFT <group___sys_graphic_itf___t_f_1ga3e3a2fb266a16d595fb12623e8de98ea>` 0x00000000
+
+- #define :ref:`TF_HCENTER <group___sys_graphic_itf___t_f_1ga6a9ed6cdcb345149db501211448172a2>` 0x00000001
+
+- #define :ref:`TF_RIGHT <group___sys_graphic_itf___t_f_1gaf5ae9a7c6ee3275c6ed8bb5925f7cd94>` 0x00000002
+
+- #define :ref:`TF_TOP <group___sys_graphic_itf___t_f_1gabb7009396a8ea0f3550b9048897b850a>` 0x00000000
+
+- #define :ref:`TF_VCENTER <group___sys_graphic_itf___t_f_1gad12a33427283c79c9790d8e866df339c>` 0x00000004
+
+- #define :ref:`TF_BOTTOM <group___sys_graphic_itf___t_f_1ga96205af2bab3317e79c79f8d96987e5c>` 0x00000008
+
+- #define :ref:`TF_AUTO_SHRINK_TEXT <group___sys_graphic_itf___t_f_1ga29c9f6979c27a57b30d1ffdba16bacf0>` 0x00000010
+
+- #define :ref:`TF_CALCULATE_RESULTING_POSITION <group___sys_graphic_itf___t_f_1gaf60bbc596e3611ec4311810752f53716>` 0x00000020
+
+- #define :ref:`TF_DRAW_RELATIVE <group___sys_graphic_itf___t_f_1gad16c8cb3b8ee36419b0fc7ad8c20c964>` 0x00000040
+
+- #define :ref:`TF_ROTATE <group___sys_graphic_itf___t_f_1ga41aaa0c01532a8456e37fa4f94247c71>` 0x00000080		/* The orientation of the text rectangle should be used for rotating the text */
+
+- #define :ref:`TF_LINEBREAK <group___sys_graphic_itf___t_f_1gaab2ad2ce9bc5364873ca45a306ef135a>` 0x00000100
+
+- #define :ref:`TF_ELLIPSIS <group___sys_graphic_itf___t_f_1ga0f164f2a3dbd789b72113601c32de084>` 0x00000200
+
+- #define :ref:`TF_SAVE_PREVIOUS_POSITION <group___sys_graphic_itf___t_f_1ga63466f39d956df0b50f41a15a7da5dc9>` 0x00000400		/* See comment of VISU_DTF_SAVE_PREVIOUS_POSITION in library VisuElemBase. */
+
+- #define :ref:`TF_USE_PREVIOUS_POSITION <group___sys_graphic_itf___t_f_1ga88acc56724c8c66144344da7681022a4>` 0x00000800		/* See comment of VISU_DTF_USE_PREVIOUS_POSITION  in library VisuElemBase. */
+
+- #define :ref:`TF_IGNORE_VERTICAL_ALIGNMENT <group___sys_graphic_itf___t_f_1gafb92c448864969e06169a5d69e5bfc15>` 0x00001000
+
+- #define :ref:`TF_DONT_MODIFY_TEXT_RECT <group___sys_graphic_itf___t_f_1gace67fcbbbc0861c3a517b91b2e13a45c>` 0x00002000
+
+- #define :ref:`TF_BGELEM <group___sys_graphic_itf___t_f_1ga0df8d3d8270843d9314bf4051801d0f7>` 0x80000000
+
+- #define :ref:`TF_WSTRING <group___sys_graphic_itf___t_f_1ga3ad638931c5a8fad1e1489d399e0407f>` 0x40000000
+
+- #define :ref:`TF_MEASURE_ALL <group___sys_graphic_itf___t_f_1ga501a9077ad03ccf241036fb860c3cc79>` 0x00002000		/* Can be used for SysGraphicGetTextExtent: Whole text will be measured and not stopped at first line-break. */
+
+- #define :ref:`TF_ANTIALIASING_INACTIVE <group___sys_graphic_itf___t_f_1gad12e3cf809573590d1c79d107c80a016>` 0x00004000		/* A special flag, used to deactivate the anti-aliasing feature temporarily */
+
+- #define :ref:`FF_ITALIC <group___sys_graphic_itf___fontstyle_1ga06da42847ee4f9d814f6c0e4905628ad>` 0x0001
+
+- #define :ref:`FF_BOLD <group___sys_graphic_itf___fontstyle_1ga35eec2e2cdfe27264199ba35acebfe9c>` 0x0002
+
+- #define :ref:`FF_UNDERLINE <group___sys_graphic_itf___fontstyle_1ga1e6ae6dbf4c0784120af77b0dd6b3ce3>` 0x0004
+
+- #define :ref:`FF_STRIKEOUT <group___sys_graphic_itf___fontstyle_1ga42ee5d6860ca60588e97bfdaf3a7abdd>` 0x0008
+
+- #define :ref:`FF_NO_LANGUAGE_DEPENDENCY <group___sys_graphic_itf___fontstyle_1ga250cb73416cd83ea58c8e2d9cb3a99d2>` 0x0100
+
+- #define :ref:`BMPF_ISOTROPIC <group___sys_graphic_itf___bitmapstyle_1ga9811ececbee0eadab1ed3af2cb125457>` 0x00000001
+
+- #define :ref:`BMPF_ANISOTROPIC <group___sys_graphic_itf___bitmapstyle_1gaad27ff2ba3f9a9ea970da44a6fd4146c>` 0x00000002
+
+- #define :ref:`BMPF_FIXED <group___sys_graphic_itf___bitmapstyle_1ga401b057b6d34ce8ea8c8da1682cbafb4>` 0x00000004
+
+- #define :ref:`BMPF_TRANSPARENT <group___sys_graphic_itf___bitmapstyle_1ga7f8f67b1c9c4f91a1171d75a4b423638>` 0x00000008
+
+- #define :ref:`BMPF_LEFT <group___sys_graphic_itf___bitmapstyle_1ga59a2333c086840e9a1a60b459a620a5f>` 0x00000040
+
+- #define :ref:`BMPF_HCENTER <group___sys_graphic_itf___bitmapstyle_1gabdca22992186752df045d68ac901afe5>` 0x00000080
+
+- #define :ref:`BMPF_RIGHT <group___sys_graphic_itf___bitmapstyle_1ga82099e9e584821f88b66468439920ca3>` 0x00000100
+
+- #define :ref:`BMPF_TOP <group___sys_graphic_itf___bitmapstyle_1ga2b5936ee1bbfa23f6a3089d73c8e6ceb>` 0x00000200
+
+- #define :ref:`BMPF_VCENTER <group___sys_graphic_itf___bitmapstyle_1ga29758b7030eb7689e271fe023b112761>` 0x00000400
+
+- #define :ref:`BMPF_BOTTOM <group___sys_graphic_itf___bitmapstyle_1gad248186a1444a98a4cd7f908f73f379f>` 0x00000800
+
+- #define :ref:`BMPF_INVALIDATE_CACHE <group___sys_graphic_itf___bitmapstyle_1ga9f5d8c0084b477ba8858324386d21032>` 0x00001000
+
+- #define :ref:`GRADIENT_LINEAR <group___sys_graphic_itf___gradient_type_1ga1047382bec330c2c49ee0c9228033d69>` 0
+
+- #define :ref:`GRADIENT_RADIAL <group___sys_graphic_itf___gradient_type_1ga29150199735b80d51facb2ff38467850>` 1
+
+- #define :ref:`GRADIENT_AXIAL <group___sys_graphic_itf___gradient_type_1ga0515a6116b3ce7fb122d8a22f59ec70a>` 2
+
+- #define :ref:`PF_SOLID <group___sys_graphic_itf___penstyle_1ga0989455c5727f12df30d12d6e5de419e>` 0 			/* pen is solid */
+
+- #define :ref:`PF_DASH <group___sys_graphic_itf___penstyle_1ga6d02d745c5febc1b06a77e60824fe829>` 1			/* pen is dashed */
+
+- #define :ref:`PF_DOT <group___sys_graphic_itf___penstyle_1ga697bd01666fdf1205418f02f5c392103>` 2			/* pen is dotted */
+
+- #define :ref:`PF_DASHDOT <group___sys_graphic_itf___penstyle_1gaabf75b4565a8e76e76a5c15829ea79ee>` 3			/* pen has alternating dashes and dots. */
+
+- #define :ref:`PF_DASHDOTDOT <group___sys_graphic_itf___penstyle_1ga4b873546670127543151814ce77da1bd>` 4			/* pen has alternating dashes and double dots. */
+
+- #define :ref:`PF_NULL <group___sys_graphic_itf___penstyle_1gaf4c1a839e03b429358dff219d40dad11>` 5			/* pen is invisible */
+
+- #define :ref:`CAPSTYLE_FLAT <group___sys_graphic_itf___pen_line_cap_style_1gad25e6261cb89b922cb626f07e65510f1>` 0x0000	/* default-value: flat cap, like no setting */
+
+- #define :ref:`CAPSTYLE_SQUARE <group___sys_graphic_itf___pen_line_cap_style_1ga4f6fae817cce227ab726a86d364348af>` 0x0001  /* square cap, is added to the end of the line */
+
+- #define :ref:`CAPSTYLE_ROUND <group___sys_graphic_itf___pen_line_cap_style_1ga1e59a05106d7c9d4f73576f7b327dee4>` 0x0002  /* round cap */
+
+- #define :ref:`LINEJOIN_MITER <group___sys_graphic_itf___pen_line_join_style_1ga64624002a6037c605b56e6cd4e2f2063>` 0x0000	/* default-value: sharp line join */
+
+- #define :ref:`LINEJOIN_BEVEL <group___sys_graphic_itf___pen_line_join_style_1gab1d0c3d06c2da598f6d28ed8155e8ae1>` 0x0001  /* flattened line join */
+
+- #define :ref:`LINEJOIN_ROUND <group___sys_graphic_itf___pen_line_join_style_1gad1a9aba86d08acfb40ec97f03a72e775>` 0x0002  /* round line join */
+
+- #define :ref:`LINEJOIN_MITER_NEW <group___sys_graphic_itf___pen_line_join_style_1ga384828e997731dc54c92dc265ef60acd>` 0x0003  /* new default-value */
+
+- #define :ref:`BF_SOLID <group___sys_graphic_itf___brushstyle_1ga8f2fdbd7eace8c14635924ee10103587>` 0x0000			/* a solid brush */
+
+- #define :ref:`BF_NULL <group___sys_graphic_itf___brushstyle_1ga39ab71d6ad6fa8de6f06d9dcf3bfcfd9>` 0x0001			/* a hollow brush */
+
+- #define :ref:`SYSGRAPHIC_FEATURES_ALL <group___sys_graphic_itf___feature_flags_1gab6b1d946cc3b4fd38a1e98579403d963>` 0xffffffff
+
+- #define :ref:`SYSGRAPHIC_FEATURE_ANSISUPPORT <group___sys_graphic_itf___feature_flags_1ga98e5efd67a15bbd46ccc7cd655395ed2>` 0x00000001
+
+- #define :ref:`SYSGRAPHIC_FEATURE_EXACTLINE <group___sys_graphic_itf___feature_flags_1gadd59d19b7a1f0a0ef61e5dcedde504aa>` 0x00000002
+
+- #define :ref:`SYSGRAPHIC_FEATURE_TEXTROTATION <group___sys_graphic_itf___feature_flags_1ga7fa1b6c4bb83fdd3fd65f19147441766>` 0x00000004
+
+- #define :ref:`SYSGRAPHIC_ANTIALIASING_NONE <group___sys_graphic_itf___anti-aliasingmodes_1ga03b815f3c36c31aefaa7b2c145b01ff1>` 0x00000000
+
+- #define :ref:`SYSGRAPHIC_ANTIALIASING_LOWQUALITY <group___sys_graphic_itf___anti-aliasingmodes_1ga5ed5df83408a4475bb178161ed9e1852>` 0x00000001
+
+- #define :ref:`SYSGRAPHIC_ANTIALIASING_HIGHQUALITY <group___sys_graphic_itf___anti-aliasingmodes_1ga6c8dc2fd44c3c05f3abcfd07671f7d37>` 0x00000002
+
+- #define :ref:`SYSGRAPHIC_COMPOSITINGMODE_BLEND <group___sys_graphic_itf___anti-aliasingmodes_1ga5c97762e1c7750c8ac611d966e07b82e>` 0x00000000
+
+- #define :ref:`SYSGRAPHIC_COMPOSITINGMODE_COPY <group___sys_graphic_itf___anti-aliasingmodes_1gad39eed2df7b6579bb38fd5ea999ef6dd>` 0x00000001
+
+- #define :ref:`SYSGRAPHIC_KEY_REPLACEMENT_FONT_NAME <group___sys_graphic_itf_1gab6ae7a8ff91b31dd0e039c06556e143a>` "ReplacementFontName"
+
+- #define :ref:`SYSGRAPHIC_KEY_FONT <group___sys_graphic_itf___settings_1gae5760776240b4cdb002892678bcc60a8>` "Graphics.Font"
+
+- #define :ref:`SYSGRAPHIC_KEY_TRANSPARENCY_SAVE_MEMORY <group___sys_graphic_itf___settings_1ga65cb89c32033b196395e22b83767a140>` "TransparencySaveMemory"
+
+- #define :ref:`SYSGRAPHIC_VALUE_TRANSPARENCY_SAVE_MEMORY_DEFAULT <group___sys_graphic_itf___settings_1ga9e158627a801653041d1c4b057fd6025>` 0
+
+- #define :ref:`SYSGRAPHIC_WINCE_DONT_CHANGE_MEMORY_SETTINGS <group___sys_graphic_itf___settings_1gab4b468a6986e96eaae8d7f23b1574fa2>` "WinCE.DontChangeMemorySettings"
+
+- #define :ref:`SYSGRAPHIC_VALUE_WINCE_DONT_CHANGE_MEMORY_SETTINGS_DEFAULT <group___sys_graphic_itf___settings_1ga5f88363110ae8a3a54cab12f510fb1a3>` 0
+
+- #define :ref:`SYSGRAPHIC_WIN32_MAX_JPEG_BYTEARRAY_SIZE <group___sys_graphic_itf___settings_1ga9af605ca50e0d1f938912a304950ca59>` "Win32.MaxJpegByteArraySize"
+
+- #define :ref:`SYSGRAPHIC_WIN32_MAX_JPEG_BYTEARRAY_SIZE_DEFAULT <group___sys_graphic_itf___settings_1gaecf4b109c170ae66bc5c7027a7d4f626>` INT32_C(2359296)
+
+- #define :ref:`SYSGRAPHIC_WIN32_MAX_JPEG_BYTEARRAY_SIZE_DEFAULT_MODERN <group___sys_graphic_itf___settings_1ga02702d4bf496ccb74b8764ef8d409257>` INT32_C(9830400)
+
+- #define :ref:`SYSGRAPHIC_WIN32_PNG_LOADPALETTE_ASPALETTE <group___sys_graphic_itf___settings_1ga8464761acd0554c0b46a7699155d576c>` "Win32.LoadPNGImagesPalette"
+
+- #define :ref:`SYSGRAPHIC_WIN32_PNG_LOADPALETTE_ASPALETTE_DEFAULT <group___sys_graphic_itf___settings_1ga5e6960f775a9ce0c2dd6e017c86eb1d6>` 0
+
+- #define :ref:`SYSGRAPHIC_WINCE_OLD_DRAW_RECT_METHOD <group___sys_graphic_itf___settings_1ga64dd3e8b8ef1363255fef2f094dc98c7>` "WinCE.UseOldDrawRectMethod"
+
+- #define :ref:`SYSGRAPHIC_WINCE_OLD_DRAW_RECT_METHOD_DEFAULT <group___sys_graphic_itf___settings_1ga6077fdf0d21fa729c93053e7cea4d604>` 1
+
+- #define :ref:`SYSGRAPHIC_WINCE_OLD_DRAW_RECT_METHODCE5 <group___sys_graphic_itf___settings_1gadf57a24d40d7e7e119bfc179dd163e0b>` "WinCE.UseOldDrawRectMethodCE5"
+
+- #define :ref:`SYSGRAPHIC_WINCE_OLD_DRAW_RECT_METHODCE5_DEFAULT <group___sys_graphic_itf___settings_1ga7ec441ffb94e550d27ec413d5dec040d>` 0
+
+- #define :ref:`SYSGRAPHIC_WINCE_OLD_DRAW_RECT_METHODCE5_DEFAULTCE6 <group___sys_graphic_itf___settings_1ga14fdff3b6c718a97b2d3744a545cf9c7>` 1
+
+- #define :ref:`SYSGRAPHIC_WINGDIPLUS_USESVGPROXY <group___sys_graphic_itf___settings_1ga453eee8046f88ae5c18995e88ae59444>` "WinGDIPlus.UseSVGProxy"
+
+- #define :ref:`SYSGRAPHIC_WINGDIPLUS_USESVGPROXY_DEFAULT <group___sys_graphic_itf___settings_1gaa8f664511f83e8e5eaab76a416e32715>` 0
+
+- #define :ref:`USE_SysGraphicCreateCompatibleDeviceContext <group___sys_graphic_itf_1ga473e86664121c7303088769c7f288d90>` :ref:`PFSYSGRAPHICCREATECOMPATIBLEDEVICECONTEXT <group___sys_graphic_itf_1ga5513a01f2cc12d36ad2e332694720e3a>` pfSysGraphicCreateCompatibleDeviceContext;
+
+- #define :ref:`EXT_SysGraphicCreateCompatibleDeviceContext <group___sys_graphic_itf_1ga391053e1deb326cd3b43929b853c5b58>` extern :ref:`PFSYSGRAPHICCREATECOMPATIBLEDEVICECONTEXT <group___sys_graphic_itf_1ga5513a01f2cc12d36ad2e332694720e3a>` pfSysGraphicCreateCompatibleDeviceContext;
+
+- #define :ref:`GET_SysGraphicCreateCompatibleDeviceContext <group___sys_graphic_itf_1ga90cedda8721e6e683ee7a4db482a85a5>` s_pfCMGetAPI2( "SysGraphicCreateCompatibleDeviceContext", (RTS_VOID_FCTPTR *)&pfSysGraphicCreateCompatibleDeviceContext, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicCreateCompatibleDeviceContext <group___sys_graphic_itf_1ga09269d8b5edb008561e2d013ef361621>` pfSysGraphicCreateCompatibleDeviceContext
+
+- #define :ref:`CHK_SysGraphicCreateCompatibleDeviceContext <group___sys_graphic_itf_1ga50627a856697765535c27481c18b5e90>` (pfSysGraphicCreateCompatibleDeviceContext != NULL)
+
+- #define :ref:`EXP_SysGraphicCreateCompatibleDeviceContext <group___sys_graphic_itf_1ga1e25c7acf55394a20ceb76e445c6210d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicCreateCompatibleDeviceContext", (RTS_UINTPTR) :ref:`SysGraphicCreateCompatibleDeviceContext <group___sys_graphic_itf_1gad38bbc1e3d6bf72163ba911310b18b81>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicCreateCompatibleDeviceContextWithCustomSize <group___sys_graphic_itf_1gab7e40040063758ee4c6920a585031f96>` :ref:`PFSYSGRAPHICCREATECOMPATIBLEDEVICECONTEXTWITHCUSTOMSIZE <group___sys_graphic_itf_1ga61899ae6adfc0e9ada6997195d71b0b2>` pfSysGraphicCreateCompatibleDeviceContextWithCustomSize;
+
+- #define :ref:`EXT_SysGraphicCreateCompatibleDeviceContextWithCustomSize <group___sys_graphic_itf_1ga6be2d2a5ddd874cdb4ee02193d432b9c>` extern :ref:`PFSYSGRAPHICCREATECOMPATIBLEDEVICECONTEXTWITHCUSTOMSIZE <group___sys_graphic_itf_1ga61899ae6adfc0e9ada6997195d71b0b2>` pfSysGraphicCreateCompatibleDeviceContextWithCustomSize;
+
+- #define :ref:`GET_SysGraphicCreateCompatibleDeviceContextWithCustomSize <group___sys_graphic_itf_1gae4787a0687822edf2fa9deeb49e18519>` s_pfCMGetAPI2( "SysGraphicCreateCompatibleDeviceContextWithCustomSize", (RTS_VOID_FCTPTR *)&pfSysGraphicCreateCompatibleDeviceContextWithCustomSize, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicCreateCompatibleDeviceContextWithCustomSize <group___sys_graphic_itf_1ga04903a7386fab8099e4c6b92ac66c8ef>` pfSysGraphicCreateCompatibleDeviceContextWithCustomSize
+
+- #define :ref:`CHK_SysGraphicCreateCompatibleDeviceContextWithCustomSize <group___sys_graphic_itf_1gaff010cc661b42e14f3d620f82f6a6896>` (pfSysGraphicCreateCompatibleDeviceContextWithCustomSize != NULL)
+
+- #define :ref:`EXP_SysGraphicCreateCompatibleDeviceContextWithCustomSize <group___sys_graphic_itf_1gab8fced4cf0c22dcbad5f708eb0597f18>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicCreateCompatibleDeviceContextWithCustomSize", (RTS_UINTPTR) :ref:`SysGraphicCreateCompatibleDeviceContextWithCustomSize <group___sys_graphic_itf_1gaf6db81769847bd132d3317d8c3a87905>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicDeleteDeviceContext <group___sys_graphic_itf_1gabefc03a3959f0e047f3060a8cabbbacd>` :ref:`PFSYSGRAPHICDELETEDEVICECONTEXT <group___sys_graphic_itf_1ga75c544e420a672d37458e7f786f7f0ed>` pfSysGraphicDeleteDeviceContext;
+
+- #define :ref:`EXT_SysGraphicDeleteDeviceContext <group___sys_graphic_itf_1gaa9a04689f466f8d1f8ceb955391e4135>` extern :ref:`PFSYSGRAPHICDELETEDEVICECONTEXT <group___sys_graphic_itf_1ga75c544e420a672d37458e7f786f7f0ed>` pfSysGraphicDeleteDeviceContext;
+
+- #define :ref:`GET_SysGraphicDeleteDeviceContext <group___sys_graphic_itf_1gaf8cc11e03e5ad08cdf2a26d706178999>` s_pfCMGetAPI2( "SysGraphicDeleteDeviceContext", (RTS_VOID_FCTPTR *)&pfSysGraphicDeleteDeviceContext, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicDeleteDeviceContext <group___sys_graphic_itf_1ga0dbfa2d1ab5c1d651b4af3120001e1ca>` pfSysGraphicDeleteDeviceContext
+
+- #define :ref:`CHK_SysGraphicDeleteDeviceContext <group___sys_graphic_itf_1gad434772aac00f7c113e91334702283cf>` (pfSysGraphicDeleteDeviceContext != NULL)
+
+- #define :ref:`EXP_SysGraphicDeleteDeviceContext <group___sys_graphic_itf_1ga5ee0dac7c0b1dc433f9ad7969e8b9789>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicDeleteDeviceContext", (RTS_UINTPTR) :ref:`SysGraphicDeleteDeviceContext <group___sys_graphic_itf_1ga1f7d83efb9ca42b8a5372b642b92f493>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicGetDeviceContext <group___sys_graphic_itf_1ga48157045ecc4c74e1a525bfea27594fd>` :ref:`PFSYSGRAPHICGETDEVICECONTEXT <group___sys_graphic_itf_1ga2be2babf095286be5afe62425717b0ea>` pfSysGraphicGetDeviceContext;
+
+- #define :ref:`EXT_SysGraphicGetDeviceContext <group___sys_graphic_itf_1ga1a221b2e85eaa36e10a8b3b78776103e>` extern :ref:`PFSYSGRAPHICGETDEVICECONTEXT <group___sys_graphic_itf_1ga2be2babf095286be5afe62425717b0ea>` pfSysGraphicGetDeviceContext;
+
+- #define :ref:`GET_SysGraphicGetDeviceContext <group___sys_graphic_itf_1ga2c597f72305340e07d8d05e2d527b623>` s_pfCMGetAPI2( "SysGraphicGetDeviceContext", (RTS_VOID_FCTPTR *)&pfSysGraphicGetDeviceContext, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicGetDeviceContext <group___sys_graphic_itf_1ga7923b78c93c68ab5ea8fab2a5880eff4>` pfSysGraphicGetDeviceContext
+
+- #define :ref:`CHK_SysGraphicGetDeviceContext <group___sys_graphic_itf_1ga0e6108a5cd07127d62a4145043d93943>` (pfSysGraphicGetDeviceContext != NULL)
+
+- #define :ref:`EXP_SysGraphicGetDeviceContext <group___sys_graphic_itf_1ga9507ad4e3f6d1114684ccac4da6fa3c2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicGetDeviceContext", (RTS_UINTPTR) :ref:`SysGraphicGetDeviceContext <group___sys_graphic_itf_1ga88f720f73eef1959fb8f8a70b7290b3e>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicReleaseDeviceContext <group___sys_graphic_itf_1gac448edc989e8bf4ab6059ccc73468169>` :ref:`PFSYSGRAPHICRELEASEDEVICECONTEXT <group___sys_graphic_itf_1ga4bda115be9963d17d0b30d58478953c0>` pfSysGraphicReleaseDeviceContext;
+
+- #define :ref:`EXT_SysGraphicReleaseDeviceContext <group___sys_graphic_itf_1ga36289013adf22db675e05fc820b72bc8>` extern :ref:`PFSYSGRAPHICRELEASEDEVICECONTEXT <group___sys_graphic_itf_1ga4bda115be9963d17d0b30d58478953c0>` pfSysGraphicReleaseDeviceContext;
+
+- #define :ref:`GET_SysGraphicReleaseDeviceContext <group___sys_graphic_itf_1gabf91794d643d311602bc3e4da4f449bd>` s_pfCMGetAPI2( "SysGraphicReleaseDeviceContext", (RTS_VOID_FCTPTR *)&pfSysGraphicReleaseDeviceContext, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicReleaseDeviceContext <group___sys_graphic_itf_1ga670ca520e8c58f5fa9d9da332d8aa3e6>` pfSysGraphicReleaseDeviceContext
+
+- #define :ref:`CHK_SysGraphicReleaseDeviceContext <group___sys_graphic_itf_1ga215acd78f74f5cb42ae4ffaf8b81cef0>` (pfSysGraphicReleaseDeviceContext != NULL)
+
+- #define :ref:`EXP_SysGraphicReleaseDeviceContext <group___sys_graphic_itf_1ga68b16749c7a1add56c69c3c2f3d12ec9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicReleaseDeviceContext", (RTS_UINTPTR) :ref:`SysGraphicReleaseDeviceContext <group___sys_graphic_itf_1ga5f23a2178c76df5997219a0335860604>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicGetDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1ga58b86d0004a4ee406e3b7eaedf5cf625>` :ref:`PFSYSGRAPHICGETDEVICECONTEXTFORWINDOWDEVICECONTEXT <group___sys_graphic_itf_1gadad9cbf61eaad55e8fd45c5571b3eb46>` pfSysGraphicGetDeviceContextForWindowDeviceContext;
+
+- #define :ref:`EXT_SysGraphicGetDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1ga44f631d71830cd524d0d38a783404362>` extern :ref:`PFSYSGRAPHICGETDEVICECONTEXTFORWINDOWDEVICECONTEXT <group___sys_graphic_itf_1gadad9cbf61eaad55e8fd45c5571b3eb46>` pfSysGraphicGetDeviceContextForWindowDeviceContext;
+
+- #define :ref:`GET_SysGraphicGetDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1ga9bc82eb294fa622f714839224efb30df>` s_pfCMGetAPI2( "SysGraphicGetDeviceContextForWindowDeviceContext", (RTS_VOID_FCTPTR *)&pfSysGraphicGetDeviceContextForWindowDeviceContext, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicGetDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1gac1e375c2dba6ac919982c5ed82a955f5>` pfSysGraphicGetDeviceContextForWindowDeviceContext
+
+- #define :ref:`CHK_SysGraphicGetDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1ga9a0d717caad680a5a9ef4f0ef83339e6>` (pfSysGraphicGetDeviceContextForWindowDeviceContext != NULL)
+
+- #define :ref:`EXP_SysGraphicGetDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1gaaa513f2ac1fbad3c49a4c40a034af6bd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicGetDeviceContextForWindowDeviceContext", (RTS_UINTPTR) :ref:`SysGraphicGetDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1ga4a064b7c502a1f03e3c943a0e3973eb5>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicReleaseDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1gad968d2094dc8f4ff09880d78847d8664>` :ref:`PFSYSGRAPHICRELEASEDEVICECONTEXTFORWINDOWDEVICECONTEXT <group___sys_graphic_itf_1gac32490d7d09d490c3531324a7dbe6094>` pfSysGraphicReleaseDeviceContextForWindowDeviceContext;
+
+- #define :ref:`EXT_SysGraphicReleaseDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1gac30a610919f692ed95cbe21826dbe2cd>` extern :ref:`PFSYSGRAPHICRELEASEDEVICECONTEXTFORWINDOWDEVICECONTEXT <group___sys_graphic_itf_1gac32490d7d09d490c3531324a7dbe6094>` pfSysGraphicReleaseDeviceContextForWindowDeviceContext;
+
+- #define :ref:`GET_SysGraphicReleaseDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1ga411698f88438aead06f82b209218dfa7>` s_pfCMGetAPI2( "SysGraphicReleaseDeviceContextForWindowDeviceContext", (RTS_VOID_FCTPTR *)&pfSysGraphicReleaseDeviceContextForWindowDeviceContext, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicReleaseDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1ga773792049955d445d19d60af4b3a8805>` pfSysGraphicReleaseDeviceContextForWindowDeviceContext
+
+- #define :ref:`CHK_SysGraphicReleaseDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1gabba013dbc06328ef67849e498979b4ac>` (pfSysGraphicReleaseDeviceContextForWindowDeviceContext != NULL)
+
+- #define :ref:`EXP_SysGraphicReleaseDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1ga0e1370e35e2e1dede3ba19156b2acc38>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicReleaseDeviceContextForWindowDeviceContext", (RTS_UINTPTR) :ref:`SysGraphicReleaseDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1ga40fac78f1b984a54cd6ef762ea1bbe77>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicSetBackgroundColor <group___sys_graphic_itf_1gae5d99419739007746d51047653d4891e>` :ref:`PFSYSGRAPHICSETBACKGROUNDCOLOR <group___sys_graphic_itf_1ga1a136ccd71b1b6da8c39012e0719e8dc>` pfSysGraphicSetBackgroundColor;
+
+- #define :ref:`EXT_SysGraphicSetBackgroundColor <group___sys_graphic_itf_1ga9b36309d003b851a259b072908c32491>` extern :ref:`PFSYSGRAPHICSETBACKGROUNDCOLOR <group___sys_graphic_itf_1ga1a136ccd71b1b6da8c39012e0719e8dc>` pfSysGraphicSetBackgroundColor;
+
+- #define :ref:`GET_SysGraphicSetBackgroundColor <group___sys_graphic_itf_1ga5382787f853c9e98249545aaa15a9e68>` s_pfCMGetAPI2( "SysGraphicSetBackgroundColor", (RTS_VOID_FCTPTR *)&pfSysGraphicSetBackgroundColor, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicSetBackgroundColor <group___sys_graphic_itf_1ga7f1c1520442449dfe8519be5f1da41d8>` pfSysGraphicSetBackgroundColor
+
+- #define :ref:`CHK_SysGraphicSetBackgroundColor <group___sys_graphic_itf_1ga35aba1a0c800d8b43a35c0fcd5c63558>` (pfSysGraphicSetBackgroundColor != NULL)
+
+- #define :ref:`EXP_SysGraphicSetBackgroundColor <group___sys_graphic_itf_1gac80692d39c88e1b8598a25d6ec09c54e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicSetBackgroundColor", (RTS_UINTPTR) :ref:`SysGraphicSetBackgroundColor <group___sys_graphic_itf_1ga2ac4a36d1bb4dd53ac25dbf588c8f9db>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicClearRectangle <group___sys_graphic_itf_1ga3620eebe6b6272611445e9bd08bb0b21>` :ref:`PFSYSGRAPHICCLEARRECTANGLE <group___sys_graphic_itf_1ga0003ddea8382ff96bc91d7eca958bed4>` pfSysGraphicClearRectangle;
+
+- #define :ref:`EXT_SysGraphicClearRectangle <group___sys_graphic_itf_1ga1f6c383427780e67e9cebe947aa374ed>` extern :ref:`PFSYSGRAPHICCLEARRECTANGLE <group___sys_graphic_itf_1ga0003ddea8382ff96bc91d7eca958bed4>` pfSysGraphicClearRectangle;
+
+- #define :ref:`GET_SysGraphicClearRectangle <group___sys_graphic_itf_1ga07abbe20b27e1dcd9978a198838cf7b6>` s_pfCMGetAPI2( "SysGraphicClearRectangle", (RTS_VOID_FCTPTR *)&pfSysGraphicClearRectangle, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicClearRectangle <group___sys_graphic_itf_1gac3ecbc691ef07624d99b5adc64a355b9>` pfSysGraphicClearRectangle
+
+- #define :ref:`CHK_SysGraphicClearRectangle <group___sys_graphic_itf_1ga0e5be6817cd08bc961c8084c5f0d4b4c>` (pfSysGraphicClearRectangle != NULL)
+
+- #define :ref:`EXP_SysGraphicClearRectangle <group___sys_graphic_itf_1gad83d78ca0fa548d0eaab5ffc625ce6c0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicClearRectangle", (RTS_UINTPTR) :ref:`SysGraphicClearRectangle <group___sys_graphic_itf_1gac014b9b2c389929aee4b69472042fbf4>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicBitBlt <group___sys_graphic_itf_1ga260b6e0465d61da960db57116bea2efc>` :ref:`PFSYSGRAPHICBITBLT <group___sys_graphic_itf_1ga5fbe642604c7f7f03c5900646cf4e6dd>` pfSysGraphicBitBlt;
+
+- #define :ref:`EXT_SysGraphicBitBlt <group___sys_graphic_itf_1ga9cf982f607555eda5adab08ffd0c9438>` extern :ref:`PFSYSGRAPHICBITBLT <group___sys_graphic_itf_1ga5fbe642604c7f7f03c5900646cf4e6dd>` pfSysGraphicBitBlt;
+
+- #define :ref:`GET_SysGraphicBitBlt <group___sys_graphic_itf_1ga719f00e1ce389051d0e2096e36427fc9>` s_pfCMGetAPI2( "SysGraphicBitBlt", (RTS_VOID_FCTPTR *)&pfSysGraphicBitBlt, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicBitBlt <group___sys_graphic_itf_1gaed6f87e56252d1d7e17811789036dcd1>` pfSysGraphicBitBlt
+
+- #define :ref:`CHK_SysGraphicBitBlt <group___sys_graphic_itf_1ga8f6dae06d4445bf96d94c3d16f5e44cf>` (pfSysGraphicBitBlt != NULL)
+
+- #define :ref:`EXP_SysGraphicBitBlt <group___sys_graphic_itf_1gae200035351815ac10aedaefbfab9578e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicBitBlt", (RTS_UINTPTR) :ref:`SysGraphicBitBlt <group___sys_graphic_itf_1ga865883bf178906506d59abcf785ccfbc>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicStretchBlt <group___sys_graphic_itf_1ga4c26243321abc6572927c383357c81a6>` :ref:`PFSYSGRAPHICSTRETCHBLT <group___sys_graphic_itf_1gafd917f1df473af351940d4e57704e91e>` pfSysGraphicStretchBlt;
+
+- #define :ref:`EXT_SysGraphicStretchBlt <group___sys_graphic_itf_1gad15ef92ecab9a00b6ea7985c7c3486e0>` extern :ref:`PFSYSGRAPHICSTRETCHBLT <group___sys_graphic_itf_1gafd917f1df473af351940d4e57704e91e>` pfSysGraphicStretchBlt;
+
+- #define :ref:`GET_SysGraphicStretchBlt <group___sys_graphic_itf_1gaa0152ac1c4a3da1de895d878e4d1a99c>` s_pfCMGetAPI2( "SysGraphicStretchBlt", (RTS_VOID_FCTPTR *)&pfSysGraphicStretchBlt, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicStretchBlt <group___sys_graphic_itf_1ga7862ced83dbf3dd80897511c2eda0a41>` pfSysGraphicStretchBlt
+
+- #define :ref:`CHK_SysGraphicStretchBlt <group___sys_graphic_itf_1ga4dfd16782b686d0e5f7d0e5efb5b34f9>` (pfSysGraphicStretchBlt != NULL)
+
+- #define :ref:`EXP_SysGraphicStretchBlt <group___sys_graphic_itf_1ga544f96d4a4c11d3a6eb5668dd5196a6b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicStretchBlt", (RTS_UINTPTR) :ref:`SysGraphicStretchBlt <group___sys_graphic_itf_1ga7b0f3dc33f572f2a4736bebf5fc4ba1f>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicDrawRect <group___sys_graphic_itf_1ga5c6de5474c562e33bee99e9aa02f0a37>` :ref:`PFSYSGRAPHICDRAWRECT <group___sys_graphic_itf_1ga6c85afb509d029e0141493a1a46f1425>` pfSysGraphicDrawRect;
+
+- #define :ref:`EXT_SysGraphicDrawRect <group___sys_graphic_itf_1ga34fb204c5cf89fa23a81d1f8d992ab5d>` extern :ref:`PFSYSGRAPHICDRAWRECT <group___sys_graphic_itf_1ga6c85afb509d029e0141493a1a46f1425>` pfSysGraphicDrawRect;
+
+- #define :ref:`GET_SysGraphicDrawRect <group___sys_graphic_itf_1ga5ce65957cfd7cc5f0cca7575c8398a00>` s_pfCMGetAPI2( "SysGraphicDrawRect", (RTS_VOID_FCTPTR *)&pfSysGraphicDrawRect, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicDrawRect <group___sys_graphic_itf_1ga71a316ec97102ed9ae677c427fb95168>` pfSysGraphicDrawRect
+
+- #define :ref:`CHK_SysGraphicDrawRect <group___sys_graphic_itf_1ga14cb1e62e5cd2d6827b00c85f3ae6779>` (pfSysGraphicDrawRect != NULL)
+
+- #define :ref:`EXP_SysGraphicDrawRect <group___sys_graphic_itf_1ga5ab9a9cfaab0e428452d82fc9d7c0c6d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicDrawRect", (RTS_UINTPTR) :ref:`SysGraphicDrawRect <group___sys_graphic_itf_1ga3a2605ef39ff92002a071b3e9a4261dd>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicSetRoundRectRadius <group___sys_graphic_itf_1ga0e994660a8c61ef8e753cf146d1c61fb>` :ref:`PFSYSGRAPHICSETROUNDRECTRADIUS <group___sys_graphic_itf_1ga91b0d5ef77185fe4546e13049cf08951>` pfSysGraphicSetRoundRectRadius;
+
+- #define :ref:`EXT_SysGraphicSetRoundRectRadius <group___sys_graphic_itf_1ga44844fea6f39728fba9cebee66bd9167>` extern :ref:`PFSYSGRAPHICSETROUNDRECTRADIUS <group___sys_graphic_itf_1ga91b0d5ef77185fe4546e13049cf08951>` pfSysGraphicSetRoundRectRadius;
+
+- #define :ref:`GET_SysGraphicSetRoundRectRadius <group___sys_graphic_itf_1ga8241cdfb8cbb53b6efe2e76d299aaf11>` s_pfCMGetAPI2( "SysGraphicSetRoundRectRadius", (RTS_VOID_FCTPTR *)&pfSysGraphicSetRoundRectRadius, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicSetRoundRectRadius <group___sys_graphic_itf_1ga4059ea6deccfd40a946fbbd4db1ac002>` pfSysGraphicSetRoundRectRadius
+
+- #define :ref:`CHK_SysGraphicSetRoundRectRadius <group___sys_graphic_itf_1gaa6858480e37c760ca4cd532b2ab0542b>` (pfSysGraphicSetRoundRectRadius != NULL)
+
+- #define :ref:`EXP_SysGraphicSetRoundRectRadius <group___sys_graphic_itf_1ga312b391e6499f1557dde3777d20440af>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicSetRoundRectRadius", (RTS_UINTPTR) :ref:`SysGraphicSetRoundRectRadius <group___sys_graphic_itf_1ga771aa366f99a0bcd719a89494b86b15a>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicDrawRectF <group___sys_graphic_itf_1ga3d541ccd64c306640058fc49f26771dc>` :ref:`PFSYSGRAPHICDRAWRECTF <group___sys_graphic_itf_1ga9fc9a67d9a504741a35fb132d5d04cc6>` pfSysGraphicDrawRectF;
+
+- #define :ref:`EXT_SysGraphicDrawRectF <group___sys_graphic_itf_1ga0f528c86884f5e3b2ba54bde5f7465e3>` extern :ref:`PFSYSGRAPHICDRAWRECTF <group___sys_graphic_itf_1ga9fc9a67d9a504741a35fb132d5d04cc6>` pfSysGraphicDrawRectF;
+
+- #define :ref:`GET_SysGraphicDrawRectF <group___sys_graphic_itf_1ga078225aca36cc016a883b6e20f9fa51a>` s_pfCMGetAPI2( "SysGraphicDrawRectF", (RTS_VOID_FCTPTR *)&pfSysGraphicDrawRectF, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicDrawRectF <group___sys_graphic_itf_1ga670a2b7601d3c9431312934bc3975d81>` pfSysGraphicDrawRectF
+
+- #define :ref:`CHK_SysGraphicDrawRectF <group___sys_graphic_itf_1gac65f56fde6701ceaacf4a41ec7310573>` (pfSysGraphicDrawRectF != NULL)
+
+- #define :ref:`EXP_SysGraphicDrawRectF <group___sys_graphic_itf_1ga5c677a06143811f8742316b3aaa92090>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicDrawRectF", (RTS_UINTPTR) :ref:`SysGraphicDrawRectF <group___sys_graphic_itf_1gaed020ad8c55aa17c379e44ba1141f017>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicDrawPolygon <group___sys_graphic_itf_1gacc1cbb19a6f49802a2e83f796acb88db>` :ref:`PFSYSGRAPHICDRAWPOLYGON <group___sys_graphic_itf_1ga40d5dd11d083abb868b7d02a710a52eb>` pfSysGraphicDrawPolygon;
+
+- #define :ref:`EXT_SysGraphicDrawPolygon <group___sys_graphic_itf_1gac1b9e802d627a0a603c6c23bc429605f>` extern :ref:`PFSYSGRAPHICDRAWPOLYGON <group___sys_graphic_itf_1ga40d5dd11d083abb868b7d02a710a52eb>` pfSysGraphicDrawPolygon;
+
+- #define :ref:`GET_SysGraphicDrawPolygon <group___sys_graphic_itf_1ga895352398a0a28d290ef0b3f2ee4cbbb>` s_pfCMGetAPI2( "SysGraphicDrawPolygon", (RTS_VOID_FCTPTR *)&pfSysGraphicDrawPolygon, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicDrawPolygon <group___sys_graphic_itf_1ga1a7c2934bd08fe8dbaf305ecf394373d>` pfSysGraphicDrawPolygon
+
+- #define :ref:`CHK_SysGraphicDrawPolygon <group___sys_graphic_itf_1ga22a45607a80686fc99351a56d31487a8>` (pfSysGraphicDrawPolygon != NULL)
+
+- #define :ref:`EXP_SysGraphicDrawPolygon <group___sys_graphic_itf_1ga2456184e7ceb87e7643fc2ac70326211>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicDrawPolygon", (RTS_UINTPTR) :ref:`SysGraphicDrawPolygon <group___sys_graphic_itf_1ga588ec66d8f579e345d6314e49fe95437>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicDrawPolygonF <group___sys_graphic_itf_1ga499da31f77b51b2485d9af79fb320889>` :ref:`PFSYSGRAPHICDRAWPOLYGONF <group___sys_graphic_itf_1ga46b48efc541e066808a1b5da45704379>` pfSysGraphicDrawPolygonF;
+
+- #define :ref:`EXT_SysGraphicDrawPolygonF <group___sys_graphic_itf_1ga725ededfd61e2e8ebd1b29e43b2c79f1>` extern :ref:`PFSYSGRAPHICDRAWPOLYGONF <group___sys_graphic_itf_1ga46b48efc541e066808a1b5da45704379>` pfSysGraphicDrawPolygonF;
+
+- #define :ref:`GET_SysGraphicDrawPolygonF <group___sys_graphic_itf_1ga4494e5f462fbc913c9fe9b58f31841af>` s_pfCMGetAPI2( "SysGraphicDrawPolygonF", (RTS_VOID_FCTPTR *)&pfSysGraphicDrawPolygonF, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicDrawPolygonF <group___sys_graphic_itf_1ga616a9bb13ebd5118005b3effb91df63c>` pfSysGraphicDrawPolygonF
+
+- #define :ref:`CHK_SysGraphicDrawPolygonF <group___sys_graphic_itf_1gab4a7268bdc99ed6e0648233840cb8927>` (pfSysGraphicDrawPolygonF != NULL)
+
+- #define :ref:`EXP_SysGraphicDrawPolygonF <group___sys_graphic_itf_1gac298a1f2417208844fa1926367e9dc76>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicDrawPolygonF", (RTS_UINTPTR) :ref:`SysGraphicDrawPolygonF <group___sys_graphic_itf_1gad7e48202c700bf7e9058b6e3219a23c3>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicDrawPie <group___sys_graphic_itf_1ga2d1eef8250dd57f376e59e7d1909b926>` :ref:`PFSYSGRAPHICDRAWPIE <group___sys_graphic_itf_1ga28eb5862de27d6b4998b0b6f4aee9614>` pfSysGraphicDrawPie;
+
+- #define :ref:`EXT_SysGraphicDrawPie <group___sys_graphic_itf_1ga5393648e9fed413d541260912cad68f2>` extern :ref:`PFSYSGRAPHICDRAWPIE <group___sys_graphic_itf_1ga28eb5862de27d6b4998b0b6f4aee9614>` pfSysGraphicDrawPie;
+
+- #define :ref:`GET_SysGraphicDrawPie <group___sys_graphic_itf_1ga0681b563d76d660e4b7f539a1a516f1b>` s_pfCMGetAPI2( "SysGraphicDrawPie", (RTS_VOID_FCTPTR *)&pfSysGraphicDrawPie, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicDrawPie <group___sys_graphic_itf_1ga84e7ad1d82afb8bdc47be684a8d815cb>` pfSysGraphicDrawPie
+
+- #define :ref:`CHK_SysGraphicDrawPie <group___sys_graphic_itf_1ga2c99fb29499801fea469837a2ae11406>` (pfSysGraphicDrawPie != NULL)
+
+- #define :ref:`EXP_SysGraphicDrawPie <group___sys_graphic_itf_1gab78ce2649acecdb35b5aa2ed3100cd24>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicDrawPie", (RTS_UINTPTR) :ref:`SysGraphicDrawPie <group___sys_graphic_itf_1gaa56ee438551927e7eaee1380fe97e8a3>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicRotateAt <group___sys_graphic_itf_1gaeaf400904e129e8a69b94a81ab830ace>` :ref:`PFSYSGRAPHICROTATEAT <group___sys_graphic_itf_1ga88bb1ded7be8fe5d55c709206c89bd65>` pfSysGraphicRotateAt;
+
+- #define :ref:`EXT_SysGraphicRotateAt <group___sys_graphic_itf_1ga6cd4be06d58ad24d6c908a85b1600e29>` extern :ref:`PFSYSGRAPHICROTATEAT <group___sys_graphic_itf_1ga88bb1ded7be8fe5d55c709206c89bd65>` pfSysGraphicRotateAt;
+
+- #define :ref:`GET_SysGraphicRotateAt <group___sys_graphic_itf_1gab3f160a156e9e5ce24821552968e0298>` s_pfCMGetAPI2( "SysGraphicRotateAt", (RTS_VOID_FCTPTR *)&pfSysGraphicRotateAt, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicRotateAt <group___sys_graphic_itf_1ga2399d4fb8525cd01c4eef1d9ebb2f898>` pfSysGraphicRotateAt
+
+- #define :ref:`CHK_SysGraphicRotateAt <group___sys_graphic_itf_1gaab9692673e00add9af2a0a08ddbf6e6f>` (pfSysGraphicRotateAt != NULL)
+
+- #define :ref:`EXP_SysGraphicRotateAt <group___sys_graphic_itf_1ga58e412253e6862d972e6b5d45e82197f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicRotateAt", (RTS_UINTPTR) :ref:`SysGraphicRotateAt <group___sys_graphic_itf_1gaac6fc6648e3ca5a0335a8e9c690c060f>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicDrawText <group___sys_graphic_itf_1ga6b685b32bc4aabf39b11c83380d71244>` :ref:`PFSYSGRAPHICDRAWTEXT <group___sys_graphic_itf_1gaf7a541214a326d2c7e7f05a671cae865>` pfSysGraphicDrawText;
+
+- #define :ref:`EXT_SysGraphicDrawText <group___sys_graphic_itf_1ga231baef3edd04cd75632b6186f19282b>` extern :ref:`PFSYSGRAPHICDRAWTEXT <group___sys_graphic_itf_1gaf7a541214a326d2c7e7f05a671cae865>` pfSysGraphicDrawText;
+
+- #define :ref:`GET_SysGraphicDrawText <group___sys_graphic_itf_1gab7167d636fbf7c35c22487a70bea7774>` s_pfCMGetAPI2( "SysGraphicDrawText", (RTS_VOID_FCTPTR *)&pfSysGraphicDrawText, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicDrawText <group___sys_graphic_itf_1gaff323e1705d55755dabe780a3041b8e0>` pfSysGraphicDrawText
+
+- #define :ref:`CHK_SysGraphicDrawText <group___sys_graphic_itf_1gaa7dbf16df85b76556a7b482339baef4c>` (pfSysGraphicDrawText != NULL)
+
+- #define :ref:`EXP_SysGraphicDrawText <group___sys_graphic_itf_1gaa75cc7fbdcb455e460e412f41d7578ae>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicDrawText", (RTS_UINTPTR) :ref:`SysGraphicDrawText <group___sys_graphic_itf_1gaca75cad33953fe8aaa8b78c7d8e0d1c4>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicGetTextMetrics <group___sys_graphic_itf_1gae39bd5d16fd3cd013901e84da2c0d63c>` :ref:`PFSYSGRAPHICGETTEXTMETRICS <group___sys_graphic_itf_1ga943ef073944d9f839779f25eb1af382c>` pfSysGraphicGetTextMetrics;
+
+- #define :ref:`EXT_SysGraphicGetTextMetrics <group___sys_graphic_itf_1gac529387b136282c6156a076bdc9e8594>` extern :ref:`PFSYSGRAPHICGETTEXTMETRICS <group___sys_graphic_itf_1ga943ef073944d9f839779f25eb1af382c>` pfSysGraphicGetTextMetrics;
+
+- #define :ref:`GET_SysGraphicGetTextMetrics <group___sys_graphic_itf_1ga68ce38938b5a55f123f5dcd6ce5b9e6b>` s_pfCMGetAPI2( "SysGraphicGetTextMetrics", (RTS_VOID_FCTPTR *)&pfSysGraphicGetTextMetrics, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicGetTextMetrics <group___sys_graphic_itf_1gab7ad05bbefe3f1ab8082caeab17148da>` pfSysGraphicGetTextMetrics
+
+- #define :ref:`CHK_SysGraphicGetTextMetrics <group___sys_graphic_itf_1gaca85505501da6245b054fc078146d2ed>` (pfSysGraphicGetTextMetrics != NULL)
+
+- #define :ref:`EXP_SysGraphicGetTextMetrics <group___sys_graphic_itf_1ga156c7da83927b3dea644b65ecabf2d1c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicGetTextMetrics", (RTS_UINTPTR) :ref:`SysGraphicGetTextMetrics <group___sys_graphic_itf_1ga3f0472fbc9f099e9fd351e5df5a02f48>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicGetTextExtent <group___sys_graphic_itf_1ga04bcb554ae6a15c60ea745c6dd824f64>` :ref:`PFSYSGRAPHICGETTEXTEXTENT <group___sys_graphic_itf_1gab2d400997e4cd647f4a361c102c8ec6e>` pfSysGraphicGetTextExtent;
+
+- #define :ref:`EXT_SysGraphicGetTextExtent <group___sys_graphic_itf_1ga9f14fe7216b1ef8ad313b22ab75fe57b>` extern :ref:`PFSYSGRAPHICGETTEXTEXTENT <group___sys_graphic_itf_1gab2d400997e4cd647f4a361c102c8ec6e>` pfSysGraphicGetTextExtent;
+
+- #define :ref:`GET_SysGraphicGetTextExtent <group___sys_graphic_itf_1ga29977f0d93f404034633ecd861c7b921>` s_pfCMGetAPI2( "SysGraphicGetTextExtent", (RTS_VOID_FCTPTR *)&pfSysGraphicGetTextExtent, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicGetTextExtent <group___sys_graphic_itf_1ga54d67e5d4101cc1b82cab00c5a5fa672>` pfSysGraphicGetTextExtent
+
+- #define :ref:`CHK_SysGraphicGetTextExtent <group___sys_graphic_itf_1ga415180fd57c2235e2fe86f92fc7a5e4c>` (pfSysGraphicGetTextExtent != NULL)
+
+- #define :ref:`EXP_SysGraphicGetTextExtent <group___sys_graphic_itf_1gad3dd767a323847a14287e7f732e29f99>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicGetTextExtent", (RTS_UINTPTR) :ref:`SysGraphicGetTextExtent <group___sys_graphic_itf_1ga9853f1793ae85562cf8d80846231ae95>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicGetFontHeight <group___sys_graphic_itf_1gae184ec56883ab9f87a5caabfa9b4ab4e>` :ref:`PFSYSGRAPHICGETFONTHEIGHT <group___sys_graphic_itf_1gadb0399f80ddb81916aee83a3ebea615e>` pfSysGraphicGetFontHeight;
+
+- #define :ref:`EXT_SysGraphicGetFontHeight <group___sys_graphic_itf_1ga67097f0e8f465dd283107f72f0866b68>` extern :ref:`PFSYSGRAPHICGETFONTHEIGHT <group___sys_graphic_itf_1gadb0399f80ddb81916aee83a3ebea615e>` pfSysGraphicGetFontHeight;
+
+- #define :ref:`GET_SysGraphicGetFontHeight <group___sys_graphic_itf_1gad445442e9cf50d02e0dce8356472fdb0>` s_pfCMGetAPI2( "SysGraphicGetFontHeight", (RTS_VOID_FCTPTR *)&pfSysGraphicGetFontHeight, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicGetFontHeight <group___sys_graphic_itf_1ga8137bb2dddc064eadb825269bb67ea21>` pfSysGraphicGetFontHeight
+
+- #define :ref:`CHK_SysGraphicGetFontHeight <group___sys_graphic_itf_1gab1569b817e28716f6261c5bcbb5d06a1>` (pfSysGraphicGetFontHeight != NULL)
+
+- #define :ref:`EXP_SysGraphicGetFontHeight <group___sys_graphic_itf_1gadc76e34e11352c2e5dc418f653934b0e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicGetFontHeight", (RTS_UINTPTR) :ref:`SysGraphicGetFontHeight <group___sys_graphic_itf_1ga3fc974d64fa5b645cebc37b8919592cd>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicGetFontHandle <group___sys_graphic_itf_1ga089633a44338dcff1029666657145e8d>` :ref:`PFSYSGRAPHICGETFONTHANDLE <group___sys_graphic_itf_1gae70f1e61ee2fee5831d5a30055717001>` pfSysGraphicGetFontHandle;
+
+- #define :ref:`EXT_SysGraphicGetFontHandle <group___sys_graphic_itf_1gaa70a3211f6d8e672c02fa53ff1e16c83>` extern :ref:`PFSYSGRAPHICGETFONTHANDLE <group___sys_graphic_itf_1gae70f1e61ee2fee5831d5a30055717001>` pfSysGraphicGetFontHandle;
+
+- #define :ref:`GET_SysGraphicGetFontHandle <group___sys_graphic_itf_1ga44fb0909baf09d05f501ac2fc79566bb>` s_pfCMGetAPI2( "SysGraphicGetFontHandle", (RTS_VOID_FCTPTR *)&pfSysGraphicGetFontHandle, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicGetFontHandle <group___sys_graphic_itf_1ga8345ac756d2498b7686165fabd6016f8>` pfSysGraphicGetFontHandle
+
+- #define :ref:`CHK_SysGraphicGetFontHandle <group___sys_graphic_itf_1gaa12662783599ace728c298b3e873da95>` (pfSysGraphicGetFontHandle != NULL)
+
+- #define :ref:`EXP_SysGraphicGetFontHandle <group___sys_graphic_itf_1gaa3ac9cdf87fdee5161c6a4aa69ff602c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicGetFontHandle", (RTS_UINTPTR) :ref:`SysGraphicGetFontHandle <group___sys_graphic_itf_1ga762257cc9c9749d144ce0c6257020208>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicCreateBrush <group___sys_graphic_itf_1gad21676f8ab5a7b74e93f6dba4a4e3fa4>` :ref:`PFSYSGRAPHICCREATEBRUSH <group___sys_graphic_itf_1gad052263415089ed1c7c5e4c0cc4520bc>` pfSysGraphicCreateBrush;
+
+- #define :ref:`EXT_SysGraphicCreateBrush <group___sys_graphic_itf_1gabcb2320d627a65cdae2d77dfc5a042dc>` extern :ref:`PFSYSGRAPHICCREATEBRUSH <group___sys_graphic_itf_1gad052263415089ed1c7c5e4c0cc4520bc>` pfSysGraphicCreateBrush;
+
+- #define :ref:`GET_SysGraphicCreateBrush <group___sys_graphic_itf_1ga92ca64ac23f4d877c0970ba7a97a8d28>` s_pfCMGetAPI2( "SysGraphicCreateBrush", (RTS_VOID_FCTPTR *)&pfSysGraphicCreateBrush, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicCreateBrush <group___sys_graphic_itf_1ga721516f3fe698af395d5e1ec66d5da4b>` pfSysGraphicCreateBrush
+
+- #define :ref:`CHK_SysGraphicCreateBrush <group___sys_graphic_itf_1ga7abb13137ea455eac03c18c753aa665d>` (pfSysGraphicCreateBrush != NULL)
+
+- #define :ref:`EXP_SysGraphicCreateBrush <group___sys_graphic_itf_1gaf2fbcb454b0b70d52afda48444ab4679>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicCreateBrush", (RTS_UINTPTR) :ref:`SysGraphicCreateBrush <group___sys_graphic_itf_1ga87b88da8c3d0ace48fbd03c3a401712d>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicSetBrush <group___sys_graphic_itf_1ga75e260ea6a5da9967fd8337697f3ec1e>` :ref:`PFSYSGRAPHICSETBRUSH <group___sys_graphic_itf_1gae9347ccae63daf78a672afbfb3971883>` pfSysGraphicSetBrush;
+
+- #define :ref:`EXT_SysGraphicSetBrush <group___sys_graphic_itf_1gadf89a40b7fb4f3f21f60b5717f05032f>` extern :ref:`PFSYSGRAPHICSETBRUSH <group___sys_graphic_itf_1gae9347ccae63daf78a672afbfb3971883>` pfSysGraphicSetBrush;
+
+- #define :ref:`GET_SysGraphicSetBrush <group___sys_graphic_itf_1gae2e1465b8870d03008bd5ca835dfc367>` s_pfCMGetAPI2( "SysGraphicSetBrush", (RTS_VOID_FCTPTR *)&pfSysGraphicSetBrush, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicSetBrush <group___sys_graphic_itf_1ga2a01adee15d7563280b8925d3a6abf9a>` pfSysGraphicSetBrush
+
+- #define :ref:`CHK_SysGraphicSetBrush <group___sys_graphic_itf_1ga580b50057ba09e0f17c7eeba7c2b7b7a>` (pfSysGraphicSetBrush != NULL)
+
+- #define :ref:`EXP_SysGraphicSetBrush <group___sys_graphic_itf_1gadff6bd3ef1e2aae11215859a7259189b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicSetBrush", (RTS_UINTPTR) :ref:`SysGraphicSetBrush <group___sys_graphic_itf_1gad21369f57e48c12ece7e8b53b47bdced>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicFreeBrush <group___sys_graphic_itf_1ga1bdfe48eb61806af8c90edc47b7de51e>` :ref:`PFSYSGRAPHICFREEBRUSH <group___sys_graphic_itf_1ga77a35df06cdf3e96c1d100ce9e573861>` pfSysGraphicFreeBrush;
+
+- #define :ref:`EXT_SysGraphicFreeBrush <group___sys_graphic_itf_1ga1f59e05d7c831cc7b65c64c1493bcfea>` extern :ref:`PFSYSGRAPHICFREEBRUSH <group___sys_graphic_itf_1ga77a35df06cdf3e96c1d100ce9e573861>` pfSysGraphicFreeBrush;
+
+- #define :ref:`GET_SysGraphicFreeBrush <group___sys_graphic_itf_1gae456430bb7bbe49d37b70d64cf361974>` s_pfCMGetAPI2( "SysGraphicFreeBrush", (RTS_VOID_FCTPTR *)&pfSysGraphicFreeBrush, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicFreeBrush <group___sys_graphic_itf_1gaefd698a30371f29855986fec086e927b>` pfSysGraphicFreeBrush
+
+- #define :ref:`CHK_SysGraphicFreeBrush <group___sys_graphic_itf_1ga449f94c9818f2ddbb33f24c3d6b15709>` (pfSysGraphicFreeBrush != NULL)
+
+- #define :ref:`EXP_SysGraphicFreeBrush <group___sys_graphic_itf_1gab69580ecf493347ad8cdf9c431499878>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicFreeBrush", (RTS_UINTPTR) :ref:`SysGraphicFreeBrush <group___sys_graphic_itf_1ga653772662b6e8c0ee97771c9f1346aa0>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicCreateGradientBrush <group___sys_graphic_itf_1ga3a48ca2f266afffbde5b6a896a942890>` :ref:`PFSYSGRAPHICCREATEGRADIENTBRUSH <group___sys_graphic_itf_1gae05127efb93c2667f1c0d79025062523>` pfSysGraphicCreateGradientBrush;
+
+- #define :ref:`EXT_SysGraphicCreateGradientBrush <group___sys_graphic_itf_1ga349085351f42e71ce2f68100693d91e2>` extern :ref:`PFSYSGRAPHICCREATEGRADIENTBRUSH <group___sys_graphic_itf_1gae05127efb93c2667f1c0d79025062523>` pfSysGraphicCreateGradientBrush;
+
+- #define :ref:`GET_SysGraphicCreateGradientBrush <group___sys_graphic_itf_1ga9dd08452895c51b8ed788ab552107a91>` s_pfCMGetAPI2( "SysGraphicCreateGradientBrush", (RTS_VOID_FCTPTR *)&pfSysGraphicCreateGradientBrush, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicCreateGradientBrush <group___sys_graphic_itf_1gae717612aadd3ee7c77f7f0691aebc28d>` pfSysGraphicCreateGradientBrush
+
+- #define :ref:`CHK_SysGraphicCreateGradientBrush <group___sys_graphic_itf_1ga1cbc4139809a3b537d38bafa812bb947>` (pfSysGraphicCreateGradientBrush != NULL)
+
+- #define :ref:`EXP_SysGraphicCreateGradientBrush <group___sys_graphic_itf_1gaab08fd5b6b78012f0c47d3f513c6f871>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicCreateGradientBrush", (RTS_UINTPTR) :ref:`SysGraphicCreateGradientBrush <group___sys_graphic_itf_1ga2d891b1089c459be1569799449bfabbe>` , 0, 0)
+
+- #define :ref:`PAT_HORIZONTAL <group___sys_graphic_itf_1ga8e0cb68246f82be365b7232be299c630>` 1
+
+- #define :ref:`PAT_VERTICAL <group___sys_graphic_itf_1gad9f76c96b0ec92ba150f80e68b3a28f6>` 2
+
+- #define :ref:`PAT_CROSS <group___sys_graphic_itf_1gab931a323389f0c4aa013770ff6c7066f>` 3
+
+- #define :ref:`PAT_DENSE_LIGHT <group___sys_graphic_itf_1gaa6c133ed309e755c8095d533155845bd>` 4
+
+- #define :ref:`PAT_DENSE_NORMAL <group___sys_graphic_itf_1ga73a5ec5586969398ddb4263340511ea1>` 5
+
+- #define :ref:`PAT_DENSE_VERY <group___sys_graphic_itf_1ga09f6fe9217e8efcbb9861f4571726949>` 6
+
+- #define :ref:`USE_SysGraphicCreatePatternBrush <group___sys_graphic_itf_1ga31d83ca6948e8fc3117e85e20a6ec838>` :ref:`PFSYSGRAPHICCREATEPATTERNBRUSH <group___sys_graphic_itf_1ga47d2dca7f51d1ec5fc81adf27a0135f4>` pfSysGraphicCreatePatternBrush;
+
+- #define :ref:`EXT_SysGraphicCreatePatternBrush <group___sys_graphic_itf_1gaed4d787af1c246a67c5e3c1d9c068daa>` extern :ref:`PFSYSGRAPHICCREATEPATTERNBRUSH <group___sys_graphic_itf_1ga47d2dca7f51d1ec5fc81adf27a0135f4>` pfSysGraphicCreatePatternBrush;
+
+- #define :ref:`GET_SysGraphicCreatePatternBrush <group___sys_graphic_itf_1gaa1bcc438cae3eefbcce93546d64a781e>` s_pfCMGetAPI2( "SysGraphicCreatePatternBrush", (RTS_VOID_FCTPTR *)&pfSysGraphicCreatePatternBrush, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicCreatePatternBrush <group___sys_graphic_itf_1ga180829e90d6ff44e94d4fabd2185f65b>` pfSysGraphicCreatePatternBrush
+
+- #define :ref:`CHK_SysGraphicCreatePatternBrush <group___sys_graphic_itf_1gacb95d90ca48d4366b6545c2b3adbf87e>` (pfSysGraphicCreatePatternBrush != NULL)
+
+- #define :ref:`EXP_SysGraphicCreatePatternBrush <group___sys_graphic_itf_1ga10b07a7f6855ce7bdd4913f50db36149>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicCreatePatternBrush", (RTS_UINTPTR) :ref:`SysGraphicCreatePatternBrush <group___sys_graphic_itf_1ga57a5e333e02d210f9ef6b9c7f0451ce9>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicCreatePenDetailed <group___sys_graphic_itf_1gaa25a3784bdfbb0560df86f42f7c18533>` :ref:`PFSYSGRAPHICCREATEPENDETAILED <group___sys_graphic_itf_1ga8770d5fc02ac97c05b2ee2c07adc5c7d>` pfSysGraphicCreatePenDetailed;
+
+- #define :ref:`EXT_SysGraphicCreatePenDetailed <group___sys_graphic_itf_1gacdbc16abfcefbb5fd0d5f596ff79d38b>` extern :ref:`PFSYSGRAPHICCREATEPENDETAILED <group___sys_graphic_itf_1ga8770d5fc02ac97c05b2ee2c07adc5c7d>` pfSysGraphicCreatePenDetailed;
+
+- #define :ref:`GET_SysGraphicCreatePenDetailed <group___sys_graphic_itf_1gae7906d6515036215d7433b116a55faac>` s_pfCMGetAPI2( "SysGraphicCreatePenDetailed", (RTS_VOID_FCTPTR *)&pfSysGraphicCreatePenDetailed, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicCreatePenDetailed <group___sys_graphic_itf_1gae65bcc4b2eec46d460ba1c209b13d1e9>` pfSysGraphicCreatePenDetailed
+
+- #define :ref:`CHK_SysGraphicCreatePenDetailed <group___sys_graphic_itf_1ga2439557ddff3e0b6fc83eeb3348c834d>` (pfSysGraphicCreatePenDetailed != NULL)
+
+- #define :ref:`EXP_SysGraphicCreatePenDetailed <group___sys_graphic_itf_1ga86cb079cbc6c55373e2da88587b9ba09>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicCreatePenDetailed", (RTS_UINTPTR) :ref:`SysGraphicCreatePenDetailed <group___sys_graphic_itf_1gaad77ff326127752b51ef29daa3e547e8>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicCreatePen <group___sys_graphic_itf_1ga7b86951e62290ed4829bf8a7c5850e91>` :ref:`PFSYSGRAPHICCREATEPEN <group___sys_graphic_itf_1ga5c6f6d39329afcbc0be951a4bf239e31>` pfSysGraphicCreatePen;
+
+- #define :ref:`EXT_SysGraphicCreatePen <group___sys_graphic_itf_1ga06a0a24cc064be994c6bfc435089c056>` extern :ref:`PFSYSGRAPHICCREATEPEN <group___sys_graphic_itf_1ga5c6f6d39329afcbc0be951a4bf239e31>` pfSysGraphicCreatePen;
+
+- #define :ref:`GET_SysGraphicCreatePen <group___sys_graphic_itf_1gaf8df03fed9c2ff82dfc606d87f9f6607>` s_pfCMGetAPI2( "SysGraphicCreatePen", (RTS_VOID_FCTPTR *)&pfSysGraphicCreatePen, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicCreatePen <group___sys_graphic_itf_1gafe950e6c2dd314df115dc69ef24359b5>` pfSysGraphicCreatePen
+
+- #define :ref:`CHK_SysGraphicCreatePen <group___sys_graphic_itf_1gaa2b57fa2c9d3609e1b2f94a9ccb6c146>` (pfSysGraphicCreatePen != NULL)
+
+- #define :ref:`EXP_SysGraphicCreatePen <group___sys_graphic_itf_1ga128feda70bd151d4d834446f32f475c5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicCreatePen", (RTS_UINTPTR) :ref:`SysGraphicCreatePen <group___sys_graphic_itf_1gac98afa65facb04e54e062bbb8f3b677f>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicSetPen <group___sys_graphic_itf_1ga45801d21c49dff93b5e23ca35f01b7aa>` :ref:`PFSYSGRAPHICSETPEN <group___sys_graphic_itf_1gaf11a20a7892bf357e9118dd40e2d92c6>` pfSysGraphicSetPen;
+
+- #define :ref:`EXT_SysGraphicSetPen <group___sys_graphic_itf_1ga0d6c60deaae7189c35db274194837385>` extern :ref:`PFSYSGRAPHICSETPEN <group___sys_graphic_itf_1gaf11a20a7892bf357e9118dd40e2d92c6>` pfSysGraphicSetPen;
+
+- #define :ref:`GET_SysGraphicSetPen <group___sys_graphic_itf_1ga95c7a7c7beb6f09b2cac2f56008cf0c3>` s_pfCMGetAPI2( "SysGraphicSetPen", (RTS_VOID_FCTPTR *)&pfSysGraphicSetPen, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicSetPen <group___sys_graphic_itf_1gae826552fb8ba882a34bdccd237184b5b>` pfSysGraphicSetPen
+
+- #define :ref:`CHK_SysGraphicSetPen <group___sys_graphic_itf_1gae11e2baa762e619172fb56f22fcb9fc8>` (pfSysGraphicSetPen != NULL)
+
+- #define :ref:`EXP_SysGraphicSetPen <group___sys_graphic_itf_1ga1958a88c79ed3759c67efa5ef12da13a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicSetPen", (RTS_UINTPTR) :ref:`SysGraphicSetPen <group___sys_graphic_itf_1gaf55649de63079081f3441b543ffb1f3f>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicFreePen <group___sys_graphic_itf_1ga1ddd4acaad90ed8a0f6ee4ff57e706b2>` :ref:`PFSYSGRAPHICFREEPEN <group___sys_graphic_itf_1gaa0a70bf84560a02b4eb3d694430a3ce5>` pfSysGraphicFreePen;
+
+- #define :ref:`EXT_SysGraphicFreePen <group___sys_graphic_itf_1ga7ed97cb24e50703d6e4e6a4175a680d0>` extern :ref:`PFSYSGRAPHICFREEPEN <group___sys_graphic_itf_1gaa0a70bf84560a02b4eb3d694430a3ce5>` pfSysGraphicFreePen;
+
+- #define :ref:`GET_SysGraphicFreePen <group___sys_graphic_itf_1ga0879bdebe086ee25456d589a251a11ca>` s_pfCMGetAPI2( "SysGraphicFreePen", (RTS_VOID_FCTPTR *)&pfSysGraphicFreePen, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicFreePen <group___sys_graphic_itf_1gabb027d7da282b1bf4fb08285129ee328>` pfSysGraphicFreePen
+
+- #define :ref:`CHK_SysGraphicFreePen <group___sys_graphic_itf_1gab696e9c8876e66088c161981cc3bbfde>` (pfSysGraphicFreePen != NULL)
+
+- #define :ref:`EXP_SysGraphicFreePen <group___sys_graphic_itf_1ga7db0bed7f3540bf4bccc11b23f960a77>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicFreePen", (RTS_UINTPTR) :ref:`SysGraphicFreePen <group___sys_graphic_itf_1ga4890a42dbcbd203e7234e016399169cd>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicCreateFont <group___sys_graphic_itf_1ga72bf04b05ce3498dc02c111d03088fe8>` :ref:`PFSYSGRAPHICCREATEFONT <group___sys_graphic_itf_1ga0f3f1c44e64476d4ab03122977cf34c7>` pfSysGraphicCreateFont;
+
+- #define :ref:`EXT_SysGraphicCreateFont <group___sys_graphic_itf_1ga2f4c16021a6ace2b62245b1de7d11494>` extern :ref:`PFSYSGRAPHICCREATEFONT <group___sys_graphic_itf_1ga0f3f1c44e64476d4ab03122977cf34c7>` pfSysGraphicCreateFont;
+
+- #define :ref:`GET_SysGraphicCreateFont <group___sys_graphic_itf_1ga56f6352149f854b14112cc9e49593a71>` s_pfCMGetAPI2( "SysGraphicCreateFont", (RTS_VOID_FCTPTR *)&pfSysGraphicCreateFont, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicCreateFont <group___sys_graphic_itf_1ga1bbac817889128ac9bcf333692d342b2>` pfSysGraphicCreateFont
+
+- #define :ref:`CHK_SysGraphicCreateFont <group___sys_graphic_itf_1ga37de94b9533104df96bb7d9660cce3c9>` (pfSysGraphicCreateFont != NULL)
+
+- #define :ref:`EXP_SysGraphicCreateFont <group___sys_graphic_itf_1ga2ac3bfdef0a38ef126771d1b2c522e7c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicCreateFont", (RTS_UINTPTR) :ref:`SysGraphicCreateFont <group___sys_graphic_itf_1ga83c7bdc13f3087d480b10f98a4d7ccca>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicFreeFont <group___sys_graphic_itf_1gac217390bf9e58d56b590e83f309b37b1>` :ref:`PFSYSGRAPHICFREEFONT <group___sys_graphic_itf_1ga58b822e598c1f2c45cae97b2d49db0c0>` pfSysGraphicFreeFont;
+
+- #define :ref:`EXT_SysGraphicFreeFont <group___sys_graphic_itf_1gaa3ed655eacd5c4db7dbb5936c36493a6>` extern :ref:`PFSYSGRAPHICFREEFONT <group___sys_graphic_itf_1ga58b822e598c1f2c45cae97b2d49db0c0>` pfSysGraphicFreeFont;
+
+- #define :ref:`GET_SysGraphicFreeFont <group___sys_graphic_itf_1gadd87fd2a89901db01c0cc6b628fc0412>` s_pfCMGetAPI2( "SysGraphicFreeFont", (RTS_VOID_FCTPTR *)&pfSysGraphicFreeFont, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicFreeFont <group___sys_graphic_itf_1gafe0ec4399d3dd42555505a98a92fcbd4>` pfSysGraphicFreeFont
+
+- #define :ref:`CHK_SysGraphicFreeFont <group___sys_graphic_itf_1gad0733852e139825a65b97b112a32c046>` (pfSysGraphicFreeFont != NULL)
+
+- #define :ref:`EXP_SysGraphicFreeFont <group___sys_graphic_itf_1ga285f137a42a748c7e4638bb280480fca>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicFreeFont", (RTS_UINTPTR) :ref:`SysGraphicFreeFont <group___sys_graphic_itf_1ga414d8f1b71f6a4c731e4ae1ae5f0e4f7>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicSetFont <group___sys_graphic_itf_1ga700d3571ed06f52fde55d65aa275850a>` :ref:`PFSYSGRAPHICSETFONT <group___sys_graphic_itf_1ga71be0cef715ec4d26c5cf6e0eac76972>` pfSysGraphicSetFont;
+
+- #define :ref:`EXT_SysGraphicSetFont <group___sys_graphic_itf_1ga1c96779d46c4a711d5e5b98288e2c2d2>` extern :ref:`PFSYSGRAPHICSETFONT <group___sys_graphic_itf_1ga71be0cef715ec4d26c5cf6e0eac76972>` pfSysGraphicSetFont;
+
+- #define :ref:`GET_SysGraphicSetFont <group___sys_graphic_itf_1gaab89f6c2e216ce3e5f3774e0b9767a93>` s_pfCMGetAPI2( "SysGraphicSetFont", (RTS_VOID_FCTPTR *)&pfSysGraphicSetFont, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicSetFont <group___sys_graphic_itf_1ga6af8c7089955cae954918c966c616dd4>` pfSysGraphicSetFont
+
+- #define :ref:`CHK_SysGraphicSetFont <group___sys_graphic_itf_1gac4331f4bc1a11492963e652eda2b3fbd>` (pfSysGraphicSetFont != NULL)
+
+- #define :ref:`EXP_SysGraphicSetFont <group___sys_graphic_itf_1ga9cfb8f0f30b8427a936d79ca716ad7bc>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicSetFont", (RTS_UINTPTR) :ref:`SysGraphicSetFont <group___sys_graphic_itf_1gaad02a964f1aac284ac066cb245645eb5>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicSetFont2 <group___sys_graphic_itf_1ga867fad54b511fe034ca4d5333c57e247>` :ref:`PFSYSGRAPHICSETFONT2 <group___sys_graphic_itf_1ga16e2abe39a4d6dd9575b7e31735e97c8>` pfSysGraphicSetFont2;
+
+- #define :ref:`EXT_SysGraphicSetFont2 <group___sys_graphic_itf_1ga84f6ee7690751317f8acd4785311c82e>` extern :ref:`PFSYSGRAPHICSETFONT2 <group___sys_graphic_itf_1ga16e2abe39a4d6dd9575b7e31735e97c8>` pfSysGraphicSetFont2;
+
+- #define :ref:`GET_SysGraphicSetFont2 <group___sys_graphic_itf_1gaeb224673d295507b95795aba3d24ded0>` s_pfCMGetAPI2( "SysGraphicSetFont2", (RTS_VOID_FCTPTR *)&pfSysGraphicSetFont2, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicSetFont2 <group___sys_graphic_itf_1ga623e9bc7d85ba15131c48eef26b7817a>` pfSysGraphicSetFont2
+
+- #define :ref:`CHK_SysGraphicSetFont2 <group___sys_graphic_itf_1gaa80f11ac4ec7b1e4cff76a728e64e04f>` (pfSysGraphicSetFont2 != NULL)
+
+- #define :ref:`EXP_SysGraphicSetFont2 <group___sys_graphic_itf_1gaf07c7c5338594eca406e02a9c2a4da85>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicSetFont2", (RTS_UINTPTR) :ref:`SysGraphicSetFont2 <group___sys_graphic_itf_1ga66d539e14643847f108094be8dceef3e>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicCreateBitmap <group___sys_graphic_itf_1ga02100c4ae4392abc9a9303b2985d7bfb>` :ref:`PFSYSGRAPHICCREATEBITMAP <group___sys_graphic_itf_1ga9a2637d07c925eb0e7465018b1fe6384>` pfSysGraphicCreateBitmap;
+
+- #define :ref:`EXT_SysGraphicCreateBitmap <group___sys_graphic_itf_1ga0f5b927101431f2a1fe6f9b85b23ed75>` extern :ref:`PFSYSGRAPHICCREATEBITMAP <group___sys_graphic_itf_1ga9a2637d07c925eb0e7465018b1fe6384>` pfSysGraphicCreateBitmap;
+
+- #define :ref:`GET_SysGraphicCreateBitmap <group___sys_graphic_itf_1ga20db8cc9e6fff4f8412f7e551c64826e>` s_pfCMGetAPI2( "SysGraphicCreateBitmap", (RTS_VOID_FCTPTR *)&pfSysGraphicCreateBitmap, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicCreateBitmap <group___sys_graphic_itf_1gaa41a7fe8a922a31d2544c950afc79c87>` pfSysGraphicCreateBitmap
+
+- #define :ref:`CHK_SysGraphicCreateBitmap <group___sys_graphic_itf_1gac48a2af76044d7bb9a58050e14e8afe3>` (pfSysGraphicCreateBitmap != NULL)
+
+- #define :ref:`EXP_SysGraphicCreateBitmap <group___sys_graphic_itf_1ga14790f3c13bd9eb02a605579d3c8a7ed>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicCreateBitmap", (RTS_UINTPTR) :ref:`SysGraphicCreateBitmap <group___sys_graphic_itf_1gad434f39d949c81be2792ba9e516a4b3a>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicDrawBitmap <group___sys_graphic_itf_1gab2309dcb1cd56fe50d0cf4594307ef0a>` :ref:`PFSYSGRAPHICDRAWBITMAP <group___sys_graphic_itf_1gac9a74f575b72c8062e53057c7723e3f8>` pfSysGraphicDrawBitmap;
+
+- #define :ref:`EXT_SysGraphicDrawBitmap <group___sys_graphic_itf_1gae0b9534fc5798079239c52b7187a21d8>` extern :ref:`PFSYSGRAPHICDRAWBITMAP <group___sys_graphic_itf_1gac9a74f575b72c8062e53057c7723e3f8>` pfSysGraphicDrawBitmap;
+
+- #define :ref:`GET_SysGraphicDrawBitmap <group___sys_graphic_itf_1ga3ef1a3ce9c58b71bcf12ba0ef90875fb>` s_pfCMGetAPI2( "SysGraphicDrawBitmap", (RTS_VOID_FCTPTR *)&pfSysGraphicDrawBitmap, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicDrawBitmap <group___sys_graphic_itf_1ga22503537e1a227325052633eb09bbefc>` pfSysGraphicDrawBitmap
+
+- #define :ref:`CHK_SysGraphicDrawBitmap <group___sys_graphic_itf_1ga8ac92639f836f047893e1def54568db2>` (pfSysGraphicDrawBitmap != NULL)
+
+- #define :ref:`EXP_SysGraphicDrawBitmap <group___sys_graphic_itf_1ga70528eeb8502cc58e43b1f64db920d73>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicDrawBitmap", (RTS_UINTPTR) :ref:`SysGraphicDrawBitmap <group___sys_graphic_itf_1ga283918b82a010b08074a068c5e6cfa4a>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicFreeBitmap <group___sys_graphic_itf_1ga2e089936242f543df73d8c530a335cc6>` :ref:`PFSYSGRAPHICFREEBITMAP <group___sys_graphic_itf_1gae42a2f5dbeb9eea4e3e466ba98d38791>` pfSysGraphicFreeBitmap;
+
+- #define :ref:`EXT_SysGraphicFreeBitmap <group___sys_graphic_itf_1ga66ca0a8740ba1f35d51cb7fc806a35cd>` extern :ref:`PFSYSGRAPHICFREEBITMAP <group___sys_graphic_itf_1gae42a2f5dbeb9eea4e3e466ba98d38791>` pfSysGraphicFreeBitmap;
+
+- #define :ref:`GET_SysGraphicFreeBitmap <group___sys_graphic_itf_1gaa2a280225f5d592d414e851f90a5c86d>` s_pfCMGetAPI2( "SysGraphicFreeBitmap", (RTS_VOID_FCTPTR *)&pfSysGraphicFreeBitmap, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicFreeBitmap <group___sys_graphic_itf_1ga1b8bc31d9c08e2831a03293fd4953c46>` pfSysGraphicFreeBitmap
+
+- #define :ref:`CHK_SysGraphicFreeBitmap <group___sys_graphic_itf_1gaea92885c7d0435d40274de92d1552e8e>` (pfSysGraphicFreeBitmap != NULL)
+
+- #define :ref:`EXP_SysGraphicFreeBitmap <group___sys_graphic_itf_1gaaf66050a2a5b78bd814639207d165deb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicFreeBitmap", (RTS_UINTPTR) :ref:`SysGraphicFreeBitmap <group___sys_graphic_itf_1gafb18c87ed7134463fff0ee365da64bcb>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicGetBitmapSize <group___sys_graphic_itf_1gacd5d6c05ef7a847f2b05da645bd31c2d>` :ref:`PFSYSGRAPHICGETBITMAPSIZE <group___sys_graphic_itf_1gabfa4f71d635c3f72cbaa4e8b56c673d7>` pfSysGraphicGetBitmapSize;
+
+- #define :ref:`EXT_SysGraphicGetBitmapSize <group___sys_graphic_itf_1ga09805c3d34744522fbcb7db71cd12fe6>` extern :ref:`PFSYSGRAPHICGETBITMAPSIZE <group___sys_graphic_itf_1gabfa4f71d635c3f72cbaa4e8b56c673d7>` pfSysGraphicGetBitmapSize;
+
+- #define :ref:`GET_SysGraphicGetBitmapSize <group___sys_graphic_itf_1ga52c8e16855f098e0b38cd9165f6f01ca>` s_pfCMGetAPI2( "SysGraphicGetBitmapSize", (RTS_VOID_FCTPTR *)&pfSysGraphicGetBitmapSize, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicGetBitmapSize <group___sys_graphic_itf_1ga06bcd0fa33e1e3bfea6d9e5fced7f690>` pfSysGraphicGetBitmapSize
+
+- #define :ref:`CHK_SysGraphicGetBitmapSize <group___sys_graphic_itf_1gaea43550b39b169bbd33f410f751481e6>` (pfSysGraphicGetBitmapSize != NULL)
+
+- #define :ref:`EXP_SysGraphicGetBitmapSize <group___sys_graphic_itf_1ga0b9be1a4a448bbbca5449927b2ef33fa>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicGetBitmapSize", (RTS_UINTPTR) :ref:`SysGraphicGetBitmapSize <group___sys_graphic_itf_1ga7b277d3b02e61db1671ef39bf8f4bba4>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicAddClipRectangle <group___sys_graphic_itf_1gaac37498177b542a539f3d60d8942820d>` :ref:`PFSYSGRAPHICADDCLIPRECTANGLE <group___sys_graphic_itf_1gad0b2c174de1106d7a5128198d4a90d42>` pfSysGraphicAddClipRectangle;
+
+- #define :ref:`EXT_SysGraphicAddClipRectangle <group___sys_graphic_itf_1ga74382a1a6285a0d2b7bf3bca7725f461>` extern :ref:`PFSYSGRAPHICADDCLIPRECTANGLE <group___sys_graphic_itf_1gad0b2c174de1106d7a5128198d4a90d42>` pfSysGraphicAddClipRectangle;
+
+- #define :ref:`GET_SysGraphicAddClipRectangle <group___sys_graphic_itf_1ga229d5939a023a6b34922e0671a9e41d7>` s_pfCMGetAPI2( "SysGraphicAddClipRectangle", (RTS_VOID_FCTPTR *)&pfSysGraphicAddClipRectangle, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicAddClipRectangle <group___sys_graphic_itf_1ga8ff0199e0f213b5acf7b6f48e2be64ab>` pfSysGraphicAddClipRectangle
+
+- #define :ref:`CHK_SysGraphicAddClipRectangle <group___sys_graphic_itf_1ga43a8c43fa505e2802b95af228a341334>` (pfSysGraphicAddClipRectangle != NULL)
+
+- #define :ref:`EXP_SysGraphicAddClipRectangle <group___sys_graphic_itf_1gaae75a01404fcb1e43ac637f0350ee372>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicAddClipRectangle", (RTS_UINTPTR) :ref:`SysGraphicAddClipRectangle <group___sys_graphic_itf_1ga61b0c0b5ba6ca3e1834aa0d45f46ea66>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicRemoveClipRectangle <group___sys_graphic_itf_1gaacaac546e274fd98e576fccbb66026ae>` :ref:`PFSYSGRAPHICREMOVECLIPRECTANGLE <group___sys_graphic_itf_1gad0b7faff0c049a743ecdfcff3e459323>` pfSysGraphicRemoveClipRectangle;
+
+- #define :ref:`EXT_SysGraphicRemoveClipRectangle <group___sys_graphic_itf_1ga2207056614b294e912470a7f385861c8>` extern :ref:`PFSYSGRAPHICREMOVECLIPRECTANGLE <group___sys_graphic_itf_1gad0b7faff0c049a743ecdfcff3e459323>` pfSysGraphicRemoveClipRectangle;
+
+- #define :ref:`GET_SysGraphicRemoveClipRectangle <group___sys_graphic_itf_1ga763a540e81269b3e5b76caba88e1290f>` s_pfCMGetAPI2( "SysGraphicRemoveClipRectangle", (RTS_VOID_FCTPTR *)&pfSysGraphicRemoveClipRectangle, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicRemoveClipRectangle <group___sys_graphic_itf_1ga7b0e88d5080cdd73c092e8f6c174a56f>` pfSysGraphicRemoveClipRectangle
+
+- #define :ref:`CHK_SysGraphicRemoveClipRectangle <group___sys_graphic_itf_1ga7153ef01a3fb08f86c2342104ca3d7bf>` (pfSysGraphicRemoveClipRectangle != NULL)
+
+- #define :ref:`EXP_SysGraphicRemoveClipRectangle <group___sys_graphic_itf_1ga5bc7a0689681deb173a762023be289d2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicRemoveClipRectangle", (RTS_UINTPTR) :ref:`SysGraphicRemoveClipRectangle <group___sys_graphic_itf_1ga303cb91efb4328c23f9734737cb8bc35>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicSetClipRectangle <group___sys_graphic_itf_1ga549cbd360bdcbba1a972696827507f7c>` :ref:`PFSYSGRAPHICSETCLIPRECTANGLE <group___sys_graphic_itf_1ga70da2b10ce17aac7cd7ce9dda6ac2ba2>` pfSysGraphicSetClipRectangle;
+
+- #define :ref:`EXT_SysGraphicSetClipRectangle <group___sys_graphic_itf_1ga49c540c3721db66beefc302ebc9a08c5>` extern :ref:`PFSYSGRAPHICSETCLIPRECTANGLE <group___sys_graphic_itf_1ga70da2b10ce17aac7cd7ce9dda6ac2ba2>` pfSysGraphicSetClipRectangle;
+
+- #define :ref:`GET_SysGraphicSetClipRectangle <group___sys_graphic_itf_1gab28d6019ef9748efcd59b0293522ec25>` s_pfCMGetAPI2( "SysGraphicSetClipRectangle", (RTS_VOID_FCTPTR *)&pfSysGraphicSetClipRectangle, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicSetClipRectangle <group___sys_graphic_itf_1ga2487a6a163f68dd672671a829763b0a5>` pfSysGraphicSetClipRectangle
+
+- #define :ref:`CHK_SysGraphicSetClipRectangle <group___sys_graphic_itf_1ga6c64ea2e11d0c81ff0b60d89559d4502>` (pfSysGraphicSetClipRectangle != NULL)
+
+- #define :ref:`EXP_SysGraphicSetClipRectangle <group___sys_graphic_itf_1ga8ffc11b2cd80410a89a0422beef4165e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicSetClipRectangle", (RTS_UINTPTR) :ref:`SysGraphicSetClipRectangle <group___sys_graphic_itf_1ga22c8b8719f9c4ffc28cf6eaca7efcffb>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicBeginPaint <group___sys_graphic_itf_1ga2442cdaa9779d17f3c3ac2a93f816a4d>` :ref:`PFSYSGRAPHICBEGINPAINT <group___sys_graphic_itf_1ga0c96846208849aecae0bb7322844d313>` pfSysGraphicBeginPaint;
+
+- #define :ref:`EXT_SysGraphicBeginPaint <group___sys_graphic_itf_1ga37f2d0b038097b7b3080795290b63362>` extern :ref:`PFSYSGRAPHICBEGINPAINT <group___sys_graphic_itf_1ga0c96846208849aecae0bb7322844d313>` pfSysGraphicBeginPaint;
+
+- #define :ref:`GET_SysGraphicBeginPaint <group___sys_graphic_itf_1gac0aa57c07e915493622337cc248192bc>` s_pfCMGetAPI2( "SysGraphicBeginPaint", (RTS_VOID_FCTPTR *)&pfSysGraphicBeginPaint, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicBeginPaint <group___sys_graphic_itf_1ga7224af317446f1aaea425f7d2f6504ff>` pfSysGraphicBeginPaint
+
+- #define :ref:`CHK_SysGraphicBeginPaint <group___sys_graphic_itf_1ga990886fb77db056f3f21daab52cb4d2a>` (pfSysGraphicBeginPaint != NULL)
+
+- #define :ref:`EXP_SysGraphicBeginPaint <group___sys_graphic_itf_1ga8aff513d93f10e141c71148b515d0134>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicBeginPaint", (RTS_UINTPTR) :ref:`SysGraphicBeginPaint <group___sys_graphic_itf_1ga93fc9d9c7aa0c8852a345d2e23b1b181>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicEndPaint <group___sys_graphic_itf_1gad97279e48236b4bbf6202f0da8f1066f>` :ref:`PFSYSGRAPHICENDPAINT <group___sys_graphic_itf_1ga884c4786762bc67554dd13bd5aeb9c57>` pfSysGraphicEndPaint;
+
+- #define :ref:`EXT_SysGraphicEndPaint <group___sys_graphic_itf_1gab364eb5c0dae42e4abbfd5b6b4b20626>` extern :ref:`PFSYSGRAPHICENDPAINT <group___sys_graphic_itf_1ga884c4786762bc67554dd13bd5aeb9c57>` pfSysGraphicEndPaint;
+
+- #define :ref:`GET_SysGraphicEndPaint <group___sys_graphic_itf_1gab458e117def120d2a6e77f4cf8714afc>` s_pfCMGetAPI2( "SysGraphicEndPaint", (RTS_VOID_FCTPTR *)&pfSysGraphicEndPaint, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicEndPaint <group___sys_graphic_itf_1gae00adccedbfc62bd60b9b3622428efc0>` pfSysGraphicEndPaint
+
+- #define :ref:`CHK_SysGraphicEndPaint <group___sys_graphic_itf_1gac0134695df6b7b86022b883035ceb189>` (pfSysGraphicEndPaint != NULL)
+
+- #define :ref:`EXP_SysGraphicEndPaint <group___sys_graphic_itf_1ga1a4d8b8c5db5686317dfcd42db8aa6a5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicEndPaint", (RTS_UINTPTR) :ref:`SysGraphicEndPaint <group___sys_graphic_itf_1gaf302e17b875f61d1ae3baac9831a15e4>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicGetFeatureFlags <group___sys_graphic_itf_1ga9817d1acf5bac43d27f2d79e6874dd62>` :ref:`PFSYSGRAPHICGETFEATUREFLAGS <group___sys_graphic_itf_1ga67b031edfba790ff0a28e74c4470621d>` pfSysGraphicGetFeatureFlags;
+
+- #define :ref:`EXT_SysGraphicGetFeatureFlags <group___sys_graphic_itf_1ga48c03f861822afe68808c2d2b34159e2>` extern :ref:`PFSYSGRAPHICGETFEATUREFLAGS <group___sys_graphic_itf_1ga67b031edfba790ff0a28e74c4470621d>` pfSysGraphicGetFeatureFlags;
+
+- #define :ref:`GET_SysGraphicGetFeatureFlags <group___sys_graphic_itf_1ga30a0f6bb68efa4c19026c503c4c1ee4b>` s_pfCMGetAPI2( "SysGraphicGetFeatureFlags", (RTS_VOID_FCTPTR *)&pfSysGraphicGetFeatureFlags, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicGetFeatureFlags <group___sys_graphic_itf_1ga74343a53535cc6e694562bb338269e0a>` pfSysGraphicGetFeatureFlags
+
+- #define :ref:`CHK_SysGraphicGetFeatureFlags <group___sys_graphic_itf_1gaa0758975f368ae8cd4289dd5800cac67>` (pfSysGraphicGetFeatureFlags != NULL)
+
+- #define :ref:`EXP_SysGraphicGetFeatureFlags <group___sys_graphic_itf_1ga29d87968a69883d46525f690e1ee2619>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicGetFeatureFlags", (RTS_UINTPTR) :ref:`SysGraphicGetFeatureFlags <group___sys_graphic_itf_1ga4c0d51f7be70c79f53a17d48c146b53c>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicPreparePrinting <group___sys_graphic_itf_1gac4fa15889a3799b918484602af9e9461>` :ref:`PFSYSGRAPHICPREPAREPRINTING <group___sys_graphic_itf_1ga0726846e87795c9e8393cac63a69b7d6>` pfSysGraphicPreparePrinting;
+
+- #define :ref:`EXT_SysGraphicPreparePrinting <group___sys_graphic_itf_1gaadd05afd4645e99b93ffea5e5d7f3fa0>` extern :ref:`PFSYSGRAPHICPREPAREPRINTING <group___sys_graphic_itf_1ga0726846e87795c9e8393cac63a69b7d6>` pfSysGraphicPreparePrinting;
+
+- #define :ref:`GET_SysGraphicPreparePrinting <group___sys_graphic_itf_1ga8a14574eafda2330fb2cddc3f9b6d40b>` s_pfCMGetAPI2( "SysGraphicPreparePrinting", (RTS_VOID_FCTPTR *)&pfSysGraphicPreparePrinting, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicPreparePrinting <group___sys_graphic_itf_1ga725628064355b05e1ff968a46f1e4eff>` pfSysGraphicPreparePrinting
+
+- #define :ref:`CHK_SysGraphicPreparePrinting <group___sys_graphic_itf_1ga25ae5e3737d21edc8593da38168fcbd6>` (pfSysGraphicPreparePrinting != NULL)
+
+- #define :ref:`EXP_SysGraphicPreparePrinting <group___sys_graphic_itf_1ga118e5513794c2e1f3b67b98ca3d03331>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicPreparePrinting", (RTS_UINTPTR) :ref:`SysGraphicPreparePrinting <group___sys_graphic_itf_1ga5e5817bd44aebc91394f1c74ab68a3c7>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicFinishPrinting <group___sys_graphic_itf_1ga9decaf5a188335db540922a8978f68c0>` :ref:`PFSYSGRAPHICFINISHPRINTING <group___sys_graphic_itf_1gaf7209c8e17a8294fb710c617bff7bf2d>` pfSysGraphicFinishPrinting;
+
+- #define :ref:`EXT_SysGraphicFinishPrinting <group___sys_graphic_itf_1ga88198399f671e2f3d2d73ff200c74704>` extern :ref:`PFSYSGRAPHICFINISHPRINTING <group___sys_graphic_itf_1gaf7209c8e17a8294fb710c617bff7bf2d>` pfSysGraphicFinishPrinting;
+
+- #define :ref:`GET_SysGraphicFinishPrinting <group___sys_graphic_itf_1ga607454d0453c2b796973ea449eafe2f7>` s_pfCMGetAPI2( "SysGraphicFinishPrinting", (RTS_VOID_FCTPTR *)&pfSysGraphicFinishPrinting, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicFinishPrinting <group___sys_graphic_itf_1ga5a62ce989766c5389d4e54b1654edfd5>` pfSysGraphicFinishPrinting
+
+- #define :ref:`CHK_SysGraphicFinishPrinting <group___sys_graphic_itf_1gac049a3a386ef9858123f02228b5509df>` (pfSysGraphicFinishPrinting != NULL)
+
+- #define :ref:`EXP_SysGraphicFinishPrinting <group___sys_graphic_itf_1ga19afd593de1adcc75368d004e828ef2d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicFinishPrinting", (RTS_UINTPTR) :ref:`SysGraphicFinishPrinting <group___sys_graphic_itf_1gaaecddbc61733e95b7b10e70ce7aecef2>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicSetAntiAliasingMode <group___sys_graphic_itf_1gaee6bddf469899719973e9848b6234954>` :ref:`PFSYSGRAPHICSETANTIALIASINGMODE <group___sys_graphic_itf_1gae82e25193ef52a4785c5ca8ec70d9094>` pfSysGraphicSetAntiAliasingMode;
+
+- #define :ref:`EXT_SysGraphicSetAntiAliasingMode <group___sys_graphic_itf_1ga6cfa6c9b09beed13f29b4a60a6e136a7>` extern :ref:`PFSYSGRAPHICSETANTIALIASINGMODE <group___sys_graphic_itf_1gae82e25193ef52a4785c5ca8ec70d9094>` pfSysGraphicSetAntiAliasingMode;
+
+- #define :ref:`GET_SysGraphicSetAntiAliasingMode <group___sys_graphic_itf_1ga25f2e694ba99c48573eb8cd5bbd39ba0>` s_pfCMGetAPI2( "SysGraphicSetAntiAliasingMode", (RTS_VOID_FCTPTR *)&pfSysGraphicSetAntiAliasingMode, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicSetAntiAliasingMode <group___sys_graphic_itf_1ga480c53019cb7cc7814a84ea8352f5f15>` pfSysGraphicSetAntiAliasingMode
+
+- #define :ref:`CHK_SysGraphicSetAntiAliasingMode <group___sys_graphic_itf_1ga24441e42cccd44b132236aece71bdd4c>` (pfSysGraphicSetAntiAliasingMode != NULL)
+
+- #define :ref:`EXP_SysGraphicSetAntiAliasingMode <group___sys_graphic_itf_1gab5edaade16b0693c9c8036f2d0fae4a6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicSetAntiAliasingMode", (RTS_UINTPTR) :ref:`SysGraphicSetAntiAliasingMode <group___sys_graphic_itf_1ga782820e35db3bcf8c9da6a5ed21e1c0e>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicGetSysWindowFont <group___sys_graphic_itf_1ga268a6c1c9a2801d7f1d1454925d88ff6>` :ref:`PFSYSGRAPHICGETSYSWINDOWFONT <group___sys_graphic_itf_1ga40b8e25a74198dc5682576a18ecffd91>` pfSysGraphicGetSysWindowFont;
+
+- #define :ref:`EXT_SysGraphicGetSysWindowFont <group___sys_graphic_itf_1gaf38b9b317f2d1cc0ddc063c321a052a8>` extern :ref:`PFSYSGRAPHICGETSYSWINDOWFONT <group___sys_graphic_itf_1ga40b8e25a74198dc5682576a18ecffd91>` pfSysGraphicGetSysWindowFont;
+
+- #define :ref:`GET_SysGraphicGetSysWindowFont <group___sys_graphic_itf_1ga46d48f1bc8dd083278faed189d2a68a7>` s_pfCMGetAPI2( "SysGraphicGetSysWindowFont", (RTS_VOID_FCTPTR *)&pfSysGraphicGetSysWindowFont, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicGetSysWindowFont <group___sys_graphic_itf_1ga1f4b7f0f441a32433642de2588512ced>` pfSysGraphicGetSysWindowFont
+
+- #define :ref:`CHK_SysGraphicGetSysWindowFont <group___sys_graphic_itf_1ga03a119d2d22870651e6a8eb22c9c4c17>` (pfSysGraphicGetSysWindowFont != NULL)
+
+- #define :ref:`EXP_SysGraphicGetSysWindowFont <group___sys_graphic_itf_1ga2c79486713fe224ef5157f77bb416870>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicGetSysWindowFont", (RTS_UINTPTR) :ref:`SysGraphicGetSysWindowFont <group___sys_graphic_itf_1gaaf724496eec95a23e49d9cb4b140c51a>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicInvalidateRectangle <group___sys_graphic_itf_1ga495d9329e189518ae248ee1bc319cfe5>` :ref:`PFSYSGRAPHICINVALIDATERECTANGLE <group___sys_graphic_itf_1gab818ecdcbef766636c8dac4fbfae69fc>` pfSysGraphicInvalidateRectangle;
+
+- #define :ref:`EXT_SysGraphicInvalidateRectangle <group___sys_graphic_itf_1ga6750ce8f95a18b2498a8da284da6aaee>` extern :ref:`PFSYSGRAPHICINVALIDATERECTANGLE <group___sys_graphic_itf_1gab818ecdcbef766636c8dac4fbfae69fc>` pfSysGraphicInvalidateRectangle;
+
+- #define :ref:`GET_SysGraphicInvalidateRectangle <group___sys_graphic_itf_1ga45655459bebfa3f488a417d3a8282899>` s_pfCMGetAPI2( "SysGraphicInvalidateRectangle", (RTS_VOID_FCTPTR *)&pfSysGraphicInvalidateRectangle, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicInvalidateRectangle <group___sys_graphic_itf_1ga64d51a6cf528f83786908f5844f91e2f>` pfSysGraphicInvalidateRectangle
+
+- #define :ref:`CHK_SysGraphicInvalidateRectangle <group___sys_graphic_itf_1ga3133641fa7a88858cac55fdb7f3527cb>` (pfSysGraphicInvalidateRectangle != NULL)
+
+- #define :ref:`EXP_SysGraphicInvalidateRectangle <group___sys_graphic_itf_1ga0271e01e5a1d9c20e1998acda71bf76f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicInvalidateRectangle", (RTS_UINTPTR) :ref:`SysGraphicInvalidateRectangle <group___sys_graphic_itf_1ga2277a14c1ee963c5306c2c881a095c51>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicResetInvalidation <group___sys_graphic_itf_1ga3da81c0b8828b1b7bd70949c3635fae5>` :ref:`PFSYSGRAPHICRESETINVALIDATION <group___sys_graphic_itf_1gab1902337b068d0b4160ace81aa38bbda>` pfSysGraphicResetInvalidation;
+
+- #define :ref:`EXT_SysGraphicResetInvalidation <group___sys_graphic_itf_1gabe7e3cbdbb11126b693ffceda7540000>` extern :ref:`PFSYSGRAPHICRESETINVALIDATION <group___sys_graphic_itf_1gab1902337b068d0b4160ace81aa38bbda>` pfSysGraphicResetInvalidation;
+
+- #define :ref:`GET_SysGraphicResetInvalidation <group___sys_graphic_itf_1ga805ffc0927b8394c3f944099d5f41e83>` s_pfCMGetAPI2( "SysGraphicResetInvalidation", (RTS_VOID_FCTPTR *)&pfSysGraphicResetInvalidation, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicResetInvalidation <group___sys_graphic_itf_1gaa222c2ed950172ae1701a21039c1c042>` pfSysGraphicResetInvalidation
+
+- #define :ref:`CHK_SysGraphicResetInvalidation <group___sys_graphic_itf_1ga855e028553438b27e97a127bade82e8d>` (pfSysGraphicResetInvalidation != NULL)
+
+- #define :ref:`EXP_SysGraphicResetInvalidation <group___sys_graphic_itf_1gaf4f345ad6890aafa33004f2a70f53f7a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicResetInvalidation", (RTS_UINTPTR) :ref:`SysGraphicResetInvalidation <group___sys_graphic_itf_1ga209b5e9be7a1508a627cd4c65855f26a>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicInvalidateClientArea <group___sys_graphic_itf_1gac9dbe6bd74b5ffae616a1007622189da>` :ref:`PFSYSGRAPHICINVALIDATECLIENTAREA <group___sys_graphic_itf_1gaba8adf741b44555240eb9040affbb79c>` pfSysGraphicInvalidateClientArea;
+
+- #define :ref:`EXT_SysGraphicInvalidateClientArea <group___sys_graphic_itf_1gaec1d88647f8c048d6c0e0613db49cf0a>` extern :ref:`PFSYSGRAPHICINVALIDATECLIENTAREA <group___sys_graphic_itf_1gaba8adf741b44555240eb9040affbb79c>` pfSysGraphicInvalidateClientArea;
+
+- #define :ref:`GET_SysGraphicInvalidateClientArea <group___sys_graphic_itf_1ga0ac3d1a5b9ef20a16b98798d1bf6f23a>` s_pfCMGetAPI2( "SysGraphicInvalidateClientArea", (RTS_VOID_FCTPTR *)&pfSysGraphicInvalidateClientArea, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicInvalidateClientArea <group___sys_graphic_itf_1gaa972a14bea7e635163cb7b82506f3d75>` pfSysGraphicInvalidateClientArea
+
+- #define :ref:`CHK_SysGraphicInvalidateClientArea <group___sys_graphic_itf_1gac741216a5c2a2861b7435b837f70f039>` (pfSysGraphicInvalidateClientArea != NULL)
+
+- #define :ref:`EXP_SysGraphicInvalidateClientArea <group___sys_graphic_itf_1ga4b5693888f378c411e21ce34b62d5b8d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicInvalidateClientArea", (RTS_UINTPTR) :ref:`SysGraphicInvalidateClientArea <group___sys_graphic_itf_1gab4e06f08874da823a924b13228391f03>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicCreateTransformation <group___sys_graphic_itf_1gab625be285d5d069a5b6de6b9fd6b59dc>` :ref:`PFSYSGRAPHICCREATETRANSFORMATION <group___sys_graphic_itf_1gaa284f8fda39219ab727697a830c880ad>` pfSysGraphicCreateTransformation;
+
+- #define :ref:`EXT_SysGraphicCreateTransformation <group___sys_graphic_itf_1ga5c5038f27bd637c8d9712b2e3dbd1ad2>` extern :ref:`PFSYSGRAPHICCREATETRANSFORMATION <group___sys_graphic_itf_1gaa284f8fda39219ab727697a830c880ad>` pfSysGraphicCreateTransformation;
+
+- #define :ref:`GET_SysGraphicCreateTransformation <group___sys_graphic_itf_1ga3c6ee79cc42c7afdd64aac958602b372>` s_pfCMGetAPI2( "SysGraphicCreateTransformation", (RTS_VOID_FCTPTR *)&pfSysGraphicCreateTransformation, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicCreateTransformation <group___sys_graphic_itf_1ga9a7052ebbb4396e2fa0a6d56ca31abcb>` pfSysGraphicCreateTransformation
+
+- #define :ref:`CHK_SysGraphicCreateTransformation <group___sys_graphic_itf_1ga6beb8709d54524c3eb26dbfbb2ee10a1>` (pfSysGraphicCreateTransformation != NULL)
+
+- #define :ref:`EXP_SysGraphicCreateTransformation <group___sys_graphic_itf_1ga10a38f0ecebd5ecca8f4654925677256>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicCreateTransformation", (RTS_UINTPTR) :ref:`SysGraphicCreateTransformation <group___sys_graphic_itf_1ga8a9e4f1d861e20593927748577f251a7>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicCreateTransformationByValues <group___sys_graphic_itf_1ga7ace28e0679a1a02b9830c5e5bc84d49>` :ref:`PFSYSGRAPHICCREATETRANSFORMATIONBYVALUES <group___sys_graphic_itf_1ga93e91c0ba75959a52eda8c5d221ad2c6>` pfSysGraphicCreateTransformationByValues;
+
+- #define :ref:`EXT_SysGraphicCreateTransformationByValues <group___sys_graphic_itf_1ga09d95c0b0fdcb18c55e2e9c5248be3b2>` extern :ref:`PFSYSGRAPHICCREATETRANSFORMATIONBYVALUES <group___sys_graphic_itf_1ga93e91c0ba75959a52eda8c5d221ad2c6>` pfSysGraphicCreateTransformationByValues;
+
+- #define :ref:`GET_SysGraphicCreateTransformationByValues <group___sys_graphic_itf_1ga1842faa59fadc7403df058c5a6b8ee62>` s_pfCMGetAPI2( "SysGraphicCreateTransformationByValues", (RTS_VOID_FCTPTR *)&pfSysGraphicCreateTransformationByValues, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicCreateTransformationByValues <group___sys_graphic_itf_1gace9453d02e2199a15ecc8a0724072dd6>` pfSysGraphicCreateTransformationByValues
+
+- #define :ref:`CHK_SysGraphicCreateTransformationByValues <group___sys_graphic_itf_1gad7359e6c27320b8ba91b21ec2bc82533>` (pfSysGraphicCreateTransformationByValues != NULL)
+
+- #define :ref:`EXP_SysGraphicCreateTransformationByValues <group___sys_graphic_itf_1ga04c626292afea09924767eb943e3e4b3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicCreateTransformationByValues", (RTS_UINTPTR) :ref:`SysGraphicCreateTransformationByValues <group___sys_graphic_itf_1ga5b9675a578e8be1d9e64c11ca36eb073>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicFreeTransformation <group___sys_graphic_itf_1ga0b0cc9fd9eafdb37681610da61790cd9>` :ref:`PFSYSGRAPHICFREETRANSFORMATION <group___sys_graphic_itf_1ga36dd00d582e5edaf230f2ada0b61c38d>` pfSysGraphicFreeTransformation;
+
+- #define :ref:`EXT_SysGraphicFreeTransformation <group___sys_graphic_itf_1gad474b0e905dd8f5d3dde1240e0505d82>` extern :ref:`PFSYSGRAPHICFREETRANSFORMATION <group___sys_graphic_itf_1ga36dd00d582e5edaf230f2ada0b61c38d>` pfSysGraphicFreeTransformation;
+
+- #define :ref:`GET_SysGraphicFreeTransformation <group___sys_graphic_itf_1gaf7ac68e12d51d513f07a7194b3294d2d>` s_pfCMGetAPI2( "SysGraphicFreeTransformation", (RTS_VOID_FCTPTR *)&pfSysGraphicFreeTransformation, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicFreeTransformation <group___sys_graphic_itf_1ga932c32a0562eb5e0103ff1c625c8a57b>` pfSysGraphicFreeTransformation
+
+- #define :ref:`CHK_SysGraphicFreeTransformation <group___sys_graphic_itf_1ga5e810f5cfc69606214b7fb32cbbcba0f>` (pfSysGraphicFreeTransformation != NULL)
+
+- #define :ref:`EXP_SysGraphicFreeTransformation <group___sys_graphic_itf_1ga52bb5a7d990b95f1e7c7e88bec2705bf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicFreeTransformation", (RTS_UINTPTR) :ref:`SysGraphicFreeTransformation <group___sys_graphic_itf_1ga08a9f7b4037486e372a8954e7151dc9e>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicTransformationScale <group___sys_graphic_itf_1ga7cb2ff277994d187b3a8aa3c4fd597d2>` :ref:`PFSYSGRAPHICTRANSFORMATIONSCALE <group___sys_graphic_itf_1ga02b45c5f85559f1f4463e2bb32147343>` pfSysGraphicTransformationScale;
+
+- #define :ref:`EXT_SysGraphicTransformationScale <group___sys_graphic_itf_1ga9383ff02e36202a6bf4896f1f3daa1f8>` extern :ref:`PFSYSGRAPHICTRANSFORMATIONSCALE <group___sys_graphic_itf_1ga02b45c5f85559f1f4463e2bb32147343>` pfSysGraphicTransformationScale;
+
+- #define :ref:`GET_SysGraphicTransformationScale <group___sys_graphic_itf_1gab85374779fb0069becae92267dc3a0d7>` s_pfCMGetAPI2( "SysGraphicTransformationScale", (RTS_VOID_FCTPTR *)&pfSysGraphicTransformationScale, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicTransformationScale <group___sys_graphic_itf_1ga3c7420b7d7a80dd236ee32692ad82c0b>` pfSysGraphicTransformationScale
+
+- #define :ref:`CHK_SysGraphicTransformationScale <group___sys_graphic_itf_1gaf6002f5ad70dffaba2f9b64cce96809e>` (pfSysGraphicTransformationScale != NULL)
+
+- #define :ref:`EXP_SysGraphicTransformationScale <group___sys_graphic_itf_1gab7df96d7cb187bc0da705c3b700b506b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicTransformationScale", (RTS_UINTPTR) :ref:`SysGraphicTransformationScale <group___sys_graphic_itf_1gabfaaf78e208bd246010f49ede5b3c235>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicTransformationRotate <group___sys_graphic_itf_1ga25638d7835f2a7f1e545774861e7ec62>` :ref:`PFSYSGRAPHICTRANSFORMATIONROTATE <group___sys_graphic_itf_1ga609c95e42fc980063db4a59491abbb18>` pfSysGraphicTransformationRotate;
+
+- #define :ref:`EXT_SysGraphicTransformationRotate <group___sys_graphic_itf_1ga736196986c44c6768ba3713d36122882>` extern :ref:`PFSYSGRAPHICTRANSFORMATIONROTATE <group___sys_graphic_itf_1ga609c95e42fc980063db4a59491abbb18>` pfSysGraphicTransformationRotate;
+
+- #define :ref:`GET_SysGraphicTransformationRotate <group___sys_graphic_itf_1ga43427b0a9e13db15c8bc0d00bee85acf>` s_pfCMGetAPI2( "SysGraphicTransformationRotate", (RTS_VOID_FCTPTR *)&pfSysGraphicTransformationRotate, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicTransformationRotate <group___sys_graphic_itf_1gaf8df59bb14f6db7ed42e75380211f400>` pfSysGraphicTransformationRotate
+
+- #define :ref:`CHK_SysGraphicTransformationRotate <group___sys_graphic_itf_1ga7fbfe68829ceaa305cc1ea6ee1af673d>` (pfSysGraphicTransformationRotate != NULL)
+
+- #define :ref:`EXP_SysGraphicTransformationRotate <group___sys_graphic_itf_1ga0a28ffb2c3aa5b44f74912f6c916ab10>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicTransformationRotate", (RTS_UINTPTR) :ref:`SysGraphicTransformationRotate <group___sys_graphic_itf_1gaaa21188545a72b597d396a0fe05a78f4>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicTransformationTranslate <group___sys_graphic_itf_1gacca39c22138f7588bcd88a60cd33dce1>` :ref:`PFSYSGRAPHICTRANSFORMATIONTRANSLATE <group___sys_graphic_itf_1gad96e1b9bdede01cef19394e651ec6906>` pfSysGraphicTransformationTranslate;
+
+- #define :ref:`EXT_SysGraphicTransformationTranslate <group___sys_graphic_itf_1ga05f53990f0ae135d2707a109a80da061>` extern :ref:`PFSYSGRAPHICTRANSFORMATIONTRANSLATE <group___sys_graphic_itf_1gad96e1b9bdede01cef19394e651ec6906>` pfSysGraphicTransformationTranslate;
+
+- #define :ref:`GET_SysGraphicTransformationTranslate <group___sys_graphic_itf_1ga883c2bba66a5fb8c33b27b4f2c2237cb>` s_pfCMGetAPI2( "SysGraphicTransformationTranslate", (RTS_VOID_FCTPTR *)&pfSysGraphicTransformationTranslate, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicTransformationTranslate <group___sys_graphic_itf_1ga39bf1593548dc4132aa51ff362e89bb5>` pfSysGraphicTransformationTranslate
+
+- #define :ref:`CHK_SysGraphicTransformationTranslate <group___sys_graphic_itf_1ga7bfd3e8eea17c95fec4312a63c70e244>` (pfSysGraphicTransformationTranslate != NULL)
+
+- #define :ref:`EXP_SysGraphicTransformationTranslate <group___sys_graphic_itf_1ga4f1e9c182985c68305b5fd7e4fa48e09>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicTransformationTranslate", (RTS_UINTPTR) :ref:`SysGraphicTransformationTranslate <group___sys_graphic_itf_1ga82856e23fdd3c2de0b1c202b6d276a78>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicSetActiveTransformation <group___sys_graphic_itf_1ga46573053b39071e324e980133849c672>` :ref:`PFSYSGRAPHICSETACTIVETRANSFORMATION <group___sys_graphic_itf_1ga099895aa0c13bd75e8a8d18c6c1595a2>` pfSysGraphicSetActiveTransformation;
+
+- #define :ref:`EXT_SysGraphicSetActiveTransformation <group___sys_graphic_itf_1gada8a8510547fac4e8f1203439b188aa7>` extern :ref:`PFSYSGRAPHICSETACTIVETRANSFORMATION <group___sys_graphic_itf_1ga099895aa0c13bd75e8a8d18c6c1595a2>` pfSysGraphicSetActiveTransformation;
+
+- #define :ref:`GET_SysGraphicSetActiveTransformation <group___sys_graphic_itf_1ga40e9579441334082dd5974fb9c571345>` s_pfCMGetAPI2( "SysGraphicSetActiveTransformation", (RTS_VOID_FCTPTR *)&pfSysGraphicSetActiveTransformation, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicSetActiveTransformation <group___sys_graphic_itf_1ga969286763764e3cf0b8b6cc69bfef3a7>` pfSysGraphicSetActiveTransformation
+
+- #define :ref:`CHK_SysGraphicSetActiveTransformation <group___sys_graphic_itf_1ga08e6c36e5f14eb1dbbc6f9fbdcc7265d>` (pfSysGraphicSetActiveTransformation != NULL)
+
+- #define :ref:`EXP_SysGraphicSetActiveTransformation <group___sys_graphic_itf_1gab1763a0b64ffbf47dda256897740beb8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicSetActiveTransformation", (RTS_UINTPTR) :ref:`SysGraphicSetActiveTransformation <group___sys_graphic_itf_1ga7ddaf9233f7b58f511e59ddcf83ccbaf>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicGetActiveTransformation <group___sys_graphic_itf_1gad31a784dc721d06170fe54c03c2ebf36>` :ref:`PFSYSGRAPHICGETACTIVETRANSFORMATION <group___sys_graphic_itf_1ga7d95c89c51b1efb0dcb0cd5ddff198e8>` pfSysGraphicGetActiveTransformation;
+
+- #define :ref:`EXT_SysGraphicGetActiveTransformation <group___sys_graphic_itf_1gaad53ac8a9cafb5e8087d85b69a5b1ac7>` extern :ref:`PFSYSGRAPHICGETACTIVETRANSFORMATION <group___sys_graphic_itf_1ga7d95c89c51b1efb0dcb0cd5ddff198e8>` pfSysGraphicGetActiveTransformation;
+
+- #define :ref:`GET_SysGraphicGetActiveTransformation <group___sys_graphic_itf_1ga78a5883a55a8a2946297ad67d8b9f7d4>` s_pfCMGetAPI2( "SysGraphicGetActiveTransformation", (RTS_VOID_FCTPTR *)&pfSysGraphicGetActiveTransformation, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicGetActiveTransformation <group___sys_graphic_itf_1gacd172fdb6d0bb1ed7b89b2e5855f69ee>` pfSysGraphicGetActiveTransformation
+
+- #define :ref:`CHK_SysGraphicGetActiveTransformation <group___sys_graphic_itf_1ga6334b49ca604b40ea1712ffa4cef6d2b>` (pfSysGraphicGetActiveTransformation != NULL)
+
+- #define :ref:`EXP_SysGraphicGetActiveTransformation <group___sys_graphic_itf_1gade6705c318b20f5540dabece2ad1f162>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicGetActiveTransformation", (RTS_UINTPTR) :ref:`SysGraphicGetActiveTransformation <group___sys_graphic_itf_1ga4330b069437a1f23f4871ce0d1e08b09>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicCloneTransformation <group___sys_graphic_itf_1gae06624970dd7bda2949deedbde7e7ef5>` :ref:`PFSYSGRAPHICCLONETRANSFORMATION <group___sys_graphic_itf_1ga5b3fb4b2aca88e80ad39404d196cf6be>` pfSysGraphicCloneTransformation;
+
+- #define :ref:`EXT_SysGraphicCloneTransformation <group___sys_graphic_itf_1gadfc75b184faebf60ea68d7d301bf6c8e>` extern :ref:`PFSYSGRAPHICCLONETRANSFORMATION <group___sys_graphic_itf_1ga5b3fb4b2aca88e80ad39404d196cf6be>` pfSysGraphicCloneTransformation;
+
+- #define :ref:`GET_SysGraphicCloneTransformation <group___sys_graphic_itf_1ga3e83f5ca20c4b0859db6c64c30b2f317>` s_pfCMGetAPI2( "SysGraphicCloneTransformation", (RTS_VOID_FCTPTR *)&pfSysGraphicCloneTransformation, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicCloneTransformation <group___sys_graphic_itf_1ga406a9c18f7641898ab09b22cba51d002>` pfSysGraphicCloneTransformation
+
+- #define :ref:`CHK_SysGraphicCloneTransformation <group___sys_graphic_itf_1ga618dfc7f6d80a969917b2818502a51c0>` (pfSysGraphicCloneTransformation != NULL)
+
+- #define :ref:`EXP_SysGraphicCloneTransformation <group___sys_graphic_itf_1gad71e907e0dafa371e5776f31e07ff780>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicCloneTransformation", (RTS_UINTPTR) :ref:`SysGraphicCloneTransformation <group___sys_graphic_itf_1ga8d9cdfa3bc890e30429817b6bf3f6872>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicTransformationTransform <group___sys_graphic_itf_1ga1404b6b519eb8a160bfc269fd859c836>` :ref:`PFSYSGRAPHICTRANSFORMATIONTRANSFORM <group___sys_graphic_itf_1gad6db99f17c91de5abe592225c58cd93f>` pfSysGraphicTransformationTransform;
+
+- #define :ref:`EXT_SysGraphicTransformationTransform <group___sys_graphic_itf_1ga38db1450f1d979f7b20f4a7481007ee7>` extern :ref:`PFSYSGRAPHICTRANSFORMATIONTRANSFORM <group___sys_graphic_itf_1gad6db99f17c91de5abe592225c58cd93f>` pfSysGraphicTransformationTransform;
+
+- #define :ref:`GET_SysGraphicTransformationTransform <group___sys_graphic_itf_1ga2d77b5488de6c2d3ae31f9e28b34b085>` s_pfCMGetAPI2( "SysGraphicTransformationTransform", (RTS_VOID_FCTPTR *)&pfSysGraphicTransformationTransform, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicTransformationTransform <group___sys_graphic_itf_1ga970b2fe3122a9cb759dd254d9d9679fc>` pfSysGraphicTransformationTransform
+
+- #define :ref:`CHK_SysGraphicTransformationTransform <group___sys_graphic_itf_1ga53aadf2d49519ff77e4d1cd230540e3c>` (pfSysGraphicTransformationTransform != NULL)
+
+- #define :ref:`EXP_SysGraphicTransformationTransform <group___sys_graphic_itf_1ga48a0db6f3dae058c3fc51cd8c924a380>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicTransformationTransform", (RTS_UINTPTR) :ref:`SysGraphicTransformationTransform <group___sys_graphic_itf_1gab2b9f9a793623d9be2639f8cd944f740>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicSetCompositingMode <group___sys_graphic_itf_1ga5c50939631cefdca4ba5486fb26a3077>` :ref:`PFSYSGRAPHICSETCOMPOSITINGMODE <group___sys_graphic_itf_1ga0e5ea904b636e475a1c291c6a8ac2b9b>` pfSysGraphicSetCompositingMode;
+
+- #define :ref:`EXT_SysGraphicSetCompositingMode <group___sys_graphic_itf_1ga806a3e67c260e3b218c5aba2dcde2d4e>` extern :ref:`PFSYSGRAPHICSETCOMPOSITINGMODE <group___sys_graphic_itf_1ga0e5ea904b636e475a1c291c6a8ac2b9b>` pfSysGraphicSetCompositingMode;
+
+- #define :ref:`GET_SysGraphicSetCompositingMode <group___sys_graphic_itf_1gaad08105bc7e5c68f73e0cb4e59510de7>` s_pfCMGetAPI2( "SysGraphicSetCompositingMode", (RTS_VOID_FCTPTR *)&pfSysGraphicSetCompositingMode, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicSetCompositingMode <group___sys_graphic_itf_1ga7fa80e5a19b0674355ee46c879956ff7>` pfSysGraphicSetCompositingMode
+
+- #define :ref:`CHK_SysGraphicSetCompositingMode <group___sys_graphic_itf_1ga5b17248ae226523d80c29c5d4b4ec295>` (pfSysGraphicSetCompositingMode != NULL)
+
+- #define :ref:`EXP_SysGraphicSetCompositingMode <group___sys_graphic_itf_1gaf4227962547fc1ba2dcbac96d0103fc7>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicSetCompositingMode", (RTS_UINTPTR) :ref:`SysGraphicSetCompositingMode <group___sys_graphic_itf_1ga9442864ee0f052c2fa5af08fa8c7c1d8>` , 0, 0)
+
+- #define :ref:`USE_SysGraphicGetCompositingMode <group___sys_graphic_itf_1ga5ef2668496b9d10a089f6b34078af4bc>` :ref:`PFSYSGRAPHICGETCOMPOSITINGMODE <group___sys_graphic_itf_1ga9adcf3862ede8492308b45a86b2128a0>` pfSysGraphicGetCompositingMode;
+
+- #define :ref:`EXT_SysGraphicGetCompositingMode <group___sys_graphic_itf_1gaa181b05d8350db3be180b9e9d70d39ed>` extern :ref:`PFSYSGRAPHICGETCOMPOSITINGMODE <group___sys_graphic_itf_1ga9adcf3862ede8492308b45a86b2128a0>` pfSysGraphicGetCompositingMode;
+
+- #define :ref:`GET_SysGraphicGetCompositingMode <group___sys_graphic_itf_1ga14dbbb661a7fbf10b3601ce060fafd55>` s_pfCMGetAPI2( "SysGraphicGetCompositingMode", (RTS_VOID_FCTPTR *)&pfSysGraphicGetCompositingMode, (fl), 0, 0)
+
+- #define :ref:`CAL_SysGraphicGetCompositingMode <group___sys_graphic_itf_1ga60f79ca1bfa42ab19824dadefa4b3296>` pfSysGraphicGetCompositingMode
+
+- #define :ref:`CHK_SysGraphicGetCompositingMode <group___sys_graphic_itf_1gadd0d580976de6272801e80265c42cd45>` (pfSysGraphicGetCompositingMode != NULL)
+
+- #define :ref:`EXP_SysGraphicGetCompositingMode <group___sys_graphic_itf_1gab95de0c3b1240efeeffa923931a6369e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicGetCompositingMode", (RTS_UINTPTR) :ref:`SysGraphicGetCompositingMode <group___sys_graphic_itf_1ga28d188b2db408eb84259f1f214f16477>` , 0, 0)
+
+- #define :ref:`ITF_SysGraphic <group___sys_graphic_itf_1ga415ca8a0f6b5104702020c099e3cb383>`
+
+- #define :ref:`EXTITF_SysGraphic <group___sys_graphic_itf_1ga2d1bfd4a14527d311fe1fc80986464c9>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICCREATECOMPATIBLEDEVICECONTEXT <group___sys_graphic_itf_1ga5513a01f2cc12d36ad2e332694720e3a>`)(RTS_HANDLE hWindow, RTS_HANDLE *phDC)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICCREATECOMPATIBLEDEVICECONTEXTWITHCUSTOMSIZE <group___sys_graphic_itf_1ga61899ae6adfc0e9ada6997195d71b0b2>`)(RTS_HANDLE hWindow, RTS_I16 iWidth, RTS_I16 iHeight, RTS_HANDLE *phDC)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICDELETEDEVICECONTEXT <group___sys_graphic_itf_1ga75c544e420a672d37458e7f786f7f0ed>`)(RTS_HANDLE hWindow, RTS_HANDLE hDC)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICGETDEVICECONTEXT <group___sys_graphic_itf_1ga2be2babf095286be5afe62425717b0ea>`)(RTS_HANDLE hWindow, RTS_HANDLE *phDC)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICRELEASEDEVICECONTEXT <group___sys_graphic_itf_1ga4bda115be9963d17d0b30d58478953c0>`)(RTS_HANDLE hWindow, RTS_HANDLE hDC)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICGETDEVICECONTEXTFORWINDOWDEVICECONTEXT <group___sys_graphic_itf_1gadad9cbf61eaad55e8fd45c5571b3eb46>`)(RTS_HANDLE hWindow, RTS_HANDLE hDCWindow, RTS_HANDLE *phDC)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICRELEASEDEVICECONTEXTFORWINDOWDEVICECONTEXT <group___sys_graphic_itf_1gac32490d7d09d490c3531324a7dbe6094>`)(RTS_HANDLE hWindow, RTS_HANDLE hDC)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICSETBACKGROUNDCOLOR <group___sys_graphic_itf_1ga1a136ccd71b1b6da8c39012e0719e8dc>`)(RTS_HANDLE hDC, RTS_UI32 ulColor)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICCLEARRECTANGLE <group___sys_graphic_itf_1ga0003ddea8382ff96bc91d7eca958bed4>`)(RTS_HANDLE hDC, RTS_Rectangle rect)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICBITBLT <group___sys_graphic_itf_1ga5fbe642604c7f7f03c5900646cf4e6dd>`)(RTS_HANDLE hDCDestination, RTS_HANDLE hDCSource, RTS_Rectangle rect)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICSTRETCHBLT <group___sys_graphic_itf_1gafd917f1df473af351940d4e57704e91e>`)(RTS_HANDLE hDCDestination, RTS_Rectangle rectDestination, RTS_HANDLE hDCSource, RTS_Rectangle rectSource)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICDRAWRECT <group___sys_graphic_itf_1ga6c85afb509d029e0141493a1a46f1425>`)(RTS_HANDLE hDC, RTS_Rectangle rect, RectangleType nType)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICSETROUNDRECTRADIUS <group___sys_graphic_itf_1ga91b0d5ef77185fe4546e13049cf08951>`)(RTS_HANDLE hDC, RTS_I16 iRadiusX, RTS_I16 iRadiusY)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICDRAWRECTF <group___sys_graphic_itf_1ga9fc9a67d9a504741a35fb132d5d04cc6>`)(RTS_HANDLE hDC, RTS_RectangleF rect, RectangleType nType)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICDRAWPOLYGON <group___sys_graphic_itf_1ga40d5dd11d083abb868b7d02a710a52eb>`)(RTS_HANDLE hDC, RTS_I16 nPoints, RTS_Point *pPoints, PolygonType nType)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICDRAWPOLYGONF <group___sys_graphic_itf_1ga46b48efc541e066808a1b5da45704379>`)(RTS_HANDLE hDC, RTS_I16 nPoints, RTS_PointF *pPoints, PolygonType nType)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICDRAWPIE <group___sys_graphic_itf_1ga28eb5862de27d6b4998b0b6f4aee9614>`)(RTS_HANDLE hDC, RTS_Rectangle rect, RTS_IEC_INT iStartAngle, RTS_IEC_INT iSweepAngle, PieType nType)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICROTATEAT <group___sys_graphic_itf_1ga88bb1ded7be8fe5d55c709206c89bd65>`)(RTS_HANDLE hDC, RTS_REAL32 fAngle, RTS_Point point, RTS_BOOL bReset)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICDRAWTEXT <group___sys_graphic_itf_1gaf7a541214a326d2c7e7f05a671cae865>`)(RTS_HANDLE hDC, RTS_Rectangle rect, void *pszText, RTS_UI32 ulDrawFlags)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICGETTEXTMETRICS <group___sys_graphic_itf_1ga943ef073944d9f839779f25eb1af382c>`)(RTS_HANDLE hDC, SYS_TEXTMETRICS *ptm)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICGETTEXTEXTENT <group___sys_graphic_itf_1gab2d400997e4cd647f4a361c102c8ec6e>`)(RTS_HANDLE hDC, void *pszText, RTS_UI32 ulDrawFlags, RTS_Size *pSize)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICGETFONTHEIGHT <group___sys_graphic_itf_1gadb0399f80ddb81916aee83a3ebea615e>`)(RTS_HANDLE hDC, RTS_I16 *piHeight)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICGETFONTHANDLE <group___sys_graphic_itf_1gae70f1e61ee2fee5831d5a30055717001>`)(RTS_HANDLE hDC, RTS_HANDLE *phFont)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICCREATEBRUSH <group___sys_graphic_itf_1gad052263415089ed1c7c5e4c0cc4520bc>`)(RTS_HANDLE hDC, RTS_UI32 ulFillFlags, RTS_UI32 ulFillColor, RTS_HANDLE *phBrush)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICSETBRUSH <group___sys_graphic_itf_1gae9347ccae63daf78a672afbfb3971883>`)(RTS_HANDLE hDC, RTS_HANDLE hBrush, RTS_HANDLE *phOldBrush)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICFREEBRUSH <group___sys_graphic_itf_1ga77a35df06cdf3e96c1d100ce9e573861>`)(RTS_HANDLE hDC, RTS_HANDLE hBrush)
+
+- typedef struct :ref:`_GradientData <struct___gradient_data>` :ref:`GradientData <group___sys_graphic_itf_1ga507c7cb26cae26f0ad758a1939baccc3>`
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICCREATEGRADIENTBRUSH <group___sys_graphic_itf_1gae05127efb93c2667f1c0d79025062523>`)(RTS_HANDLE hDC, GradientData *gradient, RTS_Rectangle rectangle, RTS_HANDLE *phBrush)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICCREATEPATTERNBRUSH <group___sys_graphic_itf_1ga47d2dca7f51d1ec5fc81adf27a0135f4>`)(RTS_HANDLE hDC, RTS_UI16 patternType, RTS_UI32 color, RTS_HANDLE *phBrush)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICCREATEPENDETAILED <group___sys_graphic_itf_1ga8770d5fc02ac97c05b2ee2c07adc5c7d>`)(RTS_HANDLE hDC, RTS_I16 nLineWidth, RTS_UI32 ulLineFlags, RTS_UI32 ulLineColor, RTS_I16 nLineCapFlag, RTS_I16 nLineJoinFlag, RTS_REAL32 rMiterLimit, RTS_HANDLE *phPen)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICCREATEPEN <group___sys_graphic_itf_1ga5c6f6d39329afcbc0be951a4bf239e31>`)(RTS_HANDLE hDC, RTS_I16 nLineWidth, RTS_UI32 ulLineFlags, RTS_UI32 ulLineColor, RTS_HANDLE *phPen)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICSETPEN <group___sys_graphic_itf_1gaf11a20a7892bf357e9118dd40e2d92c6>`)(RTS_HANDLE hDC, RTS_HANDLE hPen, RTS_HANDLE *phOldPen)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICFREEPEN <group___sys_graphic_itf_1gaa0a70bf84560a02b4eb3d694430a3ce5>`)(RTS_HANDLE hDC, RTS_HANDLE hPen)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICCREATEFONT <group___sys_graphic_itf_1ga0f3f1c44e64476d4ab03122977cf34c7>`)(RTS_HANDLE hDC, char *pszFontName, RTS_I16 nFontSize, RTS_UI32 ulFontFlags, RTS_HANDLE *phFont)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICFREEFONT <group___sys_graphic_itf_1ga58b822e598c1f2c45cae97b2d49db0c0>`)(RTS_HANDLE hDC, RTS_HANDLE hFont)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICSETFONT <group___sys_graphic_itf_1ga71be0cef715ec4d26c5cf6e0eac76972>`)(RTS_HANDLE hDC, RTS_HANDLE hFont, RTS_UI32 ulFontColor, RTS_HANDLE *phOldFont)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICSETFONT2 <group___sys_graphic_itf_1ga16e2abe39a4d6dd9575b7e31735e97c8>`)(RTS_HANDLE hDC, RTS_HANDLE hFont, RTS_UI32 ulFontColor, RTS_HANDLE *phOldFont, RTS_UI32 *pulOldFontColor)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICCREATEBITMAP <group___sys_graphic_itf_1ga9a2637d07c925eb0e7465018b1fe6384>`)(RTS_HANDLE hDC, const char *pszBmpPath, RTS_UI32 ulTransparentColor, RTS_UI32 ulFlags, RTS_HANDLE *phBitmap)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICDRAWBITMAP <group___sys_graphic_itf_1gac9a74f575b72c8062e53057c7723e3f8>`)(RTS_HANDLE hDC, RTS_HANDLE hBmp, RTS_Rectangle rPos, RTS_UI32 ulTransparentColor, RTS_UI32 ulFlags)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICFREEBITMAP <group___sys_graphic_itf_1gae42a2f5dbeb9eea4e3e466ba98d38791>`)(RTS_HANDLE hDC, RTS_HANDLE hBmp)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICGETBITMAPSIZE <group___sys_graphic_itf_1gabfa4f71d635c3f72cbaa4e8b56c673d7>`)(RTS_HANDLE hBmp, RTS_Point *pSize)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICADDCLIPRECTANGLE <group___sys_graphic_itf_1gad0b2c174de1106d7a5128198d4a90d42>`)(RTS_HANDLE hDC, RTS_Rectangle rect)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICREMOVECLIPRECTANGLE <group___sys_graphic_itf_1gad0b7faff0c049a743ecdfcff3e459323>`)(RTS_HANDLE hDC, RTS_Rectangle rect)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICSETCLIPRECTANGLE <group___sys_graphic_itf_1ga70da2b10ce17aac7cd7ce9dda6ac2ba2>`)(RTS_HANDLE hDC, RTS_Rectangle *prect)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICBEGINPAINT <group___sys_graphic_itf_1ga0c96846208849aecae0bb7322844d313>`)(RTS_HANDLE hDC, RTS_HANDLE *phPaintContext)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICENDPAINT <group___sys_graphic_itf_1ga884c4786762bc67554dd13bd5aeb9c57>`)(RTS_HANDLE hDC, RTS_HANDLE hPaintContext)
+
+- typedef RTS_UI32(* :ref:`PFSYSGRAPHICGETFEATUREFLAGS <group___sys_graphic_itf_1ga67b031edfba790ff0a28e74c4470621d>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICPREPAREPRINTING <group___sys_graphic_itf_1ga0726846e87795c9e8393cac63a69b7d6>`)(RTS_HANDLE hDC, RTS_HANDLE *phOptionalResultData, RTS_Rectangle *prWindow, RTS_Rectangle *prPrintOutput)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICFINISHPRINTING <group___sys_graphic_itf_1gaf7209c8e17a8294fb710c617bff7bf2d>`)(RTS_HANDLE hDC, RTS_HANDLE hOptionalResultData)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICSETANTIALIASINGMODE <group___sys_graphic_itf_1gae82e25193ef52a4785c5ca8ec70d9094>`)(RTS_HANDLE hDC, RTS_UI32 uiAntiAliasingSettings)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICGETSYSWINDOWFONT <group___sys_graphic_itf_1ga40b8e25a74198dc5682576a18ecffd91>`)(RTS_HANDLE hDC, RTS_HANDLE hSysGraphicFont, RTS_HANDLE *phSysWindowFont)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICINVALIDATERECTANGLE <group___sys_graphic_itf_1gab818ecdcbef766636c8dac4fbfae69fc>`)(RTS_HANDLE hDC, RTS_Rectangle rect)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICRESETINVALIDATION <group___sys_graphic_itf_1gab1902337b068d0b4160ace81aa38bbda>`)(RTS_HANDLE hDC)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICINVALIDATECLIENTAREA <group___sys_graphic_itf_1gaba8adf741b44555240eb9040affbb79c>`)(RTS_HANDLE hDC)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSGRAPHICCREATETRANSFORMATION <group___sys_graphic_itf_1gaa284f8fda39219ab727697a830c880ad>`)(RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSGRAPHICCREATETRANSFORMATIONBYVALUES <group___sys_graphic_itf_1ga93e91c0ba75959a52eda8c5d221ad2c6>`)(RTS_REAL32 m11, RTS_REAL32 m12, RTS_REAL32 m21, RTS_REAL32 m22, RTS_REAL32 dx, RTS_REAL32 dy, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICFREETRANSFORMATION <group___sys_graphic_itf_1ga36dd00d582e5edaf230f2ada0b61c38d>`)(RTS_HANDLE hTransform)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICTRANSFORMATIONSCALE <group___sys_graphic_itf_1ga02b45c5f85559f1f4463e2bb32147343>`)(RTS_HANDLE hTransform, RTS_REAL32 x, RTS_REAL32 y)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICTRANSFORMATIONROTATE <group___sys_graphic_itf_1ga609c95e42fc980063db4a59491abbb18>`)(RTS_HANDLE hTransform, RTS_REAL32 angle)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICTRANSFORMATIONTRANSLATE <group___sys_graphic_itf_1gad96e1b9bdede01cef19394e651ec6906>`)(RTS_HANDLE hTransform, RTS_REAL32 x, RTS_REAL32 y)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICSETACTIVETRANSFORMATION <group___sys_graphic_itf_1ga099895aa0c13bd75e8a8d18c6c1595a2>`)(RTS_HANDLE hdc, RTS_HANDLE hTransform)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSGRAPHICGETACTIVETRANSFORMATION <group___sys_graphic_itf_1ga7d95c89c51b1efb0dcb0cd5ddff198e8>`)(RTS_HANDLE hdc, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSGRAPHICCLONETRANSFORMATION <group___sys_graphic_itf_1ga5b3fb4b2aca88e80ad39404d196cf6be>`)(RTS_HANDLE hTransform, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICTRANSFORMATIONTRANSFORM <group___sys_graphic_itf_1gad6db99f17c91de5abe592225c58cd93f>`)(RTS_HANDLE hTransform, RTS_REAL32 m11, RTS_REAL32 m12, RTS_REAL32 m21, RTS_REAL32 m22, RTS_REAL32 dx, RTS_REAL32 dy)
+
+- typedef RTS_RESULT(* :ref:`PFSYSGRAPHICSETCOMPOSITINGMODE <group___sys_graphic_itf_1ga0e5ea904b636e475a1c291c6a8ac2b9b>`)(RTS_HANDLE hDC, RTS_UI32 compositingMode)
+
+- typedef RTS_UI32(* :ref:`PFSYSGRAPHICGETCOMPOSITINGMODE <group___sys_graphic_itf_1ga9adcf3862ede8492308b45a86b2128a0>`)(RTS_HANDLE hDC, RTS_RESULT *pResult)
+
+- typedef :ref:`ISysGraphic_C <struct_i_sys_graphic___c>` :ref:`ISysGraphic <group___sys_graphic_itf_1gafe67efdf13237f3ef0708b35e597c166>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`SysGraphicOSInit <group___sys_graphic_itf___settings_1ga08488069685c486b2eaeaa6aff4af332>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysGraphicOSHookFunction <group___sys_graphic_itf___settings_1gabe48d30874013ff48ac7d8909306badb>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_RESULT :ref:`SysGraphicCreateCompatibleDeviceContext <group___sys_graphic_itf_1gad38bbc1e3d6bf72163ba911310b18b81>` (RTS_HANDLE hWindow, RTS_HANDLE * phDC)
+
+- RTS_RESULT :ref:`SysGraphicCreateCompatibleDeviceContextWithCustomSize <group___sys_graphic_itf_1gaf6db81769847bd132d3317d8c3a87905>` (RTS_HANDLE hWindow, RTS_I16 iWidth, RTS_I16 iHeight, RTS_HANDLE * phDC)
+
+- RTS_RESULT :ref:`SysGraphicDeleteDeviceContext <group___sys_graphic_itf_1ga1f7d83efb9ca42b8a5372b642b92f493>` (RTS_HANDLE hWindow, RTS_HANDLE hDC)
+
+- RTS_RESULT :ref:`SysGraphicGetDeviceContext <group___sys_graphic_itf_1ga88f720f73eef1959fb8f8a70b7290b3e>` (RTS_HANDLE hWindow, RTS_HANDLE * phDC)
+
+- RTS_RESULT :ref:`SysGraphicReleaseDeviceContext <group___sys_graphic_itf_1ga5f23a2178c76df5997219a0335860604>` (RTS_HANDLE hWindow, RTS_HANDLE hDC)
+
+- RTS_RESULT :ref:`SysGraphicGetDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1ga4a064b7c502a1f03e3c943a0e3973eb5>` (RTS_HANDLE hWindow, RTS_HANDLE hDCWindow, RTS_HANDLE * phDC)
+
+- RTS_RESULT :ref:`SysGraphicReleaseDeviceContextForWindowDeviceContext <group___sys_graphic_itf_1ga40fac78f1b984a54cd6ef762ea1bbe77>` (RTS_HANDLE hWindow, RTS_HANDLE hDC)
+
+- RTS_RESULT :ref:`SysGraphicSetBackgroundColor <group___sys_graphic_itf_1ga2ac4a36d1bb4dd53ac25dbf588c8f9db>` (RTS_HANDLE hDC, RTS_UI32 ulColor)
+
+- RTS_RESULT :ref:`SysGraphicClearRectangle <group___sys_graphic_itf_1gac014b9b2c389929aee4b69472042fbf4>` (RTS_HANDLE hDC, RTS_Rectangle rect)
+
+- RTS_RESULT :ref:`SysGraphicBitBlt <group___sys_graphic_itf_1ga865883bf178906506d59abcf785ccfbc>` (RTS_HANDLE hDCDestination, RTS_HANDLE hDCSource, RTS_Rectangle rect)
+
+- RTS_RESULT :ref:`SysGraphicStretchBlt <group___sys_graphic_itf_1ga7b0f3dc33f572f2a4736bebf5fc4ba1f>` (RTS_HANDLE hDCDestination, RTS_Rectangle rectDestination, RTS_HANDLE hDCSource, RTS_Rectangle rectSource)
+
+- RTS_RESULT :ref:`SysGraphicDrawRect <group___sys_graphic_itf_1ga3a2605ef39ff92002a071b3e9a4261dd>` (RTS_HANDLE hDC, RTS_Rectangle rect, RectangleType nType)
+
+- RTS_RESULT :ref:`SysGraphicSetRoundRectRadius <group___sys_graphic_itf_1ga771aa366f99a0bcd719a89494b86b15a>` (RTS_HANDLE hDC, RTS_I16 iRadiusX, RTS_I16 iRadiusY)
+
+- RTS_RESULT :ref:`SysGraphicDrawRectF <group___sys_graphic_itf_1gaed020ad8c55aa17c379e44ba1141f017>` (RTS_HANDLE hDC, RTS_RectangleF rect, RectangleType nType)
+
+- RTS_RESULT :ref:`SysGraphicDrawPolygon <group___sys_graphic_itf_1ga588ec66d8f579e345d6314e49fe95437>` (RTS_HANDLE hDC, RTS_I16 nPoints, RTS_Point * pPoints, PolygonType nType)
+
+- RTS_RESULT :ref:`SysGraphicDrawPolygonF <group___sys_graphic_itf_1gad7e48202c700bf7e9058b6e3219a23c3>` (RTS_HANDLE hDC, RTS_I16 nPoints, RTS_PointF * pPoints, PolygonType nType)
+
+- RTS_RESULT :ref:`SysGraphicDrawPie <group___sys_graphic_itf_1gaa56ee438551927e7eaee1380fe97e8a3>` (RTS_HANDLE hDC, RTS_Rectangle rect, RTS_IEC_INT iStartAngle, RTS_IEC_INT iSweepAngle, PieType nType)
+
+- RTS_RESULT :ref:`SysGraphicRotateAt <group___sys_graphic_itf_1gaac6fc6648e3ca5a0335a8e9c690c060f>` (RTS_HANDLE hDC, RTS_REAL32 fAngle, RTS_Point point, RTS_BOOL bReset)
+
+- RTS_RESULT :ref:`SysGraphicDrawText <group___sys_graphic_itf_1gaca75cad33953fe8aaa8b78c7d8e0d1c4>` (RTS_HANDLE hDC, RTS_Rectangle rect, void * pszText, RTS_UI32 ulDrawFlags)
+
+- RTS_RESULT :ref:`SysGraphicGetTextMetrics <group___sys_graphic_itf_1ga3f0472fbc9f099e9fd351e5df5a02f48>` (RTS_HANDLE hDC, :ref:`SYS_TEXTMETRICS <struct_s_y_s___t_e_x_t_m_e_t_r_i_c_s>` * ptm)
+
+- RTS_RESULT :ref:`SysGraphicGetTextExtent <group___sys_graphic_itf_1ga9853f1793ae85562cf8d80846231ae95>` (RTS_HANDLE hDC, void * pszText, RTS_UI32 ulDrawFlags, RTS_Size * pSize)
+
+- RTS_RESULT :ref:`SysGraphicGetFontHeight <group___sys_graphic_itf_1ga3fc974d64fa5b645cebc37b8919592cd>` (RTS_HANDLE hDC, RTS_I16 * piHeight)
+
+- RTS_RESULT :ref:`SysGraphicGetFontHandle <group___sys_graphic_itf_1ga762257cc9c9749d144ce0c6257020208>` (RTS_HANDLE hDC, RTS_HANDLE * phFont)
+
+- RTS_RESULT :ref:`SysGraphicCreateBrush <group___sys_graphic_itf_1ga87b88da8c3d0ace48fbd03c3a401712d>` (RTS_HANDLE hDC, RTS_UI32 ulFillFlags, RTS_UI32 ulFillColor, RTS_HANDLE * phBrush)
+
+- RTS_RESULT :ref:`SysGraphicSetBrush <group___sys_graphic_itf_1gad21369f57e48c12ece7e8b53b47bdced>` (RTS_HANDLE hDC, RTS_HANDLE hBrush, RTS_HANDLE * phOldBrush)
+
+- RTS_RESULT :ref:`SysGraphicFreeBrush <group___sys_graphic_itf_1ga653772662b6e8c0ee97771c9f1346aa0>` (RTS_HANDLE hDC, RTS_HANDLE hBrush)
+
+- RTS_RESULT :ref:`SysGraphicCreateGradientBrush <group___sys_graphic_itf_1ga2d891b1089c459be1569799449bfabbe>` (RTS_HANDLE hDC, :ref:`GradientData <group___sys_graphic_itf_1ga507c7cb26cae26f0ad758a1939baccc3>` * gradient, RTS_Rectangle rectangle, RTS_HANDLE * phBrush)
+
+- RTS_RESULT :ref:`SysGraphicCreatePatternBrush <group___sys_graphic_itf_1ga57a5e333e02d210f9ef6b9c7f0451ce9>` (RTS_HANDLE hDC, RTS_UI16 patternType, RTS_UI32 color, RTS_HANDLE * phBrush)
+
+- RTS_RESULT :ref:`SysGraphicCreatePenDetailed <group___sys_graphic_itf_1gaad77ff326127752b51ef29daa3e547e8>` (RTS_HANDLE hDC, RTS_I16 nLineWidth, RTS_UI32 ulLineFlags, RTS_UI32 ulLineColor, RTS_I16 nLineCapFlag, RTS_I16 nLineJoinFlag, RTS_REAL32 rMiterLimit, RTS_HANDLE * phPen)
+
+- RTS_RESULT :ref:`SysGraphicCreatePen <group___sys_graphic_itf_1gac98afa65facb04e54e062bbb8f3b677f>` (RTS_HANDLE hDC, RTS_I16 nLineWidth, RTS_UI32 ulLineFlags, RTS_UI32 ulLineColor, RTS_HANDLE * phPen)
+
+- RTS_RESULT :ref:`SysGraphicSetPen <group___sys_graphic_itf_1gaf55649de63079081f3441b543ffb1f3f>` (RTS_HANDLE hDC, RTS_HANDLE hPen, RTS_HANDLE * phOldPen)
+
+- RTS_RESULT :ref:`SysGraphicFreePen <group___sys_graphic_itf_1ga4890a42dbcbd203e7234e016399169cd>` (RTS_HANDLE hDC, RTS_HANDLE hPen)
+
+- RTS_RESULT :ref:`SysGraphicCreateFont <group___sys_graphic_itf_1ga83c7bdc13f3087d480b10f98a4d7ccca>` (RTS_HANDLE hDC, char * pszFontName, RTS_I16 nFontSize, RTS_UI32 ulFontFlags, RTS_HANDLE * phFont)
+
+- RTS_RESULT :ref:`SysGraphicFreeFont <group___sys_graphic_itf_1ga414d8f1b71f6a4c731e4ae1ae5f0e4f7>` (RTS_HANDLE hDC, RTS_HANDLE hFont)
+
+- RTS_RESULT :ref:`SysGraphicSetFont <group___sys_graphic_itf_1gaad02a964f1aac284ac066cb245645eb5>` (RTS_HANDLE hDC, RTS_HANDLE hFont, RTS_UI32 ulFontColor, RTS_HANDLE * phOldFont)
+
+- RTS_RESULT :ref:`SysGraphicSetFont2 <group___sys_graphic_itf_1ga66d539e14643847f108094be8dceef3e>` (RTS_HANDLE hDC, RTS_HANDLE hFont, RTS_UI32 ulFontColor, RTS_HANDLE * phOldFont, RTS_UI32 * pulOldFontColor)
+
+- RTS_RESULT :ref:`SysGraphicCreateBitmap <group___sys_graphic_itf_1gad434f39d949c81be2792ba9e516a4b3a>` (RTS_HANDLE hDC, const char * pszBmpPath, RTS_UI32 ulTransparentColor, RTS_UI32 ulFlags, RTS_HANDLE * phBitmap)
+
+- RTS_RESULT :ref:`SysGraphicDrawBitmap <group___sys_graphic_itf_1ga283918b82a010b08074a068c5e6cfa4a>` (RTS_HANDLE hDC, RTS_HANDLE hBmp, RTS_Rectangle rPos, RTS_UI32 ulTransparentColor, RTS_UI32 ulFlags)
+
+- RTS_RESULT :ref:`SysGraphicFreeBitmap <group___sys_graphic_itf_1gafb18c87ed7134463fff0ee365da64bcb>` (RTS_HANDLE hDC, RTS_HANDLE hBmp)
+
+- RTS_RESULT :ref:`SysGraphicGetBitmapSize <group___sys_graphic_itf_1ga7b277d3b02e61db1671ef39bf8f4bba4>` (RTS_HANDLE hBmp, RTS_Point * pSize)
+
+- RTS_RESULT :ref:`SysGraphicAddClipRectangle <group___sys_graphic_itf_1ga61b0c0b5ba6ca3e1834aa0d45f46ea66>` (RTS_HANDLE hDC, RTS_Rectangle rect)
+
+- RTS_RESULT :ref:`SysGraphicRemoveClipRectangle <group___sys_graphic_itf_1ga303cb91efb4328c23f9734737cb8bc35>` (RTS_HANDLE hDC, RTS_Rectangle rect)
+
+- RTS_RESULT :ref:`SysGraphicSetClipRectangle <group___sys_graphic_itf_1ga22c8b8719f9c4ffc28cf6eaca7efcffb>` (RTS_HANDLE hDC, RTS_Rectangle * prect)
+
+- RTS_RESULT :ref:`SysGraphicBeginPaint <group___sys_graphic_itf_1ga93fc9d9c7aa0c8852a345d2e23b1b181>` (RTS_HANDLE hDC, RTS_HANDLE * phPaintContext)
+
+- RTS_RESULT :ref:`SysGraphicEndPaint <group___sys_graphic_itf_1gaf302e17b875f61d1ae3baac9831a15e4>` (RTS_HANDLE hDC, RTS_HANDLE hPaintContext)
+
+- RTS_UI32 :ref:`SysGraphicGetFeatureFlags <group___sys_graphic_itf_1ga4c0d51f7be70c79f53a17d48c146b53c>` (void)
+
+- RTS_RESULT :ref:`SysGraphicPreparePrinting <group___sys_graphic_itf_1ga5e5817bd44aebc91394f1c74ab68a3c7>` (RTS_HANDLE hDC, RTS_HANDLE * phOptionalResultData, RTS_Rectangle * prWindow, RTS_Rectangle * prPrintOutput)
+
+- RTS_RESULT :ref:`SysGraphicFinishPrinting <group___sys_graphic_itf_1gaaecddbc61733e95b7b10e70ce7aecef2>` (RTS_HANDLE hDC, RTS_HANDLE hOptionalResultData)
+
+- RTS_RESULT :ref:`SysGraphicSetAntiAliasingMode <group___sys_graphic_itf_1ga782820e35db3bcf8c9da6a5ed21e1c0e>` (RTS_HANDLE hDC, RTS_UI32 uiAntiAliasingSettings)
+
+- RTS_RESULT :ref:`SysGraphicGetSysWindowFont <group___sys_graphic_itf_1gaaf724496eec95a23e49d9cb4b140c51a>` (RTS_HANDLE hDC, RTS_HANDLE hSysGraphicFont, RTS_HANDLE * phSysWindowFont)
+
+- RTS_RESULT :ref:`SysGraphicInvalidateRectangle <group___sys_graphic_itf_1ga2277a14c1ee963c5306c2c881a095c51>` (RTS_HANDLE hDC, RTS_Rectangle rect)
+
+- RTS_RESULT :ref:`SysGraphicResetInvalidation <group___sys_graphic_itf_1ga209b5e9be7a1508a627cd4c65855f26a>` (RTS_HANDLE hDC)
+
+- RTS_RESULT :ref:`SysGraphicInvalidateClientArea <group___sys_graphic_itf_1gab4e06f08874da823a924b13228391f03>` (RTS_HANDLE hDC)
+
+- RTS_HANDLE :ref:`SysGraphicCreateTransformation <group___sys_graphic_itf_1ga8a9e4f1d861e20593927748577f251a7>` (RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysGraphicCreateTransformationByValues <group___sys_graphic_itf_1ga5b9675a578e8be1d9e64c11ca36eb073>` (RTS_REAL32 m11, RTS_REAL32 m12, RTS_REAL32 m21, RTS_REAL32 m22, RTS_REAL32 dx, RTS_REAL32 dy, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysGraphicFreeTransformation <group___sys_graphic_itf_1ga08a9f7b4037486e372a8954e7151dc9e>` (RTS_HANDLE hTransform)
+
+- RTS_RESULT :ref:`SysGraphicTransformationScale <group___sys_graphic_itf_1gabfaaf78e208bd246010f49ede5b3c235>` (RTS_HANDLE hTransform, RTS_REAL32 x, RTS_REAL32 y)
+
+- RTS_RESULT :ref:`SysGraphicTransformationRotate <group___sys_graphic_itf_1gaaa21188545a72b597d396a0fe05a78f4>` (RTS_HANDLE hTransform, RTS_REAL32 angle)
+
+- RTS_RESULT :ref:`SysGraphicTransformationTranslate <group___sys_graphic_itf_1ga82856e23fdd3c2de0b1c202b6d276a78>` (RTS_HANDLE hTransform, RTS_REAL32 x, RTS_REAL32 y)
+
+- RTS_RESULT :ref:`SysGraphicSetActiveTransformation <group___sys_graphic_itf_1ga7ddaf9233f7b58f511e59ddcf83ccbaf>` (RTS_HANDLE hdc, RTS_HANDLE hTransform)
+
+- RTS_HANDLE :ref:`SysGraphicGetActiveTransformation <group___sys_graphic_itf_1ga4330b069437a1f23f4871ce0d1e08b09>` (RTS_HANDLE hdc, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysGraphicCloneTransformation <group___sys_graphic_itf_1ga8d9cdfa3bc890e30429817b6bf3f6872>` (RTS_HANDLE hTransform, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysGraphicTransformationTransform <group___sys_graphic_itf_1gab2b9f9a793623d9be2639f8cd944f740>` (RTS_HANDLE hTransform, RTS_REAL32 m11, RTS_REAL32 m12, RTS_REAL32 m21, RTS_REAL32 m22, RTS_REAL32 dx, RTS_REAL32 dy)
+
+- RTS_RESULT :ref:`SysGraphicSetCompositingMode <group___sys_graphic_itf_1ga9442864ee0f052c2fa5af08fa8c7c1d8>` (RTS_HANDLE hDC, RTS_UI32 compositingMode)
+
+- RTS_UI32 :ref:`SysGraphicGetCompositingMode <group___sys_graphic_itf_1ga28d188b2db408eb84259f1f214f16477>` (RTS_HANDLE hDC, RTS_RESULT * pResult)
+
+Detailed Description
+--------------------
+
+Definition in file SysGraphicItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

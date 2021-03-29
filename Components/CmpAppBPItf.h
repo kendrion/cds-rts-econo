@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -540,7 +540,9 @@ typedef RTS_RESULT (CDECL * PFAPPBPEXIT) (APPLICATION *pApp);
 
 /**
  * <description>Routine handle a debug breakpoint. This routine is typically called from the syscpudebughandler()
- *	method of the CmpCpuHandling component. This routine must handle the folliwinghave to handle</description>
+ *	method of the SysCpuHandling component.
+ *	This function handles all debugging features (entering/leaving a breakpoint, set next statement, flowcontrol, executionpoints, etc.)
+ * </description>
  * <param name="IP" type="IN">Program counter or instruction pointer of breakpoint position, where the
  *	debug opcode is executed</param>
  * <param name="SP" type="IN">Actual stack pointer</param>
@@ -1098,7 +1100,7 @@ typedef RTS_RESULT (CDECL * PFAPPBPUPDATE) (APPLICATION *pApp, RTS_SIZE ulTypeIn
  * <description>Retrieves the first callstack entry (if available). This is the most nested calling position
  *	from the callstack. A callstack is only available, if the application in in state stop!</description>
  * <param name="pApp" type="IN">Pointer to the specified application description</param>
- * <param name="pContext" type="OUT">Returns register context, e.g. the base pointer to find the next calstack entry</param>
+ * <param name="pContext" type="OUT">Returns register context, e.g. the base pointer to find the next callstack entry</param>
  * <param name="pCallstackEntry" type="OUT">Pointer to the callstack entry</param>
  * <result>error code</result>
  */
@@ -1156,7 +1158,7 @@ typedef RTS_RESULT (CDECL * PFAPPBPGETFIRSTCALLSTACKENTRY) (APPLICATION *pApp, R
  *	from the callstack. A callstack is only available, if the application in in state stop!</description>
  * <param name="pApp" type="IN">Pointer to the specified application description</param>
  * <param name="hIecTask"IN">Handle to the desired task</param>
- * <param name="pContext" type="OUT">Returns register context, e.g. the base pointer to find the next calstack entry</param>
+ * <param name="pContext" type="OUT">Returns register context, e.g. the base pointer to find the next callstack entry</param>
  * <param name="pCallstackEntry" type="OUT">Pointer to the callstack entry</param>
  * <result>error code</result>
  */
@@ -1213,7 +1215,7 @@ typedef RTS_RESULT (CDECL * PFAPPBPGETFIRSTCALLSTACKENTRY2) (APPLICATION *pApp, 
  * <description>Retrieves the next callstack entry (if available). This is the less nested calling position
  *	from the previous call or the AppGetFirstCallstackEntry() function.</description>
  * <param name="pApp" type="IN">Pointer to the specified application description</param>
- * <param name="pContext" type="OUT">Returns register context, e.g. the base pointer to find the next calstack entry</param>
+ * <param name="pContext" type="OUT">Returns register context, e.g. the base pointer to find the next callstack entry</param>
  * <param name="pCallstackEntry" type="OUT">Pointer to the callstack entry</param>
  * <result>error code</result>
  */
@@ -1271,7 +1273,7 @@ typedef RTS_RESULT (CDECL * PFAPPBPGETNEXTCALLSTACKENTRY) (APPLICATION *pApp, Re
  *	from the previous call or the AppGetFirstCallstackEntry() function.</description>
  * <param name="pApp" type="IN">Pointer to the specified application description</param>
  * <param name="bIecCode" type="IN">Specifies, if callstack is searched in IecCode. If bIecCode is 0, we search in C-code! </param>
- * <param name="pContext" type="OUT">Returns register context, e.g. the base pointer to find the next calstack entry</param>
+ * <param name="pContext" type="OUT">Returns register context, e.g. the base pointer to find the next callstack entry</param>
  * <param name="pCallstackEntry" type="OUT">Pointer to the callstack entry</param>
  * <result>error code</result>
  */

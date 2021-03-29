@@ -1,0 +1,438 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_sem_itf:
+
+=========
+SysSemItf
+=========
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of SysSem.
+
+Detailed Description
+--------------------
+
+The SysSem interface is projected to handle synchronization objects for tasks and threads. The synchronization objects are called semaphores to synchronize concurrent access to single data resources.
+
+For example:
+
+Task1: ... SysSemEnter(hSem); [Here you can accessed the protected data] SysSemLeave(hSem); [After :ref:`SysSemLeave() <group___sys_sem_itf_1gabfa8bac50383f867e91954ee4d301868>` you must not access the protected data] ....
+
+IMPLEMENTATION NOTE: The semaphores must work recursive! That means, that a multiple call out of one task must not block the execution! For each :ref:`SysSemEnter() <group___sys_sem_itf_1gabd085fe0837dffcd3a6b3248015e8377>` call, a corresponding :ref:`SysSemLeave() <group___sys_sem_itf_1gabfa8bac50383f867e91954ee4d301868>` must be used! For this feature, binary semaphores are typically used.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Data Structures
+---------------
+
+- struct :ref:`ISysSem_C <struct_i_sys_sem___c>`
+
+Macros
+------
+
+- #define :ref:`USE_SysSemCreate <group___sys_sem_itf_1gac0d9cae59cfeb35e8081ec8c26ffa621>` :ref:`PFSYSSEMCREATE <group___sys_sem_itf_1gac8ccb976dc9d11dde4a2a1a1081cd429>` pfSysSemCreate;
+
+- #define :ref:`EXT_SysSemCreate <group___sys_sem_itf_1ga67e6a5165f7d340ecd34b7d8b244b0bf>` extern :ref:`PFSYSSEMCREATE <group___sys_sem_itf_1gac8ccb976dc9d11dde4a2a1a1081cd429>` pfSysSemCreate;
+
+- #define :ref:`GET_SysSemCreate <group___sys_sem_itf_1gac8970c8648c89c7a8cfd4f6bcbf38303>` s_pfCMGetAPI2( "SysSemCreate", (RTS_VOID_FCTPTR *)&pfSysSemCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSemCreate <group___sys_sem_itf_1gaf57f871197900e9b74f96fd50d95a277>` pfSysSemCreate
+
+- #define :ref:`CHK_SysSemCreate <group___sys_sem_itf_1ga599e3da88727a4a050daa2e75f06cdf9>` (pfSysSemCreate != NULL)
+
+- #define :ref:`EXP_SysSemCreate <group___sys_sem_itf_1ga43ae7b51aa5046506d9a6d20758be14a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemCreate", (RTS_UINTPTR) :ref:`SysSemCreate <group___sys_sem_itf_1gacd9a47c93a9dbc35a1968ebc4b4b1e30>` , 0, 0)
+
+- #define :ref:`USE_SysSemDelete <group___sys_sem_itf_1gacdbd05f4b05ee38dd10cccba16e21acb>` :ref:`PFSYSSEMDELETE <group___sys_sem_itf_1gaa2735461c6bb4125fb86c7eb6657b2f6>` pfSysSemDelete;
+
+- #define :ref:`EXT_SysSemDelete <group___sys_sem_itf_1gadeeef7bca31ba7b44ff04f8d10dcc1cf>` extern :ref:`PFSYSSEMDELETE <group___sys_sem_itf_1gaa2735461c6bb4125fb86c7eb6657b2f6>` pfSysSemDelete;
+
+- #define :ref:`GET_SysSemDelete <group___sys_sem_itf_1gad50d56e2cc82dea37096b1085c5d3e66>` s_pfCMGetAPI2( "SysSemDelete", (RTS_VOID_FCTPTR *)&pfSysSemDelete, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSemDelete <group___sys_sem_itf_1ga881fa786a8a9ed98dc5f6233152c5853>` pfSysSemDelete
+
+- #define :ref:`CHK_SysSemDelete <group___sys_sem_itf_1gae67647da60dba22d048b08182b846180>` (pfSysSemDelete != NULL)
+
+- #define :ref:`EXP_SysSemDelete <group___sys_sem_itf_1gae4b3d25d60bbd1890b88493924b73eaf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemDelete", (RTS_UINTPTR) :ref:`SysSemDelete <group___sys_sem_itf_1gac8104f0dd5d3c6b1feacb9fe5e79dc9d>` , 0, 0)
+
+- #define :ref:`USE_SysSemTry <group___sys_sem_itf_1ga23f49357b60fbf106ccb38ce55868dd7>` :ref:`PFSYSSEMTRY <group___sys_sem_itf_1ga6140f4f1b9a1c0bfaa1b757651eaba5c>` pfSysSemTry;
+
+- #define :ref:`EXT_SysSemTry <group___sys_sem_itf_1ga0fe339d510da5bc4722c0d7227e90de9>` extern :ref:`PFSYSSEMTRY <group___sys_sem_itf_1ga6140f4f1b9a1c0bfaa1b757651eaba5c>` pfSysSemTry;
+
+- #define :ref:`GET_SysSemTry <group___sys_sem_itf_1ga1fa2a340c9c2f50382487ade966a3e1c>` s_pfCMGetAPI2( "SysSemTry", (RTS_VOID_FCTPTR *)&pfSysSemTry, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSemTry <group___sys_sem_itf_1ga43b8eaa4965894e66e8e02f51ee73492>` pfSysSemTry
+
+- #define :ref:`CHK_SysSemTry <group___sys_sem_itf_1ga1727adb8a45e51bf89208128e52fd8ac>` (pfSysSemTry != NULL)
+
+- #define :ref:`EXP_SysSemTry <group___sys_sem_itf_1ga0f914eb19433953b39130b5302c6ce1f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemTry", (RTS_UINTPTR) :ref:`SysSemTry <group___sys_sem_itf_1gae8fee564d2c532d981a99ca83c23da76>` , 0, 0)
+
+- #define :ref:`USE_SysSemEnter <group___sys_sem_itf_1ga2ee84812ae3305c0bf4250652d5d33a2>` :ref:`PFSYSSEMENTER <group___sys_sem_itf_1gae607317f2c9dad1d3e7c882cdaab771c>` pfSysSemEnter;
+
+- #define :ref:`EXT_SysSemEnter <group___sys_sem_itf_1gabae417d14eb192dcf3e00a47548540c2>` extern :ref:`PFSYSSEMENTER <group___sys_sem_itf_1gae607317f2c9dad1d3e7c882cdaab771c>` pfSysSemEnter;
+
+- #define :ref:`GET_SysSemEnter <group___sys_sem_itf_1ga5b3bf95af80cb502ea4948b418701f48>` s_pfCMGetAPI2( "SysSemEnter", (RTS_VOID_FCTPTR *)&pfSysSemEnter, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSemEnter <group___sys_sem_itf_1ga50c43ca681b6bc5f09d1e1f5c93ae65e>` pfSysSemEnter
+
+- #define :ref:`CHK_SysSemEnter <group___sys_sem_itf_1ga928113b7b997fc32658f560015e1d958>` (pfSysSemEnter != NULL)
+
+- #define :ref:`EXP_SysSemEnter <group___sys_sem_itf_1ga8f334c8c2b1b074feadc056aa330f4c1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemEnter", (RTS_UINTPTR) :ref:`SysSemEnter <group___sys_sem_itf_1gabd085fe0837dffcd3a6b3248015e8377>` , 0, 0)
+
+- #define :ref:`USE_SysSemLeave <group___sys_sem_itf_1gad2609b6d1866e8571cc0fd99a53920b8>` :ref:`PFSYSSEMLEAVE <group___sys_sem_itf_1ga1ba0cbc314ba0762cb512eb696fb3a29>` pfSysSemLeave;
+
+- #define :ref:`EXT_SysSemLeave <group___sys_sem_itf_1gad96847ef36e1e56e74fc048962faacf6>` extern :ref:`PFSYSSEMLEAVE <group___sys_sem_itf_1ga1ba0cbc314ba0762cb512eb696fb3a29>` pfSysSemLeave;
+
+- #define :ref:`GET_SysSemLeave <group___sys_sem_itf_1gadcccdacba45bf4ab1a1677220808f3ac>` s_pfCMGetAPI2( "SysSemLeave", (RTS_VOID_FCTPTR *)&pfSysSemLeave, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSemLeave <group___sys_sem_itf_1ga340cb0766d09d3d8bae5bb9519a0e141>` pfSysSemLeave
+
+- #define :ref:`CHK_SysSemLeave <group___sys_sem_itf_1gadbc6619fdcbe5e17c6f37fdd7e1bfb32>` (pfSysSemLeave != NULL)
+
+- #define :ref:`EXP_SysSemLeave <group___sys_sem_itf_1gaf2b3eca0657909880072d3c924fb6005>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemLeave", (RTS_UINTPTR) :ref:`SysSemLeave <group___sys_sem_itf_1gabfa8bac50383f867e91954ee4d301868>` , 0, 0)
+
+- #define :ref:`ITF_SysSem <group___sys_sem_itf_1gac01bf9a91369e72706c48b4183928df7>`
+
+- #define :ref:`EXTITF_SysSem <group___sys_sem_itf_1ga0a4f458bbd9f1e7aed63f31865834dc5>`
+
+Typedefs
+--------
+
+- typedef RTS_HANDLE(* :ref:`PFSYSSEMCREATE <group___sys_sem_itf_1gac8ccb976dc9d11dde4a2a1a1081cd429>`)(RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSEMDELETE <group___sys_sem_itf_1gaa2735461c6bb4125fb86c7eb6657b2f6>`)(RTS_HANDLE hSem)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSEMTRY <group___sys_sem_itf_1ga6140f4f1b9a1c0bfaa1b757651eaba5c>`)(RTS_HANDLE hSem)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSEMENTER <group___sys_sem_itf_1gae607317f2c9dad1d3e7c882cdaab771c>`)(RTS_HANDLE hSem)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSEMLEAVE <group___sys_sem_itf_1ga1ba0cbc314ba0762cb512eb696fb3a29>`)(RTS_HANDLE hSem)
+
+- typedef :ref:`ISysSem_C <struct_i_sys_sem___c>` :ref:`ISysSem <group___sys_sem_itf_1ga27275656c98473a3084c91d66ef62d4f>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`SysSemOSInit <group___sys_sem_itf_1ga77dd7bc0769636c37f0f4077b851daf9>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysSemOSHookFunction <group___sys_sem_itf_1ga3d8fc57e4d21b99081fc824ac71bff50>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_HANDLE :ref:`SysSemCreate <group___sys_sem_itf_1gacd9a47c93a9dbc35a1968ebc4b4b1e30>` (RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysSemDelete <group___sys_sem_itf_1gac8104f0dd5d3c6b1feacb9fe5e79dc9d>` (RTS_HANDLE hSem)
+
+- RTS_RESULT :ref:`SysSemTry <group___sys_sem_itf_1gae8fee564d2c532d981a99ca83c23da76>` (RTS_HANDLE hSem)
+
+- RTS_RESULT :ref:`SysSemEnter <group___sys_sem_itf_1gabd085fe0837dffcd3a6b3248015e8377>` (RTS_HANDLE hSem)
+
+- RTS_RESULT :ref:`SysSemLeave <group___sys_sem_itf_1gabfa8bac50383f867e91954ee4d301868>` (RTS_HANDLE hSem)
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_sem_itf_1gac0d9cae59cfeb35e8081ec8c26ffa621:
+
+#define USE_SysSemCreate :ref:`PFSYSSEMCREATE <group___sys_sem_itf_1gac8ccb976dc9d11dde4a2a1a1081cd429>` pfSysSemCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga67e6a5165f7d340ecd34b7d8b244b0bf:
+
+#define EXT_SysSemCreate extern :ref:`PFSYSSEMCREATE <group___sys_sem_itf_1gac8ccb976dc9d11dde4a2a1a1081cd429>` pfSysSemCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gac8970c8648c89c7a8cfd4f6bcbf38303:
+
+#define GET_SysSemCreate s_pfCMGetAPI2( "SysSemCreate", (RTS_VOID_FCTPTR *)&pfSysSemCreate, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gaf57f871197900e9b74f96fd50d95a277:
+
+#define CAL_SysSemCreate pfSysSemCreate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga599e3da88727a4a050daa2e75f06cdf9:
+
+#define CHK_SysSemCreate (pfSysSemCreate != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga43ae7b51aa5046506d9a6d20758be14a:
+
+#define EXP_SysSemCreate s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemCreate", (RTS_UINTPTR) :ref:`SysSemCreate <group___sys_sem_itf_1gacd9a47c93a9dbc35a1968ebc4b4b1e30>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gacdbd05f4b05ee38dd10cccba16e21acb:
+
+#define USE_SysSemDelete :ref:`PFSYSSEMDELETE <group___sys_sem_itf_1gaa2735461c6bb4125fb86c7eb6657b2f6>` pfSysSemDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gadeeef7bca31ba7b44ff04f8d10dcc1cf:
+
+#define EXT_SysSemDelete extern :ref:`PFSYSSEMDELETE <group___sys_sem_itf_1gaa2735461c6bb4125fb86c7eb6657b2f6>` pfSysSemDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gad50d56e2cc82dea37096b1085c5d3e66:
+
+#define GET_SysSemDelete s_pfCMGetAPI2( "SysSemDelete", (RTS_VOID_FCTPTR *)&pfSysSemDelete, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga881fa786a8a9ed98dc5f6233152c5853:
+
+#define CAL_SysSemDelete pfSysSemDelete
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gae67647da60dba22d048b08182b846180:
+
+#define CHK_SysSemDelete (pfSysSemDelete != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gae4b3d25d60bbd1890b88493924b73eaf:
+
+#define EXP_SysSemDelete s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemDelete", (RTS_UINTPTR) :ref:`SysSemDelete <group___sys_sem_itf_1gac8104f0dd5d3c6b1feacb9fe5e79dc9d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga23f49357b60fbf106ccb38ce55868dd7:
+
+#define USE_SysSemTry :ref:`PFSYSSEMTRY <group___sys_sem_itf_1ga6140f4f1b9a1c0bfaa1b757651eaba5c>` pfSysSemTry;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga0fe339d510da5bc4722c0d7227e90de9:
+
+#define EXT_SysSemTry extern :ref:`PFSYSSEMTRY <group___sys_sem_itf_1ga6140f4f1b9a1c0bfaa1b757651eaba5c>` pfSysSemTry;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga1fa2a340c9c2f50382487ade966a3e1c:
+
+#define GET_SysSemTry s_pfCMGetAPI2( "SysSemTry", (RTS_VOID_FCTPTR *)&pfSysSemTry, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga43b8eaa4965894e66e8e02f51ee73492:
+
+#define CAL_SysSemTry pfSysSemTry
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga1727adb8a45e51bf89208128e52fd8ac:
+
+#define CHK_SysSemTry (pfSysSemTry != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga0f914eb19433953b39130b5302c6ce1f:
+
+#define EXP_SysSemTry s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemTry", (RTS_UINTPTR) :ref:`SysSemTry <group___sys_sem_itf_1gae8fee564d2c532d981a99ca83c23da76>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga2ee84812ae3305c0bf4250652d5d33a2:
+
+#define USE_SysSemEnter :ref:`PFSYSSEMENTER <group___sys_sem_itf_1gae607317f2c9dad1d3e7c882cdaab771c>` pfSysSemEnter;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gabae417d14eb192dcf3e00a47548540c2:
+
+#define EXT_SysSemEnter extern :ref:`PFSYSSEMENTER <group___sys_sem_itf_1gae607317f2c9dad1d3e7c882cdaab771c>` pfSysSemEnter;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga5b3bf95af80cb502ea4948b418701f48:
+
+#define GET_SysSemEnter s_pfCMGetAPI2( "SysSemEnter", (RTS_VOID_FCTPTR *)&pfSysSemEnter, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga50c43ca681b6bc5f09d1e1f5c93ae65e:
+
+#define CAL_SysSemEnter pfSysSemEnter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga928113b7b997fc32658f560015e1d958:
+
+#define CHK_SysSemEnter (pfSysSemEnter != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga8f334c8c2b1b074feadc056aa330f4c1:
+
+#define EXP_SysSemEnter s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemEnter", (RTS_UINTPTR) :ref:`SysSemEnter <group___sys_sem_itf_1gabd085fe0837dffcd3a6b3248015e8377>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gad2609b6d1866e8571cc0fd99a53920b8:
+
+#define USE_SysSemLeave :ref:`PFSYSSEMLEAVE <group___sys_sem_itf_1ga1ba0cbc314ba0762cb512eb696fb3a29>` pfSysSemLeave;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gad96847ef36e1e56e74fc048962faacf6:
+
+#define EXT_SysSemLeave extern :ref:`PFSYSSEMLEAVE <group___sys_sem_itf_1ga1ba0cbc314ba0762cb512eb696fb3a29>` pfSysSemLeave;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gadcccdacba45bf4ab1a1677220808f3ac:
+
+#define GET_SysSemLeave s_pfCMGetAPI2( "SysSemLeave", (RTS_VOID_FCTPTR *)&pfSysSemLeave, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga340cb0766d09d3d8bae5bb9519a0e141:
+
+#define CAL_SysSemLeave pfSysSemLeave
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gadbc6619fdcbe5e17c6f37fdd7e1bfb32:
+
+#define CHK_SysSemLeave (pfSysSemLeave != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gaf2b3eca0657909880072d3c924fb6005:
+
+#define EXP_SysSemLeave s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemLeave", (RTS_UINTPTR) :ref:`SysSemLeave <group___sys_sem_itf_1gabfa8bac50383f867e91954ee4d301868>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gac01bf9a91369e72706c48b4183928df7:
+
+#define ITF_SysSem
+^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga0a4f458bbd9f1e7aed63f31865834dc5:
+
+#define EXTITF_SysSem
+^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___sys_sem_itf_1gac8ccb976dc9d11dde4a2a1a1081cd429:
+
+typedef RTS_HANDLE( *  PFSYSSEMCREATE) (RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gaa2735461c6bb4125fb86c7eb6657b2f6:
+
+typedef RTS_RESULT( *  PFSYSSEMDELETE) (RTS_HANDLE hSem)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga6140f4f1b9a1c0bfaa1b757651eaba5c:
+
+typedef RTS_RESULT( *  PFSYSSEMTRY) (RTS_HANDLE hSem)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gae607317f2c9dad1d3e7c882cdaab771c:
+
+typedef RTS_RESULT( *  PFSYSSEMENTER) (RTS_HANDLE hSem)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga1ba0cbc314ba0762cb512eb696fb3a29:
+
+typedef RTS_RESULT( *  PFSYSSEMLEAVE) (RTS_HANDLE hSem)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1ga27275656c98473a3084c91d66ef62d4f:
+
+typedef ISysSem_C ISysSem
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___sys_sem_itf_1ga77dd7bc0769636c37f0f4077b851daf9:
+
+RTS_RESULT SysSemOSInit (INIT_STRUCT *pInit)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION BEGIN EXTERN LIB SECTION END
+
+.. _group___sys_sem_itf_1ga3d8fc57e4d21b99081fc824ac71bff50:
+
+RTS_RESULT SysSemOSHookFunction (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_itf_1gacd9a47c93a9dbc35a1968ebc4b4b1e30:
+
+RTS_HANDLE SysSemCreate (RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Create a new semaphore object
+
+**Parameters**
+
++---------+---------+-----------------------+
+| [out]   | pResult | Pointer to error code |
++---------+---------+-----------------------+
+
+**Returns:**
+
+Handle to the semaphore
+
+.. _group___sys_sem_itf_1gac8104f0dd5d3c6b1feacb9fe5e79dc9d:
+
+RTS_RESULT SysSemDelete (RTS_HANDLE hSem)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Delete a semaphore object
+
+**Parameters**
+
++---------+------+-------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hSem | Handle to the semaphore that is provided from :ref:`SysSemCreate() <group___sys_sem_itf_1gacd9a47c93a9dbc35a1968ebc4b4b1e30>` |
++---------+------+-------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_sem_itf_1gae8fee564d2c532d981a99ca83c23da76:
+
+RTS_RESULT SysSemTry (RTS_HANDLE hSem)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Try to enter the semaphore. If semaphore is available, the function entered the semaphore and returned ERR_OK. If semaphore is not available, ERR_FAILED is returned.
+
+**Parameters**
+
++---------+------+-------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hSem | Handle to the semaphore that is provided from :ref:`SysSemCreate() <group___sys_sem_itf_1gacd9a47c93a9dbc35a1968ebc4b4b1e30>` |
++---------+------+-------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_sem_itf_1gabd085fe0837dffcd3a6b3248015e8377:
+
+RTS_RESULT SysSemEnter (RTS_HANDLE hSem)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Enter the given semaphore. If the semaphore is still entered by another task1, the actual task2 will be blocked, until the task1 has called :ref:`SysSemLeave() <group___sys_sem_itf_1gabfa8bac50383f867e91954ee4d301868>` .
+
+IMPLEMENTATION NOTE: The semaphores must work recursive! That means, that a multiple call out of one task must not block the execution! For each :ref:`SysSemEnter() <group___sys_sem_itf_1gabd085fe0837dffcd3a6b3248015e8377>` call, a corresponding :ref:`SysSemLeave() <group___sys_sem_itf_1gabfa8bac50383f867e91954ee4d301868>` must be used!
+
+**Parameters**
+
++---------+------+-------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hSem | Handle to the semaphore that is provided from :ref:`SysSemCreate() <group___sys_sem_itf_1gacd9a47c93a9dbc35a1968ebc4b4b1e30>` |
++---------+------+-------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_sem_itf_1gabfa8bac50383f867e91954ee4d301868:
+
+RTS_RESULT SysSemLeave (RTS_HANDLE hSem)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Leave the given semaphore.
+
+**Parameters**
+
++---------+------+-------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hSem | Handle to the semaphore that is provided from :ref:`SysSemCreate() <group___sys_sem_itf_1gacd9a47c93a9dbc35a1968ebc4b4b1e30>` |
++---------+------+-------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

@@ -1,0 +1,579 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_visu_handler_remote_itf:
+
+=======================
+CmpVisuHandlerRemoteItf
+=======================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpVisuHandlerRemote.
+
+Detailed Description
+--------------------
+
+Interface for the remote visualization handler.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`.	Event parameter that is used before startup of the visualization. <group___cmp_visu_handler_remote_itf___eventparameterthatisusedbeforestartupofthevisualization>`
+
+- :ref:`Compiler switch <group___cmp_visu_handler_remote_itf___compilerswitch>`
+
+- :ref:`Event parameter <group___cmp_visu_handler_remote_itf___eventparameter>`
+
+- :ref:`Events <group___cmp_visu_handler_remote_itf___events>`
+
+- :ref:`Settings <group___cmp_visu_handler_remote_itf___settings>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpVisuHandlerRemote_C <struct_i_cmp_visu_handler_remote___c>`
+
+Macros
+------
+
+- #define :ref:`MAX_LEN_APPLNAME <group___cmp_visu_handler_remote_itf_1gaf34efb9c3bdeb79dc6006c59d76d9b6f>` 60
+
+- #define :ref:`MAX_LEN_USERNAME <group___cmp_visu_handler_remote_itf_1gaf3878f70fff7fb5ba6a3f4682a47b070>` 30
+
+- #define :ref:`MAX_LEN_PASSWORD <group___cmp_visu_handler_remote_itf_1ga61f5a1283e956e5528e56879ae0da56e>` 30
+
+- #define :ref:`MAX_LEN_PLCNAME <group___cmp_visu_handler_remote_itf_1gab0d1e29bd058970290414202531e2161>` 60
+
+- #define :ref:`MAX_LEN_TCPADDR <group___cmp_visu_handler_remote_itf_1ga1c5be3d4f810b35cd247241b49199521>` 60
+
+- #define :ref:`USE_VishRemoteConnect <group___cmp_visu_handler_remote_itf_1ga65e9f8e18c2ec9aff6101b8762bda9bb>` :ref:`PFVISHREMOTECONNECT <group___cmp_visu_handler_remote_itf_1ga68c6c00a52e527e3221ed549fe2f7205>` pfVishRemoteConnect;
+
+- #define :ref:`EXT_VishRemoteConnect <group___cmp_visu_handler_remote_itf_1ga482f46743b2c51830e1332e12d668516>` extern :ref:`PFVISHREMOTECONNECT <group___cmp_visu_handler_remote_itf_1ga68c6c00a52e527e3221ed549fe2f7205>` pfVishRemoteConnect;
+
+- #define :ref:`GET_VishRemoteConnect <group___cmp_visu_handler_remote_itf_1gac7927a70f0f676482669949d9d36a019>` s_pfCMGetAPI2( "VishRemoteConnect", (RTS_VOID_FCTPTR *)&pfVishRemoteConnect, (fl), 0, 0)
+
+- #define :ref:`CAL_VishRemoteConnect <group___cmp_visu_handler_remote_itf_1ga71e25f95035e92e74b844f1a3672e13c>` pfVishRemoteConnect
+
+- #define :ref:`CHK_VishRemoteConnect <group___cmp_visu_handler_remote_itf_1gabd97ab999ecf22bdb11436b6367ff8f8>` (pfVishRemoteConnect != NULL)
+
+- #define :ref:`EXP_VishRemoteConnect <group___cmp_visu_handler_remote_itf_1gafd4225441317914add05bfa1463cdcc8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"VishRemoteConnect", (RTS_UINTPTR) :ref:`VishRemoteConnect <group___cmp_visu_handler_remote_itf_1ga717571fa8ad0062d28fa1ed4683d1952>` , 0, 0)
+
+- #define :ref:`USE_VishRemoteReadApplications <group___cmp_visu_handler_remote_itf_1gab1f1ca452c6951131ad0be1c33f47eaa>` :ref:`PFVISHREMOTEREADAPPLICATIONS <group___cmp_visu_handler_remote_itf_1ga4b2dfc0ad22f999b471a4c775d8c290d>` pfVishRemoteReadApplications;
+
+- #define :ref:`EXT_VishRemoteReadApplications <group___cmp_visu_handler_remote_itf_1gab2f6f2f73501876d6e6a82a8aa249888>` extern :ref:`PFVISHREMOTEREADAPPLICATIONS <group___cmp_visu_handler_remote_itf_1ga4b2dfc0ad22f999b471a4c775d8c290d>` pfVishRemoteReadApplications;
+
+- #define :ref:`GET_VishRemoteReadApplications <group___cmp_visu_handler_remote_itf_1ga3bb7d60e921a7696efe61d78c6ef8ef0>` s_pfCMGetAPI2( "VishRemoteReadApplications", (RTS_VOID_FCTPTR *)&pfVishRemoteReadApplications, (fl), 0, 0)
+
+- #define :ref:`CAL_VishRemoteReadApplications <group___cmp_visu_handler_remote_itf_1ga7eeb6586729ed8782f630037d140b249>` pfVishRemoteReadApplications
+
+- #define :ref:`CHK_VishRemoteReadApplications <group___cmp_visu_handler_remote_itf_1ga038b647eca993c9cb4813a6b114eff6e>` (pfVishRemoteReadApplications != NULL)
+
+- #define :ref:`EXP_VishRemoteReadApplications <group___cmp_visu_handler_remote_itf_1ga20e0a1eedb9dc7d567d7c6aea25d4128>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"VishRemoteReadApplications", (RTS_UINTPTR) :ref:`VishRemoteReadApplications <group___cmp_visu_handler_remote_itf_1ga9ebf3f03d1644fd0318a107b190ac782>` , 0, 0)
+
+- #define :ref:`USE_VishRemoteCertFormatTextual <group___cmp_visu_handler_remote_itf_1ga5d6f5fbafb2fad21d30152ca7bdc0851>` :ref:`PFVISHREMOTECERTFORMATTEXTUAL <group___cmp_visu_handler_remote_itf_1ga51ac852ed88e8d6de374b7c169ef502b>` pfVishRemoteCertFormatTextual;
+
+- #define :ref:`EXT_VishRemoteCertFormatTextual <group___cmp_visu_handler_remote_itf_1ga2db7c573d42cae4f6e3c79996c1c8839>` extern :ref:`PFVISHREMOTECERTFORMATTEXTUAL <group___cmp_visu_handler_remote_itf_1ga51ac852ed88e8d6de374b7c169ef502b>` pfVishRemoteCertFormatTextual;
+
+- #define :ref:`GET_VishRemoteCertFormatTextual <group___cmp_visu_handler_remote_itf_1gab4bba845b2b976f57bd3cc8d2c2fd794>` s_pfCMGetAPI2( "VishRemoteCertFormatTextual", (RTS_VOID_FCTPTR *)&pfVishRemoteCertFormatTextual, (fl), 0, 0)
+
+- #define :ref:`CAL_VishRemoteCertFormatTextual <group___cmp_visu_handler_remote_itf_1ga03606c53dc5725b396f03a4b60919810>` pfVishRemoteCertFormatTextual
+
+- #define :ref:`CHK_VishRemoteCertFormatTextual <group___cmp_visu_handler_remote_itf_1gaacb2912cb297c6dd8090bdeb075393a9>` (pfVishRemoteCertFormatTextual != NULL)
+
+- #define :ref:`EXP_VishRemoteCertFormatTextual <group___cmp_visu_handler_remote_itf_1ga79bd900f289799675d2d49c5c697195c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"VishRemoteCertFormatTextual", (RTS_UINTPTR) :ref:`VishRemoteCertFormatTextual <group___cmp_visu_handler_remote_itf_1ga654803ff2bbc2025a3ffd2b5cc0a2dd1>` , 0, 0)
+
+- #define :ref:`USE_VishRemoteCertRegisterVerifyCallback <group___cmp_visu_handler_remote_itf_1ga0fcf7a4ccec63102e166e2c5d241f3e8>` :ref:`PFVISHREMOTECERTREGISTERVERIFYCALLBACK <group___cmp_visu_handler_remote_itf_1gafb26b87fa1e0b8bf9d82aa3ffe7885a6>` pfVishRemoteCertRegisterVerifyCallback;
+
+- #define :ref:`EXT_VishRemoteCertRegisterVerifyCallback <group___cmp_visu_handler_remote_itf_1ga4589646b3f1252b2c7c0746b125aec8d>` extern :ref:`PFVISHREMOTECERTREGISTERVERIFYCALLBACK <group___cmp_visu_handler_remote_itf_1gafb26b87fa1e0b8bf9d82aa3ffe7885a6>` pfVishRemoteCertRegisterVerifyCallback;
+
+- #define :ref:`GET_VishRemoteCertRegisterVerifyCallback <group___cmp_visu_handler_remote_itf_1gae3ad700e76fd811a928c061805640071>` s_pfCMGetAPI2( "VishRemoteCertRegisterVerifyCallback", (RTS_VOID_FCTPTR *)&pfVishRemoteCertRegisterVerifyCallback, (fl), 0, 0)
+
+- #define :ref:`CAL_VishRemoteCertRegisterVerifyCallback <group___cmp_visu_handler_remote_itf_1gab75c16a81fdc6c588d62eab3d538b3f7>` pfVishRemoteCertRegisterVerifyCallback
+
+- #define :ref:`CHK_VishRemoteCertRegisterVerifyCallback <group___cmp_visu_handler_remote_itf_1ga8c9fcdc3845cadc5558e09363948fcb0>` (pfVishRemoteCertRegisterVerifyCallback != NULL)
+
+- #define :ref:`EXP_VishRemoteCertRegisterVerifyCallback <group___cmp_visu_handler_remote_itf_1gace7b85248b3490b509d4a8cd1ce0feb5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"VishRemoteCertRegisterVerifyCallback", (RTS_UINTPTR) :ref:`VishRemoteCertRegisterVerifyCallback <group___cmp_visu_handler_remote_itf_1ga7dc978fba67f5a6e1553cd329789e629>` , 0, 0)
+
+- #define :ref:`USE_VishRemoteCertExport <group___cmp_visu_handler_remote_itf_1ga81212ded2c0152537a1fb6ee2d72dd0d>` :ref:`PFVISHREMOTECERTEXPORT <group___cmp_visu_handler_remote_itf_1ga17ddad30e02d38c6f19a31463df62bff>` pfVishRemoteCertExport;
+
+- #define :ref:`EXT_VishRemoteCertExport <group___cmp_visu_handler_remote_itf_1ga7adaeda9488ae9de6a4eea12de9314df>` extern :ref:`PFVISHREMOTECERTEXPORT <group___cmp_visu_handler_remote_itf_1ga17ddad30e02d38c6f19a31463df62bff>` pfVishRemoteCertExport;
+
+- #define :ref:`GET_VishRemoteCertExport <group___cmp_visu_handler_remote_itf_1ga9aad86e04fd7971b708ea86681a9055a>` s_pfCMGetAPI2( "VishRemoteCertExport", (RTS_VOID_FCTPTR *)&pfVishRemoteCertExport, (fl), 0, 0)
+
+- #define :ref:`CAL_VishRemoteCertExport <group___cmp_visu_handler_remote_itf_1ga7ec726988639790e3c4e743e53347243>` pfVishRemoteCertExport
+
+- #define :ref:`CHK_VishRemoteCertExport <group___cmp_visu_handler_remote_itf_1ga692308d6018d89f14a001c2b40437551>` (pfVishRemoteCertExport != NULL)
+
+- #define :ref:`EXP_VishRemoteCertExport <group___cmp_visu_handler_remote_itf_1gae8a2d87ec2fbe5fda7988b3aadfc4882>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"VishRemoteCertExport", (RTS_UINTPTR) :ref:`VishRemoteCertExport <group___cmp_visu_handler_remote_itf_1ga405c5ae79aae6c10cd742234436b8a3a>` , 0, 0)
+
+- #define :ref:`ITF_CmpVisuHandlerRemote <group___cmp_visu_handler_remote_itf_1gaa380cf3eecc0c2cb9c0240def6808db2>`
+
+- #define :ref:`EXTITF_CmpVisuHandlerRemote <group___cmp_visu_handler_remote_itf_1ga880eaaff1533e02c7364b11cd0ae232f>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFVISHREMOTECONNECT <group___cmp_visu_handler_remote_itf_1ga68c6c00a52e527e3221ed549fe2f7205>`)(RTS_BOOL useTempSettings)
+
+- typedef RTS_BOOL(* :ref:`PFVishRemoteProvideCredentials <group___cmp_visu_handler_remote_itf_1gac51485408f57c80127c0bd818ee8bcc5>`)(RTS_HANDLE hCallerData, char *pszUserBuffer, RTS_SIZE userBufferSize, char *pszPasswordBuffer, RTS_SIZE passwordBufferSize)
+
+- typedef void(* :ref:`PFVishRemoteNotifyApplicationName <group___cmp_visu_handler_remote_itf_1gaf5cdd1a106aa5226f9bb1563489b4780>`)(RTS_HANDLE hCallerData, char *pszApplicationName)
+
+- typedef RTS_RESULT(* :ref:`PFVISHREMOTEREADAPPLICATIONS <group___cmp_visu_handler_remote_itf_1ga4b2dfc0ad22f999b471a4c775d8c290d>`)(RTS_HANDLE hCallerData, PFVishRemoteProvideCredentials pfProvideCredentials, PFVishRemoteNotifyApplicationName pfAppCallback, RTS_BOOL bReadTempSettings)
+
+- typedef :ref:`VishRemoteVertifyCertResult <group___cmp_visu_handler_remote_itf_1ga87f3f3cbce9bc248fc0f12d439c5ef4c>` (* :ref:`PFVishRemoteVerifyCertificate <group___cmp_visu_handler_remote_itf_1ga470589d7e8cc9f58d21746c28d4c2ce5>`)(RTS_HANDLE hCallerData, RTS_HANDLE hCert, RTS_RESULT preVerifyResult)
+
+- typedef RTS_RESULT(* :ref:`PFVISHREMOTECERTFORMATTEXTUAL <group___cmp_visu_handler_remote_itf_1ga51ac852ed88e8d6de374b7c169ef502b>`)(RTS_HANDLE hCert, char *pszBuffer, RTS_SIZE bufferSize)
+
+- typedef RTS_RESULT(* :ref:`PFVISHREMOTECERTREGISTERVERIFYCALLBACK <group___cmp_visu_handler_remote_itf_1gafb26b87fa1e0b8bf9d82aa3ffe7885a6>`)(RTS_HANDLE hCallerData, PFVishRemoteVerifyCertificate pfCallback)
+
+- typedef RTS_RESULT(* :ref:`PFVISHREMOTECERTEXPORT <group___cmp_visu_handler_remote_itf_1ga17ddad30e02d38c6f19a31463df62bff>`)(RTS_HANDLE hCert, char *pszPathBuffer, RTS_SIZE bufferSize)
+
+- typedef :ref:`ICmpVisuHandlerRemote_C <struct_i_cmp_visu_handler_remote___c>` :ref:`ICmpVisuHandlerRemote <group___cmp_visu_handler_remote_itf_1gaf3afc04f6cb5283b3ea8b03a41d95c67>`
+
+Enumerations
+------------
+
+- enum :ref:`VishRemoteVertifyCertResult <group___cmp_visu_handler_remote_itf_1ga87f3f3cbce9bc248fc0f12d439c5ef4c>` { :ref:`VISH_VCRT_REJECT <group___cmp_visu_handler_remote_itf_1gga87f3f3cbce9bc248fc0f12d439c5ef4ca25299f9540faa6824bcde62b11c0c3f9>`, :ref:`VISH_VCRT_REJECT_SHUTDOWN <group___cmp_visu_handler_remote_itf_1gga87f3f3cbce9bc248fc0f12d439c5ef4ca4998851511cabc6e09c5c4b5f6866609>`, :ref:`VISH_VCRT_ACCEPT_TEMP <group___cmp_visu_handler_remote_itf_1gga87f3f3cbce9bc248fc0f12d439c5ef4cafad99cafe23483bf1782ab50336bbe47>` }
+
+Functions
+---------
+
+- RTS_RESULT :ref:`VishRemoteConnect <group___cmp_visu_handler_remote_itf_1ga717571fa8ad0062d28fa1ed4683d1952>` (RTS_BOOL useTempSettings)
+
+- RTS_RESULT :ref:`VishRemoteReadApplications <group___cmp_visu_handler_remote_itf_1ga9ebf3f03d1644fd0318a107b190ac782>` (RTS_HANDLE hCallerData, :ref:`PFVishRemoteProvideCredentials <group___cmp_visu_handler_remote_itf_1gac51485408f57c80127c0bd818ee8bcc5>`  pfProvideCredentials, :ref:`PFVishRemoteNotifyApplicationName <group___cmp_visu_handler_remote_itf_1gaf5cdd1a106aa5226f9bb1563489b4780>`  pfAppCallback, RTS_BOOL bReadTempSettings)
+
+- RTS_RESULT :ref:`VishRemoteCertFormatTextual <group___cmp_visu_handler_remote_itf_1ga654803ff2bbc2025a3ffd2b5cc0a2dd1>` (RTS_HANDLE hCert, char * pszBuffer, RTS_SIZE bufferSize)
+
+- RTS_RESULT :ref:`VishRemoteCertRegisterVerifyCallback <group___cmp_visu_handler_remote_itf_1ga7dc978fba67f5a6e1553cd329789e629>` (RTS_HANDLE hCallerData, :ref:`PFVishRemoteVerifyCertificate <group___cmp_visu_handler_remote_itf_1ga470589d7e8cc9f58d21746c28d4c2ce5>`  pfCallback)
+
+- RTS_RESULT :ref:`VishRemoteCertExport <group___cmp_visu_handler_remote_itf_1ga405c5ae79aae6c10cd742234436b8a3a>` (RTS_HANDLE hCert, char * pszPathBuffer, RTS_SIZE bufferSize)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_visu_handler_remote_itf_1gaf34efb9c3bdeb79dc6006c59d76d9b6f:
+
+#define MAX_LEN_APPLNAME 60
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gaf3878f70fff7fb5ba6a3f4682a47b070:
+
+#define MAX_LEN_USERNAME 30
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga61f5a1283e956e5528e56879ae0da56e:
+
+#define MAX_LEN_PASSWORD 30
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gab0d1e29bd058970290414202531e2161:
+
+#define MAX_LEN_PLCNAME 60
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga1c5be3d4f810b35cd247241b49199521:
+
+#define MAX_LEN_TCPADDR 60
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga65e9f8e18c2ec9aff6101b8762bda9bb:
+
+#define USE_VishRemoteConnect :ref:`PFVISHREMOTECONNECT <group___cmp_visu_handler_remote_itf_1ga68c6c00a52e527e3221ed549fe2f7205>` pfVishRemoteConnect;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga482f46743b2c51830e1332e12d668516:
+
+#define EXT_VishRemoteConnect extern :ref:`PFVISHREMOTECONNECT <group___cmp_visu_handler_remote_itf_1ga68c6c00a52e527e3221ed549fe2f7205>` pfVishRemoteConnect;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gac7927a70f0f676482669949d9d36a019:
+
+#define GET_VishRemoteConnect s_pfCMGetAPI2( "VishRemoteConnect", (RTS_VOID_FCTPTR *)&pfVishRemoteConnect, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga71e25f95035e92e74b844f1a3672e13c:
+
+#define CAL_VishRemoteConnect pfVishRemoteConnect
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gabd97ab999ecf22bdb11436b6367ff8f8:
+
+#define CHK_VishRemoteConnect (pfVishRemoteConnect != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gafd4225441317914add05bfa1463cdcc8:
+
+#define EXP_VishRemoteConnect s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"VishRemoteConnect", (RTS_UINTPTR) :ref:`VishRemoteConnect <group___cmp_visu_handler_remote_itf_1ga717571fa8ad0062d28fa1ed4683d1952>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gab1f1ca452c6951131ad0be1c33f47eaa:
+
+#define USE_VishRemoteReadApplications :ref:`PFVISHREMOTEREADAPPLICATIONS <group___cmp_visu_handler_remote_itf_1ga4b2dfc0ad22f999b471a4c775d8c290d>` pfVishRemoteReadApplications;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gab2f6f2f73501876d6e6a82a8aa249888:
+
+#define EXT_VishRemoteReadApplications extern :ref:`PFVISHREMOTEREADAPPLICATIONS <group___cmp_visu_handler_remote_itf_1ga4b2dfc0ad22f999b471a4c775d8c290d>` pfVishRemoteReadApplications;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga3bb7d60e921a7696efe61d78c6ef8ef0:
+
+#define GET_VishRemoteReadApplications s_pfCMGetAPI2( "VishRemoteReadApplications", (RTS_VOID_FCTPTR *)&pfVishRemoteReadApplications, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga7eeb6586729ed8782f630037d140b249:
+
+#define CAL_VishRemoteReadApplications pfVishRemoteReadApplications
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga038b647eca993c9cb4813a6b114eff6e:
+
+#define CHK_VishRemoteReadApplications (pfVishRemoteReadApplications != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga20e0a1eedb9dc7d567d7c6aea25d4128:
+
+#define EXP_VishRemoteReadApplications s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"VishRemoteReadApplications", (RTS_UINTPTR) :ref:`VishRemoteReadApplications <group___cmp_visu_handler_remote_itf_1ga9ebf3f03d1644fd0318a107b190ac782>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga5d6f5fbafb2fad21d30152ca7bdc0851:
+
+#define USE_VishRemoteCertFormatTextual :ref:`PFVISHREMOTECERTFORMATTEXTUAL <group___cmp_visu_handler_remote_itf_1ga51ac852ed88e8d6de374b7c169ef502b>` pfVishRemoteCertFormatTextual;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga2db7c573d42cae4f6e3c79996c1c8839:
+
+#define EXT_VishRemoteCertFormatTextual extern :ref:`PFVISHREMOTECERTFORMATTEXTUAL <group___cmp_visu_handler_remote_itf_1ga51ac852ed88e8d6de374b7c169ef502b>` pfVishRemoteCertFormatTextual;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gab4bba845b2b976f57bd3cc8d2c2fd794:
+
+#define GET_VishRemoteCertFormatTextual s_pfCMGetAPI2( "VishRemoteCertFormatTextual", (RTS_VOID_FCTPTR *)&pfVishRemoteCertFormatTextual, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga03606c53dc5725b396f03a4b60919810:
+
+#define CAL_VishRemoteCertFormatTextual pfVishRemoteCertFormatTextual
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gaacb2912cb297c6dd8090bdeb075393a9:
+
+#define CHK_VishRemoteCertFormatTextual (pfVishRemoteCertFormatTextual != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga79bd900f289799675d2d49c5c697195c:
+
+#define EXP_VishRemoteCertFormatTextual s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"VishRemoteCertFormatTextual", (RTS_UINTPTR) :ref:`VishRemoteCertFormatTextual <group___cmp_visu_handler_remote_itf_1ga654803ff2bbc2025a3ffd2b5cc0a2dd1>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga0fcf7a4ccec63102e166e2c5d241f3e8:
+
+#define USE_VishRemoteCertRegisterVerifyCallback :ref:`PFVISHREMOTECERTREGISTERVERIFYCALLBACK <group___cmp_visu_handler_remote_itf_1gafb26b87fa1e0b8bf9d82aa3ffe7885a6>` pfVishRemoteCertRegisterVerifyCallback;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga4589646b3f1252b2c7c0746b125aec8d:
+
+#define EXT_VishRemoteCertRegisterVerifyCallback extern :ref:`PFVISHREMOTECERTREGISTERVERIFYCALLBACK <group___cmp_visu_handler_remote_itf_1gafb26b87fa1e0b8bf9d82aa3ffe7885a6>` pfVishRemoteCertRegisterVerifyCallback;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gae3ad700e76fd811a928c061805640071:
+
+#define GET_VishRemoteCertRegisterVerifyCallback s_pfCMGetAPI2( "VishRemoteCertRegisterVerifyCallback", (RTS_VOID_FCTPTR *)&pfVishRemoteCertRegisterVerifyCallback, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gab75c16a81fdc6c588d62eab3d538b3f7:
+
+#define CAL_VishRemoteCertRegisterVerifyCallback pfVishRemoteCertRegisterVerifyCallback
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga8c9fcdc3845cadc5558e09363948fcb0:
+
+#define CHK_VishRemoteCertRegisterVerifyCallback (pfVishRemoteCertRegisterVerifyCallback != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gace7b85248b3490b509d4a8cd1ce0feb5:
+
+#define EXP_VishRemoteCertRegisterVerifyCallback s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"VishRemoteCertRegisterVerifyCallback", (RTS_UINTPTR) :ref:`VishRemoteCertRegisterVerifyCallback <group___cmp_visu_handler_remote_itf_1ga7dc978fba67f5a6e1553cd329789e629>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga81212ded2c0152537a1fb6ee2d72dd0d:
+
+#define USE_VishRemoteCertExport :ref:`PFVISHREMOTECERTEXPORT <group___cmp_visu_handler_remote_itf_1ga17ddad30e02d38c6f19a31463df62bff>` pfVishRemoteCertExport;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga7adaeda9488ae9de6a4eea12de9314df:
+
+#define EXT_VishRemoteCertExport extern :ref:`PFVISHREMOTECERTEXPORT <group___cmp_visu_handler_remote_itf_1ga17ddad30e02d38c6f19a31463df62bff>` pfVishRemoteCertExport;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga9aad86e04fd7971b708ea86681a9055a:
+
+#define GET_VishRemoteCertExport s_pfCMGetAPI2( "VishRemoteCertExport", (RTS_VOID_FCTPTR *)&pfVishRemoteCertExport, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga7ec726988639790e3c4e743e53347243:
+
+#define CAL_VishRemoteCertExport pfVishRemoteCertExport
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga692308d6018d89f14a001c2b40437551:
+
+#define CHK_VishRemoteCertExport (pfVishRemoteCertExport != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gae8a2d87ec2fbe5fda7988b3aadfc4882:
+
+#define EXP_VishRemoteCertExport s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"VishRemoteCertExport", (RTS_UINTPTR) :ref:`VishRemoteCertExport <group___cmp_visu_handler_remote_itf_1ga405c5ae79aae6c10cd742234436b8a3a>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gaa380cf3eecc0c2cb9c0240def6808db2:
+
+#define ITF_CmpVisuHandlerRemote
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga880eaaff1533e02c7364b11cd0ae232f:
+
+#define EXTITF_CmpVisuHandlerRemote
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_visu_handler_remote_itf_1ga68c6c00a52e527e3221ed549fe2f7205:
+
+typedef RTS_RESULT( *  PFVISHREMOTECONNECT) (RTS_BOOL useTempSettings)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gac51485408f57c80127c0bd818ee8bcc5:
+
+typedef RTS_BOOL( * PFVishRemoteProvideCredentials) (RTS_HANDLE hCallerData, char *pszUserBuffer, RTS_SIZE userBufferSize, char *pszPasswordBuffer, RTS_SIZE passwordBufferSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function will be called if it is necessary to login to the PLC or a previous login attempt failed.
+
+**Parameters**
+
++---------+--------------------+----------------------------------------------------------------------+
+| [in]    | hCallerData        | An arbitrary object that will be forwarded to the callback functions |
++---------+--------------------+----------------------------------------------------------------------+
+| [in]    | pszUserBuffer      | A buffer for the user name. Will not be NULL.                        |
++---------+--------------------+----------------------------------------------------------------------+
+| [in]    | userBufferSize     | The size of pszUserBuffer in bytes.                                  |
++---------+--------------------+----------------------------------------------------------------------+
+| [in]    | pszPasswordBuffer  | A buffer for the password. Will not be NULL.                         |
++---------+--------------------+----------------------------------------------------------------------+
+| [in]    | passwordBufferSize | The size of pszPasswordBuffer in bytes.                              |
++---------+--------------------+----------------------------------------------------------------------+
+
+**Returns:**
+
+Return FALSE to use the credentials. Return TRUE to cancel the surrounding operation.
+
+.. _group___cmp_visu_handler_remote_itf_1gaf5cdd1a106aa5226f9bb1563489b4780:
+
+typedef void( * PFVishRemoteNotifyApplicationName) (RTS_HANDLE hCallerData, char *pszApplicationName)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function will be called for each application on the PLC.
+
+**Parameters**
+
++---------+--------------------+----------------------------------------------------------------------+
+| [in]    | hCallerData        | An arbitrary object that will be forwarded to the callback functions |
++---------+--------------------+----------------------------------------------------------------------+
+| [in]    | pszApplicationName | The name of the application on the PLC. Will not be NULL.            |
++---------+--------------------+----------------------------------------------------------------------+
+
+.. _group___cmp_visu_handler_remote_itf_1ga4b2dfc0ad22f999b471a4c775d8c290d:
+
+typedef RTS_RESULT( *  PFVISHREMOTEREADAPPLICATIONS) (RTS_HANDLE hCallerData, PFVishRemoteProvideCredentials pfProvideCredentials, PFVishRemoteNotifyApplicationName pfAppCallback, RTS_BOOL bReadTempSettings)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga470589d7e8cc9f58d21746c28d4c2ce5:
+
+typedef VishRemoteVertifyCertResult( * PFVishRemoteVerifyCertificate) (RTS_HANDLE hCallerData, RTS_HANDLE hCert, RTS_RESULT preVerifyResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function will be called during connection setup in case encrypted communication is used. The intention of the call is to verify the certificate that was returned by the connected PLC.
+
+**Parameters**
+
++---------+-----------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hCallerData     | The arbitrary object that was passed as hCallerData in VishRemoteCertRegisterVerifyCallback                                                                                                                                                                 |
++---------+-----------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hCert           | The handle to the X509 certificate that has to be verified                                                                                                                                                                                                  |
++---------+-----------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | preVerifyResult | The result of the verification done by the system (like checking for known certificates, expired certificates). Depending on this first verification step and the content of the certificate the implementation of this function can decide how to proceed. |
++---------+-----------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+One of the values from VishRemoteVertifyCertResult that signals how to proceed with the certificate and the according communication setup
+
+.. _group___cmp_visu_handler_remote_itf_1ga51ac852ed88e8d6de374b7c169ef502b:
+
+typedef RTS_RESULT( *  PFVISHREMOTECERTFORMATTEXTUAL) (RTS_HANDLE hCert, char *pszBuffer, RTS_SIZE bufferSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gafb26b87fa1e0b8bf9d82aa3ffe7885a6:
+
+typedef RTS_RESULT( *  PFVISHREMOTECERTREGISTERVERIFYCALLBACK) (RTS_HANDLE hCallerData, PFVishRemoteVerifyCertificate pfCallback)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1ga17ddad30e02d38c6f19a31463df62bff:
+
+typedef RTS_RESULT( *  PFVISHREMOTECERTEXPORT) (RTS_HANDLE hCert, char *pszPathBuffer, RTS_SIZE bufferSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_handler_remote_itf_1gaf3afc04f6cb5283b3ea8b03a41d95c67:
+
+typedef ICmpVisuHandlerRemote_C ICmpVisuHandlerRemote
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Enumeration Type Documentation
+------------------------------
+
+.. _group___cmp_visu_handler_remote_itf_1ga87f3f3cbce9bc248fc0f12d439c5ef4c:
+
+enum VishRemoteVertifyCertResult
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+**Enumerator:**
+
++---------------------------+
+| VISH_VCRT_REJECT          |
++---------------------------+
+| VISH_VCRT_REJECT_SHUTDOWN |
++---------------------------+
+| VISH_VCRT_ACCEPT_TEMP     |
++---------------------------+
+
+Function Documentation
+----------------------
+
+.. _group___cmp_visu_handler_remote_itf_1ga717571fa8ad0062d28fa1ed4683d1952:
+
+RTS_RESULT VishRemoteConnect (RTS_BOOL useTempSettings)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function can be called to start the remote target-visualization in a delayed way. Typically this is done when the event EVT_CmpVisuHandlerRemote_CheckAutoStartup is handled to delay the initial startup.
+
+**Parameters**
+
++---------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | useTempSettings | The connection relevant settings like address or name will be taken from settings prefixed with the prefix "TEMP." instead of the original name if this value is TRUE. The idea is that temporary settings can be realized without overwriting possibly existing persistent settings. |
++---------+-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+This call will fail if the remote target-visualization is already running.
+
+**Returns:**
+
+error code
+
+.. _group___cmp_visu_handler_remote_itf_1ga9ebf3f03d1644fd0318a107b190ac782:
+
+RTS_RESULT VishRemoteReadApplications (RTS_HANDLE hCallerData, PFVishRemoteProvideCredentials pfProvideCredentials, PFVishRemoteNotifyApplicationName pfAppCallback, RTS_BOOL bReadTempSettings)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function reads the available applications from the connected PLC and returns them using the configured callback functions.
+
+**Parameters**
+
++---------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hCallerData          | An arbitrary object that will be forwarded to the callback functions                                                                    |
++---------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfProvideCredentials | The callback function that will be called in case a login is required. Must not be NULL.                                                |
++---------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfAppCallback        | The callback function that will be called for each application on the connected PLC. Must not be NULL.                                  |
++---------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bReadTempSettings    | If TRUE then temporary settings (beginning with "Temp.") are read from the configuration file are read, otherwise the "normal" settings |
++---------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+
+The callbacks will be called synchronously
+
+**Returns:**
+
+error code
+
+.. _group___cmp_visu_handler_remote_itf_1ga654803ff2bbc2025a3ffd2b5cc0a2dd1:
+
+RTS_RESULT VishRemoteCertFormatTextual (RTS_HANDLE hCert, char *pszBuffer, RTS_SIZE bufferSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This utility function can be used to format the contents of an X509 certificate so that the most relevant information can be presented to the user.
+
+**Parameters**
+
++---------+------------+--------------------------------------------------------------------------------------------+
+| [in]    | hCert      | The handle to the X509 certificate that should be formatted in a textual way.              |
++---------+------------+--------------------------------------------------------------------------------------------+
+| [in]    | pszBuffer  | The buffer that will be used for formatting the certificate information. Must not be NULL. |
++---------+------------+--------------------------------------------------------------------------------------------+
+| [in]    | bufferSize | The size of the buffer (bufferSize                                                         |
++---------+------------+--------------------------------------------------------------------------------------------+
+
+) that will be used for formatting the certificate information.
+
+The passed buffer should be sufficiently large (maybe ~1000 bytes) so that all relevant information of the certificate can be included.
+
+**Returns:**
+
+error code
+
+.. _group___cmp_visu_handler_remote_itf_1ga7dc978fba67f5a6e1553cd329789e629:
+
+RTS_RESULT VishRemoteCertRegisterVerifyCallback (RTS_HANDLE hCallerData, PFVishRemoteVerifyCertificate pfCallback)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function registers the given callback so that unknown certificates can be verified by the user if encrypted communication is used.
+
+**Parameters**
+
++---------+-------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | hCallerData | An arbitrary object that will be forwarded to the callback function                                   |
++---------+-------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pfCallback  | The callback function that will be called in case a certificate has to be verified. Must not be NULL. |
++---------+-------------+-------------------------------------------------------------------------------------------------------+
+
+The callbacks will be called synchronously from an arbitrary thread.
+
+**Returns:**
+
+error code
+
+.. _group___cmp_visu_handler_remote_itf_1ga405c5ae79aae6c10cd742234436b8a3a:
+
+RTS_RESULT VishRemoteCertExport (RTS_HANDLE hCert, char *pszPathBuffer, RTS_SIZE bufferSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function exports the given certificate to the default export location of certificates in BASE64 coding.
+
+**Parameters**
+
++---------+---------------+--------------------------------------------------------------------------------------------------+
+| [in]    | hCert         | The certificate to export.                                                                       |
++---------+---------------+--------------------------------------------------------------------------------------------------+
+| [out]   | pszPathBuffer | Will be filled with the path the file was exported to. Should be big enough to hold file paths.. |
++---------+---------------+--------------------------------------------------------------------------------------------------+
+| [in]    | bufferSize    | The size of pszPathBuffer.                                                                       |
++---------+---------------+--------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

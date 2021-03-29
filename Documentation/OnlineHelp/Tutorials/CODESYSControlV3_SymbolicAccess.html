@@ -1,0 +1,444 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>6.3.3. Symbolic IEC Variable Access &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/theme.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6.3.4. MultiCore Tutorial" href="CODESYSControlV3_MultiCore.html" />
+    <link rel="prev" title="6.3.2. CODESYS Control Filepath &amp; Placeholders" href="CODESYSControlV3_FilePath_Placeholders.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CODESYSControlV3_MultiCore.html" title="6.3.4. MultiCore Tutorial"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CODESYSControlV3_FilePath_Placeholders.html" title="6.3.2. CODESYS Control Filepath &amp; Placeholders"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">6. Tutorials / HowTos</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="CODESYSControlV3_FilePath_Placeholders.html"
+                        title="previous chapter">6.3.2. CODESYS Control Filepath &amp; Placeholders</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="CODESYSControlV3_MultiCore.html"
+                        title="next chapter">6.3.4. MultiCore Tutorial</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="symbolic-iec-variable-access">
+<span id="tutorial-iecvariableaccess"></span><h1>6.3.3. Symbolic IEC Variable Access<a class="headerlink" href="#symbolic-iec-variable-access" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>6.3.3.1. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>In many systems where a controller or PLC is running, there is the requirement
+of accessing the variables of the IEC application. This is needed to display
+them in a HMI or SCADA system or to provide these variables by an OPC or OPC UA
+server.</p>
+<p>The access to these variables must be always symbolic, that means via the names
+as they are declared in the IEC application.</p>
+</div>
+<div class="section" id="configuration-of-exported-symbols">
+<h2>6.3.3.2. Configuration of exported symbols<a class="headerlink" href="#configuration-of-exported-symbols" title="Permalink to this headline">¶</a></h2>
+<p>The main part is done in the CODESYS programming system using the symbol
+configuration editor. This editor is the main object dedicated to manage all
+output needed to access the symbols.</p>
+<p>The typical way to define variables that should be exported is by adding
+a the ‘Symbol configuration’ as part of the application. Basically this object
+is used to select or exclude the symbols of the application which should be
+available using the IEC variable access interface. It is possible to set
+different access rights using this editor. Further details about the handling of
+this object can be found in the CODESYS Online Help, see: <a class="reference external" href="https://help.codesys.com/webapp/_cds_symbolconfiguration;product=codesys">https://help.codesys.com/webapp/_cds_symbolconfiguration;product=codesys</a>.</p>
+<p>Additionally it is possible to export single variable or complete POUs or GVLs with
+the ‘symbol’ attribute, see: <a class="reference external" href="https://help.codesys.com/webapp/_cds_pragma_attribute_symbol;product=codesys">https://help.codesys.com/webapp/_cds_pragma_attribute_symbol;product=codesys</a>.</p>
+<div class="section" id="advanced-features">
+<h3>Advanced features<a class="headerlink" href="#advanced-features" title="Permalink to this headline">¶</a></h3>
+<p>In addition to read and write access to variable of simple datatypes, some advanced features are available:</p>
+<div class="section" id="symbol-groups">
+<h4>Symbol groups<a class="headerlink" href="#symbol-groups" title="Permalink to this headline">¶</a></h4>
+<p>In some scenarios it is required that different clients can only access a
+specific set of symbols. This requirement can be achieved with feature of the so called “Symbol groups” in conjunction with
+the CmpUserMgr component.</p>
+<p>Use the symbol configuration editor to add additional symbol sets. Each set will be added at download in the application to the CmpUserMgr. Afterwards in the
+symbol rights page of the device configure the access rights to the different symbols.</p>
+<p>See: <a class="reference external" href="https://help.codesys.com/webapp/_cds_symbolconfiguration;product=codesys;version=3.5.13.0#creating-symbol-sets-with-different-access-rights-for-different-control-clients">https://help.codesys.com/webapp/_cds_symbolconfiguration;product=codesys;version=3.5.13.0#creating-symbol-sets-with-different-access-rights-for-different-control-clients</a></p>
+</div>
+<div class="section" id="extended-information-in-the-symbolconfiguration">
+<h4>Extended information in the symbolconfiguration<a class="headerlink" href="#extended-information-in-the-symbolconfiguration" title="Permalink to this headline">¶</a></h4>
+<p>Some clients of the symbolconfiguration allows to build a detailed semantic
+description of the application. Such a client is for example the CODESYS
+OPC UA server. It is possible to activate the generation of detailed information
+about the application.</p>
+<p>Using this, the following features will be available:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>A list of all used data types.</p></li>
+<li><p>Information on inheritance of FBs and Interfaces</p></li>
+<li><p>String representations of enumerations</p></li>
+<li><p>The declaration type of a variable (VAR_INPUT, VAR_OUTPUT, etc.)</p></li>
+<li><p>The content of pragmas. Configurable by the user.</p></li>
+<li><p>The content of comments. Configurable by the user.</p></li>
+</ul>
+</div></blockquote>
+<p>As this feature is a option of the symbolconfiguration object is only possible
+to define the default of this setting and allow if this option can be changed by
+the user. See targetsetting <em>“symbolconfiguration/include_opcua_information”</em>.</p>
+</div>
+<div class="section" id="calling-of-functions-methods-fbs">
+<h4>Calling of Functions, Methods, FBs<a class="headerlink" href="#calling-of-functions-methods-fbs" title="Permalink to this headline">¶</a></h4>
+<p>It is possible to export callable elements using the symbol configuration
+editor. These elements will be marked with a lightning sign inside the symbol
+selection. If one of these elements is selected, it will be possible to call this
+element using the functional interface of the IEC variable access interface.</p>
+<p>This feature has to be enabled using the device description of the controller. By default this is
+deactivated. See <em>“symbolconfiguration/allow_calls_through_opcua”</em>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="generated-format-for-the-symbolic-information">
+<h2>6.3.3.3. Generated format for the symbolic information<a class="headerlink" href="#generated-format-for-the-symbolic-information" title="Permalink to this headline">¶</a></h2>
+<p>The symbolconfiguration objects produces different output formats. The
+availability of this formats depends on different settings.</p>
+<div class="section" id="xml-description-file">
+<h3>XML description file<a class="headerlink" href="#xml-description-file" title="Permalink to this headline">¶</a></h3>
+<p>When the code of the application is compiled, an XML file is generated that contains a description
+of the exported symbols. The name of the file contains the project and the application name (‘&lt;Project&gt;.&lt;Application&gt;.xml’).</p>
+<p>Typically this file is used for
+offline configuration of an HMI or SCADA system. A typical tool that is able to
+parse the content is the PLCHandler. If symbol sets are enabled, XML files for each symbol set is generated.</p>
+<p>It is possible to download the main XML file to the device, which can be uploaded and used by the PLCHandler to generate standard
+monitoring services to read/write the symbol values.</p>
+<p>See the corresponding targetsettings <em>“symbolconfiguration/generate_address_info”</em> and <em>“symbolconfiguration/transfer_xml”</em> for details.</p>
+</div>
+<div class="section" id="generated-code">
+<h3>Generated code<a class="headerlink" href="#generated-code" title="Permalink to this headline">¶</a></h3>
+<p>The typical usecase to access the symbols is by using automatically generated
+code of the symbolconfiguration object. This code is linked with the application
+and downloaded to the controller.</p>
+<p>It allows access to the variables using the
+CmpIecVarAccess interface in C or the IIecVarAccess3 Interface library in IEC
+code.</p>
+<div class="section" id="behavior-at-download-online-change">
+<h4>Behavior at Download/Online Change<a class="headerlink" href="#behavior-at-download-online-change" title="Permalink to this headline">¶</a></h4>
+<p>The symbolconfiguration object takes care on changes made to application and the
+selection inside the symbolconfiguration editor. If anything changes the code
+will be updated. Depending on the changes the updated code can be transmitted
+via an online change or a full download of the IEC application.</p>
+</div>
+<div class="section" id="architecture">
+<h4>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h4>
+<p>Main part of the symbolic IEC variable access is the resolution of variable
+names and paths using the generated IEC code. Typically this code is embedded
+into the application itself.</p>
+<p>A special implicit GVL (GlobalVariableList) named “__Symbols” will be generated in the application.
+This GVL contains all the nodes needed to resolve the paths of variables.
+Also a list of types is added to this GVL.</p>
+<img alt="../_images/symbolconfig_architecture.svg" src="../_images/symbolconfig_architecture.svg" /><p>Furthermore there is the possibility to add the generated code into it’s own child
+application. But this has only a historical relevance and is not used anymore.
+In this case the following architecture is downloaded to the PLC:</p>
+<img alt="../_images/symbolconfig_architecture_child.svg" src="../_images/symbolconfig_architecture_child.svg" /><p>The internal structure is composed as a tree out of different nodes. Each node can
+store special information which is needed at this place. The details of that are
+not important here. There is a defined interface how to walk over this
+tree and to resolve nodes.</p>
+<p>To speed things up every set of child is sorted when the code of the
+symbolconfiguration is generated. This allows a fast binary search on each layer.</p>
+<p>Additionally to the symbolic nodes there is a list of type nodes available. This
+list contains the type information needed to access complex values like struture
+or Functionblocks.</p>
+</div>
+</div>
+</div>
+<div class="section" id="data-consistency">
+<h2>6.3.3.4. Data Consistency<a class="headerlink" href="#data-consistency" title="Permalink to this headline">¶</a></h2>
+<p>Data consistency is ensured only for simple data types (expect STRINGs and
+WSTRINGs) up to at least 4 bytes. On 64 bit systems or systems, which are able to
+handle 8 byte wide data types, consistency is ensured too.</p>
+<p>Arrays and structures are read element by element. This means each element will
+be consistent. However, the complete array or structure is not ensured to be
+consistent.</p>
+<p>This description applies only when using the generated code.</p>
+<div class="section" id="functional-interface">
+<h3>Functional interface<a class="headerlink" href="#functional-interface" title="Permalink to this headline">¶</a></h3>
+<p>There is no additional synchronization of the access versus the IEC tasks. If
+there are further requirements regarding the consistency this has to be
+implemented by the user of the function interface. There are different ways to
+do that:</p>
+<ol class="arabic">
+<li><p>Implement a three way handshake using an additional handshake variable:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>If all data was written set a value to state 1</p></li>
+<li><p>The client checks for state 1. If the state switches to 1 all values
+are read. The PLC will not alter the values in this state.</p></li>
+<li><p>If the client has read all data it will alter the state to 2.</p></li>
+<li><p>The application waits for state 2. If state two is reached switch to
+state 0.</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>Synchronize the tasks using the function interface against the IEC tasks.
+This will lead to additional jitter of the application.</p></li>
+</ol>
+</div>
+<div class="section" id="codesys-online-interface">
+<h3>CODESYS online interface<a class="headerlink" href="#codesys-online-interface" title="Permalink to this headline">¶</a></h3>
+<p>When accessing the symbols using the online services of the CmpIecVarAccess there
+is a feature to read a variable list in a consistent way against the IEC tasks.
+This can be used when defining a variable list an specify it with the VLF_CONSISTENT_BACKGROUND_READ option flag at creating
+a variable list in the client.</p>
+</div>
+</div>
+<div class="section" id="variable-access-interfaces">
+<h2>6.3.3.5. Variable Access Interfaces<a class="headerlink" href="#variable-access-interfaces" title="Permalink to this headline">¶</a></h2>
+<p>After downloading the application with the symbolic information there are
+different ways to access these values. It is possible to access the values
+using IEC code, C Runtime components or via the CODESYS communication protocol
+using the PLCHandler.</p>
+<img alt="../_images/symbolic_cmpiecvaraccess_interfaces.svg" src="../_images/symbolic_cmpiecvaraccess_interfaces.svg" /><div class="section" id="iec-code-interface">
+<h3>IEC Code interface<a class="headerlink" href="#iec-code-interface" title="Permalink to this headline">¶</a></h3>
+<p>Using the IIecVarAccess3 Interfaces.library it is possible to access the symbolic
+information of the own or another application from within the IEC code. It is
+possible to browse, read, write and execute symbols. The access rights are
+always checked according to the settings made in the symbolconfiguration editor.</p>
+</div>
+<div class="section" id="c-runtime-interface">
+<h3>C Runtime interface<a class="headerlink" href="#c-runtime-interface" title="Permalink to this headline">¶</a></h3>
+<p>The exported variables can be accessed in the runtime system after downloading
+the applications. The access can be done with the CmpIecVarAccess component.
+This component provides a functional interface that can be used by other
+components in the runtime system.</p>
+<p>This interface provides routines to browse, read, write and execute symbols. The
+access rights are checked the same ways as the IEC code does. Additionally there
+are interfaces to define variable lists. These lists can be read or written at once. This
+is useful if the client would like to read multiple values at once and the
+client doesn’t want to care about the values needed to access the symbols.</p>
+</div>
+<div class="section" id="online-interface">
+<h3>Online interface<a class="headerlink" href="#online-interface" title="Permalink to this headline">¶</a></h3>
+<p>The variable access interface can also be used online. There are several online
+services used to browse and access the symbols. The access rights are checked
+the same way as IEC code does. However, this interface lacks some features yet that
+are available in the IEC and C interface. These lacks will be removed in the future.</p>
+<p>These are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Browsing the types</p></li>
+<li><p>Get detailed type information</p></li>
+<li><p>Call executable symbols</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="usage-on-small-embedded-systems">
+<h2>6.3.3.6. Usage on Small Embedded Systems<a class="headerlink" href="#usage-on-small-embedded-systems" title="Permalink to this headline">¶</a></h2>
+<p>As the generated code is quite large and can exceed the size of the
+application itself it is not possible to use this feature on small embedded
+systems. There are several ways to access values of these small systems.</p>
+<div class="section" id="data-sources">
+<h3>Data Sources<a class="headerlink" href="#data-sources" title="Permalink to this headline">¶</a></h3>
+<p>Typically the so called Data Sources are used by the HMI to access values of other PLCs.
+However this object can be added to normal applications as well.</p>
+<p>To use the data sources, an additional PLC must be available in the controller network. An the remote and data source
+PLCs must be configured in the same project.</p>
+<p>Apply the following steps to use the data sources:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Configure the data sources to access the values of the small PLC</p></li>
+<li><p>Add a symbolconfiguration object to the application that contains the
+data source</p></li>
+<li><p>Export the values of the small PLC using just created symbolconfiguration</p></li>
+</ol>
+</div></blockquote>
+<p>The Data Sources will use monitoring services to read and write values of the
+small PLC.</p>
+<p>For further details how to configure the data sources see:
+<a class="reference external" href="https://help.codesys.com/webapp/_cds_f_datasourcesmanager;product=codesys;version=3.5.13.0">https://help.codesys.com/webapp/_cds_f_datasourcesmanager;product=codesys;version=3.5.13.0</a></p>
+<p>Don’t add a symbolconfiguration to the embedded PLC to achieve this behavior.</p>
+<div class="section" id="restrictions">
+<h4>Restrictions<a class="headerlink" href="#restrictions" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Access rights are only checked within the Data Sources application</p></li>
+<li><p>It is not possible to call executable members</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plchandler-and-monitoring-services">
+<h3>PLCHandler and Monitoring services<a class="headerlink" href="#plchandler-and-monitoring-services" title="Permalink to this headline">¶</a></h3>
+<p>Since V3.5.14.0 of the PLCHandler it is possible to use the PLCHandler to send
+monitoring services to the PLC. This allows to access embedded systems using
+clients based on the PLCHandler. This can be HMIs or the CODESYS OPC Server.
+To use this feature the PLCHandler needs to know the addresses of the variables
+inside the areas. To get this information you need to set the targetsettings <em>“symbolconfiguration/generate_address_info”</em>
+inside the device description. There are different configurations how to use
+this feature (see above).</p>
+<div class="section" id="embedded-systems-with-file-system">
+<h4>Embedded systems with file system<a class="headerlink" href="#embedded-systems-with-file-system" title="Permalink to this headline">¶</a></h4>
+<p>If a file system is available on the PLC it is possible to transfer the XML
+description file automatically to the PLC. This is useful because the file can be managed
+consistent to the application. This file is updated on every download or online
+change. The PLCHandler will try to load the XML description file from the
+device.</p>
+<p>Use the targetsettings <em>“symbolconfiguration/transfer_xml” = True</em> and <em>“symbolconfiguration/transfer_code” = False</em> to
+achieve this behavior.</p>
+</div>
+<div class="section" id="embedded-systems-without-file-system">
+<h4>Embedded systems without file system<a class="headerlink" href="#embedded-systems-without-file-system" title="Permalink to this headline">¶</a></h4>
+<p>If no file system is available it is possible to configure the
+symbolconfiguration to generate the XML description file, but to not download
+the file to the PLC. If this is used the XML description file has to be copied
+to the PLCHandler by hand.</p>
+<p>Use the targetsettings <em>“symbolconfiguration/transfer_xml” = False</em> and <em>“symbolconfiguration/transfer_code” = False</em>
+to achieve this behavior.</p>
+</div>
+<div class="section" id="id1">
+<h4>Restrictions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Access rights can not be checked</p></li>
+<li><p>Symbol sets are not available.</p></li>
+<li><p>It is not possible to call executable members.</p></li>
+<li><p>Access to complex values and references not possible</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="targetsettings-involved">
+<h2>6.3.3.7. Targetsettings involved<a class="headerlink" href="#targetsettings-involved" title="Permalink to this headline">¶</a></h2>
+<p>The symbolconfiguration can be configured in many ways. Use the following
+targetsettings to achieve the desired behavior.</p>
+<p>For details on each targetsetting have a look at the documentation of these
+settings inside the Target-Settings documentation.</p>
+<div class="section" id="allow-calls-through-opcua">
+<h3>allow_calls_through_opcua<a class="headerlink" href="#allow-calls-through-opcua" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Setting to enable the call of executable members.</p></li>
+<li><p>Default: Forbidden</p></li>
+</ul>
+</div>
+<div class="section" id="generate-address-info">
+<h3>generate_address_info<a class="headerlink" href="#generate-address-info" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Setting to include the address information to the XML description file.</p></li>
+<li><p>Default: False</p></li>
+</ul>
+</div>
+<div class="section" id="generate-as-separate-application">
+<h3>generate_as_separate_application<a class="headerlink" href="#generate-as-separate-application" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Setting to generate the symbolconfiguration code into a child application</p></li>
+<li><p>Default: False</p></li>
+</ul>
+</div>
+<div class="section" id="include-opcua-information">
+<h3>include_opcua_information<a class="headerlink" href="#include-opcua-information" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Setting to add extended information to the symbolconfiguration.</p></li>
+<li><p>Default: Allowed</p></li>
+</ul>
+</div>
+<div class="section" id="max-area-size">
+<h3>max-area-size<a class="headerlink" href="#max-area-size" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Setting to define the maximum area size of the child application</p></li>
+<li><p>Default: -1</p></li>
+</ul>
+</div>
+<div class="section" id="transfer-code">
+<h3>transfer_code<a class="headerlink" href="#transfer-code" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Setting to decide if the symbolconfiguration code is generated and downloaded
+to the PLC.</p></li>
+<li><p>Default: True</p></li>
+</ul>
+</div>
+<div class="section" id="transfer-xml">
+<h3>transfer_xml<a class="headerlink" href="#transfer-xml" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Setting to decide if the symbolconfiguration XML description file is
+transferred to the PLC.</p></li>
+<li><p>Default: False</p></li>
+</ul>
+</div>
+<div class="section" id="transfer-xml-only">
+<h3>transfer_xml_only<a class="headerlink" href="#transfer-xml-only" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Setting is <strong>obsolete</strong>. Was replaced by transfer_code and transfer_xml</p></li>
+<li><p>Default: False</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="glossary">
+<h2>6.3.3.8. Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h2>
+<dl class="glossary simple">
+<dt id="term-codesys-online-help">CODESYS Online Help</dt><dd><p><a class="reference external" href="https://help.codesys.com/webapp/_cds_obj_symbolconfiguration;product=codesys">https://help.codesys.com/webapp/_cds_obj_symbolconfiguration;product=codesys</a></p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CODESYSControlV3_MultiCore.html" title="6.3.4. MultiCore Tutorial"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CODESYSControlV3_FilePath_Placeholders.html" title="6.3.2. CODESYS Control Filepath &amp; Placeholders"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >6. Tutorials / HowTos</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,441 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>7.1.2.161. SysMutexItf &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/theme.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7.1.2.162. SysNativeCommonControlsItf" href="group___sys_native_common_controls_itf.html" />
+    <link rel="prev" title="7.1.2.160. SysMsgQItf" href="group___sys_msg_q_itf.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="group___sys_native_common_controls_itf.html" title="7.1.2.162. SysNativeCommonControlsItf"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="group___sys_msg_q_itf.html" title="7.1.2.160. SysMsgQItf"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. Reference Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">7.1. API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="group___sys_msg_q_itf.html"
+                        title="previous chapter">7.1.2.160. SysMsgQItf</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="group___sys_native_common_controls_itf.html"
+                        title="next chapter">7.1.2.162. SysNativeCommonControlsItf</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sysmutexitf">
+<span id="group-sys-mutex-itf"></span><h1>7.1.2.161. SysMutexItf<a class="headerlink" href="#sysmutexitf" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#detailed-description" id="id29">Detailed Description</a></p></li>
+<li><p><a class="reference internal" href="#data-structures" id="id30">Data Structures</a></p></li>
+<li><p><a class="reference internal" href="#macros" id="id31">Macros</a></p></li>
+<li><p><a class="reference internal" href="#typedefs" id="id32">Typedefs</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id33">Functions</a></p></li>
+<li><p><a class="reference internal" href="#macro-definition-documentation" id="id34">Macro Definition Documentation</a></p></li>
+<li><p><a class="reference internal" href="#typedef-documentation" id="id35">Typedef Documentation</a></p></li>
+<li><p><a class="reference internal" href="#function-documentation" id="id36">Function Documentation</a></p></li>
+</ul>
+</div>
+<p>Interface of SysMutex.</p>
+<div class="section" id="detailed-description">
+<h2><a class="toc-backref" href="#id29">Detailed Description</a><a class="headerlink" href="#detailed-description" title="Permalink to this headline">¶</a></h2>
+<p>The SysMutex interface is projected to handle synchronization objects for tasks and threads. The synchronization objects are called mutex to synchronize concurrent access to single data resources.</p>
+<p>For example:</p>
+<p>Task1: … SysMutexEnter(hMutex); [Here you can accessed the protected data] SysMutexLeave(hMutex); [After <a class="reference internal" href="group___sys_sem_itf.html#group-sys-sem-itf-1gabfa8bac50383f867e91954ee4d301868"><span class="std std-ref">SysSemLeave()</span></a> you must not access the protected data] ….</p>
+<p>IMPLEMENTATION NOTE: The mutex must work recursive! That means, that a multiple call out of one task must not block the execution! For each <a class="reference internal" href="#group-sys-mutex-itf-1gaa49ac320408eff49adbba2c8df2dee52"><span class="std std-ref">SysMutexEnter()</span></a> call, a corresponding <a class="reference internal" href="#group-sys-mutex-itf-1gae3351da114f15d0d3c4b7c66fea68d97"><span class="std std-ref">SysMutexLeave()</span></a> must be used!</p>
+<p><strong>Copyright:</strong></p>
+<p>Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.</p>
+</div>
+<div class="section" id="data-structures">
+<h2><a class="toc-backref" href="#id30">Data Structures</a><a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>struct <a class="reference internal" href="struct_i_sys_mutex___c.html#struct-i-sys-mutex-c"><span class="std std-ref">ISysMutex_C</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="macros">
+<h2><a class="toc-backref" href="#id31">Macros</a><a class="headerlink" href="#macros" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga321d9f04651e6885aafeae3e52e410c5"><span class="std std-ref">USE_SysMutexCreate</span></a> <a class="reference internal" href="#group-sys-mutex-itf-1ga6769113c1174632fb098e3dd612d3b82"><span class="std std-ref">PFSYSMUTEXCREATE</span></a> pfSysMutexCreate;</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga8dc3f485595c9d19b6a1cffd7991a12c"><span class="std std-ref">EXT_SysMutexCreate</span></a> extern <a class="reference internal" href="#group-sys-mutex-itf-1ga6769113c1174632fb098e3dd612d3b82"><span class="std std-ref">PFSYSMUTEXCREATE</span></a> pfSysMutexCreate;</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1gab066ee3a470181313861714ca4061f89"><span class="std std-ref">GET_SysMutexCreate</span></a> s_pfCMGetAPI2( “SysMutexCreate”, (RTS_VOID_FCTPTR <a href="#id1"><span class="problematic" id="id2">*</span></a>)&amp;pfSysMutexCreate, (fl), 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1gaf88c84c7fe3b08f2fed66ae6b1d54218"><span class="std std-ref">CAL_SysMutexCreate</span></a> pfSysMutexCreate</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1gade2b891066e0c98ff98a52661042cd36"><span class="std std-ref">CHK_SysMutexCreate</span></a> (pfSysMutexCreate != NULL)</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga05b3b3a5b0bc08dfefd48f27f29ee4f1"><span class="std std-ref">EXP_SysMutexCreate</span></a> s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”SysMutexCreate”, (RTS_UINTPTR) <a class="reference internal" href="#group-sys-mutex-itf-1gabb2f4398bff145473f2396c1e5abd724"><span class="std std-ref">SysMutexCreate</span></a> , 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1gafc5be91ff8831e9c824c75536e731225"><span class="std std-ref">USE_SysMutexDelete</span></a> <a class="reference internal" href="#group-sys-mutex-itf-1ga59fcff43023389a9fb5e17f2c3e59e54"><span class="std std-ref">PFSYSMUTEXDELETE</span></a> pfSysMutexDelete;</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1gad50721e3e2da3193d32f17ad8031ea42"><span class="std std-ref">EXT_SysMutexDelete</span></a> extern <a class="reference internal" href="#group-sys-mutex-itf-1ga59fcff43023389a9fb5e17f2c3e59e54"><span class="std std-ref">PFSYSMUTEXDELETE</span></a> pfSysMutexDelete;</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1gadc39eadac3cd9585489425eda5cefb71"><span class="std std-ref">GET_SysMutexDelete</span></a> s_pfCMGetAPI2( “SysMutexDelete”, (RTS_VOID_FCTPTR <a href="#id3"><span class="problematic" id="id4">*</span></a>)&amp;pfSysMutexDelete, (fl), 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1gaa4b7a2fd73562a9f88b37a78daf53c66"><span class="std std-ref">CAL_SysMutexDelete</span></a> pfSysMutexDelete</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga964f985f4f0b4beb161cb032f7ccff51"><span class="std std-ref">CHK_SysMutexDelete</span></a> (pfSysMutexDelete != NULL)</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga927b09f8e4211f1e627ae5ff81fee166"><span class="std std-ref">EXP_SysMutexDelete</span></a> s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”SysMutexDelete”, (RTS_UINTPTR) <a class="reference internal" href="#group-sys-mutex-itf-1gaeabda903423971a0724db05ee8a2bde7"><span class="std std-ref">SysMutexDelete</span></a> , 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1gab29dded0bee5513815a78cf264cfa941"><span class="std std-ref">USE_SysMutexTryEnter</span></a> <a class="reference internal" href="#group-sys-mutex-itf-1gaf22ae9e64d942dda5d959630f9f29104"><span class="std std-ref">PFSYSMUTEXTRYENTER</span></a> pfSysMutexTryEnter;</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga6777ca2e807c48e64aeac1d1cb8039c5"><span class="std std-ref">EXT_SysMutexTryEnter</span></a> extern <a class="reference internal" href="#group-sys-mutex-itf-1gaf22ae9e64d942dda5d959630f9f29104"><span class="std std-ref">PFSYSMUTEXTRYENTER</span></a> pfSysMutexTryEnter;</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga05b20b492270c710ce0dfd8ed13644e2"><span class="std std-ref">GET_SysMutexTryEnter</span></a> s_pfCMGetAPI2( “SysMutexTryEnter”, (RTS_VOID_FCTPTR <a href="#id5"><span class="problematic" id="id6">*</span></a>)&amp;pfSysMutexTryEnter, (fl), 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1gaee713cf36dc727be91ee81f7610e88c0"><span class="std std-ref">CAL_SysMutexTryEnter</span></a> pfSysMutexTryEnter</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1gabcee0b7968ca8ffc4e0a7c8230093be8"><span class="std std-ref">CHK_SysMutexTryEnter</span></a> (pfSysMutexTryEnter != NULL)</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga8f1861c8e02974339d5060295b0183e4"><span class="std std-ref">EXP_SysMutexTryEnter</span></a> s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”SysMutexTryEnter”, (RTS_UINTPTR) <a class="reference internal" href="#group-sys-mutex-itf-1gaa77fbaa78d2e46c6681c4a94b0e59ee1"><span class="std std-ref">SysMutexTryEnter</span></a> , 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga2509697c3ae3c56085856059521b2e4a"><span class="std std-ref">USE_SysMutexEnter</span></a> <a class="reference internal" href="#group-sys-mutex-itf-1gaf4532f1d8b29878afef6d361db51e8a8"><span class="std std-ref">PFSYSMUTEXENTER</span></a> pfSysMutexEnter;</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga8fe7954a1e95f28062a2ed2c23a6d916"><span class="std std-ref">EXT_SysMutexEnter</span></a> extern <a class="reference internal" href="#group-sys-mutex-itf-1gaf4532f1d8b29878afef6d361db51e8a8"><span class="std std-ref">PFSYSMUTEXENTER</span></a> pfSysMutexEnter;</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1gad026653e488f86e4866145d4adef81b7"><span class="std std-ref">GET_SysMutexEnter</span></a> s_pfCMGetAPI2( “SysMutexEnter”, (RTS_VOID_FCTPTR <a href="#id7"><span class="problematic" id="id8">*</span></a>)&amp;pfSysMutexEnter, (fl), 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga12b77129f219da70683d4dc87be787dd"><span class="std std-ref">CAL_SysMutexEnter</span></a> pfSysMutexEnter</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga6985f7da702c82265102ed419b4a4dcc"><span class="std std-ref">CHK_SysMutexEnter</span></a> (pfSysMutexEnter != NULL)</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1gab8a6922f287db15abca29ffb11ca4afd"><span class="std std-ref">EXP_SysMutexEnter</span></a> s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”SysMutexEnter”, (RTS_UINTPTR) <a class="reference internal" href="#group-sys-mutex-itf-1gaa49ac320408eff49adbba2c8df2dee52"><span class="std std-ref">SysMutexEnter</span></a> , 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga59588c2b6114f8d9776a3f2ba0251639"><span class="std std-ref">USE_SysMutexLeave</span></a> <a class="reference internal" href="#group-sys-mutex-itf-1ga3945f59d6d1793263aa85c1364fc6d4d"><span class="std std-ref">PFSYSMUTEXLEAVE</span></a> pfSysMutexLeave;</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1gadae41729d126041dc304b559fdb2cdcf"><span class="std std-ref">EXT_SysMutexLeave</span></a> extern <a class="reference internal" href="#group-sys-mutex-itf-1ga3945f59d6d1793263aa85c1364fc6d4d"><span class="std std-ref">PFSYSMUTEXLEAVE</span></a> pfSysMutexLeave;</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga103e4c1ab871b0316230265882de2f43"><span class="std std-ref">GET_SysMutexLeave</span></a> s_pfCMGetAPI2( “SysMutexLeave”, (RTS_VOID_FCTPTR <a href="#id9"><span class="problematic" id="id10">*</span></a>)&amp;pfSysMutexLeave, (fl), 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1gac656ec133bc2d5429044eea309d08885"><span class="std std-ref">CAL_SysMutexLeave</span></a> pfSysMutexLeave</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga43e3af4f736727ca886190fe23a2d594"><span class="std std-ref">CHK_SysMutexLeave</span></a> (pfSysMutexLeave != NULL)</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga928507e99f6dcbc79184f994f6c7120e"><span class="std std-ref">EXP_SysMutexLeave</span></a> s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”SysMutexLeave”, (RTS_UINTPTR) <a class="reference internal" href="#group-sys-mutex-itf-1gae3351da114f15d0d3c4b7c66fea68d97"><span class="std std-ref">SysMutexLeave</span></a> , 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga57dc2ee1605f45980b9aee53c8a0e4dd"><span class="std std-ref">ITF_SysMutex</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-sys-mutex-itf-1ga75245bcbdc55c7d60aa23a1402f2561c"><span class="std std-ref">EXTITF_SysMutex</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="typedefs">
+<h2><a class="toc-backref" href="#id32">Typedefs</a><a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>typedef RTS_HANDLE(* <a class="reference internal" href="#group-sys-mutex-itf-1ga6769113c1174632fb098e3dd612d3b82"><span class="std std-ref">PFSYSMUTEXCREATE</span></a>)(RTS_RESULT <a href="#id11"><span class="problematic" id="id12">*</span></a>pResult)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-sys-mutex-itf-1ga59fcff43023389a9fb5e17f2c3e59e54"><span class="std std-ref">PFSYSMUTEXDELETE</span></a>)(RTS_HANDLE hMutex)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-sys-mutex-itf-1gaf22ae9e64d942dda5d959630f9f29104"><span class="std std-ref">PFSYSMUTEXTRYENTER</span></a>)(RTS_HANDLE hMutex)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-sys-mutex-itf-1gaf4532f1d8b29878afef6d361db51e8a8"><span class="std std-ref">PFSYSMUTEXENTER</span></a>)(RTS_HANDLE hMutex)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-sys-mutex-itf-1ga3945f59d6d1793263aa85c1364fc6d4d"><span class="std std-ref">PFSYSMUTEXLEAVE</span></a>)(RTS_HANDLE hMutex)</p></li>
+<li><p>typedef <a class="reference internal" href="struct_i_sys_mutex___c.html#struct-i-sys-mutex-c"><span class="std std-ref">ISysMutex_C</span></a> <a class="reference internal" href="#group-sys-mutex-itf-1gaa40c614a4b90498e2ff0a7b84c54d90f"><span class="std std-ref">ISysMutex</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2><a class="toc-backref" href="#id33">Functions</a><a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>RTS_RESULT <a class="reference internal" href="#group-sys-mutex-itf-1ga48ef22f51f4b14fe6b89d3d47f79c3db"><span class="std std-ref">SysMutexOSInit</span></a> (INIT_STRUCT * pInit)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-sys-mutex-itf-1ga49b4caf3c86cc298530bbb779dfe19af"><span class="std std-ref">SysMutexOSHookFunction</span></a> (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-sys-mutex-itf-1gabb2f4398bff145473f2396c1e5abd724"><span class="std std-ref">SysMutexCreate</span></a> (RTS_RESULT * pResult)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-sys-mutex-itf-1gaeabda903423971a0724db05ee8a2bde7"><span class="std std-ref">SysMutexDelete</span></a> (RTS_HANDLE hMutex)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-sys-mutex-itf-1gaa77fbaa78d2e46c6681c4a94b0e59ee1"><span class="std std-ref">SysMutexTryEnter</span></a> (RTS_HANDLE hMutex)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-sys-mutex-itf-1gaa49ac320408eff49adbba2c8df2dee52"><span class="std std-ref">SysMutexEnter</span></a> (RTS_HANDLE hMutex)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-sys-mutex-itf-1gae3351da114f15d0d3c4b7c66fea68d97"><span class="std std-ref">SysMutexLeave</span></a> (RTS_HANDLE hMutex)</p></li>
+</ul>
+</div>
+<div class="section" id="macro-definition-documentation">
+<h2><a class="toc-backref" href="#id34">Macro Definition Documentation</a><a class="headerlink" href="#macro-definition-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="define-use-sysmutexcreate-pfsysmutexcreate-pfsysmutexcreate">
+<span id="group-sys-mutex-itf-1ga321d9f04651e6885aafeae3e52e410c5"></span><h3>#define USE_SysMutexCreate <a class="reference internal" href="#group-sys-mutex-itf-1ga6769113c1174632fb098e3dd612d3b82"><span class="std std-ref">PFSYSMUTEXCREATE</span></a> pfSysMutexCreate;<a class="headerlink" href="#define-use-sysmutexcreate-pfsysmutexcreate-pfsysmutexcreate" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-sysmutexcreate-extern-pfsysmutexcreate-pfsysmutexcreate">
+<span id="group-sys-mutex-itf-1ga8dc3f485595c9d19b6a1cffd7991a12c"></span><h3>#define EXT_SysMutexCreate extern <a class="reference internal" href="#group-sys-mutex-itf-1ga6769113c1174632fb098e3dd612d3b82"><span class="std std-ref">PFSYSMUTEXCREATE</span></a> pfSysMutexCreate;<a class="headerlink" href="#define-ext-sysmutexcreate-extern-pfsysmutexcreate-pfsysmutexcreate" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-sysmutexcreate-s-pfcmgetapi2-sysmutexcreate-rts-void-fctptr-pfsysmutexcreate-fl-0-0">
+<span id="group-sys-mutex-itf-1gab066ee3a470181313861714ca4061f89"></span><h3>#define GET_SysMutexCreate s_pfCMGetAPI2( “SysMutexCreate”, (RTS_VOID_FCTPTR <a href="#id13"><span class="problematic" id="id14">*</span></a>)&amp;pfSysMutexCreate, (fl), 0, 0)<a class="headerlink" href="#define-get-sysmutexcreate-s-pfcmgetapi2-sysmutexcreate-rts-void-fctptr-pfsysmutexcreate-fl-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-sysmutexcreate-pfsysmutexcreate">
+<span id="group-sys-mutex-itf-1gaf88c84c7fe3b08f2fed66ae6b1d54218"></span><h3>#define CAL_SysMutexCreate pfSysMutexCreate<a class="headerlink" href="#define-cal-sysmutexcreate-pfsysmutexcreate" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-sysmutexcreate-pfsysmutexcreate-null">
+<span id="group-sys-mutex-itf-1gade2b891066e0c98ff98a52661042cd36"></span><h3>#define CHK_SysMutexCreate (pfSysMutexCreate != NULL)<a class="headerlink" href="#define-chk-sysmutexcreate-pfsysmutexcreate-null" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-sysmutexcreate-s-pfcmregisterapi-const-cmp-ext-function-ref-sysmutexcreate-rts-uintptr-sysmutexcreate-0-0">
+<span id="group-sys-mutex-itf-1ga05b3b3a5b0bc08dfefd48f27f29ee4f1"></span><h3>#define EXP_SysMutexCreate s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”SysMutexCreate”, (RTS_UINTPTR) <a class="reference internal" href="#group-sys-mutex-itf-1gabb2f4398bff145473f2396c1e5abd724"><span class="std std-ref">SysMutexCreate</span></a> , 0, 0)<a class="headerlink" href="#define-exp-sysmutexcreate-s-pfcmregisterapi-const-cmp-ext-function-ref-sysmutexcreate-rts-uintptr-sysmutexcreate-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-sysmutexdelete-pfsysmutexdelete-pfsysmutexdelete">
+<span id="group-sys-mutex-itf-1gafc5be91ff8831e9c824c75536e731225"></span><h3>#define USE_SysMutexDelete <a class="reference internal" href="#group-sys-mutex-itf-1ga59fcff43023389a9fb5e17f2c3e59e54"><span class="std std-ref">PFSYSMUTEXDELETE</span></a> pfSysMutexDelete;<a class="headerlink" href="#define-use-sysmutexdelete-pfsysmutexdelete-pfsysmutexdelete" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-sysmutexdelete-extern-pfsysmutexdelete-pfsysmutexdelete">
+<span id="group-sys-mutex-itf-1gad50721e3e2da3193d32f17ad8031ea42"></span><h3>#define EXT_SysMutexDelete extern <a class="reference internal" href="#group-sys-mutex-itf-1ga59fcff43023389a9fb5e17f2c3e59e54"><span class="std std-ref">PFSYSMUTEXDELETE</span></a> pfSysMutexDelete;<a class="headerlink" href="#define-ext-sysmutexdelete-extern-pfsysmutexdelete-pfsysmutexdelete" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-sysmutexdelete-s-pfcmgetapi2-sysmutexdelete-rts-void-fctptr-pfsysmutexdelete-fl-0-0">
+<span id="group-sys-mutex-itf-1gadc39eadac3cd9585489425eda5cefb71"></span><h3>#define GET_SysMutexDelete s_pfCMGetAPI2( “SysMutexDelete”, (RTS_VOID_FCTPTR <a href="#id15"><span class="problematic" id="id16">*</span></a>)&amp;pfSysMutexDelete, (fl), 0, 0)<a class="headerlink" href="#define-get-sysmutexdelete-s-pfcmgetapi2-sysmutexdelete-rts-void-fctptr-pfsysmutexdelete-fl-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-sysmutexdelete-pfsysmutexdelete">
+<span id="group-sys-mutex-itf-1gaa4b7a2fd73562a9f88b37a78daf53c66"></span><h3>#define CAL_SysMutexDelete pfSysMutexDelete<a class="headerlink" href="#define-cal-sysmutexdelete-pfsysmutexdelete" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-sysmutexdelete-pfsysmutexdelete-null">
+<span id="group-sys-mutex-itf-1ga964f985f4f0b4beb161cb032f7ccff51"></span><h3>#define CHK_SysMutexDelete (pfSysMutexDelete != NULL)<a class="headerlink" href="#define-chk-sysmutexdelete-pfsysmutexdelete-null" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-sysmutexdelete-s-pfcmregisterapi-const-cmp-ext-function-ref-sysmutexdelete-rts-uintptr-sysmutexdelete-0-0">
+<span id="group-sys-mutex-itf-1ga927b09f8e4211f1e627ae5ff81fee166"></span><h3>#define EXP_SysMutexDelete s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”SysMutexDelete”, (RTS_UINTPTR) <a class="reference internal" href="#group-sys-mutex-itf-1gaeabda903423971a0724db05ee8a2bde7"><span class="std std-ref">SysMutexDelete</span></a> , 0, 0)<a class="headerlink" href="#define-exp-sysmutexdelete-s-pfcmregisterapi-const-cmp-ext-function-ref-sysmutexdelete-rts-uintptr-sysmutexdelete-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-sysmutextryenter-pfsysmutextryenter-pfsysmutextryenter">
+<span id="group-sys-mutex-itf-1gab29dded0bee5513815a78cf264cfa941"></span><h3>#define USE_SysMutexTryEnter <a class="reference internal" href="#group-sys-mutex-itf-1gaf22ae9e64d942dda5d959630f9f29104"><span class="std std-ref">PFSYSMUTEXTRYENTER</span></a> pfSysMutexTryEnter;<a class="headerlink" href="#define-use-sysmutextryenter-pfsysmutextryenter-pfsysmutextryenter" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-sysmutextryenter-extern-pfsysmutextryenter-pfsysmutextryenter">
+<span id="group-sys-mutex-itf-1ga6777ca2e807c48e64aeac1d1cb8039c5"></span><h3>#define EXT_SysMutexTryEnter extern <a class="reference internal" href="#group-sys-mutex-itf-1gaf22ae9e64d942dda5d959630f9f29104"><span class="std std-ref">PFSYSMUTEXTRYENTER</span></a> pfSysMutexTryEnter;<a class="headerlink" href="#define-ext-sysmutextryenter-extern-pfsysmutextryenter-pfsysmutextryenter" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-sysmutextryenter-s-pfcmgetapi2-sysmutextryenter-rts-void-fctptr-pfsysmutextryenter-fl-0-0">
+<span id="group-sys-mutex-itf-1ga05b20b492270c710ce0dfd8ed13644e2"></span><h3>#define GET_SysMutexTryEnter s_pfCMGetAPI2( “SysMutexTryEnter”, (RTS_VOID_FCTPTR <a href="#id17"><span class="problematic" id="id18">*</span></a>)&amp;pfSysMutexTryEnter, (fl), 0, 0)<a class="headerlink" href="#define-get-sysmutextryenter-s-pfcmgetapi2-sysmutextryenter-rts-void-fctptr-pfsysmutextryenter-fl-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-sysmutextryenter-pfsysmutextryenter">
+<span id="group-sys-mutex-itf-1gaee713cf36dc727be91ee81f7610e88c0"></span><h3>#define CAL_SysMutexTryEnter pfSysMutexTryEnter<a class="headerlink" href="#define-cal-sysmutextryenter-pfsysmutextryenter" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-sysmutextryenter-pfsysmutextryenter-null">
+<span id="group-sys-mutex-itf-1gabcee0b7968ca8ffc4e0a7c8230093be8"></span><h3>#define CHK_SysMutexTryEnter (pfSysMutexTryEnter != NULL)<a class="headerlink" href="#define-chk-sysmutextryenter-pfsysmutextryenter-null" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-sysmutextryenter-s-pfcmregisterapi-const-cmp-ext-function-ref-sysmutextryenter-rts-uintptr-sysmutextryenter-0-0">
+<span id="group-sys-mutex-itf-1ga8f1861c8e02974339d5060295b0183e4"></span><h3>#define EXP_SysMutexTryEnter s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”SysMutexTryEnter”, (RTS_UINTPTR) <a class="reference internal" href="#group-sys-mutex-itf-1gaa77fbaa78d2e46c6681c4a94b0e59ee1"><span class="std std-ref">SysMutexTryEnter</span></a> , 0, 0)<a class="headerlink" href="#define-exp-sysmutextryenter-s-pfcmregisterapi-const-cmp-ext-function-ref-sysmutextryenter-rts-uintptr-sysmutextryenter-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-sysmutexenter-pfsysmutexenter-pfsysmutexenter">
+<span id="group-sys-mutex-itf-1ga2509697c3ae3c56085856059521b2e4a"></span><h3>#define USE_SysMutexEnter <a class="reference internal" href="#group-sys-mutex-itf-1gaf4532f1d8b29878afef6d361db51e8a8"><span class="std std-ref">PFSYSMUTEXENTER</span></a> pfSysMutexEnter;<a class="headerlink" href="#define-use-sysmutexenter-pfsysmutexenter-pfsysmutexenter" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-sysmutexenter-extern-pfsysmutexenter-pfsysmutexenter">
+<span id="group-sys-mutex-itf-1ga8fe7954a1e95f28062a2ed2c23a6d916"></span><h3>#define EXT_SysMutexEnter extern <a class="reference internal" href="#group-sys-mutex-itf-1gaf4532f1d8b29878afef6d361db51e8a8"><span class="std std-ref">PFSYSMUTEXENTER</span></a> pfSysMutexEnter;<a class="headerlink" href="#define-ext-sysmutexenter-extern-pfsysmutexenter-pfsysmutexenter" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-sysmutexenter-s-pfcmgetapi2-sysmutexenter-rts-void-fctptr-pfsysmutexenter-fl-0-0">
+<span id="group-sys-mutex-itf-1gad026653e488f86e4866145d4adef81b7"></span><h3>#define GET_SysMutexEnter s_pfCMGetAPI2( “SysMutexEnter”, (RTS_VOID_FCTPTR <a href="#id19"><span class="problematic" id="id20">*</span></a>)&amp;pfSysMutexEnter, (fl), 0, 0)<a class="headerlink" href="#define-get-sysmutexenter-s-pfcmgetapi2-sysmutexenter-rts-void-fctptr-pfsysmutexenter-fl-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-sysmutexenter-pfsysmutexenter">
+<span id="group-sys-mutex-itf-1ga12b77129f219da70683d4dc87be787dd"></span><h3>#define CAL_SysMutexEnter pfSysMutexEnter<a class="headerlink" href="#define-cal-sysmutexenter-pfsysmutexenter" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-sysmutexenter-pfsysmutexenter-null">
+<span id="group-sys-mutex-itf-1ga6985f7da702c82265102ed419b4a4dcc"></span><h3>#define CHK_SysMutexEnter (pfSysMutexEnter != NULL)<a class="headerlink" href="#define-chk-sysmutexenter-pfsysmutexenter-null" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-sysmutexenter-s-pfcmregisterapi-const-cmp-ext-function-ref-sysmutexenter-rts-uintptr-sysmutexenter-0-0">
+<span id="group-sys-mutex-itf-1gab8a6922f287db15abca29ffb11ca4afd"></span><h3>#define EXP_SysMutexEnter s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”SysMutexEnter”, (RTS_UINTPTR) <a class="reference internal" href="#group-sys-mutex-itf-1gaa49ac320408eff49adbba2c8df2dee52"><span class="std std-ref">SysMutexEnter</span></a> , 0, 0)<a class="headerlink" href="#define-exp-sysmutexenter-s-pfcmregisterapi-const-cmp-ext-function-ref-sysmutexenter-rts-uintptr-sysmutexenter-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-sysmutexleave-pfsysmutexleave-pfsysmutexleave">
+<span id="group-sys-mutex-itf-1ga59588c2b6114f8d9776a3f2ba0251639"></span><h3>#define USE_SysMutexLeave <a class="reference internal" href="#group-sys-mutex-itf-1ga3945f59d6d1793263aa85c1364fc6d4d"><span class="std std-ref">PFSYSMUTEXLEAVE</span></a> pfSysMutexLeave;<a class="headerlink" href="#define-use-sysmutexleave-pfsysmutexleave-pfsysmutexleave" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-sysmutexleave-extern-pfsysmutexleave-pfsysmutexleave">
+<span id="group-sys-mutex-itf-1gadae41729d126041dc304b559fdb2cdcf"></span><h3>#define EXT_SysMutexLeave extern <a class="reference internal" href="#group-sys-mutex-itf-1ga3945f59d6d1793263aa85c1364fc6d4d"><span class="std std-ref">PFSYSMUTEXLEAVE</span></a> pfSysMutexLeave;<a class="headerlink" href="#define-ext-sysmutexleave-extern-pfsysmutexleave-pfsysmutexleave" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-sysmutexleave-s-pfcmgetapi2-sysmutexleave-rts-void-fctptr-pfsysmutexleave-fl-0-0">
+<span id="group-sys-mutex-itf-1ga103e4c1ab871b0316230265882de2f43"></span><h3>#define GET_SysMutexLeave s_pfCMGetAPI2( “SysMutexLeave”, (RTS_VOID_FCTPTR <a href="#id21"><span class="problematic" id="id22">*</span></a>)&amp;pfSysMutexLeave, (fl), 0, 0)<a class="headerlink" href="#define-get-sysmutexleave-s-pfcmgetapi2-sysmutexleave-rts-void-fctptr-pfsysmutexleave-fl-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-sysmutexleave-pfsysmutexleave">
+<span id="group-sys-mutex-itf-1gac656ec133bc2d5429044eea309d08885"></span><h3>#define CAL_SysMutexLeave pfSysMutexLeave<a class="headerlink" href="#define-cal-sysmutexleave-pfsysmutexleave" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-sysmutexleave-pfsysmutexleave-null">
+<span id="group-sys-mutex-itf-1ga43e3af4f736727ca886190fe23a2d594"></span><h3>#define CHK_SysMutexLeave (pfSysMutexLeave != NULL)<a class="headerlink" href="#define-chk-sysmutexleave-pfsysmutexleave-null" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-sysmutexleave-s-pfcmregisterapi-const-cmp-ext-function-ref-sysmutexleave-rts-uintptr-sysmutexleave-0-0">
+<span id="group-sys-mutex-itf-1ga928507e99f6dcbc79184f994f6c7120e"></span><h3>#define EXP_SysMutexLeave s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”SysMutexLeave”, (RTS_UINTPTR) <a class="reference internal" href="#group-sys-mutex-itf-1gae3351da114f15d0d3c4b7c66fea68d97"><span class="std std-ref">SysMutexLeave</span></a> , 0, 0)<a class="headerlink" href="#define-exp-sysmutexleave-s-pfcmregisterapi-const-cmp-ext-function-ref-sysmutexleave-rts-uintptr-sysmutexleave-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-itf-sysmutex">
+<span id="group-sys-mutex-itf-1ga57dc2ee1605f45980b9aee53c8a0e4dd"></span><h3>#define ITF_SysMutex<a class="headerlink" href="#define-itf-sysmutex" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-extitf-sysmutex">
+<span id="group-sys-mutex-itf-1ga75245bcbdc55c7d60aa23a1402f2561c"></span><h3>#define EXTITF_SysMutex<a class="headerlink" href="#define-extitf-sysmutex" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="typedef-documentation">
+<h2><a class="toc-backref" href="#id35">Typedef Documentation</a><a class="headerlink" href="#typedef-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="typedef-rts-handle-pfsysmutexcreate-rts-result-presult">
+<span id="group-sys-mutex-itf-1ga6769113c1174632fb098e3dd612d3b82"></span><h3>typedef RTS_HANDLE( *  PFSYSMUTEXCREATE) (RTS_RESULT <a href="#id23"><span class="problematic" id="id24">*</span></a>pResult)<a class="headerlink" href="#typedef-rts-handle-pfsysmutexcreate-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfsysmutexdelete-rts-handle-hmutex">
+<span id="group-sys-mutex-itf-1ga59fcff43023389a9fb5e17f2c3e59e54"></span><h3>typedef RTS_RESULT( *  PFSYSMUTEXDELETE) (RTS_HANDLE hMutex)<a class="headerlink" href="#typedef-rts-result-pfsysmutexdelete-rts-handle-hmutex" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfsysmutextryenter-rts-handle-hmutex">
+<span id="group-sys-mutex-itf-1gaf22ae9e64d942dda5d959630f9f29104"></span><h3>typedef RTS_RESULT( *  PFSYSMUTEXTRYENTER) (RTS_HANDLE hMutex)<a class="headerlink" href="#typedef-rts-result-pfsysmutextryenter-rts-handle-hmutex" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfsysmutexenter-rts-handle-hmutex">
+<span id="group-sys-mutex-itf-1gaf4532f1d8b29878afef6d361db51e8a8"></span><h3>typedef RTS_RESULT( *  PFSYSMUTEXENTER) (RTS_HANDLE hMutex)<a class="headerlink" href="#typedef-rts-result-pfsysmutexenter-rts-handle-hmutex" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfsysmutexleave-rts-handle-hmutex">
+<span id="group-sys-mutex-itf-1ga3945f59d6d1793263aa85c1364fc6d4d"></span><h3>typedef RTS_RESULT( *  PFSYSMUTEXLEAVE) (RTS_HANDLE hMutex)<a class="headerlink" href="#typedef-rts-result-pfsysmutexleave-rts-handle-hmutex" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-isysmutex-c-isysmutex">
+<span id="group-sys-mutex-itf-1gaa40c614a4b90498e2ff0a7b84c54d90f"></span><h3>typedef ISysMutex_C ISysMutex<a class="headerlink" href="#typedef-isysmutex-c-isysmutex" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="function-documentation">
+<h2><a class="toc-backref" href="#id36">Function Documentation</a><a class="headerlink" href="#function-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rts-result-sysmutexosinit-init-struct-pinit">
+<span id="group-sys-mutex-itf-1ga48ef22f51f4b14fe6b89d3d47f79c3db"></span><h3>RTS_RESULT SysMutexOSInit (INIT_STRUCT <a href="#id25"><span class="problematic" id="id26">*</span></a>pInit)<a class="headerlink" href="#rts-result-sysmutexosinit-init-struct-pinit" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="rts-result-sysmutexoshookfunction-rts-ui32-ulhook-rts-uintptr-ulparam1-rts-uintptr-ulparam2">
+<span id="group-sys-mutex-itf-1ga49b4caf3c86cc298530bbb779dfe19af"></span><h3>RTS_RESULT SysMutexOSHookFunction (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)<a class="headerlink" href="#rts-result-sysmutexoshookfunction-rts-ui32-ulhook-rts-uintptr-ulparam1-rts-uintptr-ulparam2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="rts-handle-sysmutexcreate-rts-result-presult">
+<span id="group-sys-mutex-itf-1gabb2f4398bff145473f2396c1e5abd724"></span><h3>RTS_HANDLE SysMutexCreate (RTS_RESULT <a href="#id27"><span class="problematic" id="id28">*</span></a>pResult)<a class="headerlink" href="#rts-handle-sysmutexcreate-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+<p>Create a new mutex object.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 78%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[out]</p></td>
+<td><p>pResult</p></td>
+<td><p>Pointer to error code: One of:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ERR_OK: The mutex was created.</p></li>
+<li><p>ERR_NOMEMORY: The needed resources couldn’t be allocated.</p></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Handle to the mutex</p>
+</div>
+<div class="section" id="rts-result-sysmutexdelete-rts-handle-hmutex">
+<span id="group-sys-mutex-itf-1gaeabda903423971a0724db05ee8a2bde7"></span><h3>RTS_RESULT SysMutexDelete (RTS_HANDLE hMutex)<a class="headerlink" href="#rts-result-sysmutexdelete-rts-handle-hmutex" title="Permalink to this headline">¶</a></h3>
+<p>Delete a mutex object</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 88%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hMutex</p></td>
+<td><p>Handle to the mutex that is provided from <a class="reference internal" href="#group-sys-mutex-itf-1gabb2f4398bff145473f2396c1e5abd724"><span class="std std-ref">SysMutexCreate()</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>One of: ERR_OK: The mutex was deleted successful. ERR_INVALID_HANDLE: The given mutex isn’t a valid mutex handle. ERR_FAILED: An internal error occurred.</p>
+</div>
+<div class="section" id="rts-result-sysmutextryenter-rts-handle-hmutex">
+<span id="group-sys-mutex-itf-1gaa77fbaa78d2e46c6681c4a94b0e59ee1"></span><h3>RTS_RESULT SysMutexTryEnter (RTS_HANDLE hMutex)<a class="headerlink" href="#rts-result-sysmutextryenter-rts-handle-hmutex" title="Permalink to this headline">¶</a></h3>
+<p>Try to enter the mutex. If mutex is available, the function entered the mutex and returned ERR_OK. If mutex is not available, ERR_FAILED is returned.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 88%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hMutex</p></td>
+<td><p>Handle to the mutex that is provided from <a class="reference internal" href="#group-sys-mutex-itf-1gabb2f4398bff145473f2396c1e5abd724"><span class="std std-ref">SysMutexCreate()</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>One of: ERR_OK: The mutex was entered. ERR_INVALID_HANDLE: The given mutex isn’t a valid mutex handle. ERR_FAILED: An internal error occurred. Mutex was no entered.</p>
+</div>
+<div class="section" id="rts-result-sysmutexenter-rts-handle-hmutex">
+<span id="group-sys-mutex-itf-1gaa49ac320408eff49adbba2c8df2dee52"></span><h3>RTS_RESULT SysMutexEnter (RTS_HANDLE hMutex)<a class="headerlink" href="#rts-result-sysmutexenter-rts-handle-hmutex" title="Permalink to this headline">¶</a></h3>
+<p>Enter the given mutex. If the mutex is still entered by another task1, the actual task2 will be blocked, until the task1 has called <a class="reference internal" href="#group-sys-mutex-itf-1gae3351da114f15d0d3c4b7c66fea68d97"><span class="std std-ref">SysMutexLeave()</span></a> .</p>
+<p>IMPLEMENTATION NOTE: The mutex must work recursive! That means, that a multiple call out of one task must not block the execution! For each <a class="reference internal" href="#group-sys-mutex-itf-1gaa49ac320408eff49adbba2c8df2dee52"><span class="std std-ref">SysMutexEnter()</span></a> call, a corresponding <a class="reference internal" href="#group-sys-mutex-itf-1gae3351da114f15d0d3c4b7c66fea68d97"><span class="std std-ref">SysMutexLeave()</span></a> must be used!</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 4%" />
+<col style="width: 89%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hSem</p></td>
+<td><p>Handle to the mutex that is provided from <a class="reference internal" href="#group-sys-mutex-itf-1gabb2f4398bff145473f2396c1e5abd724"><span class="std std-ref">SysMutexCreate()</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>One of:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ERR_OK: The mutex was entered successful.</p></li>
+<li><p>ERR_INVALID_HANDLE: The given mutex isn’t a valid mutex handle.</p></li>
+<li><p>ERR_FAILED: An internal error occurred.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="rts-result-sysmutexleave-rts-handle-hmutex">
+<span id="group-sys-mutex-itf-1gae3351da114f15d0d3c4b7c66fea68d97"></span><h3>RTS_RESULT SysMutexLeave (RTS_HANDLE hMutex)<a class="headerlink" href="#rts-result-sysmutexleave-rts-handle-hmutex" title="Permalink to this headline">¶</a></h3>
+<p>Leave the given mutex.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 88%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hMutex</p></td>
+<td><p>Handle to the mutex that is provided from <a class="reference internal" href="#group-sys-mutex-itf-1gabb2f4398bff145473f2396c1e5abd724"><span class="std std-ref">SysMutexCreate()</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>One of:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ERR_OK: The mutex was leafed successful.</p></li>
+<li><p>ERR_INVALID_HANDLE: The given mutex isn’t a valid mutex handle.</p></li>
+<li><p>ERR_FAILED: An internal error occurred.</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="group___sys_native_common_controls_itf.html" title="7.1.2.162. SysNativeCommonControlsItf"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="group___sys_msg_q_itf.html" title="7.1.2.160. SysMsgQItf"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. Reference Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >7.1. API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

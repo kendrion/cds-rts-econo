@@ -1,37 +1,24 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>1.3.10. Hardware and Operating System Abstraction Layer (Sys-Components) &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
-    
+    <meta charset="utf-8" />
+    <title>5.3.10. Hardware and Operating System Abstraction Layer (Sys-Components) &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '3.5.14.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/theme.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
-    <link rel="up" title="1.3. Overview of the Kernel Components and Main Functions" href="overview_kernel.html" />
-    <link rel="next" title="1.3.11. Memory Management" href="ov_kernel_memory_mgmt.html" />
-    <link rel="prev" title="1.3.9. Logging" href="ov_kernel_logging.html" /> 
-  </head>
-  <body role="document">
+    <link rel="next" title="5.3.11. Memory Management" href="ov_kernel_memory_mgmt.html" />
+    <link rel="prev" title="5.3.9. Logging" href="ov_kernel_logging.html" /> 
+  </head><body>
 	<div id="header">
 		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
 		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
@@ -44,85 +31,34 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="ov_kernel_memory_mgmt.html" title="1.3.11. Memory Management"
+          <a href="ov_kernel_memory_mgmt.html" title="5.3.11. Memory Management"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="ov_kernel_logging.html" title="1.3.9. Logging"
+          <a href="ov_kernel_logging.html" title="5.3.9. Logging"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="overview_kernel.html" accesskey="U">1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >5. Architecture Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" accesskey="U">5.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">1.3.10. Hardware and Operating System Abstraction Layer (Sys-Components)</a><ul>
-<li><a class="reference internal" href="#time-access-systime">1.3.10.1. Time access (SysTime)</a></li>
-<li><a class="reference internal" href="#serial-interface-syscom">1.3.10.2. Serial interface (SysCom)</a></li>
-<li><a class="reference internal" href="#exception-handling-sysexcept">1.3.10.3. Exception handling (SysExcept)</a></li>
-<li><a class="reference internal" href="#file-access-sysfile">1.3.10.4. File access (SysFile)</a></li>
-<li><a class="reference internal" href="#file-access-using-flash-sysfileflash">1.3.10.5. File access using flash (SysFileFlash)</a></li>
-<li><a class="reference internal" href="#flash-access-sysflash">1.3.10.6. Flash access (SysFlash)</a></li>
-<li><a class="reference internal" href="#memory-access">1.3.10.7. Memory access</a><ul>
-<li><a class="reference internal" href="#heap-and-static-memory-sysmem">1.3.10.7.1. Heap and static memory (SysMem)</a></li>
-<li><a class="reference internal" href="#physical-memory-access-and-shared-memories-sysshm">1.3.10.7.2. Physical memory access and shared memories (SysShm)</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#dynamic-loading-module-sysmodule">1.3.10.8. Dynamic loading module (SysModule)</a></li>
-<li><a class="reference internal" href="#ethernet-sockets-syssocket">1.3.10.9. Ethernet sockets (SysSocket)</a></li>
-<li><a class="reference internal" href="#debug-console-outputs-sysout">1.3.10.10. Debug console outputs (SysOut)</a></li>
-<li><a class="reference internal" href="#message-queues-sysmsgq">1.3.10.11. Message queues (SysMsgQ)</a></li>
-<li><a class="reference internal" href="#interrupt-handling">1.3.10.12. Interrupt handling</a></li>
-<li><a class="reference internal" href="#pci-bus-access-syspci">1.3.10.13. PCI bus access (SysPCI)</a></li>
-<li><a class="reference internal" href="#device-port-access-sysport">1.3.10.14. Device port access (SysPort)</a></li>
-<li><a class="reference internal" href="#timer-handling-systimer">1.3.10.15. Timer handling (SysTimer)</a></li>
-<li><a class="reference internal" href="#target-information-systarget">1.3.10.16. Target information (SysTarget)</a></li>
-<li><a class="reference internal" href="#task-handling">1.3.10.17. Task handling</a><ul>
-<li><a class="reference internal" href="#synchronization-and-semaphores-syssem">1.3.10.17.1. Synchronization and semaphores (SysSem)</a></li>
-<li><a class="reference internal" href="#operating-system-events-sysevent">1.3.10.17.2. Operating system events (SysEvent)</a></li>
-<li><a class="reference internal" href="#task-handling-systask">1.3.10.17.3. Task handling (SysTask)</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#optional-system-components-for-target-visualization">1.3.10.18. Optional system components for target visualization</a><ul>
-<li><a class="reference internal" href="#window-handling-syswindow">1.3.10.18.1. Window handling (SysWindow)</a></li>
-<li><a class="reference internal" href="#basic-graphic-routines-sysgraphic">1.3.10.18.2. Basic graphic routines (SysGraphic)</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#process-handling">1.3.10.19. Process handling</a><ul>
-<li><a class="reference internal" href="#processes-sysprocess">1.3.10.19.1. Processes (SysProcess)</a></li>
-<li><a class="reference internal" href="#process-synchronization-syssemprocess">1.3.10.19.2. Process synchronization (SysSemProcess)</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#direct-ethernet-controller-access-sysethernet">1.3.10.20. Direct Ethernet controller access (SysEthernet)</a></li>
-</ul>
-</li>
-</ul>
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="ov_kernel_logging.html"
-                        title="previous chapter">1.3.9. Logging</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="ov_kernel_memory_mgmt.html"
-                        title="next chapter">1.3.11. Memory Management</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/Manual/ov_kernel_hw_os_abstraction.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ov_kernel_logging.html"
+                        title="previous chapter">5.3.9. Logging</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ov_kernel_memory_mgmt.html"
+                        title="next chapter">5.3.11. Memory Management</a></p>
         </div>
       </div>
 
@@ -132,27 +68,27 @@
           <div class="body" role="main">
             
   <div class="section" id="hardware-and-operating-system-abstraction-layer-sys-components">
-<span id="ov-kernel-hw-os-abstraction"></span><h1>1.3.10. Hardware and Operating System Abstraction Layer (Sys-Components)<a class="headerlink" href="#hardware-and-operating-system-abstraction-layer-sys-components" title="Permalink to this headline">¶</a></h1>
+<span id="ov-kernel-hw-os-abstraction"></span><h1>5.3.10. Hardware and Operating System Abstraction Layer (Sys-Components)<a class="headerlink" href="#hardware-and-operating-system-abstraction-layer-sys-components" title="Permalink to this headline">¶</a></h1>
 <p>The hardware and operating system abstraction layer is covered by the so
 called system interface components. Each system component is designed
 for a special assignment and a logical operation system object.</p>
 <p>The description of all available system interfaces declared in detail in
-the system reference guide of the runtime system (&#8220;Reference&#8221; in runtime
-online help).</p>
+the system reference guide of the runtime system (“Reference” in runtime
+help).</p>
 <div class="section" id="time-access-systime">
-<h2>1.3.10.1. Time access (SysTime)<a class="headerlink" href="#time-access-systime" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.1. Time access (SysTime)<a class="headerlink" href="#time-access-systime" title="Permalink to this headline">¶</a></h2>
 <p>In this component, you can have access to ticks with different
 resolutions (millisecond, microsecond and nanosecond) for e.g. time
 measurements and access to some functions of the real time clock (RTC).</p>
 </div>
 <div class="section" id="serial-interface-syscom">
-<h2>1.3.10.2. Serial interface (SysCom)<a class="headerlink" href="#serial-interface-syscom" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.2. Serial interface (SysCom)<a class="headerlink" href="#serial-interface-syscom" title="Permalink to this headline">¶</a></h2>
 <p>This component provides access to a serial device (RS232). You can open
 and close a device, specify settings to the device and read and write
 data to this device.</p>
 </div>
 <div class="section" id="exception-handling-sysexcept">
-<h2>1.3.10.3. Exception handling (SysExcept)<a class="headerlink" href="#exception-handling-sysexcept" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.3. Exception handling (SysExcept)<a class="headerlink" href="#exception-handling-sysexcept" title="Permalink to this headline">¶</a></h2>
 <p>The first level exception handling is done in this component. This
 component realizes on different platforms and operating system a defined
 exception handling.</p>
@@ -164,7 +100,7 @@ exception.</p>
 level exception handling components.</p>
 </div>
 <div class="section" id="file-access-sysfile">
-<span id="file-access"></span><h2>1.3.10.4. File access (SysFile)<a class="headerlink" href="#file-access-sysfile" title="Permalink to this headline">¶</a></h2>
+<span id="file-access"></span><h2>5.3.10.4. File access (SysFile)<a class="headerlink" href="#file-access-sysfile" title="Permalink to this headline">¶</a></h2>
 <p>This component provides routines for file access. You can open or close
 a file, read from or write into a file, delete or rename a file, set and
 get the actual file pointer in a file and so on.</p>
@@ -172,7 +108,7 @@ get the actual file pointer in a file and so on.</p>
 <p>At the routines where a file name is specified as a parameter, there are
 two different implementations. E.g. to open a file can be done in with
 two different interface functions:</p>
-<div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">SysFileOpen</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">pszFile</span><span class="p">,</span> <span class="n">ACCESS_MODE</span> <span class="n">am</span><span class="p">,</span> <span class="n">RTS_RESULT</span> <span class="o">*</span><span class="n">pResult</span><span class="p">)</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">SysFileOpen</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">pszFile</span><span class="p">,</span> <span class="n">ACCESS_MODE</span> <span class="n">am</span><span class="p">,</span> <span class="n">RTS_RESULT</span> <span class="o">*</span><span class="n">pResult</span><span class="p">)</span>
 <span class="n">SysFileOpen</span> <span class="o">**</span><span class="n">_</span><span class="o">**</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">pszFile</span><span class="p">,</span> <span class="n">ACCESS_MODE</span> <span class="n">am</span><span class="p">,</span> <span class="n">RTS_RESULT</span>
 <span class="o">*</span><span class="n">pResult</span><span class="p">)</span>
 </pre></div>
@@ -191,7 +127,7 @@ directory is used.</p>
 SysFileX_ routines.</p>
 </div>
 <div class="section" id="file-access-using-flash-sysfileflash">
-<h2>1.3.10.5. File access using flash (SysFileFlash)<a class="headerlink" href="#file-access-using-flash-sysfileflash" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.5. File access using flash (SysFileFlash)<a class="headerlink" href="#file-access-using-flash-sysfileflash" title="Permalink to this headline">¶</a></h2>
 <p>As an alternative to SysFile (see <a class="reference internal" href="#file-access"><span class="std std-ref">File access (SysFile)</span></a>), this component provides
 routines for file access. You can open or close a file, read from or
 write into a file, delete or rename a file, set and get the actual file
@@ -204,7 +140,7 @@ files, with fixed file names and maximum file sizes.</p>
 An example is provided in the header file of the component.</p>
 </div>
 <div class="section" id="flash-access-sysflash">
-<h2>1.3.10.6. Flash access (SysFlash)<a class="headerlink" href="#flash-access-sysflash" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.6. Flash access (SysFlash)<a class="headerlink" href="#flash-access-sysflash" title="Permalink to this headline">¶</a></h2>
 <p>This component provides routines for flash access. The usage of this
 component is optional. It provides functions to write a data buffer to
 flash, read from flash, and get the address and size of the flash. It
@@ -212,15 +148,13 @@ contains also a function that is called when a flash based file is
 closed.</p>
 <p>The flash can be used as</p>
 <ul>
-<li><p class="first">a basis for the SysFileFlash component, and</p>
-</li>
-<li><dl class="first docutils">
-<dt>for optional execution of the user code in flash. This can be used to</dt>
-<dd><p class="first last">reduce the RAM memory requirements.</p>
+<li><p>a basis for the SysFileFlash component, and</p></li>
+<li><dl class="simple">
+<dt>for optional execution of the user code in flash. This can be used to</dt><dd><p>reduce the RAM memory requirements.</p>
 </dd>
 </dl>
 <ol class="arabic">
-<li><p class="first rubric" id="directory-handling-sysdir">Directory handling (SysDir)</p>
+<li><p class="rubric" id="directory-handling-sysdir">Directory handling (SysDir)</p>
 </li>
 </ol>
 </li>
@@ -229,10 +163,10 @@ closed.</p>
 can be scanned, created, deleted or renamed.</p>
 </div>
 <div class="section" id="memory-access">
-<h2>1.3.10.7. Memory access<a class="headerlink" href="#memory-access" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.7. Memory access<a class="headerlink" href="#memory-access" title="Permalink to this headline">¶</a></h2>
 <p>The handling of memory is provided by the SysMem component.</p>
 <div class="section" id="heap-and-static-memory-sysmem">
-<h3>1.3.10.7.1. Heap and static memory (SysMem)<a class="headerlink" href="#heap-and-static-memory-sysmem" title="Permalink to this headline">¶</a></h3>
+<h3>Heap and static memory (SysMem)<a class="headerlink" href="#heap-and-static-memory-sysmem" title="Permalink to this headline">¶</a></h3>
 <p>To access the heap memory (dynamic memory allocation), there are
 different routines to allocate and free code and data memory. Code
 memory can be used to execute code in this memory.</p>
@@ -241,14 +175,14 @@ called SysMemAllocArea(). Here a static memory for the code and data
 area for the PLC application can be specified.</p>
 </div>
 <div class="section" id="physical-memory-access-and-shared-memories-sysshm">
-<h3>1.3.10.7.2. Physical memory access and shared memories (SysShm)<a class="headerlink" href="#physical-memory-access-and-shared-memories-sysshm" title="Permalink to this headline">¶</a></h3>
+<h3>Physical memory access and shared memories (SysShm)<a class="headerlink" href="#physical-memory-access-and-shared-memories-sysshm" title="Permalink to this headline">¶</a></h3>
 <p>To get access to physical memory (e.g. dual port RAM of a card), the
 SysShm provides routines to map the physical memory into the memory of
 the runtime system.</p>
 </div>
 </div>
 <div class="section" id="dynamic-loading-module-sysmodule">
-<h2>1.3.10.8. Dynamic loading module (SysModule)<a class="headerlink" href="#dynamic-loading-module-sysmodule" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.8. Dynamic loading module (SysModule)<a class="headerlink" href="#dynamic-loading-module-sysmodule" title="Permalink to this headline">¶</a></h2>
 <p>The dynamical load of components can be used on targets with an
 operating system. This functionality is provided by the operating system
 and can be used via the SysModule component.</p>
@@ -256,46 +190,46 @@ and can be used via the SysModule component.</p>
 under Windows a Dll, under VxWorks an o-file).</p>
 </div>
 <div class="section" id="ethernet-sockets-syssocket">
-<h2>1.3.10.9. Ethernet sockets (SysSocket)<a class="headerlink" href="#ethernet-sockets-syssocket" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.9. Ethernet sockets (SysSocket)<a class="headerlink" href="#ethernet-sockets-syssocket" title="Permalink to this headline">¶</a></h2>
 <p>The access to the TCP-stack, the SysSocket can be used. The socket
 interface provides TCP, UDP and RAW sockets.</p>
 <p>The SysSocket component provides additionally more higher level
 interfaces, to set up a TCP or UDP client and server.</p>
 </div>
 <div class="section" id="debug-console-outputs-sysout">
-<h2>1.3.10.10. Debug console outputs (SysOut)<a class="headerlink" href="#debug-console-outputs-sysout" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.10. Debug console outputs (SysOut)<a class="headerlink" href="#debug-console-outputs-sysout" title="Permalink to this headline">¶</a></h2>
 <p>To print messages at the console (if available), you can use the SysOut
 component. This component is used for example by the logger, to print
 all log entries at the standard console output.</p>
 </div>
 <div class="section" id="message-queues-sysmsgq">
-<h2>1.3.10.11. Message queues (SysMsgQ)<a class="headerlink" href="#message-queues-sysmsgq" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.11. Message queues (SysMsgQ)<a class="headerlink" href="#message-queues-sysmsgq" title="Permalink to this headline">¶</a></h2>
 <p>MessageQueues are a special higher level object to use for inter thread
 and task communication. The message queues are thread-safe and are used
 in the runtime system for example for the time slicing implementation of
 the Scheduler.</p>
 </div>
 <div class="section" id="interrupt-handling">
-<h2>1.3.10.12. Interrupt handling<a class="headerlink" href="#interrupt-handling" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.12. Interrupt handling<a class="headerlink" href="#interrupt-handling" title="Permalink to this headline">¶</a></h2>
 <p>Interrupt handling is a very low level and platform dependent component.
 This component provides routines to open an interrupt and to register an
 interrupt handler to this interrupt. All interrupt can be enabled or
 disabled with this component too.</p>
 </div>
 <div class="section" id="pci-bus-access-syspci">
-<h2>1.3.10.13. PCI bus access (SysPCI)<a class="headerlink" href="#pci-bus-access-syspci" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.13. PCI bus access (SysPCI)<a class="headerlink" href="#pci-bus-access-syspci" title="Permalink to this headline">¶</a></h2>
 <p>This component provides access to the PCI bus. The PCI configuration can
 be read and written for example to auto detect cards that are plugged in
 the PCI bus.</p>
 </div>
 <div class="section" id="device-port-access-sysport">
-<h2>1.3.10.14. Device port access (SysPort)<a class="headerlink" href="#device-port-access-sysport" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.14. Device port access (SysPort)<a class="headerlink" href="#device-port-access-sysport" title="Permalink to this headline">¶</a></h2>
 <p>Accessing devices is typically done via so called ports. The SysPort
 component provides access to devices via these ports. Port values can be
 read and written.</p>
 </div>
 <div class="section" id="timer-handling-systimer">
-<h2>1.3.10.15. Timer handling (SysTimer)<a class="headerlink" href="#timer-handling-systimer" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.15. Timer handling (SysTimer)<a class="headerlink" href="#timer-handling-systimer" title="Permalink to this headline">¶</a></h2>
 <p>Timer devices can be used for processes with a strong time constraint.
 The SysTimer component provides access to timer devices on the target.
 Timers are typically used in the runtime system for the cyclic call of
@@ -303,46 +237,46 @@ the runtime scheduler or to execute IEC tasks with the specified cycle
 times.</p>
 </div>
 <div class="section" id="target-information-systarget">
-<h2>1.3.10.16. Target information (SysTarget)<a class="headerlink" href="#target-information-systarget" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.16. Target information (SysTarget)<a class="headerlink" href="#target-information-systarget" title="Permalink to this headline">¶</a></h2>
 <p>The SysTarget component provides access to the target information like
 vendor and device name, target Id and version or the node name for the
 communication. The node name is detected in some implementations from
 the node name of the operating system that was assigned to the target.</p>
 </div>
 <div class="section" id="task-handling">
-<h2>1.3.10.17. Task handling<a class="headerlink" href="#task-handling" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.17. Task handling<a class="headerlink" href="#task-handling" title="Permalink to this headline">¶</a></h2>
 <p>These components are only available on operating systems with tasks or
 threads</p>
 <div class="section" id="synchronization-and-semaphores-syssem">
-<h3>1.3.10.17.1. Synchronization and semaphores (SysSem)<a class="headerlink" href="#synchronization-and-semaphores-syssem" title="Permalink to this headline">¶</a></h3>
+<h3>Synchronization and semaphores (SysSem)<a class="headerlink" href="#synchronization-and-semaphores-syssem" title="Permalink to this headline">¶</a></h3>
 <p>To synchronize access to common data between several tasks or threads,
 the SysSem component can be used to handle synchronization objects,
 called semaphores.</p>
 </div>
 <div class="section" id="operating-system-events-sysevent">
-<h3>1.3.10.17.2. Operating system events (SysEvent)<a class="headerlink" href="#operating-system-events-sysevent" title="Permalink to this headline">¶</a></h3>
+<h3>Operating system events (SysEvent)<a class="headerlink" href="#operating-system-events-sysevent" title="Permalink to this headline">¶</a></h3>
 <p>To activate tasks or threads, the operating systems provides events to
 activate a task from another task.</p>
 </div>
 <div class="section" id="task-handling-systask">
-<h3>1.3.10.17.3. Task handling (SysTask)<a class="headerlink" href="#task-handling-systask" title="Permalink to this headline">¶</a></h3>
+<h3>Task handling (SysTask)<a class="headerlink" href="#task-handling-systask" title="Permalink to this headline">¶</a></h3>
 <p>The SysTask component provides routines to create and delete tasks, to
 suspend (set into sleep) and resume (wake up) tasks and so on.</p>
 </div>
 </div>
 <div class="section" id="optional-system-components-for-target-visualization">
-<h2>1.3.10.18. Optional system components for target visualization<a class="headerlink" href="#optional-system-components-for-target-visualization" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.18. Optional system components for target visualization<a class="headerlink" href="#optional-system-components-for-target-visualization" title="Permalink to this headline">¶</a></h2>
 <p>There are optional system components that are needed by the CODESYS
 target visualization. These components can be added to the runtime
 system, if a graphical interface on the target is available.</p>
 <div class="section" id="window-handling-syswindow">
-<h3>1.3.10.18.1. Window handling (SysWindow)<a class="headerlink" href="#window-handling-syswindow" title="Permalink to this headline">¶</a></h3>
+<h3>Window handling (SysWindow)<a class="headerlink" href="#window-handling-syswindow" title="Permalink to this headline">¶</a></h3>
 <p>The SysWindow component provides access to the window handling of the
 graphical environment. The target visualization typically runs in a
 window.</p>
 </div>
 <div class="section" id="basic-graphic-routines-sysgraphic">
-<h3>1.3.10.18.2. Basic graphic routines (SysGraphic)<a class="headerlink" href="#basic-graphic-routines-sysgraphic" title="Permalink to this headline">¶</a></h3>
+<h3>Basic graphic routines (SysGraphic)<a class="headerlink" href="#basic-graphic-routines-sysgraphic" title="Permalink to this headline">¶</a></h3>
 <p>The target visualization uses some basic graphic operations to display
 all visualization objects. These basic operations are provided by the
 SysGraphic component.</p>
@@ -350,7 +284,7 @@ SysGraphic component.</p>
 Windows CE target visualization was limited to 1024*768*3 bytes
 (approx. 2.3 MB). As from V3.5.1.0 the limit can be configured by an
 entry in the PLC configuration file CODESYScontrol.cfg:</p>
-<div class="highlight-C"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SysGraphic</span><span class="p">]</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SysGraphic</span><span class="p">]</span>
 <span class="n">Win32</span><span class="p">.</span><span class="n">MaxJpegByteArraySize</span><span class="o">=</span><span class="mi">5000000</span>
 </pre></div>
 </div>
@@ -360,24 +294,24 @@ waste memory and because the CE CreateDIBSection function may fail with
 </div>
 </div>
 <div class="section" id="process-handling">
-<h2>1.3.10.19. Process handling<a class="headerlink" href="#process-handling" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.19. Process handling<a class="headerlink" href="#process-handling" title="Permalink to this headline">¶</a></h2>
 <p>On operating systems with the possibility to use processes, there are
 some components to use these processes. This components are typically
 used in the runtime system to spawn an own process of the target
 visualization to separate the runtime system from the part that displays
 the graphic information of the target visualization.</p>
 <div class="section" id="processes-sysprocess">
-<h3>1.3.10.19.1. Processes (SysProcess)<a class="headerlink" href="#processes-sysprocess" title="Permalink to this headline">¶</a></h3>
+<h3>Processes (SysProcess)<a class="headerlink" href="#processes-sysprocess" title="Permalink to this headline">¶</a></h3>
 <p>The SysProcess component provides access to create and delete processes.</p>
 </div>
 <div class="section" id="process-synchronization-syssemprocess">
-<h3>1.3.10.19.2. Process synchronization (SysSemProcess)<a class="headerlink" href="#process-synchronization-syssemprocess" title="Permalink to this headline">¶</a></h3>
+<h3>Process synchronization (SysSemProcess)<a class="headerlink" href="#process-synchronization-syssemprocess" title="Permalink to this headline">¶</a></h3>
 <p>To synchronize access to common data objects from several processes, the
 SysSemProcess component provides access to process semaphores.</p>
 </div>
 </div>
 <div class="section" id="direct-ethernet-controller-access-sysethernet">
-<h2>1.3.10.20. Direct Ethernet controller access (SysEthernet)<a class="headerlink" href="#direct-ethernet-controller-access-sysethernet" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.10.20. Direct Ethernet controller access (SysEthernet)<a class="headerlink" href="#direct-ethernet-controller-access-sysethernet" title="Permalink to this headline">¶</a></h2>
 <p>This component provides direct access to an Ethernet controller. This is
 typically used by the EtherCAT drivers to get direct access to an
 Ethernet controller.</p>
@@ -397,19 +331,19 @@ Ethernet controller.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="ov_kernel_memory_mgmt.html" title="1.3.11. Memory Management"
+          <a href="ov_kernel_memory_mgmt.html" title="5.3.11. Memory Management"
              >next</a> |</li>
         <li class="right" >
-          <a href="ov_kernel_logging.html" title="1.3.9. Logging"
+          <a href="ov_kernel_logging.html" title="5.3.9. Logging"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="overview_kernel.html" >1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >5. Architecture Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" >5.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
     </div>
   </body>
 </html>

@@ -23,9 +23,9 @@
 
 
 
-#define CMP_VERSION         UINT32_C(0x03050E00)
-#define CMP_VERSION_STRING "3.5.14.0"
-#define CMP_VERSION_RC      3,5,14,0
+#define CMP_VERSION         UINT32_C(0x03051000)
+#define CMP_VERSION_STRING "3.5.16.0"
+#define CMP_VERSION_RC      3,5,16,0
 #define CMP_VENDORID       RTS_VENDORID_3S
 
 #ifndef WIN32_RESOURCES
@@ -44,6 +44,10 @@
 
 
 
+
+/**
+ * \file CmpSocketCanDrvItf.h
+ */
 #include "CmpSocketCanDrvItf.h"
 
 

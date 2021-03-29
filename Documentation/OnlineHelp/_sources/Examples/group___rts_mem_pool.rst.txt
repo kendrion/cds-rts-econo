@@ -1,0 +1,274 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___rts_mem_pool:
+
+==========
+RtsMemPool
+==========
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+Example to show different use cases of the MemPool manager.
+
+USAGE:
+
+  - :ref:`MemPoolExamples() <group___rts_mem_pool_1gad6139c19457f7d8cfc53c41ded423f08>` can be called out of CH_COMM_CYCLE to show, how the MemPool works
+
+**Copyright:**
+
+\(c) 2003-2018 3S-Smart Software Solutions
+
+Data Structures
+---------------
+
+- struct :ref:`_TEST_STRUCT <struct___t_e_s_t___s_t_r_u_c_t>`
+
+Macros
+------
+
+- #define :ref:`TEST_NUM_OF_ELEMENTS <group___rts_mem_pool_1gafe53f3a203caf1548c883e2c1835cb0f>` 10
+
+- #define :ref:`TEST_NUM_OF_HASHTABLE_ENTRIES <group___rts_mem_pool_1gabb9aecfb425a301c32e289507c35b75f>` ( :ref:`TEST_NUM_OF_ELEMENTS <group___rts_mem_pool_1gafe53f3a203caf1548c883e2c1835cb0f>` + :ref:`TEST_NUM_OF_ELEMENTS <group___rts_mem_pool_1gafe53f3a203caf1548c883e2c1835cb0f>` / 2)
+
+Typedefs
+--------
+
+- typedef struct :ref:`_TEST_STRUCT <struct___t_e_s_t___s_t_r_u_c_t>` :ref:`TEST_STRUCT <group___rts_mem_pool_1ga4c1e991873cf58dd3efe5146c6139eba>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`CreateMemPoolsStatic <group___rts_mem_pool_1gad0faf1dc0059083966e66d7a991357bf>` (void)
+
+- RTS_RESULT :ref:`CreateMemPoolsDynamic <group___rts_mem_pool_1ga12ca0f76485d9f3efbb592efdd086127>` (void)
+
+- RTS_RESULT :ref:`DeleteMemPools <group___rts_mem_pool_1gaf160e0787dad0ae854505641a6eb15f7>` (void)
+
+- void * :ref:`UseCase_AllocateSingleBlock1 <group___rts_mem_pool_1ga582329dad080d423faddc9a4aa99742c>` (RTS_HANDLE hPool, RTS_RESULT * pResult)
+
+- void * :ref:`UseCase_AllocateSingleBlock2 <group___rts_mem_pool_1gaa53db6ca046c390ab8447e9d9502d2f2>` (RTS_HANDLE hPool, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UseCase_IterateOverAllBlocksInUse_Locking <group___rts_mem_pool_1ga63c4745c9d097f52488aae94f2d7b7d6>` (RTS_HANDLE hPool, void ** ppBlock)
+
+- RTS_RESULT :ref:`UseCase_CheckBlock_Locking <group___rts_mem_pool_1ga2dbde33083e1d0bdc901572d7fffd18c>` (RTS_HANDLE hPool, void * pBlock)
+
+- RTS_RESULT :ref:`UseCase_IterateOverAllBlocksInUse_NearlyLockFree <group___rts_mem_pool_1ga48984590ceb7b8b68f0adc1fb57bf36b>` (RTS_HANDLE hPool, void ** ppBlock)
+
+- RTS_RESULT :ref:`UseCase_CheckBlock_NearlyLockFree <group___rts_mem_pool_1ga4e4b375e69a0401f7764575b7deba3cd>` (RTS_HANDLE hPool, void * pBlock)
+
+- RTS_RESULT :ref:`UseCase_ReleaseSingleBlock1 <group___rts_mem_pool_1gaed0c2007168531d0510feb02b723ddad>` (void * pBlock)
+
+- RTS_RESULT :ref:`UseCase_ReleaseSingleBlock2 <group___rts_mem_pool_1gaf909494095346ccd52e2fb165a74fa77>` (void * pBlock, void * pParam)
+
+- RTS_RESULT :ref:`UseCase_ReleaseAllBlocksInPool <group___rts_mem_pool_1ga77cf00b8ac55b9d87b6f085d827f3b0e>` (RTS_HANDLE hPool)
+
+- RTS_RESULT :ref:`UseCase_ReleaseAllBlocksInPool2 <group___rts_mem_pool_1ga06a70112ed9e04cb5712561fa7bfae2c>` (RTS_HANDLE hPool, void * pParam)
+
+- RTS_RESULT :ref:`UseCase_ReleaseAllBlocksInPool3 <group___rts_mem_pool_1gac8e80c329a9b5d2bbd4ae146df2d5622>` (RTS_HANDLE hPool, void * pParam)
+
+- RTS_RESULT :ref:`UseCase_ReleaseSingleBlockWithinIterator <group___rts_mem_pool_1gaad2a040c43e93edc525342d3b376fc9d>` (RTS_HANDLE hPool, void * pBlock, void * pParam)
+
+- RTS_RESULT :ref:`UseCase_ReleaseAllDeletedBlocksInPool <group___rts_mem_pool_1ga2ec01c257540fb0d8fa65570a0ae95b2>` (RTS_HANDLE hPool, void * pParam)
+
+- RTS_RESULT :ref:`TestCase_DeleteBlockDuringIteration <group___rts_mem_pool_1ga5ca98564d687e3d1e0578be5d026eceb>` (RTS_HANDLE hPool)
+
+- void :ref:`BlockDelete <group___rts_mem_pool_1gae6c434d03e6849600234eceb3ae12c2c>` (void * pBlock, void * pParam)
+
+- RTS_RESULT :ref:`UseCase_ReleaseAllBlocksInPool1 <group___rts_mem_pool_1ga958a96f8e876c93f2fd0e36df843927c>` (RTS_HANDLE hPool)
+
+- RTS_RESULT :ref:`StandardUseCases <group___rts_mem_pool_1ga3f627747fb9f74803484ee685fae7f5c>` (void)
+
+- RTS_RESULT :ref:`CreateMemPoolHashed <group___rts_mem_pool_1ga377a45ce5ffd657d0f2dba05c8a24b19>` (void)
+
+- RTS_RESULT :ref:`DeleteMemPoolHashed <group___rts_mem_pool_1gafc20eb9b7c45917ba31cca196d8d87b6>` (void)
+
+- RTS_HANDLE :ref:`UseCase_AllocateSingleBlock_Hashed <group___rts_mem_pool_1ga21c6f848097438c5e140cf2ba4edafe2>` (RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UseCase_ReleaseSingleBlock_Hashed <group___rts_mem_pool_1gac903f724a973f7b7a7c50bf869ade10b>` (RTS_HANDLE hMemPoolUniqueHandle)
+
+- RTS_RESULT :ref:`HashUseCases <group___rts_mem_pool_1ga626a6ff8ae42c2a7d5be9f4f1694db1d>` (void)
+
+- RTS_RESULT :ref:`TestCase_InsertAddAppend <group___rts_mem_pool_1ga3fa0508540bfb4727a01efa64f4ab401>` (RTS_HANDLE hPool)
+
+- RTS_RESULT :ref:`TestCases <group___rts_mem_pool_1ga80c099c9e8f751a87bc4c3a6c464c832>` (void)
+
+- RTS_RESULT :ref:`MemPoolExamples <group___rts_mem_pool_1gad6139c19457f7d8cfc53c41ded423f08>` (void)
+
+Macro Definition Documentation
+------------------------------
+.. _group___rts_mem_pool_1gafe53f3a203caf1548c883e2c1835cb0f:
+
+#define TEST_NUM_OF_ELEMENTS 10
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1gabb9aecfb425a301c32e289507c35b75f:
+
+#define TEST_NUM_OF_HASHTABLE_ENTRIES ( :ref:`TEST_NUM_OF_ELEMENTS <group___rts_mem_pool_1gafe53f3a203caf1548c883e2c1835cb0f>` + :ref:`TEST_NUM_OF_ELEMENTS <group___rts_mem_pool_1gafe53f3a203caf1548c883e2c1835cb0f>` / 2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___rts_mem_pool_1ga4c1e991873cf58dd3efe5146c6139eba:
+
+typedef struct _TEST_STRUCT  TEST_STRUCT
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___rts_mem_pool_1gad0faf1dc0059083966e66d7a991357bf:
+
+static RTS_RESULT CreateMemPoolsStatic (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga12ca0f76485d9f3efbb592efdd086127:
+
+static RTS_RESULT CreateMemPoolsDynamic (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1gaf160e0787dad0ae854505641a6eb15f7:
+
+static RTS_RESULT DeleteMemPools (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga582329dad080d423faddc9a4aa99742c:
+
+static void * UseCase_AllocateSingleBlock1 (RTS_HANDLE hPool, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1gaa53db6ca046c390ab8447e9d9502d2f2:
+
+static void * UseCase_AllocateSingleBlock2 (RTS_HANDLE hPool, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga63c4745c9d097f52488aae94f2d7b7d6:
+
+static RTS_RESULT UseCase_IterateOverAllBlocksInUse_Locking (RTS_HANDLE hPool, void **ppBlock)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga2dbde33083e1d0bdc901572d7fffd18c:
+
+static RTS_RESULT UseCase_CheckBlock_Locking (RTS_HANDLE hPool, void *pBlock)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga48984590ceb7b8b68f0adc1fb57bf36b:
+
+static RTS_RESULT UseCase_IterateOverAllBlocksInUse_NearlyLockFree (RTS_HANDLE hPool, void **ppBlock)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga4e4b375e69a0401f7764575b7deba3cd:
+
+static RTS_RESULT UseCase_CheckBlock_NearlyLockFree (RTS_HANDLE hPool, void *pBlock)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1gaed0c2007168531d0510feb02b723ddad:
+
+static RTS_RESULT UseCase_ReleaseSingleBlock1 (void *pBlock)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1gaf909494095346ccd52e2fb165a74fa77:
+
+static RTS_RESULT UseCase_ReleaseSingleBlock2 (void *pBlock, void *pParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga77cf00b8ac55b9d87b6f085d827f3b0e:
+
+static RTS_RESULT UseCase_ReleaseAllBlocksInPool (RTS_HANDLE hPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga06a70112ed9e04cb5712561fa7bfae2c:
+
+static RTS_RESULT UseCase_ReleaseAllBlocksInPool2 (RTS_HANDLE hPool, void *pParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1gac8e80c329a9b5d2bbd4ae146df2d5622:
+
+static RTS_RESULT UseCase_ReleaseAllBlocksInPool3 (RTS_HANDLE hPool, void *pParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1gaad2a040c43e93edc525342d3b376fc9d:
+
+static RTS_RESULT UseCase_ReleaseSingleBlockWithinIterator (RTS_HANDLE hPool, void *pBlock, void *pParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga2ec01c257540fb0d8fa65570a0ae95b2:
+
+static RTS_RESULT UseCase_ReleaseAllDeletedBlocksInPool (RTS_HANDLE hPool, void *pParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga5ca98564d687e3d1e0578be5d026eceb:
+
+static RTS_RESULT TestCase_DeleteBlockDuringIteration (RTS_HANDLE hPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1gae6c434d03e6849600234eceb3ae12c2c:
+
+static void BlockDelete (void *pBlock, void *pParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga958a96f8e876c93f2fd0e36df843927c:
+
+static RTS_RESULT UseCase_ReleaseAllBlocksInPool1 (RTS_HANDLE hPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga3f627747fb9f74803484ee685fae7f5c:
+
+static RTS_RESULT StandardUseCases (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga377a45ce5ffd657d0f2dba05c8a24b19:
+
+static RTS_RESULT CreateMemPoolHashed (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1gafc20eb9b7c45917ba31cca196d8d87b6:
+
+static RTS_RESULT DeleteMemPoolHashed (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga21c6f848097438c5e140cf2ba4edafe2:
+
+static RTS_HANDLE UseCase_AllocateSingleBlock_Hashed (RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1gac903f724a973f7b7a7c50bf869ade10b:
+
+static RTS_RESULT UseCase_ReleaseSingleBlock_Hashed (RTS_HANDLE hMemPoolUniqueHandle)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga626a6ff8ae42c2a7d5be9f4f1694db1d:
+
+static RTS_RESULT HashUseCases (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga3fa0508540bfb4727a01efa64f4ab401:
+
+static RTS_RESULT TestCase_InsertAddAppend (RTS_HANDLE hPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1ga80c099c9e8f751a87bc4c3a6c464c832:
+
+static RTS_RESULT TestCases (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___rts_mem_pool_1gad6139c19457f7d8cfc53c41ded423f08:
+
+RTS_RESULT MemPoolExamples (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

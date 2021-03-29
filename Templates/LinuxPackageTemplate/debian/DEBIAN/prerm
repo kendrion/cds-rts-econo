@@ -1,0 +1,15 @@
+#!/bin/sh
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+
+STARTSCRIPT=/etc/init.d/codesyscontrol
+
+stop_runtime () {
+  ${STARTSCRIPT} stop;
+  pkill -9 -f "codesyscontrol"
+}
+
+echo "stop runtime"
+stop_runtime
+
+exit 0

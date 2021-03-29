@@ -1,0 +1,47 @@
+.. _feature__visualization__s_v_g__support:
+
+
+SVG Support
+===========
+
+The image format svg is not supported on all devices. 
+
+- Windows Target Visualization: Supported
+
+- Web Visualization: Supported    
+
+- Linux Target Visualization: Must be provided by the QT installation
+
+- WinCE Target Visualization: Not supported. 
+
+| In cases where svg is not supported the svg images are automatically converted to png or bmp depending on the available image formats on the device. If png is available png is used.
+
+- :ref:`visualization_targetconstraints_targetimageformats` 
+
+
+
+Required features
+-----------------
+
+- :ref:`feature__visualization`
+
+Required target settings
+------------------------
+
+The following target settings are necessary for this feature:
+
+- :ref:`visualization_TargetConstraints_SupportedSVGProfile`
+
+- :ref:`visualization_TargetConstraints_TargetImageFormats`
+
+Compiler Defines
+----------------
+
+- Platforms/Linux/CFLAGS_FEATURES: -DRTS_SVG_TARGETVISU
+
+- Platforms/Linux/QT_LIBS_FEATURES: -l${visualization/Linux/QTLibPrefix}Svg
+
+- Platforms/QNX/CFLAGS_FEATURES: -DRTS_SVG_TARGETVISU
+
+- Platforms/QNX/QT_LIBS_FEATURES: -l${visualization/QNX/QTLibPrefix}Svg
+

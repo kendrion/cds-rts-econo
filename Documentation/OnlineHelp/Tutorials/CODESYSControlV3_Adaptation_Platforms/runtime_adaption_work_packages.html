@@ -1,0 +1,688 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>6.2.1.2. Runtime adaptation work packages &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/theme.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6.2.1.3. Platform specifics" href="platform_specifics.html" />
+    <link rel="prev" title="6.2.1.1. Overview" href="overview.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="platform_specifics.html" title="6.2.1.3. Platform specifics"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="6.2.1.1. Overview"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >6. Tutorials / HowTos</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">6.2.1. CODESYS Control V3 - Runtime System Adaptation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="overview.html"
+                        title="previous chapter">6.2.1.1. Overview</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="platform_specifics.html"
+                        title="next chapter">6.2.1.3. Platform specifics</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="runtime-adaptation-work-packages">
+<span id="runtime-adaption-work-packages"></span><h1>6.2.1.2. Runtime adaptation work packages<a class="headerlink" href="#runtime-adaptation-work-packages" title="Permalink to this headline">¶</a></h1>
+<p>Depending on the different types of adaptation, different preparation
+and adaptation work has to be done.</p>
+<p>Basically, there are 3 different starting points for a runtime
+adaptation:</p>
+<ul class="simple">
+<li><p>Using standard processors and operating systems like Linux, VxWorks,
+Windows</p></li>
+<li><p>Ready-to-start embedded system with use of supported evaluation board</p></li>
+<li><p>Embedded system with other processor/OS/toolchain combination</p></li>
+</ul>
+<p>In the following chapters, runtime toolkit contents, prerequisites and
+step to build a system are listed.</p>
+<p>As the OEM has to do maintenance for its product and support for its
+customers for a longer period of time, it is recommended that the OEM
+assigns an engineer as specialist for these tasks.</p>
+<div class="section" id="standard-system">
+<h2>Standard System<a class="headerlink" href="#standard-system" title="Permalink to this headline">¶</a></h2>
+<p>Examples of such systems are Windows 7 on an Intel Pentium, or VxWorks
+on a PowerPC, or Linux on an ARM processor.</p>
+<p>Supported operating systems are Linux, VxWorks, Windows 7, Windows
+CE/Windows Embedded Compact and QNX.</p>
+<p>The CODESYS Control runtime system for Windows 7 is available in two
+different versions:</p>
+<ul class="simple">
+<li><p>CODESYS Control RTE: with hard real time extension made by 3S</p></li>
+<li><p>Some hardware requirements must be observed, see RTE manual.</p></li>
+<li><p>CODESYS Control WinV3: without real time capabilities:</p></li>
+<li><p>No special hardware requirements, so it can run on every Windows /
+x86 platform.</p></li>
+</ul>
+<p>3S maintains and tests these systems with new releases of CODESYS and/or
+new releases of the operating system.</p>
+<p>The runtime toolkit contains:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 98%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Contents of Runtime Toolkit</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><ol class="loweralpha simple">
+<li></li>
+</ol>
+</td>
+<td><p>Sample device description file for that platform</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="loweralpha simple" start="2">
+<li></li>
+</ol>
+</td>
+<td><p>CODESYS Control runtime system headers and m4 files</p></td>
+</tr>
+<tr class="row-even"><td><ol class="loweralpha simple" start="3">
+<li></li>
+</ol>
+</td>
+<td><p>Tools to create own runtime system header files</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="loweralpha simple" start="4">
+<li></li>
+</ol>
+</td>
+<td><p>3s.dat license file for licensed fieldbus stacks and other libraries</p></td>
+</tr>
+<tr class="row-even"><td><ol class="loweralpha simple" start="5">
+<li></li>
+</ol>
+</td>
+<td><p>Sample runtime configuration file (<a href="#id1"><span class="problematic" id="id2">*</span></a>.cfg)</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="loweralpha simple" start="6">
+<li></li>
+</ol>
+</td>
+<td><p>Runtime adaptation (with multi tasking scheduler):</p>
+<ul class="simple">
+<li><p>Processor specifics</p></li>
+<li><p>Timer</p></li>
+<li><p>Memory</p></li>
+<li><p>Debug Outputs</p></li>
+<li><p>Flash/File system, directories</p></li>
+<li><p>Exception handling</p></li>
+<li><p>Interrupt handling</p></li>
+<li><p>Serial interface for communication</p></li>
+<li><p>Socket interface for communication and Modbus</p></li>
+<li><p>CANmini driver to support CANopen and other CAN-based protocols (see below)</p></li>
+<li><p>PCI and Shared memory to support Hilscher fieldbus cards</p></li>
+<li><p>Ethernet driver to support EtherCAT (see below)</p></li>
+<li><p>Event handling</p></li>
+<li><p>Semaphore handling</p></li>
+<li><p>Task handling</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Prerequisites:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 12%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Responsible</p></th>
+<th class="head"><p>Task</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><ol class="lowerroman simple">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Test hardware (evaluation or final board)</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="lowerroman simple" start="2">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>C-compiler and C-debugger</p></td>
+</tr>
+<tr class="row-even"><td><ol class="lowerroman simple" start="3">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Operating system installed, including drivers for file system, TCP stack, …</p></td>
+</tr>
+</tbody>
+</table>
+<p>Steps to build your system:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 14%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Responsible</p></th>
+<th class="head"><p>Task</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><ol class="arabic simple">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Inform 3S about processor, OS and version</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="2">
+<li></li>
+</ol>
+</td>
+<td><p>3S</p></td>
+<td><p>Compile and deliver runtime toolkit to OEM</p></td>
+</tr>
+<tr class="row-even"><td><ol class="arabic simple" start="3">
+<li></li>
+</ol>
+</td>
+<td><p>3S</p></td>
+<td><p>Workshop with OEM. OEM learns about</p>
+<ul class="simple">
+<li><p>how to work with CODESYS (basics)</p></li>
+<li><p>how to adapt device description file</p></li>
+<li><p>how to adapt runtime configuration file</p></li>
+<li><p>how to build additional components, libraries and IO drivers</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="4">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Create additional components, libraries and IO drivers</p></td>
+</tr>
+<tr class="row-even"><td><ol class="arabic simple" start="5">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Test</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ready-to-start-embedded-system">
+<h2>Ready-to-start embedded system<a class="headerlink" href="#ready-to-start-embedded-system" title="Permalink to this headline">¶</a></h2>
+<p>3S supports a number of evaluation board/toolchain combinations with
+basic runtime adaptations.</p>
+<p>Examples of such systems are Infineon TriCore with Infineon TriBoard
+TC1798, or ARM with TI TMS570 MCU Development Kit, or Renesas SH2A with
+Renesas Starterkit RSK-SH7216. For all these boards, specific toolchain
+versions are supported. A list of those combinations is available on
+request.</p>
+<p>3S maintains and tests these systems with new releases of CODESYS.</p>
+<p>The runtime toolkit contains:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 2%" />
+<col style="width: 98%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Contents of Runtime Toolkit</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><ol class="loweralpha simple">
+<li></li>
+</ol>
+</td>
+<td><p>Sample device description file for that platform</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="loweralpha simple" start="2">
+<li></li>
+</ol>
+</td>
+<td><p>CODESYS Control runtime system headers and m4 files</p></td>
+</tr>
+<tr class="row-even"><td><ol class="loweralpha simple" start="3">
+<li></li>
+</ol>
+</td>
+<td><p>Tools to create own runtime system header files</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="loweralpha simple" start="4">
+<li></li>
+</ol>
+</td>
+<td><p>3s.dat license file for licensed fieldbus stacks and other libraries</p></td>
+</tr>
+<tr class="row-even"><td><ol class="loweralpha simple" start="5">
+<li></li>
+</ol>
+</td>
+<td><p>Sample runtime configuration file (<a href="#id3"><span class="problematic" id="id4">*</span></a>.cfg)</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="loweralpha simple" start="6">
+<li></li>
+</ol>
+</td>
+<td><p>CODESYS control runtime C source files, including adaptations for embedded runtime (with single tasking scheduler):</p>
+<ul class="simple">
+<li><p>Processor specifics</p></li>
+<li><p>Timer</p></li>
+<li><p>Memory</p></li>
+<li><p>Debug Outputs</p></li>
+<li><p>Flash (most of the platforms)</p></li>
+<li><p>CANmini driver to support CANopen and other CAN-based protocols (most of the platforms)</p></li>
+<li><p>Serial interface for communication</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><ol class="loweralpha simple" start="7">
+<li></li>
+</ol>
+</td>
+<td><p>Makefile, workspace or project for C compiler, to generate binaries for the evaluation board.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Prerequisites:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 24%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Responsible</p></th>
+<th class="head"><p>Task</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><ol class="lowerroman simple">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Test hardware (evaluation board)</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="lowerroman simple" start="2">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>C-compiler and C-debugger</p></td>
+</tr>
+</tbody>
+</table>
+<p>Steps to build your system:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 1%" />
+<col style="width: 8%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Responsible</p></th>
+<th class="head"><p>Task</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><ol class="arabic simple">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Inform 3S about evaluation board</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="2">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Purchase evaluation board</p></td>
+</tr>
+<tr class="row-even"><td><ol class="arabic simple" start="3">
+<li></li>
+</ol>
+</td>
+<td><p>3S</p></td>
+<td><p>Deliver runtime toolkit to OEM</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="4">
+<li></li>
+</ol>
+</td>
+<td><p>3S</p></td>
+<td><p>Workshop with OEM. OEM learns about</p>
+<ul class="simple">
+<li><p>how to work with CODESYS (basics)</p></li>
+<li><p>how to adapt device description file</p></li>
+<li><p>how to adapt runtime configuration file</p></li>
+<li><p>how to build and download runtime system</p></li>
+<li><p>how to build additional components, libraries and IO drivers</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><ol class="arabic simple" start="5">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Create additional components, libraries and IO drivers, adapt system specific components not included in runtime toolkit.</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="6">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Port to final HW</p></td>
+</tr>
+<tr class="row-even"><td><ol class="arabic simple" start="7">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Test</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="embedded-system-with-other-processor-os-toolchain-combination">
+<h2>Embedded system with other processor/OS/toolchain combination<a class="headerlink" href="#embedded-system-with-other-processor-os-toolchain-combination" title="Permalink to this headline">¶</a></h2>
+<p>Examples of such systems are Renesas SH with MQX or iTron operating
+system, or other systems where 3S has no ready-to-use adaptation.</p>
+<p>3S does no test and does no maintenance of these systems. OEMs can get
+updates of the runtime toolkit and use it to update their system to
+newer version of CODESYS, the C compiler or the board.</p>
+<p>The runtime toolkit contains:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 2%" />
+<col style="width: 98%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Contents of Runtime Toolkit</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><ol class="loweralpha simple">
+<li></li>
+</ol>
+</td>
+<td><p>Sample device description file for that platform</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="loweralpha simple" start="2">
+<li></li>
+</ol>
+</td>
+<td><p>CODESYS Control runtime system headers and m4 files</p></td>
+</tr>
+<tr class="row-even"><td><ol class="loweralpha simple" start="3">
+<li></li>
+</ol>
+</td>
+<td><p>Tools to create own runtime system header files</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="loweralpha simple" start="4">
+<li></li>
+</ol>
+</td>
+<td><p>3s.dat license file for licensed fieldbus stacks and other libraries</p></td>
+</tr>
+<tr class="row-even"><td><ol class="loweralpha simple" start="5">
+<li></li>
+</ol>
+</td>
+<td><p>Sample runtime configuration file (<a href="#id5"><span class="problematic" id="id6">*</span></a>.cfg)</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="loweralpha simple" start="6">
+<li></li>
+</ol>
+</td>
+<td><p>CODESYS control runtime C source files</p></td>
+</tr>
+<tr class="row-even"><td><ol class="loweralpha simple" start="7">
+<li></li>
+</ol>
+</td>
+<td><p>Empty function frames for runtime adaptation. In some cases, adaptation samples are available.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Prerequisites:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 12%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Responsible</p></th>
+<th class="head"><p>Task</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><ol class="lowerroman simple">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Test hardware (evaluation board or final board)</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="lowerroman simple" start="2">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>C-compiler and C-debugger</p></td>
+</tr>
+<tr class="row-even"><td><ol class="lowerroman simple" start="3">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Software to initialize the processor and run until C main() function</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="lowerroman simple" start="4">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Drivers to access serial interface, flash, timer, external and internal memory</p></td>
+</tr>
+</tbody>
+</table>
+<p>Steps to build your system:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 2%" />
+<col style="width: 9%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Responsible</p></th>
+<th class="head"><p>Task</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><ol class="arabic simple">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Inform 3S about processor, toolchain and memory configuration</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="2">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Purchase evaluation board</p></td>
+</tr>
+<tr class="row-even"><td><ol class="arabic simple" start="3">
+<li></li>
+</ol>
+</td>
+<td><p>3S</p></td>
+<td><p>Deliver runtime toolkit to OEM</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="4">
+<li></li>
+</ol>
+</td>
+<td><p>3S</p></td>
+<td><p>Workshop with OEM. OEM learns about</p>
+<ul class="simple">
+<li><p>how to work with CODESYS (basics)</p></li>
+<li><p>how to adapt device description file</p></li>
+<li><p>how to adapt runtime configuration file</p></li>
+<li><p>how to build and download runtime system</p></li>
+<li><p>how to build additional components, libraries and IO drivers</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><ol class="arabic simple" start="5">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Finish adaptation after the workshop, some of these features are optional:</p>
+<ul class="simple">
+<li><p>Processor specifics</p></li>
+<li><p>Timer</p></li>
+<li><p>Memory</p></li>
+<li><p>Debug Outputs</p></li>
+<li><p>Flash/File system, directories</p></li>
+<li><p>Exception handling</p></li>
+<li><p>Interrupt handling</p></li>
+<li><p>Serial interface for communication</p></li>
+<li><p>Socket interface for communication and Modbus</p></li>
+<li><p>Additional interfaces for communication (USB, …)</p></li>
+<li><p>CANmini driver to support CANopen and other CAN-based protocols</p></li>
+<li><p>Ethernet driver to support EtherCAT</p></li>
+<li><p>PCI and Shared memory to support Hilscher fieldbus cards</p></li>
+</ul>
+<p>In case a multitasking operating system shall be supported, the following interfaces need to supported in addition:</p>
+<ul class="simple">
+<li><p>Event handling</p></li>
+<li><p>Semaphore handling</p></li>
+<li><p>Task handling</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="6">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Create additional components, libraries and IO drivers</p></td>
+</tr>
+<tr class="row-even"><td><ol class="arabic simple" start="7">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Port to final HW</p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="8">
+<li></li>
+</ol>
+</td>
+<td><p>OEM</p></td>
+<td><p>Test</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="platform_specifics.html" title="6.2.1.3. Platform specifics"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="6.2.1.1. Overview"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >6. Tutorials / HowTos</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >6.2.1. CODESYS Control V3 - Runtime System Adaptation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

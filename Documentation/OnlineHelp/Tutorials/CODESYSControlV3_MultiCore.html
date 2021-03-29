@@ -1,0 +1,763 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>6.3.4. MultiCore Tutorial &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/theme.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6.3.5. CodeMeter Tutorial" href="CODESYSControlV3_CodeMeter_Tutorial.html" />
+    <link rel="prev" title="6.3.3. Symbolic IEC Variable Access" href="CODESYSControlV3_SymbolicAccess.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CODESYSControlV3_CodeMeter_Tutorial.html" title="6.3.5. CodeMeter Tutorial"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CODESYSControlV3_SymbolicAccess.html" title="6.3.3. Symbolic IEC Variable Access"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">6. Tutorials / HowTos</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="CODESYSControlV3_SymbolicAccess.html"
+                        title="previous chapter">6.3.3. Symbolic IEC Variable Access</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="CODESYSControlV3_CodeMeter_Tutorial.html"
+                        title="next chapter">6.3.5. CodeMeter Tutorial</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tutorial-multicore">
+<span id="id1"></span><h1>6.3.4. <span class="target" id="multicore-tutorial">MultiCore Tutorial</span><a class="headerlink" href="#tutorial-multicore" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#introduction" id="id25">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id26">MultiCore aspects</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id27">Licensing</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id28">Operating system and processor specific aspects</a></p></li>
+<li><p><a class="reference internal" href="#coding-guidlines" id="id29">Coding Guidlines</a></p></li>
+<li><p><a class="reference internal" href="#diagnostics" id="id30">Diagnostics</a></p></li>
+<li><p><a class="reference internal" href="#iec-programming-aspects" id="id31">IEC programming aspects</a></p></li>
+<li><p><a class="reference internal" href="#id24" id="id32">Features not released with V3.5.13.0 on MultiCore targets</a></p></li>
+<li><p><a class="reference internal" href="#glossary" id="id33">Glossary</a></p></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id25">6.3.4.1. Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Controller manufacturers are equipping more an more new hardware with multiple processor cores, known as multi-core CPUs.
+The subject of this document is the multi-core support for controllers with the CODESYS runtime system.</p>
+<p>For multicore targets we assume an <a class="reference internal" href="#smp">SMP</a> system. <a class="reference internal" href="#amp">AMP</a> systems are not assumed here.</p>
+<p>These are the main goals for a software running on a multicore system:</p>
+<ol class="arabic simple">
+<li><p>Improve <a class="reference internal" href="#performance">Performance</a></p></li>
+<li><p>Keep <a class="reference internal" href="#data-consistency">Data Consistency</a></p></li>
+</ol>
+<p>These aspects are described in detail in the following chapters.</p>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id26">6.3.4.2. <span class="target" id="multicore-aspects">MultiCore aspects</span></a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3><span class="target" id="performance">Performance</span><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>To improve the performance on multicore systems, there are lot of concepts. Following we describe some main principles.</p>
+<div class="section" id="task-execution-on-different-cpu-cores">
+<h4>Task execution on different CPU cores<a class="headerlink" href="#task-execution-on-different-cpu-cores" title="Permalink to this headline">¶</a></h4>
+<p>Using at least one task for each CPU core can improve the performance of your software dramatically. So splitting the software execution
+into several tasks should be aspired. Using several tasks is the most important precondition, that the software can benefit running on a
+processor with several CPU cores.</p>
+<p>The way how tasks are executed on several cores must be recognized here too. This is described in the chapter <a class="reference internal" href="#task-binding">Task binding</a>.</p>
+</div>
+<div class="section" id="avoid-global-synchronizations">
+<h4>Avoid global synchronizations<a class="headerlink" href="#avoid-global-synchronizations" title="Permalink to this headline">¶</a></h4>
+<p>If you synchronize the data access gobally between several tasks, you decrease the performance dramatically on a multicore system. So in the following chapters,
+we describe different synchronization mechanisms for different use cases to improve the performance.
+The best choice is to use locking free programming. This is described in the following chapter.</p>
+</div>
+<div class="section" id="decouple-tasks">
+<h4>Decouple tasks<a class="headerlink" href="#decouple-tasks" title="Permalink to this headline">¶</a></h4>
+<p>To decouple tasks you can use for example:</p>
+<ol class="arabic simple">
+<li><p>Message queues</p></li>
+<li><p>Asynchronous manager</p></li>
+</ol>
+<p>Both mechanisms are described in the chapter <a class="reference internal" href="#asynchronous-operations">Asynchronous Operations</a>.</p>
+</div>
+<div class="section" id="id4">
+<h4><span class="target" id="task-binding">Task binding</span><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>There are 2 different ways how a task is executed on a CPU core:</p>
+<ol class="arabic">
+<li><p>Operating system decision (free floating / load balancing):</p>
+<p>Here the Operating system decides always on which core a task is running at a time. This decision depends typically on the load on the different
+CPU cores (load balancing), but can be based on different additional characteristics. And so the CPU core can be changed during the runtime of a
+task or from task cycle to task cycle.</p>
+<p>If deterministic tasks (realtime tasks) are running as freefloating, the execution time can vary on which CPU core the task is currently running.
+So it is more predictably, if the task runs only on one CPU core. This is described following.</p>
+</li>
+<li><p>Fix bound to a CPU core:</p>
+<p>Here a task can be fix bound to a CPU core and so the task only is running in this dedicated CPU core. This could improve the predictability of the
+execution time of a task, but but this is possibly not true on all targets! But you take away the possibility of the operating system to do a load balancing
+and so it mus be measured, if a fix binding of a task has a really benefit.</p>
+</li>
+</ol>
+<p>To manage the CPU core configuration of all tasks, typically we assign a task to a so called “task group”. The CPU core binding of a complete task group
+can be configured or you can bind a single task to one or several cores.</p>
+<p>In the runtime system, we assign realtime tasks (scheduler tick and IEC-tasks) fix to one core and all other tasks are running free floating (unbound).</p>
+<p>By default we predefine the following task groups:</p>
+<ul>
+<li><p>“System”:</p>
+<p>For schedule and system tasks. Fix bound to core 0.</p>
+</li>
+<li><p>“IEC-Tasks”:</p>
+<p>Default taskgroup for all IEC-tasks. They are bound by default to one core (core=1)!</p>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul>
+<li><p>“Communication”:</p>
+<p>For all communication tasks we create this task group by default. All tasks in this task group are executed be default free floating.</p>
+</li>
+<li><p>“Visualization”:</p>
+<p>For all visualization tasks in the runtime system. All tasks in this task group are executed be default free floating.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="target" id="data-consistency">Data Consistency</span><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>To keep data consistency is not fundamentally new for multi-core targets. It is a general issue even for multitasking systems. However care must be
+taken that the preservation of data consistency is achieved not without a significant reduction in performance respectively computing power.
+Therefore we limit data consistency for accessing data up to 8-byte data types because this can be attained without considerable loss of performance,
+primarily by means of atomic operations.</p>
+<p>A generic interface in the runtime system can be used to read/write 2, 4 and 8 byte data values atomic, if your code should run on a 32bit <strong>and</strong> a
+64bit target:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#syscpureadvalueatomic-syscpuwritevalueatomic">SysCpuReadValueAtomic/SysCpuWriteValueAtomic</a>: Access to an 2, 4 and 8 byte value is atomic</p></li>
+</ul>
+<p>The data consistency in the IEC-program is described in the chapter <a class="reference internal" href="#iec-data-consistency">IEC data consistency</a>.</p>
+<p>If “core” or “multi-core” is not mentioned explicitly in the following subchapters, then this is a general issue for multitasking on <a class="reference internal" href="#up">UP</a> systems too.</p>
+<div class="section" id="bit-systems">
+<h4>32bit systems<a class="headerlink" href="#bit-systems" title="Permalink to this headline">¶</a></h4>
+<p>On 32bit systems, a data consistency for datatypes up to 4 bytes is always given, if the source and destination address for the access are correctly aligned
+(2 byte datatype on a 2 byte boundary and a 4 byte datatype on a 4 byte boundary).</p>
+<p>Access to 8 byte integer and real datatypes (RTS_UI64/RTS_I64 and  RTS_LREAL64) are not atomic! So we recommend using always the atomic functions
+<a class="reference internal" href="#syscpureadvalueatomic-syscpuwritevalueatomic">SysCpuReadValueAtomic/SysCpuWriteValueAtomic</a> or for a single 64bit access the following functions in the runtime system to achive data consistency:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#syscpuatomicreadint64-syscpuatomicwriteint64">SysCpuAtomicReadInt64/SysCpuAtomicWriteInt64</a>: Access to an 64bit integer value is atomic</p></li>
+<li><p><a class="reference internal" href="#syscpuatomicreadreal64-syscpuatomicwritereal64">SysCpuAtomicReadReal64/SysCpuAtomicWriteReal64</a>: Access to an 64bit real value is atomic</p></li>
+</ul>
+<p>On which platforms these atomic functions are implemented is described in chapter <a class="reference internal" href="#operating-system-and-processor-specific-aspects">Operating system and processor specific aspects</a>.</p>
+</div>
+<div class="section" id="id6">
+<h4>64bit systems<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>On 64bit systems, a data consistency for datatypes up to 8 bytes is always given, if the source and destination address at the access are correctly aligned (2 byte datatype on a 2 byte boundary,
+a 4 byte datatype on a 4 byte boundary and a 8 byte datatype on a 8 byte boundary).</p>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id27">6.3.4.3. <span class="target" id="licensing">Licensing</span></a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>The number of CPU cores that are supported for the IEC Tasks are licensed via a device family license in the 3S.dat file!</p>
+<p>If the number of licensed cores are less than the physical available CPU cores, the following aspects must be known:</p>
+<ol class="arabic">
+<li><p>You cannot use all CPU cores for IEC task groups</p></li>
+<li><p>“Freefloating” option for IEC task groups are not allowed!</p></li>
+<li><p>You have to specify the really used cores in the following setting:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SysCpuMultiCore</span><span class="p">]</span>
+<span class="n">IecCoreSet</span><span class="o">=</span><span class="p">{</span><span class="mf">0.</span><span class="p">.</span><span class="n">MAXCOREID</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Example for a 4 CPU core target but only 2 CPU cores are licensed:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SysCpuMultiCore</span><span class="p">]</span>
+<span class="n">IecCoreSet</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>So only CPU core 0 and 2 can be used for IEC tasks.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id28">6.3.4.4. <span class="target" id="operating-system-and-processor-specific-aspects">Operating system and processor specific aspects</span></a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="general">
+<h3>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
+<p>At the following Operating Systems the multicore support for the runtime system is prepared:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 28%" />
+<col style="width: 53%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>OS</p></th>
+<th class="head"><p>Version</p></th>
+<th class="head"><p>Runtime System MultiCore Support</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Windows</p></td>
+<td><p>Windows &gt;= Vista</p></td>
+<td><p><strong>y</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Windows RTE</p></td>
+<td></td>
+<td><p><strong>n</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Linux</p></td>
+<td></td>
+<td><p><strong>y</strong> 1)  2)</p></td>
+</tr>
+<tr class="row-odd"><td><p>VxWorks</p></td>
+<td><p>VxWorks &gt;= 6.9</p></td>
+<td><p><strong>y</strong> 1)  2)</p></td>
+</tr>
+<tr class="row-even"><td><p>Windows CE</p></td>
+<td><p>WindowsCE &gt;= 7.0</p></td>
+<td><p><strong>y</strong> 3)</p></td>
+</tr>
+<tr class="row-odd"><td><p>QNX</p></td>
+<td></td>
+<td><p>n</p></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">Legend: y = available, n = not available</div>
+<div class="line">1) Multicore support is not released on PPC targets.</div>
+<div class="line">2) Data consistency for 64bit types is not ensured on PPC targets!</div>
+<div class="line">3) Supported, but data consistency only available with Windows CE &gt;= 8.0</div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3><span class="target" id="os-specific-data-consistency">OS specific data consistency</span><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>The following Operating Systems and its processor-combinations supports <strong>read/write atomic to 64bit datatypes
+on a 32bit Operating System</strong>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 29%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 19%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>OS</p></th>
+<th class="head"><p>Version</p></th>
+<th class="head"><p>x86</p></th>
+<th class="head"><p>x64</p></th>
+<th class="head"><p>Cortex-R /
+Cortex-A</p></th>
+<th class="head"><p>ARM</p></th>
+<th class="head"><p>PPC</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Windows</p></td>
+<td><p>Windows &gt;= Vista</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>Windows RTE</p></td>
+<td></td>
+<td><p>n</p></td>
+<td><p>n</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>Linux</p></td>
+<td><p>gcc &gt;= 4.4</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>n</p></td>
+</tr>
+<tr class="row-odd"><td><p>VxWorks</p></td>
+<td><p>VxWorks &gt;= 6.9</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>n</p></td>
+<td><p>n</p></td>
+<td><p>n</p></td>
+</tr>
+<tr class="row-even"><td><p>Windows CE</p></td>
+<td><p>WindowsCE 7.0</p></td>
+<td><p>y</p></td>
+<td><p>—</p></td>
+<td><p>n</p></td>
+<td><p>n</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>Windows CE</p></td>
+<td><p>WindowsCE &gt;= 8.0</p></td>
+<td><p>y</p></td>
+<td><p>—</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>—</p></td>
+</tr>
+</tbody>
+</table>
+<p>Legend: y = available, n = not available, — = not supported by the OS</p>
+</div>
+<div class="section" id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<p>Windows means here the product CODESYSControlWin, _not_ CODESYSControlRTE! CODESYSControlWin can run on PCs with multiple CPU cores,
+with or without hyperthreading.</p>
+<ul class="simple">
+<li><p>x86/x64: all access to 64bit values are consistent and are handled atomic.</p></li>
+</ul>
+</div>
+<div class="section" id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
+<p>On a 32bit Linux, we have the following restrictions on handling 64bit datatypes:</p>
+<ul>
+<li><p>x86/x64/ARM/Cortex: all access to 64bit values are consistent and are handled atomic. gcc &gt;= 4.4 is necessary.</p></li>
+<li><p>PPC: access is not atomic!</p>
+<p>Here you have to use always <a class="reference internal" href="#syscpureadvalueatomic-syscpuwritevalueatomic">SysCpuReadValueAtomic/SysCpuWriteValueAtomic</a> repectively
+<a class="reference internal" href="#syscpuatomicreadint64-syscpuatomicwriteint64">SysCpuAtomicReadInt64/SysCpuAtomicWriteInt64</a> or <a class="reference internal" href="#syscpuatomicreadreal64-syscpuatomicwritereal64">SysCpuAtomicReadReal64/SysCpuAtomicWriteReal64</a> in the runtime system!
+This is still done for monitoring, forcing, etc.</p>
+<p>In the IEC application you have to use the AtomicReadXXX or AtomicWriteXXX to handle 64bit values atomic (see chapter <a class="reference internal" href="#iec-data-consistency">IEC data consistency</a>)!</p>
+</li>
+</ul>
+</div>
+<div class="section" id="vxworks">
+<h3>VxWorks<a class="headerlink" href="#vxworks" title="Permalink to this headline">¶</a></h3>
+<p>On 32bit VxWorks we have the following restrictions on handling 64bit datatypes:</p>
+<ul>
+<li><p>x86/x64: all access to 64bit value are consistent and are handled atomic.</p></li>
+<li><p>ARM/Cortex/PPC: access is not atomic!</p>
+<p>Here you have to use always <a class="reference internal" href="#syscpureadvalueatomic-syscpuwritevalueatomic">SysCpuReadValueAtomic/SysCpuWriteValueAtomic</a> repectively
+<a class="reference internal" href="#syscpuatomicreadint64-syscpuatomicwriteint64">SysCpuAtomicReadInt64/SysCpuAtomicWriteInt64</a> or <a class="reference internal" href="#syscpuatomicreadreal64-syscpuatomicwritereal64">SysCpuAtomicReadReal64/SysCpuAtomicWriteReal64</a> in the runtime system!
+This is still done for monitoring, forcing, etc.</p>
+<p>In the IEC application you have to use the AtomicReadXXX or AtomicWriteXXX to handle 64bit values atomic (see chapter <a class="reference internal" href="#iec-data-consistency">IEC data consistency</a>)!</p>
+</li>
+</ul>
+</div>
+<div class="section" id="windows-ce">
+<h3>Windows CE<a class="headerlink" href="#windows-ce" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="windows-ce-7">
+<h4>Windows CE 7<a class="headerlink" href="#windows-ce-7" title="Permalink to this headline">¶</a></h4>
+<p>MultiCore support is available under Windows CE 7 ARM and x86. But Windows CE 7 uses the ARM32 instruction set without support of atomic
+instructions for 64 bit access! So on ARM platforms, atomic handling of 64bit datatypes for data consistency is not supported with an
+atomic operator!</p>
+</div>
+<div class="section" id="windows-embedded-compact-2013-ce-8">
+<h4>Windows Embedded Compact 2013 (“CE 8”)<a class="headerlink" href="#windows-embedded-compact-2013-ce-8" title="Permalink to this headline">¶</a></h4>
+<p>MultiCore support is available under Windows CE 8 Cortex. Windows CE 8 for ARM CPUs uses the Thumb 2 instruction set with support of atomic
+instructions for 64 bit access.
+MultiCore support for x86 on CE 8 is currently being tested but the whole platform CE8 x86 will not not be officially available with 3.5 SP 12.
+This is due to the lack of such a device for development and tests before code close.</p>
+</div>
+<div class="section" id="measuring-the-core-load-on-windows-ce-7-and-8">
+<h4>Measuring the Core Load on Windows CE 7 and 8<a class="headerlink" href="#measuring-the-core-load-on-windows-ce-7-and-8" title="Permalink to this headline">¶</a></h4>
+<p>The runtime system uses Windows CE function CEGetIdleTimeEx for measuring the load specifically on each core (we refer here to the “Core Load”, not to the “PLC load”) .
+Some of the tested devices deliver incorrect and useless values, in the Device Trace =&gt; CPU Load, and with PLC shell command cpuload.
+For correct values, the BSP of the device must implement idle counters.
+Note that the PLC Load is measured differently and shows correct values.</p>
+</div>
+</div>
+</div>
+<div class="section" id="coding-guidlines">
+<h2><a class="toc-backref" href="#id29">6.3.4.5. Coding Guidlines</a><a class="headerlink" href="#coding-guidlines" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id10">
+<h3><span class="target" id="lock-free-programming">Lock free programming</span><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>The main goal for multicore application should be a lock free programming to improve performance!
+For lock free programming, you can use so called atomic functions of the runtime system. The following atomic functions are available.</p>
+<div class="section" id="id11">
+<h4><span class="target" id="syscputestandsetbit">SysCpuTestAndSetBit</span><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<p>With this function, you can set a bit in a 4 byte integer atomically. Atomic means here, that if the same 4 byte integer is used by several tasks
+and if the tasks modifies single bits, the bit remains consistent.</p>
+</div>
+<div class="section" id="syscpuatomicadd-syscpuatomicadd64">
+<h4><span class="target" id="syscpuatomicadd">SysCpuAtomicAdd</span> - <span class="target" id="syscpuatomicadd64">SysCpuAtomicAdd64</span><a class="headerlink" href="#syscpuatomicadd-syscpuatomicadd64" title="Permalink to this headline">¶</a></h4>
+<p>With this function, you can increment/decrement a 4 / 8 byte integer atomically. With this an atomic incrementer/decrementer can be realized.</p>
+</div>
+<div class="section" id="id12">
+<h4><span class="target" id="syscpureadvalueatomic-syscpuwritevalueatomic">SysCpuReadValueAtomic/SysCpuWriteValueAtomic</span><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<p>With this functions, a 2, 4 and 8 byte value can be read/written atomic on a 32bit and 64bit platform!</p>
+</div>
+<div class="section" id="syscpuatomicreadint64-syscpuatomicwriteint64-syscpuatomicreadreal64-syscpuatomicwritereal64">
+<h4><span class="target" id="syscpuatomicreadint64-syscpuatomicwriteint64">SysCpuAtomicReadInt64/SysCpuAtomicWriteInt64</span> - <span class="target" id="syscpuatomicreadreal64-syscpuatomicwritereal64">SysCpuAtomicReadReal64/SysCpuAtomicWriteReal64</span><a class="headerlink" href="#syscpuatomicreadint64-syscpuatomicwriteint64-syscpuatomicreadreal64-syscpuatomicwritereal64" title="Permalink to this headline">¶</a></h4>
+<p>With this functions, a 8 byte integer or real value can be read/written atomic on a 32bit platform. This is because accessing a 8 byte datatype
+needs mostly 2 machine instructions which are not atomic.</p>
+<p>So with these functions the data consistency of a 8 byte datatype can be achieved. For details see chapter <a class="reference internal" href="#data-consistency">Data Consistency</a>.</p>
+</div>
+<div class="section" id="id13">
+<h4><span class="target" id="syscpucompareandswap">SysCpuCompareAndSwap</span><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<p>Use this function to atomically compare and exchange a 4 / 8 byte value in one atomic operation. This function will only
+change the value if the value matches a defined compare value. If not the value will not be exchanged. Instead the function
+will return an error.</p>
+</div>
+</div>
+<div class="section" id="data-access-synchronization">
+<h3>Data access synchronization<a class="headerlink" href="#data-access-synchronization" title="Permalink to this headline">¶</a></h3>
+<p>Accessing the same data from several tasks can lead to an inconsistent state of this data. So the access must be synchronized, especially if tasks are
+running on different CPU cores!</p>
+<dl class="simple">
+<dt><strong>NOTE:</strong></dt><dd><p>Be aware that every synchronization operation will decrease your overall performance especially on MultiCore targets! So it is recommended to prefer atomic
+operations (see <a class="reference internal" href="#lock-free-programming">Lock free programming</a>) instead of synchronization operations!</p>
+</dd>
+</dl>
+<p>For this we have several synchronization functions in the runtime system, which achieves different synchronization aspects and can
+be used for different usages.</p>
+<div class="section" id="sysmutex-syssem">
+<h4><span class="target" id="sysmutex">SysMutex</span> / <span class="target" id="syssem">SysSem</span><a class="headerlink" href="#sysmutex-syssem" title="Permalink to this headline">¶</a></h4>
+<p>A mutex is a synchronization mechanism to synchronize access to data from several tasks. On multicore systems this could be a time consuming operation
+and so it could decrease the performance!</p>
+<dl class="simple">
+<dt><strong>NOTE:</strong></dt><dd><p>A mutex can be entered several times in one task! But you must be aware, that you have to leave as much as times you have entered the mutex!</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="id14">
+<h4><span class="target" id="syssemcount">SysSemCount</span><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<p>The initial value of a counting semaphore can be specified at creating the semaphore. You can enter only so many times at the same time, until
+this initial counter is reached! You to leave the counting semaphore as much as times you have entered it!</p>
+<dl class="simple">
+<dt><strong>NOTE:</strong></dt><dd><p>A counting semaphore should not be entered several times in one task, if the initial value is 1!</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="id15">
+<h4><span class="target" id="sysreadwritelock">SysReadWriteLock</span><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<p>Instead of using mutexes or semaphores you should prefer a ReadWriteLock (multiple reader / single writer). A readwrite lock can be used,
+if there are several readers which uses the data structure, but only a view writers.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="simple">
+<dt><strong>NOTE:</strong></dt><dd><p>Several readers can enter the lock at the same time. A writer can enter only exclusively the lock and no reader can enter at the same time.
+A task cannot enter a readlock several times or after entering a write lock! Vice versa a task cannot enter a writelock several times or
+after entering a readlock!</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="interrupt-handlers">
+<h4>Interrupt handlers<a class="headerlink" href="#interrupt-handlers" title="Permalink to this headline">¶</a></h4>
+<p>If interrupt handlers runs on multicore systems, they must be implemented multicore safe!</p>
+<dl>
+<dt><strong>NOTE:</strong></dt><dd><p>In general: SysIntDisableAll/SysIntEnableAll use interrupt locking machanisms of the operating system, if implemented at all, and therefore
+cannot be used here, because they work only on UP systems or on the current CPU core on SMP systems.</p>
+<p>So these functions must be implemented based on SpinLocks on SMP systems!</p>
+</dd>
+</dl>
+<div class="section" id="id16">
+<h5>VxWorks<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h5>
+<p>To support also a locking machanism for SMP systems, SysIntDisableAll/SysIntEnableAll use the ISR callable spinlock functions of the
+VxWorks system library “spinLockLib” (spinLockIsrTake/spinLockIsrGive). For more information refer to the according Wind River manual.</p>
+</div>
+</div>
+</div>
+<div class="section" id="id17">
+<h3><span class="target" id="asynchronous-operations">Asynchronous Operations</span><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>To decouple tasks, you can use asynchronous operations. For this you can use the following runtime system components:</p>
+<div class="section" id="sysmsgq">
+<h4>SysMsgQ<a class="headerlink" href="#sysmsgq" title="Permalink to this headline">¶</a></h4>
+<p>Message queues can be used to delegate an operation to another task, which operates on the same message queue.</p>
+</div>
+<div class="section" id="cmpasyncmgr">
+<h4>CmpAsyncMgr<a class="headerlink" href="#cmpasyncmgr" title="Permalink to this headline">¶</a></h4>
+<p>The asynchronous manager can be used to delegate an operation to be executed typically in the background (in the context of the CH_COMM_CYCLE hook,
+a separate task or an event).</p>
+</div>
+</div>
+</div>
+<div class="section" id="diagnostics">
+<h2><a class="toc-backref" href="#id30">6.3.4.6. Diagnostics</a><a class="headerlink" href="#diagnostics" title="Permalink to this headline">¶</a></h2>
+<p>To measure multicore performance, the runtime system has several builtin diagnostic features.</p>
+<div class="section" id="cpu-and-plc-load-system-traces">
+<h3>CPU and PLC load system traces<a class="headerlink" href="#cpu-and-plc-load-system-traces" title="Permalink to this headline">¶</a></h3>
+<p>If the SysCpuMultiCore and CmpTraceMgr components are integrated in the runtime system, there are created 2 system traces, which can be upload in CODESYS
+to see the CPU load and the IEC-Task load as traces.</p>
+<p>For this you have to add a trace object under your device in CODESYS and with the command upload you can upload and start the traces with the name “CpuCoreLoad”
+or “PlcLoad”.</p>
+<p><img alt="pic-cpuloadtrace" src="../_images/MultiCore-CPULoadTrace.PNG" /></p>
+<p>Fig.1 This is a picture of the CpuLoad system trace</p>
+</div>
+<div class="section" id="iec-tasks-system-trace">
+<h3>IEC-Tasks system trace<a class="headerlink" href="#iec-tasks-system-trace" title="Permalink to this headline">¶</a></h3>
+<p>There is an additional possibility to trace the IEC-task timing in a system trace. To enable this, you have to add the following setting into your runtime
+configuration file (cfg-File):</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<blockquote>
+<div><div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">CmpIecTask</span><span class="p">]</span>
+<span class="n">EnableTaskTrace</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>You can upload and start this trace to see the timing (start/end) of each IEC-task and its corresponding cycle.</p>
+</div>
+<div class="section" id="plcshell-commands">
+<h3>PlcShell commands<a class="headerlink" href="#plcshell-commands" title="Permalink to this headline">¶</a></h3>
+<p>There are the following PlcShell commands for diagnostic needs on multicore systems:</p>
+<ul>
+<li><p>cpuload - Get the current CPU load listed for each CPU core.</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">CPU</span> <span class="n">load</span> <span class="nl">average</span><span class="p">:</span>         <span class="mi">6</span><span class="o">%</span>
+
+<span class="nl">CoreID</span><span class="p">:</span>           <span class="mi">0</span>       <span class="mi">1</span>       <span class="mi">2</span>       <span class="mi">3</span>       <span class="mi">4</span>       <span class="mi">5</span>       <span class="mi">6</span>       <span class="mi">7</span>
+<span class="o">----------------------------------------------------------------------------</span>
+<span class="n">CPU</span> <span class="n">Core</span> <span class="nl">load</span><span class="p">:</span>    <span class="mi">9</span><span class="o">%</span>      <span class="mi">1</span><span class="o">%</span>     <span class="mi">16</span><span class="o">%</span>      <span class="mi">0</span><span class="o">%</span>      <span class="mi">2</span><span class="o">%</span>     <span class="mi">10</span><span class="o">%</span>      <span class="mi">0</span><span class="o">%</span>     <span class="mi">12</span><span class="o">%</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>plcload - Get the current PLC load listed for each CPU core.</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">PLC</span> <span class="n">load</span> <span class="nl">average</span><span class="p">:</span>         <span class="mi">3</span><span class="o">%</span>
+
+<span class="nl">CoreID</span><span class="p">:</span>           <span class="mi">0</span>       <span class="mi">1</span>       <span class="mi">2</span>       <span class="mi">3</span>       <span class="mi">4</span>       <span class="mi">5</span>       <span class="mi">6</span>       <span class="mi">7</span>
+<span class="o">----------------------------------------------------------------------------</span>
+<span class="n">PLC</span> <span class="n">Core</span> <span class="nl">load</span><span class="p">:</span>    <span class="mi">4</span><span class="o">%</span>      <span class="mi">3</span><span class="o">%</span>      <span class="mi">3</span><span class="o">%</span>      <span class="mi">3</span><span class="o">%</span>      <span class="mi">5</span><span class="o">%</span>      <span class="mi">4</span><span class="o">%</span>      <span class="mi">4</span><span class="o">%</span>      <span class="mi">3</span><span class="o">%</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>gettaskgroups - Display the assignment of all tasks bound to a task group.</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">TaskGroup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;System&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;SchedException&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">}</span>
+
+<span class="n">TaskGroup</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;IecTask&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;CAAEventTask&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;EventTask&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="mi">2</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;FreewheelingTask&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="mi">3</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;StatusTask&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="mi">4</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;T1_1ms&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="mi">5</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;T2_2ms&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="mi">6</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;T3_5ms&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;T4_10ms&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;T5_100ms&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="mi">2</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;T6_1000ms&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="mi">3</span><span class="p">}</span>
+
+<span class="n">TaskGroup</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;Communication&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="n">free</span> <span class="n">floating</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;WebServerCloseChannelAfterTimeoutTask&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="n">free</span> <span class="n">floating</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;OPCUAServer&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="n">free</span> <span class="n">floating</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;BlkDrvUdp&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="n">free</span> <span class="n">floating</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;BlkDrvTcp&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="n">free</span> <span class="n">floating</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;BlkDrvShm&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="n">free</span> <span class="n">floating</span><span class="p">}</span>
+    <span class="o">--</span><span class="n">TaskName</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">:</span> <span class="s">&quot;BlkDrvCom&quot;</span><span class="p">,</span> <span class="n">cores</span><span class="o">=</span><span class="p">{</span><span class="n">free</span> <span class="n">floating</span><span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>getmulticoreinfo - Display some general information about the multicore architecture and configuration.</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">MultiCore</span> <span class="nl">Info</span><span class="p">:</span>
+<span class="o">--</span> <span class="n">MultiCore</span> <span class="nl">support</span><span class="p">:</span> <span class="p">[</span><span class="n">activated</span><span class="p">],</span> <span class="n">all</span> <span class="n">cores</span> <span class="n">are</span> <span class="n">used</span>
+<span class="o">--</span> <span class="n">Number</span> <span class="n">of</span> <span class="nl">cores</span><span class="p">:</span>     <span class="mi">8</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="iec-programming-aspects">
+<h2><a class="toc-backref" href="#id31">6.3.4.7. IEC programming aspects</a><a class="headerlink" href="#iec-programming-aspects" title="Permalink to this headline">¶</a></h2>
+<p>For IEC application- or library-developers there are three things to know, if you devlop on a multicore based controller:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#iec-task-core-binding">IEC-task core binding</a></p></li>
+<li><p><a class="reference internal" href="#iec-data-consistency">IEC data consistency</a></p></li>
+<li><p><a class="reference internal" href="#iec-data-task-cycle-consistency">IEC data task cycle consistency</a></p></li>
+</ol>
+<p>These aspects are described subsequent.</p>
+<div class="section" id="id18">
+<h3><span class="target" id="iec-task-core-binding">IEC-task core binding</span><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>In chapter <a class="reference internal" href="#task-binding">Task binding</a> we described, how tasks can be bound to a CPU core via so called task groups.</p>
+<p>For IEC tasks you can manage taskgroups in the taskconfiguration and you can assign every task to such a task group.
+By default there is one group names “IEC-Tasks”.</p>
+<p>For an IEC taskgroup you can specify one of the following core bindings:</p>
+<ul class="simple">
+<li><p>FreeFloating: Core binding is dynamically managed by the operating system</p></li>
+<li><p>FixPinned: Pinned to one core, but the core is decided by the runtime system</p></li>
+<li><p>SequentialPinned: All tasks are bound, but on different cores</p></li>
+<li><p>0..&lt;MaxCoreID&gt;: Bound to a single specified core</p></li>
+</ul>
+</div>
+<div class="section" id="id19">
+<h3><span class="target" id="iec-data-consistency">IEC data consistency</span><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>Dataconsistency depends on the datatype.</p>
+<div class="section" id="bit-datatypes">
+<h4>BIT datatypes<a class="headerlink" href="#bit-datatypes" title="Permalink to this headline">¶</a></h4>
+<p>BIT access is not atomic on any CPU! We recommend to use the SysCpuTestAndSet() library function from SysCpuHandling.library to manage BIT access atomic!</p>
+</div>
+<div class="section" id="id20">
+<h4>32bit datatypes<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<p>Accessing up to 32bit datatypes are managed always consistent by the CODESYS codegenerator.</p>
+<dl class="simple">
+<dt><strong>NOTE:</strong></dt><dd><p>To implement an atomic incrementer/decrementer we recommend to use the SysCpuAtomicAdd() library function from SysCpuHandling.library!</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="bit-datatypes-integer-and-real">
+<h4>64bit datatypes (integer and real)<a class="headerlink" href="#bit-datatypes-integer-and-real" title="Permalink to this headline">¶</a></h4>
+<p>Accessing 64bit datatypes (like LWORD and LREAL) is atomic on the following <strong>32bit platforms</strong>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 64%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>x86</p></th>
+<th class="head"><p>x64</p></th>
+<th class="head"><p>ARM / Cortex-R / Cortex-A</p></th>
+<th class="head"><p>PPC</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>y 1)</p></td>
+<td><p>n</p></td>
+</tr>
+</tbody>
+</table>
+<p>Legend: y = available, n = not available</p>
+<ol class="arabic simple">
+<li><p>Access is atomic, if the target setting “Codegenerator/atomic-read-write-64-bit” is set in the DevDesc!</p></li>
+</ol>
+</div>
+<div class="section" id="id21">
+<h4><span class="target" id="strings">Strings</span><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
+<p>There is a library under construction which is called “Shared Data Area Library”. This can be used to handle a string consistent. Every reader gets a copy of the latest
+value. Writers are using a new buffer to write consistent and after the value is completely written, the value is published for the readers.</p>
+</div>
+<div class="section" id="userdefined-datatypes">
+<h4>UserDefined datatypes<a class="headerlink" href="#userdefined-datatypes" title="Permalink to this headline">¶</a></h4>
+<p>There are several libraries to help you to synchronize access to data from several tasks.</p>
+<p><a class="reference internal" href="#syssem">SysSem</a> (SysSem.library) and <a class="reference internal" href="#sysreadwritelock">SysReadWriteLock</a> (SysReadWriteLock.library) are available as libraries and can be used to synchronize access to complex data
+types like structures and arrays.</p>
+<p>Perphaps the “Shared Data Area Library” can be used for this usage (see chapter <a class="reference internal" href="#strings">Strings</a>).</p>
+</div>
+</div>
+<div class="section" id="id22">
+<h3><span class="target" id="iec-data-task-cycle-consistency">IEC data task cycle consistency</span><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<p>All referenced data in the IEC application, which can be read/written by CODESYS monitoring or a symbolic client (PLCHandler/OPC, OPC UA), are not cycle consistent
+on a MultiCore target! This is because the monitoring tasks and the IEC tasks are running independently on several cores and so they can read/write data at any time!</p>
+<p>So the IEC application must be aware about this changed behaviour on MultiCore targets!</p>
+<div class="section" id="id23">
+<h4><span class="target" id="memory-reordering-problems">Memory reordering problems</span><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
+<p>Because CPUs have to optimise the access to the system memory modern CPUs use differenct cache lines
+to temporarily store data for faster access. On multicore systems it may happen that memory operations
+(load/store) are reorderd by the CPU to achieve an optimized access to this memory locations.</p>
+<p>In some cases it can happen that the operations to the same memory location are seen in a different order on
+one core than on another core. This can cause problems where the data is used to synchronize data between threads on different cores.</p>
+<p>To handle this issue there is a new operator __MemoryBarrier available in IEC code. This operation takes care
+that laod/store instructions where the order matters are seen in the same order on all CPU cores (cache synchronization).</p>
+<p>Typically the use of the operator is highly platfrom dependend. If the atomic operations of SysCpuHandling are used, the
+runtimesystem takes care about the order on all cores. For details see documentation of target-setting codegeneratormemory-barrier.</p>
+</div>
+</div>
+</div>
+<div class="section" id="id24">
+<h2><a class="toc-backref" href="#id32">6.3.4.8. <span class="target" id="features-not-released-with-v3-5-13-0-on-multicore-targets">Features not released with V3.5.13.0 on MultiCore targets</span></a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>Redundancy:</p>
+<p>Test: Not tested yet
+=&gt; Not released for MultiCore</p>
+</li>
+<li><p>SL Runtimes:</p>
+<p>CODESYS Control RTE is not released for MultiCore yet.
+CODESYS Control RaspberryPi and EmPC are not released for MultiCore yet.</p>
+</li>
+<li><p>CNC with SoftMotion 4.3:</p>
+<p>Multicore is not supported for robotics and CNC with SoftMotion 4.3. Therefore, the planning task (for robotics) and the path task (for CNC) have to run on the
+same processor core as the bus cycle task.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="glossary">
+<h2><a class="toc-backref" href="#id33">6.3.4.9. Glossary</a><a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt><span class="target" id="smp">SMP</span></dt><dd><p>Symmetrical Multi Processor system: System with several identical CPU cores/processors</p>
+</dd>
+<dt><span class="target" id="amp">AMP</span></dt><dd><p>Asymmetrical Multi Processor system: System with several different CPU cores/procesors</p>
+</dd>
+<dt><span class="target" id="up">UP</span></dt><dd><p>Uni Processor system: System with one CPU core/procesor (e.g. single core CPU)</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CODESYSControlV3_CodeMeter_Tutorial.html" title="6.3.5. CodeMeter Tutorial"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CODESYSControlV3_SymbolicAccess.html" title="6.3.3. Symbolic IEC Variable Access"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >6. Tutorials / HowTos</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

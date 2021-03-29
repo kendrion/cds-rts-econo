@@ -25,6 +25,7 @@
 	typedef int RTS_BOOL;
 	typedef float RTS_REAL32;
 	typedef double RTS_REAL64;
+	#define RTS_INVALID_HANDLE ((RTS_HANDLE)(~((uintptr_t)0)))
 #endif
 
 typedef void (*PFINVOKEINWINDOWTASK)(RTS_UINTPTR ulCallbackParam);

@@ -1,0 +1,104 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __sys_mem_linux_8c:
+
+============================
+SysMemLinux.c File Reference
+============================
+
+| #include ":ref:`stdlib.h`"
+| #include ":ref:`stdio.h`"
+| #include ":ref:`sys/types.h`"
+| #include ":ref:`unistd.h`"
+| #include ":ref:`errno.h`"
+| #include ":ref:`setjmp.h`"
+| #include ":ref:`sys/mman.h`"
+| #include ":ref:`sys/shm.h`"
+| #include ":ref:`sys/stat.h`"
+| #include ":ref:`fcntl.h`"
+| #include ":ref:`pthread.h`"
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`SysMemDep.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`area_info_tag <structarea__info__tag>`
+
+- struct :ref:`ArealistElem <struct_arealist_elem>`
+
+Macros
+------
+
+- #define :ref:`SHM_NAME_SAFEDATA <_sys_mem_linux_8c_1af40fc96302d3566d6eb8358d572e9fea>` "cds_safeapp_safedata"
+
+- #define :ref:`SHM_NAME_UNSAFEDATA <_sys_mem_linux_8c_1a6251e8690fc31d42095af3215d8a396f>` "cds_safeapp_unsafedata"
+
+- #define :ref:`SHM_NAME_PERSDATA <_sys_mem_linux_8c_1a8aaeda365f01986fd4c97c56cca738b8>` "cds_safeapp_pers"
+
+- #define :ref:`DATA_AREA_SIZE <_sys_mem_linux_8c_1ab2dbcddefc316cac7daac56f3c7c2260>` 0x20000
+
+- #define :ref:`UNSAFE_DATA_AREA_SIZE <_sys_mem_linux_8c_1a5a030b12fed44b31959b26c4ad4e5dad>` 0x20000
+
+- #define :ref:`RETAIN_AREA_SIZE <_sys_mem_linux_8c_1a9ef4455c9612de9bef3250d408b59644>` 0x10000
+
+- #define :ref:`DATA_AREA_START_ADDRESS <_sys_mem_linux_8c_1a2d9d1ae8371b281aaffaf5ea5d231d33>` 0x1C0000
+
+- #define :ref:`RETAIN_AREA_START_ADDRESS <_sys_mem_linux_8c_1ada9583b6900ce923d64608a8eb712f79>` 0x200000
+
+- #define :ref:`SAFEAPP_DATA_AREA_START_ADDRESS <_sys_mem_linux_8c_1a0275e8aa14e6b929ac85edc8fafe7f10>` ((void*)0xC0000)
+
+- #define :ref:`SAFEAPP_UNSAFEDATA_AREA_START_ADDRESS <_sys_mem_linux_8c_1a3db0a70c54a04ba6254d24ddee49950b>` ((void*)0xE0000)
+
+- #define :ref:`SAFEAPP_PERS_AREA_START_ADDRESS <_sys_mem_linux_8c_1a854cda40581c10617dab65c2f3609438>` ((void*)0x100000)
+
+Typedefs
+--------
+
+- typedef struct :ref:`area_info_tag <structarea__info__tag>` :ref:`AreaInfo <_sys_mem_linux_8c_1a72db5c40786d532919a7f8a1a1b9d3dc>`
+
+Functions
+---------
+
+- void :ref:`sysarea_safeapp_map <_sys_mem_linux_8c_1a462cebbcd7466311cb59f3b12e705a3a>` (char * pszName, void * pAddress, int length)
+
+- void :ref:`sysarea_safeapp_unmap <_sys_mem_linux_8c_1a1bdd133d7437f9dba01273eba2115231>` (char * pszName, void * pAddress, int length)
+
+- RTS_RESULT :ref:`SysMemOSInit <_sys_mem_linux_8c_1aa8386a4d545b44f1ca2733aa31bfb891>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysMemOSHookFunction <_sys_mem_linux_8c_1aa309717bad44320b73c0ebb0b553d129>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- void :ref:`sysarea_register <_sys_mem_linux_8c_1ac2ded1905f7aa9a1df9b01157a8dcd41>` (void * pArea, unsigned long ulSize)
+
+- unsigned long :ref:`sysarea_unregister <_sys_mem_linux_8c_1ab2c332641182de729e8273bfca433358>` (void * pArea)
+
+- void * :ref:`SysMemAllocData <_sys_mem_linux_8c_1ac86cb3a6875b73f207e0c14292b96e4e>` (char * pszComponentName, RTS_SIZE ulSize, RTS_RESULT * pResult)
+
+- void * :ref:`SysMemReallocData <_sys_mem_linux_8c_1ac803284edcb99a3d288904f27349a761>` (char * pszComponentName, void * pData, RTS_SIZE ulSize, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysMemFreeData <_sys_mem_linux_8c_1a2ed61c79d0610fcf07f89582f2cba1da>` (char * pszComponentName, void * pData)
+
+- void * :ref:`SysMemAllocArea <_sys_mem_linux_8c_1a7ba42e875fb5a4b94adf7a98597675d8>` (char * pszComponentName, unsigned short usType, RTS_SIZE ulSize, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysMemFreeArea <_sys_mem_linux_8c_1ac601bc9910fc46027d782ac9f1a75ab8>` (char * pszComponentName, void * pData)
+
+- void * :ref:`SysMemAllocCode <_sys_mem_linux_8c_1a8d5e3cdf2959853e263068788ae612a7>` (char * pszComponentName, RTS_SIZE ulSize, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysMemFreeCode <_sys_mem_linux_8c_1a2fe60fc89792ced09b6a86f47a57a3bd>` (char * pszComponentName, void * pCode)
+
+- RTS_RESULT :ref:`SysMemIsValidPointer <_sys_mem_linux_8c_1a3b6dfb1099dbb85bcaf196b13254c75e>` (void * ptr, RTS_SIZE ulSize, int bWrite)
+
+Detailed Description
+--------------------
+
+Definition in file SysMemLinux.c
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

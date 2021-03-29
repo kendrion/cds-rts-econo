@@ -2,12 +2,12 @@
  * <interfacename>SysGraphicTestable</interfacename>
  * <description> 
  *	<p>The interface SysGraphicTestable is intended for implementing automatic testability in a graphical component. Typically this
- *	interface can be implemented by components intended for embedded graphics (framebuffer, light visualization). It is primarily meant as
+ *	interface can be implemented by components intended for embedded graphics (frame-buffer, light visualization). It is primarily meant as
  *	a simplification of <see>SysGraphicNative</see> to support automated testing.</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -34,7 +34,7 @@ DEF_ITF_API(`RTS_HANDLE', `CDECL', `SysGraphicTestableCreate', `(RTS_RESULT *pRe
 
 /**
  * <description>Releases a handle to a test object that was returned by <see>SysGraphicTestableCreate</see>.</description>
- * <param name="hDisplayContext" type="IN">The native displaycontext to release</param>
+ * <param name="hDisplayContext" type="IN">The native display-context to release</param>
  * <result>An error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `SysGraphicTestableDestroy', `(RTS_HANDLE hTestable)')
@@ -52,7 +52,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysGraphicTestableGetDisplaySize', `(RTS_HAN
  * <param name="sX" type="IN">The x coordinate to get the color from</param>
  * <param name="sY" type="IN">The y coordinate to get the color from</param>
  * <param name="pulColorValue" type="IN">Pointer that will return the determined color. The color will be in the
- * format used by the iec visualization ([--------|RRRRRRRR|GGGGGGGG|BBBBBBBB]).</param>
+ * format used by the IEC visualization ([--------|RRRRRRRR|GGGGGGGG|BBBBBBBB]).</param>
  * <result>An error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `SysGraphicTestableGetDisplayPixel', `(RTS_HANDLE hTestable, short sX, short sY, unsigned long* pulColorValue)')

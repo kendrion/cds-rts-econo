@@ -1,0 +1,708 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_event_itf:
+
+===========
+SysEventItf
+===========
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of SysEvent.
+
+Detailed Description
+--------------------
+
+The SysEvent interface is projected to use an operating system event to activate a task. So this component can only be used on systems with tasks!
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Data Structures
+---------------
+
+- struct :ref:`tagsyseventcreate_struct <structtagsyseventcreate__struct>`
+
+- struct :ref:`tagsyseventdelete_struct <structtagsyseventdelete__struct>`
+
+- struct :ref:`tagsyseventset_struct <structtagsyseventset__struct>`
+
+- struct :ref:`tagsyseventwait_struct <structtagsyseventwait__struct>`
+
+- struct :ref:`ISysEvent_C <struct_i_sys_event___c>`
+
+Macros
+------
+
+- #define :ref:`USE_syseventcreate <group___sys_event_itf_1gafe5fc45306b1f5e70e43d906bf28749f>` :ref:`PFSYSEVENTCREATE_IEC <group___sys_event_itf_1gac692298acb95a0e9764f3651533b5838>` pfsyseventcreate;
+
+- #define :ref:`EXT_syseventcreate <group___sys_event_itf_1gae85f61d3b74332f5526ef32b72e50bec>` extern :ref:`PFSYSEVENTCREATE_IEC <group___sys_event_itf_1gac692298acb95a0e9764f3651533b5838>` pfsyseventcreate;
+
+- #define :ref:`GET_syseventcreate <group___sys_event_itf_1ga66a0680e7c8e87ecb9fa88906870e5df>` s_pfCMGetAPI2( "syseventcreate", (RTS_VOID_FCTPTR *)&pfsyseventcreate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x67712592), 0x03050500)
+
+- #define :ref:`CAL_syseventcreate <group___sys_event_itf_1ga5097d292c7054fe796794da5b5ef6430>` pfsyseventcreate
+
+- #define :ref:`CHK_syseventcreate <group___sys_event_itf_1ga3d55780a27098953991b401bd28d248b>` (pfsyseventcreate != NULL)
+
+- #define :ref:`EXP_syseventcreate <group___sys_event_itf_1gaa2bf61f974c52d60f0a628f92f75b8ef>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syseventcreate", (RTS_UINTPTR) :ref:`syseventcreate <group___sys_event_itf_1ga474b05754b1466b545ee3d11b3359309>` , 1, RTSITF_GET_SIGNATURE(0, 0x67712592), 0x03050500)
+
+- #define :ref:`USE_syseventdelete <group___sys_event_itf_1ga2bd520ee1422f8e02e81d9340649a91b>` :ref:`PFSYSEVENTDELETE_IEC <group___sys_event_itf_1ga037e5733f249f487faf84d6d6a8ced4d>` pfsyseventdelete;
+
+- #define :ref:`EXT_syseventdelete <group___sys_event_itf_1ga6e4c5eb6a39f55921cd7c7ad67c71815>` extern :ref:`PFSYSEVENTDELETE_IEC <group___sys_event_itf_1ga037e5733f249f487faf84d6d6a8ced4d>` pfsyseventdelete;
+
+- #define :ref:`GET_syseventdelete <group___sys_event_itf_1ga2ebdbbbb8ab6609630b856c57ad3158d>` s_pfCMGetAPI2( "syseventdelete", (RTS_VOID_FCTPTR *)&pfsyseventdelete, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x97BA564C), 0x03050500)
+
+- #define :ref:`CAL_syseventdelete <group___sys_event_itf_1gaed3866b293b4d3f6bdd781b66dc406a9>` pfsyseventdelete
+
+- #define :ref:`CHK_syseventdelete <group___sys_event_itf_1ga65c0f19334f11cc5adae13c039fd088b>` (pfsyseventdelete != NULL)
+
+- #define :ref:`EXP_syseventdelete <group___sys_event_itf_1ga02804c51d6a226434e481dec9099f5f4>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syseventdelete", (RTS_UINTPTR) :ref:`syseventdelete <group___sys_event_itf_1ga736685ba4cc19328dc8d414ebec6dbc5>` , 1, RTSITF_GET_SIGNATURE(0, 0x97BA564C), 0x03050500)
+
+- #define :ref:`USE_syseventset <group___sys_event_itf_1gae125f074bb010068c005a34f589db017>` :ref:`PFSYSEVENTSET_IEC <group___sys_event_itf_1ga582109892a8874779ee521020926deba>` pfsyseventset;
+
+- #define :ref:`EXT_syseventset <group___sys_event_itf_1gabcb48360c24d39bbaafa0ba156656c82>` extern :ref:`PFSYSEVENTSET_IEC <group___sys_event_itf_1ga582109892a8874779ee521020926deba>` pfsyseventset;
+
+- #define :ref:`GET_syseventset <group___sys_event_itf_1ga8e14e0b4c02e662068779e69fc10c6c6>` s_pfCMGetAPI2( "syseventset", (RTS_VOID_FCTPTR *)&pfsyseventset, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xBDDBC5FE), 0x03050500)
+
+- #define :ref:`CAL_syseventset <group___sys_event_itf_1gab460cbf401baed8b63b8090dbe981335>` pfsyseventset
+
+- #define :ref:`CHK_syseventset <group___sys_event_itf_1ga8d5d7c87626a691049b784366d706de3>` (pfsyseventset != NULL)
+
+- #define :ref:`EXP_syseventset <group___sys_event_itf_1gae3f9f240f120b5f90e7fa2200a15bddc>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syseventset", (RTS_UINTPTR) :ref:`syseventset <group___sys_event_itf_1ga2ca04a408d835a45afcb19a7aaabd291>` , 1, RTSITF_GET_SIGNATURE(0, 0xBDDBC5FE), 0x03050500)
+
+- #define :ref:`USE_syseventwait <group___sys_event_itf_1ga35c923c630b91f889759fd680aaf1111>` :ref:`PFSYSEVENTWAIT_IEC <group___sys_event_itf_1gae6d6ad027bf0a19db9ea4506eec05865>` pfsyseventwait;
+
+- #define :ref:`EXT_syseventwait <group___sys_event_itf_1gace52b27eda58f07bb4b4a98f4d77b703>` extern :ref:`PFSYSEVENTWAIT_IEC <group___sys_event_itf_1gae6d6ad027bf0a19db9ea4506eec05865>` pfsyseventwait;
+
+- #define :ref:`GET_syseventwait <group___sys_event_itf_1ga797601c9cea6f310dd4da381cb36306d>` s_pfCMGetAPI2( "syseventwait", (RTS_VOID_FCTPTR *)&pfsyseventwait, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x34C44553), 0x03050500)
+
+- #define :ref:`CAL_syseventwait <group___sys_event_itf_1ga8c847559da4b006fa6122ae9f4725f0d>` pfsyseventwait
+
+- #define :ref:`CHK_syseventwait <group___sys_event_itf_1gaa94b5cef59c76dfa6cf57319451870d8>` (pfsyseventwait != NULL)
+
+- #define :ref:`EXP_syseventwait <group___sys_event_itf_1ga9ec088f0d16b5106d5497a59d83ae2f6>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syseventwait", (RTS_UINTPTR) :ref:`syseventwait <group___sys_event_itf_1gac839a1e16ac252a132a7337e2a8eaacf>` , 1, RTSITF_GET_SIGNATURE(0, 0x34C44553), 0x03050500)
+
+- #define :ref:`SYSEVENT_WAIT_INFINITE <group___sys_event_itf_1ga8279a74a5f77db8c69de7b9a9deea6c6>` ((long)-1)
+
+- #define :ref:`USE_SysEventCreate <group___sys_event_itf_1ga9e340d26cb2cd9924879a992f0722ccf>` :ref:`PFSYSEVENTCREATE <group___sys_event_itf_1ga36ebed5038267d422d90f9b10e2d0871>` pfSysEventCreate;
+
+- #define :ref:`EXT_SysEventCreate <group___sys_event_itf_1ga31963d7a2c593ef59eeaf6a0e9851833>` extern :ref:`PFSYSEVENTCREATE <group___sys_event_itf_1ga36ebed5038267d422d90f9b10e2d0871>` pfSysEventCreate;
+
+- #define :ref:`GET_SysEventCreate <group___sys_event_itf_1ga2d2d5b289c9fc00ca0071ede95e1cebe>` s_pfCMGetAPI2( "SysEventCreate", (RTS_VOID_FCTPTR *)&pfSysEventCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_SysEventCreate <group___sys_event_itf_1ga5d934c217a58c951bd1a68915767238f>` pfSysEventCreate
+
+- #define :ref:`CHK_SysEventCreate <group___sys_event_itf_1gabbe894b7a0f27404a49cc7d80c1fb83b>` (pfSysEventCreate != NULL)
+
+- #define :ref:`EXP_SysEventCreate <group___sys_event_itf_1ga2c4048a5dc9eb7075f3a20345319b798>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysEventCreate", (RTS_UINTPTR) :ref:`SysEventCreate <group___sys_event_itf_1ga3484fc7fc7d98cb724bc024d74c1209c>` , 0, 0)
+
+- #define :ref:`USE_SysEventDelete <group___sys_event_itf_1ga65e8ce8aee16e04658b0d71dad50f7f8>` :ref:`PFSYSEVENTDELETE <group___sys_event_itf_1ga08d321b16bcc0266d8dc72ad6e1af3eb>` pfSysEventDelete;
+
+- #define :ref:`EXT_SysEventDelete <group___sys_event_itf_1ga6b131d9d40874bb47b2216f25c30dc8f>` extern :ref:`PFSYSEVENTDELETE <group___sys_event_itf_1ga08d321b16bcc0266d8dc72ad6e1af3eb>` pfSysEventDelete;
+
+- #define :ref:`GET_SysEventDelete <group___sys_event_itf_1ga267c3d28c2239651c29729796b4038ac>` s_pfCMGetAPI2( "SysEventDelete", (RTS_VOID_FCTPTR *)&pfSysEventDelete, (fl), 0, 0)
+
+- #define :ref:`CAL_SysEventDelete <group___sys_event_itf_1ga5f8156756a4b3b4f7bddcd2a12762a08>` pfSysEventDelete
+
+- #define :ref:`CHK_SysEventDelete <group___sys_event_itf_1ga18b7f9949c351b2bb661b4454253e465>` (pfSysEventDelete != NULL)
+
+- #define :ref:`EXP_SysEventDelete <group___sys_event_itf_1gaf72e72c5928419fdef78411e69698400>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysEventDelete", (RTS_UINTPTR) :ref:`SysEventDelete <group___sys_event_itf_1ga89b4f738d9d3c7e3497c84c886b1c8a4>` , 0, 0)
+
+- #define :ref:`USE_SysEventSet <group___sys_event_itf_1ga6554729d415255338cb8774d46a14f3e>` :ref:`PFSYSEVENTSET <group___sys_event_itf_1ga9896881f622ccd7c9dddb901198fe441>` pfSysEventSet;
+
+- #define :ref:`EXT_SysEventSet <group___sys_event_itf_1ga7065657d5400f3ab361f6c93fb54c783>` extern :ref:`PFSYSEVENTSET <group___sys_event_itf_1ga9896881f622ccd7c9dddb901198fe441>` pfSysEventSet;
+
+- #define :ref:`GET_SysEventSet <group___sys_event_itf_1ga1ab1a5e1a6cd340f4815aec2af272865>` s_pfCMGetAPI2( "SysEventSet", (RTS_VOID_FCTPTR *)&pfSysEventSet, (fl), 0, 0)
+
+- #define :ref:`CAL_SysEventSet <group___sys_event_itf_1ga1687dec4dd8b04ace5bfafbef14b0a1c>` pfSysEventSet
+
+- #define :ref:`CHK_SysEventSet <group___sys_event_itf_1ga0c9b1de2b1c9d7a3fe7f11fd64458f1e>` (pfSysEventSet != NULL)
+
+- #define :ref:`EXP_SysEventSet <group___sys_event_itf_1gabc811578df1eacbbd941f42a9cda4a23>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysEventSet", (RTS_UINTPTR) :ref:`SysEventSet <group___sys_event_itf_1gaa233d04b418b30d300d605946580307e>` , 0, 0)
+
+- #define :ref:`USE_SysEventWait <group___sys_event_itf_1gae716b7be8a17493fc0703776954a1b30>` :ref:`PFSYSEVENTWAIT <group___sys_event_itf_1ga0fefe95687356cfc5b6eee49d0396931>` pfSysEventWait;
+
+- #define :ref:`EXT_SysEventWait <group___sys_event_itf_1ga5d58e89bc714c406c3cfcfc4e6f9a84d>` extern :ref:`PFSYSEVENTWAIT <group___sys_event_itf_1ga0fefe95687356cfc5b6eee49d0396931>` pfSysEventWait;
+
+- #define :ref:`GET_SysEventWait <group___sys_event_itf_1ga096ee252254f905e3fabe0fd27e1fa06>` s_pfCMGetAPI2( "SysEventWait", (RTS_VOID_FCTPTR *)&pfSysEventWait, (fl), 0, 0)
+
+- #define :ref:`CAL_SysEventWait <group___sys_event_itf_1ga0596b68cfc6fc7a2951286bc795b3be1>` pfSysEventWait
+
+- #define :ref:`CHK_SysEventWait <group___sys_event_itf_1gafdbfa8a541f08e2ea621376994166493>` (pfSysEventWait != NULL)
+
+- #define :ref:`EXP_SysEventWait <group___sys_event_itf_1ga894c3bd348850c11074f7f13e066ddd8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysEventWait", (RTS_UINTPTR) :ref:`SysEventWait <group___sys_event_itf_1gac611939828ae7d1988c117c04dd27b41>` , 0, 0)
+
+- #define :ref:`ITF_SysEvent <group___sys_event_itf_1ga61d0bb2aed08c99f526c64ad25691295>`
+
+- #define :ref:`EXTITF_SysEvent <group___sys_event_itf_1gac726da5033bdda803dd48484faa0f041>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagsyseventcreate_struct <structtagsyseventcreate__struct>` :ref:`syseventcreate_struct <group___sys_event_itf_1ga6a3c1c4b319e933ec98f0de40b766d8b>`
+
+- typedef void(* :ref:`PFSYSEVENTCREATE_IEC <group___sys_event_itf_1gac692298acb95a0e9764f3651533b5838>`)(syseventcreate_struct *p)
+
+- typedef struct :ref:`tagsyseventdelete_struct <structtagsyseventdelete__struct>` :ref:`syseventdelete_struct <group___sys_event_itf_1ga7c6ae17dff1bd39a486796df9bc6b889>`
+
+- typedef void(* :ref:`PFSYSEVENTDELETE_IEC <group___sys_event_itf_1ga037e5733f249f487faf84d6d6a8ced4d>`)(syseventdelete_struct *p)
+
+- typedef struct :ref:`tagsyseventset_struct <structtagsyseventset__struct>` :ref:`syseventset_struct <group___sys_event_itf_1ga75c441968b38e7e2704144e16fb11cdf>`
+
+- typedef void(* :ref:`PFSYSEVENTSET_IEC <group___sys_event_itf_1ga582109892a8874779ee521020926deba>`)(syseventset_struct *p)
+
+- typedef struct :ref:`tagsyseventwait_struct <structtagsyseventwait__struct>` :ref:`syseventwait_struct <group___sys_event_itf_1ga4831cd7f1f11300771ab9d3816dc5c35>`
+
+- typedef void(* :ref:`PFSYSEVENTWAIT_IEC <group___sys_event_itf_1gae6d6ad027bf0a19db9ea4506eec05865>`)(syseventwait_struct *p)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSEVENTCREATE <group___sys_event_itf_1ga36ebed5038267d422d90f9b10e2d0871>`)(char *pszName, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSEVENTDELETE <group___sys_event_itf_1ga08d321b16bcc0266d8dc72ad6e1af3eb>`)(RTS_HANDLE hEvent)
+
+- typedef RTS_RESULT(* :ref:`PFSYSEVENTSET <group___sys_event_itf_1ga9896881f622ccd7c9dddb901198fe441>`)(RTS_HANDLE hEvent)
+
+- typedef RTS_RESULT(* :ref:`PFSYSEVENTWAIT <group___sys_event_itf_1ga0fefe95687356cfc5b6eee49d0396931>`)(RTS_HANDLE hEvent, long lTimeout)
+
+- typedef :ref:`ISysEvent_C <struct_i_sys_event___c>` :ref:`ISysEvent <group___sys_event_itf_1ga8741a5a6b15788a3ecefadcf47cb84a1>`
+
+Functions
+---------
+
+- void :ref:`syseventcreate <group___sys_event_itf_1ga474b05754b1466b545ee3d11b3359309>` (:ref:`syseventcreate_struct <group___sys_event_itf_1ga6a3c1c4b319e933ec98f0de40b766d8b>` * p)
+
+- void :ref:`syseventdelete <group___sys_event_itf_1ga736685ba4cc19328dc8d414ebec6dbc5>` (:ref:`syseventdelete_struct <group___sys_event_itf_1ga7c6ae17dff1bd39a486796df9bc6b889>` * p)
+
+- void :ref:`syseventset <group___sys_event_itf_1ga2ca04a408d835a45afcb19a7aaabd291>` (:ref:`syseventset_struct <group___sys_event_itf_1ga75c441968b38e7e2704144e16fb11cdf>` * p)
+
+- void :ref:`syseventwait <group___sys_event_itf_1gac839a1e16ac252a132a7337e2a8eaacf>` (:ref:`syseventwait_struct <group___sys_event_itf_1ga4831cd7f1f11300771ab9d3816dc5c35>` * p)
+
+- RTS_RESULT :ref:`SysEventOSInit <group___sys_event_itf_1ga7ac88eec49a44dcc85db0f30c19d22a6>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysEventOSHookFunction <group___sys_event_itf_1ga6c673df231039c79f7c43ca684d8a6e2>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_HANDLE :ref:`SysEventCreate <group___sys_event_itf_1ga3484fc7fc7d98cb724bc024d74c1209c>` (char * pszName, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysEventDelete <group___sys_event_itf_1ga89b4f738d9d3c7e3497c84c886b1c8a4>` (RTS_HANDLE hEvent)
+
+- RTS_RESULT :ref:`SysEventSet <group___sys_event_itf_1gaa233d04b418b30d300d605946580307e>` (RTS_HANDLE hEvent)
+
+- RTS_RESULT :ref:`SysEventWait <group___sys_event_itf_1gac611939828ae7d1988c117c04dd27b41>` (RTS_HANDLE hEvent, long lTimeout)
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_event_itf_1gafe5fc45306b1f5e70e43d906bf28749f:
+
+#define USE_syseventcreate :ref:`PFSYSEVENTCREATE_IEC <group___sys_event_itf_1gac692298acb95a0e9764f3651533b5838>` pfsyseventcreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gae85f61d3b74332f5526ef32b72e50bec:
+
+#define EXT_syseventcreate extern :ref:`PFSYSEVENTCREATE_IEC <group___sys_event_itf_1gac692298acb95a0e9764f3651533b5838>` pfsyseventcreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga66a0680e7c8e87ecb9fa88906870e5df:
+
+#define GET_syseventcreate s_pfCMGetAPI2( "syseventcreate", (RTS_VOID_FCTPTR *)&pfsyseventcreate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x67712592), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga5097d292c7054fe796794da5b5ef6430:
+
+#define CAL_syseventcreate pfsyseventcreate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga3d55780a27098953991b401bd28d248b:
+
+#define CHK_syseventcreate (pfsyseventcreate != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gaa2bf61f974c52d60f0a628f92f75b8ef:
+
+#define EXP_syseventcreate s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syseventcreate", (RTS_UINTPTR) :ref:`syseventcreate <group___sys_event_itf_1ga474b05754b1466b545ee3d11b3359309>` , 1, RTSITF_GET_SIGNATURE(0, 0x67712592), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga2bd520ee1422f8e02e81d9340649a91b:
+
+#define USE_syseventdelete :ref:`PFSYSEVENTDELETE_IEC <group___sys_event_itf_1ga037e5733f249f487faf84d6d6a8ced4d>` pfsyseventdelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga6e4c5eb6a39f55921cd7c7ad67c71815:
+
+#define EXT_syseventdelete extern :ref:`PFSYSEVENTDELETE_IEC <group___sys_event_itf_1ga037e5733f249f487faf84d6d6a8ced4d>` pfsyseventdelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga2ebdbbbb8ab6609630b856c57ad3158d:
+
+#define GET_syseventdelete s_pfCMGetAPI2( "syseventdelete", (RTS_VOID_FCTPTR *)&pfsyseventdelete, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x97BA564C), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gaed3866b293b4d3f6bdd781b66dc406a9:
+
+#define CAL_syseventdelete pfsyseventdelete
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga65c0f19334f11cc5adae13c039fd088b:
+
+#define CHK_syseventdelete (pfsyseventdelete != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga02804c51d6a226434e481dec9099f5f4:
+
+#define EXP_syseventdelete s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syseventdelete", (RTS_UINTPTR) :ref:`syseventdelete <group___sys_event_itf_1ga736685ba4cc19328dc8d414ebec6dbc5>` , 1, RTSITF_GET_SIGNATURE(0, 0x97BA564C), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gae125f074bb010068c005a34f589db017:
+
+#define USE_syseventset :ref:`PFSYSEVENTSET_IEC <group___sys_event_itf_1ga582109892a8874779ee521020926deba>` pfsyseventset;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gabcb48360c24d39bbaafa0ba156656c82:
+
+#define EXT_syseventset extern :ref:`PFSYSEVENTSET_IEC <group___sys_event_itf_1ga582109892a8874779ee521020926deba>` pfsyseventset;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga8e14e0b4c02e662068779e69fc10c6c6:
+
+#define GET_syseventset s_pfCMGetAPI2( "syseventset", (RTS_VOID_FCTPTR *)&pfsyseventset, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xBDDBC5FE), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gab460cbf401baed8b63b8090dbe981335:
+
+#define CAL_syseventset pfsyseventset
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga8d5d7c87626a691049b784366d706de3:
+
+#define CHK_syseventset (pfsyseventset != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gae3f9f240f120b5f90e7fa2200a15bddc:
+
+#define EXP_syseventset s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syseventset", (RTS_UINTPTR) :ref:`syseventset <group___sys_event_itf_1ga2ca04a408d835a45afcb19a7aaabd291>` , 1, RTSITF_GET_SIGNATURE(0, 0xBDDBC5FE), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga35c923c630b91f889759fd680aaf1111:
+
+#define USE_syseventwait :ref:`PFSYSEVENTWAIT_IEC <group___sys_event_itf_1gae6d6ad027bf0a19db9ea4506eec05865>` pfsyseventwait;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gace52b27eda58f07bb4b4a98f4d77b703:
+
+#define EXT_syseventwait extern :ref:`PFSYSEVENTWAIT_IEC <group___sys_event_itf_1gae6d6ad027bf0a19db9ea4506eec05865>` pfsyseventwait;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga797601c9cea6f310dd4da381cb36306d:
+
+#define GET_syseventwait s_pfCMGetAPI2( "syseventwait", (RTS_VOID_FCTPTR *)&pfsyseventwait, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x34C44553), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga8c847559da4b006fa6122ae9f4725f0d:
+
+#define CAL_syseventwait pfsyseventwait
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gaa94b5cef59c76dfa6cf57319451870d8:
+
+#define CHK_syseventwait (pfsyseventwait != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga9ec088f0d16b5106d5497a59d83ae2f6:
+
+#define EXP_syseventwait s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syseventwait", (RTS_UINTPTR) :ref:`syseventwait <group___sys_event_itf_1gac839a1e16ac252a132a7337e2a8eaacf>` , 1, RTSITF_GET_SIGNATURE(0, 0x34C44553), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga8279a74a5f77db8c69de7b9a9deea6c6:
+
+#define SYSEVENT_WAIT_INFINITE ((long)-1)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION END
+
+.. _group___sys_event_itf_1ga9e340d26cb2cd9924879a992f0722ccf:
+
+#define USE_SysEventCreate :ref:`PFSYSEVENTCREATE <group___sys_event_itf_1ga36ebed5038267d422d90f9b10e2d0871>` pfSysEventCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga31963d7a2c593ef59eeaf6a0e9851833:
+
+#define EXT_SysEventCreate extern :ref:`PFSYSEVENTCREATE <group___sys_event_itf_1ga36ebed5038267d422d90f9b10e2d0871>` pfSysEventCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga2d2d5b289c9fc00ca0071ede95e1cebe:
+
+#define GET_SysEventCreate s_pfCMGetAPI2( "SysEventCreate", (RTS_VOID_FCTPTR *)&pfSysEventCreate, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga5d934c217a58c951bd1a68915767238f:
+
+#define CAL_SysEventCreate pfSysEventCreate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gabbe894b7a0f27404a49cc7d80c1fb83b:
+
+#define CHK_SysEventCreate (pfSysEventCreate != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga2c4048a5dc9eb7075f3a20345319b798:
+
+#define EXP_SysEventCreate s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysEventCreate", (RTS_UINTPTR) :ref:`SysEventCreate <group___sys_event_itf_1ga3484fc7fc7d98cb724bc024d74c1209c>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga65e8ce8aee16e04658b0d71dad50f7f8:
+
+#define USE_SysEventDelete :ref:`PFSYSEVENTDELETE <group___sys_event_itf_1ga08d321b16bcc0266d8dc72ad6e1af3eb>` pfSysEventDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga6b131d9d40874bb47b2216f25c30dc8f:
+
+#define EXT_SysEventDelete extern :ref:`PFSYSEVENTDELETE <group___sys_event_itf_1ga08d321b16bcc0266d8dc72ad6e1af3eb>` pfSysEventDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga267c3d28c2239651c29729796b4038ac:
+
+#define GET_SysEventDelete s_pfCMGetAPI2( "SysEventDelete", (RTS_VOID_FCTPTR *)&pfSysEventDelete, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga5f8156756a4b3b4f7bddcd2a12762a08:
+
+#define CAL_SysEventDelete pfSysEventDelete
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga18b7f9949c351b2bb661b4454253e465:
+
+#define CHK_SysEventDelete (pfSysEventDelete != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gaf72e72c5928419fdef78411e69698400:
+
+#define EXP_SysEventDelete s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysEventDelete", (RTS_UINTPTR) :ref:`SysEventDelete <group___sys_event_itf_1ga89b4f738d9d3c7e3497c84c886b1c8a4>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga6554729d415255338cb8774d46a14f3e:
+
+#define USE_SysEventSet :ref:`PFSYSEVENTSET <group___sys_event_itf_1ga9896881f622ccd7c9dddb901198fe441>` pfSysEventSet;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga7065657d5400f3ab361f6c93fb54c783:
+
+#define EXT_SysEventSet extern :ref:`PFSYSEVENTSET <group___sys_event_itf_1ga9896881f622ccd7c9dddb901198fe441>` pfSysEventSet;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga1ab1a5e1a6cd340f4815aec2af272865:
+
+#define GET_SysEventSet s_pfCMGetAPI2( "SysEventSet", (RTS_VOID_FCTPTR *)&pfSysEventSet, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga1687dec4dd8b04ace5bfafbef14b0a1c:
+
+#define CAL_SysEventSet pfSysEventSet
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga0c9b1de2b1c9d7a3fe7f11fd64458f1e:
+
+#define CHK_SysEventSet (pfSysEventSet != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gabc811578df1eacbbd941f42a9cda4a23:
+
+#define EXP_SysEventSet s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysEventSet", (RTS_UINTPTR) :ref:`SysEventSet <group___sys_event_itf_1gaa233d04b418b30d300d605946580307e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gae716b7be8a17493fc0703776954a1b30:
+
+#define USE_SysEventWait :ref:`PFSYSEVENTWAIT <group___sys_event_itf_1ga0fefe95687356cfc5b6eee49d0396931>` pfSysEventWait;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga5d58e89bc714c406c3cfcfc4e6f9a84d:
+
+#define EXT_SysEventWait extern :ref:`PFSYSEVENTWAIT <group___sys_event_itf_1ga0fefe95687356cfc5b6eee49d0396931>` pfSysEventWait;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga096ee252254f905e3fabe0fd27e1fa06:
+
+#define GET_SysEventWait s_pfCMGetAPI2( "SysEventWait", (RTS_VOID_FCTPTR *)&pfSysEventWait, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga0596b68cfc6fc7a2951286bc795b3be1:
+
+#define CAL_SysEventWait pfSysEventWait
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gafdbfa8a541f08e2ea621376994166493:
+
+#define CHK_SysEventWait (pfSysEventWait != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga894c3bd348850c11074f7f13e066ddd8:
+
+#define EXP_SysEventWait s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysEventWait", (RTS_UINTPTR) :ref:`SysEventWait <group___sys_event_itf_1gac611939828ae7d1988c117c04dd27b41>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga61d0bb2aed08c99f526c64ad25691295:
+
+#define ITF_SysEvent
+^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gac726da5033bdda803dd48484faa0f041:
+
+#define EXTITF_SysEvent
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___sys_event_itf_1ga6a3c1c4b319e933ec98f0de40b766d8b:
+
+typedef struct tagsyseventcreate_struct  syseventcreate_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION BEGIN
+
+Create a new event object specified with name. Two components can open the same event, if they specify the same name.
+
+IMPLEMENTATION NOTE:
+
+  - If a name is specified in szEvent, typically a system wide event is created.
+
+  - If an event still exists with this name, the routine returns the handle to the existing event
+
+  - szEvent can be NULL, so a new unique event with an empty name must be created
+
+  - If :ref:`SysEventWait() <group___sys_event_itf_1gac611939828ae7d1988c117c04dd27b41>` is done after :ref:`SysEventSet() <group___sys_event_itf_1gaa233d04b418b30d300d605946580307e>` , the event should signal the task!
+
+  - An event must not be used to signal several tasks!
+
+TARGET SPECIFIC IMPLEMENTATION:
+
+  - CoDeSys Control RTE:
+
+    - If szEvent is specified, the event will work as a system wide Windows event. In this case, every call to SysEventSet/Wait will call the corresponding Windows API-functions and this may last an unpredictable time!
+
+    - In case SysEventCreate is called with a NULL-pointer in szEvent, the event can be used to synchronize RTE-tasks only. The calls to SysEventSet/Wait keep their real time capabilities.
+
+**Returns:**
+
+RESULT: Handle to the event or RTS_INVALID_HANDLE if failed.
+
+.. _group___sys_event_itf_1gac692298acb95a0e9764f3651533b5838:
+
+typedef void( *  PFSYSEVENTCREATE_IEC) (syseventcreate_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga7c6ae17dff1bd39a486796df9bc6b889:
+
+typedef struct tagsyseventdelete_struct  syseventdelete_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Delete an exisiting event object
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_event_itf_1ga037e5733f249f487faf84d6d6a8ced4d:
+
+typedef void( *  PFSYSEVENTDELETE_IEC) (syseventdelete_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga75c441968b38e7e2704144e16fb11cdf:
+
+typedef struct tagsyseventset_struct  syseventset_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Set the given Event. With this operation, a task is activated if it waits for the event with SysEventWait.
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_event_itf_1ga582109892a8874779ee521020926deba:
+
+typedef void( *  PFSYSEVENTSET_IEC) (syseventset_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga4831cd7f1f11300771ab9d3816dc5c35:
+
+typedef struct tagsyseventwait_struct  syseventwait_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Wait for the given Event
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library):
+
+  - ERR_OK: if event was received
+
+  - ERR_TIMEOUT: for timeout
+
+.. _group___sys_event_itf_1gae6d6ad027bf0a19db9ea4506eec05865:
+
+typedef void( *  PFSYSEVENTWAIT_IEC) (syseventwait_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga36ebed5038267d422d90f9b10e2d0871:
+
+typedef RTS_HANDLE( *  PFSYSEVENTCREATE) (char *pszName, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga08d321b16bcc0266d8dc72ad6e1af3eb:
+
+typedef RTS_RESULT( *  PFSYSEVENTDELETE) (RTS_HANDLE hEvent)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga9896881f622ccd7c9dddb901198fe441:
+
+typedef RTS_RESULT( *  PFSYSEVENTSET) (RTS_HANDLE hEvent)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga0fefe95687356cfc5b6eee49d0396931:
+
+typedef RTS_RESULT( *  PFSYSEVENTWAIT) (RTS_HANDLE hEvent, long lTimeout)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga8741a5a6b15788a3ecefadcf47cb84a1:
+
+typedef ISysEvent_C ISysEvent
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___sys_event_itf_1ga474b05754b1466b545ee3d11b3359309:
+
+void syseventcreate (syseventcreate_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga736685ba4cc19328dc8d414ebec6dbc5:
+
+void syseventdelete (syseventdelete_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga2ca04a408d835a45afcb19a7aaabd291:
+
+void syseventset (syseventset_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1gac839a1e16ac252a132a7337e2a8eaacf:
+
+void syseventwait (syseventwait_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga7ac88eec49a44dcc85db0f30c19d22a6:
+
+RTS_RESULT SysEventOSInit (INIT_STRUCT *pInit)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga6c673df231039c79f7c43ca684d8a6e2:
+
+RTS_RESULT SysEventOSHookFunction (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_event_itf_1ga3484fc7fc7d98cb724bc024d74c1209c:
+
+RTS_HANDLE SysEventCreate (char *pszName, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Create a new event object specified with name. Two components can open the same event, if they specify the same name.
+
+IMPLEMENTATION NOTE:
+
+  - If a name is specified in pszName, typically a system wide event is created.
+
+  - If an event still exists with this name, the routine returns the handle to the existing event
+
+  - pszName can be NULL, so a new unique event with an empty name must be created
+
+  - If :ref:`SysEventWait() <group___sys_event_itf_1gac611939828ae7d1988c117c04dd27b41>` is done after :ref:`SysEventSet() <group___sys_event_itf_1gaa233d04b418b30d300d605946580307e>` , the event should signal the task!
+
+  - An event must not be used to signal several tasks!
+
+TARGET SPECIFIC IMPLEMENTATION:
+
+  - CoDeSys Control RTE:
+
+    - If pszName is specified, the event will work as a system wide Windows event. In this case, every call to SysEventSet/Wait will call the corresponding Windows API-functions and this may last an unpredictable time!
+
+    - In case SysEventCreate is called with a NULL-pointer in pszName, the event can be used to synchronize RTE-tasks only. The calls to SysEventSet/Wait keep their real time capabilities.
+
+**Parameters**
+
++---------+---------+--------------------------------------+
+| [in]    | pszName | Name for the new event. Can be NULL! |
++---------+---------+--------------------------------------+
+| [out]   | pResult | Pointer to error code                |
++---------+---------+--------------------------------------+
+
+**Returns:**
+
+Handle to the event or RTS_INVALID_HANDLE if failed
+
+.. _group___sys_event_itf_1ga89b4f738d9d3c7e3497c84c886b1c8a4:
+
+RTS_RESULT SysEventDelete (RTS_HANDLE hEvent)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Delete an existing event object
+
+**Parameters**
+
++---------+--------+---------------------------------------------------------------------------------------+
+| [in]    | hEvent | Handle to the event. If hEvent is RTS_INVALID_HANDLE, function returned with an error |
++---------+--------+---------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_event_itf_1gaa233d04b418b30d300d605946580307e:
+
+RTS_RESULT SysEventSet (RTS_HANDLE hEvent)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Set the given Event. With this operation, a task is activated, if this task waits for the event (see SysEventWait).
+
+**Parameters**
+
++---------+--------+---------------------------------------------------------------------------------------+
+| [in]    | hEvent | Handle to the event. If hEvent is RTS_INVALID_HANDLE, function returned with an error |
++---------+--------+---------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_event_itf_1gac611939828ae7d1988c117c04dd27b41:
+
+RTS_RESULT SysEventWait (RTS_HANDLE hEvent, long lTimeout)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Wait for the given Event
+
+**Parameters**
+
++---------+----------+---------------------------------------------------------------------------------------+
+| [in]    | hEvent   | Handle to the event. If hEvent is RTS_INVALID_HANDLE, function returned with an error |
++---------+----------+---------------------------------------------------------------------------------------+
+| [in]    | lTimeout | Timeout in ms to wait for the event.                                                  |
+|         |          |                                                                                       |
+|         |          |   - lTimeout = -1 (SYSEVENT_WAIT_INFINITE): means infinite wait                       |
+|         |          |                                                                                       |
+|         |          |   - lTimeout = 0: means no wait, only checks the event!                               |
++---------+----------+---------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code:
+
+  - ERR_OK: if event was received
+
+  - ERR_TIMEOUT: for timeout
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

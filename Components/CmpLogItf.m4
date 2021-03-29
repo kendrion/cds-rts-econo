@@ -7,19 +7,19 @@
  * The messages are saved in a local buffer in the RAM and uploaded to
  * the CoDeSys programming system or an external service tool on demand.</p>
  *
- * <p>The embedded variant of this component does not support backends and
+ * <p>The embedded variant of this component does not support back-ends and
  * is therefore not able to save the log messages into a file.</p>
  *
  * <p>Neither the log buffer in RAM, nor the communication medium are safe.
  * Therefore one can not essentially rely on the content of the log
  * messages. They can only be used for analytical purposes.</p>
  *
- * <p>For runtimes with the define RTS_SIL2 defined, the component may be a
+ * <p>For runtime with the define RTS_SIL2 defined, the component may be a
  * bit more limited. For example, no events are supported.</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -89,9 +89,27 @@ REF_ITF(`SysTimeRtcItf.m4')
  *	Example:
  *		Logger.0.Name=PlcLog
  *		Logger.0.Filter=0x0000000F	; Only logger entries of type (LOG_INFO | LOG_WARNING | LOG_ERROR | LOG_EXCEPTION) are logged
+ *
+ *	NOTE:
+ *	For some components this can be used to specify component specific log filters:
+ *		<ComponentName>.Filter=0xFFFFFFFF
  * </description>
  */
 #define LOGKEY_INT_FILTER				"Filter"
+
+/**
+ * <category>Settings</category>
+ * <type>Int</type>
+ * <description>
+ *	Setting to extend filter by a component specific logger mask.
+ *	Example:
+ *		<ComponentName>.Mask=0xFFFFFFFF
+ *
+ *  NOTE:
+ *	The mask of a component is specified in the category "Logger mask" in the interface of a component!
+ * </description>
+ */
+#define LOGKEY_INT_MASK					"Mask"
 
 /**
  * <category>Settings</category>
@@ -109,7 +127,7 @@ REF_ITF(`SysTimeRtcItf.m4')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Setting to specify the maximum number of entries that can be stored in the ringbuffer of the logger.
+ *	Setting to specify the maximum number of entries that can be stored in the ring-buffer of the logger.
  *	Example:
  *		Logger.0.Name=PlcLog
  *		Logger.0.MaxEntries=500
@@ -118,10 +136,21 @@ REF_ITF(`SysTimeRtcItf.m4')
 #define LOGKEY_INT_MAXENTRIES			"MaxEntries"
 
 /**
+ * <category>Static defines</category>
+ * <description>Limits for the MaxEntries setting </description>
+ */
+#ifndef LOGKEY_MINLIMIT_MAXENTRIES
+	#define LOGKEY_MINLIMIT_MAXENTRIES	1
+#endif
+#ifndef LOGKEY_MAXLIMIT_MAXENTRIES
+	#define LOGKEY_MAXLIMIT_MAXENTRIES	100000
+#endif
+
+/**
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Setting to specify the maximum file size, if logger is stored in SysFile backend.
+ *	Setting to specify the maximum file size in [bytes], if logger is stored in SysFile back-end.
  *	Example:
  *		Logger.0.Name=PlcLog
  *		Logger.0.MaxFileSize=100000
@@ -133,7 +162,7 @@ REF_ITF(`SysTimeRtcItf.m4')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Setting to specify the maximum number of files, if logger is stored in SysFile backend.
+ *	Setting to specify the maximum number of files, if logger is stored in SysFile back-end.
  *	Example:
  *		Logger.0.Name=PlcLog
  *		Logger.0.MaxFiles=3
@@ -146,7 +175,7 @@ REF_ITF(`SysTimeRtcItf.m4')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Setting to specify the logger backend
+ *	Setting to specify the logger back-end
  *	It must be used the way:  "Logger.<ID>.Backend.<ID Backend>.xxx"
  *	Example:
  *		Logger.0.Backend.0.ClassId=0x00000104
@@ -158,7 +187,7 @@ REF_ITF(`SysTimeRtcItf.m4')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Setting to specify the type of backend. This is specified via the corresponding class id of the backend (classes see CmpItf.h).
+ *	Setting to specify the type of back-end. This is specified via the corresponding class id of the back-end (classes see CmpItf.h).
  *	E.g.
  *		ClassId=0x00000104		; This the class id of the SysFile component. See CLASSID_CSysFile in CmpItf.h.
  *		ClassId=0x0000010B		; This the class id of the CLASSID_CSysOut component for the outputs on a console. See CLASSID_CSysOut in CmpItf.h.
@@ -176,18 +205,19 @@ REF_ITF(`SysTimeRtcItf.m4')
  * <element name="LT_HIGHSPEED" type="">Not supported</element>
  * <element name="LT_SAFE" type="">Not supported. Dump log entries in ring buffer residing in retain memory.</element>
  * <element name="LT_NORMAL" type="">Dump log entries in ring buffer residing in volatile memory (RAM)</element>
- * <element name="LT_TIMESTAMP_RTC" type="">Use realtime clock for the timestamp</element>
- * <element name="LT_TIMESTAMP_RTC_HIGHRES" type="">Use realtime clock with high resolution for the timestamp</element>
+ * <element name="LT_TIMESTAMP_RTC" type="">Use real-time clock for the time stamp</element>
+ * <element name="LT_TIMESTAMP_RTC_HIGHRES" type="">Use real-time clock with high resolution for the timestamp</element>
  * <element name="LT_TIMESTAMP_MS" type="">Use millisecond ticks for the timestamp</element>
  * <element name="LT_TIMESTAMP_US" type="">Use microsecond ticks for the timestamp</element>
  * <element name="LT_TIMESTAMP_NS" type="">Use nanosecond ticks for the timestamp</element>
  * <element name="LT_NO_DISABLE" type="">If this option is set, the logger cannot be disabled</element>
- * <element name="LT_DUMP_ASYNC" type="">Dump asynchronously in the backends</element>
- * <element name="LT_DUMP_ALWAYS" type="">Dump into the backends at every log entry</element>
- * <element name="LT_DUMP_ON_CLOSE" type="">Dump only the backends at closing the logger</element>
+ * <element name="LT_DUMP_ASYNC" type="">Dump asynchronously in the back-ends</element>
+ * <element name="LT_DUMP_ALWAYS" type="">Dump into the back-ends at every log entry</element>
+ * <element name="LT_DUMP_ON_CLOSE" type="">Dump only the back-ends at closing the logger</element>
  * <element name="LT_DUMP_ON_REQUEST" type="">Dump can be done by calling LogDumpEntries()</element>
- * <element name="LT_DUMP_FORMAT2" type="">Dump with optional format 2. Is only recognized in the backends.</element>
- * <element name="LT_STD" type=""></element>
+ * <element name="LT_DUMP_SYSFILE_FLUSH" type="">Dump every entry with a SysFileFlush in SysFile backend (synchronously writing in logfile).</element>
+ * <element name="LT_DUMP_FORMAT2" type="">Dump with optional format 2. Is only recognized in the back-ends.</element>
+ * <element name="LT_STD" type="">Standard logger type configuration</element>
  */
 #define LT_HIGHSPEED				UINT32_C(0x00000001)
 #define LT_SAFE 					UINT32_C(0x00000002)
@@ -204,45 +234,59 @@ REF_ITF(`SysTimeRtcItf.m4')
 #define LT_DUMP_ON_CLOSE			UINT32_C(0x00000800)
 #define LT_DUMP_ON_REQUEST			UINT32_C(0x00001000)
 #define LT_DUMP_FORMAT2 			UINT32_C(0x00004000)
-#ifndef LT_STD
-	#define LT_STD						(LT_NORMAL | LT_TIMESTAMP_RTC | LT_NO_DISABLE | LT_DUMP_ALWAYS)
+#define LT_DUMP_SYSFILE_FLUSH		UINT32_C(0x00008000)
+
+#ifndef LT_STD_TYPE
+	#define LT_STD_TYPE				LT_NORMAL		
 #endif
+#ifndef LT_STD_TIMESTAMP
+	#define LT_STD_TIMESTAMP		LT_TIMESTAMP_RTC_HIGHRES		
+#endif
+#ifndef LT_STD_DUMP
+	#define LT_STD_DUMP				LT_DUMP_ASYNC		
+#endif
+#ifndef LT_STD
+	#define LT_STD					(LT_STD_TYPE | LT_STD_TIMESTAMP | LT_NO_DISABLE | LT_STD_DUMP)
+#endif
+
 #define LT_HAS_TYPE(pLogger, Type)	 (pLogger->lo.iType & Type)
 
 /**
  * <category>Log class</category>
  * <description>Log entry classes and filters</description>
- * <element name="LOG_NONE" type="No defined class"></element>
- * <element name="LOG_INFO" type="Information"></element>
- * <element name="LOG_WARNING" type="Warning"></element>
- * <element name="LOG_ERROR" type="Error"></element>
- * <element name="LOG_EXCEPTION" type="Exception"></element>
- * <element name="LOG_DEBUG" type="Debug log entries (reserved for development, diagnosis or test)"></element>
- * <element name="LOG_PRINTF" type="Debug log entries like printf. For this entry, no timestamp ist logged."></element>
- * <element name="LOG_COM" type="Communication"></element>
- * <element name="LOG_INFO_TIMESTAMP_RELATIVE" type="Information with timestamp relative to the previous entry"></element>
- * <element name="LOG_CRIT_SEC" type="Semaphore log entries"></element>
- * <element name="LOG_USER_NOTIFY" type="Log entries are displayed as a message box in CoDeSys"></element>
+ * <element name="LOG_NONE" type="IN">No defined class</element>
+ * <element name="LOG_INFO" type="IN">Information</element>
+ * <element name="LOG_WARNING" type="IN">Warning</element>
+ * <element name="LOG_ERROR" type="IN">Error</element>
+ * <element name="LOG_EXCEPTION" type="IN">Exception</element>
+ * <element name="LOG_DEBUG" type="IN">Log entries for internal debugging (reserved for development, diagnosis or test)</element>
+ * <element name="LOG_PRINTF" type="IN">Debug log entries like printf. For this entry, no timestamp is logged!</element>
+ * <element name="LOG_COM" type="IN">Log entries for communication stuff. Should be separated in own logger!</element>
+ * <element name="LOG_INFO_TIMESTAMP_RELATIVE" type="IN">Information with timestamp relative to the previous entry</element>
+ * <element name="LOG_CRIT_SEC" type="IN">Semaphore log entries for testing (deadlocks, etc.)</element>
+ * <element name="LOG_USER_NOTIFY" type="IN">Log entry is displayed as a message box in the development system!</element>
  */
-#define LOG_NONE					UINT32_C(0x00000000)
-#define LOG_INFO					UINT32_C(0x00000001)
-#define LOG_WARNING					UINT32_C(0x00000002)
-#define LOG_ERROR					UINT32_C(0x00000004)
-#define LOG_EXCEPTION				UINT32_C(0x00000008)
-#define LOG_DEBUG					UINT32_C(0x00000010)
-#define LOG_PRINTF					UINT32_C(0x00000020)
-#define LOG_COM						UINT32_C(0x00000040)
-#define LOG_INFO_TIMESTAMP_RELATIVE	UINT32_C(0x00000080)
-#define LOG_CRIT_SEC				UINT32_C(0x00000100)
-#define LOG_USER_NOTIFY				UINT32_C(0x00010000)
+#define LOG_NONE					INT32_C(0x00000000)
+#define LOG_INFO					INT32_C(0x00000001)
+#define LOG_WARNING					INT32_C(0x00000002)
+#define LOG_ERROR					INT32_C(0x00000004)
+#define LOG_EXCEPTION				INT32_C(0x00000008)
+#define LOG_DEBUG					INT32_C(0x00000010)
+#define LOG_PRINTF					INT32_C(0x00000020)
+#define LOG_COM						INT32_C(0x00000040)
+#define LOG_INFO_TIMESTAMP_RELATIVE	INT32_C(0x00000080)
+#define LOG_CRIT_SEC				INT32_C(0x00000100)
+#define LOG_USER_NOTIFY				INT32_C(0x00010000)
 
 /**
  * <category>Log filter</category>
  * <description>Log entry classes and filters</description>
  * <element name="LOG_NONE" type="LogFilter"></element>
  */
-#define LOG_ALL						UINT32_MAX
-#define LOG_STD						(LOG_INFO | LOG_WARNING | LOG_ERROR | LOG_EXCEPTION)
+#define LOG_ALL						INT32_MAX
+#ifndef LOG_STD
+	#define LOG_STD					(LOG_INFO | LOG_WARNING | LOG_ERROR | LOG_EXCEPTION | LOG_PRINTF | LOG_USER_NOTIFY)
+#endif
 #define ToLog(Class, Filter)		(Class & Filter)
 
 
@@ -278,7 +322,7 @@ REF_ITF(`SysTimeRtcItf.m4')
 
 /**
  * <category>Static defines</category>
- * <description>Default maximimum number of log entries in a logger instance</description>
+ * <description>Default maximum number of log entries in a logger instance</description>
  */
 #ifndef LOG_STD_MAX_NUM_OF_ENTRIES
 	#define LOG_STD_MAX_NUM_OF_ENTRIES	500
@@ -286,7 +330,7 @@ REF_ITF(`SysTimeRtcItf.m4')
 
 /**
  * <category>Static defines</category>
- * <description>Default maximimum number of files for a logger with a file backend</description>
+ * <description>Default maximum number of files for a logger with a file back-end</description>
  */
 #ifndef LOG_STD_MAX_NUM_OF_FILES
 	#define LOG_STD_MAX_NUM_OF_FILES	3
@@ -294,7 +338,7 @@ REF_ITF(`SysTimeRtcItf.m4')
 
 /**
  * <category>Static defines</category>
- * <description>Default maximimum file size for a logger with a file backend</description>
+ * <description>Default maximum file size for a logger with a file back-end</description>
  */
 #ifndef LOG_STD_MAX_FILE_SIZE
 	#define LOG_STD_MAX_FILE_SIZE		100000
@@ -302,7 +346,7 @@ REF_ITF(`SysTimeRtcItf.m4')
 
 /**
  * <category>Static defines</category>
- * <description>Maximimum lenght of the info string in a logger entry</description>
+ * <description>maximum length of the info string in a logger entry</description>
  */
 #ifndef LOG_MAX_INFO_LEN
 	#define LOG_MAX_INFO_LEN		128
@@ -445,6 +489,14 @@ typedef struct
  * <SIL2/>
  * <category>Logger</category>
  * <description>Configuration of one logger.</description>
+ * <param name="lo" type="IN">Options for the logger</param>
+ * <param name="ulStartTimestamp" type="IN">Timestamp starting the logger</param>
+ * <param name="iIndex" type="IN">Current index in the ring-buffer where the logger is writing entries to</param>
+ * <param name="iFirstIndex" type="IN">First index of the ring buffer</param>
+ * <param name="iRegInterfaces" type="IN">Number of registered interfaces</param>
+ * <param name="iDumpSync" type="IN">ONLY FOR INTERNAL USAGE: to synchronize concurrent dump calls!</param>
+ * <param name="pLog" type="IN">Pointer to log ring-buffer</param>
+ * <param name="tLogItf" type="IN">Array of registered log interfaces</param>
  */
 typedef struct
 {
@@ -458,10 +510,27 @@ typedef struct
 	LogItf tLogItf[LOG_DEFAULT_NUM_OF_ITF];
 } Logger;
 
-typedef RTS_RESULT (CDECL * PFLOGADD2) (RTS_HANDLE hLog, CMPID CmpId, RTS_I32 iClassID, RTS_RESULT iErrorID, RTS_I32 iInfoID, char *pszInfo, ...);
+/**
+ * <category>Log filter</category>
+ * <description>Log filter for component specific logger messages.</description>
+ * <param name="hLog" type="IN">Handle to logger</param>
+ * <param name="CmpId" type="IN">ComponentID of the component to log</param>
+ * <param name="iClassFilter" type="OUT">Class filter. See "Log class" for details.</param>
+ * <param name="iMask" type="INOUT">Component specific mask. Can be used to mask additional debug outputs.</param>
+ */
+typedef struct
+{
+	RTS_HANDLE hLog;
+	CMPID CmpId;
+	RTS_I32 iClassFilter;
+	RTS_I32 iMask;
+} LogFilter;
+
+#define LOG_IS_FILTER_SET(pLogFilter, classFilter, mask)		((((LogFilter*)pLogFilter)->iClassFilter & classFilter) != 0 ? ((((LogFilter*)pLogFilter)->iMask & mask) != 0 ? 1 : 0): 0)
 
 
 /** EXTERN LIB SECTION BEGIN **/
+/*  Comments are ignored for m4 compiler so restructured text can be used. changecom(`/*', `*/') */
 
 #ifdef __cplusplus
 extern "C" {
@@ -469,81 +538,117 @@ extern "C" {
 
 /**
  * <SIL2/>
+ * Add a new log entry to the log buffer.
+ * If the buffer is full when this function is called, the oldest
+ * log entry in the buffer will be overwritten.
+ * :return: Returns the runtime system error code (see CmpErrors.library)
  */
 typedef struct taglogadd_struct
 {
-	RTS_IEC_HANDLE hLogger;				/* VAR_INPUT */	
-	RTS_IEC_STRING stCmpName[81];		/* VAR_INPUT */	
-	RTS_IEC_DINT diClassID;				/* VAR_INPUT */	
-	RTS_IEC_DINT diErrorID;				/* VAR_INPUT */	
-	RTS_IEC_DINT diInfoID;				/* VAR_INPUT */	
-	RTS_IEC_STRING stInfo[256];			/* VAR_INPUT */	
+	RTS_IEC_HANDLE hLogger;				/* VAR_INPUT */	/* Handle to the logger which was retrieved by LogCreate() or LogOpen(). 
+ Use LogConstant.LOG_STD_LOGGER as a pseudo handle to add this log entry to the standard plc logger. */
+	RTS_IEC_STRING stCmpName[81];		/* VAR_INPUT */	/* Component name which describes the source of the log entry.
+ 
+ NOTE:
+ Actually this entry is ignored in the logger! Use LogAdd2() instead! */
+	RTS_IEC_DINT diClassID;				/* VAR_INPUT */	/* ClassID of the logger. See LogClass. */
+	RTS_IEC_DINT diErrorID;				/* VAR_INPUT */	/* ErrorID of the log entry. See CmpErrors.library. */
+	RTS_IEC_DINT diInfoID;				/* VAR_INPUT */	/* ID of the info text to enable multiple language error texts */
+	RTS_IEC_STRING stInfo[256];			/* VAR_INPUT */	/* Logger text which is displayed in the logger */
 	RTS_IEC_RESULT LogAdd;				/* VAR_OUTPUT */	
 } logadd_struct;
 
-DEF_API(`void',`CDECL',`logadd',`(logadd_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x23C1D811),0x03050500)
+DEF_API(`void',`CDECL',`logadd',`(logadd_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x23C1D811),0x03051000)
 
 /**
  * <SIL2/>
+ * Add a new log entry to the log buffer.
+ *
+ * If the buffer is full when this function is called, the oldest
+ * log entry in the buffer will be overwritten.
+ * :return: Returns the runtime system error code (see CmpErrors.library)
  */
 typedef struct taglogadd2_struct
 {
-	RTS_IEC_HANDLE hLogger;				/* VAR_INPUT */	
-	RTS_IEC_UDINT udiCmpID;				/* VAR_INPUT */	
-	RTS_IEC_UDINT udiClassID;			/* VAR_INPUT */	
-	RTS_IEC_UDINT udiErrorID;			/* VAR_INPUT */	
-	RTS_IEC_UDINT udiInfoID;			/* VAR_INPUT */	
-	RTS_IEC_STRING *pszInfo;			/* VAR_INPUT */	
+	RTS_IEC_HANDLE hLogger;				/* VAR_INPUT */	/* Handle to the logger which was retrieved by LogCreate() or LogOpen(). 
+ Use LogConstant.LOG_STD_LOGGER as a pseudo handle to add this log entry to the standard plc logger. */
+	RTS_IEC_UDINT udiCmpID;				/* VAR_INPUT */	/* ComponentID. This ID consists of the VendorID (as HiWORD), the Library ID (as LoWORD) and in the LoWORD the bit to mark, that this is
+ an IEC library.
+ Example:
+		VendorID OR ComponentID.CMPID_IecCode OR libraryId
+ - ComponentID.CMPID_IecCode: see Component Manager library
+ - the VendorID can be 0xFFFF if unknown
+ - the LibraryID must be unique for each vendor
+
+ NOTE:
+ That the correct component name is displayed in the logger, you have to register your ComponentID first at the component manager:							
+ 		hCmp := CMAddComponent(sCmpName, udiCmpId, udiCmpVersion, ADR(Result));   
+ You have to remove the handle if your library is unloaded in the runtime system (e.g. in FB_Exit() method):
+  	CMRemoveComponent(hCmp); */
+	RTS_IEC_UDINT udiClassID;			/* VAR_INPUT */	/* ClassID of the logger. See LogClass. */
+	RTS_IEC_UDINT udiErrorID;			/* VAR_INPUT */	/* ErrorID of the log entry. See CmpErrors.library. */
+	RTS_IEC_UDINT udiInfoID;			/* VAR_INPUT */	/* ID of the info text to enable multiple language error texts */
+	RTS_IEC_STRING *pszInfo;			/* VAR_INPUT */	/* Logger text which is displayed in the logger */
 	RTS_IEC_RESULT LogAdd2;				/* VAR_OUTPUT */	
 } logadd2_struct;
 
-DEF_API(`void',`CDECL',`logadd2',`(logadd2_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x317F5220),0x03050500)
+DEF_API(`void',`CDECL',`logadd2',`(logadd2_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x317F5220),0x03051000)
 
 /**
  * <SIL2/>
+ * Close the logger
+ * :return: Returns the runtime system error code (see CmpErrors.library)
  */
 typedef struct taglogclose_struct
 {
-	RTS_IEC_HANDLE hLogger;				/* VAR_INPUT */	
+	RTS_IEC_HANDLE hLogger;				/* VAR_INPUT */	/* Handle to the logger which was retrieved by LogCreate() or LogOpen(). 
+ Use LogConstant.LOG_STD_LOGGER as a pseudo handle to add this log entry to the standard plc logger. */
 	RTS_IEC_RESULT LogClose;			/* VAR_OUTPUT */	
 } logclose_struct;
 
-DEF_API(`void',`CDECL',`logclose',`(logclose_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xD950850C),0x03050500)
+DEF_API(`void',`CDECL',`logclose',`(logclose_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xD950850C),0x03051000)
 
 /**
  * <SIL2/>
+ * Create a new logger specified by options
+ * :return: Returns handle to the new logger or RTS_IEC_INVALID_HANDLE
  */
 typedef struct taglogcreate_struct
 {
-	LogOptions *pOptions;				/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
+	LogOptions *pOptions;				/* VAR_INPUT */	/* Pointer to the options */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer returns the runtime system error code (see CmpErrors.library) */
 	RTS_IEC_HANDLE LogCreate;			/* VAR_OUTPUT */	
 } logcreate_struct;
 
-DEF_API(`void',`CDECL',`logcreate',`(logcreate_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x428C258C),0x03050500)
+DEF_API(`void',`CDECL',`logcreate',`(logcreate_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x428C258C),0x03051000)
 
 /**
  * <SIL2/>
+ * Delete a logger specified by handle
+ * :return: Returns the runtime system error code (see CmpErrors.library) 
  */
 typedef struct taglogdelete_struct
 {
-	RTS_IEC_HANDLE hLogger;				/* VAR_INPUT */	
+	RTS_IEC_HANDLE hLogger;				/* VAR_INPUT */	/* Handle to the logger which was retrieved by LogCreate() or LogOpen(). 
+ Use LogConstant.LOG_STD_LOGGER as a pseudo handle to add this log entry to the standard plc logger. */
 	RTS_IEC_RESULT LogDelete;			/* VAR_OUTPUT */	
 } logdelete_struct;
 
-DEF_API(`void',`CDECL',`logdelete',`(logdelete_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x676DF4F9),0x03050500)
+DEF_API(`void',`CDECL',`logdelete',`(logdelete_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x676DF4F9),0x03051000)
 
 /**
  * <SIL2/>
+ * Open an existing logger specified by name.
+ * :return: Returns handle to the existing logger or RTS_IEC_INVALID_HANDLE if not exist
  */
 typedef struct taglogopen_struct
 {
-	RTS_IEC_STRING *pszName;			/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
+	RTS_IEC_STRING *pszName;			/* VAR_INPUT */	/* Name of the logger */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to error code (see CmpErrors.library) */
 	RTS_IEC_HANDLE LogOpen;				/* VAR_OUTPUT */	
 } logopen_struct;
 
-DEF_API(`void',`CDECL',`logopen',`(logopen_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xABBDCC4F),0x03050500)
+DEF_API(`void',`CDECL',`logopen',`(logopen_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xABBDCC4F),0x03051000)
 
 #ifdef __cplusplus
 }
@@ -624,6 +729,21 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `LogSetFilter', `(RTS_HANDLE hLog, RTS_I32 iF
 DEF_ITF_API(`RTS_I32', `CDECL', `LogGetFilter', `(RTS_HANDLE hLog)')
 
 /**
+ * <description>Get filter of logger. Filter can be component specific if you specify this in the logger section (see below).
+ *	The logger filter must be used in LogAdd2()!
+ *
+ *	Example how to specify a component specific filter in the cfg-file:
+ *		[CmpLog]
+ *		CmpXXX.Filter=0xFFFFFFFF
+ * </description>
+ * <param name="hLog" type="IN">Handle to logger</param>
+ * <param name="cmpId" type="IN">ComponentId of the component to log</param>
+ * <param name="pResult" type="IN">Pointer to result</param>
+ * <result> LogFilter </result>
+ */
+DEF_ITF_API(`LogFilter', `CDECL', `LogGetFilter2', `(RTS_HANDLE hLog, CMPID cmpId, RTS_RESULT *pResult)')
+
+/**
  * <description>
  * <p>Add a new log entry to the log buffer.</p>
  *
@@ -636,7 +756,7 @@ DEF_ITF_API(`RTS_I32', `CDECL', `LogGetFilter', `(RTS_HANDLE hLog)')
  *
  * <p>If the Class ID contains the flag LOG_USER_NOTIFY, the log message
  * will be shown in form of a message box at the next log in of 
- * CoDeSys or instantly if CoDeSys is still loged in.</p>
+ * CoDeSys or instantly if CoDeSys is still logged in.</p>
  *
  * <p>The interface supports a minimum of 8 variable arguments. Depending
  * on the C-Library, this might be more.</p>
@@ -647,7 +767,7 @@ DEF_ITF_API(`RTS_I32', `CDECL', `LogGetFilter', `(RTS_HANDLE hLog)')
  * <param name="iClassID" type="IN" range="[LOG_ALL,LOG_NONE,LOG_ALL_NOT_LOG_USER_NOTIFY,LOG_ALL_NOT_LOG_INFO_TIMESTAMP_RELATIVE]">ClassID of entry (Info, Warning, Error, etc.)</param>
  * <param name="iErrorID" type="IN" range="[VALID_IERRORID]">Error code if available</param>
  * <param name="iInfoID" type="IN" range="[VALID_IINFOID]">ID of info text to enable multiple language error texts</param>
- * <param name="pszInfo" type="IN" range="[NULL,VALID_PSZINFO]">String to info text (in english or informations coded in XML)</param>  
+ * <param name="pszInfo" type="IN" range="[NULL,VALID_PSZINFO]">String to info text (in English or informations coded in XML)</param>  
  * <parampseudo name="_iFilterID" type="IN" range="[LOG_ALL,LOG_ALL_NOT_LOG_USER_NOTIFY,LOG_ALL_NOT_LOG_INFO_TIMESTAMP_RELATIVE]">Filter option</parampseudo>
  * <parampseudo name="_iType_Timestamp" type="IN" range="[LT_TIMESTAMP_MS,LT_TIMESTAMP_US,LT_TIMESTAMP_NS]">Logger Type Timestamp</parampseudo>
  * <parampseudo name="_bAddedEntry" type="OUT">Entry Added to Log</parampseudo> 
@@ -662,6 +782,75 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `LogAdd', `(RTS_HANDLE hLog, CMPID CmpId, RTS
  * <description>
  * <p>Add a new log entry to the log buffer.</p>
  *
+ * <p>If the buffer is full when this function is called, the oldest
+ * log entry in the buffer will be overwritten.</p>
+ *
+ * <p>If the Class ID contains LOG_INFO_TIMESTAMP_RELATIVE, there is an additional
+ * tag, called "TimeRel" added to the text of the log entry. This will
+ * limit the message size of the entry by the size of this tag.</p>
+ *
+ * <p>If the Class ID contains the flag LOG_USER_NOTIFY, the log message
+ * will be shown in form of a message box at the next log in of 
+ * CoDeSys or instantly if CoDeSys is still logged in.</p>
+ *
+ * <p>The interface supports a minimum of 8 variable arguments. Depending
+ * on the C-Library, this might be more.</p>
+ * <p>LT_TIMESTAMP_RTC, LT_TIMESTAMP_RTC_HIGHRES is not supported in SIL2 Runtime.</p>
+ * </description>
+ * <param name="filter" type="IN" range="">Filter for the logger. Must be retrieved by LogGetFilter2()!</param>
+ * <param name="iClassID" type="IN" range="[LOG_ALL,LOG_NONE,LOG_ALL_NOT_LOG_USER_NOTIFY,LOG_ALL_NOT_LOG_INFO_TIMESTAMP_RELATIVE]">ClassID of entry (Info, Warning, Error, etc.)</param>
+ * <param name="iErrorID" type="IN" range="[VALID_IERRORID]">Error code if available</param>
+ * <param name="iInfoID" type="IN" range="[VALID_IINFOID]">ID of info text to enable multiple language error texts</param>
+ * <param name="pszInfo" type="IN" range="[NULL,VALID_PSZINFO]">String to info text (in English or informations coded in XML)</param>  
+ * <parampseudo name="_iFilterID" type="IN" range="[LOG_ALL,LOG_ALL_NOT_LOG_USER_NOTIFY,LOG_ALL_NOT_LOG_INFO_TIMESTAMP_RELATIVE]">Filter option</parampseudo>
+ * <parampseudo name="_iType_Timestamp" type="IN" range="[LT_TIMESTAMP_MS,LT_TIMESTAMP_US,LT_TIMESTAMP_NS]">Logger Type Timestamp</parampseudo>
+ * <parampseudo name="_bAddedEntry" type="OUT">Entry Added to Log</parampseudo> 
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid logger handle</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">iClassID was filtered for this logger or Logger is not enabled,</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">Configured memory for log buffer could not be allocated</errorcode>
+ * <result>error code</result>
+ */
+DEF_ITF_API(`RTS_RESULT', `CDECL', `LogAdd2', `(LogFilter filter, RTS_I32 iClassID, RTS_RESULT iErrorID, RTS_I32 iInfoID, char *pszInfo, ...)')
+
+/**
+ * <description>
+ * <p>Add a new log entry to the log buffer.</p>
+ *
+ * <p>If the buffer is full when this function is called, the oldest
+ * log entry in the buffer will be overwritten.</p>
+ *
+ * <p>If the Class ID contains LOG_INFO_TIMESTAMP_RELATIVE, there is an additional
+ * tag, called "TimeRel" added to the text of the log entry. This will
+ * limit the message size of the entry by the size of this tag.</p>
+ *
+ * <p>If the Class ID contains the flag LOG_USER_NOTIFY, the log message
+ * will be shown in form of a message box at the next log in of 
+ * CoDeSys or instantly if CoDeSys is still logged in.</p>
+ *
+ * <p>The interface supports a minimum of 8 variable arguments. Depending
+ * on the C-Library, this might be more.</p>
+ * <p>LT_TIMESTAMP_RTC, LT_TIMESTAMP_RTC_HIGHRES is not supported in SIL2 Runtime.</p>
+ * </description>
+ * <param name="filter" type="IN" range="">Filter for the logger. Must be retrieved by LogGetFilter2()!</param>
+ * <param name="iClassID" type="IN" range="[LOG_ALL,LOG_NONE,LOG_ALL_NOT_LOG_USER_NOTIFY,LOG_ALL_NOT_LOG_INFO_TIMESTAMP_RELATIVE]">ClassID of entry (Info, Warning, Error, etc.)</param>
+ * <param name="iMask" type="IN" range="[NULL]">Component specific filter mask</param>
+ * <param name="iErrorID" type="IN" range="[VALID_IERRORID]">Error code if available</param>
+ * <param name="iInfoID" type="IN" range="[VALID_IINFOID]">ID of info text to enable multiple language error texts</param>
+ * <param name="pszInfo" type="IN" range="[NULL,VALID_PSZINFO]">String to info text (in English or informations coded in XML)</param>  
+ * <parampseudo name="_iFilterID" type="IN" range="[LOG_ALL,LOG_ALL_NOT_LOG_USER_NOTIFY,LOG_ALL_NOT_LOG_INFO_TIMESTAMP_RELATIVE]">Filter option</parampseudo>
+ * <parampseudo name="_iType_Timestamp" type="IN" range="[LT_TIMESTAMP_MS,LT_TIMESTAMP_US,LT_TIMESTAMP_NS]">Logger Type Timestamp</parampseudo>
+ * <parampseudo name="_bAddedEntry" type="OUT">Entry Added to Log</parampseudo> 
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid logger handle</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">iClassID was filtered for this logger or Logger is not enabled,</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">Configured memory for log buffer could not be allocated</errorcode>
+ * <result>error code</result>
+ */
+DEF_ITF_API(`RTS_RESULT', `CDECL', `LogAdd3', `(LogFilter filter, RTS_I32 iClassID, RTS_I32 iMask, RTS_RESULT iErrorID, RTS_I32 iInfoID, char *pszInfo, ...)')
+
+/**
+ * <description>
+ * <p>Add a new log entry to the log buffer.</p>
+ *
  * <p>The behavior is the same as the behavior of "LogAdd()", except that the 
  * parameter is a pointer to a variable argument list instead of a direct
  * variable argument list, passed to the function.</p>
@@ -671,7 +860,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `LogAdd', `(RTS_HANDLE hLog, CMPID CmpId, RTS
  * <param name="iClassID" type="IN" range="[LOG_ALL,LOG_NONE]">ClassID of entry (Info, Warning, Error, etc.)</param>
  * <param name="iErrorID" type="IN" range="[VALID_IERRORID]">Error code if available</param>
  * <param name="iInfoID" type="IN" range="[VALID_IINFOID]">ID of info text to enable multiple language error texts</param>
- * <param name="pszInfo" type="IN" range="[NULL,VALID_PSZINFO_1,VALID_PSZINFO_MAX]">String to info text (in english or informations coded in XML)</param>
+ * <param name="pszInfo" type="IN" range="[NULL,VALID_PSZINFO_1,VALID_PSZINFO_MAX]">String to info text (in English or informations coded in XML)</param>
  * <param name="pargList" type="IN" range="[NULL,VALID_PARGLIST]">Pointer to argument list, format is specified in pszInfo</param>
  * <parampseudo name="_bAddedEntry" type="OUT">Entry Added to Log</parampseudo>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid logger handle</errorcode>
@@ -682,10 +871,55 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `LogAdd', `(RTS_HANDLE hLog, CMPID CmpId, RTS
 DEF_ITF_API(`RTS_RESULT', `CDECL', `LogAddArg', `(RTS_HANDLE hLog, CMPID CmpId, RTS_I32 iClassID, RTS_RESULT iErrorID, RTS_I32 iInfoID, char *pszInfo, va_list *pargList)')
 
 /**
+ * <description>
+ * <p>Add a new log entry to the log buffer.</p>
+ *
+ * <p>The behavior is the same as the behavior of "LogAdd2()", except that the 
+ * parameter is a pointer to a variable argument list instead of a direct
+ * variable argument list, passed to the function.</p>
+ * </description>
+ * <param name="filter" type="IN" range="">Filter for the logger. Must be retrieved by LogGetFilter2()!</param>
+ * <param name="iClassID" type="IN" range="[LOG_ALL,LOG_NONE]">ClassID of entry (Info, Warning, Error, etc.)</param>
+ * <param name="iErrorID" type="IN" range="[VALID_IERRORID]">Error code if available</param>
+ * <param name="iInfoID" type="IN" range="[VALID_IINFOID]">ID of info text to enable multiple language error texts</param>
+ * <param name="pszInfo" type="IN" range="[NULL,VALID_PSZINFO_1,VALID_PSZINFO_MAX]">String to info text (in English or informations coded in XML)</param>
+ * <param name="pargList" type="IN" range="[NULL,VALID_PARGLIST]">Pointer to argument list, format is specified in pszInfo</param>
+ * <parampseudo name="_bAddedEntry" type="OUT">Entry Added to Log</parampseudo>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid logger handle</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">iClassID was filtered for this logger or Logger is not enabled,</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">Configured memory for log buffer could not be allocated</errorcode>
+ * <result>error code</result>
+ */
+DEF_ITF_API(`RTS_RESULT', `CDECL', `LogAdd2Arg', `(LogFilter filter, RTS_I32 iClassID, RTS_RESULT iErrorID, RTS_I32 iInfoID, char *pszInfo, va_list *pargList)')
+
+/**
+ * <description>
+ * <p>Add a new log entry to the log buffer.</p>
+ *
+ * <p>The behavior is the same as the behavior of "LogAdd2()", except that the 
+ * parameter is a pointer to a variable argument list instead of a direct
+ * variable argument list, passed to the function.</p>
+ * </description>
+ * <param name="filter" type="IN" range="">Filter for the logger. Must be retrieved by LogGetFilter2()!</param>
+ * <param name="iClassID" type="IN" range="[LOG_ALL,LOG_NONE]">ClassID of entry (Info, Warning, Error, etc.)</param>
+ * <param name="iMask" type="IN" range="[NULL]">Component specific filter mask</param>
+ * <param name="iErrorID" type="IN" range="[VALID_IERRORID]">Error code if available</param>
+ * <param name="iInfoID" type="IN" range="[VALID_IINFOID]">ID of info text to enable multiple language error texts</param>
+ * <param name="pszInfo" type="IN" range="[NULL,VALID_PSZINFO_1,VALID_PSZINFO_MAX]">String to info text (in English or informations coded in XML)</param>
+ * <param name="pargList" type="IN" range="[NULL,VALID_PARGLIST]">Pointer to argument list, format is specified in pszInfo</param>
+ * <parampseudo name="_bAddedEntry" type="OUT">Entry Added to Log</parampseudo>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid logger handle</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">iClassID was filtered for this logger or Logger is not enabled,</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">Configured memory for log buffer could not be allocated</errorcode>
+ * <result>error code</result>
+ */
+DEF_ITF_API(`RTS_RESULT', `CDECL', `LogAdd3Arg', `(LogFilter filter, RTS_I32 iClassID, RTS_I32 iMask, RTS_RESULT iErrorID, RTS_I32 iInfoID, char *pszInfo, va_list *pargList)')
+
+/**
  * <description> Dump all entries from all log files </description>
  * <param name="iOptions" type="IN"><p>One or multiple of the following options:</p> 
  *	<ul>
- *		<li>LT_DUMP_ASYNC: If dump is done from an asychronous event</li>
+ *		<li>LT_DUMP_ASYNC: If dump is done from an asynchronous event</li>
  *		<li>LT_DUMP_ALWAYS: If dump should be forced (always)</li>
  *		<li>LT_DUMP_ON_CLOSE: If dump is called from closing the logger instance</li>
  *		<li>LT_DUMP_ON_REQUEST: If dump is forced from a request</li>
@@ -713,23 +947,23 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `LogRegisterInterface', `(RTS_HANDLE hLog, CL
 DEF_ITF_API(`RTS_RESULT', `CDECL', `LogUnregisterInterface', `(RTS_HANDLE hLog, ICmpLogBackend *pIBackend)')
 
 /**
- * <description>Register a backend at the specified logger</description>
- * <param name="hLog" type="IN">Handle to the logger. Can be RTS_INVALID_HANDLE an so the backend is unregistered from all logger instances!</param>
- * <param name="ClassId" type="IN">ClassId of the backend. ClassId must be registered previously in the backend component with CMRegisterClass!</param>
+ * <description>Register a back-end at the specified logger</description>
+ * <param name="hLog" type="IN">Handle to the logger. Can be RTS_INVALID_HANDLE an so the back-end is unregistered from all logger instances!</param>
+ * <param name="ClassId" type="IN">ClassId of the back-end. ClassId must be registered previously in the back-end component with CMRegisterClass!</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `LogRegisterBackend', `(RTS_HANDLE hLog, CLASSID ClassId)')
 
 /**
- * <description>Unregister a backend at the specified logger</description>
- * <param name="hLog" type="IN">Handle to the logger. Can be RTS_INVALID_HANDLE an so the backend is unregistered from all logger instances!</param>
- * <param name="ClassId" type="IN">ClassId of the backend. ClassId must be registered previously in the backend component with CMRegisterClass!</param>
+ * <description>Unregister a back-end at the specified logger</description>
+ * <param name="hLog" type="IN">Handle to the logger. Can be RTS_INVALID_HANDLE an so the back-end is unregistered from all logger instances!</param>
+ * <param name="ClassId" type="IN">ClassId of the back-end. ClassId must be registered previously in the back-end component with CMRegisterClass!</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `LogUnregisterBackend', `(RTS_HANDLE hLog, CLASSID ClassId)')
 
 /**
- * <description> Get the first logentry of a logger </description>
+ * <description> Get the first logger entry of a logger </description>
  * <param name="hLog" type="IN">Handle to logger</param>
  * <param name="iIndex" type="IN">Index of entry to get. 0 is the first entry.</param>
  * <param name="pLogEntry" type="IN">Pointer to log entry</param>
@@ -739,7 +973,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `LogUnregisterBackend', `(RTS_HANDLE hLog, CL
 DEF_ITF_API(`RTS_HANDLE', `CDECL', `LogGetEntryByIndex', `(RTS_HANDLE hLog, int iIndex, LogEntry *pLogEntry, RTS_RESULT *pResult)')
 
 /**
- * <description> Get the first logentry of a logger </description>
+ * <description> Get the first logger entry of a logger </description>
  * <param name="hLog" type="IN">Handle to logger</param>
  * <param name="iQueueIndex" type="IN">Index of entry to get. -1 get the first entry.</param>
  * <param name="pLogEntry" type="IN">Pointer to log entry</param>
@@ -749,7 +983,7 @@ DEF_ITF_API(`RTS_HANDLE', `CDECL', `LogGetEntryByIndex', `(RTS_HANDLE hLog, int 
 DEF_ITF_API(`RTS_HANDLE', `CDECL', `LogGetEntryByQueueIndex', `(RTS_HANDLE hLog, int iQueueIndex, LogEntry *pLogEntry, RTS_RESULT *pResult)')
 
 /**
- * <description> Get the first logentry of a logger </description>
+ * <description> Get the first logger entry of a logger </description>
  * <param name="hLog" type="IN">Handle to logger</param>
  * <param name="pLogEntry" type="IN">Pointer to log entry</param>
  * <param name="pResult" type="IN">Pointer to result</param>
@@ -758,7 +992,7 @@ DEF_ITF_API(`RTS_HANDLE', `CDECL', `LogGetEntryByQueueIndex', `(RTS_HANDLE hLog,
 DEF_ITF_API(`RTS_HANDLE', `CDECL', `LogGetFirstEntry', `(RTS_HANDLE hLog, LogEntry *pLogEntry, RTS_RESULT *pResult)')
 
 /**
- * <description> Get the next logentry of a logger </description>
+ * <description> Get the next logger entry of a logger </description>
  * <param name="hLog" type="IN">Handle to logger</param>
  * <param name="hEntry" type="IN">Handle to log entry (is returned by LogGetFirstEntry or LogGetNextEntry)</param>
  * <param name="pLogEntry" type="IN">Pointer to log entry</param>

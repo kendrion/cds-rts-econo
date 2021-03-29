@@ -1,0 +1,441 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_window_test_itf:
+
+================
+SysWindowTestItf
+================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of SysWindowTest.
+
+Detailed Description
+--------------------
+
+SysWindowTest interfaces is intended to allow access to operating system methods that are necessary for automatic testing of window components. If you do not intend to do such tests on a platform, an implementation of this interface is not necessary!
+
+Normally, components implementing this interface are bound very tightly to the implementation of the SysWindow-Interface.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Color formats <group___sys_window_test_itf___colorformats>`
+
+- :ref:`Image formats <group___sys_window_test_itf___imageformats>`
+
+- :ref:`Key event types <group___sys_window_test_itf___keyeventtypes>`
+
+- :ref:`Key types <group___sys_window_test_itf___keytypes>`
+
+- :ref:`Mouse event types <group___sys_window_test_itf___mouseeventtypes>`
+
+- :ref:`Touch event types <group___sys_window_test_itf___toucheventtypes>`
+
+Data Structures
+---------------
+
+- struct :ref:`ISysWindowTest_C <struct_i_sys_window_test___c>`
+
+Macros
+------
+
+- #define :ref:`USE_SysWindowTestFindWindow <group___sys_window_test_itf_1ga952289716a3a6eea324f7c2ff57b64c8>` :ref:`PFSYSWINDOWTESTFINDWINDOW <group___sys_window_test_itf_1gad28a3c492573a1c5be23e9040f359bf2>` pfSysWindowTestFindWindow;
+
+- #define :ref:`EXT_SysWindowTestFindWindow <group___sys_window_test_itf_1gaf4d44e824cf9af257c609406d732211b>` extern :ref:`PFSYSWINDOWTESTFINDWINDOW <group___sys_window_test_itf_1gad28a3c492573a1c5be23e9040f359bf2>` pfSysWindowTestFindWindow;
+
+- #define :ref:`GET_SysWindowTestFindWindow <group___sys_window_test_itf_1ga0e1911f2d653f797211276846d0d4221>` s_pfCMGetAPI2( "SysWindowTestFindWindow", (RTS_VOID_FCTPTR *)&pfSysWindowTestFindWindow, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowTestFindWindow <group___sys_window_test_itf_1ga003d66a9c17d3e20d49a04fac850a6d4>` pfSysWindowTestFindWindow
+
+- #define :ref:`CHK_SysWindowTestFindWindow <group___sys_window_test_itf_1ga5327f41b741dfba52d53db44c0baaaf5>` (pfSysWindowTestFindWindow != NULL)
+
+- #define :ref:`EXP_SysWindowTestFindWindow <group___sys_window_test_itf_1ga34bd4632bfcecab4e38ebf54c13b188b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowTestFindWindow", (RTS_UINTPTR) :ref:`SysWindowTestFindWindow <group___sys_window_test_itf_1gaadc3b391633dd7614ebdeceff83388eb>` , 0, 0)
+
+- #define :ref:`USE_SysWindowTestTakeScreenShot <group___sys_window_test_itf_1ga6909fc7acc6b0dc91ea5cb0d3138e040>` :ref:`PFSYSWINDOWTESTTAKESCREENSHOT <group___sys_window_test_itf_1gaceaf8e10e3ccce0b45cfaac3778d1dc2>` pfSysWindowTestTakeScreenShot;
+
+- #define :ref:`EXT_SysWindowTestTakeScreenShot <group___sys_window_test_itf_1ga8e6c6f91f45b3061f2c8e6a0f7257717>` extern :ref:`PFSYSWINDOWTESTTAKESCREENSHOT <group___sys_window_test_itf_1gaceaf8e10e3ccce0b45cfaac3778d1dc2>` pfSysWindowTestTakeScreenShot;
+
+- #define :ref:`GET_SysWindowTestTakeScreenShot <group___sys_window_test_itf_1ga100398600d9fcd30ee3b693b458cb07f>` s_pfCMGetAPI2( "SysWindowTestTakeScreenShot", (RTS_VOID_FCTPTR *)&pfSysWindowTestTakeScreenShot, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowTestTakeScreenShot <group___sys_window_test_itf_1gaf4390115da85b019cdca9dd1862efdfc>` pfSysWindowTestTakeScreenShot
+
+- #define :ref:`CHK_SysWindowTestTakeScreenShot <group___sys_window_test_itf_1ga8bf59931606233c9eb2a6767741719e2>` (pfSysWindowTestTakeScreenShot != NULL)
+
+- #define :ref:`EXP_SysWindowTestTakeScreenShot <group___sys_window_test_itf_1ga45da7d6690a8c3838a42dfebd0fbe6ee>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowTestTakeScreenShot", (RTS_UINTPTR) :ref:`SysWindowTestTakeScreenShot <group___sys_window_test_itf_1ga4a3d1b94e715764c060eb94f1a1825bb>` , 0, 0)
+
+- #define :ref:`USE_SysWindowTestRaiseMouseEvent <group___sys_window_test_itf_1gaff0c4570ae3acdd89bb6b30d7997edf4>` :ref:`PFSYSWINDOWTESTRAISEMOUSEEVENT <group___sys_window_test_itf_1ga4185a9583da16d609e223ee59e7035c9>` pfSysWindowTestRaiseMouseEvent;
+
+- #define :ref:`EXT_SysWindowTestRaiseMouseEvent <group___sys_window_test_itf_1gad3917fa2d69dc6269764cbd1afb2da04>` extern :ref:`PFSYSWINDOWTESTRAISEMOUSEEVENT <group___sys_window_test_itf_1ga4185a9583da16d609e223ee59e7035c9>` pfSysWindowTestRaiseMouseEvent;
+
+- #define :ref:`GET_SysWindowTestRaiseMouseEvent <group___sys_window_test_itf_1ga7e73525fef5a7aaa79230c3e3d9df58e>` s_pfCMGetAPI2( "SysWindowTestRaiseMouseEvent", (RTS_VOID_FCTPTR *)&pfSysWindowTestRaiseMouseEvent, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowTestRaiseMouseEvent <group___sys_window_test_itf_1gadc2915c629d0c4dc7592809632e67afc>` pfSysWindowTestRaiseMouseEvent
+
+- #define :ref:`CHK_SysWindowTestRaiseMouseEvent <group___sys_window_test_itf_1ga516e2db36c7547822fe89cb60bf0d838>` (pfSysWindowTestRaiseMouseEvent != NULL)
+
+- #define :ref:`EXP_SysWindowTestRaiseMouseEvent <group___sys_window_test_itf_1gab930a00c4ef52804d7f385fbd6d4ac2f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowTestRaiseMouseEvent", (RTS_UINTPTR) :ref:`SysWindowTestRaiseMouseEvent <group___sys_window_test_itf_1ga0781c740605461340be6bb0d07b97d8e>` , 0, 0)
+
+- #define :ref:`USE_SysWindowTestRaiseTouchEvent <group___sys_window_test_itf_1ga90bd82303d7bd49a7ea41aed7b71c8a5>` :ref:`PFSYSWINDOWTESTRAISETOUCHEVENT <group___sys_window_test_itf_1ga658378b1120ca7a2d2e29acc18b3d0ef>` pfSysWindowTestRaiseTouchEvent;
+
+- #define :ref:`EXT_SysWindowTestRaiseTouchEvent <group___sys_window_test_itf_1ga457b06395bb424f2612d811ec8cd421c>` extern :ref:`PFSYSWINDOWTESTRAISETOUCHEVENT <group___sys_window_test_itf_1ga658378b1120ca7a2d2e29acc18b3d0ef>` pfSysWindowTestRaiseTouchEvent;
+
+- #define :ref:`GET_SysWindowTestRaiseTouchEvent <group___sys_window_test_itf_1ga9e2bd3f3f13fa2e3fc26eb27341486b6>` s_pfCMGetAPI2( "SysWindowTestRaiseTouchEvent", (RTS_VOID_FCTPTR *)&pfSysWindowTestRaiseTouchEvent, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowTestRaiseTouchEvent <group___sys_window_test_itf_1ga8267239586025000b758c68f60711bd9>` pfSysWindowTestRaiseTouchEvent
+
+- #define :ref:`CHK_SysWindowTestRaiseTouchEvent <group___sys_window_test_itf_1gabc9e5b95f0f3ef375877e8170452fc03>` (pfSysWindowTestRaiseTouchEvent != NULL)
+
+- #define :ref:`EXP_SysWindowTestRaiseTouchEvent <group___sys_window_test_itf_1ga57e407e2fad941cd6ba969550b6410b4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowTestRaiseTouchEvent", (RTS_UINTPTR) :ref:`SysWindowTestRaiseTouchEvent <group___sys_window_test_itf_1ga9d641aeacc3fb2dada8edfe897848682>` , 0, 0)
+
+- #define :ref:`USE_SysWindowTestRaiseKeyEvent <group___sys_window_test_itf_1gae3cb6c4f5ebe1dca7cb35a9578d252ac>` :ref:`PFSYSWINDOWTESTRAISEKEYEVENT <group___sys_window_test_itf_1ga1c3f5b5cd057edc2dbd6d4b5ef04fd76>` pfSysWindowTestRaiseKeyEvent;
+
+- #define :ref:`EXT_SysWindowTestRaiseKeyEvent <group___sys_window_test_itf_1ga1ce0d4c3124129e79b2eafb58ed1f2c2>` extern :ref:`PFSYSWINDOWTESTRAISEKEYEVENT <group___sys_window_test_itf_1ga1c3f5b5cd057edc2dbd6d4b5ef04fd76>` pfSysWindowTestRaiseKeyEvent;
+
+- #define :ref:`GET_SysWindowTestRaiseKeyEvent <group___sys_window_test_itf_1ga1c4021589c092a3e5115ff1d843d08c4>` s_pfCMGetAPI2( "SysWindowTestRaiseKeyEvent", (RTS_VOID_FCTPTR *)&pfSysWindowTestRaiseKeyEvent, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowTestRaiseKeyEvent <group___sys_window_test_itf_1ga4ec4551b9352498bed5e034d5cdcac42>` pfSysWindowTestRaiseKeyEvent
+
+- #define :ref:`CHK_SysWindowTestRaiseKeyEvent <group___sys_window_test_itf_1gaa7b3fb65c916f739bca36251e473ce5e>` (pfSysWindowTestRaiseKeyEvent != NULL)
+
+- #define :ref:`EXP_SysWindowTestRaiseKeyEvent <group___sys_window_test_itf_1ga8a43ace11ec7e3877f99594ecfc8bf8c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowTestRaiseKeyEvent", (RTS_UINTPTR) :ref:`SysWindowTestRaiseKeyEvent <group___sys_window_test_itf_1gaa326fd1c356d8d7afda9b904390afb93>` , 0, 0)
+
+- #define :ref:`ITF_SysWindowTest <group___sys_window_test_itf_1ga2adae73ccc4a7798d29ebd05b1181adf>`
+
+- #define :ref:`EXTITF_SysWindowTest <group___sys_window_test_itf_1ga4fba101da13acb8fb368e963b67c9f4f>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWTESTFINDWINDOW <group___sys_window_test_itf_1gad28a3c492573a1c5be23e9040f359bf2>`)(char *pszWindowClass, char *pszWindowTitle, RTS_HANDLE *phFoundWindow)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWTESTTAKESCREENSHOT <group___sys_window_test_itf_1gaceaf8e10e3ccce0b45cfaac3778d1dc2>`)(RTS_HANDLE hWindow, char *pszDestinationFileName, SysWindowTestScreenShotInfo *pScreenShotInfo)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWTESTRAISEMOUSEEVENT <group___sys_window_test_itf_1ga4185a9583da16d609e223ee59e7035c9>`)(RTS_HANDLE hWindow, RTS_I32 eventType, RTS_I32 xCoordinateInWindow, RTS_I32 yCoordinateInWindow)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWTESTRAISETOUCHEVENT <group___sys_window_test_itf_1ga658378b1120ca7a2d2e29acc18b3d0ef>`)(RTS_HANDLE hWindow, SysWindowTouchContactInfo *ptouches, RTS_I32 sizeOfArray)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWTESTRAISEKEYEVENT <group___sys_window_test_itf_1ga1c3f5b5cd057edc2dbd6d4b5ef04fd76>`)(RTS_HANDLE hWindow, RTS_I32 keyType, RTS_I32 eventType, RTS_I32 keyCode)
+
+- typedef :ref:`ISysWindowTest_C <struct_i_sys_window_test___c>` :ref:`ISysWindowTest <group___sys_window_test_itf_1gaa3a22c31ae2bbe21c6bfb3eed61df424>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`SysWindowTestFindWindow <group___sys_window_test_itf_1gaadc3b391633dd7614ebdeceff83388eb>` (char * pszWindowClass, char * pszWindowTitle, RTS_HANDLE * phFoundWindow)
+
+- RTS_RESULT :ref:`SysWindowTestTakeScreenShot <group___sys_window_test_itf_1ga4a3d1b94e715764c060eb94f1a1825bb>` (RTS_HANDLE hWindow, char * pszDestinationFileName, :ref:`SysWindowTestScreenShotInfo <struct_sys_window_test_screen_shot_info>` * pScreenShotInfo)
+
+- RTS_RESULT :ref:`SysWindowTestRaiseMouseEvent <group___sys_window_test_itf_1ga0781c740605461340be6bb0d07b97d8e>` (RTS_HANDLE hWindow, RTS_I32 eventType, RTS_I32 xCoordinateInWindow, RTS_I32 yCoordinateInWindow)
+
+- RTS_RESULT :ref:`SysWindowTestRaiseTouchEvent <group___sys_window_test_itf_1ga9d641aeacc3fb2dada8edfe897848682>` (RTS_HANDLE hWindow, :ref:`SysWindowTouchContactInfo <struct_sys_window_touch_contact_info>` * ptouches, RTS_I32 sizeOfArray)
+
+- RTS_RESULT :ref:`SysWindowTestRaiseKeyEvent <group___sys_window_test_itf_1gaa326fd1c356d8d7afda9b904390afb93>` (RTS_HANDLE hWindow, RTS_I32 keyType, RTS_I32 eventType, RTS_I32 keyCode)
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_window_test_itf_1ga952289716a3a6eea324f7c2ff57b64c8:
+
+#define USE_SysWindowTestFindWindow :ref:`PFSYSWINDOWTESTFINDWINDOW <group___sys_window_test_itf_1gad28a3c492573a1c5be23e9040f359bf2>` pfSysWindowTestFindWindow;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1gaf4d44e824cf9af257c609406d732211b:
+
+#define EXT_SysWindowTestFindWindow extern :ref:`PFSYSWINDOWTESTFINDWINDOW <group___sys_window_test_itf_1gad28a3c492573a1c5be23e9040f359bf2>` pfSysWindowTestFindWindow;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga0e1911f2d653f797211276846d0d4221:
+
+#define GET_SysWindowTestFindWindow s_pfCMGetAPI2( "SysWindowTestFindWindow", (RTS_VOID_FCTPTR *)&pfSysWindowTestFindWindow, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga003d66a9c17d3e20d49a04fac850a6d4:
+
+#define CAL_SysWindowTestFindWindow pfSysWindowTestFindWindow
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga5327f41b741dfba52d53db44c0baaaf5:
+
+#define CHK_SysWindowTestFindWindow (pfSysWindowTestFindWindow != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga34bd4632bfcecab4e38ebf54c13b188b:
+
+#define EXP_SysWindowTestFindWindow s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowTestFindWindow", (RTS_UINTPTR) :ref:`SysWindowTestFindWindow <group___sys_window_test_itf_1gaadc3b391633dd7614ebdeceff83388eb>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga6909fc7acc6b0dc91ea5cb0d3138e040:
+
+#define USE_SysWindowTestTakeScreenShot :ref:`PFSYSWINDOWTESTTAKESCREENSHOT <group___sys_window_test_itf_1gaceaf8e10e3ccce0b45cfaac3778d1dc2>` pfSysWindowTestTakeScreenShot;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga8e6c6f91f45b3061f2c8e6a0f7257717:
+
+#define EXT_SysWindowTestTakeScreenShot extern :ref:`PFSYSWINDOWTESTTAKESCREENSHOT <group___sys_window_test_itf_1gaceaf8e10e3ccce0b45cfaac3778d1dc2>` pfSysWindowTestTakeScreenShot;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga100398600d9fcd30ee3b693b458cb07f:
+
+#define GET_SysWindowTestTakeScreenShot s_pfCMGetAPI2( "SysWindowTestTakeScreenShot", (RTS_VOID_FCTPTR *)&pfSysWindowTestTakeScreenShot, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1gaf4390115da85b019cdca9dd1862efdfc:
+
+#define CAL_SysWindowTestTakeScreenShot pfSysWindowTestTakeScreenShot
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga8bf59931606233c9eb2a6767741719e2:
+
+#define CHK_SysWindowTestTakeScreenShot (pfSysWindowTestTakeScreenShot != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga45da7d6690a8c3838a42dfebd0fbe6ee:
+
+#define EXP_SysWindowTestTakeScreenShot s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowTestTakeScreenShot", (RTS_UINTPTR) :ref:`SysWindowTestTakeScreenShot <group___sys_window_test_itf_1ga4a3d1b94e715764c060eb94f1a1825bb>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1gaff0c4570ae3acdd89bb6b30d7997edf4:
+
+#define USE_SysWindowTestRaiseMouseEvent :ref:`PFSYSWINDOWTESTRAISEMOUSEEVENT <group___sys_window_test_itf_1ga4185a9583da16d609e223ee59e7035c9>` pfSysWindowTestRaiseMouseEvent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1gad3917fa2d69dc6269764cbd1afb2da04:
+
+#define EXT_SysWindowTestRaiseMouseEvent extern :ref:`PFSYSWINDOWTESTRAISEMOUSEEVENT <group___sys_window_test_itf_1ga4185a9583da16d609e223ee59e7035c9>` pfSysWindowTestRaiseMouseEvent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga7e73525fef5a7aaa79230c3e3d9df58e:
+
+#define GET_SysWindowTestRaiseMouseEvent s_pfCMGetAPI2( "SysWindowTestRaiseMouseEvent", (RTS_VOID_FCTPTR *)&pfSysWindowTestRaiseMouseEvent, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1gadc2915c629d0c4dc7592809632e67afc:
+
+#define CAL_SysWindowTestRaiseMouseEvent pfSysWindowTestRaiseMouseEvent
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga516e2db36c7547822fe89cb60bf0d838:
+
+#define CHK_SysWindowTestRaiseMouseEvent (pfSysWindowTestRaiseMouseEvent != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1gab930a00c4ef52804d7f385fbd6d4ac2f:
+
+#define EXP_SysWindowTestRaiseMouseEvent s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowTestRaiseMouseEvent", (RTS_UINTPTR) :ref:`SysWindowTestRaiseMouseEvent <group___sys_window_test_itf_1ga0781c740605461340be6bb0d07b97d8e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga90bd82303d7bd49a7ea41aed7b71c8a5:
+
+#define USE_SysWindowTestRaiseTouchEvent :ref:`PFSYSWINDOWTESTRAISETOUCHEVENT <group___sys_window_test_itf_1ga658378b1120ca7a2d2e29acc18b3d0ef>` pfSysWindowTestRaiseTouchEvent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga457b06395bb424f2612d811ec8cd421c:
+
+#define EXT_SysWindowTestRaiseTouchEvent extern :ref:`PFSYSWINDOWTESTRAISETOUCHEVENT <group___sys_window_test_itf_1ga658378b1120ca7a2d2e29acc18b3d0ef>` pfSysWindowTestRaiseTouchEvent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga9e2bd3f3f13fa2e3fc26eb27341486b6:
+
+#define GET_SysWindowTestRaiseTouchEvent s_pfCMGetAPI2( "SysWindowTestRaiseTouchEvent", (RTS_VOID_FCTPTR *)&pfSysWindowTestRaiseTouchEvent, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga8267239586025000b758c68f60711bd9:
+
+#define CAL_SysWindowTestRaiseTouchEvent pfSysWindowTestRaiseTouchEvent
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1gabc9e5b95f0f3ef375877e8170452fc03:
+
+#define CHK_SysWindowTestRaiseTouchEvent (pfSysWindowTestRaiseTouchEvent != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga57e407e2fad941cd6ba969550b6410b4:
+
+#define EXP_SysWindowTestRaiseTouchEvent s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowTestRaiseTouchEvent", (RTS_UINTPTR) :ref:`SysWindowTestRaiseTouchEvent <group___sys_window_test_itf_1ga9d641aeacc3fb2dada8edfe897848682>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1gae3cb6c4f5ebe1dca7cb35a9578d252ac:
+
+#define USE_SysWindowTestRaiseKeyEvent :ref:`PFSYSWINDOWTESTRAISEKEYEVENT <group___sys_window_test_itf_1ga1c3f5b5cd057edc2dbd6d4b5ef04fd76>` pfSysWindowTestRaiseKeyEvent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga1ce0d4c3124129e79b2eafb58ed1f2c2:
+
+#define EXT_SysWindowTestRaiseKeyEvent extern :ref:`PFSYSWINDOWTESTRAISEKEYEVENT <group___sys_window_test_itf_1ga1c3f5b5cd057edc2dbd6d4b5ef04fd76>` pfSysWindowTestRaiseKeyEvent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga1c4021589c092a3e5115ff1d843d08c4:
+
+#define GET_SysWindowTestRaiseKeyEvent s_pfCMGetAPI2( "SysWindowTestRaiseKeyEvent", (RTS_VOID_FCTPTR *)&pfSysWindowTestRaiseKeyEvent, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga4ec4551b9352498bed5e034d5cdcac42:
+
+#define CAL_SysWindowTestRaiseKeyEvent pfSysWindowTestRaiseKeyEvent
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1gaa7b3fb65c916f739bca36251e473ce5e:
+
+#define CHK_SysWindowTestRaiseKeyEvent (pfSysWindowTestRaiseKeyEvent != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga8a43ace11ec7e3877f99594ecfc8bf8c:
+
+#define EXP_SysWindowTestRaiseKeyEvent s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowTestRaiseKeyEvent", (RTS_UINTPTR) :ref:`SysWindowTestRaiseKeyEvent <group___sys_window_test_itf_1gaa326fd1c356d8d7afda9b904390afb93>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga2adae73ccc4a7798d29ebd05b1181adf:
+
+#define ITF_SysWindowTest
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga4fba101da13acb8fb368e963b67c9f4f:
+
+#define EXTITF_SysWindowTest
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___sys_window_test_itf_1gad28a3c492573a1c5be23e9040f359bf2:
+
+typedef RTS_RESULT( *  PFSYSWINDOWTESTFINDWINDOW) (char *pszWindowClass, char *pszWindowTitle, RTS_HANDLE *phFoundWindow)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1gaceaf8e10e3ccce0b45cfaac3778d1dc2:
+
+typedef RTS_RESULT( *  PFSYSWINDOWTESTTAKESCREENSHOT) (RTS_HANDLE hWindow, char *pszDestinationFileName, SysWindowTestScreenShotInfo *pScreenShotInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga4185a9583da16d609e223ee59e7035c9:
+
+typedef RTS_RESULT( *  PFSYSWINDOWTESTRAISEMOUSEEVENT) (RTS_HANDLE hWindow, RTS_I32 eventType, RTS_I32 xCoordinateInWindow, RTS_I32 yCoordinateInWindow)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga658378b1120ca7a2d2e29acc18b3d0ef:
+
+typedef RTS_RESULT( *  PFSYSWINDOWTESTRAISETOUCHEVENT) (RTS_HANDLE hWindow, SysWindowTouchContactInfo *ptouches, RTS_I32 sizeOfArray)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1ga1c3f5b5cd057edc2dbd6d4b5ef04fd76:
+
+typedef RTS_RESULT( *  PFSYSWINDOWTESTRAISEKEYEVENT) (RTS_HANDLE hWindow, RTS_I32 keyType, RTS_I32 eventType, RTS_I32 keyCode)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1gaa3a22c31ae2bbe21c6bfb3eed61df424:
+
+typedef ISysWindowTest_C ISysWindowTest
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___sys_window_test_itf_1gaadc3b391633dd7614ebdeceff83388eb:
+
+RTS_RESULT SysWindowTestFindWindow (char *pszWindowClass, char *pszWindowTitle, RTS_HANDLE *phFoundWindow)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to search the operating system's window manager for a window by some criteria.
+
+**Parameters**
+
++---------+----------------+--------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pszWindowClass | The name of the window class to search for                                                                               |
++---------+----------------+--------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pszWindowTitle | The name of the window title to search for. If the title of the window should be ignored, a value of NULL can be passed. |
++---------+----------------+--------------------------------------------------------------------------------------------------------------------------+
+| [out]   | phFoundWindow  | The window handle (if one was found)                                                                                     |
++---------+----------------+--------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+The result code, ERR_OK if the search was successful and a window was found, another error code otherwise.
+
+.. _group___sys_window_test_itf_1ga4a3d1b94e715764c060eb94f1a1825bb:
+
+RTS_RESULT SysWindowTestTakeScreenShot (RTS_HANDLE hWindow, char *pszDestinationFileName, SysWindowTestScreenShotInfo *pScreenShotInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to take a screen shot into a file from the passed window.
+
+**Parameters**
+
++---------+------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hWindow                | The window to take a screen shot from.                                                                                                                                                           |
++---------+------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pszDestinationFileName | The file name of the screen shot that should be written.                                                                                                                                         |
++---------+------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pScreenShotInfo        | This pointer will be used to return information about the format of the screen shot. A pointer to a valid object must be passed; This object will then be filled with the necessary information. |
++---------+------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+This method is optional (either by return value ERR_NOTIMPLEMENTED or at compile time) when the related SysGraphicimplementation implements the interface SysGraphicTestable
+
+**Returns:**
+
+The result code, ERR_OK if the screen shot was successful, another error code otherwise.
+
+.. _group___sys_window_test_itf_1ga0781c740605461340be6bb0d07b97d8e:
+
+RTS_RESULT SysWindowTestRaiseMouseEvent (RTS_HANDLE hWindow, RTS_I32 eventType, RTS_I32 xCoordinateInWindow, RTS_I32 yCoordinateInWindow)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to raise a mouse event on a given window.
+
+**Parameters**
+
++---------+---------------------+------------------------------------------------------------------------------------------------+
+| [in]    | hWindow             | The window where the mouse event should be raised                                              |
++---------+---------------------+------------------------------------------------------------------------------------------------+
+| [in]    | eventType           | Information about the mouse event, one of the values of the SYSWINDOWTEST_MOUSE_... constants. |
++---------+---------------------+------------------------------------------------------------------------------------------------+
+| [in]    | xCoordinateInWindow | The x coordinate in window relative positions where the event should be raised.                |
++---------+---------------------+------------------------------------------------------------------------------------------------+
+| [in]    | yCoordinateInWindow | The y coordinate in window relative positions where the event should be raised.                |
++---------+---------------------+------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+The result code, ERR_OK if successful, another error code otherwise.
+
+.. _group___sys_window_test_itf_1ga9d641aeacc3fb2dada8edfe897848682:
+
+RTS_RESULT SysWindowTestRaiseTouchEvent (RTS_HANDLE hWindow, SysWindowTouchContactInfo *ptouches, RTS_I32 sizeOfArray)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_window_test_itf_1gaa326fd1c356d8d7afda9b904390afb93:
+
+RTS_RESULT SysWindowTestRaiseKeyEvent (RTS_HANDLE hWindow, RTS_I32 keyType, RTS_I32 eventType, RTS_I32 keyCode)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to raise a key event on a given window.
+
+**Parameters**
+
++---------+-----------+--------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hWindow   | The window where the key event should be raised                                                                          |
++---------+-----------+--------------------------------------------------------------------------------------------------------------------------+
+| [in]    | keyType   | Information about the what type the key code is of. Can be one of the values of the SYSWINDOWTEST_KEYTYPE_... constants. |
++---------+-----------+--------------------------------------------------------------------------------------------------------------------------+
+| [in]    | eventType | Information about the key event, one of the values of the SYSWINDOWTEST_KEY_... constants.                               |
++---------+-----------+--------------------------------------------------------------------------------------------------------------------------+
+| [in]    | keyCode   | The key code of the key that should be raised. Value range depends on the keyType                                        |
++---------+-----------+--------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+The result code, ERR_OK if successful, another error code otherwise.
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

@@ -1,0 +1,708 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_o_p_c_u_a_server_itf_8h:
+
+==================================
+CmpOPCUAServerItf.h File Reference
+==================================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpOPCUAProviderItf.h <_cmp_o_p_c_u_a_provider_itf_8h>`"
+| #include ":ref:`CmpSecurityManagerItf.h <_cmp_security_manager_itf_8h>`"
+| #include ":ref:`CmpEventMgrItf.h <_cmp_event_mgr_itf_8h>`"
+| #include ":ref:`opcua.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`EVTPARAM_CmpOPCUAServerSessionsChanged <struct_e_v_t_p_a_r_a_m___cmp_o_p_c_u_a_server_sessions_changed>`
+
+- struct :ref:`_OpcUaObjectDescription <struct___opc_ua_object_description>`
+
+- struct :ref:`_OpcUaVariableDescription <struct___opc_ua_variable_description>`
+
+- struct :ref:`_OpcUaMethodDescription <struct___opc_ua_method_description>`
+
+- struct :ref:`_OpcUaObjectTypeDescription <struct___opc_ua_object_type_description>`
+
+- struct :ref:`_OpcUaVariableTypeDescription <struct___opc_ua_variable_type_description>`
+
+- struct :ref:`_OpcUaReferenceTypeDescription <struct___opc_ua_reference_type_description>`
+
+- struct :ref:`_OpcUaDataTypeDescription <struct___opc_ua_data_type_description>`
+
+- struct :ref:`_OpcUaViewDescription <struct___opc_ua_view_description>`
+
+- struct :ref:`_OpcUaElementDescription <union___opc_ua_element_description>`
+
+- struct :ref:`_OpcUaServerNodeDescription <struct___opc_ua_server_node_description>`
+
+- struct :ref:`_OpcUaServerReferenceDescription <struct___opc_ua_server_reference_description>`
+
+- struct :ref:`tagOpcUaServer_Session_Information <structtag_opc_ua_server___session___information>`
+
+- struct :ref:`tagopcuaservergetfirstsession_struct <structtagopcuaservergetfirstsession__struct>`
+
+- struct :ref:`tagopcuaservergetnextsession_struct <structtagopcuaservergetnextsession__struct>`
+
+- struct :ref:`tagopcuaservergetsessioninfo_struct <structtagopcuaservergetsessioninfo__struct>`
+
+- struct :ref:`_NumericRange <struct___numeric_range>`
+
+- struct :ref:`_OpcUaServer_SimpleBrowsePath <struct___opc_ua_server___simple_browse_path>`
+
+- struct :ref:`ICmpOPCUAServer_C <struct_i_cmp_o_p_c_u_a_server___c>`
+
+Macros
+------
+
+- #define :ref:`CMPOPCUAKEY_STRING_NETWORK_ADAPTER <group___cmp_o_p_c_u_a_server_itf___settings_1gad6f2651f34073cb9a23d176f7734de22>` "NetworkAdapter"
+
+- #define :ref:`CMPOPCUAVALUE_STRING_NETWORK_ADAPTER_DEFAULT <group___cmp_o_p_c_u_a_server_itf___settings_1ga1fb48693e5afb2f8f1326fbcb79b754a>` ""
+
+- #define :ref:`CMPOPCUAKEY_INT_NETWORK_PORT <group___cmp_o_p_c_u_a_server_itf___settings_1ga4ef768b74bb42e5db23a816774a47a6d>` "NetworkPort"
+
+- #define :ref:`CMPOPCUAVALUE_INT_NETWORK_PORT_DEFAULT <group___cmp_o_p_c_u_a_server_itf___settings_1ga5d02f9496db712c1762c8e579e838bac>` 4840
+
+- #define :ref:`CMPOPCUAKEY_INT_USE_LOOPBACK <group___cmp_o_p_c_u_a_server_itf___settings_1gac9549e3cc8dab941b8f8e5c333ac78d8>` "UseLoopback"
+
+- #define :ref:`CMPOPCUAVALUE_INT_USE_LOOPBACK_DEFAULT <group___cmp_o_p_c_u_a_server_itf___settings_1ga07f08ae7a398bf15bde6e97ed0d406dc>` 1
+
+- #define :ref:`CMPOPCUASERVERKEY_INT_ADAPTER_UPDATE_RATE <group___cmp_o_p_c_u_a_server_itf___settings_1gadd942092682e2c760aac16b3698e4854>` "AdapterUpdateRate"
+
+- #define :ref:`CMPOPCUASERVERVALUE_INT_ADAPTER_UPDATE_RATE_DEFAULT <group___cmp_o_p_c_u_a_server_itf___settings_1gaeed0ec9846130aa2cf0de82ab7196e46>` 5000
+
+- #define :ref:`CMPOPCUASERVERKEY_INT_ITEM_MIN_SAMPLING_RATE <group___cmp_o_p_c_u_a_server_itf___settings_1ga8a4a7e5ea6bd0c39ed63a98733ec4b3d>` "ItemMinSamplingRate"
+
+- #define :ref:`CMPOPCUASERVERVALUE_INT_ITEM_MIN_SAMPLING_RATE_DEFAULT <group___cmp_o_p_c_u_a_server_itf___settings_1gaad8acdd067d57089342423fd9342c9e0>` 100
+
+- #define :ref:`CMPOPCUASERVERKEY_INT_NUM_OF_WORKERS <group___cmp_o_p_c_u_a_server_itf___settings_1ga3b757332d428014a672d8ae4a50ca18e>` "NumOfWorkerTasks"
+
+- #define :ref:`CMPOPCUASERVERVALUE_INT_NUM_OF_WORKERS_DEFAULT <group___cmp_o_p_c_u_a_server_itf___settings_1gaaf5b0b5539d011c4c5b5ca7e003f7932>` -1
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_POLICY <group___cmp_o_p_c_u_a_server_itf___security_settings_1gafe383c25c6a2c8e8b15d9a06b1b5924e>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".CommunicationPolicy"
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_POLICY_DESC <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga4acb71a38ce5569fb85721c8d6525e74>` "Policy for communication"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_POLICY_BASIC256SHA256 <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga5f70a802e437cf3f0f5c2e5931e2543c>` "POLICY_BASIC256SHA256"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_POLICY_BASIC256 <group___cmp_o_p_c_u_a_server_itf___security_settings_1gab281c4dd987b490141d31bcc95693502>` "POLICY_BASIC256"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_POLICY_BASIC128RSA15 <group___cmp_o_p_c_u_a_server_itf___security_settings_1gaf7c0b0b4050e37200d2d669d42cddaae>` "POLICY_BASIC128RSA15"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_POLICY_DEFAULT <group___cmp_o_p_c_u_a_server_itf___security_settings_1gad85e4769551571a214ff1d65279514b3>` :ref:`CMPOPCUASERVER_VALUE_POLICY_BASIC256SHA256 <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga5f70a802e437cf3f0f5c2e5931e2543c>`
+
+- #define :ref:`CMPOPCUASERVER_VALUE_POLICY_LIST <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga9ce6edc30e7b082c52ebac53da24815a>` { \
+{(RTS_I32) :ref:`CmpOPCUAServer_SecurityPolicy_Basic256Sha256 <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggaf882a06e03264a507245389244f411a4aed3d5f4f64081337c7a1ffa29e6a0363>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPOPCUASERVER_VALUE_POLICY_BASIC256SHA256 <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga5f70a802e437cf3f0f5c2e5931e2543c>` , "Support for all policies beginning with Basic256Sha256 (AES 256 with SHA256) [By now highest security]"}\
+}
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_COMMMODE <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga49dd64a0d5dbd38678b44312f13ee68b>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".CommunicationMode"
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_COMMMODE_DESC <group___cmp_o_p_c_u_a_server_itf___security_settings_1gad05b56d59d59424475ac7c4e6231a88e>` "Mode of the communication"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_COMMMODE_SIGNED_AND_ENCRYPTED <group___cmp_o_p_c_u_a_server_itf___security_settings_1gae059e0d86909c42334fba6c12ef71d59>` "SIGNED_AND_ENCRYPTED"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_COMMMODE_MIN_SIGNED <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga0b47b2d3307103e529c5ddf771b28dc0>` "MIN_SIGNED"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_COMMMODE_ALL <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga350522ccb89f5a4789bd3d7cfe57e475>` "ALL"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_COMMMODE_ONLY_PLAINTEXT <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga2c28147003af6887d2cf20b6bc50282e>` "ONLY_PLAINTEXT"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_COMMMODE_DEFAULT <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga8d086260f0b05c2ddf57d8e99f74f0ef>` :ref:`CMPOPCUASERVER_VALUE_COMMMODE_ALL <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga350522ccb89f5a4789bd3d7cfe57e475>`
+
+- #define :ref:`CMPOPCUASERVER_VALUE_COMMMODE_LIST <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga0d8093cb70ede833f37bf60a66ad209d>` {\
+{(RTS_I32) :ref:`CmpOPCUAServer_CommMode_SignedAndEncrypted <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggae9836f01a7b15eb0ff6f7663cdd4a649a3628e3ef0e0d8d5b32d2cd68a1568092>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPOPCUASERVER_VALUE_COMMMODE_SIGNED_AND_ENCRYPTED <group___cmp_o_p_c_u_a_server_itf___security_settings_1gae059e0d86909c42334fba6c12ef71d59>` , "Only signed and encrypted communications profiles are added [HIGHEST_SECURITY_LEVEL]"},\
+{(RTS_I32) :ref:`CmpOPCUAServer_CommMode_MinSigned <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggae9836f01a7b15eb0ff6f7663cdd4a649a7ea57aad7beff0320932f936d54e7626>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPOPCUASERVER_VALUE_COMMMODE_MIN_SIGNED <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga0b47b2d3307103e529c5ddf771b28dc0>` , "Enforce a signed communication. Encryption optional available."},\
+{(RTS_I32) :ref:`CmpOPCUAServer_CommMode_PlainAndSecure <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggae9836f01a7b15eb0ff6f7663cdd4a649a99d58816b5ef5e5aeedf02a919bf255e>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPOPCUASERVER_VALUE_COMMMODE_ALL <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga350522ccb89f5a4789bd3d7cfe57e475>` , "Add all available modes. No security, just signed, signed and encrypted"},\
+{(RTS_I32) :ref:`CmpOPCUAServer_CommMode_OnlyPlaintext <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggae9836f01a7b15eb0ff6f7663cdd4a649ac76d9f54e18f0148e494eb4b67944c69>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPOPCUASERVER_VALUE_COMMMODE_ONLY_PLAINTEXT <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga2c28147003af6887d2cf20b6bc50282e>` , "Support only plain-text communication. Default without security manager."}\
+}
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_ACTIVATION <group___cmp_o_p_c_u_a_server_itf___security_settings_1gaf2c240da89ec5e4b44b1f7f316ebe201>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".Activation"
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_ACTIVATION_DESC <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga6bb18f57462a414fd3391d52aafc195f>` "Activates the OPCUA Server by default."
+
+- #define :ref:`CMPOPCUASERVER_VALUE_ACTIVATION_DEACTIVATED <group___cmp_o_p_c_u_a_server_itf___security_settings_1gaaf118897a9cd0ca4d9ec7a5a876b25ba>` "DEACTIVATED"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_ACTIVATION_ACTIVATED <group___cmp_o_p_c_u_a_server_itf___security_settings_1gac3e9389324378cf6124ff8d5fc4f2d3c>` "ACTIVATED"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_ACTIVATION_DEFAULT <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga33fbd48c6076af5d2285f2954af36dd2>` :ref:`CMPOPCUASERVER_VALUE_ACTIVATION_ACTIVATED <group___cmp_o_p_c_u_a_server_itf___security_settings_1gac3e9389324378cf6124ff8d5fc4f2d3c>`
+
+- #define :ref:`CMPOPCUASERVER_VALUE_ACTIVATION_LIST <group___cmp_o_p_c_u_a_server_itf___security_settings_1gad5fdd33be0a77e3d0fc8c56e2a6133f5>` {\
+{(RTS_I32) :ref:`CmpOPCUAServer_Deactivated <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggaf15b82c9d21f1caf3beb21c98ceca37ca4efe9d5a483573e33d17a5954e614237>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPOPCUASERVER_VALUE_ACTIVATION_DEACTIVATED <group___cmp_o_p_c_u_a_server_itf___security_settings_1gaaf118897a9cd0ca4d9ec7a5a876b25ba>` , "Deactivates the OPC UA Server"},\
+{(RTS_I32) :ref:`CmpOPCUAServer_Activated <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggaf15b82c9d21f1caf3beb21c98ceca37caef4552884352a7f63cfb4cc2546b4265>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPOPCUASERVER_VALUE_ACTIVATION_ACTIVATED <group___cmp_o_p_c_u_a_server_itf___security_settings_1gac3e9389324378cf6124ff8d5fc4f2d3c>` , "Activates the OPC UA Server. [Default]"}\
+}
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_USER_AUTHENTICATION <group___cmp_o_p_c_u_a_server_itf___security_settings_1gaef1f30ad7b1b96cde0d1e63a0807bc9a>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".UserAuthentication"
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_USER_AUTHENTICATION_DESC <group___cmp_o_p_c_u_a_server_itf___security_settings_1gae83293ab0d9f7a2bb9e5e708e336c919>` "Configuration for the user authentication."
+
+- #define :ref:`CMPOPCUASERVER_VALUE_USER_AUTHENTICATION_DISABLED <group___cmp_o_p_c_u_a_server_itf___security_settings_1gac71fd5371740be20964a50e6d6359936>` "DISABLED"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_USER_AUTHENTICATION_ENABLED <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga8c5e91c52a24051b82781e3606b31373>` "ENABLED"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_USER_AUTHENTICATION_ENFORCED <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga9a692006f775ae64044d9c1caf29ddd7>` "ENFORCED"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_USER_AUTHENTICATION_DEFAULT <group___cmp_o_p_c_u_a_server_itf___security_settings_1gae55c336c448297f43b32243ffa02fcde>` :ref:`CMPOPCUASERVER_VALUE_USER_AUTHENTICATION_ENABLED <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga8c5e91c52a24051b82781e3606b31373>`
+
+- #define :ref:`CMPOPCUASERVER_VALUE_USER_AUTHENTICATION_LIST <group___cmp_o_p_c_u_a_server_itf___security_settings_1gaac92e068bfba5aef96f3364d605a0d03>` {\
+{(RTS_I32) :ref:`CmpOPCUAServer_UserAuthentication_Disabled <group___cmp_o_p_c_u_a_server_itf___security_settings_1gga8106087e9d7d8f4a0ad85ba31c6968c0a48846344ef4652a256c6c3cc4382daff>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPOPCUASERVER_VALUE_USER_AUTHENTICATION_DISABLED <group___cmp_o_p_c_u_a_server_itf___security_settings_1gac71fd5371740be20964a50e6d6359936>` , "Deactivates the user authentication for the OPC UA server. Only Anonymus token will be available."},\
+{(RTS_I32) :ref:`CmpOPCUAServer_UserAuthentication_Enabled <group___cmp_o_p_c_u_a_server_itf___security_settings_1gga8106087e9d7d8f4a0ad85ba31c6968c0aa621f59ac6d4190aabdcbe0ec3a5ffc4>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPOPCUASERVER_VALUE_USER_AUTHENTICATION_ENABLED <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga8c5e91c52a24051b82781e3606b31373>` , "Activates the user authenticaiton for the OPC UA Server. [Default]"},\
+{(RTS_I32) :ref:`CmpOPCUAServer_UserAuthentication_Enforced <group___cmp_o_p_c_u_a_server_itf___security_settings_1gga8106087e9d7d8f4a0ad85ba31c6968c0a28a2b6e7830c6720575f7f0e8f8c3661>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPOPCUASERVER_VALUE_USER_AUTHENTICATION_ENFORCED <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga9a692006f775ae64044d9c1caf29ddd7>` , "Enforces that the users must login. No Anonymous token will be available."}\
+}
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_ALLOW_USERPASSWORD_ON_PLAINTEXT <group___cmp_o_p_c_u_a_server_itf___security_settings_1gad608ad229d21dac86b508fe74d7f5be3>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".AllowUserPasswordOnPlaintext"
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_ALLOW_USERPASSWORD_ON_PLAINTEXT_DESC <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga1e65ab324a6b9f3c3d18a4ac1e77eb91>` "Configuration for the user authentication."
+
+- #define :ref:`CMPOPCUASERVER_VALUE_ALLOW_USERPASSWORD_ON_PLAINTEXT_YES <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga41be043fbd035f41bd3e57d66c157b3c>` "YES"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_ALLOW_USERPASSWORD_ON_PLAINTEXT_NO <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga40a70cdfbfce1c6a6a684b94452fff6a>` "NO"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_ALLOW_USERPASSWORD_ON_PLAINTEXT_DEFAULT <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga7e26f7a10f22bc2acf35f6cfd72511b7>` :ref:`CMPOPCUASERVER_VALUE_ALLOW_USERPASSWORD_ON_PLAINTEXT_NO <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga40a70cdfbfce1c6a6a684b94452fff6a>`
+
+- #define :ref:`CMPOPCUASERVER_VALUE_ALLOW_USERPASSWORD_ON_PLAINTEXT_LIST <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga6de87b768ef53073d3d48c73ca988534>` {\
+{(RTS_I32) :ref:`CmpOPCUAServer_AllowUserPasswordOnPlaintext_Yes <group___cmp_o_p_c_u_a_server_itf___security_settings_1gga999f4849a8670bd8ce876108c9c9a9b3a6de2ce91cca7e6842580d5d068b8c6bf>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPOPCUASERVER_VALUE_ALLOW_USERPASSWORD_ON_PLAINTEXT_YES <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga41be043fbd035f41bd3e57d66c157b3c>` , "Allows to transmit the password in a plaintext way."},\
+{(RTS_I32) :ref:`CmpOPCUAServer_AllowUserPasswordOnPlaintext_No <group___cmp_o_p_c_u_a_server_itf___security_settings_1gga999f4849a8670bd8ce876108c9c9a9b3a90722b13e0a1b540bdd19199240681d1>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPOPCUASERVER_VALUE_ALLOW_USERPASSWORD_ON_PLAINTEXT_NO <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga40a70cdfbfce1c6a6a684b94452fff6a>` , "Forbids to tramsit the password in a plaintext way."}\
+}
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_APP_NAME <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga4711d98e309da355dc2851d613567b97>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".ApplicationName"
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_APP_NAME_DESC <group___cmp_o_p_c_u_a_server_itf___security_settings_1gaa24e3e317f03e93023965f0e30a6910a>` "The application name of the OPC UA server. This will be used for the certificate and the ApplicationName fields of the OPC UA Server."
+
+- #define :ref:`CMPOPCUASERVER_VALUE_APP_NAME_DEFAULT <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga5ad8ea2d79607f857d48ab57e8c6d2d5>` NULL
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_ORG_NAME <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga0d40e0bd3fab9553135a329afee77cf2>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".CompanyOrOrganizationName"
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_ORG_NAME_DESC <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga743b71f820cc0fa888f711e6f45b02f4>` "The name of the organization running the OPC UA server. (If empty field is ignored)"
+
+- #define :ref:`CMPOPCUASERVER_VALUE_ORG_NAME_DEFAULT <group___cmp_o_p_c_u_a_server_itf___security_settings_1gae85ff9342be9ae75226480dca0150151>` NULL
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_CITY <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga3c8fc6f61b52ff4555d8c50f17ee8af1>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".City"
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_CITY_DESC <group___cmp_o_p_c_u_a_server_itf___security_settings_1gaa412f9f6d2e557615d97eb6a72cf6bd2>` "Will fill up the city field of the OPC UA Server certificate. If empty the field won't be used."
+
+- #define :ref:`CMPOPCUASERVER_VALUE_CITY_DEFAULT <group___cmp_o_p_c_u_a_server_itf___security_settings_1gaa14d885992c1fda40e84a08454e0f318>` NULL
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_STATE <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga5b845a5ed9bcdf966be76e8fb2b040ea>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".State"
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_STATE_DESC <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga0764e222c0c623a3483923fd2142f814>` "Will fill up the state field of the OPC UA Server certificate. If empty the field won't be used."
+
+- #define :ref:`CMPOPCUASERVER_VALUE_STATE_DEFAULT <group___cmp_o_p_c_u_a_server_itf___security_settings_1gab4bd991141bd7551ae285686a3184f44>` NULL
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_COUNTRY <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga68bfe488db35410cc14370a063bfa743>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".Country"
+
+- #define :ref:`CMPOPCUASERVER_KEY_STRING_COUNTRY_DESC <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga130181874e6a821e01aa6cfdea846375>` "Will fill up the country field of the OPC UA Server certificate. If empty the field won't be used."
+
+- #define :ref:`CMPOPCUASERVER_VALUE_COUNTRY_DEFAULT <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga488b3e2faa66f79c5af8b1a0a93ff2ac>` NULL
+
+- #define :ref:`USERDB_OBJECT_OPCUASERVER <group___cmp_o_p_c_u_a_server_itf___staticdefines_1ga9c5c7cb7cf0d3e3602e82b586627dd47>` "Device.RemoteConnections.OPCUAServer"
+
+- #define :ref:`CMPOPCUASERVER_SESSION_ADDED <group___cmp_o_p_c_u_a_server_itf___staticdefines_1ga498fc35bc13b62cf5ea48241f87fa16d>` 1
+
+- #define :ref:`CMPOPCUASERVER_SESSION_CHANGED <group___cmp_o_p_c_u_a_server_itf___staticdefines_1gadb0e94c0f02718023bf6460a29004747>` 2
+
+- #define :ref:`CMPOPCUASERVER_SESSION_REMOVED <group___cmp_o_p_c_u_a_server_itf___staticdefines_1gaadb0ccdeb03c9c2b6521ccc3fb2991fa>` 3
+
+- #define :ref:`EVTPARAMID_CmpOPCUAServerSessionsChanged <group___cmp_o_p_c_u_a_server_itf___eventparameter_1gaa3910772d76c8438fc71a1db14962a86>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpOPCUAServerSessionsChanged <group___cmp_o_p_c_u_a_server_itf___eventparameter_1ga4d5e84adedb789617bdc1ee3cc0e08c9>` 0x0001
+
+- #define :ref:`EVT_CmpOPCUAServerSessionsChanged <group___cmp_o_p_c_u_a_server_itf___events_1ga03bfde7cef91fe0f4d8d7f9405af0125>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`OPCUASERVER_MESSAGESECURITYMODE_INVALID <group___cmp_o_p_c_u_a_server_itf_1ga9797a7b6a16a07d7fbfb37c3cb8741f3>` RTS_IEC_DWORD_C(0x0)
+
+- #define :ref:`OPCUASERVER_MESSAGESECURITYMODE_NONE <group___cmp_o_p_c_u_a_server_itf_1gafef4c2881a2eb576440c9176643acc98>` RTS_IEC_DWORD_C(0x1)
+
+- #define :ref:`OPCUASERVER_MESSAGESECURITYMODE_SIGN <group___cmp_o_p_c_u_a_server_itf_1gad208806ee2f7e96c13fef2dcf6f22b7f>` RTS_IEC_DWORD_C(0x2)
+
+- #define :ref:`OPCUASERVER_MESSAGESECURITYMODE_SIGNANDENCRYPT <group___cmp_o_p_c_u_a_server_itf_1ga8421fb752fa9f40ee514a7d3d033c906>` RTS_IEC_DWORD_C(0x3)
+
+- #define :ref:`OPCUASERVER_MESSAGESECURITYMODE <group___cmp_o_p_c_u_a_server_itf_1ga564b36698bb09df3b2541ce473c20c7d>` RTS_IEC_DWORD
+
+- #define :ref:`OPCUASERVER_SESSIONEVENTS_SESSION_ADDED <group___cmp_o_p_c_u_a_server_itf_1ga9ce63bef31e0bcbedf4569ff1b866a69>` RTS_IEC_DWORD_C(0x1)
+
+- #define :ref:`OPCUASERVER_SESSIONEVENTS_SESSION_CHANGED <group___cmp_o_p_c_u_a_server_itf_1ga105a84a4ffc1077a96d3143ccedfd6d7>` RTS_IEC_DWORD_C(0x2)
+
+- #define :ref:`OPCUASERVER_SESSIONEVENTS_SESSION_REMOVED <group___cmp_o_p_c_u_a_server_itf_1ga24d2a5fae2bc11bb9ac84617ada45887>` RTS_IEC_DWORD_C(0x3)
+
+- #define :ref:`OPCUASERVER_SESSIONEVENTS <group___cmp_o_p_c_u_a_server_itf_1ga19c316f0ced390dba5e25822c10f20c7>` RTS_IEC_DWORD
+
+- #define :ref:`USE_opcuaservergetfirstsession <group___cmp_o_p_c_u_a_server_itf_1gaa4a02c555820939e225f8994e6644250>` :ref:`PFOPCUASERVERGETFIRSTSESSION_IEC <group___cmp_o_p_c_u_a_server_itf_1gabb7fb03cef924d5439d9a2a1b86da049>` pfopcuaservergetfirstsession;
+
+- #define :ref:`EXT_opcuaservergetfirstsession <group___cmp_o_p_c_u_a_server_itf_1ga0c777625395602a48914335aff1f8bff>` extern :ref:`PFOPCUASERVERGETFIRSTSESSION_IEC <group___cmp_o_p_c_u_a_server_itf_1gabb7fb03cef924d5439d9a2a1b86da049>` pfopcuaservergetfirstsession;
+
+- #define :ref:`GET_opcuaservergetfirstsession <group___cmp_o_p_c_u_a_server_itf_1gac73ec6f70f0d9253ba0296797f2b035a>` s_pfCMGetAPI2( "opcuaservergetfirstsession", (RTS_VOID_FCTPTR *)&pfopcuaservergetfirstsession, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xACB7E0DC, 0x03050C00)
+
+- #define :ref:`CAL_opcuaservergetfirstsession <group___cmp_o_p_c_u_a_server_itf_1ga4faec3bd6533b42275933ba55ebd9dc6>` pfopcuaservergetfirstsession
+
+- #define :ref:`CHK_opcuaservergetfirstsession <group___cmp_o_p_c_u_a_server_itf_1ga89c7380967632c6ea2e12a4dc10da4cb>` (pfopcuaservergetfirstsession != NULL)
+
+- #define :ref:`EXP_opcuaservergetfirstsession <group___cmp_o_p_c_u_a_server_itf_1gacc79b913bcbf336e177bdd23c59062ba>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"opcuaservergetfirstsession", (RTS_UINTPTR) :ref:`opcuaservergetfirstsession <group___cmp_o_p_c_u_a_server_itf_1ga0d04523fe213118c3e70ee52769a968e>` , 1, 0xACB7E0DC, 0x03050C00)
+
+- #define :ref:`USE_opcuaservergetnextsession <group___cmp_o_p_c_u_a_server_itf_1ga80a766d334057552d6624bb3b296104c>` :ref:`PFOPCUASERVERGETNEXTSESSION_IEC <group___cmp_o_p_c_u_a_server_itf_1ga0f7ed6cef112e68f4aa52aeeb85c41b1>` pfopcuaservergetnextsession;
+
+- #define :ref:`EXT_opcuaservergetnextsession <group___cmp_o_p_c_u_a_server_itf_1ga8bdf5e58176242ba99fec0a79b8dbbbc>` extern :ref:`PFOPCUASERVERGETNEXTSESSION_IEC <group___cmp_o_p_c_u_a_server_itf_1ga0f7ed6cef112e68f4aa52aeeb85c41b1>` pfopcuaservergetnextsession;
+
+- #define :ref:`GET_opcuaservergetnextsession <group___cmp_o_p_c_u_a_server_itf_1gaf4133fd5cca1c399af02ce91d8a91883>` s_pfCMGetAPI2( "opcuaservergetnextsession", (RTS_VOID_FCTPTR *)&pfopcuaservergetnextsession, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE2BBF24A, 0x03050C00)
+
+- #define :ref:`CAL_opcuaservergetnextsession <group___cmp_o_p_c_u_a_server_itf_1ga1832f95c2f03a8d99eabb3fd498ee108>` pfopcuaservergetnextsession
+
+- #define :ref:`CHK_opcuaservergetnextsession <group___cmp_o_p_c_u_a_server_itf_1gaeae41ba18a000f6f74a5511ce5c36d11>` (pfopcuaservergetnextsession != NULL)
+
+- #define :ref:`EXP_opcuaservergetnextsession <group___cmp_o_p_c_u_a_server_itf_1ga2fc596ac59a6929c20a16b2ee4cb858d>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"opcuaservergetnextsession", (RTS_UINTPTR) :ref:`opcuaservergetnextsession <group___cmp_o_p_c_u_a_server_itf_1ga778433dfdaa0c00e851a724b44818121>` , 1, 0xE2BBF24A, 0x03050C00)
+
+- #define :ref:`USE_opcuaservergetsessioninfo <group___cmp_o_p_c_u_a_server_itf_1ga5cc02e5354fc4cdaee54b6ce7b9d182c>` :ref:`PFOPCUASERVERGETSESSIONINFO_IEC <group___cmp_o_p_c_u_a_server_itf_1ga23c70e34698ab98239ae5fc636e1985c>` pfopcuaservergetsessioninfo;
+
+- #define :ref:`EXT_opcuaservergetsessioninfo <group___cmp_o_p_c_u_a_server_itf_1gad9d35e22ef3a17c9fc3090df80517f7b>` extern :ref:`PFOPCUASERVERGETSESSIONINFO_IEC <group___cmp_o_p_c_u_a_server_itf_1ga23c70e34698ab98239ae5fc636e1985c>` pfopcuaservergetsessioninfo;
+
+- #define :ref:`GET_opcuaservergetsessioninfo <group___cmp_o_p_c_u_a_server_itf_1gaf71f5b917e9d15c2bccce56c400cbfc5>` s_pfCMGetAPI2( "opcuaservergetsessioninfo", (RTS_VOID_FCTPTR *)&pfopcuaservergetsessioninfo, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x6AE85AE6, 0x03050C00)
+
+- #define :ref:`CAL_opcuaservergetsessioninfo <group___cmp_o_p_c_u_a_server_itf_1ga342db19ea6e2a8334bc8f38f33203198>` pfopcuaservergetsessioninfo
+
+- #define :ref:`CHK_opcuaservergetsessioninfo <group___cmp_o_p_c_u_a_server_itf_1ga72aae4c808a86d1ea3ecd7be132bb492>` (pfopcuaservergetsessioninfo != NULL)
+
+- #define :ref:`EXP_opcuaservergetsessioninfo <group___cmp_o_p_c_u_a_server_itf_1gacc83036e2baca16a196e753335419a3a>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"opcuaservergetsessioninfo", (RTS_UINTPTR) :ref:`opcuaservergetsessioninfo <group___cmp_o_p_c_u_a_server_itf_1ga95f49471ef5e7c32ca228a7f71d7cef1>` , 1, 0x6AE85AE6, 0x03050C00)
+
+- #define :ref:`Max_NumericRanges <group___cmp_o_p_c_u_a_server_itf_1ga4d29339be835e75beb3aa606ce6d81aa>` 5
+
+- #define :ref:`USE_OpcUaServerRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1ga5e00c4e29a64f20dc7947e32de1eeb56>` :ref:`PFOPCUASERVERREGISTERPROVIDER <group___cmp_o_p_c_u_a_server_itf_1gaa74d29d6e20d7887e15a0a80da09c516>` pfOpcUaServerRegisterProvider;
+
+- #define :ref:`EXT_OpcUaServerRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1gaa1e769fd9b2034e70e3b24a7c097ca5e>` extern :ref:`PFOPCUASERVERREGISTERPROVIDER <group___cmp_o_p_c_u_a_server_itf_1gaa74d29d6e20d7887e15a0a80da09c516>` pfOpcUaServerRegisterProvider;
+
+- #define :ref:`GET_OpcUaServerRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1gac7f853e880ee80c106a7bdaf5e9748e4>` s_pfCMGetAPI2( "OpcUaServerRegisterProvider", (RTS_VOID_FCTPTR *)&pfOpcUaServerRegisterProvider, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1gad14775e7061fb79745d6fe9023f63dff>` pfOpcUaServerRegisterProvider
+
+- #define :ref:`CHK_OpcUaServerRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1gafe6c9d828caf76fedfccfc5fdcebb5a6>` (pfOpcUaServerRegisterProvider != NULL)
+
+- #define :ref:`EXP_OpcUaServerRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1ga277c39aea48bedb85aad52738c7ca08e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerRegisterProvider", (RTS_UINTPTR) :ref:`OpcUaServerRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1ga0cb793c031bcea3bc9bb11cda784a4e7>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerUnRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1gadb4ae27155e5c8cfe1ec74d26151f86b>` :ref:`PFOPCUASERVERUNREGISTERPROVIDER <group___cmp_o_p_c_u_a_server_itf_1ga68f0f2882a70ff77ac0dc0e73cb31e60>` pfOpcUaServerUnRegisterProvider;
+
+- #define :ref:`EXT_OpcUaServerUnRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1ga0b3da9b6f295f3dc2cdfb8c36f0308b5>` extern :ref:`PFOPCUASERVERUNREGISTERPROVIDER <group___cmp_o_p_c_u_a_server_itf_1ga68f0f2882a70ff77ac0dc0e73cb31e60>` pfOpcUaServerUnRegisterProvider;
+
+- #define :ref:`GET_OpcUaServerUnRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1ga8012182611fc3d2094040770f3709f15>` s_pfCMGetAPI2( "OpcUaServerUnRegisterProvider", (RTS_VOID_FCTPTR *)&pfOpcUaServerUnRegisterProvider, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerUnRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1gabc73e67e1255bbe84d01ef412d45110c>` pfOpcUaServerUnRegisterProvider
+
+- #define :ref:`CHK_OpcUaServerUnRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1ga811be47f5a88927a1e86110d530855f4>` (pfOpcUaServerUnRegisterProvider != NULL)
+
+- #define :ref:`EXP_OpcUaServerUnRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1gaa56b66117b8fe44f3f938fd76be8925f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerUnRegisterProvider", (RTS_UINTPTR) :ref:`OpcUaServerUnRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1gaf4c5e0a98384d6dccf9d897ddbdc8329>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerCheckReferenceRecursive <group___cmp_o_p_c_u_a_server_itf_1ga3aa57bbc10f2f1aa23a237211009dca4>` :ref:`PFOPCUASERVERCHECKREFERENCERECURSIVE <group___cmp_o_p_c_u_a_server_itf_1gae6bf149d86df0df1ed5bb8c477e8b7cc>` pfOpcUaServerCheckReferenceRecursive;
+
+- #define :ref:`EXT_OpcUaServerCheckReferenceRecursive <group___cmp_o_p_c_u_a_server_itf_1gaabd1791b520ca161caf236afb473cf6e>` extern :ref:`PFOPCUASERVERCHECKREFERENCERECURSIVE <group___cmp_o_p_c_u_a_server_itf_1gae6bf149d86df0df1ed5bb8c477e8b7cc>` pfOpcUaServerCheckReferenceRecursive;
+
+- #define :ref:`GET_OpcUaServerCheckReferenceRecursive <group___cmp_o_p_c_u_a_server_itf_1gacf46d1af281dfb30564595c33baf7ad0>` s_pfCMGetAPI2( "OpcUaServerCheckReferenceRecursive", (RTS_VOID_FCTPTR *)&pfOpcUaServerCheckReferenceRecursive, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerCheckReferenceRecursive <group___cmp_o_p_c_u_a_server_itf_1ga4c3c978c961708a9335e8daf92ea1d06>` pfOpcUaServerCheckReferenceRecursive
+
+- #define :ref:`CHK_OpcUaServerCheckReferenceRecursive <group___cmp_o_p_c_u_a_server_itf_1ga8f1b68a29a5cd736e147c0167407cd4c>` (pfOpcUaServerCheckReferenceRecursive != NULL)
+
+- #define :ref:`EXP_OpcUaServerCheckReferenceRecursive <group___cmp_o_p_c_u_a_server_itf_1ga0c5c2b5eac5a6dd9da3343872ac6aedb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerCheckReferenceRecursive", (RTS_UINTPTR) :ref:`OpcUaServerCheckReferenceRecursive <group___cmp_o_p_c_u_a_server_itf_1gafc6ae84c876865bf97dd57b2df6e3b22>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerCheckIfReferenceIsValid <group___cmp_o_p_c_u_a_server_itf_1ga7f1aa36a86a01d33eb3dd7f745387e86>` :ref:`PFOPCUASERVERCHECKIFREFERENCEISVALID <group___cmp_o_p_c_u_a_server_itf_1ga1ae4d94b0b54bab234b82947e693d2e6>` pfOpcUaServerCheckIfReferenceIsValid;
+
+- #define :ref:`EXT_OpcUaServerCheckIfReferenceIsValid <group___cmp_o_p_c_u_a_server_itf_1ga934022848ecc24272e7999fbcba13126>` extern :ref:`PFOPCUASERVERCHECKIFREFERENCEISVALID <group___cmp_o_p_c_u_a_server_itf_1ga1ae4d94b0b54bab234b82947e693d2e6>` pfOpcUaServerCheckIfReferenceIsValid;
+
+- #define :ref:`GET_OpcUaServerCheckIfReferenceIsValid <group___cmp_o_p_c_u_a_server_itf_1ga0d780f41074e6ed93dbc17ad68c09113>` s_pfCMGetAPI2( "OpcUaServerCheckIfReferenceIsValid", (RTS_VOID_FCTPTR *)&pfOpcUaServerCheckIfReferenceIsValid, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerCheckIfReferenceIsValid <group___cmp_o_p_c_u_a_server_itf_1gaaed6f2a16bdfcf0f6d3d682f84316dc6>` pfOpcUaServerCheckIfReferenceIsValid
+
+- #define :ref:`CHK_OpcUaServerCheckIfReferenceIsValid <group___cmp_o_p_c_u_a_server_itf_1ga09783881c785e037ce052259c5b8886d>` (pfOpcUaServerCheckIfReferenceIsValid != NULL)
+
+- #define :ref:`EXP_OpcUaServerCheckIfReferenceIsValid <group___cmp_o_p_c_u_a_server_itf_1ga981d55475be218b0684130d738540a87>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerCheckIfReferenceIsValid", (RTS_UINTPTR) :ref:`OpcUaServerCheckIfReferenceIsValid <group___cmp_o_p_c_u_a_server_itf_1ga3578151788386611686c858999b7cbbf>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerGetNamespaceIndex <group___cmp_o_p_c_u_a_server_itf_1gad298e94462188218c8d2fd88fb4addfb>` :ref:`PFOPCUASERVERGETNAMESPACEINDEX <group___cmp_o_p_c_u_a_server_itf_1gaf0c3db598e5461e7c413bcdb0112ed4d>` pfOpcUaServerGetNamespaceIndex;
+
+- #define :ref:`EXT_OpcUaServerGetNamespaceIndex <group___cmp_o_p_c_u_a_server_itf_1ga5d2706c3f07abc2de4a7e2eb08280bd5>` extern :ref:`PFOPCUASERVERGETNAMESPACEINDEX <group___cmp_o_p_c_u_a_server_itf_1gaf0c3db598e5461e7c413bcdb0112ed4d>` pfOpcUaServerGetNamespaceIndex;
+
+- #define :ref:`GET_OpcUaServerGetNamespaceIndex <group___cmp_o_p_c_u_a_server_itf_1ga3b20eaedd8b0ff1229f163ade6023573>` s_pfCMGetAPI2( "OpcUaServerGetNamespaceIndex", (RTS_VOID_FCTPTR *)&pfOpcUaServerGetNamespaceIndex, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerGetNamespaceIndex <group___cmp_o_p_c_u_a_server_itf_1ga77124054e94dea1fdead2f7b7b9e3e5c>` pfOpcUaServerGetNamespaceIndex
+
+- #define :ref:`CHK_OpcUaServerGetNamespaceIndex <group___cmp_o_p_c_u_a_server_itf_1gacfeb7df960a77cd54d39ea8f54d5d29f>` (pfOpcUaServerGetNamespaceIndex != NULL)
+
+- #define :ref:`EXP_OpcUaServerGetNamespaceIndex <group___cmp_o_p_c_u_a_server_itf_1ga59b40d873451fe174e51e38053a4c0e2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerGetNamespaceIndex", (RTS_UINTPTR) :ref:`OpcUaServerGetNamespaceIndex <group___cmp_o_p_c_u_a_server_itf_1ga79b878aa715b751d83a1c121e93c07a1>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerRegisterNamespace <group___cmp_o_p_c_u_a_server_itf_1gad562d9397da6d70481655e0813dca5f0>` :ref:`PFOPCUASERVERREGISTERNAMESPACE <group___cmp_o_p_c_u_a_server_itf_1gab996fd4d7cf5e311629f5cbc42c94775>` pfOpcUaServerRegisterNamespace;
+
+- #define :ref:`EXT_OpcUaServerRegisterNamespace <group___cmp_o_p_c_u_a_server_itf_1ga0f18c7b82a46da043e97c06858003cc5>` extern :ref:`PFOPCUASERVERREGISTERNAMESPACE <group___cmp_o_p_c_u_a_server_itf_1gab996fd4d7cf5e311629f5cbc42c94775>` pfOpcUaServerRegisterNamespace;
+
+- #define :ref:`GET_OpcUaServerRegisterNamespace <group___cmp_o_p_c_u_a_server_itf_1gaee5a99ad21f1e72c46e400de6330d66b>` s_pfCMGetAPI2( "OpcUaServerRegisterNamespace", (RTS_VOID_FCTPTR *)&pfOpcUaServerRegisterNamespace, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerRegisterNamespace <group___cmp_o_p_c_u_a_server_itf_1gaa1a70058d05afb93e18df7b9c909cc6f>` pfOpcUaServerRegisterNamespace
+
+- #define :ref:`CHK_OpcUaServerRegisterNamespace <group___cmp_o_p_c_u_a_server_itf_1ga66caaa82ae789b59258220f2c35bd13b>` (pfOpcUaServerRegisterNamespace != NULL)
+
+- #define :ref:`EXP_OpcUaServerRegisterNamespace <group___cmp_o_p_c_u_a_server_itf_1ga3147de59219a732e89efd56fea7ef590>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerRegisterNamespace", (RTS_UINTPTR) :ref:`OpcUaServerRegisterNamespace <group___cmp_o_p_c_u_a_server_itf_1ga59bd82a3f2e58427e82d3b7116053b83>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerParseIndexRange <group___cmp_o_p_c_u_a_server_itf_1ga7b5f42fc4ce25e8617721ec660b87416>` :ref:`PFOPCUASERVERPARSEINDEXRANGE <group___cmp_o_p_c_u_a_server_itf_1ga56bc04725e123cff8881f740929dddb3>` pfOpcUaServerParseIndexRange;
+
+- #define :ref:`EXT_OpcUaServerParseIndexRange <group___cmp_o_p_c_u_a_server_itf_1gadcac7387e002e54b133ff3f72a9e48e5>` extern :ref:`PFOPCUASERVERPARSEINDEXRANGE <group___cmp_o_p_c_u_a_server_itf_1ga56bc04725e123cff8881f740929dddb3>` pfOpcUaServerParseIndexRange;
+
+- #define :ref:`GET_OpcUaServerParseIndexRange <group___cmp_o_p_c_u_a_server_itf_1ga5e0651dec00d198eb6e0bb6a1aa81ac2>` s_pfCMGetAPI2( "OpcUaServerParseIndexRange", (RTS_VOID_FCTPTR *)&pfOpcUaServerParseIndexRange, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerParseIndexRange <group___cmp_o_p_c_u_a_server_itf_1ga06f9fa0f237c7ef6d0b0510e4f061e9c>` pfOpcUaServerParseIndexRange
+
+- #define :ref:`CHK_OpcUaServerParseIndexRange <group___cmp_o_p_c_u_a_server_itf_1ga9e123f7821d2fc6988f35a955dacc67f>` (pfOpcUaServerParseIndexRange != NULL)
+
+- #define :ref:`EXP_OpcUaServerParseIndexRange <group___cmp_o_p_c_u_a_server_itf_1ga0c835ea5fecda64c570e009750848b2f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerParseIndexRange", (RTS_UINTPTR) :ref:`OpcUaServerParseIndexRange <group___cmp_o_p_c_u_a_server_itf_1gaa1395d40ae1c961c9a3220530856b1e7>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerGetMinimumSamplingRate <group___cmp_o_p_c_u_a_server_itf_1ga7084222a8b664a96ac21446a2f3c3558>` :ref:`PFOPCUASERVERGETMINIMUMSAMPLINGRATE <group___cmp_o_p_c_u_a_server_itf_1gad1f541fbf7bf6175e3a98fb812ec31a3>` pfOpcUaServerGetMinimumSamplingRate;
+
+- #define :ref:`EXT_OpcUaServerGetMinimumSamplingRate <group___cmp_o_p_c_u_a_server_itf_1gad5215f872b63bde9155c92deb19ed408>` extern :ref:`PFOPCUASERVERGETMINIMUMSAMPLINGRATE <group___cmp_o_p_c_u_a_server_itf_1gad1f541fbf7bf6175e3a98fb812ec31a3>` pfOpcUaServerGetMinimumSamplingRate;
+
+- #define :ref:`GET_OpcUaServerGetMinimumSamplingRate <group___cmp_o_p_c_u_a_server_itf_1ga3c511d9e556b2a044c67735047a31881>` s_pfCMGetAPI2( "OpcUaServerGetMinimumSamplingRate", (RTS_VOID_FCTPTR *)&pfOpcUaServerGetMinimumSamplingRate, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerGetMinimumSamplingRate <group___cmp_o_p_c_u_a_server_itf_1ga4daecf74fc29e5069855cf20db589583>` pfOpcUaServerGetMinimumSamplingRate
+
+- #define :ref:`CHK_OpcUaServerGetMinimumSamplingRate <group___cmp_o_p_c_u_a_server_itf_1gaa99751aaab07e75f5a57bb98e8610475>` (pfOpcUaServerGetMinimumSamplingRate != NULL)
+
+- #define :ref:`EXP_OpcUaServerGetMinimumSamplingRate <group___cmp_o_p_c_u_a_server_itf_1ga08d54c7f75249dfa30d2d6bbaf84e4dc>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerGetMinimumSamplingRate", (RTS_UINTPTR) :ref:`OpcUaServerGetMinimumSamplingRate <group___cmp_o_p_c_u_a_server_itf_1ga6682590cbc123062e581915b2816f657>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerAddNodes <group___cmp_o_p_c_u_a_server_itf_1gae895bc7350f7f620a112b242fc9944bb>` :ref:`PFOPCUASERVERADDNODES <group___cmp_o_p_c_u_a_server_itf_1ga766a5f6a21a9a1fcb11ac0564aa1349b>` pfOpcUaServerAddNodes;
+
+- #define :ref:`EXT_OpcUaServerAddNodes <group___cmp_o_p_c_u_a_server_itf_1ga99a156168e3613fdefac479a06556707>` extern :ref:`PFOPCUASERVERADDNODES <group___cmp_o_p_c_u_a_server_itf_1ga766a5f6a21a9a1fcb11ac0564aa1349b>` pfOpcUaServerAddNodes;
+
+- #define :ref:`GET_OpcUaServerAddNodes <group___cmp_o_p_c_u_a_server_itf_1ga4b2a869aa0f82bb920fa668925c3e895>` s_pfCMGetAPI2( "OpcUaServerAddNodes", (RTS_VOID_FCTPTR *)&pfOpcUaServerAddNodes, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerAddNodes <group___cmp_o_p_c_u_a_server_itf_1gad8cde37107953a4beaeabc3a160c9b0d>` pfOpcUaServerAddNodes
+
+- #define :ref:`CHK_OpcUaServerAddNodes <group___cmp_o_p_c_u_a_server_itf_1ga664239b3ffba03baec87705c666e6f6d>` (pfOpcUaServerAddNodes != NULL)
+
+- #define :ref:`EXP_OpcUaServerAddNodes <group___cmp_o_p_c_u_a_server_itf_1ga88fa5600bf5d243d3de75f77207fd407>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerAddNodes", (RTS_UINTPTR) :ref:`OpcUaServerAddNodes <group___cmp_o_p_c_u_a_server_itf_1gae04722050790333dfa6aeec15389a524>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerAddReferences <group___cmp_o_p_c_u_a_server_itf_1ga50350a32e47e4768f7a89de79f52f61c>` :ref:`PFOPCUASERVERADDREFERENCES <group___cmp_o_p_c_u_a_server_itf_1gabcdc68595c1753c08a26beed3eafcf11>` pfOpcUaServerAddReferences;
+
+- #define :ref:`EXT_OpcUaServerAddReferences <group___cmp_o_p_c_u_a_server_itf_1ga3e2863290edb78323657e1090425af6c>` extern :ref:`PFOPCUASERVERADDREFERENCES <group___cmp_o_p_c_u_a_server_itf_1gabcdc68595c1753c08a26beed3eafcf11>` pfOpcUaServerAddReferences;
+
+- #define :ref:`GET_OpcUaServerAddReferences <group___cmp_o_p_c_u_a_server_itf_1ga2aea99f36a152fbe0a11dd1b236cf08c>` s_pfCMGetAPI2( "OpcUaServerAddReferences", (RTS_VOID_FCTPTR *)&pfOpcUaServerAddReferences, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerAddReferences <group___cmp_o_p_c_u_a_server_itf_1ga08f3fc132ac4ba22480bc6fbee1bfe5d>` pfOpcUaServerAddReferences
+
+- #define :ref:`CHK_OpcUaServerAddReferences <group___cmp_o_p_c_u_a_server_itf_1gafb4e3281dcc2506f3b27417b96f43cd3>` (pfOpcUaServerAddReferences != NULL)
+
+- #define :ref:`EXP_OpcUaServerAddReferences <group___cmp_o_p_c_u_a_server_itf_1gaf7073aa69a187bfbe1fa8bb0e6eefdc1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerAddReferences", (RTS_UINTPTR) :ref:`OpcUaServerAddReferences <group___cmp_o_p_c_u_a_server_itf_1gac1ae80ee7046a1f948dcc819376ec703>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerRemoveNodes <group___cmp_o_p_c_u_a_server_itf_1ga29c18b01e1e32c45ca67e4846aede9a5>` :ref:`PFOPCUASERVERREMOVENODES <group___cmp_o_p_c_u_a_server_itf_1ga06fefcdfb01355ee3f23252f09c0440a>` pfOpcUaServerRemoveNodes;
+
+- #define :ref:`EXT_OpcUaServerRemoveNodes <group___cmp_o_p_c_u_a_server_itf_1gaebcd2df4ef395ee456bdb2b9033e292c>` extern :ref:`PFOPCUASERVERREMOVENODES <group___cmp_o_p_c_u_a_server_itf_1ga06fefcdfb01355ee3f23252f09c0440a>` pfOpcUaServerRemoveNodes;
+
+- #define :ref:`GET_OpcUaServerRemoveNodes <group___cmp_o_p_c_u_a_server_itf_1ga2c78f7e1f8ba468e531d08f704906f69>` s_pfCMGetAPI2( "OpcUaServerRemoveNodes", (RTS_VOID_FCTPTR *)&pfOpcUaServerRemoveNodes, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerRemoveNodes <group___cmp_o_p_c_u_a_server_itf_1ga45193a7bed5b14d6da270e01fd978896>` pfOpcUaServerRemoveNodes
+
+- #define :ref:`CHK_OpcUaServerRemoveNodes <group___cmp_o_p_c_u_a_server_itf_1ga2bf892aefafe3c02f7de42a6228be119>` (pfOpcUaServerRemoveNodes != NULL)
+
+- #define :ref:`EXP_OpcUaServerRemoveNodes <group___cmp_o_p_c_u_a_server_itf_1ga53ffb991964f5eb2fbf07ae8cee66163>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerRemoveNodes", (RTS_UINTPTR) :ref:`OpcUaServerRemoveNodes <group___cmp_o_p_c_u_a_server_itf_1ga1e5c07785779ef4012f95af696fb61ed>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerRegisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1ga787130bf562a2eed7f944c1270161303>` :ref:`PFOPCUASERVERREGISTEREVENTNOTIFIER <group___cmp_o_p_c_u_a_server_itf_1gaf0591079193d2056310ead6959200ea9>` pfOpcUaServerRegisterEventNotifier;
+
+- #define :ref:`EXT_OpcUaServerRegisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1ga7de9ca60c3f3020f81eadfe5d7ee7779>` extern :ref:`PFOPCUASERVERREGISTEREVENTNOTIFIER <group___cmp_o_p_c_u_a_server_itf_1gaf0591079193d2056310ead6959200ea9>` pfOpcUaServerRegisterEventNotifier;
+
+- #define :ref:`GET_OpcUaServerRegisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1ga212c3ad27a7798134989b4d26c077494>` s_pfCMGetAPI2( "OpcUaServerRegisterEventNotifier", (RTS_VOID_FCTPTR *)&pfOpcUaServerRegisterEventNotifier, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerRegisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1gaa04918c72d8e6279f535fd2fcaf15aa0>` pfOpcUaServerRegisterEventNotifier
+
+- #define :ref:`CHK_OpcUaServerRegisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1gadd6a9d9ae4b4c5a532cfdb00cecd2ef5>` (pfOpcUaServerRegisterEventNotifier != NULL)
+
+- #define :ref:`EXP_OpcUaServerRegisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1ga3335e89e0a18f42e81da2e6d051837cc>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerRegisterEventNotifier", (RTS_UINTPTR) :ref:`OpcUaServerRegisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1ga8a10a4a1c433fe7f52eb1c003adbdce2>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerUnregisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1ga38048952b8f0426c2a6f2f9b96931153>` :ref:`PFOPCUASERVERUNREGISTEREVENTNOTIFIER <group___cmp_o_p_c_u_a_server_itf_1gad499a07e3165be517c821491681ca7f8>` pfOpcUaServerUnregisterEventNotifier;
+
+- #define :ref:`EXT_OpcUaServerUnregisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1ga64503552f44e258cc3425a990cb37264>` extern :ref:`PFOPCUASERVERUNREGISTEREVENTNOTIFIER <group___cmp_o_p_c_u_a_server_itf_1gad499a07e3165be517c821491681ca7f8>` pfOpcUaServerUnregisterEventNotifier;
+
+- #define :ref:`GET_OpcUaServerUnregisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1gafe460d7f4fc7d1c63ffffd3e355b1bff>` s_pfCMGetAPI2( "OpcUaServerUnregisterEventNotifier", (RTS_VOID_FCTPTR *)&pfOpcUaServerUnregisterEventNotifier, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerUnregisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1gace9b52e68a0ca5e491cf9edf105b2f02>` pfOpcUaServerUnregisterEventNotifier
+
+- #define :ref:`CHK_OpcUaServerUnregisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1gafb2eafb65804b7435b7a2a3d027d018d>` (pfOpcUaServerUnregisterEventNotifier != NULL)
+
+- #define :ref:`EXP_OpcUaServerUnregisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1ga8c2f67c283b425a7c65fe5570a147752>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerUnregisterEventNotifier", (RTS_UINTPTR) :ref:`OpcUaServerUnregisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1gaee3d73ba6b90b724a5444c28e7706352>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerRegisterEvent <group___cmp_o_p_c_u_a_server_itf_1ga1919bdeb9efd6685578d608458089cae>` :ref:`PFOPCUASERVERREGISTEREVENT <group___cmp_o_p_c_u_a_server_itf_1ga26d6591d3c70683ec22c332f3c9c3ae0>` pfOpcUaServerRegisterEvent;
+
+- #define :ref:`EXT_OpcUaServerRegisterEvent <group___cmp_o_p_c_u_a_server_itf_1ga7fab6919408c202ad1e59bc234810513>` extern :ref:`PFOPCUASERVERREGISTEREVENT <group___cmp_o_p_c_u_a_server_itf_1ga26d6591d3c70683ec22c332f3c9c3ae0>` pfOpcUaServerRegisterEvent;
+
+- #define :ref:`GET_OpcUaServerRegisterEvent <group___cmp_o_p_c_u_a_server_itf_1gaf441ed558c057060730f3f86aaf419ae>` s_pfCMGetAPI2( "OpcUaServerRegisterEvent", (RTS_VOID_FCTPTR *)&pfOpcUaServerRegisterEvent, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerRegisterEvent <group___cmp_o_p_c_u_a_server_itf_1gaf7b978ee608bb59cd2901ec373047c58>` pfOpcUaServerRegisterEvent
+
+- #define :ref:`CHK_OpcUaServerRegisterEvent <group___cmp_o_p_c_u_a_server_itf_1ga0bd43b2dd7d60d5cc22cb83f4baad6f7>` (pfOpcUaServerRegisterEvent != NULL)
+
+- #define :ref:`EXP_OpcUaServerRegisterEvent <group___cmp_o_p_c_u_a_server_itf_1ga352390271175f123fec15d9b57d6da52>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerRegisterEvent", (RTS_UINTPTR) :ref:`OpcUaServerRegisterEvent <group___cmp_o_p_c_u_a_server_itf_1gaabcc9898c5592f7959d5c5f2ca1cc980>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerUnregisterEvent <group___cmp_o_p_c_u_a_server_itf_1ga532bcc56a170cbf9f89450bc199c58c3>` :ref:`PFOPCUASERVERUNREGISTEREVENT <group___cmp_o_p_c_u_a_server_itf_1ga2f14c2a00a32dcf81cee85aac18c3896>` pfOpcUaServerUnregisterEvent;
+
+- #define :ref:`EXT_OpcUaServerUnregisterEvent <group___cmp_o_p_c_u_a_server_itf_1gacec22776795e1d5f8ded1fea7d806bb5>` extern :ref:`PFOPCUASERVERUNREGISTEREVENT <group___cmp_o_p_c_u_a_server_itf_1ga2f14c2a00a32dcf81cee85aac18c3896>` pfOpcUaServerUnregisterEvent;
+
+- #define :ref:`GET_OpcUaServerUnregisterEvent <group___cmp_o_p_c_u_a_server_itf_1ga1d7ff89f8bd41abc1b64c772c8ba8302>` s_pfCMGetAPI2( "OpcUaServerUnregisterEvent", (RTS_VOID_FCTPTR *)&pfOpcUaServerUnregisterEvent, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerUnregisterEvent <group___cmp_o_p_c_u_a_server_itf_1ga610601000162259baa9e780e104c64c9>` pfOpcUaServerUnregisterEvent
+
+- #define :ref:`CHK_OpcUaServerUnregisterEvent <group___cmp_o_p_c_u_a_server_itf_1ga32618eec8699bdc48b84263cf1fedb47>` (pfOpcUaServerUnregisterEvent != NULL)
+
+- #define :ref:`EXP_OpcUaServerUnregisterEvent <group___cmp_o_p_c_u_a_server_itf_1gafe4033c9653a1584ea4b424e7eebafe5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerUnregisterEvent", (RTS_UINTPTR) :ref:`OpcUaServerUnregisterEvent <group___cmp_o_p_c_u_a_server_itf_1gabd3047a67d53d317d32e56821dd5bef6>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerFireEvent <group___cmp_o_p_c_u_a_server_itf_1ga2ab74e2d4d1bc9055c0ff1e00c304fe4>` :ref:`PFOPCUASERVERFIREEVENT <group___cmp_o_p_c_u_a_server_itf_1ga68132b349e9c03ec32aa3c099cd14c69>` pfOpcUaServerFireEvent;
+
+- #define :ref:`EXT_OpcUaServerFireEvent <group___cmp_o_p_c_u_a_server_itf_1ga67cae0055b3c4cb2b0dbcfe894857d9e>` extern :ref:`PFOPCUASERVERFIREEVENT <group___cmp_o_p_c_u_a_server_itf_1ga68132b349e9c03ec32aa3c099cd14c69>` pfOpcUaServerFireEvent;
+
+- #define :ref:`GET_OpcUaServerFireEvent <group___cmp_o_p_c_u_a_server_itf_1gab60ef78591a0d546eea71b35fd7d3f76>` s_pfCMGetAPI2( "OpcUaServerFireEvent", (RTS_VOID_FCTPTR *)&pfOpcUaServerFireEvent, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerFireEvent <group___cmp_o_p_c_u_a_server_itf_1gaa4f5f0ccddc375e83c9aa8cbc5e61ade>` pfOpcUaServerFireEvent
+
+- #define :ref:`CHK_OpcUaServerFireEvent <group___cmp_o_p_c_u_a_server_itf_1gac922e3ea3f2480d433385323bfab1783>` (pfOpcUaServerFireEvent != NULL)
+
+- #define :ref:`EXP_OpcUaServerFireEvent <group___cmp_o_p_c_u_a_server_itf_1gac128330f835a00f40eafa1f6d9b69ae8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerFireEvent", (RTS_UINTPTR) :ref:`OpcUaServerFireEvent <group___cmp_o_p_c_u_a_server_itf_1ga298dec569335db7a6fecf8ebb53e8789>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerIndicateAddressSpaceChange <group___cmp_o_p_c_u_a_server_itf_1ga22c9e5561c7e73b14db12db1309a064b>` :ref:`PFOPCUASERVERINDICATEADDRESSSPACECHANGE <group___cmp_o_p_c_u_a_server_itf_1ga30db46c6362b7af413d7855589d1eff7>` pfOpcUaServerIndicateAddressSpaceChange;
+
+- #define :ref:`EXT_OpcUaServerIndicateAddressSpaceChange <group___cmp_o_p_c_u_a_server_itf_1ga3e86fd9a05030d52fd20a56660e1d708>` extern :ref:`PFOPCUASERVERINDICATEADDRESSSPACECHANGE <group___cmp_o_p_c_u_a_server_itf_1ga30db46c6362b7af413d7855589d1eff7>` pfOpcUaServerIndicateAddressSpaceChange;
+
+- #define :ref:`GET_OpcUaServerIndicateAddressSpaceChange <group___cmp_o_p_c_u_a_server_itf_1gade31781878ae418c2faec1086c06fcfd>` s_pfCMGetAPI2( "OpcUaServerIndicateAddressSpaceChange", (RTS_VOID_FCTPTR *)&pfOpcUaServerIndicateAddressSpaceChange, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerIndicateAddressSpaceChange <group___cmp_o_p_c_u_a_server_itf_1ga09ae22d81f395ffb96fa9e14196926a7>` pfOpcUaServerIndicateAddressSpaceChange
+
+- #define :ref:`CHK_OpcUaServerIndicateAddressSpaceChange <group___cmp_o_p_c_u_a_server_itf_1gae21a44c2cc831435b97d81b0e7fe5ce4>` (pfOpcUaServerIndicateAddressSpaceChange != NULL)
+
+- #define :ref:`EXP_OpcUaServerIndicateAddressSpaceChange <group___cmp_o_p_c_u_a_server_itf_1gab43a1d8ffe04e123c0ce4160f79f9ba8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerIndicateAddressSpaceChange", (RTS_UINTPTR) :ref:`OpcUaServerIndicateAddressSpaceChange <group___cmp_o_p_c_u_a_server_itf_1ga49ea11ce90b9f615326dcdb2847ff7db>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerGetFirstSession <group___cmp_o_p_c_u_a_server_itf_1ga75679133e208129fef72bbbac9031dae>` :ref:`PFOPCUASERVERGETFIRSTSESSION <group___cmp_o_p_c_u_a_server_itf_1ga19ca3f58e92cfadaad291babd950026d>` pfOpcUaServerGetFirstSession;
+
+- #define :ref:`EXT_OpcUaServerGetFirstSession <group___cmp_o_p_c_u_a_server_itf_1ga33252134f6b244b1c7e3f6c2048eecc1>` extern :ref:`PFOPCUASERVERGETFIRSTSESSION <group___cmp_o_p_c_u_a_server_itf_1ga19ca3f58e92cfadaad291babd950026d>` pfOpcUaServerGetFirstSession;
+
+- #define :ref:`GET_OpcUaServerGetFirstSession <group___cmp_o_p_c_u_a_server_itf_1ga8b099471a5601663b8c4b6e94390b332>` s_pfCMGetAPI2( "OpcUaServerGetFirstSession", (RTS_VOID_FCTPTR *)&pfOpcUaServerGetFirstSession, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerGetFirstSession <group___cmp_o_p_c_u_a_server_itf_1gae9942ac6c90631d47f81bb776c84ddd3>` pfOpcUaServerGetFirstSession
+
+- #define :ref:`CHK_OpcUaServerGetFirstSession <group___cmp_o_p_c_u_a_server_itf_1ga45551b5c6b09f211bff6914e1728c1ca>` (pfOpcUaServerGetFirstSession != NULL)
+
+- #define :ref:`EXP_OpcUaServerGetFirstSession <group___cmp_o_p_c_u_a_server_itf_1gac03b7cbfb82de7353d0562d2de732251>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerGetFirstSession", (RTS_UINTPTR) :ref:`OpcUaServerGetFirstSession <group___cmp_o_p_c_u_a_server_itf_1ga40d715d4cd287f1b33cb8ead90a97631>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerGetNextSession <group___cmp_o_p_c_u_a_server_itf_1ga79d0af3b683d9b74687b027b0bfddc13>` :ref:`PFOPCUASERVERGETNEXTSESSION <group___cmp_o_p_c_u_a_server_itf_1ga767815bdac0e47fc3b9de6d6fa436eb6>` pfOpcUaServerGetNextSession;
+
+- #define :ref:`EXT_OpcUaServerGetNextSession <group___cmp_o_p_c_u_a_server_itf_1gabbb34770a901888bf136a22069e0c24f>` extern :ref:`PFOPCUASERVERGETNEXTSESSION <group___cmp_o_p_c_u_a_server_itf_1ga767815bdac0e47fc3b9de6d6fa436eb6>` pfOpcUaServerGetNextSession;
+
+- #define :ref:`GET_OpcUaServerGetNextSession <group___cmp_o_p_c_u_a_server_itf_1gac0807fc8cdf2eb8e48c76abf9e6cb692>` s_pfCMGetAPI2( "OpcUaServerGetNextSession", (RTS_VOID_FCTPTR *)&pfOpcUaServerGetNextSession, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerGetNextSession <group___cmp_o_p_c_u_a_server_itf_1ga5235c711cc7f4f2e7169b837c802f137>` pfOpcUaServerGetNextSession
+
+- #define :ref:`CHK_OpcUaServerGetNextSession <group___cmp_o_p_c_u_a_server_itf_1ga4c53711988981e0fa1b7ceb450711efd>` (pfOpcUaServerGetNextSession != NULL)
+
+- #define :ref:`EXP_OpcUaServerGetNextSession <group___cmp_o_p_c_u_a_server_itf_1gac1d9d3503ac1cf694057c24df31aae3a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerGetNextSession", (RTS_UINTPTR) :ref:`OpcUaServerGetNextSession <group___cmp_o_p_c_u_a_server_itf_1ga8ba493b8b4f1f2b73106a766113366f3>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerGetSessionInfo <group___cmp_o_p_c_u_a_server_itf_1ga64cc001fd339e8ae71e1b33ea3329e47>` :ref:`PFOPCUASERVERGETSESSIONINFO <group___cmp_o_p_c_u_a_server_itf_1gae9f357f1db8c6f1b1b7389fc4ea915d6>` pfOpcUaServerGetSessionInfo;
+
+- #define :ref:`EXT_OpcUaServerGetSessionInfo <group___cmp_o_p_c_u_a_server_itf_1ga22ba3c4a279af88c654b385dbdaa311d>` extern :ref:`PFOPCUASERVERGETSESSIONINFO <group___cmp_o_p_c_u_a_server_itf_1gae9f357f1db8c6f1b1b7389fc4ea915d6>` pfOpcUaServerGetSessionInfo;
+
+- #define :ref:`GET_OpcUaServerGetSessionInfo <group___cmp_o_p_c_u_a_server_itf_1ga5863229e95b21af9ccf849fb36b1407c>` s_pfCMGetAPI2( "OpcUaServerGetSessionInfo", (RTS_VOID_FCTPTR *)&pfOpcUaServerGetSessionInfo, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerGetSessionInfo <group___cmp_o_p_c_u_a_server_itf_1gab5fe3dfc5a3b5e46c55198e5ec605ac6>` pfOpcUaServerGetSessionInfo
+
+- #define :ref:`CHK_OpcUaServerGetSessionInfo <group___cmp_o_p_c_u_a_server_itf_1ga510e9143897dad296697ea5984e61da0>` (pfOpcUaServerGetSessionInfo != NULL)
+
+- #define :ref:`EXP_OpcUaServerGetSessionInfo <group___cmp_o_p_c_u_a_server_itf_1ga08e3d7de6b8807bbab903347f9ffad0b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerGetSessionInfo", (RTS_UINTPTR) :ref:`OpcUaServerGetSessionInfo <group___cmp_o_p_c_u_a_server_itf_1ga2c8e7df1a6e2492fbf16a91e16e3f088>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerCheckAccessRights <group___cmp_o_p_c_u_a_server_itf_1ga6bc0f2684708cbdd47c5992191c9fae8>` :ref:`PFOPCUASERVERCHECKACCESSRIGHTS <group___cmp_o_p_c_u_a_server_itf_1ga8f32bb9c070fabb3bbcb4b7e996328c1>` pfOpcUaServerCheckAccessRights;
+
+- #define :ref:`EXT_OpcUaServerCheckAccessRights <group___cmp_o_p_c_u_a_server_itf_1gab34dae6cd6b95f1c97aaad1cabc58d92>` extern :ref:`PFOPCUASERVERCHECKACCESSRIGHTS <group___cmp_o_p_c_u_a_server_itf_1ga8f32bb9c070fabb3bbcb4b7e996328c1>` pfOpcUaServerCheckAccessRights;
+
+- #define :ref:`GET_OpcUaServerCheckAccessRights <group___cmp_o_p_c_u_a_server_itf_1ga9cd31076625451b6348dff34c4fc5dcd>` s_pfCMGetAPI2( "OpcUaServerCheckAccessRights", (RTS_VOID_FCTPTR *)&pfOpcUaServerCheckAccessRights, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerCheckAccessRights <group___cmp_o_p_c_u_a_server_itf_1ga5c354c441f6c7173b8ef40ef8dab1765>` pfOpcUaServerCheckAccessRights
+
+- #define :ref:`CHK_OpcUaServerCheckAccessRights <group___cmp_o_p_c_u_a_server_itf_1ga32d24f88ed1e189d7aada050e62bfc43>` (pfOpcUaServerCheckAccessRights != NULL)
+
+- #define :ref:`EXP_OpcUaServerCheckAccessRights <group___cmp_o_p_c_u_a_server_itf_1gac47bd31464ddd93f277bc6e9ec845126>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerCheckAccessRights", (RTS_UINTPTR) :ref:`OpcUaServerCheckAccessRights <group___cmp_o_p_c_u_a_server_itf_1ga5fe9ced8e8b9e4b7940485e8afdae306>` , 0, 0)
+
+- #define :ref:`USE_OpcUaServerGetUserHandle <group___cmp_o_p_c_u_a_server_itf_1ga2809655690ac4057f533a60da3778165>` :ref:`PFOPCUASERVERGETUSERHANDLE <group___cmp_o_p_c_u_a_server_itf_1ga2c98513aaec5f87bc585481aa866f2b8>` pfOpcUaServerGetUserHandle;
+
+- #define :ref:`EXT_OpcUaServerGetUserHandle <group___cmp_o_p_c_u_a_server_itf_1gac68ed7187a9974b1b35a099eb8f7570f>` extern :ref:`PFOPCUASERVERGETUSERHANDLE <group___cmp_o_p_c_u_a_server_itf_1ga2c98513aaec5f87bc585481aa866f2b8>` pfOpcUaServerGetUserHandle;
+
+- #define :ref:`GET_OpcUaServerGetUserHandle <group___cmp_o_p_c_u_a_server_itf_1ga7906d38fa636144c0acb430d88e890c1>` s_pfCMGetAPI2( "OpcUaServerGetUserHandle", (RTS_VOID_FCTPTR *)&pfOpcUaServerGetUserHandle, (fl), 0, 0)
+
+- #define :ref:`CAL_OpcUaServerGetUserHandle <group___cmp_o_p_c_u_a_server_itf_1gad88c390308668d749a77f615a8a0b33a>` pfOpcUaServerGetUserHandle
+
+- #define :ref:`CHK_OpcUaServerGetUserHandle <group___cmp_o_p_c_u_a_server_itf_1gaf748c04cfa0467750b8e0b0c76d1cfb5>` (pfOpcUaServerGetUserHandle != NULL)
+
+- #define :ref:`EXP_OpcUaServerGetUserHandle <group___cmp_o_p_c_u_a_server_itf_1ga83a1a8f57b0ed2c55e421cbbacb21db0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerGetUserHandle", (RTS_UINTPTR) :ref:`OpcUaServerGetUserHandle <group___cmp_o_p_c_u_a_server_itf_1gaf0d157d196ea6dd5b9fab621ce98b2a6>` , 0, 0)
+
+- #define :ref:`ITF_CmpOPCUAServer <group___cmp_o_p_c_u_a_server_itf_1gab6f843069ebf7f93626d55fc0cb98e8c>`
+
+- #define :ref:`EXTITF_CmpOPCUAServer <group___cmp_o_p_c_u_a_server_itf_1gaaf4dc48c7edb5c3b0465bf159a437ea5>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`_OpcUaObjectDescription <struct___opc_ua_object_description>` :ref:`OpcUaObjectDescription <group___cmp_o_p_c_u_a_server_itf_1ga110d85df928078c400d4e625fecd096d>`
+
+- typedef struct :ref:`_OpcUaVariableDescription <struct___opc_ua_variable_description>` :ref:`OpcUaVariableDescription <group___cmp_o_p_c_u_a_server_itf_1ga0e85cead952df0dde2d082f2d4c91ba6>`
+
+- typedef struct :ref:`_OpcUaMethodDescription <struct___opc_ua_method_description>` :ref:`OpcUaMethodDescription <group___cmp_o_p_c_u_a_server_itf_1ga24e29be85932f06fe63f214ae847972d>`
+
+- typedef struct :ref:`_OpcUaObjectTypeDescription <struct___opc_ua_object_type_description>` :ref:`OpcUaObjectTypeDescription <group___cmp_o_p_c_u_a_server_itf_1ga0546fc6bd8e114653a25084303e1c9de>`
+
+- typedef struct :ref:`_OpcUaVariableTypeDescription <struct___opc_ua_variable_type_description>` :ref:`OpcUaVariableTypeDescription <group___cmp_o_p_c_u_a_server_itf_1gabae880898cdfe0425d8f6f9c0f26508e>`
+
+- typedef struct :ref:`_OpcUaReferenceTypeDescription <struct___opc_ua_reference_type_description>` :ref:`OpcUaReferenceTypeDescription <group___cmp_o_p_c_u_a_server_itf_1ga64bc9e7b7e4c7c60a6aad45cc25f2ae1>`
+
+- typedef struct :ref:`_OpcUaDataTypeDescription <struct___opc_ua_data_type_description>` :ref:`OpcUaDataTypeDescription <group___cmp_o_p_c_u_a_server_itf_1ga87d8ea5b3dcd0a1d9e3855f88c701d9c>`
+
+- typedef struct :ref:`_OpcUaViewDescription <struct___opc_ua_view_description>` :ref:`OpcUaViewDescription <group___cmp_o_p_c_u_a_server_itf_1ga2c04de11ae77b58697286c32f32f369f>`
+
+- typedef union :ref:`_OpcUaElementDescription <union___opc_ua_element_description>` :ref:`OpcUaElementDescription <group___cmp_o_p_c_u_a_server_itf_1ga3943461372ebc33c5c1ab56b834f03ba>`
+
+- typedef struct :ref:`_OpcUaServerNodeDescription <struct___opc_ua_server_node_description>` :ref:`OpcUaServerNodeDescription <group___cmp_o_p_c_u_a_server_itf_1ga968e0a1636c6375fd12eb1c9ce8e561e>`
+
+- typedef struct :ref:`_OpcUaServerReferenceDescription <struct___opc_ua_server_reference_description>` :ref:`OpcUaServerReferenceDescription <group___cmp_o_p_c_u_a_server_itf_1ga2f2a16973d2a83efa6bf044cf2b0094b>`
+
+- typedef struct :ref:`tagOpcUaServer_Session_Information <structtag_opc_ua_server___session___information>` :ref:`OpcUaServer_Session_Information <group___cmp_o_p_c_u_a_server_itf_1ga7833119fb18e46c173d5f1c30c8ac612>`
+
+- typedef struct :ref:`tagopcuaservergetfirstsession_struct <structtagopcuaservergetfirstsession__struct>` :ref:`opcuaservergetfirstsession_struct <group___cmp_o_p_c_u_a_server_itf_1ga9aef0ca5764eba7c33b30f10ef873e60>`
+
+- typedef void(* :ref:`PFOPCUASERVERGETFIRSTSESSION_IEC <group___cmp_o_p_c_u_a_server_itf_1gabb7fb03cef924d5439d9a2a1b86da049>`)(opcuaservergetfirstsession_struct *p)
+
+- typedef struct :ref:`tagopcuaservergetnextsession_struct <structtagopcuaservergetnextsession__struct>` :ref:`opcuaservergetnextsession_struct <group___cmp_o_p_c_u_a_server_itf_1gafff29acee8aede9af7fae3df4267e23e>`
+
+- typedef void(* :ref:`PFOPCUASERVERGETNEXTSESSION_IEC <group___cmp_o_p_c_u_a_server_itf_1ga0f7ed6cef112e68f4aa52aeeb85c41b1>`)(opcuaservergetnextsession_struct *p)
+
+- typedef struct :ref:`tagopcuaservergetsessioninfo_struct <structtagopcuaservergetsessioninfo__struct>` :ref:`opcuaservergetsessioninfo_struct <group___cmp_o_p_c_u_a_server_itf_1ga0a421a6094ed8ecd5a2ef643a9908fc2>`
+
+- typedef void(* :ref:`PFOPCUASERVERGETSESSIONINFO_IEC <group___cmp_o_p_c_u_a_server_itf_1ga23c70e34698ab98239ae5fc636e1985c>`)(opcuaservergetsessioninfo_struct *p)
+
+- typedef enum :ref:`_NumericRangeType <group___cmp_o_p_c_u_a_server_itf_1gab0c6cdf303b542aca54d491e7d45e078>` :ref:`NumericRangeType <group___cmp_o_p_c_u_a_server_itf_1gaa0fa3b8d06074a2be9b2a5c4b3f6ea9b>`
+
+- typedef struct :ref:`_NumericRange <struct___numeric_range>` :ref:`NumericRange <group___cmp_o_p_c_u_a_server_itf_1gac23f984fd0708176ec4c74208a50a934>`
+
+- typedef struct :ref:`_OpcUaServer_SimpleBrowsePath <struct___opc_ua_server___simple_browse_path>` :ref:`OpcUaServer_BrowsePath <group___cmp_o_p_c_u_a_server_itf_1ga44fcb7e167b616e196c8be375d8e292b>`
+
+- typedef RTS_RESULT(* :ref:`PFOPCUASERVERREGISTERPROVIDER <group___cmp_o_p_c_u_a_server_itf_1gaa74d29d6e20d7887e15a0a80da09c516>`)(OpcUaProvider_Info *providerInterface)
+
+- typedef RTS_RESULT(* :ref:`PFOPCUASERVERUNREGISTERPROVIDER <group___cmp_o_p_c_u_a_server_itf_1ga68f0f2882a70ff77ac0dc0e73cb31e60>`)(OpcUaProvider_Info *providerInterface)
+
+- typedef OpcUa_Boolean(* :ref:`PFOPCUASERVERCHECKREFERENCERECURSIVE <group___cmp_o_p_c_u_a_server_itf_1gae6bf149d86df0df1ed5bb8c477e8b7cc>`)(const OpcUa_NodeId *pRequestedReference, OpcUa_Boolean bIncludeSubtypes, const OpcUa_NodeId *pReferenceToCheck)
+
+- typedef OpcUa_StatusCode(* :ref:`PFOPCUASERVERCHECKIFREFERENCEISVALID <group___cmp_o_p_c_u_a_server_itf_1ga1ae4d94b0b54bab234b82947e693d2e6>`)(const OpcUa_NodeId *pRefTypeId)
+
+- typedef OpcUa_Int16(* :ref:`PFOPCUASERVERGETNAMESPACEINDEX <group___cmp_o_p_c_u_a_server_itf_1gaf0c3db598e5461e7c413bcdb0112ed4d>`)(OpcUa_String *pNamespace)
+
+- typedef OpcUa_Int16(* :ref:`PFOPCUASERVERREGISTERNAMESPACE <group___cmp_o_p_c_u_a_server_itf_1gab996fd4d7cf5e311629f5cbc42c94775>`)(OpcUa_String *pNamespace)
+
+- typedef OpcUa_StatusCode(* :ref:`PFOPCUASERVERPARSEINDEXRANGE <group___cmp_o_p_c_u_a_server_itf_1ga56bc04725e123cff8881f740929dddb3>`)(const OpcUa_String *pString, NumericRange *pRangeArray, OpcUa_UInt32 *pMaxRanges)
+
+- typedef OpcUa_Double(* :ref:`PFOPCUASERVERGETMINIMUMSAMPLINGRATE <group___cmp_o_p_c_u_a_server_itf_1gad1f541fbf7bf6175e3a98fb812ec31a3>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFOPCUASERVERADDNODES <group___cmp_o_p_c_u_a_server_itf_1ga766a5f6a21a9a1fcb11ac0564aa1349b>`)(OpcUaProvider_Info *providerInterface, OpcUaServerNodeDescription *pNodes, RTS_UI32 numNodes)
+
+- typedef RTS_RESULT(* :ref:`PFOPCUASERVERADDREFERENCES <group___cmp_o_p_c_u_a_server_itf_1gabcdc68595c1753c08a26beed3eafcf11>`)(OpcUaServerReferenceDescription *pReferences, RTS_UI32 numReferences)
+
+- typedef RTS_RESULT(* :ref:`PFOPCUASERVERREMOVENODES <group___cmp_o_p_c_u_a_server_itf_1ga06fefcdfb01355ee3f23252f09c0440a>`)(OpcUaProvider_Info *providerInterface)
+
+- typedef RTS_HANDLE(* :ref:`PFOPCUASERVERREGISTEREVENTNOTIFIER <group___cmp_o_p_c_u_a_server_itf_1gaf0591079193d2056310ead6959200ea9>`)(OpcUa_NodeId *pNode, OpcUa_NodeId *pParentNotifier, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFOPCUASERVERUNREGISTEREVENTNOTIFIER <group___cmp_o_p_c_u_a_server_itf_1gad499a07e3165be517c821491681ca7f8>`)(RTS_HANDLE hNotifier)
+
+- typedef RTS_HANDLE(* :ref:`PFOPCUASERVERREGISTEREVENT <group___cmp_o_p_c_u_a_server_itf_1ga26d6591d3c70683ec22c332f3c9c3ae0>`)(OpcUaProvider_Info *providerInterface, OpcUa_NodeId *pEventTypeId, OpcUa_UInt32 ui32NumOfFields, OpcUaServer_BrowsePath *pEventFields, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFOPCUASERVERUNREGISTEREVENT <group___cmp_o_p_c_u_a_server_itf_1ga2f14c2a00a32dcf81cee85aac18c3896>`)(RTS_HANDLE hEvent)
+
+- typedef RTS_RESULT(* :ref:`PFOPCUASERVERFIREEVENT <group___cmp_o_p_c_u_a_server_itf_1ga68132b349e9c03ec32aa3c099cd14c69>`)(RTS_HANDLE hNotifier, RTS_HANDLE hEvent, OpcUa_Variant *pValues)
+
+- typedef RTS_RESULT(* :ref:`PFOPCUASERVERINDICATEADDRESSSPACECHANGE <group___cmp_o_p_c_u_a_server_itf_1ga30db46c6362b7af413d7855589d1eff7>`)(void)
+
+- typedef RTS_UI32(* :ref:`PFOPCUASERVERGETFIRSTSESSION <group___cmp_o_p_c_u_a_server_itf_1ga19ca3f58e92cfadaad291babd950026d>`)(RTS_RESULT *pResult)
+
+- typedef RTS_UI32(* :ref:`PFOPCUASERVERGETNEXTSESSION <group___cmp_o_p_c_u_a_server_itf_1ga767815bdac0e47fc3b9de6d6fa436eb6>`)(RTS_UI32 ui32LastSessionId, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFOPCUASERVERGETSESSIONINFO <group___cmp_o_p_c_u_a_server_itf_1gae9f357f1db8c6f1b1b7389fc4ea915d6>`)(RTS_UI32 ui32SessionId, OpcUaServer_Session_Information *pInformation)
+
+- typedef RTS_RESULT(* :ref:`PFOPCUASERVERCHECKACCESSRIGHTS <group___cmp_o_p_c_u_a_server_itf_1ga8f32bb9c070fabb3bbcb4b7e996328c1>`)(RTS_UI32 ui32SessionId, char *pszObject, RTS_UI32 ui32RequestedRights)
+
+- typedef RTS_HANDLE(* :ref:`PFOPCUASERVERGETUSERHANDLE <group___cmp_o_p_c_u_a_server_itf_1ga2c98513aaec5f87bc585481aa866f2b8>`)(RTS_UI32 ui32SessionId, RTS_RESULT *pResult)
+
+- typedef :ref:`ICmpOPCUAServer_C <struct_i_cmp_o_p_c_u_a_server___c>` :ref:`ICmpOPCUAServer <group___cmp_o_p_c_u_a_server_itf_1ga0ea32d6ccb89865686129ee11a6b6d7f>`
+
+Enumerations
+------------
+
+- enum :ref:`CmpOPCUAServer_SecurityPolicy <group___cmp_o_p_c_u_a_server_itf___security_settings_1gaf882a06e03264a507245389244f411a4>` { :ref:`CmpOPCUAServer_SecurityPolicy_Basic128Rsa15 <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggaf882a06e03264a507245389244f411a4a2176a00803342ccd925ce027fbbe94da>`, :ref:`CmpOPCUAServer_SecurityPolicy_Basic256 <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggaf882a06e03264a507245389244f411a4a1c8fc7e717d63bc63a7d60df38a3863a>`, :ref:`CmpOPCUAServer_SecurityPolicy_Basic256Sha256 <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggaf882a06e03264a507245389244f411a4aed3d5f4f64081337c7a1ffa29e6a0363>` }
+
+- enum :ref:`CmpOPCUAServer_CommunicationMode <group___cmp_o_p_c_u_a_server_itf___security_settings_1gae9836f01a7b15eb0ff6f7663cdd4a649>` { :ref:`CmpOPCUAServer_CommMode_OnlyPlaintext <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggae9836f01a7b15eb0ff6f7663cdd4a649ac76d9f54e18f0148e494eb4b67944c69>`, :ref:`CmpOPCUAServer_CommMode_PlainAndSecure <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggae9836f01a7b15eb0ff6f7663cdd4a649a99d58816b5ef5e5aeedf02a919bf255e>`, :ref:`CmpOPCUAServer_CommMode_MinSigned <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggae9836f01a7b15eb0ff6f7663cdd4a649a7ea57aad7beff0320932f936d54e7626>`, :ref:`CmpOPCUAServer_CommMode_SignedAndEncrypted <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggae9836f01a7b15eb0ff6f7663cdd4a649a3628e3ef0e0d8d5b32d2cd68a1568092>` }
+
+- enum :ref:`CmpOPCUAServer_Activation <group___cmp_o_p_c_u_a_server_itf___security_settings_1gaf15b82c9d21f1caf3beb21c98ceca37c>` { :ref:`CmpOPCUAServer_Deactivated <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggaf15b82c9d21f1caf3beb21c98ceca37ca4efe9d5a483573e33d17a5954e614237>`, :ref:`CmpOPCUAServer_Activated <group___cmp_o_p_c_u_a_server_itf___security_settings_1ggaf15b82c9d21f1caf3beb21c98ceca37caef4552884352a7f63cfb4cc2546b4265>` }
+
+- enum :ref:`CmpOPCUAServer_UserAuthentication <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga8106087e9d7d8f4a0ad85ba31c6968c0>` { :ref:`CmpOPCUAServer_UserAuthentication_Disabled <group___cmp_o_p_c_u_a_server_itf___security_settings_1gga8106087e9d7d8f4a0ad85ba31c6968c0a48846344ef4652a256c6c3cc4382daff>`, :ref:`CmpOPCUAServer_UserAuthentication_Enabled <group___cmp_o_p_c_u_a_server_itf___security_settings_1gga8106087e9d7d8f4a0ad85ba31c6968c0aa621f59ac6d4190aabdcbe0ec3a5ffc4>`, :ref:`CmpOPCUAServer_UserAuthentication_Enforced <group___cmp_o_p_c_u_a_server_itf___security_settings_1gga8106087e9d7d8f4a0ad85ba31c6968c0a28a2b6e7830c6720575f7f0e8f8c3661>` }
+
+- enum :ref:`CmpOPCUAServer_AllowUserPasswordOnPlaintext <group___cmp_o_p_c_u_a_server_itf___security_settings_1ga999f4849a8670bd8ce876108c9c9a9b3>` { :ref:`CmpOPCUAServer_AllowUserPasswordOnPlaintext_Yes <group___cmp_o_p_c_u_a_server_itf___security_settings_1gga999f4849a8670bd8ce876108c9c9a9b3a6de2ce91cca7e6842580d5d068b8c6bf>`, :ref:`CmpOPCUAServer_AllowUserPasswordOnPlaintext_No <group___cmp_o_p_c_u_a_server_itf___security_settings_1gga999f4849a8670bd8ce876108c9c9a9b3a90722b13e0a1b540bdd19199240681d1>` }
+
+- enum :ref:`_NumericRangeType <group___cmp_o_p_c_u_a_server_itf_1gab0c6cdf303b542aca54d491e7d45e078>` { :ref:`RangeType_Index <group___cmp_o_p_c_u_a_server_itf_1ggab0c6cdf303b542aca54d491e7d45e078aac68b38d0ef101b97885fb4bc720b9ff>`, :ref:`RangeType_Range <group___cmp_o_p_c_u_a_server_itf_1ggab0c6cdf303b542aca54d491e7d45e078aa3e2a541d44c3b528149d7a0ba16880f>` }
+
+Functions
+---------
+
+- void :ref:`opcuaservergetfirstsession <group___cmp_o_p_c_u_a_server_itf_1ga0d04523fe213118c3e70ee52769a968e>` (:ref:`opcuaservergetfirstsession_struct <group___cmp_o_p_c_u_a_server_itf_1ga9aef0ca5764eba7c33b30f10ef873e60>` * p)
+
+- void :ref:`opcuaservergetnextsession <group___cmp_o_p_c_u_a_server_itf_1ga778433dfdaa0c00e851a724b44818121>` (:ref:`opcuaservergetnextsession_struct <group___cmp_o_p_c_u_a_server_itf_1gafff29acee8aede9af7fae3df4267e23e>` * p)
+
+- void :ref:`opcuaservergetsessioninfo <group___cmp_o_p_c_u_a_server_itf_1ga95f49471ef5e7c32ca228a7f71d7cef1>` (:ref:`opcuaservergetsessioninfo_struct <group___cmp_o_p_c_u_a_server_itf_1ga0a421a6094ed8ecd5a2ef643a9908fc2>` * p)
+
+- RTS_RESULT :ref:`OpcUaServerRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1ga0cb793c031bcea3bc9bb11cda784a4e7>` (:ref:`OpcUaProvider_Info <group___cmp_o_p_c_u_a_provider_itf__attributeservices_1gaffb1f020f6cd2951b7ca3d81abed4e75>` * providerInterface)
+
+- RTS_RESULT :ref:`OpcUaServerUnRegisterProvider <group___cmp_o_p_c_u_a_server_itf_1gaf4c5e0a98384d6dccf9d897ddbdc8329>` (:ref:`OpcUaProvider_Info <group___cmp_o_p_c_u_a_provider_itf__attributeservices_1gaffb1f020f6cd2951b7ca3d81abed4e75>` * providerInterface)
+
+- OpcUa_Boolean :ref:`OpcUaServerCheckReferenceRecursive <group___cmp_o_p_c_u_a_server_itf_1gafc6ae84c876865bf97dd57b2df6e3b22>` (const OpcUa_NodeId * pRequestedReference, OpcUa_Boolean bIncludeSubtypes, const OpcUa_NodeId * pReferenceToCheck)
+
+- OpcUa_StatusCode :ref:`OpcUaServerCheckIfReferenceIsValid <group___cmp_o_p_c_u_a_server_itf_1ga3578151788386611686c858999b7cbbf>` (const OpcUa_NodeId * pRefTypeId)
+
+- OpcUa_Int16 :ref:`OpcUaServerGetNamespaceIndex <group___cmp_o_p_c_u_a_server_itf_1ga79b878aa715b751d83a1c121e93c07a1>` (OpcUa_String * pNamespace)
+
+- OpcUa_Int16 :ref:`OpcUaServerRegisterNamespace <group___cmp_o_p_c_u_a_server_itf_1ga59bd82a3f2e58427e82d3b7116053b83>` (OpcUa_String * pNamespace)
+
+- OpcUa_StatusCode :ref:`OpcUaServerParseIndexRange <group___cmp_o_p_c_u_a_server_itf_1gaa1395d40ae1c961c9a3220530856b1e7>` (const OpcUa_String * pString, :ref:`NumericRange <group___cmp_o_p_c_u_a_server_itf_1gac23f984fd0708176ec4c74208a50a934>` * pRangeArray, OpcUa_UInt32 * pMaxRanges)
+
+- OpcUa_Double :ref:`OpcUaServerGetMinimumSamplingRate <group___cmp_o_p_c_u_a_server_itf_1ga6682590cbc123062e581915b2816f657>` (void)
+
+- RTS_RESULT :ref:`OpcUaServerAddNodes <group___cmp_o_p_c_u_a_server_itf_1gae04722050790333dfa6aeec15389a524>` (:ref:`OpcUaProvider_Info <group___cmp_o_p_c_u_a_provider_itf__attributeservices_1gaffb1f020f6cd2951b7ca3d81abed4e75>` * providerInterface, :ref:`OpcUaServerNodeDescription <group___cmp_o_p_c_u_a_server_itf_1ga968e0a1636c6375fd12eb1c9ce8e561e>` * pNodes, RTS_UI32 numNodes)
+
+- RTS_RESULT :ref:`OpcUaServerAddReferences <group___cmp_o_p_c_u_a_server_itf_1gac1ae80ee7046a1f948dcc819376ec703>` (:ref:`OpcUaServerReferenceDescription <group___cmp_o_p_c_u_a_server_itf_1ga2f2a16973d2a83efa6bf044cf2b0094b>` * pReferences, RTS_UI32 numReferences)
+
+- RTS_RESULT :ref:`OpcUaServerRemoveNodes <group___cmp_o_p_c_u_a_server_itf_1ga1e5c07785779ef4012f95af696fb61ed>` (:ref:`OpcUaProvider_Info <group___cmp_o_p_c_u_a_provider_itf__attributeservices_1gaffb1f020f6cd2951b7ca3d81abed4e75>` * providerInterface)
+
+- RTS_HANDLE :ref:`OpcUaServerRegisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1ga8a10a4a1c433fe7f52eb1c003adbdce2>` (OpcUa_NodeId * pNode, OpcUa_NodeId * pParentNotifier, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`OpcUaServerUnregisterEventNotifier <group___cmp_o_p_c_u_a_server_itf_1gaee3d73ba6b90b724a5444c28e7706352>` (RTS_HANDLE hNotifier)
+
+- RTS_HANDLE :ref:`OpcUaServerRegisterEvent <group___cmp_o_p_c_u_a_server_itf_1gaabcc9898c5592f7959d5c5f2ca1cc980>` (:ref:`OpcUaProvider_Info <group___cmp_o_p_c_u_a_provider_itf__attributeservices_1gaffb1f020f6cd2951b7ca3d81abed4e75>` * providerInterface, OpcUa_NodeId * pEventTypeId, OpcUa_UInt32 ui32NumOfFields, :ref:`OpcUaServer_BrowsePath <group___cmp_o_p_c_u_a_server_itf_1ga44fcb7e167b616e196c8be375d8e292b>` * pEventFields, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`OpcUaServerUnregisterEvent <group___cmp_o_p_c_u_a_server_itf_1gabd3047a67d53d317d32e56821dd5bef6>` (RTS_HANDLE hEvent)
+
+- RTS_RESULT :ref:`OpcUaServerFireEvent <group___cmp_o_p_c_u_a_server_itf_1ga298dec569335db7a6fecf8ebb53e8789>` (RTS_HANDLE hNotifier, RTS_HANDLE hEvent, OpcUa_Variant * pValues)
+
+- RTS_RESULT :ref:`OpcUaServerIndicateAddressSpaceChange <group___cmp_o_p_c_u_a_server_itf_1ga49ea11ce90b9f615326dcdb2847ff7db>` (void)
+
+- RTS_UI32 :ref:`OpcUaServerGetFirstSession <group___cmp_o_p_c_u_a_server_itf_1ga40d715d4cd287f1b33cb8ead90a97631>` (RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`OpcUaServerGetNextSession <group___cmp_o_p_c_u_a_server_itf_1ga8ba493b8b4f1f2b73106a766113366f3>` (RTS_UI32 ui32LastSessionId, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`OpcUaServerGetSessionInfo <group___cmp_o_p_c_u_a_server_itf_1ga2c8e7df1a6e2492fbf16a91e16e3f088>` (RTS_UI32 ui32SessionId, :ref:`OpcUaServer_Session_Information <group___cmp_o_p_c_u_a_server_itf_1ga7833119fb18e46c173d5f1c30c8ac612>` * pInformation)
+
+- RTS_RESULT :ref:`OpcUaServerCheckAccessRights <group___cmp_o_p_c_u_a_server_itf_1ga5fe9ced8e8b9e4b7940485e8afdae306>` (RTS_UI32 ui32SessionId, char * pszObject, RTS_UI32 ui32RequestedRights)
+
+- RTS_HANDLE :ref:`OpcUaServerGetUserHandle <group___cmp_o_p_c_u_a_server_itf_1gaf0d157d196ea6dd5b9fab621ce98b2a6>` (RTS_UI32 ui32SessionId, RTS_RESULT * pResult)
+
+Detailed Description
+--------------------
+
+Definition in file CmpOPCUAServerItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

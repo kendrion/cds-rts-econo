@@ -1,0 +1,57 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_io_mgr_itf___lock_scopes:
+
+===========
+Lock Scopes
+===========
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Data Structures
+---------------
+
+- struct :ref:`iomgrregisterinstance_struct <structiomgrregisterinstance__struct>`
+
+Macros
+------
+
+- #define :ref:`IOMGR_LOCK_READ_INPUTS <group___cmp_io_mgr_itf___lock_scopes_1ga44ad7b404b82e141718b1c190f49ce42>` UINT32_C(0x0001)
+
+- #define :ref:`IOMGR_LOCK_WRITE_OUTPUTS <group___cmp_io_mgr_itf___lock_scopes_1ga1b88e9b77d258546660d4fb168be8ae4>` UINT32_C(0x0002)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_io_mgr_itf___lock_scopes_1ga44ad7b404b82e141718b1c190f49ce42:
+
+#define IOMGR_LOCK_READ_INPUTS UINT32_C(0x0001)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Scopes for mutual-exclusion locks to be used with the ui32LockScope parameters of the functions :ref:`IoMgrLockEnter() <group___cmp_io_mgr_itf_1ga6a3b8890a62765ebd5902a8219a4856b>` and :ref:`IoMgrLockLeave() <group___cmp_io_mgr_itf_1gad60fc91020763335cd2efea24e149b25>` .
+
+Note: Use both locks IOMGR_LOCK_READ_INPUTS | IOMGR_LOCK_WRITE_OUTPUTS in the function StartBusCycle(). Lock critical sections in :ref:`IoDrvReadInputs() <group___cmp_io_drv_itf_1ga48f414affb4bb84e803e08b48eaa1ea1>` and :ref:`IoDrvStartBusCycle() <group___cmp_io_drv_itf_1ga7712716bf87ce241c22958db3aa19bcc>` .
+
+.. _group___cmp_io_mgr_itf___lock_scopes_1ga1b88e9b77d258546660d4fb168be8ae4:
+
+#define IOMGR_LOCK_WRITE_OUTPUTS UINT32_C(0x0002)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Lock critical sections in :ref:`IoDrvWriteOutputs() <group___cmp_io_drv_itf_1gae25ad6b1f53f6935b17125d9757aad45>` and :ref:`IoDrvStartBusCycle() <group___cmp_io_drv_itf_1ga7712716bf87ce241c22958db3aa19bcc>` .
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

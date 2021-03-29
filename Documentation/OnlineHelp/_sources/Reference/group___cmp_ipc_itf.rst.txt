@@ -1,0 +1,1255 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_ipc_itf:
+
+=========
+CmpIpcItf
+=========
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpIpc.
+
+Detailed Description
+--------------------
+
+Interface of the inter process communication component.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpIpc_C <struct_i_cmp_ipc___c>`
+
+Macros
+------
+
+- #define :ref:`CMPIPC_KEY_SHAREDMEMSIZE <group___cmp_ipc_itf_1ga3f0ea2212adc1feb00a51ebd93b76fef>` "SharedMemSize"
+
+- #define :ref:`CMPIPC_KEY_SHAREDMEMSIZE_DEFAULT <group___cmp_ipc_itf_1gaf7efac259a6064754ecd5125c5351cf8>` INT32_C(5000)
+
+- #define :ref:`CMPIPC_KEY_SHAREDMEM_BASENAME <group___cmp_ipc_itf_1ga584e5423c45ce81a61a83032401e24fb>` "SharedMemBaseName"
+
+- #define :ref:`CMPIPC_KEY_SHAREDMEM_BASENAME_DEFAULT <group___cmp_ipc_itf_1ga5f286add1dbe0dc4be6689325d6fed7c>` "IPC_SHM_"
+
+- #define :ref:`CMPIPC_KEY_IPCTASKINTERVAL <group___cmp_ipc_itf_1gae5eafd46b26aaea016273bf6ebb6953d>` "IpcTaskInterval"
+
+- #define :ref:`CMPIPC_KEY_IPCTASKINTERVAL_DEFAULT <group___cmp_ipc_itf_1ga26a86d7a76cd0ec53bfde10356648924>` INT32_C(20000)
+
+- #define :ref:`CMPIPC_KEY_IPCTASKONEFORALL <group___cmp_ipc_itf_1gaf118a57dff5327d623464a7c93f868c6>` "IpcOneTaskForAll"
+
+- #define :ref:`CMPIPC_KEY_IPCTASKONEFORALL_DEFAULT <group___cmp_ipc_itf_1gafb096260ad0f6fed526b2a154cf794fb>` 0
+
+- #define :ref:`CMPIPC_KEY_IPCPOLLINGWAITTIME <group___cmp_ipc_itf_1ga5c823c17eeffd17e808b4682d9ba5390>` "IpcPollingWaittime"
+
+- #define :ref:`CMPIPC_KEY_IPCPOLLINGWAITTIME_DEFAULT <group___cmp_ipc_itf_1gabd38789bfd0c77f676cb844014518fc5>` 20
+
+- #define :ref:`CMPIPC_KEY_IPCSTARTUPWAITTIME <group___cmp_ipc_itf_1gae2ab1745465340305394b5e8dd897595>` "IpcStartupWaittime"
+
+- #define :ref:`CMPIPC_KEY_IPCSTARTUPWAITTIME_DEFAULT <group___cmp_ipc_itf_1ga113b78f553d42a7f0a019e93a4a0f0e5>` INT32_C(10000)
+
+- #define :ref:`CMPIPC_KEY_EVENTSYNC <group___cmp_ipc_itf_1gac3be6614c0b80d9ab23663ba7e21e158>` "EventSync"
+
+- #define :ref:`CMPIPC_KEY_EVENTSYNC_DEFAULT <group___cmp_ipc_itf_1gac00860c0dc939011d8320490df882605>` 1
+
+- #define :ref:`MAX_METHOD_NAME_LEN <group___cmp_ipc_itf_1gafe1224f1c479805c248f5b106fda51c2>` 40
+
+- #define :ref:`ERR_CHANNELNAMETOOLONG <group___cmp_ipc_itf_1gafd1df491f04d8b0ce95c0d8fc1d647ee>` 0x0500
+
+- #define :ref:`ERR_METHODNAMETOOLONG <group___cmp_ipc_itf_1ga67fba71b7f62949893bccc5b2dea32c6>` 0x0501
+
+- #define :ref:`ERR_INVALIDTYPEFORGETVALUE <group___cmp_ipc_itf_1ga3d1071adb6f734026fde3642ad55bb05>` 0x0502
+
+- #define :ref:`USE_IpcOpen <group___cmp_ipc_itf_1gac2c548f055b16f5f8869e728923f9735>` :ref:`PFIPCOPEN <group___cmp_ipc_itf_1gae76a6d40aa3c7c303ae7f4a642d0b29e>` pfIpcOpen;
+
+- #define :ref:`EXT_IpcOpen <group___cmp_ipc_itf_1ga958c8a0b600a60e02b3233b2b1ba8bee>` extern :ref:`PFIPCOPEN <group___cmp_ipc_itf_1gae76a6d40aa3c7c303ae7f4a642d0b29e>` pfIpcOpen;
+
+- #define :ref:`GET_IpcOpen <group___cmp_ipc_itf_1ga96b930b94a1e00dd785bed18d74f4a52>` s_pfCMGetAPI2( "IpcOpen", (RTS_VOID_FCTPTR *)&pfIpcOpen, (fl), 0, 0)
+
+- #define :ref:`CAL_IpcOpen <group___cmp_ipc_itf_1gaf12f4fbde302aeefe8faebacc48e8d05>` pfIpcOpen
+
+- #define :ref:`CHK_IpcOpen <group___cmp_ipc_itf_1ga9b8bcd3768a6d3d783553eabb037caf3>` (pfIpcOpen != NULL)
+
+- #define :ref:`EXP_IpcOpen <group___cmp_ipc_itf_1gae4f0ff8cdbd497a089f1a8ee6cf9a1dc>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcOpen", (RTS_UINTPTR) :ref:`IpcOpen <group___cmp_ipc_itf_1gaab3148bd70d038274bb87bf09c557c91>` , 0, 0)
+
+- #define :ref:`USE_IpcClose <group___cmp_ipc_itf_1ga17ae2236122bd162424a5a9dca0d48e5>` :ref:`PFIPCCLOSE <group___cmp_ipc_itf_1gaff077237346b227e33c19a9138cb7f95>` pfIpcClose;
+
+- #define :ref:`EXT_IpcClose <group___cmp_ipc_itf_1ga8a4e36eb617f6ced8006d6e3d1c9f6ad>` extern :ref:`PFIPCCLOSE <group___cmp_ipc_itf_1gaff077237346b227e33c19a9138cb7f95>` pfIpcClose;
+
+- #define :ref:`GET_IpcClose <group___cmp_ipc_itf_1ga01bda14db3623b02700a771ee75aaaf5>` s_pfCMGetAPI2( "IpcClose", (RTS_VOID_FCTPTR *)&pfIpcClose, (fl), 0, 0)
+
+- #define :ref:`CAL_IpcClose <group___cmp_ipc_itf_1gaeb9f2c7c3f31c3493c5443c7b7e242d0>` pfIpcClose
+
+- #define :ref:`CHK_IpcClose <group___cmp_ipc_itf_1gab83cbe8644ee533384fcafe5ce1aca7c>` (pfIpcClose != NULL)
+
+- #define :ref:`EXP_IpcClose <group___cmp_ipc_itf_1ga4598ade80f59745acac97a6070b286ab>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcClose", (RTS_UINTPTR) :ref:`IpcClose <group___cmp_ipc_itf_1gad7e7b2d2d662e793c967b62527b27cd9>` , 0, 0)
+
+- #define :ref:`USE_IpcStop <group___cmp_ipc_itf_1gac836aaa4540b9bc5432f17e4efabe6f5>` :ref:`PFIPCSTOP <group___cmp_ipc_itf_1ga48d1087a389720a198860c5eaae50b2d>` pfIpcStop;
+
+- #define :ref:`EXT_IpcStop <group___cmp_ipc_itf_1ga6fd5f0339a2240822b95c935237ac8f2>` extern :ref:`PFIPCSTOP <group___cmp_ipc_itf_1ga48d1087a389720a198860c5eaae50b2d>` pfIpcStop;
+
+- #define :ref:`GET_IpcStop <group___cmp_ipc_itf_1gac826a3edf03aafcb52d4f0de57cc56bc>` s_pfCMGetAPI2( "IpcStop", (RTS_VOID_FCTPTR *)&pfIpcStop, (fl), 0, 0)
+
+- #define :ref:`CAL_IpcStop <group___cmp_ipc_itf_1ga4d7fa8efe298edb087d110059ddfc918>` pfIpcStop
+
+- #define :ref:`CHK_IpcStop <group___cmp_ipc_itf_1ga34f9c4980b781897654f87d00fa15153>` (pfIpcStop != NULL)
+
+- #define :ref:`EXP_IpcStop <group___cmp_ipc_itf_1ga6ef857f90c0a6db819aad40dca0dd2f9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcStop", (RTS_UINTPTR) :ref:`IpcStop <group___cmp_ipc_itf_1ga7a96e02097d8164b8e8e230bbd774b06>` , 0, 0)
+
+- #define :ref:`USE_IpcRegisterHandler <group___cmp_ipc_itf_1ga59de9f59c9536cf0b31fc1fc6c3a8323>` :ref:`PFIPCREGISTERHANDLER <group___cmp_ipc_itf_1ga0f64f47c6432c308fbd2d2a8273041e3>` pfIpcRegisterHandler;
+
+- #define :ref:`EXT_IpcRegisterHandler <group___cmp_ipc_itf_1ga46ec083bf784c9290f111cff4770405c>` extern :ref:`PFIPCREGISTERHANDLER <group___cmp_ipc_itf_1ga0f64f47c6432c308fbd2d2a8273041e3>` pfIpcRegisterHandler;
+
+- #define :ref:`GET_IpcRegisterHandler <group___cmp_ipc_itf_1ga1f713ebc8c8868bf7b2c04baed2cdb71>` s_pfCMGetAPI2( "IpcRegisterHandler", (RTS_VOID_FCTPTR *)&pfIpcRegisterHandler, (fl), 0, 0)
+
+- #define :ref:`CAL_IpcRegisterHandler <group___cmp_ipc_itf_1ga213609f2da7819f3851f8df3a2675fd4>` pfIpcRegisterHandler
+
+- #define :ref:`CHK_IpcRegisterHandler <group___cmp_ipc_itf_1gac6f10cf593887957020c6cef6ddf7cca>` (pfIpcRegisterHandler != NULL)
+
+- #define :ref:`EXP_IpcRegisterHandler <group___cmp_ipc_itf_1ga3a2a3ce529a7a6744097e68d3e159498>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcRegisterHandler", (RTS_UINTPTR) :ref:`IpcRegisterHandler <group___cmp_ipc_itf_1ga0134b4f47e0fa8e5b22ecdb48e430216>` , 0, 0)
+
+- #define :ref:`USE_IpcUnregisterHandler <group___cmp_ipc_itf_1gad28a82b384f92600783642ab20663e43>` :ref:`PFIPCUNREGISTERHANDLER <group___cmp_ipc_itf_1gad1d6103ab08a05997c0fb1fb7e8df6b2>` pfIpcUnregisterHandler;
+
+- #define :ref:`EXT_IpcUnregisterHandler <group___cmp_ipc_itf_1ga17d606730bc9ccc49ebad0da7169e21c>` extern :ref:`PFIPCUNREGISTERHANDLER <group___cmp_ipc_itf_1gad1d6103ab08a05997c0fb1fb7e8df6b2>` pfIpcUnregisterHandler;
+
+- #define :ref:`GET_IpcUnregisterHandler <group___cmp_ipc_itf_1ga48fec37a84394099c411a35539b13f25>` s_pfCMGetAPI2( "IpcUnregisterHandler", (RTS_VOID_FCTPTR *)&pfIpcUnregisterHandler, (fl), 0, 0)
+
+- #define :ref:`CAL_IpcUnregisterHandler <group___cmp_ipc_itf_1gac717e710228d3cb0779cef8d1cbbd791>` pfIpcUnregisterHandler
+
+- #define :ref:`CHK_IpcUnregisterHandler <group___cmp_ipc_itf_1gaac59911de8c3a089b977cb53bba7eaf6>` (pfIpcUnregisterHandler != NULL)
+
+- #define :ref:`EXP_IpcUnregisterHandler <group___cmp_ipc_itf_1ga1e2a0d2285fae806a233871a55721654>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcUnregisterHandler", (RTS_UINTPTR) :ref:`IpcUnregisterHandler <group___cmp_ipc_itf_1ga0df08e420793ddbd324d6a5e29ec7871>` , 0, 0)
+
+- #define :ref:`USE_IpcCall <group___cmp_ipc_itf_1gab9b98ed6af80668ec41c991ef05d3f28>` :ref:`PFIPCCALL <group___cmp_ipc_itf_1gac22cdab90c7da1f4842a80340dd3c8e2>` pfIpcCall;
+
+- #define :ref:`EXT_IpcCall <group___cmp_ipc_itf_1ga40bf9ede6bcb7910fe80a1b9f13da4c2>` extern :ref:`PFIPCCALL <group___cmp_ipc_itf_1gac22cdab90c7da1f4842a80340dd3c8e2>` pfIpcCall;
+
+- #define :ref:`GET_IpcCall <group___cmp_ipc_itf_1ga38042c10e3a019285f93951f852422f0>` s_pfCMGetAPI2( "IpcCall", (RTS_VOID_FCTPTR *)&pfIpcCall, (fl), 0, 0)
+
+- #define :ref:`CAL_IpcCall <group___cmp_ipc_itf_1ga111f098646dfa19feeaf174402f8e663>` pfIpcCall
+
+- #define :ref:`CHK_IpcCall <group___cmp_ipc_itf_1gafe812e04bca09e7091194272f7ba9d8b>` (pfIpcCall != NULL)
+
+- #define :ref:`EXP_IpcCall <group___cmp_ipc_itf_1ga68b964149bf7669c9b6541facc972a3f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcCall", (RTS_UINTPTR) :ref:`IpcCall <group___cmp_ipc_itf_1ga83fc032f7ab9d697abf4b297678c0b12>` , 0, 0)
+
+- #define :ref:`USE_IpcCreateParam <group___cmp_ipc_itf_1ga209645a809180d5924f88671ddc94f46>` :ref:`PFIPCCREATEPARAM <group___cmp_ipc_itf_1gaf3dd57e2cc4ae2c870bb265f82254fe3>` pfIpcCreateParam;
+
+- #define :ref:`EXT_IpcCreateParam <group___cmp_ipc_itf_1ga9d24ce28ff071cd03c608d34a129003f>` extern :ref:`PFIPCCREATEPARAM <group___cmp_ipc_itf_1gaf3dd57e2cc4ae2c870bb265f82254fe3>` pfIpcCreateParam;
+
+- #define :ref:`GET_IpcCreateParam <group___cmp_ipc_itf_1ga98adcd94ee7497b8c255468310dd2dce>` s_pfCMGetAPI2( "IpcCreateParam", (RTS_VOID_FCTPTR *)&pfIpcCreateParam, (fl), 0, 0)
+
+- #define :ref:`CAL_IpcCreateParam <group___cmp_ipc_itf_1ga0e912c94b278f246b962fd9b84d01b53>` pfIpcCreateParam
+
+- #define :ref:`CHK_IpcCreateParam <group___cmp_ipc_itf_1ga8bed36837467a1df08249a02c48aa99d>` (pfIpcCreateParam != NULL)
+
+- #define :ref:`EXP_IpcCreateParam <group___cmp_ipc_itf_1ga9f784bb73298d5bd2ffec0af98b1409b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcCreateParam", (RTS_UINTPTR) :ref:`IpcCreateParam <group___cmp_ipc_itf_1gad7cd6cc7f1f3d20ba68c936efdfe20d9>` , 0, 0)
+
+- #define :ref:`USE_IpcFreeParam <group___cmp_ipc_itf_1ga265482d7d964824fe3e085b63b1b914a>` :ref:`PFIPCFREEPARAM <group___cmp_ipc_itf_1gabad5c27ad40555b5e64d522233f7ef9c>` pfIpcFreeParam;
+
+- #define :ref:`EXT_IpcFreeParam <group___cmp_ipc_itf_1ga915b82d68fa72974876beec4a4510707>` extern :ref:`PFIPCFREEPARAM <group___cmp_ipc_itf_1gabad5c27ad40555b5e64d522233f7ef9c>` pfIpcFreeParam;
+
+- #define :ref:`GET_IpcFreeParam <group___cmp_ipc_itf_1gafb9ebbfc924f95b566614347391bfc5f>` s_pfCMGetAPI2( "IpcFreeParam", (RTS_VOID_FCTPTR *)&pfIpcFreeParam, (fl), 0, 0)
+
+- #define :ref:`CAL_IpcFreeParam <group___cmp_ipc_itf_1gaa35f19754f92979c779f9940b33cf362>` pfIpcFreeParam
+
+- #define :ref:`CHK_IpcFreeParam <group___cmp_ipc_itf_1ga4034874fe57b83ce005dde80a4d24d9e>` (pfIpcFreeParam != NULL)
+
+- #define :ref:`EXP_IpcFreeParam <group___cmp_ipc_itf_1ga89d5daa53422348c549e986159614cca>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcFreeParam", (RTS_UINTPTR) :ref:`IpcFreeParam <group___cmp_ipc_itf_1ga02d8ebd6b0fc57a6fc0c913d704f1d05>` , 0, 0)
+
+- #define :ref:`IPC_TYPE_VOID <group___cmp_ipc_itf_1ga3a8bccbbb2030fd560aa30e9bf0612f4>` 0
+
+- #define :ref:`IPC_TYPE_DWORD <group___cmp_ipc_itf_1ga56444004c530f5277f4a782c3c7036ee>` 1
+
+- #define :ref:`IPC_TYPE_BOOLEAN <group___cmp_ipc_itf_1ga7b810734d042ea0188ee3b8f63a95aac>` 2
+
+- #define :ref:`IPC_TYPE_STRING <group___cmp_ipc_itf_1gade1a0256d84e2458a6c81329d8fb1447>` 3
+
+- #define :ref:`IPC_TYPE_BINARY <group___cmp_ipc_itf_1gaf408ce858a0e324fbc2e3e81b20b75c9>` 4
+
+- #define :ref:`IPC_TYPE_STRUCTURED <group___cmp_ipc_itf_1ga3d66d75108c0e53677f926708ca020c3>` 100
+
+- #define :ref:`USE_IpcParamSetValue <group___cmp_ipc_itf_1gabcfdb8545b06c053dd6e29aca093fada>` :ref:`PFIPCPARAMSETVALUE <group___cmp_ipc_itf_1ga7411c4eb16493941301c4e63a1df2275>` pfIpcParamSetValue;
+
+- #define :ref:`EXT_IpcParamSetValue <group___cmp_ipc_itf_1ga2e19dfadc3d1dfa05c938a5dbc0ff1d1>` extern :ref:`PFIPCPARAMSETVALUE <group___cmp_ipc_itf_1ga7411c4eb16493941301c4e63a1df2275>` pfIpcParamSetValue;
+
+- #define :ref:`GET_IpcParamSetValue <group___cmp_ipc_itf_1ga386d646a59c37a3b193a713b558073af>` s_pfCMGetAPI2( "IpcParamSetValue", (RTS_VOID_FCTPTR *)&pfIpcParamSetValue, (fl), 0, 0)
+
+- #define :ref:`CAL_IpcParamSetValue <group___cmp_ipc_itf_1ga658efe1820c7cf5dc871f1fd8f4e67ba>` pfIpcParamSetValue
+
+- #define :ref:`CHK_IpcParamSetValue <group___cmp_ipc_itf_1ga0f4e5abf79e32be96e4da103aad24f2d>` (pfIpcParamSetValue != NULL)
+
+- #define :ref:`EXP_IpcParamSetValue <group___cmp_ipc_itf_1gac735c8d772b9f67b1d063edfc484213c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcParamSetValue", (RTS_UINTPTR) :ref:`IpcParamSetValue <group___cmp_ipc_itf_1ga2d31f7651db3db6380f07e8a83e94408>` , 0, 0)
+
+- #define :ref:`USE_IpcParamGetValue <group___cmp_ipc_itf_1gaf378063b9f02d2bdd41daea92d6cf218>` :ref:`PFIPCPARAMGETVALUE <group___cmp_ipc_itf_1ga9af1d02842ec15b0a7fc256c031afe65>` pfIpcParamGetValue;
+
+- #define :ref:`EXT_IpcParamGetValue <group___cmp_ipc_itf_1gaa910cfd0b852b78c8927b81bb86a678a>` extern :ref:`PFIPCPARAMGETVALUE <group___cmp_ipc_itf_1ga9af1d02842ec15b0a7fc256c031afe65>` pfIpcParamGetValue;
+
+- #define :ref:`GET_IpcParamGetValue <group___cmp_ipc_itf_1gaa3be68c7f4d0de1524e15b3cb93c9f36>` s_pfCMGetAPI2( "IpcParamGetValue", (RTS_VOID_FCTPTR *)&pfIpcParamGetValue, (fl), 0, 0)
+
+- #define :ref:`CAL_IpcParamGetValue <group___cmp_ipc_itf_1gac937b5441b3d035c907ef902dfe43bb6>` pfIpcParamGetValue
+
+- #define :ref:`CHK_IpcParamGetValue <group___cmp_ipc_itf_1ga11451e369f723b60e594fc9fb1d4eeec>` (pfIpcParamGetValue != NULL)
+
+- #define :ref:`EXP_IpcParamGetValue <group___cmp_ipc_itf_1gac8c784bf817893dab64a4b51aad3022e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcParamGetValue", (RTS_UINTPTR) :ref:`IpcParamGetValue <group___cmp_ipc_itf_1ga615d3d69f6463f741409c25991bd721b>` , 0, 0)
+
+- #define :ref:`USE_IpcParamGetName <group___cmp_ipc_itf_1ga513c51cbf7914b06d44c3d0312920943>` :ref:`PFIPCPARAMGETNAME <group___cmp_ipc_itf_1gaadabcaa435f6349eaaf6f4eba895f1d5>` pfIpcParamGetName;
+
+- #define :ref:`EXT_IpcParamGetName <group___cmp_ipc_itf_1gae0dcda6ff58cb29e865e32279f95dfbe>` extern :ref:`PFIPCPARAMGETNAME <group___cmp_ipc_itf_1gaadabcaa435f6349eaaf6f4eba895f1d5>` pfIpcParamGetName;
+
+- #define :ref:`GET_IpcParamGetName <group___cmp_ipc_itf_1ga8e61b92b5c60ee97af619ad538df51a4>` s_pfCMGetAPI2( "IpcParamGetName", (RTS_VOID_FCTPTR *)&pfIpcParamGetName, (fl), 0, 0)
+
+- #define :ref:`CAL_IpcParamGetName <group___cmp_ipc_itf_1gaa329ffdc80553fdec7463e48f987e318>` pfIpcParamGetName
+
+- #define :ref:`CHK_IpcParamGetName <group___cmp_ipc_itf_1ga1ffc2d7207a0b5940221d63da36bc44e>` (pfIpcParamGetName != NULL)
+
+- #define :ref:`EXP_IpcParamGetName <group___cmp_ipc_itf_1ga59036d7d44fe984d80c59b0a4348af96>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcParamGetName", (RTS_UINTPTR) :ref:`IpcParamGetName <group___cmp_ipc_itf_1ga726789bd7ca629a4ad16f067289897a5>` , 0, 0)
+
+- #define :ref:`USE_IpcParamGetType <group___cmp_ipc_itf_1gaf2965e675ed760608f32a44c1764a15b>` :ref:`PFIPCPARAMGETTYPE <group___cmp_ipc_itf_1gaaeed3757d696090a2ee7e823fe17d27a>` pfIpcParamGetType;
+
+- #define :ref:`EXT_IpcParamGetType <group___cmp_ipc_itf_1ga322e565023a718bf1bb8b7d775f3123f>` extern :ref:`PFIPCPARAMGETTYPE <group___cmp_ipc_itf_1gaaeed3757d696090a2ee7e823fe17d27a>` pfIpcParamGetType;
+
+- #define :ref:`GET_IpcParamGetType <group___cmp_ipc_itf_1gaddc2bec6f2e43a5c9acd16ca4ab1faca>` s_pfCMGetAPI2( "IpcParamGetType", (RTS_VOID_FCTPTR *)&pfIpcParamGetType, (fl), 0, 0)
+
+- #define :ref:`CAL_IpcParamGetType <group___cmp_ipc_itf_1ga13415279a188226c63fe63a585a2b9df>` pfIpcParamGetType
+
+- #define :ref:`CHK_IpcParamGetType <group___cmp_ipc_itf_1ga2f19153a3fe56bcf0e0dd8aa048d1b71>` (pfIpcParamGetType != NULL)
+
+- #define :ref:`EXP_IpcParamGetType <group___cmp_ipc_itf_1ga44182f22ac17bde5c7a95878d03855bf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcParamGetType", (RTS_UINTPTR) :ref:`IpcParamGetType <group___cmp_ipc_itf_1ga9567a2218b160d739573ca100c1fa924>` , 0, 0)
+
+- #define :ref:`USE_IpcParamAddMember <group___cmp_ipc_itf_1ga34348a1b293e43ec0ae1f8c96a5623d2>` :ref:`PFIPCPARAMADDMEMBER <group___cmp_ipc_itf_1gac4ccf5cd1c4d599d2702237802fc830b>` pfIpcParamAddMember;
+
+- #define :ref:`EXT_IpcParamAddMember <group___cmp_ipc_itf_1gae7df95551b7c0cd0f2b623f2fce674d1>` extern :ref:`PFIPCPARAMADDMEMBER <group___cmp_ipc_itf_1gac4ccf5cd1c4d599d2702237802fc830b>` pfIpcParamAddMember;
+
+- #define :ref:`GET_IpcParamAddMember <group___cmp_ipc_itf_1ga6ad846d52f2be7858d774ea4ad456ad3>` s_pfCMGetAPI2( "IpcParamAddMember", (RTS_VOID_FCTPTR *)&pfIpcParamAddMember, (fl), 0, 0)
+
+- #define :ref:`CAL_IpcParamAddMember <group___cmp_ipc_itf_1ga3b7ed175cc7e1da14df5c32daa495413>` pfIpcParamAddMember
+
+- #define :ref:`CHK_IpcParamAddMember <group___cmp_ipc_itf_1gae6ed1d1310dc4f4a546822b48894cc1c>` (pfIpcParamAddMember != NULL)
+
+- #define :ref:`EXP_IpcParamAddMember <group___cmp_ipc_itf_1gaf2ad116a57522f566e951999de2e711f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcParamAddMember", (RTS_UINTPTR) :ref:`IpcParamAddMember <group___cmp_ipc_itf_1gad1f45ec2cadc14ee74805044150c4bd9>` , 0, 0)
+
+- #define :ref:`USE_IpcParamGetMemberCount <group___cmp_ipc_itf_1ga694a00618bc5323d060a5c1addff3742>` :ref:`PFIPCPARAMGETMEMBERCOUNT <group___cmp_ipc_itf_1ga6a104883b63e5afb7fcae653a1c888a7>` pfIpcParamGetMemberCount;
+
+- #define :ref:`EXT_IpcParamGetMemberCount <group___cmp_ipc_itf_1ga1e33928028b9c00ca587afe42e2d18fb>` extern :ref:`PFIPCPARAMGETMEMBERCOUNT <group___cmp_ipc_itf_1ga6a104883b63e5afb7fcae653a1c888a7>` pfIpcParamGetMemberCount;
+
+- #define :ref:`GET_IpcParamGetMemberCount <group___cmp_ipc_itf_1ga1c9829c718b466d5aebe78a0421b1e82>` s_pfCMGetAPI2( "IpcParamGetMemberCount", (RTS_VOID_FCTPTR *)&pfIpcParamGetMemberCount, (fl), 0, 0)
+
+- #define :ref:`CAL_IpcParamGetMemberCount <group___cmp_ipc_itf_1ga17d0fe71468daba42da9d569081aff7c>` pfIpcParamGetMemberCount
+
+- #define :ref:`CHK_IpcParamGetMemberCount <group___cmp_ipc_itf_1gab19dc089a7635a625a944f65f7c74500>` (pfIpcParamGetMemberCount != NULL)
+
+- #define :ref:`EXP_IpcParamGetMemberCount <group___cmp_ipc_itf_1ga0276a26a59b1410e58863dd7e631b2b1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcParamGetMemberCount", (RTS_UINTPTR) :ref:`IpcParamGetMemberCount <group___cmp_ipc_itf_1ga8538db2af41d1d89b8bc03c11531e20b>` , 0, 0)
+
+- #define :ref:`USE_IpcParamGetMember <group___cmp_ipc_itf_1gaa6d60afd0f2312af4d7c56f79310fa98>` :ref:`PFIPCPARAMGETMEMBER <group___cmp_ipc_itf_1ga2ef60cf128c72809b18931ecb7cf2e25>` pfIpcParamGetMember;
+
+- #define :ref:`EXT_IpcParamGetMember <group___cmp_ipc_itf_1ga2b072b43d33f92e99b7f7c729b9af943>` extern :ref:`PFIPCPARAMGETMEMBER <group___cmp_ipc_itf_1ga2ef60cf128c72809b18931ecb7cf2e25>` pfIpcParamGetMember;
+
+- #define :ref:`GET_IpcParamGetMember <group___cmp_ipc_itf_1ga4c9b525526b6f58052623f36b0d6e58f>` s_pfCMGetAPI2( "IpcParamGetMember", (RTS_VOID_FCTPTR *)&pfIpcParamGetMember, (fl), 0, 0)
+
+- #define :ref:`CAL_IpcParamGetMember <group___cmp_ipc_itf_1ga949bb5d6324e6a8aab1b946fa81c1a10>` pfIpcParamGetMember
+
+- #define :ref:`CHK_IpcParamGetMember <group___cmp_ipc_itf_1ga9c02c16640d302f70b39842ac3db48da>` (pfIpcParamGetMember != NULL)
+
+- #define :ref:`EXP_IpcParamGetMember <group___cmp_ipc_itf_1ga8c102019efcebdd8809b90bb58dbb80e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcParamGetMember", (RTS_UINTPTR) :ref:`IpcParamGetMember <group___cmp_ipc_itf_1ga1dea6656dcea4f18cdf4191ee128233e>` , 0, 0)
+
+- #define :ref:`ITF_CmpIpc <group___cmp_ipc_itf_1ga51b21a1d08b665e93353cbfc2e575a13>`
+
+- #define :ref:`EXTITF_CmpIpc <group___cmp_ipc_itf_1ga338840e3dec38bf544ab0f029f8d4f7f>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFIPCOPEN <group___cmp_ipc_itf_1gae76a6d40aa3c7c303ae7f4a642d0b29e>`)(char *pszName, RTS_HANDLE *phReturn)
+
+- typedef RTS_RESULT(* :ref:`PFIPCCLOSE <group___cmp_ipc_itf_1gaff077237346b227e33c19a9138cb7f95>`)(RTS_HANDLE hIpc)
+
+- typedef RTS_RESULT(* :ref:`PFIPCSTOP <group___cmp_ipc_itf_1ga48d1087a389720a198860c5eaae50b2d>`)(RTS_HANDLE hIpc)
+
+- typedef RTS_RESULT(* :ref:`PFIPCHANDLER <group___cmp_ipc_itf_1ga0d3058312a5c77bf38e72dbab88795ce>`)(RTS_HANDLE hParam, RTS_HANDLE *phResultParam, RTS_UINTPTR ulParam)
+
+- typedef RTS_RESULT(* :ref:`PFIPCREGISTERHANDLER <group___cmp_ipc_itf_1ga0f64f47c6432c308fbd2d2a8273041e3>`)(RTS_HANDLE hIpc, char *pszMethod, PFIPCHANDLER pfHandler, RTS_UINTPTR ulParam)
+
+- typedef RTS_RESULT(* :ref:`PFIPCUNREGISTERHANDLER <group___cmp_ipc_itf_1gad1d6103ab08a05997c0fb1fb7e8df6b2>`)(RTS_HANDLE hIpc, char *pszMethod)
+
+- typedef RTS_RESULT(* :ref:`PFIPCCALL <group___cmp_ipc_itf_1gac22cdab90c7da1f4842a80340dd3c8e2>`)(RTS_HANDLE hIpc, char *pszMethod, RTS_HANDLE hParams, RTS_HANDLE *phResult, RTS_UI32 iTimeOutMs)
+
+- typedef RTS_RESULT(* :ref:`PFIPCCREATEPARAM <group___cmp_ipc_itf_1gaf3dd57e2cc4ae2c870bb265f82254fe3>`)(char *pszName, RTS_HANDLE *phResult)
+
+- typedef RTS_RESULT(* :ref:`PFIPCFREEPARAM <group___cmp_ipc_itf_1gabad5c27ad40555b5e64d522233f7ef9c>`)(RTS_HANDLE hParam)
+
+- typedef RTS_RESULT(* :ref:`PFIPCPARAMSETVALUE <group___cmp_ipc_itf_1ga7411c4eb16493941301c4e63a1df2275>`)(RTS_HANDLE hParam, RTS_I32 iType, RTS_SIZE iSize, void *pData)
+
+- typedef RTS_RESULT(* :ref:`PFIPCPARAMGETVALUE <group___cmp_ipc_itf_1ga9af1d02842ec15b0a7fc256c031afe65>`)(RTS_HANDLE hParam, RTS_SIZE *piSize, void *pBuffer)
+
+- typedef RTS_RESULT(* :ref:`PFIPCPARAMGETNAME <group___cmp_ipc_itf_1gaadabcaa435f6349eaaf6f4eba895f1d5>`)(RTS_HANDLE hParam, char **ppszName)
+
+- typedef RTS_RESULT(* :ref:`PFIPCPARAMGETTYPE <group___cmp_ipc_itf_1gaaeed3757d696090a2ee7e823fe17d27a>`)(RTS_HANDLE hParam, RTS_I32 *piType)
+
+- typedef RTS_RESULT(* :ref:`PFIPCPARAMADDMEMBER <group___cmp_ipc_itf_1gac4ccf5cd1c4d599d2702237802fc830b>`)(RTS_HANDLE hParam, RTS_HANDLE hParamMember)
+
+- typedef RTS_RESULT(* :ref:`PFIPCPARAMGETMEMBERCOUNT <group___cmp_ipc_itf_1ga6a104883b63e5afb7fcae653a1c888a7>`)(RTS_HANDLE hParam, RTS_I32 *piCount)
+
+- typedef RTS_RESULT(* :ref:`PFIPCPARAMGETMEMBER <group___cmp_ipc_itf_1ga2ef60cf128c72809b18931ecb7cf2e25>`)(RTS_HANDLE hParam, RTS_I32 iNumber, RTS_HANDLE *phParamMember)
+
+- typedef :ref:`ICmpIpc_C <struct_i_cmp_ipc___c>` :ref:`ICmpIpc <group___cmp_ipc_itf_1ga0bd187da73db3dfbcae15cdfb8ab51fa>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`IpcOpen <group___cmp_ipc_itf_1gaab3148bd70d038274bb87bf09c557c91>` (char * pszName, RTS_HANDLE * phReturn)
+
+- RTS_RESULT :ref:`IpcClose <group___cmp_ipc_itf_1gad7e7b2d2d662e793c967b62527b27cd9>` (RTS_HANDLE hIpc)
+
+- RTS_RESULT :ref:`IpcStop <group___cmp_ipc_itf_1ga7a96e02097d8164b8e8e230bbd774b06>` (RTS_HANDLE hIpc)
+
+- RTS_RESULT :ref:`IpcRegisterHandler <group___cmp_ipc_itf_1ga0134b4f47e0fa8e5b22ecdb48e430216>` (RTS_HANDLE hIpc, char * pszMethod, :ref:`PFIPCHANDLER <group___cmp_ipc_itf_1ga0d3058312a5c77bf38e72dbab88795ce>`  pfHandler, RTS_UINTPTR ulParam)
+
+- RTS_RESULT :ref:`IpcUnregisterHandler <group___cmp_ipc_itf_1ga0df08e420793ddbd324d6a5e29ec7871>` (RTS_HANDLE hIpc, char * pszMethod)
+
+- RTS_RESULT :ref:`IpcCall <group___cmp_ipc_itf_1ga83fc032f7ab9d697abf4b297678c0b12>` (RTS_HANDLE hIpc, char * pszMethod, RTS_HANDLE hParams, RTS_HANDLE * phResult, RTS_UI32 iTimeOutMs)
+
+- RTS_RESULT :ref:`IpcCreateParam <group___cmp_ipc_itf_1gad7cd6cc7f1f3d20ba68c936efdfe20d9>` (char * pszName, RTS_HANDLE * phResult)
+
+- RTS_RESULT :ref:`IpcFreeParam <group___cmp_ipc_itf_1ga02d8ebd6b0fc57a6fc0c913d704f1d05>` (RTS_HANDLE hParam)
+
+- RTS_RESULT :ref:`IpcParamSetValue <group___cmp_ipc_itf_1ga2d31f7651db3db6380f07e8a83e94408>` (RTS_HANDLE hParam, RTS_I32 iType, RTS_SIZE iSize, void * pData)
+
+- RTS_RESULT :ref:`IpcParamGetValue <group___cmp_ipc_itf_1ga615d3d69f6463f741409c25991bd721b>` (RTS_HANDLE hParam, RTS_SIZE * piSize, void * pBuffer)
+
+- RTS_RESULT :ref:`IpcParamGetName <group___cmp_ipc_itf_1ga726789bd7ca629a4ad16f067289897a5>` (RTS_HANDLE hParam, char ** ppszName)
+
+- RTS_RESULT :ref:`IpcParamGetType <group___cmp_ipc_itf_1ga9567a2218b160d739573ca100c1fa924>` (RTS_HANDLE hParam, RTS_I32 * piType)
+
+- RTS_RESULT :ref:`IpcParamAddMember <group___cmp_ipc_itf_1gad1f45ec2cadc14ee74805044150c4bd9>` (RTS_HANDLE hParam, RTS_HANDLE hParamMember)
+
+- RTS_RESULT :ref:`IpcParamGetMemberCount <group___cmp_ipc_itf_1ga8538db2af41d1d89b8bc03c11531e20b>` (RTS_HANDLE hParam, RTS_I32 * piCount)
+
+- RTS_RESULT :ref:`IpcParamGetMember <group___cmp_ipc_itf_1ga1dea6656dcea4f18cdf4191ee128233e>` (RTS_HANDLE hParam, RTS_I32 iNumber, RTS_HANDLE * phParamMember)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_ipc_itf_1ga3f0ea2212adc1feb00a51ebd93b76fef:
+
+#define CMPIPC_KEY_SHAREDMEMSIZE "SharedMemSize"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Setting that decides about the size of the shared memory that is used for the inter process communication. This size limits the maximal size of data that can be transferred withing one call. The size for the data that can be used is about one half of this size for parameters to the call as well as return values.
+
+.. _group___cmp_ipc_itf_1gaf7efac259a6064754ecd5125c5351cf8:
+
+#define CMPIPC_KEY_SHAREDMEMSIZE_DEFAULT INT32_C(5000)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga584e5423c45ce81a61a83032401e24fb:
+
+#define CMPIPC_KEY_SHAREDMEM_BASENAME "SharedMemBaseName"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Setting that decides about base name for the shared memory used for the communication of the channel.
+
+.. _group___cmp_ipc_itf_1ga5f286add1dbe0dc4be6689325d6fed7c:
+
+#define CMPIPC_KEY_SHAREDMEM_BASENAME_DEFAULT "IPC_SHM_"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gae5eafd46b26aaea016273bf6ebb6953d:
+
+#define CMPIPC_KEY_IPCTASKINTERVAL "IpcTaskInterval"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Setting that decides about the interval for the task polling for result or call on a channel. This value is in microseconds.
+
+.. _group___cmp_ipc_itf_1ga26a86d7a76cd0ec53bfde10356648924:
+
+#define CMPIPC_KEY_IPCTASKINTERVAL_DEFAULT INT32_C(20000)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaf118a57dff5327d623464a7c93f868c6:
+
+#define CMPIPC_KEY_IPCTASKONEFORALL "IpcOneTaskForAll"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Setting that decides about whether one task handles all connections. If this setting is active, then usage of event synchronization is not possible at the moment.
+
+.. _group___cmp_ipc_itf_1gafb096260ad0f6fed526b2a154cf794fb:
+
+#define CMPIPC_KEY_IPCTASKONEFORALL_DEFAULT 0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga5c823c17eeffd17e808b4682d9ba5390:
+
+#define CMPIPC_KEY_IPCPOLLINGWAITTIME "IpcPollingWaittime"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Setting that decides about the time the task that is polling for calls or returns will sleep after it has done its work. Increasing this time will reduce CPU load for IPC handling but will also increase the latency for a call or result to be detected. This value is in milliseconds.
+
+.. _group___cmp_ipc_itf_1gabd38789bfd0c77f676cb844014518fc5:
+
+#define CMPIPC_KEY_IPCPOLLINGWAITTIME_DEFAULT 20
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gae2ab1745465340305394b5e8dd897595:
+
+#define CMPIPC_KEY_IPCSTARTUPWAITTIME "IpcStartupWaittime"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Setting that decides about the maximal time a connected client will wait until the connection has been completely initialized by the creating communication partner. This value is in milliseconds.
+
+.. _group___cmp_ipc_itf_1ga113b78f553d42a7f0a019e93a4a0f0e5:
+
+#define CMPIPC_KEY_IPCSTARTUPWAITTIME_DEFAULT INT32_C(10000)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gac3be6614c0b80d9ab23663ba7e21e158:
+
+#define CMPIPC_KEY_EVENTSYNC "EventSync"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Setting that decides about whether this side of an IPC channel should try to use events for faster calls. In fact the usage of events is only possible if both channels support this.
+
+.. _group___cmp_ipc_itf_1gac00860c0dc939011d8320490df882605:
+
+#define CMPIPC_KEY_EVENTSYNC_DEFAULT 1
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gafe1224f1c479805c248f5b106fda51c2:
+
+#define MAX_METHOD_NAME_LEN 40
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gafd1df491f04d8b0ce95c0d8fc1d647ee:
+
+#define ERR_CHANNELNAMETOOLONG 0x0500
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga67fba71b7f62949893bccc5b2dea32c6:
+
+#define ERR_METHODNAMETOOLONG 0x0501
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga3d1071adb6f734026fde3642ad55bb05:
+
+#define ERR_INVALIDTYPEFORGETVALUE 0x0502
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gac2c548f055b16f5f8869e728923f9735:
+
+#define USE_IpcOpen :ref:`PFIPCOPEN <group___cmp_ipc_itf_1gae76a6d40aa3c7c303ae7f4a642d0b29e>` pfIpcOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga958c8a0b600a60e02b3233b2b1ba8bee:
+
+#define EXT_IpcOpen extern :ref:`PFIPCOPEN <group___cmp_ipc_itf_1gae76a6d40aa3c7c303ae7f4a642d0b29e>` pfIpcOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga96b930b94a1e00dd785bed18d74f4a52:
+
+#define GET_IpcOpen s_pfCMGetAPI2( "IpcOpen", (RTS_VOID_FCTPTR *)&pfIpcOpen, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaf12f4fbde302aeefe8faebacc48e8d05:
+
+#define CAL_IpcOpen pfIpcOpen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga9b8bcd3768a6d3d783553eabb037caf3:
+
+#define CHK_IpcOpen (pfIpcOpen != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gae4f0ff8cdbd497a089f1a8ee6cf9a1dc:
+
+#define EXP_IpcOpen s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcOpen", (RTS_UINTPTR) :ref:`IpcOpen <group___cmp_ipc_itf_1gaab3148bd70d038274bb87bf09c557c91>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga17ae2236122bd162424a5a9dca0d48e5:
+
+#define USE_IpcClose :ref:`PFIPCCLOSE <group___cmp_ipc_itf_1gaff077237346b227e33c19a9138cb7f95>` pfIpcClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga8a4e36eb617f6ced8006d6e3d1c9f6ad:
+
+#define EXT_IpcClose extern :ref:`PFIPCCLOSE <group___cmp_ipc_itf_1gaff077237346b227e33c19a9138cb7f95>` pfIpcClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga01bda14db3623b02700a771ee75aaaf5:
+
+#define GET_IpcClose s_pfCMGetAPI2( "IpcClose", (RTS_VOID_FCTPTR *)&pfIpcClose, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaeb9f2c7c3f31c3493c5443c7b7e242d0:
+
+#define CAL_IpcClose pfIpcClose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gab83cbe8644ee533384fcafe5ce1aca7c:
+
+#define CHK_IpcClose (pfIpcClose != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga4598ade80f59745acac97a6070b286ab:
+
+#define EXP_IpcClose s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcClose", (RTS_UINTPTR) :ref:`IpcClose <group___cmp_ipc_itf_1gad7e7b2d2d662e793c967b62527b27cd9>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gac836aaa4540b9bc5432f17e4efabe6f5:
+
+#define USE_IpcStop :ref:`PFIPCSTOP <group___cmp_ipc_itf_1ga48d1087a389720a198860c5eaae50b2d>` pfIpcStop;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga6fd5f0339a2240822b95c935237ac8f2:
+
+#define EXT_IpcStop extern :ref:`PFIPCSTOP <group___cmp_ipc_itf_1ga48d1087a389720a198860c5eaae50b2d>` pfIpcStop;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gac826a3edf03aafcb52d4f0de57cc56bc:
+
+#define GET_IpcStop s_pfCMGetAPI2( "IpcStop", (RTS_VOID_FCTPTR *)&pfIpcStop, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga4d7fa8efe298edb087d110059ddfc918:
+
+#define CAL_IpcStop pfIpcStop
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga34f9c4980b781897654f87d00fa15153:
+
+#define CHK_IpcStop (pfIpcStop != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga6ef857f90c0a6db819aad40dca0dd2f9:
+
+#define EXP_IpcStop s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcStop", (RTS_UINTPTR) :ref:`IpcStop <group___cmp_ipc_itf_1ga7a96e02097d8164b8e8e230bbd774b06>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga59de9f59c9536cf0b31fc1fc6c3a8323:
+
+#define USE_IpcRegisterHandler :ref:`PFIPCREGISTERHANDLER <group___cmp_ipc_itf_1ga0f64f47c6432c308fbd2d2a8273041e3>` pfIpcRegisterHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga46ec083bf784c9290f111cff4770405c:
+
+#define EXT_IpcRegisterHandler extern :ref:`PFIPCREGISTERHANDLER <group___cmp_ipc_itf_1ga0f64f47c6432c308fbd2d2a8273041e3>` pfIpcRegisterHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga1f713ebc8c8868bf7b2c04baed2cdb71:
+
+#define GET_IpcRegisterHandler s_pfCMGetAPI2( "IpcRegisterHandler", (RTS_VOID_FCTPTR *)&pfIpcRegisterHandler, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga213609f2da7819f3851f8df3a2675fd4:
+
+#define CAL_IpcRegisterHandler pfIpcRegisterHandler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gac6f10cf593887957020c6cef6ddf7cca:
+
+#define CHK_IpcRegisterHandler (pfIpcRegisterHandler != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga3a2a3ce529a7a6744097e68d3e159498:
+
+#define EXP_IpcRegisterHandler s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcRegisterHandler", (RTS_UINTPTR) :ref:`IpcRegisterHandler <group___cmp_ipc_itf_1ga0134b4f47e0fa8e5b22ecdb48e430216>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gad28a82b384f92600783642ab20663e43:
+
+#define USE_IpcUnregisterHandler :ref:`PFIPCUNREGISTERHANDLER <group___cmp_ipc_itf_1gad1d6103ab08a05997c0fb1fb7e8df6b2>` pfIpcUnregisterHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga17d606730bc9ccc49ebad0da7169e21c:
+
+#define EXT_IpcUnregisterHandler extern :ref:`PFIPCUNREGISTERHANDLER <group___cmp_ipc_itf_1gad1d6103ab08a05997c0fb1fb7e8df6b2>` pfIpcUnregisterHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga48fec37a84394099c411a35539b13f25:
+
+#define GET_IpcUnregisterHandler s_pfCMGetAPI2( "IpcUnregisterHandler", (RTS_VOID_FCTPTR *)&pfIpcUnregisterHandler, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gac717e710228d3cb0779cef8d1cbbd791:
+
+#define CAL_IpcUnregisterHandler pfIpcUnregisterHandler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaac59911de8c3a089b977cb53bba7eaf6:
+
+#define CHK_IpcUnregisterHandler (pfIpcUnregisterHandler != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga1e2a0d2285fae806a233871a55721654:
+
+#define EXP_IpcUnregisterHandler s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcUnregisterHandler", (RTS_UINTPTR) :ref:`IpcUnregisterHandler <group___cmp_ipc_itf_1ga0df08e420793ddbd324d6a5e29ec7871>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gab9b98ed6af80668ec41c991ef05d3f28:
+
+#define USE_IpcCall :ref:`PFIPCCALL <group___cmp_ipc_itf_1gac22cdab90c7da1f4842a80340dd3c8e2>` pfIpcCall;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga40bf9ede6bcb7910fe80a1b9f13da4c2:
+
+#define EXT_IpcCall extern :ref:`PFIPCCALL <group___cmp_ipc_itf_1gac22cdab90c7da1f4842a80340dd3c8e2>` pfIpcCall;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga38042c10e3a019285f93951f852422f0:
+
+#define GET_IpcCall s_pfCMGetAPI2( "IpcCall", (RTS_VOID_FCTPTR *)&pfIpcCall, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga111f098646dfa19feeaf174402f8e663:
+
+#define CAL_IpcCall pfIpcCall
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gafe812e04bca09e7091194272f7ba9d8b:
+
+#define CHK_IpcCall (pfIpcCall != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga68b964149bf7669c9b6541facc972a3f:
+
+#define EXP_IpcCall s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcCall", (RTS_UINTPTR) :ref:`IpcCall <group___cmp_ipc_itf_1ga83fc032f7ab9d697abf4b297678c0b12>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga209645a809180d5924f88671ddc94f46:
+
+#define USE_IpcCreateParam :ref:`PFIPCCREATEPARAM <group___cmp_ipc_itf_1gaf3dd57e2cc4ae2c870bb265f82254fe3>` pfIpcCreateParam;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga9d24ce28ff071cd03c608d34a129003f:
+
+#define EXT_IpcCreateParam extern :ref:`PFIPCCREATEPARAM <group___cmp_ipc_itf_1gaf3dd57e2cc4ae2c870bb265f82254fe3>` pfIpcCreateParam;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga98adcd94ee7497b8c255468310dd2dce:
+
+#define GET_IpcCreateParam s_pfCMGetAPI2( "IpcCreateParam", (RTS_VOID_FCTPTR *)&pfIpcCreateParam, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga0e912c94b278f246b962fd9b84d01b53:
+
+#define CAL_IpcCreateParam pfIpcCreateParam
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga8bed36837467a1df08249a02c48aa99d:
+
+#define CHK_IpcCreateParam (pfIpcCreateParam != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga9f784bb73298d5bd2ffec0af98b1409b:
+
+#define EXP_IpcCreateParam s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcCreateParam", (RTS_UINTPTR) :ref:`IpcCreateParam <group___cmp_ipc_itf_1gad7cd6cc7f1f3d20ba68c936efdfe20d9>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga265482d7d964824fe3e085b63b1b914a:
+
+#define USE_IpcFreeParam :ref:`PFIPCFREEPARAM <group___cmp_ipc_itf_1gabad5c27ad40555b5e64d522233f7ef9c>` pfIpcFreeParam;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga915b82d68fa72974876beec4a4510707:
+
+#define EXT_IpcFreeParam extern :ref:`PFIPCFREEPARAM <group___cmp_ipc_itf_1gabad5c27ad40555b5e64d522233f7ef9c>` pfIpcFreeParam;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gafb9ebbfc924f95b566614347391bfc5f:
+
+#define GET_IpcFreeParam s_pfCMGetAPI2( "IpcFreeParam", (RTS_VOID_FCTPTR *)&pfIpcFreeParam, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaa35f19754f92979c779f9940b33cf362:
+
+#define CAL_IpcFreeParam pfIpcFreeParam
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga4034874fe57b83ce005dde80a4d24d9e:
+
+#define CHK_IpcFreeParam (pfIpcFreeParam != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga89d5daa53422348c549e986159614cca:
+
+#define EXP_IpcFreeParam s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcFreeParam", (RTS_UINTPTR) :ref:`IpcFreeParam <group___cmp_ipc_itf_1ga02d8ebd6b0fc57a6fc0c913d704f1d05>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga3a8bccbbb2030fd560aa30e9bf0612f4:
+
+#define IPC_TYPE_VOID 0
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga56444004c530f5277f4a782c3c7036ee:
+
+#define IPC_TYPE_DWORD 1
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga7b810734d042ea0188ee3b8f63a95aac:
+
+#define IPC_TYPE_BOOLEAN 2
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gade1a0256d84e2458a6c81329d8fb1447:
+
+#define IPC_TYPE_STRING 3
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaf408ce858a0e324fbc2e3e81b20b75c9:
+
+#define IPC_TYPE_BINARY 4
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga3d66d75108c0e53677f926708ca020c3:
+
+#define IPC_TYPE_STRUCTURED 100
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gabcfdb8545b06c053dd6e29aca093fada:
+
+#define USE_IpcParamSetValue :ref:`PFIPCPARAMSETVALUE <group___cmp_ipc_itf_1ga7411c4eb16493941301c4e63a1df2275>` pfIpcParamSetValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga2e19dfadc3d1dfa05c938a5dbc0ff1d1:
+
+#define EXT_IpcParamSetValue extern :ref:`PFIPCPARAMSETVALUE <group___cmp_ipc_itf_1ga7411c4eb16493941301c4e63a1df2275>` pfIpcParamSetValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga386d646a59c37a3b193a713b558073af:
+
+#define GET_IpcParamSetValue s_pfCMGetAPI2( "IpcParamSetValue", (RTS_VOID_FCTPTR *)&pfIpcParamSetValue, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga658efe1820c7cf5dc871f1fd8f4e67ba:
+
+#define CAL_IpcParamSetValue pfIpcParamSetValue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga0f4e5abf79e32be96e4da103aad24f2d:
+
+#define CHK_IpcParamSetValue (pfIpcParamSetValue != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gac735c8d772b9f67b1d063edfc484213c:
+
+#define EXP_IpcParamSetValue s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcParamSetValue", (RTS_UINTPTR) :ref:`IpcParamSetValue <group___cmp_ipc_itf_1ga2d31f7651db3db6380f07e8a83e94408>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaf378063b9f02d2bdd41daea92d6cf218:
+
+#define USE_IpcParamGetValue :ref:`PFIPCPARAMGETVALUE <group___cmp_ipc_itf_1ga9af1d02842ec15b0a7fc256c031afe65>` pfIpcParamGetValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaa910cfd0b852b78c8927b81bb86a678a:
+
+#define EXT_IpcParamGetValue extern :ref:`PFIPCPARAMGETVALUE <group___cmp_ipc_itf_1ga9af1d02842ec15b0a7fc256c031afe65>` pfIpcParamGetValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaa3be68c7f4d0de1524e15b3cb93c9f36:
+
+#define GET_IpcParamGetValue s_pfCMGetAPI2( "IpcParamGetValue", (RTS_VOID_FCTPTR *)&pfIpcParamGetValue, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gac937b5441b3d035c907ef902dfe43bb6:
+
+#define CAL_IpcParamGetValue pfIpcParamGetValue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga11451e369f723b60e594fc9fb1d4eeec:
+
+#define CHK_IpcParamGetValue (pfIpcParamGetValue != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gac8c784bf817893dab64a4b51aad3022e:
+
+#define EXP_IpcParamGetValue s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcParamGetValue", (RTS_UINTPTR) :ref:`IpcParamGetValue <group___cmp_ipc_itf_1ga615d3d69f6463f741409c25991bd721b>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga513c51cbf7914b06d44c3d0312920943:
+
+#define USE_IpcParamGetName :ref:`PFIPCPARAMGETNAME <group___cmp_ipc_itf_1gaadabcaa435f6349eaaf6f4eba895f1d5>` pfIpcParamGetName;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gae0dcda6ff58cb29e865e32279f95dfbe:
+
+#define EXT_IpcParamGetName extern :ref:`PFIPCPARAMGETNAME <group___cmp_ipc_itf_1gaadabcaa435f6349eaaf6f4eba895f1d5>` pfIpcParamGetName;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga8e61b92b5c60ee97af619ad538df51a4:
+
+#define GET_IpcParamGetName s_pfCMGetAPI2( "IpcParamGetName", (RTS_VOID_FCTPTR *)&pfIpcParamGetName, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaa329ffdc80553fdec7463e48f987e318:
+
+#define CAL_IpcParamGetName pfIpcParamGetName
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga1ffc2d7207a0b5940221d63da36bc44e:
+
+#define CHK_IpcParamGetName (pfIpcParamGetName != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga59036d7d44fe984d80c59b0a4348af96:
+
+#define EXP_IpcParamGetName s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcParamGetName", (RTS_UINTPTR) :ref:`IpcParamGetName <group___cmp_ipc_itf_1ga726789bd7ca629a4ad16f067289897a5>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaf2965e675ed760608f32a44c1764a15b:
+
+#define USE_IpcParamGetType :ref:`PFIPCPARAMGETTYPE <group___cmp_ipc_itf_1gaaeed3757d696090a2ee7e823fe17d27a>` pfIpcParamGetType;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga322e565023a718bf1bb8b7d775f3123f:
+
+#define EXT_IpcParamGetType extern :ref:`PFIPCPARAMGETTYPE <group___cmp_ipc_itf_1gaaeed3757d696090a2ee7e823fe17d27a>` pfIpcParamGetType;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaddc2bec6f2e43a5c9acd16ca4ab1faca:
+
+#define GET_IpcParamGetType s_pfCMGetAPI2( "IpcParamGetType", (RTS_VOID_FCTPTR *)&pfIpcParamGetType, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga13415279a188226c63fe63a585a2b9df:
+
+#define CAL_IpcParamGetType pfIpcParamGetType
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga2f19153a3fe56bcf0e0dd8aa048d1b71:
+
+#define CHK_IpcParamGetType (pfIpcParamGetType != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga44182f22ac17bde5c7a95878d03855bf:
+
+#define EXP_IpcParamGetType s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcParamGetType", (RTS_UINTPTR) :ref:`IpcParamGetType <group___cmp_ipc_itf_1ga9567a2218b160d739573ca100c1fa924>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga34348a1b293e43ec0ae1f8c96a5623d2:
+
+#define USE_IpcParamAddMember :ref:`PFIPCPARAMADDMEMBER <group___cmp_ipc_itf_1gac4ccf5cd1c4d599d2702237802fc830b>` pfIpcParamAddMember;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gae7df95551b7c0cd0f2b623f2fce674d1:
+
+#define EXT_IpcParamAddMember extern :ref:`PFIPCPARAMADDMEMBER <group___cmp_ipc_itf_1gac4ccf5cd1c4d599d2702237802fc830b>` pfIpcParamAddMember;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga6ad846d52f2be7858d774ea4ad456ad3:
+
+#define GET_IpcParamAddMember s_pfCMGetAPI2( "IpcParamAddMember", (RTS_VOID_FCTPTR *)&pfIpcParamAddMember, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga3b7ed175cc7e1da14df5c32daa495413:
+
+#define CAL_IpcParamAddMember pfIpcParamAddMember
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gae6ed1d1310dc4f4a546822b48894cc1c:
+
+#define CHK_IpcParamAddMember (pfIpcParamAddMember != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaf2ad116a57522f566e951999de2e711f:
+
+#define EXP_IpcParamAddMember s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcParamAddMember", (RTS_UINTPTR) :ref:`IpcParamAddMember <group___cmp_ipc_itf_1gad1f45ec2cadc14ee74805044150c4bd9>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga694a00618bc5323d060a5c1addff3742:
+
+#define USE_IpcParamGetMemberCount :ref:`PFIPCPARAMGETMEMBERCOUNT <group___cmp_ipc_itf_1ga6a104883b63e5afb7fcae653a1c888a7>` pfIpcParamGetMemberCount;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga1e33928028b9c00ca587afe42e2d18fb:
+
+#define EXT_IpcParamGetMemberCount extern :ref:`PFIPCPARAMGETMEMBERCOUNT <group___cmp_ipc_itf_1ga6a104883b63e5afb7fcae653a1c888a7>` pfIpcParamGetMemberCount;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga1c9829c718b466d5aebe78a0421b1e82:
+
+#define GET_IpcParamGetMemberCount s_pfCMGetAPI2( "IpcParamGetMemberCount", (RTS_VOID_FCTPTR *)&pfIpcParamGetMemberCount, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga17d0fe71468daba42da9d569081aff7c:
+
+#define CAL_IpcParamGetMemberCount pfIpcParamGetMemberCount
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gab19dc089a7635a625a944f65f7c74500:
+
+#define CHK_IpcParamGetMemberCount (pfIpcParamGetMemberCount != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga0276a26a59b1410e58863dd7e631b2b1:
+
+#define EXP_IpcParamGetMemberCount s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcParamGetMemberCount", (RTS_UINTPTR) :ref:`IpcParamGetMemberCount <group___cmp_ipc_itf_1ga8538db2af41d1d89b8bc03c11531e20b>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaa6d60afd0f2312af4d7c56f79310fa98:
+
+#define USE_IpcParamGetMember :ref:`PFIPCPARAMGETMEMBER <group___cmp_ipc_itf_1ga2ef60cf128c72809b18931ecb7cf2e25>` pfIpcParamGetMember;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga2b072b43d33f92e99b7f7c729b9af943:
+
+#define EXT_IpcParamGetMember extern :ref:`PFIPCPARAMGETMEMBER <group___cmp_ipc_itf_1ga2ef60cf128c72809b18931ecb7cf2e25>` pfIpcParamGetMember;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga4c9b525526b6f58052623f36b0d6e58f:
+
+#define GET_IpcParamGetMember s_pfCMGetAPI2( "IpcParamGetMember", (RTS_VOID_FCTPTR *)&pfIpcParamGetMember, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga949bb5d6324e6a8aab1b946fa81c1a10:
+
+#define CAL_IpcParamGetMember pfIpcParamGetMember
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga9c02c16640d302f70b39842ac3db48da:
+
+#define CHK_IpcParamGetMember (pfIpcParamGetMember != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga8c102019efcebdd8809b90bb58dbb80e:
+
+#define EXP_IpcParamGetMember s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IpcParamGetMember", (RTS_UINTPTR) :ref:`IpcParamGetMember <group___cmp_ipc_itf_1ga1dea6656dcea4f18cdf4191ee128233e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga51b21a1d08b665e93353cbfc2e575a13:
+
+#define ITF_CmpIpc
+^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga338840e3dec38bf544ab0f029f8d4f7f:
+
+#define EXTITF_CmpIpc
+^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_ipc_itf_1gae76a6d40aa3c7c303ae7f4a642d0b29e:
+
+typedef RTS_RESULT( *  PFIPCOPEN) (char *pszName, RTS_HANDLE *phReturn)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaff077237346b227e33c19a9138cb7f95:
+
+typedef RTS_RESULT( *  PFIPCCLOSE) (RTS_HANDLE hIpc)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga48d1087a389720a198860c5eaae50b2d:
+
+typedef RTS_RESULT( *  PFIPCSTOP) (RTS_HANDLE hIpc)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga0d3058312a5c77bf38e72dbab88795ce:
+
+typedef RTS_RESULT( * PFIPCHANDLER) (RTS_HANDLE hParam, RTS_HANDLE *phResultParam, RTS_UINTPTR ulParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Callback function for the IPC-mechanism
+
+**Parameters**
+
++---------+---------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hParam        | Handle to the parameters to this call.                                                                                                               |
++---------+---------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | phResultParam | The result of this call, if RTS_INVALID_HANDLE will be set to this parameter, than a parameter of type IPC_TYPE_VOID will be returned to the caller. |
++---------+---------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulParam       | The parameter registered in IpcRegisterHandler                                                                                                       |
++---------+---------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK or ERR_PARAMETER
+
+.. _group___cmp_ipc_itf_1ga0f64f47c6432c308fbd2d2a8273041e3:
+
+typedef RTS_RESULT( *  PFIPCREGISTERHANDLER) (RTS_HANDLE hIpc, char *pszMethod, PFIPCHANDLER pfHandler, RTS_UINTPTR ulParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gad1d6103ab08a05997c0fb1fb7e8df6b2:
+
+typedef RTS_RESULT( *  PFIPCUNREGISTERHANDLER) (RTS_HANDLE hIpc, char *pszMethod)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gac22cdab90c7da1f4842a80340dd3c8e2:
+
+typedef RTS_RESULT( *  PFIPCCALL) (RTS_HANDLE hIpc, char *pszMethod, RTS_HANDLE hParams, RTS_HANDLE *phResult, RTS_UI32 iTimeOutMs)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaf3dd57e2cc4ae2c870bb265f82254fe3:
+
+typedef RTS_RESULT( *  PFIPCCREATEPARAM) (char *pszName, RTS_HANDLE *phResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gabad5c27ad40555b5e64d522233f7ef9c:
+
+typedef RTS_RESULT( *  PFIPCFREEPARAM) (RTS_HANDLE hParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga7411c4eb16493941301c4e63a1df2275:
+
+typedef RTS_RESULT( *  PFIPCPARAMSETVALUE) (RTS_HANDLE hParam, RTS_I32 iType, RTS_SIZE iSize, void *pData)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga9af1d02842ec15b0a7fc256c031afe65:
+
+typedef RTS_RESULT( *  PFIPCPARAMGETVALUE) (RTS_HANDLE hParam, RTS_SIZE *piSize, void *pBuffer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaadabcaa435f6349eaaf6f4eba895f1d5:
+
+typedef RTS_RESULT( *  PFIPCPARAMGETNAME) (RTS_HANDLE hParam, char **ppszName)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gaaeed3757d696090a2ee7e823fe17d27a:
+
+typedef RTS_RESULT( *  PFIPCPARAMGETTYPE) (RTS_HANDLE hParam, RTS_I32 *piType)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gac4ccf5cd1c4d599d2702237802fc830b:
+
+typedef RTS_RESULT( *  PFIPCPARAMADDMEMBER) (RTS_HANDLE hParam, RTS_HANDLE hParamMember)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga6a104883b63e5afb7fcae653a1c888a7:
+
+typedef RTS_RESULT( *  PFIPCPARAMGETMEMBERCOUNT) (RTS_HANDLE hParam, RTS_I32 *piCount)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga2ef60cf128c72809b18931ecb7cf2e25:
+
+typedef RTS_RESULT( *  PFIPCPARAMGETMEMBER) (RTS_HANDLE hParam, RTS_I32 iNumber, RTS_HANDLE *phParamMember)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga0bd187da73db3dfbcae15cdfb8ab51fa:
+
+typedef ICmpIpc_C ICmpIpc
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_ipc_itf_1gaab3148bd70d038274bb87bf09c557c91:
+
+RTS_RESULT IpcOpen (char *pszName, RTS_HANDLE *phReturn)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1gad7e7b2d2d662e793c967b62527b27cd9:
+
+RTS_RESULT IpcClose (RTS_HANDLE hIpc)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga7a96e02097d8164b8e8e230bbd774b06:
+
+RTS_RESULT IpcStop (RTS_HANDLE hIpc)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function that must be called before unregistering callbacks on the server side of an IPC channel.
+
+**Parameters**
+
++---------+------+------------------------------------------+
+| [in]    | hIpc | Handle to the IPC communication channel. |
++---------+------+------------------------------------------+
+
+**Returns:**
+
+ERR_OK
+
+.. _group___cmp_ipc_itf_1ga0134b4f47e0fa8e5b22ecdb48e430216:
+
+RTS_RESULT IpcRegisterHandler (RTS_HANDLE hIpc, char *pszMethod, PFIPCHANDLER pfHandler, RTS_UINTPTR ulParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Register a handler for a method that should be called via the IPC-mechanism.
+
+**Parameters**
+
++---------+-----------+--------------------------------------------------------------+
+| [in]    | hIpc      | Handle to the IPC-instance                                   |
++---------+-----------+--------------------------------------------------------------+
+| [in]    | pszMethod | Name of the registered method.                               |
++---------+-----------+--------------------------------------------------------------+
+| [in]    | pfHandler | The callback method.                                         |
++---------+-----------+--------------------------------------------------------------+
+| [in]    | ulParam   | A parameter that will be forwarded to each call to pfHandler |
++---------+-----------+--------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK or ERR_PARAMETER
+
+.. _group___cmp_ipc_itf_1ga0df08e420793ddbd324d6a5e29ec7871:
+
+RTS_RESULT IpcUnregisterHandler (RTS_HANDLE hIpc, char *pszMethod)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga83fc032f7ab9d697abf4b297678c0b12:
+
+RTS_RESULT IpcCall (RTS_HANDLE hIpc, char *pszMethod, RTS_HANDLE hParams, RTS_HANDLE *phResult, RTS_UI32 iTimeOutMs)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Call a method via the IPC-mechanism.
+
+**Parameters**
+
++---------+------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hIpc       | Handle to the IPC-instance                                                                                                                                                                           |
++---------+------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pszMethod  | Name of the method to call.                                                                                                                                                                          |
++---------+------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hParams    | The parameter that will be used for the call. In case of RTS_INVALID_HANDLE a parameter of type IPC_TYPE_VOID will be used for the call. The parameter given here must not be freed after a IpcCall! |
++---------+------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | phResult   | The pointer will receive the result of the call. The parameter returned here must be freed after a IpcCall!                                                                                          |
++---------+------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | iTimeOutMs | The maximal time that will be waited for the return of the call                                                                                                                                      |
++---------+------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK if the call succeeded, ERR_PARAMETER in case of invalid parameters to this call, ERR_TIMOUT if the current call timed out or ERR_PENDING if the communication channel is still blocked due to a previously timed out call.
+
+.. _group___cmp_ipc_itf_1gad7cd6cc7f1f3d20ba68c936efdfe20d9:
+
+RTS_RESULT IpcCreateParam (char *pszName, RTS_HANDLE *phResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function creates a new parameter and returns a handle to it.
+
+**Parameters**
+
++---------+----------+-------------------------------------------------------------------+
+| [in]    | pszName  | Optional name of the parameter, may be NULL if no name is needed. |
++---------+----------+-------------------------------------------------------------------+
+| [out]   | phResult | Pointer that will receive the created parameter.                  |
++---------+----------+-------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK or ERR_PARAMETER
+
+.. _group___cmp_ipc_itf_1ga02d8ebd6b0fc57a6fc0c913d704f1d05:
+
+RTS_RESULT IpcFreeParam (RTS_HANDLE hParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function destroys a parameter.
+
+**Parameters**
+
++---------+--------+--------------------------+
+| [in]    | hParam | Handle to the parameter. |
++---------+--------+--------------------------+
+
+**Returns:**
+
+ERR_OK or ERR_PARAMETER
+
+.. _group___cmp_ipc_itf_1ga2d31f7651db3db6380f07e8a83e94408:
+
+RTS_RESULT IpcParamSetValue (RTS_HANDLE hParam, RTS_I32 iType, RTS_SIZE iSize, void *pData)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function sets the value in a parameter. If you call this function on a structured parameter, then all members of the structure will be freed, so they may not be access afterwards.
+
+**Parameters**
+
++---------+-------+---------------------------------------------------------------------------------------------------------+
+| [in]    | iType | The type of the given value, one of the IPC_TYPE_... constants without IPC_TYPE_STRUCTURED.             |
++---------+-------+---------------------------------------------------------------------------------------------------------+
+| [in]    | iSize | This parameter is only needed for types with an unknown size i.e. strings or binary.                    |
++---------+-------+---------------------------------------------------------------------------------------------------------+
+| [out]   | pData | Pointer to the data of the value to set. This data will be copied, so it can be deleted after the call. |
++---------+-------+---------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK or ERR_PARAMETER
+
+.. _group___cmp_ipc_itf_1ga615d3d69f6463f741409c25991bd721b:
+
+RTS_RESULT IpcParamGetValue (RTS_HANDLE hParam, RTS_SIZE *piSize, void *pBuffer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function returns the value of a parameter. The value will be copied to the buffer pointed to by pBuffer.
+
+**Parameters**
+
++---------+---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hParam  | Handle to the parameter                                                                                                                                                                                                                                   |
++---------+---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [inout] | piSize  | Pointer to a int that contains the size of the buffer as an IN-parameter, and after the call will contain the size of the used buffer as an OUT-parameter. For Types with fixed sizes like IPC_TYPE_BOOLEAN or IPC_TYPE_DWORD this parameter may be NULL. |
++---------+---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pBuffer | Buffer where the data should be copied to. If NULL, only the size will be returned.                                                                                                                                                                       |
++---------+---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK or ERR_PARAMETER or ERR_NOBUFFER, if the given size of pBuffer is too small
+
+.. _group___cmp_ipc_itf_1ga726789bd7ca629a4ad16f067289897a5:
+
+RTS_RESULT IpcParamGetName (RTS_HANDLE hParam, char **ppszName)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function retrieves the value of a parameter.
+
+**Parameters**
+
++---------+----------+---------------------------------------------------------------------------------+
+| [in]    | hParam   | Handle to the parameter                                                         |
++---------+----------+---------------------------------------------------------------------------------+
+| [out]   | ppszName | Pointer to a c-string. This string will return the name. It will never be NULL! |
++---------+----------+---------------------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK or ERR_PARAMETER
+
+.. _group___cmp_ipc_itf_1ga9567a2218b160d739573ca100c1fa924:
+
+RTS_RESULT IpcParamGetType (RTS_HANDLE hParam, RTS_I32 *piType)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function returns the type of a given parameter.
+
+**Parameters**
+
++---------+--------+-----------------------------------------------------------------------------------------+
+| [in]    | hParam | Handle to the parameter                                                                 |
++---------+--------+-----------------------------------------------------------------------------------------+
+| [out]   | piType | Pointer that will receive the type of this parameter as one of the IPC_TYPE_... values. |
++---------+--------+-----------------------------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK or ERR_PARAMETER
+
+.. _group___cmp_ipc_itf_1gad1f45ec2cadc14ee74805044150c4bd9:
+
+RTS_RESULT IpcParamAddMember (RTS_HANDLE hParam, RTS_HANDLE hParamMember)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga8538db2af41d1d89b8bc03c11531e20b:
+
+RTS_RESULT IpcParamGetMemberCount (RTS_HANDLE hParam, RTS_I32 *piCount)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_ipc_itf_1ga1dea6656dcea4f18cdf4191ee128233e:
+
+RTS_RESULT IpcParamGetMember (RTS_HANDLE hParam, RTS_I32 iNumber, RTS_HANDLE *phParamMember)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

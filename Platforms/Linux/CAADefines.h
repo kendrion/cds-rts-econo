@@ -18,6 +18,10 @@
 #define CAA_EXIT_CRITSEC(h)		(void)CAL_SysSemLeave(h)
 #define CAA_CLOSE_CRITSEC(h)	(void)CAL_SysSemDelete(h)
 
+#ifndef CL2_NNET  
+  #define CL2_NNET  12	/* Max. Number of physical CANbus Networks */
+#endif
+
 /*Generic CAA defines. Change the defines, before CAADefinesGeneric.h is included.*/
 #include "CAADefinesGeneric.h"
 

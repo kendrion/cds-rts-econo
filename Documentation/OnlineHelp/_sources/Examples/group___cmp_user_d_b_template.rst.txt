@@ -1,0 +1,725 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_user_d_b_template:
+
+=================
+CmpUserDBTemplate
+=================
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+An example on how to implement the user, group, and object databases and their configuration for the user management.
+
+Configuration interfaces are optional and in case they are not needed, they do not need to be initialized, registered and the whole implementation section can be removed.
+
+To change a password, at least CmpUserDBConfig interface must be implemented.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Data Structures
+---------------
+
+- struct :ref:`tagUserDBEntry <structtag_user_d_b_entry>`
+
+- struct :ref:`tagGroupDBEntry <structtag_group_d_b_entry>`
+
+- struct :ref:`tagGroupRightsEntry <structtag_group_rights_entry>`
+
+- struct :ref:`tagObjectEntry <structtag_object_entry>`
+
+- struct :ref:`UserDBTemplate_C <struct_user_d_b_template___c>`
+
+Macros
+------
+
+- #define :ref:`STATICITF_DEF <group___cmp_user_d_b_template_1ga819be70ac9e7f8924fecb7b6db48cc4e>` static
+
+- #define :ref:`DIM <group___cmp_user_d_b_template_1ga3cd6b7e9d8bf36acee07edeb6a94c9f2>` (sizeof(a)/sizeof(a[0]))
+
+- #define :ref:`PWFNAME <group___cmp_user_d_b_template_1ga1f2a038ea0f5ff45e9e2dcb9fb04fe9a>` SYSFILE_INVISIBLE_FILENAME_PREFIX "pwhash.dat"
+
+- #define :ref:`USERDB_TEMPLATE_USERLIST <group___cmp_user_d_b_template_1gaf5e947d3291ead7f1acdbd827c072a2e>` {\
+{ "Administrator", "Administrator" },\
+{ "Developer", "Developer"},\
+{ "Service", "Service"},\
+{ "Watch", "Watch"},\
+{NULL, NULL} \
+}
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagUserDBEntry <structtag_user_d_b_entry>` :ref:`UserDBEntry <group___cmp_user_d_b_template_1gaec7a42f3930d152254c31c5b09ffb3b4>`
+
+- typedef struct :ref:`tagGroupDBEntry <structtag_group_d_b_entry>` :ref:`GroupDBEntry <group___cmp_user_d_b_template_1ga05f9c90c0b2e36c056a465a106552294>`
+
+- typedef struct :ref:`tagGroupRightsEntry <structtag_group_rights_entry>` :ref:`GroupRightsEntry <group___cmp_user_d_b_template_1gad899c2967b9ce71a690ab444c47094d4>`
+
+- typedef struct :ref:`tagObjectEntry <structtag_object_entry>` :ref:`ObjectEntry <group___cmp_user_d_b_template_1gac84c69be9898222f75f9d955e5682111>`
+
+Functions
+---------
+
+- USE_STMT int :ref:`IsAdministatorGroup <group___cmp_user_d_b_template_1gaf2517c16f20cb565086f0b91c168e16c>` (RTS_HANDLE hGroup)
+
+- IMPLEMENT_ADDREF IMPLEMENT_RELEASE static DECLARE_QUERYINTERFACE IBase * :ref:`CreateInstance <group___cmp_user_d_b_template_1gab32049c3b5e4e204734e4ca7d5c54743>` (CLASSID cid, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`DeleteInstance <group___cmp_user_d_b_template_1ga943bdf9b0e320026633f0a53e0595660>` (IBase * pIBase)
+
+- void * :ref:`QueryInterface <group___cmp_user_d_b_template_1gab87fa7a07023ff0e1939f5da37252041>` (IBase * pBase, ITFID iid, RTS_RESULT * pResult)
+
+- DLL_DECL int :ref:`ComponentEntry <group___cmp_user_d_b_template_1ga428e512ef9d385507218f5cb410ecf22>` (INIT_STRUCT * pInitStruct)
+
+- int :ref:`ExportFunctions <group___cmp_user_d_b_template_1ga9b0700711be53a466c6c8494343a465a>` (void)
+
+- int :ref:`ImportFunctions <group___cmp_user_d_b_template_1ga87d62c8eb63af9f15a122c28448733bf>` (void)
+
+- RTS_UI32 :ref:`CmpGetVersion <group___cmp_user_d_b_template_1gacf72d3e99274b04feca13b139859c539>` (void)
+
+- RTS_RESULT :ref:`MakeHash <group___cmp_user_d_b_template_1gaadccedd8abe0a74c30bd3fe8c1b14e35>` (char * pszPassword, RTS_UI8 * pbyHash, RTS_SIZE iLenHash, RTS_UI32 * pulSessionId)
+
+- void :ref:`InitialHashes <group___cmp_user_d_b_template_1gab9c6566e6daa4662503eefcf842f1a0b>` (void)
+
+- void :ref:`CBResetOriginDevice <group___cmp_user_d_b_template_1ga96faafadf14c6e2fd9bc18f6dbd63409>` (EventParam * pEventParam)
+
+- RTS_RESULT :ref:`HookFunction <group___cmp_user_d_b_template_1ga0b2ad195d710768e5fa78879787cd805>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_RESULT :ref:`UserDBAuthenticate <group___cmp_user_d_b_template_1gab861916929111e432ed4c2111c5f94f6>` (RTS_HANDLE hDatabase, char * pszUser, UserMgrCredentials * pCredentials, RTS_UI32 * pUserProperty)
+
+- char * :ref:`UserDBGetFirstUser <group___cmp_user_d_b_template_1ga8465cd56b9a59767f58379f29b5e86e0>` (RTS_HANDLE hDatabase, RTS_HANDLE * hIterator, RTS_UI32 * pUserProperty, RTS_RESULT * pResult)
+
+- char * :ref:`UserDBGetNextUser <group___cmp_user_d_b_template_1ga0db241a332e91f25995abc8839fcc924>` (RTS_HANDLE hDatabase, RTS_HANDLE * hIterator, RTS_UI32 * pUserProperty, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UserDBConfigRelease <group___cmp_user_d_b_template_1ga6afef81dbab71a52c0d1c411456b34cf>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserDBConfigImport <group___cmp_user_d_b_template_1ga8b94682ecca3dee34fafe1e14647e004>` (RTS_HANDLE hDatabase, RTS_UI8 * pData, RTS_SIZE dataSize)
+
+- RTS_SIZE :ref:`UserDBConfigExport <group___cmp_user_d_b_template_1gab3544789d4f87afe3593ff0343944614>` (RTS_HANDLE hDatabase, RTS_UI8 * pData, RTS_SIZE maxSize, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UserDBConfigAddUser <group___cmp_user_d_b_template_1gaac5ef60d769779161b3405287aca6182>` (RTS_HANDLE hDatabase, char * pszUser, UserMgrCredentials * pCredentials)
+
+- RTS_BOOL :ref:`UserDBConfigExistsUser <group___cmp_user_d_b_template_1ga594742bdb5f6b3f998d935ec60ff81a3>` (RTS_HANDLE hDatabase, char * pszUser)
+
+- RTS_RESULT :ref:`UserDBConfigRemoveUser <group___cmp_user_d_b_template_1gaafe5de3748bd4383d7f3140649655b87>` (RTS_HANDLE hDatabase, char * pszUser)
+
+- RTS_RESULT :ref:`UserDBConfigSetUserCredentials <group___cmp_user_d_b_template_1ga2de815686a9ae42e24baa70a59a7df7f>` (RTS_HANDLE hDatabase, char * pszUser, UserMgrCredentials * pCredentials)
+
+- RTS_UI32 :ref:`UserDBConfigGetUserProperty <group___cmp_user_d_b_template_1ga6cbd645bb0663f04fe3e59201bb9beab>` (RTS_HANDLE hDatabase, char * pszUser, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UserDBConfigSetUserProperty <group___cmp_user_d_b_template_1ga27134018b22432fb567fa70cd6e05592>` (RTS_HANDLE hDatabase, char * pszUser, RTS_UI32 property)
+
+- RTS_HANDLE :ref:`UserGroupsDBGetGroup <group___cmp_user_d_b_template_1ga18eb4475427c674f20798afd98766e05>` (RTS_HANDLE hDatabase, char * pszGroupName, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserGroupsDBGetFirstGroup <group___cmp_user_d_b_template_1ga3d0dc11b6ba4b61fd9c29cede3e9d404>` (RTS_HANDLE hDatabase, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserGroupsDBGetNextGroup <group___cmp_user_d_b_template_1ga9cf95e86bf2f06facc2a4fa12699d22f>` (RTS_HANDLE hDatabase, RTS_HANDLE hPrevGroup, RTS_RESULT * pResult)
+
+- char * :ref:`UserGroupsDBGetName <group___cmp_user_d_b_template_1ga681ab9bece3d501bbc0f7b1d3790cb7d>` (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`UserGroupsDBGetProperty <group___cmp_user_d_b_template_1gab7b5b9a713a074e8b0e75697585feec1>` (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UserGroupsDBGroupHasUser <group___cmp_user_d_b_template_1ga5610388aa4920aaa6ea1d989ad7e292f>` (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, char * pszUser)
+
+- RTS_RESULT :ref:`UserGroupsDBGroupHasMember <group___cmp_user_d_b_template_1ga977ab91966f96e128673f5e7b1e93caf>` (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE hGroupMember)
+
+- char * :ref:`UserGroupsDBGetFirstUser <group___cmp_user_d_b_template_1gac2fa22b0bd446e0b2b534863c128beb7>` (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE * phIterator, RTS_RESULT * pResult)
+
+- char * :ref:`UserGroupsDBGetNextUser <group___cmp_user_d_b_template_1gacc40a7c332b9eb157c9b1ec054196cc7>` (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE * phIterator, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserGroupsDBGetFirstGroupMember <group___cmp_user_d_b_template_1ga16012f099b7ca51109ad12df7acd1eeb>` (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserGroupsDBGetNextGroupMember <group___cmp_user_d_b_template_1ga9868e76f00a820aae4528c01f33f0529>` (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE hPrevMember, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UserGroupsDBConfigRelease <group___cmp_user_d_b_template_1gaa35cdae6f80fc027f2a0ad5ac45f2c10>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserGroupsDBConfigImport <group___cmp_user_d_b_template_1ga67814d5335d40a4f4c67a83e0cdd36e5>` (RTS_HANDLE hDatabase, RTS_UI8 * pData, RTS_SIZE dataSize)
+
+- RTS_SIZE :ref:`UserGroupsDBConfigExport <group___cmp_user_d_b_template_1ga9f7987d5c8421f746447367cef0689cc>` (RTS_HANDLE hDatabase, RTS_UI8 * pData, RTS_SIZE maxSize, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UserGroupsDBConfigAdd <group___cmp_user_d_b_template_1gade38203718437c62a1a170124c97007c>` (RTS_HANDLE hDatabase, char * pszGroup)
+
+- RTS_RESULT :ref:`UserGroupsDBConfigRemove <group___cmp_user_d_b_template_1ga60670fac7a69e4e515f593d822f9b4f8>` (RTS_HANDLE hDatabase, char * pszGroup)
+
+- RTS_RESULT :ref:`UserGroupsDBConfigSetProperty <group___cmp_user_d_b_template_1ga51d19cbcfc6ba8021c2f973c176f2eaa>` (RTS_HANDLE hDatabase, char * pszGroup, RTS_UI32 ulProperty)
+
+- RTS_RESULT :ref:`UserGroupsDBConfigAddUser <group___cmp_user_d_b_template_1gabd0c9aaa2278d52c368f5e7609af17cc>` (RTS_HANDLE hDatabase, char * pszGroup, char * pszUser)
+
+- RTS_RESULT :ref:`UserGroupsDBConfigRemoveUser <group___cmp_user_d_b_template_1gaf40b8db1a228dc9713739a98438fbd40>` (RTS_HANDLE hDatabase, char * pszGroup, char * pszUser)
+
+- RTS_RESULT :ref:`UserGroupsDBConfigAddMember <group___cmp_user_d_b_template_1gaf8c4098457988215b6c2e42d3d8fed9d>` (RTS_HANDLE hDatabase, char * pszGroup, char * pszGroupToAdd)
+
+- RTS_RESULT :ref:`UserGroupsDBConfigRemoveMember <group___cmp_user_d_b_template_1ga46e08479cd72c30860860b848a56be2a>` (RTS_HANDLE hDatabase, char * pszGroup, char * pszGroupToRemove)
+
+- RTS_RESULT :ref:`UserDBEnforce <group___cmp_user_d_b_template_1gaa5ee74b96fe4b1b446e838f6c4fed7eb>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserObjectsDBGetUsedRights <group___cmp_user_d_b_template_1ga933ea4517c383800479e0e10ca5a8473>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 * pulUsedRights)
+
+- RTS_RESULT :ref:`UserObjectsDBGetProperties <group___cmp_user_d_b_template_1ga729e652b6df6895648ddbe5567694781>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 * pulProperties)
+
+- RTS_RESULT :ref:`UserObjectsDBGetID <group___cmp_user_d_b_template_1ga872a9c872084a26f25decd96a1a376c8>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 * pulID)
+
+- RTS_HANDLE :ref:`UserObjectsDBGetFirst <group___cmp_user_d_b_template_1ga94b0692adee0d500cd58165da86861a9>` (RTS_HANDLE hDatabase, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserObjectsDBGetNext <group___cmp_user_d_b_template_1ga5aac58b7d106bb39ab91f838b232f576>` (RTS_HANDLE hDatabase, RTS_HANDLE hPrevObject, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserObjectsDBGetFirstChild <group___cmp_user_d_b_template_1ga56195ee4a3769e9f779915347abea75c>` (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserObjectsDBGetNextChild <group___cmp_user_d_b_template_1gafba0a9c77366db2f82facf219f8ab7cc>` (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserObjectsDBGetFather <group___cmp_user_d_b_template_1ga1a519cd37e1f1d28a7d5bb6199ce5909>` (RTS_HANDLE hDatabase, RTS_HANDLE hChildObject, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserObjectsDBGetFirstGroup <group___cmp_user_d_b_template_1ga606ff966cdbaac3acaa8f02183bf7afa>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserObjectsDBGetNextGroup <group___cmp_user_d_b_template_1ga31b45646c2b05a5631908450a9414be2>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`FindObject <group___cmp_user_d_b_template_1ga643e111d4c0f4203c6e01ad90f39906e>` (char * pszObject, int nLen, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserObjectsDBOpen <group___cmp_user_d_b_template_1ga9e65e4c8d10c2af445178de4d999fba5>` (RTS_HANDLE hDatabase, char * pszObject, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UserObjectsDBClose <group___cmp_user_d_b_template_1ga92066bb0699ff52753ba8fc98a291622>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject)
+
+- RTS_RESULT :ref:`UserObjectsDBGetName <group___cmp_user_d_b_template_1gaf01883f23e8451e1b889935155eb78f3>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char * pszObject, int * piMaxLen)
+
+- RTS_RESULT :ref:`UserObjectsDBGetPath <group___cmp_user_d_b_template_1ga4be2fb97b4713a235a556bacb94f1d2c>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char * pszObject, int * piMaxLen)
+
+- RTS_RESULT :ref:`UserObjectsDBGetGroupRights <group___cmp_user_d_b_template_1ga8eed9d5a3e06532331371e6f5af7f8da>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 * pulRights, RTS_UI32 * pulDeniedRights)
+
+- RTS_RESULT :ref:`CheckAccessRights <group___cmp_user_d_b_template_1gaddbace6ca247db256c3c411cec1c7125>` (RTS_UI32 ulRequestedRights, RTS_UI32 ulObjectRights, RTS_UI32 ulObjectDeniedRights)
+
+- RTS_RESULT :ref:`UserObjectsDBHasRights <group___cmp_user_d_b_template_1ga12277666e1bc3f58322c1e3582f031e7>` (RTS_HANDLE hDatabase, char * pszObject, RTS_HANDLE hUser, RTS_UI32 ulRights)
+
+- RTS_RESULT :ref:`ObjectGetRights <group___cmp_user_d_b_template_1gae35fc1b8c0da9b2b0a695276ff2de080>` (RTS_HANDLE hObject, RTS_HANDLE hUser, RTS_UI32 * pulRights, RTS_UI32 * pulDeniedRights)
+
+- RTS_RESULT :ref:`UserObjectsDBGetRights <group___cmp_user_d_b_template_1ga8b7ebaea3f15dbe56112b7f617e1908a>` (RTS_HANDLE hDatabase, char * pszObject, RTS_HANDLE hUser, RTS_UI32 * pulRights, RTS_UI32 * pulDeniedRights)
+
+- RTS_RESULT :ref:`UserObjectsDBActivate <group___cmp_user_d_b_template_1gaf6c646e2aace81352b9884ac545894eb>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserObjectsDBConfigLoad <group___cmp_user_d_b_template_1ga730687b4590eba55244e1fe2e0a728df>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserObjectsDBConfigStore <group___cmp_user_d_b_template_1ga66d8a5bd4ac027243a7078a794f9fde8>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserObjectsDBConfigReleaseRights <group___cmp_user_d_b_template_1ga6261626be05289e3ebac6ccf5633e367>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserObjectsDBConfigRelease <group___cmp_user_d_b_template_1ga43b3b31445af3d65e64f488c466188ab>` (RTS_HANDLE hDatabase)
+
+- RTS_HANDLE :ref:`UserObjectsDBConfigAdd <group___cmp_user_d_b_template_1gabefd112fccae722e2321258a3ac202c4>` (RTS_HANDLE hDatabase, char * pszObject, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserObjectsDBConfigAdd2 <group___cmp_user_d_b_template_1ga0be998d0c9dd02abff2353255697aed0>` (RTS_HANDLE hDatabase, char * pszObject, RTS_UI32 properties, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UserObjectsDBConfigRemove <group___cmp_user_d_b_template_1gac6d9599b682043da54f62dffea0c1636>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject)
+
+- RTS_HANDLE :ref:`UserObjectsDBConfigAddChild <group___cmp_user_d_b_template_1ga75aaa162612c946d2d5021918c35e4eb>` (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, char * pszObject, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UserObjectsDBConfigSetUsedRights <group___cmp_user_d_b_template_1ga9f9366eff8e4f71ded2ed66152723136>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 ulUsedRights)
+
+- RTS_RESULT :ref:`UserObjectsDBConfigSetID <group___cmp_user_d_b_template_1gaf6466cde3af285c1e1a11133ab1864a5>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 ulID)
+
+- RTS_RESULT :ref:`UserObjectsDBConfigAddGroup <group___cmp_user_d_b_template_1ga0aeaea801c2848c8ba360f1592d13702>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup)
+
+- RTS_RESULT :ref:`UserObjectsDBConfigRemoveGroup <group___cmp_user_d_b_template_1ga7f6d2f0eb19a27b43e72b22a02ba87dc>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup)
+
+- RTS_RESULT :ref:`UserObjectsDBConfigSetGroupRights <group___cmp_user_d_b_template_1ga276a8fd111138ac03cb4e4835c8724f4>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulRights)
+
+- RTS_RESULT :ref:`UserObjectsDBConfigSetGroupDeniedRights <group___cmp_user_d_b_template_1gae17458f7126afe255f6b9c6a4fa83e62>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulDeniedRights)
+
+- RTS_RESULT :ref:`UserObjectsDBConfigClearRights <group___cmp_user_d_b_template_1gab6da566412032d5b928c514bce6e3882>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_user_d_b_template_1ga819be70ac9e7f8924fecb7b6db48cc4e:
+
+#define STATICITF_DEF static
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga3cd6b7e9d8bf36acee07edeb6a94c9f2:
+
+#define DIM (sizeof(a)/sizeof(a[0]))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga1f2a038ea0f5ff45e9e2dcb9fb04fe9a:
+
+#define PWFNAME SYSFILE_INVISIBLE_FILENAME_PREFIX "pwhash.dat"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gaf5e947d3291ead7f1acdbd827c072a2e:
+
+#define USERDB_TEMPLATE_USERLIST
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Value:**
+
+.. parsed-literal::
+
+    {\\
+    { "Administrator", "Administrator" },\\
+    { "Developer", "Developer"},\\
+    { "Service", "Service"},\\
+    { "Watch", "Watch"},\\
+    {NULL, NULL} \\
+    }
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_user_d_b_template_1gaec7a42f3930d152254c31c5b09ffb3b4:
+
+typedef struct tagUserDBEntry  UserDBEntry
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga05f9c90c0b2e36c056a465a106552294:
+
+typedef struct tagGroupDBEntry  GroupDBEntry
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gad899c2967b9ce71a690ab444c47094d4:
+
+typedef struct tagGroupRightsEntry  GroupRightsEntry
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gac84c69be9898222f75f9d955e5682111:
+
+typedef struct tagObjectEntry  ObjectEntry
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_user_d_b_template_1gaf2517c16f20cb565086f0b91c168e16c:
+
+static int IsAdministatorGroup (RTS_HANDLE hGroup)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gab32049c3b5e4e204734e4ca7d5c54743:
+
+IMPLEMENT_ADDREF IMPLEMENT_RELEASE static DECLARE_QUERYINTERFACE IBase* CreateInstance (CLASSID cid, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga943bdf9b0e320026633f0a53e0595660:
+
+static RTS_RESULT DeleteInstance (IBase *pIBase)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gab87fa7a07023ff0e1939f5da37252041:
+
+static void* QueryInterface (IBase *pBase, ITFID iid, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga428e512ef9d385507218f5cb410ecf22:
+
+DLL_DECL int ComponentEntry (INIT_STRUCT *pInitStruct)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Entry function of the component. Called at startup for each component. Used to exchange function pointers with the component manager.
+
+**Parameters**
+
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pInitStruct | Pointer to structure with: pfExportFunctions OUT Pointer to function that exports component functions pfImportFunctions OUT Pointer to function that imports functions from other components pfGetVersion OUT Pointer to function to get component version pfRegisterAPI IN Pointer to component mangager function to register a api function pfGetAPI IN Pointer to component mangager function to get a api function pfCallHook IN Pointer to component mangager function to call a hook function |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK if component could be initialized, else error code.
+
+.. _group___cmp_user_d_b_template_1ga9b0700711be53a466c6c8494343a465a:
+
+static int ExportFunctions (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga87d62c8eb63af9f15a122c28448733bf:
+
+static int ImportFunctions (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gacf72d3e99274b04feca13b139859c539:
+
+static RTS_UI32 CmpGetVersion (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gaadccedd8abe0a74c30bd3fe8c1b14e35:
+
+static RTS_RESULT MakeHash (char *pszPassword, RTS_UI8 *pbyHash, RTS_SIZE iLenHash, RTS_UI32 *pulSessionId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gab9c6566e6daa4662503eefcf842f1a0b:
+
+static void InitialHashes (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga96faafadf14c6e2fd9bc18f6dbd63409:
+
+static void CBResetOriginDevice (EventParam *pEventParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga0b2ad195d710768e5fa78879787cd805:
+
+static RTS_RESULT HookFunction (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gab861916929111e432ed4c2111c5f94f6:
+
+static RTS_RESULT UserDBAuthenticate (RTS_HANDLE hDatabase, char *pszUser, UserMgrCredentials *pCredentials, RTS_UI32 *pUserProperty)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga8465cd56b9a59767f58379f29b5e86e0:
+
+static char* UserDBGetFirstUser (RTS_HANDLE hDatabase, RTS_HANDLE *hIterator, RTS_UI32 *pUserProperty, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga0db241a332e91f25995abc8839fcc924:
+
+static char* UserDBGetNextUser (RTS_HANDLE hDatabase, RTS_HANDLE *hIterator, RTS_UI32 *pUserProperty, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga6afef81dbab71a52c0d1c411456b34cf:
+
+static RTS_RESULT UserDBConfigRelease (RTS_HANDLE hDatabase)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga8b94682ecca3dee34fafe1e14647e004:
+
+static RTS_RESULT UserDBConfigImport (RTS_HANDLE hDatabase, RTS_UI8 *pData, RTS_SIZE dataSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gab3544789d4f87afe3593ff0343944614:
+
+static RTS_SIZE UserDBConfigExport (RTS_HANDLE hDatabase, RTS_UI8 *pData, RTS_SIZE maxSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gaac5ef60d769779161b3405287aca6182:
+
+static RTS_RESULT UserDBConfigAddUser (RTS_HANDLE hDatabase, char *pszUser, UserMgrCredentials *pCredentials)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga594742bdb5f6b3f998d935ec60ff81a3:
+
+static RTS_BOOL UserDBConfigExistsUser (RTS_HANDLE hDatabase, char *pszUser)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gaafe5de3748bd4383d7f3140649655b87:
+
+static RTS_RESULT UserDBConfigRemoveUser (RTS_HANDLE hDatabase, char *pszUser)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga2de815686a9ae42e24baa70a59a7df7f:
+
+static RTS_RESULT UserDBConfigSetUserCredentials (RTS_HANDLE hDatabase, char *pszUser, UserMgrCredentials *pCredentials)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga6cbd645bb0663f04fe3e59201bb9beab:
+
+static RTS_UI32 UserDBConfigGetUserProperty (RTS_HANDLE hDatabase, char *pszUser, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga27134018b22432fb567fa70cd6e05592:
+
+static RTS_RESULT UserDBConfigSetUserProperty (RTS_HANDLE hDatabase, char *pszUser, RTS_UI32 property)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga18eb4475427c674f20798afd98766e05:
+
+static RTS_HANDLE UserGroupsDBGetGroup (RTS_HANDLE hDatabase, char *pszGroupName, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga3d0dc11b6ba4b61fd9c29cede3e9d404:
+
+static RTS_HANDLE UserGroupsDBGetFirstGroup (RTS_HANDLE hDatabase, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga9cf95e86bf2f06facc2a4fa12699d22f:
+
+static RTS_HANDLE UserGroupsDBGetNextGroup (RTS_HANDLE hDatabase, RTS_HANDLE hPrevGroup, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga681ab9bece3d501bbc0f7b1d3790cb7d:
+
+static char* UserGroupsDBGetName (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gab7b5b9a713a074e8b0e75697585feec1:
+
+static RTS_UI32 UserGroupsDBGetProperty (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga5610388aa4920aaa6ea1d989ad7e292f:
+
+static RTS_RESULT UserGroupsDBGroupHasUser (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, char *pszUser)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga977ab91966f96e128673f5e7b1e93caf:
+
+static RTS_RESULT UserGroupsDBGroupHasMember (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE hGroupMember)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gac2fa22b0bd446e0b2b534863c128beb7:
+
+static char* UserGroupsDBGetFirstUser (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE *phIterator, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gacc40a7c332b9eb157c9b1ec054196cc7:
+
+static char* UserGroupsDBGetNextUser (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE *phIterator, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga16012f099b7ca51109ad12df7acd1eeb:
+
+static RTS_HANDLE UserGroupsDBGetFirstGroupMember (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga9868e76f00a820aae4528c01f33f0529:
+
+static RTS_HANDLE UserGroupsDBGetNextGroupMember (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE hPrevMember, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gaa35cdae6f80fc027f2a0ad5ac45f2c10:
+
+static RTS_RESULT UserGroupsDBConfigRelease (RTS_HANDLE hDatabase)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga67814d5335d40a4f4c67a83e0cdd36e5:
+
+static RTS_RESULT UserGroupsDBConfigImport (RTS_HANDLE hDatabase, RTS_UI8 *pData, RTS_SIZE dataSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga9f7987d5c8421f746447367cef0689cc:
+
+static RTS_SIZE UserGroupsDBConfigExport (RTS_HANDLE hDatabase, RTS_UI8 *pData, RTS_SIZE maxSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gade38203718437c62a1a170124c97007c:
+
+static RTS_RESULT UserGroupsDBConfigAdd (RTS_HANDLE hDatabase, char *pszGroup)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga60670fac7a69e4e515f593d822f9b4f8:
+
+static RTS_RESULT UserGroupsDBConfigRemove (RTS_HANDLE hDatabase, char *pszGroup)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga51d19cbcfc6ba8021c2f973c176f2eaa:
+
+static RTS_RESULT UserGroupsDBConfigSetProperty (RTS_HANDLE hDatabase, char *pszGroup, RTS_UI32 ulProperty)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gabd0c9aaa2278d52c368f5e7609af17cc:
+
+static RTS_RESULT UserGroupsDBConfigAddUser (RTS_HANDLE hDatabase, char *pszGroup, char *pszUser)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gaf40b8db1a228dc9713739a98438fbd40:
+
+static RTS_RESULT UserGroupsDBConfigRemoveUser (RTS_HANDLE hDatabase, char *pszGroup, char *pszUser)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gaf8c4098457988215b6c2e42d3d8fed9d:
+
+static RTS_RESULT UserGroupsDBConfigAddMember (RTS_HANDLE hDatabase, char *pszGroup, char *pszGroupToAdd)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga46e08479cd72c30860860b848a56be2a:
+
+static RTS_RESULT UserGroupsDBConfigRemoveMember (RTS_HANDLE hDatabase, char *pszGroup, char *pszGroupToRemove)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gaa5ee74b96fe4b1b446e838f6c4fed7eb:
+
+static RTS_RESULT UserDBEnforce (RTS_HANDLE hDatabase)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga933ea4517c383800479e0e10ca5a8473:
+
+static RTS_RESULT UserObjectsDBGetUsedRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 *pulUsedRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga729e652b6df6895648ddbe5567694781:
+
+static RTS_RESULT UserObjectsDBGetProperties (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 *pulProperties)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga872a9c872084a26f25decd96a1a376c8:
+
+static RTS_RESULT UserObjectsDBGetID (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 *pulID)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga94b0692adee0d500cd58165da86861a9:
+
+static RTS_HANDLE UserObjectsDBGetFirst (RTS_HANDLE hDatabase, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga5aac58b7d106bb39ab91f838b232f576:
+
+static RTS_HANDLE UserObjectsDBGetNext (RTS_HANDLE hDatabase, RTS_HANDLE hPrevObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga56195ee4a3769e9f779915347abea75c:
+
+static RTS_HANDLE UserObjectsDBGetFirstChild (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gafba0a9c77366db2f82facf219f8ab7cc:
+
+static RTS_HANDLE UserObjectsDBGetNextChild (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga1a519cd37e1f1d28a7d5bb6199ce5909:
+
+static RTS_HANDLE UserObjectsDBGetFather (RTS_HANDLE hDatabase, RTS_HANDLE hChildObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga606ff966cdbaac3acaa8f02183bf7afa:
+
+static RTS_HANDLE UserObjectsDBGetFirstGroup (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga31b45646c2b05a5631908450a9414be2:
+
+static RTS_HANDLE UserObjectsDBGetNextGroup (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga643e111d4c0f4203c6e01ad90f39906e:
+
+static RTS_HANDLE FindObject (char *pszObject, int nLen, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga9e65e4c8d10c2af445178de4d999fba5:
+
+static RTS_HANDLE UserObjectsDBOpen (RTS_HANDLE hDatabase, char *pszObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga92066bb0699ff52753ba8fc98a291622:
+
+static RTS_RESULT UserObjectsDBClose (RTS_HANDLE hDatabase, RTS_HANDLE hObject)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gaf01883f23e8451e1b889935155eb78f3:
+
+static RTS_RESULT UserObjectsDBGetName (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char *pszObject, int *piMaxLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga4be2fb97b4713a235a556bacb94f1d2c:
+
+static RTS_RESULT UserObjectsDBGetPath (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char *pszObject, int *piMaxLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga8eed9d5a3e06532331371e6f5af7f8da:
+
+static RTS_RESULT UserObjectsDBGetGroupRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gaddbace6ca247db256c3c411cec1c7125:
+
+static RTS_RESULT CheckAccessRights (RTS_UI32 ulRequestedRights, RTS_UI32 ulObjectRights, RTS_UI32 ulObjectDeniedRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga12277666e1bc3f58322c1e3582f031e7:
+
+static RTS_RESULT UserObjectsDBHasRights (RTS_HANDLE hDatabase, char *pszObject, RTS_HANDLE hUser, RTS_UI32 ulRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gae35fc1b8c0da9b2b0a695276ff2de080:
+
+static RTS_RESULT ObjectGetRights (RTS_HANDLE hObject, RTS_HANDLE hUser, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga8b7ebaea3f15dbe56112b7f617e1908a:
+
+static RTS_RESULT UserObjectsDBGetRights (RTS_HANDLE hDatabase, char *pszObject, RTS_HANDLE hUser, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gaf6c646e2aace81352b9884ac545894eb:
+
+static RTS_RESULT UserObjectsDBActivate (RTS_HANDLE hDatabase)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga730687b4590eba55244e1fe2e0a728df:
+
+static RTS_RESULT UserObjectsDBConfigLoad (RTS_HANDLE hDatabase)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga66d8a5bd4ac027243a7078a794f9fde8:
+
+static RTS_RESULT UserObjectsDBConfigStore (RTS_HANDLE hDatabase)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga6261626be05289e3ebac6ccf5633e367:
+
+static RTS_RESULT UserObjectsDBConfigReleaseRights (RTS_HANDLE hDatabase)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga43b3b31445af3d65e64f488c466188ab:
+
+static RTS_RESULT UserObjectsDBConfigRelease (RTS_HANDLE hDatabase)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gabefd112fccae722e2321258a3ac202c4:
+
+static RTS_HANDLE UserObjectsDBConfigAdd (RTS_HANDLE hDatabase, char *pszObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga0be998d0c9dd02abff2353255697aed0:
+
+static RTS_HANDLE UserObjectsDBConfigAdd2 (RTS_HANDLE hDatabase, char *pszObject, RTS_UI32 properties, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gac6d9599b682043da54f62dffea0c1636:
+
+static RTS_RESULT UserObjectsDBConfigRemove (RTS_HANDLE hDatabase, RTS_HANDLE hObject)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga75aaa162612c946d2d5021918c35e4eb:
+
+static RTS_HANDLE UserObjectsDBConfigAddChild (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, char *pszObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga9f9366eff8e4f71ded2ed66152723136:
+
+static RTS_RESULT UserObjectsDBConfigSetUsedRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 ulUsedRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gaf6466cde3af285c1e1a11133ab1864a5:
+
+static RTS_RESULT UserObjectsDBConfigSetID (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 ulID)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga0aeaea801c2848c8ba360f1592d13702:
+
+static RTS_RESULT UserObjectsDBConfigAddGroup (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga7f6d2f0eb19a27b43e72b22a02ba87dc:
+
+static RTS_RESULT UserObjectsDBConfigRemoveGroup (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1ga276a8fd111138ac03cb4e4835c8724f4:
+
+static RTS_RESULT UserObjectsDBConfigSetGroupRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gae17458f7126afe255f6b9c6a4fa83e62:
+
+static RTS_RESULT UserObjectsDBConfigSetGroupDeniedRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulDeniedRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_template_1gab6da566412032d5b928c514bce6e3882:
+
+static RTS_RESULT UserObjectsDBConfigClearRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

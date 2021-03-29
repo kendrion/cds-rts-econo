@@ -94,7 +94,7 @@ typedef struct tagmyexternalfunctionblock_struct
 {
 	void* __VFTABLEPOINTER;				/* Pointer to virtual function table */
 
-	RTS_IEC_BOOL bShow;					/* VAR_INPUT */	/* Partmeter to show message box: 1=Message box will be displayed, 0=else */
+	RTS_IEC_BOOL bShow;					/* VAR_INPUT */	/* Parameter to show message box: 1=Message box will be displayed, 0=else */
 	RTS_IEC_BOOL bError;				/* VAR_INPUT */	/* Parameter to select the Icon of the message box: 1=Show error message box, 0=show information message box */
 	RTS_IEC_STRING *MessageText;		/* VAR_INPUT */	/* Message text to show in the message box */
 	RTS_IEC_DINT Out;					/* VAR_OUTPUT */	/* Result of the operation:

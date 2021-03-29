@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -67,9 +67,8 @@ typedef struct
 	RTS_UI32 ulSessionID;
 	RTS_UI32 ulServiceLength;
 	RTS_UI16 usCustomerId;
-	RTS_UI16 usReserved; /* Must be 0x0000 */
+	RTS_UI16 usReserved; /* Must explicitly be set to 0x0000, to allow future use */
 } HEADER_TAG_EXT;
-
 
 #ifdef RTS_SIXTEENBITBYTES
 	#define sizeof_HEADER_TAG_EXT	sizeof(HEADER_TAG_EXT) * 2
@@ -101,7 +100,7 @@ typedef void (CDECL *PFUPDATECRC)(RTS_UI8 *pbyData, RTS_UI32 ulDataLen, void *pP
 
 /**
  * <description>
- *   This struct holds the internal state of a writer and should be 
+ *   This structure holds the internal state of a writer and should be 
  *   treated as opaque by an application.
  *   Do not alter!
  * </description>
@@ -115,7 +114,7 @@ typedef struct
 
 	BTAG_WRITERTAGINFO tagStack[BTAG_MAX_NESTED_TAGS];
 
-	int nStackPos; /* Points to the index of the current tag. Initially set to -1 (toplevel, no current tag).
+	int nStackPos; /* Points to the index of the current tag. Initially set to -1 (top level, no current tag).
 	                   Must not exceed BTAG_MAX_NESTED_TAGS-1 */
 	
 	int iType;
@@ -131,14 +130,14 @@ typedef struct
 	RTS_UI32 ulPos;
 
 	BTAG_WRITERTAGINFO tagStack[BTAG_MAX_NESTED_TAGS];
-	int nStackPos; /* Points to the index of the current tag. Initially set to -1 (toplevel, no current tag).
+	int nStackPos; /* Points to the index of the current tag. Initially set to -1 (top level, no current tag).
 	                   Must not exceed BTAG_MAX_NESTED_TAGS-1 */
 	int	bBufferOverflow;
 }BINTAGSAVEPOINT;
 
 /**
  * <description>
- *   This struct holds the internal state of a reader and should be 
+ *   This structure holds the internal state of a reader and should be 
  *   treated as opaque by an application.
  *   Do not alter!
  * </description>
@@ -152,7 +151,7 @@ typedef struct
 	RTS_UI32 ulPos;
 
 	BTAG_READERTAGINFO tagStack[BTAG_MAX_NESTED_TAGS];
-	int nStackPos; /* Points to the index of the current tag. Initially set to -1 (toplevel, no current tag).
+	int nStackPos; /* Points to the index of the current tag. Initially set to -1 (top level, no current tag).
 	                   Must not exceed BTAG_MAX_NESTED_TAGS-1 */
 	int iType;
 	RTS_UI32 ulStartServicePos;
@@ -163,16 +162,17 @@ typedef struct
 	RTS_UI32 ulPos;
 
 	BTAG_READERTAGINFO tagStack[BTAG_MAX_NESTED_TAGS];
-	int nStackPos; /* Points to the index of the current tag. Initially set to -1 (toplevel, no current tag).
+	int nStackPos; /* Points to the index of the current tag. Initially set to -1 (top level, no current tag).
 	                   Must not exceed BTAG_MAX_NESTED_TAGS-1 */
 }BINTAGREADERSAVEPOINT;
 
 /* Enumeration of element types */
 enum
 {
-	BTAG_ET_STARTTAG = 0,
-	BTAG_ET_ENDTAG = 1,
-	BTAG_ET_EOF = 2
+	BTAG_ET_INVALID		= -1,
+	BTAG_ET_STARTTAG	=  0,
+	BTAG_ET_ENDTAG		=  1,
+	BTAG_ET_EOF			=  2
 };
 
 
@@ -186,7 +186,7 @@ extern "C" {
  *   Swap the header of a service. 
  * </description>
  * <param name="pHeader" type="INOUT">
- *   Pass in a HEADER_TAG_EXT struct that should be swapped.
+ *   Pass in a HEADER_TAG_EXT structure that should be swapped.
  * </param>
  * <param name="bSwap" type="IN">
  *   Determines, if the header should be swapped (1) or not (0).
@@ -202,7 +202,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagSwapHeader',`(HEADER_TAG_EXT* pHeader, RTS
  *   Initialize a writer. 
  * </description>
  * <param name="pWriter" type="INOUT">
- *   Pass in a BINTAGWRITER struct that will be initialized to a empty writer.
+ *   Pass in a BINTAGWRITER structure that will be initialized to a empty writer.
  * </param>
  * <param name="pBuffer" type="IN">
  *   The buffer that the writer will write to. 
@@ -223,7 +223,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagWriterInit2',`(BINTAGWRITER *pWriter, RTS_
  *   Initialize a writer. Can be used by servers or if the client and the server have the same byte order.
  * </description>
  * <param name="pWriter" type="INOUT">
- *   Pass in a BINTAGWRITER struct that will be initialized to a empty writer.
+ *   Pass in a BINTAGWRITER structure that will be initialized to a empty writer.
  * </param>
  * <param name="pBuffer" type="IN">
  *   The buffer that the writer will write to. 
@@ -294,13 +294,24 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagWriterStartTag',`(BINTAGWRITER *pWriter, R
 
 /**
  * <description>
+ *   Append a RTS_GUID to the current tag. The current tag must be a data tag. The function
+ *   handles platform specific size definitions for the data type RTS_GUID.
+ * </description>
+ * <param name="pWriter" type="IN">Pointer to bintag writer</param>
+ * <param name="pszString" type="IN">Pointer to the RTS_GUID to append</param>
+ * <result>error code</result>
+ */
+DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagWriterAppendGUID',`(BINTAGWRITER *pWriter, const RTS_GUID *pGuid)')
+
+/**
+ * <description>
  *   Append a C-string to the current tag. The string is written including
  *   the trailing end of string char (NUL). The current tag must be a data tag.
  * </description>
  * <param name="pWriter" type="IN">Pointer to bintag writer</param>
  * <param name="pszString" type="IN">Pointer to NUL terminated string to append</param>
- * <result>TRUE=succeeded, FALSE=failed</result>
- */
+ * <result>error code</result>
+*/
 DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagWriterAppendString',`(BINTAGWRITER *pWriter, const char *pszString)')
 
 /**
@@ -324,7 +335,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagWriterAppendBlob',`(BINTAGWRITER *pWriter,
  *  Returns a pointer to the current content position and forwards the write position for ulSize bytes.
  *   This function provides a buffer of length ulSize within the content of the current tag, in effect giving
  *   the caller random access to this buffer.
- *   This function is especially usefull, if that buffer has to be passed to another function, that fills it.
+ *   This function is especially useful, if that buffer has to be passed to another function, that fills it.
  *   (see example).
  *   ATTENTION: The returned pointer is valid only until the next operation on the bintagwriter is executed.
  *   After that the pointer must not be used any more! Do not store that pointer permanently.
@@ -347,8 +358,8 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagWriterAppendRaw',`(BINTAGWRITER *pWriter, 
 /**
  * <description>
  *   Add byFillByte to the content until the current content ends 
- *   on a position that satifies the desired alignment.
- *   Eg. a tag must always be closed on a (4,0)-alignment, so after adding a variable length
+ *   on a position that satisfies the desired alignment.
+ *   E.g. a tag must always be closed on a (4,0)-alignment, so after adding a variable length
  *   string one should call:
  *   <pre>
  *     BTAG_ALIGNMENT align = {4,0};
@@ -356,7 +367,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagWriterAppendRaw',`(BINTAGWRITER *pWriter, 
  *     BTagWriterAppendFillBytes(pWriter, 0, align);
  *     BTagWriterEndTag(pWriter, TAG_ID);
  *   </pre>
- *   If the alignment property is already fullfilled nothing will be appended.
+ *   If the alignment property is already fulfilled nothing will be appended.
  * </description>
  * <param name="pWriter" type="IN"></param>
  * <param name="byFillByte" type="IN">
@@ -402,7 +413,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagWriterEndTag',`(BINTAGWRITER *pWriter, RTS
  *   The buffer that is to replace the original buffer.
  * </param>
  * <param name="ulNewSize" type="IN">
- *   Size of the new buffer. Must be greater or at least equal to the current postion
+ *   Size of the new buffer. Must be greater or at least equal to the current position
  *   of the writer.
  * </param>
  * <param name="ppOldBuffer" type="OUT">
@@ -414,28 +425,28 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagWriterSwitchBuffer',`(BINTAGWRITER *pWrite
 /**
  * <description>
  *   Save the current state of the writer. A later call to BTagWriterRestoreSavepoint will
- *   reset the writer and its buffer to that state. Any number of savepoints may be created.
- *   The caller must use multiple savepoints in a stack-like fashion: If savepoints are
+ *   reset the writer and its buffer to that state. Any number of save points may be created.
+ *   The caller must use multiple save points in a stack-like fashion: If save points are
  *   created in the order 1,2,3,4 then they must be restored in opposite order only. Not 
- *   every savepoint must be restored - but if one is restored all savepoints created after
+ *   every save point must be restored - but if one is restored all save points created after
  *   that one MUST NOT BE USED any more.
- *   Examples: ("sX"="create savepoint X", "rX"="Restore savepoint X", 
- *			    "(x,y,z)"="stack of valid savepoints")
+ *   Examples: ("sX"="create save point X", "rX"="Restore save point X", 
+ *			    "(x,y,z)"="stack of valid save points")
  *   The following sequences are valid:
  *   () s1 (1) s2 (1,2) s3 (1,2,3) r2 (1) r1 ()
  *   () s1 (1) s2 (1,2) s3 (1,2,3) r2 (1) s4 (1,4) r4 (1)  
  *   whereas this one is invalid:
  *   () s1 (1) s2 (1,2) s3 (1,2,3) r2 (1) r3 [3 is not valid at this point]
  * 
- *   The writer does not track the stack of savepoints, therefore it cannot
+ *   The writer does not track the stack of save points, therefore it cannot
  *   detect errors in the restore order. It's the responsibility of the application
  *   to ensure the correct restore order. Failure in doing so will lead to an 
  *   inconsistent state and may well corrupt the whole document.
- *   Besides the restore order savepoints are independent of each other. The application
- *   may delete/reuse a savepoint anytime it doesn't need it anymore.
+ *   Besides the restore order save points are independent of each other. The application
+ *   may delete/reuse a save point anytime it doesn't need it anymore.
  * 
- *   Savepoints cannot be used to transfer the state of a writer to a second writer.
- *   Any attempt in doing so will lead to undefined behaviour.
+ *   Save points cannot be used to transfer the state of a writer to a second writer.
+ *   Any attempt in doing so will lead to undefined behavour.
  * </description>
  * <param name="pWriter" type="IN"></param>
  * <param name="pSavePoint" type="OUT">
@@ -451,10 +462,10 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagWriterCreateSavepoint',`(BINTAGWRITER *pWr
  *   these functions.
  * </description>
  * <param name="pWriter" type="IN">
- *   Must be the same writer that the savepoint was created on.
+ *   Must be the same writer that the save point was created on.
  * </param>
  * <param name="pSavepoint" type="IN">
- *   A previously created savepoint.
+ *   A previously created save point.
  * </param>
  */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagWriterRestoreSavepoint',`(BINTAGWRITER *pWriter, BINTAGSAVEPOINT *pSavepoint)')
@@ -511,7 +522,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagWriteSingleTag2',`(BINTAGWRITER *pWriter, 
  * </param>
  * <param name="ulBufferSize" type="IN">
  *   The size of pBuffer. It is expected that the whole buffer is in the bintag structure,
- *   possibly containing multiple toplevel tags. 
+ *   possibly containing multiple top level tags. 
  * </param>
  */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagReaderInit',`(BINTAGREADER *pReader, RTS_UI8 *pBuffer, RTS_UI32 ulBufferSize)')
@@ -565,7 +576,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagReaderSkipContent',`(BINTAGREADER *pReader
 
 /**
  * <description>
- *   Get the id of the current tag. Will fail if the reader is positioned at the toplevel.
+ *   Get the id of the current tag. Will fail if the reader is positioned at the top level.
  * </description>
  * <param name="pulTagId" type="OUT">
  *   Will be set to the id of the current tag.
@@ -575,7 +586,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagReaderGetTagId',`(BINTAGREADER *pReader, R
 
 /**
  * <description>
- *   Get the tag length of the current tag. Will fail if the reader is positioned at the toplevel.
+ *   Get the tag length of the current tag. Will fail if the reader is positioned at the top level.
  * </description>
  * <param name="pulTagLen" type="OUT">
  *   Will be set to the length of the current tag.
@@ -585,9 +596,9 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagReaderGetTagLen',`(BINTAGREADER *pReader, 
 
 /**
  * <description>
- *   Check if the current tag is a data tag (ie. contains raw content) or does contain
- *   subtags. Will return an error if the reader is not positioned on a tag (ie. is at the 
- *   toplevel). However, in that case pbIsData will be set to FALSE.
+ *   Check if the current tag is a data tag (i.e. contains raw content) or does contain
+ *   subtags. Will return an error if the reader is not positioned on a tag (i.e. is at the 
+ *   top level). However, in that case pbIsData will be set to FALSE.
  * </description>
  * <param name="pReader" type="IN">
  * </param>
@@ -615,7 +626,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagReaderGetComplexContent',`(BINTAGREADER *p
 /**
  * <description>
  *   Get a pointer on the content of the current tag. 
- *   Will fail if the reader is on the toplevel
+ *   Will fail if the reader is on the top level
  *   (no current tag) or the current tag is not a data tag.
  * </description>
  * <param name="pReader" type="IN">
@@ -647,7 +658,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagReaderGetContent',`(BINTAGREADER *pReader,
  * </param>
  * <param name="pulSize" type="IN">
  *   The length of the string INCLUDING the trailing '\0',
- *   ie. "strlen(ppString)+1".
+ *   i.e. "strlen(ppString)+1".
  * </param>
  * <param name="bAddEndOfString" type="IN">
  *   Force a trailing zero byte to be added, if it doesn't exist within the bounds of the tag.
@@ -660,28 +671,28 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagReaderGetString',`(BINTAGREADER *pReader, 
 /**
  * <description>
  *   Save the current state of the reader. A later call to BTagReaderRestoreSavepoint will
- *   reset the reader and its buffer to that state. Any number of savepoints may be created.
- *   The caller must use multiple savepoints in a stack-like fashion: If savepoints are
+ *   reset the reader and its buffer to that state. Any number of save points may be created.
+ *   The caller must use multiple save points in a stack-like fashion: If save points are
  *   created in the order 1,2,3,4 then they must be restored in opposite order only. Not 
- *   every savepoint must be restored - but if one is restored all savepoints created after
+ *   every save point must be restored - but if one is restored all save points created after
  *   that one MUST NOT BE USED any more.
- *   Examples: ("sX"="create savepoint X", "rX"="Restore savepoint X", 
- *			    "(x,y,z)"="stack of valid savepoints")
+ *   Examples: ("sX"="create save point X", "rX"="Restore save point X", 
+ *			    "(x,y,z)"="stack of valid save points")
  *   The following sequences are valid:
  *   () s1 (1) s2 (1,2) s3 (1,2,3) r2 (1) r1 ()
  *   () s1 (1) s2 (1,2) s3 (1,2,3) r2 (1) s4 (1,4) r4 (1)  
  *   whereas this one is invalid:
  *   () s1 (1) s2 (1,2) s3 (1,2,3) r2 (1) r3 [3 is not valid at this point]
  * 
- *   The reader does not track the stack of savepoints, therefore it cannot
+ *   The reader does not track the stack of save points, therefore it cannot
  *   detect errors in the restore order. It's the responsibility of the application
  *   to ensure the correct restore order. Failure in doing so will lead to an 
  *   inconsistent state and may well corrupt the whole document.
- *   Besides the restore order savepoints are independent of each other. The application
- *   may delete/reuse a savepoint anytime it doesn't need it anymore.
+ *   Besides the restore order save points are independent of each other. The application
+ *   may delete/reuse a save point anytime it doesn't need it anymore.
  * 
- *   Savepoints cannot be used to transfer the state of a reader to a second reader.
- *   Any attempt in doing so will lead to undefined behaviour.
+ *   Save points cannot be used to transfer the state of a reader to a second reader.
+ *   Any attempt in doing so will lead to undefined behavior.
  * </description>
  * <param name="pReader" type="IN"></param>
  * <param name="pSavePoint" type="OUT">
@@ -697,10 +708,10 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagReaderCreateSavepoint',`(BINTAGREADER *pRe
  *   these functions.
  * </description>
  * <param name="pReader" type="IN">
- *   Must be the same reader that the savepoint was created on.
+ *   Must be the same reader that the save point was created on.
  * </param>
  * <param name="pSavepoint" type="IN">
- *   A previously created savepoint.
+ *   A previously created save point.
  * </param>
  */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagReaderRestoreSavepoint',`(BINTAGREADER *pReader, BINTAGREADERSAVEPOINT *pSavepoint)')
@@ -714,7 +725,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`BTagReaderFileInit',`(BINTAGREADER *pReader, R
 /**
  * <description>Get the first tag out of a stream</description>
  * <param name="pReader" type="IN">Pointer to the reader stream</param>
- * <param name="pulToplevelTag" type="OUT">Returns the toplevel tag. -1, if no complex tag</param>
+ * <param name="pulToplevelTag" type="OUT">Returns the top level tag. -1, if no complex tag</param>
  * <param name="pulTag" type="OUT">Returns the tag</param>
  * <param name="pulSize" type="OUT">Size of the tag</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
@@ -725,7 +736,7 @@ DEF_ITF_API(`void*',`CDECL',`BTagReaderGetFirstTag',`(BINTAGREADER *pReader, RTS
 /**
  * <description>Get the first tag out of a stream</description>
  * <param name="pReader" type="IN">Pointer to the reader stream</param>
- * <param name="pulToplevelTag" type="OUT">Returns the toplevel tag. -1, if no complex tag</param>
+ * <param name="pulToplevelTag" type="OUT">Returns the top level tag. -1, if no complex tag</param>
  * <param name="pulTag" type="OUT">Returns the tag</param>
  * <param name="pulSize" type="OUT">Size of the tag</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>

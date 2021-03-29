@@ -1,0 +1,684 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_mem_pool_hash_itf:
+
+=================
+CmpMemPoolHashItf
+=================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpMemPoolHash.
+
+Detailed Description
+--------------------
+
+Interface to get a hash table around a MemPool. Because of this, you can use a unique handle to a MemPool object instead of the pointer to the MemPool object! This is because is you release a MemPool object, reuse it for a new MemPool operation and release the old one a second time
+
+Usage: 1. Creating a memory pool hash table using static memory [recommended]:
+
+#define MY_NUM_OF_HASHENTRIES 10 RTS_UI8 s_hashTableBuffer[ :ref:`MEMPOOLHASH_GET_HASHTABLE_LEN( MY_NUM_OF_HASHENTRIES ) <group___cmp_mem_pool_hash_itf_1ga9f60c91c693921a70376127b86f1388b>` ];
+
+// Create memory pool hash table RTS_RESULT result RTS_HANDLE hMemPool = :ref:`CAL_MemPoolCreateStatic(...) <group___cmp_mem_pool_itf_1gabf7e299f29fbff0bafd65f396069d947>` ; RTS_HANDLE hMemPoolHashTable = :ref:`CAL_MemPoolCreateHashTable2(hMemPool, 10, s_hashTableBuffer, COMPONENT_NAME, &result) <group___cmp_mem_pool_hash_itf_1gaa50ad37d2daa4cd896a60296816cb931>` ;
+
+2. Creating a memory pool hash table using dynamic memory:
+
+// Create memory pool hash table RTS_RESULT result RTS_HANDLE hMemPool = :ref:`CAL_MemPoolCreateStatic(...) <group___cmp_mem_pool_itf_1gabf7e299f29fbff0bafd65f396069d947>` ; RTS_HANDLE hMemPoolHashTable = :ref:`CAL_MemPoolCreateHashTable(hMemPool, 10, COMPONENT_NAME, &result) <group___cmp_mem_pool_hash_itf_1ga204f89fb2066a051930b3dd6d3690287>` ;
+
+// Delete hash table :ref:`CAL_MemPoolDeleteHashTable(hMemPoolHashTable) <group___cmp_mem_pool_hash_itf_1ga41792a009b64752117aa36e7236d6f88>` ;
+
+// Allocate a new MemPool block must be done in 2 steps: // Step1: Get handle/Allocate new block out of the MemPool (instead of :ref:`CAL_MemPoolGetBlock() <group___cmp_mem_pool_itf_1ga86ec18f8718b404c3af0b92527fcb72b>` )! RTS_HANDLE hNewMemPoolBlock = :ref:`CAL_MemPoolGetBlockHashed(hMemPoolHashTable, 1, &result) <group___cmp_mem_pool_hash_itf_1gae36822d62c1140be16fc3562efd6ada3>` ;
+
+// Step2: Get pointer MemPoolBlock (which is retrieved typically by :ref:`CAL_MemPoolGetBlock() <group___cmp_mem_pool_itf_1ga86ec18f8718b404c3af0b92527fcb72b>` ) voidpMemPoolBlock = :ref:`CAL_MemPoolGetBlockByHash(hMemPoolHashTable, hNewMemPoolBlock, &result) <group___cmp_mem_pool_hash_itf_1gab18d3fdba22cae32922d4ad43fdd582b>`
+
+// Release a MemPool block must be done in 2 steps: // Step1: Remove a block from hash table and the MemPool iterator :ref:`CAL_MemPoolRemoveBlockHashed(hMemPoolHashTable, hNewMemPoolBlock) <group___cmp_mem_pool_hash_itf_1gaa59598d90e5d1a38a03589b524dfa5b2>` ;
+
+// Step2: Release a MemPool block and put it back in the MemPool :ref:`CAL_MemPoolPutBlock(hMemPoolHashTable, pMemPoolBlock) <group___cmp_mem_pool_itf_1gae26b54cafb20eb41be65174cb3fa3d2f>`
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpMemPoolHash_C <struct_i_cmp_mem_pool_hash___c>`
+
+Macros
+------
+
+- #define :ref:`MemPoolHashEntry <group___cmp_mem_pool_hash_itf_1ga34f3d729ce095e761b20c0d2add85d27>` :ref:`CMUtlHashEntry <group___c_m_utils_hash_itf___hashentry_1gadd57a73c7ff3d9e8bfb558347e689613>`
+
+- #define :ref:`MEMPOOLHASH_GET_HASHTABLE_LEN <group___cmp_mem_pool_hash_itf_1ga9f60c91c693921a70376127b86f1388b>` ((numOfHashEntries) * sizeof( :ref:`MemPoolHashEntry <group___cmp_mem_pool_hash_itf_1ga34f3d729ce095e761b20c0d2add85d27>` **))
+
+- #define :ref:`USE_MemPoolCreateHashTable <group___cmp_mem_pool_hash_itf_1ga31245766bc056880bcce710406007e9d>` :ref:`PFMEMPOOLCREATEHASHTABLE <group___cmp_mem_pool_hash_itf_1ga795b17137c1d07a68e688cd1811bb6cc>` pfMemPoolCreateHashTable;
+
+- #define :ref:`EXT_MemPoolCreateHashTable <group___cmp_mem_pool_hash_itf_1ga92bb83516cc6004dac1b9e8e2f4cee3e>` extern :ref:`PFMEMPOOLCREATEHASHTABLE <group___cmp_mem_pool_hash_itf_1ga795b17137c1d07a68e688cd1811bb6cc>` pfMemPoolCreateHashTable;
+
+- #define :ref:`GET_MemPoolCreateHashTable <group___cmp_mem_pool_hash_itf_1gaf5680af7a18a7b06b81522a550bdd791>` s_pfCMGetAPI2( "MemPoolCreateHashTable", (RTS_VOID_FCTPTR *)&pfMemPoolCreateHashTable, (fl), 0, 0)
+
+- #define :ref:`CAL_MemPoolCreateHashTable <group___cmp_mem_pool_hash_itf_1ga204f89fb2066a051930b3dd6d3690287>` pfMemPoolCreateHashTable
+
+- #define :ref:`CHK_MemPoolCreateHashTable <group___cmp_mem_pool_hash_itf_1ga657b0bf6dfc87dfb4e0d7e63da754b40>` (pfMemPoolCreateHashTable != NULL)
+
+- #define :ref:`EXP_MemPoolCreateHashTable <group___cmp_mem_pool_hash_itf_1ga3b11ed55f179b016b5d16ff5c5b45a13>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MemPoolCreateHashTable", (RTS_UINTPTR) :ref:`MemPoolCreateHashTable <group___cmp_mem_pool_hash_itf_1ga3b317bb71ce6376db3453696d2574e41>` , 0, 0)
+
+- #define :ref:`USE_MemPoolCreateHashTable2 <group___cmp_mem_pool_hash_itf_1ga45e62aa54e7f749b6eeb664626cfc5af>` :ref:`PFMEMPOOLCREATEHASHTABLE2 <group___cmp_mem_pool_hash_itf_1gaf46aaad00300ef011280473608f7b146>` pfMemPoolCreateHashTable2;
+
+- #define :ref:`EXT_MemPoolCreateHashTable2 <group___cmp_mem_pool_hash_itf_1ga9ed348dfada4b4b9f1683ac2530d6b56>` extern :ref:`PFMEMPOOLCREATEHASHTABLE2 <group___cmp_mem_pool_hash_itf_1gaf46aaad00300ef011280473608f7b146>` pfMemPoolCreateHashTable2;
+
+- #define :ref:`GET_MemPoolCreateHashTable2 <group___cmp_mem_pool_hash_itf_1ga7f96e2ab71315133113e720fd3731cff>` s_pfCMGetAPI2( "MemPoolCreateHashTable2", (RTS_VOID_FCTPTR *)&pfMemPoolCreateHashTable2, (fl), 0, 0)
+
+- #define :ref:`CAL_MemPoolCreateHashTable2 <group___cmp_mem_pool_hash_itf_1gaa50ad37d2daa4cd896a60296816cb931>` pfMemPoolCreateHashTable2
+
+- #define :ref:`CHK_MemPoolCreateHashTable2 <group___cmp_mem_pool_hash_itf_1gac3959f9c26960901e6913fa31c430e72>` (pfMemPoolCreateHashTable2 != NULL)
+
+- #define :ref:`EXP_MemPoolCreateHashTable2 <group___cmp_mem_pool_hash_itf_1gab4c35e7094525863ce87ce40332db742>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MemPoolCreateHashTable2", (RTS_UINTPTR) :ref:`MemPoolCreateHashTable2 <group___cmp_mem_pool_hash_itf_1ga9a93c94ef2df1c1eeedb08abaf74bde3>` , 0, 0)
+
+- #define :ref:`USE_MemPoolDeleteHashTable <group___cmp_mem_pool_hash_itf_1ga2f63001581620fdc8824702e1bb4c536>` :ref:`PFMEMPOOLDELETEHASHTABLE <group___cmp_mem_pool_hash_itf_1gacf0dcefd6422c1741b96094f33099636>` pfMemPoolDeleteHashTable;
+
+- #define :ref:`EXT_MemPoolDeleteHashTable <group___cmp_mem_pool_hash_itf_1ga8a821aa8857011c7186a78205c5188c5>` extern :ref:`PFMEMPOOLDELETEHASHTABLE <group___cmp_mem_pool_hash_itf_1gacf0dcefd6422c1741b96094f33099636>` pfMemPoolDeleteHashTable;
+
+- #define :ref:`GET_MemPoolDeleteHashTable <group___cmp_mem_pool_hash_itf_1ga9f8ae6d1047d96c8c0a48a279f4b6cd6>` s_pfCMGetAPI2( "MemPoolDeleteHashTable", (RTS_VOID_FCTPTR *)&pfMemPoolDeleteHashTable, (fl), 0, 0)
+
+- #define :ref:`CAL_MemPoolDeleteHashTable <group___cmp_mem_pool_hash_itf_1ga41792a009b64752117aa36e7236d6f88>` pfMemPoolDeleteHashTable
+
+- #define :ref:`CHK_MemPoolDeleteHashTable <group___cmp_mem_pool_hash_itf_1gae5825cc3fb88412d1e70b256fddf59a3>` (pfMemPoolDeleteHashTable != NULL)
+
+- #define :ref:`EXP_MemPoolDeleteHashTable <group___cmp_mem_pool_hash_itf_1ga04a6c2426d2d55f44b1c7745b4b5101e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MemPoolDeleteHashTable", (RTS_UINTPTR) :ref:`MemPoolDeleteHashTable <group___cmp_mem_pool_hash_itf_1ga38c979d04bc49b5b5e31c699353a6c23>` , 0, 0)
+
+- #define :ref:`USE_MemPoolGetBlockHashed <group___cmp_mem_pool_hash_itf_1ga6e0cb9177841911c0adfbe0166443396>` :ref:`PFMEMPOOLGETBLOCKHASHED <group___cmp_mem_pool_hash_itf_1ga18a787f1b88454bfd9166f5b6ae1ed91>` pfMemPoolGetBlockHashed;
+
+- #define :ref:`EXT_MemPoolGetBlockHashed <group___cmp_mem_pool_hash_itf_1ga30bf7e2edd3bc04634aaf1f00276dea8>` extern :ref:`PFMEMPOOLGETBLOCKHASHED <group___cmp_mem_pool_hash_itf_1ga18a787f1b88454bfd9166f5b6ae1ed91>` pfMemPoolGetBlockHashed;
+
+- #define :ref:`GET_MemPoolGetBlockHashed <group___cmp_mem_pool_hash_itf_1ga2cda423a8206bb424c900f69a88f93a5>` s_pfCMGetAPI2( "MemPoolGetBlockHashed", (RTS_VOID_FCTPTR *)&pfMemPoolGetBlockHashed, (fl), 0, 0)
+
+- #define :ref:`CAL_MemPoolGetBlockHashed <group___cmp_mem_pool_hash_itf_1gae36822d62c1140be16fc3562efd6ada3>` pfMemPoolGetBlockHashed
+
+- #define :ref:`CHK_MemPoolGetBlockHashed <group___cmp_mem_pool_hash_itf_1ga349014a79ee31b2d961f82d08c0e9d17>` (pfMemPoolGetBlockHashed != NULL)
+
+- #define :ref:`EXP_MemPoolGetBlockHashed <group___cmp_mem_pool_hash_itf_1gaf8b4d64afb104f42e2dcc75a3d0e1803>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MemPoolGetBlockHashed", (RTS_UINTPTR) :ref:`MemPoolGetBlockHashed <group___cmp_mem_pool_hash_itf_1ga2118fb08d8d41a80aa6d2a3bb5bbacaa>` , 0, 0)
+
+- #define :ref:`USE_MemPoolGetBlockHashed2 <group___cmp_mem_pool_hash_itf_1ga3f8a2499ea355de07c1ba840b0b8a23c>` :ref:`PFMEMPOOLGETBLOCKHASHED2 <group___cmp_mem_pool_hash_itf_1ga26fbef5f097e84424f113560251580c3>` pfMemPoolGetBlockHashed2;
+
+- #define :ref:`EXT_MemPoolGetBlockHashed2 <group___cmp_mem_pool_hash_itf_1ga16e2ed3a427286b2ec3f8a63e3637823>` extern :ref:`PFMEMPOOLGETBLOCKHASHED2 <group___cmp_mem_pool_hash_itf_1ga26fbef5f097e84424f113560251580c3>` pfMemPoolGetBlockHashed2;
+
+- #define :ref:`GET_MemPoolGetBlockHashed2 <group___cmp_mem_pool_hash_itf_1ga5d7b094676a228398b8a55d6265eb1d0>` s_pfCMGetAPI2( "MemPoolGetBlockHashed2", (RTS_VOID_FCTPTR *)&pfMemPoolGetBlockHashed2, (fl), 0, 0)
+
+- #define :ref:`CAL_MemPoolGetBlockHashed2 <group___cmp_mem_pool_hash_itf_1ga9c2094738383776aac849b26de67cd11>` pfMemPoolGetBlockHashed2
+
+- #define :ref:`CHK_MemPoolGetBlockHashed2 <group___cmp_mem_pool_hash_itf_1ga383e82c97002829645dbbfe1571af3d1>` (pfMemPoolGetBlockHashed2 != NULL)
+
+- #define :ref:`EXP_MemPoolGetBlockHashed2 <group___cmp_mem_pool_hash_itf_1ga02e30027e933e925ef9cc3878ca0e53b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MemPoolGetBlockHashed2", (RTS_UINTPTR) :ref:`MemPoolGetBlockHashed2 <group___cmp_mem_pool_hash_itf_1gaca02b30c82f5ef3660f20edf00506294>` , 0, 0)
+
+- #define :ref:`USE_MemPoolRemoveBlockHashed <group___cmp_mem_pool_hash_itf_1gaee9eeefd366ca821ec6ecd23a09a44fd>` :ref:`PFMEMPOOLREMOVEBLOCKHASHED <group___cmp_mem_pool_hash_itf_1gaf8162455900987a93c91289d51d0b961>` pfMemPoolRemoveBlockHashed;
+
+- #define :ref:`EXT_MemPoolRemoveBlockHashed <group___cmp_mem_pool_hash_itf_1gac7d2581d052bfa84e089650c803126a5>` extern :ref:`PFMEMPOOLREMOVEBLOCKHASHED <group___cmp_mem_pool_hash_itf_1gaf8162455900987a93c91289d51d0b961>` pfMemPoolRemoveBlockHashed;
+
+- #define :ref:`GET_MemPoolRemoveBlockHashed <group___cmp_mem_pool_hash_itf_1ga7c3eb922969281bf25662e911271a6ab>` s_pfCMGetAPI2( "MemPoolRemoveBlockHashed", (RTS_VOID_FCTPTR *)&pfMemPoolRemoveBlockHashed, (fl), 0, 0)
+
+- #define :ref:`CAL_MemPoolRemoveBlockHashed <group___cmp_mem_pool_hash_itf_1gaa59598d90e5d1a38a03589b524dfa5b2>` pfMemPoolRemoveBlockHashed
+
+- #define :ref:`CHK_MemPoolRemoveBlockHashed <group___cmp_mem_pool_hash_itf_1ga75aefdee8985a89a9d2fa16fef1f1d16>` (pfMemPoolRemoveBlockHashed != NULL)
+
+- #define :ref:`EXP_MemPoolRemoveBlockHashed <group___cmp_mem_pool_hash_itf_1gadf50ba8552a8084f6cac30699f67fb11>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MemPoolRemoveBlockHashed", (RTS_UINTPTR) :ref:`MemPoolRemoveBlockHashed <group___cmp_mem_pool_hash_itf_1gace9fd61d9783e887e4a66503ded1eea4>` , 0, 0)
+
+- #define :ref:`USE_MemPoolGetBlockByHash <group___cmp_mem_pool_hash_itf_1gadc143319b3721fc422dc931505575802>` :ref:`PFMEMPOOLGETBLOCKBYHASH <group___cmp_mem_pool_hash_itf_1ga5a1a7f39d7ba2601f42355ff228fd0e8>` pfMemPoolGetBlockByHash;
+
+- #define :ref:`EXT_MemPoolGetBlockByHash <group___cmp_mem_pool_hash_itf_1ga0d01abeb50b025fdd4a46024fd08a512>` extern :ref:`PFMEMPOOLGETBLOCKBYHASH <group___cmp_mem_pool_hash_itf_1ga5a1a7f39d7ba2601f42355ff228fd0e8>` pfMemPoolGetBlockByHash;
+
+- #define :ref:`GET_MemPoolGetBlockByHash <group___cmp_mem_pool_hash_itf_1ga484b7ad7a79dbd82c31a3f411ec740f8>` s_pfCMGetAPI2( "MemPoolGetBlockByHash", (RTS_VOID_FCTPTR *)&pfMemPoolGetBlockByHash, (fl), 0, 0)
+
+- #define :ref:`CAL_MemPoolGetBlockByHash <group___cmp_mem_pool_hash_itf_1gab18d3fdba22cae32922d4ad43fdd582b>` pfMemPoolGetBlockByHash
+
+- #define :ref:`CHK_MemPoolGetBlockByHash <group___cmp_mem_pool_hash_itf_1ga7e7786f5e32ce8f1a67e27c6d8339b0b>` (pfMemPoolGetBlockByHash != NULL)
+
+- #define :ref:`EXP_MemPoolGetBlockByHash <group___cmp_mem_pool_hash_itf_1ga9d962adf139eee5f6d5862ee8acf0c13>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MemPoolGetBlockByHash", (RTS_UINTPTR) :ref:`MemPoolGetBlockByHash <group___cmp_mem_pool_hash_itf_1ga2420b362acd00b482fb60802f2ce0c54>` , 0, 0)
+
+- #define :ref:`ITF_CmpMemPoolHash <group___cmp_mem_pool_hash_itf_1gab2bbfe28de30f02b00c58a82b3c13d8e>`
+
+- #define :ref:`EXTITF_CmpMemPoolHash <group___cmp_mem_pool_hash_itf_1ga1cb28bed9cdb06d1432b10dab59300ec>`
+
+Typedefs
+--------
+
+- typedef RTS_HANDLE(* :ref:`PFMEMPOOLCREATEHASHTABLE <group___cmp_mem_pool_hash_itf_1ga795b17137c1d07a68e688cd1811bb6cc>`)(RTS_HANDLE hMemPool, RTS_SIZE sNumHashEntries, char *pszComponentName, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFMEMPOOLCREATEHASHTABLE2 <group___cmp_mem_pool_hash_itf_1gaf46aaad00300ef011280473608f7b146>`)(RTS_HANDLE hMemPool, RTS_SIZE sNumHashEntries, RTS_UI8 *pHashTableBuffer, char *pszComponentName, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFMEMPOOLDELETEHASHTABLE <group___cmp_mem_pool_hash_itf_1gacf0dcefd6422c1741b96094f33099636>`)(RTS_HANDLE hMemPoolHashTable)
+
+- typedef RTS_HANDLE(* :ref:`PFMEMPOOLGETBLOCKHASHED <group___cmp_mem_pool_hash_itf_1ga18a787f1b88454bfd9166f5b6ae1ed91>`)(RTS_HANDLE hMemPoolHashTable, RTS_UI32 nNumOfNewElements, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFMEMPOOLGETBLOCKHASHED2 <group___cmp_mem_pool_hash_itf_1ga26fbef5f097e84424f113560251580c3>`)(RTS_HANDLE hMemPoolHashTable, RTS_UI32 nNumOfNewElements, RTS_UI32 offsetHashEntry, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFMEMPOOLREMOVEBLOCKHASHED <group___cmp_mem_pool_hash_itf_1gaf8162455900987a93c91289d51d0b961>`)(RTS_HANDLE hMemPoolHashTable, RTS_HANDLE hHash)
+
+- typedef void *(* :ref:`PFMEMPOOLGETBLOCKBYHASH <group___cmp_mem_pool_hash_itf_1ga5a1a7f39d7ba2601f42355ff228fd0e8>`)(RTS_HANDLE hMemPoolHashTable, RTS_HANDLE hHash, RTS_RESULT *pResult)
+
+- typedef :ref:`ICmpMemPoolHash_C <struct_i_cmp_mem_pool_hash___c>` :ref:`ICmpMemPoolHash <group___cmp_mem_pool_hash_itf_1ga487d300c803f3416bd3fe0fc2c4f13bf>`
+
+Functions
+---------
+
+- RTS_HANDLE :ref:`MemPoolCreateHashTable <group___cmp_mem_pool_hash_itf_1ga3b317bb71ce6376db3453696d2574e41>` (RTS_HANDLE hMemPool, RTS_SIZE sNumHashEntries, char * pszComponentName, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`MemPoolCreateHashTable2 <group___cmp_mem_pool_hash_itf_1ga9a93c94ef2df1c1eeedb08abaf74bde3>` (RTS_HANDLE hMemPool, RTS_SIZE sNumHashEntries, RTS_UI8 * pHashTableBuffer, char * pszComponentName, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`MemPoolDeleteHashTable <group___cmp_mem_pool_hash_itf_1ga38c979d04bc49b5b5e31c699353a6c23>` (RTS_HANDLE hMemPoolHashTable)
+
+- RTS_HANDLE :ref:`MemPoolGetBlockHashed <group___cmp_mem_pool_hash_itf_1ga2118fb08d8d41a80aa6d2a3bb5bbacaa>` (RTS_HANDLE hMemPoolHashTable, RTS_UI32 nNumOfNewElements, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`MemPoolGetBlockHashed2 <group___cmp_mem_pool_hash_itf_1gaca02b30c82f5ef3660f20edf00506294>` (RTS_HANDLE hMemPoolHashTable, RTS_UI32 nNumOfNewElements, RTS_UI32 offsetHashEntry, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`MemPoolRemoveBlockHashed <group___cmp_mem_pool_hash_itf_1gace9fd61d9783e887e4a66503ded1eea4>` (RTS_HANDLE hMemPoolHashTable, RTS_HANDLE hHash)
+
+- void * :ref:`MemPoolGetBlockByHash <group___cmp_mem_pool_hash_itf_1ga2420b362acd00b482fb60802f2ce0c54>` (RTS_HANDLE hMemPoolHashTable, RTS_HANDLE hHash, RTS_RESULT * pResult)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_mem_pool_hash_itf_1ga34f3d729ce095e761b20c0d2add85d27:
+
+#define MemPoolHashEntry :ref:`CMUtlHashEntry <group___c_m_utils_hash_itf___hashentry_1gadd57a73c7ff3d9e8bfb558347e689613>`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga9f60c91c693921a70376127b86f1388b:
+
+#define MEMPOOLHASH_GET_HASHTABLE_LEN ((numOfHashEntries) * sizeof( :ref:`MemPoolHashEntry <group___cmp_mem_pool_hash_itf_1ga34f3d729ce095e761b20c0d2add85d27>` **))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga31245766bc056880bcce710406007e9d:
+
+#define USE_MemPoolCreateHashTable :ref:`PFMEMPOOLCREATEHASHTABLE <group___cmp_mem_pool_hash_itf_1ga795b17137c1d07a68e688cd1811bb6cc>` pfMemPoolCreateHashTable;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga92bb83516cc6004dac1b9e8e2f4cee3e:
+
+#define EXT_MemPoolCreateHashTable extern :ref:`PFMEMPOOLCREATEHASHTABLE <group___cmp_mem_pool_hash_itf_1ga795b17137c1d07a68e688cd1811bb6cc>` pfMemPoolCreateHashTable;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gaf5680af7a18a7b06b81522a550bdd791:
+
+#define GET_MemPoolCreateHashTable s_pfCMGetAPI2( "MemPoolCreateHashTable", (RTS_VOID_FCTPTR *)&pfMemPoolCreateHashTable, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga204f89fb2066a051930b3dd6d3690287:
+
+#define CAL_MemPoolCreateHashTable pfMemPoolCreateHashTable
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga657b0bf6dfc87dfb4e0d7e63da754b40:
+
+#define CHK_MemPoolCreateHashTable (pfMemPoolCreateHashTable != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga3b11ed55f179b016b5d16ff5c5b45a13:
+
+#define EXP_MemPoolCreateHashTable s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MemPoolCreateHashTable", (RTS_UINTPTR) :ref:`MemPoolCreateHashTable <group___cmp_mem_pool_hash_itf_1ga3b317bb71ce6376db3453696d2574e41>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga45e62aa54e7f749b6eeb664626cfc5af:
+
+#define USE_MemPoolCreateHashTable2 :ref:`PFMEMPOOLCREATEHASHTABLE2 <group___cmp_mem_pool_hash_itf_1gaf46aaad00300ef011280473608f7b146>` pfMemPoolCreateHashTable2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga9ed348dfada4b4b9f1683ac2530d6b56:
+
+#define EXT_MemPoolCreateHashTable2 extern :ref:`PFMEMPOOLCREATEHASHTABLE2 <group___cmp_mem_pool_hash_itf_1gaf46aaad00300ef011280473608f7b146>` pfMemPoolCreateHashTable2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga7f96e2ab71315133113e720fd3731cff:
+
+#define GET_MemPoolCreateHashTable2 s_pfCMGetAPI2( "MemPoolCreateHashTable2", (RTS_VOID_FCTPTR *)&pfMemPoolCreateHashTable2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gaa50ad37d2daa4cd896a60296816cb931:
+
+#define CAL_MemPoolCreateHashTable2 pfMemPoolCreateHashTable2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gac3959f9c26960901e6913fa31c430e72:
+
+#define CHK_MemPoolCreateHashTable2 (pfMemPoolCreateHashTable2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gab4c35e7094525863ce87ce40332db742:
+
+#define EXP_MemPoolCreateHashTable2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MemPoolCreateHashTable2", (RTS_UINTPTR) :ref:`MemPoolCreateHashTable2 <group___cmp_mem_pool_hash_itf_1ga9a93c94ef2df1c1eeedb08abaf74bde3>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga2f63001581620fdc8824702e1bb4c536:
+
+#define USE_MemPoolDeleteHashTable :ref:`PFMEMPOOLDELETEHASHTABLE <group___cmp_mem_pool_hash_itf_1gacf0dcefd6422c1741b96094f33099636>` pfMemPoolDeleteHashTable;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga8a821aa8857011c7186a78205c5188c5:
+
+#define EXT_MemPoolDeleteHashTable extern :ref:`PFMEMPOOLDELETEHASHTABLE <group___cmp_mem_pool_hash_itf_1gacf0dcefd6422c1741b96094f33099636>` pfMemPoolDeleteHashTable;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga9f8ae6d1047d96c8c0a48a279f4b6cd6:
+
+#define GET_MemPoolDeleteHashTable s_pfCMGetAPI2( "MemPoolDeleteHashTable", (RTS_VOID_FCTPTR *)&pfMemPoolDeleteHashTable, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga41792a009b64752117aa36e7236d6f88:
+
+#define CAL_MemPoolDeleteHashTable pfMemPoolDeleteHashTable
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gae5825cc3fb88412d1e70b256fddf59a3:
+
+#define CHK_MemPoolDeleteHashTable (pfMemPoolDeleteHashTable != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga04a6c2426d2d55f44b1c7745b4b5101e:
+
+#define EXP_MemPoolDeleteHashTable s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MemPoolDeleteHashTable", (RTS_UINTPTR) :ref:`MemPoolDeleteHashTable <group___cmp_mem_pool_hash_itf_1ga38c979d04bc49b5b5e31c699353a6c23>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga6e0cb9177841911c0adfbe0166443396:
+
+#define USE_MemPoolGetBlockHashed :ref:`PFMEMPOOLGETBLOCKHASHED <group___cmp_mem_pool_hash_itf_1ga18a787f1b88454bfd9166f5b6ae1ed91>` pfMemPoolGetBlockHashed;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga30bf7e2edd3bc04634aaf1f00276dea8:
+
+#define EXT_MemPoolGetBlockHashed extern :ref:`PFMEMPOOLGETBLOCKHASHED <group___cmp_mem_pool_hash_itf_1ga18a787f1b88454bfd9166f5b6ae1ed91>` pfMemPoolGetBlockHashed;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga2cda423a8206bb424c900f69a88f93a5:
+
+#define GET_MemPoolGetBlockHashed s_pfCMGetAPI2( "MemPoolGetBlockHashed", (RTS_VOID_FCTPTR *)&pfMemPoolGetBlockHashed, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gae36822d62c1140be16fc3562efd6ada3:
+
+#define CAL_MemPoolGetBlockHashed pfMemPoolGetBlockHashed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga349014a79ee31b2d961f82d08c0e9d17:
+
+#define CHK_MemPoolGetBlockHashed (pfMemPoolGetBlockHashed != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gaf8b4d64afb104f42e2dcc75a3d0e1803:
+
+#define EXP_MemPoolGetBlockHashed s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MemPoolGetBlockHashed", (RTS_UINTPTR) :ref:`MemPoolGetBlockHashed <group___cmp_mem_pool_hash_itf_1ga2118fb08d8d41a80aa6d2a3bb5bbacaa>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga3f8a2499ea355de07c1ba840b0b8a23c:
+
+#define USE_MemPoolGetBlockHashed2 :ref:`PFMEMPOOLGETBLOCKHASHED2 <group___cmp_mem_pool_hash_itf_1ga26fbef5f097e84424f113560251580c3>` pfMemPoolGetBlockHashed2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga16e2ed3a427286b2ec3f8a63e3637823:
+
+#define EXT_MemPoolGetBlockHashed2 extern :ref:`PFMEMPOOLGETBLOCKHASHED2 <group___cmp_mem_pool_hash_itf_1ga26fbef5f097e84424f113560251580c3>` pfMemPoolGetBlockHashed2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga5d7b094676a228398b8a55d6265eb1d0:
+
+#define GET_MemPoolGetBlockHashed2 s_pfCMGetAPI2( "MemPoolGetBlockHashed2", (RTS_VOID_FCTPTR *)&pfMemPoolGetBlockHashed2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga9c2094738383776aac849b26de67cd11:
+
+#define CAL_MemPoolGetBlockHashed2 pfMemPoolGetBlockHashed2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga383e82c97002829645dbbfe1571af3d1:
+
+#define CHK_MemPoolGetBlockHashed2 (pfMemPoolGetBlockHashed2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga02e30027e933e925ef9cc3878ca0e53b:
+
+#define EXP_MemPoolGetBlockHashed2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MemPoolGetBlockHashed2", (RTS_UINTPTR) :ref:`MemPoolGetBlockHashed2 <group___cmp_mem_pool_hash_itf_1gaca02b30c82f5ef3660f20edf00506294>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gaee9eeefd366ca821ec6ecd23a09a44fd:
+
+#define USE_MemPoolRemoveBlockHashed :ref:`PFMEMPOOLREMOVEBLOCKHASHED <group___cmp_mem_pool_hash_itf_1gaf8162455900987a93c91289d51d0b961>` pfMemPoolRemoveBlockHashed;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gac7d2581d052bfa84e089650c803126a5:
+
+#define EXT_MemPoolRemoveBlockHashed extern :ref:`PFMEMPOOLREMOVEBLOCKHASHED <group___cmp_mem_pool_hash_itf_1gaf8162455900987a93c91289d51d0b961>` pfMemPoolRemoveBlockHashed;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga7c3eb922969281bf25662e911271a6ab:
+
+#define GET_MemPoolRemoveBlockHashed s_pfCMGetAPI2( "MemPoolRemoveBlockHashed", (RTS_VOID_FCTPTR *)&pfMemPoolRemoveBlockHashed, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gaa59598d90e5d1a38a03589b524dfa5b2:
+
+#define CAL_MemPoolRemoveBlockHashed pfMemPoolRemoveBlockHashed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga75aefdee8985a89a9d2fa16fef1f1d16:
+
+#define CHK_MemPoolRemoveBlockHashed (pfMemPoolRemoveBlockHashed != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gadf50ba8552a8084f6cac30699f67fb11:
+
+#define EXP_MemPoolRemoveBlockHashed s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MemPoolRemoveBlockHashed", (RTS_UINTPTR) :ref:`MemPoolRemoveBlockHashed <group___cmp_mem_pool_hash_itf_1gace9fd61d9783e887e4a66503ded1eea4>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gadc143319b3721fc422dc931505575802:
+
+#define USE_MemPoolGetBlockByHash :ref:`PFMEMPOOLGETBLOCKBYHASH <group___cmp_mem_pool_hash_itf_1ga5a1a7f39d7ba2601f42355ff228fd0e8>` pfMemPoolGetBlockByHash;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga0d01abeb50b025fdd4a46024fd08a512:
+
+#define EXT_MemPoolGetBlockByHash extern :ref:`PFMEMPOOLGETBLOCKBYHASH <group___cmp_mem_pool_hash_itf_1ga5a1a7f39d7ba2601f42355ff228fd0e8>` pfMemPoolGetBlockByHash;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga484b7ad7a79dbd82c31a3f411ec740f8:
+
+#define GET_MemPoolGetBlockByHash s_pfCMGetAPI2( "MemPoolGetBlockByHash", (RTS_VOID_FCTPTR *)&pfMemPoolGetBlockByHash, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gab18d3fdba22cae32922d4ad43fdd582b:
+
+#define CAL_MemPoolGetBlockByHash pfMemPoolGetBlockByHash
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga7e7786f5e32ce8f1a67e27c6d8339b0b:
+
+#define CHK_MemPoolGetBlockByHash (pfMemPoolGetBlockByHash != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga9d962adf139eee5f6d5862ee8acf0c13:
+
+#define EXP_MemPoolGetBlockByHash s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MemPoolGetBlockByHash", (RTS_UINTPTR) :ref:`MemPoolGetBlockByHash <group___cmp_mem_pool_hash_itf_1ga2420b362acd00b482fb60802f2ce0c54>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gab2bbfe28de30f02b00c58a82b3c13d8e:
+
+#define ITF_CmpMemPoolHash
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga1cb28bed9cdb06d1432b10dab59300ec:
+
+#define EXTITF_CmpMemPoolHash
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_mem_pool_hash_itf_1ga795b17137c1d07a68e688cd1811bb6cc:
+
+typedef RTS_HANDLE( *  PFMEMPOOLCREATEHASHTABLE) (RTS_HANDLE hMemPool, RTS_SIZE sNumHashEntries, char *pszComponentName, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gaf46aaad00300ef011280473608f7b146:
+
+typedef RTS_HANDLE( *  PFMEMPOOLCREATEHASHTABLE2) (RTS_HANDLE hMemPool, RTS_SIZE sNumHashEntries, RTS_UI8 *pHashTableBuffer, char *pszComponentName, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gacf0dcefd6422c1741b96094f33099636:
+
+typedef RTS_RESULT( *  PFMEMPOOLDELETEHASHTABLE) (RTS_HANDLE hMemPoolHashTable)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga18a787f1b88454bfd9166f5b6ae1ed91:
+
+typedef RTS_HANDLE( *  PFMEMPOOLGETBLOCKHASHED) (RTS_HANDLE hMemPoolHashTable, RTS_UI32 nNumOfNewElements, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga26fbef5f097e84424f113560251580c3:
+
+typedef RTS_HANDLE( *  PFMEMPOOLGETBLOCKHASHED2) (RTS_HANDLE hMemPoolHashTable, RTS_UI32 nNumOfNewElements, RTS_UI32 offsetHashEntry, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1gaf8162455900987a93c91289d51d0b961:
+
+typedef RTS_RESULT( *  PFMEMPOOLREMOVEBLOCKHASHED) (RTS_HANDLE hMemPoolHashTable, RTS_HANDLE hHash)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga5a1a7f39d7ba2601f42355ff228fd0e8:
+
+typedef void*( *  PFMEMPOOLGETBLOCKBYHASH) (RTS_HANDLE hMemPoolHashTable, RTS_HANDLE hHash, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_hash_itf_1ga487d300c803f3416bd3fe0fc2c4f13bf:
+
+typedef ICmpMemPoolHash_C ICmpMemPoolHash
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_mem_pool_hash_itf_1ga3b317bb71ce6376db3453696d2574e41:
+
+RTS_HANDLE MemPoolCreateHashTable (RTS_HANDLE hMemPool, RTS_SIZE sNumHashEntries, char *pszComponentName, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Must be called _after_ MemPoolCreateDynamic / MemPoolCreateStatic to create a hash table on top of a memory pool
+
+**Parameters**
+
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hMemPool         | Handle to the memory pool created by MemPoolCreateDynamic / MemPoolCreateStatic                                                                                                                                                                                                                                                                                                                                                                                |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | sNumHashEntries  | Length of the hash table respectively the number of elements that can be stored in the hash table without any collision. NOTE: Hash table is allocated on heap via :ref:`SysMemAllocData() <group___sys_mem_itf_1gac86cb3a6875b73f207e0c14292b96e4e>` within this function. If you would like to provide a static memory for the hash table. Use :ref:`MemPoolCreateHashTable2() <group___cmp_mem_pool_hash_itf_1ga9a93c94ef2df1c1eeedb08abaf74bde3>` instead! |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pszComponentName | Pointer to the component name of the caller                                                                                                                                                                                                                                                                                                                                                                                                                    |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult          | Pointer to error code                                                                                                                                                                                                                                                                                                                                                                                                                                          |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++--------------+------------------------------------+
+| ERR_OK       | Hash table could be created        |
++--------------+------------------------------------+
+| ERR_NOMEMORY | No memory to create the hash table |
++--------------+------------------------------------+
+| ERR_FAILED   | Hash table failed to create        |
++--------------+------------------------------------+
+
+**Returns:**
+
+Handle to the create hash table around the memory pool specified by hMemPool
+
+.. _group___cmp_mem_pool_hash_itf_1ga9a93c94ef2df1c1eeedb08abaf74bde3:
+
+RTS_HANDLE MemPoolCreateHashTable2 (RTS_HANDLE hMemPool, RTS_SIZE sNumHashEntries, RTS_UI8 *pHashTableBuffer, char *pszComponentName, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Must be called _after_ MemPoolCreateDynamic / MemPoolCreateStatic to create a hash table on top of a memory pool
+
+**Parameters**
+
++---------+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hMemPool         | Handle to the memory pool created by MemPoolCreateDynamic / MemPoolCreateStatic                                                                                                                                                                                                             |
++---------+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | sNumHashEntries  | Number of blocks that are managed in the hash table                                                                                                                                                                                                                                         |
++---------+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pHashTableBuffer | Pointer to the hash table (can be static memory). Length must be (sNumHashEntriessizeof(RTS_UI8))!. NOTE: If pHashTableBuffer = NULL. the hash table will be allocated on heap via :ref:`SysMemAllocData() <group___sys_mem_itf_1gac86cb3a6875b73f207e0c14292b96e4e>` within this function. |
++---------+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pszComponentName | Pointer to the component name of the caller                                                                                                                                                                                                                                                 |
++---------+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult          | Pointer to error code                                                                                                                                                                                                                                                                       |
++---------+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++--------------+------------------------------------+
+| ERR_OK       | Hash table could be created        |
++--------------+------------------------------------+
+| ERR_NOMEMORY | No memory to create the hash table |
++--------------+------------------------------------+
+| ERR_FAILED   | Hash table failed to create        |
++--------------+------------------------------------+
+
+**Returns:**
+
+Handle to the create hash table around the memory pool specified by hMemPool
+
+.. _group___cmp_mem_pool_hash_itf_1ga38c979d04bc49b5b5e31c699353a6c23:
+
+RTS_RESULT MemPoolDeleteHashTable (RTS_HANDLE hMemPoolHashTable)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Must be called _before_ MemPoolDelete to release a hash table on top of a memory pool
+
+**Parameters**
+
++---------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hMemPoolHashTable | Handle to the hash table created by :ref:`MemPoolCreateHashTable() <group___cmp_mem_pool_hash_itf_1ga3b317bb71ce6376db3453696d2574e41>` |
++---------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+------------------------------+
+| ERR_OK        | Hash table could be released |
++---------------+------------------------------+
+| ERR_PARAMETER | Invalid hash table handle    |
++---------------+------------------------------+
+| ERR_FAILED    | Hash table failed to release |
++---------------+------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_mem_pool_hash_itf_1ga2118fb08d8d41a80aa6d2a3bb5bbacaa:
+
+RTS_HANDLE MemPoolGetBlockHashed (RTS_HANDLE hMemPoolHashTable, RTS_UI32 nNumOfNewElements, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Must be called instead of MemPoolGetBlock2! Returned the hash handle, that must be used instead of the MemPool handle directly!
+
+**Parameters**
+
++---------+-------------------+--------------------------------------------------------------------------------------------+
+| [in]    | hMemPool          | Handle to the memory pool created by MemPoolCreateDynamic / MemPoolCreateStatic            |
++---------+-------------------+--------------------------------------------------------------------------------------------+
+| [in]    | nNumOfNewElements | Number of new elements to extend in the underlying memory pool to get the new memory block |
++---------+-------------------+--------------------------------------------------------------------------------------------+
+| [out]   | pResult           | Pointer to error code                                                                      |
++---------+-------------------+--------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+------------------------------------------------------------------+
+| ERR_OK        | New hashed memory pool block can be retrieved                    |
++---------------+------------------------------------------------------------------+
+| ERR_PARAMETER | Invalid hash table handle                                        |
++---------------+------------------------------------------------------------------+
+| ERR_NOMEMORY  | There is no more memory left to get the hashed memory pool block |
++---------------+------------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the new memory pool block
+
+.. _group___cmp_mem_pool_hash_itf_1gaca02b30c82f5ef3660f20edf00506294:
+
+RTS_HANDLE MemPoolGetBlockHashed2 (RTS_HANDLE hMemPoolHashTable, RTS_UI32 nNumOfNewElements, RTS_UI32 offsetHashEntry, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Must be called instead of MemPoolGetBlock2! Returned the hash handle, that must be used instead of the MemPool handle directly! NOTE: Instead of using :ref:`MemPoolGetBlockHashed() <group___cmp_mem_pool_hash_itf_1ga2118fb08d8d41a80aa6d2a3bb5bbacaa>` you can specify the new hash entry outside by the caller (MemPoolHashEntry)! So we don't need to allocated new memory on the heap for a hash entry.
+
+**Parameters**
+
++---------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hMemPool          | Handle to the memory pool created by MemPoolCreateDynamic / MemPoolCreateStatic                                                                                                                                                                           |
++---------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | nNumOfNewElements | Number of new elements to extend in the underlying memory pool to get the new memory block                                                                                                                                                                |
++---------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | offsetHashEntry   | Offset within the MemPoolBlock, where the member of MemPoolHashEntry is located NOTE: If offsetHashEntry = RTS_UI32_MAX, a new hash entry is allocated from heap via :ref:`SysMemAllocData() <group___sys_mem_itf_1gac86cb3a6875b73f207e0c14292b96e4e>` ! |
++---------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult           | Pointer to error code                                                                                                                                                                                                                                     |
++---------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+------------------------------------------------------------------+
+| ERR_OK        | New hashed memory pool block can be retrieved                    |
++---------------+------------------------------------------------------------------+
+| ERR_PARAMETER | Invalid hash table handle                                        |
++---------------+------------------------------------------------------------------+
+| ERR_NOMEMORY  | There is no more memory left to get the hashed memory pool block |
++---------------+------------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the new memory pool block
+
+.. _group___cmp_mem_pool_hash_itf_1gace9fd61d9783e887e4a66503ded1eea4:
+
+RTS_RESULT MemPoolRemoveBlockHashed (RTS_HANDLE hMemPoolHashTable, RTS_HANDLE hHash)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Must be called instead of MemPoolRemoveUsedBlock to remove a hashed memory block from hash table! :ref:`MemPoolPutBlock() <group___cmp_mem_pool_itf_1gad85943f33a536f0cb2443453753bd5cf>` must be called as is.
+
+**Parameters**
+
++---------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hMemPool | Handle to the memory pool created by MemPoolCreateDynamic / MemPoolCreateStatic                                                                                                                                                                                |
++---------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hHash    | Handle to the hashed memory pool object retrieved by :ref:`MemPoolGetBlockHashed() <group___cmp_mem_pool_hash_itf_1ga2118fb08d8d41a80aa6d2a3bb5bbacaa>` or :ref:`MemPoolGetBlockHashed2() <group___cmp_mem_pool_hash_itf_1gaca02b30c82f5ef3660f20edf00506294>` |
++---------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+------------------------------------------------------+
+| ERR_OK        | Hashed memory pool object could be removed           |
++---------------+------------------------------------------------------+
+| ERR_PARAMETER | Invalid hash table handle or hash memory pool object |
++---------------+------------------------------------------------------+
+| ERR_FAILED    | Hashed memory pool object failed to remove           |
++---------------+------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_mem_pool_hash_itf_1ga2420b362acd00b482fb60802f2ce0c54:
+
+void* MemPoolGetBlockByHash (RTS_HANDLE hMemPoolHashTable, RTS_HANDLE hHash, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Can be used to get the memory pool data pointer specified by ith hash.
+
+**Parameters**
+
++---------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hMemPool | Handle to the memory pool created by MemPoolCreateDynamic / MemPoolCreateStatic                                                                                                                                                                                |
++---------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hHash    | Handle to the hashed memory pool object retrieved by :ref:`MemPoolGetBlockHashed() <group___cmp_mem_pool_hash_itf_1ga2118fb08d8d41a80aa6d2a3bb5bbacaa>` or :ref:`MemPoolGetBlockHashed2() <group___cmp_mem_pool_hash_itf_1gaca02b30c82f5ef3660f20edf00506294>` |
++---------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult  | Pointer to error code                                                                                                                                                                                                                                          |
++---------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+------------------------------------------------------+
+| ERR_OK        | Data pointer could be retrieved because of its hash  |
++---------------+------------------------------------------------------+
+| ERR_PARAMETER | Invalid hash table handle or hash memory pool object |
++---------------+------------------------------------------------------+
+| ERR_NO_OBJECT | No data pointer found for this hash                  |
++---------------+------------------------------------------------------+
+
+**Returns:**
+
+Pointer to the data of the hashed memory pool object
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

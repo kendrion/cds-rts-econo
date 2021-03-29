@@ -90,6 +90,10 @@
 #define LOGID_CmpMgr_BasicChecksFailed_PackMode		0x0000004D	/** <classid>LOG_ERROR</classid>	<severity>none</severity> */
 #define LOGID_CmpMgr_InitComponentFailed			0x0000004E	/** <classid>LOG_ERROR</classid>	<severity>Component inoperative</severity> */
 #define LOGID_CmpMgr_UnloadFailedComponent			0x0000004F	/** <classid>LOG_INFO</classid>		<severity>none</severity> */
+#define LOGID_CmpMgr_BasicChecksFailed_GUID			0x00000050	/** <classid>LOG_ERROR</classid>	<severity>none</severity> */
+#define LOGID_CmpMgr_BasicChecksFailed_GUID_STRING	0x00000051	/** <classid>LOG_ERROR</classid>	<severity>none</severity> */
+#define LOGID_CmpMgr_ExitShutdownHook				0x00000052	/** <classid>LOG_INFO</classid>		<severity>none</severity> */
+#define LOGID_CmpMgr_ExitShutdownHookDone			0x00000053	/** <classid>LOG_INFO</classid>		<severity>none</severity> */
 
 
 /**
@@ -162,6 +166,7 @@
 #define LOGID_CmpApp_InitServiceHandlerDenied		0x00000047	/** <classid>LOG_INFO</classid>			<severity>none</severity> */
 #define LOGID_CmpApp_OpenBootprojectCRCFailed		0x00000048	/** <classid>LOG_ERROR</classid>		<severity>Application operation failed</severity> */
 #define LOGID_CmpApp_UnalignedArea					0x00000049	/** <classid>LOG_ERROR</classid>		<severity>none</severity> */
+#define LOGID_CmpApp_IncorrectSessionInfo			0x0000004A	/** <classid>LOG_ERROR</classid>		<severity>none</severity> */
 
 /**
  * <description>CmpAppEmbedded</description>
@@ -316,6 +321,8 @@
 #define LOGID_CmpBlkDrvTcp_ConnectSuppressed		0x00000020	/** <classid>LOG_DEBUG</classid>		<severity>none</severity> */
 #define LOGID_CmpBlkDrvTcp_ConnectionClosedByPeer	0x00000021	/** <classid>LOG_DEBUG</classid>		<severity>none</severity> */
 #define LOGID_CmpBlkDrvTcp_ServerLimitReached		0x00000022	/** <classid>LOG_DEBUG</classid>		<severity>none</severity> */
+#define LOGID_CmpBlkDrvTcp_RecvHeaderFailed			0x00000023	/** <classid>LOG_DEBUG</classid>		<severity>No communication possible</severity> */ 
+#define LOGID_CmpBlkDrvTcp_RecvAddrCorrectionFailed	0x00000024	/** <classid>LOG_DEBUG</classid>		<severity>No communication possible</severity> */ 
 
 /**
  *  <desription>CmpBlkDrvShm</desription>
@@ -396,6 +403,8 @@
 #define LOGID_CmpIecTask_Exception					0x00000003	/** <classid>LOG_EXCEPTION</classid>	<severity>This task can not be executed</severity> */
 #define LOGID_CmpIecTask_Exception_StopTimeout		0x00000004	/** <classid>LOG_EXCEPTION</classid>	<severity>Timeout occurred to switch in stop mode</severity> */
 #define LOGID_CmpIecTask_SupervisorOperationRegisterFailed		0x00000005	/** <classid>LOG_ERROR</classid>	<severity>Supervisor operation register failed</severity> */
+#define LOGID_CmpIecTask_MultiCoreLicenseMissing	0x00000006	/** <classid>LOG_WARNING</classid>	<severity>For this multi-core configuration, license is missing!</severity> */
+#define LOGID_CmpIecTask_MultiCoreDemoModeExpired	0x00000007	/** <classid>LOG_EXCEPTION</classid>	<severity>Application remains in exception state, because demo mode has expired!</severity> */
 
 /**
  *  <desription>CmpRouter</desription>
@@ -558,7 +567,7 @@
 #define LOGID_CmpWebServerHandlerV3_InvalidCommAddress		0x00000001	/** <classid>LOG_ERROR</classid>	<severity>Service cannot be handled</severity> */
 #define LOGID_CmpWebServerHandlerV3_LicenseFailed			0x00000002	/** <classid>LOG_ERROR</classid>	<severity>Service cannot be handled</severity> */
 #define LOGID_CmpWebServerHandlerV3_SendServiceFailed		0x00000003	/** <classid>LOG_ERROR</classid>	<severity>Service cannot be handled</severity> */
-#define LOGID_CmpWebServerHandlerV3_CheckService			0x00000004	/** <classid>LOG_ERROR</classid>	<severity>Service cannot be handled</severity> */
+#define LOGID_CmpWebServerHandlerV3_CheckService			0x00000004	/** <classid>LOG_DEBUG</classid>	<severity>Service cannot be handled</severity> */
 #define LOGID_CmpWebServerHandlerV3_StateShutdownRTS		0x00000005	/** <classid>LOG_INFO</classid>		<severity>notification only</severity> */
 
 
@@ -649,6 +658,8 @@
 #define LOGID_CmpVisuHandlerRemote_TcpInvalidPortNr					0x00000042	/** <classid>LOG_ERROR</classid>	<severity>Visu client might not work</severity> */	
 #define LOGID_CmpVisuHandlerRemote_TcpResolving						0x00000043	/** <classid>LOG_INFO</classid>		<severity/> */
 #define LOGID_CmpVisuHandlerRemote_ImageReloadFailed				0x00000044	/** <classid>LOG_WARNING</classid>	<severity>Dynamic image will flicker</severity> */
+#define LOGID_CmpVisuHandlerRemote_DeviceNoAccessRights				0x00000045	/** <classid>LOG_DEBUG</classid>	<severity>No access rights. Requires username and credentials</severity> */
+#define LOGID_CmpVisuHandlerRemote_DeviceTooManyRetries				0x00000046	/** <classid>LOG_WARNING</classid>	<severity>Login failed due to many wrong username/password attempts</severity> */
 
 
 
@@ -658,6 +669,12 @@
 #define LOGID_CmpRetain_RetainNotStored					0x00000001	/** <classid>LOG_WARNING</classid>	<severity>Retains don't work</severity> */
 #define LOGID_CmpRetain_RetainReinit					0x00000002	/** <classid>LOG_WARNING</classid>	<severity>Retains might be lost</severity> */
 #define LOGID_CmpRetain_NoMemory						0x00000003	/** <classid>LOG_ERROR</classid>	<severity>Failed to open retain memory</severity> */
+
+
+/**
+ *  <desription>CmpUserMgr</desription>
+ */
+#define LOGID_CmpUserMgr_AuthKeyLenAdapted				0x00000001	/** <classid>LOG_WARNING</classid>	<severity>Configured key length replaced by allowed minimum value</severity> */
 
 
 /**
@@ -711,6 +728,7 @@
 #define LOGID_CmpDevice_OperationalModeBootAppMismatch	0x00000002	/** <classid>LOG_ERROR</classid>	<severity>Bootapplication denied to start</severity> */
 #define LOGID_CmpDevice_ResetOriginDeviceDenied			0x00000003	/** <classid>LOG_ERROR | LOG_USER_NOTIFY</classid>	<severity>Reset origin device denied</severity> */
 #define LOGID_CmpDevice_SessionLoginCheckFailed			0x00000004	/** <classid>LOG_ERROR </classid>	<severity>No communication possible</severity> */
+#define LOGID_CmpDevice_OperationDisabled				0x00000005	/** <classid>LOG_ERROR </classid>	<severity>Operation is disabled</severity> */
 
 /**
  *  <desription>SysFile</desription>
@@ -784,6 +802,12 @@
 #define	LOGID_SysGraphicFramebuffer_CreateSemaphoreFailed						24
 #define	LOGID_SysGraphicFramebuffer_SimulationInputsNotImplemented				25
 
+ /**
+ *  <desription>SysFramebuffer</desription>
+ */
+#define LOGID_SysFramebuffer_SimulationCreateTaskFailed							1
+#define LOGID_SysFramebuffer_FramebufferTaskGetMessageException					2
+
 /**
  *  <desription>SysGraphicLight</desription>
  */
@@ -805,7 +829,8 @@
  *  <desription>CmpEventMgr</desription>
  */
 #define LOGID_CmpEventMgr_InvalidEventHandle									1			/** <classid>LOG_ERROR</classid> */
-#define LOGID_CmpEventMgr_CallbackIecExeption										2			/** <classid>LOG_ERROR</classid> */
+#define LOGID_CmpEventMgr_CallbackIecExeption									2			/** <classid>LOG_ERROR</classid> */
+
 
 /**
  *  <desription>CmpSIL2</desription>
@@ -831,12 +856,6 @@
  */
 #define LOGID_SIL2PSP_RM4x_BootprojectNotLoaded									1			/** <classid>LOG_INFO</classid>	<severity>Bootproject not loaded</severity> */
 
-/**
- *  <desription>CmpBackup</desription>
- */
-#define LOGID_CmpBackup_BackupDenied											1			/** <classid>LOG_ERROR</classid>	<severity>Backup denied</severity> */
-#define LOGID_CmpBackup_RestoreDenied											2			/** <classid>LOG_ERROR</classid>	<severity>Restore denied</severity> */
-
  /**
  *  <desription>SysCpuMultiCore</desription>
  */
@@ -844,6 +863,8 @@
 #define LOGID_SysCpuMultiCore_ConfigTaskGroupFailed								2			/** <classid>LOG_ERROR</classid>	<severity>none/severity> */
 #define LOGID_SysCpuMultiCore_LicenseMissing									3			/** <classid>LOG_ERROR</classid>	<severity>none</severity> */
 #define LOGID_SysCpuMultiCore_MultiCoreInfo										4			/** <classid>LOG_INFO</classid>		<severity>none</severity> */
+#define LOGID_SysCpuMultiCore_MultiCoreConfError								5			/** <classid>LOG_ERROR</classid>	<severity>none</severity> */
+#define LOGID_SysCpuMultiCore_MultiCoreConfWarning								6			/** <classid>LOG_WARNING</classid>	<severity>none</severity> */
 
 
  /**
@@ -870,4 +891,14 @@
 #define LOGID_CmpIxxatCANDrv_HardwareNotRegistered								1
 #define LOGID_CmpIxxatCANDrv_NoHardwareFound									2
 
+/**
+*	<description>CmpWebSocketClient</description>
+*/
+#define LOGID_CmpWebSocketClient_HostnameTooLong								0
+#define LOGID_CmpWebSocketClient_HostnameUnavailable							1
+#define LOGID_CmpWebSocketClient_UnexpectedSchema								2
+#define LOGID_CmpWebSocketClient_PortTooLong									3
+#define LOGID_CmpWebSocketClient_PortNumberTooHigh								4
+#define LOGID_CmpWebSocketClient_HTTPError										5
+#define LOGID_CmpWebSocketClient_ConnectViaProxyError							6
 #endif	/*_LOGINFOIDS_H_*/

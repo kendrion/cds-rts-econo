@@ -67,7 +67,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -245,7 +245,7 @@ typedef struct tagsil2checkcallercontext_struct
  * <p>Expected Context is checked vs the current context, and an exception is thrown if they are different.</p>
  * </description> 
  * <param name="ulCallerContextExpected" type="IN" range="[RTS_SIL2_CALLERCTX_SAFE,RTS_SIL2_CALLERCTX_UNSAFE,RTS_SIL2_CALLERCTX_ERROR]">Expected Context, that is checked against current context.</param>
- * <parampseudo name="bSafeContext" type="IN" range="[TRUE,FALSE]">Specifies if the context is safe or unsafe.</parampseudo>
+ * <parampseudo name="bSafeContext" type="IN" range="[TRUE,FALSE]">Specifies if the current context is safe (TRUE) or unsafe (FALSE).</parampseudo>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">Context is ok</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Context could not be checked successfully, an internal error occured.</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_EXCEPTION">Contexts are different</errorcode> 
@@ -442,19 +442,22 @@ typedef struct tagsil2oemstackisvalid_struct
 
 /**
  * <description>
- * <p>Function to check if Stack is Valid</p>
- * <p>This function is called before entering the Safemode, it returns ERR_OK if the stack is valid, and ERR_FAILED if an error occured or was detected!</p>
+ * <p>OBSOLETE FUNCTION</p>
+ * <p>Function to check if stack is valid.</p>
+ * <p>The function is not called by the runtime nor by the SIL2 plugin. Platforms may implement this function for backwards compatibility.</p>
  * </description> 
  * <parampseudo name="bStackIsValid" type="IN" range="[FALSE,TRUE]">Define if the current stack is valid.</parampseudo>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Check stack was successful</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Check stack was not successful</errorcode>
- * <result>Result of Stackcheck</result>
+ * <errorcode name="RTS_RESULT Result" type="ERR_NOTIMPLEMENTED">Obsolete function not implemented</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Platform specific definition for backwards compatibility</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Platform specific definition for backwards compatibility</errorcode> 
+ * <result>Result of stack check</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `SIL2OEMStackIsValid', `(void)')
 DEF_API(`void',`CDECL',`sil2oemstackisvalid',`(sil2oemstackisvalid_struct *p)',1,0x56A27207,0x03050400)
 
 /**
  * <description>
+ * <p>OBSOLETE FUNCTION: Use SIL2OEMExecuteNonSafetyJob2() instead.</p>
  * <p>Function to delegate a Non-Safety Job</p>
  * <p>This function can be used to delegate a non-safety job from within the safe-context to be executed from the Unsafe context</p>
  * <p>The function pfNonSafetyJob has to be called from Unsafe Context with pParam as argument</p>
@@ -482,10 +485,10 @@ typedef struct tagsil2executenonsafetyjob_struct
 
 /**
  * <description>
- * <p>Function to delegate a Non-Safety Job</p>
- * <p>This function behaves the exact same way as SIL2OEMExecuteNonSafetyJob(), but
- * it provides also the size of the parameter to the function. This way, the OEM customer
- * is able to copy the parameter temporarily to a shared memory, message box or a different stack.</p>
+ * <p>Function to delegate a Non-Safety Job</p> 
+ * <p>Delegate a non-safety job from within the safe-context to be executed from the unsafe context.</p>
+ * <p>The function pfNonSafetyJob shall be called from unsafe context with pParam as argument. iSize provides the size of pParam.</p>
+ * <p>Thus, the parameter can be copied temporarily to a shared memory, message box or a different stack.</p>
  * </description> 
  * <param name="pfNonSafetyJob" type="IN" range="[NULL,VALID_NONSAFETY_FUNCTION]">Function Pointer to NonSafety Job</param>
  * <param name="pParam" type="IN" range="[NULL,VALID_POINTER]">Pointer to Parameter for NonSafety Job</param>

@@ -1,5 +1,5 @@
 /**
- * <interfacename>CmpMgrUtils</interfacename>
+ * <interfacename>CMUtils</interfacename>
  * <description>
  *	<p>Interface for utility functions of the component manager</p>
  *	<p>The utility functions can be used by all components, because they are always included
@@ -7,7 +7,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -33,7 +33,7 @@ SET_INTERFACE_NAME(`CMUtils')
 
 /**
  * <category>Static defines</category>
- * <description>Static length of a string. Is ised for RTS_STRING_CLASS.</description>
+ * <description>Static length of a string. Is used for RTS_STRING_CLASS.</description>
  */
 #define RTS_STATIC_STRING_LEN					32
 
@@ -160,7 +160,7 @@ extern "C" {
 
 /**
  * <description> 
- *	Called to skip withspaces out of a string.
+ *	Called to skip white spaces out of a string.
  * </description>
  * <param name="psz" type="IN">Pointer to the string</param>
  * <result>returns the pointer to the next position in the string with no whitespace</result>
@@ -225,7 +225,7 @@ DEF_ITF_API(`char*', `CDECL', `CMUtlLtoa', `(RTS_I32 lValue, char *pszString, in
 
 /**
  * <description> 
- *	Convert  a version as string in an integer. The string must have the format "x.x.x.x".
+ *	Converts a version as string in an integer. The string must have the format "x.x.x.x".
  * </description>
  * <param name="pszVersion" type="IN">Pointer to version as string</param>
  * <param name="pui32Version" type="OUT">Pointer to get the version as integer</param>
@@ -235,7 +235,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlStringToVersion', `(char *pszVersion, R
 
 /**
  * <description> 
- *	Convert  a version into a string. The string has the format "x.x.x.x".
+ *	Converts a version into a string. The string has the format "x.x.x.x".
  * </description>
  * <param name="ui32Version" type="IN">Version as integer</param>
  * <param name="pszVersion" type="OUT">Pointer to version as string</param>
@@ -243,6 +243,29 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlStringToVersion', `(char *pszVersion, R
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlVersionToString', `(RTS_UI32 ui32Version, char *pszVersion, RTS_SIZE nMaxLen)')
+
+/**
+ * <description> 
+ *	Converts a byte array into a string. The NUL-terminated string will contain only hexadecimal numerals (0..9, a..f) without a prefix or a suffix.
+ * </description>
+ * <param name="pData" type="IN">Byte array to convert</param>
+ * <param name="DataSize" type="IN">Size of the byte array</param>
+ * <param name="pszDestination" type="OUT">Pointer to the string to store the converted data.</param>
+ * <param name="pDestinationSize" type="INOUT">Input: Size of the destination string buffer, output: strlen(pszDestination) + 1</param>
+ * <result>error code</result>
+ */
+DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlByteArrayToString', `(const RTS_UI8 *pData, RTS_SIZE DataSize, char *pszDestination, RTS_SIZE *pDestinationSize)')
+
+/**
+ * <description> 
+ *	Converts a NUL-terminated string into a byte array. The string must only contain hexadecimal numerals (0..9, a..f, A..F) without a prefix or a suffix.
+ * </description>
+ * <param name="pszData" type="IN">String to convert</param>
+ * <param name="pDestination" type="OUT">Pointer to the buffer to store the converted string</param>
+ * <param name="pDestinationSize" type="INOUT">Input: Size of the destination buffer, output: size of the stored byte array</param>
+ * <result>error code</result>
+ */
+DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlStringToByteArray', `(const char *pszData, RTS_UI8 *pDestination, RTS_SIZE *pDestinationSize)')
 
 /**
  * <description> 
@@ -363,7 +386,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlSafeStrCpy2', `(char *pszDest, RTS_SIZE
  * <param name="pszSrc" type="IN" range="[RTS_INVALID_HANDLE,NULL,VALID_POINTER_TO_STRINGSRC]">Pointer to source buffer. String must be NUL terminated!</param>
  * <param name="nBytesCopy" type="IN" range="[0,1,RTS_SIZE_MAX]">Number of bytes to copy</param>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">Copy successful</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_BUFFERSIZE">Destination buffer too short. Only the possible number of charachters copied</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_BUFFERSIZE">Destination buffer too short. Only the possible number of characters copied</errorcode>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlSafeStrNCpy', `(char *pszDest, RTS_SIZE nDestSize, const char *pszSrc, RTS_SIZE nBytesCopy)')
@@ -376,7 +399,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlSafeStrNCpy', `(char *pszDest, RTS_SIZE
  * <param name="nDestSize" type="IN" range="[0,1,RTS_SIZE_MAX]">Length of destination buffer</param>
  * <param name="pszSrc" type="IN" range="[RTS_INVALID_HANDLE,NULL,VALID_POINTER_TO_STRINGSRC]">Pointer to source buffer. String must be NUL terminated!</param>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">Concatenate successful</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_BUFFERSIZE">Destination buffer too short. Only the possible number of charachters copied</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_BUFFERSIZE">Destination buffer too short. Only the possible number of characters copied</errorcode>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlSafeStrCat', `(char *pszDest, RTS_SIZE nDestSize, const char *pszSrc)')
@@ -470,7 +493,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlsnprintf', `(char *pszStr, RTS_SIZE ulS
  * <description> 
  *  Memory copy between two buffers. 
  *  NOTES:
- *  - Caller has to take care about parameter checks. E.g. function does not check for nullpointer or overlapping.
+ *  - Caller has to take care about parameter checks. E.g. function does not check for null-pointer or overlapping.
  *  - Function behaves exactly like memcpy from standard c-library
  *  - For some platforms (e.g. ARM), the native memcpy might be problematic when accessing external memory. In these cases this implementation can be used
  * </description>
@@ -510,28 +533,38 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlSafeMemMove', `(void *pDest, RTS_SIZE u
  * Maximum legth of the GUID string
  * </description>
  */
-#define MAX_GUID_STRING_LEN		38
+#define MAX_GUID_STRING_LEN		37
 
 /**
  * <description> 
- *  Conversion of a GUID into a string.
+ *  Conversion of a GUID into a string of the format f81d4fae-7dec-11d0-a765-00a0c91e6bf6.  
  * </description>
  * <param name="pguid" type="IN">Pointer to the GUID to convert</param>
  * <param name="pszGUID" type="OUT">Pointer to string buffer for the result</param>
- * <param name="nMaxLen" type="IN">maximum length of the string buffer. Should be at least MAX_GUID_STRING_LEN</param>
+ * <param name="nMaxLen" type="IN">Maximum length of the string buffer. Should be at least MAX_GUID_STRING_LEN</param>
  * <result>error code</result>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Conversion was successful</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer pszGUID or pguid is not valid or nMaxLen is to small</errorcode>
  */
-DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlGUIDToString', `(RTS_GUID *pguid, char *pszGUID, RTS_SIZE nMaxLen)')
+DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlGUIDToString', `(const RTS_GUID *pguid, char *pszGUID, RTS_SIZE nMaxLen)')
 
 /**
-* <description>
-*  Conversion of a string into a GUID.
-* </description>
-* <param name="pszGUID" type="IN">Pointer to string to convert</param>
-* <param name="pguid" type="OUT">Pointer to the GUID for the result</param>
-* <result>error code</result>
+ * <description>
+ *  Conversion of a string into a GUID. Handles the formats
+ *   - Platform independent GUID: f81d4fae-7dec-11d0-a765-00a0c91e6bf6 
+ *   - Alternative platform dependent legacy formats of older runtime system versions: 
+ *       - format previously generated by CMUtlGUIDToString(): {f81d4fae-7dec11d0-a76500a0-c91e6bf6}
+ *       - format previously generated by CmpTraceMgr: f81d4fae-11d07dec-a00065a7-f66b1ec9
+ *   - Handles GUIDs at start of a string, i.e. characters after the GUID are ignored. 
+ * </description>
+ * <param name="pszGUID" type="IN">Pointer to string to convert</param>
+ * <param name="pguid" type="OUT">Pointer to the GUID for the result</param>
+ * <result>error code</result>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Conversion was successful</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer pszGUID or pguid is not valid</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_SIZE_MISMATCH">Conversion failed with size mismatch, most likely pszGUID does not contain a valid GUID format</errorcode>
 */
-DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlStringToGUID', `(char *pszGUID, RTS_GUID *pguid)')
+DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlStringToGUID', `(const char *pszGUID, RTS_GUID *pguid)')
 
 
 /**
@@ -547,7 +580,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlStringToGUID', `(char *pszGUID, RTS_GUI
  *	<ul>
  *		<li>RTS_STRING_STATIC: Name is stored in a static buffer</li>
  *		<li>RTS_STRING_DYNAMIC: Name is stored in a dynamic buffer</li>
- *		<li>RTS_STRING_ASCII: Ascii string content</li>
+ *		<li>RTS_STRING_ASCII: ASCII string content</li>
  *	</ul>
  * </description>
  */
@@ -595,7 +628,7 @@ typedef struct RTS_STRING_CLASS_
  * <result>Size in bytes of the string content</result>
  */
 #define CM_PSTRING_GET_SIZE(pString)					(pString == NULL ? 0 : ((RTS_STRING_CLASS *)pString)->size)
-#define CM_STRING_GET_SIZE(string)						(&string)
+#define CM_STRING_GET_SIZE(string)						CM_PSTRING_GET_SIZE(&string)
 
 /**
  * <description> 
@@ -603,11 +636,12 @@ typedef struct RTS_STRING_CLASS_
  * </description>
  * <param name="pString" type="IN">Pointer to string class</param>
  * <param name="pszComponentName" type="IN">Pointer to the component name, which creates this string</param>
- * <param name="pszInit" type="IN">Pointer to init string to copy into content. Can be NULL.</param>
+ * <param name="pszInit" type="IN">Pointer to initialization string to copy into content. Can be NULL.</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `CMStringCreate', `(RTS_STRING_CLASS *pString, char *pszComponentName, char *pszInit)')
 DEF_ITF_API(`RTS_RESULT', `CDECL', `CMStringCreate2', `(RTS_STRING_CLASS *pString, char *pszComponentName, char *pszInit, RTS_BOOL bAllocDynamic)')
+DEF_ITF_API(`RTS_RESULT', `CDECL', `CMStringCreate3', `(RTS_STRING_CLASS *pString, char *pszComponentName, RTS_SIZE nMaxSize, RTS_BOOL bAllocDynamic)')
 
 /**
  * <description> 
@@ -634,7 +668,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMStringExtend', `(RTS_STRING_CLASS *pString
  * </description>
  * <param name="pString" type="IN">Pointer to string class</param>
  * <param name="pszSrc" type="IN">Pointer to the source string buffer</param>
- * <param name="nSrcLen" type="IN">Lenght of the source string buffer or number of bytes to copy (_with_ trailing NUL)!</param>
+ * <param name="nSrcLen" type="IN">Length of the source string buffer or number of bytes to copy (_with_ trailing NUL)!</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `CMStringCopy', `(RTS_STRING_CLASS *pString, char *pszSrc, RTS_SIZE nSrcLen)')
@@ -650,7 +684,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMStringCopy', `(RTS_STRING_CLASS *pString, 
 
 /**
  * <description> 
- *  Compare two unicode strings
+ *  Compare two Unicode strings
  * </description>
  * <param name="pwsz1" type="IN">Pointer to string 1</param>
  * <param name="pwsz2" type="IN">Pointer to string 2</param>
@@ -664,7 +698,7 @@ DEF_ITF_API(`int', `CDECL', `CMUtlwstrcmp', `(const RTS_WCHAR *pwsz1, const RTS_
 
 /**
  * <description> 
- *  Compare two unicode strings with specified number of characters
+ *  Compare two Unicode strings with specified number of characters
  * </description>
  * <param name="pwsz1" type="IN">Pointer to string 1</param>
  * <param name="pwsz2" type="IN">Pointer to string 2</param>
@@ -679,7 +713,7 @@ DEF_ITF_API(`int', `CDECL', `CMUtlwstrncmp', `(const RTS_WCHAR *pwsz1, const RTS
 
 /**
  * <description> 
- *  Copy one unicode string to another in a safe way
+ *  Copy one Unicode string to another in a safe way
  * </description>
  * <param name="pwszDest" type="IN">Destination string</param>
  * <param name="nDestSize" type="IN">Size of the destination buffer in unicode characters (not bytes)!</param>
@@ -690,10 +724,10 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlwstrcpy', `(RTS_WCHAR *pwszDest, RTS_SI
 
 /**
  * <description> 
- *  Concatenate two unicode strings in a safe way
+ *  Concatenate two Unicode strings in a safe way
  * </description>
  * <param name="pwszDest" type="IN">Destination string</param>
- * <param name="nDestSize" type="IN">Size of the destination buffer in unicode characters (not bytes)!</param>
+ * <param name="nDestSize" type="IN">Size of the destination buffer in Unicode characters (not bytes)!</param>
  * <param name="pwszSrc" type="IN">Source string</param>
  * <result>error code</result>
  */
@@ -701,10 +735,10 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlwstrcat', `(RTS_WCHAR *pwszDest, RTS_SI
 
 /**
  * <description> 
- *  Copy number of characters from one unicode string to another in a safe way
+ *  Copy number of characters from one Unicode string to another in a safe way
  * </description>
  * <param name="pwszDest" type="IN">Destination string</param>
- * <param name="nDestSize" type="IN">Size of the destination buffer in unicode characters (not bytes)!</param>
+ * <param name="nDestSize" type="IN">Size of the destination buffer in Unicode characters (not bytes)!</param>
  * <param name="pwszSrc" type="IN">Source string</param>
  * <param name="n" type="IN">Number of characters to copy (not bytes)!</param>
  * <result>error code</result>
@@ -722,7 +756,7 @@ DEF_ITF_API(`RTS_SIZE', `CDECL', `CMUtlwstrlen', `(const RTS_WCHAR *pwsz)')
 
 /**
  * <description> 
- *  Convert the characters in a unicode string to lower case.
+ *  Convert the characters in a Unicode string to lower case.
  * </description>
  * <param name="pwsz" type="IN">Pointer to string</param>
  * <result>pwsz is returned</result>
@@ -731,7 +765,7 @@ DEF_ITF_API(`RTS_WCHAR*', `CDECL', `CMUtlwtolower', `(RTS_WCHAR* pwsz)')
 
 /**
  * <description> 
- *  Convert the characters in a unicode string to upper case.
+ *  Convert the characters in a Unicode string to upper case.
  * </description>
  * <param name="pwsz" type="IN">Pointer to string</param>
  * <result>pwsz is returned</result>
@@ -740,20 +774,20 @@ DEF_ITF_API(`RTS_WCHAR*', `CDECL', `CMUtlwtoupper', `(RTS_WCHAR* pwsz)')
 
 /**
  * <description> 
- *  Convert a byte character string to a unicode character string.
+ *  Convert a byte character string to a Unicode character string.
  * </description>
  * <param name="pszSrc" type="IN">Pointer to byte character string</param>
- * <param name="pwszDest" type="IN">Pointer to unicode character string</param>
- * <param name="nDestSize" type="IN">Size of the destination buffer in unicode characters (not bytes)!</param>
+ * <param name="pwszDest" type="IN">Pointer to Unicode character string</param>
+ * <param name="nDestSize" type="IN">Size of the destination buffer in Unicode characters (not bytes)!</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlStrToW', `(const char* pszSrc, RTS_WCHAR* pwszDest, RTS_SIZE nDestSize)')
 
 /**
  * <description> 
- *  Convert a unicode character string to a byte character string .
+ *  Convert a Unicode character string to a byte character string .
  * </description>
- * <param name="pwszSrc" type="IN">Pointer to unicode character string</param>
+ * <param name="pwszSrc" type="IN">Pointer to Unicode character string</param>
  * <param name="pszDest" type="IN">Pointer to byte character string</param>
  * <param name="nDestSize" type="IN">Size of the destination buffer in bytes</param>
  * <result>error code</result>
@@ -762,9 +796,9 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlWToStr', `(const RTS_WCHAR* pwszSrc, ch
 
 /**
  * <description> 
- *  Find a character in a unicode string.
+ *  Find a character in a Unicode string.
  * </description>
- * <param name="pwsz" type="IN">Pointer to unicode string</param>
+ * <param name="pwsz" type="IN">Pointer to Unicode string</param>
  * <param name="w" type="IN">Character to find</param>
  * <result>Returns the find position or NULL if not found</result>
  */
@@ -781,17 +815,17 @@ DEF_ITF_API(`RTS_WCHAR*', `CDECL', `CMUtlwstrchr', `(const RTS_WCHAR *pwsz, RTS_
  */
  
 /**
- * <description>This function converts a UTF-16 encoded WSTRING to a sequenze of UTF-8 code points.
- * If a codepoint cannot be converted this codepoint will be replaced with the Unicode REPLACEMENT 
+ * <description>This function converts a UTF-16 encoded WSTRING to a sequence of UTF-8 code points.
+ * If a code-point cannot be converted this code-point will be replaced with the Unicode REPLACEMENT 
  * CHARACTER (U+FFFD).</description>
  * <param name="pwsz" type="IN">Pointer to WSTRING to be converted.</param>
- * <param name="wstrLen" type="IN">Size of readbuffer in WCHARs. Set to -1 if unknown.</param>
+ * <param name="wstrLen" type="IN">Size of read buffer in WCHARs. Set to -1 if unknown.</param>
  * <param name="pUtf8Str" type="IN">Pointer to buffer where to store the UTF-8 sequence.</param>
- * <param name="bufferSize" type="IN">Buffersize of UTF-8 buffer.</param>
+ * <param name="bufferSize" type="IN">Buffer size of UTF-8 buffer.</param>
  * <result>On of these error codes: 
- *                                  - ERR_OK: Everything went fine. No errors occured.
- *                                  - ERR_PARAMETER: The parameterchecks failed.
- *                                  - ERR_CONVERSION_INCOMPLETE: The conversion failed because of some codepoints. These where replaced with U+FFFD.
+ *                                  - ERR_OK: Everything went fine. No errors occurred.
+ *                                  - ERR_PARAMETER: The parameter checks failed.
+ *                                  - ERR_CONVERSION_INCOMPLETE: The conversion failed because of some code-points. These where replaced with U+FFFD.
  * </result>
  */
  
@@ -799,15 +833,15 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlWToUtf8', `(RTS_WCHAR *pwsz, RTS_SIZE w
 
 /**
  * <description>This function converts a UTF-8 string to a UTF-16 encoded WSTRING.
- * The conversion inserts the REPLACEMENT CHARACTER (U+FFFD) if a UTF-8 codepoint or invalid.</description>
+ * The conversion inserts the REPLACEMENT CHARACTER (U+FFFD) if a UTF-8 code-point or invalid.</description>
  * <param name="pUtf8Str" type="IN">Pointer to UTF-8 string to be converted.</param>
  * <param name="pUtf8BufferSize" type="IN">Read buffer size. Set to -1 if unknown.</param>
  * <param name="pwsz" type="IN">Pointer to WSTRING buffer.</param>
  * <param name="wstrLen" type="IN">Number of WCHARs in pwsz.</param>
  * <result>On of these error codes: 
- *                                  - ERR_OK: Everything went fine. No errors occured.
- *                                  - ERR_PARAMETER: The parameterchecks failed.
- *                                  - ERR_CONVERSION_INCOMPLETE: The conversion failed because of some codepoints. These where replaced with U+FFFD.
+ *                                  - ERR_OK: Everything went fine. No errors occurred.
+ *                                  - ERR_PARAMETER: The parameter checks failed.
+ *                                  - ERR_CONVERSION_INCOMPLETE: The conversion failed because of some code-points. These where replaced with U+FFFD.
  * </result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlUtf8ToW', `(RTS_UI8* pUtf8Str, RTS_SIZE utf8BufferSize, RTS_WCHAR* pwsz, RTS_SIZE wstrLen)')
@@ -815,7 +849,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMUtlUtf8ToW', `(RTS_UI8* pUtf8Str, RTS_SIZE
 /**
  *************************************************************************
  * <description> 
- *  Variable string type routines. Can be UNICODE or C-strings, dependant
+ *  Variable string type routines. Can be UNICODE or C-strings, dependent
  *	of the type definition of RTS_CWCHAR!
  * </description>
  *************************************************************************/

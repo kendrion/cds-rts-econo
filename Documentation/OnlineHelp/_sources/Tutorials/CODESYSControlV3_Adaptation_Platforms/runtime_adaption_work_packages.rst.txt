@@ -1,0 +1,291 @@
+.. _runtime_adaption_work_packages:
+
+
+Runtime adaptation work packages
+================================
+
+Depending on the different types of adaptation, different preparation
+and adaptation work has to be done.
+
+Basically, there are 3 different starting points for a runtime
+adaptation:
+
+-  Using standard processors and operating systems like Linux, VxWorks,
+   Windows
+
+-  Ready-to-start embedded system with use of supported evaluation board
+
+-  Embedded system with other processor/OS/toolchain combination
+
+In the following chapters, runtime toolkit contents, prerequisites and
+step to build a system are listed.
+
+As the OEM has to do maintenance for its product and support for its
+customers for a longer period of time, it is recommended that the OEM
+assigns an engineer as specialist for these tasks.
+
+Standard System
+---------------
+
+Examples of such systems are Windows 7 on an Intel Pentium, or VxWorks
+on a PowerPC, or Linux on an ARM processor.
+
+Supported operating systems are Linux, VxWorks, Windows 7, Windows
+CE/Windows Embedded Compact and QNX.
+
+The CODESYS Control runtime system for Windows 7 is available in two
+different versions:
+
+-  CODESYS Control RTE: with hard real time extension made by 3S
+
+-  Some hardware requirements must be observed, see RTE manual.
+
+-  CODESYS Control WinV3: without real time capabilities:
+
+-  No special hardware requirements, so it can run on every Windows /
+   x86 platform.
+
+3S maintains and tests these systems with new releases of CODESYS and/or
+new releases of the operating system.
+
+The runtime toolkit contains:
+
+== ==============================================================================
+\  Contents of Runtime Toolkit
+== ==============================================================================
+a) Sample device description file for that platform
+b) CODESYS Control runtime system headers and m4 files
+c) Tools to create own runtime system header files
+d) 3s.dat license file for licensed fieldbus stacks and other libraries
+e) Sample runtime configuration file (*.cfg)
+f) Runtime adaptation (with multi tasking scheduler):
+  
+   -  Processor specifics
+  
+   -  Timer
+  
+   -  Memory
+  
+   -  Debug Outputs
+  
+   -  Flash/File system, directories
+  
+   -  Exception handling
+  
+   -  Interrupt handling
+  
+   -  Serial interface for communication
+  
+   -  Socket interface for communication and Modbus
+  
+   -  CANmini driver to support CANopen and other CAN-based protocols (see below)
+  
+   -  PCI and Shared memory to support Hilscher fieldbus cards
+  
+   -  Ethernet driver to support EtherCAT (see below)
+  
+   -  Event handling
+  
+   -  Semaphore handling
+  
+   -  Task handling
+== ==============================================================================
+
+Prerequisites:
+
+==== =========== ===========================================================================
+\    Responsible Task
+==== =========== ===========================================================================
+i)   OEM         Test hardware (evaluation or final board)
+ii)  OEM         C-compiler and C-debugger
+iii) OEM         Operating system installed, including drivers for file system, TCP stack, …
+==== =========== ===========================================================================
+
+Steps to build your system:
+
+== =========== ===============================================================
+\  Responsible Task
+== =========== ===============================================================
+1) OEM         Inform 3S about processor, OS and version
+2) 3S          Compile and deliver runtime toolkit to OEM
+3) 3S          Workshop with OEM. OEM learns about
+              
+               -  how to work with CODESYS (basics)
+              
+               -  how to adapt device description file
+              
+               -  how to adapt runtime configuration file
+              
+               -  how to build additional components, libraries and IO drivers
+4) OEM         Create additional components, libraries and IO drivers
+5) OEM         Test
+== =========== ===============================================================
+
+Ready-to-start embedded system
+------------------------------
+
+3S supports a number of evaluation board/toolchain combinations with
+basic runtime adaptations.
+
+Examples of such systems are Infineon TriCore with Infineon TriBoard
+TC1798, or ARM with TI TMS570 MCU Development Kit, or Renesas SH2A with
+Renesas Starterkit RSK-SH7216. For all these boards, specific toolchain
+versions are supported. A list of those combinations is available on
+request.
+
+3S maintains and tests these systems with new releases of CODESYS.
+
+The runtime toolkit contains:
+
+== ===================================================================================================================
+\  Contents of Runtime Toolkit
+== ===================================================================================================================
+a) Sample device description file for that platform
+b) CODESYS Control runtime system headers and m4 files
+c) Tools to create own runtime system header files
+d) 3s.dat license file for licensed fieldbus stacks and other libraries
+e) Sample runtime configuration file (*.cfg)
+f) CODESYS control runtime C source files, including adaptations for embedded runtime (with single tasking scheduler):
+  
+   -  Processor specifics
+  
+   -  Timer
+  
+   -  Memory
+  
+   -  Debug Outputs
+  
+   -  Flash (most of the platforms)
+  
+   -  CANmini driver to support CANopen and other CAN-based protocols (most of the platforms)
+  
+   -  Serial interface for communication
+g) Makefile, workspace or project for C compiler, to generate binaries for the evaluation board.
+== ===================================================================================================================
+
+Prerequisites:
+
+=== =========== ================================
+\   Responsible Task
+=== =========== ================================
+i)  OEM         Test hardware (evaluation board)
+ii) OEM         C-compiler and C-debugger
+=== =========== ================================
+
+Steps to build your system:
+
+== =========== =========================================================================================================================
+\  Responsible Task
+== =========== =========================================================================================================================
+1) OEM         Inform 3S about evaluation board
+2) OEM         Purchase evaluation board
+3) 3S          Deliver runtime toolkit to OEM
+4) 3S          Workshop with OEM. OEM learns about
+              
+               -  how to work with CODESYS (basics)
+              
+               -  how to adapt device description file
+              
+               -  how to adapt runtime configuration file
+              
+               -  how to build and download runtime system
+              
+               -  how to build additional components, libraries and IO drivers
+5) OEM         Create additional components, libraries and IO drivers, adapt system specific components not included in runtime toolkit.
+6) OEM         Port to final HW
+7) OEM         Test
+== =========== =========================================================================================================================
+
+Embedded system with other processor/OS/toolchain combination
+-------------------------------------------------------------
+
+Examples of such systems are Renesas SH with MQX or iTron operating
+system, or other systems where 3S has no ready-to-use adaptation.
+
+3S does no test and does no maintenance of these systems. OEMs can get
+updates of the runtime toolkit and use it to update their system to
+newer version of CODESYS, the C compiler or the board.
+
+The runtime toolkit contains:
+
+== ==============================================================================================
+\  Contents of Runtime Toolkit
+== ==============================================================================================
+a) Sample device description file for that platform
+b) CODESYS Control runtime system headers and m4 files
+c) Tools to create own runtime system header files
+d) 3s.dat license file for licensed fieldbus stacks and other libraries
+e) Sample runtime configuration file (*.cfg)
+f) CODESYS control runtime C source files
+g) Empty function frames for runtime adaptation. In some cases, adaptation samples are available.
+== ==============================================================================================
+
+Prerequisites:
+
+==== =========== ==============================================================================
+\    Responsible Task
+==== =========== ==============================================================================
+i)   OEM         Test hardware (evaluation board or final board)
+ii)  OEM         C-compiler and C-debugger
+iii) OEM         Software to initialize the processor and run until C main() function
+iv)  OEM         Drivers to access serial interface, flash, timer, external and internal memory
+==== =========== ==============================================================================
+
+Steps to build your system:
+
+== =========== ===================================================================================================================
+\  Responsible Task
+== =========== ===================================================================================================================
+1) OEM         Inform 3S about processor, toolchain and memory configuration
+2) OEM         Purchase evaluation board
+3) 3S          Deliver runtime toolkit to OEM
+4) 3S          Workshop with OEM. OEM learns about
+              
+               -  how to work with CODESYS (basics)
+              
+               -  how to adapt device description file
+              
+               -  how to adapt runtime configuration file
+              
+               -  how to build and download runtime system
+              
+               -  how to build additional components, libraries and IO drivers
+5) OEM         Finish adaptation after the workshop, some of these features are optional:
+              
+               -  Processor specifics
+              
+               -  Timer
+              
+               -  Memory
+              
+               -  Debug Outputs
+              
+               -  Flash/File system, directories
+              
+               -  Exception handling
+              
+               -  Interrupt handling
+              
+               -  Serial interface for communication
+              
+               -  Socket interface for communication and Modbus
+              
+               -  Additional interfaces for communication (USB, …)
+              
+               -  CANmini driver to support CANopen and other CAN-based protocols
+              
+               -  Ethernet driver to support EtherCAT
+              
+               -  PCI and Shared memory to support Hilscher fieldbus cards
+              
+               In case a multitasking operating system shall be supported, the following interfaces need to supported in addition:
+              
+               -  Event handling
+              
+               -  Semaphore handling
+              
+               -  Task handling
+6) OEM         Create additional components, libraries and IO drivers
+7) OEM         Port to final HW
+8) OEM         Test
+== =========== ===================================================================================================================

@@ -1,0 +1,80 @@
+.. _summary_basic_concepts_single_source:
+
+
+Single Source, Macros and M4
+----------------------------
+
+As the runtime system is implemented in C language, the components
+consist of C source file(s) (*.c) and header files (*.h).
+
+The runtime supports
+
+-  static linking: all C files are linked to one binary by the linker,
+   and
+
+-  dynamic linking: every component is compiled to a separate library
+   (e.g. .dll or .so)
+
+-  mixed linking: some components are statically linked, others are
+   linked as separate libraries
+
+To support single source for static, dynamic and mixed linking, macros
+are used for function calls, especially if functions from another
+component are called. These macros are defined in the header files.
+
+Every component has two header files: the interface file and the
+dependency file.
+
+-  Interface .h file: Called Cmp*Itf.h, contains declarations for
+   exported functions
+
+-  Dependency .h file: Called Cmp*Dep.h, contains import declarations
+
+As many macros are needed for all the functions, we are using a tool to
+generate the header files with the macros. This tool is called the “m4”
+preprocessor. This tool is provided with the runtime delivery.
+
+The source files for the header files are also called m4 files. As there
+are two header files for every component, there are also two m4 files:
+
+-  Interface .m4 file: Called Cmp*Itf.m4, contains declarations for
+   exported functions
+
+-  Dependency .m4 file: Called Cmp*Dep.m4, contains import declarations
+
+**When writing a component, do not edit the header files directly. Only
+edit the .m4 files! Then, generate the .h files with the m4 tool.**
+
+The following drawing illustrates the structure of the source files of a
+component:
+
+|image2|
+
+In the template components, some batch files are provided. They call the
+m4 preprocessor to generate the .h files from the .m4 files.
+
+If your components has a new dependency on another component, e.g. you
+want to call a function from another component, you need to configure
+this new dependency. You can do that in the Dep.m4 file of your
+component. You need to add the component interface, that you want to use
+with “USE_ITF”, and you need to specify which function you want to use
+with “REQUIRED_IMPORTS” or “OPTIONAL_IMPORTS”.
+
+Example:
+
+If you want to use the functions EventOpen and EventClose from runtime
+component CmpEventMgr (which is implementing the interface
+“CmpEventMgrItf”, declared in CmpEventMgrItf.m4), add this new
+dependency to your Dep.m4 file:
+
+.. code-block:: c#
+
+   USE_ITF('CmpEventMgrItf.m4')
+
+   REQUIRED_IMPORTS(
+   EventOpen,
+   EventClose)
+
+.. |image2| image:: images/image2.png
+   :scale: 50
+

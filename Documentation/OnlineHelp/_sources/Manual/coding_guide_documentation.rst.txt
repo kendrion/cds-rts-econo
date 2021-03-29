@@ -1,0 +1,302 @@
+.. _coding_guide_documentation:
+
+Documentation
+-------------
+
+.. contents::
+    :local:
+    :depth: 1
+    
+
+All public interface functions, the parameters, settings, events, static
+defines, compiler switches, etc. must be fully documented in the
+interface header files!
+
+The documentation of the RTS sourcecode leant on html. Actually we use
+no standard format (like doxygen, reStructuredText, javadoc or similar).
+
+Compiler Switches
+.................
+
+.. code-block:: C
+
+    /**
+     * <category>Compiler switch</category>
+     * <description>
+     * Compiler switches to enable/disable single features in the component.
+     * </description>
+     * <element name="TACEMGR_DISABLE_PERSISTENT_STORAGE">Switch to disable persistent storing of trace configuration in file</element>
+     * <element name="TACEMGR_DISABLE_SYMBOLIC_VARACCESS">Switch to disable support for symbolic access of variables (see address flag TRACE_VAR_ADDRESS_FLAGS_SYMBOLIC))</element>
+     */
+
+Static Defines
+..............
+
+.. code-block:: C
+
+    /**
+     * <category>Static defines</category>
+     * <description>Bootproject file extension</description>
+     */
+    #ifndef APP_BOOTPROJECT_FILE_EXTENSION
+        #define APP_BOOTPROJECT_FILE_EXTENSION ".app"
+    #endif
+
+Settings
+........
+
+.. code-block:: C
+
+    /**
+     * <category>Settings</category>
+     * <type>Int</type>
+     * <description>
+     * Setting to enable/disable creating bootproject implicitly on download:
+     * 1: Create bootproject implicit
+     * 0: Don‘t create bootproject implicit
+     * </description>
+     */
+    #define APPKEY_INT_CREATE_BOOTPROJECT_ON_DOWNLOAD                   „Bootproject.CreateOnDownload"
+    #ifndef APPVALUE_INT_CREATE_BOOTPROJECT_ON_DOWNLOAD_DEFAULT
+        #define APPVALUE_INT_CREATE_BOOTPROJECT_ON_DOWNLOAD_DEFAULT		1
+    #endif
+
+Events
+......
+
+.. code-block:: C
+
+    /**
+     * <category>Event parameter</category>
+     * <element name="pApp" type="IN">Pointer to application description</element>
+     * <element name="pszConfigApplication" type="IN">Pointer to the name of the config application</element>
+     */
+    typedef struct
+    {
+        struct tagAPPLICATION* pApp;
+        char* pszConfigApplication;
+    } EVTPARAM_CmpAppConfig;
+    #define EVTPARAMID_CmpAppConfig 0x0001
+    #define EVTVERSION_CmpAppConfig 0x0001
+    
+    /**
+     * <category>Events</category>
+     * <description>Event is sent on Reset, after global exit and before global init.</description>
+     * <param name="pEventParam" type="IN">EVTPARAM_CmpAppConfig</param>
+     */
+    #define EVT_GlobalExitOnResetDone MAKE_EVENTID(EVTCLASS_INFO, 26)
+ 
+States
+......
+
+.. code-block:: C
+
+    /**
+     * <category>Application state</category>
+     * <description>
+     *   <ul>
+     *     <li>AS_NONE: Unspecified state</li>
+     *     <li>AS_RUN: Application in run</li>
+     *     <li>AS_STOP: Application in stop</li>
+     *     <li>AS_DEBUG_HALT_ON_BP: Application halted on breakpoint</li>
+     *     <li>AS_DEBUG_STEP: Not used actually</li>
+     *     <li>AS_SYSTEM_APPLICATION: State of a system application</li>
+     *   </ul>
+     * </description>
+     */
+    #define AS_NONE			        UINT32_C(0x00000000)
+    #define AS_RUN  			    UINT32_C(0x00000001)
+    #define AS_STOP 			    UINT32_C(0x00000002)
+    #define AS_DEBUG_HALT_ON_BP     UINT32_C(0x00000003)
+    #define AS_DEBUG_STEP 		    UINT32_C(0x00000004)
+    #define AS_SINGLE_CYCLE 	    UINT32_C(0x00000005)
+    #define AS_SYSTEM_APPLICATION   UINT32_C(0xFFFFFFFF)
+
+Structures
+..........
+
+.. code-block:: C
+
+    /**
+     * <category>Application information</category>
+     * <description>
+     * Contains the application information as specified in the application property dialog in CoDeSys.
+     * </description>
+     * <element name="pstProjectName" type="OUT">Pointer project name</element>
+     * <element name="pstAuthor" type="OUT">Pointer to author</element>
+     * <element name="pstVersion" type="OUT">Pointer to version as string in the format „x.x.x.x"</element>
+     * <element name="pstDescription" type="OUT">Pointer to description</element>
+     * <element name="pstProfile" type="OUT">Pointer to used CoDeSys profile name</element>
+     * <element name="dtLastChanges" type="OUT">Time and date of last modification of the application (UTC)</element>
+     */
+    typedef struct
+    {
+        RTS_IEC_STRING *pstProjectName;
+        RTS_IEC_STRING *pstAuthor;
+        RTS_IEC_STRING *pstVersion;
+        RTS_IEC_STRING *pstDescription;
+        RTS_IEC_STRING *pstProfile;
+        RTS_IEC_DATE_AND_TIME dtLastChanges;
+    } APPLICATION_INFO;
+ 
+Function prototypes
+...................
+
+.. code-block:: C
+
+    /**
+     * <description>Stop an application</description>
+     * <param name="pApp" type="IN">Pointer to the application</param>
+     * <param name="ulTimeoutMs" type="IN">Timeout in milliseconds to wait for stop. RTS_TIMEOUT_DEFAULT can be used as the default value</param>
+     * <param name="ulStopReason" type="IN">Stop reason, See corresponding category</param>
+     * <result>error code</result>
+     * <errorcode name="RTS_RESULT" type="ERR_OK">Application could be stopped and is now in state AS_STOP</errorcode>
+     * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid parameter</errorcode>
+     * <errorcode name="RTS_RESULT" type="ERR_TIMEOUT">Application could not be stopped within the specified timeout</errorcode>
+     * <errorcode name="RTS_RESULT" type="ERR_FAILED">Application failed to stop</errorcode>
+     */
+    DEF_ITF_API(`RTS_RESULT', `CDECL', `AppStopApplication', `(APPLICATION *pApp, RTS_UI32 ulTimeoutMs, RTS_UI32 ulStopReason)')
+
+Online services
+...............
+
+Online services must be documented right above the tag definition!
+
++-----------------------------------------+--------------------------------------------------------------+
+| HTML tag                                | Description                                                  |
++=========================================+==============================================================+
+| <category>Online services</category>    | Defines the category "Online services"                       |
++-----------------------------------------+--------------------------------------------------------------+
+| <description></description>             | Description of the service                                   |
++-----------------------------------------+--------------------------------------------------------------+
+| <servicegroup name="SG_SETTINGS">       | Service group, to which the service belongs                  |
++-----------------------------------------+--------------------------------------------------------------+
+| <service name="SRV_SETTG_READ_SETTINGS" | Name of the service (service definition)                     |
++-----------------------------------------+--------------------------------------------------------------+
+| <request></request>                     | Request tags                                                 |
++-----------------------------------------+--------------------------------------------------------------+
+| <response></response>                   | Response tags                                                |
++-----------------------------------------+--------------------------------------------------------------+
+
+The attributes for service tags are:
+
++--------------------------------+--------------------------------------------------------------+
+| Attribute                      | Description                                                  |
++================================+==============================================================+
+| name="TAG_SETTG_KEY"           | Name of the tag                                              |
++--------------------------------+--------------------------------------------------------------+
+| description=""                 | Documentation attribute                                      |
++--------------------------------+--------------------------------------------------------------+
+| define="TAG_SETTG_CATEGORY"    | Definition name of the tag                                   |
++--------------------------------+--------------------------------------------------------------+
+| type="RTS_XXX"                 | Specifies the RTS datatype of the tag                        |
+|                                | (see :ref:`coding_guide_datatypes`)                          |
++--------------------------------+--------------------------------------------------------------+
+| required="true/false"          | true = This is a mandatory tag (must be transmitted always!) |
+|                                +--------------------------------------------------------------+
+|                                | false = This is an optional tag (is not transmitted always)  |
++--------------------------------+--------------------------------------------------------------+
+| alternate="true"               | Can be specified for at least two optional tags on the       |
+|                                | same layer, which are transmitted alternativelythis is       |
+|                                | an optional tag (is transmitted not always)                  |
++--------------------------------+--------------------------------------------------------------+
+| array="true"                   | Can be specified for a complex tag, that following           |
+|                                | subtags are transmitted like an array                        |
++--------------------------------+--------------------------------------------------------------+
+
+This is an example of a complete documented online service:
+
+.. code-block:: C
+
+    /**
+     * <category>Online services</category>
+     * <description>
+     *  Online service to read all security setting.
+     * </description>
+     * <servicegroup name="SG_SETTINGS">
+     *   <service name="SRV_SETTG_READ_SETTINGS"
+     *    description="This is the documentation">
+     *     <request>
+     *        <tag name="Category" define="TAG_SETTG_CATEGORY" type="RTS_CSTRING::UTF-8" required="false"
+     *         description="This is the documentation"></tag>
+     *        <tag name="Info" define="" required="false"
+     *         description="This is the documentation">
+     *            <tag name="Component" define="TAG_SETTG_COMPONENT" type="RTS_CSTRING::UTF-8" required="false"
+     *             description="This is the documentation"></tag>
+     *            <tag name="Key" define="TAG_SETTG_KEY" type="RTS_CSTRING::UTF-8" required="false"
+     *             description="This is the documentation"></tag>
+     *        </tag>
+     *     </request>
+     *     <response>
+     *        <tag name="Settings" define="TAGNEST_SETTINGS" required="true" array="true"
+     *         description="This is the documentation">
+     *            <tag name="Info" define="TAGNEST_SETTING_INFO" required="true"
+     *             description="This is the documentation">
+     *                <tag name="Component" define="TAG_SETTG_COMPONENT" type="RTS_CSTRING::UTF-8" required="true"
+     *                 description="This is the documentation"></tag>
+     *                <tag name="Key" define="TAG_SETTG_KEY" type="RTS_CSTRING::UTF-8" required="true"
+     *                 description="This is the documentation"></tag>
+     *                <tag name="Description" define="TAG_SETTG_DESCRIPTION" type="RTS_CSTRING::UTF-8" required="false"
+     *                 description="This is the documentation"></tag>
+     *                <tag name="Flags" define="TAG_SETTG_FLAGS" type="RTS_UI32" required="true"
+     *                 description="This is the documentation"></tag>
+     *            </tag>
+     *            <tag name="Setting selectable" define="TAGNEST_SETTG_SETTING_SELECTABLE" required="false" array="true" alternate="true"
+     *             description="This is the documentation">
+     *                <tag name="" define="TAG_SETTG_SELECTED" type="RTS_CSTRING::UTF-8" required="false"
+     *                 description="This is the documentation"></tag>
+     *                <tag name="" define="TAG_SETTG_NUM_OF_SETTINGS" type="RTS_UI32" required="true"
+     *                 description="This is the documentation"></tag>
+     *                <tag name="" define="TAGNEST_SETTG_SETTING_SELECTABLE_ENTRY" required="true" array="true"
+     *                 description="This is the documentation">
+     *                    <tag name="" define="TAG_SETTG_SETTING_FLAGS" type="RTS_UI32" required="true"
+     *                     description="This is the documentation"></tag>
+     *                    <tag name="" define="TAG_SETTG_SETTING_NAME" type="RTS_CSTRING::UTF-8" required="true"
+     *                     description="This is the documentation"></tag>
+     *                    <tag name="" define="TAG_SETTG_SETTING_DESCRIPTION" type="RTS_CSTRING::UTF-8" required="false"
+     *                     description="This is the documentation"></tag>
+     *                </tag>
+     *            </tag>
+     *            <tag name="Setting editable" define="TAGNEST_SETTG_SETTING_EDITABLE" required="false" alternate="true"
+     *             description="This is the documentation">
+     *                <tag name="Flags" define="TAG_SETTG_SETTING_FLAGS" type="RTS_UI32" required="true"
+     *                 description="This is the documentation"></tag>
+     *                <tag name="Name" define="TAG_SETTG_SETTING_NAME" type="RTS_CSTRING::UTF-8" required="false"
+     *                 description="This is the documentation"></tag>
+     *                <tag name="Description" define="TAG_SETTG_SETTING_DESCRIPTION" type="RTS_CSTRING::UTF-8" required="false"
+     *                 description="This is the documentation"></tag>
+     *                <tag name="Value int" define="TAG_SETTG_SETTING_VALUE_INT" type="RTS_I32" required="false"
+     *                 description="This is the documentation"></tag>
+     *                <tag name="Default value int" define="TAG_SETTG_SETTING_DEFAULTVALUE_INT" type="RTS_I32" required="false"
+     *                 description="This is the documentation"></tag>
+     *                <tag name="Value string" define="TAG_SETTG_SETTING_VALUE_STRING" type="RTS_CSTRING::UTF-8" required="false"
+     *                 description="This is the documentation"></tag>
+     *                <tag name="Default value string" define="TAG_SETTG_SETTING_DEFAULTVALUE_STRING" type="RTS_CSTRING::UTF-8" required="false"
+     *                 description="This is the documentation"></tag>
+     *            </tag>
+     *        </tag>
+     *        <tag name="" define="TAG_SETTG_RESULT" type="RTS_I16" required="true"
+     *         description="Result code of the complete operation"></tag>
+     *     </response>
+     *   </service>
+     * </servicegroup>
+     */
+    #define SRV_SETTG_READ_SETTINGS                     0x06
+
+    #define TAG_SETTG_CATEGORY                          0x20
+    #define TAGNEST_SETTING_INFO                        0x87
+    #define TAG_SETTG_KEY                               0x11
+    #define TAGNEST_SETTINGS                            0x86
+    #define TAGNEST_SETTING_INFO                        0x87
+    #define TAG_SETTG_DESCRIPTION                       0x21
+    #define TAG_SETTG_FLAGS                             0x22
+
+    #define TAGNEST_SETTG_SETTING_SELECTABLE            0x88
+    #define TAG_SETTG_SELECTED                          0x23
+    #define TAG_SETTG_NUM_OF_SETTINGS                   0x24
+
+    #define TAGNEST_SETTG_SETTING_SELECTABLE_ENTRY      0x89
+    #define TAG_SETTG_SETTING_FLAGS                     0x31
+    #define TAG_SETTG_SETTING_NAME                      0x32
+    
+    #define TAG_SETTG_SETTING_DESCRIPTION               0x33

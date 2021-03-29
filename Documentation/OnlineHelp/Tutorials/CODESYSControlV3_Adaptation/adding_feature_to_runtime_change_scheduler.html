@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Change the Scheduler &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/theme.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Add Communication Channels" href="adding_feature_to_runtime_add_communication_channels.html" />
+    <link rel="prev" title="6.2.2.3. Adding Features to the Runtime" href="adding_feature_to_runtime.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="adding_feature_to_runtime_add_communication_channels.html" title="Add Communication Channels"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="adding_feature_to_runtime.html" title="6.2.2.3. Adding Features to the Runtime"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >6. Tutorials / HowTos</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >6.2.2. CODESYS Control V3 - Porting to a new platform</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="adding_feature_to_runtime.html" accesskey="U">6.2.2.3. Adding Features to the Runtime</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="adding_feature_to_runtime.html"
+                        title="previous chapter">6.2.2.3. Adding Features to the Runtime</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="adding_feature_to_runtime_add_communication_channels.html"
+                        title="next chapter">Add Communication Channels</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="change-the-scheduler">
+<span id="adding-feature-to-runtime-change-scheduler"></span><h1>Change the Scheduler<a class="headerlink" href="#change-the-scheduler" title="Permalink to this headline">¶</a></h1>
+<p>You can use one of three schedulers, appropriate for your runtime system:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../CODESYSControlV3_Scheduler/cmpscheduleembedded.html#tutorial-cmpscheduleembedded"><span class="std std-ref">CmpScheduleEmbedded</span></a></p></li>
+<li><p><a class="reference internal" href="../CODESYSControlV3_Scheduler/cmpscheduletimer.html#tutorial-cmpscheduletimer"><span class="std std-ref">CmpScheduleTimer</span></a></p></li>
+<li><p><a class="reference internal" href="../CODESYSControlV3_Scheduler/cmpschedule.html#tutorial-cmpschedule"><span class="std std-ref">CmpSchedule</span></a></p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="timer-scheduler">
+<h2>Timer Scheduler<a class="headerlink" href="#timer-scheduler" title="Permalink to this headline">¶</a></h2>
+<p>This feature depends on the new system interface “SysTimer”, which needs
+to be implemented for your platform. So copy SysTimerOS.c from the
+SysTemplates to SysTimerMyPlat.c in your adaptation. In generell this
+interface consists of the following API:</p>
+<ul>
+<li><div class="line-block">
+<div class="line">SysTimerOpen()</div>
+<div class="line">Create a new timer handle, associated with a real system timer.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTimerClose()</div>
+<div class="line">Free timer handle.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTimerGetContext()</div>
+<div class="line">Get current context of one of the timers. This function is called
+externally, not from within the timer context. [optional]</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTimerFitTimer()</div>
+<div class="line">Check if the passed timer handle matches the priority and interval
+which is also passed to this function. This is used to reuse
+existing timers for multiple tasks.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTimerStart()</div>
+<div class="line">Start a specific timer and enable it’s interrupts.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTimerStop()</div>
+<div class="line">Stop a specific timer or at least disable the generation of the
+timer interrupts.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTimerGetTimeStamp()</div>
+<div class="line">You should return the current timer value, if you have a readable
+counter (incrementer or decrementer). [optional]</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTimerSetInterval()</div>
+<div class="line">Change the interval of an existing timer. [optional]</div>
+</div>
+</li>
+<li><p>SysTimerGetInterval()</p></li>
+<li><p>Return the configured interval of an existing timer.</p></li>
+<li><div class="line-block">
+<div class="line">SysTimerMaxTimer()</div>
+<div class="line">Return number of available timers.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTimerGetMinResolution()</div>
+<div class="line">Return the Minimum Resolution of a timer.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTimerRegisterBasePointer()</div>
+<div class="line">This API is obsolete.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTimerDebugLeave()</div>
+<div class="line">This API is obsolete.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTimerDebugEnter()</div>
+<div class="line">This API is obsolete.</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="multitasking-scheduler">
+<h2>Multitasking Scheduler<a class="headerlink" href="#multitasking-scheduler" title="Permalink to this headline">¶</a></h2>
+<p>This feature depends on the two system interfaces “SysTask” and
+“SysEvent”. The SysTask component assumes that you have a realtime
+priority based scheduler. The Events are used to schedule the tasks.
+That means that every IEC task has it’s own event on which it is waiting
+until the scheduler signals the event to wake the task up.</p>
+<p>The SysTask interface consists of the following system dependent API:</p>
+<ul>
+<li><div class="line-block">
+<div class="line">SysTaskCreate()</div>
+<div class="line">Create a new task but keep it in suspended state.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskExit()</div>
+<div class="line">Terminate a foreign task (no suicide), but give it enough time to
+end it’s cycle.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskSetExit()</div>
+<div class="line">Just set the flag TP.bExit in the task handle to true.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskDestroy()</div>
+<div class="line">Force the task to end immediately.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskSuspend()</div>
+<div class="line">Suspend a running task temporary.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskResume()</div>
+<div class="line">Resume a previously suspended task.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskEnd()</div>
+<div class="line">This function is for a suicide of the task itself.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskWaitSleep()</div>
+<div class="line">This function lets the specified task sleep. It is enough to
+execute this for the currently running task and to prohibit it for
+foreign ones (what is easier on most systems).</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskWaitInterval()</div>
+<div class="line">Let the task sleep for one interval. This is only necessary if you
+want to bypass the event based scheduler. [optional]</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskGetCurrent()</div>
+<div class="line">Return the handle for the currently running task.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskGetCurrentOSHandle()</div>
+<div class="line">Return the current OS handle. This is necessary for the exception
+handling.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskSetPriority()</div>
+<div class="line">Change the priority of an existing task. [optional]</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskSetProcessPriority()</div>
+<div class="line">This function is only necessary for systems with interprocess
+communication. [optional]</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskGetPriority()</div>
+<div class="line">Get the Tasks IEC priority. [optional]</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskGetOSPriority()</div>
+<div class="line">Get the real priority of the task. [optional]</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskGetInfo()</div>
+<div class="line">Return the Task_Info structure from a task handle (usually just a
+cast).</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskGetContext()</div>
+<div class="line">Determine PC, SP and BP from the current (saved) task context.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskCheckStack()</div>
+<div class="line">Hook to check the task stack. [optional]</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskGetInterval()</div>
+<div class="line">Get the task interval. [optional]</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskSetInterval()</div>
+<div class="line">Change the task interval. [optional]</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTaskWaitSleepUs()</div>
+<div class="line">Implement a precise sleep in microseconds. [optional]</div>
+</div>
+</li>
+</ul>
+<p>The Events should have an event counter. That means that if an event is
+missed, the task will execute two times directly after another.
+Otherwise we might miss a cycle. You need to implement the following
+API:</p>
+<ul>
+<li><div class="line-block">
+<div class="line">SysEventCreate()</div>
+<div class="line">Create a new event or take one from a local event pool.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysEventDelete()</div>
+<div class="line">Delete an existing event or give it back to a local event pool.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysEventSet()</div>
+<div class="line">Signal an event (used by our scheduler, so maybe also from
+Interrupt context).</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysEventWait()</div>
+<div class="line">Wait on an event. This is obviously only called from the IEC tasks
+to wait for the next cycle.</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="adding_feature_to_runtime_add_communication_channels.html" title="Add Communication Channels"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="adding_feature_to_runtime.html" title="6.2.2.3. Adding Features to the Runtime"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >6. Tutorials / HowTos</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >6.2.2. CODESYS Control V3 - Porting to a new platform</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="adding_feature_to_runtime.html" >6.2.2.3. Adding Features to the Runtime</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

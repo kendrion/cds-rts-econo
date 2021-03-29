@@ -1,0 +1,764 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_shm_itf:
+
+=========
+SysShmItf
+=========
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of SysShm.
+
+Detailed Description
+--------------------
+
+The SysShm interface is projected to handle access to shared memory. Shared memory could be physical memory (e.g. IO-cards) or a memory, that can be shared between several processes or tasks.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Settings <group___sys_shm_itf___settings>`
+
+- :ref:`Shared memory object <group___sys_shm_itf___sharedmemoryobject>`
+
+- :ref:`Static defines <group___sys_shm_itf___staticdefines>`
+
+Data Structures
+---------------
+
+- struct :ref:`ISysShm_C <struct_i_sys_shm___c>`
+
+Macros
+------
+
+- #define :ref:`SHM_NUM_OF_STATIC_OBJECTS <group___sys_shm_itf_1ga5a6f8335b37a17888b70fa12455aba03>` 5
+
+- #define :ref:`USE_SysSharedMemoryCreate <group___sys_shm_itf_1ga630e37f2b1a9f4bb2a5a47dbdc935e18>` :ref:`PFSYSSHAREDMEMORYCREATE <group___sys_shm_itf_1ga7100a2ea229c0a992fbf709944f151a9>` pfSysSharedMemoryCreate;
+
+- #define :ref:`EXT_SysSharedMemoryCreate <group___sys_shm_itf_1ga23dcda58fdd1cf829bd233e7e41a64db>` extern :ref:`PFSYSSHAREDMEMORYCREATE <group___sys_shm_itf_1ga7100a2ea229c0a992fbf709944f151a9>` pfSysSharedMemoryCreate;
+
+- #define :ref:`GET_SysSharedMemoryCreate <group___sys_shm_itf_1gaa63f8f592975f1eb000f28d95d818617>` s_pfCMGetAPI2( "SysSharedMemoryCreate", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSharedMemoryCreate <group___sys_shm_itf_1gab68bb0fa79b6bf9f715b003b6fb13b2d>` pfSysSharedMemoryCreate
+
+- #define :ref:`CHK_SysSharedMemoryCreate <group___sys_shm_itf_1ga09164a300c9d6007f3abc0e6e5977d00>` (pfSysSharedMemoryCreate != NULL)
+
+- #define :ref:`EXP_SysSharedMemoryCreate <group___sys_shm_itf_1ga35e311976482c500f29064542f9e766f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryCreate", (RTS_UINTPTR) :ref:`SysSharedMemoryCreate <group___sys_shm_itf_1gaf3b9dc0e726985175998d5ac41a23f2e>` , 0, 0)
+
+- #define :ref:`USE_SysSharedMemoryDelete <group___sys_shm_itf_1ga77b0b422ca92d55a71faf8ae21e30ee3>` :ref:`PFSYSSHAREDMEMORYDELETE <group___sys_shm_itf_1ga3530c5fca3c471b9e1c06bbc8d1cd38d>` pfSysSharedMemoryDelete;
+
+- #define :ref:`EXT_SysSharedMemoryDelete <group___sys_shm_itf_1ga3aee19b5f447c5eba04b3bdf12a09481>` extern :ref:`PFSYSSHAREDMEMORYDELETE <group___sys_shm_itf_1ga3530c5fca3c471b9e1c06bbc8d1cd38d>` pfSysSharedMemoryDelete;
+
+- #define :ref:`GET_SysSharedMemoryDelete <group___sys_shm_itf_1gac1de0a3a43fdb187c45e9b3b762bc2b6>` s_pfCMGetAPI2( "SysSharedMemoryDelete", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryDelete, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSharedMemoryDelete <group___sys_shm_itf_1ga1677cf769de2cfde8a016579f01eead5>` pfSysSharedMemoryDelete
+
+- #define :ref:`CHK_SysSharedMemoryDelete <group___sys_shm_itf_1gac5138e5948aada3a9387caaa4fe18a37>` (pfSysSharedMemoryDelete != NULL)
+
+- #define :ref:`EXP_SysSharedMemoryDelete <group___sys_shm_itf_1ga236c6180ac13185ca9955bacadc273f6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryDelete", (RTS_UINTPTR) :ref:`SysSharedMemoryDelete <group___sys_shm_itf_1ga9729cea8a65de8896bcab55ddf622325>` , 0, 0)
+
+- #define :ref:`USE_SysSharedMemoryOpen <group___sys_shm_itf_1ga7b0db7fba88dc5af967ffef65a85c774>` :ref:`PFSYSSHAREDMEMORYOPEN <group___sys_shm_itf_1gac8a1a1d7d3f823a00a43fc1a229282f5>` pfSysSharedMemoryOpen;
+
+- #define :ref:`EXT_SysSharedMemoryOpen <group___sys_shm_itf_1ga301768b9fdb416127b492dbf5371bf9a>` extern :ref:`PFSYSSHAREDMEMORYOPEN <group___sys_shm_itf_1gac8a1a1d7d3f823a00a43fc1a229282f5>` pfSysSharedMemoryOpen;
+
+- #define :ref:`GET_SysSharedMemoryOpen <group___sys_shm_itf_1ga9f647406ef64c85049b6a3583125d3cb>` s_pfCMGetAPI2( "SysSharedMemoryOpen", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryOpen, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSharedMemoryOpen <group___sys_shm_itf_1ga6a3d629e0179dbd31b575131bf0cbaea>` pfSysSharedMemoryOpen
+
+- #define :ref:`CHK_SysSharedMemoryOpen <group___sys_shm_itf_1ga181f97a3d8ad3a7f449ea622088a28ab>` (pfSysSharedMemoryOpen != NULL)
+
+- #define :ref:`EXP_SysSharedMemoryOpen <group___sys_shm_itf_1ga15dd467d92f75bdf16cb75a95027800f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryOpen", (RTS_UINTPTR) :ref:`SysSharedMemoryOpen <group___sys_shm_itf_1gad722a40f6c28da9a5fe653f66aafc45d>` , 0, 0)
+
+- #define :ref:`USE_SysSharedMemoryClose <group___sys_shm_itf_1gac08400f990db537d7b0cbbf6250490d6>` :ref:`PFSYSSHAREDMEMORYCLOSE <group___sys_shm_itf_1ga0b6eb71edd013a2c6b4775ebe9294976>` pfSysSharedMemoryClose;
+
+- #define :ref:`EXT_SysSharedMemoryClose <group___sys_shm_itf_1ga2162247732e8f2bf6632084b443fc9d7>` extern :ref:`PFSYSSHAREDMEMORYCLOSE <group___sys_shm_itf_1ga0b6eb71edd013a2c6b4775ebe9294976>` pfSysSharedMemoryClose;
+
+- #define :ref:`GET_SysSharedMemoryClose <group___sys_shm_itf_1ga4f7abaaefab7e40cbc80c2ca16548ba6>` s_pfCMGetAPI2( "SysSharedMemoryClose", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryClose, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSharedMemoryClose <group___sys_shm_itf_1gaf7b28fa5260e82efb012dfe0370bfc15>` pfSysSharedMemoryClose
+
+- #define :ref:`CHK_SysSharedMemoryClose <group___sys_shm_itf_1gacb46818b278bc3c0bee3dba595ae5032>` (pfSysSharedMemoryClose != NULL)
+
+- #define :ref:`EXP_SysSharedMemoryClose <group___sys_shm_itf_1ga9411cb197f1077658c9e2a4e4cddce1e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryClose", (RTS_UINTPTR) :ref:`SysSharedMemoryClose <group___sys_shm_itf_1ga242a9724adcf68728b0082e01e716c7c>` , 0, 0)
+
+- #define :ref:`USE_SysSharedMemoryGetPointer <group___sys_shm_itf_1ga9283fd8f25a89efea1692df37b079eef>` :ref:`PFSYSSHAREDMEMORYGETPOINTER <group___sys_shm_itf_1ga4c443fed2836551fbdd4406c07a9f8de>` pfSysSharedMemoryGetPointer;
+
+- #define :ref:`EXT_SysSharedMemoryGetPointer <group___sys_shm_itf_1gae8a9704af9ab2d1fff3cf9db1bc17794>` extern :ref:`PFSYSSHAREDMEMORYGETPOINTER <group___sys_shm_itf_1ga4c443fed2836551fbdd4406c07a9f8de>` pfSysSharedMemoryGetPointer;
+
+- #define :ref:`GET_SysSharedMemoryGetPointer <group___sys_shm_itf_1ga9a88fcb134aa79029d5eb53dfaf30893>` s_pfCMGetAPI2( "SysSharedMemoryGetPointer", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryGetPointer, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSharedMemoryGetPointer <group___sys_shm_itf_1ga5fa245810f57c15cf7ee0a1adf9ff785>` pfSysSharedMemoryGetPointer
+
+- #define :ref:`CHK_SysSharedMemoryGetPointer <group___sys_shm_itf_1ga1f51690d80613fa6e52eb0c47d59b9ff>` (pfSysSharedMemoryGetPointer != NULL)
+
+- #define :ref:`EXP_SysSharedMemoryGetPointer <group___sys_shm_itf_1ga0c2b8e592ded41efc26980b54158c4d0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryGetPointer", (RTS_UINTPTR) :ref:`SysSharedMemoryGetPointer <group___sys_shm_itf_1ga85c536ef2e490bad3811ddacea94ca62>` , 0, 0)
+
+- #define :ref:`USE_SysSharedMemoryRead <group___sys_shm_itf_1ga76a9c62f4c116dc2b132bf73d46d888d>` :ref:`PFSYSSHAREDMEMORYREAD <group___sys_shm_itf_1ga2dc6b0d2226133b8a3874d75ef065402>` pfSysSharedMemoryRead;
+
+- #define :ref:`EXT_SysSharedMemoryRead <group___sys_shm_itf_1ga8aa79d24e12d5a096d46929aecca9315>` extern :ref:`PFSYSSHAREDMEMORYREAD <group___sys_shm_itf_1ga2dc6b0d2226133b8a3874d75ef065402>` pfSysSharedMemoryRead;
+
+- #define :ref:`GET_SysSharedMemoryRead <group___sys_shm_itf_1ga8ced8c7c2df3800790a6b8787992bf85>` s_pfCMGetAPI2( "SysSharedMemoryRead", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryRead, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSharedMemoryRead <group___sys_shm_itf_1ga5b97ea5d75bc59df26e68b11281c6a2f>` pfSysSharedMemoryRead
+
+- #define :ref:`CHK_SysSharedMemoryRead <group___sys_shm_itf_1gac833f655ec06c393a7827abff0c50fe8>` (pfSysSharedMemoryRead != NULL)
+
+- #define :ref:`EXP_SysSharedMemoryRead <group___sys_shm_itf_1ga53f86ceccc2bb9056353422fee1786de>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryRead", (RTS_UINTPTR) :ref:`SysSharedMemoryRead <group___sys_shm_itf_1ga07860e7d319b861e63476e7d7512f854>` , 0, 0)
+
+- #define :ref:`USE_SysSharedMemoryReadByte <group___sys_shm_itf_1gab35b6fe264164080d8d0e3599d7ca026>` :ref:`PFSYSSHAREDMEMORYREADBYTE <group___sys_shm_itf_1ga30b053a0d573ce9d3e19c083bc1a1da6>` pfSysSharedMemoryReadByte;
+
+- #define :ref:`EXT_SysSharedMemoryReadByte <group___sys_shm_itf_1ga5efa8c88706d4941ad814513c6d67ecb>` extern :ref:`PFSYSSHAREDMEMORYREADBYTE <group___sys_shm_itf_1ga30b053a0d573ce9d3e19c083bc1a1da6>` pfSysSharedMemoryReadByte;
+
+- #define :ref:`GET_SysSharedMemoryReadByte <group___sys_shm_itf_1gaa8258c40dbd51a879503c638c5414c04>` s_pfCMGetAPI2( "SysSharedMemoryReadByte", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryReadByte, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSharedMemoryReadByte <group___sys_shm_itf_1ga837121e45590dd261923637c42895b60>` pfSysSharedMemoryReadByte
+
+- #define :ref:`CHK_SysSharedMemoryReadByte <group___sys_shm_itf_1gab80188360fb5bb20215d3f098f481fe5>` (pfSysSharedMemoryReadByte != NULL)
+
+- #define :ref:`EXP_SysSharedMemoryReadByte <group___sys_shm_itf_1gac8eb31c156e204c61291918752030e40>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryReadByte", (RTS_UINTPTR) :ref:`SysSharedMemoryReadByte <group___sys_shm_itf_1ga7b173dc7d12eb48e4527cbaaa935b355>` , 0, 0)
+
+- #define :ref:`USE_SysSharedMemoryWrite <group___sys_shm_itf_1ga6708cc35593ee661705d4ff54173190a>` :ref:`PFSYSSHAREDMEMORYWRITE <group___sys_shm_itf_1ga03229da7ad765b847e89efc8d0bda313>` pfSysSharedMemoryWrite;
+
+- #define :ref:`EXT_SysSharedMemoryWrite <group___sys_shm_itf_1ga7f48482b0b601a36314b415e93867555>` extern :ref:`PFSYSSHAREDMEMORYWRITE <group___sys_shm_itf_1ga03229da7ad765b847e89efc8d0bda313>` pfSysSharedMemoryWrite;
+
+- #define :ref:`GET_SysSharedMemoryWrite <group___sys_shm_itf_1ga50a5c3a2403263d0b43512b3eb2d6f73>` s_pfCMGetAPI2( "SysSharedMemoryWrite", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryWrite, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSharedMemoryWrite <group___sys_shm_itf_1ga6403767e9309f41615661f4afdca3079>` pfSysSharedMemoryWrite
+
+- #define :ref:`CHK_SysSharedMemoryWrite <group___sys_shm_itf_1gaedb589d8e46648fd183efb5a27381f52>` (pfSysSharedMemoryWrite != NULL)
+
+- #define :ref:`EXP_SysSharedMemoryWrite <group___sys_shm_itf_1ga2c6fd814ec3e2a433cbe3a8049943034>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryWrite", (RTS_UINTPTR) :ref:`SysSharedMemoryWrite <group___sys_shm_itf_1ga11b94670d406e6eda57ea406e969e108>` , 0, 0)
+
+- #define :ref:`USE_SysSharedMemoryWriteByte <group___sys_shm_itf_1ga6d121a78442ebbacadb37e0ca8b35a73>` :ref:`PFSYSSHAREDMEMORYWRITEBYTE <group___sys_shm_itf_1ga670f561f5c2f951ab0f27d9ef79c7029>` pfSysSharedMemoryWriteByte;
+
+- #define :ref:`EXT_SysSharedMemoryWriteByte <group___sys_shm_itf_1ga069e4407dabb3a7e8600eb1f9a389e10>` extern :ref:`PFSYSSHAREDMEMORYWRITEBYTE <group___sys_shm_itf_1ga670f561f5c2f951ab0f27d9ef79c7029>` pfSysSharedMemoryWriteByte;
+
+- #define :ref:`GET_SysSharedMemoryWriteByte <group___sys_shm_itf_1gab750794887e5ad5ca2dafa069b7e6993>` s_pfCMGetAPI2( "SysSharedMemoryWriteByte", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryWriteByte, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSharedMemoryWriteByte <group___sys_shm_itf_1gab1e137beb143c8735f006c79078efefe>` pfSysSharedMemoryWriteByte
+
+- #define :ref:`CHK_SysSharedMemoryWriteByte <group___sys_shm_itf_1ga2ad0e0a3c1922f84d3d00ae078572298>` (pfSysSharedMemoryWriteByte != NULL)
+
+- #define :ref:`EXP_SysSharedMemoryWriteByte <group___sys_shm_itf_1ga5bbaf3a2df8859ec1f8106a498170dec>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryWriteByte", (RTS_UINTPTR) :ref:`SysSharedMemoryWriteByte <group___sys_shm_itf_1ga657719286100d7fffc3c3f7d119c6d59>` , 0, 0)
+
+- #define :ref:`ITF_SysShm <group___sys_shm_itf_1ga28b551c51921ba51853d452ab0273049>`
+
+- #define :ref:`EXTITF_SysShm <group___sys_shm_itf_1ga106b272ab98971ed5e03e372a9ac7eca>`
+
+Typedefs
+--------
+
+- typedef RTS_HANDLE(* :ref:`PFSYSSHAREDMEMORYCREATE <group___sys_shm_itf_1ga7100a2ea229c0a992fbf709944f151a9>`)(char *pszName, RTS_UINTPTR ulPhysicalAddress, RTS_SIZE *puiSize, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSHAREDMEMORYDELETE <group___sys_shm_itf_1ga3530c5fca3c471b9e1c06bbc8d1cd38d>`)(RTS_HANDLE hShm)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSSHAREDMEMORYOPEN <group___sys_shm_itf_1gac8a1a1d7d3f823a00a43fc1a229282f5>`)(char *pszName, RTS_UINTPTR ulPhysicalAddress, RTS_SIZE *puiSize, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSHAREDMEMORYCLOSE <group___sys_shm_itf_1ga0b6eb71edd013a2c6b4775ebe9294976>`)(RTS_HANDLE hShm)
+
+- typedef void *(* :ref:`PFSYSSHAREDMEMORYGETPOINTER <group___sys_shm_itf_1ga4c443fed2836551fbdd4406c07a9f8de>`)(RTS_HANDLE hShm, RTS_RESULT *pResult)
+
+- typedef RTS_SIZE(* :ref:`PFSYSSHAREDMEMORYREAD <group___sys_shm_itf_1ga2dc6b0d2226133b8a3874d75ef065402>`)(RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char *pbyData, RTS_SIZE uiSize, RTS_RESULT *pResult)
+
+- typedef RTS_SIZE(* :ref:`PFSYSSHAREDMEMORYREADBYTE <group___sys_shm_itf_1ga30b053a0d573ce9d3e19c083bc1a1da6>`)(RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char *pbyData, RTS_SIZE uiSize, RTS_RESULT *pResult)
+
+- typedef RTS_SIZE(* :ref:`PFSYSSHAREDMEMORYWRITE <group___sys_shm_itf_1ga03229da7ad765b847e89efc8d0bda313>`)(RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char *pbyData, RTS_SIZE uiSize, RTS_RESULT *pResult)
+
+- typedef RTS_SIZE(* :ref:`PFSYSSHAREDMEMORYWRITEBYTE <group___sys_shm_itf_1ga670f561f5c2f951ab0f27d9ef79c7029>`)(RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char *pbyData, RTS_SIZE uiSize, RTS_RESULT *pResult)
+
+- typedef :ref:`ISysShm_C <struct_i_sys_shm___c>` :ref:`ISysShm <group___sys_shm_itf_1ga0a02084d528457b4c50e99ec9b44d9ea>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`SysSharedMemoryOSInit <group___sys_shm_itf_1gacd989a2308c25ce3cb3c2b80ffebf6b7>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysSharedMemoryOSHookFunction <group___sys_shm_itf_1ga5253d651ff60a6dadce74daaedc9aa0e>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_HANDLE :ref:`SysSharedMemoryCreate <group___sys_shm_itf_1gaf3b9dc0e726985175998d5ac41a23f2e>` (char * pszName, RTS_UINTPTR ulPhysicalAddress, RTS_SIZE * puiSize, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysSharedMemoryDelete <group___sys_shm_itf_1ga9729cea8a65de8896bcab55ddf622325>` (RTS_HANDLE hShm)
+
+- RTS_HANDLE :ref:`SysSharedMemoryOpen <group___sys_shm_itf_1gad722a40f6c28da9a5fe653f66aafc45d>` (char * pszName, RTS_UINTPTR ulPhysicalAddress, RTS_SIZE * puiSize, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysSharedMemoryClose <group___sys_shm_itf_1ga242a9724adcf68728b0082e01e716c7c>` (RTS_HANDLE hShm)
+
+- void * :ref:`SysSharedMemoryGetPointer <group___sys_shm_itf_1ga85c536ef2e490bad3811ddacea94ca62>` (RTS_HANDLE hShm, RTS_RESULT * pResult)
+
+- RTS_SIZE :ref:`SysSharedMemoryRead <group___sys_shm_itf_1ga07860e7d319b861e63476e7d7512f854>` (RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char * pbyData, RTS_SIZE uiSize, RTS_RESULT * pResult)
+
+- RTS_SIZE :ref:`SysSharedMemoryReadByte <group___sys_shm_itf_1ga7b173dc7d12eb48e4527cbaaa935b355>` (RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char * pbyData, RTS_SIZE uiSize, RTS_RESULT * pResult)
+
+- RTS_SIZE :ref:`SysSharedMemoryWrite <group___sys_shm_itf_1ga11b94670d406e6eda57ea406e969e108>` (RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char * pbyData, RTS_SIZE uiSize, RTS_RESULT * pResult)
+
+- RTS_SIZE :ref:`SysSharedMemoryWriteByte <group___sys_shm_itf_1ga657719286100d7fffc3c3f7d119c6d59>` (RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char * pbyData, RTS_SIZE uiSize, RTS_RESULT * pResult)
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_shm_itf_1ga5a6f8335b37a17888b70fa12455aba03:
+
+#define SHM_NUM_OF_STATIC_OBJECTS 5
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga630e37f2b1a9f4bb2a5a47dbdc935e18:
+
+#define USE_SysSharedMemoryCreate :ref:`PFSYSSHAREDMEMORYCREATE <group___sys_shm_itf_1ga7100a2ea229c0a992fbf709944f151a9>` pfSysSharedMemoryCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga23dcda58fdd1cf829bd233e7e41a64db:
+
+#define EXT_SysSharedMemoryCreate extern :ref:`PFSYSSHAREDMEMORYCREATE <group___sys_shm_itf_1ga7100a2ea229c0a992fbf709944f151a9>` pfSysSharedMemoryCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gaa63f8f592975f1eb000f28d95d818617:
+
+#define GET_SysSharedMemoryCreate s_pfCMGetAPI2( "SysSharedMemoryCreate", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryCreate, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gab68bb0fa79b6bf9f715b003b6fb13b2d:
+
+#define CAL_SysSharedMemoryCreate pfSysSharedMemoryCreate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga09164a300c9d6007f3abc0e6e5977d00:
+
+#define CHK_SysSharedMemoryCreate (pfSysSharedMemoryCreate != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga35e311976482c500f29064542f9e766f:
+
+#define EXP_SysSharedMemoryCreate s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryCreate", (RTS_UINTPTR) :ref:`SysSharedMemoryCreate <group___sys_shm_itf_1gaf3b9dc0e726985175998d5ac41a23f2e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga77b0b422ca92d55a71faf8ae21e30ee3:
+
+#define USE_SysSharedMemoryDelete :ref:`PFSYSSHAREDMEMORYDELETE <group___sys_shm_itf_1ga3530c5fca3c471b9e1c06bbc8d1cd38d>` pfSysSharedMemoryDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga3aee19b5f447c5eba04b3bdf12a09481:
+
+#define EXT_SysSharedMemoryDelete extern :ref:`PFSYSSHAREDMEMORYDELETE <group___sys_shm_itf_1ga3530c5fca3c471b9e1c06bbc8d1cd38d>` pfSysSharedMemoryDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gac1de0a3a43fdb187c45e9b3b762bc2b6:
+
+#define GET_SysSharedMemoryDelete s_pfCMGetAPI2( "SysSharedMemoryDelete", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryDelete, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga1677cf769de2cfde8a016579f01eead5:
+
+#define CAL_SysSharedMemoryDelete pfSysSharedMemoryDelete
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gac5138e5948aada3a9387caaa4fe18a37:
+
+#define CHK_SysSharedMemoryDelete (pfSysSharedMemoryDelete != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga236c6180ac13185ca9955bacadc273f6:
+
+#define EXP_SysSharedMemoryDelete s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryDelete", (RTS_UINTPTR) :ref:`SysSharedMemoryDelete <group___sys_shm_itf_1ga9729cea8a65de8896bcab55ddf622325>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga7b0db7fba88dc5af967ffef65a85c774:
+
+#define USE_SysSharedMemoryOpen :ref:`PFSYSSHAREDMEMORYOPEN <group___sys_shm_itf_1gac8a1a1d7d3f823a00a43fc1a229282f5>` pfSysSharedMemoryOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga301768b9fdb416127b492dbf5371bf9a:
+
+#define EXT_SysSharedMemoryOpen extern :ref:`PFSYSSHAREDMEMORYOPEN <group___sys_shm_itf_1gac8a1a1d7d3f823a00a43fc1a229282f5>` pfSysSharedMemoryOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga9f647406ef64c85049b6a3583125d3cb:
+
+#define GET_SysSharedMemoryOpen s_pfCMGetAPI2( "SysSharedMemoryOpen", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryOpen, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga6a3d629e0179dbd31b575131bf0cbaea:
+
+#define CAL_SysSharedMemoryOpen pfSysSharedMemoryOpen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga181f97a3d8ad3a7f449ea622088a28ab:
+
+#define CHK_SysSharedMemoryOpen (pfSysSharedMemoryOpen != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga15dd467d92f75bdf16cb75a95027800f:
+
+#define EXP_SysSharedMemoryOpen s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryOpen", (RTS_UINTPTR) :ref:`SysSharedMemoryOpen <group___sys_shm_itf_1gad722a40f6c28da9a5fe653f66aafc45d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gac08400f990db537d7b0cbbf6250490d6:
+
+#define USE_SysSharedMemoryClose :ref:`PFSYSSHAREDMEMORYCLOSE <group___sys_shm_itf_1ga0b6eb71edd013a2c6b4775ebe9294976>` pfSysSharedMemoryClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga2162247732e8f2bf6632084b443fc9d7:
+
+#define EXT_SysSharedMemoryClose extern :ref:`PFSYSSHAREDMEMORYCLOSE <group___sys_shm_itf_1ga0b6eb71edd013a2c6b4775ebe9294976>` pfSysSharedMemoryClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga4f7abaaefab7e40cbc80c2ca16548ba6:
+
+#define GET_SysSharedMemoryClose s_pfCMGetAPI2( "SysSharedMemoryClose", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryClose, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gaf7b28fa5260e82efb012dfe0370bfc15:
+
+#define CAL_SysSharedMemoryClose pfSysSharedMemoryClose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gacb46818b278bc3c0bee3dba595ae5032:
+
+#define CHK_SysSharedMemoryClose (pfSysSharedMemoryClose != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga9411cb197f1077658c9e2a4e4cddce1e:
+
+#define EXP_SysSharedMemoryClose s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryClose", (RTS_UINTPTR) :ref:`SysSharedMemoryClose <group___sys_shm_itf_1ga242a9724adcf68728b0082e01e716c7c>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga9283fd8f25a89efea1692df37b079eef:
+
+#define USE_SysSharedMemoryGetPointer :ref:`PFSYSSHAREDMEMORYGETPOINTER <group___sys_shm_itf_1ga4c443fed2836551fbdd4406c07a9f8de>` pfSysSharedMemoryGetPointer;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gae8a9704af9ab2d1fff3cf9db1bc17794:
+
+#define EXT_SysSharedMemoryGetPointer extern :ref:`PFSYSSHAREDMEMORYGETPOINTER <group___sys_shm_itf_1ga4c443fed2836551fbdd4406c07a9f8de>` pfSysSharedMemoryGetPointer;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga9a88fcb134aa79029d5eb53dfaf30893:
+
+#define GET_SysSharedMemoryGetPointer s_pfCMGetAPI2( "SysSharedMemoryGetPointer", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryGetPointer, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga5fa245810f57c15cf7ee0a1adf9ff785:
+
+#define CAL_SysSharedMemoryGetPointer pfSysSharedMemoryGetPointer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga1f51690d80613fa6e52eb0c47d59b9ff:
+
+#define CHK_SysSharedMemoryGetPointer (pfSysSharedMemoryGetPointer != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga0c2b8e592ded41efc26980b54158c4d0:
+
+#define EXP_SysSharedMemoryGetPointer s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryGetPointer", (RTS_UINTPTR) :ref:`SysSharedMemoryGetPointer <group___sys_shm_itf_1ga85c536ef2e490bad3811ddacea94ca62>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga76a9c62f4c116dc2b132bf73d46d888d:
+
+#define USE_SysSharedMemoryRead :ref:`PFSYSSHAREDMEMORYREAD <group___sys_shm_itf_1ga2dc6b0d2226133b8a3874d75ef065402>` pfSysSharedMemoryRead;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga8aa79d24e12d5a096d46929aecca9315:
+
+#define EXT_SysSharedMemoryRead extern :ref:`PFSYSSHAREDMEMORYREAD <group___sys_shm_itf_1ga2dc6b0d2226133b8a3874d75ef065402>` pfSysSharedMemoryRead;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga8ced8c7c2df3800790a6b8787992bf85:
+
+#define GET_SysSharedMemoryRead s_pfCMGetAPI2( "SysSharedMemoryRead", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryRead, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga5b97ea5d75bc59df26e68b11281c6a2f:
+
+#define CAL_SysSharedMemoryRead pfSysSharedMemoryRead
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gac833f655ec06c393a7827abff0c50fe8:
+
+#define CHK_SysSharedMemoryRead (pfSysSharedMemoryRead != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga53f86ceccc2bb9056353422fee1786de:
+
+#define EXP_SysSharedMemoryRead s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryRead", (RTS_UINTPTR) :ref:`SysSharedMemoryRead <group___sys_shm_itf_1ga07860e7d319b861e63476e7d7512f854>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gab35b6fe264164080d8d0e3599d7ca026:
+
+#define USE_SysSharedMemoryReadByte :ref:`PFSYSSHAREDMEMORYREADBYTE <group___sys_shm_itf_1ga30b053a0d573ce9d3e19c083bc1a1da6>` pfSysSharedMemoryReadByte;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga5efa8c88706d4941ad814513c6d67ecb:
+
+#define EXT_SysSharedMemoryReadByte extern :ref:`PFSYSSHAREDMEMORYREADBYTE <group___sys_shm_itf_1ga30b053a0d573ce9d3e19c083bc1a1da6>` pfSysSharedMemoryReadByte;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gaa8258c40dbd51a879503c638c5414c04:
+
+#define GET_SysSharedMemoryReadByte s_pfCMGetAPI2( "SysSharedMemoryReadByte", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryReadByte, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga837121e45590dd261923637c42895b60:
+
+#define CAL_SysSharedMemoryReadByte pfSysSharedMemoryReadByte
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gab80188360fb5bb20215d3f098f481fe5:
+
+#define CHK_SysSharedMemoryReadByte (pfSysSharedMemoryReadByte != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gac8eb31c156e204c61291918752030e40:
+
+#define EXP_SysSharedMemoryReadByte s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryReadByte", (RTS_UINTPTR) :ref:`SysSharedMemoryReadByte <group___sys_shm_itf_1ga7b173dc7d12eb48e4527cbaaa935b355>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga6708cc35593ee661705d4ff54173190a:
+
+#define USE_SysSharedMemoryWrite :ref:`PFSYSSHAREDMEMORYWRITE <group___sys_shm_itf_1ga03229da7ad765b847e89efc8d0bda313>` pfSysSharedMemoryWrite;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga7f48482b0b601a36314b415e93867555:
+
+#define EXT_SysSharedMemoryWrite extern :ref:`PFSYSSHAREDMEMORYWRITE <group___sys_shm_itf_1ga03229da7ad765b847e89efc8d0bda313>` pfSysSharedMemoryWrite;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga50a5c3a2403263d0b43512b3eb2d6f73:
+
+#define GET_SysSharedMemoryWrite s_pfCMGetAPI2( "SysSharedMemoryWrite", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryWrite, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga6403767e9309f41615661f4afdca3079:
+
+#define CAL_SysSharedMemoryWrite pfSysSharedMemoryWrite
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gaedb589d8e46648fd183efb5a27381f52:
+
+#define CHK_SysSharedMemoryWrite (pfSysSharedMemoryWrite != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga2c6fd814ec3e2a433cbe3a8049943034:
+
+#define EXP_SysSharedMemoryWrite s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryWrite", (RTS_UINTPTR) :ref:`SysSharedMemoryWrite <group___sys_shm_itf_1ga11b94670d406e6eda57ea406e969e108>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga6d121a78442ebbacadb37e0ca8b35a73:
+
+#define USE_SysSharedMemoryWriteByte :ref:`PFSYSSHAREDMEMORYWRITEBYTE <group___sys_shm_itf_1ga670f561f5c2f951ab0f27d9ef79c7029>` pfSysSharedMemoryWriteByte;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga069e4407dabb3a7e8600eb1f9a389e10:
+
+#define EXT_SysSharedMemoryWriteByte extern :ref:`PFSYSSHAREDMEMORYWRITEBYTE <group___sys_shm_itf_1ga670f561f5c2f951ab0f27d9ef79c7029>` pfSysSharedMemoryWriteByte;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gab750794887e5ad5ca2dafa069b7e6993:
+
+#define GET_SysSharedMemoryWriteByte s_pfCMGetAPI2( "SysSharedMemoryWriteByte", (RTS_VOID_FCTPTR *)&pfSysSharedMemoryWriteByte, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gab1e137beb143c8735f006c79078efefe:
+
+#define CAL_SysSharedMemoryWriteByte pfSysSharedMemoryWriteByte
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga2ad0e0a3c1922f84d3d00ae078572298:
+
+#define CHK_SysSharedMemoryWriteByte (pfSysSharedMemoryWriteByte != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga5bbaf3a2df8859ec1f8106a498170dec:
+
+#define EXP_SysSharedMemoryWriteByte s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSharedMemoryWriteByte", (RTS_UINTPTR) :ref:`SysSharedMemoryWriteByte <group___sys_shm_itf_1ga657719286100d7fffc3c3f7d119c6d59>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga28b551c51921ba51853d452ab0273049:
+
+#define ITF_SysShm
+^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga106b272ab98971ed5e03e372a9ac7eca:
+
+#define EXTITF_SysShm
+^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___sys_shm_itf_1ga7100a2ea229c0a992fbf709944f151a9:
+
+typedef RTS_HANDLE( *  PFSYSSHAREDMEMORYCREATE) (char *pszName, RTS_UINTPTR ulPhysicalAddress, RTS_SIZE *puiSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga3530c5fca3c471b9e1c06bbc8d1cd38d:
+
+typedef RTS_RESULT( *  PFSYSSHAREDMEMORYDELETE) (RTS_HANDLE hShm)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gac8a1a1d7d3f823a00a43fc1a229282f5:
+
+typedef RTS_HANDLE( *  PFSYSSHAREDMEMORYOPEN) (char *pszName, RTS_UINTPTR ulPhysicalAddress, RTS_SIZE *puiSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga0b6eb71edd013a2c6b4775ebe9294976:
+
+typedef RTS_RESULT( *  PFSYSSHAREDMEMORYCLOSE) (RTS_HANDLE hShm)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga4c443fed2836551fbdd4406c07a9f8de:
+
+typedef void*( *  PFSYSSHAREDMEMORYGETPOINTER) (RTS_HANDLE hShm, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga2dc6b0d2226133b8a3874d75ef065402:
+
+typedef RTS_SIZE( *  PFSYSSHAREDMEMORYREAD) (RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char *pbyData, RTS_SIZE uiSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga30b053a0d573ce9d3e19c083bc1a1da6:
+
+typedef RTS_SIZE( *  PFSYSSHAREDMEMORYREADBYTE) (RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char *pbyData, RTS_SIZE uiSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga03229da7ad765b847e89efc8d0bda313:
+
+typedef RTS_SIZE( *  PFSYSSHAREDMEMORYWRITE) (RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char *pbyData, RTS_SIZE uiSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga670f561f5c2f951ab0f27d9ef79c7029:
+
+typedef RTS_SIZE( *  PFSYSSHAREDMEMORYWRITEBYTE) (RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char *pbyData, RTS_SIZE uiSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1ga0a02084d528457b4c50e99ec9b44d9ea:
+
+typedef ISysShm_C ISysShm
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___sys_shm_itf_1gacd989a2308c25ce3cb3c2b80ffebf6b7:
+
+RTS_RESULT SysSharedMemoryOSInit (INIT_STRUCT *pInit)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION BEGIN EXTERN LIB SECTION END
+
+.. _group___sys_shm_itf_1ga5253d651ff60a6dadce74daaedc9aa0e:
+
+RTS_RESULT SysSharedMemoryOSHookFunction (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_shm_itf_1gaf3b9dc0e726985175998d5ac41a23f2e:
+
+RTS_HANDLE SysSharedMemoryCreate (char *pszName, RTS_UINTPTR ulPhysicalAddress, RTS_SIZE *puiSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Create a new shared memory object specified by name. IMPLEMENTATION NOTE: If the shared memory object still exists, a valid handle is returned, but with the error code ERR_DUPLICATE.
+
+**Parameters**
+
++---------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pszName           | Name of the shared memory                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
++---------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulPhysicalAddress | Optional physical address: ulPhysicalAddress > 0: The shared memory will be mapped on this physical address ulPhysicalAddress = 0: A new shared memory will created without a specified physical address                                                                                                                                                                                                                                                                                                                                                                    |
++---------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [inout] | puiSize           | Pointer to requested size of the shared memory                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
++---------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult           | Pointer to error code: ERR_OK: Succeeded ERR_DUPLICATE: Shared memory object still exists. A valid handle to this object is returned here! ERR_NOMEMORY: No memory available on the heap to allocate a management structure ERR_FAILED: Failed to open the shared memory ERR_PARAMETER: If one of the parameter is invalid (pszName = NULL or puiSize = NULL) ERR_BUFFERSIZE: If shared memory with this name exist, but the requested size is different from the available size. In this case,puiSize returns the available size, but return handle is RTS_INVALID_HANDLE. |
++---------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the shared memory object or RTS_INVALID_HANDLE if failed
+
+.. _group___sys_shm_itf_1ga9729cea8a65de8896bcab55ddf622325:
+
+RTS_RESULT SysSharedMemoryDelete (RTS_HANDLE hShm)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Delete a shared memory object specified by handle
+
+**Parameters**
+
++---------+------+-----------------------------+
+| [in]    | hShm | Handle to the shared memory |
++---------+------+-----------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_shm_itf_1gad722a40f6c28da9a5fe653f66aafc45d:
+
+RTS_HANDLE SysSharedMemoryOpen (char *pszName, RTS_UINTPTR ulPhysicalAddress, RTS_SIZE *puiSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Opens an existing shared memory object specified by name. IMPLEMENTATION NOTE: If shared memory object not exists, an error code is returned an it is not created!
+
+**Parameters**
+
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pszName           | Name of the shared memory                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulPhysicalAddress | Optional physical address: ulPhysicalAddress > 0: The shared memory will be mapped on this physical address ulPhysicalAddress = 0: An existing shared memory will be opened without a specified physical address                                                                                                                                                                                                                                                                                                          |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [inout] | puiSize           | Pointer to requested size of the shared memory. Size must match to the existing shared memory object size!                                                                                                                                                                                                                                                                                                                                                                                                                |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult           | Pointer to error code: ERR_OK: Succeeded ERR_NO_OBJECT: If shared memory does not exist. ERR_NOMEMORY: No memory available on the heap to allocate a management structure ERR_FAILED: Failed to open the shared memory ERR_PARAMETER: If one of the parameter is invalid (pszName = NULL or puiSize = NULL) ERR_BUFFERSIZE: If shared memory with this name exist, but the requested size is different from the available size. In this case,puiSize returns the available size, but return handle is RTS_INVALID_HANDLE. |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the shared memory object or RTS_INVALID_HANDLE if failed
+
+.. _group___sys_shm_itf_1ga242a9724adcf68728b0082e01e716c7c:
+
+RTS_RESULT SysSharedMemoryClose (RTS_HANDLE hShm)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Close a shared memory object specified by handle
+
+**Parameters**
+
++---------+------+-----------------------------+
+| [in]    | hShm | Handle to the shared memory |
++---------+------+-----------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_shm_itf_1ga85c536ef2e490bad3811ddacea94ca62:
+
+void* SysSharedMemoryGetPointer (RTS_HANDLE hShm, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the pointer to the shared memory
+
+**Parameters**
+
++---------+---------+-----------------------------+
+| [in]    | hShm    | Handle to the shared memory |
++---------+---------+-----------------------------+
+| [out]   | pResult | Pointer to error code       |
++---------+---------+-----------------------------+
+
+**Returns:**
+
+Pointer to the shared memory for data access
+
+.. _group___sys_shm_itf_1ga07860e7d319b861e63476e7d7512f854:
+
+RTS_SIZE SysSharedMemoryRead (RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char *pbyData, RTS_SIZE uiSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Routine to read values from shared memory, ulOffset: offset in the shared memory pbyData: Pointer to the buffer to read in values ulSize: number of bytes to read
+
+**Parameters**
+
++---------+----------+-----------------------------------+
+| [in]    | hShm     | Handle to the shared memory       |
++---------+----------+-----------------------------------+
+| [in]    | ulOffset | Offset in the shared memory       |
++---------+----------+-----------------------------------+
+| [out]   | pbyData  | Pointer to buffer to read in data |
++---------+----------+-----------------------------------+
+| [in]    | uiSize   | Number of bytes to read           |
++---------+----------+-----------------------------------+
+| [out]   | pResult  | Pointer to error code             |
++---------+----------+-----------------------------------+
+
+**Returns:**
+
+Number of bytes read from the shared memory
+
+.. _group___sys_shm_itf_1ga7b173dc7d12eb48e4527cbaaa935b355:
+
+RTS_SIZE SysSharedMemoryReadByte (RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char *pbyData, RTS_SIZE uiSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function can be used to read "byte-wise" a defined number of bytes, starting at a certain offset.
+
+**Parameters**
+
++---------+----------+-----------------------------------+
+| [in]    | hShm     | Handle to the shared memory       |
++---------+----------+-----------------------------------+
+| [in]    | ulOffset | Offset in the shared memory       |
++---------+----------+-----------------------------------+
+| [out]   | pbyData  | Pointer to buffer to read in data |
++---------+----------+-----------------------------------+
+| [in]    | uiSize   | Number of bytes to read           |
++---------+----------+-----------------------------------+
+| [out]   | pResult  | Pointer to error code             |
++---------+----------+-----------------------------------+
+
+**Returns:**
+
+Number of bytes read from the shared memory
+
+.. _group___sys_shm_itf_1ga11b94670d406e6eda57ea406e969e108:
+
+RTS_SIZE SysSharedMemoryWrite (RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char *pbyData, RTS_SIZE uiSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Routine to write values to shared memory,
+
+**Parameters**
+
++---------+----------+-----------------------------------+
+| [in]    | hShm     | Handle to the shared memory       |
++---------+----------+-----------------------------------+
+| [in]    | ulOffset | Offset in the shared memory       |
++---------+----------+-----------------------------------+
+| [in]    | pbyData  | Pointer to buffer with write data |
++---------+----------+-----------------------------------+
+| [in]    | uiSize   | Number of bytes to write          |
++---------+----------+-----------------------------------+
+| [out]   | pResult  | Pointer to error code             |
++---------+----------+-----------------------------------+
+
+**Returns:**
+
+Number of bytes written to the shared memory
+
+.. _group___sys_shm_itf_1ga657719286100d7fffc3c3f7d119c6d59:
+
+RTS_SIZE SysSharedMemoryWriteByte (RTS_HANDLE hShm, RTS_SIZE ulOffset, unsigned char *pbyData, RTS_SIZE uiSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function can be used to write a defined number of bytes in "byte-wise" manner to a Shared Memory area, starting at a certain offset address.
+
+**Parameters**
+
++---------+----------+-----------------------------------+
+| [in]    | hShm     | Handle to the shared memory       |
++---------+----------+-----------------------------------+
+| [in]    | ulOffset | Offset in the shared memory       |
++---------+----------+-----------------------------------+
+| [in]    | pbyData  | Pointer to buffer with write data |
++---------+----------+-----------------------------------+
+| [in]    | uiSize   | Number of bytes to write          |
++---------+----------+-----------------------------------+
+| [out]   | pResult  | Pointer to error code             |
++---------+----------+-----------------------------------+
+
+**Returns:**
+
+Number of bytes written to the shared memory
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

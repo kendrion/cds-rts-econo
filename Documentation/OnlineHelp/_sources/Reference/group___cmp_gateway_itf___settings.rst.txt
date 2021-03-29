@@ -1,0 +1,219 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_gateway_itf___settings:
+
+========
+Settings
+========
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Data Structures
+---------------
+
+- struct :ref:`COMMDRVINFO <struct_c_o_m_m_d_r_v_i_n_f_o>`
+
+Macros
+------
+
+- #define :ref:`GATEWAYKEY_INT_INACTIVITY_TIMEOUT <group___cmp_gateway_itf___settings_1ga8798f04044e38eb3f0794a7db2023515>` "InactivityTimeoutMs"
+
+- #define :ref:`GATEWAYKEY_INT_INACTIVITY_TIMEOUT_DEFAULT <group___cmp_gateway_itf___settings_1ga710a11031b4567dfd188f7b1d4bfe7ef>` 60000
+
+- #define :ref:`GWCOMMDRVTCPKEY_INT_LOCALPORT <group___cmp_gateway_itf___settings_1ga9aa6d9664549eb54406acdc93d62dad8>` "ListenPort"
+
+- #define :ref:`GWCOMMDRVTCPVALUE_INT_LOCALPORT_DEFAULT <group___cmp_gateway_itf___settings_1ga340ba8c0933cd33aa79884fabfe504db>` 1217
+
+- #define :ref:`GWCOMMDRVTCPKEY_STRING_LOCALADDRESS <group___cmp_gateway_itf___settings_1ga8e14ae3e28a9ac5bac97d0da01d3b068>` "LocalAddress"
+
+- #define :ref:`GWCOMMDRVTCPVALUE_STRING_LOCALADDRESS_DEFAULT <group___cmp_gateway_itf___settings_1ga62fa192c3be85289701c30d5fbdfd658>` "0.0.0.0"
+
+- #define :ref:`GWCOMMDRVTCPKEY_STRING_PEERADDRESS <group___cmp_gateway_itf___settings_1gaa07fb77c15933480cea3889d8a366b6b>` "PeerAddress"
+
+- #define :ref:`USE_GWRegisterCommDrv <group___cmp_gateway_itf___settings_1ga8c6f52c2bd597f1e66d648403dcf6535>` :ref:`PFGWREGISTERCOMMDRV <group___cmp_gateway_itf___settings_1gae2bf040ca6a559a1b5f5dc723fcae313>` pfGWRegisterCommDrv;
+
+- #define :ref:`EXT_GWRegisterCommDrv <group___cmp_gateway_itf___settings_1gabf64f04df8e3d3132a8427e044b094f8>` extern :ref:`PFGWREGISTERCOMMDRV <group___cmp_gateway_itf___settings_1gae2bf040ca6a559a1b5f5dc723fcae313>` pfGWRegisterCommDrv;
+
+- #define :ref:`GET_GWRegisterCommDrv <group___cmp_gateway_itf___settings_1ga276c06622b4b30d407beb6b5cea6beb0>` s_pfCMGetAPI2( "GWRegisterCommDrv", (RTS_VOID_FCTPTR *)&pfGWRegisterCommDrv, (fl), 0, 0)
+
+- #define :ref:`CAL_GWRegisterCommDrv <group___cmp_gateway_itf___settings_1gaf0434fe22db236f6861d122c9f6ae0f6>` pfGWRegisterCommDrv
+
+- #define :ref:`CHK_GWRegisterCommDrv <group___cmp_gateway_itf___settings_1ga04d127dc1dd4f195d0f242ef62d9ea3f>` (pfGWRegisterCommDrv != NULL)
+
+- #define :ref:`EXP_GWRegisterCommDrv <group___cmp_gateway_itf___settings_1ga8a2f6f4094d328cbe118ae129501270c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWRegisterCommDrv", (RTS_UINTPTR) :ref:`GWRegisterCommDrv <group___cmp_gateway_itf___settings_1gadcf2c836ef802732b339f5b78693b3a8>` , 0, 0)
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFCOMMDRVSEND <group___cmp_gateway_itf___settings_1gaa38abc375f5cd4993763d0bd3a0889c2>`)(RTS_HANDLE hConnHandle, PROTOCOL_DATA_UNIT data, RTS_UI32 *pdwSent)
+
+- typedef RTS_RESULT(* :ref:`PFCOMMDRVRECEIVE <group___cmp_gateway_itf___settings_1gab523569d52935ac10b0f8712533be6ad>`)(RTS_HANDLE hConnHandle, PROTOCOL_DATA_UNIT *pData)
+
+- typedef RTS_RESULT(* :ref:`PFCOMMDRVCLOSE <group___cmp_gateway_itf___settings_1ga66b2da9291cdc0003ce260364348d797>`)(RTS_HANDLE hConnHandle)
+
+- typedef RTS_RESULT(* :ref:`PFGWREGISTERCOMMDRV <group___cmp_gateway_itf___settings_1gae2bf040ca6a559a1b5f5dc723fcae313>`)(COMMDRVINFO *pInfo, RTS_HANDLE *phDriverHandle)
+
+Enumerations
+------------
+
+- enum :ref:`@5 <group___cmp_gateway_itf___settings_1ga61dadd085c1777f559549e05962b2c9e>` { :ref:`COMMDRV_ACTION_SEND <group___cmp_gateway_itf___settings_1gga61dadd085c1777f559549e05962b2c9ea3253c8e1890d8b28cb60a4b2b2969cfc>`, :ref:`COMMDRV_ACTION_RECEIVE <group___cmp_gateway_itf___settings_1gga61dadd085c1777f559549e05962b2c9eabc09813b740b4eacecab1ca5688809b7>` }
+
+Functions
+---------
+
+- RTS_RESULT :ref:`GWRegisterCommDrv <group___cmp_gateway_itf___settings_1gadcf2c836ef802732b339f5b78693b3a8>` (:ref:`COMMDRVINFO <struct_c_o_m_m_d_r_v_i_n_f_o>` * pInfo, RTS_HANDLE * phDriverHandle)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_gateway_itf___settings_1ga8798f04044e38eb3f0794a7db2023515:
+
+#define GATEWAYKEY_INT_INACTIVITY_TIMEOUT "InactivityTimeoutMs"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<type>Int</type>
+
+Setting to modify the client inactivity timeout in ms. If no piece of data (also no keep alive) is received or successfully sent within this time, the Gateway closes the connection to the client.
+
+.. _group___cmp_gateway_itf___settings_1ga710a11031b4567dfd188f7b1d4bfe7ef:
+
+#define GATEWAYKEY_INT_INACTIVITY_TIMEOUT_DEFAULT 60000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gateway_itf___settings_1ga9aa6d9664549eb54406acdc93d62dad8:
+
+#define GWCOMMDRVTCPKEY_INT_LOCALPORT "ListenPort"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<type>Int</type>
+
+The port the gateway will be reachable via the CmpGwCommDrvTcp. Note: Set this setting in section [CmpGwCommDrvTcp]
+
+.. _group___cmp_gateway_itf___settings_1ga340ba8c0933cd33aa79884fabfe504db:
+
+#define GWCOMMDRVTCPVALUE_INT_LOCALPORT_DEFAULT 1217
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gateway_itf___settings_1ga8e14ae3e28a9ac5bac97d0da01d3b068:
+
+#define GWCOMMDRVTCPKEY_STRING_LOCALADDRESS "LocalAddress"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<type>String</type>
+
+IP address which will be used to bind the gateway.
+
+  - Use a valid IP address (of any adapter) to allow access only from a specific subnet.
+
+  - Use 0.0.0.0 to allow access from any remote computer.
+
+  - User 127.0.0.1 to allow access only from the local machine. Note: Set this setting in section [CmpGwCommDrvTcp] Note: On windows machines setting this to 127.0.0.1 is recommended if the gateway is used as edge gatway.
+
+.. _group___cmp_gateway_itf___settings_1ga62fa192c3be85289701c30d5fbdfd658:
+
+#define GWCOMMDRVTCPVALUE_STRING_LOCALADDRESS_DEFAULT "0.0.0.0"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gateway_itf___settings_1gaa07fb77c15933480cea3889d8a366b6b:
+
+#define GWCOMMDRVTCPKEY_STRING_PEERADDRESS "PeerAddress"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<type>String</type>
+
+This setting is used to restrict the access to the Gateway via GwCommDrvTcp to a specific peer or subnet. This setting has the following behavior: 1. When set to specific peer address: Allow access only to the peer that has that IP address. 2. When set to the network base address: Allows access to all peers of this subnet. 3. Setting not available: Allow any peer to connect. Note: Set this setting in section [CmpGwCommDrvTcp]
+
+.. _group___cmp_gateway_itf___settings_1ga8c6f52c2bd597f1e66d648403dcf6535:
+
+#define USE_GWRegisterCommDrv :ref:`PFGWREGISTERCOMMDRV <group___cmp_gateway_itf___settings_1gae2bf040ca6a559a1b5f5dc723fcae313>` pfGWRegisterCommDrv;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gateway_itf___settings_1gabf64f04df8e3d3132a8427e044b094f8:
+
+#define EXT_GWRegisterCommDrv extern :ref:`PFGWREGISTERCOMMDRV <group___cmp_gateway_itf___settings_1gae2bf040ca6a559a1b5f5dc723fcae313>` pfGWRegisterCommDrv;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gateway_itf___settings_1ga276c06622b4b30d407beb6b5cea6beb0:
+
+#define GET_GWRegisterCommDrv s_pfCMGetAPI2( "GWRegisterCommDrv", (RTS_VOID_FCTPTR *)&pfGWRegisterCommDrv, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gateway_itf___settings_1gaf0434fe22db236f6861d122c9f6ae0f6:
+
+#define CAL_GWRegisterCommDrv pfGWRegisterCommDrv
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gateway_itf___settings_1ga04d127dc1dd4f195d0f242ef62d9ea3f:
+
+#define CHK_GWRegisterCommDrv (pfGWRegisterCommDrv != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gateway_itf___settings_1ga8a2f6f4094d328cbe118ae129501270c:
+
+#define EXP_GWRegisterCommDrv s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWRegisterCommDrv", (RTS_UINTPTR) :ref:`GWRegisterCommDrv <group___cmp_gateway_itf___settings_1gadcf2c836ef802732b339f5b78693b3a8>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_gateway_itf___settings_1gaa38abc375f5cd4993763d0bd3a0889c2:
+
+typedef RTS_RESULT( * PFCOMMDRVSEND) (RTS_HANDLE hConnHandle, PROTOCOL_DATA_UNIT data, RTS_UI32 *pdwSent)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gateway_itf___settings_1gab523569d52935ac10b0f8712533be6ad:
+
+typedef RTS_RESULT( * PFCOMMDRVRECEIVE) (RTS_HANDLE hConnHandle, PROTOCOL_DATA_UNIT *pData)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gateway_itf___settings_1ga66b2da9291cdc0003ce260364348d797:
+
+typedef RTS_RESULT( * PFCOMMDRVCLOSE) (RTS_HANDLE hConnHandle)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gateway_itf___settings_1gae2bf040ca6a559a1b5f5dc723fcae313:
+
+typedef RTS_RESULT( *  PFGWREGISTERCOMMDRV) (COMMDRVINFO *pInfo, RTS_HANDLE *phDriverHandle)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Enumeration Type Documentation
+------------------------------
+
+.. _group___cmp_gateway_itf___settings_1ga61dadd085c1777f559549e05962b2c9e:
+
+enum @5
+^^^^^^^
+
+
+**Enumerator:**
+
++------------------------+
+| COMMDRV_ACTION_SEND    |
++------------------------+
+| COMMDRV_ACTION_RECEIVE |
++------------------------+
+
+Function Documentation
+----------------------
+
+.. _group___cmp_gateway_itf___settings_1gadcf2c836ef802732b339f5b78693b3a8:
+
+RTS_RESULT GWRegisterCommDrv (COMMDRVINFO *pInfo, RTS_HANDLE *phDriverHandle)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

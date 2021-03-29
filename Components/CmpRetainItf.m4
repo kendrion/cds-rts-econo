@@ -5,9 +5,9 @@
  *	<p>To realize non-volatile data, following different techniques are used typically:</p>
  *	<p>
  *	<ul>
- *		<li>Store data at shutdown on a non-volatile medium (e.g. harddisk): This can be used only on systems with
+ *		<li>Store data at shutdown on a non-volatile medium (e.g. hard-disk): This can be used only on systems with
  *		a defined shutdown and with an UPS (external power supply)!</li>
- *		<li>Store retain data directly on a non-voaltile RAM (SRAM, NVRAM, etc.): This can be used only on systems with
+ *		<li>Store retain data directly on a non-volatile RAM (SRAM, NVRAM, etc.): This can be used only on systems with
  *		this types of memory.</li>
  *	</ul>
  *	</p>
@@ -16,7 +16,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -43,7 +43,7 @@ SET_INTERFACE_NAME(`CmpRetain')
 /**
  * <category>Settings</category>
  * <type>String</type>
- * <description>Address of the SRAM memory can be specified here. The physical address is 
+ * <description>Address of the SRAM memory can be specified here (in hexadecimal format). The physical address is 
  *	mapped afterwards in to the address space of the runtime process.
  *	Retain parameter for type RETAIN_SRAM (see corresponding category in CmpAppItf.h).</description>
  */
@@ -52,7 +52,7 @@ SET_INTERFACE_NAME(`CmpRetain')
 /**
  * <category>Settings</category>
  * <type>String</type>
- * <description>Address of the SRAM memory can be specified here.
+ * <description>Address of the SRAM memory can be specified here (in hexadecimal format).
  *	The address _must_ still be mapped in the address space of the runtime process!
  *	Retain parameter for type RETAIN_SRAM (see corresponding category in CmpAppItf.h).</description>
  */
@@ -123,7 +123,7 @@ typedef struct
  *	 TAG_RETAIN: Occupied retain area
  *	 TAG_RETAIN_FREE: Free retain area</element>
  *	<element name="ulSize" type="IN">Size of the retain area</element>
- *	<element name="DataGuid" type="IN">Data guid of the retain area</element>
+ *	<element name="DataGuid" type="IN">Data GUID of the retain area</element>
  */
 typedef struct
 {
@@ -137,8 +137,8 @@ typedef struct
  * <description></description>
  *	<element name="RETAIN_NONE" type="IN">No retain handling specified. All retain data gets lost at the next reboot!</element>
  *	<element name="RETAIN_IN_SRAM" type="IN">Retains are saved in a non-volatile RAM (SRAM)</element>
- *	<element name="RETAIN_ON_POWERFAIL" type="IN">All retain data will be stored on a harddisk at the defined shutdown and 
- *		are restored from the harddisk at the next reboot</element>
+ *	<element name="RETAIN_ON_POWERFAIL" type="IN">All retain data will be stored on a hard-disk at the defined shutdown and 
+ *		are restored from the hard-disk at the next reboot</element>
  */
 typedef enum
 {
@@ -172,7 +172,7 @@ extern "C" {
  * <param name="usAreaType" type="IN">Area type. See category "Area Types" in SysMemItf.h for detailed information</param>
  * <param name="iSize" type="IN">Requested size of the retain area</param>
  * <param name="bRestore" type="IN">1=if retain should be restored, 0=no restore necessary</param>
- * <param name="ppbyRetain" type="OUT">Pointer pointer to return the retain memory</param>
+ * <param name="ppbyRetain" type="OUT">Pointer to pointer to return the retain memory</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `RetainAlloc', `(char *pszName, RTS_GUID *pDataGUID, RetainType rtType, RTS_UI16 usAreaType, RTS_SIZE iSize, int bRestore, RTS_UI8 **ppbyRetain)')
@@ -213,13 +213,13 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `RetainUpdateGuid', `(char *pszName, RTS_UI8 
 DEF_ITF_API(`RTS_RESULT', `CDECL', `RetainCheckGuid', `(char *pszName, RTS_UI8 *pbyRetain, RTS_GUID *pDataGuid, RTS_UI16 usAreaType)')
 
 /**
- * <description>Update retain management. Can be used to detect all free retain areas after loading all bootprojects</description>
+ * <description>Update retain management. Can be used to detect all free retain areas after loading all boot applications</description>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `RetainUpdate', `(void)')
 
 /**
- * <description>Function to store retain data. Is used for example to store retains on a harddisk.</description>
+ * <description>Function to store retain data. Is used for example to store retains on a hard-disk.</description>
  * <param name="pszName" type="IN">Name that was assigned to the retain memory</param>
  * <param name="iSize" type="IN">Requested size of the retain area</param>
  * <param name="pDataGUID" type="IN">Data guid of the retain area</param>
@@ -230,22 +230,22 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `RetainUpdate', `(void)')
 DEF_ITF_API(`RTS_RESULT', `CDECL', `RetainStore', `(char *pszName, RTS_UI8 *pbyRetain, RTS_SIZE iSize, RTS_GUID *pDataGUID, int bBackup)')
 
 /**
- * <description>Function to store retain data. Is used for example to store retains on a harddisk.</description>
+ * <description>Function to store retain data. Is used for example to store retains on a hard-disk.</description>
  * <param name="pszFile" type="IN">Name of the file to store retains to</param>
  * <param name="pszName" type="IN">Name that was assigned to the retain memory</param>
  * <param name="iSize" type="IN">Requested size of the retain area</param>
- * <param name="pDataGUID" type="IN">Data guid of the retain area</param>
+ * <param name="pDataGUID" type="IN">Data GUID of the retain area</param>
  * <param name="pbyRetain" type="IN">Pointer of the retain memory</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `RetainStoreInFile', `(char* pszFile, char *pszName, RTS_UI8 *pbyRetain, RTS_SIZE iSize, RTS_GUID *pDataGUID)')
 
 /**
- * <description>Function to restore retain data after booting the plc.
- *	Is used for example to restore retains from a harddisk.</description>
+ * <description>Function to restore retain data after booting the PLC.
+ *	Is used for example to restore retains from a hard-disk.</description>
  * <param name="pszName" type="IN">Name that was assigned to the retain memory</param>
  * <param name="iSize" type="IN">Requested size of the retain area</param>
- * <param name="pDataGUID" type="IN">Data guid of the retain area</param>
+ * <param name="pDataGUID" type="IN">Data GUID of the retain area</param>
  * <param name="pbyRetain" type="IN">Pointer of the retain memory</param>
  * <param name="usAreaType" type="IN">Area type. See category "Area Types" in SysMemItf.h for detailed information</param>
  * <param name="bBackup" type="IN">If parameter is 1, then the retain data of the specified area is restored for backup needs</param>
@@ -254,12 +254,12 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `RetainStoreInFile', `(char* pszFile, char *p
 DEF_ITF_API(`RTS_RESULT', `CDECL', `RetainRestore', `(char *pszName, RTS_UI8 *pbyRetain, RTS_SIZE iSize, RTS_GUID *pDataGUID, RTS_UI16 usAreaType, int bBackup)')
 
 /**
- * <description>Function to restore retain data after booting the plc.
- *	Is used for example to restore retains from a harddisk.</description>
+ * <description>Function to restore retain data after booting the PLC.
+ *	Is used for example to restore retains from a hard-disk.</description>
  * <param name="pszFile" type="IN">Name of the file to restore retains from</param>
  * <param name="pszName" type="IN">Name that was assigned to the retain memory</param>
  * <param name="iSize" type="IN">Requested size of the retain area</param>
- * <param name="pDataGUID" type="IN">Data guid of the retain area</param>
+ * <param name="pDataGUID" type="IN">Data GUID of the retain area</param>
  * <param name="pbyRetain" type="IN">Pointer of the retain memory</param>
  * <param name="usAreaType" type="IN">Area type. See category "Area Types" in SysMemItf.h for detailed information</param>
  * <param name="bBackup" type="IN">If parameter is 1, then the retain data of the specified area is restored for backup needs</param>

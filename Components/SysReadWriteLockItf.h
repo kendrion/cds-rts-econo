@@ -4,7 +4,7 @@
  * <p>This interface provides a synchronization technique for multiple (shared) reading and single (exclusive) writing access control to a critical resource</p>
  * </description>
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -28,7 +28,7 @@
  * <description>
  * Compiler switch to enable/disable generic implementation.
  * When SYSREADWRITELOCK_GENERIC is not defined, the implementation relies on the underlying operating system.
- * If the switch is defined, the generic implementation is activated, indepentend of the underlying operating system.
+ * If the switch is defined, the generic implementation is activated, independent of the underlying operating system.
  * </description>
  * <element name="SYSREADWRITELOCK_GENERIC">This switch may be defined in sysdefines.h</element>
  */
@@ -518,7 +518,7 @@ RTS_RESULT CDECL SysReadWriteLockOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulP
  * <description>
  * This function creates a ReadWrite locking synchronization object.
  * </description>
- * <param name="pResult" type="IN">Pointer to a variable to return an errorcode (optional).</param>
+ * <param name="pResult" type="IN">Pointer to a variable to return an error code (optional).</param>
  * <result>Returns a handle to the synchronization object or RTS_INVALID_HANDLE in case of failure.</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">A valid handle is returned.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">Not enough memory available.</errorcode>

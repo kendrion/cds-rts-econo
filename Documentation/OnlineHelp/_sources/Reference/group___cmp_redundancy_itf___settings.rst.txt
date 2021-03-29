@@ -1,0 +1,89 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_redundancy_itf___settings:
+
+========
+Settings
+========
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Macros
+------
+
+- #define :ref:`RDCYKEY_INT_DATASYNCALWAYS <group___cmp_redundancy_itf___settings_1ga074e5795ccefefe6f1f38a96e59aadf7>` "DataSyncAlways"
+
+- #define :ref:`RDCYVALUE_INT_DATASYNCALWAYS_DEFAULT <group___cmp_redundancy_itf___settings_1ga98dfd601a6cd3ebeca413d95f73ebb0b>` FALSE
+
+- #define :ref:`RDCYKEY_INT_CHECKBOOTAPPGUID <group___cmp_redundancy_itf___settings_1ga945faeb1e2e068b4111da85b41f874a5>` "CheckBootApplicationGuid"
+
+- #define :ref:`RDCYVALUE_INT_CHECKBOOTAPPGUID_DEFAULT <group___cmp_redundancy_itf___settings_1gac642b5e6bd4cdcfe760f84c01f518c73>` FALSE
+
+- #define :ref:`EVTPARAMID_CmpRedundancy_vfInit <group___cmp_redundancy_itf___settings_1gada5890de6fae4a519f755d095ba05bed>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpRedundancy_vfInit <group___cmp_redundancy_itf___settings_1ga76c7b44b856150576e3cc198196c0dbe>` 0x0001
+
+- #define :ref:`EVT_CmpRedundancy_vfInit <group___cmp_redundancy_itf___settings_1ga3e3feb269771cdc7f1c8e7496183cb27>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_redundancy_itf___settings_1ga074e5795ccefefe6f1f38a96e59aadf7:
+
+#define RDCYKEY_INT_DATASYNCALWAYS "DataSyncAlways"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<type>Int</type>
+
+Set to 1 to enable data sync in every cycle. (data sync is copying the values of global variables registered in redundancy configuration) By default, data sync is done at startup of plc2 only. During operation, data sync is not performed. Please note, dependant on the size of data and speed of communication, task cycle time can be increased.
+
+.. _group___cmp_redundancy_itf___settings_1ga98dfd601a6cd3ebeca413d95f73ebb0b:
+
+#define RDCYVALUE_INT_DATASYNCALWAYS_DEFAULT FALSE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_itf___settings_1ga945faeb1e2e068b4111da85b41f874a5:
+
+#define RDCYKEY_INT_CHECKBOOTAPPGUID "CheckBootApplicationGuid"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<type>Int</type>
+
+Set to 1 to enable check of boot application GUID. In case this setting is activated, boot application GUIDs of plc1 and plc are compared at startup of plc2. If they are equal, projects are considered as equal, so application files are not transmitted to plc2. This reduces the time needed for synchronization. Please not other files are not checked, so they are not transmitted even they are different. In case this setting is not activated, all application and visu files are always transmitted to plc2 at startup.
+
+.. _group___cmp_redundancy_itf___settings_1gac642b5e6bd4cdcfe760f84c01f518c73:
+
+#define RDCYVALUE_INT_CHECKBOOTAPPGUID_DEFAULT FALSE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_itf___settings_1gada5890de6fae4a519f755d095ba05bed:
+
+#define EVTPARAMID_CmpRedundancy_vfInit 0x0001
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_itf___settings_1ga76c7b44b856150576e3cc198196c0dbe:
+
+#define EVTVERSION_CmpRedundancy_vfInit 0x0001
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_itf___settings_1ga3e3feb269771cdc7f1c8e7496183cb27:
+
+#define EVT_CmpRedundancy_vfInit :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

@@ -1,0 +1,29 @@
+.. _enabling_c_integration:
+
+Enabling C Integration
+======================
+
+The C Integration in CODESYS is split into two parts. CODESYS itsself
+takes care of all steps required to setup and coordinate the building of
+a C source code component in your project. The end result will be a
+dynamically linkable runtime module specific to your runtime
+environment.
+
+For the actual compilation and creation of that module CODESYS must rely
+on external tools. There is no C Compiler or linker available in
+CODESYS.
+
+Enabling the C Integration for a device in a project requires the
+following steps:
+
+1. | Creating a Plug-In which implements the toolchain specific build
+     actions for your target device.
+   | Especially there must be an implementation of the interface
+     ICSourceComponentBuilder available.
+
+2. Adding a reduced Runtime system SDK to your setup specific to the
+   devices supported by the C-Integration
+
+Whenever a C module is to be compiled, an instance of the
+ICSourceComponentBuilder is created. The remaining document describes
+implementation details for the Plug-In.

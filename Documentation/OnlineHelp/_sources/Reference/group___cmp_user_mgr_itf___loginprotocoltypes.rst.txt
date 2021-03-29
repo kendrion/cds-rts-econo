@@ -1,0 +1,77 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_user_mgr_itf___loginprotocoltypes:
+
+====================
+Login protocol types
+====================
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Data Structures
+---------------
+
+- struct :ref:`UserMgrCredentials_Password <struct_user_mgr_credentials___password>`
+
+- struct :ref:`UserMgrCredentials_Store <union_user_mgr_credentials___store>`
+
+- struct :ref:`UserMgrCredentials <struct_user_mgr_credentials>`
+
+Macros
+------
+
+- #define :ref:`UserMgrCredentials_Type_Password <group___cmp_user_mgr_itf___loginprotocoltypes_1ga4750dbb3d803b6ed72abcce6a2d05d1a>` UINT32_C(1)
+
+- #define :ref:`USERMGR_DATAEXCHANGE_FOLDER <group___cmp_user_mgr_itf___loginprotocoltypes_1ga55b75df2d7469f30d7a151830fa11094>` "$UserMgr$"
+
+- #define :ref:`USERMGR_USERGROUPS_EXCHANGE_FILE <group___cmp_user_mgr_itf___loginprotocoltypes_1gafbe194d31b84cd66167e6b49b5f83126>` :ref:`USERMGR_DATAEXCHANGE_FOLDER <group___cmp_user_mgr_itf___loginprotocoltypes_1ga55b75df2d7469f30d7a151830fa11094>` "/Users_Groups_export.dum2"
+
+- #define :ref:`USERMGR_USERGROUPS_BACKUP_FILE <group___cmp_user_mgr_itf___loginprotocoltypes_1ga4fc4b92eaf1b0735761bd1cf5b69f666>` :ref:`USERMGR_DATAEXCHANGE_FOLDER <group___cmp_user_mgr_itf___loginprotocoltypes_1ga55b75df2d7469f30d7a151830fa11094>` "/Backup.dum2"
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_user_mgr_itf___loginprotocoltypes_1ga4750dbb3d803b6ed72abcce6a2d05d1a:
+
+#define UserMgrCredentials_Type_Password UINT32_C(1)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+There are different protocols that can be used to authenticae a user. The following list contains the supported credential types of the runtime system. It is not required that a runtime implements all available type. The available types depend on the actual implementaion of different user authenticators.
+
+  - UserMgrCredentials_Type_Password: This login protocol transmitts the users password in plaintext over a TLS authenticated connection. This method is suitable if the credentials have to be forwarded to other databases such as LDAP, OS, or an OEM user database.
+
+  - UserMgrCredentials_Type_AUCPACE: This login protocol checks the credentials without transmitting the users password to the PLC. It is suitable for embedded devices that have the CmpCryptoEmbedded available. A secure session is generated during login which can be used to protect further data within the session.
+
+  - UserMgrCredentials_Type_X509: This login protocol uses client certificates to authenticate the user. A Nonce is digitally signed by the client with the users private key. Only suitable for lager systems with an implementation of CmpCrypto and CmpX509Cert
+
+.. _group___cmp_user_mgr_itf___loginprotocoltypes_1ga55b75df2d7469f30d7a151830fa11094:
+
+#define USERMGR_DATAEXCHANGE_FOLDER "$UserMgr$"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr_itf___loginprotocoltypes_1gafbe194d31b84cd66167e6b49b5f83126:
+
+#define USERMGR_USERGROUPS_EXCHANGE_FILE :ref:`USERMGR_DATAEXCHANGE_FOLDER <group___cmp_user_mgr_itf___loginprotocoltypes_1ga55b75df2d7469f30d7a151830fa11094>` "/Users_Groups_export.dum2"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr_itf___loginprotocoltypes_1ga4fc4b92eaf1b0735761bd1cf5b69f666:
+
+#define USERMGR_USERGROUPS_BACKUP_FILE :ref:`USERMGR_DATAEXCHANGE_FOLDER <group___cmp_user_mgr_itf___loginprotocoltypes_1ga55b75df2d7469f30d7a151830fa11094>` "/Backup.dum2"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

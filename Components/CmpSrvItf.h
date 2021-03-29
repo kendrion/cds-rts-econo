@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -49,6 +49,28 @@
 #define HEADERTAG_SAFETY	0x5AF4
 
 /**
+ * <description> 
+ *	Defines the default edge - automation server layer 7 protocol.
+ * </description> 
+ */
+#define HEADERTAG_EDGE		0xED6E
+
+/**
+ * <description>
+ *	Reserved range for OEM specific protocol handlers: 0xFF00..0xFFFF.
+ * </description>
+ */
+#define HEADERTAG_OEM_START		0xFF00
+
+ /**
+ * <description>
+ *	Reserved range for OEM specific protocol handlers: 0xFF00..0xFFFF.
+ * </description>
+ */
+#define HEADERTAG_OEM_END		0xFFFF
+
+
+/**
  * <category>Service Groups</category>
  * <description> 
  *	Service groups for the layer 7 communication
@@ -66,7 +88,7 @@
 #define SG_ETHERCAT				0x0007
 #define SG_FILE_TRANSFER		0x0008
 #define SG_IEC_VAR_ACCESS		0x0009
-#define SG_COMPONENT_MANAGER	0x000A
+#define SG_COMPONENT_MANAGER	0x000A /* Deprecated, do not use! */
 #define SG_CMPIOMGR				0x000B
 #define SG_CMPUSERMGR			0x000C
 #define SG_ONLINEPARAMS			0x000D
@@ -84,28 +106,24 @@
 #define SG_PROFINET				0x0019
 #define SG_SIL2					0x001A
 #define SG_MONITORING2			0x001B
-#define	SG_SUB_NODE_COMM		0x001C	/* e. g. used for communication to a SIL3 RTS via fieldbus */
+#define	SG_SUB_NODE_COMM		0x001C	/* e. g. used for communication to a SIL3 RTS via field-bus */
 #define	SG_CMPCODEMETER			0x001D	/* used for license transfer */
 #define	SG_TREND_STORAGE		0x001E	/* access to the trend storage */
 #define SG_COREDUMP				0x001F
 #define SG_BACKUP				0x0020
 #define SG_RUNTIME_TEST			0x0021  /* Used for test and verification of the runtime */
 #define SG_X509_CERT            0x0022
-#define SG_SECURITY_MANAGER		0x0023
-#define SG_MAX_DEFINED			0x0023	/* NOTE: Must be adapted, if new service group was added! */
+#define SG_MAX_DEFINED			0x0022	/* NOTE: Must be adapted, if new service group was added. Service groups handled in IEC must be added to SERVICE_GROUPS_IEC additionally! */
 #define SG_MAX_RESERVED			0x00FF
 
-/**
- * <description> 
- *	Defines some special values for session ids
- * </description> 
- */
-#define SRV_SESSION_ID_EMPTY				0
-#define SRV_SESSION_ID_INVALID				0x00000001
-#define SRV_SESSION_ID_INITAL_REQUEST		0x00000011
-#define SRV_SESSION_ID_REMOTE_VISU_CLIENT	0x00000815
-#define SRV_SESSION_ID_WEBSERVER			0x0000ABCD
-#define SRV_SESSION_ID_VALIDATION_BIT		0x80000000
+#define SERVICE_GROUPS_IEC {\
+	SG_FDT, \
+	SG_IOLINK, \
+	SG_ETCSRV, \
+	SG_PROFINET, \
+	SG_SUB_NODE_COMM, \
+	SG_TREND_STORAGE, \
+	0}
 
 /**
  * <category>Static defines</category>
@@ -120,32 +138,41 @@
  * <description>Max number of services that can be defined for synchronous execution</description>
  */
 #ifndef SRV_NUM_OF_SYNC_SERVICES
-	#define SRV_NUM_OF_SYNC_SERVICES		15
+	#define SRV_NUM_OF_SYNC_SERVICES		50
 #endif
 
 /**
  * <category>Service reply tags</category>
  * <description> 
- *	Global service reply tags
+ *	Special reserved global service reply tags. Values must not be redefined by any other online service.
+ *  These tags allow a service independent, central user access error (e. g. missing access rights) handling in the client. 
+ *  All tag values >= 0xFF00 are reserved for global use.
  * </description> 
  */
-#define TAG_ERROR						0xFF7F
-#define TAG_EXTERROR_INFO				0xFF7E
-#define TAG_USER_NOTIFY					0xFF7D
-#define TAG_SERVICE_RESULT				0x01
+#define TAG_SERVICE_RESULT							0x01		/* can be used to return service results, but is not exclusively reserved */
 
+#define	TAG_RESERVED_MIN							0xFF00		/* start of reserved tag range */
+
+#define TAG_ONLINE_ACCESS_REPLY_CRYPT_TYPE			0xFF22		/* only to be used by CmpUserMgr */
+#define TAG_ONLINE_ACCESS_REPLY_CRYPT_CHALLENGE		0xFF23		/* only to be used by CmpUserMgr */
+#define TAG_ONLINE_ACCESS_RESULT					0xFF82		/* only to be used by CmpUserMgr */
+#define TAG_ONLINE_ACCESS_OBJECT					0xFF83		/* only to be used by CmpUserMgr */
+
+#define TAG_ERROR									0xFF7F		/* should be used for generic service errors, if services fail completely */
+#define TAG_EXTERROR_INFO							0xFF7E		/* reserved */
+#define TAG_USER_NOTIFY								0xFF7D		/* only to be used by CmpSrv */
 
 /**
  * <category>Event parameter</category>
  * <element name="ulChannelId" type="IN">Id of the channel on which the request arrived</element>
- * <element name="pHeaderTag" type="IN">Pointer to the header struct of the received request</element>
+ * <element name="pHeaderTag" type="IN">Pointer to the header structure of the received request</element>
  * <element name="pduData" type="IN">References the request data (without header)</element>
  * <element name="pduSendBuffer" type="OUT">Contains the buffer (pointer and length) for the reply data</element>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">Received service was completely handled.</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_L7_UNKNOWNCMD">Service is unknown by the event handler.</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_CALL_AGAIN">Received service will be handled asynchronously. 
  * To progress this event will be posted again for the same received service data with bFirstCall=0.</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_...">Another error occured, caller will send this result in a generic error tag as reply (or close the channel).</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_...">Another error occurred, caller will send this result in a generic error tag as reply (or close the channel).</errorcode>
  * <element name="Result" type="INOUT">IN: ERR_PENDING: Signals a repeated call for the same request. All other values represent the first call. OUT: See above.</element>
  */
 typedef struct
@@ -170,7 +197,7 @@ typedef struct
 
 /* EVTVERSION_CmpSrv
 0x0001: First version
-0x0002: Supports now result code ERR_CALL_AGAIN for asynchronous service handlers. Event paramter structure is still the same.
+0x0002: Supports now result code ERR_CALL_AGAIN for asynchronous service handlers. Event parameter structure is still the same.
 */
 
 
@@ -201,11 +228,11 @@ extern "C" {
  *	such a request must be sent using FinishRequest.
  * </description>
  * <param name="ulChannelId" type="IN">Id of the channel on which the request arrived</param>
- * <param name="pHeaderTag" type="IN">Pointer to the header struct of the message</param>
+ * <param name="pHeaderTag" type="IN">Pointer to the header structure of the message</param>
  * <param name="pduData" type="IN">References the request data (without header)</param>
  * <param name="pduSendBuffer" type="IN">Contains the length of the buffer for the reply data, and the buffer for the replay data</param>
  * <result>
- *	Should return ERR_OK (succeeded immediatly) or ERR_PENDING (service is handled asynchronously).
+ *	Should return ERR_OK (succeeded immediately) or ERR_PENDING (service is handled asynchronously).
  *	All other results abort the request.
  * </result>
  */
@@ -219,133 +246,28 @@ typedef RTS_RESULT (CDECL *PFServiceHandler)(RTS_UI32 ulChannelId, HEADER_TAG *p
  * </description>
  * <param name="hRouter" type="IN">Obsolete parameter, should be set to RTS_INVALID_HANDLE.</param>
  * <param name="ulChannelId" type="IN">Id of the channel on which the request arrived</param>
- * <param name="pHeaderTag" type="IN">Pointer to the header struct of the message</param>
+ * <param name="pHeaderTag" type="IN">Pointer to the header structure of the message</param>
  * <param name="pduData" type="IN">References the request data (without header)</param>
  * <param name="pduSendBuffer" type="IN">Contains the length of the buffer for the reply data, and the buffer for the replay data</param>
  * <result>
- *	Should return ERR_OK (succeeded immediatly) or ERR_PENDING (service is handled asynchronously).
+ *	Should return ERR_OK (succeeded immediately) or ERR_PENDING (service is handled asynchronously).
  *	All other results abort the request.
  * </result>
  */
 typedef RTS_RESULT (CDECL *PFServiceHandler2)(RTS_HANDLE hRouter, RTS_UI32 ulChannelId, HEADER_TAG *pHeaderTag, PROTOCOL_DATA_UNIT pduData, PROTOCOL_DATA_UNIT pduSendBuffer);
 
-
 /**
- * <description>Obsolete: Use ServerAppHandleRequest3 instead. Will be removed in future versions!</description>
- */
-RTS_RESULT CDECL ServerAppHandleRequest(RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply);
-typedef RTS_RESULT (CDECL * PFSERVERAPPHANDLEREQUEST) (RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply);
-#if defined(CMPSRV_NOTIMPLEMENTED) || defined(SERVERAPPHANDLEREQUEST_NOTIMPLEMENTED)
-	#define USE_ServerAppHandleRequest
-	#define EXT_ServerAppHandleRequest
-	#define GET_ServerAppHandleRequest(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_ServerAppHandleRequest(p0,p1,p2)  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_ServerAppHandleRequest  FALSE
-	#define EXP_ServerAppHandleRequest  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_ServerAppHandleRequest
-	#define EXT_ServerAppHandleRequest
-	#define GET_ServerAppHandleRequest(fl)  CAL_CMGETAPI( "ServerAppHandleRequest" ) 
-	#define CAL_ServerAppHandleRequest  ServerAppHandleRequest
-	#define CHK_ServerAppHandleRequest  TRUE
-	#define EXP_ServerAppHandleRequest  CAL_CMEXPAPI( "ServerAppHandleRequest" ) 
-#elif defined(MIXED_LINK) && !defined(CMPSRV_EXTERNAL)
-	#define USE_ServerAppHandleRequest
-	#define EXT_ServerAppHandleRequest
-	#define GET_ServerAppHandleRequest(fl)  CAL_CMGETAPI( "ServerAppHandleRequest" ) 
-	#define CAL_ServerAppHandleRequest  ServerAppHandleRequest
-	#define CHK_ServerAppHandleRequest  TRUE
-	#define EXP_ServerAppHandleRequest  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerAppHandleRequest", (RTS_UINTPTR)ServerAppHandleRequest, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpSrvServerAppHandleRequest
-	#define EXT_CmpSrvServerAppHandleRequest
-	#define GET_CmpSrvServerAppHandleRequest  ERR_OK
-	#define CAL_CmpSrvServerAppHandleRequest pICmpSrv->IServerAppHandleRequest
-	#define CHK_CmpSrvServerAppHandleRequest (pICmpSrv != NULL)
-	#define EXP_CmpSrvServerAppHandleRequest  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_ServerAppHandleRequest
-	#define EXT_ServerAppHandleRequest
-	#define GET_ServerAppHandleRequest(fl)  CAL_CMGETAPI( "ServerAppHandleRequest" ) 
-	#define CAL_ServerAppHandleRequest pICmpSrv->IServerAppHandleRequest
-	#define CHK_ServerAppHandleRequest (pICmpSrv != NULL)
-	#define EXP_ServerAppHandleRequest  CAL_CMEXPAPI( "ServerAppHandleRequest" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_ServerAppHandleRequest  PFSERVERAPPHANDLEREQUEST pfServerAppHandleRequest;
-	#define EXT_ServerAppHandleRequest  extern PFSERVERAPPHANDLEREQUEST pfServerAppHandleRequest;
-	#define GET_ServerAppHandleRequest(fl)  s_pfCMGetAPI2( "ServerAppHandleRequest", (RTS_VOID_FCTPTR *)&pfServerAppHandleRequest, (fl), 0, 0)
-	#define CAL_ServerAppHandleRequest  pfServerAppHandleRequest
-	#define CHK_ServerAppHandleRequest  (pfServerAppHandleRequest != NULL)
-	#define EXP_ServerAppHandleRequest  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerAppHandleRequest", (RTS_UINTPTR)ServerAppHandleRequest, 0, 0) 
-#endif
-
-
-
-
-/**
- * <description>Obsolete: Use ServerAppHandleRequest3 instead. Will be removed in future versions!</description>
- */
-RTS_RESULT CDECL ServerAppHandleRequest2(RTS_HANDLE hRouter, RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply);
-typedef RTS_RESULT (CDECL * PFSERVERAPPHANDLEREQUEST2) (RTS_HANDLE hRouter, RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply);
-#if defined(CMPSRV_NOTIMPLEMENTED) || defined(SERVERAPPHANDLEREQUEST2_NOTIMPLEMENTED)
-	#define USE_ServerAppHandleRequest2
-	#define EXT_ServerAppHandleRequest2
-	#define GET_ServerAppHandleRequest2(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_ServerAppHandleRequest2(p0,p1,p2,p3)  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_ServerAppHandleRequest2  FALSE
-	#define EXP_ServerAppHandleRequest2  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_ServerAppHandleRequest2
-	#define EXT_ServerAppHandleRequest2
-	#define GET_ServerAppHandleRequest2(fl)  CAL_CMGETAPI( "ServerAppHandleRequest2" ) 
-	#define CAL_ServerAppHandleRequest2  ServerAppHandleRequest2
-	#define CHK_ServerAppHandleRequest2  TRUE
-	#define EXP_ServerAppHandleRequest2  CAL_CMEXPAPI( "ServerAppHandleRequest2" ) 
-#elif defined(MIXED_LINK) && !defined(CMPSRV_EXTERNAL)
-	#define USE_ServerAppHandleRequest2
-	#define EXT_ServerAppHandleRequest2
-	#define GET_ServerAppHandleRequest2(fl)  CAL_CMGETAPI( "ServerAppHandleRequest2" ) 
-	#define CAL_ServerAppHandleRequest2  ServerAppHandleRequest2
-	#define CHK_ServerAppHandleRequest2  TRUE
-	#define EXP_ServerAppHandleRequest2  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerAppHandleRequest2", (RTS_UINTPTR)ServerAppHandleRequest2, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpSrvServerAppHandleRequest2
-	#define EXT_CmpSrvServerAppHandleRequest2
-	#define GET_CmpSrvServerAppHandleRequest2  ERR_OK
-	#define CAL_CmpSrvServerAppHandleRequest2 pICmpSrv->IServerAppHandleRequest2
-	#define CHK_CmpSrvServerAppHandleRequest2 (pICmpSrv != NULL)
-	#define EXP_CmpSrvServerAppHandleRequest2  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_ServerAppHandleRequest2
-	#define EXT_ServerAppHandleRequest2
-	#define GET_ServerAppHandleRequest2(fl)  CAL_CMGETAPI( "ServerAppHandleRequest2" ) 
-	#define CAL_ServerAppHandleRequest2 pICmpSrv->IServerAppHandleRequest2
-	#define CHK_ServerAppHandleRequest2 (pICmpSrv != NULL)
-	#define EXP_ServerAppHandleRequest2  CAL_CMEXPAPI( "ServerAppHandleRequest2" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_ServerAppHandleRequest2  PFSERVERAPPHANDLEREQUEST2 pfServerAppHandleRequest2;
-	#define EXT_ServerAppHandleRequest2  extern PFSERVERAPPHANDLEREQUEST2 pfServerAppHandleRequest2;
-	#define GET_ServerAppHandleRequest2(fl)  s_pfCMGetAPI2( "ServerAppHandleRequest2", (RTS_VOID_FCTPTR *)&pfServerAppHandleRequest2, (fl), 0, 0)
-	#define CAL_ServerAppHandleRequest2  pfServerAppHandleRequest2
-	#define CHK_ServerAppHandleRequest2  (pfServerAppHandleRequest2 != NULL)
-	#define EXP_ServerAppHandleRequest2  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerAppHandleRequest2", (RTS_UINTPTR)ServerAppHandleRequest2, 0, 0) 
-#endif
-
-
-
-
-/**
- * <description>Handle one sevice request from the communication layer below (channel server)</description>
+ * <description>Handle one service request from the communication layer below (channel server)</description>
  * <param name="ulChannelId" type="IN">Id of the channel on which the request arrived</param>
  * <param name="pduRequest" type="IN">Pointer to the request</param>
  * <param name="pduReply" type="OUT">Pointer to the request reply buffer</param>
  * <param name="bFirstCall" type="IN">0: Tells the function, if it was already called for the same request before (0) or not (1).</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Received service was completely handeled.</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Received service was completely handled.</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PENDING">Received service will be handled asynchronously, 
  * but the caller has not to take care about this anymore.</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_CALL_AGAIN">Received service will be handled asynchronously. 
  * To progress this function have to be called again for the same received service data with bFirstCall=0.</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_...">Another error occured, channel should be closed.</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_...">Another error occurred, channel should be closed.</errorcode>
  * <result>error code</result>
  */
 RTS_RESULT CDECL ServerAppHandleRequest3(RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply, RTS_UI32 bFirstCall);
@@ -856,7 +778,7 @@ typedef RTS_RESULT (CDECL * PFSERVERFINISHREQUEST) (RTS_UI32 ulChannelId, PROTOC
 
 
 /**
- * <description>Generates a unique session Id</description>
+ * <description>Generates a session Id, which is just a random number.</description>
  * <param name="pulSessionId" type="OUT">Pointer to get back the generated session Id</param>
  * <result>error code</result>
  */
@@ -911,64 +833,7 @@ typedef RTS_RESULT (CDECL * PFSERVERGENERATESESSIONID) (RTS_UI32 *pulSessionId);
 
 /** 
  * <description>
- *   Stores the session id in the channel instance.  
- * </description>
- * <param name="ulChannelHandle" type="IN">Id of the channel for which the session id should be set.</param>
- * <param name="ulSessionId" type="IN">New session id fo the channel.</param>
- * <result>error code</result>
-*/
-RTS_RESULT CDECL ServerSetSessionId(RTS_UI32 ulChannelHandle, RTS_UI32 ulSessionId);
-typedef RTS_RESULT (CDECL * PFSERVERSETSESSIONID) (RTS_UI32 ulChannelHandle, RTS_UI32 ulSessionId);
-#if defined(CMPSRV_NOTIMPLEMENTED) || defined(SERVERSETSESSIONID_NOTIMPLEMENTED)
-	#define USE_ServerSetSessionId
-	#define EXT_ServerSetSessionId
-	#define GET_ServerSetSessionId(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_ServerSetSessionId(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_ServerSetSessionId  FALSE
-	#define EXP_ServerSetSessionId  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_ServerSetSessionId
-	#define EXT_ServerSetSessionId
-	#define GET_ServerSetSessionId(fl)  CAL_CMGETAPI( "ServerSetSessionId" ) 
-	#define CAL_ServerSetSessionId  ServerSetSessionId
-	#define CHK_ServerSetSessionId  TRUE
-	#define EXP_ServerSetSessionId  CAL_CMEXPAPI( "ServerSetSessionId" ) 
-#elif defined(MIXED_LINK) && !defined(CMPSRV_EXTERNAL)
-	#define USE_ServerSetSessionId
-	#define EXT_ServerSetSessionId
-	#define GET_ServerSetSessionId(fl)  CAL_CMGETAPI( "ServerSetSessionId" ) 
-	#define CAL_ServerSetSessionId  ServerSetSessionId
-	#define CHK_ServerSetSessionId  TRUE
-	#define EXP_ServerSetSessionId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerSetSessionId", (RTS_UINTPTR)ServerSetSessionId, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpSrvServerSetSessionId
-	#define EXT_CmpSrvServerSetSessionId
-	#define GET_CmpSrvServerSetSessionId  ERR_OK
-	#define CAL_CmpSrvServerSetSessionId pICmpSrv->IServerSetSessionId
-	#define CHK_CmpSrvServerSetSessionId (pICmpSrv != NULL)
-	#define EXP_CmpSrvServerSetSessionId  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_ServerSetSessionId
-	#define EXT_ServerSetSessionId
-	#define GET_ServerSetSessionId(fl)  CAL_CMGETAPI( "ServerSetSessionId" ) 
-	#define CAL_ServerSetSessionId pICmpSrv->IServerSetSessionId
-	#define CHK_ServerSetSessionId (pICmpSrv != NULL)
-	#define EXP_ServerSetSessionId  CAL_CMEXPAPI( "ServerSetSessionId" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_ServerSetSessionId  PFSERVERSETSESSIONID pfServerSetSessionId;
-	#define EXT_ServerSetSessionId  extern PFSERVERSETSESSIONID pfServerSetSessionId;
-	#define GET_ServerSetSessionId(fl)  s_pfCMGetAPI2( "ServerSetSessionId", (RTS_VOID_FCTPTR *)&pfServerSetSessionId, (fl), 0, 0)
-	#define CAL_ServerSetSessionId  pfServerSetSessionId
-	#define CHK_ServerSetSessionId  (pfServerSetSessionId != NULL)
-	#define EXP_ServerSetSessionId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerSetSessionId", (RTS_UINTPTR)ServerSetSessionId, 0, 0) 
-#endif
-
-
-
-
-/** 
- * <description>
- *   Retrieves the stored session id from the channel instance.  
+ *   Retrieves the stored session id from the session instance assigned to this channel.  
  * </description>
  * <param name="ulChannelHandle" type="IN">Id of the channel for which the session id should be read.</param>
  * <param name="pulSessionId" type="OUT">Pointer to return the session id.</param>
@@ -1028,7 +893,7 @@ typedef RTS_RESULT (CDECL * PFSERVERGETSESSIONID) (RTS_UI32 ulChannelHandle, RTS
 *   Retrieves the number of available server channels.
 *   This is equal to the max. number of clients, which can be connected at the same time.
 * </description>
-* <param name="pwMaxChannels" type="OUT">Number of of channels.</param>
+* <param name="pwMaxChannels" type="OUT">Number of channels.</param>
 * <result>error code</result>
 */
 RTS_RESULT CDECL ServerGetMaxChannels(RTS_UI16 *pwMaxChannels);
@@ -1082,11 +947,11 @@ typedef RTS_RESULT (CDECL * PFSERVERGETMAXCHANNELS) (RTS_UI16 *pwMaxChannels);
 
 /**
 * <description>
-*   Retrieves general information for the specified server channel. This function is intended for information purpoeses only.
+*   Retrieves general information for the specified server channel. This function is intended for information purposes only.
 * </description>
 * <param name="ui16ChannelIndex" type="IN">Index of the channel. Allowed range: 0..MaxChannels-1.</param>
 * <param name="pui32ServerState" type="OUT">State of the server channel, see category "channel server state" for CSSTATE_ values in CmpCommunicationLibItf.</param>
-* <param name="pChInfoBuffer" type="INOUT">Caller allocated buffer, which is filled by the CHANNELINFO structure. If the the state is CSSTATE_FREE, no structure is returned.</param>
+* <param name="pChInfoBuffer" type="INOUT">Caller allocated buffer, which is filled by the CHANNELINFO structure. If the state is CSSTATE_FREE, no structure is returned.</param>
 * <param name="psiBufferLen" type="INOUT">Pointer to the size of the buffer in bytes, returns the number of copied bytes.</param>
 * <result>error code</result>
 */
@@ -1147,7 +1012,7 @@ typedef RTS_RESULT (CDECL * PFSERVERGETCHANNELINFOBYINDEX) (RTS_UI16 ui16Channel
 *		Id of the channel
 *	</param>
 *	<param name="pusStatus" type="OUT">
-*		Is set to the current progress state. The PROGRESS_xxx constants define valied values.
+*		Is set to the current progress state. The PROGRESS_xxx constants define valid values.
 *	</param>
 *  <param name="pbyScalingFactor" type="OUT">
 *		Provides the scaling factor for pnItemsComplete and pnTotalItems. These values have been scaled
@@ -1155,7 +1020,7 @@ typedef RTS_RESULT (CDECL * PFSERVERGETCHANNELINFOBYINDEX) (RTS_UI16 ui16Channel
 *		(i.e. they have been right shifted by ScalingFactor bits).
 *  </param>
 *	<param name="pnItemsComplete" type="OUT">
-*		Number of items completed (eg. the number of bytes transfered).
+*		Number of items completed (e.g. the number of bytes transfered).
 *  </param>
 * 	<param name="pnTotalItems" type="OUT">
 *		Total number of item. Is set to -1 if unknown.
@@ -1266,113 +1131,6 @@ typedef RTS_RESULT (CDECL * PFSERVERSETREDUNDANCYMODE) (RTS_BOOL bRedundant);
 
 
 /**
- * <description>Set redundancy mode standby to enable session id handling for standby controller (called by CmpRedundancy)</description>
- * <param name="bRedundanyStandby" type="IN"></param>
- * <result>error code</result>
- */
-RTS_RESULT CDECL ServerSetRedundancyModeStandby(RTS_BOOL bRedundanyStandby);
-typedef RTS_RESULT (CDECL * PFSERVERSETREDUNDANCYMODESTANDBY) (RTS_BOOL bRedundanyStandby);
-#if defined(CMPSRV_NOTIMPLEMENTED) || defined(SERVERSETREDUNDANCYMODESTANDBY_NOTIMPLEMENTED)
-	#define USE_ServerSetRedundancyModeStandby
-	#define EXT_ServerSetRedundancyModeStandby
-	#define GET_ServerSetRedundancyModeStandby(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_ServerSetRedundancyModeStandby(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_ServerSetRedundancyModeStandby  FALSE
-	#define EXP_ServerSetRedundancyModeStandby  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_ServerSetRedundancyModeStandby
-	#define EXT_ServerSetRedundancyModeStandby
-	#define GET_ServerSetRedundancyModeStandby(fl)  CAL_CMGETAPI( "ServerSetRedundancyModeStandby" ) 
-	#define CAL_ServerSetRedundancyModeStandby  ServerSetRedundancyModeStandby
-	#define CHK_ServerSetRedundancyModeStandby  TRUE
-	#define EXP_ServerSetRedundancyModeStandby  CAL_CMEXPAPI( "ServerSetRedundancyModeStandby" ) 
-#elif defined(MIXED_LINK) && !defined(CMPSRV_EXTERNAL)
-	#define USE_ServerSetRedundancyModeStandby
-	#define EXT_ServerSetRedundancyModeStandby
-	#define GET_ServerSetRedundancyModeStandby(fl)  CAL_CMGETAPI( "ServerSetRedundancyModeStandby" ) 
-	#define CAL_ServerSetRedundancyModeStandby  ServerSetRedundancyModeStandby
-	#define CHK_ServerSetRedundancyModeStandby  TRUE
-	#define EXP_ServerSetRedundancyModeStandby  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerSetRedundancyModeStandby", (RTS_UINTPTR)ServerSetRedundancyModeStandby, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpSrvServerSetRedundancyModeStandby
-	#define EXT_CmpSrvServerSetRedundancyModeStandby
-	#define GET_CmpSrvServerSetRedundancyModeStandby  ERR_OK
-	#define CAL_CmpSrvServerSetRedundancyModeStandby pICmpSrv->IServerSetRedundancyModeStandby
-	#define CHK_CmpSrvServerSetRedundancyModeStandby (pICmpSrv != NULL)
-	#define EXP_CmpSrvServerSetRedundancyModeStandby  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_ServerSetRedundancyModeStandby
-	#define EXT_ServerSetRedundancyModeStandby
-	#define GET_ServerSetRedundancyModeStandby(fl)  CAL_CMGETAPI( "ServerSetRedundancyModeStandby" ) 
-	#define CAL_ServerSetRedundancyModeStandby pICmpSrv->IServerSetRedundancyModeStandby
-	#define CHK_ServerSetRedundancyModeStandby (pICmpSrv != NULL)
-	#define EXP_ServerSetRedundancyModeStandby  CAL_CMEXPAPI( "ServerSetRedundancyModeStandby" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_ServerSetRedundancyModeStandby  PFSERVERSETREDUNDANCYMODESTANDBY pfServerSetRedundancyModeStandby;
-	#define EXT_ServerSetRedundancyModeStandby  extern PFSERVERSETREDUNDANCYMODESTANDBY pfServerSetRedundancyModeStandby;
-	#define GET_ServerSetRedundancyModeStandby(fl)  s_pfCMGetAPI2( "ServerSetRedundancyModeStandby", (RTS_VOID_FCTPTR *)&pfServerSetRedundancyModeStandby, (fl), 0, 0)
-	#define CAL_ServerSetRedundancyModeStandby  pfServerSetRedundancyModeStandby
-	#define CHK_ServerSetRedundancyModeStandby  (pfServerSetRedundancyModeStandby != NULL)
-	#define EXP_ServerSetRedundancyModeStandby  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerSetRedundancyModeStandby", (RTS_UINTPTR)ServerSetRedundancyModeStandby, 0, 0) 
-#endif
-
-
-
-
-/**
- * <description>Set flag to execute online service (called by CmpRedundancy)</description>
- * <result>error code</result>
- */
-RTS_RESULT CDECL ServerExecuteOnlineService(void);
-typedef RTS_RESULT (CDECL * PFSERVEREXECUTEONLINESERVICE) (void);
-#if defined(CMPSRV_NOTIMPLEMENTED) || defined(SERVEREXECUTEONLINESERVICE_NOTIMPLEMENTED)
-	#define USE_ServerExecuteOnlineService
-	#define EXT_ServerExecuteOnlineService
-	#define GET_ServerExecuteOnlineService(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_ServerExecuteOnlineService()  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_ServerExecuteOnlineService  FALSE
-	#define EXP_ServerExecuteOnlineService  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_ServerExecuteOnlineService
-	#define EXT_ServerExecuteOnlineService
-	#define GET_ServerExecuteOnlineService(fl)  CAL_CMGETAPI( "ServerExecuteOnlineService" ) 
-	#define CAL_ServerExecuteOnlineService  ServerExecuteOnlineService
-	#define CHK_ServerExecuteOnlineService  TRUE
-	#define EXP_ServerExecuteOnlineService  CAL_CMEXPAPI( "ServerExecuteOnlineService" ) 
-#elif defined(MIXED_LINK) && !defined(CMPSRV_EXTERNAL)
-	#define USE_ServerExecuteOnlineService
-	#define EXT_ServerExecuteOnlineService
-	#define GET_ServerExecuteOnlineService(fl)  CAL_CMGETAPI( "ServerExecuteOnlineService" ) 
-	#define CAL_ServerExecuteOnlineService  ServerExecuteOnlineService
-	#define CHK_ServerExecuteOnlineService  TRUE
-	#define EXP_ServerExecuteOnlineService  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerExecuteOnlineService", (RTS_UINTPTR)ServerExecuteOnlineService, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpSrvServerExecuteOnlineService
-	#define EXT_CmpSrvServerExecuteOnlineService
-	#define GET_CmpSrvServerExecuteOnlineService  ERR_OK
-	#define CAL_CmpSrvServerExecuteOnlineService pICmpSrv->IServerExecuteOnlineService
-	#define CHK_CmpSrvServerExecuteOnlineService (pICmpSrv != NULL)
-	#define EXP_CmpSrvServerExecuteOnlineService  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_ServerExecuteOnlineService
-	#define EXT_ServerExecuteOnlineService
-	#define GET_ServerExecuteOnlineService(fl)  CAL_CMGETAPI( "ServerExecuteOnlineService" ) 
-	#define CAL_ServerExecuteOnlineService pICmpSrv->IServerExecuteOnlineService
-	#define CHK_ServerExecuteOnlineService (pICmpSrv != NULL)
-	#define EXP_ServerExecuteOnlineService  CAL_CMEXPAPI( "ServerExecuteOnlineService" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_ServerExecuteOnlineService  PFSERVEREXECUTEONLINESERVICE pfServerExecuteOnlineService;
-	#define EXT_ServerExecuteOnlineService  extern PFSERVEREXECUTEONLINESERVICE pfServerExecuteOnlineService;
-	#define GET_ServerExecuteOnlineService(fl)  s_pfCMGetAPI2( "ServerExecuteOnlineService", (RTS_VOID_FCTPTR *)&pfServerExecuteOnlineService, (fl), 0, 0)
-	#define CAL_ServerExecuteOnlineService  pfServerExecuteOnlineService
-	#define CHK_ServerExecuteOnlineService  (pfServerExecuteOnlineService != NULL)
-	#define EXP_ServerExecuteOnlineService  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerExecuteOnlineService", (RTS_UINTPTR)ServerExecuteOnlineService, 0, 0) 
-#endif
-
-
-
-
-/**
  * <description>Handle one request (called by CmpRedundancy)</description> 
  * <param name="ulChannelId" type="IN">Id of the channel on which the request arrived</param>
  * <param name="pduRequest" type="IN">Pointer to the request</param>
@@ -1429,7 +1187,7 @@ typedef RTS_RESULT (CDECL * PFSERVERHANDLEREQUEST) (RTS_UI32 ulChannelId, PROTOC
 
 
 /**
- * <description>Get the last log entry of class LOG_USER_NOTIFY as a toplevel online service tag</description>
+ * <description>Get the last log entry of class LOG_USER_NOTIFY as a top-level online service tag</description>
  * <param name="pWriter" type="IN">Pointer to the bintag writer to get the service tag</param>
  * <param name="pduSendBuffer" type="IN">Pointer to the send buffer to reset the content of the bintag writer</param>
  * <result>Error code:
@@ -1490,7 +1248,7 @@ typedef RTS_RESULT (CDECL * PFSRVGETUSERNOTIFICATIONSERVICE) (BINTAGWRITER *pWri
 
 
 /**
- * <description>Get the last log entry of class LOG_USER_NOTIFY as a toplevel online service tag</description>
+ * <description>Get the last log entry of class LOG_USER_NOTIFY as a top-level online service tag</description>
  * <param name="pWriter" type="IN">Pointer to the bintag writer to get the service tag</param>
  * <param name="pduSendBuffer" type="IN">Pointer to the send buffer to reset the content of the bintag writer</param>
  * <param name="ulTagId" type="IN">TagId to send user notify info</param>
@@ -1560,9 +1318,7 @@ typedef RTS_RESULT (CDECL * PFSRVGETUSERNOTIFICATIONSERVICE2) (BINTAGWRITER *pWr
 typedef struct
 {
 	IBase_C *pBase;
-	PFSERVERAPPHANDLEREQUEST IServerAppHandleRequest;
- 	PFSERVERAPPHANDLEREQUEST2 IServerAppHandleRequest2;
- 	PFSERVERAPPHANDLEREQUEST3 IServerAppHandleRequest3;
+	PFSERVERAPPHANDLEREQUEST3 IServerAppHandleRequest3;
  	PFSERVERREGISTERSERVICEHANDLER IServerRegisterServiceHandler;
  	PFSERVERREGISTERSERVICEHANDLER2 IServerRegisterServiceHandler2;
  	PFSERVERREGISTERSERVICEHANDLER3 IServerRegisterServiceHandler3;
@@ -1572,14 +1328,11 @@ typedef struct
  	PFSERVERUNREGISTERPROTOCOLHANDLER IServerUnRegisterProtocolHandler;
  	PFSERVERFINISHREQUEST IServerFinishRequest;
  	PFSERVERGENERATESESSIONID IServerGenerateSessionId;
- 	PFSERVERSETSESSIONID IServerSetSessionId;
  	PFSERVERGETSESSIONID IServerGetSessionId;
  	PFSERVERGETMAXCHANNELS IServerGetMaxChannels;
  	PFSERVERGETCHANNELINFOBYINDEX IServerGetChannelInfoByIndex;
  	PFSERVERGETSTATUS IServerGetStatus;
  	PFSERVERSETREDUNDANCYMODE IServerSetRedundancyMode;
- 	PFSERVERSETREDUNDANCYMODESTANDBY IServerSetRedundancyModeStandby;
- 	PFSERVEREXECUTEONLINESERVICE IServerExecuteOnlineService;
  	PFSERVERHANDLEREQUEST IServerHandleRequest;
  	PFSRVGETUSERNOTIFICATIONSERVICE ISrvGetUserNotificationService;
  	PFSRVGETUSERNOTIFICATIONSERVICE2 ISrvGetUserNotificationService2;
@@ -1589,8 +1342,6 @@ typedef struct
 class ICmpSrv : public IBase
 {
 	public:
-		virtual RTS_RESULT CDECL IServerAppHandleRequest(RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply) =0;
-		virtual RTS_RESULT CDECL IServerAppHandleRequest2(RTS_HANDLE hRouter, RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply) =0;
 		virtual RTS_RESULT CDECL IServerAppHandleRequest3(RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply, RTS_UI32 bFirstCall) =0;
 		virtual RTS_RESULT CDECL IServerRegisterServiceHandler(RTS_UI32 ulServiceGroup, PFServiceHandler pfServiceHandler) =0;
 		virtual RTS_RESULT CDECL IServerRegisterServiceHandler2(RTS_UI32 ulServiceGroup, PFServiceHandler pfServiceHandler, char *pszRouter) =0;
@@ -1601,14 +1352,11 @@ class ICmpSrv : public IBase
 		virtual RTS_RESULT CDECL IServerUnRegisterProtocolHandler(RTS_UI16 usProtocolId, PFServiceHandler pfServiceHandler) =0;
 		virtual RTS_RESULT CDECL IServerFinishRequest(RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduData) =0;
 		virtual RTS_RESULT CDECL IServerGenerateSessionId(RTS_UI32 *pulSessionId) =0;
-		virtual RTS_RESULT CDECL IServerSetSessionId(RTS_UI32 ulChannelHandle, RTS_UI32 ulSessionId) =0;
 		virtual RTS_RESULT CDECL IServerGetSessionId(RTS_UI32 ulChannelHandle, RTS_UI32 *pulSessionId) =0;
 		virtual RTS_RESULT CDECL IServerGetMaxChannels(RTS_UI16 *pwMaxChannels) =0;
 		virtual RTS_RESULT CDECL IServerGetChannelInfoByIndex(RTS_UI16 ui16ChannelIndex, RTS_UI32 *pui32ServerState, CHANNELINFO *pChInfoBuffer, RTS_SIZE *psiBufferLen) =0;
 		virtual RTS_RESULT CDECL IServerGetStatus(RTS_UI32 ulChannelHandle, RTS_UI16 *pusStatus, RTS_UI8 *pbyScalingFactor, RTS_I32 *pnItemsComplete, RTS_I32 *pnTotalItems) =0;
 		virtual RTS_RESULT CDECL IServerSetRedundancyMode(RTS_BOOL bRedundant) =0;
-		virtual RTS_RESULT CDECL IServerSetRedundancyModeStandby(RTS_BOOL bRedundanyStandby) =0;
-		virtual RTS_RESULT CDECL IServerExecuteOnlineService(void) =0;
 		virtual RTS_RESULT CDECL IServerHandleRequest(RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply) =0;
 		virtual RTS_RESULT CDECL ISrvGetUserNotificationService(BINTAGWRITER *pWriter, PROTOCOL_DATA_UNIT *pduSendBuffer) =0;
 		virtual RTS_RESULT CDECL ISrvGetUserNotificationService2(BINTAGWRITER *pWriter, PROTOCOL_DATA_UNIT *pduSendBuffer, unsigned long ulTagId) =0;

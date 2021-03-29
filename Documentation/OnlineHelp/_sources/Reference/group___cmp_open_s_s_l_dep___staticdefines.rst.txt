@@ -1,0 +1,82 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_open_s_s_l_dep___staticdefines:
+
+==============
+Static defines
+==============
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Implemented interfaces
+----------------------
+
+- :ref:`CmpTlsItf <group___cmp_tls_itf>`
+
+- :ref:`SysSocket2Itf <group___sys_socket2_itf>`
+
+- :ref:`CmpCryptoItf <group___cmp_crypto_itf>`
+
+- :ref:`CmpX509CertItf <group___cmp_x509_cert_itf>`
+
+- :ref:`CmpTls_ImplementationItf <group___cmp_tls___implementation_itf>`
+
+- :ref:`CmpCrypto_ImplementationItf <group___cmp_crypto___implementation_itf>`
+
+- :ref:`CmpX509Cert_ImplementationItf <group___cmp_x509_cert___implementation_itf>`
+
+Macros
+------
+
+- #define :ref:`CMPOPENSSL_USE_SYSLIB <group___cmp_open_s_s_l_dep___staticdefines_1ga3a828ec70535f63c1a3e846103855b62>` 0
+
+- #define :ref:`CMPOPENSSL_DONT_INITIALIZE <group___cmp_open_s_s_l_dep___staticdefines_1gaea470a22c4402ec6ffb369a5caa3c950>` 0
+
+- #define :ref:`OPENSSSL_RTOS32_USED <group___cmp_open_s_s_l_dep___staticdefines_1ga3a5044006e16d3fe9ef3e367db304d95>` 0
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_open_s_s_l_dep___staticdefines_1ga3a828ec70535f63c1a3e846103855b62:
+
+#define CMPOPENSSL_USE_SYSLIB 0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Define to enable linking the CmpOpenSSL component against the system OpenSSL library.
+
+Enables usage of System library in CmpOpenSSL
+
+.. _group___cmp_open_s_s_l_dep___staticdefines_1gaea470a22c4402ec6ffb369a5caa3c950:
+
+#define CMPOPENSSL_DONT_INITIALIZE 0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+By default the runtime initializes and cleans up the OpenSSL library. This has to be prevented if the OpenSSL library is managed by a surrounding system like the OS or another software component. This compiler switch deactivates the OpenSSL initialization and cleanup. It must only be used if the compiler switch CMPOPENSSL_USE_SYSLIB is used as well. Otherwise, a compiler error will be generated.
+
+Prevents initialization and cleanup of CmpOpenSSL by the CODESYS Control runtime system.
+
+.. _group___cmp_open_s_s_l_dep___staticdefines_1ga3a5044006e16d3fe9ef3e367db304d95:
+
+#define OPENSSSL_RTOS32_USED 0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The function 'void RAND_add(const void, int, int)' of RTOS-32the function 'void RAND_add(const void, int, int)' of RTOS-32 uses a different third parameter than the standard OpenSSL RAND_add function.
+
+RTOS-32 is used.
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

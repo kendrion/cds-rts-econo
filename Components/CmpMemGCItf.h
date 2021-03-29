@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -82,7 +82,7 @@ extern "C" {
 
 /**
  * <description>
- *	Routine to get size of a new heap memblock with garbage collection.
+ *	Routine to get size of a new heap memory block with garbage collection.
  * </description>
  * <param name="ulSize" type="IN">Size of the memory block, that should be checked</param>
  * <result>Number of bytes to allocate included the garbage memory overhead</result>
@@ -194,7 +194,7 @@ typedef RTS_SIZE (CDECL * PFMEMGCGETCURRENTHEAPSIZE) (RTS_RESULT *pResult);
 
 /**
  * <description>
- *	Routine to add a new heap memblock to the garbage collector.	
+ *	Routine to add a new heap memory block to the garbage collector.	
  * </description>
  * <param name="pszComponentName" type="IN">Component name, that allocates the memory</param>
  * <param name="pMem" type="IN">Pointer to the memory block</param>
@@ -252,7 +252,7 @@ typedef void * (CDECL * PFMEMGCADD) (char *pszComponentName, void *pMem, RTS_SIZ
 
 /**
  * <description>
- *	Routine to remove a heap memblock from the garbage collector.	
+ *	Routine to remove a heap memory block from the garbage collector.	
  * </description>
  * <param name="pszComponentName" type="IN">Component name, that allocates the memory</param>
  * <param name="pMem" type="IN">Pointer to the memory data block</param>
@@ -368,7 +368,7 @@ typedef RTS_RESULT (CDECL * PFMEMGCCHECKBOUNDSALL) (void);
  *	Routine to find original heap memory pointer from garbage collector.
  * </description>
  * <param name="pMem" type="IN">Pointer to the memory data block</param>
- * <result>Pointer to the garabge collector entry</result>
+ * <result>Pointer to the garbage collector entry</result>
  */
 GARBAGE_COLLECTOR * CDECL MemGCFindEntry(void *pMem);
 typedef GARBAGE_COLLECTOR * (CDECL * PFMEMGCFINDENTRY) (void *pMem);
@@ -424,7 +424,7 @@ typedef GARBAGE_COLLECTOR * (CDECL * PFMEMGCFINDENTRY) (void *pMem);
  *	Routine to get the head node of the garbage collector to check for garbage memory.
  * </description>
  * <param name="ppHead" type="IN">Get first entry of the garbage collector list</param>
- * <result>Pointer to the garabge collector entry</result>
+ * <result>Pointer to the garbage collector entry</result>
  */
 RTS_RESULT CDECL MemGCGetHead(GARBAGE_COLLECTOR **ppHead);
 typedef RTS_RESULT (CDECL * PFMEMGCGETHEAD) (GARBAGE_COLLECTOR **ppHead);

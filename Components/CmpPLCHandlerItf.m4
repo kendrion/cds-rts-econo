@@ -20,56 +20,175 @@ extern "C" {
  * of these error codes exceeding the name of the error itself then please have
  * a look at the PLCHandler SDK.
  */
-#define PLCHANDLERIECERROR_FAILED    -1	
-#define PLCHANDLERIECERROR_OK    0	
-#define PLCHANDLERIECERROR_PLCNOTCONNECTED    1	
-#define PLCHANDLERIECERROR_PLCLOGINFAILED    2	
-#define PLCHANDLERIECERROR_PLCNOCYCLICLISTDEFINED    3	
-#define PLCHANDLERIECERROR_PLCHANDLERINACTIVE    4	
-#define PLCHANDLERIECERROR_LOADINGSYMBOLSFAILED    5	
-#define PLCHANDLERIECERROR_ITFNOTSUPPORTED    6	
-#define PLCHANDLERIECERROR_COMMFATAL    7	
-#define PLCHANDLERIECERROR_NOCONFIGURATION    8	
-#define PLCHANDLERIECERROR_INVALIDPARAMETER    9	
-#define PLCHANDLERIECERROR_ITFFAILED    10	
-#define PLCHANDLERIECERROR_NOTSUPPORTED    11	
-#define PLCHANDLERIECERROR_EXCEPTION    12	
-#define PLCHANDLERIECERROR_TIMEOUT    13	
-#define PLCHANDLERIECERROR_STILLCONNECTED    14	
-#define PLCHANDLERIECERROR_RECONNECTTHREADSTILLALIVE    15	
-#define PLCHANDLERIECERROR_PLCNOTCONNECTEDSYMBOLSLOADED    16	
-#define PLCHANDLERIECERROR_NOUPDATE    17	
-#define PLCHANDLERIECERROR_OCXCONVERSIONFAILED    18	
-#define PLCHANDLERIECERROR_TARGETIDMISMATCH    19	
-#define PLCHANDLERIECERROR_NOOBJECT    20	
-#define PLCHANDLERIECERROR_COMPONENTSNOTLOADED    21	
-#define PLCHANDLERIECERROR_BUSY    22	
-#define PLCHANDLERIECERROR_DISABLED    23	
-#define PLCHANDLERIECERROR_PLCFAILED    24	
-#define PLCHANDLERIECERROR_INVALIDSYMBOL    25	
-#define PLCHANDLERIECERROR_BUFFERTOOSMALL    26	
-#define PLCHANDLERIECERROR_NOPROJECT    27	
-#define PLCHANDLERIECERROR_FILEERROR    28	
-#define PLCHANDLERIECERROR_RETAINMISMATCH    29	
-#define PLCHANDLERIECERROR_NOACCESSRIGHTS    30	
-#define PLCHANDLERIECERROR_DUPLICATEPLCNAME    31	
-#define PLCHANDLERIECERROR_SIZEMISMATCH    32	
+#define PLCHANDLERIECERROR_FAILED    RTS_IEC_INT_C(0xFFFFFFFFFFFFFFFF)	
+#define PLCHANDLERIECERROR_OK    RTS_IEC_INT_C(0x0)	
+#define PLCHANDLERIECERROR_PLCNOTCONNECTED    RTS_IEC_INT_C(0x1)	
+#define PLCHANDLERIECERROR_PLCLOGINFAILED    RTS_IEC_INT_C(0x2)	
+#define PLCHANDLERIECERROR_PLCNOCYCLICLISTDEFINED    RTS_IEC_INT_C(0x3)	
+#define PLCHANDLERIECERROR_PLCHANDLERINACTIVE    RTS_IEC_INT_C(0x4)	
+#define PLCHANDLERIECERROR_LOADINGSYMBOLSFAILED    RTS_IEC_INT_C(0x5)	
+#define PLCHANDLERIECERROR_ITFNOTSUPPORTED    RTS_IEC_INT_C(0x6)	
+#define PLCHANDLERIECERROR_COMMFATAL    RTS_IEC_INT_C(0x7)	
+#define PLCHANDLERIECERROR_NOCONFIGURATION    RTS_IEC_INT_C(0x8)	
+#define PLCHANDLERIECERROR_INVALIDPARAMETER    RTS_IEC_INT_C(0x9)	
+#define PLCHANDLERIECERROR_ITFFAILED    RTS_IEC_INT_C(0xA)	
+#define PLCHANDLERIECERROR_NOTSUPPORTED    RTS_IEC_INT_C(0xB)	
+#define PLCHANDLERIECERROR_EXCEPTION    RTS_IEC_INT_C(0xC)	
+#define PLCHANDLERIECERROR_TIMEOUT    RTS_IEC_INT_C(0xD)	
+#define PLCHANDLERIECERROR_STILLCONNECTED    RTS_IEC_INT_C(0xE)	
+#define PLCHANDLERIECERROR_RECONNECTTHREADSTILLALIVE    RTS_IEC_INT_C(0xF)	
+#define PLCHANDLERIECERROR_PLCNOTCONNECTEDSYMBOLSLOADED    RTS_IEC_INT_C(0x10)	
+#define PLCHANDLERIECERROR_NOUPDATE    RTS_IEC_INT_C(0x11)	
+#define PLCHANDLERIECERROR_OCXCONVERSIONFAILED    RTS_IEC_INT_C(0x12)	
+#define PLCHANDLERIECERROR_TARGETIDMISMATCH    RTS_IEC_INT_C(0x13)	
+#define PLCHANDLERIECERROR_NOOBJECT    RTS_IEC_INT_C(0x14)	
+#define PLCHANDLERIECERROR_COMPONENTSNOTLOADED    RTS_IEC_INT_C(0x15)	
+#define PLCHANDLERIECERROR_BUSY    RTS_IEC_INT_C(0x16)	
+#define PLCHANDLERIECERROR_DISABLED    RTS_IEC_INT_C(0x17)	
+#define PLCHANDLERIECERROR_PLCFAILED    RTS_IEC_INT_C(0x18)	
+#define PLCHANDLERIECERROR_INVALIDSYMBOL    RTS_IEC_INT_C(0x19)	
+#define PLCHANDLERIECERROR_BUFFERTOOSMALL    RTS_IEC_INT_C(0x1A)	
+#define PLCHANDLERIECERROR_NOPROJECT    RTS_IEC_INT_C(0x1B)	
+#define PLCHANDLERIECERROR_FILEERROR    RTS_IEC_INT_C(0x1C)	
+#define PLCHANDLERIECERROR_RETAINMISMATCH    RTS_IEC_INT_C(0x1D)	
+#define PLCHANDLERIECERROR_NOACCESSRIGHTS    RTS_IEC_INT_C(0x1E)	
+#define PLCHANDLERIECERROR_DUPLICATEPLCNAME    RTS_IEC_INT_C(0x1F)	
+#define PLCHANDLERIECERROR_SIZEMISMATCH    RTS_IEC_INT_C(0x20)	
+#define PLCHANDLERIECERROR_LISTNOWRITEACCESS    RTS_IEC_INT_C(0x21)	
+#define PLCHANDLERIECERROR_CONSISTENTACCESSTIMEOUT    RTS_IEC_INT_C(0x22)	
+#define PLCHANDLERIECERROR_SYNCCONSISTENTACCESSDENIED    RTS_IEC_INT_C(0x23)	
+#define PLCHANDLERIECERROR_INVALIDASCIISTRING    RTS_IEC_INT_C(0x24)	
+#define PLCHANDLERIECERROR_INVALIDSTRINGLENGTH    RTS_IEC_INT_C(0x25)	
+#define PLCHANDLERIECERROR_OUTOFMEMORY    RTS_IEC_INT_C(0x26)	
+#define PLCHANDLERIECERROR_NOFILE    RTS_IEC_INT_C(0x27)	
+#define PLCHANDLERIECERROR_APPLICATIONNOTINSTOP    RTS_IEC_INT_C(0x28)	
+#define PLCHANDLERIECERROR_APPLICATIONNOTINRUN    RTS_IEC_INT_C(0x29)	
+#define PLCHANDLERIECERROR_OPERATIONMODENOTINDEBUG    RTS_IEC_INT_C(0x2A)	
+#define PLCHANDLERIECERROR_BACKUPRESTORENOTSUPPORTED    RTS_IEC_INT_C(0x2B)	
+#define PLCHANDLERIECERROR_PLCINCONSISTENTSTATE    RTS_IEC_INT_C(0x2C)	
+#define PLCHANDLERIECERROR_PLCINCOMPATIBLE    RTS_IEC_INT_C(0x2D)	
+#define PLCHANDLERIECERROR_PLCVERSIONINCOMPATIBLE    RTS_IEC_INT_C(0x2E)	
+#define PLCHANDLERIECERROR_RETAINERROR    RTS_IEC_INT_C(0x2F)	
+#define PLCHANDLERIECERROR_APPLICATIONLOADERROR    RTS_IEC_INT_C(0x30)	
+#define PLCHANDLERIECERROR_APPLICATIONSTARTERROR    RTS_IEC_INT_C(0x31)	
+#define PLCHANDLERIECERROR_FILETRANSFERERROR    RTS_IEC_INT_C(0x32)	
+#define PLCHANDLERIECERROR_OPERATIONDENIED    RTS_IEC_INT_C(0x33)	
+#define PLCHANDLERIECERROR_FORCESACTIVE    RTS_IEC_INT_C(0x34)	
+#define PLCHANDLERIECERROR_METAVERSIONMISMATCH    RTS_IEC_INT_C(0x35)	
+#define PLCHANDLERIECERROR_PROTOCOLMISMATCH    RTS_IEC_INT_C(0x36)	
+#define PLCHANDLERIECERROR_USERACCESSDENIED    RTS_IEC_INT_C(0x37)	
+#define PLCHANDLERIECERROR_CALLAGAIN    RTS_IEC_INT_C(0x38)	
 /* Typed enum definition */
 #define PLCHANDLERIECERROR    RTS_IEC_INT
 
 /**
  * This enumeration represents the state of the PLCHandler. 
  */
-#define PLCHANDLERIECSTATE_TERMINATE    -1	/* PLCHandler currently is terminating */
-#define PLCHANDLERIECSTATE_PLCNOTCONNECTED    0	/* PLC is not connected (init state) */
-#define PLCHANDLERIECSTATE_PLCCONNECTED    1	/* PLC is connected */
-#define PLCHANDLERIECSTATE_NOSYMBOLS    2	/* No symbols are available or symbol mismatch because of changed project */
-#define PLCHANDLERIECSTATE_SYMBOLSLOADED    3	/* PLC is connected and symbols are loaded */
-#define PLCHANDLERIECSTATE_RUNNING    4	/* PLC is connected, symbols are loaded and all of them are verified. 
+#define PLCHANDLERIECSTATE_TERMINATE    RTS_IEC_INT_C(0xFFFFFFFFFFFFFFFF)	/* PLCHandler currently is terminating */
+#define PLCHANDLERIECSTATE_PLCNOTCONNECTED    RTS_IEC_INT_C(0x0)	/* PLC is not connected (init state) */
+#define PLCHANDLERIECSTATE_PLCCONNECTED    RTS_IEC_INT_C(0x1)	/* PLC is connected */
+#define PLCHANDLERIECSTATE_NOSYMBOLS    RTS_IEC_INT_C(0x2)	/* No symbols are available or symbol mismatch because of changed project */
+#define PLCHANDLERIECSTATE_SYMBOLSLOADED    RTS_IEC_INT_C(0x3)	/* PLC is connected and symbols are loaded */
+#define PLCHANDLERIECSTATE_RUNNING    RTS_IEC_INT_C(0x4)	/* PLC is connected, symbols are loaded and all of them are verified. 
  Now you can work correctly with the PLCHandler object */
-#define PLCHANDLERIECSTATE_DISCONNECT    5	/* Connection is just getting terminated */
-#define PLCHANDLERIECSTATE_NOCONFIGURATION    6	/* Configuration of the PLCHandler is invalid */
-#define PLCHANDLERIECSTATE_NOTCONNECTEDSYMBOLSLOADED    7	/* PLC is currently not available, but the symbol information could be loaded offline. */
+#define PLCHANDLERIECSTATE_DISCONNECT    RTS_IEC_INT_C(0x5)	/* Connection is just getting terminated */
+#define PLCHANDLERIECSTATE_NOCONFIGURATION    RTS_IEC_INT_C(0x6)	/* Configuration of the PLCHandler is invalid */
+#define PLCHANDLERIECSTATE_NOTCONNECTEDSYMBOLSLOADED    RTS_IEC_INT_C(0x7)	/* PLC is currently not available, but the symbol information could be loaded offline. */
+/* Typed enum definition */
+#define PLCHANDLERIECSTATE    RTS_IEC_INT
+
+/**
+ * This enumeration defines the flags that can be used in calls to |SyncDefineVarList| for example.
+ * For recent details in documentation have a look at the PLCHandler documentation. 
+ */
+#define PLCHANDLERVARLISTFLAGS_NONE    RTS_IEC_DWORD_C(0x0)	
+#define PLCHANDLERVARLISTFLAGS_WRITEACCESS    RTS_IEC_DWORD_C(0x1)	
+#define PLCHANDLERVARLISTFLAGS_CONSISTENTBACKGROUNDREAD    RTS_IEC_DWORD_C(0x2)	
+#define PLCHANDLERVARLISTFLAGS_CONSISTENTSYNCHRONIZEDREAD    RTS_IEC_DWORD_C(0x4)	
+#define PLCHANDLERVARLISTFLAGS_CONSISTENTSYNCHRONIZEDWRITE    RTS_IEC_DWORD_C(0x8)	
+/* Typed enum definition */
+#define PLCHANDLERVARLISTFLAGS    RTS_IEC_DWORD
+
+/**
+ * This enumeration defines all possible error codes that can be returned
+ * by the functions from this library. If you need information for the purpose
+ * of these error codes exceeding the name of the error itself then please have
+ * a look at the PLCHandler SDK.
+ */
+#define PLCHANDLERIECERROR_FAILED    RTS_IEC_INT_C(0xFFFFFFFFFFFFFFFF)	
+#define PLCHANDLERIECERROR_OK    RTS_IEC_INT_C(0x0)	
+#define PLCHANDLERIECERROR_PLCNOTCONNECTED    RTS_IEC_INT_C(0x1)	
+#define PLCHANDLERIECERROR_PLCLOGINFAILED    RTS_IEC_INT_C(0x2)	
+#define PLCHANDLERIECERROR_PLCNOCYCLICLISTDEFINED    RTS_IEC_INT_C(0x3)	
+#define PLCHANDLERIECERROR_PLCHANDLERINACTIVE    RTS_IEC_INT_C(0x4)	
+#define PLCHANDLERIECERROR_LOADINGSYMBOLSFAILED    RTS_IEC_INT_C(0x5)	
+#define PLCHANDLERIECERROR_ITFNOTSUPPORTED    RTS_IEC_INT_C(0x6)	
+#define PLCHANDLERIECERROR_COMMFATAL    RTS_IEC_INT_C(0x7)	
+#define PLCHANDLERIECERROR_NOCONFIGURATION    RTS_IEC_INT_C(0x8)	
+#define PLCHANDLERIECERROR_INVALIDPARAMETER    RTS_IEC_INT_C(0x9)	
+#define PLCHANDLERIECERROR_ITFFAILED    RTS_IEC_INT_C(0xA)	
+#define PLCHANDLERIECERROR_NOTSUPPORTED    RTS_IEC_INT_C(0xB)	
+#define PLCHANDLERIECERROR_EXCEPTION    RTS_IEC_INT_C(0xC)	
+#define PLCHANDLERIECERROR_TIMEOUT    RTS_IEC_INT_C(0xD)	
+#define PLCHANDLERIECERROR_STILLCONNECTED    RTS_IEC_INT_C(0xE)	
+#define PLCHANDLERIECERROR_RECONNECTTHREADSTILLALIVE    RTS_IEC_INT_C(0xF)	
+#define PLCHANDLERIECERROR_PLCNOTCONNECTEDSYMBOLSLOADED    RTS_IEC_INT_C(0x10)	
+#define PLCHANDLERIECERROR_NOUPDATE    RTS_IEC_INT_C(0x11)	
+#define PLCHANDLERIECERROR_OCXCONVERSIONFAILED    RTS_IEC_INT_C(0x12)	
+#define PLCHANDLERIECERROR_TARGETIDMISMATCH    RTS_IEC_INT_C(0x13)	
+#define PLCHANDLERIECERROR_NOOBJECT    RTS_IEC_INT_C(0x14)	
+#define PLCHANDLERIECERROR_COMPONENTSNOTLOADED    RTS_IEC_INT_C(0x15)	
+#define PLCHANDLERIECERROR_BUSY    RTS_IEC_INT_C(0x16)	
+#define PLCHANDLERIECERROR_DISABLED    RTS_IEC_INT_C(0x17)	
+#define PLCHANDLERIECERROR_PLCFAILED    RTS_IEC_INT_C(0x18)	
+#define PLCHANDLERIECERROR_INVALIDSYMBOL    RTS_IEC_INT_C(0x19)	
+#define PLCHANDLERIECERROR_BUFFERTOOSMALL    RTS_IEC_INT_C(0x1A)	
+#define PLCHANDLERIECERROR_NOPROJECT    RTS_IEC_INT_C(0x1B)	
+#define PLCHANDLERIECERROR_FILEERROR    RTS_IEC_INT_C(0x1C)	
+#define PLCHANDLERIECERROR_RETAINMISMATCH    RTS_IEC_INT_C(0x1D)	
+#define PLCHANDLERIECERROR_NOACCESSRIGHTS    RTS_IEC_INT_C(0x1E)	
+#define PLCHANDLERIECERROR_DUPLICATEPLCNAME    RTS_IEC_INT_C(0x1F)	
+#define PLCHANDLERIECERROR_SIZEMISMATCH    RTS_IEC_INT_C(0x20)	
+#define PLCHANDLERIECERROR_LISTNOWRITEACCESS    RTS_IEC_INT_C(0x21)	
+#define PLCHANDLERIECERROR_CONSISTENTACCESSTIMEOUT    RTS_IEC_INT_C(0x22)	
+#define PLCHANDLERIECERROR_SYNCCONSISTENTACCESSDENIED    RTS_IEC_INT_C(0x23)	
+#define PLCHANDLERIECERROR_INVALIDASCIISTRING    RTS_IEC_INT_C(0x24)	
+#define PLCHANDLERIECERROR_INVALIDSTRINGLENGTH    RTS_IEC_INT_C(0x25)	
+#define PLCHANDLERIECERROR_OUTOFMEMORY    RTS_IEC_INT_C(0x26)	
+#define PLCHANDLERIECERROR_NOFILE    RTS_IEC_INT_C(0x27)	
+#define PLCHANDLERIECERROR_APPLICATIONNOTINSTOP    RTS_IEC_INT_C(0x28)	
+#define PLCHANDLERIECERROR_APPLICATIONNOTINRUN    RTS_IEC_INT_C(0x29)	
+#define PLCHANDLERIECERROR_OPERATIONMODENOTINDEBUG    RTS_IEC_INT_C(0x2A)	
+#define PLCHANDLERIECERROR_BACKUPRESTORENOTSUPPORTED    RTS_IEC_INT_C(0x2B)	
+#define PLCHANDLERIECERROR_PLCINCONSISTENTSTATE    RTS_IEC_INT_C(0x2C)	
+#define PLCHANDLERIECERROR_PLCINCOMPATIBLE    RTS_IEC_INT_C(0x2D)	
+#define PLCHANDLERIECERROR_PLCVERSIONINCOMPATIBLE    RTS_IEC_INT_C(0x2E)	
+#define PLCHANDLERIECERROR_RETAINERROR    RTS_IEC_INT_C(0x2F)	
+#define PLCHANDLERIECERROR_APPLICATIONLOADERROR    RTS_IEC_INT_C(0x30)	
+#define PLCHANDLERIECERROR_APPLICATIONSTARTERROR    RTS_IEC_INT_C(0x31)	
+#define PLCHANDLERIECERROR_FILETRANSFERERROR    RTS_IEC_INT_C(0x32)	
+#define PLCHANDLERIECERROR_OPERATIONDENIED    RTS_IEC_INT_C(0x33)	
+#define PLCHANDLERIECERROR_FORCESACTIVE    RTS_IEC_INT_C(0x34)	
+#define PLCHANDLERIECERROR_METAVERSIONMISMATCH    RTS_IEC_INT_C(0x35)	
+#define PLCHANDLERIECERROR_PROTOCOLMISMATCH    RTS_IEC_INT_C(0x36)	
+#define PLCHANDLERIECERROR_USERACCESSDENIED    RTS_IEC_INT_C(0x37)	
+#define PLCHANDLERIECERROR_CALLAGAIN    RTS_IEC_INT_C(0x38)	
+/* Typed enum definition */
+#define PLCHANDLERIECERROR    RTS_IEC_INT
+
+/**
+ * This enumeration represents the state of the PLCHandler. 
+ */
+#define PLCHANDLERIECSTATE_TERMINATE    RTS_IEC_INT_C(0xFFFFFFFFFFFFFFFF)	/* PLCHandler currently is terminating */
+#define PLCHANDLERIECSTATE_PLCNOTCONNECTED    RTS_IEC_INT_C(0x0)	/* PLC is not connected (init state) */
+#define PLCHANDLERIECSTATE_PLCCONNECTED    RTS_IEC_INT_C(0x1)	/* PLC is connected */
+#define PLCHANDLERIECSTATE_NOSYMBOLS    RTS_IEC_INT_C(0x2)	/* No symbols are available or symbol mismatch because of changed project */
+#define PLCHANDLERIECSTATE_SYMBOLSLOADED    RTS_IEC_INT_C(0x3)	/* PLC is connected and symbols are loaded */
+#define PLCHANDLERIECSTATE_RUNNING    RTS_IEC_INT_C(0x4)	/* PLC is connected, symbols are loaded and all of them are verified. 
+ Now you can work correctly with the PLCHandler object */
+#define PLCHANDLERIECSTATE_DISCONNECT    RTS_IEC_INT_C(0x5)	/* Connection is just getting terminated */
+#define PLCHANDLERIECSTATE_NOCONFIGURATION    RTS_IEC_INT_C(0x6)	/* Configuration of the PLCHandler is invalid */
+#define PLCHANDLERIECSTATE_NOTCONNECTEDSYMBOLSLOADED    RTS_IEC_INT_C(0x7)	/* PLC is currently not available, but the symbol information could be loaded offline. */
 /* Typed enum definition */
 #define PLCHANDLERIECSTATE    RTS_IEC_INT
 
@@ -129,7 +248,7 @@ typedef struct tagplchandlerchecksymbolvalidity_struct
 	RTS_IEC_INT PLCHandlerCheckSymbolValidity;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlerchecksymbolvalidity_struct;
 
-DEF_API(`void',`CDECL',`plchandlerchecksymbolvalidity',`(plchandlerchecksymbolvalidity_struct *p)',1,0x35B50EAA,0x03050900)
+DEF_API(`void',`CDECL',`plchandlerchecksymbolvalidity',`(plchandlerchecksymbolvalidity_struct *p)',1,0x35B50EAA,0x03050F00)
 
 /**
  * Configures the given PLCHandler instance with the given string.
@@ -144,7 +263,7 @@ typedef struct tagplchandlerconfigurebystring_struct
 	RTS_IEC_INT PLCHandlerConfigureByString;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlerconfigurebystring_struct;
 
-DEF_API(`void',`CDECL',`plchandlerconfigurebystring',`(plchandlerconfigurebystring_struct *p)',1,0x9A5EB7EA,0x03050900)
+DEF_API(`void',`CDECL',`plchandlerconfigurebystring',`(plchandlerconfigurebystring_struct *p)',1,0x9A5EB7EA,0x03050F00)
 
 /**
  * Attempts to connect according to the configuration of this instance.
@@ -163,7 +282,28 @@ typedef struct tagplchandlerconnect_struct
 	RTS_IEC_INT PLCHandlerConnect;		/* VAR_OUTPUT, Enum: ERROR */
 } plchandlerconnect_struct;
 
-DEF_API(`void',`CDECL',`plchandlerconnect',`(plchandlerconnect_struct *p)',1,0xA16ECE49,0x03050900)
+DEF_API(`void',`CDECL',`plchandlerconnect',`(plchandlerconnect_struct *p)',1,0xA16ECE49,0x03050F00)
+
+/**
+ * Supports the new error messages for denied user access and protocol mismatch.
+ * 
+ * Attempts to connect according to the configuration of this instance.
+ * This function executes a single synchronous connection attempt. There will be no automatic reconnect attempts, neither
+ * for the initial connection nor after connection losses.
+ *
+ * .. important:: Calling this method might take some time (eg. for scanning the network etc.)
+ *    so be careful when calling from an IEC-Task. Typically this method should be called in an
+ *    asynchronous way. 
+ *
+ * :return: An errorcode representing the result of this operation
+ */
+typedef struct tagplchandlerconnect2_struct
+{
+	RTS_IEC_HANDLE hPlcHandler;			/* VAR_INPUT */	/* The instance to connect. */
+	RTS_IEC_INT PLCHandlerConnect2;		/* VAR_OUTPUT, Enum: ERROR */
+} plchandlerconnect2_struct;
+
+DEF_API(`void',`CDECL',`plchandlerconnect2',`(plchandlerconnect2_struct *p)',1,0x229609D6,0x03050F00)
 
 /**
  * Creates a new PLC Handler instance.
@@ -178,7 +318,7 @@ typedef struct tagplchandlercreateinstance_struct
 	RTS_IEC_INT result;					/* VAR_OUTPUT, Enum: ERROR */
 } plchandlercreateinstance_struct;
 
-DEF_API(`void',`CDECL',`plchandlercreateinstance',`(plchandlercreateinstance_struct *p)',1,0xF3B6D6E9,0x03050900)
+DEF_API(`void',`CDECL',`plchandlercreateinstance',`(plchandlercreateinstance_struct *p)',1,0xF3B6D6E9,0x03050F00)
 
 /**
  * Deletes an instance of the PLCHandler that was previously created by |CreateInstance|
@@ -190,7 +330,7 @@ typedef struct tagplchandlerdeleteinstance_struct
 	RTS_IEC_INT PLCHandlerDeleteInstance;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlerdeleteinstance_struct;
 
-DEF_API(`void',`CDECL',`plchandlerdeleteinstance',`(plchandlerdeleteinstance_struct *p)',1,0x62C4DDDA,0x03050900)
+DEF_API(`void',`CDECL',`plchandlerdeleteinstance',`(plchandlerdeleteinstance_struct *p)',1,0x62C4DDDA,0x03050F00)
 
 /**
  * Disconnects a previously created connection of this instance.
@@ -207,7 +347,7 @@ typedef struct tagplchandlerdisconnect_struct
 	RTS_IEC_INT PLCHandlerDisconnect;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlerdisconnect_struct;
 
-DEF_API(`void',`CDECL',`plchandlerdisconnect',`(plchandlerdisconnect_struct *p)',1,0xBEC54443,0x03050900)
+DEF_API(`void',`CDECL',`plchandlerdisconnect',`(plchandlerdisconnect_struct *p)',1,0xBEC54443,0x03050F00)
 
 /**
  * This function can be used to retrieve information of the PLC to which the PLCHandler is connected to. 
@@ -220,7 +360,7 @@ typedef struct tagplchandlergetdeviceinfo_struct
 	RTS_IEC_INT PLCHandlerGetDeviceInfo;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlergetdeviceinfo_struct;
 
-DEF_API(`void',`CDECL',`plchandlergetdeviceinfo',`(plchandlergetdeviceinfo_struct *p)',1,0x9D8B2632,0x03050900)
+DEF_API(`void',`CDECL',`plchandlergetdeviceinfo',`(plchandlergetdeviceinfo_struct *p)',1,0x9D8B2632,0x03050F00)
 
 /**
  * This function returns the state of a given PLCHandler instance.
@@ -232,7 +372,7 @@ typedef struct tagplchandlergetstate_struct
 	RTS_IEC_INT result;					/* VAR_OUTPUT, Enum: ERROR */
 } plchandlergetstate_struct;
 
-DEF_API(`void',`CDECL',`plchandlergetstate',`(plchandlergetstate_struct *p)',1,0x3882F552,0x03050900)
+DEF_API(`void',`CDECL',`plchandlergetstate',`(plchandlergetstate_struct *p)',1,0x3882F552,0x03050F00)
 
 /**
  * Configures and activates logging of PLCHandler messages into a logfile.
@@ -250,7 +390,8 @@ typedef struct tagplchandlerlogginginit_struct
 	RTS_IEC_INT PLCHandlerLoggingInit;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlerlogginginit_struct;
 
-DEF_API(`void',`CDECL',`plchandlerlogginginit',`(plchandlerlogginginit_struct *p)',1,0xFB1F6D11,0x03050900)
+DEF_API(`void',`CDECL',`plchandlerlogginginit',`(plchandlerlogginginit_struct *p)',1,0xFB1F6D11,0x03050F00)
+
 /**
  * Creates a variable list to be used lateron with |SyncReadVarListFromPlc| or |SyncWriteVarListToPlc|. The resulting variable list must be released by a followup call to 
  * |SyncDeleteVarList|.
@@ -269,7 +410,7 @@ typedef struct tagplchandlersyncdefinevarlist_struct
 	RTS_IEC_INT result;					/* VAR_OUTPUT, Enum: ERROR */
 } plchandlersyncdefinevarlist_struct;
 
-DEF_API(`void',`CDECL',`plchandlersyncdefinevarlist',`(plchandlersyncdefinevarlist_struct *p)',1,0x9C816C52,0x03050D00)
+DEF_API(`void',`CDECL',`plchandlersyncdefinevarlist',`(plchandlersyncdefinevarlist_struct *p)',1,0x9C816C52,0x03050F00)
 
 /**
  * Deletes the given variable list that was previously created by |SyncDefineVarList|
@@ -282,7 +423,7 @@ typedef struct tagplchandlersyncdeletevarlist_struct
 	RTS_IEC_INT PLCHandlerSyncDeleteVarList;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlersyncdeletevarlist_struct;
 
-DEF_API(`void',`CDECL',`plchandlersyncdeletevarlist',`(plchandlersyncdeletevarlist_struct *p)',1,0xA82CAF19,0x03050D00)
+DEF_API(`void',`CDECL',`plchandlersyncdeletevarlist',`(plchandlersyncdeletevarlist_struct *p)',1,0xA82CAF19,0x03050F00)
 
 /**
  * Reads the given variable list synchronously. The list must have been created previously by a call to |SyncReadVars|
@@ -300,7 +441,8 @@ typedef struct tagplchandlersyncreadvarlist_struct
 	RTS_IEC_UDINT numVarsResult;		/* VAR_OUTPUT */	/* The size of the array of returned variables */
 } plchandlersyncreadvarlist_struct;
 
-DEF_API(`void',`CDECL',`plchandlersyncreadvarlist',`(plchandlersyncreadvarlist_struct *p)',1,0x22BA041E,0x03050900)
+DEF_API(`void',`CDECL',`plchandlersyncreadvarlist',`(plchandlersyncreadvarlist_struct *p)',1,0x22BA041E,0x03050F00)
+
 /**
  * Reads the given variable list synchronously. The list must have been created previously by a call to |SyncDefineVarList|
  *
@@ -317,7 +459,7 @@ typedef struct tagplchandlersyncreadvarlistfromplc_struct
 	RTS_IEC_UDINT numVarsResult;		/* VAR_OUTPUT */	/* The size of the array of returned variables */
 } plchandlersyncreadvarlistfromplc_struct;
 
-DEF_API(`void',`CDECL',`plchandlersyncreadvarlistfromplc',`(plchandlersyncreadvarlistfromplc_struct *p)',1,0xD0C1A01F,0x03050D00)
+DEF_API(`void',`CDECL',`plchandlersyncreadvarlistfromplc',`(plchandlersyncreadvarlistfromplc_struct *p)',1,0xD0C1A01F,0x03050F00)
 
 /**
  * Reads the given variables synchronously. The resulting variable list must be released by a followup call to 
@@ -341,7 +483,7 @@ typedef struct tagplchandlersyncreadvars_struct
 	RTS_IEC_INT result;					/* VAR_OUTPUT, Enum: ERROR */
 } plchandlersyncreadvars_struct;
 
-DEF_API(`void',`CDECL',`plchandlersyncreadvars',`(plchandlersyncreadvars_struct *p)',1,0x7F4F3550,0x03050900)
+DEF_API(`void',`CDECL',`plchandlersyncreadvars',`(plchandlersyncreadvars_struct *p)',1,0x7F4F3550,0x03050F00)
 
 /**
  * Releases the given variable list that was previously created by |SyncReadVars|
@@ -354,7 +496,7 @@ typedef struct tagplchandlersyncreadvarsrelease_struct
 	RTS_IEC_INT PLCHandlerSyncReadVarsRelease;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlersyncreadvarsrelease_struct;
 
-DEF_API(`void',`CDECL',`plchandlersyncreadvarsrelease',`(plchandlersyncreadvarsrelease_struct *p)',1,0xD4834060,0x03050900)
+DEF_API(`void',`CDECL',`plchandlersyncreadvarsrelease',`(plchandlersyncreadvarsrelease_struct *p)',1,0xD4834060,0x03050F00)
 
 /**
  * This function can be used to transfer any runtime system service to the PLC.
@@ -373,7 +515,8 @@ typedef struct tagplchandlersyncsendservice_struct
 	RTS_IEC_INT PLCHandlerSyncSendService;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlersyncsendservice_struct;
 
-DEF_API(`void',`CDECL',`plchandlersyncsendservice',`(plchandlersyncsendservice_struct *p)',1,0x303EF9A4,0x03050900)
+DEF_API(`void',`CDECL',`plchandlersyncsendservice',`(plchandlersyncsendservice_struct *p)',1,0x303EF9A4,0x03050F00)
+
 /**
  * Writes the given variable list synchronously. The list must have been created previously by a call to |SyncDefineVarList|
  *
@@ -393,7 +536,7 @@ typedef struct tagplchandlersyncwritevarlisttoplc_struct
 	RTS_IEC_INT PLCHandlerSyncWriteVarListToPlc;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlersyncwritevarlisttoplc_struct;
 
-DEF_API(`void',`CDECL',`plchandlersyncwritevarlisttoplc',`(plchandlersyncwritevarlisttoplc_struct *p)',1,0xA486E098,0x03050D00)
+DEF_API(`void',`CDECL',`plchandlersyncwritevarlisttoplc',`(plchandlersyncwritevarlisttoplc_struct *p)',1,0xA486E098,0x03050F00)
 
 /**
  * Writes the given list of values synchronously to the given list of variables.
@@ -414,7 +557,7 @@ typedef struct tagplchandlersyncwritevars_struct
 	RTS_IEC_INT PLCHandlerSyncWriteVars;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlersyncwritevars_struct;
 
-DEF_API(`void',`CDECL',`plchandlersyncwritevars',`(plchandlersyncwritevars_struct *p)',1,0xDACACBAF,0x03050900)
+DEF_API(`void',`CDECL',`plchandlersyncwritevars',`(plchandlersyncwritevars_struct *p)',1,0xDACACBAF,0x03050F00)
 
 /**
  * Creates a new variable list that will be cyclically updated by the underlying
@@ -436,7 +579,7 @@ typedef struct tagplchandlervarlistdefine_struct
 	RTS_IEC_INT result;					/* VAR_OUTPUT, Enum: ERROR */
 } plchandlervarlistdefine_struct;
 
-DEF_API(`void',`CDECL',`plchandlervarlistdefine',`(plchandlervarlistdefine_struct *p)',1,0x81C780F4,0x03050900)
+DEF_API(`void',`CDECL',`plchandlervarlistdefine',`(plchandlervarlistdefine_struct *p)',1,0x81C780F4,0x03050F00)
 
 /**
  * Deletes a variable list previously created by |VarListDefine|
@@ -454,7 +597,7 @@ typedef struct tagplchandlervarlistdelete_struct
 	RTS_IEC_INT PLCHandlerVarListDelete;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlervarlistdelete_struct;
 
-DEF_API(`void',`CDECL',`plchandlervarlistdelete',`(plchandlervarlistdelete_struct *p)',1,0xAD8E5D4F,0x03050900)
+DEF_API(`void',`CDECL',`plchandlervarlistdelete',`(plchandlervarlistdelete_struct *p)',1,0xAD8E5D4F,0x03050F00)
 
 /**
  * Deactivates monitoring the given variable list.
@@ -467,7 +610,7 @@ typedef struct tagplchandlervarlistdisable_struct
 	RTS_IEC_INT PLCHandlerVarListDisable;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlervarlistdisable_struct;
 
-DEF_API(`void',`CDECL',`plchandlervarlistdisable',`(plchandlervarlistdisable_struct *p)',1,0xA9F0A7EB,0x03050900)
+DEF_API(`void',`CDECL',`plchandlervarlistdisable',`(plchandlervarlistdisable_struct *p)',1,0xA9F0A7EB,0x03050F00)
 
 /**
  * Activates monitoring the given variable list.
@@ -480,7 +623,7 @@ typedef struct tagplchandlervarlistenable_struct
 	RTS_IEC_INT PLCHandlerVarListEnable;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlervarlistenable_struct;
 
-DEF_API(`void',`CDECL',`plchandlervarlistenable',`(plchandlervarlistenable_struct *p)',1,0x5EDC0FD8,0x03050900)
+DEF_API(`void',`CDECL',`plchandlervarlistenable',`(plchandlervarlistenable_struct *p)',1,0x5EDC0FD8,0x03050F00)
 
 /**
  * Protects the access to the variable list so it cannot be changed by the update thread.
@@ -497,7 +640,7 @@ typedef struct tagplchandlervarlistenter_struct
 	RTS_IEC_INT PLCHandlerVarListEnter;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlervarlistenter_struct;
 
-DEF_API(`void',`CDECL',`plchandlervarlistenter',`(plchandlervarlistenter_struct *p)',1,0x7F252097,0x03050900)
+DEF_API(`void',`CDECL',`plchandlervarlistenter',`(plchandlervarlistenter_struct *p)',1,0x7F252097,0x03050F00)
 
 /**
  * Releases the access to the variable list so it can be changed again by the update thread.
@@ -514,7 +657,7 @@ typedef struct tagplchandlervarlistleave_struct
 	RTS_IEC_INT PLCHandlerVarListLeave;	/* VAR_OUTPUT, Enum: ERROR */
 } plchandlervarlistleave_struct;
 
-DEF_API(`void',`CDECL',`plchandlervarlistleave',`(plchandlervarlistleave_struct *p)',1,0x6150164D,0x03050900)
+DEF_API(`void',`CDECL',`plchandlervarlistleave',`(plchandlervarlistleave_struct *p)',1,0x6150164D,0x03050F00)
 
 /**
  * Reads the cached (last retrieved) values from the given variable list.
@@ -532,7 +675,7 @@ typedef struct tagplchandlervarlistread_struct
 	RTS_IEC_UDINT numVars;				/* VAR_OUTPUT */	/* The number of variables in ``ppVarInfos`` */
 } plchandlervarlistread_struct;
 
-DEF_API(`void',`CDECL',`plchandlervarlistread',`(plchandlervarlistread_struct *p)',1,0x5FFAB125,0x03050900)
+DEF_API(`void',`CDECL',`plchandlervarlistread',`(plchandlervarlistread_struct *p)',1,0x5FFAB125,0x03050F00)
 
 #ifdef __cplusplus
 }
@@ -540,3 +683,32 @@ DEF_API(`void',`CDECL',`plchandlervarlistread',`(plchandlervarlistread_struct *p
 
 /** EXTERN LIB SECTION END **/
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+ * <description>Function to create a new PLCHandler instance.
+ * <p>NOTE:The returned instance must be released by calling PLCHandlerDeleteInstance</p>
+ * </description>
+ * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Instance successfully created</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_NO_OBJECT">Instance could not be created</errorcode>
+ * <result>A handle to the newly created PLCHandler instance</result>
+ */
+DEF_ITF_API(`RTS_HANDLE', `CDECL', `PLCHandlerCreateInstance', `(RTS_RESULT *pResult)')
+
+/**
+ * <description>Function to delete an instance of the PLCHandler that was previously created by PLCHandlerCreateInstance.</description>
+ * <param name="hPlcHandler" type="IN">Handle to the PLCHandler instance to delete</param>
+ * <result>Error code:
+ *		ERR_OK: PLCHandler instance successfully deleted
+ *		ERR_PARAMETER: Invalid parameter
+ * </result>
+ */
+DEF_ITF_API(`RTS_RESULT', `CDECL', `PLCHandlerDeleteInstance', `(RTS_HANDLE hPlcHandler)')
+
+#ifdef __cplusplus
+}
+#endif

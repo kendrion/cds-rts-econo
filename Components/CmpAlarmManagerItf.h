@@ -1,4 +1,15 @@
- 
+ /**
+ * <interfacename>CmpAlarmManager</interfacename>
+ * <description>
+ *	Interface of the alarm manager.
+ * </description>
+ *
+ * <copyright>
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * </copyright>
+ */
+
+
 	
 	
 #ifndef _CMPALARMMANAGERITF_H_

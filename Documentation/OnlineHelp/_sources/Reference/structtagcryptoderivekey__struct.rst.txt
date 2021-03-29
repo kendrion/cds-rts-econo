@@ -1,0 +1,83 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of struct.rst template
+
+.. _structtagcryptoderivekey__struct:
+
+==========================================
+tagcryptoderivekey_struct Struct Reference
+==========================================
+
+| #include ":ref:`CmpCrypto_ImplementationItf.h <_cmp_crypto___implementation_itf_8h>`"
+
+Data Fields
+-----------
+
+- RTS_IEC_HANDLE :ref:`hAlgo <group___cmp_crypto___implementation_itf_1ga7abab9f83a523f03ce40b7a1c00a2c4d>`
+- :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * :ref:`pKey <group___cmp_crypto___implementation_itf_1gae08ee958fbb01445885ef1b0521aaec7>`
+- :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * :ref:`pSalt <group___cmp_crypto___implementation_itf_1gad1fb061000d8be94c8c1488847bb8cf3>`
+- :ref:`RtsKdfParameter <union_rts_kdf_parameter>` * :ref:`pSpecificParameters <group___cmp_crypto___implementation_itf_1ga4bc60c6bb9729ae09546fc1decab0acb>`
+- :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * :ref:`pDerivedKey <group___cmp_crypto___implementation_itf_1ga1c70b9b44d75ce52563c2354efddc8a0>`
+- RTS_IEC_RESULT :ref:`CryptoDeriveKey <group___cmp_crypto___implementation_itf_1ga3e1a0648696f3cd2ff1675b294c3017f>`
+
+Detailed Description
+--------------------
+
+This Function derives a new key FROM an existing secret (key) AND an corresponding salt. The functions generates keys of the requested size which is given in pDerivedKey->ui32MaxLen. If setup properly this function provides a secure way to store passwords within the file system. By now two classes of algorithms can be use:
+
+1. P_SHA(1, 256): This algorithm can be used to derive session keys from some kind of secret data. If this algorithm is used the pSpecificParameters is not evaluated an should be NULL. This algorithm is quite fast.
+
+2. SCRYPT: This algorithm can be used to generate strong keys from weak passwords, or to store passwords in a secure way within the file system. This algorithm makes use of the pSpecificParameters and requires this parameter. Depending on the configuration given in pSpecificParameters this algorithm is time and memory consuming. For details see RFC-7914. :return: Result of the operation.
+
+  - ERR_OK: The key was derived successfully.
+
+  - ERR_INVALID_HANDLE: hAlgo was not a valid handle to derive keys.
+
+  - ERR_PARAMETER: One of the other parameters was invalid.
+
+  - ERR_FAILED: some internal error happened.
+
+Field Documentation
+-------------------
+
+.. _group___cmp_crypto___implementation_itf_1ga7abab9f83a523f03ce40b7a1c00a2c4d:
+
+RTS_IEC_HANDLE tagcryptoderivekey_struct::hAlgo
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_crypto___implementation_itf_1gae08ee958fbb01445885ef1b0521aaec7:
+
+RtsByteString* tagcryptoderivekey_struct::pKey
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_crypto___implementation_itf_1gad1fb061000d8be94c8c1488847bb8cf3:
+
+RtsByteString* tagcryptoderivekey_struct::pSalt
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_crypto___implementation_itf_1ga4bc60c6bb9729ae09546fc1decab0acb:
+
+RtsKdfParameter* tagcryptoderivekey_struct::pSpecificParameters
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_crypto___implementation_itf_1ga1c70b9b44d75ce52563c2354efddc8a0:
+
+RtsByteString* tagcryptoderivekey_struct::pDerivedKey
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_crypto___implementation_itf_1ga3e1a0648696f3cd2ff1675b294c3017f:
+
+RTS_IEC_RESULT tagcryptoderivekey_struct::CryptoDeriveKey
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The documentation for this struct was generated from the following file:
+------------------------------------------------------------------------
+
+CmpCrypto_ImplementationItf.h
+
+.. last line of struct.rst template
+.. last line of composition.rst template
+
+

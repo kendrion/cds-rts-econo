@@ -1,0 +1,1505 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_user_objects_d_b_itf:
+
+===================
+CmpUserObjectsDBItf
+===================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpUserObjectsDB.
+
+Detailed Description
+--------------------
+
+Interface for the user rights management database.
+
+Here you have to store the tree of all objects of the runtime system with their assigned user-groups and the configured rights on it.
+
+Example:
+
+  - Object: Name = "Device"; UserGroup = "Administrator" | Rights = USERDB_RIGHT_ALL | DeniedRights = USERDB_RIGHT_NONE; UserGroup = "..." | Rights = ... | DeniedRights = ...; ...
+
+  - Object: Name = "Device.MyObject"; UserGroup = "Administrator" | Rights = USERDB_RIGHT_ALL | DeniedRights = USERDB_RIGHT_NONE; UserGroup = "..." | Rights = ... | DeniedRights = ...; ...
+
+For details see :ref:`CmpUserMgrItf.h <_cmp_user_mgr_itf_8h>` .
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved. GmbH
+
+Modules
+-------
+
+- :ref:`Properties <group___cmp_user_objects_d_b_itf___properties>`
+
+- :ref:`Static defines <group___cmp_user_objects_d_b_itf___staticdefines>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpUserObjectsDB_C <struct_i_cmp_user_objects_d_b___c>`
+
+Macros
+------
+
+- #define :ref:`USE_UserObjectsDBGetUsedRights <group___cmp_user_objects_d_b_itf_1gac8571008ef1759167973bb443b780547>`
+
+- #define :ref:`EXT_UserObjectsDBGetUsedRights <group___cmp_user_objects_d_b_itf_1gaca3174550acd22ba9dfdbe3b918b9129>`
+
+- #define :ref:`GET_UserObjectsDBGetUsedRights <group___cmp_user_objects_d_b_itf_1ga7c34ccfe77ccd3d7a6b9e05f9a46b582>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBGetUsedRights <group___cmp_user_objects_d_b_itf_1gac26a44c5d4ba62a98ab22cf96af21063>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetUsedRights((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_UserObjectsDBGetUsedRights <group___cmp_user_objects_d_b_itf_1gad6fc15b64768dae36742b866524bc6e5>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBGetUsedRights <group___cmp_user_objects_d_b_itf_1ga1b8de9d88d63af7e902e64e7d3fd8880>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBGetProperties <group___cmp_user_objects_d_b_itf_1ga02e00e8257f082f4aee86f19fa606b29>`
+
+- #define :ref:`EXT_UserObjectsDBGetProperties <group___cmp_user_objects_d_b_itf_1gab93f09fc43eab7dbb7c68d116d5f1742>`
+
+- #define :ref:`GET_UserObjectsDBGetProperties <group___cmp_user_objects_d_b_itf_1ga94e90b1a8d7c5211c21d30da279146e7>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBGetProperties <group___cmp_user_objects_d_b_itf_1ga2349ba103a85389212c941e1dfb7696d>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetProperties((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_UserObjectsDBGetProperties <group___cmp_user_objects_d_b_itf_1gab0cd98b8dbdaccedeef6cb07ce3a73f3>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBGetProperties <group___cmp_user_objects_d_b_itf_1ga5e525c259cbf5355267ac049f0a487be>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBGetID <group___cmp_user_objects_d_b_itf_1ga5e3fd24f7bdf195a9223c66931976eb8>`
+
+- #define :ref:`EXT_UserObjectsDBGetID <group___cmp_user_objects_d_b_itf_1ga6d8de6e258cd15fe0d29e717507d1a47>`
+
+- #define :ref:`GET_UserObjectsDBGetID <group___cmp_user_objects_d_b_itf_1gaf8f2811d4fadad26f6e8196a94cc3f5e>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBGetID <group___cmp_user_objects_d_b_itf_1ga17326d92d2ea6ceadbea7c86b51c1219>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetID((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_UserObjectsDBGetID <group___cmp_user_objects_d_b_itf_1ga4e1dcfd85a45ae4b9ee0d4bd45de9102>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBGetID <group___cmp_user_objects_d_b_itf_1ga50e4121920fefcc5217fa43161f347ee>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBGetFirst <group___cmp_user_objects_d_b_itf_1gaf003568ccd24c35018de5081d14cc561>`
+
+- #define :ref:`EXT_UserObjectsDBGetFirst <group___cmp_user_objects_d_b_itf_1ga00e938a51e17db952359354e162fd829>`
+
+- #define :ref:`GET_UserObjectsDBGetFirst <group___cmp_user_objects_d_b_itf_1gaa4dfc58a1559e4735145b4ad26b0a170>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBGetFirst <group___cmp_user_objects_d_b_itf_1ga83ccedbd13a371d051fb2613e3c10451>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetFirst((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1))
+
+- #define :ref:`CHK_UserObjectsDBGetFirst <group___cmp_user_objects_d_b_itf_1ga27a13243649250a9d8216cb1945cc724>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBGetFirst <group___cmp_user_objects_d_b_itf_1ga2cb3559451368aa3aab229c797341b97>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBGetNext <group___cmp_user_objects_d_b_itf_1ga0bb9da4d9e4c21a8d9963fdbdd3b2887>`
+
+- #define :ref:`EXT_UserObjectsDBGetNext <group___cmp_user_objects_d_b_itf_1gac5bc0073b526ba4a93ddfe9cd4941ed2>`
+
+- #define :ref:`GET_UserObjectsDBGetNext <group___cmp_user_objects_d_b_itf_1ga08b9fd540f01b856f65d7d20503961f3>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBGetNext <group___cmp_user_objects_d_b_itf_1gaeedb1f00d2fbf1d929b42da02fa1ce11>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetNext((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_UserObjectsDBGetNext <group___cmp_user_objects_d_b_itf_1ga02b5d442765aaf592ea65bde485746dc>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBGetNext <group___cmp_user_objects_d_b_itf_1gabd9ac3f3ff8e698f9c0edd449354a36a>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBOpen <group___cmp_user_objects_d_b_itf_1gaf1435e3cd2d2e44cb6cf66718660ff4f>`
+
+- #define :ref:`EXT_UserObjectsDBOpen <group___cmp_user_objects_d_b_itf_1gaaffe304bdbeb7ec4447f1cf088b1dcd8>`
+
+- #define :ref:`GET_UserObjectsDBOpen <group___cmp_user_objects_d_b_itf_1ga35e2011f7578090ca2705ec548373104>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBOpen <group___cmp_user_objects_d_b_itf_1ga8898b40aaaafce500456b76715fa5e0f>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBOpen((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_UserObjectsDBOpen <group___cmp_user_objects_d_b_itf_1ga814390addc1023be0ae77520717fda93>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBOpen <group___cmp_user_objects_d_b_itf_1ga10a248d8c7adf9e146411f040a973254>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBClose <group___cmp_user_objects_d_b_itf_1gaad79770e98367038d9cf542ef454653e>`
+
+- #define :ref:`EXT_UserObjectsDBClose <group___cmp_user_objects_d_b_itf_1gaac2d4d8e76323a6171602bd4f7ec23c5>`
+
+- #define :ref:`GET_UserObjectsDBClose <group___cmp_user_objects_d_b_itf_1gab3c876b1479ce35e0aa7fc745057fa59>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBClose <group___cmp_user_objects_d_b_itf_1ga1c0f00c86eb3b81a5e5703b1af47142e>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBClose((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1))
+
+- #define :ref:`CHK_UserObjectsDBClose <group___cmp_user_objects_d_b_itf_1gac7590c10887e067cd58456b7d1cdb89e>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBClose <group___cmp_user_objects_d_b_itf_1ga648d759c6ff254375180ab16b306f4ab>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBGetName <group___cmp_user_objects_d_b_itf_1gacbbb2abbb9c9f6216076a1dbe4d7c280>`
+
+- #define :ref:`EXT_UserObjectsDBGetName <group___cmp_user_objects_d_b_itf_1ga48aea2fd94cf17668ce63680799c00cd>`
+
+- #define :ref:`GET_UserObjectsDBGetName <group___cmp_user_objects_d_b_itf_1gab9182fb32f45860976d86bb505fe5ab5>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBGetName <group___cmp_user_objects_d_b_itf_1gab66ca5d31099ed0812a0b4b8e4cf7b69>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetName((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2,p3))
+
+- #define :ref:`CHK_UserObjectsDBGetName <group___cmp_user_objects_d_b_itf_1ga9657e153edb18e1c6875e9bba82df56f>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBGetName <group___cmp_user_objects_d_b_itf_1ga73283f314fe89c54a14cef9b5c635a8b>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBGetPath <group___cmp_user_objects_d_b_itf_1ga7f0fbb1ad311a5c4d4c1aeae33bca38f>`
+
+- #define :ref:`EXT_UserObjectsDBGetPath <group___cmp_user_objects_d_b_itf_1ga4249a722272af51afde6ac7bff07fe3b>`
+
+- #define :ref:`GET_UserObjectsDBGetPath <group___cmp_user_objects_d_b_itf_1ga11c23419f667a7dfda5f5fd8e4f17a68>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBGetPath <group___cmp_user_objects_d_b_itf_1ga443aa1195aa439106028c5b320f19580>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetPath((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2,p3))
+
+- #define :ref:`CHK_UserObjectsDBGetPath <group___cmp_user_objects_d_b_itf_1ga77d00307c139ca362c111845af2af80e>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBGetPath <group___cmp_user_objects_d_b_itf_1gaff6378671867cf1f420158872679ba92>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBGetFirstChild <group___cmp_user_objects_d_b_itf_1gae3b5e1792a023e5e4e13f54391cc0f21>`
+
+- #define :ref:`EXT_UserObjectsDBGetFirstChild <group___cmp_user_objects_d_b_itf_1ga656122a04f1e278c6502de7fa4d48352>`
+
+- #define :ref:`GET_UserObjectsDBGetFirstChild <group___cmp_user_objects_d_b_itf_1ga2381af64d3a5b4fad7c3ff6e61029998>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBGetFirstChild <group___cmp_user_objects_d_b_itf_1gabbd23009591fbd6d93ca05fe8184e06f>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetFirstChild((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_UserObjectsDBGetFirstChild <group___cmp_user_objects_d_b_itf_1gacd217fa5b780ee7692dacf141f99d4c6>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBGetFirstChild <group___cmp_user_objects_d_b_itf_1gafead0188675c0251ee38591522ef5703>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBGetNextChild <group___cmp_user_objects_d_b_itf_1ga22351e16f543ac2f58bc50d1fe6c4932>`
+
+- #define :ref:`EXT_UserObjectsDBGetNextChild <group___cmp_user_objects_d_b_itf_1ga592856997d7d4c02d7b7a01c6587b62f>`
+
+- #define :ref:`GET_UserObjectsDBGetNextChild <group___cmp_user_objects_d_b_itf_1ga34281f5d9817515c1b47119f94dc04d4>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBGetNextChild <group___cmp_user_objects_d_b_itf_1gae9e0b2c66c620f80e3d4b4878674ed67>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetNextChild((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2,p3))
+
+- #define :ref:`CHK_UserObjectsDBGetNextChild <group___cmp_user_objects_d_b_itf_1ga2031d8b6e8f779c5bfd13cd6c5c494b2>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBGetNextChild <group___cmp_user_objects_d_b_itf_1ga61a1f50f5e55012535f2059a6b406f0f>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBGetFather <group___cmp_user_objects_d_b_itf_1gab0be38aa2fe7c22c18cfc72bc803a444>`
+
+- #define :ref:`EXT_UserObjectsDBGetFather <group___cmp_user_objects_d_b_itf_1ga860bc3b8006c0616c4af57f7a9df388f>`
+
+- #define :ref:`GET_UserObjectsDBGetFather <group___cmp_user_objects_d_b_itf_1gabf600f8f5f1299b58aa8824a9f7a74cf>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBGetFather <group___cmp_user_objects_d_b_itf_1gad0fd8c755192a1b7e0967f353464d0a7>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetFather((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_UserObjectsDBGetFather <group___cmp_user_objects_d_b_itf_1gad3c7afdf5226ed94fe1929f921e2cd02>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBGetFather <group___cmp_user_objects_d_b_itf_1ga91033c00552bd24e2753d0f328e0e869>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBGetFirstGroup <group___cmp_user_objects_d_b_itf_1gab7297336e5f7332c2d420d9fe1c50f71>`
+
+- #define :ref:`EXT_UserObjectsDBGetFirstGroup <group___cmp_user_objects_d_b_itf_1gad6241671f373a2a8c94bcc7caee04c1a>`
+
+- #define :ref:`GET_UserObjectsDBGetFirstGroup <group___cmp_user_objects_d_b_itf_1ga7d2c5f423ff7aebb180f69432fe887c0>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBGetFirstGroup <group___cmp_user_objects_d_b_itf_1gaeecd06b85cb2be5f60f4098f1e9441ed>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetFirstGroup((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_UserObjectsDBGetFirstGroup <group___cmp_user_objects_d_b_itf_1ga3a1cee11550e40c8a073c818e8d54480>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBGetFirstGroup <group___cmp_user_objects_d_b_itf_1gaf723babc06801f58fbbe5d3de122bfb4>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBGetNextGroup <group___cmp_user_objects_d_b_itf_1ga40e485769cca6f492b9044447c34af7b>`
+
+- #define :ref:`EXT_UserObjectsDBGetNextGroup <group___cmp_user_objects_d_b_itf_1ga66f02610dedf3537d9eef2eccbe36459>`
+
+- #define :ref:`GET_UserObjectsDBGetNextGroup <group___cmp_user_objects_d_b_itf_1ga82fb7c6b938139b88b7bad83d3e06144>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBGetNextGroup <group___cmp_user_objects_d_b_itf_1ga0ee3379e77a70a1672a16fab1ec0527f>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetNextGroup((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2,p3))
+
+- #define :ref:`CHK_UserObjectsDBGetNextGroup <group___cmp_user_objects_d_b_itf_1ga4a746a02af93cffd2fece5fd771f10da>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBGetNextGroup <group___cmp_user_objects_d_b_itf_1ga8520efcfe719f14c8741b88810a011b7>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBGetGroupRights <group___cmp_user_objects_d_b_itf_1ga9ac0baa492352ee53e932dabefe34819>`
+
+- #define :ref:`EXT_UserObjectsDBGetGroupRights <group___cmp_user_objects_d_b_itf_1gaa4c4ecdf8c993552052bb6fb7c492bff>`
+
+- #define :ref:`GET_UserObjectsDBGetGroupRights <group___cmp_user_objects_d_b_itf_1ga10b79dccb3632f474417ef5758a15ae6>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBGetGroupRights <group___cmp_user_objects_d_b_itf_1ga8bf8679777128c7949b38985e888b140>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetGroupRights((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2,p3,p4))
+
+- #define :ref:`CHK_UserObjectsDBGetGroupRights <group___cmp_user_objects_d_b_itf_1gaaddc9e095385cfbc0f47a673d17558f8>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBGetGroupRights <group___cmp_user_objects_d_b_itf_1ga504b9e8ede247788b9ca82ca6317dad5>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBHasRights <group___cmp_user_objects_d_b_itf_1ga796bba89a9bdf0a3cab113df1e5b52af>`
+
+- #define :ref:`EXT_UserObjectsDBHasRights <group___cmp_user_objects_d_b_itf_1ga07a9aa9509045a5903adf732d8a3d2a3>`
+
+- #define :ref:`GET_UserObjectsDBHasRights <group___cmp_user_objects_d_b_itf_1ga3c1d4483d0e8c1390a5d334edacad4f8>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBHasRights <group___cmp_user_objects_d_b_itf_1ga88499e3faf80935e4dd3d047d6368a96>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBHasRights((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2,p3))
+
+- #define :ref:`CHK_UserObjectsDBHasRights <group___cmp_user_objects_d_b_itf_1ga08dc2c67c5d1a00cadbf6b5d4e3760a4>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBHasRights <group___cmp_user_objects_d_b_itf_1ga5956461512e3d0f38b8418160356d731>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBGetRights <group___cmp_user_objects_d_b_itf_1gabb925f1fab8878802d81e1e140fcfcbc>`
+
+- #define :ref:`EXT_UserObjectsDBGetRights <group___cmp_user_objects_d_b_itf_1ga5cd32aade78b6865c8737cd3fc23a1d0>`
+
+- #define :ref:`GET_UserObjectsDBGetRights <group___cmp_user_objects_d_b_itf_1ga4396066d66398ae9099a3e29bc3ffbc1>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBGetRights <group___cmp_user_objects_d_b_itf_1ga60cbbfcba494ac5a2fbdab11b9941f69>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetRights((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2,p3,p4))
+
+- #define :ref:`CHK_UserObjectsDBGetRights <group___cmp_user_objects_d_b_itf_1ga8964582474eafa214aafd4fe1db43a39>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBGetRights <group___cmp_user_objects_d_b_itf_1gab72c12be6a967b5ef357ff3c4df0bebf>` ERR_OK
+
+- #define :ref:`USE_UserObjectsDBActivate <group___cmp_user_objects_d_b_itf_1ga1438ddd410b50273a2407957ddf92695>`
+
+- #define :ref:`EXT_UserObjectsDBActivate <group___cmp_user_objects_d_b_itf_1ga9ba8bcbce8313fb98c2cc7ed5aff9bb5>`
+
+- #define :ref:`GET_UserObjectsDBActivate <group___cmp_user_objects_d_b_itf_1ga2083f7d5e6d0d59b0d7c87488e73433d>` ERR_OK
+
+- #define :ref:`CAL_UserObjectsDBActivate <group___cmp_user_objects_d_b_itf_1ga31e8eea7ef0291247e994b5e4f11ae53>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBActivate((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance))
+
+- #define :ref:`CHK_UserObjectsDBActivate <group___cmp_user_objects_d_b_itf_1ga1d74a2a38134901dc87adfab7e026b34>` TRUE
+
+- #define :ref:`EXP_UserObjectsDBActivate <group___cmp_user_objects_d_b_itf_1ga128b6d3dece9d1fe56e7aa7ba96839f0>` ERR_OK
+
+- #define :ref:`ITF_CmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga0fe92023598bfe04144f8976609845fb>`
+
+- #define :ref:`EXTITF_CmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed53caef14d27962a10df7fe92b4a01>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFUSEROBJECTSDBGETUSEDRIGHTS <group___cmp_user_objects_d_b_itf_1ga590a3da8a28af56ae1b18dd2bdb420fc>`)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 *pulUsedRights)
+
+- typedef RTS_RESULT(* :ref:`PFUSEROBJECTSDBGETPROPERTIES <group___cmp_user_objects_d_b_itf_1gadfffe58c1d3a899f56e8624c6338be45>`)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 *pulProperties)
+
+- typedef RTS_RESULT(* :ref:`PFUSEROBJECTSDBGETID <group___cmp_user_objects_d_b_itf_1ga7d5487027309c9bee997c371d64356e4>`)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 *pulID)
+
+- typedef RTS_HANDLE(* :ref:`PFUSEROBJECTSDBGETFIRST <group___cmp_user_objects_d_b_itf_1ga975e701394c34cd84443f70a26f51ac0>`)(RTS_HANDLE hDatabase, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFUSEROBJECTSDBGETNEXT <group___cmp_user_objects_d_b_itf_1gad861dd66467186cc6b1ed4438446b755>`)(RTS_HANDLE hDatabase, RTS_HANDLE hPrevObject, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFUSEROBJECTSDBOPEN <group___cmp_user_objects_d_b_itf_1gabc5b1ae0220e7fe31b4d26446f3617ed>`)(RTS_HANDLE hDatabase, char *pszObject, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFUSEROBJECTSDBCLOSE <group___cmp_user_objects_d_b_itf_1ga46ceb7d61b823b00db4e7514b7b9033b>`)(RTS_HANDLE hDatabase, RTS_HANDLE hObject)
+
+- typedef RTS_RESULT(* :ref:`PFUSEROBJECTSDBGETNAME <group___cmp_user_objects_d_b_itf_1gab0aaa795031f30d60deebdb41e89d935>`)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, char *pszObject, int *piMaxLen)
+
+- typedef RTS_RESULT(* :ref:`PFUSEROBJECTSDBGETPATH <group___cmp_user_objects_d_b_itf_1ga40e10edacf5ed5b1ff86f70877af973b>`)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, char *pszObject, int *piMaxLen)
+
+- typedef RTS_HANDLE(* :ref:`PFUSEROBJECTSDBGETFIRSTCHILD <group___cmp_user_objects_d_b_itf_1ga7b2894c67d606e34f7ca7f73d7bc6dc5>`)(RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFUSEROBJECTSDBGETNEXTCHILD <group___cmp_user_objects_d_b_itf_1ga47be098b5d5680cc394e6324d080a19a>`)(RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFUSEROBJECTSDBGETFATHER <group___cmp_user_objects_d_b_itf_1ga36adf622bd57bf22767b81f9ff2cba12>`)(RTS_HANDLE hDatabase, RTS_HANDLE hChildObject, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFUSEROBJECTSDBGETFIRSTGROUP <group___cmp_user_objects_d_b_itf_1ga6a7dfdbcf2f73938c481bba10c6f25fa>`)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFUSEROBJECTSDBGETNEXTGROUP <group___cmp_user_objects_d_b_itf_1ga7b6d86d3771fd495c78c2fb6a6f1d5e2>`)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFUSEROBJECTSDBGETGROUPRIGHTS <group___cmp_user_objects_d_b_itf_1ga9201d7b15ad8142296d0973e565230fe>`)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights)
+
+- typedef RTS_RESULT(* :ref:`PFUSEROBJECTSDBHASRIGHTS <group___cmp_user_objects_d_b_itf_1ga9c318a9b4a1f996157157464cab45ec7>`)(RTS_HANDLE hDatabase, char *pszObject, RTS_HANDLE hUser, RTS_UI32 ulRequestedRights)
+
+- typedef RTS_RESULT(* :ref:`PFUSEROBJECTSDBGETRIGHTS <group___cmp_user_objects_d_b_itf_1ga65bfc4bf72ddde713a4a84e6b0458bb5>`)(RTS_HANDLE hDatabase, char *pszObject, RTS_HANDLE hUser, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights)
+
+- typedef RTS_RESULT(* :ref:`PFUSEROBJECTSDBACTIVATE <group___cmp_user_objects_d_b_itf_1gaa7221932a865ce959ee30ae4d3c1835b>`)(RTS_HANDLE hDatabase)
+
+- typedef :ref:`ICmpUserObjectsDB_C <struct_i_cmp_user_objects_d_b___c>` :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>`
+
+Functions
+---------
+
+- STATICITF_DEF RTS_RESULT :ref:`UserObjectsDBGetUsedRights <group___cmp_user_objects_d_b_itf_1ga6c4abe88013075349a75ea97748db2e9>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 * pulUsedRights)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserObjectsDBGetProperties <group___cmp_user_objects_d_b_itf_1ga2b3e220f9cb4751a5909ec483be17dbe>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 * pulProperties)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserObjectsDBGetID <group___cmp_user_objects_d_b_itf_1gafbcfe13e68eca90ede4da167a68c058b>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 * pulID)
+
+- STATICITF_DEF RTS_HANDLE :ref:`UserObjectsDBGetFirst <group___cmp_user_objects_d_b_itf_1ga7e027769a0f96b54eef8e88ea450dbcb>` (RTS_HANDLE hDatabase, RTS_RESULT * pResult)
+
+- STATICITF_DEF RTS_HANDLE :ref:`UserObjectsDBGetNext <group___cmp_user_objects_d_b_itf_1gaee13eb6d6456073b13d20ba7a7cf41d8>` (RTS_HANDLE hDatabase, RTS_HANDLE hPrevObject, RTS_RESULT * pResult)
+
+- STATICITF_DEF RTS_HANDLE :ref:`UserObjectsDBOpen <group___cmp_user_objects_d_b_itf_1gaf06de0f67f72236949ea74d87fc75b5c>` (RTS_HANDLE hDatabase, char * pszObject, RTS_RESULT * pResult)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserObjectsDBClose <group___cmp_user_objects_d_b_itf_1ga8b7889bedbaa2df2baa411091bae5978>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserObjectsDBGetName <group___cmp_user_objects_d_b_itf_1ga24ce94a9395fdf72c67d26b5cf786f38>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char * pszObject, int * piMaxLen)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserObjectsDBGetPath <group___cmp_user_objects_d_b_itf_1ga08afb5745800909f6f4cc7dc197a493c>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char * pszObject, int * piMaxLen)
+
+- STATICITF_DEF RTS_HANDLE :ref:`UserObjectsDBGetFirstChild <group___cmp_user_objects_d_b_itf_1gad032a88090da3f549606829b597b3019>` (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_RESULT * pResult)
+
+- STATICITF_DEF RTS_HANDLE :ref:`UserObjectsDBGetNextChild <group___cmp_user_objects_d_b_itf_1ga583e140c91648f02ebdf07b2561129df>` (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT * pResult)
+
+- STATICITF_DEF RTS_HANDLE :ref:`UserObjectsDBGetFather <group___cmp_user_objects_d_b_itf_1ga9dbba4bc21464ceb67ee80e795f392bc>` (RTS_HANDLE hDatabase, RTS_HANDLE hChildObject, RTS_RESULT * pResult)
+
+- STATICITF_DEF RTS_HANDLE :ref:`UserObjectsDBGetFirstGroup <group___cmp_user_objects_d_b_itf_1gac19b5f4454ea59447df6ed6dc81b1f8f>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_RESULT * pResult)
+
+- STATICITF_DEF RTS_HANDLE :ref:`UserObjectsDBGetNextGroup <group___cmp_user_objects_d_b_itf_1ga7c69c09552e7cc2d604bf8a217d22b91>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT * pResult)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserObjectsDBGetGroupRights <group___cmp_user_objects_d_b_itf_1gaffdfe001e2868c1049a26526a3fea2d2>` (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 * pulRights, RTS_UI32 * pulDeniedRights)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserObjectsDBHasRights <group___cmp_user_objects_d_b_itf_1gaefefa9a91e01f7dc83d9b249eb7fa231>` (RTS_HANDLE hDatabase, char * pszObject, RTS_HANDLE hUser, RTS_UI32 ulRequestedRights)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserObjectsDBGetRights <group___cmp_user_objects_d_b_itf_1ga605cf1cdb8c5387895398ab760f32b56>` (RTS_HANDLE hDatabase, char * pszObject, RTS_HANDLE hUser, RTS_UI32 * pulRights, RTS_UI32 * pulDeniedRights)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserObjectsDBActivate <group___cmp_user_objects_d_b_itf_1ga68c681774d761264f4b04686994a3421>` (RTS_HANDLE hDatabase)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_user_objects_d_b_itf_1gac8571008ef1759167973bb443b780547:
+
+#define USE_UserObjectsDBGetUsedRights
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gaca3174550acd22ba9dfdbe3b918b9129:
+
+#define EXT_UserObjectsDBGetUsedRights
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga7c34ccfe77ccd3d7a6b9e05f9a46b582:
+
+#define GET_UserObjectsDBGetUsedRights ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gac26a44c5d4ba62a98ab22cf96af21063:
+
+#define CAL_UserObjectsDBGetUsedRights (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetUsedRights((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gad6fc15b64768dae36742b866524bc6e5:
+
+#define CHK_UserObjectsDBGetUsedRights TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga1b8de9d88d63af7e902e64e7d3fd8880:
+
+#define EXP_UserObjectsDBGetUsedRights ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga02e00e8257f082f4aee86f19fa606b29:
+
+#define USE_UserObjectsDBGetProperties
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gab93f09fc43eab7dbb7c68d116d5f1742:
+
+#define EXT_UserObjectsDBGetProperties
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga94e90b1a8d7c5211c21d30da279146e7:
+
+#define GET_UserObjectsDBGetProperties ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga2349ba103a85389212c941e1dfb7696d:
+
+#define CAL_UserObjectsDBGetProperties (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetProperties((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gab0cd98b8dbdaccedeef6cb07ce3a73f3:
+
+#define CHK_UserObjectsDBGetProperties TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga5e525c259cbf5355267ac049f0a487be:
+
+#define EXP_UserObjectsDBGetProperties ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga5e3fd24f7bdf195a9223c66931976eb8:
+
+#define USE_UserObjectsDBGetID
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga6d8de6e258cd15fe0d29e717507d1a47:
+
+#define EXT_UserObjectsDBGetID
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gaf8f2811d4fadad26f6e8196a94cc3f5e:
+
+#define GET_UserObjectsDBGetID ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga17326d92d2ea6ceadbea7c86b51c1219:
+
+#define CAL_UserObjectsDBGetID (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetID((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga4e1dcfd85a45ae4b9ee0d4bd45de9102:
+
+#define CHK_UserObjectsDBGetID TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga50e4121920fefcc5217fa43161f347ee:
+
+#define EXP_UserObjectsDBGetID ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gaf003568ccd24c35018de5081d14cc561:
+
+#define USE_UserObjectsDBGetFirst
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga00e938a51e17db952359354e162fd829:
+
+#define EXT_UserObjectsDBGetFirst
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gaa4dfc58a1559e4735145b4ad26b0a170:
+
+#define GET_UserObjectsDBGetFirst ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga83ccedbd13a371d051fb2613e3c10451:
+
+#define CAL_UserObjectsDBGetFirst (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetFirst((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga27a13243649250a9d8216cb1945cc724:
+
+#define CHK_UserObjectsDBGetFirst TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga2cb3559451368aa3aab229c797341b97:
+
+#define EXP_UserObjectsDBGetFirst ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga0bb9da4d9e4c21a8d9963fdbdd3b2887:
+
+#define USE_UserObjectsDBGetNext
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gac5bc0073b526ba4a93ddfe9cd4941ed2:
+
+#define EXT_UserObjectsDBGetNext
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga08b9fd540f01b856f65d7d20503961f3:
+
+#define GET_UserObjectsDBGetNext ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gaeedb1f00d2fbf1d929b42da02fa1ce11:
+
+#define CAL_UserObjectsDBGetNext (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetNext((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga02b5d442765aaf592ea65bde485746dc:
+
+#define CHK_UserObjectsDBGetNext TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gabd9ac3f3ff8e698f9c0edd449354a36a:
+
+#define EXP_UserObjectsDBGetNext ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gaf1435e3cd2d2e44cb6cf66718660ff4f:
+
+#define USE_UserObjectsDBOpen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gaaffe304bdbeb7ec4447f1cf088b1dcd8:
+
+#define EXT_UserObjectsDBOpen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga35e2011f7578090ca2705ec548373104:
+
+#define GET_UserObjectsDBOpen ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga8898b40aaaafce500456b76715fa5e0f:
+
+#define CAL_UserObjectsDBOpen (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBOpen((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga814390addc1023be0ae77520717fda93:
+
+#define CHK_UserObjectsDBOpen TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga10a248d8c7adf9e146411f040a973254:
+
+#define EXP_UserObjectsDBOpen ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gaad79770e98367038d9cf542ef454653e:
+
+#define USE_UserObjectsDBClose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gaac2d4d8e76323a6171602bd4f7ec23c5:
+
+#define EXT_UserObjectsDBClose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gab3c876b1479ce35e0aa7fc745057fa59:
+
+#define GET_UserObjectsDBClose ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga1c0f00c86eb3b81a5e5703b1af47142e:
+
+#define CAL_UserObjectsDBClose (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBClose((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gac7590c10887e067cd58456b7d1cdb89e:
+
+#define CHK_UserObjectsDBClose TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga648d759c6ff254375180ab16b306f4ab:
+
+#define EXP_UserObjectsDBClose ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gacbbb2abbb9c9f6216076a1dbe4d7c280:
+
+#define USE_UserObjectsDBGetName
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga48aea2fd94cf17668ce63680799c00cd:
+
+#define EXT_UserObjectsDBGetName
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gab9182fb32f45860976d86bb505fe5ab5:
+
+#define GET_UserObjectsDBGetName ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gab66ca5d31099ed0812a0b4b8e4cf7b69:
+
+#define CAL_UserObjectsDBGetName (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetName((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2,p3))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga9657e153edb18e1c6875e9bba82df56f:
+
+#define CHK_UserObjectsDBGetName TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga73283f314fe89c54a14cef9b5c635a8b:
+
+#define EXP_UserObjectsDBGetName ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga7f0fbb1ad311a5c4d4c1aeae33bca38f:
+
+#define USE_UserObjectsDBGetPath
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga4249a722272af51afde6ac7bff07fe3b:
+
+#define EXT_UserObjectsDBGetPath
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga11c23419f667a7dfda5f5fd8e4f17a68:
+
+#define GET_UserObjectsDBGetPath ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga443aa1195aa439106028c5b320f19580:
+
+#define CAL_UserObjectsDBGetPath (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetPath((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2,p3))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga77d00307c139ca362c111845af2af80e:
+
+#define CHK_UserObjectsDBGetPath TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gaff6378671867cf1f420158872679ba92:
+
+#define EXP_UserObjectsDBGetPath ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gae3b5e1792a023e5e4e13f54391cc0f21:
+
+#define USE_UserObjectsDBGetFirstChild
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga656122a04f1e278c6502de7fa4d48352:
+
+#define EXT_UserObjectsDBGetFirstChild
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga2381af64d3a5b4fad7c3ff6e61029998:
+
+#define GET_UserObjectsDBGetFirstChild ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gabbd23009591fbd6d93ca05fe8184e06f:
+
+#define CAL_UserObjectsDBGetFirstChild (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetFirstChild((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gacd217fa5b780ee7692dacf141f99d4c6:
+
+#define CHK_UserObjectsDBGetFirstChild TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gafead0188675c0251ee38591522ef5703:
+
+#define EXP_UserObjectsDBGetFirstChild ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga22351e16f543ac2f58bc50d1fe6c4932:
+
+#define USE_UserObjectsDBGetNextChild
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga592856997d7d4c02d7b7a01c6587b62f:
+
+#define EXT_UserObjectsDBGetNextChild
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga34281f5d9817515c1b47119f94dc04d4:
+
+#define GET_UserObjectsDBGetNextChild ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gae9e0b2c66c620f80e3d4b4878674ed67:
+
+#define CAL_UserObjectsDBGetNextChild (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetNextChild((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2,p3))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga2031d8b6e8f779c5bfd13cd6c5c494b2:
+
+#define CHK_UserObjectsDBGetNextChild TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga61a1f50f5e55012535f2059a6b406f0f:
+
+#define EXP_UserObjectsDBGetNextChild ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gab0be38aa2fe7c22c18cfc72bc803a444:
+
+#define USE_UserObjectsDBGetFather
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga860bc3b8006c0616c4af57f7a9df388f:
+
+#define EXT_UserObjectsDBGetFather
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gabf600f8f5f1299b58aa8824a9f7a74cf:
+
+#define GET_UserObjectsDBGetFather ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gad0fd8c755192a1b7e0967f353464d0a7:
+
+#define CAL_UserObjectsDBGetFather (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetFather((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gad3c7afdf5226ed94fe1929f921e2cd02:
+
+#define CHK_UserObjectsDBGetFather TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga91033c00552bd24e2753d0f328e0e869:
+
+#define EXP_UserObjectsDBGetFather ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gab7297336e5f7332c2d420d9fe1c50f71:
+
+#define USE_UserObjectsDBGetFirstGroup
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gad6241671f373a2a8c94bcc7caee04c1a:
+
+#define EXT_UserObjectsDBGetFirstGroup
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga7d2c5f423ff7aebb180f69432fe887c0:
+
+#define GET_UserObjectsDBGetFirstGroup ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gaeecd06b85cb2be5f60f4098f1e9441ed:
+
+#define CAL_UserObjectsDBGetFirstGroup (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetFirstGroup((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga3a1cee11550e40c8a073c818e8d54480:
+
+#define CHK_UserObjectsDBGetFirstGroup TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gaf723babc06801f58fbbe5d3de122bfb4:
+
+#define EXP_UserObjectsDBGetFirstGroup ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga40e485769cca6f492b9044447c34af7b:
+
+#define USE_UserObjectsDBGetNextGroup
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga66f02610dedf3537d9eef2eccbe36459:
+
+#define EXT_UserObjectsDBGetNextGroup
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga82fb7c6b938139b88b7bad83d3e06144:
+
+#define GET_UserObjectsDBGetNextGroup ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga0ee3379e77a70a1672a16fab1ec0527f:
+
+#define CAL_UserObjectsDBGetNextGroup (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetNextGroup((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2,p3))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga4a746a02af93cffd2fece5fd771f10da:
+
+#define CHK_UserObjectsDBGetNextGroup TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga8520efcfe719f14c8741b88810a011b7:
+
+#define EXP_UserObjectsDBGetNextGroup ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga9ac0baa492352ee53e932dabefe34819:
+
+#define USE_UserObjectsDBGetGroupRights
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gaa4c4ecdf8c993552052bb6fb7c492bff:
+
+#define EXT_UserObjectsDBGetGroupRights
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga10b79dccb3632f474417ef5758a15ae6:
+
+#define GET_UserObjectsDBGetGroupRights ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga8bf8679777128c7949b38985e888b140:
+
+#define CAL_UserObjectsDBGetGroupRights (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetGroupRights((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2,p3,p4))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gaaddc9e095385cfbc0f47a673d17558f8:
+
+#define CHK_UserObjectsDBGetGroupRights TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga504b9e8ede247788b9ca82ca6317dad5:
+
+#define EXP_UserObjectsDBGetGroupRights ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga796bba89a9bdf0a3cab113df1e5b52af:
+
+#define USE_UserObjectsDBHasRights
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga07a9aa9509045a5903adf732d8a3d2a3:
+
+#define EXT_UserObjectsDBHasRights
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga3c1d4483d0e8c1390a5d334edacad4f8:
+
+#define GET_UserObjectsDBHasRights ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga88499e3faf80935e4dd3d047d6368a96:
+
+#define CAL_UserObjectsDBHasRights (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBHasRights((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2,p3))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga08dc2c67c5d1a00cadbf6b5d4e3760a4:
+
+#define CHK_UserObjectsDBHasRights TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga5956461512e3d0f38b8418160356d731:
+
+#define EXP_UserObjectsDBHasRights ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gabb925f1fab8878802d81e1e140fcfcbc:
+
+#define USE_UserObjectsDBGetRights
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga5cd32aade78b6865c8737cd3fc23a1d0:
+
+#define EXT_UserObjectsDBGetRights
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga4396066d66398ae9099a3e29bc3ffbc1:
+
+#define GET_UserObjectsDBGetRights ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga60cbbfcba494ac5a2fbdab11b9941f69:
+
+#define CAL_UserObjectsDBGetRights (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBGetRights((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance,p1,p2,p3,p4))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga8964582474eafa214aafd4fe1db43a39:
+
+#define CHK_UserObjectsDBGetRights TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gab72c12be6a967b5ef357ff3c4df0bebf:
+
+#define EXP_UserObjectsDBGetRights ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga1438ddd410b50273a2407957ddf92695:
+
+#define USE_UserObjectsDBActivate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga9ba8bcbce8313fb98c2cc7ed5aff9bb5:
+
+#define EXT_UserObjectsDBActivate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga2083f7d5e6d0d59b0d7c87488e73433d:
+
+#define GET_UserObjectsDBActivate ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga31e8eea7ef0291247e994b5e4f11ae53:
+
+#define CAL_UserObjectsDBActivate (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->IUserObjectsDBActivate((( :ref:`ICmpUserObjectsDB <group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210>` *)p0)->pBase->hInstance))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga1d74a2a38134901dc87adfab7e026b34:
+
+#define CHK_UserObjectsDBActivate TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga128b6d3dece9d1fe56e7aa7ba96839f0:
+
+#define EXP_UserObjectsDBActivate ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga0fe92023598bfe04144f8976609845fb:
+
+#define ITF_CmpUserObjectsDB
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga2ed53caef14d27962a10df7fe92b4a01:
+
+#define EXTITF_CmpUserObjectsDB
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_user_objects_d_b_itf_1ga590a3da8a28af56ae1b18dd2bdb420fc:
+
+typedef RTS_RESULT( *  PFUSEROBJECTSDBGETUSEDRIGHTS) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 *pulUsedRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gadfffe58c1d3a899f56e8624c6338be45:
+
+typedef RTS_RESULT( *  PFUSEROBJECTSDBGETPROPERTIES) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 *pulProperties)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga7d5487027309c9bee997c371d64356e4:
+
+typedef RTS_RESULT( *  PFUSEROBJECTSDBGETID) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 *pulID)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga975e701394c34cd84443f70a26f51ac0:
+
+typedef RTS_HANDLE( *  PFUSEROBJECTSDBGETFIRST) (RTS_HANDLE hDatabase, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gad861dd66467186cc6b1ed4438446b755:
+
+typedef RTS_HANDLE( *  PFUSEROBJECTSDBGETNEXT) (RTS_HANDLE hDatabase, RTS_HANDLE hPrevObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gabc5b1ae0220e7fe31b4d26446f3617ed:
+
+typedef RTS_HANDLE( *  PFUSEROBJECTSDBOPEN) (RTS_HANDLE hDatabase, char *pszObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga46ceb7d61b823b00db4e7514b7b9033b:
+
+typedef RTS_RESULT( *  PFUSEROBJECTSDBCLOSE) (RTS_HANDLE hDatabase, RTS_HANDLE hObject)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gab0aaa795031f30d60deebdb41e89d935:
+
+typedef RTS_RESULT( *  PFUSEROBJECTSDBGETNAME) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char *pszObject, int *piMaxLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga40e10edacf5ed5b1ff86f70877af973b:
+
+typedef RTS_RESULT( *  PFUSEROBJECTSDBGETPATH) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char *pszObject, int *piMaxLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga7b2894c67d606e34f7ca7f73d7bc6dc5:
+
+typedef RTS_HANDLE( *  PFUSEROBJECTSDBGETFIRSTCHILD) (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga47be098b5d5680cc394e6324d080a19a:
+
+typedef RTS_HANDLE( *  PFUSEROBJECTSDBGETNEXTCHILD) (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga36adf622bd57bf22767b81f9ff2cba12:
+
+typedef RTS_HANDLE( *  PFUSEROBJECTSDBGETFATHER) (RTS_HANDLE hDatabase, RTS_HANDLE hChildObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga6a7dfdbcf2f73938c481bba10c6f25fa:
+
+typedef RTS_HANDLE( *  PFUSEROBJECTSDBGETFIRSTGROUP) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga7b6d86d3771fd495c78c2fb6a6f1d5e2:
+
+typedef RTS_HANDLE( *  PFUSEROBJECTSDBGETNEXTGROUP) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga9201d7b15ad8142296d0973e565230fe:
+
+typedef RTS_RESULT( *  PFUSEROBJECTSDBGETGROUPRIGHTS) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga9c318a9b4a1f996157157464cab45ec7:
+
+typedef RTS_RESULT( *  PFUSEROBJECTSDBHASRIGHTS) (RTS_HANDLE hDatabase, char *pszObject, RTS_HANDLE hUser, RTS_UI32 ulRequestedRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga65bfc4bf72ddde713a4a84e6b0458bb5:
+
+typedef RTS_RESULT( *  PFUSEROBJECTSDBGETRIGHTS) (RTS_HANDLE hDatabase, char *pszObject, RTS_HANDLE hUser, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1gaa7221932a865ce959ee30ae4d3c1835b:
+
+typedef RTS_RESULT( *  PFUSEROBJECTSDBACTIVATE) (RTS_HANDLE hDatabase)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_objects_d_b_itf_1ga2ed119c4d12e10aebae26ac411aaa210:
+
+typedef ICmpUserObjectsDB_C ICmpUserObjectsDB
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_user_objects_d_b_itf_1ga6c4abe88013075349a75ea97748db2e9:
+
+STATICITF_DEF RTS_RESULT UserObjectsDBGetUsedRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 *pulUsedRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the used access rights for the object specified by handle. NOTE: In case the used rights are not set the function returns USERDB_RIGHT_ALL.
+
+**Parameters**
+
++---------+---------------+-------------------------------+
+| [in]    | hObject       | Handle to the object          |
++---------+---------------+-------------------------------+
+| [out]   | pulUsedRights | Pointer to used access rights |
++---------+---------------+-------------------------------+
+
+**Return values**
+
++---------------+------------------------------------------+
+| ERR_OK        | Rights are successfully set              |
++---------------+------------------------------------------+
+| ERR_PARAMETER | Invalid object handle or invalid pointer |
++---------------+------------------------------------------+
+
+**Returns:**
+
+Error code
+
+.. _group___cmp_user_objects_d_b_itf_1ga2b3e220f9cb4751a5909ec483be17dbe:
+
+STATICITF_DEF RTS_RESULT UserObjectsDBGetProperties (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 *pulProperties)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the properties for the object specified by handle.
+
+**Parameters**
+
++---------+---------------+-----------------------+
+| [in]    | hObject       | Handle to the object  |
++---------+---------------+-----------------------+
+| [out]   | pulProperties | Pointer to properties |
++---------+---------------+-----------------------+
+
+**Return values**
+
++---------------+------------------------------------------+
+| ERR_OK        | Rights are successfully set              |
++---------------+------------------------------------------+
+| ERR_PARAMETER | Invalid object handle or invalid pointer |
++---------------+------------------------------------------+
+
+**Returns:**
+
+Error code
+
+.. _group___cmp_user_objects_d_b_itf_1gafbcfe13e68eca90ede4da167a68c058b:
+
+STATICITF_DEF RTS_RESULT UserObjectsDBGetID (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 *pulID)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get a unique identifier of an object
+
+**Parameters**
+
++---------+---------+-----------------------------+
+| [in]    | hObject | Handle to object            |
++---------+---------+-----------------------------+
+| [out]   | pulID   | Pointer to get the ObjectID |
++---------+---------+-----------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++---------------+-----------------------------+
+| ERR_OK        | ObjectID could be retrieved |
++---------------+-----------------------------+
+| ERR_PARAMETER | Invalid object handle       |
++---------------+-----------------------------+
+
+.. _group___cmp_user_objects_d_b_itf_1ga7e027769a0f96b54eef8e88ea450dbcb:
+
+STATICITF_DEF RTS_HANDLE UserObjectsDBGetFirst (RTS_HANDLE hDatabase, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Iteration interface to get the first object of the user rights management
+
+**Parameters**
+
++---------+---------+-----------------------+
+| [out]   | pResult | Pointer to error code |
++---------+---------+-----------------------+
+
+**Return values**
+
++---------------+------------------------------------------------------+
+| ERR_OK        | First object of the user rights management available |
++---------------+------------------------------------------------------+
+| ERR_NO_OBJECT | No object available                                  |
++---------------+------------------------------------------------------+
+
+**Returns:**
+
+Handle to the first object in the user rights management or RTS_INVALID_HANDLE if failed
+
+.. _group___cmp_user_objects_d_b_itf_1gaee13eb6d6456073b13d20ba7a7cf41d8:
+
+STATICITF_DEF RTS_HANDLE UserObjectsDBGetNext (RTS_HANDLE hDatabase, RTS_HANDLE hPrevObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Iteration interface to get next object of the user rights management. Must be started with :ref:`UserObjectsDBGetFirst() <group___cmp_user_objects_d_b_itf_1ga7e027769a0f96b54eef8e88ea450dbcb>`
+
+**Parameters**
+
++---------+-------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hPrevObject | Handle to the previous object retrieved via :ref:`UserObjectsDBGetFirst() <group___cmp_user_objects_d_b_itf_1ga7e027769a0f96b54eef8e88ea450dbcb>` or subsequent calls of :ref:`UserObjectsDBGetNext() <group___cmp_user_objects_d_b_itf_1gaee13eb6d6456073b13d20ba7a7cf41d8>` |
++---------+-------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult     | Pointer to error code                                                                                                                                                                                                                                                         |
++---------+-------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+--------------------------+
+| ERR_OK        | Next object available    |
++---------------+--------------------------+
+| ERR_PARAMETER | Invalid handles          |
++---------------+--------------------------+
+| ERR_NO_OBJECT | No next object available |
++---------------+--------------------------+
+
+**Returns:**
+
+Handle to the next object in the user rights management or RTS_INVALID_HANDLE if failed
+
+.. _group___cmp_user_objects_d_b_itf_1gaf06de0f67f72236949ea74d87fc75b5c:
+
+STATICITF_DEF RTS_HANDLE UserObjectsDBOpen (RTS_HANDLE hDatabase, char *pszObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Open object specified by its name
+
+**Parameters**
+
++---------+-----------+------------------------------------+
+| [in]    | pszObject | Full object name (see object tree) |
++---------+-----------+------------------------------------+
+| [out]   | pResult   | Pointer to error code              |
++---------+-----------+------------------------------------+
+
+**Return values**
+
++--------------------+----------------------------------------------------------------+
+| ERR_OK             | Object could be opened                                         |
++--------------------+----------------------------------------------------------------+
+| ERR_PARAMETER      | Invalid parameter. pszObject = NULL or empty                   |
++--------------------+----------------------------------------------------------------+
+| ERR_NOTINITIALIZED | The user management is not initialized or it is not loaded yet |
++--------------------+----------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the object or RTS_INVALID_HANDLE if failed
+
+.. _group___cmp_user_objects_d_b_itf_1ga8b7889bedbaa2df2baa411091bae5978:
+
+STATICITF_DEF RTS_RESULT UserObjectsDBClose (RTS_HANDLE hDatabase, RTS_HANDLE hObject)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Close an object
+
+**Parameters**
+
++---------+---------+----------------------+
+| [in]    | hObject | Handle to the object |
++---------+---------+----------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++---------------+------------------------+
+| ERR_OK        | Object could be closed |
++---------------+------------------------+
+| ERR_PARAMETER | Invalid object handle  |
++---------------+------------------------+
+
+.. _group___cmp_user_objects_d_b_itf_1ga24ce94a9395fdf72c67d26b5cf786f38:
+
+STATICITF_DEF RTS_RESULT UserObjectsDBGetName (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char *pszObject, int *piMaxLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get object name
+
+**Parameters**
+
++---------+-----------+--------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hObject   | Handle to the object                                                                                                     |
++---------+-----------+--------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pszObject | Pointer to get object name                                                                                               |
++---------+-----------+--------------------------------------------------------------------------------------------------------------------------+
+| [inout] | piMaxLen  | Pointer to length of buffer in pszObject. If pszObject = NULL, only the length of the object name is returned inpiMaxLen |
++---------+-----------+--------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++---------------+---------------------------------------------------------------+
+| ERR_OK        | Object name is returned                                       |
++---------------+---------------------------------------------------------------+
+| ERR_PARAMETER | Invalid object handle or pszObject = NULL and piMaxLen = NULL |
++---------------+---------------------------------------------------------------+
+
+.. _group___cmp_user_objects_d_b_itf_1ga08afb5745800909f6f4cc7dc197a493c:
+
+STATICITF_DEF RTS_RESULT UserObjectsDBGetPath (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char *pszObject, int *piMaxLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the complete object path name
+
+**Parameters**
+
++---------+-----------+--------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hObject   | Handle to the object                                                                                                     |
++---------+-----------+--------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pszObject | Full object path name (see object tree)                                                                                  |
++---------+-----------+--------------------------------------------------------------------------------------------------------------------------+
+| [inout] | piMaxLen  | Pointer to length of buffer in pszObject. If pszObject = NULL, only the length of the object name is returned inpiMaxLen |
++---------+-----------+--------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++---------------+---------------------------------------------------------------+
+| ERR_OK        | Object name is returned                                       |
++---------------+---------------------------------------------------------------+
+| ERR_PARAMETER | Invalid object handle or pszObject = NULL and piMaxLen = NULL |
++---------------+---------------------------------------------------------------+
+
+.. _group___cmp_user_objects_d_b_itf_1gad032a88090da3f549606829b597b3019:
+
+STATICITF_DEF RTS_HANDLE UserObjectsDBGetFirstChild (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get first child object in object tree of the specified father object
+
+**Parameters**
+
++---------+---------------+-----------------------------+
+| [in]    | hFatherObject | Handle to the father object |
++---------+---------------+-----------------------------+
+| [out]   | pResult       | Pointer to error code       |
++---------+---------------+-----------------------------+
+
+**Return values**
+
++--------------------+----------------------------------------------------------------+
+| ERR_OK             | First child object available                                   |
++--------------------+----------------------------------------------------------------+
+| ERR_PARAMETER      | Invalid parameter hFatherObject                                |
++--------------------+----------------------------------------------------------------+
+| ERR_NOTINITIALIZED | The user management is not initialized or it is not loaded yet |
++--------------------+----------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the child object or RTS_INVALID_HANDLE if failed
+
+.. _group___cmp_user_objects_d_b_itf_1ga583e140c91648f02ebdf07b2561129df:
+
+STATICITF_DEF RTS_HANDLE UserObjectsDBGetNextChild (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get next child object in object tree of the specified father object. Must be started with :ref:`UserObjectsDBGetFirstChild() <group___cmp_user_objects_d_b_itf_1gad032a88090da3f549606829b597b3019>`
+
+**Parameters**
+
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hFatherObject    | Handle to the father object                                                                                                                                                                                                                                                                  |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hPrevChildObject | Handle to the previous child object retrieved by :ref:`UserObjectsDBGetFirstChild() <group___cmp_user_objects_d_b_itf_1gad032a88090da3f549606829b597b3019>` or subsequent calls of :ref:`UserObjectsDBGetNextChild() <group___cmp_user_objects_d_b_itf_1ga583e140c91648f02ebdf07b2561129df>` |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult          | Pointer to error code                                                                                                                                                                                                                                                                        |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++--------------------+----------------------------------------------------------------+
+| ERR_OK             | Next child object available                                    |
++--------------------+----------------------------------------------------------------+
+| ERR_PARAMETER      | Invalid parameter hFatherObject or hPrevChildObject            |
++--------------------+----------------------------------------------------------------+
+| ERR_NOTINITIALIZED | The user management is not initialized or it is not loaded yet |
++--------------------+----------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the next child object or RTS_INVALID_HANDLE if failed
+
+.. _group___cmp_user_objects_d_b_itf_1ga9dbba4bc21464ceb67ee80e795f392bc:
+
+STATICITF_DEF RTS_HANDLE UserObjectsDBGetFather (RTS_HANDLE hDatabase, RTS_HANDLE hChildObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the father object in object tree of the specified child object
+
+**Parameters**
+
++---------+--------------+----------------------------+
+| [in]    | hChildObject | Handle to the child object |
++---------+--------------+----------------------------+
+| [out]   | pResult      | Pointer to error code      |
++---------+--------------+----------------------------+
+
+**Return values**
+
++--------------------+----------------------------------------------------------------+
+| ERR_OK             | Father object could be retrieved                               |
++--------------------+----------------------------------------------------------------+
+| ERR_PARAMETER      | Invalid parameter hChildObject                                 |
++--------------------+----------------------------------------------------------------+
+| ERR_NOTINITIALIZED | The user management is not initialized or it is not loaded yet |
++--------------------+----------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the father/parent object or RTS_INVALID_HANDLE if failed
+
+.. _group___cmp_user_objects_d_b_itf_1gac19b5f4454ea59447df6ed6dc81b1f8f:
+
+STATICITF_DEF RTS_HANDLE UserObjectsDBGetFirstGroup (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Iteration interface to get the first group in the user rights management of the specified object
+
+**Parameters**
+
++---------+---------+-----------------------+
+| [in]    | hObject | Handle to the object  |
++---------+---------+-----------------------+
+| [out]   | pResult | Pointer to error code |
++---------+---------+-----------------------+
+
+**Return values**
+
++---------------+-----------------------+
+| ERR_OK        | First group available |
++---------------+-----------------------+
+| ERR_NO_OBJECT | No group available    |
++---------------+-----------------------+
+
+**Returns:**
+
+Handle to the first group of the object in the user rights management or RTS_INVALID_HANDLE if failed
+
+.. _group___cmp_user_objects_d_b_itf_1ga7c69c09552e7cc2d604bf8a217d22b91:
+
+STATICITF_DEF RTS_HANDLE UserObjectsDBGetNextGroup (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Iteration interface to get next group in the user rights management of the specified object. Must be started with :ref:`UserObjectsDBGetFirstGroup() <group___cmp_user_objects_d_b_itf_1gac19b5f4454ea59447df6ed6dc81b1f8f>`
+
+**Parameters**
+
++---------+------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hObject    | Handle to the object                                                                                                                                                                                                                                                                   |
++---------+------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hPrevGroup | Handle to the previous group retrieved via :ref:`UserObjectsDBGetFirstGroup() <group___cmp_user_objects_d_b_itf_1gac19b5f4454ea59447df6ed6dc81b1f8f>` or subsequent calls of :ref:`UserObjectsDBGetNextGroup() <group___cmp_user_objects_d_b_itf_1ga7c69c09552e7cc2d604bf8a217d22b91>` |
++---------+------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult    | Pointer to error code                                                                                                                                                                                                                                                                  |
++---------+------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+-------------------------+
+| ERR_OK        | Next group available    |
++---------------+-------------------------+
+| ERR_PARAMETER | Invalid handles         |
++---------------+-------------------------+
+| ERR_NO_OBJECT | No next group available |
++---------------+-------------------------+
+
+**Returns:**
+
+Handle to the next group of the object in the user rights management or RTS_INVALID_HANDLE if failed
+
+.. _group___cmp_user_objects_d_b_itf_1gaffdfe001e2868c1049a26526a3fea2d2:
+
+STATICITF_DEF RTS_RESULT UserObjectsDBGetGroupRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the rights and the denied rights of a group on a specified object
+
+**Parameters**
+
++---------+---------+-------------------------------------------------------+
+| [in]    | hObject | Handle to object                                      |
++---------+---------+-------------------------------------------------------+
+| [in]    | hGroup  | Handle to the group which access rights are requested |
++---------+---------+-------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++---------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_OK        | Access rights could be retrieved                                                                                                                                             |
++---------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_PARAMETER | Invalid handles Pointer to get rights of the group. See category "User rights" for details Pointer to get denied rights of the group. See category "User rights" for details |
++---------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_user_objects_d_b_itf_1gaefefa9a91e01f7dc83d9b249eb7fa231:
+
+STATICITF_DEF RTS_RESULT UserObjectsDBHasRights (RTS_HANDLE hDatabase, char *pszObject, RTS_HANDLE hUser, RTS_UI32 ulRequestedRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Check access rights of a user on an object (authorization)
+
+**Parameters**
+
++---------+-----------+----------------------------------------------------+
+| [in]    | pszObject | Full object name (see object tree)                 |
++---------+-----------+----------------------------------------------------+
+| [in]    | hUser     | Handle to the user which access rights are checked |
++---------+-----------+----------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++----------------------+-----------------------------------------------------------------------------------+
+| ERR_OK               | Access permitted                                                                  |
++----------------------+-----------------------------------------------------------------------------------+
+| ERR_PARAMETER        | Access rights could not be retrieved, so no access rights!                        |
++----------------------+-----------------------------------------------------------------------------------+
+| ERR_NO_ACCESS_RIGHTS | No access rights! Requested access rights. See category "User rights" for details |
++----------------------+-----------------------------------------------------------------------------------+
+
+.. _group___cmp_user_objects_d_b_itf_1ga605cf1cdb8c5387895398ab760f32b56:
+
+STATICITF_DEF RTS_RESULT UserObjectsDBGetRights (RTS_HANDLE hDatabase, char *pszObject, RTS_HANDLE hUser, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the rights and the denied rights of a user on a specified object
+
+**Parameters**
+
++---------+-----------+------------------------------------------------------+
+| [in]    | pszObject | Full object name (see object tree)                   |
++---------+-----------+------------------------------------------------------+
+| [in]    | hUser     | Handle to the user which access rights are requested |
++---------+-----------+------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++---------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_OK        | Access rights could be retrieved                                                                                                                                           |
++---------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_PARAMETER | Invalid handles Pointer to get rights of the user. See category "User rights" for details Pointer to get denied rights of the user. See category "User rights" for details |
++---------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_user_objects_d_b_itf_1ga68c681774d761264f4b04686994a3421:
+
+STATICITF_DEF RTS_RESULT UserObjectsDBActivate (RTS_HANDLE hDatabase)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Explicitly activate the usage of user authentication: no assuming of administrator rights NOTE: The UserObjectsDB is activated implicitly when a DB file is loaded or configured via CODESYS.
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++--------------------+----------------------------------------------------------------+
+| ERR_OK             | Activation was successful                                      |
++--------------------+----------------------------------------------------------------+
+| ERR_NOTINITIALIZED | The user management is not initialized or it is not loaded yet |
++--------------------+----------------------------------------------------------------+
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

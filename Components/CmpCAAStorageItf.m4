@@ -79,6 +79,53 @@ SET_INTERFACE_NAME(`CmpCAAStorage')
 	#define CMPCAASTORAGE_VALUE_PAGE_CACHE_ALLOCATION_COUNT_DEFAULT		512
 #endif
 
+/**
+ * <category>Settings</category>
+ * <description>Setting definining a hint for the maximal memory consumption of CmpCAAStorage. A value of 0 will disable this limitation.</description>
+ * <remarks>The database system will attempt to keep the memory utilization below this limit. Nevertheless instead of raising
+ *  "Out of Memory" errors, the limit might be exceeded.
+ *  Apart from the memory affected by this value there might be some relatively small additional allocations (eg. for open databases, tables, cursors) that
+ *  are not taken into account by this setting.</remarks>
+ */
+#define CMPCAASTORAGE_KEY_MEMORY_LIMIT_HINT								"MemoryLimitHintInMB"
+#ifndef CMPCAASTORAGE_VALUE_MEMORY_LIMIT_HINT_DEFAULT
+	#define CMPCAASTORAGE_VALUE_MEMORY_LIMIT_HINT_DEFAULT				64
+#endif
+
+/**
+ * <category>Settings</category>
+ * <description>Setting defining a hard limit of the memory consumption of CmpCAAStorage in percent on top of <see>MemoryLimitHintInMB</see>. 
+ *  The value will be interpreted relatively to <see>MemoryLimitHintInMB</see>. If you specify a value of 20 then the hard limit will be 1.2 times the 
+ *  value of <see>MemoryLimitHintInMB</see>.
+ *  A value below zero will disable this hard limitation.</description>
+ * <remarks>If the database system should require more memory than allowed by this setting, "Out of Memory" errors will be raised.</remarks>
+ */
+#define CMPCAASTORAGE_KEY_MEMORY_LIMIT_HARD_PERCENT						"MemoryLimitHardPercent"
+#ifndef CMPCAASTORAGE_VALUE_MEMORY_LIMIT_HARD_PERCENT_DEFAULT
+	#define CMPCAASTORAGE_VALUE_MEMORY_LIMIT_HARD_PERCENT_DEFAULT		20
+#endif
+
+/**
+ * <category>Settings</category>
+ * <description>Setting defining the suggested maximal number of database pages that are kept in memory at a time per database conection.</description>
+ * <remarks>Changing this setting might affect the performance of the database as it might increase / decrease the number of accesses to the filesystem.</remarks>
+ */
+#define CMPCAASTORAGE_KEY_PAGE_CACHE_SIZE								"PageCacheSize"
+#ifndef CMPCAASTORAGE_VALUE_PAGE_CACHE_SIZE_DEFAULT
+	#define CMPCAASTORAGE_VALUE_PAGE_CACHE_SIZE_DEFAULT					SQLITE_DEFAULT_CACHE_SIZE
+#endif
+
+/**
+ * <category>Settings</category>
+ * <description>Setting that activates log messages printing the current memory consumption of the underyling database system of CmpCAAStorage.
+ *  A value of 0 will disable this logging.</description>
+ * <remarks>The value is interpreted as interval in seconds between logging memory statistics. The log messages are displayed with logclass debug.</remarks>
+ */
+#define CMPCAASTORAGE_KEY_MEMORY_DIAGNOSIS_INTERVAL						"MemoryDiagnosisInterval"
+#ifndef CMPCAASTORAGE_VALUE_MEMORY_DIAGNOSIS_INTERVAL_DEFAULT
+	#define CMPCAASTORAGE_VALUE_MEMORY_DIAGNOSIS_INTERVAL_DEFAULT		0
+#endif
+
 typedef struct sti_column_tag* STI_COLUMN;
 typedef struct sti_cursor_tag* STI_CURSOR;
 typedef struct sti_row_tag* STI_ROW;

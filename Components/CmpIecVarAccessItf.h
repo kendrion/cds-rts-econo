@@ -3,44 +3,45 @@
  * <description> 
  *	Interface of the IEC variable access component.
  *
- *	The expoted symbols of an application are generated in a separate child application, e.g.:
+ *	The exported symbols of an application are generated in a separate child application, e.g.:
  *		Application1			// Application, which symbols are exported
  *		Application1.__Symbols	// Application, that contains the symbols
  *
  *	Each symbolic variable is generated as a separate function block, here called leaf node.
- *	Each part of the namespace of a symbol is generated as a separate function block too, here called branch node.
- *	Each data type is generated globally as a separate typenode functionblock.
- *	Each leaf node has a reference to its typenode to describe the datatype.
+ *	Each part of the name space of a symbol is generated as a separate function block too, here called branch node.
+ *	Each data type is generated globally as a separate type node function block.
+ *	Each leaf node has a reference to its type node to describe the data type.
  *
- *	Example:
- *	Branch node
- *	     |    Branch node
- *	     |         | Leaf node
- *	     |         |  |
- *	"Application1.GVL.A"			// Variable A in the global variable list
- *	"Application1.PLC_PRG.B"		// Variable B in the main program PLC_PRG
- *	"Application1.PLC_PRG.C[5]"		// Array index 5 of the array C in the main program PLC_PRG
- *	"Application1.PLC_PRG.D.E"		// Element E of the structure D in main program PLC_PRG
+ *  <pre>
+ *		Example:
+ *		Branch node
+ *		     |    Branch node
+ *		     |         | Leaf node
+ *		     |         |  |
+ *		"Application1.GVL.A"			// Variable A in the global variable list
+ *		"Application1.PLC_PRG.B"		// Variable B in the main program PLC_PRG
+ *		"Application1.PLC_PRG.C[5]"		// Array index 5 of the array C in the main program PLC_PRG
+ *		"Application1.PLC_PRG.D.E"		// Element E of the structure D in main program PLC_PRG
  *
- *	TypeNode1=BYTE
- *	TypeNode2=INT
- *	TypeNode3=WORD
- *	TypeNode4=DWORD
- *	TypeNode5=ARRAY [0..14] OF TypeNode1
- *	TypeNode6=STRUCT{E=TypeNode3, EE=TypeNode7,EEE=TypeNode2};
- *	TypeNode7=REAL
+ *		TypeNode1=BYTE
+ *		TypeNode2=INT
+ *		TypeNode3=WORD
+ *		TypeNode4=DWORD
+ *		TypeNode5=ARRAY [0..14] OF TypeNode1
+ *		TypeNode6=STRUCT{E=TypeNode3, EE=TypeNode7,EEE=TypeNode2};
+ *		TypeNode7=REAL
  *
- *	Application1.GVL.A:			TypeNode1
- *	Application1.PLC_PRG.B:		TypeNode4
- *	Application1.PLC_PRG.C:		TypeNode5
- *	Application1.PLC_PRG.C[5]: 	TypeNode1
- *	Application1.PLC_PRG.D:		TypeNode6
- *	Application1.PLC_PRG.D.E:	TypeNode3
- *
+ *		Application1.GVL.A			----&gt; TypeNode1
+ *		Application1.PLC_PRG.B		----&gt; TypeNode4
+ *		Application1.PLC_PRG.C		----&gt; TypeNode5
+ *		Application1.PLC_PRG.C[5]	----&gt; TypeNode1
+ *		Application1.PLC_PRG.D		----&gt; TypeNode6
+ *		Application1.PLC_PRG.D.E	----&gt; TypeNode3
+ *  </pre>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -82,7 +83,7 @@
  *	Compiler switches to enable/disable single features in the component.
  * </description>
  * <element name="CMPIECVARACCESS_INVALIDATENODE_SYNC">Compiler switch to activate synchronous invalidating nodes at online change. This is only
- *	for backward compatibility to the behaviour before v3.5.5.0.</element>
+ *	for backward compatibility to the behavior before v3.5.5.0.</element>
  * <element name="CMPIECVARACCESS_NUM_OF_STATIC_VARLISTS">Number of static variable lists statically allocated</element>
  * <element name="CMPIECVARACCESS_NUM_OF_STATIC_VARS">Number of static variables statically allocated</element>
  * <element name="CMPIECVARACCESS_NUM_OF_STATIC_BROWSEINFOS">Number of static browse infos statically allocated</element>
@@ -109,12 +110,12 @@
  * <type>Int</type>
  * <description>
  *  Obsolete: Should not be used anymore!
- *  Consistency is now configured by the client using the VLF_* varlist flags during definition of the variable list!
+ *  Consistency is now configured by the client using the VLF_* variable list flags during definition of the variable list!
  *	Setting to enable/disable task consistent monitoring of all variables.
  *	1: All variables should be monitored task consistent
  *	0: No task consistency needed
  *  If enabled the communication task tries to read the variables in the background, which fit into one communication buffer. 
- *  If it is not possible to read all variables without interruption of the IEC tasks during the consistancy timeout the read 
+ *  If it is not possible to read all variables without interruption of the IEC tasks during the consistency timeout the read 
  *  request is denied. For requests/variable lists exceeding the communication buffer there is no overall consistency ensured!
  * </description>
  */
@@ -215,8 +216,6 @@ typedef struct EVTPARAM_CmpIecVarAccess_WriteVar_
 #define SRV_IECVARACC_BROWSE_GET_TYPE_DESCS	0x09
 #define SRV_IECVARACC_GET_ADDRESS_INFO		0x0A
 #define SRV_IECVARACC_REMOVE_VARS_FROM_LIST	0x0B
-#define SRV_IECVARACC_GET_SYMBOLSETS        0x0C
-#define SRV_IECVARACC_CONFIGURE_SYMBOLSET   0x0D
 
 
 /**
@@ -280,49 +279,66 @@ typedef struct EVTPARAM_CmpIecVarAccess_WriteVar_
 
 /**
  * <category>Online services</category>
- * <Description>
- *	Get all SymbolsSets available within the PLC. If the SymbolsSets can't be transmitted within one online service ERR_ENTRIES_REMAINING will be returned as a result.
- *  To get the next bunch of entries setup the TAG_SYMBOLSET within the request to the last received symbol set.
- * </Description>
- * <service name="SRV_IECVARACC_GET_SYMBOLSETS">
- *	<Request>
- *		<tag name="TAG_IECVARACC_SYMBOLSET" optional="required">
- *		    <tag name="TAG_IECVARACC_SYMBOLSET_NAME" required="optional">[String]: Name of the last symbols set.</tag>
- *		    <tag name="TAG_IECVARACC_SYMBOLSET_APPLICATION" required="optional">[String]: Application name of the last symbol set.</tag>
- *		    <tag name="TAG_IECVARACC_SYBMOLSET_GROUP" required="optional">[String]: The last group that has been uploaded. If empty start with the first group.</tag>
- *      </tag>
- *	</Request>
- *	<Response>
- *		<tag name="TAG_IECVARACC_SYMBOLSET" optional="required"> This tag descripts a symbol set. This tag may appear multiple times in this service.
- *		    <tag name="TAG_IECVARACC_SYMBOLSET_NAME" required="required">[String]: Name of the symbols set.</tag>
- *		    <tag name="TAG_IECVARACC_SYMBOLSET_APPLICATION" required="required">[String]: Name of the application where the symbol set was defined.</tag>
- *		    <tag name="TAG_IECVARACC_SYBMOLSET_GROUP" required="optional">[String]: Group(s) that have access to this symbol set. This tag may appear multiple times</tag>
- *      </tag>
- *		<tag name="TAG_IECVARACC_SYMBOLSET_RESULT" required="required">[RTS_UI16]: Result code of online operation</tag>
- *	</Response>
+ * <service group="SG_IEC_VAR_ACCESS" id="SRV_IECVARACC_GET_SYMBOLSETS" name="">
+ *	<description>
+ *		Get all SymbolsSets available within the PLC. If the SymbolsSets can't be transmitted within one online service ERR_ENTRIES_REMAINING will be returned as a result.
+ *		To get the next bunch of entries setup the TAG_SYMBOLSET within the request to the last received symbol set.
+ *	</description>
+ *	<request>
+ *		<complextag id="TAG_IECVARACC_SYMBOLSET" name="" cardinality="1..?"
+ *		 description="">
+ *			<tag id="TAG_IECVARACC_SYMBOLSET_NAME" name="" cardinality="0..?" type="String"
+ *			 description="Name of the last symbols set."/>
+ *			<tag id="TAG_IECVARACC_SYMBOLSET_APPLICATION" name="" cardinality="0..?" type="String"
+ *			 description="Application name of the last symbol set."/>
+ *			<tag id="TAG_IECVARACC_SYBMOLSET_GROUP" name="" cardinality="0..?" type="String"
+ *			 description="The last group that has been uploaded. If empty start with the first group."/>
+ *		</complextag>
+ *	</request>
+ *	<response>
+ *		<complextag id="TAG_IECVARACC_SYMBOLSET" name="" cardinality="1..?"
+ *		 description="This tag describes a symbol set. This tag may appear multiple times in this service.">
+ *			<tag id="TAG_IECVARACC_SYMBOLSET_NAME" name="" cardinality="1..?" type="String"
+ *			 description="Name of the symbols set."/>
+ *			<tag id="TAG_IECVARACC_SYMBOLSET_APPLICATION" name="" cardinality="1..?" type="String"
+ *			 description="Name of the application where the symbol set was defined."/>
+ *			<tag id="TAG_IECVARACC_SYBMOLSET_GROUP" name="" cardinality="0..?" type="String"
+ *			 description="Group(s) that have access to this symbol set. This tag may appear multiple times"/>
+ *		</complextag>
+ *		<tag id="TAG_IECVARACC_SYMBOLSET_RESULT" name="" cardinality="1..?" type="RTS_UI16"
+ *		 description="Result code of online operation"/>
+ *	</response>
  * </service>
  */
- 
- /**
+#define SRV_IECVARACC_GET_SYMBOLSETS 0x0C
+
+/**
  * <category>Online services</category>
- * <Description>
- *	Configure a symbols sets. This means the groups that have access to this symbols set will be configured. By now only one symbols set can be configured within this online service.
- *  If more symbol sets are transmitted only the first one will be handled. The others are ignored silently.
- * </Description>
- * <service name="SRV_IECVARACC_CONFIGURE_SYMBOLSET">
- *	<Request>
- *		<tag name="TAG_IECVARACC_SYMBOLSET" optional="required">
- *		    <tag name="TAG_IECVARACC_SYMBOLSET_NAME" required="optional">[String]: Name of the last symbols set.</tag>
- *		    <tag name="TAG_IECVARACC_SYMBOLSET_APPLICATION" required="optional">[String]: Application name of the last symbol set.</tag>
- *		    <tag name="TAG_IECVARACC_SYMBOLSET_EXTEND_CONFIG" required="optional">[BOOL]: Switch to select if the configuration of thie symbols set should be extended. If false the group assignment will be cleard before adding the groups.</tag>
- *		    <tag name="TAG_IECVARACC_SYBMOLSET_GROUP" required="optional">[String]: Group(s) that have access to this symbol set. This tag may appear multiple times</tag>
- *      </tag>
- *	</Request>
- *	<Response>
- *		<tag name="TAG_IECVARACC_SYMBOLSET_RESULT" required="required">[RTS_UI16]: Result code of online operation</tag>
- *	</Response>
+ * <service group="SG_IEC_VAR_ACCESS" id="SRV_IECVARACC_CONFIGURE_SYMBOLSET" name="">
+ *	<description>
+ *		Configure a symbols sets. This means the groups that have access to this symbols set will be configured. By now only one symbols set can be configured within this online service.
+ *		If more symbol sets are transmitted only the first one will be handled. The others are ignored silently.
+ *	</description>
+ *	<request>
+ *		<complextag id="TAG_IECVARACC_SYMBOLSET" name="" cardinality="1..?"
+ *		 description="">
+ *			<tag id="TAG_IECVARACC_SYMBOLSET_NAME" name="" cardinality="0..?" type="String"
+ *			 description="Name of the last symbols set."/>
+ *			<tag id="TAG_IECVARACC_SYMBOLSET_APPLICATION" name="" cardinality="0..?" type="String"
+ *			 description="Application name of the last symbol set."/>
+ *			<tag id="TAG_IECVARACC_SYMBOLSET_EXTEND_CONFIG" name="" cardinality="0..?" type="BOOL"
+ *			 description="Switch to select if the configuration of this symbol set should be extended. If false the group assignment will be cleared before adding the groups."/>
+ *			<tag id="TAG_IECVARACC_SYBMOLSET_GROUP" name="" cardinality="0..?" type="String"
+ *			 description="Group(s) that have access to this symbol set. This tag may appear multiple times"/>
+ *		</complextag>
+ *	</request>
+ *	<response>
+ *		<tag id="TAG_IECVARACC_SYMBOLSET_RESULT" name="" cardinality="1..?" type="RTS_UI16"
+ *		 description="Result code of online operation"/>
+ *	</response>
  * </service>
  */
+#define SRV_IECVARACC_CONFIGURE_SYMBOLSET 0x0D
 
 /**
  * <category>Client options</category>
@@ -337,10 +353,10 @@ typedef struct EVTPARAM_CmpIecVarAccess_WriteVar_
  * <category>Varlist flags</category>
  *	<element name="VLF_MOTOROLA_BYTE_ORDER">Motorola byte order (big endian)</element>
  *	<element name="VLF_CONSISTENT_BACKGROUND_READ">Communication task tries to read the variables in the background. If it is not possible to read all variables 
- *  without interruption of the IEC tasks during the consistancy timeout the read request is denied with an error result ERR_NO_CONSISTENCY!</element>
+ *  without interruption of the IEC tasks during the consistency timeout the read request is denied with an error result ERR_NO_CONSISTENCY!</element>
  *	<element name="VLF_DATA_CHANGE">Only variables, which values changed, are transmitted</element>
- *	<element name="VLF_EXTENDABLE">Client requests to work with varlists, which can extend the comm buffer</element>
- *	<element name="VLF_EXTENDABLE_SUPPORTED">PLC supports varlists, which can extend the comm buffer</element>
+ *	<element name="VLF_EXTENDABLE">Client requests to work with variable lists, which can extend the comm buffer</element>
+ *	<element name="VLF_EXTENDABLE_SUPPORTED">PLC supports variable lists, which can extend the comm buffer</element>
  *	<element name="VLF_ACCESS_BY_VARHANDLE">Client accesses not the complete list, but only the specified vars of the list</element>
  *	<element name="VLF_SPLIT_HUGE_VARIABLES">Client can also read variables, which are larger than the communication buffer</element>
  *	<element name="VLF_CONSISTENT_SYNCHRONIZED_READ">Communication task waits for an IEC task gap and blocks the IEC tasks until the values are copied from the IEC variables to the cache</element>
@@ -348,11 +364,11 @@ typedef struct EVTPARAM_CmpIecVarAccess_WriteVar_
  *	<element name="VLF_CONSISTENCY_SUPPORTED">PLC supports the requested consistency (VLF_CONSISTENT_BACKGROUND_READ, VLF_CONSISTENT_SYNCHRONIZED_READ or VLF_CONSISTENT_SYNCHRONIZED_WRITE)</element>
  *	<element name="VLF_EXECUTE_CONSISTENT_READ">Flag to mark the first read service of a variable list to read in all values consistent in the cache</element>
  *	<element name="VLF_EXECUTE_CONSISTENT_WRITE">Flag to mark the last write service of a variable list to write out all values consistent from the cache into the IEC variables</element>
- *	<element name="VLF_RETURN_VARINFO">Return complete VarInfo to client, to let the client retrieve the variable the next time by varinfo instead of name</element>
- *	<element name="VLF_TIMESTAMP_UTC">Timestamp in UTC (Universal Time Coordinated), at which the values are read</element>
- *	<element name="VLF_TIMESTAMP_MS">Timestamp in millisecond, at which the values are read</element>
- *	<element name="VLF_TIMESTAMP_US">Timestamp in microseconds, at which the values are read</element>
- *	<element name="VLF_TIMESTAMP_NS">Timestamp in nanoseconds, at which the values are read</element>
+ *	<element name="VLF_RETURN_VARINFO">Return complete VarInfo to client, to let the client retrieve the variable the next time by variable information instead of name</element>
+ *	<element name="VLF_TIMESTAMP_UTC">Time stamp in UTC (Universal Time Coordinated), at which the values are read</element>
+ *	<element name="VLF_TIMESTAMP_MS">Time stamp in millisecond, at which the values are read</element>
+ *	<element name="VLF_TIMESTAMP_US">Time stamp in microseconds, at which the values are read</element>
+ *	<element name="VLF_TIMESTAMP_NS">Time stamp in nanoseconds, at which the values are read</element>
  */
 #define VLF_MOTOROLA_BYTE_ORDER				0x00000001
 #define VLF_CONSISTENT_BACKGROUND_READ		0x00000002
@@ -487,8 +503,8 @@ typedef struct
  * </element>
  * <element name="TCF_GET_TYPE">Return the default type class (as returned in IecVarAccGetTypeClass().</element>
  * <element name="TCF_GET_BASE_TYPE">Get the base type of an array as TypeClass3. E.g. for an ARRAY [] OF BYTE you get TYPE3_BYTE.</element>
- * <element name="TCF_GET_POU_TYPE">Get the POUType of a userdef type (TYPE3_USERDEF). See POUTypeClass.</element>
- * <element name="TCF_GET_ENUM_TYPE">Return TYPE3_ENUM if the type is an enum. See TypeClass3 in SysInternalLibItf.h for details.</element>
+ * <element name="TCF_GET_POU_TYPE">Get the POUType of a user defined type (TYPE3_USERDEF). See POUTypeClass.</element>
+ * <element name="TCF_GET_ENUM_TYPE">Return TYPE3_ENUM if the type is an enumeration. See TypeClass3 in SysInternalLibItf.h for details.</element>
  */
 #define TCF_GET_TYPE			0
 #define TCF_GET_BASE_TYPE		1
@@ -496,7 +512,7 @@ typedef struct
 #define TCF_GET_ENUM_TYPE		4
 
 /**
- * <category>POUTypeClass. This is an extension in the hiword of TypeClass3</category>
+ * <category>POUTypeClass. This is an extension in the highword of TypeClass3</category>
  * <element name="TYPE_POU_FUNCTION">POU type function</element>
  * <element name="TYPE_POU_FUNCTION_BLOCK">POU type function block</element>
  * <element name="TYPE_POU_PROGRAM">POU type program</element>
@@ -552,1704 +568,6 @@ typedef IIecVarAccess_Itfs_C	IIecVarAccess2;
 typedef IIecVarAccess_Itfs_C	IIecVarAccess3;
 
 
-/** EXTERN LIB SECTION BEGIN **/
-/*  Comments are ignored for m4 compiler so restructured text can be used.  */
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/**
- * <description>iecvaraccbrowsedown2</description>
- */
-typedef struct tagiecvaraccbrowsedown2_struct
-{
-	RTS_IEC_HANDLE hInterface;			/* VAR_INPUT */	
-	IBaseTreeNode *hNode;				/* VAR_INPUT */	
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	IBaseTreeNode *IecVarAccBrowseDown2;	/* VAR_OUTPUT */	
-} iecvaraccbrowsedown2_struct;
-
-void CDECL CDECL_EXT iecvaraccbrowsedown2(iecvaraccbrowsedown2_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCBROWSEDOWN2_IEC) (iecvaraccbrowsedown2_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCBROWSEDOWN2_NOTIMPLEMENTED)
-	#define USE_iecvaraccbrowsedown2
-	#define EXT_iecvaraccbrowsedown2
-	#define GET_iecvaraccbrowsedown2(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccbrowsedown2(p0) 
-	#define CHK_iecvaraccbrowsedown2  FALSE
-	#define EXP_iecvaraccbrowsedown2  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccbrowsedown2
-	#define EXT_iecvaraccbrowsedown2
-	#define GET_iecvaraccbrowsedown2(fl)  CAL_CMGETAPI( "iecvaraccbrowsedown2" ) 
-	#define CAL_iecvaraccbrowsedown2  iecvaraccbrowsedown2
-	#define CHK_iecvaraccbrowsedown2  TRUE
-	#define EXP_iecvaraccbrowsedown2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowsedown2", (RTS_UINTPTR)iecvaraccbrowsedown2, 1, 0, 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccbrowsedown2
-	#define EXT_iecvaraccbrowsedown2
-	#define GET_iecvaraccbrowsedown2(fl)  CAL_CMGETAPI( "iecvaraccbrowsedown2" ) 
-	#define CAL_iecvaraccbrowsedown2  iecvaraccbrowsedown2
-	#define CHK_iecvaraccbrowsedown2  TRUE
-	#define EXP_iecvaraccbrowsedown2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowsedown2", (RTS_UINTPTR)iecvaraccbrowsedown2, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccbrowsedown2
-	#define EXT_CmpIecVarAccessiecvaraccbrowsedown2
-	#define GET_CmpIecVarAccessiecvaraccbrowsedown2  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccbrowsedown2  iecvaraccbrowsedown2
-	#define CHK_CmpIecVarAccessiecvaraccbrowsedown2  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccbrowsedown2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowsedown2", (RTS_UINTPTR)iecvaraccbrowsedown2, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccbrowsedown2
-	#define EXT_iecvaraccbrowsedown2
-	#define GET_iecvaraccbrowsedown2(fl)  CAL_CMGETAPI( "iecvaraccbrowsedown2" ) 
-	#define CAL_iecvaraccbrowsedown2  iecvaraccbrowsedown2
-	#define CHK_iecvaraccbrowsedown2  TRUE
-	#define EXP_iecvaraccbrowsedown2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowsedown2", (RTS_UINTPTR)iecvaraccbrowsedown2, 1, 0, 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccbrowsedown2  PFIECVARACCBROWSEDOWN2_IEC pfiecvaraccbrowsedown2;
-	#define EXT_iecvaraccbrowsedown2  extern PFIECVARACCBROWSEDOWN2_IEC pfiecvaraccbrowsedown2;
-	#define GET_iecvaraccbrowsedown2(fl)  s_pfCMGetAPI2( "iecvaraccbrowsedown2", (RTS_VOID_FCTPTR *)&pfiecvaraccbrowsedown2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050D00)
-	#define CAL_iecvaraccbrowsedown2  pfiecvaraccbrowsedown2
-	#define CHK_iecvaraccbrowsedown2  (pfiecvaraccbrowsedown2 != NULL)
-	#define EXP_iecvaraccbrowsedown2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowsedown2", (RTS_UINTPTR)iecvaraccbrowsedown2, 1, 0, 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccbrowsegetnext2</description>
- */
-typedef struct tagiecvaraccbrowsegetnext2_struct
-{
-	RTS_IEC_HANDLE hInterface;			/* VAR_INPUT */	
-	IBaseTreeNode *hNode;				/* VAR_INPUT */	
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	IBaseTreeNode *IecVarAccBrowseGetNext2;	/* VAR_OUTPUT */	
-} iecvaraccbrowsegetnext2_struct;
-
-void CDECL CDECL_EXT iecvaraccbrowsegetnext2(iecvaraccbrowsegetnext2_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCBROWSEGETNEXT2_IEC) (iecvaraccbrowsegetnext2_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCBROWSEGETNEXT2_NOTIMPLEMENTED)
-	#define USE_iecvaraccbrowsegetnext2
-	#define EXT_iecvaraccbrowsegetnext2
-	#define GET_iecvaraccbrowsegetnext2(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccbrowsegetnext2(p0) 
-	#define CHK_iecvaraccbrowsegetnext2  FALSE
-	#define EXP_iecvaraccbrowsegetnext2  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccbrowsegetnext2
-	#define EXT_iecvaraccbrowsegetnext2
-	#define GET_iecvaraccbrowsegetnext2(fl)  CAL_CMGETAPI( "iecvaraccbrowsegetnext2" ) 
-	#define CAL_iecvaraccbrowsegetnext2  iecvaraccbrowsegetnext2
-	#define CHK_iecvaraccbrowsegetnext2  TRUE
-	#define EXP_iecvaraccbrowsegetnext2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowsegetnext2", (RTS_UINTPTR)iecvaraccbrowsegetnext2, 1, 0, 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccbrowsegetnext2
-	#define EXT_iecvaraccbrowsegetnext2
-	#define GET_iecvaraccbrowsegetnext2(fl)  CAL_CMGETAPI( "iecvaraccbrowsegetnext2" ) 
-	#define CAL_iecvaraccbrowsegetnext2  iecvaraccbrowsegetnext2
-	#define CHK_iecvaraccbrowsegetnext2  TRUE
-	#define EXP_iecvaraccbrowsegetnext2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowsegetnext2", (RTS_UINTPTR)iecvaraccbrowsegetnext2, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccbrowsegetnext2
-	#define EXT_CmpIecVarAccessiecvaraccbrowsegetnext2
-	#define GET_CmpIecVarAccessiecvaraccbrowsegetnext2  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccbrowsegetnext2  iecvaraccbrowsegetnext2
-	#define CHK_CmpIecVarAccessiecvaraccbrowsegetnext2  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccbrowsegetnext2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowsegetnext2", (RTS_UINTPTR)iecvaraccbrowsegetnext2, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccbrowsegetnext2
-	#define EXT_iecvaraccbrowsegetnext2
-	#define GET_iecvaraccbrowsegetnext2(fl)  CAL_CMGETAPI( "iecvaraccbrowsegetnext2" ) 
-	#define CAL_iecvaraccbrowsegetnext2  iecvaraccbrowsegetnext2
-	#define CHK_iecvaraccbrowsegetnext2  TRUE
-	#define EXP_iecvaraccbrowsegetnext2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowsegetnext2", (RTS_UINTPTR)iecvaraccbrowsegetnext2, 1, 0, 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccbrowsegetnext2  PFIECVARACCBROWSEGETNEXT2_IEC pfiecvaraccbrowsegetnext2;
-	#define EXT_iecvaraccbrowsegetnext2  extern PFIECVARACCBROWSEGETNEXT2_IEC pfiecvaraccbrowsegetnext2;
-	#define GET_iecvaraccbrowsegetnext2(fl)  s_pfCMGetAPI2( "iecvaraccbrowsegetnext2", (RTS_VOID_FCTPTR *)&pfiecvaraccbrowsegetnext2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050D00)
-	#define CAL_iecvaraccbrowsegetnext2  pfiecvaraccbrowsegetnext2
-	#define CHK_iecvaraccbrowsegetnext2  (pfiecvaraccbrowsegetnext2 != NULL)
-	#define EXP_iecvaraccbrowsegetnext2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowsegetnext2", (RTS_UINTPTR)iecvaraccbrowsegetnext2, 1, 0, 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccbrowserecursive</description>
- */
-typedef struct tagiecvaraccbrowserecursive_struct
-{
-	RTS_IEC_HANDLE hInterface;			/* VAR_INPUT */	
-	IBaseTreeNode *hNode;				/* VAR_INPUT */	
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	
-	RTS_IEC_BYTE *pfBrowseCallback;		/* VAR_INPUT */	
-	RTS_IEC_BYTE *pUserParameter;		/* VAR_INPUT */	
-	RTS_IEC_RESULT IecVarAccBrowseRecursive;	/* VAR_OUTPUT */	
-} iecvaraccbrowserecursive_struct;
-
-void CDECL CDECL_EXT iecvaraccbrowserecursive(iecvaraccbrowserecursive_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCBROWSERECURSIVE_IEC) (iecvaraccbrowserecursive_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCBROWSERECURSIVE_NOTIMPLEMENTED)
-	#define USE_iecvaraccbrowserecursive
-	#define EXT_iecvaraccbrowserecursive
-	#define GET_iecvaraccbrowserecursive(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccbrowserecursive(p0) 
-	#define CHK_iecvaraccbrowserecursive  FALSE
-	#define EXP_iecvaraccbrowserecursive  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccbrowserecursive
-	#define EXT_iecvaraccbrowserecursive
-	#define GET_iecvaraccbrowserecursive(fl)  CAL_CMGETAPI( "iecvaraccbrowserecursive" ) 
-	#define CAL_iecvaraccbrowserecursive  iecvaraccbrowserecursive
-	#define CHK_iecvaraccbrowserecursive  TRUE
-	#define EXP_iecvaraccbrowserecursive  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowserecursive", (RTS_UINTPTR)iecvaraccbrowserecursive, 1, 0, 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccbrowserecursive
-	#define EXT_iecvaraccbrowserecursive
-	#define GET_iecvaraccbrowserecursive(fl)  CAL_CMGETAPI( "iecvaraccbrowserecursive" ) 
-	#define CAL_iecvaraccbrowserecursive  iecvaraccbrowserecursive
-	#define CHK_iecvaraccbrowserecursive  TRUE
-	#define EXP_iecvaraccbrowserecursive  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowserecursive", (RTS_UINTPTR)iecvaraccbrowserecursive, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccbrowserecursive
-	#define EXT_CmpIecVarAccessiecvaraccbrowserecursive
-	#define GET_CmpIecVarAccessiecvaraccbrowserecursive  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccbrowserecursive  iecvaraccbrowserecursive
-	#define CHK_CmpIecVarAccessiecvaraccbrowserecursive  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccbrowserecursive  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowserecursive", (RTS_UINTPTR)iecvaraccbrowserecursive, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccbrowserecursive
-	#define EXT_iecvaraccbrowserecursive
-	#define GET_iecvaraccbrowserecursive(fl)  CAL_CMGETAPI( "iecvaraccbrowserecursive" ) 
-	#define CAL_iecvaraccbrowserecursive  iecvaraccbrowserecursive
-	#define CHK_iecvaraccbrowserecursive  TRUE
-	#define EXP_iecvaraccbrowserecursive  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowserecursive", (RTS_UINTPTR)iecvaraccbrowserecursive, 1, 0, 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccbrowserecursive  PFIECVARACCBROWSERECURSIVE_IEC pfiecvaraccbrowserecursive;
-	#define EXT_iecvaraccbrowserecursive  extern PFIECVARACCBROWSERECURSIVE_IEC pfiecvaraccbrowserecursive;
-	#define GET_iecvaraccbrowserecursive(fl)  s_pfCMGetAPI2( "iecvaraccbrowserecursive", (RTS_VOID_FCTPTR *)&pfiecvaraccbrowserecursive, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050D00)
-	#define CAL_iecvaraccbrowserecursive  pfiecvaraccbrowserecursive
-	#define CHK_iecvaraccbrowserecursive  (pfiecvaraccbrowserecursive != NULL)
-	#define EXP_iecvaraccbrowserecursive   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowserecursive", (RTS_UINTPTR)iecvaraccbrowserecursive, 1, 0, 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccbrowseup2</description>
- */
-typedef struct tagiecvaraccbrowseup2_struct
-{
-	RTS_IEC_HANDLE hInterface;			/* VAR_INPUT */	
-	IBaseTreeNode *hNode;				/* VAR_INPUT */	
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	IBaseTreeNode *IecVarAccBrowseUp2;	/* VAR_OUTPUT */	
-} iecvaraccbrowseup2_struct;
-
-void CDECL CDECL_EXT iecvaraccbrowseup2(iecvaraccbrowseup2_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCBROWSEUP2_IEC) (iecvaraccbrowseup2_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCBROWSEUP2_NOTIMPLEMENTED)
-	#define USE_iecvaraccbrowseup2
-	#define EXT_iecvaraccbrowseup2
-	#define GET_iecvaraccbrowseup2(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccbrowseup2(p0) 
-	#define CHK_iecvaraccbrowseup2  FALSE
-	#define EXP_iecvaraccbrowseup2  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccbrowseup2
-	#define EXT_iecvaraccbrowseup2
-	#define GET_iecvaraccbrowseup2(fl)  CAL_CMGETAPI( "iecvaraccbrowseup2" ) 
-	#define CAL_iecvaraccbrowseup2  iecvaraccbrowseup2
-	#define CHK_iecvaraccbrowseup2  TRUE
-	#define EXP_iecvaraccbrowseup2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowseup2", (RTS_UINTPTR)iecvaraccbrowseup2, 1, 0, 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccbrowseup2
-	#define EXT_iecvaraccbrowseup2
-	#define GET_iecvaraccbrowseup2(fl)  CAL_CMGETAPI( "iecvaraccbrowseup2" ) 
-	#define CAL_iecvaraccbrowseup2  iecvaraccbrowseup2
-	#define CHK_iecvaraccbrowseup2  TRUE
-	#define EXP_iecvaraccbrowseup2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowseup2", (RTS_UINTPTR)iecvaraccbrowseup2, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccbrowseup2
-	#define EXT_CmpIecVarAccessiecvaraccbrowseup2
-	#define GET_CmpIecVarAccessiecvaraccbrowseup2  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccbrowseup2  iecvaraccbrowseup2
-	#define CHK_CmpIecVarAccessiecvaraccbrowseup2  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccbrowseup2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowseup2", (RTS_UINTPTR)iecvaraccbrowseup2, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccbrowseup2
-	#define EXT_iecvaraccbrowseup2
-	#define GET_iecvaraccbrowseup2(fl)  CAL_CMGETAPI( "iecvaraccbrowseup2" ) 
-	#define CAL_iecvaraccbrowseup2  iecvaraccbrowseup2
-	#define CHK_iecvaraccbrowseup2  TRUE
-	#define EXP_iecvaraccbrowseup2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowseup2", (RTS_UINTPTR)iecvaraccbrowseup2, 1, 0, 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccbrowseup2  PFIECVARACCBROWSEUP2_IEC pfiecvaraccbrowseup2;
-	#define EXT_iecvaraccbrowseup2  extern PFIECVARACCBROWSEUP2_IEC pfiecvaraccbrowseup2;
-	#define GET_iecvaraccbrowseup2(fl)  s_pfCMGetAPI2( "iecvaraccbrowseup2", (RTS_VOID_FCTPTR *)&pfiecvaraccbrowseup2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050D00)
-	#define CAL_iecvaraccbrowseup2  pfiecvaraccbrowseup2
-	#define CHK_iecvaraccbrowseup2  (pfiecvaraccbrowseup2 != NULL)
-	#define EXP_iecvaraccbrowseup2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccbrowseup2", (RTS_UINTPTR)iecvaraccbrowseup2, 1, 0, 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccexitvarinfo</description>
- */
-typedef struct tagiecvaraccexitvarinfo_struct
-{
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	
-	RTS_IEC_RESULT IecVarAccExitVarInfo;	/* VAR_OUTPUT */	
-} iecvaraccexitvarinfo_struct;
-
-void CDECL CDECL_EXT iecvaraccexitvarinfo(iecvaraccexitvarinfo_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCEXITVARINFO_IEC) (iecvaraccexitvarinfo_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCEXITVARINFO_NOTIMPLEMENTED)
-	#define USE_iecvaraccexitvarinfo
-	#define EXT_iecvaraccexitvarinfo
-	#define GET_iecvaraccexitvarinfo(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccexitvarinfo(p0) 
-	#define CHK_iecvaraccexitvarinfo  FALSE
-	#define EXP_iecvaraccexitvarinfo  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccexitvarinfo
-	#define EXT_iecvaraccexitvarinfo
-	#define GET_iecvaraccexitvarinfo(fl)  CAL_CMGETAPI( "iecvaraccexitvarinfo" ) 
-	#define CAL_iecvaraccexitvarinfo  iecvaraccexitvarinfo
-	#define CHK_iecvaraccexitvarinfo  TRUE
-	#define EXP_iecvaraccexitvarinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccexitvarinfo", (RTS_UINTPTR)iecvaraccexitvarinfo, 1, 0, 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccexitvarinfo
-	#define EXT_iecvaraccexitvarinfo
-	#define GET_iecvaraccexitvarinfo(fl)  CAL_CMGETAPI( "iecvaraccexitvarinfo" ) 
-	#define CAL_iecvaraccexitvarinfo  iecvaraccexitvarinfo
-	#define CHK_iecvaraccexitvarinfo  TRUE
-	#define EXP_iecvaraccexitvarinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccexitvarinfo", (RTS_UINTPTR)iecvaraccexitvarinfo, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccexitvarinfo
-	#define EXT_CmpIecVarAccessiecvaraccexitvarinfo
-	#define GET_CmpIecVarAccessiecvaraccexitvarinfo  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccexitvarinfo  iecvaraccexitvarinfo
-	#define CHK_CmpIecVarAccessiecvaraccexitvarinfo  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccexitvarinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccexitvarinfo", (RTS_UINTPTR)iecvaraccexitvarinfo, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccexitvarinfo
-	#define EXT_iecvaraccexitvarinfo
-	#define GET_iecvaraccexitvarinfo(fl)  CAL_CMGETAPI( "iecvaraccexitvarinfo" ) 
-	#define CAL_iecvaraccexitvarinfo  iecvaraccexitvarinfo
-	#define CHK_iecvaraccexitvarinfo  TRUE
-	#define EXP_iecvaraccexitvarinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccexitvarinfo", (RTS_UINTPTR)iecvaraccexitvarinfo, 1, 0, 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccexitvarinfo  PFIECVARACCEXITVARINFO_IEC pfiecvaraccexitvarinfo;
-	#define EXT_iecvaraccexitvarinfo  extern PFIECVARACCEXITVARINFO_IEC pfiecvaraccexitvarinfo;
-	#define GET_iecvaraccexitvarinfo(fl)  s_pfCMGetAPI2( "iecvaraccexitvarinfo", (RTS_VOID_FCTPTR *)&pfiecvaraccexitvarinfo, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050D00)
-	#define CAL_iecvaraccexitvarinfo  pfiecvaraccexitvarinfo
-	#define CHK_iecvaraccexitvarinfo  (pfiecvaraccexitvarinfo != NULL)
-	#define EXP_iecvaraccexitvarinfo   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccexitvarinfo", (RTS_UINTPTR)iecvaraccexitvarinfo, 1, 0, 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccgetfirstinterface</description>
- */
-typedef struct tagiecvaraccgetfirstinterface_struct
-{
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	IIecVarAccess3 *IecVarAccGetFirstInterface;	/* VAR_OUTPUT */	
-} iecvaraccgetfirstinterface_struct;
-
-void CDECL CDECL_EXT iecvaraccgetfirstinterface(iecvaraccgetfirstinterface_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCGETFIRSTINTERFACE_IEC) (iecvaraccgetfirstinterface_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCGETFIRSTINTERFACE_NOTIMPLEMENTED)
-	#define USE_iecvaraccgetfirstinterface
-	#define EXT_iecvaraccgetfirstinterface
-	#define GET_iecvaraccgetfirstinterface(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccgetfirstinterface(p0) 
-	#define CHK_iecvaraccgetfirstinterface  FALSE
-	#define EXP_iecvaraccgetfirstinterface  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccgetfirstinterface
-	#define EXT_iecvaraccgetfirstinterface
-	#define GET_iecvaraccgetfirstinterface(fl)  CAL_CMGETAPI( "iecvaraccgetfirstinterface" ) 
-	#define CAL_iecvaraccgetfirstinterface  iecvaraccgetfirstinterface
-	#define CHK_iecvaraccgetfirstinterface  TRUE
-	#define EXP_iecvaraccgetfirstinterface  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetfirstinterface", (RTS_UINTPTR)iecvaraccgetfirstinterface, 1, RTSITF_GET_SIGNATURE(0, 0xDAF18C6C), 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccgetfirstinterface
-	#define EXT_iecvaraccgetfirstinterface
-	#define GET_iecvaraccgetfirstinterface(fl)  CAL_CMGETAPI( "iecvaraccgetfirstinterface" ) 
-	#define CAL_iecvaraccgetfirstinterface  iecvaraccgetfirstinterface
-	#define CHK_iecvaraccgetfirstinterface  TRUE
-	#define EXP_iecvaraccgetfirstinterface  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetfirstinterface", (RTS_UINTPTR)iecvaraccgetfirstinterface, 1, RTSITF_GET_SIGNATURE(0, 0xDAF18C6C), 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccgetfirstinterface
-	#define EXT_CmpIecVarAccessiecvaraccgetfirstinterface
-	#define GET_CmpIecVarAccessiecvaraccgetfirstinterface  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccgetfirstinterface  iecvaraccgetfirstinterface
-	#define CHK_CmpIecVarAccessiecvaraccgetfirstinterface  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccgetfirstinterface  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetfirstinterface", (RTS_UINTPTR)iecvaraccgetfirstinterface, 1, RTSITF_GET_SIGNATURE(0, 0xDAF18C6C), 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccgetfirstinterface
-	#define EXT_iecvaraccgetfirstinterface
-	#define GET_iecvaraccgetfirstinterface(fl)  CAL_CMGETAPI( "iecvaraccgetfirstinterface" ) 
-	#define CAL_iecvaraccgetfirstinterface  iecvaraccgetfirstinterface
-	#define CHK_iecvaraccgetfirstinterface  TRUE
-	#define EXP_iecvaraccgetfirstinterface  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetfirstinterface", (RTS_UINTPTR)iecvaraccgetfirstinterface, 1, RTSITF_GET_SIGNATURE(0, 0xDAF18C6C), 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccgetfirstinterface  PFIECVARACCGETFIRSTINTERFACE_IEC pfiecvaraccgetfirstinterface;
-	#define EXT_iecvaraccgetfirstinterface  extern PFIECVARACCGETFIRSTINTERFACE_IEC pfiecvaraccgetfirstinterface;
-	#define GET_iecvaraccgetfirstinterface(fl)  s_pfCMGetAPI2( "iecvaraccgetfirstinterface", (RTS_VOID_FCTPTR *)&pfiecvaraccgetfirstinterface, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xDAF18C6C), 0x03050D00)
-	#define CAL_iecvaraccgetfirstinterface  pfiecvaraccgetfirstinterface
-	#define CHK_iecvaraccgetfirstinterface  (pfiecvaraccgetfirstinterface != NULL)
-	#define EXP_iecvaraccgetfirstinterface   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetfirstinterface", (RTS_UINTPTR)iecvaraccgetfirstinterface, 1, RTSITF_GET_SIGNATURE(0, 0xDAF18C6C), 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccgetfirstinterface2</description>
- */
-typedef struct tagiecvaraccgetfirstinterface2_struct
-{
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	IBase *IecVarAccGetFirstInterface2;	/* VAR_OUTPUT */	
-} iecvaraccgetfirstinterface2_struct;
-
-void CDECL CDECL_EXT iecvaraccgetfirstinterface2(iecvaraccgetfirstinterface2_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCGETFIRSTINTERFACE2_IEC) (iecvaraccgetfirstinterface2_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCGETFIRSTINTERFACE2_NOTIMPLEMENTED)
-	#define USE_iecvaraccgetfirstinterface2
-	#define EXT_iecvaraccgetfirstinterface2
-	#define GET_iecvaraccgetfirstinterface2(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccgetfirstinterface2(p0) 
-	#define CHK_iecvaraccgetfirstinterface2  FALSE
-	#define EXP_iecvaraccgetfirstinterface2  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccgetfirstinterface2
-	#define EXT_iecvaraccgetfirstinterface2
-	#define GET_iecvaraccgetfirstinterface2(fl)  CAL_CMGETAPI( "iecvaraccgetfirstinterface2" ) 
-	#define CAL_iecvaraccgetfirstinterface2  iecvaraccgetfirstinterface2
-	#define CHK_iecvaraccgetfirstinterface2  TRUE
-	#define EXP_iecvaraccgetfirstinterface2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetfirstinterface2", (RTS_UINTPTR)iecvaraccgetfirstinterface2, 1, RTSITF_GET_SIGNATURE(0, 0x35A559A4), 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccgetfirstinterface2
-	#define EXT_iecvaraccgetfirstinterface2
-	#define GET_iecvaraccgetfirstinterface2(fl)  CAL_CMGETAPI( "iecvaraccgetfirstinterface2" ) 
-	#define CAL_iecvaraccgetfirstinterface2  iecvaraccgetfirstinterface2
-	#define CHK_iecvaraccgetfirstinterface2  TRUE
-	#define EXP_iecvaraccgetfirstinterface2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetfirstinterface2", (RTS_UINTPTR)iecvaraccgetfirstinterface2, 1, RTSITF_GET_SIGNATURE(0, 0x35A559A4), 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccgetfirstinterface2
-	#define EXT_CmpIecVarAccessiecvaraccgetfirstinterface2
-	#define GET_CmpIecVarAccessiecvaraccgetfirstinterface2  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccgetfirstinterface2  iecvaraccgetfirstinterface2
-	#define CHK_CmpIecVarAccessiecvaraccgetfirstinterface2  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccgetfirstinterface2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetfirstinterface2", (RTS_UINTPTR)iecvaraccgetfirstinterface2, 1, RTSITF_GET_SIGNATURE(0, 0x35A559A4), 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccgetfirstinterface2
-	#define EXT_iecvaraccgetfirstinterface2
-	#define GET_iecvaraccgetfirstinterface2(fl)  CAL_CMGETAPI( "iecvaraccgetfirstinterface2" ) 
-	#define CAL_iecvaraccgetfirstinterface2  iecvaraccgetfirstinterface2
-	#define CHK_iecvaraccgetfirstinterface2  TRUE
-	#define EXP_iecvaraccgetfirstinterface2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetfirstinterface2", (RTS_UINTPTR)iecvaraccgetfirstinterface2, 1, RTSITF_GET_SIGNATURE(0, 0x35A559A4), 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccgetfirstinterface2  PFIECVARACCGETFIRSTINTERFACE2_IEC pfiecvaraccgetfirstinterface2;
-	#define EXT_iecvaraccgetfirstinterface2  extern PFIECVARACCGETFIRSTINTERFACE2_IEC pfiecvaraccgetfirstinterface2;
-	#define GET_iecvaraccgetfirstinterface2(fl)  s_pfCMGetAPI2( "iecvaraccgetfirstinterface2", (RTS_VOID_FCTPTR *)&pfiecvaraccgetfirstinterface2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x35A559A4), 0x03050D00)
-	#define CAL_iecvaraccgetfirstinterface2  pfiecvaraccgetfirstinterface2
-	#define CHK_iecvaraccgetfirstinterface2  (pfiecvaraccgetfirstinterface2 != NULL)
-	#define EXP_iecvaraccgetfirstinterface2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetfirstinterface2", (RTS_UINTPTR)iecvaraccgetfirstinterface2, 1, RTSITF_GET_SIGNATURE(0, 0x35A559A4), 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccgetnextinterface</description>
- */
-typedef struct tagiecvaraccgetnextinterface_struct
-{
-	IIecVarAccess3 *pIPrev;				/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	IIecVarAccess3 *IecVarAccGetNextInterface;	/* VAR_OUTPUT */	
-} iecvaraccgetnextinterface_struct;
-
-void CDECL CDECL_EXT iecvaraccgetnextinterface(iecvaraccgetnextinterface_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCGETNEXTINTERFACE_IEC) (iecvaraccgetnextinterface_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCGETNEXTINTERFACE_NOTIMPLEMENTED)
-	#define USE_iecvaraccgetnextinterface
-	#define EXT_iecvaraccgetnextinterface
-	#define GET_iecvaraccgetnextinterface(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccgetnextinterface(p0) 
-	#define CHK_iecvaraccgetnextinterface  FALSE
-	#define EXP_iecvaraccgetnextinterface  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccgetnextinterface
-	#define EXT_iecvaraccgetnextinterface
-	#define GET_iecvaraccgetnextinterface(fl)  CAL_CMGETAPI( "iecvaraccgetnextinterface" ) 
-	#define CAL_iecvaraccgetnextinterface  iecvaraccgetnextinterface
-	#define CHK_iecvaraccgetnextinterface  TRUE
-	#define EXP_iecvaraccgetnextinterface  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnextinterface", (RTS_UINTPTR)iecvaraccgetnextinterface, 1, RTSITF_GET_SIGNATURE(0, 0x7143BBE4), 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccgetnextinterface
-	#define EXT_iecvaraccgetnextinterface
-	#define GET_iecvaraccgetnextinterface(fl)  CAL_CMGETAPI( "iecvaraccgetnextinterface" ) 
-	#define CAL_iecvaraccgetnextinterface  iecvaraccgetnextinterface
-	#define CHK_iecvaraccgetnextinterface  TRUE
-	#define EXP_iecvaraccgetnextinterface  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnextinterface", (RTS_UINTPTR)iecvaraccgetnextinterface, 1, RTSITF_GET_SIGNATURE(0, 0x7143BBE4), 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccgetnextinterface
-	#define EXT_CmpIecVarAccessiecvaraccgetnextinterface
-	#define GET_CmpIecVarAccessiecvaraccgetnextinterface  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccgetnextinterface  iecvaraccgetnextinterface
-	#define CHK_CmpIecVarAccessiecvaraccgetnextinterface  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccgetnextinterface  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnextinterface", (RTS_UINTPTR)iecvaraccgetnextinterface, 1, RTSITF_GET_SIGNATURE(0, 0x7143BBE4), 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccgetnextinterface
-	#define EXT_iecvaraccgetnextinterface
-	#define GET_iecvaraccgetnextinterface(fl)  CAL_CMGETAPI( "iecvaraccgetnextinterface" ) 
-	#define CAL_iecvaraccgetnextinterface  iecvaraccgetnextinterface
-	#define CHK_iecvaraccgetnextinterface  TRUE
-	#define EXP_iecvaraccgetnextinterface  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnextinterface", (RTS_UINTPTR)iecvaraccgetnextinterface, 1, RTSITF_GET_SIGNATURE(0, 0x7143BBE4), 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccgetnextinterface  PFIECVARACCGETNEXTINTERFACE_IEC pfiecvaraccgetnextinterface;
-	#define EXT_iecvaraccgetnextinterface  extern PFIECVARACCGETNEXTINTERFACE_IEC pfiecvaraccgetnextinterface;
-	#define GET_iecvaraccgetnextinterface(fl)  s_pfCMGetAPI2( "iecvaraccgetnextinterface", (RTS_VOID_FCTPTR *)&pfiecvaraccgetnextinterface, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x7143BBE4), 0x03050D00)
-	#define CAL_iecvaraccgetnextinterface  pfiecvaraccgetnextinterface
-	#define CHK_iecvaraccgetnextinterface  (pfiecvaraccgetnextinterface != NULL)
-	#define EXP_iecvaraccgetnextinterface   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnextinterface", (RTS_UINTPTR)iecvaraccgetnextinterface, 1, RTSITF_GET_SIGNATURE(0, 0x7143BBE4), 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccgetnextinterface2</description>
- */
-typedef struct tagiecvaraccgetnextinterface2_struct
-{
-	IBase *pIPrev;						/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	IBase *IecVarAccGetNextInterface2;	/* VAR_OUTPUT */	
-} iecvaraccgetnextinterface2_struct;
-
-void CDECL CDECL_EXT iecvaraccgetnextinterface2(iecvaraccgetnextinterface2_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCGETNEXTINTERFACE2_IEC) (iecvaraccgetnextinterface2_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCGETNEXTINTERFACE2_NOTIMPLEMENTED)
-	#define USE_iecvaraccgetnextinterface2
-	#define EXT_iecvaraccgetnextinterface2
-	#define GET_iecvaraccgetnextinterface2(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccgetnextinterface2(p0) 
-	#define CHK_iecvaraccgetnextinterface2  FALSE
-	#define EXP_iecvaraccgetnextinterface2  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccgetnextinterface2
-	#define EXT_iecvaraccgetnextinterface2
-	#define GET_iecvaraccgetnextinterface2(fl)  CAL_CMGETAPI( "iecvaraccgetnextinterface2" ) 
-	#define CAL_iecvaraccgetnextinterface2  iecvaraccgetnextinterface2
-	#define CHK_iecvaraccgetnextinterface2  TRUE
-	#define EXP_iecvaraccgetnextinterface2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnextinterface2", (RTS_UINTPTR)iecvaraccgetnextinterface2, 1, RTSITF_GET_SIGNATURE(0, 0xDCA77F90), 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccgetnextinterface2
-	#define EXT_iecvaraccgetnextinterface2
-	#define GET_iecvaraccgetnextinterface2(fl)  CAL_CMGETAPI( "iecvaraccgetnextinterface2" ) 
-	#define CAL_iecvaraccgetnextinterface2  iecvaraccgetnextinterface2
-	#define CHK_iecvaraccgetnextinterface2  TRUE
-	#define EXP_iecvaraccgetnextinterface2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnextinterface2", (RTS_UINTPTR)iecvaraccgetnextinterface2, 1, RTSITF_GET_SIGNATURE(0, 0xDCA77F90), 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccgetnextinterface2
-	#define EXT_CmpIecVarAccessiecvaraccgetnextinterface2
-	#define GET_CmpIecVarAccessiecvaraccgetnextinterface2  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccgetnextinterface2  iecvaraccgetnextinterface2
-	#define CHK_CmpIecVarAccessiecvaraccgetnextinterface2  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccgetnextinterface2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnextinterface2", (RTS_UINTPTR)iecvaraccgetnextinterface2, 1, RTSITF_GET_SIGNATURE(0, 0xDCA77F90), 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccgetnextinterface2
-	#define EXT_iecvaraccgetnextinterface2
-	#define GET_iecvaraccgetnextinterface2(fl)  CAL_CMGETAPI( "iecvaraccgetnextinterface2" ) 
-	#define CAL_iecvaraccgetnextinterface2  iecvaraccgetnextinterface2
-	#define CHK_iecvaraccgetnextinterface2  TRUE
-	#define EXP_iecvaraccgetnextinterface2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnextinterface2", (RTS_UINTPTR)iecvaraccgetnextinterface2, 1, RTSITF_GET_SIGNATURE(0, 0xDCA77F90), 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccgetnextinterface2  PFIECVARACCGETNEXTINTERFACE2_IEC pfiecvaraccgetnextinterface2;
-	#define EXT_iecvaraccgetnextinterface2  extern PFIECVARACCGETNEXTINTERFACE2_IEC pfiecvaraccgetnextinterface2;
-	#define GET_iecvaraccgetnextinterface2(fl)  s_pfCMGetAPI2( "iecvaraccgetnextinterface2", (RTS_VOID_FCTPTR *)&pfiecvaraccgetnextinterface2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xDCA77F90), 0x03050D00)
-	#define CAL_iecvaraccgetnextinterface2  pfiecvaraccgetnextinterface2
-	#define CHK_iecvaraccgetnextinterface2  (pfiecvaraccgetnextinterface2 != NULL)
-	#define EXP_iecvaraccgetnextinterface2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnextinterface2", (RTS_UINTPTR)iecvaraccgetnextinterface2, 1, RTSITF_GET_SIGNATURE(0, 0xDCA77F90), 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccgetnode4</description>
- */
-typedef struct tagiecvaraccgetnode4_struct
-{
-	RTS_IEC_STRING *pszPath;			/* VAR_INPUT */	
-	RTS_IEC_HANDLE *phInterface;		/* VAR_INPUT */	
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	IBaseTreeNode *IecVarAccGetNode4;	/* VAR_OUTPUT */	
-} iecvaraccgetnode4_struct;
-
-void CDECL CDECL_EXT iecvaraccgetnode4(iecvaraccgetnode4_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCGETNODE4_IEC) (iecvaraccgetnode4_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCGETNODE4_NOTIMPLEMENTED)
-	#define USE_iecvaraccgetnode4
-	#define EXT_iecvaraccgetnode4
-	#define GET_iecvaraccgetnode4(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccgetnode4(p0) 
-	#define CHK_iecvaraccgetnode4  FALSE
-	#define EXP_iecvaraccgetnode4  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccgetnode4
-	#define EXT_iecvaraccgetnode4
-	#define GET_iecvaraccgetnode4(fl)  CAL_CMGETAPI( "iecvaraccgetnode4" ) 
-	#define CAL_iecvaraccgetnode4  iecvaraccgetnode4
-	#define CHK_iecvaraccgetnode4  TRUE
-	#define EXP_iecvaraccgetnode4  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnode4", (RTS_UINTPTR)iecvaraccgetnode4, 1, 0, 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccgetnode4
-	#define EXT_iecvaraccgetnode4
-	#define GET_iecvaraccgetnode4(fl)  CAL_CMGETAPI( "iecvaraccgetnode4" ) 
-	#define CAL_iecvaraccgetnode4  iecvaraccgetnode4
-	#define CHK_iecvaraccgetnode4  TRUE
-	#define EXP_iecvaraccgetnode4  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnode4", (RTS_UINTPTR)iecvaraccgetnode4, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccgetnode4
-	#define EXT_CmpIecVarAccessiecvaraccgetnode4
-	#define GET_CmpIecVarAccessiecvaraccgetnode4  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccgetnode4  iecvaraccgetnode4
-	#define CHK_CmpIecVarAccessiecvaraccgetnode4  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccgetnode4  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnode4", (RTS_UINTPTR)iecvaraccgetnode4, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccgetnode4
-	#define EXT_iecvaraccgetnode4
-	#define GET_iecvaraccgetnode4(fl)  CAL_CMGETAPI( "iecvaraccgetnode4" ) 
-	#define CAL_iecvaraccgetnode4  iecvaraccgetnode4
-	#define CHK_iecvaraccgetnode4  TRUE
-	#define EXP_iecvaraccgetnode4  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnode4", (RTS_UINTPTR)iecvaraccgetnode4, 1, 0, 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccgetnode4  PFIECVARACCGETNODE4_IEC pfiecvaraccgetnode4;
-	#define EXT_iecvaraccgetnode4  extern PFIECVARACCGETNODE4_IEC pfiecvaraccgetnode4;
-	#define GET_iecvaraccgetnode4(fl)  s_pfCMGetAPI2( "iecvaraccgetnode4", (RTS_VOID_FCTPTR *)&pfiecvaraccgetnode4, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050D00)
-	#define CAL_iecvaraccgetnode4  pfiecvaraccgetnode4
-	#define CHK_iecvaraccgetnode4  (pfiecvaraccgetnode4 != NULL)
-	#define EXP_iecvaraccgetnode4   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnode4", (RTS_UINTPTR)iecvaraccgetnode4, 1, 0, 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccgetnodefullpath4</description>
- */
-typedef struct tagiecvaraccgetnodefullpath4_struct
-{
-	RTS_IEC_HANDLE hInterface;			/* VAR_INPUT */	
-	IBaseTreeNode *hNode;				/* VAR_INPUT */	
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	
-	RTS_IEC_STRING *pszPath;			/* VAR_INPUT */	
-	RTS_IEC_DINT iMaxPath;				/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	RTS_IEC_DINT IecVarAccGetNodeFullPath4;	/* VAR_OUTPUT */	
-} iecvaraccgetnodefullpath4_struct;
-
-void CDECL CDECL_EXT iecvaraccgetnodefullpath4(iecvaraccgetnodefullpath4_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCGETNODEFULLPATH4_IEC) (iecvaraccgetnodefullpath4_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCGETNODEFULLPATH4_NOTIMPLEMENTED)
-	#define USE_iecvaraccgetnodefullpath4
-	#define EXT_iecvaraccgetnodefullpath4
-	#define GET_iecvaraccgetnodefullpath4(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccgetnodefullpath4(p0) 
-	#define CHK_iecvaraccgetnodefullpath4  FALSE
-	#define EXP_iecvaraccgetnodefullpath4  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccgetnodefullpath4
-	#define EXT_iecvaraccgetnodefullpath4
-	#define GET_iecvaraccgetnodefullpath4(fl)  CAL_CMGETAPI( "iecvaraccgetnodefullpath4" ) 
-	#define CAL_iecvaraccgetnodefullpath4  iecvaraccgetnodefullpath4
-	#define CHK_iecvaraccgetnodefullpath4  TRUE
-	#define EXP_iecvaraccgetnodefullpath4  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnodefullpath4", (RTS_UINTPTR)iecvaraccgetnodefullpath4, 1, 0, 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccgetnodefullpath4
-	#define EXT_iecvaraccgetnodefullpath4
-	#define GET_iecvaraccgetnodefullpath4(fl)  CAL_CMGETAPI( "iecvaraccgetnodefullpath4" ) 
-	#define CAL_iecvaraccgetnodefullpath4  iecvaraccgetnodefullpath4
-	#define CHK_iecvaraccgetnodefullpath4  TRUE
-	#define EXP_iecvaraccgetnodefullpath4  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnodefullpath4", (RTS_UINTPTR)iecvaraccgetnodefullpath4, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccgetnodefullpath4
-	#define EXT_CmpIecVarAccessiecvaraccgetnodefullpath4
-	#define GET_CmpIecVarAccessiecvaraccgetnodefullpath4  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccgetnodefullpath4  iecvaraccgetnodefullpath4
-	#define CHK_CmpIecVarAccessiecvaraccgetnodefullpath4  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccgetnodefullpath4  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnodefullpath4", (RTS_UINTPTR)iecvaraccgetnodefullpath4, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccgetnodefullpath4
-	#define EXT_iecvaraccgetnodefullpath4
-	#define GET_iecvaraccgetnodefullpath4(fl)  CAL_CMGETAPI( "iecvaraccgetnodefullpath4" ) 
-	#define CAL_iecvaraccgetnodefullpath4  iecvaraccgetnodefullpath4
-	#define CHK_iecvaraccgetnodefullpath4  TRUE
-	#define EXP_iecvaraccgetnodefullpath4  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnodefullpath4", (RTS_UINTPTR)iecvaraccgetnodefullpath4, 1, 0, 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccgetnodefullpath4  PFIECVARACCGETNODEFULLPATH4_IEC pfiecvaraccgetnodefullpath4;
-	#define EXT_iecvaraccgetnodefullpath4  extern PFIECVARACCGETNODEFULLPATH4_IEC pfiecvaraccgetnodefullpath4;
-	#define GET_iecvaraccgetnodefullpath4(fl)  s_pfCMGetAPI2( "iecvaraccgetnodefullpath4", (RTS_VOID_FCTPTR *)&pfiecvaraccgetnodefullpath4, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050D00)
-	#define CAL_iecvaraccgetnodefullpath4  pfiecvaraccgetnodefullpath4
-	#define CHK_iecvaraccgetnodefullpath4  (pfiecvaraccgetnodefullpath4 != NULL)
-	#define EXP_iecvaraccgetnodefullpath4   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnodefullpath4", (RTS_UINTPTR)iecvaraccgetnodefullpath4, 1, 0, 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccgetnodename4</description>
- */
-typedef struct tagiecvaraccgetnodename4_struct
-{
-	RTS_IEC_HANDLE hInterface;			/* VAR_INPUT */	
-	IBaseTreeNode *hNode;				/* VAR_INPUT */	
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	
-	RTS_IEC_STRING *pszNodeName;		/* VAR_INPUT */	
-	RTS_IEC_UDINT nNodeNameLen;			/* VAR_INPUT */	
-	RTS_IEC_RESULT IecVarAccGetNodeName4;	/* VAR_OUTPUT */	
-} iecvaraccgetnodename4_struct;
-
-void CDECL CDECL_EXT iecvaraccgetnodename4(iecvaraccgetnodename4_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCGETNODENAME4_IEC) (iecvaraccgetnodename4_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCGETNODENAME4_NOTIMPLEMENTED)
-	#define USE_iecvaraccgetnodename4
-	#define EXT_iecvaraccgetnodename4
-	#define GET_iecvaraccgetnodename4(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccgetnodename4(p0) 
-	#define CHK_iecvaraccgetnodename4  FALSE
-	#define EXP_iecvaraccgetnodename4  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccgetnodename4
-	#define EXT_iecvaraccgetnodename4
-	#define GET_iecvaraccgetnodename4(fl)  CAL_CMGETAPI( "iecvaraccgetnodename4" ) 
-	#define CAL_iecvaraccgetnodename4  iecvaraccgetnodename4
-	#define CHK_iecvaraccgetnodename4  TRUE
-	#define EXP_iecvaraccgetnodename4  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnodename4", (RTS_UINTPTR)iecvaraccgetnodename4, 1, 0, 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccgetnodename4
-	#define EXT_iecvaraccgetnodename4
-	#define GET_iecvaraccgetnodename4(fl)  CAL_CMGETAPI( "iecvaraccgetnodename4" ) 
-	#define CAL_iecvaraccgetnodename4  iecvaraccgetnodename4
-	#define CHK_iecvaraccgetnodename4  TRUE
-	#define EXP_iecvaraccgetnodename4  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnodename4", (RTS_UINTPTR)iecvaraccgetnodename4, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccgetnodename4
-	#define EXT_CmpIecVarAccessiecvaraccgetnodename4
-	#define GET_CmpIecVarAccessiecvaraccgetnodename4  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccgetnodename4  iecvaraccgetnodename4
-	#define CHK_CmpIecVarAccessiecvaraccgetnodename4  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccgetnodename4  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnodename4", (RTS_UINTPTR)iecvaraccgetnodename4, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccgetnodename4
-	#define EXT_iecvaraccgetnodename4
-	#define GET_iecvaraccgetnodename4(fl)  CAL_CMGETAPI( "iecvaraccgetnodename4" ) 
-	#define CAL_iecvaraccgetnodename4  iecvaraccgetnodename4
-	#define CHK_iecvaraccgetnodename4  TRUE
-	#define EXP_iecvaraccgetnodename4  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnodename4", (RTS_UINTPTR)iecvaraccgetnodename4, 1, 0, 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccgetnodename4  PFIECVARACCGETNODENAME4_IEC pfiecvaraccgetnodename4;
-	#define EXT_iecvaraccgetnodename4  extern PFIECVARACCGETNODENAME4_IEC pfiecvaraccgetnodename4;
-	#define GET_iecvaraccgetnodename4(fl)  s_pfCMGetAPI2( "iecvaraccgetnodename4", (RTS_VOID_FCTPTR *)&pfiecvaraccgetnodename4, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050D00)
-	#define CAL_iecvaraccgetnodename4  pfiecvaraccgetnodename4
-	#define CHK_iecvaraccgetnodename4  (pfiecvaraccgetnodename4 != NULL)
-	#define EXP_iecvaraccgetnodename4   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetnodename4", (RTS_UINTPTR)iecvaraccgetnodename4, 1, 0, 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccgetsymbolsetmask</description>
- */
-typedef struct tagiecvaraccgetsymbolsetmask_struct
-{
-	RTS_IEC_HANDLE hUser;				/* VAR_INPUT */	
-	RTS_IEC_HANDLE hInterface;			/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	RTS_IEC_DWORD IecVarAccGetSymbolSetMask;	/* VAR_OUTPUT */	
-} iecvaraccgetsymbolsetmask_struct;
-
-void CDECL CDECL_EXT iecvaraccgetsymbolsetmask(iecvaraccgetsymbolsetmask_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCGETSYMBOLSETMASK_IEC) (iecvaraccgetsymbolsetmask_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCGETSYMBOLSETMASK_NOTIMPLEMENTED)
-	#define USE_iecvaraccgetsymbolsetmask
-	#define EXT_iecvaraccgetsymbolsetmask
-	#define GET_iecvaraccgetsymbolsetmask(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccgetsymbolsetmask(p0) 
-	#define CHK_iecvaraccgetsymbolsetmask  FALSE
-	#define EXP_iecvaraccgetsymbolsetmask  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccgetsymbolsetmask
-	#define EXT_iecvaraccgetsymbolsetmask
-	#define GET_iecvaraccgetsymbolsetmask(fl)  CAL_CMGETAPI( "iecvaraccgetsymbolsetmask" ) 
-	#define CAL_iecvaraccgetsymbolsetmask  iecvaraccgetsymbolsetmask
-	#define CHK_iecvaraccgetsymbolsetmask  TRUE
-	#define EXP_iecvaraccgetsymbolsetmask  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetsymbolsetmask", (RTS_UINTPTR)iecvaraccgetsymbolsetmask, 1, 0xCD15F68E, 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccgetsymbolsetmask
-	#define EXT_iecvaraccgetsymbolsetmask
-	#define GET_iecvaraccgetsymbolsetmask(fl)  CAL_CMGETAPI( "iecvaraccgetsymbolsetmask" ) 
-	#define CAL_iecvaraccgetsymbolsetmask  iecvaraccgetsymbolsetmask
-	#define CHK_iecvaraccgetsymbolsetmask  TRUE
-	#define EXP_iecvaraccgetsymbolsetmask  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetsymbolsetmask", (RTS_UINTPTR)iecvaraccgetsymbolsetmask, 1, 0xCD15F68E, 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccgetsymbolsetmask
-	#define EXT_CmpIecVarAccessiecvaraccgetsymbolsetmask
-	#define GET_CmpIecVarAccessiecvaraccgetsymbolsetmask  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccgetsymbolsetmask  iecvaraccgetsymbolsetmask
-	#define CHK_CmpIecVarAccessiecvaraccgetsymbolsetmask  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccgetsymbolsetmask  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetsymbolsetmask", (RTS_UINTPTR)iecvaraccgetsymbolsetmask, 1, 0xCD15F68E, 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccgetsymbolsetmask
-	#define EXT_iecvaraccgetsymbolsetmask
-	#define GET_iecvaraccgetsymbolsetmask(fl)  CAL_CMGETAPI( "iecvaraccgetsymbolsetmask" ) 
-	#define CAL_iecvaraccgetsymbolsetmask  iecvaraccgetsymbolsetmask
-	#define CHK_iecvaraccgetsymbolsetmask  TRUE
-	#define EXP_iecvaraccgetsymbolsetmask  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetsymbolsetmask", (RTS_UINTPTR)iecvaraccgetsymbolsetmask, 1, 0xCD15F68E, 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccgetsymbolsetmask  PFIECVARACCGETSYMBOLSETMASK_IEC pfiecvaraccgetsymbolsetmask;
-	#define EXT_iecvaraccgetsymbolsetmask  extern PFIECVARACCGETSYMBOLSETMASK_IEC pfiecvaraccgetsymbolsetmask;
-	#define GET_iecvaraccgetsymbolsetmask(fl)  s_pfCMGetAPI2( "iecvaraccgetsymbolsetmask", (RTS_VOID_FCTPTR *)&pfiecvaraccgetsymbolsetmask, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xCD15F68E, 0x03050D00)
-	#define CAL_iecvaraccgetsymbolsetmask  pfiecvaraccgetsymbolsetmask
-	#define CHK_iecvaraccgetsymbolsetmask  (pfiecvaraccgetsymbolsetmask != NULL)
-	#define EXP_iecvaraccgetsymbolsetmask   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccgetsymbolsetmask", (RTS_UINTPTR)iecvaraccgetsymbolsetmask, 1, 0xCD15F68E, 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccinitvarinfo</description>
- */
-typedef struct tagiecvaraccinitvarinfo_struct
-{
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	/* Pointer to the variable information struct. After using this method for initialization,
- the struct also needs to be freed with IecVarAccExitVarInfo() to prevent memory leaks in
- the runtime data structures. */
-	RTS_IEC_UINT nSizeOfVarInfo;		/* VAR_INPUT */	
-	RTS_IEC_RESULT IecVarAccInitVarInfo;	/* VAR_OUTPUT */	
-} iecvaraccinitvarinfo_struct;
-
-void CDECL CDECL_EXT iecvaraccinitvarinfo(iecvaraccinitvarinfo_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCINITVARINFO_IEC) (iecvaraccinitvarinfo_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCINITVARINFO_NOTIMPLEMENTED)
-	#define USE_iecvaraccinitvarinfo
-	#define EXT_iecvaraccinitvarinfo
-	#define GET_iecvaraccinitvarinfo(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccinitvarinfo(p0) 
-	#define CHK_iecvaraccinitvarinfo  FALSE
-	#define EXP_iecvaraccinitvarinfo  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccinitvarinfo
-	#define EXT_iecvaraccinitvarinfo
-	#define GET_iecvaraccinitvarinfo(fl)  CAL_CMGETAPI( "iecvaraccinitvarinfo" ) 
-	#define CAL_iecvaraccinitvarinfo  iecvaraccinitvarinfo
-	#define CHK_iecvaraccinitvarinfo  TRUE
-	#define EXP_iecvaraccinitvarinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccinitvarinfo", (RTS_UINTPTR)iecvaraccinitvarinfo, 1, 0, 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccinitvarinfo
-	#define EXT_iecvaraccinitvarinfo
-	#define GET_iecvaraccinitvarinfo(fl)  CAL_CMGETAPI( "iecvaraccinitvarinfo" ) 
-	#define CAL_iecvaraccinitvarinfo  iecvaraccinitvarinfo
-	#define CHK_iecvaraccinitvarinfo  TRUE
-	#define EXP_iecvaraccinitvarinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccinitvarinfo", (RTS_UINTPTR)iecvaraccinitvarinfo, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccinitvarinfo
-	#define EXT_CmpIecVarAccessiecvaraccinitvarinfo
-	#define GET_CmpIecVarAccessiecvaraccinitvarinfo  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccinitvarinfo  iecvaraccinitvarinfo
-	#define CHK_CmpIecVarAccessiecvaraccinitvarinfo  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccinitvarinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccinitvarinfo", (RTS_UINTPTR)iecvaraccinitvarinfo, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccinitvarinfo
-	#define EXT_iecvaraccinitvarinfo
-	#define GET_iecvaraccinitvarinfo(fl)  CAL_CMGETAPI( "iecvaraccinitvarinfo" ) 
-	#define CAL_iecvaraccinitvarinfo  iecvaraccinitvarinfo
-	#define CHK_iecvaraccinitvarinfo  TRUE
-	#define EXP_iecvaraccinitvarinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccinitvarinfo", (RTS_UINTPTR)iecvaraccinitvarinfo, 1, 0, 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccinitvarinfo  PFIECVARACCINITVARINFO_IEC pfiecvaraccinitvarinfo;
-	#define EXT_iecvaraccinitvarinfo  extern PFIECVARACCINITVARINFO_IEC pfiecvaraccinitvarinfo;
-	#define GET_iecvaraccinitvarinfo(fl)  s_pfCMGetAPI2( "iecvaraccinitvarinfo", (RTS_VOID_FCTPTR *)&pfiecvaraccinitvarinfo, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050D00)
-	#define CAL_iecvaraccinitvarinfo  pfiecvaraccinitvarinfo
-	#define CHK_iecvaraccinitvarinfo  (pfiecvaraccinitvarinfo != NULL)
-	#define EXP_iecvaraccinitvarinfo   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccinitvarinfo", (RTS_UINTPTR)iecvaraccinitvarinfo, 1, 0, 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccinitvarinfo2</description>
- */
-typedef struct tagiecvaraccinitvarinfo2_struct
-{
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	/* Pointer to the variable information struct. After using this method for initialization,
- the struct also needs to be freed with IecVarAccExitVarInfo() to prevent memory leaks in
- the runtime data structures. */
-	RTS_IEC_UINT nSizeOfVarInfo;		/* VAR_INPUT */	
-	RTS_IEC_HANDLE hUser;				/* VAR_INPUT */	
-	RTS_IEC_RESULT IecVarAccInitVarInfo2;	/* VAR_OUTPUT */	
-} iecvaraccinitvarinfo2_struct;
-
-void CDECL CDECL_EXT iecvaraccinitvarinfo2(iecvaraccinitvarinfo2_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCINITVARINFO2_IEC) (iecvaraccinitvarinfo2_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCINITVARINFO2_NOTIMPLEMENTED)
-	#define USE_iecvaraccinitvarinfo2
-	#define EXT_iecvaraccinitvarinfo2
-	#define GET_iecvaraccinitvarinfo2(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccinitvarinfo2(p0) 
-	#define CHK_iecvaraccinitvarinfo2  FALSE
-	#define EXP_iecvaraccinitvarinfo2  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccinitvarinfo2
-	#define EXT_iecvaraccinitvarinfo2
-	#define GET_iecvaraccinitvarinfo2(fl)  CAL_CMGETAPI( "iecvaraccinitvarinfo2" ) 
-	#define CAL_iecvaraccinitvarinfo2  iecvaraccinitvarinfo2
-	#define CHK_iecvaraccinitvarinfo2  TRUE
-	#define EXP_iecvaraccinitvarinfo2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccinitvarinfo2", (RTS_UINTPTR)iecvaraccinitvarinfo2, 1, RTSITF_GET_SIGNATURE(0x3533B10B, 0x07C98E8C), 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccinitvarinfo2
-	#define EXT_iecvaraccinitvarinfo2
-	#define GET_iecvaraccinitvarinfo2(fl)  CAL_CMGETAPI( "iecvaraccinitvarinfo2" ) 
-	#define CAL_iecvaraccinitvarinfo2  iecvaraccinitvarinfo2
-	#define CHK_iecvaraccinitvarinfo2  TRUE
-	#define EXP_iecvaraccinitvarinfo2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccinitvarinfo2", (RTS_UINTPTR)iecvaraccinitvarinfo2, 1, RTSITF_GET_SIGNATURE(0x3533B10B, 0x07C98E8C), 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccinitvarinfo2
-	#define EXT_CmpIecVarAccessiecvaraccinitvarinfo2
-	#define GET_CmpIecVarAccessiecvaraccinitvarinfo2  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccinitvarinfo2  iecvaraccinitvarinfo2
-	#define CHK_CmpIecVarAccessiecvaraccinitvarinfo2  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccinitvarinfo2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccinitvarinfo2", (RTS_UINTPTR)iecvaraccinitvarinfo2, 1, RTSITF_GET_SIGNATURE(0x3533B10B, 0x07C98E8C), 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccinitvarinfo2
-	#define EXT_iecvaraccinitvarinfo2
-	#define GET_iecvaraccinitvarinfo2(fl)  CAL_CMGETAPI( "iecvaraccinitvarinfo2" ) 
-	#define CAL_iecvaraccinitvarinfo2  iecvaraccinitvarinfo2
-	#define CHK_iecvaraccinitvarinfo2  TRUE
-	#define EXP_iecvaraccinitvarinfo2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccinitvarinfo2", (RTS_UINTPTR)iecvaraccinitvarinfo2, 1, RTSITF_GET_SIGNATURE(0x3533B10B, 0x07C98E8C), 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccinitvarinfo2  PFIECVARACCINITVARINFO2_IEC pfiecvaraccinitvarinfo2;
-	#define EXT_iecvaraccinitvarinfo2  extern PFIECVARACCINITVARINFO2_IEC pfiecvaraccinitvarinfo2;
-	#define GET_iecvaraccinitvarinfo2(fl)  s_pfCMGetAPI2( "iecvaraccinitvarinfo2", (RTS_VOID_FCTPTR *)&pfiecvaraccinitvarinfo2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x3533B10B, 0x07C98E8C), 0x03050D00)
-	#define CAL_iecvaraccinitvarinfo2  pfiecvaraccinitvarinfo2
-	#define CHK_iecvaraccinitvarinfo2  (pfiecvaraccinitvarinfo2 != NULL)
-	#define EXP_iecvaraccinitvarinfo2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccinitvarinfo2", (RTS_UINTPTR)iecvaraccinitvarinfo2, 1, RTSITF_GET_SIGNATURE(0x3533B10B, 0x07C98E8C), 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccinvalidatenode</description>
- */
-typedef struct tagiecvaraccinvalidatenode_struct
-{
-	RTS_IEC_HANDLE hNode;				/* VAR_INPUT */	
-	RTS_IEC_RESULT IecVarAccInvalidateNode;	/* VAR_OUTPUT */	
-} iecvaraccinvalidatenode_struct;
-
-void CDECL CDECL_EXT iecvaraccinvalidatenode(iecvaraccinvalidatenode_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCINVALIDATENODE_IEC) (iecvaraccinvalidatenode_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCINVALIDATENODE_NOTIMPLEMENTED)
-	#define USE_iecvaraccinvalidatenode
-	#define EXT_iecvaraccinvalidatenode
-	#define GET_iecvaraccinvalidatenode(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccinvalidatenode(p0) 
-	#define CHK_iecvaraccinvalidatenode  FALSE
-	#define EXP_iecvaraccinvalidatenode  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccinvalidatenode
-	#define EXT_iecvaraccinvalidatenode
-	#define GET_iecvaraccinvalidatenode(fl)  CAL_CMGETAPI( "iecvaraccinvalidatenode" ) 
-	#define CAL_iecvaraccinvalidatenode  iecvaraccinvalidatenode
-	#define CHK_iecvaraccinvalidatenode  TRUE
-	#define EXP_iecvaraccinvalidatenode  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccinvalidatenode", (RTS_UINTPTR)iecvaraccinvalidatenode, 1, RTSITF_GET_SIGNATURE(0, 0x0C905F23), 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccinvalidatenode
-	#define EXT_iecvaraccinvalidatenode
-	#define GET_iecvaraccinvalidatenode(fl)  CAL_CMGETAPI( "iecvaraccinvalidatenode" ) 
-	#define CAL_iecvaraccinvalidatenode  iecvaraccinvalidatenode
-	#define CHK_iecvaraccinvalidatenode  TRUE
-	#define EXP_iecvaraccinvalidatenode  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccinvalidatenode", (RTS_UINTPTR)iecvaraccinvalidatenode, 1, RTSITF_GET_SIGNATURE(0, 0x0C905F23), 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccinvalidatenode
-	#define EXT_CmpIecVarAccessiecvaraccinvalidatenode
-	#define GET_CmpIecVarAccessiecvaraccinvalidatenode  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccinvalidatenode  iecvaraccinvalidatenode
-	#define CHK_CmpIecVarAccessiecvaraccinvalidatenode  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccinvalidatenode  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccinvalidatenode", (RTS_UINTPTR)iecvaraccinvalidatenode, 1, RTSITF_GET_SIGNATURE(0, 0x0C905F23), 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccinvalidatenode
-	#define EXT_iecvaraccinvalidatenode
-	#define GET_iecvaraccinvalidatenode(fl)  CAL_CMGETAPI( "iecvaraccinvalidatenode" ) 
-	#define CAL_iecvaraccinvalidatenode  iecvaraccinvalidatenode
-	#define CHK_iecvaraccinvalidatenode  TRUE
-	#define EXP_iecvaraccinvalidatenode  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccinvalidatenode", (RTS_UINTPTR)iecvaraccinvalidatenode, 1, RTSITF_GET_SIGNATURE(0, 0x0C905F23), 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccinvalidatenode  PFIECVARACCINVALIDATENODE_IEC pfiecvaraccinvalidatenode;
-	#define EXT_iecvaraccinvalidatenode  extern PFIECVARACCINVALIDATENODE_IEC pfiecvaraccinvalidatenode;
-	#define GET_iecvaraccinvalidatenode(fl)  s_pfCMGetAPI2( "iecvaraccinvalidatenode", (RTS_VOID_FCTPTR *)&pfiecvaraccinvalidatenode, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x0C905F23), 0x03050D00)
-	#define CAL_iecvaraccinvalidatenode  pfiecvaraccinvalidatenode
-	#define CHK_iecvaraccinvalidatenode  (pfiecvaraccinvalidatenode != NULL)
-	#define EXP_iecvaraccinvalidatenode   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccinvalidatenode", (RTS_UINTPTR)iecvaraccinvalidatenode, 1, RTSITF_GET_SIGNATURE(0, 0x0C905F23), 0x03050D00) 
-#endif
-
-
-/**
- * Signature deactivated because of Interface type in RtsBrowseInfo
- */
-typedef struct tagiecvaraccnodeinfoaddbrowseinfo_struct
-{
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	/* Pointer to the variable information.
- Attention: This needs to be initialized with IecVarAccInitVarInfo() or the function
- will return an error code. It also needs to be freed with IecVarAccExitVarInfo() to
- prevent memory leaks. */
-	RtsBrowseInfo *pBrowseInfoData;		/* VAR_INPUT */	/* If this pointer is non-null, the runtime will copy the data into the new buffer.
- If this pointer is null, the new buffer memory will be cleared to zero. */
-	RTS_IEC_RESULT IecVarAccNodeInfoAddBrowseInfo;	/* VAR_OUTPUT */	
-} iecvaraccnodeinfoaddbrowseinfo_struct;
-
-void CDECL CDECL_EXT iecvaraccnodeinfoaddbrowseinfo(iecvaraccnodeinfoaddbrowseinfo_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCNODEINFOADDBROWSEINFO_IEC) (iecvaraccnodeinfoaddbrowseinfo_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCNODEINFOADDBROWSEINFO_NOTIMPLEMENTED)
-	#define USE_iecvaraccnodeinfoaddbrowseinfo
-	#define EXT_iecvaraccnodeinfoaddbrowseinfo
-	#define GET_iecvaraccnodeinfoaddbrowseinfo(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccnodeinfoaddbrowseinfo(p0) 
-	#define CHK_iecvaraccnodeinfoaddbrowseinfo  FALSE
-	#define EXP_iecvaraccnodeinfoaddbrowseinfo  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccnodeinfoaddbrowseinfo
-	#define EXT_iecvaraccnodeinfoaddbrowseinfo
-	#define GET_iecvaraccnodeinfoaddbrowseinfo(fl)  CAL_CMGETAPI( "iecvaraccnodeinfoaddbrowseinfo" ) 
-	#define CAL_iecvaraccnodeinfoaddbrowseinfo  iecvaraccnodeinfoaddbrowseinfo
-	#define CHK_iecvaraccnodeinfoaddbrowseinfo  TRUE
-	#define EXP_iecvaraccnodeinfoaddbrowseinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfoaddbrowseinfo", (RTS_UINTPTR)iecvaraccnodeinfoaddbrowseinfo, 1, 0, 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccnodeinfoaddbrowseinfo
-	#define EXT_iecvaraccnodeinfoaddbrowseinfo
-	#define GET_iecvaraccnodeinfoaddbrowseinfo(fl)  CAL_CMGETAPI( "iecvaraccnodeinfoaddbrowseinfo" ) 
-	#define CAL_iecvaraccnodeinfoaddbrowseinfo  iecvaraccnodeinfoaddbrowseinfo
-	#define CHK_iecvaraccnodeinfoaddbrowseinfo  TRUE
-	#define EXP_iecvaraccnodeinfoaddbrowseinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfoaddbrowseinfo", (RTS_UINTPTR)iecvaraccnodeinfoaddbrowseinfo, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccnodeinfoaddbrowseinfo
-	#define EXT_CmpIecVarAccessiecvaraccnodeinfoaddbrowseinfo
-	#define GET_CmpIecVarAccessiecvaraccnodeinfoaddbrowseinfo  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccnodeinfoaddbrowseinfo  iecvaraccnodeinfoaddbrowseinfo
-	#define CHK_CmpIecVarAccessiecvaraccnodeinfoaddbrowseinfo  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccnodeinfoaddbrowseinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfoaddbrowseinfo", (RTS_UINTPTR)iecvaraccnodeinfoaddbrowseinfo, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccnodeinfoaddbrowseinfo
-	#define EXT_iecvaraccnodeinfoaddbrowseinfo
-	#define GET_iecvaraccnodeinfoaddbrowseinfo(fl)  CAL_CMGETAPI( "iecvaraccnodeinfoaddbrowseinfo" ) 
-	#define CAL_iecvaraccnodeinfoaddbrowseinfo  iecvaraccnodeinfoaddbrowseinfo
-	#define CHK_iecvaraccnodeinfoaddbrowseinfo  TRUE
-	#define EXP_iecvaraccnodeinfoaddbrowseinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfoaddbrowseinfo", (RTS_UINTPTR)iecvaraccnodeinfoaddbrowseinfo, 1, 0, 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccnodeinfoaddbrowseinfo  PFIECVARACCNODEINFOADDBROWSEINFO_IEC pfiecvaraccnodeinfoaddbrowseinfo;
-	#define EXT_iecvaraccnodeinfoaddbrowseinfo  extern PFIECVARACCNODEINFOADDBROWSEINFO_IEC pfiecvaraccnodeinfoaddbrowseinfo;
-	#define GET_iecvaraccnodeinfoaddbrowseinfo(fl)  s_pfCMGetAPI2( "iecvaraccnodeinfoaddbrowseinfo", (RTS_VOID_FCTPTR *)&pfiecvaraccnodeinfoaddbrowseinfo, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050D00)
-	#define CAL_iecvaraccnodeinfoaddbrowseinfo  pfiecvaraccnodeinfoaddbrowseinfo
-	#define CHK_iecvaraccnodeinfoaddbrowseinfo  (pfiecvaraccnodeinfoaddbrowseinfo != NULL)
-	#define EXP_iecvaraccnodeinfoaddbrowseinfo   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfoaddbrowseinfo", (RTS_UINTPTR)iecvaraccnodeinfoaddbrowseinfo, 1, 0, 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccnodeinfoaddreference</description>
- */
-typedef struct tagiecvaraccnodeinfoaddreference_struct
-{
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	/* Pointer to the variable information.
- Attention: This needs to be initialized with IecVarAccInitVarInfo() or the function
- will return an error code. It also needs to be freed with IecVarAccExitVarInfo() to
- prevent memory leaks. */
-	RTS_IEC_BYTE *pReferenceInfoData;	/* VAR_INPUT */	/* If this pointer is non-null, the runtime will copy the data into the new buffer.
- If this pointer is null, the new buffer memory will be cleared to zero. */
-	RTS_IEC_XWORD nInfoSize;			/* VAR_INPUT */	/* The size of the memory to allocate. */
-	RTS_IEC_BYTE **pNewReferenceInfo;	/* VAR_INPUT */	/* If this pointer is non-null, the runtime will store the address of
- the allocated block in this pointer. (This is the same as a subsequent
- call to VarAccNodeInfoGetReference() shall return.) */
-	RTS_IEC_RESULT IecVarAccNodeInfoAddReference;	/* VAR_OUTPUT */	
-} iecvaraccnodeinfoaddreference_struct;
-
-void CDECL CDECL_EXT iecvaraccnodeinfoaddreference(iecvaraccnodeinfoaddreference_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCNODEINFOADDREFERENCE_IEC) (iecvaraccnodeinfoaddreference_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCNODEINFOADDREFERENCE_NOTIMPLEMENTED)
-	#define USE_iecvaraccnodeinfoaddreference
-	#define EXT_iecvaraccnodeinfoaddreference
-	#define GET_iecvaraccnodeinfoaddreference(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccnodeinfoaddreference(p0) 
-	#define CHK_iecvaraccnodeinfoaddreference  FALSE
-	#define EXP_iecvaraccnodeinfoaddreference  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccnodeinfoaddreference
-	#define EXT_iecvaraccnodeinfoaddreference
-	#define GET_iecvaraccnodeinfoaddreference(fl)  CAL_CMGETAPI( "iecvaraccnodeinfoaddreference" ) 
-	#define CAL_iecvaraccnodeinfoaddreference  iecvaraccnodeinfoaddreference
-	#define CHK_iecvaraccnodeinfoaddreference  TRUE
-	#define EXP_iecvaraccnodeinfoaddreference  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfoaddreference", (RTS_UINTPTR)iecvaraccnodeinfoaddreference, 1, RTSITF_GET_SIGNATURE(0xB66D74DC, 0x54D1E739), 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccnodeinfoaddreference
-	#define EXT_iecvaraccnodeinfoaddreference
-	#define GET_iecvaraccnodeinfoaddreference(fl)  CAL_CMGETAPI( "iecvaraccnodeinfoaddreference" ) 
-	#define CAL_iecvaraccnodeinfoaddreference  iecvaraccnodeinfoaddreference
-	#define CHK_iecvaraccnodeinfoaddreference  TRUE
-	#define EXP_iecvaraccnodeinfoaddreference  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfoaddreference", (RTS_UINTPTR)iecvaraccnodeinfoaddreference, 1, RTSITF_GET_SIGNATURE(0xB66D74DC, 0x54D1E739), 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccnodeinfoaddreference
-	#define EXT_CmpIecVarAccessiecvaraccnodeinfoaddreference
-	#define GET_CmpIecVarAccessiecvaraccnodeinfoaddreference  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccnodeinfoaddreference  iecvaraccnodeinfoaddreference
-	#define CHK_CmpIecVarAccessiecvaraccnodeinfoaddreference  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccnodeinfoaddreference  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfoaddreference", (RTS_UINTPTR)iecvaraccnodeinfoaddreference, 1, RTSITF_GET_SIGNATURE(0xB66D74DC, 0x54D1E739), 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccnodeinfoaddreference
-	#define EXT_iecvaraccnodeinfoaddreference
-	#define GET_iecvaraccnodeinfoaddreference(fl)  CAL_CMGETAPI( "iecvaraccnodeinfoaddreference" ) 
-	#define CAL_iecvaraccnodeinfoaddreference  iecvaraccnodeinfoaddreference
-	#define CHK_iecvaraccnodeinfoaddreference  TRUE
-	#define EXP_iecvaraccnodeinfoaddreference  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfoaddreference", (RTS_UINTPTR)iecvaraccnodeinfoaddreference, 1, RTSITF_GET_SIGNATURE(0xB66D74DC, 0x54D1E739), 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccnodeinfoaddreference  PFIECVARACCNODEINFOADDREFERENCE_IEC pfiecvaraccnodeinfoaddreference;
-	#define EXT_iecvaraccnodeinfoaddreference  extern PFIECVARACCNODEINFOADDREFERENCE_IEC pfiecvaraccnodeinfoaddreference;
-	#define GET_iecvaraccnodeinfoaddreference(fl)  s_pfCMGetAPI2( "iecvaraccnodeinfoaddreference", (RTS_VOID_FCTPTR *)&pfiecvaraccnodeinfoaddreference, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0xB66D74DC, 0x54D1E739), 0x03050D00)
-	#define CAL_iecvaraccnodeinfoaddreference  pfiecvaraccnodeinfoaddreference
-	#define CHK_iecvaraccnodeinfoaddreference  (pfiecvaraccnodeinfoaddreference != NULL)
-	#define EXP_iecvaraccnodeinfoaddreference   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfoaddreference", (RTS_UINTPTR)iecvaraccnodeinfoaddreference, 1, RTSITF_GET_SIGNATURE(0xB66D74DC, 0x54D1E739), 0x03050D00) 
-#endif
-
-
-/**
- * Signature deactivated because of Interface type in RtsBrowseInfo
- */
-typedef struct tagiecvaraccnodeinfogetbrowseinfo_struct
-{
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	
-	RtsBrowseInfo *pLast;				/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	RtsBrowseInfo *IecVarAccNodeInfoGetBrowseInfo;	/* VAR_OUTPUT */	
-} iecvaraccnodeinfogetbrowseinfo_struct;
-
-void CDECL CDECL_EXT iecvaraccnodeinfogetbrowseinfo(iecvaraccnodeinfogetbrowseinfo_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCNODEINFOGETBROWSEINFO_IEC) (iecvaraccnodeinfogetbrowseinfo_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCNODEINFOGETBROWSEINFO_NOTIMPLEMENTED)
-	#define USE_iecvaraccnodeinfogetbrowseinfo
-	#define EXT_iecvaraccnodeinfogetbrowseinfo
-	#define GET_iecvaraccnodeinfogetbrowseinfo(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccnodeinfogetbrowseinfo(p0) 
-	#define CHK_iecvaraccnodeinfogetbrowseinfo  FALSE
-	#define EXP_iecvaraccnodeinfogetbrowseinfo  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccnodeinfogetbrowseinfo
-	#define EXT_iecvaraccnodeinfogetbrowseinfo
-	#define GET_iecvaraccnodeinfogetbrowseinfo(fl)  CAL_CMGETAPI( "iecvaraccnodeinfogetbrowseinfo" ) 
-	#define CAL_iecvaraccnodeinfogetbrowseinfo  iecvaraccnodeinfogetbrowseinfo
-	#define CHK_iecvaraccnodeinfogetbrowseinfo  TRUE
-	#define EXP_iecvaraccnodeinfogetbrowseinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfogetbrowseinfo", (RTS_UINTPTR)iecvaraccnodeinfogetbrowseinfo, 1, 0, 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccnodeinfogetbrowseinfo
-	#define EXT_iecvaraccnodeinfogetbrowseinfo
-	#define GET_iecvaraccnodeinfogetbrowseinfo(fl)  CAL_CMGETAPI( "iecvaraccnodeinfogetbrowseinfo" ) 
-	#define CAL_iecvaraccnodeinfogetbrowseinfo  iecvaraccnodeinfogetbrowseinfo
-	#define CHK_iecvaraccnodeinfogetbrowseinfo  TRUE
-	#define EXP_iecvaraccnodeinfogetbrowseinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfogetbrowseinfo", (RTS_UINTPTR)iecvaraccnodeinfogetbrowseinfo, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccnodeinfogetbrowseinfo
-	#define EXT_CmpIecVarAccessiecvaraccnodeinfogetbrowseinfo
-	#define GET_CmpIecVarAccessiecvaraccnodeinfogetbrowseinfo  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccnodeinfogetbrowseinfo  iecvaraccnodeinfogetbrowseinfo
-	#define CHK_CmpIecVarAccessiecvaraccnodeinfogetbrowseinfo  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccnodeinfogetbrowseinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfogetbrowseinfo", (RTS_UINTPTR)iecvaraccnodeinfogetbrowseinfo, 1, 0, 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccnodeinfogetbrowseinfo
-	#define EXT_iecvaraccnodeinfogetbrowseinfo
-	#define GET_iecvaraccnodeinfogetbrowseinfo(fl)  CAL_CMGETAPI( "iecvaraccnodeinfogetbrowseinfo" ) 
-	#define CAL_iecvaraccnodeinfogetbrowseinfo  iecvaraccnodeinfogetbrowseinfo
-	#define CHK_iecvaraccnodeinfogetbrowseinfo  TRUE
-	#define EXP_iecvaraccnodeinfogetbrowseinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfogetbrowseinfo", (RTS_UINTPTR)iecvaraccnodeinfogetbrowseinfo, 1, 0, 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccnodeinfogetbrowseinfo  PFIECVARACCNODEINFOGETBROWSEINFO_IEC pfiecvaraccnodeinfogetbrowseinfo;
-	#define EXT_iecvaraccnodeinfogetbrowseinfo  extern PFIECVARACCNODEINFOGETBROWSEINFO_IEC pfiecvaraccnodeinfogetbrowseinfo;
-	#define GET_iecvaraccnodeinfogetbrowseinfo(fl)  s_pfCMGetAPI2( "iecvaraccnodeinfogetbrowseinfo", (RTS_VOID_FCTPTR *)&pfiecvaraccnodeinfogetbrowseinfo, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050D00)
-	#define CAL_iecvaraccnodeinfogetbrowseinfo  pfiecvaraccnodeinfogetbrowseinfo
-	#define CHK_iecvaraccnodeinfogetbrowseinfo  (pfiecvaraccnodeinfogetbrowseinfo != NULL)
-	#define EXP_iecvaraccnodeinfogetbrowseinfo   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfogetbrowseinfo", (RTS_UINTPTR)iecvaraccnodeinfogetbrowseinfo, 1, 0, 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccnodeinfogetreference</description>
- */
-typedef struct tagiecvaraccnodeinfogetreference_struct
-{
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	RTS_IEC_BYTE *IecVarAccNodeInfoGetReference;	/* VAR_OUTPUT */	
-} iecvaraccnodeinfogetreference_struct;
-
-void CDECL CDECL_EXT iecvaraccnodeinfogetreference(iecvaraccnodeinfogetreference_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCNODEINFOGETREFERENCE_IEC) (iecvaraccnodeinfogetreference_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCNODEINFOGETREFERENCE_NOTIMPLEMENTED)
-	#define USE_iecvaraccnodeinfogetreference
-	#define EXT_iecvaraccnodeinfogetreference
-	#define GET_iecvaraccnodeinfogetreference(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccnodeinfogetreference(p0) 
-	#define CHK_iecvaraccnodeinfogetreference  FALSE
-	#define EXP_iecvaraccnodeinfogetreference  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccnodeinfogetreference
-	#define EXT_iecvaraccnodeinfogetreference
-	#define GET_iecvaraccnodeinfogetreference(fl)  CAL_CMGETAPI( "iecvaraccnodeinfogetreference" ) 
-	#define CAL_iecvaraccnodeinfogetreference  iecvaraccnodeinfogetreference
-	#define CHK_iecvaraccnodeinfogetreference  TRUE
-	#define EXP_iecvaraccnodeinfogetreference  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfogetreference", (RTS_UINTPTR)iecvaraccnodeinfogetreference, 1, RTSITF_GET_SIGNATURE(0x4ABE0CEB, 0x84253FCA), 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccnodeinfogetreference
-	#define EXT_iecvaraccnodeinfogetreference
-	#define GET_iecvaraccnodeinfogetreference(fl)  CAL_CMGETAPI( "iecvaraccnodeinfogetreference" ) 
-	#define CAL_iecvaraccnodeinfogetreference  iecvaraccnodeinfogetreference
-	#define CHK_iecvaraccnodeinfogetreference  TRUE
-	#define EXP_iecvaraccnodeinfogetreference  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfogetreference", (RTS_UINTPTR)iecvaraccnodeinfogetreference, 1, RTSITF_GET_SIGNATURE(0x4ABE0CEB, 0x84253FCA), 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccnodeinfogetreference
-	#define EXT_CmpIecVarAccessiecvaraccnodeinfogetreference
-	#define GET_CmpIecVarAccessiecvaraccnodeinfogetreference  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccnodeinfogetreference  iecvaraccnodeinfogetreference
-	#define CHK_CmpIecVarAccessiecvaraccnodeinfogetreference  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccnodeinfogetreference  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfogetreference", (RTS_UINTPTR)iecvaraccnodeinfogetreference, 1, RTSITF_GET_SIGNATURE(0x4ABE0CEB, 0x84253FCA), 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccnodeinfogetreference
-	#define EXT_iecvaraccnodeinfogetreference
-	#define GET_iecvaraccnodeinfogetreference(fl)  CAL_CMGETAPI( "iecvaraccnodeinfogetreference" ) 
-	#define CAL_iecvaraccnodeinfogetreference  iecvaraccnodeinfogetreference
-	#define CHK_iecvaraccnodeinfogetreference  TRUE
-	#define EXP_iecvaraccnodeinfogetreference  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfogetreference", (RTS_UINTPTR)iecvaraccnodeinfogetreference, 1, RTSITF_GET_SIGNATURE(0x4ABE0CEB, 0x84253FCA), 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccnodeinfogetreference  PFIECVARACCNODEINFOGETREFERENCE_IEC pfiecvaraccnodeinfogetreference;
-	#define EXT_iecvaraccnodeinfogetreference  extern PFIECVARACCNODEINFOGETREFERENCE_IEC pfiecvaraccnodeinfogetreference;
-	#define GET_iecvaraccnodeinfogetreference(fl)  s_pfCMGetAPI2( "iecvaraccnodeinfogetreference", (RTS_VOID_FCTPTR *)&pfiecvaraccnodeinfogetreference, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x4ABE0CEB, 0x84253FCA), 0x03050D00)
-	#define CAL_iecvaraccnodeinfogetreference  pfiecvaraccnodeinfogetreference
-	#define CHK_iecvaraccnodeinfogetreference  (pfiecvaraccnodeinfogetreference != NULL)
-	#define EXP_iecvaraccnodeinfogetreference   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinfogetreference", (RTS_UINTPTR)iecvaraccnodeinfogetreference, 1, RTSITF_GET_SIGNATURE(0x4ABE0CEB, 0x84253FCA), 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccnodeinforemovebrowseinfo</description>
- */
-typedef struct tagiecvaraccnodeinforemovebrowseinfo_struct
-{
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	
-	RTS_IEC_RESULT IecVarAccNodeInfoRemoveBrowseInfo;	/* VAR_OUTPUT */	
-} iecvaraccnodeinforemovebrowseinfo_struct;
-
-void CDECL CDECL_EXT iecvaraccnodeinforemovebrowseinfo(iecvaraccnodeinforemovebrowseinfo_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCNODEINFOREMOVEBROWSEINFO_IEC) (iecvaraccnodeinforemovebrowseinfo_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCNODEINFOREMOVEBROWSEINFO_NOTIMPLEMENTED)
-	#define USE_iecvaraccnodeinforemovebrowseinfo
-	#define EXT_iecvaraccnodeinforemovebrowseinfo
-	#define GET_iecvaraccnodeinforemovebrowseinfo(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccnodeinforemovebrowseinfo(p0) 
-	#define CHK_iecvaraccnodeinforemovebrowseinfo  FALSE
-	#define EXP_iecvaraccnodeinforemovebrowseinfo  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccnodeinforemovebrowseinfo
-	#define EXT_iecvaraccnodeinforemovebrowseinfo
-	#define GET_iecvaraccnodeinforemovebrowseinfo(fl)  CAL_CMGETAPI( "iecvaraccnodeinforemovebrowseinfo" ) 
-	#define CAL_iecvaraccnodeinforemovebrowseinfo  iecvaraccnodeinforemovebrowseinfo
-	#define CHK_iecvaraccnodeinforemovebrowseinfo  TRUE
-	#define EXP_iecvaraccnodeinforemovebrowseinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinforemovebrowseinfo", (RTS_UINTPTR)iecvaraccnodeinforemovebrowseinfo, 1, RTSITF_GET_SIGNATURE(0x43FC9F64, 0xC2D7CEF9), 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccnodeinforemovebrowseinfo
-	#define EXT_iecvaraccnodeinforemovebrowseinfo
-	#define GET_iecvaraccnodeinforemovebrowseinfo(fl)  CAL_CMGETAPI( "iecvaraccnodeinforemovebrowseinfo" ) 
-	#define CAL_iecvaraccnodeinforemovebrowseinfo  iecvaraccnodeinforemovebrowseinfo
-	#define CHK_iecvaraccnodeinforemovebrowseinfo  TRUE
-	#define EXP_iecvaraccnodeinforemovebrowseinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinforemovebrowseinfo", (RTS_UINTPTR)iecvaraccnodeinforemovebrowseinfo, 1, RTSITF_GET_SIGNATURE(0x43FC9F64, 0xC2D7CEF9), 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccnodeinforemovebrowseinfo
-	#define EXT_CmpIecVarAccessiecvaraccnodeinforemovebrowseinfo
-	#define GET_CmpIecVarAccessiecvaraccnodeinforemovebrowseinfo  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccnodeinforemovebrowseinfo  iecvaraccnodeinforemovebrowseinfo
-	#define CHK_CmpIecVarAccessiecvaraccnodeinforemovebrowseinfo  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccnodeinforemovebrowseinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinforemovebrowseinfo", (RTS_UINTPTR)iecvaraccnodeinforemovebrowseinfo, 1, RTSITF_GET_SIGNATURE(0x43FC9F64, 0xC2D7CEF9), 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccnodeinforemovebrowseinfo
-	#define EXT_iecvaraccnodeinforemovebrowseinfo
-	#define GET_iecvaraccnodeinforemovebrowseinfo(fl)  CAL_CMGETAPI( "iecvaraccnodeinforemovebrowseinfo" ) 
-	#define CAL_iecvaraccnodeinforemovebrowseinfo  iecvaraccnodeinforemovebrowseinfo
-	#define CHK_iecvaraccnodeinforemovebrowseinfo  TRUE
-	#define EXP_iecvaraccnodeinforemovebrowseinfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinforemovebrowseinfo", (RTS_UINTPTR)iecvaraccnodeinforemovebrowseinfo, 1, RTSITF_GET_SIGNATURE(0x43FC9F64, 0xC2D7CEF9), 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccnodeinforemovebrowseinfo  PFIECVARACCNODEINFOREMOVEBROWSEINFO_IEC pfiecvaraccnodeinforemovebrowseinfo;
-	#define EXT_iecvaraccnodeinforemovebrowseinfo  extern PFIECVARACCNODEINFOREMOVEBROWSEINFO_IEC pfiecvaraccnodeinforemovebrowseinfo;
-	#define GET_iecvaraccnodeinforemovebrowseinfo(fl)  s_pfCMGetAPI2( "iecvaraccnodeinforemovebrowseinfo", (RTS_VOID_FCTPTR *)&pfiecvaraccnodeinforemovebrowseinfo, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x43FC9F64, 0xC2D7CEF9), 0x03050D00)
-	#define CAL_iecvaraccnodeinforemovebrowseinfo  pfiecvaraccnodeinforemovebrowseinfo
-	#define CHK_iecvaraccnodeinforemovebrowseinfo  (pfiecvaraccnodeinforemovebrowseinfo != NULL)
-	#define EXP_iecvaraccnodeinforemovebrowseinfo   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinforemovebrowseinfo", (RTS_UINTPTR)iecvaraccnodeinforemovebrowseinfo, 1, RTSITF_GET_SIGNATURE(0x43FC9F64, 0xC2D7CEF9), 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccnodeinforemovereference</description>
- */
-typedef struct tagiecvaraccnodeinforemovereference_struct
-{
-	VariableInformationStruct3 *pVariableInformation;	/* VAR_INPUT */	
-	RTS_IEC_RESULT IecVarAccNodeInfoRemoveReference;	/* VAR_OUTPUT */	
-} iecvaraccnodeinforemovereference_struct;
-
-void CDECL CDECL_EXT iecvaraccnodeinforemovereference(iecvaraccnodeinforemovereference_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCNODEINFOREMOVEREFERENCE_IEC) (iecvaraccnodeinforemovereference_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCNODEINFOREMOVEREFERENCE_NOTIMPLEMENTED)
-	#define USE_iecvaraccnodeinforemovereference
-	#define EXT_iecvaraccnodeinforemovereference
-	#define GET_iecvaraccnodeinforemovereference(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccnodeinforemovereference(p0) 
-	#define CHK_iecvaraccnodeinforemovereference  FALSE
-	#define EXP_iecvaraccnodeinforemovereference  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccnodeinforemovereference
-	#define EXT_iecvaraccnodeinforemovereference
-	#define GET_iecvaraccnodeinforemovereference(fl)  CAL_CMGETAPI( "iecvaraccnodeinforemovereference" ) 
-	#define CAL_iecvaraccnodeinforemovereference  iecvaraccnodeinforemovereference
-	#define CHK_iecvaraccnodeinforemovereference  TRUE
-	#define EXP_iecvaraccnodeinforemovereference  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinforemovereference", (RTS_UINTPTR)iecvaraccnodeinforemovereference, 1, RTSITF_GET_SIGNATURE(0xAAD90063, 0x725A147D), 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccnodeinforemovereference
-	#define EXT_iecvaraccnodeinforemovereference
-	#define GET_iecvaraccnodeinforemovereference(fl)  CAL_CMGETAPI( "iecvaraccnodeinforemovereference" ) 
-	#define CAL_iecvaraccnodeinforemovereference  iecvaraccnodeinforemovereference
-	#define CHK_iecvaraccnodeinforemovereference  TRUE
-	#define EXP_iecvaraccnodeinforemovereference  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinforemovereference", (RTS_UINTPTR)iecvaraccnodeinforemovereference, 1, RTSITF_GET_SIGNATURE(0xAAD90063, 0x725A147D), 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccnodeinforemovereference
-	#define EXT_CmpIecVarAccessiecvaraccnodeinforemovereference
-	#define GET_CmpIecVarAccessiecvaraccnodeinforemovereference  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccnodeinforemovereference  iecvaraccnodeinforemovereference
-	#define CHK_CmpIecVarAccessiecvaraccnodeinforemovereference  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccnodeinforemovereference  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinforemovereference", (RTS_UINTPTR)iecvaraccnodeinforemovereference, 1, RTSITF_GET_SIGNATURE(0xAAD90063, 0x725A147D), 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccnodeinforemovereference
-	#define EXT_iecvaraccnodeinforemovereference
-	#define GET_iecvaraccnodeinforemovereference(fl)  CAL_CMGETAPI( "iecvaraccnodeinforemovereference" ) 
-	#define CAL_iecvaraccnodeinforemovereference  iecvaraccnodeinforemovereference
-	#define CHK_iecvaraccnodeinforemovereference  TRUE
-	#define EXP_iecvaraccnodeinforemovereference  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinforemovereference", (RTS_UINTPTR)iecvaraccnodeinforemovereference, 1, RTSITF_GET_SIGNATURE(0xAAD90063, 0x725A147D), 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccnodeinforemovereference  PFIECVARACCNODEINFOREMOVEREFERENCE_IEC pfiecvaraccnodeinforemovereference;
-	#define EXT_iecvaraccnodeinforemovereference  extern PFIECVARACCNODEINFOREMOVEREFERENCE_IEC pfiecvaraccnodeinforemovereference;
-	#define GET_iecvaraccnodeinforemovereference(fl)  s_pfCMGetAPI2( "iecvaraccnodeinforemovereference", (RTS_VOID_FCTPTR *)&pfiecvaraccnodeinforemovereference, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0xAAD90063, 0x725A147D), 0x03050D00)
-	#define CAL_iecvaraccnodeinforemovereference  pfiecvaraccnodeinforemovereference
-	#define CHK_iecvaraccnodeinforemovereference  (pfiecvaraccnodeinforemovereference != NULL)
-	#define EXP_iecvaraccnodeinforemovereference   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccnodeinforemovereference", (RTS_UINTPTR)iecvaraccnodeinforemovereference, 1, RTSITF_GET_SIGNATURE(0xAAD90063, 0x725A147D), 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccregisterinstance</description>
- */
-typedef struct tagiecvaraccregisterinstance_struct
-{
-	IIecVarAccess *pIIecVarAccess;		/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	RTS_IEC_HANDLE IecVarAccRegisterInstance;	/* VAR_OUTPUT */	
-} iecvaraccregisterinstance_struct;
-
-void CDECL CDECL_EXT iecvaraccregisterinstance(iecvaraccregisterinstance_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCREGISTERINSTANCE_IEC) (iecvaraccregisterinstance_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCREGISTERINSTANCE_NOTIMPLEMENTED)
-	#define USE_iecvaraccregisterinstance
-	#define EXT_iecvaraccregisterinstance
-	#define GET_iecvaraccregisterinstance(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccregisterinstance(p0) 
-	#define CHK_iecvaraccregisterinstance  FALSE
-	#define EXP_iecvaraccregisterinstance  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccregisterinstance
-	#define EXT_iecvaraccregisterinstance
-	#define GET_iecvaraccregisterinstance(fl)  CAL_CMGETAPI( "iecvaraccregisterinstance" ) 
-	#define CAL_iecvaraccregisterinstance  iecvaraccregisterinstance
-	#define CHK_iecvaraccregisterinstance  TRUE
-	#define EXP_iecvaraccregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstance", (RTS_UINTPTR)iecvaraccregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0x2838418D), 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccregisterinstance
-	#define EXT_iecvaraccregisterinstance
-	#define GET_iecvaraccregisterinstance(fl)  CAL_CMGETAPI( "iecvaraccregisterinstance" ) 
-	#define CAL_iecvaraccregisterinstance  iecvaraccregisterinstance
-	#define CHK_iecvaraccregisterinstance  TRUE
-	#define EXP_iecvaraccregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstance", (RTS_UINTPTR)iecvaraccregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0x2838418D), 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccregisterinstance
-	#define EXT_CmpIecVarAccessiecvaraccregisterinstance
-	#define GET_CmpIecVarAccessiecvaraccregisterinstance  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccregisterinstance  iecvaraccregisterinstance
-	#define CHK_CmpIecVarAccessiecvaraccregisterinstance  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstance", (RTS_UINTPTR)iecvaraccregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0x2838418D), 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccregisterinstance
-	#define EXT_iecvaraccregisterinstance
-	#define GET_iecvaraccregisterinstance(fl)  CAL_CMGETAPI( "iecvaraccregisterinstance" ) 
-	#define CAL_iecvaraccregisterinstance  iecvaraccregisterinstance
-	#define CHK_iecvaraccregisterinstance  TRUE
-	#define EXP_iecvaraccregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstance", (RTS_UINTPTR)iecvaraccregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0x2838418D), 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccregisterinstance  PFIECVARACCREGISTERINSTANCE_IEC pfiecvaraccregisterinstance;
-	#define EXT_iecvaraccregisterinstance  extern PFIECVARACCREGISTERINSTANCE_IEC pfiecvaraccregisterinstance;
-	#define GET_iecvaraccregisterinstance(fl)  s_pfCMGetAPI2( "iecvaraccregisterinstance", (RTS_VOID_FCTPTR *)&pfiecvaraccregisterinstance, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x2838418D), 0x03050D00)
-	#define CAL_iecvaraccregisterinstance  pfiecvaraccregisterinstance
-	#define CHK_iecvaraccregisterinstance  (pfiecvaraccregisterinstance != NULL)
-	#define EXP_iecvaraccregisterinstance   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstance", (RTS_UINTPTR)iecvaraccregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0x2838418D), 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccregisterinstance2</description>
- */
-typedef struct tagiecvaraccregisterinstance2_struct
-{
-	IIecVarAccess2 *pIIecVarAccess2;	/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	RTS_IEC_HANDLE IecVarAccRegisterInstance2;	/* VAR_OUTPUT */	
-} iecvaraccregisterinstance2_struct;
-
-void CDECL CDECL_EXT iecvaraccregisterinstance2(iecvaraccregisterinstance2_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCREGISTERINSTANCE2_IEC) (iecvaraccregisterinstance2_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCREGISTERINSTANCE2_NOTIMPLEMENTED)
-	#define USE_iecvaraccregisterinstance2
-	#define EXT_iecvaraccregisterinstance2
-	#define GET_iecvaraccregisterinstance2(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccregisterinstance2(p0) 
-	#define CHK_iecvaraccregisterinstance2  FALSE
-	#define EXP_iecvaraccregisterinstance2  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccregisterinstance2
-	#define EXT_iecvaraccregisterinstance2
-	#define GET_iecvaraccregisterinstance2(fl)  CAL_CMGETAPI( "iecvaraccregisterinstance2" ) 
-	#define CAL_iecvaraccregisterinstance2  iecvaraccregisterinstance2
-	#define CHK_iecvaraccregisterinstance2  TRUE
-	#define EXP_iecvaraccregisterinstance2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstance2", (RTS_UINTPTR)iecvaraccregisterinstance2, 1, RTSITF_GET_SIGNATURE(0, 0x12CBCF4F), 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccregisterinstance2
-	#define EXT_iecvaraccregisterinstance2
-	#define GET_iecvaraccregisterinstance2(fl)  CAL_CMGETAPI( "iecvaraccregisterinstance2" ) 
-	#define CAL_iecvaraccregisterinstance2  iecvaraccregisterinstance2
-	#define CHK_iecvaraccregisterinstance2  TRUE
-	#define EXP_iecvaraccregisterinstance2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstance2", (RTS_UINTPTR)iecvaraccregisterinstance2, 1, RTSITF_GET_SIGNATURE(0, 0x12CBCF4F), 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccregisterinstance2
-	#define EXT_CmpIecVarAccessiecvaraccregisterinstance2
-	#define GET_CmpIecVarAccessiecvaraccregisterinstance2  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccregisterinstance2  iecvaraccregisterinstance2
-	#define CHK_CmpIecVarAccessiecvaraccregisterinstance2  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccregisterinstance2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstance2", (RTS_UINTPTR)iecvaraccregisterinstance2, 1, RTSITF_GET_SIGNATURE(0, 0x12CBCF4F), 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccregisterinstance2
-	#define EXT_iecvaraccregisterinstance2
-	#define GET_iecvaraccregisterinstance2(fl)  CAL_CMGETAPI( "iecvaraccregisterinstance2" ) 
-	#define CAL_iecvaraccregisterinstance2  iecvaraccregisterinstance2
-	#define CHK_iecvaraccregisterinstance2  TRUE
-	#define EXP_iecvaraccregisterinstance2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstance2", (RTS_UINTPTR)iecvaraccregisterinstance2, 1, RTSITF_GET_SIGNATURE(0, 0x12CBCF4F), 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccregisterinstance2  PFIECVARACCREGISTERINSTANCE2_IEC pfiecvaraccregisterinstance2;
-	#define EXT_iecvaraccregisterinstance2  extern PFIECVARACCREGISTERINSTANCE2_IEC pfiecvaraccregisterinstance2;
-	#define GET_iecvaraccregisterinstance2(fl)  s_pfCMGetAPI2( "iecvaraccregisterinstance2", (RTS_VOID_FCTPTR *)&pfiecvaraccregisterinstance2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x12CBCF4F), 0x03050D00)
-	#define CAL_iecvaraccregisterinstance2  pfiecvaraccregisterinstance2
-	#define CHK_iecvaraccregisterinstance2  (pfiecvaraccregisterinstance2 != NULL)
-	#define EXP_iecvaraccregisterinstance2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstance2", (RTS_UINTPTR)iecvaraccregisterinstance2, 1, RTSITF_GET_SIGNATURE(0, 0x12CBCF4F), 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccregisterinstance3</description>
- */
-typedef struct tagiecvaraccregisterinstance3_struct
-{
-	IIecVarAccess3 *pIIecVarAccess3;	/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	RTS_IEC_HANDLE IecVarAccRegisterInstance3;	/* VAR_OUTPUT */	
-} iecvaraccregisterinstance3_struct;
-
-void CDECL CDECL_EXT iecvaraccregisterinstance3(iecvaraccregisterinstance3_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCREGISTERINSTANCE3_IEC) (iecvaraccregisterinstance3_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCREGISTERINSTANCE3_NOTIMPLEMENTED)
-	#define USE_iecvaraccregisterinstance3
-	#define EXT_iecvaraccregisterinstance3
-	#define GET_iecvaraccregisterinstance3(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccregisterinstance3(p0) 
-	#define CHK_iecvaraccregisterinstance3  FALSE
-	#define EXP_iecvaraccregisterinstance3  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccregisterinstance3
-	#define EXT_iecvaraccregisterinstance3
-	#define GET_iecvaraccregisterinstance3(fl)  CAL_CMGETAPI( "iecvaraccregisterinstance3" ) 
-	#define CAL_iecvaraccregisterinstance3  iecvaraccregisterinstance3
-	#define CHK_iecvaraccregisterinstance3  TRUE
-	#define EXP_iecvaraccregisterinstance3  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstance3", (RTS_UINTPTR)iecvaraccregisterinstance3, 1, RTSITF_GET_SIGNATURE(0, 0xC1E3F2D6), 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccregisterinstance3
-	#define EXT_iecvaraccregisterinstance3
-	#define GET_iecvaraccregisterinstance3(fl)  CAL_CMGETAPI( "iecvaraccregisterinstance3" ) 
-	#define CAL_iecvaraccregisterinstance3  iecvaraccregisterinstance3
-	#define CHK_iecvaraccregisterinstance3  TRUE
-	#define EXP_iecvaraccregisterinstance3  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstance3", (RTS_UINTPTR)iecvaraccregisterinstance3, 1, RTSITF_GET_SIGNATURE(0, 0xC1E3F2D6), 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccregisterinstance3
-	#define EXT_CmpIecVarAccessiecvaraccregisterinstance3
-	#define GET_CmpIecVarAccessiecvaraccregisterinstance3  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccregisterinstance3  iecvaraccregisterinstance3
-	#define CHK_CmpIecVarAccessiecvaraccregisterinstance3  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccregisterinstance3  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstance3", (RTS_UINTPTR)iecvaraccregisterinstance3, 1, RTSITF_GET_SIGNATURE(0, 0xC1E3F2D6), 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccregisterinstance3
-	#define EXT_iecvaraccregisterinstance3
-	#define GET_iecvaraccregisterinstance3(fl)  CAL_CMGETAPI( "iecvaraccregisterinstance3" ) 
-	#define CAL_iecvaraccregisterinstance3  iecvaraccregisterinstance3
-	#define CHK_iecvaraccregisterinstance3  TRUE
-	#define EXP_iecvaraccregisterinstance3  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstance3", (RTS_UINTPTR)iecvaraccregisterinstance3, 1, RTSITF_GET_SIGNATURE(0, 0xC1E3F2D6), 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccregisterinstance3  PFIECVARACCREGISTERINSTANCE3_IEC pfiecvaraccregisterinstance3;
-	#define EXT_iecvaraccregisterinstance3  extern PFIECVARACCREGISTERINSTANCE3_IEC pfiecvaraccregisterinstance3;
-	#define GET_iecvaraccregisterinstance3(fl)  s_pfCMGetAPI2( "iecvaraccregisterinstance3", (RTS_VOID_FCTPTR *)&pfiecvaraccregisterinstance3, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC1E3F2D6), 0x03050D00)
-	#define CAL_iecvaraccregisterinstance3  pfiecvaraccregisterinstance3
-	#define CHK_iecvaraccregisterinstance3  (pfiecvaraccregisterinstance3 != NULL)
-	#define EXP_iecvaraccregisterinstance3   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstance3", (RTS_UINTPTR)iecvaraccregisterinstance3, 1, RTSITF_GET_SIGNATURE(0, 0xC1E3F2D6), 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccregisterinstancebase</description>
- */
-typedef struct tagiecvaraccregisterinstancebase_struct
-{
-	IBase *pIBase;						/* VAR_INPUT */	
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	
-	RTS_IEC_HANDLE IecVarAccRegisterInstanceBase;	/* VAR_OUTPUT */	
-} iecvaraccregisterinstancebase_struct;
-
-void CDECL CDECL_EXT iecvaraccregisterinstancebase(iecvaraccregisterinstancebase_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCREGISTERINSTANCEBASE_IEC) (iecvaraccregisterinstancebase_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCREGISTERINSTANCEBASE_NOTIMPLEMENTED)
-	#define USE_iecvaraccregisterinstancebase
-	#define EXT_iecvaraccregisterinstancebase
-	#define GET_iecvaraccregisterinstancebase(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccregisterinstancebase(p0) 
-	#define CHK_iecvaraccregisterinstancebase  FALSE
-	#define EXP_iecvaraccregisterinstancebase  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccregisterinstancebase
-	#define EXT_iecvaraccregisterinstancebase
-	#define GET_iecvaraccregisterinstancebase(fl)  CAL_CMGETAPI( "iecvaraccregisterinstancebase" ) 
-	#define CAL_iecvaraccregisterinstancebase  iecvaraccregisterinstancebase
-	#define CHK_iecvaraccregisterinstancebase  TRUE
-	#define EXP_iecvaraccregisterinstancebase  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstancebase", (RTS_UINTPTR)iecvaraccregisterinstancebase, 1, RTSITF_GET_SIGNATURE(0, 0xCD8685B0), 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccregisterinstancebase
-	#define EXT_iecvaraccregisterinstancebase
-	#define GET_iecvaraccregisterinstancebase(fl)  CAL_CMGETAPI( "iecvaraccregisterinstancebase" ) 
-	#define CAL_iecvaraccregisterinstancebase  iecvaraccregisterinstancebase
-	#define CHK_iecvaraccregisterinstancebase  TRUE
-	#define EXP_iecvaraccregisterinstancebase  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstancebase", (RTS_UINTPTR)iecvaraccregisterinstancebase, 1, RTSITF_GET_SIGNATURE(0, 0xCD8685B0), 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccregisterinstancebase
-	#define EXT_CmpIecVarAccessiecvaraccregisterinstancebase
-	#define GET_CmpIecVarAccessiecvaraccregisterinstancebase  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccregisterinstancebase  iecvaraccregisterinstancebase
-	#define CHK_CmpIecVarAccessiecvaraccregisterinstancebase  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccregisterinstancebase  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstancebase", (RTS_UINTPTR)iecvaraccregisterinstancebase, 1, RTSITF_GET_SIGNATURE(0, 0xCD8685B0), 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccregisterinstancebase
-	#define EXT_iecvaraccregisterinstancebase
-	#define GET_iecvaraccregisterinstancebase(fl)  CAL_CMGETAPI( "iecvaraccregisterinstancebase" ) 
-	#define CAL_iecvaraccregisterinstancebase  iecvaraccregisterinstancebase
-	#define CHK_iecvaraccregisterinstancebase  TRUE
-	#define EXP_iecvaraccregisterinstancebase  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstancebase", (RTS_UINTPTR)iecvaraccregisterinstancebase, 1, RTSITF_GET_SIGNATURE(0, 0xCD8685B0), 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccregisterinstancebase  PFIECVARACCREGISTERINSTANCEBASE_IEC pfiecvaraccregisterinstancebase;
-	#define EXT_iecvaraccregisterinstancebase  extern PFIECVARACCREGISTERINSTANCEBASE_IEC pfiecvaraccregisterinstancebase;
-	#define GET_iecvaraccregisterinstancebase(fl)  s_pfCMGetAPI2( "iecvaraccregisterinstancebase", (RTS_VOID_FCTPTR *)&pfiecvaraccregisterinstancebase, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xCD8685B0), 0x03050D00)
-	#define CAL_iecvaraccregisterinstancebase  pfiecvaraccregisterinstancebase
-	#define CHK_iecvaraccregisterinstancebase  (pfiecvaraccregisterinstancebase != NULL)
-	#define EXP_iecvaraccregisterinstancebase   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccregisterinstancebase", (RTS_UINTPTR)iecvaraccregisterinstancebase, 1, RTSITF_GET_SIGNATURE(0, 0xCD8685B0), 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccsetsymbolconfigcrc</description>
- */
-typedef struct tagiecvaraccsetsymbolconfigcrc_struct
-{
-	RTS_IEC_HANDLE hInstance;			/* VAR_INPUT */	
-	RTS_IEC_UDINT udiCrc;				/* VAR_INPUT */	
-	RTS_IEC_RESULT IecVarAccSetSymbolconfigCrc;	/* VAR_OUTPUT */	
-} iecvaraccsetsymbolconfigcrc_struct;
-
-void CDECL CDECL_EXT iecvaraccsetsymbolconfigcrc(iecvaraccsetsymbolconfigcrc_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCSETSYMBOLCONFIGCRC_IEC) (iecvaraccsetsymbolconfigcrc_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCSETSYMBOLCONFIGCRC_NOTIMPLEMENTED)
-	#define USE_iecvaraccsetsymbolconfigcrc
-	#define EXT_iecvaraccsetsymbolconfigcrc
-	#define GET_iecvaraccsetsymbolconfigcrc(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccsetsymbolconfigcrc(p0) 
-	#define CHK_iecvaraccsetsymbolconfigcrc  FALSE
-	#define EXP_iecvaraccsetsymbolconfigcrc  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccsetsymbolconfigcrc
-	#define EXT_iecvaraccsetsymbolconfigcrc
-	#define GET_iecvaraccsetsymbolconfigcrc(fl)  CAL_CMGETAPI( "iecvaraccsetsymbolconfigcrc" ) 
-	#define CAL_iecvaraccsetsymbolconfigcrc  iecvaraccsetsymbolconfigcrc
-	#define CHK_iecvaraccsetsymbolconfigcrc  TRUE
-	#define EXP_iecvaraccsetsymbolconfigcrc  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccsetsymbolconfigcrc", (RTS_UINTPTR)iecvaraccsetsymbolconfigcrc, 1, 0xFDCEC8DA, 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccsetsymbolconfigcrc
-	#define EXT_iecvaraccsetsymbolconfigcrc
-	#define GET_iecvaraccsetsymbolconfigcrc(fl)  CAL_CMGETAPI( "iecvaraccsetsymbolconfigcrc" ) 
-	#define CAL_iecvaraccsetsymbolconfigcrc  iecvaraccsetsymbolconfigcrc
-	#define CHK_iecvaraccsetsymbolconfigcrc  TRUE
-	#define EXP_iecvaraccsetsymbolconfigcrc  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccsetsymbolconfigcrc", (RTS_UINTPTR)iecvaraccsetsymbolconfigcrc, 1, 0xFDCEC8DA, 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccsetsymbolconfigcrc
-	#define EXT_CmpIecVarAccessiecvaraccsetsymbolconfigcrc
-	#define GET_CmpIecVarAccessiecvaraccsetsymbolconfigcrc  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccsetsymbolconfigcrc  iecvaraccsetsymbolconfigcrc
-	#define CHK_CmpIecVarAccessiecvaraccsetsymbolconfigcrc  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccsetsymbolconfigcrc  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccsetsymbolconfigcrc", (RTS_UINTPTR)iecvaraccsetsymbolconfigcrc, 1, 0xFDCEC8DA, 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccsetsymbolconfigcrc
-	#define EXT_iecvaraccsetsymbolconfigcrc
-	#define GET_iecvaraccsetsymbolconfigcrc(fl)  CAL_CMGETAPI( "iecvaraccsetsymbolconfigcrc" ) 
-	#define CAL_iecvaraccsetsymbolconfigcrc  iecvaraccsetsymbolconfigcrc
-	#define CHK_iecvaraccsetsymbolconfigcrc  TRUE
-	#define EXP_iecvaraccsetsymbolconfigcrc  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccsetsymbolconfigcrc", (RTS_UINTPTR)iecvaraccsetsymbolconfigcrc, 1, 0xFDCEC8DA, 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccsetsymbolconfigcrc  PFIECVARACCSETSYMBOLCONFIGCRC_IEC pfiecvaraccsetsymbolconfigcrc;
-	#define EXT_iecvaraccsetsymbolconfigcrc  extern PFIECVARACCSETSYMBOLCONFIGCRC_IEC pfiecvaraccsetsymbolconfigcrc;
-	#define GET_iecvaraccsetsymbolconfigcrc(fl)  s_pfCMGetAPI2( "iecvaraccsetsymbolconfigcrc", (RTS_VOID_FCTPTR *)&pfiecvaraccsetsymbolconfigcrc, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xFDCEC8DA, 0x03050D00)
-	#define CAL_iecvaraccsetsymbolconfigcrc  pfiecvaraccsetsymbolconfigcrc
-	#define CHK_iecvaraccsetsymbolconfigcrc  (pfiecvaraccsetsymbolconfigcrc != NULL)
-	#define EXP_iecvaraccsetsymbolconfigcrc   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccsetsymbolconfigcrc", (RTS_UINTPTR)iecvaraccsetsymbolconfigcrc, 1, 0xFDCEC8DA, 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccunregisterinstance</description>
- */
-typedef struct tagiecvaraccunregisterinstance_struct
-{
-	RTS_IEC_HANDLE hInstance;			/* VAR_INPUT */	
-	RTS_IEC_RESULT IecVarAccUnregisterInstance;	/* VAR_OUTPUT */	
-} iecvaraccunregisterinstance_struct;
-
-void CDECL CDECL_EXT iecvaraccunregisterinstance(iecvaraccunregisterinstance_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCUNREGISTERINSTANCE_IEC) (iecvaraccunregisterinstance_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCUNREGISTERINSTANCE_NOTIMPLEMENTED)
-	#define USE_iecvaraccunregisterinstance
-	#define EXT_iecvaraccunregisterinstance
-	#define GET_iecvaraccunregisterinstance(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccunregisterinstance(p0) 
-	#define CHK_iecvaraccunregisterinstance  FALSE
-	#define EXP_iecvaraccunregisterinstance  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccunregisterinstance
-	#define EXT_iecvaraccunregisterinstance
-	#define GET_iecvaraccunregisterinstance(fl)  CAL_CMGETAPI( "iecvaraccunregisterinstance" ) 
-	#define CAL_iecvaraccunregisterinstance  iecvaraccunregisterinstance
-	#define CHK_iecvaraccunregisterinstance  TRUE
-	#define EXP_iecvaraccunregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccunregisterinstance", (RTS_UINTPTR)iecvaraccunregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0xEDB8227D), 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccunregisterinstance
-	#define EXT_iecvaraccunregisterinstance
-	#define GET_iecvaraccunregisterinstance(fl)  CAL_CMGETAPI( "iecvaraccunregisterinstance" ) 
-	#define CAL_iecvaraccunregisterinstance  iecvaraccunregisterinstance
-	#define CHK_iecvaraccunregisterinstance  TRUE
-	#define EXP_iecvaraccunregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccunregisterinstance", (RTS_UINTPTR)iecvaraccunregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0xEDB8227D), 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccunregisterinstance
-	#define EXT_CmpIecVarAccessiecvaraccunregisterinstance
-	#define GET_CmpIecVarAccessiecvaraccunregisterinstance  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccunregisterinstance  iecvaraccunregisterinstance
-	#define CHK_CmpIecVarAccessiecvaraccunregisterinstance  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccunregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccunregisterinstance", (RTS_UINTPTR)iecvaraccunregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0xEDB8227D), 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccunregisterinstance
-	#define EXT_iecvaraccunregisterinstance
-	#define GET_iecvaraccunregisterinstance(fl)  CAL_CMGETAPI( "iecvaraccunregisterinstance" ) 
-	#define CAL_iecvaraccunregisterinstance  iecvaraccunregisterinstance
-	#define CHK_iecvaraccunregisterinstance  TRUE
-	#define EXP_iecvaraccunregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccunregisterinstance", (RTS_UINTPTR)iecvaraccunregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0xEDB8227D), 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccunregisterinstance  PFIECVARACCUNREGISTERINSTANCE_IEC pfiecvaraccunregisterinstance;
-	#define EXT_iecvaraccunregisterinstance  extern PFIECVARACCUNREGISTERINSTANCE_IEC pfiecvaraccunregisterinstance;
-	#define GET_iecvaraccunregisterinstance(fl)  s_pfCMGetAPI2( "iecvaraccunregisterinstance", (RTS_VOID_FCTPTR *)&pfiecvaraccunregisterinstance, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xEDB8227D), 0x03050D00)
-	#define CAL_iecvaraccunregisterinstance  pfiecvaraccunregisterinstance
-	#define CHK_iecvaraccunregisterinstance  (pfiecvaraccunregisterinstance != NULL)
-	#define EXP_iecvaraccunregisterinstance   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccunregisterinstance", (RTS_UINTPTR)iecvaraccunregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0xEDB8227D), 0x03050D00) 
-#endif
-
-
-/**
- * <description>iecvaraccupdatesymbolsets</description>
- */
-typedef struct tagiecvaraccupdatesymbolsets_struct
-{
-	RTS_IEC_HANDLE hInterface;			/* VAR_INPUT */	
-	IecVarAccSymbolSetDescription *pSymbolsSets;	/* VAR_INPUT */	
-	RTS_IEC_UDINT numOfSymbolsSets;		/* VAR_INPUT */	
-	RTS_IEC_RESULT IecVarAccUpdateSymbolSets;	/* VAR_OUTPUT */	
-} iecvaraccupdatesymbolsets_struct;
-
-void CDECL CDECL_EXT iecvaraccupdatesymbolsets(iecvaraccupdatesymbolsets_struct *p);
-typedef void (CDECL CDECL_EXT* PFIECVARACCUPDATESYMBOLSETS_IEC) (iecvaraccupdatesymbolsets_struct *p);
-#if defined(CMPIECVARACCESS_NOTIMPLEMENTED) || defined(IECVARACCUPDATESYMBOLSETS_NOTIMPLEMENTED)
-	#define USE_iecvaraccupdatesymbolsets
-	#define EXT_iecvaraccupdatesymbolsets
-	#define GET_iecvaraccupdatesymbolsets(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_iecvaraccupdatesymbolsets(p0) 
-	#define CHK_iecvaraccupdatesymbolsets  FALSE
-	#define EXP_iecvaraccupdatesymbolsets  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_iecvaraccupdatesymbolsets
-	#define EXT_iecvaraccupdatesymbolsets
-	#define GET_iecvaraccupdatesymbolsets(fl)  CAL_CMGETAPI( "iecvaraccupdatesymbolsets" ) 
-	#define CAL_iecvaraccupdatesymbolsets  iecvaraccupdatesymbolsets
-	#define CHK_iecvaraccupdatesymbolsets  TRUE
-	#define EXP_iecvaraccupdatesymbolsets  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccupdatesymbolsets", (RTS_UINTPTR)iecvaraccupdatesymbolsets, 1, 0xF81481F0, 0x03050D00) 
-#elif defined(MIXED_LINK) && !defined(CMPIECVARACCESS_EXTERNAL)
-	#define USE_iecvaraccupdatesymbolsets
-	#define EXT_iecvaraccupdatesymbolsets
-	#define GET_iecvaraccupdatesymbolsets(fl)  CAL_CMGETAPI( "iecvaraccupdatesymbolsets" ) 
-	#define CAL_iecvaraccupdatesymbolsets  iecvaraccupdatesymbolsets
-	#define CHK_iecvaraccupdatesymbolsets  TRUE
-	#define EXP_iecvaraccupdatesymbolsets  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccupdatesymbolsets", (RTS_UINTPTR)iecvaraccupdatesymbolsets, 1, 0xF81481F0, 0x03050D00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpIecVarAccessiecvaraccupdatesymbolsets
-	#define EXT_CmpIecVarAccessiecvaraccupdatesymbolsets
-	#define GET_CmpIecVarAccessiecvaraccupdatesymbolsets  ERR_OK
-	#define CAL_CmpIecVarAccessiecvaraccupdatesymbolsets  iecvaraccupdatesymbolsets
-	#define CHK_CmpIecVarAccessiecvaraccupdatesymbolsets  TRUE
-	#define EXP_CmpIecVarAccessiecvaraccupdatesymbolsets  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccupdatesymbolsets", (RTS_UINTPTR)iecvaraccupdatesymbolsets, 1, 0xF81481F0, 0x03050D00) 
-#elif defined(CPLUSPLUS)
-	#define USE_iecvaraccupdatesymbolsets
-	#define EXT_iecvaraccupdatesymbolsets
-	#define GET_iecvaraccupdatesymbolsets(fl)  CAL_CMGETAPI( "iecvaraccupdatesymbolsets" ) 
-	#define CAL_iecvaraccupdatesymbolsets  iecvaraccupdatesymbolsets
-	#define CHK_iecvaraccupdatesymbolsets  TRUE
-	#define EXP_iecvaraccupdatesymbolsets  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccupdatesymbolsets", (RTS_UINTPTR)iecvaraccupdatesymbolsets, 1, 0xF81481F0, 0x03050D00) 
-#else /* DYNAMIC_LINK */
-	#define USE_iecvaraccupdatesymbolsets  PFIECVARACCUPDATESYMBOLSETS_IEC pfiecvaraccupdatesymbolsets;
-	#define EXT_iecvaraccupdatesymbolsets  extern PFIECVARACCUPDATESYMBOLSETS_IEC pfiecvaraccupdatesymbolsets;
-	#define GET_iecvaraccupdatesymbolsets(fl)  s_pfCMGetAPI2( "iecvaraccupdatesymbolsets", (RTS_VOID_FCTPTR *)&pfiecvaraccupdatesymbolsets, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xF81481F0, 0x03050D00)
-	#define CAL_iecvaraccupdatesymbolsets  pfiecvaraccupdatesymbolsets
-	#define CHK_iecvaraccupdatesymbolsets  (pfiecvaraccupdatesymbolsets != NULL)
-	#define EXP_iecvaraccupdatesymbolsets   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iecvaraccupdatesymbolsets", (RTS_UINTPTR)iecvaraccupdatesymbolsets, 1, 0xF81481F0, 0x03050D00) 
-#endif
-
-
-#ifdef __cplusplus
-}
-#endif
-
-/** EXTERN LIB SECTION END **/
-
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -2282,8 +600,8 @@ typedef void (CDECL *PF_IECVARACC_BROWSECALLBACK)(IecVarAccBrowseCallback *pBrow
  * <description>Initialize the VarInfo.
  *	NOTE:
  *	You can cast a VariableInformationStruct3 to VariableInformationStruct2, but the nSizeOfVarInfo must match the real VariableInformationStruct3!</description>
- * <param name="pVarInfo" type="IN">Pointer to varinfo to intialize</param>
- * <param name="nSizeOfVarInfo" type="IN">Size of the varinfo</param>
+ * <param name="pVarInfo" type="IN">Pointer to variable information to initialize</param>
+ * <param name="nSizeOfVarInfo" type="IN">Size of the variable information</param>
  * <result>Error code</result>
  */
 RTS_RESULT CDECL IecVarAccInitVarInfo(VariableInformationStruct2 *pVarInfo, RTS_UI16 nSizeOfVarInfo);
@@ -2339,8 +657,8 @@ typedef RTS_RESULT (CDECL * PFIECVARACCINITVARINFO) (VariableInformationStruct2 
  * <description>Initialize the VarInfo.
  *	NOTE:
  *	You can cast any VariableInformationStruct to VariableInformationStruct2, but the nSizeOfVarInfo must match the size of the given structure.</description>
- * <param name="pVarInfo" type="IN">Pointer to varinfo to intialize</param>
- * <param name="nSizeOfVarInfo" type="IN">Size of the varinfo</param>
+ * <param name="pVarInfo" type="IN">Pointer to variable information to initialize</param>
+ * <param name="nSizeOfVarInfo" type="IN">Size of the variable information</param>
  * <param name="hUser" type="IN">Handle to user used by this session. Will be used to check access rights.</param>
  * <result>Error code</result>
  */
@@ -2397,7 +715,7 @@ typedef RTS_RESULT (CDECL * PFIECVARACCINITVARINFO2) (VariableInformationStruct2
  * <description>Release the VarInfo.
  *	NOTE:
  *	You can cast a VariableInformationStruct3 to VariableInformationStruct2, but the nSizeOfVarInfo must match the real VariableInformationStruct3!</description>
- * <param name="pVarInfo" type="IN">Pointer to varinfo to release</param>
+ * <param name="pVarInfo" type="IN">Pointer to variable information to release</param>
  * <result>Error code</result>
  */
 RTS_RESULT CDECL IecVarAccExitVarInfo(VariableInformationStruct2 *pVarInfo);
@@ -2454,8 +772,8 @@ typedef RTS_RESULT (CDECL * PFIECVARACCEXITVARINFO) (VariableInformationStruct2 
  *	NOTE:
  *	pVariableInformationDest must be initialized with IecVarAccInitVarInfo() before calling this function!
  * </description>
- * <param name="pVariableInformationDest" type="INOUT">Pointer to destination varinfo to copy to</param>
- * <param name="pVariableInformationSrc" type="IN">Pointer to source varinfo to copy from</param>
+ * <param name="pVariableInformationDest" type="INOUT">Pointer to destination variable information to copy to</param>
+ * <param name="pVariableInformationSrc" type="IN">Pointer to source variable information to copy from</param>
  * <result>Error code</result>
  */
 RTS_RESULT CDECL IecVarAccCopyVarInfo(VariableInformationStruct2 *pVariableInformationDest, VariableInformationStruct2 *pVariableInformationSrc);
@@ -4700,9 +3018,9 @@ typedef RTS_HANDLE (CDECL * PFIECVARACCGETNODE3) (char *pszPath, RTS_HANDLE *phI
 
 
 /**
- * <description>Get the leaf node handle and varinfo (with browseinfo) of the specified variable.
+ * <description>Get the leaf node handle and variable information (with browseinfo) of the specified variable.
  *	NOTE:
- *	This function addtionally adds the browse info to the VariableInformationStruct3 structure! So this is a time consuming process.
+ *	This function additionally adds the browse info to the VariableInformationStruct3 structure! So this is a time consuming process.
  *	But with this you can use the following functions with this info:
  *	- IecVarAccBrowseDown2
  *	- IecVarAccBrowseGetNext2
@@ -4783,7 +3101,7 @@ typedef RTS_HANDLE (CDECL * PFIECVARACCGETNODE4) (char *pszPath, RTS_HANDLE *phI
  * <description>Get full namespace/path of the specified node (e.g. "Application1.GVL.A"</description>
  * <param name="hInterface" type="IN">Handle to the symbolic interface</param>
  * <param name="hNode" type="IN">Handle to the node</param>
- * <param name="pszPath" type="OUT">Pointer to get full path. Can be NULL to retrieve the lenght of the path.</param>
+ * <param name="pszPath" type="OUT">Pointer to get full path. Can be NULL to retrieve the length of the path.</param>
  * <param name="iMaxPath" type="IN">Max length of pszPath</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <result>Number of characters copied to pszPath:
@@ -4851,7 +3169,7 @@ typedef int (CDECL * PFIECVARACCGETNODEFULLPATH) (RTS_HANDLE hInterface, RTS_HAN
  * <param name="hNode" type="IN">Handle to the node</param>
  * <param name="pVariableInformation" type="IN">Pointer to the variable information that is retrieved by IecVarAccGetNode3</param>
  * <param name="pszPath" type="IN">Pointer to get full path</param>
- * <param name="iMaxPath" type="IN">Max length of pszPath</param>
+ * <param name="iMaxPath" type="IN">Max length of pszPath. Valid range: [0; 16#7FFFFFFF] (negative number make no sense); values > 16#7FFF will be trimmed to 16#7FFF.</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <result>Number of characters copied to pszPath (not including NUL termination):
  *	<ul>
@@ -4918,7 +3236,7 @@ typedef int (CDECL * PFIECVARACCGETNODEFULLPATH3) (RTS_HANDLE hInterface, RTS_HA
  * <param name="hNode" type="IN">Handle to the node</param>
  * <param name="pVariableInformation" type="IN">Pointer to the variable information that is retrieved by all functions with VariableInformationStruct3 as a parameter!</param>
  * <param name="pszPath" type="IN">Pointer to get full path</param>
- * <param name="iMaxPath" type="IN">Max length of pszPath</param>
+ * <param name="iMaxPath" type="IN">Max length of pszPath. Valid range: [0; 16#7FFFFFFF] (negative number make no sense); values > 16#7FFF will be trimmed to 16#7FFF.</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <result>Number of characters copied to pszPath (not including NUL termination):
  *	<ul>
@@ -5207,8 +3525,8 @@ typedef AccessRights (CDECL * PFIECVARACCGETACCESSRIGHTS) (RTS_HANDLE hInterface
  * <description>Get access rights of the specified symbolic node</description>
  * <param name="hInterface" type="IN">Handle to the symbolic interface</param>
  * <param name="hNode" type="IN">Handle to the node</param>
- * <param name="pVariableInformation" type="IN">Pointer to the variable information struct. Use IecVarAccInitVarInfo2 for proper access right checks.</param>
- * <param name="bGetUserRights" type="IN">Flag wather the maximum access rights (FALSE) or the access rights according to the user (TRUE) should be retrieved.</param>
+ * <param name="pVariableInformation" type="IN">Pointer to the variable information structure. Use IecVarAccInitVarInfo2 for proper access right checks.</param>
+ * <param name="bGetUserRights" type="IN">Flag whether the maximum access rights (FALSE) or the access rights according to the user (TRUE) should be retrieved.</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <result>Access rights</result>
  */
@@ -6250,7 +4568,7 @@ typedef RTS_SIZE (CDECL * PFIECVARACCSWAP3) (RTS_HANDLE hInterface, RTS_HANDLE h
 
 
 /**
- * <description>Get the type node of the specified symbolic node. For arays, only the array type is retrieved!</description>
+ * <description>Get the type node of the specified symbolic node. For arrays, only the array type is retrieved!</description>
  * <param name="hInterface" type="IN">Handle to the symbolic interface</param>
  * <param name="hNode" type="IN">Handle to the node</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
@@ -6425,8 +4743,8 @@ typedef RTS_HANDLE (CDECL * PFIECVARACCGETTYPENODE3) (RTS_HANDLE hInterface, RTS
  * <param name="hTypeNode" type="IN">Handle to the type node (is retrieved by IecVarAccGetTypeNode or IecVarAccGetTypeNode2)</param>
  * <param name="pTypeDesc" type="OUT">Pointer to get type description as a C-structure.
  *	NOTE:
- *	You can call this function the first time by setting all members of pTypeDesc to 0. Then you get for user defined types (structures or functionblocks)
- *	the number of the member variables. This is retreived in pTypeDesc-&amp;gt;_union._struct._Components. Then you can allocate an array with the number of member elements
+ *	You can call this function the first time by setting all members of pTypeDesc to 0. Then you get for user defined types (structures or function blocks)
+ *	the number of the member variables. This is retrieved in pTypeDesc-&amp;gt;_union._struct._Components. Then you can allocate an array with the number of member elements
  *	and can call IecVarAccGetTypeDesc() a second time.
  *	Example:
  *		TypeDescAsUnion typeDesc;
@@ -6499,7 +4817,7 @@ typedef RTS_RESULT (CDECL * PFIECVARACCGETTYPEDESC) (RTS_HANDLE hInterface, RTS_
  * <param name="pVariableInformation" type="IN">Pointer to the variable information that is retrieved by IecVarAccGetNode3</param>
  * <param name="pszAdressInfo" type="OUT">Pointer to the string to get the address info.
  *	NOTE:
- *		 - All address infos are calclulated out of its physical addresses! So the offset is correct but must not be identical to the
+ *		 - All address infos are calculated out of its physical addresses! So the offset is correct but must not be identical to the
  *			declared address as in CoDeSys!
  *			Examples:
  *				o w AT "%IB2" : WORD	==> "%IW1"
@@ -6569,7 +4887,7 @@ typedef RTS_RESULT (CDECL * PFIECVARACCGETADDRESSINFO) (RTS_HANDLE hInterface, R
 /**
  * <description>Get the number of defined data types.
  *	NOTE:
- *	Only supported if OPC UA support is activated in the symbolconfiguration in CODESYS!</description>
+ *	Only supported if OPC UA support is activated in the symbol configuration in CODESYS!</description>
  * <param name="hInterface" type="IN">Handle to the symbolic interface</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <result>Number of defined data types</result>
@@ -6626,7 +4944,7 @@ typedef RTS_I32 (CDECL * PFIECVARACCGETNUMOFTYPES) (RTS_HANDLE hInterface, RTS_R
 /**
  * <description>Get the type node handle specified by type index.
  *	NOTE:
- *	Only supported if OPC UA support is activated in the symbolconfiguration in CODESYS!
+ *	Only supported if OPC UA support is activated in the symbol configuration in CODESYS!
  * </description>
  * <param name="hInterface" type="IN">Handle to the symbolic interface</param>
  * <param name="nIndex" type="IN">Type index</param>
@@ -6683,9 +5001,9 @@ typedef RTS_HANDLE (CDECL * PFIECVARACCGETTYPENODEBYINDEX) (RTS_HANDLE hInterfac
 
 
 /**
- * <description>Get the type name, if it is a userdefined type (structure or function block).
+ * <description>Get the type name, if it is a user defined type (structure or function block).
  *	NOTE:
- *	Only supported if OPC UA support is activated in the symbolconfiguration in CODESYS!
+ *	Only supported if OPC UA support is activated in the symbol configuration in CODESYS!
  * </description>
  * <param name="hInterface" type="IN">Handle to the symbolic interface</param>
  * <param name="hTypeNode" type="IN">Handle to the type node</param>
@@ -6858,7 +5176,7 @@ typedef POUClass (CDECL * PFIECVARACCGETPOUCLASS) (RTS_HANDLE hInterface, RTS_HA
 
 
 /**
- * <description>Get the node flags of a specified node. Is typically used in memmer node of a struct/functionblock etc. to get the storage class info (VAR_INPUT, VAR_OUTPUT, etc.)</description>
+ * <description>Get the node flags of a specified node. Is typically used in member node of a structure/function block etc. to get the storage class info (VAR_INPUT, VAR_OUTPUT, etc.)</description>
  * <param name="hInterface" type="IN">Handle to the symbolic interface</param>
  * <param name="hNode" type="IN">Handle to the node</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
@@ -6925,7 +5243,7 @@ typedef RTS_UI32 (CDECL * PFIECVARACCGETNODEFLAGS) (RTS_HANDLE hInterface, RTS_H
  * <param name="hInterface" type="IN">Handle to the symbolic interface</param>
  * <param name="hNode" type="IN">Handle to the node</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <result>Number of specified attributes at this symblic node</result>
+ * <result>Number of specified attributes at this symbolic node</result>
  */
 RTS_UI16 CDECL IecVarAccGetNumOfAttributes(RTS_HANDLE hInterface, RTS_HANDLE hNode, RTS_RESULT *pResult);
 typedef RTS_UI16 (CDECL * PFIECVARACCGETNUMOFATTRIBUTES) (RTS_HANDLE hInterface, RTS_HANDLE hNode, RTS_RESULT *pResult);
@@ -7040,12 +5358,12 @@ typedef char* (CDECL * PFIECVARACCGETATTRIBUTEBYINDEX) (RTS_HANDLE hInterface, R
 
 
 /**
- * <description>Get the enum values of an IEC Enum type</description>
+ * <description>Get the enumeration values of an IEC enumeration type</description>
  * <param name="hInterface" type="IN">Handle to the symbolic interface</param>
  * <param name="hTypeNode" type="IN">Handle to the type node (is retrieved by IecVarAccGetTypeNode or IecVarAccGetTypeNode2)</param>
- * <param name="pui16NumOfEnums" type="OUT">Pointer to the number of enum values in the returned array</param>
+ * <param name="pui16NumOfEnums" type="OUT">Pointer to the number of enumeration values in the returned array</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <result>Pointer to the array of enum values or NULL if it is not supported or this is no enum type</result>
+ * <result>Pointer to the array of enumeration values or NULL if it is not supported or this is no enumeration type</result>
  */
 EnumValues* CDECL IecVarAccGetEnumValues(RTS_HANDLE hInterface, RTS_HANDLE hTypeNode, RTS_I16 *pi16NumOfEnums, RTS_RESULT *pResult);
 typedef EnumValues* (CDECL * PFIECVARACCGETENUMVALUES) (RTS_HANDLE hInterface, RTS_HANDLE hTypeNode, RTS_I16 *pi16NumOfEnums, RTS_RESULT *pResult);
@@ -7405,7 +5723,7 @@ typedef RTS_SIZE (CDECL * PFIECVARACCGETNATIVESIZE) (RTS_HANDLE hInterface, RTS_
 
 
 /**
- * <description>Get the attributes of single enum values.
+ * <description>Get the attributes of single enumeration values.
  * Attention: The pAttributes member of the EnumAttributes return value is basically not a char*** but a char**
  * Use a construct like this to get the attributes: EnumAttributes[i].pAttributes[j] 
  * </description>
@@ -7413,10 +5731,10 @@ typedef RTS_SIZE (CDECL * PFIECVARACCGETNATIVESIZE) (RTS_HANDLE hInterface, RTS_
  * <param name="hTypeNode" type="IN">Handle to the symbolic type node</param>
  * <param name="pnNumOfEnumValues" type="OUT">Number of elements in the returned array.</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Attributes of enum values are available.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Attributes of enumeration values are available.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid parameter (one of the handles is invalid)</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">IecVarAccess interface in IEC code not available</errorcode>
- * <result>Pointer to an array of attributes of enum values.</result>
+ * <result>Pointer to an array of attributes of enumeration values.</result>
  */
 EnumAttributes* CDECL IecVarAccGetEnumMemberAttributeList(RTS_HANDLE hInterface, RTS_HANDLE hTypeNode, RTS_I16* pnNumOfEnumValues, RTS_RESULT* pResult);
 typedef EnumAttributes* (CDECL * PFIECVARACCGETENUMMEMBERATTRIBUTELIST) (RTS_HANDLE hInterface, RTS_HANDLE hTypeNode, RTS_I16* pnNumOfEnumValues, RTS_RESULT* pResult);
@@ -7472,7 +5790,7 @@ typedef EnumAttributes* (CDECL * PFIECVARACCGETENUMMEMBERATTRIBUTELIST) (RTS_HAN
  * <param name="hInterface" type="IN">Handle to the symbolic interface</param>
  * <param name="hTypeNode" type="IN">Handle to the symbolic type node</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Attributes of enum values are available.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Attributes of enumeration values are available.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid parameter (one of the handles is invalid)</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">IecVarAccess interface in IEC code not available</errorcode>
  * <result>Number of available attributes</result>
@@ -7532,7 +5850,7 @@ typedef RTS_UI16 (CDECL * PFIECVARACCGETNUMOFTYPEATTRIBUTES) (RTS_HANDLE hInterf
  * <param name="hTypeNode" type="IN">Handle to the symbolic type node</param>
  * <param name="wIndex" type="IN">Index of the attribute to get. Use IecVarAccGetNumOfTypeAttributes to get the maximum index.</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Attributes of enum values are available.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Attributes of enumeration values are available.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid parameter (one of the handles is invalid)</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">IecVarAccess interface in IEC code not available</errorcode>
  * <result>Content of attributes</result>
@@ -7593,7 +5911,7 @@ typedef char* (CDECL * PFIECVARACCGETTYPEATTRIBUTEBYINDEX) (RTS_HANDLE hInterfac
  * <param name="pLower" type="OUT">Pointer where to store the minimum accepted value.</param>
  * <param name="pUpper" type="OUT">Pointer where to store the maximum accepted value.</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Attributes of enum values are available.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Attributes of enumeration values are available.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid parameter (one of the handles is invalid)</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">IecVarAccess interface in IEC code not available</errorcode>
  * <result>Content of attributes</result>
@@ -7717,7 +6035,7 @@ typedef RTS_RESULT (CDECL * PFIECVARACCGETCONTENTFEATUREFLAGS) (RTS_HANDLE hInte
  * <param name="nArgumentBufferSize" type="IN">Size of the parameter structure</param>
  * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">One of the parameters was invalid.</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">Symbolconfiguration not initialized</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">Symbol configuration not initialized</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Internal error.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">IecVarAccess interface in IEC code not available</errorcode>
  */

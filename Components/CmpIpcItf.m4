@@ -5,14 +5,14 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
 SET_INTERFACE_NAME(`CmpIpc')
 
 /**
- * <description>Setting that decides about the size of the sharedmemory that is used for the inter
+ * <description>Setting that decides about the size of the shared memory that is used for the inter
  *	process communication. This size limits the maximal size of data that can be transferred withing one call. 
  *	The size for the data that can be used is about one half of this size for parameters to the call 
  *	as well as return values. </description>
@@ -22,7 +22,7 @@ SET_INTERFACE_NAME(`CmpIpc')
 #define CMPIPC_KEY_SHAREDMEMSIZE_DEFAULT		INT32_C(5000)
 
 /**
- * <description>Setting that decides about basename for the shared memory used for the communication of the channel. </description>
+ * <description>Setting that decides about base name for the shared memory used for the communication of the channel. </description>
  *
  */
 #define CMPIPC_KEY_SHAREDMEM_BASENAME				"SharedMemBaseName"
@@ -46,7 +46,7 @@ SET_INTERFACE_NAME(`CmpIpc')
 
 /**
  * <description>Setting that decides about the time the task that is polling for calls or returns will sleep after
- *	it has done its work. Increasing this time will reduce cpuload for ipchandling but will also increase
+ *	it has done its work. Increasing this time will reduce CPU load for IPC handling but will also increase
  *	the latency for a call or result to be detected. This value is in milliseconds. </description>
  *
  */	
@@ -85,14 +85,14 @@ DEF_API(`RTS_RESULT',`CDECL',`IpcOpen',`(char* pszName, RTS_HANDLE* phReturn)')
 DEF_API(`RTS_RESULT',`CDECL',`IpcClose',`(RTS_HANDLE hIpc)')
 
 /**
- * <description> Function that must be called before unregistering callbacks on the server side of an ipc channel.</description>
- * <param name="hIpc" type="IN">Handle to the ipc communcation channel.</param>
+ * <description> Function that must be called before unregistering callbacks on the server side of an IPC channel.</description>
+ * <param name="hIpc" type="IN">Handle to the IPC communication channel.</param>
  * <result>ERR_OK</result>
  */
 DEF_API(`RTS_RESULT',`CDECL',`IpcStop',`(RTS_HANDLE hIpc)')
 
 /**
- * <description> Callback function for the ipc-mechanism </description>
+ * <description> Callback function for the IPC-mechanism </description>
  * <param name="hParam" type="IN">Handle to the parameters to this call.</param>
  * <param name="phResultParam" type="OUT">The result of this call, if RTS_INVALID_HANDLE will be set to this parameter, 
  *	than a parameter of type IPC_TYPE_VOID will be returned to the caller. </param>
@@ -102,7 +102,7 @@ DEF_API(`RTS_RESULT',`CDECL',`IpcStop',`(RTS_HANDLE hIpc)')
 typedef RTS_RESULT (CDECL *PFIPCHANDLER)(RTS_HANDLE hParam, RTS_HANDLE* phResultParam, RTS_UINTPTR ulParam);
 
 /**
- * <description> Register a handler for a method that should be called via the ipc-mechanism. </description>
+ * <description> Register a handler for a method that should be called via the IPC-mechanism. </description>
  * <param name="hIpc" type="IN">Handle to the IPC-instance</param>
  * <param name="pszMethod" type="IN">Name of the registered method.</param>
  * <param name="pfHandler" type="IN">The callback method.</param>
@@ -114,13 +114,13 @@ DEF_API(`RTS_RESULT',`CDECL',`IpcRegisterHandler',`(RTS_HANDLE hIpc, char* pszMe
 DEF_API(`RTS_RESULT',`CDECL',`IpcUnregisterHandler',`(RTS_HANDLE hIpc, char* pszMethod)')
 
 /**
- * <description> Call a method via the ipc-mechanism. </description>
+ * <description> Call a method via the IPC-mechanism. </description>
  * <param name="hIpc" type="IN">Handle to the IPC-instance</param>
  * <param name="pszMethod" type="IN">Name of the method to call.</param>
  * <param name="hParams" type="IN">The parameter that will be used for the call. In case of RTS_INVALID_HANDLE a parameter of type 
- *	IPC_TYPE_VOID will be used for the call. The paramter given here must not be freed after a IpcCall! </param>
- * <param name="phResult" type="OUT">The pointer will recieve the result of the call. 
- *	The paramter returned here must be freed after a IpcCall! </param>
+ *	IPC_TYPE_VOID will be used for the call. The parameter given here must not be freed after a IpcCall! </param>
+ * <param name="phResult" type="OUT">The pointer will receive the result of the call. 
+ *	The parameter returned here must be freed after a IpcCall! </param>
  * <param name="iTimeOutMs" type="IN">The maximal time that will be waited for the return of the call</param>
  * <result>ERR_OK if the call succeeded, ERR_PARAMETER in case of invalid parameters to this call, ERR_TIMOUT if the current call
  *	timed out or ERR_PENDING if the communication channel is still blocked due to a previously timed out call.</result>
@@ -130,7 +130,7 @@ DEF_API(`RTS_RESULT',`CDECL',`IpcCall',`(RTS_HANDLE hIpc, char* pszMethod, RTS_H
 /**
  * <description> This function creates a new parameter and returns a handle to it. </description>
  * <param name="pszName" type="IN">Optional name of the parameter, may be NULL if no name is needed. </param>
- * <param name="phResult" type="OUT">Pointer that will recieve the created parameter. </param>
+ * <param name="phResult" type="OUT">Pointer that will receive the created parameter. </param>
  * <result>ERR_OK or ERR_PARAMETER</result>
  */
 DEF_API(`RTS_RESULT',`CDECL',`IpcCreateParam',`(char* pszName, RTS_HANDLE* phResult)')
@@ -153,7 +153,7 @@ DEF_API(`RTS_RESULT',`CDECL',`IpcFreeParam',`(RTS_HANDLE hParam)')
  * <description> This function sets the value in a parameter. If you call this function on a structured parameter, then all members of 
  *	the structure will be freed, so they may not be access afterwards. </description>
  * <param name="iType" type="IN">The type of the given value, one of the IPC_TYPE_... constants without IPC_TYPE_STRUCTURED.</param>
- * <param name="iSize" type="IN">This parameter is only needed for types with an unknown size ie. strings or binary. </param>
+ * <param name="iSize" type="IN">This parameter is only needed for types with an unknown size i.e. strings or binary. </param>
  * <param name="pData" type="OUT">Pointer to the data of the value to set. This data will be copied, so it can be deleted after the call. </param>
  * <result>ERR_OK or ERR_PARAMETER</result>
  */
@@ -163,8 +163,8 @@ DEF_API(`RTS_RESULT',`CDECL',`IpcParamSetValue',`(RTS_HANDLE hParam, RTS_I32 iTy
  * <description> This function returns the value of a parameter. The value will be copied to the buffer pointed
  *	to by pBuffer. </description>
  * <param name="hParam" type="IN">Handle to the parameter</param>
- * <param name="piSize" type="INOUT">Pointer to a int that contains the size of the buffer as an IN-param, 
- *	and after the call will contain the size of the used buffer as an OUT-param. For Types with fixed sizes
+ * <param name="piSize" type="INOUT">Pointer to a int that contains the size of the buffer as an IN-parameter, 
+ *	and after the call will contain the size of the used buffer as an OUT-parameter. For Types with fixed sizes
  *	like IPC_TYPE_BOOLEAN or IPC_TYPE_DWORD this parameter may be NULL. </param>
  * <param name="pBuffer" type="IN">Buffer where the data should be copied to. If NULL, only the size will be returned.  </param>
  * <result>ERR_OK or ERR_PARAMETER or ERR_NOBUFFER, if the given size of pBuffer is too small</result>
@@ -182,7 +182,7 @@ DEF_API(`RTS_RESULT',`CDECL',`IpcParamGetName',`(RTS_HANDLE hParam, char** ppszN
 /**
  * <description> This function returns the type of a given parameter. </description>
  * <param name="hParam" type="IN">Handle to the parameter</param>
- * <param name="piType" type="OUT">Pointer that will recieve the type of this parameter as one of the IPC_TYPE_... values. </param>
+ * <param name="piType" type="OUT">Pointer that will receive the type of this parameter as one of the IPC_TYPE_... values. </param>
  * <result>ERR_OK or ERR_PARAMETER</result>
  */
 DEF_API(`RTS_RESULT',`CDECL',`IpcParamGetType',`(RTS_HANDLE hParam, RTS_I32* piType)')

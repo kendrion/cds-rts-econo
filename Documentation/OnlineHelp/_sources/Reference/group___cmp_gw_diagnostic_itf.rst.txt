@@ -1,0 +1,344 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_gw_diagnostic_itf:
+
+==================
+CmpGwDiagnosticItf
+==================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpGwDiagnostic.
+
+Detailed Description
+--------------------
+
+This interface provides diagnostic access to the gateway. It allows other components to register as a listener. After that they will be informed about activities in the gateway like addition of new channels, closing of channels, connected clients, etc. It also allows the client to query the state of several objects. The state of a channel for example includes the number of open requests or the current quality (error rate, round-trip-time).
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Data Structures
+---------------
+
+- struct :ref:`GWDPROPERTY <struct_g_w_d_p_r_o_p_e_r_t_y>`
+
+- struct :ref:`GWDOBJECTINFO <struct_g_w_d_o_b_j_e_c_t_i_n_f_o>`
+
+- struct :ref:`GWDCOMMDRVINFO <struct_g_w_d_c_o_m_m_d_r_v_i_n_f_o>`
+
+- struct :ref:`GWDCLIENTINFO <struct_g_w_d_c_l_i_e_n_t_i_n_f_o>`
+
+- struct :ref:`GWDCHANNELINFO <struct_g_w_d_c_h_a_n_n_e_l_i_n_f_o>`
+
+- struct :ref:`GWDVIRTUALCHANNELINFO <struct_g_w_d_v_i_r_t_u_a_l_c_h_a_n_n_e_l_i_n_f_o>`
+
+- struct :ref:`GWDVIRTUALCHANNELREFINFO <struct_g_w_d_v_i_r_t_u_a_l_c_h_a_n_n_e_l_r_e_f_i_n_f_o>`
+
+- struct :ref:`GWDCHANNELSTATE <struct_g_w_d_c_h_a_n_n_e_l_s_t_a_t_e>`
+
+- struct :ref:`GWDLISTENERCALLBACKS <struct_g_w_d_l_i_s_t_e_n_e_r_c_a_l_l_b_a_c_k_s>`
+
+- struct :ref:`ICmpGwDiagnostic_C <struct_i_cmp_gw_diagnostic___c>`
+
+Macros
+------
+
+- #define :ref:`USE_GWDRegisterListener <group___cmp_gw_diagnostic_itf_1ga57fbba1ca466d3ab688a2fe4c31f700c>` :ref:`PFGWDREGISTERLISTENER <group___cmp_gw_diagnostic_itf_1ga6a78696e0b69916a0aea7ee6eec8145c>` pfGWDRegisterListener;
+
+- #define :ref:`EXT_GWDRegisterListener <group___cmp_gw_diagnostic_itf_1gab29565d7810ae66bf5adf7fe2d724b10>` extern :ref:`PFGWDREGISTERLISTENER <group___cmp_gw_diagnostic_itf_1ga6a78696e0b69916a0aea7ee6eec8145c>` pfGWDRegisterListener;
+
+- #define :ref:`GET_GWDRegisterListener <group___cmp_gw_diagnostic_itf_1ga2f42eb7a125922b76d5146cd8f5f1f86>` s_pfCMGetAPI2( "GWDRegisterListener", (RTS_VOID_FCTPTR *)&pfGWDRegisterListener, (fl), 0, 0)
+
+- #define :ref:`CAL_GWDRegisterListener <group___cmp_gw_diagnostic_itf_1gaab5d3469972af69204a73c66cc1180ae>` pfGWDRegisterListener
+
+- #define :ref:`CHK_GWDRegisterListener <group___cmp_gw_diagnostic_itf_1ga9b2b423abfd6bddc1a229a3a7a6f1a34>` (pfGWDRegisterListener != NULL)
+
+- #define :ref:`EXP_GWDRegisterListener <group___cmp_gw_diagnostic_itf_1ga977e0dc1382aacf531c9b92c17ef3b82>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWDRegisterListener", (RTS_UINTPTR) :ref:`GWDRegisterListener <group___cmp_gw_diagnostic_itf_1gaf28e953694e5387b92746b18ca97ebc2>` , 0, 0)
+
+- #define :ref:`USE_GWDUnregisterListener <group___cmp_gw_diagnostic_itf_1gacf9c8886aad95987b0c04ad9a613ca95>` :ref:`PFGWDUNREGISTERLISTENER <group___cmp_gw_diagnostic_itf_1gaf723e7bd476cc3eb37424b719eb6a35d>` pfGWDUnregisterListener;
+
+- #define :ref:`EXT_GWDUnregisterListener <group___cmp_gw_diagnostic_itf_1gac5389b743e22317a460bff72845b8456>` extern :ref:`PFGWDUNREGISTERLISTENER <group___cmp_gw_diagnostic_itf_1gaf723e7bd476cc3eb37424b719eb6a35d>` pfGWDUnregisterListener;
+
+- #define :ref:`GET_GWDUnregisterListener <group___cmp_gw_diagnostic_itf_1ga11f3bf2e3e3fef5f16b27958e7e65058>` s_pfCMGetAPI2( "GWDUnregisterListener", (RTS_VOID_FCTPTR *)&pfGWDUnregisterListener, (fl), 0, 0)
+
+- #define :ref:`CAL_GWDUnregisterListener <group___cmp_gw_diagnostic_itf_1ga893a49e08c499880bbecad2e0ae93a87>` pfGWDUnregisterListener
+
+- #define :ref:`CHK_GWDUnregisterListener <group___cmp_gw_diagnostic_itf_1ga1241e241aab44e830852b36eb5833ec5>` (pfGWDUnregisterListener != NULL)
+
+- #define :ref:`EXP_GWDUnregisterListener <group___cmp_gw_diagnostic_itf_1ga18e76b3955f60b70d4802b305e88b172>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWDUnregisterListener", (RTS_UINTPTR) :ref:`GWDUnregisterListener <group___cmp_gw_diagnostic_itf_1ga253d1e45e741d28d60231d25f62a46c3>` , 0, 0)
+
+- #define :ref:`USE_GWDGetChannelState <group___cmp_gw_diagnostic_itf_1gaf221a72e44e791db26c0c7faaca960be>` :ref:`PFGWDGETCHANNELSTATE <group___cmp_gw_diagnostic_itf_1ga71ef3ba6f86830a33dd4762eee5074f8>` pfGWDGetChannelState;
+
+- #define :ref:`EXT_GWDGetChannelState <group___cmp_gw_diagnostic_itf_1gab4843a7b8bcd260d7f9c13e4cc386304>` extern :ref:`PFGWDGETCHANNELSTATE <group___cmp_gw_diagnostic_itf_1ga71ef3ba6f86830a33dd4762eee5074f8>` pfGWDGetChannelState;
+
+- #define :ref:`GET_GWDGetChannelState <group___cmp_gw_diagnostic_itf_1ga5b98e5edc7f3ce688c7b2f83bba9e575>` s_pfCMGetAPI2( "GWDGetChannelState", (RTS_VOID_FCTPTR *)&pfGWDGetChannelState, (fl), 0, 0)
+
+- #define :ref:`CAL_GWDGetChannelState <group___cmp_gw_diagnostic_itf_1ga22044185895d64dad3f5f01d20510a07>` pfGWDGetChannelState
+
+- #define :ref:`CHK_GWDGetChannelState <group___cmp_gw_diagnostic_itf_1ga2dc8a709b0abb8e7550338c5df23843c>` (pfGWDGetChannelState != NULL)
+
+- #define :ref:`EXP_GWDGetChannelState <group___cmp_gw_diagnostic_itf_1ga978d1ec056543b4d0100afbbcd0d9318>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWDGetChannelState", (RTS_UINTPTR) :ref:`GWDGetChannelState <group___cmp_gw_diagnostic_itf_1gaa88b449e569ebf3396ec003830eb6f02>` , 0, 0)
+
+- #define :ref:`ITF_CmpGwDiagnostic <group___cmp_gw_diagnostic_itf_1gafc3f4fe9d1620fdb8e2a056d88855bec>`
+
+- #define :ref:`EXTITF_CmpGwDiagnostic <group___cmp_gw_diagnostic_itf_1gaff8266092a2d725639c7ed4323fc65c8>`
+
+Typedefs
+--------
+
+- typedef void(* :ref:`PFOBJECTADDED <group___cmp_gw_diagnostic_itf_1gaf79654d1682f001038c51fd088cc3bd8>`)(RTS_HANDLE hListenerId, RTS_INT nObjType, GWDOBJECTINFO *pInfo)
+
+- typedef void(* :ref:`PFOBJECTREMOVED <group___cmp_gw_diagnostic_itf_1gac2c1bd7f594c3a85c1ee644065c50395>`)(RTS_HANDLE hListenerId, RTS_INT nObjType, RTS_HANDLE hObjectId)
+
+- typedef RTS_RESULT(* :ref:`PFGWDREGISTERLISTENER <group___cmp_gw_diagnostic_itf_1ga6a78696e0b69916a0aea7ee6eec8145c>`)(GWDLISTENERCALLBACKS callbacks, RTS_HANDLE *phListenerId)
+
+- typedef RTS_RESULT(* :ref:`PFGWDUNREGISTERLISTENER <group___cmp_gw_diagnostic_itf_1gaf723e7bd476cc3eb37424b719eb6a35d>`)(RTS_HANDLE hListenerId)
+
+- typedef RTS_RESULT(* :ref:`PFGWDGETCHANNELSTATE <group___cmp_gw_diagnostic_itf_1ga71ef3ba6f86830a33dd4762eee5074f8>`)(RTS_UI32 ulChannelId, GWDCHANNELSTATE *pState)
+
+- typedef :ref:`ICmpGwDiagnostic_C <struct_i_cmp_gw_diagnostic___c>` :ref:`ICmpGwDiagnostic <group___cmp_gw_diagnostic_itf_1ga0d77245ab77a822a0ceba13fcdf37106>`
+
+Enumerations
+------------
+
+- enum :ref:`@8 <group___cmp_gw_diagnostic_itf_1gabed82baf7f470b522273a3e37c24c600>` { :ref:`GWDOT_COMMDRV <group___cmp_gw_diagnostic_itf_1ggabed82baf7f470b522273a3e37c24c600a58f49be68877808d36622266532c270d>`, :ref:`GWDOT_CLIENT <group___cmp_gw_diagnostic_itf_1ggabed82baf7f470b522273a3e37c24c600ae405764c5d91a6aec5c633fcd019736b>`, :ref:`GWDOT_CHANNEL <group___cmp_gw_diagnostic_itf_1ggabed82baf7f470b522273a3e37c24c600a1f46590f8104375ac705be7725d5791d>`, :ref:`GWDOT_VIRTUALCHANNEL <group___cmp_gw_diagnostic_itf_1ggabed82baf7f470b522273a3e37c24c600a6b09311f2e98a9b8f73eca7373962beb>`, :ref:`GWDOT_VIRTUALCHANNELREF <group___cmp_gw_diagnostic_itf_1ggabed82baf7f470b522273a3e37c24c600acb08be00172c3f9d51a0f1c6096a6553>` }
+
+Functions
+---------
+
+- RTS_RESULT :ref:`GWDRegisterListener <group___cmp_gw_diagnostic_itf_1gaf28e953694e5387b92746b18ca97ebc2>` (:ref:`GWDLISTENERCALLBACKS <struct_g_w_d_l_i_s_t_e_n_e_r_c_a_l_l_b_a_c_k_s>`  callbacks, RTS_HANDLE * phListenerId)
+
+- RTS_RESULT :ref:`GWDUnregisterListener <group___cmp_gw_diagnostic_itf_1ga253d1e45e741d28d60231d25f62a46c3>` (RTS_HANDLE hListenerId)
+
+- RTS_RESULT :ref:`GWDGetChannelState <group___cmp_gw_diagnostic_itf_1gaa88b449e569ebf3396ec003830eb6f02>` (RTS_UI32 ulChannelId, :ref:`GWDCHANNELSTATE <struct_g_w_d_c_h_a_n_n_e_l_s_t_a_t_e>` * pState)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_gw_diagnostic_itf_1ga57fbba1ca466d3ab688a2fe4c31f700c:
+
+#define USE_GWDRegisterListener :ref:`PFGWDREGISTERLISTENER <group___cmp_gw_diagnostic_itf_1ga6a78696e0b69916a0aea7ee6eec8145c>` pfGWDRegisterListener;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1gab29565d7810ae66bf5adf7fe2d724b10:
+
+#define EXT_GWDRegisterListener extern :ref:`PFGWDREGISTERLISTENER <group___cmp_gw_diagnostic_itf_1ga6a78696e0b69916a0aea7ee6eec8145c>` pfGWDRegisterListener;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1ga2f42eb7a125922b76d5146cd8f5f1f86:
+
+#define GET_GWDRegisterListener s_pfCMGetAPI2( "GWDRegisterListener", (RTS_VOID_FCTPTR *)&pfGWDRegisterListener, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1gaab5d3469972af69204a73c66cc1180ae:
+
+#define CAL_GWDRegisterListener pfGWDRegisterListener
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1ga9b2b423abfd6bddc1a229a3a7a6f1a34:
+
+#define CHK_GWDRegisterListener (pfGWDRegisterListener != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1ga977e0dc1382aacf531c9b92c17ef3b82:
+
+#define EXP_GWDRegisterListener s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWDRegisterListener", (RTS_UINTPTR) :ref:`GWDRegisterListener <group___cmp_gw_diagnostic_itf_1gaf28e953694e5387b92746b18ca97ebc2>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1gacf9c8886aad95987b0c04ad9a613ca95:
+
+#define USE_GWDUnregisterListener :ref:`PFGWDUNREGISTERLISTENER <group___cmp_gw_diagnostic_itf_1gaf723e7bd476cc3eb37424b719eb6a35d>` pfGWDUnregisterListener;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1gac5389b743e22317a460bff72845b8456:
+
+#define EXT_GWDUnregisterListener extern :ref:`PFGWDUNREGISTERLISTENER <group___cmp_gw_diagnostic_itf_1gaf723e7bd476cc3eb37424b719eb6a35d>` pfGWDUnregisterListener;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1ga11f3bf2e3e3fef5f16b27958e7e65058:
+
+#define GET_GWDUnregisterListener s_pfCMGetAPI2( "GWDUnregisterListener", (RTS_VOID_FCTPTR *)&pfGWDUnregisterListener, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1ga893a49e08c499880bbecad2e0ae93a87:
+
+#define CAL_GWDUnregisterListener pfGWDUnregisterListener
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1ga1241e241aab44e830852b36eb5833ec5:
+
+#define CHK_GWDUnregisterListener (pfGWDUnregisterListener != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1ga18e76b3955f60b70d4802b305e88b172:
+
+#define EXP_GWDUnregisterListener s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWDUnregisterListener", (RTS_UINTPTR) :ref:`GWDUnregisterListener <group___cmp_gw_diagnostic_itf_1ga253d1e45e741d28d60231d25f62a46c3>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1gaf221a72e44e791db26c0c7faaca960be:
+
+#define USE_GWDGetChannelState :ref:`PFGWDGETCHANNELSTATE <group___cmp_gw_diagnostic_itf_1ga71ef3ba6f86830a33dd4762eee5074f8>` pfGWDGetChannelState;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1gab4843a7b8bcd260d7f9c13e4cc386304:
+
+#define EXT_GWDGetChannelState extern :ref:`PFGWDGETCHANNELSTATE <group___cmp_gw_diagnostic_itf_1ga71ef3ba6f86830a33dd4762eee5074f8>` pfGWDGetChannelState;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1ga5b98e5edc7f3ce688c7b2f83bba9e575:
+
+#define GET_GWDGetChannelState s_pfCMGetAPI2( "GWDGetChannelState", (RTS_VOID_FCTPTR *)&pfGWDGetChannelState, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1ga22044185895d64dad3f5f01d20510a07:
+
+#define CAL_GWDGetChannelState pfGWDGetChannelState
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1ga2dc8a709b0abb8e7550338c5df23843c:
+
+#define CHK_GWDGetChannelState (pfGWDGetChannelState != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1ga978d1ec056543b4d0100afbbcd0d9318:
+
+#define EXP_GWDGetChannelState s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWDGetChannelState", (RTS_UINTPTR) :ref:`GWDGetChannelState <group___cmp_gw_diagnostic_itf_1gaa88b449e569ebf3396ec003830eb6f02>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1gafc3f4fe9d1620fdb8e2a056d88855bec:
+
+#define ITF_CmpGwDiagnostic
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1gaff8266092a2d725639c7ed4323fc65c8:
+
+#define EXTITF_CmpGwDiagnostic
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_gw_diagnostic_itf_1gaf79654d1682f001038c51fd088cc3bd8:
+
+typedef void( * PFOBJECTADDED) (RTS_HANDLE hListenerId, RTS_INT nObjType, GWDOBJECTINFO *pInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Is called every time an object is added in the gateway.
+
+**Parameters**
+
++---------+-------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hListenerId | The id returned by the GWDRegisterListener                                                                                                                                                |
++---------+-------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | nObjType    | The type of the object which is added. One of the GWDOT_xxx constants. Since new object types may be added in the future, implementations should handle unknown objects types gracefully. |
++---------+-------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pInfo       | Additional information about the added object. Depending on the object type an extension of the GWOBJECTINFO structure will be passed.                                                    |
++---------+-------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_gw_diagnostic_itf_1gac2c1bd7f594c3a85c1ee644065c50395:
+
+typedef void( * PFOBJECTREMOVED) (RTS_HANDLE hListenerId, RTS_INT nObjType, RTS_HANDLE hObjectId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Called by the gateway when an object is removed.
+
+**Parameters**
+
++---------+-------------+----------------------------------------------------------------------------------+
+| [in]    | hListenerId | The id returned by the GWDRegisterListener                                       |
++---------+-------------+----------------------------------------------------------------------------------+
+| [in]    | nObjType    | Same as in PFOBJECTADDED. hObjectId is not unique across different object types! |
++---------+-------------+----------------------------------------------------------------------------------+
+| [in]    | hObjectId   | Refers to the object id passed in the ObjectAdded routines pInfo parameter.      |
++---------+-------------+----------------------------------------------------------------------------------+
+
+.. _group___cmp_gw_diagnostic_itf_1ga6a78696e0b69916a0aea7ee6eec8145c:
+
+typedef RTS_RESULT( *  PFGWDREGISTERLISTENER) (GWDLISTENERCALLBACKS callbacks, RTS_HANDLE *phListenerId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1gaf723e7bd476cc3eb37424b719eb6a35d:
+
+typedef RTS_RESULT( *  PFGWDUNREGISTERLISTENER) (RTS_HANDLE hListenerId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1ga71ef3ba6f86830a33dd4762eee5074f8:
+
+typedef RTS_RESULT( *  PFGWDGETCHANNELSTATE) (RTS_UI32 ulChannelId, GWDCHANNELSTATE *pState)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_diagnostic_itf_1ga0d77245ab77a822a0ceba13fcdf37106:
+
+typedef ICmpGwDiagnostic_C ICmpGwDiagnostic
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Enumeration Type Documentation
+------------------------------
+
+.. _group___cmp_gw_diagnostic_itf_1gabed82baf7f470b522273a3e37c24c600:
+
+enum @8
+^^^^^^^
+
+
+**Enumerator:**
+
++-------------------------+
+| GWDOT_COMMDRV           |
++-------------------------+
+| GWDOT_CLIENT            |
++-------------------------+
+| GWDOT_CHANNEL           |
++-------------------------+
+| GWDOT_VIRTUALCHANNEL    |
++-------------------------+
+| GWDOT_VIRTUALCHANNELREF |
++-------------------------+
+
+Function Documentation
+----------------------
+
+.. _group___cmp_gw_diagnostic_itf_1gaf28e953694e5387b92746b18ca97ebc2:
+
+RTS_RESULT GWDRegisterListener (GWDLISTENERCALLBACKS callbacks, RTS_HANDLE *phListenerId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Register a listener for the gateway diagnostics interface. The listener will be informed about activities within the gateway using the provided callbacks. When calling this function, the listener is expected to be in an initial state. Therefore the pfObjectAdded function will be called for each object that exists in the gateway in order to synchronize the listener with the gateway.
+
+**Parameters**
+
++---------+--------------+------------------------------------------------------------------------------------------------------+
+| [in]    | callbacks    | callback functions of the listener                                                                   |
++---------+--------------+------------------------------------------------------------------------------------------------------+
+| [out]   | phListenerId | Will be set to a unique number that identifies the listener. Use this value in a call to unsubscribe |
++---------+--------------+------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_gw_diagnostic_itf_1ga253d1e45e741d28d60231d25f62a46c3:
+
+RTS_RESULT GWDUnregisterListener (RTS_HANDLE hListenerId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Stop informing the specified listener about activities in the gateway.
+
+**Parameters**
+
++---------+-------------+--------------------------------------------+
+| [in]    | hListenerId | The id returned by the GWDRegisterListener |
++---------+-------------+--------------------------------------------+
+
+.. _group___cmp_gw_diagnostic_itf_1gaa88b449e569ebf3396ec003830eb6f02:
+
+RTS_RESULT GWDGetChannelState (RTS_UI32 ulChannelId, GWDCHANNELSTATE *pState)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

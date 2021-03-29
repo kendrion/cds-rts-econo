@@ -1,0 +1,486 @@
+============================
+VxWorks Specific Information
+============================
+
+.. _portings_vxworks_specific:
+
+The CODESYS runtime system based on VxWorks is realized as Downloadable Kernel Module (DKM). Its build parameters (e.g. compiler tool chain) have to be compatible with the VxWorks Kernel Image (VIP) and, for VxWorks7 systems, also with the used VxWorks kernel configuration, the so called VxWorks Source Build (VSB). For more information about VSB and VIP please refer to WindRiver's Workbench and VxWorks documentation.
+For the bring up and adaption phase of the CODESYS runtime system we recommend to prepare a "full" development VIP that includes all the means to develop, debug and analyze the code WindRiver offers. Especially useful are file system, serial terminal, FTP and Telnet or SSH servers, as well as the use of WindRiver's debug tools and the SystemViewer.
+
+With Service Release 6.00 of VxWorks 7 WindRiver replaced the toolchain based on GNU by LLVM for the Hardware architectures ARM and X86. With version V3.5.15.40 CODESYSControl also supports LLVM. Please note that the CODESYSControl built with GNU is not able to run on a VxWorks Image built with LLVM and vice versa, which means that users have to order a new Runtime Tool Kit based on LLVM, if they upgrade their ARM or X86 based systems to a newer VxWorks version (VxWorks7 SR6.00 or newer).  
+
+In general the CODESYS runtime system for VxWorks prepared and delivered for your target should be able to run out of the box without any modifications of the default configuration values. To start it, you have at first to store the CODESYS DKM "codesyscontrol.out" and the sample configuration file "CODESYSControl.cfg" in the same directory accessible from the target (e.g. "/sd0:1/CODESYS"). To start it just execute following VxWorks C Shell command sequence:
+
+	.. code-block:: text
+
+		-> cd "/sd0:1/CODESYS"
+		-> ld 0,1,"codesyscontrol.out"
+		-> PlcStart
+
+The following sub-chapters describe use cases that require reconfigurations of the runtime as well as preconditions as required of the VxWorks kernel image (VIP).
+
+.. _portings_vxworks_timers:
+
+VxWorks Timers
+~~~~~~~~~~~~~~
+
+There are 3 VxWorks standard timers that may be used within the CODESYS runtime for scheduling and to calculate the CODESYS system time, depending on the VIP configuration:
+
+-  | **System Clock:** Use the default timer source, if the cycle time of your IEC tasks is constant and needs not to be changed by a call to SysTaskSetInterval. Then scheduling of the IEC tasks depends on the VxWorks system ticks. The clock rate of the system clock should be set to at least 1000 ticks per second. SysTaskSetInterval is implicitly called, if you use e.g EtherCAT with Distributed Clocks (DC) or redundant PLCs. In such a case you have to use Auxiliary Clock.
+-  | **Auxiliary Clock:** Use this timer source, if the cycle time of your IEC tasks needs to be adapted during runtime. This is the case, if the cycle interval needs to be synchronized with an external time, e.g. with distributed clocks of an EtherCAT device. To use this timer as the source for scheduling and synchronize with DC, the maximal clock rate of the VIP has to support at least 5000 ticks per second (200 microseconds per tick). 
+-  | **Timestamps counter:** This timer is used to calculate the system time with an accuracy of micro- or even nanoseconds. As precondition the according hardware timer has to run at a frequency of at least 1MHz. If your CODESYS application requires distributed clocks, the user either needs the VxWorks timestamps or an external function to get the system time with a resolution of at least 1 microsecond.
+
+Depending on the timer configuration and the settings in the CODESYS configuration file the CODESYS runtime determines the operation mode for scheduling and system time calculation. This mode is the base of the system components SysTimer, SysTime and SysTask. 
+
+The default configuration for CODESYS task scheduling and system timers of the CODESYS runtime uses VxWorks system clock (VxWorks.TimerSource=System). This means that the task scheduling of all tasks is based on the VxWorks system tick. 
+The other possibility is to use Auxiliary Clock (VxWorks.TimerSource=Auxiliary), if the scheduling of the task needs to be synchronized with an external time base, as for example Distributed Clocks of EtherCAT or redundant PLCs.
+
+The CODESYS runtime system provides the component SysTime for determining the system time in micro- or nanoseconds through the functions SysTimeGetUs() and SysTimeGetNs(). However, the accuracy of these functions is depending on the VIP configuration. To get a resolution better than the VxWorks tick rate the timestamps timer with a frequency of at least 1MHz has to be available. During the initialization phase of the CODESYS runtime system, it analyzes the available VxWorks timers and determines the "timestampMode" (see SysTimerItf.h -> VxWorks.TimeStampMode). The resulting mode is send to the CODESYS runtime system logger. For more information about the log messages see chapter: :ref:`CODESYSControl VxWorks Timer Usage: Information, Warnings and Errors <portings_vxworks_timer_usage>`
+
+.. _portings_vxworks_timestamp_modes:
+
+CODESYS Control Timestamp Modes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Timestamp mode determined is the base of the calculation of the system time of CODESYS Control. It is a combination of VxWorks System Tick counter and the Timestamp counter, if available. Following Timestamp modes are possible:
+
+-  | **UnknownTimestampMode**	Default mode at startup: Timer mode is not yet defined
+
+-  | **NoTick**   Timestamps timer is not supported by the VIP or cannot be used. This means that system ticks (System Clock) are used to determine the system time. In such a case the time resolution is limited to the resolution of the system clock. Default value of the CODESYS runtime is 1ms.
+
+-  | **TickPeriodic**   Time is based on system ticks and the periodically counting timestamps timer. This mode is used if the System Clock and the Timestamps counters are based on the same HW timer. The use of the timers is configured in the VIP. This is one of the preferred modes depending on the capabilities of the hardware.
+
+-  | **TimestampContinuous**   Continuously counting timestamps timer with 32-bit used to calculate time. This mode is preferable, if the timer counts a long period until rolling over. Don't use it, if rollover period is only one or few milliseconds, even if this is the default setting of the BSP. This leads to complex and costly time calculations!
+
+-  | **TimestampContinuous64**   Continuously counting timestamps timer with 64 bit used to calculate time. This mode is recommended, if a 64-bit counter is available and if it counts a long period until rolling over.
+ 
+-  | **TimestampPeriodic**   CODESYS System Time calculation and scheduling is based on the timestamp timer rollover count and timestamp timer value. The mode is set, if the timestamp period equals one system tick. Even if this configuration is the default of many VxWorks BSPs, it should be avoided, because it leads to complex and costly time calculations.
+  
+-  | **TimestampMode Configuration**
+   | The timer mode determined by CODESYS Control is logged, if the logger is enabled.
+
+ .. code-block:: text
+
+	2019-09-03T10:35:31Z: Cmp=SysTimer, Class=1, Error=0, Info=0, pszInfo= VxWorks.TimerSource: Auxiliary Clock - OneShot
+	2019-09-03T10:35:31Z: Cmp=SysTimer, Class=1, Error=0, Info=0, pszInfo= VxWorks.TimeStampMode: 2 TickPeriodic
+
+The user may overload the functions SysTimeGetUs() and SysTimeGetNs(). In such a case the TimestampMode is not important and the use of the VxWorks timestamps timer should be disabled. For more information refer to: :ref:`Overload Functions of SysTime <portings_vxworks_overload_systime_functions>`
+
+For more information about the TimestampMode refer to chapter: :ref:`CODESYSControl VxWorks Timer Usage: Information, Warnings and Errors <portings_vxworks_timer_usage>`. 
+
+.. _portings_vxworks_oneshotmode:
+
+OneShotMode for Variable Task Cycle Intervals (e.g. Distributed Clocks, redundant PLCs)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OneShotMode is used by some field buses (e.g. EtherCAT) or other use cases (e.g. redundant PLCs) to synchronize the cycle start times with an external time base. CODESYS Control on VxWorks requires the Auxiliary clock to support this feature. To use Distributed Clocks the VIP, respectively the used hardware timer, has to be able to provide clock rates above at least 5000 ticks per second to minimize the jitter against the distributed clock of the field bus. To achieve this synchronization the CODESYS scheduler for VxWorks determines and sets the cycle interval of a task with IEC function SysTaskSetInterval, when a task has to be activated the next time and calculates the clock rate of the Auxiliary clock accordingly. To determine the configuration of the clocks on the target with a version greater or equal to VxWorks 6.9 you can use following shell command, if it is configured into the VxWorks kernel image:
+
+	Example: vxbAuxClkShow
+	
+	.. code-block:: text
+
+		-> vxbAuxClkShow 
+		***  Auxiliary Clock details  ***
+		aux clock timer address 0x2024f8d8
+		allocated flag          01
+		clkFrequency            24000000
+		minFrequency            1
+		maxFrequency            5000
+		features                0x8b
+		name                    omap35xxTimer
+		RollOverPeriod          178 secs
+
+
+	In this example the frequency of the used timer is 24MHz
+	The highest tick rate (interrupts / second) = 5000. That means that the minmimal timer interval between 2 tick interrupts = 200 microseconds.
+
+A further precondition to support distributed clocks is a system time with a resolution better than at least 1 microsecond. This can either be realized by using the VxWorks timestamps timer or by providing functions with the required accuracy.
+To enable OneShotMode refer to :ref:`Enable OneShoMode <portings_vxworks_enable_oneshotmode>`
+
+When using Auxiliary clock, the tasks are still scheduled by the VxWorks Scheduler, but are triggered from different „high-level schedulers":
+
+-  | **Cyclic Tasks:** Triggered by the high-precision timeout scheduler.
+
+-  | **Event Tasks:** Triggered by the runtime scheduler. The variable is checked in the interval given in the configuration file.
+
+-  | **Freewheeling:** Those tasks are running all the time, and are interrupting themselves after every cycle for a small amount of time to give control to the communication subsystem. The tasks are woken up by the high-precision timeout scheduler.
+
+-  | **External Event Tasks:** Triggered by an external Event. This can be generated in every context and therefore depends on the context where the event is generated.
+ 
+.. _portings_vxworks_jitter:
+
+Jitter Considerations 
+~~~~~~~~~~~~~~~~~~~~~
+Since CODESYS Version 3.5.13.x callback routines (e.g. of the components SysTask or SysTimer) are no more executed in interrupt, but in context of a task level interrupt handler thread. This may have influence on the jitter of the CODESYS tasks, if external higher level tasks are executed. Therefore, we introduced a setting to change the priority of this task. (see also chapter Configuration Examples - Second Level IRQ Handler Task).
+
+- | **Uni-Processor Systems:** VxWorks is running on a single processor core
+  | Jitter of the tasks highly depends on their priorities. For real-time Ethernet protocols as EtherCAT, we recommend to set the priority of the tNet0 task to a value in between the range of TASKPRIO_REALTIME_BASE and TASKPRIO_REALTIME_END tasks priorities. This offers the user the possibility to set task priorities within his application depending on, when Ethernet packages needs to be handled by the task.
+  | However, such a setting may cause that the Ethernet stack of VxWorks is running out of message buffers, especially if EtherCAT with Distributed Clocks is used. In such a case set the priority of the according tNet task to TASKPRIO_SYSTEM_END or even above.
+  | Please note that any Ethernet package is handled by the assigned tNet task. That means that any task with a lower priority will be delayed, if a Ethernet message of a low priority task is sent or received in parallel.
+ 
+- | **Multi-Core Systems** VxWorks is running on more than one processor core
+  | Jitter of the tasks highly depends also on multi core systems on their priorities. However, the dependency is less distinctive, because a task with lower priority may also be executed in parallel, if a core is free. VxWorks offers on such systems to assign tNet tasks to each processor core. We recommend for real-time Ethernet protocols to use this feature and assign a higher priority in between the range of TASKPRIO_REALTIME_BASE and TASKPRIO_REALTIME_END (or even higher) to the according tNet task.
+
+For more information on tNet tasks, refer to the VxWorks documentation of Wind River and chapter :ref:`VxWorks tNet Task(s)<portings_vxworks_configuration_examples_vip_tNet>`
+
+**OneShotMode**
+
+The jitter caused by using VxWorks Auxiliary clock is in between the time windows [-AuxClkRate/2; +AuxClkRate/2]. This is caused by the minimal interval between to AuxClk-interrupts (see example vxbAuxClkShow above). CODESYS scheduler calculates the next wakeup timeout and reprograms the AuxClkRate accordingly. The IEC task gets active, if the point in time the interrupt occures is later than the lower limit of the time window above.
+
+Additional jitter may be caused by the setting of the TaskSupervisor mode defined in CmpScheduleItf.h. Refer to :ref:`TaskSupervisor Mode <portings_vxworks_tasksupervisor>` to minimize this jitter
+
+.. _portings_vxworks_default_configuration:
+
+CODESYS Control Default Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  | **Timer Source:**
+   | The default "VxWorks.TimerSource" is "System".
+
+-  | **Scheduling Mode:**
+   | The default scheduling mode for VxWorks is set in the header file "sysdefines.h" to "OSScheduler".
+
+-  | **Timestamps:**
+   | The CODESYS runtime system uses the VxWorks timestamps timer as default .
+
+  .. note::
+     To overload the default values above change the according settings in the configuration file "CODESYSControl.cfg" of the target. 
+
+.. _portings_vxworks_configuration_examples:
+
+CODESYS Control Configuration Examples 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Edit the CODESYS runtime system configuration file CODESYSControl.cfg accordingly and store it in the directory of your target, from where you start it.
+
+-  | **Setting IEC Cycle Interval:**
+   | The tick rate (timer interrupts per second) can be influenced by the following setting in the configuration file.
+   | With the example below the minimal cycle time is set to 1000 microseconds, which results in a clock rate of 1000 ticks per second. The default value (SCHEDULEKEY_INT_SCHEDULER_INTERVAL_DEFAULT) is defined in the header file CmpScheduleItf.h and changes the VxWorks system clock rate accordingly, if required. However, because WindRiver recommends not to change the system clock rate during runtime, set it during boot up phase of VxWorks and change SchedulerInterval in the configuration file accordingly.
+   
+  .. code-block:: text
+
+	[CmpSchedule]
+	SchedulerInterval=1000
+
+.. _portings_vxworks_overload_systime_functions:
+
+-   | **Overload Functions of SysTime**
+    | Some targets offer hardware means to easily determine the system time beside the VxWorks timers (e.g. through time registers). In such a case the user can overload the functions SysTimeGetUs() and SysTimeGetNs() with his own implementation through the following settings in CODESYSControl.cfg. In this example represent "MySysTimeGetUs" and "MySysTimeGetNs" functions the user has to implement e.g. as a Downloadable Kernel Module.
+
+  .. code-block:: text
+
+	[SysTime]
+	VxWorks.CustomSysTimeGetUs=MySysTimeGetUs
+	VxWorks.CustomSysTimeGetNs=MySysTimeGetNs
+	
+  .. note::
+     SysTimeGetMs(), SysTimeGetUs() and SysTimeGetNs() have to use the same time base. This means that the time values returned by these functions have to fit to following rule:
+     SysTimeMs = SysTimeUs/1000 = SysTimeNs/1000000
+     This can be checked by executing SysTimePrint in the VxWorks target shell.
+
+.. _portings_vxworks_enable_oneshotmode:
+
+-   | **Enable OneShotMode**
+    | The Distributed Clocks feature can be enabled with the following setting in the runtime configuration file:
+
+  .. code-block:: text
+
+	[SysTimer]
+	VxWorks.TimerSource=Auxiliary
+
+  .. note::
+     | Beginning with CODESYS version 3.5.15.x it is no more possible to explicitly set VxWorks.TimerMode. It is now directly bound to the setting of VxWorks.TimerSource.
+     | If set to:
+     |    VxWorks.TimerSource=System => VxWorks.TimerMode=Periodic
+     |    VxWorks.TimerSource=Auxiliary => VxWorks.TimerMode=OneShot
+
+.. _portings_vxworks_tasksupervisor:
+
+-   | **TaskSupervisor Mode**
+    | The default configuration is defines in CmpScheduleItf.h. To minimize jitter in OneShotMode use the setting below. For further information refer to the documentation of CmpSchedule. 
+
+  .. code-block:: text
+
+	[CmpSchedule]
+	Scheduling.TaskSupervisor=WatchdogTimer
+
+-   | **Disable Use of VxWorks Timestamps Timer**
+    | This may be necessary, if the timestamp timer may not be used within CODESYS Control. To switch off the use of VxWorks timestamps timer add following setting: 
+
+  .. code-block:: text
+
+	[SysTime]
+	VxWorks.UseTimestamp=0
+
+
+.. _portings_vxworks_configuration_examples_vip:
+
+Configuration Examples of the VxWorks Kernel Image
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This chapter is about the settings of the VxWorks Kernel Image (VIP) that influences the behavior and the features of CODESYS Control.
+
+**TimestampMode**
+CODESYS Control automatically determines the timestamp mode out of the VxWorks timer configuration. CODESYS Control uses VxWorks System clock and if available the VxWorks timestamp timer to calculate the uptime of the CODESYS runtime. VxWorks Auxiliary clock is used, if OneShotMode is required, e.g. to synchronize time with an external time source as EtherCAT Distributed Clock. For more information about available TimestampModes refer to: :ref:`CODESYS Control Timestamp Modes <portings_vxworks_timestamp_modes>`
+
+
+-	| **Preferred TimestampModes: TimestampContinuous64**
+	| This mode is recommended on systems with a 64-bit timestamp timer under the precondition of a long rollover period of the underlying hardware timer. The interval of the rollover period is calculated by the returned values of VxWorks system functions sysTimestamp64Period devided by the frequency of the hardware timer sysTimestamp64Freq. See following example to check whether a 64-bit timer is enabled in the VIP. The configuration file prjParams.h is auto-generated by WindRiver's WorkBench and in general is stored in the root directory of the VIP project. For further details please refer to the documentation of Wind River. 
+
+ .. code-block:: C
+
+	// prjParams.h
+	
+	#define INCLUDE_TIMESTAMP64
+	#define INCLUDE_VXB_TIMESTAMP
+	#define INCLUDE_VXB_TIMESTAMP64
+	#define TIMESTAMP_TIMER_NAME "iaTimestamp" // just an example for a 64 bit timer driver
+
+.. _portings_vxworks_configuration_examples_vip_TimestampContinuous:
+
+-	| **Prefered TimestampModes: TimestampContinuous**
+	| This mode is recommended on systems with a 32-bit timestamp timer under the precondition of a long rollover period of the underlying hardware timer. The interval of the rollover period is calculated by the returned values of VxWorks system functions sysTimestampPeriod devided by the frequency of the hardware timer sysTimestampFreq. For further details please refer to the documentation of Wind River. 
+
+	.. note::
+		| This mode should NOT be used, if the rollover period is just some milliseconds, as it is the case in many default configurations of a VIP. In such a case the calculation of the CODESYS system time is time consuming and may be imprecise. Use TimestampTickPeriodic instead! 
+		| To calculate the roll over period divide the returned value of sysTimestampPeriod by sysTimestampFreq:
+		|
+		| RolloverPeriod = sysTimestampPeriod / sysTimestampFreq
+
+-	| **Preferred TimestampModes: TimestampTickPeriodic**
+	| This mode is recommended on systems, which don't support 64-bit timers and, if the rollover period of the VxWorks timestamp timer is too short. To set this mode VxWorks system clock and timestamp counter are based on the same hardware timer. Refer e.g. to prjParams.h, that is auto-generated by WindRiver's WorkBench.
+
+ .. code-block:: C
+
+	// prjParams.h
+	
+	#define SYSCLK_TIMER_NAME "omap35xxTimer"
+	#define SYSCLK_TIMER_NUM 0
+	#define TIMESTAMP_TIMER_NAME "omap35xxTimer"
+	#define TIMESTAMP_TIMER_NUM 0
+
+
+-	| **VxWorks Timer Configuration**
+	| To determine the configuration of the VxWorks Timers on the target with a version greater or equal to VxWorks 6.9 you can use vxbSysClkShow, vxbAuxClkShow and vxbTimestampShow shell commands, if they are configured into the VxWorks kernel image. The configuration in the example below results in timestamp mode TimestampTickPeriodic, because VxWorks system clock and timestamps timer use the same hardware timer: "Timestamp address" is equal to "sys clock timer address" (=0x2024fe78). Feature "0x8b" indicates a 32-bit counter. 
+
+	Example: vxbAuxClkShow
+	
+	.. code-block:: text
+
+		-> vxbAuxClkShow 
+		***  Auxiliary Clock details  ***
+		aux clock timer address 0x2024f8d8
+		allocated flag          01
+		clkFrequency            24000000
+		minFrequency            1
+		maxFrequency            5000
+		features                0x8b
+		name                    omap35xxTimer
+		RollOverPeriod          178 secs
+		
+		-> vxbTimestampShow
+		***  Timestamp details  ***
+		Timestamp address       0x2024fe78
+		allocated flag          01
+		clkFrequency            24000000
+		minFrequency            1
+		maxFrequency            8000
+		features                0x8b
+		name                    omap35xxTimer
+		RollOverPeriod          178 secs
+		
+		-> vxbSysClkShow
+		***  System Clock details  ***
+		sys clock timer address 0x2024fe78
+		allocated flag          01
+		clkFrequency            24000000
+		minClkRate              60
+		maxClkRate              4000
+		features                0x8b
+		name                    omap35xxTimer
+		RollOverPeriod          178 secs
+
+	.. note::
+		The value "RollOverPeriod" of sysTimestampShow may be different from the "real" rollover period. For more details refer to the documentation of Wind River and to :ref:`Prefered TimestampModes: TimestampContinuous <portings_vxworks_configuration_examples_vip_TimestampContinuous>`
+
+
+.. _portings_vxworks_configuration_examples_vip_tNet:
+
+-	| **VxWorks tNet Task(s)**
+	| VxWorks 7 offers the possibility to assign tasks to dedicated network controllers and even bind them to a dedicated core on SMP systems. Following settings bind the task tNet0 to network controller 0 and CPU1 with the priority 64 and tNet1 to network controller 1 and CPU2 with the priority 30. 
+
+ .. code-block:: C
+
+	// prjParams.h
+	
+	#define NET_TASK_PRIORITIES "0,64;1,30"         // priorities tNet0: 64 and tNet1: 30 
+	#define NET_DAEMONS_CPU_AFFINITY TRUE
+	#define NET_DAEMONS_CPU_AFFINITIES "0,1;1,2"    // assign tNet0 to CPU1 and tNet1 to CPU2
+
+.. _portings_vxworks_timer_usage:
+
+CODESYSControl VxWorks Timer Usage: Information, Warnings and Errors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The CODESYS components SysTimer, SysTime, SysTask (CmpSchedule) depend on the usage of VxWorks timer configuration (SysClk, AuxClk, Timestamp) and their capabilities. The CODESYS runtime sends various logger messages during initialization phase and also during run time to detect any configuration problems. Following messages may occur:
+
+- | **VxWorks.TimerSource: System - Periodic** 
+  | Information: CODESYS Runtime System uses VxWorks SysClk for scheduling
+
+- | **VxWorks.TimerSource: Auxiliary - OneShot** 
+  | Information CODESYS Runtime System uses VxWorks AuxClk for scheduling in OneShot mode
+  
+- | **VxWorks.TimeStampMode: <no> - <mode>** 
+  | Information: CODESYS Runtime System: calculation of time is based on:
+
+   +------+-----------------------+----------------------------------------------------------+
+   | <no> | <mode>                |  Description                                             |
+   +------+-----------------------+----------------------------------------------------------+
+   | 0    | UnknownTimestampMode  | mode not yet defined                                     |
+   +------+-----------------------+----------------------------------------------------------+
+   | 1    | Tick                  | Timestamps timer not used -> tick mode                   |
+   |      |                       | time based on VxWorks system ticks                       |
+   +------+-----------------------+----------------------------------------------------------+
+   | 2    | TimestampTickPeriodic | Time is based on system ticks and the periodically       |
+   |      |                       | counting timestamps timer (preferred with 32-bit timers) |
+   +------+-----------------------+----------------------------------------------------------+
+   | 3    | TimestampContinuous   | Continuously counting timestamps timer (32 bit)          |
+   |      |                       | used to calculate time                                   |
+   +------+-----------------------+----------------------------------------------------------+
+   | 4    | TimestampContinuous64 | Continuously counting timestamps timer (64 bit)          |
+   |      |                       | used to calculate time (preferred with 64-bit timers)    |
+   +------+-----------------------+----------------------------------------------------------+
+
+- | **System Clock Rate has been changed during initialization!**  
+  | Information: HWT_CLK_CONF_INFO_SYSCLK_CHANGED
+  | CODESYS runtime system has changed VxWorks sysClkRate during initialization phase.
+
+- | **Auxiliary Clock cannot support all frequencies!**  
+  | Error: HWT_CLK_CONF_ERROR_AUX_ALLFRQS
+  | VxWorks Auxiliary clock cannot support all frequencies.
+  | -> fall back: TimerSource = System
+
+- | **Setting of Auxiliary Clock Rate failed** 
+  | Error: HWT_CLK_CONF_ERROR_AUX_SET
+  | VxWorks Auxiliary clock cannot support the requested clock rate
+  | -> wrong configuration of the VIP or the Board Support Package
+
+- | **Auxiliary Clock is not supported!**  
+  | Error: HWT_CLK_CONF_ERROR_AUX_NOTSUP
+  | VxWorks Auxiliary clock is not configured into the VxWork kernel image (VIP)
+  | -> fall back: TimerSource = System
+
+- | **Wrong maxFrequency setting in Auxiliary Clock configuration**  
+  | Error: HWT_CLK_CONF_ERROR_AUX_MAXFRQ
+  | VxWorks Auxiliary clock does not support the maxFrequency as defined in the timer handle.
+  | This may be an error of the VxWorks kernel configuration. Auxiliary clock cannot be used.
+  | -> fall back: TimerSource = System
+
+- | **Setting of System Clock Rate failed!**
+  | Error: HWT_CLK_CONF_ERROR_SYSTEM_SET
+  | VxWorks System clock cannot support requested clock rate. This may be an error of the VxWorks kernel
+  | configuration. Recommended value for System Clock rate is 1000 [ticks/second].
+  | -> VxWorks System timer cannot set requested CODESYS cycle time
+
+- | **Tried to use OneShot mode without VxWorks Timestamps support!**  
+  | Error: HWT_CLK_CONF_ERROR_DC_TS
+  | CODESYS Runtime System cannot use VxWorks timestamps
+  | VxWorks timestamps timer cannot be used (VxWork.UseTimestamps=0) or
+  | VxWorks timestamps timer is not available in VIP
+
+- | **Tried to change System Clock Rate in periodic mode during runtime!**  
+  | Error: HWT_CLK_CONF_ERROR_DC_SYSCLK
+  | CODESYS runtime system must not change sysClkRate after initialization
+  | Example: CODESYS application tried to change cycle time, but VxWorks.TimerSource=System
+  | -> Cycle time is not changed 
+
+- | **System Clock cannot support scheduler cycle time!**  
+  | Error: HWT_CLK_CONF_ERROR_SYSCLK
+  | CODESYS runtime system cannot set clock rate to achieve cycle time
+  | -> change VxWorks maximal SysClkRate to fit to CODESYS cycle time 
+
+- | **System Clock Rate is lower than 1000 ticks/s (1ms)!**  
+  | Warning: HWT_CLK_CONF_WARNING_SYSCLK
+  | CODESYS runtime system cannot set clock rate to achieve recommended cycle time (1ms)
+  | -> change VxWorks maximal SysClkRate to fit to CODESYS cycle time of 1ms
+
+- | **Tried to set cycle interval to 0!**  
+  | Error: HWT_CLK_CONF_ERROR_INTERVAL_0
+  | Maybe time calculation error or cycle time explicitly set to 0
+
+- | **Wrong maximal frequency setting of Auxiliary Clock detected!**  
+  | Warning: HWT_CLK_CONF_WARNING_AUX_MAXFRQ
+  | The maximal VxWorks AuxClkRate as read from Auxiliary timer handle (>= VxWorks 6.9) cannot be set.
+  | Wrong Auxiliary Clock configuration in VxWorks Kernel Image or Board Support Package
+ 
+- | **Wrong minimal frequency setting of Auxiliary Clock detected!"**  
+  | Warning: HWT_CLK_CONF_WARNING_AUX_MINFRQ
+  | The minimal VxWorks AuxClkRate as read from Auxiliary timer handle (>= VxWorks 6.9) cannot be set.
+  | Wrong Auxiliary Clock configuration in VxWorks Kernel Image or Board Support Package
+
+- | **Tried to set Cycle Interval to 0!**  
+  | Warning: HWT_CLK_CONF_WARNING_INTERVAL_0
+  | Tried to set the cycle interval of a task to 0.
+  | CODESYS Runtime System adjusted the interval to the next possible value.
+
+
+.. _portings_vxworks_global_object_pool:
+
+Global Object Pool
+~~~~~~~~~~~~~~~~~~
+
+| to share or communicate with external applications or modules, which are not running inside of the CODESYS Runtime. For such scenarios, CODESYS on VxWorks provides a global object pool for:
+
+-  sending events
+-  sharing semaphores and memory
+
+| To share the global symbol table across application image boundaries, the runtime emits a new symbol at first startup, called „g\_PlcObjTab". The memory within this table is allocated dynamically on the heap and does not exclusively belong to the process image.
+| To use the objects independently from the outside of CODESYS runtime, you can include the data from the table manually into an external application. The actual version of the shared object table is defined in **sysspecific.h** and has the following structure:
+
+.. code-block:: C
+  
+ #define OBJTAB_VERSION 0x00000001
+ typedef enum objTabType_e 
+ {
+   e_shm,
+   e_sem,
+   e_evt
+ } objTabType_t;
+ 
+ typedef struct shmEntry_s 
+ {
+    unsigned long ulAddress;
+    unsigned long ulSize;
+ } shmEntry_t;
+ 
+ typedef struct semEntry_s 
+ {
+    SEM_ID hSem;
+ } semEntry_t;
+ 
+ typedef struct evtEntry_s 
+ {
+    SEM_ID hEvt;
+ } evtEntry_t;
+ 
+ /* base type, which „contains" the above */
+ typedef struct objEntry_s 
+ {
+    objTabType_t tType;
+    char *pszName;
+    union 
+    {
+        shmEntry_t tShmEntry;
+        semEntry_t tSemEntry;
+        evtEntry_t tEvtEntry;
+    } u;
+ } objEntry_t;
+ 
+ typedef struct objTab_s 
+ {
+    unsigned long ulVersion;
+    SEM_ID hSem;
+    objEntry_t *ptEntries;
+    unsigned long ulSize;
+    unsigned long ulRefCnt;
+ } objTab_t;

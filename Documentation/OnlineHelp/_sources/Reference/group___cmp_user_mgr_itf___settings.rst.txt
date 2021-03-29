@@ -1,0 +1,61 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_user_mgr_itf___settings:
+
+========
+Settings
+========
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Macros
+------
+
+- #define :ref:`USERMGRKEY_INT_FAST_KEY_STARTUP <group___cmp_user_mgr_itf___settings_1ga735bf761a0fb9bd0e9a761a3a63409fd>` "FastKeyStartup"
+
+- #define :ref:`USERMGRKEY_INT_FAST_KEY_STARTUP_DEFAULT <group___cmp_user_mgr_itf___settings_1ga76c1da6ec027c1586af627093d430252>` 1
+
+- #define :ref:`USERMGR_KEY_STRING_ASYMMETRIC_AUTH_KEY <group___cmp_user_mgr_itf___settings_1gadecb162910dabbdfd79a324ad5a5b721>` "AsymmetricAuthKey"
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_user_mgr_itf___settings_1ga735bf761a0fb9bd0e9a761a3a63409fd:
+
+#define USERMGRKEY_INT_FAST_KEY_STARTUP "FastKeyStartup"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<type>INT</type>
+
+This setting defines the startup behavior of the CmpUserMgr regarding key generation: The CmpUserMgr provides a key pair for the asymmetric authentication algorithm. Depending on the CPU performance of the device, the generation of this key pair may take about 2..100 seconds. As long as these keys are not available, no client (e. g. the CODESYS Development system) is allowed to login. Defined values (all other values are reserved for future use): 0: The key pair is never stored and must be newly generated on each start of the runtime system. The keys are only kept in RAM. 1: Fast startup: When ever a new key pair is generated, these are stored. During startup the stored keys are loaded to let the runtime system communicate immediately. If no keys exist (initial startup), then logins are blocked until the keys are available. Independently of the settings the keys are updated regularly in the background.
+
+.. _group___cmp_user_mgr_itf___settings_1ga76c1da6ec027c1586af627093d430252:
+
+#define USERMGRKEY_INT_FAST_KEY_STARTUP_DEFAULT 1
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr_itf___settings_1gadecb162910dabbdfd79a324ad5a5b721:
+
+#define USERMGR_KEY_STRING_ASYMMETRIC_AUTH_KEY "AsymmetricAuthKey"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<type>String</type>
+
+Key identifier for asymmetric authentication. Used to handle stored keys for the asymmetric authentication algorithm. This setting is managed by the CmpUserMgr and must not be set by hand.
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

@@ -4,12 +4,12 @@
  * A component implementing all interfaces for security issues (replaces the existing CmpOpenSSL component).
  * </description>
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 SET_COMPONENT_NAME(`CmpOpenSSLOEM')
 COMPONENT_SOURCES(`CmpOpenSSLOEM.c')
-COMPONENT_VERSION(`0x03050E00')
+COMPONENT_VERSION(`0x0305101E')
 
 /* TODO: REPLACE 0x0001 BY YOUR VENDORID */
 COMPONENT_VENDORID(`0x0001')				

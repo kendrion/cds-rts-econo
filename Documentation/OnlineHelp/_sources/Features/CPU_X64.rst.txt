@@ -1,0 +1,75 @@
+.. _feature__c_p_u__x64:
+
+
+
+X64 Codegenerator 
+=================
+
+SysCpuHandling implementation notes
+-----------------------------------
+
+- SysCpuGetInstancePointer():
+
+Function to get the instance pointer on the basis of the base pointer. Both the instance pointer and the base pointer are only valid and used in the CODESYS application context. 
+The offset is specific to the platform and is 16 byte for the X64 codegenerator.        
+
+An example implementation may be found in Platforms/SysTemplates/Sys/SysCpuHandlingOS.c of the runtime system toolkit.
+
+
+
+Required features
+-----------------
+
+- :ref:`feature__c_p_u`
+
+- :ref:`feature__exceptioninfo`
+
+- :ref:`feature__l_tick`
+
+Required target settings
+------------------------
+
+The following target settings are necessary for this feature:
+
+- :ref:`runtime_features_set_next_statement_supported`
+
+- :ref:`codegenerator_CPU`
+
+- :ref:`codegenerator_Breakpoint Size`
+
+- :ref:`codegenerator_codegenerator-guid`
+
+- :ref:`memory-layout_stack-alignment`
+
+- :ref:`memory-layout_pack-mode`
+
+- :ref:`codegenerator_memory_barrier`
+
+Required components
+-------------------
+
+The following runtime system components are necessary for this feature:
+
+- :ref:`CmpObjectMgr <group___cmp_object_mgr_dep>`
+
+Compiler Defines
+----------------
+
+- Platforms/Linux/CFLAGS_FEATURES: -m64
+
+- Platforms/Linux/CFLAGS_FEATURES: -DTRG_64BIT
+
+- Platforms/Linux/CFLAGS_FEATURES: -DTRG_X86
+
+- Platforms/Linux/CXXFLAGS_FEATURES: -DTRG_64BIT
+
+- Platforms/Linux/CXXFLAGS_FEATURES: -DTRG_X86
+
+- Platforms/QNX/CFLAGS_FEATURES: -DTRG_64BIT
+
+- Platforms/QNX/CFLAGS_FEATURES: -DTRG_X86
+
+- Platforms/QNX/CXXFLAGS_FEATURES: -DTRG_64BIT
+
+- Platforms/QNX/CXXFLAGS_FEATURES: -DTRG_X86
+

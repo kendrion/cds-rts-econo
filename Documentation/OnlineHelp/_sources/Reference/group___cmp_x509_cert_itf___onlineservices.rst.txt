@@ -1,0 +1,285 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_x509_cert_itf___onlineservices:
+
+===============
+Online services
+===============
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Macros
+------
+
+- #define :ref:`SRV_X509_IMPORT_CERT <group___cmp_x509_cert_itf___onlineservices_1gae93c629eb28c54bccbd2e6e1db882695>` 0x01
+
+- #define :ref:`SRV_X509_EXPORT_CERT <group___cmp_x509_cert_itf___onlineservices_1gaf593c68593196fe289ac617d79b2a164>` 0x02
+
+- #define :ref:`SRV_X509_DELETE_CERT <group___cmp_x509_cert_itf___onlineservices_1gaef6f2bb3ab5cc8b7d3d568b0a5882c20>` 0x03
+
+- #define :ref:`SRV_X509_MOVE_CERT <group___cmp_x509_cert_itf___onlineservices_1gaaeeb6cfccff7719c9c20e997e8826593>` 0x04
+
+- #define :ref:`SRV_X509_LIST_CERTS <group___cmp_x509_cert_itf___onlineservices_1gab9510d9aa228ac68fc1d963ed4bfce06>` 0x05
+
+- #define :ref:`SRV_X509_LIST_USECASES <group___cmp_x509_cert_itf___onlineservices_1ga03cd5cbcfba47d19e718869e0b6e2bca>` 0x06
+
+- #define :ref:`SRV_X509_CREATE_SELFSIGNED <group___cmp_x509_cert_itf___onlineservices_1ga9d9a95d3e389f26f88ebdb7d18b0ebad>` 0x07
+
+- #define :ref:`SRV_X509_CREATE_REQUEST <group___cmp_x509_cert_itf___onlineservices_1ga0ecdf63f64170c71c714218c596dde88>` 0x08
+
+- #define :ref:`SRV_X509_GET_STATUS <group___cmp_x509_cert_itf___onlineservices_1gacf1552a86c385f6f41e80b4839674a48>` 0x09
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_x509_cert_itf___onlineservices_1gae93c629eb28c54bccbd2e6e1db882695:
+
+#define SRV_X509_IMPORT_CERT 0x01
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_X509_CERT
+
+Service: SRV_X509_IMPORT_CERT
+
+Request tags:
+
+  - TAG_X509_TRUSTLEVEL (1..?) (RTS_UI32): Trust level where to import the certificate. See the RTSCERTTRUSTLEVEL_* defines for details.
+
+  - TAG_X509_BACKEND (0..?) (Type not yet defined): Identifier of the back-end where to store the certificate. Not used by now.
+
+  - TAG_X509_CERT (1..?): Certificate in ANS.1 encoding to import.
+
+Response tags:
+
+  - TAG_X509_RESULT (1..?) (RTS_UI16): Result code of online operation
+
+.. _group___cmp_x509_cert_itf___onlineservices_1gaf593c68593196fe289ac617d79b2a164:
+
+#define SRV_X509_EXPORT_CERT 0x02
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_X509_CERT
+
+Service: SRV_X509_EXPORT_CERT
+
+Request tags:
+
+  - TAG_X509_TRUSTLEVEL (1..?) (RTS_UI32): Trust level of the certificate to export. See the RTSCERTTRUSTLEVEL_* defines for details.
+
+  - TAG_X509_BACKEND (0..?) (Type not yet defined): Identifier of the back-end of the certificate. Not used by now.
+
+  - TAG_X509_THUMBPRINT (1..?): Thumb-print of certificate calculated by the runtime system.
+
+Response tags:
+
+  - TAG_X509_RESULT (1..?) (RTS_UI16): Result code of online operation
+
+  - TAG_X509_CERT (0..?): Exported certificate in ASN.1 encoding if the certificate was available.
+
+.. _group___cmp_x509_cert_itf___onlineservices_1gaef6f2bb3ab5cc8b7d3d568b0a5882c20:
+
+#define SRV_X509_DELETE_CERT 0x03
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_X509_CERT
+
+Service: SRV_X509_DELETE_CERT
+
+Request tags:
+
+  - TAG_X509_TRUSTLEVEL (1..?) (RTS_UI32): Trust level of the certificate to delete. See the RTSCERTTRUSTLEVEL_* defines for details.
+
+  - TAG_X509_BACKEND (0..?) (Type not yet defined): Identifier of the back-end of the certificate. Not used by now.
+
+  - TAG_X509_THUMBPRINT (1..?): Thumb-print of certificate calculated by the runtime system.
+
+  - TAG_X509_DELETE_PKEY (0..?) (RTS_UI32): Flag if the private key should be deleted too. This is only used for trust level 'OWN'.
+
+Response tags:
+
+  - TAG_X509_RESULT (1..?) (RTS_UI16): Result code of online operation
+
+.. _group___cmp_x509_cert_itf___onlineservices_1gaaeeb6cfccff7719c9c20e997e8826593:
+
+#define SRV_X509_MOVE_CERT 0x04
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_X509_CERT
+
+Service: SRV_X509_MOVE_CERT
+
+Request tags:
+
+  - TAG_X509_TRUSTLEVEL (1..?) (RTS_UI32): Trust level of the certificate to move. See the RTSCERTTRUSTLEVEL_* defines for details.
+
+  - TAG_X509_BACKEND (0..?) (Type not yet defined): Identifier of the back-end of the certificate. Not used by now.
+
+  - TAG_X509_THUMBPRINT (1..?): Thumb-print of certificate calculated by the runtime system.
+
+  - TAG_X509_DEST_TRUSTLEVEL (1..?) (RTS_UI32): Trust level where to move the certificate to. See the RTSCERTTRUSTLEVEL_* defines for details.
+
+  - TAG_X509_DEST_BACKEND (0..?) (Type not yet defined): Back-end where to move the certificate to. Not used by now.
+
+Response tags:
+
+  - TAG_X509_RESULT (1..?) (RTS_UI16): Result code of online operation
+
+.. _group___cmp_x509_cert_itf___onlineservices_1gab9510d9aa228ac68fc1d963ed4bfce06:
+
+#define SRV_X509_LIST_CERTS 0x05
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_X509_CERT
+
+Service: SRV_X509_LIST_CERTS
+
+Request tags:
+
+  - TAG_X509_TRUSTLEVEL (1..?) (RTS_UI32): Trust level of the certificate to list. See the RTSCERTTRUSTLEVEL_* defines for details.
+
+  - TAG_X509_BACKEND (0..?) (Type not yet defined): Identifier of the back-end of the certificate. Not used by now.
+
+  - TAG_X509_THUMBPRINT (0..?): Thumb-print of certificate calculated by the runtime system of the last received certificate.
+
+Response tags:
+
+  - TAG_X509_RESULT (1..?) (RTS_UI16): Result code of online operation
+
+  - TAG_X509_CERT (1..?): Certificate in ASN.1 format. This tag may occur multiple times.
+
+  - TAG_X509_THUMBPRINT (1..?): Thumb-print of certificate calculated by the runtime system.
+
+.. _group___cmp_x509_cert_itf___onlineservices_1ga03cd5cbcfba47d19e718869e0b6e2bca:
+
+#define SRV_X509_LIST_USECASES 0x06
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_X509_CERT
+
+Service: SRV_X509_LIST_USECASES
+
+Request tags:
+
+  - TAG_X509_USECASE (0..?) (RTS_UI32): If the last service returned ERR_ENTRIES_REMAINING this is the ID of the last received use case.
+
+Response tags:
+
+  - TAG_X509_RESULT (1..?) (RTS_UI16): Result code of online operation
+
+  - TAG_X509_USECASE_DETAILS (1..?)
+
+    - TAG_X509_USECASE (1..?) (RTS_UI32): ID of the use case.
+
+    - TAG_X509_USECASE_COMPONENT (1..?) (String): Component which registered the use case.
+
+    - TAG_X509_USECASE_NAME (0..?) (String): Name of the use-case. Provided by the component.
+
+    - TAG_X509_USECASE_DESC (0..?) (String): Description of the use case. Provided by the component.
+
+    - TAG_X509_SUBJECT_ID (0..?) (String): OID of the current subject field. Always exists with the following TAG_X509_SUBJECT_VALUE field. Sequence is likely to be repeated
+
+    - TAG_X509_SUBJECT_VALUE (0..?) (String): Value of the current subject field.
+
+    - TAG_X509_ALT_NAME_EMAIL (0..?) (String): Alternative name containing an email address.
+
+    - TAG_X509_ALT_NAME_DNSNAME (0..?) (String): Alternative name containing the DNS name.
+
+    - TAG_X509_ALT_NAME_URI (0..?) (String): Alternative name containing the URI
+
+    - TAG_X509_ALT_NAME_IPADDRESS (0..?) (String): Alternative name containing the IP-Address.
+
+    - TAG_X509_ALT_NAME_REGISTEREDID (0..?) (String): Alternative name containing an OID in textual representation.
+
+    - TAG_X509_KEYUSAGE (0..?) (RTS_UI32): Key usage of the certificate. See: RTS_KEY_USAGE_DIGITAL_* macros.
+
+    - TAG_X509_EXT_KEYUSAGE (0..?) (String): Extended key usage identified by its textual representation. Can occur multiple times.
+
+    - TAG_X509_THUMBPRINT (0..?): Thumb-print of the certificate available for this use case. Left out if no certificate is available.
+
+    - TAG_X509_GEN_SELF_SIGNED (0..?) (Empty tag): A self signed certificate is being generated at the moment.
+
+    - TAG_X509_GEN_CSR (0..?) (Empty tag): A certificate request is being generated at the moment.
+
+.. _group___cmp_x509_cert_itf___onlineservices_1ga9d9a95d3e389f26f88ebdb7d18b0ebad:
+
+#define SRV_X509_CREATE_SELFSIGNED 0x07
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_X509_CERT
+
+Service: SRV_X509_CREATE_SELFSIGNED
+
+Request tags:
+
+  - TAG_X509_USECASE (1..?) (RTS_UI32): Use-case ID which the certificate is generated for.
+
+  - TAG_X509_BACKEND (0..?) (Type not yet defined): Back-end where to store the certificate. Not used by now.
+
+  - TAG_X509_KEY_LENGTH (0..?) (RTS_UI32): The length of the asymmetric key pair in bits. If left out the default (see MinAsymmetricKeySize) will be used.
+
+  - TAG_X509_DAYS_VALID (0..?) (RTS_UI32): Number of days the self signed certificate is valid.
+
+Response tags:
+
+  - TAG_X509_RESULT (1..?) (RTS_UI16): Result code of online operation
+
+  - TAG_X509_STATUS_HANDLE (1..?) (RTS_UI16): Result code of online operation
+
+.. _group___cmp_x509_cert_itf___onlineservices_1ga0ecdf63f64170c71c714218c596dde88:
+
+#define SRV_X509_CREATE_REQUEST 0x08
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_X509_CERT
+
+Service: SRV_X509_CREATE_REQUEST
+
+Request tags:
+
+  - TAG_X509_USECASE (1..?) (RTS_UI32): Use-case ID which the CSR is generated for.
+
+  - TAG_X509_BACKEND (0..?) (Type not yet defined): Back-end where to store the private key. Not used by now.
+
+  - TAG_X509_KEY_LENGTH (0..?) (RTS_UI32): The length of the asymmetric key pair in bits. If left out the default (see MinAsymmetricKeySize) will be used.
+
+Response tags:
+
+  - TAG_X509_RESULT (1..?) (RTS_UI16): Result code of online operation
+
+  - TAG_X509_CSR (0..?): The generated CSR in ASN.1 encoding.
+
+.. _group___cmp_x509_cert_itf___onlineservices_1gacf1552a86c385f6f41e80b4839674a48:
+
+#define SRV_X509_GET_STATUS 0x09
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_X509_CERT
+
+Service: SRV_X509_GET_STATUS
+
+Request tags:
+
+  - TAG_X509_OPERATION (1..?) (RTS_UI32): Identifier of the operation. Use the service waiting for as ID.
+
+  - TAG_X509_STATUS_HANDLE (1..?) (RTS_UI32): Use-case ID which the CSR is generated for.
+
+Response tags:
+
+  - TAG_X509_RESULT (1..?) (RTS_UI16): Result code of online operation. ERR_OK: Operation finished. ERR_INVALID_HANDLE: TAG_X509_STATUS_HANDLE was invalid. ERR_PENDING: Operations still running. ERR_FAILED: Operations failed.
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

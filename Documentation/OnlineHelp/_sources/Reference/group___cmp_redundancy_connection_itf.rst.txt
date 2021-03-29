@@ -1,0 +1,1046 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_redundancy_connection_itf:
+
+==========================
+CmpRedundancyConnectionItf
+==========================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpRedundancyConnection.
+
+Detailed Description
+--------------------
+
+This is the interface of the redundancy connection. The redundancy connection is responsible for data exchange between the two redundancy partners. The redundancy component itself is managing the connections. This component is responsible to establish, close and perform communication under control of the redundancy component itself. There is a default implementation using IP protocols TCP and UDP. It is possible to use alternative protocols, by implementing this interface and replacing the default component based on IP protocols. There are two different kinds of data exchange:
+
+  - Sending and receiving synchronization messages
+
+  - Sending and receiving data messages
+
+Synchronization messages are used during redundant operation. They are exchanged every task cycle. Data messages are used during synchronization phase. They are used to transmit the boot application file, and global data.
+
+Default implementation is using UDP for synchronization messages, and TCP for data messages.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Data Structures
+---------------
+
+- struct :ref:`tagREDUNDANCY_CONNECTION_INFO <structtag_r_e_d_u_n_d_a_n_c_y___c_o_n_n_e_c_t_i_o_n___i_n_f_o>`
+
+- struct :ref:`taggetconnectioninfo_struct <structtaggetconnectioninfo__struct>`
+
+- struct :ref:`ICmpRedundancyConnection_C <struct_i_cmp_redundancy_connection___c>`
+
+Macros
+------
+
+- #define :ref:`USE_RdcyConnectionOpen <group___cmp_redundancy_connection_itf_1ga0dcae03ac0e6cc3ae7d4149f0e9df8e6>` :ref:`PFRDCYCONNECTIONOPEN <group___cmp_redundancy_connection_itf_1ga9618258795ea9fc1b2c16c27f9c59b4c>` pfRdcyConnectionOpen;
+
+- #define :ref:`EXT_RdcyConnectionOpen <group___cmp_redundancy_connection_itf_1ga84378e0e437aa126fd4ef1a0a2e0c8e5>` extern :ref:`PFRDCYCONNECTIONOPEN <group___cmp_redundancy_connection_itf_1ga9618258795ea9fc1b2c16c27f9c59b4c>` pfRdcyConnectionOpen;
+
+- #define :ref:`GET_RdcyConnectionOpen <group___cmp_redundancy_connection_itf_1gadd5734ca124d61a3896e4da138741228>` s_pfCMGetAPI2( "RdcyConnectionOpen", (RTS_VOID_FCTPTR *)&pfRdcyConnectionOpen, (fl), 0, 0)
+
+- #define :ref:`CAL_RdcyConnectionOpen <group___cmp_redundancy_connection_itf_1ga270338ac0508a1fec953ef6d113c31ec>` pfRdcyConnectionOpen
+
+- #define :ref:`CHK_RdcyConnectionOpen <group___cmp_redundancy_connection_itf_1ga5bf5d28cedc93a64e0580093cecd05ed>` (pfRdcyConnectionOpen != NULL)
+
+- #define :ref:`EXP_RdcyConnectionOpen <group___cmp_redundancy_connection_itf_1ga277c3414dd7a3349065a4fbb7dc87d6e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionOpen", (RTS_UINTPTR) :ref:`RdcyConnectionOpen <group___cmp_redundancy_connection_itf_1ga46abfb651f9c7831e447b495542c0fa6>` , 0, 0)
+
+- #define :ref:`USE_RdcyConnectionClose <group___cmp_redundancy_connection_itf_1ga7d1cd4195807a1060a6a90b1d68549ab>` :ref:`PFRDCYCONNECTIONCLOSE <group___cmp_redundancy_connection_itf_1ga893600189a706af6fc70d0a4e7e5f9bf>` pfRdcyConnectionClose;
+
+- #define :ref:`EXT_RdcyConnectionClose <group___cmp_redundancy_connection_itf_1ga2a51e4a16b40377c49a4986029cfd795>` extern :ref:`PFRDCYCONNECTIONCLOSE <group___cmp_redundancy_connection_itf_1ga893600189a706af6fc70d0a4e7e5f9bf>` pfRdcyConnectionClose;
+
+- #define :ref:`GET_RdcyConnectionClose <group___cmp_redundancy_connection_itf_1ga93c8c873d20ace14941ec2ef60f52e3d>` s_pfCMGetAPI2( "RdcyConnectionClose", (RTS_VOID_FCTPTR *)&pfRdcyConnectionClose, (fl), 0, 0)
+
+- #define :ref:`CAL_RdcyConnectionClose <group___cmp_redundancy_connection_itf_1ga4522e0c4d65df886288c691d9cafe8ee>` pfRdcyConnectionClose
+
+- #define :ref:`CHK_RdcyConnectionClose <group___cmp_redundancy_connection_itf_1gab06b2136dc6c28aa604afb42082273c6>` (pfRdcyConnectionClose != NULL)
+
+- #define :ref:`EXP_RdcyConnectionClose <group___cmp_redundancy_connection_itf_1ga4975793832cd590fb0bea9bc59441f11>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionClose", (RTS_UINTPTR) :ref:`RdcyConnectionClose <group___cmp_redundancy_connection_itf_1ga75423e56befe426b05f660bf870b8ad4>` , 0, 0)
+
+- #define :ref:`USE_RdcyConnectionGetOwnAddress <group___cmp_redundancy_connection_itf_1gada56ceded9cdc3416e9515b06f3ad9f4>` :ref:`PFRDCYCONNECTIONGETOWNADDRESS <group___cmp_redundancy_connection_itf_1gac85b60c68916be3ded15343dc05d4d2c>` pfRdcyConnectionGetOwnAddress;
+
+- #define :ref:`EXT_RdcyConnectionGetOwnAddress <group___cmp_redundancy_connection_itf_1ga42c5cf95237977a5f9880a1db814435b>` extern :ref:`PFRDCYCONNECTIONGETOWNADDRESS <group___cmp_redundancy_connection_itf_1gac85b60c68916be3ded15343dc05d4d2c>` pfRdcyConnectionGetOwnAddress;
+
+- #define :ref:`GET_RdcyConnectionGetOwnAddress <group___cmp_redundancy_connection_itf_1gabb8d6046de5cd93bc1f9e828830242cc>` s_pfCMGetAPI2( "RdcyConnectionGetOwnAddress", (RTS_VOID_FCTPTR *)&pfRdcyConnectionGetOwnAddress, (fl), 0, 0)
+
+- #define :ref:`CAL_RdcyConnectionGetOwnAddress <group___cmp_redundancy_connection_itf_1ga00e6454b6a27456a2d22c117112eda43>` pfRdcyConnectionGetOwnAddress
+
+- #define :ref:`CHK_RdcyConnectionGetOwnAddress <group___cmp_redundancy_connection_itf_1ga2ab88540cbbf3e485ff29f019c698af0>` (pfRdcyConnectionGetOwnAddress != NULL)
+
+- #define :ref:`EXP_RdcyConnectionGetOwnAddress <group___cmp_redundancy_connection_itf_1ga4bb09cd70356e32c97b9c1d2d683bffd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionGetOwnAddress", (RTS_UINTPTR) :ref:`RdcyConnectionGetOwnAddress <group___cmp_redundancy_connection_itf_1ga7dd61ff94262110134227266f74bfa30>` , 0, 0)
+
+- #define :ref:`USE_RdcyConnectionReceiveSync <group___cmp_redundancy_connection_itf_1gadc8fe14bf14ea1248d3d27b5b9cfa0fc>` :ref:`PFRDCYCONNECTIONRECEIVESYNC <group___cmp_redundancy_connection_itf_1ga0f3202e1d2a52ae62de3d1ceff5ea0c6>` pfRdcyConnectionReceiveSync;
+
+- #define :ref:`EXT_RdcyConnectionReceiveSync <group___cmp_redundancy_connection_itf_1ga702071855bbcb2eb529b986fe7e006fe>` extern :ref:`PFRDCYCONNECTIONRECEIVESYNC <group___cmp_redundancy_connection_itf_1ga0f3202e1d2a52ae62de3d1ceff5ea0c6>` pfRdcyConnectionReceiveSync;
+
+- #define :ref:`GET_RdcyConnectionReceiveSync <group___cmp_redundancy_connection_itf_1ga75661fadb80b5c1137cb3cf94c622f44>` s_pfCMGetAPI2( "RdcyConnectionReceiveSync", (RTS_VOID_FCTPTR *)&pfRdcyConnectionReceiveSync, (fl), 0, 0)
+
+- #define :ref:`CAL_RdcyConnectionReceiveSync <group___cmp_redundancy_connection_itf_1gaf6289db4f691667b9cf5b923a130f1cc>` pfRdcyConnectionReceiveSync
+
+- #define :ref:`CHK_RdcyConnectionReceiveSync <group___cmp_redundancy_connection_itf_1gadbb9fbf8f27e9d023cdfc74ba1fccaf5>` (pfRdcyConnectionReceiveSync != NULL)
+
+- #define :ref:`EXP_RdcyConnectionReceiveSync <group___cmp_redundancy_connection_itf_1ga7fba9e650f7b3651e60054864e9070ff>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionReceiveSync", (RTS_UINTPTR) :ref:`RdcyConnectionReceiveSync <group___cmp_redundancy_connection_itf_1gab6ef807aeaddd33c68bf5888bc3000ee>` , 0, 0)
+
+- #define :ref:`USE_RdcyConnectionGetReceiveSize <group___cmp_redundancy_connection_itf_1ga0f45b058d8ee659be239f01fe2954fc1>` :ref:`PFRDCYCONNECTIONGETRECEIVESIZE <group___cmp_redundancy_connection_itf_1gac560e291a2da1f076a83cd7461257fb6>` pfRdcyConnectionGetReceiveSize;
+
+- #define :ref:`EXT_RdcyConnectionGetReceiveSize <group___cmp_redundancy_connection_itf_1ga4e65b63577a5e13370c47b73f467f428>` extern :ref:`PFRDCYCONNECTIONGETRECEIVESIZE <group___cmp_redundancy_connection_itf_1gac560e291a2da1f076a83cd7461257fb6>` pfRdcyConnectionGetReceiveSize;
+
+- #define :ref:`GET_RdcyConnectionGetReceiveSize <group___cmp_redundancy_connection_itf_1ga559bc0bb832670388329007cf1bd8f9b>` s_pfCMGetAPI2( "RdcyConnectionGetReceiveSize", (RTS_VOID_FCTPTR *)&pfRdcyConnectionGetReceiveSize, (fl), 0, 0)
+
+- #define :ref:`CAL_RdcyConnectionGetReceiveSize <group___cmp_redundancy_connection_itf_1gaca38f439631b05ea4edb37bac0f09135>` pfRdcyConnectionGetReceiveSize
+
+- #define :ref:`CHK_RdcyConnectionGetReceiveSize <group___cmp_redundancy_connection_itf_1ga08605856635933c1748c5d5b9c5a3762>` (pfRdcyConnectionGetReceiveSize != NULL)
+
+- #define :ref:`EXP_RdcyConnectionGetReceiveSize <group___cmp_redundancy_connection_itf_1ga312362e0d6b33496f5d8f3cbfc4065ea>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionGetReceiveSize", (RTS_UINTPTR) :ref:`RdcyConnectionGetReceiveSize <group___cmp_redundancy_connection_itf_1ga43410685fb1283c2a67b18f2596ef284>` , 0, 0)
+
+- #define :ref:`USE_RdcyConnectionSendSync <group___cmp_redundancy_connection_itf_1ga99517954d55e68cb697cce8605359f13>` :ref:`PFRDCYCONNECTIONSENDSYNC <group___cmp_redundancy_connection_itf_1ga4f26525892ed65c3218ac4af513afaa2>` pfRdcyConnectionSendSync;
+
+- #define :ref:`EXT_RdcyConnectionSendSync <group___cmp_redundancy_connection_itf_1gacc1fb7c4a6cea88508da653dd082b231>` extern :ref:`PFRDCYCONNECTIONSENDSYNC <group___cmp_redundancy_connection_itf_1ga4f26525892ed65c3218ac4af513afaa2>` pfRdcyConnectionSendSync;
+
+- #define :ref:`GET_RdcyConnectionSendSync <group___cmp_redundancy_connection_itf_1ga08a062d40d954f4fe6d07b45cdcfc5c1>` s_pfCMGetAPI2( "RdcyConnectionSendSync", (RTS_VOID_FCTPTR *)&pfRdcyConnectionSendSync, (fl), 0, 0)
+
+- #define :ref:`CAL_RdcyConnectionSendSync <group___cmp_redundancy_connection_itf_1ga70b6030003838fb87745c3e9d9eaa490>` pfRdcyConnectionSendSync
+
+- #define :ref:`CHK_RdcyConnectionSendSync <group___cmp_redundancy_connection_itf_1ga91f9fb13266fb4c685185a1162ce02fc>` (pfRdcyConnectionSendSync != NULL)
+
+- #define :ref:`EXP_RdcyConnectionSendSync <group___cmp_redundancy_connection_itf_1ga9986324550ce07c7be80088213fe42bf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionSendSync", (RTS_UINTPTR) :ref:`RdcyConnectionSendSync <group___cmp_redundancy_connection_itf_1gad6c62be663e4c95944b5a80fc1e2029d>` , 0, 0)
+
+- #define :ref:`USE_RdcyConnectionReceiveData <group___cmp_redundancy_connection_itf_1ga46d25e8930e9911cc54718089e67ed37>` :ref:`PFRDCYCONNECTIONRECEIVEDATA <group___cmp_redundancy_connection_itf_1gad9f9c8d2dbf6a3a30a50c6bd38751fbf>` pfRdcyConnectionReceiveData;
+
+- #define :ref:`EXT_RdcyConnectionReceiveData <group___cmp_redundancy_connection_itf_1ga45b1ee3dd6b38ce56d931d481b39a8a5>` extern :ref:`PFRDCYCONNECTIONRECEIVEDATA <group___cmp_redundancy_connection_itf_1gad9f9c8d2dbf6a3a30a50c6bd38751fbf>` pfRdcyConnectionReceiveData;
+
+- #define :ref:`GET_RdcyConnectionReceiveData <group___cmp_redundancy_connection_itf_1ga2ebe57ff65efcd84673d5aac0677841d>` s_pfCMGetAPI2( "RdcyConnectionReceiveData", (RTS_VOID_FCTPTR *)&pfRdcyConnectionReceiveData, (fl), 0, 0)
+
+- #define :ref:`CAL_RdcyConnectionReceiveData <group___cmp_redundancy_connection_itf_1ga7921880243c8a06657660bad48d1c905>` pfRdcyConnectionReceiveData
+
+- #define :ref:`CHK_RdcyConnectionReceiveData <group___cmp_redundancy_connection_itf_1ga00b76756755dfe3fd704d7d6783d912c>` (pfRdcyConnectionReceiveData != NULL)
+
+- #define :ref:`EXP_RdcyConnectionReceiveData <group___cmp_redundancy_connection_itf_1ga66f10c98dfd1109fe4adc16a3a54ce52>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionReceiveData", (RTS_UINTPTR) :ref:`RdcyConnectionReceiveData <group___cmp_redundancy_connection_itf_1gae9d7d928f5a019222b7cec84cf85d940>` , 0, 0)
+
+- #define :ref:`USE_RdcyConnectionSendData <group___cmp_redundancy_connection_itf_1ga3c6f88381a15dcd04f154ee6732cac3c>` :ref:`PFRDCYCONNECTIONSENDDATA <group___cmp_redundancy_connection_itf_1ga0a1b8876ec09a4ffa47ea3bc5c83b8c3>` pfRdcyConnectionSendData;
+
+- #define :ref:`EXT_RdcyConnectionSendData <group___cmp_redundancy_connection_itf_1ga792fa921f66d6db1b27fcc4448b8a6c8>` extern :ref:`PFRDCYCONNECTIONSENDDATA <group___cmp_redundancy_connection_itf_1ga0a1b8876ec09a4ffa47ea3bc5c83b8c3>` pfRdcyConnectionSendData;
+
+- #define :ref:`GET_RdcyConnectionSendData <group___cmp_redundancy_connection_itf_1gac46103573d97079f48a9beb890b43176>` s_pfCMGetAPI2( "RdcyConnectionSendData", (RTS_VOID_FCTPTR *)&pfRdcyConnectionSendData, (fl), 0, 0)
+
+- #define :ref:`CAL_RdcyConnectionSendData <group___cmp_redundancy_connection_itf_1ga5cf77e8caa50168d0d3aeb04b2fa1d4d>` pfRdcyConnectionSendData
+
+- #define :ref:`CHK_RdcyConnectionSendData <group___cmp_redundancy_connection_itf_1gade87fe9ed10b22b51f31d835970290cc>` (pfRdcyConnectionSendData != NULL)
+
+- #define :ref:`EXP_RdcyConnectionSendData <group___cmp_redundancy_connection_itf_1ga0c7074ab6fad6777d5ee2cc42a4f5894>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionSendData", (RTS_UINTPTR) :ref:`RdcyConnectionSendData <group___cmp_redundancy_connection_itf_1ga4e84f36b4904c07cb58f865ece58d27a>` , 0, 0)
+
+- #define :ref:`USE_RdcyConnectionReadSettings <group___cmp_redundancy_connection_itf_1ga4f4c642bf33549864668166a6468b53a>` :ref:`PFRDCYCONNECTIONREADSETTINGS <group___cmp_redundancy_connection_itf_1ga1cc1ac188a81d13856392942f43b5800>` pfRdcyConnectionReadSettings;
+
+- #define :ref:`EXT_RdcyConnectionReadSettings <group___cmp_redundancy_connection_itf_1ga665847593fcb34a7388dc92778f2e9b9>` extern :ref:`PFRDCYCONNECTIONREADSETTINGS <group___cmp_redundancy_connection_itf_1ga1cc1ac188a81d13856392942f43b5800>` pfRdcyConnectionReadSettings;
+
+- #define :ref:`GET_RdcyConnectionReadSettings <group___cmp_redundancy_connection_itf_1ga05ff763376200a971c90fe4e9125e04d>` s_pfCMGetAPI2( "RdcyConnectionReadSettings", (RTS_VOID_FCTPTR *)&pfRdcyConnectionReadSettings, (fl), 0, 0)
+
+- #define :ref:`CAL_RdcyConnectionReadSettings <group___cmp_redundancy_connection_itf_1gab4183662f364a61fdcf60549cdd0f410>` pfRdcyConnectionReadSettings
+
+- #define :ref:`CHK_RdcyConnectionReadSettings <group___cmp_redundancy_connection_itf_1gac66b726d0f6ac61f70513f482c975a1b>` (pfRdcyConnectionReadSettings != NULL)
+
+- #define :ref:`EXP_RdcyConnectionReadSettings <group___cmp_redundancy_connection_itf_1gae2edf4d08ac7d2b8ba53e74b8881f174>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionReadSettings", (RTS_UINTPTR) :ref:`RdcyConnectionReadSettings <group___cmp_redundancy_connection_itf_1gae88499d65bac0fdf4ca408aff384d804>` , 0, 0)
+
+- #define :ref:`USE_RdcyConnectionSrvReadSettings <group___cmp_redundancy_connection_itf_1ga68df59b46122afcaa92cfa2126c89311>` :ref:`PFRDCYCONNECTIONSRVREADSETTINGS <group___cmp_redundancy_connection_itf_1gab973e11cd8f7bc79f490d3f434c269a4>` pfRdcyConnectionSrvReadSettings;
+
+- #define :ref:`EXT_RdcyConnectionSrvReadSettings <group___cmp_redundancy_connection_itf_1gafc22fef49e6b39faea171b40b1eb2cf4>` extern :ref:`PFRDCYCONNECTIONSRVREADSETTINGS <group___cmp_redundancy_connection_itf_1gab973e11cd8f7bc79f490d3f434c269a4>` pfRdcyConnectionSrvReadSettings;
+
+- #define :ref:`GET_RdcyConnectionSrvReadSettings <group___cmp_redundancy_connection_itf_1gac27bfdfabfde4fe6d9e60fda03b3f92e>` s_pfCMGetAPI2( "RdcyConnectionSrvReadSettings", (RTS_VOID_FCTPTR *)&pfRdcyConnectionSrvReadSettings, (fl), 0, 0)
+
+- #define :ref:`CAL_RdcyConnectionSrvReadSettings <group___cmp_redundancy_connection_itf_1gaf2739bc04c5b6d9a5bb1e0dc5673bb02>` pfRdcyConnectionSrvReadSettings
+
+- #define :ref:`CHK_RdcyConnectionSrvReadSettings <group___cmp_redundancy_connection_itf_1ga04f7a0fb738b7cb4bf98cf5319148837>` (pfRdcyConnectionSrvReadSettings != NULL)
+
+- #define :ref:`EXP_RdcyConnectionSrvReadSettings <group___cmp_redundancy_connection_itf_1ga97d70083be52947aaaaebaf804a278d6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionSrvReadSettings", (RTS_UINTPTR) :ref:`RdcyConnectionSrvReadSettings <group___cmp_redundancy_connection_itf_1ga0e953bc0cb3c4bde2a827afd9de88324>` , 0, 0)
+
+- #define :ref:`USE_RdcyConnectionSrvWriteSettings <group___cmp_redundancy_connection_itf_1ga700bb0d4849ad195df35461158fd9680>` :ref:`PFRDCYCONNECTIONSRVWRITESETTINGS <group___cmp_redundancy_connection_itf_1ga1cbc3b4fb62a7d947471da6b963f119b>` pfRdcyConnectionSrvWriteSettings;
+
+- #define :ref:`EXT_RdcyConnectionSrvWriteSettings <group___cmp_redundancy_connection_itf_1ga7295003c38df20ccfa0d1c6b738252e6>` extern :ref:`PFRDCYCONNECTIONSRVWRITESETTINGS <group___cmp_redundancy_connection_itf_1ga1cbc3b4fb62a7d947471da6b963f119b>` pfRdcyConnectionSrvWriteSettings;
+
+- #define :ref:`GET_RdcyConnectionSrvWriteSettings <group___cmp_redundancy_connection_itf_1ga98c75c018bb3ab1cad70d92285f80d45>` s_pfCMGetAPI2( "RdcyConnectionSrvWriteSettings", (RTS_VOID_FCTPTR *)&pfRdcyConnectionSrvWriteSettings, (fl), 0, 0)
+
+- #define :ref:`CAL_RdcyConnectionSrvWriteSettings <group___cmp_redundancy_connection_itf_1ga452a5638b04e101274f6badefab76eda>` pfRdcyConnectionSrvWriteSettings
+
+- #define :ref:`CHK_RdcyConnectionSrvWriteSettings <group___cmp_redundancy_connection_itf_1ga037ca6314d16bd0ebc617f14d9a97b46>` (pfRdcyConnectionSrvWriteSettings != NULL)
+
+- #define :ref:`EXP_RdcyConnectionSrvWriteSettings <group___cmp_redundancy_connection_itf_1gaab7441875378d8f27bcdd152416e2931>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionSrvWriteSettings", (RTS_UINTPTR) :ref:`RdcyConnectionSrvWriteSettings <group___cmp_redundancy_connection_itf_1ga81f0c212553e0f586afcb5d876acae69>` , 0, 0)
+
+- #define :ref:`USE_RdcyConnectionGetSyncMessageSize <group___cmp_redundancy_connection_itf_1gaaf199065421a43b6bea5711e4c20aa85>` :ref:`PFRDCYCONNECTIONGETSYNCMESSAGESIZE <group___cmp_redundancy_connection_itf_1gad9f1ee80c92498172152128eb94ee6a2>` pfRdcyConnectionGetSyncMessageSize;
+
+- #define :ref:`EXT_RdcyConnectionGetSyncMessageSize <group___cmp_redundancy_connection_itf_1gaae26deeb587d02cc2283cb9bdf92eb30>` extern :ref:`PFRDCYCONNECTIONGETSYNCMESSAGESIZE <group___cmp_redundancy_connection_itf_1gad9f1ee80c92498172152128eb94ee6a2>` pfRdcyConnectionGetSyncMessageSize;
+
+- #define :ref:`GET_RdcyConnectionGetSyncMessageSize <group___cmp_redundancy_connection_itf_1ga4647f355f83469fcd796f4ffbe39e0f4>` s_pfCMGetAPI2( "RdcyConnectionGetSyncMessageSize", (RTS_VOID_FCTPTR *)&pfRdcyConnectionGetSyncMessageSize, (fl), 0, 0)
+
+- #define :ref:`CAL_RdcyConnectionGetSyncMessageSize <group___cmp_redundancy_connection_itf_1gac74311e0ba0679a0f0a185a43ba0460d>` pfRdcyConnectionGetSyncMessageSize
+
+- #define :ref:`CHK_RdcyConnectionGetSyncMessageSize <group___cmp_redundancy_connection_itf_1gac7a9a6d320e263b7db6154c534721623>` (pfRdcyConnectionGetSyncMessageSize != NULL)
+
+- #define :ref:`EXP_RdcyConnectionGetSyncMessageSize <group___cmp_redundancy_connection_itf_1ga23bc9c11d54f44a3c966a52e8af4e00c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionGetSyncMessageSize", (RTS_UINTPTR) :ref:`RdcyConnectionGetSyncMessageSize <group___cmp_redundancy_connection_itf_1ga519fa579c026aaa385cfcde8343e2aeb>` , 0, 0)
+
+- #define :ref:`USE_RdcyConnectionGetDataMessageSize <group___cmp_redundancy_connection_itf_1ga0fc3aa0e5b389a2da7eada3d64800cdc>` :ref:`PFRDCYCONNECTIONGETDATAMESSAGESIZE <group___cmp_redundancy_connection_itf_1ga58977e462e7cac8bcb8fb77494b33be2>` pfRdcyConnectionGetDataMessageSize;
+
+- #define :ref:`EXT_RdcyConnectionGetDataMessageSize <group___cmp_redundancy_connection_itf_1ga690487ebd72fcc49bbf837c9767d6aa6>` extern :ref:`PFRDCYCONNECTIONGETDATAMESSAGESIZE <group___cmp_redundancy_connection_itf_1ga58977e462e7cac8bcb8fb77494b33be2>` pfRdcyConnectionGetDataMessageSize;
+
+- #define :ref:`GET_RdcyConnectionGetDataMessageSize <group___cmp_redundancy_connection_itf_1gaf54eda4a27fabaea86af23bfcbf34302>` s_pfCMGetAPI2( "RdcyConnectionGetDataMessageSize", (RTS_VOID_FCTPTR *)&pfRdcyConnectionGetDataMessageSize, (fl), 0, 0)
+
+- #define :ref:`CAL_RdcyConnectionGetDataMessageSize <group___cmp_redundancy_connection_itf_1gab7340a57ec57f80ced0f072745e64a21>` pfRdcyConnectionGetDataMessageSize
+
+- #define :ref:`CHK_RdcyConnectionGetDataMessageSize <group___cmp_redundancy_connection_itf_1ga11ce85ba700a97739f6ed8d36b1c8941>` (pfRdcyConnectionGetDataMessageSize != NULL)
+
+- #define :ref:`EXP_RdcyConnectionGetDataMessageSize <group___cmp_redundancy_connection_itf_1ga4dbc0925f37d9026bf0b634ef9c1e753>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionGetDataMessageSize", (RTS_UINTPTR) :ref:`RdcyConnectionGetDataMessageSize <group___cmp_redundancy_connection_itf_1ga8e8e405fcfa2f7c3a987b12ef0604d46>` , 0, 0)
+
+- #define :ref:`USE_getconnectioninfo <group___cmp_redundancy_connection_itf_1ga2203f1d698c5ebf7c948b5d839a450be>` :ref:`PFGETCONNECTIONINFO_IEC <group___cmp_redundancy_connection_itf_1ga62a771100f01d504675604699f7399f0>` pfgetconnectioninfo;
+
+- #define :ref:`EXT_getconnectioninfo <group___cmp_redundancy_connection_itf_1gaded9d4cd124657443db1ca780da335be>` extern :ref:`PFGETCONNECTIONINFO_IEC <group___cmp_redundancy_connection_itf_1ga62a771100f01d504675604699f7399f0>` pfgetconnectioninfo;
+
+- #define :ref:`GET_getconnectioninfo <group___cmp_redundancy_connection_itf_1gaa05aa2efde062303acd4b8bc05ab4daa>` s_pfCMGetAPI2( "getconnectioninfo", (RTS_VOID_FCTPTR *)&pfgetconnectioninfo, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x2F0D4581, 0x03050F00)
+
+- #define :ref:`CAL_getconnectioninfo <group___cmp_redundancy_connection_itf_1ga44d143e71cbc5ec45ae007ebf9ead003>` pfgetconnectioninfo
+
+- #define :ref:`CHK_getconnectioninfo <group___cmp_redundancy_connection_itf_1ga31480fcd038dd7aa75ecc1d3ffe8d8db>` (pfgetconnectioninfo != NULL)
+
+- #define :ref:`EXP_getconnectioninfo <group___cmp_redundancy_connection_itf_1gaf06e984911ab709e6beeded778e04505>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getconnectioninfo", (RTS_UINTPTR) :ref:`getconnectioninfo <group___cmp_redundancy_connection_itf_1ga32269f72e49abfa3ed6e643d3689598a>` , 1, 0x2F0D4581, 0x03050F00)
+
+- #define :ref:`ITF_CmpRedundancyConnection <group___cmp_redundancy_connection_itf_1ga51964b411929c3d9e175a66e55458a9d>`
+
+- #define :ref:`EXTITF_CmpRedundancyConnection <group___cmp_redundancy_connection_itf_1gaff09c0ad87854a30f1fa789742fc2db7>`
+
+Typedefs
+--------
+
+- typedef RTS_HANDLE(* :ref:`PFRDCYCONNECTIONOPEN <group___cmp_redundancy_connection_itf_1ga9618258795ea9fc1b2c16c27f9c59b4c>`)(REDUNDANCY_COMM_MODE mode, RTS_UI32 uiMessageSize)
+
+- typedef RTS_RESULT(* :ref:`PFRDCYCONNECTIONCLOSE <group___cmp_redundancy_connection_itf_1ga893600189a706af6fc70d0a4e7e5f9bf>`)(RTS_HANDLE hConnection, REDUNDANCY_COMM_MODE mode)
+
+- typedef RTS_UI32(* :ref:`PFRDCYCONNECTIONGETOWNADDRESS <group___cmp_redundancy_connection_itf_1gac85b60c68916be3ded15343dc05d4d2c>`)(void)
+
+- typedef RTS_BOOL(* :ref:`PFRDCYCONNECTIONRECEIVESYNC <group___cmp_redundancy_connection_itf_1ga0f3202e1d2a52ae62de3d1ceff5ea0c6>`)(RTS_HANDLE hConnection, char *pbyData, RTS_UI32 diDataSize, CLIENT_REPLY *pReply)
+
+- typedef RTS_UI32(* :ref:`PFRDCYCONNECTIONGETRECEIVESIZE <group___cmp_redundancy_connection_itf_1gac560e291a2da1f076a83cd7461257fb6>`)(RTS_HANDLE hConnection, RTS_UI32 ulTimeout)
+
+- typedef RTS_UI32(* :ref:`PFRDCYCONNECTIONSENDSYNC <group___cmp_redundancy_connection_itf_1ga4f26525892ed65c3218ac4af513afaa2>`)(RTS_HANDLE hConnection, char *pbyData, RTS_UI32 diDataSize)
+
+- typedef RTS_UI32(* :ref:`PFRDCYCONNECTIONRECEIVEDATA <group___cmp_redundancy_connection_itf_1gad9f9c8d2dbf6a3a30a50c6bd38751fbf>`)(RTS_HANDLE hConnection, char *pbyData, RTS_UI32 diDataSize, CLIENT_REPLY *pReply, RTS_UI32 ulTimeout)
+
+- typedef RTS_UI32(* :ref:`PFRDCYCONNECTIONSENDDATA <group___cmp_redundancy_connection_itf_1ga0a1b8876ec09a4ffa47ea3bc5c83b8c3>`)(RTS_HANDLE hConnection, char *pbyData, RTS_UI32 diDataSize)
+
+- typedef RTS_RESULT(* :ref:`PFRDCYCONNECTIONREADSETTINGS <group___cmp_redundancy_connection_itf_1ga1cc1ac188a81d13856392942f43b5800>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFRDCYCONNECTIONSRVREADSETTINGS <group___cmp_redundancy_connection_itf_1gab973e11cd8f7bc79f490d3f434c269a4>`)(BINTAGWRITER *pwriter)
+
+- typedef RTS_RESULT(* :ref:`PFRDCYCONNECTIONSRVWRITESETTINGS <group___cmp_redundancy_connection_itf_1ga1cbc3b4fb62a7d947471da6b963f119b>`)(BINTAGREADER *preader)
+
+- typedef RTS_UI32(* :ref:`PFRDCYCONNECTIONGETSYNCMESSAGESIZE <group___cmp_redundancy_connection_itf_1gad9f1ee80c92498172152128eb94ee6a2>`)(void)
+
+- typedef RTS_UI32(* :ref:`PFRDCYCONNECTIONGETDATAMESSAGESIZE <group___cmp_redundancy_connection_itf_1ga58977e462e7cac8bcb8fb77494b33be2>`)(void)
+
+- typedef struct :ref:`tagREDUNDANCY_CONNECTION_INFO <structtag_r_e_d_u_n_d_a_n_c_y___c_o_n_n_e_c_t_i_o_n___i_n_f_o>` :ref:`REDUNDANCY_CONNECTION_INFO <group___cmp_redundancy_connection_itf_1ga55d098240070a8934fcd41a1207218ff>`
+
+- typedef struct :ref:`taggetconnectioninfo_struct <structtaggetconnectioninfo__struct>` :ref:`getconnectioninfo_struct <group___cmp_redundancy_connection_itf_1ga342e85bcee3dd22506ec292476de0c0a>`
+
+- typedef void(* :ref:`PFGETCONNECTIONINFO_IEC <group___cmp_redundancy_connection_itf_1ga62a771100f01d504675604699f7399f0>`)(getconnectioninfo_struct *p)
+
+- typedef :ref:`ICmpRedundancyConnection_C <struct_i_cmp_redundancy_connection___c>` :ref:`ICmpRedundancyConnection <group___cmp_redundancy_connection_itf_1ga3475ff40230cebeb89b45f94438ddb28>`
+
+Functions
+---------
+
+- RTS_HANDLE :ref:`RdcyConnectionOpen <group___cmp_redundancy_connection_itf_1ga46abfb651f9c7831e447b495542c0fa6>` (:ref:`REDUNDANCY_COMM_MODE <group___cmp_redundancy_itf_1gae9015dc80362e86c441a3b750d366dee>`  mode, RTS_UI32 uiMessageSize)
+
+- RTS_RESULT :ref:`RdcyConnectionClose <group___cmp_redundancy_connection_itf_1ga75423e56befe426b05f660bf870b8ad4>` (RTS_HANDLE hConnection, :ref:`REDUNDANCY_COMM_MODE <group___cmp_redundancy_itf_1gae9015dc80362e86c441a3b750d366dee>`  mode)
+
+- RTS_UI32 :ref:`RdcyConnectionGetOwnAddress <group___cmp_redundancy_connection_itf_1ga7dd61ff94262110134227266f74bfa30>` (void)
+
+- RTS_BOOL :ref:`RdcyConnectionReceiveSync <group___cmp_redundancy_connection_itf_1gab6ef807aeaddd33c68bf5888bc3000ee>` (RTS_HANDLE hConnection, char * pbyData, RTS_UI32 diDataSize, :ref:`CLIENT_REPLY <group___cmp_redundancy_itf_1ga9aca827043efb8b7c5d41e1c7b5341af>` * pReply)
+
+- RTS_UI32 :ref:`RdcyConnectionGetReceiveSize <group___cmp_redundancy_connection_itf_1ga43410685fb1283c2a67b18f2596ef284>` (RTS_HANDLE hConnection, RTS_UI32 ulTimeout)
+
+- RTS_UI32 :ref:`RdcyConnectionSendSync <group___cmp_redundancy_connection_itf_1gad6c62be663e4c95944b5a80fc1e2029d>` (RTS_HANDLE hConnection, char * pbyData, RTS_UI32 diDataSize)
+
+- RTS_UI32 :ref:`RdcyConnectionReceiveData <group___cmp_redundancy_connection_itf_1gae9d7d928f5a019222b7cec84cf85d940>` (RTS_HANDLE hConnection, char * pbyData, RTS_UI32 diDataSize, :ref:`CLIENT_REPLY <group___cmp_redundancy_itf_1ga9aca827043efb8b7c5d41e1c7b5341af>` * pReply, RTS_UI32 ulTimeout)
+
+- RTS_UI32 :ref:`RdcyConnectionSendData <group___cmp_redundancy_connection_itf_1ga4e84f36b4904c07cb58f865ece58d27a>` (RTS_HANDLE hConnection, char * pbyData, RTS_UI32 diDataSize)
+
+- RTS_RESULT :ref:`RdcyConnectionReadSettings <group___cmp_redundancy_connection_itf_1gae88499d65bac0fdf4ca408aff384d804>` (void)
+
+- RTS_RESULT :ref:`RdcyConnectionSrvReadSettings <group___cmp_redundancy_connection_itf_1ga0e953bc0cb3c4bde2a827afd9de88324>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pwriter)
+
+- RTS_RESULT :ref:`RdcyConnectionSrvWriteSettings <group___cmp_redundancy_connection_itf_1ga81f0c212553e0f586afcb5d876acae69>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * preader)
+
+- RTS_UI32 :ref:`RdcyConnectionGetSyncMessageSize <group___cmp_redundancy_connection_itf_1ga519fa579c026aaa385cfcde8343e2aeb>` (void)
+
+- RTS_UI32 :ref:`RdcyConnectionGetDataMessageSize <group___cmp_redundancy_connection_itf_1ga8e8e405fcfa2f7c3a987b12ef0604d46>` (void)
+
+- void :ref:`getconnectioninfo <group___cmp_redundancy_connection_itf_1ga32269f72e49abfa3ed6e643d3689598a>` (:ref:`getconnectioninfo_struct <group___cmp_redundancy_connection_itf_1ga342e85bcee3dd22506ec292476de0c0a>` * p)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_redundancy_connection_itf_1ga0dcae03ac0e6cc3ae7d4149f0e9df8e6:
+
+#define USE_RdcyConnectionOpen :ref:`PFRDCYCONNECTIONOPEN <group___cmp_redundancy_connection_itf_1ga9618258795ea9fc1b2c16c27f9c59b4c>` pfRdcyConnectionOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga84378e0e437aa126fd4ef1a0a2e0c8e5:
+
+#define EXT_RdcyConnectionOpen extern :ref:`PFRDCYCONNECTIONOPEN <group___cmp_redundancy_connection_itf_1ga9618258795ea9fc1b2c16c27f9c59b4c>` pfRdcyConnectionOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gadd5734ca124d61a3896e4da138741228:
+
+#define GET_RdcyConnectionOpen s_pfCMGetAPI2( "RdcyConnectionOpen", (RTS_VOID_FCTPTR *)&pfRdcyConnectionOpen, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga270338ac0508a1fec953ef6d113c31ec:
+
+#define CAL_RdcyConnectionOpen pfRdcyConnectionOpen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga5bf5d28cedc93a64e0580093cecd05ed:
+
+#define CHK_RdcyConnectionOpen (pfRdcyConnectionOpen != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga277c3414dd7a3349065a4fbb7dc87d6e:
+
+#define EXP_RdcyConnectionOpen s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionOpen", (RTS_UINTPTR) :ref:`RdcyConnectionOpen <group___cmp_redundancy_connection_itf_1ga46abfb651f9c7831e447b495542c0fa6>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga7d1cd4195807a1060a6a90b1d68549ab:
+
+#define USE_RdcyConnectionClose :ref:`PFRDCYCONNECTIONCLOSE <group___cmp_redundancy_connection_itf_1ga893600189a706af6fc70d0a4e7e5f9bf>` pfRdcyConnectionClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga2a51e4a16b40377c49a4986029cfd795:
+
+#define EXT_RdcyConnectionClose extern :ref:`PFRDCYCONNECTIONCLOSE <group___cmp_redundancy_connection_itf_1ga893600189a706af6fc70d0a4e7e5f9bf>` pfRdcyConnectionClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga93c8c873d20ace14941ec2ef60f52e3d:
+
+#define GET_RdcyConnectionClose s_pfCMGetAPI2( "RdcyConnectionClose", (RTS_VOID_FCTPTR *)&pfRdcyConnectionClose, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga4522e0c4d65df886288c691d9cafe8ee:
+
+#define CAL_RdcyConnectionClose pfRdcyConnectionClose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gab06b2136dc6c28aa604afb42082273c6:
+
+#define CHK_RdcyConnectionClose (pfRdcyConnectionClose != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga4975793832cd590fb0bea9bc59441f11:
+
+#define EXP_RdcyConnectionClose s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionClose", (RTS_UINTPTR) :ref:`RdcyConnectionClose <group___cmp_redundancy_connection_itf_1ga75423e56befe426b05f660bf870b8ad4>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gada56ceded9cdc3416e9515b06f3ad9f4:
+
+#define USE_RdcyConnectionGetOwnAddress :ref:`PFRDCYCONNECTIONGETOWNADDRESS <group___cmp_redundancy_connection_itf_1gac85b60c68916be3ded15343dc05d4d2c>` pfRdcyConnectionGetOwnAddress;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga42c5cf95237977a5f9880a1db814435b:
+
+#define EXT_RdcyConnectionGetOwnAddress extern :ref:`PFRDCYCONNECTIONGETOWNADDRESS <group___cmp_redundancy_connection_itf_1gac85b60c68916be3ded15343dc05d4d2c>` pfRdcyConnectionGetOwnAddress;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gabb8d6046de5cd93bc1f9e828830242cc:
+
+#define GET_RdcyConnectionGetOwnAddress s_pfCMGetAPI2( "RdcyConnectionGetOwnAddress", (RTS_VOID_FCTPTR *)&pfRdcyConnectionGetOwnAddress, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga00e6454b6a27456a2d22c117112eda43:
+
+#define CAL_RdcyConnectionGetOwnAddress pfRdcyConnectionGetOwnAddress
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga2ab88540cbbf3e485ff29f019c698af0:
+
+#define CHK_RdcyConnectionGetOwnAddress (pfRdcyConnectionGetOwnAddress != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga4bb09cd70356e32c97b9c1d2d683bffd:
+
+#define EXP_RdcyConnectionGetOwnAddress s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionGetOwnAddress", (RTS_UINTPTR) :ref:`RdcyConnectionGetOwnAddress <group___cmp_redundancy_connection_itf_1ga7dd61ff94262110134227266f74bfa30>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gadc8fe14bf14ea1248d3d27b5b9cfa0fc:
+
+#define USE_RdcyConnectionReceiveSync :ref:`PFRDCYCONNECTIONRECEIVESYNC <group___cmp_redundancy_connection_itf_1ga0f3202e1d2a52ae62de3d1ceff5ea0c6>` pfRdcyConnectionReceiveSync;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga702071855bbcb2eb529b986fe7e006fe:
+
+#define EXT_RdcyConnectionReceiveSync extern :ref:`PFRDCYCONNECTIONRECEIVESYNC <group___cmp_redundancy_connection_itf_1ga0f3202e1d2a52ae62de3d1ceff5ea0c6>` pfRdcyConnectionReceiveSync;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga75661fadb80b5c1137cb3cf94c622f44:
+
+#define GET_RdcyConnectionReceiveSync s_pfCMGetAPI2( "RdcyConnectionReceiveSync", (RTS_VOID_FCTPTR *)&pfRdcyConnectionReceiveSync, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gaf6289db4f691667b9cf5b923a130f1cc:
+
+#define CAL_RdcyConnectionReceiveSync pfRdcyConnectionReceiveSync
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gadbb9fbf8f27e9d023cdfc74ba1fccaf5:
+
+#define CHK_RdcyConnectionReceiveSync (pfRdcyConnectionReceiveSync != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga7fba9e650f7b3651e60054864e9070ff:
+
+#define EXP_RdcyConnectionReceiveSync s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionReceiveSync", (RTS_UINTPTR) :ref:`RdcyConnectionReceiveSync <group___cmp_redundancy_connection_itf_1gab6ef807aeaddd33c68bf5888bc3000ee>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga0f45b058d8ee659be239f01fe2954fc1:
+
+#define USE_RdcyConnectionGetReceiveSize :ref:`PFRDCYCONNECTIONGETRECEIVESIZE <group___cmp_redundancy_connection_itf_1gac560e291a2da1f076a83cd7461257fb6>` pfRdcyConnectionGetReceiveSize;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga4e65b63577a5e13370c47b73f467f428:
+
+#define EXT_RdcyConnectionGetReceiveSize extern :ref:`PFRDCYCONNECTIONGETRECEIVESIZE <group___cmp_redundancy_connection_itf_1gac560e291a2da1f076a83cd7461257fb6>` pfRdcyConnectionGetReceiveSize;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga559bc0bb832670388329007cf1bd8f9b:
+
+#define GET_RdcyConnectionGetReceiveSize s_pfCMGetAPI2( "RdcyConnectionGetReceiveSize", (RTS_VOID_FCTPTR *)&pfRdcyConnectionGetReceiveSize, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gaca38f439631b05ea4edb37bac0f09135:
+
+#define CAL_RdcyConnectionGetReceiveSize pfRdcyConnectionGetReceiveSize
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga08605856635933c1748c5d5b9c5a3762:
+
+#define CHK_RdcyConnectionGetReceiveSize (pfRdcyConnectionGetReceiveSize != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga312362e0d6b33496f5d8f3cbfc4065ea:
+
+#define EXP_RdcyConnectionGetReceiveSize s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionGetReceiveSize", (RTS_UINTPTR) :ref:`RdcyConnectionGetReceiveSize <group___cmp_redundancy_connection_itf_1ga43410685fb1283c2a67b18f2596ef284>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga99517954d55e68cb697cce8605359f13:
+
+#define USE_RdcyConnectionSendSync :ref:`PFRDCYCONNECTIONSENDSYNC <group___cmp_redundancy_connection_itf_1ga4f26525892ed65c3218ac4af513afaa2>` pfRdcyConnectionSendSync;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gacc1fb7c4a6cea88508da653dd082b231:
+
+#define EXT_RdcyConnectionSendSync extern :ref:`PFRDCYCONNECTIONSENDSYNC <group___cmp_redundancy_connection_itf_1ga4f26525892ed65c3218ac4af513afaa2>` pfRdcyConnectionSendSync;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga08a062d40d954f4fe6d07b45cdcfc5c1:
+
+#define GET_RdcyConnectionSendSync s_pfCMGetAPI2( "RdcyConnectionSendSync", (RTS_VOID_FCTPTR *)&pfRdcyConnectionSendSync, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga70b6030003838fb87745c3e9d9eaa490:
+
+#define CAL_RdcyConnectionSendSync pfRdcyConnectionSendSync
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga91f9fb13266fb4c685185a1162ce02fc:
+
+#define CHK_RdcyConnectionSendSync (pfRdcyConnectionSendSync != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga9986324550ce07c7be80088213fe42bf:
+
+#define EXP_RdcyConnectionSendSync s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionSendSync", (RTS_UINTPTR) :ref:`RdcyConnectionSendSync <group___cmp_redundancy_connection_itf_1gad6c62be663e4c95944b5a80fc1e2029d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga46d25e8930e9911cc54718089e67ed37:
+
+#define USE_RdcyConnectionReceiveData :ref:`PFRDCYCONNECTIONRECEIVEDATA <group___cmp_redundancy_connection_itf_1gad9f9c8d2dbf6a3a30a50c6bd38751fbf>` pfRdcyConnectionReceiveData;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga45b1ee3dd6b38ce56d931d481b39a8a5:
+
+#define EXT_RdcyConnectionReceiveData extern :ref:`PFRDCYCONNECTIONRECEIVEDATA <group___cmp_redundancy_connection_itf_1gad9f9c8d2dbf6a3a30a50c6bd38751fbf>` pfRdcyConnectionReceiveData;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga2ebe57ff65efcd84673d5aac0677841d:
+
+#define GET_RdcyConnectionReceiveData s_pfCMGetAPI2( "RdcyConnectionReceiveData", (RTS_VOID_FCTPTR *)&pfRdcyConnectionReceiveData, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga7921880243c8a06657660bad48d1c905:
+
+#define CAL_RdcyConnectionReceiveData pfRdcyConnectionReceiveData
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga00b76756755dfe3fd704d7d6783d912c:
+
+#define CHK_RdcyConnectionReceiveData (pfRdcyConnectionReceiveData != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga66f10c98dfd1109fe4adc16a3a54ce52:
+
+#define EXP_RdcyConnectionReceiveData s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionReceiveData", (RTS_UINTPTR) :ref:`RdcyConnectionReceiveData <group___cmp_redundancy_connection_itf_1gae9d7d928f5a019222b7cec84cf85d940>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga3c6f88381a15dcd04f154ee6732cac3c:
+
+#define USE_RdcyConnectionSendData :ref:`PFRDCYCONNECTIONSENDDATA <group___cmp_redundancy_connection_itf_1ga0a1b8876ec09a4ffa47ea3bc5c83b8c3>` pfRdcyConnectionSendData;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga792fa921f66d6db1b27fcc4448b8a6c8:
+
+#define EXT_RdcyConnectionSendData extern :ref:`PFRDCYCONNECTIONSENDDATA <group___cmp_redundancy_connection_itf_1ga0a1b8876ec09a4ffa47ea3bc5c83b8c3>` pfRdcyConnectionSendData;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gac46103573d97079f48a9beb890b43176:
+
+#define GET_RdcyConnectionSendData s_pfCMGetAPI2( "RdcyConnectionSendData", (RTS_VOID_FCTPTR *)&pfRdcyConnectionSendData, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga5cf77e8caa50168d0d3aeb04b2fa1d4d:
+
+#define CAL_RdcyConnectionSendData pfRdcyConnectionSendData
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gade87fe9ed10b22b51f31d835970290cc:
+
+#define CHK_RdcyConnectionSendData (pfRdcyConnectionSendData != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga0c7074ab6fad6777d5ee2cc42a4f5894:
+
+#define EXP_RdcyConnectionSendData s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionSendData", (RTS_UINTPTR) :ref:`RdcyConnectionSendData <group___cmp_redundancy_connection_itf_1ga4e84f36b4904c07cb58f865ece58d27a>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga4f4c642bf33549864668166a6468b53a:
+
+#define USE_RdcyConnectionReadSettings :ref:`PFRDCYCONNECTIONREADSETTINGS <group___cmp_redundancy_connection_itf_1ga1cc1ac188a81d13856392942f43b5800>` pfRdcyConnectionReadSettings;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga665847593fcb34a7388dc92778f2e9b9:
+
+#define EXT_RdcyConnectionReadSettings extern :ref:`PFRDCYCONNECTIONREADSETTINGS <group___cmp_redundancy_connection_itf_1ga1cc1ac188a81d13856392942f43b5800>` pfRdcyConnectionReadSettings;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga05ff763376200a971c90fe4e9125e04d:
+
+#define GET_RdcyConnectionReadSettings s_pfCMGetAPI2( "RdcyConnectionReadSettings", (RTS_VOID_FCTPTR *)&pfRdcyConnectionReadSettings, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gab4183662f364a61fdcf60549cdd0f410:
+
+#define CAL_RdcyConnectionReadSettings pfRdcyConnectionReadSettings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gac66b726d0f6ac61f70513f482c975a1b:
+
+#define CHK_RdcyConnectionReadSettings (pfRdcyConnectionReadSettings != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gae2edf4d08ac7d2b8ba53e74b8881f174:
+
+#define EXP_RdcyConnectionReadSettings s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionReadSettings", (RTS_UINTPTR) :ref:`RdcyConnectionReadSettings <group___cmp_redundancy_connection_itf_1gae88499d65bac0fdf4ca408aff384d804>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga68df59b46122afcaa92cfa2126c89311:
+
+#define USE_RdcyConnectionSrvReadSettings :ref:`PFRDCYCONNECTIONSRVREADSETTINGS <group___cmp_redundancy_connection_itf_1gab973e11cd8f7bc79f490d3f434c269a4>` pfRdcyConnectionSrvReadSettings;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gafc22fef49e6b39faea171b40b1eb2cf4:
+
+#define EXT_RdcyConnectionSrvReadSettings extern :ref:`PFRDCYCONNECTIONSRVREADSETTINGS <group___cmp_redundancy_connection_itf_1gab973e11cd8f7bc79f490d3f434c269a4>` pfRdcyConnectionSrvReadSettings;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gac27bfdfabfde4fe6d9e60fda03b3f92e:
+
+#define GET_RdcyConnectionSrvReadSettings s_pfCMGetAPI2( "RdcyConnectionSrvReadSettings", (RTS_VOID_FCTPTR *)&pfRdcyConnectionSrvReadSettings, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gaf2739bc04c5b6d9a5bb1e0dc5673bb02:
+
+#define CAL_RdcyConnectionSrvReadSettings pfRdcyConnectionSrvReadSettings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga04f7a0fb738b7cb4bf98cf5319148837:
+
+#define CHK_RdcyConnectionSrvReadSettings (pfRdcyConnectionSrvReadSettings != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga97d70083be52947aaaaebaf804a278d6:
+
+#define EXP_RdcyConnectionSrvReadSettings s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionSrvReadSettings", (RTS_UINTPTR) :ref:`RdcyConnectionSrvReadSettings <group___cmp_redundancy_connection_itf_1ga0e953bc0cb3c4bde2a827afd9de88324>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga700bb0d4849ad195df35461158fd9680:
+
+#define USE_RdcyConnectionSrvWriteSettings :ref:`PFRDCYCONNECTIONSRVWRITESETTINGS <group___cmp_redundancy_connection_itf_1ga1cbc3b4fb62a7d947471da6b963f119b>` pfRdcyConnectionSrvWriteSettings;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga7295003c38df20ccfa0d1c6b738252e6:
+
+#define EXT_RdcyConnectionSrvWriteSettings extern :ref:`PFRDCYCONNECTIONSRVWRITESETTINGS <group___cmp_redundancy_connection_itf_1ga1cbc3b4fb62a7d947471da6b963f119b>` pfRdcyConnectionSrvWriteSettings;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga98c75c018bb3ab1cad70d92285f80d45:
+
+#define GET_RdcyConnectionSrvWriteSettings s_pfCMGetAPI2( "RdcyConnectionSrvWriteSettings", (RTS_VOID_FCTPTR *)&pfRdcyConnectionSrvWriteSettings, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga452a5638b04e101274f6badefab76eda:
+
+#define CAL_RdcyConnectionSrvWriteSettings pfRdcyConnectionSrvWriteSettings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga037ca6314d16bd0ebc617f14d9a97b46:
+
+#define CHK_RdcyConnectionSrvWriteSettings (pfRdcyConnectionSrvWriteSettings != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gaab7441875378d8f27bcdd152416e2931:
+
+#define EXP_RdcyConnectionSrvWriteSettings s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionSrvWriteSettings", (RTS_UINTPTR) :ref:`RdcyConnectionSrvWriteSettings <group___cmp_redundancy_connection_itf_1ga81f0c212553e0f586afcb5d876acae69>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gaaf199065421a43b6bea5711e4c20aa85:
+
+#define USE_RdcyConnectionGetSyncMessageSize :ref:`PFRDCYCONNECTIONGETSYNCMESSAGESIZE <group___cmp_redundancy_connection_itf_1gad9f1ee80c92498172152128eb94ee6a2>` pfRdcyConnectionGetSyncMessageSize;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gaae26deeb587d02cc2283cb9bdf92eb30:
+
+#define EXT_RdcyConnectionGetSyncMessageSize extern :ref:`PFRDCYCONNECTIONGETSYNCMESSAGESIZE <group___cmp_redundancy_connection_itf_1gad9f1ee80c92498172152128eb94ee6a2>` pfRdcyConnectionGetSyncMessageSize;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga4647f355f83469fcd796f4ffbe39e0f4:
+
+#define GET_RdcyConnectionGetSyncMessageSize s_pfCMGetAPI2( "RdcyConnectionGetSyncMessageSize", (RTS_VOID_FCTPTR *)&pfRdcyConnectionGetSyncMessageSize, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gac74311e0ba0679a0f0a185a43ba0460d:
+
+#define CAL_RdcyConnectionGetSyncMessageSize pfRdcyConnectionGetSyncMessageSize
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gac7a9a6d320e263b7db6154c534721623:
+
+#define CHK_RdcyConnectionGetSyncMessageSize (pfRdcyConnectionGetSyncMessageSize != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga23bc9c11d54f44a3c966a52e8af4e00c:
+
+#define EXP_RdcyConnectionGetSyncMessageSize s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionGetSyncMessageSize", (RTS_UINTPTR) :ref:`RdcyConnectionGetSyncMessageSize <group___cmp_redundancy_connection_itf_1ga519fa579c026aaa385cfcde8343e2aeb>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga0fc3aa0e5b389a2da7eada3d64800cdc:
+
+#define USE_RdcyConnectionGetDataMessageSize :ref:`PFRDCYCONNECTIONGETDATAMESSAGESIZE <group___cmp_redundancy_connection_itf_1ga58977e462e7cac8bcb8fb77494b33be2>` pfRdcyConnectionGetDataMessageSize;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga690487ebd72fcc49bbf837c9767d6aa6:
+
+#define EXT_RdcyConnectionGetDataMessageSize extern :ref:`PFRDCYCONNECTIONGETDATAMESSAGESIZE <group___cmp_redundancy_connection_itf_1ga58977e462e7cac8bcb8fb77494b33be2>` pfRdcyConnectionGetDataMessageSize;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gaf54eda4a27fabaea86af23bfcbf34302:
+
+#define GET_RdcyConnectionGetDataMessageSize s_pfCMGetAPI2( "RdcyConnectionGetDataMessageSize", (RTS_VOID_FCTPTR *)&pfRdcyConnectionGetDataMessageSize, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gab7340a57ec57f80ced0f072745e64a21:
+
+#define CAL_RdcyConnectionGetDataMessageSize pfRdcyConnectionGetDataMessageSize
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga11ce85ba700a97739f6ed8d36b1c8941:
+
+#define CHK_RdcyConnectionGetDataMessageSize (pfRdcyConnectionGetDataMessageSize != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga4dbc0925f37d9026bf0b634ef9c1e753:
+
+#define EXP_RdcyConnectionGetDataMessageSize s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RdcyConnectionGetDataMessageSize", (RTS_UINTPTR) :ref:`RdcyConnectionGetDataMessageSize <group___cmp_redundancy_connection_itf_1ga8e8e405fcfa2f7c3a987b12ef0604d46>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga2203f1d698c5ebf7c948b5d839a450be:
+
+#define USE_getconnectioninfo :ref:`PFGETCONNECTIONINFO_IEC <group___cmp_redundancy_connection_itf_1ga62a771100f01d504675604699f7399f0>` pfgetconnectioninfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gaded9d4cd124657443db1ca780da335be:
+
+#define EXT_getconnectioninfo extern :ref:`PFGETCONNECTIONINFO_IEC <group___cmp_redundancy_connection_itf_1ga62a771100f01d504675604699f7399f0>` pfgetconnectioninfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gaa05aa2efde062303acd4b8bc05ab4daa:
+
+#define GET_getconnectioninfo s_pfCMGetAPI2( "getconnectioninfo", (RTS_VOID_FCTPTR *)&pfgetconnectioninfo, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x2F0D4581, 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga44d143e71cbc5ec45ae007ebf9ead003:
+
+#define CAL_getconnectioninfo pfgetconnectioninfo
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga31480fcd038dd7aa75ecc1d3ffe8d8db:
+
+#define CHK_getconnectioninfo (pfgetconnectioninfo != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gaf06e984911ab709e6beeded778e04505:
+
+#define EXP_getconnectioninfo s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getconnectioninfo", (RTS_UINTPTR) :ref:`getconnectioninfo <group___cmp_redundancy_connection_itf_1ga32269f72e49abfa3ed6e643d3689598a>` , 1, 0x2F0D4581, 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga51964b411929c3d9e175a66e55458a9d:
+
+#define ITF_CmpRedundancyConnection
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gaff09c0ad87854a30f1fa789742fc2db7:
+
+#define EXTITF_CmpRedundancyConnection
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_redundancy_connection_itf_1ga9618258795ea9fc1b2c16c27f9c59b4c:
+
+typedef RTS_HANDLE( *  PFRDCYCONNECTIONOPEN) (REDUNDANCY_COMM_MODE mode, RTS_UI32 uiMessageSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga893600189a706af6fc70d0a4e7e5f9bf:
+
+typedef RTS_RESULT( *  PFRDCYCONNECTIONCLOSE) (RTS_HANDLE hConnection, REDUNDANCY_COMM_MODE mode)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gac85b60c68916be3ded15343dc05d4d2c:
+
+typedef RTS_UI32( *  PFRDCYCONNECTIONGETOWNADDRESS) (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga0f3202e1d2a52ae62de3d1ceff5ea0c6:
+
+typedef RTS_BOOL( *  PFRDCYCONNECTIONRECEIVESYNC) (RTS_HANDLE hConnection, char *pbyData, RTS_UI32 diDataSize, CLIENT_REPLY *pReply)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gac560e291a2da1f076a83cd7461257fb6:
+
+typedef RTS_UI32( *  PFRDCYCONNECTIONGETRECEIVESIZE) (RTS_HANDLE hConnection, RTS_UI32 ulTimeout)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga4f26525892ed65c3218ac4af513afaa2:
+
+typedef RTS_UI32( *  PFRDCYCONNECTIONSENDSYNC) (RTS_HANDLE hConnection, char *pbyData, RTS_UI32 diDataSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gad9f9c8d2dbf6a3a30a50c6bd38751fbf:
+
+typedef RTS_UI32( *  PFRDCYCONNECTIONRECEIVEDATA) (RTS_HANDLE hConnection, char *pbyData, RTS_UI32 diDataSize, CLIENT_REPLY *pReply, RTS_UI32 ulTimeout)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga0a1b8876ec09a4ffa47ea3bc5c83b8c3:
+
+typedef RTS_UI32( *  PFRDCYCONNECTIONSENDDATA) (RTS_HANDLE hConnection, char *pbyData, RTS_UI32 diDataSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga1cc1ac188a81d13856392942f43b5800:
+
+typedef RTS_RESULT( *  PFRDCYCONNECTIONREADSETTINGS) (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gab973e11cd8f7bc79f490d3f434c269a4:
+
+typedef RTS_RESULT( *  PFRDCYCONNECTIONSRVREADSETTINGS) (BINTAGWRITER *pwriter)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga1cbc3b4fb62a7d947471da6b963f119b:
+
+typedef RTS_RESULT( *  PFRDCYCONNECTIONSRVWRITESETTINGS) (BINTAGREADER *preader)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1gad9f1ee80c92498172152128eb94ee6a2:
+
+typedef RTS_UI32( *  PFRDCYCONNECTIONGETSYNCMESSAGESIZE) (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga58977e462e7cac8bcb8fb77494b33be2:
+
+typedef RTS_UI32( *  PFRDCYCONNECTIONGETDATAMESSAGESIZE) (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga55d098240070a8934fcd41a1207218ff:
+
+typedef struct tagREDUNDANCY_CONNECTION_INFO  REDUNDANCY_CONNECTION_INFO
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+REDU_IP_CONNECTION_INFO
+
+.. _group___cmp_redundancy_connection_itf_1ga342e85bcee3dd22506ec292476de0c0a:
+
+typedef struct taggetconnectioninfo_struct  getconnectioninfo_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+getconnectioninfo
+
+.. _group___cmp_redundancy_connection_itf_1ga62a771100f01d504675604699f7399f0:
+
+typedef void( *  PFGETCONNECTIONINFO_IEC) (getconnectioninfo_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_redundancy_connection_itf_1ga3475ff40230cebeb89b45f94438ddb28:
+
+typedef ICmpRedundancyConnection_C ICmpRedundancyConnection
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_redundancy_connection_itf_1ga46abfb651f9c7831e447b495542c0fa6:
+
+RTS_HANDLE RdcyConnectionOpen (REDUNDANCY_COMM_MODE mode, RTS_UI32 uiMessageSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Open a redundancy connection for synchronization. This connection will be used to receive data from redundancy partner. Synchronization messages are quite small, but must be transmitted in real-time.
+
+**Parameters**
+
++---------+------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | mode | Indicates if the socked was opened in sync mode or data mode, and if used for send or received, or server or client. The following modes apply: RCOM_SyncReceive: Open a redundancy connection for sync messages receive. A UDP socket is opened and bind to local address in default implementation. RCOM_SyncSend: Open a redundancy connection for sync messages transmit. A UDP socket is opened in default implementation. RCOM_DataClient: Open a redundancy connection for data exchange. This connection will be used as client side for data transfer. The standby partner is playing the role of the communication client. Data transfer messages are quite big, and should be transmitted as fast as possible. A TCP socket is opened in default implementation, and connect to partner. RCOM_DataServer: Open a redundancy connection for data exchange. This connection will be used as server side for data transfer. The standalone and active partner is playing the role of the communication server. Data transfer messages are quite big, and should be transmitted as fast as possible. A TCP socket is opened in default implementation, and bind and listen. This socket is waiting for a client connection. |
++---------+------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Handle of connection, for example socket number. Will be used to send and receive data. In case of error RTS_INVALID_HANDLE will be returned.
+
+.. _group___cmp_redundancy_connection_itf_1ga75423e56befe426b05f660bf870b8ad4:
+
+RTS_RESULT RdcyConnectionClose (RTS_HANDLE hConnection, REDUNDANCY_COMM_MODE mode)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Close a redundancy connection previously opened with RdcyConnectionOpen.
+
+**Parameters**
+
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hConnection | Handle to the connection                                                                                                                                                                                                                |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | mode        | Indicates if the socked was opened in sync mode or data mode, see RdcyConnectionOpen. Additional mode is RCOM_DataWork. This mode is used to close a client connection, to make server socket again waiting for a new client connection |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK in case of success, other error code in case of error.
+
+.. _group___cmp_redundancy_connection_itf_1ga7dd61ff94262110134227266f74bfa30:
+
+RTS_UI32 RdcyConnectionGetOwnAddress (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Return unique address of local device. Used to determine active/standby state in case both devices boot up at the same time. The device with higher address will be active. (if devices do not boot up at the same time, first device booting up will be first standalone, and then active when second device boots.
+
+**Returns:**
+
+Unique address of device as DWORD.
+
+.. _group___cmp_redundancy_connection_itf_1gab6ef807aeaddd33c68bf5888bc3000ee:
+
+RTS_BOOL RdcyConnectionReceiveSync (RTS_HANDLE hConnection, char *pbyData, RTS_UI32 diDataSize, CLIENT_REPLY *pReply)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Receive synchronization data from partner device.
+
+**Parameters**
+
++---------+-------------+-------------------------------------------------------------------------------+
+| [in]    | hConnection | Handle to the connection, previously opened with RdcyConnectionOpen           |
++---------+-------------+-------------------------------------------------------------------------------+
+| [in]    | pbyData     | Buffer to receive the received data                                           |
++---------+-------------+-------------------------------------------------------------------------------+
+| [in]    | diDataSize  | Size of receive buffer, in bytes                                              |
++---------+-------------+-------------------------------------------------------------------------------+
+| [in]    | pReply      | Pointer to CLIENT_REPLY structure, containing information about received data |
++---------+-------------+-------------------------------------------------------------------------------+
+
+**Returns:**
+
+TRUE in case of success, FALSE in case of error.
+
+.. _group___cmp_redundancy_connection_itf_1ga43410685fb1283c2a67b18f2596ef284:
+
+RTS_UI32 RdcyConnectionGetReceiveSize (RTS_HANDLE hConnection, RTS_UI32 ulTimeout)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Determine the number of bytes that can be read. Return 0 if no data is available.
+
+**Parameters**
+
++---------+-------------+---------------------------------------------------------------------+
+| [in]    | hConnection | Handle to the connection, previously opened with RdcyConnectionOpen |
++---------+-------------+---------------------------------------------------------------------+
+| [in]    | ulTimeout   | Timeout in milliseconds                                             |
++---------+-------------+---------------------------------------------------------------------+
+
+**Returns:**
+
+Number of bytes that can be read with a following call of RdcyConnectionReceiveSync.
+
+.. _group___cmp_redundancy_connection_itf_1gad6c62be663e4c95944b5a80fc1e2029d:
+
+RTS_UI32 RdcyConnectionSendSync (RTS_HANDLE hConnection, char *pbyData, RTS_UI32 diDataSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Send synchronization data to partner device.
+
+**Parameters**
+
++---------+-------------+---------------------------------------------------------------------+
+| [in]    | hConnection | Handle to the connection, previously opened with RdcyConnectionOpen |
++---------+-------------+---------------------------------------------------------------------+
+| [in]    | pbyData     | Buffer with data to send                                            |
++---------+-------------+---------------------------------------------------------------------+
+| [in]    | diDataSize  | Size of data to send, in bytes                                      |
++---------+-------------+---------------------------------------------------------------------+
+
+**Returns:**
+
+Number of bytes successfully sent. 0 in case of error.
+
+.. _group___cmp_redundancy_connection_itf_1gae9d7d928f5a019222b7cec84cf85d940:
+
+RTS_UI32 RdcyConnectionReceiveData (RTS_HANDLE hConnection, char *pbyData, RTS_UI32 diDataSize, CLIENT_REPLY *pReply, RTS_UI32 ulTimeout)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Receive data from partner device. To see how much data is in the message, you can cast received bytes to RedundancyTlgHeader and look at member dwLen.
+
+**Parameters**
+
++---------+-------------+-----------------------------------------------------------------------------------------------------------------+
+| [in]    | hConnection | Handle to the connection, previously opened with RdcyConnectionOpen, in mode RCOM_DataClient or RCOM_DataServer |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------+
+| [in]    | pbyData     | Buffer to receive data                                                                                          |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------+
+| [in]    | diDataSize  | Size of receive buffer, in bytes                                                                                |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------+
+| [in]    | pReply      | Pointer to CLIENT_REPLY structure, containing information about received data                                   |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------+
+| [in]    | ulTimeout   | Timeout for receiving data                                                                                      |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Number of bytes successfully read into receive buffer. Return 0 if no data available.
+
+.. _group___cmp_redundancy_connection_itf_1ga4e84f36b4904c07cb58f865ece58d27a:
+
+RTS_UI32 RdcyConnectionSendData (RTS_HANDLE hConnection, char *pbyData, RTS_UI32 diDataSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Send data to partner device.
+
+**Parameters**
+
++---------+-------------+-----------------------------------------------------------------------------------------------------------------+
+| [in]    | hConnection | Handle to the connection, previously opened with RdcyConnectionOpen, in mode RCOM_DataClient or RCOM_DataServer |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------+
+| [in]    | pbyData     | Buffer with data to send                                                                                        |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------+
+| [in]    | diDataSize  | Size of data to send, in bytes                                                                                  |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Number of bytes successfully sent. 0 in case of error.
+
+.. _group___cmp_redundancy_connection_itf_1gae88499d65bac0fdf4ca408aff384d804:
+
+RTS_RESULT RdcyConnectionReadSettings (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Called when initializing the redundancy component with the redundancy connection settings from the CODESYS control configuration file. Connection settings are for e.g. IP / MAC / ... addresses of the redundancy partners, ports, timeouts, ... depending on the used communication.
+
+**Returns:**
+
+ERR_OK in case of success, ERR_FAILED in case of error.
+
+.. _group___cmp_redundancy_connection_itf_1ga0e953bc0cb3c4bde2a827afd9de88324:
+
+RTS_RESULT RdcyConnectionSrvReadSettings (BINTAGWRITER *pwriter)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Called when service is received to read the redundancy settings from the CODESYS control configuration file.
+
+**Parameters**
+
++---------+---------+-------------------------------------------------+
+| [in]    | pwriter | Pointer to the writer to write the settings to. |
++---------+---------+-------------------------------------------------+
+
+**Returns:**
+
+ERR_OK in case of success, ERR_FAILED in case of error.
+
+.. _group___cmp_redundancy_connection_itf_1ga81f0c212553e0f586afcb5d876acae69:
+
+RTS_RESULT RdcyConnectionSrvWriteSettings (BINTAGREADER *preader)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Called when service is received to write the redundancy settings from CODESYS into the CODESYS control configuration file.
+
+**Parameters**
+
++---------+---------+------------------------------------------------------------+
+| [in]    | preader | Pointer to the reader from which the settings can be read. |
++---------+---------+------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK in case of success, ERR_FAILED in case of error.
+
+.. _group___cmp_redundancy_connection_itf_1ga519fa579c026aaa385cfcde8343e2aeb:
+
+RTS_UI32 RdcyConnectionGetSyncMessageSize (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function is used to determine the maximum message size of a data message, including header. In case of UDP/IP communication, the function will return 0x000001E0
+
+**Returns:**
+
+Data message size.
+
+.. _group___cmp_redundancy_connection_itf_1ga8e8e405fcfa2f7c3a987b12ef0604d46:
+
+RTS_UI32 RdcyConnectionGetDataMessageSize (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function is used to determine the maximum message size of a data message, including header. In case of TCP/IP communication, the function will return 0x00005000
+
+**Returns:**
+
+Data message size.
+
+.. _group___cmp_redundancy_connection_itf_1ga32269f72e49abfa3ed6e643d3689598a:
+
+void getconnectioninfo (getconnectioninfo_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

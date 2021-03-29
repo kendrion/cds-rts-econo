@@ -1,11 +1,11 @@
 /**
  * <interfacename>CmpGwClient</interfacename>
  * <description> 
- *	Interface of the gateway client as an entry point in the plc network.
+ *	Interface of the gateway client as an entry point in the PLC network.
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -24,7 +24,7 @@ REF_ITF(`CmpCommunicationLibItf.m4')
 * <description>
 *	Setting to modify the default value of the Gateway inactivity timeout in ms.
 *	This default value is only used, if the Gateway connect is started by BeginConnectToGateway() instead of BeginConnectToGateway2().
-*	If no piece of data (also no keepalive) is received or sent wihtin this time, the GwClient closes the connection to the Gateway.
+*	If no piece of data (also no keep alive) is received or sent within this time, the GwClient closes the connection to the Gateway.
 * </description>
 */
 #define GWCLIENTKEY_INT_INACTIVITY_TIMEOUT					"InactivityTimeoutMs"
@@ -68,7 +68,7 @@ typedef struct
 
 #define MAX_PARAM_NAME 19
 
-/* This struct is used to describe a parameter */
+/* This structure is used to describe a parameter */
 typedef struct
 {
 	RTS_WCHAR pwszName[MAX_PARAM_NAME+1];
@@ -77,7 +77,7 @@ typedef struct
 	void *pDefaultValue; /* points to the default value of this parameter. May be null */
 }PARAMETERDEFINITION;
 
-/* This struct is used to pass a parameter.
+/* This structure is used to pass a parameter.
    pValue is a pointer to the value of the parameter
    ( e.g. a pointer to an int (PT_INT) or a pointer to a wchar-string (PT_WSTRING)).
 */
@@ -103,11 +103,11 @@ typedef struct
 /* Describe a communication driver */
 typedef struct
 {
-	RTS_UI32 dwStructLength;	/* Must be set to the size of this struct */
-	RTS_HANDLE hDriver;   /* Identifies the driver during application execution. May change in different instances of an application */
-	RTS_GUID guid;              /* Use to identify a wellknown communication driver */
+	RTS_UI32 dwStructLength;	/* Must be set to the size of this structure */
+	RTS_HANDLE hDriver;			/* Identifies the driver during application execution. May change in different instances of an application */
+	RTS_GUID guid;              /* Use to identify a well known communication driver */
 	RTS_WCHAR *pwszName;
-	PARAMDEFLIST params;          /* E.g. a tcp/ip driver uses 2 parameters: ip-address and port */
+	PARAMDEFLIST params;       /* E.g. a TCP/IP driver uses 2 parameters: IP-address and port */
 	RTS_I32 nMinPingInterval;  /* The number of seconds to wait, between pinging a gateway using this driver. Set to 0 to disable polling at all.*/
 }COMMDRVINFO;
 
@@ -119,9 +119,9 @@ typedef struct
 struct tagASYNCRESULT;
 typedef void (STDCALL *PFASYNCCALLBACK)(struct tagASYNCRESULT *pAsyncRes);
 
-/* Use this struct to call one of the BeginXXX functions asynchronously. 
-   Passing a NULL pointer for this struct will result in a synchronous call.
-   When using this struct the application has to provide the pUser and pfCallback
+/* Use this structure to call one of the BeginXXX functions asynchronously. 
+   Passing a NULL pointer for this structure will result in a synchronous call.
+   When using this structure the application has to provide the pUser and pfCallback
    field, the others are set by the asynchronous function. An application may set
    both of those - pUser and pfCallback - to NULL. In the case of pfCallback 
    no callback will be triggered when the operation completes. pUser is not 
@@ -166,14 +166,14 @@ typedef RTS_RESULT (CDECL *PFCOMMDRVRECEIVE)(RTS_HANDLE hConnHandle, PROTOCOL_DA
 
 /* Open a connection as described by pParams
    pParams        IN  
-   phConnHandle   OUT    If successfull phConnHandle is set to the handle for the connection.
-   pAsyncRes      IN/OUT Async result.
+   phConnHandle   OUT    If successful, phConnHandle is set to the handle for the connection.
+   pAsyncRes      IN/OUT Asynchronous result.
  */
 typedef RTS_RESULT (CDECL *PFCOMMDRVBEGINCONNECT)( PARAMLIST *pParams, RTS_HANDLE *phConnHandle, ASYNCRESULT *pAsyncRes);
 
 /* Wait until the BeginConnect call identified by pAsyncRes has completed. 
    pAsyncRes     IN   Identifies the matching BeginConnect call.
-   phConnHandle  OUT  If the call was successfull, then this parameter is set to the 
+   phConnHandle  OUT  If the call was successful, then this parameter is set to the 
                       handle for the newly created connection.
 */
 typedef RTS_RESULT (CDECL *PFCOMMDRVENDCONNECT) ( ASYNCRESULT *pAsyncRes, RTS_HANDLE *phConnHandle);
@@ -200,7 +200,7 @@ typedef struct
 
 typedef struct
 {
-	RTS_UI32	dwRtsMaxChannels;		/* Number of communciation channels */
+	RTS_UI32	dwRtsMaxChannels;		/* Number of communication channels */
 	RTS_UI32	dwTargetType;			/* Target type, e. g. SYSTARGET_TYPE_PROGRAMMABLE */
 	RTS_UI32	dwTargetId;				/* Target id, consists of SYSTARGET_VENDOR_ID and SYSTARGET_DEVICE_ID */
 	RTS_UI32	dwTargetVersion;		/* (OEM) version */
@@ -241,7 +241,7 @@ enum
  *  May be called by a commdriver if a connection is ready to send/receive.
  *  This function shall not signal a condition more then once without the 
  *  gateway client reacting to that signal.
- *  Eg. if the commdriver signals that a connection is ready to send it shall not
+ *  E.g. if the commdriver signals that a connection is ready to send it shall not
  *  signal this situation again before the gateway client actually called "send".
  *  The gwclient must not rely on this function to be called but may use 
  *  it to increase the performance of the connection.
@@ -261,11 +261,11 @@ DEF_API(`RTS_RESULT',`CDECL',`GWClientConnectionReady',`(RTS_HANDLE hDriverHandl
 typedef void (STDCALL *PFENUMCOMMDRVCALLBACK)(RTS_HANDLE hDriver, RTS_GUID *guid, RTS_WCHAR *pwszName, PARAMDEFLIST *pParams, RTS_I8 bLast, RTS_I32 nMinPingInterval);
 typedef void (STDCALL *PFENUMCOMMDRVCALLBACK2)(RTS_UINTPTR dwUser, RTS_HANDLE hDriver, RTS_GUID *guid, RTS_WCHAR *pwszName, PARAMDEFLIST *pParams, RTS_I8 bLast, RTS_I32 nMinPingInterval);
 
-/* This callback is called by the nameservice functions (e.g. ResolveAllNodes) for each 
+/* This callback is called by the name service functions (e.g. ResolveAllNodes) for each 
    answering node.
-   dwUser       IN  userdefined value simply passed to this function
+   dwUser       IN  user defined value simply passed to this function
    addrNode     IN  The address of the answering node
-   addrParent   IN  The address of its parent node (length zero if node is toplevel)
+   addrParent   IN  The address of its parent node (length zero if node is top level)
    nMaxChannels IN  Maximum number of channels that the runtime system is able to deal with.
    dwTargetId   IN  Target identifier
    wszNodeName  IN  The name of the node.
@@ -273,14 +273,14 @@ typedef void (STDCALL *PFENUMCOMMDRVCALLBACK2)(RTS_UINTPTR dwUser, RTS_HANDLE hD
 */
 typedef void (STDCALL *PFNODEINFOCALLBACK)(RTS_UINTPTR dwUser, NODEADDRESS_OLD addrNode, NODEADDRESS_OLD addrParent, RTS_I32 nMaxChannels, RTS_UI32 dwTargetId, RTS_WCHAR *wszNodeName, RTS_WCHAR *wszTargetName);
 
-/* This callback is called by the nameservice functions (e.g. ResolveAllNodes) for each 
+/* This callback is called by the name service functions (e.g. ResolveAllNodes) for each 
    answering node.
-   dwUser       IN  userdefined value simply passed to this function
+   dwUser       IN  user defined value simply passed to this function
    addrNode     IN  The address of the answering node
-   addrParent   IN  The address of its parent node (length zero if node is toplevel)
+   addrParent   IN  The address of its parent node (length zero if node is top level)
    nMaxChannels IN  Maximum number of channels that the runtime system is able to deal with.
    dwTargetType IN  Target type
-   dwTargetId	IN  Target ident number
+   dwTargetId	IN  Target identification number
    dwTargetVersion IN  Target version
    wszNodeName  IN  The name of the node.
    wszDeviceName IN The name of the device
@@ -288,11 +288,11 @@ typedef void (STDCALL *PFNODEINFOCALLBACK)(RTS_UINTPTR dwUser, NODEADDRESS_OLD a
 */
 typedef void (STDCALL *PFNODEINFOCALLBACK2)(RTS_UINTPTR dwUser, NODEADDRESS_OLD addrNode, NODEADDRESS_OLD addrParent, RTS_I32 nMaxChannels, RTS_UI32 dwTargetType, RTS_UI32 dwTargetId, RTS_UI32 dwTargetVersion, RTS_WCHAR *wszNodeName, RTS_WCHAR *wszDeviceName, RTS_WCHAR *wszVendorName);
 
-/* This callback is called by the nameservice functions (e.g. ResolveAllNodes) for each
+/* This callback is called by the name service functions (e.g. ResolveAllNodes) for each
 answering node.
-dwUser				IN  Userdefined value simply passed to this function
+dwUser				IN  User defined value simply passed to this function
 addrNode			IN  The address of the answering node
-addrParent			IN  The address of its parent node (length zero if node is toplevel)
+addrParent			IN  The address of its parent node (length zero if node is top level)
 GWCLIENTNODEINFO	IN  Detailed node information 
 wszNodeName			IN  Node name
 wszDeviceName		IN  Device name

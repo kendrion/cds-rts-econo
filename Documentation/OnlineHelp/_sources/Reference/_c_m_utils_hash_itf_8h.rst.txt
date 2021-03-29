@@ -1,0 +1,236 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __c_m_utils_hash_itf_8h:
+
+===============================
+CMUtilsHashItf.h File Reference
+===============================
+
+| #include ":ref:`CmpStd.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`CMUtlHaskKey_ <struct_c_m_utl_hask_key__>`
+
+- struct :ref:`CMUtlHashEntry_ <struct_c_m_utl_hash_entry__>`
+
+- struct :ref:`CMUtlHashTable_ <struct_c_m_utl_hash_table__>`
+
+- struct :ref:`ICMUtilsHash_C <struct_i_c_m_utils_hash___c>`
+
+Macros
+------
+
+- #define :ref:`CMUTLHASH_SET_FLAG_KEY <group___c_m_utils_hash_itf___hashflaghandlingmacros_1ga0918ccd771115631a4f5e7b048316e4a>` (flags = ((flags & 0xFFFFFF00) | keytype))
+
+- #define :ref:`CMUTLHASH_GET_FLAG_KEY <group___c_m_utils_hash_itf___hashflaghandlingmacros_1gaaebde814f4d78715cd56bb502a7247a8>` (flags & 0x000000FF)
+
+- #define :ref:`CMUTLHASH_FLAG_KEY_INTEGER <group___c_m_utils_hash_itf___hashentryflags_1gad0eef87488cf6aa0f7dcc771e22a03e2>` 0x00000001
+
+- #define :ref:`CMUTLHASH_FLAG_KEY_STRING <group___c_m_utils_hash_itf___hashentryflags_1gae5aa1236e2fe5991134b074364d555c7>` 0x00000002
+
+- #define :ref:`CMUTLHASH_FLAG_ALLOC_KEY <group___c_m_utils_hash_itf___hashentryflags_1gaf2341657155b102e1263bc8bab00a219>` 0x00000100
+
+- #define :ref:`CMUTLHASH_FLAG_ALLOC_ENTRY <group___c_m_utils_hash_itf___hashentryflags_1ga5f2a958877a6f13b0e4f567cc2ff15ec>` 0x00000200
+
+- #define :ref:`CMUTLHASHTABLE_FLAG_ALLOC_TABLE <group___c_m_utils_hash_itf___hashtableflags_1ga0c08419833347ac98fea10a33b0e8443>` 0x00000001
+
+- #define :ref:`CMUTLHASHTABLE_FLAG_INTERRUPT_SAFE <group___c_m_utils_hash_itf___hashtableflags_1gac7122a6ee4bd38cce51d38b06df0b813>` 0x00000002
+
+- #define :ref:`CMUTLHASHTABLE_FLAG_NO_SYNC <group___c_m_utils_hash_itf___hashtableflags_1gabdb3d2f07c2c6acce271ce7173fbf5c4>` 0x00000004
+
+- #define :ref:`USE_CMUtlHashCreate <group___c_m_utils_hash_itf_1ga23f6ba64edb5ca7e05a212c452479781>` :ref:`PFCMUTLHASHCREATE <group___c_m_utils_hash_itf_1gad02f6b641136e0f7c90aeff928188595>` pfCMUtlHashCreate;
+
+- #define :ref:`EXT_CMUtlHashCreate <group___c_m_utils_hash_itf_1ga7f502c5c73fd96d6eb2677d45faf7f0c>` extern :ref:`PFCMUTLHASHCREATE <group___c_m_utils_hash_itf_1gad02f6b641136e0f7c90aeff928188595>` pfCMUtlHashCreate;
+
+- #define :ref:`GET_CMUtlHashCreate <group___c_m_utils_hash_itf_1gafcd9e3ee44c2fadf857ab1b47a09c07c>` s_pfCMGetAPI2( "CMUtlHashCreate", (RTS_VOID_FCTPTR *)&pfCMUtlHashCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_CMUtlHashCreate <group___c_m_utils_hash_itf_1ga42acea4934322b173228a1086f2ef2b1>` pfCMUtlHashCreate
+
+- #define :ref:`CHK_CMUtlHashCreate <group___c_m_utils_hash_itf_1gaae35bb27006b6139956851becee11d6c>` (pfCMUtlHashCreate != NULL)
+
+- #define :ref:`EXP_CMUtlHashCreate <group___c_m_utils_hash_itf_1ga79f05a5fd100928f6e2e8de5c2d82974>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMUtlHashCreate", (RTS_UINTPTR) :ref:`CMUtlHashCreate <group___c_m_utils_hash_itf_1ga375c42a276465738d3211280cfe43708>` , 0, 0)
+
+- #define :ref:`USE_CMUtlHashCreate2 <group___c_m_utils_hash_itf_1ga86e258d9f81c805510a9aaff9598e380>` :ref:`PFCMUTLHASHCREATE2 <group___c_m_utils_hash_itf_1ga055d9ecc6a9820a304dbbaff01a368e1>` pfCMUtlHashCreate2;
+
+- #define :ref:`EXT_CMUtlHashCreate2 <group___c_m_utils_hash_itf_1ga4722c8b0d25b09a8b0da25e198914ee4>` extern :ref:`PFCMUTLHASHCREATE2 <group___c_m_utils_hash_itf_1ga055d9ecc6a9820a304dbbaff01a368e1>` pfCMUtlHashCreate2;
+
+- #define :ref:`GET_CMUtlHashCreate2 <group___c_m_utils_hash_itf_1gaf3871603face62eeaa3d390c8f739b0b>` s_pfCMGetAPI2( "CMUtlHashCreate2", (RTS_VOID_FCTPTR *)&pfCMUtlHashCreate2, (fl), 0, 0)
+
+- #define :ref:`CAL_CMUtlHashCreate2 <group___c_m_utils_hash_itf_1ga02201f0824fa8bd349ac860cdef9667a>` pfCMUtlHashCreate2
+
+- #define :ref:`CHK_CMUtlHashCreate2 <group___c_m_utils_hash_itf_1ga8a900876605e4977b3cfccf94cda14b3>` (pfCMUtlHashCreate2 != NULL)
+
+- #define :ref:`EXP_CMUtlHashCreate2 <group___c_m_utils_hash_itf_1ga9571542a04dd866baaba30c9e29a088a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMUtlHashCreate2", (RTS_UINTPTR) :ref:`CMUtlHashCreate2 <group___c_m_utils_hash_itf_1ga9af9fc49890a611ee125df7078d9ea3d>` , 0, 0)
+
+- #define :ref:`USE_CMUtlHashCreate3 <group___c_m_utils_hash_itf_1ga7398184375f040f808e48cad0f5a279b>` :ref:`PFCMUTLHASHCREATE3 <group___c_m_utils_hash_itf_1gaf26fe76b588874303d26cdb23ce9c33f>` pfCMUtlHashCreate3;
+
+- #define :ref:`EXT_CMUtlHashCreate3 <group___c_m_utils_hash_itf_1ga1fb0f31cd4eeb95ce63f0dbedda637b5>` extern :ref:`PFCMUTLHASHCREATE3 <group___c_m_utils_hash_itf_1gaf26fe76b588874303d26cdb23ce9c33f>` pfCMUtlHashCreate3;
+
+- #define :ref:`GET_CMUtlHashCreate3 <group___c_m_utils_hash_itf_1ga6b6754e47b643068be363e3d7aeb19cc>` s_pfCMGetAPI2( "CMUtlHashCreate3", (RTS_VOID_FCTPTR *)&pfCMUtlHashCreate3, (fl), 0, 0)
+
+- #define :ref:`CAL_CMUtlHashCreate3 <group___c_m_utils_hash_itf_1gad3660b2cf14dbe18f1a0038b8455ab0f>` pfCMUtlHashCreate3
+
+- #define :ref:`CHK_CMUtlHashCreate3 <group___c_m_utils_hash_itf_1gaf884e8ffaef77556c0bf9cf59b793422>` (pfCMUtlHashCreate3 != NULL)
+
+- #define :ref:`EXP_CMUtlHashCreate3 <group___c_m_utils_hash_itf_1ga3e2b1bd99d138f466324d67a0cb157a2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMUtlHashCreate3", (RTS_UINTPTR) :ref:`CMUtlHashCreate3 <group___c_m_utils_hash_itf_1gaa5ee46609cf8fa4c66be70f0746a5440>` , 0, 0)
+
+- #define :ref:`USE_CMUtlHashDelete <group___c_m_utils_hash_itf_1gaced5e209b9c62971f8ad22685ee2a934>` :ref:`PFCMUTLHASHDELETE <group___c_m_utils_hash_itf_1gaecfadee18b566043e05c0d44e1c9c287>` pfCMUtlHashDelete;
+
+- #define :ref:`EXT_CMUtlHashDelete <group___c_m_utils_hash_itf_1gac89e528db13ed92fafe23b2e0e8e8b75>` extern :ref:`PFCMUTLHASHDELETE <group___c_m_utils_hash_itf_1gaecfadee18b566043e05c0d44e1c9c287>` pfCMUtlHashDelete;
+
+- #define :ref:`GET_CMUtlHashDelete <group___c_m_utils_hash_itf_1ga4b70f189fe4835291d04842cbd178809>` s_pfCMGetAPI2( "CMUtlHashDelete", (RTS_VOID_FCTPTR *)&pfCMUtlHashDelete, (fl), 0, 0)
+
+- #define :ref:`CAL_CMUtlHashDelete <group___c_m_utils_hash_itf_1ga75fc51518f728eaf75de3ee464135686>` pfCMUtlHashDelete
+
+- #define :ref:`CHK_CMUtlHashDelete <group___c_m_utils_hash_itf_1gab96451980cbb79bde1c593c4ae2e5bf7>` (pfCMUtlHashDelete != NULL)
+
+- #define :ref:`EXP_CMUtlHashDelete <group___c_m_utils_hash_itf_1ga180b67eb4079191ca7389f373a64536f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMUtlHashDelete", (RTS_UINTPTR) :ref:`CMUtlHashDelete <group___c_m_utils_hash_itf_1ga8ec3ddce056ee5f5291a2f3df5be91c6>` , 0, 0)
+
+- #define :ref:`USE_CMUtlHashInsert <group___c_m_utils_hash_itf_1ga5e7c7e49135b932b284892c4b37611eb>` :ref:`PFCMUTLHASHINSERT <group___c_m_utils_hash_itf_1ga47fff3eabb33956eecc070d5f55f6865>` pfCMUtlHashInsert;
+
+- #define :ref:`EXT_CMUtlHashInsert <group___c_m_utils_hash_itf_1ga1b4ca62627a9ca8fcf92df6422051677>` extern :ref:`PFCMUTLHASHINSERT <group___c_m_utils_hash_itf_1ga47fff3eabb33956eecc070d5f55f6865>` pfCMUtlHashInsert;
+
+- #define :ref:`GET_CMUtlHashInsert <group___c_m_utils_hash_itf_1gade98d8e8b1bbe240e492f5a93f1edc34>` s_pfCMGetAPI2( "CMUtlHashInsert", (RTS_VOID_FCTPTR *)&pfCMUtlHashInsert, (fl), 0, 0)
+
+- #define :ref:`CAL_CMUtlHashInsert <group___c_m_utils_hash_itf_1ga9fc97e1fedb76b0eb74e9944d1bf26d5>` pfCMUtlHashInsert
+
+- #define :ref:`CHK_CMUtlHashInsert <group___c_m_utils_hash_itf_1gaf0d3e340f958944c35594a04de1698b8>` (pfCMUtlHashInsert != NULL)
+
+- #define :ref:`EXP_CMUtlHashInsert <group___c_m_utils_hash_itf_1gacc9a753e44d53b46f7ca11a95c98330e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMUtlHashInsert", (RTS_UINTPTR) :ref:`CMUtlHashInsert <group___c_m_utils_hash_itf_1ga0d34d9a12bb3b22a3e7f84f4cb6461bc>` , 0, 0)
+
+- #define :ref:`USE_CMUtlHashInsert2 <group___c_m_utils_hash_itf_1ga97fcd845f84b4f80a9df2445aef1fa68>` :ref:`PFCMUTLHASHINSERT2 <group___c_m_utils_hash_itf_1ga6eb504414511a26989dd930f464ff8a8>` pfCMUtlHashInsert2;
+
+- #define :ref:`EXT_CMUtlHashInsert2 <group___c_m_utils_hash_itf_1gae4a3137ac81ad535dc75bab1408de61e>` extern :ref:`PFCMUTLHASHINSERT2 <group___c_m_utils_hash_itf_1ga6eb504414511a26989dd930f464ff8a8>` pfCMUtlHashInsert2;
+
+- #define :ref:`GET_CMUtlHashInsert2 <group___c_m_utils_hash_itf_1gaa495944d3bc9300e293e4459c8a391fc>` s_pfCMGetAPI2( "CMUtlHashInsert2", (RTS_VOID_FCTPTR *)&pfCMUtlHashInsert2, (fl), 0, 0)
+
+- #define :ref:`CAL_CMUtlHashInsert2 <group___c_m_utils_hash_itf_1ga274a35f0781eaf84be0da61c66109eaa>` pfCMUtlHashInsert2
+
+- #define :ref:`CHK_CMUtlHashInsert2 <group___c_m_utils_hash_itf_1ga95eb465f4240ed4740b10e79e069e6b1>` (pfCMUtlHashInsert2 != NULL)
+
+- #define :ref:`EXP_CMUtlHashInsert2 <group___c_m_utils_hash_itf_1ga37efc6c7f6b9b1fbda923713d4bf6fdc>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMUtlHashInsert2", (RTS_UINTPTR) :ref:`CMUtlHashInsert2 <group___c_m_utils_hash_itf_1ga179a1e14b91e32416317b7424fec5824>` , 0, 0)
+
+- #define :ref:`USE_CMUtlHashRemove <group___c_m_utils_hash_itf_1gaa20672dc7d0228a9dd99a80301196612>` :ref:`PFCMUTLHASHREMOVE <group___c_m_utils_hash_itf_1gaa4e57fa4dedb21eeae6d90a06fe8f430>` pfCMUtlHashRemove;
+
+- #define :ref:`EXT_CMUtlHashRemove <group___c_m_utils_hash_itf_1ga2774231ad7ff7c39bf00cf30abf0cb61>` extern :ref:`PFCMUTLHASHREMOVE <group___c_m_utils_hash_itf_1gaa4e57fa4dedb21eeae6d90a06fe8f430>` pfCMUtlHashRemove;
+
+- #define :ref:`GET_CMUtlHashRemove <group___c_m_utils_hash_itf_1ga883fc36814c6cfb5c29e0d1d7a133b0e>` s_pfCMGetAPI2( "CMUtlHashRemove", (RTS_VOID_FCTPTR *)&pfCMUtlHashRemove, (fl), 0, 0)
+
+- #define :ref:`CAL_CMUtlHashRemove <group___c_m_utils_hash_itf_1gafe359d8342f37fcb5cfb7afc3925e70e>` pfCMUtlHashRemove
+
+- #define :ref:`CHK_CMUtlHashRemove <group___c_m_utils_hash_itf_1ga1c43c1d32d1e1e0f622018ce26e8ea56>` (pfCMUtlHashRemove != NULL)
+
+- #define :ref:`EXP_CMUtlHashRemove <group___c_m_utils_hash_itf_1ga62aacd73b4591051791e1dc6347059d1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMUtlHashRemove", (RTS_UINTPTR) :ref:`CMUtlHashRemove <group___c_m_utils_hash_itf_1ga4a666238a761ef007c69bf6ecf5c0bfa>` , 0, 0)
+
+- #define :ref:`USE_CMUtlHashRemove2 <group___c_m_utils_hash_itf_1ga0a2d79f3eb0fc12bec1d4c25524a7139>` :ref:`PFCMUTLHASHREMOVE2 <group___c_m_utils_hash_itf_1ga48f3de313d940c8f7b8e82d0ead54e7b>` pfCMUtlHashRemove2;
+
+- #define :ref:`EXT_CMUtlHashRemove2 <group___c_m_utils_hash_itf_1ga8acb4ebb3bd1a8eba8cb72ddf0c1903e>` extern :ref:`PFCMUTLHASHREMOVE2 <group___c_m_utils_hash_itf_1ga48f3de313d940c8f7b8e82d0ead54e7b>` pfCMUtlHashRemove2;
+
+- #define :ref:`GET_CMUtlHashRemove2 <group___c_m_utils_hash_itf_1gaf24f59e1e30867d6149d3d2b284bdb99>` s_pfCMGetAPI2( "CMUtlHashRemove2", (RTS_VOID_FCTPTR *)&pfCMUtlHashRemove2, (fl), 0, 0)
+
+- #define :ref:`CAL_CMUtlHashRemove2 <group___c_m_utils_hash_itf_1ga6eda020a798f785bc6a26b46522d6ace>` pfCMUtlHashRemove2
+
+- #define :ref:`CHK_CMUtlHashRemove2 <group___c_m_utils_hash_itf_1ga82b298e7b2f5e7e1b8d1c9b37f562c93>` (pfCMUtlHashRemove2 != NULL)
+
+- #define :ref:`EXP_CMUtlHashRemove2 <group___c_m_utils_hash_itf_1ga9e398321d3c09ed431de487977424c8d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMUtlHashRemove2", (RTS_UINTPTR) :ref:`CMUtlHashRemove2 <group___c_m_utils_hash_itf_1ga21dfba83a41eca5dd92864a1495bfad6>` , 0, 0)
+
+- #define :ref:`USE_CMUtlHashSearch <group___c_m_utils_hash_itf_1gae9e795177cca51861c75b15e2afa6e77>` :ref:`PFCMUTLHASHSEARCH <group___c_m_utils_hash_itf_1gabfa30d00491bd188469224aca721e6bc>` pfCMUtlHashSearch;
+
+- #define :ref:`EXT_CMUtlHashSearch <group___c_m_utils_hash_itf_1gaf1e2aeb504458acd17a122215165511c>` extern :ref:`PFCMUTLHASHSEARCH <group___c_m_utils_hash_itf_1gabfa30d00491bd188469224aca721e6bc>` pfCMUtlHashSearch;
+
+- #define :ref:`GET_CMUtlHashSearch <group___c_m_utils_hash_itf_1gac21d3751ac36c065582337b411108284>` s_pfCMGetAPI2( "CMUtlHashSearch", (RTS_VOID_FCTPTR *)&pfCMUtlHashSearch, (fl), 0, 0)
+
+- #define :ref:`CAL_CMUtlHashSearch <group___c_m_utils_hash_itf_1ga7bc107143948b6a650f9485d1c753ee1>` pfCMUtlHashSearch
+
+- #define :ref:`CHK_CMUtlHashSearch <group___c_m_utils_hash_itf_1ga39d81102be9a5099f5d73f0bd08b851d>` (pfCMUtlHashSearch != NULL)
+
+- #define :ref:`EXP_CMUtlHashSearch <group___c_m_utils_hash_itf_1ga99c5d6f920119e30492d8925be4a72cf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMUtlHashSearch", (RTS_UINTPTR) :ref:`CMUtlHashSearch <group___c_m_utils_hash_itf_1ga80c5e7e19886459ca77c785c40835363>` , 0, 0)
+
+- #define :ref:`USE_CMUtlHashIterate <group___c_m_utils_hash_itf_1gaa4f89f8b241feea4432984ec6cf6ecba>` :ref:`PFCMUTLHASHITERATE <group___c_m_utils_hash_itf_1gaa1dc4f4afc94b49b0e81ba9bd6e53284>` pfCMUtlHashIterate;
+
+- #define :ref:`EXT_CMUtlHashIterate <group___c_m_utils_hash_itf_1ga920e5f70d63c2d6ce6af859c031ade55>` extern :ref:`PFCMUTLHASHITERATE <group___c_m_utils_hash_itf_1gaa1dc4f4afc94b49b0e81ba9bd6e53284>` pfCMUtlHashIterate;
+
+- #define :ref:`GET_CMUtlHashIterate <group___c_m_utils_hash_itf_1ga415b41f9fe5364f47920a742800a0238>` s_pfCMGetAPI2( "CMUtlHashIterate", (RTS_VOID_FCTPTR *)&pfCMUtlHashIterate, (fl), 0, 0)
+
+- #define :ref:`CAL_CMUtlHashIterate <group___c_m_utils_hash_itf_1ga7348519de51188c4c7ae9595054e16c7>` pfCMUtlHashIterate
+
+- #define :ref:`CHK_CMUtlHashIterate <group___c_m_utils_hash_itf_1ga562c4f06db834b67c98ae32bf774c3a9>` (pfCMUtlHashIterate != NULL)
+
+- #define :ref:`EXP_CMUtlHashIterate <group___c_m_utils_hash_itf_1gac138b194570e1a33a1627e360767335f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMUtlHashIterate", (RTS_UINTPTR) :ref:`CMUtlHashIterate <group___c_m_utils_hash_itf_1ga533027c75cb84469c9f3f30f75eb27c9>` , 0, 0)
+
+- #define :ref:`ITF_CMUtilsHash <group___c_m_utils_hash_itf_1gaf736cd5ad089830646080ab0350c6c26>`
+
+- #define :ref:`EXTITF_CMUtilsHash <group___c_m_utils_hash_itf_1ga628cfe043b3f40cd710133dc4175a614>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`CMUtlHaskKey_ <struct_c_m_utl_hask_key__>` :ref:`CMUtlHaskKey <group___c_m_utils_hash_itf___hashkey_1ga1f30a2e66e0b6562b798e8aca991343e>`
+
+- typedef struct :ref:`CMUtlHashEntry_ <struct_c_m_utl_hash_entry__>` :ref:`CMUtlHashEntry <group___c_m_utils_hash_itf___hashentry_1gadd57a73c7ff3d9e8bfb558347e689613>`
+
+- typedef struct :ref:`CMUtlHashTable_ <struct_c_m_utl_hash_table__>` :ref:`CMUtlHashTable <group___c_m_utils_hash_itf___hashtable_1ga18c3802cb4ec26bec34e42874fd3b65d>`
+
+- typedef RTS_RESULT(* :ref:`PFCMUTLHASHCREATE <group___c_m_utils_hash_itf_1gad02f6b641136e0f7c90aeff928188595>`)(CMUtlHashTable *pHashTable, RTS_SIZE sNumHashEntries, char *pszComponentName)
+
+- typedef RTS_RESULT(* :ref:`PFCMUTLHASHCREATE2 <group___c_m_utils_hash_itf_1ga055d9ecc6a9820a304dbbaff01a368e1>`)(CMUtlHashTable *pHashTable, RTS_SIZE sNumHashEntries, RTS_UI8 *pHashTableBuffer, char *pszComponentName)
+
+- typedef RTS_RESULT(* :ref:`PFCMUTLHASHCREATE3 <group___c_m_utils_hash_itf_1gaf26fe76b588874303d26cdb23ce9c33f>`)(CMUtlHashTable *pHashTable, RTS_SIZE sNumHashEntries, RTS_UI8 *pHashTableBuffer, RTS_UI32 ui32Flags, char *pszComponentName)
+
+- typedef RTS_RESULT(* :ref:`PFCMUTLHASHDELETE <group___c_m_utils_hash_itf_1gaecfadee18b566043e05c0d44e1c9c287>`)(CMUtlHashTable *pHashTable)
+
+- typedef RTS_RESULT(* :ref:`PFCMUTLHASHINSERT <group___c_m_utils_hash_itf_1ga47fff3eabb33956eecc070d5f55f6865>`)(CMUtlHashTable *pHashTable, RTS_UI8 *pKey, RTS_SIZE keyLen, RTS_BOOL bCopyKey, void *pData)
+
+- typedef RTS_RESULT(* :ref:`PFCMUTLHASHINSERT2 <group___c_m_utils_hash_itf_1ga6eb504414511a26989dd930f464ff8a8>`)(CMUtlHashTable *pHashTable, CMUtlHashEntry *pNewEntry, RTS_UI8 *pKey, RTS_SIZE keyLen, RTS_BOOL bCopyKey, void *pData)
+
+- typedef RTS_RESULT(* :ref:`PFCMUTLHASHREMOVE <group___c_m_utils_hash_itf_1gaa4e57fa4dedb21eeae6d90a06fe8f430>`)(CMUtlHashTable *pHashTable, CMUtlHashEntry *pEntry)
+
+- typedef RTS_RESULT(* :ref:`PFCMUTLHASHREMOVE2 <group___c_m_utils_hash_itf_1ga48f3de313d940c8f7b8e82d0ead54e7b>`)(CMUtlHashTable *pHashTable, RTS_UI8 *pKey, RTS_SIZE keyLen)
+
+- typedef :ref:`CMUtlHashEntry <group___c_m_utils_hash_itf___hashentry_1gadd57a73c7ff3d9e8bfb558347e689613>` *(* :ref:`PFCMUTLHASHSEARCH <group___c_m_utils_hash_itf_1gabfa30d00491bd188469224aca721e6bc>`)(CMUtlHashTable *pHashTable, RTS_UI8 *pKey, RTS_SIZE keyLen, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PF_HASHENTRY_CALLBACK <group___c_m_utils_hash_itf_1ga588538d9612929bceb3f4e17846685eb>`)(CMUtlHashEntry *pEntry, RTS_UINTPTR cbUserData)
+
+- typedef RTS_RESULT(* :ref:`PFCMUTLHASHITERATE <group___c_m_utils_hash_itf_1gaa1dc4f4afc94b49b0e81ba9bd6e53284>`)(CMUtlHashTable *pHashTable, PF_HASHENTRY_CALLBACK pfcbHashEntry, RTS_UINTPTR cbUserData)
+
+- typedef :ref:`ICMUtilsHash_C <struct_i_c_m_utils_hash___c>` :ref:`ICMUtilsHash <group___c_m_utils_hash_itf_1ga77c6bf6dd622bf2555cfd3aca1f5ce00>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`CMUtlHashCreate <group___c_m_utils_hash_itf_1ga375c42a276465738d3211280cfe43708>` (:ref:`CMUtlHashTable <group___c_m_utils_hash_itf___hashtable_1ga18c3802cb4ec26bec34e42874fd3b65d>` * pHashTable, RTS_SIZE sNumHashEntries, char * pszComponentName)
+
+- RTS_RESULT :ref:`CMUtlHashCreate2 <group___c_m_utils_hash_itf_1ga9af9fc49890a611ee125df7078d9ea3d>` (:ref:`CMUtlHashTable <group___c_m_utils_hash_itf___hashtable_1ga18c3802cb4ec26bec34e42874fd3b65d>` * pHashTable, RTS_SIZE sNumHashEntries, RTS_UI8 * pHashTableBuffer, char * pszComponentName)
+
+- RTS_RESULT :ref:`CMUtlHashCreate3 <group___c_m_utils_hash_itf_1gaa5ee46609cf8fa4c66be70f0746a5440>` (:ref:`CMUtlHashTable <group___c_m_utils_hash_itf___hashtable_1ga18c3802cb4ec26bec34e42874fd3b65d>` * pHashTable, RTS_SIZE sNumHashEntries, RTS_UI8 * pHashTableBuffer, RTS_UI32 ui32Flags, char * pszComponentName)
+
+- RTS_RESULT :ref:`CMUtlHashDelete <group___c_m_utils_hash_itf_1ga8ec3ddce056ee5f5291a2f3df5be91c6>` (:ref:`CMUtlHashTable <group___c_m_utils_hash_itf___hashtable_1ga18c3802cb4ec26bec34e42874fd3b65d>` * pHashTable)
+
+- RTS_RESULT :ref:`CMUtlHashInsert <group___c_m_utils_hash_itf_1ga0d34d9a12bb3b22a3e7f84f4cb6461bc>` (:ref:`CMUtlHashTable <group___c_m_utils_hash_itf___hashtable_1ga18c3802cb4ec26bec34e42874fd3b65d>` * pHashTable, RTS_UI8 * pKey, RTS_SIZE keyLen, RTS_BOOL bCopyKey, void * pData)
+
+- RTS_RESULT :ref:`CMUtlHashInsert2 <group___c_m_utils_hash_itf_1ga179a1e14b91e32416317b7424fec5824>` (:ref:`CMUtlHashTable <group___c_m_utils_hash_itf___hashtable_1ga18c3802cb4ec26bec34e42874fd3b65d>` * pHashTable, :ref:`CMUtlHashEntry <group___c_m_utils_hash_itf___hashentry_1gadd57a73c7ff3d9e8bfb558347e689613>` * pNewEntry, RTS_UI8 * pKey, RTS_SIZE keyLen, RTS_BOOL bCopyKey, void * pData)
+
+- RTS_RESULT :ref:`CMUtlHashRemove <group___c_m_utils_hash_itf_1ga4a666238a761ef007c69bf6ecf5c0bfa>` (:ref:`CMUtlHashTable <group___c_m_utils_hash_itf___hashtable_1ga18c3802cb4ec26bec34e42874fd3b65d>` * pHashTable, :ref:`CMUtlHashEntry <group___c_m_utils_hash_itf___hashentry_1gadd57a73c7ff3d9e8bfb558347e689613>` * pEntry)
+
+- RTS_RESULT :ref:`CMUtlHashRemove2 <group___c_m_utils_hash_itf_1ga21dfba83a41eca5dd92864a1495bfad6>` (:ref:`CMUtlHashTable <group___c_m_utils_hash_itf___hashtable_1ga18c3802cb4ec26bec34e42874fd3b65d>` * pHashTable, RTS_UI8 * pKey, RTS_SIZE keyLen)
+
+- :ref:`CMUtlHashEntry <group___c_m_utils_hash_itf___hashentry_1gadd57a73c7ff3d9e8bfb558347e689613>` * :ref:`CMUtlHashSearch <group___c_m_utils_hash_itf_1ga80c5e7e19886459ca77c785c40835363>` (:ref:`CMUtlHashTable <group___c_m_utils_hash_itf___hashtable_1ga18c3802cb4ec26bec34e42874fd3b65d>` * pHashTable, RTS_UI8 * pKey, RTS_SIZE keyLen, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`CMUtlHashIterate <group___c_m_utils_hash_itf_1ga533027c75cb84469c9f3f30f75eb27c9>` (:ref:`CMUtlHashTable <group___c_m_utils_hash_itf___hashtable_1ga18c3802cb4ec26bec34e42874fd3b65d>` * pHashTable, :ref:`PF_HASHENTRY_CALLBACK <group___c_m_utils_hash_itf_1ga588538d9612929bceb3f4e17846685eb>`  pfcbHashEntry, RTS_UINTPTR cbUserData)
+
+Detailed Description
+--------------------
+
+Definition in file CMUtilsHashItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

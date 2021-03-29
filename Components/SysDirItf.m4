@@ -1,12 +1,12 @@
 /**
  * <interfacename>SysDir</interfacename>
  * <description> 
- *	<p>The SysDir interface is projected to handle all system dependant directory operations.
- *	If there is no filesystem on the target, the interface functions ERR_NOTIMPLEMENTED.</p>
+ *	<p>The SysDir interface is projected to handle all system dependent directory operations.
+ *	If there is no file system on the target, the interface functions ERR_NOTIMPLEMENTED.</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -82,7 +82,7 @@ typedef struct tagsysdirclose_struct
 	RTS_IEC_RESULT SysDirClose;			/* VAR_OUTPUT */	
 } sysdirclose_struct;
 
-DEF_API(`void',`CDECL',`sysdirclose',`(sysdirclose_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x7985F4ED),0x03050C00)
+DEF_API(`void',`CDECL',`sysdirclose',`(sysdirclose_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x7985F4ED),0x03050F00)
 
 /**
  * Copies the contents of szSourceDir to szDestDir.
@@ -100,7 +100,7 @@ typedef struct tagsysdircopy_struct
 	RTS_IEC_RESULT SysDirCopy;			/* VAR_OUTPUT */	
 } sysdircopy_struct;
 
-DEF_API(`void',`CDECL',`sysdircopy',`(sysdircopy_struct *p)',1,0xDCC4B146,0x03050C00)
+DEF_API(`void',`CDECL',`sysdircopy',`(sysdircopy_struct *p)',1,0xDCC4B146,0x03050F00)
 
 /**
  * Creates a new directory with the specified name
@@ -112,7 +112,7 @@ typedef struct tagsysdircreate_struct
 	RTS_IEC_RESULT SysDirCreate;		/* VAR_OUTPUT */	
 } sysdircreate_struct;
 
-DEF_API(`void',`CDECL',`sysdircreate',`(sysdircreate_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xC775A9FA),0x03050C00)
+DEF_API(`void',`CDECL',`sysdircreate',`(sysdircreate_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xC775A9FA),0x03050F00)
 
 /**
  * Creates a new directory with the specified name.
@@ -126,7 +126,7 @@ typedef struct tagsysdircreate2_struct
 	RTS_IEC_RESULT SysDirCreate2;		/* VAR_OUTPUT */	
 } sysdircreate2_struct;
 
-DEF_API(`void',`CDECL',`sysdircreate2',`(sysdircreate2_struct *p)',1,0x03802B43,0x03050C00)
+DEF_API(`void',`CDECL',`sysdircreate2',`(sysdircreate2_struct *p)',1,0x03802B43,0x03050F00)
 
 /**
  * Deletes a directory with the specified name
@@ -138,12 +138,12 @@ typedef struct tagsysdirdelete_struct
 	RTS_IEC_RESULT SysDirDelete;		/* VAR_OUTPUT */	
 } sysdirdelete_struct;
 
-DEF_API(`void',`CDECL',`sysdirdelete',`(sysdirdelete_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x3E032B8B),0x03050C00)
+DEF_API(`void',`CDECL',`sysdirdelete',`(sysdirdelete_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x3E032B8B),0x03050F00)
 
 /**
  * Deletes a directory with the specified name
  *
- * If xRecursive is set, a whole folder tree can be deleted, i.e. all subfolders and files are deleted.
+ * If xRecursive is set, a whole folder tree can be deleted, i.e. all sub-folders and files are deleted.
  * If xRecursive and xKeepDir are set, the folder is kept but its contents is deleted.
  * :return: Returns the runtime system error code (see CmpErrors_Itf.library)
  */
@@ -155,7 +155,7 @@ typedef struct tagsysdirdelete2_struct
 	RTS_IEC_RESULT SysDirDelete2;		/* VAR_OUTPUT */	
 } sysdirdelete2_struct;
 
-DEF_API(`void',`CDECL',`sysdirdelete2',`(sysdirdelete2_struct *p)',1,0xB8EF3C3D,0x03050C00)
+DEF_API(`void',`CDECL',`sysdirdelete2',`(sysdirdelete2_struct *p)',1,0xB8EF3C3D,0x03050F00)
 
 /**
  * Get current working directory for IEC file access
@@ -163,30 +163,32 @@ DEF_API(`void',`CDECL',`sysdirdelete2',`(sysdirdelete2_struct *p)',1,0xB8EF3C3D,
  */
 typedef struct tagsysdirgetcurrent_struct
 {
-	RTS_IEC_STRING *szDir;				/* VAR_INPUT */	/* OUT_PARAMETER: Name of current directory */
-	RTS_IEC_DINT diMaxDirLen;			/* VAR_INPUT */	/* Max lenght of directory buffer */
+	RTS_IEC_STRING *szDir;				/* VAR_IN_OUT */	/* OUT_PARAMETER: Name of current directory */
+	RTS_IEC_DINT diMaxDirLen;			/* VAR_INPUT */	/* Max length of directory buffer */
 	RTS_IEC_RESULT SysDirGetCurrent;	/* VAR_OUTPUT */	
 } sysdirgetcurrent_struct;
 
-DEF_API(`void',`CDECL',`sysdirgetcurrent',`(sysdirgetcurrent_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x0376B53C),0x03050C00)
+DEF_API(`void',`CDECL',`sysdirgetcurrent',`(sysdirgetcurrent_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x0376B53C),0x03050F00)
 
 /**
- * Opens a specified directory and returns a handle and the first directory entry
+ * | Opens a specified directory and returns a handle and the first directory entry.
+ * | szDirEntry is expected to provide enough space to write the directory entry to.
+ * | In case szDirEntry is 0, the first directory entry may be retrieved with SysDirRead.
  * :return: Returns the runtime system error code (see CmpErrors.library)
  */
 typedef struct tagsysdiropen_struct
 {
-	RTS_IEC_STRING *szDir;				/* VAR_INPUT */	/* Directory entry as string
+	RTS_IEC_STRING *szDir;				/* VAR_INPUT */	/* Name of directory.
 
  .. note:: Empty string ('') is the request for the current working directory. */
-	RTS_IEC_STRING *szDirEntry;			/* VAR_INPUT */	/* OUT_PARAMETER: Directory entry as string */
-	RTS_IEC_DINT diMaxDirEntry;			/* VAR_INPUT */	/* OUT_PARAMETER: Max number of bytes to write in pszDirEntry */
-	DirInfo *pDirInfo;					/* VAR_INPUT */	/* OUT_PARAMETER: Directory information */
+	RTS_IEC_STRING *szDirEntry;			/* VAR_INPUT */	/* OUT_PARAMETER, optional: Directory entry as string, may be 0 */
+	RTS_IEC_DINT diMaxDirEntry;			/* VAR_INPUT */	/* OUT_PARAMETER, optional: Max number of bytes to write in pszDirEntry */
+	DirInfo *pDirInfo;					/* VAR_INPUT */	/* OUT_PARAMETER, optional: Directory information, may be 0 */
 	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* OUT_PARAMETER: Pointer to runtime system error code (see CmpErrors.library) */
 	RTS_IEC_HANDLE SysDirOpen;			/* VAR_OUTPUT */	
 } sysdiropen_struct;
 
-DEF_API(`void',`CDECL',`sysdiropen',`(sysdiropen_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x05CA15A4),0x03050C00)
+DEF_API(`void',`CDECL',`sysdiropen',`(sysdiropen_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x05CA15A4),0x03050F00)
 
 /**
  * Read next directory entry. Writes the entry in pszDirEntry.
@@ -197,19 +199,19 @@ DEF_API(`void',`CDECL',`sysdiropen',`(sysdiropen_struct *p)',1,RTSITF_GET_SIGNAT
  *		+ ERR_PARAMETER: If one of the parameters is invalid
  *		+ ERR_BUFFERSIZE: If iMaxDirEntry is too short to get the complete directory entry string
  *
- * .. note:: Typically after error ``ERR_BUFFERSIZE``, the dir-handle is set to the next entry, so this entry will be missed!
+ * .. note:: Typically after error ``ERR_BUFFERSIZE``, the directory-handle is set to the next entry, so this entry will be missed!
  */
 typedef struct tagsysdirread_struct
 {
 	RTS_IEC_HANDLE hDir;				/* VAR_INPUT */	/* Handle to directory opened with SysDirOpen */
-	RTS_IEC_STRING *szDirEntry;			/* VAR_INPUT */	/* OUT_PARAMETER: Directory entry as string */
+	RTS_IEC_STRING *szDirEntry;			/* VAR_IN_OUT */	/* OUT_PARAMETER: Directory entry as string */
 	RTS_IEC_DINT diMaxDirEntry;			/* VAR_INPUT */	/* OUT_PARAMETER: Max number of bytes to write in pszDirEntry */
 	DirInfo *pDirInfo;					/* VAR_INPUT */	/* OUT_PARAMETER: Directory information
  NOTE: Can be 0 (so only directory name is provided in pszDirEntry) */
 	RTS_IEC_RESULT SysDirRead;			/* VAR_OUTPUT */	
 } sysdirread_struct;
 
-DEF_API(`void',`CDECL',`sysdirread',`(sysdirread_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xCF257171),0x03050C00)
+DEF_API(`void',`CDECL',`sysdirread',`(sysdirread_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xCF257171),0x03050F00)
 
 /**
  * Rename directory
@@ -222,7 +224,7 @@ typedef struct tagsysdirrename_struct
 	RTS_IEC_RESULT SysDirRename;		/* VAR_OUTPUT */	
 } sysdirrename_struct;
 
-DEF_API(`void',`CDECL',`sysdirrename',`(sysdirrename_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xA2EF5E53),0x03050C00)
+DEF_API(`void',`CDECL',`sysdirrename',`(sysdirrename_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xA2EF5E53),0x03050F00)
 
 /**
  * Set current working directory on the target. In this directory all following file function are operated.
@@ -236,7 +238,7 @@ typedef struct tagsysdirsetcurrent_struct
 	RTS_IEC_RESULT SysDirSetCurrent;	/* VAR_OUTPUT */	
 } sysdirsetcurrent_struct;
 
-DEF_API(`void',`CDECL',`sysdirsetcurrent',`(sysdirsetcurrent_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x92FA36CD),0x03050C00)
+DEF_API(`void',`CDECL',`sysdirsetcurrent',`(sysdirsetcurrent_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x92FA36CD),0x03050F00)
 
 #ifdef __cplusplus
 }
@@ -254,16 +256,17 @@ RTS_RESULT CDECL SysDirOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysDirOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
 /**
- * <description>Opens a specified directory and returns a handle and the first directory entry</description>
+ * <description>Opens a specified directory and returns a handle and the first directory entry.
+ * In case pszDirEntry is NULL, the first directory entry may be retrieved with SysDirRead.</description>
  * <param name="pszDir" type="IN">Name of directory.
- * IMPLEMENTATION NOTE: Empty string ("") is the request for the current working directory.</param>
+ * NOTE: Empty string ("") is the request for the current working directory.</param>
  * <param name="pszDirEntry" type="OUT">Optional: Directory entry as string. Can be NULL.</param>
  * <param name="iMaxDirEntry" type="IN">Optional: Max number of bytes to write in pszDirEntry</param>
- * <param name="pDirInfo" type="OUT">Directory information</param>
+ * <param name="pDirInfo" type="OUT">Optional: Directory information. Can be NULL.</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Directory can be opened and a directory info can be retrieved</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Directory cannot be opened. An invalid handle is returned.</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_END_OF_OBJECT">Directory can be opened, but _no_ pszDirEntry can be retrieved (direcory is empty or end reached)!
+ * <errorcode name="RTS_RESULT pResult" type="ERR_END_OF_OBJECT">Directory can be opened, but _no_ pszDirEntry can be retrieved (directory is empty or end reached)!
  *		NOTE:
  *		A valid handle is returned with this error and so the directory must be closed after usage!
  * </errorcode>
@@ -275,17 +278,18 @@ DEF_CREATEITF_API(`RTS_HANDLE',`CDECL',`SysDirOpen',`(char *pszDir, char *pszDir
 
 /**
  * <description>Opens a specified directory and returns a handle and the first directory entry. No standard path will be added.
+ * In case pszDirEntry is NULL, the first directory entry may be retrieved with SysDirRead.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant! Optimizations can be done here.</description>
+ *	This interface function is implemented operating system dependent! Optimizations can be done here.</description>
  * <param name="pszDir" type="IN">Name of directory.
  * IMPLEMENTATION NOTE: Empty string ("") is the request for the current working directory.</param>
  * <param name="pszDirEntry" type="OUT">Optional: Directory entry as string. Can be NULL.</param>
  * <param name="iMaxDirEntry" type="IN">Optional: Max number of bytes to write in pszDirEntry</param>
- * <param name="pDirInfo" type="OUT">Directory information</param>
+ * <param name="pDirInfo" type="OUT">Optional: Directory information. Can be NULL</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Directory can be opened and a directory info can be retrieved</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Directory cannot be opened. An invalid handle is returned.</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_END_OF_OBJECT">Directory can be opened, but _no_ pszDirEntry can be retrieved (direcory is empty or end reached)!
+ * <errorcode name="RTS_RESULT pResult" type="ERR_END_OF_OBJECT">Directory can be opened, but _no_ pszDirEntry can be retrieved (directory is empty or end reached)!
  *		NOTE:
  *		A valid handle is returned with this error and so the directory must be closed after usage!
  * </errorcode>
@@ -304,7 +308,7 @@ DEF_DELETEITF_API(`RTS_RESULT',`CDECL',`SysDirClose',`(RTS_HANDLE hDir)')
 /**
  * <description>Close an open directory.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant! Optimizations can be done here.</description>
+ *	This interface function is implemented operating system dependent! Optimizations can be done here.</description>
  * <param name="hDir" type="IN">Handle to directory opened with SysDirOpen</param>
  * <result>error code</result>
  */
@@ -333,7 +337,7 @@ DEF_HANDLEITF_API(`RTS_RESULT',`CDECL',`SysDirRead',`(RTS_HANDLE hDir, char *psz
 /**
  * <description>Read next directory entry. Writes the entry in pszDirEntry.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant! Optimizations can be done here.</description>
+ *	This interface function is implemented operating system dependent! Optimizations can be done here.</description>
  * <param name="hDir" type="IN">Handle to directory opened with SysDirOpen</param>
  * <param name="pszDirEntry" type="OUT">Directory entry as string</param>
  * <param name="iMaxDirEntry" type="OUT">Max number of bytes to write in pszDirEntry</param>
@@ -371,7 +375,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysDirCreate2',`(char *pszDir, RTS_BOOL bRecur
 /**
  * <description>Creates a new directory with the specified name. No standard path will be added.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant! Optimizations can be done here.</description>
+ *	This interface function is implemented operating system dependent! Optimizations can be done here.</description>
  * <param name="pszDir" type="IN">Name of directory</param>
  * <result>error code</result>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Directory was created successfully</errorcode>
@@ -390,7 +394,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysDirDelete',`(char *pszDir)')
 
 /**
  * <description>Deletes a directory with the specified name
- * If bRecursive is set, a whole folder tree can be deleted, i.e. all subfolders and files are deleted.
+ * If bRecursive is set, a whole folder tree can be deleted, i.e. all sub-folders and files are deleted.
  * If bRecursive and bKeepDir are set, the folder is kept but its contents is deleted.</description>
  * <param name="pszDir" type="IN">Name of directory</param>
  * <param name="bRecursive" type="IN">Delete a whole folder tree</param>
@@ -402,7 +406,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysDirDelete2',`(char *pszDir, RTS_BOOL bRecur
 /**
  * <description>Deletes a directory with the specified name. No standard path will be added.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant! Optimizations can be done here.</description>
+ *	This interface function is implemented operating system dependent! Optimizations can be done here.</description>
  * <param name="pszDir" type="IN">Name of directory</param>
  * <result>error code</result>
  */
@@ -419,7 +423,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysDirRename',`(char *pszOldDir, char *pszNewD
 /**
  * <description>Rename directory. No standard path will be added.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant! Optimizations can be done here.</description>
+ *	This interface function is implemented operating system dependent! Optimizations can be done here.</description>
  * <param name="pszOldDir" type="IN">Name of existing directory</param>
  * <param name="pszNewDir" type="IN">New name</param>
  * <result>error code</result>
@@ -431,7 +435,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysDirRename_',`(char *pszOldDir, char *pszNew
  * To obtain the working directory of the underlying file system use SysDirGetCurrent_.
  * </description>
  * <param name="pszDir" type="OUT">Name of current directory</param>
- * <param name="iMaxDirLen" type="IN">Max lenght of directory buffer</param>
+ * <param name="iMaxDirLen" type="IN">Max length of directory buffer</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`SysDirGetCurrent',`(char *pszDir, int iMaxDirLen)')
@@ -439,9 +443,9 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysDirGetCurrent',`(char *pszDir, int iMaxDirL
 /**
  * <description>Get current working directory of the underlying file system. No standard path will be added.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant!</description>
+ *	This interface function is implemented operating system dependent!</description>
  * <param name="pszDir" type="OUT">Name of current directory</param>
- * <param name="iMaxDirLen" type="IN">Max lenght of directory buffer</param>
+ * <param name="iMaxDirLen" type="IN">Max length of directory buffer</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`SysDirGetCurrent_',`(char *pszDir, int iMaxDirLen)')
@@ -463,7 +467,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysDirSetCurrent',`(char *pszDir)')
  * call and restore the path as soon as possible. Otherwise the whole runtime system may not work any more!
  * ATTENTION: Reset Origin does not affect this setting. The runtime system has to be restarted!
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant!</description>
+ *	This interface function is implemented operating system dependent!</description>
  * <param name="pszDir" type="IN">Name of current directory</param>
  * <result>error code</result>
  */
@@ -472,16 +476,17 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysDirSetCurrent_',`(char *pszDir)')
 /**
  * <description> Copies the contents of pszSourceDir to pszDestDir.
  * Depending of the parameters, all subdirectories and its content will be copied too, and existing files will be overwritten.
- * NOTE: Empty direcories will be copied if bRecursive is TRUE.
+ * Non-existing destination path will be created.
+ * NOTE: Empty directories will be copied if bRecursive is TRUE.
  * </description>
  * <param name="pszDestDir" type="IN">Name of destination directory</param>
  * <param name="pszSourceDir" type="IN">Name of source directory</param>
  * <param name="bRecursive" type="IN">TRUE: all subdirectories and their contents are copied, FALSE: subdirectories are omitted</param>
  * <param name="bOverwrite" type="IN">TRUE: existing files are overwritten, FALSE: existing files are left untouched</param>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OK">The contents of the source direcory was successfully copied to the destination direcory</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">The contents of the source directory was successfully copied to the destination directory</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_NO_OBJECT">There were no files to copy, the destination directory is nevertheless created if need be</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OPERATION_DENIED">Source or destination direcory is not accessible</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OPERATION_DENIED">Source or destination directory is not accessible</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">System error</errorcode>
  */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`SysDirCopy',`(char *pszDestDir, char *pszSourceDir, RTS_BOOL bRecursive, RTS_BOOL bOverwrite)')

@@ -1,0 +1,93 @@
+.. _feature__supervisor:
+
+
+Supervisor 
+==========
+
+This feature provides a generic and easy way to supervise all vital operations of the runtime system!
+It can be used for example to retrigger a hardware watchdog to detect a failure in vital operations which cannot be handled in software.
+
+The interface of the supervisor can be used to: 
+
+- Interfaces to read the global state of all vital operations and to iterate over all vital operations
+
+- Register/unregister an additional vital operation for supervision
+
+- Retrigger a vital operation to be alive
+
+- There is an explicit dead signal for desperate situations such as memory overwrite, etc. For these operations stTimeoutUs should be set to 0 to disable time check
+
+Vital Operations
+^^^^^^^^^^^^^^^^
+
+The following vital operations are supervised:
+
++---------------------+------------------+--------------------------------------------------+-------------------------------------------------------+-------------------------------------------+
+| ComponentID         | OperationID      | Reference                                        | Timeout [us]                                          | Description                               |
++=====================+==================+==================================================+=======================================================+===========================================+
+| CMPID_Scheduler     | 1                | :ref:`group___cmp_schedule_itf___operation_i_d`  | 2 * scheduler tick interval                           | Schedule tick is supervised CmpMemGC      |
+|                     |                  |                                                  | [Default = 2 * 1000] us                               |                                           |
+|                     |                  |                                                  |                                                       |                                           |
+|                     |                  |                                                  | (scheduler interval is specified by the setting       |                                           |
+|                     |                  |                                                  |  SCHEDULEKEY_INT_SCHEDULER_INTERVAL_US)               |                                           |
++---------------------+------------------+--------------------------------------------------+-------------------------------------------------------+-------------------------------------------+
+| CMPID_Scheduler     | 2                | :ref:`group___cmp_schedule_itf___operation_i_d`  | Is calculated based on the lowest watchdog interval   | [OPTIONAL]                                |
+|                     |                  |                                                  | from all IEC tasks!                                   | Only used, if scheduler is operating in   |
+|                     |                  |                                                  |                                                       | SVM_WATCHDOG_TIMER mode!                  |
+|                     |                  |                                                  |                                                       |                                           |
+|                     |                  |                                                  |                                                       |                                           |
++---------------------+------------------+--------------------------------------------------+-------------------------------------------------------+-------------------------------------------+
+| CMPID_CmpApp        | [Application ID] | :ref:`group___cmp_app_itf___operation_i_d`       | MIN(10.000.000, MAX(2 * maxinterval of all IEC tasks) | Is active for RUN/STOP at:                |
+|                     |                  |                                                  |                                                       |                                           |
+|                     |                  |                                                  |                                                       | - User stop                               |
+|                     |                  |                                                  |                                                       |                                           |
+|                     |                  |                                                  |                                                       | - Reset                                   |
+|                     |                  |                                                  |                                                       |                                           |
+|                     |                  |                                                  |                                                       | - Exception                               |
++---------------------+------------------+--------------------------------------------------+-------------------------------------------------------+-------------------------------------------+
+| CMPID_CmpIecTask    | 1                | :ref:`group___cmp_iec_task_itf___operation_i_d`  | [Default = 10000] us                                  | Supervision of a watchdog error during    |
+|                     |                  |                                                  |                                                       | IO-update (IEC task must leave IO update) |
+|                     |                  |                                                  | (see setting IECTASKKEY_INT_WAIT_FOR_STOP_TIMEOUT     |                                           |
++---------------------+------------------+--------------------------------------------------+-------------------------------------------------------+-------------------------------------------+
+| CMPID_CmpSupervisor | 1                | :ref:`group___cmp_supervisor_itf___operation_i_d`| 60.000.000                                            | Detects if there is no idle call          |
+|                     |                  |                                                  |                                                       | within a configurable interval.           |
++---------------------+------------------+--------------------------------------------------+-------------------------------------------------------+-------------------------------------------+
+| CMPID_CmpMemGC      | 1                | :ref:`group___cmp_mem_g_c_itf___operation_i_d`   | 0                                                     | Detects memory corruption / overwrites in |
+|                     |                  |                                                  |                                                       | CmpMemGC                                  |
++---------------------+------------------+--------------------------------------------------+-------------------------------------------------------+-------------------------------------------+
+
+Use case: Hardware watchdog
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The supervisor can be used for higher level surveillance like a hardware watchdog or a separate supervisor process! 
+
+To realize this, a cyclic task or timer has to call SupervisorOperationGetState() periodically and retrigger the hardware watchdog. In case the nNumOfFailedOperations is greater than 0,
+the cyclic task have to:
+
+- prevent retriggering the hardware watchdog to expire -> system reboot
+
+- check the causing operation and in case it is unimportant in this system state, give a second chance by reactivating the operation.
+  Call SupervisorOperationDisable() followed by SupervisorOperationEnable() to reactivate the supervision of the operation
+
+You can iterate through all vital operations by SupervisorOperationGetFirst() and SupervisorOperationGetNext(). With SupervisorOperationGetEntry() you can get details of the operation.
+
+
+Required features
+-----------------
+
+- :ref:`feature__runtime`
+
+Required target settings
+------------------------
+
+The following target settings are necessary for this feature:
+
+- :ref:`library-management_placeholder-libraries_CmpSupervisor`
+
+Required components
+-------------------
+
+The following runtime system components are necessary for this feature:
+
+- :ref:`CmpSupervisor <group___cmp_supervisor_dep>`
+

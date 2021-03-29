@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -25,7 +25,7 @@ REF_ITF(`CmpRouterItf.m4')
 #endif
 
 #define KEEPALIVE_INTERVAL (1000UL) 
-	/* Defines the idle-time (ms) after which to send a keepalive package */
+	/* Defines the idle-time (ms) after which to send a keep alive package */
 
 /**
  * <category>Settings</category>
@@ -184,7 +184,7 @@ typedef struct
 		/* CRC-32 */
 } L4METAPACKAGE;
 
-/* Header of a request for runtimesystem information(an extension on L4METAPACKAGE) */
+/* Header of a request for runtime system information(an extension on L4METAPACKAGE) */
 typedef struct
 {
 	L4METAPACKAGE metaPkg;
@@ -221,12 +221,12 @@ typedef struct
 	RTS_UI16      wDummy;
 }L4OPENCHANNEL_REQ_2;
 
-/* Definitions for the result of an open channel req */
+/* Definitions for the result of an open channel request */
 #define OPENC_SUCCESS       0  /* Channel has been created */
 #define OPENC_NOFREECHANNEL 1  /* All available channels already in use */
 #define OPENC_NOTSERVER     2  /* This is not a server - you cannot open a channel to this node */
 
-#define CHF_BIGENDIAN       0x01 /* "Motorola byteorder" */
+#define CHF_BIGENDIAN       0x01 /* "Motorola byte order" */
 
 typedef struct
 {
@@ -285,7 +285,7 @@ typedef struct
 	#endif	
 #endif
 
-/* -- Internal datastructures -- */
+/* -- Internal data structures -- */
 
 
 #define BF_SENT     0x01
@@ -306,9 +306,9 @@ typedef struct
 #define CF_BIT_SENDMODE				1		/* Bit number of previous value */
 #define CF_ADDRRELATIVE				0x04	/* Relative addressing is used */
 #define CF_BIT_ADDRRELATIVE			2		/* Bit number of previous value */
-#define CF_SEND_BLOCKS_ACTIVE		0x08	/* Flag to avoid reentrance in send routine */ 
+#define CF_SEND_BLOCKS_ACTIVE		0x08	/* Flag to avoid re-entrance in send routine */ 
 #define CF_BIT_SEND_BLOCKS_ACTIVE	3		/* Bit number of previous value */
-#define CF_REPEAT_APP_CALL			0x10	/* If this flag is set, the app (CmpSrv) is called cyclically until the service is handled. */ 
+#define CF_REPEAT_APP_CALL			0x10	/* If this flag is set, the application (CmpSrv) is called cyclically until the service is handled. */ 
 #define CF_BIT_REPEAT_APP_CALL		4		/* Bit number of previous value */
 
 typedef struct
@@ -334,7 +334,7 @@ typedef struct
 typedef struct
 {
 	/* Channel "name"*/
-	unsigned char ucAddrOffset; /* Offset of relative addresses. Valid iff CF_ADDRRELATIVE is set in wFlags */
+	unsigned char ucAddrOffset; /* Offset of relative addresses. Valid if CF_ADDRRELATIVE is set in wFlags */
 	unsigned char ucAddrPeerLen;
 	ADDRESSCOMPONENT  addrPeer[MAX_NODEADDR_LEN]; /* address of the communication partner */
 	unsigned short wChannelId;
@@ -481,7 +481,7 @@ DEF_ITF_API(`RTS_UI32',`CDECL',`NetworkGetChBufferSize',`( RTS_UI32 dwCommBuffer
 
 /**
  * <description>
- * Initialize the provided channelbuffer. 
+ * Initialize the provided channel buffer. 
  * </description>
  * <param name = "pChBuffer" type="IN"></param>
  * <param name = "dwBufferSize" type="IN"> Size of pChBuffer. </param>
@@ -494,21 +494,21 @@ DEF_ITF_API(`RTS_UI32',`CDECL',`NetworkGetChBufferSize',`( RTS_UI32 dwCommBuffer
  *   Maximum size of the communication buffer to use (usually the requested communication buffer)
  * </param>
  * <result>
- *   The size of the communication buffer for this channelbuffer.
+ *   The size of the communication buffer for this channel buffer.
  * </result>
 */
 DEF_ITF_API(`RTS_UI32',`CDECL',`NetworkInitChannelBuffer',`(CHANNELBUFFER *pChBuffer, RTS_HANDLE hRouter, RTS_UI32 dwBufferSize, unsigned short wChannelId, PEERADDRESS addrSender, unsigned char byChFlags, RTS_UI32 dwMaxCommBuffer)')
 
 /**
  * <description>
- * Initialize the provided channelbuffer with a given maximum Blocksize. 
+ * Initialize the provided channel buffer with a given maximum block size. 
  * </description>
  * <param name = "pChBuffer" type="IN"></param>
  * <param name = "dwBufferSize" type="IN"> Size of pChBuffer. </param>
  * <param name = "wChannelId" type="IN"> The id of the channel.</param>
  * <param name = "addrSender" type="IN"> The 3S-address of this channels peer. </param>
  * <param name = "byFlags" type="IN"> 
- *   Initial channel flags (CF_SERVERCHANNEL for a serverchannel, CF_SENDMODE for a clientchannel)
+ *   Initial channel flags (CF_SERVERCHANNEL for a server channel, CF_SENDMODE for a client channel)
  * </param>
  * <param name = "dwMaxCommBuffer" type="IN">  
  *   Maximum size of the communication buffer to use (usually the requested communication buffer)
@@ -517,7 +517,7 @@ DEF_ITF_API(`RTS_UI32',`CDECL',`NetworkInitChannelBuffer',`(CHANNELBUFFER *pChBu
  *   Maximum size of one block
  * </param>
  * <result>
- *   The size of the communication buffer for this channelbuffer.
+ *   The size of the communication buffer for this channel buffer.
  * </result>
 */
 DEF_ITF_API(`RTS_UI32',`CDECL',`NetworkInitChannelBuffer2',`(CHANNELBUFFER *pChBuffer, RTS_HANDLE hRouter, RTS_UI32 dwBufferSize, unsigned short wChannelId, PEERADDRESS addrSender, unsigned char byChFlags, RTS_UI32 dwMaxCommBuffer, unsigned short wMaxBlockSize)')
@@ -559,7 +559,7 @@ DEF_ITF_API(`int',`CDECL',`NetworkSendMessage',`(CHANNELBUFFER *pChBuffer, PROTO
  *		The channel for which to retrieve the status 
  *	</param>
  *	<param name="pusStatus" type="OUT">
- *		Is set to the current progress state. The PROGRESS_xxx constants define valied values.
+ *		Is set to the current progress state. The PROGRESS_xxx constants define valid values.
  *	</param>
  *  <param name="pbyScalingFactor" type="OUT">
  *		Provides the scaling factor for pnItemsComplete and pnTotalItems. These values have been scaled
@@ -567,7 +567,7 @@ DEF_ITF_API(`int',`CDECL',`NetworkSendMessage',`(CHANNELBUFFER *pChBuffer, PROTO
  *		(i.e. they have been right shifted by ScalingFactor bits).
  *  </param>
  *	<param name="pnItemsComplete" type="OUT">
- *		Number of items completed (eg. the number of bytes transfered).
+ *		Number of items completed (e.g. the number of bytes transfered).
  *  </param>
  * 	<param name="pnTotalItems" type="OUT">
  *		Total number of item. Is set to -1 if unknown.
@@ -576,7 +576,7 @@ DEF_API(`int',`CDECL',`NetworkGetStatus',`(CHANNELBUFFER *pChBuffer, RTS_UI16 *p
 
 /** 
  * <description>
- *   Returns a copy of the internal channel structure. This function is intended for information purpoeses only.
+ *   Returns a copy of the internal channel structure. This function is intended for information purposes only.
  * </description>
  * <param name="pChBuffer" type="IN">The channel for which to retrieve the status.</param>
  * <param name="pChInfoBuffer" type="INOUT">Caller allocated buffer, to which the content of the internal channel buffer structure is copied to.</param>

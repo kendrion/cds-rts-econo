@@ -1,0 +1,1161 @@
+.. _tutorial_iec-memorymanagement:
+
+==============================
+IEC Memory Management Tutorial
+==============================
+
+In this tutorial we describe the management of all memory elements for the IEC application.
+
+.. contents::
+   :local:
+   :depth: 1
+
+.. _iec_memory_management_introduction:
+
+Introduction
+============
+
+The :ref:`memory layout <dev_extended_settings_memory_layout>` for the IEC applications must be specified in the :ref:`device description <dev_desc_device>` of a controller.
+
+The can be one or several memory buffers for an IEC application. One memory buffer of an application is used to store different kind of content. 
+Each memory is a so called :ref:`memory area <dev_extended_settings_memory_layout>`:
+
++------------------------+-------------------------------------------------------------------------------------+
+| Content / Area         | Description                                                                         |
++========================+=====================================================================================+
+| Code and Constant data | The code memory contains all generated code of the IEC application. Additionally    |
+|                        | this memory contains all constant data                                              |
++------------------------+-------------------------------------------------------------------------------------+
+| Data                   | The data memory contains all global data of the IEC application                     |
+|                        | (global variables, global functionblock instances, etc.).                           |
++------------------------+-------------------------------------------------------------------------------------+
+| RETAIN data            | The retain memory contains all data specified with the keyword RETAIN in CODESYS.   |
+|                        | So this kind of data retains its values over a reboot of the controller!            |
++------------------------+-------------------------------------------------------------------------------------+
+| RETAIN PERSISTENT data | The retain memory contains all data specified with the keyword RETAIN PERSISTENT    |
+|                        | in CODESYS. So this kind of data retains its values over a reboot and a new         |
+|                        | download of the application (where the layout of these variables must remain        | 
+|                        | identical!                                                                          |
++------------------------+-------------------------------------------------------------------------------------+
+
+
+Within the data area, there are several different memory segments for different usages:
+
++------------------------+-------------------------------------------------------------------------------------+
+| Data area segment      | Description                                                                         |
++========================+=====================================================================================+
+| Marker (%M addresses)  | Here all data are stored which are marked with the "AT %M" declaration.             |
+|                        | Example:                                                                            |
+|                        | - counter AT %MW10 : WORD;                                                          |
++------------------------+-------------------------------------------------------------------------------------+
+| Inputs (%I addresses)  | Here all data are stored which are marked with the "AT %I" declaration or which are |
+|                        | mapped in the IO-configuration to an input.                                         |
+|                        | Example:                                                                            |
+|                        | - mySensor AT %IB5 : BYTE;                                                          |
++------------------------+-------------------------------------------------------------------------------------+
+| Outputs (%Q addresses) | Here all data are stored which are marked with the "AT %Q" declaration or which are |
+|                        | mapped in the IO-configuration to an output.                                        |
+|                        | Example:                                                                            |
+|                        | - myActor AT %QD5 : DWORD;                                                          |
++------------------------+-------------------------------------------------------------------------------------+
+| Global data            | Here all global data and all functionblock instances are stored.                    |
++------------------------+-------------------------------------------------------------------------------------+
+| Constants              | Constant values which cannot be changed                                             |
++------------------------+-------------------------------------------------------------------------------------+
+
+
+The areas are allocated and freed in the runtime system by the following interface functions (see :ref:`group___sys_mem_itf`):
+    
+    .. code-block:: C
+
+        void* CDECL SysMemAllocArea(char *pszComponentName, unsigned short usType, RTS_SIZE ulSize, RTS_RESULT *pResult);
+
+        RTS_RESULT CDECL SysMemFreeArea(char *pszComponentName, void* pData);
+
+In :ref:`group___sys_mem_itf` there are constants defined, which specifies the type of memory that must be allocated (see :ref:`area types <group___sys_mem_itf___area_types>`).
+
+_`Code and data memory`
+=======================
+
+    - `General`_
+    - `Single Application`_
+    - `Multiple Applications`_
+    - `Device Application`_
+    - `Embedded Runtime`_
+    - `Online change`_
+    - `Code area protection`_
+
+_`General`
+----------
+
+The code and data of an IEC-application can be managed in one mixed area or you can separate them into a code area and a data area.
+We recommend to use 2 different areas for code and data.
+
+.. note:: For details see :ref:`memory layout <dev_extended_settings_memory_layout>`.
+
+Mixed Code and Data area
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The mixed variant is recommended for limited memory ressources of a controller. Or if only one memory area is available on the controller to run the IEC-application.
+
+Example:
+
+    .. code-block:: xml
+    
+        <ts:section name="area_0">
+            <!-- Code and Data area -->
+            <ts:setting name="flags" type="integer" access="visible">
+                <ts:value>0xfe7f</ts:value>
+            </ts:setting>
+            <ts:setting name="minimal-area-size" type="integer" access="visible">
+                <ts:value>0x1000</ts:value>
+            </ts:setting>
+            <ts:setting name="maximal-area-size" type="integer" access="visible">
+                <ts:value>0x600000</ts:value>
+            </ts:setting>
+
+            <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                <ts:value>20</ts:value>
+            </ts:setting>
+        </ts:section>
+
+Separation of Code and Data area
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To protect the code memory from being modified during the lifetime of an application, you can separate the data from the code. So you can specify 2 separate areas.
+This can be helpful for a more robust and secure PLC-application management.
+
+Example:
+
+    .. code-block:: xml
+    
+        <ts:section name="area_0">
+            <!-- Code area -->
+            <ts:setting name="flags" type="integer" access="visible">
+                <ts:value>0x0042</ts:value>
+            </ts:setting>
+            <ts:setting name="minimal-area-size" type="integer" access="visible">
+                <ts:value>0x1000</ts:value>
+            </ts:setting>
+            <ts:setting name="maximal-area-size" type="integer" access="visible">
+                <ts:value>0x600000</ts:value>
+            </ts:setting>
+
+            <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                <ts:value>20</ts:value>
+            </ts:setting>
+        </ts:section>
+        <ts:section name="area_1">
+            <!-- Data area -->
+            <ts:setting name="flags" type="integer" access="visible">
+                <ts:value>0xFE9D</ts:value>
+            </ts:setting>
+            <ts:setting name="minimal-area-size" type="integer" access="visible">
+                <ts:value>0x1000</ts:value>
+            </ts:setting>
+            <ts:setting name="maximal-area-size" type="integer" access="visible">
+                <ts:value>0x600000</ts:value>
+            </ts:setting>
+            <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                <ts:value>20</ts:value>
+            </ts:setting>
+        </ts:section>
+
+_`Single Application`
+---------------------
+
+On small embedded controllers there is only memory available for one IEC-application. You can limit the number of applications in the device description with the following 
+setting (:ref:`runtime_features_max_number_of_apps`):
+
+    .. code-block:: xml
+    
+        <ts:section name="runtime_features">
+              ...
+            <ts:setting name="max_number_of_apps" type="integer" access="visible">
+                <ts:value>1</ts:value>
+            </ts:setting>
+              ...
+        </ts:section>
+
+_`Multiple Applications`
+------------------------
+
+On typical controllers there is enough memory available for more than one IEC-application. This is the default in every device description (see :ref:`runtime_features_max_number_of_apps`):
+
+    .. code-block:: xml
+    
+        <ts:section name="runtime_features">
+              ...
+            <ts:setting name="max_number_of_apps" type="integer" access="visible">
+                <ts:value>-1</ts:value>
+            </ts:setting>
+              ...
+        </ts:section>
+
+_`Device Application`
+---------------------
+
+The device application is a concept to use a toplevel IEC-applicatio, which contains code and data that can be used by the child applications. The child applications included the plc logic 
+and the device application included the global elements for all plc logic (child) applications:
+
+- IO-Configuration
+
+- Shared (library) code which can be used in the child applications
+
+- `RETAIN and RETAIN PERSISTENT memory`_ that are shared between the plc logic applications
+
+To disable the support of the device application feature, you have to use the following setting (:ref:`runtime_features_disable_device_application`):
+
+    .. code-block:: xml
+
+        <ts:section name="runtime_features">
+          ...
+            <ts:setting name="disable_device_application" type="boolean" access="visible">
+                <ts:value>0</ts:value>
+            </ts:setting>
+            ...
+        </ts:section>
+
+        
+_`Embedded Runtime`
+-------------------
+
+On embedded controllers typically the IEC-application code is running from a flash memory. In this case the flash memory start address must be known and have to be specified 
+in the device description with the setting :ref:`memory-layout_areas_area_{0}_start-address`!
+
+Example:
+
+    .. code-block:: xml
+    
+        <ts:section name="memory-layout">
+            ...
+            <ts:setting name="constants-in-own-segment" type="boolean" access="visible">
+                <ts:value>1</ts:value>  
+            </ts:setting>   
+            <ts:section name="area_0">
+                <!-- Code and constant memory -->
+                <ts:setting name="flags" type="integer" access="visible">
+                    <ts:value>0x42</ts:value>
+                </ts:setting>
+                <ts:setting name="area_flags" type="integer" access="visible">
+                    <ts:value>0x10</ts:value>
+                </ts:setting>
+                <ts:setting name="start-address" type="integer" access="visible">
+                    <ts:value>0x316600</ts:value>
+                </ts:setting>
+                <ts:setting name="minimal-area-size" type="integer" access="visible">
+                    <ts:value>0x13400</ts:value>
+                </ts:setting>
+                <ts:setting name="maximal-area-size" type="integer" access="visible">
+                    <ts:value>0x13400</ts:value>
+                </ts:setting>
+                <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                    <ts:value>0</ts:value>
+                </ts:setting>
+            </ts:section>
+            <ts:section name="area_1">
+                <!-- Data area -->
+                <ts:setting name="flags" type="integer" access="visible">
+                    <ts:value>0xFE9D</ts:value>
+                </ts:setting>
+                <ts:setting name="area_flags" type="integer" access="visible">
+                    <ts:value>0x10</ts:value>
+                </ts:setting>
+                <ts:setting name="start-address" type="integer" access="visible">
+                    <ts:value>0x320000</ts:value>
+                </ts:setting>
+                <ts:setting name="minimal-area-size" type="integer" access="visible">
+                    <ts:value>0x20000</ts:value>
+                </ts:setting>
+                <ts:setting name="maximal-area-size" type="integer" access="visible">
+                    <ts:value>0x20000</ts:value>
+                </ts:setting>
+                <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                    <ts:value>0</ts:value>
+                </ts:setting>
+            </ts:section>
+        </ts:section>
+
+.. attention::
+    The settings "additional-areas" (see :ref:`Online change`) and "dynamic-retain" + "dynamic-persistent" (see :ref:`Devicedescription configuration`) 
+    should never be used in the device description of an embedded runtime!!!
+
+_`Online change`
+----------------
+
+If your runtime system supports online changes of the IEC-application, you can use the setting "additional-areas" to specify whether 
+a new area should be allocated to realize an online change, if it does not fit into the existing areas!
+
+Example:
+
+    .. code-block:: xml
+
+        <ts:section name="memory-layout">
+              ...
+            <ts:setting name="additional-areas" type="boolean" access="visible">
+                <ts:value>1</ts:value>
+            </ts:setting>
+              ...
+        </ts:section>
+
+_`Code area protection`
+-----------------------
+
+The code area can be write protected (execution only) after loading the application. The `Separation of Code and Data area`_ is the precondition for that!
+
+There are 2 possibilities to switch the code area from writeable to write protected/only executable mode:
+
+1. `Using the operation mode`_
+2. `Dynamic code area protection`_
+
+_`Using the operation mode`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The operation mode is a feature to protect the IEC-application from unintentinal changes during the operation of a machine. This feature can be used in CODESYS by the
+IEC application developer.
+
+To use the operation mode, is must be enabled in your device (see feature :ref:`Operation Mode`). And to protect the application code, you can use the following modes:
+
+- Mode=DEBUG: code area must be opened for writing. 
+
+- Mode=OPERATIONAL: code area is write protected (no modification in the code area possible; only execution possible)
+
+To recognize a change of the Operation Mode, you have to register a callback function to the CMPID_CmpDevice::EVT_CmpDevice_SetOperationMode event (:ref:`group___cmp_device_itf`).
+And in the callback you can open/close access to the protected IEC code memory!
+
+_`Dynamic code area protection`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The code area must be opened therefore for a download or onlinechange or for debugging the IEC application. The events on 
+which the code area can be set write protected / writeable are described below (see events of :ref:`CmpAppItf <group___cmp_app_itf___events>` and :ref:`CmpAppBPItf <group___cmp_app_b_p_itf___events>`):
+
+1. Write protection for the code area can be **opened** for Download/Online-Change and Debugging:
+
+   In the following events, the code should be set writeable:
+   
+   - CMPID_CmpApp :: EVT_PrepareDownload
+   
+   - CMPID_CmpApp :: EVT_PrepareOnlineChange
+   
+   - CMPID_CmpApp :: EVT_PrepareReset
+   
+   - CMPID_CmpAppBP :: EVT_CmpAppBP_CodePatch:
+     With the event parameter "EVTPARAM_CmpAppBP_SavePatch.flags == APPBP_FLAG_BEFORE_CODE_PATCH"
+
+2. Set code area are write **protected**:
+
+   In the following events, the code are can be set write protected:
+   
+   - CMPID_CmpApp :: EVT_DownloadDone
+   
+   - CMPID_CmpApp :: EVT_OnlineChangeDone
+   
+   - CMPID_CmpApp :: EVT_ResetDone
+   
+   - CMPID_CmpAppBP :: EVT_CmpAppBP_CodePatch
+     With the event parameter "EVTPARAM_CmpAppBP_SavePatch.flags == APPBP_FLAG_AFTER_CODE_PATCH"
+
+_`RETAIN and RETAIN PERSISTENT memory`
+======================================
+
+RETAIN memory is used to store IEC-data typically over a reboot of the controller. RETAIN PERSISTENT is the hardest type of memory, which hold the data over a download of the IEC-application too!
+
+So RETAIN and RETAIN PERSISTENT data in IEC behaves as followed:
+
++------------------+-------+----------------+-----------------------+
+| Operation        | VAR   | VAR RETAIN     | VAR RETAIN PERSISTENT |
++==================+=======+================+=======================+
+| Reset warm       |  r    |  --            |  --                   |
++------------------+-------+----------------+-----------------------+
+| Reset cold       |  r    |  r             |  --                   |
++------------------+-------+----------------+-----------------------+
+| Reset origin     |  r    |  r             |  r                    |
++------------------+-------+----------------+-----------------------+
+| Download         |  r    |  r             |  --                   |
++------------------+-------+----------------+-----------------------+
+| Online Change    |  --   |  --            |  --                   |
++------------------+-------+----------------+-----------------------+
+| Reboot           |  r    |  --            |  --                   |
++------------------+-------+----------------+-----------------------+
+
+[r]:  data are reset/initialized
+
+[--]: data remain their value
+
+Here are the subchapters:
+
+    - `Different types of RETAIN memory`_
+    - `Configuration of RETAIN handling`_
+    - `Implementation of RETAIN handling`_
+    - `Special aspects`_
+        - `Static area`_
+        - `RETAIN marker (%M with RETAIN)`_
+        - `Data consistency of RETAIN memory`_
+        - `Persistence Manager`_
+
+_`Different types of RETAIN memory`
+-----------------------------------
+
+Retains can be managed in different ways. In non volatile RAM (NVRAM) or in a volatile RAM (and here the content must be stored to a persistent memory).
+
+The configuration 
+
+_`NVRAM`
+~~~~~~~~
+
+We recommend to store RETAIN and RETAIN PERSISTENT data in a so called "Non-Volatile Random-Access Memory" (NVRAM).
+On controllers typically one NVRAM is built in. So we have to split this NVRAM into several segments and each segment is assigned for a RETAIN memory for *one* application.
+
+In each allocated segment of the NVRAM the runtime system writes a header into this segment to associated uniquely to an application (see :ref:`RetainHeader <struct_retain_header>`):
+
+.. code-block:: C
+
+    /**
+     * <category>Static defines</category>
+     * <description>Tag types to detect the beginning of each retain area</description>
+     *  <element name="TAG_RETAIN_USED" type="IN">Retain area is in use</element>
+     *  <element name="TAG_RETAIN_FREE" type="IN">Retain area is free. Can be used for new areas</element>
+     *  <element name="TAG_RETAIN_RESERVED" type="IN">Retain area is reserved, because it was in use before the last shutdown.
+     *      After complete reboot, this area is marked as free, if it is no longer in use.</element>
+     */
+    #define TAG_RETAIN_USED                 UINT32_C(0xABACADAE)
+    #define TAG_RETAIN_PERSISTENT_USED      UINT32_C(0xABADAEAF)
+    #define TAG_RETAIN_FREE                 UINT32_C(0xEBECEDEE)
+    #define TAG_RETAIN_RESERVED             UINT32_C(0xFBFCFDFE)
+    #define TAG_RETAIN_PERSISTENT_RESERVED  UINT32_C(0xFBFDFEFF)
+
+    #define TAG_RETAIN_SWAPPED              UINT32_C(0xAEADACAB)    /* Only used for backward compatibility */
+
+    /**
+     * <category>Retain header</category>
+     * <description>Header that is written at the beginning of each retain area</description>
+     *  <element name="ulTag" type="IN">Start tag of a retain area.
+     *   TAG_RETAIN: Occupied retain area
+     *   TAG_RETAIN_FREE: Free retain area</element>
+     *  <element name="ulSize" type="IN">Size of the retain area</element>
+     *  <element name="DataGuid" type="IN">Data guid of the retain area</element>
+     */
+    typedef struct
+    {
+        RTS_UI32 ulTag;
+        RTS_UI32 ulSize;
+        RTS_GUID DataGuid;
+    } RetainHeader;
+
+The size of the RetainHeader is 24 bytes.
+
+So a typical NVRAM layout after downloading an application (and spare memory for one additional application) looks like:
+
++--------------------------------------------------------+
+|                                                        |
+| .. code-block:: text                                   |
+|                                                        |
+|    RetainHeader area [0]:                              |
+|       ulTag = TAG_RETAIN_USED                          |
+|       ulSize = 1024                                    |
+|       DataGuid = {df862a2a-00000000-00000000-00000000} |
++--------------------------------------------------------+
+|                                                        |
+| .. code-block:: text                                   |
+|                                                        |
+|    RETAIN data area [0]                                |
+|                                                        |
+|                                                        |
++--------------------------------------------------------+
+|                                                        |
+| .. code-block:: text                                   |
+|                                                        |
+|    RetainHeader area [1]:                              |
+|       ulTag = TAG_RETAIN_USED                          |
+|       ulSize = 1024                                    |
+|       DataGuid = {abf34891-00000000-00000000-00000000} |
++--------------------------------------------------------+
+|                                                        |
+| .. code-block:: text                                   |
+|                                                        |
+|    RETAIN PERSISTENT data area [1]                     |
+|                                                        |
+|                                                        |
++--------------------------------------------------------+
+|                                                        |
+| .. code-block:: text                                   |
+|                                                        |
+|    RetainHeader:                                       |
+|       ulTag = TAG_RETAIN_FREE                          |
+|       ulSize = 2072                                    |
+|       DataGuid = {00000000-00000000-00000000-00000000} |
++--------------------------------------------------------+
+|                                                        |
+| .. code-block:: text                                   |
+|                                                        |
+|    - free -                                            |
+|                                                        |
+|                                                        |
++--------------------------------------------------------+
+
+There are some PLCShell commands to display the layout of the NVRAM and to manage it:
+
+.. code-block:: text
+
+    getsramlayout
+        Display layout of complete SRAM.
+    clearsram <segment number retrieved by "getsramlayout" or "all">
+        Init and mark SRAM segment or complete SRAM as free.
+    savesram <filename>
+        Save complete SRAM content to file.
+    restoresram <filename>
+        Restore complete SRAM content from file.
+    saveretains [<applicationname>]
+        Save retains to files(s). [Optional only from specified application].
+    restoreretains [<applicationname>]
+        Restore retains from file(s). [Optional only for specified application].
+
+Here is the output for example of the "getsramlayout" command:
+
+.. code-block:: text
+
+    ----
+    getsramlayout
+
+    --- SRAM layout: Address=0x800f098
+    Segment[0]: Tag=TAG_RETAIN_USED, Size=6000, Guid={e7d54ab1-00000000-00000000-00000000}
+    Segment[1]: Tag=TAG_RETAIN_PERSISTENT_USED, Size=5992, Guid={e52a4e9b-00000000-00000000-00000000}
+    Segment[2]: Tag=TAG_RETAIN_FREE, Size=2085600, Guid={00000000-00000000-00000000-00000000}
+
+How to configure the NVRAM see :ref:`NVRAM configuration`.
+
+Volatile RAM
+~~~~~~~~~~~~
+
+If your controller does not have a builtin NVRAM, you can use the normal volatile RAM to store RETAIN data.
+
+.. attention::
+        But here the RETAIN data get lost after rebooting the controller! So you have to store the data on a persistent memory! For this yu have two 
+        possibilities which are described in the following chapters.
+
+The RETAIN and RETAIN PERSISTENT data are stored in this case in one file per application with the name "<Application>.ret". In this file, the RETAIN 
+and RETAIN PERSISTENT segement is stored!
+
+_`PowerFail`
+............
+
+On powerfail or shutdown of the runtime system, you have to store the RETAIN areas on a flash or harddisk. For this we provide the wollowing :ref:`example code <_rts_power_fail_8c>`, 
+that can be used as a template for own implementations.
+
+Typically an uninterruptible power supply (UPS) is used here to hold the power for some time on a powerfail situation. Depending on the hold time of your UPS, you
+have to use the most appropriate storage strategy from the example code to save the RETAIN data!
+
+How to configure the powerfail in the runtime see :ref:`PowerFail configuration`.
+
+Cyclic
+......
+
+.. attention::
+    This is the most unsafe way to manage RETAIN data! Data inconsistencies or corrupt retain data file could occur in this case!
+
+To implement this functionality, you can save all RETAIN areas in a file with the interface function :ref:`AppStoreRetainsInFile() <group___cmp_app_itf>`).
+
+.. note::
+    Use two different files to save RETAIN data to inhibit the corruption of the files! So at least one file is valid and the can be restored after loading the application!
+
+The restore of the RETAIN data must be done after loding the application(s). For this you have to register on the event :ref:`CMPID_CmpApp :: EVT_AllBootprojectsLoaded <group___cmp_app_itf___events>`. In 
+the event callback you can restore the RETAIN data with :ref:`AppRestoreRetainsFromFile() <group___cmp_app_itf>`. Use the last valid stored file here!
+
+Here is a short code snippet that checks all RETAIN areas and write to RETAIN memory, if some data has changed in the RETAIN and RETAIN PERSISTENT areas!
+
+.. code-block:: C
+
+    static void CheckRetains(void)
+    {
+        static RTS_UI32 crc32Retain = 0;
+        static RTS_UI32 crc32RetainPersistent = 0;
+
+        RTS_RESULT localResult = ERR_OK;
+        RTS_UI8 HUGEPTR* pSegment = NULL;
+        APPLICATION *pApp = NULL;
+        RTS_SIZE sizeRetain = 0;
+        RTS_UI32 crc32 = 0;
+
+        pApp = CAL_AppGetFirstApp(&localResult);
+        while (pApp != NULL)
+        {
+            /* Check RETAIN data */
+            pSegment = CAL_AppGetSegmentAddress(pApp, DA_RETAIN, &localResult);
+            if (pSegment != NULL)
+            {
+                sizeRetain = CAL_AppGetSegmentSize(pApp, DA_RETAIN, &localResult);
+
+                crc32 = CAL_CRC32Init();
+                crc32 = CAL_CRC32Update(crc32, pSegment, sizeRetain);
+                crc32 = CAL_CRC32Finish(crc32);
+                if (crc32 != crc32Retain)
+                {
+                    crc32Retain = crc32;
+                    /* => Safe RETAIN data */
+                }
+            }
+
+            /* Check RETAIN PERSISTENT data */
+            pSegment = CAL_AppGetSegmentAddress(pApp, DA_RETAIN | DA_PERSISTENT, &localResult);
+            if (pSegment != NULL)
+            {
+                sizeRetain = CAL_AppGetSegmentSize(pApp, DA_RETAIN | DA_PERSISTENT, &localResult);
+
+                crc32 = CAL_CRC32Init();
+                crc32 = CAL_CRC32Update(crc32, pSegment, sizeRetain);
+                crc32 = CAL_CRC32Finish(crc32);
+                if (crc32 != crc32RetainPersistent)
+                {
+                    crc32RetainPersistent = crc32;
+                    /* => Safe RETAIN PERSISTANT data */
+                }
+            }
+            pApp = CAL_AppGetNextApp(pApp, &localResult);
+        }
+    }
+
+_`Persistence Manager`
+......................
+
+The so called persistence manager is a feature realized in the CODESYS with the IEC application! See the CODESYS Help "Persistence Manager" 
+for details.
+
+With this feature you can manage RETAIN and RETAIN PERSISTENT data on a volatile RAM!
+
+
+_`Configuration of RETAIN handling`
+-----------------------------------
+
+The RETAIN layout must be specified in the device description of a target and in the runtime system:
+
+    - `Devicedescription configuration`_
+    - `Runtimesystem configuration`_
+
+_`Devicedescription configuration`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The RETAIN layout must be specified in the :ref:`device description <dev_extended_settings_memory_layout>` of a target. Here you have to configure,
+what is the default size of the RETAIN and the RETAIN PERSISTENT area.
+
+A typical configuration can look like this. Here we use one RETAIN segment with 1024 bytes (0x400) and one RETAIN PERSISTENT segment with 1024 bytes (0x400):
+
+.. code-block:: xml
+
+    <ts:section name="memory-layout">
+        ...
+        <ts:setting name="retain-in-own-segment" type="boolean" access="visible">
+            <ts:value>1</ts:value>
+        </ts:setting>
+        <ts:section name="areas">
+            <ts:setting name="number" type="integer" access="visible">
+                <ts:value>4</ts:value>
+            </ts:setting>
+            <ts:section name="area_0">
+                <!–RETAIN memory-->
+                <ts:setting name="flags" type="integer" access="visible">
+                    <ts:value>0x20</ts:value>
+                </ts:setting>
+                <ts:setting name="minimal-area-size" type="integer" access="visible">
+                    <ts:value>0x400</ts:value>
+                </ts:setting>              
+                <ts:setting name="maximal-area-size" type="integer" access="visible">
+                    <ts:value>0x400</ts:value>
+                </ts:setting>
+                <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                    <ts:value>0</ts:value>
+                </ts:setting>
+            </ts:section>
+            <ts:section name="area_1">
+                <!–RETAIN PERSISTENT memory-->
+                <ts:setting name="flags" type="integer" access="visible">
+                    <ts:value>0x120</ts:value>
+                </ts:setting>
+                <ts:setting name="minimal-area-size" type="integer" access="visible">
+                    <ts:value>0x400</ts:value>
+                </ts:setting>
+                <ts:setting name="maximal-area-size" type="integer" access="visible">
+                    <ts:value>0x400</ts:value>
+                </ts:setting>
+                <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                    <ts:value>0</ts:value>
+                </ts:setting>
+            </ts:section>
+            ...
+        </ts:section>
+    </ts:section>
+
+RETAIN and RETAIN PERSISTENT areas should be separated always in two different areas!
+
+.. note::
+    If you have an NVRAM, you have to be aware of the :ref:`RetainHeader <struct_retain_header>`! Here you have to split your RETAIN memory into several segments, which should
+    matched into the complete NVRAM:
+
+    - RETAIN area size = physical RETAIN segment size **- 24byte**
+
+    - RETAIN PERSISTENT area size = physical RETAIN PERSISTENT segment size **- 24byte**
+      
+      **Important**
+      
+      Not the complete memory of "RETAIN PERSISTENT area size" can be used in the application! The codegenerator reserves 20 bytes athe the beginning of
+      the area to store additional information, which reduces the size that can be used for RETAIN PERSISTENT data!
+
+
+Example 1:
+
+    You have an NVRAM with a size of 128 kByte (131.077 bytes) and you would like to run only one application on the runtime system.
+    In this case you would specify:
+
+    - RETAIN area size              = 64 kbyte - 24byte = 65535 byte - 24byte = **65511** (0xFFE7)
+
+    - RETAIN PERSISTENT area size   = 64 kbyte - 24byte = 65535 byte - 24byte = **65511** (0xFFE7)
+    
+    Here is the corresponding snipped of the device description:
+
+    .. code-block:: xml
+
+        <ts:section name="area_0">
+            <!–RETAIN memory-->
+            <ts:setting name="flags" type="integer" access="visible">
+                <ts:value>0x20</ts:value>
+            </ts:setting>
+            <ts:setting name="area-size" type="integer" access="visible">
+                <ts:value>0xFFE7</ts:value>
+            </ts:setting>
+        </ts:section>
+        <ts:section name="area_1">
+            <!–RETAIN PERSISTENT memory-->
+            <ts:setting name="flags" type="integer" access="visible">
+                <ts:value>0x120</ts:value>
+            </ts:setting>
+            <ts:setting name="area-size" type="integer" access="visible">
+                <ts:value>0xFFE7</ts:value>
+            </ts:setting>
+        </ts:section>
+
+Example 2:
+
+    You have an NVRAM with a size of 128 kByte (131.072 bytes) and you would like to run several applications on the runtime system!
+    So every application should start with a minimum area size (for example 1024 bytes) and should be increased automatically as needed 
+    by the IEC application! To support this you have to specify the settings "dynamic-retain" and "dynamic-persistent" (see example).
+    
+    In this case you would specify:
+
+    - RETAIN max area size            = 128 kbyte - 24byte = 131.072 byte - 24byte = **131048** (0x1FFE8)
+
+    - RETAIN PERSISTENT max area size = 128 kbyte - 24byte = 131.072 byte - 24byte = **131048** (0x1FFE8)
+    
+    Here is the corresponding snipped of the device description:
+
+    .. code-block:: xml
+
+        <ts:section name="memory-layout">
+            ...
+            <ts:setting name="dynamic-retain" type="boolean" access="visible">
+                <ts:value>true</ts:value>
+            </ts:setting>
+            <ts:setting name="dynamic-persistent" type="boolean" access="visible">
+                <ts:value>true</ts:value>
+            </ts:setting>
+            <ts:setting name="retain-in-own-segment" type="boolean" access="visible">
+                <ts:value>1</ts:value>
+            </ts:setting>    
+            <ts:section name="area_0">
+                <!–RETAIN memory-->
+                <ts:setting name="flags" type="integer" access="visible">
+                    <ts:value>0x20</ts:value>
+                </ts:setting>
+                <ts:setting name="minimal-area-size" type="integer" access="visible">
+                    <ts:value>1024</ts:value>
+                </ts:setting>
+                <ts:setting name="maximal-area-size" type="integer" access="visible">
+                    <ts:value>131048</ts:value>
+                </ts:setting>
+                <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                    <ts:value>10</ts:value>
+                </ts:setting>
+            </ts:section>
+            <ts:section name="area_1">
+                <!–RETAIN PERSISTENT memory-->
+                <ts:setting name="flags" type="integer" access="visible">
+                    <ts:value>0x120</ts:value>
+                </ts:setting>
+                <ts:setting name="minimal-area-size" type="integer" access="visible">
+                    <ts:value>1024</ts:value>
+                </ts:setting>
+                <ts:setting name="maximal-area-size" type="integer" access="visible">
+                    <ts:value>131048</ts:value>
+                </ts:setting>
+                <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                    <ts:value>10</ts:value>
+                </ts:setting>
+            </ts:section>
+                
+_`Runtimesystem configuration`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the runtime system you have to specify, which kind of RETAIN management you would like to select. This can be defined with 
+the setting :ref:`RetainType.Applications <group___cmp_app_itf___settings>`.
+
+Here you can set if your controller uses NVRAM, PowerFail or no support for RETAIN data!
+
+_`PowerFail configuration`
+..........................
+
+To support powerfail you have to specify the following setting (or you can set the default value by a define):
+
+Example:
+
+  .. code-block:: ini
+
+        [CmpApp]
+        RetainType.Applications=OnPowerfail
+
+_`NVRAM configuration`
+......................
+
+If you have an NVRAM you have to specify the type, starting address and the size of this memory. 
+
+The type can be specified with the setting :ref:`RetainType.Applications <group___cmp_app_itf___settings>`:
+
+Example:
+
+  .. code-block:: ini
+
+        [CmpApp]
+        RetainType.Applications=InSRAM
+
+The address of the NVRAM can be specified in the runtime system via:
+
+1. the setting in cfg-file of the runtime system: :ref:`Retain.SRAM.Address <group___cmp_retain_itf___settings>` or 
+
+2. the setting in cfg-file of the runtime system: :ref:`Retain.SRAM.AddressMapped <group___cmp_retain_itf___settings>` or 
+
+3. via an event callback (see :ref:`EVT_RetainGetSRAM <group___cmp_retain_itf___events>`).
+
+The difference between Retain.SRAM.Address and Retain.SRAM.AddressMapped is, that Retain.SRAM.Address must be mapped in the address space 
+of the runtime system and Retain.SRAM.AddressMapped is a still mapped address, which can be used directly!
+
+The size of the NVRAM can be specified with the setting :ref:`Retain.SRAM.Size <group___cmp_retain_itf___settings>` or in the event (3.) above.
+
+Examples:
+
+  Not mapped memory:
+
+  .. code-block:: ini
+
+        [CmpRetain]
+        Retain.SRAM.Size=0x1FFFF
+        Retain.SRAM.Address=0xFA3C5776
+
+        [CmpApp]
+        RetainType.Applications=InSRAM
+
+  Still mapped memory:
+
+  .. code-block:: ini
+
+        [CmpRetain]
+        Retain.SRAM.Size=0x1FFFF
+        Retain.SRAM.AddressMapped=0xFA3C5776
+
+        [CmpApp]
+        RetainType.Applications=InSRAM
+
+.. note::
+    You can simulate the NVRAM with the setting :ref:`SimulateSRAM <group___cmp_retain_itf___settings>`. Here one volatile RAM buffer will be allocated
+    (and simulates the NVRAM).
+
+    At shutdown of the runtime system this buffer is saved on disk and at restart of the runtime system the areas are restored from this file.
+    So the behaviour is equivalent to a normal NVRAM.
+
+_`No RETAIN support`
+....................
+
+You can specify no RETAIN support, if you don't have the need to store RETAIN data. This can be selected by the following setting:
+
+Example:
+
+  .. code-block:: ini
+
+        [CmpApp]
+        RetainType.Applications=InSRAM
+
+
+_`Implementation of RETAIN handling`
+------------------------------------
+
+The management of RETAIN variables is implemented in different components, dependent on the runtime system variant.
+
+Full Runtime
+~~~~~~~~~~~~
+
+This is implemented in CmpApp and CmpRetain. The configuration is different, which kind of RETAIN memory/scenario is used (see chapters above).
+
+Embedded Runtime
+~~~~~~~~~~~~~~~~
+
+This is implemented in CmpAppEmbedded. Only the support of an NVRAM via SysMemAllocArea() is supported!
+
+_`Special aspects`
+------------------
+
+_`Static area`
+~~~~~~~~~~~~~~
+
+This is a special configuration for a single application and for RETAIN and RETAIN PERSISTENT areas. With this feature you can specify 
+one area for RETAIN *and* RETAIN PERSISTENT data!
+
+See :ref:`static area <dev_extended_settings_static_area>` for details.
+
+.. attention::
+    This feature can only be used for :ref:`single application <Single Application>`! 
+
+_`RETAIN marker (%M with RETAIN)`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The marker is a memory for IEC variables, which can addressed with %M directives. For example a variable which is assigned to %MB10
+locates at the offset 10 in this memory.
+
+Some controllers locate the marker in a separate RETAIN area and so the value content is persistent.
+
+For this you have to specify in your device description the area types :ref:`DA_RETAIN | DA_MEMORY <group___sys_mem_itf>` as combination:
+
+    .. code-block:: xml
+
+        <ts:section name="areas">
+            <ts:section name="area_0">
+                <!-- Marker memory (%M addresses) -->
+                <ts:setting name="flags" type="integer" access="visible">
+                    <ts:value>0x0030</ts:value>
+                </ts:setting>
+                <ts:setting name="minimal-area-size" type="integer" access="visible">
+                    <ts:value>0x4000</ts:value>
+                </ts:setting>
+                <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                    <ts:value>0</ts:value>
+                </ts:setting>
+            </ts:section>
+            ...
+        </ts:section>
+
+_`Data consistency of RETAIN memory`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Be aware that the data in an RETAIN memory can be inconsistent, if you don't use a :ref:`PowerFail` strategy! So if you use an NVRAM and you loose
+power within an IEC task cycle, in the NVRAM you can have the RETAIN values of a partial stored IEC task cycle!
+
+
+
+_`Typical Use Cases and Configurations`
+=======================================
+
+Dynamic memory for all areas
+----------------------------
+
+If your controller can use multiple applications, has a large builtin RAM and if the RETAIN and RETAIN PERSISTENT data are stored on PowerFail, 
+you can use the following memory layout:
+
+Example:
+
+    .. code-block:: xml
+
+        <ts:section name="memory-layout">
+            <ts:setting name="dynamic-retain" type="boolean" access="visible">
+                <ts:value>true</ts:value>
+            </ts:setting>
+            <ts:setting name="dynamic-persistent" type="boolean" access="visible">
+                <ts:value>true</ts:value>
+            </ts:setting>
+            <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                <ts:value>30</ts:value>
+            </ts:setting>
+            <ts:setting name="retain-in-own-segment" type="boolean" access="visible">
+                <ts:value>1</ts:value>
+            </ts:setting>           
+            <ts:section name="areas">
+                <ts:setting name="number" type="integer" access="visible">
+                    <ts:value>4</ts:value>
+                </ts:setting>
+                <ts:section name="area_0">
+                    <!-- Data area -->
+                    <ts:setting name="flags" type="integer" access="visible">
+                        <ts:value>0xfe9f</ts:value>
+                    </ts:setting>
+                </ts:section>
+                <ts:section name="area_1">
+                    <!-- Code area -->
+                    <ts:setting name="flags" type="integer" access="visible">
+                        <ts:value>0x0040</ts:value>
+                    </ts:setting>
+                </ts:section>               
+                <ts:section name="area_2">
+                    <!-- RETAIN area -->
+                    <ts:setting name="flags" type="integer" access="visible">
+                        <ts:value>0x0020</ts:value>
+                    </ts:setting>
+                    <ts:setting name="minimal-area-size" type="integer" access="visible">
+                        <ts:value>0x1000</ts:value>
+                    </ts:setting>
+                    <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                        <ts:value>20</ts:value>
+                    </ts:setting>
+                </ts:section>
+                <ts:section name="area_3">
+                    <!-- RETAIN PERSISTENT area -->
+                    <ts:setting name="flags" type="integer" access="visible">
+                        <ts:value>0x0120</ts:value>
+                    </ts:setting>
+                    <ts:setting name="minimal-area-size" type="integer" access="visible">
+                        <ts:value>0x1000</ts:value>
+                    </ts:setting>
+                    <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                        <ts:value>20</ts:value>
+                    </ts:setting>
+                </ts:section>
+            </ts:section>
+        </ts:section>
+
+Dynamic memory for code and data, NVRAM for RETAIN
+--------------------------------------------------
+
+If your controller can have multiple applications, has a large builtin RAM and one single NVRAM, you can use the following memory layout:
+
+Example:
+
+    .. code-block:: xml
+
+        <ts:section name="memory-layout">
+            ...
+            <ts:setting name="dynamic-retain" type="boolean" access="visible">
+                <ts:value>true</ts:value>
+            </ts:setting>
+            <ts:setting name="dynamic-persistent" type="boolean" access="visible">
+                <ts:value>true</ts:value>
+            </ts:setting>
+            <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                <ts:value>30</ts:value>
+            </ts:setting>         
+            <ts:setting name="retain-in-own-segment" type="boolean" access="visible">
+                <ts:value>1</ts:value>
+            </ts:setting>
+            <ts:section name="areas">            
+                <ts:setting name="number" type="integer" access="visible">
+                    <ts:value>4</ts:value>
+                </ts:setting>
+                <ts:section name="area_0">
+                    <!-- Data area -->
+                    <ts:setting name="flags" type="integer" access="visible">
+                        <ts:value>0xfe7f</ts:value>
+                    </ts:setting>
+                </ts:section>
+                <ts:section name="area_1">
+                    <!-- Code area -->
+                    <ts:setting name="flags" type="integer" access="visible">
+                        <ts:value>0x0040</ts:value>
+                    </ts:setting>
+                </ts:section>               
+                <ts:section name="area_2">
+                    <!–RETAIN memory-->
+                    <ts:setting name="flags" type="integer" access="visible">
+                        <ts:value>0x20</ts:value>
+                    </ts:setting>
+                    <ts:setting name="minimal-area-size" type="integer" access="visible">
+                        <ts:value>1024</ts:value>
+                    </ts:setting>
+                    <ts:setting name="maximal-area-size" type="integer" access="visible">
+                        <ts:value>131048</ts:value>
+                    </ts:setting>
+                    <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                        <ts:value>10</ts:value>
+                    </ts:setting>
+                </ts:section>
+                <ts:section name="area_3">
+                    <!–RETAIN PERSISTENT memory-->
+                    <ts:setting name="flags" type="integer" access="visible">
+                        <ts:value>0x120</ts:value>
+                    </ts:setting>
+                    <ts:setting name="minimal-area-size" type="integer" access="visible">
+                        <ts:value>1024</ts:value>
+                    </ts:setting>
+                    <ts:setting name="maximal-area-size" type="integer" access="visible">
+                        <ts:value>131048</ts:value>
+                    </ts:setting>
+                    <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                        <ts:value>10</ts:value>
+                    </ts:setting>
+                </ts:section>
+            </ts:section>
+        </ts:section>
+
+Static memory for code and data, NVRAM for RETAIN
+-------------------------------------------------
+
+If your controller can only a single applications, has limited builtin RAM and one single NVRAM, you can use the following memory layout:
+
+Example:
+
+    .. code-block:: xml
+
+        <ts:section name="memory-layout">
+            ...
+            <ts:setting name="allocation-plus-in-percent" type="integer" access="visible">
+                <ts:value>0</ts:value>
+            </ts:setting>         
+            <ts:setting name="retain-in-own-segment" type="boolean" access="visible">
+                <ts:value>1</ts:value>
+            </ts:setting>
+            <ts:section name="static-area"> 
+                <!-- RETAIN and RETAIN PERSISTENT area -->
+                <ts:setting name="size" type="integer " access="visible "> 
+                    <ts:value>0x10000 </ts:value> 
+                </ts:setting> 
+                <ts:setting name="start -address " type="integer " access="visible "> 
+                    <!-- This is optional to specify the start address of the NVRAM:
+                        <ts:value>0xba5eadd </ts:value> 
+                    -->                        
+                </ts:setting>
+            </ts:section>
+            <ts:section name="areas">
+                <ts:setting name="number" type="integer" access="visible">
+                    <ts:value>4</ts:value>
+                </ts:setting>
+                <ts:section name="area_0">
+                    <!-- Data area -->
+                    <ts:setting name="flags" type="integer" access="visible">
+                        <ts:value>0xfe7f</ts:value>
+                    </ts:setting>
+                    <ts:setting name="minimal-area-size" type="integer" access="visible">
+                        <ts:value>0x10000</ts:value>
+                    </ts:setting>
+                    <ts:setting name="maximal-area-size" type="integer" access="visible">
+                        <ts:value>0x10000</ts:value>
+                    </ts:setting>                   
+                </ts:section>
+                <ts:section name="area_1">
+                    <!-- Code area -->
+                    <ts:setting name="flags" type="integer" access="visible">
+                        <ts:value>0x0040</ts:value>
+                    </ts:setting>
+                    <ts:setting name="minimal-area-size" type="integer" access="visible">
+                        <ts:value>0x10000</ts:value>
+                    </ts:setting>
+                    <ts:setting name="maximal-area-size" type="integer" access="visible">
+                        <ts:value>0x10000</ts:value>
+                    </ts:setting>                   
+                </ts:section>               
+            </ts:section>
+        </ts:section>
+
+
+..  Document history
+    +---------+------------------------------------------------------------------------------+--------+------------+
+    | Version | Description                                                                  | Author | Date       |
+    +=========+==============================================================================+========+============+
+    | 0.1     | Creation                                                                     | AH     | 15.11.2016 |
+    +---------+------------------------------------------------------------------------------+--------+------------+
+    | 0.2     | Chapter 2.4 added                                                            | AH     | 24.05.2017 |
+    +---------+------------------------------------------------------------------------------+--------+------------+
+    | 0.3     | Complete rework and completion                                               | AH     | 26.11.2018 |
+    +---------+------------------------------------------------------------------------------+--------+------------+
+    | 1.0     | Release                                                                      |        |            |
+    +---------+------------------------------------------------------------------------------+--------+------------+

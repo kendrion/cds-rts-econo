@@ -1,0 +1,960 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_edge_gateway_itf___onlineservices:
+
+===============
+Online services
+===============
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Macros
+------
+
+- #define :ref:`EDGESV_HANDSHAKE_HELLO <group___cmp_edge_gateway_itf___onlineservices_1ga4c7b4ec1a3da865a70cfbabbffe73842>` 0x01
+
+- #define :ref:`EDGESV_HANDSHAKE_CAPABILITIES <group___cmp_edge_gateway_itf___onlineservices_1ga6a5643a6d795a1d97d443bcf9c716df0>` 0x02
+
+- #define :ref:`EDGESV_HANDSHAKE_NEW_EDGE_CERT <group___cmp_edge_gateway_itf___onlineservices_1ga07b64df4af71d69db23e032f0f2b1c0b>` 0x03
+
+- #define :ref:`EDGESV_HANDSHAKE_PONG <group___cmp_edge_gateway_itf___onlineservices_1ga3161b36ce8bf8f3151b26ee5439e7801>` 0x04
+
+- #define :ref:`TAG_EDGE_MAX_PROTO_VERSION <group___cmp_edge_gateway_itf___onlineservices_1gaa46c02a9adec2ce25733c2beb06f70a9>` 0x0001
+
+- #define :ref:`TAG_EDGE_EFF_PROTO_VERSION <group___cmp_edge_gateway_itf___onlineservices_1gae7569f8bc778c7b6fa1b6a42662bcb65>` 0x0002
+
+- #define :ref:`TAG_EDGE_MAX_MESSAGE_SIZE <group___cmp_edge_gateway_itf___onlineservices_1gab845b936f08b85675ed0187ae0cd4dd4>` 0x0003
+
+- #define :ref:`TAG_EDGE_EFF_MESSAGE_SIZE <group___cmp_edge_gateway_itf___onlineservices_1ga9501c92a283f74ecef40891d712146b1>` 0x0004
+
+- #define :ref:`TAG_EDGE_TARGET_TYPE <group___cmp_edge_gateway_itf___onlineservices_1ga5ef459667b15e399c1055e65f5d8d9f3>` 0x0005
+
+- #define :ref:`TAG_EDGE_TARGET_ID <group___cmp_edge_gateway_itf___onlineservices_1ga74463be8eb09f511cd28ad5ec4d20090>` 0x0006
+
+- #define :ref:`TAG_EDGE_TARGET_VERSION <group___cmp_edge_gateway_itf___onlineservices_1ga4412ec9bb352041a45bd7c9cf86196b6>` 0x0007
+
+- #define :ref:`TAG_EDGE_CORE_VERSION <group___cmp_edge_gateway_itf___onlineservices_1ga896915f5bbce9a6ded603cab525289ee>` 0x0008
+
+- #define :ref:`TAG_EDGE_CERTIFICATE <group___cmp_edge_gateway_itf___onlineservices_1ga9474e01623d4e5570b787747d6fe0b46>` 0x0009
+
+- #define :ref:`TAG_EDGE_SERVER_NONCE <group___cmp_edge_gateway_itf___onlineservices_1ga35fa97f305055846ba504f5fe6063df8>` 0x000A
+
+- #define :ref:`TAG_EDGE_SIGNATURE_ALGORITHM <group___cmp_edge_gateway_itf___onlineservices_1gafa10ada4592faab3cf7684f37215d51f>` 0x000B
+
+- #define :ref:`TAG_EDGE_SIGNATURE <group___cmp_edge_gateway_itf___onlineservices_1gacd0e00f30ac3d0c714a39696cf96842f>` 0x000C
+
+- #define :ref:`TAG_EDGE_CAPABILITIES <group___cmp_edge_gateway_itf___onlineservices_1gae9911409b5a865423287b209c3ef480c>` 0x000D
+
+- #define :ref:`TAG_EDGE_EFF_CAPABILITIES <group___cmp_edge_gateway_itf___onlineservices_1gadc84ebe8fa6047468b45f9502e75a33d>` 0x000E
+
+- #define :ref:`TAG_EDGE_CONNECTION_TIMEOUT <group___cmp_edge_gateway_itf___onlineservices_1gab05f78764d3a066a88e35cddf5636de5>` 0x000F
+
+- #define :ref:`TAG_EDGE_EFF_CONNECTION_TIMEOUT <group___cmp_edge_gateway_itf___onlineservices_1ga48532891d84613c563a74f14e61ae166>` 0x0010
+
+- #define :ref:`EDGESV_SESSION_CREATE <group___cmp_edge_gateway_itf___onlineservices_1gade73f5ffdf40348d68e011fbec3cb967>` 0x01
+
+- #define :ref:`EDGESV_SESSION_ACTIVATE <group___cmp_edge_gateway_itf___onlineservices_1ga83fd2d831b864380258584983d5ee4e3>` 0x02
+
+- #define :ref:`EDGESV_SESSION_DELETE <group___cmp_edge_gateway_itf___onlineservices_1ga14947f273c6930c10022c1e66e49da4a>` 0x04
+
+- #define :ref:`EDGESV_SESSION_DELETE_ALL_INACTIVE <group___cmp_edge_gateway_itf___onlineservices_1gacd6a3735d6c1280d689a94c2fc089a92>` 0x05
+
+- #define :ref:`TAG_EDGE_SERVER_SESSION_TOKEN <group___cmp_edge_gateway_itf___onlineservices_1ga0475b7fa5b86dd7045dd3c5f48c5bd7b>` 0x0001
+
+- #define :ref:`TAG_EDGE_SESSION_ID <group___cmp_edge_gateway_itf___onlineservices_1gadf1f7b7875e8d33364413aec55e90018>` 0x0002
+
+- #define :ref:`TAG_EDGE_SESSION_LAST_ACK <group___cmp_edge_gateway_itf___onlineservices_1gaafc09835c8825dc5cfe0850b312c3c3c>` 0x0003
+
+- #define :ref:`TAG_EDGE_SESSION_COUNT <group___cmp_edge_gateway_itf___onlineservices_1gaba119f7247427e5844ce9fe6e6f29d13>` 0x0004
+
+- #define :ref:`EDGESV_ACK_CAS <group___cmp_edge_gateway_itf___onlineservices_1gaed6f8000363fc30fb355e978a5225eeb>` 0x01
+
+- #define :ref:`EDGESV_ACK_EDGE <group___cmp_edge_gateway_itf___onlineservices_1gac56529ef5ea3830cb4268234dc23e496>` 0x02
+
+- #define :ref:`EDGESV_EDGE_ECHO <group___cmp_edge_gateway_itf___onlineservices_1ga159769d492dcb844632361f6f75f56a0>` 0x01
+
+- #define :ref:`EDGESV_EDGE_GET_TIME <group___cmp_edge_gateway_itf___onlineservices_1ga0a736eb61afc3f3e92537621082fe2b5>` 0x02
+
+- #define :ref:`EDGESV_EDGE_SET_TIME <group___cmp_edge_gateway_itf___onlineservices_1ga468d85b0e8ab7c737bc2c9b7e0a09769>` 0x03
+
+- #define :ref:`TAG_EDGE_ECHO_REQUEST_DATA_LEN <group___cmp_edge_gateway_itf___onlineservices_1ga0a8e5330412204ba5c0ee27504f0130c>` 0x0001
+
+- #define :ref:`TAG_EDGE_ECHO_REPLY_DATA_LEN <group___cmp_edge_gateway_itf___onlineservices_1ga9746cb04bf7ef201913a6452d0bc44d7>` 0x0002
+
+- #define :ref:`TAG_EDGE_ECHO_DATA <group___cmp_edge_gateway_itf___onlineservices_1ga2b589d86a9d3a1b204172be402d30ad8>` 0x0003
+
+- #define :ref:`TAG_EDGE_TIME_UTC <group___cmp_edge_gateway_itf___onlineservices_1ga845e0fcdbb6b605347ffef18d84812e7>` 0x0004
+
+- #define :ref:`EDGESV_PLCMGM_NETWORK_SCAN <group___cmp_edge_gateway_itf___onlineservices_1gab0c345c4e86a738e5bb8767c5b585b18>` 0x01
+
+- #define :ref:`EDGESV_PLCMGM_ADD_PLCS <group___cmp_edge_gateway_itf___onlineservices_1gad6be7f721aba0c4909ea66ae61adeedc>` 0x02
+
+- #define :ref:`EDGESV_PLCMGM_REMOVE_PLCS <group___cmp_edge_gateway_itf___onlineservices_1ga01f5bd5b78adda91d0f996d0548af86a>` 0x03
+
+- #define :ref:`EDGESV_PLCMGM_CONNECT_PLC <group___cmp_edge_gateway_itf___onlineservices_1ga4150bd4af9f803be1dacc148fd9a2360>` 0x04
+
+- #define :ref:`EDGESV_PLCMGM_DISCONNECT_PLC <group___cmp_edge_gateway_itf___onlineservices_1gab659875fabeb352fc2e4bdfb6324e3a7>` 0x05
+
+- #define :ref:`EDGESV_PLCMGM_SYNC_SEND_SERVICE <group___cmp_edge_gateway_itf___onlineservices_1ga8d5f85d6de8dbc402e5923ecf280c679>` 0x06
+
+- #define :ref:`EDGESV_PLCMGM_ADD_PLCS_TO_GROUP <group___cmp_edge_gateway_itf___onlineservices_1ga62054c8c3ae45e1428a22385c0290803>` 0x07
+
+- #define :ref:`EDGESV_PLCMGM_REMOVE_PLCS_FROM_GROUP <group___cmp_edge_gateway_itf___onlineservices_1ga43257bfb6850aa8ba289d6b9b869b79c>` 0x08
+
+- #define :ref:`EDGESV_PLCMGM_GROUP_NOTIFY <group___cmp_edge_gateway_itf___onlineservices_1ga7dcdc6428d650e4321fa478c4c6fe752>` 0x09
+
+- #define :ref:`TAG_EDGE_GATEWAY_CONFIG <group___cmp_edge_gateway_itf___onlineservices_1ga062df6c443672d453d85dd45c285dc63>` 0x0001
+
+- #define :ref:`TAG_EDGE_SCAN_NOTIFICATION <group___cmp_edge_gateway_itf___onlineservices_1ga31748876f567597dd00eb791d49b0406>` 0x0002
+
+- #define :ref:`TAG_EDGE_GROUP_REFERENCE <group___cmp_edge_gateway_itf___onlineservices_1ga739d298dd5d911eff6839a825e21f36f>` 0x0003
+
+- #define :ref:`TAG_EDGE_PLC_REFERENCE <group___cmp_edge_gateway_itf___onlineservices_1ga044dc3d8d626f4cba306a5696a3454d4>` 0x0004
+
+- #define :ref:`TAG_EDGE_PLC_CONFIG <group___cmp_edge_gateway_itf___onlineservices_1ga28a0b4b9ef16d4374e6ece52ed9957b1>` 0x0005
+
+- #define :ref:`TAG_EDGE_PLC_CONFIG_PARAMETER <group___cmp_edge_gateway_itf___onlineservices_1ga9421e95297ea5b158c181cc9624777c7>` 0x0006
+
+- #define :ref:`TAG_EDGE_PLC_DEVICEINFO <group___cmp_edge_gateway_itf___onlineservices_1ga9e56c8eff992b0e3bdc6e0f1494ff8d1>` 0x0007
+
+- #define :ref:`TAG_EDGE_PLC_SYNCSENDSERVICE_DATA <group___cmp_edge_gateway_itf___onlineservices_1ga1eff1b21cdb87918813ccb6a223ecfa5>` 0x0008
+
+- #define :ref:`TAG_EDGE_NOTIFICATION_TYPES <group___cmp_edge_gateway_itf___onlineservices_1gaa3b55cb3fabbe4dc942d66ce3076cb72>` 0x0009
+
+- #define :ref:`TAG_EDGE_PLC_STATE <group___cmp_edge_gateway_itf___onlineservices_1ga679cc0cb73c645a430c987d073e075c4>` 0x000A
+
+- #define :ref:`TAG_EDGE_APP_NAME <group___cmp_edge_gateway_itf___onlineservices_1ga1a49b44cebeb95baa9d0e74caddc6bee>` 0x000B
+
+- #define :ref:`TAG_EDGE_APP_INFO_LAST_CHANGE <group___cmp_edge_gateway_itf___onlineservices_1ga69779bfb148b1bae3f6e395b67099edc>` 0x000C
+
+- #define :ref:`TAG_EDGE_APP_INFO_PROJECT <group___cmp_edge_gateway_itf___onlineservices_1ga1e21185faf1adc8afd515a2e22fa6991>` 0x000D
+
+- #define :ref:`TAG_EDGE_APP_INFO_VERSION <group___cmp_edge_gateway_itf___onlineservices_1gabe8608f66737406306232c0274b47b71>` 0x000E
+
+- #define :ref:`TAG_EDGE_APP_INFO_AUTHOR <group___cmp_edge_gateway_itf___onlineservices_1ga85303fc7b17333c7a17a594ecc1a5a7e>` 0x000F
+
+- #define :ref:`TAG_EDGE_APP_INFO_DESCRIPTION <group___cmp_edge_gateway_itf___onlineservices_1gabf624779ab505c059fb19780bc4423d1>` 0x0010
+
+- #define :ref:`TAG_EDGE_APP_INFO_PROFILE <group___cmp_edge_gateway_itf___onlineservices_1gaef5a52ae26c6ec4fd6f0fd3554118a8d>` 0x0011
+
+- #define :ref:`TAG_EDGE_APP_INFO_CODE_GUID <group___cmp_edge_gateway_itf___onlineservices_1gad402b235c6ae666724303e3318a26844>` 0x0012
+
+- #define :ref:`TAG_EDGE_APP_INFO_DATA_GUID <group___cmp_edge_gateway_itf___onlineservices_1gaa54cdbd811405dd4f2983b49d55443a2>` 0x0013
+
+- #define :ref:`TAG_EDGE_APP_STATUS <group___cmp_edge_gateway_itf___onlineservices_1gab07545326f11a4fb0db590f7d5c6c2ab>` 0x0014
+
+- #define :ref:`TAG_EDGE_APP_DELETED <group___cmp_edge_gateway_itf___onlineservices_1ga8b29c79ba4f923329e62aefe099c58fe>` 0x0015
+
+- #define :ref:`TAG_EDGE_APP_NUM_OF_APPS <group___cmp_edge_gateway_itf___onlineservices_1ga1d28f6edd0e8f97acb632dab9f6d5302>` 0x0016
+
+- #define :ref:`TAG_EDGE_PLC_ERROR <group___cmp_edge_gateway_itf___onlineservices_1ga628b1f031e43ccd3cb4dd7ab1d969fce>` 0x0017
+
+- #define :ref:`TAG_EDGE_PLC_INFO <group___cmp_edge_gateway_itf___onlineservices_1ga469194d5ffee5337b224395ff8b5871d>` 0x0018
+
+- #define :ref:`EDGESV_VAR_DEFINE_VARLIST <group___cmp_edge_gateway_itf___onlineservices_1ga357a9e956e824700c52e54b09d483f80>` 0x01
+
+- #define :ref:`EDGESV_VAR_DELETE_VARLIST <group___cmp_edge_gateway_itf___onlineservices_1gabe95795f0a97bfffb5e19f06d2e047c8>` 0x02
+
+- #define :ref:`EDGESV_VAR_READ_VARLIST <group___cmp_edge_gateway_itf___onlineservices_1ga9ab7ee9691186ba73462d633599f413d>` 0x03
+
+- #define :ref:`EDGESV_VAR_WRITE_VARS <group___cmp_edge_gateway_itf___onlineservices_1ga856b61b78d45dc61e0310bed3293de1e>` 0x04
+
+- #define :ref:`TAG_EDGE_VARLIST_REFERENCE <group___cmp_edge_gateway_itf___onlineservices_1gac3a0f4168b55828ee12b1c51d53115f2>` 0x0040
+
+- #define :ref:`TAG_EDGE_VARLIST_UPDATERATE <group___cmp_edge_gateway_itf___onlineservices_1ga944470129f4e2c5cf13acf67d026700b>` 0x0041
+
+- #define :ref:`TAG_EDGE_VARLIST_FLAGS <group___cmp_edge_gateway_itf___onlineservices_1gaa649f213e94724bcbb95ee8f691ea61d>` 0x0042
+
+- #define :ref:`TAG_EDGE_VARLIST_NUMOFSYMBOLS <group___cmp_edge_gateway_itf___onlineservices_1ga17c329eb9c5a7ffed2aa9368acb09b38>` 0x0043
+
+- #define :ref:`TAG_EDGE_VARLIST_SYMBOLS <group___cmp_edge_gateway_itf___onlineservices_1gae6fb8edb6550d13bdadf657a7cd138fe>` 0x0044
+
+- #define :ref:`TAG_EDGE_VAR_INDEX <group___cmp_edge_gateway_itf___onlineservices_1gaf386ed1263317c54180f3be40440b624>` 0x0045
+
+- #define :ref:`TAG_EDGE_VAR_READ_VALUES <group___cmp_edge_gateway_itf___onlineservices_1ga40290799aeb2a78432d4104a041de984>` 0x0046
+
+- #define :ref:`TAG_EDGE_VAR_VALUES_TO_WRITE <group___cmp_edge_gateway_itf___onlineservices_1gabf952c10089a06edc87e92a446c7b566>` 0x0047
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga4c7b4ec1a3da865a70cfbabbffe73842:
+
+#define EDGESV_HANDSHAKE_HELLO 0x01
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_HANDSHAKE
+
+Service: EDGESV_HANDSHAKE_HELLO
+
+Request tags:
+
+  - Tag Max protocol version (1..?) (RTS_UI32): Maximum protocol version supported by the edge gateway (high word: major version, low word: minor version).
+
+  - Tag Target type (1..?) (RTS_UI32): Type of the device which contains the edge gateway.
+
+  - Tag Target ID (1..?) (RTS_UI32): ID of the device containing the edge gateway.
+
+  - Tag Target version (1..?) (RTS_UI32): Version of the device containing the edge gateway.
+
+  - Tag Core version (1..?) (RTS_UI32): Version of the CmpEdgeGateway.
+
+  - Tag Max message size (1..?) (RTS_UI32): Maximum supported frame size of the edge gateway.
+
+  - Tag Connection timeout (1..?) (RTS_UI32): Default channel timeout of the edge gateway.
+
+  - Tag Certificate (1..?) (String): Base64 encoded edge certificate.
+
+Response tags:
+
+  - Tag Effective protocol version (1..?) (RTS_UI32): Effective protocol version used on this channel (high word: major version, low word: minor version).
+
+  - Tag Effective message size (1..?) (RTS_UI32): Effective frame size used on this channel.
+
+  - Tag Effective connection timeout (1..?) (RTS_UI32): Effective timeout of this channel.
+
+  - Tag Signature algorithm (1..?) (RTS_UI32): Identifies the algorithm used by the edge to sign the nonce.
+
+  - Tag Server nonce (1..?) (ByteArray): A random nonce generated by the automation server.
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga6a5643a6d795a1d97d443bcf9c716df0:
+
+#define EDGESV_HANDSHAKE_CAPABILITIES 0x02
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_HANDSHAKE
+
+Service: EDGESV_HANDSHAKE_CAPABILITIES
+
+Request tags:
+
+  - Tag Signature algorithm (1..?) (RTS_UI32): ID of signing algorithm used.
+
+  - Tag Signature (1..?) (ByteArray): Nonce of server signed by edge.
+
+  - Tag Capabilities (0..?) (To be defined): Capabilities of the edge device.
+
+Response tags:
+
+  - Tag Effective capabilities (0..?) (To be defined): Effective capabilities selected by automation server.
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga07b64df4af71d69db23e032f0f2b1c0b:
+
+#define EDGESV_HANDSHAKE_NEW_EDGE_CERT 0x03
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_HANDSHAKE
+
+Service: EDGESV_HANDSHAKE_NEW_EDGE_CERT
+
+Request tags:
+
+  - Tag Certificate (1..?) (String): Base64 encoded edge certificate.
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga3161b36ce8bf8f3151b26ee5439e7801:
+
+#define EDGESV_HANDSHAKE_PONG 0x04
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_HANDSHAKE
+
+Service: EDGESV_HANDSHAKE_PONG
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gaa46c02a9adec2ce25733c2beb06f70a9:
+
+#define TAG_EDGE_MAX_PROTO_VERSION 0x0001
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gae7569f8bc778c7b6fa1b6a42662bcb65:
+
+#define TAG_EDGE_EFF_PROTO_VERSION 0x0002
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gab845b936f08b85675ed0187ae0cd4dd4:
+
+#define TAG_EDGE_MAX_MESSAGE_SIZE 0x0003
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga9501c92a283f74ecef40891d712146b1:
+
+#define TAG_EDGE_EFF_MESSAGE_SIZE 0x0004
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga5ef459667b15e399c1055e65f5d8d9f3:
+
+#define TAG_EDGE_TARGET_TYPE 0x0005
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga74463be8eb09f511cd28ad5ec4d20090:
+
+#define TAG_EDGE_TARGET_ID 0x0006
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga4412ec9bb352041a45bd7c9cf86196b6:
+
+#define TAG_EDGE_TARGET_VERSION 0x0007
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga896915f5bbce9a6ded603cab525289ee:
+
+#define TAG_EDGE_CORE_VERSION 0x0008
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga9474e01623d4e5570b787747d6fe0b46:
+
+#define TAG_EDGE_CERTIFICATE 0x0009
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga35fa97f305055846ba504f5fe6063df8:
+
+#define TAG_EDGE_SERVER_NONCE 0x000A
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gafa10ada4592faab3cf7684f37215d51f:
+
+#define TAG_EDGE_SIGNATURE_ALGORITHM 0x000B
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gacd0e00f30ac3d0c714a39696cf96842f:
+
+#define TAG_EDGE_SIGNATURE 0x000C
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gae9911409b5a865423287b209c3ef480c:
+
+#define TAG_EDGE_CAPABILITIES 0x000D
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gadc84ebe8fa6047468b45f9502e75a33d:
+
+#define TAG_EDGE_EFF_CAPABILITIES 0x000E
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gab05f78764d3a066a88e35cddf5636de5:
+
+#define TAG_EDGE_CONNECTION_TIMEOUT 0x000F
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga48532891d84613c563a74f14e61ae166:
+
+#define TAG_EDGE_EFF_CONNECTION_TIMEOUT 0x0010
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gade73f5ffdf40348d68e011fbec3cb967:
+
+#define EDGESV_SESSION_CREATE 0x01
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_SESSION
+
+Service: EDGESV_SESSION_CREATE
+
+Request tags:
+
+  - Tag Server session token (1..?) (ByteArray): A session token generated by the CAS for long term identification of the session.
+
+Response tags:
+
+  - Tag Session id (0..?) (RTS_UI32): Session ID generated by the edge gateway to identify active sessions.
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga83fd2d831b864380258584983d5ee4e3:
+
+#define EDGESV_SESSION_ACTIVATE 0x02
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_SESSION
+
+Service: EDGESV_SESSION_ACTIVATE
+
+Request tags:
+
+  - Tag Server session token (1..?) (ByteArray): A session token generated by the CAS for long term identification of the session.
+
+  - Tag Last ack (1..?) (RTS_UI32): MessageID of the last received message by the CAS after a connection interrupt. See 8.14 for details.
+
+Response tags:
+
+  - Tag Session id (0..?) (RTS_UI32): Session ID generated by the edge gateway to identify active sessions.
+
+  - Tag Last ack (0..?) (RTS_UI32): MessageID of the last received message by the edge gateway after a connection interrupt. See 8.14 for details.
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga14947f273c6930c10022c1e66e49da4a:
+
+#define EDGESV_SESSION_DELETE 0x04
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_SESSION
+
+Service: EDGESV_SESSION_DELETE
+
+Request tags:
+
+  - Tag Server session token (1..?) (ByteArray): Token of the session to delete.
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gacd6a3735d6c1280d689a94c2fc089a92:
+
+#define EDGESV_SESSION_DELETE_ALL_INACTIVE 0x05
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_SESSION
+
+Service: EDGESV_SESSION_DELETE_ALL_INACTIVE
+
+Response tags:
+
+  - Tag Session count
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga0475b7fa5b86dd7045dd3c5f48c5bd7b:
+
+#define TAG_EDGE_SERVER_SESSION_TOKEN 0x0001
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gadf1f7b7875e8d33364413aec55e90018:
+
+#define TAG_EDGE_SESSION_ID 0x0002
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gaafc09835c8825dc5cfe0850b312c3c3c:
+
+#define TAG_EDGE_SESSION_LAST_ACK 0x0003
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gaba119f7247427e5844ce9fe6e6f29d13:
+
+#define TAG_EDGE_SESSION_COUNT 0x0004
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gaed6f8000363fc30fb355e978a5225eeb:
+
+#define EDGESV_ACK_CAS 0x01
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_ACK
+
+Service: EDGESV_ACK_CAS
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gac56529ef5ea3830cb4268234dc23e496:
+
+#define EDGESV_ACK_EDGE 0x02
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_ACK
+
+Service: EDGESV_ACK_EDGE
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga159769d492dcb844632361f6f75f56a0:
+
+#define EDGESV_EDGE_ECHO 0x01
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_EDGE_SERVICES
+
+Service: EDGESV_EDGE_ECHO
+
+Request tags:
+
+  - Tag Request data length (0..?) (RTS_UI32): Length of tag content in TAG_EDGE_ECHO_DATA.
+
+  - Tag Reply data length (0..?) (RTS_UI32): Requested length of reply content in TAG_EDGE_ECHO_DATA.
+
+  - Tag Data (0..?) (char*): Dummy bytes as payload.
+
+Response tags:
+
+  - Tag Reply data length (0..?) (RTS_UI32): Length of tag content in TAG_EDGE_ECHO_DATA.
+
+  - Tag Data (0..?) (char*): Dummy bytes as payload.
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga0a736eb61afc3f3e92537621082fe2b5:
+
+#define EDGESV_EDGE_GET_TIME 0x02
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_EDGE_SERVICES
+
+Service: EDGESV_EDGE_GET_TIME
+
+Response tags:
+
+  - Tag UTC time (1..?) (RTS_SYSTIME): UTC time in milliseconds.
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga468d85b0e8ab7c737bc2c9b7e0a09769:
+
+#define EDGESV_EDGE_SET_TIME 0x03
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_EDGE_SERVICES
+
+Service: EDGESV_EDGE_SET_TIME
+
+Request tags:
+
+  - Tag UTC time (1..?) (RTS_SYSTIME): UTC time in milliseconds.
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga0a8e5330412204ba5c0ee27504f0130c:
+
+#define TAG_EDGE_ECHO_REQUEST_DATA_LEN 0x0001
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga9746cb04bf7ef201913a6452d0bc44d7:
+
+#define TAG_EDGE_ECHO_REPLY_DATA_LEN 0x0002
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga2b589d86a9d3a1b204172be402d30ad8:
+
+#define TAG_EDGE_ECHO_DATA 0x0003
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga845e0fcdbb6b605347ffef18d84812e7:
+
+#define TAG_EDGE_TIME_UTC 0x0004
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gab0c345c4e86a738e5bb8767c5b585b18:
+
+#define EDGESV_PLCMGM_NETWORK_SCAN 0x01
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_PLC_MANAGEMENT
+
+Service: EDGESV_PLCMGM_NETWORK_SCAN
+
+Request tags:
+
+  - Tag Gateway config (0..?): Gateway configuration (members of GatewayConnectionStruct as stream with content as follows): [MemberString]: pszDeviceName [MemberString]: pszAddress [RTS_UI32]: ulPort [MemberString]: pszPassword
+
+Response tags:
+
+  - Tag Scan notification (0..?): Information about found node (members of NodeInfotyp2 as stream with content as follows): [MemberString]: pszNodeAddr [MemberString]: pszParentAddr [MemberWString]: pwszNodeName [MemberWString]: pwszDeviceName [MemberWString]: pwszVendorName [RTS_UI32]: ulTargetType [RTS_UI32]: ulTargetId [RTS_UI32]: ulTargetVersion [RTS_UI16]: wMaxChannels [RTS_UI16]: wReserved [MemberString]: pszSerialNumber [ByteArray]: pbyOemData [RTS_UI32]: ulFlags [RTS_UI8]: byIntelByteOrder [RTS_UI8]: byReserved [RTS_UI16]: wRtsBlkDrvType [RTS_UI16]: wGwBlkDrvType [RTS_UI16]: wGwRtsNsVersion [RTS_UI32]: ulGwClientGwVersion
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gad6be7f721aba0c4909ea66ae61adeedc:
+
+#define EDGESV_PLCMGM_ADD_PLCS 0x02
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_PLC_MANAGEMENT
+
+Service: EDGESV_PLCMGM_ADD_PLCS
+
+Request tags:
+
+  - Tag Group reference (0..?) (RTS_UI64): Group reference.
+
+  - Tag PLC reference (1..?) (RTS_UI64): PLC reference (0=Invalid).
+
+  - Tag PLC config (1..?): PLC configuration: [RTS_I32]: it (value of ItfType enumeration) [RTS_UI32]: ulTimeout (in ms) [RTS_UI32]: ulNumTries [RTS_UI32]: ulWaitTime (in ms) [RTS_UI32]: ulReconnectTime (in ms)
+
+  - Tag Gateway config (0..?): Gateway configuration (members of GatewayConnectionStruct as stream with content as follows): [MemberString]: pszDeviceName [MemberString]: pszAddress [RTS_UI32]: ulPort [MemberString]: pszPassword
+
+  - Tag PLC config parameter (0..?): PLC configuration parameter: [MemberString]: pszName [RTS_I32]: Type (value of PlcParameterType enumeration) [Type Dependent]: Value NOTE: The combination pszName="Address", Type=PLC_PT_STRING, Value=NULL is internally handled as local connection to the Edge Gateway itself.
+
+  - Tag PLC info (0..?): Additional PLC information: [RTS_UI32]: ulTargetType (See category "Device Types" in :ref:`SysTargetItf.h <_sys_target_itf_8h>` ) [RTS_UI32]: ulTargetId (HiWord = VendorID, LowWord = ID) [MemberString]: pszSerialNumber
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga01f5bd5b78adda91d0f996d0548af86a:
+
+#define EDGESV_PLCMGM_REMOVE_PLCS 0x03
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_PLC_MANAGEMENT
+
+Service: EDGESV_PLCMGM_REMOVE_PLCS
+
+Request tags:
+
+  - Tag Group reference (0..?) (RTS_UI64): Group reference.
+
+  - Tag PLC reference (0..?) (RTS_UI64): PLC reference (0=Invalid).
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga4150bd4af9f803be1dacc148fd9a2360:
+
+#define EDGESV_PLCMGM_CONNECT_PLC 0x04
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_PLC_MANAGEMENT
+
+Service: EDGESV_PLCMGM_CONNECT_PLC
+
+Request tags:
+
+  - Tag PLC reference (1..?) (RTS_UI64): PLC Reference (0=Invalid).
+
+Response tags:
+
+  - Tag PLC device info (0..?): Device info if connection succeeded (members of DeviceInfo2 as stream with content as follows): [MemberString]: pszNodeAddress [MemberWString]: pwszNodeName [MemberWString]: pwszTargetName [MemberWString]: pwszTargetVendorName [MemberString]: pszTargetVersion [RTS_UI32]: ulTargetId [RTS_UI32]: ulTargetType [RTS_UI32]: ulBufferSize [RTS_UI32]: DeviceSessionId [RTS_UI32]: bMotorola [MemberString]: pszTargetSerialNumber [MemberString]: pszTargetCoreVersion [RTS_UI32]: ulTargetIdentFlags [RTS_UI16]: usTargetChannels [RTS_UI16]: usNumOfIpAddresses pIpAddressList (usNumOfIpAddresses entries of following data:) [char[16]] szIp [char[16]] szMask
+
+  - Tag PLC state (0..?) (RTS_I16): Only if an error occurred during connect: new state as value of enumeration type PLCHANDLER_STATE (8/9: error).
+
+  - Tag PLC error (0..?) (RTS_I16): Error code (see PLCHandlerDefines.h) if TAG_EDGE_PLC_STATE is an error state.
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gab659875fabeb352fc2e4bdfb6324e3a7:
+
+#define EDGESV_PLCMGM_DISCONNECT_PLC 0x05
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_PLC_MANAGEMENT
+
+Service: EDGESV_PLCMGM_DISCONNECT_PLC
+
+Request tags:
+
+  - Tag PLC reference (1..?) (RTS_UI64): PLC Reference (0=Invalid).
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga8d5f85d6de8dbc402e5923ecf280c679:
+
+#define EDGESV_PLCMGM_SYNC_SEND_SERVICE 0x06
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_PLC_MANAGEMENT
+
+Service: EDGESV_PLCMGM_SYNC_SEND_SERVICE
+
+Request tags:
+
+  - Tag PLC reference (1..?) (RTS_UI64): PLC Reference (0=Invalid).
+
+  - Tag Data (1..?) (ByteArray): Byte stream which should be sent to the PLC.
+
+Response tags:
+
+  - Tag Data (0..?) (ByteArray): Byte stream with the PLCs response for the sent service.
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga62054c8c3ae45e1428a22385c0290803:
+
+#define EDGESV_PLCMGM_ADD_PLCS_TO_GROUP 0x07
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_PLC_MANAGEMENT
+
+Service: EDGESV_PLCMGM_ADD_PLCS_TO_GROUP
+
+Request tags:
+
+  - Tag Group reference (1..?) (RTS_UI64): Group reference.
+
+  - Tag PLC reference (1..?) (RTS_UI64): PLC reference (0=Invalid).
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga43257bfb6850aa8ba289d6b9b869b79c:
+
+#define EDGESV_PLCMGM_REMOVE_PLCS_FROM_GROUP 0x08
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_PLC_MANAGEMENT
+
+Service: EDGESV_PLCMGM_REMOVE_PLCS_FROM_GROUP
+
+Request tags:
+
+  - Tag Group reference (1..?) (RTS_UI64): Group reference.
+
+  - Tag PLC reference (1..?) (RTS_UI64): PLC reference (0=Invalid).
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga7dcdc6428d650e4321fa478c4c6fe752:
+
+#define EDGESV_PLCMGM_GROUP_NOTIFY 0x09
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_PLC_MANAGEMENT
+
+Service: EDGESV_PLCMGM_GROUP_NOTIFY
+
+Request tags:
+
+  - Tag Group reference (1..?) (RTS_UI64): Group reference.
+
+  - Tag Notification types (1..?) (RTS_UI32): Notification types as flag field (each type corresponds to a unique bit in this field). See flags for notification types (EDGENT_*) above.
+
+Notification tags:
+
+  - Tag PLC reference (1..?) (RTS_UI64): PLC reference (0=Invalid).
+
+  - Tag PLC state (0..?) (RTS_I16): New state as value of enum type PLCHANDLER_STATE (4: running, 8/9: error, 0: not running).
+
+  - Tag PLC device info (0..?): Device info if new state is connected (see description of EDGESV_PLCMGM_CONNECT_PLC for detailed structure of the tag content).
+
+  - Tag Number of apps (0..?) (RTS_UI32): Number of applications.
+
+  - Tag App name (0..?) (MemberString): Application name.
+
+  - Tag App deleted (0..?) (Empty): Application has been removed.
+
+  - Tag Last change (0..?) (RTS_UI32): ulLastChanges (UTC time in seconds since 1.1.1970 00:00:00).
+
+  - Tag Project (0..?) (MemberString): pszProject.
+
+  - Tag Version (0..?) (MemberString): pszVersion.
+
+  - Tag Author (0..?) (MemberString): pszAuthor.
+
+  - Tag Description (0..?) (MemberString): pszDescription.
+
+  - Tag Profile (0..?) (MemberString): pszProfile.
+
+  - Tag Code GUID (0..?) (ByteArray): CodeGuid.
+
+  - Tag Data GUID (0..?) (ByteArray): DataGuid.
+
+  - Tag App status (0..?) (RTS_I16): New application status as value of enumeration type PLC_STATUS_ENUM.
+
+  - Tag PLC error (0..?) (RTS_I16): Error code (see PLCHandlerDefines.h) if TAG_EDGE_PLC_STATE is an error state.
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga062df6c443672d453d85dd45c285dc63:
+
+#define TAG_EDGE_GATEWAY_CONFIG 0x0001
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga31748876f567597dd00eb791d49b0406:
+
+#define TAG_EDGE_SCAN_NOTIFICATION 0x0002
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga739d298dd5d911eff6839a825e21f36f:
+
+#define TAG_EDGE_GROUP_REFERENCE 0x0003
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga044dc3d8d626f4cba306a5696a3454d4:
+
+#define TAG_EDGE_PLC_REFERENCE 0x0004
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga28a0b4b9ef16d4374e6ece52ed9957b1:
+
+#define TAG_EDGE_PLC_CONFIG 0x0005
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga9421e95297ea5b158c181cc9624777c7:
+
+#define TAG_EDGE_PLC_CONFIG_PARAMETER 0x0006
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga9e56c8eff992b0e3bdc6e0f1494ff8d1:
+
+#define TAG_EDGE_PLC_DEVICEINFO 0x0007
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga1eff1b21cdb87918813ccb6a223ecfa5:
+
+#define TAG_EDGE_PLC_SYNCSENDSERVICE_DATA 0x0008
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gaa3b55cb3fabbe4dc942d66ce3076cb72:
+
+#define TAG_EDGE_NOTIFICATION_TYPES 0x0009
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga679cc0cb73c645a430c987d073e075c4:
+
+#define TAG_EDGE_PLC_STATE 0x000A
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga1a49b44cebeb95baa9d0e74caddc6bee:
+
+#define TAG_EDGE_APP_NAME 0x000B
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga69779bfb148b1bae3f6e395b67099edc:
+
+#define TAG_EDGE_APP_INFO_LAST_CHANGE 0x000C
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga1e21185faf1adc8afd515a2e22fa6991:
+
+#define TAG_EDGE_APP_INFO_PROJECT 0x000D
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gabe8608f66737406306232c0274b47b71:
+
+#define TAG_EDGE_APP_INFO_VERSION 0x000E
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga85303fc7b17333c7a17a594ecc1a5a7e:
+
+#define TAG_EDGE_APP_INFO_AUTHOR 0x000F
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gabf624779ab505c059fb19780bc4423d1:
+
+#define TAG_EDGE_APP_INFO_DESCRIPTION 0x0010
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gaef5a52ae26c6ec4fd6f0fd3554118a8d:
+
+#define TAG_EDGE_APP_INFO_PROFILE 0x0011
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gad402b235c6ae666724303e3318a26844:
+
+#define TAG_EDGE_APP_INFO_CODE_GUID 0x0012
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gaa54cdbd811405dd4f2983b49d55443a2:
+
+#define TAG_EDGE_APP_INFO_DATA_GUID 0x0013
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gab07545326f11a4fb0db590f7d5c6c2ab:
+
+#define TAG_EDGE_APP_STATUS 0x0014
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga8b29c79ba4f923329e62aefe099c58fe:
+
+#define TAG_EDGE_APP_DELETED 0x0015
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga1d28f6edd0e8f97acb632dab9f6d5302:
+
+#define TAG_EDGE_APP_NUM_OF_APPS 0x0016
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga628b1f031e43ccd3cb4dd7ab1d969fce:
+
+#define TAG_EDGE_PLC_ERROR 0x0017
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga469194d5ffee5337b224395ff8b5871d:
+
+#define TAG_EDGE_PLC_INFO 0x0018
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga357a9e956e824700c52e54b09d483f80:
+
+#define EDGESV_VAR_DEFINE_VARLIST 0x01
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_PLC_VAR_ACCESS
+
+Service: EDGESV_VAR_DEFINE_VARLIST
+
+Request tags:
+
+  - Tag PLC reference (1..?) (RTS_UI64): PLC reference (0=Invalid).
+
+  - Tag Variable list reference (1..?) (RTS_UI64): Variable list reference.
+
+  - Tag Update rate (0..?) (RTS_UI32): Update rate for the cyclic update of the variable values in ms (default: 200).
+
+  - Tag Flags (0..?) (RTS_UI32): Flags for the variable list (e. g. consistency flags).
+
+  - Tag Number of symbols (1..?) (RTS_UI32): Number of symbols in the list.
+
+  - Tag Symbols (1..?): List of symbols as array (the number of array elements has to match to the number of symbols). Each array element has following members: [RTS_UI32]: ulTypeId (see PlcSymbolDescStruct.ulTypeId) [RTS_UI32]: ulSize (see PlcSymbolDescStruct.ulSize) [MemberString]: pszSymbol (name of the symbol)
+
+Notification tags:
+
+  - Tag Var list reference (1..?) (RTS_UI64): Variable list reference.
+
+  - Tag Index (0..?) (RTS_UI32): Start index of the symbol in the variable list (default: 0).
+
+  - Tag Read values (1..?): List of Values (members of PlcVarValueStruct as stream with content as follows): [RTS_UI32]: ulTimeStamp (Seconds since 1.1.1970 00:00:00 UTC) [RTS_UI8]: bQuality [ByteArray]: byData
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gabe95795f0a97bfffb5e19f06d2e047c8:
+
+#define EDGESV_VAR_DELETE_VARLIST 0x02
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_PLC_VAR_ACCESS
+
+Service: EDGESV_VAR_DELETE_VARLIST
+
+Request tags:
+
+  - Tag PLC reference (1..?) (RTS_UI64): PLC reference (0=Invalid).
+
+  - Tag Variable list reference (1..?) (RTS_UI64): Variable list reference.
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga9ab7ee9691186ba73462d633599f413d:
+
+#define EDGESV_VAR_READ_VARLIST 0x03
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_PLC_VAR_ACCESS
+
+Service: EDGESV_VAR_READ_VARLIST
+
+Request tags:
+
+  - Tag PLC reference (1..?) (RTS_UI64): PLC reference (0=Invalid).
+
+  - Tag Variable list reference (1..?) (RTS_UI64): Variable list reference.
+
+Response tags:
+
+  - Tag Read values (1..?): List of Values as array (see description of EDGESV_VAR_DEFINE_VARLIST for detailed structure of the tag content).
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga856b61b78d45dc61e0310bed3293de1e:
+
+#define EDGESV_VAR_WRITE_VARS 0x04
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: EDGESG_PLC_VAR_ACCESS
+
+Service: EDGESV_VAR_WRITE_VARS
+
+Request tags:
+
+  - Tag PLC reference (1..?) (RTS_UI64): PLC reference (0=Invalid).
+
+  - Tag Number of symbols (1..?) (RTS_UI32): Number of values to write (must match to the size of the following lists).
+
+  - Tag Symbols (1..?): List of symbols (see description of EDGESV_VAR_DEFINE_VARLIST for detailed structure of the tag content).
+
+  - Tag Values to write (1..?) (Array of ByteArray): List of the variables values.
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gac3a0f4168b55828ee12b1c51d53115f2:
+
+#define TAG_EDGE_VARLIST_REFERENCE 0x0040
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga944470129f4e2c5cf13acf67d026700b:
+
+#define TAG_EDGE_VARLIST_UPDATERATE 0x0041
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gaa649f213e94724bcbb95ee8f691ea61d:
+
+#define TAG_EDGE_VARLIST_FLAGS 0x0042
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga17c329eb9c5a7ffed2aa9368acb09b38:
+
+#define TAG_EDGE_VARLIST_NUMOFSYMBOLS 0x0043
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gae6fb8edb6550d13bdadf657a7cd138fe:
+
+#define TAG_EDGE_VARLIST_SYMBOLS 0x0044
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gaf386ed1263317c54180f3be40440b624:
+
+#define TAG_EDGE_VAR_INDEX 0x0045
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1ga40290799aeb2a78432d4104a041de984:
+
+#define TAG_EDGE_VAR_READ_VALUES 0x0046
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_edge_gateway_itf___onlineservices_1gabf952c10089a06edc87e92a446c7b566:
+
+#define TAG_EDGE_VAR_VALUES_TO_WRITE 0x0047
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

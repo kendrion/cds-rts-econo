@@ -1,0 +1,1885 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_iec_task_itf_8h:
+
+==============================
+CmpIecTaskItf.h File Reference
+==============================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpAppItf.h <_cmp_app_itf_8h>`"
+| #include ":ref:`CmpMemPoolItf.h <_cmp_mem_pool_itf_8h>`"
+| #include ":ref:`SysTimeItf.h <_sys_time_itf_8h>`"
+
+Data Structures
+---------------
+
+- struct :ref:`sys_rts_cycle_struct <structsys__rts__cycle__struct>`
+
+- struct :ref:`sys_rts_cycle_2_struct <structsys__rts__cycle__2__struct>`
+
+- struct :ref:`EVTPARAM_CmpIecTask <struct_e_v_t_p_a_r_a_m___cmp_iec_task>`
+
+- struct :ref:`SlotPOU <struct_slot_p_o_u>`
+
+- struct :ref:`tagTask_Desc <structtag_task___desc>`
+
+- struct :ref:`tagTASK_LIST <structtag_t_a_s_k___l_i_s_t>`
+
+- struct :ref:`sys_setup_tasks_struct <structsys__setup__tasks__struct>`
+
+- struct :ref:`sys_register_slot_pou_struct <structsys__register__slot__pou__struct>`
+
+- struct :ref:`TaskGroup_Info <struct_task_group___info>`
+
+- struct :ref:`tagLDATAREF_TYPE <structtag_l_d_a_t_a_r_e_f___t_y_p_e>`
+
+- struct :ref:`tagSYSIECTASKCONFENTRY <structtag_s_y_s_i_e_c_t_a_s_k_c_o_n_f_e_n_t_r_y>`
+
+- struct :ref:`tagSYSIECTASKINFO <structtag_s_y_s_i_e_c_t_a_s_k_i_n_f_o>`
+
+- struct :ref:`tagiectaskgetconfig_struct <structtagiectaskgetconfig__struct>`
+
+- struct :ref:`tagiectaskgetinfo_struct <structtagiectaskgetinfo__struct>`
+
+- struct :ref:`tagJitter_Distribution <structtag_jitter___distribution>`
+
+- struct :ref:`tagiectaskcreate_struct <structtagiectaskcreate__struct>`
+
+- struct :ref:`tagiectaskcreate2_struct <structtagiectaskcreate2__struct>`
+
+- struct :ref:`tagiectaskdelete2_struct <structtagiectaskdelete2__struct>`
+
+- struct :ref:`tagiectaskdisablescheduling_struct <structtagiectaskdisablescheduling__struct>`
+
+- struct :ref:`tagiectaskdisablewatchdog_struct <structtagiectaskdisablewatchdog__struct>`
+
+- struct :ref:`tagiectaskdisablewatchdog2_struct <structtagiectaskdisablewatchdog2__struct>`
+
+- struct :ref:`tagiectaskenablescheduling_struct <structtagiectaskenablescheduling__struct>`
+
+- struct :ref:`tagiectaskenablewatchdog_struct <structtagiectaskenablewatchdog__struct>`
+
+- struct :ref:`tagiectaskenablewatchdog2_struct <structtagiectaskenablewatchdog2__struct>`
+
+- struct :ref:`tagiectaskgetcurrent_struct <structtagiectaskgetcurrent__struct>`
+
+- struct :ref:`tagiectaskgetdesc_struct <structtagiectaskgetdesc__struct>`
+
+- struct :ref:`tagiectaskgetfirst_struct <structtagiectaskgetfirst__struct>`
+
+- struct :ref:`tagiectaskgetinfo2_struct <structtagiectaskgetinfo2__struct>`
+
+- struct :ref:`tagiectaskgetnext_struct <structtagiectaskgetnext__struct>`
+
+- struct :ref:`tagiectaskgetprofiling_struct <structtagiectaskgetprofiling__struct>`
+
+- struct :ref:`tagiectaskreload_struct <structtagiectaskreload__struct>`
+
+- struct :ref:`tagiectaskresetstatistics_struct <structtagiectaskresetstatistics__struct>`
+
+- struct :ref:`tagTask_Info <structtag_task___info>`
+
+- struct :ref:`ICmpIecTask_C <struct_i_cmp_iec_task___c>`
+
+Macros
+------
+
+- #define :ref:`RTS_IECTASK_ENABLE_TASK_TRACE <group___cmp_iec_task_itf_1gaa7357a39213c30478c394ec17b8843e3>`
+
+- #define :ref:`RTS_IECTASK_ENABLE_DEBUG_SYSTASK <group___cmp_iec_task_itf_1ga0bee08a2d7442b728efbb32aeed12137>`
+
+- #define :ref:`IECTASK_USE_ATOMIC_BITACCESS <group___cmp_iec_task_itf___staticdefines_1ga6d97ec721af30a7bc52406696e076755>`
+
+- #define :ref:`CMPIECTASK_STACK_SIZE <group___cmp_iec_task_itf___staticdefines_1ga56cd627a23d446e4adf43a1e73f9511e>` 0
+
+- #define :ref:`CMPIECTASK_STACK_SIZE_ADDITIONAL <group___cmp_iec_task_itf___staticdefines_1ga2b58fa388ece90533e3d9ced40115eff>` 0
+
+- #define :ref:`CMPIECTASK_SYNCHRONIZATION_USE_SYSSEM <group___cmp_iec_task_itf___staticdefines_1gab52e6822120f99ebd8d6f24980b43a18>`
+
+- #define :ref:`NUM_OF_STATIC_IEC_TASKS <group___cmp_iec_task_itf___staticdefines_1ga657450891a8816e7bf4e1ff8179793f5>` 5
+
+- #define :ref:`NUM_OF_STATIC_IEC_EVENTS <group___cmp_iec_task_itf___staticdefines_1ga6f83a02abbde3ffcd890ba558871d98a>` 1
+
+- #define :ref:`MAX_IEC_TASKS <group___cmp_iec_task_itf___staticdefines_1gabebb2764feddff78ab0b5192802db7ad>` (-1)
+
+- #define :ref:`NUM_OF_STATIC_IEC_SLOTS <group___cmp_iec_task_itf___staticdefines_1gaa8d79036de7592a8041beb5cd800189c>` 10
+
+- #define :ref:`MAX_IEC_SLOTS <group___cmp_iec_task_itf___staticdefines_1ga3a29c1ccb3c5663c7f367377ba958e4e>` (-1)
+
+- #define :ref:`IECTASK_TASK_INFO_VERSION <group___cmp_iec_task_itf___staticdefines_1ga39aedd38d5a72e92eb08ee450e28496d>` 5
+
+- #define :ref:`IECTASK_TASK_INFO_GROUPS_VERSION <group___cmp_iec_task_itf___staticdefines_1ga3479963bc690ce02f57178914eddac2e>` 4
+
+- #define :ref:`IECTASK_TASK_MAX_PRIO <group___cmp_iec_task_itf___staticdefines_1gafd184ac6058887baab5e504c0cf5700a>` 255
+
+- #define :ref:`IECTASKKEY_INT_WAIT_FOR_STOP_TIMEOUT <group___cmp_iec_task_itf___settings_1gac50aff44fc044fd92bf2e02d08798ce2>` "WaitForStopTimeoutMs"
+
+- #define :ref:`IECTASKVALUE_INT_WAIT_FOR_STOP_TIMEOUT_DEFAULT <group___cmp_iec_task_itf___settings_1ga806fb4decbd1a9252285b1fbebbbdb22>` INT32_C(10000)
+
+- #define :ref:`IECTASKKEY_INT_WAIT_FOR_STOP_TIMEOUT_2 <group___cmp_iec_task_itf___settings_1ga37513ddec3be7a493c2f6a218619402c>` "WaitForStop.TimeoutMs_2"
+
+- #define :ref:`IECTASKVALUE_INT_WAIT_FOR_STOP_TIMEOUT_2_DEFAULT <group___cmp_iec_task_itf___settings_1ga3c2d5b8afd2ffbffed0c1bc6f18cd930>` INT32_C(25000)
+
+- #define :ref:`IECTASKKEY_INT_WAIT_FOR_STOP_SKIPTASKSWITHOUTOUTPUTS <group___cmp_iec_task_itf___settings_1ga13b67af339de3e388331f7a011243d7f>` "WaitForStop.SkipTasksWithoutOutputs"
+
+- #define :ref:`IECTASKVALUE_INT_WAIT_FOR_STOP_SKIPTASKSWITHOUTOUTPUTS_DEFAULT <group___cmp_iec_task_itf___settings_1ga17a6a84b6b4d78f068676748c4c703e8>` INT32_C(1)
+
+- #define :ref:`IECTASKKEY_INT_SIMPLE_CYCLE <group___cmp_iec_task_itf___settings_1gad5dcbfdd7595fc6aea9b10e4c5ee6c60>` "Simple_Cycle"
+
+- #define :ref:`IECTASKVALUE_INT_SIMPLE_CYCLE_DEFAULT <group___cmp_iec_task_itf___settings_1ga959c92c87e76a723fba2470a259d81cf>` 0
+
+- #define :ref:`IECTASKKEY_INT_ENABLE_TASK_TRACE <group___cmp_iec_task_itf___settings_1ga25a041842c6b7bb2d639f9a2ca5ac785>` "EnableTaskTrace"
+
+- #define :ref:`IECTASKVALUE_INT_ENABLE_TASK_TRACE_DEFAULT <group___cmp_iec_task_itf___settings_1ga5e69653bed8c3505432104996c20513c>` 0
+
+- #define :ref:`IECTASKKEY_STRING_VISU_TASK <group___cmp_iec_task_itf___settings_1gaa4767986e9484e24adfffec6b398b8bd>` "VisuTask"
+
+- #define :ref:`IECTASKKEY_INT_ENABLE_WATCHDOG_DURING_IOUPDATE <group___cmp_iec_task_itf___settings_1ga3440e2e53062ed684a28b74658a2d0e0>` "EnableWatchdogDuringIOUpdate"
+
+- #define :ref:`IECTASKVALUE_INT_ENABLE_WATCHDOG_DURING_IOUPDATE <group___cmp_iec_task_itf___settings_1ga12ba996600de7edabd0f74e9509adb38>` 1
+
+- #define :ref:`EVTPARAMID_CmpIecTask <group___cmp_iec_task_itf___eventparameter_1ga88b1d80a7e501bbfbbe27a3b663f1331>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpIecTask <group___cmp_iec_task_itf___eventparameter_1gacd25379a86156c03597f80bb86e853d8>` 0x0001
+
+- #define :ref:`EVT_AfterReadingInputs <group___cmp_iec_task_itf___events_1ga082b17c2edb2207ca5b136208e984bc8>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`EVT_BeforeWritingOutputs <group___cmp_iec_task_itf___events_1gac0d72b62d17cea0e6191528041e41fae>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+
+- #define :ref:`EVT_BeforeReadingInputs <group___cmp_iec_task_itf___events_1gacc18f9470dedd3bfe7f6d84389083882>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 3)
+
+- #define :ref:`EVT_AfterWritingOutputs <group___cmp_iec_task_itf___events_1gaacc33f29b26656933d3867662ba0d6e2>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 4)
+
+- #define :ref:`EVT_IecTask_ReloadInit <group___cmp_iec_task_itf___events_1ga6d910b20558275cdf2138804741d8fbe>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 5)
+
+- #define :ref:`EVT_IecTaskCreateDone <group___cmp_iec_task_itf___events_1ga49a37c8a7980ed29e4e260054b861cd4>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 6)
+
+- #define :ref:`EVT_IecTaskPrepareDelete <group___cmp_iec_task_itf___events_1ga27e35871ca23c5f600d8ff75225cad0e>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 7)
+
+- #define :ref:`EVT_IecTaskDebugLoop <group___cmp_iec_task_itf___events_1ga5ad11f3e7bc8d00b95df9eb665b9fd9b>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 8)
+
+- #define :ref:`RTS_OPID_IecTask_WatchdogInIO <group___cmp_iec_task_itf___operation_i_d_1ga76d8b655b96c0ba359bd82562b6d77df>` 1
+
+- #define :ref:`RTS_OPID_IecTask_WatchdogInIO_Description <group___cmp_iec_task_itf___operation_i_d_1ga1268ecb3cd53291717a84d3213bd4220>` "Supervision of a watchdog error during IO-update (IEC task must leave IO update)"
+
+- #define :ref:`IEC_TASK_STOPREASON_OPTION_PREPARE_SAFE_STATE <group___cmp_iec_task_itf___stopreasonoption_1ga565b56ea15d580d8934371f458962ff0>` 0x00000000
+
+- #define :ref:`IEC_TASK_STOPREASON_OPTION_DONE_SAFE_STATE <group___cmp_iec_task_itf___stopreasonoption_1gadccd0cfa6c72efd325735739d36301ee>` 0x00010000
+
+- #define :ref:`TaskCyclic <group___cmp_iec_task_itf___i_e_ctasktypes_1ga137d4e4cffab17822f3c330b8a14d87d>` 0x0000
+
+- #define :ref:`TaskEvent <group___cmp_iec_task_itf___i_e_ctasktypes_1gad781956aef1efdac0a77d1e48ec9ddbf>` 0x0001
+
+- #define :ref:`TaskExternal <group___cmp_iec_task_itf___i_e_ctasktypes_1gaa5a228a060cdd90e07798e3bc4364a0f>` 0x0002
+
+- #define :ref:`TaskFreewheeling <group___cmp_iec_task_itf___i_e_ctasktypes_1ga7a9c79a438c38a132841c46848bd69d4>` 0x0003
+
+- #define :ref:`TaskParentSync <group___cmp_iec_task_itf___i_e_ctasktypes_1ga57c2f8b06e30498410b104561e4b2ced>` 0x0004
+
+- #define :ref:`TaskLastIndex <group___cmp_iec_task_itf___i_e_ctasktypes_1ga916a915ce4cc37db67b2bca34f9cf18e>` 0x0005
+
+- #define :ref:`TS_WATCHDOG_ENABLE <group___cmp_iec_task_itf___taskstatusdefinitions_1ga38e4cf07b43b804adde5a3c6e2bd6613>` 0x0040
+
+- #define :ref:`TS_DISABLE_TASK_TIME <group___cmp_iec_task_itf___taskstatusdefinitions_1ga6a3591af21dc58e929de048abecbaf9a>` 0x0080
+
+- #define :ref:`TS_ACTIVATED <group___cmp_iec_task_itf___taskstatusdefinitions_1ga7a04046244803fb540bf76ac471c6fa0>` 0x0100
+
+- #define :ref:`TS_TOACTIVATE <group___cmp_iec_task_itf___taskstatusdefinitions_1ga3b83ae99a133b548fde9a424f9946fd3>` 0x0200
+
+- #define :ref:`TS_STOP <group___cmp_iec_task_itf___taskstatusdefinitions_1gacf55d2174435d56f966bdfa647fe6d3e>` 0x0400
+
+- #define :ref:`TS_HALT_ON_BP <group___cmp_iec_task_itf___taskstatusdefinitions_1gaa7e54955c09fd86561493f5680a4cb10>` 0x0800
+
+- #define :ref:`TS_SINGLE_CYCLE <group___cmp_iec_task_itf___taskstatusdefinitions_1ga7ed16770704181e098355f88655b7161>` 0x1000
+
+- #define :ref:`TS_WATCHDOG_ENABLE2 <group___cmp_iec_task_itf___taskstatusdefinitions_1ga45f3c424cfb2be2ce4da954d68dfd656>` 0x2000
+
+- #define :ref:`TF_WATCHDOG_ENABLE <group___cmp_iec_task_itf___taskstatusbits_1gae5a7ef98e6c5d531e4b48201c4bbc905>` 6
+
+- #define :ref:`TF_DISABLE_TASK_TIME <group___cmp_iec_task_itf___taskstatusbits_1ga7821fc0b6711662b2f5e608640f66fdb>` 7
+
+- #define :ref:`TF_ACTIVATED <group___cmp_iec_task_itf___taskstatusbits_1ga1a38b6a114d7fe33e8764e8b7d507e2e>` 8
+
+- #define :ref:`TF_TOACTIVATE <group___cmp_iec_task_itf___taskstatusbits_1gabb338450cea63657abae8bb4adf06b56>` 9
+
+- #define :ref:`TF_STOP <group___cmp_iec_task_itf___taskstatusbits_1ga641bf582cde86870bcdcc99fcc3e6088>` 10
+
+- #define :ref:`TF_HALT_ON_BP <group___cmp_iec_task_itf___taskstatusbits_1ga5c193893801c3db62ba46464348b8e56>` 11
+
+- #define :ref:`TF_SINGLE_CYCLE <group___cmp_iec_task_itf___taskstatusbits_1ga1fc7f1a6da59cc4ab35c4a6d5a5dab93>` 12
+
+- #define :ref:`TF_WATCHDOG_ENABLE2 <group___cmp_iec_task_itf___taskstatusbits_1ga8d68b82a4e5f1bc8cef62a3e32535464>` 13
+
+- #define :ref:`IsWatchdogEnabled <group___cmp_iec_task_itf___taskstatusbits_1gadea9d121efb11bd903e18c91dc384e93>` ((pTask->iState & :ref:`TS_WATCHDOG_ENABLE <group___cmp_iec_task_itf___taskstatusdefinitions_1ga38e4cf07b43b804adde5a3c6e2bd6613>` ) && (pTask->iState & :ref:`TS_WATCHDOG_ENABLE2 <group___cmp_iec_task_itf___taskstatusdefinitions_1ga45f3c424cfb2be2ce4da954d68dfd656>` ))
+
+- #define :ref:`IsTaskTimeEnabled <group___cmp_iec_task_itf___taskstatusbits_1ga7d7baba98475a65751ddd4b8aff1040d>` ((pTask->iState & :ref:`TS_DISABLE_TASK_TIME <group___cmp_iec_task_itf___taskstatusdefinitions_1ga6a3591af21dc58e929de048abecbaf9a>` ) == 0)
+
+- #define :ref:`IsActivated <group___cmp_iec_task_itf___taskstatusbits_1ga522b5cb1d5a150992977470ab32a3d2b>` (pTask->iState & :ref:`TS_ACTIVATED <group___cmp_iec_task_itf___taskstatusdefinitions_1ga7a04046244803fb540bf76ac471c6fa0>` )
+
+- #define :ref:`ToActivate <group___cmp_iec_task_itf___taskstatusbits_1ga2d6ae19f6e4ce48b611053aacbbf23b8>` (pTask->iState & :ref:`TS_TOACTIVATE <group___cmp_iec_task_itf___taskstatusdefinitions_1ga3b83ae99a133b548fde9a424f9946fd3>` )
+
+- #define :ref:`IsStopped <group___cmp_iec_task_itf___taskstatusbits_1ga924d83747bf443e0fb4b390c408254dc>` (pTask->iState & :ref:`TS_STOP <group___cmp_iec_task_itf___taskstatusdefinitions_1gacf55d2174435d56f966bdfa647fe6d3e>` )
+
+- #define :ref:`IsHaltOnBreakpoint <group___cmp_iec_task_itf___taskstatusbits_1ga31592be6b9fdd014330af00a2e7098d6>` (pTask->iState & :ref:`TS_HALT_ON_BP <group___cmp_iec_task_itf___taskstatusdefinitions_1gaa7e54955c09fd86561493f5680a4cb10>` )
+
+- #define :ref:`IsSingleCycle <group___cmp_iec_task_itf___taskstatusbits_1ga371e36b3ee7113fa0bbbcc174c044bdb>` (pTask->iState & :ref:`TS_SINGLE_CYCLE <group___cmp_iec_task_itf___taskstatusdefinitions_1ga7ed16770704181e098355f88655b7161>` )
+
+- #define :ref:`SetWatchdogEnabled <group___cmp_iec_task_itf___taskstatusbits_1ga5d509e84b3a90ee712ca99def1e288df>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_WATCHDOG_ENABLE <group___cmp_iec_task_itf___taskstatusbits_1gae5a7ef98e6c5d531e4b48201c4bbc905>` , 1)
+
+- #define :ref:`SetWatchdogDisabled <group___cmp_iec_task_itf___taskstatusbits_1gaecf2dd2fc102840ca9fe390c2714c766>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_WATCHDOG_ENABLE <group___cmp_iec_task_itf___taskstatusbits_1gae5a7ef98e6c5d531e4b48201c4bbc905>` , 0)
+
+- #define :ref:`SetWatchdogEnabled2 <group___cmp_iec_task_itf___taskstatusbits_1gac009ed490336b679fcec69cc9b18bf4d>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_WATCHDOG_ENABLE2 <group___cmp_iec_task_itf___taskstatusbits_1ga8d68b82a4e5f1bc8cef62a3e32535464>` , 1)
+
+- #define :ref:`SetWatchdogDisabled2 <group___cmp_iec_task_itf___taskstatusbits_1gaf47f248bd7724c0a4b2c04c319c989f5>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_WATCHDOG_ENABLE2 <group___cmp_iec_task_itf___taskstatusbits_1ga8d68b82a4e5f1bc8cef62a3e32535464>` , 0)
+
+- #define :ref:`SetTaskTimeDisabled <group___cmp_iec_task_itf___taskstatusbits_1ga4993d13e681ff3059be9a0a93258bc55>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_DISABLE_TASK_TIME <group___cmp_iec_task_itf___taskstatusbits_1ga7821fc0b6711662b2f5e608640f66fdb>` , 1)
+
+- #define :ref:`SetTaskTimeEnabled <group___cmp_iec_task_itf___taskstatusbits_1ga848503e77256f8933d56d5113c3f04eb>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_DISABLE_TASK_TIME <group___cmp_iec_task_itf___taskstatusbits_1ga7821fc0b6711662b2f5e608640f66fdb>` , 0)
+
+- #define :ref:`SetActivated <group___cmp_iec_task_itf___taskstatusbits_1gad949de33eda0b32eeabf8b0f1fc9fd03>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_ACTIVATED <group___cmp_iec_task_itf___taskstatusbits_1ga1a38b6a114d7fe33e8764e8b7d507e2e>` , 1)
+
+- #define :ref:`ResetActivated <group___cmp_iec_task_itf___taskstatusbits_1ga1c2dd48c04602cc19a8f356e5e82c17a>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_ACTIVATED <group___cmp_iec_task_itf___taskstatusbits_1ga1a38b6a114d7fe33e8764e8b7d507e2e>` , 0)
+
+- #define :ref:`SetToActivate <group___cmp_iec_task_itf___taskstatusbits_1ga2f7ba09de404e6000b91687eb477d138>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_TOACTIVATE <group___cmp_iec_task_itf___taskstatusbits_1gabb338450cea63657abae8bb4adf06b56>` , 1)
+
+- #define :ref:`ResetToActivate <group___cmp_iec_task_itf___taskstatusbits_1ga31d7b26fce4ce14493374ff964247e1c>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_TOACTIVATE <group___cmp_iec_task_itf___taskstatusbits_1gabb338450cea63657abae8bb4adf06b56>` , 0)
+
+- #define :ref:`SetStopped <group___cmp_iec_task_itf___taskstatusbits_1gac8eb7c66eeef3784dc92b0ef9140b66c>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_STOP <group___cmp_iec_task_itf___taskstatusbits_1ga641bf582cde86870bcdcc99fcc3e6088>` , 1)
+
+- #define :ref:`SetRunning <group___cmp_iec_task_itf___taskstatusbits_1ga5ab9e75024ac3c56e61179f1293d3c9f>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_STOP <group___cmp_iec_task_itf___taskstatusbits_1ga641bf582cde86870bcdcc99fcc3e6088>` , 0)
+
+- #define :ref:`SetHaltOnBreakpoint <group___cmp_iec_task_itf___taskstatusbits_1gab10cda1ba9a0e62119d71b6a8b4b402b>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_HALT_ON_BP <group___cmp_iec_task_itf___taskstatusbits_1ga5c193893801c3db62ba46464348b8e56>` , 1)
+
+- #define :ref:`ResetHaltOnBreakpoint <group___cmp_iec_task_itf___taskstatusbits_1ga746eba1ebbb0e84fb829f4cb15a8bd0a>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_HALT_ON_BP <group___cmp_iec_task_itf___taskstatusbits_1ga5c193893801c3db62ba46464348b8e56>` , 0)
+
+- #define :ref:`SetSingleCycle <group___cmp_iec_task_itf___taskstatusbits_1gaf18c0cde7f011ee017f631a7af75cdc7>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_SINGLE_CYCLE <group___cmp_iec_task_itf___taskstatusbits_1ga1fc7f1a6da59cc4ab35c4a6d5a5dab93>` , 1)
+
+- #define :ref:`ResetSingleCycle <group___cmp_iec_task_itf___taskstatusbits_1ga1faa320efb723b7cf8790731344bc419>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_SINGLE_CYCLE <group___cmp_iec_task_itf___taskstatusbits_1ga1fc7f1a6da59cc4ab35c4a6d5a5dab93>` , 0)
+
+- #define :ref:`SLOT_BEFORE_READ_INPUTS <group___cmp_iec_task_itf___taskstatusbits_1gac9441a320aa839536c3262e8a1feebc7>` 50
+
+- #define :ref:`SLOT_READ_INPUTS <group___cmp_iec_task_itf___taskstatusbits_1ga0c81cabcb0083be001d29f8b5ad5af8d>` 100
+
+- #define :ref:`SLOT_AFTER_READ_INPUTS <group___cmp_iec_task_itf___taskstatusbits_1gaabe32e61d7108139d13f3644e59733ad>` 15000
+
+- #define :ref:`SLOT_IEC_CODE <group___cmp_iec_task_itf___taskstatusbits_1ga137616508dfbfed9baf8611f3db52545>` 30000
+
+- #define :ref:`SLOT_BEFORE_WRITE_OUTPUTS <group___cmp_iec_task_itf___taskstatusbits_1ga1fe6df6ed87a65005d892cd5cebf348b>` 45000
+
+- #define :ref:`SLOT_WRITE_OUTPUTS <group___cmp_iec_task_itf___taskstatusbits_1ga83514dbd5666f919cd8553acf4fad99c>` 60000
+
+- #define :ref:`SLOT_AFTER_WRITE_OUTPUTS <group___cmp_iec_task_itf___taskstatusbits_1ga33ab349e8169672a0f6a3f6982529692>` 75000
+
+- #define :ref:`ITF_VISU_TASK <group___cmp_iec_task_itf___i_e_c_task_flags_1gab40b3faa2d4736b96d4799a581eba46a>` 0x00000001
+
+- #define :ref:`ITF_DONT_SCHEDULE <group___cmp_iec_task_itf___i_e_c_task_flags_1gafeac8ba2dab5958050cf30ce6aa35491>` 0x00000002
+
+- #define :ref:`ITF_ACTIVATE_TIMESLICING <group___cmp_iec_task_itf___i_e_c_task_flags_1ga53fc27d765e26f7b9f89d403efd0292d>` 0x00000004
+
+- #define :ref:`ITF_DISABLE_TIMESLICING <group___cmp_iec_task_itf___i_e_c_task_flags_1gab976811a6cabb39529728f071d2987f3>` 0x00000008
+
+- #define :ref:`ITF_EXCEPTION <group___cmp_iec_task_itf___i_e_c_task_flags_1ga35cb0f4d91c328f20f6acd993422c735>` 0x00000010
+
+- #define :ref:`ITF_SUSPENDED <group___cmp_iec_task_itf___i_e_c_task_flags_1ga33f730b8f0fc74fbda06b4284de25288>` 0x00000020
+
+- #define :ref:`ITF_ACTIVE <group___cmp_iec_task_itf___i_e_c_task_flags_1ga7c15c288a562e514d30e22a5136d67d6>` 0x00000040
+
+- #define :ref:`ITF_SUSPEND_AT_NEXT_CHANCE <group___cmp_iec_task_itf___i_e_c_task_flags_1ga53a8c05e0951d66b6157a6f43c5f25e8>` 0x00000080
+
+- #define :ref:`ITF_IN_IO_UPDATE <group___cmp_iec_task_itf___i_e_c_task_flags_1ga1996f83b1e516748f76118cd3a2bf7c3>` 0x00000100
+
+- #define :ref:`ITF_INIT_OUTPUTS <group___cmp_iec_task_itf___i_e_c_task_flags_1ga75935177009a8d2ecdd780e2a2a4dd53>` 0x00000200
+
+- #define :ref:`ITF_ENTER_LOCK <group___cmp_iec_task_itf___i_e_c_task_flags_1ga4f6c482d0652352202a453f74be3db80>` 0x00000400
+
+- #define :ref:`ITF_LEAVE_READER_LOCK <group___cmp_iec_task_itf___i_e_c_task_flags_1ga851db9bbdeabd5b2e9b712aa49135d93>` 0x00000800
+
+- #define :ref:`ITF_SUSPENDED_BY_DEBUG_TASK <group___cmp_iec_task_itf___i_e_c_task_flags_1gaef1ce868c039e476fa352f8fb4c4fef2>` 0x00001000
+
+- #define :ref:`ITF_IN_DEBUG_CONTEXT <group___cmp_iec_task_itf___i_e_c_task_flags_1ga6d4cfda518c971d3de86bcfe16a6717c>` 0x00002000
+
+- #define :ref:`ITF_BIT_VISU_TASK <group___cmp_iec_task_itf___i_e_c_task_bits_1ga5d744f5fa649f25d39c3d1f551bc8025>` 0
+
+- #define :ref:`ITF_BIT_DONT_SCHEDULE <group___cmp_iec_task_itf___i_e_c_task_bits_1ga914643b7d1fa5196f1c3fa2663806ed7>` 1
+
+- #define :ref:`ITF_BIT_ACTIVATE_TIMESLICING <group___cmp_iec_task_itf___i_e_c_task_bits_1gaa64518f24b1aa65931d96efc337c259b>` 2
+
+- #define :ref:`ITF_BIT_DISABLE_TIMESLICING <group___cmp_iec_task_itf___i_e_c_task_bits_1gaf6fcecb1ac324782d5bcf48cb6a8f83c>` 3
+
+- #define :ref:`ITF_BIT_EXCEPTION <group___cmp_iec_task_itf___i_e_c_task_bits_1gafb9a8fb52f5a6a993d4aca66e8cd4518>` 4
+
+- #define :ref:`ITF_BIT_SUSPENDED <group___cmp_iec_task_itf___i_e_c_task_bits_1gae635d1366be0348ca15f865d662d8831>` 5
+
+- #define :ref:`ITF_BIT_ACTIVE <group___cmp_iec_task_itf___i_e_c_task_bits_1gacae813b4c687b69bfe644ee262f08755>` 6
+
+- #define :ref:`ITF_BIT_SUSPEND_AT_NEXT_CHANCE <group___cmp_iec_task_itf___i_e_c_task_bits_1gae0303fedc2e9d2db2e65535f73384d45>` 7
+
+- #define :ref:`ITF_BIT_IN_IO_UPDATE <group___cmp_iec_task_itf___i_e_c_task_bits_1ga424234b7cbc37502e5b28a67f0c55eff>` 8
+
+- #define :ref:`ITF_BIT_INIT_OUTPUTS <group___cmp_iec_task_itf___i_e_c_task_bits_1ga548eaed85782b209400cff4848b6c2df>` 9
+
+- #define :ref:`ITF_BIT_ENTER_LOCK <group___cmp_iec_task_itf___i_e_c_task_bits_1gacbfec466801f94f17441e423a2e1f1f9>` 10
+
+- #define :ref:`ITF_BIT_LEAVE_READER_LOCK <group___cmp_iec_task_itf___i_e_c_task_bits_1gaca838322e0933c045c005cbe5a90f7d0>` 11
+
+- #define :ref:`ITF_BIT_SUSPENDED_BY_DEBUG_TASK <group___cmp_iec_task_itf___i_e_c_task_bits_1ga618da858f592f6253d1a2459ac8475cb>` 12
+
+- #define :ref:`ITF_BIT_IN_DEBUG_CONTEXT <group___cmp_iec_task_itf___i_e_c_task_bits_1ga6d7689171de9ea9a1f475378069d62be>` 13
+
+- #define :ref:`IsVisuTask <group___cmp_iec_task_itf___i_e_c_task_bits_1ga4da081d79ff77e8b9a51297f45743d12>` (pTask->ulFlags & :ref:`ITF_VISU_TASK <group___cmp_iec_task_itf___i_e_c_task_flags_1gab40b3faa2d4736b96d4799a581eba46a>` )
+
+- #define :ref:`DontSchedule <group___cmp_iec_task_itf___i_e_c_task_bits_1ga464acb0ee5885dc2736aabb694fd5c64>` (pTask->ulFlags & :ref:`ITF_DONT_SCHEDULE <group___cmp_iec_task_itf___i_e_c_task_flags_1gafeac8ba2dab5958050cf30ce6aa35491>` )
+
+- #define :ref:`IsTimeslicing <group___cmp_iec_task_itf___i_e_c_task_bits_1gad4b3707aa7408fb53204c423513a85ef>` (pTask->ulFlags & :ref:`ITF_ACTIVATE_TIMESLICING <group___cmp_iec_task_itf___i_e_c_task_flags_1ga53fc27d765e26f7b9f89d403efd0292d>` )
+
+- #define :ref:`IsTimeslicingDisabled <group___cmp_iec_task_itf___i_e_c_task_bits_1ga0ddfb2dc8f774f781c632e3e6e032348>` (pTask->ulFlags & :ref:`ITF_DISABLE_TIMESLICING <group___cmp_iec_task_itf___i_e_c_task_flags_1gab976811a6cabb39529728f071d2987f3>` )
+
+- #define :ref:`IsSuspended <group___cmp_iec_task_itf___i_e_c_task_bits_1gaaffc1cb6bb10de3c8768698b818e6069>` (pTask->ulFlags & :ref:`ITF_SUSPENDED <group___cmp_iec_task_itf___i_e_c_task_flags_1ga33f730b8f0fc74fbda06b4284de25288>` )
+
+- #define :ref:`IsException <group___cmp_iec_task_itf___i_e_c_task_bits_1gacd2cc1ff216243ab462990220637a730>` (pTask->ulFlags & :ref:`ITF_EXCEPTION <group___cmp_iec_task_itf___i_e_c_task_flags_1ga35cb0f4d91c328f20f6acd993422c735>` )
+
+- #define :ref:`IsActive <group___cmp_iec_task_itf___i_e_c_task_bits_1ga67003c77e229a42e281d654ab8a432fb>` (pTask->ulFlags & :ref:`ITF_ACTIVE <group___cmp_iec_task_itf___i_e_c_task_flags_1ga7c15c288a562e514d30e22a5136d67d6>` )
+
+- #define :ref:`IsSuspendAtNextChance <group___cmp_iec_task_itf___i_e_c_task_bits_1gaced470740f011dafb5f0837811137449>` (pTask->ulFlags & :ref:`ITF_SUSPEND_AT_NEXT_CHANCE <group___cmp_iec_task_itf___i_e_c_task_flags_1ga53a8c05e0951d66b6157a6f43c5f25e8>` )
+
+- #define :ref:`IsInIoUpdate <group___cmp_iec_task_itf___i_e_c_task_bits_1gabba2bc1de299f42547da1043c3733197>` (pTask->ulFlags & :ref:`ITF_IN_IO_UPDATE <group___cmp_iec_task_itf___i_e_c_task_flags_1ga1996f83b1e516748f76118cd3a2bf7c3>` )
+
+- #define :ref:`DoInitOutputs <group___cmp_iec_task_itf___i_e_c_task_bits_1gac5ec23143a449e1875c1afdaf17d113c>` (pTask->ulFlags & :ref:`ITF_INIT_OUTPUTS <group___cmp_iec_task_itf___i_e_c_task_flags_1ga75935177009a8d2ecdd780e2a2a4dd53>` )
+
+- #define :ref:`IsEnterLockDisabled <group___cmp_iec_task_itf___i_e_c_task_bits_1ga2cf7538c94a1caa41880b26d5ae4a0f9>` (pTask->ulFlags & :ref:`ITF_ENTER_LOCK <group___cmp_iec_task_itf___i_e_c_task_flags_1ga4f6c482d0652352202a453f74be3db80>` )
+
+- #define :ref:`IsLeaveReaderLock <group___cmp_iec_task_itf___i_e_c_task_bits_1gaec30af0ebd462ec77829d81a3c581a3b>` (pTask->ulFlags & :ref:`ITF_LEAVE_READER_LOCK <group___cmp_iec_task_itf___i_e_c_task_flags_1ga851db9bbdeabd5b2e9b712aa49135d93>` )
+
+- #define :ref:`IsSuspendedByDebugTask <group___cmp_iec_task_itf___i_e_c_task_bits_1ga27db4c11cd9774be5a7453e4f33c3c6a>` (pTask->ulFlags & :ref:`ITF_SUSPENDED_BY_DEBUG_TASK <group___cmp_iec_task_itf___i_e_c_task_flags_1gaef1ce868c039e476fa352f8fb4c4fef2>` )
+
+- #define :ref:`IsInDebugContext <group___cmp_iec_task_itf___i_e_c_task_bits_1gaad6d1b9991e9acc5959218f3213b6df5>` (pTask->ulFlags & :ref:`ITF_IN_DEBUG_CONTEXT <group___cmp_iec_task_itf___i_e_c_task_flags_1ga6d4cfda518c971d3de86bcfe16a6717c>` )
+
+- #define :ref:`SetVisuTask <group___cmp_iec_task_itf___i_e_c_task_bits_1ga5dedcab92cd882984ee619a0f2b36d7b>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_VISU_TASK <group___cmp_iec_task_itf___i_e_c_task_bits_1ga5d744f5fa649f25d39c3d1f551bc8025>` , 1)
+
+- #define :ref:`SetDontSchedule <group___cmp_iec_task_itf___i_e_c_task_bits_1ga17ea1b2e990e7408a4c86ea9faf2b913>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_DONT_SCHEDULE <group___cmp_iec_task_itf___i_e_c_task_bits_1ga914643b7d1fa5196f1c3fa2663806ed7>` , 1)
+
+- #define :ref:`ResetDontSchedule <group___cmp_iec_task_itf___i_e_c_task_bits_1ga49141d26057ea7f75ed13ec8e2e6faba>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_DONT_SCHEDULE <group___cmp_iec_task_itf___i_e_c_task_bits_1ga914643b7d1fa5196f1c3fa2663806ed7>` , 0)
+
+- #define :ref:`SetTimeslicing <group___cmp_iec_task_itf___i_e_c_task_bits_1gac160e9e4a855bb84fa548d74ca97779f>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_ACTIVATE_TIMESLICING <group___cmp_iec_task_itf___i_e_c_task_bits_1gaa64518f24b1aa65931d96efc337c259b>` , 1)
+
+- #define :ref:`ResetTimeslicing <group___cmp_iec_task_itf___i_e_c_task_bits_1gaa264293a99fea516f72e68c200638330>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_ACTIVATE_TIMESLICING <group___cmp_iec_task_itf___i_e_c_task_bits_1gaa64518f24b1aa65931d96efc337c259b>` , 0)
+
+- #define :ref:`DisableTimeslicing <group___cmp_iec_task_itf___i_e_c_task_bits_1ga345eeccd24805e9b48602fb2a2546dd8>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_DISABLE_TIMESLICING <group___cmp_iec_task_itf___i_e_c_task_bits_1gaf6fcecb1ac324782d5bcf48cb6a8f83c>` , 1)
+
+- #define :ref:`EnableTimeslicing <group___cmp_iec_task_itf___i_e_c_task_bits_1gafcf459fa139c411facda044f06be72a0>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_DISABLE_TIMESLICING <group___cmp_iec_task_itf___i_e_c_task_bits_1gaf6fcecb1ac324782d5bcf48cb6a8f83c>` , 0)
+
+- #define :ref:`SetSuspended <group___cmp_iec_task_itf___i_e_c_task_bits_1ga842fff810d77a8db3cf2b7c45e6a2b77>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_SUSPENDED <group___cmp_iec_task_itf___i_e_c_task_bits_1gae635d1366be0348ca15f865d662d8831>` , 1)
+
+- #define :ref:`SetResumed <group___cmp_iec_task_itf___i_e_c_task_bits_1gaec3d9f7345006c45d6f3a0674dac4a3c>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_SUSPENDED <group___cmp_iec_task_itf___i_e_c_task_bits_1gae635d1366be0348ca15f865d662d8831>` , 0)
+
+- #define :ref:`SetException <group___cmp_iec_task_itf___i_e_c_task_bits_1ga5b56cf2b9069f7e10b998e0ca529f0c1>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_EXCEPTION <group___cmp_iec_task_itf___i_e_c_task_bits_1gafb9a8fb52f5a6a993d4aca66e8cd4518>` , 1)
+
+- #define :ref:`ResetException <group___cmp_iec_task_itf___i_e_c_task_bits_1ga92e8a8b26c6debdd3e41a130dccb1e3d>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_EXCEPTION <group___cmp_iec_task_itf___i_e_c_task_bits_1gafb9a8fb52f5a6a993d4aca66e8cd4518>` , 0)
+
+- #define :ref:`SetActive <group___cmp_iec_task_itf___i_e_c_task_bits_1ga2a4fd0f9b067e6e2ecd9f0fde2dafed8>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_ACTIVE <group___cmp_iec_task_itf___i_e_c_task_bits_1gacae813b4c687b69bfe644ee262f08755>` , 1)
+
+- #define :ref:`SetInactive <group___cmp_iec_task_itf___i_e_c_task_bits_1gab614c5cb47bb03bddc5a25138aaf0fbe>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_ACTIVE <group___cmp_iec_task_itf___i_e_c_task_bits_1gacae813b4c687b69bfe644ee262f08755>` , 0)
+
+- #define :ref:`SetSuspendAtNextChance <group___cmp_iec_task_itf___i_e_c_task_bits_1ga0387766acaba1e9efc6260f068ec8aa8>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_SUSPEND_AT_NEXT_CHANCE <group___cmp_iec_task_itf___i_e_c_task_bits_1gae0303fedc2e9d2db2e65535f73384d45>` , 1)
+
+- #define :ref:`ResetSuspendAtNextChance <group___cmp_iec_task_itf___i_e_c_task_bits_1ga143092dc735cc42186e2fc0d33837426>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_SUSPEND_AT_NEXT_CHANCE <group___cmp_iec_task_itf___i_e_c_task_bits_1gae0303fedc2e9d2db2e65535f73384d45>` , 0)
+
+- #define :ref:`SetInIoUpdate <group___cmp_iec_task_itf___i_e_c_task_bits_1ga9cff0c578d2bf9ebb9b717b035278a52>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_IN_IO_UPDATE <group___cmp_iec_task_itf___i_e_c_task_bits_1ga424234b7cbc37502e5b28a67f0c55eff>` , 1)
+
+- #define :ref:`ResetInIoUpdate <group___cmp_iec_task_itf___i_e_c_task_bits_1gadab1bbcaf4dc39880bc18630a3ebce43>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_IN_IO_UPDATE <group___cmp_iec_task_itf___i_e_c_task_bits_1ga424234b7cbc37502e5b28a67f0c55eff>` , 0)
+
+- #define :ref:`SetInitOutputs <group___cmp_iec_task_itf___i_e_c_task_bits_1ga46f0090d1872dbc91d5a9de46fa99dd6>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_INIT_OUTPUTS <group___cmp_iec_task_itf___i_e_c_task_bits_1ga548eaed85782b209400cff4848b6c2df>` , 1)
+
+- #define :ref:`ResetInitOutputs <group___cmp_iec_task_itf___i_e_c_task_bits_1ga08c6f5c3baa90ed0e4f3ea9f8ed7a550>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_INIT_OUTPUTS <group___cmp_iec_task_itf___i_e_c_task_bits_1ga548eaed85782b209400cff4848b6c2df>` , 0)
+
+- #define :ref:`DisableEnterLock <group___cmp_iec_task_itf___i_e_c_task_bits_1ga346be34dd2f8bbe5f304202ff906cd7d>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_ENTER_LOCK <group___cmp_iec_task_itf___i_e_c_task_bits_1gacbfec466801f94f17441e423a2e1f1f9>` , 1)
+
+- #define :ref:`EnableEnterLock <group___cmp_iec_task_itf___i_e_c_task_bits_1ga008a0192d7aeed40bc4ed5246e5ae338>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_ENTER_LOCK <group___cmp_iec_task_itf___i_e_c_task_bits_1gacbfec466801f94f17441e423a2e1f1f9>` , 0)
+
+- #define :ref:`SetLeaveReaderLock <group___cmp_iec_task_itf___i_e_c_task_bits_1gade9e06a9cb6ef8cb2b844d8a5b2fe4c2>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_LEAVE_READER_LOCK <group___cmp_iec_task_itf___i_e_c_task_bits_1gaca838322e0933c045c005cbe5a90f7d0>` , 1)
+
+- #define :ref:`ResetLeaveReaderLock <group___cmp_iec_task_itf___i_e_c_task_bits_1ga0e14fb5e0cc2c8975e56555eb1a85003>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_LEAVE_READER_LOCK <group___cmp_iec_task_itf___i_e_c_task_bits_1gaca838322e0933c045c005cbe5a90f7d0>` , 0)
+
+- #define :ref:`SetSuspendedByDebugTask <group___cmp_iec_task_itf___i_e_c_task_bits_1gac2cd30bab5ce7c79abe591e6454ba828>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_SUSPENDED_BY_DEBUG_TASK <group___cmp_iec_task_itf___i_e_c_task_bits_1ga618da858f592f6253d1a2459ac8475cb>` , 1)
+
+- #define :ref:`ResetSuspendedByDebugTask <group___cmp_iec_task_itf___i_e_c_task_bits_1ga2e7e66e72bf00ad2fbb9b5e547b65da4>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_SUSPENDED_BY_DEBUG_TASK <group___cmp_iec_task_itf___i_e_c_task_bits_1ga618da858f592f6253d1a2459ac8475cb>` , 0)
+
+- #define :ref:`SetInDebugContext <group___cmp_iec_task_itf___i_e_c_task_bits_1ga64f2fd7a3f794d8cca0f99f71efa867a>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_IN_DEBUG_CONTEXT <group___cmp_iec_task_itf___i_e_c_task_bits_1ga6d7689171de9ea9a1f475378069d62be>` , 1)
+
+- #define :ref:`ResetInDebugContext <group___cmp_iec_task_itf___i_e_c_task_bits_1ga2045fe6b2537b89b16e43a00c164eec8>` :ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->ulFlags, sizeof(pTask->ulFlags), :ref:`ITF_BIT_IN_DEBUG_CONTEXT <group___cmp_iec_task_itf___i_e_c_task_bits_1ga6d7689171de9ea9a1f475378069d62be>` , 0)
+
+- #define :ref:`USE_iectaskgetconfig <group___cmp_iec_task_itf_1ga724eba9d4e84aa23905fdc04e4008bb9>` :ref:`PFIECTASKGETCONFIG_IEC <group___cmp_iec_task_itf_1gafcc7045b6369a398ff01bcaa05dc3fab>` pfiectaskgetconfig;
+
+- #define :ref:`EXT_iectaskgetconfig <group___cmp_iec_task_itf_1ga2a536d987f82a8658bb672b881685e4e>` extern :ref:`PFIECTASKGETCONFIG_IEC <group___cmp_iec_task_itf_1gafcc7045b6369a398ff01bcaa05dc3fab>` pfiectaskgetconfig;
+
+- #define :ref:`GET_iectaskgetconfig <group___cmp_iec_task_itf_1ga93a683a6cd837419093dc3d9cf8ddcc2>` s_pfCMGetAPI2( "iectaskgetconfig", (RTS_VOID_FCTPTR *)&pfiectaskgetconfig, (fl), 0, 0)
+
+- #define :ref:`CAL_iectaskgetconfig <group___cmp_iec_task_itf_1ga534045fe833000ee78b169a8e289111a>` pfiectaskgetconfig
+
+- #define :ref:`CHK_iectaskgetconfig <group___cmp_iec_task_itf_1ga6005e44f2116abcbd3ac34a8336c7d6b>` (pfiectaskgetconfig != NULL)
+
+- #define :ref:`EXP_iectaskgetconfig <group___cmp_iec_task_itf_1ga0594d12806629e04e98ea4089bf32dc8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"iectaskgetconfig", (RTS_UINTPTR) :ref:`iectaskgetconfig <group___cmp_iec_task_itf_1gae16024109dd010c9b054f7c1c4894b82>` , 1, 0)
+
+- #define :ref:`USE_iectaskgetinfo <group___cmp_iec_task_itf_1ga1a884ed5a84c986d52fc05e5f4936d0e>` :ref:`PFIECTASKGETINFO_IEC <group___cmp_iec_task_itf_1ga56f54568970e9d00cc809418b1ffb1e9>` pfiectaskgetinfo;
+
+- #define :ref:`EXT_iectaskgetinfo <group___cmp_iec_task_itf_1gac71e796ea841d733ca2cfdb093f83b79>` extern :ref:`PFIECTASKGETINFO_IEC <group___cmp_iec_task_itf_1ga56f54568970e9d00cc809418b1ffb1e9>` pfiectaskgetinfo;
+
+- #define :ref:`GET_iectaskgetinfo <group___cmp_iec_task_itf_1gabb031a64fbef120a6faf7c12e3dd9119>` s_pfCMGetAPI2( "iectaskgetinfo", (RTS_VOID_FCTPTR *)&pfiectaskgetinfo, (fl), 0, 0)
+
+- #define :ref:`CAL_iectaskgetinfo <group___cmp_iec_task_itf_1ga362bc76b6677f80e96cf4b87ad7cb27d>` pfiectaskgetinfo
+
+- #define :ref:`CHK_iectaskgetinfo <group___cmp_iec_task_itf_1ga8fce12deab40d5f4e520ee0d7ebd222e>` (pfiectaskgetinfo != NULL)
+
+- #define :ref:`EXP_iectaskgetinfo <group___cmp_iec_task_itf_1ga5b0364d9bc0929b92ce289052ee6b4d1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"iectaskgetinfo", (RTS_UINTPTR) :ref:`iectaskgetinfo <group___cmp_iec_task_itf_1ga325a21545482af2a497dc9a9372db8f0>` , 1, 0)
+
+- #define :ref:`USE_iectaskcreate <group___cmp_iec_task_itf_1gac39ba3c126ca1e31fa53fa80fe82ec25>` :ref:`PFIECTASKCREATE_IEC <group___cmp_iec_task_itf_1gadc44b3e0dd5473f26d5b7ddbe82c0385>` pfiectaskcreate;
+
+- #define :ref:`EXT_iectaskcreate <group___cmp_iec_task_itf_1ga5baed784110dfdedaf74a79a457f3a5f>` extern :ref:`PFIECTASKCREATE_IEC <group___cmp_iec_task_itf_1gadc44b3e0dd5473f26d5b7ddbe82c0385>` pfiectaskcreate;
+
+- #define :ref:`GET_iectaskcreate <group___cmp_iec_task_itf_1ga8617e9078bf136cea1d9b9de8826e5de>` s_pfCMGetAPI2( "iectaskcreate", (RTS_VOID_FCTPTR *)&pfiectaskcreate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xAF209471, 0x03050E00)
+
+- #define :ref:`CAL_iectaskcreate <group___cmp_iec_task_itf_1gabf09f1748152bacafdd5f9627554a3f6>` pfiectaskcreate
+
+- #define :ref:`CHK_iectaskcreate <group___cmp_iec_task_itf_1ga3b6d315f038ac8b057808351cfbfa2ea>` (pfiectaskcreate != NULL)
+
+- #define :ref:`EXP_iectaskcreate <group___cmp_iec_task_itf_1ga673337a0dff2c228c26f66aa258c3cf1>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskcreate", (RTS_UINTPTR) :ref:`iectaskcreate <group___cmp_iec_task_itf_1ga83d6daa008b9e8b7f38dfc66da322886>` , 1, 0xAF209471, 0x03050E00)
+
+- #define :ref:`USE_iectaskcreate2 <group___cmp_iec_task_itf_1gabda7c04090c46cdc760feb7f8a62b641>` :ref:`PFIECTASKCREATE2_IEC <group___cmp_iec_task_itf_1gaa4caf8303ea0c3872421ac5b392a40c0>` pfiectaskcreate2;
+
+- #define :ref:`EXT_iectaskcreate2 <group___cmp_iec_task_itf_1gad633ba3709969c3ec8a64b2e373cd320>` extern :ref:`PFIECTASKCREATE2_IEC <group___cmp_iec_task_itf_1gaa4caf8303ea0c3872421ac5b392a40c0>` pfiectaskcreate2;
+
+- #define :ref:`GET_iectaskcreate2 <group___cmp_iec_task_itf_1gaac2edf843c9c9317281686cfb0875c70>` s_pfCMGetAPI2( "iectaskcreate2", (RTS_VOID_FCTPTR *)&pfiectaskcreate2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x6AD581BB, 0x03050E00)
+
+- #define :ref:`CAL_iectaskcreate2 <group___cmp_iec_task_itf_1ga6d2581f9ecbcfeab6938db777555e3aa>` pfiectaskcreate2
+
+- #define :ref:`CHK_iectaskcreate2 <group___cmp_iec_task_itf_1ga4c2de0fef6da84082be88346061e36d8>` (pfiectaskcreate2 != NULL)
+
+- #define :ref:`EXP_iectaskcreate2 <group___cmp_iec_task_itf_1gab255cbaad1043f89bb14c396db0a0e15>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskcreate2", (RTS_UINTPTR) :ref:`iectaskcreate2 <group___cmp_iec_task_itf_1ga60569f0e92c669cd44e38f8082222877>` , 1, 0x6AD581BB, 0x03050E00)
+
+- #define :ref:`USE_iectaskdelete2 <group___cmp_iec_task_itf_1gaa65b2b0bc6dd4498d993eb55d0695e82>` :ref:`PFIECTASKDELETE2_IEC <group___cmp_iec_task_itf_1ga95f3097fff3a734a6b7f8ff2ed0694c3>` pfiectaskdelete2;
+
+- #define :ref:`EXT_iectaskdelete2 <group___cmp_iec_task_itf_1gaae79a15cfc66319b7dc7b553aec31667>` extern :ref:`PFIECTASKDELETE2_IEC <group___cmp_iec_task_itf_1ga95f3097fff3a734a6b7f8ff2ed0694c3>` pfiectaskdelete2;
+
+- #define :ref:`GET_iectaskdelete2 <group___cmp_iec_task_itf_1ga7243a5dccf26518baf5d6045b984aaa7>` s_pfCMGetAPI2( "iectaskdelete2", (RTS_VOID_FCTPTR *)&pfiectaskdelete2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x8269275F, 0x03050E00)
+
+- #define :ref:`CAL_iectaskdelete2 <group___cmp_iec_task_itf_1ga088d14cdbe56243f235d3b1e574a8dc8>` pfiectaskdelete2
+
+- #define :ref:`CHK_iectaskdelete2 <group___cmp_iec_task_itf_1ga748ed3d15146cbdb97abb1af3898c5b3>` (pfiectaskdelete2 != NULL)
+
+- #define :ref:`EXP_iectaskdelete2 <group___cmp_iec_task_itf_1gab2a4f084a6a48393ba68db88201ef425>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskdelete2", (RTS_UINTPTR) :ref:`iectaskdelete2 <group___cmp_iec_task_itf_1gaff66619f1daf3f5ecdf218b8e0e1b9f4>` , 1, 0x8269275F, 0x03050E00)
+
+- #define :ref:`USE_iectaskdisablescheduling <group___cmp_iec_task_itf_1ga019e342b9253289e83652764e0db6150>` :ref:`PFIECTASKDISABLESCHEDULING_IEC <group___cmp_iec_task_itf_1ga76ed4888a24c7dc15ec37d5aebc1e46a>` pfiectaskdisablescheduling;
+
+- #define :ref:`EXT_iectaskdisablescheduling <group___cmp_iec_task_itf_1ga8f105a48dd371c3cfbc67f79be467d40>` extern :ref:`PFIECTASKDISABLESCHEDULING_IEC <group___cmp_iec_task_itf_1ga76ed4888a24c7dc15ec37d5aebc1e46a>` pfiectaskdisablescheduling;
+
+- #define :ref:`GET_iectaskdisablescheduling <group___cmp_iec_task_itf_1ga989460182c51a49498dfd22541ac33af>` s_pfCMGetAPI2( "iectaskdisablescheduling", (RTS_VOID_FCTPTR *)&pfiectaskdisablescheduling, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xC3E3F168, 0x03050E00)
+
+- #define :ref:`CAL_iectaskdisablescheduling <group___cmp_iec_task_itf_1ga1b22db0e1693ac908ef6cb326abf9ff6>` pfiectaskdisablescheduling
+
+- #define :ref:`CHK_iectaskdisablescheduling <group___cmp_iec_task_itf_1ga8f1b52873b9608106a96368868963633>` (pfiectaskdisablescheduling != NULL)
+
+- #define :ref:`EXP_iectaskdisablescheduling <group___cmp_iec_task_itf_1ga44cbe335fd66ddb384302174bfb226fe>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskdisablescheduling", (RTS_UINTPTR) :ref:`iectaskdisablescheduling <group___cmp_iec_task_itf_1gaef1b4d817f5293c43ab5a1c4cadffa62>` , 1, 0xC3E3F168, 0x03050E00)
+
+- #define :ref:`USE_iectaskdisablewatchdog <group___cmp_iec_task_itf_1ga358d66a9a1fda5424f93dc30c2ded8bc>` :ref:`PFIECTASKDISABLEWATCHDOG_IEC <group___cmp_iec_task_itf_1ga03f9d05fcd1b12d190854231bf2dbe69>` pfiectaskdisablewatchdog;
+
+- #define :ref:`EXT_iectaskdisablewatchdog <group___cmp_iec_task_itf_1ga8de4e4086915d2af2832dfd47e9bd3a3>` extern :ref:`PFIECTASKDISABLEWATCHDOG_IEC <group___cmp_iec_task_itf_1ga03f9d05fcd1b12d190854231bf2dbe69>` pfiectaskdisablewatchdog;
+
+- #define :ref:`GET_iectaskdisablewatchdog <group___cmp_iec_task_itf_1ga498b42041bb9605e2e91ec58e2329af7>` s_pfCMGetAPI2( "iectaskdisablewatchdog", (RTS_VOID_FCTPTR *)&pfiectaskdisablewatchdog, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x2FF63495), 0x03050E00)
+
+- #define :ref:`CAL_iectaskdisablewatchdog <group___cmp_iec_task_itf_1ga0f42846409d8eb7f45dad1ff66e76a7c>` pfiectaskdisablewatchdog
+
+- #define :ref:`CHK_iectaskdisablewatchdog <group___cmp_iec_task_itf_1gab1ceeeab6a66de4669b3d02422956307>` (pfiectaskdisablewatchdog != NULL)
+
+- #define :ref:`EXP_iectaskdisablewatchdog <group___cmp_iec_task_itf_1ga7ab91dbbef48ba66d69a8260c140d8ba>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskdisablewatchdog", (RTS_UINTPTR) :ref:`iectaskdisablewatchdog <group___cmp_iec_task_itf_1gaa32c99ade69581ff9639f81d0b0f3291>` , 1, RTSITF_GET_SIGNATURE(0, 0x2FF63495), 0x03050E00)
+
+- #define :ref:`USE_iectaskdisablewatchdog2 <group___cmp_iec_task_itf_1ga91b6b880847830f6ec4348aac6eca4cc>` :ref:`PFIECTASKDISABLEWATCHDOG2_IEC <group___cmp_iec_task_itf_1ga4a5f18a971ce797e1bfb51844be63189>` pfiectaskdisablewatchdog2;
+
+- #define :ref:`EXT_iectaskdisablewatchdog2 <group___cmp_iec_task_itf_1ga61b6a9a70d0b3625007dd7e25daede43>` extern :ref:`PFIECTASKDISABLEWATCHDOG2_IEC <group___cmp_iec_task_itf_1ga4a5f18a971ce797e1bfb51844be63189>` pfiectaskdisablewatchdog2;
+
+- #define :ref:`GET_iectaskdisablewatchdog2 <group___cmp_iec_task_itf_1gaf1f523dcd16b49ecd65605fe8b1683aa>` s_pfCMGetAPI2( "iectaskdisablewatchdog2", (RTS_VOID_FCTPTR *)&pfiectaskdisablewatchdog2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x277BF3FE, 0x03050E00)
+
+- #define :ref:`CAL_iectaskdisablewatchdog2 <group___cmp_iec_task_itf_1ga61a736cd1cbe05163b9bbc75291a0203>` pfiectaskdisablewatchdog2
+
+- #define :ref:`CHK_iectaskdisablewatchdog2 <group___cmp_iec_task_itf_1gabc4a0e7ef83afc81f9e5e30ef4530914>` (pfiectaskdisablewatchdog2 != NULL)
+
+- #define :ref:`EXP_iectaskdisablewatchdog2 <group___cmp_iec_task_itf_1ga4373cfd0fc852f498609d931eafd902f>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskdisablewatchdog2", (RTS_UINTPTR) :ref:`iectaskdisablewatchdog2 <group___cmp_iec_task_itf_1ga0d2ccff747328b41c091dff303242c32>` , 1, 0x277BF3FE, 0x03050E00)
+
+- #define :ref:`USE_iectaskenablescheduling <group___cmp_iec_task_itf_1gae1e616ef9e0e4a9934ad178ec58f78a5>` :ref:`PFIECTASKENABLESCHEDULING_IEC <group___cmp_iec_task_itf_1gaa31e8d47a15ef6093dc771e9889fa768>` pfiectaskenablescheduling;
+
+- #define :ref:`EXT_iectaskenablescheduling <group___cmp_iec_task_itf_1gad26dc12be8dc0943e24f7ce82e9ae167>` extern :ref:`PFIECTASKENABLESCHEDULING_IEC <group___cmp_iec_task_itf_1gaa31e8d47a15ef6093dc771e9889fa768>` pfiectaskenablescheduling;
+
+- #define :ref:`GET_iectaskenablescheduling <group___cmp_iec_task_itf_1gab47abc10ef12f79f0cafc92b6dcef7a9>` s_pfCMGetAPI2( "iectaskenablescheduling", (RTS_VOID_FCTPTR *)&pfiectaskenablescheduling, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x4A96918C, 0x03050E00)
+
+- #define :ref:`CAL_iectaskenablescheduling <group___cmp_iec_task_itf_1gaf50d6d80fb994049649ffa9f6c696b75>` pfiectaskenablescheduling
+
+- #define :ref:`CHK_iectaskenablescheduling <group___cmp_iec_task_itf_1gaead0669256f1921a8bc81b9aa88e642f>` (pfiectaskenablescheduling != NULL)
+
+- #define :ref:`EXP_iectaskenablescheduling <group___cmp_iec_task_itf_1ga64e23134b1db63213ff7c38a9fe58bf1>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskenablescheduling", (RTS_UINTPTR) :ref:`iectaskenablescheduling <group___cmp_iec_task_itf_1ga85900ee657b04cb052401dcba5e38c85>` , 1, 0x4A96918C, 0x03050E00)
+
+- #define :ref:`USE_iectaskenablewatchdog <group___cmp_iec_task_itf_1ga8a57bf98bc8f243633a82bce8f63b0a8>` :ref:`PFIECTASKENABLEWATCHDOG_IEC <group___cmp_iec_task_itf_1ga8ed4efdec587051da8986e194b3c8ee5>` pfiectaskenablewatchdog;
+
+- #define :ref:`EXT_iectaskenablewatchdog <group___cmp_iec_task_itf_1gab101d0ee056aa46d7b52e896f46d83f9>` extern :ref:`PFIECTASKENABLEWATCHDOG_IEC <group___cmp_iec_task_itf_1ga8ed4efdec587051da8986e194b3c8ee5>` pfiectaskenablewatchdog;
+
+- #define :ref:`GET_iectaskenablewatchdog <group___cmp_iec_task_itf_1gacc2124a08389274a1731531e7750a795>` s_pfCMGetAPI2( "iectaskenablewatchdog", (RTS_VOID_FCTPTR *)&pfiectaskenablewatchdog, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x1CDBB730), 0x03050E00)
+
+- #define :ref:`CAL_iectaskenablewatchdog <group___cmp_iec_task_itf_1ga16c14f2cf256e4db179624fc816c3fe1>` pfiectaskenablewatchdog
+
+- #define :ref:`CHK_iectaskenablewatchdog <group___cmp_iec_task_itf_1ga7972b09df09213b07775e04d00053fd0>` (pfiectaskenablewatchdog != NULL)
+
+- #define :ref:`EXP_iectaskenablewatchdog <group___cmp_iec_task_itf_1gaae4573941c013e66af3e74cd2147d61a>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskenablewatchdog", (RTS_UINTPTR) :ref:`iectaskenablewatchdog <group___cmp_iec_task_itf_1ga825da65b28ca23fe550194579c78dae6>` , 1, RTSITF_GET_SIGNATURE(0, 0x1CDBB730), 0x03050E00)
+
+- #define :ref:`USE_iectaskenablewatchdog2 <group___cmp_iec_task_itf_1ga12431ecfba194ede6c495477a020c809>` :ref:`PFIECTASKENABLEWATCHDOG2_IEC <group___cmp_iec_task_itf_1gaacf5736791bb680c00393814852c1a3e>` pfiectaskenablewatchdog2;
+
+- #define :ref:`EXT_iectaskenablewatchdog2 <group___cmp_iec_task_itf_1ga54791a5f6e1d5fbdd3ad1af7c29c53bd>` extern :ref:`PFIECTASKENABLEWATCHDOG2_IEC <group___cmp_iec_task_itf_1gaacf5736791bb680c00393814852c1a3e>` pfiectaskenablewatchdog2;
+
+- #define :ref:`GET_iectaskenablewatchdog2 <group___cmp_iec_task_itf_1gac2e3485c79b59735fde1b5450f0d14f5>` s_pfCMGetAPI2( "iectaskenablewatchdog2", (RTS_VOID_FCTPTR *)&pfiectaskenablewatchdog2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE71D232F, 0x03050E00)
+
+- #define :ref:`CAL_iectaskenablewatchdog2 <group___cmp_iec_task_itf_1ga391f14c79879e3abfd350e50924e09c6>` pfiectaskenablewatchdog2
+
+- #define :ref:`CHK_iectaskenablewatchdog2 <group___cmp_iec_task_itf_1gaa229828ec8ab9db66a52f250f8434ba8>` (pfiectaskenablewatchdog2 != NULL)
+
+- #define :ref:`EXP_iectaskenablewatchdog2 <group___cmp_iec_task_itf_1ga8db48660ff3dc17b48d2efd0d076a8eb>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskenablewatchdog2", (RTS_UINTPTR) :ref:`iectaskenablewatchdog2 <group___cmp_iec_task_itf_1ga4fd2bab4a985ee26d1e873d07d76f2bc>` , 1, 0xE71D232F, 0x03050E00)
+
+- #define :ref:`USE_iectaskgetcurrent <group___cmp_iec_task_itf_1ga6c1ea91345039c1ae58b82905c874555>` :ref:`PFIECTASKGETCURRENT_IEC <group___cmp_iec_task_itf_1ga0b468aeab2dca8111d2132d31a17ce63>` pfiectaskgetcurrent;
+
+- #define :ref:`EXT_iectaskgetcurrent <group___cmp_iec_task_itf_1ga5d07873bb1f1588ebec3f225e0812a6d>` extern :ref:`PFIECTASKGETCURRENT_IEC <group___cmp_iec_task_itf_1ga0b468aeab2dca8111d2132d31a17ce63>` pfiectaskgetcurrent;
+
+- #define :ref:`GET_iectaskgetcurrent <group___cmp_iec_task_itf_1gaefb79f4cd55548742d29152fe73ac90b>` s_pfCMGetAPI2( "iectaskgetcurrent", (RTS_VOID_FCTPTR *)&pfiectaskgetcurrent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xFD44B5CC), 0x03050E00)
+
+- #define :ref:`CAL_iectaskgetcurrent <group___cmp_iec_task_itf_1ga68eac33a6552723c906ec68553e617fe>` pfiectaskgetcurrent
+
+- #define :ref:`CHK_iectaskgetcurrent <group___cmp_iec_task_itf_1ga592719a4eca43c14384784014f925555>` (pfiectaskgetcurrent != NULL)
+
+- #define :ref:`EXP_iectaskgetcurrent <group___cmp_iec_task_itf_1ga3847e2810384c71a9508932dec2d85a7>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskgetcurrent", (RTS_UINTPTR) :ref:`iectaskgetcurrent <group___cmp_iec_task_itf_1ga8af7ea168b5a6a73cf03325bf8f9fec0>` , 1, RTSITF_GET_SIGNATURE(0, 0xFD44B5CC), 0x03050E00)
+
+- #define :ref:`USE_iectaskgetdesc <group___cmp_iec_task_itf_1gafeac95b161b30437f932e1ba23605e47>` :ref:`PFIECTASKGETDESC_IEC <group___cmp_iec_task_itf_1gadc3c389c9905ba28819a89b456721e0a>` pfiectaskgetdesc;
+
+- #define :ref:`EXT_iectaskgetdesc <group___cmp_iec_task_itf_1ga7ba0b8ac210520549c071c9dc7b90351>` extern :ref:`PFIECTASKGETDESC_IEC <group___cmp_iec_task_itf_1gadc3c389c9905ba28819a89b456721e0a>` pfiectaskgetdesc;
+
+- #define :ref:`GET_iectaskgetdesc <group___cmp_iec_task_itf_1ga1db1ff0e4c8002966e750faaef176889>` s_pfCMGetAPI2( "iectaskgetdesc", (RTS_VOID_FCTPTR *)&pfiectaskgetdesc, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xCC23A789, 0x03050E00)
+
+- #define :ref:`CAL_iectaskgetdesc <group___cmp_iec_task_itf_1ga2ff26d2f844ce2bf346b13cda00cbb39>` pfiectaskgetdesc
+
+- #define :ref:`CHK_iectaskgetdesc <group___cmp_iec_task_itf_1ga7a5b8e0f622c0368720fec75c7f39e1b>` (pfiectaskgetdesc != NULL)
+
+- #define :ref:`EXP_iectaskgetdesc <group___cmp_iec_task_itf_1gacd88c8a32daa222e6ec954af95f0b382>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskgetdesc", (RTS_UINTPTR) :ref:`iectaskgetdesc <group___cmp_iec_task_itf_1ga01434141623c3c4a1418c0345c3b52da>` , 1, 0xCC23A789, 0x03050E00)
+
+- #define :ref:`USE_iectaskgetfirst <group___cmp_iec_task_itf_1gaed5c686ff142c6f0e011f35839d82927>` :ref:`PFIECTASKGETFIRST_IEC <group___cmp_iec_task_itf_1ga7586b263ef8f9a95d4a2fe027a39ab11>` pfiectaskgetfirst;
+
+- #define :ref:`EXT_iectaskgetfirst <group___cmp_iec_task_itf_1gaf5c64d21a828dd6cb51a048dfe032798>` extern :ref:`PFIECTASKGETFIRST_IEC <group___cmp_iec_task_itf_1ga7586b263ef8f9a95d4a2fe027a39ab11>` pfiectaskgetfirst;
+
+- #define :ref:`GET_iectaskgetfirst <group___cmp_iec_task_itf_1ga912ac94409ab301c6b0449974c20616a>` s_pfCMGetAPI2( "iectaskgetfirst", (RTS_VOID_FCTPTR *)&pfiectaskgetfirst, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xD65D1BF9), 0x03050E00)
+
+- #define :ref:`CAL_iectaskgetfirst <group___cmp_iec_task_itf_1ga46e3d8f08b791358784889f806dd64d7>` pfiectaskgetfirst
+
+- #define :ref:`CHK_iectaskgetfirst <group___cmp_iec_task_itf_1ga29b200ac4489af01259e17858473dfea>` (pfiectaskgetfirst != NULL)
+
+- #define :ref:`EXP_iectaskgetfirst <group___cmp_iec_task_itf_1gaf3ede9b3692ddacd212996d40219ec00>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskgetfirst", (RTS_UINTPTR) :ref:`iectaskgetfirst <group___cmp_iec_task_itf_1ga835ef14b601fae1f9518ce2e6fa9c042>` , 1, RTSITF_GET_SIGNATURE(0, 0xD65D1BF9), 0x03050E00)
+
+- #define :ref:`USE_iectaskgetinfo2 <group___cmp_iec_task_itf_1ga7971b0f5f6db51fb150420eab7540232>` :ref:`PFIECTASKGETINFO2_IEC <group___cmp_iec_task_itf_1ga669ae53a2504e4466ccdd3630ad137c2>` pfiectaskgetinfo2;
+
+- #define :ref:`EXT_iectaskgetinfo2 <group___cmp_iec_task_itf_1ga9cc029e1b8fe7909adbffa0a251de322>` extern :ref:`PFIECTASKGETINFO2_IEC <group___cmp_iec_task_itf_1ga669ae53a2504e4466ccdd3630ad137c2>` pfiectaskgetinfo2;
+
+- #define :ref:`GET_iectaskgetinfo2 <group___cmp_iec_task_itf_1gaa4d94d033d2d02de4cd5f194e45ca08b>` s_pfCMGetAPI2( "iectaskgetinfo2", (RTS_VOID_FCTPTR *)&pfiectaskgetinfo2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x2A6E9BE6), 0x03050E00)
+
+- #define :ref:`CAL_iectaskgetinfo2 <group___cmp_iec_task_itf_1gad29bf3098f02aeaf966547aaafcfbc62>` pfiectaskgetinfo2
+
+- #define :ref:`CHK_iectaskgetinfo2 <group___cmp_iec_task_itf_1gad19e60684315801704eb5ed0cf24af39>` (pfiectaskgetinfo2 != NULL)
+
+- #define :ref:`EXP_iectaskgetinfo2 <group___cmp_iec_task_itf_1gac4fa64b64852b0704f2aaff91582ea12>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskgetinfo2", (RTS_UINTPTR) :ref:`iectaskgetinfo2 <group___cmp_iec_task_itf_1ga5005ade6486c3e511c7e09f57655be97>` , 1, RTSITF_GET_SIGNATURE(0, 0x2A6E9BE6), 0x03050E00)
+
+- #define :ref:`USE_iectaskgetnext <group___cmp_iec_task_itf_1ga63f8a5b9ac72ae949ce0e7f23ccbd06f>` :ref:`PFIECTASKGETNEXT_IEC <group___cmp_iec_task_itf_1gacd43747199f3671c852722d82ad3e01b>` pfiectaskgetnext;
+
+- #define :ref:`EXT_iectaskgetnext <group___cmp_iec_task_itf_1gae9bcf920ef2cea847b397f78117c2a57>` extern :ref:`PFIECTASKGETNEXT_IEC <group___cmp_iec_task_itf_1gacd43747199f3671c852722d82ad3e01b>` pfiectaskgetnext;
+
+- #define :ref:`GET_iectaskgetnext <group___cmp_iec_task_itf_1ga8c9405638373f03d8b20d07832a3017a>` s_pfCMGetAPI2( "iectaskgetnext", (RTS_VOID_FCTPTR *)&pfiectaskgetnext, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC2306FF5), 0x03050E00)
+
+- #define :ref:`CAL_iectaskgetnext <group___cmp_iec_task_itf_1ga2d768a12f98688a0e6fb50bf34f6fee7>` pfiectaskgetnext
+
+- #define :ref:`CHK_iectaskgetnext <group___cmp_iec_task_itf_1ga33561f49a0182aa78573e2c93f417255>` (pfiectaskgetnext != NULL)
+
+- #define :ref:`EXP_iectaskgetnext <group___cmp_iec_task_itf_1gacbce5083dc3669b1af8cbaf5127b6299>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskgetnext", (RTS_UINTPTR) :ref:`iectaskgetnext <group___cmp_iec_task_itf_1gaf3adae14465e2c4a816294939fc50ca1>` , 1, RTSITF_GET_SIGNATURE(0, 0xC2306FF5), 0x03050E00)
+
+- #define :ref:`USE_iectaskgetprofiling <group___cmp_iec_task_itf_1gad96dae3e581e965d7b45800bb90fadb2>` :ref:`PFIECTASKGETPROFILING_IEC <group___cmp_iec_task_itf_1ga729b27712e9e709d20014c1ca110343d>` pfiectaskgetprofiling;
+
+- #define :ref:`EXT_iectaskgetprofiling <group___cmp_iec_task_itf_1ga2858b5a8396be5f6477d2dd24de71a9a>` extern :ref:`PFIECTASKGETPROFILING_IEC <group___cmp_iec_task_itf_1ga729b27712e9e709d20014c1ca110343d>` pfiectaskgetprofiling;
+
+- #define :ref:`GET_iectaskgetprofiling <group___cmp_iec_task_itf_1ga360a493d55220ed670cbdc763c527d0f>` s_pfCMGetAPI2( "iectaskgetprofiling", (RTS_VOID_FCTPTR *)&pfiectaskgetprofiling, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x217F24B2), 0x03050E00)
+
+- #define :ref:`CAL_iectaskgetprofiling <group___cmp_iec_task_itf_1ga4547fc3cd0a9ef32d9701ce4595c4d29>` pfiectaskgetprofiling
+
+- #define :ref:`CHK_iectaskgetprofiling <group___cmp_iec_task_itf_1gafc628db0527a2f095229190bd1998c7c>` (pfiectaskgetprofiling != NULL)
+
+- #define :ref:`EXP_iectaskgetprofiling <group___cmp_iec_task_itf_1gaf8e94c212f6cf19884a13d08a279b876>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskgetprofiling", (RTS_UINTPTR) :ref:`iectaskgetprofiling <group___cmp_iec_task_itf_1ga371a769a09db13d6feb30c86e0f1f30e>` , 1, RTSITF_GET_SIGNATURE(0, 0x217F24B2), 0x03050E00)
+
+- #define :ref:`USE_iectaskreload <group___cmp_iec_task_itf_1ga3bf8104e87c9af05f65b5150139334dc>` :ref:`PFIECTASKRELOAD_IEC <group___cmp_iec_task_itf_1ga95e256f29a6383ff7d8f46f8ae21e19c>` pfiectaskreload;
+
+- #define :ref:`EXT_iectaskreload <group___cmp_iec_task_itf_1gaf2bf71facbf38c46700a6170e3b62970>` extern :ref:`PFIECTASKRELOAD_IEC <group___cmp_iec_task_itf_1ga95e256f29a6383ff7d8f46f8ae21e19c>` pfiectaskreload;
+
+- #define :ref:`GET_iectaskreload <group___cmp_iec_task_itf_1ga166e66d4068167f091a6cb8abb6c68e0>` s_pfCMGetAPI2( "iectaskreload", (RTS_VOID_FCTPTR *)&pfiectaskreload, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x796FC828, 0x03050E00)
+
+- #define :ref:`CAL_iectaskreload <group___cmp_iec_task_itf_1ga4ae851fa7d37a4611f0174b68b67af40>` pfiectaskreload
+
+- #define :ref:`CHK_iectaskreload <group___cmp_iec_task_itf_1gadef59425b07d905484872d46bad534bd>` (pfiectaskreload != NULL)
+
+- #define :ref:`EXP_iectaskreload <group___cmp_iec_task_itf_1ga0f79357f9a251362f1d2ac068a01e5de>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskreload", (RTS_UINTPTR) :ref:`iectaskreload <group___cmp_iec_task_itf_1gac94f4d1fcf1ab54df3ab4a2642ef991b>` , 1, 0x796FC828, 0x03050E00)
+
+- #define :ref:`USE_iectaskresetstatistics <group___cmp_iec_task_itf_1ga19e2d9414c7c66e2ad9b28cc6fbdafae>` :ref:`PFIECTASKRESETSTATISTICS_IEC <group___cmp_iec_task_itf_1ga6990f4a8e3e7a848424d4add136af734>` pfiectaskresetstatistics;
+
+- #define :ref:`EXT_iectaskresetstatistics <group___cmp_iec_task_itf_1ga85e68bcce8550898f7c2aa64c145413b>` extern :ref:`PFIECTASKRESETSTATISTICS_IEC <group___cmp_iec_task_itf_1ga6990f4a8e3e7a848424d4add136af734>` pfiectaskresetstatistics;
+
+- #define :ref:`GET_iectaskresetstatistics <group___cmp_iec_task_itf_1gae33765d6dad3e3c2fcab5bc5a8ff9b90>` s_pfCMGetAPI2( "iectaskresetstatistics", (RTS_VOID_FCTPTR *)&pfiectaskresetstatistics, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x6291DC5B, 0x03050E00)
+
+- #define :ref:`CAL_iectaskresetstatistics <group___cmp_iec_task_itf_1gacbad0a7d671e331c4a5235e2d27fb9c4>` pfiectaskresetstatistics
+
+- #define :ref:`CHK_iectaskresetstatistics <group___cmp_iec_task_itf_1gaed37b987f78c61145bad847dcee58077>` (pfiectaskresetstatistics != NULL)
+
+- #define :ref:`EXP_iectaskresetstatistics <group___cmp_iec_task_itf_1ga4e80aeb03b4bbdfdf763746ef1e91763>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iectaskresetstatistics", (RTS_UINTPTR) :ref:`iectaskresetstatistics <group___cmp_iec_task_itf_1ga214ffaa11435d6726cfd55cd75399e29>` , 1, 0x6291DC5B, 0x03050E00)
+
+- #define :ref:`USE_IecTaskCreate <group___cmp_iec_task_itf_1ga33deeb277c02942caacd23a85687dbde>` :ref:`PFIECTASKCREATE <group___cmp_iec_task_itf_1gaf715af71cb7a21a4e1d838f66bfbfc63>` pfIecTaskCreate;
+
+- #define :ref:`EXT_IecTaskCreate <group___cmp_iec_task_itf_1ga57c6ff0b18f3f47d3be3f2b01a0417bd>` extern :ref:`PFIECTASKCREATE <group___cmp_iec_task_itf_1gaf715af71cb7a21a4e1d838f66bfbfc63>` pfIecTaskCreate;
+
+- #define :ref:`GET_IecTaskCreate <group___cmp_iec_task_itf_1gae44f253e910c03c3731685bd91aa7ee5>` s_pfCMGetAPI2( "IecTaskCreate", (RTS_VOID_FCTPTR *)&pfIecTaskCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskCreate <group___cmp_iec_task_itf_1ga2e56e15c046e76162138440001bea4af>` pfIecTaskCreate
+
+- #define :ref:`CHK_IecTaskCreate <group___cmp_iec_task_itf_1ga537316799ede7d2943fe0561df7861ef>` (pfIecTaskCreate != NULL)
+
+- #define :ref:`EXP_IecTaskCreate <group___cmp_iec_task_itf_1gabb7cbbd989926521580017e5fefc7ea6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskCreate", (RTS_UINTPTR) :ref:`IecTaskCreate <group___cmp_iec_task_itf_1ga04cd5e02f05231c7e341a08f67bbeb34>` , 0, 0)
+
+- #define :ref:`USE_IecTaskDelete <group___cmp_iec_task_itf_1gab8d04e62dc319d01daadd0f39c92d2b0>` :ref:`PFIECTASKDELETE <group___cmp_iec_task_itf_1ga50dcb190491b6c3244efe3af5a10e48f>` pfIecTaskDelete;
+
+- #define :ref:`EXT_IecTaskDelete <group___cmp_iec_task_itf_1ga5153e803e0ff9a8af2ab41166fd69a4f>` extern :ref:`PFIECTASKDELETE <group___cmp_iec_task_itf_1ga50dcb190491b6c3244efe3af5a10e48f>` pfIecTaskDelete;
+
+- #define :ref:`GET_IecTaskDelete <group___cmp_iec_task_itf_1ga11b8402912258ed935572a7b0a53d5f5>` s_pfCMGetAPI2( "IecTaskDelete", (RTS_VOID_FCTPTR *)&pfIecTaskDelete, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskDelete <group___cmp_iec_task_itf_1ga651ba7a00ca2e10d28c234ceaf223459>` pfIecTaskDelete
+
+- #define :ref:`CHK_IecTaskDelete <group___cmp_iec_task_itf_1ga3b056b77e3d7d2b25db27ae2a13326cd>` (pfIecTaskDelete != NULL)
+
+- #define :ref:`EXP_IecTaskDelete <group___cmp_iec_task_itf_1gadd779e14cd7ae9ea5ea44428723aa6ca>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskDelete", (RTS_UINTPTR) :ref:`IecTaskDelete <group___cmp_iec_task_itf_1ga77bb8fc663de256b0fc9e9dc65b7e1c1>` , 0, 0)
+
+- #define :ref:`USE_IecTaskDelete2 <group___cmp_iec_task_itf_1ga476f7078a5d30e166a344142c7b6f579>` :ref:`PFIECTASKDELETE2 <group___cmp_iec_task_itf_1ga49dcffc14a17143826e1aad35aa16a04>` pfIecTaskDelete2;
+
+- #define :ref:`EXT_IecTaskDelete2 <group___cmp_iec_task_itf_1gaab8576b8f21c0a508c1cf85e613819c6>` extern :ref:`PFIECTASKDELETE2 <group___cmp_iec_task_itf_1ga49dcffc14a17143826e1aad35aa16a04>` pfIecTaskDelete2;
+
+- #define :ref:`GET_IecTaskDelete2 <group___cmp_iec_task_itf_1gacd6dfbf0eb8f6afa6e2c17f0701dcbd2>` s_pfCMGetAPI2( "IecTaskDelete2", (RTS_VOID_FCTPTR *)&pfIecTaskDelete2, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskDelete2 <group___cmp_iec_task_itf_1ga13aa1e71cdc5fbcee04f2617f638ca74>` pfIecTaskDelete2
+
+- #define :ref:`CHK_IecTaskDelete2 <group___cmp_iec_task_itf_1ga68bc9199f6634558a6646a0ae4f3f793>` (pfIecTaskDelete2 != NULL)
+
+- #define :ref:`EXP_IecTaskDelete2 <group___cmp_iec_task_itf_1ga0b99af9d671d5f035d6ae3126f7010f9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskDelete2", (RTS_UINTPTR) :ref:`IecTaskDelete2 <group___cmp_iec_task_itf_1gae4b4669437eb61427806aaae5da36cdc>` , 0, 0)
+
+- #define :ref:`USE_IecFreeTasks <group___cmp_iec_task_itf_1ga73685ce276e64e607ff7e2f5b85ce74c>` :ref:`PFIECFREETASKS <group___cmp_iec_task_itf_1ga445ff604f4f13d7f3b0b0c7e4cf3ff67>` pfIecFreeTasks;
+
+- #define :ref:`EXT_IecFreeTasks <group___cmp_iec_task_itf_1ga21c5929bacff79a777b3ff35c7355bfe>` extern :ref:`PFIECFREETASKS <group___cmp_iec_task_itf_1ga445ff604f4f13d7f3b0b0c7e4cf3ff67>` pfIecFreeTasks;
+
+- #define :ref:`GET_IecFreeTasks <group___cmp_iec_task_itf_1gaa1f6396f82a104d7948e99c53a9e5911>` s_pfCMGetAPI2( "IecFreeTasks", (RTS_VOID_FCTPTR *)&pfIecFreeTasks, (fl), 0, 0)
+
+- #define :ref:`CAL_IecFreeTasks <group___cmp_iec_task_itf_1ga96754b4283b0e651e8a7be39cf187f08>` pfIecFreeTasks
+
+- #define :ref:`CHK_IecFreeTasks <group___cmp_iec_task_itf_1gadcf3368e16aa126f6f7b3da21f858b47>` (pfIecFreeTasks != NULL)
+
+- #define :ref:`EXP_IecFreeTasks <group___cmp_iec_task_itf_1ga411b65ab76f80151fe79cb5aab9e0e67>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecFreeTasks", (RTS_UINTPTR) :ref:`IecFreeTasks <group___cmp_iec_task_itf_1ga9f3298eae595f2c87108367f95be3531>` , 0, 0)
+
+- #define :ref:`USE_IecFreeTasks2 <group___cmp_iec_task_itf_1gaeff14b57b517b119aa8f66b1fc8a2ab6>` :ref:`PFIECFREETASKS2 <group___cmp_iec_task_itf_1gaf55aad94d94074da863681c5e9290000>` pfIecFreeTasks2;
+
+- #define :ref:`EXT_IecFreeTasks2 <group___cmp_iec_task_itf_1gaf790df579424f0e85b0799025a0686c0>` extern :ref:`PFIECFREETASKS2 <group___cmp_iec_task_itf_1gaf55aad94d94074da863681c5e9290000>` pfIecFreeTasks2;
+
+- #define :ref:`GET_IecFreeTasks2 <group___cmp_iec_task_itf_1ga5c92427b12aef26bb2b43aa2068d4276>` s_pfCMGetAPI2( "IecFreeTasks2", (RTS_VOID_FCTPTR *)&pfIecFreeTasks2, (fl), 0, 0)
+
+- #define :ref:`CAL_IecFreeTasks2 <group___cmp_iec_task_itf_1gad1ffe0ac76aec5349af29836cff5eb57>` pfIecFreeTasks2
+
+- #define :ref:`CHK_IecFreeTasks2 <group___cmp_iec_task_itf_1ga18523177ddf458c932e54c6fd5d5edc6>` (pfIecFreeTasks2 != NULL)
+
+- #define :ref:`EXP_IecFreeTasks2 <group___cmp_iec_task_itf_1gadadf6866b5ee99799d246ad2e28627cb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecFreeTasks2", (RTS_UINTPTR) :ref:`IecFreeTasks2 <group___cmp_iec_task_itf_1gaf13dde19807fba430042b4b07eb93e29>` , 0, 0)
+
+- #define :ref:`USE_IecTaskCycle <group___cmp_iec_task_itf_1ga8b682a5602d1f8154be611cf8764b926>` :ref:`PFIECTASKCYCLE <group___cmp_iec_task_itf_1gaeee4d636c6c90ef7f38ec5db5a92a5a7>` pfIecTaskCycle;
+
+- #define :ref:`EXT_IecTaskCycle <group___cmp_iec_task_itf_1ga36f7d055355a6f76691386a8a4467ed9>` extern :ref:`PFIECTASKCYCLE <group___cmp_iec_task_itf_1gaeee4d636c6c90ef7f38ec5db5a92a5a7>` pfIecTaskCycle;
+
+- #define :ref:`GET_IecTaskCycle <group___cmp_iec_task_itf_1ga40c353d266066c7df0e542ba1fc1d6bf>` s_pfCMGetAPI2( "IecTaskCycle", (RTS_VOID_FCTPTR *)&pfIecTaskCycle, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskCycle <group___cmp_iec_task_itf_1ga29a85b4bf93a75afe71152577da3bc88>` pfIecTaskCycle
+
+- #define :ref:`CHK_IecTaskCycle <group___cmp_iec_task_itf_1gaaf2efee179f44f97d147cc6a1d56ab40>` (pfIecTaskCycle != NULL)
+
+- #define :ref:`EXP_IecTaskCycle <group___cmp_iec_task_itf_1ga7d8c9ea9dbc4d6e2f0affb60e1b2d46b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskCycle", (RTS_UINTPTR) :ref:`IecTaskCycle <group___cmp_iec_task_itf_1gaf72e8cabbe36a206301026c133fe088c>` , 0, 0)
+
+- #define :ref:`USE_IecTaskUpdateJitterTime <group___cmp_iec_task_itf_1gad4dca2c4192b4ab51b28ce0f4d62575f>` :ref:`PFIECTASKUPDATEJITTERTIME <group___cmp_iec_task_itf_1ga01c1938f2e18a70ab68a33a3d0d6f824>` pfIecTaskUpdateJitterTime;
+
+- #define :ref:`EXT_IecTaskUpdateJitterTime <group___cmp_iec_task_itf_1ga91b72ffacd1ed42f673dcfa1fcf71427>` extern :ref:`PFIECTASKUPDATEJITTERTIME <group___cmp_iec_task_itf_1ga01c1938f2e18a70ab68a33a3d0d6f824>` pfIecTaskUpdateJitterTime;
+
+- #define :ref:`GET_IecTaskUpdateJitterTime <group___cmp_iec_task_itf_1ga22c8e1ebd8152e31b5ebd8afc90aee4f>` s_pfCMGetAPI2( "IecTaskUpdateJitterTime", (RTS_VOID_FCTPTR *)&pfIecTaskUpdateJitterTime, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskUpdateJitterTime <group___cmp_iec_task_itf_1ga0bdb98822a4e0bbdf83ddd3e84726e71>` pfIecTaskUpdateJitterTime
+
+- #define :ref:`CHK_IecTaskUpdateJitterTime <group___cmp_iec_task_itf_1ga8ef30c6f4e1107b8f8fafa1833ba7d29>` (pfIecTaskUpdateJitterTime != NULL)
+
+- #define :ref:`EXP_IecTaskUpdateJitterTime <group___cmp_iec_task_itf_1ga86387b066619c0b07e80725d9783c9ea>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskUpdateJitterTime", (RTS_UINTPTR) :ref:`IecTaskUpdateJitterTime <group___cmp_iec_task_itf_1gad90295c123bb12013728b7eec4d87157>` , 0, 0)
+
+- #define :ref:`USE_IecTaskUpdateJitterTime2 <group___cmp_iec_task_itf_1ga9e0fab17771dec880cc66f6863097ca2>` :ref:`PFIECTASKUPDATEJITTERTIME2 <group___cmp_iec_task_itf_1ga4c6ad8b502a95b10ae9155ae9693d354>` pfIecTaskUpdateJitterTime2;
+
+- #define :ref:`EXT_IecTaskUpdateJitterTime2 <group___cmp_iec_task_itf_1ga1c4a2353beccef5b1034a47610d8060f>` extern :ref:`PFIECTASKUPDATEJITTERTIME2 <group___cmp_iec_task_itf_1ga4c6ad8b502a95b10ae9155ae9693d354>` pfIecTaskUpdateJitterTime2;
+
+- #define :ref:`GET_IecTaskUpdateJitterTime2 <group___cmp_iec_task_itf_1gaedd087d8a30920a70a875a70e1a58372>` s_pfCMGetAPI2( "IecTaskUpdateJitterTime2", (RTS_VOID_FCTPTR *)&pfIecTaskUpdateJitterTime2, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskUpdateJitterTime2 <group___cmp_iec_task_itf_1gaeba9b543247a640704d00ae6f9d7178a>` pfIecTaskUpdateJitterTime2
+
+- #define :ref:`CHK_IecTaskUpdateJitterTime2 <group___cmp_iec_task_itf_1ga8b5f7a7916a1ec72f1e678c47a048497>` (pfIecTaskUpdateJitterTime2 != NULL)
+
+- #define :ref:`EXP_IecTaskUpdateJitterTime2 <group___cmp_iec_task_itf_1gaf7f83bebf4562eadeb9bb18e280ba4b9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskUpdateJitterTime2", (RTS_UINTPTR) :ref:`IecTaskUpdateJitterTime2 <group___cmp_iec_task_itf_1ga039068c36feb662eeed4bf92fe78c7f2>` , 0, 0)
+
+- #define :ref:`USE_IecTaskUpdateCycleTime <group___cmp_iec_task_itf_1ga700b24f65ba211b91d1595725cab660c>` :ref:`PFIECTASKUPDATECYCLETIME <group___cmp_iec_task_itf_1gab5bc63e76e0f051f1457b57b08348ae0>` pfIecTaskUpdateCycleTime;
+
+- #define :ref:`EXT_IecTaskUpdateCycleTime <group___cmp_iec_task_itf_1ga2037b98a14ce300f5e1a7227de28aff7>` extern :ref:`PFIECTASKUPDATECYCLETIME <group___cmp_iec_task_itf_1gab5bc63e76e0f051f1457b57b08348ae0>` pfIecTaskUpdateCycleTime;
+
+- #define :ref:`GET_IecTaskUpdateCycleTime <group___cmp_iec_task_itf_1ga6e709ea6a6aaf4dca6add1ca39f53c44>` s_pfCMGetAPI2( "IecTaskUpdateCycleTime", (RTS_VOID_FCTPTR *)&pfIecTaskUpdateCycleTime, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskUpdateCycleTime <group___cmp_iec_task_itf_1ga17a27fe31e6c389920fe6c7ba3f53eb0>` pfIecTaskUpdateCycleTime
+
+- #define :ref:`CHK_IecTaskUpdateCycleTime <group___cmp_iec_task_itf_1ga067cbebf9ef82441cf2b739a9d0c0a1b>` (pfIecTaskUpdateCycleTime != NULL)
+
+- #define :ref:`EXP_IecTaskUpdateCycleTime <group___cmp_iec_task_itf_1ga052a63db14c7cf837918e919abba5a14>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskUpdateCycleTime", (RTS_UINTPTR) :ref:`IecTaskUpdateCycleTime <group___cmp_iec_task_itf_1ga7e6a0b987b3343498580d1cd0ed38d73>` , 0, 0)
+
+- #define :ref:`USE_IecTasksResetAllowed <group___cmp_iec_task_itf_1ga4d2425eaca21b1d238df6c44a948747e>` :ref:`PFIECTASKSRESETALLOWED <group___cmp_iec_task_itf_1ga682dc49e0df2080069abfd40e30e0bb0>` pfIecTasksResetAllowed;
+
+- #define :ref:`EXT_IecTasksResetAllowed <group___cmp_iec_task_itf_1gaff3143d2ad02ad2851a1fd7deebf5755>` extern :ref:`PFIECTASKSRESETALLOWED <group___cmp_iec_task_itf_1ga682dc49e0df2080069abfd40e30e0bb0>` pfIecTasksResetAllowed;
+
+- #define :ref:`GET_IecTasksResetAllowed <group___cmp_iec_task_itf_1ga394bb50ad042039adc446a1b61867734>` s_pfCMGetAPI2( "IecTasksResetAllowed", (RTS_VOID_FCTPTR *)&pfIecTasksResetAllowed, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTasksResetAllowed <group___cmp_iec_task_itf_1gabda79eb9ef1f85bc9a6210effe0f8768>` pfIecTasksResetAllowed
+
+- #define :ref:`CHK_IecTasksResetAllowed <group___cmp_iec_task_itf_1ga9fa4b9d842c631f7d3eedc5dab0a8f89>` (pfIecTasksResetAllowed != NULL)
+
+- #define :ref:`EXP_IecTasksResetAllowed <group___cmp_iec_task_itf_1ga1ad7f6a94aece758d9773315a8712624>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTasksResetAllowed", (RTS_UINTPTR) :ref:`IecTasksResetAllowed <group___cmp_iec_task_itf_1gad7d113d788b4300dadd834d94a159640>` , 0, 0)
+
+- #define :ref:`USE_IecTasksPrepareReset <group___cmp_iec_task_itf_1gadf19aa3ce0e47ae764d83540c3478ef5>` :ref:`PFIECTASKSPREPARERESET <group___cmp_iec_task_itf_1ga7deb3ddfdcc449eda1dfe778e8d2ee6b>` pfIecTasksPrepareReset;
+
+- #define :ref:`EXT_IecTasksPrepareReset <group___cmp_iec_task_itf_1gaae7ed2146bc29dd8e31153ce872aa609>` extern :ref:`PFIECTASKSPREPARERESET <group___cmp_iec_task_itf_1ga7deb3ddfdcc449eda1dfe778e8d2ee6b>` pfIecTasksPrepareReset;
+
+- #define :ref:`GET_IecTasksPrepareReset <group___cmp_iec_task_itf_1ga0e05920395977f8162bd331656801378>` s_pfCMGetAPI2( "IecTasksPrepareReset", (RTS_VOID_FCTPTR *)&pfIecTasksPrepareReset, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTasksPrepareReset <group___cmp_iec_task_itf_1ga40271fabf819ed5f8059be79329e0cf0>` pfIecTasksPrepareReset
+
+- #define :ref:`CHK_IecTasksPrepareReset <group___cmp_iec_task_itf_1ga17aba5eff41780e9433dcbb45c0a3b19>` (pfIecTasksPrepareReset != NULL)
+
+- #define :ref:`EXP_IecTasksPrepareReset <group___cmp_iec_task_itf_1ga945025e5e87958cfbd884a52c55a785c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTasksPrepareReset", (RTS_UINTPTR) :ref:`IecTasksPrepareReset <group___cmp_iec_task_itf_1gab1895495f50b357bcb2d722d4bfb4c6b>` , 0, 0)
+
+- #define :ref:`USE_IecTasksResetDone <group___cmp_iec_task_itf_1ga3e89f9f267ffbe1905749ae468ac1046>` :ref:`PFIECTASKSRESETDONE <group___cmp_iec_task_itf_1gac83ea25478f2bb24372c43f7f3e7d3c0>` pfIecTasksResetDone;
+
+- #define :ref:`EXT_IecTasksResetDone <group___cmp_iec_task_itf_1ga62d7a6ed6f3e832bdadda4a43f2a5fb3>` extern :ref:`PFIECTASKSRESETDONE <group___cmp_iec_task_itf_1gac83ea25478f2bb24372c43f7f3e7d3c0>` pfIecTasksResetDone;
+
+- #define :ref:`GET_IecTasksResetDone <group___cmp_iec_task_itf_1gab5b712aa3523c88086901820f094fc2e>` s_pfCMGetAPI2( "IecTasksResetDone", (RTS_VOID_FCTPTR *)&pfIecTasksResetDone, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTasksResetDone <group___cmp_iec_task_itf_1gaa63ebf00a8cb9a22919e84d6e5d813f7>` pfIecTasksResetDone
+
+- #define :ref:`CHK_IecTasksResetDone <group___cmp_iec_task_itf_1ga119d969cd5e416b8d3eb6791435ee7b8>` (pfIecTasksResetDone != NULL)
+
+- #define :ref:`EXP_IecTasksResetDone <group___cmp_iec_task_itf_1gaf3d03bb4ab237ecbbbe513e0d7aea6b1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTasksResetDone", (RTS_UINTPTR) :ref:`IecTasksResetDone <group___cmp_iec_task_itf_1ga476f2757fcf65cc3cc9a308dda7b4c33>` , 0, 0)
+
+- #define :ref:`USE_IecTaskGetWaitForStopTimeout <group___cmp_iec_task_itf_1gaf1ba4b5d849e4c6f701b905a745bb13d>` :ref:`PFIECTASKGETWAITFORSTOPTIMEOUT <group___cmp_iec_task_itf_1ga8c8b06a35e3be01794cda4b4404470f7>` pfIecTaskGetWaitForStopTimeout;
+
+- #define :ref:`EXT_IecTaskGetWaitForStopTimeout <group___cmp_iec_task_itf_1gaa175a28447cccc6333ddf3fef51729fd>` extern :ref:`PFIECTASKGETWAITFORSTOPTIMEOUT <group___cmp_iec_task_itf_1ga8c8b06a35e3be01794cda4b4404470f7>` pfIecTaskGetWaitForStopTimeout;
+
+- #define :ref:`GET_IecTaskGetWaitForStopTimeout <group___cmp_iec_task_itf_1ga8beaae69862f83871ea99a50a347c7c2>` s_pfCMGetAPI2( "IecTaskGetWaitForStopTimeout", (RTS_VOID_FCTPTR *)&pfIecTaskGetWaitForStopTimeout, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskGetWaitForStopTimeout <group___cmp_iec_task_itf_1ga9fb9848cdeb5f7c9fef7bfa3f36a39f0>` pfIecTaskGetWaitForStopTimeout
+
+- #define :ref:`CHK_IecTaskGetWaitForStopTimeout <group___cmp_iec_task_itf_1ga6dc4f9015867bec4b799136fdd778b92>` (pfIecTaskGetWaitForStopTimeout != NULL)
+
+- #define :ref:`EXP_IecTaskGetWaitForStopTimeout <group___cmp_iec_task_itf_1ga47fca760d668b981c8f4c7e982b2d91e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskGetWaitForStopTimeout", (RTS_UINTPTR) :ref:`IecTaskGetWaitForStopTimeout <group___cmp_iec_task_itf_1gac988b39607f94a84094ceb1793fc2efa>` , 0, 0)
+
+- #define :ref:`USE_IecTasksWaitForStop <group___cmp_iec_task_itf_1gae44f5a185d5083dd39fd7aa11246d81c>` :ref:`PFIECTASKSWAITFORSTOP <group___cmp_iec_task_itf_1ga9b1047a64078b70a12a02bf0a97094a6>` pfIecTasksWaitForStop;
+
+- #define :ref:`EXT_IecTasksWaitForStop <group___cmp_iec_task_itf_1gaccecda9ae0931fdcf9473fe44ca0aa4c>` extern :ref:`PFIECTASKSWAITFORSTOP <group___cmp_iec_task_itf_1ga9b1047a64078b70a12a02bf0a97094a6>` pfIecTasksWaitForStop;
+
+- #define :ref:`GET_IecTasksWaitForStop <group___cmp_iec_task_itf_1ga59bf88894b6761293ea813b3add01af1>` s_pfCMGetAPI2( "IecTasksWaitForStop", (RTS_VOID_FCTPTR *)&pfIecTasksWaitForStop, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTasksWaitForStop <group___cmp_iec_task_itf_1gaacf8f8d77556fab3e18ef4cb300da997>` pfIecTasksWaitForStop
+
+- #define :ref:`CHK_IecTasksWaitForStop <group___cmp_iec_task_itf_1ga2fec313540e1a00b0ffee7d429046d5d>` (pfIecTasksWaitForStop != NULL)
+
+- #define :ref:`EXP_IecTasksWaitForStop <group___cmp_iec_task_itf_1ga447f980f97a26feabc0449b0ecfdd722>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTasksWaitForStop", (RTS_UINTPTR) :ref:`IecTasksWaitForStop <group___cmp_iec_task_itf_1ga66ed6fe06051ed5833de2462b045662a>` , 0, 0)
+
+- #define :ref:`USE_IecTaskInitOutputs <group___cmp_iec_task_itf_1gad01dd3f599f3c0b324041e37f246f761>` :ref:`PFIECTASKINITOUTPUTS <group___cmp_iec_task_itf_1gaa4344f9cb56fec8c408f3c7656d1cd22>` pfIecTaskInitOutputs;
+
+- #define :ref:`EXT_IecTaskInitOutputs <group___cmp_iec_task_itf_1ga41fb8a893874a60d9af07fffa386680c>` extern :ref:`PFIECTASKINITOUTPUTS <group___cmp_iec_task_itf_1gaa4344f9cb56fec8c408f3c7656d1cd22>` pfIecTaskInitOutputs;
+
+- #define :ref:`GET_IecTaskInitOutputs <group___cmp_iec_task_itf_1gacd502c793dc7b70f89935dae53c640ec>` s_pfCMGetAPI2( "IecTaskInitOutputs", (RTS_VOID_FCTPTR *)&pfIecTaskInitOutputs, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskInitOutputs <group___cmp_iec_task_itf_1ga94a2087155c18281b8cb381d833f5598>` pfIecTaskInitOutputs
+
+- #define :ref:`CHK_IecTaskInitOutputs <group___cmp_iec_task_itf_1ga753a6aa2c3495ff7effb23557e9af430>` (pfIecTaskInitOutputs != NULL)
+
+- #define :ref:`EXP_IecTaskInitOutputs <group___cmp_iec_task_itf_1ga4a4cde1403d0a59ee946160f505223f4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskInitOutputs", (RTS_UINTPTR) :ref:`IecTaskInitOutputs <group___cmp_iec_task_itf_1ga531c9c02a1a2c7438c1c2eca5d4ee2e9>` , 0, 0)
+
+- #define :ref:`USE_IecTaskEnterExclusiveSection <group___cmp_iec_task_itf_1gab10def5ca187c7cd4e1ec3c4856b19f1>` :ref:`PFIECTASKENTEREXCLUSIVESECTION <group___cmp_iec_task_itf_1gad8f569abefb64257712c97962e330fae>` pfIecTaskEnterExclusiveSection;
+
+- #define :ref:`EXT_IecTaskEnterExclusiveSection <group___cmp_iec_task_itf_1ga1c41efa7a2ac0768732a791cd8679461>` extern :ref:`PFIECTASKENTEREXCLUSIVESECTION <group___cmp_iec_task_itf_1gad8f569abefb64257712c97962e330fae>` pfIecTaskEnterExclusiveSection;
+
+- #define :ref:`GET_IecTaskEnterExclusiveSection <group___cmp_iec_task_itf_1ga6233d7c3e346b18e0f3488bcd6c46291>` s_pfCMGetAPI2( "IecTaskEnterExclusiveSection", (RTS_VOID_FCTPTR *)&pfIecTaskEnterExclusiveSection, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskEnterExclusiveSection <group___cmp_iec_task_itf_1ga8d84527cdd0abf5bc6c3e977d71f50a7>` pfIecTaskEnterExclusiveSection
+
+- #define :ref:`CHK_IecTaskEnterExclusiveSection <group___cmp_iec_task_itf_1gacbf1356eb30a943fe90c0611223029dd>` (pfIecTaskEnterExclusiveSection != NULL)
+
+- #define :ref:`EXP_IecTaskEnterExclusiveSection <group___cmp_iec_task_itf_1ga3af89c95308c806f4f52ed7417108464>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskEnterExclusiveSection", (RTS_UINTPTR) :ref:`IecTaskEnterExclusiveSection <group___cmp_iec_task_itf_1ga9e1b95759b92b327759cef5d52ca6615>` , 0, 0)
+
+- #define :ref:`USE_IecTaskLeaveExclusiveSection <group___cmp_iec_task_itf_1ga06f01dcfd212fe5fe4488bff27a74b36>` :ref:`PFIECTASKLEAVEEXCLUSIVESECTION <group___cmp_iec_task_itf_1ga6868823fea4928ee3effc9b17b54e1e6>` pfIecTaskLeaveExclusiveSection;
+
+- #define :ref:`EXT_IecTaskLeaveExclusiveSection <group___cmp_iec_task_itf_1ga106cb7a5117e6a1ad5e0c7c0661bf58f>` extern :ref:`PFIECTASKLEAVEEXCLUSIVESECTION <group___cmp_iec_task_itf_1ga6868823fea4928ee3effc9b17b54e1e6>` pfIecTaskLeaveExclusiveSection;
+
+- #define :ref:`GET_IecTaskLeaveExclusiveSection <group___cmp_iec_task_itf_1ga713c343babf08af5d5ef9fd264d5ec62>` s_pfCMGetAPI2( "IecTaskLeaveExclusiveSection", (RTS_VOID_FCTPTR *)&pfIecTaskLeaveExclusiveSection, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskLeaveExclusiveSection <group___cmp_iec_task_itf_1ga03e80a5d9c51e27fd5dc5c278bb2e3f8>` pfIecTaskLeaveExclusiveSection
+
+- #define :ref:`CHK_IecTaskLeaveExclusiveSection <group___cmp_iec_task_itf_1ga17de4dbf81bfc67ea94a87362c8e28d6>` (pfIecTaskLeaveExclusiveSection != NULL)
+
+- #define :ref:`EXP_IecTaskLeaveExclusiveSection <group___cmp_iec_task_itf_1gaaec37e6427eb46ba636398dde1c1ce78>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskLeaveExclusiveSection", (RTS_UINTPTR) :ref:`IecTaskLeaveExclusiveSection <group___cmp_iec_task_itf_1ga1c6f2cf08c1fd4a4d7a95c9bfa2927e2>` , 0, 0)
+
+- #define :ref:`USE_IecTaskEnterExclusiveSection2 <group___cmp_iec_task_itf_1ga798af60729350a63577513b1ba6dc7c1>` :ref:`PFIECTASKENTEREXCLUSIVESECTION2 <group___cmp_iec_task_itf_1ga65561ef4178f33c2a5e67c91a9a13229>` pfIecTaskEnterExclusiveSection2;
+
+- #define :ref:`EXT_IecTaskEnterExclusiveSection2 <group___cmp_iec_task_itf_1ga1f20e25e9499c58d05a32578caf646e4>` extern :ref:`PFIECTASKENTEREXCLUSIVESECTION2 <group___cmp_iec_task_itf_1ga65561ef4178f33c2a5e67c91a9a13229>` pfIecTaskEnterExclusiveSection2;
+
+- #define :ref:`GET_IecTaskEnterExclusiveSection2 <group___cmp_iec_task_itf_1gab9c3528122413fed36fb6c1dd19cb389>` s_pfCMGetAPI2( "IecTaskEnterExclusiveSection2", (RTS_VOID_FCTPTR *)&pfIecTaskEnterExclusiveSection2, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskEnterExclusiveSection2 <group___cmp_iec_task_itf_1gac69938eb460223eaa62d64011aa26466>` pfIecTaskEnterExclusiveSection2
+
+- #define :ref:`CHK_IecTaskEnterExclusiveSection2 <group___cmp_iec_task_itf_1ga360f6059bec9ea4f843e69ca62b2b861>` (pfIecTaskEnterExclusiveSection2 != NULL)
+
+- #define :ref:`EXP_IecTaskEnterExclusiveSection2 <group___cmp_iec_task_itf_1gaa97e20cd8105f97c8efe13cd12dd0d57>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskEnterExclusiveSection2", (RTS_UINTPTR) :ref:`IecTaskEnterExclusiveSection2 <group___cmp_iec_task_itf_1gabfe38b66d27f2469477968391326f510>` , 0, 0)
+
+- #define :ref:`USE_IecTaskTryEnterExclusiveSection2 <group___cmp_iec_task_itf_1ga8f8f60805fbe05b3ecde98114a2b1fee>` :ref:`PFIECTASKTRYENTEREXCLUSIVESECTION2 <group___cmp_iec_task_itf_1ga82a83baa65cb443943dd8522f9e6ca6f>` pfIecTaskTryEnterExclusiveSection2;
+
+- #define :ref:`EXT_IecTaskTryEnterExclusiveSection2 <group___cmp_iec_task_itf_1ga7ba92bc370c15c0747e52a537c6c9d0d>` extern :ref:`PFIECTASKTRYENTEREXCLUSIVESECTION2 <group___cmp_iec_task_itf_1ga82a83baa65cb443943dd8522f9e6ca6f>` pfIecTaskTryEnterExclusiveSection2;
+
+- #define :ref:`GET_IecTaskTryEnterExclusiveSection2 <group___cmp_iec_task_itf_1gadffa924251eeab67fc2df2a0b067660d>` s_pfCMGetAPI2( "IecTaskTryEnterExclusiveSection2", (RTS_VOID_FCTPTR *)&pfIecTaskTryEnterExclusiveSection2, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskTryEnterExclusiveSection2 <group___cmp_iec_task_itf_1ga6efe9aeabca018d3738cbed869c79bf4>` pfIecTaskTryEnterExclusiveSection2
+
+- #define :ref:`CHK_IecTaskTryEnterExclusiveSection2 <group___cmp_iec_task_itf_1ga047a57f9cffcb54fda2d03e5d40118ee>` (pfIecTaskTryEnterExclusiveSection2 != NULL)
+
+- #define :ref:`EXP_IecTaskTryEnterExclusiveSection2 <group___cmp_iec_task_itf_1ga16289f67a5d0d077f2972df79720dda6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskTryEnterExclusiveSection2", (RTS_UINTPTR) :ref:`IecTaskTryEnterExclusiveSection2 <group___cmp_iec_task_itf_1gadfaead5f45d92e72a8023a6f1cfc58ce>` , 0, 0)
+
+- #define :ref:`USE_IecTaskLeaveExclusiveSection2 <group___cmp_iec_task_itf_1ga0571c76eee76a4f764d4f20ea330af9f>` :ref:`PFIECTASKLEAVEEXCLUSIVESECTION2 <group___cmp_iec_task_itf_1ga797e50c2e19f897bfa17146961230004>` pfIecTaskLeaveExclusiveSection2;
+
+- #define :ref:`EXT_IecTaskLeaveExclusiveSection2 <group___cmp_iec_task_itf_1ga7784fc9b4f3e5153d4e0511a720a7447>` extern :ref:`PFIECTASKLEAVEEXCLUSIVESECTION2 <group___cmp_iec_task_itf_1ga797e50c2e19f897bfa17146961230004>` pfIecTaskLeaveExclusiveSection2;
+
+- #define :ref:`GET_IecTaskLeaveExclusiveSection2 <group___cmp_iec_task_itf_1ga8729ed1369869398bfbca1e8593c8c82>` s_pfCMGetAPI2( "IecTaskLeaveExclusiveSection2", (RTS_VOID_FCTPTR *)&pfIecTaskLeaveExclusiveSection2, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskLeaveExclusiveSection2 <group___cmp_iec_task_itf_1ga9e6cc20be640e3b7e22e38df965ce230>` pfIecTaskLeaveExclusiveSection2
+
+- #define :ref:`CHK_IecTaskLeaveExclusiveSection2 <group___cmp_iec_task_itf_1ga91898087b27c1a64a10bd394ad505276>` (pfIecTaskLeaveExclusiveSection2 != NULL)
+
+- #define :ref:`EXP_IecTaskLeaveExclusiveSection2 <group___cmp_iec_task_itf_1gac49fb73b777ad09fdcd0cf4c433de819>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskLeaveExclusiveSection2", (RTS_UINTPTR) :ref:`IecTaskLeaveExclusiveSection2 <group___cmp_iec_task_itf_1ga4099b8e2c977de54d113bca32ceaff83>` , 0, 0)
+
+- #define :ref:`USE___sys__setup__tasks <group___cmp_iec_task_itf_1ga5d7da2f2e22c8a19f7928faa4de82d0d>` :ref:`PF__SYS__SETUP__TASKS <group___cmp_iec_task_itf_1ga570f32d9597b2244496b2196c932fbc9>` pf__sys__setup__tasks;
+
+- #define :ref:`EXT___sys__setup__tasks <group___cmp_iec_task_itf_1gac3977ed7694420a9bdb664aecc75acf5>` extern :ref:`PF__SYS__SETUP__TASKS <group___cmp_iec_task_itf_1ga570f32d9597b2244496b2196c932fbc9>` pf__sys__setup__tasks;
+
+- #define :ref:`GET___sys__setup__tasks <group___cmp_iec_task_itf_1ga1f889d5fc2428502d696859bc7854ca4>` s_pfCMGetAPI2( "__sys__setup__tasks", (RTS_VOID_FCTPTR *)&pf__sys__setup__tasks, (fl), 0, 0)
+
+- #define :ref:`CAL___sys__setup__tasks <group___cmp_iec_task_itf_1ga0c07f98bdd293c16f5fb6428a6c976cf>` pf__sys__setup__tasks
+
+- #define :ref:`CHK___sys__setup__tasks <group___cmp_iec_task_itf_1gacd0fa839c18a16b5d916463bb61a3503>` (pf__sys__setup__tasks != NULL)
+
+- #define :ref:`EXP___sys__setup__tasks <group___cmp_iec_task_itf_1gabe7290eb54f3aeb0604f9fba5b781a1d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"__sys__setup__tasks", (RTS_UINTPTR) :ref:`__sys__setup__tasks <group___cmp_iec_task_itf_1gaa2f2a827dc6a9a49885b4ebbed9ecb1b>` , 1, 0)
+
+- #define :ref:`USE___sys__register__slot__pou <group___cmp_iec_task_itf_1ga1c87eb7b2074439a667cc92cc60ce8f3>` :ref:`PF__SYS__REGISTER__SLOT__POU <group___cmp_iec_task_itf_1gae61c2eecd1543bce7ec318f6ebf04f25>` pf__sys__register__slot__pou;
+
+- #define :ref:`EXT___sys__register__slot__pou <group___cmp_iec_task_itf_1ga6ee00d3c1ecef69ee890917073a4f7df>` extern :ref:`PF__SYS__REGISTER__SLOT__POU <group___cmp_iec_task_itf_1gae61c2eecd1543bce7ec318f6ebf04f25>` pf__sys__register__slot__pou;
+
+- #define :ref:`GET___sys__register__slot__pou <group___cmp_iec_task_itf_1gae543bd1e5c68d1df961c3eeaedccc766>` s_pfCMGetAPI2( "__sys__register__slot__pou", (RTS_VOID_FCTPTR *)&pf__sys__register__slot__pou, (fl), 0, 0)
+
+- #define :ref:`CAL___sys__register__slot__pou <group___cmp_iec_task_itf_1ga0bfd7ccf2c9e78a66d44d31f293ab4ec>` pf__sys__register__slot__pou
+
+- #define :ref:`CHK___sys__register__slot__pou <group___cmp_iec_task_itf_1gaf8bcad892d0d575b5399191826df24f7>` (pf__sys__register__slot__pou != NULL)
+
+- #define :ref:`EXP___sys__register__slot__pou <group___cmp_iec_task_itf_1ga9e114eb26c1b71dee7d562f867e37d98>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"__sys__register__slot__pou", (RTS_UINTPTR) :ref:`__sys__register__slot__pou <group___cmp_iec_task_itf_1ga559d1624d789452e3bbe6f2591d58007>` , 1, 0)
+
+- #define :ref:`USE___sys__unregister__slot__pou <group___cmp_iec_task_itf_1gadb1aa0c12a96fb3dbab62da4a2893662>` :ref:`PF__SYS__UNREGISTER__SLOT__POU <group___cmp_iec_task_itf_1ga6cde7725e3cc3dc36530cb9e6d3fc0a1>` pf__sys__unregister__slot__pou;
+
+- #define :ref:`EXT___sys__unregister__slot__pou <group___cmp_iec_task_itf_1ga13cb1862a470cf3060a1349de6cb4ff1>` extern :ref:`PF__SYS__UNREGISTER__SLOT__POU <group___cmp_iec_task_itf_1ga6cde7725e3cc3dc36530cb9e6d3fc0a1>` pf__sys__unregister__slot__pou;
+
+- #define :ref:`GET___sys__unregister__slot__pou <group___cmp_iec_task_itf_1ga43a999152d4d684b66d7d8546273d201>` s_pfCMGetAPI2( "__sys__unregister__slot__pou", (RTS_VOID_FCTPTR *)&pf__sys__unregister__slot__pou, (fl), 0, 0)
+
+- #define :ref:`CAL___sys__unregister__slot__pou <group___cmp_iec_task_itf_1ga23b02d467fc5f9ccd2a6064a46b56e56>` pf__sys__unregister__slot__pou
+
+- #define :ref:`CHK___sys__unregister__slot__pou <group___cmp_iec_task_itf_1ga05001a397f4cbdf4855d7c48169c719b>` (pf__sys__unregister__slot__pou != NULL)
+
+- #define :ref:`EXP___sys__unregister__slot__pou <group___cmp_iec_task_itf_1gae2e1adbd95bf368224ff03d1f6b6289a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"__sys__unregister__slot__pou", (RTS_UINTPTR) :ref:`__sys__unregister__slot__pou <group___cmp_iec_task_itf_1ga5aa1ba2d40606b17289539f033b44dc5>` , 1, 0)
+
+- #define :ref:`USE_IecTaskRegisterSlotCallbacks <group___cmp_iec_task_itf_1ga483010f20c39dd148c932abe52712f37>` :ref:`PFIECTASKREGISTERSLOTCALLBACKS <group___cmp_iec_task_itf_1gabd0f0e0eee3dfa0a0d2011444d14144a>` pfIecTaskRegisterSlotCallbacks;
+
+- #define :ref:`EXT_IecTaskRegisterSlotCallbacks <group___cmp_iec_task_itf_1ga83e38c29e64209bc1190e3fdc467a612>` extern :ref:`PFIECTASKREGISTERSLOTCALLBACKS <group___cmp_iec_task_itf_1gabd0f0e0eee3dfa0a0d2011444d14144a>` pfIecTaskRegisterSlotCallbacks;
+
+- #define :ref:`GET_IecTaskRegisterSlotCallbacks <group___cmp_iec_task_itf_1ga20e2117c1acc670e97b732bd9edf97aa>` s_pfCMGetAPI2( "IecTaskRegisterSlotCallbacks", (RTS_VOID_FCTPTR *)&pfIecTaskRegisterSlotCallbacks, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskRegisterSlotCallbacks <group___cmp_iec_task_itf_1ga21d027ed2c49fc964891ac809ee56831>` pfIecTaskRegisterSlotCallbacks
+
+- #define :ref:`CHK_IecTaskRegisterSlotCallbacks <group___cmp_iec_task_itf_1ga4cdedb2b777d3be777c56c4eed33b8d9>` (pfIecTaskRegisterSlotCallbacks != NULL)
+
+- #define :ref:`EXP_IecTaskRegisterSlotCallbacks <group___cmp_iec_task_itf_1ga6cc09185f20b2f64f2f1589ba21c9ac0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskRegisterSlotCallbacks", (RTS_UINTPTR) :ref:`IecTaskRegisterSlotCallbacks <group___cmp_iec_task_itf_1gad21633ed91e49a75988cb2fbed0da5de>` , 0, 0)
+
+- #define :ref:`USE_IecTaskUnregisterSlotCallbacks <group___cmp_iec_task_itf_1ga53d65fb15cf1fa51efe6a6bed8aa49ed>` :ref:`PFIECTASKUNREGISTERSLOTCALLBACKS <group___cmp_iec_task_itf_1gadcafbed5a2e9fd6f7602a5c5b0ec30f4>` pfIecTaskUnregisterSlotCallbacks;
+
+- #define :ref:`EXT_IecTaskUnregisterSlotCallbacks <group___cmp_iec_task_itf_1gad5d6fa45aebf6c5d28f08255a6e7b6c2>` extern :ref:`PFIECTASKUNREGISTERSLOTCALLBACKS <group___cmp_iec_task_itf_1gadcafbed5a2e9fd6f7602a5c5b0ec30f4>` pfIecTaskUnregisterSlotCallbacks;
+
+- #define :ref:`GET_IecTaskUnregisterSlotCallbacks <group___cmp_iec_task_itf_1ga0d49d9f7a5dfe041e627c975a7cbb004>` s_pfCMGetAPI2( "IecTaskUnregisterSlotCallbacks", (RTS_VOID_FCTPTR *)&pfIecTaskUnregisterSlotCallbacks, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskUnregisterSlotCallbacks <group___cmp_iec_task_itf_1ga1949eae81a76a62f4e0cc2f1327524ab>` pfIecTaskUnregisterSlotCallbacks
+
+- #define :ref:`CHK_IecTaskUnregisterSlotCallbacks <group___cmp_iec_task_itf_1ga610e5f03193b9d1b33ab8981c5d1efcf>` (pfIecTaskUnregisterSlotCallbacks != NULL)
+
+- #define :ref:`EXP_IecTaskUnregisterSlotCallbacks <group___cmp_iec_task_itf_1ga297b8c31222588bb3fa51bce039d061a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskUnregisterSlotCallbacks", (RTS_UINTPTR) :ref:`IecTaskUnregisterSlotCallbacks <group___cmp_iec_task_itf_1ga27bb1301e1aa59bab7e9e0e597eca64c>` , 0, 0)
+
+- #define :ref:`USE_IecTaskRegisterSlotCallback <group___cmp_iec_task_itf_1gad2f2e295e644b49ad5dc8e489028a9a1>` :ref:`PFIECTASKREGISTERSLOTCALLBACK <group___cmp_iec_task_itf_1ga7ce0e54ec813c5b15c9da1d34fed381f>` pfIecTaskRegisterSlotCallback;
+
+- #define :ref:`EXT_IecTaskRegisterSlotCallback <group___cmp_iec_task_itf_1ga87abf32cfd64e44b9903d35661f37fe6>` extern :ref:`PFIECTASKREGISTERSLOTCALLBACK <group___cmp_iec_task_itf_1ga7ce0e54ec813c5b15c9da1d34fed381f>` pfIecTaskRegisterSlotCallback;
+
+- #define :ref:`GET_IecTaskRegisterSlotCallback <group___cmp_iec_task_itf_1gac198bf29dc28339123a94f9da42db6bb>` s_pfCMGetAPI2( "IecTaskRegisterSlotCallback", (RTS_VOID_FCTPTR *)&pfIecTaskRegisterSlotCallback, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskRegisterSlotCallback <group___cmp_iec_task_itf_1gad85cc9ab573929b4584f43c814327a73>` pfIecTaskRegisterSlotCallback
+
+- #define :ref:`CHK_IecTaskRegisterSlotCallback <group___cmp_iec_task_itf_1ga516a968f3123a1495864ba6da5704599>` (pfIecTaskRegisterSlotCallback != NULL)
+
+- #define :ref:`EXP_IecTaskRegisterSlotCallback <group___cmp_iec_task_itf_1ga66c0f9bc241de77c8abc3c520fdd91a1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskRegisterSlotCallback", (RTS_UINTPTR) :ref:`IecTaskRegisterSlotCallback <group___cmp_iec_task_itf_1ga9ab06471be2c12fbc4e5dc8fc327ac16>` , 0, 0)
+
+- #define :ref:`USE_IecTaskUnregisterSlotCallback <group___cmp_iec_task_itf_1gad765e3f3c778faa6112199d56a205e2b>` :ref:`PFIECTASKUNREGISTERSLOTCALLBACK <group___cmp_iec_task_itf_1ga5e67ce5a77c580ed6c06d2b3dd4c1881>` pfIecTaskUnregisterSlotCallback;
+
+- #define :ref:`EXT_IecTaskUnregisterSlotCallback <group___cmp_iec_task_itf_1gab3b953f1cfc753fd6519e442c126d94c>` extern :ref:`PFIECTASKUNREGISTERSLOTCALLBACK <group___cmp_iec_task_itf_1ga5e67ce5a77c580ed6c06d2b3dd4c1881>` pfIecTaskUnregisterSlotCallback;
+
+- #define :ref:`GET_IecTaskUnregisterSlotCallback <group___cmp_iec_task_itf_1ga2a6ea5015a35491e24910c1c40484534>` s_pfCMGetAPI2( "IecTaskUnregisterSlotCallback", (RTS_VOID_FCTPTR *)&pfIecTaskUnregisterSlotCallback, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskUnregisterSlotCallback <group___cmp_iec_task_itf_1gafdb600ccbe780edeba30cd7dd2e8e4a0>` pfIecTaskUnregisterSlotCallback
+
+- #define :ref:`CHK_IecTaskUnregisterSlotCallback <group___cmp_iec_task_itf_1gaf108583acf16e25035e5b71d1fec729b>` (pfIecTaskUnregisterSlotCallback != NULL)
+
+- #define :ref:`EXP_IecTaskUnregisterSlotCallback <group___cmp_iec_task_itf_1ga7ada5d68da9bfb557ae9b8bd436bb5eb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskUnregisterSlotCallback", (RTS_UINTPTR) :ref:`IecTaskUnregisterSlotCallback <group___cmp_iec_task_itf_1gaab5e715c1302adae24edb7677a493bf7>` , 0, 0)
+
+- #define :ref:`USE___sys__rts__cycle <group___cmp_iec_task_itf_1gab9298d98198e1a6e2b9683c28477acd1>` :ref:`PF__SYS__RTS__CYCLE <group___cmp_iec_task_itf_1ga28b9a2a2140fdddbf065f00540e0edfa>` pf__sys__rts__cycle;
+
+- #define :ref:`EXT___sys__rts__cycle <group___cmp_iec_task_itf_1ga3ba225bd2daca85b1a53bdc13e21fe50>` extern :ref:`PF__SYS__RTS__CYCLE <group___cmp_iec_task_itf_1ga28b9a2a2140fdddbf065f00540e0edfa>` pf__sys__rts__cycle;
+
+- #define :ref:`GET___sys__rts__cycle <group___cmp_iec_task_itf_1gadf68effab4f83bfe6f55917931a94d0a>` s_pfCMGetAPI2( "__sys__rts__cycle", (RTS_VOID_FCTPTR *)&pf__sys__rts__cycle, (fl), 0, 0)
+
+- #define :ref:`CAL___sys__rts__cycle <group___cmp_iec_task_itf_1ga97b280afc870263b4d1155fc5e31cceb>` pf__sys__rts__cycle
+
+- #define :ref:`CHK___sys__rts__cycle <group___cmp_iec_task_itf_1gaec5fabb9d0382c505289062170506dd0>` (pf__sys__rts__cycle != NULL)
+
+- #define :ref:`EXP___sys__rts__cycle <group___cmp_iec_task_itf_1gad0a49ef3314c3bcb6318b846d142ab19>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"__sys__rts__cycle", (RTS_UINTPTR) :ref:`__sys__rts__cycle <group___cmp_iec_task_itf_1ga0171cfff9c8dee7028f13cc499cb1245>` , 1, 0)
+
+- #define :ref:`USE___sys__rts__cycle__2 <group___cmp_iec_task_itf_1ga2236bb45d45d39b5b631f77a7b5e346d>` :ref:`PF__SYS__RTS__CYCLE__2 <group___cmp_iec_task_itf_1ga6fe0a45fca25d2ac09c120cd8e671755>` pf__sys__rts__cycle__2;
+
+- #define :ref:`EXT___sys__rts__cycle__2 <group___cmp_iec_task_itf_1gaacd11d6c451d5dafb4539e82f37971f7>` extern :ref:`PF__SYS__RTS__CYCLE__2 <group___cmp_iec_task_itf_1ga6fe0a45fca25d2ac09c120cd8e671755>` pf__sys__rts__cycle__2;
+
+- #define :ref:`GET___sys__rts__cycle__2 <group___cmp_iec_task_itf_1ga276201fe784bfa6ec92d9b4fabbc5fba>` s_pfCMGetAPI2( "__sys__rts__cycle__2", (RTS_VOID_FCTPTR *)&pf__sys__rts__cycle__2, (fl), 0, 0)
+
+- #define :ref:`CAL___sys__rts__cycle__2 <group___cmp_iec_task_itf_1ga65180fa8731080e76587a5d12d4bc4a2>` pf__sys__rts__cycle__2
+
+- #define :ref:`CHK___sys__rts__cycle__2 <group___cmp_iec_task_itf_1gad2e248d8f092c0f450ce9109175cb2f6>` (pf__sys__rts__cycle__2 != NULL)
+
+- #define :ref:`EXP___sys__rts__cycle__2 <group___cmp_iec_task_itf_1ga4f051a4c6c3349518fb4068cf09fe942>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"__sys__rts__cycle__2", (RTS_UINTPTR) :ref:`__sys__rts__cycle__2 <group___cmp_iec_task_itf_1ga4c3a244890a6ac8f1143a4548fe2e056>` , 1, 0)
+
+- #define :ref:`USE_IecTaskGetDesc <group___cmp_iec_task_itf_1ga104ed37971e5df6bbeadcb589b6cc2c1>` :ref:`PFIECTASKGETDESC <group___cmp_iec_task_itf_1ga141fe6b24b3dd88cc3be11661a1d0518>` pfIecTaskGetDesc;
+
+- #define :ref:`EXT_IecTaskGetDesc <group___cmp_iec_task_itf_1gab18a53228da6852c34d331a1c858a5ff>` extern :ref:`PFIECTASKGETDESC <group___cmp_iec_task_itf_1ga141fe6b24b3dd88cc3be11661a1d0518>` pfIecTaskGetDesc;
+
+- #define :ref:`GET_IecTaskGetDesc <group___cmp_iec_task_itf_1gabc89f5aa92fce3b3d34f636be94f28f5>` s_pfCMGetAPI2( "IecTaskGetDesc", (RTS_VOID_FCTPTR *)&pfIecTaskGetDesc, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskGetDesc <group___cmp_iec_task_itf_1gad282654d5710254312c699f4a34ba3b9>` pfIecTaskGetDesc
+
+- #define :ref:`CHK_IecTaskGetDesc <group___cmp_iec_task_itf_1ga4f004434edfff470e4802737a585c15e>` (pfIecTaskGetDesc != NULL)
+
+- #define :ref:`EXP_IecTaskGetDesc <group___cmp_iec_task_itf_1ga9b7482e816e5f33da8ec818166ced06c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskGetDesc", (RTS_UINTPTR) :ref:`IecTaskGetDesc <group___cmp_iec_task_itf_1ga551d7fb6da86b95eda6fab0e296e7cf4>` , 0, 0)
+
+- #define :ref:`USE_IecTaskGetHandle <group___cmp_iec_task_itf_1ga1d0cedc06953955c3162f441afd5879d>` :ref:`PFIECTASKGETHANDLE <group___cmp_iec_task_itf_1gab32ed2e423d55b245e9912b739a73c68>` pfIecTaskGetHandle;
+
+- #define :ref:`EXT_IecTaskGetHandle <group___cmp_iec_task_itf_1gae9a4eaf5e2b0ac3aee9f7874d5ccb3a2>` extern :ref:`PFIECTASKGETHANDLE <group___cmp_iec_task_itf_1gab32ed2e423d55b245e9912b739a73c68>` pfIecTaskGetHandle;
+
+- #define :ref:`GET_IecTaskGetHandle <group___cmp_iec_task_itf_1ga0a0b81ea4e94638ccb120d4c734c93de>` s_pfCMGetAPI2( "IecTaskGetHandle", (RTS_VOID_FCTPTR *)&pfIecTaskGetHandle, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskGetHandle <group___cmp_iec_task_itf_1gab8745567e565f07d278b17b7c32eb234>` pfIecTaskGetHandle
+
+- #define :ref:`CHK_IecTaskGetHandle <group___cmp_iec_task_itf_1gad68e6e0803bfdb73c9cb4f6d1db40ea7>` (pfIecTaskGetHandle != NULL)
+
+- #define :ref:`EXP_IecTaskGetHandle <group___cmp_iec_task_itf_1ga83268375d2ba7fc1a050bb90ef3a60b4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskGetHandle", (RTS_UINTPTR) :ref:`IecTaskGetHandle <group___cmp_iec_task_itf_1ga4bee7ee09290853d9991614c824d1c20>` , 0, 0)
+
+- #define :ref:`USE_IecTaskGetCurrent <group___cmp_iec_task_itf_1gab69e01243a7cf3bd450d2d3f3c2ab94a>` :ref:`PFIECTASKGETCURRENT <group___cmp_iec_task_itf_1gaf2c0f8512863b5e0d9c83c36b95e27e9>` pfIecTaskGetCurrent;
+
+- #define :ref:`EXT_IecTaskGetCurrent <group___cmp_iec_task_itf_1gaba5ae3f746f08d743cb6b61ab0ee477a>` extern :ref:`PFIECTASKGETCURRENT <group___cmp_iec_task_itf_1gaf2c0f8512863b5e0d9c83c36b95e27e9>` pfIecTaskGetCurrent;
+
+- #define :ref:`GET_IecTaskGetCurrent <group___cmp_iec_task_itf_1gaeafa3ce5e36ab4d2929a5f59e8586309>` s_pfCMGetAPI2( "IecTaskGetCurrent", (RTS_VOID_FCTPTR *)&pfIecTaskGetCurrent, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskGetCurrent <group___cmp_iec_task_itf_1gad8d547d24047218b02c228d1f4ac790b>` pfIecTaskGetCurrent
+
+- #define :ref:`CHK_IecTaskGetCurrent <group___cmp_iec_task_itf_1ga40b3c717f53587731cc971fa5b86cac9>` (pfIecTaskGetCurrent != NULL)
+
+- #define :ref:`EXP_IecTaskGetCurrent <group___cmp_iec_task_itf_1gab43adf21fdefa6dff4ef87d0dfa16b1d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskGetCurrent", (RTS_UINTPTR) :ref:`IecTaskGetCurrent <group___cmp_iec_task_itf_1gad4b00394f63dbff28486254a365fd80b>` , 0, 0)
+
+- #define :ref:`USE_IecTaskDebugLoop <group___cmp_iec_task_itf_1ga1a33671423c0411adf83ab977a62f738>` :ref:`PFIECTASKDEBUGLOOP <group___cmp_iec_task_itf_1ga47a174f778699ff5207a867d44ebe99b>` pfIecTaskDebugLoop;
+
+- #define :ref:`EXT_IecTaskDebugLoop <group___cmp_iec_task_itf_1gad1669edc4433641cf4a3b22c0bce3bf6>` extern :ref:`PFIECTASKDEBUGLOOP <group___cmp_iec_task_itf_1ga47a174f778699ff5207a867d44ebe99b>` pfIecTaskDebugLoop;
+
+- #define :ref:`GET_IecTaskDebugLoop <group___cmp_iec_task_itf_1ga963b46728cfafbfbf52b83c7d054c461>` s_pfCMGetAPI2( "IecTaskDebugLoop", (RTS_VOID_FCTPTR *)&pfIecTaskDebugLoop, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskDebugLoop <group___cmp_iec_task_itf_1ga7bd8dcfed2a20468f26527d86b134f0b>` pfIecTaskDebugLoop
+
+- #define :ref:`CHK_IecTaskDebugLoop <group___cmp_iec_task_itf_1ga67980eb11b60c3c54b195b0fdc7a3432>` (pfIecTaskDebugLoop != NULL)
+
+- #define :ref:`EXP_IecTaskDebugLoop <group___cmp_iec_task_itf_1ga0243a3a5d0334a25e9dc30bc1cf81b78>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskDebugLoop", (RTS_UINTPTR) :ref:`IecTaskDebugLoop <group___cmp_iec_task_itf_1ga6fed971250836ddc32bf3130926d9b6d>` , 0, 0)
+
+- #define :ref:`USE_IecTaskDebugEnter <group___cmp_iec_task_itf_1ga2f1471474aceb6406b7d00b86d62778b>` :ref:`PFIECTASKDEBUGENTER <group___cmp_iec_task_itf_1ga12411c772ebb6c08963001f6ce0dd998>` pfIecTaskDebugEnter;
+
+- #define :ref:`EXT_IecTaskDebugEnter <group___cmp_iec_task_itf_1gae150de9037cf4f332bb325a915cfc39c>` extern :ref:`PFIECTASKDEBUGENTER <group___cmp_iec_task_itf_1ga12411c772ebb6c08963001f6ce0dd998>` pfIecTaskDebugEnter;
+
+- #define :ref:`GET_IecTaskDebugEnter <group___cmp_iec_task_itf_1gab76c1f2797ee56ddfbe92d58e176731c>` s_pfCMGetAPI2( "IecTaskDebugEnter", (RTS_VOID_FCTPTR *)&pfIecTaskDebugEnter, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskDebugEnter <group___cmp_iec_task_itf_1ga129de546d36dba7d445754da585f6618>` pfIecTaskDebugEnter
+
+- #define :ref:`CHK_IecTaskDebugEnter <group___cmp_iec_task_itf_1ga8f3105b15ea11944d644f8b9b0dc6cf5>` (pfIecTaskDebugEnter != NULL)
+
+- #define :ref:`EXP_IecTaskDebugEnter <group___cmp_iec_task_itf_1gabdecbfa50d29c3b36915c4d16c8a10b0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskDebugEnter", (RTS_UINTPTR) :ref:`IecTaskDebugEnter <group___cmp_iec_task_itf_1gae9bbb3fce011c5e4bf2578d7fff0152d>` , 0, 0)
+
+- #define :ref:`USE_IecTaskDebugLeave <group___cmp_iec_task_itf_1ga1046c51420d2230b8bd5a858a94dc23c>` :ref:`PFIECTASKDEBUGLEAVE <group___cmp_iec_task_itf_1ga90a4b501ecbae485a63371e61c87cdc7>` pfIecTaskDebugLeave;
+
+- #define :ref:`EXT_IecTaskDebugLeave <group___cmp_iec_task_itf_1gafa2da2c517699672b2828222e4adf67f>` extern :ref:`PFIECTASKDEBUGLEAVE <group___cmp_iec_task_itf_1ga90a4b501ecbae485a63371e61c87cdc7>` pfIecTaskDebugLeave;
+
+- #define :ref:`GET_IecTaskDebugLeave <group___cmp_iec_task_itf_1ga8d9f81c6ca4e4762e358dcd9a0729a4a>` s_pfCMGetAPI2( "IecTaskDebugLeave", (RTS_VOID_FCTPTR *)&pfIecTaskDebugLeave, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskDebugLeave <group___cmp_iec_task_itf_1ga0477c782d56ff7b656275560352489e5>` pfIecTaskDebugLeave
+
+- #define :ref:`CHK_IecTaskDebugLeave <group___cmp_iec_task_itf_1ga0f75d8901d3223c11c80d5c5b1a8a244>` (pfIecTaskDebugLeave != NULL)
+
+- #define :ref:`EXP_IecTaskDebugLeave <group___cmp_iec_task_itf_1gafb5d249433750e00f140edcfb3c04c28>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskDebugLeave", (RTS_UINTPTR) :ref:`IecTaskDebugLeave <group___cmp_iec_task_itf_1ga96333383d9bb2b1aca00fed71d719dac>` , 0, 0)
+
+- #define :ref:`USE_IecTaskSetContext <group___cmp_iec_task_itf_1gaacc4addd5220675e9dc54c4aa045c1c3>` :ref:`PFIECTASKSETCONTEXT <group___cmp_iec_task_itf_1ga7dc58f50e303d287b2915fbcf746e0b3>` pfIecTaskSetContext;
+
+- #define :ref:`EXT_IecTaskSetContext <group___cmp_iec_task_itf_1ga139870d4061cf6a213494a86c1dbe1a1>` extern :ref:`PFIECTASKSETCONTEXT <group___cmp_iec_task_itf_1ga7dc58f50e303d287b2915fbcf746e0b3>` pfIecTaskSetContext;
+
+- #define :ref:`GET_IecTaskSetContext <group___cmp_iec_task_itf_1ga3d28b9a68cff44a2b7a5a5d3eb798c2f>` s_pfCMGetAPI2( "IecTaskSetContext", (RTS_VOID_FCTPTR *)&pfIecTaskSetContext, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskSetContext <group___cmp_iec_task_itf_1gacb9a47925a45aa6015c72bfbe7b8e960>` pfIecTaskSetContext
+
+- #define :ref:`CHK_IecTaskSetContext <group___cmp_iec_task_itf_1ga73115700e60d977df49daf63f1cdfc3a>` (pfIecTaskSetContext != NULL)
+
+- #define :ref:`EXP_IecTaskSetContext <group___cmp_iec_task_itf_1gab28414edcc8f7e61ed09c47028e476c2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskSetContext", (RTS_UINTPTR) :ref:`IecTaskSetContext <group___cmp_iec_task_itf_1ga25da32ae307181f47fc3ec400df934d3>` , 0, 0)
+
+- #define :ref:`USE_IecTaskGetContext <group___cmp_iec_task_itf_1ga1ccb67198ceefc9181e6f7eb88a7a29d>` :ref:`PFIECTASKGETCONTEXT <group___cmp_iec_task_itf_1gaa1f9327689d227109830d16abfaf274d>` pfIecTaskGetContext;
+
+- #define :ref:`EXT_IecTaskGetContext <group___cmp_iec_task_itf_1gaa6dfe22b9534df6551943950701ad6b2>` extern :ref:`PFIECTASKGETCONTEXT <group___cmp_iec_task_itf_1gaa1f9327689d227109830d16abfaf274d>` pfIecTaskGetContext;
+
+- #define :ref:`GET_IecTaskGetContext <group___cmp_iec_task_itf_1ga922fe719cfbe99ce2722b3b6b169fe14>` s_pfCMGetAPI2( "IecTaskGetContext", (RTS_VOID_FCTPTR *)&pfIecTaskGetContext, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskGetContext <group___cmp_iec_task_itf_1ga343c4f97989a649d1c182385431a7cc1>` pfIecTaskGetContext
+
+- #define :ref:`CHK_IecTaskGetContext <group___cmp_iec_task_itf_1ga87a5436ff40ac553800c8040761fb0fb>` (pfIecTaskGetContext != NULL)
+
+- #define :ref:`EXP_IecTaskGetContext <group___cmp_iec_task_itf_1gadc86f91d312a56b9d67f851d424642c5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskGetContext", (RTS_UINTPTR) :ref:`IecTaskGetContext <group___cmp_iec_task_itf_1gadd7b45cfd8dd080a5c5fb4913b41d191>` , 0, 0)
+
+- #define :ref:`USE_IecTaskExceptionHandler <group___cmp_iec_task_itf_1ga509a0df959e1dba4ba88112972f8b84f>` :ref:`PFIECTASKEXCEPTIONHANDLER <group___cmp_iec_task_itf_1gace27991e4cf4c5e393c3eceaab4e3d87>` pfIecTaskExceptionHandler;
+
+- #define :ref:`EXT_IecTaskExceptionHandler <group___cmp_iec_task_itf_1gaa6de63843000ba2e5fb45938350dbacb>` extern :ref:`PFIECTASKEXCEPTIONHANDLER <group___cmp_iec_task_itf_1gace27991e4cf4c5e393c3eceaab4e3d87>` pfIecTaskExceptionHandler;
+
+- #define :ref:`GET_IecTaskExceptionHandler <group___cmp_iec_task_itf_1ga34b28bc84175d2cc891a81b3110c576e>` s_pfCMGetAPI2( "IecTaskExceptionHandler", (RTS_VOID_FCTPTR *)&pfIecTaskExceptionHandler, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskExceptionHandler <group___cmp_iec_task_itf_1ga5c7c7baedc6a4b4c130aff1fb3f74bc5>` pfIecTaskExceptionHandler
+
+- #define :ref:`CHK_IecTaskExceptionHandler <group___cmp_iec_task_itf_1ga71aec22f73ba6e29254c3d87df8f4aeb>` (pfIecTaskExceptionHandler != NULL)
+
+- #define :ref:`EXP_IecTaskExceptionHandler <group___cmp_iec_task_itf_1ga1e6f7f4d23ecec03322a8e7d94ea341e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExceptionHandler", (RTS_UINTPTR) :ref:`IecTaskExceptionHandler <group___cmp_iec_task_itf_1gabca80e136626c3eac6950d9ddf0f8e04>` , 0, 0)
+
+- #define :ref:`USE_IecTaskGetByIndex <group___cmp_iec_task_itf_1ga4f4650e7caefbea4a36c8eabf8b74ca1>` :ref:`PFIECTASKGETBYINDEX <group___cmp_iec_task_itf_1ga49786951c62d50519998cf9c5732deba>` pfIecTaskGetByIndex;
+
+- #define :ref:`EXT_IecTaskGetByIndex <group___cmp_iec_task_itf_1gaa65509ee4a4c0d54a1800fe737cd9312>` extern :ref:`PFIECTASKGETBYINDEX <group___cmp_iec_task_itf_1ga49786951c62d50519998cf9c5732deba>` pfIecTaskGetByIndex;
+
+- #define :ref:`GET_IecTaskGetByIndex <group___cmp_iec_task_itf_1gad37e70afc1c6f4898a1810976ed242cf>` s_pfCMGetAPI2( "IecTaskGetByIndex", (RTS_VOID_FCTPTR *)&pfIecTaskGetByIndex, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskGetByIndex <group___cmp_iec_task_itf_1ga96ff756d57104aafaab6799051600490>` pfIecTaskGetByIndex
+
+- #define :ref:`CHK_IecTaskGetByIndex <group___cmp_iec_task_itf_1ga8ca61d6f49737e7cde9aa7d0910129d0>` (pfIecTaskGetByIndex != NULL)
+
+- #define :ref:`EXP_IecTaskGetByIndex <group___cmp_iec_task_itf_1ga9bbf58d987c55611d14c7e182cc58c43>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskGetByIndex", (RTS_UINTPTR) :ref:`IecTaskGetByIndex <group___cmp_iec_task_itf_1ga9dc414e98485d686021f8e16ce7b0c0c>` , 0, 0)
+
+- #define :ref:`USE_IecTaskGetHandleByIndex <group___cmp_iec_task_itf_1ga91475f87793f548310de9f90cee9c20d>` :ref:`PFIECTASKGETHANDLEBYINDEX <group___cmp_iec_task_itf_1gae782f32a6315c646813a1fca8529286c>` pfIecTaskGetHandleByIndex;
+
+- #define :ref:`EXT_IecTaskGetHandleByIndex <group___cmp_iec_task_itf_1ga0287ac3434fbad7d8defe8bb4743e525>` extern :ref:`PFIECTASKGETHANDLEBYINDEX <group___cmp_iec_task_itf_1gae782f32a6315c646813a1fca8529286c>` pfIecTaskGetHandleByIndex;
+
+- #define :ref:`GET_IecTaskGetHandleByIndex <group___cmp_iec_task_itf_1gaced7e5510f597d04163e2d6304337f78>` s_pfCMGetAPI2( "IecTaskGetHandleByIndex", (RTS_VOID_FCTPTR *)&pfIecTaskGetHandleByIndex, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskGetHandleByIndex <group___cmp_iec_task_itf_1ga6c06c7d2cdac4bf141699bf64aaa297a>` pfIecTaskGetHandleByIndex
+
+- #define :ref:`CHK_IecTaskGetHandleByIndex <group___cmp_iec_task_itf_1gad7ed7da7d52919b55a5b1deae2b7d0a9>` (pfIecTaskGetHandleByIndex != NULL)
+
+- #define :ref:`EXP_IecTaskGetHandleByIndex <group___cmp_iec_task_itf_1gade53a0572e07067e85e53ff196128c33>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskGetHandleByIndex", (RTS_UINTPTR) :ref:`IecTaskGetHandleByIndex <group___cmp_iec_task_itf_1ga30565e7afcb8e6d4b102638d0fe3c54a>` , 0, 0)
+
+- #define :ref:`USE_IecTaskGetById <group___cmp_iec_task_itf_1ga436f0d49c16ed03035d7b7b288d31d9f>` :ref:`PFIECTASKGETBYID <group___cmp_iec_task_itf_1gace25931bfa6a3ba9011f6185f5f80a6e>` pfIecTaskGetById;
+
+- #define :ref:`EXT_IecTaskGetById <group___cmp_iec_task_itf_1ga106bcf9354f03513122fcd1192c6caae>` extern :ref:`PFIECTASKGETBYID <group___cmp_iec_task_itf_1gace25931bfa6a3ba9011f6185f5f80a6e>` pfIecTaskGetById;
+
+- #define :ref:`GET_IecTaskGetById <group___cmp_iec_task_itf_1gab49ee2785b6a43a40057c3d56084341a>` s_pfCMGetAPI2( "IecTaskGetById", (RTS_VOID_FCTPTR *)&pfIecTaskGetById, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskGetById <group___cmp_iec_task_itf_1ga86dee8eb3f74534f27f31846039154bc>` pfIecTaskGetById
+
+- #define :ref:`CHK_IecTaskGetById <group___cmp_iec_task_itf_1ga55e60b9c715d4cbb7689b2e6c2559a3b>` (pfIecTaskGetById != NULL)
+
+- #define :ref:`EXP_IecTaskGetById <group___cmp_iec_task_itf_1gad3c5e0cfafcd11c1df83d9499beb8f28>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskGetById", (RTS_UINTPTR) :ref:`IecTaskGetById <group___cmp_iec_task_itf_1gaa8d69267b7045d1dce610d3ebf3b3984>` , 0, 0)
+
+- #define :ref:`USE_IecTaskGetNumOfTasks <group___cmp_iec_task_itf_1ga1d55cd2ca53a8e9c9fb38e2d9685592f>` :ref:`PFIECTASKGETNUMOFTASKS <group___cmp_iec_task_itf_1gab29330ca60adb41f19f372a8d41d21ba>` pfIecTaskGetNumOfTasks;
+
+- #define :ref:`EXT_IecTaskGetNumOfTasks <group___cmp_iec_task_itf_1ga041b21c326cc2a7deb706d19e077dbcf>` extern :ref:`PFIECTASKGETNUMOFTASKS <group___cmp_iec_task_itf_1gab29330ca60adb41f19f372a8d41d21ba>` pfIecTaskGetNumOfTasks;
+
+- #define :ref:`GET_IecTaskGetNumOfTasks <group___cmp_iec_task_itf_1ga0f7cd13b9ce5f816db2eaefc31bf9e9e>` s_pfCMGetAPI2( "IecTaskGetNumOfTasks", (RTS_VOID_FCTPTR *)&pfIecTaskGetNumOfTasks, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskGetNumOfTasks <group___cmp_iec_task_itf_1ga86a429751ceee14b60bb839bbdf2f3f8>` pfIecTaskGetNumOfTasks
+
+- #define :ref:`CHK_IecTaskGetNumOfTasks <group___cmp_iec_task_itf_1ga3c6dc8bba9e3b9ef138a41bae95331a3>` (pfIecTaskGetNumOfTasks != NULL)
+
+- #define :ref:`EXP_IecTaskGetNumOfTasks <group___cmp_iec_task_itf_1ga49a22b4ba98eb8020e2ec1fc48553425>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskGetNumOfTasks", (RTS_UINTPTR) :ref:`IecTaskGetNumOfTasks <group___cmp_iec_task_itf_1ga348fb2f6e75ad62f6e2c8444c0cb4552>` , 0, 0)
+
+- #define :ref:`USE_IecTaskEnableSchedulingAll <group___cmp_iec_task_itf_1gada76da3f2da332bc9939561b3531956b>` :ref:`PFIECTASKENABLESCHEDULINGALL <group___cmp_iec_task_itf_1ga4b77f58d38d4473428c0a7b7aa481645>` pfIecTaskEnableSchedulingAll;
+
+- #define :ref:`EXT_IecTaskEnableSchedulingAll <group___cmp_iec_task_itf_1gaa50a5511d5cc232683dafd000c1fce69>` extern :ref:`PFIECTASKENABLESCHEDULINGALL <group___cmp_iec_task_itf_1ga4b77f58d38d4473428c0a7b7aa481645>` pfIecTaskEnableSchedulingAll;
+
+- #define :ref:`GET_IecTaskEnableSchedulingAll <group___cmp_iec_task_itf_1gaf26edc4e8d13eb911b144a58fffee8e8>` s_pfCMGetAPI2( "IecTaskEnableSchedulingAll", (RTS_VOID_FCTPTR *)&pfIecTaskEnableSchedulingAll, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskEnableSchedulingAll <group___cmp_iec_task_itf_1gade2ca953a57243a9457abd00dba2c154>` pfIecTaskEnableSchedulingAll
+
+- #define :ref:`CHK_IecTaskEnableSchedulingAll <group___cmp_iec_task_itf_1gaab6a0de088f954023275e1fbd408d186>` (pfIecTaskEnableSchedulingAll != NULL)
+
+- #define :ref:`EXP_IecTaskEnableSchedulingAll <group___cmp_iec_task_itf_1gae1947adbe8575766d355dd11c67e46cf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskEnableSchedulingAll", (RTS_UINTPTR) :ref:`IecTaskEnableSchedulingAll <group___cmp_iec_task_itf_1ga41d5c6948839e3cd83af47d44741e75f>` , 0, 0)
+
+- #define :ref:`USE_IecTaskDisableSchedulingAll <group___cmp_iec_task_itf_1ga0501f087eef90833aa8aeeb2008f43f8>` :ref:`PFIECTASKDISABLESCHEDULINGALL <group___cmp_iec_task_itf_1ga965af12eeaa1027b05e73efc18a25f74>` pfIecTaskDisableSchedulingAll;
+
+- #define :ref:`EXT_IecTaskDisableSchedulingAll <group___cmp_iec_task_itf_1ga761bfc7be7b666aee02e9cabe2c2791e>` extern :ref:`PFIECTASKDISABLESCHEDULINGALL <group___cmp_iec_task_itf_1ga965af12eeaa1027b05e73efc18a25f74>` pfIecTaskDisableSchedulingAll;
+
+- #define :ref:`GET_IecTaskDisableSchedulingAll <group___cmp_iec_task_itf_1ga6946ea1d370ee3d0c3447621902c4eb6>` s_pfCMGetAPI2( "IecTaskDisableSchedulingAll", (RTS_VOID_FCTPTR *)&pfIecTaskDisableSchedulingAll, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskDisableSchedulingAll <group___cmp_iec_task_itf_1gaf653fc2f95bd848358d0825a416638d4>` pfIecTaskDisableSchedulingAll
+
+- #define :ref:`CHK_IecTaskDisableSchedulingAll <group___cmp_iec_task_itf_1gafb4c54af183bcf9f74ffb235e03c1f89>` (pfIecTaskDisableSchedulingAll != NULL)
+
+- #define :ref:`EXP_IecTaskDisableSchedulingAll <group___cmp_iec_task_itf_1ga25799e015d732161b756c571631a341e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskDisableSchedulingAll", (RTS_UINTPTR) :ref:`IecTaskDisableSchedulingAll <group___cmp_iec_task_itf_1gaa5ef374a92d70d45614ea9f56f7202a9>` , 0, 0)
+
+- #define :ref:`USE_IecTaskEnableScheduling <group___cmp_iec_task_itf_1ga44e9f7a2ffad6fb4b6b8077deede9bb9>` :ref:`PFIECTASKENABLESCHEDULING <group___cmp_iec_task_itf_1ga1f6753a13b19d618ab6ab07d69992f63>` pfIecTaskEnableScheduling;
+
+- #define :ref:`EXT_IecTaskEnableScheduling <group___cmp_iec_task_itf_1gabdd31e63d93ce6bec33e5639b2632643>` extern :ref:`PFIECTASKENABLESCHEDULING <group___cmp_iec_task_itf_1ga1f6753a13b19d618ab6ab07d69992f63>` pfIecTaskEnableScheduling;
+
+- #define :ref:`GET_IecTaskEnableScheduling <group___cmp_iec_task_itf_1gadf0ade40e68987a728720782e52bcc1c>` s_pfCMGetAPI2( "IecTaskEnableScheduling", (RTS_VOID_FCTPTR *)&pfIecTaskEnableScheduling, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskEnableScheduling <group___cmp_iec_task_itf_1gab8900538909632c8b6c3b1a4ea6b2267>` pfIecTaskEnableScheduling
+
+- #define :ref:`CHK_IecTaskEnableScheduling <group___cmp_iec_task_itf_1ga39a8ea387698f6b6b5990eed116195dc>` (pfIecTaskEnableScheduling != NULL)
+
+- #define :ref:`EXP_IecTaskEnableScheduling <group___cmp_iec_task_itf_1gad882fd6d122873dabb7a0544b17137b2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskEnableScheduling", (RTS_UINTPTR) :ref:`IecTaskEnableScheduling <group___cmp_iec_task_itf_1gad2096684fe4466b9743dd202d525d351>` , 0, 0)
+
+- #define :ref:`USE_IecTaskDisableScheduling <group___cmp_iec_task_itf_1ga4a46a7fee73c0c533e4e7bf689d8e910>` :ref:`PFIECTASKDISABLESCHEDULING <group___cmp_iec_task_itf_1gae201ccb41f853d31100540cc4c141906>` pfIecTaskDisableScheduling;
+
+- #define :ref:`EXT_IecTaskDisableScheduling <group___cmp_iec_task_itf_1ga5ef339a6f6d05716f7f0ef6eab2371f5>` extern :ref:`PFIECTASKDISABLESCHEDULING <group___cmp_iec_task_itf_1gae201ccb41f853d31100540cc4c141906>` pfIecTaskDisableScheduling;
+
+- #define :ref:`GET_IecTaskDisableScheduling <group___cmp_iec_task_itf_1ga7015ea6445226f2335e023bba1644b78>` s_pfCMGetAPI2( "IecTaskDisableScheduling", (RTS_VOID_FCTPTR *)&pfIecTaskDisableScheduling, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskDisableScheduling <group___cmp_iec_task_itf_1ga835eea9ea2128bd0972aa74ca2d05062>` pfIecTaskDisableScheduling
+
+- #define :ref:`CHK_IecTaskDisableScheduling <group___cmp_iec_task_itf_1gae04ffceca547ea54e6be928de0a2a6b6>` (pfIecTaskDisableScheduling != NULL)
+
+- #define :ref:`EXP_IecTaskDisableScheduling <group___cmp_iec_task_itf_1gafd82475d38d50dc3970dcabf4594dc70>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskDisableScheduling", (RTS_UINTPTR) :ref:`IecTaskDisableScheduling <group___cmp_iec_task_itf_1ga056e8eb5798dc87877e73bfb89ab806a>` , 0, 0)
+
+- #define :ref:`USE_IecTaskEnableWatchdog <group___cmp_iec_task_itf_1gab2110c63cec7948d534fc0bab1c74862>` :ref:`PFIECTASKENABLEWATCHDOG <group___cmp_iec_task_itf_1gadf3e8a9662954ae8e870729c4d88f7bd>` pfIecTaskEnableWatchdog;
+
+- #define :ref:`EXT_IecTaskEnableWatchdog <group___cmp_iec_task_itf_1gaf11e36939f4431489cede016e7c7cd0a>` extern :ref:`PFIECTASKENABLEWATCHDOG <group___cmp_iec_task_itf_1gadf3e8a9662954ae8e870729c4d88f7bd>` pfIecTaskEnableWatchdog;
+
+- #define :ref:`GET_IecTaskEnableWatchdog <group___cmp_iec_task_itf_1ga80c0fea7e2e89896d667750aa276470e>` s_pfCMGetAPI2( "IecTaskEnableWatchdog", (RTS_VOID_FCTPTR *)&pfIecTaskEnableWatchdog, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskEnableWatchdog <group___cmp_iec_task_itf_1gaf2aab2c8ff2e3e5a1983ed44f1e9dc30>` pfIecTaskEnableWatchdog
+
+- #define :ref:`CHK_IecTaskEnableWatchdog <group___cmp_iec_task_itf_1gaa6b0ca67e775d03c3bf0d663c8faf8af>` (pfIecTaskEnableWatchdog != NULL)
+
+- #define :ref:`EXP_IecTaskEnableWatchdog <group___cmp_iec_task_itf_1ga144719bdbda6eee656e467fbcd134898>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskEnableWatchdog", (RTS_UINTPTR) :ref:`IecTaskEnableWatchdog <group___cmp_iec_task_itf_1ga3feeb8b00bab424a66ac27e217f4b372>` , 0, 0)
+
+- #define :ref:`USE_IecTaskDisableWatchdog <group___cmp_iec_task_itf_1ga5d649e7530f300c994dcc2cce2f031b6>` :ref:`PFIECTASKDISABLEWATCHDOG <group___cmp_iec_task_itf_1ga731eeb5ce18c0cedda966faa93cde3c4>` pfIecTaskDisableWatchdog;
+
+- #define :ref:`EXT_IecTaskDisableWatchdog <group___cmp_iec_task_itf_1ga58062dbb3798b03a8f7770bb08aa9f77>` extern :ref:`PFIECTASKDISABLEWATCHDOG <group___cmp_iec_task_itf_1ga731eeb5ce18c0cedda966faa93cde3c4>` pfIecTaskDisableWatchdog;
+
+- #define :ref:`GET_IecTaskDisableWatchdog <group___cmp_iec_task_itf_1ga236e8cc4048afb7eba2f6ad47b8e02ee>` s_pfCMGetAPI2( "IecTaskDisableWatchdog", (RTS_VOID_FCTPTR *)&pfIecTaskDisableWatchdog, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskDisableWatchdog <group___cmp_iec_task_itf_1gafbbccffdab844e24797c6053d62f2afd>` pfIecTaskDisableWatchdog
+
+- #define :ref:`CHK_IecTaskDisableWatchdog <group___cmp_iec_task_itf_1gad60a18a4580415ef882d646627153518>` (pfIecTaskDisableWatchdog != NULL)
+
+- #define :ref:`EXP_IecTaskDisableWatchdog <group___cmp_iec_task_itf_1gafa6be3221b82b4b1f806af174f18eec0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskDisableWatchdog", (RTS_UINTPTR) :ref:`IecTaskDisableWatchdog <group___cmp_iec_task_itf_1gad3141ba61650a5048a6a41ac746cefd4>` , 0, 0)
+
+- #define :ref:`USE_IecTaskEnableWatchdog2 <group___cmp_iec_task_itf_1ga58b01ad8f7386264151f1feb53e55bad>` :ref:`PFIECTASKENABLEWATCHDOG2 <group___cmp_iec_task_itf_1ga975e41777e8fb64b88c4c0705624d5e7>` pfIecTaskEnableWatchdog2;
+
+- #define :ref:`EXT_IecTaskEnableWatchdog2 <group___cmp_iec_task_itf_1gad17307962c12de89a8b8ec82ee381a6b>` extern :ref:`PFIECTASKENABLEWATCHDOG2 <group___cmp_iec_task_itf_1ga975e41777e8fb64b88c4c0705624d5e7>` pfIecTaskEnableWatchdog2;
+
+- #define :ref:`GET_IecTaskEnableWatchdog2 <group___cmp_iec_task_itf_1ga0b35e18766a4847b5b88f8f84cfd5d71>` s_pfCMGetAPI2( "IecTaskEnableWatchdog2", (RTS_VOID_FCTPTR *)&pfIecTaskEnableWatchdog2, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskEnableWatchdog2 <group___cmp_iec_task_itf_1ga619935273c0399e33059720b4885f7ae>` pfIecTaskEnableWatchdog2
+
+- #define :ref:`CHK_IecTaskEnableWatchdog2 <group___cmp_iec_task_itf_1ga124cceb779333e39a532f217edb6ac3b>` (pfIecTaskEnableWatchdog2 != NULL)
+
+- #define :ref:`EXP_IecTaskEnableWatchdog2 <group___cmp_iec_task_itf_1gac9a25ffd7217a7d837bc46cf9e736502>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskEnableWatchdog2", (RTS_UINTPTR) :ref:`IecTaskEnableWatchdog2 <group___cmp_iec_task_itf_1ga10ed63475267435205d24bf14d4173af>` , 0, 0)
+
+- #define :ref:`USE_IecTaskDisableWatchdog2 <group___cmp_iec_task_itf_1ga61a1104f742b4d074e77dd1aee037a04>` :ref:`PFIECTASKDISABLEWATCHDOG2 <group___cmp_iec_task_itf_1gabd3ce4b94058cdf1cd3d15f1d6813d8b>` pfIecTaskDisableWatchdog2;
+
+- #define :ref:`EXT_IecTaskDisableWatchdog2 <group___cmp_iec_task_itf_1ga9c55d558881c5ef5e4f1d8f91ee5e29c>` extern :ref:`PFIECTASKDISABLEWATCHDOG2 <group___cmp_iec_task_itf_1gabd3ce4b94058cdf1cd3d15f1d6813d8b>` pfIecTaskDisableWatchdog2;
+
+- #define :ref:`GET_IecTaskDisableWatchdog2 <group___cmp_iec_task_itf_1ga83be20c737cb45a223da5aaec40e281d>` s_pfCMGetAPI2( "IecTaskDisableWatchdog2", (RTS_VOID_FCTPTR *)&pfIecTaskDisableWatchdog2, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskDisableWatchdog2 <group___cmp_iec_task_itf_1ga9a0b4b4f9440b9f45a0e8a2389d08452>` pfIecTaskDisableWatchdog2
+
+- #define :ref:`CHK_IecTaskDisableWatchdog2 <group___cmp_iec_task_itf_1ga5e9e61e8f137f1ae72a257f6f13aa492>` (pfIecTaskDisableWatchdog2 != NULL)
+
+- #define :ref:`EXP_IecTaskDisableWatchdog2 <group___cmp_iec_task_itf_1ga77392571067e9c865f97e978584fd408>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskDisableWatchdog2", (RTS_UINTPTR) :ref:`IecTaskDisableWatchdog2 <group___cmp_iec_task_itf_1gaac809dc849046ae41217e04059b1c396>` , 0, 0)
+
+- #define :ref:`USE_IecTaskCheckWatchdog <group___cmp_iec_task_itf_1ga4a60e94f687ebf60bacaa11f45d1acb6>` :ref:`PFIECTASKCHECKWATCHDOG <group___cmp_iec_task_itf_1ga610cf81d35249eb3656d644743dc1fe3>` pfIecTaskCheckWatchdog;
+
+- #define :ref:`EXT_IecTaskCheckWatchdog <group___cmp_iec_task_itf_1gac5d222b8f0ad8b0f247d458f6dd30203>` extern :ref:`PFIECTASKCHECKWATCHDOG <group___cmp_iec_task_itf_1ga610cf81d35249eb3656d644743dc1fe3>` pfIecTaskCheckWatchdog;
+
+- #define :ref:`GET_IecTaskCheckWatchdog <group___cmp_iec_task_itf_1ga48819828ef218e28a58d27559fe3b623>` s_pfCMGetAPI2( "IecTaskCheckWatchdog", (RTS_VOID_FCTPTR *)&pfIecTaskCheckWatchdog, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskCheckWatchdog <group___cmp_iec_task_itf_1ga1dc017efa41ccbf8e22168f1e286e1ac>` pfIecTaskCheckWatchdog
+
+- #define :ref:`CHK_IecTaskCheckWatchdog <group___cmp_iec_task_itf_1ga00ca2a2d4c56d76d22809b937f072b22>` (pfIecTaskCheckWatchdog != NULL)
+
+- #define :ref:`EXP_IecTaskCheckWatchdog <group___cmp_iec_task_itf_1ga83d66d3a6db1fd432d56ed571f4e66d2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskCheckWatchdog", (RTS_UINTPTR) :ref:`IecTaskCheckWatchdog <group___cmp_iec_task_itf_1ga4f13e818f96a489c50df58e17696156e>` , 0, 0)
+
+- #define :ref:`USE_IecTaskGetFirst <group___cmp_iec_task_itf_1ga6243ffd732be694dd00d89d83dc70027>` :ref:`PFIECTASKGETFIRST <group___cmp_iec_task_itf_1ga93b201bdad1f206fe6c7f00588a69e1c>` pfIecTaskGetFirst;
+
+- #define :ref:`EXT_IecTaskGetFirst <group___cmp_iec_task_itf_1gad90ed427dd7db39102a81524bff1b8ff>` extern :ref:`PFIECTASKGETFIRST <group___cmp_iec_task_itf_1ga93b201bdad1f206fe6c7f00588a69e1c>` pfIecTaskGetFirst;
+
+- #define :ref:`GET_IecTaskGetFirst <group___cmp_iec_task_itf_1ga9582509cfe416731d72c8985476e7f4b>` s_pfCMGetAPI2( "IecTaskGetFirst", (RTS_VOID_FCTPTR *)&pfIecTaskGetFirst, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskGetFirst <group___cmp_iec_task_itf_1ga67b27bd78a271032a1b6f5950f00fe69>` pfIecTaskGetFirst
+
+- #define :ref:`CHK_IecTaskGetFirst <group___cmp_iec_task_itf_1gac3860c298fdbc5c0358bd9fe7a215558>` (pfIecTaskGetFirst != NULL)
+
+- #define :ref:`EXP_IecTaskGetFirst <group___cmp_iec_task_itf_1ga1570e09cd9225bebcfe6e1c6b947635f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskGetFirst", (RTS_UINTPTR) :ref:`IecTaskGetFirst <group___cmp_iec_task_itf_1ga2504b4db0d027a0d141cc481c5cd8807>` , 0, 0)
+
+- #define :ref:`USE_IecTaskGetNext <group___cmp_iec_task_itf_1ga40609caeea101377f9431e4c3154b16b>` :ref:`PFIECTASKGETNEXT <group___cmp_iec_task_itf_1gad17fe5d3af8046fe9dcc3490f541a84b>` pfIecTaskGetNext;
+
+- #define :ref:`EXT_IecTaskGetNext <group___cmp_iec_task_itf_1ga208118288a3f4beaf7c108bba34917e6>` extern :ref:`PFIECTASKGETNEXT <group___cmp_iec_task_itf_1gad17fe5d3af8046fe9dcc3490f541a84b>` pfIecTaskGetNext;
+
+- #define :ref:`GET_IecTaskGetNext <group___cmp_iec_task_itf_1gae3d080e71773826ad3dc3e2a0d0ce8a1>` s_pfCMGetAPI2( "IecTaskGetNext", (RTS_VOID_FCTPTR *)&pfIecTaskGetNext, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskGetNext <group___cmp_iec_task_itf_1gab13e7d301af4a9e941acc19ad6294d75>` pfIecTaskGetNext
+
+- #define :ref:`CHK_IecTaskGetNext <group___cmp_iec_task_itf_1gabe19d1988a11ed714d652b45c20cc402>` (pfIecTaskGetNext != NULL)
+
+- #define :ref:`EXP_IecTaskGetNext <group___cmp_iec_task_itf_1ga6a3534cb3eaf58453e5855c9598d4f4a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskGetNext", (RTS_UINTPTR) :ref:`IecTaskGetNext <group___cmp_iec_task_itf_1gab1f75eadafc2edd33f4a4ccc57a7b798>` , 0, 0)
+
+- #define :ref:`USE_IecTaskGetFirst2 <group___cmp_iec_task_itf_1gaef7f01f4f10d3de3933374bd3e9241e5>` :ref:`PFIECTASKGETFIRST2 <group___cmp_iec_task_itf_1ga9d0143aadfe8e2caf64ed8cd38a371c9>` pfIecTaskGetFirst2;
+
+- #define :ref:`EXT_IecTaskGetFirst2 <group___cmp_iec_task_itf_1gab9fcd658bbc71252549ecdde2af26e49>` extern :ref:`PFIECTASKGETFIRST2 <group___cmp_iec_task_itf_1ga9d0143aadfe8e2caf64ed8cd38a371c9>` pfIecTaskGetFirst2;
+
+- #define :ref:`GET_IecTaskGetFirst2 <group___cmp_iec_task_itf_1ga883f8d87704674d39b0df81a8101f422>` s_pfCMGetAPI2( "IecTaskGetFirst2", (RTS_VOID_FCTPTR *)&pfIecTaskGetFirst2, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskGetFirst2 <group___cmp_iec_task_itf_1gaa73bb4eaaece05d13285944e10df2f4a>` pfIecTaskGetFirst2
+
+- #define :ref:`CHK_IecTaskGetFirst2 <group___cmp_iec_task_itf_1gab7b7f21eb1bfe1e5dbb558caf4c75609>` (pfIecTaskGetFirst2 != NULL)
+
+- #define :ref:`EXP_IecTaskGetFirst2 <group___cmp_iec_task_itf_1ga6167cb9054bec7b6f220087d8485f2e4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskGetFirst2", (RTS_UINTPTR) :ref:`IecTaskGetFirst2 <group___cmp_iec_task_itf_1ga1717bf2df3276ec1f79fdb1c31235539>` , 0, 0)
+
+- #define :ref:`USE_IecTaskGetNext2 <group___cmp_iec_task_itf_1gab81f609dc652f5f2ebab43b092c6364f>` :ref:`PFIECTASKGETNEXT2 <group___cmp_iec_task_itf_1gafa8f4571ec71ae1a3298ef06e96a2e5b>` pfIecTaskGetNext2;
+
+- #define :ref:`EXT_IecTaskGetNext2 <group___cmp_iec_task_itf_1gae59250b522aea3b9109b4962014ce6bf>` extern :ref:`PFIECTASKGETNEXT2 <group___cmp_iec_task_itf_1gafa8f4571ec71ae1a3298ef06e96a2e5b>` pfIecTaskGetNext2;
+
+- #define :ref:`GET_IecTaskGetNext2 <group___cmp_iec_task_itf_1ga5ce44ccd6a6f0022dfff6a90d0ebb90d>` s_pfCMGetAPI2( "IecTaskGetNext2", (RTS_VOID_FCTPTR *)&pfIecTaskGetNext2, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskGetNext2 <group___cmp_iec_task_itf_1ga84a5825ce7f10ee0756d35f954554f58>` pfIecTaskGetNext2
+
+- #define :ref:`CHK_IecTaskGetNext2 <group___cmp_iec_task_itf_1ga2e16f454f754ddc709316432a557ba33>` (pfIecTaskGetNext2 != NULL)
+
+- #define :ref:`EXP_IecTaskGetNext2 <group___cmp_iec_task_itf_1ga4f07de761b57bdc25f866349ef7484be>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskGetNext2", (RTS_UINTPTR) :ref:`IecTaskGetNext2 <group___cmp_iec_task_itf_1gac7df703743e5dff24c67ce27de296fb3>` , 0, 0)
+
+- #define :ref:`USE_IecTaskReload <group___cmp_iec_task_itf_1ga5eafb47b1d61db221016c4d0e88b8eee>` :ref:`PFIECTASKRELOAD <group___cmp_iec_task_itf_1ga3bbd1f7b9bac1aa46568f8384281041d>` pfIecTaskReload;
+
+- #define :ref:`EXT_IecTaskReload <group___cmp_iec_task_itf_1ga072d59a97f691c5f93d048d51fe3993e>` extern :ref:`PFIECTASKRELOAD <group___cmp_iec_task_itf_1ga3bbd1f7b9bac1aa46568f8384281041d>` pfIecTaskReload;
+
+- #define :ref:`GET_IecTaskReload <group___cmp_iec_task_itf_1ga62312543a0759240e0b45fa7da7b11b6>` s_pfCMGetAPI2( "IecTaskReload", (RTS_VOID_FCTPTR *)&pfIecTaskReload, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskReload <group___cmp_iec_task_itf_1gaf90a58d763993612998019f494f2f14b>` pfIecTaskReload
+
+- #define :ref:`CHK_IecTaskReload <group___cmp_iec_task_itf_1gaa8dffea8783ee97e42e0080b77ecb5d0>` (pfIecTaskReload != NULL)
+
+- #define :ref:`EXP_IecTaskReload <group___cmp_iec_task_itf_1ga1f30e71101f4ccbb0deba2dc490d4ea6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskReload", (RTS_UINTPTR) :ref:`IecTaskReload <group___cmp_iec_task_itf_1gaf300ff9b039e6f240ff1cfc39a59de9c>` , 0, 0)
+
+- #define :ref:`USE_IecTaskCalculateId <group___cmp_iec_task_itf_1ga119557e0ffb6725c38fcec894c1ddd41>` :ref:`PFIECTASKCALCULATEID <group___cmp_iec_task_itf_1ga440de26911ebbafd04fc5363f59750aa>` pfIecTaskCalculateId;
+
+- #define :ref:`EXT_IecTaskCalculateId <group___cmp_iec_task_itf_1ga33f311f9042c83cb2e88ba31a38d582d>` extern :ref:`PFIECTASKCALCULATEID <group___cmp_iec_task_itf_1ga440de26911ebbafd04fc5363f59750aa>` pfIecTaskCalculateId;
+
+- #define :ref:`GET_IecTaskCalculateId <group___cmp_iec_task_itf_1gaf3505b28bc710f207567a66f57b0985a>` s_pfCMGetAPI2( "IecTaskCalculateId", (RTS_VOID_FCTPTR *)&pfIecTaskCalculateId, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskCalculateId <group___cmp_iec_task_itf_1ga56a13423d493a8507cfe857f47842fbc>` pfIecTaskCalculateId
+
+- #define :ref:`CHK_IecTaskCalculateId <group___cmp_iec_task_itf_1ga5b148c7be330c313cdb4b1669d218004>` (pfIecTaskCalculateId != NULL)
+
+- #define :ref:`EXP_IecTaskCalculateId <group___cmp_iec_task_itf_1ga3a3c1ae6bd9dda08664057a5b45cd091>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskCalculateId", (RTS_UINTPTR) :ref:`IecTaskCalculateId <group___cmp_iec_task_itf_1ga2defc0b0b2f479dea946e115b0f900a4>` , 0, 0)
+
+- #define :ref:`USE_IecTaskWaitTasksActive <group___cmp_iec_task_itf_1gab340404256c5d7d3b60b20fbeeffcd3a>` :ref:`PFIECTASKWAITTASKSACTIVE <group___cmp_iec_task_itf_1ga769fc342024f1ddd7b1ac1db841cceef>` pfIecTaskWaitTasksActive;
+
+- #define :ref:`EXT_IecTaskWaitTasksActive <group___cmp_iec_task_itf_1ga7ca7568a3e8dffe41efaaddf66f9838f>` extern :ref:`PFIECTASKWAITTASKSACTIVE <group___cmp_iec_task_itf_1ga769fc342024f1ddd7b1ac1db841cceef>` pfIecTaskWaitTasksActive;
+
+- #define :ref:`GET_IecTaskWaitTasksActive <group___cmp_iec_task_itf_1gaf9d19080a524f72502b4474b8232d360>` s_pfCMGetAPI2( "IecTaskWaitTasksActive", (RTS_VOID_FCTPTR *)&pfIecTaskWaitTasksActive, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskWaitTasksActive <group___cmp_iec_task_itf_1gae80bf4b8fc4f343cc5f088476b6d2981>` pfIecTaskWaitTasksActive
+
+- #define :ref:`CHK_IecTaskWaitTasksActive <group___cmp_iec_task_itf_1gaf6eaa983d76a72f571649b08e4b20a7f>` (pfIecTaskWaitTasksActive != NULL)
+
+- #define :ref:`EXP_IecTaskWaitTasksActive <group___cmp_iec_task_itf_1gaa598d42be94888a0c83dd13a3bc423ef>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskWaitTasksActive", (RTS_UINTPTR) :ref:`IecTaskWaitTasksActive <group___cmp_iec_task_itf_1gae5235d65a6bc4ce1c7eba6e5c80972ff>` , 0, 0)
+
+- #define :ref:`USE_IecTaskSingleCycle <group___cmp_iec_task_itf_1ga2d2a79684295125ae8777604cba49c6e>` :ref:`PFIECTASKSINGLECYCLE <group___cmp_iec_task_itf_1ga8581eadcf78fd3d0c5dec1530199c1c3>` pfIecTaskSingleCycle;
+
+- #define :ref:`EXT_IecTaskSingleCycle <group___cmp_iec_task_itf_1ga0a4a221a1385c6a264f12657a514b4fa>` extern :ref:`PFIECTASKSINGLECYCLE <group___cmp_iec_task_itf_1ga8581eadcf78fd3d0c5dec1530199c1c3>` pfIecTaskSingleCycle;
+
+- #define :ref:`GET_IecTaskSingleCycle <group___cmp_iec_task_itf_1gafe89199a3d17cfd74351e7a8d01b48b3>` s_pfCMGetAPI2( "IecTaskSingleCycle", (RTS_VOID_FCTPTR *)&pfIecTaskSingleCycle, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskSingleCycle <group___cmp_iec_task_itf_1gae1713e6b4aba6e19331d175b986a42fb>` pfIecTaskSingleCycle
+
+- #define :ref:`CHK_IecTaskSingleCycle <group___cmp_iec_task_itf_1gae0c22626c65545d9384277bb124e07c8>` (pfIecTaskSingleCycle != NULL)
+
+- #define :ref:`EXP_IecTaskSingleCycle <group___cmp_iec_task_itf_1gace30a6371b72103aa0e2de9b7e5fd560>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskSingleCycle", (RTS_UINTPTR) :ref:`IecTaskSingleCycle <group___cmp_iec_task_itf_1ga50a4ee0ec24c1dd72d62e3af132c2662>` , 0, 0)
+
+- #define :ref:`USE_IecTaskResetStatistics <group___cmp_iec_task_itf_1ga2ef2f5d7bcdc5a39f3ad9283d9899e1c>` :ref:`PFIECTASKRESETSTATISTICS <group___cmp_iec_task_itf_1gaa2a69ba19d694b8bc2c6631640f4bcac>` pfIecTaskResetStatistics;
+
+- #define :ref:`EXT_IecTaskResetStatistics <group___cmp_iec_task_itf_1gaf8cc11bbc680965b1ddadcfe2507b55f>` extern :ref:`PFIECTASKRESETSTATISTICS <group___cmp_iec_task_itf_1gaa2a69ba19d694b8bc2c6631640f4bcac>` pfIecTaskResetStatistics;
+
+- #define :ref:`GET_IecTaskResetStatistics <group___cmp_iec_task_itf_1ga998eb6e5de8ecda8bec730be71df68d9>` s_pfCMGetAPI2( "IecTaskResetStatistics", (RTS_VOID_FCTPTR *)&pfIecTaskResetStatistics, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskResetStatistics <group___cmp_iec_task_itf_1ga10e110806c3292ef42d5c9eb1294a884>` pfIecTaskResetStatistics
+
+- #define :ref:`CHK_IecTaskResetStatistics <group___cmp_iec_task_itf_1ga4298c14935785b7992daec1d683f01b3>` (pfIecTaskResetStatistics != NULL)
+
+- #define :ref:`EXP_IecTaskResetStatistics <group___cmp_iec_task_itf_1ga1b956517d5a3396d54205339aec98af3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskResetStatistics", (RTS_UINTPTR) :ref:`IecTaskResetStatistics <group___cmp_iec_task_itf_1ga622d8e5cc5e7571abbe87d08adc45f62>` , 0, 0)
+
+- #define :ref:`USE_IecTaskDebugHandlerEnter <group___cmp_iec_task_itf_1ga72844991c44297854acdd6a6374b2584>` :ref:`PFIECTASKDEBUGHANDLERENTER <group___cmp_iec_task_itf_1gacb7d16d1617d5e2fd41315dc33bc15e1>` pfIecTaskDebugHandlerEnter;
+
+- #define :ref:`EXT_IecTaskDebugHandlerEnter <group___cmp_iec_task_itf_1ga864c9bbbd2f139d6ae9ad2a9fbbfdf13>` extern :ref:`PFIECTASKDEBUGHANDLERENTER <group___cmp_iec_task_itf_1gacb7d16d1617d5e2fd41315dc33bc15e1>` pfIecTaskDebugHandlerEnter;
+
+- #define :ref:`GET_IecTaskDebugHandlerEnter <group___cmp_iec_task_itf_1gaa149db49828253ff1fb8e45599d664ec>` s_pfCMGetAPI2( "IecTaskDebugHandlerEnter", (RTS_VOID_FCTPTR *)&pfIecTaskDebugHandlerEnter, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskDebugHandlerEnter <group___cmp_iec_task_itf_1ga48274315705cb3a5a056f79efabce1a9>` pfIecTaskDebugHandlerEnter
+
+- #define :ref:`CHK_IecTaskDebugHandlerEnter <group___cmp_iec_task_itf_1ga8fafe8be88170417d5f4910adbfe19e2>` (pfIecTaskDebugHandlerEnter != NULL)
+
+- #define :ref:`EXP_IecTaskDebugHandlerEnter <group___cmp_iec_task_itf_1gaf72744691e07a5a4677b2983338c662e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskDebugHandlerEnter", (RTS_UINTPTR) :ref:`IecTaskDebugHandlerEnter <group___cmp_iec_task_itf_1gaaf7938b3efb461894767443dafebca50>` , 0, 0)
+
+- #define :ref:`USE_IecTaskDebugHandlerLeave <group___cmp_iec_task_itf_1ga02157a4cbf8932026afe6969012e2139>` :ref:`PFIECTASKDEBUGHANDLERLEAVE <group___cmp_iec_task_itf_1gab9e15517e279497236f4267fcb0e0df8>` pfIecTaskDebugHandlerLeave;
+
+- #define :ref:`EXT_IecTaskDebugHandlerLeave <group___cmp_iec_task_itf_1gae8f2ad844c50776be6bb085ad4c794d1>` extern :ref:`PFIECTASKDEBUGHANDLERLEAVE <group___cmp_iec_task_itf_1gab9e15517e279497236f4267fcb0e0df8>` pfIecTaskDebugHandlerLeave;
+
+- #define :ref:`GET_IecTaskDebugHandlerLeave <group___cmp_iec_task_itf_1ga0d9d3b95144d81e002537fe7ad4131ad>` s_pfCMGetAPI2( "IecTaskDebugHandlerLeave", (RTS_VOID_FCTPTR *)&pfIecTaskDebugHandlerLeave, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskDebugHandlerLeave <group___cmp_iec_task_itf_1ga23ea70be197b3519e2aa218c1e61d508>` pfIecTaskDebugHandlerLeave
+
+- #define :ref:`CHK_IecTaskDebugHandlerLeave <group___cmp_iec_task_itf_1ga6e0cbc8ba22dfda680e5db6e272f43d7>` (pfIecTaskDebugHandlerLeave != NULL)
+
+- #define :ref:`EXP_IecTaskDebugHandlerLeave <group___cmp_iec_task_itf_1gae0e7906a5ac829b35c4ce76635a715c7>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskDebugHandlerLeave", (RTS_UINTPTR) :ref:`IecTaskDebugHandlerLeave <group___cmp_iec_task_itf_1ga16b40497332d4db4155f1d3c7b4eff2f>` , 0, 0)
+
+- #define :ref:`USE_IecTaskCallIecFuncWithParams <group___cmp_iec_task_itf_1ga1def5246970160e490617b39c59335ac>` :ref:`PFIECTASKCALLIECFUNCWITHPARAMS <group___cmp_iec_task_itf_1gab3db2e60998ac8d3a2487ea894a22f4f>` pfIecTaskCallIecFuncWithParams;
+
+- #define :ref:`EXT_IecTaskCallIecFuncWithParams <group___cmp_iec_task_itf_1gac9a7725acbe6d0d41effac5352d145f9>` extern :ref:`PFIECTASKCALLIECFUNCWITHPARAMS <group___cmp_iec_task_itf_1gab3db2e60998ac8d3a2487ea894a22f4f>` pfIecTaskCallIecFuncWithParams;
+
+- #define :ref:`GET_IecTaskCallIecFuncWithParams <group___cmp_iec_task_itf_1gaa495f0f99ff097249c428f8a1661faab>` s_pfCMGetAPI2( "IecTaskCallIecFuncWithParams", (RTS_VOID_FCTPTR *)&pfIecTaskCallIecFuncWithParams, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskCallIecFuncWithParams <group___cmp_iec_task_itf_1ga49fb0e4b651534cba4d0a2ea41602b72>` pfIecTaskCallIecFuncWithParams
+
+- #define :ref:`CHK_IecTaskCallIecFuncWithParams <group___cmp_iec_task_itf_1gae00bb940d46901fa8249d95f64d3fba2>` (pfIecTaskCallIecFuncWithParams != NULL)
+
+- #define :ref:`EXP_IecTaskCallIecFuncWithParams <group___cmp_iec_task_itf_1ga70865371b5652f150b801befe784065b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskCallIecFuncWithParams", (RTS_UINTPTR) :ref:`IecTaskCallIecFuncWithParams <group___cmp_iec_task_itf_1ga9a95ae840366f4e31cdae58ca785dd7f>` , 0, 0)
+
+- #define :ref:`USE_IecTaskExtraAdd <group___cmp_iec_task_itf_1ga39ac1dca4e522df6b0d3258bf54d1cd3>` :ref:`PFIECTASKEXTRAADD <group___cmp_iec_task_itf_1ga2e82d2ce4fc489a3a75053722087174d>` pfIecTaskExtraAdd;
+
+- #define :ref:`EXT_IecTaskExtraAdd <group___cmp_iec_task_itf_1gac1c118434918226bcc10e9b85f60d171>` extern :ref:`PFIECTASKEXTRAADD <group___cmp_iec_task_itf_1ga2e82d2ce4fc489a3a75053722087174d>` pfIecTaskExtraAdd;
+
+- #define :ref:`GET_IecTaskExtraAdd <group___cmp_iec_task_itf_1gacb0d776f2f715394518d38ef8e999bce>` s_pfCMGetAPI2( "IecTaskExtraAdd", (RTS_VOID_FCTPTR *)&pfIecTaskExtraAdd, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskExtraAdd <group___cmp_iec_task_itf_1ga43932638a1f584294cc815b03a6ae044>` pfIecTaskExtraAdd
+
+- #define :ref:`CHK_IecTaskExtraAdd <group___cmp_iec_task_itf_1ga300264c39c81916dabf83c1c71bac99b>` (pfIecTaskExtraAdd != NULL)
+
+- #define :ref:`EXP_IecTaskExtraAdd <group___cmp_iec_task_itf_1ga9185b2d394525efb471eaf7bca1cc858>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExtraAdd", (RTS_UINTPTR) :ref:`IecTaskExtraAdd <group___cmp_iec_task_itf_1ga94d749be3edb7ee18dd67afaa4c28ade>` , 0, 0)
+
+- #define :ref:`USE_IecTaskExtraRemove <group___cmp_iec_task_itf_1gad582baa5c3ce5aad9e4cbb40e1fa2098>` :ref:`PFIECTASKEXTRAREMOVE <group___cmp_iec_task_itf_1gab01a40983b09f9372bf8d9a6476fbcdb>` pfIecTaskExtraRemove;
+
+- #define :ref:`EXT_IecTaskExtraRemove <group___cmp_iec_task_itf_1gaa292888759bc48bdebf953e4feb3c5c7>` extern :ref:`PFIECTASKEXTRAREMOVE <group___cmp_iec_task_itf_1gab01a40983b09f9372bf8d9a6476fbcdb>` pfIecTaskExtraRemove;
+
+- #define :ref:`GET_IecTaskExtraRemove <group___cmp_iec_task_itf_1ga1aa1dbe76884b1c45c8c0fa322e5a9f8>` s_pfCMGetAPI2( "IecTaskExtraRemove", (RTS_VOID_FCTPTR *)&pfIecTaskExtraRemove, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskExtraRemove <group___cmp_iec_task_itf_1ga136dd0d5c52259b47ba2851ea6f0ba19>` pfIecTaskExtraRemove
+
+- #define :ref:`CHK_IecTaskExtraRemove <group___cmp_iec_task_itf_1ga1e6c958ed641e22d3e2a2178f983dbf1>` (pfIecTaskExtraRemove != NULL)
+
+- #define :ref:`EXP_IecTaskExtraRemove <group___cmp_iec_task_itf_1ga50ffcd109092131e4dc17e576af7799d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExtraRemove", (RTS_UINTPTR) :ref:`IecTaskExtraRemove <group___cmp_iec_task_itf_1ga0584b7e4be8390fc8a71deee5d3ea33c>` , 0, 0)
+
+- #define :ref:`USE_IecTaskExtraFind <group___cmp_iec_task_itf_1gad914568459d271c62f0fb02dfe2e251a>` :ref:`PFIECTASKEXTRAFIND <group___cmp_iec_task_itf_1ga99cfd72c03953c856c835ad296874ea4>` pfIecTaskExtraFind;
+
+- #define :ref:`EXT_IecTaskExtraFind <group___cmp_iec_task_itf_1gada0d46ce63015a70f80104895bd2eebb>` extern :ref:`PFIECTASKEXTRAFIND <group___cmp_iec_task_itf_1ga99cfd72c03953c856c835ad296874ea4>` pfIecTaskExtraFind;
+
+- #define :ref:`GET_IecTaskExtraFind <group___cmp_iec_task_itf_1gaa3bb5d95e1f3dba4e042b5173ab2ac24>` s_pfCMGetAPI2( "IecTaskExtraFind", (RTS_VOID_FCTPTR *)&pfIecTaskExtraFind, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskExtraFind <group___cmp_iec_task_itf_1ga391908f3e0df50e863ecd38aac178299>` pfIecTaskExtraFind
+
+- #define :ref:`CHK_IecTaskExtraFind <group___cmp_iec_task_itf_1ga59db15785200c94853bbfb4cf844abf4>` (pfIecTaskExtraFind != NULL)
+
+- #define :ref:`EXP_IecTaskExtraFind <group___cmp_iec_task_itf_1gaa835454586ff92ade7041c87ce7551af>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExtraFind", (RTS_UINTPTR) :ref:`IecTaskExtraFind <group___cmp_iec_task_itf_1gabada71a08c8afea569d83d3c2c661324>` , 0, 0)
+
+- #define :ref:`USE_IecTaskExtraSetApp <group___cmp_iec_task_itf_1ga2fe2dfddccc2856b22d5be4fc64f1c32>` :ref:`PFIECTASKEXTRASETAPP <group___cmp_iec_task_itf_1ga3e4ccd6819fe9135514b9c6a049eb2cc>` pfIecTaskExtraSetApp;
+
+- #define :ref:`EXT_IecTaskExtraSetApp <group___cmp_iec_task_itf_1gadb8b8caedf4a2db0c50f21506aa017c1>` extern :ref:`PFIECTASKEXTRASETAPP <group___cmp_iec_task_itf_1ga3e4ccd6819fe9135514b9c6a049eb2cc>` pfIecTaskExtraSetApp;
+
+- #define :ref:`GET_IecTaskExtraSetApp <group___cmp_iec_task_itf_1ga89291d7858cb0b5d2efdfd5b26ee77aa>` s_pfCMGetAPI2( "IecTaskExtraSetApp", (RTS_VOID_FCTPTR *)&pfIecTaskExtraSetApp, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskExtraSetApp <group___cmp_iec_task_itf_1ga10d3012aa72ce4974df0c903de9b0696>` pfIecTaskExtraSetApp
+
+- #define :ref:`CHK_IecTaskExtraSetApp <group___cmp_iec_task_itf_1ga8e453db8faadceffd3a1e2819b1f4e0c>` (pfIecTaskExtraSetApp != NULL)
+
+- #define :ref:`EXP_IecTaskExtraSetApp <group___cmp_iec_task_itf_1gaaba67fd5850e562bcbcd2497bb73752b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExtraSetApp", (RTS_UINTPTR) :ref:`IecTaskExtraSetApp <group___cmp_iec_task_itf_1gacf304e0124f040d84b2a6652652739bf>` , 0, 0)
+
+- #define :ref:`USE_IecTaskExtraExceptionHandler <group___cmp_iec_task_itf_1gaf155ffdb3f7567ea99685832847e7bed>` :ref:`PFIECTASKEXTRAEXCEPTIONHANDLER <group___cmp_iec_task_itf_1gaddb338426055bf2380b16a07356eeaff>` pfIecTaskExtraExceptionHandler;
+
+- #define :ref:`EXT_IecTaskExtraExceptionHandler <group___cmp_iec_task_itf_1ga68dd2fbe9b6d6b13454e1b6d723b642a>` extern :ref:`PFIECTASKEXTRAEXCEPTIONHANDLER <group___cmp_iec_task_itf_1gaddb338426055bf2380b16a07356eeaff>` pfIecTaskExtraExceptionHandler;
+
+- #define :ref:`GET_IecTaskExtraExceptionHandler <group___cmp_iec_task_itf_1ga7cb1ad990169a2e5d967f26d8ce537af>` s_pfCMGetAPI2( "IecTaskExtraExceptionHandler", (RTS_VOID_FCTPTR *)&pfIecTaskExtraExceptionHandler, (fl), 0, 0)
+
+- #define :ref:`CAL_IecTaskExtraExceptionHandler <group___cmp_iec_task_itf_1ga864f797bc26c21e32fbcc2f5d14ddc6d>` pfIecTaskExtraExceptionHandler
+
+- #define :ref:`CHK_IecTaskExtraExceptionHandler <group___cmp_iec_task_itf_1ga12f95c4bc58e127e154e91bcefc5f7c0>` (pfIecTaskExtraExceptionHandler != NULL)
+
+- #define :ref:`EXP_IecTaskExtraExceptionHandler <group___cmp_iec_task_itf_1gac64828d6846f1f02633e7e379f06ca33>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExtraExceptionHandler", (RTS_UINTPTR) :ref:`IecTaskExtraExceptionHandler <group___cmp_iec_task_itf_1ga6b358f52d9648b71c7ac9426660bda7e>` , 0, 0)
+
+- #define :ref:`ITF_CmpIecTask <group___cmp_iec_task_itf_1ga3dd245ae28b4f1f43a41d77d6841f9d0>`
+
+- #define :ref:`EXTITF_CmpIecTask <group___cmp_iec_task_itf_1ga6d53bedf899f50b142533136e59425ce>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagTask_Info <structtag_task___info>` :ref:`Task_Info <group___cmp_iec_task_itf___staticdefines_1ga56b1767676d541fc548c45a73424dd38>`
+
+- typedef void HUGEPTR(** :ref:`PF_SLOT_IEC_CALLBACK <group___cmp_iec_task_itf___taskstatusbits_1ga598c4310ad4d5df216b1186d693f6c5c>`)(void)
+
+- typedef void HUGEPTR(* :ref:`PF_SLOT_CALLBACK <group___cmp_iec_task_itf___taskstatusbits_1ga5484ac4710ffcd31032615cc398026e3>`)(struct tagTask_Desc *pTask)
+
+- typedef struct :ref:`tagTask_Desc <structtag_task___desc>` :ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>`
+
+- typedef struct :ref:`tagTASK_LIST <structtag_t_a_s_k___l_i_s_t>` :ref:`Task_List <group___cmp_iec_task_itf_1ga919071da1ff63c240db8f9b5a1b0345a>`
+
+- typedef struct :ref:`tagLDATAREF_TYPE <structtag_l_d_a_t_a_r_e_f___t_y_p_e>` :ref:`LDATAREF_TYPE <group___cmp_iec_task_itf_1ga5ee924368653ff97c92d4244f2c080d9>`
+
+- typedef struct :ref:`tagSYSIECTASKCONFENTRY <structtag_s_y_s_i_e_c_t_a_s_k_c_o_n_f_e_n_t_r_y>` :ref:`SYSIECTASKCONFENTRY <group___cmp_iec_task_itf_1ga5696822261bb7665a1911538702b2308>`
+
+- typedef struct :ref:`tagSYSIECTASKINFO <structtag_s_y_s_i_e_c_t_a_s_k_i_n_f_o>` :ref:`SYSIECTASKINFO <group___cmp_iec_task_itf_1ga621424be15cc3360667148b7b7136f1a>`
+
+- typedef struct :ref:`tagiectaskgetconfig_struct <structtagiectaskgetconfig__struct>` :ref:`iectaskgetconfig_struct <group___cmp_iec_task_itf_1ga1aa2c7fdf1fbb3f4c3703267f9d129b4>`
+
+- typedef void(* :ref:`PFIECTASKGETCONFIG_IEC <group___cmp_iec_task_itf_1gafcc7045b6369a398ff01bcaa05dc3fab>`)(iectaskgetconfig_struct *p)
+
+- typedef struct :ref:`tagiectaskgetinfo_struct <structtagiectaskgetinfo__struct>` :ref:`iectaskgetinfo_struct <group___cmp_iec_task_itf_1ga3d7e18184e0d75d830bb301def53cc5d>`
+
+- typedef void(* :ref:`PFIECTASKGETINFO_IEC <group___cmp_iec_task_itf_1ga56f54568970e9d00cc809418b1ffb1e9>`)(iectaskgetinfo_struct *p)
+
+- typedef struct :ref:`tagJitter_Distribution <structtag_jitter___distribution>` :ref:`Jitter_Distribution <group___cmp_iec_task_itf_1ga1fb3c00e50b75ae282034095f49685a2>`
+
+- typedef struct :ref:`tagiectaskcreate_struct <structtagiectaskcreate__struct>` :ref:`iectaskcreate_struct <group___cmp_iec_task_itf_1ga800360dce949a03d470d1f0182c51315>`
+
+- typedef void(* :ref:`PFIECTASKCREATE_IEC <group___cmp_iec_task_itf_1gadc44b3e0dd5473f26d5b7ddbe82c0385>`)(iectaskcreate_struct *p)
+
+- typedef struct :ref:`tagiectaskcreate2_struct <structtagiectaskcreate2__struct>` :ref:`iectaskcreate2_struct <group___cmp_iec_task_itf_1ga9448b6d257bd021526453cbc98bc8f4b>`
+
+- typedef void(* :ref:`PFIECTASKCREATE2_IEC <group___cmp_iec_task_itf_1gaa4caf8303ea0c3872421ac5b392a40c0>`)(iectaskcreate2_struct *p)
+
+- typedef struct :ref:`tagiectaskdelete2_struct <structtagiectaskdelete2__struct>` :ref:`iectaskdelete2_struct <group___cmp_iec_task_itf_1gaa4945f2581ee1c8c6fafe7e726d4589e>`
+
+- typedef void(* :ref:`PFIECTASKDELETE2_IEC <group___cmp_iec_task_itf_1ga95f3097fff3a734a6b7f8ff2ed0694c3>`)(iectaskdelete2_struct *p)
+
+- typedef struct :ref:`tagiectaskdisablescheduling_struct <structtagiectaskdisablescheduling__struct>` :ref:`iectaskdisablescheduling_struct <group___cmp_iec_task_itf_1ga87f721f8e37b9721e8b84c917d091b7c>`
+
+- typedef void(* :ref:`PFIECTASKDISABLESCHEDULING_IEC <group___cmp_iec_task_itf_1ga76ed4888a24c7dc15ec37d5aebc1e46a>`)(iectaskdisablescheduling_struct *p)
+
+- typedef struct :ref:`tagiectaskdisablewatchdog_struct <structtagiectaskdisablewatchdog__struct>` :ref:`iectaskdisablewatchdog_struct <group___cmp_iec_task_itf_1gaccc118596785f2cd823347b20193d683>`
+
+- typedef void(* :ref:`PFIECTASKDISABLEWATCHDOG_IEC <group___cmp_iec_task_itf_1ga03f9d05fcd1b12d190854231bf2dbe69>`)(iectaskdisablewatchdog_struct *p)
+
+- typedef struct :ref:`tagiectaskdisablewatchdog2_struct <structtagiectaskdisablewatchdog2__struct>` :ref:`iectaskdisablewatchdog2_struct <group___cmp_iec_task_itf_1ga2a0da2f50826d766a3aeed63d0febe64>`
+
+- typedef void(* :ref:`PFIECTASKDISABLEWATCHDOG2_IEC <group___cmp_iec_task_itf_1ga4a5f18a971ce797e1bfb51844be63189>`)(iectaskdisablewatchdog2_struct *p)
+
+- typedef struct :ref:`tagiectaskenablescheduling_struct <structtagiectaskenablescheduling__struct>` :ref:`iectaskenablescheduling_struct <group___cmp_iec_task_itf_1ga41afaf798c6dfad4cab6f9580a5dfe6f>`
+
+- typedef void(* :ref:`PFIECTASKENABLESCHEDULING_IEC <group___cmp_iec_task_itf_1gaa31e8d47a15ef6093dc771e9889fa768>`)(iectaskenablescheduling_struct *p)
+
+- typedef struct :ref:`tagiectaskenablewatchdog_struct <structtagiectaskenablewatchdog__struct>` :ref:`iectaskenablewatchdog_struct <group___cmp_iec_task_itf_1ga27d75ccce3be490ecbe2f04ffd001260>`
+
+- typedef void(* :ref:`PFIECTASKENABLEWATCHDOG_IEC <group___cmp_iec_task_itf_1ga8ed4efdec587051da8986e194b3c8ee5>`)(iectaskenablewatchdog_struct *p)
+
+- typedef struct :ref:`tagiectaskenablewatchdog2_struct <structtagiectaskenablewatchdog2__struct>` :ref:`iectaskenablewatchdog2_struct <group___cmp_iec_task_itf_1ga6fd2ec688600b878816a957e876f74dc>`
+
+- typedef void(* :ref:`PFIECTASKENABLEWATCHDOG2_IEC <group___cmp_iec_task_itf_1gaacf5736791bb680c00393814852c1a3e>`)(iectaskenablewatchdog2_struct *p)
+
+- typedef struct :ref:`tagiectaskgetcurrent_struct <structtagiectaskgetcurrent__struct>` :ref:`iectaskgetcurrent_struct <group___cmp_iec_task_itf_1gab5ffa43c0bbea15ac2cfc36886b55455>`
+
+- typedef void(* :ref:`PFIECTASKGETCURRENT_IEC <group___cmp_iec_task_itf_1ga0b468aeab2dca8111d2132d31a17ce63>`)(iectaskgetcurrent_struct *p)
+
+- typedef struct :ref:`tagiectaskgetdesc_struct <structtagiectaskgetdesc__struct>` :ref:`iectaskgetdesc_struct <group___cmp_iec_task_itf_1gad788a0725c38d20b15e9aac157704916>`
+
+- typedef void(* :ref:`PFIECTASKGETDESC_IEC <group___cmp_iec_task_itf_1gadc3c389c9905ba28819a89b456721e0a>`)(iectaskgetdesc_struct *p)
+
+- typedef struct :ref:`tagiectaskgetfirst_struct <structtagiectaskgetfirst__struct>` :ref:`iectaskgetfirst_struct <group___cmp_iec_task_itf_1gab1a6f5cea7705881e2a5ffc739178702>`
+
+- typedef void(* :ref:`PFIECTASKGETFIRST_IEC <group___cmp_iec_task_itf_1ga7586b263ef8f9a95d4a2fe027a39ab11>`)(iectaskgetfirst_struct *p)
+
+- typedef struct :ref:`tagiectaskgetinfo2_struct <structtagiectaskgetinfo2__struct>` :ref:`iectaskgetinfo2_struct <group___cmp_iec_task_itf_1ga624479edf937d2524e9d848e80f552b1>`
+
+- typedef void(* :ref:`PFIECTASKGETINFO2_IEC <group___cmp_iec_task_itf_1ga669ae53a2504e4466ccdd3630ad137c2>`)(iectaskgetinfo2_struct *p)
+
+- typedef struct :ref:`tagiectaskgetnext_struct <structtagiectaskgetnext__struct>` :ref:`iectaskgetnext_struct <group___cmp_iec_task_itf_1gaa433c86631b1a98861512786c122bb5f>`
+
+- typedef void(* :ref:`PFIECTASKGETNEXT_IEC <group___cmp_iec_task_itf_1gacd43747199f3671c852722d82ad3e01b>`)(iectaskgetnext_struct *p)
+
+- typedef struct :ref:`tagiectaskgetprofiling_struct <structtagiectaskgetprofiling__struct>` :ref:`iectaskgetprofiling_struct <group___cmp_iec_task_itf_1ga54f0d1d519cfe5ce7ed06e35530c3fc1>`
+
+- typedef void(* :ref:`PFIECTASKGETPROFILING_IEC <group___cmp_iec_task_itf_1ga729b27712e9e709d20014c1ca110343d>`)(iectaskgetprofiling_struct *p)
+
+- typedef struct :ref:`tagiectaskreload_struct <structtagiectaskreload__struct>` :ref:`iectaskreload_struct <group___cmp_iec_task_itf_1ga12c59e5d11a89a3432d506a4d3217239>`
+
+- typedef void(* :ref:`PFIECTASKRELOAD_IEC <group___cmp_iec_task_itf_1ga95e256f29a6383ff7d8f46f8ae21e19c>`)(iectaskreload_struct *p)
+
+- typedef struct :ref:`tagiectaskresetstatistics_struct <structtagiectaskresetstatistics__struct>` :ref:`iectaskresetstatistics_struct <group___cmp_iec_task_itf_1ga88b246c91780d83085b431c25e456d82>`
+
+- typedef void(* :ref:`PFIECTASKRESETSTATISTICS_IEC <group___cmp_iec_task_itf_1ga6990f4a8e3e7a848424d4add136af734>`)(iectaskresetstatistics_struct *p)
+
+- typedef RTS_HANDLE(* :ref:`PFIECTASKCREATE <group___cmp_iec_task_itf_1gaf715af71cb7a21a4e1d838f66bfbfc63>`)(APPLICATION *pApp, Task_Info *pTaskInfo, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKDELETE <group___cmp_iec_task_itf_1ga50dcb190491b6c3244efe3af5a10e48f>`)(RTS_HANDLE hIecTask)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKDELETE2 <group___cmp_iec_task_itf_1ga49dcffc14a17143826e1aad35aa16a04>`)(RTS_HANDLE hIecTask, RTS_UI32 ulTimeoutMs)
+
+- typedef RTS_RESULT(* :ref:`PFIECFREETASKS <group___cmp_iec_task_itf_1ga445ff604f4f13d7f3b0b0c7e4cf3ff67>`)(APPLICATION *pApp)
+
+- typedef RTS_RESULT(* :ref:`PFIECFREETASKS2 <group___cmp_iec_task_itf_1gaf55aad94d94074da863681c5e9290000>`)(APPLICATION *pApp, RTS_UI32 ulTimeoutMs)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKCYCLE <group___cmp_iec_task_itf_1gaeee4d636c6c90ef7f38ec5db5a92a5a7>`)(Task_Desc *pTask)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKUPDATEJITTERTIME <group___cmp_iec_task_itf_1ga01c1938f2e18a70ab68a33a3d0d6f824>`)(Task_Desc *pTask, RTS_SYSTIME *ptNow)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKUPDATEJITTERTIME2 <group___cmp_iec_task_itf_1ga4c6ad8b502a95b10ae9155ae9693d354>`)(Task_Desc *pTask)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKUPDATECYCLETIME <group___cmp_iec_task_itf_1gab5bc63e76e0f051f1457b57b08348ae0>`)(Task_Desc *pTask, RTS_SYSTIME *ptActUs)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKSRESETALLOWED <group___cmp_iec_task_itf_1ga682dc49e0df2080069abfd40e30e0bb0>`)(APPLICATION *pApp)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKSPREPARERESET <group___cmp_iec_task_itf_1ga7deb3ddfdcc449eda1dfe778e8d2ee6b>`)(APPLICATION *pApp, int bResetOrigin)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKSRESETDONE <group___cmp_iec_task_itf_1gac83ea25478f2bb24372c43f7f3e7d3c0>`)(APPLICATION *pApp, int bResetOrigin)
+
+- typedef RTS_UI32(* :ref:`PFIECTASKGETWAITFORSTOPTIMEOUT <group___cmp_iec_task_itf_1ga8c8b06a35e3be01794cda4b4404470f7>`)(APPLICATION *pApp, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKSWAITFORSTOP <group___cmp_iec_task_itf_1ga9b1047a64078b70a12a02bf0a97094a6>`)(APPLICATION *pApp, RTS_UI32 ulTimeoutMs, unsigned long ulStopReason)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKINITOUTPUTS <group___cmp_iec_task_itf_1gaa4344f9cb56fec8c408f3c7656d1cd22>`)(APPLICATION *pApp)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKENTEREXCLUSIVESECTION <group___cmp_iec_task_itf_1gad8f569abefb64257712c97962e330fae>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKLEAVEEXCLUSIVESECTION <group___cmp_iec_task_itf_1ga6868823fea4928ee3effc9b17b54e1e6>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKENTEREXCLUSIVESECTION2 <group___cmp_iec_task_itf_1ga65561ef4178f33c2a5e67c91a9a13229>`)(APPLICATION *pApp)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKTRYENTEREXCLUSIVESECTION2 <group___cmp_iec_task_itf_1ga82a83baa65cb443943dd8522f9e6ca6f>`)(APPLICATION *pApp, RTS_UI32 timeoutMs, RTS_BOOL bForceEnter)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKLEAVEEXCLUSIVESECTION2 <group___cmp_iec_task_itf_1ga797e50c2e19f897bfa17146961230004>`)(APPLICATION *pApp)
+
+- typedef void(* :ref:`PF__SYS__SETUP__TASKS <group___cmp_iec_task_itf_1ga570f32d9597b2244496b2196c932fbc9>`)(sys_setup_tasks_struct *p)
+
+- typedef void(* :ref:`PF__SYS__REGISTER__SLOT__POU <group___cmp_iec_task_itf_1gae61c2eecd1543bce7ec318f6ebf04f25>`)(sys_register_slot_pou_struct *p)
+
+- typedef void(* :ref:`PF__SYS__UNREGISTER__SLOT__POU <group___cmp_iec_task_itf_1ga6cde7725e3cc3dc36530cb9e6d3fc0a1>`)(sys_register_slot_pou_struct *p)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKREGISTERSLOTCALLBACKS <group___cmp_iec_task_itf_1gabd0f0e0eee3dfa0a0d2011444d14144a>`)(APPLICATION *pApp, RTS_I32 nSlotNr, PF_SLOT_CALLBACK pfSlotCallback, int bIecCallback)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKUNREGISTERSLOTCALLBACKS <group___cmp_iec_task_itf_1gadcafbed5a2e9fd6f7602a5c5b0ec30f4>`)(APPLICATION *pApp, RTS_I32 nSlotNr, PF_SLOT_CALLBACK pfSlotCallback, int bIecCallback)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKREGISTERSLOTCALLBACK <group___cmp_iec_task_itf_1ga7ce0e54ec813c5b15c9da1d34fed381f>`)(Task_Desc *pTask, RTS_I32 nSlotNr, PF_SLOT_CALLBACK pfSlotCallback, int bIecCallback)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKUNREGISTERSLOTCALLBACK <group___cmp_iec_task_itf_1ga5e67ce5a77c580ed6c06d2b3dd4c1881>`)(Task_Desc *pTask, RTS_I32 nSlotNr, PF_SLOT_CALLBACK pfSlotCallback, int bIecCallback)
+
+- typedef void(* :ref:`PF__SYS__RTS__CYCLE <group___cmp_iec_task_itf_1ga28b9a2a2140fdddbf065f00540e0edfa>`)(sys_rts_cycle_struct *p)
+
+- typedef void(* :ref:`PF__SYS__RTS__CYCLE__2 <group___cmp_iec_task_itf_1ga6fe0a45fca25d2ac09c120cd8e671755>`)(sys_rts_cycle_2_struct *p)
+
+- typedef :ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` *(* :ref:`PFIECTASKGETDESC <group___cmp_iec_task_itf_1ga141fe6b24b3dd88cc3be11661a1d0518>`)(RTS_HANDLE hIecTask)
+
+- typedef RTS_HANDLE(* :ref:`PFIECTASKGETHANDLE <group___cmp_iec_task_itf_1gab32ed2e423d55b245e9912b739a73c68>`)(char *pszAppName, char *pszTaskName, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFIECTASKGETCURRENT <group___cmp_iec_task_itf_1gaf2c0f8512863b5e0d9c83c36b95e27e9>`)(RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKDEBUGLOOP <group___cmp_iec_task_itf_1ga47a174f778699ff5207a867d44ebe99b>`)(RTS_HANDLE hIecTask)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKDEBUGENTER <group___cmp_iec_task_itf_1ga12411c772ebb6c08963001f6ce0dd998>`)(RTS_HANDLE hIecTask)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKDEBUGLEAVE <group___cmp_iec_task_itf_1ga90a4b501ecbae485a63371e61c87cdc7>`)(RTS_HANDLE hIecTask)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKSETCONTEXT <group___cmp_iec_task_itf_1ga7dc58f50e303d287b2915fbcf746e0b3>`)(RTS_HANDLE hIecTask, RegContext *pContext)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKGETCONTEXT <group___cmp_iec_task_itf_1gaa1f9327689d227109830d16abfaf274d>`)(RTS_HANDLE hIecTask, RegContext *pContext)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKEXCEPTIONHANDLER <group___cmp_iec_task_itf_1gace27991e4cf4c5e393c3eceaab4e3d87>`)(RTS_HANDLE hIecTask, RTS_UI32 ulException, RegContext Context)
+
+- typedef :ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` *(* :ref:`PFIECTASKGETBYINDEX <group___cmp_iec_task_itf_1ga49786951c62d50519998cf9c5732deba>`)(APPLICATION *pApp, int iIndex, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFIECTASKGETHANDLEBYINDEX <group___cmp_iec_task_itf_1gae782f32a6315c646813a1fca8529286c>`)(APPLICATION *pApp, int iIndex, RTS_RESULT *pResult)
+
+- typedef :ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` *(* :ref:`PFIECTASKGETBYID <group___cmp_iec_task_itf_1gace25931bfa6a3ba9011f6185f5f80a6e>`)(APPLICATION *pApp, int iId, RTS_RESULT *pResult)
+
+- typedef int(* :ref:`PFIECTASKGETNUMOFTASKS <group___cmp_iec_task_itf_1gab29330ca60adb41f19f372a8d41d21ba>`)(APPLICATION *pApp, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKENABLESCHEDULINGALL <group___cmp_iec_task_itf_1ga4b77f58d38d4473428c0a7b7aa481645>`)(APPLICATION *pApp)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKDISABLESCHEDULINGALL <group___cmp_iec_task_itf_1ga965af12eeaa1027b05e73efc18a25f74>`)(APPLICATION *pApp, RTS_HANDLE hIecTaskToExclude)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKENABLESCHEDULING <group___cmp_iec_task_itf_1ga1f6753a13b19d618ab6ab07d69992f63>`)(RTS_HANDLE hIecTask)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKDISABLESCHEDULING <group___cmp_iec_task_itf_1gae201ccb41f853d31100540cc4c141906>`)(RTS_HANDLE hIecTask)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKENABLEWATCHDOG <group___cmp_iec_task_itf_1gadf3e8a9662954ae8e870729c4d88f7bd>`)(RTS_HANDLE hIecTask)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKDISABLEWATCHDOG <group___cmp_iec_task_itf_1ga731eeb5ce18c0cedda966faa93cde3c4>`)(RTS_HANDLE hIecTask)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKENABLEWATCHDOG2 <group___cmp_iec_task_itf_1ga975e41777e8fb64b88c4c0705624d5e7>`)(RTS_HANDLE hIecTask)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKDISABLEWATCHDOG2 <group___cmp_iec_task_itf_1gabd3ce4b94058cdf1cd3d15f1d6813d8b>`)(RTS_HANDLE hIecTask)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKCHECKWATCHDOG <group___cmp_iec_task_itf_1ga610cf81d35249eb3656d644743dc1fe3>`)(RTS_HANDLE hIecTask, RTS_SYSTIME *ptActUs)
+
+- typedef RTS_HANDLE(* :ref:`PFIECTASKGETFIRST <group___cmp_iec_task_itf_1ga93b201bdad1f206fe6c7f00588a69e1c>`)(char *pszAppName, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFIECTASKGETNEXT <group___cmp_iec_task_itf_1gad17fe5d3af8046fe9dcc3490f541a84b>`)(char *pszAppName, RTS_HANDLE hPrevIecTask, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFIECTASKGETFIRST2 <group___cmp_iec_task_itf_1ga9d0143aadfe8e2caf64ed8cd38a371c9>`)(APPLICATION *pApp, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFIECTASKGETNEXT2 <group___cmp_iec_task_itf_1gafa8f4571ec71ae1a3298ef06e96a2e5b>`)(APPLICATION *pApp, RTS_HANDLE hPrevIecTask, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFIECTASKRELOAD <group___cmp_iec_task_itf_1ga3bbd1f7b9bac1aa46568f8384281041d>`)(RTS_HANDLE hIecTask, RTS_UI32 ulTimeoutMs, RTS_RESULT *pResult)
+
+- typedef int(* :ref:`PFIECTASKCALCULATEID <group___cmp_iec_task_itf_1ga440de26911ebbafd04fc5363f59750aa>`)(APPLICATION *pApp, int iIndex, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKWAITTASKSACTIVE <group___cmp_iec_task_itf_1ga769fc342024f1ddd7b1ac1db841cceef>`)(APPLICATION *pApp, RTS_UI32 ulTimeoutMs)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKSINGLECYCLE <group___cmp_iec_task_itf_1ga8581eadcf78fd3d0c5dec1530199c1c3>`)(APPLICATION *pApp)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKRESETSTATISTICS <group___cmp_iec_task_itf_1gaa2a69ba19d694b8bc2c6631640f4bcac>`)(RTS_HANDLE hIecTask)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKDEBUGHANDLERENTER <group___cmp_iec_task_itf_1gacb7d16d1617d5e2fd41315dc33bc15e1>`)(RTS_HANDLE hIecTask)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKDEBUGHANDLERLEAVE <group___cmp_iec_task_itf_1gab9e15517e279497236f4267fcb0e0df8>`)(RTS_HANDLE hIecTask)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKCALLIECFUNCWITHPARAMS <group___cmp_iec_task_itf_1gab3db2e60998ac8d3a2487ea894a22f4f>`)(RTS_HANDLE hIecTask, APPLICATION *pApp, RTS_VOID_FCTPTR pfIECFunc, void *pParam, int iSize)
+
+- typedef RTS_HANDLE(* :ref:`PFIECTASKEXTRAADD <group___cmp_iec_task_itf_1ga2e82d2ce4fc489a3a75053722087174d>`)(RTS_HANDLE hSysTask, RTS_IEC_STRING *pszTaskName, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKEXTRAREMOVE <group___cmp_iec_task_itf_1gab01a40983b09f9372bf8d9a6476fbcdb>`)(RTS_HANDLE hIecTask)
+
+- typedef RTS_HANDLE(* :ref:`PFIECTASKEXTRAFIND <group___cmp_iec_task_itf_1ga99cfd72c03953c856c835ad296874ea4>`)(RTS_HANDLE hSysTask, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKEXTRASETAPP <group___cmp_iec_task_itf_1ga3e4ccd6819fe9135514b9c6a049eb2cc>`)(RTS_HANDLE hIecTask, APPLICATION *pApp)
+
+- typedef RTS_RESULT(* :ref:`PFIECTASKEXTRAEXCEPTIONHANDLER <group___cmp_iec_task_itf_1gaddb338426055bf2380b16a07356eeaff>`)(RTS_HANDLE hSysTask, RTS_UI32 ulException, RegContext Context)
+
+- typedef :ref:`ICmpIecTask_C <struct_i_cmp_iec_task___c>` :ref:`ICmpIecTask <group___cmp_iec_task_itf_1ga00ac847c8e8858140443afe00e28c7b9>`
+
+Functions
+---------
+
+- void :ref:`iectaskgetconfig <group___cmp_iec_task_itf_1gae16024109dd010c9b054f7c1c4894b82>` (:ref:`iectaskgetconfig_struct <group___cmp_iec_task_itf_1ga1aa2c7fdf1fbb3f4c3703267f9d129b4>` * p)
+
+- void :ref:`iectaskgetinfo <group___cmp_iec_task_itf_1ga325a21545482af2a497dc9a9372db8f0>` (:ref:`iectaskgetinfo_struct <group___cmp_iec_task_itf_1ga3d7e18184e0d75d830bb301def53cc5d>` * p)
+
+- void :ref:`iectaskcreate <group___cmp_iec_task_itf_1ga83d6daa008b9e8b7f38dfc66da322886>` (:ref:`iectaskcreate_struct <group___cmp_iec_task_itf_1ga800360dce949a03d470d1f0182c51315>` * p)
+
+- void :ref:`iectaskcreate2 <group___cmp_iec_task_itf_1ga60569f0e92c669cd44e38f8082222877>` (:ref:`iectaskcreate2_struct <group___cmp_iec_task_itf_1ga9448b6d257bd021526453cbc98bc8f4b>` * p)
+
+- void :ref:`iectaskdelete2 <group___cmp_iec_task_itf_1gaff66619f1daf3f5ecdf218b8e0e1b9f4>` (:ref:`iectaskdelete2_struct <group___cmp_iec_task_itf_1gaa4945f2581ee1c8c6fafe7e726d4589e>` * p)
+
+- void :ref:`iectaskdisablescheduling <group___cmp_iec_task_itf_1gaef1b4d817f5293c43ab5a1c4cadffa62>` (:ref:`iectaskdisablescheduling_struct <group___cmp_iec_task_itf_1ga87f721f8e37b9721e8b84c917d091b7c>` * p)
+
+- void :ref:`iectaskdisablewatchdog <group___cmp_iec_task_itf_1gaa32c99ade69581ff9639f81d0b0f3291>` (:ref:`iectaskdisablewatchdog_struct <group___cmp_iec_task_itf_1gaccc118596785f2cd823347b20193d683>` * p)
+
+- void :ref:`iectaskdisablewatchdog2 <group___cmp_iec_task_itf_1ga0d2ccff747328b41c091dff303242c32>` (:ref:`iectaskdisablewatchdog2_struct <group___cmp_iec_task_itf_1ga2a0da2f50826d766a3aeed63d0febe64>` * p)
+
+- void :ref:`iectaskenablescheduling <group___cmp_iec_task_itf_1ga85900ee657b04cb052401dcba5e38c85>` (:ref:`iectaskenablescheduling_struct <group___cmp_iec_task_itf_1ga41afaf798c6dfad4cab6f9580a5dfe6f>` * p)
+
+- void :ref:`iectaskenablewatchdog <group___cmp_iec_task_itf_1ga825da65b28ca23fe550194579c78dae6>` (:ref:`iectaskenablewatchdog_struct <group___cmp_iec_task_itf_1ga27d75ccce3be490ecbe2f04ffd001260>` * p)
+
+- void :ref:`iectaskenablewatchdog2 <group___cmp_iec_task_itf_1ga4fd2bab4a985ee26d1e873d07d76f2bc>` (:ref:`iectaskenablewatchdog2_struct <group___cmp_iec_task_itf_1ga6fd2ec688600b878816a957e876f74dc>` * p)
+
+- void :ref:`iectaskgetcurrent <group___cmp_iec_task_itf_1ga8af7ea168b5a6a73cf03325bf8f9fec0>` (:ref:`iectaskgetcurrent_struct <group___cmp_iec_task_itf_1gab5ffa43c0bbea15ac2cfc36886b55455>` * p)
+
+- void :ref:`iectaskgetdesc <group___cmp_iec_task_itf_1ga01434141623c3c4a1418c0345c3b52da>` (:ref:`iectaskgetdesc_struct <group___cmp_iec_task_itf_1gad788a0725c38d20b15e9aac157704916>` * p)
+
+- void :ref:`iectaskgetfirst <group___cmp_iec_task_itf_1ga835ef14b601fae1f9518ce2e6fa9c042>` (:ref:`iectaskgetfirst_struct <group___cmp_iec_task_itf_1gab1a6f5cea7705881e2a5ffc739178702>` * p)
+
+- void :ref:`iectaskgetinfo2 <group___cmp_iec_task_itf_1ga5005ade6486c3e511c7e09f57655be97>` (:ref:`iectaskgetinfo2_struct <group___cmp_iec_task_itf_1ga624479edf937d2524e9d848e80f552b1>` * p)
+
+- void :ref:`iectaskgetnext <group___cmp_iec_task_itf_1gaf3adae14465e2c4a816294939fc50ca1>` (:ref:`iectaskgetnext_struct <group___cmp_iec_task_itf_1gaa433c86631b1a98861512786c122bb5f>` * p)
+
+- void :ref:`iectaskgetprofiling <group___cmp_iec_task_itf_1ga371a769a09db13d6feb30c86e0f1f30e>` (:ref:`iectaskgetprofiling_struct <group___cmp_iec_task_itf_1ga54f0d1d519cfe5ce7ed06e35530c3fc1>` * p)
+
+- void :ref:`iectaskreload <group___cmp_iec_task_itf_1gac94f4d1fcf1ab54df3ab4a2642ef991b>` (:ref:`iectaskreload_struct <group___cmp_iec_task_itf_1ga12c59e5d11a89a3432d506a4d3217239>` * p)
+
+- void :ref:`iectaskresetstatistics <group___cmp_iec_task_itf_1ga214ffaa11435d6726cfd55cd75399e29>` (:ref:`iectaskresetstatistics_struct <group___cmp_iec_task_itf_1ga88b246c91780d83085b431c25e456d82>` * p)
+
+- RTS_HANDLE :ref:`IecTaskCreate <group___cmp_iec_task_itf_1ga04cd5e02f05231c7e341a08f67bbeb34>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, :ref:`Task_Info <group___cmp_iec_task_itf___staticdefines_1ga56b1767676d541fc548c45a73424dd38>` * pTaskInfo, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`IecTaskDelete <group___cmp_iec_task_itf_1ga77bb8fc663de256b0fc9e9dc65b7e1c1>` (RTS_HANDLE hIecTask)
+
+- RTS_RESULT :ref:`IecTaskDelete2 <group___cmp_iec_task_itf_1gae4b4669437eb61427806aaae5da36cdc>` (RTS_HANDLE hIecTask, RTS_UI32 ulTimeoutMs)
+
+- RTS_RESULT :ref:`IecFreeTasks <group___cmp_iec_task_itf_1ga9f3298eae595f2c87108367f95be3531>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_RESULT :ref:`IecFreeTasks2 <group___cmp_iec_task_itf_1gaf13dde19807fba430042b4b07eb93e29>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_UI32 ulTimeoutMs)
+
+- RTS_RESULT :ref:`IecTaskCycle <group___cmp_iec_task_itf_1gaf72e8cabbe36a206301026c133fe088c>` (:ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` * pTask)
+
+- RTS_RESULT :ref:`IecTaskUpdateJitterTime <group___cmp_iec_task_itf_1gad90295c123bb12013728b7eec4d87157>` (:ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` * pTask, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` * ptNow)
+
+- RTS_RESULT :ref:`IecTaskUpdateJitterTime2 <group___cmp_iec_task_itf_1ga039068c36feb662eeed4bf92fe78c7f2>` (:ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` * pTask)
+
+- RTS_RESULT :ref:`IecTaskUpdateCycleTime <group___cmp_iec_task_itf_1ga7e6a0b987b3343498580d1cd0ed38d73>` (:ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` * pTask, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` * ptActUs)
+
+- RTS_RESULT :ref:`IecTasksResetAllowed <group___cmp_iec_task_itf_1gad7d113d788b4300dadd834d94a159640>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_RESULT :ref:`IecTasksPrepareReset <group___cmp_iec_task_itf_1gab1895495f50b357bcb2d722d4bfb4c6b>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, int bResetOrigin)
+
+- RTS_RESULT :ref:`IecTasksResetDone <group___cmp_iec_task_itf_1ga476f2757fcf65cc3cc9a308dda7b4c33>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, int bResetOrigin)
+
+- RTS_UI32 :ref:`IecTaskGetWaitForStopTimeout <group___cmp_iec_task_itf_1gac988b39607f94a84094ceb1793fc2efa>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`IecTasksWaitForStop <group___cmp_iec_task_itf_1ga66ed6fe06051ed5833de2462b045662a>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_UI32 ulTimeoutMs, unsigned long ulStopReason)
+
+- RTS_RESULT :ref:`IecTaskInitOutputs <group___cmp_iec_task_itf_1ga531c9c02a1a2c7438c1c2eca5d4ee2e9>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_RESULT :ref:`IecTaskEnterExclusiveSection <group___cmp_iec_task_itf_1ga9e1b95759b92b327759cef5d52ca6615>` (void)
+
+- RTS_RESULT :ref:`IecTaskLeaveExclusiveSection <group___cmp_iec_task_itf_1ga1c6f2cf08c1fd4a4d7a95c9bfa2927e2>` (void)
+
+- RTS_RESULT :ref:`IecTaskEnterExclusiveSection2 <group___cmp_iec_task_itf_1gabfe38b66d27f2469477968391326f510>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_RESULT :ref:`IecTaskTryEnterExclusiveSection2 <group___cmp_iec_task_itf_1gadfaead5f45d92e72a8023a6f1cfc58ce>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_UI32 timeoutMs, RTS_BOOL bForceEnter)
+
+- RTS_RESULT :ref:`IecTaskLeaveExclusiveSection2 <group___cmp_iec_task_itf_1ga4099b8e2c977de54d113bca32ceaff83>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- void :ref:`__sys__setup__tasks <group___cmp_iec_task_itf_1gaa2f2a827dc6a9a49885b4ebbed9ecb1b>` (:ref:`sys_setup_tasks_struct <structsys__setup__tasks__struct>` * p)
+
+- void :ref:`__sys__register__slot__pou <group___cmp_iec_task_itf_1ga559d1624d789452e3bbe6f2591d58007>` (:ref:`sys_register_slot_pou_struct <structsys__register__slot__pou__struct>` * p)
+
+- void :ref:`__sys__unregister__slot__pou <group___cmp_iec_task_itf_1ga5aa1ba2d40606b17289539f033b44dc5>` (:ref:`sys_register_slot_pou_struct <structsys__register__slot__pou__struct>` * p)
+
+- RTS_RESULT :ref:`IecTaskRegisterSlotCallbacks <group___cmp_iec_task_itf_1gad21633ed91e49a75988cb2fbed0da5de>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_I32 nSlotNr, :ref:`PF_SLOT_CALLBACK <group___cmp_iec_task_itf___taskstatusbits_1ga5484ac4710ffcd31032615cc398026e3>`  pfSlotCallback, int bIecCallback)
+
+- RTS_RESULT :ref:`IecTaskUnregisterSlotCallbacks <group___cmp_iec_task_itf_1ga27bb1301e1aa59bab7e9e0e597eca64c>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_I32 nSlotNr, :ref:`PF_SLOT_CALLBACK <group___cmp_iec_task_itf___taskstatusbits_1ga5484ac4710ffcd31032615cc398026e3>`  pfSlotCallback, int bIecCallback)
+
+- RTS_RESULT :ref:`IecTaskRegisterSlotCallback <group___cmp_iec_task_itf_1ga9ab06471be2c12fbc4e5dc8fc327ac16>` (:ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` * pTask, RTS_I32 nSlotNr, :ref:`PF_SLOT_CALLBACK <group___cmp_iec_task_itf___taskstatusbits_1ga5484ac4710ffcd31032615cc398026e3>`  pfSlotCallback, int bIecCallback)
+
+- RTS_RESULT :ref:`IecTaskUnregisterSlotCallback <group___cmp_iec_task_itf_1gaab5e715c1302adae24edb7677a493bf7>` (:ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` * pTask, RTS_I32 nSlotNr, :ref:`PF_SLOT_CALLBACK <group___cmp_iec_task_itf___taskstatusbits_1ga5484ac4710ffcd31032615cc398026e3>`  pfSlotCallback, int bIecCallback)
+
+- void :ref:`__sys__rts__cycle <group___cmp_iec_task_itf_1ga0171cfff9c8dee7028f13cc499cb1245>` (:ref:`sys_rts_cycle_struct <structsys__rts__cycle__struct>` * p)
+
+- void :ref:`__sys__rts__cycle__2 <group___cmp_iec_task_itf_1ga4c3a244890a6ac8f1143a4548fe2e056>` (:ref:`sys_rts_cycle_2_struct <structsys__rts__cycle__2__struct>` * p)
+
+- :ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` * :ref:`IecTaskGetDesc <group___cmp_iec_task_itf_1ga551d7fb6da86b95eda6fab0e296e7cf4>` (RTS_HANDLE hIecTask)
+
+- RTS_HANDLE :ref:`IecTaskGetHandle <group___cmp_iec_task_itf_1ga4bee7ee09290853d9991614c824d1c20>` (char * pszAppName, char * pszTaskName, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`IecTaskGetCurrent <group___cmp_iec_task_itf_1gad4b00394f63dbff28486254a365fd80b>` (RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`IecTaskDebugLoop <group___cmp_iec_task_itf_1ga6fed971250836ddc32bf3130926d9b6d>` (RTS_HANDLE hIecTask)
+
+- RTS_RESULT :ref:`IecTaskDebugEnter <group___cmp_iec_task_itf_1gae9bbb3fce011c5e4bf2578d7fff0152d>` (RTS_HANDLE hIecTask)
+
+- RTS_RESULT :ref:`IecTaskDebugLeave <group___cmp_iec_task_itf_1ga96333383d9bb2b1aca00fed71d719dac>` (RTS_HANDLE hIecTask)
+
+- RTS_RESULT :ref:`IecTaskSetContext <group___cmp_iec_task_itf_1ga25da32ae307181f47fc3ec400df934d3>` (RTS_HANDLE hIecTask, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>` * pContext)
+
+- RTS_RESULT :ref:`IecTaskGetContext <group___cmp_iec_task_itf_1gadd7b45cfd8dd080a5c5fb4913b41d191>` (RTS_HANDLE hIecTask, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>` * pContext)
+
+- RTS_RESULT :ref:`IecTaskExceptionHandler <group___cmp_iec_task_itf_1gabca80e136626c3eac6950d9ddf0f8e04>` (RTS_HANDLE hIecTask, RTS_UI32 ulException, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>`  Context)
+
+- :ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` * :ref:`IecTaskGetByIndex <group___cmp_iec_task_itf_1ga9dc414e98485d686021f8e16ce7b0c0c>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, int iIndex, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`IecTaskGetHandleByIndex <group___cmp_iec_task_itf_1ga30565e7afcb8e6d4b102638d0fe3c54a>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, int iIndex, RTS_RESULT * pResult)
+
+- :ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` * :ref:`IecTaskGetById <group___cmp_iec_task_itf_1gaa8d69267b7045d1dce610d3ebf3b3984>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, int iId, RTS_RESULT * pResult)
+
+- int :ref:`IecTaskGetNumOfTasks <group___cmp_iec_task_itf_1ga348fb2f6e75ad62f6e2c8444c0cb4552>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`IecTaskEnableSchedulingAll <group___cmp_iec_task_itf_1ga41d5c6948839e3cd83af47d44741e75f>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_RESULT :ref:`IecTaskDisableSchedulingAll <group___cmp_iec_task_itf_1gaa5ef374a92d70d45614ea9f56f7202a9>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_HANDLE hIecTaskToExclude)
+
+- RTS_RESULT :ref:`IecTaskEnableScheduling <group___cmp_iec_task_itf_1gad2096684fe4466b9743dd202d525d351>` (RTS_HANDLE hIecTask)
+
+- RTS_RESULT :ref:`IecTaskDisableScheduling <group___cmp_iec_task_itf_1ga056e8eb5798dc87877e73bfb89ab806a>` (RTS_HANDLE hIecTask)
+
+- RTS_RESULT :ref:`IecTaskEnableWatchdog <group___cmp_iec_task_itf_1ga3feeb8b00bab424a66ac27e217f4b372>` (RTS_HANDLE hIecTask)
+
+- RTS_RESULT :ref:`IecTaskDisableWatchdog <group___cmp_iec_task_itf_1gad3141ba61650a5048a6a41ac746cefd4>` (RTS_HANDLE hIecTask)
+
+- RTS_RESULT :ref:`IecTaskEnableWatchdog2 <group___cmp_iec_task_itf_1ga10ed63475267435205d24bf14d4173af>` (RTS_HANDLE hIecTask)
+
+- RTS_RESULT :ref:`IecTaskDisableWatchdog2 <group___cmp_iec_task_itf_1gaac809dc849046ae41217e04059b1c396>` (RTS_HANDLE hIecTask)
+
+- RTS_RESULT :ref:`IecTaskCheckWatchdog <group___cmp_iec_task_itf_1ga4f13e818f96a489c50df58e17696156e>` (RTS_HANDLE hIecTask, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` * ptActUs)
+
+- RTS_HANDLE :ref:`IecTaskGetFirst <group___cmp_iec_task_itf_1ga2504b4db0d027a0d141cc481c5cd8807>` (char * pszAppName, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`IecTaskGetNext <group___cmp_iec_task_itf_1gab1f75eadafc2edd33f4a4ccc57a7b798>` (char * pszAppName, RTS_HANDLE hPrevIecTask, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`IecTaskGetFirst2 <group___cmp_iec_task_itf_1ga1717bf2df3276ec1f79fdb1c31235539>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`IecTaskGetNext2 <group___cmp_iec_task_itf_1gac7df703743e5dff24c67ce27de296fb3>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_HANDLE hPrevIecTask, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`IecTaskReload <group___cmp_iec_task_itf_1gaf300ff9b039e6f240ff1cfc39a59de9c>` (RTS_HANDLE hIecTask, RTS_UI32 ulTimeoutMs, RTS_RESULT * pResult)
+
+- int :ref:`IecTaskCalculateId <group___cmp_iec_task_itf_1ga2defc0b0b2f479dea946e115b0f900a4>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, int iIndex, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`IecTaskWaitTasksActive <group___cmp_iec_task_itf_1gae5235d65a6bc4ce1c7eba6e5c80972ff>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_UI32 ulTimeoutMs)
+
+- RTS_RESULT :ref:`IecTaskSingleCycle <group___cmp_iec_task_itf_1ga50a4ee0ec24c1dd72d62e3af132c2662>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_RESULT :ref:`IecTaskResetStatistics <group___cmp_iec_task_itf_1ga622d8e5cc5e7571abbe87d08adc45f62>` (RTS_HANDLE hIecTask)
+
+- RTS_RESULT :ref:`IecTaskDebugHandlerEnter <group___cmp_iec_task_itf_1gaaf7938b3efb461894767443dafebca50>` (RTS_HANDLE hIecTask)
+
+- RTS_RESULT :ref:`IecTaskDebugHandlerLeave <group___cmp_iec_task_itf_1ga16b40497332d4db4155f1d3c7b4eff2f>` (RTS_HANDLE hIecTask)
+
+- RTS_RESULT :ref:`IecTaskCallIecFuncWithParams <group___cmp_iec_task_itf_1ga9a95ae840366f4e31cdae58ca785dd7f>` (RTS_HANDLE hIecTask, :ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_VOID_FCTPTR pfIECFunc, void * pParam, int iSize)
+
+- RTS_HANDLE :ref:`IecTaskExtraAdd <group___cmp_iec_task_itf_1ga94d749be3edb7ee18dd67afaa4c28ade>` (RTS_HANDLE hSysTask, RTS_IEC_STRING * pszTaskName, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`IecTaskExtraRemove <group___cmp_iec_task_itf_1ga0584b7e4be8390fc8a71deee5d3ea33c>` (RTS_HANDLE hIecTask)
+
+- RTS_HANDLE :ref:`IecTaskExtraFind <group___cmp_iec_task_itf_1gabada71a08c8afea569d83d3c2c661324>` (RTS_HANDLE hSysTask, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`IecTaskExtraSetApp <group___cmp_iec_task_itf_1gacf304e0124f040d84b2a6652652739bf>` (RTS_HANDLE hIecTask, :ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_RESULT :ref:`IecTaskExtraExceptionHandler <group___cmp_iec_task_itf_1ga6b358f52d9648b71c7ac9426660bda7e>` (RTS_HANDLE hSysTask, RTS_UI32 ulException, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>`  Context)
+
+Detailed Description
+--------------------
+
+Definition in file CmpIecTaskItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

@@ -13,13 +13,21 @@
  * set default register width
  */
 #ifndef RTS_REGISTER_WIDTH
-    #if defined(TRG_C16X)
+    #if defined(TRG_C16X) || defined(TRG_DSP)
         #define RTS_REGISTER_WIDTH 16
     #elif defined(TRG_64BIT) || defined(TRG_IA64)
         #define RTS_REGISTER_WIDTH 64
     #else
         #define RTS_REGISTER_WIDTH 32
     #endif
+#endif
+
+#if RTS_REGISTER_WIDTH == 64 && !defined (SIZEOF_LONG)
+	#if defined (SYSTARGET_OS_WINDOWS) || defined (SYSTARGET_OS_WINDOWS_RTE) || defined (SYSTARGET_OS_WINDOWS_CE)
+		#define SIZEOF_LONG	4
+	#else
+		#define SIZEOF_LONG	8
+	#endif
 #endif
 
 /**
@@ -239,6 +247,11 @@
 		#define RTS_VSNPRINTF(s,len,format,arglist) vsnprintf(s,len,format,arglist)
 	#endif
 #endif
+
+#ifndef va_copy
+	#define va_copy(destination, source) ((destination) = (source))
+#endif
+
 
 #define CONCAT(x,y) x##y
 

@@ -1,0 +1,743 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __sys_target_itf_8h:
+
+=============================
+SysTargetItf.h File Reference
+=============================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CMItf.h <_c_m_itf_8h>`"
+| #include ":ref:`CmpIoDrvItf.h <_cmp_io_drv_itf_8h>`"
+
+Data Structures
+---------------
+
+- struct :ref:`EVTPARAM_SysEvent_SetNodeName <struct_e_v_t_p_a_r_a_m___sys_event___set_node_name>`
+
+- struct :ref:`SysTargetIdent_ <struct_sys_target_ident__>`
+
+- struct :ref:`tagsystargetgetdevicename_struct <structtagsystargetgetdevicename__struct>`
+
+- struct :ref:`tagsystargetgetdevicename2_struct <structtagsystargetgetdevicename2__struct>`
+
+- struct :ref:`tagsystargetgetid_struct <structtagsystargetgetid__struct>`
+
+- struct :ref:`tagsystargetgetid2_struct <structtagsystargetgetid2__struct>`
+
+- struct :ref:`tagsystargetgetnodename_struct <structtagsystargetgetnodename__struct>`
+
+- struct :ref:`tagsystargetgetnodename2_struct <structtagsystargetgetnodename2__struct>`
+
+- struct :ref:`tagsystargetgetoperatingsystemid_struct <structtagsystargetgetoperatingsystemid__struct>`
+
+- struct :ref:`tagsystargetgetprocessorid_struct <structtagsystargetgetprocessorid__struct>`
+
+- struct :ref:`tagsystargetgetserialnumber_struct <structtagsystargetgetserialnumber__struct>`
+
+- struct :ref:`tagsystargetgettype_struct <structtagsystargetgettype__struct>`
+
+- struct :ref:`tagsystargetgettype2_struct <structtagsystargetgettype2__struct>`
+
+- struct :ref:`tagsystargetgetvendorname_struct <structtagsystargetgetvendorname__struct>`
+
+- struct :ref:`tagsystargetgetvendorname2_struct <structtagsystargetgetvendorname2__struct>`
+
+- struct :ref:`tagsystargetgetversion_struct <structtagsystargetgetversion__struct>`
+
+- struct :ref:`tagsystargetgetversion2_struct <structtagsystargetgetversion2__struct>`
+
+- struct :ref:`ISysTarget_C <struct_i_sys_target___c>`
+
+Macros
+------
+
+- #define :ref:`SYSTARGET_MAX_NODE_NAME_LEN <group___sys_target_itf___maxnodenamelength_1ga4aa6f6a3f7f4caa47e26898cb860e654>` 50
+
+- #define :ref:`SYSTARGET_MAX_DEVICE_NAME_LEN <group___sys_target_itf___maxdevicenamelength_1ga2e83828c2166dd8f80646b7038249f02>` 100
+
+- #define :ref:`SYSTARGET_MAX_VENDOR_NAME_LEN <group___sys_target_itf___maxvendornamelength_1gaa3bfca3e4995213c3e171f935562c060>` 100
+
+- #define :ref:`SYSTARGET_MAX_SERIAL_NUMBER_LEN <group___sys_target_itf___maxserialnumberlength_1ga553906b8531081524828caf35ccbd5b3>` 65
+
+- #define :ref:`SYSTARGET_OSTABLE <group___sys_target_itf___operating_system_i_d_1gaf6862bb72cd03a0a208af4b2ec355d8d>` {\
+{ 1, "---" },\
+{ 2, "Windows" },\
+{ 3, "Windows RTE" },\
+{ 4, "Windows CE" },\
+{ 5, "Linux" },\
+{ 6, "VxWorks" },\
+{ 7, "QNX" },\
+{ 8, "UCOS" },\
+{ 0, NULL }\
+}
+
+- #define :ref:`SYSTARGET_GET_OSNAME <group___sys_target_itf___operating_system_i_d_1gaa22c63bf967deab7844ea0be194c2187>` {\
+int i;\
+RTS_ID_TO_NAME aOSNames[] = :ref:`SYSTARGET_OSTABLE <group___sys_target_itf___operating_system_i_d_1gaf6862bb72cd03a0a208af4b2ec355d8d>` ;\
+pszOSName = aOSNames[0].pszName;\
+for (i = 0; aOSNames[i].pszName != NULL; i++)\
+{\
+if (aOSNames[i].id == ulOperatingSystemId)\
+{\
+pszOSName = aOSNames[i].pszName;\
+break;\
+}\
+}\
+}
+
+- #define :ref:`SYSTARGET_ARCHITECTURE_16BIT <group___sys_target_itf___operating_system_i_d_1gac88f5f0461e97ea01c5c572cb68cddda>` "16Bit"
+
+- #define :ref:`SYSTARGET_ARCHITECTURE_32BIT <group___sys_target_itf___operating_system_i_d_1ga714e8b84321fd2a28a7950ee95fc3c3f>` "32Bit"
+
+- #define :ref:`SYSTARGET_ARCHITECTURE_64BIT <group___sys_target_itf___operating_system_i_d_1gaebe3b17f162397a2b664232f7c8a1d3d>` "64Bit"
+
+- #define :ref:`SYSTARGET_GET_ARCHITECTURE <group___sys_target_itf___operating_system_i_d_1ga342832be2d5968a6860bddde4e7e2e01>` :ref:`SYSTARGET_ARCHITECTURE_32BIT <group___sys_target_itf___operating_system_i_d_1ga714e8b84321fd2a28a7950ee95fc3c3f>`
+
+- #define :ref:`SYSTARGET_PROCESSORTABLE <group___sys_target_itf___processor_i_d_1gafca8fc0642e743cdc9fcc7988e3a7b3c>` {\
+{ 0, "---" },\
+{ 1, "x86" },\
+{ 2, "ARM" },\
+{ 3, "PPC" },\
+{ 4, "MIPS" },\
+{ 5, "SH" },\
+{ 6, "BLACKFIN" },\
+{ 7, "TRICORE" },\
+{ 8, "NIOS" },\
+{ 9, "C16X" },\
+{ 10, "CORTEX" },\
+{ 11, "DSP" },\
+{ 12, "V850" },\
+{ 13, "RX6" },\
+{ 14, "COLDFIRE" },\
+{ 0, NULL }\
+}
+
+- #define :ref:`SYSTARGET_GET_PROCESSORNAME <group___sys_target_itf___processor_i_d_1gab89c8c939ba549404dc0780d6b00e9c7>` {\
+int i;\
+RTS_ID_TO_NAME aProcNames[] = :ref:`SYSTARGET_PROCESSORTABLE <group___sys_target_itf___processor_i_d_1gafca8fc0642e743cdc9fcc7988e3a7b3c>` ;\
+pszProcessorName = aProcNames[0].pszName;\
+for (i = 0; aProcNames[i].pszName != NULL; i++)\
+{\
+if (aProcNames[i].id == procid)\
+{\
+pszProcessorName = aProcNames[i].pszName;\
+break;\
+}\
+}\
+}
+
+- #define :ref:`SYSTARGET_GET_CODING <group___sys_target_itf___processor_i_d_1ga348817641f822452966f83560c5c6d4f>` "C"
+
+- #define :ref:`SYSTARGET_DEVICE_MASK <group___sys_target_itf___device_i_dmask_1ga00ec3c4d8517de480f9f80b4c41adb22>` 0x0000
+
+- #define :ref:`SYSTARGETKEY_STRING_SERIAL_NUMBER <group___sys_target_itf___settings_1ga98ed7b3678c3e8b6e893591480a3486a>` "SerialNumber"
+
+- #define :ref:`SYSTARGETKEY_STRING_GET_NODENAME <group___sys_target_itf___settings_1ga1eb92dca033d4cd2358afde357ab9378>` "NodeName"
+
+- #define :ref:`SYSTARGETKEY_WSTRING_GET_NODENAME_UNICODE <group___sys_target_itf___settings_1gac390f0c49789a612f8a9e81ad3479c4e>` "NodeNameUnicode"
+
+- #define :ref:`SYSTARGETKEY_INT_GET_VERSION <group___sys_target_itf___settings_1ga2b69a129ea08d5a4102bbbb3156d7617>` "TargetVersion"
+
+- #define :ref:`SYSTARGETKEY_WSTRING_GET_DEVICENAME_UNICODE <group___sys_target_itf___settings_1gae018b7d5e407c09308ff50688ae9978d>` "DeviceNameUnicode"
+
+- #define :ref:`SYSTARGETKEY_STRING_GET_DEVICENAME <group___sys_target_itf___settings_1ga9565ded68c14a5addf9130c674fc66d2>` "DeviceName"
+
+- #define :ref:`SYSTARGETKEY_WSTRING_GET_VENDORNAME_UNICODE <group___sys_target_itf___settings_1gaaf84f997af73e61479d5805f6573e2d6>` "VendorNameUnicode"
+
+- #define :ref:`SYSTARGETKEY_STRING_GET_VENDORNAME <group___sys_target_itf___settings_1gafb1dac42301a98a424976dba15b0e24f>` "VendorName"
+
+- #define :ref:`SYSTARGETKEY_INT_TARGET_VERSION_MASK <group___sys_target_itf___settings_1ga093249357abb4c5c65a81d9082511ae9>` "TargetVersionMask"
+
+- #define :ref:`SYSTARGETVALUE_INT_TARGET_VERSION_MASK_DEFAULT <group___sys_target_itf___settings_1gacf4fd975c79a7ea35d51d5872fe33e55>` INT32_C(0xFFFF0000)
+
+- #define :ref:`SYSTARGETKEY_INT_TARGET_VERSION_COMPATIBILITY_MASK <group___sys_target_itf___settings_1ga48f192a5d1d036d2b0dec6dc0a4f9810>` "TargetVersionCompatibilityMask"
+
+- #define :ref:`SYSTARGETVALUE_INT_TARGET_VERSION_COMPATIBILITY_MASK_DEFAULT <group___sys_target_itf___settings_1ga24933cb3eff9c671ec0eaff5808e5e0d>` INT32_C(0xFFFFFF00)
+
+- #define :ref:`SYSTARGET_TYPE_SPECIAL_UNREGISTERED_SLOT <group___sys_target_itf___device_types_1ga2daf5915f56761832a11f72ce58cee59>` 0x0000
+
+- #define :ref:`SYSTARGET_TYPE_PROGRAMMABLE <group___sys_target_itf___device_types_1gad9a751d72dee0b50a447375575324c74>` 0x1000
+
+- #define :ref:`SYSTARGET_TYPE_3S_SPECIAL_DEVICE <group___sys_target_itf___device_types_1ga6a73e9a112fdfbabedbc0d6d3baeb026>` 0x1001
+
+- #define :ref:`SYSTARGET_TYPE_SAFETY_DEVICE <group___sys_target_itf___device_types_1gaa23c81d27c8ba6b70fa6bbea095c8d7f>` 0x1002
+
+- #define :ref:`SYSTARGET_TYPE_DRIVE <group___sys_target_itf___device_types_1ga7b2130ae9a0d99ccfd08d26eb41f454d>` 0x1003
+
+- #define :ref:`SYSTARGET_TYPE_PARAMETRIZABLE <group___sys_target_itf___device_types_1gac00c867a1c3bdaf3bb4340fc59623a18>` 0x1004
+
+- #define :ref:`SYSTARGET_TYPE_HMI <group___sys_target_itf___device_types_1ga42618a302905bbe99da7bc324315fbe8>` 0x1005
+
+- #define :ref:`SYSTARGET_TYPE_3S_SOFTMOTION <group___sys_target_itf___device_types_1gadd2f98ce1b42af52631e154d6696d4f1>` 0x1006
+
+- #define :ref:`SYSTARGET_TYPE_COMMUNICATION <group___sys_target_itf___device_types_1gae1fc2cbb6ec104913d7bcd6b33aac9be>` 0x1007
+
+- #define :ref:`SYSTARGET_TYPE_REMOTETARGETVISU <group___sys_target_itf___device_types_1ga45ad2786146deaabf9977bdc83bb69ae>` 0x1008
+
+- #define :ref:`EVTPARAMID_SysTarget_SetNodeName <group___sys_target_itf___eventparameter_1ga49d9adba257cace3cdd06f8481d1c503>` 0x0001
+
+- #define :ref:`EVTVERSION_SysTarget_SetNodeName <group___sys_target_itf___eventparameter_1ga9dffa90948da39e77ca05c8ce4a421e0>` 0x0001
+
+- #define :ref:`EVT_SysTarget_SetNodeName <group___sys_target_itf___events_1gad5997ff57b6742e5b12b2dcc2f3bb933>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`EVT_SysTarget_SetNodeNameDone <group___sys_target_itf___events_1ga15aa000dfaa6155f95b1ae3d2c4d9085>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+
+- #define :ref:`USE_systargetgetdevicename <group___sys_target_itf_1ga771b58098569a8154cec0794945813d8>` :ref:`PFSYSTARGETGETDEVICENAME_IEC <group___sys_target_itf_1ga57aa47d495dbce3e4726cd982501b7bd>` pfsystargetgetdevicename;
+
+- #define :ref:`EXT_systargetgetdevicename <group___sys_target_itf_1ga74b9026916193ceed3b6e6791fb0f013>` extern :ref:`PFSYSTARGETGETDEVICENAME_IEC <group___sys_target_itf_1ga57aa47d495dbce3e4726cd982501b7bd>` pfsystargetgetdevicename;
+
+- #define :ref:`GET_systargetgetdevicename <group___sys_target_itf_1ga72bc3bff8e2752e853b835919f07313c>` s_pfCMGetAPI2( "systargetgetdevicename", (RTS_VOID_FCTPTR *)&pfsystargetgetdevicename, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x2DEFEA3D, 0x03050500)
+
+- #define :ref:`CAL_systargetgetdevicename <group___sys_target_itf_1ga59ac67fc7498a322f27f772738097f5d>` pfsystargetgetdevicename
+
+- #define :ref:`CHK_systargetgetdevicename <group___sys_target_itf_1ga7816338d99e4e75b32a8289a0e19fb9b>` (pfsystargetgetdevicename != NULL)
+
+- #define :ref:`EXP_systargetgetdevicename <group___sys_target_itf_1ga4abd22ce20a5d30e348176321a3dda53>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systargetgetdevicename", (RTS_UINTPTR) :ref:`systargetgetdevicename <group___sys_target_itf_1ga8f17fc131e2ca1ef503f0184be4ec6dd>` , 1, 0x2DEFEA3D, 0x03050500)
+
+- #define :ref:`USE_systargetgetdevicename2 <group___sys_target_itf_1gab0defb9f61a36d11eb6ef44695cbad7a>` :ref:`PFSYSTARGETGETDEVICENAME2_IEC <group___sys_target_itf_1gabef8dfc11c1d5ed8abe6fc7b31b1792e>` pfsystargetgetdevicename2;
+
+- #define :ref:`EXT_systargetgetdevicename2 <group___sys_target_itf_1gaffe4a9f903a9820a79dafce6ec715523>` extern :ref:`PFSYSTARGETGETDEVICENAME2_IEC <group___sys_target_itf_1gabef8dfc11c1d5ed8abe6fc7b31b1792e>` pfsystargetgetdevicename2;
+
+- #define :ref:`GET_systargetgetdevicename2 <group___sys_target_itf_1gace2dd25371b0dc258507b3af5ca991a2>` s_pfCMGetAPI2( "systargetgetdevicename2", (RTS_VOID_FCTPTR *)&pfsystargetgetdevicename2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x332F9AF1, 0x03050500)
+
+- #define :ref:`CAL_systargetgetdevicename2 <group___sys_target_itf_1ga3c0f7214800811b3b8fa7c4cffb4b609>` pfsystargetgetdevicename2
+
+- #define :ref:`CHK_systargetgetdevicename2 <group___sys_target_itf_1ga72c1e0b0095825c3949e6d4181c3ce49>` (pfsystargetgetdevicename2 != NULL)
+
+- #define :ref:`EXP_systargetgetdevicename2 <group___sys_target_itf_1ga5896ae5ee002b3c90b6a60daeb6060c7>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systargetgetdevicename2", (RTS_UINTPTR) :ref:`systargetgetdevicename2 <group___sys_target_itf_1ga276542d48a5dfe8b122a9bc46bdaa76f>` , 1, 0x332F9AF1, 0x03050500)
+
+- #define :ref:`USE_systargetgetid <group___sys_target_itf_1ga775c62708715369b8abe0af159272c26>` :ref:`PFSYSTARGETGETID_IEC <group___sys_target_itf_1ga60c2183d6699611678180f679e2930f6>` pfsystargetgetid;
+
+- #define :ref:`EXT_systargetgetid <group___sys_target_itf_1ga51106102d99bb7cfb7550adce000d68a>` extern :ref:`PFSYSTARGETGETID_IEC <group___sys_target_itf_1ga60c2183d6699611678180f679e2930f6>` pfsystargetgetid;
+
+- #define :ref:`GET_systargetgetid <group___sys_target_itf_1ga60cff95cdd0005b022a26fa5601ea243>` s_pfCMGetAPI2( "systargetgetid", (RTS_VOID_FCTPTR *)&pfsystargetgetid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x02ED027A, 0x03050500)
+
+- #define :ref:`CAL_systargetgetid <group___sys_target_itf_1ga279ae0d5e86aac54615dd59c9adc13b6>` pfsystargetgetid
+
+- #define :ref:`CHK_systargetgetid <group___sys_target_itf_1gaaafce32b49ce2f3110d7de21475c0e39>` (pfsystargetgetid != NULL)
+
+- #define :ref:`EXP_systargetgetid <group___sys_target_itf_1ga7a9aaed845ec60c0aea4a6ccfe9d9eca>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systargetgetid", (RTS_UINTPTR) :ref:`systargetgetid <group___sys_target_itf_1gaffcd48498eb128af137037e223da88db>` , 1, 0x02ED027A, 0x03050500)
+
+- #define :ref:`USE_systargetgetid2 <group___sys_target_itf_1gad21992e9181040a68333d0f0b9e20c84>` :ref:`PFSYSTARGETGETID2_IEC <group___sys_target_itf_1ga65fb625e8f37bbbb1bc43ad19344acce>` pfsystargetgetid2;
+
+- #define :ref:`EXT_systargetgetid2 <group___sys_target_itf_1gaffdf3f0481234c675f8804824bbcd634>` extern :ref:`PFSYSTARGETGETID2_IEC <group___sys_target_itf_1ga65fb625e8f37bbbb1bc43ad19344acce>` pfsystargetgetid2;
+
+- #define :ref:`GET_systargetgetid2 <group___sys_target_itf_1gac2567d34fae5a2aaa8df207416d5c9a0>` s_pfCMGetAPI2( "systargetgetid2", (RTS_VOID_FCTPTR *)&pfsystargetgetid2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xEA1E39C4, 0x03050500)
+
+- #define :ref:`CAL_systargetgetid2 <group___sys_target_itf_1gaad5604808d340c15709209cdd342f035>` pfsystargetgetid2
+
+- #define :ref:`CHK_systargetgetid2 <group___sys_target_itf_1gafdc04bfdeb7d6a3f51dfc4f29e0375e1>` (pfsystargetgetid2 != NULL)
+
+- #define :ref:`EXP_systargetgetid2 <group___sys_target_itf_1gaa31e75fb67f4e28193bd77285701798c>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systargetgetid2", (RTS_UINTPTR) :ref:`systargetgetid2 <group___sys_target_itf_1ga7b6f7624f465a33fe42963cdbe6c0187>` , 1, 0xEA1E39C4, 0x03050500)
+
+- #define :ref:`USE_systargetgetnodename <group___sys_target_itf_1ga984dd972d45cdaf17ece5cce2e01cc7b>` :ref:`PFSYSTARGETGETNODENAME_IEC <group___sys_target_itf_1gabd3a0b539edfbdd07a17b82e6f94de0e>` pfsystargetgetnodename;
+
+- #define :ref:`EXT_systargetgetnodename <group___sys_target_itf_1ga4a692dbbef8e6feb2e5f9e8957674883>` extern :ref:`PFSYSTARGETGETNODENAME_IEC <group___sys_target_itf_1gabd3a0b539edfbdd07a17b82e6f94de0e>` pfsystargetgetnodename;
+
+- #define :ref:`GET_systargetgetnodename <group___sys_target_itf_1ga6325b9c81fd8d641ebc5f84b26fdbe0f>` s_pfCMGetAPI2( "systargetgetnodename", (RTS_VOID_FCTPTR *)&pfsystargetgetnodename, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xA0044621, 0x03050500)
+
+- #define :ref:`CAL_systargetgetnodename <group___sys_target_itf_1ga37937f745ac818224e88df49fecc7aed>` pfsystargetgetnodename
+
+- #define :ref:`CHK_systargetgetnodename <group___sys_target_itf_1ga1867ae26ebf57040e670696aec8418a6>` (pfsystargetgetnodename != NULL)
+
+- #define :ref:`EXP_systargetgetnodename <group___sys_target_itf_1ga97874573abb3d93cb110be70d10f4a47>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systargetgetnodename", (RTS_UINTPTR) :ref:`systargetgetnodename <group___sys_target_itf_1ga97e84504d0859dc40681684e19bab474>` , 1, 0xA0044621, 0x03050500)
+
+- #define :ref:`USE_systargetgetnodename2 <group___sys_target_itf_1gacff56e489c0f82383cf1213771c2293b>` :ref:`PFSYSTARGETGETNODENAME2_IEC <group___sys_target_itf_1ga58c074edd3182c82481849eaf7c1c130>` pfsystargetgetnodename2;
+
+- #define :ref:`EXT_systargetgetnodename2 <group___sys_target_itf_1ga137f965e9457799c953c30eb228182da>` extern :ref:`PFSYSTARGETGETNODENAME2_IEC <group___sys_target_itf_1ga58c074edd3182c82481849eaf7c1c130>` pfsystargetgetnodename2;
+
+- #define :ref:`GET_systargetgetnodename2 <group___sys_target_itf_1gadd583d56bcd98409526eba27fdbe6df4>` s_pfCMGetAPI2( "systargetgetnodename2", (RTS_VOID_FCTPTR *)&pfsystargetgetnodename2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x72B60F75, 0x03050500)
+
+- #define :ref:`CAL_systargetgetnodename2 <group___sys_target_itf_1gaa4411d9101dfc6c9969b93ff9bc9423d>` pfsystargetgetnodename2
+
+- #define :ref:`CHK_systargetgetnodename2 <group___sys_target_itf_1ga1ae6e344ae0ed07a8a8efb73e5351406>` (pfsystargetgetnodename2 != NULL)
+
+- #define :ref:`EXP_systargetgetnodename2 <group___sys_target_itf_1ga16fed9b101abfec77583d3f389c8e2b2>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systargetgetnodename2", (RTS_UINTPTR) :ref:`systargetgetnodename2 <group___sys_target_itf_1gab3e31aa5c9a00f17e9869142b9d82d24>` , 1, 0x72B60F75, 0x03050500)
+
+- #define :ref:`USE_systargetgetoperatingsystemid <group___sys_target_itf_1ga92acb2b9bd47d330f9abd2d8ea753016>` :ref:`PFSYSTARGETGETOPERATINGSYSTEMID_IEC <group___sys_target_itf_1gabfc3dbd45be82c62a20c041ed4362158>` pfsystargetgetoperatingsystemid;
+
+- #define :ref:`EXT_systargetgetoperatingsystemid <group___sys_target_itf_1gae1642074c51e9f5a927079b4f6986358>` extern :ref:`PFSYSTARGETGETOPERATINGSYSTEMID_IEC <group___sys_target_itf_1gabfc3dbd45be82c62a20c041ed4362158>` pfsystargetgetoperatingsystemid;
+
+- #define :ref:`GET_systargetgetoperatingsystemid <group___sys_target_itf_1ga9e24b4580fea90967066badd52448d57>` s_pfCMGetAPI2( "systargetgetoperatingsystemid", (RTS_VOID_FCTPTR *)&pfsystargetgetoperatingsystemid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xC12147F5, 0x03050500)
+
+- #define :ref:`CAL_systargetgetoperatingsystemid <group___sys_target_itf_1ga80a6199f7a2add6ef40f9cee61802ac1>` pfsystargetgetoperatingsystemid
+
+- #define :ref:`CHK_systargetgetoperatingsystemid <group___sys_target_itf_1gab2d5904ffb965ad8a8f656f40ec06a03>` (pfsystargetgetoperatingsystemid != NULL)
+
+- #define :ref:`EXP_systargetgetoperatingsystemid <group___sys_target_itf_1ga97a6c0fd37bef7ef6921d2bcaf298021>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systargetgetoperatingsystemid", (RTS_UINTPTR) :ref:`systargetgetoperatingsystemid <group___sys_target_itf_1gafcac5d0731080ba0db920451064776a3>` , 1, 0xC12147F5, 0x03050500)
+
+- #define :ref:`USE_systargetgetprocessorid <group___sys_target_itf_1gafadf195bbde9b6b546e85b40b5288ffe>` :ref:`PFSYSTARGETGETPROCESSORID_IEC <group___sys_target_itf_1ga93ae685e45299067ac226ccf174e5313>` pfsystargetgetprocessorid;
+
+- #define :ref:`EXT_systargetgetprocessorid <group___sys_target_itf_1gae42628cad8922b2f7334c4bd9d017111>` extern :ref:`PFSYSTARGETGETPROCESSORID_IEC <group___sys_target_itf_1ga93ae685e45299067ac226ccf174e5313>` pfsystargetgetprocessorid;
+
+- #define :ref:`GET_systargetgetprocessorid <group___sys_target_itf_1ga28a99370d08bb6b62b9cf316a9c5d422>` s_pfCMGetAPI2( "systargetgetprocessorid", (RTS_VOID_FCTPTR *)&pfsystargetgetprocessorid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x1C22A79F, 0x03050500)
+
+- #define :ref:`CAL_systargetgetprocessorid <group___sys_target_itf_1gab05316fc52e31de20bd1e4a0f69c8581>` pfsystargetgetprocessorid
+
+- #define :ref:`CHK_systargetgetprocessorid <group___sys_target_itf_1gaadb41371f601e0740f0f940c093c8a34>` (pfsystargetgetprocessorid != NULL)
+
+- #define :ref:`EXP_systargetgetprocessorid <group___sys_target_itf_1ga92cbcfa61f8b3760e2b028014a415850>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systargetgetprocessorid", (RTS_UINTPTR) :ref:`systargetgetprocessorid <group___sys_target_itf_1ga5c9533c902f975ea506f6bd06076e9df>` , 1, 0x1C22A79F, 0x03050500)
+
+- #define :ref:`USE_systargetgetserialnumber <group___sys_target_itf_1ga6a17b1d47afed0f8d30c0522b050244f>` :ref:`PFSYSTARGETGETSERIALNUMBER_IEC <group___sys_target_itf_1ga3b500ae49da7022198e8105c5a911e20>` pfsystargetgetserialnumber;
+
+- #define :ref:`EXT_systargetgetserialnumber <group___sys_target_itf_1gaf0fcc09b0e7b078bf34618acb8201472>` extern :ref:`PFSYSTARGETGETSERIALNUMBER_IEC <group___sys_target_itf_1ga3b500ae49da7022198e8105c5a911e20>` pfsystargetgetserialnumber;
+
+- #define :ref:`GET_systargetgetserialnumber <group___sys_target_itf_1ga795d7a45268dbd8d1bd2410e3220c2cb>` s_pfCMGetAPI2( "systargetgetserialnumber", (RTS_VOID_FCTPTR *)&pfsystargetgetserialnumber, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0DB18CE9, 0x03050500)
+
+- #define :ref:`CAL_systargetgetserialnumber <group___sys_target_itf_1ga64d6915831f6ff302737a38a78e1e92d>` pfsystargetgetserialnumber
+
+- #define :ref:`CHK_systargetgetserialnumber <group___sys_target_itf_1gacbb727ca7d2f464df2d8ed2e635e9b65>` (pfsystargetgetserialnumber != NULL)
+
+- #define :ref:`EXP_systargetgetserialnumber <group___sys_target_itf_1ga7e1ce2f0c5490fae1e6f0ddfb4054b86>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systargetgetserialnumber", (RTS_UINTPTR) :ref:`systargetgetserialnumber <group___sys_target_itf_1gab4e405a5cb4e08e286cbba29f9b11c93>` , 1, 0x0DB18CE9, 0x03050500)
+
+- #define :ref:`USE_systargetgettype <group___sys_target_itf_1ga5c877fbfd06c0d6f1c2c926bd909c0ed>` :ref:`PFSYSTARGETGETTYPE_IEC <group___sys_target_itf_1gaf256accdc8b3068144c48fb77179c8d6>` pfsystargetgettype;
+
+- #define :ref:`EXT_systargetgettype <group___sys_target_itf_1ga32f9c0a21bda064fde255a1641528d4a>` extern :ref:`PFSYSTARGETGETTYPE_IEC <group___sys_target_itf_1gaf256accdc8b3068144c48fb77179c8d6>` pfsystargetgettype;
+
+- #define :ref:`GET_systargetgettype <group___sys_target_itf_1gad9ec1c5cdd66e3c9b9db0564f6679c0d>` s_pfCMGetAPI2( "systargetgettype", (RTS_VOID_FCTPTR *)&pfsystargetgettype, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x4AD38850, 0x03050500)
+
+- #define :ref:`CAL_systargetgettype <group___sys_target_itf_1ga80cdb1f3b3985ca83b46dca18e3c437a>` pfsystargetgettype
+
+- #define :ref:`CHK_systargetgettype <group___sys_target_itf_1gaeb9e693539e5bf09fe347a9a9ee61643>` (pfsystargetgettype != NULL)
+
+- #define :ref:`EXP_systargetgettype <group___sys_target_itf_1ga3204142831304066f63e40ee08a8c461>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systargetgettype", (RTS_UINTPTR) :ref:`systargetgettype <group___sys_target_itf_1ga8ff935eacaef0a9dfeb85eab50dce710>` , 1, 0x4AD38850, 0x03050500)
+
+- #define :ref:`USE_systargetgettype2 <group___sys_target_itf_1ga215359601efe11fd204503bc433e52a2>` :ref:`PFSYSTARGETGETTYPE2_IEC <group___sys_target_itf_1ga85b3602424f0ccdb30bcf1874e7a777c>` pfsystargetgettype2;
+
+- #define :ref:`EXT_systargetgettype2 <group___sys_target_itf_1ga4cd8a99fe6f7f25798c37ec157394593>` extern :ref:`PFSYSTARGETGETTYPE2_IEC <group___sys_target_itf_1ga85b3602424f0ccdb30bcf1874e7a777c>` pfsystargetgettype2;
+
+- #define :ref:`GET_systargetgettype2 <group___sys_target_itf_1ga15525b716195422ca4365cced5fcaaf7>` s_pfCMGetAPI2( "systargetgettype2", (RTS_VOID_FCTPTR *)&pfsystargetgettype2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x5F20D079, 0x03050500)
+
+- #define :ref:`CAL_systargetgettype2 <group___sys_target_itf_1ga0fa9a14a0d13ecaff2cdf8e8c31f6368>` pfsystargetgettype2
+
+- #define :ref:`CHK_systargetgettype2 <group___sys_target_itf_1ga91b72f4d9f54d21b7579d5b818013bb1>` (pfsystargetgettype2 != NULL)
+
+- #define :ref:`EXP_systargetgettype2 <group___sys_target_itf_1ga74c7bf975bd1a103d6dfd2b90b1410f9>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systargetgettype2", (RTS_UINTPTR) :ref:`systargetgettype2 <group___sys_target_itf_1gae17e926ffcd21922387a819f1ecf886f>` , 1, 0x5F20D079, 0x03050500)
+
+- #define :ref:`USE_systargetgetvendorname <group___sys_target_itf_1gaa8b2e9021597302781796d645e6f8264>` :ref:`PFSYSTARGETGETVENDORNAME_IEC <group___sys_target_itf_1ga280658629542de2d62903e4e676d0c12>` pfsystargetgetvendorname;
+
+- #define :ref:`EXT_systargetgetvendorname <group___sys_target_itf_1ga5d1aa1cf9e339340b0f84ea1c42df67e>` extern :ref:`PFSYSTARGETGETVENDORNAME_IEC <group___sys_target_itf_1ga280658629542de2d62903e4e676d0c12>` pfsystargetgetvendorname;
+
+- #define :ref:`GET_systargetgetvendorname <group___sys_target_itf_1ga65caa6a1fd6af2c988da90184b868700>` s_pfCMGetAPI2( "systargetgetvendorname", (RTS_VOID_FCTPTR *)&pfsystargetgetvendorname, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xC7C8EF60, 0x03050500)
+
+- #define :ref:`CAL_systargetgetvendorname <group___sys_target_itf_1gac7d5e04bc32efbb17fa5a59c419231bb>` pfsystargetgetvendorname
+
+- #define :ref:`CHK_systargetgetvendorname <group___sys_target_itf_1ga89121cd4d1403f0b36fdfd165732aa9b>` (pfsystargetgetvendorname != NULL)
+
+- #define :ref:`EXP_systargetgetvendorname <group___sys_target_itf_1ga986eed4a9b90f812791a372439ba6dc0>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systargetgetvendorname", (RTS_UINTPTR) :ref:`systargetgetvendorname <group___sys_target_itf_1ga4a02b245426ea9e1fcdd9a519e9d0359>` , 1, 0xC7C8EF60, 0x03050500)
+
+- #define :ref:`USE_systargetgetvendorname2 <group___sys_target_itf_1gaaaaad7e6aba15bc3272643ef5074a29b>` :ref:`PFSYSTARGETGETVENDORNAME2_IEC <group___sys_target_itf_1gab70a0d2ebf6a76afc62ca4ea30139e7d>` pfsystargetgetvendorname2;
+
+- #define :ref:`EXT_systargetgetvendorname2 <group___sys_target_itf_1gaf9a20687b67e44d322a6f67741563896>` extern :ref:`PFSYSTARGETGETVENDORNAME2_IEC <group___sys_target_itf_1gab70a0d2ebf6a76afc62ca4ea30139e7d>` pfsystargetgetvendorname2;
+
+- #define :ref:`GET_systargetgetvendorname2 <group___sys_target_itf_1ga2417c9a43945892bddf5572fc6121efb>` s_pfCMGetAPI2( "systargetgetvendorname2", (RTS_VOID_FCTPTR *)&pfsystargetgetvendorname2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xECA5949D, 0x03050500)
+
+- #define :ref:`CAL_systargetgetvendorname2 <group___sys_target_itf_1ga311af0ebf9dbfb6feccf3a99bb61ceb8>` pfsystargetgetvendorname2
+
+- #define :ref:`CHK_systargetgetvendorname2 <group___sys_target_itf_1gab9ba4eed2721869fe0f68652e151c256>` (pfsystargetgetvendorname2 != NULL)
+
+- #define :ref:`EXP_systargetgetvendorname2 <group___sys_target_itf_1gae3a065417b2f258b99beab48430438f6>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systargetgetvendorname2", (RTS_UINTPTR) :ref:`systargetgetvendorname2 <group___sys_target_itf_1gaee1c3bcd8ae032b7ee720768bb62a0ed>` , 1, 0xECA5949D, 0x03050500)
+
+- #define :ref:`USE_systargetgetversion <group___sys_target_itf_1gadb19de4e41274e895abd233ac1f910dd>` :ref:`PFSYSTARGETGETVERSION_IEC <group___sys_target_itf_1ga1c794c50a0a4eea5e305e9a3cfbbc8f5>` pfsystargetgetversion;
+
+- #define :ref:`EXT_systargetgetversion <group___sys_target_itf_1gad92f0c5ae497499f5eb8e50714beb94f>` extern :ref:`PFSYSTARGETGETVERSION_IEC <group___sys_target_itf_1ga1c794c50a0a4eea5e305e9a3cfbbc8f5>` pfsystargetgetversion;
+
+- #define :ref:`GET_systargetgetversion <group___sys_target_itf_1ga411e91bb25a806631808270b213e7c1c>` s_pfCMGetAPI2( "systargetgetversion", (RTS_VOID_FCTPTR *)&pfsystargetgetversion, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x03C80949, 0x03050500)
+
+- #define :ref:`CAL_systargetgetversion <group___sys_target_itf_1ga13f4dea2e30c75b57cbbeb691e322160>` pfsystargetgetversion
+
+- #define :ref:`CHK_systargetgetversion <group___sys_target_itf_1ga960af21cf9af979410315bb4485df7de>` (pfsystargetgetversion != NULL)
+
+- #define :ref:`EXP_systargetgetversion <group___sys_target_itf_1ga1d9a27225996d05cc831ba0bf3ef8659>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systargetgetversion", (RTS_UINTPTR) :ref:`systargetgetversion <group___sys_target_itf_1gad1767ddd61e442a199f7abe0af4b242f>` , 1, 0x03C80949, 0x03050500)
+
+- #define :ref:`USE_systargetgetversion2 <group___sys_target_itf_1gaf235e49d7ba39b5192849fedf13fdd50>` :ref:`PFSYSTARGETGETVERSION2_IEC <group___sys_target_itf_1ga5f41ffd976c8fbd4823f6c50ede9d124>` pfsystargetgetversion2;
+
+- #define :ref:`EXT_systargetgetversion2 <group___sys_target_itf_1ga4142e051fe81ede94cc412495e77a8a1>` extern :ref:`PFSYSTARGETGETVERSION2_IEC <group___sys_target_itf_1ga5f41ffd976c8fbd4823f6c50ede9d124>` pfsystargetgetversion2;
+
+- #define :ref:`GET_systargetgetversion2 <group___sys_target_itf_1ga2f3d6445ef12d68a48b0baad3a4e868a>` s_pfCMGetAPI2( "systargetgetversion2", (RTS_VOID_FCTPTR *)&pfsystargetgetversion2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x183560B4, 0x03050500)
+
+- #define :ref:`CAL_systargetgetversion2 <group___sys_target_itf_1ga7341e5f41245667d098ab1f9202182fa>` pfsystargetgetversion2
+
+- #define :ref:`CHK_systargetgetversion2 <group___sys_target_itf_1gac55bc8c880b8412a39ea48cbe9cbc3ad>` (pfsystargetgetversion2 != NULL)
+
+- #define :ref:`EXP_systargetgetversion2 <group___sys_target_itf_1ga7c93aeb1ec1fd3b58db4f6f42ffc5d82>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systargetgetversion2", (RTS_UINTPTR) :ref:`systargetgetversion2 <group___sys_target_itf_1ga13a1f4121ad54689000d049227522d8f>` , 1, 0x183560B4, 0x03050500)
+
+- #define :ref:`USE_SysTargetGetNodeName <group___sys_target_itf_1gae005f6dfc77d8f666c3f5944ae248f75>` :ref:`PFSYSTARGETGETNODENAME <group___sys_target_itf_1ga3957b0c9739efaf723b1d07961f53ff1>` pfSysTargetGetNodeName;
+
+- #define :ref:`EXT_SysTargetGetNodeName <group___sys_target_itf_1ga9ad77e92c08f070375b2728fc27d55d2>` extern :ref:`PFSYSTARGETGETNODENAME <group___sys_target_itf_1ga3957b0c9739efaf723b1d07961f53ff1>` pfSysTargetGetNodeName;
+
+- #define :ref:`GET_SysTargetGetNodeName <group___sys_target_itf_1ga4bac90757dbd89d1be889dfa692fb0df>` s_pfCMGetAPI2( "SysTargetGetNodeName", (RTS_VOID_FCTPTR *)&pfSysTargetGetNodeName, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetGetNodeName <group___sys_target_itf_1gabbbea0fa93795bcfb83d5e1b7369dc77>` pfSysTargetGetNodeName
+
+- #define :ref:`CHK_SysTargetGetNodeName <group___sys_target_itf_1ga7dd7a4383aa8e63fb71233d461bba9a4>` (pfSysTargetGetNodeName != NULL)
+
+- #define :ref:`EXP_SysTargetGetNodeName <group___sys_target_itf_1gad0895f8366ba5fe1f4f985951012aa0b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetGetNodeName", (RTS_UINTPTR) :ref:`SysTargetGetNodeName <group___sys_target_itf_1ga42c6ad369c3e427fc13c5287c360f013>` , 0, 0)
+
+- #define :ref:`USE_SysTargetGetConfiguredNodeName <group___sys_target_itf_1gad0069fc1018e3af2082d360aab4b7a36>` :ref:`PFSYSTARGETGETCONFIGUREDNODENAME <group___sys_target_itf_1ga8e16900b6e1cee56337b7e929c5cca97>` pfSysTargetGetConfiguredNodeName;
+
+- #define :ref:`EXT_SysTargetGetConfiguredNodeName <group___sys_target_itf_1gac6c3118423aed652011e02ee6881f574>` extern :ref:`PFSYSTARGETGETCONFIGUREDNODENAME <group___sys_target_itf_1ga8e16900b6e1cee56337b7e929c5cca97>` pfSysTargetGetConfiguredNodeName;
+
+- #define :ref:`GET_SysTargetGetConfiguredNodeName <group___sys_target_itf_1ga7833d0cbb8d6b84347a65e928c0658e2>` s_pfCMGetAPI2( "SysTargetGetConfiguredNodeName", (RTS_VOID_FCTPTR *)&pfSysTargetGetConfiguredNodeName, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetGetConfiguredNodeName <group___sys_target_itf_1gaea7cce08cf20f6665d394fb7cd52f44e>` pfSysTargetGetConfiguredNodeName
+
+- #define :ref:`CHK_SysTargetGetConfiguredNodeName <group___sys_target_itf_1ga12be0c2a30c2f2dbab6ef08954d7af90>` (pfSysTargetGetConfiguredNodeName != NULL)
+
+- #define :ref:`EXP_SysTargetGetConfiguredNodeName <group___sys_target_itf_1gad3444397edad6a28a74979ed9005ebeb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetGetConfiguredNodeName", (RTS_UINTPTR) :ref:`SysTargetGetConfiguredNodeName <group___sys_target_itf_1gaa8ac8ed648cbbbbd65658d28d140ae52>` , 0, 0)
+
+- #define :ref:`USE_SysTargetGetType <group___sys_target_itf_1gad60dccedc337ee4bb34715e9c6da2c51>` :ref:`PFSYSTARGETGETTYPE <group___sys_target_itf_1ga3a20d9b7e1e5789be3e521a5928c05e1>` pfSysTargetGetType;
+
+- #define :ref:`EXT_SysTargetGetType <group___sys_target_itf_1ga1814c6d56972477564d056131ca11724>` extern :ref:`PFSYSTARGETGETTYPE <group___sys_target_itf_1ga3a20d9b7e1e5789be3e521a5928c05e1>` pfSysTargetGetType;
+
+- #define :ref:`GET_SysTargetGetType <group___sys_target_itf_1gae1b70171430a0f8d4a60691d4b09b63e>` s_pfCMGetAPI2( "SysTargetGetType", (RTS_VOID_FCTPTR *)&pfSysTargetGetType, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetGetType <group___sys_target_itf_1ga6d64ee7ba6fd58ade45011f217e9e7b1>` pfSysTargetGetType
+
+- #define :ref:`CHK_SysTargetGetType <group___sys_target_itf_1ga1923c73817d276bcc303883bb3cf8d05>` (pfSysTargetGetType != NULL)
+
+- #define :ref:`EXP_SysTargetGetType <group___sys_target_itf_1ga1652886f0b63d1911cee54db61ca5543>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetGetType", (RTS_UINTPTR) :ref:`SysTargetGetType <group___sys_target_itf_1ga62c8edb446591cb84d1f19524a700d7f>` , 0, 0)
+
+- #define :ref:`USE_SysTargetGetId <group___sys_target_itf_1gacd9dd2445f827ad451b881826b2b59c9>` :ref:`PFSYSTARGETGETID <group___sys_target_itf_1ga450a3926bdc4c47070ff85db438ef144>` pfSysTargetGetId;
+
+- #define :ref:`EXT_SysTargetGetId <group___sys_target_itf_1ga99ef83dca8553527829306cba46eb8c4>` extern :ref:`PFSYSTARGETGETID <group___sys_target_itf_1ga450a3926bdc4c47070ff85db438ef144>` pfSysTargetGetId;
+
+- #define :ref:`GET_SysTargetGetId <group___sys_target_itf_1ga914196b012e9615fde7a77766f77adff>` s_pfCMGetAPI2( "SysTargetGetId", (RTS_VOID_FCTPTR *)&pfSysTargetGetId, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetGetId <group___sys_target_itf_1ga23ce9a33110260b7bbe669557901940f>` pfSysTargetGetId
+
+- #define :ref:`CHK_SysTargetGetId <group___sys_target_itf_1ga27fd9779c0724a91a812ebe41c821d71>` (pfSysTargetGetId != NULL)
+
+- #define :ref:`EXP_SysTargetGetId <group___sys_target_itf_1ga7ae2d38b6ab56701c665a9f608f43eba>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetGetId", (RTS_UINTPTR) :ref:`SysTargetGetId <group___sys_target_itf_1ga282eec73f498ea412468e053171e95c8>` , 0, 0)
+
+- #define :ref:`USE_SysTargetGetVersion <group___sys_target_itf_1gaf8739d284b1c6a1d008ffc77890edf24>` :ref:`PFSYSTARGETGETVERSION <group___sys_target_itf_1gaa598e207b5dc8ce32adb7c6040d70757>` pfSysTargetGetVersion;
+
+- #define :ref:`EXT_SysTargetGetVersion <group___sys_target_itf_1gaaa7125187cae9315c0a42c8b3f0c5e68>` extern :ref:`PFSYSTARGETGETVERSION <group___sys_target_itf_1gaa598e207b5dc8ce32adb7c6040d70757>` pfSysTargetGetVersion;
+
+- #define :ref:`GET_SysTargetGetVersion <group___sys_target_itf_1gadf07942a5b75d6671db1318025cd0fbb>` s_pfCMGetAPI2( "SysTargetGetVersion", (RTS_VOID_FCTPTR *)&pfSysTargetGetVersion, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetGetVersion <group___sys_target_itf_1gafaace49ff48fccec231d27dc0be37932>` pfSysTargetGetVersion
+
+- #define :ref:`CHK_SysTargetGetVersion <group___sys_target_itf_1ga2e2b3b746091a9098d66d2cabedc6466>` (pfSysTargetGetVersion != NULL)
+
+- #define :ref:`EXP_SysTargetGetVersion <group___sys_target_itf_1gad35693cace298e869b80f0bbd6060d2e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetGetVersion", (RTS_UINTPTR) :ref:`SysTargetGetVersion <group___sys_target_itf_1ga768c19e2cd5b8425a5c870e1dab66416>` , 0, 0)
+
+- #define :ref:`USE_SysTargetGetDeviceName <group___sys_target_itf_1gade7cbfb245c274980dbd1fc3d4dce7d5>` :ref:`PFSYSTARGETGETDEVICENAME <group___sys_target_itf_1gadf6165ea995a8b78804a1d2d1bd82ff4>` pfSysTargetGetDeviceName;
+
+- #define :ref:`EXT_SysTargetGetDeviceName <group___sys_target_itf_1gab053c402ce2724011b2a5a5d614134a7>` extern :ref:`PFSYSTARGETGETDEVICENAME <group___sys_target_itf_1gadf6165ea995a8b78804a1d2d1bd82ff4>` pfSysTargetGetDeviceName;
+
+- #define :ref:`GET_SysTargetGetDeviceName <group___sys_target_itf_1ga1b7f43cf92c270fe23ebe78f45d692ec>` s_pfCMGetAPI2( "SysTargetGetDeviceName", (RTS_VOID_FCTPTR *)&pfSysTargetGetDeviceName, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetGetDeviceName <group___sys_target_itf_1ga88540a4ded4b35ae560c1cb07bdae297>` pfSysTargetGetDeviceName
+
+- #define :ref:`CHK_SysTargetGetDeviceName <group___sys_target_itf_1gaccb7424d43a512967754816bcf556d77>` (pfSysTargetGetDeviceName != NULL)
+
+- #define :ref:`EXP_SysTargetGetDeviceName <group___sys_target_itf_1gad0709ecd08ed8f216e0e12b93a6539d2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetGetDeviceName", (RTS_UINTPTR) :ref:`SysTargetGetDeviceName <group___sys_target_itf_1ga0534f05cf90b18be83949fbb022f17d1>` , 0, 0)
+
+- #define :ref:`USE_SysTargetGetVendorName <group___sys_target_itf_1gad2e36e88340d8f3288ef5cd5f0b92aeb>` :ref:`PFSYSTARGETGETVENDORNAME <group___sys_target_itf_1gaaf7ecc9b3b2f75e9bca50a3cac6d7dd6>` pfSysTargetGetVendorName;
+
+- #define :ref:`EXT_SysTargetGetVendorName <group___sys_target_itf_1gaf41050056744a6656f883357fae4e1f4>` extern :ref:`PFSYSTARGETGETVENDORNAME <group___sys_target_itf_1gaaf7ecc9b3b2f75e9bca50a3cac6d7dd6>` pfSysTargetGetVendorName;
+
+- #define :ref:`GET_SysTargetGetVendorName <group___sys_target_itf_1ga55a5d6ed27c1300391635a244dd25685>` s_pfCMGetAPI2( "SysTargetGetVendorName", (RTS_VOID_FCTPTR *)&pfSysTargetGetVendorName, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetGetVendorName <group___sys_target_itf_1ga7ab714f54c92243c0cbc638e45cd7352>` pfSysTargetGetVendorName
+
+- #define :ref:`CHK_SysTargetGetVendorName <group___sys_target_itf_1gaff43c85c0ba15e09731857b19559daca>` (pfSysTargetGetVendorName != NULL)
+
+- #define :ref:`EXP_SysTargetGetVendorName <group___sys_target_itf_1ga09a5f251bd6fdcfa54a5a9d9d24d06f1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetGetVendorName", (RTS_UINTPTR) :ref:`SysTargetGetVendorName <group___sys_target_itf_1ga41bd5290d816c8a8295e8277bb71f417>` , 0, 0)
+
+- #define :ref:`USE_SysTargetGetOperatingSystemId <group___sys_target_itf_1gadd4501699f05f35e7ef01485e033dc42>` :ref:`PFSYSTARGETGETOPERATINGSYSTEMID <group___sys_target_itf_1ga8360eeb9a5de7a64cbf7c3d88d448b2e>` pfSysTargetGetOperatingSystemId;
+
+- #define :ref:`EXT_SysTargetGetOperatingSystemId <group___sys_target_itf_1gad0170403fe07d2133f8e1a1a1b8b1577>` extern :ref:`PFSYSTARGETGETOPERATINGSYSTEMID <group___sys_target_itf_1ga8360eeb9a5de7a64cbf7c3d88d448b2e>` pfSysTargetGetOperatingSystemId;
+
+- #define :ref:`GET_SysTargetGetOperatingSystemId <group___sys_target_itf_1ga6d7595e7edae7540dc6ea3bfe7e6e62e>` s_pfCMGetAPI2( "SysTargetGetOperatingSystemId", (RTS_VOID_FCTPTR *)&pfSysTargetGetOperatingSystemId, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetGetOperatingSystemId <group___sys_target_itf_1ga2495d7976e5d78c6dbde4b6563f84dfd>` pfSysTargetGetOperatingSystemId
+
+- #define :ref:`CHK_SysTargetGetOperatingSystemId <group___sys_target_itf_1ga7941708ad2c9be23bd9936dd0bb5301b>` (pfSysTargetGetOperatingSystemId != NULL)
+
+- #define :ref:`EXP_SysTargetGetOperatingSystemId <group___sys_target_itf_1ga51422eefe717d3322183510c4892dce9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetGetOperatingSystemId", (RTS_UINTPTR) :ref:`SysTargetGetOperatingSystemId <group___sys_target_itf_1gab66943afa899f0361c3e3c43ec88fcf6>` , 0, 0)
+
+- #define :ref:`USE_SysTargetGetProcessorId <group___sys_target_itf_1ga7e9650950c47363c679a37189423c44c>` :ref:`PFSYSTARGETGETPROCESSORID <group___sys_target_itf_1gaee67a336dd04bbe4fcc6b15701509861>` pfSysTargetGetProcessorId;
+
+- #define :ref:`EXT_SysTargetGetProcessorId <group___sys_target_itf_1ga21f763b05fef5faf14c6e2722343ee8b>` extern :ref:`PFSYSTARGETGETPROCESSORID <group___sys_target_itf_1gaee67a336dd04bbe4fcc6b15701509861>` pfSysTargetGetProcessorId;
+
+- #define :ref:`GET_SysTargetGetProcessorId <group___sys_target_itf_1gaa15c62ef609dc9384bb7d205dda62e82>` s_pfCMGetAPI2( "SysTargetGetProcessorId", (RTS_VOID_FCTPTR *)&pfSysTargetGetProcessorId, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetGetProcessorId <group___sys_target_itf_1gaeea98da317b26b4bcab083995b0e7640>` pfSysTargetGetProcessorId
+
+- #define :ref:`CHK_SysTargetGetProcessorId <group___sys_target_itf_1ga93a4a78fdbd84733812a8f3b4fad3121>` (pfSysTargetGetProcessorId != NULL)
+
+- #define :ref:`EXP_SysTargetGetProcessorId <group___sys_target_itf_1gad90d86db30cf1535fd7545327dbe1114>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetGetProcessorId", (RTS_UINTPTR) :ref:`SysTargetGetProcessorId <group___sys_target_itf_1gaccc3344bf3cf479bbc8da8816a53436d>` , 0, 0)
+
+- #define :ref:`USE_SysTargetGetSerialNumber <group___sys_target_itf_1gab03b3ef3bda9f7a762957ed32e0b368d>` :ref:`PFSYSTARGETGETSERIALNUMBER <group___sys_target_itf_1ga506ab4aa9fb5fabc401e6a7433ecf2af>` pfSysTargetGetSerialNumber;
+
+- #define :ref:`EXT_SysTargetGetSerialNumber <group___sys_target_itf_1gafb5f297e63f6d7494e7bbf71f6b9bc44>` extern :ref:`PFSYSTARGETGETSERIALNUMBER <group___sys_target_itf_1ga506ab4aa9fb5fabc401e6a7433ecf2af>` pfSysTargetGetSerialNumber;
+
+- #define :ref:`GET_SysTargetGetSerialNumber <group___sys_target_itf_1ga969f59d17d43a25f26b5bd3036fec2b9>` s_pfCMGetAPI2( "SysTargetGetSerialNumber", (RTS_VOID_FCTPTR *)&pfSysTargetGetSerialNumber, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetGetSerialNumber <group___sys_target_itf_1gadf9616de6bb661931cdffadd50683ae4>` pfSysTargetGetSerialNumber
+
+- #define :ref:`CHK_SysTargetGetSerialNumber <group___sys_target_itf_1gaed8af02b0f8dd56fe5d8f4d3ad2cb6d8>` (pfSysTargetGetSerialNumber != NULL)
+
+- #define :ref:`EXP_SysTargetGetSerialNumber <group___sys_target_itf_1ga32e953ca526ea1070f4b94247c03ffe2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetGetSerialNumber", (RTS_UINTPTR) :ref:`SysTargetGetSerialNumber <group___sys_target_itf_1ga060d213095cd4f7db362495c68aaef96>` , 0, 0)
+
+- #define :ref:`USE_SysTargetGetSerialNumber_Secure <group___sys_target_itf_1ga36fdd45cb2f0c782be8352f68af92a70>` :ref:`PFSYSTARGETGETSERIALNUMBER_SECURE <group___sys_target_itf_1ga1247aacc4f97988aa234a1369ae4fb65>` pfSysTargetGetSerialNumber_Secure;
+
+- #define :ref:`EXT_SysTargetGetSerialNumber_Secure <group___sys_target_itf_1ga852ca16ec0558af4deebd68c662d52d8>` extern :ref:`PFSYSTARGETGETSERIALNUMBER_SECURE <group___sys_target_itf_1ga1247aacc4f97988aa234a1369ae4fb65>` pfSysTargetGetSerialNumber_Secure;
+
+- #define :ref:`GET_SysTargetGetSerialNumber_Secure <group___sys_target_itf_1ga7b0e557374fb07672b2ea0b222df1cec>` s_pfCMGetAPI2( "SysTargetGetSerialNumber_Secure", (RTS_VOID_FCTPTR *)&pfSysTargetGetSerialNumber_Secure, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetGetSerialNumber_Secure <group___sys_target_itf_1ga20f92f0ed1ee9edd88c02fa1220f3d40>` pfSysTargetGetSerialNumber_Secure
+
+- #define :ref:`CHK_SysTargetGetSerialNumber_Secure <group___sys_target_itf_1ga6e86a041fb76af4126d7d084c930a4c7>` (pfSysTargetGetSerialNumber_Secure != NULL)
+
+- #define :ref:`EXP_SysTargetGetSerialNumber_Secure <group___sys_target_itf_1gae9cdf3f44d45e1b5947d5970e9c668eb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetGetSerialNumber_Secure", (RTS_UINTPTR) :ref:`SysTargetGetSerialNumber_Secure <group___sys_target_itf_1ga503e51ec613c5f128a6fa17b96cbe5c1>` , 0, 0)
+
+- #define :ref:`USE_SysTargetGetSignature <group___sys_target_itf_1gaa817658027309ec50d6b54abb6dafb4d>` :ref:`PFSYSTARGETGETSIGNATURE <group___sys_target_itf_1gae9f0e0bb4bdcbd03da62ece9b1b7b46d>` pfSysTargetGetSignature;
+
+- #define :ref:`EXT_SysTargetGetSignature <group___sys_target_itf_1ga2fe99b25892d38dcbd446852dd1df742>` extern :ref:`PFSYSTARGETGETSIGNATURE <group___sys_target_itf_1gae9f0e0bb4bdcbd03da62ece9b1b7b46d>` pfSysTargetGetSignature;
+
+- #define :ref:`GET_SysTargetGetSignature <group___sys_target_itf_1ga6a0dd30540f8166bc73b21b3319cb542>` s_pfCMGetAPI2( "SysTargetGetSignature", (RTS_VOID_FCTPTR *)&pfSysTargetGetSignature, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetGetSignature <group___sys_target_itf_1ga328de57d3743306876aec35c9926f748>` pfSysTargetGetSignature
+
+- #define :ref:`CHK_SysTargetGetSignature <group___sys_target_itf_1ga33f9403d35cfd50dbea217e50ec02a26>` (pfSysTargetGetSignature != NULL)
+
+- #define :ref:`EXP_SysTargetGetSignature <group___sys_target_itf_1gafa681214a86c0d59d12dd611307dde5d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetGetSignature", (RTS_UINTPTR) :ref:`SysTargetGetSignature <group___sys_target_itf_1gadb98f511ce758228f99aae7693278518>` , 0, 0)
+
+- #define :ref:`USE_SysTargetGetDeviceMask <group___sys_target_itf_1ga3f3316b9e83b923965f9f44979bd87ef>` :ref:`PFSYSTARGETGETDEVICEMASK <group___sys_target_itf_1gafee2166be5b8d40e9f1590aa66cd4311>` pfSysTargetGetDeviceMask;
+
+- #define :ref:`EXT_SysTargetGetDeviceMask <group___sys_target_itf_1gac52cf58cf3259722ed577cf53bbbe6dd>` extern :ref:`PFSYSTARGETGETDEVICEMASK <group___sys_target_itf_1gafee2166be5b8d40e9f1590aa66cd4311>` pfSysTargetGetDeviceMask;
+
+- #define :ref:`GET_SysTargetGetDeviceMask <group___sys_target_itf_1ga43f153ffb759c80499f5d178270431b2>` s_pfCMGetAPI2( "SysTargetGetDeviceMask", (RTS_VOID_FCTPTR *)&pfSysTargetGetDeviceMask, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetGetDeviceMask <group___sys_target_itf_1ga251210204d338b9ba04fda83beeeef03>` pfSysTargetGetDeviceMask
+
+- #define :ref:`CHK_SysTargetGetDeviceMask <group___sys_target_itf_1gadef1703a0515fa333a1bd7ba60e4e612>` (pfSysTargetGetDeviceMask != NULL)
+
+- #define :ref:`EXP_SysTargetGetDeviceMask <group___sys_target_itf_1ga2089d7ec7effc564ad667d21c7b95310>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetGetDeviceMask", (RTS_UINTPTR) :ref:`SysTargetGetDeviceMask <group___sys_target_itf_1ga9a28ccfb448279d23dd8c2dcc80b6a8e>` , 0, 0)
+
+- #define :ref:`USE_SysTargetCheckIdent <group___sys_target_itf_1ga8678ab4d09642519a1b99e1eb7fa6875>` :ref:`PFSYSTARGETCHECKIDENT <group___sys_target_itf_1ga0f3dc511424a067e5e250a4b5ff8fb31>` pfSysTargetCheckIdent;
+
+- #define :ref:`EXT_SysTargetCheckIdent <group___sys_target_itf_1ga6114329e98e2814976bbf415c3fa5581>` extern :ref:`PFSYSTARGETCHECKIDENT <group___sys_target_itf_1ga0f3dc511424a067e5e250a4b5ff8fb31>` pfSysTargetCheckIdent;
+
+- #define :ref:`GET_SysTargetCheckIdent <group___sys_target_itf_1ga4680aace18a1f635348a28bdb6aefa5a>` s_pfCMGetAPI2( "SysTargetCheckIdent", (RTS_VOID_FCTPTR *)&pfSysTargetCheckIdent, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetCheckIdent <group___sys_target_itf_1gaf65139394c38328e9b6e6d2a22774351>` pfSysTargetCheckIdent
+
+- #define :ref:`CHK_SysTargetCheckIdent <group___sys_target_itf_1gadab1523e3df6b713130e52c10e907703>` (pfSysTargetCheckIdent != NULL)
+
+- #define :ref:`EXP_SysTargetCheckIdent <group___sys_target_itf_1ga13f327ace9e97d6dc9b4e2bc0c275cc1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetCheckIdent", (RTS_UINTPTR) :ref:`SysTargetCheckIdent <group___sys_target_itf_1ga0a47b20982061858c1314cc617badd8f>` , 0, 0)
+
+- #define :ref:`USE_SysTargetGetAPI <group___sys_target_itf_1ga1a8016fbff3f552df11ba9d4afc9aa9a>` :ref:`PFSYSTARGETGETAPI <group___sys_target_itf_1ga4cfabeaf5c941075ba429d76d2c76f25>` pfSysTargetGetAPI;
+
+- #define :ref:`EXT_SysTargetGetAPI <group___sys_target_itf_1ga994ed619ab0459d06fa25ca37a539806>` extern :ref:`PFSYSTARGETGETAPI <group___sys_target_itf_1ga4cfabeaf5c941075ba429d76d2c76f25>` pfSysTargetGetAPI;
+
+- #define :ref:`GET_SysTargetGetAPI <group___sys_target_itf_1ga53cd659b86650cd7a3e9339ed8359d38>` s_pfCMGetAPI2( "SysTargetGetAPI", (RTS_VOID_FCTPTR *)&pfSysTargetGetAPI, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetGetAPI <group___sys_target_itf_1gacd3fc7015c57df57c77b1851d4055727>` pfSysTargetGetAPI
+
+- #define :ref:`CHK_SysTargetGetAPI <group___sys_target_itf_1gaf1b1e59f8883e36911522c45994c3f29>` (pfSysTargetGetAPI != NULL)
+
+- #define :ref:`EXP_SysTargetGetAPI <group___sys_target_itf_1gacee524d5cadba2ff6573d77da8e74f70>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetGetAPI", (RTS_UINTPTR) :ref:`SysTargetGetAPI <group___sys_target_itf_1gaaf8d2d45621a98a319fe15e23431f621>` , 0, 0)
+
+- #define :ref:`USE_SysTargetSetNodeName <group___sys_target_itf_1ga46a1362b36f03cded8d08839ad7c2c47>` :ref:`PFSYSTARGETSETNODENAME <group___sys_target_itf_1ga660ab024a9f1c9cacbe8ec0af4dfd08c>` pfSysTargetSetNodeName;
+
+- #define :ref:`EXT_SysTargetSetNodeName <group___sys_target_itf_1ga1319acd7ba92abf0b7ce8399342961f5>` extern :ref:`PFSYSTARGETSETNODENAME <group___sys_target_itf_1ga660ab024a9f1c9cacbe8ec0af4dfd08c>` pfSysTargetSetNodeName;
+
+- #define :ref:`GET_SysTargetSetNodeName <group___sys_target_itf_1ga2883774abb5e304387dbbe1c76460ba7>` s_pfCMGetAPI2( "SysTargetSetNodeName", (RTS_VOID_FCTPTR *)&pfSysTargetSetNodeName, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTargetSetNodeName <group___sys_target_itf_1gaa2f1ba38be4a59676fd0cca3c4ba5e74>` pfSysTargetSetNodeName
+
+- #define :ref:`CHK_SysTargetSetNodeName <group___sys_target_itf_1gaa445746379b6245827728d51356d5b92>` (pfSysTargetSetNodeName != NULL)
+
+- #define :ref:`EXP_SysTargetSetNodeName <group___sys_target_itf_1ga22e8229b0d5b968d471af80539b45f9f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTargetSetNodeName", (RTS_UINTPTR) :ref:`SysTargetSetNodeName <group___sys_target_itf_1ga25f49ebea17f5b5568187e4f3d2533e7>` , 0, 0)
+
+- #define :ref:`ITF_SysTarget <group___sys_target_itf_1ga4f4113d0864d2f91f97507b2e9e8e2bb>`
+
+- #define :ref:`EXTITF_SysTarget <group___sys_target_itf_1gaa1c39154a1ce2b9fe6c01810dcc20542>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`SysTargetIdent_ <struct_sys_target_ident__>` :ref:`SysTargetIdent <group___sys_target_itf___sys_targetidentification_1ga9185ae35ee0e94a183c1b725c5c55235>`
+
+- typedef struct :ref:`tagsystargetgetdevicename_struct <structtagsystargetgetdevicename__struct>` :ref:`systargetgetdevicename_struct <group___sys_target_itf_1gaff33944c5eafca0c338860ba144196a1>`
+
+- typedef void(* :ref:`PFSYSTARGETGETDEVICENAME_IEC <group___sys_target_itf_1ga57aa47d495dbce3e4726cd982501b7bd>`)(systargetgetdevicename_struct *p)
+
+- typedef struct :ref:`tagsystargetgetdevicename2_struct <structtagsystargetgetdevicename2__struct>` :ref:`systargetgetdevicename2_struct <group___sys_target_itf_1ga9a0886170fd9a52cbff6ad9f3caddbc0>`
+
+- typedef void(* :ref:`PFSYSTARGETGETDEVICENAME2_IEC <group___sys_target_itf_1gabef8dfc11c1d5ed8abe6fc7b31b1792e>`)(systargetgetdevicename2_struct *p)
+
+- typedef struct :ref:`tagsystargetgetid_struct <structtagsystargetgetid__struct>` :ref:`systargetgetid_struct <group___sys_target_itf_1ga8ea55fb8a4973b0dbea447a37b64e782>`
+
+- typedef void(* :ref:`PFSYSTARGETGETID_IEC <group___sys_target_itf_1ga60c2183d6699611678180f679e2930f6>`)(systargetgetid_struct *p)
+
+- typedef struct :ref:`tagsystargetgetid2_struct <structtagsystargetgetid2__struct>` :ref:`systargetgetid2_struct <group___sys_target_itf_1ga07d41ad1a39570472deb0103d93d9790>`
+
+- typedef void(* :ref:`PFSYSTARGETGETID2_IEC <group___sys_target_itf_1ga65fb625e8f37bbbb1bc43ad19344acce>`)(systargetgetid2_struct *p)
+
+- typedef struct :ref:`tagsystargetgetnodename_struct <structtagsystargetgetnodename__struct>` :ref:`systargetgetnodename_struct <group___sys_target_itf_1ga7e48e3b3c4621a54cd69b2d80f67cd46>`
+
+- typedef void(* :ref:`PFSYSTARGETGETNODENAME_IEC <group___sys_target_itf_1gabd3a0b539edfbdd07a17b82e6f94de0e>`)(systargetgetnodename_struct *p)
+
+- typedef struct :ref:`tagsystargetgetnodename2_struct <structtagsystargetgetnodename2__struct>` :ref:`systargetgetnodename2_struct <group___sys_target_itf_1gaed254ec19d7137b227c965bb0b1706ac>`
+
+- typedef void(* :ref:`PFSYSTARGETGETNODENAME2_IEC <group___sys_target_itf_1ga58c074edd3182c82481849eaf7c1c130>`)(systargetgetnodename2_struct *p)
+
+- typedef struct :ref:`tagsystargetgetoperatingsystemid_struct <structtagsystargetgetoperatingsystemid__struct>` :ref:`systargetgetoperatingsystemid_struct <group___sys_target_itf_1ga6358bad9655c9a791e92e333ea2c33b0>`
+
+- typedef void(* :ref:`PFSYSTARGETGETOPERATINGSYSTEMID_IEC <group___sys_target_itf_1gabfc3dbd45be82c62a20c041ed4362158>`)(systargetgetoperatingsystemid_struct *p)
+
+- typedef struct :ref:`tagsystargetgetprocessorid_struct <structtagsystargetgetprocessorid__struct>` :ref:`systargetgetprocessorid_struct <group___sys_target_itf_1ga3d5872fbdb84d83082669129a167570f>`
+
+- typedef void(* :ref:`PFSYSTARGETGETPROCESSORID_IEC <group___sys_target_itf_1ga93ae685e45299067ac226ccf174e5313>`)(systargetgetprocessorid_struct *p)
+
+- typedef struct :ref:`tagsystargetgetserialnumber_struct <structtagsystargetgetserialnumber__struct>` :ref:`systargetgetserialnumber_struct <group___sys_target_itf_1ga90407a2b6464bc53cf59736ac685a741>`
+
+- typedef void(* :ref:`PFSYSTARGETGETSERIALNUMBER_IEC <group___sys_target_itf_1ga3b500ae49da7022198e8105c5a911e20>`)(systargetgetserialnumber_struct *p)
+
+- typedef struct :ref:`tagsystargetgettype_struct <structtagsystargetgettype__struct>` :ref:`systargetgettype_struct <group___sys_target_itf_1ga5606107310bb42dcd620c829a2cac50b>`
+
+- typedef void(* :ref:`PFSYSTARGETGETTYPE_IEC <group___sys_target_itf_1gaf256accdc8b3068144c48fb77179c8d6>`)(systargetgettype_struct *p)
+
+- typedef struct :ref:`tagsystargetgettype2_struct <structtagsystargetgettype2__struct>` :ref:`systargetgettype2_struct <group___sys_target_itf_1gab9416eda7832c59a09653b569ea07a68>`
+
+- typedef void(* :ref:`PFSYSTARGETGETTYPE2_IEC <group___sys_target_itf_1ga85b3602424f0ccdb30bcf1874e7a777c>`)(systargetgettype2_struct *p)
+
+- typedef struct :ref:`tagsystargetgetvendorname_struct <structtagsystargetgetvendorname__struct>` :ref:`systargetgetvendorname_struct <group___sys_target_itf_1ga92027ddbd7bec410e10468a8788e093d>`
+
+- typedef void(* :ref:`PFSYSTARGETGETVENDORNAME_IEC <group___sys_target_itf_1ga280658629542de2d62903e4e676d0c12>`)(systargetgetvendorname_struct *p)
+
+- typedef struct :ref:`tagsystargetgetvendorname2_struct <structtagsystargetgetvendorname2__struct>` :ref:`systargetgetvendorname2_struct <group___sys_target_itf_1ga127641812240ea8150957be89b111db1>`
+
+- typedef void(* :ref:`PFSYSTARGETGETVENDORNAME2_IEC <group___sys_target_itf_1gab70a0d2ebf6a76afc62ca4ea30139e7d>`)(systargetgetvendorname2_struct *p)
+
+- typedef struct :ref:`tagsystargetgetversion_struct <structtagsystargetgetversion__struct>` :ref:`systargetgetversion_struct <group___sys_target_itf_1gaa3dcd2dcaad2b01423dc74a56952f86d>`
+
+- typedef void(* :ref:`PFSYSTARGETGETVERSION_IEC <group___sys_target_itf_1ga1c794c50a0a4eea5e305e9a3cfbbc8f5>`)(systargetgetversion_struct *p)
+
+- typedef struct :ref:`tagsystargetgetversion2_struct <structtagsystargetgetversion2__struct>` :ref:`systargetgetversion2_struct <group___sys_target_itf_1gae012b4de134342dd9bace9685b41058a>`
+
+- typedef void(* :ref:`PFSYSTARGETGETVERSION2_IEC <group___sys_target_itf_1ga5f41ffd976c8fbd4823f6c50ede9d124>`)(systargetgetversion2_struct *p)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETGETNODENAME <group___sys_target_itf_1ga3957b0c9739efaf723b1d07961f53ff1>`)(RTS_WCHAR *pwszName, RTS_SIZE *pnMaxLength)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETGETCONFIGUREDNODENAME <group___sys_target_itf_1ga8e16900b6e1cee56337b7e929c5cca97>`)(RTS_WCHAR *pwszName, RTS_SIZE *pnMaxLength)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETGETTYPE <group___sys_target_itf_1ga3a20d9b7e1e5789be3e521a5928c05e1>`)(RTS_UI32 *pulType)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETGETID <group___sys_target_itf_1ga450a3926bdc4c47070ff85db438ef144>`)(RTS_UI32 *pulTargetId)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETGETVERSION <group___sys_target_itf_1gaa598e207b5dc8ce32adb7c6040d70757>`)(RTS_UI32 *pulVersion)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETGETDEVICENAME <group___sys_target_itf_1gadf6165ea995a8b78804a1d2d1bd82ff4>`)(RTS_WCHAR *pwszName, RTS_SIZE *pnMaxLength)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETGETVENDORNAME <group___sys_target_itf_1gaaf7ecc9b3b2f75e9bca50a3cac6d7dd6>`)(RTS_WCHAR *pwszName, RTS_SIZE *pnMaxLength)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETGETOPERATINGSYSTEMID <group___sys_target_itf_1ga8360eeb9a5de7a64cbf7c3d88d448b2e>`)(RTS_UI32 *pulOperatingSystemId)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETGETPROCESSORID <group___sys_target_itf_1gaee67a336dd04bbe4fcc6b15701509861>`)(RTS_UI32 *pulProcessorId)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETGETSERIALNUMBER <group___sys_target_itf_1ga506ab4aa9fb5fabc401e6a7433ecf2af>`)(char **ppszSerialNumber, RTS_I32 *pnMaxLen)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETGETSERIALNUMBER_SECURE <group___sys_target_itf_1ga1247aacc4f97988aa234a1369ae4fb65>`)(char **ppszSerialNumber, RTS_I32 *pnMaxLen)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETGETSIGNATURE <group___sys_target_itf_1gae9f0e0bb4bdcbd03da62ece9b1b7b46d>`)(RTS_UI32 ulChallenge, RTS_UI32 *pulSignature)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETGETDEVICEMASK <group___sys_target_itf_1gafee2166be5b8d40e9f1590aa66cd4311>`)(RTS_UI16 *pusDeviceMask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETCHECKIDENT <group___sys_target_itf_1ga0f3dc511424a067e5e250a4b5ff8fb31>`)(SysTargetIdent *pTargetIdentReq, SysTargetIdent *pTargetIdent)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETGETAPI <group___sys_target_itf_1ga4cfabeaf5c941075ba429d76d2c76f25>`)(API_RESOLVE_INFO apiInfo, RTS_VOID_FCTPTR *ppfAPIFunction)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTARGETSETNODENAME <group___sys_target_itf_1ga660ab024a9f1c9cacbe8ec0af4dfd08c>`)(RTS_WCHAR *pwszName)
+
+- typedef :ref:`ISysTarget_C <struct_i_sys_target___c>` :ref:`ISysTarget <group___sys_target_itf_1gac087a5a9792bc86c68fd949e555802f4>`
+
+Functions
+---------
+
+- void :ref:`systargetgetdevicename <group___sys_target_itf_1ga8f17fc131e2ca1ef503f0184be4ec6dd>` (:ref:`systargetgetdevicename_struct <group___sys_target_itf_1gaff33944c5eafca0c338860ba144196a1>` * p)
+
+- void :ref:`systargetgetdevicename2 <group___sys_target_itf_1ga276542d48a5dfe8b122a9bc46bdaa76f>` (:ref:`systargetgetdevicename2_struct <group___sys_target_itf_1ga9a0886170fd9a52cbff6ad9f3caddbc0>` * p)
+
+- void :ref:`systargetgetid <group___sys_target_itf_1gaffcd48498eb128af137037e223da88db>` (:ref:`systargetgetid_struct <group___sys_target_itf_1ga8ea55fb8a4973b0dbea447a37b64e782>` * p)
+
+- void :ref:`systargetgetid2 <group___sys_target_itf_1ga7b6f7624f465a33fe42963cdbe6c0187>` (:ref:`systargetgetid2_struct <group___sys_target_itf_1ga07d41ad1a39570472deb0103d93d9790>` * p)
+
+- void :ref:`systargetgetnodename <group___sys_target_itf_1ga97e84504d0859dc40681684e19bab474>` (:ref:`systargetgetnodename_struct <group___sys_target_itf_1ga7e48e3b3c4621a54cd69b2d80f67cd46>` * p)
+
+- void :ref:`systargetgetnodename2 <group___sys_target_itf_1gab3e31aa5c9a00f17e9869142b9d82d24>` (:ref:`systargetgetnodename2_struct <group___sys_target_itf_1gaed254ec19d7137b227c965bb0b1706ac>` * p)
+
+- void :ref:`systargetgetoperatingsystemid <group___sys_target_itf_1gafcac5d0731080ba0db920451064776a3>` (:ref:`systargetgetoperatingsystemid_struct <group___sys_target_itf_1ga6358bad9655c9a791e92e333ea2c33b0>` * p)
+
+- void :ref:`systargetgetprocessorid <group___sys_target_itf_1ga5c9533c902f975ea506f6bd06076e9df>` (:ref:`systargetgetprocessorid_struct <group___sys_target_itf_1ga3d5872fbdb84d83082669129a167570f>` * p)
+
+- void :ref:`systargetgetserialnumber <group___sys_target_itf_1gab4e405a5cb4e08e286cbba29f9b11c93>` (:ref:`systargetgetserialnumber_struct <group___sys_target_itf_1ga90407a2b6464bc53cf59736ac685a741>` * p)
+
+- void :ref:`systargetgettype <group___sys_target_itf_1ga8ff935eacaef0a9dfeb85eab50dce710>` (:ref:`systargetgettype_struct <group___sys_target_itf_1ga5606107310bb42dcd620c829a2cac50b>` * p)
+
+- void :ref:`systargetgettype2 <group___sys_target_itf_1gae17e926ffcd21922387a819f1ecf886f>` (:ref:`systargetgettype2_struct <group___sys_target_itf_1gab9416eda7832c59a09653b569ea07a68>` * p)
+
+- void :ref:`systargetgetvendorname <group___sys_target_itf_1ga4a02b245426ea9e1fcdd9a519e9d0359>` (:ref:`systargetgetvendorname_struct <group___sys_target_itf_1ga92027ddbd7bec410e10468a8788e093d>` * p)
+
+- void :ref:`systargetgetvendorname2 <group___sys_target_itf_1gaee1c3bcd8ae032b7ee720768bb62a0ed>` (:ref:`systargetgetvendorname2_struct <group___sys_target_itf_1ga127641812240ea8150957be89b111db1>` * p)
+
+- void :ref:`systargetgetversion <group___sys_target_itf_1gad1767ddd61e442a199f7abe0af4b242f>` (:ref:`systargetgetversion_struct <group___sys_target_itf_1gaa3dcd2dcaad2b01423dc74a56952f86d>` * p)
+
+- void :ref:`systargetgetversion2 <group___sys_target_itf_1ga13a1f4121ad54689000d049227522d8f>` (:ref:`systargetgetversion2_struct <group___sys_target_itf_1gae012b4de134342dd9bace9685b41058a>` * p)
+
+- RTS_RESULT :ref:`SysTargetOSInit <group___sys_target_itf_1gac6268c0dc4dcda5d530baa1beb7dfaa3>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysTargetOSHookFunction <group___sys_target_itf_1ga5ed0f4f88bb682f69600f783ed14c4de>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_RESULT :ref:`SysTargetGetNodeName <group___sys_target_itf_1ga42c6ad369c3e427fc13c5287c360f013>` (RTS_WCHAR * pwszName, RTS_SIZE * pnMaxLength)
+
+- RTS_RESULT :ref:`SysTargetGetConfiguredNodeName <group___sys_target_itf_1gaa8ac8ed648cbbbbd65658d28d140ae52>` (RTS_WCHAR * pwszName, RTS_SIZE * pnMaxLength)
+
+- RTS_RESULT :ref:`SysTargetGetType <group___sys_target_itf_1ga62c8edb446591cb84d1f19524a700d7f>` (RTS_UI32 * pulType)
+
+- RTS_RESULT :ref:`SysTargetGetId <group___sys_target_itf_1ga282eec73f498ea412468e053171e95c8>` (RTS_UI32 * pulTargetId)
+
+- RTS_RESULT :ref:`SysTargetGetVersion <group___sys_target_itf_1ga768c19e2cd5b8425a5c870e1dab66416>` (RTS_UI32 * pulVersion)
+
+- RTS_RESULT :ref:`SysTargetGetDeviceName <group___sys_target_itf_1ga0534f05cf90b18be83949fbb022f17d1>` (RTS_WCHAR * pwszName, RTS_SIZE * pnMaxLength)
+
+- RTS_RESULT :ref:`SysTargetGetVendorName <group___sys_target_itf_1ga41bd5290d816c8a8295e8277bb71f417>` (RTS_WCHAR * pwszName, RTS_SIZE * pnMaxLength)
+
+- RTS_RESULT :ref:`SysTargetGetOperatingSystemId <group___sys_target_itf_1gab66943afa899f0361c3e3c43ec88fcf6>` (RTS_UI32 * pulOperatingSystemId)
+
+- RTS_RESULT :ref:`SysTargetGetProcessorId <group___sys_target_itf_1gaccc3344bf3cf479bbc8da8816a53436d>` (RTS_UI32 * pulProcessorId)
+
+- RTS_RESULT :ref:`SysTargetGetSerialNumber <group___sys_target_itf_1ga060d213095cd4f7db362495c68aaef96>` (char ** ppszSerialNumber, RTS_I32 * pnMaxLen)
+
+- RTS_RESULT :ref:`SysTargetGetSerialNumber_Secure <group___sys_target_itf_1ga503e51ec613c5f128a6fa17b96cbe5c1>` (char ** ppszSerialNumber, RTS_I32 * pnMaxLen)
+
+- RTS_RESULT :ref:`SysTargetGetSignature <group___sys_target_itf_1gadb98f511ce758228f99aae7693278518>` (RTS_UI32 ulChallenge, RTS_UI32 * pulSignature)
+
+- RTS_RESULT :ref:`SysTargetGetDeviceMask <group___sys_target_itf_1ga9a28ccfb448279d23dd8c2dcc80b6a8e>` (RTS_UI16 * pusDeviceMask)
+
+- RTS_RESULT :ref:`SysTargetCheckIdent <group___sys_target_itf_1ga0a47b20982061858c1314cc617badd8f>` (:ref:`SysTargetIdent <group___sys_target_itf___sys_targetidentification_1ga9185ae35ee0e94a183c1b725c5c55235>` * pTargetIdentReq, :ref:`SysTargetIdent <group___sys_target_itf___sys_targetidentification_1ga9185ae35ee0e94a183c1b725c5c55235>` * pTargetIdent)
+
+- RTS_RESULT :ref:`SysTargetGetAPI <group___sys_target_itf_1gaaf8d2d45621a98a319fe15e23431f621>` (:ref:`API_RESOLVE_INFO <group___c_m_itf___api_resolve_info_1gab9565a2863d19785c9b52114ceafe72f>`  apiInfo, RTS_VOID_FCTPTR * ppfAPIFunction)
+
+- RTS_RESULT :ref:`SysTargetSetNodeName <group___sys_target_itf_1ga25f49ebea17f5b5568187e4f3d2533e7>` (RTS_WCHAR * pwszName)
+
+Detailed Description
+--------------------
+
+Definition in file SysTargetItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

@@ -10,7 +10,7 @@
  *  Here an own system variable is handled.
  *  </description>
  *  <copyright>
- *  Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ *  Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
 #ifndef _CMPTRACEMGROEMDEP_H_
@@ -25,9 +25,9 @@
 
 
 
-#define CMP_VERSION         UINT32_C(0x03050E00)
-#define CMP_VERSION_STRING "3.5.14.0"
-#define CMP_VERSION_RC      3,5,14,0
+#define CMP_VERSION         UINT32_C(0x03051000)
+#define CMP_VERSION_STRING "3.5.16.0"
+#define CMP_VERSION_RC      3,5,16,0
 
 /* NOTE: REPLACE 0x0001 BY YOUR VENDORID */
 #define CMP_VENDORID       0x0001
@@ -46,7 +46,15 @@
 
 
 
+
+/**
+ * \file CmpTraceMgrOEMItf.h
+ */
 #include "CmpTraceMgrOEMItf.h"
+
+/**
+ * \file CmpEventCallbackItf.h
+ */
 #include "CmpEventCallbackItf.h"
 
 
@@ -63,8 +71,20 @@
 #include "CmpTraceMgrItf.h"
 
 
+#include "SysMemItf.h"
+
+
 
     
+
+
+
+
+
+
+
+
+
 
 
 
@@ -108,15 +128,14 @@
 
 
 
-    
 
 
 
-      
 
 
 
-     
+
+
 
 
 
@@ -143,7 +162,16 @@
                 pIBase->Release(pIBase); \
             } \
         } \
-        if (pICmpTraceMgr == NULL && s_pfCMCreateInstance != NULL) \
+        if (pISysMem == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CSysMem, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pISysMem = (ISysMem *)pIBase->QueryInterface(pIBase, ITFID_ISysMem, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          if (pICmpTraceMgr == NULL && s_pfCMCreateInstance != NULL) \
         { \
             pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCmpTraceMgr, &initResult); \
             if (pIBase != NULL) \
@@ -167,7 +195,8 @@
     {\
         pICmpLog = NULL; \
         pICMUtils = NULL; \
-        pICmpTraceMgr = NULL; \
+        pISysMem = NULL; \
+          pICmpTraceMgr = NULL; \
           pICmpEventMgr = NULL; \
            \
     }
@@ -195,7 +224,17 @@
                     pICMUtils = NULL; \
             } \
         } \
-        if (pICmpTraceMgr != NULL) \
+        if (pISysMem != NULL) \
+        { \
+            pIBase = (IBase *)pISysMem->QueryInterface(pISysMem, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pISysMem = NULL; \
+            } \
+        } \
+          if (pICmpTraceMgr != NULL) \
         { \
             pIBase = (IBase *)pICmpTraceMgr->QueryInterface(pICmpTraceMgr, ITFID_IBase, &exitResult); \
             if (pIBase != NULL) \
@@ -235,15 +274,20 @@
         INIT_STMT   \
         TempResult = GET_LogAdd(CM_IMPORT_OPTIONAL_FUNCTION); \
         TempResult = GET_CMUtlMemCpy(CM_IMPORT_OPTIONAL_FUNCTION); \
-        if (ERR_OK == importResult ) TempResult = GET_EventUnregisterCallbackFunction(CM_IMPORT_OPTIONAL_FUNCTION);\
-          if (ERR_OK == importResult ) TempResult = GET_EventRegisterCallbackFunction(CM_IMPORT_OPTIONAL_FUNCTION);\
-          if (ERR_OK == importResult ) TempResult = GET_EventClose(CM_IMPORT_OPTIONAL_FUNCTION);\
-          if (ERR_OK == importResult ) TempResult = GET_EventOpen(CM_IMPORT_OPTIONAL_FUNCTION);\
+        if (ERR_OK == importResult ) importResult = GET_SysMemFreeData(0);\
+          if (ERR_OK == importResult ) importResult = GET_SysMemAllocData(0);\
+          if (ERR_OK == importResult ) importResult = GET_TraceMgrDeviceTaskUpdate(0);\
+          if (ERR_OK == importResult ) importResult = GET_TraceMgrPacketRead(0);\
+          if (ERR_OK == importResult ) importResult = GET_TraceMgrPacketReadNext2(0);\
+          if (ERR_OK == importResult ) importResult = GET_TraceMgrPacketReadFirst2(0);\
+          if (ERR_OK == importResult ) importResult = GET_TraceMgrPacketReadEnd(0);\
+          if (ERR_OK == importResult ) importResult = GET_TraceMgrPacketReadBegin(0);\
           if (ERR_OK == importResult ) importResult = GET_TraceMgrRecordGetConfig(0);\
           if (ERR_OK == importResult ) importResult = GET_TraceMgrPacketGetState(0);\
           if (ERR_OK == importResult ) importResult = GET_TraceMgrRecordUpdate3(0);\
           if (ERR_OK == importResult ) importResult = GET_TraceMgrRecordUpdate2(0);\
           if (ERR_OK == importResult ) importResult = GET_TraceMgrPacketStart(0);\
+          if (ERR_OK == importResult ) importResult = GET_TraceMgrPacketGetConfig(0);\
           if (ERR_OK == importResult ) importResult = GET_TraceMgrPacketComplete(0);\
           if (ERR_OK == importResult ) importResult = GET_TraceMgrRecordRemove(0);\
           if (ERR_OK == importResult ) importResult = GET_TraceMgrRecordAdd(0);\
@@ -281,7 +325,7 @@
 #else
 #define EXPORT_EXTREF2_STMT
 #endif
-#if !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
+#if !defined(CMPTRACEMGROEM_DISABLE_CMPITF) && !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
 #define EXPORT_CMPITF_STMT \
     {\
           \
@@ -349,7 +393,8 @@
     USE_CMUtlMemCpy  \
     USE_LogAdd \
 	ITF_CmpEventMgr     \
-	ITF_CmpTraceMgr      \
+	ITF_CmpTraceMgr     \
+	ITF_SysMem      \
     USE_EventCreate      \
     USE_EventCreate2      \
     USE_EventDelete      \
@@ -366,15 +411,20 @@
     USE_TraceMgrRecordAdd      \
     USE_TraceMgrRecordRemove      \
     USE_TraceMgrPacketComplete      \
+    USE_TraceMgrPacketGetConfig      \
     USE_TraceMgrPacketStart      \
     USE_TraceMgrRecordUpdate2      \
     USE_TraceMgrRecordUpdate3      \
     USE_TraceMgrPacketGetState      \
     USE_TraceMgrRecordGetConfig      \
-    USE_EventOpen      \
-    USE_EventClose      \
-    USE_EventRegisterCallbackFunction      \
-    USE_EventUnregisterCallbackFunction     
+    USE_TraceMgrPacketReadBegin      \
+    USE_TraceMgrPacketReadEnd      \
+    USE_TraceMgrPacketReadFirst2      \
+    USE_TraceMgrPacketReadNext2      \
+    USE_TraceMgrPacketRead      \
+    USE_TraceMgrDeviceTaskUpdate      \
+    USE_SysMemAllocData      \
+    USE_SysMemFreeData     
 #define USEIMPORT_STMT \
     /*lint -save --e{551} */ \
     static volatile PF_REGISTER_API s_pfCMRegisterAPI; \
@@ -390,7 +440,8 @@
     USE_CMUtlMemCpy  \
     USE_LogAdd \
 	ITF_CmpEventMgr    \
-	ITF_CmpTraceMgr     \
+	ITF_CmpTraceMgr    \
+	ITF_SysMem     \
     USE_EventCreate      \
     USE_EventCreate2      \
     USE_EventDelete      \
@@ -407,20 +458,26 @@
     USE_TraceMgrRecordAdd      \
     USE_TraceMgrRecordRemove      \
     USE_TraceMgrPacketComplete      \
+    USE_TraceMgrPacketGetConfig      \
     USE_TraceMgrPacketStart      \
     USE_TraceMgrRecordUpdate2      \
     USE_TraceMgrRecordUpdate3      \
     USE_TraceMgrPacketGetState      \
     USE_TraceMgrRecordGetConfig      \
-    USE_EventOpen      \
-    USE_EventClose      \
-    USE_EventRegisterCallbackFunction      \
-    USE_EventUnregisterCallbackFunction     
+    USE_TraceMgrPacketReadBegin      \
+    USE_TraceMgrPacketReadEnd      \
+    USE_TraceMgrPacketReadFirst2      \
+    USE_TraceMgrPacketReadNext2      \
+    USE_TraceMgrPacketRead      \
+    USE_TraceMgrDeviceTaskUpdate      \
+    USE_SysMemAllocData      \
+    USE_SysMemFreeData     
 #define USEEXTERN_STMT \
     EXT_CMUtlMemCpy  \
     EXT_LogAdd \
 	EXTITF_CmpEventMgr    \
-	EXTITF_CmpTraceMgr     \
+	EXTITF_CmpTraceMgr    \
+	EXTITF_SysMem     \
     EXT_EventCreate  \
     EXT_EventCreate2  \
     EXT_EventDelete  \
@@ -437,15 +494,20 @@
     EXT_TraceMgrRecordAdd  \
     EXT_TraceMgrRecordRemove  \
     EXT_TraceMgrPacketComplete  \
+    EXT_TraceMgrPacketGetConfig  \
     EXT_TraceMgrPacketStart  \
     EXT_TraceMgrRecordUpdate2  \
     EXT_TraceMgrRecordUpdate3  \
     EXT_TraceMgrPacketGetState  \
     EXT_TraceMgrRecordGetConfig  \
-    EXT_EventOpen  \
-    EXT_EventClose  \
-    EXT_EventRegisterCallbackFunction  \
-    EXT_EventUnregisterCallbackFunction 
+    EXT_TraceMgrPacketReadBegin  \
+    EXT_TraceMgrPacketReadEnd  \
+    EXT_TraceMgrPacketReadFirst2  \
+    EXT_TraceMgrPacketReadNext2  \
+    EXT_TraceMgrPacketRead  \
+    EXT_TraceMgrDeviceTaskUpdate  \
+    EXT_SysMemAllocData  \
+    EXT_SysMemFreeData 
 #ifndef COMPONENT_NAME
     #error COMPONENT_NAME is not defined. This prevents the component from being linked statically. Use SET_COMPONENT_NAME(<name_of_your_component>) to set the name of the component in your .m4 component description.
 #endif

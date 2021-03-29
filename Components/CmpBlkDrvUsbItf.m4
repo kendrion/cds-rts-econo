@@ -1,11 +1,11 @@
 /**
  * <interfacename>CmpBlkDrvUsb</interfacename>
  * <description> 
- *	Block driver interface. This interface could be implemented by different components.
+ *	Block driver interface for the USB communication.
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 

@@ -1,0 +1,57 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of struct.rst template
+
+.. _structtagiomgrlockleave__struct:
+
+=========================================
+tagiomgrlockleave_struct Struct Reference
+=========================================
+
+| #include ":ref:`CmpIoMgrItf.h <_cmp_io_mgr_itf_8h>`"
+
+Data Fields
+-----------
+
+- RTS_IEC_HANDLE :ref:`hIoDrv <group___cmp_io_mgr_itf_1gaf387853973148c68ed3f49d7175303dc>`
+- RTS_IEC_DWORD :ref:`dwLockScope <group___cmp_io_mgr_itf_1gaa3526c3c9baa35bcde1f4e321f1ae9d2>`
+- RTS_IEC_RESULT :ref:`IoMgrLockLeave <group___cmp_io_mgr_itf_1ga640d4bb9298bedf6bbad918190847792>`
+
+Detailed Description
+--------------------
+
+This function releases the mutual-exclusion locks (that were acquired with the function ``IoMgrLockEnter()``) for the given operations.
+
+IMPLEMENTATION NOTE: The behavior of the ``dwLockScope`` parameter can't be implemented on all platforms. Platforms without synchronization functionality may not be able to implement this behavior. IoMgrEmbedded of the CODESYSControlEmbedded runtime system for example can only disable and enable all interrupts.
+
+:return: error code + ERR_OK: Locks were successfully released. + ERR_PARAMETER: The ``pbyIoDrv`` parameter is ``NULL`` (only implementations that use this parameter), or the ``dwLockScope`` parameter has none of the GVL LockScopes set (only implementations that use this parameter). + ERR_FAILED: No driver entry for pbyIoDrv found in device pool.
+
+Field Documentation
+-------------------
+
+.. _group___cmp_io_mgr_itf_1gaf387853973148c68ed3f49d7175303dc:
+
+RTS_IEC_HANDLE tagiomgrlockleave_struct::hIoDrv
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_mgr_itf_1gaa3526c3c9baa35bcde1f4e321f1ae9d2:
+
+RTS_IEC_DWORD tagiomgrlockleave_struct::dwLockScope
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_mgr_itf_1ga640d4bb9298bedf6bbad918190847792:
+
+RTS_IEC_RESULT tagiomgrlockleave_struct::IoMgrLockLeave
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The documentation for this struct was generated from the following file:
+------------------------------------------------------------------------
+
+CmpIoMgrItf.h
+
+.. last line of struct.rst template
+.. last line of composition.rst template
+
+

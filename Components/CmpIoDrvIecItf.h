@@ -4,67 +4,67 @@
  * <p>Wrapper to access the interface functions of an IEC driver from C.</p>
  * <p>The registration of a new IEC driver instance is going like this:</p>
  * <pre>
- * .   +--------------+   +--------+   +-----------+
- * .   |IEC Driver Lib|   |CmpIoMgr|   |CmpIoDrvIec|
- * .   +--------------+   +--------+   +-----------+
- * .          |               |              |
- * .         +-+ Register     |              |
- * .         | |   Instance   |              |
- * .         | |-------------+-+ Register    |
- * .         | |             | |   Instance  |
- * .         | |             | |------------+-+
- * .         | |             | |            | |
- * .         | |             | |            | |
- * .         | |             |+++-----------| |
- * .         | |             || |           | |
- * .         | |             || |           | |
- * .         | |             || |           | |
- * .         | |             || |           | |
- * .         | |             |+++...........| |
- * .         | |             | |            | |
- * .         | |             | |            | |
- * .         | |             | |............+-+
- * .         | |.............+-+
- * .         +-+
+ *    +--------------+   +--------+   +-----------+
+ *    |IEC Driver Lib|   |CmpIoMgr|   |CmpIoDrvIec|
+ *    +--------------+   +--------+   +-----------+
+ *           |               |              |
+ *          +-+ Register     |              |
+ *          | |   Instance   |              |
+ *          | |-------------+-+ Register    |
+ *          | |             | |   Instance  |
+ *          | |             | |------------+-+
+ *          | |             | |            | |
+ *          | |             | |            | |
+ *          | |             |+++-----------| |
+ *          | |             || |           | |
+ *          | |             || |           | |
+ *          | |             || |           | |
+ *          | |             || |           | |
+ *          | |             |+++...........| |
+ *          | |             | |            | |
+ *          | |             | |            | |
+ *          | |             | |............+-+
+ *          | |.............+-+
+ *          +-+
  * </pre>
  * <p>The handle of the I/O driver wrapper looks like this:</p>
  * <pre>
- * .                +------------------------+
- * .                |CCmpIoDrvIec            |
- * .                +------------------------+
- * .                |hInstance               | ----.
- * .                +------------------------+     |
- * .              . |IoDrvGetInfo            |     |
- * .             /  |IoDrvGetModuleDiagnosis |     |
- * .            /   |IoDrvIdentify           |     |
- * .            |   |IoDrvReadInputs         |     |
- * . C-Wrapper -'   |IoDrvScanModules        |     |
- * .            |   |IoDrvStartBusCycle      |     |
- * .            |   |IoDrvUpdateConfiguration|     |     +-------------+
- * .            \   |IoDrvUpdateMapping      |     '---- |I/O Drv FB   |
- * .             \  |IoDrvWatchdogTrigger    |           +-------------+
- * .              ' |IoDrvWriteOutputs       |           |ITF_ICmpIoDrv|
- * .                +------------------------+           +-------------+
- * .                |IoDrvGetInfo            | .         |pvftable[4]  |
- * .                |IoDrvGetModuleDiagnosis |  \        |pvftable[5]  |
- * .                |IoDrvIdentify           |   \       |pvftable[6]  |
- * .                |IoDrvReadInputs         |   |       |pvftable[7]  |
- * .                |IoDrvScanModules        |   '------ |pvftable[8]  |
- * .                |IoDrvStartBusCycle      |   |       |pvftable[9]  |
- * .                |IoDrvUpdateConfiguration|   |       |pvftable[10] |
- * .                |IoDrvUpdateMapping      |   /       |pvftable[11] |
- * .                |IoDrvWatchdogTrigger    |  /        |pvftable[12] |
- * .                |IoDrvWriteOutputs       | '         |pvftable[13] |
- * .                +------------------------+           +-------------+
+ *                  +------------------------+
+ *                  |CCmpIoDrvIec            |
+ *                  +------------------------+
+ *                  |hInstance               | ----.
+ *                  +------------------------+     |
+ *                . |IoDrvGetInfo            |     |
+ *               /  |IoDrvGetModuleDiagnosis |     |
+ *              /   |IoDrvIdentify           |     |
+ *              |   |IoDrvReadInputs         |     |
+ *   C-Wrapper -'   |IoDrvScanModules        |     |
+ *              |   |IoDrvStartBusCycle      |     |
+ *              |   |IoDrvUpdateConfiguration|     |     +-------------+
+ *              \   |IoDrvUpdateMapping      |     '---- |I/O Drv FB   |
+ *               \  |IoDrvWatchdogTrigger    |           +-------------+
+ *                ' |IoDrvWriteOutputs       |           |ITF_ICmpIoDrv|
+ *                  +------------------------+           +-------------+
+ *                  |IoDrvGetInfo            | .         |pvftable[4]  |
+ *                  |IoDrvGetModuleDiagnosis |  \        |pvftable[5]  |
+ *                  |IoDrvIdentify           |   \       |pvftable[6]  |
+ *                  |IoDrvReadInputs         |   |       |pvftable[7]  |
+ *                  |IoDrvScanModules        |   '------ |pvftable[8]  |
+ *                  |IoDrvStartBusCycle      |   |       |pvftable[9]  |
+ *                  |IoDrvUpdateConfiguration|   |       |pvftable[10] |
+ *                  |IoDrvUpdateMapping      |   /       |pvftable[11] |
+ *                  |IoDrvWatchdogTrigger    |  /        |pvftable[12] |
+ *                  |IoDrvWriteOutputs       | '         |pvftable[13] |
+ *                  +------------------------+           +-------------+
  * </pre>
  * <p>The main difference between the registration with IoDrvRegisterInstance()
  * vs. IoDrvRegisterInstance2() is, that the first one was initializing all IEC
  * function pointers by itself and the second is using BaseUpdateConfiguration()
- * for this purpose. IoDrvRegisterInstance is now depricated.</p>
+ * for this purpose. IoDrvRegisterInstance is now deprecated.</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -126,7 +126,7 @@ void* CDECL BaseQueryInterface(IBase *pIBase, ITFID iid, RTS_RESULT *pResult);
 /**
  * <description>
  * <p>Obsolete! This interface is not used anymore.</p>
- * <p>Note: On SIL2 Runtimes, this call leads to an exception.</p>
+ * <p>Note: On SIL2 runtime this call leads to an exception.</p>
  * </description>
  * <result>Error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_NOTIMEPLEMENTED">The function is obsolete and not available anymore</errorcode>
@@ -194,7 +194,7 @@ typedef RTS_RESULT (CDECL * PFIODRVREGISTERINSTANCE) (iodrviecregisterinstance_s
  * <parampseudo name="p.pInterface" type="IN" range="[NULL,VALID_INTERFACE]">IEC Interface Pointer</parampseudo>
  * <parampseudo name="p.pInterface" type="IN" range="[NULL,VALID_INTERFACE]">IEC Interface Pointer</parampseudo>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Registration was successfull</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Registration was successful</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">Not enough memory to create a new instance</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">No valid Interface</errorcode>
  * 
@@ -252,7 +252,7 @@ typedef RTS_RESULT (CDECL * PFIODRVREGISTERINSTANCE2) (iodrviecregisterinstance2
  * <description>
  * <p>Unregister an IEC I/O driver.</p>
  * <p>Delete a driver instance and unregister it from the I/O Manager.</p>
- * <p>Note: On SIL2 runtimes, this function is only allowed in debug mode.
+ * <p>Note: On SIL2 runtime this function is only allowed in debug mode.
  * When it is called outside of the debug mode, it will throw an exception.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_UNREGISTERINSTANCE_PARAMETER]">IEC Parameter structure</param>
@@ -260,7 +260,7 @@ typedef RTS_RESULT (CDECL * PFIODRVREGISTERINSTANCE2) (iodrviecregisterinstance2
  * <parampseudo name="OperationMode" type="IN" range="[RTS_SIL2_OPMODE_SAFE,RTS_SIL2_OPMODE_DEBUG]">Operation mode</parampseudo>
  * <parampseudo name="bExceptionGenerated" type="OUT" range="[TRUE,FALSE]">Indicates, if an exception was thrown or not</parampseudo>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Deregistration was successfull</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">De-registration was successful</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pIBase was NULL</errorcode>
  * <errorcode name="RTS_RESULT" type="*">Internal error when trying to free the driver handle</errorcode>
  */

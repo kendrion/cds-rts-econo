@@ -106,12 +106,12 @@ DLL_DECL int CDECL ComponentEntry(INIT_STRUCT *pInitStruct)
 /*	Used to exchange function pointers between component manager and components.
 	Called at startup for each component.
 	pInitStruct:			IN	Pointer to structure with:
-	pfExportFunctions	OUT Pointer to function that exports component functions
-	pfImportFunctions	OUT Pointer to function that imports functions from other components
-	pfGetVersion		OUT Pointer to function to get component version
-	pfRegisterAPI		IN	Pointer to component mangager function to register a api function
-	pfGetAPI			IN	Pointer to component mangager function to get a api function
-	pfCallHook			IN	Pointer to component mangager function to call a hook function
+		pfExportFunctions	OUT Pointer to function that exports component functions
+		pfImportFunctions	OUT Pointer to function that imports functions from other components
+		pfGetVersion		OUT Pointer to function to get component version
+		pfRegisterAPI		IN	Pointer to component manager function to register a API function
+		pfGetAPI			IN	Pointer to component manager function to get a API function
+		pfCallHook			IN	Pointer to component manager function to call a hook function
 	Return					ERR_OK if library could be initialized, else error code
 */
 {

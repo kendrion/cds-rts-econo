@@ -1,0 +1,74 @@
+.. contents::
+   :local:
+   :depth: 3
+
+.. _codesyscontrolv3_runtimevariants_gettingstarted_linux:
+
+Getting Started with Linux / QNX
+================================
+
+Delivery Content
+----------------
+
+    ::
+
+        *.zip
+            ├─ BuildUtils/                  # m4 preprocessor and definitions
+            ├─ Components/                  # interface definitions of all available CODESYS Control runtime components
+            ├─ Configuration/
+            ├─── Examples/                  # sample CODESYS Control runtime configuration files
+            ├─── 3S.dat                     # license file for additional features (Fieldbuses, Visualization)
+            ├─── *.devdesc.xml              # Device Description for use in CODESYS IDE
+            ├─ Documentation/
+            ├─── RTS-Documentation.html     # entry point for all CODESYS Control runtime documentation
+            ├─ Platforms/
+            ├─── Linux/
+            ├───── Bin/
+            ├─────── codesyscontrol         # prebuilt CODESYS Control runtime binary
+            ├─────── codesyscontrol.a       # static library for linking
+            ├─────── CODESYSControl.cfg     # default CODESYS Control runtime configuration
+            ├─────── lib*.so                # optional: shared objects for dynamically linked components
+            ├───── Projects/                # Makefiles to build statically linked CODESYS Control runtime
+            ├───── main.c                   # template main.c to build statically linked CODESYS Control runtime
+            ├───── MainLinux.h              # main CODESYS Control runtime interface
+            └─ Templates/                   # template components for CODESYS Control runtime adaption and extension
+
+
+Quick installation guide
+------------------------
+To quickly install and run your CODESYS Control runtime, copy it to your target through SCP or a similar protocol and execute it in an SSH session.
+
+Copy the binaries to your target
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    | *Replace* ``root`` *with your target's username*
+    | *Replace* ``192.168.0.1`` *with your target's IP address*
+    | *This will create a new directory* ``codesys`` *in user root's home directory*
+
+    .. code-block:: shell
+
+        scp -r Platforms/Linux/Bin root@192.168.0.1:codesys
+
+Running CODESYS Control runtime
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    | *The argument* ``-d`` *is highly recommended during development as it enables additional debug output*
+
+    .. code-block:: shell
+
+        ssh root@192.168.0.1
+        cd codesys
+        ./codesyscontrol -d CODESYSControl.cfg
+
+Press Ctrl-C to cleanly shutdown CODESYS Control.
+
+Getting Started with Linux / QNX: Recommended tutorials
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+| - :ref:`portings_linux_specific_cmdline`
+| - :ref:`portings_linux_specific_filesystem`
+| - :ref:`tutorial_linux_packaging_and_autostart`
+
+Next steps
+----------
+Your CODESYS Control runtime is now up and running! You should continue by :ref:`application-download_linux`

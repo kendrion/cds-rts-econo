@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -22,7 +22,7 @@ SET_INTERFACE_NAME(`CmpCommunicationLib')
 
 /*  Block Driver Types 
 *	Used to identify the type of a blockdriver to handle its specific information or features.
-*	Example usecase: Ask the router to convert an ip address to a CoDeSys address for the 
+*	Example use case: Ask the router to convert an ip address to a CoDeSys address for the 
 *	CmpBlkDrvTcp Instance. 
 */
 #define RTS_BLK_DRV_TYPE_NONE			0x00
@@ -41,7 +41,7 @@ SET_INTERFACE_NAME(`CmpCommunicationLib')
 
 /* Block Driver Flags
  * These flags are used to handle specific information or features for a particular blockdriver type (see above).
- * Example usecase: Specify if the device to look for is a gateway or a PLC.
+ * Example use case: Specify if the device to look for is a gateway or a PLC.
  */
  #define RTS_BLK_DRV_FLAGS_PLC 0
  #define RTS_BLK_DRV_FLAGS_GATEWAY 1
@@ -59,10 +59,10 @@ SET_INTERFACE_NAME(`CmpCommunicationLib')
 /* One component of a 3S address */
 typedef RTS_UI8 ADDRESSCOMPONENT[2]; 
 
-/* Maximum number of ADDRESSCOMPONENTS in a nodeaddress*/
+/* Maximum number of ADDRESSCOMPONENTS in a node address */
 #define MAX_NODEADDR_LEN 0x0F
 
-/* Maximum number of bytes in a networkaddress */
+/* Maximum number of bytes in a network address */
 #define MAX_NETWORKADDR_LEN 8
 
 /* -- IDs describing the progress of a service in the communication system -- */
@@ -100,7 +100,7 @@ typedef struct
 	RTS_UI8 ui8AddrOffset;			/* offset of relative addresses - valid if bAddrRelative is TRUE */
 	RTS_UI8 ui8AddrPeerLen;			/* length of peer address */
 	ADDRESSCOMPONENT  addrPeer[MAX_NODEADDR_LEN]; /* address of the communication partner */
-	RTS_BOOL bAddrRelative;			/* peer address is a relativ address */
+	RTS_BOOL bAddrRelative;			/* peer address is a relative address */
 	RTS_BOOL bSecureChannel;		/* communication channel is encrypted */
 	RTS_UI32 ui32ChannelHandle;		/* handle (id) of communication channel */
 	RTS_UI32 ui32CommBufferSize;	/* effective buffer size of communication channel */
@@ -127,7 +127,7 @@ typedef struct
 	ADDRESSCOMPONENT *pAddress;
 } NODEADDRESSREF;
 
-/* Describes the adress of a communication partner within the network tree. 
+/* Describes the address of a communication partner within the network tree. 
  * Examples:
  * (1) type=AT_ABSOLUTE, nAddrOffset=<any>, pAddress={2,3,4}, nLength=3 :
  *     specifies the node 2:3:4
@@ -201,9 +201,9 @@ DEF_ITF_API(`RTS_BOOL',`CDECL',`AddrEquals',`(NODEADDRESS addr1, NODEADDRESS add
  */
 DEF_ITF_API(`RTS_BOOL',`CDECL',`AddrEqualsBuffer',`(NODEADDRESS addr1, ADDRESSCOMPONENT *pBufAddr2, RTS_UI32 nLenAddr2)') 
 
-/* Copy the address in src to dest. 
+/* Copy the address in source to destination. 
  * <description>
- *  Copy the address in src to dest. 
+ *  Copy the address in source to destination. 
  * </description>
  * <param name="pBufDest" type="OUT">Buffer, that will receive the copy of the address</param>
  * <param name="pnLenDest"  type="INOUT"> 

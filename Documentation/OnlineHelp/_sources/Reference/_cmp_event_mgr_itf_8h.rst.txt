@@ -1,0 +1,460 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_event_mgr_itf_8h:
+
+===============================
+CmpEventMgrItf.h File Reference
+===============================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpItf.h`"
+| #include ":ref:`CmpEventCallbackItf.h <_cmp_event_callback_itf_8h>`"
+
+Data Structures
+---------------
+
+- struct :ref:`tagEventOptions <structtag_event_options>`
+
+- struct :ref:`EVTPARAM_CmpEventMgr <struct_e_v_t_p_a_r_a_m___cmp_event_mgr>`
+
+- struct :ref:`icmpeventcallback_struct <structicmpeventcallback__struct>`
+
+- struct :ref:`tagicmpeventcallback_eventcallback_struct <structtagicmpeventcallback__eventcallback__struct>`
+
+- struct :ref:`ICmpEventMgr_C <struct_i_cmp_event_mgr___c>`
+
+Macros
+------
+
+- #define :ref:`EVENTMGR_NUM_OF_STATIC_EVENTS <group___cmp_event_mgr_itf___staticdefines_1gacd64207052aca2f378342acfd6a198f7>` 50
+
+- #define :ref:`EVENTMGR_NUM_OF_STATIC_CALLBACKS <group___cmp_event_mgr_itf___staticdefines_1gab3c1a75069e55ddaf041a7d5b4289246>` 10
+
+- #define :ref:`EVENTMGR_NUM_OF_STATIC_IECCALLBACKS <group___cmp_event_mgr_itf___staticdefines_1gafc4b40667aba5e36e2f5796beb609279>` 5
+
+- #define :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` (Class | Event)
+
+- #define :ref:`EVTPROVIDER_NONE <group___cmp_event_mgr_itf___providercomponentids_1ga2006ceb2e62adc1ce4c85c5b5ef3729b>` 0
+
+- #define :ref:`EVTPROVIDER_ALL <group___cmp_event_mgr_itf___providercomponentids_1ga3cb69c2c4605505bb6b01c3fcc57387c>` UINT32_MAX
+
+- #define :ref:`EVTCLASS_NONE <group___cmp_event_mgr_itf___eventclasses_1ga22110eb4c9f52d7df007c8cc375c2b14>` 0
+
+- #define :ref:`EVTCLASS_ALL <group___cmp_event_mgr_itf___eventclasses_1ga129be85406009228b53b62acf9d1fe69>` UINT32_C(0xFFFF0000)
+
+- #define :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` UINT32_C(0x00010000)
+
+- #define :ref:`EVTCLASS_WARNING <group___cmp_event_mgr_itf___eventclasses_1gabe9bc8e97894e8dac9ff9447c20112c5>` UINT32_C(0x00020000)
+
+- #define :ref:`EVTCLASS_ERROR <group___cmp_event_mgr_itf___eventclasses_1gacb4c61d801556263d732c9b8ddfa451f>` UINT32_C(0x00040000)
+
+- #define :ref:`EVTCLASS_EXCEPTION <group___cmp_event_mgr_itf___eventclasses_1ga1f5b32c2ac26993295bbf1e8d55f7d34>` UINT32_C(0x00080000)
+
+- #define :ref:`EVTCLASS_VENDOR_SPEC <group___cmp_event_mgr_itf___eventclasses_1gaff569d2f834ec5253ede975b3f853dff>` UINT32_C(0x10000000)
+
+- #define :ref:`EVT_NONE <group___cmp_event_mgr_itf___special_events_1ga9947227fadcc9634dfb998ed6d80a363>` 0
+
+- #define :ref:`EVT_ALL <group___cmp_event_mgr_itf___special_events_1ga57b65862be5d46ee2c18c009a2c297bb>` 0xFFFF
+
+- #define :ref:`EVENT_CALLBACKS_NO_LIMIT <group___cmp_event_mgr_itf___callbacklimit_1gaf925e22cbea048d47ab31da5d36a91b6>` UINT32_MAX
+
+- #define :ref:`EMF_NO_IEC_CALLBACKS <group___cmp_event_mgr_itf___eventmanagerflags_1ga0b13ac0688de7fa0e6d29dedcda2b794>` UINT32_C(0x00000001)
+
+- #define :ref:`EVTPARAMID_CmpEventMgr <group___cmp_event_mgr_itf___eventparameter_1ga125fc6b2f3254e9b6ed3cf09e3864434>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpEventMgr <group___cmp_event_mgr_itf___eventparameter_1ga2e6c053d9db1c7500708f88e4b6ec881>` 0x0001
+
+- #define :ref:`EVT_EventCreate <group___cmp_event_mgr_itf___events_1ga0f099cbd018271825f299da8fb0c16cd>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`EVT_EventDelete <group___cmp_event_mgr_itf___events_1ga94d877bbb919b506869f415486b323cb>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+
+- #define :ref:`EVT_EventOpen <group___cmp_event_mgr_itf___events_1gaaef3dc13ce32b9900518db5bea457b5d>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 3)
+
+- #define :ref:`EVT_EventClose <group___cmp_event_mgr_itf___events_1gaa846d9a446c480ea3d6aa9529589c943>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 4)
+
+- #define :ref:`EVT_EventCommCycle <group___cmp_event_mgr_itf___events_1ga98ee1d17eabca49131ce82288d3f6224>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 5)
+
+- #define :ref:`EventParam2 <group___cmp_event_mgr_itf___events_1ga0eca60f7954e09b4fd44a4661cf21b62>` :ref:`EventParam <struct_event_param>`
+
+- #define :ref:`USE_EventCreate <group___cmp_event_mgr_itf_1gae9e891ad3d43a1ed334e3d8c01937a25>` :ref:`PFEVENTCREATE <group___cmp_event_mgr_itf_1ga139766512c6a48ecbb8841c679ef366c>` pfEventCreate;
+
+- #define :ref:`EXT_EventCreate <group___cmp_event_mgr_itf_1ga3b4579f4a2318024c4a4a342d42ccc47>` extern :ref:`PFEVENTCREATE <group___cmp_event_mgr_itf_1ga139766512c6a48ecbb8841c679ef366c>` pfEventCreate;
+
+- #define :ref:`GET_EventCreate <group___cmp_event_mgr_itf_1ga4aadd23b881205963dd3a9194234dbb7>` s_pfCMGetAPI2( "EventCreate", (RTS_VOID_FCTPTR *)&pfEventCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_EventCreate <group___cmp_event_mgr_itf_1ga91e7ca1c00136d205733aa7f546c5c4a>` pfEventCreate
+
+- #define :ref:`CHK_EventCreate <group___cmp_event_mgr_itf_1ga88625048481f1920da7448825c098ab9>` (pfEventCreate != NULL)
+
+- #define :ref:`EXP_EventCreate <group___cmp_event_mgr_itf_1gae7397746ec7deb56e188ddb63712fe46>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventCreate", (RTS_UINTPTR) :ref:`EventCreate <group___cmp_event_mgr_itf_1ga6d63f00d5bce0b4125c266dd37bee048>` , 0, 0)
+
+- #define :ref:`USE_EventCreate2 <group___cmp_event_mgr_itf_1gaa1cfb4d051c3936aebf990735afc30d3>` :ref:`PFEVENTCREATE2 <group___cmp_event_mgr_itf_1ga17304b16568dfa9b331fc1187f38e1dd>` pfEventCreate2;
+
+- #define :ref:`EXT_EventCreate2 <group___cmp_event_mgr_itf_1ga4dc7689f22aa6c036d7c061298c45094>` extern :ref:`PFEVENTCREATE2 <group___cmp_event_mgr_itf_1ga17304b16568dfa9b331fc1187f38e1dd>` pfEventCreate2;
+
+- #define :ref:`GET_EventCreate2 <group___cmp_event_mgr_itf_1ga958a78c5f429c83fb5dca66eef549a57>` s_pfCMGetAPI2( "EventCreate2", (RTS_VOID_FCTPTR *)&pfEventCreate2, (fl), 0, 0)
+
+- #define :ref:`CAL_EventCreate2 <group___cmp_event_mgr_itf_1ga8097a77301e46a3c84a2ccc62d70929d>` pfEventCreate2
+
+- #define :ref:`CHK_EventCreate2 <group___cmp_event_mgr_itf_1ga082d30654187ad6f793bdaf3751322df>` (pfEventCreate2 != NULL)
+
+- #define :ref:`EXP_EventCreate2 <group___cmp_event_mgr_itf_1ga0253a1c4f74a75e280d8d97d49e2c594>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventCreate2", (RTS_UINTPTR) :ref:`EventCreate2 <group___cmp_event_mgr_itf_1ga5b5f843105b4c1b7997ffbe066fdc493>` , 0, 0)
+
+- #define :ref:`USE_EventCreate3 <group___cmp_event_mgr_itf_1gaa4e1ce920d00217738ba371a2c03ac46>` :ref:`PFEVENTCREATE3 <group___cmp_event_mgr_itf_1gae5cdac43c0bbc5e23ff66821b6a53e23>` pfEventCreate3;
+
+- #define :ref:`EXT_EventCreate3 <group___cmp_event_mgr_itf_1ga77571cbc166875bf2b6b8b59e0664b96>` extern :ref:`PFEVENTCREATE3 <group___cmp_event_mgr_itf_1gae5cdac43c0bbc5e23ff66821b6a53e23>` pfEventCreate3;
+
+- #define :ref:`GET_EventCreate3 <group___cmp_event_mgr_itf_1ga6420738a1bcb8cfe55213e21dfae8692>` s_pfCMGetAPI2( "EventCreate3", (RTS_VOID_FCTPTR *)&pfEventCreate3, (fl), 0, 0)
+
+- #define :ref:`CAL_EventCreate3 <group___cmp_event_mgr_itf_1ga2dbcfe7925040a44cac3fab3d777bf3e>` pfEventCreate3
+
+- #define :ref:`CHK_EventCreate3 <group___cmp_event_mgr_itf_1ga2be10fdb98017657a74bfed2b4c219ce>` (pfEventCreate3 != NULL)
+
+- #define :ref:`EXP_EventCreate3 <group___cmp_event_mgr_itf_1ga01d9cb19744bf90aba46560b7989e374>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventCreate3", (RTS_UINTPTR) :ref:`EventCreate3 <group___cmp_event_mgr_itf_1gad246cb6f243b196a3362cb265f3eadcb>` , 0, 0)
+
+- #define :ref:`USE_EventDelete <group___cmp_event_mgr_itf_1gac13daf490a5eacae4ed064ac7599041e>` :ref:`PFEVENTDELETE <group___cmp_event_mgr_itf_1gaf4b0d17d989488874e095b2d10239b86>` pfEventDelete;
+
+- #define :ref:`EXT_EventDelete <group___cmp_event_mgr_itf_1ga76e0e27c39bbf724d7ffbfd2bc27596b>` extern :ref:`PFEVENTDELETE <group___cmp_event_mgr_itf_1gaf4b0d17d989488874e095b2d10239b86>` pfEventDelete;
+
+- #define :ref:`GET_EventDelete <group___cmp_event_mgr_itf_1ga0807d41239b9d04f562e9a7e56211611>` s_pfCMGetAPI2( "EventDelete", (RTS_VOID_FCTPTR *)&pfEventDelete, (fl), 0, 0)
+
+- #define :ref:`CAL_EventDelete <group___cmp_event_mgr_itf_1ga2f8145d9c1fac9c38977b9e79e60d907>` pfEventDelete
+
+- #define :ref:`CHK_EventDelete <group___cmp_event_mgr_itf_1gac4afecd123445a887e11c2e3cabf84ae>` (pfEventDelete != NULL)
+
+- #define :ref:`EXP_EventDelete <group___cmp_event_mgr_itf_1gadec662ee290bf857f237795c05b816cf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventDelete", (RTS_UINTPTR) :ref:`EventDelete <group___cmp_event_mgr_itf_1ga46db17c2283a873758be432ba1b3c705>` , 0, 0)
+
+- #define :ref:`USE_EventDeleteAll <group___cmp_event_mgr_itf_1ga9cb9b577cb67967027c357df2c6d737d>` :ref:`PFEVENTDELETEALL <group___cmp_event_mgr_itf_1gaac4cf7e3eeec86a118648f1605c54b1c>` pfEventDeleteAll;
+
+- #define :ref:`EXT_EventDeleteAll <group___cmp_event_mgr_itf_1ga7a984c8cad8bfc9b871436e0b196afa3>` extern :ref:`PFEVENTDELETEALL <group___cmp_event_mgr_itf_1gaac4cf7e3eeec86a118648f1605c54b1c>` pfEventDeleteAll;
+
+- #define :ref:`GET_EventDeleteAll <group___cmp_event_mgr_itf_1gae2bfae6d8636fdbcd84e200d0c85a106>` s_pfCMGetAPI2( "EventDeleteAll", (RTS_VOID_FCTPTR *)&pfEventDeleteAll, (fl), 0, 0)
+
+- #define :ref:`CAL_EventDeleteAll <group___cmp_event_mgr_itf_1gaaf9883a1e0b278ac76a62ee1f848dc3e>` pfEventDeleteAll
+
+- #define :ref:`CHK_EventDeleteAll <group___cmp_event_mgr_itf_1gadeb26cabf27b09413df169486814686c>` (pfEventDeleteAll != NULL)
+
+- #define :ref:`EXP_EventDeleteAll <group___cmp_event_mgr_itf_1ga54e52080bebdf9ad915c8a32ce2eb7d1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventDeleteAll", (RTS_UINTPTR) :ref:`EventDeleteAll <group___cmp_event_mgr_itf_1ga4c2fa227fd0de00e44f8bc3f3f4dcfe0>` , 0, 0)
+
+- #define :ref:`USE_EventOpen <group___cmp_event_mgr_itf_1ga2eb03ad629864bda6ad39618ae1a5722>` :ref:`PFEVENTOPEN <group___cmp_event_mgr_itf_1ga18611f9bd4b6cea6742df36a26a69986>` pfEventOpen;
+
+- #define :ref:`EXT_EventOpen <group___cmp_event_mgr_itf_1gae8cee9a267b7777a3a192f3ba14d5626>` extern :ref:`PFEVENTOPEN <group___cmp_event_mgr_itf_1ga18611f9bd4b6cea6742df36a26a69986>` pfEventOpen;
+
+- #define :ref:`GET_EventOpen <group___cmp_event_mgr_itf_1ga94aa75beeb84cf6c29e6f0e80bf537a5>` s_pfCMGetAPI2( "EventOpen", (RTS_VOID_FCTPTR *)&pfEventOpen, (fl), 0, 0)
+
+- #define :ref:`CAL_EventOpen <group___cmp_event_mgr_itf_1ga9437cf9cb77ba1f657909af25ad48b1d>` pfEventOpen
+
+- #define :ref:`CHK_EventOpen <group___cmp_event_mgr_itf_1gafce632f831a833327c4bd111a204e2be>` (pfEventOpen != NULL)
+
+- #define :ref:`EXP_EventOpen <group___cmp_event_mgr_itf_1gacd0f5dacdc40266ec740308bba877fc7>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventOpen", (RTS_UINTPTR) :ref:`EventOpen <group___cmp_event_mgr_itf_1ga03c581805da95e555049ae869ff346ef>` , 0, 0)
+
+- #define :ref:`USE_EventClose <group___cmp_event_mgr_itf_1ga979675cd040934b090ff38969748f64e>` :ref:`PFEVENTCLOSE <group___cmp_event_mgr_itf_1ga9cb406694de0ebb7791c283b155b442b>` pfEventClose;
+
+- #define :ref:`EXT_EventClose <group___cmp_event_mgr_itf_1gaf6a13ad0cd2512ca80bbf77f105d5b9e>` extern :ref:`PFEVENTCLOSE <group___cmp_event_mgr_itf_1ga9cb406694de0ebb7791c283b155b442b>` pfEventClose;
+
+- #define :ref:`GET_EventClose <group___cmp_event_mgr_itf_1ga22c0bb99ed785cc0fe305d1834196cdf>` s_pfCMGetAPI2( "EventClose", (RTS_VOID_FCTPTR *)&pfEventClose, (fl), 0, 0)
+
+- #define :ref:`CAL_EventClose <group___cmp_event_mgr_itf_1gaf4d41400c603f4955948c52c876c46a1>` pfEventClose
+
+- #define :ref:`CHK_EventClose <group___cmp_event_mgr_itf_1ga51c32b40f52fb925123a35615a1173b0>` (pfEventClose != NULL)
+
+- #define :ref:`EXP_EventClose <group___cmp_event_mgr_itf_1gaa8814f5c973e0b2cf41f792ffa88fc5b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventClose", (RTS_UINTPTR) :ref:`EventClose <group___cmp_event_mgr_itf_1gab412d42bea35b57d05e6ec72c09b2248>` , 0, 0)
+
+- #define :ref:`USE_EventGetEvent <group___cmp_event_mgr_itf_1gaca95a6bbe76c52b64ab7d13a20562382>` :ref:`PFEVENTGETEVENT <group___cmp_event_mgr_itf_1gad468b520f976908e8a47abe54735b9be>` pfEventGetEvent;
+
+- #define :ref:`EXT_EventGetEvent <group___cmp_event_mgr_itf_1ga22097f1d8c1a8099e4b2a3eb2b0d34fe>` extern :ref:`PFEVENTGETEVENT <group___cmp_event_mgr_itf_1gad468b520f976908e8a47abe54735b9be>` pfEventGetEvent;
+
+- #define :ref:`GET_EventGetEvent <group___cmp_event_mgr_itf_1ga03a231937b4955fd93002aa5fc45343e>` s_pfCMGetAPI2( "EventGetEvent", (RTS_VOID_FCTPTR *)&pfEventGetEvent, (fl), 0, 0)
+
+- #define :ref:`CAL_EventGetEvent <group___cmp_event_mgr_itf_1ga1e7c4db04f219da9f3d29130634059f4>` pfEventGetEvent
+
+- #define :ref:`CHK_EventGetEvent <group___cmp_event_mgr_itf_1ga2f5cf133862cf5a250c9254e6f3661b8>` (pfEventGetEvent != NULL)
+
+- #define :ref:`EXP_EventGetEvent <group___cmp_event_mgr_itf_1ga0324db6096e154a121047e9ab71e210e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventGetEvent", (RTS_UINTPTR) :ref:`EventGetEvent <group___cmp_event_mgr_itf_1gaea9900de3e709640171fe17fe957b354>` , 0, 0)
+
+- #define :ref:`USE_EventGetClass <group___cmp_event_mgr_itf_1ga79c86019f70a79508a09fe4cb6eaf086>` :ref:`PFEVENTGETCLASS <group___cmp_event_mgr_itf_1ga77fc62e47dd431589779c0ba092b12fa>` pfEventGetClass;
+
+- #define :ref:`EXT_EventGetClass <group___cmp_event_mgr_itf_1ga608d78820e9accbd791021911578101b>` extern :ref:`PFEVENTGETCLASS <group___cmp_event_mgr_itf_1ga77fc62e47dd431589779c0ba092b12fa>` pfEventGetClass;
+
+- #define :ref:`GET_EventGetClass <group___cmp_event_mgr_itf_1gacbce7f46302db461b1cb59d0cfe20b03>` s_pfCMGetAPI2( "EventGetClass", (RTS_VOID_FCTPTR *)&pfEventGetClass, (fl), 0, 0)
+
+- #define :ref:`CAL_EventGetClass <group___cmp_event_mgr_itf_1ga345086441edc56926d88b2593f9711be>` pfEventGetClass
+
+- #define :ref:`CHK_EventGetClass <group___cmp_event_mgr_itf_1ga0e49ff074df66661a5ecfd0dd7305271>` (pfEventGetClass != NULL)
+
+- #define :ref:`EXP_EventGetClass <group___cmp_event_mgr_itf_1ga33fc2163897d032be2be4ae398f24539>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventGetClass", (RTS_UINTPTR) :ref:`EventGetClass <group___cmp_event_mgr_itf_1gadec882025916a1b54392ec1412eff915>` , 0, 0)
+
+- #define :ref:`USE_EventRegisterCallback <group___cmp_event_mgr_itf_1ga4af162594eb4c345a8ffc4fa08662f5a>` :ref:`PFEVENTREGISTERCALLBACK <group___cmp_event_mgr_itf_1ga8ce5177dfd33da954d80352b932a211d>` pfEventRegisterCallback;
+
+- #define :ref:`EXT_EventRegisterCallback <group___cmp_event_mgr_itf_1gafb1b66629d5c7d40ee3b7fbff73dc426>` extern :ref:`PFEVENTREGISTERCALLBACK <group___cmp_event_mgr_itf_1ga8ce5177dfd33da954d80352b932a211d>` pfEventRegisterCallback;
+
+- #define :ref:`GET_EventRegisterCallback <group___cmp_event_mgr_itf_1ga571228da1bfe09c806b6ff72a3d81b3c>` s_pfCMGetAPI2( "EventRegisterCallback", (RTS_VOID_FCTPTR *)&pfEventRegisterCallback, (fl), 0, 0)
+
+- #define :ref:`CAL_EventRegisterCallback <group___cmp_event_mgr_itf_1gacaecd7af5cec625ebeff69c9e8b21ac3>` pfEventRegisterCallback
+
+- #define :ref:`CHK_EventRegisterCallback <group___cmp_event_mgr_itf_1ga8181445cc94a42488f706a5226eeb50b>` (pfEventRegisterCallback != NULL)
+
+- #define :ref:`EXP_EventRegisterCallback <group___cmp_event_mgr_itf_1ga65e3fcf7ba9cfbb13891637ce0f16b81>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventRegisterCallback", (RTS_UINTPTR) :ref:`EventRegisterCallback <group___cmp_event_mgr_itf_1gacc1252cc24f4e6b1f57c0a9ad5316894>` , 0, 0)
+
+- #define :ref:`USE_EventRegisterCallback2 <group___cmp_event_mgr_itf_1ga3a84e1c6fa4d82bb51fea1fb57bc1912>` :ref:`PFEVENTREGISTERCALLBACK2 <group___cmp_event_mgr_itf_1ga20848a049db5eed65b80f4dc49e1ee55>` pfEventRegisterCallback2;
+
+- #define :ref:`EXT_EventRegisterCallback2 <group___cmp_event_mgr_itf_1ga0b116cd123d9229fc8eb18d606949a96>` extern :ref:`PFEVENTREGISTERCALLBACK2 <group___cmp_event_mgr_itf_1ga20848a049db5eed65b80f4dc49e1ee55>` pfEventRegisterCallback2;
+
+- #define :ref:`GET_EventRegisterCallback2 <group___cmp_event_mgr_itf_1gab65e800fd110ba0900ebc504dc4fd70d>` s_pfCMGetAPI2( "EventRegisterCallback2", (RTS_VOID_FCTPTR *)&pfEventRegisterCallback2, (fl), 0, 0)
+
+- #define :ref:`CAL_EventRegisterCallback2 <group___cmp_event_mgr_itf_1ga2954352ace5cb9c3703e0f1ccd7327a5>` pfEventRegisterCallback2
+
+- #define :ref:`CHK_EventRegisterCallback2 <group___cmp_event_mgr_itf_1ga7655acb4710414cb57f1adcc40e07b1a>` (pfEventRegisterCallback2 != NULL)
+
+- #define :ref:`EXP_EventRegisterCallback2 <group___cmp_event_mgr_itf_1ga2ae19e81d5868563b1dad4455257d129>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventRegisterCallback2", (RTS_UINTPTR) :ref:`EventRegisterCallback2 <group___cmp_event_mgr_itf_1gafe4769fad1c2c127880e186c33946dc6>` , 0, 0)
+
+- #define :ref:`USE_EventRegisterCallback3 <group___cmp_event_mgr_itf_1ga9750ad61129f26589eb71b8cbd0383d2>` :ref:`PFEVENTREGISTERCALLBACK3 <group___cmp_event_mgr_itf_1ga06442ea512e6503e6a9ca153d8b16d0a>` pfEventRegisterCallback3;
+
+- #define :ref:`EXT_EventRegisterCallback3 <group___cmp_event_mgr_itf_1ga4b75590a272bd24b74626404bce4ad8a>` extern :ref:`PFEVENTREGISTERCALLBACK3 <group___cmp_event_mgr_itf_1ga06442ea512e6503e6a9ca153d8b16d0a>` pfEventRegisterCallback3;
+
+- #define :ref:`GET_EventRegisterCallback3 <group___cmp_event_mgr_itf_1ga24949789189e01fd86e12a3d1170c774>` s_pfCMGetAPI2( "EventRegisterCallback3", (RTS_VOID_FCTPTR *)&pfEventRegisterCallback3, (fl), 0, 0)
+
+- #define :ref:`CAL_EventRegisterCallback3 <group___cmp_event_mgr_itf_1ga01ea24f15f9fc03db43b727fbd62c2d0>` pfEventRegisterCallback3
+
+- #define :ref:`CHK_EventRegisterCallback3 <group___cmp_event_mgr_itf_1ga87bb3d2e5caea03d18052bc022229c44>` (pfEventRegisterCallback3 != NULL)
+
+- #define :ref:`EXP_EventRegisterCallback3 <group___cmp_event_mgr_itf_1ga86e3a366ca113c8bb4e4281252945630>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventRegisterCallback3", (RTS_UINTPTR) :ref:`EventRegisterCallback3 <group___cmp_event_mgr_itf_1ga1f20adecf09c15d4812c9d726228895e>` , 0, 0)
+
+- #define :ref:`USE_EventUnregisterCallback <group___cmp_event_mgr_itf_1ga215792734068f152b69a7fd83bcfe57e>` :ref:`PFEVENTUNREGISTERCALLBACK <group___cmp_event_mgr_itf_1ga5deaec48f4e17d4c8300d00aab8a78eb>` pfEventUnregisterCallback;
+
+- #define :ref:`EXT_EventUnregisterCallback <group___cmp_event_mgr_itf_1gaf1b3d0241aee7c25215cb8ea52e0c77b>` extern :ref:`PFEVENTUNREGISTERCALLBACK <group___cmp_event_mgr_itf_1ga5deaec48f4e17d4c8300d00aab8a78eb>` pfEventUnregisterCallback;
+
+- #define :ref:`GET_EventUnregisterCallback <group___cmp_event_mgr_itf_1ga7b71a00c3823ce5b9da3f37e75743e63>` s_pfCMGetAPI2( "EventUnregisterCallback", (RTS_VOID_FCTPTR *)&pfEventUnregisterCallback, (fl), 0, 0)
+
+- #define :ref:`CAL_EventUnregisterCallback <group___cmp_event_mgr_itf_1ga8b1873670f71380fc3250df0d7353e00>` pfEventUnregisterCallback
+
+- #define :ref:`CHK_EventUnregisterCallback <group___cmp_event_mgr_itf_1ga2f28d94a6a708a62361dba6d10638de5>` (pfEventUnregisterCallback != NULL)
+
+- #define :ref:`EXP_EventUnregisterCallback <group___cmp_event_mgr_itf_1ga64c43c7c5080da19ea10ce34a0a2332c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventUnregisterCallback", (RTS_UINTPTR) :ref:`EventUnregisterCallback <group___cmp_event_mgr_itf_1ga0592f26b92632f763fb2ac344d80f0e2>` , 0, 0)
+
+- #define :ref:`USE_EventRegisterCallbackFunction <group___cmp_event_mgr_itf_1ga37038b693a87f6dda06f3c9c19f86173>` :ref:`PFEVENTREGISTERCALLBACKFUNCTION <group___cmp_event_mgr_itf_1ga8821ea43e8718c50091ad4547f52e0d7>` pfEventRegisterCallbackFunction;
+
+- #define :ref:`EXT_EventRegisterCallbackFunction <group___cmp_event_mgr_itf_1ga878ff96746def4a3ab5d2baac33a9112>` extern :ref:`PFEVENTREGISTERCALLBACKFUNCTION <group___cmp_event_mgr_itf_1ga8821ea43e8718c50091ad4547f52e0d7>` pfEventRegisterCallbackFunction;
+
+- #define :ref:`GET_EventRegisterCallbackFunction <group___cmp_event_mgr_itf_1ga4e3986c51d7f68d2486ab7a89600e80d>` s_pfCMGetAPI2( "EventRegisterCallbackFunction", (RTS_VOID_FCTPTR *)&pfEventRegisterCallbackFunction, (fl), 0, 0)
+
+- #define :ref:`CAL_EventRegisterCallbackFunction <group___cmp_event_mgr_itf_1gaffade197dfd56feaa21f32e68e4cfe67>` pfEventRegisterCallbackFunction
+
+- #define :ref:`CHK_EventRegisterCallbackFunction <group___cmp_event_mgr_itf_1ga020773c876b595f7e2f6cf2661242167>` (pfEventRegisterCallbackFunction != NULL)
+
+- #define :ref:`EXP_EventRegisterCallbackFunction <group___cmp_event_mgr_itf_1ga59f95b92bb01932d5662802f8a33be2b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventRegisterCallbackFunction", (RTS_UINTPTR) :ref:`EventRegisterCallbackFunction <group___cmp_event_mgr_itf_1ga840f61977305de6ac7b102b1dea6e97a>` , 0, 0)
+
+- #define :ref:`USE_EventRegisterCallbackFunction2 <group___cmp_event_mgr_itf_1ga1116915c0faad43f7b375c5174b9e16b>` :ref:`PFEVENTREGISTERCALLBACKFUNCTION2 <group___cmp_event_mgr_itf_1gaf0ae08f252f78c726d67cfca7ce59c11>` pfEventRegisterCallbackFunction2;
+
+- #define :ref:`EXT_EventRegisterCallbackFunction2 <group___cmp_event_mgr_itf_1ga5d2150678a9a50e69da65ecd8ad7dfe0>` extern :ref:`PFEVENTREGISTERCALLBACKFUNCTION2 <group___cmp_event_mgr_itf_1gaf0ae08f252f78c726d67cfca7ce59c11>` pfEventRegisterCallbackFunction2;
+
+- #define :ref:`GET_EventRegisterCallbackFunction2 <group___cmp_event_mgr_itf_1ga5d723dbe8d3828776ccd7898980ede50>` s_pfCMGetAPI2( "EventRegisterCallbackFunction2", (RTS_VOID_FCTPTR *)&pfEventRegisterCallbackFunction2, (fl), 0, 0)
+
+- #define :ref:`CAL_EventRegisterCallbackFunction2 <group___cmp_event_mgr_itf_1gab442fe6151b0af8d560e52e0fa7569e1>` pfEventRegisterCallbackFunction2
+
+- #define :ref:`CHK_EventRegisterCallbackFunction2 <group___cmp_event_mgr_itf_1ga4459d3142b4a29c9e259eef10b6c5e0e>` (pfEventRegisterCallbackFunction2 != NULL)
+
+- #define :ref:`EXP_EventRegisterCallbackFunction2 <group___cmp_event_mgr_itf_1gaff4172840282ce70bb2740b457a36109>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventRegisterCallbackFunction2", (RTS_UINTPTR) :ref:`EventRegisterCallbackFunction2 <group___cmp_event_mgr_itf_1ga5aa610df15014fd7a4379e0a1c39b3cb>` , 0, 0)
+
+- #define :ref:`USE_EventUnregisterCallbackFunction <group___cmp_event_mgr_itf_1ga23ae77368b04d2a557620bee8bda7010>` :ref:`PFEVENTUNREGISTERCALLBACKFUNCTION <group___cmp_event_mgr_itf_1gac4aa30b0a596e5a6b121980bf7ae8991>` pfEventUnregisterCallbackFunction;
+
+- #define :ref:`EXT_EventUnregisterCallbackFunction <group___cmp_event_mgr_itf_1gafd509605e97dd953e6b90c7a4303ef7f>` extern :ref:`PFEVENTUNREGISTERCALLBACKFUNCTION <group___cmp_event_mgr_itf_1gac4aa30b0a596e5a6b121980bf7ae8991>` pfEventUnregisterCallbackFunction;
+
+- #define :ref:`GET_EventUnregisterCallbackFunction <group___cmp_event_mgr_itf_1gaea4616330b2912824150d21cd65b5e42>` s_pfCMGetAPI2( "EventUnregisterCallbackFunction", (RTS_VOID_FCTPTR *)&pfEventUnregisterCallbackFunction, (fl), 0, 0)
+
+- #define :ref:`CAL_EventUnregisterCallbackFunction <group___cmp_event_mgr_itf_1ga4df51a3a22f1d9ef78e966846c7b4507>` pfEventUnregisterCallbackFunction
+
+- #define :ref:`CHK_EventUnregisterCallbackFunction <group___cmp_event_mgr_itf_1ga36fbd4fe00076cc24bcb344679f88e42>` (pfEventUnregisterCallbackFunction != NULL)
+
+- #define :ref:`EXP_EventUnregisterCallbackFunction <group___cmp_event_mgr_itf_1ga0e056ebed6cb295dfc546fc92ae375a1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventUnregisterCallbackFunction", (RTS_UINTPTR) :ref:`EventUnregisterCallbackFunction <group___cmp_event_mgr_itf_1ga4af436d4a7636f183f8aefd388ba00c6>` , 0, 0)
+
+- #define :ref:`USE_EventUnregisterCallbackFunction2 <group___cmp_event_mgr_itf_1ga1c3a5e8f153db7df2b9d5e5fd4531978>` :ref:`PFEVENTUNREGISTERCALLBACKFUNCTION2 <group___cmp_event_mgr_itf_1ga138ada79625cdf325e598e45783eead0>` pfEventUnregisterCallbackFunction2;
+
+- #define :ref:`EXT_EventUnregisterCallbackFunction2 <group___cmp_event_mgr_itf_1ga60588c428c478b8c274a9cd5ff9e7892>` extern :ref:`PFEVENTUNREGISTERCALLBACKFUNCTION2 <group___cmp_event_mgr_itf_1ga138ada79625cdf325e598e45783eead0>` pfEventUnregisterCallbackFunction2;
+
+- #define :ref:`GET_EventUnregisterCallbackFunction2 <group___cmp_event_mgr_itf_1ga509f3243c41a6afd289198be5bb1a0ef>` s_pfCMGetAPI2( "EventUnregisterCallbackFunction2", (RTS_VOID_FCTPTR *)&pfEventUnregisterCallbackFunction2, (fl), 0, 0)
+
+- #define :ref:`CAL_EventUnregisterCallbackFunction2 <group___cmp_event_mgr_itf_1ga583a27b4d6fa8d3196fbebe373633975>` pfEventUnregisterCallbackFunction2
+
+- #define :ref:`CHK_EventUnregisterCallbackFunction2 <group___cmp_event_mgr_itf_1gae36837fa8e352a8eafda2b22c66de1de>` (pfEventUnregisterCallbackFunction2 != NULL)
+
+- #define :ref:`EXP_EventUnregisterCallbackFunction2 <group___cmp_event_mgr_itf_1ga7b0feb5b8146c37a93acdc0047862386>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventUnregisterCallbackFunction2", (RTS_UINTPTR) :ref:`EventUnregisterCallbackFunction2 <group___cmp_event_mgr_itf_1ga93b438a1806e0a7751df719d951724bf>` , 0, 0)
+
+- #define :ref:`USE_EventRegisteredCallbacks <group___cmp_event_mgr_itf_1gac92665042565d0c8304f069892cd74a2>` :ref:`PFEVENTREGISTEREDCALLBACKS <group___cmp_event_mgr_itf_1gac571ce37e06432cb9ce5099db9eb4b5d>` pfEventRegisteredCallbacks;
+
+- #define :ref:`EXT_EventRegisteredCallbacks <group___cmp_event_mgr_itf_1gadb2cf819016e5412c2d01162533d0220>` extern :ref:`PFEVENTREGISTEREDCALLBACKS <group___cmp_event_mgr_itf_1gac571ce37e06432cb9ce5099db9eb4b5d>` pfEventRegisteredCallbacks;
+
+- #define :ref:`GET_EventRegisteredCallbacks <group___cmp_event_mgr_itf_1gab6fec4db47d1b7c693b2d477ea401641>` s_pfCMGetAPI2( "EventRegisteredCallbacks", (RTS_VOID_FCTPTR *)&pfEventRegisteredCallbacks, (fl), 0, 0)
+
+- #define :ref:`CAL_EventRegisteredCallbacks <group___cmp_event_mgr_itf_1ga9b092ee66e37d7368f86821b7e57ea07>` pfEventRegisteredCallbacks
+
+- #define :ref:`CHK_EventRegisteredCallbacks <group___cmp_event_mgr_itf_1gaa64fc973f3e56f566bf10608ca8ddf97>` (pfEventRegisteredCallbacks != NULL)
+
+- #define :ref:`EXP_EventRegisteredCallbacks <group___cmp_event_mgr_itf_1ga1675bff52764a736f4d21949c21742d8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventRegisteredCallbacks", (RTS_UINTPTR) :ref:`EventRegisteredCallbacks <group___cmp_event_mgr_itf_1gaefbe759edf99e7637b71c48ab5d54128>` , 0, 0)
+
+- #define :ref:`USE_EventRegisteredCallbacks2 <group___cmp_event_mgr_itf_1ga6fa825d119e3e999fe41567c7b175e5c>` :ref:`PFEVENTREGISTEREDCALLBACKS2 <group___cmp_event_mgr_itf_1gac64ff3a87b7f5438da687567e6d73e27>` pfEventRegisteredCallbacks2;
+
+- #define :ref:`EXT_EventRegisteredCallbacks2 <group___cmp_event_mgr_itf_1gaf509e7552ed2616895d0f6d469fb268a>` extern :ref:`PFEVENTREGISTEREDCALLBACKS2 <group___cmp_event_mgr_itf_1gac64ff3a87b7f5438da687567e6d73e27>` pfEventRegisteredCallbacks2;
+
+- #define :ref:`GET_EventRegisteredCallbacks2 <group___cmp_event_mgr_itf_1gab445bb1591e2d70d3d364156a5c70482>` s_pfCMGetAPI2( "EventRegisteredCallbacks2", (RTS_VOID_FCTPTR *)&pfEventRegisteredCallbacks2, (fl), 0, 0)
+
+- #define :ref:`CAL_EventRegisteredCallbacks2 <group___cmp_event_mgr_itf_1ga34542d46deed9978db227295568ec056>` pfEventRegisteredCallbacks2
+
+- #define :ref:`CHK_EventRegisteredCallbacks2 <group___cmp_event_mgr_itf_1ga0d2f933bbd5467134595270913caa731>` (pfEventRegisteredCallbacks2 != NULL)
+
+- #define :ref:`EXP_EventRegisteredCallbacks2 <group___cmp_event_mgr_itf_1ga75a762a60775fdb398df368ef2ded492>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventRegisteredCallbacks2", (RTS_UINTPTR) :ref:`EventRegisteredCallbacks2 <group___cmp_event_mgr_itf_1ga27c2e0a53d9fc0bd930dc10296facaaa>` , 0, 0)
+
+- #define :ref:`USE_EventPost <group___cmp_event_mgr_itf_1ga082062ed0c15e3d5fbef0c527c0c08a9>` :ref:`PFEVENTPOST <group___cmp_event_mgr_itf_1gaff06e7c2384436fd967cc3042898f0a4>` pfEventPost;
+
+- #define :ref:`EXT_EventPost <group___cmp_event_mgr_itf_1gacd078ba65230036af159bb9315d27f2e>` extern :ref:`PFEVENTPOST <group___cmp_event_mgr_itf_1gaff06e7c2384436fd967cc3042898f0a4>` pfEventPost;
+
+- #define :ref:`GET_EventPost <group___cmp_event_mgr_itf_1gae62783c0330705f4d586118b35a861c5>` s_pfCMGetAPI2( "EventPost", (RTS_VOID_FCTPTR *)&pfEventPost, (fl), 0, 0)
+
+- #define :ref:`CAL_EventPost <group___cmp_event_mgr_itf_1ga28e979df9e4bd48467c770cfdee3c8e8>` pfEventPost
+
+- #define :ref:`CHK_EventPost <group___cmp_event_mgr_itf_1gaf43cba8ee80b7742c8d9b4cd9bfec03a>` (pfEventPost != NULL)
+
+- #define :ref:`EXP_EventPost <group___cmp_event_mgr_itf_1gafb63165a06f22f1fa49ea8dfae0ac92a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventPost", (RTS_UINTPTR) :ref:`EventPost <group___cmp_event_mgr_itf_1gabf56cffdf81dfa63d7fc79b094b38be7>` , 0, 0)
+
+- #define :ref:`USE_EventPost2 <group___cmp_event_mgr_itf_1ga56e8a6c7b0ce69a8a2ebec730811e1db>` :ref:`PFEVENTPOST2 <group___cmp_event_mgr_itf_1gaa47bdde838ada972444695d9bd43c940>` pfEventPost2;
+
+- #define :ref:`EXT_EventPost2 <group___cmp_event_mgr_itf_1ga341c2d86f0e6b218135e255a9e5dc3db>` extern :ref:`PFEVENTPOST2 <group___cmp_event_mgr_itf_1gaa47bdde838ada972444695d9bd43c940>` pfEventPost2;
+
+- #define :ref:`GET_EventPost2 <group___cmp_event_mgr_itf_1gaac0113bc9c7ccd04206e24646529f622>` s_pfCMGetAPI2( "EventPost2", (RTS_VOID_FCTPTR *)&pfEventPost2, (fl), 0, 0)
+
+- #define :ref:`CAL_EventPost2 <group___cmp_event_mgr_itf_1ga58bc077637d1705459e89cba6a1d7772>` pfEventPost2
+
+- #define :ref:`CHK_EventPost2 <group___cmp_event_mgr_itf_1gaff6c4b110009cae35cb0f8d3f453114a>` (pfEventPost2 != NULL)
+
+- #define :ref:`EXP_EventPost2 <group___cmp_event_mgr_itf_1ga478d49a4849e173fd8fbfdf6bd6ce34c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventPost2", (RTS_UINTPTR) :ref:`EventPost2 <group___cmp_event_mgr_itf_1ga7700a8b680a0c48ac03feaf34fc86c04>` , 0, 0)
+
+- #define :ref:`USE_EventPostByEvent <group___cmp_event_mgr_itf_1ga541a5019306f822188ce6e09fdfc4ead>` :ref:`PFEVENTPOSTBYEVENT <group___cmp_event_mgr_itf_1gaeebf7eb845993075b09175e45ee7b49d>` pfEventPostByEvent;
+
+- #define :ref:`EXT_EventPostByEvent <group___cmp_event_mgr_itf_1ga6eba46393a1f24853a6b0f7e2b255097>` extern :ref:`PFEVENTPOSTBYEVENT <group___cmp_event_mgr_itf_1gaeebf7eb845993075b09175e45ee7b49d>` pfEventPostByEvent;
+
+- #define :ref:`GET_EventPostByEvent <group___cmp_event_mgr_itf_1gade188aa30040397820b978a71ef0f131>` s_pfCMGetAPI2( "EventPostByEvent", (RTS_VOID_FCTPTR *)&pfEventPostByEvent, (fl), 0, 0)
+
+- #define :ref:`CAL_EventPostByEvent <group___cmp_event_mgr_itf_1ga5b5033943060287640be5850ca72de24>` pfEventPostByEvent
+
+- #define :ref:`CHK_EventPostByEvent <group___cmp_event_mgr_itf_1ga82b6e4cb58f9e21758f43d4abed5bedb>` (pfEventPostByEvent != NULL)
+
+- #define :ref:`EXP_EventPostByEvent <group___cmp_event_mgr_itf_1ga4d67b60b2f0241a6a73a9e3f6cd2e292>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"EventPostByEvent", (RTS_UINTPTR) :ref:`EventPostByEvent <group___cmp_event_mgr_itf_1ga8eaff9ef246ceabc1bbcf1e365bfecdd>` , 0, 0)
+
+- #define :ref:`ITF_CmpEventMgr <group___cmp_event_mgr_itf_1ga0ef8932514d154a75f79ba0f2d7baf6f>`
+
+- #define :ref:`EXTITF_CmpEventMgr <group___cmp_event_mgr_itf_1ga301d7483fcdeb4269530c1ce7e6a921d>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagEventOptions <structtag_event_options>` :ref:`EventOptions <group___cmp_event_mgr_itf___eventoptions_1ga28e8a6e8821a62bc983dba997cea5bb7>`
+
+- typedef struct :ref:`tagicmpeventcallback_eventcallback_struct <structtagicmpeventcallback__eventcallback__struct>` :ref:`icmpeventcallback_eventcallback_struct <group___cmp_event_mgr_itf_1gacf0f656b76951176be0b20d7340a3631>`
+
+- typedef RTS_HANDLE(* :ref:`PFEVENTCREATE <group___cmp_event_mgr_itf_1ga139766512c6a48ecbb8841c679ef366c>`)(EVENTID EventId, CMPID CmpIdProvider, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFEVENTCREATE2 <group___cmp_event_mgr_itf_1ga17304b16568dfa9b331fc1187f38e1dd>`)(EVENTID EventId, CMPID CmpIdProvider, RTS_UI32 nCallbacksPossible, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFEVENTCREATE3 <group___cmp_event_mgr_itf_1gae5cdac43c0bbc5e23ff66821b6a53e23>`)(EVENTID EventId, CMPID CmpIdProvider, EventOptions *pEventOptions, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFEVENTDELETE <group___cmp_event_mgr_itf_1gaf4b0d17d989488874e095b2d10239b86>`)(RTS_HANDLE hEvent)
+
+- typedef RTS_RESULT(* :ref:`PFEVENTDELETEALL <group___cmp_event_mgr_itf_1gaac4cf7e3eeec86a118648f1605c54b1c>`)(void)
+
+- typedef RTS_HANDLE(* :ref:`PFEVENTOPEN <group___cmp_event_mgr_itf_1ga18611f9bd4b6cea6742df36a26a69986>`)(EVENTID EventId, CMPID CmpIdProvider, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFEVENTCLOSE <group___cmp_event_mgr_itf_1ga9cb406694de0ebb7791c283b155b442b>`)(RTS_HANDLE hEvent)
+
+- typedef unsigned short(* :ref:`PFEVENTGETEVENT <group___cmp_event_mgr_itf_1gad468b520f976908e8a47abe54735b9be>`)(EVENTID EventId)
+
+- typedef unsigned short(* :ref:`PFEVENTGETCLASS <group___cmp_event_mgr_itf_1ga77fc62e47dd431589779c0ba092b12fa>`)(EVENTID EventId)
+
+- typedef RTS_RESULT(* :ref:`PFEVENTREGISTERCALLBACK <group___cmp_event_mgr_itf_1ga8ce5177dfd33da954d80352b932a211d>`)(RTS_HANDLE hEvent, ICmpEventCallback *pICallback)
+
+- typedef RTS_RESULT(* :ref:`PFEVENTREGISTERCALLBACK2 <group___cmp_event_mgr_itf_1ga20848a049db5eed65b80f4dc49e1ee55>`)(RTS_HANDLE hEvent, ICmpEventCallback *pICallback, void *pUserParameter)
+
+- typedef RTS_RESULT(* :ref:`PFEVENTREGISTERCALLBACK3 <group___cmp_event_mgr_itf_1ga06442ea512e6503e6a9ca153d8b16d0a>`)(RTS_HANDLE hEvent, ICmpEventCallback *pICallback, int bIec, void *pUserParameter)
+
+- typedef RTS_RESULT(* :ref:`PFEVENTUNREGISTERCALLBACK <group___cmp_event_mgr_itf_1ga5deaec48f4e17d4c8300d00aab8a78eb>`)(RTS_HANDLE hEvent, ICmpEventCallback *pICallback)
+
+- typedef RTS_RESULT(* :ref:`PFEVENTREGISTERCALLBACKFUNCTION <group___cmp_event_mgr_itf_1ga8821ea43e8718c50091ad4547f52e0d7>`)(RTS_HANDLE hEvent, PFEVENTCALLBACKFUNCTION pfCallbackFunction, int bIec)
+
+- typedef RTS_RESULT(* :ref:`PFEVENTREGISTERCALLBACKFUNCTION2 <group___cmp_event_mgr_itf_1gaf0ae08f252f78c726d67cfca7ce59c11>`)(RTS_HANDLE hEvent, PFEVENTCALLBACKFUNCTION pfCallbackFunction, int bIec, void *pUserParameter)
+
+- typedef RTS_RESULT(* :ref:`PFEVENTUNREGISTERCALLBACKFUNCTION <group___cmp_event_mgr_itf_1gac4aa30b0a596e5a6b121980bf7ae8991>`)(RTS_HANDLE hEvent, PFEVENTCALLBACKFUNCTION pfCallbackFunction)
+
+- typedef RTS_RESULT(* :ref:`PFEVENTUNREGISTERCALLBACKFUNCTION2 <group___cmp_event_mgr_itf_1ga138ada79625cdf325e598e45783eead0>`)(RTS_HANDLE hEvent, PFEVENTCALLBACKFUNCTION pfCallbackFunction, void *pUserParameter)
+
+- typedef RTS_UI32(* :ref:`PFEVENTREGISTEREDCALLBACKS <group___cmp_event_mgr_itf_1gac571ce37e06432cb9ce5099db9eb4b5d>`)(RTS_HANDLE hEvent, RTS_RESULT *pResult)
+
+- typedef RTS_UI32(* :ref:`PFEVENTREGISTEREDCALLBACKS2 <group___cmp_event_mgr_itf_1gac64ff3a87b7f5438da687567e6d73e27>`)(RTS_HANDLE hEvent, RTS_BOOL bCheckEvent, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFEVENTPOST <group___cmp_event_mgr_itf_1gaff06e7c2384436fd967cc3042898f0a4>`)(RTS_HANDLE hEvent, EventParam *pEventParam)
+
+- typedef RTS_RESULT(* :ref:`PFEVENTPOST2 <group___cmp_event_mgr_itf_1gaa47bdde838ada972444695d9bd43c940>`)(RTS_HANDLE hEvent, unsigned short usParamId, unsigned short usVersion, void *pParameter)
+
+- typedef RTS_RESULT(* :ref:`PFEVENTPOSTBYEVENT <group___cmp_event_mgr_itf_1gaeebf7eb845993075b09175e45ee7b49d>`)(EVENTID EventId, CMPID CmpIdProvider, EventParam *pEventParam)
+
+- typedef :ref:`ICmpEventMgr_C <struct_i_cmp_event_mgr___c>` :ref:`ICmpEventMgr <group___cmp_event_mgr_itf_1gaddb27114577b319b983678219172c543>`
+
+Functions
+---------
+
+- RTS_HANDLE :ref:`EventCreate <group___cmp_event_mgr_itf_1ga6d63f00d5bce0b4125c266dd37bee048>` (:ref:`EVENTID <group___cmp_event_callback_itf_1ga01e77e79206096b36fae0f8b3bf05ed4>`  EventId, CMPID CmpIdProvider, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`EventCreate2 <group___cmp_event_mgr_itf_1ga5b5f843105b4c1b7997ffbe066fdc493>` (:ref:`EVENTID <group___cmp_event_callback_itf_1ga01e77e79206096b36fae0f8b3bf05ed4>`  EventId, CMPID CmpIdProvider, RTS_UI32 nCallbacksPossible, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`EventCreate3 <group___cmp_event_mgr_itf_1gad246cb6f243b196a3362cb265f3eadcb>` (:ref:`EVENTID <group___cmp_event_callback_itf_1ga01e77e79206096b36fae0f8b3bf05ed4>`  EventId, CMPID CmpIdProvider, :ref:`EventOptions <group___cmp_event_mgr_itf___eventoptions_1ga28e8a6e8821a62bc983dba997cea5bb7>` * pEventOptions, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`EventDelete <group___cmp_event_mgr_itf_1ga46db17c2283a873758be432ba1b3c705>` (RTS_HANDLE hEvent)
+
+- RTS_RESULT :ref:`EventDeleteAll <group___cmp_event_mgr_itf_1ga4c2fa227fd0de00e44f8bc3f3f4dcfe0>` (void)
+
+- RTS_HANDLE :ref:`EventOpen <group___cmp_event_mgr_itf_1ga03c581805da95e555049ae869ff346ef>` (:ref:`EVENTID <group___cmp_event_callback_itf_1ga01e77e79206096b36fae0f8b3bf05ed4>`  EventId, CMPID CmpIdProvider, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`EventClose <group___cmp_event_mgr_itf_1gab412d42bea35b57d05e6ec72c09b2248>` (RTS_HANDLE hEvent)
+
+- unsigned short :ref:`EventGetEvent <group___cmp_event_mgr_itf_1gaea9900de3e709640171fe17fe957b354>` (:ref:`EVENTID <group___cmp_event_callback_itf_1ga01e77e79206096b36fae0f8b3bf05ed4>`  EventId)
+
+- unsigned short :ref:`EventGetClass <group___cmp_event_mgr_itf_1gadec882025916a1b54392ec1412eff915>` (:ref:`EVENTID <group___cmp_event_callback_itf_1ga01e77e79206096b36fae0f8b3bf05ed4>`  EventId)
+
+- RTS_RESULT :ref:`EventRegisterCallback <group___cmp_event_mgr_itf_1gacc1252cc24f4e6b1f57c0a9ad5316894>` (RTS_HANDLE hEvent, :ref:`ICmpEventCallback <group___cmp_event_callback_itf_1gab62e8941dbce768886870ffcb7b40910>` * pICallback)
+
+- RTS_RESULT :ref:`EventRegisterCallback2 <group___cmp_event_mgr_itf_1gafe4769fad1c2c127880e186c33946dc6>` (RTS_HANDLE hEvent, :ref:`ICmpEventCallback <group___cmp_event_callback_itf_1gab62e8941dbce768886870ffcb7b40910>` * pICallback, void * pUserParameter)
+
+- RTS_RESULT :ref:`EventRegisterCallback3 <group___cmp_event_mgr_itf_1ga1f20adecf09c15d4812c9d726228895e>` (RTS_HANDLE hEvent, :ref:`ICmpEventCallback <group___cmp_event_callback_itf_1gab62e8941dbce768886870ffcb7b40910>` * pICallback, int bIec, void * pUserParameter)
+
+- RTS_RESULT :ref:`EventUnregisterCallback <group___cmp_event_mgr_itf_1ga0592f26b92632f763fb2ac344d80f0e2>` (RTS_HANDLE hEvent, :ref:`ICmpEventCallback <group___cmp_event_callback_itf_1gab62e8941dbce768886870ffcb7b40910>` * pICallback)
+
+- RTS_RESULT :ref:`EventRegisterCallbackFunction <group___cmp_event_mgr_itf_1ga840f61977305de6ac7b102b1dea6e97a>` (RTS_HANDLE hEvent, :ref:`PFEVENTCALLBACKFUNCTION <group___cmp_event_callback_itf_1ga0909f3063bc8707374393a0bd4cebf0d>`  pfCallbackFunction, int bIec)
+
+- RTS_RESULT :ref:`EventRegisterCallbackFunction2 <group___cmp_event_mgr_itf_1ga5aa610df15014fd7a4379e0a1c39b3cb>` (RTS_HANDLE hEvent, :ref:`PFEVENTCALLBACKFUNCTION <group___cmp_event_callback_itf_1ga0909f3063bc8707374393a0bd4cebf0d>`  pfCallbackFunction, int bIec, void * pUserParameter)
+
+- RTS_RESULT :ref:`EventUnregisterCallbackFunction <group___cmp_event_mgr_itf_1ga4af436d4a7636f183f8aefd388ba00c6>` (RTS_HANDLE hEvent, :ref:`PFEVENTCALLBACKFUNCTION <group___cmp_event_callback_itf_1ga0909f3063bc8707374393a0bd4cebf0d>`  pfCallbackFunction)
+
+- RTS_RESULT :ref:`EventUnregisterCallbackFunction2 <group___cmp_event_mgr_itf_1ga93b438a1806e0a7751df719d951724bf>` (RTS_HANDLE hEvent, :ref:`PFEVENTCALLBACKFUNCTION <group___cmp_event_callback_itf_1ga0909f3063bc8707374393a0bd4cebf0d>`  pfCallbackFunction, void * pUserParameter)
+
+- RTS_UI32 :ref:`EventRegisteredCallbacks <group___cmp_event_mgr_itf_1gaefbe759edf99e7637b71c48ab5d54128>` (RTS_HANDLE hEvent, RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`EventRegisteredCallbacks2 <group___cmp_event_mgr_itf_1ga27c2e0a53d9fc0bd930dc10296facaaa>` (RTS_HANDLE hEvent, RTS_BOOL bCheckEvent, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`EventPost <group___cmp_event_mgr_itf_1gabf56cffdf81dfa63d7fc79b094b38be7>` (RTS_HANDLE hEvent, :ref:`EventParam <struct_event_param>` * pEventParam)
+
+- RTS_RESULT :ref:`EventPost2 <group___cmp_event_mgr_itf_1ga7700a8b680a0c48ac03feaf34fc86c04>` (RTS_HANDLE hEvent, unsigned short usParamId, unsigned short usVersion, void * pParameter)
+
+- RTS_RESULT :ref:`EventPostByEvent <group___cmp_event_mgr_itf_1ga8eaff9ef246ceabc1bbcf1e365bfecdd>` (:ref:`EVENTID <group___cmp_event_callback_itf_1ga01e77e79206096b36fae0f8b3bf05ed4>`  EventId, CMPID CmpIdProvider, :ref:`EventParam <struct_event_param>` * pEventParam)
+
+Detailed Description
+--------------------
+
+Definition in file CmpEventMgrItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

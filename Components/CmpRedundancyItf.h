@@ -1,6 +1,8 @@
  /**
- * <interfacename>Redundancy</interfacename>
- * <description></description>
+ * <interfacename>CmpRedundancy</interfacename>
+ * <description>
+ *	Interface of the redundancy component.
+ * </description>
  *
  * <copyright></copyright>
  */
@@ -67,6 +69,15 @@
 #define TAG_RDCY_SUCCESS					0x2A
 #define TAG_RDCY_ERROR						0x2B
 #define TAG_RDCY_STATE						0x2C
+#define TAG_SETT_SYNCWAITTIME				0x2D
+
+/**
+ * <category>Static defines</category>
+ * <description> Size of list for file names to be transmitted to second controller. </description>
+ */
+#ifndef MAX_REDU_SYNC_FILES
+	#define MAX_REDU_SYNC_FILES 100
+#endif
 
 /**
  * <description>Redundancy settings names and default values</description>
@@ -101,6 +112,7 @@
 #define RDCYVALUE_INT_EVTTRGSTARTENDCALL_DEFAULT			TRUE
 
 #define RDCYKEY_INT_PROFIBUS								"Profibus"
+#define RDCYKEY_INT_PROFIBUSCIF50							"ProfibusCIF50"
 #define RDCYVALUE_INT_PROFIBUS_DEFAULT						FALSE
 
 #define RDCYKEY_INT_ETHERCAT								"Ethercat"
@@ -130,11 +142,43 @@
 #define RDCYKEY_INT_INPUTAREACRCCHECK						"InputAreaCrcCheck"
 #define RDCYVALUE_INT_INPUTAREACRCCHECK_DEFAULT				FALSE
 
+#define RDCYKEY_INT_AREASYNCTLGCRCCHECK						"AreaSyncTelegramCrcCheck"
+#define RDCYVALUE_INT_AREASYNCTLGCRCCHECK_DEFAULT				FALSE
+
 #define RDCYKEY_INT_CMPSRV_SERVICEWAITTIME					"Service.WaitTime"
 #define RDCYVALUE_INT_CMPSRV_SERVICEWAITTIME_DEFAULT		1000
 
 #define RDCYKEY_INT_PLCIDENT								"PlcIdent"
 #define RDCYVALUE_INT_PLCIDENT_DEFAULT						0
+
+#define RDCYKEY_INT_SYNCBEFORETASKCYCLE						"SyncBeforeTaskCycle"
+#define RDCYVALUE_INT_SYNCBEFORETASKCYCLE_DEFAULT			FALSE
+
+/**
+ * <category>Settings</category>
+ * <type>Int</type>
+ * <description> Set to 1 to enable data sync in every cycle.
+ *  (data sync is copying the values of global variables registered in redundancy configuration)
+ *  By default, data sync is done at startup of plc2 only. During operation, data sync is not performed.
+ *  Please note, dependant on the size of data and speed of communication, task cycle time can be increased. 
+ *  .
+ * </description>
+ */
+#define RDCYKEY_INT_DATASYNCALWAYS							"DataSyncAlways"
+#define RDCYVALUE_INT_DATASYNCALWAYS_DEFAULT				FALSE
+
+/**
+ * <category>Settings</category>
+ * <type>Int</type>
+ * <description> Set to 1 to enable check of boot application GUID. 
+ *  In case this setting is activated, boot application GUIDs of plc1 and plc are compared at startup of plc2.
+ *  If they are equal, projects are considered as equal, so application files are not transmitted to plc2. This reduces the time needed for synchronization.
+ *  Please not other files are not checked, so they are not transmitted even they are different.
+ *  In case this setting is not activated, all application and visu files are always transmitted to plc2 at startup.
+ * </description>
+ */
+#define RDCYKEY_INT_CHECKBOOTAPPGUID						"CheckBootApplicationGuid"
+#define RDCYVALUE_INT_CHECKBOOTAPPGUID_DEFAULT				FALSE
 
 #define EVTPARAMID_CmpRedundancy_vfInit		0x0001
 #define EVTVERSION_CmpRedundancy_vfInit		0x0001
@@ -209,6 +253,20 @@ typedef struct tagRedundancyState
 } RedundancyState;
 
 /**
+ * <description>SYNC_INFO</description>
+ */
+typedef struct tagSYNC_INFO
+{
+	RTS_IEC_UDINT ulCycle;		
+	RTS_IEC_UDINT ulWaitTimeActive;		/* in ms. Valid in active and standby state. */
+	RTS_IEC_UDINT ulWaitTimePassive;		/* In ms. Valid in standby state. Always 0 in active plc. */
+	RTS_IEC_UDINT ulWaitTimeMax;		/* In ms. Maximum wait time of active PLC. */
+	RTS_IEC_UDINT ulWaitTime;		/* In ms. Value configured in runtime CFG file. Other controller will be considered as failed if exceeded */
+	RTS_IEC_UDINT ulTaskInterval;		/* In ms. Modified if WaitTimeActive or WaitTimePassive to big, to compensate clock drift. */
+	RTS_IEC_TIME tSinceLastSync;		
+} SYNC_INFO;
+
+/**
  * <description>Enum: PLC_IDENT</description>
  */
 #define PLC_IDENT_PLC_ID_NONE    RTS_IEC_INT_C(0x0)	/* Not specified */
@@ -238,7 +296,7 @@ typedef enum
 	RCOM_SyncSend = 1,		/* Sync messages (UDP) */
 	RCOM_DataClient = 2,	/* Data messages (TCP) */
 	RCOM_DataServer = 3,	/* Data messages (TCP) */
-	RCOM_DataWork = 4,		/* Data messages (TCP), special mode to re-init server */
+	RCOM_DataWork = 4,		/* Data messages (TCP), special mode to re-initialize server */
 } REDUNDANCY_COMM_MODE;
 
 /**
@@ -588,6 +646,62 @@ typedef void (CDECL CDECL_EXT* PFGETREDUNDANCYSTATE_IEC) (getredundancystate_str
 
 
 /**
+ * <description>getsyncinformation</description>
+ */
+typedef struct taggetsyncinformation_struct
+{
+	SYNC_INFO *pSyncInfo;				/* VAR_INPUT */	
+	RTS_IEC_RESULT GetSyncInformation;	/* VAR_OUTPUT */	
+} getsyncinformation_struct;
+
+void CDECL CDECL_EXT getsyncinformation(getsyncinformation_struct *p);
+typedef void (CDECL CDECL_EXT* PFGETSYNCINFORMATION_IEC) (getsyncinformation_struct *p);
+#if defined(CMPREDUNDANCY_NOTIMPLEMENTED) || defined(GETSYNCINFORMATION_NOTIMPLEMENTED)
+	#define USE_getsyncinformation
+	#define EXT_getsyncinformation
+	#define GET_getsyncinformation(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_getsyncinformation(p0) 
+	#define CHK_getsyncinformation  FALSE
+	#define EXP_getsyncinformation  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_getsyncinformation
+	#define EXT_getsyncinformation
+	#define GET_getsyncinformation(fl)  CAL_CMGETAPI( "getsyncinformation" ) 
+	#define CAL_getsyncinformation  getsyncinformation
+	#define CHK_getsyncinformation  TRUE
+	#define EXP_getsyncinformation  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getsyncinformation", (RTS_UINTPTR)getsyncinformation, 1, 0x7312487E, 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(CMPREDUNDANCY_EXTERNAL)
+	#define USE_getsyncinformation
+	#define EXT_getsyncinformation
+	#define GET_getsyncinformation(fl)  CAL_CMGETAPI( "getsyncinformation" ) 
+	#define CAL_getsyncinformation  getsyncinformation
+	#define CHK_getsyncinformation  TRUE
+	#define EXP_getsyncinformation  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getsyncinformation", (RTS_UINTPTR)getsyncinformation, 1, 0x7312487E, 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpRedundancygetsyncinformation
+	#define EXT_CmpRedundancygetsyncinformation
+	#define GET_CmpRedundancygetsyncinformation  ERR_OK
+	#define CAL_CmpRedundancygetsyncinformation  getsyncinformation
+	#define CHK_CmpRedundancygetsyncinformation  TRUE
+	#define EXP_CmpRedundancygetsyncinformation  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getsyncinformation", (RTS_UINTPTR)getsyncinformation, 1, 0x7312487E, 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_getsyncinformation
+	#define EXT_getsyncinformation
+	#define GET_getsyncinformation(fl)  CAL_CMGETAPI( "getsyncinformation" ) 
+	#define CAL_getsyncinformation  getsyncinformation
+	#define CHK_getsyncinformation  TRUE
+	#define EXP_getsyncinformation  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getsyncinformation", (RTS_UINTPTR)getsyncinformation, 1, 0x7312487E, 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_getsyncinformation  PFGETSYNCINFORMATION_IEC pfgetsyncinformation;
+	#define EXT_getsyncinformation  extern PFGETSYNCINFORMATION_IEC pfgetsyncinformation;
+	#define GET_getsyncinformation(fl)  s_pfCMGetAPI2( "getsyncinformation", (RTS_VOID_FCTPTR *)&pfgetsyncinformation, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x7312487E, 0x03050F00)
+	#define CAL_getsyncinformation  pfgetsyncinformation
+	#define CHK_getsyncinformation  (pfgetsyncinformation != NULL)
+	#define EXP_getsyncinformation   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getsyncinformation", (RTS_UINTPTR)getsyncinformation, 1, 0x7312487E, 0x03050F00) 
+#endif
+
+
+/**
  * <description>switchtosimulation</description>
  */
 typedef struct tagswitchtosimulation_struct
@@ -647,7 +761,7 @@ typedef void (CDECL CDECL_EXT* PFSWITCHTOSIMULATION_IEC) (switchtosimulation_str
  */
 typedef struct tagswitchtostandalone_struct
 {
-	RTS_IEC_BOOL SwitchToStandalone;	/* VAR_OUTPUT */	
+	RTS_IEC_BOOL SwitchToStandalone;	/* VAR_OUTPUT */
 } switchtostandalone_struct;
 
 void CDECL CDECL_EXT switchtostandalone(switchtostandalone_struct *p);
@@ -915,6 +1029,118 @@ typedef void (CDECL CDECL_EXT* PFGETPLCIDENT_IEC) (getplcident_struct *p);
 	#define CHK_getplcident  (pfgetplcident != NULL)
 	#define EXP_getplcident   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getplcident", (RTS_UINTPTR)getplcident, 1, 0xE8999A90, 0x03050E00) 
 #endif
+
+
+/**
+ * Synchronze global data once. This includes the areas registered in redundancy.
+ *Can be called from active or standby controller. 
+ */
+typedef struct tagredundancysynchronizedata_struct
+{
+	RTS_IEC_BOOL RedundancySynchronizeData;	/* VAR_OUTPUT */	
+} redundancysynchronizedata_struct;
+
+void CDECL CDECL_EXT redundancysynchronizedata(redundancysynchronizedata_struct *p);
+typedef void (CDECL CDECL_EXT* PFREDUNDANCYSYNCHRONIZEDATA_IEC) (redundancysynchronizedata_struct *p);
+#if defined(CMPREDUNDANCY_NOTIMPLEMENTED) || defined(REDUNDANCYSYNCHRONIZEDATA_NOTIMPLEMENTED)
+	#define USE_redundancysynchronizedata
+	#define EXT_redundancysynchronizedata
+	#define GET_redundancysynchronizedata(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_redundancysynchronizedata(p0) 
+	#define CHK_redundancysynchronizedata  FALSE
+	#define EXP_redundancysynchronizedata  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_redundancysynchronizedata
+	#define EXT_redundancysynchronizedata
+	#define GET_redundancysynchronizedata(fl)  CAL_CMGETAPI( "redundancysynchronizedata" ) 
+	#define CAL_redundancysynchronizedata  redundancysynchronizedata
+	#define CHK_redundancysynchronizedata  TRUE
+	#define EXP_redundancysynchronizedata  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"redundancysynchronizedata", (RTS_UINTPTR)redundancysynchronizedata, 1, 0xBF757A6F, 0x03051000) 
+#elif defined(MIXED_LINK) && !defined(CMPREDUNDANCY_EXTERNAL)
+	#define USE_redundancysynchronizedata
+	#define EXT_redundancysynchronizedata
+	#define GET_redundancysynchronizedata(fl)  CAL_CMGETAPI( "redundancysynchronizedata" ) 
+	#define CAL_redundancysynchronizedata  redundancysynchronizedata
+	#define CHK_redundancysynchronizedata  TRUE
+	#define EXP_redundancysynchronizedata  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"redundancysynchronizedata", (RTS_UINTPTR)redundancysynchronizedata, 1, 0xBF757A6F, 0x03051000) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpRedundancyredundancysynchronizedata
+	#define EXT_CmpRedundancyredundancysynchronizedata
+	#define GET_CmpRedundancyredundancysynchronizedata  ERR_OK
+	#define CAL_CmpRedundancyredundancysynchronizedata  redundancysynchronizedata
+	#define CHK_CmpRedundancyredundancysynchronizedata  TRUE
+	#define EXP_CmpRedundancyredundancysynchronizedata  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"redundancysynchronizedata", (RTS_UINTPTR)redundancysynchronizedata, 1, 0xBF757A6F, 0x03051000) 
+#elif defined(CPLUSPLUS)
+	#define USE_redundancysynchronizedata
+	#define EXT_redundancysynchronizedata
+	#define GET_redundancysynchronizedata(fl)  CAL_CMGETAPI( "redundancysynchronizedata" ) 
+	#define CAL_redundancysynchronizedata  redundancysynchronizedata
+	#define CHK_redundancysynchronizedata  TRUE
+	#define EXP_redundancysynchronizedata  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"redundancysynchronizedata", (RTS_UINTPTR)redundancysynchronizedata, 1, 0xBF757A6F, 0x03051000) 
+#else /* DYNAMIC_LINK */
+	#define USE_redundancysynchronizedata  PFREDUNDANCYSYNCHRONIZEDATA_IEC pfredundancysynchronizedata;
+	#define EXT_redundancysynchronizedata  extern PFREDUNDANCYSYNCHRONIZEDATA_IEC pfredundancysynchronizedata;
+	#define GET_redundancysynchronizedata(fl)  s_pfCMGetAPI2( "redundancysynchronizedata", (RTS_VOID_FCTPTR *)&pfredundancysynchronizedata, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xBF757A6F, 0x03051000)
+	#define CAL_redundancysynchronizedata  pfredundancysynchronizedata
+	#define CHK_redundancysynchronizedata  (pfredundancysynchronizedata != NULL)
+	#define EXP_redundancysynchronizedata   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"redundancysynchronizedata", (RTS_UINTPTR)redundancysynchronizedata, 1, 0xBF757A6F, 0x03051000) 
+#endif
+
+
+/**
+ * In standalone state: Returns TRUE if other plc can be connected and answers to redundancy messages. There is a chance that a call to Syncrnonize() will succeed.
+ */
+typedef struct taggetconnectionstate_struct
+{
+	RTS_IEC_BOOL GetConnectionState;	/* VAR_OUTPUT */	
+} getconnectionstate_struct;
+
+void CDECL CDECL_EXT getconnectionstate(getconnectionstate_struct *p);
+typedef void (CDECL CDECL_EXT* PFGETCONNECTIONSTATE_IEC) (getconnectionstate_struct *p);
+#if defined(CMPREDUNDANCY_NOTIMPLEMENTED) || defined(GETCONNECTIONSTATE_NOTIMPLEMENTED)
+	#define USE_getconnectionstate
+	#define EXT_getconnectionstate
+	#define GET_getconnectionstate(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_getconnectionstate(p0) 
+	#define CHK_getconnectionstate  FALSE
+	#define EXP_getconnectionstate  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_getconnectionstate
+	#define EXT_getconnectionstate
+	#define GET_getconnectionstate(fl)  CAL_CMGETAPI( "getconnectionstate" ) 
+	#define CAL_getconnectionstate  getconnectionstate
+	#define CHK_getconnectionstate  TRUE
+	#define EXP_getconnectionstate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getconnectionstate", (RTS_UINTPTR)getconnectionstate, 1, 0x5802A20A, 0x03051000) 
+#elif defined(MIXED_LINK) && !defined(CMPREDUNDANCY_EXTERNAL)
+	#define USE_getconnectionstate
+	#define EXT_getconnectionstate
+	#define GET_getconnectionstate(fl)  CAL_CMGETAPI( "getconnectionstate" ) 
+	#define CAL_getconnectionstate  getconnectionstate
+	#define CHK_getconnectionstate  TRUE
+	#define EXP_getconnectionstate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getconnectionstate", (RTS_UINTPTR)getconnectionstate, 1, 0x5802A20A, 0x03051000) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpRedundancygetconnectionstate
+	#define EXT_CmpRedundancygetconnectionstate
+	#define GET_CmpRedundancygetconnectionstate  ERR_OK
+	#define CAL_CmpRedundancygetconnectionstate  getconnectionstate
+	#define CHK_CmpRedundancygetconnectionstate  TRUE
+	#define EXP_CmpRedundancygetconnectionstate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getconnectionstate", (RTS_UINTPTR)getconnectionstate, 1, 0x5802A20A, 0x03051000) 
+#elif defined(CPLUSPLUS)
+	#define USE_getconnectionstate
+	#define EXT_getconnectionstate
+	#define GET_getconnectionstate(fl)  CAL_CMGETAPI( "getconnectionstate" ) 
+	#define CAL_getconnectionstate  getconnectionstate
+	#define CHK_getconnectionstate  TRUE
+	#define EXP_getconnectionstate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getconnectionstate", (RTS_UINTPTR)getconnectionstate, 1, 0x5802A20A, 0x03051000) 
+#else /* DYNAMIC_LINK */
+	#define USE_getconnectionstate  PFGETCONNECTIONSTATE_IEC pfgetconnectionstate;
+	#define EXT_getconnectionstate  extern PFGETCONNECTIONSTATE_IEC pfgetconnectionstate;
+	#define GET_getconnectionstate(fl)  s_pfCMGetAPI2( "getconnectionstate", (RTS_VOID_FCTPTR *)&pfgetconnectionstate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x5802A20A, 0x03051000)
+	#define CAL_getconnectionstate  pfgetconnectionstate
+	#define CHK_getconnectionstate  (pfgetconnectionstate != NULL)
+	#define EXP_getconnectionstate   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getconnectionstate", (RTS_UINTPTR)getconnectionstate, 1, 0x5802A20A, 0x03051000) 
+#endif
+
 
 
 /**
@@ -1242,7 +1468,7 @@ typedef RTS_IEC_BOOL (CDECL * PFREDUNDANCYGETSTATE) (RedundancyState *pState);
 
 
 /**
- * <description>This function switches a plc in redundancy state RS_CYCLE_STANDBY to RS_SIMULATION</description>
+ * <description>This function switches a PLC in redundancy state RS_CYCLE_STANDBY to RS_SIMULATION</description>
  * <result>TRUE in case of success, otherwise FALSE</result>
  */
 RTS_IEC_BOOL CDECL RedundancySwitchToSimulation(void);
@@ -1295,7 +1521,7 @@ typedef RTS_IEC_BOOL (CDECL * PFREDUNDANCYSWITCHTOSIMULATION) (void);
 
 
 /**
- * <description>This function switches a plc in redundancy state RS_SIMULATION_START to RS_CYLCE_STANDALONE</description>
+ * <description>This function switches a PLC in redundancy state RS_SIMULATION_START to RS_CYLCE_STANDALONE</description>
  * <result>TRUE in case of success, otherwise FALSE</result>
  */
 RTS_IEC_BOOL CDECL RedundancySwitchToStandalone(void);
@@ -1348,7 +1574,7 @@ typedef RTS_IEC_BOOL (CDECL * PFREDUNDANCYSWITCHTOSTANDALONE) (void);
 
 
 /**
- * <description>This function switches a plc in redundancy state RS_CYCLE_ACTIVE to RS_CYCLE_STANDBY</description>
+ * <description>This function switches a PLC in redundancy state RS_CYCLE_ACTIVE to RS_CYCLE_STANDBY</description>
  * <result>TRUE in case of success, otherwise FALSE</result>
  */
 RTS_IEC_BOOL CDECL RedundancySwitchToStandby(void);
@@ -1401,7 +1627,7 @@ typedef RTS_IEC_BOOL (CDECL * PFREDUNDANCYSWITCHTOSTANDBY) (void);
 
 
 /**
- * <description>This function switches a plc in redundancy state RS_SIMULATION to RS_CYCLE_ACTIVE (if the second redundancy plc is running) or RS_CYCLE_STANDALONE (if the second redundancy plc is not running)</description>
+ * <description>This function switches a PLC in redundancy state RS_SIMULATION to RS_CYCLE_ACTIVE (if the second redundancy PLC is running) or RS_CYCLE_STANDALONE (if the second redundancy PLC is not running)</description>
  * <result>TRUE in case of success, otherwise FALSE</result>
  */
 RTS_IEC_BOOL CDECL RedundancySwitchToActive(void);
@@ -1454,7 +1680,7 @@ typedef RTS_IEC_BOOL (CDECL * PFREDUNDANCYSWITCHTOACTIVE) (void);
 
 
 /**
- * <description>This function synchronizes a plc in redundancy state RS_START, RS_BOOTUP_ERROR, RS_SYNCHRO_ERROR, RS_CYCLE_ERROR, RS_CYCLE_STANDALONE, RS_SIMULATION or RS_SIMULATION_START</description>
+ * <description>This function synchronizes a PLC in redundancy state RS_START, RS_BOOTUP_ERROR, RS_SYNCHRO_ERROR, RS_CYCLE_ERROR, RS_CYCLE_STANDALONE, RS_SIMULATION or RS_SIMULATION_START</description>
  * <result>TRUE in case of success, otherwise FALSE</result>
  */
 RTS_IEC_BOOL CDECL RedundancySynchronize(void);
@@ -1506,11 +1732,9 @@ typedef RTS_IEC_BOOL (CDECL * PFREDUNDANCYSYNCHRONIZE) (void);
 
 
 
-
 #ifdef __cplusplus
 }
 #endif
-
 
 
 

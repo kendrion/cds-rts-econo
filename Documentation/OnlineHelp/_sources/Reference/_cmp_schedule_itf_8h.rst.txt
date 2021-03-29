@@ -1,0 +1,1108 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_schedule_itf_8h:
+
+===============================
+CmpScheduleItf.h File Reference
+===============================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpIecTaskItf.h <_cmp_iec_task_itf_8h>`"
+| #include ":ref:`SysCpuMultiCoreItf.h <_sys_cpu_multi_core_itf_8h>`"
+
+Data Structures
+---------------
+
+- struct :ref:`EVTPARAM_CmpSchedule <struct_e_v_t_p_a_r_a_m___cmp_schedule>`
+
+- struct :ref:`EVTPARAM_CmpScheduleTick <struct_e_v_t_p_a_r_a_m___cmp_schedule_tick>`
+
+- struct :ref:`EVTPARAM_CmpScheduleTaskGapApp <struct_e_v_t_p_a_r_a_m___cmp_schedule_task_gap_app>`
+
+- struct :ref:`tagschedgetcurrenttask_struct <structtagschedgetcurrenttask__struct>`
+
+- struct :ref:`tagschedgetnumoftasks_struct <structtagschedgetnumoftasks__struct>`
+
+- struct :ref:`tagschedgetprocessorload_struct <structtagschedgetprocessorload__struct>`
+
+- struct :ref:`tagschedgettaskeventbyhandle_struct <structtagschedgettaskeventbyhandle__struct>`
+
+- struct :ref:`tagschedgettaskhandlebyindex_struct <structtagschedgettaskhandlebyindex__struct>`
+
+- struct :ref:`tagschedgettaskhandlebyname_struct <structtagschedgettaskhandlebyname__struct>`
+
+- struct :ref:`tagschedgettaskinterval_struct <structtagschedgettaskinterval__struct>`
+
+- struct :ref:`tagschedpostexternalevent_struct <structtagschedpostexternalevent__struct>`
+
+- struct :ref:`tagschedregisterexternalevent_struct <structtagschedregisterexternalevent__struct>`
+
+- struct :ref:`tagschedsettaskinterval_struct <structtagschedsettaskinterval__struct>`
+
+- struct :ref:`tagschedtaskresume_struct <structtagschedtaskresume__struct>`
+
+- struct :ref:`tagschedtasksuspend_struct <structtagschedtasksuspend__struct>`
+
+- struct :ref:`tagschedunregisterexternalevent_struct <structtagschedunregisterexternalevent__struct>`
+
+- struct :ref:`tagschedwaitbusy_struct <structtagschedwaitbusy__struct>`
+
+- struct :ref:`tagschedwaitsleep_struct <structtagschedwaitsleep__struct>`
+
+- struct :ref:`ICmpSchedule_C <struct_i_cmp_schedule___c>`
+
+Macros
+------
+
+- #define :ref:`CMD_INIT <group___cmp_schedule_itf_1ga2677fc43f8393bcf3bafc8bbface003f>` 0
+
+- #define :ref:`CMD_TICK <group___cmp_schedule_itf_1ga75193bceb35520e3ab3db84e6a00b551>` 1
+
+- #define :ref:`CMD_WAIT <group___cmp_schedule_itf_1ga6336e6fafd6732a81e1c58b669293657>` 2
+
+- #define :ref:`CMD_DEBUG_LOOP <group___cmp_schedule_itf_1ga9534cb3d0d2d2165ec30f0897d5b8149>` 3
+
+- #define :ref:`CMD_TIMESLICE_BEGIN <group___cmp_schedule_itf_1ga3db86340e4dd57d2d6f3af7c6a269b89>` 4
+
+- #define :ref:`CMD_TIMESLICE_END <group___cmp_schedule_itf_1ga095194108cab962d602bcd2be3920113>` 5
+
+- #define :ref:`CMPSCHEDULE_IECTASK_STACK_SIZE <group___cmp_schedule_itf___stacksize_1ga2fe2454ab31e186d63babd9b71d51cea>` 0
+
+- #define :ref:`SCHEDULEKEY_INT_SCHEDULER_PRIORITY <group___cmp_schedule_itf___settings_1gaf4cc66bef88dd946a2606ffe481dba28>` "SchedulerPriority"
+
+- #define :ref:`SCHEDULEKEY_INT_SCHEDULER_PRIORITY_DEFAULT <group___cmp_schedule_itf___settings_1ga38eca6e74a4fbccf6a9e193ab94ff5de>` 0
+
+- #define :ref:`SCHEDULEKEY_INT_SCHEDULER_INTERVAL_US <group___cmp_schedule_itf_1ga7d7ddbeeedf4d4c3b1e6a03c53929368>` "SchedulerInterval"
+
+- #define :ref:`SCHEDULEKEY_INT_SCHEDULER_INTERVAL_DEFAULT <group___cmp_schedule_itf_1gaae352bacfebf68e13196822a32d8ed63>` INT32_C(1000)
+
+- #define :ref:`SCHEDULEKEY_INT_PROCESSOR_LOAD_ENABLE <group___cmp_schedule_itf_1gaf305b2aae89ef50eaa23e5d084b9e588>` "ProcessorLoad.Enable"
+
+- #define :ref:`SCHEDULEVALUE_INT_PROCESSOR_LOAD_ENABLE_DEFAULT <group___cmp_schedule_itf_1gaa216bfdce71477486c37c4194adbf3cb>` 1
+
+- #define :ref:`SCHEDULEKEY_INT_PROCESSOR_LOAD_MAX <group___cmp_schedule_itf_1ga3a6ac6a60f0c406d2a28c37c88762bcc>` "ProcessorLoad.Maximum"
+
+- #define :ref:`SCHEDULEKEY_INT_PROCESSOR_LOAD_MAX_DEFAULT <group___cmp_schedule_itf_1ga389771404a384585ae3928869faa096f>` 0
+
+- #define :ref:`SCHEDULEKEY_INT_PROCESSOR_LOAD_INTERVAL <group___cmp_schedule_itf_1ga235f3b458d707e56ff60f915b5a9ab1d>` "ProcessorLoad.Interval"
+
+- #define :ref:`SCHEDULEKEY_INT_PROCESSOR_LOAD_INTERVAL_DEFAULT <group___cmp_schedule_itf_1ga621266a8276ba4feccde24bb8f17bf66>` INT32_C(1000)
+
+- #define :ref:`SCHEDULEKEY_STRING_TIMESLICING_MODE <group___cmp_schedule_itf_1ga851f471f8d35cda92ff9caaa77fee1ed>` "Timeslicing.Mode"
+
+- #define :ref:`SCHEDULEVALUE_STRING_TIMESLICING_MODE_NONE <group___cmp_schedule_itf_1gac1641ad8036281c9f097e8cb62ca8b67>` "None"
+
+- #define :ref:`SCHEDULEVALUE_STRING_TIMESLICING_MODE_INTERNAL <group___cmp_schedule_itf_1ga7d4395d7d1a1ffe5ef0e71042acecd2b>` "Internal"
+
+- #define :ref:`SCHEDULEVALUE_STRING_TIMESLICING_MODE_EXTERNAL <group___cmp_schedule_itf_1ga3104770b51a6c0d376c059a947811c2b>` "External"
+
+- #define :ref:`SCHEDULEVALUE_STRING_TIMESLICING_MODE_DEFAULT <group___cmp_schedule_itf_1ga79ddc37ff7f59b1f485c3344da098333>` :ref:`SCHEDULEVALUE_STRING_TIMESLICING_MODE_NONE <group___cmp_schedule_itf_1gac1641ad8036281c9f097e8cb62ca8b67>`
+
+- #define :ref:`SCHEDULEKEY_INT_TIMESLICING_PLCSLICE_PERCENT <group___cmp_schedule_itf_1ga5c894d81a2a849dbd9ba4c73296eafae>` "Timeslicing.PlcSlicePercent"
+
+- #define :ref:`SCHEDULEKEY_INT_TIMESLICING_PLCSLICE_PERCENT_DEFAULT <group___cmp_schedule_itf_1ga9967a4ff704ea7d7e237b5a65e38cbcd>` 0
+
+- #define :ref:`SCHEDULEKEY_INT_TIMESLICING_PLCSLICE_US <group___cmp_schedule_itf_1gad5ec974321fc9c8d8a1561ab5cb53ead>` "Timeslicing.PlcSliceUs"
+
+- #define :ref:`SCHEDULEKEY_INT_TIMESLICING_START_ON_PROCESSORLOAD <group___cmp_schedule_itf_1ga8c968efed440b6e2f29a45dc9f25bb0f>` "Timeslicing.StartOnProcessorLoad"
+
+- #define :ref:`SCHEDULETIMERKEY_USE_WATCHDOG_TIMER <group___cmp_schedule_itf_1gad0bd330cd8fe13f5fa893bdd6c372e6b>` "UseWatchdogTimer"
+
+- #define :ref:`SCHEDULETIMERVALUE_USE_WATCHDOG_TIMER_DEFAULT <group___cmp_schedule_itf_1ga309f1aaddbd67d56ca7c1a1f7697d1e0>` 1
+
+- #define :ref:`SCHEDULEKEY_INT_ENABLE_LOGGER <group___cmp_schedule_itf_1gae064d8b75e8f27260c09c86de0af5035>` "EnableLogger"
+
+- #define :ref:`SCHEDULEKEY_INT_FREEWHEELING_CYCLETIME_US <group___cmp_schedule_itf_1ga3298d253eb05aeee7c0ea0c756a89d35>` "Task.Freewheeling.Cycletime"
+
+- #define :ref:`SCHEDULEKEY_INT_FREEWHEELING_CYCLETIME_DEFAULT <group___cmp_schedule_itf_1ga8b1659b133a0adfc9e87a04a16b8824d>` INT32_C(-1)
+
+- #define :ref:`SCHEDULEKEY_DONT_USE_MICROSECOND_TIMING <group___cmp_schedule_itf_1gaf7e5f5cf31445208ddb2e4c9e3abc797>` "DontUseMicrosecondTiming"
+
+- #define :ref:`SCHEDULEVALUE_DONT_USE_MICROSECOND_TIMING_DEFAULT <group___cmp_schedule_itf_1gabc12c1a5bd8a33f81c7352be8dea8a2c>` 0
+
+- #define :ref:`SCHEDULEKEY_STRING_SCHEDULING_MODE <group___cmp_schedule_itf_1ga213614f35353d15b1b904c491124518d>` "Scheduling.Mode"
+
+- #define :ref:`SCHEDULEVALUE_STRING_SCHEDULING_MODE_MICROSECOND <group___cmp_schedule_itf_1ga5165cba0a7eceb5d78487421cc15306b>` "MicroSecond"
+
+- #define :ref:`SCHEDULEVALUE_STRING_SCHEDULING_MODE_TICK <group___cmp_schedule_itf_1ga7b8dfc69398b8f672cbe36ad80e3af99>` "Tick"
+
+- #define :ref:`SCHEDULEVALUE_STRING_SCHEDULING_MODE_OS_SCHEDULE <group___cmp_schedule_itf_1gad561232efce551d4da512d7f30c41901>` "OSScheduler"
+
+- #define :ref:`SCHEDULEVALUE_STRING_SCHEDULING_MODE_DEFAULT <group___cmp_schedule_itf_1gaa376aefac478d4ec2937ae7eb5506e38>` :ref:`SCHEDULEVALUE_STRING_SCHEDULING_MODE_MICROSECOND <group___cmp_schedule_itf_1ga5165cba0a7eceb5d78487421cc15306b>`
+
+- #define :ref:`SCHEDULEKEY_STRING_SCHEDULING_TASKSUPERVISOR <group___cmp_schedule_itf_1gaa15cf54b5480e6734cd515ae247d2207>` "Scheduling.TaskSupervisor"
+
+- #define :ref:`SCHEDULEVALUE_STRING_SCHEDULING_SUPERVISOR_SCHEDULETICK <group___cmp_schedule_itf_1ga917efa45a1b7f98bd3dbbe17038c9ae3>` "ScheduleTick"
+
+- #define :ref:`SCHEDULEVALUE_STRING_SCHEDULING_SUPERVISOR_WATCHDOGTIMER <group___cmp_schedule_itf_1ga70534ca0f692a1b91fb38805956e096d>` "WatchdogTimer"
+
+- #define :ref:`SCHEDULEVALUE_STRING_SCHEDULING_SUPERVISOR_SCHEDULETICK_TASK <group___cmp_schedule_itf_1ga3b406da6dd35a6c5b04a4e11095669b1>` "ScheduleTickTask"
+
+- #define :ref:`SCHEDULEVALUE_STRING_SCHEDULING_SUPERVISOR_DEFAULT <group___cmp_schedule_itf_1gaa3b98cfdeb74da9bce6f548641c6d1a5>` :ref:`SCHEDULEVALUE_STRING_SCHEDULING_SUPERVISOR_SCHEDULETICK <group___cmp_schedule_itf_1ga917efa45a1b7f98bd3dbbe17038c9ae3>`
+
+- #define :ref:`SCHEDULEKEY_DISABLE_OMITTED_CYCLE_WATCHDOG <group___cmp_schedule_itf_1ga441a57e03b15bc909bdbba3f980b275b>` "DisableOmittedCycleWatchdog"
+
+- #define :ref:`SCHEDULEKEY_DISABLE_OMITTED_CYCLE_WATCHDOG_DEFAULT <group___cmp_schedule_itf_1gaf9ac94174612b06c195cc12dccb8ecda>` 0
+
+- #define :ref:`SCHEDULEKEY_INT_OMITTED_CYCLE_WATCHDOG_OC <group___cmp_schedule_itf_1gad4f55fb7b6a1be789abe3fdaee5ffc8c>` "OmittedCycleWatchdog.OnlineChangeUs"
+
+- #define :ref:`SCHEDULEVALUE_INT_OMITTED_CYCLE_WATCHDOG_OC_DEFAULT <group___cmp_schedule_itf_1ga0173f03b34930c520029793d84eda622>` 0
+
+- #define :ref:`SCHEDULEKEY_INT_SUPERVISOR_TIMEOUT_MULTIPLIER <group___cmp_schedule_itf_1ga86431032a9f9e8fbf607db013581dbc4>` "SupervisorTimeoutMultiplier"
+
+- #define :ref:`SCHEDULEVALUE_INT_SUPERVISOR_TIMEOUT_MULTIPLIER_DEFAULT <group___cmp_schedule_itf_1ga600bdf246f07c0b6cc488a908f01d3fb>` INT32_C(2)
+
+- #define :ref:`RTS_OPID_SchedulerTick <group___cmp_schedule_itf___operation_i_d_1ga14e9788d3745b1cef644be844e4ee370>` 1
+
+- #define :ref:`RTS_OPID_SchedulerTick_Description <group___cmp_schedule_itf___operation_i_d_1ga0f9568b0f9186c8ff8f260c106f7275c>` "Scheduler Tick"
+
+- #define :ref:`RTS_OPID_WatchdogTimer <group___cmp_schedule_itf___operation_i_d_1gac8e2bc07e75014c160641d6d742c01dd>` 2
+
+- #define :ref:`RTS_OPID_WatchdogTimer_Description <group___cmp_schedule_itf___operation_i_d_1gab9402b7a7f89e27ae4947398cf42f17f>` "Watchdog Timer"
+
+- #define :ref:`SCHED_DEBUG_LOOP_CYCLE_TIME <group___cmp_schedule_itf___staticdefines_1ga5c35d45d43df43e59b201d1544c1b3ad>` 100
+
+- #define :ref:`CMPSCHEDULETIMER_WATCHDOG_PRIORITY <group___cmp_schedule_itf___staticdefines_1gaff72b65f54434bf2a29ca5f66f3c1e09>` 0
+
+- #define :ref:`CMPSCHEDULETIMER_WATCHDOG_INTERVAL <group___cmp_schedule_itf___staticdefines_1ga12cc72e0c8a312dff9f6f7b287e141d8>` 1000000 /* 1 ms */
+
+- #define :ref:`CMPSCHEDULE_SEARCH_NOP_AFTER_EXTERNAL_CALL <group___cmp_schedule_itf___staticdefines_1gab9bd8587765e9f5339953dc5fc3f7393>` 21
+
+- #define :ref:`SCHEDULE_FEATURE_RESET_ON_BREAKPOINT <group___cmp_schedule_itf___features_1ga7a0d5d8338e3a39331ca54c9f49744b5>` 0x00000001
+
+- #define :ref:`SCHEDULE_FEATURE_INTERNAL_TIMESLICING <group___cmp_schedule_itf___features_1gacb351ef861526e87872677a1b7ae96a2>` 0x00000002
+
+- #define :ref:`SCHEDULE_FEATURE_EXTERNAL_TIMESLICING <group___cmp_schedule_itf___features_1ga237354c9d1c862b2724a2176363eaa4f>` 0x00000003
+
+- #define :ref:`SCHEDULE_FEATURE_PROCESSOR_LOAD_CHECK <group___cmp_schedule_itf___features_1ga631d7e89c95d817327dcba5508cbb2eb>` 0x00000004
+
+- #define :ref:`EVTPARAMID_CmpSchedule <group___cmp_schedule_itf___eventparameter_1ga6464e477ea25c4b6e803e49ca9a208d8>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpSchedule <group___cmp_schedule_itf___eventparameter_1ga559d54ad96c7858e1cd830a520561a67>` 0x0001
+
+- #define :ref:`EVT_TaskCreateDone <group___cmp_schedule_itf___events_1ga42d4a39bfaa20fb7719a0084ae29c0d9>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`EVT_PrepareTaskDelete <group___cmp_schedule_itf___events_1gad44fc0229dab6e5f1757565e83700e9c>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+
+- #define :ref:`EVT_ExternalEventTaskCreateDone <group___cmp_schedule_itf___events_1ga6ed9346a5d281e19022a004083eb538c>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 3)
+
+- #define :ref:`EVT_PrepareExternalEventTaskDelete <group___cmp_schedule_itf___events_1gad895b79014f58c6c051fc6f6277e614a>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 4)
+
+- #define :ref:`EVTPARAMID_CmpScheduleTick <group___cmp_schedule_itf___eventparameter_1gac7c6194c91306fc5f46a02230b42839f>` 0x0002
+
+- #define :ref:`EVTVERSION_CmpScheduleTick <group___cmp_schedule_itf___eventparameter_1gabeea13e5e13320f6b0495294105749a8>` 0x0002
+
+- #define :ref:`EVT_ScheduleTick <group___cmp_schedule_itf___events_1gaaf2e66110da2bab5546340ca3461b75d>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 5)
+
+- #define :ref:`EVT_ScheduleTaskGap <group___cmp_schedule_itf___events_1gaa62d05bd705c653ddfa8fd54a3253045>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 6)
+
+- #define :ref:`EVTPARAMID_CmpScheduleTaskGapApp <group___cmp_schedule_itf___eventparameter_1ga7a1482b2641aaaf6c717028d3d84164c>` 0x0003
+
+- #define :ref:`EVTVERSION_CmpScheduleTaskGapApp <group___cmp_schedule_itf___eventparameter_1ga005d5f56573ce4ab65b9e626c8e2567f>` 0x0001
+
+- #define :ref:`EVT_ScheduleTaskGapApp <group___cmp_schedule_itf___events_1ga9c10fcbc8376b51847a5e821964611c5>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 7)
+
+- #define :ref:`USE_schedgetcurrenttask <_cmp_schedule_itf_8h_1aee1ca428870350b9730841feaf70fff2>` :ref:`PFSCHEDGETCURRENTTASK_IEC <_cmp_schedule_itf_8h_1add41db88b4f40a4356568a31ad58d017>` pfschedgetcurrenttask;
+
+- #define :ref:`EXT_schedgetcurrenttask <_cmp_schedule_itf_8h_1a0e3d74f5af5557f0172f2227155f1331>` extern :ref:`PFSCHEDGETCURRENTTASK_IEC <_cmp_schedule_itf_8h_1add41db88b4f40a4356568a31ad58d017>` pfschedgetcurrenttask;
+
+- #define :ref:`GET_schedgetcurrenttask <_cmp_schedule_itf_8h_1a3685dd6e502ae3f673f89fd7be5d7f57>` s_pfCMGetAPI2( "schedgetcurrenttask", (RTS_VOID_FCTPTR *)&pfschedgetcurrenttask, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x4896EDD1, 0x03050900)
+
+- #define :ref:`CAL_schedgetcurrenttask <_cmp_schedule_itf_8h_1a7df27bd69fe554c60d51cd928d24c8cd>` pfschedgetcurrenttask
+
+- #define :ref:`CHK_schedgetcurrenttask <_cmp_schedule_itf_8h_1ab1a05dcc706dd9f8c5f8f85ed00efd2e>` (pfschedgetcurrenttask != NULL)
+
+- #define :ref:`EXP_schedgetcurrenttask <_cmp_schedule_itf_8h_1a6b1075a5687e6a5e6829abe5a0252904>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"schedgetcurrenttask", (RTS_UINTPTR) :ref:`schedgetcurrenttask <_cmp_schedule_itf_8h_1a3e8e03b030af8785ac7124f017a0fd82>` , 1, 0x4896EDD1, 0x03050900)
+
+- #define :ref:`USE_schedgetnumoftasks <_cmp_schedule_itf_8h_1a18718010cbed0a7c6d763c235bb8fe5e>` :ref:`PFSCHEDGETNUMOFTASKS_IEC <_cmp_schedule_itf_8h_1a21936266adcb5bf3dd6deee608b58918>` pfschedgetnumoftasks;
+
+- #define :ref:`EXT_schedgetnumoftasks <_cmp_schedule_itf_8h_1ac304c414aac6ff4c5cfc716e12022f57>` extern :ref:`PFSCHEDGETNUMOFTASKS_IEC <_cmp_schedule_itf_8h_1a21936266adcb5bf3dd6deee608b58918>` pfschedgetnumoftasks;
+
+- #define :ref:`GET_schedgetnumoftasks <_cmp_schedule_itf_8h_1af5d545b4b2e177a8f218281dc9204449>` s_pfCMGetAPI2( "schedgetnumoftasks", (RTS_VOID_FCTPTR *)&pfschedgetnumoftasks, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x8D47FCA0, 0x03050900)
+
+- #define :ref:`CAL_schedgetnumoftasks <_cmp_schedule_itf_8h_1a678bc6bd4f20bd3832cc170dfe7d889c>` pfschedgetnumoftasks
+
+- #define :ref:`CHK_schedgetnumoftasks <_cmp_schedule_itf_8h_1ac0c26a926f8cfe680914eebfd901750d>` (pfschedgetnumoftasks != NULL)
+
+- #define :ref:`EXP_schedgetnumoftasks <_cmp_schedule_itf_8h_1ac2586a96ba29302b3bfa05f7b0f152e4>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"schedgetnumoftasks", (RTS_UINTPTR) :ref:`schedgetnumoftasks <_cmp_schedule_itf_8h_1a1595c5d81bf291e8366e818a6720fbe4>` , 1, 0x8D47FCA0, 0x03050900)
+
+- #define :ref:`USE_schedgetprocessorload <_cmp_schedule_itf_8h_1ad22535a8dabf40d2e67ad74907d4ee2b>` :ref:`PFSCHEDGETPROCESSORLOAD_IEC <_cmp_schedule_itf_8h_1aa2789fed2b44c93d602b98075892cd60>` pfschedgetprocessorload;
+
+- #define :ref:`EXT_schedgetprocessorload <_cmp_schedule_itf_8h_1ae81c7105db2316bc34c0c15b1340061c>` extern :ref:`PFSCHEDGETPROCESSORLOAD_IEC <_cmp_schedule_itf_8h_1aa2789fed2b44c93d602b98075892cd60>` pfschedgetprocessorload;
+
+- #define :ref:`GET_schedgetprocessorload <_cmp_schedule_itf_8h_1ae7fcf6c2bb18d48e62938bc016040915>` s_pfCMGetAPI2( "schedgetprocessorload", (RTS_VOID_FCTPTR *)&pfschedgetprocessorload, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xD458FC16, 0x03050900)
+
+- #define :ref:`CAL_schedgetprocessorload <_cmp_schedule_itf_8h_1a56e99855a453959c4fda05bc7a4a7127>` pfschedgetprocessorload
+
+- #define :ref:`CHK_schedgetprocessorload <_cmp_schedule_itf_8h_1a9db7fc82fa15431344d9147131424966>` (pfschedgetprocessorload != NULL)
+
+- #define :ref:`EXP_schedgetprocessorload <_cmp_schedule_itf_8h_1aed9a5095a2f12c18afc5797e75e3c466>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"schedgetprocessorload", (RTS_UINTPTR) :ref:`schedgetprocessorload <_cmp_schedule_itf_8h_1ae67b6d39ddbafe4ba0991d9574ab0beb>` , 1, 0xD458FC16, 0x03050900)
+
+- #define :ref:`USE_schedgettaskeventbyhandle <_cmp_schedule_itf_8h_1a024ad10ff1e9ceb127197144349c447e>` :ref:`PFSCHEDGETTASKEVENTBYHANDLE_IEC <_cmp_schedule_itf_8h_1a6d68bf7d5e4c02a67994df93bcb414dd>` pfschedgettaskeventbyhandle;
+
+- #define :ref:`EXT_schedgettaskeventbyhandle <_cmp_schedule_itf_8h_1a306ace8ba18bf03ba83a23102baaa8e0>` extern :ref:`PFSCHEDGETTASKEVENTBYHANDLE_IEC <_cmp_schedule_itf_8h_1a6d68bf7d5e4c02a67994df93bcb414dd>` pfschedgettaskeventbyhandle;
+
+- #define :ref:`GET_schedgettaskeventbyhandle <_cmp_schedule_itf_8h_1afa36a6f15a51c98409665fc29d4e6b02>` s_pfCMGetAPI2( "schedgettaskeventbyhandle", (RTS_VOID_FCTPTR *)&pfschedgettaskeventbyhandle, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xCF74EFE9, 0x03050900)
+
+- #define :ref:`CAL_schedgettaskeventbyhandle <_cmp_schedule_itf_8h_1ab60c98398dd7e9ef9ea65f946794634a>` pfschedgettaskeventbyhandle
+
+- #define :ref:`CHK_schedgettaskeventbyhandle <_cmp_schedule_itf_8h_1a4d47bf029eae779135757494d3a0e010>` (pfschedgettaskeventbyhandle != NULL)
+
+- #define :ref:`EXP_schedgettaskeventbyhandle <_cmp_schedule_itf_8h_1a343710861a405d7a3149a965bd4ae023>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"schedgettaskeventbyhandle", (RTS_UINTPTR) :ref:`schedgettaskeventbyhandle <_cmp_schedule_itf_8h_1ad3a1b0f5032a10535ab7ed11fd09fb6a>` , 1, 0xCF74EFE9, 0x03050900)
+
+- #define :ref:`USE_schedgettaskhandlebyindex <_cmp_schedule_itf_8h_1ab749feb9dd8fa69fdcdda8cea8df359d>` :ref:`PFSCHEDGETTASKHANDLEBYINDEX_IEC <_cmp_schedule_itf_8h_1aec9de2f5d1f51599de8df84a111b0bc2>` pfschedgettaskhandlebyindex;
+
+- #define :ref:`EXT_schedgettaskhandlebyindex <_cmp_schedule_itf_8h_1a315c81f631d8a998580a5551736c30ba>` extern :ref:`PFSCHEDGETTASKHANDLEBYINDEX_IEC <_cmp_schedule_itf_8h_1aec9de2f5d1f51599de8df84a111b0bc2>` pfschedgettaskhandlebyindex;
+
+- #define :ref:`GET_schedgettaskhandlebyindex <_cmp_schedule_itf_8h_1a473e0a3a27e15731e4ebc1d8ee9b0d4b>` s_pfCMGetAPI2( "schedgettaskhandlebyindex", (RTS_VOID_FCTPTR *)&pfschedgettaskhandlebyindex, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xA90D39FA, 0x03050900)
+
+- #define :ref:`CAL_schedgettaskhandlebyindex <_cmp_schedule_itf_8h_1a4884088d66ebf8bac551ee1ee604f341>` pfschedgettaskhandlebyindex
+
+- #define :ref:`CHK_schedgettaskhandlebyindex <_cmp_schedule_itf_8h_1a9d3972f9062b6c36b11153c010c54c4d>` (pfschedgettaskhandlebyindex != NULL)
+
+- #define :ref:`EXP_schedgettaskhandlebyindex <_cmp_schedule_itf_8h_1a67e2d5270e9834aab15cc53a40c0b3c3>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"schedgettaskhandlebyindex", (RTS_UINTPTR) :ref:`schedgettaskhandlebyindex <_cmp_schedule_itf_8h_1a19eeb4f19b5570e5cccb08a51d47e219>` , 1, 0xA90D39FA, 0x03050900)
+
+- #define :ref:`USE_schedgettaskhandlebyname <_cmp_schedule_itf_8h_1ab47e2e7cb885215e0fb2aba1fa4773e8>` :ref:`PFSCHEDGETTASKHANDLEBYNAME_IEC <_cmp_schedule_itf_8h_1aa4318af1bba5764bd80937ffa7df8e7c>` pfschedgettaskhandlebyname;
+
+- #define :ref:`EXT_schedgettaskhandlebyname <_cmp_schedule_itf_8h_1ae612ee1c39da4d45d517ab93c254135e>` extern :ref:`PFSCHEDGETTASKHANDLEBYNAME_IEC <_cmp_schedule_itf_8h_1aa4318af1bba5764bd80937ffa7df8e7c>` pfschedgettaskhandlebyname;
+
+- #define :ref:`GET_schedgettaskhandlebyname <_cmp_schedule_itf_8h_1a2db4a8139bf24daeb3b4cd319138b890>` s_pfCMGetAPI2( "schedgettaskhandlebyname", (RTS_VOID_FCTPTR *)&pfschedgettaskhandlebyname, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0FBFD668, 0x03050900)
+
+- #define :ref:`CAL_schedgettaskhandlebyname <_cmp_schedule_itf_8h_1a19ee70035dfc6f6c1344c5f4eb2bceac>` pfschedgettaskhandlebyname
+
+- #define :ref:`CHK_schedgettaskhandlebyname <_cmp_schedule_itf_8h_1af2ee9d0edcc04f5f0f79d5723f5b56d6>` (pfschedgettaskhandlebyname != NULL)
+
+- #define :ref:`EXP_schedgettaskhandlebyname <_cmp_schedule_itf_8h_1ab1e32b55f359f277ed6f4ffdc2663797>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"schedgettaskhandlebyname", (RTS_UINTPTR) :ref:`schedgettaskhandlebyname <_cmp_schedule_itf_8h_1a5bdaba8bd96bee514f8abdeaab5a2dad>` , 1, 0x0FBFD668, 0x03050900)
+
+- #define :ref:`USE_schedgettaskinterval <_cmp_schedule_itf_8h_1a6eeb962ab56e05c2f96e4d3ee88402b4>` :ref:`PFSCHEDGETTASKINTERVAL_IEC <_cmp_schedule_itf_8h_1ac65f608a3760a6a7c416e598db6a30b7>` pfschedgettaskinterval;
+
+- #define :ref:`EXT_schedgettaskinterval <_cmp_schedule_itf_8h_1a91d1c1a89ce80e010202225b2ad19446>` extern :ref:`PFSCHEDGETTASKINTERVAL_IEC <_cmp_schedule_itf_8h_1ac65f608a3760a6a7c416e598db6a30b7>` pfschedgettaskinterval;
+
+- #define :ref:`GET_schedgettaskinterval <_cmp_schedule_itf_8h_1a54680f13357c69a1a731a4f05d990bfc>` s_pfCMGetAPI2( "schedgettaskinterval", (RTS_VOID_FCTPTR *)&pfschedgettaskinterval, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x247455BA, 0x03050900)
+
+- #define :ref:`CAL_schedgettaskinterval <_cmp_schedule_itf_8h_1aaec0907d3a5c9074a3e6d67a2f92afc2>` pfschedgettaskinterval
+
+- #define :ref:`CHK_schedgettaskinterval <_cmp_schedule_itf_8h_1a8b5e15b7ac3e1f01384db3f4d4a860ae>` (pfschedgettaskinterval != NULL)
+
+- #define :ref:`EXP_schedgettaskinterval <_cmp_schedule_itf_8h_1a8de4dd75a53d9f52fab8c3ec3dfb8873>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"schedgettaskinterval", (RTS_UINTPTR) :ref:`schedgettaskinterval <_cmp_schedule_itf_8h_1add17c75f0404ad11757a277f7b8a7282>` , 1, 0x247455BA, 0x03050900)
+
+- #define :ref:`USE_schedpostexternalevent <_cmp_schedule_itf_8h_1a165639a8b4fd020db32a3146e690f44b>` :ref:`PFSCHEDPOSTEXTERNALEVENT_IEC <_cmp_schedule_itf_8h_1a2c1dfdbe8f7651720c521ae6ca7ba331>` pfschedpostexternalevent;
+
+- #define :ref:`EXT_schedpostexternalevent <_cmp_schedule_itf_8h_1a3536021a02859c81df5580a1c4ff992f>` extern :ref:`PFSCHEDPOSTEXTERNALEVENT_IEC <_cmp_schedule_itf_8h_1a2c1dfdbe8f7651720c521ae6ca7ba331>` pfschedpostexternalevent;
+
+- #define :ref:`GET_schedpostexternalevent <_cmp_schedule_itf_8h_1a586f1d0c919fd3a98b9da932951e94a0>` s_pfCMGetAPI2( "schedpostexternalevent", (RTS_VOID_FCTPTR *)&pfschedpostexternalevent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x8F2A57B0, 0x03050900)
+
+- #define :ref:`CAL_schedpostexternalevent <_cmp_schedule_itf_8h_1a398d92d4f436485a6987e400c18e283e>` pfschedpostexternalevent
+
+- #define :ref:`CHK_schedpostexternalevent <_cmp_schedule_itf_8h_1a3da2e3029701e0e6ac871952348536d6>` (pfschedpostexternalevent != NULL)
+
+- #define :ref:`EXP_schedpostexternalevent <_cmp_schedule_itf_8h_1a580e6a0c25b436e4ec0e27c4a2b3e6c9>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"schedpostexternalevent", (RTS_UINTPTR) :ref:`schedpostexternalevent <_cmp_schedule_itf_8h_1a1433b3ab41a32bb7cfb3bab6d5afe8c3>` , 1, 0x8F2A57B0, 0x03050900)
+
+- #define :ref:`USE_schedregisterexternalevent <_cmp_schedule_itf_8h_1a6ccc8dbeccb18bdbee0c4344250c7603>` :ref:`PFSCHEDREGISTEREXTERNALEVENT_IEC <_cmp_schedule_itf_8h_1a1b45f7de42f1decbda7703140a8281a7>` pfschedregisterexternalevent;
+
+- #define :ref:`EXT_schedregisterexternalevent <_cmp_schedule_itf_8h_1a88282cfa12db4f7386e17b5f03496b8c>` extern :ref:`PFSCHEDREGISTEREXTERNALEVENT_IEC <_cmp_schedule_itf_8h_1a1b45f7de42f1decbda7703140a8281a7>` pfschedregisterexternalevent;
+
+- #define :ref:`GET_schedregisterexternalevent <_cmp_schedule_itf_8h_1ac8a58b5dfaf5b7c4503e6a6db4942a14>` s_pfCMGetAPI2( "schedregisterexternalevent", (RTS_VOID_FCTPTR *)&pfschedregisterexternalevent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xF3A15AA7, 0x03050900)
+
+- #define :ref:`CAL_schedregisterexternalevent <_cmp_schedule_itf_8h_1aebc301f99ac118597cc8e8109795cffc>` pfschedregisterexternalevent
+
+- #define :ref:`CHK_schedregisterexternalevent <_cmp_schedule_itf_8h_1ae039ccb6fe3ccaf54595b5655ca42127>` (pfschedregisterexternalevent != NULL)
+
+- #define :ref:`EXP_schedregisterexternalevent <_cmp_schedule_itf_8h_1a02df7282078ee85554c4908eeb5140d8>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"schedregisterexternalevent", (RTS_UINTPTR) :ref:`schedregisterexternalevent <_cmp_schedule_itf_8h_1a7965bc04a67c08866afbaa14f1cea387>` , 1, 0xF3A15AA7, 0x03050900)
+
+- #define :ref:`USE_schedsettaskinterval <_cmp_schedule_itf_8h_1a2145bc9c974f6d3dd68305292f9c35e5>` :ref:`PFSCHEDSETTASKINTERVAL_IEC <_cmp_schedule_itf_8h_1ab184b898dc7f0520925ee6dd6aab9a87>` pfschedsettaskinterval;
+
+- #define :ref:`EXT_schedsettaskinterval <_cmp_schedule_itf_8h_1ab3318e48c4926291d1e7304e45f3ce8b>` extern :ref:`PFSCHEDSETTASKINTERVAL_IEC <_cmp_schedule_itf_8h_1ab184b898dc7f0520925ee6dd6aab9a87>` pfschedsettaskinterval;
+
+- #define :ref:`GET_schedsettaskinterval <_cmp_schedule_itf_8h_1a7d90976687a82ff410161d031953b6f9>` s_pfCMGetAPI2( "schedsettaskinterval", (RTS_VOID_FCTPTR *)&pfschedsettaskinterval, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x4DF2120E, 0x03050900)
+
+- #define :ref:`CAL_schedsettaskinterval <_cmp_schedule_itf_8h_1af0699176d15fced31d19969dea5c1f6b>` pfschedsettaskinterval
+
+- #define :ref:`CHK_schedsettaskinterval <_cmp_schedule_itf_8h_1ab45ff969a583488162db34203e84cba5>` (pfschedsettaskinterval != NULL)
+
+- #define :ref:`EXP_schedsettaskinterval <_cmp_schedule_itf_8h_1ac5fd1450d14bd691509e2c62682ab3bc>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"schedsettaskinterval", (RTS_UINTPTR) :ref:`schedsettaskinterval <_cmp_schedule_itf_8h_1a5ffe8f94a0b6421c9f832b6002d6154d>` , 1, 0x4DF2120E, 0x03050900)
+
+- #define :ref:`USE_schedtaskresume <_cmp_schedule_itf_8h_1a59e11849770371f99d93cef30b2fd92a>` :ref:`PFSCHEDTASKRESUME_IEC <_cmp_schedule_itf_8h_1a33ee584c34451eb49f5ce4995fc9a1d0>` pfschedtaskresume;
+
+- #define :ref:`EXT_schedtaskresume <_cmp_schedule_itf_8h_1a97178d7123239b4a1183b01a240146cd>` extern :ref:`PFSCHEDTASKRESUME_IEC <_cmp_schedule_itf_8h_1a33ee584c34451eb49f5ce4995fc9a1d0>` pfschedtaskresume;
+
+- #define :ref:`GET_schedtaskresume <_cmp_schedule_itf_8h_1ac785284db3917b2d4779537a1657c913>` s_pfCMGetAPI2( "schedtaskresume", (RTS_VOID_FCTPTR *)&pfschedtaskresume, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x8D82FF00, 0x03050900)
+
+- #define :ref:`CAL_schedtaskresume <_cmp_schedule_itf_8h_1a864ad670104b7bc8ca34f359036a4fd7>` pfschedtaskresume
+
+- #define :ref:`CHK_schedtaskresume <_cmp_schedule_itf_8h_1a164d18f421bc634e61b2906d17b03097>` (pfschedtaskresume != NULL)
+
+- #define :ref:`EXP_schedtaskresume <_cmp_schedule_itf_8h_1a7da470fb3bc9eee9709de95b11474398>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"schedtaskresume", (RTS_UINTPTR) :ref:`schedtaskresume <_cmp_schedule_itf_8h_1a9fc3788a0efe44fcf2d0d419aa836c08>` , 1, 0x8D82FF00, 0x03050900)
+
+- #define :ref:`USE_schedtasksuspend <_cmp_schedule_itf_8h_1aff707890a043a90b307e65ef22fa1875>` :ref:`PFSCHEDTASKSUSPEND_IEC <_cmp_schedule_itf_8h_1aa5070a192a307bb7a43c044054eb0393>` pfschedtasksuspend;
+
+- #define :ref:`EXT_schedtasksuspend <_cmp_schedule_itf_8h_1a19871244b849130f6248082359d2eaee>` extern :ref:`PFSCHEDTASKSUSPEND_IEC <_cmp_schedule_itf_8h_1aa5070a192a307bb7a43c044054eb0393>` pfschedtasksuspend;
+
+- #define :ref:`GET_schedtasksuspend <_cmp_schedule_itf_8h_1a7b730fc85ff9d4ed9852c1d550018a12>` s_pfCMGetAPI2( "schedtasksuspend", (RTS_VOID_FCTPTR *)&pfschedtasksuspend, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x3BC86060, 0x03050900)
+
+- #define :ref:`CAL_schedtasksuspend <_cmp_schedule_itf_8h_1a0a1b2854e78a491a4a4f43877ac9ef59>` pfschedtasksuspend
+
+- #define :ref:`CHK_schedtasksuspend <_cmp_schedule_itf_8h_1aad08bb004ee37a3c09b9fbe8f5fcdbe9>` (pfschedtasksuspend != NULL)
+
+- #define :ref:`EXP_schedtasksuspend <_cmp_schedule_itf_8h_1a59cc4eb99934c39e49ae4be46c41cebc>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"schedtasksuspend", (RTS_UINTPTR) :ref:`schedtasksuspend <_cmp_schedule_itf_8h_1aa0a18d08a0321f9d42657ced7279984f>` , 1, 0x3BC86060, 0x03050900)
+
+- #define :ref:`USE_schedunregisterexternalevent <_cmp_schedule_itf_8h_1a851b1e04c6ca7505fcbc294de93de6b2>` :ref:`PFSCHEDUNREGISTEREXTERNALEVENT_IEC <_cmp_schedule_itf_8h_1a70857bfeaf520f408182fba00048e820>` pfschedunregisterexternalevent;
+
+- #define :ref:`EXT_schedunregisterexternalevent <_cmp_schedule_itf_8h_1a8a918269f6763aa135800b47c376796f>` extern :ref:`PFSCHEDUNREGISTEREXTERNALEVENT_IEC <_cmp_schedule_itf_8h_1a70857bfeaf520f408182fba00048e820>` pfschedunregisterexternalevent;
+
+- #define :ref:`GET_schedunregisterexternalevent <_cmp_schedule_itf_8h_1ac61f3f8067ba3af78c3e54ab88009a83>` s_pfCMGetAPI2( "schedunregisterexternalevent", (RTS_VOID_FCTPTR *)&pfschedunregisterexternalevent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xF74A64AD, 0x03050900)
+
+- #define :ref:`CAL_schedunregisterexternalevent <_cmp_schedule_itf_8h_1ae7f5647c6b7b8da92e755fe38a319645>` pfschedunregisterexternalevent
+
+- #define :ref:`CHK_schedunregisterexternalevent <_cmp_schedule_itf_8h_1ace9fb90488623e1600a0e75afdf99f8b>` (pfschedunregisterexternalevent != NULL)
+
+- #define :ref:`EXP_schedunregisterexternalevent <_cmp_schedule_itf_8h_1ae17607b6566a4a560672922922695b78>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"schedunregisterexternalevent", (RTS_UINTPTR) :ref:`schedunregisterexternalevent <_cmp_schedule_itf_8h_1ae37e41df2ee4e942d571e2a386640316>` , 1, 0xF74A64AD, 0x03050900)
+
+- #define :ref:`USE_schedwaitbusy <_cmp_schedule_itf_8h_1a6f158ecb9e9a03c48e5b3410daaefdfb>` :ref:`PFSCHEDWAITBUSY_IEC <_cmp_schedule_itf_8h_1ae69052650001bfaf3d778be8f28d192f>` pfschedwaitbusy;
+
+- #define :ref:`EXT_schedwaitbusy <_cmp_schedule_itf_8h_1a1413e5c5973e28e21d65c15f1bc652a7>` extern :ref:`PFSCHEDWAITBUSY_IEC <_cmp_schedule_itf_8h_1ae69052650001bfaf3d778be8f28d192f>` pfschedwaitbusy;
+
+- #define :ref:`GET_schedwaitbusy <_cmp_schedule_itf_8h_1a1660ec6b09f063c5a7a0798f55547026>` s_pfCMGetAPI2( "schedwaitbusy", (RTS_VOID_FCTPTR *)&pfschedwaitbusy, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x34BA0AC2), 0x03050900)
+
+- #define :ref:`CAL_schedwaitbusy <_cmp_schedule_itf_8h_1a32ff339d262df80e95721fa411a1ef4e>` pfschedwaitbusy
+
+- #define :ref:`CHK_schedwaitbusy <_cmp_schedule_itf_8h_1a9dde2006c96c3084ab238210f6c599be>` (pfschedwaitbusy != NULL)
+
+- #define :ref:`EXP_schedwaitbusy <_cmp_schedule_itf_8h_1a60732a9953909df96ae47443ddd29f81>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"schedwaitbusy", (RTS_UINTPTR) :ref:`schedwaitbusy <_cmp_schedule_itf_8h_1a843e4c5f2f32a0b46b7676f79929ede7>` , 1, RTSITF_GET_SIGNATURE(0, 0x34BA0AC2), 0x03050900)
+
+- #define :ref:`USE_schedwaitsleep <_cmp_schedule_itf_8h_1a145b5df90cf35e739df7073aad5c8a85>` :ref:`PFSCHEDWAITSLEEP_IEC <_cmp_schedule_itf_8h_1a3099f377abd6be0ea5d11df5ab6380a0>` pfschedwaitsleep;
+
+- #define :ref:`EXT_schedwaitsleep <_cmp_schedule_itf_8h_1ad36c7d6903e08077bdc35d7ae62b9aea>` extern :ref:`PFSCHEDWAITSLEEP_IEC <_cmp_schedule_itf_8h_1a3099f377abd6be0ea5d11df5ab6380a0>` pfschedwaitsleep;
+
+- #define :ref:`GET_schedwaitsleep <_cmp_schedule_itf_8h_1a0e4b582c3aa1ce72caf6b7f8ccb03084>` s_pfCMGetAPI2( "schedwaitsleep", (RTS_VOID_FCTPTR *)&pfschedwaitsleep, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xAD6B19D4), 0x03050900)
+
+- #define :ref:`CAL_schedwaitsleep <_cmp_schedule_itf_8h_1ae2cbc7531b7b8a6fb567ebd19e81adce>` pfschedwaitsleep
+
+- #define :ref:`CHK_schedwaitsleep <_cmp_schedule_itf_8h_1a7097516e67fba03377f045043fd07f1a>` (pfschedwaitsleep != NULL)
+
+- #define :ref:`EXP_schedwaitsleep <_cmp_schedule_itf_8h_1a26d268d795ff34038127daafbc8642cc>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"schedwaitsleep", (RTS_UINTPTR) :ref:`schedwaitsleep <_cmp_schedule_itf_8h_1a200c55c7c6390409c0bf5cc05c58f462>` , 1, RTSITF_GET_SIGNATURE(0, 0xAD6B19D4), 0x03050900)
+
+- #define :ref:`USE_SchedHasFeature <_cmp_schedule_itf_8h_1a84fc6e63bc2de17f7035685258eb8811>` :ref:`PFSCHEDHASFEATURE <_cmp_schedule_itf_8h_1ab7153c1c4978330ec06378a828f7cf4c>` pfSchedHasFeature;
+
+- #define :ref:`EXT_SchedHasFeature <_cmp_schedule_itf_8h_1ab9016db7e45aa50635c501dbdefa17c7>` extern :ref:`PFSCHEDHASFEATURE <_cmp_schedule_itf_8h_1ab7153c1c4978330ec06378a828f7cf4c>` pfSchedHasFeature;
+
+- #define :ref:`GET_SchedHasFeature <_cmp_schedule_itf_8h_1aef23d963fb4b2f9eb0c9079b0e80097a>` s_pfCMGetAPI2( "SchedHasFeature", (RTS_VOID_FCTPTR *)&pfSchedHasFeature, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedHasFeature <_cmp_schedule_itf_8h_1a73bd01ec992c113f0b441fdb96542f86>` pfSchedHasFeature
+
+- #define :ref:`CHK_SchedHasFeature <_cmp_schedule_itf_8h_1a62809ae5b4fcc2067bbff42b6ada3acd>` (pfSchedHasFeature != NULL)
+
+- #define :ref:`EXP_SchedHasFeature <_cmp_schedule_itf_8h_1a2eb51f326923c0131981629373041f1d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedHasFeature", (RTS_UINTPTR) :ref:`SchedHasFeature <_cmp_schedule_itf_8h_1aa23ddf79d409da2e96f55f5fdb0c6e78>` , 0, 0)
+
+- #define :ref:`USE_SchedAddTask <_cmp_schedule_itf_8h_1ac7f7e753225ab2ec837b235cfc07f369>` :ref:`PFSCHEDADDTASK <_cmp_schedule_itf_8h_1abe5ea8473893d2d92bd0d1a0fb9e9703>` pfSchedAddTask;
+
+- #define :ref:`EXT_SchedAddTask <_cmp_schedule_itf_8h_1a3f36572830a28a70a6a88912b5b56088>` extern :ref:`PFSCHEDADDTASK <_cmp_schedule_itf_8h_1abe5ea8473893d2d92bd0d1a0fb9e9703>` pfSchedAddTask;
+
+- #define :ref:`GET_SchedAddTask <_cmp_schedule_itf_8h_1a8d4b1c02400651dc9da51039dce2bfd0>` s_pfCMGetAPI2( "SchedAddTask", (RTS_VOID_FCTPTR *)&pfSchedAddTask, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedAddTask <_cmp_schedule_itf_8h_1aa71d8ec4e5a78052d02351f947a07dae>` pfSchedAddTask
+
+- #define :ref:`CHK_SchedAddTask <_cmp_schedule_itf_8h_1a0ba28440e631a3d03041bc6eb285c37b>` (pfSchedAddTask != NULL)
+
+- #define :ref:`EXP_SchedAddTask <_cmp_schedule_itf_8h_1afe372aae7cc4b184e5cc7bfee94c6e92>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedAddTask", (RTS_UINTPTR) :ref:`SchedAddTask <_cmp_schedule_itf_8h_1a97cf2c1552f70570c790827bb82d6a6c>` , 0, 0)
+
+- #define :ref:`USE_SchedRemoveTask <_cmp_schedule_itf_8h_1aa89e234acb66123d8864a199db259f2f>` :ref:`PFSCHEDREMOVETASK <_cmp_schedule_itf_8h_1ada2cbb89ee2f1b255d90c18c670758d4>` pfSchedRemoveTask;
+
+- #define :ref:`EXT_SchedRemoveTask <_cmp_schedule_itf_8h_1a3ba8acb38c929ed3767cc0c4835d5b2f>` extern :ref:`PFSCHEDREMOVETASK <_cmp_schedule_itf_8h_1ada2cbb89ee2f1b255d90c18c670758d4>` pfSchedRemoveTask;
+
+- #define :ref:`GET_SchedRemoveTask <_cmp_schedule_itf_8h_1a4c7d8e77fcf5d8403ccaa877b9d6db5b>` s_pfCMGetAPI2( "SchedRemoveTask", (RTS_VOID_FCTPTR *)&pfSchedRemoveTask, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedRemoveTask <_cmp_schedule_itf_8h_1ac491de9dc0f00fe87d814643e3674e25>` pfSchedRemoveTask
+
+- #define :ref:`CHK_SchedRemoveTask <_cmp_schedule_itf_8h_1a4c3f3e084197ba70df94b96bb7715209>` (pfSchedRemoveTask != NULL)
+
+- #define :ref:`EXP_SchedRemoveTask <_cmp_schedule_itf_8h_1a15a5a0b80c30d6fdb39ffd2408564398>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedRemoveTask", (RTS_UINTPTR) :ref:`SchedRemoveTask <_cmp_schedule_itf_8h_1a2c8034bf7f89052105f94ab6dc8d3d1b>` , 0, 0)
+
+- #define :ref:`USE_SchedRemoveTask2 <_cmp_schedule_itf_8h_1a3ae3e1f71c3bc708c620068db0d06b12>` :ref:`PFSCHEDREMOVETASK2 <_cmp_schedule_itf_8h_1a6a8407c4c6c2c347493d6fe87dded8cc>` pfSchedRemoveTask2;
+
+- #define :ref:`EXT_SchedRemoveTask2 <_cmp_schedule_itf_8h_1ab4aac980ce26d04fa7b84fcc4b8c4889>` extern :ref:`PFSCHEDREMOVETASK2 <_cmp_schedule_itf_8h_1a6a8407c4c6c2c347493d6fe87dded8cc>` pfSchedRemoveTask2;
+
+- #define :ref:`GET_SchedRemoveTask2 <_cmp_schedule_itf_8h_1adc846d7fe52048bd1838594057808e38>` s_pfCMGetAPI2( "SchedRemoveTask2", (RTS_VOID_FCTPTR *)&pfSchedRemoveTask2, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedRemoveTask2 <_cmp_schedule_itf_8h_1af427a1efbdd9d3832b70dc9ae1e637b7>` pfSchedRemoveTask2
+
+- #define :ref:`CHK_SchedRemoveTask2 <_cmp_schedule_itf_8h_1a66bd88436d22028b2ee3ed704cd36766>` (pfSchedRemoveTask2 != NULL)
+
+- #define :ref:`EXP_SchedRemoveTask2 <_cmp_schedule_itf_8h_1add84a30d9946d1273f464d56c52b6cee>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedRemoveTask2", (RTS_UINTPTR) :ref:`SchedRemoveTask2 <_cmp_schedule_itf_8h_1ae52dbdbb5f4a1d9a582ad8ec5619b7e5>` , 0, 0)
+
+- #define :ref:`USE_Schedule <_cmp_schedule_itf_8h_1a7290d305235d58f3133a0de6082cae59>` :ref:`PFSCHEDULE <_cmp_schedule_itf_8h_1aee45adc1a935a7c0bd463425028b552b>` pfSchedule;
+
+- #define :ref:`EXT_Schedule <_cmp_schedule_itf_8h_1a6b95567db2992729f64cadfd0eb83256>` extern :ref:`PFSCHEDULE <_cmp_schedule_itf_8h_1aee45adc1a935a7c0bd463425028b552b>` pfSchedule;
+
+- #define :ref:`GET_Schedule <_cmp_schedule_itf_8h_1ae72fb78a1d678a22153896c8ef8a666a>` s_pfCMGetAPI2( "Schedule", (RTS_VOID_FCTPTR *)&pfSchedule, (fl), 0, 0)
+
+- #define :ref:`CAL_Schedule <_cmp_schedule_itf_8h_1a5fe1306f5ccd92fad91b70791215bac3>` pfSchedule
+
+- #define :ref:`CHK_Schedule <_cmp_schedule_itf_8h_1aa3a240a049ef9c6b9aae4fcc54401291>` (pfSchedule != NULL)
+
+- #define :ref:`EXP_Schedule <_cmp_schedule_itf_8h_1aa8f89558cf8dab90d8f0e4e6ef17b21b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"Schedule", (RTS_UINTPTR) :ref:`Schedule <_cmp_schedule_itf_8h_1aa4e110d2b572a55739fd9cb6e790f12b>` , 0, 0)
+
+- #define :ref:`USE_SchedDebugEnter <_cmp_schedule_itf_8h_1afa9e72218f17b71d40860850794d045c>` :ref:`PFSCHEDDEBUGENTER <_cmp_schedule_itf_8h_1a75f465a9e67f366dd512d6808c691f38>` pfSchedDebugEnter;
+
+- #define :ref:`EXT_SchedDebugEnter <_cmp_schedule_itf_8h_1ad76c0162902174246732ed235445288e>` extern :ref:`PFSCHEDDEBUGENTER <_cmp_schedule_itf_8h_1a75f465a9e67f366dd512d6808c691f38>` pfSchedDebugEnter;
+
+- #define :ref:`GET_SchedDebugEnter <_cmp_schedule_itf_8h_1a53b6cefc8744ff3c9c2087eae800fb6e>` s_pfCMGetAPI2( "SchedDebugEnter", (RTS_VOID_FCTPTR *)&pfSchedDebugEnter, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedDebugEnter <_cmp_schedule_itf_8h_1acf8ba34a8766faf949c5eacbcbea80dd>` pfSchedDebugEnter
+
+- #define :ref:`CHK_SchedDebugEnter <_cmp_schedule_itf_8h_1a3b5817216221d63cbeca26e18725bd76>` (pfSchedDebugEnter != NULL)
+
+- #define :ref:`EXP_SchedDebugEnter <_cmp_schedule_itf_8h_1a017c2b4d85f732ce575d9b7165bb93a0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedDebugEnter", (RTS_UINTPTR) :ref:`SchedDebugEnter <_cmp_schedule_itf_8h_1a314f3d9986ee6c07c893e965411897a7>` , 0, 0)
+
+- #define :ref:`USE_SchedDebugLeave <_cmp_schedule_itf_8h_1a9c5ab8942e56b426b464300d32274ecb>` :ref:`PFSCHEDDEBUGLEAVE <_cmp_schedule_itf_8h_1a9f56ed9bc4e7050f9ec24b28c4cdf84d>` pfSchedDebugLeave;
+
+- #define :ref:`EXT_SchedDebugLeave <_cmp_schedule_itf_8h_1a16b947fae0619e13e8ff29c7a046c8c6>` extern :ref:`PFSCHEDDEBUGLEAVE <_cmp_schedule_itf_8h_1a9f56ed9bc4e7050f9ec24b28c4cdf84d>` pfSchedDebugLeave;
+
+- #define :ref:`GET_SchedDebugLeave <_cmp_schedule_itf_8h_1a04c3d646fc8ecfcb96aa57ea8112f9fe>` s_pfCMGetAPI2( "SchedDebugLeave", (RTS_VOID_FCTPTR *)&pfSchedDebugLeave, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedDebugLeave <_cmp_schedule_itf_8h_1ac52cab51031b35242a480cb0de0f804f>` pfSchedDebugLeave
+
+- #define :ref:`CHK_SchedDebugLeave <_cmp_schedule_itf_8h_1ad2bca1207ec731a14ed30e366617260e>` (pfSchedDebugLeave != NULL)
+
+- #define :ref:`EXP_SchedDebugLeave <_cmp_schedule_itf_8h_1a5c8498c9b915d0d41a6b9bf2f394cab8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedDebugLeave", (RTS_UINTPTR) :ref:`SchedDebugLeave <_cmp_schedule_itf_8h_1a48bbd53df63d9951b95423a65cbd597f>` , 0, 0)
+
+- #define :ref:`USE_SchedPrepareReset <_cmp_schedule_itf_8h_1af8c7806fab3d2054cd4416d3f955143a>` :ref:`PFSCHEDPREPARERESET <_cmp_schedule_itf_8h_1af055c105cb6e5709195e7e3c7527abfe>` pfSchedPrepareReset;
+
+- #define :ref:`EXT_SchedPrepareReset <_cmp_schedule_itf_8h_1aca43e5b034f9c8215dcd3b35ebf21454>` extern :ref:`PFSCHEDPREPARERESET <_cmp_schedule_itf_8h_1af055c105cb6e5709195e7e3c7527abfe>` pfSchedPrepareReset;
+
+- #define :ref:`GET_SchedPrepareReset <_cmp_schedule_itf_8h_1aba950f50c0ab50231090e22e7a1d7f92>` s_pfCMGetAPI2( "SchedPrepareReset", (RTS_VOID_FCTPTR *)&pfSchedPrepareReset, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedPrepareReset <_cmp_schedule_itf_8h_1abd104a0877e6a9313a40da39274f0f4b>` pfSchedPrepareReset
+
+- #define :ref:`CHK_SchedPrepareReset <_cmp_schedule_itf_8h_1aa437266877655198aff40a5248aac150>` (pfSchedPrepareReset != NULL)
+
+- #define :ref:`EXP_SchedPrepareReset <_cmp_schedule_itf_8h_1a2296a53284823fcb5576640e09a09440>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedPrepareReset", (RTS_UINTPTR) :ref:`SchedPrepareReset <_cmp_schedule_itf_8h_1afd5a6c24d642abe80493f3547f5da6cb>` , 0, 0)
+
+- #define :ref:`USE_SchedResetDone <_cmp_schedule_itf_8h_1a46c1d1394ad4ca577be48e8c4e0b7e8b>` :ref:`PFSCHEDRESETDONE <_cmp_schedule_itf_8h_1aa87154d9858d427c809dde6dc6429cb0>` pfSchedResetDone;
+
+- #define :ref:`EXT_SchedResetDone <_cmp_schedule_itf_8h_1a897e00f5e3f1793f854b0e44e651b383>` extern :ref:`PFSCHEDRESETDONE <_cmp_schedule_itf_8h_1aa87154d9858d427c809dde6dc6429cb0>` pfSchedResetDone;
+
+- #define :ref:`GET_SchedResetDone <_cmp_schedule_itf_8h_1a24af4116b234658a6319f4b5b8e0b156>` s_pfCMGetAPI2( "SchedResetDone", (RTS_VOID_FCTPTR *)&pfSchedResetDone, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedResetDone <_cmp_schedule_itf_8h_1ad2c8c41c3f6be739873b641eaddde43d>` pfSchedResetDone
+
+- #define :ref:`CHK_SchedResetDone <_cmp_schedule_itf_8h_1ac8f1c24016bf5ab786fde8073114b58c>` (pfSchedResetDone != NULL)
+
+- #define :ref:`EXP_SchedResetDone <_cmp_schedule_itf_8h_1ae0e2878a92224972e3ec015fabbeccb6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedResetDone", (RTS_UINTPTR) :ref:`SchedResetDone <_cmp_schedule_itf_8h_1a87af5a5c80870f68932d36a197259825>` , 0, 0)
+
+- #define :ref:`USE_SchedStart <_cmp_schedule_itf_8h_1a05d866ebfba0a908931251c1dfe8cdf6>` :ref:`PFSCHEDSTART <_cmp_schedule_itf_8h_1aec43bc6406ee3a57c0d909eeec841cd0>` pfSchedStart;
+
+- #define :ref:`EXT_SchedStart <_cmp_schedule_itf_8h_1aa39edb00c22729dee78f9b4f83e8e361>` extern :ref:`PFSCHEDSTART <_cmp_schedule_itf_8h_1aec43bc6406ee3a57c0d909eeec841cd0>` pfSchedStart;
+
+- #define :ref:`GET_SchedStart <_cmp_schedule_itf_8h_1ac034010801891ebaef0c9dc3fcf52a09>` s_pfCMGetAPI2( "SchedStart", (RTS_VOID_FCTPTR *)&pfSchedStart, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedStart <_cmp_schedule_itf_8h_1a163cec73787dc10187b976bf9e8993a8>` pfSchedStart
+
+- #define :ref:`CHK_SchedStart <_cmp_schedule_itf_8h_1ae6f4eaf6b286fa3ff1d751bed7a51564>` (pfSchedStart != NULL)
+
+- #define :ref:`EXP_SchedStart <_cmp_schedule_itf_8h_1a3305371da067faa50fac7fe40a02c69c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedStart", (RTS_UINTPTR) :ref:`SchedStart <_cmp_schedule_itf_8h_1aa7bf93836615e788bb5e9e7d41cb2655>` , 0, 0)
+
+- #define :ref:`USE_SchedStop <_cmp_schedule_itf_8h_1a1139f8a0e693d80ee87ec38279425e6f>` :ref:`PFSCHEDSTOP <_cmp_schedule_itf_8h_1a9af21b576c69db70bc43fb49bf58a599>` pfSchedStop;
+
+- #define :ref:`EXT_SchedStop <_cmp_schedule_itf_8h_1a721f47a42f94d57005dd956c51c0f206>` extern :ref:`PFSCHEDSTOP <_cmp_schedule_itf_8h_1a9af21b576c69db70bc43fb49bf58a599>` pfSchedStop;
+
+- #define :ref:`GET_SchedStop <_cmp_schedule_itf_8h_1aa73f812555f41b22b2a7a433e0f3c701>` s_pfCMGetAPI2( "SchedStop", (RTS_VOID_FCTPTR *)&pfSchedStop, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedStop <_cmp_schedule_itf_8h_1aa1f01f74f62f3fb2d81d57981043e471>` pfSchedStop
+
+- #define :ref:`CHK_SchedStop <_cmp_schedule_itf_8h_1aa3865a1d7043103c8957c07787d92c2b>` (pfSchedStop != NULL)
+
+- #define :ref:`EXP_SchedStop <_cmp_schedule_itf_8h_1a55708a85526fa5d0e8461520f4d5a37b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedStop", (RTS_UINTPTR) :ref:`SchedStop <_cmp_schedule_itf_8h_1a820061956933ca9e340e5f7d860236d2>` , 0, 0)
+
+- #define :ref:`USE_SchedGetCurrentTask <_cmp_schedule_itf_8h_1a289fb2229ab01fd8d4f85d63ab1e421f>` :ref:`PFSCHEDGETCURRENTTASK <_cmp_schedule_itf_8h_1a6561671b13961fff184969278f13b820>` pfSchedGetCurrentTask;
+
+- #define :ref:`EXT_SchedGetCurrentTask <_cmp_schedule_itf_8h_1ad7b94619968c195a2f51dc6ea32209e0>` extern :ref:`PFSCHEDGETCURRENTTASK <_cmp_schedule_itf_8h_1a6561671b13961fff184969278f13b820>` pfSchedGetCurrentTask;
+
+- #define :ref:`GET_SchedGetCurrentTask <_cmp_schedule_itf_8h_1a6a0c7eb5892248240e0fff4354ac99d0>` s_pfCMGetAPI2( "SchedGetCurrentTask", (RTS_VOID_FCTPTR *)&pfSchedGetCurrentTask, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedGetCurrentTask <_cmp_schedule_itf_8h_1acfbddd7a8eeceab19a46a817bc6a573e>` pfSchedGetCurrentTask
+
+- #define :ref:`CHK_SchedGetCurrentTask <_cmp_schedule_itf_8h_1abbb5c4bce4273d85cbf3ca9442cab2e3>` (pfSchedGetCurrentTask != NULL)
+
+- #define :ref:`EXP_SchedGetCurrentTask <_cmp_schedule_itf_8h_1a2278c473c94774a559b7afdac761c15d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedGetCurrentTask", (RTS_UINTPTR) :ref:`SchedGetCurrentTask <_cmp_schedule_itf_8h_1aa077a735f2c0f6aaf586763190099f83>` , 0, 0)
+
+- #define :ref:`USE_SchedGetContext <_cmp_schedule_itf_8h_1ab986d0c74f311ca61370137911283fb7>` :ref:`PFSCHEDGETCONTEXT <_cmp_schedule_itf_8h_1afd08de3978a0fbbe01a68bfa7c78b624>` pfSchedGetContext;
+
+- #define :ref:`EXT_SchedGetContext <_cmp_schedule_itf_8h_1ae7486a715969daddd885f6e8f416a50c>` extern :ref:`PFSCHEDGETCONTEXT <_cmp_schedule_itf_8h_1afd08de3978a0fbbe01a68bfa7c78b624>` pfSchedGetContext;
+
+- #define :ref:`GET_SchedGetContext <_cmp_schedule_itf_8h_1a27ff83663425342f6e096f6362c7af80>` s_pfCMGetAPI2( "SchedGetContext", (RTS_VOID_FCTPTR *)&pfSchedGetContext, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedGetContext <_cmp_schedule_itf_8h_1ad0938b283af517efb99cbb32252d9429>` pfSchedGetContext
+
+- #define :ref:`CHK_SchedGetContext <_cmp_schedule_itf_8h_1a12c4028009b82c85b17004b8243af42f>` (pfSchedGetContext != NULL)
+
+- #define :ref:`EXP_SchedGetContext <_cmp_schedule_itf_8h_1a41c1088b4cb0b221e72acd26dcb416c4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedGetContext", (RTS_UINTPTR) :ref:`SchedGetContext <_cmp_schedule_itf_8h_1ae02331c4b8fbe0026b7d5e7174de4d54>` , 0, 0)
+
+- #define :ref:`USE_SchedGetNumOfTasks <_cmp_schedule_itf_8h_1a4f6c61bf3fdb7c9e241bbd4d635b8026>` :ref:`PFSCHEDGETNUMOFTASKS <_cmp_schedule_itf_8h_1a057bc6883ffd29be51bfd9d4c91b4c42>` pfSchedGetNumOfTasks;
+
+- #define :ref:`EXT_SchedGetNumOfTasks <_cmp_schedule_itf_8h_1ab3dd15f1e2c8014b8256e4ca3ad7bef1>` extern :ref:`PFSCHEDGETNUMOFTASKS <_cmp_schedule_itf_8h_1a057bc6883ffd29be51bfd9d4c91b4c42>` pfSchedGetNumOfTasks;
+
+- #define :ref:`GET_SchedGetNumOfTasks <_cmp_schedule_itf_8h_1ada56e99a936b4202dca9b3ee68a74523>` s_pfCMGetAPI2( "SchedGetNumOfTasks", (RTS_VOID_FCTPTR *)&pfSchedGetNumOfTasks, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedGetNumOfTasks <_cmp_schedule_itf_8h_1a1194a8f089147d70bda26312597a3cdc>` pfSchedGetNumOfTasks
+
+- #define :ref:`CHK_SchedGetNumOfTasks <_cmp_schedule_itf_8h_1a12adb664da222a45fdc9743fd0b7a096>` (pfSchedGetNumOfTasks != NULL)
+
+- #define :ref:`EXP_SchedGetNumOfTasks <_cmp_schedule_itf_8h_1a90a31bcc8f8e47ceeb63cb3662b286da>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedGetNumOfTasks", (RTS_UINTPTR) :ref:`SchedGetNumOfTasks <_cmp_schedule_itf_8h_1a740ebf2a723caaa858072893aaf4c082>` , 0, 0)
+
+- #define :ref:`USE_SchedGetTaskDescByIndex <_cmp_schedule_itf_8h_1ae3d45395adf1371399df6c69c9b04e3f>` :ref:`PFSCHEDGETTASKDESCBYINDEX <_cmp_schedule_itf_8h_1a7e1e9ee5f02d8fc109fa8691e12da540>` pfSchedGetTaskDescByIndex;
+
+- #define :ref:`EXT_SchedGetTaskDescByIndex <_cmp_schedule_itf_8h_1ae96040dc4e470fb854d9fd00ad601b76>` extern :ref:`PFSCHEDGETTASKDESCBYINDEX <_cmp_schedule_itf_8h_1a7e1e9ee5f02d8fc109fa8691e12da540>` pfSchedGetTaskDescByIndex;
+
+- #define :ref:`GET_SchedGetTaskDescByIndex <_cmp_schedule_itf_8h_1a79d12b02e9f18d863ab747bd2f3faadb>` s_pfCMGetAPI2( "SchedGetTaskDescByIndex", (RTS_VOID_FCTPTR *)&pfSchedGetTaskDescByIndex, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedGetTaskDescByIndex <_cmp_schedule_itf_8h_1a7a0546f8ef3ef92d6ac5334572646876>` pfSchedGetTaskDescByIndex
+
+- #define :ref:`CHK_SchedGetTaskDescByIndex <_cmp_schedule_itf_8h_1a45a07d2fcfebb9e68af7d0909087c556>` (pfSchedGetTaskDescByIndex != NULL)
+
+- #define :ref:`EXP_SchedGetTaskDescByIndex <_cmp_schedule_itf_8h_1ae48c959927b99831baf8435c601a6464>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedGetTaskDescByIndex", (RTS_UINTPTR) :ref:`SchedGetTaskDescByIndex <_cmp_schedule_itf_8h_1a842d75dfd88497dc2c0ec61efd298a51>` , 0, 0)
+
+- #define :ref:`USE_SchedGetTaskDescByHandle <_cmp_schedule_itf_8h_1a4684d344a883ded23a9fd8304fcc4a3d>` :ref:`PFSCHEDGETTASKDESCBYHANDLE <_cmp_schedule_itf_8h_1a8641969d871182b31147caaa4a8b4b3d>` pfSchedGetTaskDescByHandle;
+
+- #define :ref:`EXT_SchedGetTaskDescByHandle <_cmp_schedule_itf_8h_1a8803ad6220be3e6ef3d58721b91954ba>` extern :ref:`PFSCHEDGETTASKDESCBYHANDLE <_cmp_schedule_itf_8h_1a8641969d871182b31147caaa4a8b4b3d>` pfSchedGetTaskDescByHandle;
+
+- #define :ref:`GET_SchedGetTaskDescByHandle <_cmp_schedule_itf_8h_1aef732bf0410cea4f3e64a37d930ccbd6>` s_pfCMGetAPI2( "SchedGetTaskDescByHandle", (RTS_VOID_FCTPTR *)&pfSchedGetTaskDescByHandle, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedGetTaskDescByHandle <_cmp_schedule_itf_8h_1ac0ec3ee95ceaad9ef6b91a41be762e35>` pfSchedGetTaskDescByHandle
+
+- #define :ref:`CHK_SchedGetTaskDescByHandle <_cmp_schedule_itf_8h_1aab6e802b8f04b306aff14ba9a12a5926>` (pfSchedGetTaskDescByHandle != NULL)
+
+- #define :ref:`EXP_SchedGetTaskDescByHandle <_cmp_schedule_itf_8h_1a46059e0d4b16379310bdcbc7028a6faf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedGetTaskDescByHandle", (RTS_UINTPTR) :ref:`SchedGetTaskDescByHandle <_cmp_schedule_itf_8h_1ab930bff8f638a577033ee6e977b65b23>` , 0, 0)
+
+- #define :ref:`USE_SchedGetTaskHandleByIndex <_cmp_schedule_itf_8h_1a1b51638de92fe24d767a6efdfdd0b030>` :ref:`PFSCHEDGETTASKHANDLEBYINDEX <_cmp_schedule_itf_8h_1aec68c59ce36a1db773ef5cd296d7e832>` pfSchedGetTaskHandleByIndex;
+
+- #define :ref:`EXT_SchedGetTaskHandleByIndex <_cmp_schedule_itf_8h_1ae4e2beb8c6702924b045d79ebfbb0c76>` extern :ref:`PFSCHEDGETTASKHANDLEBYINDEX <_cmp_schedule_itf_8h_1aec68c59ce36a1db773ef5cd296d7e832>` pfSchedGetTaskHandleByIndex;
+
+- #define :ref:`GET_SchedGetTaskHandleByIndex <_cmp_schedule_itf_8h_1a36a3badcc2c73f3cf0baa33a51c44946>` s_pfCMGetAPI2( "SchedGetTaskHandleByIndex", (RTS_VOID_FCTPTR *)&pfSchedGetTaskHandleByIndex, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedGetTaskHandleByIndex <_cmp_schedule_itf_8h_1a39d7b160b68e0fed7ccf0c0770cc7658>` pfSchedGetTaskHandleByIndex
+
+- #define :ref:`CHK_SchedGetTaskHandleByIndex <_cmp_schedule_itf_8h_1a0797aa61d1c90dfc9b46369dce47f28c>` (pfSchedGetTaskHandleByIndex != NULL)
+
+- #define :ref:`EXP_SchedGetTaskHandleByIndex <_cmp_schedule_itf_8h_1a59013aa216a5104a3c51b9ff5f85372d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedGetTaskHandleByIndex", (RTS_UINTPTR) :ref:`SchedGetTaskHandleByIndex <_cmp_schedule_itf_8h_1ae5240901ba2396c33c9141eec5409abf>` , 0, 0)
+
+- #define :ref:`USE_SchedGetTaskHandleByName <_cmp_schedule_itf_8h_1a0f0f1bc06b8f5379f8d36648e0e9adc7>` :ref:`PFSCHEDGETTASKHANDLEBYNAME <_cmp_schedule_itf_8h_1abf8796f385473019631454e1ef2fba99>` pfSchedGetTaskHandleByName;
+
+- #define :ref:`EXT_SchedGetTaskHandleByName <_cmp_schedule_itf_8h_1a85d8008d187d8ca0d03c8ea2ee1d8077>` extern :ref:`PFSCHEDGETTASKHANDLEBYNAME <_cmp_schedule_itf_8h_1abf8796f385473019631454e1ef2fba99>` pfSchedGetTaskHandleByName;
+
+- #define :ref:`GET_SchedGetTaskHandleByName <_cmp_schedule_itf_8h_1afa4d5123e06724f6ce96f2b31cb96c18>` s_pfCMGetAPI2( "SchedGetTaskHandleByName", (RTS_VOID_FCTPTR *)&pfSchedGetTaskHandleByName, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedGetTaskHandleByName <_cmp_schedule_itf_8h_1a5f30f474980e7443560dd92da7dffc53>` pfSchedGetTaskHandleByName
+
+- #define :ref:`CHK_SchedGetTaskHandleByName <_cmp_schedule_itf_8h_1aff986051b173a86fa87b91ec1ced75ae>` (pfSchedGetTaskHandleByName != NULL)
+
+- #define :ref:`EXP_SchedGetTaskHandleByName <_cmp_schedule_itf_8h_1a560a32bf028e213161d83dddc3a4a1eb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedGetTaskHandleByName", (RTS_UINTPTR) :ref:`SchedGetTaskHandleByName <_cmp_schedule_itf_8h_1ab4a321f1e5bf408cb85f50b03b08c4fe>` , 0, 0)
+
+- #define :ref:`USE_SchedGetTaskEventByHandle <_cmp_schedule_itf_8h_1a3b77da12a530d6aa072625af1743d7c3>` :ref:`PFSCHEDGETTASKEVENTBYHANDLE <_cmp_schedule_itf_8h_1af89ac663a9cf00e9e5757e714606137d>` pfSchedGetTaskEventByHandle;
+
+- #define :ref:`EXT_SchedGetTaskEventByHandle <_cmp_schedule_itf_8h_1ae29f5e2ddfdb486c758e9b8c7cc9455f>` extern :ref:`PFSCHEDGETTASKEVENTBYHANDLE <_cmp_schedule_itf_8h_1af89ac663a9cf00e9e5757e714606137d>` pfSchedGetTaskEventByHandle;
+
+- #define :ref:`GET_SchedGetTaskEventByHandle <_cmp_schedule_itf_8h_1ae00f57729847dfe6b3a6caafe4499cb0>` s_pfCMGetAPI2( "SchedGetTaskEventByHandle", (RTS_VOID_FCTPTR *)&pfSchedGetTaskEventByHandle, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedGetTaskEventByHandle <_cmp_schedule_itf_8h_1a2e7eccde79464c09c7005c6e40f19ad8>` pfSchedGetTaskEventByHandle
+
+- #define :ref:`CHK_SchedGetTaskEventByHandle <_cmp_schedule_itf_8h_1a949bb6c692336f53725116706df5b368>` (pfSchedGetTaskEventByHandle != NULL)
+
+- #define :ref:`EXP_SchedGetTaskEventByHandle <_cmp_schedule_itf_8h_1a0f1697e40c4c797e3e094764dc33b4d4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedGetTaskEventByHandle", (RTS_UINTPTR) :ref:`SchedGetTaskEventByHandle <_cmp_schedule_itf_8h_1a7e1a3bf554f6405eb83a77ace3a05c41>` , 0, 0)
+
+- #define :ref:`USE_SchedTimeslicePlcBegin <_cmp_schedule_itf_8h_1a7f5ff7a3bf9605805f29e341079a9f89>` :ref:`PFSCHEDTIMESLICEPLCBEGIN <_cmp_schedule_itf_8h_1afa4d1300a531eb835abff4311a2d84c0>` pfSchedTimeslicePlcBegin;
+
+- #define :ref:`EXT_SchedTimeslicePlcBegin <_cmp_schedule_itf_8h_1a046396c9c54237287f91115719037824>` extern :ref:`PFSCHEDTIMESLICEPLCBEGIN <_cmp_schedule_itf_8h_1afa4d1300a531eb835abff4311a2d84c0>` pfSchedTimeslicePlcBegin;
+
+- #define :ref:`GET_SchedTimeslicePlcBegin <_cmp_schedule_itf_8h_1ad317a63610205ded626ee1bfd3135ac8>` s_pfCMGetAPI2( "SchedTimeslicePlcBegin", (RTS_VOID_FCTPTR *)&pfSchedTimeslicePlcBegin, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedTimeslicePlcBegin <_cmp_schedule_itf_8h_1a4716906029600a6ebcd4081862936f00>` pfSchedTimeslicePlcBegin
+
+- #define :ref:`CHK_SchedTimeslicePlcBegin <_cmp_schedule_itf_8h_1a3a2c4d746fee2ab164e65fd4ba6c3dfb>` (pfSchedTimeslicePlcBegin != NULL)
+
+- #define :ref:`EXP_SchedTimeslicePlcBegin <_cmp_schedule_itf_8h_1a4b60cc1f8f3bab99353a130734e06c50>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedTimeslicePlcBegin", (RTS_UINTPTR) :ref:`SchedTimeslicePlcBegin <_cmp_schedule_itf_8h_1acd1800c4aec89c8deeb88c821ca1ec6f>` , 0, 0)
+
+- #define :ref:`USE_SchedTimeslicePlcEnd <_cmp_schedule_itf_8h_1a4daa5ad6cc52c422a82a750b974ad560>` :ref:`PFSCHEDTIMESLICEPLCEND <_cmp_schedule_itf_8h_1a86224c1dd86765a4b2b2795733766e82>` pfSchedTimeslicePlcEnd;
+
+- #define :ref:`EXT_SchedTimeslicePlcEnd <_cmp_schedule_itf_8h_1a7f8c5a8f60ebadb075da859cd6f60aa1>` extern :ref:`PFSCHEDTIMESLICEPLCEND <_cmp_schedule_itf_8h_1a86224c1dd86765a4b2b2795733766e82>` pfSchedTimeslicePlcEnd;
+
+- #define :ref:`GET_SchedTimeslicePlcEnd <_cmp_schedule_itf_8h_1abdd1f0edb0c051fdc7f9bedf4eaef9e8>` s_pfCMGetAPI2( "SchedTimeslicePlcEnd", (RTS_VOID_FCTPTR *)&pfSchedTimeslicePlcEnd, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedTimeslicePlcEnd <_cmp_schedule_itf_8h_1a945e1dfee145b68f4cf2301bb29514e2>` pfSchedTimeslicePlcEnd
+
+- #define :ref:`CHK_SchedTimeslicePlcEnd <_cmp_schedule_itf_8h_1a3efe64bf379c7b1f38693b3427904063>` (pfSchedTimeslicePlcEnd != NULL)
+
+- #define :ref:`EXP_SchedTimeslicePlcEnd <_cmp_schedule_itf_8h_1aae6c1432b5729fc78731b80e66485e71>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedTimeslicePlcEnd", (RTS_UINTPTR) :ref:`SchedTimeslicePlcEnd <_cmp_schedule_itf_8h_1a61f14de511570d9b32911b422ec79c85>` , 0, 0)
+
+- #define :ref:`USE_SchedGetProcessorLoad <_cmp_schedule_itf_8h_1aebfc848ac18e52fe71533cad89b5cd39>` :ref:`PFSCHEDGETPROCESSORLOAD <_cmp_schedule_itf_8h_1a4345e4fd23175c514f2a1a2b1af9d992>` pfSchedGetProcessorLoad;
+
+- #define :ref:`EXT_SchedGetProcessorLoad <_cmp_schedule_itf_8h_1ab26f68bc748f979b92429bc4ef8e5238>` extern :ref:`PFSCHEDGETPROCESSORLOAD <_cmp_schedule_itf_8h_1a4345e4fd23175c514f2a1a2b1af9d992>` pfSchedGetProcessorLoad;
+
+- #define :ref:`GET_SchedGetProcessorLoad <_cmp_schedule_itf_8h_1a1cc96a2239fda28580bccd9c4d313d74>` s_pfCMGetAPI2( "SchedGetProcessorLoad", (RTS_VOID_FCTPTR *)&pfSchedGetProcessorLoad, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedGetProcessorLoad <_cmp_schedule_itf_8h_1ad5c1b7784a2356f39916934f1909ccfd>` pfSchedGetProcessorLoad
+
+- #define :ref:`CHK_SchedGetProcessorLoad <_cmp_schedule_itf_8h_1a1233e1722b8ccc8e084f96aa6b83817e>` (pfSchedGetProcessorLoad != NULL)
+
+- #define :ref:`EXP_SchedGetProcessorLoad <_cmp_schedule_itf_8h_1abbffbee1e5e81cc2c56107a17e8233f7>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedGetProcessorLoad", (RTS_UINTPTR) :ref:`SchedGetProcessorLoad <_cmp_schedule_itf_8h_1a169a5f9c17c6f3f081ae8f41805ce03c>` , 0, 0)
+
+- #define :ref:`USE_SchedGetProcessorLoadOnCore <_cmp_schedule_itf_8h_1a18e180deb1dc053f5a71b99035a416f1>` :ref:`PFSCHEDGETPROCESSORLOADONCORE <_cmp_schedule_itf_8h_1a828cb1536af84c35bef1d8f87f575286>` pfSchedGetProcessorLoadOnCore;
+
+- #define :ref:`EXT_SchedGetProcessorLoadOnCore <_cmp_schedule_itf_8h_1affb3939a2580a589ac81d55f3ec4dd9d>` extern :ref:`PFSCHEDGETPROCESSORLOADONCORE <_cmp_schedule_itf_8h_1a828cb1536af84c35bef1d8f87f575286>` pfSchedGetProcessorLoadOnCore;
+
+- #define :ref:`GET_SchedGetProcessorLoadOnCore <_cmp_schedule_itf_8h_1aa90ba7930a80bd6f97eaf87afd53c9fa>` s_pfCMGetAPI2( "SchedGetProcessorLoadOnCore", (RTS_VOID_FCTPTR *)&pfSchedGetProcessorLoadOnCore, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedGetProcessorLoadOnCore <_cmp_schedule_itf_8h_1a4effb15f0690ea343dfbc6034d49f4c0>` pfSchedGetProcessorLoadOnCore
+
+- #define :ref:`CHK_SchedGetProcessorLoadOnCore <_cmp_schedule_itf_8h_1af94d7841e139047d0f0b2c315f7553c1>` (pfSchedGetProcessorLoadOnCore != NULL)
+
+- #define :ref:`EXP_SchedGetProcessorLoadOnCore <_cmp_schedule_itf_8h_1a1b0b4ab2ca063ea09b6104a92fe0b4ac>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedGetProcessorLoadOnCore", (RTS_UINTPTR) :ref:`SchedGetProcessorLoadOnCore <_cmp_schedule_itf_8h_1acb31419874816156d95b2e34d7b70de2>` , 0, 0)
+
+- #define :ref:`USE_SchedGetTaskInterval <_cmp_schedule_itf_8h_1a83fc867ea0b34c5ea55318059efe4a69>` :ref:`PFSCHEDGETTASKINTERVAL <_cmp_schedule_itf_8h_1a9f731bc24fb4c960a17056af41e2b95a>` pfSchedGetTaskInterval;
+
+- #define :ref:`EXT_SchedGetTaskInterval <_cmp_schedule_itf_8h_1a76b39134fa61b27ef7c7413fe50b00e2>` extern :ref:`PFSCHEDGETTASKINTERVAL <_cmp_schedule_itf_8h_1a9f731bc24fb4c960a17056af41e2b95a>` pfSchedGetTaskInterval;
+
+- #define :ref:`GET_SchedGetTaskInterval <_cmp_schedule_itf_8h_1a70e33cba0f1095a00f83bc4e19a6aaf9>` s_pfCMGetAPI2( "SchedGetTaskInterval", (RTS_VOID_FCTPTR *)&pfSchedGetTaskInterval, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedGetTaskInterval <_cmp_schedule_itf_8h_1aa030d0157db112e1aa5e1a7f1253d8bf>` pfSchedGetTaskInterval
+
+- #define :ref:`CHK_SchedGetTaskInterval <_cmp_schedule_itf_8h_1a600c4c3f45215c2a66c540b60e9ac341>` (pfSchedGetTaskInterval != NULL)
+
+- #define :ref:`EXP_SchedGetTaskInterval <_cmp_schedule_itf_8h_1a8ac2e9cf3ee7d1cf11b033c5da389a95>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedGetTaskInterval", (RTS_UINTPTR) :ref:`SchedGetTaskInterval <_cmp_schedule_itf_8h_1ae1b1d213d9942794b33076899b0ac467>` , 0, 0)
+
+- #define :ref:`USE_SchedSetTaskInterval <_cmp_schedule_itf_8h_1a77ac43c07fa2b6bfab3b0eb2c60477d2>` :ref:`PFSCHEDSETTASKINTERVAL <_cmp_schedule_itf_8h_1a68028491e3df40d0a0035279bb9e197e>` pfSchedSetTaskInterval;
+
+- #define :ref:`EXT_SchedSetTaskInterval <_cmp_schedule_itf_8h_1a016a016947f4feabef1623e7a285e640>` extern :ref:`PFSCHEDSETTASKINTERVAL <_cmp_schedule_itf_8h_1a68028491e3df40d0a0035279bb9e197e>` pfSchedSetTaskInterval;
+
+- #define :ref:`GET_SchedSetTaskInterval <_cmp_schedule_itf_8h_1a8f8dfa475d36e7213d3f97d5a6f09d5b>` s_pfCMGetAPI2( "SchedSetTaskInterval", (RTS_VOID_FCTPTR *)&pfSchedSetTaskInterval, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedSetTaskInterval <_cmp_schedule_itf_8h_1a2cf54fc8cc130c791eee06fb02b3d717>` pfSchedSetTaskInterval
+
+- #define :ref:`CHK_SchedSetTaskInterval <_cmp_schedule_itf_8h_1a764d4552abbde37fef02e5ec56f1558d>` (pfSchedSetTaskInterval != NULL)
+
+- #define :ref:`EXP_SchedSetTaskInterval <_cmp_schedule_itf_8h_1ad5f67d6c3a441642a053eaa98e06ccfa>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedSetTaskInterval", (RTS_UINTPTR) :ref:`SchedSetTaskInterval <_cmp_schedule_itf_8h_1a38343a42c411c3764583e0f56ef4bcee>` , 0, 0)
+
+- #define :ref:`USE_SchedWaitSleep <_cmp_schedule_itf_8h_1a05791d774c9e48bd5c21db28ae75fe6f>` :ref:`PFSCHEDWAITSLEEP <_cmp_schedule_itf_8h_1accf2f480ed039d67b1079e41de5ce4a6>` pfSchedWaitSleep;
+
+- #define :ref:`EXT_SchedWaitSleep <_cmp_schedule_itf_8h_1adbfaddc896ee43d578a55621d4689549>` extern :ref:`PFSCHEDWAITSLEEP <_cmp_schedule_itf_8h_1accf2f480ed039d67b1079e41de5ce4a6>` pfSchedWaitSleep;
+
+- #define :ref:`GET_SchedWaitSleep <_cmp_schedule_itf_8h_1ad6d7d90cb4cb940efdd99e58cff1ff4c>` s_pfCMGetAPI2( "SchedWaitSleep", (RTS_VOID_FCTPTR *)&pfSchedWaitSleep, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedWaitSleep <_cmp_schedule_itf_8h_1a83a550b5ab6a4902f2f1e902e57d5f83>` pfSchedWaitSleep
+
+- #define :ref:`CHK_SchedWaitSleep <_cmp_schedule_itf_8h_1aafadf846691a72783938f1d6788dce97>` (pfSchedWaitSleep != NULL)
+
+- #define :ref:`EXP_SchedWaitSleep <_cmp_schedule_itf_8h_1a5799769c7099b2ce32d9d1432527e202>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedWaitSleep", (RTS_UINTPTR) :ref:`SchedWaitSleep <_cmp_schedule_itf_8h_1a578126616fc8813f8c1ce3b5c628b15c>` , 0, 0)
+
+- #define :ref:`USE_SchedWaitBusy <_cmp_schedule_itf_8h_1a88bba4190efa16c637140a39c8af6a06>` :ref:`PFSCHEDWAITBUSY <_cmp_schedule_itf_8h_1a7db50a3159e2dc849ee604e44ccf092e>` pfSchedWaitBusy;
+
+- #define :ref:`EXT_SchedWaitBusy <_cmp_schedule_itf_8h_1a240ba57fc9e0a342454705bbb8c93eea>` extern :ref:`PFSCHEDWAITBUSY <_cmp_schedule_itf_8h_1a7db50a3159e2dc849ee604e44ccf092e>` pfSchedWaitBusy;
+
+- #define :ref:`GET_SchedWaitBusy <_cmp_schedule_itf_8h_1a8d12fc57da1b8e940502e5167d4112b5>` s_pfCMGetAPI2( "SchedWaitBusy", (RTS_VOID_FCTPTR *)&pfSchedWaitBusy, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedWaitBusy <_cmp_schedule_itf_8h_1a83f3e457dee0511086655c68fd0fb5cb>` pfSchedWaitBusy
+
+- #define :ref:`CHK_SchedWaitBusy <_cmp_schedule_itf_8h_1a15cdbd0f47b5d6c07513da1ae967a9aa>` (pfSchedWaitBusy != NULL)
+
+- #define :ref:`EXP_SchedWaitBusy <_cmp_schedule_itf_8h_1a60e2376bc043e3b7859b7ca0995e02c7>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedWaitBusy", (RTS_UINTPTR) :ref:`SchedWaitBusy <_cmp_schedule_itf_8h_1a218075730f7c3059a4b7c43436f8f6d4>` , 0, 0)
+
+- #define :ref:`USE_SchedWatchdogExceptionHandler <_cmp_schedule_itf_8h_1a29e972737a3d7a87dd034843570a6c0b>` :ref:`PFSCHEDWATCHDOGEXCEPTIONHANDLER <_cmp_schedule_itf_8h_1a961feaef2a1c4f80db4ba381054bc984>` pfSchedWatchdogExceptionHandler;
+
+- #define :ref:`EXT_SchedWatchdogExceptionHandler <_cmp_schedule_itf_8h_1a024b6c82c6241191e7f6c7ff346e3053>` extern :ref:`PFSCHEDWATCHDOGEXCEPTIONHANDLER <_cmp_schedule_itf_8h_1a961feaef2a1c4f80db4ba381054bc984>` pfSchedWatchdogExceptionHandler;
+
+- #define :ref:`GET_SchedWatchdogExceptionHandler <_cmp_schedule_itf_8h_1aae7ec05d656578355fa21ca259dd8f00>` s_pfCMGetAPI2( "SchedWatchdogExceptionHandler", (RTS_VOID_FCTPTR *)&pfSchedWatchdogExceptionHandler, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedWatchdogExceptionHandler <_cmp_schedule_itf_8h_1a14674a324cb2340d2e24fc05a5384fb6>` pfSchedWatchdogExceptionHandler
+
+- #define :ref:`CHK_SchedWatchdogExceptionHandler <_cmp_schedule_itf_8h_1a14d2f676c9b442edaa2eb60541b8aa2c>` (pfSchedWatchdogExceptionHandler != NULL)
+
+- #define :ref:`EXP_SchedWatchdogExceptionHandler <_cmp_schedule_itf_8h_1a4926464f1de23d83e4a2a3dc901a3193>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedWatchdogExceptionHandler", (RTS_UINTPTR) :ref:`SchedWatchdogExceptionHandler <_cmp_schedule_itf_8h_1ac7b52ee0e9928bedc8cb2ac11cb67a7e>` , 0, 0)
+
+- #define :ref:`USE_SchedGetScheduleIntervalUs <_cmp_schedule_itf_8h_1a36c876e136fddfd133ab97179bb25e88>` :ref:`PFSCHEDGETSCHEDULEINTERVALUS <_cmp_schedule_itf_8h_1addd3936dca6e103c1ac45a6bc8e9e49b>` pfSchedGetScheduleIntervalUs;
+
+- #define :ref:`EXT_SchedGetScheduleIntervalUs <_cmp_schedule_itf_8h_1ad6e7bdb2b049d1054611860253f23fe8>` extern :ref:`PFSCHEDGETSCHEDULEINTERVALUS <_cmp_schedule_itf_8h_1addd3936dca6e103c1ac45a6bc8e9e49b>` pfSchedGetScheduleIntervalUs;
+
+- #define :ref:`GET_SchedGetScheduleIntervalUs <_cmp_schedule_itf_8h_1a9eac93ed7cc5457306660472df3ac4f5>` s_pfCMGetAPI2( "SchedGetScheduleIntervalUs", (RTS_VOID_FCTPTR *)&pfSchedGetScheduleIntervalUs, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedGetScheduleIntervalUs <_cmp_schedule_itf_8h_1a4b148e5679cd0fbf6a94ac06d86225ff>` pfSchedGetScheduleIntervalUs
+
+- #define :ref:`CHK_SchedGetScheduleIntervalUs <_cmp_schedule_itf_8h_1a8e9a7f1211d5768b4321f279b229bc49>` (pfSchedGetScheduleIntervalUs != NULL)
+
+- #define :ref:`EXP_SchedGetScheduleIntervalUs <_cmp_schedule_itf_8h_1a434d75f2102189a28e75e7e78361c631>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedGetScheduleIntervalUs", (RTS_UINTPTR) :ref:`SchedGetScheduleIntervalUs <_cmp_schedule_itf_8h_1a49bbcbb702137ad00895eb141d54d567>` , 0, 0)
+
+- #define :ref:`USE_SchedSetScheduleIntervalUs <_cmp_schedule_itf_8h_1a9f7c8ed92d3e9b0995ee74df6556796f>` :ref:`PFSCHEDSETSCHEDULEINTERVALUS <_cmp_schedule_itf_8h_1a30f5b932687f8b251386c0fc213285ad>` pfSchedSetScheduleIntervalUs;
+
+- #define :ref:`EXT_SchedSetScheduleIntervalUs <_cmp_schedule_itf_8h_1a3ac6936d9f6e15374e2655f4be97bfab>` extern :ref:`PFSCHEDSETSCHEDULEINTERVALUS <_cmp_schedule_itf_8h_1a30f5b932687f8b251386c0fc213285ad>` pfSchedSetScheduleIntervalUs;
+
+- #define :ref:`GET_SchedSetScheduleIntervalUs <_cmp_schedule_itf_8h_1a8d6170b38d44e803e1f91063c47389d2>` s_pfCMGetAPI2( "SchedSetScheduleIntervalUs", (RTS_VOID_FCTPTR *)&pfSchedSetScheduleIntervalUs, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedSetScheduleIntervalUs <_cmp_schedule_itf_8h_1a165a98c4ec0b94df1dcbebced24c31be>` pfSchedSetScheduleIntervalUs
+
+- #define :ref:`CHK_SchedSetScheduleIntervalUs <_cmp_schedule_itf_8h_1a1eb6e634ac7a15f262ab91219a3716a8>` (pfSchedSetScheduleIntervalUs != NULL)
+
+- #define :ref:`EXP_SchedSetScheduleIntervalUs <_cmp_schedule_itf_8h_1af6662a11f4dac6c5c86950e94ad4692f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedSetScheduleIntervalUs", (RTS_UINTPTR) :ref:`SchedSetScheduleIntervalUs <_cmp_schedule_itf_8h_1afe19862ffe3759c7da1eb43cbf8a06c2>` , 0, 0)
+
+- #define :ref:`USE_SchedSetTaskIntervalByTaskHandle <_cmp_schedule_itf_8h_1abfc80031f25817f88db95166f356ffc9>` :ref:`PFSCHEDSETTASKINTERVALBYTASKHANDLE <_cmp_schedule_itf_8h_1a2c000e38b83b905e5d558f51c0876153>` pfSchedSetTaskIntervalByTaskHandle;
+
+- #define :ref:`EXT_SchedSetTaskIntervalByTaskHandle <_cmp_schedule_itf_8h_1a7c244faf3e3399f90498d8c9dc33e9f9>` extern :ref:`PFSCHEDSETTASKINTERVALBYTASKHANDLE <_cmp_schedule_itf_8h_1a2c000e38b83b905e5d558f51c0876153>` pfSchedSetTaskIntervalByTaskHandle;
+
+- #define :ref:`GET_SchedSetTaskIntervalByTaskHandle <_cmp_schedule_itf_8h_1a6816a33d67f138b6aed3088f7652f53b>` s_pfCMGetAPI2( "SchedSetTaskIntervalByTaskHandle", (RTS_VOID_FCTPTR *)&pfSchedSetTaskIntervalByTaskHandle, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedSetTaskIntervalByTaskHandle <_cmp_schedule_itf_8h_1afe330486d170b21efbe4d3dc2e6d5f59>` pfSchedSetTaskIntervalByTaskHandle
+
+- #define :ref:`CHK_SchedSetTaskIntervalByTaskHandle <_cmp_schedule_itf_8h_1a7a9049857bdf08572cdb7d43743e0490>` (pfSchedSetTaskIntervalByTaskHandle != NULL)
+
+- #define :ref:`EXP_SchedSetTaskIntervalByTaskHandle <_cmp_schedule_itf_8h_1a29f6acc84b00ca2c906f774ecb8694ac>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedSetTaskIntervalByTaskHandle", (RTS_UINTPTR) :ref:`SchedSetTaskIntervalByTaskHandle <_cmp_schedule_itf_8h_1a82d7aed8841ba727ef7571dd93cdc020>` , 0, 0)
+
+- #define :ref:`USE_SchedRegisterExternalEvent <_cmp_schedule_itf_8h_1aabbc783f10687b368915130a47093710>` :ref:`PFSCHEDREGISTEREXTERNALEVENT <_cmp_schedule_itf_8h_1a00f2cc818637cc80b5c6698ee521611d>` pfSchedRegisterExternalEvent;
+
+- #define :ref:`EXT_SchedRegisterExternalEvent <_cmp_schedule_itf_8h_1ae0c560423e5a275138f38cbf1963083c>` extern :ref:`PFSCHEDREGISTEREXTERNALEVENT <_cmp_schedule_itf_8h_1a00f2cc818637cc80b5c6698ee521611d>` pfSchedRegisterExternalEvent;
+
+- #define :ref:`GET_SchedRegisterExternalEvent <_cmp_schedule_itf_8h_1af3bfc251e535862372a97f90aac1cd78>` s_pfCMGetAPI2( "SchedRegisterExternalEvent", (RTS_VOID_FCTPTR *)&pfSchedRegisterExternalEvent, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedRegisterExternalEvent <_cmp_schedule_itf_8h_1ae56470547f1f6d9f35d3ab6c193bc6d8>` pfSchedRegisterExternalEvent
+
+- #define :ref:`CHK_SchedRegisterExternalEvent <_cmp_schedule_itf_8h_1af7222b40c1001ec0ec89f985f4ea7af6>` (pfSchedRegisterExternalEvent != NULL)
+
+- #define :ref:`EXP_SchedRegisterExternalEvent <_cmp_schedule_itf_8h_1a6adef04ab22174614a263302c81c96d3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedRegisterExternalEvent", (RTS_UINTPTR) :ref:`SchedRegisterExternalEvent <_cmp_schedule_itf_8h_1a880b7a6a07983c220103310b8c42199c>` , 0, 0)
+
+- #define :ref:`USE_SchedUnregisterExternalEvent <_cmp_schedule_itf_8h_1a4dc8839f21306fea32bb9dabb3a5df05>` :ref:`PFSCHEDUNREGISTEREXTERNALEVENT <_cmp_schedule_itf_8h_1a19f8ef1c4cc34960ec0b7ff1a74068c1>` pfSchedUnregisterExternalEvent;
+
+- #define :ref:`EXT_SchedUnregisterExternalEvent <_cmp_schedule_itf_8h_1a7a4bdeedcec86e96a1726ac85a155f6c>` extern :ref:`PFSCHEDUNREGISTEREXTERNALEVENT <_cmp_schedule_itf_8h_1a19f8ef1c4cc34960ec0b7ff1a74068c1>` pfSchedUnregisterExternalEvent;
+
+- #define :ref:`GET_SchedUnregisterExternalEvent <_cmp_schedule_itf_8h_1a0c5b9c214186e1375985a962cac263ea>` s_pfCMGetAPI2( "SchedUnregisterExternalEvent", (RTS_VOID_FCTPTR *)&pfSchedUnregisterExternalEvent, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedUnregisterExternalEvent <_cmp_schedule_itf_8h_1a4e70157a8c03dc4cd878909cda3bc420>` pfSchedUnregisterExternalEvent
+
+- #define :ref:`CHK_SchedUnregisterExternalEvent <_cmp_schedule_itf_8h_1aead675b3f6d6a565496025da86d3e944>` (pfSchedUnregisterExternalEvent != NULL)
+
+- #define :ref:`EXP_SchedUnregisterExternalEvent <_cmp_schedule_itf_8h_1a12d1eb72ab744604a930762d412c71da>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedUnregisterExternalEvent", (RTS_UINTPTR) :ref:`SchedUnregisterExternalEvent <_cmp_schedule_itf_8h_1afb8e26e9007991141c1d7feade9f4be4>` , 0, 0)
+
+- #define :ref:`USE_SchedPostExternalEvent <_cmp_schedule_itf_8h_1a4ccb23ca48b632871dc42b7165a7d0ec>` :ref:`PFSCHEDPOSTEXTERNALEVENT <_cmp_schedule_itf_8h_1a98db177b5a477998bb096fabb8ce94a9>` pfSchedPostExternalEvent;
+
+- #define :ref:`EXT_SchedPostExternalEvent <_cmp_schedule_itf_8h_1a4f1cd1b0ae94bf731547f26809ec6b15>` extern :ref:`PFSCHEDPOSTEXTERNALEVENT <_cmp_schedule_itf_8h_1a98db177b5a477998bb096fabb8ce94a9>` pfSchedPostExternalEvent;
+
+- #define :ref:`GET_SchedPostExternalEvent <_cmp_schedule_itf_8h_1ae0da39c4c2dd0d7e2154a4c96e3a1a2b>` s_pfCMGetAPI2( "SchedPostExternalEvent", (RTS_VOID_FCTPTR *)&pfSchedPostExternalEvent, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedPostExternalEvent <_cmp_schedule_itf_8h_1afef836751f1a1c43d2722e81d0cc7839>` pfSchedPostExternalEvent
+
+- #define :ref:`CHK_SchedPostExternalEvent <_cmp_schedule_itf_8h_1a490598e26990ca8d6ca0dc3f7fb45919>` (pfSchedPostExternalEvent != NULL)
+
+- #define :ref:`EXP_SchedPostExternalEvent <_cmp_schedule_itf_8h_1a42c1764e7a0ac372711811dd4b8bd6b5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedPostExternalEvent", (RTS_UINTPTR) :ref:`SchedPostExternalEvent <_cmp_schedule_itf_8h_1a03afb1d011f53d849b974e43e3b936ab>` , 0, 0)
+
+- #define :ref:`USE_SchedGetTaskHandleBackend <_cmp_schedule_itf_8h_1a31438877d29e5b6176540bff494e3fb2>` :ref:`PFSCHEDGETTASKHANDLEBACKEND <_cmp_schedule_itf_8h_1aa629b80058beb7eb54f21fe0259273d8>` pfSchedGetTaskHandleBackend;
+
+- #define :ref:`EXT_SchedGetTaskHandleBackend <_cmp_schedule_itf_8h_1a0b0575132c8cca06d5c9649a1cdecff0>` extern :ref:`PFSCHEDGETTASKHANDLEBACKEND <_cmp_schedule_itf_8h_1aa629b80058beb7eb54f21fe0259273d8>` pfSchedGetTaskHandleBackend;
+
+- #define :ref:`GET_SchedGetTaskHandleBackend <_cmp_schedule_itf_8h_1a3813ea3ca17c63c90440cb411ab4a032>` s_pfCMGetAPI2( "SchedGetTaskHandleBackend", (RTS_VOID_FCTPTR *)&pfSchedGetTaskHandleBackend, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedGetTaskHandleBackend <_cmp_schedule_itf_8h_1a3509d4854126e8026c9c779a0fd2f528>` pfSchedGetTaskHandleBackend
+
+- #define :ref:`CHK_SchedGetTaskHandleBackend <_cmp_schedule_itf_8h_1a350e4c30fc50ee99949ae1fbea827959>` (pfSchedGetTaskHandleBackend != NULL)
+
+- #define :ref:`EXP_SchedGetTaskHandleBackend <_cmp_schedule_itf_8h_1ae3a5d76c228d6a3b7d1333f6cc857be8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedGetTaskHandleBackend", (RTS_UINTPTR) :ref:`SchedGetTaskHandleBackend <_cmp_schedule_itf_8h_1ae067e3cf856fc14d51bb2ca2a60a7d88>` , 0, 0)
+
+- #define :ref:`USE_SchedTaskSuspend <_cmp_schedule_itf_8h_1a00f0d3f74e8f4b97e001f908dbecc7b0>` :ref:`PFSCHEDTASKSUSPEND <_cmp_schedule_itf_8h_1a9540dac0591fd25f59dc8f7d58399bfd>` pfSchedTaskSuspend;
+
+- #define :ref:`EXT_SchedTaskSuspend <_cmp_schedule_itf_8h_1ac9a02cad0d1d8f07446513b70f44fc02>` extern :ref:`PFSCHEDTASKSUSPEND <_cmp_schedule_itf_8h_1a9540dac0591fd25f59dc8f7d58399bfd>` pfSchedTaskSuspend;
+
+- #define :ref:`GET_SchedTaskSuspend <_cmp_schedule_itf_8h_1a416cb57a543f843f45d9d423a15a43f2>` s_pfCMGetAPI2( "SchedTaskSuspend", (RTS_VOID_FCTPTR *)&pfSchedTaskSuspend, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedTaskSuspend <_cmp_schedule_itf_8h_1abb60791a022f395411ed3a9dc0538f0c>` pfSchedTaskSuspend
+
+- #define :ref:`CHK_SchedTaskSuspend <_cmp_schedule_itf_8h_1aece59ce6caed42da7ad15d5a28fa41e5>` (pfSchedTaskSuspend != NULL)
+
+- #define :ref:`EXP_SchedTaskSuspend <_cmp_schedule_itf_8h_1a3b4d7dbdd06223238fdbc3994a276583>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedTaskSuspend", (RTS_UINTPTR) :ref:`SchedTaskSuspend <_cmp_schedule_itf_8h_1a307e0291a968f1af5552886ee418a03d>` , 0, 0)
+
+- #define :ref:`USE_SchedTaskResume <_cmp_schedule_itf_8h_1a8ec389dcc5e283ae362c604e4cf2f971>` :ref:`PFSCHEDTASKRESUME <_cmp_schedule_itf_8h_1ad8b28e208add2745abbad8d131604f39>` pfSchedTaskResume;
+
+- #define :ref:`EXT_SchedTaskResume <_cmp_schedule_itf_8h_1aa3ceb69a3bd60cd48877a7349bf12d99>` extern :ref:`PFSCHEDTASKRESUME <_cmp_schedule_itf_8h_1ad8b28e208add2745abbad8d131604f39>` pfSchedTaskResume;
+
+- #define :ref:`GET_SchedTaskResume <_cmp_schedule_itf_8h_1a098ff7295e87e0db8fa185d77999b128>` s_pfCMGetAPI2( "SchedTaskResume", (RTS_VOID_FCTPTR *)&pfSchedTaskResume, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedTaskResume <_cmp_schedule_itf_8h_1a121623215f1385761872c012f0c156f4>` pfSchedTaskResume
+
+- #define :ref:`CHK_SchedTaskResume <_cmp_schedule_itf_8h_1a132b4df03d506db0fa66e53d7bfda320>` (pfSchedTaskResume != NULL)
+
+- #define :ref:`EXP_SchedTaskResume <_cmp_schedule_itf_8h_1a84e78eee2d625bef639ea632b4ec3263>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedTaskResume", (RTS_UINTPTR) :ref:`SchedTaskResume <_cmp_schedule_itf_8h_1a69e5a612d3c08549674665cc66c12911>` , 0, 0)
+
+- #define :ref:`USE_SchedTaskWaitForStop <_cmp_schedule_itf_8h_1a648eb9a869ec486a0b3e80a1524f6b6f>` :ref:`PFSCHEDTASKWAITFORSTOP <_cmp_schedule_itf_8h_1adf49ebc3e1ba18c3d0592d3ba5c02480>` pfSchedTaskWaitForStop;
+
+- #define :ref:`EXT_SchedTaskWaitForStop <_cmp_schedule_itf_8h_1a9a7375d0f096dc5837f64266036419be>` extern :ref:`PFSCHEDTASKWAITFORSTOP <_cmp_schedule_itf_8h_1adf49ebc3e1ba18c3d0592d3ba5c02480>` pfSchedTaskWaitForStop;
+
+- #define :ref:`GET_SchedTaskWaitForStop <_cmp_schedule_itf_8h_1a7a217636fc0440b02c9fd6969a4831b4>` s_pfCMGetAPI2( "SchedTaskWaitForStop", (RTS_VOID_FCTPTR *)&pfSchedTaskWaitForStop, (fl), 0, 0)
+
+- #define :ref:`CAL_SchedTaskWaitForStop <_cmp_schedule_itf_8h_1a7e0984c8dc5fdae6a80debac79e21b0d>` pfSchedTaskWaitForStop
+
+- #define :ref:`CHK_SchedTaskWaitForStop <_cmp_schedule_itf_8h_1af4c78ab60c55a02fc6fc80e1d428ae6b>` (pfSchedTaskWaitForStop != NULL)
+
+- #define :ref:`EXP_SchedTaskWaitForStop <_cmp_schedule_itf_8h_1a404866da029b27e64a6e66bb5b6bfdaf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SchedTaskWaitForStop", (RTS_UINTPTR) :ref:`SchedTaskWaitForStop <_cmp_schedule_itf_8h_1a00af1ea28a22d6050bc5c8bb3dcdc37e>` , 0, 0)
+
+- #define :ref:`ITF_CmpSchedule <_cmp_schedule_itf_8h_1aca2b296ed52c28ccc7788fb047a6fb4f>`
+
+- #define :ref:`EXTITF_CmpSchedule <_cmp_schedule_itf_8h_1a5de353daa57e36a9d5aa58aede46ca63>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagschedgetcurrenttask_struct <structtagschedgetcurrenttask__struct>` :ref:`schedgetcurrenttask_struct <_cmp_schedule_itf_8h_1a7b5bc904cb84b4225b7edf6fcb82dfb0>`
+
+- typedef void(* :ref:`PFSCHEDGETCURRENTTASK_IEC <_cmp_schedule_itf_8h_1add41db88b4f40a4356568a31ad58d017>`)(schedgetcurrenttask_struct *p)
+
+- typedef struct :ref:`tagschedgetnumoftasks_struct <structtagschedgetnumoftasks__struct>` :ref:`schedgetnumoftasks_struct <_cmp_schedule_itf_8h_1abed37608ae8e8086a18afb3444e443d3>`
+
+- typedef void(* :ref:`PFSCHEDGETNUMOFTASKS_IEC <_cmp_schedule_itf_8h_1a21936266adcb5bf3dd6deee608b58918>`)(schedgetnumoftasks_struct *p)
+
+- typedef struct :ref:`tagschedgetprocessorload_struct <structtagschedgetprocessorload__struct>` :ref:`schedgetprocessorload_struct <_cmp_schedule_itf_8h_1a7265dca77b4bd1bc82f62f23d8216894>`
+
+- typedef void(* :ref:`PFSCHEDGETPROCESSORLOAD_IEC <_cmp_schedule_itf_8h_1aa2789fed2b44c93d602b98075892cd60>`)(schedgetprocessorload_struct *p)
+
+- typedef struct :ref:`tagschedgettaskeventbyhandle_struct <structtagschedgettaskeventbyhandle__struct>` :ref:`schedgettaskeventbyhandle_struct <_cmp_schedule_itf_8h_1acfa65f0ab35d41cbde7ba33035220e0e>`
+
+- typedef void(* :ref:`PFSCHEDGETTASKEVENTBYHANDLE_IEC <_cmp_schedule_itf_8h_1a6d68bf7d5e4c02a67994df93bcb414dd>`)(schedgettaskeventbyhandle_struct *p)
+
+- typedef struct :ref:`tagschedgettaskhandlebyindex_struct <structtagschedgettaskhandlebyindex__struct>` :ref:`schedgettaskhandlebyindex_struct <_cmp_schedule_itf_8h_1a1ccf12cf6f5139782ed6370b7c6e324d>`
+
+- typedef void(* :ref:`PFSCHEDGETTASKHANDLEBYINDEX_IEC <_cmp_schedule_itf_8h_1aec9de2f5d1f51599de8df84a111b0bc2>`)(schedgettaskhandlebyindex_struct *p)
+
+- typedef struct :ref:`tagschedgettaskhandlebyname_struct <structtagschedgettaskhandlebyname__struct>` :ref:`schedgettaskhandlebyname_struct <_cmp_schedule_itf_8h_1ae0285287f1be6b4bde961a420914a1f4>`
+
+- typedef void(* :ref:`PFSCHEDGETTASKHANDLEBYNAME_IEC <_cmp_schedule_itf_8h_1aa4318af1bba5764bd80937ffa7df8e7c>`)(schedgettaskhandlebyname_struct *p)
+
+- typedef struct :ref:`tagschedgettaskinterval_struct <structtagschedgettaskinterval__struct>` :ref:`schedgettaskinterval_struct <_cmp_schedule_itf_8h_1a06879827e752e229a9d3f58e7aaff2ee>`
+
+- typedef void(* :ref:`PFSCHEDGETTASKINTERVAL_IEC <_cmp_schedule_itf_8h_1ac65f608a3760a6a7c416e598db6a30b7>`)(schedgettaskinterval_struct *p)
+
+- typedef struct :ref:`tagschedpostexternalevent_struct <structtagschedpostexternalevent__struct>` :ref:`schedpostexternalevent_struct <_cmp_schedule_itf_8h_1ad6b5789b1a6f0d96913be4d95c9c518e>`
+
+- typedef void(* :ref:`PFSCHEDPOSTEXTERNALEVENT_IEC <_cmp_schedule_itf_8h_1a2c1dfdbe8f7651720c521ae6ca7ba331>`)(schedpostexternalevent_struct *p)
+
+- typedef struct :ref:`tagschedregisterexternalevent_struct <structtagschedregisterexternalevent__struct>` :ref:`schedregisterexternalevent_struct <_cmp_schedule_itf_8h_1a7bd7eed96c074b258f900b392ab77f20>`
+
+- typedef void(* :ref:`PFSCHEDREGISTEREXTERNALEVENT_IEC <_cmp_schedule_itf_8h_1a1b45f7de42f1decbda7703140a8281a7>`)(schedregisterexternalevent_struct *p)
+
+- typedef struct :ref:`tagschedsettaskinterval_struct <structtagschedsettaskinterval__struct>` :ref:`schedsettaskinterval_struct <_cmp_schedule_itf_8h_1a75f8282b38572a0e401ee7ea98ee5254>`
+
+- typedef void(* :ref:`PFSCHEDSETTASKINTERVAL_IEC <_cmp_schedule_itf_8h_1ab184b898dc7f0520925ee6dd6aab9a87>`)(schedsettaskinterval_struct *p)
+
+- typedef struct :ref:`tagschedtaskresume_struct <structtagschedtaskresume__struct>` :ref:`schedtaskresume_struct <_cmp_schedule_itf_8h_1a0dc06ba1ab92ed754f0f2c1c975c2df0>`
+
+- typedef void(* :ref:`PFSCHEDTASKRESUME_IEC <_cmp_schedule_itf_8h_1a33ee584c34451eb49f5ce4995fc9a1d0>`)(schedtaskresume_struct *p)
+
+- typedef struct :ref:`tagschedtasksuspend_struct <structtagschedtasksuspend__struct>` :ref:`schedtasksuspend_struct <_cmp_schedule_itf_8h_1a2653c718ba5a1b8db842e7b42181ab55>`
+
+- typedef void(* :ref:`PFSCHEDTASKSUSPEND_IEC <_cmp_schedule_itf_8h_1aa5070a192a307bb7a43c044054eb0393>`)(schedtasksuspend_struct *p)
+
+- typedef struct :ref:`tagschedunregisterexternalevent_struct <structtagschedunregisterexternalevent__struct>` :ref:`schedunregisterexternalevent_struct <_cmp_schedule_itf_8h_1abb9cf62279ca09d1da4ee623231744fc>`
+
+- typedef void(* :ref:`PFSCHEDUNREGISTEREXTERNALEVENT_IEC <_cmp_schedule_itf_8h_1a70857bfeaf520f408182fba00048e820>`)(schedunregisterexternalevent_struct *p)
+
+- typedef struct :ref:`tagschedwaitbusy_struct <structtagschedwaitbusy__struct>` :ref:`schedwaitbusy_struct <_cmp_schedule_itf_8h_1a8ac9b1a82951324a526bdfde7a94dae4>`
+
+- typedef void(* :ref:`PFSCHEDWAITBUSY_IEC <_cmp_schedule_itf_8h_1ae69052650001bfaf3d778be8f28d192f>`)(schedwaitbusy_struct *p)
+
+- typedef struct :ref:`tagschedwaitsleep_struct <structtagschedwaitsleep__struct>` :ref:`schedwaitsleep_struct <_cmp_schedule_itf_8h_1a80c81c37f2941f1e4d9781b914238dd5>`
+
+- typedef void(* :ref:`PFSCHEDWAITSLEEP_IEC <_cmp_schedule_itf_8h_1a3099f377abd6be0ea5d11df5ab6380a0>`)(schedwaitsleep_struct *p)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDHASFEATURE <_cmp_schedule_itf_8h_1ab7153c1c4978330ec06378a828f7cf4c>`)(unsigned long ulFeatures)
+
+- typedef RTS_HANDLE(* :ref:`PFSCHEDADDTASK <_cmp_schedule_itf_8h_1abe5ea8473893d2d92bd0d1a0fb9e9703>`)(Task_Desc *pTask, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDREMOVETASK <_cmp_schedule_itf_8h_1ada2cbb89ee2f1b255d90c18c670758d4>`)(RTS_HANDLE hSchedTask)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDREMOVETASK2 <_cmp_schedule_itf_8h_1a6a8407c4c6c2c347493d6fe87dded8cc>`)(RTS_HANDLE hSchedTask, RTS_UI32 ulTimeoutMs)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDULE <_cmp_schedule_itf_8h_1aee45adc1a935a7c0bd463425028b552b>`)(RTS_HANDLE hSchedTask, int iCmd)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDDEBUGENTER <_cmp_schedule_itf_8h_1a75f465a9e67f366dd512d6808c691f38>`)(RTS_HANDLE hSchedTask)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDDEBUGLEAVE <_cmp_schedule_itf_8h_1a9f56ed9bc4e7050f9ec24b28c4cdf84d>`)(RTS_HANDLE hSchedTask)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDPREPARERESET <_cmp_schedule_itf_8h_1af055c105cb6e5709195e7e3c7527abfe>`)(APPLICATION *pApp, int bResetOrigin)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDRESETDONE <_cmp_schedule_itf_8h_1aa87154d9858d427c809dde6dc6429cb0>`)(APPLICATION *pApp, int bResetOrigin)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDSTART <_cmp_schedule_itf_8h_1aec43bc6406ee3a57c0d909eeec841cd0>`)(APPLICATION *pApp)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDSTOP <_cmp_schedule_itf_8h_1a9af21b576c69db70bc43fb49bf58a599>`)(APPLICATION *pApp, RTS_HANDLE hTaskToExclude)
+
+- typedef RTS_HANDLE(* :ref:`PFSCHEDGETCURRENTTASK <_cmp_schedule_itf_8h_1a6561671b13961fff184969278f13b820>`)(Task_Desc **ppTask, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDGETCONTEXT <_cmp_schedule_itf_8h_1afd08de3978a0fbbe01a68bfa7c78b624>`)(RTS_HANDLE hSchedTask, RegContext *pContext)
+
+- typedef int(* :ref:`PFSCHEDGETNUMOFTASKS <_cmp_schedule_itf_8h_1a057bc6883ffd29be51bfd9d4c91b4c42>`)(APPLICATION *pApp, RTS_RESULT *pResult)
+
+- typedef :ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` *(* :ref:`PFSCHEDGETTASKDESCBYINDEX <_cmp_schedule_itf_8h_1a7e1e9ee5f02d8fc109fa8691e12da540>`)(APPLICATION *pApp, int iIndex, RTS_RESULT *pResult)
+
+- typedef :ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` *(* :ref:`PFSCHEDGETTASKDESCBYHANDLE <_cmp_schedule_itf_8h_1a8641969d871182b31147caaa4a8b4b3d>`)(RTS_HANDLE hSchedTask, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSCHEDGETTASKHANDLEBYINDEX <_cmp_schedule_itf_8h_1aec68c59ce36a1db773ef5cd296d7e832>`)(APPLICATION *pApp, int iIndex, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSCHEDGETTASKHANDLEBYNAME <_cmp_schedule_itf_8h_1abf8796f385473019631454e1ef2fba99>`)(char *pszTaskName, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSCHEDGETTASKEVENTBYHANDLE <_cmp_schedule_itf_8h_1af89ac663a9cf00e9e5757e714606137d>`)(RTS_HANDLE hSchedTask, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDTIMESLICEPLCBEGIN <_cmp_schedule_itf_8h_1afa4d1300a531eb835abff4311a2d84c0>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDTIMESLICEPLCEND <_cmp_schedule_itf_8h_1a86224c1dd86765a4b2b2795733766e82>`)(void)
+
+- typedef unsigned long(* :ref:`PFSCHEDGETPROCESSORLOAD <_cmp_schedule_itf_8h_1a4345e4fd23175c514f2a1a2b1af9d992>`)(RTS_RESULT *pResult)
+
+- typedef RTS_UI32(* :ref:`PFSCHEDGETPROCESSORLOADONCORE <_cmp_schedule_itf_8h_1a828cb1536af84c35bef1d8f87f575286>`)(RTS_UI32 uCoreID, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDGETTASKINTERVAL <_cmp_schedule_itf_8h_1a9f731bc24fb4c960a17056af41e2b95a>`)(RTS_HANDLE hSchedTask, RTS_UI32 *pulInterval)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDSETTASKINTERVAL <_cmp_schedule_itf_8h_1a68028491e3df40d0a0035279bb9e197e>`)(RTS_HANDLE hSchedTask, RTS_UI32 ulInterval)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDWAITSLEEP <_cmp_schedule_itf_8h_1accf2f480ed039d67b1079e41de5ce4a6>`)(RTS_SYSTIME *ptSleepUs)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDWAITBUSY <_cmp_schedule_itf_8h_1a7db50a3159e2dc849ee604e44ccf092e>`)(RTS_SYSTIME *ptSleepUs)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDWATCHDOGEXCEPTIONHANDLER <_cmp_schedule_itf_8h_1a961feaef2a1c4f80db4ba381054bc984>`)(RTS_HANDLE hSchedTask)
+
+- typedef int(* :ref:`PFSCHEDGETSCHEDULEINTERVALUS <_cmp_schedule_itf_8h_1addd3936dca6e103c1ac45a6bc8e9e49b>`)(RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDSETSCHEDULEINTERVALUS <_cmp_schedule_itf_8h_1a30f5b932687f8b251386c0fc213285ad>`)(int iScheduleIntervalUsNew)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDSETTASKINTERVALBYTASKHANDLE <_cmp_schedule_itf_8h_1a2c000e38b83b905e5d558f51c0876153>`)(RTS_HANDLE hSysTask, RTS_UI32 ulInterval)
+
+- typedef RTS_HANDLE(* :ref:`PFSCHEDREGISTEREXTERNALEVENT <_cmp_schedule_itf_8h_1a00f2cc818637cc80b5c6698ee521611d>`)(const char *pszExtEventName, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDUNREGISTEREXTERNALEVENT <_cmp_schedule_itf_8h_1a19f8ef1c4cc34960ec0b7ff1a74068c1>`)(RTS_HANDLE hExtEvent)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDPOSTEXTERNALEVENT <_cmp_schedule_itf_8h_1a98db177b5a477998bb096fabb8ce94a9>`)(RTS_HANDLE hExtEvent)
+
+- typedef RTS_HANDLE(* :ref:`PFSCHEDGETTASKHANDLEBACKEND <_cmp_schedule_itf_8h_1aa629b80058beb7eb54f21fe0259273d8>`)(RTS_HANDLE hSchedTask, CMPID *pCmpIdBackend, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDTASKSUSPEND <_cmp_schedule_itf_8h_1a9540dac0591fd25f59dc8f7d58399bfd>`)(RTS_HANDLE hSchedTask)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDTASKRESUME <_cmp_schedule_itf_8h_1ad8b28e208add2745abbad8d131604f39>`)(RTS_HANDLE hSchedTask)
+
+- typedef RTS_RESULT(* :ref:`PFSCHEDTASKWAITFORSTOP <_cmp_schedule_itf_8h_1adf49ebc3e1ba18c3d0592d3ba5c02480>`)(RTS_HANDLE hSchedTask, RTS_SYSTIME timeoutUs)
+
+- typedef :ref:`ICmpSchedule_C <struct_i_cmp_schedule___c>` :ref:`ICmpSchedule <_cmp_schedule_itf_8h_1aa0f7dfdeb1fa5a7402e880f13dcc9995>`
+
+Functions
+---------
+
+- void :ref:`schedgetcurrenttask <_cmp_schedule_itf_8h_1a3e8e03b030af8785ac7124f017a0fd82>` (:ref:`schedgetcurrenttask_struct <_cmp_schedule_itf_8h_1a7b5bc904cb84b4225b7edf6fcb82dfb0>` * p)
+
+- void :ref:`schedgetnumoftasks <_cmp_schedule_itf_8h_1a1595c5d81bf291e8366e818a6720fbe4>` (:ref:`schedgetnumoftasks_struct <_cmp_schedule_itf_8h_1abed37608ae8e8086a18afb3444e443d3>` * p)
+
+- void :ref:`schedgetprocessorload <_cmp_schedule_itf_8h_1ae67b6d39ddbafe4ba0991d9574ab0beb>` (:ref:`schedgetprocessorload_struct <_cmp_schedule_itf_8h_1a7265dca77b4bd1bc82f62f23d8216894>` * p)
+
+- void :ref:`schedgettaskeventbyhandle <_cmp_schedule_itf_8h_1ad3a1b0f5032a10535ab7ed11fd09fb6a>` (:ref:`schedgettaskeventbyhandle_struct <_cmp_schedule_itf_8h_1acfa65f0ab35d41cbde7ba33035220e0e>` * p)
+
+- void :ref:`schedgettaskhandlebyindex <_cmp_schedule_itf_8h_1a19eeb4f19b5570e5cccb08a51d47e219>` (:ref:`schedgettaskhandlebyindex_struct <_cmp_schedule_itf_8h_1a1ccf12cf6f5139782ed6370b7c6e324d>` * p)
+
+- void :ref:`schedgettaskhandlebyname <_cmp_schedule_itf_8h_1a5bdaba8bd96bee514f8abdeaab5a2dad>` (:ref:`schedgettaskhandlebyname_struct <_cmp_schedule_itf_8h_1ae0285287f1be6b4bde961a420914a1f4>` * p)
+
+- void :ref:`schedgettaskinterval <_cmp_schedule_itf_8h_1add17c75f0404ad11757a277f7b8a7282>` (:ref:`schedgettaskinterval_struct <_cmp_schedule_itf_8h_1a06879827e752e229a9d3f58e7aaff2ee>` * p)
+
+- void :ref:`schedpostexternalevent <_cmp_schedule_itf_8h_1a1433b3ab41a32bb7cfb3bab6d5afe8c3>` (:ref:`schedpostexternalevent_struct <_cmp_schedule_itf_8h_1ad6b5789b1a6f0d96913be4d95c9c518e>` * p)
+
+- void :ref:`schedregisterexternalevent <_cmp_schedule_itf_8h_1a7965bc04a67c08866afbaa14f1cea387>` (:ref:`schedregisterexternalevent_struct <_cmp_schedule_itf_8h_1a7bd7eed96c074b258f900b392ab77f20>` * p)
+
+- void :ref:`schedsettaskinterval <_cmp_schedule_itf_8h_1a5ffe8f94a0b6421c9f832b6002d6154d>` (:ref:`schedsettaskinterval_struct <_cmp_schedule_itf_8h_1a75f8282b38572a0e401ee7ea98ee5254>` * p)
+
+- void :ref:`schedtaskresume <_cmp_schedule_itf_8h_1a9fc3788a0efe44fcf2d0d419aa836c08>` (:ref:`schedtaskresume_struct <_cmp_schedule_itf_8h_1a0dc06ba1ab92ed754f0f2c1c975c2df0>` * p)
+
+- void :ref:`schedtasksuspend <_cmp_schedule_itf_8h_1aa0a18d08a0321f9d42657ced7279984f>` (:ref:`schedtasksuspend_struct <_cmp_schedule_itf_8h_1a2653c718ba5a1b8db842e7b42181ab55>` * p)
+
+- void :ref:`schedunregisterexternalevent <_cmp_schedule_itf_8h_1ae37e41df2ee4e942d571e2a386640316>` (:ref:`schedunregisterexternalevent_struct <_cmp_schedule_itf_8h_1abb9cf62279ca09d1da4ee623231744fc>` * p)
+
+- void :ref:`schedwaitbusy <_cmp_schedule_itf_8h_1a843e4c5f2f32a0b46b7676f79929ede7>` (:ref:`schedwaitbusy_struct <_cmp_schedule_itf_8h_1a8ac9b1a82951324a526bdfde7a94dae4>` * p)
+
+- void :ref:`schedwaitsleep <_cmp_schedule_itf_8h_1a200c55c7c6390409c0bf5cc05c58f462>` (:ref:`schedwaitsleep_struct <_cmp_schedule_itf_8h_1a80c81c37f2941f1e4d9781b914238dd5>` * p)
+
+- RTS_RESULT :ref:`SchedHasFeature <_cmp_schedule_itf_8h_1aa23ddf79d409da2e96f55f5fdb0c6e78>` (unsigned long ulFeatures)
+
+- RTS_HANDLE :ref:`SchedAddTask <_cmp_schedule_itf_8h_1a97cf2c1552f70570c790827bb82d6a6c>` (:ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` * pTask, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SchedRemoveTask <_cmp_schedule_itf_8h_1a2c8034bf7f89052105f94ab6dc8d3d1b>` (RTS_HANDLE hSchedTask)
+
+- RTS_RESULT :ref:`SchedRemoveTask2 <_cmp_schedule_itf_8h_1ae52dbdbb5f4a1d9a582ad8ec5619b7e5>` (RTS_HANDLE hSchedTask, RTS_UI32 ulTimeoutMs)
+
+- RTS_RESULT :ref:`Schedule <_cmp_schedule_itf_8h_1aa4e110d2b572a55739fd9cb6e790f12b>` (RTS_HANDLE hSchedTask, int iCmd)
+
+- RTS_RESULT :ref:`SchedDebugEnter <_cmp_schedule_itf_8h_1a314f3d9986ee6c07c893e965411897a7>` (RTS_HANDLE hSchedTask)
+
+- RTS_RESULT :ref:`SchedDebugLeave <_cmp_schedule_itf_8h_1a48bbd53df63d9951b95423a65cbd597f>` (RTS_HANDLE hSchedTask)
+
+- RTS_RESULT :ref:`SchedPrepareReset <_cmp_schedule_itf_8h_1afd5a6c24d642abe80493f3547f5da6cb>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, int bResetOrigin)
+
+- RTS_RESULT :ref:`SchedResetDone <_cmp_schedule_itf_8h_1a87af5a5c80870f68932d36a197259825>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, int bResetOrigin)
+
+- RTS_RESULT :ref:`SchedStart <_cmp_schedule_itf_8h_1aa7bf93836615e788bb5e9e7d41cb2655>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_RESULT :ref:`SchedStop <_cmp_schedule_itf_8h_1a820061956933ca9e340e5f7d860236d2>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_HANDLE hTaskToExclude)
+
+- RTS_HANDLE :ref:`SchedGetCurrentTask <_cmp_schedule_itf_8h_1aa077a735f2c0f6aaf586763190099f83>` (:ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` ** ppTask, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SchedGetContext <_cmp_schedule_itf_8h_1ae02331c4b8fbe0026b7d5e7174de4d54>` (RTS_HANDLE hSchedTask, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>` * pContext)
+
+- int :ref:`SchedGetNumOfTasks <_cmp_schedule_itf_8h_1a740ebf2a723caaa858072893aaf4c082>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_RESULT * pResult)
+
+- :ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` * :ref:`SchedGetTaskDescByIndex <_cmp_schedule_itf_8h_1a842d75dfd88497dc2c0ec61efd298a51>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, int iIndex, RTS_RESULT * pResult)
+
+- :ref:`Task_Desc <group___cmp_iec_task_itf_1ga3e7248e4ba098ac4bb720b4a1ac4f6dd>` * :ref:`SchedGetTaskDescByHandle <_cmp_schedule_itf_8h_1ab930bff8f638a577033ee6e977b65b23>` (RTS_HANDLE hSchedTask, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SchedGetTaskHandleByIndex <_cmp_schedule_itf_8h_1ae5240901ba2396c33c9141eec5409abf>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, int iIndex, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SchedGetTaskHandleByName <_cmp_schedule_itf_8h_1ab4a321f1e5bf408cb85f50b03b08c4fe>` (char * pszTaskName, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SchedGetTaskEventByHandle <_cmp_schedule_itf_8h_1a7e1a3bf554f6405eb83a77ace3a05c41>` (RTS_HANDLE hSchedTask, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SchedTimeslicePlcBegin <_cmp_schedule_itf_8h_1acd1800c4aec89c8deeb88c821ca1ec6f>` (void)
+
+- RTS_RESULT :ref:`SchedTimeslicePlcEnd <_cmp_schedule_itf_8h_1a61f14de511570d9b32911b422ec79c85>` (void)
+
+- unsigned long :ref:`SchedGetProcessorLoad <_cmp_schedule_itf_8h_1a169a5f9c17c6f3f081ae8f41805ce03c>` (RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`SchedGetProcessorLoadOnCore <_cmp_schedule_itf_8h_1acb31419874816156d95b2e34d7b70de2>` (RTS_UI32 uCoreID, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SchedGetTaskInterval <_cmp_schedule_itf_8h_1ae1b1d213d9942794b33076899b0ac467>` (RTS_HANDLE hSchedTask, RTS_UI32 * pulInterval)
+
+- RTS_RESULT :ref:`SchedSetTaskInterval <_cmp_schedule_itf_8h_1a38343a42c411c3764583e0f56ef4bcee>` (RTS_HANDLE hSchedTask, RTS_UI32 ulInterval)
+
+- RTS_RESULT :ref:`SchedWaitSleep <_cmp_schedule_itf_8h_1a578126616fc8813f8c1ce3b5c628b15c>` (:ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` * ptSleepUs)
+
+- RTS_RESULT :ref:`SchedWaitBusy <_cmp_schedule_itf_8h_1a218075730f7c3059a4b7c43436f8f6d4>` (:ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` * ptSleepUs)
+
+- RTS_RESULT :ref:`SchedWatchdogExceptionHandler <_cmp_schedule_itf_8h_1ac7b52ee0e9928bedc8cb2ac11cb67a7e>` (RTS_HANDLE hSchedTask)
+
+- int :ref:`SchedGetScheduleIntervalUs <_cmp_schedule_itf_8h_1a49bbcbb702137ad00895eb141d54d567>` (RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SchedSetScheduleIntervalUs <_cmp_schedule_itf_8h_1afe19862ffe3759c7da1eb43cbf8a06c2>` (int iScheduleIntervalUsNew)
+
+- RTS_RESULT :ref:`SchedSetTaskIntervalByTaskHandle <_cmp_schedule_itf_8h_1a82d7aed8841ba727ef7571dd93cdc020>` (RTS_HANDLE hSysTask, RTS_UI32 ulInterval)
+
+- RTS_HANDLE :ref:`SchedRegisterExternalEvent <_cmp_schedule_itf_8h_1a880b7a6a07983c220103310b8c42199c>` (const char * pszExtEventName, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SchedUnregisterExternalEvent <_cmp_schedule_itf_8h_1afb8e26e9007991141c1d7feade9f4be4>` (RTS_HANDLE hExtEvent)
+
+- RTS_RESULT :ref:`SchedPostExternalEvent <_cmp_schedule_itf_8h_1a03afb1d011f53d849b974e43e3b936ab>` (RTS_HANDLE hExtEvent)
+
+- RTS_HANDLE :ref:`SchedGetTaskHandleBackend <_cmp_schedule_itf_8h_1ae067e3cf856fc14d51bb2ca2a60a7d88>` (RTS_HANDLE hSchedTask, CMPID * pCmpIdBackend, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SchedTaskSuspend <_cmp_schedule_itf_8h_1a307e0291a968f1af5552886ee418a03d>` (RTS_HANDLE hSchedTask)
+
+- RTS_RESULT :ref:`SchedTaskResume <_cmp_schedule_itf_8h_1a69e5a612d3c08549674665cc66c12911>` (RTS_HANDLE hSchedTask)
+
+- RTS_RESULT :ref:`SchedTaskWaitForStop <_cmp_schedule_itf_8h_1a00af1ea28a22d6050bc5c8bb3dcdc37e>` (RTS_HANDLE hSchedTask, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>`  timeoutUs)
+
+Detailed Description
+--------------------
+
+Definition in file CmpScheduleItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

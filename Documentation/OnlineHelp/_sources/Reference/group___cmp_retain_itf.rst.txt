@@ -1,0 +1,901 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_retain_itf:
+
+============
+CmpRetainItf
+============
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpRetain.
+
+Detailed Description
+--------------------
+
+This is the interface of the retain manager. Retains are data that are not lost after a reboot (non-volatile).
+
+To realize non-volatile data, following different techniques are used typically:
+
+  - Store data at shutdown on a non-volatile medium (e.g. hard-disk): This can be used only on systems with a defined shutdown and with an UPS (external power supply)!
+
+  - Store retain data directly on a non-volatile RAM (SRAM, NVRAM, etc.): This can be used only on systems with this types of memory.
+
+All retain data is checked for consistency with a data GUID. This GUID is written at the beginning of each retain area and can be checked after the next restore.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Delete option <group___cmp_retain_itf___deleteoption>`
+
+- :ref:`Event parameter <group___cmp_retain_itf___eventparameter>`
+
+- :ref:`Events <group___cmp_retain_itf___events>`
+
+- :ref:`Retain header <group___cmp_retain_itf___retainheader>`
+
+- :ref:`Retain type <group___cmp_retain_itf___retaintype>`
+
+- :ref:`Settings <group___cmp_retain_itf___settings>`
+
+- :ref:`Static defines <group___cmp_retain_itf___staticdefines>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpRetain_C <struct_i_cmp_retain___c>`
+
+Macros
+------
+
+- #define :ref:`USE_RetainAlloc <group___cmp_retain_itf_1ga70efcb1a48f0c5a187798df27bd07bca>` :ref:`PFRETAINALLOC <group___cmp_retain_itf_1gaf6eec1869fb56de63094da053f349d1c>` pfRetainAlloc;
+
+- #define :ref:`EXT_RetainAlloc <group___cmp_retain_itf_1ga1b9a52b4641b18283778a737d02afb80>` extern :ref:`PFRETAINALLOC <group___cmp_retain_itf_1gaf6eec1869fb56de63094da053f349d1c>` pfRetainAlloc;
+
+- #define :ref:`GET_RetainAlloc <group___cmp_retain_itf_1ga34cb7d5069341f0992f0ead9dc95f222>` s_pfCMGetAPI2( "RetainAlloc", (RTS_VOID_FCTPTR *)&pfRetainAlloc, (fl), 0, 0)
+
+- #define :ref:`CAL_RetainAlloc <group___cmp_retain_itf_1gadedb0f15ebb291be3eaf8dca06b8ca2c>` pfRetainAlloc
+
+- #define :ref:`CHK_RetainAlloc <group___cmp_retain_itf_1ga5f214224b72447f433c5071f04adab57>` (pfRetainAlloc != NULL)
+
+- #define :ref:`EXP_RetainAlloc <group___cmp_retain_itf_1gaf2261b90cf7ed307cb8befb9b90c0cb3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainAlloc", (RTS_UINTPTR) :ref:`RetainAlloc <group___cmp_retain_itf_1ga9488af398ccccb9e7cb905c57a5a70b5>` , 0, 0)
+
+- #define :ref:`USE_RetainFree <group___cmp_retain_itf_1gafceb0089f0cdda6f41e13c3fdc7f077f>` :ref:`PFRETAINFREE <group___cmp_retain_itf_1ga49482374aeef5d66394bd62ed0f16980>` pfRetainFree;
+
+- #define :ref:`EXT_RetainFree <group___cmp_retain_itf_1ga16436fbc79343104755e1f81ffde1fba>` extern :ref:`PFRETAINFREE <group___cmp_retain_itf_1ga49482374aeef5d66394bd62ed0f16980>` pfRetainFree;
+
+- #define :ref:`GET_RetainFree <group___cmp_retain_itf_1ga97e0af5232ab4824ecb765601bd35cc3>` s_pfCMGetAPI2( "RetainFree", (RTS_VOID_FCTPTR *)&pfRetainFree, (fl), 0, 0)
+
+- #define :ref:`CAL_RetainFree <group___cmp_retain_itf_1ga04b11f8c95d94906b52ccd886b7715be>` pfRetainFree
+
+- #define :ref:`CHK_RetainFree <group___cmp_retain_itf_1gaae75d64d91e551b320c446c828d9a19c>` (pfRetainFree != NULL)
+
+- #define :ref:`EXP_RetainFree <group___cmp_retain_itf_1ga4ea387c8b07bfa37282258fdc483a2d6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainFree", (RTS_UINTPTR) :ref:`RetainFree <group___cmp_retain_itf_1ga41db1fb9c53c88c8dff916d99c0adb49>` , 0, 0)
+
+- #define :ref:`USE_RetainFreeAll <group___cmp_retain_itf_1ga0c20aa8eff4e53fbe5044559fe267c3b>` :ref:`PFRETAINFREEALL <group___cmp_retain_itf_1ga7a865446cbb182d232968433b9550aa6>` pfRetainFreeAll;
+
+- #define :ref:`EXT_RetainFreeAll <group___cmp_retain_itf_1gaf237fd82b9c331d815d04363ccaf6a1b>` extern :ref:`PFRETAINFREEALL <group___cmp_retain_itf_1ga7a865446cbb182d232968433b9550aa6>` pfRetainFreeAll;
+
+- #define :ref:`GET_RetainFreeAll <group___cmp_retain_itf_1ga9e976d319365dac1999020419b172bf8>` s_pfCMGetAPI2( "RetainFreeAll", (RTS_VOID_FCTPTR *)&pfRetainFreeAll, (fl), 0, 0)
+
+- #define :ref:`CAL_RetainFreeAll <group___cmp_retain_itf_1gaaa57375edcbaac0f48cfa93da10f2b05>` pfRetainFreeAll
+
+- #define :ref:`CHK_RetainFreeAll <group___cmp_retain_itf_1ga5320f99bda6946c8297a4450cfa06d93>` (pfRetainFreeAll != NULL)
+
+- #define :ref:`EXP_RetainFreeAll <group___cmp_retain_itf_1ga6957fce16f4e22d5721c1dc9550640b0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainFreeAll", (RTS_UINTPTR) :ref:`RetainFreeAll <group___cmp_retain_itf_1ga54a0c084a3de1e56312b72038ba66354>` , 0, 0)
+
+- #define :ref:`USE_RetainUpdateGuid <group___cmp_retain_itf_1gaf21757b993c6deefdd16a3b39db8d502>` :ref:`PFRETAINUPDATEGUID <group___cmp_retain_itf_1ga81a294d021571bb916f0d3b54a61b6ae>` pfRetainUpdateGuid;
+
+- #define :ref:`EXT_RetainUpdateGuid <group___cmp_retain_itf_1ga6396e350f55fc4afa05982458fa4c891>` extern :ref:`PFRETAINUPDATEGUID <group___cmp_retain_itf_1ga81a294d021571bb916f0d3b54a61b6ae>` pfRetainUpdateGuid;
+
+- #define :ref:`GET_RetainUpdateGuid <group___cmp_retain_itf_1gac9a7e93eab6b052d3fbe07c719608682>` s_pfCMGetAPI2( "RetainUpdateGuid", (RTS_VOID_FCTPTR *)&pfRetainUpdateGuid, (fl), 0, 0)
+
+- #define :ref:`CAL_RetainUpdateGuid <group___cmp_retain_itf_1gad7fd510c28b1d2d98bfdb0d90aa513d2>` pfRetainUpdateGuid
+
+- #define :ref:`CHK_RetainUpdateGuid <group___cmp_retain_itf_1ga37e0fbf72b93e7ef1f9d789d1621be65>` (pfRetainUpdateGuid != NULL)
+
+- #define :ref:`EXP_RetainUpdateGuid <group___cmp_retain_itf_1ga1144cc7d8d40640ca27f1e7d5ca8c214>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainUpdateGuid", (RTS_UINTPTR) :ref:`RetainUpdateGuid <group___cmp_retain_itf_1ga0e5e09fc843d927d2cd6b8dfb15d2a69>` , 0, 0)
+
+- #define :ref:`USE_RetainCheckGuid <group___cmp_retain_itf_1gaedf404ba81ebdfe095d41964f2ce3448>` :ref:`PFRETAINCHECKGUID <group___cmp_retain_itf_1gad5b0f89f095830e3fe75ebc109d708e6>` pfRetainCheckGuid;
+
+- #define :ref:`EXT_RetainCheckGuid <group___cmp_retain_itf_1ga615680637b148858cf81398dc95821da>` extern :ref:`PFRETAINCHECKGUID <group___cmp_retain_itf_1gad5b0f89f095830e3fe75ebc109d708e6>` pfRetainCheckGuid;
+
+- #define :ref:`GET_RetainCheckGuid <group___cmp_retain_itf_1ga09cdfb6cf57ba1d07a125f725138b8f8>` s_pfCMGetAPI2( "RetainCheckGuid", (RTS_VOID_FCTPTR *)&pfRetainCheckGuid, (fl), 0, 0)
+
+- #define :ref:`CAL_RetainCheckGuid <group___cmp_retain_itf_1ga7352f0d611570ac842237b43fa00255e>` pfRetainCheckGuid
+
+- #define :ref:`CHK_RetainCheckGuid <group___cmp_retain_itf_1ga5977cdd26eeed082e75d3fdf0ce30287>` (pfRetainCheckGuid != NULL)
+
+- #define :ref:`EXP_RetainCheckGuid <group___cmp_retain_itf_1gad4baa5ba42c8ceb6ecb583fd9bf0f104>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainCheckGuid", (RTS_UINTPTR) :ref:`RetainCheckGuid <group___cmp_retain_itf_1gab64263b24b17c8f7f26adc4ca08dffe9>` , 0, 0)
+
+- #define :ref:`USE_RetainUpdate <group___cmp_retain_itf_1ga8626b70442f8c116f67084dc00a9cf48>` :ref:`PFRETAINUPDATE <group___cmp_retain_itf_1ga924c25d8523be679fc2cedf51a68fce1>` pfRetainUpdate;
+
+- #define :ref:`EXT_RetainUpdate <group___cmp_retain_itf_1ga11e3cf3d1c328a154f76020f6758499e>` extern :ref:`PFRETAINUPDATE <group___cmp_retain_itf_1ga924c25d8523be679fc2cedf51a68fce1>` pfRetainUpdate;
+
+- #define :ref:`GET_RetainUpdate <group___cmp_retain_itf_1ga8badc67e0161c400f8f7d420c9be40b3>` s_pfCMGetAPI2( "RetainUpdate", (RTS_VOID_FCTPTR *)&pfRetainUpdate, (fl), 0, 0)
+
+- #define :ref:`CAL_RetainUpdate <group___cmp_retain_itf_1gacfbdecb5b8935d1e43111a2ed8184050>` pfRetainUpdate
+
+- #define :ref:`CHK_RetainUpdate <group___cmp_retain_itf_1ga4d8b04b25e45dca49020a8ee8ab5c03f>` (pfRetainUpdate != NULL)
+
+- #define :ref:`EXP_RetainUpdate <group___cmp_retain_itf_1ga2585eeed86dcdb6d4c6ae5d2579e95eb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainUpdate", (RTS_UINTPTR) :ref:`RetainUpdate <group___cmp_retain_itf_1ga5e4750cb069c93892ada509d08dea350>` , 0, 0)
+
+- #define :ref:`USE_RetainStore <group___cmp_retain_itf_1gabae2ded3c5354bf09b79d54672504a96>` :ref:`PFRETAINSTORE <group___cmp_retain_itf_1gac7068a26bb4a051497066110241a1659>` pfRetainStore;
+
+- #define :ref:`EXT_RetainStore <group___cmp_retain_itf_1gab0d2366026aba7435f1b168af7e7198c>` extern :ref:`PFRETAINSTORE <group___cmp_retain_itf_1gac7068a26bb4a051497066110241a1659>` pfRetainStore;
+
+- #define :ref:`GET_RetainStore <group___cmp_retain_itf_1ga3f251daf1576c415cc8c0d7058949269>` s_pfCMGetAPI2( "RetainStore", (RTS_VOID_FCTPTR *)&pfRetainStore, (fl), 0, 0)
+
+- #define :ref:`CAL_RetainStore <group___cmp_retain_itf_1ga760d043b97cda5e0df6f9cd84e013304>` pfRetainStore
+
+- #define :ref:`CHK_RetainStore <group___cmp_retain_itf_1ga26a02674f2eb924780bf18caa2b137ec>` (pfRetainStore != NULL)
+
+- #define :ref:`EXP_RetainStore <group___cmp_retain_itf_1gab2c13b7309084db3ed694ba08a230585>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainStore", (RTS_UINTPTR) :ref:`RetainStore <group___cmp_retain_itf_1gaef2547c0f31e99a30d940db47e8d06c4>` , 0, 0)
+
+- #define :ref:`USE_RetainStoreInFile <group___cmp_retain_itf_1ga7b575a52f89e3437ab28fa5c3355e402>` :ref:`PFRETAINSTOREINFILE <group___cmp_retain_itf_1ga4184276fc482b20e30231f321c63e58f>` pfRetainStoreInFile;
+
+- #define :ref:`EXT_RetainStoreInFile <group___cmp_retain_itf_1ga6c721fc633152c6eb900747be6238dfd>` extern :ref:`PFRETAINSTOREINFILE <group___cmp_retain_itf_1ga4184276fc482b20e30231f321c63e58f>` pfRetainStoreInFile;
+
+- #define :ref:`GET_RetainStoreInFile <group___cmp_retain_itf_1ga6773c140e07fcca8d92ca802c4fa0b31>` s_pfCMGetAPI2( "RetainStoreInFile", (RTS_VOID_FCTPTR *)&pfRetainStoreInFile, (fl), 0, 0)
+
+- #define :ref:`CAL_RetainStoreInFile <group___cmp_retain_itf_1ga8ca88c9bf7f44700adb6f2a6e560f505>` pfRetainStoreInFile
+
+- #define :ref:`CHK_RetainStoreInFile <group___cmp_retain_itf_1gaf3b6e17b517d88c2e4ee2757498ddaee>` (pfRetainStoreInFile != NULL)
+
+- #define :ref:`EXP_RetainStoreInFile <group___cmp_retain_itf_1gaa498f54bb7db998517f8e0c554923e92>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainStoreInFile", (RTS_UINTPTR) :ref:`RetainStoreInFile <group___cmp_retain_itf_1ga9d949fa8a21dfae931ca58cfb045b328>` , 0, 0)
+
+- #define :ref:`USE_RetainRestore <group___cmp_retain_itf_1ga8093b9dcf90e18b696e0d0bd4129c086>` :ref:`PFRETAINRESTORE <group___cmp_retain_itf_1gab3a873f4e8147e48f29ac633d170266d>` pfRetainRestore;
+
+- #define :ref:`EXT_RetainRestore <group___cmp_retain_itf_1gab6a9221f8e30c2c8fe012393a3d70050>` extern :ref:`PFRETAINRESTORE <group___cmp_retain_itf_1gab3a873f4e8147e48f29ac633d170266d>` pfRetainRestore;
+
+- #define :ref:`GET_RetainRestore <group___cmp_retain_itf_1gaaee65373d9e63b2e36d3d18f85e54d5b>` s_pfCMGetAPI2( "RetainRestore", (RTS_VOID_FCTPTR *)&pfRetainRestore, (fl), 0, 0)
+
+- #define :ref:`CAL_RetainRestore <group___cmp_retain_itf_1gaaa783f792fdd4bbe8e8f490ea1b361ad>` pfRetainRestore
+
+- #define :ref:`CHK_RetainRestore <group___cmp_retain_itf_1ga7b0c30ca3d6e3d97a4ff273b0d192f27>` (pfRetainRestore != NULL)
+
+- #define :ref:`EXP_RetainRestore <group___cmp_retain_itf_1ga7428f56f527ea77325bd6da1b3c3d71f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainRestore", (RTS_UINTPTR) :ref:`RetainRestore <group___cmp_retain_itf_1gafca05ce675d98106a474a1ef82532d73>` , 0, 0)
+
+- #define :ref:`USE_RetainRestoreFromFile <group___cmp_retain_itf_1ga9ba166eab653dc1c8152a6a229c6990d>` :ref:`PFRETAINRESTOREFROMFILE <group___cmp_retain_itf_1ga4c5d7686234ae541230f4d1d8aa96fb0>` pfRetainRestoreFromFile;
+
+- #define :ref:`EXT_RetainRestoreFromFile <group___cmp_retain_itf_1ga89162e7788a20a4b0da5d0d84def8da5>` extern :ref:`PFRETAINRESTOREFROMFILE <group___cmp_retain_itf_1ga4c5d7686234ae541230f4d1d8aa96fb0>` pfRetainRestoreFromFile;
+
+- #define :ref:`GET_RetainRestoreFromFile <group___cmp_retain_itf_1ga59610ed69009b1d40709e24b1dac88d1>` s_pfCMGetAPI2( "RetainRestoreFromFile", (RTS_VOID_FCTPTR *)&pfRetainRestoreFromFile, (fl), 0, 0)
+
+- #define :ref:`CAL_RetainRestoreFromFile <group___cmp_retain_itf_1ga015223a7b40002da3d518d8f7cd6a957>` pfRetainRestoreFromFile
+
+- #define :ref:`CHK_RetainRestoreFromFile <group___cmp_retain_itf_1ga9ab65bce94a77873b304a05a5926bda1>` (pfRetainRestoreFromFile != NULL)
+
+- #define :ref:`EXP_RetainRestoreFromFile <group___cmp_retain_itf_1gab55a7f9b39984a7eeda7bc32e9695ebe>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainRestoreFromFile", (RTS_UINTPTR) :ref:`RetainRestoreFromFile <group___cmp_retain_itf_1gab285d98c2e004226f9c6a50b17dbd397>` , 0, 0)
+
+- #define :ref:`USE_RetainPrepareStore <group___cmp_retain_itf_1ga6c2bed456ef83565dd2fff8ae72144ab>` :ref:`PFRETAINPREPARESTORE <group___cmp_retain_itf_1gacf81e354d709279a46a09ff58bebb91c>` pfRetainPrepareStore;
+
+- #define :ref:`EXT_RetainPrepareStore <group___cmp_retain_itf_1ga8435a30a988745d12aeb349fcb14e8f3>` extern :ref:`PFRETAINPREPARESTORE <group___cmp_retain_itf_1gacf81e354d709279a46a09ff58bebb91c>` pfRetainPrepareStore;
+
+- #define :ref:`GET_RetainPrepareStore <group___cmp_retain_itf_1ga112e67a8cd7d506f1212cdd6f8062f86>` s_pfCMGetAPI2( "RetainPrepareStore", (RTS_VOID_FCTPTR *)&pfRetainPrepareStore, (fl), 0, 0)
+
+- #define :ref:`CAL_RetainPrepareStore <group___cmp_retain_itf_1gaac137e66596b8d443fef72de0358d054>` pfRetainPrepareStore
+
+- #define :ref:`CHK_RetainPrepareStore <group___cmp_retain_itf_1gac335bc4ec96d32a2fe44ca51d6d79615>` (pfRetainPrepareStore != NULL)
+
+- #define :ref:`EXP_RetainPrepareStore <group___cmp_retain_itf_1ga61274809013026dde0aaf1aa2147ee12>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainPrepareStore", (RTS_UINTPTR) :ref:`RetainPrepareStore <group___cmp_retain_itf_1ga4ea6ee220f9993d42939be1c20f0fdd4>` , 0, 0)
+
+- #define :ref:`ITF_CmpRetain <group___cmp_retain_itf_1ga5d19d0f92a8c81d9fc204cf9f8e41651>`
+
+- #define :ref:`EXTITF_CmpRetain <group___cmp_retain_itf_1ga437e44e4cfcd9e4253a2228e536c37e7>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFRETAINALLOC <group___cmp_retain_itf_1gaf6eec1869fb56de63094da053f349d1c>`)(char *pszName, RTS_GUID *pDataGUID, RetainType rtType, RTS_UI16 usAreaType, RTS_SIZE iSize, int bRestore, RTS_UI8 **ppbyRetain)
+
+- typedef RTS_RESULT(* :ref:`PFRETAINFREE <group___cmp_retain_itf_1ga49482374aeef5d66394bd62ed0f16980>`)(char *pszName, RTS_UI8 *pbyRetain, int nDeleteOption)
+
+- typedef RTS_RESULT(* :ref:`PFRETAINFREEALL <group___cmp_retain_itf_1ga7a865446cbb182d232968433b9550aa6>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFRETAINUPDATEGUID <group___cmp_retain_itf_1ga81a294d021571bb916f0d3b54a61b6ae>`)(char *pszName, RTS_UI8 *pbyRetain, RTS_GUID *pDataGuidOld, RTS_GUID *pDataGuidNew)
+
+- typedef RTS_RESULT(* :ref:`PFRETAINCHECKGUID <group___cmp_retain_itf_1gad5b0f89f095830e3fe75ebc109d708e6>`)(char *pszName, RTS_UI8 *pbyRetain, RTS_GUID *pDataGuid, RTS_UI16 usAreaType)
+
+- typedef RTS_RESULT(* :ref:`PFRETAINUPDATE <group___cmp_retain_itf_1ga924c25d8523be679fc2cedf51a68fce1>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFRETAINSTORE <group___cmp_retain_itf_1gac7068a26bb4a051497066110241a1659>`)(char *pszName, RTS_UI8 *pbyRetain, RTS_SIZE iSize, RTS_GUID *pDataGUID, int bBackup)
+
+- typedef RTS_RESULT(* :ref:`PFRETAINSTOREINFILE <group___cmp_retain_itf_1ga4184276fc482b20e30231f321c63e58f>`)(char *pszFile, char *pszName, RTS_UI8 *pbyRetain, RTS_SIZE iSize, RTS_GUID *pDataGUID)
+
+- typedef RTS_RESULT(* :ref:`PFRETAINRESTORE <group___cmp_retain_itf_1gab3a873f4e8147e48f29ac633d170266d>`)(char *pszName, RTS_UI8 *pbyRetain, RTS_SIZE iSize, RTS_GUID *pDataGUID, RTS_UI16 usAreaType, int bBackup)
+
+- typedef RTS_RESULT(* :ref:`PFRETAINRESTOREFROMFILE <group___cmp_retain_itf_1ga4c5d7686234ae541230f4d1d8aa96fb0>`)(char *pszFile, char *pszName, RTS_UI8 *pbyRetain, RTS_SIZE iSize, RTS_GUID *pDataGUID, RTS_UI16 usAreaType)
+
+- typedef RTS_RESULT(* :ref:`PFRETAINPREPARESTORE <group___cmp_retain_itf_1gacf81e354d709279a46a09ff58bebb91c>`)(char *pszFile, char *pszName)
+
+- typedef :ref:`ICmpRetain_C <struct_i_cmp_retain___c>` :ref:`ICmpRetain <group___cmp_retain_itf_1gadee45d8affc6e12f51aeaff43c2d2a0b>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`RetainAlloc <group___cmp_retain_itf_1ga9488af398ccccb9e7cb905c57a5a70b5>` (char * pszName, RTS_GUID * pDataGUID, :ref:`RetainType <group___cmp_retain_itf___retaintype_1ga6e45fc1e6bbb34dc2006aa7d299471a4>`  rtType, RTS_UI16 usAreaType, RTS_SIZE iSize, int bRestore, RTS_UI8 ** ppbyRetain)
+
+- RTS_RESULT :ref:`RetainFree <group___cmp_retain_itf_1ga41db1fb9c53c88c8dff916d99c0adb49>` (char * pszName, RTS_UI8 * pbyRetain, int nDeleteOption)
+
+- RTS_RESULT :ref:`RetainFreeAll <group___cmp_retain_itf_1ga54a0c084a3de1e56312b72038ba66354>` (void)
+
+- RTS_RESULT :ref:`RetainUpdateGuid <group___cmp_retain_itf_1ga0e5e09fc843d927d2cd6b8dfb15d2a69>` (char * pszName, RTS_UI8 * pbyRetain, RTS_GUID * pDataGuidOld, RTS_GUID * pDataGuidNew)
+
+- RTS_RESULT :ref:`RetainCheckGuid <group___cmp_retain_itf_1gab64263b24b17c8f7f26adc4ca08dffe9>` (char * pszName, RTS_UI8 * pbyRetain, RTS_GUID * pDataGuid, RTS_UI16 usAreaType)
+
+- RTS_RESULT :ref:`RetainUpdate <group___cmp_retain_itf_1ga5e4750cb069c93892ada509d08dea350>` (void)
+
+- RTS_RESULT :ref:`RetainStore <group___cmp_retain_itf_1gaef2547c0f31e99a30d940db47e8d06c4>` (char * pszName, RTS_UI8 * pbyRetain, RTS_SIZE iSize, RTS_GUID * pDataGUID, int bBackup)
+
+- RTS_RESULT :ref:`RetainStoreInFile <group___cmp_retain_itf_1ga9d949fa8a21dfae931ca58cfb045b328>` (char * pszFile, char * pszName, RTS_UI8 * pbyRetain, RTS_SIZE iSize, RTS_GUID * pDataGUID)
+
+- RTS_RESULT :ref:`RetainRestore <group___cmp_retain_itf_1gafca05ce675d98106a474a1ef82532d73>` (char * pszName, RTS_UI8 * pbyRetain, RTS_SIZE iSize, RTS_GUID * pDataGUID, RTS_UI16 usAreaType, int bBackup)
+
+- RTS_RESULT :ref:`RetainRestoreFromFile <group___cmp_retain_itf_1gab285d98c2e004226f9c6a50b17dbd397>` (char * pszFile, char * pszName, RTS_UI8 * pbyRetain, RTS_SIZE iSize, RTS_GUID * pDataGUID, RTS_UI16 usAreaType)
+
+- RTS_RESULT :ref:`RetainPrepareStore <group___cmp_retain_itf_1ga4ea6ee220f9993d42939be1c20f0fdd4>` (char * pszFile, char * pszName)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_retain_itf_1ga70efcb1a48f0c5a187798df27bd07bca:
+
+#define USE_RetainAlloc :ref:`PFRETAINALLOC <group___cmp_retain_itf_1gaf6eec1869fb56de63094da053f349d1c>` pfRetainAlloc;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga1b9a52b4641b18283778a737d02afb80:
+
+#define EXT_RetainAlloc extern :ref:`PFRETAINALLOC <group___cmp_retain_itf_1gaf6eec1869fb56de63094da053f349d1c>` pfRetainAlloc;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga34cb7d5069341f0992f0ead9dc95f222:
+
+#define GET_RetainAlloc s_pfCMGetAPI2( "RetainAlloc", (RTS_VOID_FCTPTR *)&pfRetainAlloc, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gadedb0f15ebb291be3eaf8dca06b8ca2c:
+
+#define CAL_RetainAlloc pfRetainAlloc
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga5f214224b72447f433c5071f04adab57:
+
+#define CHK_RetainAlloc (pfRetainAlloc != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gaf2261b90cf7ed307cb8befb9b90c0cb3:
+
+#define EXP_RetainAlloc s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainAlloc", (RTS_UINTPTR) :ref:`RetainAlloc <group___cmp_retain_itf_1ga9488af398ccccb9e7cb905c57a5a70b5>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gafceb0089f0cdda6f41e13c3fdc7f077f:
+
+#define USE_RetainFree :ref:`PFRETAINFREE <group___cmp_retain_itf_1ga49482374aeef5d66394bd62ed0f16980>` pfRetainFree;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga16436fbc79343104755e1f81ffde1fba:
+
+#define EXT_RetainFree extern :ref:`PFRETAINFREE <group___cmp_retain_itf_1ga49482374aeef5d66394bd62ed0f16980>` pfRetainFree;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga97e0af5232ab4824ecb765601bd35cc3:
+
+#define GET_RetainFree s_pfCMGetAPI2( "RetainFree", (RTS_VOID_FCTPTR *)&pfRetainFree, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga04b11f8c95d94906b52ccd886b7715be:
+
+#define CAL_RetainFree pfRetainFree
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gaae75d64d91e551b320c446c828d9a19c:
+
+#define CHK_RetainFree (pfRetainFree != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga4ea387c8b07bfa37282258fdc483a2d6:
+
+#define EXP_RetainFree s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainFree", (RTS_UINTPTR) :ref:`RetainFree <group___cmp_retain_itf_1ga41db1fb9c53c88c8dff916d99c0adb49>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga0c20aa8eff4e53fbe5044559fe267c3b:
+
+#define USE_RetainFreeAll :ref:`PFRETAINFREEALL <group___cmp_retain_itf_1ga7a865446cbb182d232968433b9550aa6>` pfRetainFreeAll;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gaf237fd82b9c331d815d04363ccaf6a1b:
+
+#define EXT_RetainFreeAll extern :ref:`PFRETAINFREEALL <group___cmp_retain_itf_1ga7a865446cbb182d232968433b9550aa6>` pfRetainFreeAll;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga9e976d319365dac1999020419b172bf8:
+
+#define GET_RetainFreeAll s_pfCMGetAPI2( "RetainFreeAll", (RTS_VOID_FCTPTR *)&pfRetainFreeAll, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gaaa57375edcbaac0f48cfa93da10f2b05:
+
+#define CAL_RetainFreeAll pfRetainFreeAll
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga5320f99bda6946c8297a4450cfa06d93:
+
+#define CHK_RetainFreeAll (pfRetainFreeAll != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga6957fce16f4e22d5721c1dc9550640b0:
+
+#define EXP_RetainFreeAll s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainFreeAll", (RTS_UINTPTR) :ref:`RetainFreeAll <group___cmp_retain_itf_1ga54a0c084a3de1e56312b72038ba66354>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gaf21757b993c6deefdd16a3b39db8d502:
+
+#define USE_RetainUpdateGuid :ref:`PFRETAINUPDATEGUID <group___cmp_retain_itf_1ga81a294d021571bb916f0d3b54a61b6ae>` pfRetainUpdateGuid;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga6396e350f55fc4afa05982458fa4c891:
+
+#define EXT_RetainUpdateGuid extern :ref:`PFRETAINUPDATEGUID <group___cmp_retain_itf_1ga81a294d021571bb916f0d3b54a61b6ae>` pfRetainUpdateGuid;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gac9a7e93eab6b052d3fbe07c719608682:
+
+#define GET_RetainUpdateGuid s_pfCMGetAPI2( "RetainUpdateGuid", (RTS_VOID_FCTPTR *)&pfRetainUpdateGuid, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gad7fd510c28b1d2d98bfdb0d90aa513d2:
+
+#define CAL_RetainUpdateGuid pfRetainUpdateGuid
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga37e0fbf72b93e7ef1f9d789d1621be65:
+
+#define CHK_RetainUpdateGuid (pfRetainUpdateGuid != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga1144cc7d8d40640ca27f1e7d5ca8c214:
+
+#define EXP_RetainUpdateGuid s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainUpdateGuid", (RTS_UINTPTR) :ref:`RetainUpdateGuid <group___cmp_retain_itf_1ga0e5e09fc843d927d2cd6b8dfb15d2a69>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gaedf404ba81ebdfe095d41964f2ce3448:
+
+#define USE_RetainCheckGuid :ref:`PFRETAINCHECKGUID <group___cmp_retain_itf_1gad5b0f89f095830e3fe75ebc109d708e6>` pfRetainCheckGuid;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga615680637b148858cf81398dc95821da:
+
+#define EXT_RetainCheckGuid extern :ref:`PFRETAINCHECKGUID <group___cmp_retain_itf_1gad5b0f89f095830e3fe75ebc109d708e6>` pfRetainCheckGuid;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga09cdfb6cf57ba1d07a125f725138b8f8:
+
+#define GET_RetainCheckGuid s_pfCMGetAPI2( "RetainCheckGuid", (RTS_VOID_FCTPTR *)&pfRetainCheckGuid, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga7352f0d611570ac842237b43fa00255e:
+
+#define CAL_RetainCheckGuid pfRetainCheckGuid
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga5977cdd26eeed082e75d3fdf0ce30287:
+
+#define CHK_RetainCheckGuid (pfRetainCheckGuid != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gad4baa5ba42c8ceb6ecb583fd9bf0f104:
+
+#define EXP_RetainCheckGuid s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainCheckGuid", (RTS_UINTPTR) :ref:`RetainCheckGuid <group___cmp_retain_itf_1gab64263b24b17c8f7f26adc4ca08dffe9>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga8626b70442f8c116f67084dc00a9cf48:
+
+#define USE_RetainUpdate :ref:`PFRETAINUPDATE <group___cmp_retain_itf_1ga924c25d8523be679fc2cedf51a68fce1>` pfRetainUpdate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga11e3cf3d1c328a154f76020f6758499e:
+
+#define EXT_RetainUpdate extern :ref:`PFRETAINUPDATE <group___cmp_retain_itf_1ga924c25d8523be679fc2cedf51a68fce1>` pfRetainUpdate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga8badc67e0161c400f8f7d420c9be40b3:
+
+#define GET_RetainUpdate s_pfCMGetAPI2( "RetainUpdate", (RTS_VOID_FCTPTR *)&pfRetainUpdate, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gacfbdecb5b8935d1e43111a2ed8184050:
+
+#define CAL_RetainUpdate pfRetainUpdate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga4d8b04b25e45dca49020a8ee8ab5c03f:
+
+#define CHK_RetainUpdate (pfRetainUpdate != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga2585eeed86dcdb6d4c6ae5d2579e95eb:
+
+#define EXP_RetainUpdate s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainUpdate", (RTS_UINTPTR) :ref:`RetainUpdate <group___cmp_retain_itf_1ga5e4750cb069c93892ada509d08dea350>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gabae2ded3c5354bf09b79d54672504a96:
+
+#define USE_RetainStore :ref:`PFRETAINSTORE <group___cmp_retain_itf_1gac7068a26bb4a051497066110241a1659>` pfRetainStore;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gab0d2366026aba7435f1b168af7e7198c:
+
+#define EXT_RetainStore extern :ref:`PFRETAINSTORE <group___cmp_retain_itf_1gac7068a26bb4a051497066110241a1659>` pfRetainStore;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga3f251daf1576c415cc8c0d7058949269:
+
+#define GET_RetainStore s_pfCMGetAPI2( "RetainStore", (RTS_VOID_FCTPTR *)&pfRetainStore, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga760d043b97cda5e0df6f9cd84e013304:
+
+#define CAL_RetainStore pfRetainStore
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga26a02674f2eb924780bf18caa2b137ec:
+
+#define CHK_RetainStore (pfRetainStore != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gab2c13b7309084db3ed694ba08a230585:
+
+#define EXP_RetainStore s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainStore", (RTS_UINTPTR) :ref:`RetainStore <group___cmp_retain_itf_1gaef2547c0f31e99a30d940db47e8d06c4>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga7b575a52f89e3437ab28fa5c3355e402:
+
+#define USE_RetainStoreInFile :ref:`PFRETAINSTOREINFILE <group___cmp_retain_itf_1ga4184276fc482b20e30231f321c63e58f>` pfRetainStoreInFile;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga6c721fc633152c6eb900747be6238dfd:
+
+#define EXT_RetainStoreInFile extern :ref:`PFRETAINSTOREINFILE <group___cmp_retain_itf_1ga4184276fc482b20e30231f321c63e58f>` pfRetainStoreInFile;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga6773c140e07fcca8d92ca802c4fa0b31:
+
+#define GET_RetainStoreInFile s_pfCMGetAPI2( "RetainStoreInFile", (RTS_VOID_FCTPTR *)&pfRetainStoreInFile, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga8ca88c9bf7f44700adb6f2a6e560f505:
+
+#define CAL_RetainStoreInFile pfRetainStoreInFile
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gaf3b6e17b517d88c2e4ee2757498ddaee:
+
+#define CHK_RetainStoreInFile (pfRetainStoreInFile != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gaa498f54bb7db998517f8e0c554923e92:
+
+#define EXP_RetainStoreInFile s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainStoreInFile", (RTS_UINTPTR) :ref:`RetainStoreInFile <group___cmp_retain_itf_1ga9d949fa8a21dfae931ca58cfb045b328>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga8093b9dcf90e18b696e0d0bd4129c086:
+
+#define USE_RetainRestore :ref:`PFRETAINRESTORE <group___cmp_retain_itf_1gab3a873f4e8147e48f29ac633d170266d>` pfRetainRestore;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gab6a9221f8e30c2c8fe012393a3d70050:
+
+#define EXT_RetainRestore extern :ref:`PFRETAINRESTORE <group___cmp_retain_itf_1gab3a873f4e8147e48f29ac633d170266d>` pfRetainRestore;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gaaee65373d9e63b2e36d3d18f85e54d5b:
+
+#define GET_RetainRestore s_pfCMGetAPI2( "RetainRestore", (RTS_VOID_FCTPTR *)&pfRetainRestore, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gaaa783f792fdd4bbe8e8f490ea1b361ad:
+
+#define CAL_RetainRestore pfRetainRestore
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga7b0c30ca3d6e3d97a4ff273b0d192f27:
+
+#define CHK_RetainRestore (pfRetainRestore != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga7428f56f527ea77325bd6da1b3c3d71f:
+
+#define EXP_RetainRestore s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainRestore", (RTS_UINTPTR) :ref:`RetainRestore <group___cmp_retain_itf_1gafca05ce675d98106a474a1ef82532d73>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga9ba166eab653dc1c8152a6a229c6990d:
+
+#define USE_RetainRestoreFromFile :ref:`PFRETAINRESTOREFROMFILE <group___cmp_retain_itf_1ga4c5d7686234ae541230f4d1d8aa96fb0>` pfRetainRestoreFromFile;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga89162e7788a20a4b0da5d0d84def8da5:
+
+#define EXT_RetainRestoreFromFile extern :ref:`PFRETAINRESTOREFROMFILE <group___cmp_retain_itf_1ga4c5d7686234ae541230f4d1d8aa96fb0>` pfRetainRestoreFromFile;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga59610ed69009b1d40709e24b1dac88d1:
+
+#define GET_RetainRestoreFromFile s_pfCMGetAPI2( "RetainRestoreFromFile", (RTS_VOID_FCTPTR *)&pfRetainRestoreFromFile, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga015223a7b40002da3d518d8f7cd6a957:
+
+#define CAL_RetainRestoreFromFile pfRetainRestoreFromFile
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga9ab65bce94a77873b304a05a5926bda1:
+
+#define CHK_RetainRestoreFromFile (pfRetainRestoreFromFile != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gab55a7f9b39984a7eeda7bc32e9695ebe:
+
+#define EXP_RetainRestoreFromFile s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainRestoreFromFile", (RTS_UINTPTR) :ref:`RetainRestoreFromFile <group___cmp_retain_itf_1gab285d98c2e004226f9c6a50b17dbd397>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga6c2bed456ef83565dd2fff8ae72144ab:
+
+#define USE_RetainPrepareStore :ref:`PFRETAINPREPARESTORE <group___cmp_retain_itf_1gacf81e354d709279a46a09ff58bebb91c>` pfRetainPrepareStore;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga8435a30a988745d12aeb349fcb14e8f3:
+
+#define EXT_RetainPrepareStore extern :ref:`PFRETAINPREPARESTORE <group___cmp_retain_itf_1gacf81e354d709279a46a09ff58bebb91c>` pfRetainPrepareStore;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga112e67a8cd7d506f1212cdd6f8062f86:
+
+#define GET_RetainPrepareStore s_pfCMGetAPI2( "RetainPrepareStore", (RTS_VOID_FCTPTR *)&pfRetainPrepareStore, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gaac137e66596b8d443fef72de0358d054:
+
+#define CAL_RetainPrepareStore pfRetainPrepareStore
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gac335bc4ec96d32a2fe44ca51d6d79615:
+
+#define CHK_RetainPrepareStore (pfRetainPrepareStore != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga61274809013026dde0aaf1aa2147ee12:
+
+#define EXP_RetainPrepareStore s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RetainPrepareStore", (RTS_UINTPTR) :ref:`RetainPrepareStore <group___cmp_retain_itf_1ga4ea6ee220f9993d42939be1c20f0fdd4>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga5d19d0f92a8c81d9fc204cf9f8e41651:
+
+#define ITF_CmpRetain
+^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga437e44e4cfcd9e4253a2228e536c37e7:
+
+#define EXTITF_CmpRetain
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_retain_itf_1gaf6eec1869fb56de63094da053f349d1c:
+
+typedef RTS_RESULT( *  PFRETAINALLOC) (char *pszName, RTS_GUID *pDataGUID, RetainType rtType, RTS_UI16 usAreaType, RTS_SIZE iSize, int bRestore, RTS_UI8 **ppbyRetain)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga49482374aeef5d66394bd62ed0f16980:
+
+typedef RTS_RESULT( *  PFRETAINFREE) (char *pszName, RTS_UI8 *pbyRetain, int nDeleteOption)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga7a865446cbb182d232968433b9550aa6:
+
+typedef RTS_RESULT( *  PFRETAINFREEALL) (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga81a294d021571bb916f0d3b54a61b6ae:
+
+typedef RTS_RESULT( *  PFRETAINUPDATEGUID) (char *pszName, RTS_UI8 *pbyRetain, RTS_GUID *pDataGuidOld, RTS_GUID *pDataGuidNew)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gad5b0f89f095830e3fe75ebc109d708e6:
+
+typedef RTS_RESULT( *  PFRETAINCHECKGUID) (char *pszName, RTS_UI8 *pbyRetain, RTS_GUID *pDataGuid, RTS_UI16 usAreaType)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga924c25d8523be679fc2cedf51a68fce1:
+
+typedef RTS_RESULT( *  PFRETAINUPDATE) (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gac7068a26bb4a051497066110241a1659:
+
+typedef RTS_RESULT( *  PFRETAINSTORE) (char *pszName, RTS_UI8 *pbyRetain, RTS_SIZE iSize, RTS_GUID *pDataGUID, int bBackup)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga4184276fc482b20e30231f321c63e58f:
+
+typedef RTS_RESULT( *  PFRETAINSTOREINFILE) (char *pszFile, char *pszName, RTS_UI8 *pbyRetain, RTS_SIZE iSize, RTS_GUID *pDataGUID)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gab3a873f4e8147e48f29ac633d170266d:
+
+typedef RTS_RESULT( *  PFRETAINRESTORE) (char *pszName, RTS_UI8 *pbyRetain, RTS_SIZE iSize, RTS_GUID *pDataGUID, RTS_UI16 usAreaType, int bBackup)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1ga4c5d7686234ae541230f4d1d8aa96fb0:
+
+typedef RTS_RESULT( *  PFRETAINRESTOREFROMFILE) (char *pszFile, char *pszName, RTS_UI8 *pbyRetain, RTS_SIZE iSize, RTS_GUID *pDataGUID, RTS_UI16 usAreaType)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gacf81e354d709279a46a09ff58bebb91c:
+
+typedef RTS_RESULT( *  PFRETAINPREPARESTORE) (char *pszFile, char *pszName)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_retain_itf_1gadee45d8affc6e12f51aeaff43c2d2a0b:
+
+typedef ICmpRetain_C ICmpRetain
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_retain_itf_1ga9488af398ccccb9e7cb905c57a5a70b5:
+
+RTS_RESULT RetainAlloc (char *pszName, RTS_GUID *pDataGUID, RetainType rtType, RTS_UI16 usAreaType, RTS_SIZE iSize, int bRestore, RTS_UI8 **ppbyRetain)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Routine to allocate retain memory
+
+**Parameters**
+
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pszName    | Name to assign to the retain memory                                                                   |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pDataGUID  | Pointer to data GUID (GUID of the data content or another unique GUID)                                |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | rtType     | Retain type                                                                                           |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | usAreaType | Area type. See category "Area Types" in :ref:`SysMemItf.h <_sys_mem_itf_8h>` for detailed information |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | iSize      | Requested size of the retain area                                                                     |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | bRestore   | 1=if retain should be restored, 0=no restore necessary                                                |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [out]   | ppbyRetain | Pointer to pointer to return the retain memory                                                        |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_retain_itf_1ga41db1fb9c53c88c8dff916d99c0adb49:
+
+RTS_RESULT RetainFree (char *pszName, RTS_UI8 *pbyRetain, int nDeleteOption)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Release the retain memory
+
+**Parameters**
+
++---------+---------------+-----------------------------------------------------+
+| [in]    | pszName       | Name that was assigned to the retain memory         |
++---------+---------------+-----------------------------------------------------+
+| [in]    | pbyRetain     | Pointer of the retain memory to release             |
++---------+---------------+-----------------------------------------------------+
+| [in]    | nDeleteOption | Option to delete retain memory. See "Delete option" |
++---------+---------------+-----------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_retain_itf_1ga54a0c084a3de1e56312b72038ba66354:
+
+RTS_RESULT RetainFreeAll (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Release all retain memory
+**Returns:**
+
+error code
+
+.. _group___cmp_retain_itf_1ga0e5e09fc843d927d2cd6b8dfb15d2a69:
+
+RTS_RESULT RetainUpdateGuid (char *pszName, RTS_UI8 *pbyRetain, RTS_GUID *pDataGuidOld, RTS_GUID *pDataGuidNew)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Update data GUID in the specified retain area
+
+**Parameters**
+
++---------+--------------+---------------------------------------------+
+| [in]    | pszName      | Name that was assigned to the retain memory |
++---------+--------------+---------------------------------------------+
+| [in]    | pbyRetain    | Pointer of the retain memory to release     |
++---------+--------------+---------------------------------------------+
+| [in]    | pDataGuidOld | Pointer to old data GUID                    |
++---------+--------------+---------------------------------------------+
+| [in]    | pDataGuidNew | Pointer to new data GUID                    |
++---------+--------------+---------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_retain_itf_1gab64263b24b17c8f7f26adc4ca08dffe9:
+
+RTS_RESULT RetainCheckGuid (char *pszName, RTS_UI8 *pbyRetain, RTS_GUID *pDataGuid, RTS_UI16 usAreaType)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Check GUID that is stored in the retain memory
+
+**Parameters**
+
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pszName    | Name that was assigned to the retain memory                                                           |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pbyRetain  | Pointer of the retain memory to release                                                               |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pDataGUID  | Pointer to data GUID                                                                                  |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | usAreaType | Area type. See category "Area Types" in :ref:`SysMemItf.h <_sys_mem_itf_8h>` for detailed information |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_retain_itf_1ga5e4750cb069c93892ada509d08dea350:
+
+RTS_RESULT RetainUpdate (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Update retain management. Can be used to detect all free retain areas after loading all boot applications
+**Returns:**
+
+error code
+
+.. _group___cmp_retain_itf_1gaef2547c0f31e99a30d940db47e8d06c4:
+
+RTS_RESULT RetainStore (char *pszName, RTS_UI8 *pbyRetain, RTS_SIZE iSize, RTS_GUID *pDataGUID, int bBackup)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to store retain data. Is used for example to store retains on a hard-disk.
+
+**Parameters**
+
++---------+-----------+------------------------------------------------------------------------------------------+
+| [in]    | pszName   | Name that was assigned to the retain memory                                              |
++---------+-----------+------------------------------------------------------------------------------------------+
+| [in]    | iSize     | Requested size of the retain area                                                        |
++---------+-----------+------------------------------------------------------------------------------------------+
+| [in]    | pDataGUID | Data guid of the retain area                                                             |
++---------+-----------+------------------------------------------------------------------------------------------+
+| [in]    | pbyRetain | Pointer of the retain memory                                                             |
++---------+-----------+------------------------------------------------------------------------------------------+
+| [in]    | bBackup   | If parameter is 1, then the retain data of the specified area is stored for backup needs |
++---------+-----------+------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_retain_itf_1ga9d949fa8a21dfae931ca58cfb045b328:
+
+RTS_RESULT RetainStoreInFile (char *pszFile, char *pszName, RTS_UI8 *pbyRetain, RTS_SIZE iSize, RTS_GUID *pDataGUID)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to store retain data. Is used for example to store retains on a hard-disk.
+
+**Parameters**
+
++---------+-----------+---------------------------------------------+
+| [in]    | pszFile   | Name of the file to store retains to        |
++---------+-----------+---------------------------------------------+
+| [in]    | pszName   | Name that was assigned to the retain memory |
++---------+-----------+---------------------------------------------+
+| [in]    | iSize     | Requested size of the retain area           |
++---------+-----------+---------------------------------------------+
+| [in]    | pDataGUID | Data GUID of the retain area                |
++---------+-----------+---------------------------------------------+
+| [in]    | pbyRetain | Pointer of the retain memory                |
++---------+-----------+---------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_retain_itf_1gafca05ce675d98106a474a1ef82532d73:
+
+RTS_RESULT RetainRestore (char *pszName, RTS_UI8 *pbyRetain, RTS_SIZE iSize, RTS_GUID *pDataGUID, RTS_UI16 usAreaType, int bBackup)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to restore retain data after booting the PLC. Is used for example to restore retains from a hard-disk.
+
+**Parameters**
+
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pszName    | Name that was assigned to the retain memory                                                           |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | iSize      | Requested size of the retain area                                                                     |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pDataGUID  | Data GUID of the retain area                                                                          |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pbyRetain  | Pointer of the retain memory                                                                          |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | usAreaType | Area type. See category "Area Types" in :ref:`SysMemItf.h <_sys_mem_itf_8h>` for detailed information |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | bBackup    | If parameter is 1, then the retain data of the specified area is restored for backup needs            |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_retain_itf_1gab285d98c2e004226f9c6a50b17dbd397:
+
+RTS_RESULT RetainRestoreFromFile (char *pszFile, char *pszName, RTS_UI8 *pbyRetain, RTS_SIZE iSize, RTS_GUID *pDataGUID, RTS_UI16 usAreaType)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to restore retain data after booting the PLC. Is used for example to restore retains from a hard-disk.
+
+**Parameters**
+
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pszFile    | Name of the file to restore retains from                                                              |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pszName    | Name that was assigned to the retain memory                                                           |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | iSize      | Requested size of the retain area                                                                     |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pDataGUID  | Data GUID of the retain area                                                                          |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pbyRetain  | Pointer of the retain memory                                                                          |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | usAreaType | Area type. See category "Area Types" in :ref:`SysMemItf.h <_sys_mem_itf_8h>` for detailed information |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | bBackup    | If parameter is 1, then the retain data of the specified area is restored for backup needs            |
++---------+------------+-------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_retain_itf_1ga4ea6ee220f9993d42939be1c20f0fdd4:
+
+RTS_RESULT RetainPrepareStore (char *pszFile, char *pszName)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to prepare store retains
+
+**Parameters**
+
++---------+---------+---------------------------------------------+
+| [in]    | pszFile | Name of the file to prepare                 |
++---------+---------+---------------------------------------------+
+| [in]    | pszName | Name that was assigned to the retain memory |
++---------+---------+---------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

@@ -3,7 +3,7 @@
  * <description></description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
  
@@ -59,12 +59,65 @@
 	#define CMPOPCUAVALUE_INT_TRACE_LEVEL_DEFAULT	(OPCUA_TRACE_LEVEL_ERROR | OPCUA_TRACE_LEVEL_WARNING)
 #endif
 
+#define CMPOPCUASTACK_KEY_INT_MAX_ALLOC					"Stack.MaxAlloc"
+#ifndef CMPOPCUASTACK_VALUE_INT_MAX_ALLOC
+	#define CMPOPCUASTACK_VALUE_INT_MAX_ALLOC			0x10000		/* 1MB */
+#endif
+
+#define CMPOPCUASTACK_KEY_INT_MAX_STRINGLEN				"Stack.MaxStringLen"
+#ifndef CMPOPCUASTACK_VALUE_INT_MAX_STRINGLEN
+	#define CMPOPCUASTACK_VALUE_INT_MAX_STRINGLEN		((OpcUa_UInt32)OpcUa_Int32_Max)
+#endif
+
+#define CMPOPCUASTACK_KEY_INT_MAX_BYTESTRINGLEN			"Stack.MaxByteStringLen"
+#ifndef CMPOPCUASTACK_VALUE_INT_MAX_BYTESTRINGLEN
+	#define CMPOPCUASTACK_VALUE_INT_MAX_BYTESTRINGLEN	((OpcUa_UInt32)OpcUa_Int32_Max)
+#endif
+
+#define CMPOPCUASTACK_KEY_INT_MAX_ARRAYLEN				"Stack.MaxArrayLenth"
+#ifndef CMPOPCUASTACK_VALUE_INT_MAX_ARRAYLEN
+	#define CMPOPCUASTACK_VALUE_INT_MAX_ARRAYLEN		((OpcUa_UInt32)OpcUa_Int32_Max)
+#endif
+
+#define CMPOPCUASTACK_KEY_INT_MAX_MESSAGESIZE			"Stack.MaxMaxMessageSize"
+#ifndef CMPOPCUASTACK_VALUE_INT_MAX_MESSAGESIZE
+	#define CMPOPCUASTACK_VALUE_INT_MAX_MESSAGESIZE		0x100000		/* 1MB */
+#endif
+
+#define CMPOPCUASTACK_KEY_INT_MAX_RECURSIONDEPTH		"Stack.MaxRecursionDepth"
+#ifndef CMPOPCUASTACK_VALUE_INT_MAX_RECURSIONDEPTH
+	#define CMPOPCUASTACK_VALUE_INT_MAX_RECURSIONDEPTH	100
+#endif
+
+
+
+#define CMPOPCUASTACK_KEY_INT_LISTENER_MAX_CHUNKSIZE			"Listener.MaxChukSize"
+#ifndef CMPOPCUASTACK_VALUE_INT_LISTENER_MAX_CHUNKSIZE
+	#define CMPOPCUASTACK_VALUE_INT_LISTENER_MAX_CHUNKSIZE		0x10000		/* 65 KB */
+#endif
+
+#define CMPOPCUASTACK_KEY_INT_CONNECTION_MAX_CHUNKSIZE			"Connection.MaxChukSize"
+#ifndef CMPOPCUASTACK_VALUE_INT_CONNECTION_MAX_CHUNKSIZE
+	#define CMPOPCUASTACK_VALUE_INT_CONNECTION_MAX_CHUNKSIZE	0x10000		/* 65 KB */
+#endif
+
+#define CMPOPCUASTACK_KEY_INT_TCP_MAX_MESSAGESIZE				"Transport.MaxMessageLength"
+#ifndef CMPOPCUASTACK_VALUE_INT_TCP_MAX_MESSAGESIZE
+	#define CMPOPCUASTACK_VALUE_INT_TCP_MAX_MESSAGESIZE			0x100000		/* 1MB */
+#endif
+
+#define CMPOPCUASTACK_KEY_INT_TCP_MAX_CHUNKCOUNT				"Transport.MaxChukCount"
+#ifndef CMPOPCUASTACK_VALUE_INT_TCP_MAX_CHUNKCOUNT
+	#define CMPOPCUASTACK_VALUE_INT_TCP_MAX_CHUNKCOUNT			0x10		/* Allow up to 1MB sized messages */
+#endif
+
+
 /**
  * <category>Compiler switches</category>
  * <description>This switch enables or disables the implementation of the OPC UA security
  * policies inside the OPC UA stack. By default the implementation will be there if the
- * requred interfaces are implemented. Other components can use the switch to determin if
- * the security policies of hte UA Stack are availabe at compile time.</description>
+ * required interfaces are implemented. Other components can use the switch to determine if
+ * the security policies of the UA Stack are available at compile time.</description>
  */
 #if !(defined CMPCRYPTO_NOTIMPLEMENTED || defined CMPX509CERT_NOTIMPLEMENTED)
     #ifndef CMPOPCUASTACK_SUPPORT_SECURE_COMMUNICATION
@@ -86,11 +139,20 @@
     #endif
 #endif
 
+/**
+ * <category>Static defines</category>
+ * <description>Stack configuration: Maximum size of one single malloc/realloc operation.</description>
+ */
+#ifndef RTS_OPCUA_ALLOC_SIZE_MAX
+	#define RTS_OPCUA_ALLOC_SIZE_MAX 0x1000000
+#endif
+
 /* OPC UA Stack header files */
 #include "opcua.h"
 #include "opcua_list.h"
 #include "opcua_endpoint.h"
 #include "opcua_timer.h"
+#include "opcua_channel.h"
 
 #define CAL_OpcUaStringCompare(xValue1, xValue2) CAL_OpcUaStringStrnCmp(xValue1, xValue2, OPCUA_STRING_LENDONTCARE, OpcUa_False)
 #define CAL_OpcUaStringCopyTo(xSource, xDestination) CAL_OpcUaStringStrnCpy(xDestination, xSource, OPCUA_STRING_LENDONTCARE)
@@ -1637,13 +1699,13 @@ typedef OpcUa_CharA* (CDECL * PFOPCUASTRINGGETRAWSTRING) (const OpcUa_String* pS
 
 
 
-OpcUa_StatusCode CDECL OpcUaStringInitialize(OpcUa_String* pString);
-typedef OpcUa_StatusCode (CDECL * PFOPCUASTRINGINITIALIZE) (OpcUa_String* pString);
+OpcUa_Void CDECL OpcUaStringInitialize(OpcUa_String* pString);
+typedef OpcUa_Void (CDECL * PFOPCUASTRINGINITIALIZE) (OpcUa_String* pString);
 #if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUASTRINGINITIALIZE_NOTIMPLEMENTED)
 	#define USE_OpcUaStringInitialize
 	#define EXT_OpcUaStringInitialize
 	#define GET_OpcUaStringInitialize(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_OpcUaStringInitialize(p0)  (OpcUa_StatusCode)ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaStringInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
 	#define CHK_OpcUaStringInitialize  FALSE
 	#define EXP_OpcUaStringInitialize  ERR_OK
 #elif defined(STATIC_LINK)
@@ -2789,6 +2851,54 @@ typedef OpcUa_Void (CDECL * PFOPCUAREADVALUEIDCLEAR) (OpcUa_ReadValueId* pValue)
 	#define CAL_OpcUaReadValueIdClear  pfOpcUaReadValueIdClear
 	#define CHK_OpcUaReadValueIdClear  (pfOpcUaReadValueIdClear != NULL)
 	#define EXP_OpcUaReadValueIdClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaReadValueIdClear", (RTS_UINTPTR)OpcUaReadValueIdClear, 0, 0) 
+#endif
+
+
+
+OpcUa_StatusCode CDECL OpcUaReadValueIdCopyTo(const OpcUa_ReadValueId* pSource, OpcUa_ReadValueId* pDestination);
+typedef OpcUa_StatusCode (CDECL * PFOPCUAREADVALUEIDCOPYTO) (const OpcUa_ReadValueId* pSource, OpcUa_ReadValueId* pDestination);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAREADVALUEIDCOPYTO_NOTIMPLEMENTED)
+	#define USE_OpcUaReadValueIdCopyTo
+	#define EXT_OpcUaReadValueIdCopyTo
+	#define GET_OpcUaReadValueIdCopyTo(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaReadValueIdCopyTo(p0,p1)  (OpcUa_StatusCode)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaReadValueIdCopyTo  FALSE
+	#define EXP_OpcUaReadValueIdCopyTo  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaReadValueIdCopyTo
+	#define EXT_OpcUaReadValueIdCopyTo
+	#define GET_OpcUaReadValueIdCopyTo(fl)  CAL_CMGETAPI( "OpcUaReadValueIdCopyTo" ) 
+	#define CAL_OpcUaReadValueIdCopyTo  OpcUaReadValueIdCopyTo
+	#define CHK_OpcUaReadValueIdCopyTo  TRUE
+	#define EXP_OpcUaReadValueIdCopyTo  CAL_CMEXPAPI( "OpcUaReadValueIdCopyTo" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaReadValueIdCopyTo
+	#define EXT_OpcUaReadValueIdCopyTo
+	#define GET_OpcUaReadValueIdCopyTo(fl)  CAL_CMGETAPI( "OpcUaReadValueIdCopyTo" ) 
+	#define CAL_OpcUaReadValueIdCopyTo  OpcUaReadValueIdCopyTo
+	#define CHK_OpcUaReadValueIdCopyTo  TRUE
+	#define EXP_OpcUaReadValueIdCopyTo  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaReadValueIdCopyTo", (RTS_UINTPTR)OpcUaReadValueIdCopyTo, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaReadValueIdCopyTo
+	#define EXT_CmpOPCUAStackOpcUaReadValueIdCopyTo
+	#define GET_CmpOPCUAStackOpcUaReadValueIdCopyTo  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaReadValueIdCopyTo pICmpOPCUAStack->IOpcUaReadValueIdCopyTo
+	#define CHK_CmpOPCUAStackOpcUaReadValueIdCopyTo (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaReadValueIdCopyTo  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaReadValueIdCopyTo
+	#define EXT_OpcUaReadValueIdCopyTo
+	#define GET_OpcUaReadValueIdCopyTo(fl)  CAL_CMGETAPI( "OpcUaReadValueIdCopyTo" ) 
+	#define CAL_OpcUaReadValueIdCopyTo pICmpOPCUAStack->IOpcUaReadValueIdCopyTo
+	#define CHK_OpcUaReadValueIdCopyTo (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaReadValueIdCopyTo  CAL_CMEXPAPI( "OpcUaReadValueIdCopyTo" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaReadValueIdCopyTo  PFOPCUAREADVALUEIDCOPYTO pfOpcUaReadValueIdCopyTo;
+	#define EXT_OpcUaReadValueIdCopyTo  extern PFOPCUAREADVALUEIDCOPYTO pfOpcUaReadValueIdCopyTo;
+	#define GET_OpcUaReadValueIdCopyTo(fl)  s_pfCMGetAPI2( "OpcUaReadValueIdCopyTo", (RTS_VOID_FCTPTR *)&pfOpcUaReadValueIdCopyTo, (fl), 0, 0)
+	#define CAL_OpcUaReadValueIdCopyTo  pfOpcUaReadValueIdCopyTo
+	#define CHK_OpcUaReadValueIdCopyTo  (pfOpcUaReadValueIdCopyTo != NULL)
+	#define EXP_OpcUaReadValueIdCopyTo  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaReadValueIdCopyTo", (RTS_UINTPTR)OpcUaReadValueIdCopyTo, 0, 0) 
 #endif
 
 
@@ -3958,6 +4068,103 @@ typedef OpcUa_Void (CDECL * PFOPCUAAPPLICATIONDESCRIPTIONCLEAR) (OpcUa_Applicati
 
 
 
+OpcUa_Void CDECL OpcUaServerOnNetworkInitialize(OpcUa_ServerOnNetwork* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUASERVERONNETWORKINITIALIZE) (OpcUa_ServerOnNetwork* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUASERVERONNETWORKINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaServerOnNetworkInitialize
+	#define EXT_OpcUaServerOnNetworkInitialize
+	#define GET_OpcUaServerOnNetworkInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaServerOnNetworkInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaServerOnNetworkInitialize  FALSE
+	#define EXP_OpcUaServerOnNetworkInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaServerOnNetworkInitialize
+	#define EXT_OpcUaServerOnNetworkInitialize
+	#define GET_OpcUaServerOnNetworkInitialize(fl)  CAL_CMGETAPI( "OpcUaServerOnNetworkInitialize" ) 
+	#define CAL_OpcUaServerOnNetworkInitialize  OpcUaServerOnNetworkInitialize
+	#define CHK_OpcUaServerOnNetworkInitialize  TRUE
+	#define EXP_OpcUaServerOnNetworkInitialize  CAL_CMEXPAPI( "OpcUaServerOnNetworkInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaServerOnNetworkInitialize
+	#define EXT_OpcUaServerOnNetworkInitialize
+	#define GET_OpcUaServerOnNetworkInitialize(fl)  CAL_CMGETAPI( "OpcUaServerOnNetworkInitialize" ) 
+	#define CAL_OpcUaServerOnNetworkInitialize  OpcUaServerOnNetworkInitialize
+	#define CHK_OpcUaServerOnNetworkInitialize  TRUE
+	#define EXP_OpcUaServerOnNetworkInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerOnNetworkInitialize", (RTS_UINTPTR)OpcUaServerOnNetworkInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaServerOnNetworkInitialize
+	#define EXT_CmpOPCUAStackOpcUaServerOnNetworkInitialize
+	#define GET_CmpOPCUAStackOpcUaServerOnNetworkInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaServerOnNetworkInitialize pICmpOPCUAStack->IOpcUaServerOnNetworkInitialize
+	#define CHK_CmpOPCUAStackOpcUaServerOnNetworkInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaServerOnNetworkInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaServerOnNetworkInitialize
+	#define EXT_OpcUaServerOnNetworkInitialize
+	#define GET_OpcUaServerOnNetworkInitialize(fl)  CAL_CMGETAPI( "OpcUaServerOnNetworkInitialize" ) 
+	#define CAL_OpcUaServerOnNetworkInitialize pICmpOPCUAStack->IOpcUaServerOnNetworkInitialize
+	#define CHK_OpcUaServerOnNetworkInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaServerOnNetworkInitialize  CAL_CMEXPAPI( "OpcUaServerOnNetworkInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaServerOnNetworkInitialize  PFOPCUASERVERONNETWORKINITIALIZE pfOpcUaServerOnNetworkInitialize;
+	#define EXT_OpcUaServerOnNetworkInitialize  extern PFOPCUASERVERONNETWORKINITIALIZE pfOpcUaServerOnNetworkInitialize;
+	#define GET_OpcUaServerOnNetworkInitialize(fl)  s_pfCMGetAPI2( "OpcUaServerOnNetworkInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaServerOnNetworkInitialize, (fl), 0, 0)
+	#define CAL_OpcUaServerOnNetworkInitialize  pfOpcUaServerOnNetworkInitialize
+	#define CHK_OpcUaServerOnNetworkInitialize  (pfOpcUaServerOnNetworkInitialize != NULL)
+	#define EXP_OpcUaServerOnNetworkInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerOnNetworkInitialize", (RTS_UINTPTR)OpcUaServerOnNetworkInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaServerOnNetworkClear(OpcUa_ServerOnNetwork* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUASERVERONNETWORKCLEAR) (OpcUa_ServerOnNetwork* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUASERVERONNETWORKCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaServerOnNetworkClear
+	#define EXT_OpcUaServerOnNetworkClear
+	#define GET_OpcUaServerOnNetworkClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaServerOnNetworkClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaServerOnNetworkClear  FALSE
+	#define EXP_OpcUaServerOnNetworkClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaServerOnNetworkClear
+	#define EXT_OpcUaServerOnNetworkClear
+	#define GET_OpcUaServerOnNetworkClear(fl)  CAL_CMGETAPI( "OpcUaServerOnNetworkClear" ) 
+	#define CAL_OpcUaServerOnNetworkClear  OpcUaServerOnNetworkClear
+	#define CHK_OpcUaServerOnNetworkClear  TRUE
+	#define EXP_OpcUaServerOnNetworkClear  CAL_CMEXPAPI( "OpcUaServerOnNetworkClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaServerOnNetworkClear
+	#define EXT_OpcUaServerOnNetworkClear
+	#define GET_OpcUaServerOnNetworkClear(fl)  CAL_CMGETAPI( "OpcUaServerOnNetworkClear" ) 
+	#define CAL_OpcUaServerOnNetworkClear  OpcUaServerOnNetworkClear
+	#define CHK_OpcUaServerOnNetworkClear  TRUE
+	#define EXP_OpcUaServerOnNetworkClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerOnNetworkClear", (RTS_UINTPTR)OpcUaServerOnNetworkClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaServerOnNetworkClear
+	#define EXT_CmpOPCUAStackOpcUaServerOnNetworkClear
+	#define GET_CmpOPCUAStackOpcUaServerOnNetworkClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaServerOnNetworkClear pICmpOPCUAStack->IOpcUaServerOnNetworkClear
+	#define CHK_CmpOPCUAStackOpcUaServerOnNetworkClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaServerOnNetworkClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaServerOnNetworkClear
+	#define EXT_OpcUaServerOnNetworkClear
+	#define GET_OpcUaServerOnNetworkClear(fl)  CAL_CMGETAPI( "OpcUaServerOnNetworkClear" ) 
+	#define CAL_OpcUaServerOnNetworkClear pICmpOPCUAStack->IOpcUaServerOnNetworkClear
+	#define CHK_OpcUaServerOnNetworkClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaServerOnNetworkClear  CAL_CMEXPAPI( "OpcUaServerOnNetworkClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaServerOnNetworkClear  PFOPCUASERVERONNETWORKCLEAR pfOpcUaServerOnNetworkClear;
+	#define EXT_OpcUaServerOnNetworkClear  extern PFOPCUASERVERONNETWORKCLEAR pfOpcUaServerOnNetworkClear;
+	#define GET_OpcUaServerOnNetworkClear(fl)  s_pfCMGetAPI2( "OpcUaServerOnNetworkClear", (RTS_VOID_FCTPTR *)&pfOpcUaServerOnNetworkClear, (fl), 0, 0)
+	#define CAL_OpcUaServerOnNetworkClear  pfOpcUaServerOnNetworkClear
+	#define CHK_OpcUaServerOnNetworkClear  (pfOpcUaServerOnNetworkClear != NULL)
+	#define EXP_OpcUaServerOnNetworkClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaServerOnNetworkClear", (RTS_UINTPTR)OpcUaServerOnNetworkClear, 0, 0) 
+#endif
+
+
+
+
 OpcUa_Void CDECL OpcUaEventNotificationListInitialize(OpcUa_EventNotificationList* pValue);
 typedef OpcUa_Void (CDECL * PFOPCUAEVENTNOTIFICATIONLISTINITIALIZE) (OpcUa_EventNotificationList* pValue);
 #if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAEVENTNOTIFICATIONLISTINITIALIZE_NOTIMPLEMENTED)
@@ -4247,6 +4454,4563 @@ typedef OpcUa_Void (CDECL * PFOPCUASIMPLEATTRIBUTEOPERANDCLEAR) (OpcUa_SimpleAtt
 #endif
 
 
+
+
+OpcUa_Void CDECL OpcUaFindServersRequestInitialize(OpcUa_FindServersRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAFINDSERVERSREQUESTINITIALIZE) (OpcUa_FindServersRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAFINDSERVERSREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaFindServersRequestInitialize
+	#define EXT_OpcUaFindServersRequestInitialize
+	#define GET_OpcUaFindServersRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaFindServersRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaFindServersRequestInitialize  FALSE
+	#define EXP_OpcUaFindServersRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaFindServersRequestInitialize
+	#define EXT_OpcUaFindServersRequestInitialize
+	#define GET_OpcUaFindServersRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaFindServersRequestInitialize" ) 
+	#define CAL_OpcUaFindServersRequestInitialize  OpcUaFindServersRequestInitialize
+	#define CHK_OpcUaFindServersRequestInitialize  TRUE
+	#define EXP_OpcUaFindServersRequestInitialize  CAL_CMEXPAPI( "OpcUaFindServersRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaFindServersRequestInitialize
+	#define EXT_OpcUaFindServersRequestInitialize
+	#define GET_OpcUaFindServersRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaFindServersRequestInitialize" ) 
+	#define CAL_OpcUaFindServersRequestInitialize  OpcUaFindServersRequestInitialize
+	#define CHK_OpcUaFindServersRequestInitialize  TRUE
+	#define EXP_OpcUaFindServersRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersRequestInitialize", (RTS_UINTPTR)OpcUaFindServersRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaFindServersRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaFindServersRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaFindServersRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaFindServersRequestInitialize pICmpOPCUAStack->IOpcUaFindServersRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaFindServersRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaFindServersRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaFindServersRequestInitialize
+	#define EXT_OpcUaFindServersRequestInitialize
+	#define GET_OpcUaFindServersRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaFindServersRequestInitialize" ) 
+	#define CAL_OpcUaFindServersRequestInitialize pICmpOPCUAStack->IOpcUaFindServersRequestInitialize
+	#define CHK_OpcUaFindServersRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaFindServersRequestInitialize  CAL_CMEXPAPI( "OpcUaFindServersRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaFindServersRequestInitialize  PFOPCUAFINDSERVERSREQUESTINITIALIZE pfOpcUaFindServersRequestInitialize;
+	#define EXT_OpcUaFindServersRequestInitialize  extern PFOPCUAFINDSERVERSREQUESTINITIALIZE pfOpcUaFindServersRequestInitialize;
+	#define GET_OpcUaFindServersRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaFindServersRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaFindServersRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaFindServersRequestInitialize  pfOpcUaFindServersRequestInitialize
+	#define CHK_OpcUaFindServersRequestInitialize  (pfOpcUaFindServersRequestInitialize != NULL)
+	#define EXP_OpcUaFindServersRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersRequestInitialize", (RTS_UINTPTR)OpcUaFindServersRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaFindServersRequestClear(OpcUa_FindServersRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAFINDSERVERSREQUESTCLEAR) (OpcUa_FindServersRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAFINDSERVERSREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaFindServersRequestClear
+	#define EXT_OpcUaFindServersRequestClear
+	#define GET_OpcUaFindServersRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaFindServersRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaFindServersRequestClear  FALSE
+	#define EXP_OpcUaFindServersRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaFindServersRequestClear
+	#define EXT_OpcUaFindServersRequestClear
+	#define GET_OpcUaFindServersRequestClear(fl)  CAL_CMGETAPI( "OpcUaFindServersRequestClear" ) 
+	#define CAL_OpcUaFindServersRequestClear  OpcUaFindServersRequestClear
+	#define CHK_OpcUaFindServersRequestClear  TRUE
+	#define EXP_OpcUaFindServersRequestClear  CAL_CMEXPAPI( "OpcUaFindServersRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaFindServersRequestClear
+	#define EXT_OpcUaFindServersRequestClear
+	#define GET_OpcUaFindServersRequestClear(fl)  CAL_CMGETAPI( "OpcUaFindServersRequestClear" ) 
+	#define CAL_OpcUaFindServersRequestClear  OpcUaFindServersRequestClear
+	#define CHK_OpcUaFindServersRequestClear  TRUE
+	#define EXP_OpcUaFindServersRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersRequestClear", (RTS_UINTPTR)OpcUaFindServersRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaFindServersRequestClear
+	#define EXT_CmpOPCUAStackOpcUaFindServersRequestClear
+	#define GET_CmpOPCUAStackOpcUaFindServersRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaFindServersRequestClear pICmpOPCUAStack->IOpcUaFindServersRequestClear
+	#define CHK_CmpOPCUAStackOpcUaFindServersRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaFindServersRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaFindServersRequestClear
+	#define EXT_OpcUaFindServersRequestClear
+	#define GET_OpcUaFindServersRequestClear(fl)  CAL_CMGETAPI( "OpcUaFindServersRequestClear" ) 
+	#define CAL_OpcUaFindServersRequestClear pICmpOPCUAStack->IOpcUaFindServersRequestClear
+	#define CHK_OpcUaFindServersRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaFindServersRequestClear  CAL_CMEXPAPI( "OpcUaFindServersRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaFindServersRequestClear  PFOPCUAFINDSERVERSREQUESTCLEAR pfOpcUaFindServersRequestClear;
+	#define EXT_OpcUaFindServersRequestClear  extern PFOPCUAFINDSERVERSREQUESTCLEAR pfOpcUaFindServersRequestClear;
+	#define GET_OpcUaFindServersRequestClear(fl)  s_pfCMGetAPI2( "OpcUaFindServersRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaFindServersRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaFindServersRequestClear  pfOpcUaFindServersRequestClear
+	#define CHK_OpcUaFindServersRequestClear  (pfOpcUaFindServersRequestClear != NULL)
+	#define EXP_OpcUaFindServersRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersRequestClear", (RTS_UINTPTR)OpcUaFindServersRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaFindServersResponseInitialize(OpcUa_FindServersResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAFINDSERVERSRESPONSEINITIALIZE) (OpcUa_FindServersResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAFINDSERVERSRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaFindServersResponseInitialize
+	#define EXT_OpcUaFindServersResponseInitialize
+	#define GET_OpcUaFindServersResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaFindServersResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaFindServersResponseInitialize  FALSE
+	#define EXP_OpcUaFindServersResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaFindServersResponseInitialize
+	#define EXT_OpcUaFindServersResponseInitialize
+	#define GET_OpcUaFindServersResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaFindServersResponseInitialize" ) 
+	#define CAL_OpcUaFindServersResponseInitialize  OpcUaFindServersResponseInitialize
+	#define CHK_OpcUaFindServersResponseInitialize  TRUE
+	#define EXP_OpcUaFindServersResponseInitialize  CAL_CMEXPAPI( "OpcUaFindServersResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaFindServersResponseInitialize
+	#define EXT_OpcUaFindServersResponseInitialize
+	#define GET_OpcUaFindServersResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaFindServersResponseInitialize" ) 
+	#define CAL_OpcUaFindServersResponseInitialize  OpcUaFindServersResponseInitialize
+	#define CHK_OpcUaFindServersResponseInitialize  TRUE
+	#define EXP_OpcUaFindServersResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersResponseInitialize", (RTS_UINTPTR)OpcUaFindServersResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaFindServersResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaFindServersResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaFindServersResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaFindServersResponseInitialize pICmpOPCUAStack->IOpcUaFindServersResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaFindServersResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaFindServersResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaFindServersResponseInitialize
+	#define EXT_OpcUaFindServersResponseInitialize
+	#define GET_OpcUaFindServersResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaFindServersResponseInitialize" ) 
+	#define CAL_OpcUaFindServersResponseInitialize pICmpOPCUAStack->IOpcUaFindServersResponseInitialize
+	#define CHK_OpcUaFindServersResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaFindServersResponseInitialize  CAL_CMEXPAPI( "OpcUaFindServersResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaFindServersResponseInitialize  PFOPCUAFINDSERVERSRESPONSEINITIALIZE pfOpcUaFindServersResponseInitialize;
+	#define EXT_OpcUaFindServersResponseInitialize  extern PFOPCUAFINDSERVERSRESPONSEINITIALIZE pfOpcUaFindServersResponseInitialize;
+	#define GET_OpcUaFindServersResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaFindServersResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaFindServersResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaFindServersResponseInitialize  pfOpcUaFindServersResponseInitialize
+	#define CHK_OpcUaFindServersResponseInitialize  (pfOpcUaFindServersResponseInitialize != NULL)
+	#define EXP_OpcUaFindServersResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersResponseInitialize", (RTS_UINTPTR)OpcUaFindServersResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaFindServersResponseClear(OpcUa_FindServersResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAFINDSERVERSRESPONSECLEAR) (OpcUa_FindServersResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAFINDSERVERSRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaFindServersResponseClear
+	#define EXT_OpcUaFindServersResponseClear
+	#define GET_OpcUaFindServersResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaFindServersResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaFindServersResponseClear  FALSE
+	#define EXP_OpcUaFindServersResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaFindServersResponseClear
+	#define EXT_OpcUaFindServersResponseClear
+	#define GET_OpcUaFindServersResponseClear(fl)  CAL_CMGETAPI( "OpcUaFindServersResponseClear" ) 
+	#define CAL_OpcUaFindServersResponseClear  OpcUaFindServersResponseClear
+	#define CHK_OpcUaFindServersResponseClear  TRUE
+	#define EXP_OpcUaFindServersResponseClear  CAL_CMEXPAPI( "OpcUaFindServersResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaFindServersResponseClear
+	#define EXT_OpcUaFindServersResponseClear
+	#define GET_OpcUaFindServersResponseClear(fl)  CAL_CMGETAPI( "OpcUaFindServersResponseClear" ) 
+	#define CAL_OpcUaFindServersResponseClear  OpcUaFindServersResponseClear
+	#define CHK_OpcUaFindServersResponseClear  TRUE
+	#define EXP_OpcUaFindServersResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersResponseClear", (RTS_UINTPTR)OpcUaFindServersResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaFindServersResponseClear
+	#define EXT_CmpOPCUAStackOpcUaFindServersResponseClear
+	#define GET_CmpOPCUAStackOpcUaFindServersResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaFindServersResponseClear pICmpOPCUAStack->IOpcUaFindServersResponseClear
+	#define CHK_CmpOPCUAStackOpcUaFindServersResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaFindServersResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaFindServersResponseClear
+	#define EXT_OpcUaFindServersResponseClear
+	#define GET_OpcUaFindServersResponseClear(fl)  CAL_CMGETAPI( "OpcUaFindServersResponseClear" ) 
+	#define CAL_OpcUaFindServersResponseClear pICmpOPCUAStack->IOpcUaFindServersResponseClear
+	#define CHK_OpcUaFindServersResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaFindServersResponseClear  CAL_CMEXPAPI( "OpcUaFindServersResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaFindServersResponseClear  PFOPCUAFINDSERVERSRESPONSECLEAR pfOpcUaFindServersResponseClear;
+	#define EXT_OpcUaFindServersResponseClear  extern PFOPCUAFINDSERVERSRESPONSECLEAR pfOpcUaFindServersResponseClear;
+	#define GET_OpcUaFindServersResponseClear(fl)  s_pfCMGetAPI2( "OpcUaFindServersResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaFindServersResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaFindServersResponseClear  pfOpcUaFindServersResponseClear
+	#define CHK_OpcUaFindServersResponseClear  (pfOpcUaFindServersResponseClear != NULL)
+	#define EXP_OpcUaFindServersResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersResponseClear", (RTS_UINTPTR)OpcUaFindServersResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaFindServersOnNetworkRequestInitialize(OpcUa_FindServersOnNetworkRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAFINDSERVERSONNETWORKREQUESTINITIALIZE) (OpcUa_FindServersOnNetworkRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAFINDSERVERSONNETWORKREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaFindServersOnNetworkRequestInitialize
+	#define EXT_OpcUaFindServersOnNetworkRequestInitialize
+	#define GET_OpcUaFindServersOnNetworkRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaFindServersOnNetworkRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaFindServersOnNetworkRequestInitialize  FALSE
+	#define EXP_OpcUaFindServersOnNetworkRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaFindServersOnNetworkRequestInitialize
+	#define EXT_OpcUaFindServersOnNetworkRequestInitialize
+	#define GET_OpcUaFindServersOnNetworkRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaFindServersOnNetworkRequestInitialize" ) 
+	#define CAL_OpcUaFindServersOnNetworkRequestInitialize  OpcUaFindServersOnNetworkRequestInitialize
+	#define CHK_OpcUaFindServersOnNetworkRequestInitialize  TRUE
+	#define EXP_OpcUaFindServersOnNetworkRequestInitialize  CAL_CMEXPAPI( "OpcUaFindServersOnNetworkRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaFindServersOnNetworkRequestInitialize
+	#define EXT_OpcUaFindServersOnNetworkRequestInitialize
+	#define GET_OpcUaFindServersOnNetworkRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaFindServersOnNetworkRequestInitialize" ) 
+	#define CAL_OpcUaFindServersOnNetworkRequestInitialize  OpcUaFindServersOnNetworkRequestInitialize
+	#define CHK_OpcUaFindServersOnNetworkRequestInitialize  TRUE
+	#define EXP_OpcUaFindServersOnNetworkRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersOnNetworkRequestInitialize", (RTS_UINTPTR)OpcUaFindServersOnNetworkRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaFindServersOnNetworkRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaFindServersOnNetworkRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaFindServersOnNetworkRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaFindServersOnNetworkRequestInitialize pICmpOPCUAStack->IOpcUaFindServersOnNetworkRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaFindServersOnNetworkRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaFindServersOnNetworkRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaFindServersOnNetworkRequestInitialize
+	#define EXT_OpcUaFindServersOnNetworkRequestInitialize
+	#define GET_OpcUaFindServersOnNetworkRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaFindServersOnNetworkRequestInitialize" ) 
+	#define CAL_OpcUaFindServersOnNetworkRequestInitialize pICmpOPCUAStack->IOpcUaFindServersOnNetworkRequestInitialize
+	#define CHK_OpcUaFindServersOnNetworkRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaFindServersOnNetworkRequestInitialize  CAL_CMEXPAPI( "OpcUaFindServersOnNetworkRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaFindServersOnNetworkRequestInitialize  PFOPCUAFINDSERVERSONNETWORKREQUESTINITIALIZE pfOpcUaFindServersOnNetworkRequestInitialize;
+	#define EXT_OpcUaFindServersOnNetworkRequestInitialize  extern PFOPCUAFINDSERVERSONNETWORKREQUESTINITIALIZE pfOpcUaFindServersOnNetworkRequestInitialize;
+	#define GET_OpcUaFindServersOnNetworkRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaFindServersOnNetworkRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaFindServersOnNetworkRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaFindServersOnNetworkRequestInitialize  pfOpcUaFindServersOnNetworkRequestInitialize
+	#define CHK_OpcUaFindServersOnNetworkRequestInitialize  (pfOpcUaFindServersOnNetworkRequestInitialize != NULL)
+	#define EXP_OpcUaFindServersOnNetworkRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersOnNetworkRequestInitialize", (RTS_UINTPTR)OpcUaFindServersOnNetworkRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaFindServersOnNetworkRequestClear(OpcUa_FindServersOnNetworkRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAFINDSERVERSONNETWORKREQUESTCLEAR) (OpcUa_FindServersOnNetworkRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAFINDSERVERSONNETWORKREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaFindServersOnNetworkRequestClear
+	#define EXT_OpcUaFindServersOnNetworkRequestClear
+	#define GET_OpcUaFindServersOnNetworkRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaFindServersOnNetworkRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaFindServersOnNetworkRequestClear  FALSE
+	#define EXP_OpcUaFindServersOnNetworkRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaFindServersOnNetworkRequestClear
+	#define EXT_OpcUaFindServersOnNetworkRequestClear
+	#define GET_OpcUaFindServersOnNetworkRequestClear(fl)  CAL_CMGETAPI( "OpcUaFindServersOnNetworkRequestClear" ) 
+	#define CAL_OpcUaFindServersOnNetworkRequestClear  OpcUaFindServersOnNetworkRequestClear
+	#define CHK_OpcUaFindServersOnNetworkRequestClear  TRUE
+	#define EXP_OpcUaFindServersOnNetworkRequestClear  CAL_CMEXPAPI( "OpcUaFindServersOnNetworkRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaFindServersOnNetworkRequestClear
+	#define EXT_OpcUaFindServersOnNetworkRequestClear
+	#define GET_OpcUaFindServersOnNetworkRequestClear(fl)  CAL_CMGETAPI( "OpcUaFindServersOnNetworkRequestClear" ) 
+	#define CAL_OpcUaFindServersOnNetworkRequestClear  OpcUaFindServersOnNetworkRequestClear
+	#define CHK_OpcUaFindServersOnNetworkRequestClear  TRUE
+	#define EXP_OpcUaFindServersOnNetworkRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersOnNetworkRequestClear", (RTS_UINTPTR)OpcUaFindServersOnNetworkRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaFindServersOnNetworkRequestClear
+	#define EXT_CmpOPCUAStackOpcUaFindServersOnNetworkRequestClear
+	#define GET_CmpOPCUAStackOpcUaFindServersOnNetworkRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaFindServersOnNetworkRequestClear pICmpOPCUAStack->IOpcUaFindServersOnNetworkRequestClear
+	#define CHK_CmpOPCUAStackOpcUaFindServersOnNetworkRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaFindServersOnNetworkRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaFindServersOnNetworkRequestClear
+	#define EXT_OpcUaFindServersOnNetworkRequestClear
+	#define GET_OpcUaFindServersOnNetworkRequestClear(fl)  CAL_CMGETAPI( "OpcUaFindServersOnNetworkRequestClear" ) 
+	#define CAL_OpcUaFindServersOnNetworkRequestClear pICmpOPCUAStack->IOpcUaFindServersOnNetworkRequestClear
+	#define CHK_OpcUaFindServersOnNetworkRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaFindServersOnNetworkRequestClear  CAL_CMEXPAPI( "OpcUaFindServersOnNetworkRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaFindServersOnNetworkRequestClear  PFOPCUAFINDSERVERSONNETWORKREQUESTCLEAR pfOpcUaFindServersOnNetworkRequestClear;
+	#define EXT_OpcUaFindServersOnNetworkRequestClear  extern PFOPCUAFINDSERVERSONNETWORKREQUESTCLEAR pfOpcUaFindServersOnNetworkRequestClear;
+	#define GET_OpcUaFindServersOnNetworkRequestClear(fl)  s_pfCMGetAPI2( "OpcUaFindServersOnNetworkRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaFindServersOnNetworkRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaFindServersOnNetworkRequestClear  pfOpcUaFindServersOnNetworkRequestClear
+	#define CHK_OpcUaFindServersOnNetworkRequestClear  (pfOpcUaFindServersOnNetworkRequestClear != NULL)
+	#define EXP_OpcUaFindServersOnNetworkRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersOnNetworkRequestClear", (RTS_UINTPTR)OpcUaFindServersOnNetworkRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaFindServersOnNetworkResponseInitialize(OpcUa_FindServersOnNetworkResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAFINDSERVERSONNETWORKRESPONSEINITIALIZE) (OpcUa_FindServersOnNetworkResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAFINDSERVERSONNETWORKRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaFindServersOnNetworkResponseInitialize
+	#define EXT_OpcUaFindServersOnNetworkResponseInitialize
+	#define GET_OpcUaFindServersOnNetworkResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaFindServersOnNetworkResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaFindServersOnNetworkResponseInitialize  FALSE
+	#define EXP_OpcUaFindServersOnNetworkResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaFindServersOnNetworkResponseInitialize
+	#define EXT_OpcUaFindServersOnNetworkResponseInitialize
+	#define GET_OpcUaFindServersOnNetworkResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaFindServersOnNetworkResponseInitialize" ) 
+	#define CAL_OpcUaFindServersOnNetworkResponseInitialize  OpcUaFindServersOnNetworkResponseInitialize
+	#define CHK_OpcUaFindServersOnNetworkResponseInitialize  TRUE
+	#define EXP_OpcUaFindServersOnNetworkResponseInitialize  CAL_CMEXPAPI( "OpcUaFindServersOnNetworkResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaFindServersOnNetworkResponseInitialize
+	#define EXT_OpcUaFindServersOnNetworkResponseInitialize
+	#define GET_OpcUaFindServersOnNetworkResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaFindServersOnNetworkResponseInitialize" ) 
+	#define CAL_OpcUaFindServersOnNetworkResponseInitialize  OpcUaFindServersOnNetworkResponseInitialize
+	#define CHK_OpcUaFindServersOnNetworkResponseInitialize  TRUE
+	#define EXP_OpcUaFindServersOnNetworkResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersOnNetworkResponseInitialize", (RTS_UINTPTR)OpcUaFindServersOnNetworkResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaFindServersOnNetworkResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaFindServersOnNetworkResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaFindServersOnNetworkResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaFindServersOnNetworkResponseInitialize pICmpOPCUAStack->IOpcUaFindServersOnNetworkResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaFindServersOnNetworkResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaFindServersOnNetworkResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaFindServersOnNetworkResponseInitialize
+	#define EXT_OpcUaFindServersOnNetworkResponseInitialize
+	#define GET_OpcUaFindServersOnNetworkResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaFindServersOnNetworkResponseInitialize" ) 
+	#define CAL_OpcUaFindServersOnNetworkResponseInitialize pICmpOPCUAStack->IOpcUaFindServersOnNetworkResponseInitialize
+	#define CHK_OpcUaFindServersOnNetworkResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaFindServersOnNetworkResponseInitialize  CAL_CMEXPAPI( "OpcUaFindServersOnNetworkResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaFindServersOnNetworkResponseInitialize  PFOPCUAFINDSERVERSONNETWORKRESPONSEINITIALIZE pfOpcUaFindServersOnNetworkResponseInitialize;
+	#define EXT_OpcUaFindServersOnNetworkResponseInitialize  extern PFOPCUAFINDSERVERSONNETWORKRESPONSEINITIALIZE pfOpcUaFindServersOnNetworkResponseInitialize;
+	#define GET_OpcUaFindServersOnNetworkResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaFindServersOnNetworkResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaFindServersOnNetworkResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaFindServersOnNetworkResponseInitialize  pfOpcUaFindServersOnNetworkResponseInitialize
+	#define CHK_OpcUaFindServersOnNetworkResponseInitialize  (pfOpcUaFindServersOnNetworkResponseInitialize != NULL)
+	#define EXP_OpcUaFindServersOnNetworkResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersOnNetworkResponseInitialize", (RTS_UINTPTR)OpcUaFindServersOnNetworkResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaFindServersOnNetworkResponseClear(OpcUa_FindServersOnNetworkResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAFINDSERVERSONNETWORKRESPONSECLEAR) (OpcUa_FindServersOnNetworkResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAFINDSERVERSONNETWORKRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaFindServersOnNetworkResponseClear
+	#define EXT_OpcUaFindServersOnNetworkResponseClear
+	#define GET_OpcUaFindServersOnNetworkResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaFindServersOnNetworkResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaFindServersOnNetworkResponseClear  FALSE
+	#define EXP_OpcUaFindServersOnNetworkResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaFindServersOnNetworkResponseClear
+	#define EXT_OpcUaFindServersOnNetworkResponseClear
+	#define GET_OpcUaFindServersOnNetworkResponseClear(fl)  CAL_CMGETAPI( "OpcUaFindServersOnNetworkResponseClear" ) 
+	#define CAL_OpcUaFindServersOnNetworkResponseClear  OpcUaFindServersOnNetworkResponseClear
+	#define CHK_OpcUaFindServersOnNetworkResponseClear  TRUE
+	#define EXP_OpcUaFindServersOnNetworkResponseClear  CAL_CMEXPAPI( "OpcUaFindServersOnNetworkResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaFindServersOnNetworkResponseClear
+	#define EXT_OpcUaFindServersOnNetworkResponseClear
+	#define GET_OpcUaFindServersOnNetworkResponseClear(fl)  CAL_CMGETAPI( "OpcUaFindServersOnNetworkResponseClear" ) 
+	#define CAL_OpcUaFindServersOnNetworkResponseClear  OpcUaFindServersOnNetworkResponseClear
+	#define CHK_OpcUaFindServersOnNetworkResponseClear  TRUE
+	#define EXP_OpcUaFindServersOnNetworkResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersOnNetworkResponseClear", (RTS_UINTPTR)OpcUaFindServersOnNetworkResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaFindServersOnNetworkResponseClear
+	#define EXT_CmpOPCUAStackOpcUaFindServersOnNetworkResponseClear
+	#define GET_CmpOPCUAStackOpcUaFindServersOnNetworkResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaFindServersOnNetworkResponseClear pICmpOPCUAStack->IOpcUaFindServersOnNetworkResponseClear
+	#define CHK_CmpOPCUAStackOpcUaFindServersOnNetworkResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaFindServersOnNetworkResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaFindServersOnNetworkResponseClear
+	#define EXT_OpcUaFindServersOnNetworkResponseClear
+	#define GET_OpcUaFindServersOnNetworkResponseClear(fl)  CAL_CMGETAPI( "OpcUaFindServersOnNetworkResponseClear" ) 
+	#define CAL_OpcUaFindServersOnNetworkResponseClear pICmpOPCUAStack->IOpcUaFindServersOnNetworkResponseClear
+	#define CHK_OpcUaFindServersOnNetworkResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaFindServersOnNetworkResponseClear  CAL_CMEXPAPI( "OpcUaFindServersOnNetworkResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaFindServersOnNetworkResponseClear  PFOPCUAFINDSERVERSONNETWORKRESPONSECLEAR pfOpcUaFindServersOnNetworkResponseClear;
+	#define EXT_OpcUaFindServersOnNetworkResponseClear  extern PFOPCUAFINDSERVERSONNETWORKRESPONSECLEAR pfOpcUaFindServersOnNetworkResponseClear;
+	#define GET_OpcUaFindServersOnNetworkResponseClear(fl)  s_pfCMGetAPI2( "OpcUaFindServersOnNetworkResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaFindServersOnNetworkResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaFindServersOnNetworkResponseClear  pfOpcUaFindServersOnNetworkResponseClear
+	#define CHK_OpcUaFindServersOnNetworkResponseClear  (pfOpcUaFindServersOnNetworkResponseClear != NULL)
+	#define EXP_OpcUaFindServersOnNetworkResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaFindServersOnNetworkResponseClear", (RTS_UINTPTR)OpcUaFindServersOnNetworkResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaGetEndpointsRequestInitialize(OpcUa_GetEndpointsRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAGETENDPOINTSREQUESTINITIALIZE) (OpcUa_GetEndpointsRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAGETENDPOINTSREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaGetEndpointsRequestInitialize
+	#define EXT_OpcUaGetEndpointsRequestInitialize
+	#define GET_OpcUaGetEndpointsRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaGetEndpointsRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaGetEndpointsRequestInitialize  FALSE
+	#define EXP_OpcUaGetEndpointsRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaGetEndpointsRequestInitialize
+	#define EXT_OpcUaGetEndpointsRequestInitialize
+	#define GET_OpcUaGetEndpointsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaGetEndpointsRequestInitialize" ) 
+	#define CAL_OpcUaGetEndpointsRequestInitialize  OpcUaGetEndpointsRequestInitialize
+	#define CHK_OpcUaGetEndpointsRequestInitialize  TRUE
+	#define EXP_OpcUaGetEndpointsRequestInitialize  CAL_CMEXPAPI( "OpcUaGetEndpointsRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaGetEndpointsRequestInitialize
+	#define EXT_OpcUaGetEndpointsRequestInitialize
+	#define GET_OpcUaGetEndpointsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaGetEndpointsRequestInitialize" ) 
+	#define CAL_OpcUaGetEndpointsRequestInitialize  OpcUaGetEndpointsRequestInitialize
+	#define CHK_OpcUaGetEndpointsRequestInitialize  TRUE
+	#define EXP_OpcUaGetEndpointsRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaGetEndpointsRequestInitialize", (RTS_UINTPTR)OpcUaGetEndpointsRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaGetEndpointsRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaGetEndpointsRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaGetEndpointsRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaGetEndpointsRequestInitialize pICmpOPCUAStack->IOpcUaGetEndpointsRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaGetEndpointsRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaGetEndpointsRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaGetEndpointsRequestInitialize
+	#define EXT_OpcUaGetEndpointsRequestInitialize
+	#define GET_OpcUaGetEndpointsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaGetEndpointsRequestInitialize" ) 
+	#define CAL_OpcUaGetEndpointsRequestInitialize pICmpOPCUAStack->IOpcUaGetEndpointsRequestInitialize
+	#define CHK_OpcUaGetEndpointsRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaGetEndpointsRequestInitialize  CAL_CMEXPAPI( "OpcUaGetEndpointsRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaGetEndpointsRequestInitialize  PFOPCUAGETENDPOINTSREQUESTINITIALIZE pfOpcUaGetEndpointsRequestInitialize;
+	#define EXT_OpcUaGetEndpointsRequestInitialize  extern PFOPCUAGETENDPOINTSREQUESTINITIALIZE pfOpcUaGetEndpointsRequestInitialize;
+	#define GET_OpcUaGetEndpointsRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaGetEndpointsRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaGetEndpointsRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaGetEndpointsRequestInitialize  pfOpcUaGetEndpointsRequestInitialize
+	#define CHK_OpcUaGetEndpointsRequestInitialize  (pfOpcUaGetEndpointsRequestInitialize != NULL)
+	#define EXP_OpcUaGetEndpointsRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaGetEndpointsRequestInitialize", (RTS_UINTPTR)OpcUaGetEndpointsRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaGetEndpointsRequestClear(OpcUa_GetEndpointsRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAGETENDPOINTSREQUESTCLEAR) (OpcUa_GetEndpointsRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAGETENDPOINTSREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaGetEndpointsRequestClear
+	#define EXT_OpcUaGetEndpointsRequestClear
+	#define GET_OpcUaGetEndpointsRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaGetEndpointsRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaGetEndpointsRequestClear  FALSE
+	#define EXP_OpcUaGetEndpointsRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaGetEndpointsRequestClear
+	#define EXT_OpcUaGetEndpointsRequestClear
+	#define GET_OpcUaGetEndpointsRequestClear(fl)  CAL_CMGETAPI( "OpcUaGetEndpointsRequestClear" ) 
+	#define CAL_OpcUaGetEndpointsRequestClear  OpcUaGetEndpointsRequestClear
+	#define CHK_OpcUaGetEndpointsRequestClear  TRUE
+	#define EXP_OpcUaGetEndpointsRequestClear  CAL_CMEXPAPI( "OpcUaGetEndpointsRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaGetEndpointsRequestClear
+	#define EXT_OpcUaGetEndpointsRequestClear
+	#define GET_OpcUaGetEndpointsRequestClear(fl)  CAL_CMGETAPI( "OpcUaGetEndpointsRequestClear" ) 
+	#define CAL_OpcUaGetEndpointsRequestClear  OpcUaGetEndpointsRequestClear
+	#define CHK_OpcUaGetEndpointsRequestClear  TRUE
+	#define EXP_OpcUaGetEndpointsRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaGetEndpointsRequestClear", (RTS_UINTPTR)OpcUaGetEndpointsRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaGetEndpointsRequestClear
+	#define EXT_CmpOPCUAStackOpcUaGetEndpointsRequestClear
+	#define GET_CmpOPCUAStackOpcUaGetEndpointsRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaGetEndpointsRequestClear pICmpOPCUAStack->IOpcUaGetEndpointsRequestClear
+	#define CHK_CmpOPCUAStackOpcUaGetEndpointsRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaGetEndpointsRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaGetEndpointsRequestClear
+	#define EXT_OpcUaGetEndpointsRequestClear
+	#define GET_OpcUaGetEndpointsRequestClear(fl)  CAL_CMGETAPI( "OpcUaGetEndpointsRequestClear" ) 
+	#define CAL_OpcUaGetEndpointsRequestClear pICmpOPCUAStack->IOpcUaGetEndpointsRequestClear
+	#define CHK_OpcUaGetEndpointsRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaGetEndpointsRequestClear  CAL_CMEXPAPI( "OpcUaGetEndpointsRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaGetEndpointsRequestClear  PFOPCUAGETENDPOINTSREQUESTCLEAR pfOpcUaGetEndpointsRequestClear;
+	#define EXT_OpcUaGetEndpointsRequestClear  extern PFOPCUAGETENDPOINTSREQUESTCLEAR pfOpcUaGetEndpointsRequestClear;
+	#define GET_OpcUaGetEndpointsRequestClear(fl)  s_pfCMGetAPI2( "OpcUaGetEndpointsRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaGetEndpointsRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaGetEndpointsRequestClear  pfOpcUaGetEndpointsRequestClear
+	#define CHK_OpcUaGetEndpointsRequestClear  (pfOpcUaGetEndpointsRequestClear != NULL)
+	#define EXP_OpcUaGetEndpointsRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaGetEndpointsRequestClear", (RTS_UINTPTR)OpcUaGetEndpointsRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaGetEndpointsResponseInitialize(OpcUa_GetEndpointsResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAGETENDPOINTSRESPONSEINITIALIZE) (OpcUa_GetEndpointsResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAGETENDPOINTSRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaGetEndpointsResponseInitialize
+	#define EXT_OpcUaGetEndpointsResponseInitialize
+	#define GET_OpcUaGetEndpointsResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaGetEndpointsResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaGetEndpointsResponseInitialize  FALSE
+	#define EXP_OpcUaGetEndpointsResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaGetEndpointsResponseInitialize
+	#define EXT_OpcUaGetEndpointsResponseInitialize
+	#define GET_OpcUaGetEndpointsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaGetEndpointsResponseInitialize" ) 
+	#define CAL_OpcUaGetEndpointsResponseInitialize  OpcUaGetEndpointsResponseInitialize
+	#define CHK_OpcUaGetEndpointsResponseInitialize  TRUE
+	#define EXP_OpcUaGetEndpointsResponseInitialize  CAL_CMEXPAPI( "OpcUaGetEndpointsResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaGetEndpointsResponseInitialize
+	#define EXT_OpcUaGetEndpointsResponseInitialize
+	#define GET_OpcUaGetEndpointsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaGetEndpointsResponseInitialize" ) 
+	#define CAL_OpcUaGetEndpointsResponseInitialize  OpcUaGetEndpointsResponseInitialize
+	#define CHK_OpcUaGetEndpointsResponseInitialize  TRUE
+	#define EXP_OpcUaGetEndpointsResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaGetEndpointsResponseInitialize", (RTS_UINTPTR)OpcUaGetEndpointsResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaGetEndpointsResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaGetEndpointsResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaGetEndpointsResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaGetEndpointsResponseInitialize pICmpOPCUAStack->IOpcUaGetEndpointsResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaGetEndpointsResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaGetEndpointsResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaGetEndpointsResponseInitialize
+	#define EXT_OpcUaGetEndpointsResponseInitialize
+	#define GET_OpcUaGetEndpointsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaGetEndpointsResponseInitialize" ) 
+	#define CAL_OpcUaGetEndpointsResponseInitialize pICmpOPCUAStack->IOpcUaGetEndpointsResponseInitialize
+	#define CHK_OpcUaGetEndpointsResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaGetEndpointsResponseInitialize  CAL_CMEXPAPI( "OpcUaGetEndpointsResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaGetEndpointsResponseInitialize  PFOPCUAGETENDPOINTSRESPONSEINITIALIZE pfOpcUaGetEndpointsResponseInitialize;
+	#define EXT_OpcUaGetEndpointsResponseInitialize  extern PFOPCUAGETENDPOINTSRESPONSEINITIALIZE pfOpcUaGetEndpointsResponseInitialize;
+	#define GET_OpcUaGetEndpointsResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaGetEndpointsResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaGetEndpointsResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaGetEndpointsResponseInitialize  pfOpcUaGetEndpointsResponseInitialize
+	#define CHK_OpcUaGetEndpointsResponseInitialize  (pfOpcUaGetEndpointsResponseInitialize != NULL)
+	#define EXP_OpcUaGetEndpointsResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaGetEndpointsResponseInitialize", (RTS_UINTPTR)OpcUaGetEndpointsResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaGetEndpointsResponseClear(OpcUa_GetEndpointsResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAGETENDPOINTSRESPONSECLEAR) (OpcUa_GetEndpointsResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAGETENDPOINTSRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaGetEndpointsResponseClear
+	#define EXT_OpcUaGetEndpointsResponseClear
+	#define GET_OpcUaGetEndpointsResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaGetEndpointsResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaGetEndpointsResponseClear  FALSE
+	#define EXP_OpcUaGetEndpointsResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaGetEndpointsResponseClear
+	#define EXT_OpcUaGetEndpointsResponseClear
+	#define GET_OpcUaGetEndpointsResponseClear(fl)  CAL_CMGETAPI( "OpcUaGetEndpointsResponseClear" ) 
+	#define CAL_OpcUaGetEndpointsResponseClear  OpcUaGetEndpointsResponseClear
+	#define CHK_OpcUaGetEndpointsResponseClear  TRUE
+	#define EXP_OpcUaGetEndpointsResponseClear  CAL_CMEXPAPI( "OpcUaGetEndpointsResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaGetEndpointsResponseClear
+	#define EXT_OpcUaGetEndpointsResponseClear
+	#define GET_OpcUaGetEndpointsResponseClear(fl)  CAL_CMGETAPI( "OpcUaGetEndpointsResponseClear" ) 
+	#define CAL_OpcUaGetEndpointsResponseClear  OpcUaGetEndpointsResponseClear
+	#define CHK_OpcUaGetEndpointsResponseClear  TRUE
+	#define EXP_OpcUaGetEndpointsResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaGetEndpointsResponseClear", (RTS_UINTPTR)OpcUaGetEndpointsResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaGetEndpointsResponseClear
+	#define EXT_CmpOPCUAStackOpcUaGetEndpointsResponseClear
+	#define GET_CmpOPCUAStackOpcUaGetEndpointsResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaGetEndpointsResponseClear pICmpOPCUAStack->IOpcUaGetEndpointsResponseClear
+	#define CHK_CmpOPCUAStackOpcUaGetEndpointsResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaGetEndpointsResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaGetEndpointsResponseClear
+	#define EXT_OpcUaGetEndpointsResponseClear
+	#define GET_OpcUaGetEndpointsResponseClear(fl)  CAL_CMGETAPI( "OpcUaGetEndpointsResponseClear" ) 
+	#define CAL_OpcUaGetEndpointsResponseClear pICmpOPCUAStack->IOpcUaGetEndpointsResponseClear
+	#define CHK_OpcUaGetEndpointsResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaGetEndpointsResponseClear  CAL_CMEXPAPI( "OpcUaGetEndpointsResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaGetEndpointsResponseClear  PFOPCUAGETENDPOINTSRESPONSECLEAR pfOpcUaGetEndpointsResponseClear;
+	#define EXT_OpcUaGetEndpointsResponseClear  extern PFOPCUAGETENDPOINTSRESPONSECLEAR pfOpcUaGetEndpointsResponseClear;
+	#define GET_OpcUaGetEndpointsResponseClear(fl)  s_pfCMGetAPI2( "OpcUaGetEndpointsResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaGetEndpointsResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaGetEndpointsResponseClear  pfOpcUaGetEndpointsResponseClear
+	#define CHK_OpcUaGetEndpointsResponseClear  (pfOpcUaGetEndpointsResponseClear != NULL)
+	#define EXP_OpcUaGetEndpointsResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaGetEndpointsResponseClear", (RTS_UINTPTR)OpcUaGetEndpointsResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaCreateSessionRequestInitialize(OpcUa_CreateSessionRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACREATESESSIONREQUESTINITIALIZE) (OpcUa_CreateSessionRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACREATESESSIONREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaCreateSessionRequestInitialize
+	#define EXT_OpcUaCreateSessionRequestInitialize
+	#define GET_OpcUaCreateSessionRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCreateSessionRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCreateSessionRequestInitialize  FALSE
+	#define EXP_OpcUaCreateSessionRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCreateSessionRequestInitialize
+	#define EXT_OpcUaCreateSessionRequestInitialize
+	#define GET_OpcUaCreateSessionRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateSessionRequestInitialize" ) 
+	#define CAL_OpcUaCreateSessionRequestInitialize  OpcUaCreateSessionRequestInitialize
+	#define CHK_OpcUaCreateSessionRequestInitialize  TRUE
+	#define EXP_OpcUaCreateSessionRequestInitialize  CAL_CMEXPAPI( "OpcUaCreateSessionRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCreateSessionRequestInitialize
+	#define EXT_OpcUaCreateSessionRequestInitialize
+	#define GET_OpcUaCreateSessionRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateSessionRequestInitialize" ) 
+	#define CAL_OpcUaCreateSessionRequestInitialize  OpcUaCreateSessionRequestInitialize
+	#define CHK_OpcUaCreateSessionRequestInitialize  TRUE
+	#define EXP_OpcUaCreateSessionRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSessionRequestInitialize", (RTS_UINTPTR)OpcUaCreateSessionRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCreateSessionRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaCreateSessionRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaCreateSessionRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCreateSessionRequestInitialize pICmpOPCUAStack->IOpcUaCreateSessionRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaCreateSessionRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCreateSessionRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCreateSessionRequestInitialize
+	#define EXT_OpcUaCreateSessionRequestInitialize
+	#define GET_OpcUaCreateSessionRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateSessionRequestInitialize" ) 
+	#define CAL_OpcUaCreateSessionRequestInitialize pICmpOPCUAStack->IOpcUaCreateSessionRequestInitialize
+	#define CHK_OpcUaCreateSessionRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCreateSessionRequestInitialize  CAL_CMEXPAPI( "OpcUaCreateSessionRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCreateSessionRequestInitialize  PFOPCUACREATESESSIONREQUESTINITIALIZE pfOpcUaCreateSessionRequestInitialize;
+	#define EXT_OpcUaCreateSessionRequestInitialize  extern PFOPCUACREATESESSIONREQUESTINITIALIZE pfOpcUaCreateSessionRequestInitialize;
+	#define GET_OpcUaCreateSessionRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaCreateSessionRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaCreateSessionRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaCreateSessionRequestInitialize  pfOpcUaCreateSessionRequestInitialize
+	#define CHK_OpcUaCreateSessionRequestInitialize  (pfOpcUaCreateSessionRequestInitialize != NULL)
+	#define EXP_OpcUaCreateSessionRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSessionRequestInitialize", (RTS_UINTPTR)OpcUaCreateSessionRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaCreateSessionRequestClear(OpcUa_CreateSessionRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACREATESESSIONREQUESTCLEAR) (OpcUa_CreateSessionRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACREATESESSIONREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaCreateSessionRequestClear
+	#define EXT_OpcUaCreateSessionRequestClear
+	#define GET_OpcUaCreateSessionRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCreateSessionRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCreateSessionRequestClear  FALSE
+	#define EXP_OpcUaCreateSessionRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCreateSessionRequestClear
+	#define EXT_OpcUaCreateSessionRequestClear
+	#define GET_OpcUaCreateSessionRequestClear(fl)  CAL_CMGETAPI( "OpcUaCreateSessionRequestClear" ) 
+	#define CAL_OpcUaCreateSessionRequestClear  OpcUaCreateSessionRequestClear
+	#define CHK_OpcUaCreateSessionRequestClear  TRUE
+	#define EXP_OpcUaCreateSessionRequestClear  CAL_CMEXPAPI( "OpcUaCreateSessionRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCreateSessionRequestClear
+	#define EXT_OpcUaCreateSessionRequestClear
+	#define GET_OpcUaCreateSessionRequestClear(fl)  CAL_CMGETAPI( "OpcUaCreateSessionRequestClear" ) 
+	#define CAL_OpcUaCreateSessionRequestClear  OpcUaCreateSessionRequestClear
+	#define CHK_OpcUaCreateSessionRequestClear  TRUE
+	#define EXP_OpcUaCreateSessionRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSessionRequestClear", (RTS_UINTPTR)OpcUaCreateSessionRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCreateSessionRequestClear
+	#define EXT_CmpOPCUAStackOpcUaCreateSessionRequestClear
+	#define GET_CmpOPCUAStackOpcUaCreateSessionRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCreateSessionRequestClear pICmpOPCUAStack->IOpcUaCreateSessionRequestClear
+	#define CHK_CmpOPCUAStackOpcUaCreateSessionRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCreateSessionRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCreateSessionRequestClear
+	#define EXT_OpcUaCreateSessionRequestClear
+	#define GET_OpcUaCreateSessionRequestClear(fl)  CAL_CMGETAPI( "OpcUaCreateSessionRequestClear" ) 
+	#define CAL_OpcUaCreateSessionRequestClear pICmpOPCUAStack->IOpcUaCreateSessionRequestClear
+	#define CHK_OpcUaCreateSessionRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCreateSessionRequestClear  CAL_CMEXPAPI( "OpcUaCreateSessionRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCreateSessionRequestClear  PFOPCUACREATESESSIONREQUESTCLEAR pfOpcUaCreateSessionRequestClear;
+	#define EXT_OpcUaCreateSessionRequestClear  extern PFOPCUACREATESESSIONREQUESTCLEAR pfOpcUaCreateSessionRequestClear;
+	#define GET_OpcUaCreateSessionRequestClear(fl)  s_pfCMGetAPI2( "OpcUaCreateSessionRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaCreateSessionRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaCreateSessionRequestClear  pfOpcUaCreateSessionRequestClear
+	#define CHK_OpcUaCreateSessionRequestClear  (pfOpcUaCreateSessionRequestClear != NULL)
+	#define EXP_OpcUaCreateSessionRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSessionRequestClear", (RTS_UINTPTR)OpcUaCreateSessionRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaCreateSessionResponseInitialize(OpcUa_CreateSessionResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACREATESESSIONRESPONSEINITIALIZE) (OpcUa_CreateSessionResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACREATESESSIONRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaCreateSessionResponseInitialize
+	#define EXT_OpcUaCreateSessionResponseInitialize
+	#define GET_OpcUaCreateSessionResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCreateSessionResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCreateSessionResponseInitialize  FALSE
+	#define EXP_OpcUaCreateSessionResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCreateSessionResponseInitialize
+	#define EXT_OpcUaCreateSessionResponseInitialize
+	#define GET_OpcUaCreateSessionResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateSessionResponseInitialize" ) 
+	#define CAL_OpcUaCreateSessionResponseInitialize  OpcUaCreateSessionResponseInitialize
+	#define CHK_OpcUaCreateSessionResponseInitialize  TRUE
+	#define EXP_OpcUaCreateSessionResponseInitialize  CAL_CMEXPAPI( "OpcUaCreateSessionResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCreateSessionResponseInitialize
+	#define EXT_OpcUaCreateSessionResponseInitialize
+	#define GET_OpcUaCreateSessionResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateSessionResponseInitialize" ) 
+	#define CAL_OpcUaCreateSessionResponseInitialize  OpcUaCreateSessionResponseInitialize
+	#define CHK_OpcUaCreateSessionResponseInitialize  TRUE
+	#define EXP_OpcUaCreateSessionResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSessionResponseInitialize", (RTS_UINTPTR)OpcUaCreateSessionResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCreateSessionResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaCreateSessionResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaCreateSessionResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCreateSessionResponseInitialize pICmpOPCUAStack->IOpcUaCreateSessionResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaCreateSessionResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCreateSessionResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCreateSessionResponseInitialize
+	#define EXT_OpcUaCreateSessionResponseInitialize
+	#define GET_OpcUaCreateSessionResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateSessionResponseInitialize" ) 
+	#define CAL_OpcUaCreateSessionResponseInitialize pICmpOPCUAStack->IOpcUaCreateSessionResponseInitialize
+	#define CHK_OpcUaCreateSessionResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCreateSessionResponseInitialize  CAL_CMEXPAPI( "OpcUaCreateSessionResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCreateSessionResponseInitialize  PFOPCUACREATESESSIONRESPONSEINITIALIZE pfOpcUaCreateSessionResponseInitialize;
+	#define EXT_OpcUaCreateSessionResponseInitialize  extern PFOPCUACREATESESSIONRESPONSEINITIALIZE pfOpcUaCreateSessionResponseInitialize;
+	#define GET_OpcUaCreateSessionResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaCreateSessionResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaCreateSessionResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaCreateSessionResponseInitialize  pfOpcUaCreateSessionResponseInitialize
+	#define CHK_OpcUaCreateSessionResponseInitialize  (pfOpcUaCreateSessionResponseInitialize != NULL)
+	#define EXP_OpcUaCreateSessionResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSessionResponseInitialize", (RTS_UINTPTR)OpcUaCreateSessionResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaCreateSessionResponseClear(OpcUa_CreateSessionResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACREATESESSIONRESPONSECLEAR) (OpcUa_CreateSessionResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACREATESESSIONRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaCreateSessionResponseClear
+	#define EXT_OpcUaCreateSessionResponseClear
+	#define GET_OpcUaCreateSessionResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCreateSessionResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCreateSessionResponseClear  FALSE
+	#define EXP_OpcUaCreateSessionResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCreateSessionResponseClear
+	#define EXT_OpcUaCreateSessionResponseClear
+	#define GET_OpcUaCreateSessionResponseClear(fl)  CAL_CMGETAPI( "OpcUaCreateSessionResponseClear" ) 
+	#define CAL_OpcUaCreateSessionResponseClear  OpcUaCreateSessionResponseClear
+	#define CHK_OpcUaCreateSessionResponseClear  TRUE
+	#define EXP_OpcUaCreateSessionResponseClear  CAL_CMEXPAPI( "OpcUaCreateSessionResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCreateSessionResponseClear
+	#define EXT_OpcUaCreateSessionResponseClear
+	#define GET_OpcUaCreateSessionResponseClear(fl)  CAL_CMGETAPI( "OpcUaCreateSessionResponseClear" ) 
+	#define CAL_OpcUaCreateSessionResponseClear  OpcUaCreateSessionResponseClear
+	#define CHK_OpcUaCreateSessionResponseClear  TRUE
+	#define EXP_OpcUaCreateSessionResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSessionResponseClear", (RTS_UINTPTR)OpcUaCreateSessionResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCreateSessionResponseClear
+	#define EXT_CmpOPCUAStackOpcUaCreateSessionResponseClear
+	#define GET_CmpOPCUAStackOpcUaCreateSessionResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCreateSessionResponseClear pICmpOPCUAStack->IOpcUaCreateSessionResponseClear
+	#define CHK_CmpOPCUAStackOpcUaCreateSessionResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCreateSessionResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCreateSessionResponseClear
+	#define EXT_OpcUaCreateSessionResponseClear
+	#define GET_OpcUaCreateSessionResponseClear(fl)  CAL_CMGETAPI( "OpcUaCreateSessionResponseClear" ) 
+	#define CAL_OpcUaCreateSessionResponseClear pICmpOPCUAStack->IOpcUaCreateSessionResponseClear
+	#define CHK_OpcUaCreateSessionResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCreateSessionResponseClear  CAL_CMEXPAPI( "OpcUaCreateSessionResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCreateSessionResponseClear  PFOPCUACREATESESSIONRESPONSECLEAR pfOpcUaCreateSessionResponseClear;
+	#define EXT_OpcUaCreateSessionResponseClear  extern PFOPCUACREATESESSIONRESPONSECLEAR pfOpcUaCreateSessionResponseClear;
+	#define GET_OpcUaCreateSessionResponseClear(fl)  s_pfCMGetAPI2( "OpcUaCreateSessionResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaCreateSessionResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaCreateSessionResponseClear  pfOpcUaCreateSessionResponseClear
+	#define CHK_OpcUaCreateSessionResponseClear  (pfOpcUaCreateSessionResponseClear != NULL)
+	#define EXP_OpcUaCreateSessionResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSessionResponseClear", (RTS_UINTPTR)OpcUaCreateSessionResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaActivateSessionRequestInitialize(OpcUa_ActivateSessionRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAACTIVATESESSIONREQUESTINITIALIZE) (OpcUa_ActivateSessionRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAACTIVATESESSIONREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaActivateSessionRequestInitialize
+	#define EXT_OpcUaActivateSessionRequestInitialize
+	#define GET_OpcUaActivateSessionRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaActivateSessionRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaActivateSessionRequestInitialize  FALSE
+	#define EXP_OpcUaActivateSessionRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaActivateSessionRequestInitialize
+	#define EXT_OpcUaActivateSessionRequestInitialize
+	#define GET_OpcUaActivateSessionRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaActivateSessionRequestInitialize" ) 
+	#define CAL_OpcUaActivateSessionRequestInitialize  OpcUaActivateSessionRequestInitialize
+	#define CHK_OpcUaActivateSessionRequestInitialize  TRUE
+	#define EXP_OpcUaActivateSessionRequestInitialize  CAL_CMEXPAPI( "OpcUaActivateSessionRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaActivateSessionRequestInitialize
+	#define EXT_OpcUaActivateSessionRequestInitialize
+	#define GET_OpcUaActivateSessionRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaActivateSessionRequestInitialize" ) 
+	#define CAL_OpcUaActivateSessionRequestInitialize  OpcUaActivateSessionRequestInitialize
+	#define CHK_OpcUaActivateSessionRequestInitialize  TRUE
+	#define EXP_OpcUaActivateSessionRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaActivateSessionRequestInitialize", (RTS_UINTPTR)OpcUaActivateSessionRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaActivateSessionRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaActivateSessionRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaActivateSessionRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaActivateSessionRequestInitialize pICmpOPCUAStack->IOpcUaActivateSessionRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaActivateSessionRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaActivateSessionRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaActivateSessionRequestInitialize
+	#define EXT_OpcUaActivateSessionRequestInitialize
+	#define GET_OpcUaActivateSessionRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaActivateSessionRequestInitialize" ) 
+	#define CAL_OpcUaActivateSessionRequestInitialize pICmpOPCUAStack->IOpcUaActivateSessionRequestInitialize
+	#define CHK_OpcUaActivateSessionRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaActivateSessionRequestInitialize  CAL_CMEXPAPI( "OpcUaActivateSessionRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaActivateSessionRequestInitialize  PFOPCUAACTIVATESESSIONREQUESTINITIALIZE pfOpcUaActivateSessionRequestInitialize;
+	#define EXT_OpcUaActivateSessionRequestInitialize  extern PFOPCUAACTIVATESESSIONREQUESTINITIALIZE pfOpcUaActivateSessionRequestInitialize;
+	#define GET_OpcUaActivateSessionRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaActivateSessionRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaActivateSessionRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaActivateSessionRequestInitialize  pfOpcUaActivateSessionRequestInitialize
+	#define CHK_OpcUaActivateSessionRequestInitialize  (pfOpcUaActivateSessionRequestInitialize != NULL)
+	#define EXP_OpcUaActivateSessionRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaActivateSessionRequestInitialize", (RTS_UINTPTR)OpcUaActivateSessionRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaActivateSessionRequestClear(OpcUa_ActivateSessionRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAACTIVATESESSIONREQUESTCLEAR) (OpcUa_ActivateSessionRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAACTIVATESESSIONREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaActivateSessionRequestClear
+	#define EXT_OpcUaActivateSessionRequestClear
+	#define GET_OpcUaActivateSessionRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaActivateSessionRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaActivateSessionRequestClear  FALSE
+	#define EXP_OpcUaActivateSessionRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaActivateSessionRequestClear
+	#define EXT_OpcUaActivateSessionRequestClear
+	#define GET_OpcUaActivateSessionRequestClear(fl)  CAL_CMGETAPI( "OpcUaActivateSessionRequestClear" ) 
+	#define CAL_OpcUaActivateSessionRequestClear  OpcUaActivateSessionRequestClear
+	#define CHK_OpcUaActivateSessionRequestClear  TRUE
+	#define EXP_OpcUaActivateSessionRequestClear  CAL_CMEXPAPI( "OpcUaActivateSessionRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaActivateSessionRequestClear
+	#define EXT_OpcUaActivateSessionRequestClear
+	#define GET_OpcUaActivateSessionRequestClear(fl)  CAL_CMGETAPI( "OpcUaActivateSessionRequestClear" ) 
+	#define CAL_OpcUaActivateSessionRequestClear  OpcUaActivateSessionRequestClear
+	#define CHK_OpcUaActivateSessionRequestClear  TRUE
+	#define EXP_OpcUaActivateSessionRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaActivateSessionRequestClear", (RTS_UINTPTR)OpcUaActivateSessionRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaActivateSessionRequestClear
+	#define EXT_CmpOPCUAStackOpcUaActivateSessionRequestClear
+	#define GET_CmpOPCUAStackOpcUaActivateSessionRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaActivateSessionRequestClear pICmpOPCUAStack->IOpcUaActivateSessionRequestClear
+	#define CHK_CmpOPCUAStackOpcUaActivateSessionRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaActivateSessionRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaActivateSessionRequestClear
+	#define EXT_OpcUaActivateSessionRequestClear
+	#define GET_OpcUaActivateSessionRequestClear(fl)  CAL_CMGETAPI( "OpcUaActivateSessionRequestClear" ) 
+	#define CAL_OpcUaActivateSessionRequestClear pICmpOPCUAStack->IOpcUaActivateSessionRequestClear
+	#define CHK_OpcUaActivateSessionRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaActivateSessionRequestClear  CAL_CMEXPAPI( "OpcUaActivateSessionRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaActivateSessionRequestClear  PFOPCUAACTIVATESESSIONREQUESTCLEAR pfOpcUaActivateSessionRequestClear;
+	#define EXT_OpcUaActivateSessionRequestClear  extern PFOPCUAACTIVATESESSIONREQUESTCLEAR pfOpcUaActivateSessionRequestClear;
+	#define GET_OpcUaActivateSessionRequestClear(fl)  s_pfCMGetAPI2( "OpcUaActivateSessionRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaActivateSessionRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaActivateSessionRequestClear  pfOpcUaActivateSessionRequestClear
+	#define CHK_OpcUaActivateSessionRequestClear  (pfOpcUaActivateSessionRequestClear != NULL)
+	#define EXP_OpcUaActivateSessionRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaActivateSessionRequestClear", (RTS_UINTPTR)OpcUaActivateSessionRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaActivateSessionResponseInitialize(OpcUa_ActivateSessionResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAACTIVATESESSIONRESPONSEINITIALIZE) (OpcUa_ActivateSessionResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAACTIVATESESSIONRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaActivateSessionResponseInitialize
+	#define EXT_OpcUaActivateSessionResponseInitialize
+	#define GET_OpcUaActivateSessionResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaActivateSessionResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaActivateSessionResponseInitialize  FALSE
+	#define EXP_OpcUaActivateSessionResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaActivateSessionResponseInitialize
+	#define EXT_OpcUaActivateSessionResponseInitialize
+	#define GET_OpcUaActivateSessionResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaActivateSessionResponseInitialize" ) 
+	#define CAL_OpcUaActivateSessionResponseInitialize  OpcUaActivateSessionResponseInitialize
+	#define CHK_OpcUaActivateSessionResponseInitialize  TRUE
+	#define EXP_OpcUaActivateSessionResponseInitialize  CAL_CMEXPAPI( "OpcUaActivateSessionResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaActivateSessionResponseInitialize
+	#define EXT_OpcUaActivateSessionResponseInitialize
+	#define GET_OpcUaActivateSessionResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaActivateSessionResponseInitialize" ) 
+	#define CAL_OpcUaActivateSessionResponseInitialize  OpcUaActivateSessionResponseInitialize
+	#define CHK_OpcUaActivateSessionResponseInitialize  TRUE
+	#define EXP_OpcUaActivateSessionResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaActivateSessionResponseInitialize", (RTS_UINTPTR)OpcUaActivateSessionResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaActivateSessionResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaActivateSessionResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaActivateSessionResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaActivateSessionResponseInitialize pICmpOPCUAStack->IOpcUaActivateSessionResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaActivateSessionResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaActivateSessionResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaActivateSessionResponseInitialize
+	#define EXT_OpcUaActivateSessionResponseInitialize
+	#define GET_OpcUaActivateSessionResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaActivateSessionResponseInitialize" ) 
+	#define CAL_OpcUaActivateSessionResponseInitialize pICmpOPCUAStack->IOpcUaActivateSessionResponseInitialize
+	#define CHK_OpcUaActivateSessionResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaActivateSessionResponseInitialize  CAL_CMEXPAPI( "OpcUaActivateSessionResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaActivateSessionResponseInitialize  PFOPCUAACTIVATESESSIONRESPONSEINITIALIZE pfOpcUaActivateSessionResponseInitialize;
+	#define EXT_OpcUaActivateSessionResponseInitialize  extern PFOPCUAACTIVATESESSIONRESPONSEINITIALIZE pfOpcUaActivateSessionResponseInitialize;
+	#define GET_OpcUaActivateSessionResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaActivateSessionResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaActivateSessionResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaActivateSessionResponseInitialize  pfOpcUaActivateSessionResponseInitialize
+	#define CHK_OpcUaActivateSessionResponseInitialize  (pfOpcUaActivateSessionResponseInitialize != NULL)
+	#define EXP_OpcUaActivateSessionResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaActivateSessionResponseInitialize", (RTS_UINTPTR)OpcUaActivateSessionResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaActivateSessionResponseClear(OpcUa_ActivateSessionResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAACTIVATESESSIONRESPONSECLEAR) (OpcUa_ActivateSessionResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAACTIVATESESSIONRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaActivateSessionResponseClear
+	#define EXT_OpcUaActivateSessionResponseClear
+	#define GET_OpcUaActivateSessionResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaActivateSessionResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaActivateSessionResponseClear  FALSE
+	#define EXP_OpcUaActivateSessionResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaActivateSessionResponseClear
+	#define EXT_OpcUaActivateSessionResponseClear
+	#define GET_OpcUaActivateSessionResponseClear(fl)  CAL_CMGETAPI( "OpcUaActivateSessionResponseClear" ) 
+	#define CAL_OpcUaActivateSessionResponseClear  OpcUaActivateSessionResponseClear
+	#define CHK_OpcUaActivateSessionResponseClear  TRUE
+	#define EXP_OpcUaActivateSessionResponseClear  CAL_CMEXPAPI( "OpcUaActivateSessionResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaActivateSessionResponseClear
+	#define EXT_OpcUaActivateSessionResponseClear
+	#define GET_OpcUaActivateSessionResponseClear(fl)  CAL_CMGETAPI( "OpcUaActivateSessionResponseClear" ) 
+	#define CAL_OpcUaActivateSessionResponseClear  OpcUaActivateSessionResponseClear
+	#define CHK_OpcUaActivateSessionResponseClear  TRUE
+	#define EXP_OpcUaActivateSessionResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaActivateSessionResponseClear", (RTS_UINTPTR)OpcUaActivateSessionResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaActivateSessionResponseClear
+	#define EXT_CmpOPCUAStackOpcUaActivateSessionResponseClear
+	#define GET_CmpOPCUAStackOpcUaActivateSessionResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaActivateSessionResponseClear pICmpOPCUAStack->IOpcUaActivateSessionResponseClear
+	#define CHK_CmpOPCUAStackOpcUaActivateSessionResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaActivateSessionResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaActivateSessionResponseClear
+	#define EXT_OpcUaActivateSessionResponseClear
+	#define GET_OpcUaActivateSessionResponseClear(fl)  CAL_CMGETAPI( "OpcUaActivateSessionResponseClear" ) 
+	#define CAL_OpcUaActivateSessionResponseClear pICmpOPCUAStack->IOpcUaActivateSessionResponseClear
+	#define CHK_OpcUaActivateSessionResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaActivateSessionResponseClear  CAL_CMEXPAPI( "OpcUaActivateSessionResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaActivateSessionResponseClear  PFOPCUAACTIVATESESSIONRESPONSECLEAR pfOpcUaActivateSessionResponseClear;
+	#define EXT_OpcUaActivateSessionResponseClear  extern PFOPCUAACTIVATESESSIONRESPONSECLEAR pfOpcUaActivateSessionResponseClear;
+	#define GET_OpcUaActivateSessionResponseClear(fl)  s_pfCMGetAPI2( "OpcUaActivateSessionResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaActivateSessionResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaActivateSessionResponseClear  pfOpcUaActivateSessionResponseClear
+	#define CHK_OpcUaActivateSessionResponseClear  (pfOpcUaActivateSessionResponseClear != NULL)
+	#define EXP_OpcUaActivateSessionResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaActivateSessionResponseClear", (RTS_UINTPTR)OpcUaActivateSessionResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaCloseSessionRequestInitialize(OpcUa_CloseSessionRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACLOSESESSIONREQUESTINITIALIZE) (OpcUa_CloseSessionRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACLOSESESSIONREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaCloseSessionRequestInitialize
+	#define EXT_OpcUaCloseSessionRequestInitialize
+	#define GET_OpcUaCloseSessionRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCloseSessionRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCloseSessionRequestInitialize  FALSE
+	#define EXP_OpcUaCloseSessionRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCloseSessionRequestInitialize
+	#define EXT_OpcUaCloseSessionRequestInitialize
+	#define GET_OpcUaCloseSessionRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaCloseSessionRequestInitialize" ) 
+	#define CAL_OpcUaCloseSessionRequestInitialize  OpcUaCloseSessionRequestInitialize
+	#define CHK_OpcUaCloseSessionRequestInitialize  TRUE
+	#define EXP_OpcUaCloseSessionRequestInitialize  CAL_CMEXPAPI( "OpcUaCloseSessionRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCloseSessionRequestInitialize
+	#define EXT_OpcUaCloseSessionRequestInitialize
+	#define GET_OpcUaCloseSessionRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaCloseSessionRequestInitialize" ) 
+	#define CAL_OpcUaCloseSessionRequestInitialize  OpcUaCloseSessionRequestInitialize
+	#define CHK_OpcUaCloseSessionRequestInitialize  TRUE
+	#define EXP_OpcUaCloseSessionRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCloseSessionRequestInitialize", (RTS_UINTPTR)OpcUaCloseSessionRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCloseSessionRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaCloseSessionRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaCloseSessionRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCloseSessionRequestInitialize pICmpOPCUAStack->IOpcUaCloseSessionRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaCloseSessionRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCloseSessionRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCloseSessionRequestInitialize
+	#define EXT_OpcUaCloseSessionRequestInitialize
+	#define GET_OpcUaCloseSessionRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaCloseSessionRequestInitialize" ) 
+	#define CAL_OpcUaCloseSessionRequestInitialize pICmpOPCUAStack->IOpcUaCloseSessionRequestInitialize
+	#define CHK_OpcUaCloseSessionRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCloseSessionRequestInitialize  CAL_CMEXPAPI( "OpcUaCloseSessionRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCloseSessionRequestInitialize  PFOPCUACLOSESESSIONREQUESTINITIALIZE pfOpcUaCloseSessionRequestInitialize;
+	#define EXT_OpcUaCloseSessionRequestInitialize  extern PFOPCUACLOSESESSIONREQUESTINITIALIZE pfOpcUaCloseSessionRequestInitialize;
+	#define GET_OpcUaCloseSessionRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaCloseSessionRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaCloseSessionRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaCloseSessionRequestInitialize  pfOpcUaCloseSessionRequestInitialize
+	#define CHK_OpcUaCloseSessionRequestInitialize  (pfOpcUaCloseSessionRequestInitialize != NULL)
+	#define EXP_OpcUaCloseSessionRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCloseSessionRequestInitialize", (RTS_UINTPTR)OpcUaCloseSessionRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaCloseSessionRequestClear(OpcUa_CloseSessionRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACLOSESESSIONREQUESTCLEAR) (OpcUa_CloseSessionRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACLOSESESSIONREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaCloseSessionRequestClear
+	#define EXT_OpcUaCloseSessionRequestClear
+	#define GET_OpcUaCloseSessionRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCloseSessionRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCloseSessionRequestClear  FALSE
+	#define EXP_OpcUaCloseSessionRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCloseSessionRequestClear
+	#define EXT_OpcUaCloseSessionRequestClear
+	#define GET_OpcUaCloseSessionRequestClear(fl)  CAL_CMGETAPI( "OpcUaCloseSessionRequestClear" ) 
+	#define CAL_OpcUaCloseSessionRequestClear  OpcUaCloseSessionRequestClear
+	#define CHK_OpcUaCloseSessionRequestClear  TRUE
+	#define EXP_OpcUaCloseSessionRequestClear  CAL_CMEXPAPI( "OpcUaCloseSessionRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCloseSessionRequestClear
+	#define EXT_OpcUaCloseSessionRequestClear
+	#define GET_OpcUaCloseSessionRequestClear(fl)  CAL_CMGETAPI( "OpcUaCloseSessionRequestClear" ) 
+	#define CAL_OpcUaCloseSessionRequestClear  OpcUaCloseSessionRequestClear
+	#define CHK_OpcUaCloseSessionRequestClear  TRUE
+	#define EXP_OpcUaCloseSessionRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCloseSessionRequestClear", (RTS_UINTPTR)OpcUaCloseSessionRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCloseSessionRequestClear
+	#define EXT_CmpOPCUAStackOpcUaCloseSessionRequestClear
+	#define GET_CmpOPCUAStackOpcUaCloseSessionRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCloseSessionRequestClear pICmpOPCUAStack->IOpcUaCloseSessionRequestClear
+	#define CHK_CmpOPCUAStackOpcUaCloseSessionRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCloseSessionRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCloseSessionRequestClear
+	#define EXT_OpcUaCloseSessionRequestClear
+	#define GET_OpcUaCloseSessionRequestClear(fl)  CAL_CMGETAPI( "OpcUaCloseSessionRequestClear" ) 
+	#define CAL_OpcUaCloseSessionRequestClear pICmpOPCUAStack->IOpcUaCloseSessionRequestClear
+	#define CHK_OpcUaCloseSessionRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCloseSessionRequestClear  CAL_CMEXPAPI( "OpcUaCloseSessionRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCloseSessionRequestClear  PFOPCUACLOSESESSIONREQUESTCLEAR pfOpcUaCloseSessionRequestClear;
+	#define EXT_OpcUaCloseSessionRequestClear  extern PFOPCUACLOSESESSIONREQUESTCLEAR pfOpcUaCloseSessionRequestClear;
+	#define GET_OpcUaCloseSessionRequestClear(fl)  s_pfCMGetAPI2( "OpcUaCloseSessionRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaCloseSessionRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaCloseSessionRequestClear  pfOpcUaCloseSessionRequestClear
+	#define CHK_OpcUaCloseSessionRequestClear  (pfOpcUaCloseSessionRequestClear != NULL)
+	#define EXP_OpcUaCloseSessionRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCloseSessionRequestClear", (RTS_UINTPTR)OpcUaCloseSessionRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaCloseSessionResponseInitialize(OpcUa_CloseSessionResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACLOSESESSIONRESPONSEINITIALIZE) (OpcUa_CloseSessionResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACLOSESESSIONRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaCloseSessionResponseInitialize
+	#define EXT_OpcUaCloseSessionResponseInitialize
+	#define GET_OpcUaCloseSessionResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCloseSessionResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCloseSessionResponseInitialize  FALSE
+	#define EXP_OpcUaCloseSessionResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCloseSessionResponseInitialize
+	#define EXT_OpcUaCloseSessionResponseInitialize
+	#define GET_OpcUaCloseSessionResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaCloseSessionResponseInitialize" ) 
+	#define CAL_OpcUaCloseSessionResponseInitialize  OpcUaCloseSessionResponseInitialize
+	#define CHK_OpcUaCloseSessionResponseInitialize  TRUE
+	#define EXP_OpcUaCloseSessionResponseInitialize  CAL_CMEXPAPI( "OpcUaCloseSessionResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCloseSessionResponseInitialize
+	#define EXT_OpcUaCloseSessionResponseInitialize
+	#define GET_OpcUaCloseSessionResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaCloseSessionResponseInitialize" ) 
+	#define CAL_OpcUaCloseSessionResponseInitialize  OpcUaCloseSessionResponseInitialize
+	#define CHK_OpcUaCloseSessionResponseInitialize  TRUE
+	#define EXP_OpcUaCloseSessionResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCloseSessionResponseInitialize", (RTS_UINTPTR)OpcUaCloseSessionResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCloseSessionResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaCloseSessionResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaCloseSessionResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCloseSessionResponseInitialize pICmpOPCUAStack->IOpcUaCloseSessionResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaCloseSessionResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCloseSessionResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCloseSessionResponseInitialize
+	#define EXT_OpcUaCloseSessionResponseInitialize
+	#define GET_OpcUaCloseSessionResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaCloseSessionResponseInitialize" ) 
+	#define CAL_OpcUaCloseSessionResponseInitialize pICmpOPCUAStack->IOpcUaCloseSessionResponseInitialize
+	#define CHK_OpcUaCloseSessionResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCloseSessionResponseInitialize  CAL_CMEXPAPI( "OpcUaCloseSessionResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCloseSessionResponseInitialize  PFOPCUACLOSESESSIONRESPONSEINITIALIZE pfOpcUaCloseSessionResponseInitialize;
+	#define EXT_OpcUaCloseSessionResponseInitialize  extern PFOPCUACLOSESESSIONRESPONSEINITIALIZE pfOpcUaCloseSessionResponseInitialize;
+	#define GET_OpcUaCloseSessionResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaCloseSessionResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaCloseSessionResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaCloseSessionResponseInitialize  pfOpcUaCloseSessionResponseInitialize
+	#define CHK_OpcUaCloseSessionResponseInitialize  (pfOpcUaCloseSessionResponseInitialize != NULL)
+	#define EXP_OpcUaCloseSessionResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCloseSessionResponseInitialize", (RTS_UINTPTR)OpcUaCloseSessionResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaCloseSessionResponseClear(OpcUa_CloseSessionResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACLOSESESSIONRESPONSECLEAR) (OpcUa_CloseSessionResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACLOSESESSIONRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaCloseSessionResponseClear
+	#define EXT_OpcUaCloseSessionResponseClear
+	#define GET_OpcUaCloseSessionResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCloseSessionResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCloseSessionResponseClear  FALSE
+	#define EXP_OpcUaCloseSessionResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCloseSessionResponseClear
+	#define EXT_OpcUaCloseSessionResponseClear
+	#define GET_OpcUaCloseSessionResponseClear(fl)  CAL_CMGETAPI( "OpcUaCloseSessionResponseClear" ) 
+	#define CAL_OpcUaCloseSessionResponseClear  OpcUaCloseSessionResponseClear
+	#define CHK_OpcUaCloseSessionResponseClear  TRUE
+	#define EXP_OpcUaCloseSessionResponseClear  CAL_CMEXPAPI( "OpcUaCloseSessionResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCloseSessionResponseClear
+	#define EXT_OpcUaCloseSessionResponseClear
+	#define GET_OpcUaCloseSessionResponseClear(fl)  CAL_CMGETAPI( "OpcUaCloseSessionResponseClear" ) 
+	#define CAL_OpcUaCloseSessionResponseClear  OpcUaCloseSessionResponseClear
+	#define CHK_OpcUaCloseSessionResponseClear  TRUE
+	#define EXP_OpcUaCloseSessionResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCloseSessionResponseClear", (RTS_UINTPTR)OpcUaCloseSessionResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCloseSessionResponseClear
+	#define EXT_CmpOPCUAStackOpcUaCloseSessionResponseClear
+	#define GET_CmpOPCUAStackOpcUaCloseSessionResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCloseSessionResponseClear pICmpOPCUAStack->IOpcUaCloseSessionResponseClear
+	#define CHK_CmpOPCUAStackOpcUaCloseSessionResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCloseSessionResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCloseSessionResponseClear
+	#define EXT_OpcUaCloseSessionResponseClear
+	#define GET_OpcUaCloseSessionResponseClear(fl)  CAL_CMGETAPI( "OpcUaCloseSessionResponseClear" ) 
+	#define CAL_OpcUaCloseSessionResponseClear pICmpOPCUAStack->IOpcUaCloseSessionResponseClear
+	#define CHK_OpcUaCloseSessionResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCloseSessionResponseClear  CAL_CMEXPAPI( "OpcUaCloseSessionResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCloseSessionResponseClear  PFOPCUACLOSESESSIONRESPONSECLEAR pfOpcUaCloseSessionResponseClear;
+	#define EXT_OpcUaCloseSessionResponseClear  extern PFOPCUACLOSESESSIONRESPONSECLEAR pfOpcUaCloseSessionResponseClear;
+	#define GET_OpcUaCloseSessionResponseClear(fl)  s_pfCMGetAPI2( "OpcUaCloseSessionResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaCloseSessionResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaCloseSessionResponseClear  pfOpcUaCloseSessionResponseClear
+	#define CHK_OpcUaCloseSessionResponseClear  (pfOpcUaCloseSessionResponseClear != NULL)
+	#define EXP_OpcUaCloseSessionResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCloseSessionResponseClear", (RTS_UINTPTR)OpcUaCloseSessionResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaReadRequestInitialize(OpcUa_ReadRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAREADREQUESTINITIALIZE) (OpcUa_ReadRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAREADREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaReadRequestInitialize
+	#define EXT_OpcUaReadRequestInitialize
+	#define GET_OpcUaReadRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaReadRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaReadRequestInitialize  FALSE
+	#define EXP_OpcUaReadRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaReadRequestInitialize
+	#define EXT_OpcUaReadRequestInitialize
+	#define GET_OpcUaReadRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaReadRequestInitialize" ) 
+	#define CAL_OpcUaReadRequestInitialize  OpcUaReadRequestInitialize
+	#define CHK_OpcUaReadRequestInitialize  TRUE
+	#define EXP_OpcUaReadRequestInitialize  CAL_CMEXPAPI( "OpcUaReadRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaReadRequestInitialize
+	#define EXT_OpcUaReadRequestInitialize
+	#define GET_OpcUaReadRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaReadRequestInitialize" ) 
+	#define CAL_OpcUaReadRequestInitialize  OpcUaReadRequestInitialize
+	#define CHK_OpcUaReadRequestInitialize  TRUE
+	#define EXP_OpcUaReadRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaReadRequestInitialize", (RTS_UINTPTR)OpcUaReadRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaReadRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaReadRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaReadRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaReadRequestInitialize pICmpOPCUAStack->IOpcUaReadRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaReadRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaReadRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaReadRequestInitialize
+	#define EXT_OpcUaReadRequestInitialize
+	#define GET_OpcUaReadRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaReadRequestInitialize" ) 
+	#define CAL_OpcUaReadRequestInitialize pICmpOPCUAStack->IOpcUaReadRequestInitialize
+	#define CHK_OpcUaReadRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaReadRequestInitialize  CAL_CMEXPAPI( "OpcUaReadRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaReadRequestInitialize  PFOPCUAREADREQUESTINITIALIZE pfOpcUaReadRequestInitialize;
+	#define EXT_OpcUaReadRequestInitialize  extern PFOPCUAREADREQUESTINITIALIZE pfOpcUaReadRequestInitialize;
+	#define GET_OpcUaReadRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaReadRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaReadRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaReadRequestInitialize  pfOpcUaReadRequestInitialize
+	#define CHK_OpcUaReadRequestInitialize  (pfOpcUaReadRequestInitialize != NULL)
+	#define EXP_OpcUaReadRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaReadRequestInitialize", (RTS_UINTPTR)OpcUaReadRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaReadRequestClear(OpcUa_ReadRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAREADREQUESTCLEAR) (OpcUa_ReadRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAREADREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaReadRequestClear
+	#define EXT_OpcUaReadRequestClear
+	#define GET_OpcUaReadRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaReadRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaReadRequestClear  FALSE
+	#define EXP_OpcUaReadRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaReadRequestClear
+	#define EXT_OpcUaReadRequestClear
+	#define GET_OpcUaReadRequestClear(fl)  CAL_CMGETAPI( "OpcUaReadRequestClear" ) 
+	#define CAL_OpcUaReadRequestClear  OpcUaReadRequestClear
+	#define CHK_OpcUaReadRequestClear  TRUE
+	#define EXP_OpcUaReadRequestClear  CAL_CMEXPAPI( "OpcUaReadRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaReadRequestClear
+	#define EXT_OpcUaReadRequestClear
+	#define GET_OpcUaReadRequestClear(fl)  CAL_CMGETAPI( "OpcUaReadRequestClear" ) 
+	#define CAL_OpcUaReadRequestClear  OpcUaReadRequestClear
+	#define CHK_OpcUaReadRequestClear  TRUE
+	#define EXP_OpcUaReadRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaReadRequestClear", (RTS_UINTPTR)OpcUaReadRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaReadRequestClear
+	#define EXT_CmpOPCUAStackOpcUaReadRequestClear
+	#define GET_CmpOPCUAStackOpcUaReadRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaReadRequestClear pICmpOPCUAStack->IOpcUaReadRequestClear
+	#define CHK_CmpOPCUAStackOpcUaReadRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaReadRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaReadRequestClear
+	#define EXT_OpcUaReadRequestClear
+	#define GET_OpcUaReadRequestClear(fl)  CAL_CMGETAPI( "OpcUaReadRequestClear" ) 
+	#define CAL_OpcUaReadRequestClear pICmpOPCUAStack->IOpcUaReadRequestClear
+	#define CHK_OpcUaReadRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaReadRequestClear  CAL_CMEXPAPI( "OpcUaReadRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaReadRequestClear  PFOPCUAREADREQUESTCLEAR pfOpcUaReadRequestClear;
+	#define EXT_OpcUaReadRequestClear  extern PFOPCUAREADREQUESTCLEAR pfOpcUaReadRequestClear;
+	#define GET_OpcUaReadRequestClear(fl)  s_pfCMGetAPI2( "OpcUaReadRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaReadRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaReadRequestClear  pfOpcUaReadRequestClear
+	#define CHK_OpcUaReadRequestClear  (pfOpcUaReadRequestClear != NULL)
+	#define EXP_OpcUaReadRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaReadRequestClear", (RTS_UINTPTR)OpcUaReadRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaReadResponseInitialize(OpcUa_ReadResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAREADRESPONSEINITIALIZE) (OpcUa_ReadResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAREADRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaReadResponseInitialize
+	#define EXT_OpcUaReadResponseInitialize
+	#define GET_OpcUaReadResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaReadResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaReadResponseInitialize  FALSE
+	#define EXP_OpcUaReadResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaReadResponseInitialize
+	#define EXT_OpcUaReadResponseInitialize
+	#define GET_OpcUaReadResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaReadResponseInitialize" ) 
+	#define CAL_OpcUaReadResponseInitialize  OpcUaReadResponseInitialize
+	#define CHK_OpcUaReadResponseInitialize  TRUE
+	#define EXP_OpcUaReadResponseInitialize  CAL_CMEXPAPI( "OpcUaReadResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaReadResponseInitialize
+	#define EXT_OpcUaReadResponseInitialize
+	#define GET_OpcUaReadResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaReadResponseInitialize" ) 
+	#define CAL_OpcUaReadResponseInitialize  OpcUaReadResponseInitialize
+	#define CHK_OpcUaReadResponseInitialize  TRUE
+	#define EXP_OpcUaReadResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaReadResponseInitialize", (RTS_UINTPTR)OpcUaReadResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaReadResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaReadResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaReadResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaReadResponseInitialize pICmpOPCUAStack->IOpcUaReadResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaReadResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaReadResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaReadResponseInitialize
+	#define EXT_OpcUaReadResponseInitialize
+	#define GET_OpcUaReadResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaReadResponseInitialize" ) 
+	#define CAL_OpcUaReadResponseInitialize pICmpOPCUAStack->IOpcUaReadResponseInitialize
+	#define CHK_OpcUaReadResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaReadResponseInitialize  CAL_CMEXPAPI( "OpcUaReadResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaReadResponseInitialize  PFOPCUAREADRESPONSEINITIALIZE pfOpcUaReadResponseInitialize;
+	#define EXT_OpcUaReadResponseInitialize  extern PFOPCUAREADRESPONSEINITIALIZE pfOpcUaReadResponseInitialize;
+	#define GET_OpcUaReadResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaReadResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaReadResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaReadResponseInitialize  pfOpcUaReadResponseInitialize
+	#define CHK_OpcUaReadResponseInitialize  (pfOpcUaReadResponseInitialize != NULL)
+	#define EXP_OpcUaReadResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaReadResponseInitialize", (RTS_UINTPTR)OpcUaReadResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaReadResponseClear(OpcUa_ReadResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAREADRESPONSECLEAR) (OpcUa_ReadResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAREADRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaReadResponseClear
+	#define EXT_OpcUaReadResponseClear
+	#define GET_OpcUaReadResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaReadResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaReadResponseClear  FALSE
+	#define EXP_OpcUaReadResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaReadResponseClear
+	#define EXT_OpcUaReadResponseClear
+	#define GET_OpcUaReadResponseClear(fl)  CAL_CMGETAPI( "OpcUaReadResponseClear" ) 
+	#define CAL_OpcUaReadResponseClear  OpcUaReadResponseClear
+	#define CHK_OpcUaReadResponseClear  TRUE
+	#define EXP_OpcUaReadResponseClear  CAL_CMEXPAPI( "OpcUaReadResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaReadResponseClear
+	#define EXT_OpcUaReadResponseClear
+	#define GET_OpcUaReadResponseClear(fl)  CAL_CMGETAPI( "OpcUaReadResponseClear" ) 
+	#define CAL_OpcUaReadResponseClear  OpcUaReadResponseClear
+	#define CHK_OpcUaReadResponseClear  TRUE
+	#define EXP_OpcUaReadResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaReadResponseClear", (RTS_UINTPTR)OpcUaReadResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaReadResponseClear
+	#define EXT_CmpOPCUAStackOpcUaReadResponseClear
+	#define GET_CmpOPCUAStackOpcUaReadResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaReadResponseClear pICmpOPCUAStack->IOpcUaReadResponseClear
+	#define CHK_CmpOPCUAStackOpcUaReadResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaReadResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaReadResponseClear
+	#define EXT_OpcUaReadResponseClear
+	#define GET_OpcUaReadResponseClear(fl)  CAL_CMGETAPI( "OpcUaReadResponseClear" ) 
+	#define CAL_OpcUaReadResponseClear pICmpOPCUAStack->IOpcUaReadResponseClear
+	#define CHK_OpcUaReadResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaReadResponseClear  CAL_CMEXPAPI( "OpcUaReadResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaReadResponseClear  PFOPCUAREADRESPONSECLEAR pfOpcUaReadResponseClear;
+	#define EXT_OpcUaReadResponseClear  extern PFOPCUAREADRESPONSECLEAR pfOpcUaReadResponseClear;
+	#define GET_OpcUaReadResponseClear(fl)  s_pfCMGetAPI2( "OpcUaReadResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaReadResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaReadResponseClear  pfOpcUaReadResponseClear
+	#define CHK_OpcUaReadResponseClear  (pfOpcUaReadResponseClear != NULL)
+	#define EXP_OpcUaReadResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaReadResponseClear", (RTS_UINTPTR)OpcUaReadResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaWriteRequestInitialize(OpcUa_WriteRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAWRITEREQUESTINITIALIZE) (OpcUa_WriteRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAWRITEREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaWriteRequestInitialize
+	#define EXT_OpcUaWriteRequestInitialize
+	#define GET_OpcUaWriteRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaWriteRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaWriteRequestInitialize  FALSE
+	#define EXP_OpcUaWriteRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaWriteRequestInitialize
+	#define EXT_OpcUaWriteRequestInitialize
+	#define GET_OpcUaWriteRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaWriteRequestInitialize" ) 
+	#define CAL_OpcUaWriteRequestInitialize  OpcUaWriteRequestInitialize
+	#define CHK_OpcUaWriteRequestInitialize  TRUE
+	#define EXP_OpcUaWriteRequestInitialize  CAL_CMEXPAPI( "OpcUaWriteRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaWriteRequestInitialize
+	#define EXT_OpcUaWriteRequestInitialize
+	#define GET_OpcUaWriteRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaWriteRequestInitialize" ) 
+	#define CAL_OpcUaWriteRequestInitialize  OpcUaWriteRequestInitialize
+	#define CHK_OpcUaWriteRequestInitialize  TRUE
+	#define EXP_OpcUaWriteRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaWriteRequestInitialize", (RTS_UINTPTR)OpcUaWriteRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaWriteRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaWriteRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaWriteRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaWriteRequestInitialize pICmpOPCUAStack->IOpcUaWriteRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaWriteRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaWriteRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaWriteRequestInitialize
+	#define EXT_OpcUaWriteRequestInitialize
+	#define GET_OpcUaWriteRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaWriteRequestInitialize" ) 
+	#define CAL_OpcUaWriteRequestInitialize pICmpOPCUAStack->IOpcUaWriteRequestInitialize
+	#define CHK_OpcUaWriteRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaWriteRequestInitialize  CAL_CMEXPAPI( "OpcUaWriteRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaWriteRequestInitialize  PFOPCUAWRITEREQUESTINITIALIZE pfOpcUaWriteRequestInitialize;
+	#define EXT_OpcUaWriteRequestInitialize  extern PFOPCUAWRITEREQUESTINITIALIZE pfOpcUaWriteRequestInitialize;
+	#define GET_OpcUaWriteRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaWriteRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaWriteRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaWriteRequestInitialize  pfOpcUaWriteRequestInitialize
+	#define CHK_OpcUaWriteRequestInitialize  (pfOpcUaWriteRequestInitialize != NULL)
+	#define EXP_OpcUaWriteRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaWriteRequestInitialize", (RTS_UINTPTR)OpcUaWriteRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaWriteRequestClear(OpcUa_WriteRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAWRITEREQUESTCLEAR) (OpcUa_WriteRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAWRITEREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaWriteRequestClear
+	#define EXT_OpcUaWriteRequestClear
+	#define GET_OpcUaWriteRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaWriteRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaWriteRequestClear  FALSE
+	#define EXP_OpcUaWriteRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaWriteRequestClear
+	#define EXT_OpcUaWriteRequestClear
+	#define GET_OpcUaWriteRequestClear(fl)  CAL_CMGETAPI( "OpcUaWriteRequestClear" ) 
+	#define CAL_OpcUaWriteRequestClear  OpcUaWriteRequestClear
+	#define CHK_OpcUaWriteRequestClear  TRUE
+	#define EXP_OpcUaWriteRequestClear  CAL_CMEXPAPI( "OpcUaWriteRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaWriteRequestClear
+	#define EXT_OpcUaWriteRequestClear
+	#define GET_OpcUaWriteRequestClear(fl)  CAL_CMGETAPI( "OpcUaWriteRequestClear" ) 
+	#define CAL_OpcUaWriteRequestClear  OpcUaWriteRequestClear
+	#define CHK_OpcUaWriteRequestClear  TRUE
+	#define EXP_OpcUaWriteRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaWriteRequestClear", (RTS_UINTPTR)OpcUaWriteRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaWriteRequestClear
+	#define EXT_CmpOPCUAStackOpcUaWriteRequestClear
+	#define GET_CmpOPCUAStackOpcUaWriteRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaWriteRequestClear pICmpOPCUAStack->IOpcUaWriteRequestClear
+	#define CHK_CmpOPCUAStackOpcUaWriteRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaWriteRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaWriteRequestClear
+	#define EXT_OpcUaWriteRequestClear
+	#define GET_OpcUaWriteRequestClear(fl)  CAL_CMGETAPI( "OpcUaWriteRequestClear" ) 
+	#define CAL_OpcUaWriteRequestClear pICmpOPCUAStack->IOpcUaWriteRequestClear
+	#define CHK_OpcUaWriteRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaWriteRequestClear  CAL_CMEXPAPI( "OpcUaWriteRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaWriteRequestClear  PFOPCUAWRITEREQUESTCLEAR pfOpcUaWriteRequestClear;
+	#define EXT_OpcUaWriteRequestClear  extern PFOPCUAWRITEREQUESTCLEAR pfOpcUaWriteRequestClear;
+	#define GET_OpcUaWriteRequestClear(fl)  s_pfCMGetAPI2( "OpcUaWriteRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaWriteRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaWriteRequestClear  pfOpcUaWriteRequestClear
+	#define CHK_OpcUaWriteRequestClear  (pfOpcUaWriteRequestClear != NULL)
+	#define EXP_OpcUaWriteRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaWriteRequestClear", (RTS_UINTPTR)OpcUaWriteRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaWriteResponseInitialize(OpcUa_WriteResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAWRITERESPONSEINITIALIZE) (OpcUa_WriteResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAWRITERESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaWriteResponseInitialize
+	#define EXT_OpcUaWriteResponseInitialize
+	#define GET_OpcUaWriteResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaWriteResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaWriteResponseInitialize  FALSE
+	#define EXP_OpcUaWriteResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaWriteResponseInitialize
+	#define EXT_OpcUaWriteResponseInitialize
+	#define GET_OpcUaWriteResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaWriteResponseInitialize" ) 
+	#define CAL_OpcUaWriteResponseInitialize  OpcUaWriteResponseInitialize
+	#define CHK_OpcUaWriteResponseInitialize  TRUE
+	#define EXP_OpcUaWriteResponseInitialize  CAL_CMEXPAPI( "OpcUaWriteResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaWriteResponseInitialize
+	#define EXT_OpcUaWriteResponseInitialize
+	#define GET_OpcUaWriteResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaWriteResponseInitialize" ) 
+	#define CAL_OpcUaWriteResponseInitialize  OpcUaWriteResponseInitialize
+	#define CHK_OpcUaWriteResponseInitialize  TRUE
+	#define EXP_OpcUaWriteResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaWriteResponseInitialize", (RTS_UINTPTR)OpcUaWriteResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaWriteResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaWriteResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaWriteResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaWriteResponseInitialize pICmpOPCUAStack->IOpcUaWriteResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaWriteResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaWriteResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaWriteResponseInitialize
+	#define EXT_OpcUaWriteResponseInitialize
+	#define GET_OpcUaWriteResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaWriteResponseInitialize" ) 
+	#define CAL_OpcUaWriteResponseInitialize pICmpOPCUAStack->IOpcUaWriteResponseInitialize
+	#define CHK_OpcUaWriteResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaWriteResponseInitialize  CAL_CMEXPAPI( "OpcUaWriteResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaWriteResponseInitialize  PFOPCUAWRITERESPONSEINITIALIZE pfOpcUaWriteResponseInitialize;
+	#define EXT_OpcUaWriteResponseInitialize  extern PFOPCUAWRITERESPONSEINITIALIZE pfOpcUaWriteResponseInitialize;
+	#define GET_OpcUaWriteResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaWriteResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaWriteResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaWriteResponseInitialize  pfOpcUaWriteResponseInitialize
+	#define CHK_OpcUaWriteResponseInitialize  (pfOpcUaWriteResponseInitialize != NULL)
+	#define EXP_OpcUaWriteResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaWriteResponseInitialize", (RTS_UINTPTR)OpcUaWriteResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaWriteResponseClear(OpcUa_WriteResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAWRITERESPONSECLEAR) (OpcUa_WriteResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAWRITERESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaWriteResponseClear
+	#define EXT_OpcUaWriteResponseClear
+	#define GET_OpcUaWriteResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaWriteResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaWriteResponseClear  FALSE
+	#define EXP_OpcUaWriteResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaWriteResponseClear
+	#define EXT_OpcUaWriteResponseClear
+	#define GET_OpcUaWriteResponseClear(fl)  CAL_CMGETAPI( "OpcUaWriteResponseClear" ) 
+	#define CAL_OpcUaWriteResponseClear  OpcUaWriteResponseClear
+	#define CHK_OpcUaWriteResponseClear  TRUE
+	#define EXP_OpcUaWriteResponseClear  CAL_CMEXPAPI( "OpcUaWriteResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaWriteResponseClear
+	#define EXT_OpcUaWriteResponseClear
+	#define GET_OpcUaWriteResponseClear(fl)  CAL_CMGETAPI( "OpcUaWriteResponseClear" ) 
+	#define CAL_OpcUaWriteResponseClear  OpcUaWriteResponseClear
+	#define CHK_OpcUaWriteResponseClear  TRUE
+	#define EXP_OpcUaWriteResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaWriteResponseClear", (RTS_UINTPTR)OpcUaWriteResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaWriteResponseClear
+	#define EXT_CmpOPCUAStackOpcUaWriteResponseClear
+	#define GET_CmpOPCUAStackOpcUaWriteResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaWriteResponseClear pICmpOPCUAStack->IOpcUaWriteResponseClear
+	#define CHK_CmpOPCUAStackOpcUaWriteResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaWriteResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaWriteResponseClear
+	#define EXT_OpcUaWriteResponseClear
+	#define GET_OpcUaWriteResponseClear(fl)  CAL_CMGETAPI( "OpcUaWriteResponseClear" ) 
+	#define CAL_OpcUaWriteResponseClear pICmpOPCUAStack->IOpcUaWriteResponseClear
+	#define CHK_OpcUaWriteResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaWriteResponseClear  CAL_CMEXPAPI( "OpcUaWriteResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaWriteResponseClear  PFOPCUAWRITERESPONSECLEAR pfOpcUaWriteResponseClear;
+	#define EXT_OpcUaWriteResponseClear  extern PFOPCUAWRITERESPONSECLEAR pfOpcUaWriteResponseClear;
+	#define GET_OpcUaWriteResponseClear(fl)  s_pfCMGetAPI2( "OpcUaWriteResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaWriteResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaWriteResponseClear  pfOpcUaWriteResponseClear
+	#define CHK_OpcUaWriteResponseClear  (pfOpcUaWriteResponseClear != NULL)
+	#define EXP_OpcUaWriteResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaWriteResponseClear", (RTS_UINTPTR)OpcUaWriteResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaCreateSubscriptionRequestInitialize(OpcUa_CreateSubscriptionRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACREATESUBSCRIPTIONREQUESTINITIALIZE) (OpcUa_CreateSubscriptionRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACREATESUBSCRIPTIONREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaCreateSubscriptionRequestInitialize
+	#define EXT_OpcUaCreateSubscriptionRequestInitialize
+	#define GET_OpcUaCreateSubscriptionRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCreateSubscriptionRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCreateSubscriptionRequestInitialize  FALSE
+	#define EXP_OpcUaCreateSubscriptionRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCreateSubscriptionRequestInitialize
+	#define EXT_OpcUaCreateSubscriptionRequestInitialize
+	#define GET_OpcUaCreateSubscriptionRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateSubscriptionRequestInitialize" ) 
+	#define CAL_OpcUaCreateSubscriptionRequestInitialize  OpcUaCreateSubscriptionRequestInitialize
+	#define CHK_OpcUaCreateSubscriptionRequestInitialize  TRUE
+	#define EXP_OpcUaCreateSubscriptionRequestInitialize  CAL_CMEXPAPI( "OpcUaCreateSubscriptionRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCreateSubscriptionRequestInitialize
+	#define EXT_OpcUaCreateSubscriptionRequestInitialize
+	#define GET_OpcUaCreateSubscriptionRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateSubscriptionRequestInitialize" ) 
+	#define CAL_OpcUaCreateSubscriptionRequestInitialize  OpcUaCreateSubscriptionRequestInitialize
+	#define CHK_OpcUaCreateSubscriptionRequestInitialize  TRUE
+	#define EXP_OpcUaCreateSubscriptionRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSubscriptionRequestInitialize", (RTS_UINTPTR)OpcUaCreateSubscriptionRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCreateSubscriptionRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaCreateSubscriptionRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaCreateSubscriptionRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCreateSubscriptionRequestInitialize pICmpOPCUAStack->IOpcUaCreateSubscriptionRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaCreateSubscriptionRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCreateSubscriptionRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCreateSubscriptionRequestInitialize
+	#define EXT_OpcUaCreateSubscriptionRequestInitialize
+	#define GET_OpcUaCreateSubscriptionRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateSubscriptionRequestInitialize" ) 
+	#define CAL_OpcUaCreateSubscriptionRequestInitialize pICmpOPCUAStack->IOpcUaCreateSubscriptionRequestInitialize
+	#define CHK_OpcUaCreateSubscriptionRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCreateSubscriptionRequestInitialize  CAL_CMEXPAPI( "OpcUaCreateSubscriptionRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCreateSubscriptionRequestInitialize  PFOPCUACREATESUBSCRIPTIONREQUESTINITIALIZE pfOpcUaCreateSubscriptionRequestInitialize;
+	#define EXT_OpcUaCreateSubscriptionRequestInitialize  extern PFOPCUACREATESUBSCRIPTIONREQUESTINITIALIZE pfOpcUaCreateSubscriptionRequestInitialize;
+	#define GET_OpcUaCreateSubscriptionRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaCreateSubscriptionRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaCreateSubscriptionRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaCreateSubscriptionRequestInitialize  pfOpcUaCreateSubscriptionRequestInitialize
+	#define CHK_OpcUaCreateSubscriptionRequestInitialize  (pfOpcUaCreateSubscriptionRequestInitialize != NULL)
+	#define EXP_OpcUaCreateSubscriptionRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSubscriptionRequestInitialize", (RTS_UINTPTR)OpcUaCreateSubscriptionRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaCreateSubscriptionRequestClear(OpcUa_CreateSubscriptionRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACREATESUBSCRIPTIONREQUESTCLEAR) (OpcUa_CreateSubscriptionRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACREATESUBSCRIPTIONREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaCreateSubscriptionRequestClear
+	#define EXT_OpcUaCreateSubscriptionRequestClear
+	#define GET_OpcUaCreateSubscriptionRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCreateSubscriptionRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCreateSubscriptionRequestClear  FALSE
+	#define EXP_OpcUaCreateSubscriptionRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCreateSubscriptionRequestClear
+	#define EXT_OpcUaCreateSubscriptionRequestClear
+	#define GET_OpcUaCreateSubscriptionRequestClear(fl)  CAL_CMGETAPI( "OpcUaCreateSubscriptionRequestClear" ) 
+	#define CAL_OpcUaCreateSubscriptionRequestClear  OpcUaCreateSubscriptionRequestClear
+	#define CHK_OpcUaCreateSubscriptionRequestClear  TRUE
+	#define EXP_OpcUaCreateSubscriptionRequestClear  CAL_CMEXPAPI( "OpcUaCreateSubscriptionRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCreateSubscriptionRequestClear
+	#define EXT_OpcUaCreateSubscriptionRequestClear
+	#define GET_OpcUaCreateSubscriptionRequestClear(fl)  CAL_CMGETAPI( "OpcUaCreateSubscriptionRequestClear" ) 
+	#define CAL_OpcUaCreateSubscriptionRequestClear  OpcUaCreateSubscriptionRequestClear
+	#define CHK_OpcUaCreateSubscriptionRequestClear  TRUE
+	#define EXP_OpcUaCreateSubscriptionRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSubscriptionRequestClear", (RTS_UINTPTR)OpcUaCreateSubscriptionRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCreateSubscriptionRequestClear
+	#define EXT_CmpOPCUAStackOpcUaCreateSubscriptionRequestClear
+	#define GET_CmpOPCUAStackOpcUaCreateSubscriptionRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCreateSubscriptionRequestClear pICmpOPCUAStack->IOpcUaCreateSubscriptionRequestClear
+	#define CHK_CmpOPCUAStackOpcUaCreateSubscriptionRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCreateSubscriptionRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCreateSubscriptionRequestClear
+	#define EXT_OpcUaCreateSubscriptionRequestClear
+	#define GET_OpcUaCreateSubscriptionRequestClear(fl)  CAL_CMGETAPI( "OpcUaCreateSubscriptionRequestClear" ) 
+	#define CAL_OpcUaCreateSubscriptionRequestClear pICmpOPCUAStack->IOpcUaCreateSubscriptionRequestClear
+	#define CHK_OpcUaCreateSubscriptionRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCreateSubscriptionRequestClear  CAL_CMEXPAPI( "OpcUaCreateSubscriptionRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCreateSubscriptionRequestClear  PFOPCUACREATESUBSCRIPTIONREQUESTCLEAR pfOpcUaCreateSubscriptionRequestClear;
+	#define EXT_OpcUaCreateSubscriptionRequestClear  extern PFOPCUACREATESUBSCRIPTIONREQUESTCLEAR pfOpcUaCreateSubscriptionRequestClear;
+	#define GET_OpcUaCreateSubscriptionRequestClear(fl)  s_pfCMGetAPI2( "OpcUaCreateSubscriptionRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaCreateSubscriptionRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaCreateSubscriptionRequestClear  pfOpcUaCreateSubscriptionRequestClear
+	#define CHK_OpcUaCreateSubscriptionRequestClear  (pfOpcUaCreateSubscriptionRequestClear != NULL)
+	#define EXP_OpcUaCreateSubscriptionRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSubscriptionRequestClear", (RTS_UINTPTR)OpcUaCreateSubscriptionRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaModifySubscriptionRequestInitialize(OpcUa_ModifySubscriptionRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAMODIFYSUBSCRIPTIONREQUESTINITIALIZE) (OpcUa_ModifySubscriptionRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAMODIFYSUBSCRIPTIONREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaModifySubscriptionRequestInitialize
+	#define EXT_OpcUaModifySubscriptionRequestInitialize
+	#define GET_OpcUaModifySubscriptionRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaModifySubscriptionRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaModifySubscriptionRequestInitialize  FALSE
+	#define EXP_OpcUaModifySubscriptionRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaModifySubscriptionRequestInitialize
+	#define EXT_OpcUaModifySubscriptionRequestInitialize
+	#define GET_OpcUaModifySubscriptionRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaModifySubscriptionRequestInitialize" ) 
+	#define CAL_OpcUaModifySubscriptionRequestInitialize  OpcUaModifySubscriptionRequestInitialize
+	#define CHK_OpcUaModifySubscriptionRequestInitialize  TRUE
+	#define EXP_OpcUaModifySubscriptionRequestInitialize  CAL_CMEXPAPI( "OpcUaModifySubscriptionRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaModifySubscriptionRequestInitialize
+	#define EXT_OpcUaModifySubscriptionRequestInitialize
+	#define GET_OpcUaModifySubscriptionRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaModifySubscriptionRequestInitialize" ) 
+	#define CAL_OpcUaModifySubscriptionRequestInitialize  OpcUaModifySubscriptionRequestInitialize
+	#define CHK_OpcUaModifySubscriptionRequestInitialize  TRUE
+	#define EXP_OpcUaModifySubscriptionRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifySubscriptionRequestInitialize", (RTS_UINTPTR)OpcUaModifySubscriptionRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaModifySubscriptionRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaModifySubscriptionRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaModifySubscriptionRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaModifySubscriptionRequestInitialize pICmpOPCUAStack->IOpcUaModifySubscriptionRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaModifySubscriptionRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaModifySubscriptionRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaModifySubscriptionRequestInitialize
+	#define EXT_OpcUaModifySubscriptionRequestInitialize
+	#define GET_OpcUaModifySubscriptionRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaModifySubscriptionRequestInitialize" ) 
+	#define CAL_OpcUaModifySubscriptionRequestInitialize pICmpOPCUAStack->IOpcUaModifySubscriptionRequestInitialize
+	#define CHK_OpcUaModifySubscriptionRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaModifySubscriptionRequestInitialize  CAL_CMEXPAPI( "OpcUaModifySubscriptionRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaModifySubscriptionRequestInitialize  PFOPCUAMODIFYSUBSCRIPTIONREQUESTINITIALIZE pfOpcUaModifySubscriptionRequestInitialize;
+	#define EXT_OpcUaModifySubscriptionRequestInitialize  extern PFOPCUAMODIFYSUBSCRIPTIONREQUESTINITIALIZE pfOpcUaModifySubscriptionRequestInitialize;
+	#define GET_OpcUaModifySubscriptionRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaModifySubscriptionRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaModifySubscriptionRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaModifySubscriptionRequestInitialize  pfOpcUaModifySubscriptionRequestInitialize
+	#define CHK_OpcUaModifySubscriptionRequestInitialize  (pfOpcUaModifySubscriptionRequestInitialize != NULL)
+	#define EXP_OpcUaModifySubscriptionRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifySubscriptionRequestInitialize", (RTS_UINTPTR)OpcUaModifySubscriptionRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaModifySubscriptionRequestClear(OpcUa_ModifySubscriptionRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAMODIFYSUBSCRIPTIONREQUESTCLEAR) (OpcUa_ModifySubscriptionRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAMODIFYSUBSCRIPTIONREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaModifySubscriptionRequestClear
+	#define EXT_OpcUaModifySubscriptionRequestClear
+	#define GET_OpcUaModifySubscriptionRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaModifySubscriptionRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaModifySubscriptionRequestClear  FALSE
+	#define EXP_OpcUaModifySubscriptionRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaModifySubscriptionRequestClear
+	#define EXT_OpcUaModifySubscriptionRequestClear
+	#define GET_OpcUaModifySubscriptionRequestClear(fl)  CAL_CMGETAPI( "OpcUaModifySubscriptionRequestClear" ) 
+	#define CAL_OpcUaModifySubscriptionRequestClear  OpcUaModifySubscriptionRequestClear
+	#define CHK_OpcUaModifySubscriptionRequestClear  TRUE
+	#define EXP_OpcUaModifySubscriptionRequestClear  CAL_CMEXPAPI( "OpcUaModifySubscriptionRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaModifySubscriptionRequestClear
+	#define EXT_OpcUaModifySubscriptionRequestClear
+	#define GET_OpcUaModifySubscriptionRequestClear(fl)  CAL_CMGETAPI( "OpcUaModifySubscriptionRequestClear" ) 
+	#define CAL_OpcUaModifySubscriptionRequestClear  OpcUaModifySubscriptionRequestClear
+	#define CHK_OpcUaModifySubscriptionRequestClear  TRUE
+	#define EXP_OpcUaModifySubscriptionRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifySubscriptionRequestClear", (RTS_UINTPTR)OpcUaModifySubscriptionRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaModifySubscriptionRequestClear
+	#define EXT_CmpOPCUAStackOpcUaModifySubscriptionRequestClear
+	#define GET_CmpOPCUAStackOpcUaModifySubscriptionRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaModifySubscriptionRequestClear pICmpOPCUAStack->IOpcUaModifySubscriptionRequestClear
+	#define CHK_CmpOPCUAStackOpcUaModifySubscriptionRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaModifySubscriptionRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaModifySubscriptionRequestClear
+	#define EXT_OpcUaModifySubscriptionRequestClear
+	#define GET_OpcUaModifySubscriptionRequestClear(fl)  CAL_CMGETAPI( "OpcUaModifySubscriptionRequestClear" ) 
+	#define CAL_OpcUaModifySubscriptionRequestClear pICmpOPCUAStack->IOpcUaModifySubscriptionRequestClear
+	#define CHK_OpcUaModifySubscriptionRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaModifySubscriptionRequestClear  CAL_CMEXPAPI( "OpcUaModifySubscriptionRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaModifySubscriptionRequestClear  PFOPCUAMODIFYSUBSCRIPTIONREQUESTCLEAR pfOpcUaModifySubscriptionRequestClear;
+	#define EXT_OpcUaModifySubscriptionRequestClear  extern PFOPCUAMODIFYSUBSCRIPTIONREQUESTCLEAR pfOpcUaModifySubscriptionRequestClear;
+	#define GET_OpcUaModifySubscriptionRequestClear(fl)  s_pfCMGetAPI2( "OpcUaModifySubscriptionRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaModifySubscriptionRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaModifySubscriptionRequestClear  pfOpcUaModifySubscriptionRequestClear
+	#define CHK_OpcUaModifySubscriptionRequestClear  (pfOpcUaModifySubscriptionRequestClear != NULL)
+	#define EXP_OpcUaModifySubscriptionRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifySubscriptionRequestClear", (RTS_UINTPTR)OpcUaModifySubscriptionRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaPublishRequestInitialize(OpcUa_PublishRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAPUBLISHREQUESTINITIALIZE) (OpcUa_PublishRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAPUBLISHREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaPublishRequestInitialize
+	#define EXT_OpcUaPublishRequestInitialize
+	#define GET_OpcUaPublishRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaPublishRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaPublishRequestInitialize  FALSE
+	#define EXP_OpcUaPublishRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaPublishRequestInitialize
+	#define EXT_OpcUaPublishRequestInitialize
+	#define GET_OpcUaPublishRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaPublishRequestInitialize" ) 
+	#define CAL_OpcUaPublishRequestInitialize  OpcUaPublishRequestInitialize
+	#define CHK_OpcUaPublishRequestInitialize  TRUE
+	#define EXP_OpcUaPublishRequestInitialize  CAL_CMEXPAPI( "OpcUaPublishRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaPublishRequestInitialize
+	#define EXT_OpcUaPublishRequestInitialize
+	#define GET_OpcUaPublishRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaPublishRequestInitialize" ) 
+	#define CAL_OpcUaPublishRequestInitialize  OpcUaPublishRequestInitialize
+	#define CHK_OpcUaPublishRequestInitialize  TRUE
+	#define EXP_OpcUaPublishRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaPublishRequestInitialize", (RTS_UINTPTR)OpcUaPublishRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaPublishRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaPublishRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaPublishRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaPublishRequestInitialize pICmpOPCUAStack->IOpcUaPublishRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaPublishRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaPublishRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaPublishRequestInitialize
+	#define EXT_OpcUaPublishRequestInitialize
+	#define GET_OpcUaPublishRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaPublishRequestInitialize" ) 
+	#define CAL_OpcUaPublishRequestInitialize pICmpOPCUAStack->IOpcUaPublishRequestInitialize
+	#define CHK_OpcUaPublishRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaPublishRequestInitialize  CAL_CMEXPAPI( "OpcUaPublishRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaPublishRequestInitialize  PFOPCUAPUBLISHREQUESTINITIALIZE pfOpcUaPublishRequestInitialize;
+	#define EXT_OpcUaPublishRequestInitialize  extern PFOPCUAPUBLISHREQUESTINITIALIZE pfOpcUaPublishRequestInitialize;
+	#define GET_OpcUaPublishRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaPublishRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaPublishRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaPublishRequestInitialize  pfOpcUaPublishRequestInitialize
+	#define CHK_OpcUaPublishRequestInitialize  (pfOpcUaPublishRequestInitialize != NULL)
+	#define EXP_OpcUaPublishRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaPublishRequestInitialize", (RTS_UINTPTR)OpcUaPublishRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaPublishRequestClear(OpcUa_PublishRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAPUBLISHREQUESTCLEAR) (OpcUa_PublishRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAPUBLISHREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaPublishRequestClear
+	#define EXT_OpcUaPublishRequestClear
+	#define GET_OpcUaPublishRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaPublishRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaPublishRequestClear  FALSE
+	#define EXP_OpcUaPublishRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaPublishRequestClear
+	#define EXT_OpcUaPublishRequestClear
+	#define GET_OpcUaPublishRequestClear(fl)  CAL_CMGETAPI( "OpcUaPublishRequestClear" ) 
+	#define CAL_OpcUaPublishRequestClear  OpcUaPublishRequestClear
+	#define CHK_OpcUaPublishRequestClear  TRUE
+	#define EXP_OpcUaPublishRequestClear  CAL_CMEXPAPI( "OpcUaPublishRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaPublishRequestClear
+	#define EXT_OpcUaPublishRequestClear
+	#define GET_OpcUaPublishRequestClear(fl)  CAL_CMGETAPI( "OpcUaPublishRequestClear" ) 
+	#define CAL_OpcUaPublishRequestClear  OpcUaPublishRequestClear
+	#define CHK_OpcUaPublishRequestClear  TRUE
+	#define EXP_OpcUaPublishRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaPublishRequestClear", (RTS_UINTPTR)OpcUaPublishRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaPublishRequestClear
+	#define EXT_CmpOPCUAStackOpcUaPublishRequestClear
+	#define GET_CmpOPCUAStackOpcUaPublishRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaPublishRequestClear pICmpOPCUAStack->IOpcUaPublishRequestClear
+	#define CHK_CmpOPCUAStackOpcUaPublishRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaPublishRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaPublishRequestClear
+	#define EXT_OpcUaPublishRequestClear
+	#define GET_OpcUaPublishRequestClear(fl)  CAL_CMGETAPI( "OpcUaPublishRequestClear" ) 
+	#define CAL_OpcUaPublishRequestClear pICmpOPCUAStack->IOpcUaPublishRequestClear
+	#define CHK_OpcUaPublishRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaPublishRequestClear  CAL_CMEXPAPI( "OpcUaPublishRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaPublishRequestClear  PFOPCUAPUBLISHREQUESTCLEAR pfOpcUaPublishRequestClear;
+	#define EXT_OpcUaPublishRequestClear  extern PFOPCUAPUBLISHREQUESTCLEAR pfOpcUaPublishRequestClear;
+	#define GET_OpcUaPublishRequestClear(fl)  s_pfCMGetAPI2( "OpcUaPublishRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaPublishRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaPublishRequestClear  pfOpcUaPublishRequestClear
+	#define CHK_OpcUaPublishRequestClear  (pfOpcUaPublishRequestClear != NULL)
+	#define EXP_OpcUaPublishRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaPublishRequestClear", (RTS_UINTPTR)OpcUaPublishRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaRepublishRequestInitialize(OpcUa_RepublishRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAREPUBLISHREQUESTINITIALIZE) (OpcUa_RepublishRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAREPUBLISHREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaRepublishRequestInitialize
+	#define EXT_OpcUaRepublishRequestInitialize
+	#define GET_OpcUaRepublishRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaRepublishRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaRepublishRequestInitialize  FALSE
+	#define EXP_OpcUaRepublishRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaRepublishRequestInitialize
+	#define EXT_OpcUaRepublishRequestInitialize
+	#define GET_OpcUaRepublishRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaRepublishRequestInitialize" ) 
+	#define CAL_OpcUaRepublishRequestInitialize  OpcUaRepublishRequestInitialize
+	#define CHK_OpcUaRepublishRequestInitialize  TRUE
+	#define EXP_OpcUaRepublishRequestInitialize  CAL_CMEXPAPI( "OpcUaRepublishRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaRepublishRequestInitialize
+	#define EXT_OpcUaRepublishRequestInitialize
+	#define GET_OpcUaRepublishRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaRepublishRequestInitialize" ) 
+	#define CAL_OpcUaRepublishRequestInitialize  OpcUaRepublishRequestInitialize
+	#define CHK_OpcUaRepublishRequestInitialize  TRUE
+	#define EXP_OpcUaRepublishRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRepublishRequestInitialize", (RTS_UINTPTR)OpcUaRepublishRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaRepublishRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaRepublishRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaRepublishRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaRepublishRequestInitialize pICmpOPCUAStack->IOpcUaRepublishRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaRepublishRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaRepublishRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaRepublishRequestInitialize
+	#define EXT_OpcUaRepublishRequestInitialize
+	#define GET_OpcUaRepublishRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaRepublishRequestInitialize" ) 
+	#define CAL_OpcUaRepublishRequestInitialize pICmpOPCUAStack->IOpcUaRepublishRequestInitialize
+	#define CHK_OpcUaRepublishRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaRepublishRequestInitialize  CAL_CMEXPAPI( "OpcUaRepublishRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaRepublishRequestInitialize  PFOPCUAREPUBLISHREQUESTINITIALIZE pfOpcUaRepublishRequestInitialize;
+	#define EXT_OpcUaRepublishRequestInitialize  extern PFOPCUAREPUBLISHREQUESTINITIALIZE pfOpcUaRepublishRequestInitialize;
+	#define GET_OpcUaRepublishRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaRepublishRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaRepublishRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaRepublishRequestInitialize  pfOpcUaRepublishRequestInitialize
+	#define CHK_OpcUaRepublishRequestInitialize  (pfOpcUaRepublishRequestInitialize != NULL)
+	#define EXP_OpcUaRepublishRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRepublishRequestInitialize", (RTS_UINTPTR)OpcUaRepublishRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaRepublishRequestClear(OpcUa_RepublishRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAREPUBLISHREQUESTCLEAR) (OpcUa_RepublishRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAREPUBLISHREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaRepublishRequestClear
+	#define EXT_OpcUaRepublishRequestClear
+	#define GET_OpcUaRepublishRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaRepublishRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaRepublishRequestClear  FALSE
+	#define EXP_OpcUaRepublishRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaRepublishRequestClear
+	#define EXT_OpcUaRepublishRequestClear
+	#define GET_OpcUaRepublishRequestClear(fl)  CAL_CMGETAPI( "OpcUaRepublishRequestClear" ) 
+	#define CAL_OpcUaRepublishRequestClear  OpcUaRepublishRequestClear
+	#define CHK_OpcUaRepublishRequestClear  TRUE
+	#define EXP_OpcUaRepublishRequestClear  CAL_CMEXPAPI( "OpcUaRepublishRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaRepublishRequestClear
+	#define EXT_OpcUaRepublishRequestClear
+	#define GET_OpcUaRepublishRequestClear(fl)  CAL_CMGETAPI( "OpcUaRepublishRequestClear" ) 
+	#define CAL_OpcUaRepublishRequestClear  OpcUaRepublishRequestClear
+	#define CHK_OpcUaRepublishRequestClear  TRUE
+	#define EXP_OpcUaRepublishRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRepublishRequestClear", (RTS_UINTPTR)OpcUaRepublishRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaRepublishRequestClear
+	#define EXT_CmpOPCUAStackOpcUaRepublishRequestClear
+	#define GET_CmpOPCUAStackOpcUaRepublishRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaRepublishRequestClear pICmpOPCUAStack->IOpcUaRepublishRequestClear
+	#define CHK_CmpOPCUAStackOpcUaRepublishRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaRepublishRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaRepublishRequestClear
+	#define EXT_OpcUaRepublishRequestClear
+	#define GET_OpcUaRepublishRequestClear(fl)  CAL_CMGETAPI( "OpcUaRepublishRequestClear" ) 
+	#define CAL_OpcUaRepublishRequestClear pICmpOPCUAStack->IOpcUaRepublishRequestClear
+	#define CHK_OpcUaRepublishRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaRepublishRequestClear  CAL_CMEXPAPI( "OpcUaRepublishRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaRepublishRequestClear  PFOPCUAREPUBLISHREQUESTCLEAR pfOpcUaRepublishRequestClear;
+	#define EXT_OpcUaRepublishRequestClear  extern PFOPCUAREPUBLISHREQUESTCLEAR pfOpcUaRepublishRequestClear;
+	#define GET_OpcUaRepublishRequestClear(fl)  s_pfCMGetAPI2( "OpcUaRepublishRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaRepublishRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaRepublishRequestClear  pfOpcUaRepublishRequestClear
+	#define CHK_OpcUaRepublishRequestClear  (pfOpcUaRepublishRequestClear != NULL)
+	#define EXP_OpcUaRepublishRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRepublishRequestClear", (RTS_UINTPTR)OpcUaRepublishRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaSetPublishingModeRequestInitialize(OpcUa_SetPublishingModeRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUASETPUBLISHINGMODEREQUESTINITIALIZE) (OpcUa_SetPublishingModeRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUASETPUBLISHINGMODEREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaSetPublishingModeRequestInitialize
+	#define EXT_OpcUaSetPublishingModeRequestInitialize
+	#define GET_OpcUaSetPublishingModeRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaSetPublishingModeRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaSetPublishingModeRequestInitialize  FALSE
+	#define EXP_OpcUaSetPublishingModeRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaSetPublishingModeRequestInitialize
+	#define EXT_OpcUaSetPublishingModeRequestInitialize
+	#define GET_OpcUaSetPublishingModeRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaSetPublishingModeRequestInitialize" ) 
+	#define CAL_OpcUaSetPublishingModeRequestInitialize  OpcUaSetPublishingModeRequestInitialize
+	#define CHK_OpcUaSetPublishingModeRequestInitialize  TRUE
+	#define EXP_OpcUaSetPublishingModeRequestInitialize  CAL_CMEXPAPI( "OpcUaSetPublishingModeRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaSetPublishingModeRequestInitialize
+	#define EXT_OpcUaSetPublishingModeRequestInitialize
+	#define GET_OpcUaSetPublishingModeRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaSetPublishingModeRequestInitialize" ) 
+	#define CAL_OpcUaSetPublishingModeRequestInitialize  OpcUaSetPublishingModeRequestInitialize
+	#define CHK_OpcUaSetPublishingModeRequestInitialize  TRUE
+	#define EXP_OpcUaSetPublishingModeRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetPublishingModeRequestInitialize", (RTS_UINTPTR)OpcUaSetPublishingModeRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaSetPublishingModeRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaSetPublishingModeRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaSetPublishingModeRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaSetPublishingModeRequestInitialize pICmpOPCUAStack->IOpcUaSetPublishingModeRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaSetPublishingModeRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaSetPublishingModeRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaSetPublishingModeRequestInitialize
+	#define EXT_OpcUaSetPublishingModeRequestInitialize
+	#define GET_OpcUaSetPublishingModeRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaSetPublishingModeRequestInitialize" ) 
+	#define CAL_OpcUaSetPublishingModeRequestInitialize pICmpOPCUAStack->IOpcUaSetPublishingModeRequestInitialize
+	#define CHK_OpcUaSetPublishingModeRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaSetPublishingModeRequestInitialize  CAL_CMEXPAPI( "OpcUaSetPublishingModeRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaSetPublishingModeRequestInitialize  PFOPCUASETPUBLISHINGMODEREQUESTINITIALIZE pfOpcUaSetPublishingModeRequestInitialize;
+	#define EXT_OpcUaSetPublishingModeRequestInitialize  extern PFOPCUASETPUBLISHINGMODEREQUESTINITIALIZE pfOpcUaSetPublishingModeRequestInitialize;
+	#define GET_OpcUaSetPublishingModeRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaSetPublishingModeRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaSetPublishingModeRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaSetPublishingModeRequestInitialize  pfOpcUaSetPublishingModeRequestInitialize
+	#define CHK_OpcUaSetPublishingModeRequestInitialize  (pfOpcUaSetPublishingModeRequestInitialize != NULL)
+	#define EXP_OpcUaSetPublishingModeRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetPublishingModeRequestInitialize", (RTS_UINTPTR)OpcUaSetPublishingModeRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaSetPublishingModeRequestClear(OpcUa_SetPublishingModeRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUASETPUBLISHINGMODEREQUESTCLEAR) (OpcUa_SetPublishingModeRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUASETPUBLISHINGMODEREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaSetPublishingModeRequestClear
+	#define EXT_OpcUaSetPublishingModeRequestClear
+	#define GET_OpcUaSetPublishingModeRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaSetPublishingModeRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaSetPublishingModeRequestClear  FALSE
+	#define EXP_OpcUaSetPublishingModeRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaSetPublishingModeRequestClear
+	#define EXT_OpcUaSetPublishingModeRequestClear
+	#define GET_OpcUaSetPublishingModeRequestClear(fl)  CAL_CMGETAPI( "OpcUaSetPublishingModeRequestClear" ) 
+	#define CAL_OpcUaSetPublishingModeRequestClear  OpcUaSetPublishingModeRequestClear
+	#define CHK_OpcUaSetPublishingModeRequestClear  TRUE
+	#define EXP_OpcUaSetPublishingModeRequestClear  CAL_CMEXPAPI( "OpcUaSetPublishingModeRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaSetPublishingModeRequestClear
+	#define EXT_OpcUaSetPublishingModeRequestClear
+	#define GET_OpcUaSetPublishingModeRequestClear(fl)  CAL_CMGETAPI( "OpcUaSetPublishingModeRequestClear" ) 
+	#define CAL_OpcUaSetPublishingModeRequestClear  OpcUaSetPublishingModeRequestClear
+	#define CHK_OpcUaSetPublishingModeRequestClear  TRUE
+	#define EXP_OpcUaSetPublishingModeRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetPublishingModeRequestClear", (RTS_UINTPTR)OpcUaSetPublishingModeRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaSetPublishingModeRequestClear
+	#define EXT_CmpOPCUAStackOpcUaSetPublishingModeRequestClear
+	#define GET_CmpOPCUAStackOpcUaSetPublishingModeRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaSetPublishingModeRequestClear pICmpOPCUAStack->IOpcUaSetPublishingModeRequestClear
+	#define CHK_CmpOPCUAStackOpcUaSetPublishingModeRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaSetPublishingModeRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaSetPublishingModeRequestClear
+	#define EXT_OpcUaSetPublishingModeRequestClear
+	#define GET_OpcUaSetPublishingModeRequestClear(fl)  CAL_CMGETAPI( "OpcUaSetPublishingModeRequestClear" ) 
+	#define CAL_OpcUaSetPublishingModeRequestClear pICmpOPCUAStack->IOpcUaSetPublishingModeRequestClear
+	#define CHK_OpcUaSetPublishingModeRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaSetPublishingModeRequestClear  CAL_CMEXPAPI( "OpcUaSetPublishingModeRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaSetPublishingModeRequestClear  PFOPCUASETPUBLISHINGMODEREQUESTCLEAR pfOpcUaSetPublishingModeRequestClear;
+	#define EXT_OpcUaSetPublishingModeRequestClear  extern PFOPCUASETPUBLISHINGMODEREQUESTCLEAR pfOpcUaSetPublishingModeRequestClear;
+	#define GET_OpcUaSetPublishingModeRequestClear(fl)  s_pfCMGetAPI2( "OpcUaSetPublishingModeRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaSetPublishingModeRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaSetPublishingModeRequestClear  pfOpcUaSetPublishingModeRequestClear
+	#define CHK_OpcUaSetPublishingModeRequestClear  (pfOpcUaSetPublishingModeRequestClear != NULL)
+	#define EXP_OpcUaSetPublishingModeRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetPublishingModeRequestClear", (RTS_UINTPTR)OpcUaSetPublishingModeRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaDeleteSubscriptionsRequestInitialize(OpcUa_DeleteSubscriptionsRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUADELETESUBSCRIPTIONSREQUESTINITIALIZE) (OpcUa_DeleteSubscriptionsRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUADELETESUBSCRIPTIONSREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaDeleteSubscriptionsRequestInitialize
+	#define EXT_OpcUaDeleteSubscriptionsRequestInitialize
+	#define GET_OpcUaDeleteSubscriptionsRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaDeleteSubscriptionsRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaDeleteSubscriptionsRequestInitialize  FALSE
+	#define EXP_OpcUaDeleteSubscriptionsRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaDeleteSubscriptionsRequestInitialize
+	#define EXT_OpcUaDeleteSubscriptionsRequestInitialize
+	#define GET_OpcUaDeleteSubscriptionsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaDeleteSubscriptionsRequestInitialize" ) 
+	#define CAL_OpcUaDeleteSubscriptionsRequestInitialize  OpcUaDeleteSubscriptionsRequestInitialize
+	#define CHK_OpcUaDeleteSubscriptionsRequestInitialize  TRUE
+	#define EXP_OpcUaDeleteSubscriptionsRequestInitialize  CAL_CMEXPAPI( "OpcUaDeleteSubscriptionsRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaDeleteSubscriptionsRequestInitialize
+	#define EXT_OpcUaDeleteSubscriptionsRequestInitialize
+	#define GET_OpcUaDeleteSubscriptionsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaDeleteSubscriptionsRequestInitialize" ) 
+	#define CAL_OpcUaDeleteSubscriptionsRequestInitialize  OpcUaDeleteSubscriptionsRequestInitialize
+	#define CHK_OpcUaDeleteSubscriptionsRequestInitialize  TRUE
+	#define EXP_OpcUaDeleteSubscriptionsRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteSubscriptionsRequestInitialize", (RTS_UINTPTR)OpcUaDeleteSubscriptionsRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaDeleteSubscriptionsRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaDeleteSubscriptionsRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaDeleteSubscriptionsRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaDeleteSubscriptionsRequestInitialize pICmpOPCUAStack->IOpcUaDeleteSubscriptionsRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaDeleteSubscriptionsRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaDeleteSubscriptionsRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaDeleteSubscriptionsRequestInitialize
+	#define EXT_OpcUaDeleteSubscriptionsRequestInitialize
+	#define GET_OpcUaDeleteSubscriptionsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaDeleteSubscriptionsRequestInitialize" ) 
+	#define CAL_OpcUaDeleteSubscriptionsRequestInitialize pICmpOPCUAStack->IOpcUaDeleteSubscriptionsRequestInitialize
+	#define CHK_OpcUaDeleteSubscriptionsRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaDeleteSubscriptionsRequestInitialize  CAL_CMEXPAPI( "OpcUaDeleteSubscriptionsRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaDeleteSubscriptionsRequestInitialize  PFOPCUADELETESUBSCRIPTIONSREQUESTINITIALIZE pfOpcUaDeleteSubscriptionsRequestInitialize;
+	#define EXT_OpcUaDeleteSubscriptionsRequestInitialize  extern PFOPCUADELETESUBSCRIPTIONSREQUESTINITIALIZE pfOpcUaDeleteSubscriptionsRequestInitialize;
+	#define GET_OpcUaDeleteSubscriptionsRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaDeleteSubscriptionsRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaDeleteSubscriptionsRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaDeleteSubscriptionsRequestInitialize  pfOpcUaDeleteSubscriptionsRequestInitialize
+	#define CHK_OpcUaDeleteSubscriptionsRequestInitialize  (pfOpcUaDeleteSubscriptionsRequestInitialize != NULL)
+	#define EXP_OpcUaDeleteSubscriptionsRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteSubscriptionsRequestInitialize", (RTS_UINTPTR)OpcUaDeleteSubscriptionsRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaDeleteSubscriptionsRequestClear(OpcUa_DeleteSubscriptionsRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUADELETESUBSCRIPTIONSREQUESTCLEAR) (OpcUa_DeleteSubscriptionsRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUADELETESUBSCRIPTIONSREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaDeleteSubscriptionsRequestClear
+	#define EXT_OpcUaDeleteSubscriptionsRequestClear
+	#define GET_OpcUaDeleteSubscriptionsRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaDeleteSubscriptionsRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaDeleteSubscriptionsRequestClear  FALSE
+	#define EXP_OpcUaDeleteSubscriptionsRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaDeleteSubscriptionsRequestClear
+	#define EXT_OpcUaDeleteSubscriptionsRequestClear
+	#define GET_OpcUaDeleteSubscriptionsRequestClear(fl)  CAL_CMGETAPI( "OpcUaDeleteSubscriptionsRequestClear" ) 
+	#define CAL_OpcUaDeleteSubscriptionsRequestClear  OpcUaDeleteSubscriptionsRequestClear
+	#define CHK_OpcUaDeleteSubscriptionsRequestClear  TRUE
+	#define EXP_OpcUaDeleteSubscriptionsRequestClear  CAL_CMEXPAPI( "OpcUaDeleteSubscriptionsRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaDeleteSubscriptionsRequestClear
+	#define EXT_OpcUaDeleteSubscriptionsRequestClear
+	#define GET_OpcUaDeleteSubscriptionsRequestClear(fl)  CAL_CMGETAPI( "OpcUaDeleteSubscriptionsRequestClear" ) 
+	#define CAL_OpcUaDeleteSubscriptionsRequestClear  OpcUaDeleteSubscriptionsRequestClear
+	#define CHK_OpcUaDeleteSubscriptionsRequestClear  TRUE
+	#define EXP_OpcUaDeleteSubscriptionsRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteSubscriptionsRequestClear", (RTS_UINTPTR)OpcUaDeleteSubscriptionsRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaDeleteSubscriptionsRequestClear
+	#define EXT_CmpOPCUAStackOpcUaDeleteSubscriptionsRequestClear
+	#define GET_CmpOPCUAStackOpcUaDeleteSubscriptionsRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaDeleteSubscriptionsRequestClear pICmpOPCUAStack->IOpcUaDeleteSubscriptionsRequestClear
+	#define CHK_CmpOPCUAStackOpcUaDeleteSubscriptionsRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaDeleteSubscriptionsRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaDeleteSubscriptionsRequestClear
+	#define EXT_OpcUaDeleteSubscriptionsRequestClear
+	#define GET_OpcUaDeleteSubscriptionsRequestClear(fl)  CAL_CMGETAPI( "OpcUaDeleteSubscriptionsRequestClear" ) 
+	#define CAL_OpcUaDeleteSubscriptionsRequestClear pICmpOPCUAStack->IOpcUaDeleteSubscriptionsRequestClear
+	#define CHK_OpcUaDeleteSubscriptionsRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaDeleteSubscriptionsRequestClear  CAL_CMEXPAPI( "OpcUaDeleteSubscriptionsRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaDeleteSubscriptionsRequestClear  PFOPCUADELETESUBSCRIPTIONSREQUESTCLEAR pfOpcUaDeleteSubscriptionsRequestClear;
+	#define EXT_OpcUaDeleteSubscriptionsRequestClear  extern PFOPCUADELETESUBSCRIPTIONSREQUESTCLEAR pfOpcUaDeleteSubscriptionsRequestClear;
+	#define GET_OpcUaDeleteSubscriptionsRequestClear(fl)  s_pfCMGetAPI2( "OpcUaDeleteSubscriptionsRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaDeleteSubscriptionsRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaDeleteSubscriptionsRequestClear  pfOpcUaDeleteSubscriptionsRequestClear
+	#define CHK_OpcUaDeleteSubscriptionsRequestClear  (pfOpcUaDeleteSubscriptionsRequestClear != NULL)
+	#define EXP_OpcUaDeleteSubscriptionsRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteSubscriptionsRequestClear", (RTS_UINTPTR)OpcUaDeleteSubscriptionsRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaTransferSubscriptionsRequestInitialize(OpcUa_TransferSubscriptionsRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUATRANSFERSUBSCRIPTIONSREQUESTINITIALIZE) (OpcUa_TransferSubscriptionsRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUATRANSFERSUBSCRIPTIONSREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaTransferSubscriptionsRequestInitialize
+	#define EXT_OpcUaTransferSubscriptionsRequestInitialize
+	#define GET_OpcUaTransferSubscriptionsRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaTransferSubscriptionsRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaTransferSubscriptionsRequestInitialize  FALSE
+	#define EXP_OpcUaTransferSubscriptionsRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaTransferSubscriptionsRequestInitialize
+	#define EXT_OpcUaTransferSubscriptionsRequestInitialize
+	#define GET_OpcUaTransferSubscriptionsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaTransferSubscriptionsRequestInitialize" ) 
+	#define CAL_OpcUaTransferSubscriptionsRequestInitialize  OpcUaTransferSubscriptionsRequestInitialize
+	#define CHK_OpcUaTransferSubscriptionsRequestInitialize  TRUE
+	#define EXP_OpcUaTransferSubscriptionsRequestInitialize  CAL_CMEXPAPI( "OpcUaTransferSubscriptionsRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaTransferSubscriptionsRequestInitialize
+	#define EXT_OpcUaTransferSubscriptionsRequestInitialize
+	#define GET_OpcUaTransferSubscriptionsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaTransferSubscriptionsRequestInitialize" ) 
+	#define CAL_OpcUaTransferSubscriptionsRequestInitialize  OpcUaTransferSubscriptionsRequestInitialize
+	#define CHK_OpcUaTransferSubscriptionsRequestInitialize  TRUE
+	#define EXP_OpcUaTransferSubscriptionsRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTransferSubscriptionsRequestInitialize", (RTS_UINTPTR)OpcUaTransferSubscriptionsRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaTransferSubscriptionsRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaTransferSubscriptionsRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaTransferSubscriptionsRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaTransferSubscriptionsRequestInitialize pICmpOPCUAStack->IOpcUaTransferSubscriptionsRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaTransferSubscriptionsRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaTransferSubscriptionsRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaTransferSubscriptionsRequestInitialize
+	#define EXT_OpcUaTransferSubscriptionsRequestInitialize
+	#define GET_OpcUaTransferSubscriptionsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaTransferSubscriptionsRequestInitialize" ) 
+	#define CAL_OpcUaTransferSubscriptionsRequestInitialize pICmpOPCUAStack->IOpcUaTransferSubscriptionsRequestInitialize
+	#define CHK_OpcUaTransferSubscriptionsRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaTransferSubscriptionsRequestInitialize  CAL_CMEXPAPI( "OpcUaTransferSubscriptionsRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaTransferSubscriptionsRequestInitialize  PFOPCUATRANSFERSUBSCRIPTIONSREQUESTINITIALIZE pfOpcUaTransferSubscriptionsRequestInitialize;
+	#define EXT_OpcUaTransferSubscriptionsRequestInitialize  extern PFOPCUATRANSFERSUBSCRIPTIONSREQUESTINITIALIZE pfOpcUaTransferSubscriptionsRequestInitialize;
+	#define GET_OpcUaTransferSubscriptionsRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaTransferSubscriptionsRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaTransferSubscriptionsRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaTransferSubscriptionsRequestInitialize  pfOpcUaTransferSubscriptionsRequestInitialize
+	#define CHK_OpcUaTransferSubscriptionsRequestInitialize  (pfOpcUaTransferSubscriptionsRequestInitialize != NULL)
+	#define EXP_OpcUaTransferSubscriptionsRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTransferSubscriptionsRequestInitialize", (RTS_UINTPTR)OpcUaTransferSubscriptionsRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaTransferSubscriptionsRequestClear(OpcUa_TransferSubscriptionsRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUATRANSFERSUBSCRIPTIONSREQUESTCLEAR) (OpcUa_TransferSubscriptionsRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUATRANSFERSUBSCRIPTIONSREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaTransferSubscriptionsRequestClear
+	#define EXT_OpcUaTransferSubscriptionsRequestClear
+	#define GET_OpcUaTransferSubscriptionsRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaTransferSubscriptionsRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaTransferSubscriptionsRequestClear  FALSE
+	#define EXP_OpcUaTransferSubscriptionsRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaTransferSubscriptionsRequestClear
+	#define EXT_OpcUaTransferSubscriptionsRequestClear
+	#define GET_OpcUaTransferSubscriptionsRequestClear(fl)  CAL_CMGETAPI( "OpcUaTransferSubscriptionsRequestClear" ) 
+	#define CAL_OpcUaTransferSubscriptionsRequestClear  OpcUaTransferSubscriptionsRequestClear
+	#define CHK_OpcUaTransferSubscriptionsRequestClear  TRUE
+	#define EXP_OpcUaTransferSubscriptionsRequestClear  CAL_CMEXPAPI( "OpcUaTransferSubscriptionsRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaTransferSubscriptionsRequestClear
+	#define EXT_OpcUaTransferSubscriptionsRequestClear
+	#define GET_OpcUaTransferSubscriptionsRequestClear(fl)  CAL_CMGETAPI( "OpcUaTransferSubscriptionsRequestClear" ) 
+	#define CAL_OpcUaTransferSubscriptionsRequestClear  OpcUaTransferSubscriptionsRequestClear
+	#define CHK_OpcUaTransferSubscriptionsRequestClear  TRUE
+	#define EXP_OpcUaTransferSubscriptionsRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTransferSubscriptionsRequestClear", (RTS_UINTPTR)OpcUaTransferSubscriptionsRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaTransferSubscriptionsRequestClear
+	#define EXT_CmpOPCUAStackOpcUaTransferSubscriptionsRequestClear
+	#define GET_CmpOPCUAStackOpcUaTransferSubscriptionsRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaTransferSubscriptionsRequestClear pICmpOPCUAStack->IOpcUaTransferSubscriptionsRequestClear
+	#define CHK_CmpOPCUAStackOpcUaTransferSubscriptionsRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaTransferSubscriptionsRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaTransferSubscriptionsRequestClear
+	#define EXT_OpcUaTransferSubscriptionsRequestClear
+	#define GET_OpcUaTransferSubscriptionsRequestClear(fl)  CAL_CMGETAPI( "OpcUaTransferSubscriptionsRequestClear" ) 
+	#define CAL_OpcUaTransferSubscriptionsRequestClear pICmpOPCUAStack->IOpcUaTransferSubscriptionsRequestClear
+	#define CHK_OpcUaTransferSubscriptionsRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaTransferSubscriptionsRequestClear  CAL_CMEXPAPI( "OpcUaTransferSubscriptionsRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaTransferSubscriptionsRequestClear  PFOPCUATRANSFERSUBSCRIPTIONSREQUESTCLEAR pfOpcUaTransferSubscriptionsRequestClear;
+	#define EXT_OpcUaTransferSubscriptionsRequestClear  extern PFOPCUATRANSFERSUBSCRIPTIONSREQUESTCLEAR pfOpcUaTransferSubscriptionsRequestClear;
+	#define GET_OpcUaTransferSubscriptionsRequestClear(fl)  s_pfCMGetAPI2( "OpcUaTransferSubscriptionsRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaTransferSubscriptionsRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaTransferSubscriptionsRequestClear  pfOpcUaTransferSubscriptionsRequestClear
+	#define CHK_OpcUaTransferSubscriptionsRequestClear  (pfOpcUaTransferSubscriptionsRequestClear != NULL)
+	#define EXP_OpcUaTransferSubscriptionsRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTransferSubscriptionsRequestClear", (RTS_UINTPTR)OpcUaTransferSubscriptionsRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaCreateSubscriptionResponseInitialize(OpcUa_CreateSubscriptionResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACREATESUBSCRIPTIONRESPONSEINITIALIZE) (OpcUa_CreateSubscriptionResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACREATESUBSCRIPTIONRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaCreateSubscriptionResponseInitialize
+	#define EXT_OpcUaCreateSubscriptionResponseInitialize
+	#define GET_OpcUaCreateSubscriptionResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCreateSubscriptionResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCreateSubscriptionResponseInitialize  FALSE
+	#define EXP_OpcUaCreateSubscriptionResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCreateSubscriptionResponseInitialize
+	#define EXT_OpcUaCreateSubscriptionResponseInitialize
+	#define GET_OpcUaCreateSubscriptionResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateSubscriptionResponseInitialize" ) 
+	#define CAL_OpcUaCreateSubscriptionResponseInitialize  OpcUaCreateSubscriptionResponseInitialize
+	#define CHK_OpcUaCreateSubscriptionResponseInitialize  TRUE
+	#define EXP_OpcUaCreateSubscriptionResponseInitialize  CAL_CMEXPAPI( "OpcUaCreateSubscriptionResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCreateSubscriptionResponseInitialize
+	#define EXT_OpcUaCreateSubscriptionResponseInitialize
+	#define GET_OpcUaCreateSubscriptionResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateSubscriptionResponseInitialize" ) 
+	#define CAL_OpcUaCreateSubscriptionResponseInitialize  OpcUaCreateSubscriptionResponseInitialize
+	#define CHK_OpcUaCreateSubscriptionResponseInitialize  TRUE
+	#define EXP_OpcUaCreateSubscriptionResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSubscriptionResponseInitialize", (RTS_UINTPTR)OpcUaCreateSubscriptionResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCreateSubscriptionResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaCreateSubscriptionResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaCreateSubscriptionResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCreateSubscriptionResponseInitialize pICmpOPCUAStack->IOpcUaCreateSubscriptionResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaCreateSubscriptionResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCreateSubscriptionResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCreateSubscriptionResponseInitialize
+	#define EXT_OpcUaCreateSubscriptionResponseInitialize
+	#define GET_OpcUaCreateSubscriptionResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateSubscriptionResponseInitialize" ) 
+	#define CAL_OpcUaCreateSubscriptionResponseInitialize pICmpOPCUAStack->IOpcUaCreateSubscriptionResponseInitialize
+	#define CHK_OpcUaCreateSubscriptionResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCreateSubscriptionResponseInitialize  CAL_CMEXPAPI( "OpcUaCreateSubscriptionResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCreateSubscriptionResponseInitialize  PFOPCUACREATESUBSCRIPTIONRESPONSEINITIALIZE pfOpcUaCreateSubscriptionResponseInitialize;
+	#define EXT_OpcUaCreateSubscriptionResponseInitialize  extern PFOPCUACREATESUBSCRIPTIONRESPONSEINITIALIZE pfOpcUaCreateSubscriptionResponseInitialize;
+	#define GET_OpcUaCreateSubscriptionResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaCreateSubscriptionResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaCreateSubscriptionResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaCreateSubscriptionResponseInitialize  pfOpcUaCreateSubscriptionResponseInitialize
+	#define CHK_OpcUaCreateSubscriptionResponseInitialize  (pfOpcUaCreateSubscriptionResponseInitialize != NULL)
+	#define EXP_OpcUaCreateSubscriptionResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSubscriptionResponseInitialize", (RTS_UINTPTR)OpcUaCreateSubscriptionResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaCreateSubscriptionResponseClear(OpcUa_CreateSubscriptionResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACREATESUBSCRIPTIONRESPONSECLEAR) (OpcUa_CreateSubscriptionResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACREATESUBSCRIPTIONRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaCreateSubscriptionResponseClear
+	#define EXT_OpcUaCreateSubscriptionResponseClear
+	#define GET_OpcUaCreateSubscriptionResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCreateSubscriptionResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCreateSubscriptionResponseClear  FALSE
+	#define EXP_OpcUaCreateSubscriptionResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCreateSubscriptionResponseClear
+	#define EXT_OpcUaCreateSubscriptionResponseClear
+	#define GET_OpcUaCreateSubscriptionResponseClear(fl)  CAL_CMGETAPI( "OpcUaCreateSubscriptionResponseClear" ) 
+	#define CAL_OpcUaCreateSubscriptionResponseClear  OpcUaCreateSubscriptionResponseClear
+	#define CHK_OpcUaCreateSubscriptionResponseClear  TRUE
+	#define EXP_OpcUaCreateSubscriptionResponseClear  CAL_CMEXPAPI( "OpcUaCreateSubscriptionResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCreateSubscriptionResponseClear
+	#define EXT_OpcUaCreateSubscriptionResponseClear
+	#define GET_OpcUaCreateSubscriptionResponseClear(fl)  CAL_CMGETAPI( "OpcUaCreateSubscriptionResponseClear" ) 
+	#define CAL_OpcUaCreateSubscriptionResponseClear  OpcUaCreateSubscriptionResponseClear
+	#define CHK_OpcUaCreateSubscriptionResponseClear  TRUE
+	#define EXP_OpcUaCreateSubscriptionResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSubscriptionResponseClear", (RTS_UINTPTR)OpcUaCreateSubscriptionResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCreateSubscriptionResponseClear
+	#define EXT_CmpOPCUAStackOpcUaCreateSubscriptionResponseClear
+	#define GET_CmpOPCUAStackOpcUaCreateSubscriptionResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCreateSubscriptionResponseClear pICmpOPCUAStack->IOpcUaCreateSubscriptionResponseClear
+	#define CHK_CmpOPCUAStackOpcUaCreateSubscriptionResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCreateSubscriptionResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCreateSubscriptionResponseClear
+	#define EXT_OpcUaCreateSubscriptionResponseClear
+	#define GET_OpcUaCreateSubscriptionResponseClear(fl)  CAL_CMGETAPI( "OpcUaCreateSubscriptionResponseClear" ) 
+	#define CAL_OpcUaCreateSubscriptionResponseClear pICmpOPCUAStack->IOpcUaCreateSubscriptionResponseClear
+	#define CHK_OpcUaCreateSubscriptionResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCreateSubscriptionResponseClear  CAL_CMEXPAPI( "OpcUaCreateSubscriptionResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCreateSubscriptionResponseClear  PFOPCUACREATESUBSCRIPTIONRESPONSECLEAR pfOpcUaCreateSubscriptionResponseClear;
+	#define EXT_OpcUaCreateSubscriptionResponseClear  extern PFOPCUACREATESUBSCRIPTIONRESPONSECLEAR pfOpcUaCreateSubscriptionResponseClear;
+	#define GET_OpcUaCreateSubscriptionResponseClear(fl)  s_pfCMGetAPI2( "OpcUaCreateSubscriptionResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaCreateSubscriptionResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaCreateSubscriptionResponseClear  pfOpcUaCreateSubscriptionResponseClear
+	#define CHK_OpcUaCreateSubscriptionResponseClear  (pfOpcUaCreateSubscriptionResponseClear != NULL)
+	#define EXP_OpcUaCreateSubscriptionResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateSubscriptionResponseClear", (RTS_UINTPTR)OpcUaCreateSubscriptionResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaModifySubscriptionResponseInitialize(OpcUa_ModifySubscriptionResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAMODIFYSUBSCRIPTIONRESPONSEINITIALIZE) (OpcUa_ModifySubscriptionResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAMODIFYSUBSCRIPTIONRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaModifySubscriptionResponseInitialize
+	#define EXT_OpcUaModifySubscriptionResponseInitialize
+	#define GET_OpcUaModifySubscriptionResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaModifySubscriptionResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaModifySubscriptionResponseInitialize  FALSE
+	#define EXP_OpcUaModifySubscriptionResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaModifySubscriptionResponseInitialize
+	#define EXT_OpcUaModifySubscriptionResponseInitialize
+	#define GET_OpcUaModifySubscriptionResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaModifySubscriptionResponseInitialize" ) 
+	#define CAL_OpcUaModifySubscriptionResponseInitialize  OpcUaModifySubscriptionResponseInitialize
+	#define CHK_OpcUaModifySubscriptionResponseInitialize  TRUE
+	#define EXP_OpcUaModifySubscriptionResponseInitialize  CAL_CMEXPAPI( "OpcUaModifySubscriptionResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaModifySubscriptionResponseInitialize
+	#define EXT_OpcUaModifySubscriptionResponseInitialize
+	#define GET_OpcUaModifySubscriptionResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaModifySubscriptionResponseInitialize" ) 
+	#define CAL_OpcUaModifySubscriptionResponseInitialize  OpcUaModifySubscriptionResponseInitialize
+	#define CHK_OpcUaModifySubscriptionResponseInitialize  TRUE
+	#define EXP_OpcUaModifySubscriptionResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifySubscriptionResponseInitialize", (RTS_UINTPTR)OpcUaModifySubscriptionResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaModifySubscriptionResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaModifySubscriptionResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaModifySubscriptionResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaModifySubscriptionResponseInitialize pICmpOPCUAStack->IOpcUaModifySubscriptionResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaModifySubscriptionResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaModifySubscriptionResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaModifySubscriptionResponseInitialize
+	#define EXT_OpcUaModifySubscriptionResponseInitialize
+	#define GET_OpcUaModifySubscriptionResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaModifySubscriptionResponseInitialize" ) 
+	#define CAL_OpcUaModifySubscriptionResponseInitialize pICmpOPCUAStack->IOpcUaModifySubscriptionResponseInitialize
+	#define CHK_OpcUaModifySubscriptionResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaModifySubscriptionResponseInitialize  CAL_CMEXPAPI( "OpcUaModifySubscriptionResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaModifySubscriptionResponseInitialize  PFOPCUAMODIFYSUBSCRIPTIONRESPONSEINITIALIZE pfOpcUaModifySubscriptionResponseInitialize;
+	#define EXT_OpcUaModifySubscriptionResponseInitialize  extern PFOPCUAMODIFYSUBSCRIPTIONRESPONSEINITIALIZE pfOpcUaModifySubscriptionResponseInitialize;
+	#define GET_OpcUaModifySubscriptionResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaModifySubscriptionResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaModifySubscriptionResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaModifySubscriptionResponseInitialize  pfOpcUaModifySubscriptionResponseInitialize
+	#define CHK_OpcUaModifySubscriptionResponseInitialize  (pfOpcUaModifySubscriptionResponseInitialize != NULL)
+	#define EXP_OpcUaModifySubscriptionResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifySubscriptionResponseInitialize", (RTS_UINTPTR)OpcUaModifySubscriptionResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaModifySubscriptionResponseClear(OpcUa_ModifySubscriptionResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAMODIFYSUBSCRIPTIONRESPONSECLEAR) (OpcUa_ModifySubscriptionResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAMODIFYSUBSCRIPTIONRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaModifySubscriptionResponseClear
+	#define EXT_OpcUaModifySubscriptionResponseClear
+	#define GET_OpcUaModifySubscriptionResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaModifySubscriptionResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaModifySubscriptionResponseClear  FALSE
+	#define EXP_OpcUaModifySubscriptionResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaModifySubscriptionResponseClear
+	#define EXT_OpcUaModifySubscriptionResponseClear
+	#define GET_OpcUaModifySubscriptionResponseClear(fl)  CAL_CMGETAPI( "OpcUaModifySubscriptionResponseClear" ) 
+	#define CAL_OpcUaModifySubscriptionResponseClear  OpcUaModifySubscriptionResponseClear
+	#define CHK_OpcUaModifySubscriptionResponseClear  TRUE
+	#define EXP_OpcUaModifySubscriptionResponseClear  CAL_CMEXPAPI( "OpcUaModifySubscriptionResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaModifySubscriptionResponseClear
+	#define EXT_OpcUaModifySubscriptionResponseClear
+	#define GET_OpcUaModifySubscriptionResponseClear(fl)  CAL_CMGETAPI( "OpcUaModifySubscriptionResponseClear" ) 
+	#define CAL_OpcUaModifySubscriptionResponseClear  OpcUaModifySubscriptionResponseClear
+	#define CHK_OpcUaModifySubscriptionResponseClear  TRUE
+	#define EXP_OpcUaModifySubscriptionResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifySubscriptionResponseClear", (RTS_UINTPTR)OpcUaModifySubscriptionResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaModifySubscriptionResponseClear
+	#define EXT_CmpOPCUAStackOpcUaModifySubscriptionResponseClear
+	#define GET_CmpOPCUAStackOpcUaModifySubscriptionResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaModifySubscriptionResponseClear pICmpOPCUAStack->IOpcUaModifySubscriptionResponseClear
+	#define CHK_CmpOPCUAStackOpcUaModifySubscriptionResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaModifySubscriptionResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaModifySubscriptionResponseClear
+	#define EXT_OpcUaModifySubscriptionResponseClear
+	#define GET_OpcUaModifySubscriptionResponseClear(fl)  CAL_CMGETAPI( "OpcUaModifySubscriptionResponseClear" ) 
+	#define CAL_OpcUaModifySubscriptionResponseClear pICmpOPCUAStack->IOpcUaModifySubscriptionResponseClear
+	#define CHK_OpcUaModifySubscriptionResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaModifySubscriptionResponseClear  CAL_CMEXPAPI( "OpcUaModifySubscriptionResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaModifySubscriptionResponseClear  PFOPCUAMODIFYSUBSCRIPTIONRESPONSECLEAR pfOpcUaModifySubscriptionResponseClear;
+	#define EXT_OpcUaModifySubscriptionResponseClear  extern PFOPCUAMODIFYSUBSCRIPTIONRESPONSECLEAR pfOpcUaModifySubscriptionResponseClear;
+	#define GET_OpcUaModifySubscriptionResponseClear(fl)  s_pfCMGetAPI2( "OpcUaModifySubscriptionResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaModifySubscriptionResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaModifySubscriptionResponseClear  pfOpcUaModifySubscriptionResponseClear
+	#define CHK_OpcUaModifySubscriptionResponseClear  (pfOpcUaModifySubscriptionResponseClear != NULL)
+	#define EXP_OpcUaModifySubscriptionResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifySubscriptionResponseClear", (RTS_UINTPTR)OpcUaModifySubscriptionResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaRepublishResponseInitialize(OpcUa_RepublishResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAREPUBLISHRESPONSEINITIALIZE) (OpcUa_RepublishResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAREPUBLISHRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaRepublishResponseInitialize
+	#define EXT_OpcUaRepublishResponseInitialize
+	#define GET_OpcUaRepublishResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaRepublishResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaRepublishResponseInitialize  FALSE
+	#define EXP_OpcUaRepublishResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaRepublishResponseInitialize
+	#define EXT_OpcUaRepublishResponseInitialize
+	#define GET_OpcUaRepublishResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaRepublishResponseInitialize" ) 
+	#define CAL_OpcUaRepublishResponseInitialize  OpcUaRepublishResponseInitialize
+	#define CHK_OpcUaRepublishResponseInitialize  TRUE
+	#define EXP_OpcUaRepublishResponseInitialize  CAL_CMEXPAPI( "OpcUaRepublishResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaRepublishResponseInitialize
+	#define EXT_OpcUaRepublishResponseInitialize
+	#define GET_OpcUaRepublishResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaRepublishResponseInitialize" ) 
+	#define CAL_OpcUaRepublishResponseInitialize  OpcUaRepublishResponseInitialize
+	#define CHK_OpcUaRepublishResponseInitialize  TRUE
+	#define EXP_OpcUaRepublishResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRepublishResponseInitialize", (RTS_UINTPTR)OpcUaRepublishResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaRepublishResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaRepublishResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaRepublishResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaRepublishResponseInitialize pICmpOPCUAStack->IOpcUaRepublishResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaRepublishResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaRepublishResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaRepublishResponseInitialize
+	#define EXT_OpcUaRepublishResponseInitialize
+	#define GET_OpcUaRepublishResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaRepublishResponseInitialize" ) 
+	#define CAL_OpcUaRepublishResponseInitialize pICmpOPCUAStack->IOpcUaRepublishResponseInitialize
+	#define CHK_OpcUaRepublishResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaRepublishResponseInitialize  CAL_CMEXPAPI( "OpcUaRepublishResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaRepublishResponseInitialize  PFOPCUAREPUBLISHRESPONSEINITIALIZE pfOpcUaRepublishResponseInitialize;
+	#define EXT_OpcUaRepublishResponseInitialize  extern PFOPCUAREPUBLISHRESPONSEINITIALIZE pfOpcUaRepublishResponseInitialize;
+	#define GET_OpcUaRepublishResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaRepublishResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaRepublishResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaRepublishResponseInitialize  pfOpcUaRepublishResponseInitialize
+	#define CHK_OpcUaRepublishResponseInitialize  (pfOpcUaRepublishResponseInitialize != NULL)
+	#define EXP_OpcUaRepublishResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRepublishResponseInitialize", (RTS_UINTPTR)OpcUaRepublishResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaRepublishResponseClear(OpcUa_RepublishResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAREPUBLISHRESPONSECLEAR) (OpcUa_RepublishResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAREPUBLISHRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaRepublishResponseClear
+	#define EXT_OpcUaRepublishResponseClear
+	#define GET_OpcUaRepublishResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaRepublishResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaRepublishResponseClear  FALSE
+	#define EXP_OpcUaRepublishResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaRepublishResponseClear
+	#define EXT_OpcUaRepublishResponseClear
+	#define GET_OpcUaRepublishResponseClear(fl)  CAL_CMGETAPI( "OpcUaRepublishResponseClear" ) 
+	#define CAL_OpcUaRepublishResponseClear  OpcUaRepublishResponseClear
+	#define CHK_OpcUaRepublishResponseClear  TRUE
+	#define EXP_OpcUaRepublishResponseClear  CAL_CMEXPAPI( "OpcUaRepublishResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaRepublishResponseClear
+	#define EXT_OpcUaRepublishResponseClear
+	#define GET_OpcUaRepublishResponseClear(fl)  CAL_CMGETAPI( "OpcUaRepublishResponseClear" ) 
+	#define CAL_OpcUaRepublishResponseClear  OpcUaRepublishResponseClear
+	#define CHK_OpcUaRepublishResponseClear  TRUE
+	#define EXP_OpcUaRepublishResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRepublishResponseClear", (RTS_UINTPTR)OpcUaRepublishResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaRepublishResponseClear
+	#define EXT_CmpOPCUAStackOpcUaRepublishResponseClear
+	#define GET_CmpOPCUAStackOpcUaRepublishResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaRepublishResponseClear pICmpOPCUAStack->IOpcUaRepublishResponseClear
+	#define CHK_CmpOPCUAStackOpcUaRepublishResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaRepublishResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaRepublishResponseClear
+	#define EXT_OpcUaRepublishResponseClear
+	#define GET_OpcUaRepublishResponseClear(fl)  CAL_CMGETAPI( "OpcUaRepublishResponseClear" ) 
+	#define CAL_OpcUaRepublishResponseClear pICmpOPCUAStack->IOpcUaRepublishResponseClear
+	#define CHK_OpcUaRepublishResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaRepublishResponseClear  CAL_CMEXPAPI( "OpcUaRepublishResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaRepublishResponseClear  PFOPCUAREPUBLISHRESPONSECLEAR pfOpcUaRepublishResponseClear;
+	#define EXT_OpcUaRepublishResponseClear  extern PFOPCUAREPUBLISHRESPONSECLEAR pfOpcUaRepublishResponseClear;
+	#define GET_OpcUaRepublishResponseClear(fl)  s_pfCMGetAPI2( "OpcUaRepublishResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaRepublishResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaRepublishResponseClear  pfOpcUaRepublishResponseClear
+	#define CHK_OpcUaRepublishResponseClear  (pfOpcUaRepublishResponseClear != NULL)
+	#define EXP_OpcUaRepublishResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRepublishResponseClear", (RTS_UINTPTR)OpcUaRepublishResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaSetPublishingModeResponseInitialize(OpcUa_SetPublishingModeResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUASETPUBLISHINGMODERESPONSEINITIALIZE) (OpcUa_SetPublishingModeResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUASETPUBLISHINGMODERESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaSetPublishingModeResponseInitialize
+	#define EXT_OpcUaSetPublishingModeResponseInitialize
+	#define GET_OpcUaSetPublishingModeResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaSetPublishingModeResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaSetPublishingModeResponseInitialize  FALSE
+	#define EXP_OpcUaSetPublishingModeResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaSetPublishingModeResponseInitialize
+	#define EXT_OpcUaSetPublishingModeResponseInitialize
+	#define GET_OpcUaSetPublishingModeResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaSetPublishingModeResponseInitialize" ) 
+	#define CAL_OpcUaSetPublishingModeResponseInitialize  OpcUaSetPublishingModeResponseInitialize
+	#define CHK_OpcUaSetPublishingModeResponseInitialize  TRUE
+	#define EXP_OpcUaSetPublishingModeResponseInitialize  CAL_CMEXPAPI( "OpcUaSetPublishingModeResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaSetPublishingModeResponseInitialize
+	#define EXT_OpcUaSetPublishingModeResponseInitialize
+	#define GET_OpcUaSetPublishingModeResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaSetPublishingModeResponseInitialize" ) 
+	#define CAL_OpcUaSetPublishingModeResponseInitialize  OpcUaSetPublishingModeResponseInitialize
+	#define CHK_OpcUaSetPublishingModeResponseInitialize  TRUE
+	#define EXP_OpcUaSetPublishingModeResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetPublishingModeResponseInitialize", (RTS_UINTPTR)OpcUaSetPublishingModeResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaSetPublishingModeResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaSetPublishingModeResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaSetPublishingModeResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaSetPublishingModeResponseInitialize pICmpOPCUAStack->IOpcUaSetPublishingModeResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaSetPublishingModeResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaSetPublishingModeResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaSetPublishingModeResponseInitialize
+	#define EXT_OpcUaSetPublishingModeResponseInitialize
+	#define GET_OpcUaSetPublishingModeResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaSetPublishingModeResponseInitialize" ) 
+	#define CAL_OpcUaSetPublishingModeResponseInitialize pICmpOPCUAStack->IOpcUaSetPublishingModeResponseInitialize
+	#define CHK_OpcUaSetPublishingModeResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaSetPublishingModeResponseInitialize  CAL_CMEXPAPI( "OpcUaSetPublishingModeResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaSetPublishingModeResponseInitialize  PFOPCUASETPUBLISHINGMODERESPONSEINITIALIZE pfOpcUaSetPublishingModeResponseInitialize;
+	#define EXT_OpcUaSetPublishingModeResponseInitialize  extern PFOPCUASETPUBLISHINGMODERESPONSEINITIALIZE pfOpcUaSetPublishingModeResponseInitialize;
+	#define GET_OpcUaSetPublishingModeResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaSetPublishingModeResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaSetPublishingModeResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaSetPublishingModeResponseInitialize  pfOpcUaSetPublishingModeResponseInitialize
+	#define CHK_OpcUaSetPublishingModeResponseInitialize  (pfOpcUaSetPublishingModeResponseInitialize != NULL)
+	#define EXP_OpcUaSetPublishingModeResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetPublishingModeResponseInitialize", (RTS_UINTPTR)OpcUaSetPublishingModeResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaSetPublishingModeResponseClear(OpcUa_SetPublishingModeResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUASETPUBLISHINGMODERESPONSECLEAR) (OpcUa_SetPublishingModeResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUASETPUBLISHINGMODERESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaSetPublishingModeResponseClear
+	#define EXT_OpcUaSetPublishingModeResponseClear
+	#define GET_OpcUaSetPublishingModeResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaSetPublishingModeResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaSetPublishingModeResponseClear  FALSE
+	#define EXP_OpcUaSetPublishingModeResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaSetPublishingModeResponseClear
+	#define EXT_OpcUaSetPublishingModeResponseClear
+	#define GET_OpcUaSetPublishingModeResponseClear(fl)  CAL_CMGETAPI( "OpcUaSetPublishingModeResponseClear" ) 
+	#define CAL_OpcUaSetPublishingModeResponseClear  OpcUaSetPublishingModeResponseClear
+	#define CHK_OpcUaSetPublishingModeResponseClear  TRUE
+	#define EXP_OpcUaSetPublishingModeResponseClear  CAL_CMEXPAPI( "OpcUaSetPublishingModeResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaSetPublishingModeResponseClear
+	#define EXT_OpcUaSetPublishingModeResponseClear
+	#define GET_OpcUaSetPublishingModeResponseClear(fl)  CAL_CMGETAPI( "OpcUaSetPublishingModeResponseClear" ) 
+	#define CAL_OpcUaSetPublishingModeResponseClear  OpcUaSetPublishingModeResponseClear
+	#define CHK_OpcUaSetPublishingModeResponseClear  TRUE
+	#define EXP_OpcUaSetPublishingModeResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetPublishingModeResponseClear", (RTS_UINTPTR)OpcUaSetPublishingModeResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaSetPublishingModeResponseClear
+	#define EXT_CmpOPCUAStackOpcUaSetPublishingModeResponseClear
+	#define GET_CmpOPCUAStackOpcUaSetPublishingModeResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaSetPublishingModeResponseClear pICmpOPCUAStack->IOpcUaSetPublishingModeResponseClear
+	#define CHK_CmpOPCUAStackOpcUaSetPublishingModeResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaSetPublishingModeResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaSetPublishingModeResponseClear
+	#define EXT_OpcUaSetPublishingModeResponseClear
+	#define GET_OpcUaSetPublishingModeResponseClear(fl)  CAL_CMGETAPI( "OpcUaSetPublishingModeResponseClear" ) 
+	#define CAL_OpcUaSetPublishingModeResponseClear pICmpOPCUAStack->IOpcUaSetPublishingModeResponseClear
+	#define CHK_OpcUaSetPublishingModeResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaSetPublishingModeResponseClear  CAL_CMEXPAPI( "OpcUaSetPublishingModeResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaSetPublishingModeResponseClear  PFOPCUASETPUBLISHINGMODERESPONSECLEAR pfOpcUaSetPublishingModeResponseClear;
+	#define EXT_OpcUaSetPublishingModeResponseClear  extern PFOPCUASETPUBLISHINGMODERESPONSECLEAR pfOpcUaSetPublishingModeResponseClear;
+	#define GET_OpcUaSetPublishingModeResponseClear(fl)  s_pfCMGetAPI2( "OpcUaSetPublishingModeResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaSetPublishingModeResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaSetPublishingModeResponseClear  pfOpcUaSetPublishingModeResponseClear
+	#define CHK_OpcUaSetPublishingModeResponseClear  (pfOpcUaSetPublishingModeResponseClear != NULL)
+	#define EXP_OpcUaSetPublishingModeResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetPublishingModeResponseClear", (RTS_UINTPTR)OpcUaSetPublishingModeResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaDeleteSubscriptionsResponseInitialize(OpcUa_DeleteSubscriptionsResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUADELETESUBSCRIPTIONSRESPONSEINITIALIZE) (OpcUa_DeleteSubscriptionsResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUADELETESUBSCRIPTIONSRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaDeleteSubscriptionsResponseInitialize
+	#define EXT_OpcUaDeleteSubscriptionsResponseInitialize
+	#define GET_OpcUaDeleteSubscriptionsResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaDeleteSubscriptionsResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaDeleteSubscriptionsResponseInitialize  FALSE
+	#define EXP_OpcUaDeleteSubscriptionsResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaDeleteSubscriptionsResponseInitialize
+	#define EXT_OpcUaDeleteSubscriptionsResponseInitialize
+	#define GET_OpcUaDeleteSubscriptionsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaDeleteSubscriptionsResponseInitialize" ) 
+	#define CAL_OpcUaDeleteSubscriptionsResponseInitialize  OpcUaDeleteSubscriptionsResponseInitialize
+	#define CHK_OpcUaDeleteSubscriptionsResponseInitialize  TRUE
+	#define EXP_OpcUaDeleteSubscriptionsResponseInitialize  CAL_CMEXPAPI( "OpcUaDeleteSubscriptionsResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaDeleteSubscriptionsResponseInitialize
+	#define EXT_OpcUaDeleteSubscriptionsResponseInitialize
+	#define GET_OpcUaDeleteSubscriptionsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaDeleteSubscriptionsResponseInitialize" ) 
+	#define CAL_OpcUaDeleteSubscriptionsResponseInitialize  OpcUaDeleteSubscriptionsResponseInitialize
+	#define CHK_OpcUaDeleteSubscriptionsResponseInitialize  TRUE
+	#define EXP_OpcUaDeleteSubscriptionsResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteSubscriptionsResponseInitialize", (RTS_UINTPTR)OpcUaDeleteSubscriptionsResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaDeleteSubscriptionsResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaDeleteSubscriptionsResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaDeleteSubscriptionsResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaDeleteSubscriptionsResponseInitialize pICmpOPCUAStack->IOpcUaDeleteSubscriptionsResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaDeleteSubscriptionsResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaDeleteSubscriptionsResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaDeleteSubscriptionsResponseInitialize
+	#define EXT_OpcUaDeleteSubscriptionsResponseInitialize
+	#define GET_OpcUaDeleteSubscriptionsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaDeleteSubscriptionsResponseInitialize" ) 
+	#define CAL_OpcUaDeleteSubscriptionsResponseInitialize pICmpOPCUAStack->IOpcUaDeleteSubscriptionsResponseInitialize
+	#define CHK_OpcUaDeleteSubscriptionsResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaDeleteSubscriptionsResponseInitialize  CAL_CMEXPAPI( "OpcUaDeleteSubscriptionsResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaDeleteSubscriptionsResponseInitialize  PFOPCUADELETESUBSCRIPTIONSRESPONSEINITIALIZE pfOpcUaDeleteSubscriptionsResponseInitialize;
+	#define EXT_OpcUaDeleteSubscriptionsResponseInitialize  extern PFOPCUADELETESUBSCRIPTIONSRESPONSEINITIALIZE pfOpcUaDeleteSubscriptionsResponseInitialize;
+	#define GET_OpcUaDeleteSubscriptionsResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaDeleteSubscriptionsResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaDeleteSubscriptionsResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaDeleteSubscriptionsResponseInitialize  pfOpcUaDeleteSubscriptionsResponseInitialize
+	#define CHK_OpcUaDeleteSubscriptionsResponseInitialize  (pfOpcUaDeleteSubscriptionsResponseInitialize != NULL)
+	#define EXP_OpcUaDeleteSubscriptionsResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteSubscriptionsResponseInitialize", (RTS_UINTPTR)OpcUaDeleteSubscriptionsResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaDeleteSubscriptionsResponseClear(OpcUa_DeleteSubscriptionsResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUADELETESUBSCRIPTIONSRESPONSECLEAR) (OpcUa_DeleteSubscriptionsResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUADELETESUBSCRIPTIONSRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaDeleteSubscriptionsResponseClear
+	#define EXT_OpcUaDeleteSubscriptionsResponseClear
+	#define GET_OpcUaDeleteSubscriptionsResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaDeleteSubscriptionsResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaDeleteSubscriptionsResponseClear  FALSE
+	#define EXP_OpcUaDeleteSubscriptionsResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaDeleteSubscriptionsResponseClear
+	#define EXT_OpcUaDeleteSubscriptionsResponseClear
+	#define GET_OpcUaDeleteSubscriptionsResponseClear(fl)  CAL_CMGETAPI( "OpcUaDeleteSubscriptionsResponseClear" ) 
+	#define CAL_OpcUaDeleteSubscriptionsResponseClear  OpcUaDeleteSubscriptionsResponseClear
+	#define CHK_OpcUaDeleteSubscriptionsResponseClear  TRUE
+	#define EXP_OpcUaDeleteSubscriptionsResponseClear  CAL_CMEXPAPI( "OpcUaDeleteSubscriptionsResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaDeleteSubscriptionsResponseClear
+	#define EXT_OpcUaDeleteSubscriptionsResponseClear
+	#define GET_OpcUaDeleteSubscriptionsResponseClear(fl)  CAL_CMGETAPI( "OpcUaDeleteSubscriptionsResponseClear" ) 
+	#define CAL_OpcUaDeleteSubscriptionsResponseClear  OpcUaDeleteSubscriptionsResponseClear
+	#define CHK_OpcUaDeleteSubscriptionsResponseClear  TRUE
+	#define EXP_OpcUaDeleteSubscriptionsResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteSubscriptionsResponseClear", (RTS_UINTPTR)OpcUaDeleteSubscriptionsResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaDeleteSubscriptionsResponseClear
+	#define EXT_CmpOPCUAStackOpcUaDeleteSubscriptionsResponseClear
+	#define GET_CmpOPCUAStackOpcUaDeleteSubscriptionsResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaDeleteSubscriptionsResponseClear pICmpOPCUAStack->IOpcUaDeleteSubscriptionsResponseClear
+	#define CHK_CmpOPCUAStackOpcUaDeleteSubscriptionsResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaDeleteSubscriptionsResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaDeleteSubscriptionsResponseClear
+	#define EXT_OpcUaDeleteSubscriptionsResponseClear
+	#define GET_OpcUaDeleteSubscriptionsResponseClear(fl)  CAL_CMGETAPI( "OpcUaDeleteSubscriptionsResponseClear" ) 
+	#define CAL_OpcUaDeleteSubscriptionsResponseClear pICmpOPCUAStack->IOpcUaDeleteSubscriptionsResponseClear
+	#define CHK_OpcUaDeleteSubscriptionsResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaDeleteSubscriptionsResponseClear  CAL_CMEXPAPI( "OpcUaDeleteSubscriptionsResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaDeleteSubscriptionsResponseClear  PFOPCUADELETESUBSCRIPTIONSRESPONSECLEAR pfOpcUaDeleteSubscriptionsResponseClear;
+	#define EXT_OpcUaDeleteSubscriptionsResponseClear  extern PFOPCUADELETESUBSCRIPTIONSRESPONSECLEAR pfOpcUaDeleteSubscriptionsResponseClear;
+	#define GET_OpcUaDeleteSubscriptionsResponseClear(fl)  s_pfCMGetAPI2( "OpcUaDeleteSubscriptionsResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaDeleteSubscriptionsResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaDeleteSubscriptionsResponseClear  pfOpcUaDeleteSubscriptionsResponseClear
+	#define CHK_OpcUaDeleteSubscriptionsResponseClear  (pfOpcUaDeleteSubscriptionsResponseClear != NULL)
+	#define EXP_OpcUaDeleteSubscriptionsResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteSubscriptionsResponseClear", (RTS_UINTPTR)OpcUaDeleteSubscriptionsResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaTransferSubscriptionsResponseInitialize(OpcUa_TransferSubscriptionsResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUATRANSFERSUBSCRIPTIONSRESPONSEINITIALIZE) (OpcUa_TransferSubscriptionsResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUATRANSFERSUBSCRIPTIONSRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaTransferSubscriptionsResponseInitialize
+	#define EXT_OpcUaTransferSubscriptionsResponseInitialize
+	#define GET_OpcUaTransferSubscriptionsResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaTransferSubscriptionsResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaTransferSubscriptionsResponseInitialize  FALSE
+	#define EXP_OpcUaTransferSubscriptionsResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaTransferSubscriptionsResponseInitialize
+	#define EXT_OpcUaTransferSubscriptionsResponseInitialize
+	#define GET_OpcUaTransferSubscriptionsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaTransferSubscriptionsResponseInitialize" ) 
+	#define CAL_OpcUaTransferSubscriptionsResponseInitialize  OpcUaTransferSubscriptionsResponseInitialize
+	#define CHK_OpcUaTransferSubscriptionsResponseInitialize  TRUE
+	#define EXP_OpcUaTransferSubscriptionsResponseInitialize  CAL_CMEXPAPI( "OpcUaTransferSubscriptionsResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaTransferSubscriptionsResponseInitialize
+	#define EXT_OpcUaTransferSubscriptionsResponseInitialize
+	#define GET_OpcUaTransferSubscriptionsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaTransferSubscriptionsResponseInitialize" ) 
+	#define CAL_OpcUaTransferSubscriptionsResponseInitialize  OpcUaTransferSubscriptionsResponseInitialize
+	#define CHK_OpcUaTransferSubscriptionsResponseInitialize  TRUE
+	#define EXP_OpcUaTransferSubscriptionsResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTransferSubscriptionsResponseInitialize", (RTS_UINTPTR)OpcUaTransferSubscriptionsResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaTransferSubscriptionsResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaTransferSubscriptionsResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaTransferSubscriptionsResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaTransferSubscriptionsResponseInitialize pICmpOPCUAStack->IOpcUaTransferSubscriptionsResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaTransferSubscriptionsResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaTransferSubscriptionsResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaTransferSubscriptionsResponseInitialize
+	#define EXT_OpcUaTransferSubscriptionsResponseInitialize
+	#define GET_OpcUaTransferSubscriptionsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaTransferSubscriptionsResponseInitialize" ) 
+	#define CAL_OpcUaTransferSubscriptionsResponseInitialize pICmpOPCUAStack->IOpcUaTransferSubscriptionsResponseInitialize
+	#define CHK_OpcUaTransferSubscriptionsResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaTransferSubscriptionsResponseInitialize  CAL_CMEXPAPI( "OpcUaTransferSubscriptionsResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaTransferSubscriptionsResponseInitialize  PFOPCUATRANSFERSUBSCRIPTIONSRESPONSEINITIALIZE pfOpcUaTransferSubscriptionsResponseInitialize;
+	#define EXT_OpcUaTransferSubscriptionsResponseInitialize  extern PFOPCUATRANSFERSUBSCRIPTIONSRESPONSEINITIALIZE pfOpcUaTransferSubscriptionsResponseInitialize;
+	#define GET_OpcUaTransferSubscriptionsResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaTransferSubscriptionsResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaTransferSubscriptionsResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaTransferSubscriptionsResponseInitialize  pfOpcUaTransferSubscriptionsResponseInitialize
+	#define CHK_OpcUaTransferSubscriptionsResponseInitialize  (pfOpcUaTransferSubscriptionsResponseInitialize != NULL)
+	#define EXP_OpcUaTransferSubscriptionsResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTransferSubscriptionsResponseInitialize", (RTS_UINTPTR)OpcUaTransferSubscriptionsResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaTransferSubscriptionsResponseClear(OpcUa_TransferSubscriptionsResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUATRANSFERSUBSCRIPTIONSRESPONSECLEAR) (OpcUa_TransferSubscriptionsResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUATRANSFERSUBSCRIPTIONSRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaTransferSubscriptionsResponseClear
+	#define EXT_OpcUaTransferSubscriptionsResponseClear
+	#define GET_OpcUaTransferSubscriptionsResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaTransferSubscriptionsResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaTransferSubscriptionsResponseClear  FALSE
+	#define EXP_OpcUaTransferSubscriptionsResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaTransferSubscriptionsResponseClear
+	#define EXT_OpcUaTransferSubscriptionsResponseClear
+	#define GET_OpcUaTransferSubscriptionsResponseClear(fl)  CAL_CMGETAPI( "OpcUaTransferSubscriptionsResponseClear" ) 
+	#define CAL_OpcUaTransferSubscriptionsResponseClear  OpcUaTransferSubscriptionsResponseClear
+	#define CHK_OpcUaTransferSubscriptionsResponseClear  TRUE
+	#define EXP_OpcUaTransferSubscriptionsResponseClear  CAL_CMEXPAPI( "OpcUaTransferSubscriptionsResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaTransferSubscriptionsResponseClear
+	#define EXT_OpcUaTransferSubscriptionsResponseClear
+	#define GET_OpcUaTransferSubscriptionsResponseClear(fl)  CAL_CMGETAPI( "OpcUaTransferSubscriptionsResponseClear" ) 
+	#define CAL_OpcUaTransferSubscriptionsResponseClear  OpcUaTransferSubscriptionsResponseClear
+	#define CHK_OpcUaTransferSubscriptionsResponseClear  TRUE
+	#define EXP_OpcUaTransferSubscriptionsResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTransferSubscriptionsResponseClear", (RTS_UINTPTR)OpcUaTransferSubscriptionsResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaTransferSubscriptionsResponseClear
+	#define EXT_CmpOPCUAStackOpcUaTransferSubscriptionsResponseClear
+	#define GET_CmpOPCUAStackOpcUaTransferSubscriptionsResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaTransferSubscriptionsResponseClear pICmpOPCUAStack->IOpcUaTransferSubscriptionsResponseClear
+	#define CHK_CmpOPCUAStackOpcUaTransferSubscriptionsResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaTransferSubscriptionsResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaTransferSubscriptionsResponseClear
+	#define EXT_OpcUaTransferSubscriptionsResponseClear
+	#define GET_OpcUaTransferSubscriptionsResponseClear(fl)  CAL_CMGETAPI( "OpcUaTransferSubscriptionsResponseClear" ) 
+	#define CAL_OpcUaTransferSubscriptionsResponseClear pICmpOPCUAStack->IOpcUaTransferSubscriptionsResponseClear
+	#define CHK_OpcUaTransferSubscriptionsResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaTransferSubscriptionsResponseClear  CAL_CMEXPAPI( "OpcUaTransferSubscriptionsResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaTransferSubscriptionsResponseClear  PFOPCUATRANSFERSUBSCRIPTIONSRESPONSECLEAR pfOpcUaTransferSubscriptionsResponseClear;
+	#define EXT_OpcUaTransferSubscriptionsResponseClear  extern PFOPCUATRANSFERSUBSCRIPTIONSRESPONSECLEAR pfOpcUaTransferSubscriptionsResponseClear;
+	#define GET_OpcUaTransferSubscriptionsResponseClear(fl)  s_pfCMGetAPI2( "OpcUaTransferSubscriptionsResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaTransferSubscriptionsResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaTransferSubscriptionsResponseClear  pfOpcUaTransferSubscriptionsResponseClear
+	#define CHK_OpcUaTransferSubscriptionsResponseClear  (pfOpcUaTransferSubscriptionsResponseClear != NULL)
+	#define EXP_OpcUaTransferSubscriptionsResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTransferSubscriptionsResponseClear", (RTS_UINTPTR)OpcUaTransferSubscriptionsResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaCreateMonitoredItemsRequestInitialize(OpcUa_CreateMonitoredItemsRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACREATEMONITOREDITEMSREQUESTINITIALIZE) (OpcUa_CreateMonitoredItemsRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACREATEMONITOREDITEMSREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaCreateMonitoredItemsRequestInitialize
+	#define EXT_OpcUaCreateMonitoredItemsRequestInitialize
+	#define GET_OpcUaCreateMonitoredItemsRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCreateMonitoredItemsRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCreateMonitoredItemsRequestInitialize  FALSE
+	#define EXP_OpcUaCreateMonitoredItemsRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCreateMonitoredItemsRequestInitialize
+	#define EXT_OpcUaCreateMonitoredItemsRequestInitialize
+	#define GET_OpcUaCreateMonitoredItemsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateMonitoredItemsRequestInitialize" ) 
+	#define CAL_OpcUaCreateMonitoredItemsRequestInitialize  OpcUaCreateMonitoredItemsRequestInitialize
+	#define CHK_OpcUaCreateMonitoredItemsRequestInitialize  TRUE
+	#define EXP_OpcUaCreateMonitoredItemsRequestInitialize  CAL_CMEXPAPI( "OpcUaCreateMonitoredItemsRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCreateMonitoredItemsRequestInitialize
+	#define EXT_OpcUaCreateMonitoredItemsRequestInitialize
+	#define GET_OpcUaCreateMonitoredItemsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateMonitoredItemsRequestInitialize" ) 
+	#define CAL_OpcUaCreateMonitoredItemsRequestInitialize  OpcUaCreateMonitoredItemsRequestInitialize
+	#define CHK_OpcUaCreateMonitoredItemsRequestInitialize  TRUE
+	#define EXP_OpcUaCreateMonitoredItemsRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateMonitoredItemsRequestInitialize", (RTS_UINTPTR)OpcUaCreateMonitoredItemsRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCreateMonitoredItemsRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaCreateMonitoredItemsRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaCreateMonitoredItemsRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCreateMonitoredItemsRequestInitialize pICmpOPCUAStack->IOpcUaCreateMonitoredItemsRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaCreateMonitoredItemsRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCreateMonitoredItemsRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCreateMonitoredItemsRequestInitialize
+	#define EXT_OpcUaCreateMonitoredItemsRequestInitialize
+	#define GET_OpcUaCreateMonitoredItemsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateMonitoredItemsRequestInitialize" ) 
+	#define CAL_OpcUaCreateMonitoredItemsRequestInitialize pICmpOPCUAStack->IOpcUaCreateMonitoredItemsRequestInitialize
+	#define CHK_OpcUaCreateMonitoredItemsRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCreateMonitoredItemsRequestInitialize  CAL_CMEXPAPI( "OpcUaCreateMonitoredItemsRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCreateMonitoredItemsRequestInitialize  PFOPCUACREATEMONITOREDITEMSREQUESTINITIALIZE pfOpcUaCreateMonitoredItemsRequestInitialize;
+	#define EXT_OpcUaCreateMonitoredItemsRequestInitialize  extern PFOPCUACREATEMONITOREDITEMSREQUESTINITIALIZE pfOpcUaCreateMonitoredItemsRequestInitialize;
+	#define GET_OpcUaCreateMonitoredItemsRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaCreateMonitoredItemsRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaCreateMonitoredItemsRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaCreateMonitoredItemsRequestInitialize  pfOpcUaCreateMonitoredItemsRequestInitialize
+	#define CHK_OpcUaCreateMonitoredItemsRequestInitialize  (pfOpcUaCreateMonitoredItemsRequestInitialize != NULL)
+	#define EXP_OpcUaCreateMonitoredItemsRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateMonitoredItemsRequestInitialize", (RTS_UINTPTR)OpcUaCreateMonitoredItemsRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaCreateMonitoredItemsRequestClear(OpcUa_CreateMonitoredItemsRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACREATEMONITOREDITEMSREQUESTCLEAR) (OpcUa_CreateMonitoredItemsRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACREATEMONITOREDITEMSREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaCreateMonitoredItemsRequestClear
+	#define EXT_OpcUaCreateMonitoredItemsRequestClear
+	#define GET_OpcUaCreateMonitoredItemsRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCreateMonitoredItemsRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCreateMonitoredItemsRequestClear  FALSE
+	#define EXP_OpcUaCreateMonitoredItemsRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCreateMonitoredItemsRequestClear
+	#define EXT_OpcUaCreateMonitoredItemsRequestClear
+	#define GET_OpcUaCreateMonitoredItemsRequestClear(fl)  CAL_CMGETAPI( "OpcUaCreateMonitoredItemsRequestClear" ) 
+	#define CAL_OpcUaCreateMonitoredItemsRequestClear  OpcUaCreateMonitoredItemsRequestClear
+	#define CHK_OpcUaCreateMonitoredItemsRequestClear  TRUE
+	#define EXP_OpcUaCreateMonitoredItemsRequestClear  CAL_CMEXPAPI( "OpcUaCreateMonitoredItemsRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCreateMonitoredItemsRequestClear
+	#define EXT_OpcUaCreateMonitoredItemsRequestClear
+	#define GET_OpcUaCreateMonitoredItemsRequestClear(fl)  CAL_CMGETAPI( "OpcUaCreateMonitoredItemsRequestClear" ) 
+	#define CAL_OpcUaCreateMonitoredItemsRequestClear  OpcUaCreateMonitoredItemsRequestClear
+	#define CHK_OpcUaCreateMonitoredItemsRequestClear  TRUE
+	#define EXP_OpcUaCreateMonitoredItemsRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateMonitoredItemsRequestClear", (RTS_UINTPTR)OpcUaCreateMonitoredItemsRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCreateMonitoredItemsRequestClear
+	#define EXT_CmpOPCUAStackOpcUaCreateMonitoredItemsRequestClear
+	#define GET_CmpOPCUAStackOpcUaCreateMonitoredItemsRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCreateMonitoredItemsRequestClear pICmpOPCUAStack->IOpcUaCreateMonitoredItemsRequestClear
+	#define CHK_CmpOPCUAStackOpcUaCreateMonitoredItemsRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCreateMonitoredItemsRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCreateMonitoredItemsRequestClear
+	#define EXT_OpcUaCreateMonitoredItemsRequestClear
+	#define GET_OpcUaCreateMonitoredItemsRequestClear(fl)  CAL_CMGETAPI( "OpcUaCreateMonitoredItemsRequestClear" ) 
+	#define CAL_OpcUaCreateMonitoredItemsRequestClear pICmpOPCUAStack->IOpcUaCreateMonitoredItemsRequestClear
+	#define CHK_OpcUaCreateMonitoredItemsRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCreateMonitoredItemsRequestClear  CAL_CMEXPAPI( "OpcUaCreateMonitoredItemsRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCreateMonitoredItemsRequestClear  PFOPCUACREATEMONITOREDITEMSREQUESTCLEAR pfOpcUaCreateMonitoredItemsRequestClear;
+	#define EXT_OpcUaCreateMonitoredItemsRequestClear  extern PFOPCUACREATEMONITOREDITEMSREQUESTCLEAR pfOpcUaCreateMonitoredItemsRequestClear;
+	#define GET_OpcUaCreateMonitoredItemsRequestClear(fl)  s_pfCMGetAPI2( "OpcUaCreateMonitoredItemsRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaCreateMonitoredItemsRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaCreateMonitoredItemsRequestClear  pfOpcUaCreateMonitoredItemsRequestClear
+	#define CHK_OpcUaCreateMonitoredItemsRequestClear  (pfOpcUaCreateMonitoredItemsRequestClear != NULL)
+	#define EXP_OpcUaCreateMonitoredItemsRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateMonitoredItemsRequestClear", (RTS_UINTPTR)OpcUaCreateMonitoredItemsRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaCreateMonitoredItemsResponseInitialize(OpcUa_CreateMonitoredItemsResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACREATEMONITOREDITEMSRESPONSEINITIALIZE) (OpcUa_CreateMonitoredItemsResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACREATEMONITOREDITEMSRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaCreateMonitoredItemsResponseInitialize
+	#define EXT_OpcUaCreateMonitoredItemsResponseInitialize
+	#define GET_OpcUaCreateMonitoredItemsResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCreateMonitoredItemsResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCreateMonitoredItemsResponseInitialize  FALSE
+	#define EXP_OpcUaCreateMonitoredItemsResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCreateMonitoredItemsResponseInitialize
+	#define EXT_OpcUaCreateMonitoredItemsResponseInitialize
+	#define GET_OpcUaCreateMonitoredItemsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateMonitoredItemsResponseInitialize" ) 
+	#define CAL_OpcUaCreateMonitoredItemsResponseInitialize  OpcUaCreateMonitoredItemsResponseInitialize
+	#define CHK_OpcUaCreateMonitoredItemsResponseInitialize  TRUE
+	#define EXP_OpcUaCreateMonitoredItemsResponseInitialize  CAL_CMEXPAPI( "OpcUaCreateMonitoredItemsResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCreateMonitoredItemsResponseInitialize
+	#define EXT_OpcUaCreateMonitoredItemsResponseInitialize
+	#define GET_OpcUaCreateMonitoredItemsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateMonitoredItemsResponseInitialize" ) 
+	#define CAL_OpcUaCreateMonitoredItemsResponseInitialize  OpcUaCreateMonitoredItemsResponseInitialize
+	#define CHK_OpcUaCreateMonitoredItemsResponseInitialize  TRUE
+	#define EXP_OpcUaCreateMonitoredItemsResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateMonitoredItemsResponseInitialize", (RTS_UINTPTR)OpcUaCreateMonitoredItemsResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCreateMonitoredItemsResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaCreateMonitoredItemsResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaCreateMonitoredItemsResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCreateMonitoredItemsResponseInitialize pICmpOPCUAStack->IOpcUaCreateMonitoredItemsResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaCreateMonitoredItemsResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCreateMonitoredItemsResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCreateMonitoredItemsResponseInitialize
+	#define EXT_OpcUaCreateMonitoredItemsResponseInitialize
+	#define GET_OpcUaCreateMonitoredItemsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaCreateMonitoredItemsResponseInitialize" ) 
+	#define CAL_OpcUaCreateMonitoredItemsResponseInitialize pICmpOPCUAStack->IOpcUaCreateMonitoredItemsResponseInitialize
+	#define CHK_OpcUaCreateMonitoredItemsResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCreateMonitoredItemsResponseInitialize  CAL_CMEXPAPI( "OpcUaCreateMonitoredItemsResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCreateMonitoredItemsResponseInitialize  PFOPCUACREATEMONITOREDITEMSRESPONSEINITIALIZE pfOpcUaCreateMonitoredItemsResponseInitialize;
+	#define EXT_OpcUaCreateMonitoredItemsResponseInitialize  extern PFOPCUACREATEMONITOREDITEMSRESPONSEINITIALIZE pfOpcUaCreateMonitoredItemsResponseInitialize;
+	#define GET_OpcUaCreateMonitoredItemsResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaCreateMonitoredItemsResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaCreateMonitoredItemsResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaCreateMonitoredItemsResponseInitialize  pfOpcUaCreateMonitoredItemsResponseInitialize
+	#define CHK_OpcUaCreateMonitoredItemsResponseInitialize  (pfOpcUaCreateMonitoredItemsResponseInitialize != NULL)
+	#define EXP_OpcUaCreateMonitoredItemsResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateMonitoredItemsResponseInitialize", (RTS_UINTPTR)OpcUaCreateMonitoredItemsResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaCreateMonitoredItemsResponseClear(OpcUa_CreateMonitoredItemsResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUACREATEMONITOREDITEMSRESPONSECLEAR) (OpcUa_CreateMonitoredItemsResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACREATEMONITOREDITEMSRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaCreateMonitoredItemsResponseClear
+	#define EXT_OpcUaCreateMonitoredItemsResponseClear
+	#define GET_OpcUaCreateMonitoredItemsResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCreateMonitoredItemsResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCreateMonitoredItemsResponseClear  FALSE
+	#define EXP_OpcUaCreateMonitoredItemsResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCreateMonitoredItemsResponseClear
+	#define EXT_OpcUaCreateMonitoredItemsResponseClear
+	#define GET_OpcUaCreateMonitoredItemsResponseClear(fl)  CAL_CMGETAPI( "OpcUaCreateMonitoredItemsResponseClear" ) 
+	#define CAL_OpcUaCreateMonitoredItemsResponseClear  OpcUaCreateMonitoredItemsResponseClear
+	#define CHK_OpcUaCreateMonitoredItemsResponseClear  TRUE
+	#define EXP_OpcUaCreateMonitoredItemsResponseClear  CAL_CMEXPAPI( "OpcUaCreateMonitoredItemsResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCreateMonitoredItemsResponseClear
+	#define EXT_OpcUaCreateMonitoredItemsResponseClear
+	#define GET_OpcUaCreateMonitoredItemsResponseClear(fl)  CAL_CMGETAPI( "OpcUaCreateMonitoredItemsResponseClear" ) 
+	#define CAL_OpcUaCreateMonitoredItemsResponseClear  OpcUaCreateMonitoredItemsResponseClear
+	#define CHK_OpcUaCreateMonitoredItemsResponseClear  TRUE
+	#define EXP_OpcUaCreateMonitoredItemsResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateMonitoredItemsResponseClear", (RTS_UINTPTR)OpcUaCreateMonitoredItemsResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCreateMonitoredItemsResponseClear
+	#define EXT_CmpOPCUAStackOpcUaCreateMonitoredItemsResponseClear
+	#define GET_CmpOPCUAStackOpcUaCreateMonitoredItemsResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCreateMonitoredItemsResponseClear pICmpOPCUAStack->IOpcUaCreateMonitoredItemsResponseClear
+	#define CHK_CmpOPCUAStackOpcUaCreateMonitoredItemsResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCreateMonitoredItemsResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCreateMonitoredItemsResponseClear
+	#define EXT_OpcUaCreateMonitoredItemsResponseClear
+	#define GET_OpcUaCreateMonitoredItemsResponseClear(fl)  CAL_CMGETAPI( "OpcUaCreateMonitoredItemsResponseClear" ) 
+	#define CAL_OpcUaCreateMonitoredItemsResponseClear pICmpOPCUAStack->IOpcUaCreateMonitoredItemsResponseClear
+	#define CHK_OpcUaCreateMonitoredItemsResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCreateMonitoredItemsResponseClear  CAL_CMEXPAPI( "OpcUaCreateMonitoredItemsResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCreateMonitoredItemsResponseClear  PFOPCUACREATEMONITOREDITEMSRESPONSECLEAR pfOpcUaCreateMonitoredItemsResponseClear;
+	#define EXT_OpcUaCreateMonitoredItemsResponseClear  extern PFOPCUACREATEMONITOREDITEMSRESPONSECLEAR pfOpcUaCreateMonitoredItemsResponseClear;
+	#define GET_OpcUaCreateMonitoredItemsResponseClear(fl)  s_pfCMGetAPI2( "OpcUaCreateMonitoredItemsResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaCreateMonitoredItemsResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaCreateMonitoredItemsResponseClear  pfOpcUaCreateMonitoredItemsResponseClear
+	#define CHK_OpcUaCreateMonitoredItemsResponseClear  (pfOpcUaCreateMonitoredItemsResponseClear != NULL)
+	#define EXP_OpcUaCreateMonitoredItemsResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCreateMonitoredItemsResponseClear", (RTS_UINTPTR)OpcUaCreateMonitoredItemsResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaModifyMonitoredItemsRequestInitialize(OpcUa_ModifyMonitoredItemsRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAMODIFYMONITOREDITEMSREQUESTINITIALIZE) (OpcUa_ModifyMonitoredItemsRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAMODIFYMONITOREDITEMSREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaModifyMonitoredItemsRequestInitialize
+	#define EXT_OpcUaModifyMonitoredItemsRequestInitialize
+	#define GET_OpcUaModifyMonitoredItemsRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaModifyMonitoredItemsRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaModifyMonitoredItemsRequestInitialize  FALSE
+	#define EXP_OpcUaModifyMonitoredItemsRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaModifyMonitoredItemsRequestInitialize
+	#define EXT_OpcUaModifyMonitoredItemsRequestInitialize
+	#define GET_OpcUaModifyMonitoredItemsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaModifyMonitoredItemsRequestInitialize" ) 
+	#define CAL_OpcUaModifyMonitoredItemsRequestInitialize  OpcUaModifyMonitoredItemsRequestInitialize
+	#define CHK_OpcUaModifyMonitoredItemsRequestInitialize  TRUE
+	#define EXP_OpcUaModifyMonitoredItemsRequestInitialize  CAL_CMEXPAPI( "OpcUaModifyMonitoredItemsRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaModifyMonitoredItemsRequestInitialize
+	#define EXT_OpcUaModifyMonitoredItemsRequestInitialize
+	#define GET_OpcUaModifyMonitoredItemsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaModifyMonitoredItemsRequestInitialize" ) 
+	#define CAL_OpcUaModifyMonitoredItemsRequestInitialize  OpcUaModifyMonitoredItemsRequestInitialize
+	#define CHK_OpcUaModifyMonitoredItemsRequestInitialize  TRUE
+	#define EXP_OpcUaModifyMonitoredItemsRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifyMonitoredItemsRequestInitialize", (RTS_UINTPTR)OpcUaModifyMonitoredItemsRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaModifyMonitoredItemsRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaModifyMonitoredItemsRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaModifyMonitoredItemsRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaModifyMonitoredItemsRequestInitialize pICmpOPCUAStack->IOpcUaModifyMonitoredItemsRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaModifyMonitoredItemsRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaModifyMonitoredItemsRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaModifyMonitoredItemsRequestInitialize
+	#define EXT_OpcUaModifyMonitoredItemsRequestInitialize
+	#define GET_OpcUaModifyMonitoredItemsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaModifyMonitoredItemsRequestInitialize" ) 
+	#define CAL_OpcUaModifyMonitoredItemsRequestInitialize pICmpOPCUAStack->IOpcUaModifyMonitoredItemsRequestInitialize
+	#define CHK_OpcUaModifyMonitoredItemsRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaModifyMonitoredItemsRequestInitialize  CAL_CMEXPAPI( "OpcUaModifyMonitoredItemsRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaModifyMonitoredItemsRequestInitialize  PFOPCUAMODIFYMONITOREDITEMSREQUESTINITIALIZE pfOpcUaModifyMonitoredItemsRequestInitialize;
+	#define EXT_OpcUaModifyMonitoredItemsRequestInitialize  extern PFOPCUAMODIFYMONITOREDITEMSREQUESTINITIALIZE pfOpcUaModifyMonitoredItemsRequestInitialize;
+	#define GET_OpcUaModifyMonitoredItemsRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaModifyMonitoredItemsRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaModifyMonitoredItemsRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaModifyMonitoredItemsRequestInitialize  pfOpcUaModifyMonitoredItemsRequestInitialize
+	#define CHK_OpcUaModifyMonitoredItemsRequestInitialize  (pfOpcUaModifyMonitoredItemsRequestInitialize != NULL)
+	#define EXP_OpcUaModifyMonitoredItemsRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifyMonitoredItemsRequestInitialize", (RTS_UINTPTR)OpcUaModifyMonitoredItemsRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaModifyMonitoredItemsRequestClear(OpcUa_ModifyMonitoredItemsRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAMODIFYMONITOREDITEMSREQUESTCLEAR) (OpcUa_ModifyMonitoredItemsRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAMODIFYMONITOREDITEMSREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaModifyMonitoredItemsRequestClear
+	#define EXT_OpcUaModifyMonitoredItemsRequestClear
+	#define GET_OpcUaModifyMonitoredItemsRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaModifyMonitoredItemsRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaModifyMonitoredItemsRequestClear  FALSE
+	#define EXP_OpcUaModifyMonitoredItemsRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaModifyMonitoredItemsRequestClear
+	#define EXT_OpcUaModifyMonitoredItemsRequestClear
+	#define GET_OpcUaModifyMonitoredItemsRequestClear(fl)  CAL_CMGETAPI( "OpcUaModifyMonitoredItemsRequestClear" ) 
+	#define CAL_OpcUaModifyMonitoredItemsRequestClear  OpcUaModifyMonitoredItemsRequestClear
+	#define CHK_OpcUaModifyMonitoredItemsRequestClear  TRUE
+	#define EXP_OpcUaModifyMonitoredItemsRequestClear  CAL_CMEXPAPI( "OpcUaModifyMonitoredItemsRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaModifyMonitoredItemsRequestClear
+	#define EXT_OpcUaModifyMonitoredItemsRequestClear
+	#define GET_OpcUaModifyMonitoredItemsRequestClear(fl)  CAL_CMGETAPI( "OpcUaModifyMonitoredItemsRequestClear" ) 
+	#define CAL_OpcUaModifyMonitoredItemsRequestClear  OpcUaModifyMonitoredItemsRequestClear
+	#define CHK_OpcUaModifyMonitoredItemsRequestClear  TRUE
+	#define EXP_OpcUaModifyMonitoredItemsRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifyMonitoredItemsRequestClear", (RTS_UINTPTR)OpcUaModifyMonitoredItemsRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaModifyMonitoredItemsRequestClear
+	#define EXT_CmpOPCUAStackOpcUaModifyMonitoredItemsRequestClear
+	#define GET_CmpOPCUAStackOpcUaModifyMonitoredItemsRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaModifyMonitoredItemsRequestClear pICmpOPCUAStack->IOpcUaModifyMonitoredItemsRequestClear
+	#define CHK_CmpOPCUAStackOpcUaModifyMonitoredItemsRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaModifyMonitoredItemsRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaModifyMonitoredItemsRequestClear
+	#define EXT_OpcUaModifyMonitoredItemsRequestClear
+	#define GET_OpcUaModifyMonitoredItemsRequestClear(fl)  CAL_CMGETAPI( "OpcUaModifyMonitoredItemsRequestClear" ) 
+	#define CAL_OpcUaModifyMonitoredItemsRequestClear pICmpOPCUAStack->IOpcUaModifyMonitoredItemsRequestClear
+	#define CHK_OpcUaModifyMonitoredItemsRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaModifyMonitoredItemsRequestClear  CAL_CMEXPAPI( "OpcUaModifyMonitoredItemsRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaModifyMonitoredItemsRequestClear  PFOPCUAMODIFYMONITOREDITEMSREQUESTCLEAR pfOpcUaModifyMonitoredItemsRequestClear;
+	#define EXT_OpcUaModifyMonitoredItemsRequestClear  extern PFOPCUAMODIFYMONITOREDITEMSREQUESTCLEAR pfOpcUaModifyMonitoredItemsRequestClear;
+	#define GET_OpcUaModifyMonitoredItemsRequestClear(fl)  s_pfCMGetAPI2( "OpcUaModifyMonitoredItemsRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaModifyMonitoredItemsRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaModifyMonitoredItemsRequestClear  pfOpcUaModifyMonitoredItemsRequestClear
+	#define CHK_OpcUaModifyMonitoredItemsRequestClear  (pfOpcUaModifyMonitoredItemsRequestClear != NULL)
+	#define EXP_OpcUaModifyMonitoredItemsRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifyMonitoredItemsRequestClear", (RTS_UINTPTR)OpcUaModifyMonitoredItemsRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaModifyMonitoredItemsResponseInitialize(OpcUa_ModifyMonitoredItemsResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAMODIFYMONITOREDITEMSRESPONSEINITIALIZE) (OpcUa_ModifyMonitoredItemsResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAMODIFYMONITOREDITEMSRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaModifyMonitoredItemsResponseInitialize
+	#define EXT_OpcUaModifyMonitoredItemsResponseInitialize
+	#define GET_OpcUaModifyMonitoredItemsResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaModifyMonitoredItemsResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaModifyMonitoredItemsResponseInitialize  FALSE
+	#define EXP_OpcUaModifyMonitoredItemsResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaModifyMonitoredItemsResponseInitialize
+	#define EXT_OpcUaModifyMonitoredItemsResponseInitialize
+	#define GET_OpcUaModifyMonitoredItemsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaModifyMonitoredItemsResponseInitialize" ) 
+	#define CAL_OpcUaModifyMonitoredItemsResponseInitialize  OpcUaModifyMonitoredItemsResponseInitialize
+	#define CHK_OpcUaModifyMonitoredItemsResponseInitialize  TRUE
+	#define EXP_OpcUaModifyMonitoredItemsResponseInitialize  CAL_CMEXPAPI( "OpcUaModifyMonitoredItemsResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaModifyMonitoredItemsResponseInitialize
+	#define EXT_OpcUaModifyMonitoredItemsResponseInitialize
+	#define GET_OpcUaModifyMonitoredItemsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaModifyMonitoredItemsResponseInitialize" ) 
+	#define CAL_OpcUaModifyMonitoredItemsResponseInitialize  OpcUaModifyMonitoredItemsResponseInitialize
+	#define CHK_OpcUaModifyMonitoredItemsResponseInitialize  TRUE
+	#define EXP_OpcUaModifyMonitoredItemsResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifyMonitoredItemsResponseInitialize", (RTS_UINTPTR)OpcUaModifyMonitoredItemsResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaModifyMonitoredItemsResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaModifyMonitoredItemsResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaModifyMonitoredItemsResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaModifyMonitoredItemsResponseInitialize pICmpOPCUAStack->IOpcUaModifyMonitoredItemsResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaModifyMonitoredItemsResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaModifyMonitoredItemsResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaModifyMonitoredItemsResponseInitialize
+	#define EXT_OpcUaModifyMonitoredItemsResponseInitialize
+	#define GET_OpcUaModifyMonitoredItemsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaModifyMonitoredItemsResponseInitialize" ) 
+	#define CAL_OpcUaModifyMonitoredItemsResponseInitialize pICmpOPCUAStack->IOpcUaModifyMonitoredItemsResponseInitialize
+	#define CHK_OpcUaModifyMonitoredItemsResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaModifyMonitoredItemsResponseInitialize  CAL_CMEXPAPI( "OpcUaModifyMonitoredItemsResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaModifyMonitoredItemsResponseInitialize  PFOPCUAMODIFYMONITOREDITEMSRESPONSEINITIALIZE pfOpcUaModifyMonitoredItemsResponseInitialize;
+	#define EXT_OpcUaModifyMonitoredItemsResponseInitialize  extern PFOPCUAMODIFYMONITOREDITEMSRESPONSEINITIALIZE pfOpcUaModifyMonitoredItemsResponseInitialize;
+	#define GET_OpcUaModifyMonitoredItemsResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaModifyMonitoredItemsResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaModifyMonitoredItemsResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaModifyMonitoredItemsResponseInitialize  pfOpcUaModifyMonitoredItemsResponseInitialize
+	#define CHK_OpcUaModifyMonitoredItemsResponseInitialize  (pfOpcUaModifyMonitoredItemsResponseInitialize != NULL)
+	#define EXP_OpcUaModifyMonitoredItemsResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifyMonitoredItemsResponseInitialize", (RTS_UINTPTR)OpcUaModifyMonitoredItemsResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaModifyMonitoredItemsResponseClear(OpcUa_ModifyMonitoredItemsResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAMODIFYMONITOREDITEMSRESPONSECLEAR) (OpcUa_ModifyMonitoredItemsResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAMODIFYMONITOREDITEMSRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaModifyMonitoredItemsResponseClear
+	#define EXT_OpcUaModifyMonitoredItemsResponseClear
+	#define GET_OpcUaModifyMonitoredItemsResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaModifyMonitoredItemsResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaModifyMonitoredItemsResponseClear  FALSE
+	#define EXP_OpcUaModifyMonitoredItemsResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaModifyMonitoredItemsResponseClear
+	#define EXT_OpcUaModifyMonitoredItemsResponseClear
+	#define GET_OpcUaModifyMonitoredItemsResponseClear(fl)  CAL_CMGETAPI( "OpcUaModifyMonitoredItemsResponseClear" ) 
+	#define CAL_OpcUaModifyMonitoredItemsResponseClear  OpcUaModifyMonitoredItemsResponseClear
+	#define CHK_OpcUaModifyMonitoredItemsResponseClear  TRUE
+	#define EXP_OpcUaModifyMonitoredItemsResponseClear  CAL_CMEXPAPI( "OpcUaModifyMonitoredItemsResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaModifyMonitoredItemsResponseClear
+	#define EXT_OpcUaModifyMonitoredItemsResponseClear
+	#define GET_OpcUaModifyMonitoredItemsResponseClear(fl)  CAL_CMGETAPI( "OpcUaModifyMonitoredItemsResponseClear" ) 
+	#define CAL_OpcUaModifyMonitoredItemsResponseClear  OpcUaModifyMonitoredItemsResponseClear
+	#define CHK_OpcUaModifyMonitoredItemsResponseClear  TRUE
+	#define EXP_OpcUaModifyMonitoredItemsResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifyMonitoredItemsResponseClear", (RTS_UINTPTR)OpcUaModifyMonitoredItemsResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaModifyMonitoredItemsResponseClear
+	#define EXT_CmpOPCUAStackOpcUaModifyMonitoredItemsResponseClear
+	#define GET_CmpOPCUAStackOpcUaModifyMonitoredItemsResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaModifyMonitoredItemsResponseClear pICmpOPCUAStack->IOpcUaModifyMonitoredItemsResponseClear
+	#define CHK_CmpOPCUAStackOpcUaModifyMonitoredItemsResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaModifyMonitoredItemsResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaModifyMonitoredItemsResponseClear
+	#define EXT_OpcUaModifyMonitoredItemsResponseClear
+	#define GET_OpcUaModifyMonitoredItemsResponseClear(fl)  CAL_CMGETAPI( "OpcUaModifyMonitoredItemsResponseClear" ) 
+	#define CAL_OpcUaModifyMonitoredItemsResponseClear pICmpOPCUAStack->IOpcUaModifyMonitoredItemsResponseClear
+	#define CHK_OpcUaModifyMonitoredItemsResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaModifyMonitoredItemsResponseClear  CAL_CMEXPAPI( "OpcUaModifyMonitoredItemsResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaModifyMonitoredItemsResponseClear  PFOPCUAMODIFYMONITOREDITEMSRESPONSECLEAR pfOpcUaModifyMonitoredItemsResponseClear;
+	#define EXT_OpcUaModifyMonitoredItemsResponseClear  extern PFOPCUAMODIFYMONITOREDITEMSRESPONSECLEAR pfOpcUaModifyMonitoredItemsResponseClear;
+	#define GET_OpcUaModifyMonitoredItemsResponseClear(fl)  s_pfCMGetAPI2( "OpcUaModifyMonitoredItemsResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaModifyMonitoredItemsResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaModifyMonitoredItemsResponseClear  pfOpcUaModifyMonitoredItemsResponseClear
+	#define CHK_OpcUaModifyMonitoredItemsResponseClear  (pfOpcUaModifyMonitoredItemsResponseClear != NULL)
+	#define EXP_OpcUaModifyMonitoredItemsResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaModifyMonitoredItemsResponseClear", (RTS_UINTPTR)OpcUaModifyMonitoredItemsResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaSetMonitoringModeRequestInitialize(OpcUa_SetMonitoringModeRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUASETMONITORINGMODEREQUESTINITIALIZE) (OpcUa_SetMonitoringModeRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUASETMONITORINGMODEREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaSetMonitoringModeRequestInitialize
+	#define EXT_OpcUaSetMonitoringModeRequestInitialize
+	#define GET_OpcUaSetMonitoringModeRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaSetMonitoringModeRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaSetMonitoringModeRequestInitialize  FALSE
+	#define EXP_OpcUaSetMonitoringModeRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaSetMonitoringModeRequestInitialize
+	#define EXT_OpcUaSetMonitoringModeRequestInitialize
+	#define GET_OpcUaSetMonitoringModeRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaSetMonitoringModeRequestInitialize" ) 
+	#define CAL_OpcUaSetMonitoringModeRequestInitialize  OpcUaSetMonitoringModeRequestInitialize
+	#define CHK_OpcUaSetMonitoringModeRequestInitialize  TRUE
+	#define EXP_OpcUaSetMonitoringModeRequestInitialize  CAL_CMEXPAPI( "OpcUaSetMonitoringModeRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaSetMonitoringModeRequestInitialize
+	#define EXT_OpcUaSetMonitoringModeRequestInitialize
+	#define GET_OpcUaSetMonitoringModeRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaSetMonitoringModeRequestInitialize" ) 
+	#define CAL_OpcUaSetMonitoringModeRequestInitialize  OpcUaSetMonitoringModeRequestInitialize
+	#define CHK_OpcUaSetMonitoringModeRequestInitialize  TRUE
+	#define EXP_OpcUaSetMonitoringModeRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetMonitoringModeRequestInitialize", (RTS_UINTPTR)OpcUaSetMonitoringModeRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaSetMonitoringModeRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaSetMonitoringModeRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaSetMonitoringModeRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaSetMonitoringModeRequestInitialize pICmpOPCUAStack->IOpcUaSetMonitoringModeRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaSetMonitoringModeRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaSetMonitoringModeRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaSetMonitoringModeRequestInitialize
+	#define EXT_OpcUaSetMonitoringModeRequestInitialize
+	#define GET_OpcUaSetMonitoringModeRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaSetMonitoringModeRequestInitialize" ) 
+	#define CAL_OpcUaSetMonitoringModeRequestInitialize pICmpOPCUAStack->IOpcUaSetMonitoringModeRequestInitialize
+	#define CHK_OpcUaSetMonitoringModeRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaSetMonitoringModeRequestInitialize  CAL_CMEXPAPI( "OpcUaSetMonitoringModeRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaSetMonitoringModeRequestInitialize  PFOPCUASETMONITORINGMODEREQUESTINITIALIZE pfOpcUaSetMonitoringModeRequestInitialize;
+	#define EXT_OpcUaSetMonitoringModeRequestInitialize  extern PFOPCUASETMONITORINGMODEREQUESTINITIALIZE pfOpcUaSetMonitoringModeRequestInitialize;
+	#define GET_OpcUaSetMonitoringModeRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaSetMonitoringModeRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaSetMonitoringModeRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaSetMonitoringModeRequestInitialize  pfOpcUaSetMonitoringModeRequestInitialize
+	#define CHK_OpcUaSetMonitoringModeRequestInitialize  (pfOpcUaSetMonitoringModeRequestInitialize != NULL)
+	#define EXP_OpcUaSetMonitoringModeRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetMonitoringModeRequestInitialize", (RTS_UINTPTR)OpcUaSetMonitoringModeRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaSetMonitoringModeRequestClear(OpcUa_SetMonitoringModeRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUASETMONITORINGMODEREQUESTCLEAR) (OpcUa_SetMonitoringModeRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUASETMONITORINGMODEREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaSetMonitoringModeRequestClear
+	#define EXT_OpcUaSetMonitoringModeRequestClear
+	#define GET_OpcUaSetMonitoringModeRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaSetMonitoringModeRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaSetMonitoringModeRequestClear  FALSE
+	#define EXP_OpcUaSetMonitoringModeRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaSetMonitoringModeRequestClear
+	#define EXT_OpcUaSetMonitoringModeRequestClear
+	#define GET_OpcUaSetMonitoringModeRequestClear(fl)  CAL_CMGETAPI( "OpcUaSetMonitoringModeRequestClear" ) 
+	#define CAL_OpcUaSetMonitoringModeRequestClear  OpcUaSetMonitoringModeRequestClear
+	#define CHK_OpcUaSetMonitoringModeRequestClear  TRUE
+	#define EXP_OpcUaSetMonitoringModeRequestClear  CAL_CMEXPAPI( "OpcUaSetMonitoringModeRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaSetMonitoringModeRequestClear
+	#define EXT_OpcUaSetMonitoringModeRequestClear
+	#define GET_OpcUaSetMonitoringModeRequestClear(fl)  CAL_CMGETAPI( "OpcUaSetMonitoringModeRequestClear" ) 
+	#define CAL_OpcUaSetMonitoringModeRequestClear  OpcUaSetMonitoringModeRequestClear
+	#define CHK_OpcUaSetMonitoringModeRequestClear  TRUE
+	#define EXP_OpcUaSetMonitoringModeRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetMonitoringModeRequestClear", (RTS_UINTPTR)OpcUaSetMonitoringModeRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaSetMonitoringModeRequestClear
+	#define EXT_CmpOPCUAStackOpcUaSetMonitoringModeRequestClear
+	#define GET_CmpOPCUAStackOpcUaSetMonitoringModeRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaSetMonitoringModeRequestClear pICmpOPCUAStack->IOpcUaSetMonitoringModeRequestClear
+	#define CHK_CmpOPCUAStackOpcUaSetMonitoringModeRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaSetMonitoringModeRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaSetMonitoringModeRequestClear
+	#define EXT_OpcUaSetMonitoringModeRequestClear
+	#define GET_OpcUaSetMonitoringModeRequestClear(fl)  CAL_CMGETAPI( "OpcUaSetMonitoringModeRequestClear" ) 
+	#define CAL_OpcUaSetMonitoringModeRequestClear pICmpOPCUAStack->IOpcUaSetMonitoringModeRequestClear
+	#define CHK_OpcUaSetMonitoringModeRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaSetMonitoringModeRequestClear  CAL_CMEXPAPI( "OpcUaSetMonitoringModeRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaSetMonitoringModeRequestClear  PFOPCUASETMONITORINGMODEREQUESTCLEAR pfOpcUaSetMonitoringModeRequestClear;
+	#define EXT_OpcUaSetMonitoringModeRequestClear  extern PFOPCUASETMONITORINGMODEREQUESTCLEAR pfOpcUaSetMonitoringModeRequestClear;
+	#define GET_OpcUaSetMonitoringModeRequestClear(fl)  s_pfCMGetAPI2( "OpcUaSetMonitoringModeRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaSetMonitoringModeRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaSetMonitoringModeRequestClear  pfOpcUaSetMonitoringModeRequestClear
+	#define CHK_OpcUaSetMonitoringModeRequestClear  (pfOpcUaSetMonitoringModeRequestClear != NULL)
+	#define EXP_OpcUaSetMonitoringModeRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetMonitoringModeRequestClear", (RTS_UINTPTR)OpcUaSetMonitoringModeRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaSetMonitoringModeResponseInitialize(OpcUa_SetMonitoringModeResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUASETMONITORINGMODERESPONSEINITIALIZE) (OpcUa_SetMonitoringModeResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUASETMONITORINGMODERESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaSetMonitoringModeResponseInitialize
+	#define EXT_OpcUaSetMonitoringModeResponseInitialize
+	#define GET_OpcUaSetMonitoringModeResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaSetMonitoringModeResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaSetMonitoringModeResponseInitialize  FALSE
+	#define EXP_OpcUaSetMonitoringModeResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaSetMonitoringModeResponseInitialize
+	#define EXT_OpcUaSetMonitoringModeResponseInitialize
+	#define GET_OpcUaSetMonitoringModeResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaSetMonitoringModeResponseInitialize" ) 
+	#define CAL_OpcUaSetMonitoringModeResponseInitialize  OpcUaSetMonitoringModeResponseInitialize
+	#define CHK_OpcUaSetMonitoringModeResponseInitialize  TRUE
+	#define EXP_OpcUaSetMonitoringModeResponseInitialize  CAL_CMEXPAPI( "OpcUaSetMonitoringModeResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaSetMonitoringModeResponseInitialize
+	#define EXT_OpcUaSetMonitoringModeResponseInitialize
+	#define GET_OpcUaSetMonitoringModeResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaSetMonitoringModeResponseInitialize" ) 
+	#define CAL_OpcUaSetMonitoringModeResponseInitialize  OpcUaSetMonitoringModeResponseInitialize
+	#define CHK_OpcUaSetMonitoringModeResponseInitialize  TRUE
+	#define EXP_OpcUaSetMonitoringModeResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetMonitoringModeResponseInitialize", (RTS_UINTPTR)OpcUaSetMonitoringModeResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaSetMonitoringModeResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaSetMonitoringModeResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaSetMonitoringModeResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaSetMonitoringModeResponseInitialize pICmpOPCUAStack->IOpcUaSetMonitoringModeResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaSetMonitoringModeResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaSetMonitoringModeResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaSetMonitoringModeResponseInitialize
+	#define EXT_OpcUaSetMonitoringModeResponseInitialize
+	#define GET_OpcUaSetMonitoringModeResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaSetMonitoringModeResponseInitialize" ) 
+	#define CAL_OpcUaSetMonitoringModeResponseInitialize pICmpOPCUAStack->IOpcUaSetMonitoringModeResponseInitialize
+	#define CHK_OpcUaSetMonitoringModeResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaSetMonitoringModeResponseInitialize  CAL_CMEXPAPI( "OpcUaSetMonitoringModeResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaSetMonitoringModeResponseInitialize  PFOPCUASETMONITORINGMODERESPONSEINITIALIZE pfOpcUaSetMonitoringModeResponseInitialize;
+	#define EXT_OpcUaSetMonitoringModeResponseInitialize  extern PFOPCUASETMONITORINGMODERESPONSEINITIALIZE pfOpcUaSetMonitoringModeResponseInitialize;
+	#define GET_OpcUaSetMonitoringModeResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaSetMonitoringModeResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaSetMonitoringModeResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaSetMonitoringModeResponseInitialize  pfOpcUaSetMonitoringModeResponseInitialize
+	#define CHK_OpcUaSetMonitoringModeResponseInitialize  (pfOpcUaSetMonitoringModeResponseInitialize != NULL)
+	#define EXP_OpcUaSetMonitoringModeResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetMonitoringModeResponseInitialize", (RTS_UINTPTR)OpcUaSetMonitoringModeResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaSetMonitoringModeResponseClear(OpcUa_SetMonitoringModeResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUASETMONITORINGMODERESPONSECLEAR) (OpcUa_SetMonitoringModeResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUASETMONITORINGMODERESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaSetMonitoringModeResponseClear
+	#define EXT_OpcUaSetMonitoringModeResponseClear
+	#define GET_OpcUaSetMonitoringModeResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaSetMonitoringModeResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaSetMonitoringModeResponseClear  FALSE
+	#define EXP_OpcUaSetMonitoringModeResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaSetMonitoringModeResponseClear
+	#define EXT_OpcUaSetMonitoringModeResponseClear
+	#define GET_OpcUaSetMonitoringModeResponseClear(fl)  CAL_CMGETAPI( "OpcUaSetMonitoringModeResponseClear" ) 
+	#define CAL_OpcUaSetMonitoringModeResponseClear  OpcUaSetMonitoringModeResponseClear
+	#define CHK_OpcUaSetMonitoringModeResponseClear  TRUE
+	#define EXP_OpcUaSetMonitoringModeResponseClear  CAL_CMEXPAPI( "OpcUaSetMonitoringModeResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaSetMonitoringModeResponseClear
+	#define EXT_OpcUaSetMonitoringModeResponseClear
+	#define GET_OpcUaSetMonitoringModeResponseClear(fl)  CAL_CMGETAPI( "OpcUaSetMonitoringModeResponseClear" ) 
+	#define CAL_OpcUaSetMonitoringModeResponseClear  OpcUaSetMonitoringModeResponseClear
+	#define CHK_OpcUaSetMonitoringModeResponseClear  TRUE
+	#define EXP_OpcUaSetMonitoringModeResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetMonitoringModeResponseClear", (RTS_UINTPTR)OpcUaSetMonitoringModeResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaSetMonitoringModeResponseClear
+	#define EXT_CmpOPCUAStackOpcUaSetMonitoringModeResponseClear
+	#define GET_CmpOPCUAStackOpcUaSetMonitoringModeResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaSetMonitoringModeResponseClear pICmpOPCUAStack->IOpcUaSetMonitoringModeResponseClear
+	#define CHK_CmpOPCUAStackOpcUaSetMonitoringModeResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaSetMonitoringModeResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaSetMonitoringModeResponseClear
+	#define EXT_OpcUaSetMonitoringModeResponseClear
+	#define GET_OpcUaSetMonitoringModeResponseClear(fl)  CAL_CMGETAPI( "OpcUaSetMonitoringModeResponseClear" ) 
+	#define CAL_OpcUaSetMonitoringModeResponseClear pICmpOPCUAStack->IOpcUaSetMonitoringModeResponseClear
+	#define CHK_OpcUaSetMonitoringModeResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaSetMonitoringModeResponseClear  CAL_CMEXPAPI( "OpcUaSetMonitoringModeResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaSetMonitoringModeResponseClear  PFOPCUASETMONITORINGMODERESPONSECLEAR pfOpcUaSetMonitoringModeResponseClear;
+	#define EXT_OpcUaSetMonitoringModeResponseClear  extern PFOPCUASETMONITORINGMODERESPONSECLEAR pfOpcUaSetMonitoringModeResponseClear;
+	#define GET_OpcUaSetMonitoringModeResponseClear(fl)  s_pfCMGetAPI2( "OpcUaSetMonitoringModeResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaSetMonitoringModeResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaSetMonitoringModeResponseClear  pfOpcUaSetMonitoringModeResponseClear
+	#define CHK_OpcUaSetMonitoringModeResponseClear  (pfOpcUaSetMonitoringModeResponseClear != NULL)
+	#define EXP_OpcUaSetMonitoringModeResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSetMonitoringModeResponseClear", (RTS_UINTPTR)OpcUaSetMonitoringModeResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaDeleteMonitoredItemsRequestInitialize(OpcUa_DeleteMonitoredItemsRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUADELETEMONITOREDITEMSREQUESTINITIALIZE) (OpcUa_DeleteMonitoredItemsRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUADELETEMONITOREDITEMSREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaDeleteMonitoredItemsRequestInitialize
+	#define EXT_OpcUaDeleteMonitoredItemsRequestInitialize
+	#define GET_OpcUaDeleteMonitoredItemsRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaDeleteMonitoredItemsRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaDeleteMonitoredItemsRequestInitialize  FALSE
+	#define EXP_OpcUaDeleteMonitoredItemsRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaDeleteMonitoredItemsRequestInitialize
+	#define EXT_OpcUaDeleteMonitoredItemsRequestInitialize
+	#define GET_OpcUaDeleteMonitoredItemsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaDeleteMonitoredItemsRequestInitialize" ) 
+	#define CAL_OpcUaDeleteMonitoredItemsRequestInitialize  OpcUaDeleteMonitoredItemsRequestInitialize
+	#define CHK_OpcUaDeleteMonitoredItemsRequestInitialize  TRUE
+	#define EXP_OpcUaDeleteMonitoredItemsRequestInitialize  CAL_CMEXPAPI( "OpcUaDeleteMonitoredItemsRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaDeleteMonitoredItemsRequestInitialize
+	#define EXT_OpcUaDeleteMonitoredItemsRequestInitialize
+	#define GET_OpcUaDeleteMonitoredItemsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaDeleteMonitoredItemsRequestInitialize" ) 
+	#define CAL_OpcUaDeleteMonitoredItemsRequestInitialize  OpcUaDeleteMonitoredItemsRequestInitialize
+	#define CHK_OpcUaDeleteMonitoredItemsRequestInitialize  TRUE
+	#define EXP_OpcUaDeleteMonitoredItemsRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteMonitoredItemsRequestInitialize", (RTS_UINTPTR)OpcUaDeleteMonitoredItemsRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaDeleteMonitoredItemsRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaDeleteMonitoredItemsRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaDeleteMonitoredItemsRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaDeleteMonitoredItemsRequestInitialize pICmpOPCUAStack->IOpcUaDeleteMonitoredItemsRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaDeleteMonitoredItemsRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaDeleteMonitoredItemsRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaDeleteMonitoredItemsRequestInitialize
+	#define EXT_OpcUaDeleteMonitoredItemsRequestInitialize
+	#define GET_OpcUaDeleteMonitoredItemsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaDeleteMonitoredItemsRequestInitialize" ) 
+	#define CAL_OpcUaDeleteMonitoredItemsRequestInitialize pICmpOPCUAStack->IOpcUaDeleteMonitoredItemsRequestInitialize
+	#define CHK_OpcUaDeleteMonitoredItemsRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaDeleteMonitoredItemsRequestInitialize  CAL_CMEXPAPI( "OpcUaDeleteMonitoredItemsRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaDeleteMonitoredItemsRequestInitialize  PFOPCUADELETEMONITOREDITEMSREQUESTINITIALIZE pfOpcUaDeleteMonitoredItemsRequestInitialize;
+	#define EXT_OpcUaDeleteMonitoredItemsRequestInitialize  extern PFOPCUADELETEMONITOREDITEMSREQUESTINITIALIZE pfOpcUaDeleteMonitoredItemsRequestInitialize;
+	#define GET_OpcUaDeleteMonitoredItemsRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaDeleteMonitoredItemsRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaDeleteMonitoredItemsRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaDeleteMonitoredItemsRequestInitialize  pfOpcUaDeleteMonitoredItemsRequestInitialize
+	#define CHK_OpcUaDeleteMonitoredItemsRequestInitialize  (pfOpcUaDeleteMonitoredItemsRequestInitialize != NULL)
+	#define EXP_OpcUaDeleteMonitoredItemsRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteMonitoredItemsRequestInitialize", (RTS_UINTPTR)OpcUaDeleteMonitoredItemsRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaDeleteMonitoredItemsRequestClear(OpcUa_DeleteMonitoredItemsRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUADELETEMONITOREDITEMSREQUESTCLEAR) (OpcUa_DeleteMonitoredItemsRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUADELETEMONITOREDITEMSREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaDeleteMonitoredItemsRequestClear
+	#define EXT_OpcUaDeleteMonitoredItemsRequestClear
+	#define GET_OpcUaDeleteMonitoredItemsRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaDeleteMonitoredItemsRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaDeleteMonitoredItemsRequestClear  FALSE
+	#define EXP_OpcUaDeleteMonitoredItemsRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaDeleteMonitoredItemsRequestClear
+	#define EXT_OpcUaDeleteMonitoredItemsRequestClear
+	#define GET_OpcUaDeleteMonitoredItemsRequestClear(fl)  CAL_CMGETAPI( "OpcUaDeleteMonitoredItemsRequestClear" ) 
+	#define CAL_OpcUaDeleteMonitoredItemsRequestClear  OpcUaDeleteMonitoredItemsRequestClear
+	#define CHK_OpcUaDeleteMonitoredItemsRequestClear  TRUE
+	#define EXP_OpcUaDeleteMonitoredItemsRequestClear  CAL_CMEXPAPI( "OpcUaDeleteMonitoredItemsRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaDeleteMonitoredItemsRequestClear
+	#define EXT_OpcUaDeleteMonitoredItemsRequestClear
+	#define GET_OpcUaDeleteMonitoredItemsRequestClear(fl)  CAL_CMGETAPI( "OpcUaDeleteMonitoredItemsRequestClear" ) 
+	#define CAL_OpcUaDeleteMonitoredItemsRequestClear  OpcUaDeleteMonitoredItemsRequestClear
+	#define CHK_OpcUaDeleteMonitoredItemsRequestClear  TRUE
+	#define EXP_OpcUaDeleteMonitoredItemsRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteMonitoredItemsRequestClear", (RTS_UINTPTR)OpcUaDeleteMonitoredItemsRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaDeleteMonitoredItemsRequestClear
+	#define EXT_CmpOPCUAStackOpcUaDeleteMonitoredItemsRequestClear
+	#define GET_CmpOPCUAStackOpcUaDeleteMonitoredItemsRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaDeleteMonitoredItemsRequestClear pICmpOPCUAStack->IOpcUaDeleteMonitoredItemsRequestClear
+	#define CHK_CmpOPCUAStackOpcUaDeleteMonitoredItemsRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaDeleteMonitoredItemsRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaDeleteMonitoredItemsRequestClear
+	#define EXT_OpcUaDeleteMonitoredItemsRequestClear
+	#define GET_OpcUaDeleteMonitoredItemsRequestClear(fl)  CAL_CMGETAPI( "OpcUaDeleteMonitoredItemsRequestClear" ) 
+	#define CAL_OpcUaDeleteMonitoredItemsRequestClear pICmpOPCUAStack->IOpcUaDeleteMonitoredItemsRequestClear
+	#define CHK_OpcUaDeleteMonitoredItemsRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaDeleteMonitoredItemsRequestClear  CAL_CMEXPAPI( "OpcUaDeleteMonitoredItemsRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaDeleteMonitoredItemsRequestClear  PFOPCUADELETEMONITOREDITEMSREQUESTCLEAR pfOpcUaDeleteMonitoredItemsRequestClear;
+	#define EXT_OpcUaDeleteMonitoredItemsRequestClear  extern PFOPCUADELETEMONITOREDITEMSREQUESTCLEAR pfOpcUaDeleteMonitoredItemsRequestClear;
+	#define GET_OpcUaDeleteMonitoredItemsRequestClear(fl)  s_pfCMGetAPI2( "OpcUaDeleteMonitoredItemsRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaDeleteMonitoredItemsRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaDeleteMonitoredItemsRequestClear  pfOpcUaDeleteMonitoredItemsRequestClear
+	#define CHK_OpcUaDeleteMonitoredItemsRequestClear  (pfOpcUaDeleteMonitoredItemsRequestClear != NULL)
+	#define EXP_OpcUaDeleteMonitoredItemsRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteMonitoredItemsRequestClear", (RTS_UINTPTR)OpcUaDeleteMonitoredItemsRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaDeleteMonitoredItemsResponseInitialize(OpcUa_DeleteMonitoredItemsResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUADELETEMONITOREDITEMSRESPONSEINITIALIZE) (OpcUa_DeleteMonitoredItemsResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUADELETEMONITOREDITEMSRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaDeleteMonitoredItemsResponseInitialize
+	#define EXT_OpcUaDeleteMonitoredItemsResponseInitialize
+	#define GET_OpcUaDeleteMonitoredItemsResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaDeleteMonitoredItemsResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaDeleteMonitoredItemsResponseInitialize  FALSE
+	#define EXP_OpcUaDeleteMonitoredItemsResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaDeleteMonitoredItemsResponseInitialize
+	#define EXT_OpcUaDeleteMonitoredItemsResponseInitialize
+	#define GET_OpcUaDeleteMonitoredItemsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaDeleteMonitoredItemsResponseInitialize" ) 
+	#define CAL_OpcUaDeleteMonitoredItemsResponseInitialize  OpcUaDeleteMonitoredItemsResponseInitialize
+	#define CHK_OpcUaDeleteMonitoredItemsResponseInitialize  TRUE
+	#define EXP_OpcUaDeleteMonitoredItemsResponseInitialize  CAL_CMEXPAPI( "OpcUaDeleteMonitoredItemsResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaDeleteMonitoredItemsResponseInitialize
+	#define EXT_OpcUaDeleteMonitoredItemsResponseInitialize
+	#define GET_OpcUaDeleteMonitoredItemsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaDeleteMonitoredItemsResponseInitialize" ) 
+	#define CAL_OpcUaDeleteMonitoredItemsResponseInitialize  OpcUaDeleteMonitoredItemsResponseInitialize
+	#define CHK_OpcUaDeleteMonitoredItemsResponseInitialize  TRUE
+	#define EXP_OpcUaDeleteMonitoredItemsResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteMonitoredItemsResponseInitialize", (RTS_UINTPTR)OpcUaDeleteMonitoredItemsResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaDeleteMonitoredItemsResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaDeleteMonitoredItemsResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaDeleteMonitoredItemsResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaDeleteMonitoredItemsResponseInitialize pICmpOPCUAStack->IOpcUaDeleteMonitoredItemsResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaDeleteMonitoredItemsResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaDeleteMonitoredItemsResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaDeleteMonitoredItemsResponseInitialize
+	#define EXT_OpcUaDeleteMonitoredItemsResponseInitialize
+	#define GET_OpcUaDeleteMonitoredItemsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaDeleteMonitoredItemsResponseInitialize" ) 
+	#define CAL_OpcUaDeleteMonitoredItemsResponseInitialize pICmpOPCUAStack->IOpcUaDeleteMonitoredItemsResponseInitialize
+	#define CHK_OpcUaDeleteMonitoredItemsResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaDeleteMonitoredItemsResponseInitialize  CAL_CMEXPAPI( "OpcUaDeleteMonitoredItemsResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaDeleteMonitoredItemsResponseInitialize  PFOPCUADELETEMONITOREDITEMSRESPONSEINITIALIZE pfOpcUaDeleteMonitoredItemsResponseInitialize;
+	#define EXT_OpcUaDeleteMonitoredItemsResponseInitialize  extern PFOPCUADELETEMONITOREDITEMSRESPONSEINITIALIZE pfOpcUaDeleteMonitoredItemsResponseInitialize;
+	#define GET_OpcUaDeleteMonitoredItemsResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaDeleteMonitoredItemsResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaDeleteMonitoredItemsResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaDeleteMonitoredItemsResponseInitialize  pfOpcUaDeleteMonitoredItemsResponseInitialize
+	#define CHK_OpcUaDeleteMonitoredItemsResponseInitialize  (pfOpcUaDeleteMonitoredItemsResponseInitialize != NULL)
+	#define EXP_OpcUaDeleteMonitoredItemsResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteMonitoredItemsResponseInitialize", (RTS_UINTPTR)OpcUaDeleteMonitoredItemsResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaDeleteMonitoredItemsResponseClear(OpcUa_DeleteMonitoredItemsResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUADELETEMONITOREDITEMSRESPONSECLEAR) (OpcUa_DeleteMonitoredItemsResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUADELETEMONITOREDITEMSRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaDeleteMonitoredItemsResponseClear
+	#define EXT_OpcUaDeleteMonitoredItemsResponseClear
+	#define GET_OpcUaDeleteMonitoredItemsResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaDeleteMonitoredItemsResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaDeleteMonitoredItemsResponseClear  FALSE
+	#define EXP_OpcUaDeleteMonitoredItemsResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaDeleteMonitoredItemsResponseClear
+	#define EXT_OpcUaDeleteMonitoredItemsResponseClear
+	#define GET_OpcUaDeleteMonitoredItemsResponseClear(fl)  CAL_CMGETAPI( "OpcUaDeleteMonitoredItemsResponseClear" ) 
+	#define CAL_OpcUaDeleteMonitoredItemsResponseClear  OpcUaDeleteMonitoredItemsResponseClear
+	#define CHK_OpcUaDeleteMonitoredItemsResponseClear  TRUE
+	#define EXP_OpcUaDeleteMonitoredItemsResponseClear  CAL_CMEXPAPI( "OpcUaDeleteMonitoredItemsResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaDeleteMonitoredItemsResponseClear
+	#define EXT_OpcUaDeleteMonitoredItemsResponseClear
+	#define GET_OpcUaDeleteMonitoredItemsResponseClear(fl)  CAL_CMGETAPI( "OpcUaDeleteMonitoredItemsResponseClear" ) 
+	#define CAL_OpcUaDeleteMonitoredItemsResponseClear  OpcUaDeleteMonitoredItemsResponseClear
+	#define CHK_OpcUaDeleteMonitoredItemsResponseClear  TRUE
+	#define EXP_OpcUaDeleteMonitoredItemsResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteMonitoredItemsResponseClear", (RTS_UINTPTR)OpcUaDeleteMonitoredItemsResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaDeleteMonitoredItemsResponseClear
+	#define EXT_CmpOPCUAStackOpcUaDeleteMonitoredItemsResponseClear
+	#define GET_CmpOPCUAStackOpcUaDeleteMonitoredItemsResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaDeleteMonitoredItemsResponseClear pICmpOPCUAStack->IOpcUaDeleteMonitoredItemsResponseClear
+	#define CHK_CmpOPCUAStackOpcUaDeleteMonitoredItemsResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaDeleteMonitoredItemsResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaDeleteMonitoredItemsResponseClear
+	#define EXT_OpcUaDeleteMonitoredItemsResponseClear
+	#define GET_OpcUaDeleteMonitoredItemsResponseClear(fl)  CAL_CMGETAPI( "OpcUaDeleteMonitoredItemsResponseClear" ) 
+	#define CAL_OpcUaDeleteMonitoredItemsResponseClear pICmpOPCUAStack->IOpcUaDeleteMonitoredItemsResponseClear
+	#define CHK_OpcUaDeleteMonitoredItemsResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaDeleteMonitoredItemsResponseClear  CAL_CMEXPAPI( "OpcUaDeleteMonitoredItemsResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaDeleteMonitoredItemsResponseClear  PFOPCUADELETEMONITOREDITEMSRESPONSECLEAR pfOpcUaDeleteMonitoredItemsResponseClear;
+	#define EXT_OpcUaDeleteMonitoredItemsResponseClear  extern PFOPCUADELETEMONITOREDITEMSRESPONSECLEAR pfOpcUaDeleteMonitoredItemsResponseClear;
+	#define GET_OpcUaDeleteMonitoredItemsResponseClear(fl)  s_pfCMGetAPI2( "OpcUaDeleteMonitoredItemsResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaDeleteMonitoredItemsResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaDeleteMonitoredItemsResponseClear  pfOpcUaDeleteMonitoredItemsResponseClear
+	#define CHK_OpcUaDeleteMonitoredItemsResponseClear  (pfOpcUaDeleteMonitoredItemsResponseClear != NULL)
+	#define EXP_OpcUaDeleteMonitoredItemsResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDeleteMonitoredItemsResponseClear", (RTS_UINTPTR)OpcUaDeleteMonitoredItemsResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaBrowseRequestInitialize(OpcUa_BrowseRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUABROWSEREQUESTINITIALIZE) (OpcUa_BrowseRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUABROWSEREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaBrowseRequestInitialize
+	#define EXT_OpcUaBrowseRequestInitialize
+	#define GET_OpcUaBrowseRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaBrowseRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaBrowseRequestInitialize  FALSE
+	#define EXP_OpcUaBrowseRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaBrowseRequestInitialize
+	#define EXT_OpcUaBrowseRequestInitialize
+	#define GET_OpcUaBrowseRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaBrowseRequestInitialize" ) 
+	#define CAL_OpcUaBrowseRequestInitialize  OpcUaBrowseRequestInitialize
+	#define CHK_OpcUaBrowseRequestInitialize  TRUE
+	#define EXP_OpcUaBrowseRequestInitialize  CAL_CMEXPAPI( "OpcUaBrowseRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaBrowseRequestInitialize
+	#define EXT_OpcUaBrowseRequestInitialize
+	#define GET_OpcUaBrowseRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaBrowseRequestInitialize" ) 
+	#define CAL_OpcUaBrowseRequestInitialize  OpcUaBrowseRequestInitialize
+	#define CHK_OpcUaBrowseRequestInitialize  TRUE
+	#define EXP_OpcUaBrowseRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseRequestInitialize", (RTS_UINTPTR)OpcUaBrowseRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaBrowseRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaBrowseRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaBrowseRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaBrowseRequestInitialize pICmpOPCUAStack->IOpcUaBrowseRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaBrowseRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaBrowseRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaBrowseRequestInitialize
+	#define EXT_OpcUaBrowseRequestInitialize
+	#define GET_OpcUaBrowseRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaBrowseRequestInitialize" ) 
+	#define CAL_OpcUaBrowseRequestInitialize pICmpOPCUAStack->IOpcUaBrowseRequestInitialize
+	#define CHK_OpcUaBrowseRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaBrowseRequestInitialize  CAL_CMEXPAPI( "OpcUaBrowseRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaBrowseRequestInitialize  PFOPCUABROWSEREQUESTINITIALIZE pfOpcUaBrowseRequestInitialize;
+	#define EXT_OpcUaBrowseRequestInitialize  extern PFOPCUABROWSEREQUESTINITIALIZE pfOpcUaBrowseRequestInitialize;
+	#define GET_OpcUaBrowseRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaBrowseRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaBrowseRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaBrowseRequestInitialize  pfOpcUaBrowseRequestInitialize
+	#define CHK_OpcUaBrowseRequestInitialize  (pfOpcUaBrowseRequestInitialize != NULL)
+	#define EXP_OpcUaBrowseRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseRequestInitialize", (RTS_UINTPTR)OpcUaBrowseRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaBrowseRequestClear(OpcUa_BrowseRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUABROWSEREQUESTCLEAR) (OpcUa_BrowseRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUABROWSEREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaBrowseRequestClear
+	#define EXT_OpcUaBrowseRequestClear
+	#define GET_OpcUaBrowseRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaBrowseRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaBrowseRequestClear  FALSE
+	#define EXP_OpcUaBrowseRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaBrowseRequestClear
+	#define EXT_OpcUaBrowseRequestClear
+	#define GET_OpcUaBrowseRequestClear(fl)  CAL_CMGETAPI( "OpcUaBrowseRequestClear" ) 
+	#define CAL_OpcUaBrowseRequestClear  OpcUaBrowseRequestClear
+	#define CHK_OpcUaBrowseRequestClear  TRUE
+	#define EXP_OpcUaBrowseRequestClear  CAL_CMEXPAPI( "OpcUaBrowseRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaBrowseRequestClear
+	#define EXT_OpcUaBrowseRequestClear
+	#define GET_OpcUaBrowseRequestClear(fl)  CAL_CMGETAPI( "OpcUaBrowseRequestClear" ) 
+	#define CAL_OpcUaBrowseRequestClear  OpcUaBrowseRequestClear
+	#define CHK_OpcUaBrowseRequestClear  TRUE
+	#define EXP_OpcUaBrowseRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseRequestClear", (RTS_UINTPTR)OpcUaBrowseRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaBrowseRequestClear
+	#define EXT_CmpOPCUAStackOpcUaBrowseRequestClear
+	#define GET_CmpOPCUAStackOpcUaBrowseRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaBrowseRequestClear pICmpOPCUAStack->IOpcUaBrowseRequestClear
+	#define CHK_CmpOPCUAStackOpcUaBrowseRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaBrowseRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaBrowseRequestClear
+	#define EXT_OpcUaBrowseRequestClear
+	#define GET_OpcUaBrowseRequestClear(fl)  CAL_CMGETAPI( "OpcUaBrowseRequestClear" ) 
+	#define CAL_OpcUaBrowseRequestClear pICmpOPCUAStack->IOpcUaBrowseRequestClear
+	#define CHK_OpcUaBrowseRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaBrowseRequestClear  CAL_CMEXPAPI( "OpcUaBrowseRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaBrowseRequestClear  PFOPCUABROWSEREQUESTCLEAR pfOpcUaBrowseRequestClear;
+	#define EXT_OpcUaBrowseRequestClear  extern PFOPCUABROWSEREQUESTCLEAR pfOpcUaBrowseRequestClear;
+	#define GET_OpcUaBrowseRequestClear(fl)  s_pfCMGetAPI2( "OpcUaBrowseRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaBrowseRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaBrowseRequestClear  pfOpcUaBrowseRequestClear
+	#define CHK_OpcUaBrowseRequestClear  (pfOpcUaBrowseRequestClear != NULL)
+	#define EXP_OpcUaBrowseRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseRequestClear", (RTS_UINTPTR)OpcUaBrowseRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaBrowseResponseInitialize(OpcUa_BrowseResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUABROWSERESPONSEINITIALIZE) (OpcUa_BrowseResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUABROWSERESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaBrowseResponseInitialize
+	#define EXT_OpcUaBrowseResponseInitialize
+	#define GET_OpcUaBrowseResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaBrowseResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaBrowseResponseInitialize  FALSE
+	#define EXP_OpcUaBrowseResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaBrowseResponseInitialize
+	#define EXT_OpcUaBrowseResponseInitialize
+	#define GET_OpcUaBrowseResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaBrowseResponseInitialize" ) 
+	#define CAL_OpcUaBrowseResponseInitialize  OpcUaBrowseResponseInitialize
+	#define CHK_OpcUaBrowseResponseInitialize  TRUE
+	#define EXP_OpcUaBrowseResponseInitialize  CAL_CMEXPAPI( "OpcUaBrowseResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaBrowseResponseInitialize
+	#define EXT_OpcUaBrowseResponseInitialize
+	#define GET_OpcUaBrowseResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaBrowseResponseInitialize" ) 
+	#define CAL_OpcUaBrowseResponseInitialize  OpcUaBrowseResponseInitialize
+	#define CHK_OpcUaBrowseResponseInitialize  TRUE
+	#define EXP_OpcUaBrowseResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseResponseInitialize", (RTS_UINTPTR)OpcUaBrowseResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaBrowseResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaBrowseResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaBrowseResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaBrowseResponseInitialize pICmpOPCUAStack->IOpcUaBrowseResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaBrowseResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaBrowseResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaBrowseResponseInitialize
+	#define EXT_OpcUaBrowseResponseInitialize
+	#define GET_OpcUaBrowseResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaBrowseResponseInitialize" ) 
+	#define CAL_OpcUaBrowseResponseInitialize pICmpOPCUAStack->IOpcUaBrowseResponseInitialize
+	#define CHK_OpcUaBrowseResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaBrowseResponseInitialize  CAL_CMEXPAPI( "OpcUaBrowseResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaBrowseResponseInitialize  PFOPCUABROWSERESPONSEINITIALIZE pfOpcUaBrowseResponseInitialize;
+	#define EXT_OpcUaBrowseResponseInitialize  extern PFOPCUABROWSERESPONSEINITIALIZE pfOpcUaBrowseResponseInitialize;
+	#define GET_OpcUaBrowseResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaBrowseResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaBrowseResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaBrowseResponseInitialize  pfOpcUaBrowseResponseInitialize
+	#define CHK_OpcUaBrowseResponseInitialize  (pfOpcUaBrowseResponseInitialize != NULL)
+	#define EXP_OpcUaBrowseResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseResponseInitialize", (RTS_UINTPTR)OpcUaBrowseResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaBrowseResponseClear(OpcUa_BrowseResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUABROWSERESPONSECLEAR) (OpcUa_BrowseResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUABROWSERESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaBrowseResponseClear
+	#define EXT_OpcUaBrowseResponseClear
+	#define GET_OpcUaBrowseResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaBrowseResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaBrowseResponseClear  FALSE
+	#define EXP_OpcUaBrowseResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaBrowseResponseClear
+	#define EXT_OpcUaBrowseResponseClear
+	#define GET_OpcUaBrowseResponseClear(fl)  CAL_CMGETAPI( "OpcUaBrowseResponseClear" ) 
+	#define CAL_OpcUaBrowseResponseClear  OpcUaBrowseResponseClear
+	#define CHK_OpcUaBrowseResponseClear  TRUE
+	#define EXP_OpcUaBrowseResponseClear  CAL_CMEXPAPI( "OpcUaBrowseResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaBrowseResponseClear
+	#define EXT_OpcUaBrowseResponseClear
+	#define GET_OpcUaBrowseResponseClear(fl)  CAL_CMGETAPI( "OpcUaBrowseResponseClear" ) 
+	#define CAL_OpcUaBrowseResponseClear  OpcUaBrowseResponseClear
+	#define CHK_OpcUaBrowseResponseClear  TRUE
+	#define EXP_OpcUaBrowseResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseResponseClear", (RTS_UINTPTR)OpcUaBrowseResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaBrowseResponseClear
+	#define EXT_CmpOPCUAStackOpcUaBrowseResponseClear
+	#define GET_CmpOPCUAStackOpcUaBrowseResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaBrowseResponseClear pICmpOPCUAStack->IOpcUaBrowseResponseClear
+	#define CHK_CmpOPCUAStackOpcUaBrowseResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaBrowseResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaBrowseResponseClear
+	#define EXT_OpcUaBrowseResponseClear
+	#define GET_OpcUaBrowseResponseClear(fl)  CAL_CMGETAPI( "OpcUaBrowseResponseClear" ) 
+	#define CAL_OpcUaBrowseResponseClear pICmpOPCUAStack->IOpcUaBrowseResponseClear
+	#define CHK_OpcUaBrowseResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaBrowseResponseClear  CAL_CMEXPAPI( "OpcUaBrowseResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaBrowseResponseClear  PFOPCUABROWSERESPONSECLEAR pfOpcUaBrowseResponseClear;
+	#define EXT_OpcUaBrowseResponseClear  extern PFOPCUABROWSERESPONSECLEAR pfOpcUaBrowseResponseClear;
+	#define GET_OpcUaBrowseResponseClear(fl)  s_pfCMGetAPI2( "OpcUaBrowseResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaBrowseResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaBrowseResponseClear  pfOpcUaBrowseResponseClear
+	#define CHK_OpcUaBrowseResponseClear  (pfOpcUaBrowseResponseClear != NULL)
+	#define EXP_OpcUaBrowseResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseResponseClear", (RTS_UINTPTR)OpcUaBrowseResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaBrowseNextRequestInitialize(OpcUa_BrowseNextRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUABROWSENEXTREQUESTINITIALIZE) (OpcUa_BrowseNextRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUABROWSENEXTREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaBrowseNextRequestInitialize
+	#define EXT_OpcUaBrowseNextRequestInitialize
+	#define GET_OpcUaBrowseNextRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaBrowseNextRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaBrowseNextRequestInitialize  FALSE
+	#define EXP_OpcUaBrowseNextRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaBrowseNextRequestInitialize
+	#define EXT_OpcUaBrowseNextRequestInitialize
+	#define GET_OpcUaBrowseNextRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaBrowseNextRequestInitialize" ) 
+	#define CAL_OpcUaBrowseNextRequestInitialize  OpcUaBrowseNextRequestInitialize
+	#define CHK_OpcUaBrowseNextRequestInitialize  TRUE
+	#define EXP_OpcUaBrowseNextRequestInitialize  CAL_CMEXPAPI( "OpcUaBrowseNextRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaBrowseNextRequestInitialize
+	#define EXT_OpcUaBrowseNextRequestInitialize
+	#define GET_OpcUaBrowseNextRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaBrowseNextRequestInitialize" ) 
+	#define CAL_OpcUaBrowseNextRequestInitialize  OpcUaBrowseNextRequestInitialize
+	#define CHK_OpcUaBrowseNextRequestInitialize  TRUE
+	#define EXP_OpcUaBrowseNextRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseNextRequestInitialize", (RTS_UINTPTR)OpcUaBrowseNextRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaBrowseNextRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaBrowseNextRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaBrowseNextRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaBrowseNextRequestInitialize pICmpOPCUAStack->IOpcUaBrowseNextRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaBrowseNextRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaBrowseNextRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaBrowseNextRequestInitialize
+	#define EXT_OpcUaBrowseNextRequestInitialize
+	#define GET_OpcUaBrowseNextRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaBrowseNextRequestInitialize" ) 
+	#define CAL_OpcUaBrowseNextRequestInitialize pICmpOPCUAStack->IOpcUaBrowseNextRequestInitialize
+	#define CHK_OpcUaBrowseNextRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaBrowseNextRequestInitialize  CAL_CMEXPAPI( "OpcUaBrowseNextRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaBrowseNextRequestInitialize  PFOPCUABROWSENEXTREQUESTINITIALIZE pfOpcUaBrowseNextRequestInitialize;
+	#define EXT_OpcUaBrowseNextRequestInitialize  extern PFOPCUABROWSENEXTREQUESTINITIALIZE pfOpcUaBrowseNextRequestInitialize;
+	#define GET_OpcUaBrowseNextRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaBrowseNextRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaBrowseNextRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaBrowseNextRequestInitialize  pfOpcUaBrowseNextRequestInitialize
+	#define CHK_OpcUaBrowseNextRequestInitialize  (pfOpcUaBrowseNextRequestInitialize != NULL)
+	#define EXP_OpcUaBrowseNextRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseNextRequestInitialize", (RTS_UINTPTR)OpcUaBrowseNextRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaBrowseNextRequestClear(OpcUa_BrowseNextRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUABROWSENEXTREQUESTCLEAR) (OpcUa_BrowseNextRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUABROWSENEXTREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaBrowseNextRequestClear
+	#define EXT_OpcUaBrowseNextRequestClear
+	#define GET_OpcUaBrowseNextRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaBrowseNextRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaBrowseNextRequestClear  FALSE
+	#define EXP_OpcUaBrowseNextRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaBrowseNextRequestClear
+	#define EXT_OpcUaBrowseNextRequestClear
+	#define GET_OpcUaBrowseNextRequestClear(fl)  CAL_CMGETAPI( "OpcUaBrowseNextRequestClear" ) 
+	#define CAL_OpcUaBrowseNextRequestClear  OpcUaBrowseNextRequestClear
+	#define CHK_OpcUaBrowseNextRequestClear  TRUE
+	#define EXP_OpcUaBrowseNextRequestClear  CAL_CMEXPAPI( "OpcUaBrowseNextRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaBrowseNextRequestClear
+	#define EXT_OpcUaBrowseNextRequestClear
+	#define GET_OpcUaBrowseNextRequestClear(fl)  CAL_CMGETAPI( "OpcUaBrowseNextRequestClear" ) 
+	#define CAL_OpcUaBrowseNextRequestClear  OpcUaBrowseNextRequestClear
+	#define CHK_OpcUaBrowseNextRequestClear  TRUE
+	#define EXP_OpcUaBrowseNextRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseNextRequestClear", (RTS_UINTPTR)OpcUaBrowseNextRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaBrowseNextRequestClear
+	#define EXT_CmpOPCUAStackOpcUaBrowseNextRequestClear
+	#define GET_CmpOPCUAStackOpcUaBrowseNextRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaBrowseNextRequestClear pICmpOPCUAStack->IOpcUaBrowseNextRequestClear
+	#define CHK_CmpOPCUAStackOpcUaBrowseNextRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaBrowseNextRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaBrowseNextRequestClear
+	#define EXT_OpcUaBrowseNextRequestClear
+	#define GET_OpcUaBrowseNextRequestClear(fl)  CAL_CMGETAPI( "OpcUaBrowseNextRequestClear" ) 
+	#define CAL_OpcUaBrowseNextRequestClear pICmpOPCUAStack->IOpcUaBrowseNextRequestClear
+	#define CHK_OpcUaBrowseNextRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaBrowseNextRequestClear  CAL_CMEXPAPI( "OpcUaBrowseNextRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaBrowseNextRequestClear  PFOPCUABROWSENEXTREQUESTCLEAR pfOpcUaBrowseNextRequestClear;
+	#define EXT_OpcUaBrowseNextRequestClear  extern PFOPCUABROWSENEXTREQUESTCLEAR pfOpcUaBrowseNextRequestClear;
+	#define GET_OpcUaBrowseNextRequestClear(fl)  s_pfCMGetAPI2( "OpcUaBrowseNextRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaBrowseNextRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaBrowseNextRequestClear  pfOpcUaBrowseNextRequestClear
+	#define CHK_OpcUaBrowseNextRequestClear  (pfOpcUaBrowseNextRequestClear != NULL)
+	#define EXP_OpcUaBrowseNextRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseNextRequestClear", (RTS_UINTPTR)OpcUaBrowseNextRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaBrowseNextResponseInitialize(OpcUa_BrowseNextResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUABROWSENEXTRESPONSEINITIALIZE) (OpcUa_BrowseNextResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUABROWSENEXTRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaBrowseNextResponseInitialize
+	#define EXT_OpcUaBrowseNextResponseInitialize
+	#define GET_OpcUaBrowseNextResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaBrowseNextResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaBrowseNextResponseInitialize  FALSE
+	#define EXP_OpcUaBrowseNextResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaBrowseNextResponseInitialize
+	#define EXT_OpcUaBrowseNextResponseInitialize
+	#define GET_OpcUaBrowseNextResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaBrowseNextResponseInitialize" ) 
+	#define CAL_OpcUaBrowseNextResponseInitialize  OpcUaBrowseNextResponseInitialize
+	#define CHK_OpcUaBrowseNextResponseInitialize  TRUE
+	#define EXP_OpcUaBrowseNextResponseInitialize  CAL_CMEXPAPI( "OpcUaBrowseNextResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaBrowseNextResponseInitialize
+	#define EXT_OpcUaBrowseNextResponseInitialize
+	#define GET_OpcUaBrowseNextResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaBrowseNextResponseInitialize" ) 
+	#define CAL_OpcUaBrowseNextResponseInitialize  OpcUaBrowseNextResponseInitialize
+	#define CHK_OpcUaBrowseNextResponseInitialize  TRUE
+	#define EXP_OpcUaBrowseNextResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseNextResponseInitialize", (RTS_UINTPTR)OpcUaBrowseNextResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaBrowseNextResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaBrowseNextResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaBrowseNextResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaBrowseNextResponseInitialize pICmpOPCUAStack->IOpcUaBrowseNextResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaBrowseNextResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaBrowseNextResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaBrowseNextResponseInitialize
+	#define EXT_OpcUaBrowseNextResponseInitialize
+	#define GET_OpcUaBrowseNextResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaBrowseNextResponseInitialize" ) 
+	#define CAL_OpcUaBrowseNextResponseInitialize pICmpOPCUAStack->IOpcUaBrowseNextResponseInitialize
+	#define CHK_OpcUaBrowseNextResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaBrowseNextResponseInitialize  CAL_CMEXPAPI( "OpcUaBrowseNextResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaBrowseNextResponseInitialize  PFOPCUABROWSENEXTRESPONSEINITIALIZE pfOpcUaBrowseNextResponseInitialize;
+	#define EXT_OpcUaBrowseNextResponseInitialize  extern PFOPCUABROWSENEXTRESPONSEINITIALIZE pfOpcUaBrowseNextResponseInitialize;
+	#define GET_OpcUaBrowseNextResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaBrowseNextResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaBrowseNextResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaBrowseNextResponseInitialize  pfOpcUaBrowseNextResponseInitialize
+	#define CHK_OpcUaBrowseNextResponseInitialize  (pfOpcUaBrowseNextResponseInitialize != NULL)
+	#define EXP_OpcUaBrowseNextResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseNextResponseInitialize", (RTS_UINTPTR)OpcUaBrowseNextResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaBrowseNextResponseClear(OpcUa_BrowseNextResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUABROWSENEXTRESPONSECLEAR) (OpcUa_BrowseNextResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUABROWSENEXTRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaBrowseNextResponseClear
+	#define EXT_OpcUaBrowseNextResponseClear
+	#define GET_OpcUaBrowseNextResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaBrowseNextResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaBrowseNextResponseClear  FALSE
+	#define EXP_OpcUaBrowseNextResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaBrowseNextResponseClear
+	#define EXT_OpcUaBrowseNextResponseClear
+	#define GET_OpcUaBrowseNextResponseClear(fl)  CAL_CMGETAPI( "OpcUaBrowseNextResponseClear" ) 
+	#define CAL_OpcUaBrowseNextResponseClear  OpcUaBrowseNextResponseClear
+	#define CHK_OpcUaBrowseNextResponseClear  TRUE
+	#define EXP_OpcUaBrowseNextResponseClear  CAL_CMEXPAPI( "OpcUaBrowseNextResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaBrowseNextResponseClear
+	#define EXT_OpcUaBrowseNextResponseClear
+	#define GET_OpcUaBrowseNextResponseClear(fl)  CAL_CMGETAPI( "OpcUaBrowseNextResponseClear" ) 
+	#define CAL_OpcUaBrowseNextResponseClear  OpcUaBrowseNextResponseClear
+	#define CHK_OpcUaBrowseNextResponseClear  TRUE
+	#define EXP_OpcUaBrowseNextResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseNextResponseClear", (RTS_UINTPTR)OpcUaBrowseNextResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaBrowseNextResponseClear
+	#define EXT_CmpOPCUAStackOpcUaBrowseNextResponseClear
+	#define GET_CmpOPCUAStackOpcUaBrowseNextResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaBrowseNextResponseClear pICmpOPCUAStack->IOpcUaBrowseNextResponseClear
+	#define CHK_CmpOPCUAStackOpcUaBrowseNextResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaBrowseNextResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaBrowseNextResponseClear
+	#define EXT_OpcUaBrowseNextResponseClear
+	#define GET_OpcUaBrowseNextResponseClear(fl)  CAL_CMGETAPI( "OpcUaBrowseNextResponseClear" ) 
+	#define CAL_OpcUaBrowseNextResponseClear pICmpOPCUAStack->IOpcUaBrowseNextResponseClear
+	#define CHK_OpcUaBrowseNextResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaBrowseNextResponseClear  CAL_CMEXPAPI( "OpcUaBrowseNextResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaBrowseNextResponseClear  PFOPCUABROWSENEXTRESPONSECLEAR pfOpcUaBrowseNextResponseClear;
+	#define EXT_OpcUaBrowseNextResponseClear  extern PFOPCUABROWSENEXTRESPONSECLEAR pfOpcUaBrowseNextResponseClear;
+	#define GET_OpcUaBrowseNextResponseClear(fl)  s_pfCMGetAPI2( "OpcUaBrowseNextResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaBrowseNextResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaBrowseNextResponseClear  pfOpcUaBrowseNextResponseClear
+	#define CHK_OpcUaBrowseNextResponseClear  (pfOpcUaBrowseNextResponseClear != NULL)
+	#define EXP_OpcUaBrowseNextResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaBrowseNextResponseClear", (RTS_UINTPTR)OpcUaBrowseNextResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize(OpcUa_TranslateBrowsePathsToNodeIdsRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUATRANSLATEBROWSEPATHSTONODEIDSREQUESTINITIALIZE) (OpcUa_TranslateBrowsePathsToNodeIdsRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUATRANSLATEBROWSEPATHSTONODEIDSREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  FALSE
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize" ) 
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  TRUE
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  CAL_CMEXPAPI( "OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize" ) 
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  TRUE
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize", (RTS_UINTPTR)OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsRequestInitialize pICmpOPCUAStack->IOpcUaTranslateBrowsePathsToNodeIdsRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize" ) 
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize pICmpOPCUAStack->IOpcUaTranslateBrowsePathsToNodeIdsRequestInitialize
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  CAL_CMEXPAPI( "OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  PFOPCUATRANSLATEBROWSEPATHSTONODEIDSREQUESTINITIALIZE pfOpcUaTranslateBrowsePathsToNodeIdsRequestInitialize;
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  extern PFOPCUATRANSLATEBROWSEPATHSTONODEIDSREQUESTINITIALIZE pfOpcUaTranslateBrowsePathsToNodeIdsRequestInitialize;
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaTranslateBrowsePathsToNodeIdsRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  pfOpcUaTranslateBrowsePathsToNodeIdsRequestInitialize
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  (pfOpcUaTranslateBrowsePathsToNodeIdsRequestInitialize != NULL)
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize", (RTS_UINTPTR)OpcUaTranslateBrowsePathsToNodeIdsRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaTranslateBrowsePathsToNodeIdsRequestClear(OpcUa_TranslateBrowsePathsToNodeIdsRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUATRANSLATEBROWSEPATHSTONODEIDSREQUESTCLEAR) (OpcUa_TranslateBrowsePathsToNodeIdsRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUATRANSLATEBROWSEPATHSTONODEIDSREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsRequestClear
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsRequestClear
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsRequestClear  FALSE
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsRequestClear
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsRequestClear
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsRequestClear(fl)  CAL_CMGETAPI( "OpcUaTranslateBrowsePathsToNodeIdsRequestClear" ) 
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsRequestClear  OpcUaTranslateBrowsePathsToNodeIdsRequestClear
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsRequestClear  TRUE
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsRequestClear  CAL_CMEXPAPI( "OpcUaTranslateBrowsePathsToNodeIdsRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsRequestClear
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsRequestClear
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsRequestClear(fl)  CAL_CMGETAPI( "OpcUaTranslateBrowsePathsToNodeIdsRequestClear" ) 
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsRequestClear  OpcUaTranslateBrowsePathsToNodeIdsRequestClear
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsRequestClear  TRUE
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTranslateBrowsePathsToNodeIdsRequestClear", (RTS_UINTPTR)OpcUaTranslateBrowsePathsToNodeIdsRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsRequestClear
+	#define EXT_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsRequestClear
+	#define GET_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsRequestClear pICmpOPCUAStack->IOpcUaTranslateBrowsePathsToNodeIdsRequestClear
+	#define CHK_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsRequestClear
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsRequestClear
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsRequestClear(fl)  CAL_CMGETAPI( "OpcUaTranslateBrowsePathsToNodeIdsRequestClear" ) 
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsRequestClear pICmpOPCUAStack->IOpcUaTranslateBrowsePathsToNodeIdsRequestClear
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsRequestClear  CAL_CMEXPAPI( "OpcUaTranslateBrowsePathsToNodeIdsRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsRequestClear  PFOPCUATRANSLATEBROWSEPATHSTONODEIDSREQUESTCLEAR pfOpcUaTranslateBrowsePathsToNodeIdsRequestClear;
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsRequestClear  extern PFOPCUATRANSLATEBROWSEPATHSTONODEIDSREQUESTCLEAR pfOpcUaTranslateBrowsePathsToNodeIdsRequestClear;
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsRequestClear(fl)  s_pfCMGetAPI2( "OpcUaTranslateBrowsePathsToNodeIdsRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaTranslateBrowsePathsToNodeIdsRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsRequestClear  pfOpcUaTranslateBrowsePathsToNodeIdsRequestClear
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsRequestClear  (pfOpcUaTranslateBrowsePathsToNodeIdsRequestClear != NULL)
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTranslateBrowsePathsToNodeIdsRequestClear", (RTS_UINTPTR)OpcUaTranslateBrowsePathsToNodeIdsRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize(OpcUa_TranslateBrowsePathsToNodeIdsResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUATRANSLATEBROWSEPATHSTONODEIDSRESPONSEINITIALIZE) (OpcUa_TranslateBrowsePathsToNodeIdsResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUATRANSLATEBROWSEPATHSTONODEIDSRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  FALSE
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize" ) 
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  TRUE
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  CAL_CMEXPAPI( "OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize" ) 
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  TRUE
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize", (RTS_UINTPTR)OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsResponseInitialize pICmpOPCUAStack->IOpcUaTranslateBrowsePathsToNodeIdsResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize" ) 
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize pICmpOPCUAStack->IOpcUaTranslateBrowsePathsToNodeIdsResponseInitialize
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  CAL_CMEXPAPI( "OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  PFOPCUATRANSLATEBROWSEPATHSTONODEIDSRESPONSEINITIALIZE pfOpcUaTranslateBrowsePathsToNodeIdsResponseInitialize;
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  extern PFOPCUATRANSLATEBROWSEPATHSTONODEIDSRESPONSEINITIALIZE pfOpcUaTranslateBrowsePathsToNodeIdsResponseInitialize;
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaTranslateBrowsePathsToNodeIdsResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  pfOpcUaTranslateBrowsePathsToNodeIdsResponseInitialize
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  (pfOpcUaTranslateBrowsePathsToNodeIdsResponseInitialize != NULL)
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize", (RTS_UINTPTR)OpcUaTranslateBrowsePathsToNodeIdsResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaTranslateBrowsePathsToNodeIdsResponseClear(OpcUa_TranslateBrowsePathsToNodeIdsResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUATRANSLATEBROWSEPATHSTONODEIDSRESPONSECLEAR) (OpcUa_TranslateBrowsePathsToNodeIdsResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUATRANSLATEBROWSEPATHSTONODEIDSRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsResponseClear
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsResponseClear
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsResponseClear  FALSE
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsResponseClear
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsResponseClear
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsResponseClear(fl)  CAL_CMGETAPI( "OpcUaTranslateBrowsePathsToNodeIdsResponseClear" ) 
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsResponseClear  OpcUaTranslateBrowsePathsToNodeIdsResponseClear
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsResponseClear  TRUE
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsResponseClear  CAL_CMEXPAPI( "OpcUaTranslateBrowsePathsToNodeIdsResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsResponseClear
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsResponseClear
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsResponseClear(fl)  CAL_CMGETAPI( "OpcUaTranslateBrowsePathsToNodeIdsResponseClear" ) 
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsResponseClear  OpcUaTranslateBrowsePathsToNodeIdsResponseClear
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsResponseClear  TRUE
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTranslateBrowsePathsToNodeIdsResponseClear", (RTS_UINTPTR)OpcUaTranslateBrowsePathsToNodeIdsResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsResponseClear
+	#define EXT_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsResponseClear
+	#define GET_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsResponseClear pICmpOPCUAStack->IOpcUaTranslateBrowsePathsToNodeIdsResponseClear
+	#define CHK_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaTranslateBrowsePathsToNodeIdsResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsResponseClear
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsResponseClear
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsResponseClear(fl)  CAL_CMGETAPI( "OpcUaTranslateBrowsePathsToNodeIdsResponseClear" ) 
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsResponseClear pICmpOPCUAStack->IOpcUaTranslateBrowsePathsToNodeIdsResponseClear
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsResponseClear  CAL_CMEXPAPI( "OpcUaTranslateBrowsePathsToNodeIdsResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaTranslateBrowsePathsToNodeIdsResponseClear  PFOPCUATRANSLATEBROWSEPATHSTONODEIDSRESPONSECLEAR pfOpcUaTranslateBrowsePathsToNodeIdsResponseClear;
+	#define EXT_OpcUaTranslateBrowsePathsToNodeIdsResponseClear  extern PFOPCUATRANSLATEBROWSEPATHSTONODEIDSRESPONSECLEAR pfOpcUaTranslateBrowsePathsToNodeIdsResponseClear;
+	#define GET_OpcUaTranslateBrowsePathsToNodeIdsResponseClear(fl)  s_pfCMGetAPI2( "OpcUaTranslateBrowsePathsToNodeIdsResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaTranslateBrowsePathsToNodeIdsResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaTranslateBrowsePathsToNodeIdsResponseClear  pfOpcUaTranslateBrowsePathsToNodeIdsResponseClear
+	#define CHK_OpcUaTranslateBrowsePathsToNodeIdsResponseClear  (pfOpcUaTranslateBrowsePathsToNodeIdsResponseClear != NULL)
+	#define EXP_OpcUaTranslateBrowsePathsToNodeIdsResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaTranslateBrowsePathsToNodeIdsResponseClear", (RTS_UINTPTR)OpcUaTranslateBrowsePathsToNodeIdsResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaRegisterNodesRequestInitialize(OpcUa_RegisterNodesRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAREGISTERNODESREQUESTINITIALIZE) (OpcUa_RegisterNodesRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAREGISTERNODESREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaRegisterNodesRequestInitialize
+	#define EXT_OpcUaRegisterNodesRequestInitialize
+	#define GET_OpcUaRegisterNodesRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaRegisterNodesRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaRegisterNodesRequestInitialize  FALSE
+	#define EXP_OpcUaRegisterNodesRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaRegisterNodesRequestInitialize
+	#define EXT_OpcUaRegisterNodesRequestInitialize
+	#define GET_OpcUaRegisterNodesRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaRegisterNodesRequestInitialize" ) 
+	#define CAL_OpcUaRegisterNodesRequestInitialize  OpcUaRegisterNodesRequestInitialize
+	#define CHK_OpcUaRegisterNodesRequestInitialize  TRUE
+	#define EXP_OpcUaRegisterNodesRequestInitialize  CAL_CMEXPAPI( "OpcUaRegisterNodesRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaRegisterNodesRequestInitialize
+	#define EXT_OpcUaRegisterNodesRequestInitialize
+	#define GET_OpcUaRegisterNodesRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaRegisterNodesRequestInitialize" ) 
+	#define CAL_OpcUaRegisterNodesRequestInitialize  OpcUaRegisterNodesRequestInitialize
+	#define CHK_OpcUaRegisterNodesRequestInitialize  TRUE
+	#define EXP_OpcUaRegisterNodesRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRegisterNodesRequestInitialize", (RTS_UINTPTR)OpcUaRegisterNodesRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaRegisterNodesRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaRegisterNodesRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaRegisterNodesRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaRegisterNodesRequestInitialize pICmpOPCUAStack->IOpcUaRegisterNodesRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaRegisterNodesRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaRegisterNodesRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaRegisterNodesRequestInitialize
+	#define EXT_OpcUaRegisterNodesRequestInitialize
+	#define GET_OpcUaRegisterNodesRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaRegisterNodesRequestInitialize" ) 
+	#define CAL_OpcUaRegisterNodesRequestInitialize pICmpOPCUAStack->IOpcUaRegisterNodesRequestInitialize
+	#define CHK_OpcUaRegisterNodesRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaRegisterNodesRequestInitialize  CAL_CMEXPAPI( "OpcUaRegisterNodesRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaRegisterNodesRequestInitialize  PFOPCUAREGISTERNODESREQUESTINITIALIZE pfOpcUaRegisterNodesRequestInitialize;
+	#define EXT_OpcUaRegisterNodesRequestInitialize  extern PFOPCUAREGISTERNODESREQUESTINITIALIZE pfOpcUaRegisterNodesRequestInitialize;
+	#define GET_OpcUaRegisterNodesRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaRegisterNodesRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaRegisterNodesRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaRegisterNodesRequestInitialize  pfOpcUaRegisterNodesRequestInitialize
+	#define CHK_OpcUaRegisterNodesRequestInitialize  (pfOpcUaRegisterNodesRequestInitialize != NULL)
+	#define EXP_OpcUaRegisterNodesRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRegisterNodesRequestInitialize", (RTS_UINTPTR)OpcUaRegisterNodesRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaRegisterNodesRequestClear(OpcUa_RegisterNodesRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAREGISTERNODESREQUESTCLEAR) (OpcUa_RegisterNodesRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAREGISTERNODESREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaRegisterNodesRequestClear
+	#define EXT_OpcUaRegisterNodesRequestClear
+	#define GET_OpcUaRegisterNodesRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaRegisterNodesRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaRegisterNodesRequestClear  FALSE
+	#define EXP_OpcUaRegisterNodesRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaRegisterNodesRequestClear
+	#define EXT_OpcUaRegisterNodesRequestClear
+	#define GET_OpcUaRegisterNodesRequestClear(fl)  CAL_CMGETAPI( "OpcUaRegisterNodesRequestClear" ) 
+	#define CAL_OpcUaRegisterNodesRequestClear  OpcUaRegisterNodesRequestClear
+	#define CHK_OpcUaRegisterNodesRequestClear  TRUE
+	#define EXP_OpcUaRegisterNodesRequestClear  CAL_CMEXPAPI( "OpcUaRegisterNodesRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaRegisterNodesRequestClear
+	#define EXT_OpcUaRegisterNodesRequestClear
+	#define GET_OpcUaRegisterNodesRequestClear(fl)  CAL_CMGETAPI( "OpcUaRegisterNodesRequestClear" ) 
+	#define CAL_OpcUaRegisterNodesRequestClear  OpcUaRegisterNodesRequestClear
+	#define CHK_OpcUaRegisterNodesRequestClear  TRUE
+	#define EXP_OpcUaRegisterNodesRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRegisterNodesRequestClear", (RTS_UINTPTR)OpcUaRegisterNodesRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaRegisterNodesRequestClear
+	#define EXT_CmpOPCUAStackOpcUaRegisterNodesRequestClear
+	#define GET_CmpOPCUAStackOpcUaRegisterNodesRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaRegisterNodesRequestClear pICmpOPCUAStack->IOpcUaRegisterNodesRequestClear
+	#define CHK_CmpOPCUAStackOpcUaRegisterNodesRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaRegisterNodesRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaRegisterNodesRequestClear
+	#define EXT_OpcUaRegisterNodesRequestClear
+	#define GET_OpcUaRegisterNodesRequestClear(fl)  CAL_CMGETAPI( "OpcUaRegisterNodesRequestClear" ) 
+	#define CAL_OpcUaRegisterNodesRequestClear pICmpOPCUAStack->IOpcUaRegisterNodesRequestClear
+	#define CHK_OpcUaRegisterNodesRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaRegisterNodesRequestClear  CAL_CMEXPAPI( "OpcUaRegisterNodesRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaRegisterNodesRequestClear  PFOPCUAREGISTERNODESREQUESTCLEAR pfOpcUaRegisterNodesRequestClear;
+	#define EXT_OpcUaRegisterNodesRequestClear  extern PFOPCUAREGISTERNODESREQUESTCLEAR pfOpcUaRegisterNodesRequestClear;
+	#define GET_OpcUaRegisterNodesRequestClear(fl)  s_pfCMGetAPI2( "OpcUaRegisterNodesRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaRegisterNodesRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaRegisterNodesRequestClear  pfOpcUaRegisterNodesRequestClear
+	#define CHK_OpcUaRegisterNodesRequestClear  (pfOpcUaRegisterNodesRequestClear != NULL)
+	#define EXP_OpcUaRegisterNodesRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRegisterNodesRequestClear", (RTS_UINTPTR)OpcUaRegisterNodesRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaRegisterNodesResponseInitialize(OpcUa_RegisterNodesResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAREGISTERNODESRESPONSEINITIALIZE) (OpcUa_RegisterNodesResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAREGISTERNODESRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaRegisterNodesResponseInitialize
+	#define EXT_OpcUaRegisterNodesResponseInitialize
+	#define GET_OpcUaRegisterNodesResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaRegisterNodesResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaRegisterNodesResponseInitialize  FALSE
+	#define EXP_OpcUaRegisterNodesResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaRegisterNodesResponseInitialize
+	#define EXT_OpcUaRegisterNodesResponseInitialize
+	#define GET_OpcUaRegisterNodesResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaRegisterNodesResponseInitialize" ) 
+	#define CAL_OpcUaRegisterNodesResponseInitialize  OpcUaRegisterNodesResponseInitialize
+	#define CHK_OpcUaRegisterNodesResponseInitialize  TRUE
+	#define EXP_OpcUaRegisterNodesResponseInitialize  CAL_CMEXPAPI( "OpcUaRegisterNodesResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaRegisterNodesResponseInitialize
+	#define EXT_OpcUaRegisterNodesResponseInitialize
+	#define GET_OpcUaRegisterNodesResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaRegisterNodesResponseInitialize" ) 
+	#define CAL_OpcUaRegisterNodesResponseInitialize  OpcUaRegisterNodesResponseInitialize
+	#define CHK_OpcUaRegisterNodesResponseInitialize  TRUE
+	#define EXP_OpcUaRegisterNodesResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRegisterNodesResponseInitialize", (RTS_UINTPTR)OpcUaRegisterNodesResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaRegisterNodesResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaRegisterNodesResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaRegisterNodesResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaRegisterNodesResponseInitialize pICmpOPCUAStack->IOpcUaRegisterNodesResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaRegisterNodesResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaRegisterNodesResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaRegisterNodesResponseInitialize
+	#define EXT_OpcUaRegisterNodesResponseInitialize
+	#define GET_OpcUaRegisterNodesResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaRegisterNodesResponseInitialize" ) 
+	#define CAL_OpcUaRegisterNodesResponseInitialize pICmpOPCUAStack->IOpcUaRegisterNodesResponseInitialize
+	#define CHK_OpcUaRegisterNodesResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaRegisterNodesResponseInitialize  CAL_CMEXPAPI( "OpcUaRegisterNodesResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaRegisterNodesResponseInitialize  PFOPCUAREGISTERNODESRESPONSEINITIALIZE pfOpcUaRegisterNodesResponseInitialize;
+	#define EXT_OpcUaRegisterNodesResponseInitialize  extern PFOPCUAREGISTERNODESRESPONSEINITIALIZE pfOpcUaRegisterNodesResponseInitialize;
+	#define GET_OpcUaRegisterNodesResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaRegisterNodesResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaRegisterNodesResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaRegisterNodesResponseInitialize  pfOpcUaRegisterNodesResponseInitialize
+	#define CHK_OpcUaRegisterNodesResponseInitialize  (pfOpcUaRegisterNodesResponseInitialize != NULL)
+	#define EXP_OpcUaRegisterNodesResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRegisterNodesResponseInitialize", (RTS_UINTPTR)OpcUaRegisterNodesResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaRegisterNodesResponseClear(OpcUa_RegisterNodesResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAREGISTERNODESRESPONSECLEAR) (OpcUa_RegisterNodesResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAREGISTERNODESRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaRegisterNodesResponseClear
+	#define EXT_OpcUaRegisterNodesResponseClear
+	#define GET_OpcUaRegisterNodesResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaRegisterNodesResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaRegisterNodesResponseClear  FALSE
+	#define EXP_OpcUaRegisterNodesResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaRegisterNodesResponseClear
+	#define EXT_OpcUaRegisterNodesResponseClear
+	#define GET_OpcUaRegisterNodesResponseClear(fl)  CAL_CMGETAPI( "OpcUaRegisterNodesResponseClear" ) 
+	#define CAL_OpcUaRegisterNodesResponseClear  OpcUaRegisterNodesResponseClear
+	#define CHK_OpcUaRegisterNodesResponseClear  TRUE
+	#define EXP_OpcUaRegisterNodesResponseClear  CAL_CMEXPAPI( "OpcUaRegisterNodesResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaRegisterNodesResponseClear
+	#define EXT_OpcUaRegisterNodesResponseClear
+	#define GET_OpcUaRegisterNodesResponseClear(fl)  CAL_CMGETAPI( "OpcUaRegisterNodesResponseClear" ) 
+	#define CAL_OpcUaRegisterNodesResponseClear  OpcUaRegisterNodesResponseClear
+	#define CHK_OpcUaRegisterNodesResponseClear  TRUE
+	#define EXP_OpcUaRegisterNodesResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRegisterNodesResponseClear", (RTS_UINTPTR)OpcUaRegisterNodesResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaRegisterNodesResponseClear
+	#define EXT_CmpOPCUAStackOpcUaRegisterNodesResponseClear
+	#define GET_CmpOPCUAStackOpcUaRegisterNodesResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaRegisterNodesResponseClear pICmpOPCUAStack->IOpcUaRegisterNodesResponseClear
+	#define CHK_CmpOPCUAStackOpcUaRegisterNodesResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaRegisterNodesResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaRegisterNodesResponseClear
+	#define EXT_OpcUaRegisterNodesResponseClear
+	#define GET_OpcUaRegisterNodesResponseClear(fl)  CAL_CMGETAPI( "OpcUaRegisterNodesResponseClear" ) 
+	#define CAL_OpcUaRegisterNodesResponseClear pICmpOPCUAStack->IOpcUaRegisterNodesResponseClear
+	#define CHK_OpcUaRegisterNodesResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaRegisterNodesResponseClear  CAL_CMEXPAPI( "OpcUaRegisterNodesResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaRegisterNodesResponseClear  PFOPCUAREGISTERNODESRESPONSECLEAR pfOpcUaRegisterNodesResponseClear;
+	#define EXT_OpcUaRegisterNodesResponseClear  extern PFOPCUAREGISTERNODESRESPONSECLEAR pfOpcUaRegisterNodesResponseClear;
+	#define GET_OpcUaRegisterNodesResponseClear(fl)  s_pfCMGetAPI2( "OpcUaRegisterNodesResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaRegisterNodesResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaRegisterNodesResponseClear  pfOpcUaRegisterNodesResponseClear
+	#define CHK_OpcUaRegisterNodesResponseClear  (pfOpcUaRegisterNodesResponseClear != NULL)
+	#define EXP_OpcUaRegisterNodesResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaRegisterNodesResponseClear", (RTS_UINTPTR)OpcUaRegisterNodesResponseClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaUnregisterNodesRequestInitialize(OpcUa_UnregisterNodesRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAUNREGISTERNODESREQUESTINITIALIZE) (OpcUa_UnregisterNodesRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAUNREGISTERNODESREQUESTINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaUnregisterNodesRequestInitialize
+	#define EXT_OpcUaUnregisterNodesRequestInitialize
+	#define GET_OpcUaUnregisterNodesRequestInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaUnregisterNodesRequestInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaUnregisterNodesRequestInitialize  FALSE
+	#define EXP_OpcUaUnregisterNodesRequestInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaUnregisterNodesRequestInitialize
+	#define EXT_OpcUaUnregisterNodesRequestInitialize
+	#define GET_OpcUaUnregisterNodesRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaUnregisterNodesRequestInitialize" ) 
+	#define CAL_OpcUaUnregisterNodesRequestInitialize  OpcUaUnregisterNodesRequestInitialize
+	#define CHK_OpcUaUnregisterNodesRequestInitialize  TRUE
+	#define EXP_OpcUaUnregisterNodesRequestInitialize  CAL_CMEXPAPI( "OpcUaUnregisterNodesRequestInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaUnregisterNodesRequestInitialize
+	#define EXT_OpcUaUnregisterNodesRequestInitialize
+	#define GET_OpcUaUnregisterNodesRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaUnregisterNodesRequestInitialize" ) 
+	#define CAL_OpcUaUnregisterNodesRequestInitialize  OpcUaUnregisterNodesRequestInitialize
+	#define CHK_OpcUaUnregisterNodesRequestInitialize  TRUE
+	#define EXP_OpcUaUnregisterNodesRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaUnregisterNodesRequestInitialize", (RTS_UINTPTR)OpcUaUnregisterNodesRequestInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaUnregisterNodesRequestInitialize
+	#define EXT_CmpOPCUAStackOpcUaUnregisterNodesRequestInitialize
+	#define GET_CmpOPCUAStackOpcUaUnregisterNodesRequestInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaUnregisterNodesRequestInitialize pICmpOPCUAStack->IOpcUaUnregisterNodesRequestInitialize
+	#define CHK_CmpOPCUAStackOpcUaUnregisterNodesRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaUnregisterNodesRequestInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaUnregisterNodesRequestInitialize
+	#define EXT_OpcUaUnregisterNodesRequestInitialize
+	#define GET_OpcUaUnregisterNodesRequestInitialize(fl)  CAL_CMGETAPI( "OpcUaUnregisterNodesRequestInitialize" ) 
+	#define CAL_OpcUaUnregisterNodesRequestInitialize pICmpOPCUAStack->IOpcUaUnregisterNodesRequestInitialize
+	#define CHK_OpcUaUnregisterNodesRequestInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaUnregisterNodesRequestInitialize  CAL_CMEXPAPI( "OpcUaUnregisterNodesRequestInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaUnregisterNodesRequestInitialize  PFOPCUAUNREGISTERNODESREQUESTINITIALIZE pfOpcUaUnregisterNodesRequestInitialize;
+	#define EXT_OpcUaUnregisterNodesRequestInitialize  extern PFOPCUAUNREGISTERNODESREQUESTINITIALIZE pfOpcUaUnregisterNodesRequestInitialize;
+	#define GET_OpcUaUnregisterNodesRequestInitialize(fl)  s_pfCMGetAPI2( "OpcUaUnregisterNodesRequestInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaUnregisterNodesRequestInitialize, (fl), 0, 0)
+	#define CAL_OpcUaUnregisterNodesRequestInitialize  pfOpcUaUnregisterNodesRequestInitialize
+	#define CHK_OpcUaUnregisterNodesRequestInitialize  (pfOpcUaUnregisterNodesRequestInitialize != NULL)
+	#define EXP_OpcUaUnregisterNodesRequestInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaUnregisterNodesRequestInitialize", (RTS_UINTPTR)OpcUaUnregisterNodesRequestInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaUnregisterNodesRequestClear(OpcUa_UnregisterNodesRequest* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAUNREGISTERNODESREQUESTCLEAR) (OpcUa_UnregisterNodesRequest* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAUNREGISTERNODESREQUESTCLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaUnregisterNodesRequestClear
+	#define EXT_OpcUaUnregisterNodesRequestClear
+	#define GET_OpcUaUnregisterNodesRequestClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaUnregisterNodesRequestClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaUnregisterNodesRequestClear  FALSE
+	#define EXP_OpcUaUnregisterNodesRequestClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaUnregisterNodesRequestClear
+	#define EXT_OpcUaUnregisterNodesRequestClear
+	#define GET_OpcUaUnregisterNodesRequestClear(fl)  CAL_CMGETAPI( "OpcUaUnregisterNodesRequestClear" ) 
+	#define CAL_OpcUaUnregisterNodesRequestClear  OpcUaUnregisterNodesRequestClear
+	#define CHK_OpcUaUnregisterNodesRequestClear  TRUE
+	#define EXP_OpcUaUnregisterNodesRequestClear  CAL_CMEXPAPI( "OpcUaUnregisterNodesRequestClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaUnregisterNodesRequestClear
+	#define EXT_OpcUaUnregisterNodesRequestClear
+	#define GET_OpcUaUnregisterNodesRequestClear(fl)  CAL_CMGETAPI( "OpcUaUnregisterNodesRequestClear" ) 
+	#define CAL_OpcUaUnregisterNodesRequestClear  OpcUaUnregisterNodesRequestClear
+	#define CHK_OpcUaUnregisterNodesRequestClear  TRUE
+	#define EXP_OpcUaUnregisterNodesRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaUnregisterNodesRequestClear", (RTS_UINTPTR)OpcUaUnregisterNodesRequestClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaUnregisterNodesRequestClear
+	#define EXT_CmpOPCUAStackOpcUaUnregisterNodesRequestClear
+	#define GET_CmpOPCUAStackOpcUaUnregisterNodesRequestClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaUnregisterNodesRequestClear pICmpOPCUAStack->IOpcUaUnregisterNodesRequestClear
+	#define CHK_CmpOPCUAStackOpcUaUnregisterNodesRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaUnregisterNodesRequestClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaUnregisterNodesRequestClear
+	#define EXT_OpcUaUnregisterNodesRequestClear
+	#define GET_OpcUaUnregisterNodesRequestClear(fl)  CAL_CMGETAPI( "OpcUaUnregisterNodesRequestClear" ) 
+	#define CAL_OpcUaUnregisterNodesRequestClear pICmpOPCUAStack->IOpcUaUnregisterNodesRequestClear
+	#define CHK_OpcUaUnregisterNodesRequestClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaUnregisterNodesRequestClear  CAL_CMEXPAPI( "OpcUaUnregisterNodesRequestClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaUnregisterNodesRequestClear  PFOPCUAUNREGISTERNODESREQUESTCLEAR pfOpcUaUnregisterNodesRequestClear;
+	#define EXT_OpcUaUnregisterNodesRequestClear  extern PFOPCUAUNREGISTERNODESREQUESTCLEAR pfOpcUaUnregisterNodesRequestClear;
+	#define GET_OpcUaUnregisterNodesRequestClear(fl)  s_pfCMGetAPI2( "OpcUaUnregisterNodesRequestClear", (RTS_VOID_FCTPTR *)&pfOpcUaUnregisterNodesRequestClear, (fl), 0, 0)
+	#define CAL_OpcUaUnregisterNodesRequestClear  pfOpcUaUnregisterNodesRequestClear
+	#define CHK_OpcUaUnregisterNodesRequestClear  (pfOpcUaUnregisterNodesRequestClear != NULL)
+	#define EXP_OpcUaUnregisterNodesRequestClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaUnregisterNodesRequestClear", (RTS_UINTPTR)OpcUaUnregisterNodesRequestClear, 0, 0) 
+#endif
+
+
+
+
+OpcUa_Void CDECL OpcUaUnregisterNodesResponseInitialize(OpcUa_UnregisterNodesResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAUNREGISTERNODESRESPONSEINITIALIZE) (OpcUa_UnregisterNodesResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAUNREGISTERNODESRESPONSEINITIALIZE_NOTIMPLEMENTED)
+	#define USE_OpcUaUnregisterNodesResponseInitialize
+	#define EXT_OpcUaUnregisterNodesResponseInitialize
+	#define GET_OpcUaUnregisterNodesResponseInitialize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaUnregisterNodesResponseInitialize(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaUnregisterNodesResponseInitialize  FALSE
+	#define EXP_OpcUaUnregisterNodesResponseInitialize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaUnregisterNodesResponseInitialize
+	#define EXT_OpcUaUnregisterNodesResponseInitialize
+	#define GET_OpcUaUnregisterNodesResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaUnregisterNodesResponseInitialize" ) 
+	#define CAL_OpcUaUnregisterNodesResponseInitialize  OpcUaUnregisterNodesResponseInitialize
+	#define CHK_OpcUaUnregisterNodesResponseInitialize  TRUE
+	#define EXP_OpcUaUnregisterNodesResponseInitialize  CAL_CMEXPAPI( "OpcUaUnregisterNodesResponseInitialize" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaUnregisterNodesResponseInitialize
+	#define EXT_OpcUaUnregisterNodesResponseInitialize
+	#define GET_OpcUaUnregisterNodesResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaUnregisterNodesResponseInitialize" ) 
+	#define CAL_OpcUaUnregisterNodesResponseInitialize  OpcUaUnregisterNodesResponseInitialize
+	#define CHK_OpcUaUnregisterNodesResponseInitialize  TRUE
+	#define EXP_OpcUaUnregisterNodesResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaUnregisterNodesResponseInitialize", (RTS_UINTPTR)OpcUaUnregisterNodesResponseInitialize, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaUnregisterNodesResponseInitialize
+	#define EXT_CmpOPCUAStackOpcUaUnregisterNodesResponseInitialize
+	#define GET_CmpOPCUAStackOpcUaUnregisterNodesResponseInitialize  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaUnregisterNodesResponseInitialize pICmpOPCUAStack->IOpcUaUnregisterNodesResponseInitialize
+	#define CHK_CmpOPCUAStackOpcUaUnregisterNodesResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaUnregisterNodesResponseInitialize  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaUnregisterNodesResponseInitialize
+	#define EXT_OpcUaUnregisterNodesResponseInitialize
+	#define GET_OpcUaUnregisterNodesResponseInitialize(fl)  CAL_CMGETAPI( "OpcUaUnregisterNodesResponseInitialize" ) 
+	#define CAL_OpcUaUnregisterNodesResponseInitialize pICmpOPCUAStack->IOpcUaUnregisterNodesResponseInitialize
+	#define CHK_OpcUaUnregisterNodesResponseInitialize (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaUnregisterNodesResponseInitialize  CAL_CMEXPAPI( "OpcUaUnregisterNodesResponseInitialize" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaUnregisterNodesResponseInitialize  PFOPCUAUNREGISTERNODESRESPONSEINITIALIZE pfOpcUaUnregisterNodesResponseInitialize;
+	#define EXT_OpcUaUnregisterNodesResponseInitialize  extern PFOPCUAUNREGISTERNODESRESPONSEINITIALIZE pfOpcUaUnregisterNodesResponseInitialize;
+	#define GET_OpcUaUnregisterNodesResponseInitialize(fl)  s_pfCMGetAPI2( "OpcUaUnregisterNodesResponseInitialize", (RTS_VOID_FCTPTR *)&pfOpcUaUnregisterNodesResponseInitialize, (fl), 0, 0)
+	#define CAL_OpcUaUnregisterNodesResponseInitialize  pfOpcUaUnregisterNodesResponseInitialize
+	#define CHK_OpcUaUnregisterNodesResponseInitialize  (pfOpcUaUnregisterNodesResponseInitialize != NULL)
+	#define EXP_OpcUaUnregisterNodesResponseInitialize  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaUnregisterNodesResponseInitialize", (RTS_UINTPTR)OpcUaUnregisterNodesResponseInitialize, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaUnregisterNodesResponseClear(OpcUa_UnregisterNodesResponse* pValue);
+typedef OpcUa_Void (CDECL * PFOPCUAUNREGISTERNODESRESPONSECLEAR) (OpcUa_UnregisterNodesResponse* pValue);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAUNREGISTERNODESRESPONSECLEAR_NOTIMPLEMENTED)
+	#define USE_OpcUaUnregisterNodesResponseClear
+	#define EXT_OpcUaUnregisterNodesResponseClear
+	#define GET_OpcUaUnregisterNodesResponseClear(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaUnregisterNodesResponseClear(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaUnregisterNodesResponseClear  FALSE
+	#define EXP_OpcUaUnregisterNodesResponseClear  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaUnregisterNodesResponseClear
+	#define EXT_OpcUaUnregisterNodesResponseClear
+	#define GET_OpcUaUnregisterNodesResponseClear(fl)  CAL_CMGETAPI( "OpcUaUnregisterNodesResponseClear" ) 
+	#define CAL_OpcUaUnregisterNodesResponseClear  OpcUaUnregisterNodesResponseClear
+	#define CHK_OpcUaUnregisterNodesResponseClear  TRUE
+	#define EXP_OpcUaUnregisterNodesResponseClear  CAL_CMEXPAPI( "OpcUaUnregisterNodesResponseClear" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaUnregisterNodesResponseClear
+	#define EXT_OpcUaUnregisterNodesResponseClear
+	#define GET_OpcUaUnregisterNodesResponseClear(fl)  CAL_CMGETAPI( "OpcUaUnregisterNodesResponseClear" ) 
+	#define CAL_OpcUaUnregisterNodesResponseClear  OpcUaUnregisterNodesResponseClear
+	#define CHK_OpcUaUnregisterNodesResponseClear  TRUE
+	#define EXP_OpcUaUnregisterNodesResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaUnregisterNodesResponseClear", (RTS_UINTPTR)OpcUaUnregisterNodesResponseClear, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaUnregisterNodesResponseClear
+	#define EXT_CmpOPCUAStackOpcUaUnregisterNodesResponseClear
+	#define GET_CmpOPCUAStackOpcUaUnregisterNodesResponseClear  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaUnregisterNodesResponseClear pICmpOPCUAStack->IOpcUaUnregisterNodesResponseClear
+	#define CHK_CmpOPCUAStackOpcUaUnregisterNodesResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaUnregisterNodesResponseClear  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaUnregisterNodesResponseClear
+	#define EXT_OpcUaUnregisterNodesResponseClear
+	#define GET_OpcUaUnregisterNodesResponseClear(fl)  CAL_CMGETAPI( "OpcUaUnregisterNodesResponseClear" ) 
+	#define CAL_OpcUaUnregisterNodesResponseClear pICmpOPCUAStack->IOpcUaUnregisterNodesResponseClear
+	#define CHK_OpcUaUnregisterNodesResponseClear (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaUnregisterNodesResponseClear  CAL_CMEXPAPI( "OpcUaUnregisterNodesResponseClear" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaUnregisterNodesResponseClear  PFOPCUAUNREGISTERNODESRESPONSECLEAR pfOpcUaUnregisterNodesResponseClear;
+	#define EXT_OpcUaUnregisterNodesResponseClear  extern PFOPCUAUNREGISTERNODESRESPONSECLEAR pfOpcUaUnregisterNodesResponseClear;
+	#define GET_OpcUaUnregisterNodesResponseClear(fl)  s_pfCMGetAPI2( "OpcUaUnregisterNodesResponseClear", (RTS_VOID_FCTPTR *)&pfOpcUaUnregisterNodesResponseClear, (fl), 0, 0)
+	#define CAL_OpcUaUnregisterNodesResponseClear  pfOpcUaUnregisterNodesResponseClear
+	#define CHK_OpcUaUnregisterNodesResponseClear  (pfOpcUaUnregisterNodesResponseClear != NULL)
+	#define EXP_OpcUaUnregisterNodesResponseClear  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaUnregisterNodesResponseClear", (RTS_UINTPTR)OpcUaUnregisterNodesResponseClear, 0, 0) 
+#endif
 
 
 
@@ -5597,13 +10361,13 @@ typedef OpcUa_StatusCode (CDECL * PFOPCUAENDPOINTGETMESSAGESECURECHANNELSECURITY
 
 
 
-OpcUa_StatusCode CDECL OpcUaEndpointOpen(OpcUa_Endpoint hEndpoint, OpcUa_StringA sUrl, OpcUa_StringA sTransportProfileUri, OpcUa_Endpoint_PfnEndpointCallback* pfEndpointCallback, OpcUa_Void* pvEndpointCallbackData, OpcUa_ByteString* pServerCertificate, OpcUa_Key* pServerPrivateKey, OpcUa_Void* pPKIConfig, OpcUa_UInt32 nNoOfSecurityPolicies, OpcUa_Endpoint_SecurityPolicyConfiguration* pSecurityPolicies);
-typedef OpcUa_StatusCode (CDECL * PFOPCUAENDPOINTOPEN) (OpcUa_Endpoint hEndpoint, OpcUa_StringA sUrl, OpcUa_StringA sTransportProfileUri, OpcUa_Endpoint_PfnEndpointCallback* pfEndpointCallback, OpcUa_Void* pvEndpointCallbackData, OpcUa_ByteString* pServerCertificate, OpcUa_Key* pServerPrivateKey, OpcUa_Void* pPKIConfig, OpcUa_UInt32 nNoOfSecurityPolicies, OpcUa_Endpoint_SecurityPolicyConfiguration* pSecurityPolicies);
+OpcUa_StatusCode CDECL OpcUaEndpointOpen(OpcUa_Endpoint hEndpoint, OpcUa_StringA sUrl, OpcUa_StringA sTransportProfileUri, OpcUa_Endpoint_PfnEndpointCallback* pfEndpointCallback, OpcUa_Void* pvEndpointCallbackData, OpcUa_ByteString* pServerCertificate, OpcUa_Key* pServerPrivateKey, OpcUa_Void* pPKIConfig, OpcUa_UInt32 nNoOfSecurityPolicies, OpcUa_Endpoint_SecurityPolicyConfiguration* pSecurityPolicies, OpcUa_SocketManager hSocketManager);
+typedef OpcUa_StatusCode (CDECL * PFOPCUAENDPOINTOPEN) (OpcUa_Endpoint hEndpoint, OpcUa_StringA sUrl, OpcUa_StringA sTransportProfileUri, OpcUa_Endpoint_PfnEndpointCallback* pfEndpointCallback, OpcUa_Void* pvEndpointCallbackData, OpcUa_ByteString* pServerCertificate, OpcUa_Key* pServerPrivateKey, OpcUa_Void* pPKIConfig, OpcUa_UInt32 nNoOfSecurityPolicies, OpcUa_Endpoint_SecurityPolicyConfiguration* pSecurityPolicies, OpcUa_SocketManager hSocketManager);
 #if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAENDPOINTOPEN_NOTIMPLEMENTED)
 	#define USE_OpcUaEndpointOpen
 	#define EXT_OpcUaEndpointOpen
 	#define GET_OpcUaEndpointOpen(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_OpcUaEndpointOpen(p0,p1,p2,p3,p4,p5,p6,p7,p8,p9)  (OpcUa_StatusCode)ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaEndpointOpen(p0,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10)  (OpcUa_StatusCode)ERR_NOTIMPLEMENTED
 	#define CHK_OpcUaEndpointOpen  FALSE
 	#define EXP_OpcUaEndpointOpen  ERR_OK
 #elif defined(STATIC_LINK)
@@ -5885,102 +10649,6 @@ typedef OpcUa_StatusCode (CDECL * PFOPCUAENDPOINTGETPEERINFOFROMCONTEXT) (OpcUa_
 
 
 
-OpcUa_StatusCode CDECL OpcUaEndpointGetPeerInfoBySecureChannelId(OpcUa_Endpoint hEndpoint, OpcUa_UInt32 uSecureChannelId, OpcUa_String* psPeerInfo);
-typedef OpcUa_StatusCode (CDECL * PFOPCUAENDPOINTGETPEERINFOBYSECURECHANNELID) (OpcUa_Endpoint hEndpoint, OpcUa_UInt32 uSecureChannelId, OpcUa_String* psPeerInfo);
-#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAENDPOINTGETPEERINFOBYSECURECHANNELID_NOTIMPLEMENTED)
-	#define USE_OpcUaEndpointGetPeerInfoBySecureChannelId
-	#define EXT_OpcUaEndpointGetPeerInfoBySecureChannelId
-	#define GET_OpcUaEndpointGetPeerInfoBySecureChannelId(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_OpcUaEndpointGetPeerInfoBySecureChannelId(p0,p1,p2)  (OpcUa_StatusCode)ERR_NOTIMPLEMENTED
-	#define CHK_OpcUaEndpointGetPeerInfoBySecureChannelId  FALSE
-	#define EXP_OpcUaEndpointGetPeerInfoBySecureChannelId  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_OpcUaEndpointGetPeerInfoBySecureChannelId
-	#define EXT_OpcUaEndpointGetPeerInfoBySecureChannelId
-	#define GET_OpcUaEndpointGetPeerInfoBySecureChannelId(fl)  CAL_CMGETAPI( "OpcUaEndpointGetPeerInfoBySecureChannelId" ) 
-	#define CAL_OpcUaEndpointGetPeerInfoBySecureChannelId  OpcUaEndpointGetPeerInfoBySecureChannelId
-	#define CHK_OpcUaEndpointGetPeerInfoBySecureChannelId  TRUE
-	#define EXP_OpcUaEndpointGetPeerInfoBySecureChannelId  CAL_CMEXPAPI( "OpcUaEndpointGetPeerInfoBySecureChannelId" ) 
-#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
-	#define USE_OpcUaEndpointGetPeerInfoBySecureChannelId
-	#define EXT_OpcUaEndpointGetPeerInfoBySecureChannelId
-	#define GET_OpcUaEndpointGetPeerInfoBySecureChannelId(fl)  CAL_CMGETAPI( "OpcUaEndpointGetPeerInfoBySecureChannelId" ) 
-	#define CAL_OpcUaEndpointGetPeerInfoBySecureChannelId  OpcUaEndpointGetPeerInfoBySecureChannelId
-	#define CHK_OpcUaEndpointGetPeerInfoBySecureChannelId  TRUE
-	#define EXP_OpcUaEndpointGetPeerInfoBySecureChannelId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaEndpointGetPeerInfoBySecureChannelId", (RTS_UINTPTR)OpcUaEndpointGetPeerInfoBySecureChannelId, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpOPCUAStackOpcUaEndpointGetPeerInfoBySecureChannelId
-	#define EXT_CmpOPCUAStackOpcUaEndpointGetPeerInfoBySecureChannelId
-	#define GET_CmpOPCUAStackOpcUaEndpointGetPeerInfoBySecureChannelId  ERR_OK
-	#define CAL_CmpOPCUAStackOpcUaEndpointGetPeerInfoBySecureChannelId pICmpOPCUAStack->IOpcUaEndpointGetPeerInfoBySecureChannelId
-	#define CHK_CmpOPCUAStackOpcUaEndpointGetPeerInfoBySecureChannelId (pICmpOPCUAStack != NULL)
-	#define EXP_CmpOPCUAStackOpcUaEndpointGetPeerInfoBySecureChannelId  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_OpcUaEndpointGetPeerInfoBySecureChannelId
-	#define EXT_OpcUaEndpointGetPeerInfoBySecureChannelId
-	#define GET_OpcUaEndpointGetPeerInfoBySecureChannelId(fl)  CAL_CMGETAPI( "OpcUaEndpointGetPeerInfoBySecureChannelId" ) 
-	#define CAL_OpcUaEndpointGetPeerInfoBySecureChannelId pICmpOPCUAStack->IOpcUaEndpointGetPeerInfoBySecureChannelId
-	#define CHK_OpcUaEndpointGetPeerInfoBySecureChannelId (pICmpOPCUAStack != NULL)
-	#define EXP_OpcUaEndpointGetPeerInfoBySecureChannelId  CAL_CMEXPAPI( "OpcUaEndpointGetPeerInfoBySecureChannelId" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_OpcUaEndpointGetPeerInfoBySecureChannelId  PFOPCUAENDPOINTGETPEERINFOBYSECURECHANNELID pfOpcUaEndpointGetPeerInfoBySecureChannelId;
-	#define EXT_OpcUaEndpointGetPeerInfoBySecureChannelId  extern PFOPCUAENDPOINTGETPEERINFOBYSECURECHANNELID pfOpcUaEndpointGetPeerInfoBySecureChannelId;
-	#define GET_OpcUaEndpointGetPeerInfoBySecureChannelId(fl)  s_pfCMGetAPI2( "OpcUaEndpointGetPeerInfoBySecureChannelId", (RTS_VOID_FCTPTR *)&pfOpcUaEndpointGetPeerInfoBySecureChannelId, (fl), 0, 0)
-	#define CAL_OpcUaEndpointGetPeerInfoBySecureChannelId  pfOpcUaEndpointGetPeerInfoBySecureChannelId
-	#define CHK_OpcUaEndpointGetPeerInfoBySecureChannelId  (pfOpcUaEndpointGetPeerInfoBySecureChannelId != NULL)
-	#define EXP_OpcUaEndpointGetPeerInfoBySecureChannelId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaEndpointGetPeerInfoBySecureChannelId", (RTS_UINTPTR)OpcUaEndpointGetPeerInfoBySecureChannelId, 0, 0) 
-#endif
-
-
-
-OpcUa_StatusCode CDECL OpcUaEndpointCloseSecureChannel(OpcUa_Endpoint hEndpoint, OpcUa_UInt32 uSecureChannelId, OpcUa_StatusCode uStatus);
-typedef OpcUa_StatusCode (CDECL * PFOPCUAENDPOINTCLOSESECURECHANNEL) (OpcUa_Endpoint hEndpoint, OpcUa_UInt32 uSecureChannelId, OpcUa_StatusCode uStatus);
-#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUAENDPOINTCLOSESECURECHANNEL_NOTIMPLEMENTED)
-	#define USE_OpcUaEndpointCloseSecureChannel
-	#define EXT_OpcUaEndpointCloseSecureChannel
-	#define GET_OpcUaEndpointCloseSecureChannel(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_OpcUaEndpointCloseSecureChannel(p0,p1,p2)  (OpcUa_StatusCode)ERR_NOTIMPLEMENTED
-	#define CHK_OpcUaEndpointCloseSecureChannel  FALSE
-	#define EXP_OpcUaEndpointCloseSecureChannel  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_OpcUaEndpointCloseSecureChannel
-	#define EXT_OpcUaEndpointCloseSecureChannel
-	#define GET_OpcUaEndpointCloseSecureChannel(fl)  CAL_CMGETAPI( "OpcUaEndpointCloseSecureChannel" ) 
-	#define CAL_OpcUaEndpointCloseSecureChannel  OpcUaEndpointCloseSecureChannel
-	#define CHK_OpcUaEndpointCloseSecureChannel  TRUE
-	#define EXP_OpcUaEndpointCloseSecureChannel  CAL_CMEXPAPI( "OpcUaEndpointCloseSecureChannel" ) 
-#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
-	#define USE_OpcUaEndpointCloseSecureChannel
-	#define EXT_OpcUaEndpointCloseSecureChannel
-	#define GET_OpcUaEndpointCloseSecureChannel(fl)  CAL_CMGETAPI( "OpcUaEndpointCloseSecureChannel" ) 
-	#define CAL_OpcUaEndpointCloseSecureChannel  OpcUaEndpointCloseSecureChannel
-	#define CHK_OpcUaEndpointCloseSecureChannel  TRUE
-	#define EXP_OpcUaEndpointCloseSecureChannel  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaEndpointCloseSecureChannel", (RTS_UINTPTR)OpcUaEndpointCloseSecureChannel, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpOPCUAStackOpcUaEndpointCloseSecureChannel
-	#define EXT_CmpOPCUAStackOpcUaEndpointCloseSecureChannel
-	#define GET_CmpOPCUAStackOpcUaEndpointCloseSecureChannel  ERR_OK
-	#define CAL_CmpOPCUAStackOpcUaEndpointCloseSecureChannel pICmpOPCUAStack->IOpcUaEndpointCloseSecureChannel
-	#define CHK_CmpOPCUAStackOpcUaEndpointCloseSecureChannel (pICmpOPCUAStack != NULL)
-	#define EXP_CmpOPCUAStackOpcUaEndpointCloseSecureChannel  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_OpcUaEndpointCloseSecureChannel
-	#define EXT_OpcUaEndpointCloseSecureChannel
-	#define GET_OpcUaEndpointCloseSecureChannel(fl)  CAL_CMGETAPI( "OpcUaEndpointCloseSecureChannel" ) 
-	#define CAL_OpcUaEndpointCloseSecureChannel pICmpOPCUAStack->IOpcUaEndpointCloseSecureChannel
-	#define CHK_OpcUaEndpointCloseSecureChannel (pICmpOPCUAStack != NULL)
-	#define EXP_OpcUaEndpointCloseSecureChannel  CAL_CMEXPAPI( "OpcUaEndpointCloseSecureChannel" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_OpcUaEndpointCloseSecureChannel  PFOPCUAENDPOINTCLOSESECURECHANNEL pfOpcUaEndpointCloseSecureChannel;
-	#define EXT_OpcUaEndpointCloseSecureChannel  extern PFOPCUAENDPOINTCLOSESECURECHANNEL pfOpcUaEndpointCloseSecureChannel;
-	#define GET_OpcUaEndpointCloseSecureChannel(fl)  s_pfCMGetAPI2( "OpcUaEndpointCloseSecureChannel", (RTS_VOID_FCTPTR *)&pfOpcUaEndpointCloseSecureChannel, (fl), 0, 0)
-	#define CAL_OpcUaEndpointCloseSecureChannel  pfOpcUaEndpointCloseSecureChannel
-	#define CHK_OpcUaEndpointCloseSecureChannel  (pfOpcUaEndpointCloseSecureChannel != NULL)
-	#define EXP_OpcUaEndpointCloseSecureChannel  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaEndpointCloseSecureChannel", (RTS_UINTPTR)OpcUaEndpointCloseSecureChannel, 0, 0) 
-#endif
-
-
-
 
 OpcUa_StatusCode CDECL OpcUaTimerCreate(OpcUa_Timer* hTimer, OpcUa_UInt32 msecInterval, OpcUa_Timer_Callback* fpTimerCallback, OpcUa_Timer_Callback* fpKillCallback, OpcUa_Void* pvCallbackData);
 typedef OpcUa_StatusCode (CDECL * PFOPCUATIMERCREATE) (OpcUa_Timer* hTimer, OpcUa_UInt32 msecInterval, OpcUa_Timer_Callback* fpTimerCallback, OpcUa_Timer_Callback* fpKillCallback, OpcUa_Void* pvCallbackData);
@@ -6123,6 +10791,102 @@ typedef OpcUa_StatusCode (CDECL * PFOPCUASOCKETMANAGERLOOP) (OpcUa_SocketManager
 	#define CAL_OpcUaSocketManagerLoop  pfOpcUaSocketManagerLoop
 	#define CHK_OpcUaSocketManagerLoop  (pfOpcUaSocketManagerLoop != NULL)
 	#define EXP_OpcUaSocketManagerLoop  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSocketManagerLoop", (RTS_UINTPTR)OpcUaSocketManagerLoop, 0, 0) 
+#endif
+
+
+
+OpcUa_StatusCode CDECL OpcUaSocketManagerCreate(OpcUa_SocketManager* pSocketManager, OpcUa_UInt32 nSockets,	OpcUa_UInt32 nFlags);
+typedef OpcUa_StatusCode (CDECL * PFOPCUASOCKETMANAGERCREATE) (OpcUa_SocketManager* pSocketManager, OpcUa_UInt32 nSockets,	OpcUa_UInt32 nFlags);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUASOCKETMANAGERCREATE_NOTIMPLEMENTED)
+	#define USE_OpcUaSocketManagerCreate
+	#define EXT_OpcUaSocketManagerCreate
+	#define GET_OpcUaSocketManagerCreate(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaSocketManagerCreate(p0,p1,p2)  (OpcUa_StatusCode)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaSocketManagerCreate  FALSE
+	#define EXP_OpcUaSocketManagerCreate  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaSocketManagerCreate
+	#define EXT_OpcUaSocketManagerCreate
+	#define GET_OpcUaSocketManagerCreate(fl)  CAL_CMGETAPI( "OpcUaSocketManagerCreate" ) 
+	#define CAL_OpcUaSocketManagerCreate  OpcUaSocketManagerCreate
+	#define CHK_OpcUaSocketManagerCreate  TRUE
+	#define EXP_OpcUaSocketManagerCreate  CAL_CMEXPAPI( "OpcUaSocketManagerCreate" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaSocketManagerCreate
+	#define EXT_OpcUaSocketManagerCreate
+	#define GET_OpcUaSocketManagerCreate(fl)  CAL_CMGETAPI( "OpcUaSocketManagerCreate" ) 
+	#define CAL_OpcUaSocketManagerCreate  OpcUaSocketManagerCreate
+	#define CHK_OpcUaSocketManagerCreate  TRUE
+	#define EXP_OpcUaSocketManagerCreate  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSocketManagerCreate", (RTS_UINTPTR)OpcUaSocketManagerCreate, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaSocketManagerCreate
+	#define EXT_CmpOPCUAStackOpcUaSocketManagerCreate
+	#define GET_CmpOPCUAStackOpcUaSocketManagerCreate  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaSocketManagerCreate pICmpOPCUAStack->IOpcUaSocketManagerCreate
+	#define CHK_CmpOPCUAStackOpcUaSocketManagerCreate (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaSocketManagerCreate  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaSocketManagerCreate
+	#define EXT_OpcUaSocketManagerCreate
+	#define GET_OpcUaSocketManagerCreate(fl)  CAL_CMGETAPI( "OpcUaSocketManagerCreate" ) 
+	#define CAL_OpcUaSocketManagerCreate pICmpOPCUAStack->IOpcUaSocketManagerCreate
+	#define CHK_OpcUaSocketManagerCreate (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaSocketManagerCreate  CAL_CMEXPAPI( "OpcUaSocketManagerCreate" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaSocketManagerCreate  PFOPCUASOCKETMANAGERCREATE pfOpcUaSocketManagerCreate;
+	#define EXT_OpcUaSocketManagerCreate  extern PFOPCUASOCKETMANAGERCREATE pfOpcUaSocketManagerCreate;
+	#define GET_OpcUaSocketManagerCreate(fl)  s_pfCMGetAPI2( "OpcUaSocketManagerCreate", (RTS_VOID_FCTPTR *)&pfOpcUaSocketManagerCreate, (fl), 0, 0)
+	#define CAL_OpcUaSocketManagerCreate  pfOpcUaSocketManagerCreate
+	#define CHK_OpcUaSocketManagerCreate  (pfOpcUaSocketManagerCreate != NULL)
+	#define EXP_OpcUaSocketManagerCreate  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSocketManagerCreate", (RTS_UINTPTR)OpcUaSocketManagerCreate, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaSocketManagerDelete(OpcUa_SocketManager* pSocketManager);
+typedef OpcUa_Void (CDECL * PFOPCUASOCKETMANAGERDELETE) (OpcUa_SocketManager* pSocketManager);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUASOCKETMANAGERDELETE_NOTIMPLEMENTED)
+	#define USE_OpcUaSocketManagerDelete
+	#define EXT_OpcUaSocketManagerDelete
+	#define GET_OpcUaSocketManagerDelete(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaSocketManagerDelete(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaSocketManagerDelete  FALSE
+	#define EXP_OpcUaSocketManagerDelete  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaSocketManagerDelete
+	#define EXT_OpcUaSocketManagerDelete
+	#define GET_OpcUaSocketManagerDelete(fl)  CAL_CMGETAPI( "OpcUaSocketManagerDelete" ) 
+	#define CAL_OpcUaSocketManagerDelete  OpcUaSocketManagerDelete
+	#define CHK_OpcUaSocketManagerDelete  TRUE
+	#define EXP_OpcUaSocketManagerDelete  CAL_CMEXPAPI( "OpcUaSocketManagerDelete" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaSocketManagerDelete
+	#define EXT_OpcUaSocketManagerDelete
+	#define GET_OpcUaSocketManagerDelete(fl)  CAL_CMGETAPI( "OpcUaSocketManagerDelete" ) 
+	#define CAL_OpcUaSocketManagerDelete  OpcUaSocketManagerDelete
+	#define CHK_OpcUaSocketManagerDelete  TRUE
+	#define EXP_OpcUaSocketManagerDelete  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSocketManagerDelete", (RTS_UINTPTR)OpcUaSocketManagerDelete, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaSocketManagerDelete
+	#define EXT_CmpOPCUAStackOpcUaSocketManagerDelete
+	#define GET_CmpOPCUAStackOpcUaSocketManagerDelete  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaSocketManagerDelete pICmpOPCUAStack->IOpcUaSocketManagerDelete
+	#define CHK_CmpOPCUAStackOpcUaSocketManagerDelete (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaSocketManagerDelete  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaSocketManagerDelete
+	#define EXT_OpcUaSocketManagerDelete
+	#define GET_OpcUaSocketManagerDelete(fl)  CAL_CMGETAPI( "OpcUaSocketManagerDelete" ) 
+	#define CAL_OpcUaSocketManagerDelete pICmpOPCUAStack->IOpcUaSocketManagerDelete
+	#define CHK_OpcUaSocketManagerDelete (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaSocketManagerDelete  CAL_CMEXPAPI( "OpcUaSocketManagerDelete" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaSocketManagerDelete  PFOPCUASOCKETMANAGERDELETE pfOpcUaSocketManagerDelete;
+	#define EXT_OpcUaSocketManagerDelete  extern PFOPCUASOCKETMANAGERDELETE pfOpcUaSocketManagerDelete;
+	#define GET_OpcUaSocketManagerDelete(fl)  s_pfCMGetAPI2( "OpcUaSocketManagerDelete", (RTS_VOID_FCTPTR *)&pfOpcUaSocketManagerDelete, (fl), 0, 0)
+	#define CAL_OpcUaSocketManagerDelete  pfOpcUaSocketManagerDelete
+	#define CHK_OpcUaSocketManagerDelete  (pfOpcUaSocketManagerDelete != NULL)
+	#define EXP_OpcUaSocketManagerDelete  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaSocketManagerDelete", (RTS_UINTPTR)OpcUaSocketManagerDelete, 0, 0) 
 #endif
 
 
@@ -6758,6 +11522,54 @@ typedef OpcUa_StatusCode (CDECL * PFOPCUACRYPTOASYMMETRICDECRYPT) (OpcUa_CryptoP
 
 
 
+OpcUa_StatusCode CDECL OpcUaCryptoAsymmetricEncrypt(OpcUa_CryptoProvider* pProvider, OpcUa_Byte* pPlainText, OpcUa_UInt32 plainTextLen, OpcUa_Key* publicKey, OpcUa_Byte* pCipherText, OpcUa_UInt32* pCipherTextLen);
+typedef OpcUa_StatusCode (CDECL * PFOPCUACRYPTOASYMMETRICENCRYPT) (OpcUa_CryptoProvider* pProvider, OpcUa_Byte* pPlainText, OpcUa_UInt32 plainTextLen, OpcUa_Key* publicKey, OpcUa_Byte* pCipherText, OpcUa_UInt32* pCipherTextLen);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACRYPTOASYMMETRICENCRYPT_NOTIMPLEMENTED)
+	#define USE_OpcUaCryptoAsymmetricEncrypt
+	#define EXT_OpcUaCryptoAsymmetricEncrypt
+	#define GET_OpcUaCryptoAsymmetricEncrypt(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCryptoAsymmetricEncrypt(p0,p1,p2,p3,p4,p5)  (OpcUa_StatusCode)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCryptoAsymmetricEncrypt  FALSE
+	#define EXP_OpcUaCryptoAsymmetricEncrypt  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCryptoAsymmetricEncrypt
+	#define EXT_OpcUaCryptoAsymmetricEncrypt
+	#define GET_OpcUaCryptoAsymmetricEncrypt(fl)  CAL_CMGETAPI( "OpcUaCryptoAsymmetricEncrypt" ) 
+	#define CAL_OpcUaCryptoAsymmetricEncrypt  OpcUaCryptoAsymmetricEncrypt
+	#define CHK_OpcUaCryptoAsymmetricEncrypt  TRUE
+	#define EXP_OpcUaCryptoAsymmetricEncrypt  CAL_CMEXPAPI( "OpcUaCryptoAsymmetricEncrypt" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCryptoAsymmetricEncrypt
+	#define EXT_OpcUaCryptoAsymmetricEncrypt
+	#define GET_OpcUaCryptoAsymmetricEncrypt(fl)  CAL_CMGETAPI( "OpcUaCryptoAsymmetricEncrypt" ) 
+	#define CAL_OpcUaCryptoAsymmetricEncrypt  OpcUaCryptoAsymmetricEncrypt
+	#define CHK_OpcUaCryptoAsymmetricEncrypt  TRUE
+	#define EXP_OpcUaCryptoAsymmetricEncrypt  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCryptoAsymmetricEncrypt", (RTS_UINTPTR)OpcUaCryptoAsymmetricEncrypt, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCryptoAsymmetricEncrypt
+	#define EXT_CmpOPCUAStackOpcUaCryptoAsymmetricEncrypt
+	#define GET_CmpOPCUAStackOpcUaCryptoAsymmetricEncrypt  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCryptoAsymmetricEncrypt pICmpOPCUAStack->IOpcUaCryptoAsymmetricEncrypt
+	#define CHK_CmpOPCUAStackOpcUaCryptoAsymmetricEncrypt (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCryptoAsymmetricEncrypt  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCryptoAsymmetricEncrypt
+	#define EXT_OpcUaCryptoAsymmetricEncrypt
+	#define GET_OpcUaCryptoAsymmetricEncrypt(fl)  CAL_CMGETAPI( "OpcUaCryptoAsymmetricEncrypt" ) 
+	#define CAL_OpcUaCryptoAsymmetricEncrypt pICmpOPCUAStack->IOpcUaCryptoAsymmetricEncrypt
+	#define CHK_OpcUaCryptoAsymmetricEncrypt (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCryptoAsymmetricEncrypt  CAL_CMEXPAPI( "OpcUaCryptoAsymmetricEncrypt" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCryptoAsymmetricEncrypt  PFOPCUACRYPTOASYMMETRICENCRYPT pfOpcUaCryptoAsymmetricEncrypt;
+	#define EXT_OpcUaCryptoAsymmetricEncrypt  extern PFOPCUACRYPTOASYMMETRICENCRYPT pfOpcUaCryptoAsymmetricEncrypt;
+	#define GET_OpcUaCryptoAsymmetricEncrypt(fl)  s_pfCMGetAPI2( "OpcUaCryptoAsymmetricEncrypt", (RTS_VOID_FCTPTR *)&pfOpcUaCryptoAsymmetricEncrypt, (fl), 0, 0)
+	#define CAL_OpcUaCryptoAsymmetricEncrypt  pfOpcUaCryptoAsymmetricEncrypt
+	#define CHK_OpcUaCryptoAsymmetricEncrypt  (pfOpcUaCryptoAsymmetricEncrypt != NULL)
+	#define EXP_OpcUaCryptoAsymmetricEncrypt  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCryptoAsymmetricEncrypt", (RTS_UINTPTR)OpcUaCryptoAsymmetricEncrypt, 0, 0) 
+#endif
+
+
+
 OpcUa_CharA* CDECL OpcUaCryptoGetSignatureAlgorithmUri(OpcUa_CryptoProvider* pProvider);
 typedef OpcUa_CharA* (CDECL * PFOPCUACRYPTOGETSIGNATUREALGORITHMURI) (OpcUa_CryptoProvider* pProvider);
 #if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACRYPTOGETSIGNATUREALGORITHMURI_NOTIMPLEMENTED)
@@ -6802,6 +11614,54 @@ typedef OpcUa_CharA* (CDECL * PFOPCUACRYPTOGETSIGNATUREALGORITHMURI) (OpcUa_Cryp
 	#define CAL_OpcUaCryptoGetSignatureAlgorithmUri  pfOpcUaCryptoGetSignatureAlgorithmUri
 	#define CHK_OpcUaCryptoGetSignatureAlgorithmUri  (pfOpcUaCryptoGetSignatureAlgorithmUri != NULL)
 	#define EXP_OpcUaCryptoGetSignatureAlgorithmUri  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCryptoGetSignatureAlgorithmUri", (RTS_UINTPTR)OpcUaCryptoGetSignatureAlgorithmUri, 0, 0) 
+#endif
+
+
+
+OpcUa_CharA* CDECL OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri(OpcUa_CryptoProvider* pProvider);
+typedef OpcUa_CharA* (CDECL * PFOPCUACRYPTOGETASYMMETRICENCRYPTIONALGORITHMURI) (OpcUa_CryptoProvider* pProvider);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACRYPTOGETASYMMETRICENCRYPTIONALGORITHMURI_NOTIMPLEMENTED)
+	#define USE_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri
+	#define EXT_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri
+	#define GET_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri(p0)  (OpcUa_CharA*)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  FALSE
+	#define EXP_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri
+	#define EXT_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri
+	#define GET_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri(fl)  CAL_CMGETAPI( "OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri" ) 
+	#define CAL_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri
+	#define CHK_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  TRUE
+	#define EXP_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  CAL_CMEXPAPI( "OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri
+	#define EXT_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri
+	#define GET_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri(fl)  CAL_CMGETAPI( "OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri" ) 
+	#define CAL_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri
+	#define CHK_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  TRUE
+	#define EXP_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri", (RTS_UINTPTR)OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaCryptoGetAsymmetricEncryptionAlgorithmUri
+	#define EXT_CmpOPCUAStackOpcUaCryptoGetAsymmetricEncryptionAlgorithmUri
+	#define GET_CmpOPCUAStackOpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaCryptoGetAsymmetricEncryptionAlgorithmUri pICmpOPCUAStack->IOpcUaCryptoGetAsymmetricEncryptionAlgorithmUri
+	#define CHK_CmpOPCUAStackOpcUaCryptoGetAsymmetricEncryptionAlgorithmUri (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri
+	#define EXT_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri
+	#define GET_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri(fl)  CAL_CMGETAPI( "OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri" ) 
+	#define CAL_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri pICmpOPCUAStack->IOpcUaCryptoGetAsymmetricEncryptionAlgorithmUri
+	#define CHK_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  CAL_CMEXPAPI( "OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  PFOPCUACRYPTOGETASYMMETRICENCRYPTIONALGORITHMURI pfOpcUaCryptoGetAsymmetricEncryptionAlgorithmUri;
+	#define EXT_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  extern PFOPCUACRYPTOGETASYMMETRICENCRYPTIONALGORITHMURI pfOpcUaCryptoGetAsymmetricEncryptionAlgorithmUri;
+	#define GET_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri(fl)  s_pfCMGetAPI2( "OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri", (RTS_VOID_FCTPTR *)&pfOpcUaCryptoGetAsymmetricEncryptionAlgorithmUri, (fl), 0, 0)
+	#define CAL_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  pfOpcUaCryptoGetAsymmetricEncryptionAlgorithmUri
+	#define CHK_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  (pfOpcUaCryptoGetAsymmetricEncryptionAlgorithmUri != NULL)
+	#define EXP_OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri", (RTS_UINTPTR)OpcUaCryptoGetAsymmetricEncryptionAlgorithmUri, 0, 0) 
 #endif
 
 
@@ -6950,19 +11810,391 @@ typedef OpcUa_StatusCode (CDECL * PFOPCUACRYPTOPROVIDERDELETE) (OpcUa_CryptoProv
 
 
 
+OpcUa_StatusCode CDECL OpcUaStackGenerateApplicationSignature(const OpcUa_StringA pszSecurityPolicyUri, const OpcUa_ByteString *pPeerCert, const OpcUa_ByteString *pPeerNonce, const OpcUa_Key *pMyPrivateKey, OpcUa_SignatureData *pSignature);
+typedef OpcUa_StatusCode (CDECL * PFOPCUASTACKGENERATEAPPLICATIONSIGNATURE) (const OpcUa_StringA pszSecurityPolicyUri, const OpcUa_ByteString *pPeerCert, const OpcUa_ByteString *pPeerNonce, const OpcUa_Key *pMyPrivateKey, OpcUa_SignatureData *pSignature);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUASTACKGENERATEAPPLICATIONSIGNATURE_NOTIMPLEMENTED)
+	#define USE_OpcUaStackGenerateApplicationSignature
+	#define EXT_OpcUaStackGenerateApplicationSignature
+	#define GET_OpcUaStackGenerateApplicationSignature(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaStackGenerateApplicationSignature(p0,p1,p2,p3,p4)  (OpcUa_StatusCode)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaStackGenerateApplicationSignature  FALSE
+	#define EXP_OpcUaStackGenerateApplicationSignature  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaStackGenerateApplicationSignature
+	#define EXT_OpcUaStackGenerateApplicationSignature
+	#define GET_OpcUaStackGenerateApplicationSignature(fl)  CAL_CMGETAPI( "OpcUaStackGenerateApplicationSignature" ) 
+	#define CAL_OpcUaStackGenerateApplicationSignature  OpcUaStackGenerateApplicationSignature
+	#define CHK_OpcUaStackGenerateApplicationSignature  TRUE
+	#define EXP_OpcUaStackGenerateApplicationSignature  CAL_CMEXPAPI( "OpcUaStackGenerateApplicationSignature" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaStackGenerateApplicationSignature
+	#define EXT_OpcUaStackGenerateApplicationSignature
+	#define GET_OpcUaStackGenerateApplicationSignature(fl)  CAL_CMGETAPI( "OpcUaStackGenerateApplicationSignature" ) 
+	#define CAL_OpcUaStackGenerateApplicationSignature  OpcUaStackGenerateApplicationSignature
+	#define CHK_OpcUaStackGenerateApplicationSignature  TRUE
+	#define EXP_OpcUaStackGenerateApplicationSignature  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaStackGenerateApplicationSignature", (RTS_UINTPTR)OpcUaStackGenerateApplicationSignature, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaStackGenerateApplicationSignature
+	#define EXT_CmpOPCUAStackOpcUaStackGenerateApplicationSignature
+	#define GET_CmpOPCUAStackOpcUaStackGenerateApplicationSignature  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaStackGenerateApplicationSignature pICmpOPCUAStack->IOpcUaStackGenerateApplicationSignature
+	#define CHK_CmpOPCUAStackOpcUaStackGenerateApplicationSignature (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaStackGenerateApplicationSignature  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaStackGenerateApplicationSignature
+	#define EXT_OpcUaStackGenerateApplicationSignature
+	#define GET_OpcUaStackGenerateApplicationSignature(fl)  CAL_CMGETAPI( "OpcUaStackGenerateApplicationSignature" ) 
+	#define CAL_OpcUaStackGenerateApplicationSignature pICmpOPCUAStack->IOpcUaStackGenerateApplicationSignature
+	#define CHK_OpcUaStackGenerateApplicationSignature (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaStackGenerateApplicationSignature  CAL_CMEXPAPI( "OpcUaStackGenerateApplicationSignature" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaStackGenerateApplicationSignature  PFOPCUASTACKGENERATEAPPLICATIONSIGNATURE pfOpcUaStackGenerateApplicationSignature;
+	#define EXT_OpcUaStackGenerateApplicationSignature  extern PFOPCUASTACKGENERATEAPPLICATIONSIGNATURE pfOpcUaStackGenerateApplicationSignature;
+	#define GET_OpcUaStackGenerateApplicationSignature(fl)  s_pfCMGetAPI2( "OpcUaStackGenerateApplicationSignature", (RTS_VOID_FCTPTR *)&pfOpcUaStackGenerateApplicationSignature, (fl), 0, 0)
+	#define CAL_OpcUaStackGenerateApplicationSignature  pfOpcUaStackGenerateApplicationSignature
+	#define CHK_OpcUaStackGenerateApplicationSignature  (pfOpcUaStackGenerateApplicationSignature != NULL)
+	#define EXP_OpcUaStackGenerateApplicationSignature  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaStackGenerateApplicationSignature", (RTS_UINTPTR)OpcUaStackGenerateApplicationSignature, 0, 0) 
+#endif
+
+
+
+OpcUa_StatusCode CDECL OpcUaStackVerifyApplicationSignature(const OpcUa_StringA pszSecurityPolicyUri, const OpcUa_SignatureData *pSignature, const OpcUa_ByteString *pMyCert, const OpcUa_ByteString *pMyNonce, RTS_HANDLE hPeerCert);
+typedef OpcUa_StatusCode (CDECL * PFOPCUASTACKVERIFYAPPLICATIONSIGNATURE) (const OpcUa_StringA pszSecurityPolicyUri, const OpcUa_SignatureData *pSignature, const OpcUa_ByteString *pMyCert, const OpcUa_ByteString *pMyNonce, RTS_HANDLE hPeerCert);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUASTACKVERIFYAPPLICATIONSIGNATURE_NOTIMPLEMENTED)
+	#define USE_OpcUaStackVerifyApplicationSignature
+	#define EXT_OpcUaStackVerifyApplicationSignature
+	#define GET_OpcUaStackVerifyApplicationSignature(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaStackVerifyApplicationSignature(p0,p1,p2,p3,p4)  (OpcUa_StatusCode)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaStackVerifyApplicationSignature  FALSE
+	#define EXP_OpcUaStackVerifyApplicationSignature  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaStackVerifyApplicationSignature
+	#define EXT_OpcUaStackVerifyApplicationSignature
+	#define GET_OpcUaStackVerifyApplicationSignature(fl)  CAL_CMGETAPI( "OpcUaStackVerifyApplicationSignature" ) 
+	#define CAL_OpcUaStackVerifyApplicationSignature  OpcUaStackVerifyApplicationSignature
+	#define CHK_OpcUaStackVerifyApplicationSignature  TRUE
+	#define EXP_OpcUaStackVerifyApplicationSignature  CAL_CMEXPAPI( "OpcUaStackVerifyApplicationSignature" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaStackVerifyApplicationSignature
+	#define EXT_OpcUaStackVerifyApplicationSignature
+	#define GET_OpcUaStackVerifyApplicationSignature(fl)  CAL_CMGETAPI( "OpcUaStackVerifyApplicationSignature" ) 
+	#define CAL_OpcUaStackVerifyApplicationSignature  OpcUaStackVerifyApplicationSignature
+	#define CHK_OpcUaStackVerifyApplicationSignature  TRUE
+	#define EXP_OpcUaStackVerifyApplicationSignature  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaStackVerifyApplicationSignature", (RTS_UINTPTR)OpcUaStackVerifyApplicationSignature, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaStackVerifyApplicationSignature
+	#define EXT_CmpOPCUAStackOpcUaStackVerifyApplicationSignature
+	#define GET_CmpOPCUAStackOpcUaStackVerifyApplicationSignature  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaStackVerifyApplicationSignature pICmpOPCUAStack->IOpcUaStackVerifyApplicationSignature
+	#define CHK_CmpOPCUAStackOpcUaStackVerifyApplicationSignature (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaStackVerifyApplicationSignature  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaStackVerifyApplicationSignature
+	#define EXT_OpcUaStackVerifyApplicationSignature
+	#define GET_OpcUaStackVerifyApplicationSignature(fl)  CAL_CMGETAPI( "OpcUaStackVerifyApplicationSignature" ) 
+	#define CAL_OpcUaStackVerifyApplicationSignature pICmpOPCUAStack->IOpcUaStackVerifyApplicationSignature
+	#define CHK_OpcUaStackVerifyApplicationSignature (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaStackVerifyApplicationSignature  CAL_CMEXPAPI( "OpcUaStackVerifyApplicationSignature" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaStackVerifyApplicationSignature  PFOPCUASTACKVERIFYAPPLICATIONSIGNATURE pfOpcUaStackVerifyApplicationSignature;
+	#define EXT_OpcUaStackVerifyApplicationSignature  extern PFOPCUASTACKVERIFYAPPLICATIONSIGNATURE pfOpcUaStackVerifyApplicationSignature;
+	#define GET_OpcUaStackVerifyApplicationSignature(fl)  s_pfCMGetAPI2( "OpcUaStackVerifyApplicationSignature", (RTS_VOID_FCTPTR *)&pfOpcUaStackVerifyApplicationSignature, (fl), 0, 0)
+	#define CAL_OpcUaStackVerifyApplicationSignature  pfOpcUaStackVerifyApplicationSignature
+	#define CHK_OpcUaStackVerifyApplicationSignature  (pfOpcUaStackVerifyApplicationSignature != NULL)
+	#define EXP_OpcUaStackVerifyApplicationSignature  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaStackVerifyApplicationSignature", (RTS_UINTPTR)OpcUaStackVerifyApplicationSignature, 0, 0) 
+#endif
 
 
 
 
+/* Client Interface */
+OpcUa_StatusCode CDECL OpcUaChannelCreate(OpcUa_Channel* a_phChannel, OpcUa_Channel_SerializerType a_eSerializerType);
+typedef OpcUa_StatusCode (CDECL * PFOPCUACHANNELCREATE) (OpcUa_Channel* a_phChannel, OpcUa_Channel_SerializerType a_eSerializerType);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACHANNELCREATE_NOTIMPLEMENTED)
+	#define USE_OpcUaChannelCreate
+	#define EXT_OpcUaChannelCreate
+	#define GET_OpcUaChannelCreate(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaChannelCreate(p0,p1)  (OpcUa_StatusCode)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaChannelCreate  FALSE
+	#define EXP_OpcUaChannelCreate  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaChannelCreate
+	#define EXT_OpcUaChannelCreate
+	#define GET_OpcUaChannelCreate(fl)  CAL_CMGETAPI( "OpcUaChannelCreate" ) 
+	#define CAL_OpcUaChannelCreate  OpcUaChannelCreate
+	#define CHK_OpcUaChannelCreate  TRUE
+	#define EXP_OpcUaChannelCreate  CAL_CMEXPAPI( "OpcUaChannelCreate" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaChannelCreate
+	#define EXT_OpcUaChannelCreate
+	#define GET_OpcUaChannelCreate(fl)  CAL_CMGETAPI( "OpcUaChannelCreate" ) 
+	#define CAL_OpcUaChannelCreate  OpcUaChannelCreate
+	#define CHK_OpcUaChannelCreate  TRUE
+	#define EXP_OpcUaChannelCreate  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaChannelCreate", (RTS_UINTPTR)OpcUaChannelCreate, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaChannelCreate
+	#define EXT_CmpOPCUAStackOpcUaChannelCreate
+	#define GET_CmpOPCUAStackOpcUaChannelCreate  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaChannelCreate pICmpOPCUAStack->IOpcUaChannelCreate
+	#define CHK_CmpOPCUAStackOpcUaChannelCreate (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaChannelCreate  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaChannelCreate
+	#define EXT_OpcUaChannelCreate
+	#define GET_OpcUaChannelCreate(fl)  CAL_CMGETAPI( "OpcUaChannelCreate" ) 
+	#define CAL_OpcUaChannelCreate pICmpOPCUAStack->IOpcUaChannelCreate
+	#define CHK_OpcUaChannelCreate (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaChannelCreate  CAL_CMEXPAPI( "OpcUaChannelCreate" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaChannelCreate  PFOPCUACHANNELCREATE pfOpcUaChannelCreate;
+	#define EXT_OpcUaChannelCreate  extern PFOPCUACHANNELCREATE pfOpcUaChannelCreate;
+	#define GET_OpcUaChannelCreate(fl)  s_pfCMGetAPI2( "OpcUaChannelCreate", (RTS_VOID_FCTPTR *)&pfOpcUaChannelCreate, (fl), 0, 0)
+	#define CAL_OpcUaChannelCreate  pfOpcUaChannelCreate
+	#define CHK_OpcUaChannelCreate  (pfOpcUaChannelCreate != NULL)
+	#define EXP_OpcUaChannelCreate  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaChannelCreate", (RTS_UINTPTR)OpcUaChannelCreate, 0, 0) 
+#endif
+
+
+
+OpcUa_Void CDECL OpcUaChannelDelete(OpcUa_Channel* a_phChannel);
+typedef OpcUa_Void (CDECL * PFOPCUACHANNELDELETE) (OpcUa_Channel* a_phChannel);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACHANNELDELETE_NOTIMPLEMENTED)
+	#define USE_OpcUaChannelDelete
+	#define EXT_OpcUaChannelDelete
+	#define GET_OpcUaChannelDelete(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaChannelDelete(p0)  (OpcUa_Void)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaChannelDelete  FALSE
+	#define EXP_OpcUaChannelDelete  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaChannelDelete
+	#define EXT_OpcUaChannelDelete
+	#define GET_OpcUaChannelDelete(fl)  CAL_CMGETAPI( "OpcUaChannelDelete" ) 
+	#define CAL_OpcUaChannelDelete  OpcUaChannelDelete
+	#define CHK_OpcUaChannelDelete  TRUE
+	#define EXP_OpcUaChannelDelete  CAL_CMEXPAPI( "OpcUaChannelDelete" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaChannelDelete
+	#define EXT_OpcUaChannelDelete
+	#define GET_OpcUaChannelDelete(fl)  CAL_CMGETAPI( "OpcUaChannelDelete" ) 
+	#define CAL_OpcUaChannelDelete  OpcUaChannelDelete
+	#define CHK_OpcUaChannelDelete  TRUE
+	#define EXP_OpcUaChannelDelete  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaChannelDelete", (RTS_UINTPTR)OpcUaChannelDelete, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaChannelDelete
+	#define EXT_CmpOPCUAStackOpcUaChannelDelete
+	#define GET_CmpOPCUAStackOpcUaChannelDelete  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaChannelDelete pICmpOPCUAStack->IOpcUaChannelDelete
+	#define CHK_CmpOPCUAStackOpcUaChannelDelete (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaChannelDelete  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaChannelDelete
+	#define EXT_OpcUaChannelDelete
+	#define GET_OpcUaChannelDelete(fl)  CAL_CMGETAPI( "OpcUaChannelDelete" ) 
+	#define CAL_OpcUaChannelDelete pICmpOPCUAStack->IOpcUaChannelDelete
+	#define CHK_OpcUaChannelDelete (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaChannelDelete  CAL_CMEXPAPI( "OpcUaChannelDelete" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaChannelDelete  PFOPCUACHANNELDELETE pfOpcUaChannelDelete;
+	#define EXT_OpcUaChannelDelete  extern PFOPCUACHANNELDELETE pfOpcUaChannelDelete;
+	#define GET_OpcUaChannelDelete(fl)  s_pfCMGetAPI2( "OpcUaChannelDelete", (RTS_VOID_FCTPTR *)&pfOpcUaChannelDelete, (fl), 0, 0)
+	#define CAL_OpcUaChannelDelete  pfOpcUaChannelDelete
+	#define CHK_OpcUaChannelDelete  (pfOpcUaChannelDelete != NULL)
+	#define EXP_OpcUaChannelDelete  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaChannelDelete", (RTS_UINTPTR)OpcUaChannelDelete, 0, 0) 
+#endif
+
+
+
+OpcUa_StatusCode CDECL OpcUaChannelBeginConnect(OpcUa_Channel pChannel, OpcUa_StringA sUrl, OpcUa_ByteString* pClientCertificate, OpcUa_Key* pClientPrivateKey, OpcUa_ByteString* pServerCertificate, OpcUa_Void* pPKIConfig, OpcUa_String* pRequestedSecurityPolicyUri, OpcUa_Int32 nRequestedLifetime, OpcUa_MessageSecurityMode messageSecurityMode, OpcUa_UInt32 nNetworkTimeout, OpcUa_Channel_PfnConnectionStateChanged* pfCallback, OpcUa_Void* pCallbackData, OpcUa_SocketManager hSocketManager);
+typedef OpcUa_StatusCode (CDECL * PFOPCUACHANNELBEGINCONNECT) (OpcUa_Channel pChannel, OpcUa_StringA sUrl, OpcUa_ByteString* pClientCertificate, OpcUa_Key* pClientPrivateKey, OpcUa_ByteString* pServerCertificate, OpcUa_Void* pPKIConfig, OpcUa_String* pRequestedSecurityPolicyUri, OpcUa_Int32 nRequestedLifetime, OpcUa_MessageSecurityMode messageSecurityMode, OpcUa_UInt32 nNetworkTimeout, OpcUa_Channel_PfnConnectionStateChanged* pfCallback, OpcUa_Void* pCallbackData, OpcUa_SocketManager hSocketManager);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACHANNELBEGINCONNECT_NOTIMPLEMENTED)
+	#define USE_OpcUaChannelBeginConnect
+	#define EXT_OpcUaChannelBeginConnect
+	#define GET_OpcUaChannelBeginConnect(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaChannelBeginConnect(p0,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12)  (OpcUa_StatusCode)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaChannelBeginConnect  FALSE
+	#define EXP_OpcUaChannelBeginConnect  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaChannelBeginConnect
+	#define EXT_OpcUaChannelBeginConnect
+	#define GET_OpcUaChannelBeginConnect(fl)  CAL_CMGETAPI( "OpcUaChannelBeginConnect" ) 
+	#define CAL_OpcUaChannelBeginConnect  OpcUaChannelBeginConnect
+	#define CHK_OpcUaChannelBeginConnect  TRUE
+	#define EXP_OpcUaChannelBeginConnect  CAL_CMEXPAPI( "OpcUaChannelBeginConnect" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaChannelBeginConnect
+	#define EXT_OpcUaChannelBeginConnect
+	#define GET_OpcUaChannelBeginConnect(fl)  CAL_CMGETAPI( "OpcUaChannelBeginConnect" ) 
+	#define CAL_OpcUaChannelBeginConnect  OpcUaChannelBeginConnect
+	#define CHK_OpcUaChannelBeginConnect  TRUE
+	#define EXP_OpcUaChannelBeginConnect  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaChannelBeginConnect", (RTS_UINTPTR)OpcUaChannelBeginConnect, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaChannelBeginConnect
+	#define EXT_CmpOPCUAStackOpcUaChannelBeginConnect
+	#define GET_CmpOPCUAStackOpcUaChannelBeginConnect  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaChannelBeginConnect pICmpOPCUAStack->IOpcUaChannelBeginConnect
+	#define CHK_CmpOPCUAStackOpcUaChannelBeginConnect (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaChannelBeginConnect  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaChannelBeginConnect
+	#define EXT_OpcUaChannelBeginConnect
+	#define GET_OpcUaChannelBeginConnect(fl)  CAL_CMGETAPI( "OpcUaChannelBeginConnect" ) 
+	#define CAL_OpcUaChannelBeginConnect pICmpOPCUAStack->IOpcUaChannelBeginConnect
+	#define CHK_OpcUaChannelBeginConnect (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaChannelBeginConnect  CAL_CMEXPAPI( "OpcUaChannelBeginConnect" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaChannelBeginConnect  PFOPCUACHANNELBEGINCONNECT pfOpcUaChannelBeginConnect;
+	#define EXT_OpcUaChannelBeginConnect  extern PFOPCUACHANNELBEGINCONNECT pfOpcUaChannelBeginConnect;
+	#define GET_OpcUaChannelBeginConnect(fl)  s_pfCMGetAPI2( "OpcUaChannelBeginConnect", (RTS_VOID_FCTPTR *)&pfOpcUaChannelBeginConnect, (fl), 0, 0)
+	#define CAL_OpcUaChannelBeginConnect  pfOpcUaChannelBeginConnect
+	#define CHK_OpcUaChannelBeginConnect  (pfOpcUaChannelBeginConnect != NULL)
+	#define EXP_OpcUaChannelBeginConnect  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaChannelBeginConnect", (RTS_UINTPTR)OpcUaChannelBeginConnect, 0, 0) 
+#endif
+
+
+
+OpcUa_StatusCode CDECL OpcUaChannelBeginDisconnect(OpcUa_Channel a_pChannel, OpcUa_Channel_PfnConnectionStateChanged* a_pfCallback, OpcUa_Void* a_pCallbackData);
+typedef OpcUa_StatusCode (CDECL * PFOPCUACHANNELBEGINDISCONNECT) (OpcUa_Channel a_pChannel, OpcUa_Channel_PfnConnectionStateChanged* a_pfCallback, OpcUa_Void* a_pCallbackData);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACHANNELBEGINDISCONNECT_NOTIMPLEMENTED)
+	#define USE_OpcUaChannelBeginDisconnect
+	#define EXT_OpcUaChannelBeginDisconnect
+	#define GET_OpcUaChannelBeginDisconnect(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaChannelBeginDisconnect(p0,p1,p2)  (OpcUa_StatusCode)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaChannelBeginDisconnect  FALSE
+	#define EXP_OpcUaChannelBeginDisconnect  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaChannelBeginDisconnect
+	#define EXT_OpcUaChannelBeginDisconnect
+	#define GET_OpcUaChannelBeginDisconnect(fl)  CAL_CMGETAPI( "OpcUaChannelBeginDisconnect" ) 
+	#define CAL_OpcUaChannelBeginDisconnect  OpcUaChannelBeginDisconnect
+	#define CHK_OpcUaChannelBeginDisconnect  TRUE
+	#define EXP_OpcUaChannelBeginDisconnect  CAL_CMEXPAPI( "OpcUaChannelBeginDisconnect" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaChannelBeginDisconnect
+	#define EXT_OpcUaChannelBeginDisconnect
+	#define GET_OpcUaChannelBeginDisconnect(fl)  CAL_CMGETAPI( "OpcUaChannelBeginDisconnect" ) 
+	#define CAL_OpcUaChannelBeginDisconnect  OpcUaChannelBeginDisconnect
+	#define CHK_OpcUaChannelBeginDisconnect  TRUE
+	#define EXP_OpcUaChannelBeginDisconnect  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaChannelBeginDisconnect", (RTS_UINTPTR)OpcUaChannelBeginDisconnect, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaChannelBeginDisconnect
+	#define EXT_CmpOPCUAStackOpcUaChannelBeginDisconnect
+	#define GET_CmpOPCUAStackOpcUaChannelBeginDisconnect  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaChannelBeginDisconnect pICmpOPCUAStack->IOpcUaChannelBeginDisconnect
+	#define CHK_CmpOPCUAStackOpcUaChannelBeginDisconnect (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaChannelBeginDisconnect  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaChannelBeginDisconnect
+	#define EXT_OpcUaChannelBeginDisconnect
+	#define GET_OpcUaChannelBeginDisconnect(fl)  CAL_CMGETAPI( "OpcUaChannelBeginDisconnect" ) 
+	#define CAL_OpcUaChannelBeginDisconnect pICmpOPCUAStack->IOpcUaChannelBeginDisconnect
+	#define CHK_OpcUaChannelBeginDisconnect (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaChannelBeginDisconnect  CAL_CMEXPAPI( "OpcUaChannelBeginDisconnect" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaChannelBeginDisconnect  PFOPCUACHANNELBEGINDISCONNECT pfOpcUaChannelBeginDisconnect;
+	#define EXT_OpcUaChannelBeginDisconnect  extern PFOPCUACHANNELBEGINDISCONNECT pfOpcUaChannelBeginDisconnect;
+	#define GET_OpcUaChannelBeginDisconnect(fl)  s_pfCMGetAPI2( "OpcUaChannelBeginDisconnect", (RTS_VOID_FCTPTR *)&pfOpcUaChannelBeginDisconnect, (fl), 0, 0)
+	#define CAL_OpcUaChannelBeginDisconnect  pfOpcUaChannelBeginDisconnect
+	#define CHK_OpcUaChannelBeginDisconnect  (pfOpcUaChannelBeginDisconnect != NULL)
+	#define EXP_OpcUaChannelBeginDisconnect  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaChannelBeginDisconnect", (RTS_UINTPTR)OpcUaChannelBeginDisconnect, 0, 0) 
+#endif
+
+
+
+OpcUa_StatusCode CDECL OpcUaChannelBeginInvokeService(OpcUa_Channel a_hChannel, OpcUa_StringA a_sName, OpcUa_Void* a_pRequest, OpcUa_EncodeableType* a_pRequestType, OpcUa_Channel_PfnRequestComplete* a_pCallback, OpcUa_Void* a_pCallbackData);
+typedef OpcUa_StatusCode (CDECL * PFOPCUACHANNELBEGININVOKESERVICE) (OpcUa_Channel a_hChannel, OpcUa_StringA a_sName, OpcUa_Void* a_pRequest, OpcUa_EncodeableType* a_pRequestType, OpcUa_Channel_PfnRequestComplete* a_pCallback, OpcUa_Void* a_pCallbackData);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUACHANNELBEGININVOKESERVICE_NOTIMPLEMENTED)
+	#define USE_OpcUaChannelBeginInvokeService
+	#define EXT_OpcUaChannelBeginInvokeService
+	#define GET_OpcUaChannelBeginInvokeService(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaChannelBeginInvokeService(p0,p1,p2,p3,p4,p5)  (OpcUa_StatusCode)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaChannelBeginInvokeService  FALSE
+	#define EXP_OpcUaChannelBeginInvokeService  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaChannelBeginInvokeService
+	#define EXT_OpcUaChannelBeginInvokeService
+	#define GET_OpcUaChannelBeginInvokeService(fl)  CAL_CMGETAPI( "OpcUaChannelBeginInvokeService" ) 
+	#define CAL_OpcUaChannelBeginInvokeService  OpcUaChannelBeginInvokeService
+	#define CHK_OpcUaChannelBeginInvokeService  TRUE
+	#define EXP_OpcUaChannelBeginInvokeService  CAL_CMEXPAPI( "OpcUaChannelBeginInvokeService" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaChannelBeginInvokeService
+	#define EXT_OpcUaChannelBeginInvokeService
+	#define GET_OpcUaChannelBeginInvokeService(fl)  CAL_CMGETAPI( "OpcUaChannelBeginInvokeService" ) 
+	#define CAL_OpcUaChannelBeginInvokeService  OpcUaChannelBeginInvokeService
+	#define CHK_OpcUaChannelBeginInvokeService  TRUE
+	#define EXP_OpcUaChannelBeginInvokeService  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaChannelBeginInvokeService", (RTS_UINTPTR)OpcUaChannelBeginInvokeService, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaChannelBeginInvokeService
+	#define EXT_CmpOPCUAStackOpcUaChannelBeginInvokeService
+	#define GET_CmpOPCUAStackOpcUaChannelBeginInvokeService  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaChannelBeginInvokeService pICmpOPCUAStack->IOpcUaChannelBeginInvokeService
+	#define CHK_CmpOPCUAStackOpcUaChannelBeginInvokeService (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaChannelBeginInvokeService  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaChannelBeginInvokeService
+	#define EXT_OpcUaChannelBeginInvokeService
+	#define GET_OpcUaChannelBeginInvokeService(fl)  CAL_CMGETAPI( "OpcUaChannelBeginInvokeService" ) 
+	#define CAL_OpcUaChannelBeginInvokeService pICmpOPCUAStack->IOpcUaChannelBeginInvokeService
+	#define CHK_OpcUaChannelBeginInvokeService (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaChannelBeginInvokeService  CAL_CMEXPAPI( "OpcUaChannelBeginInvokeService" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaChannelBeginInvokeService  PFOPCUACHANNELBEGININVOKESERVICE pfOpcUaChannelBeginInvokeService;
+	#define EXT_OpcUaChannelBeginInvokeService  extern PFOPCUACHANNELBEGININVOKESERVICE pfOpcUaChannelBeginInvokeService;
+	#define GET_OpcUaChannelBeginInvokeService(fl)  s_pfCMGetAPI2( "OpcUaChannelBeginInvokeService", (RTS_VOID_FCTPTR *)&pfOpcUaChannelBeginInvokeService, (fl), 0, 0)
+	#define CAL_OpcUaChannelBeginInvokeService  pfOpcUaChannelBeginInvokeService
+	#define CHK_OpcUaChannelBeginInvokeService  (pfOpcUaChannelBeginInvokeService != NULL)
+	#define EXP_OpcUaChannelBeginInvokeService  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaChannelBeginInvokeService", (RTS_UINTPTR)OpcUaChannelBeginInvokeService, 0, 0) 
+#endif
 
 
 
 
-
-
-
-
-
+/* Helpers */
+OpcUa_StatusCode CDECL OpcUaDateTimeGetStringFromDateTime(const OpcUa_DateTime dateTime, OpcUa_StringA pBuffer, OpcUa_UInt32 uLength);
+typedef OpcUa_StatusCode (CDECL * PFOPCUADATETIMEGETSTRINGFROMDATETIME) (const OpcUa_DateTime dateTime, OpcUa_StringA pBuffer, OpcUa_UInt32 uLength);
+#if defined(CMPOPCUASTACK_NOTIMPLEMENTED) || defined(OPCUADATETIMEGETSTRINGFROMDATETIME_NOTIMPLEMENTED)
+	#define USE_OpcUaDateTimeGetStringFromDateTime
+	#define EXT_OpcUaDateTimeGetStringFromDateTime
+	#define GET_OpcUaDateTimeGetStringFromDateTime(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_OpcUaDateTimeGetStringFromDateTime(p0,p1,p2)  (OpcUa_StatusCode)ERR_NOTIMPLEMENTED
+	#define CHK_OpcUaDateTimeGetStringFromDateTime  FALSE
+	#define EXP_OpcUaDateTimeGetStringFromDateTime  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_OpcUaDateTimeGetStringFromDateTime
+	#define EXT_OpcUaDateTimeGetStringFromDateTime
+	#define GET_OpcUaDateTimeGetStringFromDateTime(fl)  CAL_CMGETAPI( "OpcUaDateTimeGetStringFromDateTime" ) 
+	#define CAL_OpcUaDateTimeGetStringFromDateTime  OpcUaDateTimeGetStringFromDateTime
+	#define CHK_OpcUaDateTimeGetStringFromDateTime  TRUE
+	#define EXP_OpcUaDateTimeGetStringFromDateTime  CAL_CMEXPAPI( "OpcUaDateTimeGetStringFromDateTime" ) 
+#elif defined(MIXED_LINK) && !defined(CMPOPCUASTACK_EXTERNAL)
+	#define USE_OpcUaDateTimeGetStringFromDateTime
+	#define EXT_OpcUaDateTimeGetStringFromDateTime
+	#define GET_OpcUaDateTimeGetStringFromDateTime(fl)  CAL_CMGETAPI( "OpcUaDateTimeGetStringFromDateTime" ) 
+	#define CAL_OpcUaDateTimeGetStringFromDateTime  OpcUaDateTimeGetStringFromDateTime
+	#define CHK_OpcUaDateTimeGetStringFromDateTime  TRUE
+	#define EXP_OpcUaDateTimeGetStringFromDateTime  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDateTimeGetStringFromDateTime", (RTS_UINTPTR)OpcUaDateTimeGetStringFromDateTime, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpOPCUAStackOpcUaDateTimeGetStringFromDateTime
+	#define EXT_CmpOPCUAStackOpcUaDateTimeGetStringFromDateTime
+	#define GET_CmpOPCUAStackOpcUaDateTimeGetStringFromDateTime  ERR_OK
+	#define CAL_CmpOPCUAStackOpcUaDateTimeGetStringFromDateTime pICmpOPCUAStack->IOpcUaDateTimeGetStringFromDateTime
+	#define CHK_CmpOPCUAStackOpcUaDateTimeGetStringFromDateTime (pICmpOPCUAStack != NULL)
+	#define EXP_CmpOPCUAStackOpcUaDateTimeGetStringFromDateTime  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_OpcUaDateTimeGetStringFromDateTime
+	#define EXT_OpcUaDateTimeGetStringFromDateTime
+	#define GET_OpcUaDateTimeGetStringFromDateTime(fl)  CAL_CMGETAPI( "OpcUaDateTimeGetStringFromDateTime" ) 
+	#define CAL_OpcUaDateTimeGetStringFromDateTime pICmpOPCUAStack->IOpcUaDateTimeGetStringFromDateTime
+	#define CHK_OpcUaDateTimeGetStringFromDateTime (pICmpOPCUAStack != NULL)
+	#define EXP_OpcUaDateTimeGetStringFromDateTime  CAL_CMEXPAPI( "OpcUaDateTimeGetStringFromDateTime" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_OpcUaDateTimeGetStringFromDateTime  PFOPCUADATETIMEGETSTRINGFROMDATETIME pfOpcUaDateTimeGetStringFromDateTime;
+	#define EXT_OpcUaDateTimeGetStringFromDateTime  extern PFOPCUADATETIMEGETSTRINGFROMDATETIME pfOpcUaDateTimeGetStringFromDateTime;
+	#define GET_OpcUaDateTimeGetStringFromDateTime(fl)  s_pfCMGetAPI2( "OpcUaDateTimeGetStringFromDateTime", (RTS_VOID_FCTPTR *)&pfOpcUaDateTimeGetStringFromDateTime, (fl), 0, 0)
+	#define CAL_OpcUaDateTimeGetStringFromDateTime  pfOpcUaDateTimeGetStringFromDateTime
+	#define CHK_OpcUaDateTimeGetStringFromDateTime  (pfOpcUaDateTimeGetStringFromDateTime != NULL)
+	#define EXP_OpcUaDateTimeGetStringFromDateTime  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"OpcUaDateTimeGetStringFromDateTime", (RTS_UINTPTR)OpcUaDateTimeGetStringFromDateTime, 0, 0) 
+#endif
 
 
 
@@ -7028,6 +12260,7 @@ typedef struct
  	PFOPCUAEXTENSIONOBJECTCOPYTO IOpcUaExtensionObjectCopyTo;
  	PFOPCUAREADVALUEIDINITIALIZE IOpcUaReadValueIdInitialize;
  	PFOPCUAREADVALUEIDCLEAR IOpcUaReadValueIdClear;
+ 	PFOPCUAREADVALUEIDCOPYTO IOpcUaReadValueIdCopyTo;
  	PFOPCUABROWSEDESCRIPTIONINITIALIZE IOpcUaBrowseDescriptionInitialize;
  	PFOPCUABROWSEDESCRIPTIONCLEAR IOpcUaBrowseDescriptionClear;
  	PFOPCUABROWSEPATHINITIALIZE IOpcUaBrowsePathInitialize;
@@ -7052,12 +12285,108 @@ typedef struct
  	PFOPCUASIGNATUREDATACLEAR IOpcUaSignatureDataClear;
  	PFOPCUAAPPLICATIONDESCRIPTIONINITIALIZE IOpcUaApplicationDescriptionInitialize;
  	PFOPCUAAPPLICATIONDESCRIPTIONCLEAR IOpcUaApplicationDescriptionClear;
+ 	PFOPCUASERVERONNETWORKINITIALIZE IOpcUaServerOnNetworkInitialize;
+ 	PFOPCUASERVERONNETWORKCLEAR IOpcUaServerOnNetworkClear;
  	PFOPCUAEVENTNOTIFICATIONLISTINITIALIZE IOpcUaEventNotificationListInitialize;
  	PFOPCUAEVENTNOTIFICATIONLISTCLEAR IOpcUaEventNotificationListClear;
  	PFOPCUAEVENTFIELDLISTINITIALIZE IOpcUaEventFieldListInitialize;
  	PFOPCUAEVENTFIELDLISTCLEAR IOpcUaEventFieldListClear;
  	PFOPCUASIMPLEATTRIBUTEOPERANDINITIALIZE IOpcUaSimpleAttributeOperandInitialize;
  	PFOPCUASIMPLEATTRIBUTEOPERANDCLEAR IOpcUaSimpleAttributeOperandClear;
+ 	PFOPCUAFINDSERVERSREQUESTINITIALIZE IOpcUaFindServersRequestInitialize;
+ 	PFOPCUAFINDSERVERSREQUESTCLEAR IOpcUaFindServersRequestClear;
+ 	PFOPCUAFINDSERVERSRESPONSEINITIALIZE IOpcUaFindServersResponseInitialize;
+ 	PFOPCUAFINDSERVERSRESPONSECLEAR IOpcUaFindServersResponseClear;
+ 	PFOPCUAFINDSERVERSONNETWORKREQUESTINITIALIZE IOpcUaFindServersOnNetworkRequestInitialize;
+ 	PFOPCUAFINDSERVERSONNETWORKREQUESTCLEAR IOpcUaFindServersOnNetworkRequestClear;
+ 	PFOPCUAFINDSERVERSONNETWORKRESPONSEINITIALIZE IOpcUaFindServersOnNetworkResponseInitialize;
+ 	PFOPCUAFINDSERVERSONNETWORKRESPONSECLEAR IOpcUaFindServersOnNetworkResponseClear;
+ 	PFOPCUAGETENDPOINTSREQUESTINITIALIZE IOpcUaGetEndpointsRequestInitialize;
+ 	PFOPCUAGETENDPOINTSREQUESTCLEAR IOpcUaGetEndpointsRequestClear;
+ 	PFOPCUAGETENDPOINTSRESPONSEINITIALIZE IOpcUaGetEndpointsResponseInitialize;
+ 	PFOPCUAGETENDPOINTSRESPONSECLEAR IOpcUaGetEndpointsResponseClear;
+ 	PFOPCUACREATESESSIONREQUESTINITIALIZE IOpcUaCreateSessionRequestInitialize;
+ 	PFOPCUACREATESESSIONREQUESTCLEAR IOpcUaCreateSessionRequestClear;
+ 	PFOPCUACREATESESSIONRESPONSEINITIALIZE IOpcUaCreateSessionResponseInitialize;
+ 	PFOPCUACREATESESSIONRESPONSECLEAR IOpcUaCreateSessionResponseClear;
+ 	PFOPCUAACTIVATESESSIONREQUESTINITIALIZE IOpcUaActivateSessionRequestInitialize;
+ 	PFOPCUAACTIVATESESSIONREQUESTCLEAR IOpcUaActivateSessionRequestClear;
+ 	PFOPCUAACTIVATESESSIONRESPONSEINITIALIZE IOpcUaActivateSessionResponseInitialize;
+ 	PFOPCUAACTIVATESESSIONRESPONSECLEAR IOpcUaActivateSessionResponseClear;
+ 	PFOPCUACLOSESESSIONREQUESTINITIALIZE IOpcUaCloseSessionRequestInitialize;
+ 	PFOPCUACLOSESESSIONREQUESTCLEAR IOpcUaCloseSessionRequestClear;
+ 	PFOPCUACLOSESESSIONRESPONSEINITIALIZE IOpcUaCloseSessionResponseInitialize;
+ 	PFOPCUACLOSESESSIONRESPONSECLEAR IOpcUaCloseSessionResponseClear;
+ 	PFOPCUAREADREQUESTINITIALIZE IOpcUaReadRequestInitialize;
+ 	PFOPCUAREADREQUESTCLEAR IOpcUaReadRequestClear;
+ 	PFOPCUAREADRESPONSEINITIALIZE IOpcUaReadResponseInitialize;
+ 	PFOPCUAREADRESPONSECLEAR IOpcUaReadResponseClear;
+ 	PFOPCUAWRITEREQUESTINITIALIZE IOpcUaWriteRequestInitialize;
+ 	PFOPCUAWRITEREQUESTCLEAR IOpcUaWriteRequestClear;
+ 	PFOPCUAWRITERESPONSEINITIALIZE IOpcUaWriteResponseInitialize;
+ 	PFOPCUAWRITERESPONSECLEAR IOpcUaWriteResponseClear;
+ 	PFOPCUACREATESUBSCRIPTIONREQUESTINITIALIZE IOpcUaCreateSubscriptionRequestInitialize;
+ 	PFOPCUACREATESUBSCRIPTIONREQUESTCLEAR IOpcUaCreateSubscriptionRequestClear;
+ 	PFOPCUAMODIFYSUBSCRIPTIONREQUESTINITIALIZE IOpcUaModifySubscriptionRequestInitialize;
+ 	PFOPCUAMODIFYSUBSCRIPTIONREQUESTCLEAR IOpcUaModifySubscriptionRequestClear;
+ 	PFOPCUAPUBLISHREQUESTINITIALIZE IOpcUaPublishRequestInitialize;
+ 	PFOPCUAPUBLISHREQUESTCLEAR IOpcUaPublishRequestClear;
+ 	PFOPCUAREPUBLISHREQUESTINITIALIZE IOpcUaRepublishRequestInitialize;
+ 	PFOPCUAREPUBLISHREQUESTCLEAR IOpcUaRepublishRequestClear;
+ 	PFOPCUASETPUBLISHINGMODEREQUESTINITIALIZE IOpcUaSetPublishingModeRequestInitialize;
+ 	PFOPCUASETPUBLISHINGMODEREQUESTCLEAR IOpcUaSetPublishingModeRequestClear;
+ 	PFOPCUADELETESUBSCRIPTIONSREQUESTINITIALIZE IOpcUaDeleteSubscriptionsRequestInitialize;
+ 	PFOPCUADELETESUBSCRIPTIONSREQUESTCLEAR IOpcUaDeleteSubscriptionsRequestClear;
+ 	PFOPCUATRANSFERSUBSCRIPTIONSREQUESTINITIALIZE IOpcUaTransferSubscriptionsRequestInitialize;
+ 	PFOPCUATRANSFERSUBSCRIPTIONSREQUESTCLEAR IOpcUaTransferSubscriptionsRequestClear;
+ 	PFOPCUACREATESUBSCRIPTIONRESPONSEINITIALIZE IOpcUaCreateSubscriptionResponseInitialize;
+ 	PFOPCUACREATESUBSCRIPTIONRESPONSECLEAR IOpcUaCreateSubscriptionResponseClear;
+ 	PFOPCUAMODIFYSUBSCRIPTIONRESPONSEINITIALIZE IOpcUaModifySubscriptionResponseInitialize;
+ 	PFOPCUAMODIFYSUBSCRIPTIONRESPONSECLEAR IOpcUaModifySubscriptionResponseClear;
+ 	PFOPCUAREPUBLISHRESPONSEINITIALIZE IOpcUaRepublishResponseInitialize;
+ 	PFOPCUAREPUBLISHRESPONSECLEAR IOpcUaRepublishResponseClear;
+ 	PFOPCUASETPUBLISHINGMODERESPONSEINITIALIZE IOpcUaSetPublishingModeResponseInitialize;
+ 	PFOPCUASETPUBLISHINGMODERESPONSECLEAR IOpcUaSetPublishingModeResponseClear;
+ 	PFOPCUADELETESUBSCRIPTIONSRESPONSEINITIALIZE IOpcUaDeleteSubscriptionsResponseInitialize;
+ 	PFOPCUADELETESUBSCRIPTIONSRESPONSECLEAR IOpcUaDeleteSubscriptionsResponseClear;
+ 	PFOPCUATRANSFERSUBSCRIPTIONSRESPONSEINITIALIZE IOpcUaTransferSubscriptionsResponseInitialize;
+ 	PFOPCUATRANSFERSUBSCRIPTIONSRESPONSECLEAR IOpcUaTransferSubscriptionsResponseClear;
+ 	PFOPCUACREATEMONITOREDITEMSREQUESTINITIALIZE IOpcUaCreateMonitoredItemsRequestInitialize;
+ 	PFOPCUACREATEMONITOREDITEMSREQUESTCLEAR IOpcUaCreateMonitoredItemsRequestClear;
+ 	PFOPCUACREATEMONITOREDITEMSRESPONSEINITIALIZE IOpcUaCreateMonitoredItemsResponseInitialize;
+ 	PFOPCUACREATEMONITOREDITEMSRESPONSECLEAR IOpcUaCreateMonitoredItemsResponseClear;
+ 	PFOPCUAMODIFYMONITOREDITEMSREQUESTINITIALIZE IOpcUaModifyMonitoredItemsRequestInitialize;
+ 	PFOPCUAMODIFYMONITOREDITEMSREQUESTCLEAR IOpcUaModifyMonitoredItemsRequestClear;
+ 	PFOPCUAMODIFYMONITOREDITEMSRESPONSEINITIALIZE IOpcUaModifyMonitoredItemsResponseInitialize;
+ 	PFOPCUAMODIFYMONITOREDITEMSRESPONSECLEAR IOpcUaModifyMonitoredItemsResponseClear;
+ 	PFOPCUASETMONITORINGMODEREQUESTINITIALIZE IOpcUaSetMonitoringModeRequestInitialize;
+ 	PFOPCUASETMONITORINGMODEREQUESTCLEAR IOpcUaSetMonitoringModeRequestClear;
+ 	PFOPCUASETMONITORINGMODERESPONSEINITIALIZE IOpcUaSetMonitoringModeResponseInitialize;
+ 	PFOPCUASETMONITORINGMODERESPONSECLEAR IOpcUaSetMonitoringModeResponseClear;
+ 	PFOPCUADELETEMONITOREDITEMSREQUESTINITIALIZE IOpcUaDeleteMonitoredItemsRequestInitialize;
+ 	PFOPCUADELETEMONITOREDITEMSREQUESTCLEAR IOpcUaDeleteMonitoredItemsRequestClear;
+ 	PFOPCUADELETEMONITOREDITEMSRESPONSEINITIALIZE IOpcUaDeleteMonitoredItemsResponseInitialize;
+ 	PFOPCUADELETEMONITOREDITEMSRESPONSECLEAR IOpcUaDeleteMonitoredItemsResponseClear;
+ 	PFOPCUABROWSEREQUESTINITIALIZE IOpcUaBrowseRequestInitialize;
+ 	PFOPCUABROWSEREQUESTCLEAR IOpcUaBrowseRequestClear;
+ 	PFOPCUABROWSERESPONSEINITIALIZE IOpcUaBrowseResponseInitialize;
+ 	PFOPCUABROWSERESPONSECLEAR IOpcUaBrowseResponseClear;
+ 	PFOPCUABROWSENEXTREQUESTINITIALIZE IOpcUaBrowseNextRequestInitialize;
+ 	PFOPCUABROWSENEXTREQUESTCLEAR IOpcUaBrowseNextRequestClear;
+ 	PFOPCUABROWSENEXTRESPONSEINITIALIZE IOpcUaBrowseNextResponseInitialize;
+ 	PFOPCUABROWSENEXTRESPONSECLEAR IOpcUaBrowseNextResponseClear;
+ 	PFOPCUATRANSLATEBROWSEPATHSTONODEIDSREQUESTINITIALIZE IOpcUaTranslateBrowsePathsToNodeIdsRequestInitialize;
+ 	PFOPCUATRANSLATEBROWSEPATHSTONODEIDSREQUESTCLEAR IOpcUaTranslateBrowsePathsToNodeIdsRequestClear;
+ 	PFOPCUATRANSLATEBROWSEPATHSTONODEIDSRESPONSEINITIALIZE IOpcUaTranslateBrowsePathsToNodeIdsResponseInitialize;
+ 	PFOPCUATRANSLATEBROWSEPATHSTONODEIDSRESPONSECLEAR IOpcUaTranslateBrowsePathsToNodeIdsResponseClear;
+ 	PFOPCUAREGISTERNODESREQUESTINITIALIZE IOpcUaRegisterNodesRequestInitialize;
+ 	PFOPCUAREGISTERNODESREQUESTCLEAR IOpcUaRegisterNodesRequestClear;
+ 	PFOPCUAREGISTERNODESRESPONSEINITIALIZE IOpcUaRegisterNodesResponseInitialize;
+ 	PFOPCUAREGISTERNODESRESPONSECLEAR IOpcUaRegisterNodesResponseClear;
+ 	PFOPCUAUNREGISTERNODESREQUESTINITIALIZE IOpcUaUnregisterNodesRequestInitialize;
+ 	PFOPCUAUNREGISTERNODESREQUESTCLEAR IOpcUaUnregisterNodesRequestClear;
+ 	PFOPCUAUNREGISTERNODESRESPONSEINITIALIZE IOpcUaUnregisterNodesResponseInitialize;
+ 	PFOPCUAUNREGISTERNODESRESPONSECLEAR IOpcUaUnregisterNodesResponseClear;
  	PFOPCUALISTCREATE IOpcUaListCreate;
  	PFOPCUALISTINITIALIZE IOpcUaListInitialize;
  	PFOPCUALISTCLEAR IOpcUaListClear;
@@ -7092,11 +12421,11 @@ typedef struct
  	PFOPCUAENDPOINTUPDATESERVICEFUNCTIONS IOpcUaEndpointUpdateServiceFunctions;
  	PFOPCUAENDPOINTGETCALLBACKDATA IOpcUaEndpointGetCallbackData;
  	PFOPCUAENDPOINTGETPEERINFOFROMCONTEXT IOpcUaEndpointGetPeerInfoFromContext;
- 	PFOPCUAENDPOINTGETPEERINFOBYSECURECHANNELID IOpcUaEndpointGetPeerInfoBySecureChannelId;
- 	PFOPCUAENDPOINTCLOSESECURECHANNEL IOpcUaEndpointCloseSecureChannel;
  	PFOPCUATIMERCREATE IOpcUaTimerCreate;
  	PFOPCUATIMERDELETE IOpcUaTimerDelete;
  	PFOPCUASOCKETMANAGERLOOP IOpcUaSocketManagerLoop;
+ 	PFOPCUASOCKETMANAGERCREATE IOpcUaSocketManagerCreate;
+ 	PFOPCUASOCKETMANAGERDELETE IOpcUaSocketManagerDelete;
  	PFOPCUASERVERAPICREATEFAULT IOpcUaServerApiCreateFault;
  	PFOPCUAGETENCODABLEOBJECTTYPE IOpcUaGetEncodableObjectType;
  	PFOPCUAGETBEGINSERVICEFUNCTION IOpcUaGetBeginServiceFunction;
@@ -7110,10 +12439,20 @@ typedef struct
  	PFOPCUACRYPTOASYMMETRICSIGN IOpcUaCryptoAsymmetricSign;
  	PFOPCUACRYPTOASYMMETRICVERIFY IOpcUaCryptoAsymmetricVerify;
  	PFOPCUACRYPTOASYMMETRICDECRYPT IOpcUaCryptoAsymmetricDecrypt;
+ 	PFOPCUACRYPTOASYMMETRICENCRYPT IOpcUaCryptoAsymmetricEncrypt;
  	PFOPCUACRYPTOGETSIGNATUREALGORITHMURI IOpcUaCryptoGetSignatureAlgorithmUri;
+ 	PFOPCUACRYPTOGETASYMMETRICENCRYPTIONALGORITHMURI IOpcUaCryptoGetAsymmetricEncryptionAlgorithmUri;
  	PFOPCUACRYPTOGETASYMMETRICKEYLENGTH IOpcUaCryptoGetAsymmetricKeyLength;
  	PFOPCUACRYPTOPROVIDERCREATE IOpcUaCryptoProviderCreate;
  	PFOPCUACRYPTOPROVIDERDELETE IOpcUaCryptoProviderDelete;
+ 	PFOPCUASTACKGENERATEAPPLICATIONSIGNATURE IOpcUaStackGenerateApplicationSignature;
+ 	PFOPCUASTACKVERIFYAPPLICATIONSIGNATURE IOpcUaStackVerifyApplicationSignature;
+ 	PFOPCUACHANNELCREATE IOpcUaChannelCreate;
+ 	PFOPCUACHANNELDELETE IOpcUaChannelDelete;
+ 	PFOPCUACHANNELBEGINCONNECT IOpcUaChannelBeginConnect;
+ 	PFOPCUACHANNELBEGINDISCONNECT IOpcUaChannelBeginDisconnect;
+ 	PFOPCUACHANNELBEGININVOKESERVICE IOpcUaChannelBeginInvokeService;
+ 	PFOPCUADATETIMEGETSTRINGFROMDATETIME IOpcUaDateTimeGetStringFromDateTime;
  } ICmpOPCUAStack_C;
 
 #ifdef CPLUSPLUS
@@ -7152,7 +12491,7 @@ class ICmpOPCUAStack : public IBase
 		virtual OpcUa_StatusCode CDECL IOpcUaStringAttachToString(OpcUa_StringA strSource, OpcUa_UInt32  uLength, OpcUa_UInt32  uBufferSize, OpcUa_Boolean bDoCopy, OpcUa_Boolean bFreeOnClear, OpcUa_String* pString) =0;
 		virtual OpcUa_Void CDECL IOpcUaStringClear(OpcUa_String* pString) =0;
 		virtual OpcUa_CharA* CDECL IOpcUaStringGetRawString(const OpcUa_String* pString) =0;
-		virtual OpcUa_StatusCode CDECL IOpcUaStringInitialize(OpcUa_String* pString) =0;
+		virtual OpcUa_Void CDECL IOpcUaStringInitialize(OpcUa_String* pString) =0;
 		virtual OpcUa_Boolean CDECL IOpcUaStringIsEmpty(const OpcUa_String* pString) =0;
 		virtual OpcUa_Boolean CDECL IOpcUaStringIsNull(const OpcUa_String* pString) =0;
 		virtual OpcUa_UInt32 CDECL IOpcUaStringStrLen(const OpcUa_String* pString) =0;
@@ -7176,6 +12515,7 @@ class ICmpOPCUAStack : public IBase
 		virtual OpcUa_StatusCode CDECL IOpcUaExtensionObjectCopyTo(const OpcUa_ExtensionObject* pSource, OpcUa_ExtensionObject* pDestination) =0;
 		virtual OpcUa_Void CDECL IOpcUaReadValueIdInitialize(OpcUa_ReadValueId* pValue) =0;
 		virtual OpcUa_Void CDECL IOpcUaReadValueIdClear(OpcUa_ReadValueId* pValue) =0;
+		virtual OpcUa_StatusCode CDECL IOpcUaReadValueIdCopyTo(const OpcUa_ReadValueId* pSource, OpcUa_ReadValueId* pDestination) =0;
 		virtual OpcUa_Void CDECL IOpcUaBrowseDescriptionInitialize(OpcUa_BrowseDescription* pValue) =0;
 		virtual OpcUa_Void CDECL IOpcUaBrowseDescriptionClear(OpcUa_BrowseDescription* pValue) =0;
 		virtual OpcUa_Void CDECL IOpcUaBrowsePathInitialize(OpcUa_BrowsePath* pValue) =0;
@@ -7200,12 +12540,108 @@ class ICmpOPCUAStack : public IBase
 		virtual OpcUa_Void CDECL IOpcUaSignatureDataClear(OpcUa_SignatureData* pValue) =0;
 		virtual OpcUa_Void CDECL IOpcUaApplicationDescriptionInitialize(OpcUa_ApplicationDescription* pValue) =0;
 		virtual OpcUa_Void CDECL IOpcUaApplicationDescriptionClear(OpcUa_ApplicationDescription* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaServerOnNetworkInitialize(OpcUa_ServerOnNetwork* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaServerOnNetworkClear(OpcUa_ServerOnNetwork* pValue) =0;
 		virtual OpcUa_Void CDECL IOpcUaEventNotificationListInitialize(OpcUa_EventNotificationList* pValue) =0;
 		virtual OpcUa_Void CDECL IOpcUaEventNotificationListClear(OpcUa_EventNotificationList* pValue) =0;
 		virtual OpcUa_Void CDECL IOpcUaEventFieldListInitialize(OpcUa_EventFieldList* pValue) =0;
 		virtual OpcUa_Void CDECL IOpcUaEventFieldListClear(OpcUa_EventFieldList* pValue) =0;
 		virtual OpcUa_Void CDECL IOpcUaSimpleAttributeOperandInitialize(OpcUa_SimpleAttributeOperand* pValue) =0;
 		virtual OpcUa_Void CDECL IOpcUaSimpleAttributeOperandClear(OpcUa_SimpleAttributeOperand* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaFindServersRequestInitialize(OpcUa_FindServersRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaFindServersRequestClear(OpcUa_FindServersRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaFindServersResponseInitialize(OpcUa_FindServersResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaFindServersResponseClear(OpcUa_FindServersResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaFindServersOnNetworkRequestInitialize(OpcUa_FindServersOnNetworkRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaFindServersOnNetworkRequestClear(OpcUa_FindServersOnNetworkRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaFindServersOnNetworkResponseInitialize(OpcUa_FindServersOnNetworkResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaFindServersOnNetworkResponseClear(OpcUa_FindServersOnNetworkResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaGetEndpointsRequestInitialize(OpcUa_GetEndpointsRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaGetEndpointsRequestClear(OpcUa_GetEndpointsRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaGetEndpointsResponseInitialize(OpcUa_GetEndpointsResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaGetEndpointsResponseClear(OpcUa_GetEndpointsResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCreateSessionRequestInitialize(OpcUa_CreateSessionRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCreateSessionRequestClear(OpcUa_CreateSessionRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCreateSessionResponseInitialize(OpcUa_CreateSessionResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCreateSessionResponseClear(OpcUa_CreateSessionResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaActivateSessionRequestInitialize(OpcUa_ActivateSessionRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaActivateSessionRequestClear(OpcUa_ActivateSessionRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaActivateSessionResponseInitialize(OpcUa_ActivateSessionResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaActivateSessionResponseClear(OpcUa_ActivateSessionResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCloseSessionRequestInitialize(OpcUa_CloseSessionRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCloseSessionRequestClear(OpcUa_CloseSessionRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCloseSessionResponseInitialize(OpcUa_CloseSessionResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCloseSessionResponseClear(OpcUa_CloseSessionResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaReadRequestInitialize(OpcUa_ReadRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaReadRequestClear(OpcUa_ReadRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaReadResponseInitialize(OpcUa_ReadResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaReadResponseClear(OpcUa_ReadResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaWriteRequestInitialize(OpcUa_WriteRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaWriteRequestClear(OpcUa_WriteRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaWriteResponseInitialize(OpcUa_WriteResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaWriteResponseClear(OpcUa_WriteResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCreateSubscriptionRequestInitialize(OpcUa_CreateSubscriptionRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCreateSubscriptionRequestClear(OpcUa_CreateSubscriptionRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaModifySubscriptionRequestInitialize(OpcUa_ModifySubscriptionRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaModifySubscriptionRequestClear(OpcUa_ModifySubscriptionRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaPublishRequestInitialize(OpcUa_PublishRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaPublishRequestClear(OpcUa_PublishRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaRepublishRequestInitialize(OpcUa_RepublishRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaRepublishRequestClear(OpcUa_RepublishRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaSetPublishingModeRequestInitialize(OpcUa_SetPublishingModeRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaSetPublishingModeRequestClear(OpcUa_SetPublishingModeRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaDeleteSubscriptionsRequestInitialize(OpcUa_DeleteSubscriptionsRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaDeleteSubscriptionsRequestClear(OpcUa_DeleteSubscriptionsRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaTransferSubscriptionsRequestInitialize(OpcUa_TransferSubscriptionsRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaTransferSubscriptionsRequestClear(OpcUa_TransferSubscriptionsRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCreateSubscriptionResponseInitialize(OpcUa_CreateSubscriptionResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCreateSubscriptionResponseClear(OpcUa_CreateSubscriptionResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaModifySubscriptionResponseInitialize(OpcUa_ModifySubscriptionResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaModifySubscriptionResponseClear(OpcUa_ModifySubscriptionResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaRepublishResponseInitialize(OpcUa_RepublishResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaRepublishResponseClear(OpcUa_RepublishResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaSetPublishingModeResponseInitialize(OpcUa_SetPublishingModeResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaSetPublishingModeResponseClear(OpcUa_SetPublishingModeResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaDeleteSubscriptionsResponseInitialize(OpcUa_DeleteSubscriptionsResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaDeleteSubscriptionsResponseClear(OpcUa_DeleteSubscriptionsResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaTransferSubscriptionsResponseInitialize(OpcUa_TransferSubscriptionsResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaTransferSubscriptionsResponseClear(OpcUa_TransferSubscriptionsResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCreateMonitoredItemsRequestInitialize(OpcUa_CreateMonitoredItemsRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCreateMonitoredItemsRequestClear(OpcUa_CreateMonitoredItemsRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCreateMonitoredItemsResponseInitialize(OpcUa_CreateMonitoredItemsResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaCreateMonitoredItemsResponseClear(OpcUa_CreateMonitoredItemsResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaModifyMonitoredItemsRequestInitialize(OpcUa_ModifyMonitoredItemsRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaModifyMonitoredItemsRequestClear(OpcUa_ModifyMonitoredItemsRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaModifyMonitoredItemsResponseInitialize(OpcUa_ModifyMonitoredItemsResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaModifyMonitoredItemsResponseClear(OpcUa_ModifyMonitoredItemsResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaSetMonitoringModeRequestInitialize(OpcUa_SetMonitoringModeRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaSetMonitoringModeRequestClear(OpcUa_SetMonitoringModeRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaSetMonitoringModeResponseInitialize(OpcUa_SetMonitoringModeResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaSetMonitoringModeResponseClear(OpcUa_SetMonitoringModeResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaDeleteMonitoredItemsRequestInitialize(OpcUa_DeleteMonitoredItemsRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaDeleteMonitoredItemsRequestClear(OpcUa_DeleteMonitoredItemsRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaDeleteMonitoredItemsResponseInitialize(OpcUa_DeleteMonitoredItemsResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaDeleteMonitoredItemsResponseClear(OpcUa_DeleteMonitoredItemsResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaBrowseRequestInitialize(OpcUa_BrowseRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaBrowseRequestClear(OpcUa_BrowseRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaBrowseResponseInitialize(OpcUa_BrowseResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaBrowseResponseClear(OpcUa_BrowseResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaBrowseNextRequestInitialize(OpcUa_BrowseNextRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaBrowseNextRequestClear(OpcUa_BrowseNextRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaBrowseNextResponseInitialize(OpcUa_BrowseNextResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaBrowseNextResponseClear(OpcUa_BrowseNextResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaTranslateBrowsePathsToNodeIdsRequestInitialize(OpcUa_TranslateBrowsePathsToNodeIdsRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaTranslateBrowsePathsToNodeIdsRequestClear(OpcUa_TranslateBrowsePathsToNodeIdsRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaTranslateBrowsePathsToNodeIdsResponseInitialize(OpcUa_TranslateBrowsePathsToNodeIdsResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaTranslateBrowsePathsToNodeIdsResponseClear(OpcUa_TranslateBrowsePathsToNodeIdsResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaRegisterNodesRequestInitialize(OpcUa_RegisterNodesRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaRegisterNodesRequestClear(OpcUa_RegisterNodesRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaRegisterNodesResponseInitialize(OpcUa_RegisterNodesResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaRegisterNodesResponseClear(OpcUa_RegisterNodesResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaUnregisterNodesRequestInitialize(OpcUa_UnregisterNodesRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaUnregisterNodesRequestClear(OpcUa_UnregisterNodesRequest* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaUnregisterNodesResponseInitialize(OpcUa_UnregisterNodesResponse* pValue) =0;
+		virtual OpcUa_Void CDECL IOpcUaUnregisterNodesResponseClear(OpcUa_UnregisterNodesResponse* pValue) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaListCreate(OpcUa_List** ppList) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaListInitialize(OpcUa_List* pList) =0;
 		virtual OpcUa_Void CDECL IOpcUaListClear(OpcUa_List* pList) =0;
@@ -7234,17 +12670,17 @@ class ICmpOPCUAStack : public IBase
 		virtual OpcUa_StatusCode CDECL IOpcUaEndpointEndSendResponse(OpcUa_Endpoint hEndpoint, OpcUa_Handle* hContext, OpcUa_StatusCode uStatusCode, OpcUa_Void* pResponse, OpcUa_EncodeableType* pResponseType) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaEndpointGetMessageSecureChannelId(OpcUa_Endpoint hEndpoint, OpcUa_Handle hContext, OpcUa_UInt32* pSecureChannelId) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaEndpointGetMessageSecureChannelSecurityPolicy(OpcUa_Endpoint hEndpoint, OpcUa_Handle hContext, OpcUa_Endpoint_SecurityPolicyConfiguration* pSecurityPolicy) =0;
-		virtual OpcUa_StatusCode CDECL IOpcUaEndpointOpen(OpcUa_Endpoint hEndpoint, OpcUa_StringA sUrl, OpcUa_StringA sTransportProfileUri, OpcUa_Endpoint_PfnEndpointCallback* pfEndpointCallback, OpcUa_Void* pvEndpointCallbackData, OpcUa_ByteString* pServerCertificate, OpcUa_Key* pServerPrivateKey, OpcUa_Void* pPKIConfig, OpcUa_UInt32 nNoOfSecurityPolicies, OpcUa_Endpoint_SecurityPolicyConfiguration* pSecurityPolicies) =0;
+		virtual OpcUa_StatusCode CDECL IOpcUaEndpointOpen(OpcUa_Endpoint hEndpoint, OpcUa_StringA sUrl, OpcUa_StringA sTransportProfileUri, OpcUa_Endpoint_PfnEndpointCallback* pfEndpointCallback, OpcUa_Void* pvEndpointCallbackData, OpcUa_ByteString* pServerCertificate, OpcUa_Key* pServerPrivateKey, OpcUa_Void* pPKIConfig, OpcUa_UInt32 nNoOfSecurityPolicies, OpcUa_Endpoint_SecurityPolicyConfiguration* pSecurityPolicies, OpcUa_SocketManager hSocketManager) =0;
 		virtual OpcUa_Void CDECL IOpcUaEndpointSendErrorResponse(OpcUa_Endpoint hEndpoint, OpcUa_Handle hContext, OpcUa_StatusCode uStatus) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaEndpointGetServiceFunction(OpcUa_Endpoint hEndpoint, OpcUa_Handle hContext, OpcUa_PfnInvokeService** ppInvoke) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaEndpointUpdateServiceFunctions(OpcUa_Endpoint hEndpoint, OpcUa_UInt32 uRequestTypeId, OpcUa_PfnBeginInvokeService* pBeginInvoke, OpcUa_PfnInvokeService* pInvoke) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaEndpointGetCallbackData(OpcUa_Endpoint hEndpoint, OpcUa_Void** ppvCallbackData) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaEndpointGetPeerInfoFromContext(OpcUa_Endpoint hEndpoint, OpcUa_Handle hContext, OpcUa_String* psPeerInfo) =0;
-		virtual OpcUa_StatusCode CDECL IOpcUaEndpointGetPeerInfoBySecureChannelId(OpcUa_Endpoint hEndpoint, OpcUa_UInt32 uSecureChannelId, OpcUa_String* psPeerInfo) =0;
-		virtual OpcUa_StatusCode CDECL IOpcUaEndpointCloseSecureChannel(OpcUa_Endpoint hEndpoint, OpcUa_UInt32 uSecureChannelId, OpcUa_StatusCode uStatus) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaTimerCreate(OpcUa_Timer* hTimer, OpcUa_UInt32 msecInterval, OpcUa_Timer_Callback* fpTimerCallback, OpcUa_Timer_Callback* fpKillCallback, OpcUa_Void* pvCallbackData) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaTimerDelete(OpcUa_Timer* phTimer) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaSocketManagerLoop(OpcUa_SocketManager pSocketManager, OpcUa_UInt32 msecTimeout, OpcUa_Boolean bRunOnce) =0;
+		virtual OpcUa_StatusCode CDECL IOpcUaSocketManagerCreate(OpcUa_SocketManager* pSocketManager, OpcUa_UInt32 nSockets, OpcUa_UInt32 nFlags) =0;
+		virtual OpcUa_Void CDECL IOpcUaSocketManagerDelete(OpcUa_SocketManager* pSocketManager) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaServerApiCreateFault(OpcUa_RequestHeader* pRequestHeader, OpcUa_StatusCode uServiceResult, OpcUa_DiagnosticInfo* pServiceDiagnostics, OpcUa_Int32* pNoOfStringTable, OpcUa_String** ppStringTable, OpcUa_Void** ppFault, OpcUa_EncodeableType** ppFaultType) =0;
 		virtual OpcUa_EncodeableType* CDECL IOpcUaGetEncodableObjectType(OpcUa_UInt32 ui32TypeId) =0;
 		virtual OpcUa_PfnBeginInvokeService* CDECL IOpcUaGetBeginServiceFunction(OpcUa_UInt32 ui32ServiceId) =0;
@@ -7258,10 +12694,20 @@ class ICmpOPCUAStack : public IBase
 		virtual OpcUa_StatusCode CDECL IOpcUaCryptoAsymmetricSign(OpcUa_CryptoProvider* pProvider, OpcUa_ByteString data, OpcUa_Key* privateKey, OpcUa_ByteString* pSignature) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaCryptoAsymmetricVerify(OpcUa_CryptoProvider* pProvider, OpcUa_ByteString data, OpcUa_Key* publicKey, OpcUa_ByteString* pSignature) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaCryptoAsymmetricDecrypt(OpcUa_CryptoProvider* pProvider, OpcUa_Byte* pCipherText, OpcUa_UInt32 cipherTextLen, OpcUa_Key* privateKey, OpcUa_Byte* pPlainText, OpcUa_UInt32* pPlainTextLen) =0;
+		virtual OpcUa_StatusCode CDECL IOpcUaCryptoAsymmetricEncrypt(OpcUa_CryptoProvider* pProvider, OpcUa_Byte* pPlainText, OpcUa_UInt32 plainTextLen, OpcUa_Key* publicKey, OpcUa_Byte* pCipherText, OpcUa_UInt32* pCipherTextLen) =0;
 		virtual OpcUa_CharA* CDECL IOpcUaCryptoGetSignatureAlgorithmUri(OpcUa_CryptoProvider* pProvider) =0;
+		virtual OpcUa_CharA* CDECL IOpcUaCryptoGetAsymmetricEncryptionAlgorithmUri(OpcUa_CryptoProvider* pProvider) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaCryptoGetAsymmetricKeyLength(OpcUa_CryptoProvider* a_pProvider, OpcUa_Key a_publicKey, OpcUa_UInt32* a_pBits) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaCryptoProviderCreate(OpcUa_StringA a_psSecurityProfileUri, OpcUa_CryptoProvider* a_pProvider) =0;
 		virtual OpcUa_StatusCode CDECL IOpcUaCryptoProviderDelete(OpcUa_CryptoProvider* a_pProvider) =0;
+		virtual OpcUa_StatusCode CDECL IOpcUaStackGenerateApplicationSignature(const OpcUa_StringA pszSecurityPolicyUri, const OpcUa_ByteString *pPeerCert, const OpcUa_ByteString *pPeerNonce, const OpcUa_Key *pMyPrivateKey, OpcUa_SignatureData *pSignature) =0;
+		virtual OpcUa_StatusCode CDECL IOpcUaStackVerifyApplicationSignature(const OpcUa_StringA pszSecurityPolicyUri, const OpcUa_SignatureData *pSignature, const OpcUa_ByteString *pMyCert, const OpcUa_ByteString *pMyNonce, RTS_HANDLE hPeerCert) =0;
+		virtual OpcUa_StatusCode CDECL IOpcUaChannelCreate(OpcUa_Channel* a_phChannel, OpcUa_Channel_SerializerType a_eSerializerType) =0;
+		virtual OpcUa_Void CDECL IOpcUaChannelDelete(OpcUa_Channel* a_phChannel) =0;
+		virtual OpcUa_StatusCode CDECL IOpcUaChannelBeginConnect(OpcUa_Channel pChannel, OpcUa_StringA sUrl, OpcUa_ByteString* pClientCertificate, OpcUa_Key* pClientPrivateKey, OpcUa_ByteString* pServerCertificate, OpcUa_Void* pPKIConfig, OpcUa_String* pRequestedSecurityPolicyUri, OpcUa_Int32 nRequestedLifetime, OpcUa_MessageSecurityMode messageSecurityMode, OpcUa_UInt32 nNetworkTimeout, OpcUa_Channel_PfnConnectionStateChanged* pfCallback, OpcUa_Void* pCallbackData, OpcUa_SocketManager hSocketManager) =0;
+		virtual OpcUa_StatusCode CDECL IOpcUaChannelBeginDisconnect(OpcUa_Channel a_pChannel, OpcUa_Channel_PfnConnectionStateChanged* a_pfCallback, OpcUa_Void* a_pCallbackData) =0;
+		virtual OpcUa_StatusCode CDECL IOpcUaChannelBeginInvokeService(OpcUa_Channel a_hChannel, OpcUa_StringA a_sName, OpcUa_Void* a_pRequest, OpcUa_EncodeableType* a_pRequestType, OpcUa_Channel_PfnRequestComplete* a_pCallback, OpcUa_Void* a_pCallbackData) =0;
+		virtual OpcUa_StatusCode CDECL IOpcUaDateTimeGetStringFromDateTime(const OpcUa_DateTime dateTime, OpcUa_StringA pBuffer, OpcUa_UInt32 uLength) =0;
 };
 	#ifndef ITF_CmpOPCUAStack
 		#define ITF_CmpOPCUAStack static ICmpOPCUAStack *pICmpOPCUAStack = NULL;

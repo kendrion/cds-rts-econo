@@ -15,6 +15,9 @@
 #define HANDLE2FD(h)	(int)(unsigned long)h
 #define FD2HANDLE(fd)	(RTS_HANDLE)(unsigned long)(fd)
 
+#define NSEC_PER_SEC	1000000000
+#define USEC_PER_SEC	1000000
+
 /* Debugging  ---------------------------------------------------------------------------------------- */
 #ifdef RTS_DEBUG
 
@@ -71,8 +74,78 @@ extern int rts_system(const char *command);
 #endif
 
 #ifdef NO_CAS_SUPPORT
+
+#ifdef TRG_64BIT
+#error 64bit CPUs support CompareAndSwap - remove NO_CAS_SUPPORT compile flag
+#endif
+
 #define NO_CAS64_SUPPORT
-#else
+
+#if defined(TRG_X86)
+	#define SYS_ATOMIC_COMPARE_AND_SWAP(piValue, iExchangeValue, iCompareValue, Result) \
+		do { \
+			RTS_I32 iPrev = 0; \
+			__asm__ __volatile__ ( \
+				"mov %3, %%eax\n" \
+				"lock cmpxchg %2, (%1)\n" \
+				"mov %%eax, %0\n" \
+				: "=&r"(iPrev)\
+				: "r" (piValue), "r" (iExchangeValue), "r" (iCompareValue) \
+				: "cc", "memory", "%eax");	\
+			if (iPrev == iCompareValue) \
+				Result = ERR_OK; \
+			else \
+				Result = ERR_FAILED; \
+		} while (0)
+
+#elif ((defined(TRG_ARM) && (RTS_ARM_ARCH_VERSION >= 6)) || defined (TRG_CORTEX))
+	#define SYS_ATOMIC_COMPARE_AND_SWAP(piValue, iExchangeValue, iCompareValue, Result) \
+		do { \
+			RTS_I32 iPrev = 0; \
+			RTS_I32 iStat = 1; \
+			__asm__ __volatile__ ( \
+						"ldrex %4, [%1]\n" \
+						"cmp %3, %4\n" \
+						"bne 1f\n" \
+						"strex %0, %2, [%1]\n" \
+						"1:\n" \
+						: "=&r" (iStat) \
+						: "r" (piValue), "r" (iExchangeValue), "r" (iCompareValue), "r" (iPrev) \
+						: "cc", "memory"); \
+			if (iStat == 0) \
+				Result = ERR_OK; \
+			else \
+				Result = ERR_FAILED; \
+		} while(0)
+
+#elif defined(TRG_PPC)
+	#define SYS_ATOMIC_COMPARE_AND_SWAP(piValue, iExchangeValue, iCompareValue, Result) \
+		do { \
+			RTS_I32 iPrev; \
+			RTS_I32 iStat; \
+			__asm__ __volatile__ ( \
+						"li     %0, 1\n" \
+						"lwarx	%4, 0, %1\n" \
+						"cmpw	%3, %4\n" \
+						"bne    1f\n" \
+						"stwcx.	%2, 0, %1\n" \
+						"bne-	1f\n" \
+						"li     %0, 0\n" \
+						"1:\n" \
+						: "=&r" (iStat) \
+						: "r" (piValue), "r" (iExchangeValue), "r" (iCompareValue), "r" (iPrev) \
+						: "cc", "memory"); \
+			if (iStat == 0) \
+				Result = ERR_OK; \
+			else \
+				Result = ERR_FAILED; \
+		} while(0)
+
+#endif
+
+
+#else //NO_CAS_SUPPORT
+
 #define SYS_ATOMIC_COMPARE_AND_SWAP(piValue, iExchangeValue, iCompareValue, Result) \
 	do { \
 		if (__sync_bool_compare_and_swap((unsigned int *)piValue, (unsigned int)iCompareValue, (unsigned int)iExchangeValue)) \

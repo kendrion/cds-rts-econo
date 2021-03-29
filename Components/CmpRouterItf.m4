@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -21,7 +21,7 @@ REF_ITF(`CmpBlkDrvItf.m4')
  *	Max. number of router instances. If more block driver instances available as configured for router
  *	main and sub nets, then there is created a router instance for each of this available block driver instances
  *  until this limit is reached. If a runtime system has a fixed number of interfaces, then this value
- *  should be set to the max. number of blockdriver instances, which are available on this system.
+ *  should be set to the max. number of block driver instances, which are available on this system.
  *  Allowed value range: 1..15.
  * </description>
  */
@@ -38,17 +38,17 @@ REF_ITF(`CmpBlkDrvItf.m4')
  *  this is not necessary at all, because the server implementations listen on all router instances. 
  *  But on client side the implementations (CmpChannelClient or CmpNameServiceClient) are always bound
  *  to the first router instance. This means without the parallel routing feature a communication client
- *  (Gateway, PLCHandler, OPC Server, DataServer, ...) can only communciate to PLCs which are connected to
- *  a mainnet or subnet of the first local router instance of the client.
- *  Another aspect of parallel routing is the package forwarding. On PLCs all block driver instances are assigend
- *  to a mainnet of the router instances. But also on the Gateway there are typically at least a few router instances
+ *  (Gateway, PLCHandler, OPC Server, DataServer, ...) can only communicate to PLCs which are connected to
+ *  a main net or subnet of the first local router instance of the client.
+ *  Another aspect of parallel routing is the package forwarding. On PLCs all block driver instances are assigned
+ *  to a main net of the router instances. But also on the Gateway there are typically at least a few router instances
  *  available. If a PLC or Gateway should forward a received package to a PLC which is connected to another interface, 
  *  there is also the parallel routing feature needed.
  *  Allowed values: 
  *  0: Parallel routing is completely disabled. Should only be used on PLCs without any client functionality or
  *     to limit the local client communication very hard to the first router instance.  
  *  1: Parallel routing is enabled for forwarding received packages to another interface and also local client
- *     implemantations can communicate to all networks on all router instances. Is typically be used on PLCs
+ *     implementations can communicate to all networks on all router instances. Is typically be used on PLCs
  *     to allow complex PLC networks. Furthermore this was for a long time also the default for the Gateway.
  *  2 (default): Parallel routing is enabled for the local client to let him communicate to all networks on 
  *     all router instances, but received packages are not forwarded to other interfaces. If there are no
@@ -88,10 +88,10 @@ REF_ITF(`CmpBlkDrvItf.m4')
  * <category>Settings</category>
  * <type>String</type>
  * <description>
- *	Name of the router's mainnet (Example: 0.MainNet=ether 0).
+ *	Name of the router's main net (Example: 0.MainNet=ether 0).
  *  Is used to bind a block driver instance to a router instance. On client side (Gateway) the first
  *  router instance needs no parallel routing to communicate to a peer. All devices connected to this
- *  mainnet return shorter addresses in the network scan.
+ *  main net return shorter addresses in the network scan.
  *	If the name is set to "ether x", then the first registered instance of the CmpBlkDrvUdp is used. 
  * </description>
  */
@@ -103,7 +103,7 @@ REF_ITF(`CmpBlkDrvItf.m4')
  * <description>
  *	Number of the routers's subnets.
  *  Allowed value range: 1..15.
- *  Thanks parallel routing subnets are typically not neccessary anymore. Must only be used on client side (Gateway)
+ *  Thanks parallel routing subnets are typically not necessary anymore. Must only be used on client side (Gateway)
  * </description>
  */
 #define ROUTERKEY_INT_NUMSUBNETS								"NumSubnets"
@@ -132,7 +132,7 @@ REF_ITF(`CmpBlkDrvItf.m4')
  * <category>Settings</category>
  * <type>String</type>
  * <description>
- *	Address update interval in seconds of a router subnet or mainnet. 
+ *	Address update interval in seconds of a router subnet or main net. 
  *  The value 0 disables the address update service for this net.
  *  There is usually no need to configure this. 
  *  Examples: 
@@ -162,7 +162,7 @@ typedef enum tagRouterPriority
 	RPRIO_EMERGENCY = 3
 } ROUTERPRIORITY;
 
-/* -- Interface exported to blockdrivers -- */
+/* -- Interface exported to block drivers -- */
 
 #define MAX_ROUTERNAME 20
 #define MAX_BLOCKSIZE 512
@@ -185,11 +185,11 @@ typedef RTS_RESULT (CDECL * PFBDOPEN) (RTS_HANDLE hInterface);
 typedef RTS_RESULT (CDECL * PFBDCLOSE) (RTS_HANDLE hInterface);
 
 /**
- * <description> Send data over a blockdriver. Received reply is sent directly to the router </description>
+ * <description> Send data over a block driver. Received reply is sent directly to the router </description>
  * <param name="hInterface" type="IN">Handle to the interface</param>
  * <param name="addrReceiver" type="IN">Logical address of receiver</param>
  * <param name="pduData" type="IN">Pointer to block to sent</param>
- * <result>error code. ERR_NOBUFFER, if the blockdriver can temporary not send. In this case
+ * <result>error code. ERR_NOBUFFER, if the block driver can temporary not send. In this case
  * the higher layers try to send the same block again.</result>
  */
 /* static RTS_RESULT CDECL BdSend(RTS_HANDLE hInterface, NETWORKADDRESS addrReceiver, PROTOCOL_DATA_UNIT pduData); */
@@ -198,9 +198,9 @@ typedef RTS_RESULT (CDECL * PFBDSEND) (RTS_HANDLE hInterface, NETWORKADDRESS add
 typedef struct
 {
 	PFBDSEND pfBDSend;
-		/* pointer to the blockdrivers send method */
+		/* pointer to the block drivers send method */
 	RTS_HANDLE hInterface;
-		/* Interfacehandle within the blockdriver. This handle is passed to all calls to the blockdriver */
+		/* Interface handle within the block driver. This handle is passed to all calls to the block driver */
 	int nMaxBlockSize;
 		/* The maximum size of a block that may be sent over this device. */
 	int nNetworkAddressBitSize;
@@ -211,15 +211,15 @@ typedef struct
 		/* address of the device within it's subnet (CAN-Node ID, etc.) */
 	char szName[MAX_INTERFACE_NAME]; 
 		/* human readable name of the device. Must be unique.  */
-		/* Could be something like "eth0" or "Ethernetcard #1"  */
+		/* Could be something like "eth0" or "Ethernet card #1"  */
 } NETWORKINTERFACEINFO;
 
 typedef struct
 {
 	PFBDSEND pfBDSend;
-		/* pointer to the blockdrivers send method */
+		/* pointer to the block drivers send method */
 	RTS_HANDLE hInterface;
-		/* Interfacehandle within the blockdriver. This handle is passed to all calls to the blockdriver */
+		/* Interface handle within the block driver. This handle is passed to all calls to the block driver */
 	int nMaxBlockSize;
 		/* The maximum size of a block that may be sent over this device. */
 	int nNetworkAddressBitSize;
@@ -230,14 +230,14 @@ typedef struct
 		/* address of the device within it's subnet (CAN-Node ID, etc.) */
 	char szName[MAX_INTERFACE_NAME]; 
 		/* human readable name of the device. Must be unique.  */
-		/* Could be something like "eth0" or "Ethernetcard #1"  */
+		/* Could be something like "eth0" or "Ethernet card #1"  */
 	RTS_UI16 usType;
 		/* Type of the adapter, see CmpCommunicationLibItf.h. */
 		/* Can be set to RTS_BLK_DRV_TYPE_NONE, if no device specific information is provided */
 	RTS_UI16 usDummy;
 		/* Not used at the moment, must be 0 for future compatibility. */
 	void *pTypeSpecific;
-		/* Pointer to the typespecific information, must be NULL, if no further information is available. */ 
+		/* Pointer to the type specific information, must be NULL, if no further information is available. */ 
 } NETWORKINTERFACEINFO2;
 
 typedef struct
@@ -252,13 +252,13 @@ extern "C" {
 #endif
 
 /** <description>
- *   Called by a blockdriver to register one of it's devices with the router. Allows also
- *   to provide some block driver typ specific information.
+ *   Called by a block driver to register one of it's devices with the router. Allows also
+ *   to provide some block driver type specific information.
  * </description>
  * <param name="pDeviceInfo" type="IN">Describes the device to register </param>
  * <param name="phSubnet" type="OUT">
  *   Is set to the subnet handle that refers to this interface. The
- *   blockdriver must provide this value in each call to 
+ *   block driver must provide this value in each call to 
  *   RouterHandleData or RouterUnregisterNetworkInterface.
  * </param>
  * <result>error code</result>
@@ -266,12 +266,12 @@ extern "C" {
 DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterRegisterNetworkInterface2',`(NETWORKINTERFACEINFO2 *pInterfaceInfo, RTS_HANDLE * phSubnet)')
 
 /** <description>
- *   Called by a blockdriver to register one of it's devices with the router.
+ *   Called by a block driver to register one of it's devices with the router.
  * </description>
  * <param name="pDeviceInfo" type="IN">Describes the device to register </param>
  * <param name="phSubnet" type="OUT">
  *   Is set to the subnet handle that refers to this interface. The
- *   blockdriver must provide this value in each call to 
+ *   block driver must provide this value in each call to 
  *   RouterHandleData or RouterUnregisterNetworkInterface.
  * </param>
  * <result>error code</result>
@@ -281,10 +281,10 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterRegisterNetworkInterface',`(NETWORKINTER
 /** <description>
  *   At the moment pOnDemandInfo IS NOT USED by the CmpRouter!
  * 
- *   Called by an on-demand blockdriver to register one of it's devices with the router. An on-demand blockdriver
- *   is a blockdriver that is able to shutdown/open its connection on demand. Eg. for serial blockdrivers, so they
+ *   Called by an on-demand block driver to register one of it's devices with the router. An on-demand block driver
+ *   is a block driver that is able to shutdown/open its connection on demand. Eg. for serial block drivers, so they
  *   can release their hardware interface as long as it isn't needed and open it only, when their is data to be sent.
- *   The blockdriver is supposed to be initially closed.
+ *   The block driver is supposed to be initially closed.
  * </description>
  * <param name="pDeviceInfo" type="IN">
  *    Describes the device to register 
@@ -294,7 +294,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterRegisterNetworkInterface',`(NETWORKINTER
  * </param>
  * <param name="phSubnet" type="OUT">
  *   Is set to the subnet handle that refers to this interface. The
- *   blockdriver must provide this value in each call to 
+ *   block driver must provide this value in each call to 
  *   RouterHandleData or RouterUnregisterNetworkInterface.
  * </param>
  * <result>error code</result>
@@ -302,7 +302,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterRegisterNetworkInterface',`(NETWORKINTER
 DEF_ITF_API(`RTS_RESULT', `CDECL',`RouterRegisterOnDemandNWInterface', `(NETWORKINTERFACEINFO *pInterfaceInfo, ONDEMANDNETWORKINTERFACE *pOnDemandInfo, RTS_HANDLE * phSubnet)')
 
 /** <description>
- *   Called by a blockdriver to unregister one of it's devices
+ *   Called by a block driver to unregister one of it's devices
  * </description>
  * <param name="hSubnet" type="IN">
  *   Subnet handle of the interface, which should be unregistered.
@@ -312,10 +312,10 @@ DEF_ITF_API(`RTS_RESULT', `CDECL',`RouterRegisterOnDemandNWInterface', `(NETWORK
 DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterUnregisterNetworkInterface',`(RTS_HANDLE hSubnet)')
 
 /** <description>
- *   Called whenever the blockdriver receives a valid data package 
+ *   Called whenever the block driver receives a valid data package 
  * </description>
  * <param name="phSubnet" type="IN">
- *   The subnetid assigned to the receiving device during RouterRegisterDevice
+ *   The subnet id assigned to the receiving device during RouterRegisterDevice
  * </param>
  * <param name="addrSender" type="IN">
  *   The device address of the sender within the subnet
@@ -326,7 +326,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterUnregisterNetworkInterface',`(RTS_HANDLE
 DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterHandleData', `(RTS_HANDLE phSubnet, NETWORKADDRESS sender, PROTOCOL_DATA_UNIT pduData, int bIsBroadcast)')
 
 /** <description>
- *   Called by a blockdriver to get the addresses of a data package. 
+ *   Called by a block driver to get the addresses of a data package. 
  * </description>
  * <param name="pduData" type="IN">
  *   Data package, from which the addresses should be read.
@@ -345,7 +345,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterHandleData', `(RTS_HANDLE phSubnet, NETW
 DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterGetBlkAddresses', `(PROTOCOL_DATA_UNIT pduData, PEERADDRESS *pAddrReceiver, PEERADDRESS *pAddrSender, RTS_I32 *piDataOffset)')
 
 /** <description>
- *   Called by a blockdriver to compare two peer addresses. 
+ *   Called by a block driver to compare two peer addresses. 
  * </description>
  * <param name="pAddr1" type="IN">
  *   First address to compare
@@ -403,7 +403,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterRegisterProtocolHandler',`(int nProtocol
 
 /** <description>
  *   Let the router calculate the CoDeSys peer address of a node. This works only for block drivers, which
- *   have a unique instance, e. g. the BlkDrvTcp. The given network address conains in this case the ip-address
+ *   have a unique instance, e. g. the BlkDrvTcp. The given network address contains in this case the IP-address
  *	 and the port of the node, in the  block driver specific format.
  *   Additionally this function can be used to get the address of the first router instance of the own 
  *   runtime system.
@@ -414,11 +414,11 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterRegisterProtocolHandler',`(int nProtocol
  *   the next two parameters are ignored.
  * </param>
  * <param name="byNetworkAddressBitSize" type="IN">
- *   Length of the specified network address in bits. Must match to the setting in the blockdriver.
+ *   Length of the specified network address in bits. Must match to the setting in the block driver.
  *   Should be 0, if RTS_BLK_DRV_TYPE_NONE is used to get the own router address.
  * </param>
  * <param name="pNetworkAddr" type="IN">
- *   Networkaddress of the node, for which the peer address should be calcualted.
+ *   Network address of the node, for which the peer address should be calculated.
  *   Should be NULL, if RTS_BLK_DRV_TYPE_NONE is used to get the own router address.
  * </param>
  * <param name="pNodeAddr" type="OUT">
@@ -430,7 +430,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterCalculateNodeAddr', `(RTS_UI16 usBlkDrvT
 
 /**
  * <description>
- *   Get the handle to the routerinstance with the provided name.
+ *   Get the handle to the router instance with the provided name.
  * </description>
  * <param name="szName" type="IN">
  *	Name of the router. This parameter may be NULL to request a handle to the default router.
@@ -519,25 +519,25 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterSend2',`(RTS_HANDLE hRouter, PEERADDRESS
 DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterSend',`(RTS_HANDLE hRouter, PEERADDRESS addrReceiver, int nProtocolId, RTS_UI8 byMessageId, ROUTERPRIORITY prio, PROTOCOL_DATA_UNIT pduData)')
 
 /** <description>
- *   Get the routers nodeaddress.
+ *   Get the routers node address.
  * </description>
  * <param name="hRouter" typ="IN">Handle to router. If set to RTS_INVALID_HANDLE, the first router instance is used.</param>
- * <param name="pAddrRouter" type="OUT">Is set to the nodeaddress of the router</param>
+ * <param name="pAddrRouter" type="OUT">Is set to the node address of the router</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterGetHostAddress',`(RTS_HANDLE hRouter, NODEADDRESS *pAddrRouter)')
 
 /** <description>
- *   Get the nodeaddress of the parent node.
+ *   Get the node address of the parent node.
  * </description>
  * <param name="hRouter" typ="IN">Handle to router. If set to RTS_INVALID_HANDLE, the first router instance is used.</param>
- * <param name="pAddrParent" type="OUT">Is set to the nodeaddress of the router</param>
+ * <param name="pAddrParent" type="OUT">Is set to the node address of the router</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`RouterGetParentAddress',`(RTS_HANDLE hRouter, NODEADDRESS *pAddrParent)')
 
 /** <description>
-*   Get the block driver type RTS_BLK_DRV_TYPE_xxx of the refered network interface. See CmpCommunicationLibItf.
+*   Get the block driver type RTS_BLK_DRV_TYPE_xxx of the referred network interface. See CmpCommunicationLibItf.
 * </description>
 * <param name="hNetworkInterface" typ="IN">Handle of network instance.</param>
 * <param name="pbyBlkDrvType" type="OUT">Pointer to return block driver type of the network interface.</param>

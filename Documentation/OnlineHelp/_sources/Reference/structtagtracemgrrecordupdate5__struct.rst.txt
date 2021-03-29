@@ -1,0 +1,71 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of struct.rst template
+
+.. _structtagtracemgrrecordupdate5__struct:
+
+================================================
+tagtracemgrrecordupdate5_struct Struct Reference
+================================================
+
+| #include ":ref:`CmpTraceMgrItf.h <_cmp_trace_mgr_itf_8h>`"
+
+Data Fields
+-----------
+
+- RTS_IEC_HANDLE :ref:`hPacket <group___cmp_trace_mgr_itf_1ga4723f1f4663e05b6c6bc73f7ef1bdc3d>`
+- RTS_IEC_HANDLE :ref:`hRecord <group___cmp_trace_mgr_itf_1ga313506c87b4fbab3d7b47ff8f09cb334>`
+- RTS_IEC_ULINT * :ref:`pstTimestamp <group___cmp_trace_mgr_itf_1ga74a45ad2774f09a2d65d808bfad0ba54>`
+- RTS_IEC_RESULT :ref:`TraceMgrRecordUpdate5 <group___cmp_trace_mgr_itf_1ga7c23399501eb3a33279eba2c76e31e8f>`
+
+Detailed Description
+--------------------
+
+Records the current value of the trace variable of a record. For all trace records in the context of an IEC or system task, we use one timestamp for all values [CDS-66118].
+
+.. note:: This function is called cyclically by CmpTraceMgr. It should not be called by the application.
+
+:return: Returns the runtime system error code (see CmpErrors.library):
+
+  - ERR_PARAMETER if hPacket or hPrevRecord is not a valid handle
+
+  - ERR_NOTINITIALIZED if the packet is not currently recording (not started, trigger reached, ...)
+
+  - ERR_PENDING if no value is recorded for this cycle due to :ref:`TracePacketConfiguration.ulEveryNCycles <group___cmp_trace_mgr_itf_1ga29112671b73a99708fc7be47c372ba08>`
+
+  - ERR_FAILED if reading the value of the trace variable failed
+
+Field Documentation
+-------------------
+
+.. _group___cmp_trace_mgr_itf_1ga4723f1f4663e05b6c6bc73f7ef1bdc3d:
+
+RTS_IEC_HANDLE tagtracemgrrecordupdate5_struct::hPacket
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_trace_mgr_itf_1ga313506c87b4fbab3d7b47ff8f09cb334:
+
+RTS_IEC_HANDLE tagtracemgrrecordupdate5_struct::hRecord
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_trace_mgr_itf_1ga74a45ad2774f09a2d65d808bfad0ba54:
+
+RTS_IEC_ULINT* tagtracemgrrecordupdate5_struct::pstTimestamp
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_trace_mgr_itf_1ga7c23399501eb3a33279eba2c76e31e8f:
+
+RTS_IEC_RESULT tagtracemgrrecordupdate5_struct::TraceMgrRecordUpdate5
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The documentation for this struct was generated from the following file:
+------------------------------------------------------------------------
+
+CmpTraceMgrItf.h
+
+.. last line of struct.rst template
+.. last line of composition.rst template
+
+

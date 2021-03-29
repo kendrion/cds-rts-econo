@@ -42,9 +42,9 @@ DLL_DECL int CDECL ComponentEntry(INIT_STRUCT *pInitStruct)
 		pfExportFunctions	OUT Pointer to function that exports component functions
 		pfImportFunctions	OUT Pointer to function that imports functions from other components
 		pfGetVersion		OUT Pointer to function to get component version
-		pfRegisterAPI		IN	Pointer to component mangager function to register a api function
-		pfGetAPI			IN	Pointer to component mangager function to get a api function
-		pfCallHook			IN	Pointer to component mangager function to call a hook function
+		pfRegisterAPI		IN	Pointer to component manager function to register a API function
+		pfGetAPI			IN	Pointer to component manager function to get a API function
+		pfCallHook			IN	Pointer to component manager function to call a hook function
 	Return					ERR_OK if library could be initialized, else error code
 */
 {
@@ -133,6 +133,11 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_
 
 	switch (ulHook)
 	{
+		case CH_INIT:
+		{
+			INIT_STMT;
+			break;
+		}
 		case CH_INIT2:
 		{
 			RTS_I32 iValue;
@@ -455,7 +460,7 @@ RTS_RESULT CDECL SysTargetGetVendorName(RTS_WCHAR *pwszName, RTS_SIZE *pnMaxLeng
 		iLen = sizeof(sz);
 		
 		CAL_CMUtlsnprintf(szKey, sizeof(szKey), "%s", SYSTARGETKEY_STRING_GET_VENDORNAME);		
-		Result = CAL_SettgGetStringValue(COMPONENT_NAME, szKey, sz, (int *)&iLen, "", 0);
+		Result = CAL_SettgGetStringValue(COMPONENT_NAME, szKey, sz, &iLen, "", 0);
 		if (Result == ERR_OK && pnMaxLength != NULL)
 		{
 			if (pwszName != NULL)
@@ -631,7 +636,7 @@ static void CDECL CBWriteSetting(EventParam *pEventParam)
 
 							if (CAL_CMUtlUtf8ToW((RTS_UI8 *)pszNodeName, strlen(pszNodeName) + 1, pwszNodeName, wstrLen) == ERR_OK)
 							{
-								if (SysTargetSetNodeName(pwszNodeName) == ERR_OK)
+								if (CAL_SysTargetSetNodeName(pwszNodeName) == ERR_OK)
 									pParam->Result = ERR_NOTHING_TO_DO;
 							}
 
@@ -640,7 +645,7 @@ static void CDECL CBWriteSetting(EventParam *pEventParam)
 						else if ((pParam->entry.setting.editableSetting.flags & CMPSETTINGS_EFLAGS_EDITABLE_WSTRING) &&
 							pParam->entry.setting.editableSetting.value.pWStringSetting != NULL)
 						{
-							if (SysTargetSetNodeName(pParam->entry.setting.editableSetting.value.pWStringSetting) == ERR_OK)
+							if (CAL_SysTargetSetNodeName(pParam->entry.setting.editableSetting.value.pWStringSetting) == ERR_OK)
 								pParam->Result = ERR_NOTHING_TO_DO;
 						}
 					}
@@ -805,6 +810,117 @@ void CDECL CDECL_EXT systargetgetserialnumber(systargetgetserialnumber_struct *p
 }
 #endif
 
+/* pnMaxLen: Buffer size (= strlen + 1) */
+RTS_RESULT CDECL SysTargetGetSerialNumber(char **ppszSerialNumber, RTS_I32 *pnMaxLen)
+{
+	static RTS_CSTRING s_szTargetSerialNumber[256] = { 0 };
+	static RTS_I32 s_iNeededSerNoBufSize = 0; /* Buffer size (= strlen + 1) */
+
+	if (pnMaxLen == NULL)
+		return ERR_PARAMETER;
+	
+	if (s_szTargetSerialNumber[0] == '\0')
+	{
+		RTS_RESULT rResult;
+		RTS_CSTRING *pszSerialNumber = s_szTargetSerialNumber;
+
+		s_iNeededSerNoBufSize = sizeof(s_szTargetSerialNumber);
+		rResult = SysTargetGetSerialNumber_(&pszSerialNumber, &s_iNeededSerNoBufSize);
+
+		if ((rResult != ERR_OK) || (s_iNeededSerNoBufSize < 2) || (s_szTargetSerialNumber[0] == '\0'))
+		{
+			RTS_I32 i32NeededSerNoStrLen = sizeof(s_szTargetSerialNumber) - 1;
+			rResult = CAL_SettgGetStringValue(COMPONENT_NAME, SYSTARGETKEY_STRING_SERIAL_NUMBER, s_szTargetSerialNumber, &i32NeededSerNoStrLen, "", 0);
+			s_iNeededSerNoBufSize = i32NeededSerNoStrLen + 1;
+		}
+
+		if ((rResult != ERR_OK) || (s_iNeededSerNoBufSize < 2) || (s_szTargetSerialNumber[0] == '\0'))
+		{
+			static const RTS_CSTRING s_sz_PREFIX[] = "RTS-";
+
+			if (CHK_CryptoGenerateRandomNumber)
+			{
+				RTS_UI64 ui64SerialNumber;
+				RtsByteString temp;
+				temp.pByData = (RTS_IEC_BYTE*)&ui64SerialNumber;
+				temp.ui32Len = 0;
+				temp.ui32MaxLen = sizeof(ui64SerialNumber);
+				rResult = CAL_CryptoGenerateRandomNumber(sizeof(ui64SerialNumber), &temp);
+
+				CAL_CMUtlsnprintf(s_szTargetSerialNumber, sizeof(s_szTargetSerialNumber), "%s%016" PRI_X64, s_sz_PREFIX, ui64SerialNumber);
+				s_iNeededSerNoBufSize = strlen(s_szTargetSerialNumber) + 1;
+			}
+
+			if ((rResult != ERR_OK) || (s_iNeededSerNoBufSize < 2) || (s_szTargetSerialNumber[0] == '\0'))
+			{
+				if (CHK_SysSockGetFirstAdapterInfo && CHK_SysTimeGetMs)
+				{
+					static const RTS_UI64 ui64_NULL = UINT64_C(0);
+					SOCK_ADAPTER_INFO *pAdapterInfo = CAL_SysSockGetFirstAdapterInfo(&rResult);
+					if (pAdapterInfo != NULL)
+					{
+						while ((rResult == ERR_OK) && (memcmp(pAdapterInfo->aui8Mac, &ui64_NULL, 6) == 0))
+						{
+							pAdapterInfo = CAL_SysSockGetNextAdapterInfo(pAdapterInfo, &rResult);
+						}
+						if (rResult == ERR_OK)
+						{
+							RTS_UI16 ui16RandNumber;
+							RTS_INT iSeed = (RTS_INT)CAL_SysTimeGetMs(); /* SysTimeGetMs() returns RTS_UI32 */
+							if (CHK_SysTimeGetUs)
+							{
+								RTS_SYSTIME sysTime;
+								CAL_SysTimeGetUs(&sysTime);
+								iSeed ^= (RTS_INT)sysTime;
+							}
+							srand(iSeed);
+							(void)rand(); /* Skip first */
+							ui16RandNumber = (RTS_UI16)rand(); /* range: 0 to 0x7FFF */
+							CAL_CMUtlsnprintf(s_szTargetSerialNumber, sizeof(s_szTargetSerialNumber),
+								"%s%02" PRI_X8 "%02" PRI_X8 "%02" PRI_X8 "%02" PRI_X8 "%02" PRI_X8 "%02" PRI_X8 "%04" PRI_X16,
+								s_sz_PREFIX,
+								pAdapterInfo->aui8Mac[0], pAdapterInfo->aui8Mac[1], pAdapterInfo->aui8Mac[2],
+								pAdapterInfo->aui8Mac[3], pAdapterInfo->aui8Mac[4], pAdapterInfo->aui8Mac[5],
+								ui16RandNumber);
+							s_iNeededSerNoBufSize = strlen(s_szTargetSerialNumber) + 1;
+						}
+					}
+					else
+						if (rResult == ERR_OK)
+							rResult = ERR_FAILED;
+				}
+			}
+
+			if ((rResult == ERR_OK) && (s_iNeededSerNoBufSize > 1) && (s_szTargetSerialNumber[0] != '\0'))
+			{
+				rResult = CAL_SettgSetStringValue(COMPONENT_NAME, SYSTARGETKEY_STRING_SERIAL_NUMBER, s_szTargetSerialNumber, s_iNeededSerNoBufSize - 1);
+				if (rResult != ERR_OK)
+				{
+					/* If the settings are not writable (SettingsEmbedded) no serial number should be generated.
+					 * Otherwise the device gets a different serial number every time this function is called.
+					 */
+					s_szTargetSerialNumber[0] = '\0';
+					s_iNeededSerNoBufSize = 0;
+				}
+			}
+		}
+	}
+
+	if (ppszSerialNumber == NULL)
+	{
+		*pnMaxLen = s_iNeededSerNoBufSize;
+		return ERR_OK;
+	}
+	*pnMaxLen = MIN(s_iNeededSerNoBufSize, *pnMaxLen);
+
+	if (*ppszSerialNumber == NULL)
+	{
+		*ppszSerialNumber = s_szTargetSerialNumber;
+		return ERR_OK;
+	}
+	return CAL_CMUtlSafeStrCpy(*ppszSerialNumber, *pnMaxLen, s_szTargetSerialNumber);
+}
+
 #if defined(RTS_DEBUG)
 static RTS_RESULT SysTargetModuleTest(void)
 {
@@ -812,7 +928,7 @@ static RTS_RESULT SysTargetModuleTest(void)
 	static int s_bDebug = 1;
 	char sz[64] = {0};
 	char szSafe[64] = {0};
-	int nMaxLen;
+	RTS_I32 nMaxLen;
 
 	if (s_bDebug)
 	{

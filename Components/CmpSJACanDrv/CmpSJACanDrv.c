@@ -57,9 +57,9 @@ DLL_DECL int CDECL ComponentEntry(INIT_STRUCT *pInitStruct)
 		pfExportFunctions	OUT Pointer to function that exports component functions
 		pfImportFunctions	OUT Pointer to function that imports functions from other components
 		pfGetVersion		OUT Pointer to function to get component version
-		pfRegisterAPI		IN	Pointer to component mangager function to register a api function
-		pfGetAPI			IN	Pointer to component mangager function to get a api function
-		pfCallHook			IN	Pointer to component mangager function to call a hook function
+		pfRegisterAPI		IN	Pointer to component manager function to register a API function
+		pfGetAPI			IN	Pointer to component manager function to get a API function
+		pfCallHook			IN	Pointer to component manager function to call a hook function
 	Return					ERR_OK if library could be initialized, else error code
 */
 {
@@ -283,9 +283,9 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_
 										case DEVICE_ID_PCI_F3_ALTERA:
 											devinfo.ulPhysAddr = pcii.ulBaseAddresses[2] & 0xfffffff0;
 										break;
-										//case DEVICE_ID_PCIEX_A2_ALTERA:
-											//devinfo.ulPhysAddr = (pcii.ulBaseAddresses[1] & 0xfffffff0) + 0x10000;
-										//break;
+										case DEVICE_ID_PCIEX_A2_ALTERA:
+											devinfo.ulPhysAddr = (pcii.ulBaseAddresses[1] & 0xfffffff0) + 0x10000;
+										break;
 									}
 									SjaAddChipDescription(&devinfo);
 									
@@ -569,7 +569,7 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_
 									break;
 								}
 
-								//devinfo.ulPhysAddr = pcii.ulBaseAddresses[2] & 0xfffffff0;
+								/*devinfo.ulPhysAddr = pcii.ulBaseAddresses[2] & 0xfffffff0;*/
 								SjaAddChipDescription(&devinfo);
 
 								if(pcii.usSubSystemID == SUBSYSTEM_ID_3451 || 
@@ -607,7 +607,7 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_
 										break;
 									}
 
-								//	devinfo.ulPhysAddr = pcii.ulBaseAddresses[4] & 0xfffffff0;
+								/*	devinfo.ulPhysAddr = pcii.ulBaseAddresses[4] & 0xfffffff0;*/
 									SjaAddChipDescription(&devinfo);								
 								}
 							}
@@ -670,8 +670,9 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_
 								CAL_SysPciGetCardInfo(VENDOR_ID_PEAK,DEVICE_ID_PEAK5,iPciPeak,&pcii) == ERR_OK ||
 								CAL_SysPciGetCardInfo(VENDOR_ID_PEAK,DEVICE_ID_PEAK6,iPciPeak,&pcii) == ERR_OK ||
 								CAL_SysPciGetCardInfo(VENDOR_ID_PEAK,DEVICE_ID_PEAK7,iPciPeak,&pcii) == ERR_OK ||
-								CAL_SysPciGetCardInfo(VENDOR_ID_PEAK,DEVICE_ID_PEAK8,iPciPeak,&pcii) == ERR_OK)
-						{ /*A peak card found. TODO, but will not happen: heterogenous peak cards in one machine will not be all detected.*/
+								CAL_SysPciGetCardInfo(VENDOR_ID_PEAK,DEVICE_ID_PEAK8,iPciPeak,&pcii) == ERR_OK ||
+								CAL_SysPciGetCardInfo(VENDOR_ID_PEAK,DEVICE_ID_PEAK9,iPciPeak,&pcii) == ERR_OK)
+						{ /*A peak card found. TODO, but will not happen: heterogeneous peak cards in one machine will not be all detected.*/
 							iPciPeak++;
 							bFound = 1;
 
@@ -1230,7 +1231,7 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_
 					ulH = (unsigned long)iH;
 					devinfo.ulIntVec = (unsigned short)ulH;
 
-					/*0 is LevelSensitiv, 1 is Latched.*/
+					/*0 is LevelSensitive, 1 is Latched.*/
 					CAL_CMUtlsnprintf(szValName, sizeof(szValName), SJA_SETTG_INTEDGE,iDevCfg);
 					CAL_SettgGetIntValue(COMPONENT_NAME,szValName,&iH,0,0);
 					ulH = (unsigned long)iH;

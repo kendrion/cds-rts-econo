@@ -1,0 +1,421 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_file_transfer_itf_8h:
+
+===================================
+CmpFileTransferItf.h File Reference
+===================================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpItf.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`FileInfo <struct_file_info>`
+
+- struct :ref:`FileName <struct_file_name>`
+
+- struct :ref:`FileTransfer <struct_file_transfer>`
+
+- struct :ref:`EVTPARAM_CmpFileTransfer <struct_e_v_t_p_a_r_a_m___cmp_file_transfer>`
+
+- struct :ref:`EVTPARAM_CmpSyncFileTransfer <struct_e_v_t_p_a_r_a_m___cmp_sync_file_transfer>`
+
+- struct :ref:`ICmpFileTransfer_C <struct_i_cmp_file_transfer___c>`
+
+Macros
+------
+
+- #define :ref:`FILENAME_STATIC <group___cmp_file_transfer_itf___alloctypes_1gad0c787a87e50a8e3f368699f36f48a93>` 0
+
+- #define :ref:`FILENAME_DYNAMIC <group___cmp_file_transfer_itf___alloctypes_1ga685a0c81027294dc310f78a76bee944b>` 1
+
+- #define :ref:`FT_UPLOAD <group___cmp_file_transfer_itf___transfertypes_1ga57eebfc505a4ed88c126b1e2f164f065>` 0
+
+- #define :ref:`FT_DOWNLOAD <group___cmp_file_transfer_itf___transfertypes_1gac81dd2961a3715a5045bac754010be65>` 1
+
+- #define :ref:`FT_SYNC_FILE_BEGIN_APP <group___cmp_file_transfer_itf___transfertypes_1gac8bd67d1afd3eb71ae7bbe2337ab7b24>` 0x01
+
+- #define :ref:`FT_SYNC_FILE_END_APP <group___cmp_file_transfer_itf___transfertypes_1gadc1b5d69f6c0664b952f2d65726c6a5c>` 0x02
+
+- #define :ref:`FT_SYNC_FILE_BEING_DEVICE <group___cmp_file_transfer_itf___transfertypes_1gafec2bd17178ecf7c16a844a75128a269>` 0x03
+
+- #define :ref:`FT_SYNC_FILE_END_DEVICE <group___cmp_file_transfer_itf___transfertypes_1ga62caa2284b00594469f83d50a8883eb8>` 0x04
+
+- #define :ref:`FT_FILE_BEGIN_LOGIN_APP <group___cmp_file_transfer_itf___transfertypes_1ga3941d51c28d182e1110c92b7bac166ef>` 0x05
+
+- #define :ref:`FT_FILE_END_LOGIN_APP <group___cmp_file_transfer_itf___transfertypes_1ga887655572f54d909c01e18bc2efbbe6b>` 0x06
+
+- #define :ref:`FT_FILE_BEGIN_OEM <group___cmp_file_transfer_itf___transfertypes_1ga6b376a9a05b50df28028d9660d8dd1b2>` 0x07
+
+- #define :ref:`FT_FILE_END_OEM <group___cmp_file_transfer_itf___transfertypes_1ga3b083f1488cd071159e523a4eb74cd92>` 0x08
+
+- #define :ref:`FT_NUM_OF_STATIC_TANSFERS <group___cmp_file_transfer_itf___staticdefines_1ga6b66b4f2c80caf4cd7d7f54b9c278da3>` 4
+
+- #define :ref:`FT_TEMP_FILE_EXTENSION <group___cmp_file_transfer_itf___staticdefines_1ga1507f43f4b09cb2e0036af36833ad8c7>` ".tmp"
+
+- #define :ref:`FT_BACKUP_FILE_EXTENSION <group___cmp_file_transfer_itf___staticdefines_1gac98cc21674c0a6abf05d8b4078fed25b>` ".bak"
+
+- #define :ref:`FTKEY_INT_ASYNC_SERVICES <group___cmp_file_transfer_itf___settings_1ga5b7b9b0885ef0f6f5ae9413d22d4c534>` "AsyncServices"
+
+- #define :ref:`FTVALUE_INT_ASYNC_SERVICES_DEFAULT <group___cmp_file_transfer_itf___settings_1ga031ab9097db8fa8cffd59da3c60d9937>` 0
+
+- #define :ref:`OP_FILE_TRANSFER_DOWNLOAD <group___cmp_file_transfer_itf___operations_1gad28050d055dadecaea84d12fdf7f24ff>` 1
+
+- #define :ref:`OP_FILE_TRANSFER_UPLOAD <group___cmp_file_transfer_itf___operations_1ga8504f7501e169961a230caa4a8577648>` 2
+
+- #define :ref:`OP_FILE_TRANSFER_DELETE_FILE <group___cmp_file_transfer_itf___operations_1ga0b93ec594362c67a3345229407230a0c>` 3
+
+- #define :ref:`OP_FILE_TRANSFER_RENAME_FILE <group___cmp_file_transfer_itf___operations_1ga36fb6c79581d0181fcc79c023ec18661>` 4
+
+- #define :ref:`OP_FILE_TRANSFER_CREATE_DIRECTORY <group___cmp_file_transfer_itf___operations_1gab31550ff09ca048a918113989ca51d1a>` 5
+
+- #define :ref:`OP_FILE_TRANSFER_DELETE_DIRECTORY <group___cmp_file_transfer_itf___operations_1ga5eee716ff13f871fedc78dbbad5d5d97>` 6
+
+- #define :ref:`OP_FILE_TRANSFER_RENAME_DIRECTORY <group___cmp_file_transfer_itf___operations_1ga8783894e1d05355702c9de8b6b0710e5>` 7
+
+- #define :ref:`EVTPARAMID_CmpFileTransfer <group___cmp_file_transfer_itf___eventparameter_1gac225694482aa840280409dbbe40e7229>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpFileTransfer <group___cmp_file_transfer_itf___eventparameter_1ga7003dfd044f7e16ca627801c5403d17c>` 0x0002
+
+- #define :ref:`EVT_FileTransfer <group___cmp_file_transfer_itf___events_1ga8bc6256a3b483d16c6bc8685d3b13775>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`EVTPARAMID_CmpSyncFileTransfer <group___cmp_file_transfer_itf___eventparameter_1ga12163f1639c540e9426261c2e7addea6>` 0x0002
+
+- #define :ref:`EVTVERSION_CmpSyncFileTransfer <group___cmp_file_transfer_itf___eventparameter_1gacb87297ec899ebb645782e03879d36a5>` 0x0001
+
+- #define :ref:`EVT_SyncFileTransfer <group___cmp_file_transfer_itf___events_1gaa883fc1c3a3ef1d57288f25b8157f4fa>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+
+- #define :ref:`SRVFT_GET_FILEINFO <group___cmp_file_transfer_itf___events_1gac3d6d51e0176fef00d6fea8a75c135a9>` 0x01
+
+- #define :ref:`SRVFT_START_DOWNLOAD <group___cmp_file_transfer_itf___events_1gabffd6d9742faf46df7dc991f7270b41a>` 0x02
+
+- #define :ref:`SRVFT_RESTART_DOWNLOAD <group___cmp_file_transfer_itf___events_1gac1e29c81c5456eddf5e50f978ce93919>` 0x03
+
+- #define :ref:`SRVFT_DOWNLOAD <group___cmp_file_transfer_itf___events_1ga17bb6bc717f350226e18a6789d65abb5>` 0x04
+
+- #define :ref:`SRVFT_START_UPLOAD <group___cmp_file_transfer_itf___events_1ga50e11a2f638c41d76e4184fcb956aabf>` 0x05
+
+- #define :ref:`SRVFT_RESTART_UPLOAD <group___cmp_file_transfer_itf___events_1gaa192bc44f014859413fe492d4cb6b0e3>` 0x06
+
+- #define :ref:`SRVFT_UPLOAD <group___cmp_file_transfer_itf___events_1ga6553bb985c398431489cced585ab701a>` 0x07
+
+- #define :ref:`SRVFT_END <group___cmp_file_transfer_itf___events_1ga3e45d435e03cd6f3fd57af9325dd4aac>` 0x08
+
+- #define :ref:`SRVFT_CANCEL <group___cmp_file_transfer_itf___events_1gac001ddc24a15bd8f1a73367187c2eb13>` 0x09
+
+- #define :ref:`SRVFT_SAFE_SIGNATURE <group___cmp_file_transfer_itf___events_1ga288dbd75a3d47cab07a3dc580c4a9bc4>` 0x0A
+
+- #define :ref:`SRVFT_GET_SAFED_SIGNATURE <group___cmp_file_transfer_itf___events_1gad5b43b095e29cd9fde3fa765cc9e17f2>` 0x0B
+
+- #define :ref:`SRVFT_GET_DIRECTORYINFO <group___cmp_file_transfer_itf___events_1ga45b5ab4e80169052264d9290e4205ea8>` 0x0C
+
+- #define :ref:`SRVFT_GET_DIRECTORYINFO_CANCEL <group___cmp_file_transfer_itf___events_1ga76be87c0588ab50837d244476a1369a9>` 0x0D
+
+- #define :ref:`SRVFT_DELETE_FILE <group___cmp_file_transfer_itf___events_1gae1727fa0ad590930647b3d8dbb437cc3>` 0x0E
+
+- #define :ref:`SRVFT_RENAME_FILE <group___cmp_file_transfer_itf___events_1ga1ffd3e48fc44562f9daa3114deb7adba>` 0x0F
+
+- #define :ref:`SRVFT_CREATE_DIRECTORY <group___cmp_file_transfer_itf___events_1ga6f569aed7fc2cb8cd193475afb72b7e6>` 0x10
+
+- #define :ref:`SRVFT_DELETE_DIRECTORY <group___cmp_file_transfer_itf___events_1ga306faea01f7e8bc2ea494d3e4f144a82>` 0x11
+
+- #define :ref:`SRVFT_RENAME_DIRECTORY <group___cmp_file_transfer_itf___events_1gaad354fa6653546a8819a86c94ca12275>` 0x12
+
+- #define :ref:`SRVFT_GET_FREE_DISK_SPACE <group___cmp_file_transfer_itf___events_1ga337058cc4d541958e94c4f2761811216>` 0x13	/* Not implemented, only sent by CDS >= V3.5.1.0 and < V3.5.1.30 */
+
+- #define :ref:`SRVFT_SYNC_FILE_TRANSFER <group___cmp_file_transfer_itf___events_1ga627ccb379f061d2fe36cdbb37c6750b2>` 0x14
+
+- #define :ref:`FTT_DOWNLOAD <group___cmp_file_transfer_itf___events_1gae0cb420623e45893bcd21eccb91b7644>` 1
+
+- #define :ref:`FTT_UPLOAD <group___cmp_file_transfer_itf___events_1ga867d74789b30a5b88d6d8e2a1d2348c5>` 2
+
+- #define :ref:`TAG_REPLY_FILEINFO <group___cmp_file_transfer_itf___onlinereplytags_1ga750655a5555ca3e671c84f2edbf9c910>` 0x81
+
+- #define :ref:`TAG_FILENAME <group___cmp_file_transfer_itf___onlinereplytags_1gac969e32685c65e9be78695b74dd02b6f>` 0x01
+
+- #define :ref:`TAG_FILEINFO <group___cmp_file_transfer_itf___onlinereplytags_1gaab2be2c76f0e508f2d5d7a30ffdb23cc>` 0x02
+
+- #define :ref:`TAG_SESSIONID <group___cmp_file_transfer_itf___onlinereplytags_1ga5b19c955fcfe54eb4a7522603489d3d4>` 0x03
+
+- #define :ref:`TAG_STARTINFO <group___cmp_file_transfer_itf___onlinereplytags_1ga806e7332e7186f469d89f364f8ce8b64>` 0x04
+
+- #define :ref:`TAG_REPLY_STARTINFO <group___cmp_file_transfer_itf___onlinereplytags_1ga264116c0d84437008c22e6095e529d97>` 0x84
+
+- #define :ref:`TAG_DATA <group___cmp_file_transfer_itf___onlinereplytags_1gaa00ccb735f252f9bf267dacb79bc17c8>` 0x05
+
+- #define :ref:`TAG_REPLY_DATAACK <group___cmp_file_transfer_itf___onlinereplytags_1ga0d7af476af9bfd9a7cc54547fab84a4d>` 0x05
+
+- #define :ref:`TAG_DATASIZE <group___cmp_file_transfer_itf___onlinereplytags_1gae3ba72637a6377506de6d548cecc14be>` 0x06
+
+- #define :ref:`TAG_REPLY_DATASIZE <group___cmp_file_transfer_itf___onlinereplytags_1gadfee4e0faca47b46adb93da3cb847a9d>` 0x06
+
+- #define :ref:`TAG_END <group___cmp_file_transfer_itf___onlinereplytags_1ga0f5b90506631a30c98593c247eab2005>` 0x07
+
+- #define :ref:`TAG_REPLY_ENDACK <group___cmp_file_transfer_itf___onlinereplytags_1gaf2d2207e7f25af3a9054a879f7b65aec>` 0x07
+
+- #define :ref:`TAG_REPLY_ERROR <group___cmp_file_transfer_itf___onlinereplytags_1ga0ed08e397961fb5ca05f20879f1ba153>` 0x08
+
+- #define :ref:`TAG_REPLY_GET_SAFED_SIGNATURE <group___cmp_file_transfer_itf___onlinereplytags_1gaafdd85b84367787f008b5c3d26d3f8e9>` 0x09
+
+- #define :ref:`TAG_REPLY_GET_FILENAME <group___cmp_file_transfer_itf___onlinereplytags_1ga3747ea4227b721f420cf706e22d6c6a2>` 0x0A
+
+- #define :ref:`TAG_DIRECTORY_NAME <group___cmp_file_transfer_itf___onlinereplytags_1ga4957987ec9db2f32d10132cb5b17fc45>` 0x0B
+
+- #define :ref:`TAG_DIRECTORY_HANDLE <group___cmp_file_transfer_itf___onlinereplytags_1ga40c047065ed10b08f2b7128803001639>` 0x0C
+
+- #define :ref:`TAG_REPLY_DIRECTORY_INFO <group___cmp_file_transfer_itf___onlinereplytags_1ga0b363eb370a6e14b8fea2056b95ff784>` 0x8D
+
+- #define :ref:`TAG_ENTRY_NAME <group___cmp_file_transfer_itf___onlinereplytags_1gad15dd1292da31b67d656257630377ae4>` 0x0E
+
+- #define :ref:`TAG_DIRECTORY_INFO <group___cmp_file_transfer_itf___onlinereplytags_1gab429e5c80df5472f736c57a2efda0c2f>` 0x0F
+
+- #define :ref:`TAG_FILETRANSFER_TYPE <group___cmp_file_transfer_itf___onlinereplytags_1ga14302bc375604e7e9e9dd84882f7b618>` 0x10
+
+- #define :ref:`TAG_DIRECTORY_EXTRAINFO <group___cmp_file_transfer_itf___onlinereplytags_1gaf1815028de8cfc3dbe487508363acf66>` 0x11
+
+- #define :ref:`TAG_REPLY_DIRECTORY_HANDLE <group___cmp_file_transfer_itf___onlinereplytags_1ga717aedeffb5b79538581daf6029c4661>` 0x1F
+
+- #define :ref:`TAG_DIR_ENTRY <group___cmp_file_transfer_itf___onlinereplytags_1ga06f8a02fb62b9e1ce42e4c21750d224c>` 0x90
+
+- #define :ref:`TDEI_PLACEHOLDER <group___cmp_file_transfer_itf___directoryextrainfoflags_1gad09b4a94a2d5cf1c637391486e5c4caf>` 0x00000001
+
+- #define :ref:`TDEI_REDUNDANT <group___cmp_file_transfer_itf___directoryextrainfoflags_1gac7fb7f7dcf74344a11973821d4f7b7ea>` 0x00000002
+
+- #define :ref:`USERDB_OBJECT_ROOTDIRECTORY <group___cmp_file_transfer_itf___staticdefines_1gafb72d903aac3494ab9550166f8cfb3fb>` "/"
+
+- #define :ref:`USE_FileTransferStartDownload <group___cmp_file_transfer_itf_1ga423585d85178dc088452d876835b35e0>` :ref:`PFFILETRANSFERSTARTDOWNLOAD <group___cmp_file_transfer_itf_1ga88ec463e73630f27ad2f8850d4193dd2>` pfFileTransferStartDownload;
+
+- #define :ref:`EXT_FileTransferStartDownload <group___cmp_file_transfer_itf_1gab5e2316afd8a3025f48f7407fd3fc824>` extern :ref:`PFFILETRANSFERSTARTDOWNLOAD <group___cmp_file_transfer_itf_1ga88ec463e73630f27ad2f8850d4193dd2>` pfFileTransferStartDownload;
+
+- #define :ref:`GET_FileTransferStartDownload <group___cmp_file_transfer_itf_1gae1219cd1eb10b2ec4061b87be5a70871>` s_pfCMGetAPI2( "FileTransferStartDownload", (RTS_VOID_FCTPTR *)&pfFileTransferStartDownload, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferStartDownload <group___cmp_file_transfer_itf_1gadb4dc46040fde68d7531344316d4332a>` pfFileTransferStartDownload
+
+- #define :ref:`CHK_FileTransferStartDownload <group___cmp_file_transfer_itf_1ga3c68b88569b7ecfdd2ca7758d3140567>` (pfFileTransferStartDownload != NULL)
+
+- #define :ref:`EXP_FileTransferStartDownload <group___cmp_file_transfer_itf_1ga2c5639b98ba26e88c505f688d59bf82b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferStartDownload", (RTS_UINTPTR) :ref:`FileTransferStartDownload <group___cmp_file_transfer_itf_1ga033232f2c1e9dbb5049eb02c521facb0>` , 0, 0)
+
+- #define :ref:`USE_FileTransferDownload <group___cmp_file_transfer_itf_1gad3694c12985400f75ec53218e8d9c9d6>` :ref:`PFFILETRANSFERDOWNLOAD <group___cmp_file_transfer_itf_1ga756e47df2b6b67d81d91f12a856a1efb>` pfFileTransferDownload;
+
+- #define :ref:`EXT_FileTransferDownload <group___cmp_file_transfer_itf_1ga9098be6c6bb5b0f53575c69c32a19cf8>` extern :ref:`PFFILETRANSFERDOWNLOAD <group___cmp_file_transfer_itf_1ga756e47df2b6b67d81d91f12a856a1efb>` pfFileTransferDownload;
+
+- #define :ref:`GET_FileTransferDownload <group___cmp_file_transfer_itf_1ga843fb4b955c0d454cad0c465bf290299>` s_pfCMGetAPI2( "FileTransferDownload", (RTS_VOID_FCTPTR *)&pfFileTransferDownload, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferDownload <group___cmp_file_transfer_itf_1gad9dfe8003c18d77380c58db3fbd3405c>` pfFileTransferDownload
+
+- #define :ref:`CHK_FileTransferDownload <group___cmp_file_transfer_itf_1ga2e81080e59fba13be10d6d34c8aea6f9>` (pfFileTransferDownload != NULL)
+
+- #define :ref:`EXP_FileTransferDownload <group___cmp_file_transfer_itf_1gae593558850aba6499c930dfcfd92c5a6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferDownload", (RTS_UINTPTR) :ref:`FileTransferDownload <group___cmp_file_transfer_itf_1gafc8613776f70c2cd74aabb258b2936c9>` , 0, 0)
+
+- #define :ref:`USE_FileTransferEndDownload <group___cmp_file_transfer_itf_1ga8ede251f9731e6481d4ad90544a4c02f>` :ref:`PFFILETRANSFERENDDOWNLOAD <group___cmp_file_transfer_itf_1gace25746be0436d6c71a7daacb8ffc064>` pfFileTransferEndDownload;
+
+- #define :ref:`EXT_FileTransferEndDownload <group___cmp_file_transfer_itf_1ga6f6a1031ee2ab96a8558ac12d238d07d>` extern :ref:`PFFILETRANSFERENDDOWNLOAD <group___cmp_file_transfer_itf_1gace25746be0436d6c71a7daacb8ffc064>` pfFileTransferEndDownload;
+
+- #define :ref:`GET_FileTransferEndDownload <group___cmp_file_transfer_itf_1ga1d1d3848dba99ffea2abd9dea1b7c819>` s_pfCMGetAPI2( "FileTransferEndDownload", (RTS_VOID_FCTPTR *)&pfFileTransferEndDownload, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferEndDownload <group___cmp_file_transfer_itf_1gac0e26b843f15d2bb9bb406923d93245a>` pfFileTransferEndDownload
+
+- #define :ref:`CHK_FileTransferEndDownload <group___cmp_file_transfer_itf_1ga8e310691e672ff42ec7d2d4fba84eef2>` (pfFileTransferEndDownload != NULL)
+
+- #define :ref:`EXP_FileTransferEndDownload <group___cmp_file_transfer_itf_1ga388a6d1c93ca67cc30378e7569a249fa>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferEndDownload", (RTS_UINTPTR) :ref:`FileTransferEndDownload <group___cmp_file_transfer_itf_1gad16b2093d83869160c91a7d69c51b754>` , 0, 0)
+
+- #define :ref:`USE_FileTransferStartUpload <group___cmp_file_transfer_itf_1ga4defff38a83faf6609926acdc225d8c7>` :ref:`PFFILETRANSFERSTARTUPLOAD <group___cmp_file_transfer_itf_1ga13d1909ae0330cd685785216645bd4ab>` pfFileTransferStartUpload;
+
+- #define :ref:`EXT_FileTransferStartUpload <group___cmp_file_transfer_itf_1ga5af9e4c6fc31e250632c8cbf71c8eda7>` extern :ref:`PFFILETRANSFERSTARTUPLOAD <group___cmp_file_transfer_itf_1ga13d1909ae0330cd685785216645bd4ab>` pfFileTransferStartUpload;
+
+- #define :ref:`GET_FileTransferStartUpload <group___cmp_file_transfer_itf_1ga977f69a414f872b1f6d0588950f24cce>` s_pfCMGetAPI2( "FileTransferStartUpload", (RTS_VOID_FCTPTR *)&pfFileTransferStartUpload, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferStartUpload <group___cmp_file_transfer_itf_1gae2c836d6ebbe01805ad3421b19127a28>` pfFileTransferStartUpload
+
+- #define :ref:`CHK_FileTransferStartUpload <group___cmp_file_transfer_itf_1ga267009c90401191380290e425e197b0b>` (pfFileTransferStartUpload != NULL)
+
+- #define :ref:`EXP_FileTransferStartUpload <group___cmp_file_transfer_itf_1ga661c078726070220dbcd5a992aacc330>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferStartUpload", (RTS_UINTPTR) :ref:`FileTransferStartUpload <group___cmp_file_transfer_itf_1ga2f591dc06306a175c365b8b18e767c87>` , 0, 0)
+
+- #define :ref:`USE_FileTransferUpload <group___cmp_file_transfer_itf_1ga274db8ee5a64703a58a8589358ef9c3c>` :ref:`PFFILETRANSFERUPLOAD <group___cmp_file_transfer_itf_1gadc9d0da0013ea1654168868e0c428fec>` pfFileTransferUpload;
+
+- #define :ref:`EXT_FileTransferUpload <group___cmp_file_transfer_itf_1ga188a52421db23be7438ed2b5f1bac702>` extern :ref:`PFFILETRANSFERUPLOAD <group___cmp_file_transfer_itf_1gadc9d0da0013ea1654168868e0c428fec>` pfFileTransferUpload;
+
+- #define :ref:`GET_FileTransferUpload <group___cmp_file_transfer_itf_1ga7e3e490cc66a081931521b99e9ff334b>` s_pfCMGetAPI2( "FileTransferUpload", (RTS_VOID_FCTPTR *)&pfFileTransferUpload, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferUpload <group___cmp_file_transfer_itf_1gac27c57a977d9c0a5ff114941772fbfc1>` pfFileTransferUpload
+
+- #define :ref:`CHK_FileTransferUpload <group___cmp_file_transfer_itf_1gad7fde6652ee09c24366419b740a16876>` (pfFileTransferUpload != NULL)
+
+- #define :ref:`EXP_FileTransferUpload <group___cmp_file_transfer_itf_1ga075ca03b82511e17687aeb38979b60a7>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferUpload", (RTS_UINTPTR) :ref:`FileTransferUpload <group___cmp_file_transfer_itf_1gaafd30cdeda57f080741ff6b7a22e0913>` , 0, 0)
+
+- #define :ref:`USE_FileTransferEndUpload <group___cmp_file_transfer_itf_1ga0bccfff01947e0dd7eaba10a5feaddd3>` :ref:`PFFILETRANSFERENDUPLOAD <group___cmp_file_transfer_itf_1gaec094b0d87cf7bcac1e4182876fb4db1>` pfFileTransferEndUpload;
+
+- #define :ref:`EXT_FileTransferEndUpload <group___cmp_file_transfer_itf_1ga95577b8f1ad7841ac7096e27377b32a4>` extern :ref:`PFFILETRANSFERENDUPLOAD <group___cmp_file_transfer_itf_1gaec094b0d87cf7bcac1e4182876fb4db1>` pfFileTransferEndUpload;
+
+- #define :ref:`GET_FileTransferEndUpload <group___cmp_file_transfer_itf_1ga70767785a4abbad14fc6230f4ae5ac4d>` s_pfCMGetAPI2( "FileTransferEndUpload", (RTS_VOID_FCTPTR *)&pfFileTransferEndUpload, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferEndUpload <group___cmp_file_transfer_itf_1gabf606c6f1fc394e4f877e9170d78feb9>` pfFileTransferEndUpload
+
+- #define :ref:`CHK_FileTransferEndUpload <group___cmp_file_transfer_itf_1gad0cdd653cd0b155fe6e102c5cdbbd8f7>` (pfFileTransferEndUpload != NULL)
+
+- #define :ref:`EXP_FileTransferEndUpload <group___cmp_file_transfer_itf_1ga2172cfa93fbc34249b690221ebfe5d10>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferEndUpload", (RTS_UINTPTR) :ref:`FileTransferEndUpload <group___cmp_file_transfer_itf_1gab29e3301bfe625801c1451f44095f5df>` , 0, 0)
+
+- #define :ref:`USE_FileTransferClose <group___cmp_file_transfer_itf_1ga71515387b77832aa41d7f612594a078d>` :ref:`PFFILETRANSFERCLOSE <group___cmp_file_transfer_itf_1gac8ed203a5b6c46a2c8d95b904b7943b5>` pfFileTransferClose;
+
+- #define :ref:`EXT_FileTransferClose <group___cmp_file_transfer_itf_1ga59d004d300ff9e8fdd170eaee296dae6>` extern :ref:`PFFILETRANSFERCLOSE <group___cmp_file_transfer_itf_1gac8ed203a5b6c46a2c8d95b904b7943b5>` pfFileTransferClose;
+
+- #define :ref:`GET_FileTransferClose <group___cmp_file_transfer_itf_1ga49bccb3f11a6d00c7973eb782151c2c9>` s_pfCMGetAPI2( "FileTransferClose", (RTS_VOID_FCTPTR *)&pfFileTransferClose, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferClose <group___cmp_file_transfer_itf_1ga7ffd2c0e8bf5d5420adf3ac461aac6b1>` pfFileTransferClose
+
+- #define :ref:`CHK_FileTransferClose <group___cmp_file_transfer_itf_1ga64dd4fcc11d4182c1ddaf469f635f608>` (pfFileTransferClose != NULL)
+
+- #define :ref:`EXP_FileTransferClose <group___cmp_file_transfer_itf_1ga3157507fbb705ca05c23aa696c229f48>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferClose", (RTS_UINTPTR) :ref:`FileTransferClose <group___cmp_file_transfer_itf_1gad76ee122b3aa1f0af7cfa83261f03c32>` , 0, 0)
+
+- #define :ref:`USE_FileTransferCancel <group___cmp_file_transfer_itf_1ga424d1d7f0b1812ffe1d371de4b207c33>` :ref:`PFFILETRANSFERCANCEL <group___cmp_file_transfer_itf_1ga761078a504edb6d5ff950be4a56f6ed1>` pfFileTransferCancel;
+
+- #define :ref:`EXT_FileTransferCancel <group___cmp_file_transfer_itf_1ga47db4d8713d19815d4f8a02cf10d6a47>` extern :ref:`PFFILETRANSFERCANCEL <group___cmp_file_transfer_itf_1ga761078a504edb6d5ff950be4a56f6ed1>` pfFileTransferCancel;
+
+- #define :ref:`GET_FileTransferCancel <group___cmp_file_transfer_itf_1ga5690993de5decc82e40bc122a8e0e873>` s_pfCMGetAPI2( "FileTransferCancel", (RTS_VOID_FCTPTR *)&pfFileTransferCancel, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferCancel <group___cmp_file_transfer_itf_1ga54dfaa332c1cdbdbd2551cb24eaf2cf1>` pfFileTransferCancel
+
+- #define :ref:`CHK_FileTransferCancel <group___cmp_file_transfer_itf_1ga1788bd67dfa6233ea2d5e68f0cb1a1be>` (pfFileTransferCancel != NULL)
+
+- #define :ref:`EXP_FileTransferCancel <group___cmp_file_transfer_itf_1gabb1a7cc6b4be7a8b1515322b0cf7a121>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferCancel", (RTS_UINTPTR) :ref:`FileTransferCancel <group___cmp_file_transfer_itf_1gaaec88ac066c46f76af94133132700d3d>` , 0, 0)
+
+- #define :ref:`USE_FileTransferCancelAll <group___cmp_file_transfer_itf_1ga84d3f638d30564a389faf87c5fe725c7>` :ref:`PFFILETRANSFERCANCELALL <group___cmp_file_transfer_itf_1ga5948844cd8f5faeb44026b569c6c72a0>` pfFileTransferCancelAll;
+
+- #define :ref:`EXT_FileTransferCancelAll <group___cmp_file_transfer_itf_1ga7c9f7220e072923d600130db745a130c>` extern :ref:`PFFILETRANSFERCANCELALL <group___cmp_file_transfer_itf_1ga5948844cd8f5faeb44026b569c6c72a0>` pfFileTransferCancelAll;
+
+- #define :ref:`GET_FileTransferCancelAll <group___cmp_file_transfer_itf_1ga111b822dde32de7241d4c99ffbef8984>` s_pfCMGetAPI2( "FileTransferCancelAll", (RTS_VOID_FCTPTR *)&pfFileTransferCancelAll, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferCancelAll <group___cmp_file_transfer_itf_1gadef9ce7f2d1941debc82eb75f0389cb1>` pfFileTransferCancelAll
+
+- #define :ref:`CHK_FileTransferCancelAll <group___cmp_file_transfer_itf_1ga3fae868d33d309d225a5e56153efb7c4>` (pfFileTransferCancelAll != NULL)
+
+- #define :ref:`EXP_FileTransferCancelAll <group___cmp_file_transfer_itf_1ga30f881b4268cbb8a0b1fa1a85c08bc50>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferCancelAll", (RTS_UINTPTR) :ref:`FileTransferCancelAll <group___cmp_file_transfer_itf_1gabe46ab9ea202570ffc490665f3304b6b>` , 0, 0)
+
+- #define :ref:`USE_FileTransferGetInfo <group___cmp_file_transfer_itf_1ga6e1215ada8861c3fd7fe2afc6135eccd>` :ref:`PFFILETRANSFERGETINFO <group___cmp_file_transfer_itf_1ga1fa39ca2c21bb61545b88cfe125839e4>` pfFileTransferGetInfo;
+
+- #define :ref:`EXT_FileTransferGetInfo <group___cmp_file_transfer_itf_1gac97c160a047ce8759612c23ee35a30d6>` extern :ref:`PFFILETRANSFERGETINFO <group___cmp_file_transfer_itf_1ga1fa39ca2c21bb61545b88cfe125839e4>` pfFileTransferGetInfo;
+
+- #define :ref:`GET_FileTransferGetInfo <group___cmp_file_transfer_itf_1ga23d173b797e056b04861d454a7ed2009>` s_pfCMGetAPI2( "FileTransferGetInfo", (RTS_VOID_FCTPTR *)&pfFileTransferGetInfo, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferGetInfo <group___cmp_file_transfer_itf_1ga7bf1886d957a194083536e374c6a0e8a>` pfFileTransferGetInfo
+
+- #define :ref:`CHK_FileTransferGetInfo <group___cmp_file_transfer_itf_1ga560bac050648c925369b6f6aa94a3ebc>` (pfFileTransferGetInfo != NULL)
+
+- #define :ref:`EXP_FileTransferGetInfo <group___cmp_file_transfer_itf_1gaebef1697257400652c69ce9ee2f7be43>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferGetInfo", (RTS_UINTPTR) :ref:`FileTransferGetInfo <group___cmp_file_transfer_itf_1ga3827395bddf269d24db01c27aacc6e4c>` , 0, 0)
+
+- #define :ref:`USE_FileTransferToTransmit <group___cmp_file_transfer_itf_1ga23519669cc4c6260fab3fbc023f8c060>` :ref:`PFFILETRANSFERTOTRANSMIT <group___cmp_file_transfer_itf_1ga7f9710eff5d0f191ba625ef708650c62>` pfFileTransferToTransmit;
+
+- #define :ref:`EXT_FileTransferToTransmit <group___cmp_file_transfer_itf_1ga649bcdc61a1f420bc1ccaee414f2205f>` extern :ref:`PFFILETRANSFERTOTRANSMIT <group___cmp_file_transfer_itf_1ga7f9710eff5d0f191ba625ef708650c62>` pfFileTransferToTransmit;
+
+- #define :ref:`GET_FileTransferToTransmit <group___cmp_file_transfer_itf_1gaf2848ba6abee3e07cd9794353df7cd5d>` s_pfCMGetAPI2( "FileTransferToTransmit", (RTS_VOID_FCTPTR *)&pfFileTransferToTransmit, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferToTransmit <group___cmp_file_transfer_itf_1gaafb383d1cb3d9856a6a0a2cf27573cf0>` pfFileTransferToTransmit
+
+- #define :ref:`CHK_FileTransferToTransmit <group___cmp_file_transfer_itf_1ga4f22e08943e4c257b8784166f0bb76a5>` (pfFileTransferToTransmit != NULL)
+
+- #define :ref:`EXP_FileTransferToTransmit <group___cmp_file_transfer_itf_1gae8c2c6cc80d7a6e11d07c528e756d731>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferToTransmit", (RTS_UINTPTR) :ref:`FileTransferToTransmit <group___cmp_file_transfer_itf_1gab35a43fdc2969d65a16755aa9d5acd22>` , 0, 0)
+
+- #define :ref:`USE_FileTransferSafeSignature <group___cmp_file_transfer_itf_1ga552287cdcd34685eeddada23b1c46df5>` :ref:`PFFILETRANSFERSAFESIGNATURE <group___cmp_file_transfer_itf_1ga29fc44ab4c1e60023bcd5c499af061cb>` pfFileTransferSafeSignature;
+
+- #define :ref:`EXT_FileTransferSafeSignature <group___cmp_file_transfer_itf_1ga9e109a02d8994fafcad48e17daf305b6>` extern :ref:`PFFILETRANSFERSAFESIGNATURE <group___cmp_file_transfer_itf_1ga29fc44ab4c1e60023bcd5c499af061cb>` pfFileTransferSafeSignature;
+
+- #define :ref:`GET_FileTransferSafeSignature <group___cmp_file_transfer_itf_1ga3ebfff6c6e2afe1436b6151a56baf9af>` s_pfCMGetAPI2( "FileTransferSafeSignature", (RTS_VOID_FCTPTR *)&pfFileTransferSafeSignature, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferSafeSignature <group___cmp_file_transfer_itf_1ga528a023efe0f92f97d9d2c241d491f6d>` pfFileTransferSafeSignature
+
+- #define :ref:`CHK_FileTransferSafeSignature <group___cmp_file_transfer_itf_1gaa0cd6f17562e5f217f16df54dabf7b68>` (pfFileTransferSafeSignature != NULL)
+
+- #define :ref:`EXP_FileTransferSafeSignature <group___cmp_file_transfer_itf_1ga6dfcdea8bdd2179c0154880dd12d9287>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferSafeSignature", (RTS_UINTPTR) :ref:`FileTransferSafeSignature <group___cmp_file_transfer_itf_1ga7eabb283118b8fea8b26f4d6a8e90a05>` , 0, 0)
+
+- #define :ref:`USE_FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1gad680e6f4e26bdf87718a4a44cd7214e9>` :ref:`PFFILETRANSFERGETSAFEDSIGNATURE <group___cmp_file_transfer_itf_1ga66a0b92d49ad01a6f6540f00c8e81e59>` pfFileTransferGetSafedSignature;
+
+- #define :ref:`EXT_FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1gaf0482da537b84f883018db31bf55c9d1>` extern :ref:`PFFILETRANSFERGETSAFEDSIGNATURE <group___cmp_file_transfer_itf_1ga66a0b92d49ad01a6f6540f00c8e81e59>` pfFileTransferGetSafedSignature;
+
+- #define :ref:`GET_FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1ga536b17e07c97e6087304a5731b8ab119>` s_pfCMGetAPI2( "FileTransferGetSafedSignature", (RTS_VOID_FCTPTR *)&pfFileTransferGetSafedSignature, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1ga148c787ead2df83513f055d16d0d4266>` pfFileTransferGetSafedSignature
+
+- #define :ref:`CHK_FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1ga68c49a0033f6506bddafa0a4f9369f90>` (pfFileTransferGetSafedSignature != NULL)
+
+- #define :ref:`EXP_FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1ga7a03a6eed5236a241a6a1b02a559f9ab>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferGetSafedSignature", (RTS_UINTPTR) :ref:`FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1gad81ea0a57efbfa1bbfb6da3dfbda9c24>` , 0, 0)
+
+- #define :ref:`ITF_CmpFileTransfer <group___cmp_file_transfer_itf_1gaa6fd8c6cd6cae162c56e6e15a0294f94>`
+
+- #define :ref:`EXTITF_CmpFileTransfer <group___cmp_file_transfer_itf_1gaa2e4fae0353a348adb0418c684cb38f9>`
+
+Typedefs
+--------
+
+- typedef RTS_HANDLE(* :ref:`PFFILETRANSFERSTARTDOWNLOAD <group___cmp_file_transfer_itf_1ga88ec463e73630f27ad2f8850d4193dd2>`)(char *pszFileName, FileInfo *pInfo, RTS_UI32 ulSessionId, int bRestart, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERDOWNLOAD <group___cmp_file_transfer_itf_1ga756e47df2b6b67d81d91f12a856a1efb>`)(RTS_HANDLE hFiletransfer, unsigned char *pbyData, RTS_SIZE ulLen)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERENDDOWNLOAD <group___cmp_file_transfer_itf_1gace25746be0436d6c71a7daacb8ffc064>`)(RTS_HANDLE hFiletransfer)
+
+- typedef RTS_HANDLE(* :ref:`PFFILETRANSFERSTARTUPLOAD <group___cmp_file_transfer_itf_1ga13d1909ae0330cd685785216645bd4ab>`)(char *pszFileName, FileInfo *pInfo, RTS_UI32 ulSessionId, int bRestart, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERUPLOAD <group___cmp_file_transfer_itf_1gadc9d0da0013ea1654168868e0c428fec>`)(RTS_HANDLE hFiletransfer, unsigned char *pbyData, RTS_SIZE *pulMaxLen)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERENDUPLOAD <group___cmp_file_transfer_itf_1gaec094b0d87cf7bcac1e4182876fb4db1>`)(RTS_HANDLE hFiletransfer, FileInfo *pFileInfo)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERCLOSE <group___cmp_file_transfer_itf_1gac8ed203a5b6c46a2c8d95b904b7943b5>`)(RTS_HANDLE hFiletransfer)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERCANCEL <group___cmp_file_transfer_itf_1ga761078a504edb6d5ff950be4a56f6ed1>`)(RTS_HANDLE hFiletransfer)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERCANCELALL <group___cmp_file_transfer_itf_1ga5948844cd8f5faeb44026b569c6c72a0>`)(RTS_UI32 ulSessionId)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERGETINFO <group___cmp_file_transfer_itf_1ga1fa39ca2c21bb61545b88cfe125839e4>`)(char *pszFileName, FileInfo *pInfo, FileInfo *pInfoClient)
+
+- typedef RTS_SIZE(* :ref:`PFFILETRANSFERTOTRANSMIT <group___cmp_file_transfer_itf_1ga7f9710eff5d0f191ba625ef708650c62>`)(RTS_HANDLE hFiletransfer, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERSAFESIGNATURE <group___cmp_file_transfer_itf_1ga29fc44ab4c1e60023bcd5c499af061cb>`)(char *pszFileName, RTS_UI32 ulCRC32)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERGETSAFEDSIGNATURE <group___cmp_file_transfer_itf_1ga66a0b92d49ad01a6f6540f00c8e81e59>`)(char *pszFileName, RTS_UI32 *pulCRC32)
+
+- typedef :ref:`ICmpFileTransfer_C <struct_i_cmp_file_transfer___c>` :ref:`ICmpFileTransfer <group___cmp_file_transfer_itf_1gad61a0cf3ab5449c5625f484b7e901e0b>`
+
+Functions
+---------
+
+- RTS_HANDLE :ref:`FileTransferStartDownload <group___cmp_file_transfer_itf_1ga033232f2c1e9dbb5049eb02c521facb0>` (char * pszFileName, :ref:`FileInfo <struct_file_info>` * pInfo, RTS_UI32 ulSessionId, int bRestart, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`FileTransferDownload <group___cmp_file_transfer_itf_1gafc8613776f70c2cd74aabb258b2936c9>` (RTS_HANDLE hFiletransfer, unsigned char * pbyData, RTS_SIZE ulLen)
+
+- RTS_RESULT :ref:`FileTransferEndDownload <group___cmp_file_transfer_itf_1gad16b2093d83869160c91a7d69c51b754>` (RTS_HANDLE hFiletransfer)
+
+- RTS_HANDLE :ref:`FileTransferStartUpload <group___cmp_file_transfer_itf_1ga2f591dc06306a175c365b8b18e767c87>` (char * pszFileName, :ref:`FileInfo <struct_file_info>` * pInfo, RTS_UI32 ulSessionId, int bRestart, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`FileTransferUpload <group___cmp_file_transfer_itf_1gaafd30cdeda57f080741ff6b7a22e0913>` (RTS_HANDLE hFiletransfer, unsigned char * pbyData, RTS_SIZE * pulMaxLen)
+
+- RTS_RESULT :ref:`FileTransferEndUpload <group___cmp_file_transfer_itf_1gab29e3301bfe625801c1451f44095f5df>` (RTS_HANDLE hFiletransfer, :ref:`FileInfo <struct_file_info>` * pFileInfo)
+
+- RTS_RESULT :ref:`FileTransferClose <group___cmp_file_transfer_itf_1gad76ee122b3aa1f0af7cfa83261f03c32>` (RTS_HANDLE hFiletransfer)
+
+- RTS_RESULT :ref:`FileTransferCancel <group___cmp_file_transfer_itf_1gaaec88ac066c46f76af94133132700d3d>` (RTS_HANDLE hFiletransfer)
+
+- RTS_RESULT :ref:`FileTransferCancelAll <group___cmp_file_transfer_itf_1gabe46ab9ea202570ffc490665f3304b6b>` (RTS_UI32 ulSessionId)
+
+- RTS_RESULT :ref:`FileTransferGetInfo <group___cmp_file_transfer_itf_1ga3827395bddf269d24db01c27aacc6e4c>` (char * pszFileName, :ref:`FileInfo <struct_file_info>` * pInfo, :ref:`FileInfo <struct_file_info>` * pInfoClient)
+
+- RTS_SIZE :ref:`FileTransferToTransmit <group___cmp_file_transfer_itf_1gab35a43fdc2969d65a16755aa9d5acd22>` (RTS_HANDLE hFiletransfer, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`FileTransferSafeSignature <group___cmp_file_transfer_itf_1ga7eabb283118b8fea8b26f4d6a8e90a05>` (char * pszFileName, RTS_UI32 ulCRC32)
+
+- RTS_RESULT :ref:`FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1gad81ea0a57efbfa1bbfb6da3dfbda9c24>` (char * pszFileName, RTS_UI32 * pulCRC32)
+
+Detailed Description
+--------------------
+
+Definition in file CmpFileTransferItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

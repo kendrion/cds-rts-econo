@@ -1,0 +1,36 @@
+.. _runtime_system_sdk:
+
+Runtime system SDK
+==================
+
+Building a dynamic object loadable by the CODESYS runtime requires a set
+of tools and headers referred to as an SDK.The common storage for this
+SDKs is the folder named C-Integration the installation root folder of
+CODESYS.
+
+Folder layout
+-------------
+
+Every PlugIn uses its own subfolder and must use the Guid of the
+ComponentBuilder instance as folder name. If different device versions
+are to be supported, it is recommended to group the versions by folders.
+
+Eventually a certain layout of an SDK folder is expected. The folder
+**Components** should contain the headers of runtime components either
+required for building a dynamic object or which are additionally
+selectable by the user for usage in their code. The folder **Platforms**
+contains architecture and OS specific headers.
+
+User selectable runtime system components
+-----------------------------------------
+
+The runtime system components selectable by user for usage in their code
+through the configuration editor in CODESYS are acquired through the
+IBuildConfiguration interface.The property
+**AvailableRuntimeComponents** returns a list of all components visible
+to the user.
+
+The list returned by the property can either be hardcoded or parsed from
+configuration files. The implementation details are left open. The
+reference implementation parses an XML file to get the list of the
+components.

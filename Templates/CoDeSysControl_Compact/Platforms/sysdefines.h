@@ -241,6 +241,8 @@
 	typedef signed   long long RTS_I64;
 	typedef unsigned long long RTS_UI64;
 #endif
+#define RTS_UI64_MAX				(RTS_UI64)(~((RTS_UI64)0))
+#define RTS_I64_MAX					(RTS_I64)(~((RTS_I64)0))
 #define BASE64BITTYPES_DEFINED
 
 #ifdef _DEBUG

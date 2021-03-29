@@ -1,0 +1,850 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_target_visu_itf:
+
+================
+CmpTargetVisuItf
+================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpTargetVisu.
+
+Detailed Description
+--------------------
+
+Interface for the target visualization.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Event parameter <group___cmp_target_visu_itf___eventparameter>`
+
+- :ref:`Events <group___cmp_target_visu_itf___events>`
+
+- :ref:`Settings <group___cmp_target_visu_itf___settings>`
+
+Data Structures
+---------------
+
+- struct :ref:`tagtargetvisucyclic_struct <structtagtargetvisucyclic__struct>`
+
+- struct :ref:`tagtargetvisufindbyid_struct <structtagtargetvisufindbyid__struct>`
+
+- struct :ref:`tagtargetvisunotify_struct <structtagtargetvisunotify__struct>`
+
+- struct :ref:`ICmpTargetVisu_C <struct_i_cmp_target_visu___c>`
+
+Macros
+------
+
+- #define :ref:`USE_CreateTargetvisuInstance <group___cmp_target_visu_itf_1ga0d87e75451de387f0c051bb7db079c95>` :ref:`PFCREATETARGETVISUINSTANCE <group___cmp_target_visu_itf_1ga1940eaa11d9896ab900ff2dada6cf491>` pfCreateTargetvisuInstance;
+
+- #define :ref:`EXT_CreateTargetvisuInstance <group___cmp_target_visu_itf_1gaaf2bd6ff07611ab74711a882968c2222>` extern :ref:`PFCREATETARGETVISUINSTANCE <group___cmp_target_visu_itf_1ga1940eaa11d9896ab900ff2dada6cf491>` pfCreateTargetvisuInstance;
+
+- #define :ref:`GET_CreateTargetvisuInstance <group___cmp_target_visu_itf_1ga85b6c81a48e4f5ceb298e7e659730285>` s_pfCMGetAPI2( "CreateTargetvisuInstance", (RTS_VOID_FCTPTR *)&pfCreateTargetvisuInstance, (fl), 0, 0)
+
+- #define :ref:`CAL_CreateTargetvisuInstance <group___cmp_target_visu_itf_1gad5df988bed6db730e0abd8b5b4c91a73>` pfCreateTargetvisuInstance
+
+- #define :ref:`CHK_CreateTargetvisuInstance <group___cmp_target_visu_itf_1ga65ecc8498ffefc8da80936f15db9c4dd>` (pfCreateTargetvisuInstance != NULL)
+
+- #define :ref:`EXP_CreateTargetvisuInstance <group___cmp_target_visu_itf_1ga187077b5d99ef2f2508bae843c252da9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CreateTargetvisuInstance", (RTS_UINTPTR) :ref:`CreateTargetvisuInstance <group___cmp_target_visu_itf_1ga5c6d38aeeb7add978ae6a1d3ce2343db>` , 0, 0)
+
+- #define :ref:`CMPTARGETVISU_FLAGS_REMOTE <group___cmp_target_visu_itf_1ga82c2e7788e51d2742761a52edc38dfb5>` 0x0001
+
+- #define :ref:`CMPTARGETVISU_FLAGS_REMOTE_BESTFIT <group___cmp_target_visu_itf_1ga060f2b568a4c99b361ebe5c78b83ceeb>` 0x0002
+
+- #define :ref:`CMPTARGETVISU_FLAGS_MEASURE_PAINTCOMMANDEXECUTION <group___cmp_target_visu_itf_1ga57c30bd50654765d5f09170777ed9066>` 0x0004
+
+- #define :ref:`CMPTARGETVISU_FLAGS_MEASURE_MOUSEDOWNREACTION <group___cmp_target_visu_itf_1gac21b18a1b1ab720ad94254958c068a15>` 0x0008
+
+- #define :ref:`CMPTARGETVISU_FLAGS_MEASURE_PAINTINGTOSCREEN <group___cmp_target_visu_itf_1ga38babc3446ee2511de54ee271ac5867e>` 0x0010
+
+- #define :ref:`CMPTARGETVISU_FLAGS_ACTIVATE_TOUCHHANDLING <group___cmp_target_visu_itf_1ga53647fa5dbc1f448899b055c1ca9965c>` 0x0020
+
+- #define :ref:`CMPTARGETVISU_FLAGS_ACTIVATE_KEYBOARD <group___cmp_target_visu_itf_1gaae36b5cdce7c7aa2fbaffd325b401f5a>` 0x0040
+
+- #define :ref:`CMPTARGETVISU_FLAGS_REMOTE_SCALETYPEISOTROPIC <group___cmp_target_visu_itf_1gaa439d4596688c22634ca6c42d13502df>` 0x0080
+
+- #define :ref:`CMPTARGETVISU_FLAGS_REMOTE_BESTFIT_FOR_DIALOGS <group___cmp_target_visu_itf_1gae466b7e9bf37ada9b92e79a4623f3fd1>` 0x0100
+
+- #define :ref:`CMPTARGETVISU_FLAGS_TRANSPARENT_BACKGROUND <group___cmp_target_visu_itf_1ga660c8bdcff5ba5e9c24f3bffbabc815e>` 0x0400
+
+- #define :ref:`CMPTARGETVISU_NOTIFY_TAG_PAINTDATA_AVAILABLE <group___cmp_target_visu_itf_1gab2cdc98310fac6711e8d05b3df7e660b>` 1
+
+- #define :ref:`USE_CreateTargetvisuInstance2 <group___cmp_target_visu_itf_1ga05e85a4b33e43304d044b89774dc83e7>` :ref:`PFCREATETARGETVISUINSTANCE2 <group___cmp_target_visu_itf_1gae92c2baddeef35505e8b18537fa3b601>` pfCreateTargetvisuInstance2;
+
+- #define :ref:`EXT_CreateTargetvisuInstance2 <group___cmp_target_visu_itf_1gabad04bbfb70ec3f0f9a1f64eef96ac80>` extern :ref:`PFCREATETARGETVISUINSTANCE2 <group___cmp_target_visu_itf_1gae92c2baddeef35505e8b18537fa3b601>` pfCreateTargetvisuInstance2;
+
+- #define :ref:`GET_CreateTargetvisuInstance2 <group___cmp_target_visu_itf_1gabe2abbfc411ac2e41aa068f09ab20964>` s_pfCMGetAPI2( "CreateTargetvisuInstance2", (RTS_VOID_FCTPTR *)&pfCreateTargetvisuInstance2, (fl), 0, 0)
+
+- #define :ref:`CAL_CreateTargetvisuInstance2 <group___cmp_target_visu_itf_1gac5085a8d415993de012b9c26cb1d06a9>` pfCreateTargetvisuInstance2
+
+- #define :ref:`CHK_CreateTargetvisuInstance2 <group___cmp_target_visu_itf_1gaf1364fc5c0d572ccae1cd4a1a6e81662>` (pfCreateTargetvisuInstance2 != NULL)
+
+- #define :ref:`EXP_CreateTargetvisuInstance2 <group___cmp_target_visu_itf_1ga8281a920c0a51627c4f1294cb286c1aa>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CreateTargetvisuInstance2", (RTS_UINTPTR) :ref:`CreateTargetvisuInstance2 <group___cmp_target_visu_itf_1ga472ed0945b70e9e27d4f1e4b2a0404bb>` , 0, 0)
+
+- #define :ref:`USE_DestroyTargetvisuInstance <group___cmp_target_visu_itf_1ga3ed5b22b85c0838d5675c100d087b828>` :ref:`PFDESTROYTARGETVISUINSTANCE <group___cmp_target_visu_itf_1ga48e82890c79c2dbbad7db59b0b3c9b67>` pfDestroyTargetvisuInstance;
+
+- #define :ref:`EXT_DestroyTargetvisuInstance <group___cmp_target_visu_itf_1ga65064b9f349cc014ca3fdbd50b575c9b>` extern :ref:`PFDESTROYTARGETVISUINSTANCE <group___cmp_target_visu_itf_1ga48e82890c79c2dbbad7db59b0b3c9b67>` pfDestroyTargetvisuInstance;
+
+- #define :ref:`GET_DestroyTargetvisuInstance <group___cmp_target_visu_itf_1ga653c7389e70ecd30e493fe04f361de97>` s_pfCMGetAPI2( "DestroyTargetvisuInstance", (RTS_VOID_FCTPTR *)&pfDestroyTargetvisuInstance, (fl), 0, 0)
+
+- #define :ref:`CAL_DestroyTargetvisuInstance <group___cmp_target_visu_itf_1gacab8e0fad11682c558fe616acea0eef6>` pfDestroyTargetvisuInstance
+
+- #define :ref:`CHK_DestroyTargetvisuInstance <group___cmp_target_visu_itf_1gaeb204c7d927d298ad04ce169091c9ad0>` (pfDestroyTargetvisuInstance != NULL)
+
+- #define :ref:`EXP_DestroyTargetvisuInstance <group___cmp_target_visu_itf_1ga530abc33fe6896525273236d1bdba303>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DestroyTargetvisuInstance", (RTS_UINTPTR) :ref:`DestroyTargetvisuInstance <group___cmp_target_visu_itf_1gaa405516d7a9cf7b10b80fb8d0ce437da>` , 0, 0)
+
+- #define :ref:`USE_TargetVisuRegisterEventHandler <group___cmp_target_visu_itf_1ga792d80ebfb3e29882244caaa072fa7c8>` :ref:`PFTARGETVISUREGISTEREVENTHANDLER <group___cmp_target_visu_itf_1gaa92cea4075202c42cffc331bf2b8c694>` pfTargetVisuRegisterEventHandler;
+
+- #define :ref:`EXT_TargetVisuRegisterEventHandler <group___cmp_target_visu_itf_1gaedf729e414ff485e23759dfd1108a7b6>` extern :ref:`PFTARGETVISUREGISTEREVENTHANDLER <group___cmp_target_visu_itf_1gaa92cea4075202c42cffc331bf2b8c694>` pfTargetVisuRegisterEventHandler;
+
+- #define :ref:`GET_TargetVisuRegisterEventHandler <group___cmp_target_visu_itf_1gac37fb2aec9a361908b3a88f9c1dfc185>` s_pfCMGetAPI2( "TargetVisuRegisterEventHandler", (RTS_VOID_FCTPTR *)&pfTargetVisuRegisterEventHandler, (fl), 0, 0)
+
+- #define :ref:`CAL_TargetVisuRegisterEventHandler <group___cmp_target_visu_itf_1ga046c2ca408ce7ddb4dfd8eaf567091db>` pfTargetVisuRegisterEventHandler
+
+- #define :ref:`CHK_TargetVisuRegisterEventHandler <group___cmp_target_visu_itf_1gaf14fe2ffb6e41ff10ed74906dcd0eac9>` (pfTargetVisuRegisterEventHandler != NULL)
+
+- #define :ref:`EXP_TargetVisuRegisterEventHandler <group___cmp_target_visu_itf_1gaf725fe962e64827bca760d2723c02fc3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"TargetVisuRegisterEventHandler", (RTS_UINTPTR) :ref:`TargetVisuRegisterEventHandler <group___cmp_target_visu_itf_1ga607556697abc736db950c91e500385e9>` , 0, 0)
+
+- #define :ref:`USE_TargetVisuUnregisterEventHandler <group___cmp_target_visu_itf_1gaf7d1f3d2681458139ff09240ab219fec>` :ref:`PFTARGETVISUUNREGISTEREVENTHANDLER <group___cmp_target_visu_itf_1gaabbfe288e22df5392fd358a696934d88>` pfTargetVisuUnregisterEventHandler;
+
+- #define :ref:`EXT_TargetVisuUnregisterEventHandler <group___cmp_target_visu_itf_1gac87887df4e51e1cc4ae4f592aa548f83>` extern :ref:`PFTARGETVISUUNREGISTEREVENTHANDLER <group___cmp_target_visu_itf_1gaabbfe288e22df5392fd358a696934d88>` pfTargetVisuUnregisterEventHandler;
+
+- #define :ref:`GET_TargetVisuUnregisterEventHandler <group___cmp_target_visu_itf_1ga6e7f6d878beda39eac00cee1dbf3f7f3>` s_pfCMGetAPI2( "TargetVisuUnregisterEventHandler", (RTS_VOID_FCTPTR *)&pfTargetVisuUnregisterEventHandler, (fl), 0, 0)
+
+- #define :ref:`CAL_TargetVisuUnregisterEventHandler <group___cmp_target_visu_itf_1ga6ed1eba8147583a6eb08d595ab09f1e5>` pfTargetVisuUnregisterEventHandler
+
+- #define :ref:`CHK_TargetVisuUnregisterEventHandler <group___cmp_target_visu_itf_1gaba9dd114449e722c66c4ce96994e0702>` (pfTargetVisuUnregisterEventHandler != NULL)
+
+- #define :ref:`EXP_TargetVisuUnregisterEventHandler <group___cmp_target_visu_itf_1gacb7f5ebbba7c8730f5fc8b2e46491e7d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"TargetVisuUnregisterEventHandler", (RTS_UINTPTR) :ref:`TargetVisuUnregisterEventHandler <group___cmp_target_visu_itf_1ga9330e030699bdc5966cf92012cb67f3f>` , 0, 0)
+
+- #define :ref:`USE_targetvisucyclic <group___cmp_target_visu_itf_1ga0957870641a51798739a39166524e221>` :ref:`PFTARGETVISUCYCLIC_IEC <group___cmp_target_visu_itf_1ga1614e716c9bdc06dbeb4955e25016d01>` pftargetvisucyclic;
+
+- #define :ref:`EXT_targetvisucyclic <group___cmp_target_visu_itf_1gaa33b6d6cfe962491af039936f4900ccb>` extern :ref:`PFTARGETVISUCYCLIC_IEC <group___cmp_target_visu_itf_1ga1614e716c9bdc06dbeb4955e25016d01>` pftargetvisucyclic;
+
+- #define :ref:`GET_targetvisucyclic <group___cmp_target_visu_itf_1ga8878c75788b209b2798e78ecf6252406>` s_pfCMGetAPI2( "targetvisucyclic", (RTS_VOID_FCTPTR *)&pftargetvisucyclic, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0xD44FE2A3, 0xFE915838), 0x03050500)
+
+- #define :ref:`CAL_targetvisucyclic <group___cmp_target_visu_itf_1ga7474e991df5b0acef24f716861ca858c>` pftargetvisucyclic
+
+- #define :ref:`CHK_targetvisucyclic <group___cmp_target_visu_itf_1gabd42883f7a5c4738f429d3c52896378b>` (pftargetvisucyclic != NULL)
+
+- #define :ref:`EXP_targetvisucyclic <group___cmp_target_visu_itf_1ga6e28164632db3cf37ebf407726a9572b>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"targetvisucyclic", (RTS_UINTPTR) :ref:`targetvisucyclic <group___cmp_target_visu_itf_1gaeb0952832f02122733d7c18e71145956>` , 1, RTSITF_GET_SIGNATURE(0xD44FE2A3, 0xFE915838), 0x03050500)
+
+- #define :ref:`USE_targetvisufindbyid <group___cmp_target_visu_itf_1ga5cbd1b113d98e981db0544f5f3646864>` :ref:`PFTARGETVISUFINDBYID_IEC <group___cmp_target_visu_itf_1ga49f13543b4c8d6ba0df5a2f23f7e19ec>` pftargetvisufindbyid;
+
+- #define :ref:`EXT_targetvisufindbyid <group___cmp_target_visu_itf_1ga71f5a2e442f665e4d2457f24f91c7e5f>` extern :ref:`PFTARGETVISUFINDBYID_IEC <group___cmp_target_visu_itf_1ga49f13543b4c8d6ba0df5a2f23f7e19ec>` pftargetvisufindbyid;
+
+- #define :ref:`GET_targetvisufindbyid <group___cmp_target_visu_itf_1ga1a3783e653f022bce3a4d278fbe1dc47>` s_pfCMGetAPI2( "targetvisufindbyid", (RTS_VOID_FCTPTR *)&pftargetvisufindbyid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xEC5DE09D, 0x03050500)
+
+- #define :ref:`CAL_targetvisufindbyid <group___cmp_target_visu_itf_1gac79963b41053393eddc41c126dafe189>` pftargetvisufindbyid
+
+- #define :ref:`CHK_targetvisufindbyid <group___cmp_target_visu_itf_1gafb918020cae50f22b9079ac3ee2886d5>` (pftargetvisufindbyid != NULL)
+
+- #define :ref:`EXP_targetvisufindbyid <group___cmp_target_visu_itf_1ga9cb58b9a010754d4cca27b31b319a521>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"targetvisufindbyid", (RTS_UINTPTR) :ref:`targetvisufindbyid <group___cmp_target_visu_itf_1gad236fd23e4b4bd62da1559844295fa22>` , 1, 0xEC5DE09D, 0x03050500)
+
+- #define :ref:`USE_targetvisunotify <group___cmp_target_visu_itf_1ga397015693b3171cf2b62ed63ae5250c5>` :ref:`PFTARGETVISUNOTIFY_IEC <group___cmp_target_visu_itf_1ga75397de6f65895fc7b9993eaec8482ed>` pftargetvisunotify;
+
+- #define :ref:`EXT_targetvisunotify <group___cmp_target_visu_itf_1gaedf0fdbe0aa3357c580af1e0f6769ca0>` extern :ref:`PFTARGETVISUNOTIFY_IEC <group___cmp_target_visu_itf_1ga75397de6f65895fc7b9993eaec8482ed>` pftargetvisunotify;
+
+- #define :ref:`GET_targetvisunotify <group___cmp_target_visu_itf_1gaa1ab2e2b340ac757e4321e29a6b7656c>` s_pfCMGetAPI2( "targetvisunotify", (RTS_VOID_FCTPTR *)&pftargetvisunotify, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x78EF227D, 0x03050500)
+
+- #define :ref:`CAL_targetvisunotify <group___cmp_target_visu_itf_1gaf4e48ca2249b6b0910f03816fb6cf5c0>` pftargetvisunotify
+
+- #define :ref:`CHK_targetvisunotify <group___cmp_target_visu_itf_1gad0ce494623ecd7156e3f4f60c27d3685>` (pftargetvisunotify != NULL)
+
+- #define :ref:`EXP_targetvisunotify <group___cmp_target_visu_itf_1ga7e0f9da635a77c2b018c7014fcf5d65c>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"targetvisunotify", (RTS_UINTPTR) :ref:`targetvisunotify <group___cmp_target_visu_itf_1gaa8782ea18ad1473d215b11fed719aee5>` , 1, 0x78EF227D, 0x03050500)
+
+- #define :ref:`USE_TargetVisuRaiseCustomEventAll <group___cmp_target_visu_itf_1gaa4f359b5595e47967888286401853793>` :ref:`PFTARGETVISURAISECUSTOMEVENTALL <group___cmp_target_visu_itf_1gaf9d95bb7a681e48dc69815eeafbeae4e>` pfTargetVisuRaiseCustomEventAll;
+
+- #define :ref:`EXT_TargetVisuRaiseCustomEventAll <group___cmp_target_visu_itf_1gaf67bf84fdd2c7886da764b118e44f13a>` extern :ref:`PFTARGETVISURAISECUSTOMEVENTALL <group___cmp_target_visu_itf_1gaf9d95bb7a681e48dc69815eeafbeae4e>` pfTargetVisuRaiseCustomEventAll;
+
+- #define :ref:`GET_TargetVisuRaiseCustomEventAll <group___cmp_target_visu_itf_1gaa0b3bf1c6a0d1b640fc39a65557b13e7>` s_pfCMGetAPI2( "TargetVisuRaiseCustomEventAll", (RTS_VOID_FCTPTR *)&pfTargetVisuRaiseCustomEventAll, (fl), 0, 0)
+
+- #define :ref:`CAL_TargetVisuRaiseCustomEventAll <group___cmp_target_visu_itf_1ga9bb7372b12d09ded6eac2e2d872958af>` pfTargetVisuRaiseCustomEventAll
+
+- #define :ref:`CHK_TargetVisuRaiseCustomEventAll <group___cmp_target_visu_itf_1ga7a24abc233ad8b7f724c34db7fb22496>` (pfTargetVisuRaiseCustomEventAll != NULL)
+
+- #define :ref:`EXP_TargetVisuRaiseCustomEventAll <group___cmp_target_visu_itf_1gac0adb88f942cb4a9fbad1f730761fb3d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"TargetVisuRaiseCustomEventAll", (RTS_UINTPTR) :ref:`TargetVisuRaiseCustomEventAll <group___cmp_target_visu_itf_1gab1a5279ce6dba2040dd755a9be386535>` , 0, 0)
+
+- #define :ref:`ITF_CmpTargetVisu <group___cmp_target_visu_itf_1ga408b84395455cefefe77107416af1969>`
+
+- #define :ref:`EXTITF_CmpTargetVisu <group___cmp_target_visu_itf_1ga7f8b45d76044459767e6acd95e31db8f>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFCREATETARGETVISUINSTANCE <group___cmp_target_visu_itf_1ga1940eaa11d9896ab900ff2dada6cf491>`)(char *pszApplication, RTS_Rectangle *pWindowRect, RTS_HANDLE *pHandleRet)
+
+- typedef RTS_RESULT(* :ref:`PFCREATETARGETVISUINSTANCE2 <group___cmp_target_visu_itf_1gae92c2baddeef35505e8b18537fa3b601>`)(CmpTargetvisuCreateInformation *pCreateInformation, RTS_HANDLE *pHandleRet)
+
+- typedef RTS_RESULT(* :ref:`PFDESTROYTARGETVISUINSTANCE <group___cmp_target_visu_itf_1ga48e82890c79c2dbbad7db59b0b3c9b67>`)(RTS_HANDLE hTargetVisu)
+
+- typedef RTS_RESULT(* :ref:`PFTARGETVISUCALLBACK <group___cmp_target_visu_itf_1ga8e529be6bba30a5064bdc4d9e98ac32d>`)(RTS_HANDLE hTargetVisu, TargetvisuCallback wcb, RTS_UINTPTR ulCallbackParam, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- typedef RTS_RESULT(* :ref:`PFTARGETVISUREGISTEREVENTHANDLER <group___cmp_target_visu_itf_1gaa92cea4075202c42cffc331bf2b8c694>`)(PFTARGETVISUCALLBACK pfCallback, RTS_UINTPTR ulParam)
+
+- typedef RTS_RESULT(* :ref:`PFTARGETVISUUNREGISTEREVENTHANDLER <group___cmp_target_visu_itf_1gaabbfe288e22df5392fd358a696934d88>`)(PFTARGETVISUCALLBACK pfCallback, RTS_UINTPTR ulParam)
+
+- typedef struct :ref:`tagtargetvisucyclic_struct <structtagtargetvisucyclic__struct>` :ref:`targetvisucyclic_struct <group___cmp_target_visu_itf_1gaa2f18cf2812dabf632854a34fc474c6e>`
+
+- typedef void(* :ref:`PFTARGETVISUCYCLIC_IEC <group___cmp_target_visu_itf_1ga1614e716c9bdc06dbeb4955e25016d01>`)(targetvisucyclic_struct *p)
+
+- typedef struct :ref:`tagtargetvisufindbyid_struct <structtagtargetvisufindbyid__struct>` :ref:`targetvisufindbyid_struct <group___cmp_target_visu_itf_1gac5b48c03ccac5fdb7a7fbea386c1e8c9>`
+
+- typedef void(* :ref:`PFTARGETVISUFINDBYID_IEC <group___cmp_target_visu_itf_1ga49f13543b4c8d6ba0df5a2f23f7e19ec>`)(targetvisufindbyid_struct *p)
+
+- typedef struct :ref:`tagtargetvisunotify_struct <structtagtargetvisunotify__struct>` :ref:`targetvisunotify_struct <group___cmp_target_visu_itf_1ga8803d29923ed9f4e204ba667ca3fea58>`
+
+- typedef void(* :ref:`PFTARGETVISUNOTIFY_IEC <group___cmp_target_visu_itf_1ga75397de6f65895fc7b9993eaec8482ed>`)(targetvisunotify_struct *p)
+
+- typedef RTS_RESULT(* :ref:`PFTARGETVISURAISECUSTOMEVENTALL <group___cmp_target_visu_itf_1gaf9d95bb7a681e48dc69815eeafbeae4e>`)(RTS_UI16 uiEventType, RTS_UI32 dwParam1, RTS_UI32 dwParam2, void *pAdditionalData, RTS_SIZE additionalDataSize)
+
+- typedef :ref:`ICmpTargetVisu_C <struct_i_cmp_target_visu___c>` :ref:`ICmpTargetVisu <group___cmp_target_visu_itf_1gaace2e67ec43841d23e089444c6ec8f53>`
+
+Enumerations
+------------
+
+- enum :ref:`TargetvisuCallback <group___cmp_target_visu_itf_1ga58b7f4dc7f070f89ff2fe369df3e4c05>` { :ref:`TCB_BEFORERUNNING <group___cmp_target_visu_itf_1gga58b7f4dc7f070f89ff2fe369df3e4c05ad1e43af22843a4312006fc977a110458>`, :ref:`TCB_REMOVING <group___cmp_target_visu_itf_1gga58b7f4dc7f070f89ff2fe369df3e4c05a6200c03e8bd59665e8f48a6e0d85427c>`, :ref:`TCB_CREATED <group___cmp_target_visu_itf_1gga58b7f4dc7f070f89ff2fe369df3e4c05aa3fc1de3433f3775a759b8abd7c910e5>`, :ref:`TCB_GETCLIENTIDFAILED <group___cmp_target_visu_itf_1gga58b7f4dc7f070f89ff2fe369df3e4c05a8fa8addff7926fbf870cc2b69a7e87f2>`, :ref:`TCB_WINDOWOPENED <group___cmp_target_visu_itf_1gga58b7f4dc7f070f89ff2fe369df3e4c05a24fe4e5db64e697243429a3e49caa9a1>`, :ref:`TCB_WINDOWCREATIONFAILED <group___cmp_target_visu_itf_1gga58b7f4dc7f070f89ff2fe369df3e4c05a1e83b09b5b22e8801372022241df883b>` }
+
+Functions
+---------
+
+- RTS_RESULT :ref:`CreateTargetvisuInstance <group___cmp_target_visu_itf_1ga5c6d38aeeb7add978ae6a1d3ce2343db>` (char * pszApplication, RTS_Rectangle * pWindowRect, RTS_HANDLE * pHandleRet)
+
+- RTS_RESULT :ref:`CreateTargetvisuInstance2 <group___cmp_target_visu_itf_1ga472ed0945b70e9e27d4f1e4b2a0404bb>` (:ref:`CmpTargetvisuCreateInformation <struct_cmp_targetvisu_create_information>` * pCreateInformation, RTS_HANDLE * pHandleRet)
+
+- RTS_RESULT :ref:`DestroyTargetvisuInstance <group___cmp_target_visu_itf_1gaa405516d7a9cf7b10b80fb8d0ce437da>` (RTS_HANDLE hTargetVisu)
+
+- RTS_RESULT :ref:`TargetVisuRegisterEventHandler <group___cmp_target_visu_itf_1ga607556697abc736db950c91e500385e9>` (:ref:`PFTARGETVISUCALLBACK <group___cmp_target_visu_itf_1ga8e529be6bba30a5064bdc4d9e98ac32d>`  pfCallback, RTS_UINTPTR ulParam)
+
+- RTS_RESULT :ref:`TargetVisuUnregisterEventHandler <group___cmp_target_visu_itf_1ga9330e030699bdc5966cf92012cb67f3f>` (:ref:`PFTARGETVISUCALLBACK <group___cmp_target_visu_itf_1ga8e529be6bba30a5064bdc4d9e98ac32d>`  pfCallback, RTS_UINTPTR ulParam)
+
+- void :ref:`targetvisucyclic <group___cmp_target_visu_itf_1gaeb0952832f02122733d7c18e71145956>` (:ref:`targetvisucyclic_struct <group___cmp_target_visu_itf_1gaa2f18cf2812dabf632854a34fc474c6e>` * p)
+
+- void :ref:`targetvisufindbyid <group___cmp_target_visu_itf_1gad236fd23e4b4bd62da1559844295fa22>` (:ref:`targetvisufindbyid_struct <group___cmp_target_visu_itf_1gac5b48c03ccac5fdb7a7fbea386c1e8c9>` * p)
+
+- void :ref:`targetvisunotify <group___cmp_target_visu_itf_1gaa8782ea18ad1473d215b11fed719aee5>` (:ref:`targetvisunotify_struct <group___cmp_target_visu_itf_1ga8803d29923ed9f4e204ba667ca3fea58>` * p)
+
+- RTS_RESULT :ref:`TargetVisuRaiseCustomEventAll <group___cmp_target_visu_itf_1gab1a5279ce6dba2040dd755a9be386535>` (RTS_UI16 uiEventType, RTS_UI32 dwParam1, RTS_UI32 dwParam2, void * pAdditionalData, RTS_SIZE additionalDataSize)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_target_visu_itf_1ga0d87e75451de387f0c051bb7db079c95:
+
+#define USE_CreateTargetvisuInstance :ref:`PFCREATETARGETVISUINSTANCE <group___cmp_target_visu_itf_1ga1940eaa11d9896ab900ff2dada6cf491>` pfCreateTargetvisuInstance;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaaf2bd6ff07611ab74711a882968c2222:
+
+#define EXT_CreateTargetvisuInstance extern :ref:`PFCREATETARGETVISUINSTANCE <group___cmp_target_visu_itf_1ga1940eaa11d9896ab900ff2dada6cf491>` pfCreateTargetvisuInstance;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga85b6c81a48e4f5ceb298e7e659730285:
+
+#define GET_CreateTargetvisuInstance s_pfCMGetAPI2( "CreateTargetvisuInstance", (RTS_VOID_FCTPTR *)&pfCreateTargetvisuInstance, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gad5df988bed6db730e0abd8b5b4c91a73:
+
+#define CAL_CreateTargetvisuInstance pfCreateTargetvisuInstance
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga65ecc8498ffefc8da80936f15db9c4dd:
+
+#define CHK_CreateTargetvisuInstance (pfCreateTargetvisuInstance != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga187077b5d99ef2f2508bae843c252da9:
+
+#define EXP_CreateTargetvisuInstance s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CreateTargetvisuInstance", (RTS_UINTPTR) :ref:`CreateTargetvisuInstance <group___cmp_target_visu_itf_1ga5c6d38aeeb7add978ae6a1d3ce2343db>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga82c2e7788e51d2742761a52edc38dfb5:
+
+#define CMPTARGETVISU_FLAGS_REMOTE 0x0001
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Special flag that will be set when the target-visualization is executed (ie. drawn) on a different PLC than the paint commands are calculated. Probably only relevant when using CmpVisuHandlerRemote.
+
+.. _group___cmp_target_visu_itf_1ga060f2b568a4c99b361ebe5c78b83ceeb:
+
+#define CMPTARGETVISU_FLAGS_REMOTE_BESTFIT 0x0002
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Special flag that can be set when the target-visualization is executed (ie. drawn) on a different PLC than the paint commands are calculated. If this flag is set, then the visualization will be drawn in best fit mode.
+
+.. _group___cmp_target_visu_itf_1ga57c30bd50654765d5f09170777ed9066:
+
+#define CMPTARGETVISU_FLAGS_MEASURE_PAINTCOMMANDEXECUTION 0x0004
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Special flag that can be set when the target-visualization should measure the time that is necessary for executing the paint commands. The result of this measurement is sent to the IEC visualization using an input event.
+
+.. _group___cmp_target_visu_itf_1gac21b18a1b1ab720ad94254958c068a15:
+
+#define CMPTARGETVISU_FLAGS_MEASURE_MOUSEDOWNREACTION 0x0008
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Special flag that can be set when the target-visualization should measure the reaction time on mouse down events. the paint commands. The result of this measurement is sent to the IEC visualization using an input event.
+
+Mouse events that are raised faster than the reaction can be drawn cannot be measured using this mechanism
+
+.. _group___cmp_target_visu_itf_1ga38babc3446ee2511de54ee271ac5867e:
+
+#define CMPTARGETVISU_FLAGS_MEASURE_PAINTINGTOSCREEN 0x0010
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Special flag that can be set when the target-visualization should measure the reaction time on mouse down events. the paint commands. The result of this measurement is sent to the IEC visualization using an input event.
+
+Mouse events that are raised faster than the reaction can be drawn cannot be measured using this mechanism
+
+.. _group___cmp_target_visu_itf_1ga53647fa5dbc1f448899b055c1ca9965c:
+
+#define CMPTARGETVISU_FLAGS_ACTIVATE_TOUCHHANDLING 0x0020
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Flag that activates the evaluation of touch events in the target-visualization (of course only if supported by the according system implementation.
+
+.. _group___cmp_target_visu_itf_1gaae36b5cdce7c7aa2fbaffd325b401f5a:
+
+#define CMPTARGETVISU_FLAGS_ACTIVATE_KEYBOARD 0x0040
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Flag that activates keyboard usage.
+
+.. _group___cmp_target_visu_itf_1gaa439d4596688c22634ca6c42d13502df:
+
+#define CMPTARGETVISU_FLAGS_REMOTE_SCALETYPEISOTROPIC 0x0080
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Special flag that can be set when the target-visualization is executed (i.e. drawn) on a different PLC than the paint commands are calculated. If this flag is set, then the visualization will be drawn with scale type isotropic when best fit mode is set.
+
+.. _group___cmp_target_visu_itf_1gae466b7e9bf37ada9b92e79a4623f3fd1:
+
+#define CMPTARGETVISU_FLAGS_REMOTE_BESTFIT_FOR_DIALOGS 0x0100
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Special flag that can be set when the target-visualization is executed (i.e. drawn) on a different PLC than the paint commands are calculated. If this flag is set, then the visualization and the visualization dialogs will be drawn in best fit mode.
+
+.. _group___cmp_target_visu_itf_1ga660c8bdcff5ba5e9c24f3bffbabc815e:
+
+#define CMPTARGETVISU_FLAGS_TRANSPARENT_BACKGROUND 0x0400
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Special flag that creates a window with fully transparent background. Please remark that this feature is only supported at the moment by Qt-Based implementations.
+
+.. _group___cmp_target_visu_itf_1gab2cdc98310fac6711e8d05b3df7e660b:
+
+#define CMPTARGETVISU_NOTIFY_TAG_PAINTDATA_AVAILABLE 1
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Notification that can be sent to the target-visualization to signal that new paint data is available for execution. Arguments are not used at the moment.
+
+.. _group___cmp_target_visu_itf_1ga05e85a4b33e43304d044b89774dc83e7:
+
+#define USE_CreateTargetvisuInstance2 :ref:`PFCREATETARGETVISUINSTANCE2 <group___cmp_target_visu_itf_1gae92c2baddeef35505e8b18537fa3b601>` pfCreateTargetvisuInstance2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gabad04bbfb70ec3f0f9a1f64eef96ac80:
+
+#define EXT_CreateTargetvisuInstance2 extern :ref:`PFCREATETARGETVISUINSTANCE2 <group___cmp_target_visu_itf_1gae92c2baddeef35505e8b18537fa3b601>` pfCreateTargetvisuInstance2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gabe2abbfc411ac2e41aa068f09ab20964:
+
+#define GET_CreateTargetvisuInstance2 s_pfCMGetAPI2( "CreateTargetvisuInstance2", (RTS_VOID_FCTPTR *)&pfCreateTargetvisuInstance2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gac5085a8d415993de012b9c26cb1d06a9:
+
+#define CAL_CreateTargetvisuInstance2 pfCreateTargetvisuInstance2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaf1364fc5c0d572ccae1cd4a1a6e81662:
+
+#define CHK_CreateTargetvisuInstance2 (pfCreateTargetvisuInstance2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga8281a920c0a51627c4f1294cb286c1aa:
+
+#define EXP_CreateTargetvisuInstance2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CreateTargetvisuInstance2", (RTS_UINTPTR) :ref:`CreateTargetvisuInstance2 <group___cmp_target_visu_itf_1ga472ed0945b70e9e27d4f1e4b2a0404bb>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga3ed5b22b85c0838d5675c100d087b828:
+
+#define USE_DestroyTargetvisuInstance :ref:`PFDESTROYTARGETVISUINSTANCE <group___cmp_target_visu_itf_1ga48e82890c79c2dbbad7db59b0b3c9b67>` pfDestroyTargetvisuInstance;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga65064b9f349cc014ca3fdbd50b575c9b:
+
+#define EXT_DestroyTargetvisuInstance extern :ref:`PFDESTROYTARGETVISUINSTANCE <group___cmp_target_visu_itf_1ga48e82890c79c2dbbad7db59b0b3c9b67>` pfDestroyTargetvisuInstance;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga653c7389e70ecd30e493fe04f361de97:
+
+#define GET_DestroyTargetvisuInstance s_pfCMGetAPI2( "DestroyTargetvisuInstance", (RTS_VOID_FCTPTR *)&pfDestroyTargetvisuInstance, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gacab8e0fad11682c558fe616acea0eef6:
+
+#define CAL_DestroyTargetvisuInstance pfDestroyTargetvisuInstance
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaeb204c7d927d298ad04ce169091c9ad0:
+
+#define CHK_DestroyTargetvisuInstance (pfDestroyTargetvisuInstance != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga530abc33fe6896525273236d1bdba303:
+
+#define EXP_DestroyTargetvisuInstance s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DestroyTargetvisuInstance", (RTS_UINTPTR) :ref:`DestroyTargetvisuInstance <group___cmp_target_visu_itf_1gaa405516d7a9cf7b10b80fb8d0ce437da>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga792d80ebfb3e29882244caaa072fa7c8:
+
+#define USE_TargetVisuRegisterEventHandler :ref:`PFTARGETVISUREGISTEREVENTHANDLER <group___cmp_target_visu_itf_1gaa92cea4075202c42cffc331bf2b8c694>` pfTargetVisuRegisterEventHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaedf729e414ff485e23759dfd1108a7b6:
+
+#define EXT_TargetVisuRegisterEventHandler extern :ref:`PFTARGETVISUREGISTEREVENTHANDLER <group___cmp_target_visu_itf_1gaa92cea4075202c42cffc331bf2b8c694>` pfTargetVisuRegisterEventHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gac37fb2aec9a361908b3a88f9c1dfc185:
+
+#define GET_TargetVisuRegisterEventHandler s_pfCMGetAPI2( "TargetVisuRegisterEventHandler", (RTS_VOID_FCTPTR *)&pfTargetVisuRegisterEventHandler, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga046c2ca408ce7ddb4dfd8eaf567091db:
+
+#define CAL_TargetVisuRegisterEventHandler pfTargetVisuRegisterEventHandler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaf14fe2ffb6e41ff10ed74906dcd0eac9:
+
+#define CHK_TargetVisuRegisterEventHandler (pfTargetVisuRegisterEventHandler != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaf725fe962e64827bca760d2723c02fc3:
+
+#define EXP_TargetVisuRegisterEventHandler s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"TargetVisuRegisterEventHandler", (RTS_UINTPTR) :ref:`TargetVisuRegisterEventHandler <group___cmp_target_visu_itf_1ga607556697abc736db950c91e500385e9>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaf7d1f3d2681458139ff09240ab219fec:
+
+#define USE_TargetVisuUnregisterEventHandler :ref:`PFTARGETVISUUNREGISTEREVENTHANDLER <group___cmp_target_visu_itf_1gaabbfe288e22df5392fd358a696934d88>` pfTargetVisuUnregisterEventHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gac87887df4e51e1cc4ae4f592aa548f83:
+
+#define EXT_TargetVisuUnregisterEventHandler extern :ref:`PFTARGETVISUUNREGISTEREVENTHANDLER <group___cmp_target_visu_itf_1gaabbfe288e22df5392fd358a696934d88>` pfTargetVisuUnregisterEventHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga6e7f6d878beda39eac00cee1dbf3f7f3:
+
+#define GET_TargetVisuUnregisterEventHandler s_pfCMGetAPI2( "TargetVisuUnregisterEventHandler", (RTS_VOID_FCTPTR *)&pfTargetVisuUnregisterEventHandler, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga6ed1eba8147583a6eb08d595ab09f1e5:
+
+#define CAL_TargetVisuUnregisterEventHandler pfTargetVisuUnregisterEventHandler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaba9dd114449e722c66c4ce96994e0702:
+
+#define CHK_TargetVisuUnregisterEventHandler (pfTargetVisuUnregisterEventHandler != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gacb7f5ebbba7c8730f5fc8b2e46491e7d:
+
+#define EXP_TargetVisuUnregisterEventHandler s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"TargetVisuUnregisterEventHandler", (RTS_UINTPTR) :ref:`TargetVisuUnregisterEventHandler <group___cmp_target_visu_itf_1ga9330e030699bdc5966cf92012cb67f3f>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga0957870641a51798739a39166524e221:
+
+#define USE_targetvisucyclic :ref:`PFTARGETVISUCYCLIC_IEC <group___cmp_target_visu_itf_1ga1614e716c9bdc06dbeb4955e25016d01>` pftargetvisucyclic;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaa33b6d6cfe962491af039936f4900ccb:
+
+#define EXT_targetvisucyclic extern :ref:`PFTARGETVISUCYCLIC_IEC <group___cmp_target_visu_itf_1ga1614e716c9bdc06dbeb4955e25016d01>` pftargetvisucyclic;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga8878c75788b209b2798e78ecf6252406:
+
+#define GET_targetvisucyclic s_pfCMGetAPI2( "targetvisucyclic", (RTS_VOID_FCTPTR *)&pftargetvisucyclic, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0xD44FE2A3, 0xFE915838), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga7474e991df5b0acef24f716861ca858c:
+
+#define CAL_targetvisucyclic pftargetvisucyclic
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gabd42883f7a5c4738f429d3c52896378b:
+
+#define CHK_targetvisucyclic (pftargetvisucyclic != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga6e28164632db3cf37ebf407726a9572b:
+
+#define EXP_targetvisucyclic s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"targetvisucyclic", (RTS_UINTPTR) :ref:`targetvisucyclic <group___cmp_target_visu_itf_1gaeb0952832f02122733d7c18e71145956>` , 1, RTSITF_GET_SIGNATURE(0xD44FE2A3, 0xFE915838), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga5cbd1b113d98e981db0544f5f3646864:
+
+#define USE_targetvisufindbyid :ref:`PFTARGETVISUFINDBYID_IEC <group___cmp_target_visu_itf_1ga49f13543b4c8d6ba0df5a2f23f7e19ec>` pftargetvisufindbyid;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga71f5a2e442f665e4d2457f24f91c7e5f:
+
+#define EXT_targetvisufindbyid extern :ref:`PFTARGETVISUFINDBYID_IEC <group___cmp_target_visu_itf_1ga49f13543b4c8d6ba0df5a2f23f7e19ec>` pftargetvisufindbyid;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga1a3783e653f022bce3a4d278fbe1dc47:
+
+#define GET_targetvisufindbyid s_pfCMGetAPI2( "targetvisufindbyid", (RTS_VOID_FCTPTR *)&pftargetvisufindbyid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xEC5DE09D, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gac79963b41053393eddc41c126dafe189:
+
+#define CAL_targetvisufindbyid pftargetvisufindbyid
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gafb918020cae50f22b9079ac3ee2886d5:
+
+#define CHK_targetvisufindbyid (pftargetvisufindbyid != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga9cb58b9a010754d4cca27b31b319a521:
+
+#define EXP_targetvisufindbyid s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"targetvisufindbyid", (RTS_UINTPTR) :ref:`targetvisufindbyid <group___cmp_target_visu_itf_1gad236fd23e4b4bd62da1559844295fa22>` , 1, 0xEC5DE09D, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga397015693b3171cf2b62ed63ae5250c5:
+
+#define USE_targetvisunotify :ref:`PFTARGETVISUNOTIFY_IEC <group___cmp_target_visu_itf_1ga75397de6f65895fc7b9993eaec8482ed>` pftargetvisunotify;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaedf0fdbe0aa3357c580af1e0f6769ca0:
+
+#define EXT_targetvisunotify extern :ref:`PFTARGETVISUNOTIFY_IEC <group___cmp_target_visu_itf_1ga75397de6f65895fc7b9993eaec8482ed>` pftargetvisunotify;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaa1ab2e2b340ac757e4321e29a6b7656c:
+
+#define GET_targetvisunotify s_pfCMGetAPI2( "targetvisunotify", (RTS_VOID_FCTPTR *)&pftargetvisunotify, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x78EF227D, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaf4e48ca2249b6b0910f03816fb6cf5c0:
+
+#define CAL_targetvisunotify pftargetvisunotify
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gad0ce494623ecd7156e3f4f60c27d3685:
+
+#define CHK_targetvisunotify (pftargetvisunotify != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga7e0f9da635a77c2b018c7014fcf5d65c:
+
+#define EXP_targetvisunotify s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"targetvisunotify", (RTS_UINTPTR) :ref:`targetvisunotify <group___cmp_target_visu_itf_1gaa8782ea18ad1473d215b11fed719aee5>` , 1, 0x78EF227D, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaa4f359b5595e47967888286401853793:
+
+#define USE_TargetVisuRaiseCustomEventAll :ref:`PFTARGETVISURAISECUSTOMEVENTALL <group___cmp_target_visu_itf_1gaf9d95bb7a681e48dc69815eeafbeae4e>` pfTargetVisuRaiseCustomEventAll;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaf67bf84fdd2c7886da764b118e44f13a:
+
+#define EXT_TargetVisuRaiseCustomEventAll extern :ref:`PFTARGETVISURAISECUSTOMEVENTALL <group___cmp_target_visu_itf_1gaf9d95bb7a681e48dc69815eeafbeae4e>` pfTargetVisuRaiseCustomEventAll;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaa0b3bf1c6a0d1b640fc39a65557b13e7:
+
+#define GET_TargetVisuRaiseCustomEventAll s_pfCMGetAPI2( "TargetVisuRaiseCustomEventAll", (RTS_VOID_FCTPTR *)&pfTargetVisuRaiseCustomEventAll, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga9bb7372b12d09ded6eac2e2d872958af:
+
+#define CAL_TargetVisuRaiseCustomEventAll pfTargetVisuRaiseCustomEventAll
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga7a24abc233ad8b7f724c34db7fb22496:
+
+#define CHK_TargetVisuRaiseCustomEventAll (pfTargetVisuRaiseCustomEventAll != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gac0adb88f942cb4a9fbad1f730761fb3d:
+
+#define EXP_TargetVisuRaiseCustomEventAll s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"TargetVisuRaiseCustomEventAll", (RTS_UINTPTR) :ref:`TargetVisuRaiseCustomEventAll <group___cmp_target_visu_itf_1gab1a5279ce6dba2040dd755a9be386535>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga408b84395455cefefe77107416af1969:
+
+#define ITF_CmpTargetVisu
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga7f8b45d76044459767e6acd95e31db8f:
+
+#define EXTITF_CmpTargetVisu
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_target_visu_itf_1ga1940eaa11d9896ab900ff2dada6cf491:
+
+typedef RTS_RESULT( *  PFCREATETARGETVISUINSTANCE) (char *pszApplication, RTS_Rectangle *pWindowRect, RTS_HANDLE *pHandleRet)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gae92c2baddeef35505e8b18537fa3b601:
+
+typedef RTS_RESULT( *  PFCREATETARGETVISUINSTANCE2) (CmpTargetvisuCreateInformation *pCreateInformation, RTS_HANDLE *pHandleRet)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga48e82890c79c2dbbad7db59b0b3c9b67:
+
+typedef RTS_RESULT( *  PFDESTROYTARGETVISUINSTANCE) (RTS_HANDLE hTargetVisu)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga8e529be6bba30a5064bdc4d9e98ac32d:
+
+typedef RTS_RESULT( * PFTARGETVISUCALLBACK) (RTS_HANDLE hTargetVisu, TargetvisuCallback wcb, RTS_UINTPTR ulCallbackParam, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaa92cea4075202c42cffc331bf2b8c694:
+
+typedef RTS_RESULT( *  PFTARGETVISUREGISTEREVENTHANDLER) (PFTARGETVISUCALLBACK pfCallback, RTS_UINTPTR ulParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaabbfe288e22df5392fd358a696934d88:
+
+typedef RTS_RESULT( *  PFTARGETVISUUNREGISTEREVENTHANDLER) (PFTARGETVISUCALLBACK pfCallback, RTS_UINTPTR ulParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaa2f18cf2812dabf632854a34fc474c6e:
+
+typedef struct tagtargetvisucyclic_struct  targetvisucyclic_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION BEGIN
+
+This function will be called cyclically by the generic visualization libraries for active target-visualization clients when it is supported by these libraries. The call is used for implementing a target-visualization without the need for multitasking systems.
+
+.. _group___cmp_target_visu_itf_1ga1614e716c9bdc06dbeb4955e25016d01:
+
+typedef void( *  PFTARGETVISUCYCLIC_IEC) (targetvisucyclic_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gac5b48c03ccac5fdb7a7fbea386c1e8c9:
+
+typedef struct tagtargetvisufindbyid_struct  targetvisufindbyid_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function can be used to find out the handle of the target-visualization when having the according identification
+
+.. _group___cmp_target_visu_itf_1ga49f13543b4c8d6ba0df5a2f23f7e19ec:
+
+typedef void( *  PFTARGETVISUFINDBYID_IEC) (targetvisufindbyid_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1ga8803d29923ed9f4e204ba667ca3fea58:
+
+typedef struct tagtargetvisunotify_struct  targetvisunotify_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function can be used to send notifications to a target-visualization instance. As those notifications are usually sent in an asynchronous way, do not expect immediate effects when this function returned!
+
+.. _group___cmp_target_visu_itf_1ga75397de6f65895fc7b9993eaec8482ed:
+
+typedef void( *  PFTARGETVISUNOTIFY_IEC) (targetvisunotify_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaf9d95bb7a681e48dc69815eeafbeae4e:
+
+typedef RTS_RESULT( *  PFTARGETVISURAISECUSTOMEVENTALL) (RTS_UI16 uiEventType, RTS_UI32 dwParam1, RTS_UI32 dwParam2, void *pAdditionalData, RTS_SIZE additionalDataSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaace2e67ec43841d23e089444c6ec8f53:
+
+typedef ICmpTargetVisu_C ICmpTargetVisu
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Enumeration Type Documentation
+------------------------------
+
+.. _group___cmp_target_visu_itf_1ga58b7f4dc7f070f89ff2fe369df3e4c05:
+
+enum TargetvisuCallback
+^^^^^^^^^^^^^^^^^^^^^^^
+
+
+**Enumerator:**
+
++--------------------------+
+| TCB_BEFORERUNNING        |
++--------------------------+
+| TCB_REMOVING             |
++--------------------------+
+| TCB_CREATED              |
++--------------------------+
+| TCB_GETCLIENTIDFAILED    |
++--------------------------+
+| TCB_WINDOWOPENED         |
++--------------------------+
+| TCB_WINDOWCREATIONFAILED |
++--------------------------+
+
+Function Documentation
+----------------------
+
+.. _group___cmp_target_visu_itf_1ga5c6d38aeeb7add978ae6a1d3ce2343db:
+
+RTS_RESULT CreateTargetvisuInstance (char *pszApplication, RTS_Rectangle *pWindowRect, RTS_HANDLE *pHandleRet)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creates an instance of a target-visualization, i-e. creates a window etc.
+
+**Parameters**
+
++---------+----------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pszApplication | The application the target-visualization should connect to.                                                                                         |
++---------+----------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pWindowRect    | An optional rectangle that will be the rectangle of the target-visualization window. If this parameter is NULL, then the whole Screen will be used. |
++---------+----------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pHandleRet     | A handle to the created instance of the target-visualization.                                                                                       |
++---------+----------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_target_visu_itf_1ga472ed0945b70e9e27d4f1e4b2a0404bb:
+
+RTS_RESULT CreateTargetvisuInstance2 (CmpTargetvisuCreateInformation *pCreateInformation, RTS_HANDLE *pHandleRet)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creates an instance of a target-visualization, ie. creates a window etc. In fact, this is an extension of CreateTargetvisuInstance
+
+**Parameters**
+
++---------+--------------------+---------------------------------------------------------------+
+| [in]    | pCreateInformation | The information used for creating the target-visualization.   |
++---------+--------------------+---------------------------------------------------------------+
+| [out]   | pHandleRet         | A handle to the created instance of the target-visualization. |
++---------+--------------------+---------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_target_visu_itf_1gaa405516d7a9cf7b10b80fb8d0ce437da:
+
+RTS_RESULT DestroyTargetvisuInstance (RTS_HANDLE hTargetVisu)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Destroys an instance of a target-visualization.
+
+**Parameters**
+
++---------+-------------+----------------------------------------+
+| [in]    | hTargetVisu | The instance that should be destroyed. |
++---------+-------------+----------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_target_visu_itf_1ga607556697abc736db950c91e500385e9:
+
+RTS_RESULT TargetVisuRegisterEventHandler (PFTARGETVISUCALLBACK pfCallback, RTS_UINTPTR ulParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Register a callback that will be notified about certain events within this component
+
+**Parameters**
+
++---------+------------+---------------------------------------------------------------------+
+| [in]    | pfCallback | The function that will be called.                                   |
++---------+------------+---------------------------------------------------------------------+
+| [in]    | ulParam    | A Parameter that will be used when calling the registered callback. |
++---------+------------+---------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_target_visu_itf_1ga9330e030699bdc5966cf92012cb67f3f:
+
+RTS_RESULT TargetVisuUnregisterEventHandler (PFTARGETVISUCALLBACK pfCallback, RTS_UINTPTR ulParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Unregister a callback that will be notified about certain events within this component
+
+**Parameters**
+
++---------+------------+--------------------------------------------------------+
+| [in]    | pfCallback | The function for which the callback should be removed. |
++---------+------------+--------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_target_visu_itf_1gaeb0952832f02122733d7c18e71145956:
+
+void targetvisucyclic (targetvisucyclic_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gad236fd23e4b4bd62da1559844295fa22:
+
+void targetvisufindbyid (targetvisufindbyid_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gaa8782ea18ad1473d215b11fed719aee5:
+
+void targetvisunotify (targetvisunotify_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_target_visu_itf_1gab1a5279ce6dba2040dd755a9be386535:
+
+RTS_RESULT TargetVisuRaiseCustomEventAll (RTS_UI16 uiEventType, RTS_UI32 dwParam1, RTS_UI32 dwParam2, void *pAdditionalData, RTS_SIZE additionalDataSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to raise a custom event, that will be delivered to all target visualizations
+
+**Parameters**
+
++---------+--------------------+-----------------------------------------------------------------------------------------+
+| [in]    | uiEventType        | Identifies the event                                                                    |
++---------+--------------------+-----------------------------------------------------------------------------------------+
+| [in]    | dwParam1           | event parameter 1 (event specific)                                                      |
++---------+--------------------+-----------------------------------------------------------------------------------------+
+| [in]    | dwParam2           | event parameter 2 (event specific)                                                      |
++---------+--------------------+-----------------------------------------------------------------------------------------+
+| [in]    | pAdditionalData    | Optional pointer to a piece of memory containing additional event data                  |
++---------+--------------------+-----------------------------------------------------------------------------------------+
+| [in]    | additionalDataSize | The size of memory pAdditionalData points to. Only relevant if pAdditionalData is not 0 |
++---------+--------------------+-----------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

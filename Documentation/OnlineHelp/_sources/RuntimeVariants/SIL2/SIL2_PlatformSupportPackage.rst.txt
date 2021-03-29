@@ -1,0 +1,79 @@
+.. _codesyscontrolv3_runtimevariants_sil2_psp:
+
+CODESYS Safety SIL2 Platform Support Package (PSP)
+==================================================
+
+.. contents::
+   :local:
+   :depth: 1
+
+Getting Started
+---------------
+
+A CODESYS Safety SIL2 Platform Support Package (PSP) is a runtime toolkit
+including a pre-certified Safety SIL2 adaption for a specific platform.
+
+Operation Mode
+--------------
+
+There is a function SIL2PSP_GetOperationMode() in the CODESYS Safety SIL2 PSP interface
+to determine the current operation mode of the CODESYS Safety SIL2 runtime.
+
+For multicore architectures (e.g. TriCore AURIX) the CODESYS Safety SIL2 runtime of the
+safety core can read the operation mode using the PSP interface and provide the information
+to another core by exchanging the data via a shared memory.
+
+Changing memory area sizes
+--------------------------
+
+There are different memory areas in a CODESYS Safety SIL2 runtime implementation using the Platform Support Package (PSP).
+For the CODESYS application at least the following memory areas shall exist:
+
+- Code Area
+- Safe Data Area
+- Non-Safe Data Area
+- Retain Area (optional)
+
+For configuration of the memory areas the corresponding start address and size must be configured.
+The area configuration must be the same in the linker file of the runtime,
+in component SysMem<Target> and in the device description of the target.
+The configuration is checked during startup of the runtime.
+In case of a misconfiguration the runtime won't start the CODESYS application.
+
+NOTE: The configuration of the memory areas shall only be changed inside the OEM configuration areas!
+
+The start and end of OEM configuration areas are marked in the linker file using comments like in the following example:
+
+.. code-block:: C
+
+ /* OEM configuration start */
+  ...
+ /* OEM configuration end */
+
+Bootloader Integration
+----------------------
+
+An own bootloader can be integrated into the CODESYS runtime.
+There is a linker section defined in the linker file where the code of the bootlader can be located.
+This section is directly at the start of the flash memory and so the bootloader can directly be used as the startup code.
+After the bootloader code, the code of the CODESYS runtime is located.
+
+Using Retains
+-------------
+
+:ref:`embedded_retains`
+
+Using Block Drivers
+-------------------
+
+:ref:`embedded_block_drivers`
+
+Supported plattforms
+--------------------
+
+- Texas Instruments Hercules
+- Infineon AURIX
+
+Further information see the Safety SIL2 manual, delivered as part of the toolkit.
+
+

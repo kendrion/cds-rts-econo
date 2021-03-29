@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -23,13 +23,57 @@ extern "C" {
 * <type>Int</type>
 * <description>
 *	Setting to modify the client inactivity timeout in ms. 
-*	If no piece of data (also no keepalive) is received or successfully sent wihtin this time, the Gateway closes the connection to the client.
+*	If no piece of data (also no keep alive) is received or successfully sent within this time, the Gateway closes the connection to the client.
 * </description>
 */
 #define GATEWAYKEY_INT_INACTIVITY_TIMEOUT					"InactivityTimeoutMs"
 #ifndef GATEWAYKEY_INT_INACTIVITY_TIMEOUT_DEFAULT
 	#define GATEWAYKEY_INT_INACTIVITY_TIMEOUT_DEFAULT		60000
 #endif
+
+/**
+ * <category>Settings</category>
+ * <type>Int</type>
+ * <description>
+ *	The port the gateway will be reachable via the CmpGwCommDrvTcp.
+ * 	Note: Set this setting in section [CmpGwCommDrvTcp]
+ * </description>
+ */
+#define GWCOMMDRVTCPKEY_INT_LOCALPORT							"ListenPort"
+#ifndef GWCOMMDRVTCPVALUE_INT_LOCALPORT_DEFAULT
+	#define GWCOMMDRVTCPVALUE_INT_LOCALPORT_DEFAULT				1217
+#endif
+
+/**
+ * <category>Settings</category>
+ * <type>String</type>
+ * <description>
+ *	IP address which will be used to bind the gateway. 
+ *		- Use a valid IP address (of any adapter) to allow access only from a specific subnet.
+ *		- Use 0.0.0.0 to allow access from any remote computer.
+ *		- User 127.0.0.1 to allow access only from the local machine.
+ * Note: Set this setting in section [CmpGwCommDrvTcp]
+ * Note: On windows machines setting this to 127.0.0.1 is recommended if the gateway is used as edge gatway.
+ * </description>
+ */
+#define GWCOMMDRVTCPKEY_STRING_LOCALADDRESS						"LocalAddress"
+#ifndef GWCOMMDRVTCPVALUE_STRING_LOCALADDRESS_DEFAULT
+	#define GWCOMMDRVTCPVALUE_STRING_LOCALADDRESS_DEFAULT		"0.0.0.0"
+#endif
+
+/**
+ * <category>Settings</category>
+ * <type>String</type>
+ * <description>
+ *	This setting is used to restrict the access to the Gateway via GwCommDrvTcp to a specific peer or
+ *	subnet. This setting has the following behavior:
+ *		1. When set to specific peer address: Allow access only to the peer that has that IP address.
+ *		2. When set to the network base address: Allows access to all peers of this subnet.
+ *		3. Setting not available: Allow any peer to connect.
+ * Note: Set this setting in section [CmpGwCommDrvTcp]
+ * </description>
+ */
+#define GWCOMMDRVTCPKEY_STRING_PEERADDRESS						"PeerAddress"
 
 
 /* -- Functions exported by communication drivers to the Gateway -- */
@@ -75,7 +119,7 @@ typedef struct
 
 /* Called by a gateway communication driver to register 
    with the gateway. 
-   pInfo          IN  Contains function pointers to the comm driver api.
+   pInfo          IN  Contains function pointers to the comm driver API.
    phDriverHandle OUT Set to a unique value for the comm driver. The driver must provide
                       the assigned value in all other calls to the gateway functions 
 				      in order to identify itself.
@@ -105,21 +149,21 @@ enum
  *  The handle to the connection.
  * </param>
  * <param name="nAction" type="IN">
- *  The action that is ready on this connection - eg. COMMDRV_ACTION_SEND, COMMDRV_ACTION_RECEIVE
+ *  The action that is ready on this connection - e.g. COMMDRV_ACTION_SEND, COMMDRV_ACTION_RECEIVE
  * </param>
  */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`GWConnectionReady',`(RTS_HANDLE hDriverHandle, RTS_HANDLE hConnHandle, RTS_I32 nAction)')
 
 /* Called when a client connects. If anything else then ERR_OK is returned
-   the communication driver should close the connection immediatly.
+   the communication driver should close the connection immediately.
    hDriverHandle   IN  The value assigned during GWRegisterCommDrv.
-   hConnHandle     IN  A handle identifing the new connection.
+   hConnHandle     IN  A handle identifying the new connection.
 */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`GWClientConnect',`(RTS_HANDLE hDriverHandle, RTS_HANDLE hConnHandle)')
 
 /* Called when a client connection has been disconnected.
    hDriverHandle   IN  The value assigned during GWRegisterCommDrv.
-   hConnHandle     IN  A handle identifing the disconnected connection. 
+   hConnHandle     IN  A handle identifying the disconnected connection. 
 */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`GWClientDisconnect',`(RTS_HANDLE hDriverHandle, RTS_HANDLE hConnHandle)')
 

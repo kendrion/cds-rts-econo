@@ -197,5 +197,12 @@ typedef unsigned short RTS_WCHAR;
 	{"Application.app",		0x0,				FILE1_SIZE,			0xFFFFFFFF, 0xFFFFFFFF},\
 };
 
+
+
+/* CDS-68321: OpenSSL: 1.1.1c: set behavior to "nonblocking", see include/openssl/e_os2.h and crypto/rand/rand_unix.c
+ * now DEVRANDOM is defined, but DEVRANDOM_WAIT not, so OpenSSL should not block  */
+#define DEVRANDOM "/dev/urandom", "/dev/random", "/dev/hwrng", "/dev/srandom"
+
+	
 #endif /* __SYSDEFINES__H__ */
 

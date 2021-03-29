@@ -1,5 +1,5 @@
  /**
- * <interfacename>CmpMgrUtilsHash</interfacename>
+ * <interfacename>CMUtilsHash</interfacename>
  * <description>
  *	Interface for the implementation of a hash table with a linked list of hash entries to handle collisions.
  *
@@ -47,7 +47,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -91,10 +91,12 @@
 /**
  * <category>Hash table flags</category>
  * <element name="CMUTLHASHTABLE_FLAG_ALLOC_TABLE">INTERNAL USAGE: Table is dynamically allocated from heap</element>
- * <element name="CMUTLHASHTABLE_FLAG_INTERRUPT_SAFE">Can be set by the caller after createing the hash table to specify, that the hash table should be interrupt safe/used from an interrupt handler!</element>
+ * <element name="CMUTLHASHTABLE_FLAG_INTERRUPT_SAFE">Can be set by the caller after creating the hash table to specify, that the hash table should be interrupt safe/used from an interrupt handler!</element>
+ * <element name="CMUTLHASHTABLE_FLAG_NO_SYNC">Can be set to specify, that the hash table should not create a synchronization object. In this case the hash table should only be called from a single task context!</element>
  */
 #define CMUTLHASHTABLE_FLAG_ALLOC_TABLE			0x00000001
 #define CMUTLHASHTABLE_FLAG_INTERRUPT_SAFE		0x00000002
+#define CMUTLHASHTABLE_FLAG_NO_SYNC				0x00000004
 
 
 /**
@@ -143,7 +145,7 @@ typedef struct CMUtlHashEntry_
  * </description>
  * <element name="hSync" type="IN">Handle to a synchronization object</element>
  * <element name="ppTable" type="IN">Pointer to the hash table buffer. Length must be (sNumHashEntries * sizeof(RTS_UI8 *))</element>
- * <element name="sNumHashEntries" type="IN">Lenght of the hash table respectively the number of elements that can be stored in the hash table without any collision</element>
+ * <element name="sNumHashEntries" type="IN">Length of the hash table respectively the number of elements that can be stored in the hash table without any collision</element>
  * <element name="pszComponentName" type="IN">Pointer to component name of the caller (which is generated typically in the macro COMPONENT_NAME)</element>
  * <element name="flagsTable" type="IN">Flags of the hash table. See category "Hash table flags" for details.</element>
  */
@@ -166,7 +168,7 @@ extern "C" {
  *  Function to create a hash table.
  * </description>
  * <param name="pHashTable" type="INOUT">Pointer to a hash table object, which is filled by this function call!</param>
- * <param name="sNumHashEntries" type="IN">Lenght of the hash table respectively the number of elements that can be stored in the hash table without any collision.
+ * <param name="sNumHashEntries" type="IN">Length of the hash table respectively the number of elements that can be stored in the hash table without any collision.
  *		NOTE:
  *		Hash table is allocated on heap via SysMemAllocData() within this function. If you would like to provide a static memory for the hash table. Use CMUtlHashCreate2() instead!
  *      The number of available hash entries should be a prime number to get a nice spreading.
@@ -231,7 +233,7 @@ typedef RTS_RESULT (CDECL * PFCMUTLHASHCREATE) (CMUtlHashTable *pHashTable, RTS_
  *  Function to create a hash table with a specified hash buffer.
  * </description>
  * <param name="pHashTable" type="INOUT">Pointer to a hash table object, which is filled by this function</param>
- * <param name="sNumHashEntries" type="IN">Lenght of the hash table respectively the number of elements that can be stored in the hash table without any collision</param>
+ * <param name="sNumHashEntries" type="IN">Length of the hash table respectively the number of elements that can be stored in the hash table without any collision</param>
  * <param name="pHashTableBuffer" type="IN">Pointer to the hash table (can be static memory). Length must be (sNumHashEntries * sizeof(RTS_UI8 *))!.
  *		NOTE:
  *		If pHashTableBuffer = NULL. the hash table will be allocated on heap via SysMemAllocData() within this function.
@@ -287,6 +289,73 @@ typedef RTS_RESULT (CDECL * PFCMUTLHASHCREATE2) (CMUtlHashTable *pHashTable, RTS
 	#define CAL_CMUtlHashCreate2  pfCMUtlHashCreate2
 	#define CHK_CMUtlHashCreate2  (pfCMUtlHashCreate2 != NULL)
 	#define EXP_CMUtlHashCreate2  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMUtlHashCreate2", (RTS_UINTPTR)CMUtlHashCreate2, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>
+ *  Function to create a hash table with a specified hash buffer.
+ * </description>
+ * <param name="pHashTable" type="INOUT">Pointer to a hash table object, which is filled by this function</param>
+ * <param name="sNumHashEntries" type="IN">Length of the hash table respectively the number of elements that can be stored in the hash table without any collision</param>
+ * <param name="pHashTableBuffer" type="IN">Pointer to the hash table (can be static memory). Length must be (sNumHashEntries * sizeof(RTS_UI8 *))!.
+ *		NOTE:
+ *		If pHashTableBuffer = NULL. the hash table will be allocated on heap via SysMemAllocData() within this function.
+ *      The number of available hash entries should be a prime number to get a nice spreading.
+ * </param>
+ * <param name="ui32Flags" type="IN">Flags how to create the hash table. See: Hash table flags</param>
+ * <param name="pszComponentName" type="IN">Pointer to component name of the caller (which is generated typically in the macro COMPONENT_NAME)</param>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Hash table could be created</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Invalid pointer or sHashTableLen is 0</errorcode> 
+ * <errorcode name="RTS_RESULT Result" type="ERR_NOMEMORY">No memory to create the hash table</errorcode> 
+ * <result>error code</result>
+ */
+RTS_RESULT CDECL CMUtlHashCreate3(CMUtlHashTable *pHashTable, RTS_SIZE sNumHashEntries, RTS_UI8 *pHashTableBuffer, RTS_UI32 ui32Flags, char *pszComponentName);
+typedef RTS_RESULT (CDECL * PFCMUTLHASHCREATE3) (CMUtlHashTable *pHashTable, RTS_SIZE sNumHashEntries, RTS_UI8 *pHashTableBuffer, RTS_UI32 ui32Flags, char *pszComponentName);
+#if defined(CMUTILSHASH_NOTIMPLEMENTED) || defined(CMUTLHASHCREATE3_NOTIMPLEMENTED)
+	#define USE_CMUtlHashCreate3
+	#define EXT_CMUtlHashCreate3
+	#define GET_CMUtlHashCreate3(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CMUtlHashCreate3(p0,p1,p2,p3,p4)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CMUtlHashCreate3  FALSE
+	#define EXP_CMUtlHashCreate3  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CMUtlHashCreate3
+	#define EXT_CMUtlHashCreate3
+	#define GET_CMUtlHashCreate3(fl)  CAL_CMGETAPI( "CMUtlHashCreate3" ) 
+	#define CAL_CMUtlHashCreate3  CMUtlHashCreate3
+	#define CHK_CMUtlHashCreate3  TRUE
+	#define EXP_CMUtlHashCreate3  CAL_CMEXPAPI( "CMUtlHashCreate3" ) 
+#elif defined(MIXED_LINK) && !defined(CMUTILSHASH_EXTERNAL)
+	#define USE_CMUtlHashCreate3
+	#define EXT_CMUtlHashCreate3
+	#define GET_CMUtlHashCreate3(fl)  CAL_CMGETAPI( "CMUtlHashCreate3" ) 
+	#define CAL_CMUtlHashCreate3  CMUtlHashCreate3
+	#define CHK_CMUtlHashCreate3  TRUE
+	#define EXP_CMUtlHashCreate3  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMUtlHashCreate3", (RTS_UINTPTR)CMUtlHashCreate3, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CMUtilsHashCMUtlHashCreate3
+	#define EXT_CMUtilsHashCMUtlHashCreate3
+	#define GET_CMUtilsHashCMUtlHashCreate3  ERR_OK
+	#define CAL_CMUtilsHashCMUtlHashCreate3 pICMUtilsHash->ICMUtlHashCreate3
+	#define CHK_CMUtilsHashCMUtlHashCreate3 (pICMUtilsHash != NULL)
+	#define EXP_CMUtilsHashCMUtlHashCreate3  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CMUtlHashCreate3
+	#define EXT_CMUtlHashCreate3
+	#define GET_CMUtlHashCreate3(fl)  CAL_CMGETAPI( "CMUtlHashCreate3" ) 
+	#define CAL_CMUtlHashCreate3 pICMUtilsHash->ICMUtlHashCreate3
+	#define CHK_CMUtlHashCreate3 (pICMUtilsHash != NULL)
+	#define EXP_CMUtlHashCreate3  CAL_CMEXPAPI( "CMUtlHashCreate3" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CMUtlHashCreate3  PFCMUTLHASHCREATE3 pfCMUtlHashCreate3;
+	#define EXT_CMUtlHashCreate3  extern PFCMUTLHASHCREATE3 pfCMUtlHashCreate3;
+	#define GET_CMUtlHashCreate3(fl)  s_pfCMGetAPI2( "CMUtlHashCreate3", (RTS_VOID_FCTPTR *)&pfCMUtlHashCreate3, (fl), 0, 0)
+	#define CAL_CMUtlHashCreate3  pfCMUtlHashCreate3
+	#define CHK_CMUtlHashCreate3  (pfCMUtlHashCreate3 != NULL)
+	#define EXP_CMUtlHashCreate3  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMUtlHashCreate3", (RTS_UINTPTR)CMUtlHashCreate3, 0, 0) 
 #endif
 
 
@@ -359,7 +428,9 @@ typedef RTS_RESULT (CDECL * PFCMUTLHASHDELETE) (CMUtlHashTable *pHashTable);
  * <param name="pHashTable" type="IN">Pointer to a hash table filled by CMUtlHashCreate() or CMUtlHashCreate2()</param>
  * <param name="pKey" type="IN">Corresponding unique key. Can be an integer or string key.</param>
  * <param name="keyLen" type="IN">Key length in bytes</param>
- * <param name="bCopyKey" type="IN">Is only relevant for String key: TRUE=Key is allocated and coppied, FALSE=Only a reference to the key is hold!</param>
+ * <param name="bCopyKey" type="IN">TRUE=Key is copied. If the size of the key is bigger than the register size of the architecture 
+		then the key is copied. FALSE=Only a reference to the key is hold and the value is not copied at all!
+		Please take care: For integral values or addresses that should be used as keys typically TRUE has to be passed</param>
  * <param name="pData" type="IN">Pointer to data to store in hash entry</param>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">Hash entry could be inserted</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Invalid hash table pointer</errorcode> 
@@ -426,7 +497,9 @@ typedef RTS_RESULT (CDECL * PFCMUTLHASHINSERT) (CMUtlHashTable *pHashTable, RTS_
  *		If the pointer is NULL, a new hash entry (CMUtlHashEntry) is allocated from heap via SysMemAllocData().</param>
  * <param name="pKey" type="IN">Corresponding unique key. Can be an integer or string key.</param>
  * <param name="keyLen" type="IN">Key length in bytes</param>
- * <param name="bCopyKey" type="IN">Is only relevant for String key: TRUE=Key is allocated and coppied, FALSE=Only a reference to the key is hold!</param>
+ * <param name="bCopyKey" type="IN">TRUE=Key is copied. If the size of the key is bigger than the register size of the architecture 
+		then the key is copied. FALSE=Only a reference to the key is hold and the value is not copied at all!
+		Please take care: For integral values or addresses that should be used as keys typically TRUE has to be passed</param>
  * <param name="pData" type="IN">Pointer to data to store in hash entry</param>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">Hash entry could be inserted</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Invalid hash table pointer</errorcode> 
@@ -610,8 +683,8 @@ typedef RTS_RESULT (CDECL * PFCMUTLHASHREMOVE2) (CMUtlHashTable *pHashTable, RTS
  *  Note: If the size of the key is equal or lower the register size of the architecture the key is directly used as hash.
  * </description>
  * <param name="pHashTable" type="IN">Pointer to a hash table object, which is filled by this function</param>
- * <param name="pKey" type="IN">Pointer to the key value toi search for the entry</param> 
- * <param name="keyLen" type="IN">Lenght of the key. If the key is a string, additionally the NUL termination character must be _included_ in the keylen!</param> 
+ * <param name="pKey" type="IN">Pointer to the key value to search for the entry</param> 
+ * <param name="keyLen" type="IN">Length of the key. If the key is a string, additionally the NUL termination character must be _included_ in the key length!</param> 
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Hash entry could be found</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Invalid hash table pointer or pointer to key</errorcode> 
@@ -667,6 +740,79 @@ typedef CMUtlHashEntry * (CDECL * PFCMUTLHASHSEARCH) (CMUtlHashTable *pHashTable
 
 
 
+/**
+ * <description>
+ *  This callback function can be implemented by components iterating over the content of a hash table using <see>CMUtlHashIterate</see>.
+ * </description>
+ * <param name="pEntry" type="IN">The current entry of the iteration</param>
+ * <param name="cbUserData" type="IN">The user provided value that was passed to CMUtlHashIterate</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">The iteration should continue if there are more entries.</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">The iteration will be stopped and not proceed with the remaining entries after the callback returned.</errorcode> 
+ */
+typedef RTS_RESULT (CDECL *PF_HASHENTRY_CALLBACK)(CMUtlHashEntry *pEntry, RTS_UINTPTR cbUserData);
+
+/**
+ * <description>
+ *  Function to iterate over all entries in the hash table. 
+ * </description>
+ * <param name="pHashTable" type="IN">Pointer to a hash table object, which will be iterated over by this function</param>
+ * <param name="pfcbHashEntry" type="IN">Callback function that will be called for every entry of the hash-table.</param> 
+ * <param name="cbUserData" type="IN">User provided value that will transparently be passed to all calls of pfCallback</param> 
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Hash entry could be found</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Invalid hash table or callback function</errorcode> 
+ */
+RTS_RESULT CDECL CMUtlHashIterate(CMUtlHashTable *pHashTable, PF_HASHENTRY_CALLBACK pfcbHashEntry, RTS_UINTPTR cbUserData);
+typedef RTS_RESULT (CDECL * PFCMUTLHASHITERATE) (CMUtlHashTable *pHashTable, PF_HASHENTRY_CALLBACK pfcbHashEntry, RTS_UINTPTR cbUserData);
+#if defined(CMUTILSHASH_NOTIMPLEMENTED) || defined(CMUTLHASHITERATE_NOTIMPLEMENTED)
+	#define USE_CMUtlHashIterate
+	#define EXT_CMUtlHashIterate
+	#define GET_CMUtlHashIterate(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CMUtlHashIterate(p0,p1,p2)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CMUtlHashIterate  FALSE
+	#define EXP_CMUtlHashIterate  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CMUtlHashIterate
+	#define EXT_CMUtlHashIterate
+	#define GET_CMUtlHashIterate(fl)  CAL_CMGETAPI( "CMUtlHashIterate" ) 
+	#define CAL_CMUtlHashIterate  CMUtlHashIterate
+	#define CHK_CMUtlHashIterate  TRUE
+	#define EXP_CMUtlHashIterate  CAL_CMEXPAPI( "CMUtlHashIterate" ) 
+#elif defined(MIXED_LINK) && !defined(CMUTILSHASH_EXTERNAL)
+	#define USE_CMUtlHashIterate
+	#define EXT_CMUtlHashIterate
+	#define GET_CMUtlHashIterate(fl)  CAL_CMGETAPI( "CMUtlHashIterate" ) 
+	#define CAL_CMUtlHashIterate  CMUtlHashIterate
+	#define CHK_CMUtlHashIterate  TRUE
+	#define EXP_CMUtlHashIterate  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMUtlHashIterate", (RTS_UINTPTR)CMUtlHashIterate, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CMUtilsHashCMUtlHashIterate
+	#define EXT_CMUtilsHashCMUtlHashIterate
+	#define GET_CMUtilsHashCMUtlHashIterate  ERR_OK
+	#define CAL_CMUtilsHashCMUtlHashIterate pICMUtilsHash->ICMUtlHashIterate
+	#define CHK_CMUtilsHashCMUtlHashIterate (pICMUtilsHash != NULL)
+	#define EXP_CMUtilsHashCMUtlHashIterate  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CMUtlHashIterate
+	#define EXT_CMUtlHashIterate
+	#define GET_CMUtlHashIterate(fl)  CAL_CMGETAPI( "CMUtlHashIterate" ) 
+	#define CAL_CMUtlHashIterate pICMUtilsHash->ICMUtlHashIterate
+	#define CHK_CMUtlHashIterate (pICMUtilsHash != NULL)
+	#define EXP_CMUtlHashIterate  CAL_CMEXPAPI( "CMUtlHashIterate" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CMUtlHashIterate  PFCMUTLHASHITERATE pfCMUtlHashIterate;
+	#define EXT_CMUtlHashIterate  extern PFCMUTLHASHITERATE pfCMUtlHashIterate;
+	#define GET_CMUtlHashIterate(fl)  s_pfCMGetAPI2( "CMUtlHashIterate", (RTS_VOID_FCTPTR *)&pfCMUtlHashIterate, (fl), 0, 0)
+	#define CAL_CMUtlHashIterate  pfCMUtlHashIterate
+	#define CHK_CMUtlHashIterate  (pfCMUtlHashIterate != NULL)
+	#define EXP_CMUtlHashIterate  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CMUtlHashIterate", (RTS_UINTPTR)CMUtlHashIterate, 0, 0) 
+#endif
+
+
+
+
+
 #ifdef __cplusplus
 }
 #endif
@@ -678,12 +824,14 @@ typedef struct
 	IBase_C *pBase;
 	PFCMUTLHASHCREATE ICMUtlHashCreate;
  	PFCMUTLHASHCREATE2 ICMUtlHashCreate2;
+ 	PFCMUTLHASHCREATE3 ICMUtlHashCreate3;
  	PFCMUTLHASHDELETE ICMUtlHashDelete;
  	PFCMUTLHASHINSERT ICMUtlHashInsert;
  	PFCMUTLHASHINSERT2 ICMUtlHashInsert2;
  	PFCMUTLHASHREMOVE ICMUtlHashRemove;
  	PFCMUTLHASHREMOVE2 ICMUtlHashRemove2;
  	PFCMUTLHASHSEARCH ICMUtlHashSearch;
+ 	PFCMUTLHASHITERATE ICMUtlHashIterate;
  } ICMUtilsHash_C;
 
 #ifdef CPLUSPLUS
@@ -692,12 +840,14 @@ class ICMUtilsHash : public IBase
 	public:
 		virtual RTS_RESULT CDECL ICMUtlHashCreate(CMUtlHashTable *pHashTable, RTS_SIZE sNumHashEntries, char *pszComponentName) =0;
 		virtual RTS_RESULT CDECL ICMUtlHashCreate2(CMUtlHashTable *pHashTable, RTS_SIZE sNumHashEntries, RTS_UI8 *pHashTableBuffer, char *pszComponentName) =0;
+		virtual RTS_RESULT CDECL ICMUtlHashCreate3(CMUtlHashTable *pHashTable, RTS_SIZE sNumHashEntries, RTS_UI8 *pHashTableBuffer, RTS_UI32 ui32Flags, char *pszComponentName) =0;
 		virtual RTS_RESULT CDECL ICMUtlHashDelete(CMUtlHashTable *pHashTable) =0;
 		virtual RTS_RESULT CDECL ICMUtlHashInsert(CMUtlHashTable *pHashTable, RTS_UI8 *pKey, RTS_SIZE keyLen, RTS_BOOL bCopyKey, void *pData) =0;
 		virtual RTS_RESULT CDECL ICMUtlHashInsert2(CMUtlHashTable *pHashTable, CMUtlHashEntry *pNewEntry, RTS_UI8 *pKey, RTS_SIZE keyLen, RTS_BOOL bCopyKey, void *pData) =0;
 		virtual RTS_RESULT CDECL ICMUtlHashRemove(CMUtlHashTable *pHashTable, CMUtlHashEntry *pEntry) =0;
 		virtual RTS_RESULT CDECL ICMUtlHashRemove2(CMUtlHashTable *pHashTable, RTS_UI8 *pKey, RTS_SIZE keyLen) =0;
 		virtual CMUtlHashEntry * CDECL ICMUtlHashSearch(CMUtlHashTable *pHashTable, RTS_UI8 *pKey, RTS_SIZE keyLen, RTS_RESULT *pResult) =0;
+		virtual RTS_RESULT CDECL ICMUtlHashIterate(CMUtlHashTable *pHashTable, PF_HASHENTRY_CALLBACK pfcbHashEntry, RTS_UINTPTR cbUserData) =0;
 };
 	#ifndef ITF_CMUtilsHash
 		#define ITF_CMUtilsHash static ICMUtilsHash *pICMUtilsHash = NULL;

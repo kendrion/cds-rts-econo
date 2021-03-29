@@ -73,4 +73,16 @@ SET_INTERFACE_NAME(`CmpSocketCanDrv')
 #define SOCKETCAN_INT_ASYNCSEND "AsyncSend"
 #define SOCKETCAN_INT_ASYNCSEND_DEFAULT 0
 
+/**
+ * <category>Settings</category>
+ * <type>String</type>
+ * <description>
+ * Name of command that is executed to Reset a Busalarm.
+ * Default is "ip link canX type can restart".
+ * </description>
+ */
+#define SOCKETCAN_STRING_RESETCOMMAND "ResetCommand"
+#define SOCKETCAN_STRING_RESETCOMMAND_DEFAULT ""
+
+
 

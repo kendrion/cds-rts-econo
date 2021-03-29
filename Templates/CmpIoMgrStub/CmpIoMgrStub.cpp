@@ -69,6 +69,8 @@
 
 
 
+
+
 RTS_RESULT CDECL CCmpIoMgrStub::IIoMgrExceptionHandler(char *pszApplication, RTS_UI32 ulException)
 {
 	return IoMgrExceptionHandler(pszApplication,ulException);
@@ -158,6 +160,16 @@ RTS_RESULT CDECL CCmpIoMgrStub::IIoMgrUpdateMapping2(IoConfigTaskMap *pTaskMapLi
 RTS_RESULT CDECL CCmpIoMgrStub::IIoMgrReconfigure(IoConfigConnector *pConnector, RTS_UI32 *pui32State)
 {
 	return IoMgrReconfigure(pConnector,pui32State);
+}
+
+RTS_RESULT CDECL CCmpIoMgrStub::IIoMgrLockEnter(IBase *pIBase, const RTS_UI32 ui32LockScope)
+{
+	return IoMgrLockEnter(pIBase,ui32LockScope);
+}
+
+RTS_RESULT CDECL CCmpIoMgrStub::IIoMgrLockLeave(IBase *pIBase, const RTS_UI32 ui32LockScope)
+{
+	return IoMgrLockLeave(pIBase,ui32LockScope);
 }
 
 RTS_RESULT CDECL CCmpIoMgrStub::IIoMgrReadInputs(IoConfigTaskMap *pTaskMap)

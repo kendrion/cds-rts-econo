@@ -1,0 +1,725 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_bin_tag_util_itf_8h:
+
+=================================
+CmpBinTagUtilItf.h File Reference
+=================================
+
+| #include ":ref:`CmpStd.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`BTAG_ALIGNMENT <struct_b_t_a_g___a_l_i_g_n_m_e_n_t>`
+
+- struct :ref:`HEADER_TAG <struct_h_e_a_d_e_r___t_a_g>`
+
+- struct :ref:`HEADER_TAG_EXT <struct_h_e_a_d_e_r___t_a_g___e_x_t>`
+
+- struct :ref:`_BTAG_WriterTagInfo <struct___b_t_a_g___writer_tag_info>`
+
+- struct :ref:`_BTAG_ReaderTagInfo <struct___b_t_a_g___reader_tag_info>`
+
+- struct :ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>`
+
+- struct :ref:`BINTAGSAVEPOINT <struct_b_i_n_t_a_g_s_a_v_e_p_o_i_n_t>`
+
+- struct :ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>`
+
+- struct :ref:`BINTAGREADERSAVEPOINT <struct_b_i_n_t_a_g_r_e_a_d_e_r_s_a_v_e_p_o_i_n_t>`
+
+- struct :ref:`ICmpBinTagUtil_C <struct_i_cmp_bin_tag_util___c>`
+
+Macros
+------
+
+- #define :ref:`BTU_MAX_TAG_LEN <group___cmp_bin_tag_util_itf___staticdefines_1ga720b2fb312dec5b3d9dd8ce2f36230bf>` 12
+
+- #define :ref:`BTAG_MAX_NESTED_TAGS <group___cmp_bin_tag_util_itf_1ga7a8615d44a1c288fcfd7c007289d1b3c>` 10
+
+- #define :ref:`BTAG_MAX_STATIC_FILESTREAM_BUFFER <group___cmp_bin_tag_util_itf_1gab96c73af16b48025d888327e679272ff>` (NETSERVER_BUFFERSIZE / (NETSERVER_MAXCHANNELS * 2))
+
+- #define :ref:`BINTAGTYPE_STREAM <group___cmp_bin_tag_util_itf_1gac6bc300f2ebad3fb7653784a2e7d5d70>` 1
+
+- #define :ref:`BINTAGTYPE_FILE <group___cmp_bin_tag_util_itf_1gad23b28569dcc374fafaa3a1fdf0512a2>` 2
+
+- #define :ref:`BINTAGTYPE_FILESTREAM <group___cmp_bin_tag_util_itf_1ga34407060c86dc24efde9212377b52475>` 3
+
+- #define :ref:`USE_BTagSwapHeader <group___cmp_bin_tag_util_itf_1gacb9735ce4562a0d7dad44bf406f55796>` :ref:`PFBTAGSWAPHEADER <group___cmp_bin_tag_util_itf_1ga5f2780388ad464c57e35d629669ad964>` pfBTagSwapHeader;
+
+- #define :ref:`EXT_BTagSwapHeader <group___cmp_bin_tag_util_itf_1ga1418ad20b13b290d142902458a1f374a>` extern :ref:`PFBTAGSWAPHEADER <group___cmp_bin_tag_util_itf_1ga5f2780388ad464c57e35d629669ad964>` pfBTagSwapHeader;
+
+- #define :ref:`GET_BTagSwapHeader <group___cmp_bin_tag_util_itf_1ga36cdad9469e23700f1fe09433158bc5a>` s_pfCMGetAPI2( "BTagSwapHeader", (RTS_VOID_FCTPTR *)&pfBTagSwapHeader, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagSwapHeader <group___cmp_bin_tag_util_itf_1ga2a0c1b147999bb4ffbb1aafbe6472f30>` pfBTagSwapHeader
+
+- #define :ref:`CHK_BTagSwapHeader <group___cmp_bin_tag_util_itf_1gaf0b9c2204c2c962809ba5b4da81de21c>` (pfBTagSwapHeader != NULL)
+
+- #define :ref:`EXP_BTagSwapHeader <group___cmp_bin_tag_util_itf_1ga8e23a93aa38f6a93681faf6f1043dec1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagSwapHeader", (RTS_UINTPTR) :ref:`BTagSwapHeader <group___cmp_bin_tag_util_itf_1ga5f33422f0c7653c158bf99a42b2060da>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterInit2 <group___cmp_bin_tag_util_itf_1gad1a92983bc11f0b6538d3af1ddd4f9e5>` :ref:`PFBTAGWRITERINIT2 <group___cmp_bin_tag_util_itf_1ga0fb37f0e9d0cfb49e4af5c0d2c11976a>` pfBTagWriterInit2;
+
+- #define :ref:`EXT_BTagWriterInit2 <group___cmp_bin_tag_util_itf_1gad994c278be0e1673f8205c550f11cce3>` extern :ref:`PFBTAGWRITERINIT2 <group___cmp_bin_tag_util_itf_1ga0fb37f0e9d0cfb49e4af5c0d2c11976a>` pfBTagWriterInit2;
+
+- #define :ref:`GET_BTagWriterInit2 <group___cmp_bin_tag_util_itf_1ga3fc1a4588a6891e931aee553286d197f>` s_pfCMGetAPI2( "BTagWriterInit2", (RTS_VOID_FCTPTR *)&pfBTagWriterInit2, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterInit2 <group___cmp_bin_tag_util_itf_1gaaebff7b0fa7fab65ce2e3bc72ed3b267>` pfBTagWriterInit2
+
+- #define :ref:`CHK_BTagWriterInit2 <group___cmp_bin_tag_util_itf_1ga01cfd4edcc1c53eb058fa65da39f7716>` (pfBTagWriterInit2 != NULL)
+
+- #define :ref:`EXP_BTagWriterInit2 <group___cmp_bin_tag_util_itf_1ga00e52c44223269d3781580b22da3644c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterInit2", (RTS_UINTPTR) :ref:`BTagWriterInit2 <group___cmp_bin_tag_util_itf_1gaa5930b1e6e5bf2e1dd1d0703f3b5d97a>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterInit <group___cmp_bin_tag_util_itf_1gaf4ab92bc7de9b2618745b86463d96703>` :ref:`PFBTAGWRITERINIT <group___cmp_bin_tag_util_itf_1gac8997ebb6f47f250a2ad67e9a8e55953>` pfBTagWriterInit;
+
+- #define :ref:`EXT_BTagWriterInit <group___cmp_bin_tag_util_itf_1gacd2b7aaae402b9c654f57e39aa2721a7>` extern :ref:`PFBTAGWRITERINIT <group___cmp_bin_tag_util_itf_1gac8997ebb6f47f250a2ad67e9a8e55953>` pfBTagWriterInit;
+
+- #define :ref:`GET_BTagWriterInit <group___cmp_bin_tag_util_itf_1gab9b62a0f854a5fb4d70f034b2ecef6dd>` s_pfCMGetAPI2( "BTagWriterInit", (RTS_VOID_FCTPTR *)&pfBTagWriterInit, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterInit <group___cmp_bin_tag_util_itf_1ga51dd23f49f81023cc9e07a9afbf26c9f>` pfBTagWriterInit
+
+- #define :ref:`CHK_BTagWriterInit <group___cmp_bin_tag_util_itf_1gafb2b7202cd13a76e81037a5603cdb214>` (pfBTagWriterInit != NULL)
+
+- #define :ref:`EXP_BTagWriterInit <group___cmp_bin_tag_util_itf_1gaf4d6b0bdbcfee0b1b059d6ae82aefe4b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterInit", (RTS_UINTPTR) :ref:`BTagWriterInit <group___cmp_bin_tag_util_itf_1gac9e16abd6dbd5a37262a306a1d460b85>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterStartService <group___cmp_bin_tag_util_itf_1gab616af53ba91eb87c80178d65010b15f>` :ref:`PFBTAGWRITERSTARTSERVICE <group___cmp_bin_tag_util_itf_1gaf747a6f06895aa9912f03c132416e75d>` pfBTagWriterStartService;
+
+- #define :ref:`EXT_BTagWriterStartService <group___cmp_bin_tag_util_itf_1ga09ff0ce766fd33ac26d36bdcf4477829>` extern :ref:`PFBTAGWRITERSTARTSERVICE <group___cmp_bin_tag_util_itf_1gaf747a6f06895aa9912f03c132416e75d>` pfBTagWriterStartService;
+
+- #define :ref:`GET_BTagWriterStartService <group___cmp_bin_tag_util_itf_1ga9d019cb0b182c14d8bf95e2bbe914b61>` s_pfCMGetAPI2( "BTagWriterStartService", (RTS_VOID_FCTPTR *)&pfBTagWriterStartService, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterStartService <group___cmp_bin_tag_util_itf_1gae88be052b0ec6e08ec5ddec26fb1b583>` pfBTagWriterStartService
+
+- #define :ref:`CHK_BTagWriterStartService <group___cmp_bin_tag_util_itf_1gabce70f913d4c8cafe5c556b695348880>` (pfBTagWriterStartService != NULL)
+
+- #define :ref:`EXP_BTagWriterStartService <group___cmp_bin_tag_util_itf_1ga9df6b5e14df678d69ed816032b135164>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterStartService", (RTS_UINTPTR) :ref:`BTagWriterStartService <group___cmp_bin_tag_util_itf_1ga4fc0080da9819f83633704592488454b>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterFinishService <group___cmp_bin_tag_util_itf_1ga1ce0bdce62f4fd096c30066ac6a151dd>` :ref:`PFBTAGWRITERFINISHSERVICE <group___cmp_bin_tag_util_itf_1ga01c2d48f5bf41b27182d89ebb4aa9789>` pfBTagWriterFinishService;
+
+- #define :ref:`EXT_BTagWriterFinishService <group___cmp_bin_tag_util_itf_1gaecca0e04d8985218bb6b8ecf2500eabf>` extern :ref:`PFBTAGWRITERFINISHSERVICE <group___cmp_bin_tag_util_itf_1ga01c2d48f5bf41b27182d89ebb4aa9789>` pfBTagWriterFinishService;
+
+- #define :ref:`GET_BTagWriterFinishService <group___cmp_bin_tag_util_itf_1ga666111a1b0660d0ff0d8b3de14917444>` s_pfCMGetAPI2( "BTagWriterFinishService", (RTS_VOID_FCTPTR *)&pfBTagWriterFinishService, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterFinishService <group___cmp_bin_tag_util_itf_1gacfb2856cee25cb56b36fd06db83a5687>` pfBTagWriterFinishService
+
+- #define :ref:`CHK_BTagWriterFinishService <group___cmp_bin_tag_util_itf_1gab7ec17d80460a398a8feb6a9c2b8c0ec>` (pfBTagWriterFinishService != NULL)
+
+- #define :ref:`EXP_BTagWriterFinishService <group___cmp_bin_tag_util_itf_1gaa19e9f7999de6c0e28782fadf4008617>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterFinishService", (RTS_UINTPTR) :ref:`BTagWriterFinishService <group___cmp_bin_tag_util_itf_1ga5ab533e932ba4664f24cfdd0f7a61bd9>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterStartTag <group___cmp_bin_tag_util_itf_1gac2cc54a7670de118fcb35cd27b9d7ae0>` :ref:`PFBTAGWRITERSTARTTAG <group___cmp_bin_tag_util_itf_1ga8cb2f39f723b655d92ae3b21532dff4c>` pfBTagWriterStartTag;
+
+- #define :ref:`EXT_BTagWriterStartTag <group___cmp_bin_tag_util_itf_1ga22b4d9ace645c4e21e8e2933b96839a2>` extern :ref:`PFBTAGWRITERSTARTTAG <group___cmp_bin_tag_util_itf_1ga8cb2f39f723b655d92ae3b21532dff4c>` pfBTagWriterStartTag;
+
+- #define :ref:`GET_BTagWriterStartTag <group___cmp_bin_tag_util_itf_1ga0207059d0f0e7a7a665ceef5ad38045c>` s_pfCMGetAPI2( "BTagWriterStartTag", (RTS_VOID_FCTPTR *)&pfBTagWriterStartTag, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterStartTag <group___cmp_bin_tag_util_itf_1ga22c7eb1401b5d5eb64e2077e536325c2>` pfBTagWriterStartTag
+
+- #define :ref:`CHK_BTagWriterStartTag <group___cmp_bin_tag_util_itf_1gaf036091c9e9dd2604bb5e6e36955fa6d>` (pfBTagWriterStartTag != NULL)
+
+- #define :ref:`EXP_BTagWriterStartTag <group___cmp_bin_tag_util_itf_1ga38b705da3ab75897cde40e12341e575c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterStartTag", (RTS_UINTPTR) :ref:`BTagWriterStartTag <group___cmp_bin_tag_util_itf_1gafd29ce97b0bd5fe47d04ab6569f0b347>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterAppendGUID <group___cmp_bin_tag_util_itf_1gab575c831bc58e1cde1ed4a8af2b07fd6>` :ref:`PFBTAGWRITERAPPENDGUID <group___cmp_bin_tag_util_itf_1ga790ed837b66c64d5e3d548f80e56535c>` pfBTagWriterAppendGUID;
+
+- #define :ref:`EXT_BTagWriterAppendGUID <group___cmp_bin_tag_util_itf_1ga452367a233ddc56561cd6a6c17813ad3>` extern :ref:`PFBTAGWRITERAPPENDGUID <group___cmp_bin_tag_util_itf_1ga790ed837b66c64d5e3d548f80e56535c>` pfBTagWriterAppendGUID;
+
+- #define :ref:`GET_BTagWriterAppendGUID <group___cmp_bin_tag_util_itf_1ga4cf9030795a8e211217853c1a87487a4>` s_pfCMGetAPI2( "BTagWriterAppendGUID", (RTS_VOID_FCTPTR *)&pfBTagWriterAppendGUID, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterAppendGUID <group___cmp_bin_tag_util_itf_1gaa41e3884fda5fd1935b79ce69f8290c2>` pfBTagWriterAppendGUID
+
+- #define :ref:`CHK_BTagWriterAppendGUID <group___cmp_bin_tag_util_itf_1ga0969f4aae23e506bdb97757c70ddb59d>` (pfBTagWriterAppendGUID != NULL)
+
+- #define :ref:`EXP_BTagWriterAppendGUID <group___cmp_bin_tag_util_itf_1ga05321bd1ce7c2049223ad0b967a17094>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterAppendGUID", (RTS_UINTPTR) :ref:`BTagWriterAppendGUID <group___cmp_bin_tag_util_itf_1gacaa27e6a96cf19d16e04828f8ee5fad2>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterAppendString <group___cmp_bin_tag_util_itf_1ga32cec6b1eef7eb094d85c6987a18a3c7>` :ref:`PFBTAGWRITERAPPENDSTRING <group___cmp_bin_tag_util_itf_1gacbaf3cde2d7e74176009b61523188f45>` pfBTagWriterAppendString;
+
+- #define :ref:`EXT_BTagWriterAppendString <group___cmp_bin_tag_util_itf_1ga6eaa0813a40f9efbf583987032cb8c55>` extern :ref:`PFBTAGWRITERAPPENDSTRING <group___cmp_bin_tag_util_itf_1gacbaf3cde2d7e74176009b61523188f45>` pfBTagWriterAppendString;
+
+- #define :ref:`GET_BTagWriterAppendString <group___cmp_bin_tag_util_itf_1gaabee4d0998c44fff06f7f192528f4bfc>` s_pfCMGetAPI2( "BTagWriterAppendString", (RTS_VOID_FCTPTR *)&pfBTagWriterAppendString, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterAppendString <group___cmp_bin_tag_util_itf_1gaa2453e07dd062c67a9b85e3748dd9c4f>` pfBTagWriterAppendString
+
+- #define :ref:`CHK_BTagWriterAppendString <group___cmp_bin_tag_util_itf_1ga578e8b131a10f102b5d14c44fa9fb1b8>` (pfBTagWriterAppendString != NULL)
+
+- #define :ref:`EXP_BTagWriterAppendString <group___cmp_bin_tag_util_itf_1ga67779ee8d86eb9776db8e3e3aa4930f7>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterAppendString", (RTS_UINTPTR) :ref:`BTagWriterAppendString <group___cmp_bin_tag_util_itf_1gadb6f29df0b99c15140ec93b9c0f39bcb>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterAppendWString <group___cmp_bin_tag_util_itf_1gaa9d791c77d53e00e4e79640339cde076>` :ref:`PFBTAGWRITERAPPENDWSTRING <group___cmp_bin_tag_util_itf_1ga759ddcb5ad9ff038b9775ddab6b8d693>` pfBTagWriterAppendWString;
+
+- #define :ref:`EXT_BTagWriterAppendWString <group___cmp_bin_tag_util_itf_1ga6a119a2b703cd514454bb1f93e1496e1>` extern :ref:`PFBTAGWRITERAPPENDWSTRING <group___cmp_bin_tag_util_itf_1ga759ddcb5ad9ff038b9775ddab6b8d693>` pfBTagWriterAppendWString;
+
+- #define :ref:`GET_BTagWriterAppendWString <group___cmp_bin_tag_util_itf_1ga3851c3a0b6a926d0185ecb178da071f1>` s_pfCMGetAPI2( "BTagWriterAppendWString", (RTS_VOID_FCTPTR *)&pfBTagWriterAppendWString, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterAppendWString <group___cmp_bin_tag_util_itf_1gabf4f83af5247e070b2cf9c55bc34d5c5>` pfBTagWriterAppendWString
+
+- #define :ref:`CHK_BTagWriterAppendWString <group___cmp_bin_tag_util_itf_1ga90d710d808763fa7b0352b9af1aea8ab>` (pfBTagWriterAppendWString != NULL)
+
+- #define :ref:`EXP_BTagWriterAppendWString <group___cmp_bin_tag_util_itf_1ga7013d574062d4d704f63ee8d12b1af9e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterAppendWString", (RTS_UINTPTR) :ref:`BTagWriterAppendWString <group___cmp_bin_tag_util_itf_1gae16657b7cad26c026cbc7ec0e13a8615>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterAppendBlob <group___cmp_bin_tag_util_itf_1ga075edb9038fda934caeb1e803146bbb8>` :ref:`PFBTAGWRITERAPPENDBLOB <group___cmp_bin_tag_util_itf_1gab098d053522a40220d685f0893d96207>` pfBTagWriterAppendBlob;
+
+- #define :ref:`EXT_BTagWriterAppendBlob <group___cmp_bin_tag_util_itf_1ga63ba2152167c8227dc65762b664c1035>` extern :ref:`PFBTAGWRITERAPPENDBLOB <group___cmp_bin_tag_util_itf_1gab098d053522a40220d685f0893d96207>` pfBTagWriterAppendBlob;
+
+- #define :ref:`GET_BTagWriterAppendBlob <group___cmp_bin_tag_util_itf_1ga03559d1c9b345e0d3c734c7caf323344>` s_pfCMGetAPI2( "BTagWriterAppendBlob", (RTS_VOID_FCTPTR *)&pfBTagWriterAppendBlob, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterAppendBlob <group___cmp_bin_tag_util_itf_1ga906591cba664d66051329bae051f954b>` pfBTagWriterAppendBlob
+
+- #define :ref:`CHK_BTagWriterAppendBlob <group___cmp_bin_tag_util_itf_1gadc9dc66395cfb4a08d39546c9e44fed0>` (pfBTagWriterAppendBlob != NULL)
+
+- #define :ref:`EXP_BTagWriterAppendBlob <group___cmp_bin_tag_util_itf_1ga2d038f3c714176dfd091c307e54d3f6b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterAppendBlob", (RTS_UINTPTR) :ref:`BTagWriterAppendBlob <group___cmp_bin_tag_util_itf_1ga81a67538ed2635420bf99734bb2d1da5>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterAppendRaw <group___cmp_bin_tag_util_itf_1ga6e088a34d90f604194ae3863ac7ab90b>` :ref:`PFBTAGWRITERAPPENDRAW <group___cmp_bin_tag_util_itf_1ga09534d76179b434bc371d53b4dec67d4>` pfBTagWriterAppendRaw;
+
+- #define :ref:`EXT_BTagWriterAppendRaw <group___cmp_bin_tag_util_itf_1gafbd33f9308bb6fd346fdb33894f7dbe7>` extern :ref:`PFBTAGWRITERAPPENDRAW <group___cmp_bin_tag_util_itf_1ga09534d76179b434bc371d53b4dec67d4>` pfBTagWriterAppendRaw;
+
+- #define :ref:`GET_BTagWriterAppendRaw <group___cmp_bin_tag_util_itf_1ga20359ce3723b4655a380da59f5788075>` s_pfCMGetAPI2( "BTagWriterAppendRaw", (RTS_VOID_FCTPTR *)&pfBTagWriterAppendRaw, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterAppendRaw <group___cmp_bin_tag_util_itf_1ga94ffa2ccb5943fc6ffb649485f14fef9>` pfBTagWriterAppendRaw
+
+- #define :ref:`CHK_BTagWriterAppendRaw <group___cmp_bin_tag_util_itf_1ga2ef285681669737f9fd0c3edae305cef>` (pfBTagWriterAppendRaw != NULL)
+
+- #define :ref:`EXP_BTagWriterAppendRaw <group___cmp_bin_tag_util_itf_1gab3327e134aa28f4b86e66cad7177e2bf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterAppendRaw", (RTS_UINTPTR) :ref:`BTagWriterAppendRaw <group___cmp_bin_tag_util_itf_1ga80b65ebe1d633a55cb438f170bc115d9>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterAppendFillBytes <group___cmp_bin_tag_util_itf_1ga464013b7048a33c95fa7a105bfa8a936>` :ref:`PFBTAGWRITERAPPENDFILLBYTES <group___cmp_bin_tag_util_itf_1gaa6195723f92b81f5193dab64e884eecc>` pfBTagWriterAppendFillBytes;
+
+- #define :ref:`EXT_BTagWriterAppendFillBytes <group___cmp_bin_tag_util_itf_1ga1a43368b339980134903ffab469d7145>` extern :ref:`PFBTAGWRITERAPPENDFILLBYTES <group___cmp_bin_tag_util_itf_1gaa6195723f92b81f5193dab64e884eecc>` pfBTagWriterAppendFillBytes;
+
+- #define :ref:`GET_BTagWriterAppendFillBytes <group___cmp_bin_tag_util_itf_1ga14b1ddcf89fdc91429ba8ad4eef838b6>` s_pfCMGetAPI2( "BTagWriterAppendFillBytes", (RTS_VOID_FCTPTR *)&pfBTagWriterAppendFillBytes, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterAppendFillBytes <group___cmp_bin_tag_util_itf_1gaad5104aa60284625867ad0cf2d4ee266>` pfBTagWriterAppendFillBytes
+
+- #define :ref:`CHK_BTagWriterAppendFillBytes <group___cmp_bin_tag_util_itf_1gad86a4cb975832fde6f81c59d84ff71ac>` (pfBTagWriterAppendFillBytes != NULL)
+
+- #define :ref:`EXP_BTagWriterAppendFillBytes <group___cmp_bin_tag_util_itf_1ga7d049e7065379ef2eb5cb82e7adfab97>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterAppendFillBytes", (RTS_UINTPTR) :ref:`BTagWriterAppendFillBytes <group___cmp_bin_tag_util_itf_1gad4af6aeae70dfa84ebb272f169ccaab1>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterAppendDummyBytes <group___cmp_bin_tag_util_itf_1gaff3e286372defd2d15edfdc0ff2b773e>` :ref:`PFBTAGWRITERAPPENDDUMMYBYTES <group___cmp_bin_tag_util_itf_1ga0c774960144ac07edb92bc635ae27a44>` pfBTagWriterAppendDummyBytes;
+
+- #define :ref:`EXT_BTagWriterAppendDummyBytes <group___cmp_bin_tag_util_itf_1gae27ec507f4ea60afe3a381a50e5fb687>` extern :ref:`PFBTAGWRITERAPPENDDUMMYBYTES <group___cmp_bin_tag_util_itf_1ga0c774960144ac07edb92bc635ae27a44>` pfBTagWriterAppendDummyBytes;
+
+- #define :ref:`GET_BTagWriterAppendDummyBytes <group___cmp_bin_tag_util_itf_1ga24102451f6f8f4343e876f5a48b5b64b>` s_pfCMGetAPI2( "BTagWriterAppendDummyBytes", (RTS_VOID_FCTPTR *)&pfBTagWriterAppendDummyBytes, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterAppendDummyBytes <group___cmp_bin_tag_util_itf_1ga9a3bd8139032dd3b91441e7f6f6ab833>` pfBTagWriterAppendDummyBytes
+
+- #define :ref:`CHK_BTagWriterAppendDummyBytes <group___cmp_bin_tag_util_itf_1gaa71b676ef3c5de6a9476668cf3d70f96>` (pfBTagWriterAppendDummyBytes != NULL)
+
+- #define :ref:`EXP_BTagWriterAppendDummyBytes <group___cmp_bin_tag_util_itf_1ga8381d169de7bab62a4307966eed4d58b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterAppendDummyBytes", (RTS_UINTPTR) :ref:`BTagWriterAppendDummyBytes <group___cmp_bin_tag_util_itf_1ga8419cf900a699af68830237bd8da058f>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterEndTag <group___cmp_bin_tag_util_itf_1gabc31f8b663c41d0bb79037b1c7cdabd8>` :ref:`PFBTAGWRITERENDTAG <group___cmp_bin_tag_util_itf_1ga80cfeeaefc4ee1654e81313333fe255c>` pfBTagWriterEndTag;
+
+- #define :ref:`EXT_BTagWriterEndTag <group___cmp_bin_tag_util_itf_1ga4dc7f33f3d37f080817a55618e161f81>` extern :ref:`PFBTAGWRITERENDTAG <group___cmp_bin_tag_util_itf_1ga80cfeeaefc4ee1654e81313333fe255c>` pfBTagWriterEndTag;
+
+- #define :ref:`GET_BTagWriterEndTag <group___cmp_bin_tag_util_itf_1ga529a1b06569b5c01090d166d12a97cbc>` s_pfCMGetAPI2( "BTagWriterEndTag", (RTS_VOID_FCTPTR *)&pfBTagWriterEndTag, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterEndTag <group___cmp_bin_tag_util_itf_1ga60974b9da1c07ad9092a4a4a9c4ae1d8>` pfBTagWriterEndTag
+
+- #define :ref:`CHK_BTagWriterEndTag <group___cmp_bin_tag_util_itf_1gac0c5254eda53d06631e548033fd0bf94>` (pfBTagWriterEndTag != NULL)
+
+- #define :ref:`EXP_BTagWriterEndTag <group___cmp_bin_tag_util_itf_1gaf39dbe38ecdd1e2ecd9933a35c8dcfb4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterEndTag", (RTS_UINTPTR) :ref:`BTagWriterEndTag <group___cmp_bin_tag_util_itf_1ga3f2cf456d540c6853a22bea26eef48f6>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterSwitchBuffer <group___cmp_bin_tag_util_itf_1gae5a16ddd7ffff2d53587e11f722b19cc>` :ref:`PFBTAGWRITERSWITCHBUFFER <group___cmp_bin_tag_util_itf_1gab7ac609c187ca2680febfb28ea68d254>` pfBTagWriterSwitchBuffer;
+
+- #define :ref:`EXT_BTagWriterSwitchBuffer <group___cmp_bin_tag_util_itf_1ga803354fe9a99cef8ce68996ec4e07a5a>` extern :ref:`PFBTAGWRITERSWITCHBUFFER <group___cmp_bin_tag_util_itf_1gab7ac609c187ca2680febfb28ea68d254>` pfBTagWriterSwitchBuffer;
+
+- #define :ref:`GET_BTagWriterSwitchBuffer <group___cmp_bin_tag_util_itf_1gaa2a0aae2371b82399ba87cc8ddc5937c>` s_pfCMGetAPI2( "BTagWriterSwitchBuffer", (RTS_VOID_FCTPTR *)&pfBTagWriterSwitchBuffer, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterSwitchBuffer <group___cmp_bin_tag_util_itf_1ga894bd8d12335dce81c87c9d59957c815>` pfBTagWriterSwitchBuffer
+
+- #define :ref:`CHK_BTagWriterSwitchBuffer <group___cmp_bin_tag_util_itf_1ga0432d69b7f100d03a75c11265088ac0e>` (pfBTagWriterSwitchBuffer != NULL)
+
+- #define :ref:`EXP_BTagWriterSwitchBuffer <group___cmp_bin_tag_util_itf_1gac3a0598343345a0f4de25495c3218044>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterSwitchBuffer", (RTS_UINTPTR) :ref:`BTagWriterSwitchBuffer <group___cmp_bin_tag_util_itf_1gac52c256bccff16361b398c6f5d54de55>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterCreateSavepoint <group___cmp_bin_tag_util_itf_1ga735dcac52790e0093030d623df49961f>` :ref:`PFBTAGWRITERCREATESAVEPOINT <group___cmp_bin_tag_util_itf_1ga36e72efa1d9d733aa0b0cd9be490710b>` pfBTagWriterCreateSavepoint;
+
+- #define :ref:`EXT_BTagWriterCreateSavepoint <group___cmp_bin_tag_util_itf_1ga3b58e2031f00dbc2f29f925238c9cc06>` extern :ref:`PFBTAGWRITERCREATESAVEPOINT <group___cmp_bin_tag_util_itf_1ga36e72efa1d9d733aa0b0cd9be490710b>` pfBTagWriterCreateSavepoint;
+
+- #define :ref:`GET_BTagWriterCreateSavepoint <group___cmp_bin_tag_util_itf_1gaf5007456b166ab3dfc4cf81269148931>` s_pfCMGetAPI2( "BTagWriterCreateSavepoint", (RTS_VOID_FCTPTR *)&pfBTagWriterCreateSavepoint, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterCreateSavepoint <group___cmp_bin_tag_util_itf_1gaff25258b08240b1ef521adabe87ca561>` pfBTagWriterCreateSavepoint
+
+- #define :ref:`CHK_BTagWriterCreateSavepoint <group___cmp_bin_tag_util_itf_1ga1ccec8cd865906d1431db2c3a182abb6>` (pfBTagWriterCreateSavepoint != NULL)
+
+- #define :ref:`EXP_BTagWriterCreateSavepoint <group___cmp_bin_tag_util_itf_1ga8a9ea778ad49681adf4d5b62d779414c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterCreateSavepoint", (RTS_UINTPTR) :ref:`BTagWriterCreateSavepoint <group___cmp_bin_tag_util_itf_1gaefefa23ce72f22006813faf84563b430>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterRestoreSavepoint <group___cmp_bin_tag_util_itf_1ga64ffd0ed130750e35433e6363a2a7ae4>` :ref:`PFBTAGWRITERRESTORESAVEPOINT <group___cmp_bin_tag_util_itf_1ga5f08629935c2153c0d9440ed4cbea441>` pfBTagWriterRestoreSavepoint;
+
+- #define :ref:`EXT_BTagWriterRestoreSavepoint <group___cmp_bin_tag_util_itf_1gad78c8a062df9a5cf08b5062b11d755d3>` extern :ref:`PFBTAGWRITERRESTORESAVEPOINT <group___cmp_bin_tag_util_itf_1ga5f08629935c2153c0d9440ed4cbea441>` pfBTagWriterRestoreSavepoint;
+
+- #define :ref:`GET_BTagWriterRestoreSavepoint <group___cmp_bin_tag_util_itf_1ga176df620935d6233bcf5f762c1509ad4>` s_pfCMGetAPI2( "BTagWriterRestoreSavepoint", (RTS_VOID_FCTPTR *)&pfBTagWriterRestoreSavepoint, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterRestoreSavepoint <group___cmp_bin_tag_util_itf_1ga68ad1160663c58672f5087ca45aa83fe>` pfBTagWriterRestoreSavepoint
+
+- #define :ref:`CHK_BTagWriterRestoreSavepoint <group___cmp_bin_tag_util_itf_1ga729f5799019fc35c4f49c7fd88a8548a>` (pfBTagWriterRestoreSavepoint != NULL)
+
+- #define :ref:`EXP_BTagWriterRestoreSavepoint <group___cmp_bin_tag_util_itf_1gad0baea5ebae2e8012d10ba8c1de24884>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterRestoreSavepoint", (RTS_UINTPTR) :ref:`BTagWriterRestoreSavepoint <group___cmp_bin_tag_util_itf_1gaa04b4387c7d5f8a056ab75f90e26707b>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterGetAvailableBuffer <group___cmp_bin_tag_util_itf_1ga3e3868ed1498a604c77febd1b09d78a8>` :ref:`PFBTAGWRITERGETAVAILABLEBUFFER <group___cmp_bin_tag_util_itf_1ga08641f647e91a97fb579a92f938b3e2e>` pfBTagWriterGetAvailableBuffer;
+
+- #define :ref:`EXT_BTagWriterGetAvailableBuffer <group___cmp_bin_tag_util_itf_1ga64f4aa719e810b1bc66a565d7e1e38c4>` extern :ref:`PFBTAGWRITERGETAVAILABLEBUFFER <group___cmp_bin_tag_util_itf_1ga08641f647e91a97fb579a92f938b3e2e>` pfBTagWriterGetAvailableBuffer;
+
+- #define :ref:`GET_BTagWriterGetAvailableBuffer <group___cmp_bin_tag_util_itf_1gab59d7f1fdafe3f4de46ad4930b9ab5e5>` s_pfCMGetAPI2( "BTagWriterGetAvailableBuffer", (RTS_VOID_FCTPTR *)&pfBTagWriterGetAvailableBuffer, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterGetAvailableBuffer <group___cmp_bin_tag_util_itf_1ga6d682828dcf6cce7563948e9ae5d340a>` pfBTagWriterGetAvailableBuffer
+
+- #define :ref:`CHK_BTagWriterGetAvailableBuffer <group___cmp_bin_tag_util_itf_1gaf3e72244980d576abbe530ed55075cbc>` (pfBTagWriterGetAvailableBuffer != NULL)
+
+- #define :ref:`EXP_BTagWriterGetAvailableBuffer <group___cmp_bin_tag_util_itf_1ga524dc61a91d36abfe5a2e0448f0da41e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterGetAvailableBuffer", (RTS_UINTPTR) :ref:`BTagWriterGetAvailableBuffer <group___cmp_bin_tag_util_itf_1ga35d4f0f00f99853e39013baeea99fa9b>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterFinish <group___cmp_bin_tag_util_itf_1gaa8cbf47d0d44da993895c5b45fa7b334>` :ref:`PFBTAGWRITERFINISH <group___cmp_bin_tag_util_itf_1ga7a7b8742f90ddce93a259364a75baac1>` pfBTagWriterFinish;
+
+- #define :ref:`EXT_BTagWriterFinish <group___cmp_bin_tag_util_itf_1gac9c4ed826f05824bd7754649c1cd2442>` extern :ref:`PFBTAGWRITERFINISH <group___cmp_bin_tag_util_itf_1ga7a7b8742f90ddce93a259364a75baac1>` pfBTagWriterFinish;
+
+- #define :ref:`GET_BTagWriterFinish <group___cmp_bin_tag_util_itf_1gab9fe81c25c33c03270729d63c39f672a>` s_pfCMGetAPI2( "BTagWriterFinish", (RTS_VOID_FCTPTR *)&pfBTagWriterFinish, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterFinish <group___cmp_bin_tag_util_itf_1gaeae7509dc6358cdee2b7c0dad0ee117d>` pfBTagWriterFinish
+
+- #define :ref:`CHK_BTagWriterFinish <group___cmp_bin_tag_util_itf_1ga51fa2d94eb93a81a37bc9c7a5d33016c>` (pfBTagWriterFinish != NULL)
+
+- #define :ref:`EXP_BTagWriterFinish <group___cmp_bin_tag_util_itf_1ga79b19bc79542cc95d29f29b6f476bdf8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterFinish", (RTS_UINTPTR) :ref:`BTagWriterFinish <group___cmp_bin_tag_util_itf_1ga0af27850a6ee2f790c9ab443b5111cd4>` , 0, 0)
+
+- #define :ref:`USE_BTagWriteSingleTag <group___cmp_bin_tag_util_itf_1gaf4d126081aa115a26493ed00dcd2069c>` :ref:`PFBTAGWRITESINGLETAG <group___cmp_bin_tag_util_itf_1ga298c4850b0e43707462f61e4d37a1f7b>` pfBTagWriteSingleTag;
+
+- #define :ref:`EXT_BTagWriteSingleTag <group___cmp_bin_tag_util_itf_1gab6484316ce886bb28a144a903309ba0f>` extern :ref:`PFBTAGWRITESINGLETAG <group___cmp_bin_tag_util_itf_1ga298c4850b0e43707462f61e4d37a1f7b>` pfBTagWriteSingleTag;
+
+- #define :ref:`GET_BTagWriteSingleTag <group___cmp_bin_tag_util_itf_1ga4c149f3736737a9a88af3a37f4f06bf8>` s_pfCMGetAPI2( "BTagWriteSingleTag", (RTS_VOID_FCTPTR *)&pfBTagWriteSingleTag, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriteSingleTag <group___cmp_bin_tag_util_itf_1gaa4624e83ae868b43e51f92cbabc64fcf>` pfBTagWriteSingleTag
+
+- #define :ref:`CHK_BTagWriteSingleTag <group___cmp_bin_tag_util_itf_1gaba5c35008b8c57435acd6f8fe8f25e97>` (pfBTagWriteSingleTag != NULL)
+
+- #define :ref:`EXP_BTagWriteSingleTag <group___cmp_bin_tag_util_itf_1gaffe12966663b05c891086af5391b83d7>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriteSingleTag", (RTS_UINTPTR) :ref:`BTagWriteSingleTag <group___cmp_bin_tag_util_itf_1gadf9ad720bb98e70354af29b25b01c8f3>` , 0, 0)
+
+- #define :ref:`USE_BTagWriteSingleTag2 <group___cmp_bin_tag_util_itf_1gad6ff2cfac4a21ec7d1b311254c29511f>` :ref:`PFBTAGWRITESINGLETAG2 <group___cmp_bin_tag_util_itf_1gaf6512a4078b97e44893f48a14eb1a428>` pfBTagWriteSingleTag2;
+
+- #define :ref:`EXT_BTagWriteSingleTag2 <group___cmp_bin_tag_util_itf_1ga3ad45b6af7046363658abfd66695eda3>` extern :ref:`PFBTAGWRITESINGLETAG2 <group___cmp_bin_tag_util_itf_1gaf6512a4078b97e44893f48a14eb1a428>` pfBTagWriteSingleTag2;
+
+- #define :ref:`GET_BTagWriteSingleTag2 <group___cmp_bin_tag_util_itf_1gace5101ae2ae586d7dfcf326811daa346>` s_pfCMGetAPI2( "BTagWriteSingleTag2", (RTS_VOID_FCTPTR *)&pfBTagWriteSingleTag2, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriteSingleTag2 <group___cmp_bin_tag_util_itf_1gaf9b50525269893f787587ec8a1c7d75b>` pfBTagWriteSingleTag2
+
+- #define :ref:`CHK_BTagWriteSingleTag2 <group___cmp_bin_tag_util_itf_1ga5c4baad92ab9a8d7120a10d97c899e9d>` (pfBTagWriteSingleTag2 != NULL)
+
+- #define :ref:`EXP_BTagWriteSingleTag2 <group___cmp_bin_tag_util_itf_1ga220387f5e471e300015bf65f3c34ebf0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriteSingleTag2", (RTS_UINTPTR) :ref:`BTagWriteSingleTag2 <group___cmp_bin_tag_util_itf_1gaae1e438865f10164d966a05147bbd431>` , 0, 0)
+
+- #define :ref:`USE_BTagReaderInit <group___cmp_bin_tag_util_itf_1gae806068620bf4077f6fd81b2a5bf989d>` :ref:`PFBTAGREADERINIT <group___cmp_bin_tag_util_itf_1ga27a8dee67b73864a920c641fdb09ade5>` pfBTagReaderInit;
+
+- #define :ref:`EXT_BTagReaderInit <group___cmp_bin_tag_util_itf_1gaa920855f2adf12dab09d2bbd704085a9>` extern :ref:`PFBTAGREADERINIT <group___cmp_bin_tag_util_itf_1ga27a8dee67b73864a920c641fdb09ade5>` pfBTagReaderInit;
+
+- #define :ref:`GET_BTagReaderInit <group___cmp_bin_tag_util_itf_1gacc5cbb177b4439f50d9f452f836d27dd>` s_pfCMGetAPI2( "BTagReaderInit", (RTS_VOID_FCTPTR *)&pfBTagReaderInit, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagReaderInit <group___cmp_bin_tag_util_itf_1ga97e13dd35d88878e982b6bf268256086>` pfBTagReaderInit
+
+- #define :ref:`CHK_BTagReaderInit <group___cmp_bin_tag_util_itf_1ga0a2e69e7ae623dd94e286fca2508db81>` (pfBTagReaderInit != NULL)
+
+- #define :ref:`EXP_BTagReaderInit <group___cmp_bin_tag_util_itf_1ga1b50d01df7f13a72ce94ffdcf7c0ef62>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagReaderInit", (RTS_UINTPTR) :ref:`BTagReaderInit <group___cmp_bin_tag_util_itf_1ga4a580903a01c231f743462630a80c7b9>` , 0, 0)
+
+- #define :ref:`USE_BTagReaderPeekNext <group___cmp_bin_tag_util_itf_1gad0630b523034afd443ebb9518206aa2f>` :ref:`PFBTAGREADERPEEKNEXT <group___cmp_bin_tag_util_itf_1ga7272748c5bcc1d450ed62aaecfb62a51>` pfBTagReaderPeekNext;
+
+- #define :ref:`EXT_BTagReaderPeekNext <group___cmp_bin_tag_util_itf_1gaf5e2f8f9de7b49ab9050176cec1d26d7>` extern :ref:`PFBTAGREADERPEEKNEXT <group___cmp_bin_tag_util_itf_1ga7272748c5bcc1d450ed62aaecfb62a51>` pfBTagReaderPeekNext;
+
+- #define :ref:`GET_BTagReaderPeekNext <group___cmp_bin_tag_util_itf_1gaa67b67f1bdfeedb5248eb33c6dc0b3f1>` s_pfCMGetAPI2( "BTagReaderPeekNext", (RTS_VOID_FCTPTR *)&pfBTagReaderPeekNext, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagReaderPeekNext <group___cmp_bin_tag_util_itf_1gae128cf81fe824cfea7b8160022026276>` pfBTagReaderPeekNext
+
+- #define :ref:`CHK_BTagReaderPeekNext <group___cmp_bin_tag_util_itf_1ga0915f81cc23839746e3179384c726814>` (pfBTagReaderPeekNext != NULL)
+
+- #define :ref:`EXP_BTagReaderPeekNext <group___cmp_bin_tag_util_itf_1gae6d22680c90fefdb9e97f5807306d95c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagReaderPeekNext", (RTS_UINTPTR) :ref:`BTagReaderPeekNext <group___cmp_bin_tag_util_itf_1gae482e0ab148aefa5b40d3c14a715b431>` , 0, 0)
+
+- #define :ref:`USE_BTagReaderMoveNext <group___cmp_bin_tag_util_itf_1gaba42ff990c6975d4c11fd1cc6a7449ef>` :ref:`PFBTAGREADERMOVENEXT <group___cmp_bin_tag_util_itf_1ga04633fa690c17f1a0562aa6ec8a4e3c9>` pfBTagReaderMoveNext;
+
+- #define :ref:`EXT_BTagReaderMoveNext <group___cmp_bin_tag_util_itf_1ga4e7ad10e784f3d44d9a48057664daf82>` extern :ref:`PFBTAGREADERMOVENEXT <group___cmp_bin_tag_util_itf_1ga04633fa690c17f1a0562aa6ec8a4e3c9>` pfBTagReaderMoveNext;
+
+- #define :ref:`GET_BTagReaderMoveNext <group___cmp_bin_tag_util_itf_1ga6a7159ef7354293c699ba231335ad5cf>` s_pfCMGetAPI2( "BTagReaderMoveNext", (RTS_VOID_FCTPTR *)&pfBTagReaderMoveNext, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagReaderMoveNext <group___cmp_bin_tag_util_itf_1gab8b342b82059ff4059164d8c51940c73>` pfBTagReaderMoveNext
+
+- #define :ref:`CHK_BTagReaderMoveNext <group___cmp_bin_tag_util_itf_1ga6fc16f21f6e45a5bfe4a5ee79f029eff>` (pfBTagReaderMoveNext != NULL)
+
+- #define :ref:`EXP_BTagReaderMoveNext <group___cmp_bin_tag_util_itf_1gac3fd0b34f44a015185b0d8fbe9d76f8e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagReaderMoveNext", (RTS_UINTPTR) :ref:`BTagReaderMoveNext <group___cmp_bin_tag_util_itf_1ga64927ab05a3632b524df047861ebb7e5>` , 0, 0)
+
+- #define :ref:`USE_BTagReaderSkipContent <group___cmp_bin_tag_util_itf_1ga5d34c3095304901836ce8df8529f127f>` :ref:`PFBTAGREADERSKIPCONTENT <group___cmp_bin_tag_util_itf_1gaf2bd0106dea1b29e5a1e77dd73bca09b>` pfBTagReaderSkipContent;
+
+- #define :ref:`EXT_BTagReaderSkipContent <group___cmp_bin_tag_util_itf_1gad4fd61ea101a18680bd4345e438cd9dc>` extern :ref:`PFBTAGREADERSKIPCONTENT <group___cmp_bin_tag_util_itf_1gaf2bd0106dea1b29e5a1e77dd73bca09b>` pfBTagReaderSkipContent;
+
+- #define :ref:`GET_BTagReaderSkipContent <group___cmp_bin_tag_util_itf_1ga247b33310de71ad19b74bdc03b97d2c9>` s_pfCMGetAPI2( "BTagReaderSkipContent", (RTS_VOID_FCTPTR *)&pfBTagReaderSkipContent, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagReaderSkipContent <group___cmp_bin_tag_util_itf_1gaefefbe5ea7e01b440b5fb915e0ecd6e9>` pfBTagReaderSkipContent
+
+- #define :ref:`CHK_BTagReaderSkipContent <group___cmp_bin_tag_util_itf_1ga979b4ce9880ce0900545d3cdb7f2b696>` (pfBTagReaderSkipContent != NULL)
+
+- #define :ref:`EXP_BTagReaderSkipContent <group___cmp_bin_tag_util_itf_1gab18528de71c04193f19a51bbccc46482>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagReaderSkipContent", (RTS_UINTPTR) :ref:`BTagReaderSkipContent <group___cmp_bin_tag_util_itf_1ga58b9b91e29f42a1a0ff442b1b97d1ee1>` , 0, 0)
+
+- #define :ref:`USE_BTagReaderGetTagId <group___cmp_bin_tag_util_itf_1ga1f404c1d6754fcab98f9e8d029dcdc53>` :ref:`PFBTAGREADERGETTAGID <group___cmp_bin_tag_util_itf_1ga5928067f4b5eaa0c4628f475330ecdea>` pfBTagReaderGetTagId;
+
+- #define :ref:`EXT_BTagReaderGetTagId <group___cmp_bin_tag_util_itf_1gae25f52a5d35203c205e322b9f0e8b3a5>` extern :ref:`PFBTAGREADERGETTAGID <group___cmp_bin_tag_util_itf_1ga5928067f4b5eaa0c4628f475330ecdea>` pfBTagReaderGetTagId;
+
+- #define :ref:`GET_BTagReaderGetTagId <group___cmp_bin_tag_util_itf_1ga5647d2c07abbbbff8d90d66e2a7caf27>` s_pfCMGetAPI2( "BTagReaderGetTagId", (RTS_VOID_FCTPTR *)&pfBTagReaderGetTagId, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagReaderGetTagId <group___cmp_bin_tag_util_itf_1gad2dad995b2798f0826d6bc9fce9bd269>` pfBTagReaderGetTagId
+
+- #define :ref:`CHK_BTagReaderGetTagId <group___cmp_bin_tag_util_itf_1gaefb06f1cb54ee3641b580059f106979e>` (pfBTagReaderGetTagId != NULL)
+
+- #define :ref:`EXP_BTagReaderGetTagId <group___cmp_bin_tag_util_itf_1ga7f1d16e7cf15841ac5ec6a7d8344285a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagReaderGetTagId", (RTS_UINTPTR) :ref:`BTagReaderGetTagId <group___cmp_bin_tag_util_itf_1gaac2ed0c282be75db6939d359810f7065>` , 0, 0)
+
+- #define :ref:`USE_BTagReaderGetTagLen <group___cmp_bin_tag_util_itf_1gacec6d0e3da5928bb0e2953f9a473eb8c>` :ref:`PFBTAGREADERGETTAGLEN <group___cmp_bin_tag_util_itf_1ga3b353e9231f49ff19960217a7112816a>` pfBTagReaderGetTagLen;
+
+- #define :ref:`EXT_BTagReaderGetTagLen <group___cmp_bin_tag_util_itf_1ga81da7c3967dcd3dfae0274be9e5b5e93>` extern :ref:`PFBTAGREADERGETTAGLEN <group___cmp_bin_tag_util_itf_1ga3b353e9231f49ff19960217a7112816a>` pfBTagReaderGetTagLen;
+
+- #define :ref:`GET_BTagReaderGetTagLen <group___cmp_bin_tag_util_itf_1ga8b0ced5cf1b06aa254416a5aefcfe506>` s_pfCMGetAPI2( "BTagReaderGetTagLen", (RTS_VOID_FCTPTR *)&pfBTagReaderGetTagLen, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagReaderGetTagLen <group___cmp_bin_tag_util_itf_1ga7773f9160a4cee36b4c76e62f1286e41>` pfBTagReaderGetTagLen
+
+- #define :ref:`CHK_BTagReaderGetTagLen <group___cmp_bin_tag_util_itf_1gad8b42e9c81c121da779aadba4cdcf665>` (pfBTagReaderGetTagLen != NULL)
+
+- #define :ref:`EXP_BTagReaderGetTagLen <group___cmp_bin_tag_util_itf_1ga778514e650570a7a550f681959e88d7c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagReaderGetTagLen", (RTS_UINTPTR) :ref:`BTagReaderGetTagLen <group___cmp_bin_tag_util_itf_1ga1444abd7c3c70f632a0a95d3a8daa16c>` , 0, 0)
+
+- #define :ref:`USE_BTagReaderIsDataTag <group___cmp_bin_tag_util_itf_1ga3880f3dc9587d6aed30827056b4cb110>` :ref:`PFBTAGREADERISDATATAG <group___cmp_bin_tag_util_itf_1ga328d7345f51ff6f13eb16976187ed3b7>` pfBTagReaderIsDataTag;
+
+- #define :ref:`EXT_BTagReaderIsDataTag <group___cmp_bin_tag_util_itf_1ga0c5e632f65574a2fe8a8db7ad45169b0>` extern :ref:`PFBTAGREADERISDATATAG <group___cmp_bin_tag_util_itf_1ga328d7345f51ff6f13eb16976187ed3b7>` pfBTagReaderIsDataTag;
+
+- #define :ref:`GET_BTagReaderIsDataTag <group___cmp_bin_tag_util_itf_1ga1174cb747c1bd8e7bb20e84473b64a26>` s_pfCMGetAPI2( "BTagReaderIsDataTag", (RTS_VOID_FCTPTR *)&pfBTagReaderIsDataTag, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagReaderIsDataTag <group___cmp_bin_tag_util_itf_1ga1675ded0708efe0f5ce0e9c2b842f931>` pfBTagReaderIsDataTag
+
+- #define :ref:`CHK_BTagReaderIsDataTag <group___cmp_bin_tag_util_itf_1ga5599eff9f31a84c145458659b1eba428>` (pfBTagReaderIsDataTag != NULL)
+
+- #define :ref:`EXP_BTagReaderIsDataTag <group___cmp_bin_tag_util_itf_1ga60185325b7c59b13513ebdb255ce8369>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagReaderIsDataTag", (RTS_UINTPTR) :ref:`BTagReaderIsDataTag <group___cmp_bin_tag_util_itf_1ga022ddc2d95a50bcba1d5b7947ea33b6a>` , 0, 0)
+
+- #define :ref:`USE_BTagReaderGetComplexContent <group___cmp_bin_tag_util_itf_1gaad7afbce2bfca80683e2fd536a703255>` :ref:`PFBTAGREADERGETCOMPLEXCONTENT <group___cmp_bin_tag_util_itf_1gaaa0bd9a04c8ef082f0caf937bd9813b9>` pfBTagReaderGetComplexContent;
+
+- #define :ref:`EXT_BTagReaderGetComplexContent <group___cmp_bin_tag_util_itf_1ga4d36753226796c714be7be7a9903f67b>` extern :ref:`PFBTAGREADERGETCOMPLEXCONTENT <group___cmp_bin_tag_util_itf_1gaaa0bd9a04c8ef082f0caf937bd9813b9>` pfBTagReaderGetComplexContent;
+
+- #define :ref:`GET_BTagReaderGetComplexContent <group___cmp_bin_tag_util_itf_1ga157eb58a63ecad045895e7624308dd14>` s_pfCMGetAPI2( "BTagReaderGetComplexContent", (RTS_VOID_FCTPTR *)&pfBTagReaderGetComplexContent, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagReaderGetComplexContent <group___cmp_bin_tag_util_itf_1gaa92079c88bb82d34fe68a2e9b523a89d>` pfBTagReaderGetComplexContent
+
+- #define :ref:`CHK_BTagReaderGetComplexContent <group___cmp_bin_tag_util_itf_1gad6775bf6a9cb8c092b3a34a5274a2876>` (pfBTagReaderGetComplexContent != NULL)
+
+- #define :ref:`EXP_BTagReaderGetComplexContent <group___cmp_bin_tag_util_itf_1gad7a44abceef4c30046b50e6686528735>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagReaderGetComplexContent", (RTS_UINTPTR) :ref:`BTagReaderGetComplexContent <group___cmp_bin_tag_util_itf_1ga580b67848e86db4dc311ad8cf4b07a9a>` , 0, 0)
+
+- #define :ref:`USE_BTagReaderGetContent <group___cmp_bin_tag_util_itf_1ga083473e507bbefb9fdcced4a08efb8c2>` :ref:`PFBTAGREADERGETCONTENT <group___cmp_bin_tag_util_itf_1gac7c5032945c54e3d03d5930610c05f22>` pfBTagReaderGetContent;
+
+- #define :ref:`EXT_BTagReaderGetContent <group___cmp_bin_tag_util_itf_1ga783f5e96ab77e3707242986988daaa4e>` extern :ref:`PFBTAGREADERGETCONTENT <group___cmp_bin_tag_util_itf_1gac7c5032945c54e3d03d5930610c05f22>` pfBTagReaderGetContent;
+
+- #define :ref:`GET_BTagReaderGetContent <group___cmp_bin_tag_util_itf_1ga9ea9db1565b7bfa95f33477a35596bfd>` s_pfCMGetAPI2( "BTagReaderGetContent", (RTS_VOID_FCTPTR *)&pfBTagReaderGetContent, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagReaderGetContent <group___cmp_bin_tag_util_itf_1ga8316c146b0f862d372f583e5d21c7b49>` pfBTagReaderGetContent
+
+- #define :ref:`CHK_BTagReaderGetContent <group___cmp_bin_tag_util_itf_1ga96515d1200095bf4b8f138f7bbc7b51c>` (pfBTagReaderGetContent != NULL)
+
+- #define :ref:`EXP_BTagReaderGetContent <group___cmp_bin_tag_util_itf_1ga63305f37d20e14f1c3d9d7954fd19b23>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagReaderGetContent", (RTS_UINTPTR) :ref:`BTagReaderGetContent <group___cmp_bin_tag_util_itf_1ga220c1fa43be4ba6dd3c6978dbcfcea4c>` , 0, 0)
+
+- #define :ref:`USE_BTagReaderGetString <group___cmp_bin_tag_util_itf_1gae32d388fe52966f7f207ddac7414abab>` :ref:`PFBTAGREADERGETSTRING <group___cmp_bin_tag_util_itf_1ga322279661a4a806cf30d3ff74bbc2722>` pfBTagReaderGetString;
+
+- #define :ref:`EXT_BTagReaderGetString <group___cmp_bin_tag_util_itf_1ga071673361f252fbea63cf56276865e95>` extern :ref:`PFBTAGREADERGETSTRING <group___cmp_bin_tag_util_itf_1ga322279661a4a806cf30d3ff74bbc2722>` pfBTagReaderGetString;
+
+- #define :ref:`GET_BTagReaderGetString <group___cmp_bin_tag_util_itf_1ga3a26525f086cb6f8c5df3b65e448292c>` s_pfCMGetAPI2( "BTagReaderGetString", (RTS_VOID_FCTPTR *)&pfBTagReaderGetString, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagReaderGetString <group___cmp_bin_tag_util_itf_1ga65d61236c4b70c67be4cb44fef16bd9c>` pfBTagReaderGetString
+
+- #define :ref:`CHK_BTagReaderGetString <group___cmp_bin_tag_util_itf_1ga652952e339db78053383a9db4e0933f1>` (pfBTagReaderGetString != NULL)
+
+- #define :ref:`EXP_BTagReaderGetString <group___cmp_bin_tag_util_itf_1ga17e703549659b9100064c257cff5c3cb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagReaderGetString", (RTS_UINTPTR) :ref:`BTagReaderGetString <group___cmp_bin_tag_util_itf_1gadfd36a3cb8bf0fd8f66e2ca39057f63b>` , 0, 0)
+
+- #define :ref:`USE_BTagReaderCreateSavepoint <group___cmp_bin_tag_util_itf_1ga5664921a041dbe456052a061cc549772>` :ref:`PFBTAGREADERCREATESAVEPOINT <group___cmp_bin_tag_util_itf_1ga267026ab471b657c7e99a742540a367e>` pfBTagReaderCreateSavepoint;
+
+- #define :ref:`EXT_BTagReaderCreateSavepoint <group___cmp_bin_tag_util_itf_1ga72240bceeb96c6f26b91cadc2816fe56>` extern :ref:`PFBTAGREADERCREATESAVEPOINT <group___cmp_bin_tag_util_itf_1ga267026ab471b657c7e99a742540a367e>` pfBTagReaderCreateSavepoint;
+
+- #define :ref:`GET_BTagReaderCreateSavepoint <group___cmp_bin_tag_util_itf_1gaf5e5a44cd4bab9e1a444ee75c1c2cf24>` s_pfCMGetAPI2( "BTagReaderCreateSavepoint", (RTS_VOID_FCTPTR *)&pfBTagReaderCreateSavepoint, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagReaderCreateSavepoint <group___cmp_bin_tag_util_itf_1gadf031f80a19b77ad87bef5f911eccbd6>` pfBTagReaderCreateSavepoint
+
+- #define :ref:`CHK_BTagReaderCreateSavepoint <group___cmp_bin_tag_util_itf_1gad25c4b25d8bc0ae853c28fb610f2cf75>` (pfBTagReaderCreateSavepoint != NULL)
+
+- #define :ref:`EXP_BTagReaderCreateSavepoint <group___cmp_bin_tag_util_itf_1ga064e4a4e5d84fbf029f80c7d4c75fdb4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagReaderCreateSavepoint", (RTS_UINTPTR) :ref:`BTagReaderCreateSavepoint <group___cmp_bin_tag_util_itf_1gafe04ecee4c0c11d8c779492bfd100074>` , 0, 0)
+
+- #define :ref:`USE_BTagReaderRestoreSavepoint <group___cmp_bin_tag_util_itf_1gaf32cf9d1d4a359da762186eb485c50ff>` :ref:`PFBTAGREADERRESTORESAVEPOINT <group___cmp_bin_tag_util_itf_1ga3f02623da9247fc56227a8fd70ad66a9>` pfBTagReaderRestoreSavepoint;
+
+- #define :ref:`EXT_BTagReaderRestoreSavepoint <group___cmp_bin_tag_util_itf_1ga31b09e7a9d8fa6c2d84561aa0712b512>` extern :ref:`PFBTAGREADERRESTORESAVEPOINT <group___cmp_bin_tag_util_itf_1ga3f02623da9247fc56227a8fd70ad66a9>` pfBTagReaderRestoreSavepoint;
+
+- #define :ref:`GET_BTagReaderRestoreSavepoint <group___cmp_bin_tag_util_itf_1ga2cf83c31154413827a6eec3a376f9ccf>` s_pfCMGetAPI2( "BTagReaderRestoreSavepoint", (RTS_VOID_FCTPTR *)&pfBTagReaderRestoreSavepoint, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagReaderRestoreSavepoint <group___cmp_bin_tag_util_itf_1ga3475173f4c737e473a5bbb86155d0bfc>` pfBTagReaderRestoreSavepoint
+
+- #define :ref:`CHK_BTagReaderRestoreSavepoint <group___cmp_bin_tag_util_itf_1ga1ffda3d5f3c62a0b1d4aefe0435bb9ca>` (pfBTagReaderRestoreSavepoint != NULL)
+
+- #define :ref:`EXP_BTagReaderRestoreSavepoint <group___cmp_bin_tag_util_itf_1ga34b6751b4d7dc9e6f1333069183e0395>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagReaderRestoreSavepoint", (RTS_UINTPTR) :ref:`BTagReaderRestoreSavepoint <group___cmp_bin_tag_util_itf_1ga198fa209b27d078688b8c743182bda9f>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterFileInit <group___cmp_bin_tag_util_itf_1ga80265323daaf6a32689c71c3acecb25c>` :ref:`PFBTAGWRITERFILEINIT <group___cmp_bin_tag_util_itf_1ga90b1dd70b7107a6e73d48418ffbd8246>` pfBTagWriterFileInit;
+
+- #define :ref:`EXT_BTagWriterFileInit <group___cmp_bin_tag_util_itf_1ga0ea0c2993de3bb9f3c1c82a588435732>` extern :ref:`PFBTAGWRITERFILEINIT <group___cmp_bin_tag_util_itf_1ga90b1dd70b7107a6e73d48418ffbd8246>` pfBTagWriterFileInit;
+
+- #define :ref:`GET_BTagWriterFileInit <group___cmp_bin_tag_util_itf_1gafc1a039231aabcd6b32381816ddcc4d4>` s_pfCMGetAPI2( "BTagWriterFileInit", (RTS_VOID_FCTPTR *)&pfBTagWriterFileInit, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterFileInit <group___cmp_bin_tag_util_itf_1ga59b71aac3502b3eb65e1e497b57a02da>` pfBTagWriterFileInit
+
+- #define :ref:`CHK_BTagWriterFileInit <group___cmp_bin_tag_util_itf_1gaf900b72e397ad024e6aa4cac159871f7>` (pfBTagWriterFileInit != NULL)
+
+- #define :ref:`EXP_BTagWriterFileInit <group___cmp_bin_tag_util_itf_1ga076c68e5a4abdc4a0dc74e54867c0031>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterFileInit", (RTS_UINTPTR) :ref:`BTagWriterFileInit <group___cmp_bin_tag_util_itf_1gac475bb9ca185a3a6b732eebb934dd17d>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterFileInit2 <group___cmp_bin_tag_util_itf_1ga70fc3b66215fbafaeafc857a157e38a5>` :ref:`PFBTAGWRITERFILEINIT2 <group___cmp_bin_tag_util_itf_1gacf92d5b224d135fe903bf30b2cf8a53d>` pfBTagWriterFileInit2;
+
+- #define :ref:`EXT_BTagWriterFileInit2 <group___cmp_bin_tag_util_itf_1ga207be693bc03b2fa1b660517d3e030d4>` extern :ref:`PFBTAGWRITERFILEINIT2 <group___cmp_bin_tag_util_itf_1gacf92d5b224d135fe903bf30b2cf8a53d>` pfBTagWriterFileInit2;
+
+- #define :ref:`GET_BTagWriterFileInit2 <group___cmp_bin_tag_util_itf_1ga0455e8c3693de14bdf065e29f1701cab>` s_pfCMGetAPI2( "BTagWriterFileInit2", (RTS_VOID_FCTPTR *)&pfBTagWriterFileInit2, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterFileInit2 <group___cmp_bin_tag_util_itf_1ga955ee7c3d1205f32a148170db95fb96f>` pfBTagWriterFileInit2
+
+- #define :ref:`CHK_BTagWriterFileInit2 <group___cmp_bin_tag_util_itf_1ga8366c1c06d1c29a582f9ee13ac45a410>` (pfBTagWriterFileInit2 != NULL)
+
+- #define :ref:`EXP_BTagWriterFileInit2 <group___cmp_bin_tag_util_itf_1gac4178e4f91ef7b647bae1497d57eefca>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterFileInit2", (RTS_UINTPTR) :ref:`BTagWriterFileInit2 <group___cmp_bin_tag_util_itf_1ga98e1412e288d8dc6b36e6407dcefc241>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterFileStreamInit <group___cmp_bin_tag_util_itf_1gab03e5fd3c93df003b5ecd8cca1c354fd>` :ref:`PFBTAGWRITERFILESTREAMINIT <group___cmp_bin_tag_util_itf_1ga399f4ead158c13e19610e6558fcdc701>` pfBTagWriterFileStreamInit;
+
+- #define :ref:`EXT_BTagWriterFileStreamInit <group___cmp_bin_tag_util_itf_1ga088347004273b5b98cfe79caffdc195e>` extern :ref:`PFBTAGWRITERFILESTREAMINIT <group___cmp_bin_tag_util_itf_1ga399f4ead158c13e19610e6558fcdc701>` pfBTagWriterFileStreamInit;
+
+- #define :ref:`GET_BTagWriterFileStreamInit <group___cmp_bin_tag_util_itf_1gaf34930d5e39c85ceb905c6bc57ca7d92>` s_pfCMGetAPI2( "BTagWriterFileStreamInit", (RTS_VOID_FCTPTR *)&pfBTagWriterFileStreamInit, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterFileStreamInit <group___cmp_bin_tag_util_itf_1gaf9a908947f959bc78b038e1a72bc0f56>` pfBTagWriterFileStreamInit
+
+- #define :ref:`CHK_BTagWriterFileStreamInit <group___cmp_bin_tag_util_itf_1ga34f61f44976330ca85097c5c48aee340>` (pfBTagWriterFileStreamInit != NULL)
+
+- #define :ref:`EXP_BTagWriterFileStreamInit <group___cmp_bin_tag_util_itf_1ga17c1b5ada842804d5b7bcfe37898f274>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterFileStreamInit", (RTS_UINTPTR) :ref:`BTagWriterFileStreamInit <group___cmp_bin_tag_util_itf_1ga54dc9940ffcc68387445d16fabe82501>` , 0, 0)
+
+- #define :ref:`USE_BTagWriterFileStreamInit2 <group___cmp_bin_tag_util_itf_1ga8bf4a09166d72e7d3e09f6616e5299b9>` :ref:`PFBTAGWRITERFILESTREAMINIT2 <group___cmp_bin_tag_util_itf_1ga02a6f1a891733d12782997e5b3a91946>` pfBTagWriterFileStreamInit2;
+
+- #define :ref:`EXT_BTagWriterFileStreamInit2 <group___cmp_bin_tag_util_itf_1ga75a6d26fa07b6235545cfcba9ed0cc7c>` extern :ref:`PFBTAGWRITERFILESTREAMINIT2 <group___cmp_bin_tag_util_itf_1ga02a6f1a891733d12782997e5b3a91946>` pfBTagWriterFileStreamInit2;
+
+- #define :ref:`GET_BTagWriterFileStreamInit2 <group___cmp_bin_tag_util_itf_1gab64edc7a0e93e07b3214da2094f9f640>` s_pfCMGetAPI2( "BTagWriterFileStreamInit2", (RTS_VOID_FCTPTR *)&pfBTagWriterFileStreamInit2, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagWriterFileStreamInit2 <group___cmp_bin_tag_util_itf_1ga67fcbf422554d581708b98c1469c5ba6>` pfBTagWriterFileStreamInit2
+
+- #define :ref:`CHK_BTagWriterFileStreamInit2 <group___cmp_bin_tag_util_itf_1ga30f8cb6af48c2a4ab7553d965295f13c>` (pfBTagWriterFileStreamInit2 != NULL)
+
+- #define :ref:`EXP_BTagWriterFileStreamInit2 <group___cmp_bin_tag_util_itf_1ga2aa2a95ab529e0d6ac418fbb464d266c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagWriterFileStreamInit2", (RTS_UINTPTR) :ref:`BTagWriterFileStreamInit2 <group___cmp_bin_tag_util_itf_1gab1634634c5d807db718c3ea7fd1cfca6>` , 0, 0)
+
+- #define :ref:`USE_BTagReaderFileInit <group___cmp_bin_tag_util_itf_1ga0086af88d080bd7a1d56360c90455b31>` :ref:`PFBTAGREADERFILEINIT <group___cmp_bin_tag_util_itf_1ga35ba8a9f25a80c0f3fff8f608dedc1a8>` pfBTagReaderFileInit;
+
+- #define :ref:`EXT_BTagReaderFileInit <group___cmp_bin_tag_util_itf_1gabaf98b3f2dd4f412015d31c9723a9489>` extern :ref:`PFBTAGREADERFILEINIT <group___cmp_bin_tag_util_itf_1ga35ba8a9f25a80c0f3fff8f608dedc1a8>` pfBTagReaderFileInit;
+
+- #define :ref:`GET_BTagReaderFileInit <group___cmp_bin_tag_util_itf_1ga70b44877b055d17912b0d77203e83e57>` s_pfCMGetAPI2( "BTagReaderFileInit", (RTS_VOID_FCTPTR *)&pfBTagReaderFileInit, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagReaderFileInit <group___cmp_bin_tag_util_itf_1ga986eafd0c9716606e97e49b9f0e601f9>` pfBTagReaderFileInit
+
+- #define :ref:`CHK_BTagReaderFileInit <group___cmp_bin_tag_util_itf_1ga2b1ae90219005f2fca0181dd37c2f82b>` (pfBTagReaderFileInit != NULL)
+
+- #define :ref:`EXP_BTagReaderFileInit <group___cmp_bin_tag_util_itf_1gaf71215eff6c1b2fd516681f6b4a8159f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagReaderFileInit", (RTS_UINTPTR) :ref:`BTagReaderFileInit <group___cmp_bin_tag_util_itf_1ga3aa9642dcd750b0c6d0bc1103514e88e>` , 0, 0)
+
+- #define :ref:`USE_BTagReaderGetFirstTag <group___cmp_bin_tag_util_itf_1gaedaed2ca2c99040121789da431197e7b>` :ref:`PFBTAGREADERGETFIRSTTAG <group___cmp_bin_tag_util_itf_1ga94eef639d22d5bb56f1556f052036858>` pfBTagReaderGetFirstTag;
+
+- #define :ref:`EXT_BTagReaderGetFirstTag <group___cmp_bin_tag_util_itf_1ga79df39dfa3d3b8ed2c84f40d34f020e7>` extern :ref:`PFBTAGREADERGETFIRSTTAG <group___cmp_bin_tag_util_itf_1ga94eef639d22d5bb56f1556f052036858>` pfBTagReaderGetFirstTag;
+
+- #define :ref:`GET_BTagReaderGetFirstTag <group___cmp_bin_tag_util_itf_1ga76e27fd03d2c3ebe597d349dbd0343d8>` s_pfCMGetAPI2( "BTagReaderGetFirstTag", (RTS_VOID_FCTPTR *)&pfBTagReaderGetFirstTag, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagReaderGetFirstTag <group___cmp_bin_tag_util_itf_1ga47495f360862c046f7820d38fd8162a6>` pfBTagReaderGetFirstTag
+
+- #define :ref:`CHK_BTagReaderGetFirstTag <group___cmp_bin_tag_util_itf_1gae1c0c386eea355740e4583b0b5977677>` (pfBTagReaderGetFirstTag != NULL)
+
+- #define :ref:`EXP_BTagReaderGetFirstTag <group___cmp_bin_tag_util_itf_1ga2aa268f09f20c3379d54881ba1fd831d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagReaderGetFirstTag", (RTS_UINTPTR) :ref:`BTagReaderGetFirstTag <group___cmp_bin_tag_util_itf_1ga2524a0e38a0f99cc88a243a762ac25bf>` , 0, 0)
+
+- #define :ref:`USE_BTagReaderGetNextTag <group___cmp_bin_tag_util_itf_1gaee4d19d7bc88e10c736fc3668a39b869>` :ref:`PFBTAGREADERGETNEXTTAG <group___cmp_bin_tag_util_itf_1ga335ffdebc4a3555f82fa47fb3efcca28>` pfBTagReaderGetNextTag;
+
+- #define :ref:`EXT_BTagReaderGetNextTag <group___cmp_bin_tag_util_itf_1ga82a113b24ee97114ce1d62e61aa2393a>` extern :ref:`PFBTAGREADERGETNEXTTAG <group___cmp_bin_tag_util_itf_1ga335ffdebc4a3555f82fa47fb3efcca28>` pfBTagReaderGetNextTag;
+
+- #define :ref:`GET_BTagReaderGetNextTag <group___cmp_bin_tag_util_itf_1gae06d8bb20f8fece3690c0cb572e35aba>` s_pfCMGetAPI2( "BTagReaderGetNextTag", (RTS_VOID_FCTPTR *)&pfBTagReaderGetNextTag, (fl), 0, 0)
+
+- #define :ref:`CAL_BTagReaderGetNextTag <group___cmp_bin_tag_util_itf_1gac790a53d3c588dcf691c3f2aef26d006>` pfBTagReaderGetNextTag
+
+- #define :ref:`CHK_BTagReaderGetNextTag <group___cmp_bin_tag_util_itf_1ga0ddc6cba6be44c8e452c8f4cdb939ea3>` (pfBTagReaderGetNextTag != NULL)
+
+- #define :ref:`EXP_BTagReaderGetNextTag <group___cmp_bin_tag_util_itf_1ga975a9d4743dbfa8cb27628c4ae0a70c0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BTagReaderGetNextTag", (RTS_UINTPTR) :ref:`BTagReaderGetNextTag <group___cmp_bin_tag_util_itf_1gaba78e97eeef7d4405a997a1c836872fd>` , 0, 0)
+
+- #define :ref:`ITF_CmpBinTagUtil <group___cmp_bin_tag_util_itf_1ga80922c0a63754b7af9d2c87293174b35>`
+
+- #define :ref:`EXTITF_CmpBinTagUtil <group___cmp_bin_tag_util_itf_1ga32b1d8a61e4d4a0568291115645116c5>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`_BTAG_WriterTagInfo <struct___b_t_a_g___writer_tag_info>` :ref:`BTAG_WRITERTAGINFO <group___cmp_bin_tag_util_itf_1ga22e8de6ff1260f3b661e8484cb2bfd2e>`
+
+- typedef struct :ref:`_BTAG_ReaderTagInfo <struct___b_t_a_g___reader_tag_info>` :ref:`BTAG_READERTAGINFO <group___cmp_bin_tag_util_itf_1ga8c4aa636215f9fecb692588a5c2d48ce>`
+
+- typedef void(* :ref:`PFUPDATECRC <group___cmp_bin_tag_util_itf_1gafafc5705c63c651423282158f9d2369e>`)(RTS_UI8 *pbyData, RTS_UI32 ulDataLen, void *pParameter)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGSWAPHEADER <group___cmp_bin_tag_util_itf_1ga5f2780388ad464c57e35d629669ad964>`)(HEADER_TAG_EXT *pHeader, RTS_I32 bSwap)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERINIT2 <group___cmp_bin_tag_util_itf_1ga0fb37f0e9d0cfb49e4af5c0d2c11976a>`)(BINTAGWRITER *pWriter, RTS_UI8 *pBuffer, RTS_UI32 ulBufferSize, RTS_I32 bSwapHeader)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERINIT <group___cmp_bin_tag_util_itf_1gac8997ebb6f47f250a2ad67e9a8e55953>`)(BINTAGWRITER *pWriter, RTS_UI8 *pBuffer, RTS_UI32 ulBufferSize)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERSTARTSERVICE <group___cmp_bin_tag_util_itf_1gaf747a6f06895aa9912f03c132416e75d>`)(BINTAGWRITER *pWriter, RTS_UI32 ulSessionID, RTS_UI16 usHeaderTag, RTS_UI32 ulServiceGroup, RTS_UI16 usService)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERFINISHSERVICE <group___cmp_bin_tag_util_itf_1ga01c2d48f5bf41b27182d89ebb4aa9789>`)(BINTAGWRITER *pWriter, RTS_UI8 **ppBuffer, RTS_UI32 *pulSize)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERSTARTTAG <group___cmp_bin_tag_util_itf_1ga8cb2f39f723b655d92ae3b21532dff4c>`)(BINTAGWRITER *pWriter, RTS_UI32 ulTagId, BTAG_ALIGNMENT contentAlignment, RTS_UI32 ulMinLengthSize)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERAPPENDGUID <group___cmp_bin_tag_util_itf_1ga790ed837b66c64d5e3d548f80e56535c>`)(BINTAGWRITER *pWriter, const RTS_GUID *pGuid)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERAPPENDSTRING <group___cmp_bin_tag_util_itf_1gacbaf3cde2d7e74176009b61523188f45>`)(BINTAGWRITER *pWriter, const char *pszString)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERAPPENDWSTRING <group___cmp_bin_tag_util_itf_1ga759ddcb5ad9ff038b9775ddab6b8d693>`)(BINTAGWRITER *pWriter, const RTS_WCHAR *wszString)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERAPPENDBLOB <group___cmp_bin_tag_util_itf_1gab098d053522a40220d685f0893d96207>`)(BINTAGWRITER *pWriter, const RTS_UI8 *pBlob, RTS_UI32 ulSize)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERAPPENDRAW <group___cmp_bin_tag_util_itf_1ga09534d76179b434bc371d53b4dec67d4>`)(BINTAGWRITER *pWriter, RTS_UI8 **ppBuffer, RTS_UI32 ulSize)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERAPPENDFILLBYTES <group___cmp_bin_tag_util_itf_1gaa6195723f92b81f5193dab64e884eecc>`)(BINTAGWRITER *pWriter, RTS_UI8 byFillByte, BTAG_ALIGNMENT alignment)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERAPPENDDUMMYBYTES <group___cmp_bin_tag_util_itf_1ga0c774960144ac07edb92bc635ae27a44>`)(BINTAGWRITER *pWriter, RTS_UI8 byFillByte, RTS_UI32 ulSize)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERENDTAG <group___cmp_bin_tag_util_itf_1ga80cfeeaefc4ee1654e81313333fe255c>`)(BINTAGWRITER *pWriter, RTS_UI32 ulTagId)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERSWITCHBUFFER <group___cmp_bin_tag_util_itf_1gab7ac609c187ca2680febfb28ea68d254>`)(BINTAGWRITER *pWriter, RTS_UI8 *pNewBuffer, RTS_UI32 ulNewSize, RTS_UI8 **ppOldBuffer)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERCREATESAVEPOINT <group___cmp_bin_tag_util_itf_1ga36e72efa1d9d733aa0b0cd9be490710b>`)(BINTAGWRITER *pWriter, BINTAGSAVEPOINT *pSavepoint)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERRESTORESAVEPOINT <group___cmp_bin_tag_util_itf_1ga5f08629935c2153c0d9440ed4cbea441>`)(BINTAGWRITER *pWriter, BINTAGSAVEPOINT *pSavepoint)
+
+- typedef RTS_UI32(* :ref:`PFBTAGWRITERGETAVAILABLEBUFFER <group___cmp_bin_tag_util_itf_1ga08641f647e91a97fb579a92f938b3e2e>`)(BINTAGWRITER *pWriter)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERFINISH <group___cmp_bin_tag_util_itf_1ga7a7b8742f90ddce93a259364a75baac1>`)(BINTAGWRITER *pWriter, RTS_UI8 **ppBuffer, RTS_UI32 *pulSize)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITESINGLETAG <group___cmp_bin_tag_util_itf_1ga298c4850b0e43707462f61e4d37a1f7b>`)(BINTAGWRITER *pWriter, RTS_UI32 ulTag, BTAG_ALIGNMENT align, RTS_I32 bFillBytes, void *pContent, RTS_UI32 ulSize)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITESINGLETAG2 <group___cmp_bin_tag_util_itf_1gaf6512a4078b97e44893f48a14eb1a428>`)(BINTAGWRITER *pWriter, RTS_UI32 ulTag, BTAG_ALIGNMENT align, void **ppContentList, RTS_UI32 *paulSize)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGREADERINIT <group___cmp_bin_tag_util_itf_1ga27a8dee67b73864a920c641fdb09ade5>`)(BINTAGREADER *pReader, RTS_UI8 *pBuffer, RTS_UI32 ulBufferSize)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGREADERPEEKNEXT <group___cmp_bin_tag_util_itf_1ga7272748c5bcc1d450ed62aaecfb62a51>`)(BINTAGREADER *pReader)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGREADERMOVENEXT <group___cmp_bin_tag_util_itf_1ga04633fa690c17f1a0562aa6ec8a4e3c9>`)(BINTAGREADER *pReader, RTS_I32 *pnElementType)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGREADERSKIPCONTENT <group___cmp_bin_tag_util_itf_1gaf2bd0106dea1b29e5a1e77dd73bca09b>`)(BINTAGREADER *pReader)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGREADERGETTAGID <group___cmp_bin_tag_util_itf_1ga5928067f4b5eaa0c4628f475330ecdea>`)(BINTAGREADER *pReader, RTS_UI32 *pulTagId)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGREADERGETTAGLEN <group___cmp_bin_tag_util_itf_1ga3b353e9231f49ff19960217a7112816a>`)(BINTAGREADER *pReader, RTS_UI32 *pulTagLen)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGREADERISDATATAG <group___cmp_bin_tag_util_itf_1ga328d7345f51ff6f13eb16976187ed3b7>`)(BINTAGREADER *pReader, RTS_I32 *pbIsDataTag)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGREADERGETCOMPLEXCONTENT <group___cmp_bin_tag_util_itf_1gaaa0bd9a04c8ef082f0caf937bd9813b9>`)(BINTAGREADER *pReader, RTS_UI8 **ppBuffer, RTS_UI32 *pulSize)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGREADERGETCONTENT <group___cmp_bin_tag_util_itf_1gac7c5032945c54e3d03d5930610c05f22>`)(BINTAGREADER *pReader, RTS_UI8 **ppBuffer, RTS_UI32 *pulSize)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGREADERGETSTRING <group___cmp_bin_tag_util_itf_1ga322279661a4a806cf30d3ff74bbc2722>`)(BINTAGREADER *pReader, char **ppString, RTS_UI32 *pulSize, RTS_I32 bAddEndOfString)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGREADERCREATESAVEPOINT <group___cmp_bin_tag_util_itf_1ga267026ab471b657c7e99a742540a367e>`)(BINTAGREADER *pReader, BINTAGREADERSAVEPOINT *pSavepoint)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGREADERRESTORESAVEPOINT <group___cmp_bin_tag_util_itf_1ga3f02623da9247fc56227a8fd70ad66a9>`)(BINTAGREADER *pReader, BINTAGREADERSAVEPOINT *pSavepoint)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERFILEINIT <group___cmp_bin_tag_util_itf_1ga90b1dd70b7107a6e73d48418ffbd8246>`)(BINTAGWRITER *pWriter, RTS_HANDLE hFile)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERFILEINIT2 <group___cmp_bin_tag_util_itf_1gacf92d5b224d135fe903bf30b2cf8a53d>`)(BINTAGWRITER *pWriter, char *pszFileName)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERFILESTREAMINIT <group___cmp_bin_tag_util_itf_1ga399f4ead158c13e19610e6558fcdc701>`)(BINTAGWRITER *pWriter, RTS_HANDLE hFile)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGWRITERFILESTREAMINIT2 <group___cmp_bin_tag_util_itf_1ga02a6f1a891733d12782997e5b3a91946>`)(BINTAGWRITER *pWriter, RTS_HANDLE hFile, PFUPDATECRC pfUpdateCRC, void *pParameterUpdateCRC)
+
+- typedef RTS_RESULT(* :ref:`PFBTAGREADERFILEINIT <group___cmp_bin_tag_util_itf_1ga35ba8a9f25a80c0f3fff8f608dedc1a8>`)(BINTAGREADER *pReader, RTS_UI8 *pBuffer, RTS_UI32 ulBufferSize, RTS_HANDLE hFile)
+
+- typedef void *(* :ref:`PFBTAGREADERGETFIRSTTAG <group___cmp_bin_tag_util_itf_1ga94eef639d22d5bb56f1556f052036858>`)(BINTAGREADER *pReader, RTS_UI32 *pulToplevelTag, RTS_UI32 *pulTag, RTS_UI32 *pulSize, RTS_RESULT *pResult)
+
+- typedef void *(* :ref:`PFBTAGREADERGETNEXTTAG <group___cmp_bin_tag_util_itf_1ga335ffdebc4a3555f82fa47fb3efcca28>`)(BINTAGREADER *pReader, RTS_UI32 *pulToplevelTag, RTS_UI32 *pulTag, RTS_UI32 *pulSize, RTS_RESULT *pResult)
+
+- typedef :ref:`ICmpBinTagUtil_C <struct_i_cmp_bin_tag_util___c>` :ref:`ICmpBinTagUtil <group___cmp_bin_tag_util_itf_1ga7450889f8d5f28947db45c6c57af276f>`
+
+Enumerations
+------------
+
+- enum :ref:`@3 <group___cmp_bin_tag_util_itf_1gabc6126af1d45847bc59afa0aa3216b04>` { :ref:`BTAG_ET_INVALID <group___cmp_bin_tag_util_itf_1ggabc6126af1d45847bc59afa0aa3216b04a7381838dd61a6831f5066366c087d646>`, :ref:`BTAG_ET_STARTTAG <group___cmp_bin_tag_util_itf_1ggabc6126af1d45847bc59afa0aa3216b04a64607f7c4f32534f0ca7cb58756ff4e5>`, :ref:`BTAG_ET_ENDTAG <group___cmp_bin_tag_util_itf_1ggabc6126af1d45847bc59afa0aa3216b04a8372b6ceac6526bc59262b6f99d7d7f5>`, :ref:`BTAG_ET_EOF <group___cmp_bin_tag_util_itf_1ggabc6126af1d45847bc59afa0aa3216b04a38d035a8b56ba63ec930edf7c2cecf2a>` }
+
+Functions
+---------
+
+- RTS_RESULT :ref:`BTagSwapHeader <group___cmp_bin_tag_util_itf_1ga5f33422f0c7653c158bf99a42b2060da>` (:ref:`HEADER_TAG_EXT <struct_h_e_a_d_e_r___t_a_g___e_x_t>` * pHeader, RTS_I32 bSwap)
+
+- RTS_RESULT :ref:`BTagWriterInit2 <group___cmp_bin_tag_util_itf_1gaa5930b1e6e5bf2e1dd1d0703f3b5d97a>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_UI8 * pBuffer, RTS_UI32 ulBufferSize, RTS_I32 bSwapHeader)
+
+- RTS_RESULT :ref:`BTagWriterInit <group___cmp_bin_tag_util_itf_1gac9e16abd6dbd5a37262a306a1d460b85>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_UI8 * pBuffer, RTS_UI32 ulBufferSize)
+
+- RTS_RESULT :ref:`BTagWriterStartService <group___cmp_bin_tag_util_itf_1ga4fc0080da9819f83633704592488454b>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_UI32 ulSessionID, RTS_UI16 usHeaderTag, RTS_UI32 ulServiceGroup, RTS_UI16 usService)
+
+- RTS_RESULT :ref:`BTagWriterFinishService <group___cmp_bin_tag_util_itf_1ga5ab533e932ba4664f24cfdd0f7a61bd9>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_UI8 ** ppBuffer, RTS_UI32 * pulSize)
+
+- RTS_RESULT :ref:`BTagWriterStartTag <group___cmp_bin_tag_util_itf_1gafd29ce97b0bd5fe47d04ab6569f0b347>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_UI32 ulTagId, :ref:`BTAG_ALIGNMENT <struct_b_t_a_g___a_l_i_g_n_m_e_n_t>`  contentAlignment, RTS_UI32 ulMinLengthSize)
+
+- RTS_RESULT :ref:`BTagWriterAppendGUID <group___cmp_bin_tag_util_itf_1gacaa27e6a96cf19d16e04828f8ee5fad2>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, const RTS_GUID * pGuid)
+
+- RTS_RESULT :ref:`BTagWriterAppendString <group___cmp_bin_tag_util_itf_1gadb6f29df0b99c15140ec93b9c0f39bcb>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, const char * pszString)
+
+- RTS_RESULT :ref:`BTagWriterAppendWString <group___cmp_bin_tag_util_itf_1gae16657b7cad26c026cbc7ec0e13a8615>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, const RTS_WCHAR * wszString)
+
+- RTS_RESULT :ref:`BTagWriterAppendBlob <group___cmp_bin_tag_util_itf_1ga81a67538ed2635420bf99734bb2d1da5>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, const RTS_UI8 * pBlob, RTS_UI32 ulSize)
+
+- RTS_RESULT :ref:`BTagWriterAppendRaw <group___cmp_bin_tag_util_itf_1ga80b65ebe1d633a55cb438f170bc115d9>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_UI8 ** ppBuffer, RTS_UI32 ulSize)
+
+- RTS_RESULT :ref:`BTagWriterAppendFillBytes <group___cmp_bin_tag_util_itf_1gad4af6aeae70dfa84ebb272f169ccaab1>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_UI8 byFillByte, :ref:`BTAG_ALIGNMENT <struct_b_t_a_g___a_l_i_g_n_m_e_n_t>`  alignment)
+
+- RTS_RESULT :ref:`BTagWriterAppendDummyBytes <group___cmp_bin_tag_util_itf_1ga8419cf900a699af68830237bd8da058f>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_UI8 byFillByte, RTS_UI32 ulSize)
+
+- RTS_RESULT :ref:`BTagWriterEndTag <group___cmp_bin_tag_util_itf_1ga3f2cf456d540c6853a22bea26eef48f6>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_UI32 ulTagId)
+
+- RTS_RESULT :ref:`BTagWriterSwitchBuffer <group___cmp_bin_tag_util_itf_1gac52c256bccff16361b398c6f5d54de55>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_UI8 * pNewBuffer, RTS_UI32 ulNewSize, RTS_UI8 ** ppOldBuffer)
+
+- RTS_RESULT :ref:`BTagWriterCreateSavepoint <group___cmp_bin_tag_util_itf_1gaefefa23ce72f22006813faf84563b430>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, :ref:`BINTAGSAVEPOINT <struct_b_i_n_t_a_g_s_a_v_e_p_o_i_n_t>` * pSavepoint)
+
+- RTS_RESULT :ref:`BTagWriterRestoreSavepoint <group___cmp_bin_tag_util_itf_1gaa04b4387c7d5f8a056ab75f90e26707b>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, :ref:`BINTAGSAVEPOINT <struct_b_i_n_t_a_g_s_a_v_e_p_o_i_n_t>` * pSavepoint)
+
+- RTS_UI32 :ref:`BTagWriterGetAvailableBuffer <group___cmp_bin_tag_util_itf_1ga35d4f0f00f99853e39013baeea99fa9b>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter)
+
+- RTS_RESULT :ref:`BTagWriterFinish <group___cmp_bin_tag_util_itf_1ga0af27850a6ee2f790c9ab443b5111cd4>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_UI8 ** ppBuffer, RTS_UI32 * pulSize)
+
+- RTS_RESULT :ref:`BTagWriteSingleTag <group___cmp_bin_tag_util_itf_1gadf9ad720bb98e70354af29b25b01c8f3>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_UI32 ulTag, :ref:`BTAG_ALIGNMENT <struct_b_t_a_g___a_l_i_g_n_m_e_n_t>`  align, RTS_I32 bFillBytes, void * pContent, RTS_UI32 ulSize)
+
+- RTS_RESULT :ref:`BTagWriteSingleTag2 <group___cmp_bin_tag_util_itf_1gaae1e438865f10164d966a05147bbd431>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_UI32 ulTag, :ref:`BTAG_ALIGNMENT <struct_b_t_a_g___a_l_i_g_n_m_e_n_t>`  align, void ** ppContentList, RTS_UI32 * paulSize)
+
+- RTS_RESULT :ref:`BTagReaderInit <group___cmp_bin_tag_util_itf_1ga4a580903a01c231f743462630a80c7b9>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader, RTS_UI8 * pBuffer, RTS_UI32 ulBufferSize)
+
+- RTS_RESULT :ref:`BTagReaderPeekNext <group___cmp_bin_tag_util_itf_1gae482e0ab148aefa5b40d3c14a715b431>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader)
+
+- RTS_RESULT :ref:`BTagReaderMoveNext <group___cmp_bin_tag_util_itf_1ga64927ab05a3632b524df047861ebb7e5>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader, RTS_I32 * pnElementType)
+
+- RTS_RESULT :ref:`BTagReaderSkipContent <group___cmp_bin_tag_util_itf_1ga58b9b91e29f42a1a0ff442b1b97d1ee1>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader)
+
+- RTS_RESULT :ref:`BTagReaderGetTagId <group___cmp_bin_tag_util_itf_1gaac2ed0c282be75db6939d359810f7065>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader, RTS_UI32 * pulTagId)
+
+- RTS_RESULT :ref:`BTagReaderGetTagLen <group___cmp_bin_tag_util_itf_1ga1444abd7c3c70f632a0a95d3a8daa16c>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader, RTS_UI32 * pulTagLen)
+
+- RTS_RESULT :ref:`BTagReaderIsDataTag <group___cmp_bin_tag_util_itf_1ga022ddc2d95a50bcba1d5b7947ea33b6a>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader, RTS_I32 * pbIsDataTag)
+
+- RTS_RESULT :ref:`BTagReaderGetComplexContent <group___cmp_bin_tag_util_itf_1ga580b67848e86db4dc311ad8cf4b07a9a>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader, RTS_UI8 ** ppBuffer, RTS_UI32 * pulSize)
+
+- RTS_RESULT :ref:`BTagReaderGetContent <group___cmp_bin_tag_util_itf_1ga220c1fa43be4ba6dd3c6978dbcfcea4c>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader, RTS_UI8 ** ppBuffer, RTS_UI32 * pulSize)
+
+- RTS_RESULT :ref:`BTagReaderGetString <group___cmp_bin_tag_util_itf_1gadfd36a3cb8bf0fd8f66e2ca39057f63b>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader, char ** ppString, RTS_UI32 * pulSize, RTS_I32 bAddEndOfString)
+
+- RTS_RESULT :ref:`BTagReaderCreateSavepoint <group___cmp_bin_tag_util_itf_1gafe04ecee4c0c11d8c779492bfd100074>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader, :ref:`BINTAGREADERSAVEPOINT <struct_b_i_n_t_a_g_r_e_a_d_e_r_s_a_v_e_p_o_i_n_t>` * pSavepoint)
+
+- RTS_RESULT :ref:`BTagReaderRestoreSavepoint <group___cmp_bin_tag_util_itf_1ga198fa209b27d078688b8c743182bda9f>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader, :ref:`BINTAGREADERSAVEPOINT <struct_b_i_n_t_a_g_r_e_a_d_e_r_s_a_v_e_p_o_i_n_t>` * pSavepoint)
+
+- RTS_RESULT :ref:`BTagWriterFileInit <group___cmp_bin_tag_util_itf_1gac475bb9ca185a3a6b732eebb934dd17d>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_HANDLE hFile)
+
+- RTS_RESULT :ref:`BTagWriterFileInit2 <group___cmp_bin_tag_util_itf_1ga98e1412e288d8dc6b36e6407dcefc241>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, char * pszFileName)
+
+- RTS_RESULT :ref:`BTagWriterFileStreamInit <group___cmp_bin_tag_util_itf_1ga54dc9940ffcc68387445d16fabe82501>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_HANDLE hFile)
+
+- RTS_RESULT :ref:`BTagWriterFileStreamInit2 <group___cmp_bin_tag_util_itf_1gab1634634c5d807db718c3ea7fd1cfca6>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_HANDLE hFile, :ref:`PFUPDATECRC <group___cmp_bin_tag_util_itf_1gafafc5705c63c651423282158f9d2369e>`  pfUpdateCRC, void * pParameterUpdateCRC)
+
+- RTS_RESULT :ref:`BTagReaderFileInit <group___cmp_bin_tag_util_itf_1ga3aa9642dcd750b0c6d0bc1103514e88e>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader, RTS_UI8 * pBuffer, RTS_UI32 ulBufferSize, RTS_HANDLE hFile)
+
+- void * :ref:`BTagReaderGetFirstTag <group___cmp_bin_tag_util_itf_1ga2524a0e38a0f99cc88a243a762ac25bf>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader, RTS_UI32 * pulToplevelTag, RTS_UI32 * pulTag, RTS_UI32 * pulSize, RTS_RESULT * pResult)
+
+- void * :ref:`BTagReaderGetNextTag <group___cmp_bin_tag_util_itf_1gaba78e97eeef7d4405a997a1c836872fd>` (:ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader, RTS_UI32 * pulToplevelTag, RTS_UI32 * pulTag, RTS_UI32 * pulSize, RTS_RESULT * pResult)
+
+Detailed Description
+--------------------
+
+Definition in file CmpBinTagUtilItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

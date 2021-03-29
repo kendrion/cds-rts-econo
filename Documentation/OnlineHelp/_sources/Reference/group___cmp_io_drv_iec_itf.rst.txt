@@ -1,0 +1,475 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_io_drv_iec_itf:
+
+==============
+CmpIoDrvIecItf
+==============
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpIoDrvIec.
+
+Detailed Description
+--------------------
+
+Wrapper to access the interface functions of an IEC driver from C.
+
+The registration of a new IEC driver instance is going like this:
+::
+    *				    +--------------+   +--------+   +-----------+
+    *				    |IEC Driver Lib|   |CmpIoMgr|   |CmpIoDrvIec|
+    *				    +--------------+   +--------+   +-----------+
+    *				           |               |              |
+    *				          +-+ Register     |              |
+    *				          | |   Instance   |              |
+    *				          | |-------------+-+ Register    |
+    *				          | |             | |   Instance  |
+    *				          | |             | |------------+-+
+    *				          | |             | |            | |
+    *				          | |             | |            | |
+    *				          | |             |+++-----------| |
+    *				          | |             || |           | |
+    *				          | |             || |           | |
+    *				          | |             || |           | |
+    *				          | |             || |           | |
+    *				          | |             |+++...........| |
+    *				          | |             | |            | |
+    *				          | |             | |            | |
+    *				          | |             | |............+-+
+    *				          | |.............+-+
+    *				          +-+
+    *
+
+The handle of the I/O driver wrapper looks like this:
+::
+    *				                  +------------------------+
+    *				                  |CCmpIoDrvIec            |
+    *				                  +------------------------+
+    *				                  |hInstance               | ----.
+    *				                  +------------------------+     |
+    *				                . |IoDrvGetInfo            |     |
+    *				               /  |IoDrvGetModuleDiagnosis |     |
+    *				              /   |IoDrvIdentify           |     |
+    *				              |   |IoDrvReadInputs         |     |
+    *				   C-Wrapper -'   |IoDrvScanModules        |     |
+    *				              |   |IoDrvStartBusCycle      |     |
+    *				              |   |IoDrvUpdateConfiguration|     |     +-------------+
+    *				              \   |IoDrvUpdateMapping      |     '---- |I/O Drv FB   |
+    *				               \  |IoDrvWatchdogTrigger    |           +-------------+
+    *				                ' |IoDrvWriteOutputs       |           |ITF_ICmpIoDrv|
+    *				                  +------------------------+           +-------------+
+    *				                  |IoDrvGetInfo            | .         |pvftable[4]  |
+    *				                  |IoDrvGetModuleDiagnosis |  \        |pvftable[5]  |
+    *				                  |IoDrvIdentify           |   \       |pvftable[6]  |
+    *				                  |IoDrvReadInputs         |   |       |pvftable[7]  |
+    *				                  |IoDrvScanModules        |   '------ |pvftable[8]  |
+    *				                  |IoDrvStartBusCycle      |   |       |pvftable[9]  |
+    *				                  |IoDrvUpdateConfiguration|   |       |pvftable[10] |
+    *				                  |IoDrvUpdateMapping      |   /       |pvftable[11] |
+    *				                  |IoDrvWatchdogTrigger    |  /        |pvftable[12] |
+    *				                  |IoDrvWriteOutputs       | '         |pvftable[13] |
+    *				                  +------------------------+           +-------------+
+    *
+
+The main difference between the registration with :ref:`IoDrvRegisterInstance() <group___cmp_io_drv_iec_itf_1gadbf7ff9d8ae9b79eb3c0ad257c7f4d4d>` vs. :ref:`IoDrvRegisterInstance2() <group___cmp_io_drv_iec_itf_1gafce80ad1c8d4bf68357149336c9e7ccb>` is, that the first one was initializing all IEC function pointers by itself and the second is using BaseUpdateConfiguration() for this purpose. IoDrvRegisterInstance is now deprecated.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Data Structures
+---------------
+
+- struct :ref:`iodrviecregisterinstance_struct <structiodrviecregisterinstance__struct>`
+
+- struct :ref:`iodrviecregisterinstance2_struct <structiodrviecregisterinstance2__struct>`
+
+- struct :ref:`iodrviecunregisterinstance_struct <structiodrviecunregisterinstance__struct>`
+
+- struct :ref:`ICmpIoDrvIec_C <struct_i_cmp_io_drv_iec___c>`
+
+Macros
+------
+
+- #define :ref:`MAX_STATIC_IEC_DRIVER <group___cmp_io_drv_iec_itf_1ga681a5bb24dc1d6855abf8f35bddcd463>` 2
+
+- #define :ref:`USE_IoDrvRegisterInstance <group___cmp_io_drv_iec_itf_1ga90457e3f06ece3a6c0cb221d2c4392a3>` :ref:`PFIODRVREGISTERINSTANCE <group___cmp_io_drv_iec_itf_1ga5ec12a7cb525f38fdc319737b24520d8>` pfIoDrvRegisterInstance;
+
+- #define :ref:`EXT_IoDrvRegisterInstance <group___cmp_io_drv_iec_itf_1ga96c703a8cf3958e7493c4c5e7ea6cc2b>` extern :ref:`PFIODRVREGISTERINSTANCE <group___cmp_io_drv_iec_itf_1ga5ec12a7cb525f38fdc319737b24520d8>` pfIoDrvRegisterInstance;
+
+- #define :ref:`GET_IoDrvRegisterInstance <group___cmp_io_drv_iec_itf_1ga2487b3d2f1ccefabccea818a1e15944b>` s_pfCMGetAPI2( "IoDrvRegisterInstance", (RTS_VOID_FCTPTR *)&pfIoDrvRegisterInstance, (fl), 0, 0)
+
+- #define :ref:`CAL_IoDrvRegisterInstance <group___cmp_io_drv_iec_itf_1ga81675a553b39e9d45a33db32f4d2329d>` pfIoDrvRegisterInstance
+
+- #define :ref:`CHK_IoDrvRegisterInstance <group___cmp_io_drv_iec_itf_1gaf31257af3a417df7e01c11b243055cb4>` (pfIoDrvRegisterInstance != NULL)
+
+- #define :ref:`EXP_IoDrvRegisterInstance <group___cmp_io_drv_iec_itf_1ga00466f00f1c978e5a11adcf6c09a2a8d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IoDrvRegisterInstance", (RTS_UINTPTR) :ref:`IoDrvRegisterInstance <group___cmp_io_drv_iec_itf_1gadbf7ff9d8ae9b79eb3c0ad257c7f4d4d>` , 0, 0)
+
+- #define :ref:`USE_IoDrvRegisterInstance2 <group___cmp_io_drv_iec_itf_1ga89e62f7e7d5aa4841bc5194a8cbe1c78>` :ref:`PFIODRVREGISTERINSTANCE2 <group___cmp_io_drv_iec_itf_1gacd53b8fb83239079ccc5ff057d96bf9f>` pfIoDrvRegisterInstance2;
+
+- #define :ref:`EXT_IoDrvRegisterInstance2 <group___cmp_io_drv_iec_itf_1ga0ef31856d3e3435200277710aa35892f>` extern :ref:`PFIODRVREGISTERINSTANCE2 <group___cmp_io_drv_iec_itf_1gacd53b8fb83239079ccc5ff057d96bf9f>` pfIoDrvRegisterInstance2;
+
+- #define :ref:`GET_IoDrvRegisterInstance2 <group___cmp_io_drv_iec_itf_1gaccbc7b21f374e30c23f7c46177d45c0c>` s_pfCMGetAPI2( "IoDrvRegisterInstance2", (RTS_VOID_FCTPTR *)&pfIoDrvRegisterInstance2, (fl), 0, 0)
+
+- #define :ref:`CAL_IoDrvRegisterInstance2 <group___cmp_io_drv_iec_itf_1ga5cee15fd2647cd9a16cd57acf466beff>` pfIoDrvRegisterInstance2
+
+- #define :ref:`CHK_IoDrvRegisterInstance2 <group___cmp_io_drv_iec_itf_1gab8c8298ac8a166f480ddd2c285516119>` (pfIoDrvRegisterInstance2 != NULL)
+
+- #define :ref:`EXP_IoDrvRegisterInstance2 <group___cmp_io_drv_iec_itf_1ga701f1a63cf42adfb10e65e7121a30cb4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IoDrvRegisterInstance2", (RTS_UINTPTR) :ref:`IoDrvRegisterInstance2 <group___cmp_io_drv_iec_itf_1gafce80ad1c8d4bf68357149336c9e7ccb>` , 0, 0)
+
+- #define :ref:`USE_IoDrvUnregisterInstance <group___cmp_io_drv_iec_itf_1gacfa93f85e6580a2a89f64162daec79df>` :ref:`PFIODRVUNREGISTERINSTANCE <group___cmp_io_drv_iec_itf_1gae3fa6890c01a1a24e757e0ae831c74c4>` pfIoDrvUnregisterInstance;
+
+- #define :ref:`EXT_IoDrvUnregisterInstance <group___cmp_io_drv_iec_itf_1gabace9d8c016c353eff150d466ef49786>` extern :ref:`PFIODRVUNREGISTERINSTANCE <group___cmp_io_drv_iec_itf_1gae3fa6890c01a1a24e757e0ae831c74c4>` pfIoDrvUnregisterInstance;
+
+- #define :ref:`GET_IoDrvUnregisterInstance <group___cmp_io_drv_iec_itf_1ga55da21ea2e8a5605f728a9eca2fb5f67>` s_pfCMGetAPI2( "IoDrvUnregisterInstance", (RTS_VOID_FCTPTR *)&pfIoDrvUnregisterInstance, (fl), 0, 0)
+
+- #define :ref:`CAL_IoDrvUnregisterInstance <group___cmp_io_drv_iec_itf_1ga56329e7d80b870be8959cdb095b8de4a>` pfIoDrvUnregisterInstance
+
+- #define :ref:`CHK_IoDrvUnregisterInstance <group___cmp_io_drv_iec_itf_1ga36ad3d942a3ec75661cd7e8fb220a1e0>` (pfIoDrvUnregisterInstance != NULL)
+
+- #define :ref:`EXP_IoDrvUnregisterInstance <group___cmp_io_drv_iec_itf_1gafe090ca7652c74ee6dcde72729dc10e1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IoDrvUnregisterInstance", (RTS_UINTPTR) :ref:`IoDrvUnregisterInstance <group___cmp_io_drv_iec_itf_1gad673156c1f647de9b86958db5d403d5b>` , 0, 0)
+
+- #define :ref:`USE_IoDrvGetIecInterface <group___cmp_io_drv_iec_itf_1gadc5ccccdf7b9521a9c45775721d06af0>` :ref:`PFIODRVGETIECINTERFACE <group___cmp_io_drv_iec_itf_1gac4e42aef7e7c3cc2dd26387f02669d78>` pfIoDrvGetIecInterface;
+
+- #define :ref:`EXT_IoDrvGetIecInterface <group___cmp_io_drv_iec_itf_1ga34c54a3d348a341cfc09301418343874>` extern :ref:`PFIODRVGETIECINTERFACE <group___cmp_io_drv_iec_itf_1gac4e42aef7e7c3cc2dd26387f02669d78>` pfIoDrvGetIecInterface;
+
+- #define :ref:`GET_IoDrvGetIecInterface <group___cmp_io_drv_iec_itf_1gaf412a75701a10a19bf1308a3ff0ed079>` s_pfCMGetAPI2( "IoDrvGetIecInterface", (RTS_VOID_FCTPTR *)&pfIoDrvGetIecInterface, (fl), 0, 0)
+
+- #define :ref:`CAL_IoDrvGetIecInterface <group___cmp_io_drv_iec_itf_1ga14fefaf2fcda928a2023d8de67801f9d>` pfIoDrvGetIecInterface
+
+- #define :ref:`CHK_IoDrvGetIecInterface <group___cmp_io_drv_iec_itf_1ga82d47030e97ad030e2f3df382768162b>` (pfIoDrvGetIecInterface != NULL)
+
+- #define :ref:`EXP_IoDrvGetIecInterface <group___cmp_io_drv_iec_itf_1ga19150e30556cd27c850a7b35a98c8b9f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IoDrvGetIecInterface", (RTS_UINTPTR) :ref:`IoDrvGetIecInterface <group___cmp_io_drv_iec_itf_1ga1a62531a88b48f29f6084e1a06c36141>` , 0, 0)
+
+- #define :ref:`ITF_CmpIoDrvIec <group___cmp_io_drv_iec_itf_1ga3197a80cfd15f58ec1277b1b377e6f81>`
+
+- #define :ref:`EXTITF_CmpIoDrvIec <group___cmp_io_drv_iec_itf_1ga32024949974657f4e70901b27ee4221a>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFIODRVREGISTERINSTANCE <group___cmp_io_drv_iec_itf_1ga5ec12a7cb525f38fdc319737b24520d8>`)(iodrviecregisterinstance_struct *p)
+
+- typedef RTS_RESULT(* :ref:`PFIODRVREGISTERINSTANCE2 <group___cmp_io_drv_iec_itf_1gacd53b8fb83239079ccc5ff057d96bf9f>`)(iodrviecregisterinstance2_struct *p)
+
+- typedef RTS_RESULT(* :ref:`PFIODRVUNREGISTERINSTANCE <group___cmp_io_drv_iec_itf_1gae3fa6890c01a1a24e757e0ae831c74c4>`)(iodrviecunregisterinstance_struct *p)
+
+- typedef IBase *(* :ref:`PFIODRVGETIECINTERFACE <group___cmp_io_drv_iec_itf_1gac4e42aef7e7c3cc2dd26387f02669d78>`)(RTS_HANDLE hIoDrv, RTS_RESULT *pResult)
+
+- typedef :ref:`ICmpIoDrvIec_C <struct_i_cmp_io_drv_iec___c>` :ref:`ICmpIoDrvIec <group___cmp_io_drv_iec_itf_1gaad775a88f1e1a475928865a8908f6c3d>`
+
+Functions
+---------
+
+- void * :ref:`BaseQueryInterface <group___cmp_io_drv_iec_itf_1ga585628c39a42b75cdacb2dc29bfba6fc>` (IBase * pIBase, ITFID iid, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`IoDrvRegisterInstance <group___cmp_io_drv_iec_itf_1gadbf7ff9d8ae9b79eb3c0ad257c7f4d4d>` (:ref:`iodrviecregisterinstance_struct <structiodrviecregisterinstance__struct>` * p)
+
+- RTS_RESULT :ref:`IoDrvRegisterInstance2 <group___cmp_io_drv_iec_itf_1gafce80ad1c8d4bf68357149336c9e7ccb>` (:ref:`iodrviecregisterinstance2_struct <structiodrviecregisterinstance2__struct>` * p)
+
+- RTS_RESULT :ref:`IoDrvUnregisterInstance <group___cmp_io_drv_iec_itf_1gad673156c1f647de9b86958db5d403d5b>` (:ref:`iodrviecunregisterinstance_struct <structiodrviecunregisterinstance__struct>` * p)
+
+- IBase * :ref:`IoDrvGetIecInterface <group___cmp_io_drv_iec_itf_1ga1a62531a88b48f29f6084e1a06c36141>` (RTS_HANDLE hIoDrv, RTS_RESULT * pResult)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_io_drv_iec_itf_1ga681a5bb24dc1d6855abf8f35bddcd463:
+
+#define MAX_STATIC_IEC_DRIVER 2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga90457e3f06ece3a6c0cb221d2c4392a3:
+
+#define USE_IoDrvRegisterInstance :ref:`PFIODRVREGISTERINSTANCE <group___cmp_io_drv_iec_itf_1ga5ec12a7cb525f38fdc319737b24520d8>` pfIoDrvRegisterInstance;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga96c703a8cf3958e7493c4c5e7ea6cc2b:
+
+#define EXT_IoDrvRegisterInstance extern :ref:`PFIODRVREGISTERINSTANCE <group___cmp_io_drv_iec_itf_1ga5ec12a7cb525f38fdc319737b24520d8>` pfIoDrvRegisterInstance;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga2487b3d2f1ccefabccea818a1e15944b:
+
+#define GET_IoDrvRegisterInstance s_pfCMGetAPI2( "IoDrvRegisterInstance", (RTS_VOID_FCTPTR *)&pfIoDrvRegisterInstance, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga81675a553b39e9d45a33db32f4d2329d:
+
+#define CAL_IoDrvRegisterInstance pfIoDrvRegisterInstance
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1gaf31257af3a417df7e01c11b243055cb4:
+
+#define CHK_IoDrvRegisterInstance (pfIoDrvRegisterInstance != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga00466f00f1c978e5a11adcf6c09a2a8d:
+
+#define EXP_IoDrvRegisterInstance s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IoDrvRegisterInstance", (RTS_UINTPTR) :ref:`IoDrvRegisterInstance <group___cmp_io_drv_iec_itf_1gadbf7ff9d8ae9b79eb3c0ad257c7f4d4d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga89e62f7e7d5aa4841bc5194a8cbe1c78:
+
+#define USE_IoDrvRegisterInstance2 :ref:`PFIODRVREGISTERINSTANCE2 <group___cmp_io_drv_iec_itf_1gacd53b8fb83239079ccc5ff057d96bf9f>` pfIoDrvRegisterInstance2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga0ef31856d3e3435200277710aa35892f:
+
+#define EXT_IoDrvRegisterInstance2 extern :ref:`PFIODRVREGISTERINSTANCE2 <group___cmp_io_drv_iec_itf_1gacd53b8fb83239079ccc5ff057d96bf9f>` pfIoDrvRegisterInstance2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1gaccbc7b21f374e30c23f7c46177d45c0c:
+
+#define GET_IoDrvRegisterInstance2 s_pfCMGetAPI2( "IoDrvRegisterInstance2", (RTS_VOID_FCTPTR *)&pfIoDrvRegisterInstance2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga5cee15fd2647cd9a16cd57acf466beff:
+
+#define CAL_IoDrvRegisterInstance2 pfIoDrvRegisterInstance2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1gab8c8298ac8a166f480ddd2c285516119:
+
+#define CHK_IoDrvRegisterInstance2 (pfIoDrvRegisterInstance2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga701f1a63cf42adfb10e65e7121a30cb4:
+
+#define EXP_IoDrvRegisterInstance2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IoDrvRegisterInstance2", (RTS_UINTPTR) :ref:`IoDrvRegisterInstance2 <group___cmp_io_drv_iec_itf_1gafce80ad1c8d4bf68357149336c9e7ccb>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1gacfa93f85e6580a2a89f64162daec79df:
+
+#define USE_IoDrvUnregisterInstance :ref:`PFIODRVUNREGISTERINSTANCE <group___cmp_io_drv_iec_itf_1gae3fa6890c01a1a24e757e0ae831c74c4>` pfIoDrvUnregisterInstance;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1gabace9d8c016c353eff150d466ef49786:
+
+#define EXT_IoDrvUnregisterInstance extern :ref:`PFIODRVUNREGISTERINSTANCE <group___cmp_io_drv_iec_itf_1gae3fa6890c01a1a24e757e0ae831c74c4>` pfIoDrvUnregisterInstance;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga55da21ea2e8a5605f728a9eca2fb5f67:
+
+#define GET_IoDrvUnregisterInstance s_pfCMGetAPI2( "IoDrvUnregisterInstance", (RTS_VOID_FCTPTR *)&pfIoDrvUnregisterInstance, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga56329e7d80b870be8959cdb095b8de4a:
+
+#define CAL_IoDrvUnregisterInstance pfIoDrvUnregisterInstance
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga36ad3d942a3ec75661cd7e8fb220a1e0:
+
+#define CHK_IoDrvUnregisterInstance (pfIoDrvUnregisterInstance != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1gafe090ca7652c74ee6dcde72729dc10e1:
+
+#define EXP_IoDrvUnregisterInstance s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IoDrvUnregisterInstance", (RTS_UINTPTR) :ref:`IoDrvUnregisterInstance <group___cmp_io_drv_iec_itf_1gad673156c1f647de9b86958db5d403d5b>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1gadc5ccccdf7b9521a9c45775721d06af0:
+
+#define USE_IoDrvGetIecInterface :ref:`PFIODRVGETIECINTERFACE <group___cmp_io_drv_iec_itf_1gac4e42aef7e7c3cc2dd26387f02669d78>` pfIoDrvGetIecInterface;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga34c54a3d348a341cfc09301418343874:
+
+#define EXT_IoDrvGetIecInterface extern :ref:`PFIODRVGETIECINTERFACE <group___cmp_io_drv_iec_itf_1gac4e42aef7e7c3cc2dd26387f02669d78>` pfIoDrvGetIecInterface;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1gaf412a75701a10a19bf1308a3ff0ed079:
+
+#define GET_IoDrvGetIecInterface s_pfCMGetAPI2( "IoDrvGetIecInterface", (RTS_VOID_FCTPTR *)&pfIoDrvGetIecInterface, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga14fefaf2fcda928a2023d8de67801f9d:
+
+#define CAL_IoDrvGetIecInterface pfIoDrvGetIecInterface
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga82d47030e97ad030e2f3df382768162b:
+
+#define CHK_IoDrvGetIecInterface (pfIoDrvGetIecInterface != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga19150e30556cd27c850a7b35a98c8b9f:
+
+#define EXP_IoDrvGetIecInterface s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IoDrvGetIecInterface", (RTS_UINTPTR) :ref:`IoDrvGetIecInterface <group___cmp_io_drv_iec_itf_1ga1a62531a88b48f29f6084e1a06c36141>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga3197a80cfd15f58ec1277b1b377e6f81:
+
+#define ITF_CmpIoDrvIec
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1ga32024949974657f4e70901b27ee4221a:
+
+#define EXTITF_CmpIoDrvIec
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_io_drv_iec_itf_1ga5ec12a7cb525f38fdc319737b24520d8:
+
+typedef RTS_RESULT( *  PFIODRVREGISTERINSTANCE) (iodrviecregisterinstance_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1gacd53b8fb83239079ccc5ff057d96bf9f:
+
+typedef RTS_RESULT( *  PFIODRVREGISTERINSTANCE2) (iodrviecregisterinstance2_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1gae3fa6890c01a1a24e757e0ae831c74c4:
+
+typedef RTS_RESULT( *  PFIODRVUNREGISTERINSTANCE) (iodrviecunregisterinstance_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1gac4e42aef7e7c3cc2dd26387f02669d78:
+
+typedef IBase*( *  PFIODRVGETIECINTERFACE) (RTS_HANDLE hIoDrv, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1gaad775a88f1e1a475928865a8908f6c3d:
+
+typedef ICmpIoDrvIec_C ICmpIoDrvIec
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_io_drv_iec_itf_1ga585628c39a42b75cdacb2dc29bfba6fc:
+
+void* BaseQueryInterface (IBase *pIBase, ITFID iid, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_iec_itf_1gadbf7ff9d8ae9b79eb3c0ad257c7f4d4d:
+
+RTS_RESULT IoDrvRegisterInstance (iodrviecregisterinstance_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Obsolete! This interface is not used anymore.
+
+Note: On SIL2 runtime this call leads to an exception.
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++---------------------+-------------------------------------------------------------------------------+
+| ERR_NOTIMEPLEMENTED | The function is obsolete and not available anymore                            |
++---------------------+-------------------------------------------------------------------------------+
+| ERR_FAILED          | The function was called in a SIL2 runtime and the exception handling returned |
++---------------------+-------------------------------------------------------------------------------+
+
+.. _group___cmp_io_drv_iec_itf_1gafce80ad1c8d4bf68357149336c9e7ccb:
+
+RTS_RESULT IoDrvRegisterInstance2 (iodrviecregisterinstance2_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Register an IEC I/O driver.
+
+A call to this function creates a new instance of the CmpIoDrvIec component, which acts as a wrapper for the registered IEC I/O driver. It will, by itself, call :ref:`IoMgrRegisterInstance2() <group___cmp_io_mgr_itf_1ga719300d430f19ba50e795fd1ed0e658a>` to register the newly created C-Wrapper Interface at the I/O Manager.
+
+**Parameters**
+
++---------+--------------+------------------------------------------------------------------+
+| [in]    | p            | IEC Parameter structure RANGE=[VALID_REGISTERINSTANCE_PARAMETER] |
++---------+--------------+------------------------------------------------------------------+
+| [in]    | p.pInterface | ***PSEUDO*** IEC Interface Pointer RANGE=[NULL,VALID_INTERFACE]  |
++---------+--------------+------------------------------------------------------------------+
+| [in]    | p.pInterface | ***PSEUDO*** IEC Interface Pointer RANGE=[NULL,VALID_INTERFACE]  |
++---------+--------------+------------------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++--------------+--------------------------------------------+
+| ERR_OK       | Registration was successful                |
++--------------+--------------------------------------------+
+| ERR_NOMEMORY | Not enough memory to create a new instance |
++--------------+--------------------------------------------+
+| ERR_FAILED   | No valid Interface                         |
++--------------+--------------------------------------------+
+
+.. _group___cmp_io_drv_iec_itf_1gad673156c1f647de9b86958db5d403d5b:
+
+RTS_RESULT IoDrvUnregisterInstance (iodrviecunregisterinstance_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Unregister an IEC I/O driver.
+
+Delete a driver instance and unregister it from the I/O Manager.
+
+Note: On SIL2 runtime this function is only allowed in debug mode. When it is called outside of the debug mode, it will throw an exception.
+
+**Parameters**
+
++---------+---------------------+-------------------------------------------------------------------------------------------+
+| [in]    | p                   | IEC Parameter structure RANGE=[VALID_UNREGISTERINSTANCE_PARAMETER]                        |
++---------+---------------------+-------------------------------------------------------------------------------------------+
+| [in]    | p.hInterface        | ***PSEUDO*** IEC Interface Pointer RANGE=[RTS_INVALID_HANDLE,NULL,VALID_INTERFACE_HANDLE] |
++---------+---------------------+-------------------------------------------------------------------------------------------+
+| [in]    | OperationMode       | ***PSEUDO*** Operation mode RANGE=[RTS_SIL2_OPMODE_SAFE,RTS_SIL2_OPMODE_DEBUG]            |
++---------+---------------------+-------------------------------------------------------------------------------------------+
+| [out]   | bExceptionGenerated | ***PSEUDO*** Indicates, if an exception was thrown or not RANGE=[TRUE,FALSE]              |
++---------+---------------------+-------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++---------------+---------------------------------------------+
+| ERR_OK        | De-registration was successful              |
++---------------+---------------------------------------------+
+| ERR_PARAMETER | pIBase was NULL                             |
++---------------+---------------------------------------------+
+| Internal      | error when trying to free the driver handle |
++---------------+---------------------------------------------+
+
+.. _group___cmp_io_drv_iec_itf_1ga1a62531a88b48f29f6084e1a06c36141:
+
+IBase* IoDrvGetIecInterface (RTS_HANDLE hIoDrv, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get an IEC I/O driver interface pointer, based on a handle to it's corresponding C-Wrapper.
+
+**Parameters**
+
++---------+--------+----------------------------------------------------------------------+
+| [in]    | hIoDrv | Handle of a C-Wrapper RANGE=[RTS_INVALID_HANDLE,NULL,VALID_IODRIVER] |
++---------+--------+----------------------------------------------------------------------+
+| [out]   | Result | Result of the function                                               |
++---------+--------+----------------------------------------------------------------------+
+
+**Returns:**
+
+Pointer to the IEC base interface
+
+**Return values**
+
++---------------+---------------------------------+
+| ERR_OK        | Interface returned successfully |
++---------------+---------------------------------+
+| ERR_PARAMETER | hIoDrv was NULL or invalid      |
++---------------+---------------------------------+
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

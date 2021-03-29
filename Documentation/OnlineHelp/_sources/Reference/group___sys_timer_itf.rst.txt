@@ -1,0 +1,2871 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_timer_itf:
+
+===========
+SysTimerItf
+===========
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of SysTimer.
+
+Detailed Description
+--------------------
+
+The SysTimer interface is projected to access timer devices on target.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Settings <group___sys_timer_itf___settings>`
+
+- :ref:`Static defines <group___sys_timer_itf___staticdefines>`
+
+- :ref:`Timer error codes <group___sys_timer_itf___timererrorcodes>`
+
+- :ref:`Timer info structure <group___sys_timer_itf___timerinfostructure>`
+
+- :ref:`Timer type <group___sys_timer_itf___timertype>`
+
+Data Structures
+---------------
+
+- struct :ref:`systimercallback_struct <structsystimercallback__struct>`
+
+- struct :ref:`tagsystimercreatecallback_struct <structtagsystimercreatecallback__struct>`
+
+- struct :ref:`tagsystimercreatecallback2_struct <structtagsystimercreatecallback2__struct>`
+
+- struct :ref:`tagsystimercreateevent_struct <structtagsystimercreateevent__struct>`
+
+- struct :ref:`tagsystimerdelete_struct <structtagsystimerdelete__struct>`
+
+- struct :ref:`tagsystimergetinterval_struct <structtagsystimergetinterval__struct>`
+
+- struct :ref:`tagsystimergettimestamp_struct <structtagsystimergettimestamp__struct>`
+
+- struct :ref:`tagsystimermaxtimer_struct <structtagsystimermaxtimer__struct>`
+
+- struct :ref:`tagsystimersetinterval_struct <structtagsystimersetinterval__struct>`
+
+- struct :ref:`tagsystimerstart_struct <structtagsystimerstart__struct>`
+
+- struct :ref:`tagsystimerstop_struct <structtagsystimerstop__struct>`
+
+- struct :ref:`ISysTimer_C <struct_i_sys_timer___c>`
+
+Macros
+------
+
+- #define :ref:`USE_systimercreatecallback <group___sys_timer_itf_1gaf6f874e550d01092d2b2028aefe9d07f>` :ref:`PFSYSTIMERCREATECALLBACK_IEC <group___sys_timer_itf_1ga0a0bce53c7bb6416ac5c47e7c1f4cb9e>` pfsystimercreatecallback;
+
+- #define :ref:`EXT_systimercreatecallback <group___sys_timer_itf_1gaf7fbc7ac6c4c38878e27e85b2c6ef5b6>` extern :ref:`PFSYSTIMERCREATECALLBACK_IEC <group___sys_timer_itf_1ga0a0bce53c7bb6416ac5c47e7c1f4cb9e>` pfsystimercreatecallback;
+
+- #define :ref:`GET_systimercreatecallback <group___sys_timer_itf_1ga5c4d38f6be7617a48116b821d38a94d3>` s_pfCMGetAPI2( "systimercreatecallback", (RTS_VOID_FCTPTR *)&pfsystimercreatecallback, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE5D4A503, 0x03050500)
+
+- #define :ref:`CAL_systimercreatecallback <group___sys_timer_itf_1gac0710b626ed35ca3c10c8a8ac2588300>` pfsystimercreatecallback
+
+- #define :ref:`CHK_systimercreatecallback <group___sys_timer_itf_1ga7d6b9a30e9f4a65f5d32c94121e278a8>` (pfsystimercreatecallback != NULL)
+
+- #define :ref:`EXP_systimercreatecallback <group___sys_timer_itf_1gab991bfd79e7632bc2527c5b52e408936>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimercreatecallback", (RTS_UINTPTR) :ref:`systimercreatecallback <group___sys_timer_itf_1ga68ee3666c8dcb0ed66401c36f18be08e>` , 1, 0xE5D4A503, 0x03050500)
+
+- #define :ref:`USE_systimercreatecallback2 <group___sys_timer_itf_1gaafc0088ec16a30f174013e5a4070c4cb>` :ref:`PFSYSTIMERCREATECALLBACK2_IEC <group___sys_timer_itf_1ga817f0deab6bdba0642177d4d7f8753d1>` pfsystimercreatecallback2;
+
+- #define :ref:`EXT_systimercreatecallback2 <group___sys_timer_itf_1ga530a39d91157b391f6552017672ba8c7>` extern :ref:`PFSYSTIMERCREATECALLBACK2_IEC <group___sys_timer_itf_1ga817f0deab6bdba0642177d4d7f8753d1>` pfsystimercreatecallback2;
+
+- #define :ref:`GET_systimercreatecallback2 <group___sys_timer_itf_1gae95984cf79fa46cd106149f44d2f1d18>` s_pfCMGetAPI2( "systimercreatecallback2", (RTS_VOID_FCTPTR *)&pfsystimercreatecallback2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x337F2137, 0x03050500)
+
+- #define :ref:`CAL_systimercreatecallback2 <group___sys_timer_itf_1ga3dd5791b65525a9ac9f6d375899617dd>` pfsystimercreatecallback2
+
+- #define :ref:`CHK_systimercreatecallback2 <group___sys_timer_itf_1ga39aca582df682b115b95f6e3a7ec31d6>` (pfsystimercreatecallback2 != NULL)
+
+- #define :ref:`EXP_systimercreatecallback2 <group___sys_timer_itf_1ga99904e56bea236144eb9b87a27cadbe8>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimercreatecallback2", (RTS_UINTPTR) :ref:`systimercreatecallback2 <group___sys_timer_itf_1gae115324f61d2148ec229cb2f2df1ff70>` , 1, 0x337F2137, 0x03050500)
+
+- #define :ref:`USE_systimercreateevent <group___sys_timer_itf_1ga4e44356938d4f22db9041658ff23587d>` :ref:`PFSYSTIMERCREATEEVENT_IEC <group___sys_timer_itf_1ga4cc123e10f953061a28fddeb6d6e4674>` pfsystimercreateevent;
+
+- #define :ref:`EXT_systimercreateevent <group___sys_timer_itf_1gaa5452cbc449d8e77ea21c77d2d819294>` extern :ref:`PFSYSTIMERCREATEEVENT_IEC <group___sys_timer_itf_1ga4cc123e10f953061a28fddeb6d6e4674>` pfsystimercreateevent;
+
+- #define :ref:`GET_systimercreateevent <group___sys_timer_itf_1gac8cd815e3eb95953cd668478ae7aa5b7>` s_pfCMGetAPI2( "systimercreateevent", (RTS_VOID_FCTPTR *)&pfsystimercreateevent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xA540A9F1, 0x03050500)
+
+- #define :ref:`CAL_systimercreateevent <group___sys_timer_itf_1ga5a58284e9bf4e2183783d2f06a76d7cc>` pfsystimercreateevent
+
+- #define :ref:`CHK_systimercreateevent <group___sys_timer_itf_1gaf2d73d803985698b10973ea7c08687df>` (pfsystimercreateevent != NULL)
+
+- #define :ref:`EXP_systimercreateevent <group___sys_timer_itf_1gaf2cd2e6df0e10377fbab65ea3e5bdf2c>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimercreateevent", (RTS_UINTPTR) :ref:`systimercreateevent <group___sys_timer_itf_1ga1bfa5fdd8b70cf7a9d30618e4cc97ff1>` , 1, 0xA540A9F1, 0x03050500)
+
+- #define :ref:`USE_systimerdelete <group___sys_timer_itf_1ga632e5a5381a003e526fc74334d05cf5f>` :ref:`PFSYSTIMERDELETE_IEC <group___sys_timer_itf_1ga08dbd00036798458897c6db1d5e88353>` pfsystimerdelete;
+
+- #define :ref:`EXT_systimerdelete <group___sys_timer_itf_1gaebc9e48a648dde9a3c2b0c363b1d9a72>` extern :ref:`PFSYSTIMERDELETE_IEC <group___sys_timer_itf_1ga08dbd00036798458897c6db1d5e88353>` pfsystimerdelete;
+
+- #define :ref:`GET_systimerdelete <group___sys_timer_itf_1ga8ed2d6db86ba51535a48e57a319269a6>` s_pfCMGetAPI2( "systimerdelete", (RTS_VOID_FCTPTR *)&pfsystimerdelete, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE1762326, 0x03050500)
+
+- #define :ref:`CAL_systimerdelete <group___sys_timer_itf_1ga1fd745748dbceb1bbe82b319230527be>` pfsystimerdelete
+
+- #define :ref:`CHK_systimerdelete <group___sys_timer_itf_1gaf4e8e60083d6cd6d6e0e955fcfe57991>` (pfsystimerdelete != NULL)
+
+- #define :ref:`EXP_systimerdelete <group___sys_timer_itf_1gafdc9b645a41e3e3daec7d3a8938b3353>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimerdelete", (RTS_UINTPTR) :ref:`systimerdelete <group___sys_timer_itf_1ga7fb2351b18c91e8638e4acf5e98d345b>` , 1, 0xE1762326, 0x03050500)
+
+- #define :ref:`USE_systimergetinterval <group___sys_timer_itf_1ga6bd0541d53a3fa1e6aaea0d5b3c0b486>` :ref:`PFSYSTIMERGETINTERVAL_IEC <group___sys_timer_itf_1gac25c449d047f1af784ea42d5654fd16f>` pfsystimergetinterval;
+
+- #define :ref:`EXT_systimergetinterval <group___sys_timer_itf_1gaead1126d8b29555a0e8c0423dd67b58a>` extern :ref:`PFSYSTIMERGETINTERVAL_IEC <group___sys_timer_itf_1gac25c449d047f1af784ea42d5654fd16f>` pfsystimergetinterval;
+
+- #define :ref:`GET_systimergetinterval <group___sys_timer_itf_1gad2c80974da2d14aa3b38f68f6d55458a>` s_pfCMGetAPI2( "systimergetinterval", (RTS_VOID_FCTPTR *)&pfsystimergetinterval, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x1B0A9C63, 0x03050500)
+
+- #define :ref:`CAL_systimergetinterval <group___sys_timer_itf_1gad62d0a89d5f3509472be7e75c03d13ab>` pfsystimergetinterval
+
+- #define :ref:`CHK_systimergetinterval <group___sys_timer_itf_1ga03c7e9e97d277f7be023937cf0380954>` (pfsystimergetinterval != NULL)
+
+- #define :ref:`EXP_systimergetinterval <group___sys_timer_itf_1gab1c668dfcff008a0e798c4745948a284>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimergetinterval", (RTS_UINTPTR) :ref:`systimergetinterval <group___sys_timer_itf_1gab35d8f01b522f83479fb07b6bf86ad43>` , 1, 0x1B0A9C63, 0x03050500)
+
+- #define :ref:`USE_systimergettimestamp <group___sys_timer_itf_1gaeee4c9cd965bc8d0737d2869ccd6e461>` :ref:`PFSYSTIMERGETTIMESTAMP_IEC <group___sys_timer_itf_1ga9a4aef7ae319d7162397acfa2cec15c8>` pfsystimergettimestamp;
+
+- #define :ref:`EXT_systimergettimestamp <group___sys_timer_itf_1ga5a08a21feae1c3b7b5f6804631c5b403>` extern :ref:`PFSYSTIMERGETTIMESTAMP_IEC <group___sys_timer_itf_1ga9a4aef7ae319d7162397acfa2cec15c8>` pfsystimergettimestamp;
+
+- #define :ref:`GET_systimergettimestamp <group___sys_timer_itf_1ga589256964f609635ef7006633e5a7c32>` s_pfCMGetAPI2( "systimergettimestamp", (RTS_VOID_FCTPTR *)&pfsystimergettimestamp, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xFE525971, 0x03050500)
+
+- #define :ref:`CAL_systimergettimestamp <group___sys_timer_itf_1ga9dd8b84d07e965ce4d35301a6c46349a>` pfsystimergettimestamp
+
+- #define :ref:`CHK_systimergettimestamp <group___sys_timer_itf_1ga819f6fe1853ebb70f408c301ee04f97c>` (pfsystimergettimestamp != NULL)
+
+- #define :ref:`EXP_systimergettimestamp <group___sys_timer_itf_1gad758eca0c3c4a31be2595024c0c3f29e>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimergettimestamp", (RTS_UINTPTR) :ref:`systimergettimestamp <group___sys_timer_itf_1ga140844d918f4bc2c69135b6f9acc2500>` , 1, 0xFE525971, 0x03050500)
+
+- #define :ref:`USE_systimermaxtimer <group___sys_timer_itf_1gafcbaa2473b5c56c1a36c70358419fbb5>` :ref:`PFSYSTIMERMAXTIMER_IEC <group___sys_timer_itf_1ga697860df2bb0565fb7e3ae7187d3595b>` pfsystimermaxtimer;
+
+- #define :ref:`EXT_systimermaxtimer <group___sys_timer_itf_1gae2b2fd9bd9a397b8edade1d8c2eac128>` extern :ref:`PFSYSTIMERMAXTIMER_IEC <group___sys_timer_itf_1ga697860df2bb0565fb7e3ae7187d3595b>` pfsystimermaxtimer;
+
+- #define :ref:`GET_systimermaxtimer <group___sys_timer_itf_1ga43ae95f6b52ec0bee3ebdd5767a26caf>` s_pfCMGetAPI2( "systimermaxtimer", (RTS_VOID_FCTPTR *)&pfsystimermaxtimer, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xFF05757E, 0x03050500)
+
+- #define :ref:`CAL_systimermaxtimer <group___sys_timer_itf_1gad688a23df840767d47826c949ddc6a96>` pfsystimermaxtimer
+
+- #define :ref:`CHK_systimermaxtimer <group___sys_timer_itf_1gafa68a54e881cd04ae7edd2a110e4b5db>` (pfsystimermaxtimer != NULL)
+
+- #define :ref:`EXP_systimermaxtimer <group___sys_timer_itf_1ga724b6d86d751aae0c50653dfdd59aec2>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimermaxtimer", (RTS_UINTPTR) :ref:`systimermaxtimer <group___sys_timer_itf_1ga3ecbc34238f0050e858954da0ef7e9dd>` , 1, 0xFF05757E, 0x03050500)
+
+- #define :ref:`USE_systimersetinterval <group___sys_timer_itf_1gad84af87ede6f58d41cc11b0c1ab8f4ae>` :ref:`PFSYSTIMERSETINTERVAL_IEC <group___sys_timer_itf_1ga8a86caff8843210748a4486dab92be6d>` pfsystimersetinterval;
+
+- #define :ref:`EXT_systimersetinterval <group___sys_timer_itf_1gacabe991035bc4ac7e3d31507536cff2f>` extern :ref:`PFSYSTIMERSETINTERVAL_IEC <group___sys_timer_itf_1ga8a86caff8843210748a4486dab92be6d>` pfsystimersetinterval;
+
+- #define :ref:`GET_systimersetinterval <group___sys_timer_itf_1ga33b5085d1833c3127062f19ad9ee6559>` s_pfCMGetAPI2( "systimersetinterval", (RTS_VOID_FCTPTR *)&pfsystimersetinterval, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x2AF11037, 0x03050500)
+
+- #define :ref:`CAL_systimersetinterval <group___sys_timer_itf_1ga42ebd5a7c8f7633f3ea5f7492c419d21>` pfsystimersetinterval
+
+- #define :ref:`CHK_systimersetinterval <group___sys_timer_itf_1ga86a8de690acb6eb31038b4ad84e9a0a7>` (pfsystimersetinterval != NULL)
+
+- #define :ref:`EXP_systimersetinterval <group___sys_timer_itf_1ga34456fc97f7e3b7559bcb7a986244043>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimersetinterval", (RTS_UINTPTR) :ref:`systimersetinterval <group___sys_timer_itf_1gaceead3f5bc13daff7557677f99ff763c>` , 1, 0x2AF11037, 0x03050500)
+
+- #define :ref:`USE_systimerstart <group___sys_timer_itf_1gaabe322b1ee7a5a2ec4437be4ece15641>` :ref:`PFSYSTIMERSTART_IEC <group___sys_timer_itf_1ga7fc4f1ce66b1cbd31db253eae9b81988>` pfsystimerstart;
+
+- #define :ref:`EXT_systimerstart <group___sys_timer_itf_1ga03c4433170364915a0644dc9274deafe>` extern :ref:`PFSYSTIMERSTART_IEC <group___sys_timer_itf_1ga7fc4f1ce66b1cbd31db253eae9b81988>` pfsystimerstart;
+
+- #define :ref:`GET_systimerstart <group___sys_timer_itf_1ga15aeef1663cf5650a352375d6b53d03b>` s_pfCMGetAPI2( "systimerstart", (RTS_VOID_FCTPTR *)&pfsystimerstart, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE6A9B3FA, 0x03050500)
+
+- #define :ref:`CAL_systimerstart <group___sys_timer_itf_1ga8137b226d0f0605b85c9d4a14c359dcb>` pfsystimerstart
+
+- #define :ref:`CHK_systimerstart <group___sys_timer_itf_1ga36be682ec5eccce0d8dd746079ade36e>` (pfsystimerstart != NULL)
+
+- #define :ref:`EXP_systimerstart <group___sys_timer_itf_1ga5d343948431b5079edaf52e70b4b3eb3>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimerstart", (RTS_UINTPTR) :ref:`systimerstart <group___sys_timer_itf_1gacb5f5da3a0c1f2ff54c7b7d1cc0b8617>` , 1, 0xE6A9B3FA, 0x03050500)
+
+- #define :ref:`USE_systimerstop <group___sys_timer_itf_1gaada1780bcac8efdaa2eef1ed943018b4>` :ref:`PFSYSTIMERSTOP_IEC <group___sys_timer_itf_1ga56d6d55c5778ae726eed7e71f5d8e760>` pfsystimerstop;
+
+- #define :ref:`EXT_systimerstop <group___sys_timer_itf_1ga1990af9b888fa9162ca39990234a2695>` extern :ref:`PFSYSTIMERSTOP_IEC <group___sys_timer_itf_1ga56d6d55c5778ae726eed7e71f5d8e760>` pfsystimerstop;
+
+- #define :ref:`GET_systimerstop <group___sys_timer_itf_1ga36f6e950ad47c5534467462cc58e3717>` s_pfCMGetAPI2( "systimerstop", (RTS_VOID_FCTPTR *)&pfsystimerstop, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x6374B953, 0x03050500)
+
+- #define :ref:`CAL_systimerstop <group___sys_timer_itf_1ga25e2a60dd164db2272681d53b9878a85>` pfsystimerstop
+
+- #define :ref:`CHK_systimerstop <group___sys_timer_itf_1ga496acee7ed5f567fc81ec42680020654>` (pfsystimerstop != NULL)
+
+- #define :ref:`EXP_systimerstop <group___sys_timer_itf_1ga3320e98b0b5e9eecbf11d5144d9dd9c2>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimerstop", (RTS_UINTPTR) :ref:`systimerstop <group___sys_timer_itf_1gafc80299b68323395049698ea4ec084cb>` , 1, 0x6374B953, 0x03050500)
+
+- #define :ref:`USE_SysTimerCreateEvent <group___sys_timer_itf_1ga3c485f470dc03352e95869f7e57965fd>` :ref:`PFSYSTIMERCREATEEVENT <group___sys_timer_itf_1gabda2238d14fd58b33bc70a151ac37c93>` pfSysTimerCreateEvent;
+
+- #define :ref:`EXT_SysTimerCreateEvent <group___sys_timer_itf_1ga7daa697b7d386e298d9accfc0c5c9bbc>` extern :ref:`PFSYSTIMERCREATEEVENT <group___sys_timer_itf_1gabda2238d14fd58b33bc70a151ac37c93>` pfSysTimerCreateEvent;
+
+- #define :ref:`GET_SysTimerCreateEvent <group___sys_timer_itf_1ga8d87158bb2196cf28e7038d810abc58b>` s_pfCMGetAPI2( "SysTimerCreateEvent", (RTS_VOID_FCTPTR *)&pfSysTimerCreateEvent, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerCreateEvent <group___sys_timer_itf_1ga95be1a9dc1998689796b9c054029a23f>` pfSysTimerCreateEvent
+
+- #define :ref:`CHK_SysTimerCreateEvent <group___sys_timer_itf_1ga94537fd559d00f594a8ce27caed6cbf0>` (pfSysTimerCreateEvent != NULL)
+
+- #define :ref:`EXP_SysTimerCreateEvent <group___sys_timer_itf_1ga87f4f02aa338673948e4db7ff4868dd7>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerCreateEvent", (RTS_UINTPTR) :ref:`SysTimerCreateEvent <group___sys_timer_itf_1ga72448a0047df2952bde603c6f9e3836c>` , 0, 0)
+
+- #define :ref:`USE_SysTimerCreateCallback <group___sys_timer_itf_1gab5ffd787ccc90d8407eb400114cf1990>` :ref:`PFSYSTIMERCREATECALLBACK <group___sys_timer_itf_1ga245369d425b1ca84fb1076b888031fad>` pfSysTimerCreateCallback;
+
+- #define :ref:`EXT_SysTimerCreateCallback <group___sys_timer_itf_1ga2bdc475693cff07f1e857b817e0d70c6>` extern :ref:`PFSYSTIMERCREATECALLBACK <group___sys_timer_itf_1ga245369d425b1ca84fb1076b888031fad>` pfSysTimerCreateCallback;
+
+- #define :ref:`GET_SysTimerCreateCallback <group___sys_timer_itf_1ga5a58d74922f40a1fffd67bfa7c6c19b5>` s_pfCMGetAPI2( "SysTimerCreateCallback", (RTS_VOID_FCTPTR *)&pfSysTimerCreateCallback, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerCreateCallback <group___sys_timer_itf_1gab437712fe77c226cf6e9a237fc2db855>` pfSysTimerCreateCallback
+
+- #define :ref:`CHK_SysTimerCreateCallback <group___sys_timer_itf_1ga8c09c6c8aaa7a3b94d0d444a3659e93f>` (pfSysTimerCreateCallback != NULL)
+
+- #define :ref:`EXP_SysTimerCreateCallback <group___sys_timer_itf_1gad549b7880e3766feb26dce4e2e3e6338>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerCreateCallback", (RTS_UINTPTR) :ref:`SysTimerCreateCallback <group___sys_timer_itf_1ga7bd0c7b2667c9e120d678bc77aa530ee>` , 0, 0)
+
+- #define :ref:`USE_SysTimerCreateCallback2 <group___sys_timer_itf_1ga3048f26a5256ed8ccc983ae31ffcf5f4>` :ref:`PFSYSTIMERCREATECALLBACK2 <group___sys_timer_itf_1ga370ce614468326a8d58496d7efed3c77>` pfSysTimerCreateCallback2;
+
+- #define :ref:`EXT_SysTimerCreateCallback2 <group___sys_timer_itf_1ga8c4fbe88ccb795847e7f2ade32661bd3>` extern :ref:`PFSYSTIMERCREATECALLBACK2 <group___sys_timer_itf_1ga370ce614468326a8d58496d7efed3c77>` pfSysTimerCreateCallback2;
+
+- #define :ref:`GET_SysTimerCreateCallback2 <group___sys_timer_itf_1ga1b3c91b49a11027d7a18eeb9d674e374>` s_pfCMGetAPI2( "SysTimerCreateCallback2", (RTS_VOID_FCTPTR *)&pfSysTimerCreateCallback2, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerCreateCallback2 <group___sys_timer_itf_1ga7cef938ad04d3bbb30214e61ff2feb34>` pfSysTimerCreateCallback2
+
+- #define :ref:`CHK_SysTimerCreateCallback2 <group___sys_timer_itf_1gaab4ef83f84ed98f5ad596a1235eed428>` (pfSysTimerCreateCallback2 != NULL)
+
+- #define :ref:`EXP_SysTimerCreateCallback2 <group___sys_timer_itf_1gaf67499dbcb15fe4cec4f90c0040b5f83>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerCreateCallback2", (RTS_UINTPTR) :ref:`SysTimerCreateCallback2 <group___sys_timer_itf_1gac13e0205d37e969d4a01a53ae7464e39>` , 0, 0)
+
+- #define :ref:`USE_SysTimerDelete <group___sys_timer_itf_1ga354975f6032db946eef4ce0fa9fcf3b2>` :ref:`PFSYSTIMERDELETE <group___sys_timer_itf_1ga29a57191ddd5f6fa7bb4794f96f4f661>` pfSysTimerDelete;
+
+- #define :ref:`EXT_SysTimerDelete <group___sys_timer_itf_1ga7c36e57608ad0b547d8c3656e3f420c2>` extern :ref:`PFSYSTIMERDELETE <group___sys_timer_itf_1ga29a57191ddd5f6fa7bb4794f96f4f661>` pfSysTimerDelete;
+
+- #define :ref:`GET_SysTimerDelete <group___sys_timer_itf_1gaf392045b662b6ff400a2aab543040815>` s_pfCMGetAPI2( "SysTimerDelete", (RTS_VOID_FCTPTR *)&pfSysTimerDelete, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerDelete <group___sys_timer_itf_1ga7afb15b8c75463242a83cb7034543084>` pfSysTimerDelete
+
+- #define :ref:`CHK_SysTimerDelete <group___sys_timer_itf_1gaa03972cab007069e90c8ceabbbb4e4c7>` (pfSysTimerDelete != NULL)
+
+- #define :ref:`EXP_SysTimerDelete <group___sys_timer_itf_1ga48955f07027cd38c783a4f7e37e1df78>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerDelete", (RTS_UINTPTR) :ref:`SysTimerDelete <group___sys_timer_itf_1ga82ba4944fb348a0fc3147e0ad225e941>` , 0, 0)
+
+- #define :ref:`USE_SysTimerOpen <group___sys_timer_itf_1ga0e9a7f116960b7c842e84c74897ebb25>` :ref:`PFSYSTIMEROPEN <group___sys_timer_itf_1ga37fc5f036687b87cb47892d0556a1933>` pfSysTimerOpen;
+
+- #define :ref:`EXT_SysTimerOpen <group___sys_timer_itf_1ga972ece851f266bed6d1c521ff360821a>` extern :ref:`PFSYSTIMEROPEN <group___sys_timer_itf_1ga37fc5f036687b87cb47892d0556a1933>` pfSysTimerOpen;
+
+- #define :ref:`GET_SysTimerOpen <group___sys_timer_itf_1ga9e60f9ae005f30d35f0fb0567a1d86f9>` s_pfCMGetAPI2( "SysTimerOpen", (RTS_VOID_FCTPTR *)&pfSysTimerOpen, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerOpen <group___sys_timer_itf_1ga686fd80ed00f84cd969912e26e1e5425>` pfSysTimerOpen
+
+- #define :ref:`CHK_SysTimerOpen <group___sys_timer_itf_1ga04783dfd123ebc460787c47dcb64e44f>` (pfSysTimerOpen != NULL)
+
+- #define :ref:`EXP_SysTimerOpen <group___sys_timer_itf_1gafef6227260bd09fa32d986dbd4af1ec0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerOpen", (RTS_UINTPTR) :ref:`SysTimerOpen <group___sys_timer_itf_1ga81a4bda452cea19feeba1b8383cafcee>` , 0, 0)
+
+- #define :ref:`USE_SysTimerClose <group___sys_timer_itf_1gab35a5b4edd1ecc783aa3009039e40b99>` :ref:`PFSYSTIMERCLOSE <group___sys_timer_itf_1ga2db8adc7e0a77efa784ef8837eb706da>` pfSysTimerClose;
+
+- #define :ref:`EXT_SysTimerClose <group___sys_timer_itf_1gaa2ff18099c215708c4f865232b2340e6>` extern :ref:`PFSYSTIMERCLOSE <group___sys_timer_itf_1ga2db8adc7e0a77efa784ef8837eb706da>` pfSysTimerClose;
+
+- #define :ref:`GET_SysTimerClose <group___sys_timer_itf_1gaf56e1059f1f1d75fcd34a149b4748652>` s_pfCMGetAPI2( "SysTimerClose", (RTS_VOID_FCTPTR *)&pfSysTimerClose, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerClose <group___sys_timer_itf_1gab23f39489350db1d2b09615b961ffdd6>` pfSysTimerClose
+
+- #define :ref:`CHK_SysTimerClose <group___sys_timer_itf_1ga1422c7f393045407f806df5db4af8b5c>` (pfSysTimerClose != NULL)
+
+- #define :ref:`EXP_SysTimerClose <group___sys_timer_itf_1ga9532774e61dfa4252a12dad2873c3a65>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerClose", (RTS_UINTPTR) :ref:`SysTimerClose <group___sys_timer_itf_1gaa9dc02593fd99db07c4db7eca43cf2ab>` , 0, 0)
+
+- #define :ref:`USE_SysTimerStart <group___sys_timer_itf_1ga9726d215aec1d9657349ae39c9482a20>` :ref:`PFSYSTIMERSTART <group___sys_timer_itf_1ga16cae85ea8756639ed2434e8728bbf64>` pfSysTimerStart;
+
+- #define :ref:`EXT_SysTimerStart <group___sys_timer_itf_1gadc72212595c63c67b6551b4e43fe9544>` extern :ref:`PFSYSTIMERSTART <group___sys_timer_itf_1ga16cae85ea8756639ed2434e8728bbf64>` pfSysTimerStart;
+
+- #define :ref:`GET_SysTimerStart <group___sys_timer_itf_1gae496b1a97fa5a2f5cfe9bc376ef5967c>` s_pfCMGetAPI2( "SysTimerStart", (RTS_VOID_FCTPTR *)&pfSysTimerStart, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerStart <group___sys_timer_itf_1ga9c2ee528d98773b57d0b9b4961676f24>` pfSysTimerStart
+
+- #define :ref:`CHK_SysTimerStart <group___sys_timer_itf_1ga0cf393962a653e7a551bb97396cd7439>` (pfSysTimerStart != NULL)
+
+- #define :ref:`EXP_SysTimerStart <group___sys_timer_itf_1gac4ae38d7cd0d2d750a9c00d0cc6db039>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerStart", (RTS_UINTPTR) :ref:`SysTimerStart <group___sys_timer_itf_1gaab0e60e94bc15215f8cc59f0925d8111>` , 0, 0)
+
+- #define :ref:`USE_SysTimerStop <group___sys_timer_itf_1ga08cb644b90b8bae1aad587f95df0dcb8>` :ref:`PFSYSTIMERSTOP <group___sys_timer_itf_1ga4defb09d4235d559ac87f0ce28ca88b4>` pfSysTimerStop;
+
+- #define :ref:`EXT_SysTimerStop <group___sys_timer_itf_1gab4bb084c7e58a4ed6d4bde4f432c3952>` extern :ref:`PFSYSTIMERSTOP <group___sys_timer_itf_1ga4defb09d4235d559ac87f0ce28ca88b4>` pfSysTimerStop;
+
+- #define :ref:`GET_SysTimerStop <group___sys_timer_itf_1gab54880e875d8de15eaab14d11271e1b0>` s_pfCMGetAPI2( "SysTimerStop", (RTS_VOID_FCTPTR *)&pfSysTimerStop, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerStop <group___sys_timer_itf_1ga9124e83ebe952fefcd1f4d74a5d2819b>` pfSysTimerStop
+
+- #define :ref:`CHK_SysTimerStop <group___sys_timer_itf_1gaf8555c9fa6e716ae7a60abe6ef8dcaa9>` (pfSysTimerStop != NULL)
+
+- #define :ref:`EXP_SysTimerStop <group___sys_timer_itf_1gabd5aae952bef50fe1d402cdaa34cf3c6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerStop", (RTS_UINTPTR) :ref:`SysTimerStop <group___sys_timer_itf_1gae4193bd2879f8f1aa9a6b799069e1759>` , 0, 0)
+
+- #define :ref:`USE_SysTimerGetInterval <group___sys_timer_itf_1gadbf34bafadec2f40e10a9b6f1a055772>` :ref:`PFSYSTIMERGETINTERVAL <group___sys_timer_itf_1ga797e5c3667df3f1dcc41badf03c0c111>` pfSysTimerGetInterval;
+
+- #define :ref:`EXT_SysTimerGetInterval <group___sys_timer_itf_1ga0f32a05f5494e987afc51195a090d05d>` extern :ref:`PFSYSTIMERGETINTERVAL <group___sys_timer_itf_1ga797e5c3667df3f1dcc41badf03c0c111>` pfSysTimerGetInterval;
+
+- #define :ref:`GET_SysTimerGetInterval <group___sys_timer_itf_1ga99da1dbd48642d9df799524a257c35d0>` s_pfCMGetAPI2( "SysTimerGetInterval", (RTS_VOID_FCTPTR *)&pfSysTimerGetInterval, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerGetInterval <group___sys_timer_itf_1gaad67d206cfaf24d8970ddf1db76827d3>` pfSysTimerGetInterval
+
+- #define :ref:`CHK_SysTimerGetInterval <group___sys_timer_itf_1ga5e71afed6ce304732dc051d6cac22e5a>` (pfSysTimerGetInterval != NULL)
+
+- #define :ref:`EXP_SysTimerGetInterval <group___sys_timer_itf_1gad0535516eda1cf803fd4489675c8420c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetInterval", (RTS_UINTPTR) :ref:`SysTimerGetInterval <group___sys_timer_itf_1ga536aaa19cb9a505f566d1c8afb598124>` , 0, 0)
+
+- #define :ref:`USE_SysTimerSetInterval <group___sys_timer_itf_1gaa1dbd1d0bdf6fc759af9c43f5faa00b1>` :ref:`PFSYSTIMERSETINTERVAL <group___sys_timer_itf_1ga52e3089d98099b79cc0fd34985ed7a27>` pfSysTimerSetInterval;
+
+- #define :ref:`EXT_SysTimerSetInterval <group___sys_timer_itf_1ga444d6be7f0499fd58e27e0b9b900e948>` extern :ref:`PFSYSTIMERSETINTERVAL <group___sys_timer_itf_1ga52e3089d98099b79cc0fd34985ed7a27>` pfSysTimerSetInterval;
+
+- #define :ref:`GET_SysTimerSetInterval <group___sys_timer_itf_1ga12d155bfe4fd4befa85400c888cf3bc9>` s_pfCMGetAPI2( "SysTimerSetInterval", (RTS_VOID_FCTPTR *)&pfSysTimerSetInterval, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerSetInterval <group___sys_timer_itf_1ga6231cdbf8643a5bffc6697a5d2b22100>` pfSysTimerSetInterval
+
+- #define :ref:`CHK_SysTimerSetInterval <group___sys_timer_itf_1gad31385e40f1d4af4e3b420d6300a94ce>` (pfSysTimerSetInterval != NULL)
+
+- #define :ref:`EXP_SysTimerSetInterval <group___sys_timer_itf_1gad9f0dda640d3cac52c592a07267c7323>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerSetInterval", (RTS_UINTPTR) :ref:`SysTimerSetInterval <group___sys_timer_itf_1gaec21d923ed57b06f68b032563b2af243>` , 0, 0)
+
+- #define :ref:`USE_SysTimerGetTimeStamp <group___sys_timer_itf_1gaedf366a513b1d9715479e93a1a2d07c8>` :ref:`PFSYSTIMERGETTIMESTAMP <group___sys_timer_itf_1ga8dc16e64fd9bb80fb259a2e71bfc8052>` pfSysTimerGetTimeStamp;
+
+- #define :ref:`EXT_SysTimerGetTimeStamp <group___sys_timer_itf_1gaf0c511bbd606ea82e23b7ea6d4e38d7c>` extern :ref:`PFSYSTIMERGETTIMESTAMP <group___sys_timer_itf_1ga8dc16e64fd9bb80fb259a2e71bfc8052>` pfSysTimerGetTimeStamp;
+
+- #define :ref:`GET_SysTimerGetTimeStamp <group___sys_timer_itf_1ga16dae2d956f19b4c8174035062472388>` s_pfCMGetAPI2( "SysTimerGetTimeStamp", (RTS_VOID_FCTPTR *)&pfSysTimerGetTimeStamp, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerGetTimeStamp <group___sys_timer_itf_1gaf49bca2926bfa4789caa629267d98ff3>` pfSysTimerGetTimeStamp
+
+- #define :ref:`CHK_SysTimerGetTimeStamp <group___sys_timer_itf_1gaf37c129906046ca0292ee3b6829184f7>` (pfSysTimerGetTimeStamp != NULL)
+
+- #define :ref:`EXP_SysTimerGetTimeStamp <group___sys_timer_itf_1gad9d6dbf65289aacd6f271e234b62b1ab>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetTimeStamp", (RTS_UINTPTR) :ref:`SysTimerGetTimeStamp <group___sys_timer_itf_1ga921a7ac15d2223a29952722c2159aeaf>` , 0, 0)
+
+- #define :ref:`USE_SysTimerMaxTimer <group___sys_timer_itf_1gac4d39b655abd8c3492e7fb3f049d0de0>` :ref:`PFSYSTIMERMAXTIMER <group___sys_timer_itf_1ga4a4860b6a31123a0482705907ec7f828>` pfSysTimerMaxTimer;
+
+- #define :ref:`EXT_SysTimerMaxTimer <group___sys_timer_itf_1ga691cadd4270f1a0cb0ebe61cdb31023d>` extern :ref:`PFSYSTIMERMAXTIMER <group___sys_timer_itf_1ga4a4860b6a31123a0482705907ec7f828>` pfSysTimerMaxTimer;
+
+- #define :ref:`GET_SysTimerMaxTimer <group___sys_timer_itf_1gab3c1d9103d275c7a4e672f8eff5c65f5>` s_pfCMGetAPI2( "SysTimerMaxTimer", (RTS_VOID_FCTPTR *)&pfSysTimerMaxTimer, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerMaxTimer <group___sys_timer_itf_1ga1406da1140fc6f4e3cf5ccc1e0c1ece3>` pfSysTimerMaxTimer
+
+- #define :ref:`CHK_SysTimerMaxTimer <group___sys_timer_itf_1ga9b98c3c3197d29f8be4c5ffdaa12f766>` (pfSysTimerMaxTimer != NULL)
+
+- #define :ref:`EXP_SysTimerMaxTimer <group___sys_timer_itf_1gac2749a7e8026c6145ca331f29ef9e517>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerMaxTimer", (RTS_UINTPTR) :ref:`SysTimerMaxTimer <group___sys_timer_itf_1ga1ac691c3724ffeb1de2add6f9891fe92>` , 0, 0)
+
+- #define :ref:`USE_SysTimerExistsTimer <group___sys_timer_itf_1ga4e32ab01e31e9d8a08b7f2ffd47bc3f8>` :ref:`PFSYSTIMEREXISTSTIMER <group___sys_timer_itf_1ga87e06d63d6c4862d9f5ad4a2949f0bdc>` pfSysTimerExistsTimer;
+
+- #define :ref:`EXT_SysTimerExistsTimer <group___sys_timer_itf_1gab6cdb1f232984dd5b1f622b1288ed9ee>` extern :ref:`PFSYSTIMEREXISTSTIMER <group___sys_timer_itf_1ga87e06d63d6c4862d9f5ad4a2949f0bdc>` pfSysTimerExistsTimer;
+
+- #define :ref:`GET_SysTimerExistsTimer <group___sys_timer_itf_1ga6305e8bc5e7faadb4163f0668c8d4f17>` s_pfCMGetAPI2( "SysTimerExistsTimer", (RTS_VOID_FCTPTR *)&pfSysTimerExistsTimer, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerExistsTimer <group___sys_timer_itf_1ga710a82a151a3b7bfd274b3fd80cee7f6>` pfSysTimerExistsTimer
+
+- #define :ref:`CHK_SysTimerExistsTimer <group___sys_timer_itf_1gaf28e38250e14ceb05eaab5f5f2370d09>` (pfSysTimerExistsTimer != NULL)
+
+- #define :ref:`EXP_SysTimerExistsTimer <group___sys_timer_itf_1ga0b917d6a94355d4bf17da0be7dc7b0af>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerExistsTimer", (RTS_UINTPTR) :ref:`SysTimerExistsTimer <group___sys_timer_itf_1ga760278302712fe1313233f313309df2c>` , 0, 0)
+
+- #define :ref:`USE_SysTimerFitTimer <group___sys_timer_itf_1ga2b05a4b2d1512ae696a546832e9065f5>` :ref:`PFSYSTIMERFITTIMER <group___sys_timer_itf_1gad328647c796395a1c8f56396a755dad1>` pfSysTimerFitTimer;
+
+- #define :ref:`EXT_SysTimerFitTimer <group___sys_timer_itf_1ga3529e9d655dc5de7a37ca3652aa13704>` extern :ref:`PFSYSTIMERFITTIMER <group___sys_timer_itf_1gad328647c796395a1c8f56396a755dad1>` pfSysTimerFitTimer;
+
+- #define :ref:`GET_SysTimerFitTimer <group___sys_timer_itf_1ga08dce4439f7d90b742185ed0494ed7b2>` s_pfCMGetAPI2( "SysTimerFitTimer", (RTS_VOID_FCTPTR *)&pfSysTimerFitTimer, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerFitTimer <group___sys_timer_itf_1ga4067f4d2cc76145adfc98e9d18a16143>` pfSysTimerFitTimer
+
+- #define :ref:`CHK_SysTimerFitTimer <group___sys_timer_itf_1gae6f0b4b436d1e9e3462199976c5906d4>` (pfSysTimerFitTimer != NULL)
+
+- #define :ref:`EXP_SysTimerFitTimer <group___sys_timer_itf_1ga2758d730c6134dbc878b34e469d68368>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerFitTimer", (RTS_UINTPTR) :ref:`SysTimerFitTimer <group___sys_timer_itf_1gac2815f89df55182c4bcb1572d9426e48>` , 0, 0)
+
+- #define :ref:`USE_SysTimerGetMinResolution <group___sys_timer_itf_1gab1e7581bf791dc011fb8a733a17ec7a6>` :ref:`PFSYSTIMERGETMINRESOLUTION <group___sys_timer_itf_1gab7b85f5315fa21d89cf73c9aa3cbb18f>` pfSysTimerGetMinResolution;
+
+- #define :ref:`EXT_SysTimerGetMinResolution <group___sys_timer_itf_1gaf3dd4e596ef1a33bdf2363b08d0dbdcd>` extern :ref:`PFSYSTIMERGETMINRESOLUTION <group___sys_timer_itf_1gab7b85f5315fa21d89cf73c9aa3cbb18f>` pfSysTimerGetMinResolution;
+
+- #define :ref:`GET_SysTimerGetMinResolution <group___sys_timer_itf_1gad14b84fdac97cb1390b61f821e011e6e>` s_pfCMGetAPI2( "SysTimerGetMinResolution", (RTS_VOID_FCTPTR *)&pfSysTimerGetMinResolution, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerGetMinResolution <group___sys_timer_itf_1ga7916be65a8e893166093de65b9408de3>` pfSysTimerGetMinResolution
+
+- #define :ref:`CHK_SysTimerGetMinResolution <group___sys_timer_itf_1ga04e3a70d6164c6d7ea2e66a994ad6bf4>` (pfSysTimerGetMinResolution != NULL)
+
+- #define :ref:`EXP_SysTimerGetMinResolution <group___sys_timer_itf_1ga141842d4094d58e45241e933821addf5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetMinResolution", (RTS_UINTPTR) :ref:`SysTimerGetMinResolution <group___sys_timer_itf_1gaf4319db131dab4fd0e26c159e3b112db>` , 0, 0)
+
+- #define :ref:`USE_SysTimerGetContext <group___sys_timer_itf_1ga1cb28e059e7a5b5ef6879ab49fe149b4>` :ref:`PFSYSTIMERGETCONTEXT <group___sys_timer_itf_1ga77a988a585593082151f492ceef46fcc>` pfSysTimerGetContext;
+
+- #define :ref:`EXT_SysTimerGetContext <group___sys_timer_itf_1ga062e763725848490009488ad305879dd>` extern :ref:`PFSYSTIMERGETCONTEXT <group___sys_timer_itf_1ga77a988a585593082151f492ceef46fcc>` pfSysTimerGetContext;
+
+- #define :ref:`GET_SysTimerGetContext <group___sys_timer_itf_1ga404242adfd15e9dc13d3bb4f5aa966be>` s_pfCMGetAPI2( "SysTimerGetContext", (RTS_VOID_FCTPTR *)&pfSysTimerGetContext, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerGetContext <group___sys_timer_itf_1ga84b07b39032ea7d42c6641b884a46d0f>` pfSysTimerGetContext
+
+- #define :ref:`CHK_SysTimerGetContext <group___sys_timer_itf_1gac6e7d83a79b720c798f152b853b01e5a>` (pfSysTimerGetContext != NULL)
+
+- #define :ref:`EXP_SysTimerGetContext <group___sys_timer_itf_1ga77df71f3774c7e135ecff2d55ef47615>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetContext", (RTS_UINTPTR) :ref:`SysTimerGetContext <group___sys_timer_itf_1ga1cf6549e1b5201bbf7914c9678ccfa09>` , 0, 0)
+
+- #define :ref:`USE_SysTimerGenerateException <group___sys_timer_itf_1ga309847d3ce0a37253e511e7efebe948b>` :ref:`PFSYSTIMERGENERATEEXCEPTION <group___sys_timer_itf_1ga0a00158a0717c17f10c32c4aaa56c6be>` pfSysTimerGenerateException;
+
+- #define :ref:`EXT_SysTimerGenerateException <group___sys_timer_itf_1ga56152a0835684078eaef32cffdc06554>` extern :ref:`PFSYSTIMERGENERATEEXCEPTION <group___sys_timer_itf_1ga0a00158a0717c17f10c32c4aaa56c6be>` pfSysTimerGenerateException;
+
+- #define :ref:`GET_SysTimerGenerateException <group___sys_timer_itf_1gaf8a7169bf7e852fa296bf1bc11a069ae>` s_pfCMGetAPI2( "SysTimerGenerateException", (RTS_VOID_FCTPTR *)&pfSysTimerGenerateException, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerGenerateException <group___sys_timer_itf_1ga9c25f39d0b1b2fc0cb3fb7407c7d4754>` pfSysTimerGenerateException
+
+- #define :ref:`CHK_SysTimerGenerateException <group___sys_timer_itf_1ga60a6d5f9f72080ce341234097933a774>` (pfSysTimerGenerateException != NULL)
+
+- #define :ref:`EXP_SysTimerGenerateException <group___sys_timer_itf_1ga533c7adf9657e67ae1ad5a92dc25b170>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGenerateException", (RTS_UINTPTR) :ref:`SysTimerGenerateException <group___sys_timer_itf_1ga3c20cc89d81ed444dccf47b1cedbd248>` , 0, 0)
+
+- #define :ref:`USE_SysTimerSetCallbackParameter <group___sys_timer_itf_1gaf213c4d0131b75261044689b34ac7c9e>` :ref:`PFSYSTIMERSETCALLBACKPARAMETER <group___sys_timer_itf_1gaceec2dac4350922030999dee6896ab1b>` pfSysTimerSetCallbackParameter;
+
+- #define :ref:`EXT_SysTimerSetCallbackParameter <group___sys_timer_itf_1ga4aa45f4450065912fc3aa62ade9822fe>` extern :ref:`PFSYSTIMERSETCALLBACKPARAMETER <group___sys_timer_itf_1gaceec2dac4350922030999dee6896ab1b>` pfSysTimerSetCallbackParameter;
+
+- #define :ref:`GET_SysTimerSetCallbackParameter <group___sys_timer_itf_1gae6f75a7094c7e37dd74898c528acc84b>` s_pfCMGetAPI2( "SysTimerSetCallbackParameter", (RTS_VOID_FCTPTR *)&pfSysTimerSetCallbackParameter, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerSetCallbackParameter <group___sys_timer_itf_1ga43fbb25e2c040f308276a1f22dada54e>` pfSysTimerSetCallbackParameter
+
+- #define :ref:`CHK_SysTimerSetCallbackParameter <group___sys_timer_itf_1gaa7e0c4b5ed6153922766969c5c8a1531>` (pfSysTimerSetCallbackParameter != NULL)
+
+- #define :ref:`EXP_SysTimerSetCallbackParameter <group___sys_timer_itf_1gad8ccbb74d3834c83abc4d14eca4c51c4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerSetCallbackParameter", (RTS_UINTPTR) :ref:`SysTimerSetCallbackParameter <group___sys_timer_itf_1gade90871c9e2feac4245496edbbd09147>` , 0, 0)
+
+- #define :ref:`USE_SysTimerSetResetFollowing <group___sys_timer_itf_1ga32a74c8d0c5d364ea78a0f4d4af61c83>` :ref:`PFSYSTIMERSETRESETFOLLOWING <group___sys_timer_itf_1gaff9a4296e9268d30a2a8ba0e01149402>` pfSysTimerSetResetFollowing;
+
+- #define :ref:`EXT_SysTimerSetResetFollowing <group___sys_timer_itf_1ga4d3dbec4ccefbde7105d6ef4882da1bb>` extern :ref:`PFSYSTIMERSETRESETFOLLOWING <group___sys_timer_itf_1gaff9a4296e9268d30a2a8ba0e01149402>` pfSysTimerSetResetFollowing;
+
+- #define :ref:`GET_SysTimerSetResetFollowing <group___sys_timer_itf_1ga225e5e1a6d19db315fcdac36cb6b44d9>` s_pfCMGetAPI2( "SysTimerSetResetFollowing", (RTS_VOID_FCTPTR *)&pfSysTimerSetResetFollowing, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerSetResetFollowing <group___sys_timer_itf_1gae465adda71bf6c6a04eaddff1c08ad53>` pfSysTimerSetResetFollowing
+
+- #define :ref:`CHK_SysTimerSetResetFollowing <group___sys_timer_itf_1ga06d1b53b5c781b0369fc6ac660d647a1>` (pfSysTimerSetResetFollowing != NULL)
+
+- #define :ref:`EXP_SysTimerSetResetFollowing <group___sys_timer_itf_1ga9aac000310c398c2a148e81b5a95af75>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerSetResetFollowing", (RTS_UINTPTR) :ref:`SysTimerSetResetFollowing <group___sys_timer_itf_1ga97e2e65ab002ecda68472bea31976d67>` , 0, 0)
+
+- #define :ref:`USE_SysTimerRegisterBasePointer <group___sys_timer_itf_1ga1b2698d220c14fdb5e6194532defc4dc>` :ref:`PFSYSTIMERREGISTERBASEPOINTER <group___sys_timer_itf_1gada68f86c87871f4d5c5e214fc387bc9e>` pfSysTimerRegisterBasePointer;
+
+- #define :ref:`EXT_SysTimerRegisterBasePointer <group___sys_timer_itf_1ga222d50d4fd586f840fb02b7889226841>` extern :ref:`PFSYSTIMERREGISTERBASEPOINTER <group___sys_timer_itf_1gada68f86c87871f4d5c5e214fc387bc9e>` pfSysTimerRegisterBasePointer;
+
+- #define :ref:`GET_SysTimerRegisterBasePointer <group___sys_timer_itf_1gae1638ef02ea964c3f5e7193eebf6e9e8>` s_pfCMGetAPI2( "SysTimerRegisterBasePointer", (RTS_VOID_FCTPTR *)&pfSysTimerRegisterBasePointer, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerRegisterBasePointer <group___sys_timer_itf_1ga5995fd1ec513c2aede3bb8ec4e8e8e18>` pfSysTimerRegisterBasePointer
+
+- #define :ref:`CHK_SysTimerRegisterBasePointer <group___sys_timer_itf_1ga3c6998df226519f0c96b6708dad5e747>` (pfSysTimerRegisterBasePointer != NULL)
+
+- #define :ref:`EXP_SysTimerRegisterBasePointer <group___sys_timer_itf_1ga9860489d0a34d950e09b3745a88bd920>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerRegisterBasePointer", (RTS_UINTPTR) :ref:`SysTimerRegisterBasePointer <group___sys_timer_itf_1gab11b25e015573472d6b997d9e1b3b81b>` , 0, 0)
+
+- #define :ref:`USE_SysTimerGetFirst <group___sys_timer_itf_1gaaa312da2eb93b61416c5bc884606fa13>` :ref:`PFSYSTIMERGETFIRST <group___sys_timer_itf_1gaff2d3f85db88958c2a5bc391d3344683>` pfSysTimerGetFirst;
+
+- #define :ref:`EXT_SysTimerGetFirst <group___sys_timer_itf_1ga2e3254b8604d87e04f01722b5485b435>` extern :ref:`PFSYSTIMERGETFIRST <group___sys_timer_itf_1gaff2d3f85db88958c2a5bc391d3344683>` pfSysTimerGetFirst;
+
+- #define :ref:`GET_SysTimerGetFirst <group___sys_timer_itf_1ga36ff48c059234142c96284c8cd4ff0da>` s_pfCMGetAPI2( "SysTimerGetFirst", (RTS_VOID_FCTPTR *)&pfSysTimerGetFirst, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerGetFirst <group___sys_timer_itf_1ga31b7d5c9aa0e4636f5b5575cac5c0edd>` pfSysTimerGetFirst
+
+- #define :ref:`CHK_SysTimerGetFirst <group___sys_timer_itf_1gacdc656d52c69a65ae06918cd268f3f4f>` (pfSysTimerGetFirst != NULL)
+
+- #define :ref:`EXP_SysTimerGetFirst <group___sys_timer_itf_1gae9aa682564896803f22e441b36b0e565>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetFirst", (RTS_UINTPTR) :ref:`SysTimerGetFirst <group___sys_timer_itf_1ga0fafc580f3121e54077f1bc8c8c668bf>` , 0, 0)
+
+- #define :ref:`USE_SysTimerGetNext <group___sys_timer_itf_1gadb4024c6f5e536de6f4e3ec0d08a88ae>` :ref:`PFSYSTIMERGETNEXT <group___sys_timer_itf_1ga7de2513df0724fcaca0c643079d0cea1>` pfSysTimerGetNext;
+
+- #define :ref:`EXT_SysTimerGetNext <group___sys_timer_itf_1ga4c3893c5afaf34382d6490e6e2a945c8>` extern :ref:`PFSYSTIMERGETNEXT <group___sys_timer_itf_1ga7de2513df0724fcaca0c643079d0cea1>` pfSysTimerGetNext;
+
+- #define :ref:`GET_SysTimerGetNext <group___sys_timer_itf_1ga035fcc785a9247471778170802527c17>` s_pfCMGetAPI2( "SysTimerGetNext", (RTS_VOID_FCTPTR *)&pfSysTimerGetNext, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerGetNext <group___sys_timer_itf_1gadad6f5e96151b1e7aa31d886123b5184>` pfSysTimerGetNext
+
+- #define :ref:`CHK_SysTimerGetNext <group___sys_timer_itf_1ga8c8c1d18f01fb4a978efc22d66aacfdc>` (pfSysTimerGetNext != NULL)
+
+- #define :ref:`EXP_SysTimerGetNext <group___sys_timer_itf_1ga4aab420647da2b269ec35c8c7d4efea1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetNext", (RTS_UINTPTR) :ref:`SysTimerGetNext <group___sys_timer_itf_1ga7c12fb9423c04f31df8474c0c9a55166>` , 0, 0)
+
+- #define :ref:`USE_SysTimerCallCallback <group___sys_timer_itf_1gad9553f1ca54b5ff63de85f181a49008e>` :ref:`PFSYSTIMERCALLCALLBACK <group___sys_timer_itf_1ga949a3bc0184ea8c5916802886ca32af1>` pfSysTimerCallCallback;
+
+- #define :ref:`EXT_SysTimerCallCallback <group___sys_timer_itf_1ga439aacadbb4d1263ed901fdf7666cbbb>` extern :ref:`PFSYSTIMERCALLCALLBACK <group___sys_timer_itf_1ga949a3bc0184ea8c5916802886ca32af1>` pfSysTimerCallCallback;
+
+- #define :ref:`GET_SysTimerCallCallback <group___sys_timer_itf_1gaa9047f99255d5aaad30579d729b91927>` s_pfCMGetAPI2( "SysTimerCallCallback", (RTS_VOID_FCTPTR *)&pfSysTimerCallCallback, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerCallCallback <group___sys_timer_itf_1ga5063eaefe420c033c195393338976ebc>` pfSysTimerCallCallback
+
+- #define :ref:`CHK_SysTimerCallCallback <group___sys_timer_itf_1ga8ad6b76f3be58eb44f036e144e2f93df>` (pfSysTimerCallCallback != NULL)
+
+- #define :ref:`EXP_SysTimerCallCallback <group___sys_timer_itf_1ga484350af2031915a65676700b2aa3c84>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerCallCallback", (RTS_UINTPTR) :ref:`SysTimerCallCallback <group___sys_timer_itf_1ga5b2f8285bf4efc778d302ded6eed1815>` , 0, 0)
+
+- #define :ref:`USE_SysTimerGetCurrent <group___sys_timer_itf_1gaed3a62b01a7c0130cf6d85252e1ed4db>` :ref:`PFSYSTIMERGETCURRENT <group___sys_timer_itf_1ga5c8d7398d686522430de5628af1f79d2>` pfSysTimerGetCurrent;
+
+- #define :ref:`EXT_SysTimerGetCurrent <group___sys_timer_itf_1ga3c0445391875dfcf7d1dce81e2abc5d3>` extern :ref:`PFSYSTIMERGETCURRENT <group___sys_timer_itf_1ga5c8d7398d686522430de5628af1f79d2>` pfSysTimerGetCurrent;
+
+- #define :ref:`GET_SysTimerGetCurrent <group___sys_timer_itf_1gaf65fe238e6c4155b06b1b9916de33d7d>` s_pfCMGetAPI2( "SysTimerGetCurrent", (RTS_VOID_FCTPTR *)&pfSysTimerGetCurrent, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerGetCurrent <group___sys_timer_itf_1ga1006f4c38a7a3afb6abf509149c8c6f7>` pfSysTimerGetCurrent
+
+- #define :ref:`CHK_SysTimerGetCurrent <group___sys_timer_itf_1gada6f4e4531dac0de8db0ac90125b01fb>` (pfSysTimerGetCurrent != NULL)
+
+- #define :ref:`EXP_SysTimerGetCurrent <group___sys_timer_itf_1ga30c8b71bfe7eedb8ce154346550d7202>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetCurrent", (RTS_UINTPTR) :ref:`SysTimerGetCurrent <group___sys_timer_itf_1ga806e51d55aa81bc515d93f14014b160f>` , 0, 0)
+
+- #define :ref:`USE_SysTimerGetInfo <group___sys_timer_itf_1ga95b22b6e183e3b086dde3225bf2809d5>` :ref:`PFSYSTIMERGETINFO <group___sys_timer_itf_1ga19cf2ba44e035b78bc38aca22df9add7>` pfSysTimerGetInfo;
+
+- #define :ref:`EXT_SysTimerGetInfo <group___sys_timer_itf_1ga316a4cf6b7ec9a3bec95299232a89417>` extern :ref:`PFSYSTIMERGETINFO <group___sys_timer_itf_1ga19cf2ba44e035b78bc38aca22df9add7>` pfSysTimerGetInfo;
+
+- #define :ref:`GET_SysTimerGetInfo <group___sys_timer_itf_1gabe14037189ea2f827f2e9c8c2a15f001>` s_pfCMGetAPI2( "SysTimerGetInfo", (RTS_VOID_FCTPTR *)&pfSysTimerGetInfo, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimerGetInfo <group___sys_timer_itf_1gaeea6cce22f5dc124ecbb267e0b343342>` pfSysTimerGetInfo
+
+- #define :ref:`CHK_SysTimerGetInfo <group___sys_timer_itf_1ga16150f7817414c9184475d2f824276c4>` (pfSysTimerGetInfo != NULL)
+
+- #define :ref:`EXP_SysTimerGetInfo <group___sys_timer_itf_1gaaca10cefb03a9e0f4691e62ef2ab1c7a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetInfo", (RTS_UINTPTR) :ref:`SysTimerGetInfo <group___sys_timer_itf_1ga6e2d67e9e3d87116cabc7a2892ceaa28>` , 0, 0)
+
+- #define :ref:`ITF_SysTimer <group___sys_timer_itf_1gac007bda410aeef6d00f57006fb17720a>`
+
+- #define :ref:`EXTITF_SysTimer <group___sys_timer_itf_1gaca004b138610dcf60ab80b938a299194>`
+
+Typedefs
+--------
+
+- typedef void HUGEPTR(* :ref:`PFTIMERCALLBACK <group___sys_timer_itf_1ga8e3005c645ca74ac5979873a429a1d4a>`)(RTS_HANDLE hParam)
+
+- typedef RTS_RESULT(* :ref:`PFTIMEREXCEPTIONHANDLER <group___sys_timer_itf_1gaa8a367a6a7299822ea22df5cac9589e8>`)(RTS_HANDLE hTimerHandle, RTS_UI32 ulException, RegContext Context)
+
+- typedef struct :ref:`tagsystimercreatecallback_struct <structtagsystimercreatecallback__struct>` :ref:`systimercreatecallback_struct <group___sys_timer_itf_1ga299065b5a711c22b2d332b5e0bfb8561>`
+
+- typedef void(* :ref:`PFSYSTIMERCREATECALLBACK_IEC <group___sys_timer_itf_1ga0a0bce53c7bb6416ac5c47e7c1f4cb9e>`)(systimercreatecallback_struct *p)
+
+- typedef struct :ref:`tagsystimercreatecallback2_struct <structtagsystimercreatecallback2__struct>` :ref:`systimercreatecallback2_struct <group___sys_timer_itf_1ga1c2f1ddafced9b1d1a23265a3f63dbc7>`
+
+- typedef void(* :ref:`PFSYSTIMERCREATECALLBACK2_IEC <group___sys_timer_itf_1ga817f0deab6bdba0642177d4d7f8753d1>`)(systimercreatecallback2_struct *p)
+
+- typedef struct :ref:`tagsystimercreateevent_struct <structtagsystimercreateevent__struct>` :ref:`systimercreateevent_struct <group___sys_timer_itf_1ga04930ee508302e86be3c34824a97bcfb>`
+
+- typedef void(* :ref:`PFSYSTIMERCREATEEVENT_IEC <group___sys_timer_itf_1ga4cc123e10f953061a28fddeb6d6e4674>`)(systimercreateevent_struct *p)
+
+- typedef struct :ref:`tagsystimerdelete_struct <structtagsystimerdelete__struct>` :ref:`systimerdelete_struct <group___sys_timer_itf_1ga2097aea5dc7382ed3620f2db1de27709>`
+
+- typedef void(* :ref:`PFSYSTIMERDELETE_IEC <group___sys_timer_itf_1ga08dbd00036798458897c6db1d5e88353>`)(systimerdelete_struct *p)
+
+- typedef struct :ref:`tagsystimergetinterval_struct <structtagsystimergetinterval__struct>` :ref:`systimergetinterval_struct <group___sys_timer_itf_1ga5eb01d53972d8d029a07776967085d7c>`
+
+- typedef void(* :ref:`PFSYSTIMERGETINTERVAL_IEC <group___sys_timer_itf_1gac25c449d047f1af784ea42d5654fd16f>`)(systimergetinterval_struct *p)
+
+- typedef struct :ref:`tagsystimergettimestamp_struct <structtagsystimergettimestamp__struct>` :ref:`systimergettimestamp_struct <group___sys_timer_itf_1ga43f35fc1ccbddbd787478a8f87d6be87>`
+
+- typedef void(* :ref:`PFSYSTIMERGETTIMESTAMP_IEC <group___sys_timer_itf_1ga9a4aef7ae319d7162397acfa2cec15c8>`)(systimergettimestamp_struct *p)
+
+- typedef struct :ref:`tagsystimermaxtimer_struct <structtagsystimermaxtimer__struct>` :ref:`systimermaxtimer_struct <group___sys_timer_itf_1ga024303d370ba06786797b427d203bce0>`
+
+- typedef void(* :ref:`PFSYSTIMERMAXTIMER_IEC <group___sys_timer_itf_1ga697860df2bb0565fb7e3ae7187d3595b>`)(systimermaxtimer_struct *p)
+
+- typedef struct :ref:`tagsystimersetinterval_struct <structtagsystimersetinterval__struct>` :ref:`systimersetinterval_struct <group___sys_timer_itf_1gaed89997b85893f4faddb5a035bb54869>`
+
+- typedef void(* :ref:`PFSYSTIMERSETINTERVAL_IEC <group___sys_timer_itf_1ga8a86caff8843210748a4486dab92be6d>`)(systimersetinterval_struct *p)
+
+- typedef struct :ref:`tagsystimerstart_struct <structtagsystimerstart__struct>` :ref:`systimerstart_struct <group___sys_timer_itf_1ga24211b0db8a33e07fe6e95a1cee48da1>`
+
+- typedef void(* :ref:`PFSYSTIMERSTART_IEC <group___sys_timer_itf_1ga7fc4f1ce66b1cbd31db253eae9b81988>`)(systimerstart_struct *p)
+
+- typedef struct :ref:`tagsystimerstop_struct <structtagsystimerstop__struct>` :ref:`systimerstop_struct <group___sys_timer_itf_1ga76bcf0390256147083789efbf1a5dfda>`
+
+- typedef void(* :ref:`PFSYSTIMERSTOP_IEC <group___sys_timer_itf_1ga56d6d55c5778ae726eed7e71f5d8e760>`)(systimerstop_struct *p)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSTIMERCREATEEVENT <group___sys_timer_itf_1gabda2238d14fd58b33bc70a151ac37c93>`)(RTS_HANDLE hEvent, RTS_SYSTIME tIntervalNs, unsigned long ulPriority, PFTIMEREXCEPTIONHANDLER pfExceptionHandler, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSTIMERCREATECALLBACK <group___sys_timer_itf_1ga245369d425b1ca84fb1076b888031fad>`)(PFTIMERCALLBACK pfTimerCallback, RTS_HANDLE hParam, int bIECFunction, RTS_SYSTIME tIntervalNs, unsigned long ulPriority, PFTIMEREXCEPTIONHANDLER pfExceptionHandler, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSTIMERCREATECALLBACK2 <group___sys_timer_itf_1ga370ce614468326a8d58496d7efed3c77>`)(PFTIMERCALLBACK pfTimerCallback, RTS_HANDLE hParam, int bIECFunction, RTS_SYSTIME tIntervalNs, unsigned long ulPriority, unsigned long ulType, PFTIMEREXCEPTIONHANDLER pfExceptionHandler, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMERDELETE <group___sys_timer_itf_1ga29a57191ddd5f6fa7bb4794f96f4f661>`)(RTS_HANDLE hTimer)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSTIMEROPEN <group___sys_timer_itf_1ga37fc5f036687b87cb47892d0556a1933>`)(SYS_TIMER_INFO *pTimerInfo, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMERCLOSE <group___sys_timer_itf_1ga2db8adc7e0a77efa784ef8837eb706da>`)(RTS_HANDLE hTimer)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMERSTART <group___sys_timer_itf_1ga16cae85ea8756639ed2434e8728bbf64>`)(RTS_HANDLE hTimer, unsigned long ulType)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMERSTOP <group___sys_timer_itf_1ga4defb09d4235d559ac87f0ce28ca88b4>`)(RTS_HANDLE hTimer)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMERGETINTERVAL <group___sys_timer_itf_1ga797e5c3667df3f1dcc41badf03c0c111>`)(RTS_HANDLE hTimer, RTS_SYSTIME *ptIntervalNs)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMERSETINTERVAL <group___sys_timer_itf_1ga52e3089d98099b79cc0fd34985ed7a27>`)(RTS_HANDLE hTimer, RTS_SYSTIME tIntervalNs)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMERGETTIMESTAMP <group___sys_timer_itf_1ga8dc16e64fd9bb80fb259a2e71bfc8052>`)(RTS_HANDLE hTimer, RTS_SYSTIME *ptTimestampNs)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMERMAXTIMER <group___sys_timer_itf_1ga4a4860b6a31123a0482705907ec7f828>`)(RTS_UI32 *pulMaxTimers)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSTIMEREXISTSTIMER <group___sys_timer_itf_1ga87e06d63d6c4862d9f5ad4a2949f0bdc>`)(unsigned long ulPriority, RTS_SYSTIME tInterval, RTS_RESULT *pResult)
+
+- typedef unsigned int(* :ref:`PFSYSTIMERFITTIMER <group___sys_timer_itf_1gad328647c796395a1c8f56396a755dad1>`)(RTS_HANDLE hTimer, unsigned long ulPriority, RTS_SYSTIME tInterval, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMERGETMINRESOLUTION <group___sys_timer_itf_1gab7b85f5315fa21d89cf73c9aa3cbb18f>`)(RTS_HANDLE hTimer, RTS_SYSTIME *ptMinResolutionNs)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMERGETCONTEXT <group___sys_timer_itf_1ga77a988a585593082151f492ceef46fcc>`)(RTS_HANDLE hTimer, RegContext *pContext)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMERGENERATEEXCEPTION <group___sys_timer_itf_1ga0a00158a0717c17f10c32c4aaa56c6be>`)(RTS_HANDLE hTimerHandle, RTS_UI32 ulException, RegContext Context)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMERSETCALLBACKPARAMETER <group___sys_timer_itf_1gaceec2dac4350922030999dee6896ab1b>`)(RTS_HANDLE hTimer, RTS_HANDLE hParam)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMERSETRESETFOLLOWING <group___sys_timer_itf_1gaff9a4296e9268d30a2a8ba0e01149402>`)(RTS_HANDLE hTimer)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMERREGISTERBASEPOINTER <group___sys_timer_itf_1gada68f86c87871f4d5c5e214fc387bc9e>`)(RTS_UINTPTR ulBP)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSTIMERGETFIRST <group___sys_timer_itf_1gaff2d3f85db88958c2a5bc391d3344683>`)(RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSTIMERGETNEXT <group___sys_timer_itf_1ga7de2513df0724fcaca0c643079d0cea1>`)(RTS_HANDLE hTimerPrev, RTS_RESULT *pResult)
+
+- typedef void(* :ref:`PFSYSTIMERCALLCALLBACK <group___sys_timer_itf_1ga949a3bc0184ea8c5916802886ca32af1>`)(SYS_TIMER_INFO *pTimer)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSTIMERGETCURRENT <group___sys_timer_itf_1ga5c8d7398d686522430de5628af1f79d2>`)(RTS_RESULT *pResult)
+
+- typedef :ref:`SYS_TIMER_INFO <struct_s_y_s___t_i_m_e_r___i_n_f_o>` *(* :ref:`PFSYSTIMERGETINFO <group___sys_timer_itf_1ga19cf2ba44e035b78bc38aca22df9add7>`)(RTS_HANDLE hTimer, RTS_RESULT *pResult)
+
+- typedef :ref:`ISysTimer_C <struct_i_sys_timer___c>` :ref:`ISysTimer <group___sys_timer_itf_1ga2936e5147fb23d8106c8701c7db21f96>`
+
+Functions
+---------
+
+- void :ref:`systimercreatecallback <group___sys_timer_itf_1ga68ee3666c8dcb0ed66401c36f18be08e>` (:ref:`systimercreatecallback_struct <group___sys_timer_itf_1ga299065b5a711c22b2d332b5e0bfb8561>` * p)
+
+- void :ref:`systimercreatecallback2 <group___sys_timer_itf_1gae115324f61d2148ec229cb2f2df1ff70>` (:ref:`systimercreatecallback2_struct <group___sys_timer_itf_1ga1c2f1ddafced9b1d1a23265a3f63dbc7>` * p)
+
+- void :ref:`systimercreateevent <group___sys_timer_itf_1ga1bfa5fdd8b70cf7a9d30618e4cc97ff1>` (:ref:`systimercreateevent_struct <group___sys_timer_itf_1ga04930ee508302e86be3c34824a97bcfb>` * p)
+
+- void :ref:`systimerdelete <group___sys_timer_itf_1ga7fb2351b18c91e8638e4acf5e98d345b>` (:ref:`systimerdelete_struct <group___sys_timer_itf_1ga2097aea5dc7382ed3620f2db1de27709>` * p)
+
+- void :ref:`systimergetinterval <group___sys_timer_itf_1gab35d8f01b522f83479fb07b6bf86ad43>` (:ref:`systimergetinterval_struct <group___sys_timer_itf_1ga5eb01d53972d8d029a07776967085d7c>` * p)
+
+- void :ref:`systimergettimestamp <group___sys_timer_itf_1ga140844d918f4bc2c69135b6f9acc2500>` (:ref:`systimergettimestamp_struct <group___sys_timer_itf_1ga43f35fc1ccbddbd787478a8f87d6be87>` * p)
+
+- void :ref:`systimermaxtimer <group___sys_timer_itf_1ga3ecbc34238f0050e858954da0ef7e9dd>` (:ref:`systimermaxtimer_struct <group___sys_timer_itf_1ga024303d370ba06786797b427d203bce0>` * p)
+
+- void :ref:`systimersetinterval <group___sys_timer_itf_1gaceead3f5bc13daff7557677f99ff763c>` (:ref:`systimersetinterval_struct <group___sys_timer_itf_1gaed89997b85893f4faddb5a035bb54869>` * p)
+
+- void :ref:`systimerstart <group___sys_timer_itf_1gacb5f5da3a0c1f2ff54c7b7d1cc0b8617>` (:ref:`systimerstart_struct <group___sys_timer_itf_1ga24211b0db8a33e07fe6e95a1cee48da1>` * p)
+
+- void :ref:`systimerstop <group___sys_timer_itf_1gafc80299b68323395049698ea4ec084cb>` (:ref:`systimerstop_struct <group___sys_timer_itf_1ga76bcf0390256147083789efbf1a5dfda>` * p)
+
+- RTS_RESULT :ref:`SysTimerOSInit <group___sys_timer_itf_1ga4b88c19e3cb50e4fb404b9840b3f4818>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysTimerOSHookFunction <group___sys_timer_itf_1gae41bca895d3668f705513c37ff58f360>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_HANDLE :ref:`SysTimerCreateEvent <group___sys_timer_itf_1ga72448a0047df2952bde603c6f9e3836c>` (RTS_HANDLE hEvent, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>`  tIntervalNs, unsigned long ulPriority, :ref:`PFTIMEREXCEPTIONHANDLER <group___sys_timer_itf_1gaa8a367a6a7299822ea22df5cac9589e8>`  pfExceptionHandler, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysTimerCreateCallback <group___sys_timer_itf_1ga7bd0c7b2667c9e120d678bc77aa530ee>` (:ref:`PFTIMERCALLBACK <group___sys_timer_itf_1ga8e3005c645ca74ac5979873a429a1d4a>`  pfTimerCallback, RTS_HANDLE hParam, int bIECFunction, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>`  tIntervalNs, unsigned long ulPriority, :ref:`PFTIMEREXCEPTIONHANDLER <group___sys_timer_itf_1gaa8a367a6a7299822ea22df5cac9589e8>`  pfExceptionHandler, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysTimerCreateCallback2 <group___sys_timer_itf_1gac13e0205d37e969d4a01a53ae7464e39>` (:ref:`PFTIMERCALLBACK <group___sys_timer_itf_1ga8e3005c645ca74ac5979873a429a1d4a>`  pfTimerCallback, RTS_HANDLE hParam, int bIECFunction, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>`  tIntervalNs, unsigned long ulPriority, unsigned long ulType, :ref:`PFTIMEREXCEPTIONHANDLER <group___sys_timer_itf_1gaa8a367a6a7299822ea22df5cac9589e8>`  pfExceptionHandler, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysTimerDelete <group___sys_timer_itf_1ga82ba4944fb348a0fc3147e0ad225e941>` (RTS_HANDLE hTimer)
+
+- RTS_HANDLE :ref:`SysTimerOpen <group___sys_timer_itf_1ga81a4bda452cea19feeba1b8383cafcee>` (:ref:`SYS_TIMER_INFO <struct_s_y_s___t_i_m_e_r___i_n_f_o>` * pTimerInfo, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysTimerClose <group___sys_timer_itf_1gaa9dc02593fd99db07c4db7eca43cf2ab>` (RTS_HANDLE hTimer)
+
+- RTS_RESULT :ref:`SysTimerStart <group___sys_timer_itf_1gaab0e60e94bc15215f8cc59f0925d8111>` (RTS_HANDLE hTimer, unsigned long ulType)
+
+- RTS_RESULT :ref:`SysTimerStop <group___sys_timer_itf_1gae4193bd2879f8f1aa9a6b799069e1759>` (RTS_HANDLE hTimer)
+
+- RTS_RESULT :ref:`SysTimerGetInterval <group___sys_timer_itf_1ga536aaa19cb9a505f566d1c8afb598124>` (RTS_HANDLE hTimer, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` * ptIntervalNs)
+
+- RTS_RESULT :ref:`SysTimerSetInterval <group___sys_timer_itf_1gaec21d923ed57b06f68b032563b2af243>` (RTS_HANDLE hTimer, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>`  tIntervalNs)
+
+- RTS_RESULT :ref:`SysTimerGetTimeStamp <group___sys_timer_itf_1ga921a7ac15d2223a29952722c2159aeaf>` (RTS_HANDLE hTimer, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` * ptTimestampNs)
+
+- RTS_RESULT :ref:`SysTimerMaxTimer <group___sys_timer_itf_1ga1ac691c3724ffeb1de2add6f9891fe92>` (RTS_UI32 * pulMaxTimers)
+
+- RTS_HANDLE :ref:`SysTimerExistsTimer <group___sys_timer_itf_1ga760278302712fe1313233f313309df2c>` (unsigned long ulPriority, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>`  tInterval, RTS_RESULT * pResult)
+
+- unsigned int :ref:`SysTimerFitTimer <group___sys_timer_itf_1gac2815f89df55182c4bcb1572d9426e48>` (RTS_HANDLE hTimer, unsigned long ulPriority, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>`  tInterval, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysTimerGetMinResolution <group___sys_timer_itf_1gaf4319db131dab4fd0e26c159e3b112db>` (RTS_HANDLE hTimer, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` * ptMinResolutionNs)
+
+- RTS_RESULT :ref:`SysTimerGetContext <group___sys_timer_itf_1ga1cf6549e1b5201bbf7914c9678ccfa09>` (RTS_HANDLE hTimer, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>` * pContext)
+
+- RTS_RESULT :ref:`SysTimerGenerateException <group___sys_timer_itf_1ga3c20cc89d81ed444dccf47b1cedbd248>` (RTS_HANDLE hTimerHandle, RTS_UI32 ulException, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>`  Context)
+
+- RTS_RESULT :ref:`SysTimerSetCallbackParameter <group___sys_timer_itf_1gade90871c9e2feac4245496edbbd09147>` (RTS_HANDLE hTimer, RTS_HANDLE hParam)
+
+- RTS_RESULT :ref:`SysTimerSetResetFollowing <group___sys_timer_itf_1ga97e2e65ab002ecda68472bea31976d67>` (RTS_HANDLE hTimer)
+
+- RTS_RESULT :ref:`SysTimerRegisterBasePointer <group___sys_timer_itf_1gab11b25e015573472d6b997d9e1b3b81b>` (RTS_UINTPTR ulBP)
+
+- RTS_HANDLE :ref:`SysTimerGetFirst <group___sys_timer_itf_1ga0fafc580f3121e54077f1bc8c8c668bf>` (RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysTimerGetNext <group___sys_timer_itf_1ga7c12fb9423c04f31df8474c0c9a55166>` (RTS_HANDLE hTimerPrev, RTS_RESULT * pResult)
+
+- void :ref:`SysTimerCallCallback <group___sys_timer_itf_1ga5b2f8285bf4efc778d302ded6eed1815>` (:ref:`SYS_TIMER_INFO <struct_s_y_s___t_i_m_e_r___i_n_f_o>` * pTimer)
+
+- RTS_HANDLE :ref:`SysTimerGetCurrent <group___sys_timer_itf_1ga806e51d55aa81bc515d93f14014b160f>` (RTS_RESULT * pResult)
+
+- :ref:`SYS_TIMER_INFO <struct_s_y_s___t_i_m_e_r___i_n_f_o>` * :ref:`SysTimerGetInfo <group___sys_timer_itf_1ga6e2d67e9e3d87116cabc7a2892ceaa28>` (RTS_HANDLE hTimer, RTS_RESULT * pResult)
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_timer_itf_1gaf6f874e550d01092d2b2028aefe9d07f:
+
+#define USE_systimercreatecallback :ref:`PFSYSTIMERCREATECALLBACK_IEC <group___sys_timer_itf_1ga0a0bce53c7bb6416ac5c47e7c1f4cb9e>` pfsystimercreatecallback;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf7fbc7ac6c4c38878e27e85b2c6ef5b6:
+
+#define EXT_systimercreatecallback extern :ref:`PFSYSTIMERCREATECALLBACK_IEC <group___sys_timer_itf_1ga0a0bce53c7bb6416ac5c47e7c1f4cb9e>` pfsystimercreatecallback;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga5c4d38f6be7617a48116b821d38a94d3:
+
+#define GET_systimercreatecallback s_pfCMGetAPI2( "systimercreatecallback", (RTS_VOID_FCTPTR *)&pfsystimercreatecallback, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE5D4A503, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gac0710b626ed35ca3c10c8a8ac2588300:
+
+#define CAL_systimercreatecallback pfsystimercreatecallback
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga7d6b9a30e9f4a65f5d32c94121e278a8:
+
+#define CHK_systimercreatecallback (pfsystimercreatecallback != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gab991bfd79e7632bc2527c5b52e408936:
+
+#define EXP_systimercreatecallback s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimercreatecallback", (RTS_UINTPTR) :ref:`systimercreatecallback <group___sys_timer_itf_1ga68ee3666c8dcb0ed66401c36f18be08e>` , 1, 0xE5D4A503, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaafc0088ec16a30f174013e5a4070c4cb:
+
+#define USE_systimercreatecallback2 :ref:`PFSYSTIMERCREATECALLBACK2_IEC <group___sys_timer_itf_1ga817f0deab6bdba0642177d4d7f8753d1>` pfsystimercreatecallback2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga530a39d91157b391f6552017672ba8c7:
+
+#define EXT_systimercreatecallback2 extern :ref:`PFSYSTIMERCREATECALLBACK2_IEC <group___sys_timer_itf_1ga817f0deab6bdba0642177d4d7f8753d1>` pfsystimercreatecallback2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gae95984cf79fa46cd106149f44d2f1d18:
+
+#define GET_systimercreatecallback2 s_pfCMGetAPI2( "systimercreatecallback2", (RTS_VOID_FCTPTR *)&pfsystimercreatecallback2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x337F2137, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga3dd5791b65525a9ac9f6d375899617dd:
+
+#define CAL_systimercreatecallback2 pfsystimercreatecallback2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga39aca582df682b115b95f6e3a7ec31d6:
+
+#define CHK_systimercreatecallback2 (pfsystimercreatecallback2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga99904e56bea236144eb9b87a27cadbe8:
+
+#define EXP_systimercreatecallback2 s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimercreatecallback2", (RTS_UINTPTR) :ref:`systimercreatecallback2 <group___sys_timer_itf_1gae115324f61d2148ec229cb2f2df1ff70>` , 1, 0x337F2137, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga4e44356938d4f22db9041658ff23587d:
+
+#define USE_systimercreateevent :ref:`PFSYSTIMERCREATEEVENT_IEC <group___sys_timer_itf_1ga4cc123e10f953061a28fddeb6d6e4674>` pfsystimercreateevent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaa5452cbc449d8e77ea21c77d2d819294:
+
+#define EXT_systimercreateevent extern :ref:`PFSYSTIMERCREATEEVENT_IEC <group___sys_timer_itf_1ga4cc123e10f953061a28fddeb6d6e4674>` pfsystimercreateevent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gac8cd815e3eb95953cd668478ae7aa5b7:
+
+#define GET_systimercreateevent s_pfCMGetAPI2( "systimercreateevent", (RTS_VOID_FCTPTR *)&pfsystimercreateevent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xA540A9F1, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga5a58284e9bf4e2183783d2f06a76d7cc:
+
+#define CAL_systimercreateevent pfsystimercreateevent
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf2d73d803985698b10973ea7c08687df:
+
+#define CHK_systimercreateevent (pfsystimercreateevent != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf2cd2e6df0e10377fbab65ea3e5bdf2c:
+
+#define EXP_systimercreateevent s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimercreateevent", (RTS_UINTPTR) :ref:`systimercreateevent <group___sys_timer_itf_1ga1bfa5fdd8b70cf7a9d30618e4cc97ff1>` , 1, 0xA540A9F1, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga632e5a5381a003e526fc74334d05cf5f:
+
+#define USE_systimerdelete :ref:`PFSYSTIMERDELETE_IEC <group___sys_timer_itf_1ga08dbd00036798458897c6db1d5e88353>` pfsystimerdelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaebc9e48a648dde9a3c2b0c363b1d9a72:
+
+#define EXT_systimerdelete extern :ref:`PFSYSTIMERDELETE_IEC <group___sys_timer_itf_1ga08dbd00036798458897c6db1d5e88353>` pfsystimerdelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga8ed2d6db86ba51535a48e57a319269a6:
+
+#define GET_systimerdelete s_pfCMGetAPI2( "systimerdelete", (RTS_VOID_FCTPTR *)&pfsystimerdelete, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE1762326, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga1fd745748dbceb1bbe82b319230527be:
+
+#define CAL_systimerdelete pfsystimerdelete
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf4e8e60083d6cd6d6e0e955fcfe57991:
+
+#define CHK_systimerdelete (pfsystimerdelete != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gafdc9b645a41e3e3daec7d3a8938b3353:
+
+#define EXP_systimerdelete s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimerdelete", (RTS_UINTPTR) :ref:`systimerdelete <group___sys_timer_itf_1ga7fb2351b18c91e8638e4acf5e98d345b>` , 1, 0xE1762326, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga6bd0541d53a3fa1e6aaea0d5b3c0b486:
+
+#define USE_systimergetinterval :ref:`PFSYSTIMERGETINTERVAL_IEC <group___sys_timer_itf_1gac25c449d047f1af784ea42d5654fd16f>` pfsystimergetinterval;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaead1126d8b29555a0e8c0423dd67b58a:
+
+#define EXT_systimergetinterval extern :ref:`PFSYSTIMERGETINTERVAL_IEC <group___sys_timer_itf_1gac25c449d047f1af784ea42d5654fd16f>` pfsystimergetinterval;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gad2c80974da2d14aa3b38f68f6d55458a:
+
+#define GET_systimergetinterval s_pfCMGetAPI2( "systimergetinterval", (RTS_VOID_FCTPTR *)&pfsystimergetinterval, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x1B0A9C63, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gad62d0a89d5f3509472be7e75c03d13ab:
+
+#define CAL_systimergetinterval pfsystimergetinterval
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga03c7e9e97d277f7be023937cf0380954:
+
+#define CHK_systimergetinterval (pfsystimergetinterval != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gab1c668dfcff008a0e798c4745948a284:
+
+#define EXP_systimergetinterval s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimergetinterval", (RTS_UINTPTR) :ref:`systimergetinterval <group___sys_timer_itf_1gab35d8f01b522f83479fb07b6bf86ad43>` , 1, 0x1B0A9C63, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaeee4c9cd965bc8d0737d2869ccd6e461:
+
+#define USE_systimergettimestamp :ref:`PFSYSTIMERGETTIMESTAMP_IEC <group___sys_timer_itf_1ga9a4aef7ae319d7162397acfa2cec15c8>` pfsystimergettimestamp;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga5a08a21feae1c3b7b5f6804631c5b403:
+
+#define EXT_systimergettimestamp extern :ref:`PFSYSTIMERGETTIMESTAMP_IEC <group___sys_timer_itf_1ga9a4aef7ae319d7162397acfa2cec15c8>` pfsystimergettimestamp;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga589256964f609635ef7006633e5a7c32:
+
+#define GET_systimergettimestamp s_pfCMGetAPI2( "systimergettimestamp", (RTS_VOID_FCTPTR *)&pfsystimergettimestamp, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xFE525971, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga9dd8b84d07e965ce4d35301a6c46349a:
+
+#define CAL_systimergettimestamp pfsystimergettimestamp
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga819f6fe1853ebb70f408c301ee04f97c:
+
+#define CHK_systimergettimestamp (pfsystimergettimestamp != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gad758eca0c3c4a31be2595024c0c3f29e:
+
+#define EXP_systimergettimestamp s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimergettimestamp", (RTS_UINTPTR) :ref:`systimergettimestamp <group___sys_timer_itf_1ga140844d918f4bc2c69135b6f9acc2500>` , 1, 0xFE525971, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gafcbaa2473b5c56c1a36c70358419fbb5:
+
+#define USE_systimermaxtimer :ref:`PFSYSTIMERMAXTIMER_IEC <group___sys_timer_itf_1ga697860df2bb0565fb7e3ae7187d3595b>` pfsystimermaxtimer;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gae2b2fd9bd9a397b8edade1d8c2eac128:
+
+#define EXT_systimermaxtimer extern :ref:`PFSYSTIMERMAXTIMER_IEC <group___sys_timer_itf_1ga697860df2bb0565fb7e3ae7187d3595b>` pfsystimermaxtimer;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga43ae95f6b52ec0bee3ebdd5767a26caf:
+
+#define GET_systimermaxtimer s_pfCMGetAPI2( "systimermaxtimer", (RTS_VOID_FCTPTR *)&pfsystimermaxtimer, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xFF05757E, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gad688a23df840767d47826c949ddc6a96:
+
+#define CAL_systimermaxtimer pfsystimermaxtimer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gafa68a54e881cd04ae7edd2a110e4b5db:
+
+#define CHK_systimermaxtimer (pfsystimermaxtimer != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga724b6d86d751aae0c50653dfdd59aec2:
+
+#define EXP_systimermaxtimer s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimermaxtimer", (RTS_UINTPTR) :ref:`systimermaxtimer <group___sys_timer_itf_1ga3ecbc34238f0050e858954da0ef7e9dd>` , 1, 0xFF05757E, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gad84af87ede6f58d41cc11b0c1ab8f4ae:
+
+#define USE_systimersetinterval :ref:`PFSYSTIMERSETINTERVAL_IEC <group___sys_timer_itf_1ga8a86caff8843210748a4486dab92be6d>` pfsystimersetinterval;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gacabe991035bc4ac7e3d31507536cff2f:
+
+#define EXT_systimersetinterval extern :ref:`PFSYSTIMERSETINTERVAL_IEC <group___sys_timer_itf_1ga8a86caff8843210748a4486dab92be6d>` pfsystimersetinterval;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga33b5085d1833c3127062f19ad9ee6559:
+
+#define GET_systimersetinterval s_pfCMGetAPI2( "systimersetinterval", (RTS_VOID_FCTPTR *)&pfsystimersetinterval, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x2AF11037, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga42ebd5a7c8f7633f3ea5f7492c419d21:
+
+#define CAL_systimersetinterval pfsystimersetinterval
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga86a8de690acb6eb31038b4ad84e9a0a7:
+
+#define CHK_systimersetinterval (pfsystimersetinterval != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga34456fc97f7e3b7559bcb7a986244043:
+
+#define EXP_systimersetinterval s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimersetinterval", (RTS_UINTPTR) :ref:`systimersetinterval <group___sys_timer_itf_1gaceead3f5bc13daff7557677f99ff763c>` , 1, 0x2AF11037, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaabe322b1ee7a5a2ec4437be4ece15641:
+
+#define USE_systimerstart :ref:`PFSYSTIMERSTART_IEC <group___sys_timer_itf_1ga7fc4f1ce66b1cbd31db253eae9b81988>` pfsystimerstart;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga03c4433170364915a0644dc9274deafe:
+
+#define EXT_systimerstart extern :ref:`PFSYSTIMERSTART_IEC <group___sys_timer_itf_1ga7fc4f1ce66b1cbd31db253eae9b81988>` pfsystimerstart;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga15aeef1663cf5650a352375d6b53d03b:
+
+#define GET_systimerstart s_pfCMGetAPI2( "systimerstart", (RTS_VOID_FCTPTR *)&pfsystimerstart, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE6A9B3FA, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga8137b226d0f0605b85c9d4a14c359dcb:
+
+#define CAL_systimerstart pfsystimerstart
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga36be682ec5eccce0d8dd746079ade36e:
+
+#define CHK_systimerstart (pfsystimerstart != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga5d343948431b5079edaf52e70b4b3eb3:
+
+#define EXP_systimerstart s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimerstart", (RTS_UINTPTR) :ref:`systimerstart <group___sys_timer_itf_1gacb5f5da3a0c1f2ff54c7b7d1cc0b8617>` , 1, 0xE6A9B3FA, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaada1780bcac8efdaa2eef1ed943018b4:
+
+#define USE_systimerstop :ref:`PFSYSTIMERSTOP_IEC <group___sys_timer_itf_1ga56d6d55c5778ae726eed7e71f5d8e760>` pfsystimerstop;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga1990af9b888fa9162ca39990234a2695:
+
+#define EXT_systimerstop extern :ref:`PFSYSTIMERSTOP_IEC <group___sys_timer_itf_1ga56d6d55c5778ae726eed7e71f5d8e760>` pfsystimerstop;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga36f6e950ad47c5534467462cc58e3717:
+
+#define GET_systimerstop s_pfCMGetAPI2( "systimerstop", (RTS_VOID_FCTPTR *)&pfsystimerstop, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x6374B953, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga25e2a60dd164db2272681d53b9878a85:
+
+#define CAL_systimerstop pfsystimerstop
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga496acee7ed5f567fc81ec42680020654:
+
+#define CHK_systimerstop (pfsystimerstop != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga3320e98b0b5e9eecbf11d5144d9dd9c2:
+
+#define EXP_systimerstop s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimerstop", (RTS_UINTPTR) :ref:`systimerstop <group___sys_timer_itf_1gafc80299b68323395049698ea4ec084cb>` , 1, 0x6374B953, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga3c485f470dc03352e95869f7e57965fd:
+
+#define USE_SysTimerCreateEvent :ref:`PFSYSTIMERCREATEEVENT <group___sys_timer_itf_1gabda2238d14fd58b33bc70a151ac37c93>` pfSysTimerCreateEvent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga7daa697b7d386e298d9accfc0c5c9bbc:
+
+#define EXT_SysTimerCreateEvent extern :ref:`PFSYSTIMERCREATEEVENT <group___sys_timer_itf_1gabda2238d14fd58b33bc70a151ac37c93>` pfSysTimerCreateEvent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga8d87158bb2196cf28e7038d810abc58b:
+
+#define GET_SysTimerCreateEvent s_pfCMGetAPI2( "SysTimerCreateEvent", (RTS_VOID_FCTPTR *)&pfSysTimerCreateEvent, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga95be1a9dc1998689796b9c054029a23f:
+
+#define CAL_SysTimerCreateEvent pfSysTimerCreateEvent
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga94537fd559d00f594a8ce27caed6cbf0:
+
+#define CHK_SysTimerCreateEvent (pfSysTimerCreateEvent != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga87f4f02aa338673948e4db7ff4868dd7:
+
+#define EXP_SysTimerCreateEvent s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerCreateEvent", (RTS_UINTPTR) :ref:`SysTimerCreateEvent <group___sys_timer_itf_1ga72448a0047df2952bde603c6f9e3836c>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gab5ffd787ccc90d8407eb400114cf1990:
+
+#define USE_SysTimerCreateCallback :ref:`PFSYSTIMERCREATECALLBACK <group___sys_timer_itf_1ga245369d425b1ca84fb1076b888031fad>` pfSysTimerCreateCallback;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga2bdc475693cff07f1e857b817e0d70c6:
+
+#define EXT_SysTimerCreateCallback extern :ref:`PFSYSTIMERCREATECALLBACK <group___sys_timer_itf_1ga245369d425b1ca84fb1076b888031fad>` pfSysTimerCreateCallback;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga5a58d74922f40a1fffd67bfa7c6c19b5:
+
+#define GET_SysTimerCreateCallback s_pfCMGetAPI2( "SysTimerCreateCallback", (RTS_VOID_FCTPTR *)&pfSysTimerCreateCallback, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gab437712fe77c226cf6e9a237fc2db855:
+
+#define CAL_SysTimerCreateCallback pfSysTimerCreateCallback
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga8c09c6c8aaa7a3b94d0d444a3659e93f:
+
+#define CHK_SysTimerCreateCallback (pfSysTimerCreateCallback != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gad549b7880e3766feb26dce4e2e3e6338:
+
+#define EXP_SysTimerCreateCallback s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerCreateCallback", (RTS_UINTPTR) :ref:`SysTimerCreateCallback <group___sys_timer_itf_1ga7bd0c7b2667c9e120d678bc77aa530ee>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga3048f26a5256ed8ccc983ae31ffcf5f4:
+
+#define USE_SysTimerCreateCallback2 :ref:`PFSYSTIMERCREATECALLBACK2 <group___sys_timer_itf_1ga370ce614468326a8d58496d7efed3c77>` pfSysTimerCreateCallback2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga8c4fbe88ccb795847e7f2ade32661bd3:
+
+#define EXT_SysTimerCreateCallback2 extern :ref:`PFSYSTIMERCREATECALLBACK2 <group___sys_timer_itf_1ga370ce614468326a8d58496d7efed3c77>` pfSysTimerCreateCallback2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga1b3c91b49a11027d7a18eeb9d674e374:
+
+#define GET_SysTimerCreateCallback2 s_pfCMGetAPI2( "SysTimerCreateCallback2", (RTS_VOID_FCTPTR *)&pfSysTimerCreateCallback2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga7cef938ad04d3bbb30214e61ff2feb34:
+
+#define CAL_SysTimerCreateCallback2 pfSysTimerCreateCallback2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaab4ef83f84ed98f5ad596a1235eed428:
+
+#define CHK_SysTimerCreateCallback2 (pfSysTimerCreateCallback2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf67499dbcb15fe4cec4f90c0040b5f83:
+
+#define EXP_SysTimerCreateCallback2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerCreateCallback2", (RTS_UINTPTR) :ref:`SysTimerCreateCallback2 <group___sys_timer_itf_1gac13e0205d37e969d4a01a53ae7464e39>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga354975f6032db946eef4ce0fa9fcf3b2:
+
+#define USE_SysTimerDelete :ref:`PFSYSTIMERDELETE <group___sys_timer_itf_1ga29a57191ddd5f6fa7bb4794f96f4f661>` pfSysTimerDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga7c36e57608ad0b547d8c3656e3f420c2:
+
+#define EXT_SysTimerDelete extern :ref:`PFSYSTIMERDELETE <group___sys_timer_itf_1ga29a57191ddd5f6fa7bb4794f96f4f661>` pfSysTimerDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf392045b662b6ff400a2aab543040815:
+
+#define GET_SysTimerDelete s_pfCMGetAPI2( "SysTimerDelete", (RTS_VOID_FCTPTR *)&pfSysTimerDelete, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga7afb15b8c75463242a83cb7034543084:
+
+#define CAL_SysTimerDelete pfSysTimerDelete
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaa03972cab007069e90c8ceabbbb4e4c7:
+
+#define CHK_SysTimerDelete (pfSysTimerDelete != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga48955f07027cd38c783a4f7e37e1df78:
+
+#define EXP_SysTimerDelete s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerDelete", (RTS_UINTPTR) :ref:`SysTimerDelete <group___sys_timer_itf_1ga82ba4944fb348a0fc3147e0ad225e941>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga0e9a7f116960b7c842e84c74897ebb25:
+
+#define USE_SysTimerOpen :ref:`PFSYSTIMEROPEN <group___sys_timer_itf_1ga37fc5f036687b87cb47892d0556a1933>` pfSysTimerOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga972ece851f266bed6d1c521ff360821a:
+
+#define EXT_SysTimerOpen extern :ref:`PFSYSTIMEROPEN <group___sys_timer_itf_1ga37fc5f036687b87cb47892d0556a1933>` pfSysTimerOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga9e60f9ae005f30d35f0fb0567a1d86f9:
+
+#define GET_SysTimerOpen s_pfCMGetAPI2( "SysTimerOpen", (RTS_VOID_FCTPTR *)&pfSysTimerOpen, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga686fd80ed00f84cd969912e26e1e5425:
+
+#define CAL_SysTimerOpen pfSysTimerOpen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga04783dfd123ebc460787c47dcb64e44f:
+
+#define CHK_SysTimerOpen (pfSysTimerOpen != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gafef6227260bd09fa32d986dbd4af1ec0:
+
+#define EXP_SysTimerOpen s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerOpen", (RTS_UINTPTR) :ref:`SysTimerOpen <group___sys_timer_itf_1ga81a4bda452cea19feeba1b8383cafcee>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gab35a5b4edd1ecc783aa3009039e40b99:
+
+#define USE_SysTimerClose :ref:`PFSYSTIMERCLOSE <group___sys_timer_itf_1ga2db8adc7e0a77efa784ef8837eb706da>` pfSysTimerClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaa2ff18099c215708c4f865232b2340e6:
+
+#define EXT_SysTimerClose extern :ref:`PFSYSTIMERCLOSE <group___sys_timer_itf_1ga2db8adc7e0a77efa784ef8837eb706da>` pfSysTimerClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf56e1059f1f1d75fcd34a149b4748652:
+
+#define GET_SysTimerClose s_pfCMGetAPI2( "SysTimerClose", (RTS_VOID_FCTPTR *)&pfSysTimerClose, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gab23f39489350db1d2b09615b961ffdd6:
+
+#define CAL_SysTimerClose pfSysTimerClose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga1422c7f393045407f806df5db4af8b5c:
+
+#define CHK_SysTimerClose (pfSysTimerClose != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga9532774e61dfa4252a12dad2873c3a65:
+
+#define EXP_SysTimerClose s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerClose", (RTS_UINTPTR) :ref:`SysTimerClose <group___sys_timer_itf_1gaa9dc02593fd99db07c4db7eca43cf2ab>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga9726d215aec1d9657349ae39c9482a20:
+
+#define USE_SysTimerStart :ref:`PFSYSTIMERSTART <group___sys_timer_itf_1ga16cae85ea8756639ed2434e8728bbf64>` pfSysTimerStart;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gadc72212595c63c67b6551b4e43fe9544:
+
+#define EXT_SysTimerStart extern :ref:`PFSYSTIMERSTART <group___sys_timer_itf_1ga16cae85ea8756639ed2434e8728bbf64>` pfSysTimerStart;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gae496b1a97fa5a2f5cfe9bc376ef5967c:
+
+#define GET_SysTimerStart s_pfCMGetAPI2( "SysTimerStart", (RTS_VOID_FCTPTR *)&pfSysTimerStart, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga9c2ee528d98773b57d0b9b4961676f24:
+
+#define CAL_SysTimerStart pfSysTimerStart
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga0cf393962a653e7a551bb97396cd7439:
+
+#define CHK_SysTimerStart (pfSysTimerStart != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gac4ae38d7cd0d2d750a9c00d0cc6db039:
+
+#define EXP_SysTimerStart s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerStart", (RTS_UINTPTR) :ref:`SysTimerStart <group___sys_timer_itf_1gaab0e60e94bc15215f8cc59f0925d8111>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga08cb644b90b8bae1aad587f95df0dcb8:
+
+#define USE_SysTimerStop :ref:`PFSYSTIMERSTOP <group___sys_timer_itf_1ga4defb09d4235d559ac87f0ce28ca88b4>` pfSysTimerStop;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gab4bb084c7e58a4ed6d4bde4f432c3952:
+
+#define EXT_SysTimerStop extern :ref:`PFSYSTIMERSTOP <group___sys_timer_itf_1ga4defb09d4235d559ac87f0ce28ca88b4>` pfSysTimerStop;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gab54880e875d8de15eaab14d11271e1b0:
+
+#define GET_SysTimerStop s_pfCMGetAPI2( "SysTimerStop", (RTS_VOID_FCTPTR *)&pfSysTimerStop, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga9124e83ebe952fefcd1f4d74a5d2819b:
+
+#define CAL_SysTimerStop pfSysTimerStop
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf8555c9fa6e716ae7a60abe6ef8dcaa9:
+
+#define CHK_SysTimerStop (pfSysTimerStop != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gabd5aae952bef50fe1d402cdaa34cf3c6:
+
+#define EXP_SysTimerStop s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerStop", (RTS_UINTPTR) :ref:`SysTimerStop <group___sys_timer_itf_1gae4193bd2879f8f1aa9a6b799069e1759>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gadbf34bafadec2f40e10a9b6f1a055772:
+
+#define USE_SysTimerGetInterval :ref:`PFSYSTIMERGETINTERVAL <group___sys_timer_itf_1ga797e5c3667df3f1dcc41badf03c0c111>` pfSysTimerGetInterval;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga0f32a05f5494e987afc51195a090d05d:
+
+#define EXT_SysTimerGetInterval extern :ref:`PFSYSTIMERGETINTERVAL <group___sys_timer_itf_1ga797e5c3667df3f1dcc41badf03c0c111>` pfSysTimerGetInterval;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga99da1dbd48642d9df799524a257c35d0:
+
+#define GET_SysTimerGetInterval s_pfCMGetAPI2( "SysTimerGetInterval", (RTS_VOID_FCTPTR *)&pfSysTimerGetInterval, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaad67d206cfaf24d8970ddf1db76827d3:
+
+#define CAL_SysTimerGetInterval pfSysTimerGetInterval
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga5e71afed6ce304732dc051d6cac22e5a:
+
+#define CHK_SysTimerGetInterval (pfSysTimerGetInterval != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gad0535516eda1cf803fd4489675c8420c:
+
+#define EXP_SysTimerGetInterval s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetInterval", (RTS_UINTPTR) :ref:`SysTimerGetInterval <group___sys_timer_itf_1ga536aaa19cb9a505f566d1c8afb598124>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaa1dbd1d0bdf6fc759af9c43f5faa00b1:
+
+#define USE_SysTimerSetInterval :ref:`PFSYSTIMERSETINTERVAL <group___sys_timer_itf_1ga52e3089d98099b79cc0fd34985ed7a27>` pfSysTimerSetInterval;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga444d6be7f0499fd58e27e0b9b900e948:
+
+#define EXT_SysTimerSetInterval extern :ref:`PFSYSTIMERSETINTERVAL <group___sys_timer_itf_1ga52e3089d98099b79cc0fd34985ed7a27>` pfSysTimerSetInterval;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga12d155bfe4fd4befa85400c888cf3bc9:
+
+#define GET_SysTimerSetInterval s_pfCMGetAPI2( "SysTimerSetInterval", (RTS_VOID_FCTPTR *)&pfSysTimerSetInterval, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga6231cdbf8643a5bffc6697a5d2b22100:
+
+#define CAL_SysTimerSetInterval pfSysTimerSetInterval
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gad31385e40f1d4af4e3b420d6300a94ce:
+
+#define CHK_SysTimerSetInterval (pfSysTimerSetInterval != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gad9f0dda640d3cac52c592a07267c7323:
+
+#define EXP_SysTimerSetInterval s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerSetInterval", (RTS_UINTPTR) :ref:`SysTimerSetInterval <group___sys_timer_itf_1gaec21d923ed57b06f68b032563b2af243>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaedf366a513b1d9715479e93a1a2d07c8:
+
+#define USE_SysTimerGetTimeStamp :ref:`PFSYSTIMERGETTIMESTAMP <group___sys_timer_itf_1ga8dc16e64fd9bb80fb259a2e71bfc8052>` pfSysTimerGetTimeStamp;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf0c511bbd606ea82e23b7ea6d4e38d7c:
+
+#define EXT_SysTimerGetTimeStamp extern :ref:`PFSYSTIMERGETTIMESTAMP <group___sys_timer_itf_1ga8dc16e64fd9bb80fb259a2e71bfc8052>` pfSysTimerGetTimeStamp;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga16dae2d956f19b4c8174035062472388:
+
+#define GET_SysTimerGetTimeStamp s_pfCMGetAPI2( "SysTimerGetTimeStamp", (RTS_VOID_FCTPTR *)&pfSysTimerGetTimeStamp, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf49bca2926bfa4789caa629267d98ff3:
+
+#define CAL_SysTimerGetTimeStamp pfSysTimerGetTimeStamp
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf37c129906046ca0292ee3b6829184f7:
+
+#define CHK_SysTimerGetTimeStamp (pfSysTimerGetTimeStamp != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gad9d6dbf65289aacd6f271e234b62b1ab:
+
+#define EXP_SysTimerGetTimeStamp s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetTimeStamp", (RTS_UINTPTR) :ref:`SysTimerGetTimeStamp <group___sys_timer_itf_1ga921a7ac15d2223a29952722c2159aeaf>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gac4d39b655abd8c3492e7fb3f049d0de0:
+
+#define USE_SysTimerMaxTimer :ref:`PFSYSTIMERMAXTIMER <group___sys_timer_itf_1ga4a4860b6a31123a0482705907ec7f828>` pfSysTimerMaxTimer;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga691cadd4270f1a0cb0ebe61cdb31023d:
+
+#define EXT_SysTimerMaxTimer extern :ref:`PFSYSTIMERMAXTIMER <group___sys_timer_itf_1ga4a4860b6a31123a0482705907ec7f828>` pfSysTimerMaxTimer;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gab3c1d9103d275c7a4e672f8eff5c65f5:
+
+#define GET_SysTimerMaxTimer s_pfCMGetAPI2( "SysTimerMaxTimer", (RTS_VOID_FCTPTR *)&pfSysTimerMaxTimer, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga1406da1140fc6f4e3cf5ccc1e0c1ece3:
+
+#define CAL_SysTimerMaxTimer pfSysTimerMaxTimer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga9b98c3c3197d29f8be4c5ffdaa12f766:
+
+#define CHK_SysTimerMaxTimer (pfSysTimerMaxTimer != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gac2749a7e8026c6145ca331f29ef9e517:
+
+#define EXP_SysTimerMaxTimer s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerMaxTimer", (RTS_UINTPTR) :ref:`SysTimerMaxTimer <group___sys_timer_itf_1ga1ac691c3724ffeb1de2add6f9891fe92>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga4e32ab01e31e9d8a08b7f2ffd47bc3f8:
+
+#define USE_SysTimerExistsTimer :ref:`PFSYSTIMEREXISTSTIMER <group___sys_timer_itf_1ga87e06d63d6c4862d9f5ad4a2949f0bdc>` pfSysTimerExistsTimer;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gab6cdb1f232984dd5b1f622b1288ed9ee:
+
+#define EXT_SysTimerExistsTimer extern :ref:`PFSYSTIMEREXISTSTIMER <group___sys_timer_itf_1ga87e06d63d6c4862d9f5ad4a2949f0bdc>` pfSysTimerExistsTimer;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga6305e8bc5e7faadb4163f0668c8d4f17:
+
+#define GET_SysTimerExistsTimer s_pfCMGetAPI2( "SysTimerExistsTimer", (RTS_VOID_FCTPTR *)&pfSysTimerExistsTimer, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga710a82a151a3b7bfd274b3fd80cee7f6:
+
+#define CAL_SysTimerExistsTimer pfSysTimerExistsTimer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf28e38250e14ceb05eaab5f5f2370d09:
+
+#define CHK_SysTimerExistsTimer (pfSysTimerExistsTimer != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga0b917d6a94355d4bf17da0be7dc7b0af:
+
+#define EXP_SysTimerExistsTimer s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerExistsTimer", (RTS_UINTPTR) :ref:`SysTimerExistsTimer <group___sys_timer_itf_1ga760278302712fe1313233f313309df2c>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga2b05a4b2d1512ae696a546832e9065f5:
+
+#define USE_SysTimerFitTimer :ref:`PFSYSTIMERFITTIMER <group___sys_timer_itf_1gad328647c796395a1c8f56396a755dad1>` pfSysTimerFitTimer;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga3529e9d655dc5de7a37ca3652aa13704:
+
+#define EXT_SysTimerFitTimer extern :ref:`PFSYSTIMERFITTIMER <group___sys_timer_itf_1gad328647c796395a1c8f56396a755dad1>` pfSysTimerFitTimer;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga08dce4439f7d90b742185ed0494ed7b2:
+
+#define GET_SysTimerFitTimer s_pfCMGetAPI2( "SysTimerFitTimer", (RTS_VOID_FCTPTR *)&pfSysTimerFitTimer, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga4067f4d2cc76145adfc98e9d18a16143:
+
+#define CAL_SysTimerFitTimer pfSysTimerFitTimer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gae6f0b4b436d1e9e3462199976c5906d4:
+
+#define CHK_SysTimerFitTimer (pfSysTimerFitTimer != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga2758d730c6134dbc878b34e469d68368:
+
+#define EXP_SysTimerFitTimer s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerFitTimer", (RTS_UINTPTR) :ref:`SysTimerFitTimer <group___sys_timer_itf_1gac2815f89df55182c4bcb1572d9426e48>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gab1e7581bf791dc011fb8a733a17ec7a6:
+
+#define USE_SysTimerGetMinResolution :ref:`PFSYSTIMERGETMINRESOLUTION <group___sys_timer_itf_1gab7b85f5315fa21d89cf73c9aa3cbb18f>` pfSysTimerGetMinResolution;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf3dd4e596ef1a33bdf2363b08d0dbdcd:
+
+#define EXT_SysTimerGetMinResolution extern :ref:`PFSYSTIMERGETMINRESOLUTION <group___sys_timer_itf_1gab7b85f5315fa21d89cf73c9aa3cbb18f>` pfSysTimerGetMinResolution;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gad14b84fdac97cb1390b61f821e011e6e:
+
+#define GET_SysTimerGetMinResolution s_pfCMGetAPI2( "SysTimerGetMinResolution", (RTS_VOID_FCTPTR *)&pfSysTimerGetMinResolution, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga7916be65a8e893166093de65b9408de3:
+
+#define CAL_SysTimerGetMinResolution pfSysTimerGetMinResolution
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga04e3a70d6164c6d7ea2e66a994ad6bf4:
+
+#define CHK_SysTimerGetMinResolution (pfSysTimerGetMinResolution != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga141842d4094d58e45241e933821addf5:
+
+#define EXP_SysTimerGetMinResolution s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetMinResolution", (RTS_UINTPTR) :ref:`SysTimerGetMinResolution <group___sys_timer_itf_1gaf4319db131dab4fd0e26c159e3b112db>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga1cb28e059e7a5b5ef6879ab49fe149b4:
+
+#define USE_SysTimerGetContext :ref:`PFSYSTIMERGETCONTEXT <group___sys_timer_itf_1ga77a988a585593082151f492ceef46fcc>` pfSysTimerGetContext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga062e763725848490009488ad305879dd:
+
+#define EXT_SysTimerGetContext extern :ref:`PFSYSTIMERGETCONTEXT <group___sys_timer_itf_1ga77a988a585593082151f492ceef46fcc>` pfSysTimerGetContext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga404242adfd15e9dc13d3bb4f5aa966be:
+
+#define GET_SysTimerGetContext s_pfCMGetAPI2( "SysTimerGetContext", (RTS_VOID_FCTPTR *)&pfSysTimerGetContext, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga84b07b39032ea7d42c6641b884a46d0f:
+
+#define CAL_SysTimerGetContext pfSysTimerGetContext
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gac6e7d83a79b720c798f152b853b01e5a:
+
+#define CHK_SysTimerGetContext (pfSysTimerGetContext != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga77df71f3774c7e135ecff2d55ef47615:
+
+#define EXP_SysTimerGetContext s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetContext", (RTS_UINTPTR) :ref:`SysTimerGetContext <group___sys_timer_itf_1ga1cf6549e1b5201bbf7914c9678ccfa09>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga309847d3ce0a37253e511e7efebe948b:
+
+#define USE_SysTimerGenerateException :ref:`PFSYSTIMERGENERATEEXCEPTION <group___sys_timer_itf_1ga0a00158a0717c17f10c32c4aaa56c6be>` pfSysTimerGenerateException;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga56152a0835684078eaef32cffdc06554:
+
+#define EXT_SysTimerGenerateException extern :ref:`PFSYSTIMERGENERATEEXCEPTION <group___sys_timer_itf_1ga0a00158a0717c17f10c32c4aaa56c6be>` pfSysTimerGenerateException;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf8a7169bf7e852fa296bf1bc11a069ae:
+
+#define GET_SysTimerGenerateException s_pfCMGetAPI2( "SysTimerGenerateException", (RTS_VOID_FCTPTR *)&pfSysTimerGenerateException, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga9c25f39d0b1b2fc0cb3fb7407c7d4754:
+
+#define CAL_SysTimerGenerateException pfSysTimerGenerateException
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga60a6d5f9f72080ce341234097933a774:
+
+#define CHK_SysTimerGenerateException (pfSysTimerGenerateException != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga533c7adf9657e67ae1ad5a92dc25b170:
+
+#define EXP_SysTimerGenerateException s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGenerateException", (RTS_UINTPTR) :ref:`SysTimerGenerateException <group___sys_timer_itf_1ga3c20cc89d81ed444dccf47b1cedbd248>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf213c4d0131b75261044689b34ac7c9e:
+
+#define USE_SysTimerSetCallbackParameter :ref:`PFSYSTIMERSETCALLBACKPARAMETER <group___sys_timer_itf_1gaceec2dac4350922030999dee6896ab1b>` pfSysTimerSetCallbackParameter;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga4aa45f4450065912fc3aa62ade9822fe:
+
+#define EXT_SysTimerSetCallbackParameter extern :ref:`PFSYSTIMERSETCALLBACKPARAMETER <group___sys_timer_itf_1gaceec2dac4350922030999dee6896ab1b>` pfSysTimerSetCallbackParameter;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gae6f75a7094c7e37dd74898c528acc84b:
+
+#define GET_SysTimerSetCallbackParameter s_pfCMGetAPI2( "SysTimerSetCallbackParameter", (RTS_VOID_FCTPTR *)&pfSysTimerSetCallbackParameter, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga43fbb25e2c040f308276a1f22dada54e:
+
+#define CAL_SysTimerSetCallbackParameter pfSysTimerSetCallbackParameter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaa7e0c4b5ed6153922766969c5c8a1531:
+
+#define CHK_SysTimerSetCallbackParameter (pfSysTimerSetCallbackParameter != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gad8ccbb74d3834c83abc4d14eca4c51c4:
+
+#define EXP_SysTimerSetCallbackParameter s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerSetCallbackParameter", (RTS_UINTPTR) :ref:`SysTimerSetCallbackParameter <group___sys_timer_itf_1gade90871c9e2feac4245496edbbd09147>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga32a74c8d0c5d364ea78a0f4d4af61c83:
+
+#define USE_SysTimerSetResetFollowing :ref:`PFSYSTIMERSETRESETFOLLOWING <group___sys_timer_itf_1gaff9a4296e9268d30a2a8ba0e01149402>` pfSysTimerSetResetFollowing;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga4d3dbec4ccefbde7105d6ef4882da1bb:
+
+#define EXT_SysTimerSetResetFollowing extern :ref:`PFSYSTIMERSETRESETFOLLOWING <group___sys_timer_itf_1gaff9a4296e9268d30a2a8ba0e01149402>` pfSysTimerSetResetFollowing;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga225e5e1a6d19db315fcdac36cb6b44d9:
+
+#define GET_SysTimerSetResetFollowing s_pfCMGetAPI2( "SysTimerSetResetFollowing", (RTS_VOID_FCTPTR *)&pfSysTimerSetResetFollowing, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gae465adda71bf6c6a04eaddff1c08ad53:
+
+#define CAL_SysTimerSetResetFollowing pfSysTimerSetResetFollowing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga06d1b53b5c781b0369fc6ac660d647a1:
+
+#define CHK_SysTimerSetResetFollowing (pfSysTimerSetResetFollowing != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga9aac000310c398c2a148e81b5a95af75:
+
+#define EXP_SysTimerSetResetFollowing s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerSetResetFollowing", (RTS_UINTPTR) :ref:`SysTimerSetResetFollowing <group___sys_timer_itf_1ga97e2e65ab002ecda68472bea31976d67>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga1b2698d220c14fdb5e6194532defc4dc:
+
+#define USE_SysTimerRegisterBasePointer :ref:`PFSYSTIMERREGISTERBASEPOINTER <group___sys_timer_itf_1gada68f86c87871f4d5c5e214fc387bc9e>` pfSysTimerRegisterBasePointer;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga222d50d4fd586f840fb02b7889226841:
+
+#define EXT_SysTimerRegisterBasePointer extern :ref:`PFSYSTIMERREGISTERBASEPOINTER <group___sys_timer_itf_1gada68f86c87871f4d5c5e214fc387bc9e>` pfSysTimerRegisterBasePointer;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gae1638ef02ea964c3f5e7193eebf6e9e8:
+
+#define GET_SysTimerRegisterBasePointer s_pfCMGetAPI2( "SysTimerRegisterBasePointer", (RTS_VOID_FCTPTR *)&pfSysTimerRegisterBasePointer, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga5995fd1ec513c2aede3bb8ec4e8e8e18:
+
+#define CAL_SysTimerRegisterBasePointer pfSysTimerRegisterBasePointer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga3c6998df226519f0c96b6708dad5e747:
+
+#define CHK_SysTimerRegisterBasePointer (pfSysTimerRegisterBasePointer != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga9860489d0a34d950e09b3745a88bd920:
+
+#define EXP_SysTimerRegisterBasePointer s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerRegisterBasePointer", (RTS_UINTPTR) :ref:`SysTimerRegisterBasePointer <group___sys_timer_itf_1gab11b25e015573472d6b997d9e1b3b81b>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaaa312da2eb93b61416c5bc884606fa13:
+
+#define USE_SysTimerGetFirst :ref:`PFSYSTIMERGETFIRST <group___sys_timer_itf_1gaff2d3f85db88958c2a5bc391d3344683>` pfSysTimerGetFirst;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga2e3254b8604d87e04f01722b5485b435:
+
+#define EXT_SysTimerGetFirst extern :ref:`PFSYSTIMERGETFIRST <group___sys_timer_itf_1gaff2d3f85db88958c2a5bc391d3344683>` pfSysTimerGetFirst;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga36ff48c059234142c96284c8cd4ff0da:
+
+#define GET_SysTimerGetFirst s_pfCMGetAPI2( "SysTimerGetFirst", (RTS_VOID_FCTPTR *)&pfSysTimerGetFirst, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga31b7d5c9aa0e4636f5b5575cac5c0edd:
+
+#define CAL_SysTimerGetFirst pfSysTimerGetFirst
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gacdc656d52c69a65ae06918cd268f3f4f:
+
+#define CHK_SysTimerGetFirst (pfSysTimerGetFirst != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gae9aa682564896803f22e441b36b0e565:
+
+#define EXP_SysTimerGetFirst s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetFirst", (RTS_UINTPTR) :ref:`SysTimerGetFirst <group___sys_timer_itf_1ga0fafc580f3121e54077f1bc8c8c668bf>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gadb4024c6f5e536de6f4e3ec0d08a88ae:
+
+#define USE_SysTimerGetNext :ref:`PFSYSTIMERGETNEXT <group___sys_timer_itf_1ga7de2513df0724fcaca0c643079d0cea1>` pfSysTimerGetNext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga4c3893c5afaf34382d6490e6e2a945c8:
+
+#define EXT_SysTimerGetNext extern :ref:`PFSYSTIMERGETNEXT <group___sys_timer_itf_1ga7de2513df0724fcaca0c643079d0cea1>` pfSysTimerGetNext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga035fcc785a9247471778170802527c17:
+
+#define GET_SysTimerGetNext s_pfCMGetAPI2( "SysTimerGetNext", (RTS_VOID_FCTPTR *)&pfSysTimerGetNext, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gadad6f5e96151b1e7aa31d886123b5184:
+
+#define CAL_SysTimerGetNext pfSysTimerGetNext
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga8c8c1d18f01fb4a978efc22d66aacfdc:
+
+#define CHK_SysTimerGetNext (pfSysTimerGetNext != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga4aab420647da2b269ec35c8c7d4efea1:
+
+#define EXP_SysTimerGetNext s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetNext", (RTS_UINTPTR) :ref:`SysTimerGetNext <group___sys_timer_itf_1ga7c12fb9423c04f31df8474c0c9a55166>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gad9553f1ca54b5ff63de85f181a49008e:
+
+#define USE_SysTimerCallCallback :ref:`PFSYSTIMERCALLCALLBACK <group___sys_timer_itf_1ga949a3bc0184ea8c5916802886ca32af1>` pfSysTimerCallCallback;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga439aacadbb4d1263ed901fdf7666cbbb:
+
+#define EXT_SysTimerCallCallback extern :ref:`PFSYSTIMERCALLCALLBACK <group___sys_timer_itf_1ga949a3bc0184ea8c5916802886ca32af1>` pfSysTimerCallCallback;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaa9047f99255d5aaad30579d729b91927:
+
+#define GET_SysTimerCallCallback s_pfCMGetAPI2( "SysTimerCallCallback", (RTS_VOID_FCTPTR *)&pfSysTimerCallCallback, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga5063eaefe420c033c195393338976ebc:
+
+#define CAL_SysTimerCallCallback pfSysTimerCallCallback
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga8ad6b76f3be58eb44f036e144e2f93df:
+
+#define CHK_SysTimerCallCallback (pfSysTimerCallCallback != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga484350af2031915a65676700b2aa3c84:
+
+#define EXP_SysTimerCallCallback s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerCallCallback", (RTS_UINTPTR) :ref:`SysTimerCallCallback <group___sys_timer_itf_1ga5b2f8285bf4efc778d302ded6eed1815>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaed3a62b01a7c0130cf6d85252e1ed4db:
+
+#define USE_SysTimerGetCurrent :ref:`PFSYSTIMERGETCURRENT <group___sys_timer_itf_1ga5c8d7398d686522430de5628af1f79d2>` pfSysTimerGetCurrent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga3c0445391875dfcf7d1dce81e2abc5d3:
+
+#define EXT_SysTimerGetCurrent extern :ref:`PFSYSTIMERGETCURRENT <group___sys_timer_itf_1ga5c8d7398d686522430de5628af1f79d2>` pfSysTimerGetCurrent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaf65fe238e6c4155b06b1b9916de33d7d:
+
+#define GET_SysTimerGetCurrent s_pfCMGetAPI2( "SysTimerGetCurrent", (RTS_VOID_FCTPTR *)&pfSysTimerGetCurrent, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga1006f4c38a7a3afb6abf509149c8c6f7:
+
+#define CAL_SysTimerGetCurrent pfSysTimerGetCurrent
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gada6f4e4531dac0de8db0ac90125b01fb:
+
+#define CHK_SysTimerGetCurrent (pfSysTimerGetCurrent != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga30c8b71bfe7eedb8ce154346550d7202:
+
+#define EXP_SysTimerGetCurrent s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetCurrent", (RTS_UINTPTR) :ref:`SysTimerGetCurrent <group___sys_timer_itf_1ga806e51d55aa81bc515d93f14014b160f>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga95b22b6e183e3b086dde3225bf2809d5:
+
+#define USE_SysTimerGetInfo :ref:`PFSYSTIMERGETINFO <group___sys_timer_itf_1ga19cf2ba44e035b78bc38aca22df9add7>` pfSysTimerGetInfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga316a4cf6b7ec9a3bec95299232a89417:
+
+#define EXT_SysTimerGetInfo extern :ref:`PFSYSTIMERGETINFO <group___sys_timer_itf_1ga19cf2ba44e035b78bc38aca22df9add7>` pfSysTimerGetInfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gabe14037189ea2f827f2e9c8c2a15f001:
+
+#define GET_SysTimerGetInfo s_pfCMGetAPI2( "SysTimerGetInfo", (RTS_VOID_FCTPTR *)&pfSysTimerGetInfo, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaeea6cce22f5dc124ecbb267e0b343342:
+
+#define CAL_SysTimerGetInfo pfSysTimerGetInfo
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga16150f7817414c9184475d2f824276c4:
+
+#define CHK_SysTimerGetInfo (pfSysTimerGetInfo != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaaca10cefb03a9e0f4691e62ef2ab1c7a:
+
+#define EXP_SysTimerGetInfo s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimerGetInfo", (RTS_UINTPTR) :ref:`SysTimerGetInfo <group___sys_timer_itf_1ga6e2d67e9e3d87116cabc7a2892ceaa28>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gac007bda410aeef6d00f57006fb17720a:
+
+#define ITF_SysTimer
+^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaca004b138610dcf60ab80b938a299194:
+
+#define EXTITF_SysTimer
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___sys_timer_itf_1ga8e3005c645ca74ac5979873a429a1d4a:
+
+typedef void HUGEPTR( * PFTIMERCALLBACK) (RTS_HANDLE hParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Timer callback interface
+
+**Parameters**
+
++---------+--------+----------------------------------------------------------+
+| [in]    | hParam | Parameter handle RANGE=[RTS_INVALID_HANDLE,VALID_HPARAM] |
++---------+--------+----------------------------------------------------------+
+
+.. _group___sys_timer_itf_1gaa8a367a6a7299822ea22df5cac9589e8:
+
+typedef RTS_RESULT( * PFTIMEREXCEPTIONHANDLER) (RTS_HANDLE hTimerHandle, RTS_UI32 ulException, RegContext Context)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Timer exception callback interface
+
+**Parameters**
+
++---------+--------------+---------------------------------------------------------------------------------+
+| [in]    | hTimerHandle | Handle of the assigned timer RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE]  |
++---------+--------------+---------------------------------------------------------------------------------+
+| [in]    | ulException  | Exception number RANGE=[RTS_RANGE_OF_ULONG]                                     |
++---------+--------------+---------------------------------------------------------------------------------+
+| [in]    | Context      | Register context of the exception RANGE=[RTS_INVALID_HANDLE,NULL,VALID_CONTEXT] |
++---------+--------------+---------------------------------------------------------------------------------+
+
+.. _group___sys_timer_itf_1ga299065b5a711c22b2d332b5e0bfb8561:
+
+typedef struct tagsystimercreatecallback_struct  systimercreatecallback_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION BEGIN
+
+This function creates a new timer and calls a callback function.
+**Returns:**
+
+RESULT: Handle of the timer or RTS_INVALID_HANDLE if failed
+
+.. _group___sys_timer_itf_1ga0a0bce53c7bb6416ac5c47e7c1f4cb9e:
+
+typedef void( *  PFSYSTIMERCREATECALLBACK_IEC) (systimercreatecallback_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga1c2f1ddafced9b1d1a23265a3f63dbc7:
+
+typedef struct tagsystimercreatecallback2_struct  systimercreatecallback2_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function creates a timer and calls a callback function.
+**Returns:**
+
+RESULT: Handle of the timer or RTS_INVALID_HANDLE if failed
+
+.. _group___sys_timer_itf_1ga817f0deab6bdba0642177d4d7f8753d1:
+
+typedef void( *  PFSYSTIMERCREATECALLBACK2_IEC) (systimercreatecallback2_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga04930ee508302e86be3c34824a97bcfb:
+
+typedef struct tagsystimercreateevent_struct  systimercreateevent_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function creates a new timer and sets an event at timer elapsed.
+**Returns:**
+
+Handle of the timer or RTS_INVALID_HANDLE
+
+.. _group___sys_timer_itf_1ga4cc123e10f953061a28fddeb6d6e4674:
+
+typedef void( *  PFSYSTIMERCREATEEVENT_IEC) (systimercreateevent_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga2097aea5dc7382ed3620f2db1de27709:
+
+typedef struct tagsystimerdelete_struct  systimerdelete_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function deletes a timer
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_timer_itf_1ga08dbd00036798458897c6db1d5e88353:
+
+typedef void( *  PFSYSTIMERDELETE_IEC) (systimerdelete_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga5eb01d53972d8d029a07776967085d7c:
+
+typedef struct tagsystimergetinterval_struct  systimergetinterval_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the interval of a timer
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_timer_itf_1gac25c449d047f1af784ea42d5654fd16f:
+
+typedef void( *  PFSYSTIMERGETINTERVAL_IEC) (systimergetinterval_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga43f35fc1ccbddbd787478a8f87d6be87:
+
+typedef struct tagsystimergettimestamp_struct  systimergettimestamp_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function returns the timestamp in ticks since timer start
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_timer_itf_1ga9a4aef7ae319d7162397acfa2cec15c8:
+
+typedef void( *  PFSYSTIMERGETTIMESTAMP_IEC) (systimergettimestamp_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga024303d370ba06786797b427d203bce0:
+
+typedef struct tagsystimermaxtimer_struct  systimermaxtimer_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function returns the maximal number of timers
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_timer_itf_1ga697860df2bb0565fb7e3ae7187d3595b:
+
+typedef void( *  PFSYSTIMERMAXTIMER_IEC) (systimermaxtimer_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaed89997b85893f4faddb5a035bb54869:
+
+typedef struct tagsystimersetinterval_struct  systimersetinterval_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function returns the interval of a timer
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_timer_itf_1ga8a86caff8843210748a4486dab92be6d:
+
+typedef void( *  PFSYSTIMERSETINTERVAL_IEC) (systimersetinterval_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga24211b0db8a33e07fe6e95a1cee48da1:
+
+typedef struct tagsystimerstart_struct  systimerstart_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function starts a timer
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_timer_itf_1ga7fc4f1ce66b1cbd31db253eae9b81988:
+
+typedef void( *  PFSYSTIMERSTART_IEC) (systimerstart_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga76bcf0390256147083789efbf1a5dfda:
+
+typedef struct tagsystimerstop_struct  systimerstop_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function stops a timer
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_timer_itf_1ga56d6d55c5778ae726eed7e71f5d8e760:
+
+typedef void( *  PFSYSTIMERSTOP_IEC) (systimerstop_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gabda2238d14fd58b33bc70a151ac37c93:
+
+typedef RTS_HANDLE( *  PFSYSTIMERCREATEEVENT) (RTS_HANDLE hEvent, RTS_SYSTIME tIntervalNs, unsigned long ulPriority, PFTIMEREXCEPTIONHANDLER pfExceptionHandler, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga245369d425b1ca84fb1076b888031fad:
+
+typedef RTS_HANDLE( *  PFSYSTIMERCREATECALLBACK) (PFTIMERCALLBACK pfTimerCallback, RTS_HANDLE hParam, int bIECFunction, RTS_SYSTIME tIntervalNs, unsigned long ulPriority, PFTIMEREXCEPTIONHANDLER pfExceptionHandler, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga370ce614468326a8d58496d7efed3c77:
+
+typedef RTS_HANDLE( *  PFSYSTIMERCREATECALLBACK2) (PFTIMERCALLBACK pfTimerCallback, RTS_HANDLE hParam, int bIECFunction, RTS_SYSTIME tIntervalNs, unsigned long ulPriority, unsigned long ulType, PFTIMEREXCEPTIONHANDLER pfExceptionHandler, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga29a57191ddd5f6fa7bb4794f96f4f661:
+
+typedef RTS_RESULT( *  PFSYSTIMERDELETE) (RTS_HANDLE hTimer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga37fc5f036687b87cb47892d0556a1933:
+
+typedef RTS_HANDLE( *  PFSYSTIMEROPEN) (SYS_TIMER_INFO *pTimerInfo, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga2db8adc7e0a77efa784ef8837eb706da:
+
+typedef RTS_RESULT( *  PFSYSTIMERCLOSE) (RTS_HANDLE hTimer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga16cae85ea8756639ed2434e8728bbf64:
+
+typedef RTS_RESULT( *  PFSYSTIMERSTART) (RTS_HANDLE hTimer, unsigned long ulType)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga4defb09d4235d559ac87f0ce28ca88b4:
+
+typedef RTS_RESULT( *  PFSYSTIMERSTOP) (RTS_HANDLE hTimer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga797e5c3667df3f1dcc41badf03c0c111:
+
+typedef RTS_RESULT( *  PFSYSTIMERGETINTERVAL) (RTS_HANDLE hTimer, RTS_SYSTIME *ptIntervalNs)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga52e3089d98099b79cc0fd34985ed7a27:
+
+typedef RTS_RESULT( *  PFSYSTIMERSETINTERVAL) (RTS_HANDLE hTimer, RTS_SYSTIME tIntervalNs)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga8dc16e64fd9bb80fb259a2e71bfc8052:
+
+typedef RTS_RESULT( *  PFSYSTIMERGETTIMESTAMP) (RTS_HANDLE hTimer, RTS_SYSTIME *ptTimestampNs)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga4a4860b6a31123a0482705907ec7f828:
+
+typedef RTS_RESULT( *  PFSYSTIMERMAXTIMER) (RTS_UI32 *pulMaxTimers)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga87e06d63d6c4862d9f5ad4a2949f0bdc:
+
+typedef RTS_HANDLE( *  PFSYSTIMEREXISTSTIMER) (unsigned long ulPriority, RTS_SYSTIME tInterval, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gad328647c796395a1c8f56396a755dad1:
+
+typedef unsigned int( *  PFSYSTIMERFITTIMER) (RTS_HANDLE hTimer, unsigned long ulPriority, RTS_SYSTIME tInterval, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gab7b85f5315fa21d89cf73c9aa3cbb18f:
+
+typedef RTS_RESULT( *  PFSYSTIMERGETMINRESOLUTION) (RTS_HANDLE hTimer, RTS_SYSTIME *ptMinResolutionNs)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga77a988a585593082151f492ceef46fcc:
+
+typedef RTS_RESULT( *  PFSYSTIMERGETCONTEXT) (RTS_HANDLE hTimer, RegContext *pContext)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga0a00158a0717c17f10c32c4aaa56c6be:
+
+typedef RTS_RESULT( *  PFSYSTIMERGENERATEEXCEPTION) (RTS_HANDLE hTimerHandle, RTS_UI32 ulException, RegContext Context)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaceec2dac4350922030999dee6896ab1b:
+
+typedef RTS_RESULT( *  PFSYSTIMERSETCALLBACKPARAMETER) (RTS_HANDLE hTimer, RTS_HANDLE hParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaff9a4296e9268d30a2a8ba0e01149402:
+
+typedef RTS_RESULT( *  PFSYSTIMERSETRESETFOLLOWING) (RTS_HANDLE hTimer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gada68f86c87871f4d5c5e214fc387bc9e:
+
+typedef RTS_RESULT( *  PFSYSTIMERREGISTERBASEPOINTER) (RTS_UINTPTR ulBP)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaff2d3f85db88958c2a5bc391d3344683:
+
+typedef RTS_HANDLE( *  PFSYSTIMERGETFIRST) (RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga7de2513df0724fcaca0c643079d0cea1:
+
+typedef RTS_HANDLE( *  PFSYSTIMERGETNEXT) (RTS_HANDLE hTimerPrev, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga949a3bc0184ea8c5916802886ca32af1:
+
+typedef void( *  PFSYSTIMERCALLCALLBACK) (SYS_TIMER_INFO *pTimer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga5c8d7398d686522430de5628af1f79d2:
+
+typedef RTS_HANDLE( *  PFSYSTIMERGETCURRENT) (RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga19cf2ba44e035b78bc38aca22df9add7:
+
+typedef SYS_TIMER_INFO*( *  PFSYSTIMERGETINFO) (RTS_HANDLE hTimer, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga2936e5147fb23d8106c8701c7db21f96:
+
+typedef ISysTimer_C ISysTimer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___sys_timer_itf_1ga68ee3666c8dcb0ed66401c36f18be08e:
+
+void systimercreatecallback (systimercreatecallback_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gae115324f61d2148ec229cb2f2df1ff70:
+
+void systimercreatecallback2 (systimercreatecallback2_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga1bfa5fdd8b70cf7a9d30618e4cc97ff1:
+
+void systimercreateevent (systimercreateevent_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga7fb2351b18c91e8638e4acf5e98d345b:
+
+void systimerdelete (systimerdelete_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gab35d8f01b522f83479fb07b6bf86ad43:
+
+void systimergetinterval (systimergetinterval_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga140844d918f4bc2c69135b6f9acc2500:
+
+void systimergettimestamp (systimergettimestamp_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga3ecbc34238f0050e858954da0ef7e9dd:
+
+void systimermaxtimer (systimermaxtimer_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gaceead3f5bc13daff7557677f99ff763c:
+
+void systimersetinterval (systimersetinterval_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gacb5f5da3a0c1f2ff54c7b7d1cc0b8617:
+
+void systimerstart (systimerstart_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1gafc80299b68323395049698ea4ec084cb:
+
+void systimerstop (systimerstop_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga4b88c19e3cb50e4fb404b9840b3f4818:
+
+RTS_RESULT SysTimerOSInit (INIT_STRUCT *pInit)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION END
+
+.. _group___sys_timer_itf_1gae41bca895d3668f705513c37ff58f360:
+
+RTS_RESULT SysTimerOSHookFunction (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_timer_itf_1ga72448a0047df2952bde603c6f9e3836c:
+
+RTS_HANDLE SysTimerCreateEvent (RTS_HANDLE hEvent, RTS_SYSTIME tIntervalNs, unsigned long ulPriority, PFTIMEREXCEPTIONHANDLER pfExceptionHandler, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function creates a timer and sets an event
+
+**Parameters**
+
++---------+--------------------+---------------------------------------------------------------------------------------------------------------+
+| [in]    | hEvent             | Handle to the event that is sent after the interval expires RANGE=[RTS_INVALID_HANDLE,NULL,VALID_EVENTHANDLE] |
++---------+--------------------+---------------------------------------------------------------------------------------------------------------+
+| [in]    | tIntervalNs        | Period of the timer (timebase = 1 [ns]) RANGE=[0,MIN_INTERVAL,MAX_INTERVAL,1000000]                           |
++---------+--------------------+---------------------------------------------------------------------------------------------------------------+
+| [in]    | ulPriority         | Priority of the timer object RANGE=[0..(SYSTIMER_NUM_OF_TIMER_PRIOS - 1),SYSTIMER_NUM_OF_TIMER_PRIOS]         |
++---------+--------------------+---------------------------------------------------------------------------------------------------------------+
+| [in]    | pfExceptionHandler | Pointer to an optional exception handler. Can be NULL. RANGE=[NULL,VALID_PFEXCEPTIONHANDLER]                  |
++---------+--------------------+---------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult            | Result pointer containing the error code. Might be NULL.                                                      |
++---------+--------------------+---------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++--------------------+---------------------------------------------------------------+
+| ERR_NOTIMPLEMENTED | Functionality not implemented, RTS_INVALID_HANDLE is returned |
++--------------------+---------------------------------------------------------------+
+| ERR_OK             | Event was created, a valid Handle is returned                 |
++--------------------+---------------------------------------------------------------+
+
+**Returns:**
+
+Handle of the timer or RTS_INVALID_HANDLE
+
+.. _group___sys_timer_itf_1ga7bd0c7b2667c9e120d678bc77aa530ee:
+
+RTS_HANDLE SysTimerCreateCallback (PFTIMERCALLBACK pfTimerCallback, RTS_HANDLE hParam, int bIECFunction, RTS_SYSTIME tIntervalNs, unsigned long ulPriority, PFTIMEREXCEPTIONHANDLER pfExceptionHandler, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function creates a system timer, which cyclically calls the callback function that is passed with the parameter pfTimerCallback.
+
+This callback has to be of type PFTIMERCALLBACK and gets a the handle which is specified by hParam passed on every call.
+
+The supported timer intervals may be limited by the hardware and/or underlying operating systems.
+
+**Parameters**
+
++---------+--------------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pfTimerCallback    | Pointer to a callback function RANGE=[RTS_INVALID_HANDLE,NULL,VALID_PFTIMERCALLBACK]                  |
++---------+--------------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | hParam             | Parameter for callback routine RANGE=[RTS_INVALID_HANDLE,VALID_HPARAM]                                |
++---------+--------------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | bIECFunction       | Is IEC function RANGE=[0,1]                                                                           |
++---------+--------------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | tIntervalNs        | Interval of the timer (timebase = 1 ns) RANGE=[0,MIN_INTERVAL,MAX_INTERVAL,1000000]                   |
++---------+--------------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | ulPriority         | Priority of the timer object RANGE=[0..(SYSTIMER_NUM_OF_TIMER_PRIOS - 1),SYSTIMER_NUM_OF_TIMER_PRIOS] |
++---------+--------------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pfExceptionHandler | Pointer to an optional exception handler. Can be NULL. RANGE=[NULL,VALID_PFEXCEPTIONHANDLER]          |
++---------+--------------------+-------------------------------------------------------------------------------------------------------+
+| [out]   | pResult            | Result pointer containing the error code. Might be NULL.                                              |
++---------+--------------------+-------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++-------------------+-----------------------------------------------------------------------------------------------------+
+| ERR_OK            | Callback was created successfully                                                                   |
++-------------------+-----------------------------------------------------------------------------------------------------+
+| ERR_FAILED        | Timer could not be opened, SysTimerOpen returned not ERR_OK, RTS_INVALID_HANDLE is returned         |
++-------------------+-----------------------------------------------------------------------------------------------------+
+| ERR_PARAMETER     | pfTimerCallback was invalid, RTS_INVALID_HANDLE is returned                                         |
++-------------------+-----------------------------------------------------------------------------------------------------+
+| ERR_OUT_OF_LIMITS | Number of static timers exceeds Limit: SYSTIMER_NUM_OF_STATIC_TIMER, RTS_INVALID_HANDLE is returned |
++-------------------+-----------------------------------------------------------------------------------------------------+
+| ERR_NO_MEMORY     | Could not get Timerinfo from MemPool, RTS_INVALID_HANDLE is returned                                |
++-------------------+-----------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Handle of the timer or RTS_INVALID_HANDLE
+
+.. _group___sys_timer_itf_1gac13e0205d37e969d4a01a53ae7464e39:
+
+RTS_HANDLE SysTimerCreateCallback2 (PFTIMERCALLBACK pfTimerCallback, RTS_HANDLE hParam, int bIECFunction, RTS_SYSTIME tIntervalNs, unsigned long ulPriority, unsigned long ulType, PFTIMEREXCEPTIONHANDLER pfExceptionHandler, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<SIL2>
+
+This function creates a system timer, which calls the callback function that is passed with the parameter pfTimerCallback.
+
+This callback has to be of type PFTIMERCALLBACK and gets a the handle which is specified by hParam passed on every call.
+
+Supported are timers with a different behavior (e.g. cyclic timers and one-shot timers). They are specified in the category "Timer type"
+
+The supported timer intervals may be limited by the hardware and/or underlying operating systems. For one-shot timers, the interval just specifies the time for the next shot.
+
+For the case, that the underlying operating system supports only exception handling based on tasks, you can pass a task as an exception handler with the parameter pfExceptionHandler.
+
+Timers are prioritized like IEC Tasks. There may be 256 Priorities, but this number is in fact limited by the system adaptation.
+
+**Parameters**
+
++---------+--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfTimerCallback    | Pointer for the Timer callback. This callback is called when ever the timer event occurred. RANGE=[NULL,VALID_PFTIMERCALLBACK]                                                          |
++---------+--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hParam             | Parameter that is passed to the timer callback. RANGE=[NULL,VALID_HPARAM]                                                                                                               |
++---------+--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bIECFunction       | Specify if the Callback is an IEC Function or a C Function. This parameter is only used internally and may be 0 in most cases. RANGE=[0,1]                                              |
++---------+--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | tIntervalNs        | Interval of the timer (timebase = 1 [ns]). The resolution may vary because of limitations from the hardware or underlying operating system. RANGE=[0,MIN_INTERVAL,MAX_INTERVAL,1000000] |
++---------+--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulPriority         | Priority of the timer object RANGE=[0..(SYSTIMER_NUM_OF_TIMER_PRIOS - 1),SYSTIMER_NUM_OF_TIMER_PRIOS]                                                                                   |
++---------+--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulType             | Not all timers from the category "Timer type" might be supported by the system. The only reliable timer is the periodic timer. RANGE=[RTS_TIMER_NONE,RTS_TIMER_PERIODIC]                |
++---------+--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfExceptionHandler | Pointer to an optional exception handler. Can be NULL. RANGE=[NULL,VALID_PFEXCEPTIONHANDLER]                                                                                            |
++---------+--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult            | Result pointer containing the error code. Might be NULL.                                                                                                                                |
++---------+--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bFullMemPool       | ***PSEUDO*** Indicates whether the internal used MemPool is full. RANGE=[TRUE,FALSE]                                                                                                    |
++---------+--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | _bIECFunction      | ***PSEUDO*** if bIECFunction Input is set, IEC function is called with SysCpuCallIECFuncWithParams, else directly                                                                       |
++---------+--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | _hParam            | ***PSEUDO*** hParam from pfTimerCallback must be same value as INPUT hParam                                                                                                             |
++---------+--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | _tIntervalNs       | ***PSEUDO*** Interval in which pfTimerCallback is called must be equal to INPUT tIntervalNs                                                                                             |
++---------+--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bFullTimer         | ***PSEUDO*** Indicates whether all timer used. RANGE=[TRUE,FALSE]                                                                                                                       |
++---------+--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++-------------------+-----------------------------------------------------------------------------------------------------+
+| ERR_OK            | Callback was created successfully                                                                   |
++-------------------+-----------------------------------------------------------------------------------------------------+
+| ERR_FAILED        | Timer could not be opened, SysTimerOpen returned not ERR_OK, RTS_INVALID_HANDLE is returned         |
++-------------------+-----------------------------------------------------------------------------------------------------+
+| ERR_PARAMETER     | pfTimerCallback was invalid, RTS_INVALID_HANDLE is returned                                         |
++-------------------+-----------------------------------------------------------------------------------------------------+
+| ERR_OUT_OF_LIMITS | Number of static timers exceeds Limit: SYSTIMER_NUM_OF_STATIC_TIMER, RTS_INVALID_HANDLE is returned |
++-------------------+-----------------------------------------------------------------------------------------------------+
+| ERR_NO_MEMORY     | Could not get timer-info from MemPool, RTS_INVALID_HANDLE is returned                               |
++-------------------+-----------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Handle of the timer or RTS_INVALID_HANDLE if there was an error.
+
+.. _group___sys_timer_itf_1ga82ba4944fb348a0fc3147e0ad225e941:
+
+RTS_RESULT SysTimerDelete (RTS_HANDLE hTimer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function deletes a timer
+
+**Parameters**
+
++---------+--------+-----------------------------------------------------------------------+
+| [in]    | hTimer | Handle of the timer RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE] |
++---------+--------+-----------------------------------------------------------------------+
+
+**Return values**
+
++---------------+-------------------------+
+| ERR_PARAMETER | hTimer is invalid       |
++---------------+-------------------------+
+| ERR_OK        | hTimer could be deleted |
++---------------+-------------------------+
+
+**Returns:**
+
+Error code
+
+.. _group___sys_timer_itf_1ga81a4bda452cea19feeba1b8383cafcee:
+
+RTS_HANDLE SysTimerOpen (SYS_TIMER_INFO *pTimerInfo, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function creates a system specific timer. IMPLEMENTATION NOTE: The timer must be disabled (in stop state) after returning this routine! The timer must be started explicitly with SysTimerStart.
+
+**Parameters**
+
++---------+------------+---------------------------------------------------------------------------+
+| [in]    | pTimerInfo | Parameter for timer RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERINFOHANDLE] |
++---------+------------+---------------------------------------------------------------------------+
+| [out]   | pResult    | Result pointer containing the error code. Might be NULL.                  |
++---------+------------+---------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+-----------------------+
+| ERR_PARAMETER | pTimerInfo is invalid |
++---------------+-----------------------+
+| ERR_OK        | Timer was opened      |
++---------------+-----------------------+
+
+**Returns:**
+
+Handle of the timer-info or RTS_INVALID_HANDLE
+
+.. _group___sys_timer_itf_1gaa9dc02593fd99db07c4db7eca43cf2ab:
+
+RTS_RESULT SysTimerClose (RTS_HANDLE hTimer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function closes a timer
+
+**Parameters**
+
++---------+--------+-----------------------------------------------------------------------+
+| [in]    | hTimer | Handle of the timer RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE] |
++---------+--------+-----------------------------------------------------------------------+
+
+**Return values**
+
++---------------+-------------------+
+| ERR_PARAMETER | hTimer is invalid |
++---------------+-------------------+
+| ERR_OK        | Timer was closed  |
++---------------+-------------------+
+
+**Returns:**
+
+Error code
+
+.. _group___sys_timer_itf_1gaab0e60e94bc15215f8cc59f0925d8111:
+
+RTS_RESULT SysTimerStart (RTS_HANDLE hTimer, unsigned long ulType)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function starts a timer
+
+**Parameters**
+
++---------+----------+-----------------------------------------------------------------------------------+
+| [in]    | hTimer   | Handle of the timer RANGE=[RTS_INVALID_HANDLE,VALID_TIMERHANDLE]                  |
++---------+----------+-----------------------------------------------------------------------------------+
+| [in]    | ulType   | Timer type. See corresponding category. RANGE=[RTS_TIMER_NONE,RTS_TIMER_PERIODIC] |
++---------+----------+-----------------------------------------------------------------------------------+
+| [out]   | bRunning | ***PSEUDO*** Timer is running successfully                                        |
++---------+----------+-----------------------------------------------------------------------------------+
+
+**Return values**
+
++--------------------+--------------------------------------------+
+| ERR_PARAMETER      | hTimer is invalid or Type is not supported |
++--------------------+--------------------------------------------+
+| ERR_OK             | Timer was started                          |
++--------------------+--------------------------------------------+
+| ERR_FAILED         | Timer could not be started                 |
++--------------------+--------------------------------------------+
+| ERR_NOTIMPLEMENTED | Feature is not implemented                 |
++--------------------+--------------------------------------------+
+
+**Returns:**
+
+Error Code
+
+.. _group___sys_timer_itf_1gae4193bd2879f8f1aa9a6b799069e1759:
+
+RTS_RESULT SysTimerStop (RTS_HANDLE hTimer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function stops a timer
+
+**Parameters**
+
++---------+--------+-----------------------------------------------------------------------+
+| [in]    | hTimer | Handle of the timer RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE] |
++---------+--------+-----------------------------------------------------------------------+
+
+**Return values**
+
++--------------------+----------------------------+
+| ERR_PARAMETER      | hTimer is invalid          |
++--------------------+----------------------------+
+| ERR_OK             | Timer was stopped          |
++--------------------+----------------------------+
+| ERR_FAILED         | Timer could not be stopped |
++--------------------+----------------------------+
+| ERR_NOTIMPLEMENTED | Feature is not implemented |
++--------------------+----------------------------+
+
+**Returns:**
+
+Error Code
+
+.. _group___sys_timer_itf_1ga536aaa19cb9a505f566d1c8afb598124:
+
+RTS_RESULT SysTimerGetInterval (RTS_HANDLE hTimer, RTS_SYSTIME *ptIntervalNs)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the interval of a timer
+
+**Parameters**
+
++---------+--------------+-----------------------------------------------------------------------+
+| [in]    | hTimer       | Handle of the timer RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE] |
++---------+--------------+-----------------------------------------------------------------------+
+| [out]   | ptIntervalNs | Pointer to Interval of the timer in nanoseconds                       |
++---------+--------------+-----------------------------------------------------------------------+
+| [out]   | ptIntervalNs | ***PSEUDO*** Interval of the timer in nanoseconds                     |
++---------+--------------+-----------------------------------------------------------------------+
+
+**Return values**
+
++--------------------+----------------------------------------------+
+| ERR_PARAMETER      | hTimer is invalid or ptIntervalNs is invalid |
++--------------------+----------------------------------------------+
+| ERR_OK             | Interval could be read successfully          |
++--------------------+----------------------------------------------+
+| ERR_FAILED         | Interval could not be read                   |
++--------------------+----------------------------------------------+
+| ERR_NOTIMPLEMENTED | Feature is not implemented                   |
++--------------------+----------------------------------------------+
+
+**Returns:**
+
+Error code
+
+.. _group___sys_timer_itf_1gaec21d923ed57b06f68b032563b2af243:
+
+RTS_RESULT SysTimerSetInterval (RTS_HANDLE hTimer, RTS_SYSTIME tIntervalNs)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function set the interval of a timer
+
+**Parameters**
+
++---------+-------------+-----------------------------------------------------------------------------------------+
+| [in]    | hTimer      | Handle of the timer RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE]                   |
++---------+-------------+-----------------------------------------------------------------------------------------+
+| [in]    | tIntervalNs | Interval of the timer in nanoseconds to set RANGE=[0,MIN_INTERVAL,MAX_INTERVAL,1000000] |
++---------+-------------+-----------------------------------------------------------------------------------------+
+
+**Return values**
+
++--------------------+-----------------------------------+
+| ERR_PARAMETER      | hTimer is invalid                 |
++--------------------+-----------------------------------+
+| ERR_OK             | Interval was set successfully     |
++--------------------+-----------------------------------+
+| ERR_FAILED         | Interval was not set successfully |
++--------------------+-----------------------------------+
+| ERR_NOTIMPLEMENTED | Feature is not implemented        |
++--------------------+-----------------------------------+
+
+**Returns:**
+
+Error code
+
+.. _group___sys_timer_itf_1ga921a7ac15d2223a29952722c2159aeaf:
+
+RTS_RESULT SysTimerGetTimeStamp (RTS_HANDLE hTimer, RTS_SYSTIME *ptTimestampNs)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function returns the timestamp in ticks since timer start
+
+**Parameters**
+
++---------+---------------+-----------------------------------------------------------------------+
+| [in]    | hTimer        | Handle of the timer RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE] |
++---------+---------------+-----------------------------------------------------------------------+
+| [out]   | ptTimestampNs | Timestamp in nanoseconds                                              |
++---------+---------------+-----------------------------------------------------------------------+
+
+**Return values**
+
++--------------------+-------------------------------------+
+| ERR_PARAMETER      | hTimer or ptTimestampNs is invalid  |
++--------------------+-------------------------------------+
+| ERR_OK             | Timestamp returned successfully     |
++--------------------+-------------------------------------+
+| ERR_FAILED         | Timestamp could not be returned     |
++--------------------+-------------------------------------+
+| ERR_OVERFLOW       | Overflow detected since timer start |
++--------------------+-------------------------------------+
+| ERR_NOTIMPLEMENTED | Feature is not implemented          |
++--------------------+-------------------------------------+
+
+**Returns:**
+
+Error code
+
+.. _group___sys_timer_itf_1ga1ac691c3724ffeb1de2add6f9891fe92:
+
+RTS_RESULT SysTimerMaxTimer (RTS_UI32 *pulMaxTimers)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function returns the maximal number of timers
+
+**Parameters**
+
++---------+-------------+------------------+
+| [out]   | pulMaxTimer | Number of Timers |
++---------+-------------+------------------+
+
+**Return values**
+
++--------------------+-----------------------------------+
+| ERR_PARAMETER      | pulMaxTimer is invalid            |
++--------------------+-----------------------------------+
+| ERR_OK             | pulMaxTimer returned successfully |
++--------------------+-----------------------------------+
+| ERR_FAILED         | pulMaxTimer could not be returned |
++--------------------+-----------------------------------+
+| ERR_NOTIMPLEMENTED | Feature is not implemented        |
++--------------------+-----------------------------------+
+
+**Returns:**
+
+Error code
+
+.. _group___sys_timer_itf_1ga760278302712fe1313233f313309df2c:
+
+RTS_HANDLE SysTimerExistsTimer (unsigned long ulPriority, RTS_SYSTIME tInterval, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function looks for timers with the given properties
+
+**Parameters**
+
++---------+------------+------------------------------------------------------------------------------------------------+
+| [in]    | ulPriority | Priority of the timer RANGE=[0..(SYSTIMER_NUM_OF_TIMER_PRIOS - 1),SYSTIMER_NUM_OF_TIMER_PRIOS] |
++---------+------------+------------------------------------------------------------------------------------------------+
+| [in]    | tInterval  | Interval of the timer RANGE=[RTS_RANGE_OF_UINT64]                                              |
++---------+------------+------------------------------------------------------------------------------------------------+
+| [out]   | pResult    | Result pointer containing the error code. Might be NULL.                                       |
++---------+------------+------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+----------------------+
+| ERR_OK        | Found existing Timer |
++---------------+----------------------+
+| ERR_NO_OBJECT | Found no Timer       |
++---------------+----------------------+
+
+**Returns:**
+
+Handle to the searched timer or RTS_INVALID_HANDLE
+
+.. _group___sys_timer_itf_1gac2815f89df55182c4bcb1572d9426e48:
+
+unsigned int SysTimerFitTimer (RTS_HANDLE hTimer, unsigned long ulPriority, RTS_SYSTIME tInterval, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function checks a given timer
+
+**Parameters**
+
++---------+------------+--------------------------------------------------------------------------------------------+
+| [in]    | hTimer     | Timer to check RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE]                           |
++---------+------------+--------------------------------------------------------------------------------------------+
+| [in]    | ulPriority | Priority to check RANGE=[0..(SYSTIMER_NUM_OF_TIMER_PRIOS - 1),SYSTIMER_NUM_OF_TIMER_PRIOS] |
++---------+------------+--------------------------------------------------------------------------------------------+
+| [in]    | tInterval  | Interval to check RANGE=[RTS_RANGE_OF_UINT64]                                              |
++---------+------------+--------------------------------------------------------------------------------------------+
+| [out]   | pResult    | Result pointer containing the error code. Might be NULL.                                   |
++---------+------------+--------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+-------------------+
+| ERR_PARAMETER | hTimer is invalid |
++---------------+-------------------+
+| ERR_OK        | Found fit Timer   |
++---------------+-------------------+
+| ERR_NO_OBJECT | Found no Timer    |
++---------------+-------------------+
+
+**Returns:**
+
+Returns if Timer fits
+
+.. _group___sys_timer_itf_1gaf4319db131dab4fd0e26c159e3b112db:
+
+RTS_RESULT SysTimerGetMinResolution (RTS_HANDLE hTimer, RTS_SYSTIME *ptMinResolutionNs)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the minimum resolution of the timer
+
+**Parameters**
+
++---------+-------------------+-----------------------------------------------------------------------+
+| [in]    | hTimer            | Handle of the timer RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE] |
++---------+-------------------+-----------------------------------------------------------------------+
+| [out]   | ptMinResolutionNs | Minimum timer resolution in nanoseconds                               |
++---------+-------------------+-----------------------------------------------------------------------+
+
+**Return values**
+
++---------------+----------------------------------------+
+| ERR_PARAMETER | hTimer or ptMinResolutionNs is invalid |
++---------------+----------------------------------------+
+| ERR_OK        | Could get min resolution               |
++---------------+----------------------------------------+
+| ERR_FAILED    | Could not get min resolution           |
++---------------+----------------------------------------+
+
+**Returns:**
+
+Error code
+
+.. _group___sys_timer_itf_1ga1cf6549e1b5201bbf7914c9678ccfa09:
+
+RTS_RESULT SysTimerGetContext (RTS_HANDLE hTimer, RegContext *pContext)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function returns the context of the current timer handling
+
+**Parameters**
+
++---------+----------+-----------------------------------------------------------------------+
+| [in]    | hTimer   | Handle of the Timer RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE] |
++---------+----------+-----------------------------------------------------------------------+
+| [out]   | pContext | Pointer to Timer Context                                              |
++---------+----------+-----------------------------------------------------------------------+
+
+**Return values**
+
++--------------------+-------------------------------+
+| ERR_PARAMETER      | hTimer or pContext is invalid |
++--------------------+-------------------------------+
+| ERR_OK             | GetContext was successful     |
++--------------------+-------------------------------+
+| ERR_FAILED         | Could not get Context         |
++--------------------+-------------------------------+
+| ERR_NOTIMPLEMENTED | Feature is not implemented    |
++--------------------+-------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_timer_itf_1ga3c20cc89d81ed444dccf47b1cedbd248:
+
+RTS_RESULT SysTimerGenerateException (RTS_HANDLE hTimerHandle, RTS_UI32 ulException, RegContext Context)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Calls the corresponding exception handler of the timer.
+
+**Parameters**
+
++---------+--------------+----------------------------------------------------------------------------------------------------------------+
+| [in]    | hTimerHandle | Handle to timer RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE]                                              |
++---------+--------------+----------------------------------------------------------------------------------------------------------------+
+| [in]    | ulException  | Rts standard exception RANGE=[RTS_RANGE_OF_ULONG]                                                              |
++---------+--------------+----------------------------------------------------------------------------------------------------------------+
+| [in]    | Context      | Context to detect the code location where the exception occurred RANGE=[RTS_INVALID_HANDLE,NULL,VALID_CONTEXT] |
++---------+--------------+----------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++------------+---------------------------------------------------------+
+| ERR_OK     | Exception was successfully handled                      |
++------------+---------------------------------------------------------+
+| ERR_FAILED | No Timer found or Exception Handler returned ERR_FAILED |
++------------+---------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK
+
+.. _group___sys_timer_itf_1gade90871c9e2feac4245496edbbd09147:
+
+RTS_RESULT SysTimerSetCallbackParameter (RTS_HANDLE hTimer, RTS_HANDLE hParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sets the Callback Parameter
+
+**Parameters**
+
++---------+--------+------------------------------------------------------------------------+
+| [in]    | hTimer | Handle of the timer RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE]  |
++---------+--------+------------------------------------------------------------------------+
+| [in]    | hParam | Parameter for callback routine RANGE=[RTS_INVALID_HANDLE,VALID_HPARAM] |
++---------+--------+------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+---------------------------------------------+
+| ERR_OK        | Callback Parameter was successfully handled |
++---------------+---------------------------------------------+
+| ERR_PARAMETER | hTimer invalid                              |
++---------------+---------------------------------------------+
+
+**Returns:**
+
+Error code
+
+.. _group___sys_timer_itf_1ga97e2e65ab002ecda68472bea31976d67:
+
+RTS_RESULT SysTimerSetResetFollowing (RTS_HANDLE hTimer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+With this function the specified function is reseted (Needed for CmpScheduleTimer)
+
+**Parameters**
+
++---------+--------+--------------------------------------------------------------------------------+
+| [in]    | hTimer | Handle of the timer to reset RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE] |
++---------+--------+--------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+-------------------------+
+| ERR_OK        | No error occurred       |
++---------------+-------------------------+
+| ERR_FAILED    | Setting Priority failed |
++---------------+-------------------------+
+| ERR_PARAMETER | hTimer invalid          |
++---------------+-------------------------+
+
+**Returns:**
+
+Error code
+
+.. _group___sys_timer_itf_1gab11b25e015573472d6b997d9e1b3b81b:
+
+RTS_RESULT SysTimerRegisterBasePointer (RTS_UINTPTR ulBP)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Register the base pointer of the main routine.
+
+**Parameters**
+
++---------+-------+------------------------------------------------------------------------+
+| [in]    | pulBP | base pointer of main RANGE=[RTS_INVALID_HANDLE,NULL,VALID_BASEPOINTER] |
++---------+-------+------------------------------------------------------------------------+
+
+**Return values**
+
++--------------------+---------------------------------+
+| ERR_PARAMETER      | pulBP is invalid                |
++--------------------+---------------------------------+
+| ERR_OK             | pulBP was successful registered |
++--------------------+---------------------------------+
+| ERR_FAILED         | pulBP could not be registered   |
++--------------------+---------------------------------+
+| ERR_NOTIMPLEMENTED | Feature is not implemented      |
++--------------------+---------------------------------+
+
+**Returns:**
+
+ERR_OK
+
+.. _group___sys_timer_itf_1ga0fafc580f3121e54077f1bc8c8c668bf:
+
+RTS_HANDLE SysTimerGetFirst (RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get first registered timer object
+
+**Parameters**
+
++---------+---------+----------------------------------------------------------+
+| [out]   | pResult | Result pointer containing the error code. Might be NULL. |
++---------+---------+----------------------------------------------------------+
+
+**Return values**
+
++---------------+--------------------------------+
+| ERR_OK        | Successfully found first Timer |
++---------------+--------------------------------+
+| ERR_NO_OBJECT | No Timer found                 |
++---------------+--------------------------------+
+
+**Returns:**
+
+Handle to first timer object
+
+.. _group___sys_timer_itf_1ga7c12fb9423c04f31df8474c0c9a55166:
+
+RTS_HANDLE SysTimerGetNext (RTS_HANDLE hTimerPrev, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get next registered timer object
+
+**Parameters**
+
++---------+------------+---------------------------------------------------------------------------------------+
+| [in]    | hTimerPrev | Handle to previous timer object RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERINFOHANDLE] |
++---------+------------+---------------------------------------------------------------------------------------+
+| [out]   | pResult    | Result pointer containing the error code. Might be NULL.                              |
++---------+------------+---------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+-------------------------------+
+| ERR_OK        | Successfully found next Timer |
++---------------+-------------------------------+
+| ERR_NO_OBJECT | No Timer found                |
++---------------+-------------------------------+
+
+**Returns:**
+
+Handle to next timer object
+
+.. _group___sys_timer_itf_1ga5b2f8285bf4efc778d302ded6eed1815:
+
+void SysTimerCallCallback (SYS_TIMER_INFO *pTimer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Call the registered callback handler with the corresponding hParam. IEC- and C-handlers are supported.
+
+**Parameters**
+
++---------+----------------------+--------------------------------------------------------------------------+
+| [in]    | hTimer               | Specified timer object RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE] |
++---------+----------------------+--------------------------------------------------------------------------+
+| [in]    | pTimer->bIECFunction | ***PSEUDO*** Specified timer object RANGE=[RTS_RANGE_OF_INT]             |
++---------+----------------------+--------------------------------------------------------------------------+
+| [out]   | bFuncCalled          | ***PSEUDO*** Function call expected                                      |
++---------+----------------------+--------------------------------------------------------------------------+
+
+.. _group___sys_timer_itf_1ga806e51d55aa81bc515d93f14014b160f:
+
+RTS_HANDLE SysTimerGetCurrent (RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the handle of the currently active timer, or RTS_INVALID_HANDLE if we are outside of a timer context.
+
+For SIL2 systems, this function is not implemented and returns always RTS_INVALID_HANDLE.
+
+**Parameters**
+
++---------+--------------+---------------------------------------------------------------------------------+
+| [out]   | pResult      | Result pointer containing the error code. Might be NULL.                        |
++---------+--------------+---------------------------------------------------------------------------------+
+| [in]    | bSIL2Runtime | ***PSEUDO*** Result pointer containing the error code. Might be NULL. RANGE=[1] |
++---------+--------------+---------------------------------------------------------------------------------+
+
+**Returns:**
+
+Handle of the currently active timer or RTS_INVALID_HANDLE
+
+.. _group___sys_timer_itf_1ga6e2d67e9e3d87116cabc7a2892ceaa28:
+
+SYS_TIMER_INFO* SysTimerGetInfo (RTS_HANDLE hTimer, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the timer info of the specified timer
+
+**Parameters**
+
++---------+---------+--------------------------------------------------------------------------+
+| [in]    | hTimer  | Specified timer object RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE] |
++---------+---------+--------------------------------------------------------------------------+
+| [out]   | pResult | Result pointer containing the error code. Might be NULL.                 |
++---------+---------+--------------------------------------------------------------------------+
+
+**Returns:**
+
+Pointer to the :ref:`SYS_TIMER_INFO <struct_s_y_s___t_i_m_e_r___i_n_f_o>` structure or NULL if failed
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

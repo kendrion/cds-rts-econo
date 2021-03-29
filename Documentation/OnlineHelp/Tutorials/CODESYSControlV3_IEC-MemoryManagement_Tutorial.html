@@ -1,0 +1,1231 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>6.3.6. IEC Memory Management Tutorial &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/theme.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6.3.7. Trace Manager" href="CODESYSControlV3_TraceManager/index.html" />
+    <link rel="prev" title="6.3.5. CodeMeter Tutorial" href="CODESYSControlV3_CodeMeter_Tutorial.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CODESYSControlV3_TraceManager/index.html" title="6.3.7. Trace Manager"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CODESYSControlV3_CodeMeter_Tutorial.html" title="6.3.5. CodeMeter Tutorial"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">6. Tutorials / HowTos</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="CODESYSControlV3_CodeMeter_Tutorial.html"
+                        title="previous chapter">6.3.5. CodeMeter Tutorial</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="CODESYSControlV3_TraceManager/index.html"
+                        title="next chapter">6.3.7. Trace Manager</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="iec-memory-management-tutorial">
+<span id="tutorial-iec-memorymanagement"></span><h1>6.3.6. IEC Memory Management Tutorial<a class="headerlink" href="#iec-memory-management-tutorial" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial we describe the management of all memory elements for the IEC application.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#introduction" id="id29">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id30">Code and data memory</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id31">RETAIN and RETAIN PERSISTENT memory</a></p></li>
+<li><p><a class="reference internal" href="#id28" id="id32">Typical Use Cases and Configurations</a></p></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<span id="iec-memory-management-introduction"></span><h2><a class="toc-backref" href="#id29">6.3.6.1. Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../Manual/dev_desc_device_extended_settings.html#dev-extended-settings-memory-layout"><span class="std std-ref">memory layout</span></a> for the IEC applications must be specified in the <a class="reference internal" href="../Manual/dev_desc_device.html#dev-desc-device"><span class="std std-ref">device description</span></a> of a controller.</p>
+<p>The can be one or several memory buffers for an IEC application. One memory buffer of an application is used to store different kind of content.
+Each memory is a so called <a class="reference internal" href="../Manual/dev_desc_device_extended_settings.html#dev-extended-settings-memory-layout"><span class="std std-ref">memory area</span></a>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Content / Area</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Code and Constant data</p></td>
+<td><p>The code memory contains all generated code of the IEC application. Additionally
+this memory contains all constant data</p></td>
+</tr>
+<tr class="row-odd"><td><p>Data</p></td>
+<td><p>The data memory contains all global data of the IEC application
+(global variables, global functionblock instances, etc.).</p></td>
+</tr>
+<tr class="row-even"><td><p>RETAIN data</p></td>
+<td><p>The retain memory contains all data specified with the keyword RETAIN in CODESYS.
+So this kind of data retains its values over a reboot of the controller!</p></td>
+</tr>
+<tr class="row-odd"><td><p>RETAIN PERSISTENT data</p></td>
+<td><p>The retain memory contains all data specified with the keyword RETAIN PERSISTENT
+in CODESYS. So this kind of data retains its values over a reboot and a new
+download of the application (where the layout of these variables must remain
+identical!</p></td>
+</tr>
+</tbody>
+</table>
+<p>Within the data area, there are several different memory segments for different usages:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Data area segment</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Marker (%M addresses)</p></td>
+<td><p>Here all data are stored which are marked with the “AT %M” declaration.
+Example:
+- counter AT %MW10 : WORD;</p></td>
+</tr>
+<tr class="row-odd"><td><p>Inputs (%I addresses)</p></td>
+<td><p>Here all data are stored which are marked with the “AT %I” declaration or which are
+mapped in the IO-configuration to an input.
+Example:
+- mySensor AT %IB5 : BYTE;</p></td>
+</tr>
+<tr class="row-even"><td><p>Outputs (%Q addresses)</p></td>
+<td><p>Here all data are stored which are marked with the “AT %Q” declaration or which are
+mapped in the IO-configuration to an output.
+Example:
+- myActor AT %QD5 : DWORD;</p></td>
+</tr>
+<tr class="row-odd"><td><p>Global data</p></td>
+<td><p>Here all global data and all functionblock instances are stored.</p></td>
+</tr>
+<tr class="row-even"><td><p>Constants</p></td>
+<td><p>Constant values which cannot be changed</p></td>
+</tr>
+</tbody>
+</table>
+<p>The areas are allocated and freed in the runtime system by the following interface functions (see <a class="reference internal" href="../Reference/group___sys_mem_itf.html#group-sys-mem-itf"><span class="std std-ref">SysMemItf</span></a>):</p>
+<blockquote>
+<div><div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="o">*</span> <span class="n">CDECL</span> <span class="n">SysMemAllocArea</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">pszComponentName</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">usType</span><span class="p">,</span> <span class="n">RTS_SIZE</span> <span class="n">ulSize</span><span class="p">,</span> <span class="n">RTS_RESULT</span> <span class="o">*</span><span class="n">pResult</span><span class="p">);</span>
+
+<span class="n">RTS_RESULT</span> <span class="n">CDECL</span> <span class="n">SysMemFreeArea</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">pszComponentName</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">pData</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>In <a class="reference internal" href="../Reference/group___sys_mem_itf.html#group-sys-mem-itf"><span class="std std-ref">SysMemItf</span></a> there are constants defined, which specifies the type of memory that must be allocated (see <a class="reference internal" href="../Reference/group___sys_mem_itf___area_types.html#group-sys-mem-itf-area-types"><span class="std std-ref">area types</span></a>).</p>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id30">6.3.6.2. <span class="target" id="code-and-data-memory">Code and data memory</span></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#general">General</a></p></li>
+<li><p><a class="reference internal" href="#single-application">Single Application</a></p></li>
+<li><p><a class="reference internal" href="#multiple-applications">Multiple Applications</a></p></li>
+<li><p><a class="reference internal" href="#device-application">Device Application</a></p></li>
+<li><p><a class="reference internal" href="#embedded-runtime">Embedded Runtime</a></p></li>
+<li><p><a class="reference internal" href="#online-change">Online change</a></p></li>
+<li><p><a class="reference internal" href="#code-area-protection">Code area protection</a></p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="id2">
+<h3><span class="target" id="general">General</span><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>The code and data of an IEC-application can be managed in one mixed area or you can separate them into a code area and a data area.
+We recommend to use 2 different areas for code and data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For details see <a class="reference internal" href="../Manual/dev_desc_device_extended_settings.html#dev-extended-settings-memory-layout"><span class="std std-ref">memory layout</span></a>.</p>
+</div>
+<div class="section" id="mixed-code-and-data-area">
+<h4>Mixed Code and Data area<a class="headerlink" href="#mixed-code-and-data-area" title="Permalink to this headline">¶</a></h4>
+<p>The mixed variant is recommended for limited memory ressources of a controller. Or if only one memory area is available on the controller to run the IEC-application.</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_0&quot;</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Code and Data area --&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>0xfe7f<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>0x1000<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;maximal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>0x600000<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>20<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+<span class="nt">&lt;/ts:section&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="separation-of-code-and-data-area">
+<h4>Separation of Code and Data area<a class="headerlink" href="#separation-of-code-and-data-area" title="Permalink to this headline">¶</a></h4>
+<p>To protect the code memory from being modified during the lifetime of an application, you can separate the data from the code. So you can specify 2 separate areas.
+This can be helpful for a more robust and secure PLC-application management.</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_0&quot;</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Code area --&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>0x0042<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>0x1000<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;maximal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>0x600000<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>20<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+<span class="nt">&lt;/ts:section&gt;</span>
+<span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_1&quot;</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Data area --&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>0xFE9D<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>0x1000<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;maximal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>0x600000<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>20<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+<span class="nt">&lt;/ts:section&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="id3">
+<h3><span class="target" id="single-application">Single Application</span><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>On small embedded controllers there is only memory available for one IEC-application. You can limit the number of applications in the device description with the following
+setting (<a class="reference internal" href="../TargetSettings/runtime_features/s-max_number_of_apps.html#runtime-features-max-number-of-apps"><span class="std std-ref">max_number_of_apps</span></a>):</p>
+<blockquote>
+<div><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;runtime_features&quot;</span><span class="nt">&gt;</span>
+      ...
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;max_number_of_apps&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>1<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+      ...
+<span class="nt">&lt;/ts:section&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id4">
+<h3><span class="target" id="multiple-applications">Multiple Applications</span><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>On typical controllers there is enough memory available for more than one IEC-application. This is the default in every device description (see <a class="reference internal" href="../TargetSettings/runtime_features/s-max_number_of_apps.html#runtime-features-max-number-of-apps"><span class="std std-ref">max_number_of_apps</span></a>):</p>
+<blockquote>
+<div><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;runtime_features&quot;</span><span class="nt">&gt;</span>
+      ...
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;max_number_of_apps&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>-1<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+      ...
+<span class="nt">&lt;/ts:section&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id5">
+<h3><span class="target" id="device-application">Device Application</span><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>The device application is a concept to use a toplevel IEC-applicatio, which contains code and data that can be used by the child applications. The child applications included the plc logic
+and the device application included the global elements for all plc logic (child) applications:</p>
+<ul class="simple">
+<li><p>IO-Configuration</p></li>
+<li><p>Shared (library) code which can be used in the child applications</p></li>
+<li><p><a class="reference internal" href="#retain-and-retain-persistent-memory">RETAIN and RETAIN PERSISTENT memory</a> that are shared between the plc logic applications</p></li>
+</ul>
+<p>To disable the support of the device application feature, you have to use the following setting (<a class="reference internal" href="../TargetSettings/runtime_features/s-disable_device_application.html#runtime-features-disable-device-application"><span class="std std-ref">disable_device_application</span></a>):</p>
+<blockquote>
+<div><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;runtime_features&quot;</span><span class="nt">&gt;</span>
+  ...
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;disable_device_application&quot;</span> <span class="na">type=</span><span class="s">&quot;boolean&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>0<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    ...
+<span class="nt">&lt;/ts:section&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id6">
+<h3><span class="target" id="embedded-runtime">Embedded Runtime</span><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>On embedded controllers typically the IEC-application code is running from a flash memory. In this case the flash memory start address must be known and have to be specified
+in the device description with the setting <a class="reference internal" href="../TargetSettings/memory-layout/areas/area_0/s-start-address.html#memory-layout-areas-area-0-start-address"><span class="std std-ref">start-address</span></a>!</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;memory-layout&quot;</span><span class="nt">&gt;</span>
+    ...
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;constants-in-own-segment&quot;</span> <span class="na">type=</span><span class="s">&quot;boolean&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>1<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_0&quot;</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- Code and constant memory --&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0x42<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;area_flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0x10<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;start-address&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0x316600<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0x13400<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;maximal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0x13400<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;/ts:section&gt;</span>
+    <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_1&quot;</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- Data area --&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0xFE9D<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;area_flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0x10<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;start-address&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0x320000<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0x20000<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;maximal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0x20000<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;/ts:section&gt;</span>
+<span class="nt">&lt;/ts:section&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>The settings “additional-areas” (see <span class="xref std std-ref">Online change</span>) and “dynamic-retain” + “dynamic-persistent” (see <span class="xref std std-ref">Devicedescription configuration</span>)
+should never be used in the device description of an embedded runtime!!!</p>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="target" id="online-change">Online change</span><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>If your runtime system supports online changes of the IEC-application, you can use the setting “additional-areas” to specify whether
+a new area should be allocated to realize an online change, if it does not fit into the existing areas!</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;memory-layout&quot;</span><span class="nt">&gt;</span>
+      ...
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;additional-areas&quot;</span> <span class="na">type=</span><span class="s">&quot;boolean&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>1<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+      ...
+<span class="nt">&lt;/ts:section&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id8">
+<h3><span class="target" id="code-area-protection">Code area protection</span><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>The code area can be write protected (execution only) after loading the application. The <a class="reference internal" href="#separation-of-code-and-data-area">Separation of Code and Data area</a> is the precondition for that!</p>
+<p>There are 2 possibilities to switch the code area from writeable to write protected/only executable mode:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#using-the-operation-mode">Using the operation mode</a></p></li>
+<li><p><a class="reference internal" href="#dynamic-code-area-protection">Dynamic code area protection</a></p></li>
+</ol>
+<div class="section" id="id9">
+<h4><span class="target" id="using-the-operation-mode">Using the operation mode</span><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p>The operation mode is a feature to protect the IEC-application from unintentinal changes during the operation of a machine. This feature can be used in CODESYS by the
+IEC application developer.</p>
+<p>To use the operation mode, is must be enabled in your device (see feature <span class="xref std std-ref">Operation Mode</span>). And to protect the application code, you can use the following modes:</p>
+<ul class="simple">
+<li><p>Mode=DEBUG: code area must be opened for writing.</p></li>
+<li><p>Mode=OPERATIONAL: code area is write protected (no modification in the code area possible; only execution possible)</p></li>
+</ul>
+<p>To recognize a change of the Operation Mode, you have to register a callback function to the CMPID_CmpDevice::EVT_CmpDevice_SetOperationMode event (<a class="reference internal" href="../Reference/group___cmp_device_itf.html#group-cmp-device-itf"><span class="std std-ref">CmpDeviceItf</span></a>).
+And in the callback you can open/close access to the protected IEC code memory!</p>
+</div>
+<div class="section" id="id10">
+<h4><span class="target" id="dynamic-code-area-protection">Dynamic code area protection</span><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<p>The code area must be opened therefore for a download or onlinechange or for debugging the IEC application. The events on
+which the code area can be set write protected / writeable are described below (see events of <a class="reference internal" href="../Reference/group___cmp_app_itf___events.html#group-cmp-app-itf-events"><span class="std std-ref">CmpAppItf</span></a> and <a class="reference internal" href="../Reference/group___cmp_app_b_p_itf___events.html#group-cmp-app-b-p-itf-events"><span class="std std-ref">CmpAppBPItf</span></a>):</p>
+<ol class="arabic">
+<li><p>Write protection for the code area can be <strong>opened</strong> for Download/Online-Change and Debugging:</p>
+<p>In the following events, the code should be set writeable:</p>
+<ul class="simple">
+<li><p>CMPID_CmpApp :: EVT_PrepareDownload</p></li>
+<li><p>CMPID_CmpApp :: EVT_PrepareOnlineChange</p></li>
+<li><p>CMPID_CmpApp :: EVT_PrepareReset</p></li>
+<li><p>CMPID_CmpAppBP :: EVT_CmpAppBP_CodePatch:
+With the event parameter “EVTPARAM_CmpAppBP_SavePatch.flags == APPBP_FLAG_BEFORE_CODE_PATCH”</p></li>
+</ul>
+</li>
+<li><p>Set code area are write <strong>protected</strong>:</p>
+<p>In the following events, the code are can be set write protected:</p>
+<ul class="simple">
+<li><p>CMPID_CmpApp :: EVT_DownloadDone</p></li>
+<li><p>CMPID_CmpApp :: EVT_OnlineChangeDone</p></li>
+<li><p>CMPID_CmpApp :: EVT_ResetDone</p></li>
+<li><p>CMPID_CmpAppBP :: EVT_CmpAppBP_CodePatch
+With the event parameter “EVTPARAM_CmpAppBP_SavePatch.flags == APPBP_FLAG_AFTER_CODE_PATCH”</p></li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2><a class="toc-backref" href="#id31">6.3.6.3. <span class="target" id="retain-and-retain-persistent-memory">RETAIN and RETAIN PERSISTENT memory</span></a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<p>RETAIN memory is used to store IEC-data typically over a reboot of the controller. RETAIN PERSISTENT is the hardest type of memory, which hold the data over a download of the IEC-application too!</p>
+<p>So RETAIN and RETAIN PERSISTENT data in IEC behaves as followed:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 11%" />
+<col style="width: 25%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>VAR</p></th>
+<th class="head"><p>VAR RETAIN</p></th>
+<th class="head"><p>VAR RETAIN PERSISTENT</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Reset warm</p></td>
+<td><p>r</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>Reset cold</p></td>
+<td><p>r</p></td>
+<td><p>r</p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p>Reset origin</p></td>
+<td><p>r</p></td>
+<td><p>r</p></td>
+<td><p>r</p></td>
+</tr>
+<tr class="row-odd"><td><p>Download</p></td>
+<td><p>r</p></td>
+<td><p>r</p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p>Online Change</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>Reboot</p></td>
+<td><p>r</p></td>
+<td><p>–</p></td>
+<td><p>–</p></td>
+</tr>
+</tbody>
+</table>
+<p>[r]:  data are reset/initialized</p>
+<p>[–]: data remain their value</p>
+<p>Here are the subchapters:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#different-types-of-retain-memory">Different types of RETAIN memory</a></p></li>
+<li><p><a class="reference internal" href="#configuration-of-retain-handling">Configuration of RETAIN handling</a></p></li>
+<li><p><a class="reference internal" href="#implementation-of-retain-handling">Implementation of RETAIN handling</a></p></li>
+<li><dl class="simple">
+<dt><a class="reference internal" href="#special-aspects">Special aspects</a></dt><dd><ul>
+<li><p><a class="reference internal" href="#static-area">Static area</a></p></li>
+<li><p><a class="reference internal" href="#retain-marker-m-with-retain">RETAIN marker (%M with RETAIN)</a></p></li>
+<li><p><a class="reference internal" href="#data-consistency-of-retain-memory">Data consistency of RETAIN memory</a></p></li>
+<li><p><a class="reference internal" href="#persistence-manager">Persistence Manager</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<div class="section" id="id12">
+<h3><span class="target" id="different-types-of-retain-memory">Different types of RETAIN memory</span><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>Retains can be managed in different ways. In non volatile RAM (NVRAM) or in a volatile RAM (and here the content must be stored to a persistent memory).</p>
+<p>The configuration</p>
+<div class="section" id="id13">
+<h4><span class="target" id="nvram">NVRAM</span><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<p>We recommend to store RETAIN and RETAIN PERSISTENT data in a so called “Non-Volatile Random-Access Memory” (NVRAM).
+On controllers typically one NVRAM is built in. So we have to split this NVRAM into several segments and each segment is assigned for a RETAIN memory for <em>one</em> application.</p>
+<p>In each allocated segment of the NVRAM the runtime system writes a header into this segment to associated uniquely to an application (see <a class="reference internal" href="../Reference/struct_retain_header.html#struct-retain-header"><span class="std std-ref">RetainHeader</span></a>):</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * &lt;category&gt;Static defines&lt;/category&gt;</span>
+<span class="cm"> * &lt;description&gt;Tag types to detect the beginning of each retain area&lt;/description&gt;</span>
+<span class="cm"> *  &lt;element name=&quot;TAG_RETAIN_USED&quot; type=&quot;IN&quot;&gt;Retain area is in use&lt;/element&gt;</span>
+<span class="cm"> *  &lt;element name=&quot;TAG_RETAIN_FREE&quot; type=&quot;IN&quot;&gt;Retain area is free. Can be used for new areas&lt;/element&gt;</span>
+<span class="cm"> *  &lt;element name=&quot;TAG_RETAIN_RESERVED&quot; type=&quot;IN&quot;&gt;Retain area is reserved, because it was in use before the last shutdown.</span>
+<span class="cm"> *      After complete reboot, this area is marked as free, if it is no longer in use.&lt;/element&gt;</span>
+<span class="cm"> */</span>
+<span class="cp">#define TAG_RETAIN_USED                 UINT32_C(0xABACADAE)</span>
+<span class="cp">#define TAG_RETAIN_PERSISTENT_USED      UINT32_C(0xABADAEAF)</span>
+<span class="cp">#define TAG_RETAIN_FREE                 UINT32_C(0xEBECEDEE)</span>
+<span class="cp">#define TAG_RETAIN_RESERVED             UINT32_C(0xFBFCFDFE)</span>
+<span class="cp">#define TAG_RETAIN_PERSISTENT_RESERVED  UINT32_C(0xFBFDFEFF)</span>
+
+<span class="cp">#define TAG_RETAIN_SWAPPED              UINT32_C(0xAEADACAB)    </span><span class="cm">/* Only used for backward compatibility */</span><span class="cp"></span>
+
+<span class="cm">/**</span>
+<span class="cm"> * &lt;category&gt;Retain header&lt;/category&gt;</span>
+<span class="cm"> * &lt;description&gt;Header that is written at the beginning of each retain area&lt;/description&gt;</span>
+<span class="cm"> *  &lt;element name=&quot;ulTag&quot; type=&quot;IN&quot;&gt;Start tag of a retain area.</span>
+<span class="cm"> *   TAG_RETAIN: Occupied retain area</span>
+<span class="cm"> *   TAG_RETAIN_FREE: Free retain area&lt;/element&gt;</span>
+<span class="cm"> *  &lt;element name=&quot;ulSize&quot; type=&quot;IN&quot;&gt;Size of the retain area&lt;/element&gt;</span>
+<span class="cm"> *  &lt;element name=&quot;DataGuid&quot; type=&quot;IN&quot;&gt;Data guid of the retain area&lt;/element&gt;</span>
+<span class="cm"> */</span>
+<span class="k">typedef</span> <span class="k">struct</span>
+<span class="p">{</span>
+    <span class="n">RTS_UI32</span> <span class="n">ulTag</span><span class="p">;</span>
+    <span class="n">RTS_UI32</span> <span class="n">ulSize</span><span class="p">;</span>
+    <span class="n">RTS_GUID</span> <span class="n">DataGuid</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">RetainHeader</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The size of the RetainHeader is 24 bytes.</p>
+<p>So a typical NVRAM layout after downloading an application (and spare memory for one additional application) looks like:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>RetainHeader area [0]:
+   ulTag = TAG_RETAIN_USED
+   ulSize = 1024
+   DataGuid = {df862a2a-00000000-00000000-00000000}
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>RETAIN data area [0]
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>RetainHeader area [1]:
+   ulTag = TAG_RETAIN_USED
+   ulSize = 1024
+   DataGuid = {abf34891-00000000-00000000-00000000}
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>RETAIN PERSISTENT data area [1]
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>RetainHeader:
+   ulTag = TAG_RETAIN_FREE
+   ulSize = 2072
+   DataGuid = {00000000-00000000-00000000-00000000}
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- free -
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>There are some PLCShell commands to display the layout of the NVRAM and to manage it:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>getsramlayout
+    Display layout of complete SRAM.
+clearsram &lt;segment number retrieved by &quot;getsramlayout&quot; or &quot;all&quot;&gt;
+    Init and mark SRAM segment or complete SRAM as free.
+savesram &lt;filename&gt;
+    Save complete SRAM content to file.
+restoresram &lt;filename&gt;
+    Restore complete SRAM content from file.
+saveretains [&lt;applicationname&gt;]
+    Save retains to files(s). [Optional only from specified application].
+restoreretains [&lt;applicationname&gt;]
+    Restore retains from file(s). [Optional only for specified application].
+</pre></div>
+</div>
+<p>Here is the output for example of the “getsramlayout” command:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>----
+getsramlayout
+
+--- SRAM layout: Address=0x800f098
+Segment[0]: Tag=TAG_RETAIN_USED, Size=6000, Guid={e7d54ab1-00000000-00000000-00000000}
+Segment[1]: Tag=TAG_RETAIN_PERSISTENT_USED, Size=5992, Guid={e52a4e9b-00000000-00000000-00000000}
+Segment[2]: Tag=TAG_RETAIN_FREE, Size=2085600, Guid={00000000-00000000-00000000-00000000}
+</pre></div>
+</div>
+<p>How to configure the NVRAM see <span class="xref std std-ref">NVRAM configuration</span>.</p>
+</div>
+<div class="section" id="volatile-ram">
+<h4>Volatile RAM<a class="headerlink" href="#volatile-ram" title="Permalink to this headline">¶</a></h4>
+<p>If your controller does not have a builtin NVRAM, you can use the normal volatile RAM to store RETAIN data.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>But here the RETAIN data get lost after rebooting the controller! So you have to store the data on a persistent memory! For this yu have two
+possibilities which are described in the following chapters.</p>
+</div>
+<p>The RETAIN and RETAIN PERSISTENT data are stored in this case in one file per application with the name “&lt;Application&gt;.ret”. In this file, the RETAIN
+and RETAIN PERSISTENT segement is stored!</p>
+<div class="section" id="id14">
+<h5><span class="target" id="powerfail">PowerFail</span><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h5>
+<p>On powerfail or shutdown of the runtime system, you have to store the RETAIN areas on a flash or harddisk. For this we provide the wollowing <span class="xref std std-ref">example code</span>,
+that can be used as a template for own implementations.</p>
+<p>Typically an uninterruptible power supply (UPS) is used here to hold the power for some time on a powerfail situation. Depending on the hold time of your UPS, you
+have to use the most appropriate storage strategy from the example code to save the RETAIN data!</p>
+<p>How to configure the powerfail in the runtime see <span class="xref std std-ref">PowerFail configuration</span>.</p>
+</div>
+<div class="section" id="cyclic">
+<h5>Cyclic<a class="headerlink" href="#cyclic" title="Permalink to this headline">¶</a></h5>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This is the most unsafe way to manage RETAIN data! Data inconsistencies or corrupt retain data file could occur in this case!</p>
+</div>
+<p>To implement this functionality, you can save all RETAIN areas in a file with the interface function <a class="reference internal" href="../Reference/group___cmp_app_itf.html#group-cmp-app-itf"><span class="std std-ref">AppStoreRetainsInFile()</span></a>).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Use two different files to save RETAIN data to inhibit the corruption of the files! So at least one file is valid and the can be restored after loading the application!</p>
+</div>
+<p>The restore of the RETAIN data must be done after loding the application(s). For this you have to register on the event <a class="reference internal" href="../Reference/group___cmp_app_itf___events.html#group-cmp-app-itf-events"><span class="std std-ref">CMPID_CmpApp :: EVT_AllBootprojectsLoaded</span></a>. In
+the event callback you can restore the RETAIN data with <a class="reference internal" href="../Reference/group___cmp_app_itf.html#group-cmp-app-itf"><span class="std std-ref">AppRestoreRetainsFromFile()</span></a>. Use the last valid stored file here!</p>
+<p>Here is a short code snippet that checks all RETAIN areas and write to RETAIN memory, if some data has changed in the RETAIN and RETAIN PERSISTENT areas!</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="kt">void</span> <span class="n">CheckRetains</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="n">RTS_UI32</span> <span class="n">crc32Retain</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">static</span> <span class="n">RTS_UI32</span> <span class="n">crc32RetainPersistent</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">RTS_RESULT</span> <span class="n">localResult</span> <span class="o">=</span> <span class="n">ERR_OK</span><span class="p">;</span>
+    <span class="n">RTS_UI8</span> <span class="n">HUGEPTR</span><span class="o">*</span> <span class="n">pSegment</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">APPLICATION</span> <span class="o">*</span><span class="n">pApp</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">RTS_SIZE</span> <span class="n">sizeRetain</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">RTS_UI32</span> <span class="n">crc32</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">pApp</span> <span class="o">=</span> <span class="n">CAL_AppGetFirstApp</span><span class="p">(</span><span class="o">&amp;</span><span class="n">localResult</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">pApp</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="cm">/* Check RETAIN data */</span>
+        <span class="n">pSegment</span> <span class="o">=</span> <span class="n">CAL_AppGetSegmentAddress</span><span class="p">(</span><span class="n">pApp</span><span class="p">,</span> <span class="n">DA_RETAIN</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">localResult</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pSegment</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">sizeRetain</span> <span class="o">=</span> <span class="n">CAL_AppGetSegmentSize</span><span class="p">(</span><span class="n">pApp</span><span class="p">,</span> <span class="n">DA_RETAIN</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">localResult</span><span class="p">);</span>
+
+            <span class="n">crc32</span> <span class="o">=</span> <span class="n">CAL_CRC32Init</span><span class="p">();</span>
+            <span class="n">crc32</span> <span class="o">=</span> <span class="n">CAL_CRC32Update</span><span class="p">(</span><span class="n">crc32</span><span class="p">,</span> <span class="n">pSegment</span><span class="p">,</span> <span class="n">sizeRetain</span><span class="p">);</span>
+            <span class="n">crc32</span> <span class="o">=</span> <span class="n">CAL_CRC32Finish</span><span class="p">(</span><span class="n">crc32</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">crc32</span> <span class="o">!=</span> <span class="n">crc32Retain</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">crc32Retain</span> <span class="o">=</span> <span class="n">crc32</span><span class="p">;</span>
+                <span class="cm">/* =&gt; Safe RETAIN data */</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="cm">/* Check RETAIN PERSISTENT data */</span>
+        <span class="n">pSegment</span> <span class="o">=</span> <span class="n">CAL_AppGetSegmentAddress</span><span class="p">(</span><span class="n">pApp</span><span class="p">,</span> <span class="n">DA_RETAIN</span> <span class="o">|</span> <span class="n">DA_PERSISTENT</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">localResult</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pSegment</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">sizeRetain</span> <span class="o">=</span> <span class="n">CAL_AppGetSegmentSize</span><span class="p">(</span><span class="n">pApp</span><span class="p">,</span> <span class="n">DA_RETAIN</span> <span class="o">|</span> <span class="n">DA_PERSISTENT</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">localResult</span><span class="p">);</span>
+
+            <span class="n">crc32</span> <span class="o">=</span> <span class="n">CAL_CRC32Init</span><span class="p">();</span>
+            <span class="n">crc32</span> <span class="o">=</span> <span class="n">CAL_CRC32Update</span><span class="p">(</span><span class="n">crc32</span><span class="p">,</span> <span class="n">pSegment</span><span class="p">,</span> <span class="n">sizeRetain</span><span class="p">);</span>
+            <span class="n">crc32</span> <span class="o">=</span> <span class="n">CAL_CRC32Finish</span><span class="p">(</span><span class="n">crc32</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">crc32</span> <span class="o">!=</span> <span class="n">crc32RetainPersistent</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">crc32RetainPersistent</span> <span class="o">=</span> <span class="n">crc32</span><span class="p">;</span>
+                <span class="cm">/* =&gt; Safe RETAIN PERSISTANT data */</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">pApp</span> <span class="o">=</span> <span class="n">CAL_AppGetNextApp</span><span class="p">(</span><span class="n">pApp</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">localResult</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id15">
+<h5><span class="target" id="persistence-manager">Persistence Manager</span><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h5>
+<p>The so called persistence manager is a feature realized in the CODESYS with the IEC application! See the CODESYS Help “Persistence Manager”
+for details.</p>
+<p>With this feature you can manage RETAIN and RETAIN PERSISTENT data on a volatile RAM!</p>
+</div>
+</div>
+</div>
+<div class="section" id="id16">
+<h3><span class="target" id="configuration-of-retain-handling">Configuration of RETAIN handling</span><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>The RETAIN layout must be specified in the device description of a target and in the runtime system:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#devicedescription-configuration">Devicedescription configuration</a></p></li>
+<li><p><a class="reference internal" href="#runtimesystem-configuration">Runtimesystem configuration</a></p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="id17">
+<h4><span class="target" id="devicedescription-configuration">Devicedescription configuration</span><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<p>The RETAIN layout must be specified in the <a class="reference internal" href="../Manual/dev_desc_device_extended_settings.html#dev-extended-settings-memory-layout"><span class="std std-ref">device description</span></a> of a target. Here you have to configure,
+what is the default size of the RETAIN and the RETAIN PERSISTENT area.</p>
+<p>A typical configuration can look like this. Here we use one RETAIN segment with 1024 bytes (0x400) and one RETAIN PERSISTENT segment with 1024 bytes (0x400):</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;memory-layout&quot;</span><span class="nt">&gt;</span>
+    ...
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;retain-in-own-segment&quot;</span> <span class="na">type=</span><span class="s">&quot;boolean&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>1<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;areas&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;number&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>4<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_0&quot;</span><span class="nt">&gt;</span>
+            <span class="cp">&lt;!–RETAIN memory--&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x20<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x400<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;maximal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x400<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;/ts:section&gt;</span>
+        <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_1&quot;</span><span class="nt">&gt;</span>
+            <span class="cp">&lt;!–RETAIN PERSISTENT memory--&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x120<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x400<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;maximal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x400<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;/ts:section&gt;</span>
+        ...
+    <span class="nt">&lt;/ts:section&gt;</span>
+<span class="nt">&lt;/ts:section&gt;</span>
+</pre></div>
+</div>
+<p>RETAIN and RETAIN PERSISTENT areas should be separated always in two different areas!</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have an NVRAM, you have to be aware of the <a class="reference internal" href="../Reference/struct_retain_header.html#struct-retain-header"><span class="std std-ref">RetainHeader</span></a>! Here you have to split your RETAIN memory into several segments, which should
+matched into the complete NVRAM:</p>
+<ul>
+<li><p>RETAIN area size = physical RETAIN segment size <strong>- 24byte</strong></p></li>
+<li><p>RETAIN PERSISTENT area size = physical RETAIN PERSISTENT segment size <strong>- 24byte</strong></p>
+<p><strong>Important</strong></p>
+<p>Not the complete memory of “RETAIN PERSISTENT area size” can be used in the application! The codegenerator reserves 20 bytes athe the beginning of
+the area to store additional information, which reduces the size that can be used for RETAIN PERSISTENT data!</p>
+</li>
+</ul>
+</div>
+<p>Example 1:</p>
+<blockquote>
+<div><p>You have an NVRAM with a size of 128 kByte (131.077 bytes) and you would like to run only one application on the runtime system.
+In this case you would specify:</p>
+<ul class="simple">
+<li><p>RETAIN area size              = 64 kbyte - 24byte = 65535 byte - 24byte = <strong>65511</strong> (0xFFE7)</p></li>
+<li><p>RETAIN PERSISTENT area size   = 64 kbyte - 24byte = 65535 byte - 24byte = <strong>65511</strong> (0xFFE7)</p></li>
+</ul>
+<p>Here is the corresponding snipped of the device description:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_0&quot;</span><span class="nt">&gt;</span>
+    <span class="cp">&lt;!–RETAIN memory--&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>0x20<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>0xFFE7<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+<span class="nt">&lt;/ts:section&gt;</span>
+<span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_1&quot;</span><span class="nt">&gt;</span>
+    <span class="cp">&lt;!–RETAIN PERSISTENT memory--&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>0x120<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>0xFFE7<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+<span class="nt">&lt;/ts:section&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Example 2:</p>
+<blockquote>
+<div><p>You have an NVRAM with a size of 128 kByte (131.072 bytes) and you would like to run several applications on the runtime system!
+So every application should start with a minimum area size (for example 1024 bytes) and should be increased automatically as needed
+by the IEC application! To support this you have to specify the settings “dynamic-retain” and “dynamic-persistent” (see example).</p>
+<p>In this case you would specify:</p>
+<ul class="simple">
+<li><p>RETAIN max area size            = 128 kbyte - 24byte = 131.072 byte - 24byte = <strong>131048</strong> (0x1FFE8)</p></li>
+<li><p>RETAIN PERSISTENT max area size = 128 kbyte - 24byte = 131.072 byte - 24byte = <strong>131048</strong> (0x1FFE8)</p></li>
+</ul>
+<p>Here is the corresponding snipped of the device description:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;memory-layout&quot;</span><span class="nt">&gt;</span>
+    ...
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;dynamic-retain&quot;</span> <span class="na">type=</span><span class="s">&quot;boolean&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>true<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;dynamic-persistent&quot;</span> <span class="na">type=</span><span class="s">&quot;boolean&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>true<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;retain-in-own-segment&quot;</span> <span class="na">type=</span><span class="s">&quot;boolean&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>1<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_0&quot;</span><span class="nt">&gt;</span>
+        <span class="cp">&lt;!–RETAIN memory--&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0x20<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>1024<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;maximal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>131048<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>10<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;/ts:section&gt;</span>
+    <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_1&quot;</span><span class="nt">&gt;</span>
+        <span class="cp">&lt;!–RETAIN PERSISTENT memory--&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0x120<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>1024<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;maximal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>131048<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>10<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;/ts:section&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id18">
+<h4><span class="target" id="runtimesystem-configuration">Runtimesystem configuration</span><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<p>In the runtime system you have to specify, which kind of RETAIN management you would like to select. This can be defined with
+the setting <a class="reference internal" href="../Reference/group___cmp_app_itf___settings.html#group-cmp-app-itf-settings"><span class="std std-ref">RetainType.Applications</span></a>.</p>
+<p>Here you can set if your controller uses NVRAM, PowerFail or no support for RETAIN data!</p>
+<div class="section" id="id19">
+<h5><span class="target" id="powerfail-configuration">PowerFail configuration</span><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h5>
+<p>To support powerfail you have to specify the following setting (or you can set the default value by a define):</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[CmpApp]</span>
+<span class="na">RetainType.Applications</span><span class="o">=</span><span class="s">OnPowerfail</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id20">
+<h5><span class="target" id="nvram-configuration">NVRAM configuration</span><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h5>
+<p>If you have an NVRAM you have to specify the type, starting address and the size of this memory.</p>
+<p>The type can be specified with the setting <a class="reference internal" href="../Reference/group___cmp_app_itf___settings.html#group-cmp-app-itf-settings"><span class="std std-ref">RetainType.Applications</span></a>:</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[CmpApp]</span>
+<span class="na">RetainType.Applications</span><span class="o">=</span><span class="s">InSRAM</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The address of the NVRAM can be specified in the runtime system via:</p>
+<ol class="arabic simple">
+<li><p>the setting in cfg-file of the runtime system: <a class="reference internal" href="../Reference/group___cmp_retain_itf___settings.html#group-cmp-retain-itf-settings"><span class="std std-ref">Retain.SRAM.Address</span></a> or</p></li>
+<li><p>the setting in cfg-file of the runtime system: <a class="reference internal" href="../Reference/group___cmp_retain_itf___settings.html#group-cmp-retain-itf-settings"><span class="std std-ref">Retain.SRAM.AddressMapped</span></a> or</p></li>
+<li><p>via an event callback (see <a class="reference internal" href="../Reference/group___cmp_retain_itf___events.html#group-cmp-retain-itf-events"><span class="std std-ref">EVT_RetainGetSRAM</span></a>).</p></li>
+</ol>
+<p>The difference between Retain.SRAM.Address and Retain.SRAM.AddressMapped is, that Retain.SRAM.Address must be mapped in the address space
+of the runtime system and Retain.SRAM.AddressMapped is a still mapped address, which can be used directly!</p>
+<p>The size of the NVRAM can be specified with the setting <a class="reference internal" href="../Reference/group___cmp_retain_itf___settings.html#group-cmp-retain-itf-settings"><span class="std std-ref">Retain.SRAM.Size</span></a> or in the event (3.) above.</p>
+<p>Examples:</p>
+<blockquote>
+<div><p>Not mapped memory:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[CmpRetain]</span>
+<span class="na">Retain.SRAM.Size</span><span class="o">=</span><span class="s">0x1FFFF</span>
+<span class="na">Retain.SRAM.Address</span><span class="o">=</span><span class="s">0xFA3C5776</span>
+
+<span class="k">[CmpApp]</span>
+<span class="na">RetainType.Applications</span><span class="o">=</span><span class="s">InSRAM</span>
+</pre></div>
+</div>
+<p>Still mapped memory:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[CmpRetain]</span>
+<span class="na">Retain.SRAM.Size</span><span class="o">=</span><span class="s">0x1FFFF</span>
+<span class="na">Retain.SRAM.AddressMapped</span><span class="o">=</span><span class="s">0xFA3C5776</span>
+
+<span class="k">[CmpApp]</span>
+<span class="na">RetainType.Applications</span><span class="o">=</span><span class="s">InSRAM</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can simulate the NVRAM with the setting <a class="reference internal" href="../Reference/group___cmp_retain_itf___settings.html#group-cmp-retain-itf-settings"><span class="std std-ref">SimulateSRAM</span></a>. Here one volatile RAM buffer will be allocated
+(and simulates the NVRAM).</p>
+<p>At shutdown of the runtime system this buffer is saved on disk and at restart of the runtime system the areas are restored from this file.
+So the behaviour is equivalent to a normal NVRAM.</p>
+</div>
+</div>
+<div class="section" id="id21">
+<h5><span class="target" id="no-retain-support">No RETAIN support</span><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h5>
+<p>You can specify no RETAIN support, if you don’t have the need to store RETAIN data. This can be selected by the following setting:</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[CmpApp]</span>
+<span class="na">RetainType.Applications</span><span class="o">=</span><span class="s">InSRAM</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+</div>
+<div class="section" id="id22">
+<h3><span class="target" id="implementation-of-retain-handling">Implementation of RETAIN handling</span><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<p>The management of RETAIN variables is implemented in different components, dependent on the runtime system variant.</p>
+<div class="section" id="full-runtime">
+<h4>Full Runtime<a class="headerlink" href="#full-runtime" title="Permalink to this headline">¶</a></h4>
+<p>This is implemented in CmpApp and CmpRetain. The configuration is different, which kind of RETAIN memory/scenario is used (see chapters above).</p>
+</div>
+<div class="section" id="id23">
+<h4>Embedded Runtime<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
+<p>This is implemented in CmpAppEmbedded. Only the support of an NVRAM via SysMemAllocArea() is supported!</p>
+</div>
+</div>
+<div class="section" id="id24">
+<h3><span class="target" id="special-aspects">Special aspects</span><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id25">
+<h4><span class="target" id="static-area">Static area</span><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
+<p>This is a special configuration for a single application and for RETAIN and RETAIN PERSISTENT areas. With this feature you can specify
+one area for RETAIN <em>and</em> RETAIN PERSISTENT data!</p>
+<p>See <a class="reference internal" href="../Manual/dev_desc_device_extended_settings.html#dev-extended-settings-static-area"><span class="std std-ref">static area</span></a> for details.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This feature can only be used for <a class="reference internal" href="#single-application"><span class="std std-ref">single application</span></a>!</p>
+</div>
+</div>
+<div class="section" id="id26">
+<h4><span class="target" id="retain-marker-m-with-retain">RETAIN marker (%M with RETAIN)</span><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h4>
+<p>The marker is a memory for IEC variables, which can addressed with %M directives. For example a variable which is assigned to %MB10
+locates at the offset 10 in this memory.</p>
+<p>Some controllers locate the marker in a separate RETAIN area and so the value content is persistent.</p>
+<p>For this you have to specify in your device description the area types <a class="reference internal" href="../Reference/group___sys_mem_itf.html#group-sys-mem-itf"><span class="std std-ref">DA_RETAIN | DA_MEMORY</span></a> as combination:</p>
+<blockquote>
+<div><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;areas&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_0&quot;</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- Marker memory (%M addresses) --&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0x0030<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0x4000<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;/ts:section&gt;</span>
+    ...
+<span class="nt">&lt;/ts:section&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id27">
+<h4><span class="target" id="data-consistency-of-retain-memory">Data consistency of RETAIN memory</span><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h4>
+<p>Be aware that the data in an RETAIN memory can be inconsistent, if you don’t use a <span class="xref std std-ref">PowerFail</span> strategy! So if you use an NVRAM and you loose
+power within an IEC task cycle, in the NVRAM you can have the RETAIN values of a partial stored IEC task cycle!</p>
+</div>
+</div>
+</div>
+<div class="section" id="id28">
+<h2><a class="toc-backref" href="#id32">6.3.6.4. <span class="target" id="typical-use-cases-and-configurations">Typical Use Cases and Configurations</span></a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dynamic-memory-for-all-areas">
+<h3>Dynamic memory for all areas<a class="headerlink" href="#dynamic-memory-for-all-areas" title="Permalink to this headline">¶</a></h3>
+<p>If your controller can use multiple applications, has a large builtin RAM and if the RETAIN and RETAIN PERSISTENT data are stored on PowerFail,
+you can use the following memory layout:</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;memory-layout&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;dynamic-retain&quot;</span> <span class="na">type=</span><span class="s">&quot;boolean&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>true<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;dynamic-persistent&quot;</span> <span class="na">type=</span><span class="s">&quot;boolean&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>true<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>30<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;retain-in-own-segment&quot;</span> <span class="na">type=</span><span class="s">&quot;boolean&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>1<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;areas&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;number&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>4<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_0&quot;</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!-- Data area --&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0xfe9f<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;/ts:section&gt;</span>
+        <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_1&quot;</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!-- Code area --&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x0040<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;/ts:section&gt;</span>
+        <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_2&quot;</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!-- RETAIN area --&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x0020<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x1000<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>20<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;/ts:section&gt;</span>
+        <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_3&quot;</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!-- RETAIN PERSISTENT area --&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x0120<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x1000<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>20<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;/ts:section&gt;</span>
+    <span class="nt">&lt;/ts:section&gt;</span>
+<span class="nt">&lt;/ts:section&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="dynamic-memory-for-code-and-data-nvram-for-retain">
+<h3>Dynamic memory for code and data, NVRAM for RETAIN<a class="headerlink" href="#dynamic-memory-for-code-and-data-nvram-for-retain" title="Permalink to this headline">¶</a></h3>
+<p>If your controller can have multiple applications, has a large builtin RAM and one single NVRAM, you can use the following memory layout:</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;memory-layout&quot;</span><span class="nt">&gt;</span>
+    ...
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;dynamic-retain&quot;</span> <span class="na">type=</span><span class="s">&quot;boolean&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>true<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;dynamic-persistent&quot;</span> <span class="na">type=</span><span class="s">&quot;boolean&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>true<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>30<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;retain-in-own-segment&quot;</span> <span class="na">type=</span><span class="s">&quot;boolean&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>1<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;areas&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;number&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>4<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_0&quot;</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!-- Data area --&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0xfe7f<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;/ts:section&gt;</span>
+        <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_1&quot;</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!-- Code area --&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x0040<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;/ts:section&gt;</span>
+        <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_2&quot;</span><span class="nt">&gt;</span>
+            <span class="cp">&lt;!–RETAIN memory--&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x20<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>1024<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;maximal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>131048<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>10<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;/ts:section&gt;</span>
+        <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_3&quot;</span><span class="nt">&gt;</span>
+            <span class="cp">&lt;!–RETAIN PERSISTENT memory--&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x120<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>1024<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;maximal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>131048<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>10<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;/ts:section&gt;</span>
+    <span class="nt">&lt;/ts:section&gt;</span>
+<span class="nt">&lt;/ts:section&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="static-memory-for-code-and-data-nvram-for-retain">
+<h3>Static memory for code and data, NVRAM for RETAIN<a class="headerlink" href="#static-memory-for-code-and-data-nvram-for-retain" title="Permalink to this headline">¶</a></h3>
+<p>If your controller can only a single applications, has limited builtin RAM and one single NVRAM, you can use the following memory layout:</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;memory-layout&quot;</span><span class="nt">&gt;</span>
+    ...
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;allocation-plus-in-percent&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>0<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;retain-in-own-segment&quot;</span> <span class="na">type=</span><span class="s">&quot;boolean&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:value&gt;</span>1<span class="nt">&lt;/ts:value&gt;</span>
+    <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;static-area&quot;</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- RETAIN and RETAIN PERSISTENT area --&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer &quot;</span> <span class="na">access=</span><span class="s">&quot;visible &quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>0x10000 <span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;start -address &quot;</span> <span class="na">type=</span><span class="s">&quot;integer &quot;</span> <span class="na">access=</span><span class="s">&quot;visible &quot;</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!-- This is optional to specify the start address of the NVRAM:</span>
+<span class="c">                &lt;ts:value&gt;0xba5eadd &lt;/ts:value&gt;</span>
+<span class="c">            --&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+    <span class="nt">&lt;/ts:section&gt;</span>
+    <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;areas&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;number&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ts:value&gt;</span>4<span class="nt">&lt;/ts:value&gt;</span>
+        <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_0&quot;</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!-- Data area --&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0xfe7f<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x10000<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;maximal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x10000<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;/ts:section&gt;</span>
+        <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;area_1&quot;</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!-- Code area --&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;flags&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x0040<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;minimal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x10000<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+            <span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">&quot;maximal-area-size&quot;</span> <span class="na">type=</span><span class="s">&quot;integer&quot;</span> <span class="na">access=</span><span class="s">&quot;visible&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:value&gt;</span>0x10000<span class="nt">&lt;/ts:value&gt;</span>
+            <span class="nt">&lt;/ts:setting&gt;</span>
+        <span class="nt">&lt;/ts:section&gt;</span>
+    <span class="nt">&lt;/ts:section&gt;</span>
+<span class="nt">&lt;/ts:section&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CODESYSControlV3_TraceManager/index.html" title="6.3.7. Trace Manager"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CODESYSControlV3_CodeMeter_Tutorial.html" title="6.3.5. CodeMeter Tutorial"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >6. Tutorials / HowTos</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

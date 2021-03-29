@@ -1,0 +1,40 @@
+.. _interfaces:
+.. index:: Trace Manager interfaces
+
+Interfaces of the Trace Manager
+===============================
+
+The Trace Manager component has 3 different interfaces:
+
++------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Interface                    | Function                                                                                                                                                   |
++==============================+============================================================================================================================================================+
+| Component Interface          | API for other runtime system components. For detailed description of the interface see the ``CmpTraceMgrItf`` documentation in the Runtime System Reference|
++------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Library Interface            | The IEC library to access the Trace Manager out of a POU /function block / IEC application.                                                                |
+|                              | For details see the library documentation of ``CmpTraceMgr.library``.                                                                                      |
++------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Service Interface (Online)   | The online interface for CODESYS                                                                                                                           |
++------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+All functional interfaces (component and library) of the trace manager
+provide the following functions:
+
+-  Create a trace packet (with configuration) / delete a trace packet.
+-  Add / remove a trace record.
+-  Manage a trace packet (start, stop, fill the trace record buffer, etc.).
+-  Delete a trace packet.
+-  List trace packets.
+-  Open and close a trace packet (to get the handle).
+-  Handle a trace packet (start, stop, reset).
+-  Handle the status of a trace packet (degree of filling, trigger
+   received with time stamp).
+-  Set the trigger status of a trace packet.
+-  Activate/deactivate the capturing of data.
+-  Activate/deactivate the trigger handling of a trace packet.
+-  Write/update the data of a trace (n set of data + time, alternatively n
+   set of data with start time and interval).
+-  Read the configuration of a trace packet.
+-  Read the data of a trace.
+-  Save the trace packet in a file (with and without data).
+-  Read the trace packet from a file (create).

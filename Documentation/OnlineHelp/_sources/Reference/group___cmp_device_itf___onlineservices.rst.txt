@@ -1,0 +1,319 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_device_itf___onlineservices:
+
+===============
+Online services
+===============
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Macros
+------
+
+- #define :ref:`SRV_DEV_GET_TARGET_IDENT <group___cmp_device_itf___onlineservices_1ga905e8e4f79a012a484277d81cadcf866>` 0x01
+
+- #define :ref:`SRV_DEV_LOGIN <group___cmp_device_itf___onlineservices_1gaef83d2ddb032a165b8f74f856ee84007>` 0x02
+
+- #define :ref:`SRV_DEV_LOGOUT <group___cmp_device_itf___onlineservices_1gaf0fb81601a94d139ea766bdb7771ea67>` 0x03
+
+- #define :ref:`SRV_DEV_RESET_ORIGIN <group___cmp_device_itf___onlineservices_1gabe79b13b20a7987ea0907fa347928034>` 0x04
+
+- #define :ref:`SRV_DEV_ECHO <group___cmp_device_itf___onlineservices_1gad3a0a87cf87dbf9489baa2f6a7e34abb>` 0x05
+
+- #define :ref:`SRV_DEV_SET_OPERATION_MODE <group___cmp_device_itf___onlineservices_1ga94c01fa7efe235346f01b673086b3fd8>` 0x06
+
+- #define :ref:`SRV_DEV_GET_OPERATION_MODE <group___cmp_device_itf___onlineservices_1ga7594d990375db90f2bee0f33510b7a80>` 0x07
+
+- #define :ref:`SRV_DEV_INTERACTIVE_LOGIN <group___cmp_device_itf___onlineservices_1ga25f206746a21e2f38ba45361ec734c36>` 0x08
+
+- #define :ref:`SRV_DEV_SET_NODE_NAME <group___cmp_device_itf___onlineservices_1gaf29726567eb55d26d7537f1de32e1e29>` 0x09
+
+- #define :ref:`SRV_DEV_SESSION_CREATE <group___cmp_device_itf___onlineservices_1gaab29618e00b732b21d5b852d75890f7d>` 0x0A
+
+- #define :ref:`SRV_DEV_RESET_ORIGIN_GET_CONFIG <group___cmp_device_itf___onlineservices_1ga80d481edca6b5ab887d9a4dfae4c7267>` 0x0B
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_device_itf___onlineservices_1ga905e8e4f79a012a484277d81cadcf866:
+
+#define SRV_DEV_GET_TARGET_IDENT 0x01
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_DEVICE
+
+Service: SRV_DEV_GET_TARGET_IDENT
+
+Request tags:
+
+  - Tag Identification (1..?): TODO
+
+Response tags:
+
+  - Tag Identification (0..?): TODO
+
+  - Tag Device name (0..?): TODO
+
+  - Tag Vendor name (0..?): TODO
+
+  - Tag Node name (0..?): TODO
+
+  - Tag Reply (1..?): TODO
+
+  - Tag RTS version (0..?): TODO
+
+  - Tag Flags (0..?): TODO
+
+  - Tag Number of channels (0..?): TODO
+
+  - Tag Serial number (0..?): TODO
+
+  - Tag IP address info (0..?): TODO
+
+.. _group___cmp_device_itf___onlineservices_1gaef83d2ddb032a165b8f74f856ee84007:
+
+#define SRV_DEV_LOGIN 0x02
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_DEVICE
+
+Service: SRV_DEV_LOGIN
+
+Request tags:
+
+  - Tag Crypt type (1..?) (RTS_UI32): Authentication type. Must match to the type negotiated by SRV_DEV_SESSION_CREATE.
+
+  - TAG_USERMGR_CRYPT_STEP (0..?) (RTS_UI32): Current step of login sequence. Not used for authentication type USERMGR_CRYPT_XOR.
+
+  - Tag Crypt challenge (0..?) (char*): Challenge used for password encryption. Only used for authentication type USERMGR_CRYPT_XOR.
+
+  - Tag Credentials (0..?): Top level tag. Contains the user credentials.
+
+    - Tag User (0..?) (char*): User name.
+
+    - Tag Password (0..?) (char*): Encrypted password.
+
+Response tags:
+
+  - TAG_USERMGR_CRYPT_PUB_KEY (0..?) (char*): Public key used for password encryption. Only sent for authentication type USERMGR_CRYPT_ASYMMETRIC.
+
+  - TAG_USERMGR_CRYPT_NONCE (0..?) (char*): Nonce used for password encryption. Only sent for authentication type USERMGR_CRYPT_ASYMMETRIC.
+
+  - TAG_ONLINE_ACCESS_RESULT (1..?): Top level tag. Contains the service result, if access rights are missing for the requested service.
+
+    - TAG_USRMGR_REPLY_LOGIN_RESULT (1..?) (RTS_UI16): Result code of online operation. Important result codes, which should be handled by the client: ERR_OK, ERR_PENDING, ERR_TYPE_MISMATCH, ERR_CHANGE_PASSWORD, ERR_NOT_READY_YET, ERR_NO_ACCESS_RIGHTS
+
+  - TAG_ONLINE_ACCESS_OBJECT (1..?): Top level tag. Describes the denied access.
+
+    - TAG_NAME (1..?) (char*): Object which should be accessed
+
+    - TAG_RIGHTS (1..?) (RTS_UI32): Needed rights to execute the requested access.
+
+  - TAG_USERMGR_CRYPT_TYPE (1..?) (RTS_UI32): Authentication type. Matches to the type negotiated by SRV_DEV_SESSION_CREATE.
+
+  - TAG_USERMGR_CRYPT_CHALLENGE (0..?) (char*): Challenge used for password encryption. Only used for authentication type USERMGR_CRYPT_XOR.
+
+  - Tag Login reply (1..?): Top level tag. Contains the service result, if access rights are missing for the requested service.
+
+    - Tag Login result (1..?) (RTS_UI16): Result code of online operation.
+
+    - Tag Settings (0..?) (RTS_UI32): Feature flags of the runtime system. Only sent, if the login was completed successfully.
+
+    - Tag Login session id (0..?) (RTS_UI32): SessionID which has to be used for all further online services.
+
+  - TAG_OBJECT (1..?): Top level tag. Describes the denied access.
+
+    - TAG_NAME (1..?) (char*): Object which should be accessed
+
+    - TAG_RIGHTS (1..?) (RTS_UI32): Needed rights to execute the requested access.
+
+.. _group___cmp_device_itf___onlineservices_1gaf0fb81601a94d139ea766bdb7771ea67:
+
+#define SRV_DEV_LOGOUT 0x03
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_DEVICE
+
+Service: SRV_DEV_LOGOUT
+
+Request tags:
+
+  - TODO_0x01: TODO
+
+Response tags:
+
+  - Tag Logout reply: TODO
+
+.. _group___cmp_device_itf___onlineservices_1gabe79b13b20a7987ea0907fa347928034:
+
+#define SRV_DEV_RESET_ORIGIN 0x04
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_DEVICE
+
+Service: SRV_DEV_RESET_ORIGIN
+
+Request tags:
+
+  - Tag Reset origin config (0..?) (RTS_UI32): See category "Reset Origin Configuration". Flag field for objects that shall not be handled during reset.
+
+  - Tag Reset origin config (0..?) (RTS_UI32): Obsolete: use TAG_DEV_RESET_ORIGIN_CONFIG_OPTIONS instead.
+
+Response tags:
+
+  - Tag Reset origin results (0..1) (RTS_UI32): Only if an error occured during deletion of the configured objects: bit vector indicating the results for the requested configuration (bit=1: error deleting the corresponding object, bit=0: success).
+
+  - Tag Result: TODO
+
+.. _group___cmp_device_itf___onlineservices_1gad3a0a87cf87dbf9489baa2f6a7e34abb:
+
+#define SRV_DEV_ECHO 0x05
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_DEVICE
+
+Service: SRV_DEV_ECHO
+
+Request tags:
+
+  - Tag Request data length (0..?) (RTS_UI32): Length of tag content in TAG_DEV_ECHO_DATA.
+
+  - Tag Reply data length (0..?) (RTS_UI32): Requested length of reply content in TAG_DEV_ECHO_DATA.
+
+  - Tag Data (0..?) (char*): Dummy bytes as payload.
+
+Response tags:
+
+  - Tag Result (0..?) (RTS_UI16): Result code of online operation
+
+  - Tag Reply data length (0..?) (RTS_UI32): Length of tag content in TAG_DEV_ECHO_DATA
+
+  - Tag Data (0..?) (char*): Dummy bytes as payload.
+
+.. _group___cmp_device_itf___onlineservices_1ga94c01fa7efe235346f01b673086b3fd8:
+
+#define SRV_DEV_SET_OPERATION_MODE 0x06
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_DEVICE
+
+Service: SRV_DEV_SET_OPERATION_MODE
+
+Request tags:
+
+  - Tag Operation mode (0..?) (RTS_UI32): Operation mode to set.
+
+Response tags:
+
+  - Tag Result (1..?) (RTS_UI6): Result code of online operation
+
+  - TAG_USER_NOTIFY (0..?) (LogEntry): User notification message, contains the component, which has denied the service
+
+.. _group___cmp_device_itf___onlineservices_1ga7594d990375db90f2bee0f33510b7a80:
+
+#define SRV_DEV_GET_OPERATION_MODE 0x07
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_DEVICE
+
+Service: SRV_DEV_GET_OPERATION_MODE
+
+Response tags:
+
+  - Tag Operation mode (1..?) (RTS_UI32): Current operation mode of the device.
+
+.. _group___cmp_device_itf___onlineservices_1ga25f206746a21e2f38ba45361ec734c36:
+
+#define SRV_DEV_INTERACTIVE_LOGIN 0x08
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_DEVICE
+
+Service: SRV_DEV_INTERACTIVE_LOGIN
+
+Request tags:
+
+  - Tag Command (1..?) (RTS_UI32): See category "Interactive login commands".
+
+  - Tag Mode (0..?) (RTS_UI32): See category Interactive login mode flags. Only used for command DEV_ILC_LOGIN_REQUEST.
+
+  - Tag Data (0..?) (RTS_UI8*): Login information to be checked by the runtime system. Only used for mode DEV_ILM_STRING
+
+Response tags:
+
+  - Tag Result (1..?) (RTS_UI16): Result code of online operation. Supported results: ERR_OK (interactive login successful), ERR_FAILED (generic error), ERR_TIMEOUT (timeout elapsed on device side), ERR_PENDING (device still waits for user action, e. g. key press), ERR_NOT_SUPPORTED (requested login mode is not supported by the device) ERR_ID_MISMATCH (login information does not match).
+
+  - Tag Session id (0..?) (RTS_UI32): SessionID which have to be used for all further online services on this channel. Only returned for command DEV_ILC_LOGIN_REQUEST
+
+.. _group___cmp_device_itf___onlineservices_1gaf29726567eb55d26d7537f1de32e1e29:
+
+#define SRV_DEV_SET_NODE_NAME 0x09
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_DEVICE
+
+Service: SRV_DEV_SET_NODE_NAME
+
+Request tags:
+
+  - Tag Node name (1..?) (RTS_UI32): New UTF-16 node name. By passing an empty string, the node name settings are deleted and so the default node name is set again.
+
+Response tags:
+
+  - Tag Result (1..?) (RTS_UI6): Result code of online operation. See description of SysTargetSetNodeName for details.
+
+.. _group___cmp_device_itf___onlineservices_1gaab29618e00b732b21d5b852d75890f7d:
+
+#define SRV_DEV_SESSION_CREATE 0x0A
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_DEVICE
+
+Service: SRV_DEV_SESSION_CREATE
+
+Request tags:
+
+  - TAG_DEV_CLIENT_IDENTIFIER (1..?): Top level tag. Contains the client identification.
+
+    - TAG_DEV_CLIENT_TYPE (1..?) (RTS_UI32): The type of the client. See Client type in CmpSessionInformationItf.
+
+    - TAG_DEV_CLIENT_NAME (0..?) (char[]): UTF-8 encoded name of the client.
+
+    - TAG_DEV_CLIENT_VENDOR (0..?) (char[]): UTF-8 encoded vendor name of the client.
+
+    - TAG_DEV_CLIENT_HOSTNAME (0..?) (char[]): UTF-8 encoded fully qualified host name (FQHN) of the system where the client is running.
+
+    - TAG_DEV_CLIENT_VERSION (0..?) (char[]): UTF-8 encoded client version number.
+
+    - TAG_DEV_CLIENT_CDS_VERSION (0..?) (char[]): UTF-8 encoded fully CODESYS version number.
+
+  - TAG_DEV_CLIENT_AUTH_TYPE (1..?): Authentication types supported by the client. See Crypt type in CmpUserMgrItf.
+
+Response tags:
+
+  - TAG_DEV_REPLY_LOGIN_SESSIONID (0..?) (RTS_UI32): SessionID which has to be used for all further online services of this client.
+
+  - TAG_DEV_CLIENT_AUTH_TYPE (1..?) (RTS_UI32): Effective authentication type selected by the runtime
+
+.. _group___cmp_device_itf___onlineservices_1ga80d481edca6b5ab887d9a4dfae4c7267:
+
+#define SRV_DEV_RESET_ORIGIN_GET_CONFIG 0x0B
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

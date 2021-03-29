@@ -1,0 +1,697 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_channel_mgr_itf:
+
+================
+CmpChannelMgrItf
+================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpChannelMgr.
+
+Detailed Description
+--------------------
+
+Interface for the channel manager.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Package logfilter <group___cmp_channel_mgr_itf___packagelogfilter>`
+
+- :ref:`Settings <group___cmp_channel_mgr_itf___settings>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpChannelMgr_C <struct_i_cmp_channel_mgr___c>`
+
+Macros
+------
+
+- #define :ref:`L4_VERSION_MAJOR <group___cmp_channel_mgr_itf_1ga035f99a2ee8d7ccee8593135db62eeda>` 0x01
+
+- #define :ref:`L4_VERSION_MINOR <group___cmp_channel_mgr_itf_1gac46e7b3cbe834646847154c8686d2618>` 0x01
+
+- #define :ref:`KEEPALIVE_INTERVAL <group___cmp_channel_mgr_itf_1ga5eeac63dd12a0028fe31009a45e6f2b7>` (1000UL)
+
+- #define :ref:`USE_ChannelMgrHandleData <group___cmp_channel_mgr_itf_1gaa52d77e6af67234644dceecb70fd0df3>` :ref:`PFCHANNELMGRHANDLEDATA <group___cmp_channel_mgr_itf_1ga19f9b7b4a3b72a680c12ef9f2a937579>` pfChannelMgrHandleData;
+
+- #define :ref:`EXT_ChannelMgrHandleData <group___cmp_channel_mgr_itf_1gaf2735090c9c2475c7c873cc761c2488a>` extern :ref:`PFCHANNELMGRHANDLEDATA <group___cmp_channel_mgr_itf_1ga19f9b7b4a3b72a680c12ef9f2a937579>` pfChannelMgrHandleData;
+
+- #define :ref:`GET_ChannelMgrHandleData <group___cmp_channel_mgr_itf_1ga1ec91d6f6d85d59bdb9352f2a0b84444>` s_pfCMGetAPI2( "ChannelMgrHandleData", (RTS_VOID_FCTPTR *)&pfChannelMgrHandleData, (fl), 0, 0)
+
+- #define :ref:`CAL_ChannelMgrHandleData <group___cmp_channel_mgr_itf_1ga9dc0c2002e6cb3183ec781e2342329c3>` pfChannelMgrHandleData
+
+- #define :ref:`CHK_ChannelMgrHandleData <group___cmp_channel_mgr_itf_1gaddfafed92e2518fa489305354d6208e6>` (pfChannelMgrHandleData != NULL)
+
+- #define :ref:`EXP_ChannelMgrHandleData <group___cmp_channel_mgr_itf_1ga995959a17ee0c6c19f4ea8a24acb439b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ChannelMgrHandleData", (RTS_UINTPTR) :ref:`ChannelMgrHandleData <group___cmp_channel_mgr_itf_1ga5fff2562a9a9441172ca7316499e5048>` , 0, 0)
+
+- #define :ref:`USE_NetworkGetChBufferSize <group___cmp_channel_mgr_itf_1ga1a69c722a36a604ff36c1ad39c358c30>` :ref:`PFNETWORKGETCHBUFFERSIZE <group___cmp_channel_mgr_itf_1ga30e3a10cde448ed371a2a4d12aae41a3>` pfNetworkGetChBufferSize;
+
+- #define :ref:`EXT_NetworkGetChBufferSize <group___cmp_channel_mgr_itf_1ga555de82997af77051a1fc6e9ed1273a9>` extern :ref:`PFNETWORKGETCHBUFFERSIZE <group___cmp_channel_mgr_itf_1ga30e3a10cde448ed371a2a4d12aae41a3>` pfNetworkGetChBufferSize;
+
+- #define :ref:`GET_NetworkGetChBufferSize <group___cmp_channel_mgr_itf_1gab3c1ce6ebc19f60d7814ca446a3defad>` s_pfCMGetAPI2( "NetworkGetChBufferSize", (RTS_VOID_FCTPTR *)&pfNetworkGetChBufferSize, (fl), 0, 0)
+
+- #define :ref:`CAL_NetworkGetChBufferSize <group___cmp_channel_mgr_itf_1ga4e1087ee07902ecd56a6869bdbef2965>` pfNetworkGetChBufferSize
+
+- #define :ref:`CHK_NetworkGetChBufferSize <group___cmp_channel_mgr_itf_1ga605dccdff67d35de413aa8d02cfa696f>` (pfNetworkGetChBufferSize != NULL)
+
+- #define :ref:`EXP_NetworkGetChBufferSize <group___cmp_channel_mgr_itf_1ga0df62ffff80c81d31269c13c33493665>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetworkGetChBufferSize", (RTS_UINTPTR) :ref:`NetworkGetChBufferSize <group___cmp_channel_mgr_itf_1ga88e0db7d843d2dd63291a9bf122ed1a2>` , 0, 0)
+
+- #define :ref:`USE_NetworkInitChannelBuffer <group___cmp_channel_mgr_itf_1gaeb259d5dd26648589fef641a1220bbf8>` :ref:`PFNETWORKINITCHANNELBUFFER <group___cmp_channel_mgr_itf_1gab42b227c98ccb9678dacc83ee6df9c31>` pfNetworkInitChannelBuffer;
+
+- #define :ref:`EXT_NetworkInitChannelBuffer <group___cmp_channel_mgr_itf_1gadb036e13ed4b93d99077c26e733f8b31>` extern :ref:`PFNETWORKINITCHANNELBUFFER <group___cmp_channel_mgr_itf_1gab42b227c98ccb9678dacc83ee6df9c31>` pfNetworkInitChannelBuffer;
+
+- #define :ref:`GET_NetworkInitChannelBuffer <group___cmp_channel_mgr_itf_1gab32be7f9bd16df54e38e3790b7fa7e6d>` s_pfCMGetAPI2( "NetworkInitChannelBuffer", (RTS_VOID_FCTPTR *)&pfNetworkInitChannelBuffer, (fl), 0, 0)
+
+- #define :ref:`CAL_NetworkInitChannelBuffer <group___cmp_channel_mgr_itf_1gaf856a27bf9c65930d0df8dff7b2e4357>` pfNetworkInitChannelBuffer
+
+- #define :ref:`CHK_NetworkInitChannelBuffer <group___cmp_channel_mgr_itf_1ga9467256609910608d56b775fbc5985f8>` (pfNetworkInitChannelBuffer != NULL)
+
+- #define :ref:`EXP_NetworkInitChannelBuffer <group___cmp_channel_mgr_itf_1gaa29dea2cd07f865064c19437f897f630>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetworkInitChannelBuffer", (RTS_UINTPTR) :ref:`NetworkInitChannelBuffer <group___cmp_channel_mgr_itf_1gad1b647b32a792e8ddaf3ca7e127f081b>` , 0, 0)
+
+- #define :ref:`USE_NetworkInitChannelBuffer2 <group___cmp_channel_mgr_itf_1gaa5a293886674567bbb24558271959bcc>` :ref:`PFNETWORKINITCHANNELBUFFER2 <group___cmp_channel_mgr_itf_1ga01d879464803d4a4f3bfbdb15330fa59>` pfNetworkInitChannelBuffer2;
+
+- #define :ref:`EXT_NetworkInitChannelBuffer2 <group___cmp_channel_mgr_itf_1gaddfe9ffa6314c3a93de7ac68d9057ee2>` extern :ref:`PFNETWORKINITCHANNELBUFFER2 <group___cmp_channel_mgr_itf_1ga01d879464803d4a4f3bfbdb15330fa59>` pfNetworkInitChannelBuffer2;
+
+- #define :ref:`GET_NetworkInitChannelBuffer2 <group___cmp_channel_mgr_itf_1ga1e1e7c1de260c9a7093decc36c9ec467>` s_pfCMGetAPI2( "NetworkInitChannelBuffer2", (RTS_VOID_FCTPTR *)&pfNetworkInitChannelBuffer2, (fl), 0, 0)
+
+- #define :ref:`CAL_NetworkInitChannelBuffer2 <group___cmp_channel_mgr_itf_1ga9a50522697fff79c94ec9725a9f5819b>` pfNetworkInitChannelBuffer2
+
+- #define :ref:`CHK_NetworkInitChannelBuffer2 <group___cmp_channel_mgr_itf_1ga8484dcf37ea3318d89b8ef80e174696c>` (pfNetworkInitChannelBuffer2 != NULL)
+
+- #define :ref:`EXP_NetworkInitChannelBuffer2 <group___cmp_channel_mgr_itf_1gac86f0da787aa2a5464f4a9d6270ea8dd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetworkInitChannelBuffer2", (RTS_UINTPTR) :ref:`NetworkInitChannelBuffer2 <group___cmp_channel_mgr_itf_1gaf3111f973dde9b17c6f77de3a67a9480>` , 0, 0)
+
+- #define :ref:`USE_NetworkSendMetaPkg <group___cmp_channel_mgr_itf_1ga6d63eda13488e701304690f32b18d719>` :ref:`PFNETWORKSENDMETAPKG <group___cmp_channel_mgr_itf_1ga1a21aa0a4c9785db9666ed0114e000b2>` pfNetworkSendMetaPkg;
+
+- #define :ref:`EXT_NetworkSendMetaPkg <group___cmp_channel_mgr_itf_1gab07c38fa1f3d881746b87a2a703da0ab>` extern :ref:`PFNETWORKSENDMETAPKG <group___cmp_channel_mgr_itf_1ga1a21aa0a4c9785db9666ed0114e000b2>` pfNetworkSendMetaPkg;
+
+- #define :ref:`GET_NetworkSendMetaPkg <group___cmp_channel_mgr_itf_1ga6b2a2595539535e90645b28d2f888544>` s_pfCMGetAPI2( "NetworkSendMetaPkg", (RTS_VOID_FCTPTR *)&pfNetworkSendMetaPkg, (fl), 0, 0)
+
+- #define :ref:`CAL_NetworkSendMetaPkg <group___cmp_channel_mgr_itf_1ga1ddc9c903ffd4716057dd841dfadbcd4>` pfNetworkSendMetaPkg
+
+- #define :ref:`CHK_NetworkSendMetaPkg <group___cmp_channel_mgr_itf_1gab26f5e1b80bb9f4561b8b37a2ec888a8>` (pfNetworkSendMetaPkg != NULL)
+
+- #define :ref:`EXP_NetworkSendMetaPkg <group___cmp_channel_mgr_itf_1gaa21a57b9700e5acccadea016f43986e7>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetworkSendMetaPkg", (RTS_UINTPTR) :ref:`NetworkSendMetaPkg <group___cmp_channel_mgr_itf_1gac30a14a4f0c93249a5434d6e88fef8c6>` , 0, 0)
+
+- #define :ref:`USE_NetworkSendMessage <group___cmp_channel_mgr_itf_1ga92dab06a1f7f9ca2791de346a594c26f>` :ref:`PFNETWORKSENDMESSAGE <group___cmp_channel_mgr_itf_1gab0cdd9a5e230f17e9804683cc3a168a4>` pfNetworkSendMessage;
+
+- #define :ref:`EXT_NetworkSendMessage <group___cmp_channel_mgr_itf_1gae7415ce9417149a281d6e1a28afaa036>` extern :ref:`PFNETWORKSENDMESSAGE <group___cmp_channel_mgr_itf_1gab0cdd9a5e230f17e9804683cc3a168a4>` pfNetworkSendMessage;
+
+- #define :ref:`GET_NetworkSendMessage <group___cmp_channel_mgr_itf_1ga117b0deaaff54c844136a89bf9f64383>` s_pfCMGetAPI2( "NetworkSendMessage", (RTS_VOID_FCTPTR *)&pfNetworkSendMessage, (fl), 0, 0)
+
+- #define :ref:`CAL_NetworkSendMessage <group___cmp_channel_mgr_itf_1gacc5d259d877c3114016be5fc15c62aa2>` pfNetworkSendMessage
+
+- #define :ref:`CHK_NetworkSendMessage <group___cmp_channel_mgr_itf_1ga6aea4ea8c3623b511b33ca183f484ff9>` (pfNetworkSendMessage != NULL)
+
+- #define :ref:`EXP_NetworkSendMessage <group___cmp_channel_mgr_itf_1gac8fa4b2c13a9bbfa014b2e3d9bc39921>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetworkSendMessage", (RTS_UINTPTR) :ref:`NetworkSendMessage <group___cmp_channel_mgr_itf_1ga3ea09e58b9795a135dd142b68b5640c7>` , 0, 0)
+
+- #define :ref:`USE_NetworkGetStatus <group___cmp_channel_mgr_itf_1ga2c128daab6e65aa2555cee5195983866>` :ref:`PFNETWORKGETSTATUS <group___cmp_channel_mgr_itf_1ga0634d7929a4c66da2667b188679d0d84>` pfNetworkGetStatus;
+
+- #define :ref:`EXT_NetworkGetStatus <group___cmp_channel_mgr_itf_1ga82934922368ed080eab29ae65884aca9>` extern :ref:`PFNETWORKGETSTATUS <group___cmp_channel_mgr_itf_1ga0634d7929a4c66da2667b188679d0d84>` pfNetworkGetStatus;
+
+- #define :ref:`GET_NetworkGetStatus <group___cmp_channel_mgr_itf_1ga4a1b35dec7e4d3e398f2d3e26575d185>` s_pfCMGetAPI2( "NetworkGetStatus", (RTS_VOID_FCTPTR *)&pfNetworkGetStatus, (fl), 0, 0)
+
+- #define :ref:`CAL_NetworkGetStatus <group___cmp_channel_mgr_itf_1ga060e11989f6810bf7440394a5d12fe61>` pfNetworkGetStatus
+
+- #define :ref:`CHK_NetworkGetStatus <group___cmp_channel_mgr_itf_1ga0970869b342240c3cbd2d5b5f6c426ae>` (pfNetworkGetStatus != NULL)
+
+- #define :ref:`EXP_NetworkGetStatus <group___cmp_channel_mgr_itf_1gaf233790841cf6f7823f6fb0059b0142c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetworkGetStatus", (RTS_UINTPTR) :ref:`NetworkGetStatus <group___cmp_channel_mgr_itf_1gaf7189f9c636836d745a4893a99457233>` , 0, 0)
+
+- #define :ref:`USE_NetworkGetChannelInfo <group___cmp_channel_mgr_itf_1gaff1d27282b9997315fd69d063f062b05>` :ref:`PFNETWORKGETCHANNELINFO <group___cmp_channel_mgr_itf_1gaadb392ed9fdec62e13fe0b8f22fcd8d9>` pfNetworkGetChannelInfo;
+
+- #define :ref:`EXT_NetworkGetChannelInfo <group___cmp_channel_mgr_itf_1ga966d0356a3372c39a70fdf0ff9b1e524>` extern :ref:`PFNETWORKGETCHANNELINFO <group___cmp_channel_mgr_itf_1gaadb392ed9fdec62e13fe0b8f22fcd8d9>` pfNetworkGetChannelInfo;
+
+- #define :ref:`GET_NetworkGetChannelInfo <group___cmp_channel_mgr_itf_1gac9a4a436b8969cedf0d996ddb41cc78f>` s_pfCMGetAPI2( "NetworkGetChannelInfo", (RTS_VOID_FCTPTR *)&pfNetworkGetChannelInfo, (fl), 0, 0)
+
+- #define :ref:`CAL_NetworkGetChannelInfo <group___cmp_channel_mgr_itf_1gaa8f347dbc783bff3c4f08bf778c93f77>` pfNetworkGetChannelInfo
+
+- #define :ref:`CHK_NetworkGetChannelInfo <group___cmp_channel_mgr_itf_1gacfedbd70328a6c5d21598c7727f7cc1a>` (pfNetworkGetChannelInfo != NULL)
+
+- #define :ref:`EXP_NetworkGetChannelInfo <group___cmp_channel_mgr_itf_1ga95564ddc5574afe9384a95ce777acf69>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetworkGetChannelInfo", (RTS_UINTPTR) :ref:`NetworkGetChannelInfo <group___cmp_channel_mgr_itf_1ga33f0d1e478dc9a78557089a76d607016>` , 0, 0)
+
+- #define :ref:`ITF_CmpChannelMgr <group___cmp_channel_mgr_itf_1ga2d4b349d909077177bc2520361a2576c>`
+
+- #define :ref:`EXTITF_CmpChannelMgr <group___cmp_channel_mgr_itf_1gaeb494d5abac415754c1bcb04c0ec9253>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFCHANNELMGRHANDLEDATA <group___cmp_channel_mgr_itf_1ga19f9b7b4a3b72a680c12ef9f2a937579>`)(RTS_HANDLE hRouter, RTS_HANDLE hNetworkInterface, RTS_UI8 byServiceId, RTS_UI8 byMessageId, PEERADDRESS addrSender, PEERADDRESS addrReceiver, PROTOCOL_DATA_UNIT pduData, RTS_RESULT nRouterError)
+
+- typedef int(* :ref:`PFCHANNELHANDLER <group___cmp_channel_mgr_itf_1ga8c4811d959c773e621773f2fa54e04a4>`)(CHANNELBUFFER *pChBuffer, void *pParam)
+
+- typedef RTS_UI32(* :ref:`PFNETWORKGETCHBUFFERSIZE <group___cmp_channel_mgr_itf_1ga30e3a10cde448ed371a2a4d12aae41a3>`)(RTS_UI32 dwCommBufferSize, unsigned short wMaxBlockSize, int *pnNumBlocks)
+
+- typedef RTS_UI32(* :ref:`PFNETWORKINITCHANNELBUFFER <group___cmp_channel_mgr_itf_1gab42b227c98ccb9678dacc83ee6df9c31>`)(CHANNELBUFFER *pChBuffer, RTS_HANDLE hRouter, RTS_UI32 dwBufferSize, unsigned short wChannelId, PEERADDRESS addrSender, unsigned char byChFlags, RTS_UI32 dwMaxCommBuffer)
+
+- typedef RTS_UI32(* :ref:`PFNETWORKINITCHANNELBUFFER2 <group___cmp_channel_mgr_itf_1ga01d879464803d4a4f3bfbdb15330fa59>`)(CHANNELBUFFER *pChBuffer, RTS_HANDLE hRouter, RTS_UI32 dwBufferSize, unsigned short wChannelId, PEERADDRESS addrSender, unsigned char byChFlags, RTS_UI32 dwMaxCommBuffer, unsigned short wMaxBlockSize)
+
+- typedef int(* :ref:`PFNETWORKSENDMETAPKG <group___cmp_channel_mgr_itf_1ga1a21aa0a4c9785db9666ed0114e000b2>`)(RTS_HANDLE hRouter, PEERADDRESS addrReceiver, L4METAPACKAGE *pMetaPkg, int nPkgSize)
+
+- typedef int(* :ref:`PFNETWORKSENDMESSAGE <group___cmp_channel_mgr_itf_1gab0cdd9a5e230f17e9804683cc3a168a4>`)(CHANNELBUFFER *pChBuffer, PROTOCOL_DATA_UNIT pduData)
+
+- typedef int(* :ref:`PFNETWORKGETSTATUS <group___cmp_channel_mgr_itf_1ga0634d7929a4c66da2667b188679d0d84>`)(CHANNELBUFFER *pChBuffer, RTS_UI16 *pusStatus, RTS_UI8 *pbyScalingFactor, RTS_I32 *pnItemsComplete, RTS_I32 *pnTotalItems)
+
+- typedef RTS_RESULT(* :ref:`PFNETWORKGETCHANNELINFO <group___cmp_channel_mgr_itf_1gaadb392ed9fdec62e13fe0b8f22fcd8d9>`)(CHANNELBUFFER *pChBuffer, CHANNELBUFFER *pChInfoBuffer, RTS_SIZE *psiBufferLen)
+
+- typedef :ref:`ICmpChannelMgr_C <struct_i_cmp_channel_mgr___c>` :ref:`ICmpChannelMgr <group___cmp_channel_mgr_itf_1ga2322a5f4a0223a0de7bc1f506afd9d48>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`ChannelMgrHandleData <group___cmp_channel_mgr_itf_1ga5fff2562a9a9441172ca7316499e5048>` (RTS_HANDLE hRouter, RTS_HANDLE hNetworkInterface, RTS_UI8 byServiceId, RTS_UI8 byMessageId, :ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>`  addrSender, :ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>`  addrReceiver, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduData, RTS_RESULT nRouterError)
+
+- RTS_UI32 :ref:`NetworkGetChBufferSize <group___cmp_channel_mgr_itf_1ga88e0db7d843d2dd63291a9bf122ed1a2>` (RTS_UI32 dwCommBufferSize, unsigned short wMaxBlockSize, int * pnNumBlocks)
+
+- RTS_UI32 :ref:`NetworkInitChannelBuffer <group___cmp_channel_mgr_itf_1gad1b647b32a792e8ddaf3ca7e127f081b>` (:ref:`CHANNELBUFFER <struct_c_h_a_n_n_e_l_b_u_f_f_e_r>` * pChBuffer, RTS_HANDLE hRouter, RTS_UI32 dwBufferSize, unsigned short wChannelId, :ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>`  addrSender, unsigned char byChFlags, RTS_UI32 dwMaxCommBuffer)
+
+- RTS_UI32 :ref:`NetworkInitChannelBuffer2 <group___cmp_channel_mgr_itf_1gaf3111f973dde9b17c6f77de3a67a9480>` (:ref:`CHANNELBUFFER <struct_c_h_a_n_n_e_l_b_u_f_f_e_r>` * pChBuffer, RTS_HANDLE hRouter, RTS_UI32 dwBufferSize, unsigned short wChannelId, :ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>`  addrSender, unsigned char byChFlags, RTS_UI32 dwMaxCommBuffer, unsigned short wMaxBlockSize)
+
+- int :ref:`NetworkSendMetaPkg <group___cmp_channel_mgr_itf_1gac30a14a4f0c93249a5434d6e88fef8c6>` (RTS_HANDLE hRouter, :ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>`  addrReceiver, :ref:`L4METAPACKAGE <struct_l4_m_e_t_a_p_a_c_k_a_g_e>` * pMetaPkg, int nPkgSize)
+
+- int :ref:`NetworkSendMessage <group___cmp_channel_mgr_itf_1ga3ea09e58b9795a135dd142b68b5640c7>` (:ref:`CHANNELBUFFER <struct_c_h_a_n_n_e_l_b_u_f_f_e_r>` * pChBuffer, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduData)
+
+- int :ref:`NetworkGetStatus <group___cmp_channel_mgr_itf_1gaf7189f9c636836d745a4893a99457233>` (:ref:`CHANNELBUFFER <struct_c_h_a_n_n_e_l_b_u_f_f_e_r>` * pChBuffer, RTS_UI16 * pusStatus, RTS_UI8 * pbyScalingFactor, RTS_I32 * pnItemsComplete, RTS_I32 * pnTotalItems)
+
+- RTS_RESULT :ref:`NetworkGetChannelInfo <group___cmp_channel_mgr_itf_1ga33f0d1e478dc9a78557089a76d607016>` (:ref:`CHANNELBUFFER <struct_c_h_a_n_n_e_l_b_u_f_f_e_r>` * pChBuffer, :ref:`CHANNELBUFFER <struct_c_h_a_n_n_e_l_b_u_f_f_e_r>` * pChInfoBuffer, RTS_SIZE * psiBufferLen)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_channel_mgr_itf_1ga035f99a2ee8d7ccee8593135db62eeda:
+
+#define L4_VERSION_MAJOR 0x01
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gac46e7b3cbe834646847154c8686d2618:
+
+#define L4_VERSION_MINOR 0x01
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga5eeac63dd12a0028fe31009a45e6f2b7:
+
+#define KEEPALIVE_INTERVAL (1000UL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gaa52d77e6af67234644dceecb70fd0df3:
+
+#define USE_ChannelMgrHandleData :ref:`PFCHANNELMGRHANDLEDATA <group___cmp_channel_mgr_itf_1ga19f9b7b4a3b72a680c12ef9f2a937579>` pfChannelMgrHandleData;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gaf2735090c9c2475c7c873cc761c2488a:
+
+#define EXT_ChannelMgrHandleData extern :ref:`PFCHANNELMGRHANDLEDATA <group___cmp_channel_mgr_itf_1ga19f9b7b4a3b72a680c12ef9f2a937579>` pfChannelMgrHandleData;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga1ec91d6f6d85d59bdb9352f2a0b84444:
+
+#define GET_ChannelMgrHandleData s_pfCMGetAPI2( "ChannelMgrHandleData", (RTS_VOID_FCTPTR *)&pfChannelMgrHandleData, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga9dc0c2002e6cb3183ec781e2342329c3:
+
+#define CAL_ChannelMgrHandleData pfChannelMgrHandleData
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gaddfafed92e2518fa489305354d6208e6:
+
+#define CHK_ChannelMgrHandleData (pfChannelMgrHandleData != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga995959a17ee0c6c19f4ea8a24acb439b:
+
+#define EXP_ChannelMgrHandleData s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ChannelMgrHandleData", (RTS_UINTPTR) :ref:`ChannelMgrHandleData <group___cmp_channel_mgr_itf_1ga5fff2562a9a9441172ca7316499e5048>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga1a69c722a36a604ff36c1ad39c358c30:
+
+#define USE_NetworkGetChBufferSize :ref:`PFNETWORKGETCHBUFFERSIZE <group___cmp_channel_mgr_itf_1ga30e3a10cde448ed371a2a4d12aae41a3>` pfNetworkGetChBufferSize;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga555de82997af77051a1fc6e9ed1273a9:
+
+#define EXT_NetworkGetChBufferSize extern :ref:`PFNETWORKGETCHBUFFERSIZE <group___cmp_channel_mgr_itf_1ga30e3a10cde448ed371a2a4d12aae41a3>` pfNetworkGetChBufferSize;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gab3c1ce6ebc19f60d7814ca446a3defad:
+
+#define GET_NetworkGetChBufferSize s_pfCMGetAPI2( "NetworkGetChBufferSize", (RTS_VOID_FCTPTR *)&pfNetworkGetChBufferSize, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga4e1087ee07902ecd56a6869bdbef2965:
+
+#define CAL_NetworkGetChBufferSize pfNetworkGetChBufferSize
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga605dccdff67d35de413aa8d02cfa696f:
+
+#define CHK_NetworkGetChBufferSize (pfNetworkGetChBufferSize != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga0df62ffff80c81d31269c13c33493665:
+
+#define EXP_NetworkGetChBufferSize s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetworkGetChBufferSize", (RTS_UINTPTR) :ref:`NetworkGetChBufferSize <group___cmp_channel_mgr_itf_1ga88e0db7d843d2dd63291a9bf122ed1a2>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gaeb259d5dd26648589fef641a1220bbf8:
+
+#define USE_NetworkInitChannelBuffer :ref:`PFNETWORKINITCHANNELBUFFER <group___cmp_channel_mgr_itf_1gab42b227c98ccb9678dacc83ee6df9c31>` pfNetworkInitChannelBuffer;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gadb036e13ed4b93d99077c26e733f8b31:
+
+#define EXT_NetworkInitChannelBuffer extern :ref:`PFNETWORKINITCHANNELBUFFER <group___cmp_channel_mgr_itf_1gab42b227c98ccb9678dacc83ee6df9c31>` pfNetworkInitChannelBuffer;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gab32be7f9bd16df54e38e3790b7fa7e6d:
+
+#define GET_NetworkInitChannelBuffer s_pfCMGetAPI2( "NetworkInitChannelBuffer", (RTS_VOID_FCTPTR *)&pfNetworkInitChannelBuffer, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gaf856a27bf9c65930d0df8dff7b2e4357:
+
+#define CAL_NetworkInitChannelBuffer pfNetworkInitChannelBuffer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga9467256609910608d56b775fbc5985f8:
+
+#define CHK_NetworkInitChannelBuffer (pfNetworkInitChannelBuffer != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gaa29dea2cd07f865064c19437f897f630:
+
+#define EXP_NetworkInitChannelBuffer s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetworkInitChannelBuffer", (RTS_UINTPTR) :ref:`NetworkInitChannelBuffer <group___cmp_channel_mgr_itf_1gad1b647b32a792e8ddaf3ca7e127f081b>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gaa5a293886674567bbb24558271959bcc:
+
+#define USE_NetworkInitChannelBuffer2 :ref:`PFNETWORKINITCHANNELBUFFER2 <group___cmp_channel_mgr_itf_1ga01d879464803d4a4f3bfbdb15330fa59>` pfNetworkInitChannelBuffer2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gaddfe9ffa6314c3a93de7ac68d9057ee2:
+
+#define EXT_NetworkInitChannelBuffer2 extern :ref:`PFNETWORKINITCHANNELBUFFER2 <group___cmp_channel_mgr_itf_1ga01d879464803d4a4f3bfbdb15330fa59>` pfNetworkInitChannelBuffer2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga1e1e7c1de260c9a7093decc36c9ec467:
+
+#define GET_NetworkInitChannelBuffer2 s_pfCMGetAPI2( "NetworkInitChannelBuffer2", (RTS_VOID_FCTPTR *)&pfNetworkInitChannelBuffer2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga9a50522697fff79c94ec9725a9f5819b:
+
+#define CAL_NetworkInitChannelBuffer2 pfNetworkInitChannelBuffer2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga8484dcf37ea3318d89b8ef80e174696c:
+
+#define CHK_NetworkInitChannelBuffer2 (pfNetworkInitChannelBuffer2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gac86f0da787aa2a5464f4a9d6270ea8dd:
+
+#define EXP_NetworkInitChannelBuffer2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetworkInitChannelBuffer2", (RTS_UINTPTR) :ref:`NetworkInitChannelBuffer2 <group___cmp_channel_mgr_itf_1gaf3111f973dde9b17c6f77de3a67a9480>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga6d63eda13488e701304690f32b18d719:
+
+#define USE_NetworkSendMetaPkg :ref:`PFNETWORKSENDMETAPKG <group___cmp_channel_mgr_itf_1ga1a21aa0a4c9785db9666ed0114e000b2>` pfNetworkSendMetaPkg;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gab07c38fa1f3d881746b87a2a703da0ab:
+
+#define EXT_NetworkSendMetaPkg extern :ref:`PFNETWORKSENDMETAPKG <group___cmp_channel_mgr_itf_1ga1a21aa0a4c9785db9666ed0114e000b2>` pfNetworkSendMetaPkg;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga6b2a2595539535e90645b28d2f888544:
+
+#define GET_NetworkSendMetaPkg s_pfCMGetAPI2( "NetworkSendMetaPkg", (RTS_VOID_FCTPTR *)&pfNetworkSendMetaPkg, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga1ddc9c903ffd4716057dd841dfadbcd4:
+
+#define CAL_NetworkSendMetaPkg pfNetworkSendMetaPkg
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gab26f5e1b80bb9f4561b8b37a2ec888a8:
+
+#define CHK_NetworkSendMetaPkg (pfNetworkSendMetaPkg != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gaa21a57b9700e5acccadea016f43986e7:
+
+#define EXP_NetworkSendMetaPkg s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetworkSendMetaPkg", (RTS_UINTPTR) :ref:`NetworkSendMetaPkg <group___cmp_channel_mgr_itf_1gac30a14a4f0c93249a5434d6e88fef8c6>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga92dab06a1f7f9ca2791de346a594c26f:
+
+#define USE_NetworkSendMessage :ref:`PFNETWORKSENDMESSAGE <group___cmp_channel_mgr_itf_1gab0cdd9a5e230f17e9804683cc3a168a4>` pfNetworkSendMessage;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gae7415ce9417149a281d6e1a28afaa036:
+
+#define EXT_NetworkSendMessage extern :ref:`PFNETWORKSENDMESSAGE <group___cmp_channel_mgr_itf_1gab0cdd9a5e230f17e9804683cc3a168a4>` pfNetworkSendMessage;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga117b0deaaff54c844136a89bf9f64383:
+
+#define GET_NetworkSendMessage s_pfCMGetAPI2( "NetworkSendMessage", (RTS_VOID_FCTPTR *)&pfNetworkSendMessage, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gacc5d259d877c3114016be5fc15c62aa2:
+
+#define CAL_NetworkSendMessage pfNetworkSendMessage
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga6aea4ea8c3623b511b33ca183f484ff9:
+
+#define CHK_NetworkSendMessage (pfNetworkSendMessage != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gac8fa4b2c13a9bbfa014b2e3d9bc39921:
+
+#define EXP_NetworkSendMessage s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetworkSendMessage", (RTS_UINTPTR) :ref:`NetworkSendMessage <group___cmp_channel_mgr_itf_1ga3ea09e58b9795a135dd142b68b5640c7>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga2c128daab6e65aa2555cee5195983866:
+
+#define USE_NetworkGetStatus :ref:`PFNETWORKGETSTATUS <group___cmp_channel_mgr_itf_1ga0634d7929a4c66da2667b188679d0d84>` pfNetworkGetStatus;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga82934922368ed080eab29ae65884aca9:
+
+#define EXT_NetworkGetStatus extern :ref:`PFNETWORKGETSTATUS <group___cmp_channel_mgr_itf_1ga0634d7929a4c66da2667b188679d0d84>` pfNetworkGetStatus;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga4a1b35dec7e4d3e398f2d3e26575d185:
+
+#define GET_NetworkGetStatus s_pfCMGetAPI2( "NetworkGetStatus", (RTS_VOID_FCTPTR *)&pfNetworkGetStatus, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga060e11989f6810bf7440394a5d12fe61:
+
+#define CAL_NetworkGetStatus pfNetworkGetStatus
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga0970869b342240c3cbd2d5b5f6c426ae:
+
+#define CHK_NetworkGetStatus (pfNetworkGetStatus != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gaf233790841cf6f7823f6fb0059b0142c:
+
+#define EXP_NetworkGetStatus s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetworkGetStatus", (RTS_UINTPTR) :ref:`NetworkGetStatus <group___cmp_channel_mgr_itf_1gaf7189f9c636836d745a4893a99457233>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gaff1d27282b9997315fd69d063f062b05:
+
+#define USE_NetworkGetChannelInfo :ref:`PFNETWORKGETCHANNELINFO <group___cmp_channel_mgr_itf_1gaadb392ed9fdec62e13fe0b8f22fcd8d9>` pfNetworkGetChannelInfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga966d0356a3372c39a70fdf0ff9b1e524:
+
+#define EXT_NetworkGetChannelInfo extern :ref:`PFNETWORKGETCHANNELINFO <group___cmp_channel_mgr_itf_1gaadb392ed9fdec62e13fe0b8f22fcd8d9>` pfNetworkGetChannelInfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gac9a4a436b8969cedf0d996ddb41cc78f:
+
+#define GET_NetworkGetChannelInfo s_pfCMGetAPI2( "NetworkGetChannelInfo", (RTS_VOID_FCTPTR *)&pfNetworkGetChannelInfo, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gaa8f347dbc783bff3c4f08bf778c93f77:
+
+#define CAL_NetworkGetChannelInfo pfNetworkGetChannelInfo
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gacfedbd70328a6c5d21598c7727f7cc1a:
+
+#define CHK_NetworkGetChannelInfo (pfNetworkGetChannelInfo != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga95564ddc5574afe9384a95ce777acf69:
+
+#define EXP_NetworkGetChannelInfo s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetworkGetChannelInfo", (RTS_UINTPTR) :ref:`NetworkGetChannelInfo <group___cmp_channel_mgr_itf_1ga33f0d1e478dc9a78557089a76d607016>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga2d4b349d909077177bc2520361a2576c:
+
+#define ITF_CmpChannelMgr
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gaeb494d5abac415754c1bcb04c0ec9253:
+
+#define EXTITF_CmpChannelMgr
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_channel_mgr_itf_1ga19f9b7b4a3b72a680c12ef9f2a937579:
+
+typedef RTS_RESULT( *  PFCHANNELMGRHANDLEDATA) (RTS_HANDLE hRouter, RTS_HANDLE hNetworkInterface, RTS_UI8 byServiceId, RTS_UI8 byMessageId, PEERADDRESS addrSender, PEERADDRESS addrReceiver, PROTOCOL_DATA_UNIT pduData, RTS_RESULT nRouterError)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga8c4811d959c773e621773f2fa54e04a4:
+
+typedef int(* PFCHANNELHANDLER) (CHANNELBUFFER *pChBuffer, void *pParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga30e3a10cde448ed371a2a4d12aae41a3:
+
+typedef RTS_UI32( *  PFNETWORKGETCHBUFFERSIZE) (RTS_UI32 dwCommBufferSize, unsigned short wMaxBlockSize, int *pnNumBlocks)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gab42b227c98ccb9678dacc83ee6df9c31:
+
+typedef RTS_UI32( *  PFNETWORKINITCHANNELBUFFER) (CHANNELBUFFER *pChBuffer, RTS_HANDLE hRouter, RTS_UI32 dwBufferSize, unsigned short wChannelId, PEERADDRESS addrSender, unsigned char byChFlags, RTS_UI32 dwMaxCommBuffer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga01d879464803d4a4f3bfbdb15330fa59:
+
+typedef RTS_UI32( *  PFNETWORKINITCHANNELBUFFER2) (CHANNELBUFFER *pChBuffer, RTS_HANDLE hRouter, RTS_UI32 dwBufferSize, unsigned short wChannelId, PEERADDRESS addrSender, unsigned char byChFlags, RTS_UI32 dwMaxCommBuffer, unsigned short wMaxBlockSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga1a21aa0a4c9785db9666ed0114e000b2:
+
+typedef int( *  PFNETWORKSENDMETAPKG) (RTS_HANDLE hRouter, PEERADDRESS addrReceiver, L4METAPACKAGE *pMetaPkg, int nPkgSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gab0cdd9a5e230f17e9804683cc3a168a4:
+
+typedef int( *  PFNETWORKSENDMESSAGE) (CHANNELBUFFER *pChBuffer, PROTOCOL_DATA_UNIT pduData)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga0634d7929a4c66da2667b188679d0d84:
+
+typedef int( *  PFNETWORKGETSTATUS) (CHANNELBUFFER *pChBuffer, RTS_UI16 *pusStatus, RTS_UI8 *pbyScalingFactor, RTS_I32 *pnItemsComplete, RTS_I32 *pnTotalItems)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1gaadb392ed9fdec62e13fe0b8f22fcd8d9:
+
+typedef RTS_RESULT( *  PFNETWORKGETCHANNELINFO) (CHANNELBUFFER *pChBuffer, CHANNELBUFFER *pChInfoBuffer, RTS_SIZE *psiBufferLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_channel_mgr_itf_1ga2322a5f4a0223a0de7bc1f506afd9d48:
+
+typedef ICmpChannelMgr_C ICmpChannelMgr
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_channel_mgr_itf_1ga5fff2562a9a9441172ca7316499e5048:
+
+RTS_RESULT ChannelMgrHandleData (RTS_HANDLE hRouter, RTS_HANDLE hNetworkInterface, RTS_UI8 byServiceId, RTS_UI8 byMessageId, PEERADDRESS addrSender, PEERADDRESS addrReceiver, PROTOCOL_DATA_UNIT pduData, RTS_RESULT nRouterError)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Protocol handler of CmpChannelMgr. Attention: Must only be called by CmpRouter to forward an incoming data package.
+
+**Parameters**
+
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hRouter           | Handle of router instance calling this function. For L4 client implementations, by default it is called by the router instance 0. For L4 server implementations, it is called by the router instance which has received the package originally.                                                                           |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hNetworkInterface | Handle of the network interface receiving originally the package                                                                                                                                                                                                                                                          |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | byServiceId       | The protocol id of the package                                                                                                                                                                                                                                                                                            |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | byMessageId       | The message id of the package                                                                                                                                                                                                                                                                                             |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | addrSender        | Sender address. The pointer within will not be valid after this function returns.                                                                                                                                                                                                                                         |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | addrReceiver      | Receiver address (either the address of this node or a broadcast address). The pointer within will not be valid after this function returns.                                                                                                                                                                              |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pduData           | The received data. The data pointer will not be valid after this function returns.                                                                                                                                                                                                                                        |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | nRouterError      | If this value is not ERR_OK, then this message has been generated by an intermediate node in response to a message previously sent by this node, that could not be delivered. nRouterError identifies the kind of error that happened. pduData then contains a detailed error description depending on the kind of error. |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_channel_mgr_itf_1ga88e0db7d843d2dd63291a9bf122ed1a2:
+
+RTS_UI32 NetworkGetChBufferSize (RTS_UI32 dwCommBufferSize, unsigned short wMaxBlockSize, int *pnNumBlocks)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Given a fixed size for the communication buffer return the required size of the channel buffer.
+
+**Parameters**
+
++---------+------------------+-----------------------------------------------------------------------+
+| [in]    | dwCommBufferSize | Requested size of the communication buffer                            |
++---------+------------------+-----------------------------------------------------------------------+
+| [in]    | wMaxBlockSize    | Maximum size of a layer4 block (as returned by RouterGetMaxBlockSize) |
++---------+------------------+-----------------------------------------------------------------------+
+| [out]   | pnNumBlocks      | Required number of block buffers                                      |
++---------+------------------+-----------------------------------------------------------------------+
+
+**Returns:**
+
+The size of the channel buffer in bytes.
+
+.. _group___cmp_channel_mgr_itf_1gad1b647b32a792e8ddaf3ca7e127f081b:
+
+RTS_UI32 NetworkInitChannelBuffer (CHANNELBUFFER *pChBuffer, RTS_HANDLE hRouter, RTS_UI32 dwBufferSize, unsigned short wChannelId, PEERADDRESS addrSender, unsigned char byChFlags, RTS_UI32 dwMaxCommBuffer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Initialize the provided channel buffer.
+
+**Parameters**
+
++---------+-----------------+-----------------------------------------------------------------------------------------------+
+| [in]    | dwBufferSize    | Size of pChBuffer.                                                                            |
++---------+-----------------+-----------------------------------------------------------------------------------------------+
+| [in]    | wChannelId      | The id of the channel.                                                                        |
++---------+-----------------+-----------------------------------------------------------------------------------------------+
+| [in]    | addrSender      | The 3S-address of this channels peer.                                                         |
++---------+-----------------+-----------------------------------------------------------------------------------------------+
+| [in]    | byFlags         | Initial channel flags (CF_SERVERCHANNEL for a serverchannel, CF_SENDMODE for a clientchannel) |
++---------+-----------------+-----------------------------------------------------------------------------------------------+
+| [in]    | dwMaxCommBuffer | Maximum size of the communication buffer to use (usually the requested communication buffer)  |
++---------+-----------------+-----------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+The size of the communication buffer for this channel buffer.
+
+.. _group___cmp_channel_mgr_itf_1gaf3111f973dde9b17c6f77de3a67a9480:
+
+RTS_UI32 NetworkInitChannelBuffer2 (CHANNELBUFFER *pChBuffer, RTS_HANDLE hRouter, RTS_UI32 dwBufferSize, unsigned short wChannelId, PEERADDRESS addrSender, unsigned char byChFlags, RTS_UI32 dwMaxCommBuffer, unsigned short wMaxBlockSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Initialize the provided channel buffer with a given maximum block size.
+
+**Parameters**
+
++---------+-----------------+-------------------------------------------------------------------------------------------------+
+| [in]    | dwBufferSize    | Size of pChBuffer.                                                                              |
++---------+-----------------+-------------------------------------------------------------------------------------------------+
+| [in]    | wChannelId      | The id of the channel.                                                                          |
++---------+-----------------+-------------------------------------------------------------------------------------------------+
+| [in]    | addrSender      | The 3S-address of this channels peer.                                                           |
++---------+-----------------+-------------------------------------------------------------------------------------------------+
+| [in]    | byFlags         | Initial channel flags (CF_SERVERCHANNEL for a server channel, CF_SENDMODE for a client channel) |
++---------+-----------------+-------------------------------------------------------------------------------------------------+
+| [in]    | dwMaxCommBuffer | Maximum size of the communication buffer to use (usually the requested communication buffer)    |
++---------+-----------------+-------------------------------------------------------------------------------------------------+
+| [in]    | wMaxBlockSize   | Maximum size of one block                                                                       |
++---------+-----------------+-------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+The size of the communication buffer for this channel buffer.
+
+.. _group___cmp_channel_mgr_itf_1gac30a14a4f0c93249a5434d6e88fef8c6:
+
+int NetworkSendMetaPkg (RTS_HANDLE hRouter, PEERADDRESS addrReceiver, L4METAPACKAGE *pMetaPkg, int nPkgSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Send metaPkg to addrReceiver. Sets the checksum field of the metaPkg before sending.
+
+**Parameters**
+
++---------+--------------+-------------------------+
+| [in]    | addrReceiver | Address of the receiver |
++---------+--------------+-------------------------+
+| [in]    | pMetaPkg     | The package to be sent  |
++---------+--------------+-------------------------+
+| [in]    | nPkgSize     | Size of pMetaPkg        |
++---------+--------------+-------------------------+
+
+**Returns:**
+
+An error code.
+
+.. _group___cmp_channel_mgr_itf_1ga3ea09e58b9795a135dd142b68b5640c7:
+
+int NetworkSendMessage (CHANNELBUFFER *pChBuffer, PROTOCOL_DATA_UNIT pduData)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Send a message over the provided channel. A channel can't be receiving and sending at the same time. Thus this function will fail with ERR_CHANNELMODE if the channel is currently in receive mode.
+
+**Returns:**
+
+  - ERR_CHANNELMODE if the channel is in receive mode.
+
+  - ERR_CHC_MESSAGESIZE/ERR_CHS_MESSAGESIZE if the size of the data is greater then the CommBuffer size.
+
+.. _group___cmp_channel_mgr_itf_1gaf7189f9c636836d745a4893a99457233:
+
+int NetworkGetStatus (CHANNELBUFFER *pChBuffer, RTS_UI16 *pusStatus, RTS_UI8 *pbyScalingFactor, RTS_I32 *pnItemsComplete, RTS_I32 *pnTotalItems)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the current status of an active channel.
+
+**Parameters**
+
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pChBuffer        | The channel for which to retrieve the status                                                                                                                                                             |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pusStatus        | Is set to the current progress state. The PROGRESS_xxx constants define valid values.                                                                                                                    |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pbyScalingFactor | Provides the scaling factor for pnItemsComplete and pnTotalItems. These values have been scaled down by dividing them through 2^ScalingFactor (i.e. they have been right shifted by ScalingFactor bits). |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pnItemsComplete  | Number of items completed (e.g. the number of bytes transfered).                                                                                                                                         |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pnTotalItems     | Total number of item. Is set to -1 if unknown.                                                                                                                                                           |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_channel_mgr_itf_1ga33f0d1e478dc9a78557089a76d607016:
+
+RTS_RESULT NetworkGetChannelInfo (CHANNELBUFFER *pChBuffer, CHANNELBUFFER *pChInfoBuffer, RTS_SIZE *psiBufferLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns a copy of the internal channel structure. This function is intended for information purposes only.
+
+**Parameters**
+
++---------+---------------+------------------------------------------------------------------------------------------------------+
+| [in]    | pChBuffer     | The channel for which to retrieve the status.                                                        |
++---------+---------------+------------------------------------------------------------------------------------------------------+
+| [inout] | pChInfoBuffer | Caller allocated buffer, to which the content of the internal channel buffer structure is copied to. |
++---------+---------------+------------------------------------------------------------------------------------------------------+
+| [inout] | psiBufferLen  | Pointer to the size of the buffer in bytes, returns the number of copied bytes.                      |
++---------+---------------+------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

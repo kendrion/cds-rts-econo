@@ -1,0 +1,1015 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_file_transfer_itf:
+
+==================
+CmpFileTransferItf
+==================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpFileTransfer.
+
+Detailed Description
+--------------------
+
+This interface is specified for the file transfer component, to enable the transmission of files from and to the runtime system, to browse the directories online on the target and to handle directories (create, delete, rename).
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Alloc types <group___cmp_file_transfer_itf___alloctypes>`
+
+- :ref:`Directory extra info flags <group___cmp_file_transfer_itf___directoryextrainfoflags>`
+
+- :ref:`Event parameter <group___cmp_file_transfer_itf___eventparameter>`
+
+- :ref:`Events <group___cmp_file_transfer_itf___events>`
+
+- :ref:`Online reply tags <group___cmp_file_transfer_itf___onlinereplytags>`
+
+- :ref:`Operations <group___cmp_file_transfer_itf___operations>`
+
+- :ref:`Settings <group___cmp_file_transfer_itf___settings>`
+
+- :ref:`Static defines <group___cmp_file_transfer_itf___staticdefines>`
+
+- :ref:`Transfer types <group___cmp_file_transfer_itf___transfertypes>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpFileTransfer_C <struct_i_cmp_file_transfer___c>`
+
+Macros
+------
+
+- #define :ref:`USE_FileTransferStartDownload <group___cmp_file_transfer_itf_1ga423585d85178dc088452d876835b35e0>` :ref:`PFFILETRANSFERSTARTDOWNLOAD <group___cmp_file_transfer_itf_1ga88ec463e73630f27ad2f8850d4193dd2>` pfFileTransferStartDownload;
+
+- #define :ref:`EXT_FileTransferStartDownload <group___cmp_file_transfer_itf_1gab5e2316afd8a3025f48f7407fd3fc824>` extern :ref:`PFFILETRANSFERSTARTDOWNLOAD <group___cmp_file_transfer_itf_1ga88ec463e73630f27ad2f8850d4193dd2>` pfFileTransferStartDownload;
+
+- #define :ref:`GET_FileTransferStartDownload <group___cmp_file_transfer_itf_1gae1219cd1eb10b2ec4061b87be5a70871>` s_pfCMGetAPI2( "FileTransferStartDownload", (RTS_VOID_FCTPTR *)&pfFileTransferStartDownload, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferStartDownload <group___cmp_file_transfer_itf_1gadb4dc46040fde68d7531344316d4332a>` pfFileTransferStartDownload
+
+- #define :ref:`CHK_FileTransferStartDownload <group___cmp_file_transfer_itf_1ga3c68b88569b7ecfdd2ca7758d3140567>` (pfFileTransferStartDownload != NULL)
+
+- #define :ref:`EXP_FileTransferStartDownload <group___cmp_file_transfer_itf_1ga2c5639b98ba26e88c505f688d59bf82b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferStartDownload", (RTS_UINTPTR) :ref:`FileTransferStartDownload <group___cmp_file_transfer_itf_1ga033232f2c1e9dbb5049eb02c521facb0>` , 0, 0)
+
+- #define :ref:`USE_FileTransferDownload <group___cmp_file_transfer_itf_1gad3694c12985400f75ec53218e8d9c9d6>` :ref:`PFFILETRANSFERDOWNLOAD <group___cmp_file_transfer_itf_1ga756e47df2b6b67d81d91f12a856a1efb>` pfFileTransferDownload;
+
+- #define :ref:`EXT_FileTransferDownload <group___cmp_file_transfer_itf_1ga9098be6c6bb5b0f53575c69c32a19cf8>` extern :ref:`PFFILETRANSFERDOWNLOAD <group___cmp_file_transfer_itf_1ga756e47df2b6b67d81d91f12a856a1efb>` pfFileTransferDownload;
+
+- #define :ref:`GET_FileTransferDownload <group___cmp_file_transfer_itf_1ga843fb4b955c0d454cad0c465bf290299>` s_pfCMGetAPI2( "FileTransferDownload", (RTS_VOID_FCTPTR *)&pfFileTransferDownload, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferDownload <group___cmp_file_transfer_itf_1gad9dfe8003c18d77380c58db3fbd3405c>` pfFileTransferDownload
+
+- #define :ref:`CHK_FileTransferDownload <group___cmp_file_transfer_itf_1ga2e81080e59fba13be10d6d34c8aea6f9>` (pfFileTransferDownload != NULL)
+
+- #define :ref:`EXP_FileTransferDownload <group___cmp_file_transfer_itf_1gae593558850aba6499c930dfcfd92c5a6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferDownload", (RTS_UINTPTR) :ref:`FileTransferDownload <group___cmp_file_transfer_itf_1gafc8613776f70c2cd74aabb258b2936c9>` , 0, 0)
+
+- #define :ref:`USE_FileTransferEndDownload <group___cmp_file_transfer_itf_1ga8ede251f9731e6481d4ad90544a4c02f>` :ref:`PFFILETRANSFERENDDOWNLOAD <group___cmp_file_transfer_itf_1gace25746be0436d6c71a7daacb8ffc064>` pfFileTransferEndDownload;
+
+- #define :ref:`EXT_FileTransferEndDownload <group___cmp_file_transfer_itf_1ga6f6a1031ee2ab96a8558ac12d238d07d>` extern :ref:`PFFILETRANSFERENDDOWNLOAD <group___cmp_file_transfer_itf_1gace25746be0436d6c71a7daacb8ffc064>` pfFileTransferEndDownload;
+
+- #define :ref:`GET_FileTransferEndDownload <group___cmp_file_transfer_itf_1ga1d1d3848dba99ffea2abd9dea1b7c819>` s_pfCMGetAPI2( "FileTransferEndDownload", (RTS_VOID_FCTPTR *)&pfFileTransferEndDownload, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferEndDownload <group___cmp_file_transfer_itf_1gac0e26b843f15d2bb9bb406923d93245a>` pfFileTransferEndDownload
+
+- #define :ref:`CHK_FileTransferEndDownload <group___cmp_file_transfer_itf_1ga8e310691e672ff42ec7d2d4fba84eef2>` (pfFileTransferEndDownload != NULL)
+
+- #define :ref:`EXP_FileTransferEndDownload <group___cmp_file_transfer_itf_1ga388a6d1c93ca67cc30378e7569a249fa>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferEndDownload", (RTS_UINTPTR) :ref:`FileTransferEndDownload <group___cmp_file_transfer_itf_1gad16b2093d83869160c91a7d69c51b754>` , 0, 0)
+
+- #define :ref:`USE_FileTransferStartUpload <group___cmp_file_transfer_itf_1ga4defff38a83faf6609926acdc225d8c7>` :ref:`PFFILETRANSFERSTARTUPLOAD <group___cmp_file_transfer_itf_1ga13d1909ae0330cd685785216645bd4ab>` pfFileTransferStartUpload;
+
+- #define :ref:`EXT_FileTransferStartUpload <group___cmp_file_transfer_itf_1ga5af9e4c6fc31e250632c8cbf71c8eda7>` extern :ref:`PFFILETRANSFERSTARTUPLOAD <group___cmp_file_transfer_itf_1ga13d1909ae0330cd685785216645bd4ab>` pfFileTransferStartUpload;
+
+- #define :ref:`GET_FileTransferStartUpload <group___cmp_file_transfer_itf_1ga977f69a414f872b1f6d0588950f24cce>` s_pfCMGetAPI2( "FileTransferStartUpload", (RTS_VOID_FCTPTR *)&pfFileTransferStartUpload, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferStartUpload <group___cmp_file_transfer_itf_1gae2c836d6ebbe01805ad3421b19127a28>` pfFileTransferStartUpload
+
+- #define :ref:`CHK_FileTransferStartUpload <group___cmp_file_transfer_itf_1ga267009c90401191380290e425e197b0b>` (pfFileTransferStartUpload != NULL)
+
+- #define :ref:`EXP_FileTransferStartUpload <group___cmp_file_transfer_itf_1ga661c078726070220dbcd5a992aacc330>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferStartUpload", (RTS_UINTPTR) :ref:`FileTransferStartUpload <group___cmp_file_transfer_itf_1ga2f591dc06306a175c365b8b18e767c87>` , 0, 0)
+
+- #define :ref:`USE_FileTransferUpload <group___cmp_file_transfer_itf_1ga274db8ee5a64703a58a8589358ef9c3c>` :ref:`PFFILETRANSFERUPLOAD <group___cmp_file_transfer_itf_1gadc9d0da0013ea1654168868e0c428fec>` pfFileTransferUpload;
+
+- #define :ref:`EXT_FileTransferUpload <group___cmp_file_transfer_itf_1ga188a52421db23be7438ed2b5f1bac702>` extern :ref:`PFFILETRANSFERUPLOAD <group___cmp_file_transfer_itf_1gadc9d0da0013ea1654168868e0c428fec>` pfFileTransferUpload;
+
+- #define :ref:`GET_FileTransferUpload <group___cmp_file_transfer_itf_1ga7e3e490cc66a081931521b99e9ff334b>` s_pfCMGetAPI2( "FileTransferUpload", (RTS_VOID_FCTPTR *)&pfFileTransferUpload, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferUpload <group___cmp_file_transfer_itf_1gac27c57a977d9c0a5ff114941772fbfc1>` pfFileTransferUpload
+
+- #define :ref:`CHK_FileTransferUpload <group___cmp_file_transfer_itf_1gad7fde6652ee09c24366419b740a16876>` (pfFileTransferUpload != NULL)
+
+- #define :ref:`EXP_FileTransferUpload <group___cmp_file_transfer_itf_1ga075ca03b82511e17687aeb38979b60a7>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferUpload", (RTS_UINTPTR) :ref:`FileTransferUpload <group___cmp_file_transfer_itf_1gaafd30cdeda57f080741ff6b7a22e0913>` , 0, 0)
+
+- #define :ref:`USE_FileTransferEndUpload <group___cmp_file_transfer_itf_1ga0bccfff01947e0dd7eaba10a5feaddd3>` :ref:`PFFILETRANSFERENDUPLOAD <group___cmp_file_transfer_itf_1gaec094b0d87cf7bcac1e4182876fb4db1>` pfFileTransferEndUpload;
+
+- #define :ref:`EXT_FileTransferEndUpload <group___cmp_file_transfer_itf_1ga95577b8f1ad7841ac7096e27377b32a4>` extern :ref:`PFFILETRANSFERENDUPLOAD <group___cmp_file_transfer_itf_1gaec094b0d87cf7bcac1e4182876fb4db1>` pfFileTransferEndUpload;
+
+- #define :ref:`GET_FileTransferEndUpload <group___cmp_file_transfer_itf_1ga70767785a4abbad14fc6230f4ae5ac4d>` s_pfCMGetAPI2( "FileTransferEndUpload", (RTS_VOID_FCTPTR *)&pfFileTransferEndUpload, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferEndUpload <group___cmp_file_transfer_itf_1gabf606c6f1fc394e4f877e9170d78feb9>` pfFileTransferEndUpload
+
+- #define :ref:`CHK_FileTransferEndUpload <group___cmp_file_transfer_itf_1gad0cdd653cd0b155fe6e102c5cdbbd8f7>` (pfFileTransferEndUpload != NULL)
+
+- #define :ref:`EXP_FileTransferEndUpload <group___cmp_file_transfer_itf_1ga2172cfa93fbc34249b690221ebfe5d10>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferEndUpload", (RTS_UINTPTR) :ref:`FileTransferEndUpload <group___cmp_file_transfer_itf_1gab29e3301bfe625801c1451f44095f5df>` , 0, 0)
+
+- #define :ref:`USE_FileTransferClose <group___cmp_file_transfer_itf_1ga71515387b77832aa41d7f612594a078d>` :ref:`PFFILETRANSFERCLOSE <group___cmp_file_transfer_itf_1gac8ed203a5b6c46a2c8d95b904b7943b5>` pfFileTransferClose;
+
+- #define :ref:`EXT_FileTransferClose <group___cmp_file_transfer_itf_1ga59d004d300ff9e8fdd170eaee296dae6>` extern :ref:`PFFILETRANSFERCLOSE <group___cmp_file_transfer_itf_1gac8ed203a5b6c46a2c8d95b904b7943b5>` pfFileTransferClose;
+
+- #define :ref:`GET_FileTransferClose <group___cmp_file_transfer_itf_1ga49bccb3f11a6d00c7973eb782151c2c9>` s_pfCMGetAPI2( "FileTransferClose", (RTS_VOID_FCTPTR *)&pfFileTransferClose, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferClose <group___cmp_file_transfer_itf_1ga7ffd2c0e8bf5d5420adf3ac461aac6b1>` pfFileTransferClose
+
+- #define :ref:`CHK_FileTransferClose <group___cmp_file_transfer_itf_1ga64dd4fcc11d4182c1ddaf469f635f608>` (pfFileTransferClose != NULL)
+
+- #define :ref:`EXP_FileTransferClose <group___cmp_file_transfer_itf_1ga3157507fbb705ca05c23aa696c229f48>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferClose", (RTS_UINTPTR) :ref:`FileTransferClose <group___cmp_file_transfer_itf_1gad76ee122b3aa1f0af7cfa83261f03c32>` , 0, 0)
+
+- #define :ref:`USE_FileTransferCancel <group___cmp_file_transfer_itf_1ga424d1d7f0b1812ffe1d371de4b207c33>` :ref:`PFFILETRANSFERCANCEL <group___cmp_file_transfer_itf_1ga761078a504edb6d5ff950be4a56f6ed1>` pfFileTransferCancel;
+
+- #define :ref:`EXT_FileTransferCancel <group___cmp_file_transfer_itf_1ga47db4d8713d19815d4f8a02cf10d6a47>` extern :ref:`PFFILETRANSFERCANCEL <group___cmp_file_transfer_itf_1ga761078a504edb6d5ff950be4a56f6ed1>` pfFileTransferCancel;
+
+- #define :ref:`GET_FileTransferCancel <group___cmp_file_transfer_itf_1ga5690993de5decc82e40bc122a8e0e873>` s_pfCMGetAPI2( "FileTransferCancel", (RTS_VOID_FCTPTR *)&pfFileTransferCancel, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferCancel <group___cmp_file_transfer_itf_1ga54dfaa332c1cdbdbd2551cb24eaf2cf1>` pfFileTransferCancel
+
+- #define :ref:`CHK_FileTransferCancel <group___cmp_file_transfer_itf_1ga1788bd67dfa6233ea2d5e68f0cb1a1be>` (pfFileTransferCancel != NULL)
+
+- #define :ref:`EXP_FileTransferCancel <group___cmp_file_transfer_itf_1gabb1a7cc6b4be7a8b1515322b0cf7a121>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferCancel", (RTS_UINTPTR) :ref:`FileTransferCancel <group___cmp_file_transfer_itf_1gaaec88ac066c46f76af94133132700d3d>` , 0, 0)
+
+- #define :ref:`USE_FileTransferCancelAll <group___cmp_file_transfer_itf_1ga84d3f638d30564a389faf87c5fe725c7>` :ref:`PFFILETRANSFERCANCELALL <group___cmp_file_transfer_itf_1ga5948844cd8f5faeb44026b569c6c72a0>` pfFileTransferCancelAll;
+
+- #define :ref:`EXT_FileTransferCancelAll <group___cmp_file_transfer_itf_1ga7c9f7220e072923d600130db745a130c>` extern :ref:`PFFILETRANSFERCANCELALL <group___cmp_file_transfer_itf_1ga5948844cd8f5faeb44026b569c6c72a0>` pfFileTransferCancelAll;
+
+- #define :ref:`GET_FileTransferCancelAll <group___cmp_file_transfer_itf_1ga111b822dde32de7241d4c99ffbef8984>` s_pfCMGetAPI2( "FileTransferCancelAll", (RTS_VOID_FCTPTR *)&pfFileTransferCancelAll, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferCancelAll <group___cmp_file_transfer_itf_1gadef9ce7f2d1941debc82eb75f0389cb1>` pfFileTransferCancelAll
+
+- #define :ref:`CHK_FileTransferCancelAll <group___cmp_file_transfer_itf_1ga3fae868d33d309d225a5e56153efb7c4>` (pfFileTransferCancelAll != NULL)
+
+- #define :ref:`EXP_FileTransferCancelAll <group___cmp_file_transfer_itf_1ga30f881b4268cbb8a0b1fa1a85c08bc50>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferCancelAll", (RTS_UINTPTR) :ref:`FileTransferCancelAll <group___cmp_file_transfer_itf_1gabe46ab9ea202570ffc490665f3304b6b>` , 0, 0)
+
+- #define :ref:`USE_FileTransferGetInfo <group___cmp_file_transfer_itf_1ga6e1215ada8861c3fd7fe2afc6135eccd>` :ref:`PFFILETRANSFERGETINFO <group___cmp_file_transfer_itf_1ga1fa39ca2c21bb61545b88cfe125839e4>` pfFileTransferGetInfo;
+
+- #define :ref:`EXT_FileTransferGetInfo <group___cmp_file_transfer_itf_1gac97c160a047ce8759612c23ee35a30d6>` extern :ref:`PFFILETRANSFERGETINFO <group___cmp_file_transfer_itf_1ga1fa39ca2c21bb61545b88cfe125839e4>` pfFileTransferGetInfo;
+
+- #define :ref:`GET_FileTransferGetInfo <group___cmp_file_transfer_itf_1ga23d173b797e056b04861d454a7ed2009>` s_pfCMGetAPI2( "FileTransferGetInfo", (RTS_VOID_FCTPTR *)&pfFileTransferGetInfo, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferGetInfo <group___cmp_file_transfer_itf_1ga7bf1886d957a194083536e374c6a0e8a>` pfFileTransferGetInfo
+
+- #define :ref:`CHK_FileTransferGetInfo <group___cmp_file_transfer_itf_1ga560bac050648c925369b6f6aa94a3ebc>` (pfFileTransferGetInfo != NULL)
+
+- #define :ref:`EXP_FileTransferGetInfo <group___cmp_file_transfer_itf_1gaebef1697257400652c69ce9ee2f7be43>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferGetInfo", (RTS_UINTPTR) :ref:`FileTransferGetInfo <group___cmp_file_transfer_itf_1ga3827395bddf269d24db01c27aacc6e4c>` , 0, 0)
+
+- #define :ref:`USE_FileTransferToTransmit <group___cmp_file_transfer_itf_1ga23519669cc4c6260fab3fbc023f8c060>` :ref:`PFFILETRANSFERTOTRANSMIT <group___cmp_file_transfer_itf_1ga7f9710eff5d0f191ba625ef708650c62>` pfFileTransferToTransmit;
+
+- #define :ref:`EXT_FileTransferToTransmit <group___cmp_file_transfer_itf_1ga649bcdc61a1f420bc1ccaee414f2205f>` extern :ref:`PFFILETRANSFERTOTRANSMIT <group___cmp_file_transfer_itf_1ga7f9710eff5d0f191ba625ef708650c62>` pfFileTransferToTransmit;
+
+- #define :ref:`GET_FileTransferToTransmit <group___cmp_file_transfer_itf_1gaf2848ba6abee3e07cd9794353df7cd5d>` s_pfCMGetAPI2( "FileTransferToTransmit", (RTS_VOID_FCTPTR *)&pfFileTransferToTransmit, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferToTransmit <group___cmp_file_transfer_itf_1gaafb383d1cb3d9856a6a0a2cf27573cf0>` pfFileTransferToTransmit
+
+- #define :ref:`CHK_FileTransferToTransmit <group___cmp_file_transfer_itf_1ga4f22e08943e4c257b8784166f0bb76a5>` (pfFileTransferToTransmit != NULL)
+
+- #define :ref:`EXP_FileTransferToTransmit <group___cmp_file_transfer_itf_1gae8c2c6cc80d7a6e11d07c528e756d731>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferToTransmit", (RTS_UINTPTR) :ref:`FileTransferToTransmit <group___cmp_file_transfer_itf_1gab35a43fdc2969d65a16755aa9d5acd22>` , 0, 0)
+
+- #define :ref:`USE_FileTransferSafeSignature <group___cmp_file_transfer_itf_1ga552287cdcd34685eeddada23b1c46df5>` :ref:`PFFILETRANSFERSAFESIGNATURE <group___cmp_file_transfer_itf_1ga29fc44ab4c1e60023bcd5c499af061cb>` pfFileTransferSafeSignature;
+
+- #define :ref:`EXT_FileTransferSafeSignature <group___cmp_file_transfer_itf_1ga9e109a02d8994fafcad48e17daf305b6>` extern :ref:`PFFILETRANSFERSAFESIGNATURE <group___cmp_file_transfer_itf_1ga29fc44ab4c1e60023bcd5c499af061cb>` pfFileTransferSafeSignature;
+
+- #define :ref:`GET_FileTransferSafeSignature <group___cmp_file_transfer_itf_1ga3ebfff6c6e2afe1436b6151a56baf9af>` s_pfCMGetAPI2( "FileTransferSafeSignature", (RTS_VOID_FCTPTR *)&pfFileTransferSafeSignature, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferSafeSignature <group___cmp_file_transfer_itf_1ga528a023efe0f92f97d9d2c241d491f6d>` pfFileTransferSafeSignature
+
+- #define :ref:`CHK_FileTransferSafeSignature <group___cmp_file_transfer_itf_1gaa0cd6f17562e5f217f16df54dabf7b68>` (pfFileTransferSafeSignature != NULL)
+
+- #define :ref:`EXP_FileTransferSafeSignature <group___cmp_file_transfer_itf_1ga6dfcdea8bdd2179c0154880dd12d9287>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferSafeSignature", (RTS_UINTPTR) :ref:`FileTransferSafeSignature <group___cmp_file_transfer_itf_1ga7eabb283118b8fea8b26f4d6a8e90a05>` , 0, 0)
+
+- #define :ref:`USE_FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1gad680e6f4e26bdf87718a4a44cd7214e9>` :ref:`PFFILETRANSFERGETSAFEDSIGNATURE <group___cmp_file_transfer_itf_1ga66a0b92d49ad01a6f6540f00c8e81e59>` pfFileTransferGetSafedSignature;
+
+- #define :ref:`EXT_FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1gaf0482da537b84f883018db31bf55c9d1>` extern :ref:`PFFILETRANSFERGETSAFEDSIGNATURE <group___cmp_file_transfer_itf_1ga66a0b92d49ad01a6f6540f00c8e81e59>` pfFileTransferGetSafedSignature;
+
+- #define :ref:`GET_FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1ga536b17e07c97e6087304a5731b8ab119>` s_pfCMGetAPI2( "FileTransferGetSafedSignature", (RTS_VOID_FCTPTR *)&pfFileTransferGetSafedSignature, (fl), 0, 0)
+
+- #define :ref:`CAL_FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1ga148c787ead2df83513f055d16d0d4266>` pfFileTransferGetSafedSignature
+
+- #define :ref:`CHK_FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1ga68c49a0033f6506bddafa0a4f9369f90>` (pfFileTransferGetSafedSignature != NULL)
+
+- #define :ref:`EXP_FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1ga7a03a6eed5236a241a6a1b02a559f9ab>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferGetSafedSignature", (RTS_UINTPTR) :ref:`FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1gad81ea0a57efbfa1bbfb6da3dfbda9c24>` , 0, 0)
+
+- #define :ref:`ITF_CmpFileTransfer <group___cmp_file_transfer_itf_1gaa6fd8c6cd6cae162c56e6e15a0294f94>`
+
+- #define :ref:`EXTITF_CmpFileTransfer <group___cmp_file_transfer_itf_1gaa2e4fae0353a348adb0418c684cb38f9>`
+
+Typedefs
+--------
+
+- typedef RTS_HANDLE(* :ref:`PFFILETRANSFERSTARTDOWNLOAD <group___cmp_file_transfer_itf_1ga88ec463e73630f27ad2f8850d4193dd2>`)(char *pszFileName, FileInfo *pInfo, RTS_UI32 ulSessionId, int bRestart, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERDOWNLOAD <group___cmp_file_transfer_itf_1ga756e47df2b6b67d81d91f12a856a1efb>`)(RTS_HANDLE hFiletransfer, unsigned char *pbyData, RTS_SIZE ulLen)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERENDDOWNLOAD <group___cmp_file_transfer_itf_1gace25746be0436d6c71a7daacb8ffc064>`)(RTS_HANDLE hFiletransfer)
+
+- typedef RTS_HANDLE(* :ref:`PFFILETRANSFERSTARTUPLOAD <group___cmp_file_transfer_itf_1ga13d1909ae0330cd685785216645bd4ab>`)(char *pszFileName, FileInfo *pInfo, RTS_UI32 ulSessionId, int bRestart, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERUPLOAD <group___cmp_file_transfer_itf_1gadc9d0da0013ea1654168868e0c428fec>`)(RTS_HANDLE hFiletransfer, unsigned char *pbyData, RTS_SIZE *pulMaxLen)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERENDUPLOAD <group___cmp_file_transfer_itf_1gaec094b0d87cf7bcac1e4182876fb4db1>`)(RTS_HANDLE hFiletransfer, FileInfo *pFileInfo)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERCLOSE <group___cmp_file_transfer_itf_1gac8ed203a5b6c46a2c8d95b904b7943b5>`)(RTS_HANDLE hFiletransfer)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERCANCEL <group___cmp_file_transfer_itf_1ga761078a504edb6d5ff950be4a56f6ed1>`)(RTS_HANDLE hFiletransfer)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERCANCELALL <group___cmp_file_transfer_itf_1ga5948844cd8f5faeb44026b569c6c72a0>`)(RTS_UI32 ulSessionId)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERGETINFO <group___cmp_file_transfer_itf_1ga1fa39ca2c21bb61545b88cfe125839e4>`)(char *pszFileName, FileInfo *pInfo, FileInfo *pInfoClient)
+
+- typedef RTS_SIZE(* :ref:`PFFILETRANSFERTOTRANSMIT <group___cmp_file_transfer_itf_1ga7f9710eff5d0f191ba625ef708650c62>`)(RTS_HANDLE hFiletransfer, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERSAFESIGNATURE <group___cmp_file_transfer_itf_1ga29fc44ab4c1e60023bcd5c499af061cb>`)(char *pszFileName, RTS_UI32 ulCRC32)
+
+- typedef RTS_RESULT(* :ref:`PFFILETRANSFERGETSAFEDSIGNATURE <group___cmp_file_transfer_itf_1ga66a0b92d49ad01a6f6540f00c8e81e59>`)(char *pszFileName, RTS_UI32 *pulCRC32)
+
+- typedef :ref:`ICmpFileTransfer_C <struct_i_cmp_file_transfer___c>` :ref:`ICmpFileTransfer <group___cmp_file_transfer_itf_1gad61a0cf3ab5449c5625f484b7e901e0b>`
+
+Functions
+---------
+
+- RTS_HANDLE :ref:`FileTransferStartDownload <group___cmp_file_transfer_itf_1ga033232f2c1e9dbb5049eb02c521facb0>` (char * pszFileName, :ref:`FileInfo <struct_file_info>` * pInfo, RTS_UI32 ulSessionId, int bRestart, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`FileTransferDownload <group___cmp_file_transfer_itf_1gafc8613776f70c2cd74aabb258b2936c9>` (RTS_HANDLE hFiletransfer, unsigned char * pbyData, RTS_SIZE ulLen)
+
+- RTS_RESULT :ref:`FileTransferEndDownload <group___cmp_file_transfer_itf_1gad16b2093d83869160c91a7d69c51b754>` (RTS_HANDLE hFiletransfer)
+
+- RTS_HANDLE :ref:`FileTransferStartUpload <group___cmp_file_transfer_itf_1ga2f591dc06306a175c365b8b18e767c87>` (char * pszFileName, :ref:`FileInfo <struct_file_info>` * pInfo, RTS_UI32 ulSessionId, int bRestart, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`FileTransferUpload <group___cmp_file_transfer_itf_1gaafd30cdeda57f080741ff6b7a22e0913>` (RTS_HANDLE hFiletransfer, unsigned char * pbyData, RTS_SIZE * pulMaxLen)
+
+- RTS_RESULT :ref:`FileTransferEndUpload <group___cmp_file_transfer_itf_1gab29e3301bfe625801c1451f44095f5df>` (RTS_HANDLE hFiletransfer, :ref:`FileInfo <struct_file_info>` * pFileInfo)
+
+- RTS_RESULT :ref:`FileTransferClose <group___cmp_file_transfer_itf_1gad76ee122b3aa1f0af7cfa83261f03c32>` (RTS_HANDLE hFiletransfer)
+
+- RTS_RESULT :ref:`FileTransferCancel <group___cmp_file_transfer_itf_1gaaec88ac066c46f76af94133132700d3d>` (RTS_HANDLE hFiletransfer)
+
+- RTS_RESULT :ref:`FileTransferCancelAll <group___cmp_file_transfer_itf_1gabe46ab9ea202570ffc490665f3304b6b>` (RTS_UI32 ulSessionId)
+
+- RTS_RESULT :ref:`FileTransferGetInfo <group___cmp_file_transfer_itf_1ga3827395bddf269d24db01c27aacc6e4c>` (char * pszFileName, :ref:`FileInfo <struct_file_info>` * pInfo, :ref:`FileInfo <struct_file_info>` * pInfoClient)
+
+- RTS_SIZE :ref:`FileTransferToTransmit <group___cmp_file_transfer_itf_1gab35a43fdc2969d65a16755aa9d5acd22>` (RTS_HANDLE hFiletransfer, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`FileTransferSafeSignature <group___cmp_file_transfer_itf_1ga7eabb283118b8fea8b26f4d6a8e90a05>` (char * pszFileName, RTS_UI32 ulCRC32)
+
+- RTS_RESULT :ref:`FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1gad81ea0a57efbfa1bbfb6da3dfbda9c24>` (char * pszFileName, RTS_UI32 * pulCRC32)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_file_transfer_itf_1ga423585d85178dc088452d876835b35e0:
+
+#define USE_FileTransferStartDownload :ref:`PFFILETRANSFERSTARTDOWNLOAD <group___cmp_file_transfer_itf_1ga88ec463e73630f27ad2f8850d4193dd2>` pfFileTransferStartDownload;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gab5e2316afd8a3025f48f7407fd3fc824:
+
+#define EXT_FileTransferStartDownload extern :ref:`PFFILETRANSFERSTARTDOWNLOAD <group___cmp_file_transfer_itf_1ga88ec463e73630f27ad2f8850d4193dd2>` pfFileTransferStartDownload;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gae1219cd1eb10b2ec4061b87be5a70871:
+
+#define GET_FileTransferStartDownload s_pfCMGetAPI2( "FileTransferStartDownload", (RTS_VOID_FCTPTR *)&pfFileTransferStartDownload, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gadb4dc46040fde68d7531344316d4332a:
+
+#define CAL_FileTransferStartDownload pfFileTransferStartDownload
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga3c68b88569b7ecfdd2ca7758d3140567:
+
+#define CHK_FileTransferStartDownload (pfFileTransferStartDownload != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga2c5639b98ba26e88c505f688d59bf82b:
+
+#define EXP_FileTransferStartDownload s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferStartDownload", (RTS_UINTPTR) :ref:`FileTransferStartDownload <group___cmp_file_transfer_itf_1ga033232f2c1e9dbb5049eb02c521facb0>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gad3694c12985400f75ec53218e8d9c9d6:
+
+#define USE_FileTransferDownload :ref:`PFFILETRANSFERDOWNLOAD <group___cmp_file_transfer_itf_1ga756e47df2b6b67d81d91f12a856a1efb>` pfFileTransferDownload;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga9098be6c6bb5b0f53575c69c32a19cf8:
+
+#define EXT_FileTransferDownload extern :ref:`PFFILETRANSFERDOWNLOAD <group___cmp_file_transfer_itf_1ga756e47df2b6b67d81d91f12a856a1efb>` pfFileTransferDownload;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga843fb4b955c0d454cad0c465bf290299:
+
+#define GET_FileTransferDownload s_pfCMGetAPI2( "FileTransferDownload", (RTS_VOID_FCTPTR *)&pfFileTransferDownload, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gad9dfe8003c18d77380c58db3fbd3405c:
+
+#define CAL_FileTransferDownload pfFileTransferDownload
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga2e81080e59fba13be10d6d34c8aea6f9:
+
+#define CHK_FileTransferDownload (pfFileTransferDownload != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gae593558850aba6499c930dfcfd92c5a6:
+
+#define EXP_FileTransferDownload s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferDownload", (RTS_UINTPTR) :ref:`FileTransferDownload <group___cmp_file_transfer_itf_1gafc8613776f70c2cd74aabb258b2936c9>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga8ede251f9731e6481d4ad90544a4c02f:
+
+#define USE_FileTransferEndDownload :ref:`PFFILETRANSFERENDDOWNLOAD <group___cmp_file_transfer_itf_1gace25746be0436d6c71a7daacb8ffc064>` pfFileTransferEndDownload;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga6f6a1031ee2ab96a8558ac12d238d07d:
+
+#define EXT_FileTransferEndDownload extern :ref:`PFFILETRANSFERENDDOWNLOAD <group___cmp_file_transfer_itf_1gace25746be0436d6c71a7daacb8ffc064>` pfFileTransferEndDownload;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga1d1d3848dba99ffea2abd9dea1b7c819:
+
+#define GET_FileTransferEndDownload s_pfCMGetAPI2( "FileTransferEndDownload", (RTS_VOID_FCTPTR *)&pfFileTransferEndDownload, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gac0e26b843f15d2bb9bb406923d93245a:
+
+#define CAL_FileTransferEndDownload pfFileTransferEndDownload
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga8e310691e672ff42ec7d2d4fba84eef2:
+
+#define CHK_FileTransferEndDownload (pfFileTransferEndDownload != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga388a6d1c93ca67cc30378e7569a249fa:
+
+#define EXP_FileTransferEndDownload s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferEndDownload", (RTS_UINTPTR) :ref:`FileTransferEndDownload <group___cmp_file_transfer_itf_1gad16b2093d83869160c91a7d69c51b754>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga4defff38a83faf6609926acdc225d8c7:
+
+#define USE_FileTransferStartUpload :ref:`PFFILETRANSFERSTARTUPLOAD <group___cmp_file_transfer_itf_1ga13d1909ae0330cd685785216645bd4ab>` pfFileTransferStartUpload;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga5af9e4c6fc31e250632c8cbf71c8eda7:
+
+#define EXT_FileTransferStartUpload extern :ref:`PFFILETRANSFERSTARTUPLOAD <group___cmp_file_transfer_itf_1ga13d1909ae0330cd685785216645bd4ab>` pfFileTransferStartUpload;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga977f69a414f872b1f6d0588950f24cce:
+
+#define GET_FileTransferStartUpload s_pfCMGetAPI2( "FileTransferStartUpload", (RTS_VOID_FCTPTR *)&pfFileTransferStartUpload, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gae2c836d6ebbe01805ad3421b19127a28:
+
+#define CAL_FileTransferStartUpload pfFileTransferStartUpload
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga267009c90401191380290e425e197b0b:
+
+#define CHK_FileTransferStartUpload (pfFileTransferStartUpload != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga661c078726070220dbcd5a992aacc330:
+
+#define EXP_FileTransferStartUpload s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferStartUpload", (RTS_UINTPTR) :ref:`FileTransferStartUpload <group___cmp_file_transfer_itf_1ga2f591dc06306a175c365b8b18e767c87>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga274db8ee5a64703a58a8589358ef9c3c:
+
+#define USE_FileTransferUpload :ref:`PFFILETRANSFERUPLOAD <group___cmp_file_transfer_itf_1gadc9d0da0013ea1654168868e0c428fec>` pfFileTransferUpload;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga188a52421db23be7438ed2b5f1bac702:
+
+#define EXT_FileTransferUpload extern :ref:`PFFILETRANSFERUPLOAD <group___cmp_file_transfer_itf_1gadc9d0da0013ea1654168868e0c428fec>` pfFileTransferUpload;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga7e3e490cc66a081931521b99e9ff334b:
+
+#define GET_FileTransferUpload s_pfCMGetAPI2( "FileTransferUpload", (RTS_VOID_FCTPTR *)&pfFileTransferUpload, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gac27c57a977d9c0a5ff114941772fbfc1:
+
+#define CAL_FileTransferUpload pfFileTransferUpload
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gad7fde6652ee09c24366419b740a16876:
+
+#define CHK_FileTransferUpload (pfFileTransferUpload != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga075ca03b82511e17687aeb38979b60a7:
+
+#define EXP_FileTransferUpload s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferUpload", (RTS_UINTPTR) :ref:`FileTransferUpload <group___cmp_file_transfer_itf_1gaafd30cdeda57f080741ff6b7a22e0913>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga0bccfff01947e0dd7eaba10a5feaddd3:
+
+#define USE_FileTransferEndUpload :ref:`PFFILETRANSFERENDUPLOAD <group___cmp_file_transfer_itf_1gaec094b0d87cf7bcac1e4182876fb4db1>` pfFileTransferEndUpload;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga95577b8f1ad7841ac7096e27377b32a4:
+
+#define EXT_FileTransferEndUpload extern :ref:`PFFILETRANSFERENDUPLOAD <group___cmp_file_transfer_itf_1gaec094b0d87cf7bcac1e4182876fb4db1>` pfFileTransferEndUpload;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga70767785a4abbad14fc6230f4ae5ac4d:
+
+#define GET_FileTransferEndUpload s_pfCMGetAPI2( "FileTransferEndUpload", (RTS_VOID_FCTPTR *)&pfFileTransferEndUpload, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gabf606c6f1fc394e4f877e9170d78feb9:
+
+#define CAL_FileTransferEndUpload pfFileTransferEndUpload
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gad0cdd653cd0b155fe6e102c5cdbbd8f7:
+
+#define CHK_FileTransferEndUpload (pfFileTransferEndUpload != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga2172cfa93fbc34249b690221ebfe5d10:
+
+#define EXP_FileTransferEndUpload s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferEndUpload", (RTS_UINTPTR) :ref:`FileTransferEndUpload <group___cmp_file_transfer_itf_1gab29e3301bfe625801c1451f44095f5df>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga71515387b77832aa41d7f612594a078d:
+
+#define USE_FileTransferClose :ref:`PFFILETRANSFERCLOSE <group___cmp_file_transfer_itf_1gac8ed203a5b6c46a2c8d95b904b7943b5>` pfFileTransferClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga59d004d300ff9e8fdd170eaee296dae6:
+
+#define EXT_FileTransferClose extern :ref:`PFFILETRANSFERCLOSE <group___cmp_file_transfer_itf_1gac8ed203a5b6c46a2c8d95b904b7943b5>` pfFileTransferClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga49bccb3f11a6d00c7973eb782151c2c9:
+
+#define GET_FileTransferClose s_pfCMGetAPI2( "FileTransferClose", (RTS_VOID_FCTPTR *)&pfFileTransferClose, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga7ffd2c0e8bf5d5420adf3ac461aac6b1:
+
+#define CAL_FileTransferClose pfFileTransferClose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga64dd4fcc11d4182c1ddaf469f635f608:
+
+#define CHK_FileTransferClose (pfFileTransferClose != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga3157507fbb705ca05c23aa696c229f48:
+
+#define EXP_FileTransferClose s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferClose", (RTS_UINTPTR) :ref:`FileTransferClose <group___cmp_file_transfer_itf_1gad76ee122b3aa1f0af7cfa83261f03c32>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga424d1d7f0b1812ffe1d371de4b207c33:
+
+#define USE_FileTransferCancel :ref:`PFFILETRANSFERCANCEL <group___cmp_file_transfer_itf_1ga761078a504edb6d5ff950be4a56f6ed1>` pfFileTransferCancel;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga47db4d8713d19815d4f8a02cf10d6a47:
+
+#define EXT_FileTransferCancel extern :ref:`PFFILETRANSFERCANCEL <group___cmp_file_transfer_itf_1ga761078a504edb6d5ff950be4a56f6ed1>` pfFileTransferCancel;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga5690993de5decc82e40bc122a8e0e873:
+
+#define GET_FileTransferCancel s_pfCMGetAPI2( "FileTransferCancel", (RTS_VOID_FCTPTR *)&pfFileTransferCancel, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga54dfaa332c1cdbdbd2551cb24eaf2cf1:
+
+#define CAL_FileTransferCancel pfFileTransferCancel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga1788bd67dfa6233ea2d5e68f0cb1a1be:
+
+#define CHK_FileTransferCancel (pfFileTransferCancel != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gabb1a7cc6b4be7a8b1515322b0cf7a121:
+
+#define EXP_FileTransferCancel s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferCancel", (RTS_UINTPTR) :ref:`FileTransferCancel <group___cmp_file_transfer_itf_1gaaec88ac066c46f76af94133132700d3d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga84d3f638d30564a389faf87c5fe725c7:
+
+#define USE_FileTransferCancelAll :ref:`PFFILETRANSFERCANCELALL <group___cmp_file_transfer_itf_1ga5948844cd8f5faeb44026b569c6c72a0>` pfFileTransferCancelAll;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga7c9f7220e072923d600130db745a130c:
+
+#define EXT_FileTransferCancelAll extern :ref:`PFFILETRANSFERCANCELALL <group___cmp_file_transfer_itf_1ga5948844cd8f5faeb44026b569c6c72a0>` pfFileTransferCancelAll;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga111b822dde32de7241d4c99ffbef8984:
+
+#define GET_FileTransferCancelAll s_pfCMGetAPI2( "FileTransferCancelAll", (RTS_VOID_FCTPTR *)&pfFileTransferCancelAll, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gadef9ce7f2d1941debc82eb75f0389cb1:
+
+#define CAL_FileTransferCancelAll pfFileTransferCancelAll
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga3fae868d33d309d225a5e56153efb7c4:
+
+#define CHK_FileTransferCancelAll (pfFileTransferCancelAll != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga30f881b4268cbb8a0b1fa1a85c08bc50:
+
+#define EXP_FileTransferCancelAll s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferCancelAll", (RTS_UINTPTR) :ref:`FileTransferCancelAll <group___cmp_file_transfer_itf_1gabe46ab9ea202570ffc490665f3304b6b>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga6e1215ada8861c3fd7fe2afc6135eccd:
+
+#define USE_FileTransferGetInfo :ref:`PFFILETRANSFERGETINFO <group___cmp_file_transfer_itf_1ga1fa39ca2c21bb61545b88cfe125839e4>` pfFileTransferGetInfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gac97c160a047ce8759612c23ee35a30d6:
+
+#define EXT_FileTransferGetInfo extern :ref:`PFFILETRANSFERGETINFO <group___cmp_file_transfer_itf_1ga1fa39ca2c21bb61545b88cfe125839e4>` pfFileTransferGetInfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga23d173b797e056b04861d454a7ed2009:
+
+#define GET_FileTransferGetInfo s_pfCMGetAPI2( "FileTransferGetInfo", (RTS_VOID_FCTPTR *)&pfFileTransferGetInfo, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga7bf1886d957a194083536e374c6a0e8a:
+
+#define CAL_FileTransferGetInfo pfFileTransferGetInfo
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga560bac050648c925369b6f6aa94a3ebc:
+
+#define CHK_FileTransferGetInfo (pfFileTransferGetInfo != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gaebef1697257400652c69ce9ee2f7be43:
+
+#define EXP_FileTransferGetInfo s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferGetInfo", (RTS_UINTPTR) :ref:`FileTransferGetInfo <group___cmp_file_transfer_itf_1ga3827395bddf269d24db01c27aacc6e4c>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga23519669cc4c6260fab3fbc023f8c060:
+
+#define USE_FileTransferToTransmit :ref:`PFFILETRANSFERTOTRANSMIT <group___cmp_file_transfer_itf_1ga7f9710eff5d0f191ba625ef708650c62>` pfFileTransferToTransmit;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga649bcdc61a1f420bc1ccaee414f2205f:
+
+#define EXT_FileTransferToTransmit extern :ref:`PFFILETRANSFERTOTRANSMIT <group___cmp_file_transfer_itf_1ga7f9710eff5d0f191ba625ef708650c62>` pfFileTransferToTransmit;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gaf2848ba6abee3e07cd9794353df7cd5d:
+
+#define GET_FileTransferToTransmit s_pfCMGetAPI2( "FileTransferToTransmit", (RTS_VOID_FCTPTR *)&pfFileTransferToTransmit, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gaafb383d1cb3d9856a6a0a2cf27573cf0:
+
+#define CAL_FileTransferToTransmit pfFileTransferToTransmit
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga4f22e08943e4c257b8784166f0bb76a5:
+
+#define CHK_FileTransferToTransmit (pfFileTransferToTransmit != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gae8c2c6cc80d7a6e11d07c528e756d731:
+
+#define EXP_FileTransferToTransmit s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferToTransmit", (RTS_UINTPTR) :ref:`FileTransferToTransmit <group___cmp_file_transfer_itf_1gab35a43fdc2969d65a16755aa9d5acd22>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga552287cdcd34685eeddada23b1c46df5:
+
+#define USE_FileTransferSafeSignature :ref:`PFFILETRANSFERSAFESIGNATURE <group___cmp_file_transfer_itf_1ga29fc44ab4c1e60023bcd5c499af061cb>` pfFileTransferSafeSignature;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga9e109a02d8994fafcad48e17daf305b6:
+
+#define EXT_FileTransferSafeSignature extern :ref:`PFFILETRANSFERSAFESIGNATURE <group___cmp_file_transfer_itf_1ga29fc44ab4c1e60023bcd5c499af061cb>` pfFileTransferSafeSignature;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga3ebfff6c6e2afe1436b6151a56baf9af:
+
+#define GET_FileTransferSafeSignature s_pfCMGetAPI2( "FileTransferSafeSignature", (RTS_VOID_FCTPTR *)&pfFileTransferSafeSignature, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga528a023efe0f92f97d9d2c241d491f6d:
+
+#define CAL_FileTransferSafeSignature pfFileTransferSafeSignature
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gaa0cd6f17562e5f217f16df54dabf7b68:
+
+#define CHK_FileTransferSafeSignature (pfFileTransferSafeSignature != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga6dfcdea8bdd2179c0154880dd12d9287:
+
+#define EXP_FileTransferSafeSignature s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferSafeSignature", (RTS_UINTPTR) :ref:`FileTransferSafeSignature <group___cmp_file_transfer_itf_1ga7eabb283118b8fea8b26f4d6a8e90a05>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gad680e6f4e26bdf87718a4a44cd7214e9:
+
+#define USE_FileTransferGetSafedSignature :ref:`PFFILETRANSFERGETSAFEDSIGNATURE <group___cmp_file_transfer_itf_1ga66a0b92d49ad01a6f6540f00c8e81e59>` pfFileTransferGetSafedSignature;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gaf0482da537b84f883018db31bf55c9d1:
+
+#define EXT_FileTransferGetSafedSignature extern :ref:`PFFILETRANSFERGETSAFEDSIGNATURE <group___cmp_file_transfer_itf_1ga66a0b92d49ad01a6f6540f00c8e81e59>` pfFileTransferGetSafedSignature;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga536b17e07c97e6087304a5731b8ab119:
+
+#define GET_FileTransferGetSafedSignature s_pfCMGetAPI2( "FileTransferGetSafedSignature", (RTS_VOID_FCTPTR *)&pfFileTransferGetSafedSignature, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga148c787ead2df83513f055d16d0d4266:
+
+#define CAL_FileTransferGetSafedSignature pfFileTransferGetSafedSignature
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga68c49a0033f6506bddafa0a4f9369f90:
+
+#define CHK_FileTransferGetSafedSignature (pfFileTransferGetSafedSignature != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga7a03a6eed5236a241a6a1b02a559f9ab:
+
+#define EXP_FileTransferGetSafedSignature s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"FileTransferGetSafedSignature", (RTS_UINTPTR) :ref:`FileTransferGetSafedSignature <group___cmp_file_transfer_itf_1gad81ea0a57efbfa1bbfb6da3dfbda9c24>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gaa6fd8c6cd6cae162c56e6e15a0294f94:
+
+#define ITF_CmpFileTransfer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gaa2e4fae0353a348adb0418c684cb38f9:
+
+#define EXTITF_CmpFileTransfer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_file_transfer_itf_1ga88ec463e73630f27ad2f8850d4193dd2:
+
+typedef RTS_HANDLE( *  PFFILETRANSFERSTARTDOWNLOAD) (char *pszFileName, FileInfo *pInfo, RTS_UI32 ulSessionId, int bRestart, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga756e47df2b6b67d81d91f12a856a1efb:
+
+typedef RTS_RESULT( *  PFFILETRANSFERDOWNLOAD) (RTS_HANDLE hFiletransfer, unsigned char *pbyData, RTS_SIZE ulLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gace25746be0436d6c71a7daacb8ffc064:
+
+typedef RTS_RESULT( *  PFFILETRANSFERENDDOWNLOAD) (RTS_HANDLE hFiletransfer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga13d1909ae0330cd685785216645bd4ab:
+
+typedef RTS_HANDLE( *  PFFILETRANSFERSTARTUPLOAD) (char *pszFileName, FileInfo *pInfo, RTS_UI32 ulSessionId, int bRestart, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gadc9d0da0013ea1654168868e0c428fec:
+
+typedef RTS_RESULT( *  PFFILETRANSFERUPLOAD) (RTS_HANDLE hFiletransfer, unsigned char *pbyData, RTS_SIZE *pulMaxLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gaec094b0d87cf7bcac1e4182876fb4db1:
+
+typedef RTS_RESULT( *  PFFILETRANSFERENDUPLOAD) (RTS_HANDLE hFiletransfer, FileInfo *pFileInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gac8ed203a5b6c46a2c8d95b904b7943b5:
+
+typedef RTS_RESULT( *  PFFILETRANSFERCLOSE) (RTS_HANDLE hFiletransfer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga761078a504edb6d5ff950be4a56f6ed1:
+
+typedef RTS_RESULT( *  PFFILETRANSFERCANCEL) (RTS_HANDLE hFiletransfer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga5948844cd8f5faeb44026b569c6c72a0:
+
+typedef RTS_RESULT( *  PFFILETRANSFERCANCELALL) (RTS_UI32 ulSessionId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga1fa39ca2c21bb61545b88cfe125839e4:
+
+typedef RTS_RESULT( *  PFFILETRANSFERGETINFO) (char *pszFileName, FileInfo *pInfo, FileInfo *pInfoClient)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga7f9710eff5d0f191ba625ef708650c62:
+
+typedef RTS_SIZE( *  PFFILETRANSFERTOTRANSMIT) (RTS_HANDLE hFiletransfer, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga29fc44ab4c1e60023bcd5c499af061cb:
+
+typedef RTS_RESULT( *  PFFILETRANSFERSAFESIGNATURE) (char *pszFileName, RTS_UI32 ulCRC32)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1ga66a0b92d49ad01a6f6540f00c8e81e59:
+
+typedef RTS_RESULT( *  PFFILETRANSFERGETSAFEDSIGNATURE) (char *pszFileName, RTS_UI32 *pulCRC32)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_file_transfer_itf_1gad61a0cf3ab5449c5625f484b7e901e0b:
+
+typedef ICmpFileTransfer_C ICmpFileTransfer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_file_transfer_itf_1ga033232f2c1e9dbb5049eb02c521facb0:
+
+RTS_HANDLE FileTransferStartDownload (char *pszFileName, FileInfo *pInfo, RTS_UI32 ulSessionId, int bRestart, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creates a file transfer download object to transfer a file from client to target
+
+**Parameters**
+
++---------+-------------+------------------------------------------------------------------------------------------+
+| [in]    | pszFileName | File name (can have a file path)                                                         |
++---------+-------------+------------------------------------------------------------------------------------------+
+| [in]    | pInfo       | File info of the file to be transmitted from the client                                  |
++---------+-------------+------------------------------------------------------------------------------------------+
+| [in]    | ulSessionId | SessionId (can be the channelid) of the transfer                                         |
++---------+-------------+------------------------------------------------------------------------------------------+
+| [in]    | bRestart    | 1: the file transfer will be continued, 0: start of the file transfer from the beginning |
++---------+-------------+------------------------------------------------------------------------------------------+
+| [out]   | pResult     | Pointer to error code                                                                    |
++---------+-------------+------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the file transfer object
+
+.. _group___cmp_file_transfer_itf_1gafc8613776f70c2cd74aabb258b2936c9:
+
+RTS_RESULT FileTransferDownload (RTS_HANDLE hFiletransfer, unsigned char *pbyData, RTS_SIZE ulLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Transfer file data to the target
+
+**Parameters**
+
++---------+---------------+------------------------------------+
+| [in]    | hFiletransfer | Handle to the file transfer object |
++---------+---------------+------------------------------------+
+| [in]    | pbyData       | Data to transfer into the file     |
++---------+---------------+------------------------------------+
+| [in]    | ulLen         | Number of bytes to transfer        |
++---------+---------------+------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_file_transfer_itf_1gad16b2093d83869160c91a7d69c51b754:
+
+RTS_RESULT FileTransferEndDownload (RTS_HANDLE hFiletransfer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Finish file transfer download
+
+**Parameters**
+
++---------+---------------+------------------------------------+
+| [in]    | hFiletransfer | Handle to the file transfer object |
++---------+---------------+------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_file_transfer_itf_1ga2f591dc06306a175c365b8b18e767c87:
+
+RTS_HANDLE FileTransferStartUpload (char *pszFileName, FileInfo *pInfo, RTS_UI32 ulSessionId, int bRestart, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creates a file transfer upload object to transfer a file from target to client
+
+**Parameters**
+
++---------+-------------+------------------------------------------------------------------------------------------+
+| [in]    | pszFileName | File name (can have a file path)                                                         |
++---------+-------------+------------------------------------------------------------------------------------------+
+| [in]    | pInfo       | File info of the file to be transmitted to the client                                    |
++---------+-------------+------------------------------------------------------------------------------------------+
+| [in]    | ulSessionId | SessionId (can be the channelid) of the transfer                                         |
++---------+-------------+------------------------------------------------------------------------------------------+
+| [in]    | bRestart    | 1: the file transfer will be continued, 0: start of the file transfer from the beginning |
++---------+-------------+------------------------------------------------------------------------------------------+
+| [out]   | pResult     | Pointer to error code                                                                    |
++---------+-------------+------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the file transfer object
+
+.. _group___cmp_file_transfer_itf_1gaafd30cdeda57f080741ff6b7a22e0913:
+
+RTS_RESULT FileTransferUpload (RTS_HANDLE hFiletransfer, unsigned char *pbyData, RTS_SIZE *pulMaxLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Transfer file data to the client
+
+**Parameters**
+
++---------+---------------+---------------------------------------------------------------------------+
+| [in]    | hFiletransfer | Handle to the file transfer object                                        |
++---------+---------------+---------------------------------------------------------------------------+
+| [in]    | pbyData       | Data to transfer from the file                                            |
++---------+---------------+---------------------------------------------------------------------------+
+| [inout] | pulMaxLen     | Number of bytes to transfer, returns the real number of transferred bytes |
++---------+---------------+---------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_file_transfer_itf_1gab29e3301bfe625801c1451f44095f5df:
+
+RTS_RESULT FileTransferEndUpload (RTS_HANDLE hFiletransfer, FileInfo *pFileInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Finish file transfer upload
+
+**Parameters**
+
++---------+---------------+------------------------------------------------------------------------------------------------------+
+| [in]    | hFiletransfer | Handle to the file transfer object                                                                   |
++---------+---------------+------------------------------------------------------------------------------------------------------+
+| [out]   | pFileInfo     | Returns the file info of the uploaded file. Can be used to check the consistence on the upload side. |
++---------+---------------+------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_file_transfer_itf_1gad76ee122b3aa1f0af7cfa83261f03c32:
+
+RTS_RESULT FileTransferClose (RTS_HANDLE hFiletransfer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Close a file transfer
+
+**Parameters**
+
++---------+---------------+------------------------------------+
+| [in]    | hFiletransfer | Handle to the file transfer object |
++---------+---------------+------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_file_transfer_itf_1gaaec88ac066c46f76af94133132700d3d:
+
+RTS_RESULT FileTransferCancel (RTS_HANDLE hFiletransfer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cancel and abort a file transfer
+
+**Parameters**
+
++---------+---------------+------------------------------------+
+| [in]    | hFiletransfer | Handle to the file transfer object |
++---------+---------------+------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_file_transfer_itf_1gabe46ab9ea202570ffc490665f3304b6b:
+
+RTS_RESULT FileTransferCancelAll (RTS_UI32 ulSessionId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cancel and abort all file transfers on the specified sessionid (channelid)
+
+**Parameters**
+
++---------+---------------+------------------------------------+
+| [in]    | hFiletransfer | Handle to the file transfer object |
++---------+---------------+------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_file_transfer_itf_1ga3827395bddf269d24db01c27aacc6e4c:
+
+RTS_RESULT FileTransferGetInfo (char *pszFileName, FileInfo *pInfo, FileInfo *pInfoClient)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get file infos from target and client
+
+**Parameters**
+
++---------+-------------+-------------------------------------+
+| [in]    | pszFileName | File name (can have a file path)    |
++---------+-------------+-------------------------------------+
+| [out]   | pInfo       | File info of the file in the target |
++---------+-------------+-------------------------------------+
+| [in]    | pInfoClient | File info of the file at the client |
++---------+-------------+-------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_file_transfer_itf_1gab35a43fdc2969d65a16755aa9d5acd22:
+
+RTS_SIZE FileTransferToTransmit (RTS_HANDLE hFiletransfer, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get number of bytes to transmit
+
+**Parameters**
+
++---------+---------------+------------------------------------+
+| [in]    | hFiletransfer | Handle to the file transfer object |
++---------+---------------+------------------------------------+
+| [out]   | pResult       | Pointer to error code              |
++---------+---------------+------------------------------------+
+
+**Returns:**
+
+Number of bytes to transmit
+
+.. _group___cmp_file_transfer_itf_1ga7eabb283118b8fea8b26f4d6a8e90a05:
+
+RTS_RESULT FileTransferSafeSignature (char *pszFileName, RTS_UI32 ulCRC32)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Safe signature of a specified file to check consistency
+
+**Parameters**
+
++---------+-------------+----------------------------------+
+| [in]    | pszFileName | File name (can have a file path) |
++---------+-------------+----------------------------------+
+| [in]    | ulCRC32     | CRC32 of the file                |
++---------+-------------+----------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_file_transfer_itf_1gad81ea0a57efbfa1bbfb6da3dfbda9c24:
+
+RTS_RESULT FileTransferGetSafedSignature (char *pszFileName, RTS_UI32 *pulCRC32)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get saved signature of a specified file to check consistency
+
+**Parameters**
+
++---------+-------------+----------------------------------+
+| [in]    | pszFileName | File name (can have a file path) |
++---------+-------------+----------------------------------+
+| [out]   | pulCRC32    | Pointer to get CRC32 of the file |
++---------+-------------+----------------------------------+
+
+**Returns:**
+
+error code
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

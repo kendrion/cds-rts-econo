@@ -1,0 +1,2248 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_dir_itf:
+
+=========
+SysDirItf
+=========
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of SysDir.
+
+Detailed Description
+--------------------
+
+The SysDir interface is projected to handle all system dependent directory operations. If there is no file system on the target, the interface functions ERR_NOTIMPLEMENTED.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Directory file time <group___sys_dir_itf___directoryfiletime>`
+
+- :ref:`Directory info entry <group___sys_dir_itf___directoryinfoentry>`
+
+- :ref:`Directory info flags <group___sys_dir_itf___directoryinfoflags>`
+
+- :ref:`Settings <group___sys_dir_itf___settings>`
+
+Data Structures
+---------------
+
+- struct :ref:`tagsysdirclose_struct <structtagsysdirclose__struct>`
+
+- struct :ref:`tagsysdircopy_struct <structtagsysdircopy__struct>`
+
+- struct :ref:`tagsysdircreate_struct <structtagsysdircreate__struct>`
+
+- struct :ref:`tagsysdircreate2_struct <structtagsysdircreate2__struct>`
+
+- struct :ref:`tagsysdirdelete_struct <structtagsysdirdelete__struct>`
+
+- struct :ref:`tagsysdirdelete2_struct <structtagsysdirdelete2__struct>`
+
+- struct :ref:`tagsysdirgetcurrent_struct <structtagsysdirgetcurrent__struct>`
+
+- struct :ref:`tagsysdiropen_struct <structtagsysdiropen__struct>`
+
+- struct :ref:`tagsysdirread_struct <structtagsysdirread__struct>`
+
+- struct :ref:`tagsysdirrename_struct <structtagsysdirrename__struct>`
+
+- struct :ref:`tagsysdirsetcurrent_struct <structtagsysdirsetcurrent__struct>`
+
+- struct :ref:`ISysDir_C <struct_i_sys_dir___c>`
+
+Macros
+------
+
+- #define :ref:`USE_sysdirclose <group___sys_dir_itf_1gaadd6d0c1ecf4a382c0af500077a8c7ab>` :ref:`PFSYSDIRCLOSE_IEC <group___sys_dir_itf_1ga43f1c6f63734476c133b0f645409ab2b>` pfsysdirclose;
+
+- #define :ref:`EXT_sysdirclose <group___sys_dir_itf_1gac6fa7e7b37006d6249475107c9c62698>` extern :ref:`PFSYSDIRCLOSE_IEC <group___sys_dir_itf_1ga43f1c6f63734476c133b0f645409ab2b>` pfsysdirclose;
+
+- #define :ref:`GET_sysdirclose <group___sys_dir_itf_1ga1a11ad8f749def5b4258a51decca3bb3>` s_pfCMGetAPI2( "sysdirclose", (RTS_VOID_FCTPTR *)&pfsysdirclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050F00)
+
+- #define :ref:`CAL_sysdirclose <group___sys_dir_itf_1ga70e19dace1ea0e987d33b5d7512f09ab>` pfsysdirclose
+
+- #define :ref:`CHK_sysdirclose <group___sys_dir_itf_1gaf4ca83a5b08f7583bf1b6076cfea5eb7>` (pfsysdirclose != NULL)
+
+- #define :ref:`EXP_sysdirclose <group___sys_dir_itf_1ga77f7636288efa0b19d4cba2f30ac2017>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirclose", (RTS_UINTPTR) :ref:`sysdirclose <group___sys_dir_itf_1gaae092283142eb314da9b6c8f78607419>` , 1, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050F00)
+
+- #define :ref:`USE_sysdircopy <group___sys_dir_itf_1gae65116507d4f4c405306c91a88762d0c>` :ref:`PFSYSDIRCOPY_IEC <group___sys_dir_itf_1gafdb1252b9fdaeb1d3d8b15f18afc3222>` pfsysdircopy;
+
+- #define :ref:`EXT_sysdircopy <group___sys_dir_itf_1gad03cbdfacaa785ee4ec1793cfef15450>` extern :ref:`PFSYSDIRCOPY_IEC <group___sys_dir_itf_1gafdb1252b9fdaeb1d3d8b15f18afc3222>` pfsysdircopy;
+
+- #define :ref:`GET_sysdircopy <group___sys_dir_itf_1gad405b2f770ba431ff468ed79f0b43f34>` s_pfCMGetAPI2( "sysdircopy", (RTS_VOID_FCTPTR *)&pfsysdircopy, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xDCC4B146, 0x03050F00)
+
+- #define :ref:`CAL_sysdircopy <group___sys_dir_itf_1ga45c62619cb4345efa7339846292ced6e>` pfsysdircopy
+
+- #define :ref:`CHK_sysdircopy <group___sys_dir_itf_1ga5675cb7a2f89d4373af543dec5a78625>` (pfsysdircopy != NULL)
+
+- #define :ref:`EXP_sysdircopy <group___sys_dir_itf_1gacb45747f2c0a2741fe4bedec49439f5c>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircopy", (RTS_UINTPTR) :ref:`sysdircopy <group___sys_dir_itf_1gaef492051e21dd693289c1d50b9e56dfe>` , 1, 0xDCC4B146, 0x03050F00)
+
+- #define :ref:`USE_sysdircreate <group___sys_dir_itf_1ga2b743be21746cee9c04c5a506d8cab40>` :ref:`PFSYSDIRCREATE_IEC <group___sys_dir_itf_1ga05fab8c3f51657f02406cdd5a3a50469>` pfsysdircreate;
+
+- #define :ref:`EXT_sysdircreate <group___sys_dir_itf_1ga308fb2074b0c444f7a5b201de8cb6635>` extern :ref:`PFSYSDIRCREATE_IEC <group___sys_dir_itf_1ga05fab8c3f51657f02406cdd5a3a50469>` pfsysdircreate;
+
+- #define :ref:`GET_sysdircreate <group___sys_dir_itf_1gaea316a0124af4cccc47ef5468bf063c3>` s_pfCMGetAPI2( "sysdircreate", (RTS_VOID_FCTPTR *)&pfsysdircreate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050F00)
+
+- #define :ref:`CAL_sysdircreate <group___sys_dir_itf_1ga783f8ae010d8acca665b0aee44f65cbc>` pfsysdircreate
+
+- #define :ref:`CHK_sysdircreate <group___sys_dir_itf_1ga9dbcc455d136cd1e5dce756553792c58>` (pfsysdircreate != NULL)
+
+- #define :ref:`EXP_sysdircreate <group___sys_dir_itf_1ga1e0d8ba6fdf0c416aa530835c0a58629>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate", (RTS_UINTPTR) :ref:`sysdircreate <group___sys_dir_itf_1ga2acb5522ee2bdb6550f89a46e1883785>` , 1, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050F00)
+
+- #define :ref:`USE_sysdircreate2 <group___sys_dir_itf_1ga19a012f12719cd411c6aa3c5bf214d68>` :ref:`PFSYSDIRCREATE2_IEC <group___sys_dir_itf_1ga4c9fee109c18f20afdb80831b59a0690>` pfsysdircreate2;
+
+- #define :ref:`EXT_sysdircreate2 <group___sys_dir_itf_1ga83c3fe99619fffce877d1dd5d78c55f5>` extern :ref:`PFSYSDIRCREATE2_IEC <group___sys_dir_itf_1ga4c9fee109c18f20afdb80831b59a0690>` pfsysdircreate2;
+
+- #define :ref:`GET_sysdircreate2 <group___sys_dir_itf_1ga631032e60c28e2427e143511633628fc>` s_pfCMGetAPI2( "sysdircreate2", (RTS_VOID_FCTPTR *)&pfsysdircreate2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x03802B43, 0x03050F00)
+
+- #define :ref:`CAL_sysdircreate2 <group___sys_dir_itf_1gae1062b954b72be5a5b96fde035c7baa9>` pfsysdircreate2
+
+- #define :ref:`CHK_sysdircreate2 <group___sys_dir_itf_1ga99dd51c92e02628f6bc83071af918424>` (pfsysdircreate2 != NULL)
+
+- #define :ref:`EXP_sysdircreate2 <group___sys_dir_itf_1ga09d84f52b03be1753a3444c7fdd99876>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate2", (RTS_UINTPTR) :ref:`sysdircreate2 <group___sys_dir_itf_1gad7ca635af6d92d433cce6efa9603502e>` , 1, 0x03802B43, 0x03050F00)
+
+- #define :ref:`USE_sysdirdelete <group___sys_dir_itf_1ga66d28198bc61e2e366d80cd20f012d76>` :ref:`PFSYSDIRDELETE_IEC <group___sys_dir_itf_1gaf38c1fdc805812a0a7faab91be0377fc>` pfsysdirdelete;
+
+- #define :ref:`EXT_sysdirdelete <group___sys_dir_itf_1gac8f39a32349935ec433f4bc8b95130ff>` extern :ref:`PFSYSDIRDELETE_IEC <group___sys_dir_itf_1gaf38c1fdc805812a0a7faab91be0377fc>` pfsysdirdelete;
+
+- #define :ref:`GET_sysdirdelete <group___sys_dir_itf_1ga76cb4a5033a16e4dcb629c79b112f56c>` s_pfCMGetAPI2( "sysdirdelete", (RTS_VOID_FCTPTR *)&pfsysdirdelete, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050F00)
+
+- #define :ref:`CAL_sysdirdelete <group___sys_dir_itf_1ga4498f0bd807a1bcdaee08d3a39ca1976>` pfsysdirdelete
+
+- #define :ref:`CHK_sysdirdelete <group___sys_dir_itf_1ga3e48f1645551adefc521ff9eeb8647c3>` (pfsysdirdelete != NULL)
+
+- #define :ref:`EXP_sysdirdelete <group___sys_dir_itf_1ga97377cc6e23724a17a3b4fcd69c06657>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete", (RTS_UINTPTR) :ref:`sysdirdelete <group___sys_dir_itf_1ga14f00b62067b67038088a9f7746f3445>` , 1, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050F00)
+
+- #define :ref:`USE_sysdirdelete2 <group___sys_dir_itf_1gac142ac33e63c503630833067e7bd7ec8>` :ref:`PFSYSDIRDELETE2_IEC <group___sys_dir_itf_1ga6120a291638ac952ae7e2e6f0b09e650>` pfsysdirdelete2;
+
+- #define :ref:`EXT_sysdirdelete2 <group___sys_dir_itf_1ga3a1ab09d1c29beae69ec750c0afbef20>` extern :ref:`PFSYSDIRDELETE2_IEC <group___sys_dir_itf_1ga6120a291638ac952ae7e2e6f0b09e650>` pfsysdirdelete2;
+
+- #define :ref:`GET_sysdirdelete2 <group___sys_dir_itf_1ga00089c1fc0f4f4a3c69bf4abdc37e317>` s_pfCMGetAPI2( "sysdirdelete2", (RTS_VOID_FCTPTR *)&pfsysdirdelete2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xB8EF3C3D, 0x03050F00)
+
+- #define :ref:`CAL_sysdirdelete2 <group___sys_dir_itf_1ga60c7de2725a8f0985baebfcd5a897ba0>` pfsysdirdelete2
+
+- #define :ref:`CHK_sysdirdelete2 <group___sys_dir_itf_1gaa859bc1df4d68b0aca07fd0aa9aa58d1>` (pfsysdirdelete2 != NULL)
+
+- #define :ref:`EXP_sysdirdelete2 <group___sys_dir_itf_1ga8971a429a0c11b4f4a326769b7e472c5>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete2", (RTS_UINTPTR) :ref:`sysdirdelete2 <group___sys_dir_itf_1gab262293a919c7759937e3d02f7725e9d>` , 1, 0xB8EF3C3D, 0x03050F00)
+
+- #define :ref:`USE_sysdirgetcurrent <group___sys_dir_itf_1gad1da0805c6716f03b695eb8dd14750e8>` :ref:`PFSYSDIRGETCURRENT_IEC <group___sys_dir_itf_1ga463fbee74aceb5062df9b62364a22886>` pfsysdirgetcurrent;
+
+- #define :ref:`EXT_sysdirgetcurrent <group___sys_dir_itf_1ga0f8226d9b04b19bb4ccad2d079d0d58d>` extern :ref:`PFSYSDIRGETCURRENT_IEC <group___sys_dir_itf_1ga463fbee74aceb5062df9b62364a22886>` pfsysdirgetcurrent;
+
+- #define :ref:`GET_sysdirgetcurrent <group___sys_dir_itf_1ga9afdc51737565228543bfdac468b7ecc>` s_pfCMGetAPI2( "sysdirgetcurrent", (RTS_VOID_FCTPTR *)&pfsysdirgetcurrent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050F00)
+
+- #define :ref:`CAL_sysdirgetcurrent <group___sys_dir_itf_1gae3f8752776851323a26fb30351793583>` pfsysdirgetcurrent
+
+- #define :ref:`CHK_sysdirgetcurrent <group___sys_dir_itf_1ga041e96db65946f64776036a5e97b8a23>` (pfsysdirgetcurrent != NULL)
+
+- #define :ref:`EXP_sysdirgetcurrent <group___sys_dir_itf_1ga9ca5e88d63b1c94c79537f3d366f8e34>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirgetcurrent", (RTS_UINTPTR) :ref:`sysdirgetcurrent <group___sys_dir_itf_1gad3c182bb5cf51ff1de2d43161abfeaf5>` , 1, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050F00)
+
+- #define :ref:`USE_sysdiropen <group___sys_dir_itf_1gadeb5d0e50089844aa77c1550146e632e>` :ref:`PFSYSDIROPEN_IEC <group___sys_dir_itf_1ga3025a411b859614260c2ac134e6fe185>` pfsysdiropen;
+
+- #define :ref:`EXT_sysdiropen <group___sys_dir_itf_1gaf74052a0e9176fdac8d13be11f04b9a0>` extern :ref:`PFSYSDIROPEN_IEC <group___sys_dir_itf_1ga3025a411b859614260c2ac134e6fe185>` pfsysdiropen;
+
+- #define :ref:`GET_sysdiropen <group___sys_dir_itf_1ga0668acebbd2f1b1a4d814aa39880af9a>` s_pfCMGetAPI2( "sysdiropen", (RTS_VOID_FCTPTR *)&pfsysdiropen, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050F00)
+
+- #define :ref:`CAL_sysdiropen <group___sys_dir_itf_1ga266e6de49b69e2c8b2800bfe73b57596>` pfsysdiropen
+
+- #define :ref:`CHK_sysdiropen <group___sys_dir_itf_1gadc8cb17c60cd41689a1992f33d91430c>` (pfsysdiropen != NULL)
+
+- #define :ref:`EXP_sysdiropen <group___sys_dir_itf_1ga4aab53cfffe25205513f6f3628dc1944>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdiropen", (RTS_UINTPTR) :ref:`sysdiropen <group___sys_dir_itf_1gacdaf4ed63ab1742ef2711befcfbac121>` , 1, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050F00)
+
+- #define :ref:`USE_sysdirread <group___sys_dir_itf_1ga9b8e6bcfc275b144c386fc45c427793b>` :ref:`PFSYSDIRREAD_IEC <group___sys_dir_itf_1ga628a726c76ade5c8157c66d1bee1eadc>` pfsysdirread;
+
+- #define :ref:`EXT_sysdirread <group___sys_dir_itf_1gab6ce7b4169f1aee2b3138166595a3b05>` extern :ref:`PFSYSDIRREAD_IEC <group___sys_dir_itf_1ga628a726c76ade5c8157c66d1bee1eadc>` pfsysdirread;
+
+- #define :ref:`GET_sysdirread <group___sys_dir_itf_1gae43ebb6c6b1bce6f7379c482e1bed24f>` s_pfCMGetAPI2( "sysdirread", (RTS_VOID_FCTPTR *)&pfsysdirread, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050F00)
+
+- #define :ref:`CAL_sysdirread <group___sys_dir_itf_1ga7f7fa4b127859f27d4d657bcbfb1f89e>` pfsysdirread
+
+- #define :ref:`CHK_sysdirread <group___sys_dir_itf_1gaeee300cb921eb48e890988b8d93f0d35>` (pfsysdirread != NULL)
+
+- #define :ref:`EXP_sysdirread <group___sys_dir_itf_1ga0082474675aaf914dc605851bbed6273>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirread", (RTS_UINTPTR) :ref:`sysdirread <group___sys_dir_itf_1ga3a5c1836f58d0eaf3977912688ec7426>` , 1, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050F00)
+
+- #define :ref:`USE_sysdirrename <group___sys_dir_itf_1ga0ad9bf190d5a4861d4ebb04430bd39a0>` :ref:`PFSYSDIRRENAME_IEC <group___sys_dir_itf_1gadc3e22de80237177866274197d854c18>` pfsysdirrename;
+
+- #define :ref:`EXT_sysdirrename <group___sys_dir_itf_1ga32f21ad4fb60ed400e0e0c7335b5ce71>` extern :ref:`PFSYSDIRRENAME_IEC <group___sys_dir_itf_1gadc3e22de80237177866274197d854c18>` pfsysdirrename;
+
+- #define :ref:`GET_sysdirrename <group___sys_dir_itf_1gacfa95fa9976dfa328b614cf9a25c52c0>` s_pfCMGetAPI2( "sysdirrename", (RTS_VOID_FCTPTR *)&pfsysdirrename, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050F00)
+
+- #define :ref:`CAL_sysdirrename <group___sys_dir_itf_1ga1a617faa464557622bcaf9df79a90854>` pfsysdirrename
+
+- #define :ref:`CHK_sysdirrename <group___sys_dir_itf_1ga70f78cd49229b60949e687457a944eb6>` (pfsysdirrename != NULL)
+
+- #define :ref:`EXP_sysdirrename <group___sys_dir_itf_1gaffb0dc4686e23e3bc9e0be0b1468f10c>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirrename", (RTS_UINTPTR) :ref:`sysdirrename <group___sys_dir_itf_1ga01443d0a0bd15a354a421b01dc649d47>` , 1, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050F00)
+
+- #define :ref:`USE_sysdirsetcurrent <group___sys_dir_itf_1ga559540e197871e2fa53ab77c788a12ea>` :ref:`PFSYSDIRSETCURRENT_IEC <group___sys_dir_itf_1ga9079a1c5852999faac95d2f31807ba5e>` pfsysdirsetcurrent;
+
+- #define :ref:`EXT_sysdirsetcurrent <group___sys_dir_itf_1gaa624b484d4c6866f2eefbc37c1266a9a>` extern :ref:`PFSYSDIRSETCURRENT_IEC <group___sys_dir_itf_1ga9079a1c5852999faac95d2f31807ba5e>` pfsysdirsetcurrent;
+
+- #define :ref:`GET_sysdirsetcurrent <group___sys_dir_itf_1gaae89ea689435f022e3a111b9cbab9cb6>` s_pfCMGetAPI2( "sysdirsetcurrent", (RTS_VOID_FCTPTR *)&pfsysdirsetcurrent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050F00)
+
+- #define :ref:`CAL_sysdirsetcurrent <group___sys_dir_itf_1ga9880431e6eabc43a46731b2fd9404722>` pfsysdirsetcurrent
+
+- #define :ref:`CHK_sysdirsetcurrent <group___sys_dir_itf_1ga0ac19464886d9c46f61e6cc4244b5ed7>` (pfsysdirsetcurrent != NULL)
+
+- #define :ref:`EXP_sysdirsetcurrent <group___sys_dir_itf_1ga1796a3456dab9e298699097f131edfc7>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirsetcurrent", (RTS_UINTPTR) :ref:`sysdirsetcurrent <group___sys_dir_itf_1ga42bd9510889e435f2dcfbe2c1d94aa31>` , 1, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050F00)
+
+- #define :ref:`USE_SysDirOpen <group___sys_dir_itf_1ga8b5ad52fd7e61d17e275c97e029eebdc>` :ref:`PFSYSDIROPEN <group___sys_dir_itf_1gab245023b8c9429c638d04ae89b926850>` pfSysDirOpen;
+
+- #define :ref:`EXT_SysDirOpen <group___sys_dir_itf_1ga22983eecad8807287ee4b2c838f7dcce>` extern :ref:`PFSYSDIROPEN <group___sys_dir_itf_1gab245023b8c9429c638d04ae89b926850>` pfSysDirOpen;
+
+- #define :ref:`GET_SysDirOpen <group___sys_dir_itf_1gaeaa9e027633239c95c7ef330275b55b5>` s_pfCMGetAPI2( "SysDirOpen", (RTS_VOID_FCTPTR *)&pfSysDirOpen, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirOpen <group___sys_dir_itf_1gad4fd3a40423d7416196c02075ca2c09f>` pfSysDirOpen
+
+- #define :ref:`CHK_SysDirOpen <group___sys_dir_itf_1ga2b01fd13118240425aa9ed9c8cbfad8c>` (pfSysDirOpen != NULL)
+
+- #define :ref:`EXP_SysDirOpen <group___sys_dir_itf_1ga5a0fa4b2c9586dda3500a615ecd9866c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirOpen", (RTS_UINTPTR) :ref:`SysDirOpen <group___sys_dir_itf_1ga3ab07b5c1fd2888b4aed1a66b169fa73>` , 0, 0)
+
+- #define :ref:`USE_SysDirOpen_ <group___sys_dir_itf_1gaf102d5cb0ed07f290e0f15e043e63943>` :ref:`PFSYSDIROPEN_ <group___sys_dir_itf_1ga5b2ef28214af85ae6511cca5b69b67ac>` pfSysDirOpen_;
+
+- #define :ref:`EXT_SysDirOpen_ <group___sys_dir_itf_1ga07c85850a3cde3ec573deb3a3a7be7fc>` extern :ref:`PFSYSDIROPEN_ <group___sys_dir_itf_1ga5b2ef28214af85ae6511cca5b69b67ac>` pfSysDirOpen_;
+
+- #define :ref:`GET_SysDirOpen_ <group___sys_dir_itf_1gab03c2926444db4901c7b419759618375>` s_pfCMGetAPI2( "SysDirOpen_", (RTS_VOID_FCTPTR *)&pfSysDirOpen_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirOpen_ <group___sys_dir_itf_1ga15356cf5ff0079ce1b2329d789927471>` pfSysDirOpen_
+
+- #define :ref:`CHK_SysDirOpen_ <group___sys_dir_itf_1ga5a6eba4be737af0cb159ce5e96c022c7>` (pfSysDirOpen_ != NULL)
+
+- #define :ref:`EXP_SysDirOpen_ <group___sys_dir_itf_1gac26eedaa59006ec70f3ee79b5a473072>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirOpen_", (RTS_UINTPTR) :ref:`SysDirOpen_ <group___sys_dir_itf_1ga52f8e5fc8d27d8c7f7f890cd0bc7c840>` , 0, 0)
+
+- #define :ref:`USE_SysDirClose <group___sys_dir_itf_1ga04b1175c798ed4b222828253ba1c1285>` :ref:`PFSYSDIRCLOSE <group___sys_dir_itf_1ga441cf0b9cfe785ceb624c07c6e06dc24>` pfSysDirClose;
+
+- #define :ref:`EXT_SysDirClose <group___sys_dir_itf_1ga1385dc09461a2654504d1d144e734b37>` extern :ref:`PFSYSDIRCLOSE <group___sys_dir_itf_1ga441cf0b9cfe785ceb624c07c6e06dc24>` pfSysDirClose;
+
+- #define :ref:`GET_SysDirClose <group___sys_dir_itf_1ga71ba8fcc991b2355da517c386140039f>` s_pfCMGetAPI2( "SysDirClose", (RTS_VOID_FCTPTR *)&pfSysDirClose, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirClose <group___sys_dir_itf_1gaf1b8120b2991a789a44e7b075db25686>` pfSysDirClose
+
+- #define :ref:`CHK_SysDirClose <group___sys_dir_itf_1ga164658746d2cb55576beeb783a2afda4>` (pfSysDirClose != NULL)
+
+- #define :ref:`EXP_SysDirClose <group___sys_dir_itf_1ga741d441a7bc1a4a342d76437e4473628>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirClose", (RTS_UINTPTR) :ref:`SysDirClose <group___sys_dir_itf_1ga9ffd65d2557513315a3f9879ae8a029d>` , 0, 0)
+
+- #define :ref:`USE_SysDirClose_ <group___sys_dir_itf_1ga3cf9e5469f656dee23d20b4c1467ac33>` :ref:`PFSYSDIRCLOSE_ <group___sys_dir_itf_1ga2bd73581c5b87bddcece2d20d7ecc6d4>` pfSysDirClose_;
+
+- #define :ref:`EXT_SysDirClose_ <group___sys_dir_itf_1gac6336687c465b5e1f41747a57b970d4f>` extern :ref:`PFSYSDIRCLOSE_ <group___sys_dir_itf_1ga2bd73581c5b87bddcece2d20d7ecc6d4>` pfSysDirClose_;
+
+- #define :ref:`GET_SysDirClose_ <group___sys_dir_itf_1gaef598f04922297a47d59fb0ce9bc2c28>` s_pfCMGetAPI2( "SysDirClose_", (RTS_VOID_FCTPTR *)&pfSysDirClose_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirClose_ <group___sys_dir_itf_1ga173487ba6ec42a62c9e414797bb0030b>` pfSysDirClose_
+
+- #define :ref:`CHK_SysDirClose_ <group___sys_dir_itf_1ga39edfb523d3411de68852e77466f35ca>` (pfSysDirClose_ != NULL)
+
+- #define :ref:`EXP_SysDirClose_ <group___sys_dir_itf_1ga03d8b0d9210b3308e3d1b337ed18ab41>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirClose_", (RTS_UINTPTR) :ref:`SysDirClose_ <group___sys_dir_itf_1ga1710760b5ae70ab40988298e5387de78>` , 0, 0)
+
+- #define :ref:`USE_SysDirRead <group___sys_dir_itf_1ga46ed2f3ae9f952b75a77d051fd660904>` :ref:`PFSYSDIRREAD <group___sys_dir_itf_1ga8aee496b7a7236ff5645d4b95df9293a>` pfSysDirRead;
+
+- #define :ref:`EXT_SysDirRead <group___sys_dir_itf_1gad0de19156d3f4e7a51aa3ba3b62295dd>` extern :ref:`PFSYSDIRREAD <group___sys_dir_itf_1ga8aee496b7a7236ff5645d4b95df9293a>` pfSysDirRead;
+
+- #define :ref:`GET_SysDirRead <group___sys_dir_itf_1ga053d687da97a7612550d72caec55e61c>` s_pfCMGetAPI2( "SysDirRead", (RTS_VOID_FCTPTR *)&pfSysDirRead, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirRead <group___sys_dir_itf_1ga26cbcaf572b24ffc3a35832da02c6d64>` pfSysDirRead
+
+- #define :ref:`CHK_SysDirRead <group___sys_dir_itf_1gaa94dc15265ff831750f94445c63fa422>` (pfSysDirRead != NULL)
+
+- #define :ref:`EXP_SysDirRead <group___sys_dir_itf_1gaa9078ab3c03b06c49076ab7aa880543c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirRead", (RTS_UINTPTR) :ref:`SysDirRead <group___sys_dir_itf_1gab22153a1fa4e3218a46c00becd80bccb>` , 0, 0)
+
+- #define :ref:`USE_SysDirRead_ <group___sys_dir_itf_1ga7dde02b2c5f7569b091bac4c3f44117b>` :ref:`PFSYSDIRREAD_ <group___sys_dir_itf_1ga1d9fad9cc0594cbe231ae266a6e3bccd>` pfSysDirRead_;
+
+- #define :ref:`EXT_SysDirRead_ <group___sys_dir_itf_1gaf9200cee6eccc3034d85daa2a0932453>` extern :ref:`PFSYSDIRREAD_ <group___sys_dir_itf_1ga1d9fad9cc0594cbe231ae266a6e3bccd>` pfSysDirRead_;
+
+- #define :ref:`GET_SysDirRead_ <group___sys_dir_itf_1ga503623860933e400a13585299ac1d18c>` s_pfCMGetAPI2( "SysDirRead_", (RTS_VOID_FCTPTR *)&pfSysDirRead_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirRead_ <group___sys_dir_itf_1ga0836838d7b2d7b743e71a63994373e6c>` pfSysDirRead_
+
+- #define :ref:`CHK_SysDirRead_ <group___sys_dir_itf_1ga33a79e7fd03dfb0383aa591cc5974619>` (pfSysDirRead_ != NULL)
+
+- #define :ref:`EXP_SysDirRead_ <group___sys_dir_itf_1ga1c7527d9a194c9ad46403a6741544024>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirRead_", (RTS_UINTPTR) :ref:`SysDirRead_ <group___sys_dir_itf_1ga957873529ed52516626c9551c3fc1b95>` , 0, 0)
+
+- #define :ref:`USE_SysDirCreate <group___sys_dir_itf_1ga2c496d25643f76849cf22629cbd20dd0>` :ref:`PFSYSDIRCREATE <group___sys_dir_itf_1gacb243299400a8346a07d8d1dcdbe5ae1>` pfSysDirCreate;
+
+- #define :ref:`EXT_SysDirCreate <group___sys_dir_itf_1ga9b18acb4e795cf490b6006966303dfa7>` extern :ref:`PFSYSDIRCREATE <group___sys_dir_itf_1gacb243299400a8346a07d8d1dcdbe5ae1>` pfSysDirCreate;
+
+- #define :ref:`GET_SysDirCreate <group___sys_dir_itf_1gaa4400517cf353b9278dc42d976bbe252>` s_pfCMGetAPI2( "SysDirCreate", (RTS_VOID_FCTPTR *)&pfSysDirCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirCreate <group___sys_dir_itf_1ga56ed4a7ac524df7815a5d4039ed8db26>` pfSysDirCreate
+
+- #define :ref:`CHK_SysDirCreate <group___sys_dir_itf_1gafb7f3bcda519f26d3896722d20bf5e83>` (pfSysDirCreate != NULL)
+
+- #define :ref:`EXP_SysDirCreate <group___sys_dir_itf_1gaa6d3020f33caed340d461a51837a291e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirCreate", (RTS_UINTPTR) :ref:`SysDirCreate <group___sys_dir_itf_1ga382b85aba7a92647808e18532b38287c>` , 0, 0)
+
+- #define :ref:`USE_SysDirCreate2 <group___sys_dir_itf_1ga1ada3e6853f59b6f6403ec7d9a345013>` :ref:`PFSYSDIRCREATE2 <group___sys_dir_itf_1ga3d3f9e75d906c5322c64910bb3286e91>` pfSysDirCreate2;
+
+- #define :ref:`EXT_SysDirCreate2 <group___sys_dir_itf_1ga41500eb2bbcf0ca7677669b1edd2c31b>` extern :ref:`PFSYSDIRCREATE2 <group___sys_dir_itf_1ga3d3f9e75d906c5322c64910bb3286e91>` pfSysDirCreate2;
+
+- #define :ref:`GET_SysDirCreate2 <group___sys_dir_itf_1gab7f51616aa497206edd213a7a29c4fd5>` s_pfCMGetAPI2( "SysDirCreate2", (RTS_VOID_FCTPTR *)&pfSysDirCreate2, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirCreate2 <group___sys_dir_itf_1ga8d1a3e2d1d9732f7e3972ff27e0e243d>` pfSysDirCreate2
+
+- #define :ref:`CHK_SysDirCreate2 <group___sys_dir_itf_1ga79b5bbea00e9ec0b894e15d13fa9930a>` (pfSysDirCreate2 != NULL)
+
+- #define :ref:`EXP_SysDirCreate2 <group___sys_dir_itf_1ga98f3eff8ca1039f560db43de8d459996>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirCreate2", (RTS_UINTPTR) :ref:`SysDirCreate2 <group___sys_dir_itf_1gaa6cfe429e3b16f4d6fa6c904317595dc>` , 0, 0)
+
+- #define :ref:`USE_SysDirCreate_ <group___sys_dir_itf_1ga06f46c76cf3151a5747bdce667ab8dea>` :ref:`PFSYSDIRCREATE_ <group___sys_dir_itf_1ga39b65a508db480daf6dc50d9089fb198>` pfSysDirCreate_;
+
+- #define :ref:`EXT_SysDirCreate_ <group___sys_dir_itf_1ga744eed2b97fa215010fb9026740af563>` extern :ref:`PFSYSDIRCREATE_ <group___sys_dir_itf_1ga39b65a508db480daf6dc50d9089fb198>` pfSysDirCreate_;
+
+- #define :ref:`GET_SysDirCreate_ <group___sys_dir_itf_1ga73e87363a4142c1c14db34facaf18e20>` s_pfCMGetAPI2( "SysDirCreate_", (RTS_VOID_FCTPTR *)&pfSysDirCreate_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirCreate_ <group___sys_dir_itf_1ga38f56735bb2b1ef7e5412695b34a790c>` pfSysDirCreate_
+
+- #define :ref:`CHK_SysDirCreate_ <group___sys_dir_itf_1gae493af1d76282927c6e5f851625eb032>` (pfSysDirCreate_ != NULL)
+
+- #define :ref:`EXP_SysDirCreate_ <group___sys_dir_itf_1ga8997801b347950b9e1b18169bf9afde9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirCreate_", (RTS_UINTPTR) :ref:`SysDirCreate_ <group___sys_dir_itf_1ga94530ed643a1ccd04f1a7a560f420c94>` , 0, 0)
+
+- #define :ref:`USE_SysDirDelete <group___sys_dir_itf_1ga9132af8006c3f52039661166d6a584da>` :ref:`PFSYSDIRDELETE <group___sys_dir_itf_1ga89c176675c115a75f8e172f17ab4bb0c>` pfSysDirDelete;
+
+- #define :ref:`EXT_SysDirDelete <group___sys_dir_itf_1gac28798ff890da583ba263d7be2c23402>` extern :ref:`PFSYSDIRDELETE <group___sys_dir_itf_1ga89c176675c115a75f8e172f17ab4bb0c>` pfSysDirDelete;
+
+- #define :ref:`GET_SysDirDelete <group___sys_dir_itf_1ga7c97ef66c81e9ab22f9d539dbe544683>` s_pfCMGetAPI2( "SysDirDelete", (RTS_VOID_FCTPTR *)&pfSysDirDelete, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirDelete <group___sys_dir_itf_1gaf6a365f352556f84119862ce1043f5e2>` pfSysDirDelete
+
+- #define :ref:`CHK_SysDirDelete <group___sys_dir_itf_1gafc3e247d6aa0392d9d7dc2f5226f2c78>` (pfSysDirDelete != NULL)
+
+- #define :ref:`EXP_SysDirDelete <group___sys_dir_itf_1gadf2baba2093d82a9e71ebe575bd96239>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirDelete", (RTS_UINTPTR) :ref:`SysDirDelete <group___sys_dir_itf_1gab57b1051e92ae0659543a876461fde22>` , 0, 0)
+
+- #define :ref:`USE_SysDirDelete2 <group___sys_dir_itf_1ga3ddd6f955dc86a08fcd09d10a6dad5dc>` :ref:`PFSYSDIRDELETE2 <group___sys_dir_itf_1gaf6272b70abb0186efcdda716eb63d67b>` pfSysDirDelete2;
+
+- #define :ref:`EXT_SysDirDelete2 <group___sys_dir_itf_1gaad85b7dbd304ec7aea191a81a2ac7ae0>` extern :ref:`PFSYSDIRDELETE2 <group___sys_dir_itf_1gaf6272b70abb0186efcdda716eb63d67b>` pfSysDirDelete2;
+
+- #define :ref:`GET_SysDirDelete2 <group___sys_dir_itf_1gae93635c8d89028fee257bd9f2869bc24>` s_pfCMGetAPI2( "SysDirDelete2", (RTS_VOID_FCTPTR *)&pfSysDirDelete2, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirDelete2 <group___sys_dir_itf_1ga9222202852d080c88fe0619d78329549>` pfSysDirDelete2
+
+- #define :ref:`CHK_SysDirDelete2 <group___sys_dir_itf_1ga267923bd905ebc61050fe6c48896d446>` (pfSysDirDelete2 != NULL)
+
+- #define :ref:`EXP_SysDirDelete2 <group___sys_dir_itf_1ga7b90c8a351a4d95ff5eaadcd390a7e3f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirDelete2", (RTS_UINTPTR) :ref:`SysDirDelete2 <group___sys_dir_itf_1gad05203de99260e76da1659e386c795ef>` , 0, 0)
+
+- #define :ref:`USE_SysDirDelete_ <group___sys_dir_itf_1gac68b37e4352e96e75df28b4a76aab6f2>` :ref:`PFSYSDIRDELETE_ <group___sys_dir_itf_1gad95e5ed72a0ccdbb855f5566eede363b>` pfSysDirDelete_;
+
+- #define :ref:`EXT_SysDirDelete_ <group___sys_dir_itf_1ga55340e6f5c518ab5a52f56639a5473b5>` extern :ref:`PFSYSDIRDELETE_ <group___sys_dir_itf_1gad95e5ed72a0ccdbb855f5566eede363b>` pfSysDirDelete_;
+
+- #define :ref:`GET_SysDirDelete_ <group___sys_dir_itf_1gab74ffc9a32081bc5875546a556a3b2ba>` s_pfCMGetAPI2( "SysDirDelete_", (RTS_VOID_FCTPTR *)&pfSysDirDelete_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirDelete_ <group___sys_dir_itf_1ga6247d99c49b5c5327c9ed186504d8129>` pfSysDirDelete_
+
+- #define :ref:`CHK_SysDirDelete_ <group___sys_dir_itf_1gaab41df184b7405a4717a564e017902b9>` (pfSysDirDelete_ != NULL)
+
+- #define :ref:`EXP_SysDirDelete_ <group___sys_dir_itf_1ga6d5a7d3c4d9e17c622ee11c989b6506d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirDelete_", (RTS_UINTPTR) :ref:`SysDirDelete_ <group___sys_dir_itf_1gacc03df6ff7ef0224d9d8f695a35ae18f>` , 0, 0)
+
+- #define :ref:`USE_SysDirRename <group___sys_dir_itf_1ga643b4ad6cf57ef416de897c3eaf9b859>` :ref:`PFSYSDIRRENAME <group___sys_dir_itf_1ga21886d61d9884775054fd564ba25c51b>` pfSysDirRename;
+
+- #define :ref:`EXT_SysDirRename <group___sys_dir_itf_1ga1c436289e3b02c76fbdff730c5adf9e8>` extern :ref:`PFSYSDIRRENAME <group___sys_dir_itf_1ga21886d61d9884775054fd564ba25c51b>` pfSysDirRename;
+
+- #define :ref:`GET_SysDirRename <group___sys_dir_itf_1ga3a6b0f3c8c6eb4447a34eb38bae29949>` s_pfCMGetAPI2( "SysDirRename", (RTS_VOID_FCTPTR *)&pfSysDirRename, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirRename <group___sys_dir_itf_1ga7adf523f04e8efd692cefacd3ecf4aa5>` pfSysDirRename
+
+- #define :ref:`CHK_SysDirRename <group___sys_dir_itf_1ga4914373c0d8a140a9f09e668ffd59298>` (pfSysDirRename != NULL)
+
+- #define :ref:`EXP_SysDirRename <group___sys_dir_itf_1gac20a7f97209f9ad46b0b1d9f2439c8c9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirRename", (RTS_UINTPTR) :ref:`SysDirRename <group___sys_dir_itf_1gaa595cbb76c27ab321a114e63d80a48e1>` , 0, 0)
+
+- #define :ref:`USE_SysDirRename_ <group___sys_dir_itf_1gaaef04e2adb7da40186339efe03590c0d>` :ref:`PFSYSDIRRENAME_ <group___sys_dir_itf_1ga10b547fa6127d0072167b7a318710c15>` pfSysDirRename_;
+
+- #define :ref:`EXT_SysDirRename_ <group___sys_dir_itf_1gad7ff5590c6b08686b19fcb4bf6820611>` extern :ref:`PFSYSDIRRENAME_ <group___sys_dir_itf_1ga10b547fa6127d0072167b7a318710c15>` pfSysDirRename_;
+
+- #define :ref:`GET_SysDirRename_ <group___sys_dir_itf_1ga7e18075172f8ced4a3fab8c3f462379b>` s_pfCMGetAPI2( "SysDirRename_", (RTS_VOID_FCTPTR *)&pfSysDirRename_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirRename_ <group___sys_dir_itf_1gaf765d9648f20813ba1c857c559caa8c4>` pfSysDirRename_
+
+- #define :ref:`CHK_SysDirRename_ <group___sys_dir_itf_1gab6b62cf51d63d009aec4410339815543>` (pfSysDirRename_ != NULL)
+
+- #define :ref:`EXP_SysDirRename_ <group___sys_dir_itf_1gaa7b9de753108243317f4c57a69c93e64>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirRename_", (RTS_UINTPTR) :ref:`SysDirRename_ <group___sys_dir_itf_1ga99606af2288a25ebae8387d07920e283>` , 0, 0)
+
+- #define :ref:`USE_SysDirGetCurrent <group___sys_dir_itf_1ga1f020fd99898eb0d2b5e2994cf56639d>` :ref:`PFSYSDIRGETCURRENT <group___sys_dir_itf_1gad58f3d1c21d8cc9071becef97c83258b>` pfSysDirGetCurrent;
+
+- #define :ref:`EXT_SysDirGetCurrent <group___sys_dir_itf_1ga735c30313f3860214396d5503d96c03e>` extern :ref:`PFSYSDIRGETCURRENT <group___sys_dir_itf_1gad58f3d1c21d8cc9071becef97c83258b>` pfSysDirGetCurrent;
+
+- #define :ref:`GET_SysDirGetCurrent <group___sys_dir_itf_1gaf4a8aaf446518ffd4124e56d0a9ae761>` s_pfCMGetAPI2( "SysDirGetCurrent", (RTS_VOID_FCTPTR *)&pfSysDirGetCurrent, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirGetCurrent <group___sys_dir_itf_1gac2dc26e22d47d7ea8e9f616caa972bd7>` pfSysDirGetCurrent
+
+- #define :ref:`CHK_SysDirGetCurrent <group___sys_dir_itf_1ga7987905c62a2f4b707f9f21b8a7a64b2>` (pfSysDirGetCurrent != NULL)
+
+- #define :ref:`EXP_SysDirGetCurrent <group___sys_dir_itf_1ga67c730100fea377911dc5fe81e76b7d5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirGetCurrent", (RTS_UINTPTR) :ref:`SysDirGetCurrent <group___sys_dir_itf_1ga5d0e2bbbb89d1c2ded2b88eeed24042e>` , 0, 0)
+
+- #define :ref:`USE_SysDirGetCurrent_ <group___sys_dir_itf_1gaadd81e72ce36c3aa483fd922014a02be>` :ref:`PFSYSDIRGETCURRENT_ <group___sys_dir_itf_1gadafcad46497bd5740028a0cd98664feb>` pfSysDirGetCurrent_;
+
+- #define :ref:`EXT_SysDirGetCurrent_ <group___sys_dir_itf_1gaeceaeadd380fc8a5cfd838678e04e083>` extern :ref:`PFSYSDIRGETCURRENT_ <group___sys_dir_itf_1gadafcad46497bd5740028a0cd98664feb>` pfSysDirGetCurrent_;
+
+- #define :ref:`GET_SysDirGetCurrent_ <group___sys_dir_itf_1ga6a9f9d854cb442e3f3ac9a8db8381a3e>` s_pfCMGetAPI2( "SysDirGetCurrent_", (RTS_VOID_FCTPTR *)&pfSysDirGetCurrent_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirGetCurrent_ <group___sys_dir_itf_1ga8e8cc786ef6c5822c44054d821052b6c>` pfSysDirGetCurrent_
+
+- #define :ref:`CHK_SysDirGetCurrent_ <group___sys_dir_itf_1gae42a6a12e76bf33434039c5f3056819e>` (pfSysDirGetCurrent_ != NULL)
+
+- #define :ref:`EXP_SysDirGetCurrent_ <group___sys_dir_itf_1ga16bc0df43807feed7990e721b7fbd69e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirGetCurrent_", (RTS_UINTPTR) :ref:`SysDirGetCurrent_ <group___sys_dir_itf_1gac9bceac56abc6fc67ae11265ad14474d>` , 0, 0)
+
+- #define :ref:`USE_SysDirSetCurrent <group___sys_dir_itf_1ga806efbba999b1863666c12e33d181020>` :ref:`PFSYSDIRSETCURRENT <group___sys_dir_itf_1ga095d8e31c8a3e84ef495667675e3ae25>` pfSysDirSetCurrent;
+
+- #define :ref:`EXT_SysDirSetCurrent <group___sys_dir_itf_1ga4c10b274688f581eb8fffbf97ca99ae1>` extern :ref:`PFSYSDIRSETCURRENT <group___sys_dir_itf_1ga095d8e31c8a3e84ef495667675e3ae25>` pfSysDirSetCurrent;
+
+- #define :ref:`GET_SysDirSetCurrent <group___sys_dir_itf_1gab94ffc2d26ff7088ba6777f3e22e38be>` s_pfCMGetAPI2( "SysDirSetCurrent", (RTS_VOID_FCTPTR *)&pfSysDirSetCurrent, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirSetCurrent <group___sys_dir_itf_1ga32e3e56621eb8ac9e85ab12a8406d504>` pfSysDirSetCurrent
+
+- #define :ref:`CHK_SysDirSetCurrent <group___sys_dir_itf_1ga9b71682a4f4f8468bd38247f39ae95e8>` (pfSysDirSetCurrent != NULL)
+
+- #define :ref:`EXP_SysDirSetCurrent <group___sys_dir_itf_1ga6f046d5426ac06e6f739f86110d6e1e3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirSetCurrent", (RTS_UINTPTR) :ref:`SysDirSetCurrent <group___sys_dir_itf_1gac269cce0192c9269c10cc2b56a77eee1>` , 0, 0)
+
+- #define :ref:`USE_SysDirSetCurrent_ <group___sys_dir_itf_1ga4a1551a32f44951d02ca280e154fa2be>` :ref:`PFSYSDIRSETCURRENT_ <group___sys_dir_itf_1ga79ce88de75c385a741fcb78557e33817>` pfSysDirSetCurrent_;
+
+- #define :ref:`EXT_SysDirSetCurrent_ <group___sys_dir_itf_1gaf029e90e7ef46c3a9b1b6cc94718a8bd>` extern :ref:`PFSYSDIRSETCURRENT_ <group___sys_dir_itf_1ga79ce88de75c385a741fcb78557e33817>` pfSysDirSetCurrent_;
+
+- #define :ref:`GET_SysDirSetCurrent_ <group___sys_dir_itf_1ga78dee88167de1c2bd68cfa86fb9a4cf2>` s_pfCMGetAPI2( "SysDirSetCurrent_", (RTS_VOID_FCTPTR *)&pfSysDirSetCurrent_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirSetCurrent_ <group___sys_dir_itf_1gad9cbaab277ac9606e6ce56f44834e478>` pfSysDirSetCurrent_
+
+- #define :ref:`CHK_SysDirSetCurrent_ <group___sys_dir_itf_1gaac34f7802d1f9a4312bd65c6968d1430>` (pfSysDirSetCurrent_ != NULL)
+
+- #define :ref:`EXP_SysDirSetCurrent_ <group___sys_dir_itf_1gad1374b7a6e259b5dbb3969f26cb731a6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirSetCurrent_", (RTS_UINTPTR) :ref:`SysDirSetCurrent_ <group___sys_dir_itf_1ga3b74804294898ea334a4f8f559aeef9e>` , 0, 0)
+
+- #define :ref:`USE_SysDirCopy <group___sys_dir_itf_1ga92cf279288b22e1168469ce94a11db14>` :ref:`PFSYSDIRCOPY <group___sys_dir_itf_1gabd567d2f5c969ff70047fef8df28cae1>` pfSysDirCopy;
+
+- #define :ref:`EXT_SysDirCopy <group___sys_dir_itf_1gafe68d6492fe0d92347ab067075c3c6d4>` extern :ref:`PFSYSDIRCOPY <group___sys_dir_itf_1gabd567d2f5c969ff70047fef8df28cae1>` pfSysDirCopy;
+
+- #define :ref:`GET_SysDirCopy <group___sys_dir_itf_1ga93b06b9848b7392077840b962c7ce551>` s_pfCMGetAPI2( "SysDirCopy", (RTS_VOID_FCTPTR *)&pfSysDirCopy, (fl), 0, 0)
+
+- #define :ref:`CAL_SysDirCopy <group___sys_dir_itf_1ga48bcdff1f6a95c3691cc18ea679dd42e>` pfSysDirCopy
+
+- #define :ref:`CHK_SysDirCopy <group___sys_dir_itf_1gab1d262c681871cd8e3086f266ed24753>` (pfSysDirCopy != NULL)
+
+- #define :ref:`EXP_SysDirCopy <group___sys_dir_itf_1ga9198556ce1e83a9c08122a97f5a23169>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirCopy", (RTS_UINTPTR) :ref:`SysDirCopy <group___sys_dir_itf_1ga49ab0a528d1f9382b3729e2725284a36>` , 0, 0)
+
+- #define :ref:`ITF_SysDir <group___sys_dir_itf_1ga4f3489368a1bd402fe474fd7e3bd0f45>`
+
+- #define :ref:`EXTITF_SysDir <group___sys_dir_itf_1ga72d4400792d9889450050e8242121c95>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagsysdirclose_struct <structtagsysdirclose__struct>` :ref:`sysdirclose_struct <group___sys_dir_itf_1gaabebaae09eb8d5e04436d571f4edf13b>`
+
+- typedef void(* :ref:`PFSYSDIRCLOSE_IEC <group___sys_dir_itf_1ga43f1c6f63734476c133b0f645409ab2b>`)(sysdirclose_struct *p)
+
+- typedef struct :ref:`tagsysdircopy_struct <structtagsysdircopy__struct>` :ref:`sysdircopy_struct <group___sys_dir_itf_1ga7774c01f4c23e8b593401befb61e1941>`
+
+- typedef void(* :ref:`PFSYSDIRCOPY_IEC <group___sys_dir_itf_1gafdb1252b9fdaeb1d3d8b15f18afc3222>`)(sysdircopy_struct *p)
+
+- typedef struct :ref:`tagsysdircreate_struct <structtagsysdircreate__struct>` :ref:`sysdircreate_struct <group___sys_dir_itf_1ga35be8988026158db9fe6c600863161de>`
+
+- typedef void(* :ref:`PFSYSDIRCREATE_IEC <group___sys_dir_itf_1ga05fab8c3f51657f02406cdd5a3a50469>`)(sysdircreate_struct *p)
+
+- typedef struct :ref:`tagsysdircreate2_struct <structtagsysdircreate2__struct>` :ref:`sysdircreate2_struct <group___sys_dir_itf_1ga67c9ff03fb1e5d8239ce2970c3db0bb5>`
+
+- typedef void(* :ref:`PFSYSDIRCREATE2_IEC <group___sys_dir_itf_1ga4c9fee109c18f20afdb80831b59a0690>`)(sysdircreate2_struct *p)
+
+- typedef struct :ref:`tagsysdirdelete_struct <structtagsysdirdelete__struct>` :ref:`sysdirdelete_struct <group___sys_dir_itf_1gac86b4be28e214b8547da0bd7ac78fae9>`
+
+- typedef void(* :ref:`PFSYSDIRDELETE_IEC <group___sys_dir_itf_1gaf38c1fdc805812a0a7faab91be0377fc>`)(sysdirdelete_struct *p)
+
+- typedef struct :ref:`tagsysdirdelete2_struct <structtagsysdirdelete2__struct>` :ref:`sysdirdelete2_struct <group___sys_dir_itf_1ga4c31d0b9b8ce3c95ce882d2ac2851148>`
+
+- typedef void(* :ref:`PFSYSDIRDELETE2_IEC <group___sys_dir_itf_1ga6120a291638ac952ae7e2e6f0b09e650>`)(sysdirdelete2_struct *p)
+
+- typedef struct :ref:`tagsysdirgetcurrent_struct <structtagsysdirgetcurrent__struct>` :ref:`sysdirgetcurrent_struct <group___sys_dir_itf_1gaa3fe72a76b64346053ce1f163ea4415a>`
+
+- typedef void(* :ref:`PFSYSDIRGETCURRENT_IEC <group___sys_dir_itf_1ga463fbee74aceb5062df9b62364a22886>`)(sysdirgetcurrent_struct *p)
+
+- typedef struct :ref:`tagsysdiropen_struct <structtagsysdiropen__struct>` :ref:`sysdiropen_struct <group___sys_dir_itf_1gaa18ea62ad73f2586a371d70cfa35f31c>`
+
+- typedef void(* :ref:`PFSYSDIROPEN_IEC <group___sys_dir_itf_1ga3025a411b859614260c2ac134e6fe185>`)(sysdiropen_struct *p)
+
+- typedef struct :ref:`tagsysdirread_struct <structtagsysdirread__struct>` :ref:`sysdirread_struct <group___sys_dir_itf_1gade4348a61b37e0c51dde752744f8172c>`
+
+- typedef void(* :ref:`PFSYSDIRREAD_IEC <group___sys_dir_itf_1ga628a726c76ade5c8157c66d1bee1eadc>`)(sysdirread_struct *p)
+
+- typedef struct :ref:`tagsysdirrename_struct <structtagsysdirrename__struct>` :ref:`sysdirrename_struct <group___sys_dir_itf_1ga361ba1ce5f2c274d10a41f91f9acf794>`
+
+- typedef void(* :ref:`PFSYSDIRRENAME_IEC <group___sys_dir_itf_1gadc3e22de80237177866274197d854c18>`)(sysdirrename_struct *p)
+
+- typedef struct :ref:`tagsysdirsetcurrent_struct <structtagsysdirsetcurrent__struct>` :ref:`sysdirsetcurrent_struct <group___sys_dir_itf_1gaf227ad8e4b2c86d973084faacf5054ae>`
+
+- typedef void(* :ref:`PFSYSDIRSETCURRENT_IEC <group___sys_dir_itf_1ga9079a1c5852999faac95d2f31807ba5e>`)(sysdirsetcurrent_struct *p)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSDIROPEN <group___sys_dir_itf_1gab245023b8c9429c638d04ae89b926850>`)(char *pszDir, char *pszDirEntry, int iMaxDirEntry, DirInfo *pDirInfo, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSDIROPEN_ <group___sys_dir_itf_1ga5b2ef28214af85ae6511cca5b69b67ac>`)(char *pszDir, char *pszDirEntry, int iMaxDirEntry, DirInfo *pDirInfo, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRCLOSE <group___sys_dir_itf_1ga441cf0b9cfe785ceb624c07c6e06dc24>`)(RTS_HANDLE hDir)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRCLOSE_ <group___sys_dir_itf_1ga2bd73581c5b87bddcece2d20d7ecc6d4>`)(RTS_HANDLE hDir)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRREAD <group___sys_dir_itf_1ga8aee496b7a7236ff5645d4b95df9293a>`)(RTS_HANDLE hDir, char *pszDirEntry, int iMaxDirEntry, DirInfo *pDirInfo)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRREAD_ <group___sys_dir_itf_1ga1d9fad9cc0594cbe231ae266a6e3bccd>`)(RTS_HANDLE hDir, char *pszDirEntry, int iMaxDirEntry, DirInfo *pDirInfo)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRCREATE <group___sys_dir_itf_1gacb243299400a8346a07d8d1dcdbe5ae1>`)(char *pszDir)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRCREATE2 <group___sys_dir_itf_1ga3d3f9e75d906c5322c64910bb3286e91>`)(char *pszDir, RTS_BOOL bRecursive)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRCREATE_ <group___sys_dir_itf_1ga39b65a508db480daf6dc50d9089fb198>`)(char *pszDir)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRDELETE <group___sys_dir_itf_1ga89c176675c115a75f8e172f17ab4bb0c>`)(char *pszDir)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRDELETE2 <group___sys_dir_itf_1gaf6272b70abb0186efcdda716eb63d67b>`)(char *pszDir, RTS_BOOL bRecursive, RTS_BOOL bKeepDir)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRDELETE_ <group___sys_dir_itf_1gad95e5ed72a0ccdbb855f5566eede363b>`)(char *pszDir)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRRENAME <group___sys_dir_itf_1ga21886d61d9884775054fd564ba25c51b>`)(char *pszOldDir, char *pszNewDir)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRRENAME_ <group___sys_dir_itf_1ga10b547fa6127d0072167b7a318710c15>`)(char *pszOldDir, char *pszNewDir)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRGETCURRENT <group___sys_dir_itf_1gad58f3d1c21d8cc9071becef97c83258b>`)(char *pszDir, int iMaxDirLen)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRGETCURRENT_ <group___sys_dir_itf_1gadafcad46497bd5740028a0cd98664feb>`)(char *pszDir, int iMaxDirLen)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRSETCURRENT <group___sys_dir_itf_1ga095d8e31c8a3e84ef495667675e3ae25>`)(char *pszDir)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRSETCURRENT_ <group___sys_dir_itf_1ga79ce88de75c385a741fcb78557e33817>`)(char *pszDir)
+
+- typedef RTS_RESULT(* :ref:`PFSYSDIRCOPY <group___sys_dir_itf_1gabd567d2f5c969ff70047fef8df28cae1>`)(char *pszDestDir, char *pszSourceDir, RTS_BOOL bRecursive, RTS_BOOL bOverwrite)
+
+- typedef :ref:`ISysDir_C <struct_i_sys_dir___c>` :ref:`ISysDir <group___sys_dir_itf_1ga6f7cbb2c4a5cd36bd405cef89ac887de>`
+
+Functions
+---------
+
+- void :ref:`sysdirclose <group___sys_dir_itf_1gaae092283142eb314da9b6c8f78607419>` (:ref:`sysdirclose_struct <group___sys_dir_itf_1gaabebaae09eb8d5e04436d571f4edf13b>` * p)
+
+- void :ref:`sysdircopy <group___sys_dir_itf_1gaef492051e21dd693289c1d50b9e56dfe>` (:ref:`sysdircopy_struct <group___sys_dir_itf_1ga7774c01f4c23e8b593401befb61e1941>` * p)
+
+- void :ref:`sysdircreate <group___sys_dir_itf_1ga2acb5522ee2bdb6550f89a46e1883785>` (:ref:`sysdircreate_struct <group___sys_dir_itf_1ga35be8988026158db9fe6c600863161de>` * p)
+
+- void :ref:`sysdircreate2 <group___sys_dir_itf_1gad7ca635af6d92d433cce6efa9603502e>` (:ref:`sysdircreate2_struct <group___sys_dir_itf_1ga67c9ff03fb1e5d8239ce2970c3db0bb5>` * p)
+
+- void :ref:`sysdirdelete <group___sys_dir_itf_1ga14f00b62067b67038088a9f7746f3445>` (:ref:`sysdirdelete_struct <group___sys_dir_itf_1gac86b4be28e214b8547da0bd7ac78fae9>` * p)
+
+- void :ref:`sysdirdelete2 <group___sys_dir_itf_1gab262293a919c7759937e3d02f7725e9d>` (:ref:`sysdirdelete2_struct <group___sys_dir_itf_1ga4c31d0b9b8ce3c95ce882d2ac2851148>` * p)
+
+- void :ref:`sysdirgetcurrent <group___sys_dir_itf_1gad3c182bb5cf51ff1de2d43161abfeaf5>` (:ref:`sysdirgetcurrent_struct <group___sys_dir_itf_1gaa3fe72a76b64346053ce1f163ea4415a>` * p)
+
+- void :ref:`sysdiropen <group___sys_dir_itf_1gacdaf4ed63ab1742ef2711befcfbac121>` (:ref:`sysdiropen_struct <group___sys_dir_itf_1gaa18ea62ad73f2586a371d70cfa35f31c>` * p)
+
+- void :ref:`sysdirread <group___sys_dir_itf_1ga3a5c1836f58d0eaf3977912688ec7426>` (:ref:`sysdirread_struct <group___sys_dir_itf_1gade4348a61b37e0c51dde752744f8172c>` * p)
+
+- void :ref:`sysdirrename <group___sys_dir_itf_1ga01443d0a0bd15a354a421b01dc649d47>` (:ref:`sysdirrename_struct <group___sys_dir_itf_1ga361ba1ce5f2c274d10a41f91f9acf794>` * p)
+
+- void :ref:`sysdirsetcurrent <group___sys_dir_itf_1ga42bd9510889e435f2dcfbe2c1d94aa31>` (:ref:`sysdirsetcurrent_struct <group___sys_dir_itf_1gaf227ad8e4b2c86d973084faacf5054ae>` * p)
+
+- RTS_RESULT :ref:`SysDirOSInit <group___sys_dir_itf_1ga56327e69d3db146f042d5d7026363961>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysDirOSHookFunction <group___sys_dir_itf_1ga4818ccaf3e2f97fce5271b7fb399f30e>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_HANDLE :ref:`SysDirOpen <group___sys_dir_itf_1ga3ab07b5c1fd2888b4aed1a66b169fa73>` (char * pszDir, char * pszDirEntry, int iMaxDirEntry, :ref:`DirInfo <struct_dir_info>` * pDirInfo, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysDirOpen_ <group___sys_dir_itf_1ga52f8e5fc8d27d8c7f7f890cd0bc7c840>` (char * pszDir, char * pszDirEntry, int iMaxDirEntry, :ref:`DirInfo <struct_dir_info>` * pDirInfo, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysDirClose <group___sys_dir_itf_1ga9ffd65d2557513315a3f9879ae8a029d>` (RTS_HANDLE hDir)
+
+- RTS_RESULT :ref:`SysDirClose_ <group___sys_dir_itf_1ga1710760b5ae70ab40988298e5387de78>` (RTS_HANDLE hDir)
+
+- RTS_RESULT :ref:`SysDirRead <group___sys_dir_itf_1gab22153a1fa4e3218a46c00becd80bccb>` (RTS_HANDLE hDir, char * pszDirEntry, int iMaxDirEntry, :ref:`DirInfo <struct_dir_info>` * pDirInfo)
+
+- RTS_RESULT :ref:`SysDirRead_ <group___sys_dir_itf_1ga957873529ed52516626c9551c3fc1b95>` (RTS_HANDLE hDir, char * pszDirEntry, int iMaxDirEntry, :ref:`DirInfo <struct_dir_info>` * pDirInfo)
+
+- RTS_RESULT :ref:`SysDirCreate <group___sys_dir_itf_1ga382b85aba7a92647808e18532b38287c>` (char * pszDir)
+
+- RTS_RESULT :ref:`SysDirCreate2 <group___sys_dir_itf_1gaa6cfe429e3b16f4d6fa6c904317595dc>` (char * pszDir, RTS_BOOL bRecursive)
+
+- RTS_RESULT :ref:`SysDirCreate_ <group___sys_dir_itf_1ga94530ed643a1ccd04f1a7a560f420c94>` (char * pszDir)
+
+- RTS_RESULT :ref:`SysDirDelete <group___sys_dir_itf_1gab57b1051e92ae0659543a876461fde22>` (char * pszDir)
+
+- RTS_RESULT :ref:`SysDirDelete2 <group___sys_dir_itf_1gad05203de99260e76da1659e386c795ef>` (char * pszDir, RTS_BOOL bRecursive, RTS_BOOL bKeepDir)
+
+- RTS_RESULT :ref:`SysDirDelete_ <group___sys_dir_itf_1gacc03df6ff7ef0224d9d8f695a35ae18f>` (char * pszDir)
+
+- RTS_RESULT :ref:`SysDirRename <group___sys_dir_itf_1gaa595cbb76c27ab321a114e63d80a48e1>` (char * pszOldDir, char * pszNewDir)
+
+- RTS_RESULT :ref:`SysDirRename_ <group___sys_dir_itf_1ga99606af2288a25ebae8387d07920e283>` (char * pszOldDir, char * pszNewDir)
+
+- RTS_RESULT :ref:`SysDirGetCurrent <group___sys_dir_itf_1ga5d0e2bbbb89d1c2ded2b88eeed24042e>` (char * pszDir, int iMaxDirLen)
+
+- RTS_RESULT :ref:`SysDirGetCurrent_ <group___sys_dir_itf_1gac9bceac56abc6fc67ae11265ad14474d>` (char * pszDir, int iMaxDirLen)
+
+- RTS_RESULT :ref:`SysDirSetCurrent <group___sys_dir_itf_1gac269cce0192c9269c10cc2b56a77eee1>` (char * pszDir)
+
+- RTS_RESULT :ref:`SysDirSetCurrent_ <group___sys_dir_itf_1ga3b74804294898ea334a4f8f559aeef9e>` (char * pszDir)
+
+- RTS_RESULT :ref:`SysDirCopy <group___sys_dir_itf_1ga49ab0a528d1f9382b3729e2725284a36>` (char * pszDestDir, char * pszSourceDir, RTS_BOOL bRecursive, RTS_BOOL bOverwrite)
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_dir_itf_1gaadd6d0c1ecf4a382c0af500077a8c7ab:
+
+#define USE_sysdirclose :ref:`PFSYSDIRCLOSE_IEC <group___sys_dir_itf_1ga43f1c6f63734476c133b0f645409ab2b>` pfsysdirclose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gac6fa7e7b37006d6249475107c9c62698:
+
+#define EXT_sysdirclose extern :ref:`PFSYSDIRCLOSE_IEC <group___sys_dir_itf_1ga43f1c6f63734476c133b0f645409ab2b>` pfsysdirclose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga1a11ad8f749def5b4258a51decca3bb3:
+
+#define GET_sysdirclose s_pfCMGetAPI2( "sysdirclose", (RTS_VOID_FCTPTR *)&pfsysdirclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga70e19dace1ea0e987d33b5d7512f09ab:
+
+#define CAL_sysdirclose pfsysdirclose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaf4ca83a5b08f7583bf1b6076cfea5eb7:
+
+#define CHK_sysdirclose (pfsysdirclose != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga77f7636288efa0b19d4cba2f30ac2017:
+
+#define EXP_sysdirclose s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirclose", (RTS_UINTPTR) :ref:`sysdirclose <group___sys_dir_itf_1gaae092283142eb314da9b6c8f78607419>` , 1, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gae65116507d4f4c405306c91a88762d0c:
+
+#define USE_sysdircopy :ref:`PFSYSDIRCOPY_IEC <group___sys_dir_itf_1gafdb1252b9fdaeb1d3d8b15f18afc3222>` pfsysdircopy;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gad03cbdfacaa785ee4ec1793cfef15450:
+
+#define EXT_sysdircopy extern :ref:`PFSYSDIRCOPY_IEC <group___sys_dir_itf_1gafdb1252b9fdaeb1d3d8b15f18afc3222>` pfsysdircopy;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gad405b2f770ba431ff468ed79f0b43f34:
+
+#define GET_sysdircopy s_pfCMGetAPI2( "sysdircopy", (RTS_VOID_FCTPTR *)&pfsysdircopy, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xDCC4B146, 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga45c62619cb4345efa7339846292ced6e:
+
+#define CAL_sysdircopy pfsysdircopy
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga5675cb7a2f89d4373af543dec5a78625:
+
+#define CHK_sysdircopy (pfsysdircopy != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gacb45747f2c0a2741fe4bedec49439f5c:
+
+#define EXP_sysdircopy s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircopy", (RTS_UINTPTR) :ref:`sysdircopy <group___sys_dir_itf_1gaef492051e21dd693289c1d50b9e56dfe>` , 1, 0xDCC4B146, 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga2b743be21746cee9c04c5a506d8cab40:
+
+#define USE_sysdircreate :ref:`PFSYSDIRCREATE_IEC <group___sys_dir_itf_1ga05fab8c3f51657f02406cdd5a3a50469>` pfsysdircreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga308fb2074b0c444f7a5b201de8cb6635:
+
+#define EXT_sysdircreate extern :ref:`PFSYSDIRCREATE_IEC <group___sys_dir_itf_1ga05fab8c3f51657f02406cdd5a3a50469>` pfsysdircreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaea316a0124af4cccc47ef5468bf063c3:
+
+#define GET_sysdircreate s_pfCMGetAPI2( "sysdircreate", (RTS_VOID_FCTPTR *)&pfsysdircreate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga783f8ae010d8acca665b0aee44f65cbc:
+
+#define CAL_sysdircreate pfsysdircreate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga9dbcc455d136cd1e5dce756553792c58:
+
+#define CHK_sysdircreate (pfsysdircreate != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga1e0d8ba6fdf0c416aa530835c0a58629:
+
+#define EXP_sysdircreate s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate", (RTS_UINTPTR) :ref:`sysdircreate <group___sys_dir_itf_1ga2acb5522ee2bdb6550f89a46e1883785>` , 1, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga19a012f12719cd411c6aa3c5bf214d68:
+
+#define USE_sysdircreate2 :ref:`PFSYSDIRCREATE2_IEC <group___sys_dir_itf_1ga4c9fee109c18f20afdb80831b59a0690>` pfsysdircreate2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga83c3fe99619fffce877d1dd5d78c55f5:
+
+#define EXT_sysdircreate2 extern :ref:`PFSYSDIRCREATE2_IEC <group___sys_dir_itf_1ga4c9fee109c18f20afdb80831b59a0690>` pfsysdircreate2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga631032e60c28e2427e143511633628fc:
+
+#define GET_sysdircreate2 s_pfCMGetAPI2( "sysdircreate2", (RTS_VOID_FCTPTR *)&pfsysdircreate2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x03802B43, 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gae1062b954b72be5a5b96fde035c7baa9:
+
+#define CAL_sysdircreate2 pfsysdircreate2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga99dd51c92e02628f6bc83071af918424:
+
+#define CHK_sysdircreate2 (pfsysdircreate2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga09d84f52b03be1753a3444c7fdd99876:
+
+#define EXP_sysdircreate2 s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate2", (RTS_UINTPTR) :ref:`sysdircreate2 <group___sys_dir_itf_1gad7ca635af6d92d433cce6efa9603502e>` , 1, 0x03802B43, 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga66d28198bc61e2e366d80cd20f012d76:
+
+#define USE_sysdirdelete :ref:`PFSYSDIRDELETE_IEC <group___sys_dir_itf_1gaf38c1fdc805812a0a7faab91be0377fc>` pfsysdirdelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gac8f39a32349935ec433f4bc8b95130ff:
+
+#define EXT_sysdirdelete extern :ref:`PFSYSDIRDELETE_IEC <group___sys_dir_itf_1gaf38c1fdc805812a0a7faab91be0377fc>` pfsysdirdelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga76cb4a5033a16e4dcb629c79b112f56c:
+
+#define GET_sysdirdelete s_pfCMGetAPI2( "sysdirdelete", (RTS_VOID_FCTPTR *)&pfsysdirdelete, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga4498f0bd807a1bcdaee08d3a39ca1976:
+
+#define CAL_sysdirdelete pfsysdirdelete
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga3e48f1645551adefc521ff9eeb8647c3:
+
+#define CHK_sysdirdelete (pfsysdirdelete != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga97377cc6e23724a17a3b4fcd69c06657:
+
+#define EXP_sysdirdelete s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete", (RTS_UINTPTR) :ref:`sysdirdelete <group___sys_dir_itf_1ga14f00b62067b67038088a9f7746f3445>` , 1, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gac142ac33e63c503630833067e7bd7ec8:
+
+#define USE_sysdirdelete2 :ref:`PFSYSDIRDELETE2_IEC <group___sys_dir_itf_1ga6120a291638ac952ae7e2e6f0b09e650>` pfsysdirdelete2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga3a1ab09d1c29beae69ec750c0afbef20:
+
+#define EXT_sysdirdelete2 extern :ref:`PFSYSDIRDELETE2_IEC <group___sys_dir_itf_1ga6120a291638ac952ae7e2e6f0b09e650>` pfsysdirdelete2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga00089c1fc0f4f4a3c69bf4abdc37e317:
+
+#define GET_sysdirdelete2 s_pfCMGetAPI2( "sysdirdelete2", (RTS_VOID_FCTPTR *)&pfsysdirdelete2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xB8EF3C3D, 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga60c7de2725a8f0985baebfcd5a897ba0:
+
+#define CAL_sysdirdelete2 pfsysdirdelete2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaa859bc1df4d68b0aca07fd0aa9aa58d1:
+
+#define CHK_sysdirdelete2 (pfsysdirdelete2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga8971a429a0c11b4f4a326769b7e472c5:
+
+#define EXP_sysdirdelete2 s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete2", (RTS_UINTPTR) :ref:`sysdirdelete2 <group___sys_dir_itf_1gab262293a919c7759937e3d02f7725e9d>` , 1, 0xB8EF3C3D, 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gad1da0805c6716f03b695eb8dd14750e8:
+
+#define USE_sysdirgetcurrent :ref:`PFSYSDIRGETCURRENT_IEC <group___sys_dir_itf_1ga463fbee74aceb5062df9b62364a22886>` pfsysdirgetcurrent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga0f8226d9b04b19bb4ccad2d079d0d58d:
+
+#define EXT_sysdirgetcurrent extern :ref:`PFSYSDIRGETCURRENT_IEC <group___sys_dir_itf_1ga463fbee74aceb5062df9b62364a22886>` pfsysdirgetcurrent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga9afdc51737565228543bfdac468b7ecc:
+
+#define GET_sysdirgetcurrent s_pfCMGetAPI2( "sysdirgetcurrent", (RTS_VOID_FCTPTR *)&pfsysdirgetcurrent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gae3f8752776851323a26fb30351793583:
+
+#define CAL_sysdirgetcurrent pfsysdirgetcurrent
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga041e96db65946f64776036a5e97b8a23:
+
+#define CHK_sysdirgetcurrent (pfsysdirgetcurrent != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga9ca5e88d63b1c94c79537f3d366f8e34:
+
+#define EXP_sysdirgetcurrent s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirgetcurrent", (RTS_UINTPTR) :ref:`sysdirgetcurrent <group___sys_dir_itf_1gad3c182bb5cf51ff1de2d43161abfeaf5>` , 1, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gadeb5d0e50089844aa77c1550146e632e:
+
+#define USE_sysdiropen :ref:`PFSYSDIROPEN_IEC <group___sys_dir_itf_1ga3025a411b859614260c2ac134e6fe185>` pfsysdiropen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaf74052a0e9176fdac8d13be11f04b9a0:
+
+#define EXT_sysdiropen extern :ref:`PFSYSDIROPEN_IEC <group___sys_dir_itf_1ga3025a411b859614260c2ac134e6fe185>` pfsysdiropen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga0668acebbd2f1b1a4d814aa39880af9a:
+
+#define GET_sysdiropen s_pfCMGetAPI2( "sysdiropen", (RTS_VOID_FCTPTR *)&pfsysdiropen, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga266e6de49b69e2c8b2800bfe73b57596:
+
+#define CAL_sysdiropen pfsysdiropen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gadc8cb17c60cd41689a1992f33d91430c:
+
+#define CHK_sysdiropen (pfsysdiropen != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga4aab53cfffe25205513f6f3628dc1944:
+
+#define EXP_sysdiropen s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdiropen", (RTS_UINTPTR) :ref:`sysdiropen <group___sys_dir_itf_1gacdaf4ed63ab1742ef2711befcfbac121>` , 1, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga9b8e6bcfc275b144c386fc45c427793b:
+
+#define USE_sysdirread :ref:`PFSYSDIRREAD_IEC <group___sys_dir_itf_1ga628a726c76ade5c8157c66d1bee1eadc>` pfsysdirread;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gab6ce7b4169f1aee2b3138166595a3b05:
+
+#define EXT_sysdirread extern :ref:`PFSYSDIRREAD_IEC <group___sys_dir_itf_1ga628a726c76ade5c8157c66d1bee1eadc>` pfsysdirread;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gae43ebb6c6b1bce6f7379c482e1bed24f:
+
+#define GET_sysdirread s_pfCMGetAPI2( "sysdirread", (RTS_VOID_FCTPTR *)&pfsysdirread, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga7f7fa4b127859f27d4d657bcbfb1f89e:
+
+#define CAL_sysdirread pfsysdirread
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaeee300cb921eb48e890988b8d93f0d35:
+
+#define CHK_sysdirread (pfsysdirread != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga0082474675aaf914dc605851bbed6273:
+
+#define EXP_sysdirread s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirread", (RTS_UINTPTR) :ref:`sysdirread <group___sys_dir_itf_1ga3a5c1836f58d0eaf3977912688ec7426>` , 1, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga0ad9bf190d5a4861d4ebb04430bd39a0:
+
+#define USE_sysdirrename :ref:`PFSYSDIRRENAME_IEC <group___sys_dir_itf_1gadc3e22de80237177866274197d854c18>` pfsysdirrename;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga32f21ad4fb60ed400e0e0c7335b5ce71:
+
+#define EXT_sysdirrename extern :ref:`PFSYSDIRRENAME_IEC <group___sys_dir_itf_1gadc3e22de80237177866274197d854c18>` pfsysdirrename;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gacfa95fa9976dfa328b614cf9a25c52c0:
+
+#define GET_sysdirrename s_pfCMGetAPI2( "sysdirrename", (RTS_VOID_FCTPTR *)&pfsysdirrename, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga1a617faa464557622bcaf9df79a90854:
+
+#define CAL_sysdirrename pfsysdirrename
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga70f78cd49229b60949e687457a944eb6:
+
+#define CHK_sysdirrename (pfsysdirrename != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaffb0dc4686e23e3bc9e0be0b1468f10c:
+
+#define EXP_sysdirrename s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirrename", (RTS_UINTPTR) :ref:`sysdirrename <group___sys_dir_itf_1ga01443d0a0bd15a354a421b01dc649d47>` , 1, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga559540e197871e2fa53ab77c788a12ea:
+
+#define USE_sysdirsetcurrent :ref:`PFSYSDIRSETCURRENT_IEC <group___sys_dir_itf_1ga9079a1c5852999faac95d2f31807ba5e>` pfsysdirsetcurrent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaa624b484d4c6866f2eefbc37c1266a9a:
+
+#define EXT_sysdirsetcurrent extern :ref:`PFSYSDIRSETCURRENT_IEC <group___sys_dir_itf_1ga9079a1c5852999faac95d2f31807ba5e>` pfsysdirsetcurrent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaae89ea689435f022e3a111b9cbab9cb6:
+
+#define GET_sysdirsetcurrent s_pfCMGetAPI2( "sysdirsetcurrent", (RTS_VOID_FCTPTR *)&pfsysdirsetcurrent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga9880431e6eabc43a46731b2fd9404722:
+
+#define CAL_sysdirsetcurrent pfsysdirsetcurrent
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga0ac19464886d9c46f61e6cc4244b5ed7:
+
+#define CHK_sysdirsetcurrent (pfsysdirsetcurrent != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga1796a3456dab9e298699097f131edfc7:
+
+#define EXP_sysdirsetcurrent s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirsetcurrent", (RTS_UINTPTR) :ref:`sysdirsetcurrent <group___sys_dir_itf_1ga42bd9510889e435f2dcfbe2c1d94aa31>` , 1, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050F00)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga8b5ad52fd7e61d17e275c97e029eebdc:
+
+#define USE_SysDirOpen :ref:`PFSYSDIROPEN <group___sys_dir_itf_1gab245023b8c9429c638d04ae89b926850>` pfSysDirOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga22983eecad8807287ee4b2c838f7dcce:
+
+#define EXT_SysDirOpen extern :ref:`PFSYSDIROPEN <group___sys_dir_itf_1gab245023b8c9429c638d04ae89b926850>` pfSysDirOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaeaa9e027633239c95c7ef330275b55b5:
+
+#define GET_SysDirOpen s_pfCMGetAPI2( "SysDirOpen", (RTS_VOID_FCTPTR *)&pfSysDirOpen, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gad4fd3a40423d7416196c02075ca2c09f:
+
+#define CAL_SysDirOpen pfSysDirOpen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga2b01fd13118240425aa9ed9c8cbfad8c:
+
+#define CHK_SysDirOpen (pfSysDirOpen != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga5a0fa4b2c9586dda3500a615ecd9866c:
+
+#define EXP_SysDirOpen s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirOpen", (RTS_UINTPTR) :ref:`SysDirOpen <group___sys_dir_itf_1ga3ab07b5c1fd2888b4aed1a66b169fa73>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaf102d5cb0ed07f290e0f15e043e63943:
+
+#define USE_SysDirOpen_ :ref:`PFSYSDIROPEN_ <group___sys_dir_itf_1ga5b2ef28214af85ae6511cca5b69b67ac>` pfSysDirOpen_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga07c85850a3cde3ec573deb3a3a7be7fc:
+
+#define EXT_SysDirOpen_ extern :ref:`PFSYSDIROPEN_ <group___sys_dir_itf_1ga5b2ef28214af85ae6511cca5b69b67ac>` pfSysDirOpen_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gab03c2926444db4901c7b419759618375:
+
+#define GET_SysDirOpen_ s_pfCMGetAPI2( "SysDirOpen_", (RTS_VOID_FCTPTR *)&pfSysDirOpen_, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga15356cf5ff0079ce1b2329d789927471:
+
+#define CAL_SysDirOpen_ pfSysDirOpen_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga5a6eba4be737af0cb159ce5e96c022c7:
+
+#define CHK_SysDirOpen_ (pfSysDirOpen_ != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gac26eedaa59006ec70f3ee79b5a473072:
+
+#define EXP_SysDirOpen_ s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirOpen_", (RTS_UINTPTR) :ref:`SysDirOpen_ <group___sys_dir_itf_1ga52f8e5fc8d27d8c7f7f890cd0bc7c840>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga04b1175c798ed4b222828253ba1c1285:
+
+#define USE_SysDirClose :ref:`PFSYSDIRCLOSE <group___sys_dir_itf_1ga441cf0b9cfe785ceb624c07c6e06dc24>` pfSysDirClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga1385dc09461a2654504d1d144e734b37:
+
+#define EXT_SysDirClose extern :ref:`PFSYSDIRCLOSE <group___sys_dir_itf_1ga441cf0b9cfe785ceb624c07c6e06dc24>` pfSysDirClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga71ba8fcc991b2355da517c386140039f:
+
+#define GET_SysDirClose s_pfCMGetAPI2( "SysDirClose", (RTS_VOID_FCTPTR *)&pfSysDirClose, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaf1b8120b2991a789a44e7b075db25686:
+
+#define CAL_SysDirClose pfSysDirClose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga164658746d2cb55576beeb783a2afda4:
+
+#define CHK_SysDirClose (pfSysDirClose != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga741d441a7bc1a4a342d76437e4473628:
+
+#define EXP_SysDirClose s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirClose", (RTS_UINTPTR) :ref:`SysDirClose <group___sys_dir_itf_1ga9ffd65d2557513315a3f9879ae8a029d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga3cf9e5469f656dee23d20b4c1467ac33:
+
+#define USE_SysDirClose_ :ref:`PFSYSDIRCLOSE_ <group___sys_dir_itf_1ga2bd73581c5b87bddcece2d20d7ecc6d4>` pfSysDirClose_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gac6336687c465b5e1f41747a57b970d4f:
+
+#define EXT_SysDirClose_ extern :ref:`PFSYSDIRCLOSE_ <group___sys_dir_itf_1ga2bd73581c5b87bddcece2d20d7ecc6d4>` pfSysDirClose_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaef598f04922297a47d59fb0ce9bc2c28:
+
+#define GET_SysDirClose_ s_pfCMGetAPI2( "SysDirClose_", (RTS_VOID_FCTPTR *)&pfSysDirClose_, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga173487ba6ec42a62c9e414797bb0030b:
+
+#define CAL_SysDirClose_ pfSysDirClose_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga39edfb523d3411de68852e77466f35ca:
+
+#define CHK_SysDirClose_ (pfSysDirClose_ != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga03d8b0d9210b3308e3d1b337ed18ab41:
+
+#define EXP_SysDirClose_ s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirClose_", (RTS_UINTPTR) :ref:`SysDirClose_ <group___sys_dir_itf_1ga1710760b5ae70ab40988298e5387de78>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga46ed2f3ae9f952b75a77d051fd660904:
+
+#define USE_SysDirRead :ref:`PFSYSDIRREAD <group___sys_dir_itf_1ga8aee496b7a7236ff5645d4b95df9293a>` pfSysDirRead;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gad0de19156d3f4e7a51aa3ba3b62295dd:
+
+#define EXT_SysDirRead extern :ref:`PFSYSDIRREAD <group___sys_dir_itf_1ga8aee496b7a7236ff5645d4b95df9293a>` pfSysDirRead;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga053d687da97a7612550d72caec55e61c:
+
+#define GET_SysDirRead s_pfCMGetAPI2( "SysDirRead", (RTS_VOID_FCTPTR *)&pfSysDirRead, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga26cbcaf572b24ffc3a35832da02c6d64:
+
+#define CAL_SysDirRead pfSysDirRead
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaa94dc15265ff831750f94445c63fa422:
+
+#define CHK_SysDirRead (pfSysDirRead != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaa9078ab3c03b06c49076ab7aa880543c:
+
+#define EXP_SysDirRead s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirRead", (RTS_UINTPTR) :ref:`SysDirRead <group___sys_dir_itf_1gab22153a1fa4e3218a46c00becd80bccb>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga7dde02b2c5f7569b091bac4c3f44117b:
+
+#define USE_SysDirRead_ :ref:`PFSYSDIRREAD_ <group___sys_dir_itf_1ga1d9fad9cc0594cbe231ae266a6e3bccd>` pfSysDirRead_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaf9200cee6eccc3034d85daa2a0932453:
+
+#define EXT_SysDirRead_ extern :ref:`PFSYSDIRREAD_ <group___sys_dir_itf_1ga1d9fad9cc0594cbe231ae266a6e3bccd>` pfSysDirRead_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga503623860933e400a13585299ac1d18c:
+
+#define GET_SysDirRead_ s_pfCMGetAPI2( "SysDirRead_", (RTS_VOID_FCTPTR *)&pfSysDirRead_, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga0836838d7b2d7b743e71a63994373e6c:
+
+#define CAL_SysDirRead_ pfSysDirRead_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga33a79e7fd03dfb0383aa591cc5974619:
+
+#define CHK_SysDirRead_ (pfSysDirRead_ != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga1c7527d9a194c9ad46403a6741544024:
+
+#define EXP_SysDirRead_ s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirRead_", (RTS_UINTPTR) :ref:`SysDirRead_ <group___sys_dir_itf_1ga957873529ed52516626c9551c3fc1b95>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga2c496d25643f76849cf22629cbd20dd0:
+
+#define USE_SysDirCreate :ref:`PFSYSDIRCREATE <group___sys_dir_itf_1gacb243299400a8346a07d8d1dcdbe5ae1>` pfSysDirCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga9b18acb4e795cf490b6006966303dfa7:
+
+#define EXT_SysDirCreate extern :ref:`PFSYSDIRCREATE <group___sys_dir_itf_1gacb243299400a8346a07d8d1dcdbe5ae1>` pfSysDirCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaa4400517cf353b9278dc42d976bbe252:
+
+#define GET_SysDirCreate s_pfCMGetAPI2( "SysDirCreate", (RTS_VOID_FCTPTR *)&pfSysDirCreate, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga56ed4a7ac524df7815a5d4039ed8db26:
+
+#define CAL_SysDirCreate pfSysDirCreate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gafb7f3bcda519f26d3896722d20bf5e83:
+
+#define CHK_SysDirCreate (pfSysDirCreate != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaa6d3020f33caed340d461a51837a291e:
+
+#define EXP_SysDirCreate s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirCreate", (RTS_UINTPTR) :ref:`SysDirCreate <group___sys_dir_itf_1ga382b85aba7a92647808e18532b38287c>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga1ada3e6853f59b6f6403ec7d9a345013:
+
+#define USE_SysDirCreate2 :ref:`PFSYSDIRCREATE2 <group___sys_dir_itf_1ga3d3f9e75d906c5322c64910bb3286e91>` pfSysDirCreate2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga41500eb2bbcf0ca7677669b1edd2c31b:
+
+#define EXT_SysDirCreate2 extern :ref:`PFSYSDIRCREATE2 <group___sys_dir_itf_1ga3d3f9e75d906c5322c64910bb3286e91>` pfSysDirCreate2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gab7f51616aa497206edd213a7a29c4fd5:
+
+#define GET_SysDirCreate2 s_pfCMGetAPI2( "SysDirCreate2", (RTS_VOID_FCTPTR *)&pfSysDirCreate2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga8d1a3e2d1d9732f7e3972ff27e0e243d:
+
+#define CAL_SysDirCreate2 pfSysDirCreate2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga79b5bbea00e9ec0b894e15d13fa9930a:
+
+#define CHK_SysDirCreate2 (pfSysDirCreate2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga98f3eff8ca1039f560db43de8d459996:
+
+#define EXP_SysDirCreate2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirCreate2", (RTS_UINTPTR) :ref:`SysDirCreate2 <group___sys_dir_itf_1gaa6cfe429e3b16f4d6fa6c904317595dc>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga06f46c76cf3151a5747bdce667ab8dea:
+
+#define USE_SysDirCreate_ :ref:`PFSYSDIRCREATE_ <group___sys_dir_itf_1ga39b65a508db480daf6dc50d9089fb198>` pfSysDirCreate_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga744eed2b97fa215010fb9026740af563:
+
+#define EXT_SysDirCreate_ extern :ref:`PFSYSDIRCREATE_ <group___sys_dir_itf_1ga39b65a508db480daf6dc50d9089fb198>` pfSysDirCreate_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga73e87363a4142c1c14db34facaf18e20:
+
+#define GET_SysDirCreate_ s_pfCMGetAPI2( "SysDirCreate_", (RTS_VOID_FCTPTR *)&pfSysDirCreate_, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga38f56735bb2b1ef7e5412695b34a790c:
+
+#define CAL_SysDirCreate_ pfSysDirCreate_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gae493af1d76282927c6e5f851625eb032:
+
+#define CHK_SysDirCreate_ (pfSysDirCreate_ != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga8997801b347950b9e1b18169bf9afde9:
+
+#define EXP_SysDirCreate_ s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirCreate_", (RTS_UINTPTR) :ref:`SysDirCreate_ <group___sys_dir_itf_1ga94530ed643a1ccd04f1a7a560f420c94>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga9132af8006c3f52039661166d6a584da:
+
+#define USE_SysDirDelete :ref:`PFSYSDIRDELETE <group___sys_dir_itf_1ga89c176675c115a75f8e172f17ab4bb0c>` pfSysDirDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gac28798ff890da583ba263d7be2c23402:
+
+#define EXT_SysDirDelete extern :ref:`PFSYSDIRDELETE <group___sys_dir_itf_1ga89c176675c115a75f8e172f17ab4bb0c>` pfSysDirDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga7c97ef66c81e9ab22f9d539dbe544683:
+
+#define GET_SysDirDelete s_pfCMGetAPI2( "SysDirDelete", (RTS_VOID_FCTPTR *)&pfSysDirDelete, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaf6a365f352556f84119862ce1043f5e2:
+
+#define CAL_SysDirDelete pfSysDirDelete
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gafc3e247d6aa0392d9d7dc2f5226f2c78:
+
+#define CHK_SysDirDelete (pfSysDirDelete != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gadf2baba2093d82a9e71ebe575bd96239:
+
+#define EXP_SysDirDelete s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirDelete", (RTS_UINTPTR) :ref:`SysDirDelete <group___sys_dir_itf_1gab57b1051e92ae0659543a876461fde22>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga3ddd6f955dc86a08fcd09d10a6dad5dc:
+
+#define USE_SysDirDelete2 :ref:`PFSYSDIRDELETE2 <group___sys_dir_itf_1gaf6272b70abb0186efcdda716eb63d67b>` pfSysDirDelete2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaad85b7dbd304ec7aea191a81a2ac7ae0:
+
+#define EXT_SysDirDelete2 extern :ref:`PFSYSDIRDELETE2 <group___sys_dir_itf_1gaf6272b70abb0186efcdda716eb63d67b>` pfSysDirDelete2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gae93635c8d89028fee257bd9f2869bc24:
+
+#define GET_SysDirDelete2 s_pfCMGetAPI2( "SysDirDelete2", (RTS_VOID_FCTPTR *)&pfSysDirDelete2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga9222202852d080c88fe0619d78329549:
+
+#define CAL_SysDirDelete2 pfSysDirDelete2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga267923bd905ebc61050fe6c48896d446:
+
+#define CHK_SysDirDelete2 (pfSysDirDelete2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga7b90c8a351a4d95ff5eaadcd390a7e3f:
+
+#define EXP_SysDirDelete2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirDelete2", (RTS_UINTPTR) :ref:`SysDirDelete2 <group___sys_dir_itf_1gad05203de99260e76da1659e386c795ef>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gac68b37e4352e96e75df28b4a76aab6f2:
+
+#define USE_SysDirDelete_ :ref:`PFSYSDIRDELETE_ <group___sys_dir_itf_1gad95e5ed72a0ccdbb855f5566eede363b>` pfSysDirDelete_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga55340e6f5c518ab5a52f56639a5473b5:
+
+#define EXT_SysDirDelete_ extern :ref:`PFSYSDIRDELETE_ <group___sys_dir_itf_1gad95e5ed72a0ccdbb855f5566eede363b>` pfSysDirDelete_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gab74ffc9a32081bc5875546a556a3b2ba:
+
+#define GET_SysDirDelete_ s_pfCMGetAPI2( "SysDirDelete_", (RTS_VOID_FCTPTR *)&pfSysDirDelete_, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga6247d99c49b5c5327c9ed186504d8129:
+
+#define CAL_SysDirDelete_ pfSysDirDelete_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaab41df184b7405a4717a564e017902b9:
+
+#define CHK_SysDirDelete_ (pfSysDirDelete_ != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga6d5a7d3c4d9e17c622ee11c989b6506d:
+
+#define EXP_SysDirDelete_ s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirDelete_", (RTS_UINTPTR) :ref:`SysDirDelete_ <group___sys_dir_itf_1gacc03df6ff7ef0224d9d8f695a35ae18f>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga643b4ad6cf57ef416de897c3eaf9b859:
+
+#define USE_SysDirRename :ref:`PFSYSDIRRENAME <group___sys_dir_itf_1ga21886d61d9884775054fd564ba25c51b>` pfSysDirRename;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga1c436289e3b02c76fbdff730c5adf9e8:
+
+#define EXT_SysDirRename extern :ref:`PFSYSDIRRENAME <group___sys_dir_itf_1ga21886d61d9884775054fd564ba25c51b>` pfSysDirRename;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga3a6b0f3c8c6eb4447a34eb38bae29949:
+
+#define GET_SysDirRename s_pfCMGetAPI2( "SysDirRename", (RTS_VOID_FCTPTR *)&pfSysDirRename, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga7adf523f04e8efd692cefacd3ecf4aa5:
+
+#define CAL_SysDirRename pfSysDirRename
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga4914373c0d8a140a9f09e668ffd59298:
+
+#define CHK_SysDirRename (pfSysDirRename != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gac20a7f97209f9ad46b0b1d9f2439c8c9:
+
+#define EXP_SysDirRename s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirRename", (RTS_UINTPTR) :ref:`SysDirRename <group___sys_dir_itf_1gaa595cbb76c27ab321a114e63d80a48e1>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaaef04e2adb7da40186339efe03590c0d:
+
+#define USE_SysDirRename_ :ref:`PFSYSDIRRENAME_ <group___sys_dir_itf_1ga10b547fa6127d0072167b7a318710c15>` pfSysDirRename_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gad7ff5590c6b08686b19fcb4bf6820611:
+
+#define EXT_SysDirRename_ extern :ref:`PFSYSDIRRENAME_ <group___sys_dir_itf_1ga10b547fa6127d0072167b7a318710c15>` pfSysDirRename_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga7e18075172f8ced4a3fab8c3f462379b:
+
+#define GET_SysDirRename_ s_pfCMGetAPI2( "SysDirRename_", (RTS_VOID_FCTPTR *)&pfSysDirRename_, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaf765d9648f20813ba1c857c559caa8c4:
+
+#define CAL_SysDirRename_ pfSysDirRename_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gab6b62cf51d63d009aec4410339815543:
+
+#define CHK_SysDirRename_ (pfSysDirRename_ != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaa7b9de753108243317f4c57a69c93e64:
+
+#define EXP_SysDirRename_ s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirRename_", (RTS_UINTPTR) :ref:`SysDirRename_ <group___sys_dir_itf_1ga99606af2288a25ebae8387d07920e283>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga1f020fd99898eb0d2b5e2994cf56639d:
+
+#define USE_SysDirGetCurrent :ref:`PFSYSDIRGETCURRENT <group___sys_dir_itf_1gad58f3d1c21d8cc9071becef97c83258b>` pfSysDirGetCurrent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga735c30313f3860214396d5503d96c03e:
+
+#define EXT_SysDirGetCurrent extern :ref:`PFSYSDIRGETCURRENT <group___sys_dir_itf_1gad58f3d1c21d8cc9071becef97c83258b>` pfSysDirGetCurrent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaf4a8aaf446518ffd4124e56d0a9ae761:
+
+#define GET_SysDirGetCurrent s_pfCMGetAPI2( "SysDirGetCurrent", (RTS_VOID_FCTPTR *)&pfSysDirGetCurrent, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gac2dc26e22d47d7ea8e9f616caa972bd7:
+
+#define CAL_SysDirGetCurrent pfSysDirGetCurrent
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga7987905c62a2f4b707f9f21b8a7a64b2:
+
+#define CHK_SysDirGetCurrent (pfSysDirGetCurrent != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga67c730100fea377911dc5fe81e76b7d5:
+
+#define EXP_SysDirGetCurrent s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirGetCurrent", (RTS_UINTPTR) :ref:`SysDirGetCurrent <group___sys_dir_itf_1ga5d0e2bbbb89d1c2ded2b88eeed24042e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaadd81e72ce36c3aa483fd922014a02be:
+
+#define USE_SysDirGetCurrent_ :ref:`PFSYSDIRGETCURRENT_ <group___sys_dir_itf_1gadafcad46497bd5740028a0cd98664feb>` pfSysDirGetCurrent_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaeceaeadd380fc8a5cfd838678e04e083:
+
+#define EXT_SysDirGetCurrent_ extern :ref:`PFSYSDIRGETCURRENT_ <group___sys_dir_itf_1gadafcad46497bd5740028a0cd98664feb>` pfSysDirGetCurrent_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga6a9f9d854cb442e3f3ac9a8db8381a3e:
+
+#define GET_SysDirGetCurrent_ s_pfCMGetAPI2( "SysDirGetCurrent_", (RTS_VOID_FCTPTR *)&pfSysDirGetCurrent_, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga8e8cc786ef6c5822c44054d821052b6c:
+
+#define CAL_SysDirGetCurrent_ pfSysDirGetCurrent_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gae42a6a12e76bf33434039c5f3056819e:
+
+#define CHK_SysDirGetCurrent_ (pfSysDirGetCurrent_ != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga16bc0df43807feed7990e721b7fbd69e:
+
+#define EXP_SysDirGetCurrent_ s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirGetCurrent_", (RTS_UINTPTR) :ref:`SysDirGetCurrent_ <group___sys_dir_itf_1gac9bceac56abc6fc67ae11265ad14474d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga806efbba999b1863666c12e33d181020:
+
+#define USE_SysDirSetCurrent :ref:`PFSYSDIRSETCURRENT <group___sys_dir_itf_1ga095d8e31c8a3e84ef495667675e3ae25>` pfSysDirSetCurrent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga4c10b274688f581eb8fffbf97ca99ae1:
+
+#define EXT_SysDirSetCurrent extern :ref:`PFSYSDIRSETCURRENT <group___sys_dir_itf_1ga095d8e31c8a3e84ef495667675e3ae25>` pfSysDirSetCurrent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gab94ffc2d26ff7088ba6777f3e22e38be:
+
+#define GET_SysDirSetCurrent s_pfCMGetAPI2( "SysDirSetCurrent", (RTS_VOID_FCTPTR *)&pfSysDirSetCurrent, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga32e3e56621eb8ac9e85ab12a8406d504:
+
+#define CAL_SysDirSetCurrent pfSysDirSetCurrent
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga9b71682a4f4f8468bd38247f39ae95e8:
+
+#define CHK_SysDirSetCurrent (pfSysDirSetCurrent != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga6f046d5426ac06e6f739f86110d6e1e3:
+
+#define EXP_SysDirSetCurrent s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirSetCurrent", (RTS_UINTPTR) :ref:`SysDirSetCurrent <group___sys_dir_itf_1gac269cce0192c9269c10cc2b56a77eee1>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga4a1551a32f44951d02ca280e154fa2be:
+
+#define USE_SysDirSetCurrent_ :ref:`PFSYSDIRSETCURRENT_ <group___sys_dir_itf_1ga79ce88de75c385a741fcb78557e33817>` pfSysDirSetCurrent_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaf029e90e7ef46c3a9b1b6cc94718a8bd:
+
+#define EXT_SysDirSetCurrent_ extern :ref:`PFSYSDIRSETCURRENT_ <group___sys_dir_itf_1ga79ce88de75c385a741fcb78557e33817>` pfSysDirSetCurrent_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga78dee88167de1c2bd68cfa86fb9a4cf2:
+
+#define GET_SysDirSetCurrent_ s_pfCMGetAPI2( "SysDirSetCurrent_", (RTS_VOID_FCTPTR *)&pfSysDirSetCurrent_, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gad9cbaab277ac9606e6ce56f44834e478:
+
+#define CAL_SysDirSetCurrent_ pfSysDirSetCurrent_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaac34f7802d1f9a4312bd65c6968d1430:
+
+#define CHK_SysDirSetCurrent_ (pfSysDirSetCurrent_ != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gad1374b7a6e259b5dbb3969f26cb731a6:
+
+#define EXP_SysDirSetCurrent_ s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirSetCurrent_", (RTS_UINTPTR) :ref:`SysDirSetCurrent_ <group___sys_dir_itf_1ga3b74804294898ea334a4f8f559aeef9e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga92cf279288b22e1168469ce94a11db14:
+
+#define USE_SysDirCopy :ref:`PFSYSDIRCOPY <group___sys_dir_itf_1gabd567d2f5c969ff70047fef8df28cae1>` pfSysDirCopy;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gafe68d6492fe0d92347ab067075c3c6d4:
+
+#define EXT_SysDirCopy extern :ref:`PFSYSDIRCOPY <group___sys_dir_itf_1gabd567d2f5c969ff70047fef8df28cae1>` pfSysDirCopy;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga93b06b9848b7392077840b962c7ce551:
+
+#define GET_SysDirCopy s_pfCMGetAPI2( "SysDirCopy", (RTS_VOID_FCTPTR *)&pfSysDirCopy, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga48bcdff1f6a95c3691cc18ea679dd42e:
+
+#define CAL_SysDirCopy pfSysDirCopy
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gab1d262c681871cd8e3086f266ed24753:
+
+#define CHK_SysDirCopy (pfSysDirCopy != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga9198556ce1e83a9c08122a97f5a23169:
+
+#define EXP_SysDirCopy s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysDirCopy", (RTS_UINTPTR) :ref:`SysDirCopy <group___sys_dir_itf_1ga49ab0a528d1f9382b3729e2725284a36>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga4f3489368a1bd402fe474fd7e3bd0f45:
+
+#define ITF_SysDir
+^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga72d4400792d9889450050e8242121c95:
+
+#define EXTITF_SysDir
+^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___sys_dir_itf_1gaabebaae09eb8d5e04436d571f4edf13b:
+
+typedef struct tagsysdirclose_struct  sysdirclose_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION BEGIN
+
+Close an open directory :return: Returns the runtime system error code (see CmpErrors_Itf.library)
+
+.. _group___sys_dir_itf_1ga43f1c6f63734476c133b0f645409ab2b:
+
+typedef void( *  PFSYSDIRCLOSE_IEC) (sysdirclose_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga7774c01f4c23e8b593401befb61e1941:
+
+typedef struct tagsysdircopy_struct  sysdircopy_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Copies the contents of szSourceDir to szDestDir. Nonexisting destination path will be created. Depending of the parameters, all subdirectories and its content will be copied too, and existing files will be overwritten. NOTE: Empty direcories will be copied if xRecursive is TRUE. :return: Returns the runtime system error code (see CmpErrors_Itf.library)
+
+.. _group___sys_dir_itf_1gafdb1252b9fdaeb1d3d8b15f18afc3222:
+
+typedef void( *  PFSYSDIRCOPY_IEC) (sysdircopy_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga35be8988026158db9fe6c600863161de:
+
+typedef struct tagsysdircreate_struct  sysdircreate_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creates a new directory with the specified name :return: Returns the runtime system error code (see CmpErrors_Itf.library)
+
+.. _group___sys_dir_itf_1ga05fab8c3f51657f02406cdd5a3a50469:
+
+typedef void( *  PFSYSDIRCREATE_IEC) (sysdircreate_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga67c9ff03fb1e5d8239ce2970c3db0bb5:
+
+typedef struct tagsysdircreate2_struct  sysdircreate2_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creates a new directory with the specified name. If xRecursive is set, a full path is created, i.e. all missing parent directories are created too. :return: Returns the runtime system error code (see CmpErrors_Itf.library)
+
+.. _group___sys_dir_itf_1ga4c9fee109c18f20afdb80831b59a0690:
+
+typedef void( *  PFSYSDIRCREATE2_IEC) (sysdircreate2_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gac86b4be28e214b8547da0bd7ac78fae9:
+
+typedef struct tagsysdirdelete_struct  sysdirdelete_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Deletes a directory with the specified name :return: Returns the runtime system error code (see CmpErrors_Itf.library)
+
+.. _group___sys_dir_itf_1gaf38c1fdc805812a0a7faab91be0377fc:
+
+typedef void( *  PFSYSDIRDELETE_IEC) (sysdirdelete_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga4c31d0b9b8ce3c95ce882d2ac2851148:
+
+typedef struct tagsysdirdelete2_struct  sysdirdelete2_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Deletes a directory with the specified name
+
+If xRecursive is set, a whole folder tree can be deleted, i.e. all sub-folders and files are deleted. If xRecursive and xKeepDir are set, the folder is kept but its contents is deleted. :return: Returns the runtime system error code (see CmpErrors_Itf.library)
+
+.. _group___sys_dir_itf_1ga6120a291638ac952ae7e2e6f0b09e650:
+
+typedef void( *  PFSYSDIRDELETE2_IEC) (sysdirdelete2_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaa3fe72a76b64346053ce1f163ea4415a:
+
+typedef struct tagsysdirgetcurrent_struct  sysdirgetcurrent_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get current working directory for IEC file access :return: Returns the runtime system error code (see CmpErrors_Itf.library)
+
+.. _group___sys_dir_itf_1ga463fbee74aceb5062df9b62364a22886:
+
+typedef void( *  PFSYSDIRGETCURRENT_IEC) (sysdirgetcurrent_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaa18ea62ad73f2586a371d70cfa35f31c:
+
+typedef struct tagsysdiropen_struct  sysdiropen_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+| Opens a specified directory and returns a handle and the first directory entry. | szDirEntry is expected to provide enough space to write the directory entry to. | In case szDirEntry is 0, the first directory entry may be retrieved with SysDirRead. :return: Returns the runtime system error code (see CmpErrors.library)
+
+.. _group___sys_dir_itf_1ga3025a411b859614260c2ac134e6fe185:
+
+typedef void( *  PFSYSDIROPEN_IEC) (sysdiropen_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gade4348a61b37e0c51dde752744f8172c:
+
+typedef struct tagsysdirread_struct  sysdirread_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Read next directory entry. Writes the entry in pszDirEntry. :return: Returns the runtime system error code (see CmpErrors.library)
+
++ ERR_OK: Entry could be read + ERR_END_OF_OBJECT: If end of directory list was reached + ERR_PARAMETER: If one of the parameters is invalid + ERR_BUFFERSIZE: If iMaxDirEntry is too short to get the complete directory entry string
+
+.. note:: Typically after error ``ERR_BUFFERSIZE``, the directory-handle is set to the next entry, so this entry will be missed!
+
+.. _group___sys_dir_itf_1ga628a726c76ade5c8157c66d1bee1eadc:
+
+typedef void( *  PFSYSDIRREAD_IEC) (sysdirread_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga361ba1ce5f2c274d10a41f91f9acf794:
+
+typedef struct tagsysdirrename_struct  sysdirrename_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Rename directory :return: Returns the runtime system error code (see CmpErrors.library)
+
+.. _group___sys_dir_itf_1gadc3e22de80237177866274197d854c18:
+
+typedef void( *  PFSYSDIRRENAME_IEC) (sysdirrename_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaf227ad8e4b2c86d973084faacf5054ae:
+
+typedef struct tagsysdirsetcurrent_struct  sysdirsetcurrent_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Set current working directory on the target. In this directory all following file function are operated. This setting applies to file access from IEC only. An empty string resets the working directory to its default. This function should not be used in parallel to any other file operation from IEC. :return: Returns the runtime system error code (see CmpErrors.library)
+
+.. _group___sys_dir_itf_1ga9079a1c5852999faac95d2f31807ba5e:
+
+typedef void( *  PFSYSDIRSETCURRENT_IEC) (sysdirsetcurrent_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gab245023b8c9429c638d04ae89b926850:
+
+typedef RTS_HANDLE( *  PFSYSDIROPEN) (char *pszDir, char *pszDirEntry, int iMaxDirEntry, DirInfo *pDirInfo, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga5b2ef28214af85ae6511cca5b69b67ac:
+
+typedef RTS_HANDLE( *  PFSYSDIROPEN_) (char *pszDir, char *pszDirEntry, int iMaxDirEntry, DirInfo *pDirInfo, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga441cf0b9cfe785ceb624c07c6e06dc24:
+
+typedef RTS_RESULT( *  PFSYSDIRCLOSE) (RTS_HANDLE hDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga2bd73581c5b87bddcece2d20d7ecc6d4:
+
+typedef RTS_RESULT( *  PFSYSDIRCLOSE_) (RTS_HANDLE hDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga8aee496b7a7236ff5645d4b95df9293a:
+
+typedef RTS_RESULT( *  PFSYSDIRREAD) (RTS_HANDLE hDir, char *pszDirEntry, int iMaxDirEntry, DirInfo *pDirInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga1d9fad9cc0594cbe231ae266a6e3bccd:
+
+typedef RTS_RESULT( *  PFSYSDIRREAD_) (RTS_HANDLE hDir, char *pszDirEntry, int iMaxDirEntry, DirInfo *pDirInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gacb243299400a8346a07d8d1dcdbe5ae1:
+
+typedef RTS_RESULT( *  PFSYSDIRCREATE) (char *pszDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga3d3f9e75d906c5322c64910bb3286e91:
+
+typedef RTS_RESULT( *  PFSYSDIRCREATE2) (char *pszDir, RTS_BOOL bRecursive)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga39b65a508db480daf6dc50d9089fb198:
+
+typedef RTS_RESULT( *  PFSYSDIRCREATE_) (char *pszDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga89c176675c115a75f8e172f17ab4bb0c:
+
+typedef RTS_RESULT( *  PFSYSDIRDELETE) (char *pszDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaf6272b70abb0186efcdda716eb63d67b:
+
+typedef RTS_RESULT( *  PFSYSDIRDELETE2) (char *pszDir, RTS_BOOL bRecursive, RTS_BOOL bKeepDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gad95e5ed72a0ccdbb855f5566eede363b:
+
+typedef RTS_RESULT( *  PFSYSDIRDELETE_) (char *pszDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga21886d61d9884775054fd564ba25c51b:
+
+typedef RTS_RESULT( *  PFSYSDIRRENAME) (char *pszOldDir, char *pszNewDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga10b547fa6127d0072167b7a318710c15:
+
+typedef RTS_RESULT( *  PFSYSDIRRENAME_) (char *pszOldDir, char *pszNewDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gad58f3d1c21d8cc9071becef97c83258b:
+
+typedef RTS_RESULT( *  PFSYSDIRGETCURRENT) (char *pszDir, int iMaxDirLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gadafcad46497bd5740028a0cd98664feb:
+
+typedef RTS_RESULT( *  PFSYSDIRGETCURRENT_) (char *pszDir, int iMaxDirLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga095d8e31c8a3e84ef495667675e3ae25:
+
+typedef RTS_RESULT( *  PFSYSDIRSETCURRENT) (char *pszDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga79ce88de75c385a741fcb78557e33817:
+
+typedef RTS_RESULT( *  PFSYSDIRSETCURRENT_) (char *pszDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gabd567d2f5c969ff70047fef8df28cae1:
+
+typedef RTS_RESULT( *  PFSYSDIRCOPY) (char *pszDestDir, char *pszSourceDir, RTS_BOOL bRecursive, RTS_BOOL bOverwrite)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga6f7cbb2c4a5cd36bd405cef89ac887de:
+
+typedef ISysDir_C ISysDir
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___sys_dir_itf_1gaae092283142eb314da9b6c8f78607419:
+
+void sysdirclose (sysdirclose_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gaef492051e21dd693289c1d50b9e56dfe:
+
+void sysdircopy (sysdircopy_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga2acb5522ee2bdb6550f89a46e1883785:
+
+void sysdircreate (sysdircreate_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gad7ca635af6d92d433cce6efa9603502e:
+
+void sysdircreate2 (sysdircreate2_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga14f00b62067b67038088a9f7746f3445:
+
+void sysdirdelete (sysdirdelete_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gab262293a919c7759937e3d02f7725e9d:
+
+void sysdirdelete2 (sysdirdelete2_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gad3c182bb5cf51ff1de2d43161abfeaf5:
+
+void sysdirgetcurrent (sysdirgetcurrent_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1gacdaf4ed63ab1742ef2711befcfbac121:
+
+void sysdiropen (sysdiropen_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga3a5c1836f58d0eaf3977912688ec7426:
+
+void sysdirread (sysdirread_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga01443d0a0bd15a354a421b01dc649d47:
+
+void sysdirrename (sysdirrename_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga42bd9510889e435f2dcfbe2c1d94aa31:
+
+void sysdirsetcurrent (sysdirsetcurrent_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga56327e69d3db146f042d5d7026363961:
+
+RTS_RESULT SysDirOSInit (INIT_STRUCT *pInit)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION END
+
+.. _group___sys_dir_itf_1ga4818ccaf3e2f97fce5271b7fb399f30e:
+
+RTS_RESULT SysDirOSHookFunction (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_dir_itf_1ga3ab07b5c1fd2888b4aed1a66b169fa73:
+
+RTS_HANDLE SysDirOpen (char *pszDir, char *pszDirEntry, int iMaxDirEntry, DirInfo *pDirInfo, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Opens a specified directory and returns a handle and the first directory entry. In case pszDirEntry is NULL, the first directory entry may be retrieved with SysDirRead.
+
+**Parameters**
+
++---------+--------------+----------------------------------------------------------------------------------------------+
+| [in]    | pszDir       | Name of directory. NOTE: Empty string ("") is the request for the current working directory. |
++---------+--------------+----------------------------------------------------------------------------------------------+
+| [out]   | pszDirEntry  | Optional: Directory entry as string. Can be NULL.                                            |
++---------+--------------+----------------------------------------------------------------------------------------------+
+| [in]    | iMaxDirEntry | Optional: Max number of bytes to write in pszDirEntry                                        |
++---------+--------------+----------------------------------------------------------------------------------------------+
+| [out]   | pDirInfo     | Optional: Directory information. Can be NULL.                                                |
++---------+--------------+----------------------------------------------------------------------------------------------+
+| [out]   | pResult      | Pointer to error code                                                                        |
++---------+--------------+----------------------------------------------------------------------------------------------+
+
+**Return values**
+
++----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_OK               | Directory can be opened and a directory info can be retrieved                                                                                                                                         |
++----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_FAILED           | Directory cannot be opened. An invalid handle is returned.                                                                                                                                            |
++----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_END_OF_OBJECT    | Directory can be opened, but _no_ pszDirEntry can be retrieved (directory is empty or end reached)! NOTE: A valid handle is returned with this error and so the directory must be closed after usage! |
++----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_OPERATION_DENIED | Directory cannot be opened because access was denied. An invalid handle is returned.                                                                                                                  |
++----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_PARAMETER        | One of the parameters is invalid. An invalid handle is returned.                                                                                                                                      |
++----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+RTS_HANDLE on directory
+
+.. _group___sys_dir_itf_1ga52f8e5fc8d27d8c7f7f890cd0bc7c840:
+
+RTS_HANDLE SysDirOpen_ (char *pszDir, char *pszDirEntry, int iMaxDirEntry, DirInfo *pDirInfo, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Opens a specified directory and returns a handle and the first directory entry. No standard path will be added. In case pszDirEntry is NULL, the first directory entry may be retrieved with SysDirRead. IMPLEMENTATION NOTE: This interface function is implemented operating system dependent! Optimizations can be done here.
+
+**Parameters**
+
++---------+--------------+-------------------------------------------------------------------------------------------------------------+
+| [in]    | pszDir       | Name of directory. IMPLEMENTATION NOTE: Empty string ("") is the request for the current working directory. |
++---------+--------------+-------------------------------------------------------------------------------------------------------------+
+| [out]   | pszDirEntry  | Optional: Directory entry as string. Can be NULL.                                                           |
++---------+--------------+-------------------------------------------------------------------------------------------------------------+
+| [in]    | iMaxDirEntry | Optional: Max number of bytes to write in pszDirEntry                                                       |
++---------+--------------+-------------------------------------------------------------------------------------------------------------+
+| [out]   | pDirInfo     | Optional: Directory information. Can be NULL                                                                |
++---------+--------------+-------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult      | Pointer to error code                                                                                       |
++---------+--------------+-------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_OK            | Directory can be opened and a directory info can be retrieved                                                                                                                                         |
++-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_FAILED        | Directory cannot be opened. An invalid handle is returned.                                                                                                                                            |
++-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_END_OF_OBJECT | Directory can be opened, but _no_ pszDirEntry can be retrieved (directory is empty or end reached)! NOTE: A valid handle is returned with this error and so the directory must be closed after usage! |
++-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_PARAMETER     | One of the parameters is invalid. An invalid handle is returned.                                                                                                                                      |
++-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+RTS_HANDLE on directory
+
+.. _group___sys_dir_itf_1ga9ffd65d2557513315a3f9879ae8a029d:
+
+RTS_RESULT SysDirClose (RTS_HANDLE hDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Close an open directory
+
+**Parameters**
+
++---------+------+----------------------------------------------------------------+
+| [in]    | hDir | Handle to directory opened with SysDirOpen or with SysDirOpen_ |
++---------+------+----------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_dir_itf_1ga1710760b5ae70ab40988298e5387de78:
+
+RTS_RESULT SysDirClose_ (RTS_HANDLE hDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Close an open directory. IMPLEMENTATION NOTE: This interface function is implemented operating system dependent! Optimizations can be done here.
+
+**Parameters**
+
++---------+------+--------------------------------------------+
+| [in]    | hDir | Handle to directory opened with SysDirOpen |
++---------+------+--------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_dir_itf_1gab22153a1fa4e3218a46c00becd80bccb:
+
+RTS_RESULT SysDirRead (RTS_HANDLE hDir, char *pszDirEntry, int iMaxDirEntry, DirInfo *pDirInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Read next directory entry. Writes the entry in pszDirEntry.
+
+**Parameters**
+
++---------+--------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hDir         | Handle to directory opened with SysDirOpen                                                                             |
++---------+--------------+------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pszDirEntry  | Directory entry as string                                                                                              |
++---------+--------------+------------------------------------------------------------------------------------------------------------------------+
+| [out]   | iMaxDirEntry | Max number of bytes to write in pszDirEntry                                                                            |
++---------+--------------+------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pDirInfo     | Pointer to directory information. IMPLEMENTATION NOTE: Can be NULL (so only directory name is provided in pszDirEntry) |
++---------+--------------+------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+  - ERR_OK: The directory string contains the next directory entry and is referenced by "pszDirEntry", "pDirInfo" references the related directory information string.
+
+  - ERR_END_OF_OBJECT: If end of directory list was reached, the "pszDirEntry" referenced buffer stays empty.
+
+  - ERR_PARAMETER: If one of the parameters is invalid, the function returns without updating the directory iterator.
+
+  - ERR_BUFFERSIZE: If iMaxDirEntry is too short to get the complete directory entry string but not null. ATTENTION: Typically if this error occurs, the "pszDirEntry" contains the string to the incomplete next entry, the iterator is updated!
+
+.. _group___sys_dir_itf_1ga957873529ed52516626c9551c3fc1b95:
+
+RTS_RESULT SysDirRead_ (RTS_HANDLE hDir, char *pszDirEntry, int iMaxDirEntry, DirInfo *pDirInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Read next directory entry. Writes the entry in pszDirEntry. IMPLEMENTATION NOTE: This interface function is implemented operating system dependent! Optimizations can be done here.
+
+**Parameters**
+
++---------+--------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hDir         | Handle to directory opened with SysDirOpen                                                                             |
++---------+--------------+------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pszDirEntry  | Directory entry as string                                                                                              |
++---------+--------------+------------------------------------------------------------------------------------------------------------------------+
+| [out]   | iMaxDirEntry | Max number of bytes to write in pszDirEntry                                                                            |
++---------+--------------+------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pDirInfo     | Pointer to directory information. IMPLEMENTATION NOTE: Can be NULL (so only directory name is provided in pszDirEntry) |
++---------+--------------+------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+  - ERR_OK: The directory string contains the next directory entry and is referenced by "pszDirEntry", "pDirInfo" references the related directory information string.
+
+  - ERR_END_OF_OBJECT: If end of directory list was reached, the "pszDirEntry" referenced buffer stays empty.
+
+  - ERR_PARAMETER: If one of the parameters is invalid, the function returns without updating the directory iterator.
+
+  - ERR_BUFFERSIZE: If iMaxDirEntry is too short to get the complete directory entry string but not null. ATTENTION: Typically if this error occurs, the "pszDirEntry" contains the string to the incomplete next entry, the iterator is updated!
+
+.. _group___sys_dir_itf_1ga382b85aba7a92647808e18532b38287c:
+
+RTS_RESULT SysDirCreate (char *pszDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creates a new directory with the specified name
+
+**Parameters**
+
++---------+--------+-------------------+
+| [in]    | pszDir | Name of directory |
++---------+--------+-------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_dir_itf_1gaa6cfe429e3b16f4d6fa6c904317595dc:
+
+RTS_RESULT SysDirCreate2 (char *pszDir, RTS_BOOL bRecursive)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creates a new directory with the specified name. If bRecursive is set, a full path is created, i.e. all missing parent directories are created too.
+
+**Parameters**
+
++---------+------------+--------------------+
+| [in]    | pszDir     | Name of directory  |
++---------+------------+--------------------+
+| [in]    | bRecursive | Create a full path |
++---------+------------+--------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_dir_itf_1ga94530ed643a1ccd04f1a7a560f420c94:
+
+RTS_RESULT SysDirCreate_ (char *pszDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creates a new directory with the specified name. No standard path will be added. IMPLEMENTATION NOTE: This interface function is implemented operating system dependent! Optimizations can be done here.
+
+**Parameters**
+
++---------+--------+-------------------+
+| [in]    | pszDir | Name of directory |
++---------+--------+-------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+--------------------------------------------------------------------------------+
+| ERR_OK        | Directory was created successfully                                             |
++---------------+--------------------------------------------------------------------------------+
+| ERR_FAILED    | Directory couldn't be created for various reasons other than the following two |
++---------------+--------------------------------------------------------------------------------+
+| ERR_NO_OBJECT | The path to the directory to be created does not exist                         |
++---------------+--------------------------------------------------------------------------------+
+| ERR_DUPLICATE | The directory already exists                                                   |
++---------------+--------------------------------------------------------------------------------+
+
+.. _group___sys_dir_itf_1gab57b1051e92ae0659543a876461fde22:
+
+RTS_RESULT SysDirDelete (char *pszDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Deletes a directory with the specified name
+
+**Parameters**
+
++---------+--------+-------------------+
+| [in]    | pszDir | Name of directory |
++---------+--------+-------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_dir_itf_1gad05203de99260e76da1659e386c795ef:
+
+RTS_RESULT SysDirDelete2 (char *pszDir, RTS_BOOL bRecursive, RTS_BOOL bKeepDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Deletes a directory with the specified name If bRecursive is set, a whole folder tree can be deleted, i.e. all sub-folders and files are deleted. If bRecursive and bKeepDir are set, the folder is kept but its contents is deleted.
+
+**Parameters**
+
++---------+------------+----------------------------+
+| [in]    | pszDir     | Name of directory          |
++---------+------------+----------------------------+
+| [in]    | bRecursive | Delete a whole folder tree |
++---------+------------+----------------------------+
+| [in]    | bKeepDir   | Keep the starting folder   |
++---------+------------+----------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_dir_itf_1gacc03df6ff7ef0224d9d8f695a35ae18f:
+
+RTS_RESULT SysDirDelete_ (char *pszDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Deletes a directory with the specified name. No standard path will be added. IMPLEMENTATION NOTE: This interface function is implemented operating system dependent! Optimizations can be done here.
+
+**Parameters**
+
++---------+--------+-------------------+
+| [in]    | pszDir | Name of directory |
++---------+--------+-------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_dir_itf_1gaa595cbb76c27ab321a114e63d80a48e1:
+
+RTS_RESULT SysDirRename (char *pszOldDir, char *pszNewDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Rename directory
+
+**Parameters**
+
++---------+-----------+----------------------------+
+| [in]    | pszOldDir | Name of existing directory |
++---------+-----------+----------------------------+
+| [in]    | pszNewDir | New name                   |
++---------+-----------+----------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_dir_itf_1ga99606af2288a25ebae8387d07920e283:
+
+RTS_RESULT SysDirRename_ (char *pszOldDir, char *pszNewDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Rename directory. No standard path will be added. IMPLEMENTATION NOTE: This interface function is implemented operating system dependent! Optimizations can be done here.
+
+**Parameters**
+
++---------+-----------+----------------------------+
+| [in]    | pszOldDir | Name of existing directory |
++---------+-----------+----------------------------+
+| [in]    | pszNewDir | New name                   |
++---------+-----------+----------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_dir_itf_1ga5d0e2bbbb89d1c2ded2b88eeed24042e:
+
+RTS_RESULT SysDirGetCurrent (char *pszDir, int iMaxDirLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get current working directory. If no FilePath is specified pzDir is empty (default). To obtain the working directory of the underlying file system use SysDirGetCurrent_.
+
+**Parameters**
+
++---------+------------+--------------------------------+
+| [out]   | pszDir     | Name of current directory      |
++---------+------------+--------------------------------+
+| [in]    | iMaxDirLen | Max length of directory buffer |
++---------+------------+--------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_dir_itf_1gac9bceac56abc6fc67ae11265ad14474d:
+
+RTS_RESULT SysDirGetCurrent_ (char *pszDir, int iMaxDirLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get current working directory of the underlying file system. No standard path will be added. IMPLEMENTATION NOTE: This interface function is implemented operating system dependent!
+
+**Parameters**
+
++---------+------------+--------------------------------+
+| [out]   | pszDir     | Name of current directory      |
++---------+------------+--------------------------------+
+| [in]    | iMaxDirLen | Max length of directory buffer |
++---------+------------+--------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_dir_itf_1gac269cce0192c9269c10cc2b56a77eee1:
+
+RTS_RESULT SysDirSetCurrent (char *pszDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Former set current working directory. This function has been deprecated. It returns just ERR_NOTIMPLEMENTED. To really change the working directory of the whole runtime system use SysDirSetCurrent_.
+
+**Parameters**
+
++---------+--------+----------+
+| [in]    | pszDir | not used |
++---------+--------+----------+
+
+**Returns:**
+
+ERR_NOTIMPLEMENTED
+
+.. _group___sys_dir_itf_1ga3b74804294898ea334a4f8f559aeef9e:
+
+RTS_RESULT SysDirSetCurrent_ (char *pszDir)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Set current working directory of the underlying file system of the whole runtime system. No standard path will be added. It is not recommended to use this function! ATTENTION: Just in case it is strongly recommended to save the path with SysDirGetCurrent_ prior to this call and restore the path as soon as possible. Otherwise the whole runtime system may not work any more! ATTENTION: Reset Origin does not affect this setting. The runtime system has to be restarted! IMPLEMENTATION NOTE: This interface function is implemented operating system dependent!
+
+**Parameters**
+
++---------+--------+---------------------------+
+| [in]    | pszDir | Name of current directory |
++---------+--------+---------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_dir_itf_1ga49ab0a528d1f9382b3729e2725284a36:
+
+RTS_RESULT SysDirCopy (char *pszDestDir, char *pszSourceDir, RTS_BOOL bRecursive, RTS_BOOL bOverwrite)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Copies the contents of pszSourceDir to pszDestDir. Depending of the parameters, all subdirectories and its content will be copied too, and existing files will be overwritten. Non-existing destination path will be created. NOTE: Empty directories will be copied if bRecursive is TRUE.
+
+**Parameters**
+
++---------+--------------+-------------------------------------------------------------------------------------------+
+| [in]    | pszDestDir   | Name of destination directory                                                             |
++---------+--------------+-------------------------------------------------------------------------------------------+
+| [in]    | pszSourceDir | Name of source directory                                                                  |
++---------+--------------+-------------------------------------------------------------------------------------------+
+| [in]    | bRecursive   | TRUE: all subdirectories and their contents are copied, FALSE: subdirectories are omitted |
++---------+--------------+-------------------------------------------------------------------------------------------+
+| [in]    | bOverwrite   | TRUE: existing files are overwritten, FALSE: existing files are left untouched            |
++---------+--------------+-------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++----------------------+-------------------------------------------------------------------------------------------+
+| ERR_OK               | The contents of the source directory was successfully copied to the destination directory |
++----------------------+-------------------------------------------------------------------------------------------+
+| ERR_NO_OBJECT        | There were no files to copy, the destination directory is nevertheless created if need be |
++----------------------+-------------------------------------------------------------------------------------------+
+| ERR_OPERATION_DENIED | Source or destination directory is not accessible                                         |
++----------------------+-------------------------------------------------------------------------------------------+
+| ERR_FAILED           | System error                                                                              |
++----------------------+-------------------------------------------------------------------------------------------+
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

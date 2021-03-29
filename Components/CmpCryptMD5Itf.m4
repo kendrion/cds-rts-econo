@@ -1,3 +1,17 @@
+/**
+ * <interfacename>CmpCryptMD5</interfacename>
+ * <description>
+ *	Interface for the MD5 hash feature.
+ *
+ *	ATTENTION:
+ *	Don't use the MD5 hash in security relevant applications. MD5 is an unsafe algorithm because of existing collision tables!!
+ * </description>
+ *
+ * <copyright>
+ *  Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * </copyright>
+ */
+
 SET_INTERFACE_NAME(`CmpCryptMD5')
 
 #include "CmpItf.h"

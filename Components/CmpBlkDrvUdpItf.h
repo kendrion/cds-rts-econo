@@ -1,11 +1,13 @@
- /*****************************************************************************
-*
-*	Copyright:		© 3S - Smart Software Solutions GmbH, Kempten
-*	Program:		Runtime System for the CoDeSys Soft-Plc
-*	Module: 		Naming service
-*	Version:
-*	Description:	External interface for the naming service client
-******************************************************************************/
+ /**
+ * <interfacename>CmpBlkDrvUdp</interfacename>
+ * <description> 
+ *	Block driver interface for the UDP communication.
+ * </description>
+ *
+ * <copyright>
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * </copyright>
+ */
 
 
 	

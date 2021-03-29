@@ -1,0 +1,936 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_web_socket_client_itf:
+
+=====================
+CmpWebSocketClientItf
+=====================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpWebSocketClient.
+
+Detailed Description
+--------------------
+
+This component contains an implementation of the WebSocket protocol on the client side. See RFC-6455 ( https://tools.ietf.org/html/rfc6455) for details.
+
+The following features are supported:
+
+  - Connect to WebSocket server using plaintext connection. (ws:// schema)
+
+  - Connect to WebSocket server using TLS connection. (wss:// schema)
+
+  - Send binary and text frames.
+
+  - Do a fragmented transfer. Fragmentation has to be done by using implementation.
+
+  - Receive binary and text frames.
+
+  - Receive a fragmented transfer. Defragmentation has to be done by using implementation;
+
+  - Ping / Pong is handled by the implementation. The using implementation is notified if a Ping or Pong was received.
+
+The configuration of the TLS connection has to be done by the using implementation. A TLS context must be configured to the needs of the application. This TLS context is passed to the WebSocket implementation. It is used to create a secure socket. If needed a callback for the server certificate validation can be added to this TLS context. The TLS context must use a TLS client method.
+
+The Implementation will parse the given URL and get the host (or IP-address), port (if set) and path (if set) from that URL. If no port is given default ports will be used. (80 for ws:// schema, 443 for wss:// schema).
+
+**Copyright:**
+
+Copyright (c) 2018 CODESYS Development GmbH. All rights reserved.
+
+Data Structures
+---------------
+
+- struct :ref:`WsClientProxy <struct_ws_client_proxy>`
+
+- struct :ref:`ICmpWebSocketClient_C <struct_i_cmp_web_socket_client___c>`
+
+Macros
+------
+
+- #define :ref:`USE_WsClientCreate <group___cmp_web_socket_client_itf_1gae076bec893870f9f7ff0cc2cc8aab84f>` :ref:`PFWSCLIENTCREATE <group___cmp_web_socket_client_itf_1gac36ad1d51e399fa3c1c9281d2b45240a>` pfWsClientCreate;
+
+- #define :ref:`EXT_WsClientCreate <group___cmp_web_socket_client_itf_1gac31757a800014fdce132b399a6c0b3fd>` extern :ref:`PFWSCLIENTCREATE <group___cmp_web_socket_client_itf_1gac36ad1d51e399fa3c1c9281d2b45240a>` pfWsClientCreate;
+
+- #define :ref:`GET_WsClientCreate <group___cmp_web_socket_client_itf_1ga318df5e37b460a147dbeece58a28b1a1>` s_pfCMGetAPI2( "WsClientCreate", (RTS_VOID_FCTPTR *)&pfWsClientCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_WsClientCreate <group___cmp_web_socket_client_itf_1gaedc5a9b1b342fb3cad2bd58faf645533>` pfWsClientCreate
+
+- #define :ref:`CHK_WsClientCreate <group___cmp_web_socket_client_itf_1gae7f1dc24a65923fd2bdc4cc5b921fcc4>` (pfWsClientCreate != NULL)
+
+- #define :ref:`EXP_WsClientCreate <group___cmp_web_socket_client_itf_1ga31544df22f270711902374c23276fc9b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientCreate", (RTS_UINTPTR) :ref:`WsClientCreate <group___cmp_web_socket_client_itf_1ga828537331f0d1d76c5c93e0673db0745>` , 0, 0)
+
+- #define :ref:`USE_WsClientDelete <group___cmp_web_socket_client_itf_1gabd09a63e99ef0f67419bfbfbe4df872b>` :ref:`PFWSCLIENTDELETE <group___cmp_web_socket_client_itf_1ga20cb5922e463f0c7564e2c88b7febba1>` pfWsClientDelete;
+
+- #define :ref:`EXT_WsClientDelete <group___cmp_web_socket_client_itf_1ga45173284fe20e83a1285a774c44d8452>` extern :ref:`PFWSCLIENTDELETE <group___cmp_web_socket_client_itf_1ga20cb5922e463f0c7564e2c88b7febba1>` pfWsClientDelete;
+
+- #define :ref:`GET_WsClientDelete <group___cmp_web_socket_client_itf_1ga453ad3f33be5b84952aa8a1a23c503fc>` s_pfCMGetAPI2( "WsClientDelete", (RTS_VOID_FCTPTR *)&pfWsClientDelete, (fl), 0, 0)
+
+- #define :ref:`CAL_WsClientDelete <group___cmp_web_socket_client_itf_1gad461ce8891ba546ec80259d71949b842>` pfWsClientDelete
+
+- #define :ref:`CHK_WsClientDelete <group___cmp_web_socket_client_itf_1ga4ae1338d449aeb05cd5fe27576ddca95>` (pfWsClientDelete != NULL)
+
+- #define :ref:`EXP_WsClientDelete <group___cmp_web_socket_client_itf_1ga83a79524bbeddd3d947623e3f5ce1d3b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientDelete", (RTS_UINTPTR) :ref:`WsClientDelete <group___cmp_web_socket_client_itf_1ga6feb84d7cadd98622aa0671e368c197f>` , 0, 0)
+
+- #define :ref:`USE_WsClientConnect <group___cmp_web_socket_client_itf_1ga1b1a8172f8a4547bfed61378d6872ffe>` :ref:`PFWSCLIENTCONNECT <group___cmp_web_socket_client_itf_1gaaee28adf798be4b4c849b47dbf2a09ca>` pfWsClientConnect;
+
+- #define :ref:`EXT_WsClientConnect <group___cmp_web_socket_client_itf_1ga42c6d3f3ceff5ad329c4ef6ccde1db04>` extern :ref:`PFWSCLIENTCONNECT <group___cmp_web_socket_client_itf_1gaaee28adf798be4b4c849b47dbf2a09ca>` pfWsClientConnect;
+
+- #define :ref:`GET_WsClientConnect <group___cmp_web_socket_client_itf_1ga42ed817db23d0bd5d12184d10bc6ee0c>` s_pfCMGetAPI2( "WsClientConnect", (RTS_VOID_FCTPTR *)&pfWsClientConnect, (fl), 0, 0)
+
+- #define :ref:`CAL_WsClientConnect <group___cmp_web_socket_client_itf_1ga9cc46806e05ad56841d36fc7cc6914b9>` pfWsClientConnect
+
+- #define :ref:`CHK_WsClientConnect <group___cmp_web_socket_client_itf_1gaf7d46ea095c2b35e9395443ad24f2b44>` (pfWsClientConnect != NULL)
+
+- #define :ref:`EXP_WsClientConnect <group___cmp_web_socket_client_itf_1ga13645a235bb4673ba1be4b65e103b53c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientConnect", (RTS_UINTPTR) :ref:`WsClientConnect <group___cmp_web_socket_client_itf_1gab2eee7ff752a31ed81a85f59ad843b2d>` , 0, 0)
+
+- #define :ref:`USE_WsClientDisconnect <group___cmp_web_socket_client_itf_1ga5528afe0ac4a188c76bfbeafdcc251bc>` :ref:`PFWSCLIENTDISCONNECT <group___cmp_web_socket_client_itf_1ga7499096f7f841a55df7aa075ec6cdf8f>` pfWsClientDisconnect;
+
+- #define :ref:`EXT_WsClientDisconnect <group___cmp_web_socket_client_itf_1ga8ed1c68e060450428481732f3e711af6>` extern :ref:`PFWSCLIENTDISCONNECT <group___cmp_web_socket_client_itf_1ga7499096f7f841a55df7aa075ec6cdf8f>` pfWsClientDisconnect;
+
+- #define :ref:`GET_WsClientDisconnect <group___cmp_web_socket_client_itf_1gaa0e75b1ea72c9cddbeea17b06c403c65>` s_pfCMGetAPI2( "WsClientDisconnect", (RTS_VOID_FCTPTR *)&pfWsClientDisconnect, (fl), 0, 0)
+
+- #define :ref:`CAL_WsClientDisconnect <group___cmp_web_socket_client_itf_1ga6377b5f04f6ab6fa74caef6e9e1549fc>` pfWsClientDisconnect
+
+- #define :ref:`CHK_WsClientDisconnect <group___cmp_web_socket_client_itf_1gaa59bd0921e243eba89fee2b33b066ec2>` (pfWsClientDisconnect != NULL)
+
+- #define :ref:`EXP_WsClientDisconnect <group___cmp_web_socket_client_itf_1ga96847fe7cad584fe3996ba623ad42b4f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientDisconnect", (RTS_UINTPTR) :ref:`WsClientDisconnect <group___cmp_web_socket_client_itf_1ga8c014856cd0d94b7617dd12d9375366b>` , 0, 0)
+
+- #define :ref:`USE_WsClientSend <group___cmp_web_socket_client_itf_1ga447b2886ca2826e9afa27c75d8dbedcb>` :ref:`PFWSCLIENTSEND <group___cmp_web_socket_client_itf_1ga24e2736ac8ca48bba0f5c66386b93914>` pfWsClientSend;
+
+- #define :ref:`EXT_WsClientSend <group___cmp_web_socket_client_itf_1ga4d2932d110d170fa59e7484a27023f41>` extern :ref:`PFWSCLIENTSEND <group___cmp_web_socket_client_itf_1ga24e2736ac8ca48bba0f5c66386b93914>` pfWsClientSend;
+
+- #define :ref:`GET_WsClientSend <group___cmp_web_socket_client_itf_1ga70eb83eae00f56055a45800ebfd1d999>` s_pfCMGetAPI2( "WsClientSend", (RTS_VOID_FCTPTR *)&pfWsClientSend, (fl), 0, 0)
+
+- #define :ref:`CAL_WsClientSend <group___cmp_web_socket_client_itf_1ga78c7281ea8f29d4cf1806d2936e22808>` pfWsClientSend
+
+- #define :ref:`CHK_WsClientSend <group___cmp_web_socket_client_itf_1gaf2ab416c644f57aef01ebbcc6678f404>` (pfWsClientSend != NULL)
+
+- #define :ref:`EXP_WsClientSend <group___cmp_web_socket_client_itf_1ga47fbfc038d345274a72642671ca93d4f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientSend", (RTS_UINTPTR) :ref:`WsClientSend <group___cmp_web_socket_client_itf_1gad2166f0e930e7bb0e137559ea6fc81a3>` , 0, 0)
+
+- #define :ref:`USE_WsClientProcess <group___cmp_web_socket_client_itf_1gaf8e78c1b2657b08a65c69bbca9167c47>` :ref:`PFWSCLIENTPROCESS <group___cmp_web_socket_client_itf_1gaed4f980f607da4589a6cf1e56bdbe5f6>` pfWsClientProcess;
+
+- #define :ref:`EXT_WsClientProcess <group___cmp_web_socket_client_itf_1ga07b648c18dd5973f236c6d82845975e1>` extern :ref:`PFWSCLIENTPROCESS <group___cmp_web_socket_client_itf_1gaed4f980f607da4589a6cf1e56bdbe5f6>` pfWsClientProcess;
+
+- #define :ref:`GET_WsClientProcess <group___cmp_web_socket_client_itf_1gac73a963f5c67287533d3b113ca2bf671>` s_pfCMGetAPI2( "WsClientProcess", (RTS_VOID_FCTPTR *)&pfWsClientProcess, (fl), 0, 0)
+
+- #define :ref:`CAL_WsClientProcess <group___cmp_web_socket_client_itf_1ga4112a5975e24094fed9038d1ad241b5d>` pfWsClientProcess
+
+- #define :ref:`CHK_WsClientProcess <group___cmp_web_socket_client_itf_1gaad3e400a644b1af1f1767369c485c8b8>` (pfWsClientProcess != NULL)
+
+- #define :ref:`EXP_WsClientProcess <group___cmp_web_socket_client_itf_1ga4a0924bb5513f99ef078ca5d9b2a9922>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientProcess", (RTS_UINTPTR) :ref:`WsClientProcess <group___cmp_web_socket_client_itf_1gaed578d2029b8064031595ee11ed603d9>` , 0, 0)
+
+- #define :ref:`USE_WsClientGetHttpHeader <group___cmp_web_socket_client_itf_1gabb724246b1ed1460cf58b11f44cfe7e9>` :ref:`PFWSCLIENTGETHTTPHEADER <group___cmp_web_socket_client_itf_1ga98aa4170a2db6f12c931c19df7f28d75>` pfWsClientGetHttpHeader;
+
+- #define :ref:`EXT_WsClientGetHttpHeader <group___cmp_web_socket_client_itf_1gafa13d501a97bb64986f43e3c3ced9471>` extern :ref:`PFWSCLIENTGETHTTPHEADER <group___cmp_web_socket_client_itf_1ga98aa4170a2db6f12c931c19df7f28d75>` pfWsClientGetHttpHeader;
+
+- #define :ref:`GET_WsClientGetHttpHeader <group___cmp_web_socket_client_itf_1ga82e9ded65def353dd1ca362eb5d83920>` s_pfCMGetAPI2( "WsClientGetHttpHeader", (RTS_VOID_FCTPTR *)&pfWsClientGetHttpHeader, (fl), 0, 0)
+
+- #define :ref:`CAL_WsClientGetHttpHeader <group___cmp_web_socket_client_itf_1ga3cf5fedc3514d39144ee60fb6e5b346c>` pfWsClientGetHttpHeader
+
+- #define :ref:`CHK_WsClientGetHttpHeader <group___cmp_web_socket_client_itf_1ga4e805fa38dc3776ae10109c8d106b8ee>` (pfWsClientGetHttpHeader != NULL)
+
+- #define :ref:`EXP_WsClientGetHttpHeader <group___cmp_web_socket_client_itf_1gade1f6a305b9b1bb84b2f0d21b4f0ed0f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientGetHttpHeader", (RTS_UINTPTR) :ref:`WsClientGetHttpHeader <group___cmp_web_socket_client_itf_1ga415f483f071bd66d48d07726bd5131ea>` , 0, 0)
+
+- #define :ref:`USE_WsClientSetCookie <group___cmp_web_socket_client_itf_1gae65fba37f5a69ec6fe20d8fb0e5c2893>` :ref:`PFWSCLIENTSETCOOKIE <group___cmp_web_socket_client_itf_1ga64ce44b23213bf63a05f763fff5ad26c>` pfWsClientSetCookie;
+
+- #define :ref:`EXT_WsClientSetCookie <group___cmp_web_socket_client_itf_1gae886c8a6b4ea0061424e64b0973d7527>` extern :ref:`PFWSCLIENTSETCOOKIE <group___cmp_web_socket_client_itf_1ga64ce44b23213bf63a05f763fff5ad26c>` pfWsClientSetCookie;
+
+- #define :ref:`GET_WsClientSetCookie <group___cmp_web_socket_client_itf_1ga72da9cfd37234bb8cb3e45cb9d9f7ae6>` s_pfCMGetAPI2( "WsClientSetCookie", (RTS_VOID_FCTPTR *)&pfWsClientSetCookie, (fl), 0, 0)
+
+- #define :ref:`CAL_WsClientSetCookie <group___cmp_web_socket_client_itf_1ga5b7e88afe06122089b170c5932b7ff14>` pfWsClientSetCookie
+
+- #define :ref:`CHK_WsClientSetCookie <group___cmp_web_socket_client_itf_1ga19dbde63ac2d7088c5c2bba7062034de>` (pfWsClientSetCookie != NULL)
+
+- #define :ref:`EXP_WsClientSetCookie <group___cmp_web_socket_client_itf_1ga090b7c35b8b5c54d0157ac5047e9ffd2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientSetCookie", (RTS_UINTPTR) :ref:`WsClientSetCookie <group___cmp_web_socket_client_itf_1ga1c2d2ae401dee73244533b3e97ffe9dd>` , 0, 0)
+
+- #define :ref:`USE_WsClientSetProxy <group___cmp_web_socket_client_itf_1ga3fadfae4364b0c7f503e79dcbaada530>` :ref:`PFWSCLIENTSETPROXY <group___cmp_web_socket_client_itf_1ga5d4091e8c558f3f0e5dad303620da84d>` pfWsClientSetProxy;
+
+- #define :ref:`EXT_WsClientSetProxy <group___cmp_web_socket_client_itf_1gaa108f2b699d3a0d9ee07bf6fbd1a8430>` extern :ref:`PFWSCLIENTSETPROXY <group___cmp_web_socket_client_itf_1ga5d4091e8c558f3f0e5dad303620da84d>` pfWsClientSetProxy;
+
+- #define :ref:`GET_WsClientSetProxy <group___cmp_web_socket_client_itf_1ga31a45b81c71f0d20bce6a40c40d785dc>` s_pfCMGetAPI2( "WsClientSetProxy", (RTS_VOID_FCTPTR *)&pfWsClientSetProxy, (fl), 0, 0)
+
+- #define :ref:`CAL_WsClientSetProxy <group___cmp_web_socket_client_itf_1gaa1acb6a6b2d3733553d098b16d6f59e7>` pfWsClientSetProxy
+
+- #define :ref:`CHK_WsClientSetProxy <group___cmp_web_socket_client_itf_1gad893f6c37855b9994f176d30e30cd241>` (pfWsClientSetProxy != NULL)
+
+- #define :ref:`EXP_WsClientSetProxy <group___cmp_web_socket_client_itf_1ga995702bfeed47e4c74ee5f9b67483c80>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientSetProxy", (RTS_UINTPTR) :ref:`WsClientSetProxy <group___cmp_web_socket_client_itf_1ga1999c8a3a1cfa1fbefc16bf0a6542854>` , 0, 0)
+
+- #define :ref:`ITF_CmpWebSocketClient <group___cmp_web_socket_client_itf_1ga55953dcc6c117e652a3060d5f7381f32>`
+
+- #define :ref:`EXTITF_CmpWebSocketClient <group___cmp_web_socket_client_itf_1gafa5f258f54d156ba50e543d3afcbdd64>`
+
+Typedefs
+--------
+
+- typedef void(* :ref:`PFDATARECEIVEDCALLBACK <group___cmp_web_socket_client_itf_1gaa01c61054651cc483d084b70c2242460>`)(RTS_HANDLE hClient, void *pUserData, RTS_UI8 *pData, RTS_SIZE dataSize, RTS_BOOL bBinaryMode, RTS_BOOL bFinalFragmet)
+
+- typedef void(* :ref:`PFSTATECHANGECLALLBACK <group___cmp_web_socket_client_itf_1gade19a2a40fc07b1120f2fd8e3ebf83b6>`)(RTS_HANDLE hClient, void *pUserData, WsClientState newState, WebSocketStatus statusCode)
+
+- typedef RTS_HANDLE(* :ref:`PFWSCLIENTCREATE <group___cmp_web_socket_client_itf_1gac36ad1d51e399fa3c1c9281d2b45240a>`)(RTS_SIZE bufferSize, char *pszUrl, char *pszProto, RTS_HANDLE hTlsContext, void *pUserData, PFDATARECEIVEDCALLBACK pfDataReceivedCallback, PFSTATECHANGECLALLBACK pfStateChangeCallback, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFWSCLIENTDELETE <group___cmp_web_socket_client_itf_1ga20cb5922e463f0c7564e2c88b7febba1>`)(RTS_HANDLE hClient)
+
+- typedef RTS_RESULT(* :ref:`PFWSCLIENTCONNECT <group___cmp_web_socket_client_itf_1gaaee28adf798be4b4c849b47dbf2a09ca>`)(RTS_HANDLE hClient)
+
+- typedef RTS_RESULT(* :ref:`PFWSCLIENTDISCONNECT <group___cmp_web_socket_client_itf_1ga7499096f7f841a55df7aa075ec6cdf8f>`)(RTS_HANDLE hClient, WebSocketStatus statusCode)
+
+- typedef RTS_RESULT(* :ref:`PFWSCLIENTSEND <group___cmp_web_socket_client_itf_1ga24e2736ac8ca48bba0f5c66386b93914>`)(RTS_HANDLE hClient, RTS_UI8 *pSendData, RTS_SIZE dataSize, RTS_BOOL bBinaryMode, RTS_BOOL bFinalFragmet)
+
+- typedef RTS_RESULT(* :ref:`PFWSCLIENTPROCESS <group___cmp_web_socket_client_itf_1gaed4f980f607da4589a6cf1e56bdbe5f6>`)(RTS_HANDLE hClient, RTS_UI32 ui32Timeout)
+
+- typedef RTS_RESULT(* :ref:`PFWSCLIENTGETHTTPHEADER <group___cmp_web_socket_client_itf_1ga98aa4170a2db6f12c931c19df7f28d75>`)(RTS_HANDLE hClient, RTS_UI8 **ppHeader)
+
+- typedef RTS_RESULT(* :ref:`PFWSCLIENTSETCOOKIE <group___cmp_web_socket_client_itf_1ga64ce44b23213bf63a05f763fff5ad26c>`)(RTS_HANDLE hClient, RTS_UI8 *pCookieName, RTS_UI8 *pCookieValue)
+
+- typedef RTS_RESULT(* :ref:`PFWSCLIENTSETPROXY <group___cmp_web_socket_client_itf_1ga5d4091e8c558f3f0e5dad303620da84d>`)(RTS_HANDLE hClient, WsClientProxy *pProxy)
+
+- typedef :ref:`ICmpWebSocketClient_C <struct_i_cmp_web_socket_client___c>` :ref:`ICmpWebSocketClient <group___cmp_web_socket_client_itf_1ga70dc734f127003963241044305430fd4>`
+
+Enumerations
+------------
+
+- enum :ref:`WebSocketStatus <group___cmp_web_socket_client_itf_1ga7ca615b8b1393c323b49562a6391daa4>` { :ref:`WebSocketStatus_Not_Relevant <group___cmp_web_socket_client_itf_1gga7ca615b8b1393c323b49562a6391daa4ad9e40164d8a8454a44c0f8ccf5de8b47>`, :ref:`WebSocketStatus_Close_Normal <group___cmp_web_socket_client_itf_1gga7ca615b8b1393c323b49562a6391daa4a1d24dbe3414d90d3c55455c48416e4f2>`, :ref:`WebSocketStatus_Close_GoingAway <group___cmp_web_socket_client_itf_1gga7ca615b8b1393c323b49562a6391daa4a4cbf6278e0f2c009e12b7a46b466eb9e>`, :ref:`WebSocketStatus_Close_Protocol <group___cmp_web_socket_client_itf_1gga7ca615b8b1393c323b49562a6391daa4a501df830206b1c0f852137bb185b3aad>`, :ref:`WebSocketStatus_Close_Type <group___cmp_web_socket_client_itf_1gga7ca615b8b1393c323b49562a6391daa4a2841b4a329d8d9c6e2b318b9ee9f8e5f>`, :ref:`WebSocketStatus_Close_Inconsistent <group___cmp_web_socket_client_itf_1gga7ca615b8b1393c323b49562a6391daa4ad634c2059c136a4173ec9edeb497209e>`, :ref:`WebSocketStatus_Close_Policy <group___cmp_web_socket_client_itf_1gga7ca615b8b1393c323b49562a6391daa4a0863557c5544494799367ae429eebbc1>`, :ref:`WebSocketStatus_Close_Toobig <group___cmp_web_socket_client_itf_1gga7ca615b8b1393c323b49562a6391daa4a491cb2ce0c6638a544a7b0f78da6234a>`, :ref:`WebSocketStatus_Close_Extension <group___cmp_web_socket_client_itf_1gga7ca615b8b1393c323b49562a6391daa4a64ad7bc2a7703005378ac37b914851ce>`, :ref:`WebSocketStatus_Close_Unexpected <group___cmp_web_socket_client_itf_1gga7ca615b8b1393c323b49562a6391daa4a35279c42306688a117535e89ee1d5073>` }
+
+- enum :ref:`WsClientState <group___cmp_web_socket_client_itf_1gae14697c6e6daa42a59774b2a4a6e204e>` { :ref:`WsClientState_Initial <group___cmp_web_socket_client_itf_1ggae14697c6e6daa42a59774b2a4a6e204ea10474f704b6ec535cd836029b9523a97>`, :ref:`WsClientState_InConnect <group___cmp_web_socket_client_itf_1ggae14697c6e6daa42a59774b2a4a6e204ead4735b65d7f58914cc239fcf75df1487>`, :ref:`WsClientState_InConnect_HandshakeSent <group___cmp_web_socket_client_itf_1ggae14697c6e6daa42a59774b2a4a6e204eab11bb6783326d754637699eefb607a23>`, :ref:`WsClientState_Connected <group___cmp_web_socket_client_itf_1ggae14697c6e6daa42a59774b2a4a6e204eae6c88241c4ccb832b164051a33a59398>`, :ref:`WsClientState_PingReceived <group___cmp_web_socket_client_itf_1ggae14697c6e6daa42a59774b2a4a6e204eab5a1f90336105b93afdb3d5216f5607d>`, :ref:`WsClientState_PongReceived <group___cmp_web_socket_client_itf_1ggae14697c6e6daa42a59774b2a4a6e204ea5409d6101c67064e85785d06aa87d5f3>`, :ref:`WsClientState_FrameSentCompletly <group___cmp_web_socket_client_itf_1ggae14697c6e6daa42a59774b2a4a6e204eaab67cd08a591fb9cf2a0cb69177ddf66>`, :ref:`WsClientState_ConnectionClosedByServer <group___cmp_web_socket_client_itf_1ggae14697c6e6daa42a59774b2a4a6e204eaebc8d87e4c966ab4f1520b1bf3db9bd2>`, :ref:`WsClientState_ConnectionClosedLocally <group___cmp_web_socket_client_itf_1ggae14697c6e6daa42a59774b2a4a6e204ea6d8372a4e77af9a4bb7304e2f68d6a49>`, :ref:`WsClientState_InConnect_InitialResponseReceived <group___cmp_web_socket_client_itf_1ggae14697c6e6daa42a59774b2a4a6e204ea29722836255e3e360fb6047aecd57a77>`, :ref:`WsClientState_InConnect_InProxyConnect <group___cmp_web_socket_client_itf_1ggae14697c6e6daa42a59774b2a4a6e204ea74bb8b5a2924b3302bb369c33f910383>`, :ref:`WsClientState_InConnect_ProxyConnected <group___cmp_web_socket_client_itf_1ggae14697c6e6daa42a59774b2a4a6e204ea247c2aa438f534b6ea8cc0d6ab321e92>`, :ref:`WsClientState_InConnect_TlsStarted <group___cmp_web_socket_client_itf_1ggae14697c6e6daa42a59774b2a4a6e204ea3fb61ba3b42e0f3088a0852ec11311a5>` }
+
+- enum :ref:`WsClientProxyType <group___cmp_web_socket_client_itf_1gaa8c502e96af9e90da873ac9f6dbe7910>` { :ref:`WsClientProxyType_None <group___cmp_web_socket_client_itf_1ggaa8c502e96af9e90da873ac9f6dbe7910a5f386ba6733d78567f775404f6fe22e7>`, :ref:`WsClientProxyType_Http <group___cmp_web_socket_client_itf_1ggaa8c502e96af9e90da873ac9f6dbe7910a8f9d8f87d9a9331c89f30f99742b65c9>` }
+
+Functions
+---------
+
+- RTS_HANDLE :ref:`WsClientCreate <group___cmp_web_socket_client_itf_1ga828537331f0d1d76c5c93e0673db0745>` (RTS_SIZE bufferSize, char * pszUrl, char * pszProto, RTS_HANDLE hTlsContext, void * pUserData, :ref:`PFDATARECEIVEDCALLBACK <group___cmp_web_socket_client_itf_1gaa01c61054651cc483d084b70c2242460>`  pfDataReceivedCallback, :ref:`PFSTATECHANGECLALLBACK <group___cmp_web_socket_client_itf_1gade19a2a40fc07b1120f2fd8e3ebf83b6>`  pfStateChangeCallback, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`WsClientDelete <group___cmp_web_socket_client_itf_1ga6feb84d7cadd98622aa0671e368c197f>` (RTS_HANDLE hClient)
+
+- RTS_RESULT :ref:`WsClientConnect <group___cmp_web_socket_client_itf_1gab2eee7ff752a31ed81a85f59ad843b2d>` (RTS_HANDLE hClient)
+
+- RTS_RESULT :ref:`WsClientDisconnect <group___cmp_web_socket_client_itf_1ga8c014856cd0d94b7617dd12d9375366b>` (RTS_HANDLE hClient, :ref:`WebSocketStatus <group___cmp_web_socket_client_itf_1ga7ca615b8b1393c323b49562a6391daa4>`  statusCode)
+
+- RTS_RESULT :ref:`WsClientSend <group___cmp_web_socket_client_itf_1gad2166f0e930e7bb0e137559ea6fc81a3>` (RTS_HANDLE hClient, RTS_UI8 * pSendData, RTS_SIZE dataSize, RTS_BOOL bBinaryMode, RTS_BOOL bFinalFragmet)
+
+- RTS_RESULT :ref:`WsClientProcess <group___cmp_web_socket_client_itf_1gaed578d2029b8064031595ee11ed603d9>` (RTS_HANDLE hClient, RTS_UI32 ui32Timeout)
+
+- RTS_RESULT :ref:`WsClientGetHttpHeader <group___cmp_web_socket_client_itf_1ga415f483f071bd66d48d07726bd5131ea>` (RTS_HANDLE hClient, RTS_UI8 ** ppHeader)
+
+- RTS_RESULT :ref:`WsClientSetCookie <group___cmp_web_socket_client_itf_1ga1c2d2ae401dee73244533b3e97ffe9dd>` (RTS_HANDLE hClient, RTS_UI8 * pCookieName, RTS_UI8 * pCookieValue)
+
+- RTS_RESULT :ref:`WsClientSetProxy <group___cmp_web_socket_client_itf_1ga1999c8a3a1cfa1fbefc16bf0a6542854>` (RTS_HANDLE hClient, :ref:`WsClientProxy <struct_ws_client_proxy>` * pProxy)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_web_socket_client_itf_1gae076bec893870f9f7ff0cc2cc8aab84f:
+
+#define USE_WsClientCreate :ref:`PFWSCLIENTCREATE <group___cmp_web_socket_client_itf_1gac36ad1d51e399fa3c1c9281d2b45240a>` pfWsClientCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gac31757a800014fdce132b399a6c0b3fd:
+
+#define EXT_WsClientCreate extern :ref:`PFWSCLIENTCREATE <group___cmp_web_socket_client_itf_1gac36ad1d51e399fa3c1c9281d2b45240a>` pfWsClientCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga318df5e37b460a147dbeece58a28b1a1:
+
+#define GET_WsClientCreate s_pfCMGetAPI2( "WsClientCreate", (RTS_VOID_FCTPTR *)&pfWsClientCreate, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gaedc5a9b1b342fb3cad2bd58faf645533:
+
+#define CAL_WsClientCreate pfWsClientCreate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gae7f1dc24a65923fd2bdc4cc5b921fcc4:
+
+#define CHK_WsClientCreate (pfWsClientCreate != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga31544df22f270711902374c23276fc9b:
+
+#define EXP_WsClientCreate s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientCreate", (RTS_UINTPTR) :ref:`WsClientCreate <group___cmp_web_socket_client_itf_1ga828537331f0d1d76c5c93e0673db0745>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gabd09a63e99ef0f67419bfbfbe4df872b:
+
+#define USE_WsClientDelete :ref:`PFWSCLIENTDELETE <group___cmp_web_socket_client_itf_1ga20cb5922e463f0c7564e2c88b7febba1>` pfWsClientDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga45173284fe20e83a1285a774c44d8452:
+
+#define EXT_WsClientDelete extern :ref:`PFWSCLIENTDELETE <group___cmp_web_socket_client_itf_1ga20cb5922e463f0c7564e2c88b7febba1>` pfWsClientDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga453ad3f33be5b84952aa8a1a23c503fc:
+
+#define GET_WsClientDelete s_pfCMGetAPI2( "WsClientDelete", (RTS_VOID_FCTPTR *)&pfWsClientDelete, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gad461ce8891ba546ec80259d71949b842:
+
+#define CAL_WsClientDelete pfWsClientDelete
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga4ae1338d449aeb05cd5fe27576ddca95:
+
+#define CHK_WsClientDelete (pfWsClientDelete != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga83a79524bbeddd3d947623e3f5ce1d3b:
+
+#define EXP_WsClientDelete s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientDelete", (RTS_UINTPTR) :ref:`WsClientDelete <group___cmp_web_socket_client_itf_1ga6feb84d7cadd98622aa0671e368c197f>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga1b1a8172f8a4547bfed61378d6872ffe:
+
+#define USE_WsClientConnect :ref:`PFWSCLIENTCONNECT <group___cmp_web_socket_client_itf_1gaaee28adf798be4b4c849b47dbf2a09ca>` pfWsClientConnect;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga42c6d3f3ceff5ad329c4ef6ccde1db04:
+
+#define EXT_WsClientConnect extern :ref:`PFWSCLIENTCONNECT <group___cmp_web_socket_client_itf_1gaaee28adf798be4b4c849b47dbf2a09ca>` pfWsClientConnect;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga42ed817db23d0bd5d12184d10bc6ee0c:
+
+#define GET_WsClientConnect s_pfCMGetAPI2( "WsClientConnect", (RTS_VOID_FCTPTR *)&pfWsClientConnect, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga9cc46806e05ad56841d36fc7cc6914b9:
+
+#define CAL_WsClientConnect pfWsClientConnect
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gaf7d46ea095c2b35e9395443ad24f2b44:
+
+#define CHK_WsClientConnect (pfWsClientConnect != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga13645a235bb4673ba1be4b65e103b53c:
+
+#define EXP_WsClientConnect s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientConnect", (RTS_UINTPTR) :ref:`WsClientConnect <group___cmp_web_socket_client_itf_1gab2eee7ff752a31ed81a85f59ad843b2d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga5528afe0ac4a188c76bfbeafdcc251bc:
+
+#define USE_WsClientDisconnect :ref:`PFWSCLIENTDISCONNECT <group___cmp_web_socket_client_itf_1ga7499096f7f841a55df7aa075ec6cdf8f>` pfWsClientDisconnect;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga8ed1c68e060450428481732f3e711af6:
+
+#define EXT_WsClientDisconnect extern :ref:`PFWSCLIENTDISCONNECT <group___cmp_web_socket_client_itf_1ga7499096f7f841a55df7aa075ec6cdf8f>` pfWsClientDisconnect;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gaa0e75b1ea72c9cddbeea17b06c403c65:
+
+#define GET_WsClientDisconnect s_pfCMGetAPI2( "WsClientDisconnect", (RTS_VOID_FCTPTR *)&pfWsClientDisconnect, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga6377b5f04f6ab6fa74caef6e9e1549fc:
+
+#define CAL_WsClientDisconnect pfWsClientDisconnect
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gaa59bd0921e243eba89fee2b33b066ec2:
+
+#define CHK_WsClientDisconnect (pfWsClientDisconnect != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga96847fe7cad584fe3996ba623ad42b4f:
+
+#define EXP_WsClientDisconnect s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientDisconnect", (RTS_UINTPTR) :ref:`WsClientDisconnect <group___cmp_web_socket_client_itf_1ga8c014856cd0d94b7617dd12d9375366b>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga447b2886ca2826e9afa27c75d8dbedcb:
+
+#define USE_WsClientSend :ref:`PFWSCLIENTSEND <group___cmp_web_socket_client_itf_1ga24e2736ac8ca48bba0f5c66386b93914>` pfWsClientSend;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga4d2932d110d170fa59e7484a27023f41:
+
+#define EXT_WsClientSend extern :ref:`PFWSCLIENTSEND <group___cmp_web_socket_client_itf_1ga24e2736ac8ca48bba0f5c66386b93914>` pfWsClientSend;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga70eb83eae00f56055a45800ebfd1d999:
+
+#define GET_WsClientSend s_pfCMGetAPI2( "WsClientSend", (RTS_VOID_FCTPTR *)&pfWsClientSend, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga78c7281ea8f29d4cf1806d2936e22808:
+
+#define CAL_WsClientSend pfWsClientSend
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gaf2ab416c644f57aef01ebbcc6678f404:
+
+#define CHK_WsClientSend (pfWsClientSend != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga47fbfc038d345274a72642671ca93d4f:
+
+#define EXP_WsClientSend s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientSend", (RTS_UINTPTR) :ref:`WsClientSend <group___cmp_web_socket_client_itf_1gad2166f0e930e7bb0e137559ea6fc81a3>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gaf8e78c1b2657b08a65c69bbca9167c47:
+
+#define USE_WsClientProcess :ref:`PFWSCLIENTPROCESS <group___cmp_web_socket_client_itf_1gaed4f980f607da4589a6cf1e56bdbe5f6>` pfWsClientProcess;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga07b648c18dd5973f236c6d82845975e1:
+
+#define EXT_WsClientProcess extern :ref:`PFWSCLIENTPROCESS <group___cmp_web_socket_client_itf_1gaed4f980f607da4589a6cf1e56bdbe5f6>` pfWsClientProcess;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gac73a963f5c67287533d3b113ca2bf671:
+
+#define GET_WsClientProcess s_pfCMGetAPI2( "WsClientProcess", (RTS_VOID_FCTPTR *)&pfWsClientProcess, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga4112a5975e24094fed9038d1ad241b5d:
+
+#define CAL_WsClientProcess pfWsClientProcess
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gaad3e400a644b1af1f1767369c485c8b8:
+
+#define CHK_WsClientProcess (pfWsClientProcess != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga4a0924bb5513f99ef078ca5d9b2a9922:
+
+#define EXP_WsClientProcess s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientProcess", (RTS_UINTPTR) :ref:`WsClientProcess <group___cmp_web_socket_client_itf_1gaed578d2029b8064031595ee11ed603d9>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gabb724246b1ed1460cf58b11f44cfe7e9:
+
+#define USE_WsClientGetHttpHeader :ref:`PFWSCLIENTGETHTTPHEADER <group___cmp_web_socket_client_itf_1ga98aa4170a2db6f12c931c19df7f28d75>` pfWsClientGetHttpHeader;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gafa13d501a97bb64986f43e3c3ced9471:
+
+#define EXT_WsClientGetHttpHeader extern :ref:`PFWSCLIENTGETHTTPHEADER <group___cmp_web_socket_client_itf_1ga98aa4170a2db6f12c931c19df7f28d75>` pfWsClientGetHttpHeader;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga82e9ded65def353dd1ca362eb5d83920:
+
+#define GET_WsClientGetHttpHeader s_pfCMGetAPI2( "WsClientGetHttpHeader", (RTS_VOID_FCTPTR *)&pfWsClientGetHttpHeader, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga3cf5fedc3514d39144ee60fb6e5b346c:
+
+#define CAL_WsClientGetHttpHeader pfWsClientGetHttpHeader
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga4e805fa38dc3776ae10109c8d106b8ee:
+
+#define CHK_WsClientGetHttpHeader (pfWsClientGetHttpHeader != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gade1f6a305b9b1bb84b2f0d21b4f0ed0f:
+
+#define EXP_WsClientGetHttpHeader s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientGetHttpHeader", (RTS_UINTPTR) :ref:`WsClientGetHttpHeader <group___cmp_web_socket_client_itf_1ga415f483f071bd66d48d07726bd5131ea>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gae65fba37f5a69ec6fe20d8fb0e5c2893:
+
+#define USE_WsClientSetCookie :ref:`PFWSCLIENTSETCOOKIE <group___cmp_web_socket_client_itf_1ga64ce44b23213bf63a05f763fff5ad26c>` pfWsClientSetCookie;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gae886c8a6b4ea0061424e64b0973d7527:
+
+#define EXT_WsClientSetCookie extern :ref:`PFWSCLIENTSETCOOKIE <group___cmp_web_socket_client_itf_1ga64ce44b23213bf63a05f763fff5ad26c>` pfWsClientSetCookie;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga72da9cfd37234bb8cb3e45cb9d9f7ae6:
+
+#define GET_WsClientSetCookie s_pfCMGetAPI2( "WsClientSetCookie", (RTS_VOID_FCTPTR *)&pfWsClientSetCookie, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga5b7e88afe06122089b170c5932b7ff14:
+
+#define CAL_WsClientSetCookie pfWsClientSetCookie
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga19dbde63ac2d7088c5c2bba7062034de:
+
+#define CHK_WsClientSetCookie (pfWsClientSetCookie != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga090b7c35b8b5c54d0157ac5047e9ffd2:
+
+#define EXP_WsClientSetCookie s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientSetCookie", (RTS_UINTPTR) :ref:`WsClientSetCookie <group___cmp_web_socket_client_itf_1ga1c2d2ae401dee73244533b3e97ffe9dd>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga3fadfae4364b0c7f503e79dcbaada530:
+
+#define USE_WsClientSetProxy :ref:`PFWSCLIENTSETPROXY <group___cmp_web_socket_client_itf_1ga5d4091e8c558f3f0e5dad303620da84d>` pfWsClientSetProxy;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gaa108f2b699d3a0d9ee07bf6fbd1a8430:
+
+#define EXT_WsClientSetProxy extern :ref:`PFWSCLIENTSETPROXY <group___cmp_web_socket_client_itf_1ga5d4091e8c558f3f0e5dad303620da84d>` pfWsClientSetProxy;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga31a45b81c71f0d20bce6a40c40d785dc:
+
+#define GET_WsClientSetProxy s_pfCMGetAPI2( "WsClientSetProxy", (RTS_VOID_FCTPTR *)&pfWsClientSetProxy, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gaa1acb6a6b2d3733553d098b16d6f59e7:
+
+#define CAL_WsClientSetProxy pfWsClientSetProxy
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gad893f6c37855b9994f176d30e30cd241:
+
+#define CHK_WsClientSetProxy (pfWsClientSetProxy != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga995702bfeed47e4c74ee5f9b67483c80:
+
+#define EXP_WsClientSetProxy s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"WsClientSetProxy", (RTS_UINTPTR) :ref:`WsClientSetProxy <group___cmp_web_socket_client_itf_1ga1999c8a3a1cfa1fbefc16bf0a6542854>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga55953dcc6c117e652a3060d5f7381f32:
+
+#define ITF_CmpWebSocketClient
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gafa5f258f54d156ba50e543d3afcbdd64:
+
+#define EXTITF_CmpWebSocketClient
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_web_socket_client_itf_1gaa01c61054651cc483d084b70c2242460:
+
+typedef void( * PFDATARECEIVEDCALLBACK) (RTS_HANDLE hClient, void *pUserData, RTS_UI8 *pData, RTS_SIZE dataSize, RTS_BOOL bBinaryMode, RTS_BOOL bFinalFragmet)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Callback function if a complete frame is received from the WebSocket. A single frame is completely defragmented by the WebSocket implementation. A fragmented transfer where multiple frames are used must be defragmented by the caller.
+
+**Parameters**
+
++---------+---------------+--------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hClient       | Handle to the client that received the frame.                                                                            |
++---------+---------------+--------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pUserData     | Pointer to user defined data.                                                                                            |
++---------+---------------+--------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pData         | Pointer to the received data.                                                                                            |
++---------+---------------+--------------------------------------------------------------------------------------------------------------------------+
+| [in]    | dataSize      | Size of available data.                                                                                                  |
++---------+---------------+--------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bBinaryMode   | TRUE if a binary frame is received. FALSE if a text frame is received.                                                   |
++---------+---------------+--------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bFinalFragmet | TRUE if this is the final fragment. This can happen for the first frame. If FALSE this is part of a fragmented transfer. |
++---------+---------------+--------------------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_web_socket_client_itf_1gade19a2a40fc07b1120f2fd8e3ebf83b6:
+
+typedef void( * PFSTATECHANGECLALLBACK) (RTS_HANDLE hClient, void *pUserData, WsClientState newState, WebSocketStatus statusCode)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Callback function to inform on state changes of the WebSocket connection. Note: For WsClientState_PingReceived and WsClientState_PongReceived are used informational. Internal no state is changed.
+
+**Parameters**
+
++---------+------------+----------------------------------------------------------------------------------+
+| [in]    | hClient    | Handle to the client that received the frame.                                    |
++---------+------------+----------------------------------------------------------------------------------+
+| [in]    | pUserData  | Pointer to user defined data.                                                    |
++---------+------------+----------------------------------------------------------------------------------+
+| [in]    | newState   | New state of the WebSocket connection.                                           |
++---------+------------+----------------------------------------------------------------------------------+
+| [in]    | statusCode | This is used when the state changes to ConnectionClosed. This is the reason why. |
++---------+------------+----------------------------------------------------------------------------------+
+
+.. _group___cmp_web_socket_client_itf_1gac36ad1d51e399fa3c1c9281d2b45240a:
+
+typedef RTS_HANDLE( *  PFWSCLIENTCREATE) (RTS_SIZE bufferSize, char *pszUrl, char *pszProto, RTS_HANDLE hTlsContext, void *pUserData, PFDATARECEIVEDCALLBACK pfDataReceivedCallback, PFSTATECHANGECLALLBACK pfStateChangeCallback, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga20cb5922e463f0c7564e2c88b7febba1:
+
+typedef RTS_RESULT( *  PFWSCLIENTDELETE) (RTS_HANDLE hClient)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gaaee28adf798be4b4c849b47dbf2a09ca:
+
+typedef RTS_RESULT( *  PFWSCLIENTCONNECT) (RTS_HANDLE hClient)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga7499096f7f841a55df7aa075ec6cdf8f:
+
+typedef RTS_RESULT( *  PFWSCLIENTDISCONNECT) (RTS_HANDLE hClient, WebSocketStatus statusCode)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga24e2736ac8ca48bba0f5c66386b93914:
+
+typedef RTS_RESULT( *  PFWSCLIENTSEND) (RTS_HANDLE hClient, RTS_UI8 *pSendData, RTS_SIZE dataSize, RTS_BOOL bBinaryMode, RTS_BOOL bFinalFragmet)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1gaed4f980f607da4589a6cf1e56bdbe5f6:
+
+typedef RTS_RESULT( *  PFWSCLIENTPROCESS) (RTS_HANDLE hClient, RTS_UI32 ui32Timeout)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga98aa4170a2db6f12c931c19df7f28d75:
+
+typedef RTS_RESULT( *  PFWSCLIENTGETHTTPHEADER) (RTS_HANDLE hClient, RTS_UI8 **ppHeader)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga64ce44b23213bf63a05f763fff5ad26c:
+
+typedef RTS_RESULT( *  PFWSCLIENTSETCOOKIE) (RTS_HANDLE hClient, RTS_UI8 *pCookieName, RTS_UI8 *pCookieValue)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga5d4091e8c558f3f0e5dad303620da84d:
+
+typedef RTS_RESULT( *  PFWSCLIENTSETPROXY) (RTS_HANDLE hClient, WsClientProxy *pProxy)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_web_socket_client_itf_1ga70dc734f127003963241044305430fd4:
+
+typedef ICmpWebSocketClient_C ICmpWebSocketClient
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Enumeration Type Documentation
+------------------------------
+
+.. _group___cmp_web_socket_client_itf_1ga7ca615b8b1393c323b49562a6391daa4:
+
+enum WebSocketStatus
+^^^^^^^^^^^^^^^^^^^^
+
+
+**Enumerator:**
+
++------------------------------------+
+| WebSocketStatus_Not_Relevant       |
++------------------------------------+
+| WebSocketStatus_Close_Normal       |
++------------------------------------+
+| WebSocketStatus_Close_GoingAway    |
++------------------------------------+
+| WebSocketStatus_Close_Protocol     |
++------------------------------------+
+| WebSocketStatus_Close_Type         |
++------------------------------------+
+| WebSocketStatus_Close_Inconsistent |
++------------------------------------+
+| WebSocketStatus_Close_Policy       |
++------------------------------------+
+| WebSocketStatus_Close_Toobig       |
++------------------------------------+
+| WebSocketStatus_Close_Extension    |
++------------------------------------+
+| WebSocketStatus_Close_Unexpected   |
++------------------------------------+
+
+.. _group___cmp_web_socket_client_itf_1gae14697c6e6daa42a59774b2a4a6e204e:
+
+enum WsClientState
+^^^^^^^^^^^^^^^^^^
+
+
+**Enumerator:**
+
++-------------------------------------------------+
+| WsClientState_Initial                           |
++-------------------------------------------------+
+| WsClientState_InConnect                         |
++-------------------------------------------------+
+| WsClientState_InConnect_HandshakeSent           |
++-------------------------------------------------+
+| WsClientState_Connected                         |
++-------------------------------------------------+
+| WsClientState_PingReceived                      |
++-------------------------------------------------+
+| WsClientState_PongReceived                      |
++-------------------------------------------------+
+| WsClientState_FrameSentCompletly                |
++-------------------------------------------------+
+| WsClientState_ConnectionClosedByServer          |
++-------------------------------------------------+
+| WsClientState_ConnectionClosedLocally           |
++-------------------------------------------------+
+| WsClientState_InConnect_InitialResponseReceived |
++-------------------------------------------------+
+| WsClientState_InConnect_InProxyConnect          |
++-------------------------------------------------+
+| WsClientState_InConnect_ProxyConnected          |
++-------------------------------------------------+
+| WsClientState_InConnect_TlsStarted              |
++-------------------------------------------------+
+
+.. _group___cmp_web_socket_client_itf_1gaa8c502e96af9e90da873ac9f6dbe7910:
+
+enum WsClientProxyType
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+**Enumerator:**
+
++------------------------+
+| WsClientProxyType_None |
++------------------------+
+| WsClientProxyType_Http |
++------------------------+
+
+Function Documentation
+----------------------
+
+.. _group___cmp_web_socket_client_itf_1ga828537331f0d1d76c5c93e0673db0745:
+
+RTS_HANDLE WsClientCreate (RTS_SIZE bufferSize, char *pszUrl, char *pszProto, RTS_HANDLE hTlsContext, void *pUserData, PFDATARECEIVEDCALLBACK pfDataReceivedCallback, PFSTATECHANGECLALLBACK pfStateChangeCallback, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Create a new WebSocket client.
+
+**Parameters**
+
++---------+------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bufferSize             | Set this to the maximum data size size needed.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
++---------+------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pszUrl                 | URL to connect to. The official scheme for WebSockets ws://host[:port][/path] (plain text) or wss://[:port][/path] (TLS connection) is expected here. The parts are used in that way: host (Mandatory): Used for HOST in the HTTP GET request. Used to resolve the Server. You can use a host name or IP-address. If a host name is used and scheme is WSS a SNI will be added to the TLS handshake. port (Optional): Port to connect to. path (Optional): Path is used in the HTTP GET request. If not available a '/' will be added to the HTTP GET request. |
++---------+------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pszProto               | Protocol used inside the websocket handshake header. May be NULL.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
++---------+------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hTlsContext            | The TLC context to use if a wss:// scheme is given.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
++---------+------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pUserData              | Pointer to a user defined value. This is passed to the two callbacks.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
++---------+------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfDataReceivedCallback | Callback function used if a data frame is received.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
++---------+------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfStateChangeCallback  | Callback function used to send state changes.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
++---------+------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult                | Error Code:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+|         |                        |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+|         |                        |   - ERR_OK: WebSocket client created successfully.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+|         |                        |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+|         |                        |   - ERR_PARAMETER: One of the parameters is invalid.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+|         |                        |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+|         |                        |   - ERR_INVALID_URL: The given URL is invalid.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+|         |                        |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+|         |                        |   - ERR_INVALID_HANDLE: A wss:// scheme is given, but hTlsContext is invalid.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
++---------+------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the WebSocket. RTS_INVALID_HANDLE in case of an error.
+
+.. _group___cmp_web_socket_client_itf_1ga6feb84d7cadd98622aa0671e368c197f:
+
+RTS_RESULT WsClientDelete (RTS_HANDLE hClient)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Delete a WebSocket client.
+
+**Parameters**
+
++---------+---------+-------------------------+
+| [in]    | hSocket | Handle to the WebSocket |
++---------+---------+-------------------------+
+
+**Returns:**
+
+Either ERR_OK or ERR_INVALID_HANDLE in case hClient is unknown.
+
+.. _group___cmp_web_socket_client_itf_1gab2eee7ff752a31ed81a85f59ad843b2d:
+
+RTS_RESULT WsClientConnect (RTS_HANDLE hClient)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Connects the WebSocket to the WebSocket server.
+
+**Parameters**
+
++---------+---------+-------------------------+
+| [in]    | hClient | Handle to the WebSocket |
++---------+---------+-------------------------+
+
+**Returns:**
+
+Error Code:
+
+  - ERR_INVALID_HANDLE: The given hClient is unknown.
+
+  - ERR_SOCK_HOSTNOTFOUND: The host of the URL could not be found.
+
+  - ERR_FAILED: Some internal error occurred.
+
+  - ERR_PENDING: Connection pending. Will be finished within WsClientProcess. Wait for state callback with WsClientState_Connected.
+
+.. _group___cmp_web_socket_client_itf_1ga8c014856cd0d94b7617dd12d9375366b:
+
+RTS_RESULT WsClientDisconnect (RTS_HANDLE hClient, WebSocketStatus statusCode)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Disconnects the WebSocket. Sends a FIN frame to the server. Use WsClientConnect to reestablish the connection the same server.
+
+**Parameters**
+
++---------+------------+--------------------------------------------------+
+| [in]    | hClient    | Handle to the WebSocket.                         |
++---------+------------+--------------------------------------------------+
+| [in]    | statusCode | Status code why the connection is beeing closed. |
++---------+------------+--------------------------------------------------+
+
+**Returns:**
+
+Error Code:
+
+  - ERR_INVALID_HANDLE: The given hClient is unknown.
+
+  - ERR_OK: The connection is closed.
+
+.. _group___cmp_web_socket_client_itf_1gad2166f0e930e7bb0e137559ea6fc81a3:
+
+RTS_RESULT WsClientSend (RTS_HANDLE hClient, RTS_UI8 *pSendData, RTS_SIZE dataSize, RTS_BOOL bBinaryMode, RTS_BOOL bFinalFragmet)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Send a data frame to the server.
+
+**Parameters**
+
++---------+---------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hClient       | Handle to the WebSocket.                                                                                                                                |
++---------+---------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pSendData     | Pointer to the data to send.                                                                                                                            |
++---------+---------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | dataSize      | Size of the data to send.                                                                                                                               |
++---------+---------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bBinaryMode   | If TRUE, a binary frame will be sent. If FALSE, a text frame will be sent.                                                                              |
++---------+---------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bFinalFragmet | Use this to signal that this is the final frame. If not set the subsequent calls will send send continuation frames until bFinalFragmet is set to TRUE. |
++---------+---------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Error Code:
+
+  - ERR_OK: Frame is sent.
+
+  - ERR_BUFFERSIZE: Too much data to send.
+
+  - ERR_PENDING: Parts where sent. Sending is finished in WsClientProcess.
+
+  - ERR_CALL_AGAIN: No data sent. Call again.
+
+.. _group___cmp_web_socket_client_itf_1gaed578d2029b8064031595ee11ed603d9:
+
+RTS_RESULT WsClientProcess (RTS_HANDLE hClient, RTS_UI32 ui32Timeout)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Call this function cyclically in a way of your needs. This function will process incoming packets, defragment them, finishes handshaking, etc.
+
+**Parameters**
+
++---------+-------------+---------------------------------+
+| [in]    | hClient     | Handle to the WebSocket         |
++---------+-------------+---------------------------------+
+| [in]    | ui32Timeout | Timeout used for SysSockSelect. |
++---------+-------------+---------------------------------+
+
+**Returns:**
+
+Error Code:
+
+  - ERR_INVALID_HANDLE: The hClient is unknown.
+
+  - ERR_OK: This is returned otherwise. To signal state changes the state change callback is used.
+
+.. _group___cmp_web_socket_client_itf_1ga415f483f071bd66d48d07726bd5131ea:
+
+RTS_RESULT WsClientGetHttpHeader (RTS_HANDLE hClient, RTS_UI8 **ppHeader)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to retrieve a pointer to the header of the initial HTTP response. Can only be called in the context of the callback PFSTATECHANGECLALLBACK during the state WsClientState_InConnect_InitialResponseReceived.
+
+**Parameters**
+
++---------+----------+-------------------------------------------------+
+| [in]    | hClient  | Handle to the WebSocket                         |
++---------+----------+-------------------------------------------------+
+| [out]   | ppHeader | Pointer to Pointer to the retrieved HTTP header |
++---------+----------+-------------------------------------------------+
+
+**Returns:**
+
+Error Code:
+
+  - ERR_INVALID_HANDLE: The hClient is unknown.
+
+  - ERR_PARAMETER: ppHeader is NULL.
+
+  - ERR_INVALID_STATE: The client is not in the state WsClientState_InConnect_InitialResponseReceived.
+
+  - ERR_OK: The HTTP header has been successfully retrieved.
+
+.. _group___cmp_web_socket_client_itf_1ga1c2d2ae401dee73244533b3e97ffe9dd:
+
+RTS_RESULT WsClientSetCookie (RTS_HANDLE hClient, RTS_UI8 *pCookieName, RTS_UI8 *pCookieValue)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to store a cookie to be sent with the initial HTTP request.
+
+**Parameters**
+
++---------+--------------+-------------------------+
+| [in]    | hClient      | Handle to the WebSocket |
++---------+--------------+-------------------------+
+| [in]    | pCookieName  | Name of the cookie      |
++---------+--------------+-------------------------+
+| [in]    | pCookieValue | Value of the cookie     |
++---------+--------------+-------------------------+
+
+**Returns:**
+
+Error Code:
+
+  - ERR_INVALID_HANDLE: The hClient is unknown.
+
+  - ERR_PARAMETER: pCookieName or pCookieValue is NULL.
+
+  - ERR_NOMEMORY: No heap memory to store the cookie.
+
+  - ERR_FAILED: An internal error occured storing the cookie into the internal websocket structure.
+
+  - ERR_OK: The cookie has been successfully stored.
+
+.. _group___cmp_web_socket_client_itf_1ga1999c8a3a1cfa1fbefc16bf0a6542854:
+
+RTS_RESULT WsClientSetProxy (RTS_HANDLE hClient, WsClientProxy *pProxy)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to configure a proxy server for the connection.
+
+**Parameters**
+
++---------+---------+-----------------------------------------------------------------------------------------------------+
+| [in]    | hClient | Handle to the WebSocket                                                                             |
++---------+---------+-----------------------------------------------------------------------------------------------------+
+| [in]    | pProxy  | Pointer to the proxy description (see definition of :ref:`WsClientProxy <struct_ws_client_proxy>` ) |
++---------+---------+-----------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Error Code:
+
+  - ERR_INVALID_HANDLE: The hClient is unknown.
+
+  - ERR_PARAMETER: pProxy is NULL.
+
+  - ERR_OK: The proxy configuration has been set successfully.
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

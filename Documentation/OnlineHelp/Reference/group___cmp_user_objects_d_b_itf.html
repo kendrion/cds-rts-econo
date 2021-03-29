@@ -1,0 +1,1415 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>7.1.2.120. CmpUserObjectsDBItf &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/theme.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7.1.2.121. CmpVisuClientControllerHostItf" href="group___cmp_visu_client_controller_host_itf.html" />
+    <link rel="prev" title="7.1.2.119. CmpUserObjectsDBConfigurationItf" href="group___cmp_user_objects_d_b_configuration_itf.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="group___cmp_visu_client_controller_host_itf.html" title="7.1.2.121. CmpVisuClientControllerHostItf"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="group___cmp_user_objects_d_b_configuration_itf.html" title="7.1.2.119. CmpUserObjectsDBConfigurationItf"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. Reference Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">7.1. API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="group___cmp_user_objects_d_b_configuration_itf.html"
+                        title="previous chapter">7.1.2.119. CmpUserObjectsDBConfigurationItf</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="group___cmp_visu_client_controller_host_itf.html"
+                        title="next chapter">7.1.2.121. CmpVisuClientControllerHostItf</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="cmpuserobjectsdbitf">
+<span id="group-cmp-user-objects-d-b-itf"></span><h1>7.1.2.120. CmpUserObjectsDBItf<a class="headerlink" href="#cmpuserobjectsdbitf" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#detailed-description" id="id277">Detailed Description</a></p></li>
+<li><p><a class="reference internal" href="#modules" id="id278">Modules</a></p></li>
+<li><p><a class="reference internal" href="#data-structures" id="id279">Data Structures</a></p></li>
+<li><p><a class="reference internal" href="#macros" id="id280">Macros</a></p></li>
+<li><p><a class="reference internal" href="#typedefs" id="id281">Typedefs</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id282">Functions</a></p></li>
+<li><p><a class="reference internal" href="#macro-definition-documentation" id="id283">Macro Definition Documentation</a></p></li>
+<li><p><a class="reference internal" href="#typedef-documentation" id="id284">Typedef Documentation</a></p></li>
+<li><p><a class="reference internal" href="#function-documentation" id="id285">Function Documentation</a></p></li>
+</ul>
+</div>
+<p>Interface of CmpUserObjectsDB.</p>
+<div class="section" id="detailed-description">
+<h2><a class="toc-backref" href="#id277">Detailed Description</a><a class="headerlink" href="#detailed-description" title="Permalink to this headline">¶</a></h2>
+<p>Interface for the user rights management database.</p>
+<p>Here you have to store the tree of all objects of the runtime system with their assigned user-groups and the configured rights on it.</p>
+<p>Example:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Object: Name = “Device”; UserGroup = “Administrator” | Rights = USERDB_RIGHT_ALL | DeniedRights = USERDB_RIGHT_NONE; UserGroup = “…” | Rights = … | DeniedRights = …; …</p></li>
+<li><p>Object: Name = “Device.MyObject”; UserGroup = “Administrator” | Rights = USERDB_RIGHT_ALL | DeniedRights = USERDB_RIGHT_NONE; UserGroup = “…” | Rights = … | DeniedRights = …; …</p></li>
+</ul>
+</div></blockquote>
+<p>For details see <span class="xref std std-ref">CmpUserMgrItf.h</span> .</p>
+<p><strong>Copyright:</strong></p>
+<p>Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved. GmbH</p>
+</div>
+<div class="section" id="modules">
+<h2><a class="toc-backref" href="#id278">Modules</a><a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="group___cmp_user_objects_d_b_itf___properties.html#group-cmp-user-objects-d-b-itf-properties"><span class="std std-ref">Properties</span></a></p></li>
+<li><p><a class="reference internal" href="group___cmp_user_objects_d_b_itf___staticdefines.html#group-cmp-user-objects-d-b-itf-staticdefines"><span class="std std-ref">Static defines</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="data-structures">
+<h2><a class="toc-backref" href="#id279">Data Structures</a><a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>struct <a class="reference internal" href="struct_i_cmp_user_objects_d_b___c.html#struct-i-cmp-user-objects-d-b-c"><span class="std std-ref">ICmpUserObjectsDB_C</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="macros">
+<h2><a class="toc-backref" href="#id280">Macros</a><a class="headerlink" href="#macros" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gac8571008ef1759167973bb443b780547"><span class="std std-ref">USE_UserObjectsDBGetUsedRights</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaca3174550acd22ba9dfdbe3b918b9129"><span class="std std-ref">EXT_UserObjectsDBGetUsedRights</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga7c34ccfe77ccd3d7a6b9e05f9a46b582"><span class="std std-ref">GET_UserObjectsDBGetUsedRights</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gac26a44c5d4ba62a98ab22cf96af21063"><span class="std std-ref">CAL_UserObjectsDBGetUsedRights</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id1"><span class="problematic" id="id2">*</span></a>)p0)-&gt;IUserObjectsDBGetUsedRights((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id3"><span class="problematic" id="id4">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gad6fc15b64768dae36742b866524bc6e5"><span class="std std-ref">CHK_UserObjectsDBGetUsedRights</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga1b8de9d88d63af7e902e64e7d3fd8880"><span class="std std-ref">EXP_UserObjectsDBGetUsedRights</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga02e00e8257f082f4aee86f19fa606b29"><span class="std std-ref">USE_UserObjectsDBGetProperties</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gab93f09fc43eab7dbb7c68d116d5f1742"><span class="std std-ref">EXT_UserObjectsDBGetProperties</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga94e90b1a8d7c5211c21d30da279146e7"><span class="std std-ref">GET_UserObjectsDBGetProperties</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2349ba103a85389212c941e1dfb7696d"><span class="std std-ref">CAL_UserObjectsDBGetProperties</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id5"><span class="problematic" id="id6">*</span></a>)p0)-&gt;IUserObjectsDBGetProperties((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id7"><span class="problematic" id="id8">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gab0cd98b8dbdaccedeef6cb07ce3a73f3"><span class="std std-ref">CHK_UserObjectsDBGetProperties</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga5e525c259cbf5355267ac049f0a487be"><span class="std std-ref">EXP_UserObjectsDBGetProperties</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga5e3fd24f7bdf195a9223c66931976eb8"><span class="std std-ref">USE_UserObjectsDBGetID</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga6d8de6e258cd15fe0d29e717507d1a47"><span class="std std-ref">EXT_UserObjectsDBGetID</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaf8f2811d4fadad26f6e8196a94cc3f5e"><span class="std std-ref">GET_UserObjectsDBGetID</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga17326d92d2ea6ceadbea7c86b51c1219"><span class="std std-ref">CAL_UserObjectsDBGetID</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id9"><span class="problematic" id="id10">*</span></a>)p0)-&gt;IUserObjectsDBGetID((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id11"><span class="problematic" id="id12">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga4e1dcfd85a45ae4b9ee0d4bd45de9102"><span class="std std-ref">CHK_UserObjectsDBGetID</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga50e4121920fefcc5217fa43161f347ee"><span class="std std-ref">EXP_UserObjectsDBGetID</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaf003568ccd24c35018de5081d14cc561"><span class="std std-ref">USE_UserObjectsDBGetFirst</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga00e938a51e17db952359354e162fd829"><span class="std std-ref">EXT_UserObjectsDBGetFirst</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaa4dfc58a1559e4735145b4ad26b0a170"><span class="std std-ref">GET_UserObjectsDBGetFirst</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga83ccedbd13a371d051fb2613e3c10451"><span class="std std-ref">CAL_UserObjectsDBGetFirst</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id13"><span class="problematic" id="id14">*</span></a>)p0)-&gt;IUserObjectsDBGetFirst((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id15"><span class="problematic" id="id16">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga27a13243649250a9d8216cb1945cc724"><span class="std std-ref">CHK_UserObjectsDBGetFirst</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2cb3559451368aa3aab229c797341b97"><span class="std std-ref">EXP_UserObjectsDBGetFirst</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga0bb9da4d9e4c21a8d9963fdbdd3b2887"><span class="std std-ref">USE_UserObjectsDBGetNext</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gac5bc0073b526ba4a93ddfe9cd4941ed2"><span class="std std-ref">EXT_UserObjectsDBGetNext</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga08b9fd540f01b856f65d7d20503961f3"><span class="std std-ref">GET_UserObjectsDBGetNext</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaeedb1f00d2fbf1d929b42da02fa1ce11"><span class="std std-ref">CAL_UserObjectsDBGetNext</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id17"><span class="problematic" id="id18">*</span></a>)p0)-&gt;IUserObjectsDBGetNext((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id19"><span class="problematic" id="id20">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga02b5d442765aaf592ea65bde485746dc"><span class="std std-ref">CHK_UserObjectsDBGetNext</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gabd9ac3f3ff8e698f9c0edd449354a36a"><span class="std std-ref">EXP_UserObjectsDBGetNext</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaf1435e3cd2d2e44cb6cf66718660ff4f"><span class="std std-ref">USE_UserObjectsDBOpen</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaaffe304bdbeb7ec4447f1cf088b1dcd8"><span class="std std-ref">EXT_UserObjectsDBOpen</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga35e2011f7578090ca2705ec548373104"><span class="std std-ref">GET_UserObjectsDBOpen</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga8898b40aaaafce500456b76715fa5e0f"><span class="std std-ref">CAL_UserObjectsDBOpen</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id21"><span class="problematic" id="id22">*</span></a>)p0)-&gt;IUserObjectsDBOpen((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id23"><span class="problematic" id="id24">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga814390addc1023be0ae77520717fda93"><span class="std std-ref">CHK_UserObjectsDBOpen</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga10a248d8c7adf9e146411f040a973254"><span class="std std-ref">EXP_UserObjectsDBOpen</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaad79770e98367038d9cf542ef454653e"><span class="std std-ref">USE_UserObjectsDBClose</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaac2d4d8e76323a6171602bd4f7ec23c5"><span class="std std-ref">EXT_UserObjectsDBClose</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gab3c876b1479ce35e0aa7fc745057fa59"><span class="std std-ref">GET_UserObjectsDBClose</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga1c0f00c86eb3b81a5e5703b1af47142e"><span class="std std-ref">CAL_UserObjectsDBClose</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id25"><span class="problematic" id="id26">*</span></a>)p0)-&gt;IUserObjectsDBClose((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id27"><span class="problematic" id="id28">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gac7590c10887e067cd58456b7d1cdb89e"><span class="std std-ref">CHK_UserObjectsDBClose</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga648d759c6ff254375180ab16b306f4ab"><span class="std std-ref">EXP_UserObjectsDBClose</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gacbbb2abbb9c9f6216076a1dbe4d7c280"><span class="std std-ref">USE_UserObjectsDBGetName</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga48aea2fd94cf17668ce63680799c00cd"><span class="std std-ref">EXT_UserObjectsDBGetName</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gab9182fb32f45860976d86bb505fe5ab5"><span class="std std-ref">GET_UserObjectsDBGetName</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gab66ca5d31099ed0812a0b4b8e4cf7b69"><span class="std std-ref">CAL_UserObjectsDBGetName</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id29"><span class="problematic" id="id30">*</span></a>)p0)-&gt;IUserObjectsDBGetName((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id31"><span class="problematic" id="id32">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2,p3))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga9657e153edb18e1c6875e9bba82df56f"><span class="std std-ref">CHK_UserObjectsDBGetName</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga73283f314fe89c54a14cef9b5c635a8b"><span class="std std-ref">EXP_UserObjectsDBGetName</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga7f0fbb1ad311a5c4d4c1aeae33bca38f"><span class="std std-ref">USE_UserObjectsDBGetPath</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga4249a722272af51afde6ac7bff07fe3b"><span class="std std-ref">EXT_UserObjectsDBGetPath</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga11c23419f667a7dfda5f5fd8e4f17a68"><span class="std std-ref">GET_UserObjectsDBGetPath</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga443aa1195aa439106028c5b320f19580"><span class="std std-ref">CAL_UserObjectsDBGetPath</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id33"><span class="problematic" id="id34">*</span></a>)p0)-&gt;IUserObjectsDBGetPath((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id35"><span class="problematic" id="id36">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2,p3))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga77d00307c139ca362c111845af2af80e"><span class="std std-ref">CHK_UserObjectsDBGetPath</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaff6378671867cf1f420158872679ba92"><span class="std std-ref">EXP_UserObjectsDBGetPath</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gae3b5e1792a023e5e4e13f54391cc0f21"><span class="std std-ref">USE_UserObjectsDBGetFirstChild</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga656122a04f1e278c6502de7fa4d48352"><span class="std std-ref">EXT_UserObjectsDBGetFirstChild</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2381af64d3a5b4fad7c3ff6e61029998"><span class="std std-ref">GET_UserObjectsDBGetFirstChild</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gabbd23009591fbd6d93ca05fe8184e06f"><span class="std std-ref">CAL_UserObjectsDBGetFirstChild</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id37"><span class="problematic" id="id38">*</span></a>)p0)-&gt;IUserObjectsDBGetFirstChild((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id39"><span class="problematic" id="id40">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gacd217fa5b780ee7692dacf141f99d4c6"><span class="std std-ref">CHK_UserObjectsDBGetFirstChild</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gafead0188675c0251ee38591522ef5703"><span class="std std-ref">EXP_UserObjectsDBGetFirstChild</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga22351e16f543ac2f58bc50d1fe6c4932"><span class="std std-ref">USE_UserObjectsDBGetNextChild</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga592856997d7d4c02d7b7a01c6587b62f"><span class="std std-ref">EXT_UserObjectsDBGetNextChild</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga34281f5d9817515c1b47119f94dc04d4"><span class="std std-ref">GET_UserObjectsDBGetNextChild</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gae9e0b2c66c620f80e3d4b4878674ed67"><span class="std std-ref">CAL_UserObjectsDBGetNextChild</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id41"><span class="problematic" id="id42">*</span></a>)p0)-&gt;IUserObjectsDBGetNextChild((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id43"><span class="problematic" id="id44">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2,p3))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2031d8b6e8f779c5bfd13cd6c5c494b2"><span class="std std-ref">CHK_UserObjectsDBGetNextChild</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga61a1f50f5e55012535f2059a6b406f0f"><span class="std std-ref">EXP_UserObjectsDBGetNextChild</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gab0be38aa2fe7c22c18cfc72bc803a444"><span class="std std-ref">USE_UserObjectsDBGetFather</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga860bc3b8006c0616c4af57f7a9df388f"><span class="std std-ref">EXT_UserObjectsDBGetFather</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gabf600f8f5f1299b58aa8824a9f7a74cf"><span class="std std-ref">GET_UserObjectsDBGetFather</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gad0fd8c755192a1b7e0967f353464d0a7"><span class="std std-ref">CAL_UserObjectsDBGetFather</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id45"><span class="problematic" id="id46">*</span></a>)p0)-&gt;IUserObjectsDBGetFather((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id47"><span class="problematic" id="id48">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gad3c7afdf5226ed94fe1929f921e2cd02"><span class="std std-ref">CHK_UserObjectsDBGetFather</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga91033c00552bd24e2753d0f328e0e869"><span class="std std-ref">EXP_UserObjectsDBGetFather</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gab7297336e5f7332c2d420d9fe1c50f71"><span class="std std-ref">USE_UserObjectsDBGetFirstGroup</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gad6241671f373a2a8c94bcc7caee04c1a"><span class="std std-ref">EXT_UserObjectsDBGetFirstGroup</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga7d2c5f423ff7aebb180f69432fe887c0"><span class="std std-ref">GET_UserObjectsDBGetFirstGroup</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaeecd06b85cb2be5f60f4098f1e9441ed"><span class="std std-ref">CAL_UserObjectsDBGetFirstGroup</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id49"><span class="problematic" id="id50">*</span></a>)p0)-&gt;IUserObjectsDBGetFirstGroup((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id51"><span class="problematic" id="id52">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga3a1cee11550e40c8a073c818e8d54480"><span class="std std-ref">CHK_UserObjectsDBGetFirstGroup</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaf723babc06801f58fbbe5d3de122bfb4"><span class="std std-ref">EXP_UserObjectsDBGetFirstGroup</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga40e485769cca6f492b9044447c34af7b"><span class="std std-ref">USE_UserObjectsDBGetNextGroup</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga66f02610dedf3537d9eef2eccbe36459"><span class="std std-ref">EXT_UserObjectsDBGetNextGroup</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga82fb7c6b938139b88b7bad83d3e06144"><span class="std std-ref">GET_UserObjectsDBGetNextGroup</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga0ee3379e77a70a1672a16fab1ec0527f"><span class="std std-ref">CAL_UserObjectsDBGetNextGroup</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id53"><span class="problematic" id="id54">*</span></a>)p0)-&gt;IUserObjectsDBGetNextGroup((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id55"><span class="problematic" id="id56">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2,p3))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga4a746a02af93cffd2fece5fd771f10da"><span class="std std-ref">CHK_UserObjectsDBGetNextGroup</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga8520efcfe719f14c8741b88810a011b7"><span class="std std-ref">EXP_UserObjectsDBGetNextGroup</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga9ac0baa492352ee53e932dabefe34819"><span class="std std-ref">USE_UserObjectsDBGetGroupRights</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaa4c4ecdf8c993552052bb6fb7c492bff"><span class="std std-ref">EXT_UserObjectsDBGetGroupRights</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga10b79dccb3632f474417ef5758a15ae6"><span class="std std-ref">GET_UserObjectsDBGetGroupRights</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga8bf8679777128c7949b38985e888b140"><span class="std std-ref">CAL_UserObjectsDBGetGroupRights</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id57"><span class="problematic" id="id58">*</span></a>)p0)-&gt;IUserObjectsDBGetGroupRights((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id59"><span class="problematic" id="id60">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2,p3,p4))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaaddc9e095385cfbc0f47a673d17558f8"><span class="std std-ref">CHK_UserObjectsDBGetGroupRights</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga504b9e8ede247788b9ca82ca6317dad5"><span class="std std-ref">EXP_UserObjectsDBGetGroupRights</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga796bba89a9bdf0a3cab113df1e5b52af"><span class="std std-ref">USE_UserObjectsDBHasRights</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga07a9aa9509045a5903adf732d8a3d2a3"><span class="std std-ref">EXT_UserObjectsDBHasRights</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga3c1d4483d0e8c1390a5d334edacad4f8"><span class="std std-ref">GET_UserObjectsDBHasRights</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga88499e3faf80935e4dd3d047d6368a96"><span class="std std-ref">CAL_UserObjectsDBHasRights</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id61"><span class="problematic" id="id62">*</span></a>)p0)-&gt;IUserObjectsDBHasRights((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id63"><span class="problematic" id="id64">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2,p3))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga08dc2c67c5d1a00cadbf6b5d4e3760a4"><span class="std std-ref">CHK_UserObjectsDBHasRights</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga5956461512e3d0f38b8418160356d731"><span class="std std-ref">EXP_UserObjectsDBHasRights</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gabb925f1fab8878802d81e1e140fcfcbc"><span class="std std-ref">USE_UserObjectsDBGetRights</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga5cd32aade78b6865c8737cd3fc23a1d0"><span class="std std-ref">EXT_UserObjectsDBGetRights</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga4396066d66398ae9099a3e29bc3ffbc1"><span class="std std-ref">GET_UserObjectsDBGetRights</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga60cbbfcba494ac5a2fbdab11b9941f69"><span class="std std-ref">CAL_UserObjectsDBGetRights</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id65"><span class="problematic" id="id66">*</span></a>)p0)-&gt;IUserObjectsDBGetRights((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id67"><span class="problematic" id="id68">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2,p3,p4))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga8964582474eafa214aafd4fe1db43a39"><span class="std std-ref">CHK_UserObjectsDBGetRights</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gab72c12be6a967b5ef357ff3c4df0bebf"><span class="std std-ref">EXP_UserObjectsDBGetRights</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga1438ddd410b50273a2407957ddf92695"><span class="std std-ref">USE_UserObjectsDBActivate</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga9ba8bcbce8313fb98c2cc7ed5aff9bb5"><span class="std std-ref">EXT_UserObjectsDBActivate</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2083f7d5e6d0d59b0d7c87488e73433d"><span class="std std-ref">GET_UserObjectsDBActivate</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga31e8eea7ef0291247e994b5e4f11ae53"><span class="std std-ref">CAL_UserObjectsDBActivate</span></a> (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id69"><span class="problematic" id="id70">*</span></a>)p0)-&gt;IUserObjectsDBActivate((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id71"><span class="problematic" id="id72">*</span></a>)p0)-&gt;pBase-&gt;hInstance))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga1d74a2a38134901dc87adfab7e026b34"><span class="std std-ref">CHK_UserObjectsDBActivate</span></a> TRUE</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga128b6d3dece9d1fe56e7aa7ba96839f0"><span class="std std-ref">EXP_UserObjectsDBActivate</span></a> ERR_OK</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga0fe92023598bfe04144f8976609845fb"><span class="std std-ref">ITF_CmpUserObjectsDB</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed53caef14d27962a10df7fe92b4a01"><span class="std std-ref">EXTITF_CmpUserObjectsDB</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="typedefs">
+<h2><a class="toc-backref" href="#id281">Typedefs</a><a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga590a3da8a28af56ae1b18dd2bdb420fc"><span class="std std-ref">PFUSEROBJECTSDBGETUSEDRIGHTS</span></a>)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 <a href="#id73"><span class="problematic" id="id74">*</span></a>pulUsedRights)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gadfffe58c1d3a899f56e8624c6338be45"><span class="std std-ref">PFUSEROBJECTSDBGETPROPERTIES</span></a>)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 <a href="#id75"><span class="problematic" id="id76">*</span></a>pulProperties)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga7d5487027309c9bee997c371d64356e4"><span class="std std-ref">PFUSEROBJECTSDBGETID</span></a>)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 <a href="#id77"><span class="problematic" id="id78">*</span></a>pulID)</p></li>
+<li><p>typedef RTS_HANDLE(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga975e701394c34cd84443f70a26f51ac0"><span class="std std-ref">PFUSEROBJECTSDBGETFIRST</span></a>)(RTS_HANDLE hDatabase, RTS_RESULT <a href="#id79"><span class="problematic" id="id80">*</span></a>pResult)</p></li>
+<li><p>typedef RTS_HANDLE(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gad861dd66467186cc6b1ed4438446b755"><span class="std std-ref">PFUSEROBJECTSDBGETNEXT</span></a>)(RTS_HANDLE hDatabase, RTS_HANDLE hPrevObject, RTS_RESULT <a href="#id81"><span class="problematic" id="id82">*</span></a>pResult)</p></li>
+<li><p>typedef RTS_HANDLE(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gabc5b1ae0220e7fe31b4d26446f3617ed"><span class="std std-ref">PFUSEROBJECTSDBOPEN</span></a>)(RTS_HANDLE hDatabase, char <a href="#id83"><span class="problematic" id="id84">*</span></a>pszObject, RTS_RESULT <a href="#id85"><span class="problematic" id="id86">*</span></a>pResult)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga46ceb7d61b823b00db4e7514b7b9033b"><span class="std std-ref">PFUSEROBJECTSDBCLOSE</span></a>)(RTS_HANDLE hDatabase, RTS_HANDLE hObject)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gab0aaa795031f30d60deebdb41e89d935"><span class="std std-ref">PFUSEROBJECTSDBGETNAME</span></a>)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, char <a href="#id87"><span class="problematic" id="id88">*</span></a>pszObject, int <a href="#id89"><span class="problematic" id="id90">*</span></a>piMaxLen)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga40e10edacf5ed5b1ff86f70877af973b"><span class="std std-ref">PFUSEROBJECTSDBGETPATH</span></a>)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, char <a href="#id91"><span class="problematic" id="id92">*</span></a>pszObject, int <a href="#id93"><span class="problematic" id="id94">*</span></a>piMaxLen)</p></li>
+<li><p>typedef RTS_HANDLE(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga7b2894c67d606e34f7ca7f73d7bc6dc5"><span class="std std-ref">PFUSEROBJECTSDBGETFIRSTCHILD</span></a>)(RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_RESULT <a href="#id95"><span class="problematic" id="id96">*</span></a>pResult)</p></li>
+<li><p>typedef RTS_HANDLE(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga47be098b5d5680cc394e6324d080a19a"><span class="std std-ref">PFUSEROBJECTSDBGETNEXTCHILD</span></a>)(RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT <a href="#id97"><span class="problematic" id="id98">*</span></a>pResult)</p></li>
+<li><p>typedef RTS_HANDLE(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga36adf622bd57bf22767b81f9ff2cba12"><span class="std std-ref">PFUSEROBJECTSDBGETFATHER</span></a>)(RTS_HANDLE hDatabase, RTS_HANDLE hChildObject, RTS_RESULT <a href="#id99"><span class="problematic" id="id100">*</span></a>pResult)</p></li>
+<li><p>typedef RTS_HANDLE(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga6a7dfdbcf2f73938c481bba10c6f25fa"><span class="std std-ref">PFUSEROBJECTSDBGETFIRSTGROUP</span></a>)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_RESULT <a href="#id101"><span class="problematic" id="id102">*</span></a>pResult)</p></li>
+<li><p>typedef RTS_HANDLE(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga7b6d86d3771fd495c78c2fb6a6f1d5e2"><span class="std std-ref">PFUSEROBJECTSDBGETNEXTGROUP</span></a>)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT <a href="#id103"><span class="problematic" id="id104">*</span></a>pResult)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga9201d7b15ad8142296d0973e565230fe"><span class="std std-ref">PFUSEROBJECTSDBGETGROUPRIGHTS</span></a>)(RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 <a href="#id105"><span class="problematic" id="id106">*</span></a>pulRights, RTS_UI32 <a href="#id107"><span class="problematic" id="id108">*</span></a>pulDeniedRights)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga9c318a9b4a1f996157157464cab45ec7"><span class="std std-ref">PFUSEROBJECTSDBHASRIGHTS</span></a>)(RTS_HANDLE hDatabase, char <a href="#id109"><span class="problematic" id="id110">*</span></a>pszObject, RTS_HANDLE hUser, RTS_UI32 ulRequestedRights)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga65bfc4bf72ddde713a4a84e6b0458bb5"><span class="std std-ref">PFUSEROBJECTSDBGETRIGHTS</span></a>)(RTS_HANDLE hDatabase, char <a href="#id111"><span class="problematic" id="id112">*</span></a>pszObject, RTS_HANDLE hUser, RTS_UI32 <a href="#id113"><span class="problematic" id="id114">*</span></a>pulRights, RTS_UI32 <a href="#id115"><span class="problematic" id="id116">*</span></a>pulDeniedRights)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaa7221932a865ce959ee30ae4d3c1835b"><span class="std std-ref">PFUSEROBJECTSDBACTIVATE</span></a>)(RTS_HANDLE hDatabase)</p></li>
+<li><p>typedef <a class="reference internal" href="struct_i_cmp_user_objects_d_b___c.html#struct-i-cmp-user-objects-d-b-c"><span class="std std-ref">ICmpUserObjectsDB_C</span></a> <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2><a class="toc-backref" href="#id282">Functions</a><a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>STATICITF_DEF RTS_RESULT <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga6c4abe88013075349a75ea97748db2e9"><span class="std std-ref">UserObjectsDBGetUsedRights</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 * pulUsedRights)</p></li>
+<li><p>STATICITF_DEF RTS_RESULT <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2b3e220f9cb4751a5909ec483be17dbe"><span class="std std-ref">UserObjectsDBGetProperties</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 * pulProperties)</p></li>
+<li><p>STATICITF_DEF RTS_RESULT <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gafbcfe13e68eca90ede4da167a68c058b"><span class="std std-ref">UserObjectsDBGetID</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 * pulID)</p></li>
+<li><p>STATICITF_DEF RTS_HANDLE <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga7e027769a0f96b54eef8e88ea450dbcb"><span class="std std-ref">UserObjectsDBGetFirst</span></a> (RTS_HANDLE hDatabase, RTS_RESULT * pResult)</p></li>
+<li><p>STATICITF_DEF RTS_HANDLE <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaee13eb6d6456073b13d20ba7a7cf41d8"><span class="std std-ref">UserObjectsDBGetNext</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hPrevObject, RTS_RESULT * pResult)</p></li>
+<li><p>STATICITF_DEF RTS_HANDLE <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaf06de0f67f72236949ea74d87fc75b5c"><span class="std std-ref">UserObjectsDBOpen</span></a> (RTS_HANDLE hDatabase, char * pszObject, RTS_RESULT * pResult)</p></li>
+<li><p>STATICITF_DEF RTS_RESULT <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga8b7889bedbaa2df2baa411091bae5978"><span class="std std-ref">UserObjectsDBClose</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject)</p></li>
+<li><p>STATICITF_DEF RTS_RESULT <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga24ce94a9395fdf72c67d26b5cf786f38"><span class="std std-ref">UserObjectsDBGetName</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char * pszObject, int * piMaxLen)</p></li>
+<li><p>STATICITF_DEF RTS_RESULT <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga08afb5745800909f6f4cc7dc197a493c"><span class="std std-ref">UserObjectsDBGetPath</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char * pszObject, int * piMaxLen)</p></li>
+<li><p>STATICITF_DEF RTS_HANDLE <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gad032a88090da3f549606829b597b3019"><span class="std std-ref">UserObjectsDBGetFirstChild</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_RESULT * pResult)</p></li>
+<li><p>STATICITF_DEF RTS_HANDLE <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga583e140c91648f02ebdf07b2561129df"><span class="std std-ref">UserObjectsDBGetNextChild</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT * pResult)</p></li>
+<li><p>STATICITF_DEF RTS_HANDLE <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga9dbba4bc21464ceb67ee80e795f392bc"><span class="std std-ref">UserObjectsDBGetFather</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hChildObject, RTS_RESULT * pResult)</p></li>
+<li><p>STATICITF_DEF RTS_HANDLE <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gac19b5f4454ea59447df6ed6dc81b1f8f"><span class="std std-ref">UserObjectsDBGetFirstGroup</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_RESULT * pResult)</p></li>
+<li><p>STATICITF_DEF RTS_HANDLE <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga7c69c09552e7cc2d604bf8a217d22b91"><span class="std std-ref">UserObjectsDBGetNextGroup</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT * pResult)</p></li>
+<li><p>STATICITF_DEF RTS_RESULT <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaffdfe001e2868c1049a26526a3fea2d2"><span class="std std-ref">UserObjectsDBGetGroupRights</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 * pulRights, RTS_UI32 * pulDeniedRights)</p></li>
+<li><p>STATICITF_DEF RTS_RESULT <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaefefa9a91e01f7dc83d9b249eb7fa231"><span class="std std-ref">UserObjectsDBHasRights</span></a> (RTS_HANDLE hDatabase, char * pszObject, RTS_HANDLE hUser, RTS_UI32 ulRequestedRights)</p></li>
+<li><p>STATICITF_DEF RTS_RESULT <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga605cf1cdb8c5387895398ab760f32b56"><span class="std std-ref">UserObjectsDBGetRights</span></a> (RTS_HANDLE hDatabase, char * pszObject, RTS_HANDLE hUser, RTS_UI32 * pulRights, RTS_UI32 * pulDeniedRights)</p></li>
+<li><p>STATICITF_DEF RTS_RESULT <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga68c681774d761264f4b04686994a3421"><span class="std std-ref">UserObjectsDBActivate</span></a> (RTS_HANDLE hDatabase)</p></li>
+</ul>
+</div>
+<div class="section" id="macro-definition-documentation">
+<h2><a class="toc-backref" href="#id283">Macro Definition Documentation</a><a class="headerlink" href="#macro-definition-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="define-use-userobjectsdbgetusedrights">
+<span id="group-cmp-user-objects-d-b-itf-1gac8571008ef1759167973bb443b780547"></span><h3>#define USE_UserObjectsDBGetUsedRights<a class="headerlink" href="#define-use-userobjectsdbgetusedrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbgetusedrights">
+<span id="group-cmp-user-objects-d-b-itf-1gaca3174550acd22ba9dfdbe3b918b9129"></span><h3>#define EXT_UserObjectsDBGetUsedRights<a class="headerlink" href="#define-ext-userobjectsdbgetusedrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbgetusedrights-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga7c34ccfe77ccd3d7a6b9e05f9a46b582"></span><h3>#define GET_UserObjectsDBGetUsedRights ERR_OK<a class="headerlink" href="#define-get-userobjectsdbgetusedrights-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbgetusedrights-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbgetusedrights-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2">
+<span id="group-cmp-user-objects-d-b-itf-1gac26a44c5d4ba62a98ab22cf96af21063"></span><h3>#define CAL_UserObjectsDBGetUsedRights (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id117"><span class="problematic" id="id118">*</span></a>)p0)-&gt;IUserObjectsDBGetUsedRights((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id119"><span class="problematic" id="id120">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))<a class="headerlink" href="#define-cal-userobjectsdbgetusedrights-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbgetusedrights-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbgetusedrights-true">
+<span id="group-cmp-user-objects-d-b-itf-1gad6fc15b64768dae36742b866524bc6e5"></span><h3>#define CHK_UserObjectsDBGetUsedRights TRUE<a class="headerlink" href="#define-chk-userobjectsdbgetusedrights-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbgetusedrights-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga1b8de9d88d63af7e902e64e7d3fd8880"></span><h3>#define EXP_UserObjectsDBGetUsedRights ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbgetusedrights-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbgetproperties">
+<span id="group-cmp-user-objects-d-b-itf-1ga02e00e8257f082f4aee86f19fa606b29"></span><h3>#define USE_UserObjectsDBGetProperties<a class="headerlink" href="#define-use-userobjectsdbgetproperties" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbgetproperties">
+<span id="group-cmp-user-objects-d-b-itf-1gab93f09fc43eab7dbb7c68d116d5f1742"></span><h3>#define EXT_UserObjectsDBGetProperties<a class="headerlink" href="#define-ext-userobjectsdbgetproperties" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbgetproperties-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga94e90b1a8d7c5211c21d30da279146e7"></span><h3>#define GET_UserObjectsDBGetProperties ERR_OK<a class="headerlink" href="#define-get-userobjectsdbgetproperties-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbgetproperties-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbgetproperties-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2">
+<span id="group-cmp-user-objects-d-b-itf-1ga2349ba103a85389212c941e1dfb7696d"></span><h3>#define CAL_UserObjectsDBGetProperties (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id121"><span class="problematic" id="id122">*</span></a>)p0)-&gt;IUserObjectsDBGetProperties((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id123"><span class="problematic" id="id124">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))<a class="headerlink" href="#define-cal-userobjectsdbgetproperties-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbgetproperties-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbgetproperties-true">
+<span id="group-cmp-user-objects-d-b-itf-1gab0cd98b8dbdaccedeef6cb07ce3a73f3"></span><h3>#define CHK_UserObjectsDBGetProperties TRUE<a class="headerlink" href="#define-chk-userobjectsdbgetproperties-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbgetproperties-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga5e525c259cbf5355267ac049f0a487be"></span><h3>#define EXP_UserObjectsDBGetProperties ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbgetproperties-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbgetid">
+<span id="group-cmp-user-objects-d-b-itf-1ga5e3fd24f7bdf195a9223c66931976eb8"></span><h3>#define USE_UserObjectsDBGetID<a class="headerlink" href="#define-use-userobjectsdbgetid" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbgetid">
+<span id="group-cmp-user-objects-d-b-itf-1ga6d8de6e258cd15fe0d29e717507d1a47"></span><h3>#define EXT_UserObjectsDBGetID<a class="headerlink" href="#define-ext-userobjectsdbgetid" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbgetid-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1gaf8f2811d4fadad26f6e8196a94cc3f5e"></span><h3>#define GET_UserObjectsDBGetID ERR_OK<a class="headerlink" href="#define-get-userobjectsdbgetid-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbgetid-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbgetid-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2">
+<span id="group-cmp-user-objects-d-b-itf-1ga17326d92d2ea6ceadbea7c86b51c1219"></span><h3>#define CAL_UserObjectsDBGetID (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id125"><span class="problematic" id="id126">*</span></a>)p0)-&gt;IUserObjectsDBGetID((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id127"><span class="problematic" id="id128">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))<a class="headerlink" href="#define-cal-userobjectsdbgetid-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbgetid-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbgetid-true">
+<span id="group-cmp-user-objects-d-b-itf-1ga4e1dcfd85a45ae4b9ee0d4bd45de9102"></span><h3>#define CHK_UserObjectsDBGetID TRUE<a class="headerlink" href="#define-chk-userobjectsdbgetid-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbgetid-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga50e4121920fefcc5217fa43161f347ee"></span><h3>#define EXP_UserObjectsDBGetID ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbgetid-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbgetfirst">
+<span id="group-cmp-user-objects-d-b-itf-1gaf003568ccd24c35018de5081d14cc561"></span><h3>#define USE_UserObjectsDBGetFirst<a class="headerlink" href="#define-use-userobjectsdbgetfirst" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbgetfirst">
+<span id="group-cmp-user-objects-d-b-itf-1ga00e938a51e17db952359354e162fd829"></span><h3>#define EXT_UserObjectsDBGetFirst<a class="headerlink" href="#define-ext-userobjectsdbgetfirst" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbgetfirst-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1gaa4dfc58a1559e4735145b4ad26b0a170"></span><h3>#define GET_UserObjectsDBGetFirst ERR_OK<a class="headerlink" href="#define-get-userobjectsdbgetfirst-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbgetfirst-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbgetfirst-icmpuserobjectsdb-p0-pbase-hinstance-p1">
+<span id="group-cmp-user-objects-d-b-itf-1ga83ccedbd13a371d051fb2613e3c10451"></span><h3>#define CAL_UserObjectsDBGetFirst (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id129"><span class="problematic" id="id130">*</span></a>)p0)-&gt;IUserObjectsDBGetFirst((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id131"><span class="problematic" id="id132">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1))<a class="headerlink" href="#define-cal-userobjectsdbgetfirst-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbgetfirst-icmpuserobjectsdb-p0-pbase-hinstance-p1" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbgetfirst-true">
+<span id="group-cmp-user-objects-d-b-itf-1ga27a13243649250a9d8216cb1945cc724"></span><h3>#define CHK_UserObjectsDBGetFirst TRUE<a class="headerlink" href="#define-chk-userobjectsdbgetfirst-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbgetfirst-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga2cb3559451368aa3aab229c797341b97"></span><h3>#define EXP_UserObjectsDBGetFirst ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbgetfirst-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbgetnext">
+<span id="group-cmp-user-objects-d-b-itf-1ga0bb9da4d9e4c21a8d9963fdbdd3b2887"></span><h3>#define USE_UserObjectsDBGetNext<a class="headerlink" href="#define-use-userobjectsdbgetnext" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbgetnext">
+<span id="group-cmp-user-objects-d-b-itf-1gac5bc0073b526ba4a93ddfe9cd4941ed2"></span><h3>#define EXT_UserObjectsDBGetNext<a class="headerlink" href="#define-ext-userobjectsdbgetnext" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbgetnext-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga08b9fd540f01b856f65d7d20503961f3"></span><h3>#define GET_UserObjectsDBGetNext ERR_OK<a class="headerlink" href="#define-get-userobjectsdbgetnext-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbgetnext-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbgetnext-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2">
+<span id="group-cmp-user-objects-d-b-itf-1gaeedb1f00d2fbf1d929b42da02fa1ce11"></span><h3>#define CAL_UserObjectsDBGetNext (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id133"><span class="problematic" id="id134">*</span></a>)p0)-&gt;IUserObjectsDBGetNext((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id135"><span class="problematic" id="id136">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))<a class="headerlink" href="#define-cal-userobjectsdbgetnext-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbgetnext-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbgetnext-true">
+<span id="group-cmp-user-objects-d-b-itf-1ga02b5d442765aaf592ea65bde485746dc"></span><h3>#define CHK_UserObjectsDBGetNext TRUE<a class="headerlink" href="#define-chk-userobjectsdbgetnext-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbgetnext-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1gabd9ac3f3ff8e698f9c0edd449354a36a"></span><h3>#define EXP_UserObjectsDBGetNext ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbgetnext-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbopen">
+<span id="group-cmp-user-objects-d-b-itf-1gaf1435e3cd2d2e44cb6cf66718660ff4f"></span><h3>#define USE_UserObjectsDBOpen<a class="headerlink" href="#define-use-userobjectsdbopen" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbopen">
+<span id="group-cmp-user-objects-d-b-itf-1gaaffe304bdbeb7ec4447f1cf088b1dcd8"></span><h3>#define EXT_UserObjectsDBOpen<a class="headerlink" href="#define-ext-userobjectsdbopen" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbopen-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga35e2011f7578090ca2705ec548373104"></span><h3>#define GET_UserObjectsDBOpen ERR_OK<a class="headerlink" href="#define-get-userobjectsdbopen-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbopen-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbopen-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2">
+<span id="group-cmp-user-objects-d-b-itf-1ga8898b40aaaafce500456b76715fa5e0f"></span><h3>#define CAL_UserObjectsDBOpen (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id137"><span class="problematic" id="id138">*</span></a>)p0)-&gt;IUserObjectsDBOpen((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id139"><span class="problematic" id="id140">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))<a class="headerlink" href="#define-cal-userobjectsdbopen-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbopen-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbopen-true">
+<span id="group-cmp-user-objects-d-b-itf-1ga814390addc1023be0ae77520717fda93"></span><h3>#define CHK_UserObjectsDBOpen TRUE<a class="headerlink" href="#define-chk-userobjectsdbopen-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbopen-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga10a248d8c7adf9e146411f040a973254"></span><h3>#define EXP_UserObjectsDBOpen ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbopen-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbclose">
+<span id="group-cmp-user-objects-d-b-itf-1gaad79770e98367038d9cf542ef454653e"></span><h3>#define USE_UserObjectsDBClose<a class="headerlink" href="#define-use-userobjectsdbclose" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbclose">
+<span id="group-cmp-user-objects-d-b-itf-1gaac2d4d8e76323a6171602bd4f7ec23c5"></span><h3>#define EXT_UserObjectsDBClose<a class="headerlink" href="#define-ext-userobjectsdbclose" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbclose-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1gab3c876b1479ce35e0aa7fc745057fa59"></span><h3>#define GET_UserObjectsDBClose ERR_OK<a class="headerlink" href="#define-get-userobjectsdbclose-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbclose-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbclose-icmpuserobjectsdb-p0-pbase-hinstance-p1">
+<span id="group-cmp-user-objects-d-b-itf-1ga1c0f00c86eb3b81a5e5703b1af47142e"></span><h3>#define CAL_UserObjectsDBClose (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id141"><span class="problematic" id="id142">*</span></a>)p0)-&gt;IUserObjectsDBClose((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id143"><span class="problematic" id="id144">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1))<a class="headerlink" href="#define-cal-userobjectsdbclose-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbclose-icmpuserobjectsdb-p0-pbase-hinstance-p1" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbclose-true">
+<span id="group-cmp-user-objects-d-b-itf-1gac7590c10887e067cd58456b7d1cdb89e"></span><h3>#define CHK_UserObjectsDBClose TRUE<a class="headerlink" href="#define-chk-userobjectsdbclose-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbclose-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga648d759c6ff254375180ab16b306f4ab"></span><h3>#define EXP_UserObjectsDBClose ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbclose-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbgetname">
+<span id="group-cmp-user-objects-d-b-itf-1gacbbb2abbb9c9f6216076a1dbe4d7c280"></span><h3>#define USE_UserObjectsDBGetName<a class="headerlink" href="#define-use-userobjectsdbgetname" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbgetname">
+<span id="group-cmp-user-objects-d-b-itf-1ga48aea2fd94cf17668ce63680799c00cd"></span><h3>#define EXT_UserObjectsDBGetName<a class="headerlink" href="#define-ext-userobjectsdbgetname" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbgetname-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1gab9182fb32f45860976d86bb505fe5ab5"></span><h3>#define GET_UserObjectsDBGetName ERR_OK<a class="headerlink" href="#define-get-userobjectsdbgetname-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbgetname-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbgetname-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2-p3">
+<span id="group-cmp-user-objects-d-b-itf-1gab66ca5d31099ed0812a0b4b8e4cf7b69"></span><h3>#define CAL_UserObjectsDBGetName (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id145"><span class="problematic" id="id146">*</span></a>)p0)-&gt;IUserObjectsDBGetName((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id147"><span class="problematic" id="id148">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2,p3))<a class="headerlink" href="#define-cal-userobjectsdbgetname-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbgetname-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2-p3" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbgetname-true">
+<span id="group-cmp-user-objects-d-b-itf-1ga9657e153edb18e1c6875e9bba82df56f"></span><h3>#define CHK_UserObjectsDBGetName TRUE<a class="headerlink" href="#define-chk-userobjectsdbgetname-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbgetname-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga73283f314fe89c54a14cef9b5c635a8b"></span><h3>#define EXP_UserObjectsDBGetName ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbgetname-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbgetpath">
+<span id="group-cmp-user-objects-d-b-itf-1ga7f0fbb1ad311a5c4d4c1aeae33bca38f"></span><h3>#define USE_UserObjectsDBGetPath<a class="headerlink" href="#define-use-userobjectsdbgetpath" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbgetpath">
+<span id="group-cmp-user-objects-d-b-itf-1ga4249a722272af51afde6ac7bff07fe3b"></span><h3>#define EXT_UserObjectsDBGetPath<a class="headerlink" href="#define-ext-userobjectsdbgetpath" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbgetpath-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga11c23419f667a7dfda5f5fd8e4f17a68"></span><h3>#define GET_UserObjectsDBGetPath ERR_OK<a class="headerlink" href="#define-get-userobjectsdbgetpath-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbgetpath-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbgetpath-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2-p3">
+<span id="group-cmp-user-objects-d-b-itf-1ga443aa1195aa439106028c5b320f19580"></span><h3>#define CAL_UserObjectsDBGetPath (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id149"><span class="problematic" id="id150">*</span></a>)p0)-&gt;IUserObjectsDBGetPath((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id151"><span class="problematic" id="id152">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2,p3))<a class="headerlink" href="#define-cal-userobjectsdbgetpath-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbgetpath-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2-p3" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbgetpath-true">
+<span id="group-cmp-user-objects-d-b-itf-1ga77d00307c139ca362c111845af2af80e"></span><h3>#define CHK_UserObjectsDBGetPath TRUE<a class="headerlink" href="#define-chk-userobjectsdbgetpath-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbgetpath-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1gaff6378671867cf1f420158872679ba92"></span><h3>#define EXP_UserObjectsDBGetPath ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbgetpath-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbgetfirstchild">
+<span id="group-cmp-user-objects-d-b-itf-1gae3b5e1792a023e5e4e13f54391cc0f21"></span><h3>#define USE_UserObjectsDBGetFirstChild<a class="headerlink" href="#define-use-userobjectsdbgetfirstchild" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbgetfirstchild">
+<span id="group-cmp-user-objects-d-b-itf-1ga656122a04f1e278c6502de7fa4d48352"></span><h3>#define EXT_UserObjectsDBGetFirstChild<a class="headerlink" href="#define-ext-userobjectsdbgetfirstchild" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbgetfirstchild-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga2381af64d3a5b4fad7c3ff6e61029998"></span><h3>#define GET_UserObjectsDBGetFirstChild ERR_OK<a class="headerlink" href="#define-get-userobjectsdbgetfirstchild-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbgetfirstchild-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbgetfirstchild-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2">
+<span id="group-cmp-user-objects-d-b-itf-1gabbd23009591fbd6d93ca05fe8184e06f"></span><h3>#define CAL_UserObjectsDBGetFirstChild (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id153"><span class="problematic" id="id154">*</span></a>)p0)-&gt;IUserObjectsDBGetFirstChild((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id155"><span class="problematic" id="id156">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))<a class="headerlink" href="#define-cal-userobjectsdbgetfirstchild-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbgetfirstchild-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbgetfirstchild-true">
+<span id="group-cmp-user-objects-d-b-itf-1gacd217fa5b780ee7692dacf141f99d4c6"></span><h3>#define CHK_UserObjectsDBGetFirstChild TRUE<a class="headerlink" href="#define-chk-userobjectsdbgetfirstchild-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbgetfirstchild-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1gafead0188675c0251ee38591522ef5703"></span><h3>#define EXP_UserObjectsDBGetFirstChild ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbgetfirstchild-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbgetnextchild">
+<span id="group-cmp-user-objects-d-b-itf-1ga22351e16f543ac2f58bc50d1fe6c4932"></span><h3>#define USE_UserObjectsDBGetNextChild<a class="headerlink" href="#define-use-userobjectsdbgetnextchild" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbgetnextchild">
+<span id="group-cmp-user-objects-d-b-itf-1ga592856997d7d4c02d7b7a01c6587b62f"></span><h3>#define EXT_UserObjectsDBGetNextChild<a class="headerlink" href="#define-ext-userobjectsdbgetnextchild" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbgetnextchild-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga34281f5d9817515c1b47119f94dc04d4"></span><h3>#define GET_UserObjectsDBGetNextChild ERR_OK<a class="headerlink" href="#define-get-userobjectsdbgetnextchild-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbgetnextchild-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbgetnextchild-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2-p3">
+<span id="group-cmp-user-objects-d-b-itf-1gae9e0b2c66c620f80e3d4b4878674ed67"></span><h3>#define CAL_UserObjectsDBGetNextChild (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id157"><span class="problematic" id="id158">*</span></a>)p0)-&gt;IUserObjectsDBGetNextChild((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id159"><span class="problematic" id="id160">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2,p3))<a class="headerlink" href="#define-cal-userobjectsdbgetnextchild-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbgetnextchild-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2-p3" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbgetnextchild-true">
+<span id="group-cmp-user-objects-d-b-itf-1ga2031d8b6e8f779c5bfd13cd6c5c494b2"></span><h3>#define CHK_UserObjectsDBGetNextChild TRUE<a class="headerlink" href="#define-chk-userobjectsdbgetnextchild-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbgetnextchild-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga61a1f50f5e55012535f2059a6b406f0f"></span><h3>#define EXP_UserObjectsDBGetNextChild ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbgetnextchild-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbgetfather">
+<span id="group-cmp-user-objects-d-b-itf-1gab0be38aa2fe7c22c18cfc72bc803a444"></span><h3>#define USE_UserObjectsDBGetFather<a class="headerlink" href="#define-use-userobjectsdbgetfather" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbgetfather">
+<span id="group-cmp-user-objects-d-b-itf-1ga860bc3b8006c0616c4af57f7a9df388f"></span><h3>#define EXT_UserObjectsDBGetFather<a class="headerlink" href="#define-ext-userobjectsdbgetfather" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbgetfather-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1gabf600f8f5f1299b58aa8824a9f7a74cf"></span><h3>#define GET_UserObjectsDBGetFather ERR_OK<a class="headerlink" href="#define-get-userobjectsdbgetfather-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbgetfather-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbgetfather-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2">
+<span id="group-cmp-user-objects-d-b-itf-1gad0fd8c755192a1b7e0967f353464d0a7"></span><h3>#define CAL_UserObjectsDBGetFather (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id161"><span class="problematic" id="id162">*</span></a>)p0)-&gt;IUserObjectsDBGetFather((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id163"><span class="problematic" id="id164">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))<a class="headerlink" href="#define-cal-userobjectsdbgetfather-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbgetfather-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbgetfather-true">
+<span id="group-cmp-user-objects-d-b-itf-1gad3c7afdf5226ed94fe1929f921e2cd02"></span><h3>#define CHK_UserObjectsDBGetFather TRUE<a class="headerlink" href="#define-chk-userobjectsdbgetfather-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbgetfather-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga91033c00552bd24e2753d0f328e0e869"></span><h3>#define EXP_UserObjectsDBGetFather ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbgetfather-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbgetfirstgroup">
+<span id="group-cmp-user-objects-d-b-itf-1gab7297336e5f7332c2d420d9fe1c50f71"></span><h3>#define USE_UserObjectsDBGetFirstGroup<a class="headerlink" href="#define-use-userobjectsdbgetfirstgroup" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbgetfirstgroup">
+<span id="group-cmp-user-objects-d-b-itf-1gad6241671f373a2a8c94bcc7caee04c1a"></span><h3>#define EXT_UserObjectsDBGetFirstGroup<a class="headerlink" href="#define-ext-userobjectsdbgetfirstgroup" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbgetfirstgroup-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga7d2c5f423ff7aebb180f69432fe887c0"></span><h3>#define GET_UserObjectsDBGetFirstGroup ERR_OK<a class="headerlink" href="#define-get-userobjectsdbgetfirstgroup-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbgetfirstgroup-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbgetfirstgroup-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2">
+<span id="group-cmp-user-objects-d-b-itf-1gaeecd06b85cb2be5f60f4098f1e9441ed"></span><h3>#define CAL_UserObjectsDBGetFirstGroup (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id165"><span class="problematic" id="id166">*</span></a>)p0)-&gt;IUserObjectsDBGetFirstGroup((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id167"><span class="problematic" id="id168">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2))<a class="headerlink" href="#define-cal-userobjectsdbgetfirstgroup-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbgetfirstgroup-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbgetfirstgroup-true">
+<span id="group-cmp-user-objects-d-b-itf-1ga3a1cee11550e40c8a073c818e8d54480"></span><h3>#define CHK_UserObjectsDBGetFirstGroup TRUE<a class="headerlink" href="#define-chk-userobjectsdbgetfirstgroup-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbgetfirstgroup-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1gaf723babc06801f58fbbe5d3de122bfb4"></span><h3>#define EXP_UserObjectsDBGetFirstGroup ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbgetfirstgroup-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbgetnextgroup">
+<span id="group-cmp-user-objects-d-b-itf-1ga40e485769cca6f492b9044447c34af7b"></span><h3>#define USE_UserObjectsDBGetNextGroup<a class="headerlink" href="#define-use-userobjectsdbgetnextgroup" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbgetnextgroup">
+<span id="group-cmp-user-objects-d-b-itf-1ga66f02610dedf3537d9eef2eccbe36459"></span><h3>#define EXT_UserObjectsDBGetNextGroup<a class="headerlink" href="#define-ext-userobjectsdbgetnextgroup" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbgetnextgroup-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga82fb7c6b938139b88b7bad83d3e06144"></span><h3>#define GET_UserObjectsDBGetNextGroup ERR_OK<a class="headerlink" href="#define-get-userobjectsdbgetnextgroup-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbgetnextgroup-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbgetnextgroup-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2-p3">
+<span id="group-cmp-user-objects-d-b-itf-1ga0ee3379e77a70a1672a16fab1ec0527f"></span><h3>#define CAL_UserObjectsDBGetNextGroup (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id169"><span class="problematic" id="id170">*</span></a>)p0)-&gt;IUserObjectsDBGetNextGroup((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id171"><span class="problematic" id="id172">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2,p3))<a class="headerlink" href="#define-cal-userobjectsdbgetnextgroup-p0-rts-invalid-handle-p0-null-rts-handle-rts-invalid-handle-icmpuserobjectsdb-p0-iuserobjectsdbgetnextgroup-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2-p3" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbgetnextgroup-true">
+<span id="group-cmp-user-objects-d-b-itf-1ga4a746a02af93cffd2fece5fd771f10da"></span><h3>#define CHK_UserObjectsDBGetNextGroup TRUE<a class="headerlink" href="#define-chk-userobjectsdbgetnextgroup-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbgetnextgroup-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga8520efcfe719f14c8741b88810a011b7"></span><h3>#define EXP_UserObjectsDBGetNextGroup ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbgetnextgroup-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbgetgrouprights">
+<span id="group-cmp-user-objects-d-b-itf-1ga9ac0baa492352ee53e932dabefe34819"></span><h3>#define USE_UserObjectsDBGetGroupRights<a class="headerlink" href="#define-use-userobjectsdbgetgrouprights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbgetgrouprights">
+<span id="group-cmp-user-objects-d-b-itf-1gaa4c4ecdf8c993552052bb6fb7c492bff"></span><h3>#define EXT_UserObjectsDBGetGroupRights<a class="headerlink" href="#define-ext-userobjectsdbgetgrouprights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbgetgrouprights-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga10b79dccb3632f474417ef5758a15ae6"></span><h3>#define GET_UserObjectsDBGetGroupRights ERR_OK<a class="headerlink" href="#define-get-userobjectsdbgetgrouprights-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbgetgrouprights-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbgetgrouprights-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2-p3-p4">
+<span id="group-cmp-user-objects-d-b-itf-1ga8bf8679777128c7949b38985e888b140"></span><h3>#define CAL_UserObjectsDBGetGroupRights (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id173"><span class="problematic" id="id174">*</span></a>)p0)-&gt;IUserObjectsDBGetGroupRights((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id175"><span class="problematic" id="id176">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2,p3,p4))<a class="headerlink" href="#define-cal-userobjectsdbgetgrouprights-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbgetgrouprights-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2-p3-p4" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbgetgrouprights-true">
+<span id="group-cmp-user-objects-d-b-itf-1gaaddc9e095385cfbc0f47a673d17558f8"></span><h3>#define CHK_UserObjectsDBGetGroupRights TRUE<a class="headerlink" href="#define-chk-userobjectsdbgetgrouprights-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbgetgrouprights-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga504b9e8ede247788b9ca82ca6317dad5"></span><h3>#define EXP_UserObjectsDBGetGroupRights ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbgetgrouprights-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbhasrights">
+<span id="group-cmp-user-objects-d-b-itf-1ga796bba89a9bdf0a3cab113df1e5b52af"></span><h3>#define USE_UserObjectsDBHasRights<a class="headerlink" href="#define-use-userobjectsdbhasrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbhasrights">
+<span id="group-cmp-user-objects-d-b-itf-1ga07a9aa9509045a5903adf732d8a3d2a3"></span><h3>#define EXT_UserObjectsDBHasRights<a class="headerlink" href="#define-ext-userobjectsdbhasrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbhasrights-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga3c1d4483d0e8c1390a5d334edacad4f8"></span><h3>#define GET_UserObjectsDBHasRights ERR_OK<a class="headerlink" href="#define-get-userobjectsdbhasrights-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbhasrights-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbhasrights-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2-p3">
+<span id="group-cmp-user-objects-d-b-itf-1ga88499e3faf80935e4dd3d047d6368a96"></span><h3>#define CAL_UserObjectsDBHasRights (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id177"><span class="problematic" id="id178">*</span></a>)p0)-&gt;IUserObjectsDBHasRights((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id179"><span class="problematic" id="id180">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2,p3))<a class="headerlink" href="#define-cal-userobjectsdbhasrights-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbhasrights-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2-p3" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbhasrights-true">
+<span id="group-cmp-user-objects-d-b-itf-1ga08dc2c67c5d1a00cadbf6b5d4e3760a4"></span><h3>#define CHK_UserObjectsDBHasRights TRUE<a class="headerlink" href="#define-chk-userobjectsdbhasrights-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbhasrights-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga5956461512e3d0f38b8418160356d731"></span><h3>#define EXP_UserObjectsDBHasRights ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbhasrights-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbgetrights">
+<span id="group-cmp-user-objects-d-b-itf-1gabb925f1fab8878802d81e1e140fcfcbc"></span><h3>#define USE_UserObjectsDBGetRights<a class="headerlink" href="#define-use-userobjectsdbgetrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbgetrights">
+<span id="group-cmp-user-objects-d-b-itf-1ga5cd32aade78b6865c8737cd3fc23a1d0"></span><h3>#define EXT_UserObjectsDBGetRights<a class="headerlink" href="#define-ext-userobjectsdbgetrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbgetrights-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga4396066d66398ae9099a3e29bc3ffbc1"></span><h3>#define GET_UserObjectsDBGetRights ERR_OK<a class="headerlink" href="#define-get-userobjectsdbgetrights-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbgetrights-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbgetrights-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2-p3-p4">
+<span id="group-cmp-user-objects-d-b-itf-1ga60cbbfcba494ac5a2fbdab11b9941f69"></span><h3>#define CAL_UserObjectsDBGetRights (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id181"><span class="problematic" id="id182">*</span></a>)p0)-&gt;IUserObjectsDBGetRights((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id183"><span class="problematic" id="id184">*</span></a>)p0)-&gt;pBase-&gt;hInstance,p1,p2,p3,p4))<a class="headerlink" href="#define-cal-userobjectsdbgetrights-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbgetrights-icmpuserobjectsdb-p0-pbase-hinstance-p1-p2-p3-p4" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbgetrights-true">
+<span id="group-cmp-user-objects-d-b-itf-1ga8964582474eafa214aafd4fe1db43a39"></span><h3>#define CHK_UserObjectsDBGetRights TRUE<a class="headerlink" href="#define-chk-userobjectsdbgetrights-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbgetrights-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1gab72c12be6a967b5ef357ff3c4df0bebf"></span><h3>#define EXP_UserObjectsDBGetRights ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbgetrights-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-userobjectsdbactivate">
+<span id="group-cmp-user-objects-d-b-itf-1ga1438ddd410b50273a2407957ddf92695"></span><h3>#define USE_UserObjectsDBActivate<a class="headerlink" href="#define-use-userobjectsdbactivate" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-userobjectsdbactivate">
+<span id="group-cmp-user-objects-d-b-itf-1ga9ba8bcbce8313fb98c2cc7ed5aff9bb5"></span><h3>#define EXT_UserObjectsDBActivate<a class="headerlink" href="#define-ext-userobjectsdbactivate" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-userobjectsdbactivate-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga2083f7d5e6d0d59b0d7c87488e73433d"></span><h3>#define GET_UserObjectsDBActivate ERR_OK<a class="headerlink" href="#define-get-userobjectsdbactivate-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-userobjectsdbactivate-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbactivate-icmpuserobjectsdb-p0-pbase-hinstance">
+<span id="group-cmp-user-objects-d-b-itf-1ga31e8eea7ef0291247e994b5e4f11ae53"></span><h3>#define CAL_UserObjectsDBActivate (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id185"><span class="problematic" id="id186">*</span></a>)p0)-&gt;IUserObjectsDBActivate((( <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"><span class="std std-ref">ICmpUserObjectsDB</span></a> <a href="#id187"><span class="problematic" id="id188">*</span></a>)p0)-&gt;pBase-&gt;hInstance))<a class="headerlink" href="#define-cal-userobjectsdbactivate-p0-rts-invalid-handle-p0-null-rts-result-err-parameter-icmpuserobjectsdb-p0-iuserobjectsdbactivate-icmpuserobjectsdb-p0-pbase-hinstance" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-userobjectsdbactivate-true">
+<span id="group-cmp-user-objects-d-b-itf-1ga1d74a2a38134901dc87adfab7e026b34"></span><h3>#define CHK_UserObjectsDBActivate TRUE<a class="headerlink" href="#define-chk-userobjectsdbactivate-true" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-userobjectsdbactivate-err-ok">
+<span id="group-cmp-user-objects-d-b-itf-1ga128b6d3dece9d1fe56e7aa7ba96839f0"></span><h3>#define EXP_UserObjectsDBActivate ERR_OK<a class="headerlink" href="#define-exp-userobjectsdbactivate-err-ok" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-itf-cmpuserobjectsdb">
+<span id="group-cmp-user-objects-d-b-itf-1ga0fe92023598bfe04144f8976609845fb"></span><h3>#define ITF_CmpUserObjectsDB<a class="headerlink" href="#define-itf-cmpuserobjectsdb" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-extitf-cmpuserobjectsdb">
+<span id="group-cmp-user-objects-d-b-itf-1ga2ed53caef14d27962a10df7fe92b4a01"></span><h3>#define EXTITF_CmpUserObjectsDB<a class="headerlink" href="#define-extitf-cmpuserobjectsdb" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="typedef-documentation">
+<h2><a class="toc-backref" href="#id284">Typedef Documentation</a><a class="headerlink" href="#typedef-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="typedef-rts-result-pfuserobjectsdbgetusedrights-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulusedrights">
+<span id="group-cmp-user-objects-d-b-itf-1ga590a3da8a28af56ae1b18dd2bdb420fc"></span><h3>typedef RTS_RESULT( *  PFUSEROBJECTSDBGETUSEDRIGHTS) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 <a href="#id189"><span class="problematic" id="id190">*</span></a>pulUsedRights)<a class="headerlink" href="#typedef-rts-result-pfuserobjectsdbgetusedrights-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulusedrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfuserobjectsdbgetproperties-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulproperties">
+<span id="group-cmp-user-objects-d-b-itf-1gadfffe58c1d3a899f56e8624c6338be45"></span><h3>typedef RTS_RESULT( *  PFUSEROBJECTSDBGETPROPERTIES) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 <a href="#id191"><span class="problematic" id="id192">*</span></a>pulProperties)<a class="headerlink" href="#typedef-rts-result-pfuserobjectsdbgetproperties-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulproperties" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfuserobjectsdbgetid-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulid">
+<span id="group-cmp-user-objects-d-b-itf-1ga7d5487027309c9bee997c371d64356e4"></span><h3>typedef RTS_RESULT( *  PFUSEROBJECTSDBGETID) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 <a href="#id193"><span class="problematic" id="id194">*</span></a>pulID)<a class="headerlink" href="#typedef-rts-result-pfuserobjectsdbgetid-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulid" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-handle-pfuserobjectsdbgetfirst-rts-handle-hdatabase-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1ga975e701394c34cd84443f70a26f51ac0"></span><h3>typedef RTS_HANDLE( *  PFUSEROBJECTSDBGETFIRST) (RTS_HANDLE hDatabase, RTS_RESULT <a href="#id195"><span class="problematic" id="id196">*</span></a>pResult)<a class="headerlink" href="#typedef-rts-handle-pfuserobjectsdbgetfirst-rts-handle-hdatabase-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-handle-pfuserobjectsdbgetnext-rts-handle-hdatabase-rts-handle-hprevobject-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1gad861dd66467186cc6b1ed4438446b755"></span><h3>typedef RTS_HANDLE( *  PFUSEROBJECTSDBGETNEXT) (RTS_HANDLE hDatabase, RTS_HANDLE hPrevObject, RTS_RESULT <a href="#id197"><span class="problematic" id="id198">*</span></a>pResult)<a class="headerlink" href="#typedef-rts-handle-pfuserobjectsdbgetnext-rts-handle-hdatabase-rts-handle-hprevobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-handle-pfuserobjectsdbopen-rts-handle-hdatabase-char-pszobject-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1gabc5b1ae0220e7fe31b4d26446f3617ed"></span><h3>typedef RTS_HANDLE( *  PFUSEROBJECTSDBOPEN) (RTS_HANDLE hDatabase, char <a href="#id199"><span class="problematic" id="id200">*</span></a>pszObject, RTS_RESULT <a href="#id201"><span class="problematic" id="id202">*</span></a>pResult)<a class="headerlink" href="#typedef-rts-handle-pfuserobjectsdbopen-rts-handle-hdatabase-char-pszobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfuserobjectsdbclose-rts-handle-hdatabase-rts-handle-hobject">
+<span id="group-cmp-user-objects-d-b-itf-1ga46ceb7d61b823b00db4e7514b7b9033b"></span><h3>typedef RTS_RESULT( *  PFUSEROBJECTSDBCLOSE) (RTS_HANDLE hDatabase, RTS_HANDLE hObject)<a class="headerlink" href="#typedef-rts-result-pfuserobjectsdbclose-rts-handle-hdatabase-rts-handle-hobject" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfuserobjectsdbgetname-rts-handle-hdatabase-rts-handle-hobject-char-pszobject-int-pimaxlen">
+<span id="group-cmp-user-objects-d-b-itf-1gab0aaa795031f30d60deebdb41e89d935"></span><h3>typedef RTS_RESULT( *  PFUSEROBJECTSDBGETNAME) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char <a href="#id203"><span class="problematic" id="id204">*</span></a>pszObject, int <a href="#id205"><span class="problematic" id="id206">*</span></a>piMaxLen)<a class="headerlink" href="#typedef-rts-result-pfuserobjectsdbgetname-rts-handle-hdatabase-rts-handle-hobject-char-pszobject-int-pimaxlen" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfuserobjectsdbgetpath-rts-handle-hdatabase-rts-handle-hobject-char-pszobject-int-pimaxlen">
+<span id="group-cmp-user-objects-d-b-itf-1ga40e10edacf5ed5b1ff86f70877af973b"></span><h3>typedef RTS_RESULT( *  PFUSEROBJECTSDBGETPATH) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char <a href="#id207"><span class="problematic" id="id208">*</span></a>pszObject, int <a href="#id209"><span class="problematic" id="id210">*</span></a>piMaxLen)<a class="headerlink" href="#typedef-rts-result-pfuserobjectsdbgetpath-rts-handle-hdatabase-rts-handle-hobject-char-pszobject-int-pimaxlen" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-handle-pfuserobjectsdbgetfirstchild-rts-handle-hdatabase-rts-handle-hfatherobject-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1ga7b2894c67d606e34f7ca7f73d7bc6dc5"></span><h3>typedef RTS_HANDLE( *  PFUSEROBJECTSDBGETFIRSTCHILD) (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_RESULT <a href="#id211"><span class="problematic" id="id212">*</span></a>pResult)<a class="headerlink" href="#typedef-rts-handle-pfuserobjectsdbgetfirstchild-rts-handle-hdatabase-rts-handle-hfatherobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-handle-pfuserobjectsdbgetnextchild-rts-handle-hdatabase-rts-handle-hfatherobject-rts-handle-hprevchildobject-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1ga47be098b5d5680cc394e6324d080a19a"></span><h3>typedef RTS_HANDLE( *  PFUSEROBJECTSDBGETNEXTCHILD) (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT <a href="#id213"><span class="problematic" id="id214">*</span></a>pResult)<a class="headerlink" href="#typedef-rts-handle-pfuserobjectsdbgetnextchild-rts-handle-hdatabase-rts-handle-hfatherobject-rts-handle-hprevchildobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-handle-pfuserobjectsdbgetfather-rts-handle-hdatabase-rts-handle-hchildobject-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1ga36adf622bd57bf22767b81f9ff2cba12"></span><h3>typedef RTS_HANDLE( *  PFUSEROBJECTSDBGETFATHER) (RTS_HANDLE hDatabase, RTS_HANDLE hChildObject, RTS_RESULT <a href="#id215"><span class="problematic" id="id216">*</span></a>pResult)<a class="headerlink" href="#typedef-rts-handle-pfuserobjectsdbgetfather-rts-handle-hdatabase-rts-handle-hchildobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-handle-pfuserobjectsdbgetfirstgroup-rts-handle-hdatabase-rts-handle-hobject-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1ga6a7dfdbcf2f73938c481bba10c6f25fa"></span><h3>typedef RTS_HANDLE( *  PFUSEROBJECTSDBGETFIRSTGROUP) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_RESULT <a href="#id217"><span class="problematic" id="id218">*</span></a>pResult)<a class="headerlink" href="#typedef-rts-handle-pfuserobjectsdbgetfirstgroup-rts-handle-hdatabase-rts-handle-hobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-handle-pfuserobjectsdbgetnextgroup-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hprevgroup-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1ga7b6d86d3771fd495c78c2fb6a6f1d5e2"></span><h3>typedef RTS_HANDLE( *  PFUSEROBJECTSDBGETNEXTGROUP) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT <a href="#id219"><span class="problematic" id="id220">*</span></a>pResult)<a class="headerlink" href="#typedef-rts-handle-pfuserobjectsdbgetnextgroup-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hprevgroup-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfuserobjectsdbgetgrouprights-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hgroup-rts-ui32-pulrights-rts-ui32-puldeniedrights">
+<span id="group-cmp-user-objects-d-b-itf-1ga9201d7b15ad8142296d0973e565230fe"></span><h3>typedef RTS_RESULT( *  PFUSEROBJECTSDBGETGROUPRIGHTS) (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 <a href="#id221"><span class="problematic" id="id222">*</span></a>pulRights, RTS_UI32 <a href="#id223"><span class="problematic" id="id224">*</span></a>pulDeniedRights)<a class="headerlink" href="#typedef-rts-result-pfuserobjectsdbgetgrouprights-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hgroup-rts-ui32-pulrights-rts-ui32-puldeniedrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfuserobjectsdbhasrights-rts-handle-hdatabase-char-pszobject-rts-handle-huser-rts-ui32-ulrequestedrights">
+<span id="group-cmp-user-objects-d-b-itf-1ga9c318a9b4a1f996157157464cab45ec7"></span><h3>typedef RTS_RESULT( *  PFUSEROBJECTSDBHASRIGHTS) (RTS_HANDLE hDatabase, char <a href="#id225"><span class="problematic" id="id226">*</span></a>pszObject, RTS_HANDLE hUser, RTS_UI32 ulRequestedRights)<a class="headerlink" href="#typedef-rts-result-pfuserobjectsdbhasrights-rts-handle-hdatabase-char-pszobject-rts-handle-huser-rts-ui32-ulrequestedrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfuserobjectsdbgetrights-rts-handle-hdatabase-char-pszobject-rts-handle-huser-rts-ui32-pulrights-rts-ui32-puldeniedrights">
+<span id="group-cmp-user-objects-d-b-itf-1ga65bfc4bf72ddde713a4a84e6b0458bb5"></span><h3>typedef RTS_RESULT( *  PFUSEROBJECTSDBGETRIGHTS) (RTS_HANDLE hDatabase, char <a href="#id227"><span class="problematic" id="id228">*</span></a>pszObject, RTS_HANDLE hUser, RTS_UI32 <a href="#id229"><span class="problematic" id="id230">*</span></a>pulRights, RTS_UI32 <a href="#id231"><span class="problematic" id="id232">*</span></a>pulDeniedRights)<a class="headerlink" href="#typedef-rts-result-pfuserobjectsdbgetrights-rts-handle-hdatabase-char-pszobject-rts-handle-huser-rts-ui32-pulrights-rts-ui32-puldeniedrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfuserobjectsdbactivate-rts-handle-hdatabase">
+<span id="group-cmp-user-objects-d-b-itf-1gaa7221932a865ce959ee30ae4d3c1835b"></span><h3>typedef RTS_RESULT( *  PFUSEROBJECTSDBACTIVATE) (RTS_HANDLE hDatabase)<a class="headerlink" href="#typedef-rts-result-pfuserobjectsdbactivate-rts-handle-hdatabase" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-icmpuserobjectsdb-c-icmpuserobjectsdb">
+<span id="group-cmp-user-objects-d-b-itf-1ga2ed119c4d12e10aebae26ac411aaa210"></span><h3>typedef ICmpUserObjectsDB_C ICmpUserObjectsDB<a class="headerlink" href="#typedef-icmpuserobjectsdb-c-icmpuserobjectsdb" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="function-documentation">
+<h2><a class="toc-backref" href="#id285">Function Documentation</a><a class="headerlink" href="#function-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="staticitf-def-rts-result-userobjectsdbgetusedrights-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulusedrights">
+<span id="group-cmp-user-objects-d-b-itf-1ga6c4abe88013075349a75ea97748db2e9"></span><h3>STATICITF_DEF RTS_RESULT UserObjectsDBGetUsedRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 <a href="#id233"><span class="problematic" id="id234">*</span></a>pulUsedRights)<a class="headerlink" href="#staticitf-def-rts-result-userobjectsdbgetusedrights-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulusedrights" title="Permalink to this headline">¶</a></h3>
+<p>Get the used access rights for the object specified by handle. NOTE: In case the used rights are not set the function returns USERDB_RIGHT_ALL.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 27%" />
+<col style="width: 56%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hObject</p></td>
+<td><p>Handle to the object</p></td>
+</tr>
+<tr class="row-even"><td><p>[out]</p></td>
+<td><p>pulUsedRights</p></td>
+<td><p>Pointer to used access rights</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>Rights are successfully set</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_PARAMETER</p></td>
+<td><p>Invalid object handle or invalid pointer</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error code</p>
+</div>
+<div class="section" id="staticitf-def-rts-result-userobjectsdbgetproperties-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulproperties">
+<span id="group-cmp-user-objects-d-b-itf-1ga2b3e220f9cb4751a5909ec483be17dbe"></span><h3>STATICITF_DEF RTS_RESULT UserObjectsDBGetProperties (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 <a href="#id235"><span class="problematic" id="id236">*</span></a>pulProperties)<a class="headerlink" href="#staticitf-def-rts-result-userobjectsdbgetproperties-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulproperties" title="Permalink to this headline">¶</a></h3>
+<p>Get the properties for the object specified by handle.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 32%" />
+<col style="width: 49%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hObject</p></td>
+<td><p>Handle to the object</p></td>
+</tr>
+<tr class="row-even"><td><p>[out]</p></td>
+<td><p>pulProperties</p></td>
+<td><p>Pointer to properties</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>Rights are successfully set</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_PARAMETER</p></td>
+<td><p>Invalid object handle or invalid pointer</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error code</p>
+</div>
+<div class="section" id="staticitf-def-rts-result-userobjectsdbgetid-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulid">
+<span id="group-cmp-user-objects-d-b-itf-1gafbcfe13e68eca90ede4da167a68c058b"></span><h3>STATICITF_DEF RTS_RESULT UserObjectsDBGetID (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 <a href="#id237"><span class="problematic" id="id238">*</span></a>pulID)<a class="headerlink" href="#staticitf-def-rts-result-userobjectsdbgetid-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulid" title="Permalink to this headline">¶</a></h3>
+<p>Get a unique identifier of an object</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 62%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hObject</p></td>
+<td><p>Handle to object</p></td>
+</tr>
+<tr class="row-even"><td><p>[out]</p></td>
+<td><p>pulID</p></td>
+<td><p>Pointer to get the ObjectID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error code</p>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 66%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>ObjectID could be retrieved</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_PARAMETER</p></td>
+<td><p>Invalid object handle</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="staticitf-def-rts-handle-userobjectsdbgetfirst-rts-handle-hdatabase-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1ga7e027769a0f96b54eef8e88ea450dbcb"></span><h3>STATICITF_DEF RTS_HANDLE UserObjectsDBGetFirst (RTS_HANDLE hDatabase, RTS_RESULT <a href="#id239"><span class="problematic" id="id240">*</span></a>pResult)<a class="headerlink" href="#staticitf-def-rts-handle-userobjectsdbgetfirst-rts-handle-hdatabase-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+<p>Iteration interface to get the first object of the user rights management</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 56%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[out]</p></td>
+<td><p>pResult</p></td>
+<td><p>Pointer to error code</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>First object of the user rights management available</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_NO_OBJECT</p></td>
+<td><p>No object available</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Handle to the first object in the user rights management or RTS_INVALID_HANDLE if failed</p>
+</div>
+<div class="section" id="staticitf-def-rts-handle-userobjectsdbgetnext-rts-handle-hdatabase-rts-handle-hprevobject-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1gaee13eb6d6456073b13d20ba7a7cf41d8"></span><h3>STATICITF_DEF RTS_HANDLE UserObjectsDBGetNext (RTS_HANDLE hDatabase, RTS_HANDLE hPrevObject, RTS_RESULT <a href="#id241"><span class="problematic" id="id242">*</span></a>pResult)<a class="headerlink" href="#staticitf-def-rts-handle-userobjectsdbgetnext-rts-handle-hdatabase-rts-handle-hprevobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+<p>Iteration interface to get next object of the user rights management. Must be started with <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga7e027769a0f96b54eef8e88ea450dbcb"><span class="std std-ref">UserObjectsDBGetFirst()</span></a></p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 4%" />
+<col style="width: 92%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hPrevObject</p></td>
+<td><p>Handle to the previous object retrieved via <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga7e027769a0f96b54eef8e88ea450dbcb"><span class="std std-ref">UserObjectsDBGetFirst()</span></a> or subsequent calls of <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gaee13eb6d6456073b13d20ba7a7cf41d8"><span class="std std-ref">UserObjectsDBGetNext()</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>[out]</p></td>
+<td><p>pResult</p></td>
+<td><p>Pointer to error code</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 63%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>Next object available</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_PARAMETER</p></td>
+<td><p>Invalid handles</p></td>
+</tr>
+<tr class="row-odd"><td><p>ERR_NO_OBJECT</p></td>
+<td><p>No next object available</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Handle to the next object in the user rights management or RTS_INVALID_HANDLE if failed</p>
+</div>
+<div class="section" id="staticitf-def-rts-handle-userobjectsdbopen-rts-handle-hdatabase-char-pszobject-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1gaf06de0f67f72236949ea74d87fc75b5c"></span><h3>STATICITF_DEF RTS_HANDLE UserObjectsDBOpen (RTS_HANDLE hDatabase, char <a href="#id243"><span class="problematic" id="id244">*</span></a>pszObject, RTS_RESULT <a href="#id245"><span class="problematic" id="id246">*</span></a>pResult)<a class="headerlink" href="#staticitf-def-rts-handle-userobjectsdbopen-rts-handle-hdatabase-char-pszobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+<p>Open object specified by its name</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 20%" />
+<col style="width: 64%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>pszObject</p></td>
+<td><p>Full object name (see object tree)</p></td>
+</tr>
+<tr class="row-even"><td><p>[out]</p></td>
+<td><p>pResult</p></td>
+<td><p>Pointer to error code</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 76%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>Object could be opened</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_PARAMETER</p></td>
+<td><p>Invalid parameter. pszObject = NULL or empty</p></td>
+</tr>
+<tr class="row-odd"><td><p>ERR_NOTINITIALIZED</p></td>
+<td><p>The user management is not initialized or it is not loaded yet</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Handle to the object or RTS_INVALID_HANDLE if failed</p>
+</div>
+<div class="section" id="staticitf-def-rts-result-userobjectsdbclose-rts-handle-hdatabase-rts-handle-hobject">
+<span id="group-cmp-user-objects-d-b-itf-1ga8b7889bedbaa2df2baa411091bae5978"></span><h3>STATICITF_DEF RTS_RESULT UserObjectsDBClose (RTS_HANDLE hDatabase, RTS_HANDLE hObject)<a class="headerlink" href="#staticitf-def-rts-result-userobjectsdbclose-rts-handle-hdatabase-rts-handle-hobject" title="Permalink to this headline">¶</a></h3>
+<p>Close an object</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 23%" />
+<col style="width: 55%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hObject</p></td>
+<td><p>Handle to the object</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error code</p>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 62%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>Object could be closed</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_PARAMETER</p></td>
+<td><p>Invalid object handle</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="staticitf-def-rts-result-userobjectsdbgetname-rts-handle-hdatabase-rts-handle-hobject-char-pszobject-int-pimaxlen">
+<span id="group-cmp-user-objects-d-b-itf-1ga24ce94a9395fdf72c67d26b5cf786f38"></span><h3>STATICITF_DEF RTS_RESULT UserObjectsDBGetName (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char <a href="#id247"><span class="problematic" id="id248">*</span></a>pszObject, int <a href="#id249"><span class="problematic" id="id250">*</span></a>piMaxLen)<a class="headerlink" href="#staticitf-def-rts-result-userobjectsdbgetname-rts-handle-hdatabase-rts-handle-hobject-char-pszobject-int-pimaxlen" title="Permalink to this headline">¶</a></h3>
+<p>Get object name</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 8%" />
+<col style="width: 86%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hObject</p></td>
+<td><p>Handle to the object</p></td>
+</tr>
+<tr class="row-even"><td><p>[out]</p></td>
+<td><p>pszObject</p></td>
+<td><p>Pointer to get object name</p></td>
+</tr>
+<tr class="row-odd"><td><p>[inout]</p></td>
+<td><p>piMaxLen</p></td>
+<td><p>Pointer to length of buffer in pszObject. If pszObject = NULL, only the length of the object name is returned inpiMaxLen</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error code</p>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 81%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>Object name is returned</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_PARAMETER</p></td>
+<td><p>Invalid object handle or pszObject = NULL and piMaxLen = NULL</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="staticitf-def-rts-result-userobjectsdbgetpath-rts-handle-hdatabase-rts-handle-hobject-char-pszobject-int-pimaxlen">
+<span id="group-cmp-user-objects-d-b-itf-1ga08afb5745800909f6f4cc7dc197a493c"></span><h3>STATICITF_DEF RTS_RESULT UserObjectsDBGetPath (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char <a href="#id251"><span class="problematic" id="id252">*</span></a>pszObject, int <a href="#id253"><span class="problematic" id="id254">*</span></a>piMaxLen)<a class="headerlink" href="#staticitf-def-rts-result-userobjectsdbgetpath-rts-handle-hdatabase-rts-handle-hobject-char-pszobject-int-pimaxlen" title="Permalink to this headline">¶</a></h3>
+<p>Get the complete object path name</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 8%" />
+<col style="width: 86%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hObject</p></td>
+<td><p>Handle to the object</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>pszObject</p></td>
+<td><p>Full object path name (see object tree)</p></td>
+</tr>
+<tr class="row-odd"><td><p>[inout]</p></td>
+<td><p>piMaxLen</p></td>
+<td><p>Pointer to length of buffer in pszObject. If pszObject = NULL, only the length of the object name is returned inpiMaxLen</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error code</p>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 81%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>Object name is returned</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_PARAMETER</p></td>
+<td><p>Invalid object handle or pszObject = NULL and piMaxLen = NULL</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="staticitf-def-rts-handle-userobjectsdbgetfirstchild-rts-handle-hdatabase-rts-handle-hfatherobject-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1gad032a88090da3f549606829b597b3019"></span><h3>STATICITF_DEF RTS_HANDLE UserObjectsDBGetFirstChild (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_RESULT <a href="#id255"><span class="problematic" id="id256">*</span></a>pResult)<a class="headerlink" href="#staticitf-def-rts-handle-userobjectsdbgetfirstchild-rts-handle-hdatabase-rts-handle-hfatherobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+<p>Get first child object in object tree of the specified father object</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 28%" />
+<col style="width: 55%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hFatherObject</p></td>
+<td><p>Handle to the father object</p></td>
+</tr>
+<tr class="row-even"><td><p>[out]</p></td>
+<td><p>pResult</p></td>
+<td><p>Pointer to error code</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 76%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>First child object available</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_PARAMETER</p></td>
+<td><p>Invalid parameter hFatherObject</p></td>
+</tr>
+<tr class="row-odd"><td><p>ERR_NOTINITIALIZED</p></td>
+<td><p>The user management is not initialized or it is not loaded yet</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Handle to the child object or RTS_INVALID_HANDLE if failed</p>
+</div>
+<div class="section" id="staticitf-def-rts-handle-userobjectsdbgetnextchild-rts-handle-hdatabase-rts-handle-hfatherobject-rts-handle-hprevchildobject-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1ga583e140c91648f02ebdf07b2561129df"></span><h3>STATICITF_DEF RTS_HANDLE UserObjectsDBGetNextChild (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT <a href="#id257"><span class="problematic" id="id258">*</span></a>pResult)<a class="headerlink" href="#staticitf-def-rts-handle-userobjectsdbgetnextchild-rts-handle-hdatabase-rts-handle-hfatherobject-rts-handle-hprevchildobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+<p>Get next child object in object tree of the specified father object. Must be started with <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gad032a88090da3f549606829b597b3019"><span class="std std-ref">UserObjectsDBGetFirstChild()</span></a></p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 6%" />
+<col style="width: 91%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hFatherObject</p></td>
+<td><p>Handle to the father object</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>hPrevChildObject</p></td>
+<td><p>Handle to the previous child object retrieved by <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gad032a88090da3f549606829b597b3019"><span class="std std-ref">UserObjectsDBGetFirstChild()</span></a> or subsequent calls of <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga583e140c91648f02ebdf07b2561129df"><span class="std std-ref">UserObjectsDBGetNextChild()</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>[out]</p></td>
+<td><p>pResult</p></td>
+<td><p>Pointer to error code</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 76%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>Next child object available</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_PARAMETER</p></td>
+<td><p>Invalid parameter hFatherObject or hPrevChildObject</p></td>
+</tr>
+<tr class="row-odd"><td><p>ERR_NOTINITIALIZED</p></td>
+<td><p>The user management is not initialized or it is not loaded yet</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Handle to the next child object or RTS_INVALID_HANDLE if failed</p>
+</div>
+<div class="section" id="staticitf-def-rts-handle-userobjectsdbgetfather-rts-handle-hdatabase-rts-handle-hchildobject-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1ga9dbba4bc21464ceb67ee80e795f392bc"></span><h3>STATICITF_DEF RTS_HANDLE UserObjectsDBGetFather (RTS_HANDLE hDatabase, RTS_HANDLE hChildObject, RTS_RESULT <a href="#id259"><span class="problematic" id="id260">*</span></a>pResult)<a class="headerlink" href="#staticitf-def-rts-handle-userobjectsdbgetfather-rts-handle-hdatabase-rts-handle-hchildobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+<p>Get the father object in object tree of the specified child object</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 27%" />
+<col style="width: 55%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hChildObject</p></td>
+<td><p>Handle to the child object</p></td>
+</tr>
+<tr class="row-even"><td><p>[out]</p></td>
+<td><p>pResult</p></td>
+<td><p>Pointer to error code</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 76%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>Father object could be retrieved</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_PARAMETER</p></td>
+<td><p>Invalid parameter hChildObject</p></td>
+</tr>
+<tr class="row-odd"><td><p>ERR_NOTINITIALIZED</p></td>
+<td><p>The user management is not initialized or it is not loaded yet</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Handle to the father/parent object or RTS_INVALID_HANDLE if failed</p>
+</div>
+<div class="section" id="staticitf-def-rts-handle-userobjectsdbgetfirstgroup-rts-handle-hdatabase-rts-handle-hobject-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1gac19b5f4454ea59447df6ed6dc81b1f8f"></span><h3>STATICITF_DEF RTS_HANDLE UserObjectsDBGetFirstGroup (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_RESULT <a href="#id261"><span class="problematic" id="id262">*</span></a>pResult)<a class="headerlink" href="#staticitf-def-rts-handle-userobjectsdbgetfirstgroup-rts-handle-hdatabase-rts-handle-hobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+<p>Iteration interface to get the first group in the user rights management of the specified object</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 56%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hObject</p></td>
+<td><p>Handle to the object</p></td>
+</tr>
+<tr class="row-even"><td><p>[out]</p></td>
+<td><p>pResult</p></td>
+<td><p>Pointer to error code</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 39%" />
+<col style="width: 61%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>First group available</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_NO_OBJECT</p></td>
+<td><p>No group available</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Handle to the first group of the object in the user rights management or RTS_INVALID_HANDLE if failed</p>
+</div>
+<div class="section" id="staticitf-def-rts-handle-userobjectsdbgetnextgroup-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hprevgroup-rts-result-presult">
+<span id="group-cmp-user-objects-d-b-itf-1ga7c69c09552e7cc2d604bf8a217d22b91"></span><h3>STATICITF_DEF RTS_HANDLE UserObjectsDBGetNextGroup (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT <a href="#id263"><span class="problematic" id="id264">*</span></a>pResult)<a class="headerlink" href="#staticitf-def-rts-handle-userobjectsdbgetnextgroup-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hprevgroup-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+<p>Iteration interface to get next group in the user rights management of the specified object. Must be started with <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gac19b5f4454ea59447df6ed6dc81b1f8f"><span class="std std-ref">UserObjectsDBGetFirstGroup()</span></a></p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 4%" />
+<col style="width: 93%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hObject</p></td>
+<td><p>Handle to the object</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>hPrevGroup</p></td>
+<td><p>Handle to the previous group retrieved via <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1gac19b5f4454ea59447df6ed6dc81b1f8f"><span class="std std-ref">UserObjectsDBGetFirstGroup()</span></a> or subsequent calls of <a class="reference internal" href="#group-cmp-user-objects-d-b-itf-1ga7c69c09552e7cc2d604bf8a217d22b91"><span class="std std-ref">UserObjectsDBGetNextGroup()</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>[out]</p></td>
+<td><p>pResult</p></td>
+<td><p>Pointer to error code</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 63%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>Next group available</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_PARAMETER</p></td>
+<td><p>Invalid handles</p></td>
+</tr>
+<tr class="row-odd"><td><p>ERR_NO_OBJECT</p></td>
+<td><p>No next group available</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Handle to the next group of the object in the user rights management or RTS_INVALID_HANDLE if failed</p>
+</div>
+<div class="section" id="staticitf-def-rts-result-userobjectsdbgetgrouprights-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hgroup-rts-ui32-pulrights-rts-ui32-puldeniedrights">
+<span id="group-cmp-user-objects-d-b-itf-1gaffdfe001e2868c1049a26526a3fea2d2"></span><h3>STATICITF_DEF RTS_RESULT UserObjectsDBGetGroupRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 <a href="#id265"><span class="problematic" id="id266">*</span></a>pulRights, RTS_UI32 <a href="#id267"><span class="problematic" id="id268">*</span></a>pulDeniedRights)<a class="headerlink" href="#staticitf-def-rts-result-userobjectsdbgetgrouprights-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hgroup-rts-ui32-pulrights-rts-ui32-puldeniedrights" title="Permalink to this headline">¶</a></h3>
+<p>Get the rights and the denied rights of a group on a specified object</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 75%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hObject</p></td>
+<td><p>Handle to object</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>hGroup</p></td>
+<td><p>Handle to the group which access rights are requested</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error code</p>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 92%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>Access rights could be retrieved</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_PARAMETER</p></td>
+<td><p>Invalid handles Pointer to get rights of the group. See category “User rights” for details Pointer to get denied rights of the group. See category “User rights” for details</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="staticitf-def-rts-result-userobjectsdbhasrights-rts-handle-hdatabase-char-pszobject-rts-handle-huser-rts-ui32-ulrequestedrights">
+<span id="group-cmp-user-objects-d-b-itf-1gaefefa9a91e01f7dc83d9b249eb7fa231"></span><h3>STATICITF_DEF RTS_RESULT UserObjectsDBHasRights (RTS_HANDLE hDatabase, char <a href="#id269"><span class="problematic" id="id270">*</span></a>pszObject, RTS_HANDLE hUser, RTS_UI32 ulRequestedRights)<a class="headerlink" href="#staticitf-def-rts-result-userobjectsdbhasrights-rts-handle-hdatabase-char-pszobject-rts-handle-huser-rts-ui32-ulrequestedrights" title="Permalink to this headline">¶</a></h3>
+<p>Check access rights of a user on an object (authorization)</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 15%" />
+<col style="width: 72%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>pszObject</p></td>
+<td><p>Full object name (see object tree)</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>hUser</p></td>
+<td><p>Handle to the user which access rights are checked</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error code</p>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 79%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>Access permitted</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_PARAMETER</p></td>
+<td><p>Access rights could not be retrieved, so no access rights!</p></td>
+</tr>
+<tr class="row-odd"><td><p>ERR_NO_ACCESS_RIGHTS</p></td>
+<td><p>No access rights! Requested access rights. See category “User rights” for details</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="staticitf-def-rts-result-userobjectsdbgetrights-rts-handle-hdatabase-char-pszobject-rts-handle-huser-rts-ui32-pulrights-rts-ui32-puldeniedrights">
+<span id="group-cmp-user-objects-d-b-itf-1ga605cf1cdb8c5387895398ab760f32b56"></span><h3>STATICITF_DEF RTS_RESULT UserObjectsDBGetRights (RTS_HANDLE hDatabase, char <a href="#id271"><span class="problematic" id="id272">*</span></a>pszObject, RTS_HANDLE hUser, RTS_UI32 <a href="#id273"><span class="problematic" id="id274">*</span></a>pulRights, RTS_UI32 <a href="#id275"><span class="problematic" id="id276">*</span></a>pulDeniedRights)<a class="headerlink" href="#staticitf-def-rts-result-userobjectsdbgetrights-rts-handle-hdatabase-char-pszobject-rts-handle-huser-rts-ui32-pulrights-rts-ui32-puldeniedrights" title="Permalink to this headline">¶</a></h3>
+<p>Get the rights and the denied rights of a user on a specified object</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 15%" />
+<col style="width: 73%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>pszObject</p></td>
+<td><p>Full object name (see object tree)</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>hUser</p></td>
+<td><p>Handle to the user which access rights are requested</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error code</p>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 92%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>Access rights could be retrieved</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_PARAMETER</p></td>
+<td><p>Invalid handles Pointer to get rights of the user. See category “User rights” for details Pointer to get denied rights of the user. See category “User rights” for details</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="staticitf-def-rts-result-userobjectsdbactivate-rts-handle-hdatabase">
+<span id="group-cmp-user-objects-d-b-itf-1ga68c681774d761264f4b04686994a3421"></span><h3>STATICITF_DEF RTS_RESULT UserObjectsDBActivate (RTS_HANDLE hDatabase)<a class="headerlink" href="#staticitf-def-rts-result-userobjectsdbactivate-rts-handle-hdatabase" title="Permalink to this headline">¶</a></h3>
+<p>Explicitly activate the usage of user authentication: no assuming of administrator rights NOTE: The UserObjectsDB is activated implicitly when a DB file is loaded or configured via CODESYS.</p>
+<p><strong>Returns:</strong></p>
+<p>Error code</p>
+<p><strong>Return values</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 76%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>ERR_OK</p></td>
+<td><p>Activation was successful</p></td>
+</tr>
+<tr class="row-even"><td><p>ERR_NOTINITIALIZED</p></td>
+<td><p>The user management is not initialized or it is not loaded yet</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="group___cmp_visu_client_controller_host_itf.html" title="7.1.2.121. CmpVisuClientControllerHostItf"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="group___cmp_user_objects_d_b_configuration_itf.html" title="7.1.2.119. CmpUserObjectsDBConfigurationItf"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. Reference Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >7.1. API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

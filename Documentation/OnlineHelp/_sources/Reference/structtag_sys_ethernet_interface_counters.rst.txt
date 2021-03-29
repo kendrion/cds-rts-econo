@@ -1,0 +1,235 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of struct.rst template
+
+.. _structtag_sys_ethernet_interface_counters:
+
+================================================
+tagSysEthernetInterfaceCounters Struct Reference
+================================================
+
+| #include ":ref:`SysEthernetItf.h <_sys_ethernet_itf_8h>`"
+
+Data Fields
+-----------
+
+- RTS_IEC_DWORD :ref:`structVersion <group___sys_ethernet_itf_1ga214ffaacd845b51fa758e4b212fa33d2>`
+- RTS_IEC_DWORD :ref:`ifInNUcastPkts <group___sys_ethernet_itf_1gaef68c5ffcbfdb8f873a6b2a5562f2935>`
+- RTS_IEC_DWORD :ref:`ifInDiscards <group___sys_ethernet_itf_1ga8e777f50c9574ddd4c66cfa1f262f92e>`
+- RTS_IEC_DWORD :ref:`ifInErrors <group___sys_ethernet_itf_1gab09dcf043af1515bf0301266469ba7be>`
+- RTS_IEC_DWORD :ref:`ifInUnknownProtos <group___sys_ethernet_itf_1ga470e365d0a8cffe2b4a2f43e05f8c6f2>`
+- RTS_IEC_DWORD :ref:`ifOutNUcastPkts <group___sys_ethernet_itf_1gaf7eb0bbc728a43a7eb957463e7e87253>`
+- RTS_IEC_DWORD :ref:`ifOutDiscards <group___sys_ethernet_itf_1gafb798772a87fbf082e796ed671956f14>`
+- RTS_IEC_DWORD :ref:`ifOutErrors <group___sys_ethernet_itf_1gacc11ed166f6d0b4b3cca6b480dfba695>`
+- RTS_IEC_LWORD :ref:`hcInOctets <group___sys_ethernet_itf_1ga4d0cdca7b9c33cc019468535f1861634>`
+- RTS_IEC_LWORD :ref:`hcInUcastPkts <group___sys_ethernet_itf_1gab8d941d21f93a2fa6241ae56584bf94c>`
+- RTS_IEC_LWORD :ref:`hcInMulticastPkts <group___sys_ethernet_itf_1ga9d4606bd5226454a93b296e8a1a3ec2c>`
+- RTS_IEC_LWORD :ref:`hcInBroadcastPkts <group___sys_ethernet_itf_1ga396c80be6f2fb6c8864fabe4e538af4b>`
+- RTS_IEC_LWORD :ref:`hcOutOctets <group___sys_ethernet_itf_1ga2914dff23ca891fabbbfbdd6d7403953>`
+- RTS_IEC_LWORD :ref:`hcOutUcastPkts <group___sys_ethernet_itf_1ga37a33075faf4a1ca98fa42baf4918bf8>`
+- RTS_IEC_LWORD :ref:`hcOutMulticastPkts <group___sys_ethernet_itf_1ga82d01fc0cc78d5a1653048117f696eec>`
+- RTS_IEC_LWORD :ref:`hcOutBroadcastPkts <group___sys_ethernet_itf_1ga9a8a18642f6a3a3446ee13d88da452f5>`
+- RTS_IEC_RESULT :ref:`ifInNUcastPktsQuality <group___sys_ethernet_itf_1ga71468bbe8edb9d2b355f29cc140e3541>`
+- RTS_IEC_RESULT :ref:`ifInDiscardsQuality <group___sys_ethernet_itf_1ga92d14747417e3b792912a8075c132396>`
+- RTS_IEC_RESULT :ref:`ifInErrorsQuality <group___sys_ethernet_itf_1ga510439f2d050d60176f7e6ff1aad6a79>`
+- RTS_IEC_RESULT :ref:`ifInUnknownProtosQuality <group___sys_ethernet_itf_1ga9a72ab90f164abb89b3160dad9307100>`
+- RTS_IEC_RESULT :ref:`ifOutNUcastPktsQuality <group___sys_ethernet_itf_1ga95ce9d8ce138fcc64cd71e0a269517d1>`
+- RTS_IEC_RESULT :ref:`ifOutDiscardsQuality <group___sys_ethernet_itf_1ga67b87b0e5e9353bc008252447a789087>`
+- RTS_IEC_RESULT :ref:`ifOutErrorsQuality <group___sys_ethernet_itf_1gae9f1a30b6eb7f94a6948cc3f61a97005>`
+- RTS_IEC_RESULT :ref:`hcInOctetsQuality <group___sys_ethernet_itf_1gad3ee1bb710c61721703f108ba3424077>`
+- RTS_IEC_RESULT :ref:`hcInUcastPktsQuality <group___sys_ethernet_itf_1gac424ee656a55554a552163bd50e7f66f>`
+- RTS_IEC_RESULT :ref:`hcInMulticastPktsQuality <group___sys_ethernet_itf_1ga8306239a62513d19d82dec6375b1d5a2>`
+- RTS_IEC_RESULT :ref:`hcInBroadcastPktsQuality <group___sys_ethernet_itf_1ga6b350470a7018892f8b26ffa04318548>`
+- RTS_IEC_RESULT :ref:`hcOutOctetsQuality <group___sys_ethernet_itf_1ga7feeb21f3bde1aeca519b4f0568dcb8a>`
+- RTS_IEC_RESULT :ref:`hcOutUcastPktsQuality <group___sys_ethernet_itf_1ga334aec18cac8cac22a1e7ffc4cd4e8d2>`
+- RTS_IEC_RESULT :ref:`hcOutMulticastPktsQuality <group___sys_ethernet_itf_1ga30ac603e9cd0393b1eee846b9133bc67>`
+- RTS_IEC_RESULT :ref:`hcOutBroadcastPktsQuality <group___sys_ethernet_itf_1ga57677f3edcac85960e3e33d4fec58cb9>`
+
+Detailed Description
+--------------------
+
+The "HC Interface Counters" and the "Interface Counters" of EIP plus a quality flag for each value and a struct version.
+
+Quality Flags used in the runtime interface for reading the Ethernet interface settings.
+
+These quality flags are not from the EIP specification, but were added by CODESYS. The idea behind this is to be able to say for each individual value of the respective STRUCT whether it has been filled correctly by the platform implementation.
+
+Possible quality flags are:
+
+  - ERR_OK: Value could be determined without errors
+
+  - ERR_NOTIMPLEMENTED: Not implemented by this platform implementation
+
+  - ERR_NOT_SUPPORTED: Not supported by this platform implementation
+
+  - ERR_FAILED: Error: Value could not be determined
+
+Field Documentation
+-------------------
+
+.. _group___sys_ethernet_itf_1ga214ffaacd845b51fa758e4b212fa33d2:
+
+RTS_IEC_DWORD tagSysEthernetInterfaceCounters::structVersion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1gaef68c5ffcbfdb8f873a6b2a5562f2935:
+
+RTS_IEC_DWORD tagSysEthernetInterfaceCounters::ifInNUcastPkts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga8e777f50c9574ddd4c66cfa1f262f92e:
+
+RTS_IEC_DWORD tagSysEthernetInterfaceCounters::ifInDiscards
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1gab09dcf043af1515bf0301266469ba7be:
+
+RTS_IEC_DWORD tagSysEthernetInterfaceCounters::ifInErrors
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga470e365d0a8cffe2b4a2f43e05f8c6f2:
+
+RTS_IEC_DWORD tagSysEthernetInterfaceCounters::ifInUnknownProtos
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1gaf7eb0bbc728a43a7eb957463e7e87253:
+
+RTS_IEC_DWORD tagSysEthernetInterfaceCounters::ifOutNUcastPkts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1gafb798772a87fbf082e796ed671956f14:
+
+RTS_IEC_DWORD tagSysEthernetInterfaceCounters::ifOutDiscards
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1gacc11ed166f6d0b4b3cca6b480dfba695:
+
+RTS_IEC_DWORD tagSysEthernetInterfaceCounters::ifOutErrors
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga4d0cdca7b9c33cc019468535f1861634:
+
+RTS_IEC_LWORD tagSysEthernetInterfaceCounters::hcInOctets
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1gab8d941d21f93a2fa6241ae56584bf94c:
+
+RTS_IEC_LWORD tagSysEthernetInterfaceCounters::hcInUcastPkts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga9d4606bd5226454a93b296e8a1a3ec2c:
+
+RTS_IEC_LWORD tagSysEthernetInterfaceCounters::hcInMulticastPkts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga396c80be6f2fb6c8864fabe4e538af4b:
+
+RTS_IEC_LWORD tagSysEthernetInterfaceCounters::hcInBroadcastPkts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga2914dff23ca891fabbbfbdd6d7403953:
+
+RTS_IEC_LWORD tagSysEthernetInterfaceCounters::hcOutOctets
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga37a33075faf4a1ca98fa42baf4918bf8:
+
+RTS_IEC_LWORD tagSysEthernetInterfaceCounters::hcOutUcastPkts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga82d01fc0cc78d5a1653048117f696eec:
+
+RTS_IEC_LWORD tagSysEthernetInterfaceCounters::hcOutMulticastPkts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga9a8a18642f6a3a3446ee13d88da452f5:
+
+RTS_IEC_LWORD tagSysEthernetInterfaceCounters::hcOutBroadcastPkts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga71468bbe8edb9d2b355f29cc140e3541:
+
+RTS_IEC_RESULT tagSysEthernetInterfaceCounters::ifInNUcastPktsQuality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga92d14747417e3b792912a8075c132396:
+
+RTS_IEC_RESULT tagSysEthernetInterfaceCounters::ifInDiscardsQuality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga510439f2d050d60176f7e6ff1aad6a79:
+
+RTS_IEC_RESULT tagSysEthernetInterfaceCounters::ifInErrorsQuality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga9a72ab90f164abb89b3160dad9307100:
+
+RTS_IEC_RESULT tagSysEthernetInterfaceCounters::ifInUnknownProtosQuality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga95ce9d8ce138fcc64cd71e0a269517d1:
+
+RTS_IEC_RESULT tagSysEthernetInterfaceCounters::ifOutNUcastPktsQuality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga67b87b0e5e9353bc008252447a789087:
+
+RTS_IEC_RESULT tagSysEthernetInterfaceCounters::ifOutDiscardsQuality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1gae9f1a30b6eb7f94a6948cc3f61a97005:
+
+RTS_IEC_RESULT tagSysEthernetInterfaceCounters::ifOutErrorsQuality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1gad3ee1bb710c61721703f108ba3424077:
+
+RTS_IEC_RESULT tagSysEthernetInterfaceCounters::hcInOctetsQuality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1gac424ee656a55554a552163bd50e7f66f:
+
+RTS_IEC_RESULT tagSysEthernetInterfaceCounters::hcInUcastPktsQuality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga8306239a62513d19d82dec6375b1d5a2:
+
+RTS_IEC_RESULT tagSysEthernetInterfaceCounters::hcInMulticastPktsQuality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga6b350470a7018892f8b26ffa04318548:
+
+RTS_IEC_RESULT tagSysEthernetInterfaceCounters::hcInBroadcastPktsQuality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga7feeb21f3bde1aeca519b4f0568dcb8a:
+
+RTS_IEC_RESULT tagSysEthernetInterfaceCounters::hcOutOctetsQuality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga334aec18cac8cac22a1e7ffc4cd4e8d2:
+
+RTS_IEC_RESULT tagSysEthernetInterfaceCounters::hcOutUcastPktsQuality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga30ac603e9cd0393b1eee846b9133bc67:
+
+RTS_IEC_RESULT tagSysEthernetInterfaceCounters::hcOutMulticastPktsQuality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_ethernet_itf_1ga57677f3edcac85960e3e33d4fec58cb9:
+
+RTS_IEC_RESULT tagSysEthernetInterfaceCounters::hcOutBroadcastPktsQuality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The documentation for this struct was generated from the following file:
+------------------------------------------------------------------------
+
+SysEthernetItf.h
+
+.. last line of struct.rst template
+.. last line of composition.rst template
+
+

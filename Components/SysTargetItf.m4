@@ -6,7 +6,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -85,6 +85,32 @@ REF_ITF(`CmpIoDrvItf.m4')
 	#define SYSTARGET_OS_ID					8
 #endif
 
+#define SYSTARGET_OSTABLE					{\
+												{ 1, "---" },\
+												{ 2, "Windows" },\
+												{ 3, "Windows RTE" },\
+												{ 4, "Windows CE" },\
+												{ 5, "Linux" },\
+												{ 6, "VxWorks" },\
+												{ 7, "QNX" },\
+												{ 8, "UCOS" },\
+												{ 0, NULL }\
+											}
+
+#define SYSTARGET_GET_OSNAME(osid, pszOSName)	{\
+													int i;\
+													RTS_ID_TO_NAME aOSNames[] = SYSTARGET_OSTABLE;\
+													pszOSName = aOSNames[0].pszName;\
+													for (i = 0; aOSNames[i].pszName != NULL; i++)\
+													{\
+														if (aOSNames[i].id == ulOperatingSystemId)\
+														{\
+															pszOSName = aOSNames[i].pszName;\
+															break;\
+														}\
+													}\
+												}
+
 /**
  * <category>Compiler switch</category>
  * <description>
@@ -94,6 +120,18 @@ REF_ITF(`CmpIoDrvItf.m4')
  * <element name="TRG_32BIT">32 Bit platform</element>
  * <element name="TRG_64BIT">64 Bit platform</element>
  */
+#define SYSTARGET_ARCHITECTURE_16BIT			"16Bit"
+#define SYSTARGET_ARCHITECTURE_32BIT			"32Bit"
+#define SYSTARGET_ARCHITECTURE_64BIT			"64Bit"
+
+#if defined(TRG_16BIT)
+	#define SYSTARGET_GET_ARCHITECTURE				SYSTARGET_ARCHITECTURE_16BIT
+#elif defined(TRG_64BIT)
+	#define SYSTARGET_GET_ARCHITECTURE				SYSTARGET_ARCHITECTURE_64BIT
+#else
+	#define SYSTARGET_GET_ARCHITECTURE				SYSTARGET_ARCHITECTURE_32BIT
+#endif
+
 
 
 /**
@@ -157,6 +195,44 @@ REF_ITF(`CmpIoDrvItf.m4')
 	#define SYSTARGET_CPU_ID				14
 #endif
 
+#define SYSTARGET_PROCESSORTABLE			{\
+												{ 0, "---" },\
+												{ 1, "x86" },\
+												{ 2, "ARM" },\
+												{ 3, "PPC" },\
+												{ 4, "MIPS" },\
+												{ 5, "SH" },\
+												{ 6, "BLACKFIN" },\
+												{ 7, "TRICORE" },\
+												{ 8, "NIOS" },\
+												{ 9, "C16X" },\
+												{ 10, "CORTEX" },\
+												{ 11, "DSP" },\
+												{ 12, "V850" },\
+												{ 13, "RX6" },\
+												{ 14, "COLDFIRE" },\
+												{ 0, NULL }\
+											}
+
+#define SYSTARGET_GET_PROCESSORNAME(procid, pszProcessorName)	{\
+													int i;\
+													RTS_ID_TO_NAME aProcNames[] = SYSTARGET_PROCESSORTABLE;\
+													pszProcessorName = aProcNames[0].pszName;\
+													for (i = 0; aProcNames[i].pszName != NULL; i++)\
+													{\
+														if (aProcNames[i].id == procid)\
+														{\
+															pszProcessorName = aProcNames[i].pszName;\
+															break;\
+														}\
+													}\
+												}
+
+#ifdef CPLUSPLUS
+	#define SYSTARGET_GET_CODING				"C++"
+#else
+	#define SYSTARGET_GET_CODING				"C"
+#endif
 
 
 /**
@@ -169,7 +245,7 @@ REF_ITF(`CmpIoDrvItf.m4')
 
 /**
  * <category>DeviceID mask</category>
- * <description>Specifices, which parts of the DeviceID are checked in the signature. So a range of devices can use the same signature.</description>
+ * <description>Specifies, which parts of the DeviceID are checked in the signature. So a range of devices can use the same signature.</description>
  */
 #ifndef SYSTARGET_DEVICE_MASK
 	#define SYSTARGET_DEVICE_MASK			0x0000
@@ -199,6 +275,16 @@ REF_ITF(`CmpIoDrvItf.m4')
 	#error SYSTARGET_SIGNATUREID must be defined. Can be requested at 3S.
 #endif
 
+
+/**
+ * <category>Settings</category>
+ * <type>String</type>
+ * <description>Setting for the serial number of the target.
+ *	This setting is only effective if the CODESYS run-time system of the target has no serial number implemented.
+ *	If the CODESYS run-time system of the target has an serial number implemented, this setting will be ignored.
+ * </description>
+ */
+#define SYSTARGETKEY_STRING_SERIAL_NUMBER			"SerialNumber"
 
 /**
  * <category>Settings</category>
@@ -360,7 +446,7 @@ REF_ITF(`CmpIoDrvItf.m4')
  
 /**
  * <category>Device Types</category>
- * <description>Parametrizable device</description>
+ * <description>Parameterizable device</description>
  */
 #define SYSTARGET_TYPE_PARAMETRIZABLE				0x1004
 
@@ -385,7 +471,7 @@ REF_ITF(`CmpIoDrvItf.m4')
  
 /**
  * <category>Device Types</category>
- * <description>Remote targetvisu device</description>
+ * <description>Remote target-visualization device</description>
  *
  */
 #define SYSTARGET_TYPE_REMOTETARGETVISU				0x1008
@@ -488,7 +574,7 @@ DEF_API(`void',`CDECL',`systargetgetdevicename2',`(systargetgetdevicename2_struc
 
 /**
  * <description>Returns the TargetId.
- *	NOTE: Highword of the TargetId is the VendorId! The VendorId is managed by 3S.
+ *	NOTE: High-word of the TargetId is the VendorId! The VendorId is managed by 3S.
  * </description>
  * <result><p>RESULT: Returns the runtime system error code (see CmpErrors.library).</p></result>
  */
@@ -573,7 +659,7 @@ typedef struct tagsystargetgetserialnumber_struct
 {
 	RTS_IEC_STRING **ppsSerialNumber;	/* VAR_INPUT */	/* <param name="ppsSerialNumber" type="INOUT">Pointer to pointer to serial number.
 	If ppsSerialNumber==NULL, the length of the serial number can be retrieved in *pnMaxLen.
-	If *ppsSerialNumber==NULL, the pointer will be set to the serial nubmer. *pnMaxLen contains the real length of the serial number.
+	If *ppsSerialNumber==NULL, the pointer will be set to the serial number. *pnMaxLen contains the real length of the serial number.
 	If *ppsSerialNumber!=NULL, the serial number will be written into the buffer. *pnMaxLen must specify the max length of the buffer!</param> */
 	RTS_IEC_DINT *pnMaxLen;				/* VAR_INPUT */	/* <param name="pnMaxLen" type="INOUT">Pointer to maxlength of ppsSerialNumber, returns the real length of content of ppsSerialNumber.</param> */
 	RTS_IEC_RESULT SysTargetGetSerialNumber;	/* VAR_OUTPUT */	
@@ -670,7 +756,7 @@ DEF_API(`void',`CDECL',`systargetgetversion2',`(systargetgetversion2_struct *p)'
 extern "C" {
 #endif
 
-/* Init routines for OS specific modules */
+/* Initialization routines for OS specific modules */
 RTS_RESULT CDECL SysTargetOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysTargetOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
@@ -680,17 +766,17 @@ RTS_RESULT CDECL SysTargetOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, 
  *  <p>IMPLEMENTATION NOTES:</p>
  *  This node name, which is for example displayed in the CODESYS communication dialog scanning all targets, should be 
  *  unique by default. In first instance this could be the registered host name of the target in the network. Another
- *  approach ist to add the official serial number (e.g. "MyController_1234-5678") or the IP-Address of the controller, 
+ *  approach is to add the official serial number (e.g. "MyController_1234-5678") or the IP-Address of the controller, 
  *  which is most of the time unique (e.g. "MyController_192.168.123.234") as part of the node name. This requirement focused 
  *  on the use case where an end user takes several identical controllers of one vendor and plugs at once into his plant or machine.
- *  And so every controller should show up in the commuication dialog at a scan with a unique node name. Furthermore this is important
+ *  And so every controller should show up in the communication dialog at a scan with a unique node name. Furthermore this is important
  *  to allow a client to connect by using the node name.
  *  The length is limited to SYSTARGET_MAX_NODE_NAME_LEN.
  * </description>
  * <param name="pwszName" type="IN" range="[0,VALID_NAME,INVALID_NAME]">Buffer that is filled with the name of the node. Type is UTF-16.</param>
  * <param name="pnMaxLength" type="INOUT" range="[0,VALID_LENGTH,INVALID_LENGTH]">Pointer to maximum length in 16-bit code units (not bytes!).
  *	Returns the number of 16-bit code units copied into the buffer including the trailing zero.</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Name was retrieved sucessfull</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Name was retrieved successful</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to MaxLength or Name may not be null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Name could not be retrieved</errorcode>
  * <result>error code</result>
@@ -704,7 +790,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysTargetGetNodeName',`(RTS_WCHAR *pwszName,
  * <param name="pwszName" type="IN" range="[0,VALID_NAME,INVALID_NAME]">Buffer that is filled with the name of the node. Type is UTF-16. Can be NULL to get the necessary length.</param>
  * <param name="pnMaxLength" type="INOUT" range="[0,VALID_LENGTH,INVALID_LENGTH]">Pointer to maximum length in 16-bit code units (not bytes!).
  *	Returns the number of 16-bit code units copied into the buffer including the trailing zero.</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Name was retrieved sucessfull</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Name was retrieved successful</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to MaxLength or Name may not be null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Name could not be retrieved</errorcode>
  * <result>error code</result>
@@ -715,10 +801,10 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysTargetGetConfiguredNodeName',`(RTS_WCHAR 
  * <description>
  * <p>Returns the target type</p>
  * <p>The possible target types are specified in the section "Device Types" (e.g. SYSTARGET_TYPE_PROGRAMMABLE).</p>
- * <p>Note: On SIL2 runtimes, this should return the value of the define SYSTARGET_DEVICE_TYPE.</p>
+ * <p>Note: On SIL2 runtime this should return the value of the define SYSTARGET_DEVICE_TYPE.</p>
  * </description>
  * <param name="pulType" type="INOUT" range="[0,VALID_TYPE_POINTER]">Pointer to target type. See corresponding category "Device Types"</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">TargetType was retrieved sucessfull</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">TargetType was retrieved successful</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to Type may not be null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">TargetType could not be retrieved</errorcode>
  * <result>error code</result>
@@ -728,11 +814,11 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysTargetGetType',`(RTS_UI32 *pulType)')
 /**
  * <description>
  * <p>Returns the TargetId of the PLC.</p>
- * <p>Note: Highword of the TargetId must be the VendorId! The VendorId is managed by 3S.</p>
- * <p>Note2: On SIL2 runtimes, this should return the combination of the defines SYSTARGET_VENDOR_ID and SYSTARGET_DEVICE_ID.</p>
+ * <p>Note: High-word of the TargetId must be the VendorId! The VendorId is managed by 3S.</p>
+ * <p>Note2: On SIL2 runtime this should return the combination of the defines SYSTARGET_VENDOR_ID and SYSTARGET_DEVICE_ID.</p>
  * </description>
  * <param name="pulTargetId" type="INOUT" range="[0,VALID_ID_POINTER]">Pointer to the TargetId</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">TargetId was retrieved sucessfull</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">TargetId was retrieved successful</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to TargetId may not be null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">TargetId could not be retrieved</errorcode>
  * <result>error code</result>
@@ -742,10 +828,10 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysTargetGetId',`(RTS_UI32 *pulTargetId)')
 /**
  * <description>
  * <p>Returns the target version</p>
- * <p>Note: On SIL2 runtimes, this should return the value of the define SYSTARGET_DEVICE_VERSION.</p>
+ * <p>Note: On SIL2 runtime this should return the value of the define SYSTARGET_DEVICE_VERSION.</p>
  * </description>
  * <param name="pulVersion" type="INOUT" range="[0,VALID_VERSION_POINTER]">Pointer to version of the target</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">version was retrieved sucessfull</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">version was retrieved successful</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to version may not be null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">version could not be retrieved</errorcode>
  * <result>error code</result>
@@ -761,7 +847,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysTargetGetVersion',`(RTS_UI32 *pulVersion)
  * <param name="pwszName" type="INOUT" range="[0,INVALID_NAME,VALID_NAME]">Pointer to the device name. Type is UTF-16. Can be NULL to get the necessary length.</param>
  * <param name="pnMaxLength" type="INOUT" range="[0,INVALID_LENGTH,VALID_LENGTH]">Pointer to maximum length of the name in 16-bit code units (not bytes!).
  *	Returns the number of 16-bit code units copied into the buffer including the trailing zero.</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">device name was retrieved sucessfull</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">device name was retrieved successful</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to length may not be null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">device name could not be retrieved</errorcode>
  * <result>error code</result>
@@ -777,7 +863,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysTargetGetDeviceName',`(RTS_WCHAR *pwszNam
  * <param name="pwszName" type="INOUT" range="[0,INVALID_NAME,VALID_NAME]">Pointer to the device name. Type is UTF-16. Can be NULL to get the necessary length.</param>
  * <param name="pnMaxLength" type="INOUT" range="[0,INVALID_LENGTH,VALID_LENGTH]">Pointer to maximum length of the name in 16-bit code units (not bytes!).
  *	Returns the number of 16-bit code units copied into the buffer including the trailing zero.</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">vendor name was retrieved sucessfull</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">vendor name was retrieved successful</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to length may not be null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">vendor name could not be retrieved</errorcode>
  * <result>error code</result>
@@ -787,7 +873,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysTargetGetVendorName',`(RTS_WCHAR *pwszNam
 /**
  * <description>Returns the ID of the operating system.</description>
  * <param name="pulOperatingSystemID" type="INOUT" range="[0,VALID_OS_ID_POINTER]">Pointer to operating system Id. See category "Operating System" above</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">OS ID was retrieved sucessfull</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">OS ID was retrieved successful</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to OS ID may not be null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">OS ID could not be retrieved</errorcode>
  * <result>error code</result>
@@ -797,7 +883,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysTargetGetOperatingSystemId',`(RTS_UI32 *p
 /**
  * <description>Returns the ID of the processor</description>
  * <param name="pulProcessorID" type="INOUT" range="[0,VALID_CPU_ID_POINTER]">Pointer to processor ID. See category "Processor ID" above</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">CPU ID was retrieved sucessfull</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">CPU ID was retrieved successful</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to CPU ID may not be null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">CPU ID could not be retrieved</errorcode>
  * <result>error code</result>
@@ -807,6 +893,8 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysTargetGetProcessorId',`(RTS_UI32 *pulProc
 /**
  * <description>Returns a unique serial number of the target. Unique serial number can be used e.g. for detection or communication needs (e. g. as part of node name).
  * <p>IMPLEMENTATION NOTES:</p>
+ * If the platform specific implementation of the target has no serial number implemented, then the value of the [SysTarget] setting SYSTARGETKEY_STRING_SERIAL_NUMBER will be read.
+ * 
  * The length of the serial number string must be limited to SYSTARGET_MAX_SERIAL_NUMBER_LEN characters including NULL termination! 
  *
  *	Example:	"C4D7F967-00020655-00100800-029AF2C4"
@@ -819,11 +907,13 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysTargetGetProcessorId',`(RTS_UI32 *pulProc
  * <param name="ppszSerialNumber" type="INOUT" range="[0,VALID_SN_P_NULL,VALID_SN_P_VALID]">Pointer to pointer to serial number.
  *	<ul>
  *		<li>If ppszSerialNumber==NULL, the length of the serial number can be retrieved in *pnMaxLen.</li>
- *		<li>If *ppszSerialNumber==NULL, the pointer will be set to the static serial nubmer. *pnMaxLen contains the real length of the serial number.</li>
+ *		<li>If *ppszSerialNumber==NULL, the pointer will be set to the static serial number. *pnMaxLen contains the real length of the serial number.</li>
  *		<li>If *ppszSerialNumber!=NULL, the serial number will be written into the buffer. *pnMaxLen must specify the max length of the buffer!</li>
  *	</ul>	
  * </param>
- * <param name="pnMaxLen" type="INOUT" range="[0,VALID_MAX_LEN]">Pointer to the max length of the string (if *ppszSerialNumber!=NULL). On return it contains returned length including NULL.</param>
+ * <param name="pnMaxLen" type="INOUT" range="[0,VALID_MAX_LEN]">
+ *	Input: size of the *ppszSerialNumber buffer (= strlen +1).
+ *	Output: If (ppszSerialNumber==NULL) then: strlen(SerialNo) + 1, else: MIN(strlen(SerialNo) + 1, *pnMaxLen).</param>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">SN was retrieved successful</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to MaxLen may not be null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">SN could not be retrieved</errorcode>
@@ -838,22 +928,24 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysTargetGetSerialNumber',`(char **ppszSeria
  * <p>IMPLEMENTATION NOTES:</p>
  * - The length of the serial number string must be limited to 512 characters! It is recommended to limit the length to 64 characters.
  * - The serial number must be robust against cracking!!! Typically it should be determined from a unique hardware serial number (device serial number, CPU serial number etc.).
- *	 If this is not available, it must be calculated out of hardware unique characteristics (harddisk serial number + operating system serial number + CPU type + BIOS type etc.)
+ *	 If this is not available, it must be calculated out of hardware unique characteristics (hard disk serial number + operating system serial number + CPU type + BIOS type etc.)
  *
  *	Example:	"C4D7F967-00020655-00100800-029AF2C4"
  *
  *	If ppszSerialNumber==NULL, the length of the serial number can be retrieved in *pnMaxLen.
- *	If *ppszSerialNumber==NULL, the pointer will be set to the static serial nubmer. *pnMaxLen contains the real length of the serial number.
+ *	If *ppszSerialNumber==NULL, the pointer will be set to the static serial number. *pnMaxLen contains the real length of the serial number.
  *	If *ppszSerialNumber!=NULL, the serial number will be written into the buffer. *pnMaxLen must specify the max length of the buffer!
  * </description>
  * <param name="ppszSerialNumber" type="INOUT" range="[0,VALID_SN_P_NULL,VALID_SN_P_VALID]">Pointer to pointer to serial number.
  *	<ul>
  *		<li>If ppszSerialNumber==NULL, the length of the serial number can be retrieved in *pnMaxLen.</li>
- *		<li>If *ppszSerialNumber==NULL, the pointer will be set to the static serial nubmer. *pnMaxLen contains the real length of the serial number.</li>
+ *		<li>If *ppszSerialNumber==NULL, the pointer will be set to the static serial number. *pnMaxLen contains the real length of the serial number.</li>
  *		<li>If *ppszSerialNumber!=NULL, the serial number will be written into the buffer. *pnMaxLen must specify the max length of the buffer!</li>
  *	</ul>	
  * </param>
- * <param name="pnMaxLen" type="INOUT" range="[0,VALID_MAX_LEN]">Pointer to the max length of the string (if *ppszSerialNumber!=NULL) or the length that is returned by the function.</param>
+ * <param name="pnMaxLen" type="INOUT" range="[0,VALID_MAX_LEN]">
+ *	Input: size of the *ppszSerialNumber buffer (= strlen +1).
+ *	Output: If (ppszSerialNumber==NULL) then: strlen(SerialNo) + 1, else: MIN(strlen(SerialNo) + 1, *pnMaxLen).</param>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">SN was retrieved successful</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to MaxLen may not be null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Error retrieving SN</errorcode>
@@ -867,7 +959,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysTargetGetSerialNumber_Secure',`(char **pp
  * <description>Returns the signature of SysTarget</description>
  * <param name="ulChallenge" type="IN" range="[0,VALID_CHALLENGE]">Challenge to get the signature</param>
  * <param name="pulSignature" type="INOUT" range="[0,VALID_SIGNATURE,INVALID_SIGNATURE]">Signature of the SysTarget entries Type, Id, OperatingSystem, ProcessorType</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Signature was retrieved sucessfull</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Signature was retrieved successful</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to Signature and ulChallenge may not be null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Signature could not be retrieved</errorcode>
  * <result>error code</result>
@@ -881,7 +973,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysTargetGetSignature',`(RTS_UI32 ulChalleng
  *		*pusDeviceMask = 0x00FF: Only the high BYTE of the DeviceID is used to generate the signature. So a range of 255 devices can be used with the same signature.
  * </description>
  * <param name="pusDeviceMask" type="INOUT" range="[0,P_VALID_DEVICE_MASK]">Pointer to return the device mask</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">device mask was retrieved sucessfull</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">device mask was retrieved successful</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to device mask may not be null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">device mask could not be retrieved</errorcode>
  * <result>error code</result>
@@ -907,10 +999,10 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysTargetCheckIdent',`(SysTargetIdent *pTarg
  * The OEM can use the implementation in SysTargetOEM to redirect or disable specific functions.
  * </description>
  * <param name="apiInfo" type="IN">API info of the current API function to resolve</param>
- * <param name="ppfAPIFunction" type="INOUT">Pointer to API functionpointer</param>
+ * <param name="ppfAPIFunction" type="INOUT">Pointer to API function pointer</param>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">API function successfully redirected to the function that *ppfAPIFunction is pointing to</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_NOT_SUPPORTED">API function is disabled for external calls. Unresolved reference will occur.</errorcode> 
- * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to API functionpointer is NULL</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to API function pointer is NULL</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">API function is not overloaded or redirected by SysTargetGetAPI</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_NOTIMPLEMENTED">No implementation to resolve the API</errorcode>
  * <result>error code</result>
@@ -924,7 +1016,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysTargetGetAPI',`(API_RESOLVE_INFO apiInfo,
 *  deleted and so the default node name is set again.
 * </description>
 * <param name="pwszName" type="IN">Buffer that is filled with the name of the node. Type is UTF-16.</param>
-* <errorcode name="RTS_RESULT Result" type="ERR_OK">Node name was set sucessfully</errorcode>
+* <errorcode name="RTS_RESULT Result" type="ERR_OK">Node name was set successful</errorcode>
 * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Pointer to name may not be null</errorcode>
 * <errorcode name="RTS_RESULT Result" type="ERR_OUT_OF_LIMITS">Length of name exceeds SYSTARGET_MAX_NODE_NAME_LEN</errorcode>
 * <errorcode name="RTS_RESULT Result" type="ERR_NO_ACCESS_RIGHTS">Configuration (file) is write protected</errorcode>

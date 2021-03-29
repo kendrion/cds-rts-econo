@@ -1,0 +1,153 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Add other Features &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/theme.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6.2.3. Creating Runtime System Components, Libraries and I/O Drivers" href="../CODESYSControlV3_Create_Components_Libraries_IOdrivers/index.html" />
+    <link rel="prev" title="Add Communication Channels" href="adding_feature_to_runtime_add_communication_channels.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../CODESYSControlV3_Create_Components_Libraries_IOdrivers/index.html" title="6.2.3. Creating Runtime System Components, Libraries and I/O Drivers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="adding_feature_to_runtime_add_communication_channels.html" title="Add Communication Channels"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >6. Tutorials / HowTos</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >6.2.2. CODESYS Control V3 - Porting to a new platform</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="adding_feature_to_runtime.html" accesskey="U">6.2.2.3. Adding Features to the Runtime</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="adding_feature_to_runtime_add_communication_channels.html"
+                        title="previous chapter">Add Communication Channels</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../CODESYSControlV3_Create_Components_Libraries_IOdrivers/index.html"
+                        title="next chapter">6.2.3. Creating Runtime System Components, Libraries and I/O Drivers</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="add-other-features">
+<span id="adding-feature-to-runtime-add-other-features"></span><h1>Add other Features<a class="headerlink" href="#add-other-features" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="debugging-support">
+<h2>Debugging Support<a class="headerlink" href="#debugging-support" title="Permalink to this headline">¶</a></h2>
+<p>Additional Components:</p>
+<ul class="simple">
+<li><p>CmpAppBP</p></li>
+<li><p>CmpAppForce</p></li>
+</ul>
+<p>Note, that the component <em>CmpAppBP</em> relies on a correct breakpoint
+handling in the component SysCpuHandling. Maybe you didn’t implement
+this in the first shot.</p>
+<p>The component <em>CmpAppForce</em> adds support to force monitored variables to
+a specific value. It needs no special support from the system layer.</p>
+</div>
+<div class="section" id="full-trace-support">
+<h2>Full Trace Support<a class="headerlink" href="#full-trace-support" title="Permalink to this headline">¶</a></h2>
+<p>Additional Components:</p>
+<ul class="simple">
+<li><p>CmpTraceMgr</p></li>
+</ul>
+<p>Dependencies:</p>
+<ul class="simple">
+<li><p>SysTimeRtc</p></li>
+</ul>
+<p>Currently CODESYS supports two different kinds of traces. The default
+one creates a child application and reads the trace values with the
+usual monitoring service. For this trace, you need no special support in
+the runtime. But this one is also limited in it’s functionality. For
+examples: You are not able to trace device parameters, you can’t
+configure a trace from an IEC application and you can’t store/restore it
+on the PLC.</p>
+<div class="line-block">
+<div class="line">The full trace is enabled with the following setting in the device
+description:</div>
+<div class="line">&lt;ts:TargetSettings&gt;</div>
+<div class="line">&lt;ts:section name=”trace”&gt;</div>
+<div class="line">&lt;ts:setting name=”tracemanager” type=”boolean” access=”visible”&gt;</div>
+<div class="line">&lt;ts:value&gt;1&lt;/ts:value&gt;</div>
+<div class="line">&lt;/ts:setting&gt;Then, you will need the additional component
+<em>CmpTraceMgr</em>, which is dependent on the system component
+<em>SysTimeRtc</em>. At least, you need to implement the following function:</div>
+</div>
+<ul>
+<li><div class="line-block">
+<div class="line">SysTimeRtcGet()</div>
+<div class="line">Return a localized UNIX timestamp.</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../CODESYSControlV3_Create_Components_Libraries_IOdrivers/index.html" title="6.2.3. Creating Runtime System Components, Libraries and I/O Drivers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="adding_feature_to_runtime_add_communication_channels.html" title="Add Communication Channels"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >6. Tutorials / HowTos</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >6.2.2. CODESYS Control V3 - Porting to a new platform</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="adding_feature_to_runtime.html" >6.2.2.3. Adding Features to the Runtime</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1230 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_except_itf:
+
+============
+SysExceptItf
+============
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of SysExcept.
+
+Detailed Description
+--------------------
+
+The SysExcept interface is projected to handle all exceptions in the runtime system. All available exceptions on the target should be handled. Exception handling is typically CPU and operating system dependent.
+
+All active code parts in the runtime system (tasks, timer, interrupt handler) must be protected against software errors, because this could lead to an unpredictable behavior or crash of the complete runtime system.
+
+All exceptions are handled in this component as first level. If the first level handling is done in another component, the component has to call the :ref:`SysExceptGenerateException() <group___sys_except_itf_1ga08d2a6fb1d1966d74c4a8a2313efd643>` routine to enable second level handling. In this case, the first level handling must be disabled with a configuration setting (see below).
+
+The SysExcept component forwards every exception to the component, that manages the active code, mostly the SysTask, SysTimer or SysInt component. These components must register exception handlers to the SysExcept component.
+
+As the last station of exception handling, the exception handler of the component, that creates the active object, was called from the SysTask, SysTimer or SysInt component. Below you can see the structure and the layers of exception handling:
+::
+    *				   +----------------------------------------------------------+
+    *				   | XXX component:                       Code that generates |
+    *				   | Registered exception handler         exception (1)       |
+    *				   | of component, is called. (4)                             |
+    *				   +----------------------------------------------------------+
+    *				        ^                                                 |
+    *				        |                                                 |
+    *				        |                                                 |
+    *				   +-----------------------------------------------+      |
+    *				   | SysTask or SysTimer component:                |      |
+    *				   | Registered exception handler is called (3)    |      |
+    *				   +-----------------------------------------------+      |
+    *				        ^                                                 |
+    *				        |                                                 |
+    *				        |                                                 |
+    *				   +-----------------------------------------------+      |
+    *				   | SysExcept component:                          |      |
+    *				   | ::SysExceptGenerateException() is called (2)  |      |
+    *				   +-----------------------------------------------+      |
+    *				        ^                                                 |
+    *				        |                                                 |
+    *				        |                    Exception occurred (1a)      |
+    *				        |<------------------------------------------------|
+    *				        |                                                 |
+    *				   +-----------------------------------------------+      |
+    *				   | OEM component:                                |      | (1b)
+    *				   | First level exception handling. If the        |      |
+    *				   | exception is not in the OEM context, it is    |      |
+    *				   | forwarded to the SysExcept component          |      |
+    *				   +-----------------------------------------------+      |
+    *				        ^                                                 |
+    *				        '-------------------------------------------------'
+    *
+
+If RTS_STRUCTURED_EXCEPTION_HANDLING is set as a define, the structured exception handling is activated. To use this exception handling, the following functions must be imported:
+
+  - SysExceptTry
+
+  - SysExceptCatch
+
+  - SysExceptCatchException
+
+Here is an example of the usage:
+::
+    *				     Variant 1:
+    *				     ----------
+    *				     rts_try
+    *				     {
+    *				         ...
+    *				     }
+    *				     rts_catch_exception(RTSEXCPT_DIVIDEBYZERO)
+    *				     {
+    *				         RTS_UI32 exceptionCode = EXCPT_GET_CODE();
+    *				         RegContextpExceptionContext = EXCPT_GET_CONTEXT();
+    *				         ...
+    *				     }
+    *				     rts_catch_exception(RTSEXCPT_DIVIDEBYZERO)
+    *				     {
+    *				         ...
+    *				     }
+    *				     rts_catch
+    *				     {
+    *				         ...
+    *				     }
+    *				     rts_try_end
+    *
+    *
+    *				     Variant 2:
+    *				     ----------
+    *
+    *				     rts_try
+    *				     {
+    *				         ...
+    *				     }
+    *				     rts_catch
+    *				     {
+    *				         RTS_UI32 exceptionCode = EXCPT_GET_CODE();
+    *				         RegContextpExceptionContext = EXCPT_GET_CONTEXT();
+    *				         ...
+    *				     }
+    *				     rts_try_end
+    *
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Compiler switch <group___sys_except_itf___compilerswitch>`
+
+- :ref:`Event parameter <group___sys_except_itf___eventparameter>`
+
+- :ref:`Events <group___sys_except_itf___events>`
+
+- :ref:`Exception code <group___sys_except_itf___exceptioncode>`
+
+- :ref:`Exception context <group___sys_except_itf___exceptioncontext>`
+
+- :ref:`Exception handler <group___sys_except_itf___exceptionhandler>`
+
+- :ref:`Exception pseudo code <group___sys_except_itf___exceptionpseudocode>`
+
+- :ref:`SEH Context <group___sys_except_itf___s_e_h_context>`
+
+- :ref:`Settings <group___sys_except_itf___settings>`
+
+- :ref:`Static defines <group___sys_except_itf___staticdefines>`
+
+Data Structures
+---------------
+
+- struct :ref:`tagsysexceptgenerateexception_struct <structtagsysexceptgenerateexception__struct>`
+
+- struct :ref:`tagsysexceptdisableseh_struct <structtagsysexceptdisableseh__struct>`
+
+- struct :ref:`tagsysexceptdisableseh2_struct <structtagsysexceptdisableseh2__struct>`
+
+- struct :ref:`tagsysexceptenableseh_struct <structtagsysexceptenableseh__struct>`
+
+- struct :ref:`tagsysexceptenableseh2_struct <structtagsysexceptenableseh2__struct>`
+
+- struct :ref:`ISysExcept_C <struct_i_sys_except___c>`
+
+Macros
+------
+
+- #define :ref:`USE_SysExceptMapException <group___sys_except_itf_1gaa1f0d0a0c7b2eeec06f6f4a982753d37>` :ref:`PFSYSEXCEPTMAPEXCEPTION <group___sys_except_itf_1gae600045f549bd5e5935417f1cccfb74c>` pfSysExceptMapException;
+
+- #define :ref:`EXT_SysExceptMapException <group___sys_except_itf_1ga1e81f55df8bd3a994fa7a400fa4e4a04>` extern :ref:`PFSYSEXCEPTMAPEXCEPTION <group___sys_except_itf_1gae600045f549bd5e5935417f1cccfb74c>` pfSysExceptMapException;
+
+- #define :ref:`GET_SysExceptMapException <group___sys_except_itf_1ga8ef0d6cf033e725549028adc6534141d>` s_pfCMGetAPI2( "SysExceptMapException", (RTS_VOID_FCTPTR *)&pfSysExceptMapException, (fl), 0, 0)
+
+- #define :ref:`CAL_SysExceptMapException <group___sys_except_itf_1ga6f3b7f0b8a30607c1ef0b3601be4602b>` pfSysExceptMapException
+
+- #define :ref:`CHK_SysExceptMapException <group___sys_except_itf_1ga600fd1f336aad054bb8dcf3cefe7d615>` (pfSysExceptMapException != NULL)
+
+- #define :ref:`EXP_SysExceptMapException <group___sys_except_itf_1ga040a3ed7a0e223a0402901d11a1a39cb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptMapException", (RTS_UINTPTR) :ref:`SysExceptMapException <group___sys_except_itf_1ga336e49c382a64e42f1ec78176678fb65>` , 0, 0)
+
+- #define :ref:`USE_SysExceptGenerateException <group___sys_except_itf_1ga1074f84f760145704e6f88a95e649803>` :ref:`PFSYSEXCEPTGENERATEEXCEPTION <group___sys_except_itf_1ga6380259837ef402f19a866973f82cf1c>` pfSysExceptGenerateException;
+
+- #define :ref:`EXT_SysExceptGenerateException <group___sys_except_itf_1gaf85f1fbb23d445052ffb1cd7c49b9ea3>` extern :ref:`PFSYSEXCEPTGENERATEEXCEPTION <group___sys_except_itf_1ga6380259837ef402f19a866973f82cf1c>` pfSysExceptGenerateException;
+
+- #define :ref:`GET_SysExceptGenerateException <group___sys_except_itf_1gac7c25234b222663b1087f0773ac1b85c>` s_pfCMGetAPI2( "SysExceptGenerateException", (RTS_VOID_FCTPTR *)&pfSysExceptGenerateException, (fl), 0, 0)
+
+- #define :ref:`CAL_SysExceptGenerateException <group___sys_except_itf_1gaaac11130a07dff1e5c4cbfeecdc79994>` pfSysExceptGenerateException
+
+- #define :ref:`CHK_SysExceptGenerateException <group___sys_except_itf_1ga5bbf349ea2c2470d3c7f6f295c62e0dd>` (pfSysExceptGenerateException != NULL)
+
+- #define :ref:`EXP_SysExceptGenerateException <group___sys_except_itf_1ga8584f7f51e047e152ec5b65a4e6799d2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptGenerateException", (RTS_UINTPTR) :ref:`SysExceptGenerateException <group___sys_except_itf_1ga08d2a6fb1d1966d74c4a8a2313efd643>` , 0, 0)
+
+- #define :ref:`USE_SysExceptGenerateException2 <group___sys_except_itf_1ga85f46a8a32dcc3ad93c07ad296c8b357>` :ref:`PFSYSEXCEPTGENERATEEXCEPTION2 <group___sys_except_itf_1gaebae7a218a99881bf30017830263e06d>` pfSysExceptGenerateException2;
+
+- #define :ref:`EXT_SysExceptGenerateException2 <group___sys_except_itf_1ga55c7c63190255e88f257780b0dbf3539>` extern :ref:`PFSYSEXCEPTGENERATEEXCEPTION2 <group___sys_except_itf_1gaebae7a218a99881bf30017830263e06d>` pfSysExceptGenerateException2;
+
+- #define :ref:`GET_SysExceptGenerateException2 <group___sys_except_itf_1gacf0d7ed3b0572377db8a96348ba04afd>` s_pfCMGetAPI2( "SysExceptGenerateException2", (RTS_VOID_FCTPTR *)&pfSysExceptGenerateException2, (fl), 0, 0)
+
+- #define :ref:`CAL_SysExceptGenerateException2 <group___sys_except_itf_1ga67d2fda3c271dd587ca641d897164be6>` pfSysExceptGenerateException2
+
+- #define :ref:`CHK_SysExceptGenerateException2 <group___sys_except_itf_1ga31ebc7e74e6539c2900244b6fb4cdc59>` (pfSysExceptGenerateException2 != NULL)
+
+- #define :ref:`EXP_SysExceptGenerateException2 <group___sys_except_itf_1ga207070a7ccc13165842d59f5cc7a509e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptGenerateException2", (RTS_UINTPTR) :ref:`SysExceptGenerateException2 <group___sys_except_itf_1ga3b3c4ab286d3b4fb48d3d085f7304725>` , 0, 0)
+
+- #define :ref:`USE_SysExceptRegisterInterface <group___sys_except_itf_1gadd6e15c01a24e5d003f64309301a7339>` :ref:`PFSYSEXCEPTREGISTERINTERFACE <group___sys_except_itf_1ga2c10c958055f34e3c5f38fc011f19ba2>` pfSysExceptRegisterInterface;
+
+- #define :ref:`EXT_SysExceptRegisterInterface <group___sys_except_itf_1ga0d3bfada96f642c6cf1e3a7401ea5be0>` extern :ref:`PFSYSEXCEPTREGISTERINTERFACE <group___sys_except_itf_1ga2c10c958055f34e3c5f38fc011f19ba2>` pfSysExceptRegisterInterface;
+
+- #define :ref:`GET_SysExceptRegisterInterface <group___sys_except_itf_1ga8c4c37359aad592b5e2fe353c8039cb4>` s_pfCMGetAPI2( "SysExceptRegisterInterface", (RTS_VOID_FCTPTR *)&pfSysExceptRegisterInterface, (fl), 0, 0)
+
+- #define :ref:`CAL_SysExceptRegisterInterface <group___sys_except_itf_1gae48332dfc616028ccff51b2802509546>` pfSysExceptRegisterInterface
+
+- #define :ref:`CHK_SysExceptRegisterInterface <group___sys_except_itf_1ga12a910e323fce7fca8bb3000138858e6>` (pfSysExceptRegisterInterface != NULL)
+
+- #define :ref:`EXP_SysExceptRegisterInterface <group___sys_except_itf_1ga8b599c37b90200536e1e19c2ecb5e450>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptRegisterInterface", (RTS_UINTPTR) :ref:`SysExceptRegisterInterface <group___sys_except_itf_1ga8ceedda4f464989a5c85f11d5d726bcc>` , 0, 0)
+
+- #define :ref:`USE_SysExceptTry <group___sys_except_itf_1gaf33196ae387634aed602bbd153c9cf79>` :ref:`PFSYSEXCEPTTRY <group___sys_except_itf_1ga80c320fe61de5f2440d97df39218a7e9>` pfSysExceptTry;
+
+- #define :ref:`EXT_SysExceptTry <group___sys_except_itf_1ga3740de08322326c6b58e28bb6be48570>` extern :ref:`PFSYSEXCEPTTRY <group___sys_except_itf_1ga80c320fe61de5f2440d97df39218a7e9>` pfSysExceptTry;
+
+- #define :ref:`GET_SysExceptTry <group___sys_except_itf_1ga2aa4fd36c56dd4d805791e084562e479>` s_pfCMGetAPI2( "SysExceptTry", (RTS_VOID_FCTPTR *)&pfSysExceptTry, (fl), 0, 0)
+
+- #define :ref:`CAL_SysExceptTry <group___sys_except_itf_1gaa6d6927c17b4fa6b4b0c251319cc1d55>` pfSysExceptTry
+
+- #define :ref:`CHK_SysExceptTry <group___sys_except_itf_1ga1515d57655cbb3f9c1d4f75897b227cf>` (pfSysExceptTry != NULL)
+
+- #define :ref:`EXP_SysExceptTry <group___sys_except_itf_1gae7c1fba51e08e8a609f015c816a7a755>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptTry", (RTS_UINTPTR) :ref:`SysExceptTry <group___sys_except_itf_1gaad6c28843b2da8220b3f9e4432f12993>` , 0, 0)
+
+- #define :ref:`USE_SysExceptCatchException <group___sys_except_itf_1ga2207186c43ec286cd651404af6503b5d>` :ref:`PFSYSEXCEPTCATCHEXCEPTION <group___sys_except_itf_1ga198410ba20f020508bf3d13e57a18393>` pfSysExceptCatchException;
+
+- #define :ref:`EXT_SysExceptCatchException <group___sys_except_itf_1gaa7ffb8912c5f8688c36b05b10e24176b>` extern :ref:`PFSYSEXCEPTCATCHEXCEPTION <group___sys_except_itf_1ga198410ba20f020508bf3d13e57a18393>` pfSysExceptCatchException;
+
+- #define :ref:`GET_SysExceptCatchException <group___sys_except_itf_1ga4971a9a4a5b3b98f9ece862a966d480f>` s_pfCMGetAPI2( "SysExceptCatchException", (RTS_VOID_FCTPTR *)&pfSysExceptCatchException, (fl), 0, 0)
+
+- #define :ref:`CAL_SysExceptCatchException <group___sys_except_itf_1ga9954384024c50cc9f0863f62ca8be04d>` pfSysExceptCatchException
+
+- #define :ref:`CHK_SysExceptCatchException <group___sys_except_itf_1gad95dc38cba896df7282c2d868494aca0>` (pfSysExceptCatchException != NULL)
+
+- #define :ref:`EXP_SysExceptCatchException <group___sys_except_itf_1ga467c5e300d72127e4ea4afd4b33c6da2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptCatchException", (RTS_UINTPTR) :ref:`SysExceptCatchException <group___sys_except_itf_1ga96612c336c3aea3d2ebc32e6bda317ce>` , 0, 0)
+
+- #define :ref:`USE_SysExceptCatch <group___sys_except_itf_1ga34255a6c1636b587a961cd109e116cd4>` :ref:`PFSYSEXCEPTCATCH <group___sys_except_itf_1ga73726898ece8e5f98b6cfaabe6644c6a>` pfSysExceptCatch;
+
+- #define :ref:`EXT_SysExceptCatch <group___sys_except_itf_1ga27dadf9d2a2ee73dc578834efbd15e8e>` extern :ref:`PFSYSEXCEPTCATCH <group___sys_except_itf_1ga73726898ece8e5f98b6cfaabe6644c6a>` pfSysExceptCatch;
+
+- #define :ref:`GET_SysExceptCatch <group___sys_except_itf_1gaef43deaf76474710c7b9744fd6d20080>` s_pfCMGetAPI2( "SysExceptCatch", (RTS_VOID_FCTPTR *)&pfSysExceptCatch, (fl), 0, 0)
+
+- #define :ref:`CAL_SysExceptCatch <group___sys_except_itf_1gaf018bff15e3a29510c48d7a1f9580c1a>` pfSysExceptCatch
+
+- #define :ref:`CHK_SysExceptCatch <group___sys_except_itf_1ga3fc8de1d85bcf9b3b46256ee9f2a4f3a>` (pfSysExceptCatch != NULL)
+
+- #define :ref:`EXP_SysExceptCatch <group___sys_except_itf_1ga8aac5c513f8c6d521010aead2a5f4382>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptCatch", (RTS_UINTPTR) :ref:`SysExceptCatch <group___sys_except_itf_1ga80f2e5a7f6e13c7905c2d8498e5b1756>` , 0, 0)
+
+- #define :ref:`USE_SysExceptUnregisterInterface <group___sys_except_itf_1gaea89ea9f8634c93fcb005bd1170ee504>` :ref:`PFSYSEXCEPTUNREGISTERINTERFACE <group___sys_except_itf_1ga722e08bb37f51b0bdb236ba2266adeaa>` pfSysExceptUnregisterInterface;
+
+- #define :ref:`EXT_SysExceptUnregisterInterface <group___sys_except_itf_1ga638860fd15e672bf058af81d32778989>` extern :ref:`PFSYSEXCEPTUNREGISTERINTERFACE <group___sys_except_itf_1ga722e08bb37f51b0bdb236ba2266adeaa>` pfSysExceptUnregisterInterface;
+
+- #define :ref:`GET_SysExceptUnregisterInterface <group___sys_except_itf_1ga3933af8259e35993ee27b9c61865d9c0>` s_pfCMGetAPI2( "SysExceptUnregisterInterface", (RTS_VOID_FCTPTR *)&pfSysExceptUnregisterInterface, (fl), 0, 0)
+
+- #define :ref:`CAL_SysExceptUnregisterInterface <group___sys_except_itf_1ga761ab9feb989fc190e3f9323c1d55d48>` pfSysExceptUnregisterInterface
+
+- #define :ref:`CHK_SysExceptUnregisterInterface <group___sys_except_itf_1ga57b5810f20d5a227c46ac4cbb30f9282>` (pfSysExceptUnregisterInterface != NULL)
+
+- #define :ref:`EXP_SysExceptUnregisterInterface <group___sys_except_itf_1gac6b6f5bfb995cb5a9d52f003236fb61e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptUnregisterInterface", (RTS_UINTPTR) :ref:`SysExceptUnregisterInterface <group___sys_except_itf_1ga498ce17bbbf06d67dadb5d35c484bbcd>` , 0, 0)
+
+- #define :ref:`USE_SysExceptConvertToString <group___sys_except_itf_1ga13efbff0222d8ba261b611b5d827ca1a>` :ref:`PFSYSEXCEPTCONVERTTOSTRING <group___sys_except_itf_1gaaf8228ab96342a6ed9a91ef358fc3862>` pfSysExceptConvertToString;
+
+- #define :ref:`EXT_SysExceptConvertToString <group___sys_except_itf_1ga5b4448da12aaac602b6cffa238bf3938>` extern :ref:`PFSYSEXCEPTCONVERTTOSTRING <group___sys_except_itf_1gaaf8228ab96342a6ed9a91ef358fc3862>` pfSysExceptConvertToString;
+
+- #define :ref:`GET_SysExceptConvertToString <group___sys_except_itf_1ga81c9f9c65083105907175ddf4186f19e>` s_pfCMGetAPI2( "SysExceptConvertToString", (RTS_VOID_FCTPTR *)&pfSysExceptConvertToString, (fl), 0, 0)
+
+- #define :ref:`CAL_SysExceptConvertToString <group___sys_except_itf_1ga96b3894a01f2ba1d1ce23cfd1753c489>` pfSysExceptConvertToString
+
+- #define :ref:`CHK_SysExceptConvertToString <group___sys_except_itf_1gaedc612dbbf08daa3c79ca9add7a60b48>` (pfSysExceptConvertToString != NULL)
+
+- #define :ref:`EXP_SysExceptConvertToString <group___sys_except_itf_1gabb0f8640bc01702456262e3d9dff191d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptConvertToString", (RTS_UINTPTR) :ref:`SysExceptConvertToString <group___sys_except_itf_1ga9316367f5ba209468334042df0b633b0>` , 0, 0)
+
+- #define :ref:`USE_sysexceptgenerateexception <group___sys_except_itf_1ga181ef33d2c323d189f04ded89d8c6002>` :ref:`PFSYSEXCEPTGENERATEEXCEPTION_IEC <group___sys_except_itf_1gab85b0b9283aeccf8ddbf718d3060558d>` pfsysexceptgenerateexception;
+
+- #define :ref:`EXT_sysexceptgenerateexception <group___sys_except_itf_1gab671e4f7a704ac43ccb16b9eba11f2dd>` extern :ref:`PFSYSEXCEPTGENERATEEXCEPTION_IEC <group___sys_except_itf_1gab85b0b9283aeccf8ddbf718d3060558d>` pfsysexceptgenerateexception;
+
+- #define :ref:`GET_sysexceptgenerateexception <group___sys_except_itf_1ga2ebce731d54920d70b474cd7edcd8250>` s_pfCMGetAPI2( "sysexceptgenerateexception", (RTS_VOID_FCTPTR *)&pfsysexceptgenerateexception, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE91614FA, 0x03050500)
+
+- #define :ref:`CAL_sysexceptgenerateexception <group___sys_except_itf_1ga9e0f9970219600e4b2998598aaedfaf8>` pfsysexceptgenerateexception
+
+- #define :ref:`CHK_sysexceptgenerateexception <group___sys_except_itf_1gabd693a29af779f5547c3ad80fc0aa66c>` (pfsysexceptgenerateexception != NULL)
+
+- #define :ref:`EXP_sysexceptgenerateexception <group___sys_except_itf_1ga40593d0a925104eee6261768c19d3681>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysexceptgenerateexception", (RTS_UINTPTR) :ref:`sysexceptgenerateexception <group___sys_except_itf_1gaaccc5ba2f6e5a875ad231102e091ec42>` , 1, 0xE91614FA, 0x03050500)
+
+- #define :ref:`USE_sysexceptdisableseh <group___sys_except_itf_1ga22d2e4302cf1508195ca76ef8cb934d3>` :ref:`PFSYSEXCEPTDISABLESEH_IEC <group___sys_except_itf_1ga32fae4cb345cdad4468d83a180bf6cd2>` pfsysexceptdisableseh;
+
+- #define :ref:`EXT_sysexceptdisableseh <group___sys_except_itf_1ga924bb83ca2e61e35a31a4831e4e03bf2>` extern :ref:`PFSYSEXCEPTDISABLESEH_IEC <group___sys_except_itf_1ga32fae4cb345cdad4468d83a180bf6cd2>` pfsysexceptdisableseh;
+
+- #define :ref:`GET_sysexceptdisableseh <group___sys_except_itf_1ga584c9a4203e1b66bae43e5a34efaf2c3>` s_pfCMGetAPI2( "sysexceptdisableseh", (RTS_VOID_FCTPTR *)&pfsysexceptdisableseh, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x8C7B1A37, 0x03050500)
+
+- #define :ref:`CAL_sysexceptdisableseh <group___sys_except_itf_1gaa9bdb183fff784e2dad14aae16c47148>` pfsysexceptdisableseh
+
+- #define :ref:`CHK_sysexceptdisableseh <group___sys_except_itf_1gadf9fa3c3c2fcf55b8a6aef2113f3f032>` (pfsysexceptdisableseh != NULL)
+
+- #define :ref:`EXP_sysexceptdisableseh <group___sys_except_itf_1gae18edc16947457f2da8b0b7ebac42d3a>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysexceptdisableseh", (RTS_UINTPTR) :ref:`sysexceptdisableseh <group___sys_except_itf_1gaf738b2c85ffbcc718fcfbff993593b2c>` , 1, 0x8C7B1A37, 0x03050500)
+
+- #define :ref:`USE_sysexceptdisableseh2 <group___sys_except_itf_1ga9c8d1d6d0383dc762612128b0fdbd1f7>` :ref:`PFSYSEXCEPTDISABLESEH2_IEC <group___sys_except_itf_1gada8002d6c18923db90622e4328d0b51a>` pfsysexceptdisableseh2;
+
+- #define :ref:`EXT_sysexceptdisableseh2 <group___sys_except_itf_1gaf8ba32d1ceb85858905d0e357c86d53b>` extern :ref:`PFSYSEXCEPTDISABLESEH2_IEC <group___sys_except_itf_1gada8002d6c18923db90622e4328d0b51a>` pfsysexceptdisableseh2;
+
+- #define :ref:`GET_sysexceptdisableseh2 <group___sys_except_itf_1gab2236a6fd6d317ef6b83537279975ae9>` s_pfCMGetAPI2( "sysexceptdisableseh2", (RTS_VOID_FCTPTR *)&pfsysexceptdisableseh2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB55730A3), 0x03050500)
+
+- #define :ref:`CAL_sysexceptdisableseh2 <group___sys_except_itf_1gae0231066af3b94224b2367eb2733b14e>` pfsysexceptdisableseh2
+
+- #define :ref:`CHK_sysexceptdisableseh2 <group___sys_except_itf_1ga6147f369f8f58fb9e9296f30c8d585d0>` (pfsysexceptdisableseh2 != NULL)
+
+- #define :ref:`EXP_sysexceptdisableseh2 <group___sys_except_itf_1ga670a4a9371f7259f94ab0a392f07f0eb>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysexceptdisableseh2", (RTS_UINTPTR) :ref:`sysexceptdisableseh2 <group___sys_except_itf_1ga17847b0e5660f268f9d1bf2eb82fabe6>` , 1, RTSITF_GET_SIGNATURE(0, 0xB55730A3), 0x03050500)
+
+- #define :ref:`USE_sysexceptenableseh <group___sys_except_itf_1ga1d5f8706ac95640c780f4959aa13ca5e>` :ref:`PFSYSEXCEPTENABLESEH_IEC <group___sys_except_itf_1gade951ccc3a448727cbd5741f345888c2>` pfsysexceptenableseh;
+
+- #define :ref:`EXT_sysexceptenableseh <group___sys_except_itf_1gad9c335b084bf730192adc58a0d1341dc>` extern :ref:`PFSYSEXCEPTENABLESEH_IEC <group___sys_except_itf_1gade951ccc3a448727cbd5741f345888c2>` pfsysexceptenableseh;
+
+- #define :ref:`GET_sysexceptenableseh <group___sys_except_itf_1ga2a3fdd0bbff686b7ee5191fccec2bf61>` s_pfCMGetAPI2( "sysexceptenableseh", (RTS_VOID_FCTPTR *)&pfsysexceptenableseh, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x41742724, 0x03050500)
+
+- #define :ref:`CAL_sysexceptenableseh <group___sys_except_itf_1ga5aa2ba29d2e7c82c8ab1f4835e208036>` pfsysexceptenableseh
+
+- #define :ref:`CHK_sysexceptenableseh <group___sys_except_itf_1ga68c579d0ac4bc7f7552ca8bef63b6c20>` (pfsysexceptenableseh != NULL)
+
+- #define :ref:`EXP_sysexceptenableseh <group___sys_except_itf_1gac46e0f5036cfb57f660f761600096ad6>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysexceptenableseh", (RTS_UINTPTR) :ref:`sysexceptenableseh <group___sys_except_itf_1ga8ca46ee5cfe5ddf69df4809e9699c9f8>` , 1, 0x41742724, 0x03050500)
+
+- #define :ref:`USE_sysexceptenableseh2 <group___sys_except_itf_1gaafc1a73f8b5999ae8c926cc5f4f415eb>` :ref:`PFSYSEXCEPTENABLESEH2_IEC <group___sys_except_itf_1gaa3f29c3334b9a46ae6b843c85977eebd>` pfsysexceptenableseh2;
+
+- #define :ref:`EXT_sysexceptenableseh2 <group___sys_except_itf_1ga25ef6ce936fffb6d187c7d19e07ee674>` extern :ref:`PFSYSEXCEPTENABLESEH2_IEC <group___sys_except_itf_1gaa3f29c3334b9a46ae6b843c85977eebd>` pfsysexceptenableseh2;
+
+- #define :ref:`GET_sysexceptenableseh2 <group___sys_except_itf_1ga40bfe0193925fc74aa76abde87a07f81>` s_pfCMGetAPI2( "sysexceptenableseh2", (RTS_VOID_FCTPTR *)&pfsysexceptenableseh2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x5FF166F1), 0x03050500)
+
+- #define :ref:`CAL_sysexceptenableseh2 <group___sys_except_itf_1ga936d9e75dd4d05b254e2ef33623b0173>` pfsysexceptenableseh2
+
+- #define :ref:`CHK_sysexceptenableseh2 <group___sys_except_itf_1ga162a4d793e298774dcb66ea9f8047394>` (pfsysexceptenableseh2 != NULL)
+
+- #define :ref:`EXP_sysexceptenableseh2 <group___sys_except_itf_1gaaf1dfbd044f9f75b1ecb05f7e61f97e3>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysexceptenableseh2", (RTS_UINTPTR) :ref:`sysexceptenableseh2 <group___sys_except_itf_1gad047183db8e032764558ba5f6e887197>` , 1, RTSITF_GET_SIGNATURE(0, 0x5FF166F1), 0x03050500)
+
+- #define :ref:`EXCPT_GET_CODE <group___sys_except_itf_1gafa13bd2a20d345de5cd92e2d4cfbfffa>` :ref:`RTSEXCPT_NOEXCEPTION <group___sys_except_itf___exceptioncode_1gade57a8ea56476601c4f9fb6f63f643fd>`
+
+- #define :ref:`EXCPT_GET_CONTEXT <group___sys_except_itf_1gac374b40182a1b3b181b31f10db25e1d5>` NULL
+
+- #define :ref:`rts_try <group___sys_except_itf_1ga61368765a3d688a5e1e3a88e44189d93>` {
+
+- #define :ref:`rts_catch_exception <group___sys_except_itf_1ga1e1e32f23b63c47b755e947a37112033>` if (0)
+
+- #define :ref:`rts_catch <group___sys_except_itf_1ga552b79c08cc9bdef2f867dcf0384289c>` if (0)
+
+- #define :ref:`rts_try_end <group___sys_except_itf_1ga9a04fd3fbedab315f4b4ee5dd081dfcc>` }
+
+- #define :ref:`ITF_SysExcept <group___sys_except_itf_1gac7746708ebfb98e5168ae7e9952b30ad>`
+
+- #define :ref:`EXTITF_SysExcept <group___sys_except_itf_1ga4a7d99301e7bd6b0a2d8ea5d63dc8db6>`
+
+Typedefs
+--------
+
+- typedef RTS_UI32(* :ref:`PFSYSEXCEPTMAPEXCEPTION <group___sys_except_itf_1gae600045f549bd5e5935417f1cccfb74c>`)(RTS_UI32 ulOSException)
+
+- typedef RTS_RESULT(* :ref:`PFSYSEXCEPTGENERATEEXCEPTION <group___sys_except_itf_1ga6380259837ef402f19a866973f82cf1c>`)(RTS_HANDLE ulTaskOSHandle, ExceptionCode Exception, RegContext Context)
+
+- typedef RTS_RESULT(* :ref:`PFSYSEXCEPTGENERATEEXCEPTION2 <group___sys_except_itf_1gaebae7a218a99881bf30017830263e06d>`)(RTS_HANDLE ulTaskOSHandle, ExceptionCode Exception, RegContext Context, int bSuspendExceptionTask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSEXCEPTREGISTERINTERFACE <group___sys_except_itf_1ga2c10c958055f34e3c5f38fc011f19ba2>`)(PFEXCEPTIONHANDLER pExceptionHandler)
+
+- typedef RTS_RESULT(* :ref:`PFSYSEXCEPTTRY <group___sys_except_itf_1ga80c320fe61de5f2440d97df39218a7e9>`)(SEHContext *context)
+
+- typedef RTS_RESULT(* :ref:`PFSYSEXCEPTCATCHEXCEPTION <group___sys_except_itf_1ga198410ba20f020508bf3d13e57a18393>`)(SEHContext *context, RTS_UI32 ui32ExceptionCode)
+
+- typedef RTS_RESULT(* :ref:`PFSYSEXCEPTCATCH <group___sys_except_itf_1ga73726898ece8e5f98b6cfaabe6644c6a>`)(SEHContext *context)
+
+- typedef RTS_RESULT(* :ref:`PFSYSEXCEPTUNREGISTERINTERFACE <group___sys_except_itf_1ga722e08bb37f51b0bdb236ba2266adeaa>`)(PFEXCEPTIONHANDLER pExceptionHandler)
+
+- typedef RTS_RESULT(* :ref:`PFSYSEXCEPTCONVERTTOSTRING <group___sys_except_itf_1gaaf8228ab96342a6ed9a91ef358fc3862>`)(RTS_UI32 ulExceptionCode, char *pszException, int iMaxExceptionLen)
+
+- typedef struct :ref:`tagsysexceptgenerateexception_struct <structtagsysexceptgenerateexception__struct>` :ref:`sysexceptgenerateexception_struct <group___sys_except_itf_1ga43436000d1579bbe68a24b38330f8eaf>`
+
+- typedef void(* :ref:`PFSYSEXCEPTGENERATEEXCEPTION_IEC <group___sys_except_itf_1gab85b0b9283aeccf8ddbf718d3060558d>`)(sysexceptgenerateexception_struct *p)
+
+- typedef struct :ref:`tagsysexceptdisableseh_struct <structtagsysexceptdisableseh__struct>` :ref:`sysexceptdisableseh_struct <group___sys_except_itf_1ga86f3e9217852743fcd47861141e7f295>`
+
+- typedef void(* :ref:`PFSYSEXCEPTDISABLESEH_IEC <group___sys_except_itf_1ga32fae4cb345cdad4468d83a180bf6cd2>`)(sysexceptdisableseh_struct *p)
+
+- typedef struct :ref:`tagsysexceptdisableseh2_struct <structtagsysexceptdisableseh2__struct>` :ref:`sysexceptdisableseh2_struct <group___sys_except_itf_1ga37fce74c516cdc734f2fe1f708d3a9f4>`
+
+- typedef void(* :ref:`PFSYSEXCEPTDISABLESEH2_IEC <group___sys_except_itf_1gada8002d6c18923db90622e4328d0b51a>`)(sysexceptdisableseh2_struct *p)
+
+- typedef struct :ref:`tagsysexceptenableseh_struct <structtagsysexceptenableseh__struct>` :ref:`sysexceptenableseh_struct <group___sys_except_itf_1ga1c5a750533e25080df0df14bd1fa8d19>`
+
+- typedef void(* :ref:`PFSYSEXCEPTENABLESEH_IEC <group___sys_except_itf_1gade951ccc3a448727cbd5741f345888c2>`)(sysexceptenableseh_struct *p)
+
+- typedef struct :ref:`tagsysexceptenableseh2_struct <structtagsysexceptenableseh2__struct>` :ref:`sysexceptenableseh2_struct <group___sys_except_itf_1gaa420c8d9fef4dd5d6c38ec73be6bb0d5>`
+
+- typedef void(* :ref:`PFSYSEXCEPTENABLESEH2_IEC <group___sys_except_itf_1gaa3f29c3334b9a46ae6b843c85977eebd>`)(sysexceptenableseh2_struct *p)
+
+- typedef :ref:`ISysExcept_C <struct_i_sys_except___c>` :ref:`ISysExcept <group___sys_except_itf_1gae17a11c6b4cfa8b942d4cb8a4ae2a711>`
+
+Functions
+---------
+
+- RTS_UI32 :ref:`SysExceptMapException <group___sys_except_itf_1ga336e49c382a64e42f1ec78176678fb65>` (RTS_UI32 ulOSException)
+
+- RTS_RESULT :ref:`SysExceptGenerateException <group___sys_except_itf_1ga08d2a6fb1d1966d74c4a8a2313efd643>` (RTS_HANDLE ulTaskOSHandle, :ref:`ExceptionCode <group___sys_except_itf___exceptioncode_1gabe2074073b7a6a06097f687be87c34cd>`  Exception, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>`  Context)
+
+- RTS_RESULT :ref:`SysExceptGenerateException2 <group___sys_except_itf_1ga3b3c4ab286d3b4fb48d3d085f7304725>` (RTS_HANDLE ulTaskOSHandle, :ref:`ExceptionCode <group___sys_except_itf___exceptioncode_1gabe2074073b7a6a06097f687be87c34cd>`  Exception, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>`  Context, int bSuspendExceptionTask)
+
+- RTS_RESULT :ref:`SysExceptRegisterInterface <group___sys_except_itf_1ga8ceedda4f464989a5c85f11d5d726bcc>` (:ref:`PFEXCEPTIONHANDLER <group___sys_except_itf___exceptionhandler_1ga3755b93a4d53728bc450cf6ab4f78645>`  pExceptionHandler)
+
+- RTS_RESULT :ref:`SysExceptTry <group___sys_except_itf_1gaad6c28843b2da8220b3f9e4432f12993>` (:ref:`SEHContext <group___sys_except_itf___s_e_h_context_1ga1f27ab33af4d1aa88d9097c5d8215c22>` * context)
+
+- RTS_RESULT :ref:`SysExceptCatchException <group___sys_except_itf_1ga96612c336c3aea3d2ebc32e6bda317ce>` (:ref:`SEHContext <group___sys_except_itf___s_e_h_context_1ga1f27ab33af4d1aa88d9097c5d8215c22>` * context, RTS_UI32 ui32ExceptionCode)
+
+- RTS_RESULT :ref:`SysExceptCatch <group___sys_except_itf_1ga80f2e5a7f6e13c7905c2d8498e5b1756>` (:ref:`SEHContext <group___sys_except_itf___s_e_h_context_1ga1f27ab33af4d1aa88d9097c5d8215c22>` * context)
+
+- RTS_RESULT :ref:`SysExceptUnregisterInterface <group___sys_except_itf_1ga498ce17bbbf06d67dadb5d35c484bbcd>` (:ref:`PFEXCEPTIONHANDLER <group___sys_except_itf___exceptionhandler_1ga3755b93a4d53728bc450cf6ab4f78645>`  pExceptionHandler)
+
+- RTS_RESULT :ref:`SysExceptConvertToString <group___sys_except_itf_1ga9316367f5ba209468334042df0b633b0>` (RTS_UI32 ulExceptionCode, char * pszException, int iMaxExceptionLen)
+
+- void :ref:`sysexceptgenerateexception <group___sys_except_itf_1gaaccc5ba2f6e5a875ad231102e091ec42>` (:ref:`sysexceptgenerateexception_struct <group___sys_except_itf_1ga43436000d1579bbe68a24b38330f8eaf>` * p)
+
+- void :ref:`sysexceptdisableseh <group___sys_except_itf_1gaf738b2c85ffbcc718fcfbff993593b2c>` (:ref:`sysexceptdisableseh_struct <group___sys_except_itf_1ga86f3e9217852743fcd47861141e7f295>` * p)
+
+- void :ref:`sysexceptdisableseh2 <group___sys_except_itf_1ga17847b0e5660f268f9d1bf2eb82fabe6>` (:ref:`sysexceptdisableseh2_struct <group___sys_except_itf_1ga37fce74c516cdc734f2fe1f708d3a9f4>` * p)
+
+- void :ref:`sysexceptenableseh <group___sys_except_itf_1ga8ca46ee5cfe5ddf69df4809e9699c9f8>` (:ref:`sysexceptenableseh_struct <group___sys_except_itf_1ga1c5a750533e25080df0df14bd1fa8d19>` * p)
+
+- void :ref:`sysexceptenableseh2 <group___sys_except_itf_1gad047183db8e032764558ba5f6e887197>` (:ref:`sysexceptenableseh2_struct <group___sys_except_itf_1gaa420c8d9fef4dd5d6c38ec73be6bb0d5>` * p)
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_except_itf_1gaa1f0d0a0c7b2eeec06f6f4a982753d37:
+
+#define USE_SysExceptMapException :ref:`PFSYSEXCEPTMAPEXCEPTION <group___sys_except_itf_1gae600045f549bd5e5935417f1cccfb74c>` pfSysExceptMapException;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga1e81f55df8bd3a994fa7a400fa4e4a04:
+
+#define EXT_SysExceptMapException extern :ref:`PFSYSEXCEPTMAPEXCEPTION <group___sys_except_itf_1gae600045f549bd5e5935417f1cccfb74c>` pfSysExceptMapException;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga8ef0d6cf033e725549028adc6534141d:
+
+#define GET_SysExceptMapException s_pfCMGetAPI2( "SysExceptMapException", (RTS_VOID_FCTPTR *)&pfSysExceptMapException, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga6f3b7f0b8a30607c1ef0b3601be4602b:
+
+#define CAL_SysExceptMapException pfSysExceptMapException
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga600fd1f336aad054bb8dcf3cefe7d615:
+
+#define CHK_SysExceptMapException (pfSysExceptMapException != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga040a3ed7a0e223a0402901d11a1a39cb:
+
+#define EXP_SysExceptMapException s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptMapException", (RTS_UINTPTR) :ref:`SysExceptMapException <group___sys_except_itf_1ga336e49c382a64e42f1ec78176678fb65>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga1074f84f760145704e6f88a95e649803:
+
+#define USE_SysExceptGenerateException :ref:`PFSYSEXCEPTGENERATEEXCEPTION <group___sys_except_itf_1ga6380259837ef402f19a866973f82cf1c>` pfSysExceptGenerateException;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaf85f1fbb23d445052ffb1cd7c49b9ea3:
+
+#define EXT_SysExceptGenerateException extern :ref:`PFSYSEXCEPTGENERATEEXCEPTION <group___sys_except_itf_1ga6380259837ef402f19a866973f82cf1c>` pfSysExceptGenerateException;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gac7c25234b222663b1087f0773ac1b85c:
+
+#define GET_SysExceptGenerateException s_pfCMGetAPI2( "SysExceptGenerateException", (RTS_VOID_FCTPTR *)&pfSysExceptGenerateException, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaaac11130a07dff1e5c4cbfeecdc79994:
+
+#define CAL_SysExceptGenerateException pfSysExceptGenerateException
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga5bbf349ea2c2470d3c7f6f295c62e0dd:
+
+#define CHK_SysExceptGenerateException (pfSysExceptGenerateException != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga8584f7f51e047e152ec5b65a4e6799d2:
+
+#define EXP_SysExceptGenerateException s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptGenerateException", (RTS_UINTPTR) :ref:`SysExceptGenerateException <group___sys_except_itf_1ga08d2a6fb1d1966d74c4a8a2313efd643>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga85f46a8a32dcc3ad93c07ad296c8b357:
+
+#define USE_SysExceptGenerateException2 :ref:`PFSYSEXCEPTGENERATEEXCEPTION2 <group___sys_except_itf_1gaebae7a218a99881bf30017830263e06d>` pfSysExceptGenerateException2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga55c7c63190255e88f257780b0dbf3539:
+
+#define EXT_SysExceptGenerateException2 extern :ref:`PFSYSEXCEPTGENERATEEXCEPTION2 <group___sys_except_itf_1gaebae7a218a99881bf30017830263e06d>` pfSysExceptGenerateException2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gacf0d7ed3b0572377db8a96348ba04afd:
+
+#define GET_SysExceptGenerateException2 s_pfCMGetAPI2( "SysExceptGenerateException2", (RTS_VOID_FCTPTR *)&pfSysExceptGenerateException2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga67d2fda3c271dd587ca641d897164be6:
+
+#define CAL_SysExceptGenerateException2 pfSysExceptGenerateException2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga31ebc7e74e6539c2900244b6fb4cdc59:
+
+#define CHK_SysExceptGenerateException2 (pfSysExceptGenerateException2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga207070a7ccc13165842d59f5cc7a509e:
+
+#define EXP_SysExceptGenerateException2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptGenerateException2", (RTS_UINTPTR) :ref:`SysExceptGenerateException2 <group___sys_except_itf_1ga3b3c4ab286d3b4fb48d3d085f7304725>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gadd6e15c01a24e5d003f64309301a7339:
+
+#define USE_SysExceptRegisterInterface :ref:`PFSYSEXCEPTREGISTERINTERFACE <group___sys_except_itf_1ga2c10c958055f34e3c5f38fc011f19ba2>` pfSysExceptRegisterInterface;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga0d3bfada96f642c6cf1e3a7401ea5be0:
+
+#define EXT_SysExceptRegisterInterface extern :ref:`PFSYSEXCEPTREGISTERINTERFACE <group___sys_except_itf_1ga2c10c958055f34e3c5f38fc011f19ba2>` pfSysExceptRegisterInterface;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga8c4c37359aad592b5e2fe353c8039cb4:
+
+#define GET_SysExceptRegisterInterface s_pfCMGetAPI2( "SysExceptRegisterInterface", (RTS_VOID_FCTPTR *)&pfSysExceptRegisterInterface, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gae48332dfc616028ccff51b2802509546:
+
+#define CAL_SysExceptRegisterInterface pfSysExceptRegisterInterface
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga12a910e323fce7fca8bb3000138858e6:
+
+#define CHK_SysExceptRegisterInterface (pfSysExceptRegisterInterface != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga8b599c37b90200536e1e19c2ecb5e450:
+
+#define EXP_SysExceptRegisterInterface s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptRegisterInterface", (RTS_UINTPTR) :ref:`SysExceptRegisterInterface <group___sys_except_itf_1ga8ceedda4f464989a5c85f11d5d726bcc>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaf33196ae387634aed602bbd153c9cf79:
+
+#define USE_SysExceptTry :ref:`PFSYSEXCEPTTRY <group___sys_except_itf_1ga80c320fe61de5f2440d97df39218a7e9>` pfSysExceptTry;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga3740de08322326c6b58e28bb6be48570:
+
+#define EXT_SysExceptTry extern :ref:`PFSYSEXCEPTTRY <group___sys_except_itf_1ga80c320fe61de5f2440d97df39218a7e9>` pfSysExceptTry;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga2aa4fd36c56dd4d805791e084562e479:
+
+#define GET_SysExceptTry s_pfCMGetAPI2( "SysExceptTry", (RTS_VOID_FCTPTR *)&pfSysExceptTry, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaa6d6927c17b4fa6b4b0c251319cc1d55:
+
+#define CAL_SysExceptTry pfSysExceptTry
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga1515d57655cbb3f9c1d4f75897b227cf:
+
+#define CHK_SysExceptTry (pfSysExceptTry != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gae7c1fba51e08e8a609f015c816a7a755:
+
+#define EXP_SysExceptTry s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptTry", (RTS_UINTPTR) :ref:`SysExceptTry <group___sys_except_itf_1gaad6c28843b2da8220b3f9e4432f12993>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga2207186c43ec286cd651404af6503b5d:
+
+#define USE_SysExceptCatchException :ref:`PFSYSEXCEPTCATCHEXCEPTION <group___sys_except_itf_1ga198410ba20f020508bf3d13e57a18393>` pfSysExceptCatchException;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaa7ffb8912c5f8688c36b05b10e24176b:
+
+#define EXT_SysExceptCatchException extern :ref:`PFSYSEXCEPTCATCHEXCEPTION <group___sys_except_itf_1ga198410ba20f020508bf3d13e57a18393>` pfSysExceptCatchException;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga4971a9a4a5b3b98f9ece862a966d480f:
+
+#define GET_SysExceptCatchException s_pfCMGetAPI2( "SysExceptCatchException", (RTS_VOID_FCTPTR *)&pfSysExceptCatchException, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga9954384024c50cc9f0863f62ca8be04d:
+
+#define CAL_SysExceptCatchException pfSysExceptCatchException
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gad95dc38cba896df7282c2d868494aca0:
+
+#define CHK_SysExceptCatchException (pfSysExceptCatchException != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga467c5e300d72127e4ea4afd4b33c6da2:
+
+#define EXP_SysExceptCatchException s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptCatchException", (RTS_UINTPTR) :ref:`SysExceptCatchException <group___sys_except_itf_1ga96612c336c3aea3d2ebc32e6bda317ce>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga34255a6c1636b587a961cd109e116cd4:
+
+#define USE_SysExceptCatch :ref:`PFSYSEXCEPTCATCH <group___sys_except_itf_1ga73726898ece8e5f98b6cfaabe6644c6a>` pfSysExceptCatch;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga27dadf9d2a2ee73dc578834efbd15e8e:
+
+#define EXT_SysExceptCatch extern :ref:`PFSYSEXCEPTCATCH <group___sys_except_itf_1ga73726898ece8e5f98b6cfaabe6644c6a>` pfSysExceptCatch;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaef43deaf76474710c7b9744fd6d20080:
+
+#define GET_SysExceptCatch s_pfCMGetAPI2( "SysExceptCatch", (RTS_VOID_FCTPTR *)&pfSysExceptCatch, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaf018bff15e3a29510c48d7a1f9580c1a:
+
+#define CAL_SysExceptCatch pfSysExceptCatch
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga3fc8de1d85bcf9b3b46256ee9f2a4f3a:
+
+#define CHK_SysExceptCatch (pfSysExceptCatch != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga8aac5c513f8c6d521010aead2a5f4382:
+
+#define EXP_SysExceptCatch s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptCatch", (RTS_UINTPTR) :ref:`SysExceptCatch <group___sys_except_itf_1ga80f2e5a7f6e13c7905c2d8498e5b1756>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaea89ea9f8634c93fcb005bd1170ee504:
+
+#define USE_SysExceptUnregisterInterface :ref:`PFSYSEXCEPTUNREGISTERINTERFACE <group___sys_except_itf_1ga722e08bb37f51b0bdb236ba2266adeaa>` pfSysExceptUnregisterInterface;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga638860fd15e672bf058af81d32778989:
+
+#define EXT_SysExceptUnregisterInterface extern :ref:`PFSYSEXCEPTUNREGISTERINTERFACE <group___sys_except_itf_1ga722e08bb37f51b0bdb236ba2266adeaa>` pfSysExceptUnregisterInterface;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga3933af8259e35993ee27b9c61865d9c0:
+
+#define GET_SysExceptUnregisterInterface s_pfCMGetAPI2( "SysExceptUnregisterInterface", (RTS_VOID_FCTPTR *)&pfSysExceptUnregisterInterface, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga761ab9feb989fc190e3f9323c1d55d48:
+
+#define CAL_SysExceptUnregisterInterface pfSysExceptUnregisterInterface
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga57b5810f20d5a227c46ac4cbb30f9282:
+
+#define CHK_SysExceptUnregisterInterface (pfSysExceptUnregisterInterface != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gac6b6f5bfb995cb5a9d52f003236fb61e:
+
+#define EXP_SysExceptUnregisterInterface s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptUnregisterInterface", (RTS_UINTPTR) :ref:`SysExceptUnregisterInterface <group___sys_except_itf_1ga498ce17bbbf06d67dadb5d35c484bbcd>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga13efbff0222d8ba261b611b5d827ca1a:
+
+#define USE_SysExceptConvertToString :ref:`PFSYSEXCEPTCONVERTTOSTRING <group___sys_except_itf_1gaaf8228ab96342a6ed9a91ef358fc3862>` pfSysExceptConvertToString;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga5b4448da12aaac602b6cffa238bf3938:
+
+#define EXT_SysExceptConvertToString extern :ref:`PFSYSEXCEPTCONVERTTOSTRING <group___sys_except_itf_1gaaf8228ab96342a6ed9a91ef358fc3862>` pfSysExceptConvertToString;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga81c9f9c65083105907175ddf4186f19e:
+
+#define GET_SysExceptConvertToString s_pfCMGetAPI2( "SysExceptConvertToString", (RTS_VOID_FCTPTR *)&pfSysExceptConvertToString, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga96b3894a01f2ba1d1ce23cfd1753c489:
+
+#define CAL_SysExceptConvertToString pfSysExceptConvertToString
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaedc612dbbf08daa3c79ca9add7a60b48:
+
+#define CHK_SysExceptConvertToString (pfSysExceptConvertToString != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gabb0f8640bc01702456262e3d9dff191d:
+
+#define EXP_SysExceptConvertToString s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysExceptConvertToString", (RTS_UINTPTR) :ref:`SysExceptConvertToString <group___sys_except_itf_1ga9316367f5ba209468334042df0b633b0>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga181ef33d2c323d189f04ded89d8c6002:
+
+#define USE_sysexceptgenerateexception :ref:`PFSYSEXCEPTGENERATEEXCEPTION_IEC <group___sys_except_itf_1gab85b0b9283aeccf8ddbf718d3060558d>` pfsysexceptgenerateexception;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gab671e4f7a704ac43ccb16b9eba11f2dd:
+
+#define EXT_sysexceptgenerateexception extern :ref:`PFSYSEXCEPTGENERATEEXCEPTION_IEC <group___sys_except_itf_1gab85b0b9283aeccf8ddbf718d3060558d>` pfsysexceptgenerateexception;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga2ebce731d54920d70b474cd7edcd8250:
+
+#define GET_sysexceptgenerateexception s_pfCMGetAPI2( "sysexceptgenerateexception", (RTS_VOID_FCTPTR *)&pfsysexceptgenerateexception, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE91614FA, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga9e0f9970219600e4b2998598aaedfaf8:
+
+#define CAL_sysexceptgenerateexception pfsysexceptgenerateexception
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gabd693a29af779f5547c3ad80fc0aa66c:
+
+#define CHK_sysexceptgenerateexception (pfsysexceptgenerateexception != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga40593d0a925104eee6261768c19d3681:
+
+#define EXP_sysexceptgenerateexception s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysexceptgenerateexception", (RTS_UINTPTR) :ref:`sysexceptgenerateexception <group___sys_except_itf_1gaaccc5ba2f6e5a875ad231102e091ec42>` , 1, 0xE91614FA, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga22d2e4302cf1508195ca76ef8cb934d3:
+
+#define USE_sysexceptdisableseh :ref:`PFSYSEXCEPTDISABLESEH_IEC <group___sys_except_itf_1ga32fae4cb345cdad4468d83a180bf6cd2>` pfsysexceptdisableseh;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga924bb83ca2e61e35a31a4831e4e03bf2:
+
+#define EXT_sysexceptdisableseh extern :ref:`PFSYSEXCEPTDISABLESEH_IEC <group___sys_except_itf_1ga32fae4cb345cdad4468d83a180bf6cd2>` pfsysexceptdisableseh;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga584c9a4203e1b66bae43e5a34efaf2c3:
+
+#define GET_sysexceptdisableseh s_pfCMGetAPI2( "sysexceptdisableseh", (RTS_VOID_FCTPTR *)&pfsysexceptdisableseh, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x8C7B1A37, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaa9bdb183fff784e2dad14aae16c47148:
+
+#define CAL_sysexceptdisableseh pfsysexceptdisableseh
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gadf9fa3c3c2fcf55b8a6aef2113f3f032:
+
+#define CHK_sysexceptdisableseh (pfsysexceptdisableseh != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gae18edc16947457f2da8b0b7ebac42d3a:
+
+#define EXP_sysexceptdisableseh s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysexceptdisableseh", (RTS_UINTPTR) :ref:`sysexceptdisableseh <group___sys_except_itf_1gaf738b2c85ffbcc718fcfbff993593b2c>` , 1, 0x8C7B1A37, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga9c8d1d6d0383dc762612128b0fdbd1f7:
+
+#define USE_sysexceptdisableseh2 :ref:`PFSYSEXCEPTDISABLESEH2_IEC <group___sys_except_itf_1gada8002d6c18923db90622e4328d0b51a>` pfsysexceptdisableseh2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaf8ba32d1ceb85858905d0e357c86d53b:
+
+#define EXT_sysexceptdisableseh2 extern :ref:`PFSYSEXCEPTDISABLESEH2_IEC <group___sys_except_itf_1gada8002d6c18923db90622e4328d0b51a>` pfsysexceptdisableseh2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gab2236a6fd6d317ef6b83537279975ae9:
+
+#define GET_sysexceptdisableseh2 s_pfCMGetAPI2( "sysexceptdisableseh2", (RTS_VOID_FCTPTR *)&pfsysexceptdisableseh2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB55730A3), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gae0231066af3b94224b2367eb2733b14e:
+
+#define CAL_sysexceptdisableseh2 pfsysexceptdisableseh2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga6147f369f8f58fb9e9296f30c8d585d0:
+
+#define CHK_sysexceptdisableseh2 (pfsysexceptdisableseh2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga670a4a9371f7259f94ab0a392f07f0eb:
+
+#define EXP_sysexceptdisableseh2 s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysexceptdisableseh2", (RTS_UINTPTR) :ref:`sysexceptdisableseh2 <group___sys_except_itf_1ga17847b0e5660f268f9d1bf2eb82fabe6>` , 1, RTSITF_GET_SIGNATURE(0, 0xB55730A3), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga1d5f8706ac95640c780f4959aa13ca5e:
+
+#define USE_sysexceptenableseh :ref:`PFSYSEXCEPTENABLESEH_IEC <group___sys_except_itf_1gade951ccc3a448727cbd5741f345888c2>` pfsysexceptenableseh;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gad9c335b084bf730192adc58a0d1341dc:
+
+#define EXT_sysexceptenableseh extern :ref:`PFSYSEXCEPTENABLESEH_IEC <group___sys_except_itf_1gade951ccc3a448727cbd5741f345888c2>` pfsysexceptenableseh;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga2a3fdd0bbff686b7ee5191fccec2bf61:
+
+#define GET_sysexceptenableseh s_pfCMGetAPI2( "sysexceptenableseh", (RTS_VOID_FCTPTR *)&pfsysexceptenableseh, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x41742724, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga5aa2ba29d2e7c82c8ab1f4835e208036:
+
+#define CAL_sysexceptenableseh pfsysexceptenableseh
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga68c579d0ac4bc7f7552ca8bef63b6c20:
+
+#define CHK_sysexceptenableseh (pfsysexceptenableseh != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gac46e0f5036cfb57f660f761600096ad6:
+
+#define EXP_sysexceptenableseh s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysexceptenableseh", (RTS_UINTPTR) :ref:`sysexceptenableseh <group___sys_except_itf_1ga8ca46ee5cfe5ddf69df4809e9699c9f8>` , 1, 0x41742724, 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaafc1a73f8b5999ae8c926cc5f4f415eb:
+
+#define USE_sysexceptenableseh2 :ref:`PFSYSEXCEPTENABLESEH2_IEC <group___sys_except_itf_1gaa3f29c3334b9a46ae6b843c85977eebd>` pfsysexceptenableseh2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga25ef6ce936fffb6d187c7d19e07ee674:
+
+#define EXT_sysexceptenableseh2 extern :ref:`PFSYSEXCEPTENABLESEH2_IEC <group___sys_except_itf_1gaa3f29c3334b9a46ae6b843c85977eebd>` pfsysexceptenableseh2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga40bfe0193925fc74aa76abde87a07f81:
+
+#define GET_sysexceptenableseh2 s_pfCMGetAPI2( "sysexceptenableseh2", (RTS_VOID_FCTPTR *)&pfsysexceptenableseh2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x5FF166F1), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga936d9e75dd4d05b254e2ef33623b0173:
+
+#define CAL_sysexceptenableseh2 pfsysexceptenableseh2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga162a4d793e298774dcb66ea9f8047394:
+
+#define CHK_sysexceptenableseh2 (pfsysexceptenableseh2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaaf1dfbd044f9f75b1ecb05f7e61f97e3:
+
+#define EXP_sysexceptenableseh2 s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysexceptenableseh2", (RTS_UINTPTR) :ref:`sysexceptenableseh2 <group___sys_except_itf_1gad047183db8e032764558ba5f6e887197>` , 1, RTSITF_GET_SIGNATURE(0, 0x5FF166F1), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gafa13bd2a20d345de5cd92e2d4cfbfffa:
+
+#define EXCPT_GET_CODE :ref:`RTSEXCPT_NOEXCEPTION <group___sys_except_itf___exceptioncode_1gade57a8ea56476601c4f9fb6f63f643fd>`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION END
+
+.. _group___sys_except_itf_1gac374b40182a1b3b181b31f10db25e1d5:
+
+#define EXCPT_GET_CONTEXT NULL
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga61368765a3d688a5e1e3a88e44189d93:
+
+#define rts_try {
+^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga1e1e32f23b63c47b755e947a37112033:
+
+#define rts_catch_exception if (0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga552b79c08cc9bdef2f867dcf0384289c:
+
+#define rts_catch if (0)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga9a04fd3fbedab315f4b4ee5dd081dfcc:
+
+#define rts_try_end }
+^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gac7746708ebfb98e5168ae7e9952b30ad:
+
+#define ITF_SysExcept
+^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga4a7d99301e7bd6b0a2d8ea5d63dc8db6:
+
+#define EXTITF_SysExcept
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___sys_except_itf_1gae600045f549bd5e5935417f1cccfb74c:
+
+typedef RTS_UI32( *  PFSYSEXCEPTMAPEXCEPTION) (RTS_UI32 ulOSException)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga6380259837ef402f19a866973f82cf1c:
+
+typedef RTS_RESULT( *  PFSYSEXCEPTGENERATEEXCEPTION) (RTS_HANDLE ulTaskOSHandle, ExceptionCode Exception, RegContext Context)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaebae7a218a99881bf30017830263e06d:
+
+typedef RTS_RESULT( *  PFSYSEXCEPTGENERATEEXCEPTION2) (RTS_HANDLE ulTaskOSHandle, ExceptionCode Exception, RegContext Context, int bSuspendExceptionTask)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga2c10c958055f34e3c5f38fc011f19ba2:
+
+typedef RTS_RESULT( *  PFSYSEXCEPTREGISTERINTERFACE) (PFEXCEPTIONHANDLER pExceptionHandler)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga80c320fe61de5f2440d97df39218a7e9:
+
+typedef RTS_RESULT( *  PFSYSEXCEPTTRY) (SEHContext *context)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga198410ba20f020508bf3d13e57a18393:
+
+typedef RTS_RESULT( *  PFSYSEXCEPTCATCHEXCEPTION) (SEHContext *context, RTS_UI32 ui32ExceptionCode)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga73726898ece8e5f98b6cfaabe6644c6a:
+
+typedef RTS_RESULT( *  PFSYSEXCEPTCATCH) (SEHContext *context)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga722e08bb37f51b0bdb236ba2266adeaa:
+
+typedef RTS_RESULT( *  PFSYSEXCEPTUNREGISTERINTERFACE) (PFEXCEPTIONHANDLER pExceptionHandler)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaaf8228ab96342a6ed9a91ef358fc3862:
+
+typedef RTS_RESULT( *  PFSYSEXCEPTCONVERTTOSTRING) (RTS_UI32 ulExceptionCode, char *pszException, int iMaxExceptionLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga43436000d1579bbe68a24b38330f8eaf:
+
+typedef struct tagsysexceptgenerateexception_struct  sysexceptgenerateexception_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION BEGIN
+
+Interrupt the execution of the currently running task, and set the application into an exception state. If the runtime system supports it, CODESYS may even highlight the source position where this function was called.
+**Returns:**
+
+RESULT: If succeeded this function doesn't return at all, otherwise it returns ERR_FAILED.
+
+.. _group___sys_except_itf_1gab85b0b9283aeccf8ddbf718d3060558d:
+
+typedef void( *  PFSYSEXCEPTGENERATEEXCEPTION_IEC) (sysexceptgenerateexception_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga86f3e9217852743fcd47861141e7f295:
+
+typedef struct tagsysexceptdisableseh_struct  sysexceptdisableseh_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Obsolete function
+
+.. _group___sys_except_itf_1ga32fae4cb345cdad4468d83a180bf6cd2:
+
+typedef void( *  PFSYSEXCEPTDISABLESEH_IEC) (sysexceptdisableseh_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga37fce74c516cdc734f2fe1f708d3a9f4:
+
+typedef struct tagsysexceptdisableseh2_struct  sysexceptdisableseh2_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Obsolete function
+
+.. _group___sys_except_itf_1gada8002d6c18923db90622e4328d0b51a:
+
+typedef void( *  PFSYSEXCEPTDISABLESEH2_IEC) (sysexceptdisableseh2_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga1c5a750533e25080df0df14bd1fa8d19:
+
+typedef struct tagsysexceptenableseh_struct  sysexceptenableseh_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Obsolete function
+
+.. _group___sys_except_itf_1gade951ccc3a448727cbd5741f345888c2:
+
+typedef void( *  PFSYSEXCEPTENABLESEH_IEC) (sysexceptenableseh_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaa420c8d9fef4dd5d6c38ec73be6bb0d5:
+
+typedef struct tagsysexceptenableseh2_struct  sysexceptenableseh2_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Obsolete function
+
+.. _group___sys_except_itf_1gaa3f29c3334b9a46ae6b843c85977eebd:
+
+typedef void( *  PFSYSEXCEPTENABLESEH2_IEC) (sysexceptenableseh2_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gae17a11c6b4cfa8b942d4cb8a4ae2a711:
+
+typedef ISysExcept_C ISysExcept
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___sys_except_itf_1ga336e49c382a64e42f1ec78176678fb65:
+
+RTS_UI32 SysExceptMapException (RTS_UI32 ulOSException)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Map the operating system specific exception into the standard runtime exception code
+
+**Parameters**
+
++---------+---------------+------------------------------------------+
+| [in]    | ulOSException | Operating system specific exception code |
++---------+---------------+------------------------------------------+
+
+**Returns:**
+
+Standard exception code (see category exception code above)
+
+.. _group___sys_except_itf_1ga08d2a6fb1d1966d74c4a8a2313efd643:
+
+RTS_RESULT SysExceptGenerateException (RTS_HANDLE ulTaskOSHandle, ExceptionCode Exception, RegContext Context)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Structured Exception Handling
+
+This function is called from Exception handlers of the hardware, operating systems or, in case of soft-errors, within the task code.
+
+The structured exception handling calls every registered exception handler, stops the IEC Tasks and prepares the task context of the task that generated the exception, so that it can be read by the CoDeSys programming system for analysis purposes.
+
+OEM customers can use this function also from their own exception handlers to propagate generic as well as customer specific exceptions to the application. This way, they can profit from the debugging infrastructure of CoDeSys to find the fault address within the IEC application.
+
+**Note:** On SIL2 Platforms, this function will act only as described above, when the PLC is currently in Debug-Mode. If it is actually in the Safety-Mode, this call puts the PLC directly into the safe mode, by calling the function :ref:`SIL2OEMException() <group___cmp_s_i_l2_itf_1ga18773ad5b541c2d47a6b9c6321379f77>` .
+
+**Parameters**
+
++---------+--------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulTaskOSHandle     | System specific task or timer handle or RTS_INVALID_HANDLE if unknown RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TASKHANDLE]                                      |
++---------+--------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | Exception          | Exception code (OS or runtime specific) RANGE=[RTSEXCPT_UNKNOWN]                                                                                            |
++---------+--------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | Context            | Context to detect the code location where the exception was generated. If ulTaskOSHandle is RTS_INVALID_HANDLE, values can be 0. RANGE=[NULL,VALID_CONTEXT] |
++---------+--------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | Mode               | ***PSEUDO*** Defines the current mode of the PLC. RANGE=[SAFETY,DEBUG]                                                                                      |
++---------+--------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | StructuredHandling | ***PSEUDO*** TRUE if structured Exception Handling was used.                                                                                                |
++---------+--------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_except_itf_1ga3b3c4ab286d3b4fb48d3d085f7304725:
+
+RTS_RESULT SysExceptGenerateException2 (RTS_HANDLE ulTaskOSHandle, ExceptionCode Exception, RegContext Context, int bSuspendExceptionTask)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Structured Exception Handling
+
+This function acts the same way as :ref:`SysExceptGenerateException() <group___sys_except_itf_1ga08d2a6fb1d1966d74c4a8a2313efd643>` , except for the case, that it will try to suspend the task in the following condition:
+
+  - bSuspendExceptionTask is set to TRUE
+
+  - None of the registered exception handlers returned ERR_DONT_SUSPEND_TASK
+
+**Parameters**
+
++---------+-----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulTaskOSHandle        | System specific task or timer handle or RTS_INVALID_HANDLE if unknown RANGE=[RTS_INVALID_HANDLE,NULL,VALID_TASKHANDLE]                                      |
++---------+-----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | Exception             | Exception code (OS or runtime specific) RANGE=[EXCEPTION_1]                                                                                                 |
++---------+-----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | Context               | Context to detect the code location where the exception was generated. If ulTaskOSHandle is RTS_INVALID_HANDLE, values can be 0. RANGE=[NULL,VALID_CONTEXT] |
++---------+-----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bSuspendExceptionTask | Flag to specify, if the exception task is forced to suspended RANGE=[0,1]                                                                                   |
++---------+-----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bSafetyMode           | ***PSEUDO*** Defines the current mode of the PLC. RANGE=[0,1]                                                                                               |
++---------+-----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | bStructuredHandling   | ***PSEUDO*** TRUE if structured Exception Handling was used.                                                                                                |
++---------+-----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++-----------------------+--------------------------------------------------------------------------+
+| ERR_OK                | None of the registered exception handlers returned ERR_DONT_SUSPEND_TASK |
++-----------------------+--------------------------------------------------------------------------+
+| ERR_DONT_SUSPEND_TASK | An exception handler suspends the task itself                            |
++-----------------------+--------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_except_itf_1ga8ceedda4f464989a5c85f11d5d726bcc:
+
+RTS_RESULT SysExceptRegisterInterface (PFEXCEPTIONHANDLER pExceptionHandler)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to register an exception handler
+
+**Parameters**
+
++---------+-------------------+------------------------------+
+| [in]    | pExceptionHandler | Pointer to exception handler |
++---------+-------------------+------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_except_itf_1gaad6c28843b2da8220b3f9e4432f12993:
+
+RTS_RESULT SysExceptTry (SEHContext *context)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function registers or cleans up an exception context. If this is the entry, it returns ERR_OK, otherwise ERR_FAILED
+
+**Parameters**
+
++---------+---------+----------------------------------------------------+
+| [in]    | context | Context, describing one structured exception frame |
++---------+---------+----------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_except_itf_1ga96612c336c3aea3d2ebc32e6bda317ce:
+
+RTS_RESULT SysExceptCatchException (SEHContext *context, RTS_UI32 ui32ExceptionCode)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function returns ERR_OK when the passed exception matches the exception code that really occurred.
+
+**Parameters**
+
++---------+-------------------+----------------------------------------------------+
+| [in]    | context           | Context, describing one structured exception frame |
++---------+-------------------+----------------------------------------------------+
+| [in]    | ui32ExceptionCode | Exception code to match on                         |
++---------+-------------------+----------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_except_itf_1ga80f2e5a7f6e13c7905c2d8498e5b1756:
+
+RTS_RESULT SysExceptCatch (SEHContext *context)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function returns ERR_OK if the exception was not yet handled.
+
+**Parameters**
+
++---------+---------+----------------------------------------------------+
+| [in]    | context | Context, describing one structured exception frame |
++---------+---------+----------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_except_itf_1ga498ce17bbbf06d67dadb5d35c484bbcd:
+
+RTS_RESULT SysExceptUnregisterInterface (PFEXCEPTIONHANDLER pExceptionHandler)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to unregister exception handler
+
+**Parameters**
+
++---------+-------------------+------------------------------+
+| [in]    | pExceptionHandler | Pointer to exception handler |
++---------+-------------------+------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_except_itf_1ga9316367f5ba209468334042df0b633b0:
+
+RTS_RESULT SysExceptConvertToString (RTS_UI32 ulExceptionCode, char *pszException, int iMaxExceptionLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Convert an exception to string
+
+**Parameters**
+
++---------+------------------+--------------------------------------------+
+| [in]    | ulExceptionCode  | Exception code                             |
++---------+------------------+--------------------------------------------+
+| [out]   | pszException     | Pointer to exception string                |
++---------+------------------+--------------------------------------------+
+| [in]    | iMaxExceptionLen | Maximum length of exception string pointer |
++---------+------------------+--------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_except_itf_1gaaccc5ba2f6e5a875ad231102e091ec42:
+
+void sysexceptgenerateexception (sysexceptgenerateexception_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gaf738b2c85ffbcc718fcfbff993593b2c:
+
+void sysexceptdisableseh (sysexceptdisableseh_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga17847b0e5660f268f9d1bf2eb82fabe6:
+
+void sysexceptdisableseh2 (sysexceptdisableseh2_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1ga8ca46ee5cfe5ddf69df4809e9699c9f8:
+
+void sysexceptenableseh (sysexceptenableseh_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_except_itf_1gad047183db8e032764558ba5f6e887197:
+
+void sysexceptenableseh2 (sysexceptenableseh2_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

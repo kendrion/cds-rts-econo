@@ -1,7 +1,7 @@
  /**
  * <interfacename>SysSocket</interfacename>
  * <description> 
- *	<p>The SysSocket interface is projected to handle access to ethernet socket layer.
+ *	<p>The SysSocket interface is projected to handle access to Ethernet socket layer.
  *	TCP, UDP and RAW sockets can be used.</p>
  * </description>
  *
@@ -25,8 +25,9 @@
 
 #include "SysSocketItf.h"
 
-#define SYSSOCK_TYPE_STD	1
-#define SYSSOCK_TYPE_TLS	2
+#define SYSSOCK_TYPE_STD		1
+#define SYSSOCK_TYPE_TLS		2
+#define SYSSOCK_TYPE_STARTTLS	3
 
 #define USE_SYSSOCKET2_STMT					static PF_DELETEINSTANCE2 s_pfCMDeleteInstance2 = NULL;
 #define INIT_SYSSOCKET2_STMT(pInitStruct)	{s_pfCMDeleteInstance2 = ((INIT_STRUCT *)pInitStruct)->pfCMDeleteInstance2;}
@@ -251,7 +252,7 @@ typedef RTS_RESULT (CDECL * PFSYSSOCK2CLOSE) (RTS_HANDLE hSocket);
  * <param name="iLevel" type="IN">Level of the socket</param>
  * <param name="iOption" type="IN">Socket option command</param>
  * <param name="pcOptionValue" type="IN">Pointer to the option value</param>
- * <param name="iOptionLen" type="IN">Lenght of option value</param>
+ * <param name="iOptionLen" type="IN">Length of option value</param>
  * <result>error code</result>
  */
 STATICITF_DEF RTS_RESULT CDECL SysSock2SetOption(RTS_HANDLE hSocket, RTS_I32 iLevel, RTS_I32 iOption, char *pcOptionValue, RTS_I32 iOptionLen);
@@ -368,7 +369,7 @@ typedef RTS_RESULT (CDECL * PFSYSSOCK2GETOPTION) (RTS_HANDLE hSocket, RTS_I32 iL
  *	Bind a socket to a socket address and port number
  * </description>
  * <param name="hSocket" type="IN">Handle to the socket</param>
- * <param name="pSockAddr" type="IN">Spcket address</param>
+ * <param name="pSockAddr" type="IN">Socket address</param>
  * <param name="iSockAddrSize" type="IN">Size of the socket address structure</param>
  * <result>error code</result>
  */
@@ -591,7 +592,7 @@ typedef RTS_HANDLE (CDECL * PFSYSSOCK2ACCEPT) (RTS_HANDLE hISysSocket, CLASSID C
  * <description>
  *	Connect as a client to a TCP server.
  *  Note: If you are connecting to a TLS server that requires SNI (Server Name Indication) use SysSock2SetOption with 
- *  level SOCKET_IPPROTO_TLS and option SOCKET_SO_HOSTNAME to set the hostname.
+ *  level SOCKET_IPPROTO_TLS and option SOCKET_SO_HOSTNAME to set the host-name.
  * </description>
  * <param name="hSocket" type="IN">Handle to the socket</param>
  * <param name="pSockAddr" type="IN">Socket address of the client, who is connected</param>
@@ -1262,8 +1263,8 @@ typedef RTS_RESULT (CDECL * PFSYSSOCK2GETPEERNAME) (RTS_HANDLE hSocket, SOCKADDR
 /**
  * <description>
  *	Returns the socket address of the local socket.
- *  Usally this function is called to retrieve the local socket address on multihomed hosts or to get 
- *  the local port number in client implemntations. If the socket is not locally bound to an address,
+ *  Usually this function is called to retrieve the local socket address on multi-homed hosts or to get 
+ *  the local port number in client implementations. If the socket is not locally bound to an address,
  *  the function will fail until the socket is connected.
  * </description>
  * <param name="hSocket" type="IN">Handle to the socket</param>
@@ -1380,6 +1381,71 @@ typedef CLASSID (CDECL * PFSYSSOCK2GETCLASSID) (RTS_HANDLE hSocket, RTS_RESULT *
 #ifdef __cplusplus
 }
 #endif
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+ * <description>Enum: SysSocket2_Type</description>
+ */
+#define SYSSOCKET2_TYPE_STD    RTS_IEC_INT_C(0x1)	
+#define SYSSOCKET2_TYPE_TLS    RTS_IEC_INT_C(0x2)	
+#define SYSSOCKET2_TYPE_STARTTLS    RTS_IEC_INT_C(0x3)	
+/* Typed enum definition */
+#define SYSSOCKET2_TYPE    RTS_IEC_INT
+
+/**
+ * <description>Enum: SysSocket2_Type</description>
+ */
+#define SYSSOCKET2_TYPE_STD    RTS_IEC_INT_C(0x1)	
+#define SYSSOCKET2_TYPE_TLS    RTS_IEC_INT_C(0x2)	
+#define SYSSOCKET2_TYPE_STARTTLS    RTS_IEC_INT_C(0x3)	
+/* Typed enum definition */
+#define SYSSOCKET2_TYPE    RTS_IEC_INT
+
+/**
+ * <description>SysSocket2_StdSockets</description>
+ */
+typedef struct tagSysSocket2_StdSockets
+{
+	RTS_IEC_INT i32AddressFamily;		
+	RTS_IEC_DINT i32Type;		
+	RTS_IEC_DINT i32Protocol;		
+} SysSocket2_StdSockets;
+
+/**
+ * <description>SysSocket2_TlsSockets</description>
+ */
+typedef struct tagSysSocket2_TlsSockets
+{
+	RTS_IEC_HANDLE hTlsContext;		
+} SysSocket2_TlsSockets;
+
+/**
+ * <description>SysSocket2_SpecificParameter</description>
+ */
+typedef union
+{
+	SysSocket2_StdSockets stdSockets;		
+	SysSocket2_TlsSockets tlsSockets;		
+} SysSocket2_SpecificParameter;
+
+/**
+ * This structure represents the parameters to create a specific socket type
+ * Set the parameterType to your desired socket type. By now Std or TLS sockets
+ * are available.
+ * The specifica member contains the parameters needed to create this socket type
+ */
+typedef struct tagSysSocket2_Parameter
+{
+	RTS_IEC_INT parameterType;		
+	SysSocket2_SpecificParameter specific;		
+} SysSocket2_Parameter;
+
+#ifdef __cplusplus
+}
+#endif
+
 
 
 

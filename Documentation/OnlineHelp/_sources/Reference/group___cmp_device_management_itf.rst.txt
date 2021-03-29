@@ -1,0 +1,591 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_device_management_itf:
+
+======================
+CmpDeviceManagementItf
+======================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpDeviceManagement.
+
+Detailed Description
+--------------------
+
+=== PROTOTYPE: DONT USE YET! === Component which implements the device management functions like install/update/backup/restore of the complete firmware.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Compiler switch <group___cmp_device_management_itf___compilerswitch>`
+
+- :ref:`Event parameter <group___cmp_device_management_itf___eventparameter>`
+
+- :ref:`Events <group___cmp_device_management_itf___events>`
+
+- :ref:`Static defines <group___cmp_device_management_itf___staticdefines>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpDeviceManagement_C <struct_i_cmp_device_management___c>`
+
+Macros
+------
+
+- #define :ref:`USE_DMContainerCreate <group___cmp_device_management_itf_1ga7b2d61c7a9e8222fbc1910b50ce41b3e>` :ref:`PFDMCONTAINERCREATE <group___cmp_device_management_itf_1ga0c48677bc67b37195ee712c78e3925f1>` pfDMContainerCreate;
+
+- #define :ref:`EXT_DMContainerCreate <group___cmp_device_management_itf_1gaaf8e6a9d959d15eef77a6258905c6cc6>` extern :ref:`PFDMCONTAINERCREATE <group___cmp_device_management_itf_1ga0c48677bc67b37195ee712c78e3925f1>` pfDMContainerCreate;
+
+- #define :ref:`GET_DMContainerCreate <group___cmp_device_management_itf_1ga12d01eabf67d22428cd39548b073ac56>` s_pfCMGetAPI2( "DMContainerCreate", (RTS_VOID_FCTPTR *)&pfDMContainerCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_DMContainerCreate <group___cmp_device_management_itf_1ga250d82200959c1663b338fc686eb2591>` pfDMContainerCreate
+
+- #define :ref:`CHK_DMContainerCreate <group___cmp_device_management_itf_1gaf55e8fc654754286f2c424cab3f97f1a>` (pfDMContainerCreate != NULL)
+
+- #define :ref:`EXP_DMContainerCreate <group___cmp_device_management_itf_1ga349c018728ffc4ece0b53a0e4d5539d4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMContainerCreate", (RTS_UINTPTR) :ref:`DMContainerCreate <group___cmp_device_management_itf_1gab01f80270a473c68d29c90bea1995204>` , 0, 0)
+
+- #define :ref:`USE_DMContainerClose <group___cmp_device_management_itf_1ga48313f7965669321386f5ccdcb7c470a>` :ref:`PFDMCONTAINERCLOSE <group___cmp_device_management_itf_1gaf3772ebc72ec80644c3223859b67761a>` pfDMContainerClose;
+
+- #define :ref:`EXT_DMContainerClose <group___cmp_device_management_itf_1ga604f1670a752eb99d9be47dd95848d26>` extern :ref:`PFDMCONTAINERCLOSE <group___cmp_device_management_itf_1gaf3772ebc72ec80644c3223859b67761a>` pfDMContainerClose;
+
+- #define :ref:`GET_DMContainerClose <group___cmp_device_management_itf_1ga6907af9e9e5e1f8028ec283eb2809214>` s_pfCMGetAPI2( "DMContainerClose", (RTS_VOID_FCTPTR *)&pfDMContainerClose, (fl), 0, 0)
+
+- #define :ref:`CAL_DMContainerClose <group___cmp_device_management_itf_1gaddbffcd6bd309cd5a1db774c29b17dac>` pfDMContainerClose
+
+- #define :ref:`CHK_DMContainerClose <group___cmp_device_management_itf_1ga39e7f92047d3b79efd68c991bbc97865>` (pfDMContainerClose != NULL)
+
+- #define :ref:`EXP_DMContainerClose <group___cmp_device_management_itf_1ga8dfa8c98029e50ff2f7cf87712e1a035>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMContainerClose", (RTS_UINTPTR) :ref:`DMContainerClose <group___cmp_device_management_itf_1gad4c515cfad46518065b4111cc07ef86e>` , 0, 0)
+
+- #define :ref:`USE_DMContainerGetPath <group___cmp_device_management_itf_1ga2eaa067562719437c98e74ba6fb83121>` :ref:`PFDMCONTAINERGETPATH <group___cmp_device_management_itf_1ga023ffb9ea345cf917380df5ce24df721>` pfDMContainerGetPath;
+
+- #define :ref:`EXT_DMContainerGetPath <group___cmp_device_management_itf_1gad6f61587d3b55ceb38031d0e6ef96360>` extern :ref:`PFDMCONTAINERGETPATH <group___cmp_device_management_itf_1ga023ffb9ea345cf917380df5ce24df721>` pfDMContainerGetPath;
+
+- #define :ref:`GET_DMContainerGetPath <group___cmp_device_management_itf_1ga37c5f0915628d56d7940ed26e4f446cb>` s_pfCMGetAPI2( "DMContainerGetPath", (RTS_VOID_FCTPTR *)&pfDMContainerGetPath, (fl), 0, 0)
+
+- #define :ref:`CAL_DMContainerGetPath <group___cmp_device_management_itf_1ga10e9b77df04e0ad912015b51f1ae8728>` pfDMContainerGetPath
+
+- #define :ref:`CHK_DMContainerGetPath <group___cmp_device_management_itf_1gaef3ad57d66ef642313f9fb310da4bdd5>` (pfDMContainerGetPath != NULL)
+
+- #define :ref:`EXP_DMContainerGetPath <group___cmp_device_management_itf_1gacfde49ed494d62a16771a0574053701d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMContainerGetPath", (RTS_UINTPTR) :ref:`DMContainerGetPath <group___cmp_device_management_itf_1ga29214d112cfa70de176f92cbecffb3dc>` , 0, 0)
+
+- #define :ref:`USE_DMPackageCreate <group___cmp_device_management_itf_1ga57ce59e5596446befa28f9ac4ac2540d>` :ref:`PFDMPACKAGECREATE <group___cmp_device_management_itf_1ga4ec7f2f9dce215a0131eeeff58f9e384>` pfDMPackageCreate;
+
+- #define :ref:`EXT_DMPackageCreate <group___cmp_device_management_itf_1ga76ad2b46d5671f54c3c0e26d810b7474>` extern :ref:`PFDMPACKAGECREATE <group___cmp_device_management_itf_1ga4ec7f2f9dce215a0131eeeff58f9e384>` pfDMPackageCreate;
+
+- #define :ref:`GET_DMPackageCreate <group___cmp_device_management_itf_1ga9a2701af28e2ddb2b4d017a4f0f0ec7a>` s_pfCMGetAPI2( "DMPackageCreate", (RTS_VOID_FCTPTR *)&pfDMPackageCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_DMPackageCreate <group___cmp_device_management_itf_1ga3db1de1217894850e67bb4b742d5c071>` pfDMPackageCreate
+
+- #define :ref:`CHK_DMPackageCreate <group___cmp_device_management_itf_1ga283e131a0866cea91d5c082ad7f7072d>` (pfDMPackageCreate != NULL)
+
+- #define :ref:`EXP_DMPackageCreate <group___cmp_device_management_itf_1ga2dded4a7bc0cb5ba05cbd930dab85bdd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMPackageCreate", (RTS_UINTPTR) :ref:`DMPackageCreate <group___cmp_device_management_itf_1ga3d9557990ec515d17fe1a0f6fa58da00>` , 0, 0)
+
+- #define :ref:`USE_DMPackageClose <group___cmp_device_management_itf_1gac633b92a3900aed265bb88acbc9bc7a4>` :ref:`PFDMPACKAGECLOSE <group___cmp_device_management_itf_1ga92cef4c64e207ed106bf0e201508f4be>` pfDMPackageClose;
+
+- #define :ref:`EXT_DMPackageClose <group___cmp_device_management_itf_1ga9c9e5d1c7db6efffa712a9dca385493f>` extern :ref:`PFDMPACKAGECLOSE <group___cmp_device_management_itf_1ga92cef4c64e207ed106bf0e201508f4be>` pfDMPackageClose;
+
+- #define :ref:`GET_DMPackageClose <group___cmp_device_management_itf_1ga5a17c74c0de013e76cde38938b17ff59>` s_pfCMGetAPI2( "DMPackageClose", (RTS_VOID_FCTPTR *)&pfDMPackageClose, (fl), 0, 0)
+
+- #define :ref:`CAL_DMPackageClose <group___cmp_device_management_itf_1ga79a2a78caec8805802e82a8bddc12164>` pfDMPackageClose
+
+- #define :ref:`CHK_DMPackageClose <group___cmp_device_management_itf_1ga8f6e69ad92d9b3ac939a4c45983a6858>` (pfDMPackageClose != NULL)
+
+- #define :ref:`EXP_DMPackageClose <group___cmp_device_management_itf_1ga3257484d745682c08c8b24493d0f8ef8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMPackageClose", (RTS_UINTPTR) :ref:`DMPackageClose <group___cmp_device_management_itf_1gaa7fd5a1b202f48d7a911cf4644091cb2>` , 0, 0)
+
+- #define :ref:`USE_DMPackageSetConfiguration <group___cmp_device_management_itf_1ga78b3dbf86d874f6395b0f97d93ce43af>` :ref:`PFDMPACKAGESETCONFIGURATION <group___cmp_device_management_itf_1ga0e17fde367e57722635ae2e10c85c60a>` pfDMPackageSetConfiguration;
+
+- #define :ref:`EXT_DMPackageSetConfiguration <group___cmp_device_management_itf_1gabe4ffbc943b678faba145eebff780473>` extern :ref:`PFDMPACKAGESETCONFIGURATION <group___cmp_device_management_itf_1ga0e17fde367e57722635ae2e10c85c60a>` pfDMPackageSetConfiguration;
+
+- #define :ref:`GET_DMPackageSetConfiguration <group___cmp_device_management_itf_1gaae53f6a08e7a26e2fe5bb2bf7d72ad17>` s_pfCMGetAPI2( "DMPackageSetConfiguration", (RTS_VOID_FCTPTR *)&pfDMPackageSetConfiguration, (fl), 0, 0)
+
+- #define :ref:`CAL_DMPackageSetConfiguration <group___cmp_device_management_itf_1gaa5a85e462ceffa1cf9feda7a4260274b>` pfDMPackageSetConfiguration
+
+- #define :ref:`CHK_DMPackageSetConfiguration <group___cmp_device_management_itf_1gaf1fd7decd0e0c56c00135d9db7a7d730>` (pfDMPackageSetConfiguration != NULL)
+
+- #define :ref:`EXP_DMPackageSetConfiguration <group___cmp_device_management_itf_1ga7afd3718be03fa0b4702f52067af9f9d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMPackageSetConfiguration", (RTS_UINTPTR) :ref:`DMPackageSetConfiguration <group___cmp_device_management_itf_1ga7c3097ed5e9f9d24562e10f570ee757e>` , 0, 0)
+
+- #define :ref:`USE_DMPackageAddFile <group___cmp_device_management_itf_1gae1faa61c97806bc08eb3d4b02b44b0b8>` :ref:`PFDMPACKAGEADDFILE <group___cmp_device_management_itf_1ga3a205310cdd7ba3113be521a7e6853bd>` pfDMPackageAddFile;
+
+- #define :ref:`EXT_DMPackageAddFile <group___cmp_device_management_itf_1gad63ee4c843834b14454b8772f11e4a38>` extern :ref:`PFDMPACKAGEADDFILE <group___cmp_device_management_itf_1ga3a205310cdd7ba3113be521a7e6853bd>` pfDMPackageAddFile;
+
+- #define :ref:`GET_DMPackageAddFile <group___cmp_device_management_itf_1ga18635c49e82dd273f7723b462db88fb1>` s_pfCMGetAPI2( "DMPackageAddFile", (RTS_VOID_FCTPTR *)&pfDMPackageAddFile, (fl), 0, 0)
+
+- #define :ref:`CAL_DMPackageAddFile <group___cmp_device_management_itf_1ga66b920cee1f3168b4db6d908fa052b87>` pfDMPackageAddFile
+
+- #define :ref:`CHK_DMPackageAddFile <group___cmp_device_management_itf_1gaa0709bb0249bab26b84586f0758a5e53>` (pfDMPackageAddFile != NULL)
+
+- #define :ref:`EXP_DMPackageAddFile <group___cmp_device_management_itf_1gae57c1132c1d17a63c3b29044ec0dea57>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMPackageAddFile", (RTS_UINTPTR) :ref:`DMPackageAddFile <group___cmp_device_management_itf_1ga4db72f8b68f668f8afa64c2167c7f89f>` , 0, 0)
+
+- #define :ref:`USE_DMPackageGetFirst <group___cmp_device_management_itf_1ga7b9d14e4f6b4fd277e901e69020a8fb4>` :ref:`PFDMPACKAGEGETFIRST <group___cmp_device_management_itf_1ga8ac94a5d0f2b0e27e27d16dc8d3f1054>` pfDMPackageGetFirst;
+
+- #define :ref:`EXT_DMPackageGetFirst <group___cmp_device_management_itf_1gac5dcffe7820efd381dde0e02429a6130>` extern :ref:`PFDMPACKAGEGETFIRST <group___cmp_device_management_itf_1ga8ac94a5d0f2b0e27e27d16dc8d3f1054>` pfDMPackageGetFirst;
+
+- #define :ref:`GET_DMPackageGetFirst <group___cmp_device_management_itf_1gac70b917ab4e618f61b632a79c874dcdc>` s_pfCMGetAPI2( "DMPackageGetFirst", (RTS_VOID_FCTPTR *)&pfDMPackageGetFirst, (fl), 0, 0)
+
+- #define :ref:`CAL_DMPackageGetFirst <group___cmp_device_management_itf_1ga148957ad72288c55a0c0f309afec3e9f>` pfDMPackageGetFirst
+
+- #define :ref:`CHK_DMPackageGetFirst <group___cmp_device_management_itf_1ga8e8e62210b9176c752e10c3146645400>` (pfDMPackageGetFirst != NULL)
+
+- #define :ref:`EXP_DMPackageGetFirst <group___cmp_device_management_itf_1gab8c9cf540d9e2bc820fdc6691d06d173>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMPackageGetFirst", (RTS_UINTPTR) :ref:`DMPackageGetFirst <group___cmp_device_management_itf_1ga518bec2c8229b7fed91595037dbeb28a>` , 0, 0)
+
+- #define :ref:`USE_DMPackageGetNext <group___cmp_device_management_itf_1gad79a37b07622b5a51c6292540bcde656>` :ref:`PFDMPACKAGEGETNEXT <group___cmp_device_management_itf_1gaeea59b873ef87283217c0f4e3ffcd187>` pfDMPackageGetNext;
+
+- #define :ref:`EXT_DMPackageGetNext <group___cmp_device_management_itf_1gadb83eb780f7005629d8edd0e9947d77f>` extern :ref:`PFDMPACKAGEGETNEXT <group___cmp_device_management_itf_1gaeea59b873ef87283217c0f4e3ffcd187>` pfDMPackageGetNext;
+
+- #define :ref:`GET_DMPackageGetNext <group___cmp_device_management_itf_1gaa1d16a7d7b64e1f32547cd139e746517>` s_pfCMGetAPI2( "DMPackageGetNext", (RTS_VOID_FCTPTR *)&pfDMPackageGetNext, (fl), 0, 0)
+
+- #define :ref:`CAL_DMPackageGetNext <group___cmp_device_management_itf_1ga67de3c7b6d42cd2bd357ad6451816f7d>` pfDMPackageGetNext
+
+- #define :ref:`CHK_DMPackageGetNext <group___cmp_device_management_itf_1ga1faf94c19dc93fa2924575bae1d87814>` (pfDMPackageGetNext != NULL)
+
+- #define :ref:`EXP_DMPackageGetNext <group___cmp_device_management_itf_1ga48c43117d7dc97fb793a4d235d9b6051>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMPackageGetNext", (RTS_UINTPTR) :ref:`DMPackageGetNext <group___cmp_device_management_itf_1ga937c4fe58c1fd5e9b96a55c6e07224be>` , 0, 0)
+
+- #define :ref:`ITF_CmpDeviceManagement <group___cmp_device_management_itf_1ga5e77cd30fcdd1d118d30e741dabe930d>`
+
+- #define :ref:`EXTITF_CmpDeviceManagement <group___cmp_device_management_itf_1gab021fc751f35afdeb17a9f423af403b9>`
+
+Typedefs
+--------
+
+- typedef RTS_HANDLE(* :ref:`PFDMCONTAINERCREATE <group___cmp_device_management_itf_1ga0c48677bc67b37195ee712c78e3925f1>`)(RTS_UTF8STRING *pName, RTS_UTF8STRING *pFilePath, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFDMCONTAINERCLOSE <group___cmp_device_management_itf_1gaf3772ebc72ec80644c3223859b67761a>`)(RTS_HANDLE hContainer)
+
+- typedef RTS_UTF8STRING *(* :ref:`PFDMCONTAINERGETPATH <group___cmp_device_management_itf_1ga023ffb9ea345cf917380df5ce24df721>`)(RTS_HANDLE hContainer, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFDMPACKAGECREATE <group___cmp_device_management_itf_1ga4ec7f2f9dce215a0131eeeff58f9e384>`)(RTS_HANDLE hContainer, RTS_UTF8STRING *pName, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFDMPACKAGECLOSE <group___cmp_device_management_itf_1ga92cef4c64e207ed106bf0e201508f4be>`)(RTS_HANDLE hPackage)
+
+- typedef RTS_RESULT(* :ref:`PFDMPACKAGESETCONFIGURATION <group___cmp_device_management_itf_1ga0e17fde367e57722635ae2e10c85c60a>`)(RTS_HANDLE hPackage, DM_PACKAGE_CONFIGURATION *pConfiguration)
+
+- typedef RTS_RESULT(* :ref:`PFDMPACKAGEADDFILE <group___cmp_device_management_itf_1ga3a205310cdd7ba3113be521a7e6853bd>`)(RTS_HANDLE hPackage, RTS_UTF8STRING *pFilePath, RTS_UTF8STRING *pPackageFilePath)
+
+- typedef RTS_HANDLE(* :ref:`PFDMPACKAGEGETFIRST <group___cmp_device_management_itf_1ga8ac94a5d0f2b0e27e27d16dc8d3f1054>`)(RTS_HANDLE hContainer, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFDMPACKAGEGETNEXT <group___cmp_device_management_itf_1gaeea59b873ef87283217c0f4e3ffcd187>`)(RTS_HANDLE hContainer, RTS_HANDLE hPackage, RTS_RESULT *pResult)
+
+- typedef :ref:`ICmpDeviceManagement_C <struct_i_cmp_device_management___c>` :ref:`ICmpDeviceManagement <group___cmp_device_management_itf_1ga88a938fe77fec85f974af347b3535a01>`
+
+Functions
+---------
+
+- RTS_HANDLE :ref:`DMContainerCreate <group___cmp_device_management_itf_1gab01f80270a473c68d29c90bea1995204>` (RTS_UTF8STRING * pName, RTS_UTF8STRING * pFilePath, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`DMContainerClose <group___cmp_device_management_itf_1gad4c515cfad46518065b4111cc07ef86e>` (RTS_HANDLE hContainer)
+
+- RTS_UTF8STRING * :ref:`DMContainerGetPath <group___cmp_device_management_itf_1ga29214d112cfa70de176f92cbecffb3dc>` (RTS_HANDLE hContainer, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`DMPackageCreate <group___cmp_device_management_itf_1ga3d9557990ec515d17fe1a0f6fa58da00>` (RTS_HANDLE hContainer, RTS_UTF8STRING * pName, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`DMPackageClose <group___cmp_device_management_itf_1gaa7fd5a1b202f48d7a911cf4644091cb2>` (RTS_HANDLE hPackage)
+
+- RTS_RESULT :ref:`DMPackageSetConfiguration <group___cmp_device_management_itf_1ga7c3097ed5e9f9d24562e10f570ee757e>` (RTS_HANDLE hPackage, :ref:`DM_PACKAGE_CONFIGURATION <group___cmp_device_management_itf___events_1gad665ae9065653520c7a9d20c79d4b4a1>` * pConfiguration)
+
+- RTS_RESULT :ref:`DMPackageAddFile <group___cmp_device_management_itf_1ga4db72f8b68f668f8afa64c2167c7f89f>` (RTS_HANDLE hPackage, RTS_UTF8STRING * pFilePath, RTS_UTF8STRING * pPackageFilePath)
+
+- RTS_HANDLE :ref:`DMPackageGetFirst <group___cmp_device_management_itf_1ga518bec2c8229b7fed91595037dbeb28a>` (RTS_HANDLE hContainer, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`DMPackageGetNext <group___cmp_device_management_itf_1ga937c4fe58c1fd5e9b96a55c6e07224be>` (RTS_HANDLE hContainer, RTS_HANDLE hPackage, RTS_RESULT * pResult)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_device_management_itf_1ga7b2d61c7a9e8222fbc1910b50ce41b3e:
+
+#define USE_DMContainerCreate :ref:`PFDMCONTAINERCREATE <group___cmp_device_management_itf_1ga0c48677bc67b37195ee712c78e3925f1>` pfDMContainerCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gaaf8e6a9d959d15eef77a6258905c6cc6:
+
+#define EXT_DMContainerCreate extern :ref:`PFDMCONTAINERCREATE <group___cmp_device_management_itf_1ga0c48677bc67b37195ee712c78e3925f1>` pfDMContainerCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga12d01eabf67d22428cd39548b073ac56:
+
+#define GET_DMContainerCreate s_pfCMGetAPI2( "DMContainerCreate", (RTS_VOID_FCTPTR *)&pfDMContainerCreate, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga250d82200959c1663b338fc686eb2591:
+
+#define CAL_DMContainerCreate pfDMContainerCreate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gaf55e8fc654754286f2c424cab3f97f1a:
+
+#define CHK_DMContainerCreate (pfDMContainerCreate != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga349c018728ffc4ece0b53a0e4d5539d4:
+
+#define EXP_DMContainerCreate s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMContainerCreate", (RTS_UINTPTR) :ref:`DMContainerCreate <group___cmp_device_management_itf_1gab01f80270a473c68d29c90bea1995204>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga48313f7965669321386f5ccdcb7c470a:
+
+#define USE_DMContainerClose :ref:`PFDMCONTAINERCLOSE <group___cmp_device_management_itf_1gaf3772ebc72ec80644c3223859b67761a>` pfDMContainerClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga604f1670a752eb99d9be47dd95848d26:
+
+#define EXT_DMContainerClose extern :ref:`PFDMCONTAINERCLOSE <group___cmp_device_management_itf_1gaf3772ebc72ec80644c3223859b67761a>` pfDMContainerClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga6907af9e9e5e1f8028ec283eb2809214:
+
+#define GET_DMContainerClose s_pfCMGetAPI2( "DMContainerClose", (RTS_VOID_FCTPTR *)&pfDMContainerClose, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gaddbffcd6bd309cd5a1db774c29b17dac:
+
+#define CAL_DMContainerClose pfDMContainerClose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga39e7f92047d3b79efd68c991bbc97865:
+
+#define CHK_DMContainerClose (pfDMContainerClose != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga8dfa8c98029e50ff2f7cf87712e1a035:
+
+#define EXP_DMContainerClose s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMContainerClose", (RTS_UINTPTR) :ref:`DMContainerClose <group___cmp_device_management_itf_1gad4c515cfad46518065b4111cc07ef86e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga2eaa067562719437c98e74ba6fb83121:
+
+#define USE_DMContainerGetPath :ref:`PFDMCONTAINERGETPATH <group___cmp_device_management_itf_1ga023ffb9ea345cf917380df5ce24df721>` pfDMContainerGetPath;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gad6f61587d3b55ceb38031d0e6ef96360:
+
+#define EXT_DMContainerGetPath extern :ref:`PFDMCONTAINERGETPATH <group___cmp_device_management_itf_1ga023ffb9ea345cf917380df5ce24df721>` pfDMContainerGetPath;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga37c5f0915628d56d7940ed26e4f446cb:
+
+#define GET_DMContainerGetPath s_pfCMGetAPI2( "DMContainerGetPath", (RTS_VOID_FCTPTR *)&pfDMContainerGetPath, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga10e9b77df04e0ad912015b51f1ae8728:
+
+#define CAL_DMContainerGetPath pfDMContainerGetPath
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gaef3ad57d66ef642313f9fb310da4bdd5:
+
+#define CHK_DMContainerGetPath (pfDMContainerGetPath != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gacfde49ed494d62a16771a0574053701d:
+
+#define EXP_DMContainerGetPath s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMContainerGetPath", (RTS_UINTPTR) :ref:`DMContainerGetPath <group___cmp_device_management_itf_1ga29214d112cfa70de176f92cbecffb3dc>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga57ce59e5596446befa28f9ac4ac2540d:
+
+#define USE_DMPackageCreate :ref:`PFDMPACKAGECREATE <group___cmp_device_management_itf_1ga4ec7f2f9dce215a0131eeeff58f9e384>` pfDMPackageCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga76ad2b46d5671f54c3c0e26d810b7474:
+
+#define EXT_DMPackageCreate extern :ref:`PFDMPACKAGECREATE <group___cmp_device_management_itf_1ga4ec7f2f9dce215a0131eeeff58f9e384>` pfDMPackageCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga9a2701af28e2ddb2b4d017a4f0f0ec7a:
+
+#define GET_DMPackageCreate s_pfCMGetAPI2( "DMPackageCreate", (RTS_VOID_FCTPTR *)&pfDMPackageCreate, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga3db1de1217894850e67bb4b742d5c071:
+
+#define CAL_DMPackageCreate pfDMPackageCreate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga283e131a0866cea91d5c082ad7f7072d:
+
+#define CHK_DMPackageCreate (pfDMPackageCreate != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga2dded4a7bc0cb5ba05cbd930dab85bdd:
+
+#define EXP_DMPackageCreate s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMPackageCreate", (RTS_UINTPTR) :ref:`DMPackageCreate <group___cmp_device_management_itf_1ga3d9557990ec515d17fe1a0f6fa58da00>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gac633b92a3900aed265bb88acbc9bc7a4:
+
+#define USE_DMPackageClose :ref:`PFDMPACKAGECLOSE <group___cmp_device_management_itf_1ga92cef4c64e207ed106bf0e201508f4be>` pfDMPackageClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga9c9e5d1c7db6efffa712a9dca385493f:
+
+#define EXT_DMPackageClose extern :ref:`PFDMPACKAGECLOSE <group___cmp_device_management_itf_1ga92cef4c64e207ed106bf0e201508f4be>` pfDMPackageClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga5a17c74c0de013e76cde38938b17ff59:
+
+#define GET_DMPackageClose s_pfCMGetAPI2( "DMPackageClose", (RTS_VOID_FCTPTR *)&pfDMPackageClose, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga79a2a78caec8805802e82a8bddc12164:
+
+#define CAL_DMPackageClose pfDMPackageClose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga8f6e69ad92d9b3ac939a4c45983a6858:
+
+#define CHK_DMPackageClose (pfDMPackageClose != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga3257484d745682c08c8b24493d0f8ef8:
+
+#define EXP_DMPackageClose s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMPackageClose", (RTS_UINTPTR) :ref:`DMPackageClose <group___cmp_device_management_itf_1gaa7fd5a1b202f48d7a911cf4644091cb2>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga78b3dbf86d874f6395b0f97d93ce43af:
+
+#define USE_DMPackageSetConfiguration :ref:`PFDMPACKAGESETCONFIGURATION <group___cmp_device_management_itf_1ga0e17fde367e57722635ae2e10c85c60a>` pfDMPackageSetConfiguration;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gabe4ffbc943b678faba145eebff780473:
+
+#define EXT_DMPackageSetConfiguration extern :ref:`PFDMPACKAGESETCONFIGURATION <group___cmp_device_management_itf_1ga0e17fde367e57722635ae2e10c85c60a>` pfDMPackageSetConfiguration;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gaae53f6a08e7a26e2fe5bb2bf7d72ad17:
+
+#define GET_DMPackageSetConfiguration s_pfCMGetAPI2( "DMPackageSetConfiguration", (RTS_VOID_FCTPTR *)&pfDMPackageSetConfiguration, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gaa5a85e462ceffa1cf9feda7a4260274b:
+
+#define CAL_DMPackageSetConfiguration pfDMPackageSetConfiguration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gaf1fd7decd0e0c56c00135d9db7a7d730:
+
+#define CHK_DMPackageSetConfiguration (pfDMPackageSetConfiguration != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga7afd3718be03fa0b4702f52067af9f9d:
+
+#define EXP_DMPackageSetConfiguration s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMPackageSetConfiguration", (RTS_UINTPTR) :ref:`DMPackageSetConfiguration <group___cmp_device_management_itf_1ga7c3097ed5e9f9d24562e10f570ee757e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gae1faa61c97806bc08eb3d4b02b44b0b8:
+
+#define USE_DMPackageAddFile :ref:`PFDMPACKAGEADDFILE <group___cmp_device_management_itf_1ga3a205310cdd7ba3113be521a7e6853bd>` pfDMPackageAddFile;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gad63ee4c843834b14454b8772f11e4a38:
+
+#define EXT_DMPackageAddFile extern :ref:`PFDMPACKAGEADDFILE <group___cmp_device_management_itf_1ga3a205310cdd7ba3113be521a7e6853bd>` pfDMPackageAddFile;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga18635c49e82dd273f7723b462db88fb1:
+
+#define GET_DMPackageAddFile s_pfCMGetAPI2( "DMPackageAddFile", (RTS_VOID_FCTPTR *)&pfDMPackageAddFile, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga66b920cee1f3168b4db6d908fa052b87:
+
+#define CAL_DMPackageAddFile pfDMPackageAddFile
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gaa0709bb0249bab26b84586f0758a5e53:
+
+#define CHK_DMPackageAddFile (pfDMPackageAddFile != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gae57c1132c1d17a63c3b29044ec0dea57:
+
+#define EXP_DMPackageAddFile s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMPackageAddFile", (RTS_UINTPTR) :ref:`DMPackageAddFile <group___cmp_device_management_itf_1ga4db72f8b68f668f8afa64c2167c7f89f>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga7b9d14e4f6b4fd277e901e69020a8fb4:
+
+#define USE_DMPackageGetFirst :ref:`PFDMPACKAGEGETFIRST <group___cmp_device_management_itf_1ga8ac94a5d0f2b0e27e27d16dc8d3f1054>` pfDMPackageGetFirst;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gac5dcffe7820efd381dde0e02429a6130:
+
+#define EXT_DMPackageGetFirst extern :ref:`PFDMPACKAGEGETFIRST <group___cmp_device_management_itf_1ga8ac94a5d0f2b0e27e27d16dc8d3f1054>` pfDMPackageGetFirst;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gac70b917ab4e618f61b632a79c874dcdc:
+
+#define GET_DMPackageGetFirst s_pfCMGetAPI2( "DMPackageGetFirst", (RTS_VOID_FCTPTR *)&pfDMPackageGetFirst, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga148957ad72288c55a0c0f309afec3e9f:
+
+#define CAL_DMPackageGetFirst pfDMPackageGetFirst
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga8e8e62210b9176c752e10c3146645400:
+
+#define CHK_DMPackageGetFirst (pfDMPackageGetFirst != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gab8c9cf540d9e2bc820fdc6691d06d173:
+
+#define EXP_DMPackageGetFirst s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMPackageGetFirst", (RTS_UINTPTR) :ref:`DMPackageGetFirst <group___cmp_device_management_itf_1ga518bec2c8229b7fed91595037dbeb28a>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gad79a37b07622b5a51c6292540bcde656:
+
+#define USE_DMPackageGetNext :ref:`PFDMPACKAGEGETNEXT <group___cmp_device_management_itf_1gaeea59b873ef87283217c0f4e3ffcd187>` pfDMPackageGetNext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gadb83eb780f7005629d8edd0e9947d77f:
+
+#define EXT_DMPackageGetNext extern :ref:`PFDMPACKAGEGETNEXT <group___cmp_device_management_itf_1gaeea59b873ef87283217c0f4e3ffcd187>` pfDMPackageGetNext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gaa1d16a7d7b64e1f32547cd139e746517:
+
+#define GET_DMPackageGetNext s_pfCMGetAPI2( "DMPackageGetNext", (RTS_VOID_FCTPTR *)&pfDMPackageGetNext, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga67de3c7b6d42cd2bd357ad6451816f7d:
+
+#define CAL_DMPackageGetNext pfDMPackageGetNext
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga1faf94c19dc93fa2924575bae1d87814:
+
+#define CHK_DMPackageGetNext (pfDMPackageGetNext != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga48c43117d7dc97fb793a4d235d9b6051:
+
+#define EXP_DMPackageGetNext s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DMPackageGetNext", (RTS_UINTPTR) :ref:`DMPackageGetNext <group___cmp_device_management_itf_1ga937c4fe58c1fd5e9b96a55c6e07224be>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga5e77cd30fcdd1d118d30e741dabe930d:
+
+#define ITF_CmpDeviceManagement
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gab021fc751f35afdeb17a9f423af403b9:
+
+#define EXTITF_CmpDeviceManagement
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_device_management_itf_1ga0c48677bc67b37195ee712c78e3925f1:
+
+typedef RTS_HANDLE( *  PFDMCONTAINERCREATE) (RTS_UTF8STRING *pName, RTS_UTF8STRING *pFilePath, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gaf3772ebc72ec80644c3223859b67761a:
+
+typedef RTS_RESULT( *  PFDMCONTAINERCLOSE) (RTS_HANDLE hContainer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga023ffb9ea345cf917380df5ce24df721:
+
+typedef RTS_UTF8STRING*( *  PFDMCONTAINERGETPATH) (RTS_HANDLE hContainer, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga4ec7f2f9dce215a0131eeeff58f9e384:
+
+typedef RTS_HANDLE( *  PFDMPACKAGECREATE) (RTS_HANDLE hContainer, RTS_UTF8STRING *pName, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga92cef4c64e207ed106bf0e201508f4be:
+
+typedef RTS_RESULT( *  PFDMPACKAGECLOSE) (RTS_HANDLE hPackage)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga0e17fde367e57722635ae2e10c85c60a:
+
+typedef RTS_RESULT( *  PFDMPACKAGESETCONFIGURATION) (RTS_HANDLE hPackage, DM_PACKAGE_CONFIGURATION *pConfiguration)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga3a205310cdd7ba3113be521a7e6853bd:
+
+typedef RTS_RESULT( *  PFDMPACKAGEADDFILE) (RTS_HANDLE hPackage, RTS_UTF8STRING *pFilePath, RTS_UTF8STRING *pPackageFilePath)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga8ac94a5d0f2b0e27e27d16dc8d3f1054:
+
+typedef RTS_HANDLE( *  PFDMPACKAGEGETFIRST) (RTS_HANDLE hContainer, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gaeea59b873ef87283217c0f4e3ffcd187:
+
+typedef RTS_HANDLE( *  PFDMPACKAGEGETNEXT) (RTS_HANDLE hContainer, RTS_HANDLE hPackage, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga88a938fe77fec85f974af347b3535a01:
+
+typedef ICmpDeviceManagement_C ICmpDeviceManagement
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_device_management_itf_1gab01f80270a473c68d29c90bea1995204:
+
+RTS_HANDLE DMContainerCreate (RTS_UTF8STRING *pName, RTS_UTF8STRING *pFilePath, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION BEGIN EXTERN LIB SECTION END
+
+.. _group___cmp_device_management_itf_1gad4c515cfad46518065b4111cc07ef86e:
+
+RTS_RESULT DMContainerClose (RTS_HANDLE hContainer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga29214d112cfa70de176f92cbecffb3dc:
+
+RTS_UTF8STRING* DMContainerGetPath (RTS_HANDLE hContainer, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga3d9557990ec515d17fe1a0f6fa58da00:
+
+RTS_HANDLE DMPackageCreate (RTS_HANDLE hContainer, RTS_UTF8STRING *pName, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1gaa7fd5a1b202f48d7a911cf4644091cb2:
+
+RTS_RESULT DMPackageClose (RTS_HANDLE hPackage)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga7c3097ed5e9f9d24562e10f570ee757e:
+
+RTS_RESULT DMPackageSetConfiguration (RTS_HANDLE hPackage, DM_PACKAGE_CONFIGURATION *pConfiguration)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga4db72f8b68f668f8afa64c2167c7f89f:
+
+RTS_RESULT DMPackageAddFile (RTS_HANDLE hPackage, RTS_UTF8STRING *pFilePath, RTS_UTF8STRING *pPackageFilePath)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga518bec2c8229b7fed91595037dbeb28a:
+
+RTS_HANDLE DMPackageGetFirst (RTS_HANDLE hContainer, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_management_itf_1ga937c4fe58c1fd5e9b96a55c6e07224be:
+
+RTS_HANDLE DMPackageGetNext (RTS_HANDLE hContainer, RTS_HANDLE hPackage, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

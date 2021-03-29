@@ -1,0 +1,253 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __sys_flash_itf_8h:
+
+============================
+SysFlashItf.h File Reference
+============================
+
+| #include ":ref:`CmpStd.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`FILE_DESCtag <struct_f_i_l_e___d_e_s_ctag>`
+
+- struct :ref:`ISysFlash_C <struct_i_sys_flash___c>`
+
+Macros
+------
+
+- #define :ref:`SYSFLASH_KEY_INT_ERASE_BLOCK_SIZE <group___sys_flash_itf___settings_1gae88272e69b66e214213b518c9a7a8502>` "EraseBlockSize"
+
+- #define :ref:`SYSFLASH_VALUE_INT_ERASE_BLOCK_SIZE_DEFAULT <group___sys_flash_itf___settings_1ga2d03f7dc8de26d5bcc1fe6eba6bf214c>` INT32_C(0x1000)
+
+- #define :ref:`SYSFLASH_KEY_INT_READ_BLOCK_SIZE <group___sys_flash_itf___settings_1gabbe665ac1eb493877e38e91c1fecc6f9>` "ReadBlockSize"
+
+- #define :ref:`SYSFLASH_VALUE_INT_READ_BLOCK_SIZE_DEFAULT <group___sys_flash_itf___settings_1ga7e8b30a88881a4a0feff57ac8aaea154>` INT32_C(0x10000)
+
+- #define :ref:`SYSFLASH_KEY_INT_WRITE_BLOCK_SIZE <group___sys_flash_itf___settings_1gacd072cb6a3625cf5c1913f74a2815e6f>` "WriteBlockSize"
+
+- #define :ref:`SYSFLASH_VALUE_INT_WRITE_BLOCK_SIZE_DEFAULT <group___sys_flash_itf___settings_1ga7374a9ca4fd72937e97bdeb3ea8bec6e>` INT32_C(0x1000)
+
+- #define :ref:`SYSFLASH_KEY_INT_FLUSH_BLOCK_SIZE <group___sys_flash_itf___settings_1ga9afcefbac9388c6381d35ee72e525842>` "FlushBlockSize"
+
+- #define :ref:`SYSFLASH_VALUE_INT_FLUSH_BLOCK_SIZE_DEFAULT <group___sys_flash_itf___settings_1ga5d5db5516c205f78c0c42cdce7f9f423>` INT32_C(0x10000000)
+
+- #define :ref:`MAX_FILENAME <group___sys_flash_itf___settings_1gabe0ec333b60117063f9b9fd9f849cb08>` 32
+
+- #define :ref:`USE_SysFlashInit <group___sys_flash_itf_1gafa3f51e7e02c2b9301b97ee9dff2416c>` :ref:`PFSYSFLASHINIT <group___sys_flash_itf_1gaa33a2e8a87c3d6d24d54076d9b0781b8>` pfSysFlashInit;
+
+- #define :ref:`EXT_SysFlashInit <group___sys_flash_itf_1gab8c28f2d27fdfff2ec1cd3f5c784a860>` extern :ref:`PFSYSFLASHINIT <group___sys_flash_itf_1gaa33a2e8a87c3d6d24d54076d9b0781b8>` pfSysFlashInit;
+
+- #define :ref:`GET_SysFlashInit <group___sys_flash_itf_1ga4e4d3584c4c8813e25798a5bc98a7864>` s_pfCMGetAPI2( "SysFlashInit", (RTS_VOID_FCTPTR *)&pfSysFlashInit, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFlashInit <group___sys_flash_itf_1ga0591b15c93f14668ce6eb038337f4066>` pfSysFlashInit
+
+- #define :ref:`CHK_SysFlashInit <group___sys_flash_itf_1ga91f3ea1ca3f5e3d2d98978b6bbf389cd>` (pfSysFlashInit != NULL)
+
+- #define :ref:`EXP_SysFlashInit <group___sys_flash_itf_1ga778bb2849edc772144ab260d70b027cd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFlashInit", (RTS_UINTPTR) :ref:`SysFlashInit <group___sys_flash_itf_1ga35fbff0ae7e4a8e206b57b89d4277e58>` , 0, 0)
+
+- #define :ref:`USE_SysFlashErase <group___sys_flash_itf_1gafecd76bf6f1e28e2564a744b2e7adbcf>` :ref:`PFSYSFLASHERASE <group___sys_flash_itf_1gadbc9e2b77ea2beb04e4c1de39e6c0586>` pfSysFlashErase;
+
+- #define :ref:`EXT_SysFlashErase <group___sys_flash_itf_1ga4caf2a35ae9373ed8afc5fcb7392ca81>` extern :ref:`PFSYSFLASHERASE <group___sys_flash_itf_1gadbc9e2b77ea2beb04e4c1de39e6c0586>` pfSysFlashErase;
+
+- #define :ref:`GET_SysFlashErase <group___sys_flash_itf_1gadca5d01833236895d3c4298fc0469b41>` s_pfCMGetAPI2( "SysFlashErase", (RTS_VOID_FCTPTR *)&pfSysFlashErase, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFlashErase <group___sys_flash_itf_1gaf9706371913c1e13fd9d89450e49d64e>` pfSysFlashErase
+
+- #define :ref:`CHK_SysFlashErase <group___sys_flash_itf_1gac443160653f7ebfb12340c3e49b28cfb>` (pfSysFlashErase != NULL)
+
+- #define :ref:`EXP_SysFlashErase <group___sys_flash_itf_1ga5202db9e8b5e7c56b4918761763c7580>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFlashErase", (RTS_UINTPTR) :ref:`SysFlashErase <group___sys_flash_itf_1gae5d531621146c84a4da162ea1f07175b>` , 0, 0)
+
+- #define :ref:`USE_SysFlashRead <group___sys_flash_itf_1gafb02304b27fcba205e54de754642ee8f>` :ref:`PFSYSFLASHREAD <group___sys_flash_itf_1ga2aa34af11110dbfd48cdbe89b43dc602>` pfSysFlashRead;
+
+- #define :ref:`EXT_SysFlashRead <group___sys_flash_itf_1ga31b76e5da9b0a26f1cb74d9fa3da97fd>` extern :ref:`PFSYSFLASHREAD <group___sys_flash_itf_1ga2aa34af11110dbfd48cdbe89b43dc602>` pfSysFlashRead;
+
+- #define :ref:`GET_SysFlashRead <group___sys_flash_itf_1ga77138085fad2fbdd83a4b91dadca7899>` s_pfCMGetAPI2( "SysFlashRead", (RTS_VOID_FCTPTR *)&pfSysFlashRead, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFlashRead <group___sys_flash_itf_1gaafdf2dd476f666e3dcb58b54c08e3080>` pfSysFlashRead
+
+- #define :ref:`CHK_SysFlashRead <group___sys_flash_itf_1ga1753a6ed951161df16cbd52e1454901f>` (pfSysFlashRead != NULL)
+
+- #define :ref:`EXP_SysFlashRead <group___sys_flash_itf_1ga3fa6c1f16b2b14975786f56e7c031557>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFlashRead", (RTS_UINTPTR) :ref:`SysFlashRead <group___sys_flash_itf_1ga26f8bf1c7020cf6001a923599e72531c>` , 0, 0)
+
+- #define :ref:`USE_SysFlashWrite <group___sys_flash_itf_1gaa2898762376863e91a37da1173692869>` :ref:`PFSYSFLASHWRITE <group___sys_flash_itf_1gac9cd0543d37e2e2aed2e77bad32fea8d>` pfSysFlashWrite;
+
+- #define :ref:`EXT_SysFlashWrite <group___sys_flash_itf_1ga4d25e522bc912a943fbb895093c630e5>` extern :ref:`PFSYSFLASHWRITE <group___sys_flash_itf_1gac9cd0543d37e2e2aed2e77bad32fea8d>` pfSysFlashWrite;
+
+- #define :ref:`GET_SysFlashWrite <group___sys_flash_itf_1gac868bb58ce62d74bf1c0ac7332041508>` s_pfCMGetAPI2( "SysFlashWrite", (RTS_VOID_FCTPTR *)&pfSysFlashWrite, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFlashWrite <group___sys_flash_itf_1gacc6a6a27e2375ce84f6d8fc0c0870f76>` pfSysFlashWrite
+
+- #define :ref:`CHK_SysFlashWrite <group___sys_flash_itf_1gab0122f32f313a6103bcd5c91f5ad6526>` (pfSysFlashWrite != NULL)
+
+- #define :ref:`EXP_SysFlashWrite <group___sys_flash_itf_1ga35f241bee0a648cf06e951a3a6ad10ec>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFlashWrite", (RTS_UINTPTR) :ref:`SysFlashWrite <group___sys_flash_itf_1ga7f6f843ecfa4d0a430cfea4c5b0c7dc0>` , 0, 0)
+
+- #define :ref:`USE_SysFlashFlush <group___sys_flash_itf_1gae3094aaa8787c40da5d5ea391728881a>` :ref:`PFSYSFLASHFLUSH <group___sys_flash_itf_1ga55b6342bc046972cfcbd147f97ced0ea>` pfSysFlashFlush;
+
+- #define :ref:`EXT_SysFlashFlush <group___sys_flash_itf_1ga44a91fddcd209ff90d65296f21af3e72>` extern :ref:`PFSYSFLASHFLUSH <group___sys_flash_itf_1ga55b6342bc046972cfcbd147f97ced0ea>` pfSysFlashFlush;
+
+- #define :ref:`GET_SysFlashFlush <group___sys_flash_itf_1gad028cacbe736ede1941f8f3cf73eb3eb>` s_pfCMGetAPI2( "SysFlashFlush", (RTS_VOID_FCTPTR *)&pfSysFlashFlush, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFlashFlush <group___sys_flash_itf_1gaa63661cd32650428c96144e1c9aa2eb7>` pfSysFlashFlush
+
+- #define :ref:`CHK_SysFlashFlush <group___sys_flash_itf_1gab5b304a58791c5493b1e160a76b1f04f>` (pfSysFlashFlush != NULL)
+
+- #define :ref:`EXP_SysFlashFlush <group___sys_flash_itf_1gabefbfa12f863df4b8d94c3d1a14cf843>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFlashFlush", (RTS_UINTPTR) :ref:`SysFlashFlush <group___sys_flash_itf_1gaf63efee5ecd81889352162c5d8dc4ca3>` , 0, 0)
+
+- #define :ref:`USE_SysFlashGetPhysicalAddress <group___sys_flash_itf_1gadc8b7fede92fa33b9f47fcb682cfc51f>` :ref:`PFSYSFLASHGETPHYSICALADDRESS <group___sys_flash_itf_1gab2967a7ac24b93a48b78fca0d00e4db1>` pfSysFlashGetPhysicalAddress;
+
+- #define :ref:`EXT_SysFlashGetPhysicalAddress <group___sys_flash_itf_1ga62ea66adc9dd8add7d234599b8e40e76>` extern :ref:`PFSYSFLASHGETPHYSICALADDRESS <group___sys_flash_itf_1gab2967a7ac24b93a48b78fca0d00e4db1>` pfSysFlashGetPhysicalAddress;
+
+- #define :ref:`GET_SysFlashGetPhysicalAddress <group___sys_flash_itf_1ga347976a0a0a0d9928b15e0a2447b5538>` s_pfCMGetAPI2( "SysFlashGetPhysicalAddress", (RTS_VOID_FCTPTR *)&pfSysFlashGetPhysicalAddress, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFlashGetPhysicalAddress <group___sys_flash_itf_1gafb66989c501426da1df3a18bc2828032>` pfSysFlashGetPhysicalAddress
+
+- #define :ref:`CHK_SysFlashGetPhysicalAddress <group___sys_flash_itf_1ga19aafa1a87aec6e0db65b44f21534dce>` (pfSysFlashGetPhysicalAddress != NULL)
+
+- #define :ref:`EXP_SysFlashGetPhysicalAddress <group___sys_flash_itf_1ga72ebde0b99f90ad4c876909f36a0ceab>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFlashGetPhysicalAddress", (RTS_UINTPTR) :ref:`SysFlashGetPhysicalAddress <group___sys_flash_itf_1gada6709acd984a4eed5308a522d085936>` , 0, 0)
+
+- #define :ref:`USE_SysFlashGetSize <group___sys_flash_itf_1gac805962168949b859aa08708a86a7195>` :ref:`PFSYSFLASHGETSIZE <group___sys_flash_itf_1gaf9a067d52e68564c3f5ebb65aee914ce>` pfSysFlashGetSize;
+
+- #define :ref:`EXT_SysFlashGetSize <group___sys_flash_itf_1ga534805cbe49d1afa2c6a907ad978cd8d>` extern :ref:`PFSYSFLASHGETSIZE <group___sys_flash_itf_1gaf9a067d52e68564c3f5ebb65aee914ce>` pfSysFlashGetSize;
+
+- #define :ref:`GET_SysFlashGetSize <group___sys_flash_itf_1ga18e05067c879dca1e72e1a8fa29011eb>` s_pfCMGetAPI2( "SysFlashGetSize", (RTS_VOID_FCTPTR *)&pfSysFlashGetSize, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFlashGetSize <group___sys_flash_itf_1gab3117ab09e50faf01b8f0e47e65e2b16>` pfSysFlashGetSize
+
+- #define :ref:`CHK_SysFlashGetSize <group___sys_flash_itf_1ga9e83f2edcaf59136ac588bdb1fc9f671>` (pfSysFlashGetSize != NULL)
+
+- #define :ref:`EXP_SysFlashGetSize <group___sys_flash_itf_1gaafaf39a04400c2d52bd0ecd80cc23997>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFlashGetSize", (RTS_UINTPTR) :ref:`SysFlashGetSize <group___sys_flash_itf_1ga30d51584eebad5d2d74dfec73c34bc08>` , 0, 0)
+
+- #define :ref:`USE_SysFlashErase_ <group___sys_flash_itf_1ga8bd8cde75d3b2574fda32b085a45300c>` :ref:`PFSYSFLASHERASE_ <group___sys_flash_itf_1ga5ec022e3c472d2e85cd38c76751eb063>` pfSysFlashErase_;
+
+- #define :ref:`EXT_SysFlashErase_ <group___sys_flash_itf_1ga51b956a163af3634675ede47ce068698>` extern :ref:`PFSYSFLASHERASE_ <group___sys_flash_itf_1ga5ec022e3c472d2e85cd38c76751eb063>` pfSysFlashErase_;
+
+- #define :ref:`GET_SysFlashErase_ <group___sys_flash_itf_1ga49addc501f752119cc3c1cc34e621f4f>` s_pfCMGetAPI2( "SysFlashErase_", (RTS_VOID_FCTPTR *)&pfSysFlashErase_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFlashErase_ <group___sys_flash_itf_1ga9f65204fb63aded4426d0c26acdddddb>` pfSysFlashErase_
+
+- #define :ref:`CHK_SysFlashErase_ <group___sys_flash_itf_1gacf30d12d0d9d8f669eaef04fbaa3e4aa>` (pfSysFlashErase_ != NULL)
+
+- #define :ref:`EXP_SysFlashErase_ <group___sys_flash_itf_1gad61dc946e56033cd0f493192f3a1584c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFlashErase_", (RTS_UINTPTR) :ref:`SysFlashErase_ <group___sys_flash_itf_1ga21fd79f255440888df20a0a73f181d87>` , 0, 0)
+
+- #define :ref:`USE_SysFlashRead_ <group___sys_flash_itf_1gab914d968f0fad6ae3b18ee0288ce329e>` :ref:`PFSYSFLASHREAD_ <group___sys_flash_itf_1gaa546b1e2f7bc5b6950bac1a67ebbedca>` pfSysFlashRead_;
+
+- #define :ref:`EXT_SysFlashRead_ <group___sys_flash_itf_1gae4a5b91d2c299e92d820598274fb90b5>` extern :ref:`PFSYSFLASHREAD_ <group___sys_flash_itf_1gaa546b1e2f7bc5b6950bac1a67ebbedca>` pfSysFlashRead_;
+
+- #define :ref:`GET_SysFlashRead_ <group___sys_flash_itf_1ga35d43ab550b498bca16d7cb152439b13>` s_pfCMGetAPI2( "SysFlashRead_", (RTS_VOID_FCTPTR *)&pfSysFlashRead_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFlashRead_ <group___sys_flash_itf_1gaab9957ee452b660efad58c802e0c348a>` pfSysFlashRead_
+
+- #define :ref:`CHK_SysFlashRead_ <group___sys_flash_itf_1gaf6f6944b32dbf5a2381c36b8a461eda1>` (pfSysFlashRead_ != NULL)
+
+- #define :ref:`EXP_SysFlashRead_ <group___sys_flash_itf_1ga7226ccecefd7a6ebd0165c0403c60f80>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFlashRead_", (RTS_UINTPTR) :ref:`SysFlashRead_ <group___sys_flash_itf_1gaf5c5962662e1806888cfb0e624afee97>` , 0, 0)
+
+- #define :ref:`USE_SysFlashWrite_ <group___sys_flash_itf_1ga916a5c415a5ba655591d11ab63008fe3>` :ref:`PFSYSFLASHWRITE_ <group___sys_flash_itf_1ga6f50828fb5907599939e4b652be3ee0a>` pfSysFlashWrite_;
+
+- #define :ref:`EXT_SysFlashWrite_ <group___sys_flash_itf_1ga7fc59a7de2e2d9b6034f406a8febff28>` extern :ref:`PFSYSFLASHWRITE_ <group___sys_flash_itf_1ga6f50828fb5907599939e4b652be3ee0a>` pfSysFlashWrite_;
+
+- #define :ref:`GET_SysFlashWrite_ <group___sys_flash_itf_1ga806463941833558da10b44a6e0c83265>` s_pfCMGetAPI2( "SysFlashWrite_", (RTS_VOID_FCTPTR *)&pfSysFlashWrite_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFlashWrite_ <group___sys_flash_itf_1gab4218d8c6cfcc89c6ba4b09374755cc6>` pfSysFlashWrite_
+
+- #define :ref:`CHK_SysFlashWrite_ <group___sys_flash_itf_1ga608f9178a0c84b6422d4015647ab6855>` (pfSysFlashWrite_ != NULL)
+
+- #define :ref:`EXP_SysFlashWrite_ <group___sys_flash_itf_1ga93142ec758d93b46d5c1f917fb790c19>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFlashWrite_", (RTS_UINTPTR) :ref:`SysFlashWrite_ <group___sys_flash_itf_1ga0e9c7a6ca1e7ac2637fae386cd4b84bd>` , 0, 0)
+
+- #define :ref:`USE_SysFlashFlush_ <group___sys_flash_itf_1ga01936da4840ce4945d39dbc687f19301>` :ref:`PFSYSFLASHFLUSH_ <group___sys_flash_itf_1ga240319c357bb3242d029728904d09e9f>` pfSysFlashFlush_;
+
+- #define :ref:`EXT_SysFlashFlush_ <group___sys_flash_itf_1ga5b5f6f5c39b33be8f3b97bf5bc894a57>` extern :ref:`PFSYSFLASHFLUSH_ <group___sys_flash_itf_1ga240319c357bb3242d029728904d09e9f>` pfSysFlashFlush_;
+
+- #define :ref:`GET_SysFlashFlush_ <group___sys_flash_itf_1gaf980b7ee418762c7d6edad13648450a7>` s_pfCMGetAPI2( "SysFlashFlush_", (RTS_VOID_FCTPTR *)&pfSysFlashFlush_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFlashFlush_ <group___sys_flash_itf_1ga85894f3e61a95167e6ee8dc471ac0bdd>` pfSysFlashFlush_
+
+- #define :ref:`CHK_SysFlashFlush_ <group___sys_flash_itf_1ga95e3986b03e6e81846a0d63cac460708>` (pfSysFlashFlush_ != NULL)
+
+- #define :ref:`EXP_SysFlashFlush_ <group___sys_flash_itf_1gabc3b918ba990c492dcccca4e571ef8e8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFlashFlush_", (RTS_UINTPTR) :ref:`SysFlashFlush_ <group___sys_flash_itf_1gaf4cc69f895ad17f6e6a7b31a4c290396>` , 0, 0)
+
+- #define :ref:`ITF_SysFlash <group___sys_flash_itf_1gad98347a44879f880ca649f97934fed34>`
+
+- #define :ref:`EXTITF_SysFlash <group___sys_flash_itf_1ga5fc3ff2d8067e4738c18823cfb9732a6>`
+
+Typedefs
+--------
+
+- typedef enum :ref:`tagFlashArea <group___sys_flash_itf___settings_1gaab7373f3d02c11e0849445fb480ec0d9>` :ref:`FlashArea <group___sys_flash_itf___settings_1ga592e77b8379be53433be404615060ceb>`
+
+- typedef struct :ref:`FILE_DESCtag <struct_f_i_l_e___d_e_s_ctag>` :ref:`FILE_DESC <group___sys_flash_itf___settings_1ga6b52dd6db6eddfc75b19c1cee34ab84c>`
+
+- typedef RTS_RESULT(* :ref:`PFSYSFLASHINIT <group___sys_flash_itf_1gaa33a2e8a87c3d6d24d54076d9b0781b8>`)(FlashArea fa)
+
+- typedef RTS_RESULT(* :ref:`PFSYSFLASHERASE <group___sys_flash_itf_1gadbc9e2b77ea2beb04e4c1de39e6c0586>`)(FlashArea fa, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+- typedef RTS_RESULT(* :ref:`PFSYSFLASHREAD <group___sys_flash_itf_1ga2aa34af11110dbfd48cdbe89b43dc602>`)(FlashArea fa, char *pcDest, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+- typedef RTS_RESULT(* :ref:`PFSYSFLASHWRITE <group___sys_flash_itf_1gac9cd0543d37e2e2aed2e77bad32fea8d>`)(FlashArea fa, char *pcSource, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+- typedef RTS_RESULT(* :ref:`PFSYSFLASHFLUSH <group___sys_flash_itf_1ga55b6342bc046972cfcbd147f97ced0ea>`)(FlashArea fa, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+- typedef RTS_UINTPTR(* :ref:`PFSYSFLASHGETPHYSICALADDRESS <group___sys_flash_itf_1gab2967a7ac24b93a48b78fca0d00e4db1>`)(FlashArea fa, RTS_RESULT *pResult)
+
+- typedef RTS_SIZE(* :ref:`PFSYSFLASHGETSIZE <group___sys_flash_itf_1gaf9a067d52e68564c3f5ebb65aee914ce>`)(FlashArea fa, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSFLASHERASE_ <group___sys_flash_itf_1ga5ec022e3c472d2e85cd38c76751eb063>`)(FlashArea fa, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+- typedef RTS_RESULT(* :ref:`PFSYSFLASHREAD_ <group___sys_flash_itf_1gaa546b1e2f7bc5b6950bac1a67ebbedca>`)(FlashArea fa, char *pcDest, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+- typedef RTS_RESULT(* :ref:`PFSYSFLASHWRITE_ <group___sys_flash_itf_1ga6f50828fb5907599939e4b652be3ee0a>`)(FlashArea fa, char *pcSource, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+- typedef RTS_RESULT(* :ref:`PFSYSFLASHFLUSH_ <group___sys_flash_itf_1ga240319c357bb3242d029728904d09e9f>`)(FlashArea fa, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+- typedef :ref:`ISysFlash_C <struct_i_sys_flash___c>` :ref:`ISysFlash <group___sys_flash_itf_1ga777a60308a85d8ff0f0c1d4f1ab5d862>`
+
+Enumerations
+------------
+
+- enum :ref:`tagFlashArea <group___sys_flash_itf___settings_1gaab7373f3d02c11e0849445fb480ec0d9>` { :ref:`FA_UNKNOWN <group___sys_flash_itf___settings_1ggaab7373f3d02c11e0849445fb480ec0d9a54058e6c6b3c417ce53eafb0fe7f6806>`, :ref:`FA_FILE <group___sys_flash_itf___settings_1ggaab7373f3d02c11e0849445fb480ec0d9ac315b7d2339e60b9c9e6a689962c4c13>`, :ref:`FA_CODE <group___sys_flash_itf___settings_1ggaab7373f3d02c11e0849445fb480ec0d9af255155e366a11d9b7987dd1a843841e>` }
+
+Functions
+---------
+
+- RTS_RESULT :ref:`SysFlashOSInit <group___sys_flash_itf___settings_1ga22dd3249f6e6c066799ddb133580cb9d>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysFlashOSHookFunction <group___sys_flash_itf___settings_1ga4e04232e16ff1d0709d43bde8460dc7a>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_RESULT :ref:`SysFlashInit <group___sys_flash_itf_1ga35fbff0ae7e4a8e206b57b89d4277e58>` (:ref:`FlashArea <group___sys_flash_itf___settings_1ga592e77b8379be53433be404615060ceb>`  fa)
+
+- RTS_RESULT :ref:`SysFlashErase <group___sys_flash_itf_1gae5d531621146c84a4da162ea1f07175b>` (:ref:`FlashArea <group___sys_flash_itf___settings_1ga592e77b8379be53433be404615060ceb>`  fa, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+- RTS_RESULT :ref:`SysFlashRead <group___sys_flash_itf_1ga26f8bf1c7020cf6001a923599e72531c>` (:ref:`FlashArea <group___sys_flash_itf___settings_1ga592e77b8379be53433be404615060ceb>`  fa, char * pcDest, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+- RTS_RESULT :ref:`SysFlashWrite <group___sys_flash_itf_1ga7f6f843ecfa4d0a430cfea4c5b0c7dc0>` (:ref:`FlashArea <group___sys_flash_itf___settings_1ga592e77b8379be53433be404615060ceb>`  fa, char * pcSource, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+- RTS_RESULT :ref:`SysFlashFlush <group___sys_flash_itf_1gaf63efee5ecd81889352162c5d8dc4ca3>` (:ref:`FlashArea <group___sys_flash_itf___settings_1ga592e77b8379be53433be404615060ceb>`  fa, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+- RTS_UINTPTR :ref:`SysFlashGetPhysicalAddress <group___sys_flash_itf_1gada6709acd984a4eed5308a522d085936>` (:ref:`FlashArea <group___sys_flash_itf___settings_1ga592e77b8379be53433be404615060ceb>`  fa, RTS_RESULT * pResult)
+
+- RTS_SIZE :ref:`SysFlashGetSize <group___sys_flash_itf_1ga30d51584eebad5d2d74dfec73c34bc08>` (:ref:`FlashArea <group___sys_flash_itf___settings_1ga592e77b8379be53433be404615060ceb>`  fa, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysFlashErase_ <group___sys_flash_itf_1ga21fd79f255440888df20a0a73f181d87>` (:ref:`FlashArea <group___sys_flash_itf___settings_1ga592e77b8379be53433be404615060ceb>`  fa, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+- RTS_RESULT :ref:`SysFlashRead_ <group___sys_flash_itf_1gaf5c5962662e1806888cfb0e624afee97>` (:ref:`FlashArea <group___sys_flash_itf___settings_1ga592e77b8379be53433be404615060ceb>`  fa, char * pcDest, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+- RTS_RESULT :ref:`SysFlashWrite_ <group___sys_flash_itf_1ga0e9c7a6ca1e7ac2637fae386cd4b84bd>` (:ref:`FlashArea <group___sys_flash_itf___settings_1ga592e77b8379be53433be404615060ceb>`  fa, char * pcSource, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+- RTS_RESULT :ref:`SysFlashFlush_ <group___sys_flash_itf_1gaf4cc69f895ad17f6e6a7b31a4c290396>` (:ref:`FlashArea <group___sys_flash_itf___settings_1ga592e77b8379be53433be404615060ceb>`  fa, RTS_SIZE ulSize, RTS_SIZE ulOffset)
+
+Detailed Description
+--------------------
+
+Definition in file SysFlashItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

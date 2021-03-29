@@ -1,11 +1,14 @@
 /**
- * <interfacename>Redundancy</interfacename>
- * <description></description>
+ * <interfacename>CmpRedundancy</interfacename>
+ * <description>
+ *	Interface of the redundancy component.
+ * </description>
  *
  * <copyright></copyright>
  */
 
 SET_INTERFACE_NAME(`CmpRedundancy')
+SET_PLACEHOLDER_NAME(`Redundancy Implementation')
 
 #include "CmpItf.h"
 
@@ -54,6 +57,15 @@ SET_INTERFACE_NAME(`CmpRedundancy')
 #define TAG_RDCY_SUCCESS					0x2A
 #define TAG_RDCY_ERROR						0x2B
 #define TAG_RDCY_STATE						0x2C
+#define TAG_SETT_SYNCWAITTIME				0x2D
+
+/**
+ * <category>Static defines</category>
+ * <description> Size of list for file names to be transmitted to second controller. </description>
+ */
+#ifndef MAX_REDU_SYNC_FILES
+	#define MAX_REDU_SYNC_FILES 100
+#endif
 
 /**
  * <description>Redundancy settings names and default values</description>
@@ -88,6 +100,7 @@ SET_INTERFACE_NAME(`CmpRedundancy')
 #define RDCYVALUE_INT_EVTTRGSTARTENDCALL_DEFAULT			TRUE
 
 #define RDCYKEY_INT_PROFIBUS								"Profibus"
+#define RDCYKEY_INT_PROFIBUSCIF50							"ProfibusCIF50"
 #define RDCYVALUE_INT_PROFIBUS_DEFAULT						FALSE
 
 #define RDCYKEY_INT_ETHERCAT								"Ethercat"
@@ -117,11 +130,43 @@ SET_INTERFACE_NAME(`CmpRedundancy')
 #define RDCYKEY_INT_INPUTAREACRCCHECK						"InputAreaCrcCheck"
 #define RDCYVALUE_INT_INPUTAREACRCCHECK_DEFAULT				FALSE
 
+#define RDCYKEY_INT_AREASYNCTLGCRCCHECK						"AreaSyncTelegramCrcCheck"
+#define RDCYVALUE_INT_AREASYNCTLGCRCCHECK_DEFAULT				FALSE
+
 #define RDCYKEY_INT_CMPSRV_SERVICEWAITTIME					"Service.WaitTime"
 #define RDCYVALUE_INT_CMPSRV_SERVICEWAITTIME_DEFAULT		1000
 
 #define RDCYKEY_INT_PLCIDENT								"PlcIdent"
 #define RDCYVALUE_INT_PLCIDENT_DEFAULT						0
+
+#define RDCYKEY_INT_SYNCBEFORETASKCYCLE						"SyncBeforeTaskCycle"
+#define RDCYVALUE_INT_SYNCBEFORETASKCYCLE_DEFAULT			FALSE
+
+/**
+ * <category>Settings</category>
+ * <type>Int</type>
+ * <description> Set to 1 to enable data sync in every cycle.
+ *  (data sync is copying the values of global variables registered in redundancy configuration)
+ *  By default, data sync is done at startup of plc2 only. During operation, data sync is not performed.
+ *  Please note, dependant on the size of data and speed of communication, task cycle time can be increased. 
+ *  .
+ * </description>
+ */
+#define RDCYKEY_INT_DATASYNCALWAYS							"DataSyncAlways"
+#define RDCYVALUE_INT_DATASYNCALWAYS_DEFAULT				FALSE
+
+/**
+ * <category>Settings</category>
+ * <type>Int</type>
+ * <description> Set to 1 to enable check of boot application GUID. 
+ *  In case this setting is activated, boot application GUIDs of plc1 and plc are compared at startup of plc2.
+ *  If they are equal, projects are considered as equal, so application files are not transmitted to plc2. This reduces the time needed for synchronization.
+ *  Please not other files are not checked, so they are not transmitted even they are different.
+ *  In case this setting is not activated, all application and visu files are always transmitted to plc2 at startup.
+ * </description>
+ */
+#define RDCYKEY_INT_CHECKBOOTAPPGUID						"CheckBootApplicationGuid"
+#define RDCYVALUE_INT_CHECKBOOTAPPGUID_DEFAULT				FALSE
 
 #define EVTPARAMID_CmpRedundancy_vfInit		0x0001
 #define EVTVERSION_CmpRedundancy_vfInit		0x0001
@@ -196,6 +241,20 @@ typedef struct tagRedundancyState
 } RedundancyState;
 
 /**
+ * <description>SYNC_INFO</description>
+ */
+typedef struct tagSYNC_INFO
+{
+	RTS_IEC_UDINT ulCycle;		
+	RTS_IEC_UDINT ulWaitTimeActive;		/* in ms. Valid in active and standby state. */
+	RTS_IEC_UDINT ulWaitTimePassive;		/* In ms. Valid in standby state. Always 0 in active plc. */
+	RTS_IEC_UDINT ulWaitTimeMax;		/* In ms. Maximum wait time of active PLC. */
+	RTS_IEC_UDINT ulWaitTime;		/* In ms. Value configured in runtime CFG file. Other controller will be considered as failed if exceeded */
+	RTS_IEC_UDINT ulTaskInterval;		/* In ms. Modified if WaitTimeActive or WaitTimePassive to big, to compensate clock drift. */
+	RTS_IEC_TIME tSinceLastSync;		
+} SYNC_INFO;
+
+/**
  * <description>Enum: PLC_IDENT</description>
  */
 #define PLC_IDENT_PLC_ID_NONE    RTS_IEC_INT_C(0x0)	/* Not specified */
@@ -225,7 +284,7 @@ typedef enum
 	RCOM_SyncSend = 1,		/* Sync messages (UDP) */
 	RCOM_DataClient = 2,	/* Data messages (TCP) */
 	RCOM_DataServer = 3,	/* Data messages (TCP) */
-	RCOM_DataWork = 4,		/* Data messages (TCP), special mode to re-init server */
+	RCOM_DataWork = 4,		/* Data messages (TCP), special mode to re-initialize server */
 } REDUNDANCY_COMM_MODE;
 
 /**
@@ -305,6 +364,17 @@ typedef struct taggetredundancystate_struct
 DEF_API(`void',`CDECL',`getredundancystate',`(getredundancystate_struct *p)',1,0x0,0x0)
 
 /**
+ * <description>getsyncinformation</description>
+ */
+typedef struct taggetsyncinformation_struct
+{
+	SYNC_INFO *pSyncInfo;				/* VAR_INPUT */	
+	RTS_IEC_RESULT GetSyncInformation;	/* VAR_OUTPUT */	
+} getsyncinformation_struct;
+
+DEF_API(`void',`CDECL',`getsyncinformation',`(getsyncinformation_struct *p)',1,0x7312487E,0x03050F00)
+
+/**
  * <description>switchtosimulation</description>
  */
 typedef struct tagswitchtosimulation_struct
@@ -319,7 +389,7 @@ DEF_API(`void',`CDECL',`switchtosimulation',`(switchtosimulation_struct *p)',1,0
  */
 typedef struct tagswitchtostandalone_struct
 {
-	RTS_IEC_BOOL SwitchToStandalone;	/* VAR_OUTPUT */	
+	RTS_IEC_BOOL SwitchToStandalone;	/* VAR_OUTPUT */
 } switchtostandalone_struct;
 
 DEF_API(`void',`CDECL',`switchtostandalone',`(switchtostandalone_struct *p)',1,0x0,0x0)
@@ -365,6 +435,28 @@ typedef struct taggetplcident_struct
 DEF_API(`void',`CDECL',`getplcident',`(getplcident_struct *p)',1,0xE8999A90,0x03050E00)
 
 /**
+ * Synchronze global data once. This includes the areas registered in redundancy.
+ *Can be called from active or standby controller. 
+ */
+typedef struct tagredundancysynchronizedata_struct
+{
+	RTS_IEC_BOOL RedundancySynchronizeData;	/* VAR_OUTPUT */	
+} redundancysynchronizedata_struct;
+
+DEF_API(`void',`CDECL',`redundancysynchronizedata',`(redundancysynchronizedata_struct *p)',1,0xBF757A6F,0x03051000)
+
+/**
+ * In standalone state: Returns TRUE if other plc can be connected and answers to redundancy messages. There is a chance that a call to Syncrnonize() will succeed.
+ */
+typedef struct taggetconnectionstate_struct
+{
+	RTS_IEC_BOOL GetConnectionState;	/* VAR_OUTPUT */	
+} getconnectionstate_struct;
+
+DEF_API(`void',`CDECL',`getconnectionstate',`(getconnectionstate_struct *p)',1,0x5802A20A,0x03051000)
+
+
+/**
  * <description>This function registers the memory area as redundant area</description>
  * <param name="pbyArea" type="IN">Start address</param>
  * <param name="ulSize" type="IN">Size</param>
@@ -407,37 +499,35 @@ DEF_ITF_API(`RTS_IEC_BOOL',`CDECL',`RedundancyCycleStart',`(void)')
 DEF_ITF_API(`RTS_IEC_BOOL',`CDECL',`RedundancyGetState',`(RedundancyState *pState)')
 
 /**
- * <description>This function switches a plc in redundancy state RS_CYCLE_STANDBY to RS_SIMULATION</description>
+ * <description>This function switches a PLC in redundancy state RS_CYCLE_STANDBY to RS_SIMULATION</description>
  * <result>TRUE in case of success, otherwise FALSE</result>
  */
 DEF_ITF_API(`RTS_IEC_BOOL',`CDECL',`RedundancySwitchToSimulation',`(void)')
 
 /**
- * <description>This function switches a plc in redundancy state RS_SIMULATION_START to RS_CYLCE_STANDALONE</description>
+ * <description>This function switches a PLC in redundancy state RS_SIMULATION_START to RS_CYLCE_STANDALONE</description>
  * <result>TRUE in case of success, otherwise FALSE</result>
  */
 DEF_ITF_API(`RTS_IEC_BOOL',`CDECL',`RedundancySwitchToStandalone',`(void)')
 
 /**
- * <description>This function switches a plc in redundancy state RS_CYCLE_ACTIVE to RS_CYCLE_STANDBY</description>
+ * <description>This function switches a PLC in redundancy state RS_CYCLE_ACTIVE to RS_CYCLE_STANDBY</description>
  * <result>TRUE in case of success, otherwise FALSE</result>
  */
 DEF_ITF_API(`RTS_IEC_BOOL',`CDECL',`RedundancySwitchToStandby',`(void)')
 
 /**
- * <description>This function switches a plc in redundancy state RS_SIMULATION to RS_CYCLE_ACTIVE (if the second redundancy plc is running) or RS_CYCLE_STANDALONE (if the second redundancy plc is not running)</description>
+ * <description>This function switches a PLC in redundancy state RS_SIMULATION to RS_CYCLE_ACTIVE (if the second redundancy PLC is running) or RS_CYCLE_STANDALONE (if the second redundancy PLC is not running)</description>
  * <result>TRUE in case of success, otherwise FALSE</result>
  */
 DEF_ITF_API(`RTS_IEC_BOOL',`CDECL',`RedundancySwitchToActive',`(void)')
 
 /**
- * <description>This function synchronizes a plc in redundancy state RS_START, RS_BOOTUP_ERROR, RS_SYNCHRO_ERROR, RS_CYCLE_ERROR, RS_CYCLE_STANDALONE, RS_SIMULATION or RS_SIMULATION_START</description>
+ * <description>This function synchronizes a PLC in redundancy state RS_START, RS_BOOTUP_ERROR, RS_SYNCHRO_ERROR, RS_CYCLE_ERROR, RS_CYCLE_STANDALONE, RS_SIMULATION or RS_SIMULATION_START</description>
  * <result>TRUE in case of success, otherwise FALSE</result>
  */
 DEF_ITF_API(`RTS_IEC_BOOL',`CDECL',`RedundancySynchronize',`(void)')
 
-
 #ifdef __cplusplus
 }
 #endif
-

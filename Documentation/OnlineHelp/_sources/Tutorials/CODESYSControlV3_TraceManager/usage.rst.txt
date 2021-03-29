@@ -1,0 +1,117 @@
+.. _usage:
+.. index:: trace packet configuration
+
+Usage
+-----
+
+General
+~~~~~~~
+
+To define a trace, first you have to create a trace packet:
+
+.. code-block:: csharp
+
+  RTS_HANDLE TraceMgrPacketCreate(TracePacketConfiguration *pConfiguration, RTS_RESULT *pResult);
+
+The trace packet needs some configuration entries:
+  
+.. code-block:: csharp
+
+  /**
+  * Configuration of a trace packet
+  */
+
+  typedef struct tagTracePacketConfiguration
+
+  {
+   RTS_IEC_STRING *pszName;               /* The name of the trace packet */
+   RTS_IEC_STRING *pszApplicationName;    /* The name of the application (optional) */
+   RTS_IEC_STRING *pszIecTaskName;        /* IEC-task name in which the samples are recorded (optional) */
+   RTS_IEC_STRING *pszComment;            /* A comment for the packet (optional) */
+   struct tagTraceTrigger *pttTrigger;    /* Pointer to a trigger description (optional) */
+   struct tagTraceVariable *ptvCondition; /* A pointer to the description of a boolean variable. If given, samples are recorded only if the variable has value true. (optional, must be present if TRACE_PACKET_FLAGS_CONDITION is set in ulFlags) */
+   RTS_IEC_UDINT ulEveryNCycles;          /* Record samples every ulEveryNCycles cycles.  Must be > 0. (Default: 1) */
+   RTS_IEC_UDINT ulBufferEntries;         /* The number of samples that the trace buffer can hold. */
+   RTS_IEC_UDINT ulFlags;                 /* Trace packet flags.  See TRACE_PACKET_FLAGS. */   	
+                                          /* The interface, starting from here is only used in C and not exported to IEC.*/
+   RTS_GUID ApplicationDataGuid;
+  } TracePacketConfiguration;
+
+.. note:: If you specify an ApplicationName and an IecTaskName, the trace records (values) are recorded at the end of this IEC-task cycle! If nothing is specified here, the trigger of recording the values must be done by the owner of the Trace Packet via the functions ``TraceMgrRecordUpdate23()``!
+
+After the creation of a Trace Packet you can add single trace records
+(trace variables) with the following function:
+
+.. code-block:: csharp
+
+  RTS_HANDLE TraceMgrRecordAdd(RTS_HANDLE hPacket, 
+  TraceRecordConfiguration *pConfiguration,RTS_RESULT *pResult);
+	
+
+A record must be configured too:
+
+.. code-block:: csharp
+
+  /**
+  * Trace record configuration
+  *
+  * The colors (ulGraphColor, ulMinWarningColor, ulMaxWarningColor)
+  * and are encoded in UDINTs in the ARGB format: the most significant
+  * byte is the alpha value, the next byte the red value, followed by 
+  * green and blue. Each color component takes a value between 0 and FF.
+  * So 0xFF000000 is white, 0xFFFFFFFF is black, 0xFFFF0000 is red
+  * 0xFF00FF00 is green, and 0xFF0000FF is blue
+  */
+		
+  typedef struct tagTraceRecordConfiguration
+  {	
+   RTS_IEC_STRING *pszVariable;      /* Name of the variable */
+   TraceVariableAddress tvaAddress;  /* Address definition of the variable */
+   RTS_IEC_UDINT tcClass;            /* Type class of the variable. See enum IBase.TypeClass for the possible values. */
+   RTS_IEC_UDINT ulSize;             /* Size in bytes of a single sample */
+   RTS_IEC_UDINT ulGraphColor;       /* Color in which the trace curve for the variable should be displayed */
+   RTS_IEC_UDINT ulGraphType;        /* Graph type (1: line (with points), 2: cross, 4: step (with points), 5: point, 8: line (without points), 9: step (without points), 10: line (with crosses), 11: steps (with crosses)) */
+   RTS_IEC_UDINT ulMinWarningColor;  /* Color to use if a sample is <= fCriticalLowerLimit */
+   RTS_IEC_UDINT ulMaxWarningColor;  /* Color to use if a sample is >= fCriticalUpperLimit */
+   RTS_IEC_REAL fCriticalLowerLimit; /* The lower limit */
+   RTS_IEC_REAL fCriticalUpperLimit; /* The upper limit */
+   RTS_IEC_BOOL bActivateMinWarning; /* If set, the trace  will be displayed in the color ulMinWarningColor as soon as a sample is <= fCriticalLowerLimit */
+   RTS_IEC_BOOL bActivateMaxWarning; /* If set, the trace  will be displayed in the color ulMaxWarningColor as soon as a sample is >= fCriticalUpperLimit */
+   RTS_IEC_BYTE byYAxis;             /* Not used */
+  } TraceRecordConfiguration;
+
+If all records are added, you have to complete the trace packet with the
+following function:
+
+.. code-block:: csharp
+
+  RTS_RESULT TraceMgrPacketComplete(RTS_HANDLE hPacket);
+
+After that the trace configuration is completed.
+
+Then the trace must be explicitly started to start recording. For this use the following function:
+
+.. code-block:: csharp
+
+  RTS_RESULT TraceMgrPacketStart(RTS_HANDLE hPacket);
+
+The recording of the values must be done cyclically via calling the
+``TraceMgrRecordUpdate23()`` function. This can be triggered out of a
+system task. Alternatively - if an IEC task is specified in the trace packet
+configuration - you get an event (EVT\_TRACEMGR\_UPDATE\_RECORD from
+CMPID\_CmpTraceMgr) at the end of the IEC task cycle.
+
+IEC Component
+~~~~~~~~~~~~~
+
+To use the Trace Manager out of an IEC application, you can use the
+``CmpTraceMgr.library``. An example for the usage of the Trace Manager can
+be found at the `CODESYS Store <https://store.codesys.com>`__.
+
+Runtime System Component
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+To use the Trace Manager out of a runtime system component, you can use
+the ``CmpTraceMgrItf``. The reference of this API can be found in the
+reference documentation of the runtime system. An example can be found in the runtime delivery
+starter package under ``$/Templates/CmpTraceMgrOEM``.

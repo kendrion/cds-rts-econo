@@ -1,0 +1,155 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_task_itf___settings:
+
+========
+Settings
+========
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Macros
+------
+
+- #define :ref:`SYSTASKKEY_INT_WIN32_DEBUG_DISABLE_EXCEPTIONHANDLER <group___sys_task_itf___settings_1ga54df903725c826995193effef2153a7a>` "Win32.DebuggingOnlyDisableExceptionHandler"
+
+- #define :ref:`SYSTASKKEY_INT_WIN32_DEBUG_DISABLE_EXCEPTIONHANDLER_DEFAULT <group___sys_task_itf___settings_1ga161d48a28463073155e4e89cf9ed5950>` 0
+
+- #define :ref:`SYSTASKKEY_INT_TASK_STACKSIZE <group___sys_task_itf___settings_1gaf3f4e9b276bf8dc6a13d0027f505911c>` "StackSize"
+
+- #define :ref:`SYSTASKVALUE_INT_TASK_STACKSIZE_DEFAULT <group___sys_task_itf___settings_1gac04ba49cdc3616978984f3c712eae00c>` 0
+
+- #define :ref:`SYSTASKKEY_INT_QNX_CLOCKPERIOD <group___sys_task_itf___settings_1ga9de461b46c688bb97a9099cc7ca2c028>` "QNX.ClockPeriod"
+
+- #define :ref:`SYSTASKVALUE_INT_QNX_CLOCKPERIOD_DEFAULT <group___sys_task_itf___settings_1gab881e98c3a30804d8f671b3103bb5160>` 0
+
+- #define :ref:`SYSTASKKEY_INT_QNX_DISABLETICKBASEDSCHEDULER <group___sys_task_itf___settings_1ga4b87d91db874b68d843038c142c39d39>` "QNX.DisableTickBasedScheduler"
+
+- #define :ref:`SYSTASKVALUE_INT_QNX_DISABLETICKBASEDSCHEDULER_DEFAULT <group___sys_task_itf___settings_1ga8398031777442a03f6a826a113246c79>` 0
+
+- #define :ref:`SYSTASKKEY_INT_LINUX_SKIPLOSTCYCLES <group___sys_task_itf___settings_1ga5b95647504c4dcd60755b3a6e189aecb>` "Linux.SkipLostCycles"
+
+- #define :ref:`SYSTASKVALUE_INT_LINUX_SKIPLOSTCYCLES_DEFAULT <group___sys_task_itf___settings_1gae0c1c990ca53529429d01564f48156fc>` 0
+
+- #define :ref:`PFTASKEXCEPTIONHANDLER <group___sys_task_itf___settings_1ga292ffd009d5a17d2499c8a6e2b14669b>` :ref:`PFSYS_TASK_EXCEPTIONHANDLER <group___sys_task_itf___settings_1gaa84d1f5aa1af833b600b448c3f41031e>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFSYS_TASK_EXCEPTIONHANDLER <group___sys_task_itf___settings_1gaa84d1f5aa1af833b600b448c3f41031e>`)(RTS_HANDLE hTask, RTS_UI32 ulException, RegContext Context)
+
+Functions
+---------
+
+- RTS_RESULT :ref:`TaskExceptionHandler <group___sys_task_itf___settings_1ga93074b9493638418e35baf05a4fcf2f2>` (RTS_HANDLE hTask, RTS_UI32 ulException, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>`  Context)
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_task_itf___settings_1ga54df903725c826995193effef2153a7a:
+
+#define SYSTASKKEY_INT_WIN32_DEBUG_DISABLE_EXCEPTIONHANDLER "Win32.DebuggingOnlyDisableExceptionHandler"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<type>Int</type>
+
+ATTENTION!!! Only intended for very special debug purposes! Use this setting only, if this was requested by the 3S team! Use this setting only in non-productive test environments! When this is set, all task exceptions are untreated and the first exception will directly crash the runtime system!!!
+
+.. _group___sys_task_itf___settings_1ga161d48a28463073155e4e89cf9ed5950:
+
+#define SYSTASKKEY_INT_WIN32_DEBUG_DISABLE_EXCEPTIONHANDLER_DEFAULT 0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_task_itf___settings_1gaf3f4e9b276bf8dc6a13d0027f505911c:
+
+#define SYSTASKKEY_INT_TASK_STACKSIZE "StackSize"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<type>Int</type>
+
+Setting to specify the OS specify task stack-size. For smaller embedded systems with tasks, this setting is necessary. NOTE: Actually this setting is only supported by Linux/QNX platforms!
+
+.. _group___sys_task_itf___settings_1gac04ba49cdc3616978984f3c712eae00c:
+
+#define SYSTASKVALUE_INT_TASK_STACKSIZE_DEFAULT 0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_task_itf___settings_1ga9de461b46c688bb97a9099cc7ca2c028:
+
+#define SYSTASKKEY_INT_QNX_CLOCKPERIOD "QNX.ClockPeriod"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<type>Int</type>
+
+By default CODESYS doesn't change the clock period of the QNX system tick. To reduce the jitter of the tasks, or to support "distributed clocks", one might want to have a higher resolution of the timer. With this setting you can adjust the clock period at CODESYS startup. The period is defined in nanoseconds and is passed as is to the QNX neutrino function ClockPeriod().
+
+.. _group___sys_task_itf___settings_1gab881e98c3a30804d8f671b3103bb5160:
+
+#define SYSTASKVALUE_INT_QNX_CLOCKPERIOD_DEFAULT 0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_task_itf___settings_1ga4b87d91db874b68d843038c142c39d39:
+
+#define SYSTASKKEY_INT_QNX_DISABLETICKBASEDSCHEDULER "QNX.DisableTickBasedScheduler"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<type>Int</type>
+
+By default CODESYS aligns tasks to the QNX system tick to reduce task jitter and avoid lost IEC task cycles. These would occur as the QNX system tick may not be set to exact values, depending on the underlying hardware. When using "distributed clocks", this behavior is undesired as it leads to high deviations in the resulting DC sync window. With this setting you can modify this behavior so that the scheduler will not make any adjustments to a task's wakeup time and leave the exact tick up to the system. Please note that you should additionally decrease the QNX system tick for "distributed clocks". 0: Default behavior, tasks are aligned to QNX system tick; recommended to minimize task jitter with low system tick rates 1: Modified behavior, tasks are not aligned to QNX system tick; recommended when using "distributed clocks"
+
+.. _group___sys_task_itf___settings_1ga8398031777442a03f6a826a113246c79:
+
+#define SYSTASKVALUE_INT_QNX_DISABLETICKBASEDSCHEDULER_DEFAULT 0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_task_itf___settings_1ga5b95647504c4dcd60755b3a6e189aecb:
+
+#define SYSTASKKEY_INT_LINUX_SKIPLOSTCYCLES "Linux.SkipLostCycles"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<type>Int</type>
+
+1: If the computed starting time of the next task cycle is in the past this cycle will be skipped. The task will wait until the next starting time in the future. 0(DEFAULT): If the computed starting time of the next task cycle is in the past the task will be scheduled immediately. NOTE: Actually this setting is only supported by Linux/QNX platforms!
+
+.. _group___sys_task_itf___settings_1gae0c1c990ca53529429d01564f48156fc:
+
+#define SYSTASKVALUE_INT_LINUX_SKIPLOSTCYCLES_DEFAULT 0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_task_itf___settings_1ga292ffd009d5a17d2499c8a6e2b14669b:
+
+#define PFTASKEXCEPTIONHANDLER :ref:`PFSYS_TASK_EXCEPTIONHANDLER <group___sys_task_itf___settings_1gaa84d1f5aa1af833b600b448c3f41031e>`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___sys_task_itf___settings_1gaa84d1f5aa1af833b600b448c3f41031e:
+
+typedef RTS_RESULT( * PFSYS_TASK_EXCEPTIONHANDLER) (RTS_HANDLE hTask, RTS_UI32 ulException, RegContext Context)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___sys_task_itf___settings_1ga93074b9493638418e35baf05a4fcf2f2:
+
+RTS_RESULT TaskExceptionHandler (RTS_HANDLE hTask, RTS_UI32 ulException, RegContext Context)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

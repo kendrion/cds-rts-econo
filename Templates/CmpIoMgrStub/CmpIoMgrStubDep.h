@@ -11,7 +11,7 @@
  *  implemented IOMgr is necessary.
  *  </description>
  *  <copyright>
- *  Copyright (c) 2017-2019 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ *  Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
 #ifndef _CMPIOMGRSTUBDEP_H_
@@ -26,9 +26,9 @@
 
 
 
-#define CMP_VERSION         UINT32_C(0x03050E1E)
-#define CMP_VERSION_STRING "3.5.14.30"
-#define CMP_VERSION_RC      3,5,14,30
+#define CMP_VERSION         UINT32_C(0x03051000)
+#define CMP_VERSION_STRING "3.5.16.0"
+#define CMP_VERSION_RC      3,5,16,0
 #define CMP_VENDORID       RTS_VENDORID_3S
 
 #ifndef WIN32_RESOURCES
@@ -45,6 +45,10 @@
 
 
 
+
+/**
+ * \file CmpIoMgrItf.h
+ */
 #include "CmpIoMgrItf.h"
 
 
@@ -122,64 +126,66 @@
 
 #ifndef CMPIOMGRSTUB_DISABLE_EXTREF
 #define EXPORT_EXTREF_STMT \
-                                                                                                      { (RTS_VOID_FCTPTR)iomgrregisterinstance, "iomgrregisterinstance", 0, 0 },\
+                                                                                                          { (RTS_VOID_FCTPTR)iomgrregisterinstance, "iomgrregisterinstance", 0, 0 },\
               { (RTS_VOID_FCTPTR)iomgrconfiggetiodriver, "iomgrconfiggetiodriver", 0, 0x3010200 },\
-          { (RTS_VOID_FCTPTR)iomgrwriteparameter, "iomgrwriteparameter", RTSITF_GET_SIGNATURE(0, 0xAD04F7E8), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrwriteoutputs, "iomgrwriteoutputs", RTSITF_GET_SIGNATURE(0, 0xDA3433B3), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrwatchdogtrigger, "iomgrwatchdogtrigger", RTSITF_GET_SIGNATURE(0, 0x986DFD93), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrupdatemapping2, "iomgrupdatemapping2", RTSITF_GET_SIGNATURE(0, 0x775F7CAD), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrupdatemapping, "iomgrupdatemapping", RTSITF_GET_SIGNATURE(0, 0x0A15126C), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrupdateconfiguration2, "iomgrupdateconfiguration2", RTSITF_GET_SIGNATURE(0, 0x44CD4528), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrupdateconfiguration, "iomgrupdateconfiguration", RTSITF_GET_SIGNATURE(0, 0xB1381773), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrunregisterinstance, "iomgrunregisterinstance", RTSITF_GET_SIGNATURE(0, 0x830B7CC7), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrunregisterconfigapplication, "iomgrunregisterconfigapplication", RTSITF_GET_SIGNATURE(0, 0xECB18F2E), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrstartbuscycle2, "iomgrstartbuscycle2", RTSITF_GET_SIGNATURE(0, 0x8AB99A18), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrstartbuscycle, "iomgrstartbuscycle", RTSITF_GET_SIGNATURE(0, 0x09EEEC27), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrsetdriverproperty, "iomgrsetdriverproperty", RTSITF_GET_SIGNATURE(0, 0x936FC5C4), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrsetdriverproperties, "iomgrsetdriverproperties", RTSITF_GET_SIGNATURE(0, 0x607A5D95), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrscanmodules, "iomgrscanmodules", RTSITF_GET_SIGNATURE(0, 0xF31DBCAE), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrregisterinstance2, "iomgrregisterinstance2", RTSITF_GET_SIGNATURE(0, 0x4219F9A3), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrregisterconfigapplication, "iomgrregisterconfigapplication", RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrreconfigure, "iomgrreconfigure", RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrreadparameter, "iomgrreadparameter", RTSITF_GET_SIGNATURE(0, 0xD37BF5DF), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrreadinputs, "iomgrreadinputs", RTSITF_GET_SIGNATURE(0, 0x3BCE0A42), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgridentify, "iomgridentify", RTSITF_GET_SIGNATURE(0, 0xC48724F5), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrgetnextdriverinstance, "iomgrgetnextdriverinstance", RTSITF_GET_SIGNATURE(0, 0x0B47742F), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrgetmodulediagnosis, "iomgrgetmodulediagnosis", RTSITF_GET_SIGNATURE(0, 0x5DA78ABA), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrgetfirstdriverinstance, "iomgrgetfirstdriverinstance", RTSITF_GET_SIGNATURE(0, 0x7823BC76), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrgetdriverproperties, "iomgrgetdriverproperties", RTSITF_GET_SIGNATURE(0, 0xEC0D662D), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrgetconfigapplication, "iomgrgetconfigapplication", RTSITF_GET_SIGNATURE(0, 0xF82C99F4), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrgetbuscycletype, "iomgrgetbuscycletype", RTSITF_GET_SIGNATURE(0, 0x8334DD20), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrcopyoutputle, "iomgrcopyoutputle", RTSITF_GET_SIGNATURE(0, 0x5FC818BC), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrcopyoutputbe, "iomgrcopyoutputbe", RTSITF_GET_SIGNATURE(0, 0xCDB7B2BE), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrcopyinputle, "iomgrcopyinputle", RTSITF_GET_SIGNATURE(0, 0xD4FB4CB6), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrcopyinputbe, "iomgrcopyinputbe", RTSITF_GET_SIGNATURE(0, 0x072C6C71), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrconfigsetdiagnosis, "iomgrconfigsetdiagnosis", RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrconfigresetdiagnosis, "iomgrconfigresetdiagnosis", RTSITF_GET_SIGNATURE(0, 0x6B60C0F6), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrconfiggetparametervalueword, "iomgrconfiggetparametervalueword", RTSITF_GET_SIGNATURE(0, 0x522D5073), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrconfiggetparametervaluepointer, "iomgrconfiggetparametervaluepointer", RTSITF_GET_SIGNATURE(0, 0x633BC6E3), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrconfiggetparametervaluedword, "iomgrconfiggetparametervaluedword", RTSITF_GET_SIGNATURE(0, 0x6F885F72), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrconfiggetparametervaluebyte, "iomgrconfiggetparametervaluebyte", RTSITF_GET_SIGNATURE(0, 0xDE4EF488), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrconfiggetparameter, "iomgrconfiggetparameter", RTSITF_GET_SIGNATURE(0, 0xC7A23B05), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrconfiggetnextconnector, "iomgrconfiggetnextconnector", RTSITF_GET_SIGNATURE(0, 0xA5BCF071), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrconfiggetnextchild, "iomgrconfiggetnextchild", RTSITF_GET_SIGNATURE(0, 0x2F87EBF8), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrconfiggetfirstconnector, "iomgrconfiggetfirstconnector", RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrconfiggetfirstchild, "iomgrconfiggetfirstchild", RTSITF_GET_SIGNATURE(0, 0xB89B6273), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrconfiggetdriver, "iomgrconfiggetdriver", RTSITF_GET_SIGNATURE(0, 0xA6C591A7), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrconfiggetconnectorlist, "iomgrconfiggetconnectorlist", RTSITF_GET_SIGNATURE(0, 0x6E3F45DC), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrconfiggetconnectorbydriver, "iomgrconfiggetconnectorbydriver", RTSITF_GET_SIGNATURE(0, 0x076B9D1E), 0x03050800 },\
-          { (RTS_VOID_FCTPTR)iomgrconfiggetconnector, "iomgrconfiggetconnector", RTSITF_GET_SIGNATURE(0, 0xB093BAED), 0x03050800 },\
+          { (RTS_VOID_FCTPTR)iomgrwriteparameter, "iomgrwriteparameter", RTSITF_GET_SIGNATURE(0, 0xAD04F7E8), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrwriteoutputs, "iomgrwriteoutputs", 0, 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrwatchdogtrigger, "iomgrwatchdogtrigger", RTSITF_GET_SIGNATURE(0, 0x986DFD93), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrupdatemapping2, "iomgrupdatemapping2", 0, 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrupdatemapping, "iomgrupdatemapping", 0, 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrupdateconfiguration2, "iomgrupdateconfiguration2", RTSITF_GET_SIGNATURE(0, 0x44CD4528), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrupdateconfiguration, "iomgrupdateconfiguration", RTSITF_GET_SIGNATURE(0, 0xB1381773), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrunregisterinstance, "iomgrunregisterinstance", RTSITF_GET_SIGNATURE(0, 0x830B7CC7), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrunregisterconfigapplication, "iomgrunregisterconfigapplication", RTSITF_GET_SIGNATURE(0, 0xECB18F2E), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrstartbuscycle2, "iomgrstartbuscycle2", RTSITF_GET_SIGNATURE(0, 0x8AB99A18), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrstartbuscycle, "iomgrstartbuscycle", RTSITF_GET_SIGNATURE(0, 0x09EEEC27), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrsetdriverproperty, "iomgrsetdriverproperty", RTSITF_GET_SIGNATURE(0, 0x936FC5C4), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrsetdriverproperties, "iomgrsetdriverproperties", RTSITF_GET_SIGNATURE(0, 0x607A5D95), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrscanmodules, "iomgrscanmodules", RTSITF_GET_SIGNATURE(0, 0xF31DBCAE), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrregisterinstance2, "iomgrregisterinstance2", RTSITF_GET_SIGNATURE(0, 0x4219F9A3), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrregisterconfigapplication, "iomgrregisterconfigapplication", RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrreconfigure, "iomgrreconfigure", RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrreadparameter, "iomgrreadparameter", RTSITF_GET_SIGNATURE(0, 0xD37BF5DF), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrreadinputs, "iomgrreadinputs", 0, 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrlockleave, "iomgrlockleave", 0x3CFC293B, 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrlockenter, "iomgrlockenter", 0x3517831C, 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgridentify, "iomgridentify", RTSITF_GET_SIGNATURE(0, 0xC48724F5), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrgetnextdriverinstance, "iomgrgetnextdriverinstance", RTSITF_GET_SIGNATURE(0, 0x0B47742F), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrgetmodulediagnosis, "iomgrgetmodulediagnosis", RTSITF_GET_SIGNATURE(0, 0x5DA78ABA), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrgetfirstdriverinstance, "iomgrgetfirstdriverinstance", RTSITF_GET_SIGNATURE(0, 0x7823BC76), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrgetdriverproperties, "iomgrgetdriverproperties", RTSITF_GET_SIGNATURE(0, 0xEC0D662D), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrgetconfigapplication, "iomgrgetconfigapplication", RTSITF_GET_SIGNATURE(0, 0xF82C99F4), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrgetbuscycletype, "iomgrgetbuscycletype", RTSITF_GET_SIGNATURE(0, 0x8334DD20), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrcopyoutputle, "iomgrcopyoutputle", 0, 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrcopyoutputbe, "iomgrcopyoutputbe", 0, 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrcopyinputle, "iomgrcopyinputle", 0, 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrcopyinputbe, "iomgrcopyinputbe", 0, 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrconfigsetdiagnosis, "iomgrconfigsetdiagnosis", RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrconfigresetdiagnosis, "iomgrconfigresetdiagnosis", RTSITF_GET_SIGNATURE(0, 0x6B60C0F6), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrconfiggetparametervalueword, "iomgrconfiggetparametervalueword", RTSITF_GET_SIGNATURE(0, 0x522D5073), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrconfiggetparametervaluepointer, "iomgrconfiggetparametervaluepointer", RTSITF_GET_SIGNATURE(0, 0x633BC6E3), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrconfiggetparametervaluedword, "iomgrconfiggetparametervaluedword", RTSITF_GET_SIGNATURE(0, 0x6F885F72), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrconfiggetparametervaluebyte, "iomgrconfiggetparametervaluebyte", RTSITF_GET_SIGNATURE(0, 0xDE4EF488), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrconfiggetparameter, "iomgrconfiggetparameter", RTSITF_GET_SIGNATURE(0, 0xC7A23B05), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrconfiggetnextconnector, "iomgrconfiggetnextconnector", RTSITF_GET_SIGNATURE(0, 0xA5BCF071), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrconfiggetnextchild, "iomgrconfiggetnextchild", RTSITF_GET_SIGNATURE(0, 0x2F87EBF8), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrconfiggetfirstconnector, "iomgrconfiggetfirstconnector", RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrconfiggetfirstchild, "iomgrconfiggetfirstchild", RTSITF_GET_SIGNATURE(0, 0xB89B6273), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrconfiggetdriver, "iomgrconfiggetdriver", RTSITF_GET_SIGNATURE(0, 0xA6C591A7), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrconfiggetconnectorlist, "iomgrconfiggetconnectorlist", RTSITF_GET_SIGNATURE(0, 0x6E3F45DC), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrconfiggetconnectorbydriver, "iomgrconfiggetconnectorbydriver", RTSITF_GET_SIGNATURE(0, 0x076B9D1E), 0x03050F00 },\
+          { (RTS_VOID_FCTPTR)iomgrconfiggetconnector, "iomgrconfiggetconnector", RTSITF_GET_SIGNATURE(0, 0xB093BAED), 0x03050F00 },\
           
 #else
 #define EXPORT_EXTREF_STMT
 #endif
 #ifndef CMPIOMGRSTUB_DISABLE_EXTREF2
 #define EXPORT_EXTREF2_STMT \
-                                                                                                                                                                                                        
+                                                                                                                                                                                                                
 #else
 #define EXPORT_EXTREF2_STMT
 #endif
-#if !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
+#if !defined(CMPIOMGRSTUB_DISABLE_CMPITF) && !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
 #define EXPORT_CMPITF_STMT \
     {\
         { (RTS_VOID_FCTPTR)IoMgrCopyOutputBE, "IoMgrCopyOutputBE", 0, 0 },\
@@ -213,6 +219,8 @@
           { (RTS_VOID_FCTPTR)IoMgrStartBusCycle, "IoMgrStartBusCycle", 0, 0 },\
           { (RTS_VOID_FCTPTR)IoMgrWriteOutputs, "IoMgrWriteOutputs", 0, 0 },\
           { (RTS_VOID_FCTPTR)IoMgrReadInputs, "IoMgrReadInputs", 0, 0 },\
+          { (RTS_VOID_FCTPTR)IoMgrLockLeave, "IoMgrLockLeave", 0, 0 },\
+          { (RTS_VOID_FCTPTR)IoMgrLockEnter, "IoMgrLockEnter", 0, 0 },\
           { (RTS_VOID_FCTPTR)IoMgrReconfigure, "IoMgrReconfigure", 0, 0 },\
           { (RTS_VOID_FCTPTR)IoMgrUpdateMapping2, "IoMgrUpdateMapping2", 0, 0 },\
           { (RTS_VOID_FCTPTR)IoMgrUpdateMapping, "IoMgrUpdateMapping", 0, 0 },\
@@ -231,7 +239,7 @@
           { (RTS_VOID_FCTPTR)IoMgrRegisterInstance2, "IoMgrRegisterInstance2", 0, 0 },\
             { (RTS_VOID_FCTPTR)IoMgrRegisterInstance, "IoMgrRegisterInstance", 0, 0 },\
           { (RTS_VOID_FCTPTR)IoMgrExceptionHandler, "IoMgrExceptionHandler", 0, 0 },\
-                                                                                                      \
+                                                                                                          \
         { ((RTS_VOID_FCTPTR)(void *)0), "", 0, 0 }\
     }
 #else
@@ -389,6 +397,8 @@ class CCmpIoMgrStub : public ICmpIoMgr
         virtual RTS_RESULT CDECL IIoMgrUpdateMapping(IoConfigTaskMap *pTaskMapList, int nCount);
         virtual RTS_RESULT CDECL IIoMgrUpdateMapping2(IoConfigTaskMap *pTaskMapList, int nCount, char *pszConfigApplication);
         virtual RTS_RESULT CDECL IIoMgrReconfigure(IoConfigConnector *pConnector, RTS_UI32 *pui32State);
+        virtual RTS_RESULT CDECL IIoMgrLockEnter(IBase *pIBase, const RTS_UI32 ui32LockScope);
+        virtual RTS_RESULT CDECL IIoMgrLockLeave(IBase *pIBase, const RTS_UI32 ui32LockScope);
         virtual RTS_RESULT CDECL IIoMgrReadInputs(IoConfigTaskMap *pTaskMap);
         virtual RTS_RESULT CDECL IIoMgrWriteOutputs(IoConfigTaskMap *pTaskMap);
         virtual RTS_RESULT CDECL IIoMgrStartBusCycle(IoConfigConnector *pConnector);

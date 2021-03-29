@@ -3,13 +3,29 @@
  * <description></description>
  *
  * <copyright>
- *  Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ *  Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
 SET_INTERFACE_NAME(`CmpCodeMeter')
 
 #define RTS_CM_PUBLIC_KEY_LEN					64
+
+/**
+ * <category>CodeMeter Versions</category>
+ * <description>
+ *	CodeMeter version numbers checked by this CODESYS Control RTS component.
+ * </description>
+ * <element name="RTS_CM_RUNTIME_MIN_MAJOR_VER">Minimum major version number of the CodeMeter runtime</element>
+ * <element name="RTS_CM_RUNTIME_MIN_MINOR_VER">Minimum minor version number of the CodeMeter runtime</element>
+ * <element name="RTS_CM_RUNTIME_MIN_BUILD">Minimum build number of the CodeMeter runtime</element>
+ */
+
+/* CodeMeter Runtime version 7.10a corresponds to major ver. 7, minor ver. 10, and build 4196. */
+#define RTS_CM_RUNTIME_MIN_MAJOR_VER (7)
+#define RTS_CM_RUNTIME_MIN_MINOR_VER (10)
+#define RTS_CM_RUNTIME_MIN_BUILD (4196)
+
 
 /**
  * <category>Compiler switch</category>
@@ -27,31 +43,48 @@ SET_INTERFACE_NAME(`CmpCodeMeter')
  * </element>
  * <element name="RTS_CODEMETER_DISABLE_USB">Switch to disable WIBU USB dongle support</element>
  * <element name="RTS_CODEMETER_DISABLE_CMCARD">Switch to disable WIBU CF/SD card support</element>
+ * <element name="RTS_CODEMETER_DISABLE_LICENSE_CACHE">Switch to disable WIBU license cache feature</element>
  */
 
 
 /**
- * <description>3S Firmcodes</description>
- * <element name="RTS_CODEMETER_SOFTLICENSES_FIRMCODE" type="IN">Firmcode for softkey licenses (CmActLicenses)</element>
- * <element name="RTS_CODEMETER_LICENSES_FIRMCODE" type="IN">Firmcode for hardkey licenses (CmDongle)</element>
- * <element name="RTS_CODEMETER_ENCRYPTION_FIRMCODE" type="IN">Firmcode for encryption of the bootproject</element>
+ * <description>3S firm codes</description>
+ * <element name="RTS_CODEMETER_UNIVERSAL_FIRMCODE" type="IN">Firm code for universal firmcode licenses</element>
+ * <element name="RTS_CODEMETER_SOFTLICENSES_FIRMCODE" type="IN">Firm code for softkey licenses (CmActLicenses)</element>
+ * <element name="RTS_CODEMETER_LICENSES_FIRMCODE" type="IN">Firm code for hardkey licenses (CmDongle)</element>
+ * <element name="RTS_CODEMETER_ACCESS_PROT_FIRMCODE" type="IN">Firm code for access protection</element>
+ * <element name="RTS_CODEMETER_ENCRYPTION_FIRMCODE" type="IN">Firm code for encryption of the boot application</element>
  */
+#ifndef RTS_CODEMETER_UNIVERSAL_FIRMCODE
+	#define RTS_CODEMETER_UNIVERSAL_FIRMCODE		6000437
+#endif
 #ifndef RTS_CODEMETER_SOFTLICENSES_FIRMCODE
 	#define RTS_CODEMETER_SOFTLICENSES_FIRMCODE		5000304
 #endif
 #ifndef RTS_CODEMETER_LICENSES_FIRMCODE
 	#define RTS_CODEMETER_LICENSES_FIRMCODE			101597
 #endif
+#ifndef RTS_CODEMETER_ACCESS_PROT_FIRMCODE
+	#define RTS_CODEMETER_ACCESS_PROT_FIRMCODE		101598
+#endif
 #ifndef RTS_CODEMETER_ENCRYPTION_FIRMCODE
 	#define RTS_CODEMETER_ENCRYPTION_FIRMCODE		101599
 #endif
+
+
+/**
+ * <category>Static defines</category>
+ * <description>Predefined objects in the runtime</description>
+ */
+#define USERDB_OBJECT_CODEMETER				        "Device.CodeMeter"
+
 
 /**
  * <category>Settings</category>
  * <type>String</type>
  * <description>List of wbb files to create empty CmActLicense containers. List of files must be indexed starting with 1.
  *	NOTE:
- *  - Every license vendor must create its own wbb file with the contaning firmcode! And so for every license vendor an empty CmAct license container is created
+ *  - Every license vendor must create its own wbb-file with the containing firm code! And so for every license vendor an empty CmAct license container is created
  *	  as a file on the target!
  *
  * Example:
@@ -64,7 +97,7 @@ SET_INTERFACE_NAME(`CmpCodeMeter')
 
 /**
  * <description>
- *	This is the name of the 3S-wbb file to create an empty softcontainer!
+ *	This is the name of the 3S-wbb file to create an empty soft container!
  * </description>
  */
 #ifndef CODEM_3S_INIT_LICENSE_FILE
@@ -85,7 +118,7 @@ SET_INTERFACE_NAME(`CmpCodeMeter')
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>Setting to activate installing license container. The wbb files(s) must be registered for that (see setting "InitLicenseFile").
+ * <description>Setting to activate installing license container. The wbb-files(s) must be registered for that (see setting "InitLicenseFile").
  *	NOTE:
  *	The key is deleted after installing the container!
  * </description>
@@ -106,107 +139,119 @@ SET_INTERFACE_NAME(`CmpCodeMeter')
 	#define CODEMVALUE_STRING_LICENSE_SERVER_DEFAULT					""
 #endif
 
+/**
+ * <category>Online services</category>
+ * <service group="SG_CMPCODEMETER" id="SRV_CODEMETER_READ_DONGLE_LIST" name=""
+ *  description="Generate list of connected WIBU-Boxes">
+ *	<request/>
+ *	<response>
+ *		<tag id="TAG_CM_NUM_OF_DONGLES" name="Number of dongles" cardinality="1..?" type="RTS_UI16"
+ *		 description="Number of dongles in the reply"/>
+ *		<complextag id="TAG_CM_CMPLX_DONGLE" name="" cardinality="1..?"
+ *		 description="Complex tag for dongle entry">
+ *			<tag id="TAG_CM_DONGLE_HANDLE" name="Dongle handle" cardinality="1..?" type="char*"
+ *			 description="Dongle handle. Here we use the serial number as string"/>
+ *			<tag id="TAG_CM_DONGLE_INFOSTRING" name="" cardinality="1..?" type="char*"
+ *			 description="Infos string of the dongle"/>
+ *		</complextag>
+ *	</response>
+ * </service>
+ */
+#define SRV_CODEMETER_READ_DONGLE_LIST 0x01
+
+#define TAG_CM_NUM_OF_DONGLES 0x01
+#define TAG_CM_CMPLX_DONGLE 0x81
+#define TAG_CM_DONGLE_HANDLE 0x01
+#define TAG_CM_DONGLE_INFOSTRING 0x02
 
 /**
  * <category>Online services</category>
- * <Description>
- *	Generate list of connected Wibu-Boxes
- * </Description>
- * <service name="SRV_CODEMETER_READ_DONGLE_LIST">
- *	<Request>
- *	</Request>
- *	<Response>
- *		<tag name="TAG_CM_NUM_OF_DONGLES" required="mandatory">[RTS_UI16]: Number of dongles in the reply</tag>
- *		<tag name="TAG_CM_CMPLX_DONGLE" required="mandatory">Complex tag for dongle entry</tag>
- *			<tag name="TAG_CM_DONGLE_HANDLE" required="mandatory">[char*]: Dongle handle. Here we use the serial number as string</tag>
- *			<tag name="TAG_CM_DONGLE_INFOSTRING" required="mandatory">[char*]: Infos string of the dongle </tag>
- *	</Response>
+ * <service group="SG_CMPCODEMETER" id="SRV_CODEMETER_READ_LIC_PER_DONGLE" name=""
+ *  description="Generate license information of a WIBU-Box">
+ *	<request/>
+ *	<response>
+ *		<tag id="TAG_CM_NUM_OF_LICS" name="Number of licenses" cardinality="1..?" type="RTS_UI16"
+ *		 description="Number of licenses"/>
+ *		<complextag id="TAG_CM_CMPLX_LICDESC" name="" cardinality="1..?"
+ *		 description="Complex tag for license entry">
+ *			<tag id="TAG_CM_LIC_NAME" name="License name" cardinality="1..?" type="char*"
+ *			 description="License name"/>
+ *			<tag id="TAG_CM_LIC_COMPANY" name="Company name" cardinality="1..?" type="char*"
+ *			 description="Company name"/>
+ *			<tag id="TAG_CM_LIC_FIRMCODE" name="Firm code" cardinality="1..?" type="RTS_UI32"
+ *			 description="Firm code"/>
+ *			<tag id="TAG_CM_LIC_PRODUCTCODE" name="Product code" cardinality="1..?" type="RTS_UI32"
+ *			 description="Product code"/>
+ *			<tag id="TAG_CM_LIC_FEATUREMAP" name="Feature map" cardinality="1..?" type="RTS_UI32"
+ *			 description="Feature map"/>
+ *			<tag id="TAG_CM_LIC_LICSTATE" name="License state" cardinality="1..?" type="RTS_UI32"
+ *			 description="License state (active/inactive)"/>
+ *			<tag id="TAG_CM_LIC_ACTIVATIONURL" name="Activation URL" cardinality="1..?" type="char*"
+ *			 description="Activation URL"/>
+ *			<tag id="TAG_CM_LIC_DESCRIPTION" name="Description" cardinality="1..?" type="char*"
+ *			 description="Description"/>
+ *		</complextag>
+ *	</response>
  * </service>
  */
-#define SRV_CODEMETER_READ_DONGLE_LIST 0x0001
-#define TAG_CM_NUM_OF_DONGLES 0x0001
-#define TAG_CM_CMPLX_DONGLE 0x0081
-#define TAG_CM_DONGLE_HANDLE 0x0001
-#define TAG_CM_DONGLE_INFOSTRING 0x0002
+#define SRV_CODEMETER_READ_LIC_PER_DONGLE 0x02
+
+#define TAG_CMREQ_DONGLE_HANDLE 0x01
+#define TAG_CM_NUM_OF_LICS 0x01
+#define TAG_CM_CMPLX_LICDESC 0x81
+#define TAG_CM_LIC_NAME 0x01
+#define TAG_CM_LIC_COMPANY 0x02
+#define TAG_CM_LIC_FIRMCODE 0x03
+#define TAG_CM_LIC_PRODUCTCODE 0x04
+#define TAG_CM_LIC_FEATUREMAP 0x05
+#define TAG_CM_LIC_LICSTATE 0x06
+#define TAG_CM_LIC_ACTIVATIONURL 0x07
+#define TAG_CM_LIC_DESCRIPTION 0x08
 
 /**
  * <category>Online services</category>
- * <Description>
- *	Generate license information of a Wibu-Box
- * </Description>
- * <service name="SRV_CODEMETER_READ_LIC_PER_DONGLE">
- *	<Request>
- *	</Request>
- *	<Response>
- *		<tag name="TAG_CMREQ_DONGLE_HANDLE" required="mandatory">[char*]: Dongle handle. Here we use the serial number as string</tag>
- *		<tag name="TAG_CM_NUM_OF_LICS" required="mandatory">[RTS_UI16]: Number of licenses</tag>
- *		<tag name="TAG_CM_CMPLX_LICDESC" required="mandatory">Complex tag for license entry</tag>
- *			<tag name="TAG_CM_LIC_NAME" required="mandatory">[char*]: License name</tag>
- *			<tag name="TAG_CM_LIC_COMPANY" required="mandatory">[char*]: Company name</tag>
- *			<tag name="TAG_CM_LIC_FIRMCODE" required="mandatory">[RTS_UI32]: Firm code</tag>
- *			<tag name="TAG_CM_LIC_PRODUCTCODE" required="mandatory">[RTS_UI32]: Product code</tag>
- *			<tag name="TAG_CM_LIC_FEATUREMAP" required="mandatory">[RTS_UI32]: Feature map</tag>
- *			<tag name="TAG_CM_LIC_LICSTATE" required="mandatory">[RTS_UI32]: License state (active/inactive)</tag>
- *			<tag name="TAG_CM_LIC_ACTIVATIONURL" required="mandatory">[char*]: Activation URL</tag>
- *			<tag name="TAG_CM_LIC_DESCRIPTION" required="mandatory">[char*]: Description</tag>
- *	</Response>
+ * <service group="SG_CMPCODEMETER" id="SRV_CODEMETER_CREATE_CONTEXT_FILE" name=""
+ *  description="Generate license information of a WIBU-Box">
+ *	<request>
+ *		<tag id="TAG_CMREQ_DONGLE_HANDLE" name="Dongle handle" cardinality="1..?" type=""
+ *		 description="Dongle handle. Here we use the serial number as string"/>
+ *		<tag id="TAG_CMREQ_NUM_FIRMCODE" name="Number of firm codes" cardinality="1..?" type="RTS_UI32"
+ *		 description="Number of firm codes"/>
+ *		<tag id="TAG_CMREQ_FIRMCODE" name="Firm code" cardinality="0..?" type="RTS_UI32"
+ *		 description="Requested firm code"/>
+ *	</request>
+ *	<response>
+ *		<tag id="TAG_CM_CONTEXT_FILE_NAME" name="" cardinality="1..?" type="char*"
+ *		 description="Name of the generated context file"/>
+ *	</response>
  * </service>
  */
-#define SRV_CODEMETER_READ_LIC_PER_DONGLE 0x0002
-#define TAG_CMREQ_DONGLE_HANDLE 0x0001
-#define TAG_CM_NUM_OF_LICS 0x0001
-#define TAG_CM_CMPLX_LICDESC 0x0081
-#define TAG_CM_LIC_NAME 0x0001
-#define TAG_CM_LIC_COMPANY 0x0002
-#define TAG_CM_LIC_FIRMCODE 0x0003
-#define TAG_CM_LIC_PRODUCTCODE 0x0004
-#define TAG_CM_LIC_FEATUREMAP 0x0005
-#define TAG_CM_LIC_LICSTATE 0x0006
-#define TAG_CM_LIC_ACTIVATIONURL 0x0007
-#define TAG_CM_LIC_DESCRIPTION 0x0008
+#define SRV_CODEMETER_CREATE_CONTEXT_FILE 0x03
+
+#define TAG_CMREQ_NUM_FIRMCODE 0x02
+#define TAG_CMREQ_FIRMCODE 0x03
+#define TAG_CM_CONTEXT_FILE_NAME 0x01
 
 /**
  * <category>Online services</category>
- * <Description>
- *	Generate license information of a Wibu-Box
- * </Description>
- * <service name="SRV_CODEMETER_CREATE_CONTEXT_FILE">
- *	<Request>
- *		<tag name="TAG_CMREQ_DONGLE_HANDLE" required="mandatory">see above</tag>
- *		<tag name="TAG_CMREQ_NUM_FIRMCODE" required="mandatory">[RTS_UI32]: Number of firmcodes</tag>
- *		<tag name="TAG_CMREQ_FIRMCODE" required="optional">[RTS_UI32]: Requested firmcode</tag>
- *	</Request>
- *	<Response>
- *		<tag name="TAG_CM_CONTEXT_FILE_NAME" required="mandatory">[char*]: Name of the generated context file</tag>
- *	</Response>
+ * <service group="SG_CMPCODEMETER" id="SRV_CODEMETER_ACTIVATE_UPD_CTXT_FILE" name=""
+ *  description="Activate an updated context file">
+ *	<request>
+ *		<tag id="TAG_CMREQ_CTXT_FILENAME" name="" cardinality="1..?" type=""
+ *		 description="TODO"/>
+ *		<tag id="TAG_CMREQ_CTXT_DONGLEHANDLE" name="Dongle handle" cardinality="1..?" type="char*"
+ *		 description="Dongle handle. Here we use the serial number as string"/>
+ *	</request>
+ *	<response/>
  * </service>
  */
-#define SRV_CODEMETER_CREATE_CONTEXT_FILE 0x0003
-#define TAG_CMREQ_NUM_FIRMCODE 0x0002
-#define TAG_CMREQ_FIRMCODE 0x0003
-#define TAG_CM_CONTEXT_FILE_NAME 0x0001
+#define SRV_CODEMETER_ACTIVATE_UPD_CTXT_FILE 0x04
 
-/**
- * <category>Online services</category>
- * <Description>
- *	Activate an updated context file
- * </Description>
- * <service name="SRV_CODEMETER_ACTIVATE_UPD_CTXT_FILE">
- *	<Request>
- *		<tag name="TAG_CMREQ_CTXT_FILENAME" required="mandatory">see above</tag>
- *		<tag name="TAG_CMREQ_CTXT_DONGLEHANDLE" required="mandatory">[char*]: Dongle handle. Here we use the serial number as string</tag>
- *	</Request>
- *	<Response>
- *	</Response>
- * </service>
- */
-#define SRV_CODEMETER_ACTIVATE_UPD_CTXT_FILE 0x0004
-#define TAG_CMREQ_CTXT_FILENAME 0x0001
-#define TAG_CMREQ_CTXT_DONGLEHANDLE 0x0002
-#define TAG_CM_ERROR_RTS_ERROR 0x0001
-#define TAG_CM_ERROR_CM_ERROR 0x0002
-#define TAG_CM_ERROR_CM_ERROR_TEXT 0x0003
-
+#define TAG_CMREQ_CTXT_FILENAME 0x01
+#define TAG_CMREQ_CTXT_DONGLEHANDLE 0x02
+#define TAG_CM_ERROR_RTS_ERROR 0x01
+#define TAG_CM_ERROR_CM_ERROR 0x02
+#define TAG_CM_ERROR_CM_ERROR_TEXT 0x03
 
 /** EXTERN LIB SECTION BEGIN **/
 /*  Comments are ignored for m4 compiler so restructured text can be used. changecom(`/*', `*/') */
@@ -446,7 +491,7 @@ DEF_ITF_API(`RTS_HANDLE',`CDECL',`CodeMGetNext',`(RTS_HANDLE hPrevCodeMeter, RTS
  * <description>
  *	Open the communication to a the CodeMeter device
  * </description>
- * <param name="ulFirmCode" type="IN">Firmcode of the vendor</param>
+ * <param name="ulFirmCode" type="IN">Firm code of the vendor</param>
  * <param name="ulProductCode" type="IN">Product code</param>
  * <param name="ulFeatureCode" type="IN">Feature code</param>
  * <param name="pResult" type="OUT">Pointer to error code:
@@ -607,11 +652,11 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`CodeMDecryptDirect',`(RTS_UI8 *pKey, RTS_UI32 
 
 /**
  * <description>
- *	Function to generate the export license file for the specified firmcodes
+ *	Function to generate the export license file for the specified firm codes
  * </description>
  * <param name="containerSerialNumber" type="IN">Serial number of the specified container from which the context file should be retrieved</param>
- * <param name="paulFirmCodes" type="IN">Pointer to array of firmcodes</param>
- * <param name="ulFirmCodes" type="IN">Number of firmcodes in the array</param>
+ * <param name="paulFirmCodes" type="IN">Pointer to array of firm codes</param>
+ * <param name="ulFirmCodes" type="IN">Number of firm codes in the array</param>
  * <param name="pszLicenseFile" type="IN">License file to store license information</param>
  * <result>Error code:
  *   <ul>
@@ -641,11 +686,11 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`CodeMWriteLicenseFile',`(RTS_UI32 ui32SerialNu
 
 /**
  * <description>
- *	Function to read all licenses for a specific firmcode. 
+ *	Function to read all licenses for a specific firm code. 
  * </description>
- * <param name="ulFirmcode" type="IN">Firmcode to enumerate.</param>
- * <param name="paEntry" type="OUT">Array of RTS_CMBOXENTRY-structures to receive the boxentries.</param>
- * <param name="pnEntries" type="IN OUT">Pointer to an initialized variable. Initvalue is number of structs in paEntry.</param>
+ * <param name="ulFirmcode" type="IN">Firm code to enumerate.</param>
+ * <param name="paEntry" type="OUT">Array of RTS_CMBOXENTRY-structures to receive the box entries.</param>
+ * <param name="pnEntries" type="IN OUT">Pointer to an initialized variable. Initial value is number of structs in paEntry.</param>
  * <result>Error code:
  *   <ul>
  *     <li>ERR_OK: Successful</li>
@@ -659,10 +704,10 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`CodeMGetContentByFirmcode',`(RTS_UI32 ulFirmco
 
 /**
  * <description>
- *	Function to read a license entry specified by frimcode and productcode. 
+ *	Function to read a license entry specified by firm code and product code. 
  * </description>
- * <param name="ulFirmcode" type="IN">Firmcode of the license entry</param>
- * <param name="ulProductcode" type="IN">Productcode of the license entry</param>
+ * <param name="ulFirmcode" type="IN">Firm code of the license entry</param>
+ * <param name="ulProductcode" type="IN">Product code of the license entry</param>
  * <param name="paEntry" type="OUT">Pointer to RTS_CMBOXENTRY to get the license entry</param>
  * <result>Error code:
  *   <ul>
@@ -676,11 +721,34 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`CodeMGetContentByFirmcode2',`(RTS_UI32 ulFirmc
 
 /**
  * <description>
- *	Function to read a license entry specified by frimcode and productcode from a network server. 
+ *	Function to read a license entry specified by firm code and product code. 
  * </description>
- * <param name="ulFirmcode" type="IN">Firmcode of the license entry</param>
- * <param name="ulProductcode" type="IN">Productcode of the license entry</param>
- * <param name="pszServer" type="IN">Servername or IP-Address (dotted string format)</param>
+ * <param name="ulFirmcode" type="IN">Firm code of the license entry</param>
+ * <param name="ulProductcode" type="IN">Product code of the license entry</param>
+ * <param name="bReleaseLicense" type="IN">
+ *   <ul>
+ *		<li>TRUE:	Release license so it can be used several from several instances</li>
+ *		<li>FALSE:	Don't release license so it remains occupied and cannot be used by another instance!</li>
+ *   </ul>
+ * </param>
+ * <param name="paEntry" type="OUT">Pointer to RTS_CMBOXENTRY to get the license entry</param>
+ * <result>Error code:
+ *   <ul>
+ *     <li>ERR_OK: Successful</li>
+ *     <li>ERR_PARAMETER: License entry pointer is NULL</li>
+ *     <li>ERR_NOT_SUPPORTED: License entry not found or occupied by another instance!</li> 
+ *   </ul>
+ * </result>
+ */
+DEF_ITF_API(`RTS_RESULT',`CDECL',`CodeMGetContentByFirmcode3',`(RTS_UI32 ulFirmcode, RTS_UI32 ulProductcode, RTS_BOOL bReleaseLicense, RTS_CMBOXENTRY *paEntry)')
+
+/**
+ * <description>
+ *	Function to read a license entry specified by firm code and product code from a network server. 
+ * </description>
+ * <param name="ulFirmcode" type="IN">Firm code of the license entry</param>
+ * <param name="ulProductcode" type="IN">Product code of the license entry</param>
+ * <param name="pszServer" type="IN">Server name or IP-Address (dotted string format)</param>
  * <param name="paEntry" type="OUT">Pointer to RTS_CMBOXENTRY to get the license entry</param>
  * <param name="bNoRelease" type="IN">Determines if the function calls CmRelease. 1= CmRelease not called.</param>
  * <param name="phEntry" type="IN">In case CmRelease is not called, the resulting entry handle is returned to the caller here.</param>

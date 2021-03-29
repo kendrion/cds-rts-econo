@@ -1,15 +1,15 @@
 /**
- *  <name>Component SJA Can Mini Driver</name>
+ *  <name>CmpSJACanDrv</name>
  *  <description> 
  *  </description>
  *  <copyright>
- *  Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ *  Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
 SET_COMPONENT_NAME(`CmpSJACanDrv')
 COMPONENT_SOURCES(`CmpSJACanDrv.c', `SJACanDrv.c')
 
-COMPONENT_VERSION(`0x03050E00')
+COMPONENT_VERSION(`0x03051000')
 COMPONENT_VENDORID(`RTS_VENDORID_3S')
 
 CATEGORY(`Application.IO.IoDriver.CAN.SJA')
@@ -81,6 +81,7 @@ CATEGORY(`Application.IO.IoDriver.CAN.SJA')
 #define DEVICE_ID_PEAK6 0x0006	/* PCAN-PC/104-Plus. */
 #define DEVICE_ID_PEAK7 0x0007	/* PCAN-PCI/104-Express. */
 #define DEVICE_ID_PEAK8 0x0008	/* PCAN-miniPCI-Express. */
+#define DEVICE_ID_PEAK9 0x0013	/* PCAN-PCI-Express. */
 	
 #define SUBSYSTEM_ID_IXXAT_PCI04 0x2540
 #define SUBVENDOR_ID_IXXAT_PCI04 0x10B5

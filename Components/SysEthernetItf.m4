@@ -1,13 +1,13 @@
 /**
  * <interfacename>SysEthernet</interfacename>
  * <description> 
- *	<p>The SysEthernet interface contains low level routines for a direct access to an ethernet controller.
+ *	<p>The SysEthernet interface contains low level routines for a direct access to an Ethernet controller.
  *	This interface is typically used by an EtherCAT driver.</p>
- *	<p>All other ethernet communciation components use higher level routines (see SysSocket interface).</p>
+ *	<p>All other Ethernet communication components use higher level routines (see SysSocket interface).</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -17,7 +17,9 @@ SET_INTERFACE_NAME(`SysEthernet')
  * <category>Static defines</category>
  * <description>Maximum number of supported adapters</description>
  */
-#define MAX_NUM_ADAPTERS 5
+#ifndef	MAX_NUM_ADAPTERS
+	#define MAX_NUM_ADAPTERS 15
+#endif
 
 /**
  * <category>Static defines</category>
@@ -52,8 +54,8 @@ SET_INTERFACE_NAME(`SysEthernet')
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>filter for incoming packets by protocol type. Default is Ethercat
- * Set Linux.ProtocolFilter=3 for no filtering at all(for profinet or ethnetIP). See linux/if_ether.h for valid filter values</description>
+ * <description>filter for incoming packets by protocol type. Default is EtherCAT
+ * Set Linux.ProtocolFilter=3 for no filtering at all(for ProfiNet or ethnetIP). See Linux/if_ether.h for valid filter values</description>
  */
 #define SYSETHERNETKEY_INT_LINUX_PROTOCOLFILTER			"Linux.ProtocolFilter"
 #define SYSETHERNETKEY_INT_LINUX_PROTOCOLFILTER_DEFAULT	PROTO_ECAT
@@ -72,14 +74,43 @@ SET_INTERFACE_NAME(`SysEthernet')
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>use socketoption PACKET_QDISC_BYPASS for SysEthernet sockets. Default is no</description>
+ * <description>use socket-option PACKET_QDISC_BYPASS for SysEthernet sockets. Default is no</description>
  */
 #define SYSETHERNETKEY_INT_LINUX_QDISC_BYPASS			"Linux.PACKET_QDISC_BYPASS"
 #define SYSETHERNETKEY_INT_LINUX_QDISC_BYPASS_DEFAULT	0
 
 /**
+ * <category>Settings</category>
+ * <type>Int</type>
+ * <description>DSA tag mode for Ethernet frames. See Distributed Switch Architecture (DSA) for details.
+ * Setting can be evaluated by Ethernet based stacks to be able to use DSA tail tagging.
+ * 0 - not active
+ * 1 - DSA
+ * 2 - TRAILER
+ * 3 - EDSA
+ * 4 - BRCM
+ * </description>
+ */
+#define SYSETHERNETKEY_INT_DSA_TAG_MODE					"DSATagMode"
+#define SYSETHERNETKEY_INT_DSA_TAG_DEFAULT				0
+
+/**
+ * <category>Settings</category>
+ * <type>Int</type>
+ * <description>DSA tag port for Ethernet frames. See Distributed Switch Architecture (DSA) for details.
+ * Setting can be evaluated by Ethernet based stacks to set the port via DSA tail tagging.
+ * 0 - not active
+ * 1 - 1st port
+ * 2 - 2nd port
+ * ...</description>
+ */
+#define SYSETHERNETKEY_INT_DSA_TAG_PORT					"DSATagPort"
+#define SYSETHERNETKEY_INT_DSA_TAG_PORT_DEFAULT			0
+
+
+/**
  * <category>Event parameter</category>
- * <element name="pFrame" type="IN">Pointer to one ethernet frame</element>
+ * <element name="pFrame" type="IN">Pointer to one Ethernet frame</element>
  */
 typedef struct
 {
@@ -90,30 +121,30 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent when ethernet packet has arrived</description>
+ * <description>Event is sent when Ethernet packet has arrived</description>
  * <param name="pEventParam" type="IN">EVTPARAM_SysEthernet</param>
  */
 #define EVT_EthPacketArrived					MAKE_EVENTID(EVTCLASS_INFO, 1)
 
 /**
  * <category>Events</category>
- * <description>Event is sent when ethernet packet was sent</description>
+ * <description>Event is sent when Ethernet packet was sent</description>
  * <param name="pEventParam" type="IN">EVTPARAM_SysEthernet</param>
  */
 #define EVT_EthPacketSent						MAKE_EVENTID(EVTCLASS_INFO, 2)
 
 /**
  * <category>Events</category>
- * <description>Event is created by the platformspecific adaptation of SysEthernet, in case there are parameters, that are designed to be changed by the application.
- * This way it is possible for the application to check if there are such possibilities and to get some paramters by calling "EventPost"</description>
+ * <description>Event is created by the platform specific adaptation of SysEthernet, in case there are parameters, that are designed to be changed by the application.
+ * This way it is possible for the application to check if there are such possibilities and to get some parameters by calling "EventPost"</description>
  * <param name="pEventParam" type="IN">EVTPARAM_SysEthernet</param>
  */
 #define EVT_EthGetParameterValue						MAKE_EVENTID(EVTCLASS_INFO, 3)
 
 /**
  * <category>Events</category>
- * <description>Event is created by the platformspecific adaptation of SysEthernet, in case there are parameters, that are designed to be changed by the application.
- * This way it is possible for the application to check if there are such possibilities and to set some paramters by calling "EventPost"</description>
+ * <description>Event is created by the platform specific adaptation of SysEthernet, in case there are parameters, that are designed to be changed by the application.
+ * This way it is possible for the application to check if there are such possibilities and to set some parameters by calling "EventPost"</description>
  * <param name="pEventParam" type="IN">EVTPARAM_SysEthernet</param>
  */
 #define EVT_EthSetParameterValue						MAKE_EVENTID(EVTCLASS_INFO, 4)
@@ -140,7 +171,6 @@ typedef struct
  * <category>Online services</category>
  */
 
-#define SRV_ETC_GETSOCKADAPTERINFO			0x76
 #define SRV_ETC_GETADAPTERINFO				0x77
 
 /**
@@ -156,30 +186,43 @@ typedef struct
 
 /**
  * <category>Online services</category>
- * <Description>
- *  Service to retrieve the adapter info on SysSocket level. Should be polled until the content of TAG_SERVICE_RESULT is 
- *  different from ERR_ENTRIES_REMAINING to get all adapters. 
- * </Description>
- * <service name="SRV_ETC_GETSOCKADAPTERINFO">
- *	<Request>
- *		<tag name="TAG_ETC_SOCKADAPTER_NEXT_INDEX" required="optional">[RTS_UI32]: Index of first adapter, which should be read. Default is 0, if tag is omitted.</tag>
- *	</Request>
- *	<Response>
- *		<tag name="TAG_ETC_SOCKADAPTER" required="optional">[SOCK_ADAPTER_INFORMATION]: Adapter information for one network adapter. 
- *			For each adapter one tag of this type is added. Layout of IEC structure SOCK_ADAPTER_INFORMATION is used.
- *			Is not returned, if no adapter is available.</tag>
- *		<tag name="TAG_ETC_SOCKADAPTER_NEXT_INDEX" required="optional">[RTS_UI32]: Index of next adapter, which should be requested by next service
- *			Only returned, if not all adapter informations fits into the communication buffer.</tag>
- *		<tag name="TAG_SERVICE_RESULT" required="mandatory">[RTS_UI16]: Result code of online service: 
+ * <service group="SG_ETHERCAT" id="SRV_ETC_GETSOCKADAPTERINFO" name="">
+ *	<description>
+ *		Service to retrieve the adapter info on SysSocket level. Should be polled until the content of TAG_SERVICE_RESULT is 
+ *		different from ERR_ENTRIES_REMAINING to get all adapters. 
+ *	</description>
+ *	<request>
+ *		<tag id="TAG_ETC_SOCKADAPTER_NEXT_INDEX" name="" cardinality="0..?" type="RTS_UI32"
+ *		 description="Index of first adapter, which should be read. Default is 0, if tag is omitted."/>
+ *	</request>
+ *	<response>
+ *		<tag id="TAG_ETC_SOCKADAPTER" name="" cardinality="0..?" type="SOCK_ADAPTER_INFORMATION">
+ *			<description>
+ *				Adapter information for one network adapter. 
+ *				For each adapter one tag of this type is added. Layout of IEC structure SOCK_ADAPTER_INFORMATION is used.
+ *				Is not returned, if no adapter is available.
+ *			</description>
+ *		</tag>
+ *		<tag id="TAG_ETC_SOCKADAPTER_NEXT_INDEX" name="" cardinality="0..?" type="RTS_UI32">
+ *			<description>
+ *				Index of next adapter, which should be requested by next service
+ *				Only returned, if not all adapter informations fits into the communication buffer.
+ *			</description>
+ *		</tag>
+ *		<tag id="TAG_SERVICE_RESULT" name="" cardinality="1..?" type="RTS_UI16">
+ *			<description>
+ *				Result code of online service: 
  *				ERR_OK (all adapters have been read), 
  *				ERR_NOTIMPLEMENTED (SysSocket does not provide the functionality to read the adapter information),
  *				ERR_NOT_SUPPORTED (SysSockGetFirstAdapterInfo or SysSockGetFirstAdapterInfo are not available),
  *				ERR_FAILED (no adapter information available, e. g. no adapter present), 
- *				ERR_ENTRIES_REMAINING (not all adapter informations fits into the communication buffer).</tag>
- *	</Response>
+ *				ERR_ENTRIES_REMAINING (not all adapter informations fits into the communication buffer).
+ *			</description>
+ *		</tag>
+ *	</response>
  * </service>
  */
- 
+#define SRV_ETC_GETSOCKADAPTERINFO 0x76
 
 typedef struct
 {
@@ -282,7 +325,7 @@ DEF_ITF_API(`void',`CDECL',`openethernet',`(OpenEthernetInterface* poei)',1)
 DEF_ITF_API(`void',`CDECL',`sendethframe',`(SendEthernetInterface* psfi)',1)
 
 /**
- * <description>Get ethernet packet</description>
+ * <description>Get Ethernet packet</description>
  * <param name="pgei" type="IN">Pointer to parameters</param>
  * <result>error code</result>
  */
@@ -311,14 +354,14 @@ DEF_API(`void',`CDECL',`getadapterinfo',`(GetAdapterInfoEthernetInterface* paiei
 
 
 /**
- * <description>Send IP etherpacket (EoE)</description>
+ * <description>Send IP Ethernet packet (EoE)</description>
  * <param name="psfi" type="IN">Pointer to parameters</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`void',`CDECL',`sendIPethframe',`(SendIPEthernetInterface* psfi)',1)
 
 /**
- * <description>Get IP ethernet packet</description>
+ * <description>Get IP Ethernet packet</description>
  * <param name="pgei" type="IN">Pointer to parameters</param>
  * <result>error code</result>
  */
@@ -534,6 +577,41 @@ typedef struct tagStructEthernetframe
 } StructEthernetframe;
 
 /**
+ * The "Capability Bits" of EIP 
+ * plus a quality flag for each value and a struct version.
+ * 
+ * Quality Flags used in the runtime interface for reading the Ethernet interface settings.
+ * 
+ * These quality flags are not from the EIP specification, but were added by CODESYS.
+ * The idea behind this is
+ * to be able to say for each individual value of the respective STRUCT
+ * whether it has been filled correctly by the platform implementation.
+ * 
+ * Possible quality flags are:
+ * - ERR_OK: Value could be determined without errors
+ * - ERR_NOTIMPLEMENTED: Not implemented by this platform implementation
+ * - ERR_NOT_SUPPORTED: Not supported by this platform implementation
+ * - ERR_FAILED: Error: Value could not be determined
+ */
+typedef struct tagSysEthernetCapabilities
+{
+	RTS_IEC_DWORD structVersion;		/* Version number of this struct. This is version 1. To be increased on changes. */
+	RTS_IEC_BOOL manualSettingRequiresReset;		/* Indicates whether or not the device requires a reset to apply changes made to the Interface Control attribute (#6). 
+ 0 = Indicates that the device automatically applies changes made to the Interface Control attribute (#6) and, therefore, does not require a reset in order for changes to take effect.  This is the value this bit shall have when the Interface Control attribute (#6) is not implemented. 
+ 1 = Indicates that the device does not automatically apply changes made to the Interface Control attribute (#6) and, therefore, will require a reset in order for changes to take effect. Note: this bit shall also be replicated in the Interface Flags attribute (#2) in order to retain backwards compatibility with previous object revisions. */
+	RTS_IEC_BOOL autoNegotiate;		/* 0 = Indicates that the interface does not support link auto-negotiation 
+ 1 = Indicates that the interface supports link auto-negotiation */
+	RTS_IEC_BOOL autoMdix;		/* 0 = Indicates that the interface does not support auto MDIX operation 
+ 1 = Indicates that the interface supports auto MDIX operation */
+	RTS_IEC_BOOL manualSpeedDuplex;		/* 0 = Indicates that the interface does not support manual setting of speed/duplex. The Interface Control attribute (#6) shall not be supported.  
+ 1 = Indicates that the interface supports manual setting of speed/duplex via the Interface Control attribute (#6) */
+	RTS_IEC_RESULT manualSettingRequiresResetQuality;		
+	RTS_IEC_RESULT autoNegotiateQuality;		
+	RTS_IEC_RESULT autoMdixQuality;		
+	RTS_IEC_RESULT manualSpeedDuplexQuality;		
+} SysEthernetCapabilities;
+
+/**
  * <description>SysEthernetFrame</description>
  */
 typedef struct tagSysEthernetFrame
@@ -543,33 +621,242 @@ typedef struct tagSysEthernetFrame
 } SysEthernetFrame;
 
 /**
- * Structure containing the ethernet port configuration and status
+ * The "HC Interface Counters" and the "Interface Counters" of EIP 
+ * plus a quality flag for each value and a struct version.
+ * 
+ * Quality Flags used in the runtime interface for reading the Ethernet interface settings.
+ * 
+ * These quality flags are not from the EIP specification, but were added by CODESYS.
+ * The idea behind this is
+ * to be able to say for each individual value of the respective STRUCT
+ * whether it has been filled correctly by the platform implementation.
+ * 
+ * Possible quality flags are:
+ * - ERR_OK: Value could be determined without errors
+ * - ERR_NOTIMPLEMENTED: Not implemented by this platform implementation
+ * - ERR_NOT_SUPPORTED: Not supported by this platform implementation
+ * - ERR_FAILED: Error: Value could not be determined
+ */
+typedef struct tagSysEthernetInterfaceCounters
+{
+	RTS_IEC_DWORD structVersion;		/* Version number of this struct. This is version 1. To be increased on changes. */
+	RTS_IEC_DWORD ifInNUcastPkts;		/* RFC 2863  InNUcastPackets:
+	The number of packets, delivered by this sub-layer to a
+	higher (sub-)layer, which were addressed to a multicast or
+	broadcast address at this sub-layer. */
+	RTS_IEC_DWORD ifInDiscards;		/* RFC 2863  InDiscards:
+	The number of inbound packets which were chosen to be
+	discarded even though no errors had been detected to prevent
+	their being deliverable to a higher-layer protocol. One
+	possible reason for discarding such a packet could be to
+	free up buffer space. */
+	RTS_IEC_DWORD ifInErrors;		/* RFC 2863  InErrors:
+	For packet-oriented interfaces, the number of inbound
+	packets that contained errors preventing them from being
+	deliverable to a higher-layer protocol. For character-
+	oriented or fixed-length interfaces, the number of inbound
+	transmission units that contained errors preventing them
+	from being deliverable to a higher-layer protocol. */
+	RTS_IEC_DWORD ifInUnknownProtos;		/* RFC 2863  InUnknownProtos:
+	For packet-oriented interfaces, the number of packets
+	received via the interface which were discarded because of
+	an unknown or unsupported protocol. For character-oriented
+	or fixed-length interfaces that support protocol
+	multiplexing the number of transmission units received via
+	the interface which were discarded because of an unknown or
+	unsupported protocol. For any interface that does not
+	support protocol multiplexing, this counter will always be
+	0. */
+	RTS_IEC_DWORD ifOutNUcastPkts;		/* RFC 2863  OutNUcastPkts:
+	The total number of packets that higher-level protocols
+	requested be transmitted, and which were addressed to a
+	multicast or broadcast address at this sub-layer, including
+	those that were discarded or not sent. */
+	RTS_IEC_DWORD ifOutDiscards;		/* RFC 2863  OutDiscards:
+	The number of outbound packets which were chosen to be
+	discarded even though no errors had been detected to prevent
+	their being transmitted. One possible reason for discarding
+	such a packet could be to free up buffer space. */
+	RTS_IEC_DWORD ifOutErrors;		/* RFC 2863  OutErrors:
+	For packet-oriented interfaces, the number of outbound
+	packets that could not be transmitted because of errors.
+	For character-oriented or fixed-length interfaces, the
+	number of outbound transmission units that could not be
+	transmitted because of errors. */
+	RTS_IEC_LWORD hcInOctets;		/* The total number of octets received on the interface. This counter is a 64-bit version of In Octets. */
+	RTS_IEC_LWORD hcInUcastPkts;		/* Unicast packets received on the interface. This counter is a 64-bit version of In Ucast Packets. */
+	RTS_IEC_LWORD hcInMulticastPkts;		/* Multicast packets received on the interface. */
+	RTS_IEC_LWORD hcInBroadcastPkts;		/* Broadcast packets received on the interface. */
+	RTS_IEC_LWORD hcOutOctets;		/* Octets sent on the interface. This counter is a 64-bit version of Out Octets. */
+	RTS_IEC_LWORD hcOutUcastPkts;		/* Unicast packets sent on the interface.  This counter is a 64-bit version of Out Ucast Packets. */
+	RTS_IEC_LWORD hcOutMulticastPkts;		/* Multicast packets sent on the interface. */
+	RTS_IEC_LWORD hcOutBroadcastPkts;		/* Broadcast packets sent on the interface. */
+	RTS_IEC_RESULT ifInNUcastPktsQuality;		
+	RTS_IEC_RESULT ifInDiscardsQuality;		
+	RTS_IEC_RESULT ifInErrorsQuality;		
+	RTS_IEC_RESULT ifInUnknownProtosQuality;		
+	RTS_IEC_RESULT ifOutNUcastPktsQuality;		
+	RTS_IEC_RESULT ifOutDiscardsQuality;		
+	RTS_IEC_RESULT ifOutErrorsQuality;		
+	RTS_IEC_RESULT hcInOctetsQuality;		
+	RTS_IEC_RESULT hcInUcastPktsQuality;		
+	RTS_IEC_RESULT hcInMulticastPktsQuality;		
+	RTS_IEC_RESULT hcInBroadcastPktsQuality;		
+	RTS_IEC_RESULT hcOutOctetsQuality;		
+	RTS_IEC_RESULT hcOutUcastPktsQuality;		
+	RTS_IEC_RESULT hcOutMulticastPktsQuality;		
+	RTS_IEC_RESULT hcOutBroadcastPktsQuality;		
+} SysEthernetInterfaceCounters;
+
+/**
+ * The "HC Media Counters" and the "Media Counters" of EIP 
+ * plus a quality flag for each value and a struct version.
+ * 
+ * Quality Flags used in the runtime interface for reading the Ethernet interface settings.
+ * 
+ * These quality flags are not from the EIP specification, but were added by CODESYS.
+ * The idea behind this is
+ * to be able to say for each individual value of the respective STRUCT
+ * whether it has been filled correctly by the platform implementation.
+ * 
+ * Possible quality flags are:
+ * - ERR_OK: Value could be determined without errors
+ * - ERR_NOTIMPLEMENTED: Not implemented by this platform implementation
+ * - ERR_NOT_SUPPORTED: Not supported by this platform implementation
+ * - ERR_FAILED: Error: Value could not be determined
+ */
+typedef struct tagSysEthernetMediaCounters
+{
+	RTS_IEC_DWORD structVersion;		/* Version number of this struct. This is version 1. To be increased on changes. */
+	RTS_IEC_DWORD dot3StatsSingleCollisionFrames;		/* RFC 3635  Single Collisions:
+	A count of frames that are involved in a single
+    collision, and are subsequently transmitted
+    successfully.
+    A frame that is counted by an instance of this
+    object is also counted by the corresponding
+    instance of either the ifOutUcastPkts,
+    ifOutMulticastPkts, or ifOutBroadcastPkts,
+    and is not counted by the corresponding
+    instance of the dot3StatsMultipleCollisionFrames
+    object.
+    This counter does not increment when the
+    interface is operating in full-duplex mode. */
+	RTS_IEC_DWORD dot3StatsMultipleCollisionFrames;		/* RFC 3635  Multiple Collisions:
+	A count of frames that are involved in more
+	than one collision and are subsequently
+    transmitted successfully.
+    A frame that is counted by an instance of this
+    object is also counted by the corresponding
+    instance of either the ifOutUcastPkts,
+    ifOutMulticastPkts, or ifOutBroadcastPkts,
+    and is not counted by the corresponding
+    instance of the dot3StatsSingleCollisionFrames
+    object.
+    This counter does not increment when the
+    interface is operating in full-duplex mode. */
+	RTS_IEC_DWORD dot3StatsSQETestErrors;		/* RFC 3635  SQE Test Errors:
+	A count of times that the SQE TEST ERROR
+    is received on a particular interface. The
+    SQE TEST ERROR is set in accordance with the
+    rules for verification of the SQE detection
+    mechanism in the PLS Carrier Sense Function as
+    described in IEEE Std. 802.3, 2000 Edition,
+    section 7.2.4.6.
+    This counter does not increment on interfaces
+    operating at speeds greater than 10 Mb/s, or on
+    interfaces operating in full-duplex mode. */
+	RTS_IEC_DWORD dot3StatsDeferredTransmissions;		/* RFC 3635  Deferred Transmissions:
+	A count of frames for which the first
+    transmission attempt on a particular interface
+    is delayed because the medium is busy.
+    The count represented by an instance of this
+    object does not include frames involved in
+    collisions.
+    This counter does not increment when the
+    interface is operating in full-duplex mode. */
+	RTS_IEC_DWORD dot3StatsLateCollisions;		/* RFC 3635  Late Collisions:
+	The number of times that a collision is
+    detected on a particular interface later than
+    one slotTime into the transmission of a packet.
+    A (late) collision included in a count
+    represented by an instance of this object is
+    also considered as a (generic) collision for
+    purposes of other collision-related
+    statistics.
+    This counter does not increment when the
+    interface is operating in full-duplex mode. */
+	RTS_IEC_DWORD dot3StatsExcessiveCollisions;		/* RFC 3635  Excessive Collisions:
+	A count of frames for which transmission on a
+    particular interface fails due to excessive
+    collisions.
+    This counter does not increment when the
+    interface is operating in full-duplex mode. */
+	RTS_IEC_DWORD dot3StatsCarrierSenseErrors;		/* RFC 3635  Carrier Sense Errors:
+	The number of times that the carrier sense
+    condition was lost or never asserted when
+    attempting to transmit a frame on a particular
+    interface.
+    The count represented by an instance of this
+    object is incremented at most once per
+    transmission attempt, even if the carrier sense
+    condition fluctuates during a transmission
+    attempt.
+    This counter does not increment when the
+    interface is operating in full-duplex mode. */
+	RTS_IEC_LWORD hcStatsAlignmentErrors;		/* Frames received that are not an integral number of octets in length and do not pass the FCS check. This counter is a 64-bit version of Alignment Errors. */
+	RTS_IEC_LWORD hcStatsFCSErrors;		/* Frames received that are an integral number of octets in length but do not pass the FCS check.  This counter is a 64-bit version of FCS Errors. */
+	RTS_IEC_LWORD hcStatsInternalMacTransmitErrors;		/* Frames for which transmission fails due to an internal MAC sublayer transmit error.  This counter is a 64-bit version of MAC Transmit Errors. */
+	RTS_IEC_LWORD hcStatsFrameTooLongs;		/* Frames received that exceed the maximum permitted frame size.  This counter is a 64-bit version of Frame Too Long Errors. */
+	RTS_IEC_LWORD hcStatsInternalMacReceiveErrors;		/* Frames for which reception on an interface fails due to an internal MAC sublayer receive error.  This counter is a 64-bit version of MAC Receive Errors. */
+	RTS_IEC_LWORD hcStatsSymbolErrors;		/* Number of times there was an invalid data symbol on the media when a valid carrier was present. */
+	RTS_IEC_RESULT dot3StatsAlignmentErrorsQuality;		
+	RTS_IEC_RESULT dot3StatsFCSErrorsQuality;		
+	RTS_IEC_RESULT dot3StatsSingleCollisionFramesQuality;		
+	RTS_IEC_RESULT dot3StatsMultipleCollisionFramesQuality;		
+	RTS_IEC_RESULT dot3StatsSQETestErrorsQuality;		
+	RTS_IEC_RESULT dot3StatsDeferredTransmissionsQuality;		
+	RTS_IEC_RESULT dot3StatsLateCollisionsQuality;		
+	RTS_IEC_RESULT dot3StatsExcessiveCollisionsQuality;		
+	RTS_IEC_RESULT dot3StatsInternalMacTransmitErrorsQuality;		
+	RTS_IEC_RESULT dot3StatsCarrierSenseErrorsQuality;		
+	RTS_IEC_RESULT dot3StatsFrameTooLongsQuality;		
+	RTS_IEC_RESULT dot3StatsInternalMacReceiveErrorsQuality;		
+	RTS_IEC_RESULT hcStatsAlignmentErrorsQuality;		
+	RTS_IEC_RESULT hcStatsFCSErrorsQuality;		
+	RTS_IEC_RESULT hcStatsInternalMacTransmitErrorsQuality;		
+	RTS_IEC_RESULT hcStatsFrameTooLongsQuality;		
+	RTS_IEC_RESULT hcStatsInternalMacReceiveErrorsQuality;		
+	RTS_IEC_RESULT hcStatsSymbolErrorsQuality;		
+} SysEthernetMediaCounters;
+
+/**
+ * Structure containing the Ethernet port configuration and status
  */
 typedef struct tagSysEthernetPortConfigAndStatus
 {
 	RTS_IEC_UDINT udiStructSize;		/* Size of the structure SysEthernetPortConfigAndStatus returned from external implementation */
 	RTS_IEC_UDINT udiVersion;		/* Version number of the structure */
 	RTS_IEC_UDINT udiMauType;		/* Media Access Unit (MAU) type, see MauType constants SYSETH_MAUTYPE_... */
-	RTS_IEC_UINT uiOperStatus;		/* Link state of ethernet port, see OperStatus constants SYSETH_OPERSTAT_... */
-	RTS_IEC_USINT usiAutoNegSupport;		/* Autonegotiation support of MAU, see AutoNegSupport constants SYSETH_AUTONEGSUP_... */
-	RTS_IEC_USINT usiAutoNegMode;		/* Autonegotiation mode of MAU, see AutoNegMode constants SYSETH_AUTONEGMODE_... */
-	RTS_IEC_ULINT uliAutoNegSupportedCap;		/* Supported autonegotiation capabilities of MAU, see AutoNegCaps constants SYSETH_AUTONEGCAP_... */
-	RTS_IEC_ULINT uliAutoNegAdvertisedCap;		/* Advertised autonegotiation capabilities of MAU, see AutoNegCaps constants SYSETH_AUTONEGCAP_... */
+	RTS_IEC_UINT uiOperStatus;		/* Link state of Ethernet port, see OperStatus constants SYSETH_OPERSTAT_... */
+	RTS_IEC_USINT usiAutoNegSupport;		/* Auto-negotiation support of MAU, see AutoNegSupport constants SYSETH_AUTONEGSUP_... */
+	RTS_IEC_USINT usiAutoNegMode;		/* Auto-negotiation mode of MAU, see AutoNegMode constants SYSETH_AUTONEGMODE_... */
+	RTS_IEC_ULINT uliAutoNegSupportedCap;		/* Supported auto-negotiation capabilities of MAU, see AutoNegCaps constants SYSETH_AUTONEGCAP_... */
+	RTS_IEC_ULINT uliAutoNegAdvertisedCap;		/* Advertised auto-negotiation capabilities of MAU, see AutoNegCaps constants SYSETH_AUTONEGCAP_... */
 } SysEthernetPortConfigAndStatus;
 
 /**
- * Close a ethernet adapter.
+ * Close a Ethernet adapter.
  */
 typedef struct tagsysethernetadapterclose_struct
 {
-	RTS_IEC_HANDLE hAdapter;			/* VAR_INPUT */	/* Handle to the opened ethernet adapter. Retrieved using SysEthernetAdapterOpen() */
+	RTS_IEC_HANDLE hAdapter;			/* VAR_INPUT */	/* Handle to the opened Ethernet adapter. Retrieved using SysEthernetAdapterOpen() */
 	RTS_IEC_RESULT SysEthernetAdapterClose;	/* VAR_OUTPUT */	
 } sysethernetadapterclose_struct;
 
-DEF_API(`void',`CDECL',`sysethernetadapterclose',`(sysethernetadapterclose_struct *p)',1,0x3AF33BA1,0x03050C00)
+DEF_API(`void',`CDECL',`sysethernetadapterclose',`(sysethernetadapterclose_struct *p)',1,0x3AF33BA1,0x03051100)
 
 /**
- * Open an ethernet adapter by its MAC address.
+ * Open an Ethernet adapter by its MAC address.
  * .. note::
  *    Each adapter can only be opened once.
  * :return: Returns a handle to the opened adapter. SysTypes.RTS_INVALID_HANDLE is returned if the operation failed.
@@ -581,25 +868,25 @@ typedef struct tagsysethernetadapteropen_struct
 	RTS_IEC_HANDLE SysEthernetAdapterOpen;	/* VAR_OUTPUT */	
 } sysethernetadapteropen_struct;
 
-DEF_API(`void',`CDECL',`sysethernetadapteropen',`(sysethernetadapteropen_struct *p)',1,0x7E26ED8D,0x03050C00)
+DEF_API(`void',`CDECL',`sysethernetadapteropen',`(sysethernetadapteropen_struct *p)',1,0x7E26ED8D,0x03051100)
 
 /**
- * This function receives the next ethernet frame from the ethernet adapter. A pointer to this frame
+ * This function receives the next Ethernet frame from the Ethernet adapter. A pointer to this frame
  * is returned.
  * ..note::
  *   The frame returned has to be released using the SysEthernetEthFrameRelease() function.
  *   The frame will only be overwritten if the frame is released. As frames are reused when
  *   released pay attention to call this function if processing of the frame has finished.
- * :return: Pointer to the ethernet frame
+ * :return: Pointer to the Ethernet frame
  */
 typedef struct tagsysethernetethframereceive_struct
 {
-	RTS_IEC_HANDLE hAdapter;			/* VAR_INPUT */	/* Ethernetadapter where to receive the frame. */
+	RTS_IEC_HANDLE hAdapter;			/* VAR_INPUT */	/* Ethernet adapter where to receive the frame. */
 	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Result of the operation. */
 	SysEthernetFrame *SysEthernetEthFrameReceive;	/* VAR_OUTPUT */	
 } sysethernetethframereceive_struct;
 
-DEF_API(`void',`CDECL',`sysethernetethframereceive',`(sysethernetethframereceive_struct *p)',1,0xAA2055F3,0x03050C00)
+DEF_API(`void',`CDECL',`sysethernetethframereceive',`(sysethernetethframereceive_struct *p)',1,0xAA2055F3,0x03051100)
 
 /**
  * This function sends an ethernetframe to the given adapter.
@@ -608,12 +895,12 @@ DEF_API(`void',`CDECL',`sysethernetethframereceive',`(sysethernetethframereceive
  */
 typedef struct tagsysethernetethframesend_struct
 {
-	RTS_IEC_HANDLE hAdapter;			/* VAR_INPUT */	/* Ethernetadapter where to send the frame. */
+	RTS_IEC_HANDLE hAdapter;			/* VAR_INPUT */	/* Ethernet adapter where to send the frame. */
 	SysEthernetFrame *pFrame;			/* VAR_INPUT */	/* Pointer to the frame to send. */
 	RTS_IEC_RESULT SysEthernetEthFrameSend;	/* VAR_OUTPUT */	
 } sysethernetethframesend_struct;
 
-DEF_API(`void',`CDECL',`sysethernetethframesend',`(sysethernetethframesend_struct *p)',1,0x9145ED7E,0x03050C00)
+DEF_API(`void',`CDECL',`sysethernetethframesend',`(sysethernetethframesend_struct *p)',1,0x9145ED7E,0x03051100)
 
 /**
  * Release a received frame to indicate that the frame can be reused.
@@ -624,10 +911,51 @@ typedef struct tagsysethernetframerelease_struct
 	RTS_IEC_RESULT SysEthernetFrameRelease;	/* VAR_OUTPUT */	
 } sysethernetframerelease_struct;
 
-DEF_API(`void',`CDECL',`sysethernetframerelease',`(sysethernetframerelease_struct *p)',1,0xDF7EE900,0x03050C00)
+DEF_API(`void',`CDECL',`sysethernetframerelease',`(sysethernetframerelease_struct *p)',1,0xDF7EE900,0x03051100)
 
 /**
- * Get ethernet port configuration and status of an adapter identified by its MAC address.
+ * Get EIP Interface Capability of an adapter identified by its MAC address.
+ * :return: Runtime system error code (see CmpErrors.library).
+ */
+typedef struct tagsysethernetgetcapabilities_struct
+{
+	RTS_IEC_BYTE macAddress[6];			/* VAR_INPUT */	/* MAC address of the adapter to get information from */
+	SysEthernetCapabilities *pSysEthernetCapabilities;	/* VAR_INPUT */	/* EIP Interface Capability structure */
+	RTS_IEC_RESULT SysEthernetGetCapabilities;	/* VAR_OUTPUT */	
+} sysethernetgetcapabilities_struct;
+
+DEF_API(`void',`CDECL',`sysethernetgetcapabilities',`(sysethernetgetcapabilities_struct *p)',1,0x7DDC367B,0x03051100)
+
+/**
+ * Get EIP Interface Counters of an adapter identified by its MAC address.
+ * :return: Runtime system error code (see CmpErrors.library).
+ */
+typedef struct tagsysethernetgetinterfacecounters_struct
+{
+	RTS_IEC_BYTE macAddress[6];			/* VAR_INPUT */	/* MAC address of the adapter to get information from */
+	SysEthernetInterfaceCounters *pSysEthernetInterfaceCounters;	/* VAR_INPUT */	/* EIP Interface Counters structure */
+	RTS_IEC_BOOL xGetAndClear;			/* VAR_INPUT */	/* Set the counters to zero after the response is built. */
+	RTS_IEC_RESULT SysEthernetGetInterfaceCounters;	/* VAR_OUTPUT */	
+} sysethernetgetinterfacecounters_struct;
+
+DEF_API(`void',`CDECL',`sysethernetgetinterfacecounters',`(sysethernetgetinterfacecounters_struct *p)',1,0x0C75E324,0x03051100)
+
+/**
+ * Get EIP Media Counters of an adapter identified by its MAC address.
+ * :return: Runtime system error code (see CmpErrors.library).
+ */
+typedef struct tagsysethernetgetmediacounters_struct
+{
+	RTS_IEC_BYTE macAddress[6];			/* VAR_INPUT */	/* MAC address of the adapter to get information from */
+	SysEthernetMediaCounters *pSysEthernetMediaCounters;	/* VAR_INPUT */	/* EIP Media Counters structure */
+	RTS_IEC_BOOL xGetAndClear;			/* VAR_INPUT */	/* Set the counters to zero after the response is built. */
+	RTS_IEC_RESULT SysEthernetGetMediaCounters;	/* VAR_OUTPUT */	
+} sysethernetgetmediacounters_struct;
+
+DEF_API(`void',`CDECL',`sysethernetgetmediacounters',`(sysethernetgetmediacounters_struct *p)',1,0x1D87744E,0x03051100)
+
+/**
+ * Get Ethernet port configuration and status of an adapter identified by its MAC address.
  * :return: Runtime system error code (see CmpErrors.library).
  */
 typedef struct tagsysethernetgetportconfigandstatus_struct
@@ -638,14 +966,14 @@ typedef struct tagsysethernetgetportconfigandstatus_struct
 	RTS_IEC_RESULT SysEthernetGetPortConfigAndStatus;	/* VAR_OUTPUT */	
 } sysethernetgetportconfigandstatus_struct;
 
-DEF_API(`void',`CDECL',`sysethernetgetportconfigandstatus',`(sysethernetgetportconfigandstatus_struct *p)',1,RTSITF_GET_SIGNATURE(0xE8D0BEEB, 0x21B15FAE),0x03050C00)
+DEF_API(`void',`CDECL',`sysethernetgetportconfigandstatus',`(sysethernetgetportconfigandstatus_struct *p)',1,RTSITF_GET_SIGNATURE(0xE8D0BEEB, 0x21B15FAE),0x03051100)
 
 /**
  * This function receives an IP frame from the systems IP Stack.
- * This frame has to be packed into an Ethercat frame and sent to
+ * This frame has to be packed into an EtherCAT frame and sent to
  * this adapter.
  * ..note::
- *   Special function for Ethernet over Ethercat (EoE) 
+ *   Special function for Ethernet over EtherCAT (EoE) 
  */
 typedef struct tagsysethernetipframereceive_struct
 {
@@ -654,13 +982,13 @@ typedef struct tagsysethernetipframereceive_struct
 	SysEthernetFrame *SysEthernetIpFrameReceive;	/* VAR_OUTPUT */	
 } sysethernetipframereceive_struct;
 
-DEF_API(`void',`CDECL',`sysethernetipframereceive',`(sysethernetipframereceive_struct *p)',1,0x3794F2CE,0x03050C00)
+DEF_API(`void',`CDECL',`sysethernetipframereceive',`(sysethernetipframereceive_struct *p)',1,0x3794F2CE,0x03051100)
 
 /**
- * This functions sends an ethernet frame to the local IP Stack for processing.
+ * This functions sends an Ethernet frame to the local IP Stack for processing.
  * The frame can be safely reused when this function has returned.
  * ..note::
- *   Special function for Ethernet over Ethercat (EoE) 
+ *   Special function for Ethernet over EtherCAT (EoE) 
  */
 typedef struct tagsysethernetipframesend_struct
 {
@@ -669,33 +997,33 @@ typedef struct tagsysethernetipframesend_struct
 	RTS_IEC_RESULT SysEthernetIpFrameSend;	/* VAR_OUTPUT */	
 } sysethernetipframesend_struct;
 
-DEF_API(`void',`CDECL',`sysethernetipframesend',`(sysethernetipframesend_struct *p)',1,0x02F5C5D2,0x03050C00)
+DEF_API(`void',`CDECL',`sysethernetipframesend',`(sysethernetipframesend_struct *p)',1,0x02F5C5D2,0x03051100)
 
 /**
- * Set advertised autonegotiation capabilities for an adapter identified by its MAC address.
+ * Set advertised auto-negotiation capabilities for an adapter identified by its MAC address.
  * :return: Runtime system error code (see CmpErrors.library).
  */
 typedef struct tagsysethernetsetautonegadvertisedcap_struct
 {
 	RTS_IEC_BYTE macAddress[6];			/* VAR_INPUT */	/* MAC address of the adapter */
-	RTS_IEC_ULINT uliAutoNegAdvertisedCap;	/* VAR_INPUT */	/* Advertised autonegotiation capabilities of MAU, see AutoNegCaps constants SYSETH_AUTONEGCAP_... */
+	RTS_IEC_ULINT uliAutoNegAdvertisedCap;	/* VAR_INPUT */	/* Advertised auto-negotiation capabilities of MAU, see AutoNegCaps constants SYSETH_AUTONEGCAP_... */
 	RTS_IEC_RESULT SysEthernetSetAutoNegAdvertisedCap;	/* VAR_OUTPUT */	
 } sysethernetsetautonegadvertisedcap_struct;
 
-DEF_API(`void',`CDECL',`sysethernetsetautonegadvertisedcap',`(sysethernetsetautonegadvertisedcap_struct *p)',1,0xBC4E06DB,0x03050C00)
+DEF_API(`void',`CDECL',`sysethernetsetautonegadvertisedcap',`(sysethernetsetautonegadvertisedcap_struct *p)',1,0xBC4E06DB,0x03051100)
 
 /**
- * Set autonegotiation mode for an adapter identified by its MAC address.
+ * Set auto-negotiation mode for an adapter identified by its MAC address.
  * :return: Runtime system error code (see CmpErrors.library).
  */
 typedef struct tagsysethernetsetautonegmode_struct
 {
 	RTS_IEC_BYTE macAddress[6];			/* VAR_INPUT */	/* MAC address of the adapter */
-	RTS_IEC_USINT usiAutoNegMode;		/* VAR_INPUT */	/* Autonegotiation mode of MAU, see AutoNegMode constants SYSETH_AUTONEGMODE_... */
+	RTS_IEC_USINT usiAutoNegMode;		/* VAR_INPUT */	/* Auto-negotiation mode of MAU, see AutoNegMode constants SYSETH_AUTONEGMODE_... */
 	RTS_IEC_RESULT SysEthernetSetAutoNegMode;	/* VAR_OUTPUT */	
 } sysethernetsetautonegmode_struct;
 
-DEF_API(`void',`CDECL',`sysethernetsetautonegmode',`(sysethernetsetautonegmode_struct *p)',1,0xCDFED6BF,0x03050C00)
+DEF_API(`void',`CDECL',`sysethernetsetautonegmode',`(sysethernetsetautonegmode_struct *p)',1,0xCDFED6BF,0x03051100)
 
 /**
  * Set Media Access Unit (MAU) type for an adapter identified by its MAC address.
@@ -708,7 +1036,7 @@ typedef struct tagsysethernetsetmautype_struct
 	RTS_IEC_RESULT SysEthernetSetMauType;	/* VAR_OUTPUT */	
 } sysethernetsetmautype_struct;
 
-DEF_API(`void',`CDECL',`sysethernetsetmautype',`(sysethernetsetmautype_struct *p)',1,0x06B2A7F6,0x03050C00)
+DEF_API(`void',`CDECL',`sysethernetsetmautype',`(sysethernetsetmautype_struct *p)',1,0x06B2A7F6,0x03051100)
 
 #ifdef __cplusplus
 }
@@ -724,7 +1052,7 @@ extern "C" {
  * Open and Close Ethernet adapters 
  */
 /**
- * <description>Open an ethernet adapter by its MAC address.
+ * <description>Open an Ethernet adapter by its MAC address.
  *  Note: Each adapter can only be opened once.
  * </description>
  * <return>Returns a handle to the opened adapter. SysTypes.RTS_INVALID_HANDLE is returned if the operation failed.</return>
@@ -735,7 +1063,7 @@ extern "C" {
 DEF_ITF_API(`RTS_HANDLE',`CDECL',`SysEthernetAdapterOpen',`(RTS_UI8* pMacAddress, RTS_SIZE macSize, RTS_RESULT* pResult)')
 
 /**
- * <description>Close an ethernet adapter.</description>
+ * <description>Close an Ethernet adapter.</description>
  * <return>Result of the operation. ERR_INVALID_HANDLE if the handle was invalid. ERR_OK if operation was successful.</return>
  * <param name="hAdapter" type="IN">Adapter to close.</param>
  */
@@ -745,7 +1073,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysEthernetAdapterClose',`(RTS_HANDLE hAdapter
  * Send and receive data
  */
 /**
- * <description>Send an ethernet frame to the adapter. The data of the frame is copied to the adapter. When this function
+ * <description>Send an Ethernet frame to the adapter. The data of the frame is copied to the adapter. When this function
  * returns the frame can be overwritten without any problems.
  * <return>Result of the operation. ERR_OK if successful. ERR_INVALID_HANDLE if the handle was invalid.</return>
  * <param name="hAdapter" type="IN">Adapter where to send the frame.</param>
@@ -754,7 +1082,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysEthernetAdapterClose',`(RTS_HANDLE hAdapter
 DEF_ITF_API(`RTS_RESULT',`CDECL',`SysEthernetEthFrameSend',`(RTS_HANDLE hAdapter, SysEthernetFrame* pFrame)')
 
 /**
- * <description>Receive an ethernet frame for the ethernet adapter.
+ * <description>Receive an Ethernet frame for the Ethernet adapter.
  * Note: 
  *   The frame returned has to be released using the SysEthernetEthFrameRelease() function.
  *   The frame will only be overwritten if the frame is released. As frames are reused when
@@ -766,12 +1094,12 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysEthernetEthFrameSend',`(RTS_HANDLE hAdapter
 DEF_ITF_API(`SysEthernetFrame*',`CDECL',`SysEthernetEthFrameReceive',`(RTS_HANDLE hAdapter, RTS_RESULT* pResult)')
 
 /*
- * Functions for Ethernet over Ethercat (EoE)
+ * Functions for Ethernet over EtherCAT (EoE)
  */
 /**
- * <description>This functions sends an ethernet frame to the local IP Stack for processing.
+ * <description>This functions sends an Ethernet frame to the local IP Stack for processing.
  * The frame can be safely reused when this function has returned.
- * Note: Special function for Ethernet over Ethercat (EoE)</description>
+ * Note: Special function for Ethernet over EtherCAT (EoE)</description>
  * <return>Pointer to the received frame. NULL if failed.</return>
  * <param name="hAdapter" type="IN">Adapter where to send the IP Frame.</param>
  * <param name="pResult" type="OUT">Result of the operation.</param>
@@ -780,9 +1108,9 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysEthernetIpFrameSend',`(RTS_HANDLE hAdapter,
 
 /**
  * <description>This function receives an IP frame from the systems IP Stack.
- * This frame has to be packed into an Ethercat frame and sent to
+ * This frame has to be packed into an EtherCAT frame and sent to
  * this adapter.
- * Note: Special function for Ethernet over Ethercat (EoE) </description>
+ * Note: Special function for Ethernet over EtherCAT (EoE) </description>
  * <return>Pointer to the received frame. NULL if failed.</return>
  * <param name="hAdapter" type="IN">Adapter where to receive the IP Frame.</param>
  * <param name="pResult" type="OUT">Result of the operation.</param>
@@ -806,33 +1134,33 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysEthernetFrameRelease',`(SysEthernetFrame* p
 #define SYSETH_CONFIG_AND_STATUS_STRUCT_VERSION		1	/* version number of structure, to be increased on changes */
 
 /**
-* <description>Get ethernet port configuration and status of an adapter identified by its MAC address.</description>
+* <description>Get Ethernet port configuration and status of an adapter identified by its MAC address.</description>
 * <param name="pMacAddress" type="IN">Pointer to the MAC address of the adapter to get information from.</param>
 * <param name="macSize" type="IN">Size of the MAC address. This is usually 6 bytes.</param>
-* <param name="pPortConfigAndStatus" type="IN">Structure to be filled with the configuration and status data. The struct element udiStructSize must contain a valid size for the struct.</param>
+* <param name="pPortConfigAndStatus" type="IN">Structure to be filled with the configuration and status data. The structure element udiStructSize must contain a valid size for the structure.</param>
 * <result>Runtime system error code</result>
 * <errorcode name="RTS_RESULT" type="ERR_OK">Information is available</errorcode>
-* <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Paramter error</errorcode>
+* <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter error</errorcode>
 * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">No adapter with the provided MAC address could be found</errorcode>
-* <errorcode name="RTS_RESULT" type="ERR_FAILED">Generic error, typically occured in lower layer</errorcode>
-* <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">Function is not implemented/errorcode>
+* <errorcode name="RTS_RESULT" type="ERR_FAILED">Generic error, typically occurred in lower layer</errorcode>
+* <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">Function is not implemented/error code>
 */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`SysEthernetGetPortConfigAndStatus',`(RTS_UI8* pMacAddress, RTS_SIZE macSize, SysEthernetPortConfigAndStatus* pPortConfigAndStatus)')
 
 /**
-* <description>Set advertised autonegotiation capabilities for an adapter identified by its MAC address.</description>
+* <description>Set advertised auto-negotiation capabilities for an adapter identified by its MAC address.</description>
 * <param name="pMacAddress" type="IN">Pointer to the MAC address of the adapter.</param>
 * <param name="macSize" type="IN">Size of the MAC address. This is usually 6 bytes.</param>
-* <param name="ui64AutoNegAdvertisedCap" type="IN">Advertised autonegotiation capabilities of MAU, see AutoNegCaps constants SYSETH_AUTONEGCAP_...</param>
+* <param name="ui64AutoNegAdvertisedCap" type="IN">Advertised auto-negotiation capabilities of MAU, see AutoNegCaps constants SYSETH_AUTONEGCAP_...</param>
 * <result>Runtime system error code</result>
 */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`SysEthernetSetAutoNegAdvertisedCap',`(RTS_UI8* pMacAddress, RTS_SIZE macSize, RTS_UI64 ui64AutoNegAdvertisedCap)')
 
 /**
-* <description>Set autonegotiation mode for an adapter identified by its MAC address.</description>
+* <description>Set auto-negotiation mode for an adapter identified by its MAC address.</description>
 * <param name="pMacAddress" type="IN">Pointer to the MAC address of the adapter.</param>
 * <param name="macSize" type="IN">Size of the MAC address. This is usually 6 bytes.</param>
-* <param name="ui8AutoNegMode" type="IN">Autonegotiation mode of MAU, see AutoNegMode constants SYSETH_AUTONEGMODE_...</param>
+* <param name="ui8AutoNegMode" type="IN">Auto-negotiation mode of MAU, see AutoNegMode constants SYSETH_AUTONEGMODE_...</param>
 * <result>Runtime system error code</result>
 */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`SysEthernetSetAutoNegMode',`(RTS_UI8* pMacAddress, RTS_SIZE macSize, RTS_UI8 ui8AutoNegMode)')
@@ -846,6 +1174,49 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysEthernetSetAutoNegMode',`(RTS_UI8* pMacAddr
 */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`SysEthernetSetMauType',`(RTS_UI8* pMacAddress, RTS_SIZE macSize, RTS_UI32 ui32MauType)')
 
+/**
+* <description>Get EIP Interface Counters of an adapter identified by its MAC address.</description>
+* <param name="pMacAddress" type="IN">Pointer to the MAC address of the adapter to get information from.</param>
+* <param name="macSize" type="IN">Size of the MAC address. This is usually 6 bytes.</param>
+* <param name="pSysEthernetInterfaceCounters" type="IN">EIP Interface Counters structure</param>
+* <param name="getAndClear" type="IN">Set the counters to zero after the response is built.</param>
+* <result>Runtime system error code</result>
+* <errorcode name="RTS_RESULT" type="ERR_OK">Information is available</errorcode>
+* <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter error</errorcode>
+* <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">No adapter with the provided MAC address could be found</errorcode>
+* <errorcode name="RTS_RESULT" type="ERR_FAILED">Generic error, typically occurred in lower layer</errorcode>
+* <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">Function is not implemented/error code>
+*/
+DEF_ITF_API(`RTS_RESULT',`CDECL',`SysEthernetGetInterfaceCounters',`(RTS_UI8* pMacAddress, RTS_SIZE macSize, SysEthernetInterfaceCounters* pSysEthernetInterfaceCounters, RTS_BOOL getAndClear)')
+
+/**
+* <description>Get EIP Media Counters of an adapter identified by its MAC address.</description>
+* <param name="pMacAddress" type="IN">Pointer to the MAC address of the adapter to get information from.</param>
+* <param name="macSize" type="IN">Size of the MAC address. This is usually 6 bytes.</param>
+* <param name="pSysEthernetMediaCounters" type="IN">EIP Media Counters structure</param>
+* <param name="getAndClear" type="IN">Set the counters to zero after the response is built.</param>
+* <result>Runtime system error code</result>
+* <errorcode name="RTS_RESULT" type="ERR_OK">Information is available</errorcode>
+* <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter error</errorcode>
+* <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">No adapter with the provided MAC address could be found</errorcode>
+* <errorcode name="RTS_RESULT" type="ERR_FAILED">Generic error, typically occurred in lower layer</errorcode>
+* <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">Function is not implemented/error code>
+*/
+DEF_ITF_API(`RTS_RESULT',`CDECL',`SysEthernetGetMediaCounters',`(RTS_UI8* pMacAddress, RTS_SIZE macSize, SysEthernetMediaCounters* pSysEthernetMediaCounters, RTS_BOOL getAndClear)')
+
+/**
+* <description>Get EIP Interface Capabilities of an adapter identified by its MAC address.</description>
+* <param name="pMacAddress" type="IN">Pointer to the MAC address of the adapter to get information from.</param>
+* <param name="macSize" type="IN">Size of the MAC address. This is usually 6 bytes.</param>
+* <param name="pSysEthernetCapabilities" type="IN">EIP Interface Capability structure</param>
+* <result>Runtime system error code</result>
+* <errorcode name="RTS_RESULT" type="ERR_OK">Information is available</errorcode>
+* <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter error</errorcode>
+* <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">No adapter with the provided MAC address could be found</errorcode>
+* <errorcode name="RTS_RESULT" type="ERR_FAILED">Generic error, typically occurred in lower layer</errorcode>
+* <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">Function is not implemented/error code>
+*/
+DEF_ITF_API(`RTS_RESULT',`CDECL',`SysEthernetGetCapabilities',`(RTS_UI8* pMacAddress, RTS_SIZE macSize, SysEthernetCapabilities* pSysEthernetCapabilities)')
 
 #ifdef __cplusplus
 }

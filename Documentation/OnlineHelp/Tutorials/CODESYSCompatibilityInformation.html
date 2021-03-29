@@ -1,0 +1,427 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>6.1.2. CODESYS Compatibility Information &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/theme.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6.1.3. CODESYS Control - Runtime System Brochure" href="CODESYSControlV3_RuntimeSystemBrochure.html" />
+    <link rel="prev" title="6.1.1.4. Manage the License Files" href="CODESYSControlV3_FirstSteps/manage_license_files.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CODESYSControlV3_RuntimeSystemBrochure.html" title="6.1.3. CODESYS Control - Runtime System Brochure"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CODESYSControlV3_FirstSteps/manage_license_files.html" title="6.1.1.4. Manage the License Files"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">6. Tutorials / HowTos</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="CODESYSControlV3_FirstSteps/manage_license_files.html"
+                        title="previous chapter">6.1.1.4. Manage the License Files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="CODESYSControlV3_RuntimeSystemBrochure.html"
+                        title="next chapter">6.1.3. CODESYS Control - Runtime System Brochure</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="codesys-compatibility-information">
+<h1>6.1.2. CODESYS Compatibility Information<a class="headerlink" href="#codesys-compatibility-information" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<span id="id1"></span><h2>6.1.2.1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>CODESYS, the CODESYS runtime system and the IEC project are used in different versions and so the compatibility between each of these components
+is an important aspect.</p>
+<p>CODESYS can be updated very easy via a new available setup. With a newer CODESYS installation you get typically a new compiler version,
+a set of libraries and new Features (PlugIns).</p>
+<p>The CODESYS runtime system is not so easy to update, because an OEM customer has to integrate the runtime system into their Controller and
+to retest the complete Firmware. So this is typically not a short term  process.</p>
+<p>The IEC project has different versions during commissioning a machine. After the machine is released, the IEC project is only changed for
+service or maintenance work.</p>
+<dl class="simple">
+<dt>These are the general compatibility aspects:</dt><dd><ul class="simple">
+<li><p><a class="reference internal" href="#compatibility-codesys-runtime-system">Compatibility CODESYS - Runtime System</a></p></li>
+<li><p><a class="reference internal" href="#compatibility-iec-project-runtime-system">Compatibility IEC project - Runtime System</a></p></li>
+<li><p><a class="reference internal" href="#compatibility-device-descriptions-runtime-system">Compatibility Device Descriptions - Runtime System</a></p></li>
+<li><p><a class="reference internal" href="#compatibility-external-libraries-runtime-system">Compatibility External Libraries - Runtime System</a></p></li>
+<li><p><a class="reference internal" href="#compatibility-bootproject-retains-runtime-system">Compatibility Bootproject + Retains - Runtime System</a></p></li>
+<li><p><a class="reference internal" href="#compatibility-codesys-projects">Compatibility CODESYS Projects</a></p></li>
+<li><p><a class="reference internal" href="#compatibility-codesys-automation-platform-interfaces">Compatibility CODESYS Automation Platform Interfaces</a></p></li>
+<li><p><a class="reference internal" href="#compatibility-codesys-compiler-version">Compatibility CODESYS Compiler Version</a></p></li>
+<li><p><a class="reference internal" href="#compatibility-codesys-compiler-version-libraries">Compatibility CODESYS Compiler Version - Libraries</a></p></li>
+<li><p><a class="reference internal" href="#compatibility-codesys-visualization-profile">Compatibility CODESYS Visualization Profile</a></p></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="id2">
+<h2>6.1.2.2. <span class="target" id="compatibility-codesys-runtime-system">Compatibility CODESYS - Runtime System</span><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>We recommend always to use the newest CODESYS version and the usage of the newest CODESYS compiler! The typical use case is that CODESYS
+is updated more often than the runtime system and so CODESYS is newer than the runtime system.</p>
+<p>Using a newer version of CODESYS will not change the behaviour of existing projects, as long as the device description is not changed!</p>
+<p>But we do not recommend to use an older version of CODESYS and a newer version of the runtime system! We do not test this compatibility explicitly.
+Because of security fixes in newer runtime systems, there could be incompatibilities with older versions of CODESYS.</p>
+</div>
+<div class="section" id="id3">
+<h2>6.1.2.3. <span class="target" id="compatibility-iec-project-runtime-system">Compatibility IEC project - Runtime System</span><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>We recommend always to use the newest CODESYS version and the usage of the newest CODESYS compiler!</p>
+<p>Existing projects must run unchanged on existing runtime systems, also with newer CODESYS versions!</p>
+<p>The following aspects are of interest:</p>
+<blockquote>
+<div><ul>
+<li><p>New features in CODESYS are activated typically in the device description. So they are disabled for older runtime systems respectively older device descriptions.</p></li>
+<li><p>The versions of all external libraries are resolved by the device description. So they are matching to the corresponding runtime system.</p></li>
+<li><p>Internal libraries are resolved by the library profile matching to the CODESYS version, independent of the runtime system version.</p></li>
+<li><p>With a newer CODESYS version we provide typically a newer compiler version. But for existing projects, the selected compiler version is not changed!</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you update the compiler version to a newer version the generated IEC code can be changed (e.g. implicit generated code from PlugIns like visualization
+dependent on the selected compiler version)! So this may affect the behaviour of the project e.g. different timing, fixed bugs which changes the behaviour,
+etc. We recommend testing your project thoroughly after updating the compiler version!</p>
+</div>
+</li>
+<li><p>The communication services are built according to a common tagged format. Unknown tags are ignored by the runtime system. A change in the communication service is therefore possible
+but the programming system will not expect the runtime system to interpret the new information.</p></li>
+</ul>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>6.1.2.4. <span class="target" id="compatibility-device-descriptions-runtime-system">Compatibility Device Descriptions - Runtime System</span><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>Existing projects must run unchanged on existing runtime systems, also with newer CODESYS versions. This can be fulfilled, because the device description in the project
+is not changed an has the existing version, that matched to the runtime system version.
+Additionally you can login to the runtime system, if the version of the device description and the runtime system are not too far away or incompatible:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>An older device description version and a newer runtime systems are accepted at login. Newer device description version and an older runtime systems is not accepted so
+the login is denied.</p></li>
+<li><p>the device description contains a list of external libraries, which external functions are implemented in the runtime system. The corresponding version of the library is
+specified here in the so called library placeholder list.
+NOTE:
+The placeholder list should only contain the libraries, which corresponding runtime components are available in the runtime system!</p></li>
+<li><p>There is a possibility to configure the compatibility range between the device description and the runtime system. That means you cannot login into the controller
+if the versions are not matching! This range can be selected by the OEM with the following settings in the runtime system (see SysTargetItf.h of the runtime system):</p>
+<ul>
+<li><dl class="simple">
+<dt>SYSTARGETKEY_INT_TARGET_VERSION_MASK                      “TargetVersionMask”</dt><dd><p>Setting to specify a mask to check the target version for compatibility with the device description.
+In the mask only the significant digits are checked.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>SYSTARGETKEY_INT_TARGET_VERSION_COMPATIBILITY_MASK        “TargetVersionCompatibilityMask”</dt><dd><p>Setting to specify a compatibility mask to check the target version for compatibility with the device description.
+A device description that is lower or equal the target version is accepted. A higher device description version
+is denied.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p>For details on creating own target packages and device descriptions, see Manuals/CODESYSControlV3_Manual.pdf, chapter 10.1.</p>
+<p><strong>Examples:</strong></p>
+<blockquote>
+<div><blockquote>
+<div><p>CODESYS current:</p>
+</div></blockquote>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 16%" />
+<col style="width: 17%" />
+<col style="width: 11%" />
+<col style="width: 20%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>CODESYS Version</p></th>
+<th class="head"><p>CODESYS Control Version</p></th>
+<th class="head"><p>Device description Version</p></th>
+<th class="head"><p>Recommended</p></th>
+<th class="head"><p>Restrictions</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>3.5.9.0</p></td>
+<td><p>3.5.9.0</p></td>
+<td><p>3.5.9.0</p></td>
+<td><p>yes, optimal</p></td>
+<td><p>—</p></td>
+<td><p>This is the most ideal combination</p></td>
+</tr>
+<tr class="row-odd"><td><p>3.5.9.0</p></td>
+<td><p>3.5.4.0</p></td>
+<td><p>3.5.4.0</p></td>
+<td><p>yes</p></td>
+<td><p>—</p></td>
+<td><p>This the typcial compatibility use case</p></td>
+</tr>
+<tr class="row-even"><td><p>3.5.4.0</p></td>
+<td><p>3.5.2.0</p></td>
+<td><p>3.5.4.0</p></td>
+<td><p>no, but possible</p></td>
+<td><p>warning at login into the
+controller, that the DevDesc
+is not matching</p></td>
+<td><p>This is possible because the DevDesc is
+in the compatible range of 3.5.x.x</p></td>
+</tr>
+<tr class="row-odd"><td><p>3.5.9.0</p></td>
+<td><p>3.5.4.0</p></td>
+<td><p>3.5.9.0</p></td>
+<td><p>no</p></td>
+<td><p>no access to the controller</p></td>
+<td><p>This is denied by default because of an
+incompatible mismatch between DescDesc
+and the runtime system</p></td>
+</tr>
+<tr class="row-even"><td><p>3.5.9.0</p></td>
+<td><p>3.5.4.0</p></td>
+<td><p>3.4.3.0</p></td>
+<td><p>no</p></td>
+<td><p>no access to the controller</p></td>
+<td><p>This is denied by default because of an
+incompatible mismatch between DescDesc
+and the runtime system (out of
+compatibility range)</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<blockquote>
+<div><p>CODESYS older version:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 16%" />
+<col style="width: 17%" />
+<col style="width: 11%" />
+<col style="width: 20%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>CODESYS Version</p></th>
+<th class="head"><p>CODESYS Control Version</p></th>
+<th class="head"><p>Device description Version</p></th>
+<th class="head"><p>Recommended</p></th>
+<th class="head"><p>Restrictions</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>3.5.4.0</p></td>
+<td><p>3.5.9.0</p></td>
+<td><p>3.5.9.0</p></td>
+<td><p>no, see 1)</p></td>
+<td><p>Incompatibilities possible
+because of security fixes
+in runtime system</p></td>
+<td><p>In CODESYS the set of all external
+libraries must be available and perhaps
+there are newer IEC language resource
+are used that leads to compile errors!</p></td>
+</tr>
+<tr class="row-odd"><td><p>3.5.4.0</p></td>
+<td><p>3.5.9.0</p></td>
+<td><p>3.5.4.0</p></td>
+<td><p>no, see 1)</p></td>
+<td><p>Incompatibilities possible
+because of security fixes
+in runtime system</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic simple">
+<li><p>see chapter <a class="reference internal" href="#compatibility-codesys-runtime-system">Compatibility CODESYS - Runtime System</a></p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="id5">
+<h2>6.1.2.5. <span class="target" id="compatibility-external-libraries-runtime-system">Compatibility External Libraries - Runtime System</span><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>Within a Main Version (e.g. 3.5.x.x) we are compatible in the runtime system regarding external Libraries. So interface functions in external Libraries are not changed or
+removed within a Main Version. This is checked in every Release Test for a service pack against the previous service pack version.
+But new interface functions or structure definitions could be added in newer library versions without any influence on existing libraries.</p>
+</div>
+<div class="section" id="id6">
+<h2>6.1.2.6. <span class="target" id="compatibility-bootproject-retains-runtime-system">Compatibility Bootproject + Retains - Runtime System</span><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>Existing bootprojects must be loadable within a main version by the runtime system! Within a main version (e.g. v3.5.x.x) we must be backward compatible regarding the bootproject and
+the external Libraries!
+This means a newer runtime system must be able to load older bootprojects, but we must not be able to load newer bootprojects that maches only to newer runtime systems!
+Especially the backward compatibility of external Libraries are checked explicitly at every release of a service pack (see chapter <a class="reference internal" href="#compatibility-external-libraries-runtime-system">Compatibility External Libraries - runtime system</a>).
+Over main versions it could work, but we cannot guarantee the compatibility!
+We check an existing bootproject before loading against the type label of a target (VendorID, DeviceID and since v3.5.8.0 the DeviceVersion).</p>
+<p>Retain-Variables out of a stored retain file (&lt;Application&gt;.ret) or SRAM must always be compatible.
+Per retain area a checksum is saved in a separate file, the same checksum is saved in the bootproject. This checksum is generated by the compiler out of the retain data and is an identification
+of all variables in the retain area with their respective types. If the checksum of the Retain data and the checksum in the bootproject do not match, there are several options in the
+runtime system to select the behaviour. These optionas can be specified as settings in the cfg-File in the [CmpApp] section:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Bootproject.RetainMismatch.Init = 1:
+Bootproject is loaded and retains are initialized</p></li>
+<li><p>Bootproject.RetainMismatch.Exception = 1:
+Bootproject is loaded, but the application will remain in stop and is set to an exception state. You can manually do a reset to heal this state.</p></li>
+<li><p>No setting [DEFAULT]:
+Bootproject is not loaded and an error message is added to the logger.</p></li>
+</ol>
+</div></blockquote>
+<p>Before runtime system Version 3.5.7.0 the Checksum was calculated out of the whole data of the application, with newer versions, the checksum is calculated only out of the data in the retain area.
+I.e. with newer versions, the retain data can be loaded to a boot project even if the project has changed, as long as these changes do not include changes in retain data.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>6.1.2.7. <span class="target" id="compatibility-codesys-projects">Compatibility CODESYS Projects</span><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>First of all, opening existing projects in newer CODESYS versions must be possible without any data loss with any version combination.</p>
+<p>Existing projects that are opened with a newer CODESYS version are kept in a “compatibility mode” as long as possible. That means, as long as the user only makes changes to the project
+which do not require new functionality, the storage format remains at the same version, so that the original CODESYS version is still able to open and edit that project without any loss
+of data. If the user makes changes which requires new data to be stored in the project, s/he will be interactively informed about that situation, giving him/her the possibility to undo
+the recent changes if a compatibility break would not be acceptable.</p>
+<p>Opening newer project storage versions in older CODESYS versions is often - not always, this depends on the availability of plug-in types in the old version - possible, but strictly
+discouraged. A corresponding message will be displayed while loading such a project.</p>
+<p>The user is also explicitly able to save a project for an older version of CODESYS using the “File :: Save As…” command. In that case, information will be dumped to the Messages view
+about which objects are suffering from data loss.</p>
+</div>
+<div class="section" id="id8">
+<h2>6.1.2.8. <span class="target" id="compatibility-codesys-automation-platform-interfaces">Compatibility CODESYS Automation Platform Interfaces</span><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>We guarantee that public AP interfaces, classes, delegates, structs, and enums are not changed any more after they have been released. We also guarantee that every AP SDK release does
+not contain any un-released types. That means, existing customer plug-ins can surely be executed in the context of a newer AP version without the need of re-compilation.</p>
+<p>Furthermore, we do our best that the semantics behind the interfaces does not change in an incompatible way. As one could imagine, this is sometimes a tightrope walk, because even a
+bugfix could be considered a semantic change. However, due to our experience with typical customer requirements, we mostly succeed in balancing out an implementation change.</p>
+</div>
+<div class="section" id="id9">
+<h2>6.1.2.9. <span class="target" id="compatibility-codesys-compiler-version">Compatibility CODESYS Compiler Version</span><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<p>With any version of the CODESYS Programming System you can select older compiler versions in the project Settings - Compiler Settings (beginning with version 3.4.0.0).
+If you create a new project, the compiler version will be set per default to the newest available compiler version. If an older project is opened with a newer Programming system, it is prompted to
+the programmer, that a newer compiler version is available, but the version will not be changed automatically.</p>
+<p>We guarantee that the generated code will be the same with any newer version of CODESYS, if the compiler version is not changed. That includes compiler bugs resulting in wrong code.
+We guarantee that login without online change is possible, if a download was done with an older version of CODESYS and the project is opened with a newer version of CODESYS, and the project is not changed.
+We guarantee that online changes are possible with a newer version of CODESYS, if the project contains changes, as long as an online change is possible at all. (I.e: if not the task configuration or the
+IO-Configuration is changed).</p>
+<p>That means in reverse: if the compiler version is changed, we cannot guarantee that the generated code is exactly the same. If you update the compiler version, you have to test your application again.
+New error messages and new warnings may occur after updating the compiler version. Login on a device containing the generated code is not possible. Online Change is not possible. A new download
+will be necessary.</p>
+<p>Note that the compiler version not only affects the compilation process itself, but also the language model that is produced by the objects. For example, since the IO-Configuration produces
+code, this code is produced according to the compiler version. Any automation platform plugin that produces code needs to consider the compiler version.</p>
+<p>You should keep the compiler version for maintaining applications on existing machines. You should use the newest version available for creating new applications.</p>
+</div>
+<div class="section" id="id10">
+<h2>6.1.2.10. <span class="target" id="compatibility-codesys-compiler-version-patching-of-old-versions">Compatibility CODESYS Compiler Version - Patching of old versions</span><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<p>All reported bugs with priority Critical, as well as a limited number of requested bugs will be fixed in the next service pack, and in the next Patch of all maintained versions.
+For example, a critical bug may be fixed for Version V3.5 SP13, V3.5 SP12 Patch 4 and V3.5 SP 11 Patch 6.
+The respective Compiler Versions will be integrated in the next Release of the newer Version.
+For example, Compiler Version V3.5 SP11 Patch 6 with all fixes for that version could be available in CODESYS Version V3.5 SP13, as well as in CODESYS Version
+V3.5 SP12 Patch 5.
+Upon request, patches on even older versions are possible. You then have to be aware, that there will be no integration of the Compiler Version in newer versions.
+For example, if there are patches on versions V3.5 SP13, V3.5 SP12, V3.5 SP11, but a customer needs a special fix on an earlier version, e.g: V3.5 SP3, then the
+respective Compiler Version will not occur in any Patch of a newer version.
+The more the code base of the current version and the code base of the version with the bugfix diverge, the more difficult is it to guarantee the same behaviour.
+For example, a function in which a fix in version V3.5 SP3 is necessary may no longer exist in the version V3.5 SP13. Integrating the old compiler version with its bugfixes
+in the new version may then be impossible.
+That means, projects that are produced with such a patch and opened with a newer version of CODESYS will require an update of the compiler version and will need recompilation.</p>
+</div>
+<div class="section" id="id11">
+<h2>6.1.2.11. <span class="target" id="compatibility-codesys-compiler-version-ap-developers">Compatibility CODESYS Compiler Version - AP Developers</span><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<p>Maintaining the compiler compatibility is not only a task for the compiler itself. It is a requirement for all Plugins in the automation platform. Every code change in an AP-Plugin that may have an
+effect on the generated code has to be done depending on the current compiler version. This is necessary in particular for all objects implementing the ILanguageModelProvider-interface and related interfaces.</p>
+</div>
+<div class="section" id="id12">
+<h2>6.1.2.12. <span class="target" id="compatibility-codesys-compiler-version-libraries">Compatibility CODESYS Compiler Version - Libraries</span><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<p>If you write libraries for CODESYS, you should consider, that the library may be used with an older version of CODESYS. You then should use this older compiler version for checking and saving the
+library. Thereby you avoid using new language features that are not available in older versions (like for example the operator AND_THEN or ANY_TYPE). On the other hand, with newer compiler versions your library may produce
+new errors and new warnings. Therefore it may be useful to check the library also with newer compiler versions.
+A compiled-library will use the compiler version as the project version when saved. That means for example, if you have the CODESYS installation 3.5.7.0 and the compiler version 3.5.5.0
+then the compiled-library will be saved with all information that is available in CODESYS 3.5.5.0.</p>
+<p>We guarantee that a library will successfully compile if used in a project, if the library was successfully checked with the same CODESYS compiler version.
+We guarantee that a compiled-library can be loaded with any CODESYS-Version equal or newer to the compiler version with which it was saved.</p>
+<p>Note that the last statement is not valid for source libraries.</p>
+</div>
+<div class="section" id="id13">
+<h2>6.1.2.13. <span class="target" id="compatibility-codesys-visualization-profile">Compatibility CODESYS Visualization Profile</span><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<p>The so called “Visualization Profile” in CODESYS is used to harmonize all visualization related components (Libraries, Codegeneration, etc.) to one consistent version that works prefectly together.
+The visualization profile is nearly independent of the adjusted compiler version in CODESYS. If the visualization profile is not compatible to this compiler versions, you get a compiler error with a hint to switch to
+a newer compiler version.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CODESYSControlV3_RuntimeSystemBrochure.html" title="6.1.3. CODESYS Control - Runtime System Brochure"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CODESYSControlV3_FirstSteps/manage_license_files.html" title="6.1.1.4. Manage the License Files"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >6. Tutorials / HowTos</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

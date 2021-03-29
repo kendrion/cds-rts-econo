@@ -1,0 +1,997 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __sys_cpu_multi_core_itf_8h:
+
+===================================
+SysCpuMultiCoreItf.h File Reference
+===================================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpTraceMgrItf.h <_cmp_trace_mgr_itf_8h>`"
+
+Data Structures
+---------------
+
+- struct :ref:`EVTPARAM_SysCpuMC_GroupBinding <struct_e_v_t_p_a_r_a_m___sys_cpu_m_c___group_binding>`
+
+- struct :ref:`EVTPARAM_SysCpuMC_IecCoreSetOverwrite <struct_e_v_t_p_a_r_a_m___sys_cpu_m_c___iec_core_set_overwrite>`
+
+- struct :ref:`CpuCoreBits <union_cpu_core_bits>`
+
+- struct :ref:`tagCpuCoreBindingDesc <structtag_cpu_core_binding_desc>`
+
+- struct :ref:`tagsysmcbdalloc_struct <structtagsysmcbdalloc__struct>`
+
+- struct :ref:`tagsysmcbdcount_struct <structtagsysmcbdcount__struct>`
+
+- struct :ref:`tagsysmcbdfree_struct <structtagsysmcbdfree__struct>`
+
+- struct :ref:`tagsysmcbdgetfirstid_struct <structtagsysmcbdgetfirstid__struct>`
+
+- struct :ref:`tagsysmcbdgetnextid_struct <structtagsysmcbdgetnextid__struct>`
+
+- struct :ref:`tagsysmcbdisset_struct <structtagsysmcbdisset__struct>`
+
+- struct :ref:`tagsysmcgetload_struct <structtagsysmcgetload__struct>`
+
+- struct :ref:`tagsysmcgetnumofcores_struct <structtagsysmcgetnumofcores__struct>`
+
+- struct :ref:`tagsysmcgetprocessbinding_struct <structtagsysmcgetprocessbinding__struct>`
+
+- struct :ref:`tagsysmcgettaskbinding_struct <structtagsysmcgettaskbinding__struct>`
+
+- struct :ref:`ISysCpuMultiCore_C <struct_i_sys_cpu_multi_core___c>`
+
+Macros
+------
+
+- #define :ref:`EVTPARAMID_SysCpuMC_GroupBinding <group___sys_cpu_multi_core_itf___eventparameter_1gadd256ddaa9ca1c056f7920eeb918ec29>` 0x0001
+
+- #define :ref:`EVTVERSION_SysCpuMC_GroupBinding <group___sys_cpu_multi_core_itf___eventparameter_1gaaa8782443145b5cee08c8bf92abec00f>` 0x0001
+
+- #define :ref:`EVT_GroupBinding <group___sys_cpu_multi_core_itf___events_1ga4e024effa8b940927d71d70974f1e8d0>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`EVTPARAMID_SysCpuMC_IecCoreSetOverwrite <group___sys_cpu_multi_core_itf___eventparameter_1ga2795e5411bf259ba249110862d668791>` 0x0002
+
+- #define :ref:`EVTVERSION_SysCpuMC_IecCoreSetOverwrite <group___sys_cpu_multi_core_itf___eventparameter_1ga015881d7c35be2ba5ec6ae1c6460c287>` 0x0001
+
+- #define :ref:`EVT_IecCoreSetOverwrite <group___sys_cpu_multi_core_itf___events_1gab820d52daedac9bfda6eead07ad50699>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+
+- #define :ref:`SYSMCKEY_INT_BINDPROCESS <group___sys_cpu_multi_core_itf___settings_1gab27063bcb5c76472af172c3592b72a83>` "BindProcess.CoreID"
+
+- #define :ref:`SYSMCVALUE_INT_BINDPROCESS <group___sys_cpu_multi_core_itf___settings_1ga090c1613486b6d58dc1d9bd17478fc48>` -1
+
+- #define :ref:`SYSMCKEY_INT_CPULOADTRACE <group___sys_cpu_multi_core_itf___settings_1ga9203b427f55a600e62f0ce6f82af6dca>` "CpuLoadTrace.Enable"
+
+- #define :ref:`SYSMCVALUE_INT_CPULOADTRACE <group___sys_cpu_multi_core_itf___settings_1ga6048acd75477b87ab0c9a15bcc5f4e55>` 1
+
+- #define :ref:`SYSMCKEY_INT_PLCLOADTRACE <group___sys_cpu_multi_core_itf___settings_1ga5a25a2989471de1d4fd680a8a513c013>` "PlcLoadTrace.Enable"
+
+- #define :ref:`SYSMCVALUE_INT_PLCLOADTRACE <group___sys_cpu_multi_core_itf___settings_1gac61d6270f9fa115f40c83af1907c90d2>` 1
+
+- #define :ref:`SYSMCKEY_STRING_IECCORESET <group___sys_cpu_multi_core_itf___settings_1gad2228d4d2f57a91a421a200d9054ae1f>` "IecCoreSet"
+
+- #define :ref:`SYSMCVALUE_STRING_IECCORESET <group___sys_cpu_multi_core_itf___settings_1ga07ef65cd085c297f05ec6f668a589ecf>` "{0..MAXCOREID}"
+
+- #define :ref:`SYSMC_TASKGROUPMASK_STRATEGY <group___sys_cpu_multi_core_itf___settings_1gaf3d08c1eb7ebdc248f0913fffc2dee56>` 0x000000FF
+
+- #define :ref:`SYSMC_TASKGROUPOPTION_MULTICORE_FREEFLOATING <group___sys_cpu_multi_core_itf___settings_1gabed8529c82f117352f0814dff6f440c1>` 0x00000000
+
+- #define :ref:`SYSMC_TASKGROUPOPTION_MULTICORE_SEQUENCIAL_PINNED <group___sys_cpu_multi_core_itf___settings_1gaacc2c45e57aa72d7460576e9736a10eb>` 0x00000001
+
+- #define :ref:`SYSMC_TASKGROUPOPTION_SINGLECORE <group___sys_cpu_multi_core_itf___settings_1ga7793d5d5959fd654fe45fdd0a3c98022>` 0x00000002
+
+- #define :ref:`SYSMC_TASKGROUPMASK_OPTIONS <group___sys_cpu_multi_core_itf___settings_1gab6ebe66729eb370cacec2b088e0a5d0f>` 0x0000FF00
+
+- #define :ref:`SYSMC_TASKGROUPOPTION_GROUP_CONF <group___sys_cpu_multi_core_itf___settings_1gacce077a146b972e8670ae99dc29c7ff8>` 0x00000100
+
+- #define :ref:`SYSMC_TASKGROUPOPTION_IEC_TASKS <group___sys_cpu_multi_core_itf___settings_1ga49241f68ad67183683dcff685b31c35a>` 0x00000200
+
+- #define :ref:`SYSMC_TASKGROUPOPTION_AUTODELETE <group___sys_cpu_multi_core_itf___settings_1ga542dabd53d89e7c9e7d7a532f764786d>` 0x00000400
+
+- #define :ref:`SYSMC_TASKGROUPNAME_SYS <group___sys_cpu_multi_core_itf___staticdefines_1ga0efde40fae272a0847ded5fe94ca7389>` "System"
+
+- #define :ref:`SYSMC_TASKGROUPNAME_IEC <group___sys_cpu_multi_core_itf___staticdefines_1ga2bf11cfcaeb14c15fab821cfe0881e36>` "IEC-Tasks"
+
+- #define :ref:`SYSMC_TASKGROUPNAME_COM <group___sys_cpu_multi_core_itf___staticdefines_1ga38baae23d49f75c0ab2f2e4f2ad0b887>` "Communication"
+
+- #define :ref:`SYSMC_TASKGROUPNAME_VIS <group___sys_cpu_multi_core_itf___staticdefines_1gafe3c9e1264f4f09e350e29c7f77e4135>` "Visualization"
+
+- #define :ref:`SYSMCBASEKEY_TASKGROUP <group___sys_cpu_multi_core_itf___settings_1gac7dcd80e80a7d39a17af4dfadbf2702e>` "TaskGroup"
+
+- #define :ref:`SYSMCSUBKEY_TASKGROUP_NAME <group___sys_cpu_multi_core_itf___settings_1ga6609b0ca8802926370bf0af61d547d35>` "Name"
+
+- #define :ref:`SYSMCSUBKEY_TASKGROUP_OPTION <group___sys_cpu_multi_core_itf___settings_1gab0bc906e4c0d9a3ac66cc135bebbebb8>` "Option"
+
+- #define :ref:`SYSMCVALUE_INT_TASKGROUP_OPTION_DEFAULT <group___sys_cpu_multi_core_itf___settings_1ga361d881ab5b7147de73642015ee4537e>` :ref:`SYSMC_TASKGROUPOPTION_MULTICORE_FREEFLOATING <group___sys_cpu_multi_core_itf___settings_1gabed8529c82f117352f0814dff6f440c1>`
+
+- #define :ref:`SYSMCSUBKEY_TASKGROUP_CORESET <group___sys_cpu_multi_core_itf___settings_1ga6b91d533774b3707c77a998d28e11b1f>` "CoreSet"
+
+- #define :ref:`SYSMCBITSPERXWORD <group___sys_cpu_multi_core_itf___staticdefines_1gadab3a55eec067a14117691203a8eaf3a>` (sizeof(RTS_IEC_XWORD) * 8)
+
+- #define :ref:`SYSMC_LICENSE_ID <group___sys_cpu_multi_core_itf___staticdefines_1gadd5c7be3922cf90ce8b571d4847f6bda>` 0x2251
+
+- #define :ref:`USE_sysmcbdalloc <group___sys_cpu_multi_core_itf_1ga943cccef5b29df1ddfa782ac78c12930>` :ref:`PFSYSMCBDALLOC_IEC <group___sys_cpu_multi_core_itf_1ga5299e2dcee264167086d85076e7eac2a>` pfsysmcbdalloc;
+
+- #define :ref:`EXT_sysmcbdalloc <group___sys_cpu_multi_core_itf_1ga6385243658d956e66a18b34b71df15b0>` extern :ref:`PFSYSMCBDALLOC_IEC <group___sys_cpu_multi_core_itf_1ga5299e2dcee264167086d85076e7eac2a>` pfsysmcbdalloc;
+
+- #define :ref:`GET_sysmcbdalloc <group___sys_cpu_multi_core_itf_1ga9fa7462ff6e6776d41a44bea7ff58c72>` s_pfCMGetAPI2( "sysmcbdalloc", (RTS_VOID_FCTPTR *)&pfsysmcbdalloc, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0xECD5C206, 0xC7AAC7EB), 0x03050B00)
+
+- #define :ref:`CAL_sysmcbdalloc <group___sys_cpu_multi_core_itf_1ga39e28dee90d8d93a1661be757c74e8d4>` pfsysmcbdalloc
+
+- #define :ref:`CHK_sysmcbdalloc <group___sys_cpu_multi_core_itf_1ga71ff941de759cb9fbd0dcde09a28e2d4>` (pfsysmcbdalloc != NULL)
+
+- #define :ref:`EXP_sysmcbdalloc <group___sys_cpu_multi_core_itf_1ga48898e9d2e0e9ef6846571ecf61bfc86>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysmcbdalloc", (RTS_UINTPTR) :ref:`sysmcbdalloc <group___sys_cpu_multi_core_itf_1gac4f508901816a0262f9a75a753ebbed4>` , 1, RTSITF_GET_SIGNATURE(0xECD5C206, 0xC7AAC7EB), 0x03050B00)
+
+- #define :ref:`USE_sysmcbdcount <group___sys_cpu_multi_core_itf_1ga9d642db485e1391ad3df9a559f0b5e9d>` :ref:`PFSYSMCBDCOUNT_IEC <group___sys_cpu_multi_core_itf_1gaf510bd4c45afeae7498666b65d381802>` pfsysmcbdcount;
+
+- #define :ref:`EXT_sysmcbdcount <group___sys_cpu_multi_core_itf_1gad91590753084c325b0864dd0e13cc72f>` extern :ref:`PFSYSMCBDCOUNT_IEC <group___sys_cpu_multi_core_itf_1gaf510bd4c45afeae7498666b65d381802>` pfsysmcbdcount;
+
+- #define :ref:`GET_sysmcbdcount <group___sys_cpu_multi_core_itf_1ga2b11d8152dc96c1b96c76cca28f6c83d>` s_pfCMGetAPI2( "sysmcbdcount", (RTS_VOID_FCTPTR *)&pfsysmcbdcount, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0xA5E90785, 0x52EBF69E), 0x03050B00)
+
+- #define :ref:`CAL_sysmcbdcount <group___sys_cpu_multi_core_itf_1gaddd2a1afa21f87bff2fd1b28515e873a>` pfsysmcbdcount
+
+- #define :ref:`CHK_sysmcbdcount <group___sys_cpu_multi_core_itf_1gac64026917b0a4303e961ceb038293331>` (pfsysmcbdcount != NULL)
+
+- #define :ref:`EXP_sysmcbdcount <group___sys_cpu_multi_core_itf_1ga4c64238c5109430245842baa9ddd2513>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysmcbdcount", (RTS_UINTPTR) :ref:`sysmcbdcount <group___sys_cpu_multi_core_itf_1ga0496bf9ce955cf88bfbec84b3d98509c>` , 1, RTSITF_GET_SIGNATURE(0xA5E90785, 0x52EBF69E), 0x03050B00)
+
+- #define :ref:`USE_sysmcbdfree <group___sys_cpu_multi_core_itf_1gae9b6ad9b0f411e9e0cb141f79350ff8f>` :ref:`PFSYSMCBDFREE_IEC <group___sys_cpu_multi_core_itf_1ga1266fe01bc03af9e38d9dcc6519c02ce>` pfsysmcbdfree;
+
+- #define :ref:`EXT_sysmcbdfree <group___sys_cpu_multi_core_itf_1ga6846e2d5f42e1d3e20ddd47aabdf5358>` extern :ref:`PFSYSMCBDFREE_IEC <group___sys_cpu_multi_core_itf_1ga1266fe01bc03af9e38d9dcc6519c02ce>` pfsysmcbdfree;
+
+- #define :ref:`GET_sysmcbdfree <group___sys_cpu_multi_core_itf_1ga2df3cda05cef21259057a5a865c099b0>` s_pfCMGetAPI2( "sysmcbdfree", (RTS_VOID_FCTPTR *)&pfsysmcbdfree, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x2D152790, 0x4E99D982), 0x03050B00)
+
+- #define :ref:`CAL_sysmcbdfree <group___sys_cpu_multi_core_itf_1gaae7a1fedbb54684146b8d4ed41530c9c>` pfsysmcbdfree
+
+- #define :ref:`CHK_sysmcbdfree <group___sys_cpu_multi_core_itf_1gaa473005ec9da631bb56090bce9b888cb>` (pfsysmcbdfree != NULL)
+
+- #define :ref:`EXP_sysmcbdfree <group___sys_cpu_multi_core_itf_1ga4ad82b215b5f4cef79b1b66ae738f57a>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysmcbdfree", (RTS_UINTPTR) :ref:`sysmcbdfree <group___sys_cpu_multi_core_itf_1ga62fc58f3ff6b0a9b5fdca9ac905a49ef>` , 1, RTSITF_GET_SIGNATURE(0x2D152790, 0x4E99D982), 0x03050B00)
+
+- #define :ref:`USE_sysmcbdgetfirstid <group___sys_cpu_multi_core_itf_1ga0abb322a9a13f63b2c15a92beef4f483>` :ref:`PFSYSMCBDGETFIRSTID_IEC <group___sys_cpu_multi_core_itf_1gad4b7db01400a2933096a9be785096b58>` pfsysmcbdgetfirstid;
+
+- #define :ref:`EXT_sysmcbdgetfirstid <group___sys_cpu_multi_core_itf_1ga288c219dc909ca23e56be849ac95fa30>` extern :ref:`PFSYSMCBDGETFIRSTID_IEC <group___sys_cpu_multi_core_itf_1gad4b7db01400a2933096a9be785096b58>` pfsysmcbdgetfirstid;
+
+- #define :ref:`GET_sysmcbdgetfirstid <group___sys_cpu_multi_core_itf_1ga407390fac3b3c2869443b82103551555>` s_pfCMGetAPI2( "sysmcbdgetfirstid", (RTS_VOID_FCTPTR *)&pfsysmcbdgetfirstid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x0413C991, 0xF3084CC6), 0x03050B00)
+
+- #define :ref:`CAL_sysmcbdgetfirstid <group___sys_cpu_multi_core_itf_1ga7c6b34a56a5791675d0d03fce961a2db>` pfsysmcbdgetfirstid
+
+- #define :ref:`CHK_sysmcbdgetfirstid <group___sys_cpu_multi_core_itf_1ga8038cf00021ee94562ef95f087bedbad>` (pfsysmcbdgetfirstid != NULL)
+
+- #define :ref:`EXP_sysmcbdgetfirstid <group___sys_cpu_multi_core_itf_1ga74a2e784a1bbb3acf245e3b43f259536>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysmcbdgetfirstid", (RTS_UINTPTR) :ref:`sysmcbdgetfirstid <group___sys_cpu_multi_core_itf_1ga7109aeeab758e7f40dde58e84087c9c3>` , 1, RTSITF_GET_SIGNATURE(0x0413C991, 0xF3084CC6), 0x03050B00)
+
+- #define :ref:`USE_sysmcbdgetnextid <group___sys_cpu_multi_core_itf_1ga0d138a6fdd62fd2d8e0fd9f92be9d9ac>` :ref:`PFSYSMCBDGETNEXTID_IEC <group___sys_cpu_multi_core_itf_1ga1a4ee7aae706d83a17c4374eb2d059d9>` pfsysmcbdgetnextid;
+
+- #define :ref:`EXT_sysmcbdgetnextid <group___sys_cpu_multi_core_itf_1ga9173650d9880507385b851582b74492c>` extern :ref:`PFSYSMCBDGETNEXTID_IEC <group___sys_cpu_multi_core_itf_1ga1a4ee7aae706d83a17c4374eb2d059d9>` pfsysmcbdgetnextid;
+
+- #define :ref:`GET_sysmcbdgetnextid <group___sys_cpu_multi_core_itf_1gac0eddc31f72d817429ee2c46db1ea635>` s_pfCMGetAPI2( "sysmcbdgetnextid", (RTS_VOID_FCTPTR *)&pfsysmcbdgetnextid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0xDC0570FA, 0xB42D3BDD), 0x03050B00)
+
+- #define :ref:`CAL_sysmcbdgetnextid <group___sys_cpu_multi_core_itf_1gab83af969e28a57487817fd93a5c0af83>` pfsysmcbdgetnextid
+
+- #define :ref:`CHK_sysmcbdgetnextid <group___sys_cpu_multi_core_itf_1ga3d0c42e13f3e160ad355b9bb08ef479e>` (pfsysmcbdgetnextid != NULL)
+
+- #define :ref:`EXP_sysmcbdgetnextid <group___sys_cpu_multi_core_itf_1gad1a4b503bedd43d2916d1a9d4c3c5692>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysmcbdgetnextid", (RTS_UINTPTR) :ref:`sysmcbdgetnextid <group___sys_cpu_multi_core_itf_1ga0c799e18991fb2bcd5dfddc28d2bdf77>` , 1, RTSITF_GET_SIGNATURE(0xDC0570FA, 0xB42D3BDD), 0x03050B00)
+
+- #define :ref:`USE_sysmcbdisset <group___sys_cpu_multi_core_itf_1gabcb7186d21b53a4fc7fd55caab5190ae>` :ref:`PFSYSMCBDISSET_IEC <group___sys_cpu_multi_core_itf_1ga1790800f9e0985350fb58251533a31b7>` pfsysmcbdisset;
+
+- #define :ref:`EXT_sysmcbdisset <group___sys_cpu_multi_core_itf_1gac01ada613c2f27f6a80dc4be380e4f46>` extern :ref:`PFSYSMCBDISSET_IEC <group___sys_cpu_multi_core_itf_1ga1790800f9e0985350fb58251533a31b7>` pfsysmcbdisset;
+
+- #define :ref:`GET_sysmcbdisset <group___sys_cpu_multi_core_itf_1gaab0fc8152ccc76982fd2b9d01d45f7a2>` s_pfCMGetAPI2( "sysmcbdisset", (RTS_VOID_FCTPTR *)&pfsysmcbdisset, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x54BC1578, 0xA3BEE463), 0x03050B00)
+
+- #define :ref:`CAL_sysmcbdisset <group___sys_cpu_multi_core_itf_1gac31cb41d9b4fda97185131576ec8f462>` pfsysmcbdisset
+
+- #define :ref:`CHK_sysmcbdisset <group___sys_cpu_multi_core_itf_1ga7dbbdb4bf560a81ca67fd6f6279b5fd0>` (pfsysmcbdisset != NULL)
+
+- #define :ref:`EXP_sysmcbdisset <group___sys_cpu_multi_core_itf_1ga16f28bfeef890c89abde35a94b966f82>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysmcbdisset", (RTS_UINTPTR) :ref:`sysmcbdisset <group___sys_cpu_multi_core_itf_1ga0142ed1a70c983b1c9797f8edcf7a553>` , 1, RTSITF_GET_SIGNATURE(0x54BC1578, 0xA3BEE463), 0x03050B00)
+
+- #define :ref:`USE_sysmcgetload <group___sys_cpu_multi_core_itf_1ga1866684310d73ce7fa8e9a3f4f26c8b1>` :ref:`PFSYSMCGETLOAD_IEC <group___sys_cpu_multi_core_itf_1ga1a34205c2d556d51da6ac6b40b1e145a>` pfsysmcgetload;
+
+- #define :ref:`EXT_sysmcgetload <group___sys_cpu_multi_core_itf_1ga89e024763e734dbe1262e7a6b6d3f51e>` extern :ref:`PFSYSMCGETLOAD_IEC <group___sys_cpu_multi_core_itf_1ga1a34205c2d556d51da6ac6b40b1e145a>` pfsysmcgetload;
+
+- #define :ref:`GET_sysmcgetload <group___sys_cpu_multi_core_itf_1ga05eaae1ad13c4cc2e6fdb0ccfebcdcb8>` s_pfCMGetAPI2( "sysmcgetload", (RTS_VOID_FCTPTR *)&pfsysmcgetload, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xEF6D21E5, 0x03050B00)
+
+- #define :ref:`CAL_sysmcgetload <group___sys_cpu_multi_core_itf_1gaa252cfb1447eb5cd730e4f5727c63831>` pfsysmcgetload
+
+- #define :ref:`CHK_sysmcgetload <group___sys_cpu_multi_core_itf_1ga8c1e6a541b8ade1a0bcb1f8527b46de6>` (pfsysmcgetload != NULL)
+
+- #define :ref:`EXP_sysmcgetload <group___sys_cpu_multi_core_itf_1gaff026fddd72fde85d95acea8f81f86e4>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysmcgetload", (RTS_UINTPTR) :ref:`sysmcgetload <group___sys_cpu_multi_core_itf_1gab30bcd94c9ed65ee5205031654f6178c>` , 1, 0xEF6D21E5, 0x03050B00)
+
+- #define :ref:`USE_sysmcgetnumofcores <group___sys_cpu_multi_core_itf_1gae68394920503b2c3e5146009c9d8e99d>` :ref:`PFSYSMCGETNUMOFCORES_IEC <group___sys_cpu_multi_core_itf_1gaae002acb28c8f483fe7b58a5ac0dbf33>` pfsysmcgetnumofcores;
+
+- #define :ref:`EXT_sysmcgetnumofcores <group___sys_cpu_multi_core_itf_1ga208530892cf71d952412bb79a457ca81>` extern :ref:`PFSYSMCGETNUMOFCORES_IEC <group___sys_cpu_multi_core_itf_1gaae002acb28c8f483fe7b58a5ac0dbf33>` pfsysmcgetnumofcores;
+
+- #define :ref:`GET_sysmcgetnumofcores <group___sys_cpu_multi_core_itf_1ga0a2f2849307eb0b2ea80a6ac127855a2>` s_pfCMGetAPI2( "sysmcgetnumofcores", (RTS_VOID_FCTPTR *)&pfsysmcgetnumofcores, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x9360E181, 0x03050B00)
+
+- #define :ref:`CAL_sysmcgetnumofcores <group___sys_cpu_multi_core_itf_1gaae881bc17a95750f0e0d9352ef751c5a>` pfsysmcgetnumofcores
+
+- #define :ref:`CHK_sysmcgetnumofcores <group___sys_cpu_multi_core_itf_1ga91e67d3cfcb757df0f02ba6c8673739b>` (pfsysmcgetnumofcores != NULL)
+
+- #define :ref:`EXP_sysmcgetnumofcores <group___sys_cpu_multi_core_itf_1ga56856144aeaf98aaba7848d96827e705>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysmcgetnumofcores", (RTS_UINTPTR) :ref:`sysmcgetnumofcores <group___sys_cpu_multi_core_itf_1gaa44a3fb76bc604fc96e32a8664bdba92>` , 1, 0x9360E181, 0x03050B00)
+
+- #define :ref:`USE_sysmcgetprocessbinding <group___sys_cpu_multi_core_itf_1ga2236b8307023acd8c103ce8c18202ef8>` :ref:`PFSYSMCGETPROCESSBINDING_IEC <group___sys_cpu_multi_core_itf_1gaafded06b72a8a436a666f09b5c6ce5ec>` pfsysmcgetprocessbinding;
+
+- #define :ref:`EXT_sysmcgetprocessbinding <group___sys_cpu_multi_core_itf_1ga796d29660edb9e7fffd77d85dd2199d6>` extern :ref:`PFSYSMCGETPROCESSBINDING_IEC <group___sys_cpu_multi_core_itf_1gaafded06b72a8a436a666f09b5c6ce5ec>` pfsysmcgetprocessbinding;
+
+- #define :ref:`GET_sysmcgetprocessbinding <group___sys_cpu_multi_core_itf_1gad10842c2669ed198d05b0bf0fafbee9e>` s_pfCMGetAPI2( "sysmcgetprocessbinding", (RTS_VOID_FCTPTR *)&pfsysmcgetprocessbinding, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x630248E0, 0x2F2E120C), 0x03050B00)
+
+- #define :ref:`CAL_sysmcgetprocessbinding <group___sys_cpu_multi_core_itf_1ga4cedc4577356b6f777cc47f1860b99c5>` pfsysmcgetprocessbinding
+
+- #define :ref:`CHK_sysmcgetprocessbinding <group___sys_cpu_multi_core_itf_1ga55c016dc97bb512f71c41f38070e71e0>` (pfsysmcgetprocessbinding != NULL)
+
+- #define :ref:`EXP_sysmcgetprocessbinding <group___sys_cpu_multi_core_itf_1ga17e65fc2b735399372d695cbb3665424>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysmcgetprocessbinding", (RTS_UINTPTR) :ref:`sysmcgetprocessbinding <group___sys_cpu_multi_core_itf_1gabc46aa562c75ff628b9f0a70db6afd61>` , 1, RTSITF_GET_SIGNATURE(0x630248E0, 0x2F2E120C), 0x03050B00)
+
+- #define :ref:`USE_sysmcgettaskbinding <group___sys_cpu_multi_core_itf_1ga5c7f3d8f3e99016955d2327af89782d2>` :ref:`PFSYSMCGETTASKBINDING_IEC <group___sys_cpu_multi_core_itf_1ga38fd97ac72e7aad4fe7b9b987f08141c>` pfsysmcgettaskbinding;
+
+- #define :ref:`EXT_sysmcgettaskbinding <group___sys_cpu_multi_core_itf_1gac14fa4e5c13e24b1187ab030ebac63a2>` extern :ref:`PFSYSMCGETTASKBINDING_IEC <group___sys_cpu_multi_core_itf_1ga38fd97ac72e7aad4fe7b9b987f08141c>` pfsysmcgettaskbinding;
+
+- #define :ref:`GET_sysmcgettaskbinding <group___sys_cpu_multi_core_itf_1ga9827318411fe9987ebfd9cc82e6e79aa>` s_pfCMGetAPI2( "sysmcgettaskbinding", (RTS_VOID_FCTPTR *)&pfsysmcgettaskbinding, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x4571B9EE, 0x2D12BDE0), 0x03050B00)
+
+- #define :ref:`CAL_sysmcgettaskbinding <group___sys_cpu_multi_core_itf_1gaeee6d979bf9cf84ad88cdffd8ac280c0>` pfsysmcgettaskbinding
+
+- #define :ref:`CHK_sysmcgettaskbinding <group___sys_cpu_multi_core_itf_1ga3c63834e55c5861b631951b607e72dd7>` (pfsysmcgettaskbinding != NULL)
+
+- #define :ref:`EXP_sysmcgettaskbinding <group___sys_cpu_multi_core_itf_1ga48d18c98c56d816717a880313b88206a>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysmcgettaskbinding", (RTS_UINTPTR) :ref:`sysmcgettaskbinding <group___sys_cpu_multi_core_itf_1ga913176bec64ab3bddaa69c60cfa1dbac>` , 1, RTSITF_GET_SIGNATURE(0x4571B9EE, 0x2D12BDE0), 0x03050B00)
+
+- #define :ref:`USE_SysMCAddTaskGroup <group___sys_cpu_multi_core_itf_1gab278cd403bf00e1569631e4116c95ee3>` :ref:`PFSYSMCADDTASKGROUP <group___sys_cpu_multi_core_itf_1ga2772b08eaa3adc15356ddc7ba2314ac5>` pfSysMCAddTaskGroup;
+
+- #define :ref:`EXT_SysMCAddTaskGroup <group___sys_cpu_multi_core_itf_1ga6dc84e1dac951cec0665c42f8d520d9c>` extern :ref:`PFSYSMCADDTASKGROUP <group___sys_cpu_multi_core_itf_1ga2772b08eaa3adc15356ddc7ba2314ac5>` pfSysMCAddTaskGroup;
+
+- #define :ref:`GET_SysMCAddTaskGroup <group___sys_cpu_multi_core_itf_1gaf56fbacabe4a2f6d041d41a1f1739758>` s_pfCMGetAPI2( "SysMCAddTaskGroup", (RTS_VOID_FCTPTR *)&pfSysMCAddTaskGroup, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCAddTaskGroup <group___sys_cpu_multi_core_itf_1gaf856b541038c2cc675c9a6b27b309690>` pfSysMCAddTaskGroup
+
+- #define :ref:`CHK_SysMCAddTaskGroup <group___sys_cpu_multi_core_itf_1ga17b0c7155d6ef2c50e61bebe165a0f6e>` (pfSysMCAddTaskGroup != NULL)
+
+- #define :ref:`EXP_SysMCAddTaskGroup <group___sys_cpu_multi_core_itf_1gaf0a3a79dc7c0df6d3401357f010a8175>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCAddTaskGroup", (RTS_UINTPTR) :ref:`SysMCAddTaskGroup <group___sys_cpu_multi_core_itf_1ga3e7226a3e5850ff12b21afc0cc357afe>` , 0, 0)
+
+- #define :ref:`USE_SysMCRemoveTaskGroup <group___sys_cpu_multi_core_itf_1gacbf9105ac1247712f8d3f0056843ab65>` :ref:`PFSYSMCREMOVETASKGROUP <group___sys_cpu_multi_core_itf_1gacb59d0b75ad1b3ecb5442fa7916ec093>` pfSysMCRemoveTaskGroup;
+
+- #define :ref:`EXT_SysMCRemoveTaskGroup <group___sys_cpu_multi_core_itf_1ga922999c5f72a523480574c78867dcc40>` extern :ref:`PFSYSMCREMOVETASKGROUP <group___sys_cpu_multi_core_itf_1gacb59d0b75ad1b3ecb5442fa7916ec093>` pfSysMCRemoveTaskGroup;
+
+- #define :ref:`GET_SysMCRemoveTaskGroup <group___sys_cpu_multi_core_itf_1ga557cc7c29dd5dde34d6d55db5e7aa5b0>` s_pfCMGetAPI2( "SysMCRemoveTaskGroup", (RTS_VOID_FCTPTR *)&pfSysMCRemoveTaskGroup, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCRemoveTaskGroup <group___sys_cpu_multi_core_itf_1ga7594715c23564ff752405d5875ebbe0a>` pfSysMCRemoveTaskGroup
+
+- #define :ref:`CHK_SysMCRemoveTaskGroup <group___sys_cpu_multi_core_itf_1ga60856d7bd90f12ffee3f98bf48edc83b>` (pfSysMCRemoveTaskGroup != NULL)
+
+- #define :ref:`EXP_SysMCRemoveTaskGroup <group___sys_cpu_multi_core_itf_1ga95eda843c245a7eba67690b3d7ffe871>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCRemoveTaskGroup", (RTS_UINTPTR) :ref:`SysMCRemoveTaskGroup <group___sys_cpu_multi_core_itf_1ga14ebbd6a5e82a7fea5038a1224fbf20e>` , 0, 0)
+
+- #define :ref:`USE_SysMCFindTaskGroup <group___sys_cpu_multi_core_itf_1ga125a2747c1ef0ed68ffd168b67eba85c>` :ref:`PFSYSMCFINDTASKGROUP <group___sys_cpu_multi_core_itf_1ga0a037f42299db236e7d6e7c622d18afc>` pfSysMCFindTaskGroup;
+
+- #define :ref:`EXT_SysMCFindTaskGroup <group___sys_cpu_multi_core_itf_1gaf48a16356e4fa868b5db91c57efe3891>` extern :ref:`PFSYSMCFINDTASKGROUP <group___sys_cpu_multi_core_itf_1ga0a037f42299db236e7d6e7c622d18afc>` pfSysMCFindTaskGroup;
+
+- #define :ref:`GET_SysMCFindTaskGroup <group___sys_cpu_multi_core_itf_1ga48b4cead4329658853d172fafdc8cd05>` s_pfCMGetAPI2( "SysMCFindTaskGroup", (RTS_VOID_FCTPTR *)&pfSysMCFindTaskGroup, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCFindTaskGroup <group___sys_cpu_multi_core_itf_1ga051a343593c81bb013c219f738c0b583>` pfSysMCFindTaskGroup
+
+- #define :ref:`CHK_SysMCFindTaskGroup <group___sys_cpu_multi_core_itf_1ga8a566f9a9ee61c5abc39be7448eb5942>` (pfSysMCFindTaskGroup != NULL)
+
+- #define :ref:`EXP_SysMCFindTaskGroup <group___sys_cpu_multi_core_itf_1ga5b05a298f046c735b8562459421c76e0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCFindTaskGroup", (RTS_UINTPTR) :ref:`SysMCFindTaskGroup <group___sys_cpu_multi_core_itf_1ga90cedc6b143396cc5040a8d60355da06>` , 0, 0)
+
+- #define :ref:`USE_SysMCGetFirstTaskGroup <group___sys_cpu_multi_core_itf_1ga85a74d4f2f2e3994789a587ded6032c1>` :ref:`PFSYSMCGETFIRSTTASKGROUP <group___sys_cpu_multi_core_itf_1ga27d8020b3f8b5673d93f6a133d5af096>` pfSysMCGetFirstTaskGroup;
+
+- #define :ref:`EXT_SysMCGetFirstTaskGroup <group___sys_cpu_multi_core_itf_1ga140763a11a82a77c27f85365c05901b5>` extern :ref:`PFSYSMCGETFIRSTTASKGROUP <group___sys_cpu_multi_core_itf_1ga27d8020b3f8b5673d93f6a133d5af096>` pfSysMCGetFirstTaskGroup;
+
+- #define :ref:`GET_SysMCGetFirstTaskGroup <group___sys_cpu_multi_core_itf_1ga76446f659478ea6577ceedce7e09b356>` s_pfCMGetAPI2( "SysMCGetFirstTaskGroup", (RTS_VOID_FCTPTR *)&pfSysMCGetFirstTaskGroup, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCGetFirstTaskGroup <group___sys_cpu_multi_core_itf_1gac2e6acfd28f1e2af17a217718bceeba9>` pfSysMCGetFirstTaskGroup
+
+- #define :ref:`CHK_SysMCGetFirstTaskGroup <group___sys_cpu_multi_core_itf_1ga70f9c5bab6fd6f4362dd45a0626d1431>` (pfSysMCGetFirstTaskGroup != NULL)
+
+- #define :ref:`EXP_SysMCGetFirstTaskGroup <group___sys_cpu_multi_core_itf_1gae74edbccc00c6bf26fbc476dc510e4c9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCGetFirstTaskGroup", (RTS_UINTPTR) :ref:`SysMCGetFirstTaskGroup <group___sys_cpu_multi_core_itf_1ga5b2ad8115ed6541c1bddf2499125fa31>` , 0, 0)
+
+- #define :ref:`USE_SysMCGetNextTaskGroup <group___sys_cpu_multi_core_itf_1ga731b91bc5e1579f6a31415b1438064af>` :ref:`PFSYSMCGETNEXTTASKGROUP <group___sys_cpu_multi_core_itf_1gae130c387d090eb55d7f7692a935aa077>` pfSysMCGetNextTaskGroup;
+
+- #define :ref:`EXT_SysMCGetNextTaskGroup <group___sys_cpu_multi_core_itf_1gaa81934abfe61bbd9417bd24750b8aafd>` extern :ref:`PFSYSMCGETNEXTTASKGROUP <group___sys_cpu_multi_core_itf_1gae130c387d090eb55d7f7692a935aa077>` pfSysMCGetNextTaskGroup;
+
+- #define :ref:`GET_SysMCGetNextTaskGroup <group___sys_cpu_multi_core_itf_1ga113301e3e82232d4edfa61347d4a3d95>` s_pfCMGetAPI2( "SysMCGetNextTaskGroup", (RTS_VOID_FCTPTR *)&pfSysMCGetNextTaskGroup, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCGetNextTaskGroup <group___sys_cpu_multi_core_itf_1gaa77f51b425530d32f82215bd606097fc>` pfSysMCGetNextTaskGroup
+
+- #define :ref:`CHK_SysMCGetNextTaskGroup <group___sys_cpu_multi_core_itf_1ga2c15f8718cb90623f0f6eddbd9439f62>` (pfSysMCGetNextTaskGroup != NULL)
+
+- #define :ref:`EXP_SysMCGetNextTaskGroup <group___sys_cpu_multi_core_itf_1ga7b927efe272cc5a078cdf0c6ec7ce5bf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCGetNextTaskGroup", (RTS_UINTPTR) :ref:`SysMCGetNextTaskGroup <group___sys_cpu_multi_core_itf_1gae8dd16f4dd503e41179ac5af684a957c>` , 0, 0)
+
+- #define :ref:`USE_SysMCGetTaskGroupName <group___sys_cpu_multi_core_itf_1ga7ed51b56cba10119b5fc5f311fedf48a>` :ref:`PFSYSMCGETTASKGROUPNAME <group___sys_cpu_multi_core_itf_1gabc3d549b3ae68c3d36281887a24e3336>` pfSysMCGetTaskGroupName;
+
+- #define :ref:`EXT_SysMCGetTaskGroupName <group___sys_cpu_multi_core_itf_1ga54d31bcad0e31a2c727a842ce4d23ba7>` extern :ref:`PFSYSMCGETTASKGROUPNAME <group___sys_cpu_multi_core_itf_1gabc3d549b3ae68c3d36281887a24e3336>` pfSysMCGetTaskGroupName;
+
+- #define :ref:`GET_SysMCGetTaskGroupName <group___sys_cpu_multi_core_itf_1ga8cab160049f73182cbb88959830d5452>` s_pfCMGetAPI2( "SysMCGetTaskGroupName", (RTS_VOID_FCTPTR *)&pfSysMCGetTaskGroupName, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCGetTaskGroupName <group___sys_cpu_multi_core_itf_1ga9ec4f1b68bdaeaa2e2bc3923d1b117fb>` pfSysMCGetTaskGroupName
+
+- #define :ref:`CHK_SysMCGetTaskGroupName <group___sys_cpu_multi_core_itf_1ga60c764bd9f72ea302ceebb5ea3eff82a>` (pfSysMCGetTaskGroupName != NULL)
+
+- #define :ref:`EXP_SysMCGetTaskGroupName <group___sys_cpu_multi_core_itf_1gacb1f3c2c8040662a867fa665f0dc7050>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCGetTaskGroupName", (RTS_UINTPTR) :ref:`SysMCGetTaskGroupName <group___sys_cpu_multi_core_itf_1gab7a5dc75e3ddf495f6521c9a3746b043>` , 0, 0)
+
+- #define :ref:`USE_SysMCGetTaskGroupBinding <group___sys_cpu_multi_core_itf_1gab937efdc5aa1f87a3ffdd91deec7f8f0>` :ref:`PFSYSMCGETTASKGROUPBINDING <group___sys_cpu_multi_core_itf_1ga10d5bd89305e66c13b542e9e411ba3bc>` pfSysMCGetTaskGroupBinding;
+
+- #define :ref:`EXT_SysMCGetTaskGroupBinding <group___sys_cpu_multi_core_itf_1gae518134394fe41156ec598089ed7abd8>` extern :ref:`PFSYSMCGETTASKGROUPBINDING <group___sys_cpu_multi_core_itf_1ga10d5bd89305e66c13b542e9e411ba3bc>` pfSysMCGetTaskGroupBinding;
+
+- #define :ref:`GET_SysMCGetTaskGroupBinding <group___sys_cpu_multi_core_itf_1ga11178759f78eabb2f1afad271c142eb7>` s_pfCMGetAPI2( "SysMCGetTaskGroupBinding", (RTS_VOID_FCTPTR *)&pfSysMCGetTaskGroupBinding, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCGetTaskGroupBinding <group___sys_cpu_multi_core_itf_1ga529a5d0ebb1b585efbe7d61e9309a618>` pfSysMCGetTaskGroupBinding
+
+- #define :ref:`CHK_SysMCGetTaskGroupBinding <group___sys_cpu_multi_core_itf_1ga7fcf7347e3eb88c90e2a28a27c91ec82>` (pfSysMCGetTaskGroupBinding != NULL)
+
+- #define :ref:`EXP_SysMCGetTaskGroupBinding <group___sys_cpu_multi_core_itf_1ga645e6c56496734c157a3c76619a623cb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCGetTaskGroupBinding", (RTS_UINTPTR) :ref:`SysMCGetTaskGroupBinding <group___sys_cpu_multi_core_itf_1ga8e6466c59085cd67a619e49d2cb28de5>` , 0, 0)
+
+- #define :ref:`USE_SysMCGetTaskGroupOptions <group___sys_cpu_multi_core_itf_1ga65fc769a0ab5c73aafdab750ef6d5614>` :ref:`PFSYSMCGETTASKGROUPOPTIONS <group___sys_cpu_multi_core_itf_1ga90989f04235e7837b24fd8d4747967e7>` pfSysMCGetTaskGroupOptions;
+
+- #define :ref:`EXT_SysMCGetTaskGroupOptions <group___sys_cpu_multi_core_itf_1ga2d71aa00e3841a248ccc5acc20549fa3>` extern :ref:`PFSYSMCGETTASKGROUPOPTIONS <group___sys_cpu_multi_core_itf_1ga90989f04235e7837b24fd8d4747967e7>` pfSysMCGetTaskGroupOptions;
+
+- #define :ref:`GET_SysMCGetTaskGroupOptions <group___sys_cpu_multi_core_itf_1ga43fa9eacd6f00c3db784212228326043>` s_pfCMGetAPI2( "SysMCGetTaskGroupOptions", (RTS_VOID_FCTPTR *)&pfSysMCGetTaskGroupOptions, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCGetTaskGroupOptions <group___sys_cpu_multi_core_itf_1ga7d5faea7d5116bb9cbe970ce73410da0>` pfSysMCGetTaskGroupOptions
+
+- #define :ref:`CHK_SysMCGetTaskGroupOptions <group___sys_cpu_multi_core_itf_1ga1da9915889d46e3048a5f12280d90757>` (pfSysMCGetTaskGroupOptions != NULL)
+
+- #define :ref:`EXP_SysMCGetTaskGroupOptions <group___sys_cpu_multi_core_itf_1gae5ad797dea38a751d7191a8cf863a4b0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCGetTaskGroupOptions", (RTS_UINTPTR) :ref:`SysMCGetTaskGroupOptions <group___sys_cpu_multi_core_itf_1ga199e91c3e0eb5724b40f1f56461937e6>` , 0, 0)
+
+- #define :ref:`USE_SysMCChangeTaskGroupStrategy <group___sys_cpu_multi_core_itf_1gaf174131e5c9f758868fecd8c191b7f28>` :ref:`PFSYSMCCHANGETASKGROUPSTRATEGY <group___sys_cpu_multi_core_itf_1gaffe32b67d5ca492b7048ad53e3b18dd0>` pfSysMCChangeTaskGroupStrategy;
+
+- #define :ref:`EXT_SysMCChangeTaskGroupStrategy <group___sys_cpu_multi_core_itf_1ga90b4b6ee1cf699c5ac5794132278455a>` extern :ref:`PFSYSMCCHANGETASKGROUPSTRATEGY <group___sys_cpu_multi_core_itf_1gaffe32b67d5ca492b7048ad53e3b18dd0>` pfSysMCChangeTaskGroupStrategy;
+
+- #define :ref:`GET_SysMCChangeTaskGroupStrategy <group___sys_cpu_multi_core_itf_1gaf6baccfd0fa687f7a8f35cb217d2b88d>` s_pfCMGetAPI2( "SysMCChangeTaskGroupStrategy", (RTS_VOID_FCTPTR *)&pfSysMCChangeTaskGroupStrategy, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCChangeTaskGroupStrategy <group___sys_cpu_multi_core_itf_1gad1899c004aadbe31ab19ef2f119feb12>` pfSysMCChangeTaskGroupStrategy
+
+- #define :ref:`CHK_SysMCChangeTaskGroupStrategy <group___sys_cpu_multi_core_itf_1gad041e701deb274d5e25195cc9ec26ec6>` (pfSysMCChangeTaskGroupStrategy != NULL)
+
+- #define :ref:`EXP_SysMCChangeTaskGroupStrategy <group___sys_cpu_multi_core_itf_1gabc84f61feb040284bb3485ba744eea17>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCChangeTaskGroupStrategy", (RTS_UINTPTR) :ref:`SysMCChangeTaskGroupStrategy <group___sys_cpu_multi_core_itf_1ga7accb4ae53fe0b6374bd719eda626578>` , 0, 0)
+
+- #define :ref:`USE_SysMCSetTaskGroupBinding <group___sys_cpu_multi_core_itf_1gaf93202b8d977becb10df097d79436fdb>` :ref:`PFSYSMCSETTASKGROUPBINDING <group___sys_cpu_multi_core_itf_1ga07cc0ef8cbe9afafd8f5c84b72803c27>` pfSysMCSetTaskGroupBinding;
+
+- #define :ref:`EXT_SysMCSetTaskGroupBinding <group___sys_cpu_multi_core_itf_1ga8d040c266ca678e24e83fbe573cecc38>` extern :ref:`PFSYSMCSETTASKGROUPBINDING <group___sys_cpu_multi_core_itf_1ga07cc0ef8cbe9afafd8f5c84b72803c27>` pfSysMCSetTaskGroupBinding;
+
+- #define :ref:`GET_SysMCSetTaskGroupBinding <group___sys_cpu_multi_core_itf_1ga1791bedc47b638709aff4bf1f1ca6857>` s_pfCMGetAPI2( "SysMCSetTaskGroupBinding", (RTS_VOID_FCTPTR *)&pfSysMCSetTaskGroupBinding, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCSetTaskGroupBinding <group___sys_cpu_multi_core_itf_1ga2b509903f9f150bd7c2364b97149fa08>` pfSysMCSetTaskGroupBinding
+
+- #define :ref:`CHK_SysMCSetTaskGroupBinding <group___sys_cpu_multi_core_itf_1gaac58b336934ca3732e56d8ed80726ad9>` (pfSysMCSetTaskGroupBinding != NULL)
+
+- #define :ref:`EXP_SysMCSetTaskGroupBinding <group___sys_cpu_multi_core_itf_1gada1ce87c36f49b4e309befa970d0f095>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCSetTaskGroupBinding", (RTS_UINTPTR) :ref:`SysMCSetTaskGroupBinding <group___sys_cpu_multi_core_itf_1ga0c34f39b422fa76f399d49f1b3f3e35e>` , 0, 0)
+
+- #define :ref:`USE_SysMCAddToTaskGroup <group___sys_cpu_multi_core_itf_1ga87279f1cb0b5f1c9fd7aa276b1fffd7a>` :ref:`PFSYSMCADDTOTASKGROUP <group___sys_cpu_multi_core_itf_1ga4f1cf60cef02ed8ef2e86bcb6c77c8df>` pfSysMCAddToTaskGroup;
+
+- #define :ref:`EXT_SysMCAddToTaskGroup <group___sys_cpu_multi_core_itf_1ga6a2bdc799486fc589f431df306abd119>` extern :ref:`PFSYSMCADDTOTASKGROUP <group___sys_cpu_multi_core_itf_1ga4f1cf60cef02ed8ef2e86bcb6c77c8df>` pfSysMCAddToTaskGroup;
+
+- #define :ref:`GET_SysMCAddToTaskGroup <group___sys_cpu_multi_core_itf_1ga2a7de1f6e5264e3fe011349adb0cbf6a>` s_pfCMGetAPI2( "SysMCAddToTaskGroup", (RTS_VOID_FCTPTR *)&pfSysMCAddToTaskGroup, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCAddToTaskGroup <group___sys_cpu_multi_core_itf_1ga21265e4dc01e84bc33f874aeba93c456>` pfSysMCAddToTaskGroup
+
+- #define :ref:`CHK_SysMCAddToTaskGroup <group___sys_cpu_multi_core_itf_1gad6a4e6d940460c1598dcd46bdc7ae0fa>` (pfSysMCAddToTaskGroup != NULL)
+
+- #define :ref:`EXP_SysMCAddToTaskGroup <group___sys_cpu_multi_core_itf_1gabf99e0849e5ebf4cb3b95d813794c8fc>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCAddToTaskGroup", (RTS_UINTPTR) :ref:`SysMCAddToTaskGroup <group___sys_cpu_multi_core_itf_1gad11a4ecca49ea9a1a9aed3314553c269>` , 0, 0)
+
+- #define :ref:`USE_SysMCRemoveFromTaskGroup <group___sys_cpu_multi_core_itf_1ga66a1efa7d5b7361c2067a21ba9d2b9e9>` :ref:`PFSYSMCREMOVEFROMTASKGROUP <group___sys_cpu_multi_core_itf_1gae245ecdaac7aa9c5baaeceb7997a9863>` pfSysMCRemoveFromTaskGroup;
+
+- #define :ref:`EXT_SysMCRemoveFromTaskGroup <group___sys_cpu_multi_core_itf_1ga94c29710ba5e2025edb650841eb0917b>` extern :ref:`PFSYSMCREMOVEFROMTASKGROUP <group___sys_cpu_multi_core_itf_1gae245ecdaac7aa9c5baaeceb7997a9863>` pfSysMCRemoveFromTaskGroup;
+
+- #define :ref:`GET_SysMCRemoveFromTaskGroup <group___sys_cpu_multi_core_itf_1gafc5e2d93f381b0ca6ba9a912addfb142>` s_pfCMGetAPI2( "SysMCRemoveFromTaskGroup", (RTS_VOID_FCTPTR *)&pfSysMCRemoveFromTaskGroup, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCRemoveFromTaskGroup <group___sys_cpu_multi_core_itf_1ga062f59882d4577377204078535cfb97a>` pfSysMCRemoveFromTaskGroup
+
+- #define :ref:`CHK_SysMCRemoveFromTaskGroup <group___sys_cpu_multi_core_itf_1ga196a4736275194dd3cd8649c0f658b55>` (pfSysMCRemoveFromTaskGroup != NULL)
+
+- #define :ref:`EXP_SysMCRemoveFromTaskGroup <group___sys_cpu_multi_core_itf_1ga085c8f9fd2d4e56dc7b877a3f7b2015a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCRemoveFromTaskGroup", (RTS_UINTPTR) :ref:`SysMCRemoveFromTaskGroup <group___sys_cpu_multi_core_itf_1ga65eb376a169af515e537a94c8c593299>` , 0, 0)
+
+- #define :ref:`USE_SysMCBeginTaskGroupConf <group___sys_cpu_multi_core_itf_1gab79146ce000a3298491a1131e5696337>` :ref:`PFSYSMCBEGINTASKGROUPCONF <group___sys_cpu_multi_core_itf_1ga567fd9789e8e32a6245421121dec1ce6>` pfSysMCBeginTaskGroupConf;
+
+- #define :ref:`EXT_SysMCBeginTaskGroupConf <group___sys_cpu_multi_core_itf_1gadcda7313b20f7e8325e71ee6bd7a26e5>` extern :ref:`PFSYSMCBEGINTASKGROUPCONF <group___sys_cpu_multi_core_itf_1ga567fd9789e8e32a6245421121dec1ce6>` pfSysMCBeginTaskGroupConf;
+
+- #define :ref:`GET_SysMCBeginTaskGroupConf <group___sys_cpu_multi_core_itf_1gaa836dc7e04025ccc659af78499e08206>` s_pfCMGetAPI2( "SysMCBeginTaskGroupConf", (RTS_VOID_FCTPTR *)&pfSysMCBeginTaskGroupConf, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCBeginTaskGroupConf <group___sys_cpu_multi_core_itf_1gafd10eeccbadb1c03e8de6627900fd5d2>` pfSysMCBeginTaskGroupConf
+
+- #define :ref:`CHK_SysMCBeginTaskGroupConf <group___sys_cpu_multi_core_itf_1ga5f29afeffcb33987cc7abe7efe9a4314>` (pfSysMCBeginTaskGroupConf != NULL)
+
+- #define :ref:`EXP_SysMCBeginTaskGroupConf <group___sys_cpu_multi_core_itf_1ga88ac0111d76a4e4051d8c62a522a80c3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCBeginTaskGroupConf", (RTS_UINTPTR) :ref:`SysMCBeginTaskGroupConf <group___sys_cpu_multi_core_itf_1ga87eb95c838a43dbb3c2a8f1aa4274a84>` , 0, 0)
+
+- #define :ref:`USE_SysMCEndTaskGroupConf <group___sys_cpu_multi_core_itf_1ga373ac57dd3d5e4c93a5025f130754039>` :ref:`PFSYSMCENDTASKGROUPCONF <group___sys_cpu_multi_core_itf_1ga6b27b52fb5da43ba3b22fc95d9bf5da7>` pfSysMCEndTaskGroupConf;
+
+- #define :ref:`EXT_SysMCEndTaskGroupConf <group___sys_cpu_multi_core_itf_1gaa482c4bc1a562983035fdedfd3c0a0a1>` extern :ref:`PFSYSMCENDTASKGROUPCONF <group___sys_cpu_multi_core_itf_1ga6b27b52fb5da43ba3b22fc95d9bf5da7>` pfSysMCEndTaskGroupConf;
+
+- #define :ref:`GET_SysMCEndTaskGroupConf <group___sys_cpu_multi_core_itf_1ga7056570ab52e05a6167aace8b4dc6be2>` s_pfCMGetAPI2( "SysMCEndTaskGroupConf", (RTS_VOID_FCTPTR *)&pfSysMCEndTaskGroupConf, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCEndTaskGroupConf <group___sys_cpu_multi_core_itf_1gaf61b00b7bba777d0a71c6f175844e822>` pfSysMCEndTaskGroupConf
+
+- #define :ref:`CHK_SysMCEndTaskGroupConf <group___sys_cpu_multi_core_itf_1gab6ffa8bdff3cf9d15d733752c34fabae>` (pfSysMCEndTaskGroupConf != NULL)
+
+- #define :ref:`EXP_SysMCEndTaskGroupConf <group___sys_cpu_multi_core_itf_1ga5e80e5854d315758e9eac280d5fb0b2c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCEndTaskGroupConf", (RTS_UINTPTR) :ref:`SysMCEndTaskGroupConf <group___sys_cpu_multi_core_itf_1ga85d810d30e53ba1698443cc4fd0d5896>` , 0, 0)
+
+- #define :ref:`USE_SysMCBDAlloc <group___sys_cpu_multi_core_itf_1ga820c8cd2d1ec515b28edcb2cb3c08478>` :ref:`PFSYSMCBDALLOC <group___sys_cpu_multi_core_itf_1ga98a7dcab997e00b1d5f22d0ec77cd3cf>` pfSysMCBDAlloc;
+
+- #define :ref:`EXT_SysMCBDAlloc <group___sys_cpu_multi_core_itf_1ga6e0ca5a32b788e8f19a28eebcdf9f18a>` extern :ref:`PFSYSMCBDALLOC <group___sys_cpu_multi_core_itf_1ga98a7dcab997e00b1d5f22d0ec77cd3cf>` pfSysMCBDAlloc;
+
+- #define :ref:`GET_SysMCBDAlloc <group___sys_cpu_multi_core_itf_1ga9e0cadf9768fcc061e9d7542a5cd1f14>` s_pfCMGetAPI2( "SysMCBDAlloc", (RTS_VOID_FCTPTR *)&pfSysMCBDAlloc, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCBDAlloc <group___sys_cpu_multi_core_itf_1ga812a6261f4a8ba812584fedb0a8b489c>` pfSysMCBDAlloc
+
+- #define :ref:`CHK_SysMCBDAlloc <group___sys_cpu_multi_core_itf_1gabfb69664b5d01e555c5e3c6ef248cfcb>` (pfSysMCBDAlloc != NULL)
+
+- #define :ref:`EXP_SysMCBDAlloc <group___sys_cpu_multi_core_itf_1gaf8f4248e2b869a8a489380f0448308cb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCBDAlloc", (RTS_UINTPTR) :ref:`SysMCBDAlloc <group___sys_cpu_multi_core_itf_1ga37d02f00277ccf1ea8921eb243d9edf1>` , 0, 0)
+
+- #define :ref:`USE_SysMCBDFree <group___sys_cpu_multi_core_itf_1ga9450966e0f2c4c668a9cefb119280c7e>` :ref:`PFSYSMCBDFREE <group___sys_cpu_multi_core_itf_1gacf9c0f251d57fa53b06e22a197c29ed6>` pfSysMCBDFree;
+
+- #define :ref:`EXT_SysMCBDFree <group___sys_cpu_multi_core_itf_1gaa189c93d68279d335075c419d6c964bb>` extern :ref:`PFSYSMCBDFREE <group___sys_cpu_multi_core_itf_1gacf9c0f251d57fa53b06e22a197c29ed6>` pfSysMCBDFree;
+
+- #define :ref:`GET_SysMCBDFree <group___sys_cpu_multi_core_itf_1ga9893fa686217abea2c8c348e90ba8a02>` s_pfCMGetAPI2( "SysMCBDFree", (RTS_VOID_FCTPTR *)&pfSysMCBDFree, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCBDFree <group___sys_cpu_multi_core_itf_1ga96668d5f6000e8645551ce4ac9328ea9>` pfSysMCBDFree
+
+- #define :ref:`CHK_SysMCBDFree <group___sys_cpu_multi_core_itf_1gad59194d8c0b87221f50189cdc245df93>` (pfSysMCBDFree != NULL)
+
+- #define :ref:`EXP_SysMCBDFree <group___sys_cpu_multi_core_itf_1ga56bda8160b8727a1bb08cda36ba18f6b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCBDFree", (RTS_UINTPTR) :ref:`SysMCBDFree <group___sys_cpu_multi_core_itf_1ga67b4af553e2fc0838ac31c538813b143>` , 0, 0)
+
+- #define :ref:`USE_SysMCBDZero <group___sys_cpu_multi_core_itf_1gae28b68a91773573ed2f48119f9e920ab>` :ref:`PFSYSMCBDZERO <group___sys_cpu_multi_core_itf_1ga9007441598ca93a05b8da28394df9e37>` pfSysMCBDZero;
+
+- #define :ref:`EXT_SysMCBDZero <group___sys_cpu_multi_core_itf_1ga3813e53f3a3d1a19105c5ad99a973948>` extern :ref:`PFSYSMCBDZERO <group___sys_cpu_multi_core_itf_1ga9007441598ca93a05b8da28394df9e37>` pfSysMCBDZero;
+
+- #define :ref:`GET_SysMCBDZero <group___sys_cpu_multi_core_itf_1gac7e444c32b0c4253807ab26dbb73c9d4>` s_pfCMGetAPI2( "SysMCBDZero", (RTS_VOID_FCTPTR *)&pfSysMCBDZero, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCBDZero <group___sys_cpu_multi_core_itf_1gaf6e5fa92193602c99e1fd71311859dae>` pfSysMCBDZero
+
+- #define :ref:`CHK_SysMCBDZero <group___sys_cpu_multi_core_itf_1ga0de264ee5f515a2921a05b63de44c430>` (pfSysMCBDZero != NULL)
+
+- #define :ref:`EXP_SysMCBDZero <group___sys_cpu_multi_core_itf_1gad3700bda1690714f5b7365fdcf8f9af9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCBDZero", (RTS_UINTPTR) :ref:`SysMCBDZero <group___sys_cpu_multi_core_itf_1ga74f1ef1820f7040ab8a6fc4d06adf90e>` , 0, 0)
+
+- #define :ref:`USE_SysMCBDSet <group___sys_cpu_multi_core_itf_1ga65f00ba18f7c2dc4507694657be0db13>` :ref:`PFSYSMCBDSET <group___sys_cpu_multi_core_itf_1gaa9fd353e668d23f8dabccf0fff2848c1>` pfSysMCBDSet;
+
+- #define :ref:`EXT_SysMCBDSet <group___sys_cpu_multi_core_itf_1ga9280a7fa6d33cc8ebf57097f6438514a>` extern :ref:`PFSYSMCBDSET <group___sys_cpu_multi_core_itf_1gaa9fd353e668d23f8dabccf0fff2848c1>` pfSysMCBDSet;
+
+- #define :ref:`GET_SysMCBDSet <group___sys_cpu_multi_core_itf_1ga6998dcdd033807145d7a142f008f2bb0>` s_pfCMGetAPI2( "SysMCBDSet", (RTS_VOID_FCTPTR *)&pfSysMCBDSet, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCBDSet <group___sys_cpu_multi_core_itf_1gad7c8b7688b12477ab8528c8566b15d0b>` pfSysMCBDSet
+
+- #define :ref:`CHK_SysMCBDSet <group___sys_cpu_multi_core_itf_1ga32781af1d338b341e5fa75e754851aa7>` (pfSysMCBDSet != NULL)
+
+- #define :ref:`EXP_SysMCBDSet <group___sys_cpu_multi_core_itf_1gaf8c1bb0cdd0b244d21668065f93867cf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCBDSet", (RTS_UINTPTR) :ref:`SysMCBDSet <group___sys_cpu_multi_core_itf_1ga4d694d700fde30f78a8e6c6d56ae6953>` , 0, 0)
+
+- #define :ref:`USE_SysMCBDReset <group___sys_cpu_multi_core_itf_1ga12f2be6b1918eb6a4f8c0636581fe415>` :ref:`PFSYSMCBDRESET <group___sys_cpu_multi_core_itf_1gab97da2c71d3db667912417a50daa9f3e>` pfSysMCBDReset;
+
+- #define :ref:`EXT_SysMCBDReset <group___sys_cpu_multi_core_itf_1gae2882df28e5c6cbc813a66c191869a91>` extern :ref:`PFSYSMCBDRESET <group___sys_cpu_multi_core_itf_1gab97da2c71d3db667912417a50daa9f3e>` pfSysMCBDReset;
+
+- #define :ref:`GET_SysMCBDReset <group___sys_cpu_multi_core_itf_1ga8d01823ee868b11876ea140aeeeb66c0>` s_pfCMGetAPI2( "SysMCBDReset", (RTS_VOID_FCTPTR *)&pfSysMCBDReset, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCBDReset <group___sys_cpu_multi_core_itf_1ga6c9b7e1779b92554d822d16ff9ba4324>` pfSysMCBDReset
+
+- #define :ref:`CHK_SysMCBDReset <group___sys_cpu_multi_core_itf_1gaa4d65935bc11ff670924eef870135943>` (pfSysMCBDReset != NULL)
+
+- #define :ref:`EXP_SysMCBDReset <group___sys_cpu_multi_core_itf_1ga7de4ff9952f2551fe6838170838dfc18>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCBDReset", (RTS_UINTPTR) :ref:`SysMCBDReset <group___sys_cpu_multi_core_itf_1ga81c37f56c8162e9cf6798e81692d43f5>` , 0, 0)
+
+- #define :ref:`USE_SysMCBDIsSet <group___sys_cpu_multi_core_itf_1ga73afb5f022c89b279f248a01faf7ed13>` :ref:`PFSYSMCBDISSET <group___sys_cpu_multi_core_itf_1gae590fac171e7a3d0ffa8eb2ebf820563>` pfSysMCBDIsSet;
+
+- #define :ref:`EXT_SysMCBDIsSet <group___sys_cpu_multi_core_itf_1gaa6df28af9bde2e3421680064e9929e48>` extern :ref:`PFSYSMCBDISSET <group___sys_cpu_multi_core_itf_1gae590fac171e7a3d0ffa8eb2ebf820563>` pfSysMCBDIsSet;
+
+- #define :ref:`GET_SysMCBDIsSet <group___sys_cpu_multi_core_itf_1gadd016230a80da9034cfab20199ca6b4a>` s_pfCMGetAPI2( "SysMCBDIsSet", (RTS_VOID_FCTPTR *)&pfSysMCBDIsSet, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCBDIsSet <group___sys_cpu_multi_core_itf_1ga6dd5fbb2ae5c6a052320a6dbc8cc99f6>` pfSysMCBDIsSet
+
+- #define :ref:`CHK_SysMCBDIsSet <group___sys_cpu_multi_core_itf_1ga4b1ed70674bb587671f03e2318ffa8ed>` (pfSysMCBDIsSet != NULL)
+
+- #define :ref:`EXP_SysMCBDIsSet <group___sys_cpu_multi_core_itf_1ga3f96bc8318830eeaa0d8f1fb34383a2d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCBDIsSet", (RTS_UINTPTR) :ref:`SysMCBDIsSet <group___sys_cpu_multi_core_itf_1ga31996614ae2b8ad82fa65ff647e87025>` , 0, 0)
+
+- #define :ref:`USE_SysMCBDCount <group___sys_cpu_multi_core_itf_1gaca661d459e9cb6cf20587f326a8212d3>` :ref:`PFSYSMCBDCOUNT <group___sys_cpu_multi_core_itf_1ga163d0710bcb59ca8d5f011805e58df67>` pfSysMCBDCount;
+
+- #define :ref:`EXT_SysMCBDCount <group___sys_cpu_multi_core_itf_1ga2b9b7520caea1d8ed26548e69c7e85fc>` extern :ref:`PFSYSMCBDCOUNT <group___sys_cpu_multi_core_itf_1ga163d0710bcb59ca8d5f011805e58df67>` pfSysMCBDCount;
+
+- #define :ref:`GET_SysMCBDCount <group___sys_cpu_multi_core_itf_1ga9d609d29818b62ece2bd77d0881fec0c>` s_pfCMGetAPI2( "SysMCBDCount", (RTS_VOID_FCTPTR *)&pfSysMCBDCount, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCBDCount <group___sys_cpu_multi_core_itf_1ga2ba37651152edc9c7630bb08ef013952>` pfSysMCBDCount
+
+- #define :ref:`CHK_SysMCBDCount <group___sys_cpu_multi_core_itf_1ga65768697dfd8366b68fadea026b40a50>` (pfSysMCBDCount != NULL)
+
+- #define :ref:`EXP_SysMCBDCount <group___sys_cpu_multi_core_itf_1ga843b1a25eb4be90e040a7bd3a103bce9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCBDCount", (RTS_UINTPTR) :ref:`SysMCBDCount <group___sys_cpu_multi_core_itf_1ga1bd02aa285cb33b49355e102a444a5a5>` , 0, 0)
+
+- #define :ref:`USE_SysMCBDGetFirstID <group___sys_cpu_multi_core_itf_1gadc6ab85326af87dc8e6c8d8a9bb28ea5>` :ref:`PFSYSMCBDGETFIRSTID <group___sys_cpu_multi_core_itf_1ga8164dad26ab1b0fc950528679775bbb4>` pfSysMCBDGetFirstID;
+
+- #define :ref:`EXT_SysMCBDGetFirstID <group___sys_cpu_multi_core_itf_1gaaf6dcb4c40b79883794a29fb608ccc43>` extern :ref:`PFSYSMCBDGETFIRSTID <group___sys_cpu_multi_core_itf_1ga8164dad26ab1b0fc950528679775bbb4>` pfSysMCBDGetFirstID;
+
+- #define :ref:`GET_SysMCBDGetFirstID <group___sys_cpu_multi_core_itf_1ga656831db387f38294e024a930db0cc6d>` s_pfCMGetAPI2( "SysMCBDGetFirstID", (RTS_VOID_FCTPTR *)&pfSysMCBDGetFirstID, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCBDGetFirstID <group___sys_cpu_multi_core_itf_1gae336acc744ddb5a0970ed88d004ecca7>` pfSysMCBDGetFirstID
+
+- #define :ref:`CHK_SysMCBDGetFirstID <group___sys_cpu_multi_core_itf_1ga260a511e2e63aafd2d8c010d81803978>` (pfSysMCBDGetFirstID != NULL)
+
+- #define :ref:`EXP_SysMCBDGetFirstID <group___sys_cpu_multi_core_itf_1ga455b29c9ce1aa92f837715ec3f2686a9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCBDGetFirstID", (RTS_UINTPTR) :ref:`SysMCBDGetFirstID <group___sys_cpu_multi_core_itf_1gaa0407c35494b8c8a53a26c8c7b24d621>` , 0, 0)
+
+- #define :ref:`USE_SysMCBDGetNextID <group___sys_cpu_multi_core_itf_1gad5048cee41af52c4efc70fc656c81c9d>` :ref:`PFSYSMCBDGETNEXTID <group___sys_cpu_multi_core_itf_1ga9ec609730375b61ee95b091daf85b1a9>` pfSysMCBDGetNextID;
+
+- #define :ref:`EXT_SysMCBDGetNextID <group___sys_cpu_multi_core_itf_1gaba242452fc928a29cde91151f67be7fc>` extern :ref:`PFSYSMCBDGETNEXTID <group___sys_cpu_multi_core_itf_1ga9ec609730375b61ee95b091daf85b1a9>` pfSysMCBDGetNextID;
+
+- #define :ref:`GET_SysMCBDGetNextID <group___sys_cpu_multi_core_itf_1ga4b7cfa5de8b2a3eadb1f99a1aaf364d9>` s_pfCMGetAPI2( "SysMCBDGetNextID", (RTS_VOID_FCTPTR *)&pfSysMCBDGetNextID, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCBDGetNextID <group___sys_cpu_multi_core_itf_1ga4f1c2969ec9189333b25e2c5d36e0657>` pfSysMCBDGetNextID
+
+- #define :ref:`CHK_SysMCBDGetNextID <group___sys_cpu_multi_core_itf_1gaef5f74085ed2d950994abb4f525770a8>` (pfSysMCBDGetNextID != NULL)
+
+- #define :ref:`EXP_SysMCBDGetNextID <group___sys_cpu_multi_core_itf_1ga22990afa0662359877360ec82599d2f3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCBDGetNextID", (RTS_UINTPTR) :ref:`SysMCBDGetNextID <group___sys_cpu_multi_core_itf_1gaf7ac85cc51905025e4f7aaa512bb58ba>` , 0, 0)
+
+- #define :ref:`USE_SysMCBindProcess <group___sys_cpu_multi_core_itf_1ga9a3bbee5685699cbe891ceb7f63da410>` :ref:`PFSYSMCBINDPROCESS <group___sys_cpu_multi_core_itf_1gab0f7bd6e383444373f0022bffa80ef44>` pfSysMCBindProcess;
+
+- #define :ref:`EXT_SysMCBindProcess <group___sys_cpu_multi_core_itf_1gaf7fbf9ed6efc228bb3526c49fccf2f90>` extern :ref:`PFSYSMCBINDPROCESS <group___sys_cpu_multi_core_itf_1gab0f7bd6e383444373f0022bffa80ef44>` pfSysMCBindProcess;
+
+- #define :ref:`GET_SysMCBindProcess <group___sys_cpu_multi_core_itf_1gacd156e73a728e7c34878afe5d9ecfeed>` s_pfCMGetAPI2( "SysMCBindProcess", (RTS_VOID_FCTPTR *)&pfSysMCBindProcess, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCBindProcess <group___sys_cpu_multi_core_itf_1ga1d6983cc9047abf1901dce0376735b04>` pfSysMCBindProcess
+
+- #define :ref:`CHK_SysMCBindProcess <group___sys_cpu_multi_core_itf_1gaf5b0665299c115e4c40e18cad6a20249>` (pfSysMCBindProcess != NULL)
+
+- #define :ref:`EXP_SysMCBindProcess <group___sys_cpu_multi_core_itf_1ga53df2e144f8adfb49c0449845fb25c93>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCBindProcess", (RTS_UINTPTR) :ref:`SysMCBindProcess <group___sys_cpu_multi_core_itf_1ga87a4c7e4fc4cbc1742e0db7cc9b89db7>` , 0, 0)
+
+- #define :ref:`USE_SysMCBindProcess_ <group___sys_cpu_multi_core_itf_1gaba8ba2157e69bdf6bf0b3839fcf0ebe2>` :ref:`PFSYSMCBINDPROCESS_ <group___sys_cpu_multi_core_itf_1ga27c91809a2303c3150a0f8d0ef6bd1b3>` pfSysMCBindProcess_;
+
+- #define :ref:`EXT_SysMCBindProcess_ <group___sys_cpu_multi_core_itf_1gaf58b0507ca05f2f0e2d3071ef4f6f01a>` extern :ref:`PFSYSMCBINDPROCESS_ <group___sys_cpu_multi_core_itf_1ga27c91809a2303c3150a0f8d0ef6bd1b3>` pfSysMCBindProcess_;
+
+- #define :ref:`GET_SysMCBindProcess_ <group___sys_cpu_multi_core_itf_1gaa0a80219e07d7d2b6487fc128af9a133>` s_pfCMGetAPI2( "SysMCBindProcess_", (RTS_VOID_FCTPTR *)&pfSysMCBindProcess_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCBindProcess_ <group___sys_cpu_multi_core_itf_1ga24eebbb3e1645fe493c2d525f5932d72>` pfSysMCBindProcess_
+
+- #define :ref:`CHK_SysMCBindProcess_ <group___sys_cpu_multi_core_itf_1gae08267e65756d20ba3343d66f1f7f7bc>` (pfSysMCBindProcess_ != NULL)
+
+- #define :ref:`EXP_SysMCBindProcess_ <group___sys_cpu_multi_core_itf_1ga788620b3c370dd56adc98e07d165cf05>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCBindProcess_", (RTS_UINTPTR) :ref:`SysMCBindProcess_ <group___sys_cpu_multi_core_itf_1gad2a081e193f037befa9272979b986f35>` , 0, 0)
+
+- #define :ref:`USE_SysMCBindTask <group___sys_cpu_multi_core_itf_1ga88f3d27d1441fda8d29d21ad6227f116>` :ref:`PFSYSMCBINDTASK <group___sys_cpu_multi_core_itf_1gaa488eb90983e9fe5ba4b0f5e43ce47a1>` pfSysMCBindTask;
+
+- #define :ref:`EXT_SysMCBindTask <group___sys_cpu_multi_core_itf_1ga88921cb6dced093ab49ad6014e6fc6f5>` extern :ref:`PFSYSMCBINDTASK <group___sys_cpu_multi_core_itf_1gaa488eb90983e9fe5ba4b0f5e43ce47a1>` pfSysMCBindTask;
+
+- #define :ref:`GET_SysMCBindTask <group___sys_cpu_multi_core_itf_1gaf5165b1081845bdc2908919941efcd0d>` s_pfCMGetAPI2( "SysMCBindTask", (RTS_VOID_FCTPTR *)&pfSysMCBindTask, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCBindTask <group___sys_cpu_multi_core_itf_1ga41c34ee2fe3a9e296298c14a0b365207>` pfSysMCBindTask
+
+- #define :ref:`CHK_SysMCBindTask <group___sys_cpu_multi_core_itf_1ga0868dde4abbe9f0aa533fdd676be7c61>` (pfSysMCBindTask != NULL)
+
+- #define :ref:`EXP_SysMCBindTask <group___sys_cpu_multi_core_itf_1ga2b7b956f153cceeb3c3ec0ffd18082a1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCBindTask", (RTS_UINTPTR) :ref:`SysMCBindTask <group___sys_cpu_multi_core_itf_1ga61c9583a7b245940d42f4ee58e96f310>` , 0, 0)
+
+- #define :ref:`USE_SysMCBindTask_ <group___sys_cpu_multi_core_itf_1gafe42daa3768e8c503f3e28b3dc116f3e>` :ref:`PFSYSMCBINDTASK_ <group___sys_cpu_multi_core_itf_1ga7a59c1f3fd11fe24019bc4c0f5456d74>` pfSysMCBindTask_;
+
+- #define :ref:`EXT_SysMCBindTask_ <group___sys_cpu_multi_core_itf_1gaa7c1db529254f694610abfb66a2ccf85>` extern :ref:`PFSYSMCBINDTASK_ <group___sys_cpu_multi_core_itf_1ga7a59c1f3fd11fe24019bc4c0f5456d74>` pfSysMCBindTask_;
+
+- #define :ref:`GET_SysMCBindTask_ <group___sys_cpu_multi_core_itf_1ga84e73c7cfd487f1fd2ce44ee23a8b9b1>` s_pfCMGetAPI2( "SysMCBindTask_", (RTS_VOID_FCTPTR *)&pfSysMCBindTask_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCBindTask_ <group___sys_cpu_multi_core_itf_1gae0a5d41fced651ad2961c03f08bcb0ef>` pfSysMCBindTask_
+
+- #define :ref:`CHK_SysMCBindTask_ <group___sys_cpu_multi_core_itf_1gae0409f6dde496806f225c19d637cdae5>` (pfSysMCBindTask_ != NULL)
+
+- #define :ref:`EXP_SysMCBindTask_ <group___sys_cpu_multi_core_itf_1gae5c377efb69f6aa117bd56e9fc3988b3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCBindTask_", (RTS_UINTPTR) :ref:`SysMCBindTask_ <group___sys_cpu_multi_core_itf_1ga25fad5b42431683bc9123e7a47808ed6>` , 0, 0)
+
+- #define :ref:`USE_SysMCUnbindProcess <group___sys_cpu_multi_core_itf_1gab6bf6462f03d702c0de5ca8fe50fe66c>` :ref:`PFSYSMCUNBINDPROCESS <group___sys_cpu_multi_core_itf_1gaef2af023ee0d4fd435933e5515ff82ac>` pfSysMCUnbindProcess;
+
+- #define :ref:`EXT_SysMCUnbindProcess <group___sys_cpu_multi_core_itf_1ga249766915bd0ffe8cacde6b10f2b6652>` extern :ref:`PFSYSMCUNBINDPROCESS <group___sys_cpu_multi_core_itf_1gaef2af023ee0d4fd435933e5515ff82ac>` pfSysMCUnbindProcess;
+
+- #define :ref:`GET_SysMCUnbindProcess <group___sys_cpu_multi_core_itf_1ga90be7008fd016f7830ce67524e30e95b>` s_pfCMGetAPI2( "SysMCUnbindProcess", (RTS_VOID_FCTPTR *)&pfSysMCUnbindProcess, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCUnbindProcess <group___sys_cpu_multi_core_itf_1gaa021dccaf49130db675235bc00c67c9a>` pfSysMCUnbindProcess
+
+- #define :ref:`CHK_SysMCUnbindProcess <group___sys_cpu_multi_core_itf_1ga7b8a2db61b571a5a4577a2a152de342c>` (pfSysMCUnbindProcess != NULL)
+
+- #define :ref:`EXP_SysMCUnbindProcess <group___sys_cpu_multi_core_itf_1gafe51e61b5b6a54cbc8ee74b50b49c208>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCUnbindProcess", (RTS_UINTPTR) :ref:`SysMCUnbindProcess <group___sys_cpu_multi_core_itf_1gadb909c872b5a787ebf42c6d368cc90e0>` , 0, 0)
+
+- #define :ref:`USE_SysMCUnbindProcess_ <group___sys_cpu_multi_core_itf_1gabd68326d2e43bf7f11dad0fbade1580e>` :ref:`PFSYSMCUNBINDPROCESS_ <group___sys_cpu_multi_core_itf_1ga579d94762b80b6a0dd00f774a069e43e>` pfSysMCUnbindProcess_;
+
+- #define :ref:`EXT_SysMCUnbindProcess_ <group___sys_cpu_multi_core_itf_1gaf64123d7090952201aa86ff6c5515129>` extern :ref:`PFSYSMCUNBINDPROCESS_ <group___sys_cpu_multi_core_itf_1ga579d94762b80b6a0dd00f774a069e43e>` pfSysMCUnbindProcess_;
+
+- #define :ref:`GET_SysMCUnbindProcess_ <group___sys_cpu_multi_core_itf_1gaa1e255f633cfec0e81054cc2619bca44>` s_pfCMGetAPI2( "SysMCUnbindProcess_", (RTS_VOID_FCTPTR *)&pfSysMCUnbindProcess_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCUnbindProcess_ <group___sys_cpu_multi_core_itf_1gaa1e6e57799b58b15ded02e156dc19553>` pfSysMCUnbindProcess_
+
+- #define :ref:`CHK_SysMCUnbindProcess_ <group___sys_cpu_multi_core_itf_1gaf5a0e88cc75f1a9e4ee8df3ed933e96f>` (pfSysMCUnbindProcess_ != NULL)
+
+- #define :ref:`EXP_SysMCUnbindProcess_ <group___sys_cpu_multi_core_itf_1ga02b415a3bb6f31389af6cb4ce83f9494>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCUnbindProcess_", (RTS_UINTPTR) :ref:`SysMCUnbindProcess_ <group___sys_cpu_multi_core_itf_1gaaabfb963dafcd85e1b1ef1b35c16a565>` , 0, 0)
+
+- #define :ref:`USE_SysMCUnbindTask <group___sys_cpu_multi_core_itf_1gab645fa6e991bee3ac53c12f51da4c7cc>` :ref:`PFSYSMCUNBINDTASK <group___sys_cpu_multi_core_itf_1gae575236c455c0a22afa4f735981dc924>` pfSysMCUnbindTask;
+
+- #define :ref:`EXT_SysMCUnbindTask <group___sys_cpu_multi_core_itf_1ga8229628289587bb52712d500b457ada6>` extern :ref:`PFSYSMCUNBINDTASK <group___sys_cpu_multi_core_itf_1gae575236c455c0a22afa4f735981dc924>` pfSysMCUnbindTask;
+
+- #define :ref:`GET_SysMCUnbindTask <group___sys_cpu_multi_core_itf_1ga3ba10c78e2c6e1e5167a0288fba12c61>` s_pfCMGetAPI2( "SysMCUnbindTask", (RTS_VOID_FCTPTR *)&pfSysMCUnbindTask, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCUnbindTask <group___sys_cpu_multi_core_itf_1ga7ce76ac6e65adbab5c0f907ce8a9c8cf>` pfSysMCUnbindTask
+
+- #define :ref:`CHK_SysMCUnbindTask <group___sys_cpu_multi_core_itf_1ga8bf480f031d781f60c9a93a55615020b>` (pfSysMCUnbindTask != NULL)
+
+- #define :ref:`EXP_SysMCUnbindTask <group___sys_cpu_multi_core_itf_1gab985e021ccfd8cabfe8287ed1d9a44b4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCUnbindTask", (RTS_UINTPTR) :ref:`SysMCUnbindTask <group___sys_cpu_multi_core_itf_1ga8c502c9779d3c49788cc47018b1407b4>` , 0, 0)
+
+- #define :ref:`USE_SysMCUnbindTask_ <group___sys_cpu_multi_core_itf_1ga6537893b14de4b4223f24b2a9688dcc9>` :ref:`PFSYSMCUNBINDTASK_ <group___sys_cpu_multi_core_itf_1ga8e7ccba814d48aecd6b8623a1a755e5e>` pfSysMCUnbindTask_;
+
+- #define :ref:`EXT_SysMCUnbindTask_ <group___sys_cpu_multi_core_itf_1ga9842e597b749ee321a9592bd919b0603>` extern :ref:`PFSYSMCUNBINDTASK_ <group___sys_cpu_multi_core_itf_1ga8e7ccba814d48aecd6b8623a1a755e5e>` pfSysMCUnbindTask_;
+
+- #define :ref:`GET_SysMCUnbindTask_ <group___sys_cpu_multi_core_itf_1ga1d976dfa4fb378f9983a33f86be7a6d1>` s_pfCMGetAPI2( "SysMCUnbindTask_", (RTS_VOID_FCTPTR *)&pfSysMCUnbindTask_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCUnbindTask_ <group___sys_cpu_multi_core_itf_1ga7bbaa50856cb38630460accd884e6716>` pfSysMCUnbindTask_
+
+- #define :ref:`CHK_SysMCUnbindTask_ <group___sys_cpu_multi_core_itf_1gaf5dda2dede9d2cc61d390cf0a0a00655>` (pfSysMCUnbindTask_ != NULL)
+
+- #define :ref:`EXP_SysMCUnbindTask_ <group___sys_cpu_multi_core_itf_1gabf27e096a17e1e4a12a69beca4bd47b7>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCUnbindTask_", (RTS_UINTPTR) :ref:`SysMCUnbindTask_ <group___sys_cpu_multi_core_itf_1gaa30487d7d6674b2cfac6bff166e59975>` , 0, 0)
+
+- #define :ref:`USE_SysMCGetLoad <group___sys_cpu_multi_core_itf_1ga28eaf67f9d778a2b5fce67a1a2d3530f>` :ref:`PFSYSMCGETLOAD <group___sys_cpu_multi_core_itf_1ga23d232fd51dcaf0bb5e590da89346ccb>` pfSysMCGetLoad;
+
+- #define :ref:`EXT_SysMCGetLoad <group___sys_cpu_multi_core_itf_1ga6a9e21b9ea3a3dd3e53254bbcbd5f85c>` extern :ref:`PFSYSMCGETLOAD <group___sys_cpu_multi_core_itf_1ga23d232fd51dcaf0bb5e590da89346ccb>` pfSysMCGetLoad;
+
+- #define :ref:`GET_SysMCGetLoad <group___sys_cpu_multi_core_itf_1gacc03f87771c41171d98d6c0a9497b144>` s_pfCMGetAPI2( "SysMCGetLoad", (RTS_VOID_FCTPTR *)&pfSysMCGetLoad, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCGetLoad <group___sys_cpu_multi_core_itf_1gac96c30574801e79ef3c2ef472f6faeae>` pfSysMCGetLoad
+
+- #define :ref:`CHK_SysMCGetLoad <group___sys_cpu_multi_core_itf_1gaee2b4bee0f0f133f53adf099ecc901e8>` (pfSysMCGetLoad != NULL)
+
+- #define :ref:`EXP_SysMCGetLoad <group___sys_cpu_multi_core_itf_1ga451a510c42f0ca1b4a5b7709b1179983>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCGetLoad", (RTS_UINTPTR) :ref:`SysMCGetLoad <group___sys_cpu_multi_core_itf_1ga1be2430e917d710b3f6d242944434592>` , 0, 0)
+
+- #define :ref:`USE_SysMCGetLoad_ <group___sys_cpu_multi_core_itf_1ga6ab6f783ff7e9785ac0f20fa3ee5417b>` :ref:`PFSYSMCGETLOAD_ <group___sys_cpu_multi_core_itf_1ga316d814681fd9c1c9d510160b572f352>` pfSysMCGetLoad_;
+
+- #define :ref:`EXT_SysMCGetLoad_ <group___sys_cpu_multi_core_itf_1gab2fb50e70f2744c752642827210781db>` extern :ref:`PFSYSMCGETLOAD_ <group___sys_cpu_multi_core_itf_1ga316d814681fd9c1c9d510160b572f352>` pfSysMCGetLoad_;
+
+- #define :ref:`GET_SysMCGetLoad_ <group___sys_cpu_multi_core_itf_1gaa267e0a1462ebdfe753d87e573ec6305>` s_pfCMGetAPI2( "SysMCGetLoad_", (RTS_VOID_FCTPTR *)&pfSysMCGetLoad_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCGetLoad_ <group___sys_cpu_multi_core_itf_1ga4d95f7149f9dbc02ed4e3c3e85f9b92a>` pfSysMCGetLoad_
+
+- #define :ref:`CHK_SysMCGetLoad_ <group___sys_cpu_multi_core_itf_1ga7b3f0628fafa069f48a51afdc62dd843>` (pfSysMCGetLoad_ != NULL)
+
+- #define :ref:`EXP_SysMCGetLoad_ <group___sys_cpu_multi_core_itf_1ga3d1924e4e93550d1b58e01b72e25489f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCGetLoad_", (RTS_UINTPTR) :ref:`SysMCGetLoad_ <group___sys_cpu_multi_core_itf_1ga41bebadc1868cd428caeb2debf2ff40d>` , 0, 0)
+
+- #define :ref:`USE_SysMCGetNumOfCores <group___sys_cpu_multi_core_itf_1ga092da0abe068a58457e805f2bf74a0e5>` :ref:`PFSYSMCGETNUMOFCORES <group___sys_cpu_multi_core_itf_1gaf0f4582faa0a63baff3098c1eaec9a7e>` pfSysMCGetNumOfCores;
+
+- #define :ref:`EXT_SysMCGetNumOfCores <group___sys_cpu_multi_core_itf_1ga90ea1050d1bf538d4e983b7f9d2f0fc9>` extern :ref:`PFSYSMCGETNUMOFCORES <group___sys_cpu_multi_core_itf_1gaf0f4582faa0a63baff3098c1eaec9a7e>` pfSysMCGetNumOfCores;
+
+- #define :ref:`GET_SysMCGetNumOfCores <group___sys_cpu_multi_core_itf_1gae0c389b68a92cdb900bc59b17ba655d8>` s_pfCMGetAPI2( "SysMCGetNumOfCores", (RTS_VOID_FCTPTR *)&pfSysMCGetNumOfCores, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCGetNumOfCores <group___sys_cpu_multi_core_itf_1gad0c136a78756b38485245d7160b1ab37>` pfSysMCGetNumOfCores
+
+- #define :ref:`CHK_SysMCGetNumOfCores <group___sys_cpu_multi_core_itf_1ga399ba0c174eb7b52c61db5e26c97668c>` (pfSysMCGetNumOfCores != NULL)
+
+- #define :ref:`EXP_SysMCGetNumOfCores <group___sys_cpu_multi_core_itf_1ga28738f5b08da428d0dac0bac1bb58e4d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCGetNumOfCores", (RTS_UINTPTR) :ref:`SysMCGetNumOfCores <group___sys_cpu_multi_core_itf_1gadf9130c00eee49dd86fb4dfd55ef0c8a>` , 0, 0)
+
+- #define :ref:`USE_SysMCGetNumOfCores_ <group___sys_cpu_multi_core_itf_1ga65cbd85070174ba02917e93fe6e254ce>` :ref:`PFSYSMCGETNUMOFCORES_ <group___sys_cpu_multi_core_itf_1ga54e342c01265bfc6fbdf0c57c93002a1>` pfSysMCGetNumOfCores_;
+
+- #define :ref:`EXT_SysMCGetNumOfCores_ <group___sys_cpu_multi_core_itf_1gad152f83627105542a5d872e6fc879a12>` extern :ref:`PFSYSMCGETNUMOFCORES_ <group___sys_cpu_multi_core_itf_1ga54e342c01265bfc6fbdf0c57c93002a1>` pfSysMCGetNumOfCores_;
+
+- #define :ref:`GET_SysMCGetNumOfCores_ <group___sys_cpu_multi_core_itf_1gacdf48cb456db7e16068eeae77d16cd7f>` s_pfCMGetAPI2( "SysMCGetNumOfCores_", (RTS_VOID_FCTPTR *)&pfSysMCGetNumOfCores_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCGetNumOfCores_ <group___sys_cpu_multi_core_itf_1ga4104d0d1f6d0ca7de86daf80f59dd391>` pfSysMCGetNumOfCores_
+
+- #define :ref:`CHK_SysMCGetNumOfCores_ <group___sys_cpu_multi_core_itf_1ga0796574b13ce3aa588a93f0353239888>` (pfSysMCGetNumOfCores_ != NULL)
+
+- #define :ref:`EXP_SysMCGetNumOfCores_ <group___sys_cpu_multi_core_itf_1ga3410649a995fc4aa6d287572431c635c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCGetNumOfCores_", (RTS_UINTPTR) :ref:`SysMCGetNumOfCores_ <group___sys_cpu_multi_core_itf_1ga157b4dcefc157c8ff096a52de5ef8701>` , 0, 0)
+
+- #define :ref:`USE_SysMCGetProcessBinding <group___sys_cpu_multi_core_itf_1ga7d7ea270d5759e9f9d4b6b3e4b3b5fa5>` :ref:`PFSYSMCGETPROCESSBINDING <group___sys_cpu_multi_core_itf_1ga9e391fdd54f998891522aa9c54de322e>` pfSysMCGetProcessBinding;
+
+- #define :ref:`EXT_SysMCGetProcessBinding <group___sys_cpu_multi_core_itf_1gaaaafdcb4a296c7cc9ef18509bb66a74f>` extern :ref:`PFSYSMCGETPROCESSBINDING <group___sys_cpu_multi_core_itf_1ga9e391fdd54f998891522aa9c54de322e>` pfSysMCGetProcessBinding;
+
+- #define :ref:`GET_SysMCGetProcessBinding <group___sys_cpu_multi_core_itf_1gac6cc0fd27adda34450d83975fd6066d5>` s_pfCMGetAPI2( "SysMCGetProcessBinding", (RTS_VOID_FCTPTR *)&pfSysMCGetProcessBinding, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCGetProcessBinding <group___sys_cpu_multi_core_itf_1ga4e276413ad4977a7981074472b627f95>` pfSysMCGetProcessBinding
+
+- #define :ref:`CHK_SysMCGetProcessBinding <group___sys_cpu_multi_core_itf_1ga1c258ab003ea0b9d6b89c0fcfc6f2e7e>` (pfSysMCGetProcessBinding != NULL)
+
+- #define :ref:`EXP_SysMCGetProcessBinding <group___sys_cpu_multi_core_itf_1ga12894c59baac33dcdaff887f1841d080>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCGetProcessBinding", (RTS_UINTPTR) :ref:`SysMCGetProcessBinding <group___sys_cpu_multi_core_itf_1ga77d577955203eb463a31afbc4112f472>` , 0, 0)
+
+- #define :ref:`USE_SysMCGetProcessBinding_ <group___sys_cpu_multi_core_itf_1ga42411d1ffbf777aedb8d4163c41b1be3>` :ref:`PFSYSMCGETPROCESSBINDING_ <group___sys_cpu_multi_core_itf_1ga6021c2dd3de97fcf1fc0e57898e8a827>` pfSysMCGetProcessBinding_;
+
+- #define :ref:`EXT_SysMCGetProcessBinding_ <group___sys_cpu_multi_core_itf_1ga0056adc0caf086318fb49ef42d9d2a6e>` extern :ref:`PFSYSMCGETPROCESSBINDING_ <group___sys_cpu_multi_core_itf_1ga6021c2dd3de97fcf1fc0e57898e8a827>` pfSysMCGetProcessBinding_;
+
+- #define :ref:`GET_SysMCGetProcessBinding_ <group___sys_cpu_multi_core_itf_1gac6261b4915eb549f8e932fb4149fa5aa>` s_pfCMGetAPI2( "SysMCGetProcessBinding_", (RTS_VOID_FCTPTR *)&pfSysMCGetProcessBinding_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCGetProcessBinding_ <group___sys_cpu_multi_core_itf_1gabdae68532417ca1f6406996a5b1bebd4>` pfSysMCGetProcessBinding_
+
+- #define :ref:`CHK_SysMCGetProcessBinding_ <group___sys_cpu_multi_core_itf_1gacc524ee6ba73ea28b0b6936eaf5e2596>` (pfSysMCGetProcessBinding_ != NULL)
+
+- #define :ref:`EXP_SysMCGetProcessBinding_ <group___sys_cpu_multi_core_itf_1ga406d5ed57ca8085457296d87f3ad8997>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCGetProcessBinding_", (RTS_UINTPTR) :ref:`SysMCGetProcessBinding_ <group___sys_cpu_multi_core_itf_1gadd050f9b966798c186b9814924aade0a>` , 0, 0)
+
+- #define :ref:`USE_SysMCGetTaskBinding <group___sys_cpu_multi_core_itf_1ga56083da3ca9c3a89ac011ba3bb42d412>` :ref:`PFSYSMCGETTASKBINDING <group___sys_cpu_multi_core_itf_1ga2c81b94389e3ba09c676a1db82f199ff>` pfSysMCGetTaskBinding;
+
+- #define :ref:`EXT_SysMCGetTaskBinding <group___sys_cpu_multi_core_itf_1gada94364d9b29090119740dda22bae945>` extern :ref:`PFSYSMCGETTASKBINDING <group___sys_cpu_multi_core_itf_1ga2c81b94389e3ba09c676a1db82f199ff>` pfSysMCGetTaskBinding;
+
+- #define :ref:`GET_SysMCGetTaskBinding <group___sys_cpu_multi_core_itf_1ga46d032c375f3802e4a31630efe7fff85>` s_pfCMGetAPI2( "SysMCGetTaskBinding", (RTS_VOID_FCTPTR *)&pfSysMCGetTaskBinding, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCGetTaskBinding <group___sys_cpu_multi_core_itf_1gaff4294be95a865d65ab4f08d09d2cef4>` pfSysMCGetTaskBinding
+
+- #define :ref:`CHK_SysMCGetTaskBinding <group___sys_cpu_multi_core_itf_1ga266b9f0406a3aa88ac736a8ea6af30fa>` (pfSysMCGetTaskBinding != NULL)
+
+- #define :ref:`EXP_SysMCGetTaskBinding <group___sys_cpu_multi_core_itf_1gaec5e1967308279e8659f27f3e2427fde>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCGetTaskBinding", (RTS_UINTPTR) :ref:`SysMCGetTaskBinding <group___sys_cpu_multi_core_itf_1ga9929613cee047235c7e4bab785978bd6>` , 0, 0)
+
+- #define :ref:`USE_SysMCGetTaskBinding_ <group___sys_cpu_multi_core_itf_1gaf9bee9c82c33a1e151536e8ef3e14dde>` :ref:`PFSYSMCGETTASKBINDING_ <group___sys_cpu_multi_core_itf_1ga635ef308aaa298d32a16892b0150ed31>` pfSysMCGetTaskBinding_;
+
+- #define :ref:`EXT_SysMCGetTaskBinding_ <group___sys_cpu_multi_core_itf_1gaaf49b2175ced7f3d4fc8b2c89aa6e901>` extern :ref:`PFSYSMCGETTASKBINDING_ <group___sys_cpu_multi_core_itf_1ga635ef308aaa298d32a16892b0150ed31>` pfSysMCGetTaskBinding_;
+
+- #define :ref:`GET_SysMCGetTaskBinding_ <group___sys_cpu_multi_core_itf_1ga3c54e854fa3ace31b5e125650a5a916f>` s_pfCMGetAPI2( "SysMCGetTaskBinding_", (RTS_VOID_FCTPTR *)&pfSysMCGetTaskBinding_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCGetTaskBinding_ <group___sys_cpu_multi_core_itf_1ga1e096e4952178e749c23c60e1bcc849e>` pfSysMCGetTaskBinding_
+
+- #define :ref:`CHK_SysMCGetTaskBinding_ <group___sys_cpu_multi_core_itf_1gaac9d59b17f537a3465f3c4df806b92dd>` (pfSysMCGetTaskBinding_ != NULL)
+
+- #define :ref:`EXP_SysMCGetTaskBinding_ <group___sys_cpu_multi_core_itf_1gadd54a2ebf1211668dda4335d1584ca60>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCGetTaskBinding_", (RTS_UINTPTR) :ref:`SysMCGetTaskBinding_ <group___sys_cpu_multi_core_itf_1gaa7fc872c7df6386652f4d931701256e1>` , 0, 0)
+
+- #define :ref:`USE_SysMCGetCurrentCoreID <group___sys_cpu_multi_core_itf_1ga863572aafbb6207660631f9d5fbc5ff2>` :ref:`PFSYSMCGETCURRENTCOREID <group___sys_cpu_multi_core_itf_1gaa8f68f09de9e74c9f7d61615050fce1d>` pfSysMCGetCurrentCoreID;
+
+- #define :ref:`EXT_SysMCGetCurrentCoreID <group___sys_cpu_multi_core_itf_1gad7e0dd3ee10c365fa218d713468bc5b4>` extern :ref:`PFSYSMCGETCURRENTCOREID <group___sys_cpu_multi_core_itf_1gaa8f68f09de9e74c9f7d61615050fce1d>` pfSysMCGetCurrentCoreID;
+
+- #define :ref:`GET_SysMCGetCurrentCoreID <group___sys_cpu_multi_core_itf_1ga81ca7b894936ff6517dc1fe42ebfdf2f>` s_pfCMGetAPI2( "SysMCGetCurrentCoreID", (RTS_VOID_FCTPTR *)&pfSysMCGetCurrentCoreID, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCGetCurrentCoreID <group___sys_cpu_multi_core_itf_1ga09a936045eaad42f02eafee2c2d808ec>` pfSysMCGetCurrentCoreID
+
+- #define :ref:`CHK_SysMCGetCurrentCoreID <group___sys_cpu_multi_core_itf_1gadf4f8334b6f5a4e8d72abd9b66f2978b>` (pfSysMCGetCurrentCoreID != NULL)
+
+- #define :ref:`EXP_SysMCGetCurrentCoreID <group___sys_cpu_multi_core_itf_1ga5fd42df6ce05622964a380516a809a57>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCGetCurrentCoreID", (RTS_UINTPTR) :ref:`SysMCGetCurrentCoreID <group___sys_cpu_multi_core_itf_1ga9161f12f86827eab55b7c5c100745638>` , 0, 0)
+
+- #define :ref:`USE_SysMCGetCurrentCoreID_ <group___sys_cpu_multi_core_itf_1ga2df9193761c439978275350c29c2e7b1>` :ref:`PFSYSMCGETCURRENTCOREID_ <group___sys_cpu_multi_core_itf_1gaa9437caff943dca3a969af9b223984c1>` pfSysMCGetCurrentCoreID_;
+
+- #define :ref:`EXT_SysMCGetCurrentCoreID_ <group___sys_cpu_multi_core_itf_1gaa352dcd90fe61278b2607bf613ecd806>` extern :ref:`PFSYSMCGETCURRENTCOREID_ <group___sys_cpu_multi_core_itf_1gaa9437caff943dca3a969af9b223984c1>` pfSysMCGetCurrentCoreID_;
+
+- #define :ref:`GET_SysMCGetCurrentCoreID_ <group___sys_cpu_multi_core_itf_1ga88f0faa3c10234d67fef2c6eff05a146>` s_pfCMGetAPI2( "SysMCGetCurrentCoreID_", (RTS_VOID_FCTPTR *)&pfSysMCGetCurrentCoreID_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCGetCurrentCoreID_ <group___sys_cpu_multi_core_itf_1ga2bc23cd3c9007e93250526623d91f10e>` pfSysMCGetCurrentCoreID_
+
+- #define :ref:`CHK_SysMCGetCurrentCoreID_ <group___sys_cpu_multi_core_itf_1ga9a0aab8a81043e8fc76dc617862d39b7>` (pfSysMCGetCurrentCoreID_ != NULL)
+
+- #define :ref:`EXP_SysMCGetCurrentCoreID_ <group___sys_cpu_multi_core_itf_1gac222352d34093d93da0fd42b275cd217>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCGetCurrentCoreID_", (RTS_UINTPTR) :ref:`SysMCGetCurrentCoreID_ <group___sys_cpu_multi_core_itf_1ga9df4a7641181a251554db824306e29e3>` , 0, 0)
+
+- #define :ref:`USE_SysMCCheckMultiCoreLicense <group___sys_cpu_multi_core_itf_1ga2b93019aabf9db0856430b65f36cafe2>` :ref:`PFSYSMCCHECKMULTICORELICENSE <group___sys_cpu_multi_core_itf_1ga7bca2b1c67ef10e268a838ad8e87229a>` pfSysMCCheckMultiCoreLicense;
+
+- #define :ref:`EXT_SysMCCheckMultiCoreLicense <group___sys_cpu_multi_core_itf_1ga9354a932a576e795a28a8ecc3c292be9>` extern :ref:`PFSYSMCCHECKMULTICORELICENSE <group___sys_cpu_multi_core_itf_1ga7bca2b1c67ef10e268a838ad8e87229a>` pfSysMCCheckMultiCoreLicense;
+
+- #define :ref:`GET_SysMCCheckMultiCoreLicense <group___sys_cpu_multi_core_itf_1ga12fdec8242cb5c297f8a155d835616a2>` s_pfCMGetAPI2( "SysMCCheckMultiCoreLicense", (RTS_VOID_FCTPTR *)&pfSysMCCheckMultiCoreLicense, (fl), 0, 0)
+
+- #define :ref:`CAL_SysMCCheckMultiCoreLicense <group___sys_cpu_multi_core_itf_1ga06ed2211b2ee8f108be01d7f9370543f>` pfSysMCCheckMultiCoreLicense
+
+- #define :ref:`CHK_SysMCCheckMultiCoreLicense <group___sys_cpu_multi_core_itf_1gaeacf45447ef77870d29deb34048fc328>` (pfSysMCCheckMultiCoreLicense != NULL)
+
+- #define :ref:`EXP_SysMCCheckMultiCoreLicense <group___sys_cpu_multi_core_itf_1gaca612098d7ac109aff1e415606a4d924>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCCheckMultiCoreLicense", (RTS_UINTPTR) :ref:`SysMCCheckMultiCoreLicense <group___sys_cpu_multi_core_itf_1gaf84990c209ade0d6578766d49267aa24>` , 0, 0)
+
+- #define :ref:`ITF_SysCpuMultiCore <group___sys_cpu_multi_core_itf_1gaff9baa213d2b63faa34678aaa4053336>`
+
+- #define :ref:`EXTITF_SysCpuMultiCore <group___sys_cpu_multi_core_itf_1gab19e913d3e1ba1faf919f2e3a8f97864>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagCpuCoreBindingDesc <structtag_cpu_core_binding_desc>` :ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>`
+
+- typedef struct :ref:`tagsysmcbdalloc_struct <structtagsysmcbdalloc__struct>` :ref:`sysmcbdalloc_struct <group___sys_cpu_multi_core_itf_1ga34643d390e7c496e237aa2f48b69cad2>`
+
+- typedef void(* :ref:`PFSYSMCBDALLOC_IEC <group___sys_cpu_multi_core_itf_1ga5299e2dcee264167086d85076e7eac2a>`)(sysmcbdalloc_struct *p)
+
+- typedef struct :ref:`tagsysmcbdcount_struct <structtagsysmcbdcount__struct>` :ref:`sysmcbdcount_struct <group___sys_cpu_multi_core_itf_1ga4583f3d1ecfe6e2e0af3e6e8a1d8a38c>`
+
+- typedef void(* :ref:`PFSYSMCBDCOUNT_IEC <group___sys_cpu_multi_core_itf_1gaf510bd4c45afeae7498666b65d381802>`)(sysmcbdcount_struct *p)
+
+- typedef struct :ref:`tagsysmcbdfree_struct <structtagsysmcbdfree__struct>` :ref:`sysmcbdfree_struct <group___sys_cpu_multi_core_itf_1ga031ba83dcde009a9ad49adfa8275d3fd>`
+
+- typedef void(* :ref:`PFSYSMCBDFREE_IEC <group___sys_cpu_multi_core_itf_1ga1266fe01bc03af9e38d9dcc6519c02ce>`)(sysmcbdfree_struct *p)
+
+- typedef struct :ref:`tagsysmcbdgetfirstid_struct <structtagsysmcbdgetfirstid__struct>` :ref:`sysmcbdgetfirstid_struct <group___sys_cpu_multi_core_itf_1ga0bf77a388434f729531593940ae02948>`
+
+- typedef void(* :ref:`PFSYSMCBDGETFIRSTID_IEC <group___sys_cpu_multi_core_itf_1gad4b7db01400a2933096a9be785096b58>`)(sysmcbdgetfirstid_struct *p)
+
+- typedef struct :ref:`tagsysmcbdgetnextid_struct <structtagsysmcbdgetnextid__struct>` :ref:`sysmcbdgetnextid_struct <group___sys_cpu_multi_core_itf_1ga485711ed9f75659861167cf0127c990d>`
+
+- typedef void(* :ref:`PFSYSMCBDGETNEXTID_IEC <group___sys_cpu_multi_core_itf_1ga1a4ee7aae706d83a17c4374eb2d059d9>`)(sysmcbdgetnextid_struct *p)
+
+- typedef struct :ref:`tagsysmcbdisset_struct <structtagsysmcbdisset__struct>` :ref:`sysmcbdisset_struct <group___sys_cpu_multi_core_itf_1ga89bf7bb33713d1b419ed35ed7bea8c92>`
+
+- typedef void(* :ref:`PFSYSMCBDISSET_IEC <group___sys_cpu_multi_core_itf_1ga1790800f9e0985350fb58251533a31b7>`)(sysmcbdisset_struct *p)
+
+- typedef struct :ref:`tagsysmcgetload_struct <structtagsysmcgetload__struct>` :ref:`sysmcgetload_struct <group___sys_cpu_multi_core_itf_1ga8ffb5973137cf357da8ab98aed5fd458>`
+
+- typedef void(* :ref:`PFSYSMCGETLOAD_IEC <group___sys_cpu_multi_core_itf_1ga1a34205c2d556d51da6ac6b40b1e145a>`)(sysmcgetload_struct *p)
+
+- typedef struct :ref:`tagsysmcgetnumofcores_struct <structtagsysmcgetnumofcores__struct>` :ref:`sysmcgetnumofcores_struct <group___sys_cpu_multi_core_itf_1ga820422a5f5531dc7c128bf0584ba04d8>`
+
+- typedef void(* :ref:`PFSYSMCGETNUMOFCORES_IEC <group___sys_cpu_multi_core_itf_1gaae002acb28c8f483fe7b58a5ac0dbf33>`)(sysmcgetnumofcores_struct *p)
+
+- typedef struct :ref:`tagsysmcgetprocessbinding_struct <structtagsysmcgetprocessbinding__struct>` :ref:`sysmcgetprocessbinding_struct <group___sys_cpu_multi_core_itf_1ga0b64fad5640e611ee4038bfddd8da1a8>`
+
+- typedef void(* :ref:`PFSYSMCGETPROCESSBINDING_IEC <group___sys_cpu_multi_core_itf_1gaafded06b72a8a436a666f09b5c6ce5ec>`)(sysmcgetprocessbinding_struct *p)
+
+- typedef struct :ref:`tagsysmcgettaskbinding_struct <structtagsysmcgettaskbinding__struct>` :ref:`sysmcgettaskbinding_struct <group___sys_cpu_multi_core_itf_1ga7a525de72f4e1ece481a4bdedaa45251>`
+
+- typedef void(* :ref:`PFSYSMCGETTASKBINDING_IEC <group___sys_cpu_multi_core_itf_1ga38fd97ac72e7aad4fe7b9b987f08141c>`)(sysmcgettaskbinding_struct *p)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSMCADDTASKGROUP <group___sys_cpu_multi_core_itf_1ga2772b08eaa3adc15356ddc7ba2314ac5>`)(char *pszTaskGroup, RTS_UI32 taskGroupOptions, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCREMOVETASKGROUP <group___sys_cpu_multi_core_itf_1gacb59d0b75ad1b3ecb5442fa7916ec093>`)(RTS_HANDLE hTaskGroup)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSMCFINDTASKGROUP <group___sys_cpu_multi_core_itf_1ga0a037f42299db236e7d6e7c622d18afc>`)(char *pszTaskGroup, RTS_I32 bIecTaskGroup, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSMCGETFIRSTTASKGROUP <group___sys_cpu_multi_core_itf_1ga27d8020b3f8b5673d93f6a133d5af096>`)(RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSMCGETNEXTTASKGROUP <group___sys_cpu_multi_core_itf_1gae130c387d090eb55d7f7692a935aa077>`)(RTS_HANDLE hPrevTaskGroup, RTS_RESULT *pResult)
+
+- typedef char *(* :ref:`PFSYSMCGETTASKGROUPNAME <group___sys_cpu_multi_core_itf_1gabc3d549b3ae68c3d36281887a24e3336>`)(RTS_HANDLE hTaskGroup, RTS_RESULT *pResult)
+
+- typedef :ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` *(* :ref:`PFSYSMCGETTASKGROUPBINDING <group___sys_cpu_multi_core_itf_1ga10d5bd89305e66c13b542e9e411ba3bc>`)(RTS_HANDLE hTaskGroup, RTS_RESULT *pResult)
+
+- typedef RTS_UI32(* :ref:`PFSYSMCGETTASKGROUPOPTIONS <group___sys_cpu_multi_core_itf_1ga90989f04235e7837b24fd8d4747967e7>`)(RTS_HANDLE hTaskGroup, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCCHANGETASKGROUPSTRATEGY <group___sys_cpu_multi_core_itf_1gaffe32b67d5ca492b7048ad53e3b18dd0>`)(RTS_HANDLE hTaskGroup, RTS_UI32 taskGroupStrategy)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCSETTASKGROUPBINDING <group___sys_cpu_multi_core_itf_1ga07cc0ef8cbe9afafd8f5c84b72803c27>`)(RTS_HANDLE hTaskGroup, CpuCoreBindingDesc *pBindingDesc)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCADDTOTASKGROUP <group___sys_cpu_multi_core_itf_1ga4f1cf60cef02ed8ef2e86bcb6c77c8df>`)(RTS_HANDLE hSysTask, RTS_HANDLE hTaskGroup)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCREMOVEFROMTASKGROUP <group___sys_cpu_multi_core_itf_1gae245ecdaac7aa9c5baaeceb7997a9863>`)(RTS_HANDLE hSysTask, RTS_HANDLE hTaskGroup)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCBEGINTASKGROUPCONF <group___sys_cpu_multi_core_itf_1ga567fd9789e8e32a6245421121dec1ce6>`)(RTS_HANDLE hTaskGroup)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCENDTASKGROUPCONF <group___sys_cpu_multi_core_itf_1ga6b27b52fb5da43ba3b22fc95d9bf5da7>`)(RTS_HANDLE hTaskGroup)
+
+- typedef :ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` *(* :ref:`PFSYSMCBDALLOC <group___sys_cpu_multi_core_itf_1ga98a7dcab997e00b1d5f22d0ec77cd3cf>`)(RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCBDFREE <group___sys_cpu_multi_core_itf_1gacf9c0f251d57fa53b06e22a197c29ed6>`)(CpuCoreBindingDesc *pBindingDesc)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCBDZERO <group___sys_cpu_multi_core_itf_1ga9007441598ca93a05b8da28394df9e37>`)(CpuCoreBindingDesc *pBindingDesc)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCBDSET <group___sys_cpu_multi_core_itf_1gaa9fd353e668d23f8dabccf0fff2848c1>`)(CpuCoreBindingDesc *pBindingDesc, RTS_UI32 uCoreId)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCBDRESET <group___sys_cpu_multi_core_itf_1gab97da2c71d3db667912417a50daa9f3e>`)(CpuCoreBindingDesc *pBindingDesc, RTS_UI32 uCoreId)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCBDISSET <group___sys_cpu_multi_core_itf_1gae590fac171e7a3d0ffa8eb2ebf820563>`)(CpuCoreBindingDesc *pBindingDesc, RTS_UI32 uCoreId)
+
+- typedef RTS_UI32(* :ref:`PFSYSMCBDCOUNT <group___sys_cpu_multi_core_itf_1ga163d0710bcb59ca8d5f011805e58df67>`)(CpuCoreBindingDesc *pBindingDesc, RTS_RESULT *pResult)
+
+- typedef RTS_UI32(* :ref:`PFSYSMCBDGETFIRSTID <group___sys_cpu_multi_core_itf_1ga8164dad26ab1b0fc950528679775bbb4>`)(CpuCoreBindingDesc *pBindingDesc, RTS_RESULT *pResult)
+
+- typedef RTS_UI32(* :ref:`PFSYSMCBDGETNEXTID <group___sys_cpu_multi_core_itf_1ga9ec609730375b61ee95b091daf85b1a9>`)(CpuCoreBindingDesc *pBindingDesc, RTS_UI32 uPrevCoreID, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCBINDPROCESS <group___sys_cpu_multi_core_itf_1gab0f7bd6e383444373f0022bffa80ef44>`)(CpuCoreBindingDesc *pBindingDesc, RTS_IEC_HANDLE hProcess)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCBINDPROCESS_ <group___sys_cpu_multi_core_itf_1ga27c91809a2303c3150a0f8d0ef6bd1b3>`)(CpuCoreBindingDesc *pBindingDesc, RTS_IEC_HANDLE hProcess)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCBINDTASK <group___sys_cpu_multi_core_itf_1gaa488eb90983e9fe5ba4b0f5e43ce47a1>`)(CpuCoreBindingDesc *pBindingDesc, RTS_IEC_HANDLE hTask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCBINDTASK_ <group___sys_cpu_multi_core_itf_1ga7a59c1f3fd11fe24019bc4c0f5456d74>`)(CpuCoreBindingDesc *pBindingDesc, RTS_IEC_HANDLE hTask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCUNBINDPROCESS <group___sys_cpu_multi_core_itf_1gaef2af023ee0d4fd435933e5515ff82ac>`)(RTS_IEC_HANDLE hProcess)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCUNBINDPROCESS_ <group___sys_cpu_multi_core_itf_1ga579d94762b80b6a0dd00f774a069e43e>`)(RTS_IEC_HANDLE hProcess)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCUNBINDTASK <group___sys_cpu_multi_core_itf_1gae575236c455c0a22afa4f735981dc924>`)(RTS_IEC_HANDLE hTask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCUNBINDTASK_ <group___sys_cpu_multi_core_itf_1ga8e7ccba814d48aecd6b8623a1a755e5e>`)(RTS_IEC_HANDLE hTask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCGETLOAD <group___sys_cpu_multi_core_itf_1ga23d232fd51dcaf0bb5e590da89346ccb>`)(RTS_UI32 uCoreID, RTS_UI8 *pPercent)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCGETLOAD_ <group___sys_cpu_multi_core_itf_1ga316d814681fd9c1c9d510160b572f352>`)(RTS_UI32 uCoreID, RTS_UI8 *pPercent)
+
+- typedef RTS_UI32(* :ref:`PFSYSMCGETNUMOFCORES <group___sys_cpu_multi_core_itf_1gaf0f4582faa0a63baff3098c1eaec9a7e>`)(RTS_RESULT *pResult)
+
+- typedef RTS_UI32(* :ref:`PFSYSMCGETNUMOFCORES_ <group___sys_cpu_multi_core_itf_1ga54e342c01265bfc6fbdf0c57c93002a1>`)(RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCGETPROCESSBINDING <group___sys_cpu_multi_core_itf_1ga9e391fdd54f998891522aa9c54de322e>`)(RTS_IEC_HANDLE hProcess, CpuCoreBindingDesc *pBindingDesc)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCGETPROCESSBINDING_ <group___sys_cpu_multi_core_itf_1ga6021c2dd3de97fcf1fc0e57898e8a827>`)(RTS_IEC_HANDLE hProcess, CpuCoreBindingDesc *pBindingDesc)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCGETTASKBINDING <group___sys_cpu_multi_core_itf_1ga2c81b94389e3ba09c676a1db82f199ff>`)(RTS_IEC_HANDLE hTask, CpuCoreBindingDesc *pBindingDesc)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCGETTASKBINDING_ <group___sys_cpu_multi_core_itf_1ga635ef308aaa298d32a16892b0150ed31>`)(RTS_IEC_HANDLE hTask, CpuCoreBindingDesc *pBindingDesc)
+
+- typedef RTS_UI32(* :ref:`PFSYSMCGETCURRENTCOREID <group___sys_cpu_multi_core_itf_1gaa8f68f09de9e74c9f7d61615050fce1d>`)(RTS_RESULT *pResult)
+
+- typedef RTS_UI32(* :ref:`PFSYSMCGETCURRENTCOREID_ <group___sys_cpu_multi_core_itf_1gaa9437caff943dca3a969af9b223984c1>`)(RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSMCCHECKMULTICORELICENSE <group___sys_cpu_multi_core_itf_1ga7bca2b1c67ef10e268a838ad8e87229a>`)(RTS_UI32 *pnCoresLicensed)
+
+- typedef :ref:`ISysCpuMultiCore_C <struct_i_sys_cpu_multi_core___c>` :ref:`ISysCpuMultiCore <group___sys_cpu_multi_core_itf_1gabca52eac9b2d0f93af38c09a39fbfa98>`
+
+Functions
+---------
+
+- void :ref:`sysmcbdalloc <group___sys_cpu_multi_core_itf_1gac4f508901816a0262f9a75a753ebbed4>` (:ref:`sysmcbdalloc_struct <group___sys_cpu_multi_core_itf_1ga34643d390e7c496e237aa2f48b69cad2>` * p)
+
+- void :ref:`sysmcbdcount <group___sys_cpu_multi_core_itf_1ga0496bf9ce955cf88bfbec84b3d98509c>` (:ref:`sysmcbdcount_struct <group___sys_cpu_multi_core_itf_1ga4583f3d1ecfe6e2e0af3e6e8a1d8a38c>` * p)
+
+- void :ref:`sysmcbdfree <group___sys_cpu_multi_core_itf_1ga62fc58f3ff6b0a9b5fdca9ac905a49ef>` (:ref:`sysmcbdfree_struct <group___sys_cpu_multi_core_itf_1ga031ba83dcde009a9ad49adfa8275d3fd>` * p)
+
+- void :ref:`sysmcbdgetfirstid <group___sys_cpu_multi_core_itf_1ga7109aeeab758e7f40dde58e84087c9c3>` (:ref:`sysmcbdgetfirstid_struct <group___sys_cpu_multi_core_itf_1ga0bf77a388434f729531593940ae02948>` * p)
+
+- void :ref:`sysmcbdgetnextid <group___sys_cpu_multi_core_itf_1ga0c799e18991fb2bcd5dfddc28d2bdf77>` (:ref:`sysmcbdgetnextid_struct <group___sys_cpu_multi_core_itf_1ga485711ed9f75659861167cf0127c990d>` * p)
+
+- void :ref:`sysmcbdisset <group___sys_cpu_multi_core_itf_1ga0142ed1a70c983b1c9797f8edcf7a553>` (:ref:`sysmcbdisset_struct <group___sys_cpu_multi_core_itf_1ga89bf7bb33713d1b419ed35ed7bea8c92>` * p)
+
+- void :ref:`sysmcgetload <group___sys_cpu_multi_core_itf_1gab30bcd94c9ed65ee5205031654f6178c>` (:ref:`sysmcgetload_struct <group___sys_cpu_multi_core_itf_1ga8ffb5973137cf357da8ab98aed5fd458>` * p)
+
+- void :ref:`sysmcgetnumofcores <group___sys_cpu_multi_core_itf_1gaa44a3fb76bc604fc96e32a8664bdba92>` (:ref:`sysmcgetnumofcores_struct <group___sys_cpu_multi_core_itf_1ga820422a5f5531dc7c128bf0584ba04d8>` * p)
+
+- void :ref:`sysmcgetprocessbinding <group___sys_cpu_multi_core_itf_1gabc46aa562c75ff628b9f0a70db6afd61>` (:ref:`sysmcgetprocessbinding_struct <group___sys_cpu_multi_core_itf_1ga0b64fad5640e611ee4038bfddd8da1a8>` * p)
+
+- void :ref:`sysmcgettaskbinding <group___sys_cpu_multi_core_itf_1ga913176bec64ab3bddaa69c60cfa1dbac>` (:ref:`sysmcgettaskbinding_struct <group___sys_cpu_multi_core_itf_1ga7a525de72f4e1ece481a4bdedaa45251>` * p)
+
+- RTS_RESULT :ref:`SysCpuMultiCoreOSInit <group___sys_cpu_multi_core_itf_1ga6608c8cd3da78bbf5b65e2b63d4fc46e>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysCpuMultiCoreOSHookFunction <group___sys_cpu_multi_core_itf_1ga61a0a2d508898c4f903779980b58e870>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_HANDLE :ref:`SysMCAddTaskGroup <group___sys_cpu_multi_core_itf_1ga3e7226a3e5850ff12b21afc0cc357afe>` (char * pszTaskGroup, RTS_UI32 taskGroupOptions, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysMCRemoveTaskGroup <group___sys_cpu_multi_core_itf_1ga14ebbd6a5e82a7fea5038a1224fbf20e>` (RTS_HANDLE hTaskGroup)
+
+- RTS_HANDLE :ref:`SysMCFindTaskGroup <group___sys_cpu_multi_core_itf_1ga90cedc6b143396cc5040a8d60355da06>` (char * pszTaskGroup, RTS_I32 bIecTaskGroup, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysMCGetFirstTaskGroup <group___sys_cpu_multi_core_itf_1ga5b2ad8115ed6541c1bddf2499125fa31>` (RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysMCGetNextTaskGroup <group___sys_cpu_multi_core_itf_1gae8dd16f4dd503e41179ac5af684a957c>` (RTS_HANDLE hPrevTaskGroup, RTS_RESULT * pResult)
+
+- char * :ref:`SysMCGetTaskGroupName <group___sys_cpu_multi_core_itf_1gab7a5dc75e3ddf495f6521c9a3746b043>` (RTS_HANDLE hTaskGroup, RTS_RESULT * pResult)
+
+- :ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * :ref:`SysMCGetTaskGroupBinding <group___sys_cpu_multi_core_itf_1ga8e6466c59085cd67a619e49d2cb28de5>` (RTS_HANDLE hTaskGroup, RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`SysMCGetTaskGroupOptions <group___sys_cpu_multi_core_itf_1ga199e91c3e0eb5724b40f1f56461937e6>` (RTS_HANDLE hTaskGroup, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysMCChangeTaskGroupStrategy <group___sys_cpu_multi_core_itf_1ga7accb4ae53fe0b6374bd719eda626578>` (RTS_HANDLE hTaskGroup, RTS_UI32 taskGroupStrategy)
+
+- RTS_RESULT :ref:`SysMCSetTaskGroupBinding <group___sys_cpu_multi_core_itf_1ga0c34f39b422fa76f399d49f1b3f3e35e>` (RTS_HANDLE hTaskGroup, :ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc)
+
+- RTS_RESULT :ref:`SysMCAddToTaskGroup <group___sys_cpu_multi_core_itf_1gad11a4ecca49ea9a1a9aed3314553c269>` (RTS_HANDLE hSysTask, RTS_HANDLE hTaskGroup)
+
+- RTS_RESULT :ref:`SysMCRemoveFromTaskGroup <group___sys_cpu_multi_core_itf_1ga65eb376a169af515e537a94c8c593299>` (RTS_HANDLE hSysTask, RTS_HANDLE hTaskGroup)
+
+- RTS_RESULT :ref:`SysMCBeginTaskGroupConf <group___sys_cpu_multi_core_itf_1ga87eb95c838a43dbb3c2a8f1aa4274a84>` (RTS_HANDLE hTaskGroup)
+
+- RTS_RESULT :ref:`SysMCEndTaskGroupConf <group___sys_cpu_multi_core_itf_1ga85d810d30e53ba1698443cc4fd0d5896>` (RTS_HANDLE hTaskGroup)
+
+- :ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * :ref:`SysMCBDAlloc <group___sys_cpu_multi_core_itf_1ga37d02f00277ccf1ea8921eb243d9edf1>` (RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysMCBDFree <group___sys_cpu_multi_core_itf_1ga67b4af553e2fc0838ac31c538813b143>` (:ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc)
+
+- RTS_RESULT :ref:`SysMCBDZero <group___sys_cpu_multi_core_itf_1ga74f1ef1820f7040ab8a6fc4d06adf90e>` (:ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc)
+
+- RTS_RESULT :ref:`SysMCBDSet <group___sys_cpu_multi_core_itf_1ga4d694d700fde30f78a8e6c6d56ae6953>` (:ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc, RTS_UI32 uCoreId)
+
+- RTS_RESULT :ref:`SysMCBDReset <group___sys_cpu_multi_core_itf_1ga81c37f56c8162e9cf6798e81692d43f5>` (:ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc, RTS_UI32 uCoreId)
+
+- RTS_RESULT :ref:`SysMCBDIsSet <group___sys_cpu_multi_core_itf_1ga31996614ae2b8ad82fa65ff647e87025>` (:ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc, RTS_UI32 uCoreId)
+
+- RTS_UI32 :ref:`SysMCBDCount <group___sys_cpu_multi_core_itf_1ga1bd02aa285cb33b49355e102a444a5a5>` (:ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc, RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`SysMCBDGetFirstID <group___sys_cpu_multi_core_itf_1gaa0407c35494b8c8a53a26c8c7b24d621>` (:ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc, RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`SysMCBDGetNextID <group___sys_cpu_multi_core_itf_1gaf7ac85cc51905025e4f7aaa512bb58ba>` (:ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc, RTS_UI32 uPrevCoreID, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysMCBindProcess <group___sys_cpu_multi_core_itf_1ga87a4c7e4fc4cbc1742e0db7cc9b89db7>` (:ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc, RTS_IEC_HANDLE hProcess)
+
+- RTS_RESULT :ref:`SysMCBindProcess_ <group___sys_cpu_multi_core_itf_1gad2a081e193f037befa9272979b986f35>` (:ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc, RTS_IEC_HANDLE hProcess)
+
+- RTS_RESULT :ref:`SysMCBindTask <group___sys_cpu_multi_core_itf_1ga61c9583a7b245940d42f4ee58e96f310>` (:ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc, RTS_IEC_HANDLE hTask)
+
+- RTS_RESULT :ref:`SysMCBindTask_ <group___sys_cpu_multi_core_itf_1ga25fad5b42431683bc9123e7a47808ed6>` (:ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc, RTS_IEC_HANDLE hTask)
+
+- RTS_RESULT :ref:`SysMCUnbindProcess <group___sys_cpu_multi_core_itf_1gadb909c872b5a787ebf42c6d368cc90e0>` (RTS_IEC_HANDLE hProcess)
+
+- RTS_RESULT :ref:`SysMCUnbindProcess_ <group___sys_cpu_multi_core_itf_1gaaabfb963dafcd85e1b1ef1b35c16a565>` (RTS_IEC_HANDLE hProcess)
+
+- RTS_RESULT :ref:`SysMCUnbindTask <group___sys_cpu_multi_core_itf_1ga8c502c9779d3c49788cc47018b1407b4>` (RTS_IEC_HANDLE hTask)
+
+- RTS_RESULT :ref:`SysMCUnbindTask_ <group___sys_cpu_multi_core_itf_1gaa30487d7d6674b2cfac6bff166e59975>` (RTS_IEC_HANDLE hTask)
+
+- RTS_RESULT :ref:`SysMCGetLoad <group___sys_cpu_multi_core_itf_1ga1be2430e917d710b3f6d242944434592>` (RTS_UI32 uCoreID, RTS_UI8 * pPercent)
+
+- RTS_RESULT :ref:`SysMCGetLoad_ <group___sys_cpu_multi_core_itf_1ga41bebadc1868cd428caeb2debf2ff40d>` (RTS_UI32 uCoreID, RTS_UI8 * pPercent)
+
+- RTS_UI32 :ref:`SysMCGetNumOfCores <group___sys_cpu_multi_core_itf_1gadf9130c00eee49dd86fb4dfd55ef0c8a>` (RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`SysMCGetNumOfCores_ <group___sys_cpu_multi_core_itf_1ga157b4dcefc157c8ff096a52de5ef8701>` (RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysMCGetProcessBinding <group___sys_cpu_multi_core_itf_1ga77d577955203eb463a31afbc4112f472>` (RTS_IEC_HANDLE hProcess, :ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc)
+
+- RTS_RESULT :ref:`SysMCGetProcessBinding_ <group___sys_cpu_multi_core_itf_1gadd050f9b966798c186b9814924aade0a>` (RTS_IEC_HANDLE hProcess, :ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc)
+
+- RTS_RESULT :ref:`SysMCGetTaskBinding <group___sys_cpu_multi_core_itf_1ga9929613cee047235c7e4bab785978bd6>` (RTS_IEC_HANDLE hTask, :ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc)
+
+- RTS_RESULT :ref:`SysMCGetTaskBinding_ <group___sys_cpu_multi_core_itf_1gaa7fc872c7df6386652f4d931701256e1>` (RTS_IEC_HANDLE hTask, :ref:`CpuCoreBindingDesc <group___sys_cpu_multi_core_itf_1ga990300d712bbd8dd872389e4a57380bc>` * pBindingDesc)
+
+- RTS_UI32 :ref:`SysMCGetCurrentCoreID <group___sys_cpu_multi_core_itf_1ga9161f12f86827eab55b7c5c100745638>` (RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`SysMCGetCurrentCoreID_ <group___sys_cpu_multi_core_itf_1ga9df4a7641181a251554db824306e29e3>` (RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysMCCheckMultiCoreLicense <group___sys_cpu_multi_core_itf_1gaf84990c209ade0d6578766d49267aa24>` (RTS_UI32 * pnCoresLicensed)
+
+Detailed Description
+--------------------
+
+Definition in file SysCpuMultiCoreItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

@@ -1,0 +1,91 @@
+.. _content_of_delivery:
+
+Content of the Delivery
+=======================
+
+Depending on your exact order and contract, your CPU and your Platform,
+you might get a different delivery. Here we list the common parts as
+well as the general specialties of the different kinds of deliveries.
+
+Common
+------
+
+There are a few folders and files, which you will find in every
+delivery, because they are necessary to do brand labeling on your PLC or
+to extend the CODESYS Control runtime with I/O drivers or own
+components.
+
+-  | **Components/*Itf.h, Components/*Itf.m4**
+   | These are the interfaces of the 3S CODESYS Control components.
+   Those interfaces can be used or implemented from your OEM specific
+   components and I/O drivers.
+
+-  | **BuildUtils/msys/bin/*.bat**
+   | This directory contains a few batch scripts that can be used to
+     compile the M4 files of our or your own components. Those M4 files
+     are describing the interfaces and dependencies of the component and
+     generate the header and C++ files based on that.
+
+-  | **Configuration/*.cfg**
+   | You will find several examples of configuration files in this
+     folder. You can use them as a starting point for your own
+     configuration. If you want to have an overview about the available
+     configuration entries, you can check Runtime System Reference
+     document, which you find in the documentation folder.
+
+-  | **Configuration/3S.dat**
+   | This file contains license information for your ordered field
+     busses or advanced features, like SoftMotion or Visualization.
+
+-  | **Platforms/*/**
+   | Depending on the platform that you ordered, you may find a few
+     system specific files below this folder.
+
+-  | **RtsConfigurator/Bin/RtsConfigurator.exe**
+   | This tool is included in every runtime delivery. However, it is
+     only really useful for those, who ordered the complete source code
+     of the runtime. It is used to resolve the dependencies between the
+     components and create a configuration for a custom built runtime.
+
+Standard Platforms
+------------------
+
+Standard Platforms are for example RTE, Linux, VxWorks, WinCE, ... . If
+you have one of those platforms and didn’t order a „Source Delivery“,
+you will get a binary package of the runtime, which is specifically
+built for your platform.
+
+In most cases these binaries will be included directly in the delivery
+in the subfolder „Platforms/*/Bin/*“. However, if you use a newer or
+exotic platform, it is possible that we need to make a custom build,
+specifically for your target (maybe with your tool chain). In those
+cases you will get a Starter Package without any binaries. The binaries
+will be delivered from your first level support during the adaptation.
+
+**Note:** Most Linux platforms need to be built with the tool chain of
+the OEM. So you will most likely get a Starter Package without any
+binaries.
+
+Custom- / Embedded Platforms
+----------------------------
+
+If you don’t have an operating system, or you have a system that we
+don’t yet support, you will retrieve an embedded delivery. This kind of
+delivery contains all sources of the runtime, so that you can port it to
+your OS or CPU.
+
+By default you get a folder with some empty implementations of the
+system layer, which you can find in the folder „Platforms/SysTemplates“.
+Furthermore you might get some help and maybe some platform templates
+for your CPU or OS from your first level support (just ask).
+
+Source Deliveries
+-----------------
+
+Source deliveries are very similar to embedded deliveries, because they
+are also containing all the runtime sources. But a source delivery is
+always specific for one of the standard platforms and contains all the
+source code of that platform adaptation.
+
+There is no common way of compiling those platforms. This is something
+you should learn during your initial workshop.

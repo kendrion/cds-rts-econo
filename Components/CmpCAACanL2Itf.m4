@@ -1,3 +1,12 @@
+/**
+ * <interfacename>CmpCAACanL2</interfacename>
+ * <description>
+ * </description>
+ *
+ * <copyright>
+ *  Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * </copyright>
+ */
 SET_INTERFACE_NAME(`CmpCAACanL2')
 
 #include "CmpItf.h"
@@ -45,9 +54,9 @@ extern "C" {
 
 
 /* Basic Functions */
-DEF_ITF_API(`CAA_HANDLE',`CDECL',`CL2_DriverOpenH',`(unsigned char ucNetId, unsigned short usBaudrate, CAA_BOOL xSupport29Bit, CAA_COUNT ctMessages, CAA_ERROR* peError)')
+DEF_ITF_API(`CAA_HANDLE',`CDECL',`CL2_DriverOpenH',`(unsigned char ucNetId, CAA_UINT usBaudrate, CAA_BOOL xSupport29Bit, CAA_COUNT ctMessages, CAA_ERROR* peError)')
 DEF_ITF_API(`CAA_SIZE',`CDECL',`CL2_DriverGetSize',`(unsigned char ucNetId, CAA_BOOL xSupport29Bit, CAA_COUNT ctMessages, CAA_ERROR* peError)')
-DEF_ITF_API(`CAA_HANDLE',`CDECL',`CL2_DriverOpenP',`(unsigned char ucNetId, unsigned short usBaudrate, CAA_BOOL xSupport29Bit, CAA_SIZE szMemSize, CAA_PVOID pMemory, CAA_ERROR* peError)')
+DEF_ITF_API(`CAA_HANDLE',`CDECL',`CL2_DriverOpenP',`(unsigned char ucNetId, CAA_UINT usBaudrate, CAA_BOOL xSupport29Bit, CAA_SIZE szMemSize, CAA_PVOID pMemory, CAA_ERROR* peError)')
 DEF_ITF_API(`CAA_ERROR',`CDECL',`CL2_DriverClose',`(CAA_HANDLE hDriver)')
 DEF_ITF_API(`CAA_HANDLE',`CDECL',`CL2_CreateMessage',`(CAA_HANDLE hDriver, CL2I_COBID cobId, unsigned char ucLength, CAA_BOOL xRTR, CAA_BOOL x29BitId, CAA_ERROR* peError)')
 DEF_ITF_API(`CAA_ERROR',`CDECL',`CL2_FreeMessage',`(CAA_HANDLE hMessage)')
@@ -65,15 +74,15 @@ DEF_ITF_API(`CAA_HANDLE',`CDECL',`CL2_ReadArrayReceiver',`(CAA_HANDLE hArrayRece
 DEF_ITF_API(`CAA_ERROR',`CDECL',`CL2_Write',`(CAA_HANDLE hDriver, CAA_HANDLE hMessage, unsigned char ucPrio, CAA_BOOL xEnableSyncWindow)')
 
 /* Cyclic Custom Services */
-DEF_ITF_API(`CAA_HANDLE',`CDECL',`CL2_CstCycleOpen',`(CAA_HANDLE hDriver, CAA_ENUM eCstEvent, unsigned short usPrio, CAA_BOOL xEnableSyncWindow, CAA_UDINT ulCstCycle, CAA_UDINT ulCstForewarnTime, CAA_ERROR* peError)')
+DEF_ITF_API(`CAA_HANDLE',`CDECL',`CL2_CstCycleOpen',`(CAA_HANDLE hDriver, CAA_ENUM eCstEvent, CAA_USINT usPrio, CAA_BOOL xEnableSyncWindow, CAA_UDINT ulCstCycle, CAA_UDINT ulCstForewarnTime, CAA_ERROR* peError)')
 DEF_ITF_API(`CAA_HANDLE',`CDECL',`CL2_CstCycleUpdate',`(CAA_HANDLE hCstCycle, CAA_HANDLE hMessage, CAA_ERROR* peError)')
 DEF_ITF_API(`CAA_ERROR',`CDECL',`CL2_CstCycleStart',`(CAA_HANDLE hCstCycle)')
 DEF_ITF_API(`CAA_ERROR',`CDECL',`CL2_CstCycleStop',`(CAA_HANDLE hCstCycle)')
 DEF_ITF_API(`CAA_HANDLE',`CDECL',`CL2_CstCycleClose',`(CAA_HANDLE hCstCycle, CAA_ERROR* peError)')
 
 /* Diagnostic Information */
-DEF_ITF_API(`unsigned short',`CDECL',`CL2_GetBaudrate',`(CAA_HANDLE hDriver, CAA_ERROR* peError)')
-DEF_ITF_API(`unsigned short',`CDECL',`CL2_GetBusload',`(CAA_HANDLE hDriver, CAA_ERROR* peError)')
+DEF_ITF_API(`CAA_UINT',`CDECL',`CL2_GetBaudrate',`(CAA_HANDLE hDriver, CAA_ERROR* peError)')
+DEF_ITF_API(`CAA_USINT',`CDECL',`CL2_GetBusload',`(CAA_HANDLE hDriver, CAA_ERROR* peError)')
 DEF_ITF_API(`CAA_ENUM',`CDECL',`CL2_GetBusState',`(CAA_HANDLE hDriver, CAA_ERROR* peError)')
 DEF_ITF_API(`CAA_COUNT',`CDECL',`CL2_GetReceiveCounter',`(CAA_HANDLE hDriver, CAA_ERROR* peError)')
 DEF_ITF_API(`CAA_COUNT',`CDECL',`CL2_GetLostCounter',`(CAA_HANDLE hDriver, CAA_ERROR* peError)')
@@ -112,7 +121,7 @@ DEF_ITF_API(`unsigned char',`CDECL',`CL2_GetCiAState',`(CAA_HANDLE hDriver, CAA_
 DEF_ITF_API(`CAA_ERROR',`CDECL',`CL2_SetCiAState',`(CAA_HANDLE hDriver, unsigned char byState)')
 
 /* Properties */
-DEF_ITF_API(`CAA_UDINT',`CDECL',`CL2_GetProperty',`(unsigned short usPropery)')
+DEF_ITF_API(`CAA_UDINT',`CDECL',`CL2_GetProperty',`(CAA_UINT usPropery)')
 
 /* Services for Can Mini Driver */
 DEF_ITF_API(`CAA_ERROR',`CDECL',`CL2_CmdRegister',`(unsigned char ucNetId, CMD_CMDRV* pCMDRV, CAA_COUNT ctMessages, CL2I_INFO** ppInfo)')
@@ -172,7 +181,18 @@ DEF_ITF_API(`CAA_ERROR',`CDECL',`CL2_MsgSendAcknNoIRQ',`(unsigned char ucNetId, 
 DEF_ITF_API(`CAA_ERROR',`CDECL',`CL2_MsgPutRQueue',`(unsigned char ucNetId, CAA_HANDLE hBlock)')
 DEF_ITF_API(`CAA_HANDLE',`CDECL',`CL2_MsgClone',`(unsigned char ucNetId, CAA_HANDLE hBlock, CAA_ERROR* peError)')
 
-DEF_ITF_API(`unsigned short',`CDECL',`CL2_GetSupplierVersion',`(CAA_BOOL xDummy)')
+DEF_ITF_API(`CAA_WORD',`CDECL',`CL2_GetSupplierVersion',`(CAA_BOOL xDummy)')
+
+typedef struct tagcl2_drivergetsize_struct
+{
+	RTS_IEC_USINT usiNetId;				/* VAR_INPUT */	
+	CAA_BOOL xSupport29Bit;				/* VAR_INPUT */	
+	CAA_COUNT ctMessages;				/* VAR_INPUT */	
+	CAA_ERROR* peError;					/* VAR_INPUT */	
+	CAA_SIZE cl2_drivergetsize;			/* VAR_OUTPUT */	
+} cl2_drivergetsize_struct;
+
+DEF_API(`void',`CDECL',`cl2_drivergetsize',`(cl2_drivergetsize_struct *p)',1,RTSITF_GET_SIGNATURE(0x744E99DF, 0xF26CF0AA),0x03050F00)
 
 /**
  * <description>cl2_driveropenp</description>
@@ -478,7 +498,7 @@ typedef struct tagcl2_getbusload_struct
 {
 	CAA_HANDLE hDriver;					/* VAR_INPUT */
 	CAA_ERROR* peError;					/* VAR_INPUT */
-	unsigned short GetBusload;			/* VAR_OUTPUT */
+	CAA_USINT GetBusload;				/* VAR_OUTPUT */
 } cl2_getbusload_struct;
 
 DEF_API(`void',`CDECL',`cl2_getbusload',`(cl2_getbusload_struct *p)',1,0x0,0x0)

@@ -4,11 +4,11 @@
  ***********************************************************************/
 
 /**
- *  <name>Component SJA Can Mini Driver</name>
+ *  <name>CmpSJACanDrv</name>
  *  <description> 
  *  </description>
  *  <copyright>
- *  Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ *  Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
 #ifndef _CMPSJACANDRVDEP_H_
@@ -23,9 +23,9 @@
 
 
 
-#define CMP_VERSION         UINT32_C(0x03050E00)
-#define CMP_VERSION_STRING "3.5.14.0"
-#define CMP_VERSION_RC      3,5,14,0
+#define CMP_VERSION         UINT32_C(0x03051000)
+#define CMP_VERSION_STRING "3.5.16.0"
+#define CMP_VERSION_RC      3,5,16,0
 #define CMP_VENDORID       RTS_VENDORID_3S
 
 #ifndef WIN32_RESOURCES
@@ -101,6 +101,7 @@
 #define DEVICE_ID_PEAK6 0x0006	/* PCAN-PC/104-Plus. */
 #define DEVICE_ID_PEAK7 0x0007	/* PCAN-PCI/104-Express. */
 #define DEVICE_ID_PEAK8 0x0008	/* PCAN-miniPCI-Express. */
+#define DEVICE_ID_PEAK9 0x0013	/* PCAN-PCI-Express. */
 	
 #define SUBSYSTEM_ID_IXXAT_PCI04 0x2540
 #define SUBVENDOR_ID_IXXAT_PCI04 0x10B5
@@ -180,6 +181,10 @@
 
 
 
+
+/**
+ * \file CmpSJACanDrvItf.h
+ */
 #include "CmpSJACanDrvItf.h"
 
 
@@ -692,7 +697,7 @@
 #else
 #define EXPORT_EXTREF2_STMT
 #endif
-#if !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
+#if !defined(CMPSJACANDRV_DISABLE_CMPITF) && !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
 #define EXPORT_CMPITF_STMT \
     {\
         { (RTS_VOID_FCTPTR)SJA_GetDeviceDescription, "SJA_GetDeviceDescription", 0, 0 },\

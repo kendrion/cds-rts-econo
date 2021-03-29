@@ -6,7 +6,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -14,6 +14,15 @@ SET_INTERFACE_NAME(`SysMsgQ')
 
 #include "CmpItf.h"
 
+
+/**
+ * <category>Compiler switch</category>
+ * <description>
+ *	Compiler switches to enable/disable single features in the component.
+ * </description>
+ * <element name="SYSMSGQ_OS_IMPLEMENTED">Switch to disable generic implementation of message queues in CmpSysMsgQ.c! So it can be used to implement
+ * OS specific (if the OS provides own message queue implementations).</element>
+ */
 
 /**
  * <category>Message Queue Options</category>

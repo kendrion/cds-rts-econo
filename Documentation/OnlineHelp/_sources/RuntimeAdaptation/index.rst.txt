@@ -1,0 +1,97 @@
+.. _codesyscontrolv3_runtimeadaptation:
+
+==================
+Runtime Adaptation
+==================
+
+.. contents::
+   :local:
+   :depth: 1
+
+Generial information
+====================
+
+The runtime system can be adapted in various aspects.
+
+Due to the component-based architecture (see :ref:`arch_overview`), the runtime system can be adapted to existing controllers according 
+to their available resources or aspired requirements.
+
+In the first step, the basic functional scope can be defined by selecting the components. There are several components which
+provides different implementations to reduce code or memory consumption.
+
+Examples:
+
+    - Full features IEC application manager:    :ref:`group___cmp_app_dep`
+    
+    - Embedded IEC application manager for a single application:    :ref:`group___cmp_app_embedded_dep`
+
+In the second step, the range of functions can then be further reduced or extended by configuring each component. Therefore you can use
+compiler switches or static defines, which modifies code or memory consumption during compoile time of the runtime system.
+
+References:
+
+    - :ref:`compiler_switches`
+
+    - :ref:`static_defines`
+
+Device Description
+==================
+
+A controller is fully described for the programming system CODESYS in a so called "device description". It is an XML file 
+in a specific schema (see :ref:`device_description_schema` for details).
+
+Typically a device description matching to your controller is provided by CODESYS GmbH at evey runtime delivery package.
+
+In the architecture manual there is a detailed description:     :ref:`device_description`
+
+And here you can find a full reference of all available target settings for a device description:  :ref:`target_settings_doc`
+
+Runtime System Extensions
+=========================
+
+You can extend the runtime system in several way by implementing an additional component or by replacing existing components with an
+own component.
+
+In the following chapters we describe some basics of the runtime development and how to implement new components.
+
+Runtime Development Basics
+--------------------------
+
+Some basics must be known before writing own runtime system components:
+
+- Architecture manual:
+
+    - :ref:`architecture` (important: :ref:`arch_comp_itf_architecture`!)
+
+    - :ref:`customer`
+
+- Coding Guidelines:    :ref:`coding_guidelines`
+
+- Porting V2 -> V3:     :ref:`migrating_v2_to_v3`
+
+- ANSI C Datatypes:     :ref:`arch_datatypes`
+
+Available Tutorials / How-to's
+------------------------------
+
+Some tutorials provide additional information:
+
+- :ref:`tutorial_adaptation_platforms`
+
+- :ref:`tutorial_porting_new_platform`
+
+- :ref:`tutorial_creating_components_libraries_iodrivers`
+
+Extended Features
+=================
+
+There are some extended features that can be used to adapt the runtime system to own flavors.
+
+Internationalization of the logger
+----------------------------------
+
+The plc logger texts can be translated into multiple languages.
+
+Here :ref:`logger_strings` you can find an XML file with all exported logger entries of the runtime system.
+
+And here :ref:`ov_kernel_logging_multilanguage` is a description, how to translate the plc logger strings into different languages.

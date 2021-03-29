@@ -1,0 +1,619 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_c_a_a_real_time_clock_itf_8h:
+
+=======================================
+CmpCAARealTimeClockItf.h File Reference
+=======================================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpItf.h`"
+| #include ":ref:`CAADefines.h`"
+| #include ":ref:`CAATypes.h`"
+| #include ":ref:`CAARealTimeClock.h`"
+| #include ":ref:`CAABehaviourModel.h`"
+| #include ":ref:`CAAAsyncMan.h`"
+| #include ":ref:`CAAMemBlockMan.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`tagRTCLK_GETTIMEZONEINFORMATION_PARAMS <structtag_r_t_c_l_k___g_e_t_t_i_m_e_z_o_n_e_i_n_f_o_r_m_a_t_i_o_n___p_a_r_a_m_s>`
+
+- struct :ref:`tagRTCLK_SETTIMEZONEINFORMATION_PARAMS <structtag_r_t_c_l_k___s_e_t_t_i_m_e_z_o_n_e_i_n_f_o_r_m_a_t_i_o_n___p_a_r_a_m_s>`
+
+- struct :ref:`tagRTCLK_SETDATEANDTIME_PARAMS <structtag_r_t_c_l_k___s_e_t_d_a_t_e_a_n_d_t_i_m_e___p_a_r_a_m_s>`
+
+- struct :ref:`tagRTCLK_GETDATEANDTIME_PARAMS <structtag_r_t_c_l_k___g_e_t_d_a_t_e_a_n_d_t_i_m_e___p_a_r_a_m_s>`
+
+- struct :ref:`tagrtclk_getdateandtime_struct <structtagrtclk__getdateandtime__struct>`
+
+- struct :ref:`tagrtclk_getdateandtime_main_struct <structtagrtclk__getdateandtime__main__struct>`
+
+- struct :ref:`tagrtclk_getdateandtime_fb_init_struct <structtagrtclk__getdateandtime__fb__init__struct>`
+
+- struct :ref:`tagrtclk_getdateandtime_fb_exit_struct <structtagrtclk__getdateandtime__fb__exit__struct>`
+
+- struct :ref:`tagrtclk_getproperty_struct <structtagrtclk__getproperty__struct>`
+
+- struct :ref:`tagrtclk_getsupplierversion_struct <structtagrtclk__getsupplierversion__struct>`
+
+- struct :ref:`tagrtclk_gettimezoneinformation_struct <structtagrtclk__gettimezoneinformation__struct>`
+
+- struct :ref:`tagrtclk_gettimezoneinformation_main_struct <structtagrtclk__gettimezoneinformation__main__struct>`
+
+- struct :ref:`tagrtclk_gettimezoneinformation_fb_init_struct <structtagrtclk__gettimezoneinformation__fb__init__struct>`
+
+- struct :ref:`tagrtclk_gettimezoneinformation_fb_exit_struct <structtagrtclk__gettimezoneinformation__fb__exit__struct>`
+
+- struct :ref:`tagrtclk_setdateandtime_struct <structtagrtclk__setdateandtime__struct>`
+
+- struct :ref:`tagrtclk_setdateandtime_main_struct <structtagrtclk__setdateandtime__main__struct>`
+
+- struct :ref:`tagrtclk_setdateandtime_fb_init_struct <structtagrtclk__setdateandtime__fb__init__struct>`
+
+- struct :ref:`tagrtclk_setdateandtime_fb_exit_struct <structtagrtclk__setdateandtime__fb__exit__struct>`
+
+- struct :ref:`tagrtclk_settimezoneinformation_struct <structtagrtclk__settimezoneinformation__struct>`
+
+- struct :ref:`tagrtclk_settimezoneinformation_main_struct <structtagrtclk__settimezoneinformation__main__struct>`
+
+- struct :ref:`tagrtclk_settimezoneinformation_fb_init_struct <structtagrtclk__settimezoneinformation__fb__init__struct>`
+
+- struct :ref:`tagrtclk_settimezoneinformation_fb_exit_struct <structtagrtclk__settimezoneinformation__fb__exit__struct>`
+
+- struct :ref:`ICmpCAARealTimeClock_C <struct_i_cmp_c_a_a_real_time_clock___c>`
+
+Macros
+------
+
+- #define :ref:`USE_RTCLK_WorkerInit <_cmp_c_a_a_real_time_clock_itf_8h_1a7cdcfbe56645addad7975788f1538c50>` :ref:`PFRTCLK_WORKERINIT <_cmp_c_a_a_real_time_clock_itf_8h_1a91d43a77ac39287f4fff3eaf20f7bf81>` pfRTCLK_WorkerInit;
+
+- #define :ref:`EXT_RTCLK_WorkerInit <_cmp_c_a_a_real_time_clock_itf_8h_1a82b42311f56a627b28fec314a538c51e>` extern :ref:`PFRTCLK_WORKERINIT <_cmp_c_a_a_real_time_clock_itf_8h_1a91d43a77ac39287f4fff3eaf20f7bf81>` pfRTCLK_WorkerInit;
+
+- #define :ref:`GET_RTCLK_WorkerInit <_cmp_c_a_a_real_time_clock_itf_8h_1a6fe76922c00f717f00dd5ce2205101ce>` s_pfCMGetAPI2( "RTCLK_WorkerInit", (RTS_VOID_FCTPTR *)&pfRTCLK_WorkerInit, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_WorkerInit <_cmp_c_a_a_real_time_clock_itf_8h_1ad53e9174727763016a5c7d0b71a42df7>` pfRTCLK_WorkerInit
+
+- #define :ref:`CHK_RTCLK_WorkerInit <_cmp_c_a_a_real_time_clock_itf_8h_1a2d81a26345725126f5f8582b571f146b>` (pfRTCLK_WorkerInit != NULL)
+
+- #define :ref:`EXP_RTCLK_WorkerInit <_cmp_c_a_a_real_time_clock_itf_8h_1a3085b9268fc5e3eb6973978f069faaa2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_WorkerInit", (RTS_UINTPTR) :ref:`RTCLK_WorkerInit <_cmp_c_a_a_real_time_clock_itf_8h_1ab526dc4c4f4b678b1439968b0b138968>` , 0, 0)
+
+- #define :ref:`USE_RTCLK_WorkerExit <_cmp_c_a_a_real_time_clock_itf_8h_1a9636aee3b0fa8f7504108c8a89a91e0c>` :ref:`PFRTCLK_WORKEREXIT <_cmp_c_a_a_real_time_clock_itf_8h_1ad36ce15256ee292e4c5327ed08ffb7c1>` pfRTCLK_WorkerExit;
+
+- #define :ref:`EXT_RTCLK_WorkerExit <_cmp_c_a_a_real_time_clock_itf_8h_1a6fc5f43e3149f4d938cdc33d280735e9>` extern :ref:`PFRTCLK_WORKEREXIT <_cmp_c_a_a_real_time_clock_itf_8h_1ad36ce15256ee292e4c5327ed08ffb7c1>` pfRTCLK_WorkerExit;
+
+- #define :ref:`GET_RTCLK_WorkerExit <_cmp_c_a_a_real_time_clock_itf_8h_1a7114d360035a8fa5cc0afa763587feff>` s_pfCMGetAPI2( "RTCLK_WorkerExit", (RTS_VOID_FCTPTR *)&pfRTCLK_WorkerExit, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_WorkerExit <_cmp_c_a_a_real_time_clock_itf_8h_1ada9bdb5de0b70087ed0d63b45c0dcf90>` pfRTCLK_WorkerExit
+
+- #define :ref:`CHK_RTCLK_WorkerExit <_cmp_c_a_a_real_time_clock_itf_8h_1a2bdd07894123322598bdb7ffce030c49>` (pfRTCLK_WorkerExit != NULL)
+
+- #define :ref:`EXP_RTCLK_WorkerExit <_cmp_c_a_a_real_time_clock_itf_8h_1a3908f2c89c83a5c1a3e4d706bcd0482f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_WorkerExit", (RTS_UINTPTR) :ref:`RTCLK_WorkerExit <_cmp_c_a_a_real_time_clock_itf_8h_1ad24686a60e97c916ba9c7cdf2be8bf2d>` , 0, 0)
+
+- #define :ref:`USE_RTCLK_GetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1a7719da560c9b5ffe8e34993c5d734c1b>` :ref:`PFRTCLK_GETDATEANDTIME <_cmp_c_a_a_real_time_clock_itf_8h_1a2e9509c11585f2220928a7af6a105e26>` pfRTCLK_GetDateAndTime;
+
+- #define :ref:`EXT_RTCLK_GetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1aba3d7e57a97779f124cae3718bbe60b3>` extern :ref:`PFRTCLK_GETDATEANDTIME <_cmp_c_a_a_real_time_clock_itf_8h_1a2e9509c11585f2220928a7af6a105e26>` pfRTCLK_GetDateAndTime;
+
+- #define :ref:`GET_RTCLK_GetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1a68b56d59b2bda55498f4bdac46aa9607>` s_pfCMGetAPI2( "RTCLK_GetDateAndTime", (RTS_VOID_FCTPTR *)&pfRTCLK_GetDateAndTime, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_GetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1ab3fb10dd7bbc87732c7874d549946676>` pfRTCLK_GetDateAndTime
+
+- #define :ref:`CHK_RTCLK_GetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1ac1f7271b113f3211acb79cf525860abb>` (pfRTCLK_GetDateAndTime != NULL)
+
+- #define :ref:`EXP_RTCLK_GetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1adb3b74c7e419fb1dcb0d27e30b8b9c62>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_GetDateAndTime", (RTS_UINTPTR) :ref:`RTCLK_GetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1ab59ec3a3698d08aca8d8c51ca6e3a213>` , 0, 0)
+
+- #define :ref:`USE_RTCLK_GetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1ab85caf5b1876fa5831274a1ba880dd6e>` :ref:`PFRTCLK_GETDATEANDTIME_FB_INIT <_cmp_c_a_a_real_time_clock_itf_8h_1aeb3cdaa1349aa72176e81042a22a6371>` pfRTCLK_GetDateAndTime_FB_Init;
+
+- #define :ref:`EXT_RTCLK_GetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a907273eb0b2fd5d5298f71ec6e080ef1>` extern :ref:`PFRTCLK_GETDATEANDTIME_FB_INIT <_cmp_c_a_a_real_time_clock_itf_8h_1aeb3cdaa1349aa72176e81042a22a6371>` pfRTCLK_GetDateAndTime_FB_Init;
+
+- #define :ref:`GET_RTCLK_GetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a6d2905e533033924436e9a8f4233a728>` s_pfCMGetAPI2( "RTCLK_GetDateAndTime_FB_Init", (RTS_VOID_FCTPTR *)&pfRTCLK_GetDateAndTime_FB_Init, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_GetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a75ac7d78d8e2d60b1fb55d8790756885>` pfRTCLK_GetDateAndTime_FB_Init
+
+- #define :ref:`CHK_RTCLK_GetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a62b570ee2e6f975042ed45bd2ef1f321>` (pfRTCLK_GetDateAndTime_FB_Init != NULL)
+
+- #define :ref:`EXP_RTCLK_GetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a49d8d54881fba00de90d812724d04979>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_GetDateAndTime_FB_Init", (RTS_UINTPTR) :ref:`RTCLK_GetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a6a4277b6f4fc136d7cec50952a1f0bea>` , 0, 0)
+
+- #define :ref:`USE_RTCLK_GetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a35b7c08ff1b58f59db713bc598227ceb>` :ref:`PFRTCLK_GETDATEANDTIME_FB_EXIT <_cmp_c_a_a_real_time_clock_itf_8h_1acd2957816b2524f2b0fa207596f0521b>` pfRTCLK_GetDateAndTime_FB_Exit;
+
+- #define :ref:`EXT_RTCLK_GetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a0235df7eb43fdac33d8bce8c9370c76e>` extern :ref:`PFRTCLK_GETDATEANDTIME_FB_EXIT <_cmp_c_a_a_real_time_clock_itf_8h_1acd2957816b2524f2b0fa207596f0521b>` pfRTCLK_GetDateAndTime_FB_Exit;
+
+- #define :ref:`GET_RTCLK_GetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a1e42e897f89eddb23e89150be1efb5a5>` s_pfCMGetAPI2( "RTCLK_GetDateAndTime_FB_Exit", (RTS_VOID_FCTPTR *)&pfRTCLK_GetDateAndTime_FB_Exit, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_GetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a7ffcd95f072f67a515b314a6b2c842b6>` pfRTCLK_GetDateAndTime_FB_Exit
+
+- #define :ref:`CHK_RTCLK_GetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a12d3395ddbd79daa6db94a788a287c5f>` (pfRTCLK_GetDateAndTime_FB_Exit != NULL)
+
+- #define :ref:`EXP_RTCLK_GetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a9893477b6984db973fd85e831d4db247>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_GetDateAndTime_FB_Exit", (RTS_UINTPTR) :ref:`RTCLK_GetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a0bbd875e3d6ef2c63be3a0f2231bf3a9>` , 0, 0)
+
+- #define :ref:`USE_RTCLK_SetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1ae2920079c1c4bd03f7dc656f9c5bff0b>` :ref:`PFRTCLK_SETDATEANDTIME <_cmp_c_a_a_real_time_clock_itf_8h_1ac618653a7c5e6139582ccae19e7c2598>` pfRTCLK_SetDateAndTime;
+
+- #define :ref:`EXT_RTCLK_SetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1a969bc2b4887954fbe98e3115d079ff41>` extern :ref:`PFRTCLK_SETDATEANDTIME <_cmp_c_a_a_real_time_clock_itf_8h_1ac618653a7c5e6139582ccae19e7c2598>` pfRTCLK_SetDateAndTime;
+
+- #define :ref:`GET_RTCLK_SetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1a479a5ce192711a0c978e50481f7f798c>` s_pfCMGetAPI2( "RTCLK_SetDateAndTime", (RTS_VOID_FCTPTR *)&pfRTCLK_SetDateAndTime, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_SetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1a7cecb9cd6b4d7ce9650f9ddb2fffa37a>` pfRTCLK_SetDateAndTime
+
+- #define :ref:`CHK_RTCLK_SetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1a6c76e7e95e8f4131d1978a147bca6d41>` (pfRTCLK_SetDateAndTime != NULL)
+
+- #define :ref:`EXP_RTCLK_SetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1ac678c41e2758dd6d61b03c5ea4ddacd8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_SetDateAndTime", (RTS_UINTPTR) :ref:`RTCLK_SetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1a641dff028fdcddf979dd078a8c96d813>` , 0, 0)
+
+- #define :ref:`USE_RTCLK_SetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a237a20d4824e5281f2d2c85029dc2c67>` :ref:`PFRTCLK_SETDATEANDTIME_FB_INIT <_cmp_c_a_a_real_time_clock_itf_8h_1ab9d5953daffc4346a41c507cf3a969a0>` pfRTCLK_SetDateAndTime_FB_Init;
+
+- #define :ref:`EXT_RTCLK_SetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a9065b04b0e2d9768cb2adba47ca0c61a>` extern :ref:`PFRTCLK_SETDATEANDTIME_FB_INIT <_cmp_c_a_a_real_time_clock_itf_8h_1ab9d5953daffc4346a41c507cf3a969a0>` pfRTCLK_SetDateAndTime_FB_Init;
+
+- #define :ref:`GET_RTCLK_SetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1ac4fd5013ac8fb09f5b8bccc46d479a47>` s_pfCMGetAPI2( "RTCLK_SetDateAndTime_FB_Init", (RTS_VOID_FCTPTR *)&pfRTCLK_SetDateAndTime_FB_Init, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_SetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1adba0a14fa3e9dfa4dc67da4371267b3a>` pfRTCLK_SetDateAndTime_FB_Init
+
+- #define :ref:`CHK_RTCLK_SetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a2a848337250593665862b49e86d00f09>` (pfRTCLK_SetDateAndTime_FB_Init != NULL)
+
+- #define :ref:`EXP_RTCLK_SetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1abc2839f6e1da925caae4a1f54f0e6162>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_SetDateAndTime_FB_Init", (RTS_UINTPTR) :ref:`RTCLK_SetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a0bebb8c0e0f7bb31ed7771efbec551c9>` , 0, 0)
+
+- #define :ref:`USE_RTCLK_SetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a2d7e5ed518f786478dac84b915f31b80>` :ref:`PFRTCLK_SETDATEANDTIME_FB_EXIT <_cmp_c_a_a_real_time_clock_itf_8h_1a4ee0f00f2bcdb0ad514a44b5e08520d0>` pfRTCLK_SetDateAndTime_FB_Exit;
+
+- #define :ref:`EXT_RTCLK_SetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a30cebec7006c75636da3e918065d1c8c>` extern :ref:`PFRTCLK_SETDATEANDTIME_FB_EXIT <_cmp_c_a_a_real_time_clock_itf_8h_1a4ee0f00f2bcdb0ad514a44b5e08520d0>` pfRTCLK_SetDateAndTime_FB_Exit;
+
+- #define :ref:`GET_RTCLK_SetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1abaf550369187740486dae9d9fd3b8af1>` s_pfCMGetAPI2( "RTCLK_SetDateAndTime_FB_Exit", (RTS_VOID_FCTPTR *)&pfRTCLK_SetDateAndTime_FB_Exit, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_SetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1af0b2593559110aaf7a42e544ee803b6d>` pfRTCLK_SetDateAndTime_FB_Exit
+
+- #define :ref:`CHK_RTCLK_SetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a47c2c493d1ebaa93f3e12d0093544388>` (pfRTCLK_SetDateAndTime_FB_Exit != NULL)
+
+- #define :ref:`EXP_RTCLK_SetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1ae5face52104ef9220434df27ef7e934b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_SetDateAndTime_FB_Exit", (RTS_UINTPTR) :ref:`RTCLK_SetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a17c8041c3c59f5668f7309e9c5093d57>` , 0, 0)
+
+- #define :ref:`USE_RTCLK_GetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1a6ca06474409678f0c90c0dca0675ea9e>` :ref:`PFRTCLK_GETTIMEZONEINFORMATION <_cmp_c_a_a_real_time_clock_itf_8h_1a3e5545f8e2237c05d851eff020cf9b21>` pfRTCLK_GetTimeZoneInformation;
+
+- #define :ref:`EXT_RTCLK_GetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1a491ca0f8b78ee952bbe19fb0769297b4>` extern :ref:`PFRTCLK_GETTIMEZONEINFORMATION <_cmp_c_a_a_real_time_clock_itf_8h_1a3e5545f8e2237c05d851eff020cf9b21>` pfRTCLK_GetTimeZoneInformation;
+
+- #define :ref:`GET_RTCLK_GetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1a199309b5d98c2792570dd4e6c702424f>` s_pfCMGetAPI2( "RTCLK_GetTimeZoneInformation", (RTS_VOID_FCTPTR *)&pfRTCLK_GetTimeZoneInformation, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_GetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1a0109e82ac1bf25cb2148ad2a59a6b9c0>` pfRTCLK_GetTimeZoneInformation
+
+- #define :ref:`CHK_RTCLK_GetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1a6393040bc3425ecb1c8d102b64e17b40>` (pfRTCLK_GetTimeZoneInformation != NULL)
+
+- #define :ref:`EXP_RTCLK_GetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1aab2ae9d6f8c66f862a7ed16589669bb8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_GetTimeZoneInformation", (RTS_UINTPTR) :ref:`RTCLK_GetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1a5048f4426632f406f2abe8fbc7168958>` , 0, 0)
+
+- #define :ref:`USE_RTCLK_GetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a3d0cce623f8ee9b1284effc68723a27d>` :ref:`PFRTCLK_GETTIMEZONEINFORMATION_FB_INIT <_cmp_c_a_a_real_time_clock_itf_8h_1a7a0b202cac51c2dfad08f274ada0fa54>` pfRTCLK_GetTimeZoneInformation_FB_Init;
+
+- #define :ref:`EXT_RTCLK_GetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a290eeac81e7a425b1d4c7df49045ad22>` extern :ref:`PFRTCLK_GETTIMEZONEINFORMATION_FB_INIT <_cmp_c_a_a_real_time_clock_itf_8h_1a7a0b202cac51c2dfad08f274ada0fa54>` pfRTCLK_GetTimeZoneInformation_FB_Init;
+
+- #define :ref:`GET_RTCLK_GetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a2686ea08f807e4db6aa8b369f8c8f169>` s_pfCMGetAPI2( "RTCLK_GetTimeZoneInformation_FB_Init", (RTS_VOID_FCTPTR *)&pfRTCLK_GetTimeZoneInformation_FB_Init, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_GetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1af652fbcb50c66a8e213bc6c48cf6fbf3>` pfRTCLK_GetTimeZoneInformation_FB_Init
+
+- #define :ref:`CHK_RTCLK_GetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1ae0a54f46ce73590e6b3c56a2d225e8f9>` (pfRTCLK_GetTimeZoneInformation_FB_Init != NULL)
+
+- #define :ref:`EXP_RTCLK_GetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a501bd4edabd905a2243edc1e97b259cb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_GetTimeZoneInformation_FB_Init", (RTS_UINTPTR) :ref:`RTCLK_GetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a7612475e437958d888ededa4dc9f3e2a>` , 0, 0)
+
+- #define :ref:`USE_RTCLK_GetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a46aaf8553807cf3ee5960a98aadc764b>` :ref:`PFRTCLK_GETTIMEZONEINFORMATION_FB_EXIT <_cmp_c_a_a_real_time_clock_itf_8h_1a8a58cebdc44a92424893f2b05cc7b2ec>` pfRTCLK_GetTimeZoneInformation_FB_Exit;
+
+- #define :ref:`EXT_RTCLK_GetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1aeb84b52a975f6b400b8b060b2d6b1b6c>` extern :ref:`PFRTCLK_GETTIMEZONEINFORMATION_FB_EXIT <_cmp_c_a_a_real_time_clock_itf_8h_1a8a58cebdc44a92424893f2b05cc7b2ec>` pfRTCLK_GetTimeZoneInformation_FB_Exit;
+
+- #define :ref:`GET_RTCLK_GetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a54876abd52196a19c4fa0dcb5e40c573>` s_pfCMGetAPI2( "RTCLK_GetTimeZoneInformation_FB_Exit", (RTS_VOID_FCTPTR *)&pfRTCLK_GetTimeZoneInformation_FB_Exit, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_GetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1af3cc4523ff49fe302306d84e3f4932d5>` pfRTCLK_GetTimeZoneInformation_FB_Exit
+
+- #define :ref:`CHK_RTCLK_GetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a7a05d86c8ddd7a4d06a19fbe89fb0ee0>` (pfRTCLK_GetTimeZoneInformation_FB_Exit != NULL)
+
+- #define :ref:`EXP_RTCLK_GetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a802dff6f012118f9ef6c9870c112816d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_GetTimeZoneInformation_FB_Exit", (RTS_UINTPTR) :ref:`RTCLK_GetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a6ef165b7eb5fd168aa9415ef267a2755>` , 0, 0)
+
+- #define :ref:`USE_RTCLK_SetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1a697250ff361930bdf25acecf800eec17>` :ref:`PFRTCLK_SETTIMEZONEINFORMATION <_cmp_c_a_a_real_time_clock_itf_8h_1adce00c34b40cd662ad3d0a8c6883876f>` pfRTCLK_SetTimeZoneInformation;
+
+- #define :ref:`EXT_RTCLK_SetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1ae3d8eea9537c924248b4e23bc9923525>` extern :ref:`PFRTCLK_SETTIMEZONEINFORMATION <_cmp_c_a_a_real_time_clock_itf_8h_1adce00c34b40cd662ad3d0a8c6883876f>` pfRTCLK_SetTimeZoneInformation;
+
+- #define :ref:`GET_RTCLK_SetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1a41d272636e82731d30af2b68ede95a05>` s_pfCMGetAPI2( "RTCLK_SetTimeZoneInformation", (RTS_VOID_FCTPTR *)&pfRTCLK_SetTimeZoneInformation, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_SetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1a002eb6ff6c86747edaedfabb14a6f812>` pfRTCLK_SetTimeZoneInformation
+
+- #define :ref:`CHK_RTCLK_SetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1ae2837e9a5e947ae2b183a6da7ecf4e71>` (pfRTCLK_SetTimeZoneInformation != NULL)
+
+- #define :ref:`EXP_RTCLK_SetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1a0ee3e12d74eb2a4192ac678c20b798ce>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_SetTimeZoneInformation", (RTS_UINTPTR) :ref:`RTCLK_SetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1a2ed5eee5cf9b20650ce8bd31cce8157e>` , 0, 0)
+
+- #define :ref:`USE_RTCLK_SetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1acb6a949b4fed4e09a6dfa30c243f1267>` :ref:`PFRTCLK_SETTIMEZONEINFORMATION_FB_INIT <_cmp_c_a_a_real_time_clock_itf_8h_1a81a87216308052d935449c3ab5bed093>` pfRTCLK_SetTimeZoneInformation_FB_Init;
+
+- #define :ref:`EXT_RTCLK_SetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1aa68eb7951d1d0d5c2837f4efe7473b46>` extern :ref:`PFRTCLK_SETTIMEZONEINFORMATION_FB_INIT <_cmp_c_a_a_real_time_clock_itf_8h_1a81a87216308052d935449c3ab5bed093>` pfRTCLK_SetTimeZoneInformation_FB_Init;
+
+- #define :ref:`GET_RTCLK_SetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a8e5e1e3ce1eed7d4feb804777c8c5f7b>` s_pfCMGetAPI2( "RTCLK_SetTimeZoneInformation_FB_Init", (RTS_VOID_FCTPTR *)&pfRTCLK_SetTimeZoneInformation_FB_Init, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_SetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1abe0d373ccdc134b6619867f29e6ba160>` pfRTCLK_SetTimeZoneInformation_FB_Init
+
+- #define :ref:`CHK_RTCLK_SetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a75e7dd482268ec4e5c125ca7ce4c3b25>` (pfRTCLK_SetTimeZoneInformation_FB_Init != NULL)
+
+- #define :ref:`EXP_RTCLK_SetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a35b33c0d0dcd68c483007bbc57c658e9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_SetTimeZoneInformation_FB_Init", (RTS_UINTPTR) :ref:`RTCLK_SetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1ad1b016dccc768bdf290baf717bda0087>` , 0, 0)
+
+- #define :ref:`USE_RTCLK_SetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a1a615b152978a882432d7c34abec4285>` :ref:`PFRTCLK_SETTIMEZONEINFORMATION_FB_EXIT <_cmp_c_a_a_real_time_clock_itf_8h_1aff52bab5d8e93ed76bdfadb6d0f3879e>` pfRTCLK_SetTimeZoneInformation_FB_Exit;
+
+- #define :ref:`EXT_RTCLK_SetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a2d3b46b6d37ed4e93e2aaaa4073847a6>` extern :ref:`PFRTCLK_SETTIMEZONEINFORMATION_FB_EXIT <_cmp_c_a_a_real_time_clock_itf_8h_1aff52bab5d8e93ed76bdfadb6d0f3879e>` pfRTCLK_SetTimeZoneInformation_FB_Exit;
+
+- #define :ref:`GET_RTCLK_SetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a590794d794b282511400349c73c033ef>` s_pfCMGetAPI2( "RTCLK_SetTimeZoneInformation_FB_Exit", (RTS_VOID_FCTPTR *)&pfRTCLK_SetTimeZoneInformation_FB_Exit, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_SetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1ab282d24d9ebfe78a94e1f989ae72746f>` pfRTCLK_SetTimeZoneInformation_FB_Exit
+
+- #define :ref:`CHK_RTCLK_SetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a67703d54ef2d59dd76b580ec24e328cf>` (pfRTCLK_SetTimeZoneInformation_FB_Exit != NULL)
+
+- #define :ref:`EXP_RTCLK_SetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1aec5f6585439989f96aedd5559c823b06>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_SetTimeZoneInformation_FB_Exit", (RTS_UINTPTR) :ref:`RTCLK_SetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a3f1861363f46ee6e94730fb4823b1a82>` , 0, 0)
+
+- #define :ref:`USE_RTCLK_GetSupplierVersion <_cmp_c_a_a_real_time_clock_itf_8h_1aea664696ceefcb034fc866370abcb478>` :ref:`PFRTCLK_GETSUPPLIERVERSION <_cmp_c_a_a_real_time_clock_itf_8h_1ab924583c639693ec50df596d2214d84d>` pfRTCLK_GetSupplierVersion;
+
+- #define :ref:`EXT_RTCLK_GetSupplierVersion <_cmp_c_a_a_real_time_clock_itf_8h_1abe4c15e2d3129d7480a38cae846be939>` extern :ref:`PFRTCLK_GETSUPPLIERVERSION <_cmp_c_a_a_real_time_clock_itf_8h_1ab924583c639693ec50df596d2214d84d>` pfRTCLK_GetSupplierVersion;
+
+- #define :ref:`GET_RTCLK_GetSupplierVersion <_cmp_c_a_a_real_time_clock_itf_8h_1a852025ab50ab262af9f55b8e62ad314b>` s_pfCMGetAPI2( "RTCLK_GetSupplierVersion", (RTS_VOID_FCTPTR *)&pfRTCLK_GetSupplierVersion, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_GetSupplierVersion <_cmp_c_a_a_real_time_clock_itf_8h_1ad7d35c09c250d5bba749a1e423353152>` pfRTCLK_GetSupplierVersion
+
+- #define :ref:`CHK_RTCLK_GetSupplierVersion <_cmp_c_a_a_real_time_clock_itf_8h_1a0968835f9138026bf4aa30572652e520>` (pfRTCLK_GetSupplierVersion != NULL)
+
+- #define :ref:`EXP_RTCLK_GetSupplierVersion <_cmp_c_a_a_real_time_clock_itf_8h_1a810661310e0d367185c4e0ac665279d4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_GetSupplierVersion", (RTS_UINTPTR) :ref:`RTCLK_GetSupplierVersion <_cmp_c_a_a_real_time_clock_itf_8h_1a46bf73ec8832a7d2bc6af1b3c99c7cd4>` , 0, 0)
+
+- #define :ref:`USE_RTCLK_GetProperty <_cmp_c_a_a_real_time_clock_itf_8h_1a7743562a1e7ea2ecfa72996c5e98639b>` :ref:`PFRTCLK_GETPROPERTY <_cmp_c_a_a_real_time_clock_itf_8h_1aea59e93e2b461551d22fc2a7cda661c8>` pfRTCLK_GetProperty;
+
+- #define :ref:`EXT_RTCLK_GetProperty <_cmp_c_a_a_real_time_clock_itf_8h_1a10440b7586965b6c23cb62d2e9a68e27>` extern :ref:`PFRTCLK_GETPROPERTY <_cmp_c_a_a_real_time_clock_itf_8h_1aea59e93e2b461551d22fc2a7cda661c8>` pfRTCLK_GetProperty;
+
+- #define :ref:`GET_RTCLK_GetProperty <_cmp_c_a_a_real_time_clock_itf_8h_1ad24fe649e0e310e9dc4dae48c313d37b>` s_pfCMGetAPI2( "RTCLK_GetProperty", (RTS_VOID_FCTPTR *)&pfRTCLK_GetProperty, (fl), 0, 0)
+
+- #define :ref:`CAL_RTCLK_GetProperty <_cmp_c_a_a_real_time_clock_itf_8h_1a777310a9e3a0379e0e0578132a671d8a>` pfRTCLK_GetProperty
+
+- #define :ref:`CHK_RTCLK_GetProperty <_cmp_c_a_a_real_time_clock_itf_8h_1ac968961a7ec26dd981c3d351a2c834ef>` (pfRTCLK_GetProperty != NULL)
+
+- #define :ref:`EXP_RTCLK_GetProperty <_cmp_c_a_a_real_time_clock_itf_8h_1a4ce0d3f5f764f35eb1d519ab99ea17c4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RTCLK_GetProperty", (RTS_UINTPTR) :ref:`RTCLK_GetProperty <_cmp_c_a_a_real_time_clock_itf_8h_1a4cf9427e28272939d76f4548ed8b95ca>` , 0, 0)
+
+- #define :ref:`USE_rtclk_getdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1a159ec58067179633ca08d211d268314a>` :ref:`PFRTCLK_GETDATEANDTIME__MAIN_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a86d379a18293c992ce11d790a8773478>` pfrtclk_getdateandtime__main;
+
+- #define :ref:`EXT_rtclk_getdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1a48da901b32e8bab27c654a5e12ba3eef>` extern :ref:`PFRTCLK_GETDATEANDTIME__MAIN_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a86d379a18293c992ce11d790a8773478>` pfrtclk_getdateandtime__main;
+
+- #define :ref:`GET_rtclk_getdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1a14c063044c468510721c745e5a6b9fae>` s_pfCMGetAPI2( "rtclk_getdateandtime__main", (RTS_VOID_FCTPTR *)&pfrtclk_getdateandtime__main, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA101FA6A), 0x03050528)
+
+- #define :ref:`CAL_rtclk_getdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1a5a7ab4b6808622564410dd03e3d2da3e>` pfrtclk_getdateandtime__main
+
+- #define :ref:`CHK_rtclk_getdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1aeefb492055d5c464517c560039f816f4>` (pfrtclk_getdateandtime__main != NULL)
+
+- #define :ref:`EXP_rtclk_getdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1a67509a3358f89a94a9b149e7aa78b541>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtclk_getdateandtime__main", (RTS_UINTPTR) :ref:`rtclk_getdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1adb9a85ca6abc83c6dde51c5a8e575ebc>` , 1, RTSITF_GET_SIGNATURE(0, 0xA101FA6A), 0x03050528)
+
+- #define :ref:`USE_rtclk_getdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1ac4fdee30a80fe4180a6f653fa0bf952a>` :ref:`PFRTCLK_GETDATEANDTIME__FB_INIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1abac1943e82fccae692394b4940d7637a>` pfrtclk_getdateandtime__fb_init;
+
+- #define :ref:`EXT_rtclk_getdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1aae48835319c889b06b66467834c3fcac>` extern :ref:`PFRTCLK_GETDATEANDTIME__FB_INIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1abac1943e82fccae692394b4940d7637a>` pfrtclk_getdateandtime__fb_init;
+
+- #define :ref:`GET_rtclk_getdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1afc0a200f08e2e3cc50c49f6875d80e91>` s_pfCMGetAPI2( "rtclk_getdateandtime__fb_init", (RTS_VOID_FCTPTR *)&pfrtclk_getdateandtime__fb_init, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xD64C25C7), 0x03050528)
+
+- #define :ref:`CAL_rtclk_getdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a34e761a550df19318e5f8008da1a8a70>` pfrtclk_getdateandtime__fb_init
+
+- #define :ref:`CHK_rtclk_getdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1aba714b3ee742d85d0674703ebd8b0909>` (pfrtclk_getdateandtime__fb_init != NULL)
+
+- #define :ref:`EXP_rtclk_getdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a4333fa3f415ae3e4e76e3d581f0598ea>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtclk_getdateandtime__fb_init", (RTS_UINTPTR) :ref:`rtclk_getdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1ad5ee9937bbad803da43aca057b9f0038>` , 1, RTSITF_GET_SIGNATURE(0, 0xD64C25C7), 0x03050528)
+
+- #define :ref:`USE_rtclk_getdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1aa82bbd48a70e7e8bec863d29e9a23ea0>` :ref:`PFRTCLK_GETDATEANDTIME__FB_EXIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1ad2415a23d20cb4597de567a39ed99460>` pfrtclk_getdateandtime__fb_exit;
+
+- #define :ref:`EXT_rtclk_getdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1ab6f2616918501aee02c80e26b1080ae6>` extern :ref:`PFRTCLK_GETDATEANDTIME__FB_EXIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1ad2415a23d20cb4597de567a39ed99460>` pfrtclk_getdateandtime__fb_exit;
+
+- #define :ref:`GET_rtclk_getdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a7d5ca14bc81c85988f67490667bfd753>` s_pfCMGetAPI2( "rtclk_getdateandtime__fb_exit", (RTS_VOID_FCTPTR *)&pfrtclk_getdateandtime__fb_exit, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA9565B5F), 0x03050528)
+
+- #define :ref:`CAL_rtclk_getdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a9e08f9e566f277f6faca9805409aea37>` pfrtclk_getdateandtime__fb_exit
+
+- #define :ref:`CHK_rtclk_getdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1ab3b8b8d76fb1429b6edc05d5a27c6037>` (pfrtclk_getdateandtime__fb_exit != NULL)
+
+- #define :ref:`EXP_rtclk_getdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1ab318011dc81d09e1131b7b758fa3f23c>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtclk_getdateandtime__fb_exit", (RTS_UINTPTR) :ref:`rtclk_getdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a3ddbd696bd98f9115ec7ec9f48c717cd>` , 1, RTSITF_GET_SIGNATURE(0, 0xA9565B5F), 0x03050528)
+
+- #define :ref:`USE_rtclk_getproperty <_cmp_c_a_a_real_time_clock_itf_8h_1a41512ab03eb7d221fcac272b492af357>` :ref:`PFRTCLK_GETPROPERTY_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a6777b71ccd4cba228b6b7abcaa960dbd>` pfrtclk_getproperty;
+
+- #define :ref:`EXT_rtclk_getproperty <_cmp_c_a_a_real_time_clock_itf_8h_1afc06107482dd050ba57c0bd53dc31116>` extern :ref:`PFRTCLK_GETPROPERTY_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a6777b71ccd4cba228b6b7abcaa960dbd>` pfrtclk_getproperty;
+
+- #define :ref:`GET_rtclk_getproperty <_cmp_c_a_a_real_time_clock_itf_8h_1a0b1a6c662a3cd3ddd91bfc4c4e68e757>` s_pfCMGetAPI2( "rtclk_getproperty", (RTS_VOID_FCTPTR *)&pfrtclk_getproperty, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xCE228B87), 0x03050528)
+
+- #define :ref:`CAL_rtclk_getproperty <_cmp_c_a_a_real_time_clock_itf_8h_1a5f8feb4e149eb9b0aa3c64f0b1d27bab>` pfrtclk_getproperty
+
+- #define :ref:`CHK_rtclk_getproperty <_cmp_c_a_a_real_time_clock_itf_8h_1a8325b95e414f7fa7d2e062d11db48013>` (pfrtclk_getproperty != NULL)
+
+- #define :ref:`EXP_rtclk_getproperty <_cmp_c_a_a_real_time_clock_itf_8h_1ad38f331afd8c06e30f2ffc363cfbae25>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtclk_getproperty", (RTS_UINTPTR) :ref:`rtclk_getproperty <_cmp_c_a_a_real_time_clock_itf_8h_1aa8447303587c086309a1610b2964dd8d>` , 1, RTSITF_GET_SIGNATURE(0, 0xCE228B87), 0x03050528)
+
+- #define :ref:`USE_rtclk_getsupplierversion <_cmp_c_a_a_real_time_clock_itf_8h_1a623ca389be137472cba03b3f1fcb1608>` :ref:`PFRTCLK_GETSUPPLIERVERSION_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1ab2439f723ff90e149875160e0b839332>` pfrtclk_getsupplierversion;
+
+- #define :ref:`EXT_rtclk_getsupplierversion <_cmp_c_a_a_real_time_clock_itf_8h_1a96bb3f7f3b8e61d5ffe52f1d794cba89>` extern :ref:`PFRTCLK_GETSUPPLIERVERSION_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1ab2439f723ff90e149875160e0b839332>` pfrtclk_getsupplierversion;
+
+- #define :ref:`GET_rtclk_getsupplierversion <_cmp_c_a_a_real_time_clock_itf_8h_1ab816766c0af577dd4c4d07fb8b4557e5>` s_pfCMGetAPI2( "rtclk_getsupplierversion", (RTS_VOID_FCTPTR *)&pfrtclk_getsupplierversion, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x25593C3C), 0x03050528)
+
+- #define :ref:`CAL_rtclk_getsupplierversion <_cmp_c_a_a_real_time_clock_itf_8h_1aa754aaeb42fcbd02bf6ad8ea8c56cb66>` pfrtclk_getsupplierversion
+
+- #define :ref:`CHK_rtclk_getsupplierversion <_cmp_c_a_a_real_time_clock_itf_8h_1a65eb7ca30d1c8f5be628e5d89b8f8fd9>` (pfrtclk_getsupplierversion != NULL)
+
+- #define :ref:`EXP_rtclk_getsupplierversion <_cmp_c_a_a_real_time_clock_itf_8h_1a6c68bd4d0a871a38bc97af5e3118cb2b>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtclk_getsupplierversion", (RTS_UINTPTR) :ref:`rtclk_getsupplierversion <_cmp_c_a_a_real_time_clock_itf_8h_1a9581e5ac32ac4a8bfada3c15f9aebb1b>` , 1, RTSITF_GET_SIGNATURE(0, 0x25593C3C), 0x03050528)
+
+- #define :ref:`USE_rtclk_gettimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1a61dbcbeab56e1388347843c8941adaae>` :ref:`PFRTCLK_GETTIMEZONEINFORMATION__MAIN_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1ac6cfa789a64b7353d7b42d6a03df5909>` pfrtclk_gettimezoneinformation__main;
+
+- #define :ref:`EXT_rtclk_gettimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1ab20f50cb7251ba11f2776c55e6f2b76a>` extern :ref:`PFRTCLK_GETTIMEZONEINFORMATION__MAIN_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1ac6cfa789a64b7353d7b42d6a03df5909>` pfrtclk_gettimezoneinformation__main;
+
+- #define :ref:`GET_rtclk_gettimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1af5952dc9d5c3d3bc23f707d5906601b2>` s_pfCMGetAPI2( "rtclk_gettimezoneinformation__main", (RTS_VOID_FCTPTR *)&pfrtclk_gettimezoneinformation__main, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x9FDA8153), 0x03050528)
+
+- #define :ref:`CAL_rtclk_gettimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1acd89d3caa87184c8358f39ff2b6b8102>` pfrtclk_gettimezoneinformation__main
+
+- #define :ref:`CHK_rtclk_gettimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1a27c55cc9de6cf8362ea4cc7ad633f248>` (pfrtclk_gettimezoneinformation__main != NULL)
+
+- #define :ref:`EXP_rtclk_gettimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1a68e06ba9aa716721f0a86381f98d26ea>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtclk_gettimezoneinformation__main", (RTS_UINTPTR) :ref:`rtclk_gettimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1a018871e50227bc2dde77b32516090ebc>` , 1, RTSITF_GET_SIGNATURE(0, 0x9FDA8153), 0x03050528)
+
+- #define :ref:`USE_rtclk_gettimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a2be03380784caf4270f47f8694afe6e6>` :ref:`PFRTCLK_GETTIMEZONEINFORMATION__FB_INIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1ae1f4b603de1c8f1eb5f2d8d3b385cd14>` pfrtclk_gettimezoneinformation__fb_init;
+
+- #define :ref:`EXT_rtclk_gettimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a6efcf200a40955579c554221f0c7b675>` extern :ref:`PFRTCLK_GETTIMEZONEINFORMATION__FB_INIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1ae1f4b603de1c8f1eb5f2d8d3b385cd14>` pfrtclk_gettimezoneinformation__fb_init;
+
+- #define :ref:`GET_rtclk_gettimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a9ed74bdd396ea0a4f4d2eb80676f0294>` s_pfCMGetAPI2( "rtclk_gettimezoneinformation__fb_init", (RTS_VOID_FCTPTR *)&pfrtclk_gettimezoneinformation__fb_init, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC7722D11), 0x03050528)
+
+- #define :ref:`CAL_rtclk_gettimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a325dc4ef53b760ba46a0799871fdb63a>` pfrtclk_gettimezoneinformation__fb_init
+
+- #define :ref:`CHK_rtclk_gettimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1afa3df4c107a4914f41a16549dadc8be3>` (pfrtclk_gettimezoneinformation__fb_init != NULL)
+
+- #define :ref:`EXP_rtclk_gettimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a30ffa69ee800b8aeaf77d5692bb250c5>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtclk_gettimezoneinformation__fb_init", (RTS_UINTPTR) :ref:`rtclk_gettimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a31b20e09e115d9b6c3636a3de37c510a>` , 1, RTSITF_GET_SIGNATURE(0, 0xC7722D11), 0x03050528)
+
+- #define :ref:`USE_rtclk_gettimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a97efa1f24de63946d18744cf6ffe32f4>` :ref:`PFRTCLK_GETTIMEZONEINFORMATION__FB_EXIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1aa402867212f9252cedf117518d97c79c>` pfrtclk_gettimezoneinformation__fb_exit;
+
+- #define :ref:`EXT_rtclk_gettimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1ab03818fd4734e361daa0adecff64bfa7>` extern :ref:`PFRTCLK_GETTIMEZONEINFORMATION__FB_EXIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1aa402867212f9252cedf117518d97c79c>` pfrtclk_gettimezoneinformation__fb_exit;
+
+- #define :ref:`GET_rtclk_gettimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1ad6fd07cd9a9555249b6d03b7384b4a7a>` s_pfCMGetAPI2( "rtclk_gettimezoneinformation__fb_exit", (RTS_VOID_FCTPTR *)&pfrtclk_gettimezoneinformation__fb_exit, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x578320C7), 0x03050528)
+
+- #define :ref:`CAL_rtclk_gettimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a59083416a75b88706b22cf25ed99cf51>` pfrtclk_gettimezoneinformation__fb_exit
+
+- #define :ref:`CHK_rtclk_gettimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a9ae84d56e4c4790c25af59a1a7c63af5>` (pfrtclk_gettimezoneinformation__fb_exit != NULL)
+
+- #define :ref:`EXP_rtclk_gettimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a043a01694298e1c17b3bc6260ff50714>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtclk_gettimezoneinformation__fb_exit", (RTS_UINTPTR) :ref:`rtclk_gettimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1ae3de7561e513ff6a2c7b0851852f9aa8>` , 1, RTSITF_GET_SIGNATURE(0, 0x578320C7), 0x03050528)
+
+- #define :ref:`USE_rtclk_setdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1a401074928cf882b7a7bfe030e1ec21cf>` :ref:`PFRTCLK_SETDATEANDTIME__MAIN_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a5902d9f9158243de48cebe34a94cfc3f>` pfrtclk_setdateandtime__main;
+
+- #define :ref:`EXT_rtclk_setdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1a59f4c719a0adcaef22f2509cf920d3cd>` extern :ref:`PFRTCLK_SETDATEANDTIME__MAIN_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a5902d9f9158243de48cebe34a94cfc3f>` pfrtclk_setdateandtime__main;
+
+- #define :ref:`GET_rtclk_setdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1ab08b1232082074c09ce9f6493c0b8390>` s_pfCMGetAPI2( "rtclk_setdateandtime__main", (RTS_VOID_FCTPTR *)&pfrtclk_setdateandtime__main, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x11AD8AA3), 0x03050528)
+
+- #define :ref:`CAL_rtclk_setdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1a0e1bf1320e9dc6afe87e304fd7f40214>` pfrtclk_setdateandtime__main
+
+- #define :ref:`CHK_rtclk_setdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1a0b86775edc28e7eb5ae6d80c96949ec6>` (pfrtclk_setdateandtime__main != NULL)
+
+- #define :ref:`EXP_rtclk_setdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1adb9ce51821b972c318ab3d6254174d95>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtclk_setdateandtime__main", (RTS_UINTPTR) :ref:`rtclk_setdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1a88f63aee1d3e3e72940ddb8f9e4e3fd8>` , 1, RTSITF_GET_SIGNATURE(0, 0x11AD8AA3), 0x03050528)
+
+- #define :ref:`USE_rtclk_setdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a0f8b6114dd3c88187e4b596b96913280>` :ref:`PFRTCLK_SETDATEANDTIME__FB_INIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a0817eef66180ca95c806e486854a96cc>` pfrtclk_setdateandtime__fb_init;
+
+- #define :ref:`EXT_rtclk_setdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a006ac6ee8c89085defeff199fc650221>` extern :ref:`PFRTCLK_SETDATEANDTIME__FB_INIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a0817eef66180ca95c806e486854a96cc>` pfrtclk_setdateandtime__fb_init;
+
+- #define :ref:`GET_rtclk_setdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a7438b735a995d4fb9015d0c4624bb96a>` s_pfCMGetAPI2( "rtclk_setdateandtime__fb_init", (RTS_VOID_FCTPTR *)&pfrtclk_setdateandtime__fb_init, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA2DDB783), 0x03050528)
+
+- #define :ref:`CAL_rtclk_setdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a9d01fd938b67d2636e807c264e19a031>` pfrtclk_setdateandtime__fb_init
+
+- #define :ref:`CHK_rtclk_setdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1ac2b1ea0167f8f5f0c63df5ca714da821>` (pfrtclk_setdateandtime__fb_init != NULL)
+
+- #define :ref:`EXP_rtclk_setdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a9ea9400b4376e950c8391198b9928b2f>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtclk_setdateandtime__fb_init", (RTS_UINTPTR) :ref:`rtclk_setdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1aa5b6bfd1e725533772673a9f8f73dfb3>` , 1, RTSITF_GET_SIGNATURE(0, 0xA2DDB783), 0x03050528)
+
+- #define :ref:`USE_rtclk_setdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a18d686c865429f424005967e21a2ca7f>` :ref:`PFRTCLK_SETDATEANDTIME__FB_EXIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1af856de4ec4a4b97bbb13ce40bf68b685>` pfrtclk_setdateandtime__fb_exit;
+
+- #define :ref:`EXT_rtclk_setdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a84bd94595f60af3361e890ef847e63eb>` extern :ref:`PFRTCLK_SETDATEANDTIME__FB_EXIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1af856de4ec4a4b97bbb13ce40bf68b685>` pfrtclk_setdateandtime__fb_exit;
+
+- #define :ref:`GET_rtclk_setdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1aec7f5d9ca56f8cb59d64795403057ce4>` s_pfCMGetAPI2( "rtclk_setdateandtime__fb_exit", (RTS_VOID_FCTPTR *)&pfrtclk_setdateandtime__fb_exit, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xFABF672F), 0x03050528)
+
+- #define :ref:`CAL_rtclk_setdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1adab850a494b7ae0297418ccbfa71f5fb>` pfrtclk_setdateandtime__fb_exit
+
+- #define :ref:`CHK_rtclk_setdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a2c9e802f8bc403819958e0cc80d4e717>` (pfrtclk_setdateandtime__fb_exit != NULL)
+
+- #define :ref:`EXP_rtclk_setdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a12dea3de8057b120b42ec7559744ca3b>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtclk_setdateandtime__fb_exit", (RTS_UINTPTR) :ref:`rtclk_setdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a9d0bee8f223776b74a4f3ab0803ba1d3>` , 1, RTSITF_GET_SIGNATURE(0, 0xFABF672F), 0x03050528)
+
+- #define :ref:`USE_rtclk_settimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1af03ce701deb3c023df228640a0fd249a>` :ref:`PFRTCLK_SETTIMEZONEINFORMATION__MAIN_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a8ba91e102f717ea9ac5114d03a31c4ea>` pfrtclk_settimezoneinformation__main;
+
+- #define :ref:`EXT_rtclk_settimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1ac5dd130a0bf3080d7ecd687d79e8967f>` extern :ref:`PFRTCLK_SETTIMEZONEINFORMATION__MAIN_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a8ba91e102f717ea9ac5114d03a31c4ea>` pfrtclk_settimezoneinformation__main;
+
+- #define :ref:`GET_rtclk_settimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1a3861efd270a5ddcab3183a977a35b6b8>` s_pfCMGetAPI2( "rtclk_settimezoneinformation__main", (RTS_VOID_FCTPTR *)&pfrtclk_settimezoneinformation__main, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xE87F7BC1), 0x03050528)
+
+- #define :ref:`CAL_rtclk_settimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1a362e045deee7e7bdbcd22f1ce29b7f41>` pfrtclk_settimezoneinformation__main
+
+- #define :ref:`CHK_rtclk_settimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1afca157ae55b6caaca315163eece06edd>` (pfrtclk_settimezoneinformation__main != NULL)
+
+- #define :ref:`EXP_rtclk_settimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1abff975d3527c92864bd34b4ee5af81e7>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtclk_settimezoneinformation__main", (RTS_UINTPTR) :ref:`rtclk_settimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1a5b39388c00bca2bdd5aa9ea53609de5f>` , 1, RTSITF_GET_SIGNATURE(0, 0xE87F7BC1), 0x03050528)
+
+- #define :ref:`USE_rtclk_settimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a554ffcc6673cfcfb7311e4051135024c>` :ref:`PFRTCLK_SETTIMEZONEINFORMATION__FB_INIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a6cfddb0c259f210fddf9c25c378d05f4>` pfrtclk_settimezoneinformation__fb_init;
+
+- #define :ref:`EXT_rtclk_settimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a448dace205189097d7c2a216954c31ca>` extern :ref:`PFRTCLK_SETTIMEZONEINFORMATION__FB_INIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a6cfddb0c259f210fddf9c25c378d05f4>` pfrtclk_settimezoneinformation__fb_init;
+
+- #define :ref:`GET_rtclk_settimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1ac359087f7954f4e7696eadde2fc9c5fd>` s_pfCMGetAPI2( "rtclk_settimezoneinformation__fb_init", (RTS_VOID_FCTPTR *)&pfrtclk_settimezoneinformation__fb_init, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xDDDC4554), 0x03050528)
+
+- #define :ref:`CAL_rtclk_settimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a349d349ba770a0cae97769203f76650c>` pfrtclk_settimezoneinformation__fb_init
+
+- #define :ref:`CHK_rtclk_settimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1aa54e6576a8e571fb531cbab0a069d687>` (pfrtclk_settimezoneinformation__fb_init != NULL)
+
+- #define :ref:`EXP_rtclk_settimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a02c841603de4c8f06a098eeecd75c583>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtclk_settimezoneinformation__fb_init", (RTS_UINTPTR) :ref:`rtclk_settimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a33ea29f5bf07897319ec701d0285debe>` , 1, RTSITF_GET_SIGNATURE(0, 0xDDDC4554), 0x03050528)
+
+- #define :ref:`USE_rtclk_settimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1af0ee8c076e922af10833194961bc35a0>` :ref:`PFRTCLK_SETTIMEZONEINFORMATION__FB_EXIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a8eae6596d195330896e9092b16eebd93>` pfrtclk_settimezoneinformation__fb_exit;
+
+- #define :ref:`EXT_rtclk_settimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1aeaf3bac82cc3cb6f692387f0b2f4d2a0>` extern :ref:`PFRTCLK_SETTIMEZONEINFORMATION__FB_EXIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a8eae6596d195330896e9092b16eebd93>` pfrtclk_settimezoneinformation__fb_exit;
+
+- #define :ref:`GET_rtclk_settimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a06668fd0cacd58854f6ce967ad8ea9f1>` s_pfCMGetAPI2( "rtclk_settimezoneinformation__fb_exit", (RTS_VOID_FCTPTR *)&pfrtclk_settimezoneinformation__fb_exit, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x2B8D8BD0), 0x03050528)
+
+- #define :ref:`CAL_rtclk_settimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a1bd873a4020599a4e845cbedda0c2f07>` pfrtclk_settimezoneinformation__fb_exit
+
+- #define :ref:`CHK_rtclk_settimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1acd03af43afdd9ba2cfb995fd82c42854>` (pfrtclk_settimezoneinformation__fb_exit != NULL)
+
+- #define :ref:`EXP_rtclk_settimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a98bfc59a521a9adc11caad532e971e33>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtclk_settimezoneinformation__fb_exit", (RTS_UINTPTR) :ref:`rtclk_settimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a6edfdd51da5ec3abfdfd6e2306a346b4>` , 1, RTSITF_GET_SIGNATURE(0, 0x2B8D8BD0), 0x03050528)
+
+- #define :ref:`ITF_CmpCAARealTimeClock <_cmp_c_a_a_real_time_clock_itf_8h_1afff123e9eaaa93674ac80c26b7d6a150>`
+
+- #define :ref:`EXTITF_CmpCAARealTimeClock <_cmp_c_a_a_real_time_clock_itf_8h_1adfea3896a49fab714dd62ca7a5b7113b>`
+
+Typedefs
+--------
+
+- typedef CAA_ERROR(* :ref:`PFRTCLK_WORKERINIT <_cmp_c_a_a_real_time_clock_itf_8h_1a91d43a77ac39287f4fff3eaf20f7bf81>`)(void)
+
+- typedef CAA_ERROR(* :ref:`PFRTCLK_WORKEREXIT <_cmp_c_a_a_real_time_clock_itf_8h_1ad36ce15256ee292e4c5327ed08ffb7c1>`)(void)
+
+- typedef void(* :ref:`PFRTCLK_GETDATEANDTIME <_cmp_c_a_a_real_time_clock_itf_8h_1a2e9509c11585f2220928a7af6a105e26>`)(rtclk_getdateandtime_typ *inst)
+
+- typedef CAA_BOOL(* :ref:`PFRTCLK_GETDATEANDTIME_FB_INIT <_cmp_c_a_a_real_time_clock_itf_8h_1aeb3cdaa1349aa72176e81042a22a6371>`)(CAA_BOOL bInitRetains, CAA_BOOL bInCopyCode, rtclk_getdateandtime_typ *inst)
+
+- typedef CAA_BOOL(* :ref:`PFRTCLK_GETDATEANDTIME_FB_EXIT <_cmp_c_a_a_real_time_clock_itf_8h_1acd2957816b2524f2b0fa207596f0521b>`)(CAA_BOOL bInCopyCode, rtclk_getdateandtime_typ *inst)
+
+- typedef void(* :ref:`PFRTCLK_SETDATEANDTIME <_cmp_c_a_a_real_time_clock_itf_8h_1ac618653a7c5e6139582ccae19e7c2598>`)(rtclk_setdateandtime_typ *inst)
+
+- typedef CAA_BOOL(* :ref:`PFRTCLK_SETDATEANDTIME_FB_INIT <_cmp_c_a_a_real_time_clock_itf_8h_1ab9d5953daffc4346a41c507cf3a969a0>`)(CAA_BOOL bInitRetains, CAA_BOOL bInCopyCode, rtclk_setdateandtime_typ *inst)
+
+- typedef CAA_BOOL(* :ref:`PFRTCLK_SETDATEANDTIME_FB_EXIT <_cmp_c_a_a_real_time_clock_itf_8h_1a4ee0f00f2bcdb0ad514a44b5e08520d0>`)(CAA_BOOL bInCopyCode, rtclk_setdateandtime_typ *inst)
+
+- typedef void(* :ref:`PFRTCLK_GETTIMEZONEINFORMATION <_cmp_c_a_a_real_time_clock_itf_8h_1a3e5545f8e2237c05d851eff020cf9b21>`)(rtclk_gettimezoneinformation_typ *inst)
+
+- typedef CAA_BOOL(* :ref:`PFRTCLK_GETTIMEZONEINFORMATION_FB_INIT <_cmp_c_a_a_real_time_clock_itf_8h_1a7a0b202cac51c2dfad08f274ada0fa54>`)(CAA_BOOL bInitRetains, CAA_BOOL bInCopyCode, rtclk_gettimezoneinformation_typ *inst)
+
+- typedef CAA_BOOL(* :ref:`PFRTCLK_GETTIMEZONEINFORMATION_FB_EXIT <_cmp_c_a_a_real_time_clock_itf_8h_1a8a58cebdc44a92424893f2b05cc7b2ec>`)(CAA_BOOL bInCopyCode, rtclk_gettimezoneinformation_typ *inst)
+
+- typedef void(* :ref:`PFRTCLK_SETTIMEZONEINFORMATION <_cmp_c_a_a_real_time_clock_itf_8h_1adce00c34b40cd662ad3d0a8c6883876f>`)(rtclk_settimezoneinformation_typ *inst)
+
+- typedef CAA_BOOL(* :ref:`PFRTCLK_SETTIMEZONEINFORMATION_FB_INIT <_cmp_c_a_a_real_time_clock_itf_8h_1a81a87216308052d935449c3ab5bed093>`)(CAA_BOOL bInitRetains, CAA_BOOL bInCopyCode, rtclk_settimezoneinformation_typ *inst)
+
+- typedef CAA_BOOL(* :ref:`PFRTCLK_SETTIMEZONEINFORMATION_FB_EXIT <_cmp_c_a_a_real_time_clock_itf_8h_1aff52bab5d8e93ed76bdfadb6d0f3879e>`)(CAA_BOOL bInCopyCode, rtclk_settimezoneinformation_typ *inst)
+
+- typedef unsigned short(* :ref:`PFRTCLK_GETSUPPLIERVERSION <_cmp_c_a_a_real_time_clock_itf_8h_1ab924583c639693ec50df596d2214d84d>`)(CAA_BOOL xDummy)
+
+- typedef RTS_IEC_XWORD(* :ref:`PFRTCLK_GETPROPERTY <_cmp_c_a_a_real_time_clock_itf_8h_1aea59e93e2b461551d22fc2a7cda661c8>`)(unsigned short usProperty)
+
+- typedef struct :ref:`tagRTCLK_GETTIMEZONEINFORMATION_PARAMS <structtag_r_t_c_l_k___g_e_t_t_i_m_e_z_o_n_e_i_n_f_o_r_m_a_t_i_o_n___p_a_r_a_m_s>` :ref:`RTCLK_GETTIMEZONEINFORMATION_PARAMS <_cmp_c_a_a_real_time_clock_itf_8h_1a587f08be28a6e02b9b87e82720463d8b>`
+
+- typedef struct :ref:`tagRTCLK_SETTIMEZONEINFORMATION_PARAMS <structtag_r_t_c_l_k___s_e_t_t_i_m_e_z_o_n_e_i_n_f_o_r_m_a_t_i_o_n___p_a_r_a_m_s>` :ref:`RTCLK_SETTIMEZONEINFORMATION_PARAMS <_cmp_c_a_a_real_time_clock_itf_8h_1a7ac301710d004bb45ca7f02d2eeefa6e>`
+
+- typedef struct :ref:`tagRTCLK_SETDATEANDTIME_PARAMS <structtag_r_t_c_l_k___s_e_t_d_a_t_e_a_n_d_t_i_m_e___p_a_r_a_m_s>` :ref:`RTCLK_SETDATEANDTIME_PARAMS <_cmp_c_a_a_real_time_clock_itf_8h_1a9996ab9d2d628f9c36612d8d8f98637c>`
+
+- typedef struct :ref:`tagRTCLK_GETDATEANDTIME_PARAMS <structtag_r_t_c_l_k___g_e_t_d_a_t_e_a_n_d_t_i_m_e___p_a_r_a_m_s>` :ref:`RTCLK_GETDATEANDTIME_PARAMS <_cmp_c_a_a_real_time_clock_itf_8h_1ac6b4c7e86b16c5a4451b80016658d7be>`
+
+- typedef struct :ref:`tagrtclk_getdateandtime_struct <structtagrtclk__getdateandtime__struct>` :ref:`rtclk_getdateandtime_struct <_cmp_c_a_a_real_time_clock_itf_8h_1a77508ca23173f32e65e4ad12e8245096>`
+
+- typedef struct :ref:`tagrtclk_getdateandtime_main_struct <structtagrtclk__getdateandtime__main__struct>` :ref:`rtclk_getdateandtime_main_struct <_cmp_c_a_a_real_time_clock_itf_8h_1aa5cc61eaaee4edf133f4e6d78ac4f356>`
+
+- typedef void(* :ref:`PFRTCLK_GETDATEANDTIME__MAIN_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a86d379a18293c992ce11d790a8773478>`)(rtclk_getdateandtime_main_struct *p)
+
+- typedef struct :ref:`tagrtclk_getdateandtime_fb_init_struct <structtagrtclk__getdateandtime__fb__init__struct>` :ref:`rtclk_getdateandtime_fb_init_struct <_cmp_c_a_a_real_time_clock_itf_8h_1acfc174bdf5a54455e15000572707f5f0>`
+
+- typedef void(* :ref:`PFRTCLK_GETDATEANDTIME__FB_INIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1abac1943e82fccae692394b4940d7637a>`)(rtclk_getdateandtime_fb_init_struct *p)
+
+- typedef struct :ref:`tagrtclk_getdateandtime_fb_exit_struct <structtagrtclk__getdateandtime__fb__exit__struct>` :ref:`rtclk_getdateandtime_fb_exit_struct <_cmp_c_a_a_real_time_clock_itf_8h_1ab3e939276dd0dbfb8fa4eb4ce9f9187b>`
+
+- typedef void(* :ref:`PFRTCLK_GETDATEANDTIME__FB_EXIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1ad2415a23d20cb4597de567a39ed99460>`)(rtclk_getdateandtime_fb_exit_struct *p)
+
+- typedef struct :ref:`tagrtclk_getproperty_struct <structtagrtclk__getproperty__struct>` :ref:`rtclk_getproperty_struct <_cmp_c_a_a_real_time_clock_itf_8h_1ab8faaf65bb57136a46272d4bccf76da1>`
+
+- typedef void(* :ref:`PFRTCLK_GETPROPERTY_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a6777b71ccd4cba228b6b7abcaa960dbd>`)(rtclk_getproperty_struct *p)
+
+- typedef struct :ref:`tagrtclk_getsupplierversion_struct <structtagrtclk__getsupplierversion__struct>` :ref:`rtclk_getsupplierversion_struct <_cmp_c_a_a_real_time_clock_itf_8h_1a91465d93156025a2d6345d81a9ec07bd>`
+
+- typedef void(* :ref:`PFRTCLK_GETSUPPLIERVERSION_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1ab2439f723ff90e149875160e0b839332>`)(rtclk_getsupplierversion_struct *p)
+
+- typedef struct :ref:`tagrtclk_gettimezoneinformation_struct <structtagrtclk__gettimezoneinformation__struct>` :ref:`rtclk_gettimezoneinformation_struct <_cmp_c_a_a_real_time_clock_itf_8h_1ab5f316ba761bbbbd6d2ec559400da635>`
+
+- typedef struct :ref:`tagrtclk_gettimezoneinformation_main_struct <structtagrtclk__gettimezoneinformation__main__struct>` :ref:`rtclk_gettimezoneinformation_main_struct <_cmp_c_a_a_real_time_clock_itf_8h_1ae40656c62efc26c5e000f95b4c9a1691>`
+
+- typedef void(* :ref:`PFRTCLK_GETTIMEZONEINFORMATION__MAIN_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1ac6cfa789a64b7353d7b42d6a03df5909>`)(rtclk_gettimezoneinformation_main_struct *p)
+
+- typedef struct :ref:`tagrtclk_gettimezoneinformation_fb_init_struct <structtagrtclk__gettimezoneinformation__fb__init__struct>` :ref:`rtclk_gettimezoneinformation_fb_init_struct <_cmp_c_a_a_real_time_clock_itf_8h_1a2de97916779aefcdd64fe48961b64e7e>`
+
+- typedef void(* :ref:`PFRTCLK_GETTIMEZONEINFORMATION__FB_INIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1ae1f4b603de1c8f1eb5f2d8d3b385cd14>`)(rtclk_gettimezoneinformation_fb_init_struct *p)
+
+- typedef struct :ref:`tagrtclk_gettimezoneinformation_fb_exit_struct <structtagrtclk__gettimezoneinformation__fb__exit__struct>` :ref:`rtclk_gettimezoneinformation_fb_exit_struct <_cmp_c_a_a_real_time_clock_itf_8h_1a862010b39ddc49e9ce1ee82979e8cab4>`
+
+- typedef void(* :ref:`PFRTCLK_GETTIMEZONEINFORMATION__FB_EXIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1aa402867212f9252cedf117518d97c79c>`)(rtclk_gettimezoneinformation_fb_exit_struct *p)
+
+- typedef struct :ref:`tagrtclk_setdateandtime_struct <structtagrtclk__setdateandtime__struct>` :ref:`rtclk_setdateandtime_struct <_cmp_c_a_a_real_time_clock_itf_8h_1a51085e794531050b0d9bf979a783690d>`
+
+- typedef struct :ref:`tagrtclk_setdateandtime_main_struct <structtagrtclk__setdateandtime__main__struct>` :ref:`rtclk_setdateandtime_main_struct <_cmp_c_a_a_real_time_clock_itf_8h_1adcaa4d45c44b3a6c9937f95166373b09>`
+
+- typedef void(* :ref:`PFRTCLK_SETDATEANDTIME__MAIN_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a5902d9f9158243de48cebe34a94cfc3f>`)(rtclk_setdateandtime_main_struct *p)
+
+- typedef struct :ref:`tagrtclk_setdateandtime_fb_init_struct <structtagrtclk__setdateandtime__fb__init__struct>` :ref:`rtclk_setdateandtime_fb_init_struct <_cmp_c_a_a_real_time_clock_itf_8h_1af3730f830ecb3ee53e451b4bdf205518>`
+
+- typedef void(* :ref:`PFRTCLK_SETDATEANDTIME__FB_INIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a0817eef66180ca95c806e486854a96cc>`)(rtclk_setdateandtime_fb_init_struct *p)
+
+- typedef struct :ref:`tagrtclk_setdateandtime_fb_exit_struct <structtagrtclk__setdateandtime__fb__exit__struct>` :ref:`rtclk_setdateandtime_fb_exit_struct <_cmp_c_a_a_real_time_clock_itf_8h_1a3c27bc94c1b2c4a97b4fe78943faeb47>`
+
+- typedef void(* :ref:`PFRTCLK_SETDATEANDTIME__FB_EXIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1af856de4ec4a4b97bbb13ce40bf68b685>`)(rtclk_setdateandtime_fb_exit_struct *p)
+
+- typedef struct :ref:`tagrtclk_settimezoneinformation_struct <structtagrtclk__settimezoneinformation__struct>` :ref:`rtclk_settimezoneinformation_struct <_cmp_c_a_a_real_time_clock_itf_8h_1a5a9f6ada870d0f661bf0ffc678249138>`
+
+- typedef struct :ref:`tagrtclk_settimezoneinformation_main_struct <structtagrtclk__settimezoneinformation__main__struct>` :ref:`rtclk_settimezoneinformation_main_struct <_cmp_c_a_a_real_time_clock_itf_8h_1a42c6b83f137832d288acc891591f5ce4>`
+
+- typedef void(* :ref:`PFRTCLK_SETTIMEZONEINFORMATION__MAIN_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a8ba91e102f717ea9ac5114d03a31c4ea>`)(rtclk_settimezoneinformation_main_struct *p)
+
+- typedef struct :ref:`tagrtclk_settimezoneinformation_fb_init_struct <structtagrtclk__settimezoneinformation__fb__init__struct>` :ref:`rtclk_settimezoneinformation_fb_init_struct <_cmp_c_a_a_real_time_clock_itf_8h_1ab7376200377e0c72efff7978f91bc41f>`
+
+- typedef void(* :ref:`PFRTCLK_SETTIMEZONEINFORMATION__FB_INIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a6cfddb0c259f210fddf9c25c378d05f4>`)(rtclk_settimezoneinformation_fb_init_struct *p)
+
+- typedef struct :ref:`tagrtclk_settimezoneinformation_fb_exit_struct <structtagrtclk__settimezoneinformation__fb__exit__struct>` :ref:`rtclk_settimezoneinformation_fb_exit_struct <_cmp_c_a_a_real_time_clock_itf_8h_1ae0171f1a0a754c048100cc5920aad7e6>`
+
+- typedef void(* :ref:`PFRTCLK_SETTIMEZONEINFORMATION__FB_EXIT_IEC <_cmp_c_a_a_real_time_clock_itf_8h_1a8eae6596d195330896e9092b16eebd93>`)(rtclk_settimezoneinformation_fb_exit_struct *p)
+
+- typedef :ref:`ICmpCAARealTimeClock_C <struct_i_cmp_c_a_a_real_time_clock___c>` :ref:`ICmpCAARealTimeClock <_cmp_c_a_a_real_time_clock_itf_8h_1a9d0c75fc61ea33d37ef4a7c53660414f>`
+
+Functions
+---------
+
+- CAA_ERROR :ref:`RTCLK_WorkerInit <_cmp_c_a_a_real_time_clock_itf_8h_1ab526dc4c4f4b678b1439968b0b138968>` (void)
+
+- CAA_ERROR :ref:`RTCLK_WorkerExit <_cmp_c_a_a_real_time_clock_itf_8h_1ad24686a60e97c916ba9c7cdf2be8bf2d>` (void)
+
+- void :ref:`RTCLK_GetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1ab59ec3a3698d08aca8d8c51ca6e3a213>` (rtclk_getdateandtime_typ * inst)
+
+- CAA_BOOL :ref:`RTCLK_GetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a6a4277b6f4fc136d7cec50952a1f0bea>` (CAA_BOOL bInitRetains, CAA_BOOL bInCopyCode, rtclk_getdateandtime_typ * inst)
+
+- CAA_BOOL :ref:`RTCLK_GetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a0bbd875e3d6ef2c63be3a0f2231bf3a9>` (CAA_BOOL bInCopyCode, rtclk_getdateandtime_typ * inst)
+
+- void :ref:`RTCLK_SetDateAndTime <_cmp_c_a_a_real_time_clock_itf_8h_1a641dff028fdcddf979dd078a8c96d813>` (rtclk_setdateandtime_typ * inst)
+
+- CAA_BOOL :ref:`RTCLK_SetDateAndTime_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a0bebb8c0e0f7bb31ed7771efbec551c9>` (CAA_BOOL bInitRetains, CAA_BOOL bInCopyCode, rtclk_setdateandtime_typ * inst)
+
+- CAA_BOOL :ref:`RTCLK_SetDateAndTime_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a17c8041c3c59f5668f7309e9c5093d57>` (CAA_BOOL bInCopyCode, rtclk_setdateandtime_typ * inst)
+
+- void :ref:`RTCLK_GetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1a5048f4426632f406f2abe8fbc7168958>` (rtclk_gettimezoneinformation_typ * inst)
+
+- CAA_BOOL :ref:`RTCLK_GetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1a7612475e437958d888ededa4dc9f3e2a>` (CAA_BOOL bInitRetains, CAA_BOOL bInCopyCode, rtclk_gettimezoneinformation_typ * inst)
+
+- CAA_BOOL :ref:`RTCLK_GetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a6ef165b7eb5fd168aa9415ef267a2755>` (CAA_BOOL bInCopyCode, rtclk_gettimezoneinformation_typ * inst)
+
+- void :ref:`RTCLK_SetTimeZoneInformation <_cmp_c_a_a_real_time_clock_itf_8h_1a2ed5eee5cf9b20650ce8bd31cce8157e>` (rtclk_settimezoneinformation_typ * inst)
+
+- CAA_BOOL :ref:`RTCLK_SetTimeZoneInformation_FB_Init <_cmp_c_a_a_real_time_clock_itf_8h_1ad1b016dccc768bdf290baf717bda0087>` (CAA_BOOL bInitRetains, CAA_BOOL bInCopyCode, rtclk_settimezoneinformation_typ * inst)
+
+- CAA_BOOL :ref:`RTCLK_SetTimeZoneInformation_FB_Exit <_cmp_c_a_a_real_time_clock_itf_8h_1a3f1861363f46ee6e94730fb4823b1a82>` (CAA_BOOL bInCopyCode, rtclk_settimezoneinformation_typ * inst)
+
+- unsigned short :ref:`RTCLK_GetSupplierVersion <_cmp_c_a_a_real_time_clock_itf_8h_1a46bf73ec8832a7d2bc6af1b3c99c7cd4>` (CAA_BOOL xDummy)
+
+- RTS_IEC_XWORD :ref:`RTCLK_GetProperty <_cmp_c_a_a_real_time_clock_itf_8h_1a4cf9427e28272939d76f4548ed8b95ca>` (unsigned short usProperty)
+
+- void :ref:`rtclk_getdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1adb9a85ca6abc83c6dde51c5a8e575ebc>` (:ref:`rtclk_getdateandtime_main_struct <_cmp_c_a_a_real_time_clock_itf_8h_1aa5cc61eaaee4edf133f4e6d78ac4f356>` * p)
+
+- void :ref:`rtclk_getdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1ad5ee9937bbad803da43aca057b9f0038>` (:ref:`rtclk_getdateandtime_fb_init_struct <_cmp_c_a_a_real_time_clock_itf_8h_1acfc174bdf5a54455e15000572707f5f0>` * p)
+
+- void :ref:`rtclk_getdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a3ddbd696bd98f9115ec7ec9f48c717cd>` (:ref:`rtclk_getdateandtime_fb_exit_struct <_cmp_c_a_a_real_time_clock_itf_8h_1ab3e939276dd0dbfb8fa4eb4ce9f9187b>` * p)
+
+- void :ref:`rtclk_getproperty <_cmp_c_a_a_real_time_clock_itf_8h_1aa8447303587c086309a1610b2964dd8d>` (:ref:`rtclk_getproperty_struct <_cmp_c_a_a_real_time_clock_itf_8h_1ab8faaf65bb57136a46272d4bccf76da1>` * p)
+
+- void :ref:`rtclk_getsupplierversion <_cmp_c_a_a_real_time_clock_itf_8h_1a9581e5ac32ac4a8bfada3c15f9aebb1b>` (:ref:`rtclk_getsupplierversion_struct <_cmp_c_a_a_real_time_clock_itf_8h_1a91465d93156025a2d6345d81a9ec07bd>` * p)
+
+- void :ref:`rtclk_gettimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1a018871e50227bc2dde77b32516090ebc>` (:ref:`rtclk_gettimezoneinformation_main_struct <_cmp_c_a_a_real_time_clock_itf_8h_1ae40656c62efc26c5e000f95b4c9a1691>` * p)
+
+- void :ref:`rtclk_gettimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a31b20e09e115d9b6c3636a3de37c510a>` (:ref:`rtclk_gettimezoneinformation_fb_init_struct <_cmp_c_a_a_real_time_clock_itf_8h_1a2de97916779aefcdd64fe48961b64e7e>` * p)
+
+- void :ref:`rtclk_gettimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1ae3de7561e513ff6a2c7b0851852f9aa8>` (:ref:`rtclk_gettimezoneinformation_fb_exit_struct <_cmp_c_a_a_real_time_clock_itf_8h_1a862010b39ddc49e9ce1ee82979e8cab4>` * p)
+
+- void :ref:`rtclk_setdateandtime__main <_cmp_c_a_a_real_time_clock_itf_8h_1a88f63aee1d3e3e72940ddb8f9e4e3fd8>` (:ref:`rtclk_setdateandtime_main_struct <_cmp_c_a_a_real_time_clock_itf_8h_1adcaa4d45c44b3a6c9937f95166373b09>` * p)
+
+- void :ref:`rtclk_setdateandtime__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1aa5b6bfd1e725533772673a9f8f73dfb3>` (:ref:`rtclk_setdateandtime_fb_init_struct <_cmp_c_a_a_real_time_clock_itf_8h_1af3730f830ecb3ee53e451b4bdf205518>` * p)
+
+- void :ref:`rtclk_setdateandtime__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a9d0bee8f223776b74a4f3ab0803ba1d3>` (:ref:`rtclk_setdateandtime_fb_exit_struct <_cmp_c_a_a_real_time_clock_itf_8h_1a3c27bc94c1b2c4a97b4fe78943faeb47>` * p)
+
+- void :ref:`rtclk_settimezoneinformation__main <_cmp_c_a_a_real_time_clock_itf_8h_1a5b39388c00bca2bdd5aa9ea53609de5f>` (:ref:`rtclk_settimezoneinformation_main_struct <_cmp_c_a_a_real_time_clock_itf_8h_1a42c6b83f137832d288acc891591f5ce4>` * p)
+
+- void :ref:`rtclk_settimezoneinformation__fb_init <_cmp_c_a_a_real_time_clock_itf_8h_1a33ea29f5bf07897319ec701d0285debe>` (:ref:`rtclk_settimezoneinformation_fb_init_struct <_cmp_c_a_a_real_time_clock_itf_8h_1ab7376200377e0c72efff7978f91bc41f>` * p)
+
+- void :ref:`rtclk_settimezoneinformation__fb_exit <_cmp_c_a_a_real_time_clock_itf_8h_1a6edfdd51da5ec3abfdfd6e2306a346b4>` (:ref:`rtclk_settimezoneinformation_fb_exit_struct <_cmp_c_a_a_real_time_clock_itf_8h_1ae0171f1a0a754c048100cc5920aad7e6>` * p)
+
+Detailed Description
+--------------------
+
+Definition in file CmpCAARealTimeClockItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

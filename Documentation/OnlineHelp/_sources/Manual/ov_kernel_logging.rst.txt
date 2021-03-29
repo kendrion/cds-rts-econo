@@ -1,0 +1,186 @@
+.. _ov_kernel_logging:
+
+Logging
+-------
+
+The logger component (CmpLog) has the possibility to log all events of
+the runtime system like the startup and shutdown and all application
+downloads.
+
+The logger can be instantiated, so each component can create its own
+logger.
+
+One logger instance is always available and this is called the standard
+logger. In the standard logger, all components log by default.
+
+One log entry consists of:
+
++-------------------------------+---------------------------------------------------+
+| Entry                         | Description                                       |
++===============================+===================================================+
+| Timestamp                     | Can be a RTC, microsecond or millisecond value    |
+|                               | (depends on the log options)                      |
++-------------------------------+---------------------------------------------------+
+| ComponentId of the component, | Each component in the runtime system has a unique |                                                                                   
+| that specifies the log entry  | Id. This Id must be specified here to recognize   |
+|                               | the source of the log entry.                      |
++-------------------------------+---------------------------------------------------+
+| Log class                     | The following log classes are available:          |
+|                               |                                                   |
+|                               | | #define LOG\_INFO 0x00000001                    |
+|                               | | For general information                         |
+|                               |                                                   |
+|                               | | #define LOG\_WARNING 0x00000002                 |
+|                               | | For warnings                                    |
+|                               |                                                   |
+|                               | | #define LOG\_ERROR 0x00000004                   |
+|                               | | For errors                                      |
+|                               |                                                   |
+|                               | | #define LOG\_EXCEPTION 0x00000008               |
+|                               | | For exceptions                                  |
+|                               |                                                   |
+|                               | | #define LOG\_DEBUG 0x00000010                   |
+|                               | | Only for debug log entries                      |
+|                               |                                                   |
+|                               | | #define LOG\_COM 0x00000040                     |
+|                               | | For communication entries                       |
+|                               |                                                   |
+|                               | #define LOG\_INFO\_TIMESTAMP\_RELATIVE 0x00000080 |
+|                               |                                                   |
+|                               | For entries with a timestamp, that is calculated  |
+|                               | as a difference from the log entry before         |
++-------------------------------+---------------------------------------------------+
+| Error Id                      | The error Id, if an operation failed              |
++-------------------------------+---------------------------------------------------+
+| Info Id                       | An unique Id per component, that can be           |
+|                               | used to specify a longer test for the log entry   |
+|                               | in the target description of CODESYS.             |
+|                               | This is used to save resources in the             |
+|                               | runtime system to store the log entries           |
++-------------------------------+---------------------------------------------------+
+| Info string                   | Info string with optional and variable            |
+|                               | information, e.g. application names or task names |
++-------------------------------+---------------------------------------------------+
+
+The standard logger is configured this way by default:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+LOG\_ALL but with excluded LOG\_DEBUG entries. To enable the debug log
+entries you have to enable this by configuring the log filter in the
+CODESYSControl.cfg file:
+
+.. code-block:: C
+
+ [CmpLog]
+ Logger.0.Name=PlcLog
+ Logger.0.Filter=0xFFFFFFFF
+
+Usage out of a Runtime System Component
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The log entries can be added to the standard logger with the interface
+function LogAdd(). It can be used for example:
+
+.. code-block:: C
+
+  CAL\_LogAdd(STD\_LOGGER, COMPONENT\_ID, LOG\_ERROR, ERR\_FAILED,
+  LOGID\_CmpApp\_OpenBootprojectFailed, "<app>%s</app>", pszAppName);
+
+Usage out of an IEC Application/Library
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the logger is used out of an IEC application (via CmpLog.library).
+the component ID must be unique the following way:
+
+1. | The IEC code bit must always be set:
+   | #define CMPID\_IecCode 0x00001000
+
+2. The HIGHWORD must contain the VendorID
+
+3. The LOWWORD can contain the unique ID, that is coordinated by the
+   vendor
+
+Example:
+
+   | VendorID: 0x1234
+   | IECCode Bit: 0x00001000
+   | Component/LibraryID: 0x0005
+   | => ComponentID = 0x12341005
+
+That the component name can be resolved with its name, the Library have
+to register its ComponentID with the corresponding name at the component
+manager via ComponentManager.library.
+
+.. code-block:: C
+
+ hCmp : RTS_IEC_HANDLE;
+ hCmp := CMAddComponent('MyLibrary', 0x12341005, 0x03050500, 0);
+
+Typically this can be done in the FB\_Init Method of a function block.
+
+Additionally the Library have to deregister its component name via the
+following function:
+
+.. code-block:: C
+
+ CMRemoveComponent(hCmp);
+
+Typically this can be done in the FB\_Exit Method of a function block.
+
+.. _ov_kernel_logging_multilanguage:
+
+Multilanguage logger entries
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Each device description can define internationalized logger strings for a runtime component within a string table.
+
+Therefore a string table with namespace "RTSLog_" + Component Name (e.g. "RTSLog_CM) must be defined.
+The identifier of the strings within such a string table begin with "ID_" followed by the eight digits hexadecimal InfoID of the corresponding logger message (e.g. ID_000000A1) .
+Variable content is marked with curly brackets.
+
+Example:
+
+.. code-block:: xml
+
+    <Strings namespace="RTSLog_CM">
+        <Language lang="de">
+            <String identifier="ID_00000006">Version: {version}; Datum: {builddate}</String>
+            <String identifier="ID_00000007">SystemComponent: {name} init, Id: {id}, Version: {version}</String>
+        </Language>
+        <Language lang="en">
+            <String identifier="ID_00000006">Version: {version}; Build Date: {builddate}</String>
+            <String identifier="ID_00000007">SystemComponent: {name} init, id: {id}, version: {version}</String>
+        </Language>
+    </Strings>
+
+There is also the possibility to define strings in an external file (see ExternalStrings-1.0.xsd scheme). For this, add a file reference to the device description, which has the following key: "ExternalStrings".
+
+Example:
+
+.. code-block:: xml
+
+    <Files namespace="local"> <!-- Note: The "Files" section is not necessary if all internationalized strings are in one external file.-->
+        <Language lang="de">
+            <File fileref="local" identifier="GenericLogStrings">
+                <LocalFile>GenericLogStrings_de.xml</LocalFile>
+            </File>
+        </Language>
+        <Language lang="en">
+            <File fileref="local" identifier="GenericLogStrings">
+                <LocalFile>GenericLogStrings_en.xml</LocalFile>
+            </File>
+        </Language>
+    </Files>
+    <Device>
+        <DeviceInfo>
+             ...
+            <AdditionalFiles>
+                <File key="ExternalStrings" name="local:GenericLogStrings">GenericLogStrings_en.xml</File>
+            </AdditionalFiles>
+        </DeviceInfo>
+        ...
+    </Device>
+
+If there is no device in the device tree specifying a logger string for the currrent message and language, the logger will use the default text provided by the runtime system.
+
+A file with all exported logger strings in this format can be found here :ref:`logger_strings`.

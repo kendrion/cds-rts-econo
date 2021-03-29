@@ -1,11 +1,11 @@
 /**
  * <interfacename>CmpNameServiceClientIec</interfacename>
  * <description> 
- *	Iec interface to the naming service client.
+ *	IEC interface to the naming service client.
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -63,17 +63,17 @@ typedef struct tagNSC_NodeInfoExt
    - device name (zero terminated wide-char string) followed by
    - type description (zero terminated wide-char string)
    If wParentAddrSize is zero (i.e. node has no parent) then the node name
-   starts immediatly at position offsetof(addrParent).
+   starts immediately at position offsetof(addrParent).
  */
 } NSC_NodeInfoExt;
 
 /**
- * Close an instance of the nameservice client. Callbacks that arrive after the client has been closed will no longer be forwarded.
+ * Close an instance of the name service client. Callbacks that arrive after the client has been closed will no longer be forwarded.
  * Returns the result of the operation, ERR_OK if a valid instance has been given in.
  */
 typedef struct tagnsclientclose_struct
 {
-	RTS_IEC_HANDLE hNSClient;			/* VAR_INPUT */	/* Handle of the nameservice client that is to be closed */
+	RTS_IEC_HANDLE hNSClient;			/* VAR_INPUT */	/* Handle of the name service client that is to be closed */
 	RTS_IEC_RESULT NSClientClose;		/* VAR_OUTPUT */	
 } nsclientclose_struct;
 
@@ -84,18 +84,18 @@ DEF_API(`void',`CDECL',`nsclientclose',`(nsclientclose_struct *p)',1,RTSITF_GET_
  */
 typedef struct tagnsclientopen_struct
 {
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Will optionally receive an error code if the creation of a nameservice client has failed. Otherwise ERR_OK will be returned. */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Will optionally receive an error code if the creation of a name service client has failed. Otherwise ERR_OK will be returned. */
 	RTS_IEC_HANDLE NSClientOpen;		/* VAR_OUTPUT */	
 } nsclientopen_struct;
 
 DEF_API(`void',`CDECL',`nsclientopen',`(nsclientopen_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xD17DF797),0x03050500)
 
 /**
- * Initiates the resolving of all available runtimes. Returns the result of the operation.
+ * Initiates the resolving of all available runtime. Returns the result of the operation.
  */
 typedef struct tagnsclientresolveall_struct
 {
-	RTS_IEC_HANDLE hNSClient;			/* VAR_INPUT */	/* The instance of a nameservice client that shall to do the nameresolving */
+	RTS_IEC_HANDLE hNSClient;			/* VAR_INPUT */	/* The instance of a name service client that shall to do the name resolving */
 	RTS_IEC_UXINT udiReqId;				/* VAR_INPUT */	/* Identifies the request. */
 	RTS_IEC_BYTE *pfnResponseCallback;	/* VAR_INPUT */	/* Prototype see NSClientResponseCallback. This callback will be triggered for each available node */
 	RTS_IEC_RESULT NSClientResolveAll;	/* VAR_OUTPUT */	

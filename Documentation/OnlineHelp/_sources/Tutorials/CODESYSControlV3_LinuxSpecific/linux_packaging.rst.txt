@@ -1,0 +1,71 @@
+.. _tutorial_linux_packaging_and_autostart:
+
+Linux packaging and autostart
+=============================
+Your CODESYSControl runtime delivery contains a template for packaging your runtime adaption into the Debian package format (.deb) as well as an init script example to automatically start CODESYSControl runtime at system startup.
+
+Packaging
+---------
+Using the template to build a .deb package
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Navigate to ``Templates/LinuxPackageTemplate`` in your delivery. It contains a ``Makefile`` as well as a ``debian/`` directory structure. It follows the Filesystem Hierarchy Standard, which is further descriped in :ref:`portings_linux_specific_filesystem`. Place your CODESYSControl runtime binary in ``opt/codesys/bin/`` and your dynamically linked components in ``opt/codesys/lib``. Then, type
+
+    | *Maintainter scripts in* ``debian/DEBIAN/`` *need to be executable. Mode* ``755`` *is recommended*
+    | *Init script in* ``etc/init.d/codesyscontrol`` *needs to be executable*
+
+    .. code-block:: shell
+
+        make package
+
+to create a .deb package. Edit the following variables in ``Makefile`` to adjust its filename and metadata
+
+    .. code-block:: shell
+
+        ARCHITECTURE=armhf
+        PACKAGE_VERSION=3.5.16.0
+        PACKAGE=codesyscontrol_V${PACKAGE_VERSION}_${ARCHITECTURE}.deb
+        PACKAGE_DESCRIPTION=V${PACKAGE_VERSION}, $(shell date)
+        MAINTAINER=Maintainer
+
+or set the according variables as environment variables.
+
+Optional: Modify maintainer scripts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+You can modify and expand the maintainer scripts as you wish. By default, the scripts do the following:
+
+- ``preinst``
+    + nonexistent
+- ``postinst``
+    + make CODESYSControl_User.cfg writable
+    + add codesyscontrol service ``update-rc.d``
+- ``prerm``
+    + stop ``codesyscontrol`` service
+    + force kill all running processes
+- ``postrm``
+    + remove ``codesyscontrol`` service with ``update-rc.d``
+
+Autostart
+---------
+The default init script ``etc/init.d/codesyscontrol`` is not limited to Debian-based Linux systems and should work in most environments. It mostly follows the Linux Standard Base without relying on specified init functions (such as ``log_*_msg``) for compatibility reasons. It provides the following actions:
+
+- ``start``
+    + start codesyscontrol, if it is not yet running
+    + stores a pidfile in ``/var/run/codesyscontrol.pid``
+- ``stop``
+    + stop codesyscontrol, if it is running
+    + follows the schedule ``TERM/15/KILL/10`` before it times out
+- ``restart``
+    + restart codesyscontrol service
+    + if it is not yet running, it will be started
+- ``try-restart``
+    + restart codesyscontrol service, if it is running
+    + if it is not yet running, it will not be started
+- ``reload``
+    + not supported; no action
+- ``force-reload``
+    + not supported;  implemented as ``restart``
+- ``status``
+    + determines if service is running or not
+    + exit codes specified by LSB are not (yet) implemented
+
+A configuration file ``/etc/default/codesyscontrol`` is sourced by the init script. By default, it only provides a setting for logging debug output to a configurable log file. Feel free to extend it by your own parameters to customize the init script's behavior.

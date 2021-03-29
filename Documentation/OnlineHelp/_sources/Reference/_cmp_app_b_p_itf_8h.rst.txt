@@ -1,0 +1,513 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_app_b_p_itf_8h:
+
+============================
+CmpAppBPItf.h File Reference
+============================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpAppItf.h <_cmp_app_itf_8h>`"
+| #include ":ref:`CmpSrvItf.h <_cmp_srv_itf_8h>`"
+| #include ":ref:`CmpIecTaskItf.h <_cmp_iec_task_itf_8h>`"
+
+Data Structures
+---------------
+
+- struct :ref:`EVTPARAM_CmpAppBP_SavePatch <struct_e_v_t_p_a_r_a_m___cmp_app_b_p___save_patch>`
+
+- struct :ref:`EVTPARAM_CmpAppBP_CodePatch <struct_e_v_t_p_a_r_a_m___cmp_app_b_p___code_patch>`
+
+- struct :ref:`BreakpointDesc_ <struct_breakpoint_desc__>`
+
+- struct :ref:`BreakpointContext_ <struct_breakpoint_context__>`
+
+- struct :ref:`Breakpoint_ <struct_breakpoint__>`
+
+- struct :ref:`Flowpoint_ <struct_flowpoint__>`
+
+- struct :ref:`DebugContext_ <struct_debug_context__>`
+
+- struct :ref:`FLOW_BP_INFO <struct_f_l_o_w___b_p___i_n_f_o>`
+
+- struct :ref:`FLOW_INFO <struct_f_l_o_w___i_n_f_o>`
+
+- struct :ref:`tagCallstackEntry <structtag_callstack_entry>`
+
+- struct :ref:`tagappbpgetcallstack_struct <structtagappbpgetcallstack__struct>`
+
+- struct :ref:`ICmpAppBP_C <struct_i_cmp_app_b_p___c>`
+
+Macros
+------
+
+- #define :ref:`APP_STATIC_BP_ENTRIES <group___cmp_app_b_p_itf___staticdefines_1gaa69768715a9efe5e62183fb3f1144c4d>` 20
+
+- #define :ref:`APP_STATIC_FLOW_ENTRIES <group___cmp_app_b_p_itf___staticdefines_1gaf5b4b8e760c26225e4f61a4bf66fd38c>` 20
+
+- #define :ref:`APP_MAX_BP_OPCODE_SIZE <group___cmp_app_b_p_itf___staticdefines_1ga5aa694dfbbe5b6f907b3863746d7c7bd>` 8
+
+- #define :ref:`APP_MAX_BP_CONDITION_SIZE <group___cmp_app_b_p_itf___staticdefines_1ga0ddc3dc1a87740336d1fb8be9df9ce1d>` 300
+
+- #define :ref:`APP_MAX_BP_INTERP_CODE_SIZE <group___cmp_app_b_p_itf___staticdefines_1gad663b9cd7f224eb5586a69ec6f6da928>` 1000
+
+- #define :ref:`APPBP_MAX_FLOW_SERVICE_LEN <group___cmp_app_b_p_itf___staticdefines_1ga875d9ac88c492fb75f6c85669b91e363>` 10000
+
+- #define :ref:`EXECUTIONPOINT_STACK_SIZE <group___cmp_app_b_p_itf___staticdefines_1ga9fa55530d37d088161ff7ac4db658145>` 4096
+
+- #define :ref:`APPBP_FLAG_BEFORE_CODE_PATCH <group___cmp_app_b_p_itf___codepatcheventflags_1ga67dcfb07f56278afcc902a53e10260a9>` 0x00000001
+
+- #define :ref:`APPBP_FLAG_AFTER_CODE_PATCH <group___cmp_app_b_p_itf___codepatcheventflags_1ga55e501e62f5d25089dda1df7e76f1551>` 0x00000002
+
+- #define :ref:`APPBP_FLAG_CODE_PATCHED <group___cmp_app_b_p_itf___codepatcheventflags_1gaf6b28539114e5fe79ac246d73d64618d>` 0x00000004
+
+- #define :ref:`EVTPARAMID_CmpAppBP_SavePatch <group___cmp_app_b_p_itf___eventparameter_1gabbfcfd7082645475b0b1c0dee796eb04>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpAppBP_SavePatch <group___cmp_app_b_p_itf___eventparameter_1gab705916f41f2a4372c7e6505d6b5e228>` 0x0002
+
+- #define :ref:`EVTPARAMID_CmpAppBP_CodePatch <group___cmp_app_b_p_itf___eventparameter_1ga0432ac86d59611eff9d0924779759164>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpAppBP_CodePatch <group___cmp_app_b_p_itf___eventparameter_1gab23c107053a70ac1905292d8e92e7f6c>` 0x0001
+
+- #define :ref:`EVT_CmpAppBP_CodePatch <group___cmp_app_b_p_itf___events_1gaa6804545667f828b7e5b641b24d914d1>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`EVT_CmpAppBP_CodeSave <group___cmp_app_b_p_itf___events_1gaf2d5ba3e93d96c39b428ccdd98ba7639>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+
+- #define :ref:`BP_PERMANENT <group___cmp_app_b_p_itf___breakpointtypes_1gaad0e1b8888a9b1569127b5f9a15bacc3>` 1
+
+- #define :ref:`BP_TEMPORARY <group___cmp_app_b_p_itf___breakpointtypes_1ga8a9e82894aa3c3e718b9d9fd64f3bc4a>` 2
+
+- #define :ref:`BP_REPATCH <group___cmp_app_b_p_itf___breakpointtypes_1ga6a019cffb132940e0730007aea92e3aa>` 3
+
+- #define :ref:`BP_FLOWREAD <group___cmp_app_b_p_itf___breakpointtypes_1gace73971490dafed8ddeaa9843fee5ef1>` 4
+
+- #define :ref:`BP_FLOWWRITE <group___cmp_app_b_p_itf___breakpointtypes_1ga3b6afe29933015b8b0b89894e8a0170e>` 5
+
+- #define :ref:`BP_FLOWFORCE <group___cmp_app_b_p_itf___breakpointtypes_1ga122ca01e0008dc62ff2e8e02d7929b73>` 6
+
+- #define :ref:`BP_CODE_EXECUTIONPOINT <group___cmp_app_b_p_itf___breakpointtypes_1gaccd9af4fbf988e94177af2904a1adc42>` 7
+
+- #define :ref:`BP_SUSPEND_TASK <group___cmp_app_b_p_itf___breakpointtypes_1gaa8ae1c46da90970815bc0618f8f422c8>` 8
+
+- #define :ref:`BP_DATA_BREAKPOINT <group___cmp_app_b_p_itf___breakpointtypes_1ga198656fb0bdaadf5ebfe73c4d50379c4>` 9
+
+- #define :ref:`BP_DATA_EXECUTIONPOINT <group___cmp_app_b_p_itf___breakpointtypes_1ga202926e3b664812a5bcfb7f235f4f807>` 10
+
+- #define :ref:`BP_INVALID <group___cmp_app_b_p_itf___breakpointtypes_1ga2996b44a626c54e684dac35c8c747bfe>` 0xFFFFFFFF
+
+- #define :ref:`HIT_ALWAYS <group___cmp_app_b_p_itf___breakpointhitcountconditions_1gaea5656b988aed051471c10d5855d83d4>` 0
+
+- #define :ref:`HIT_EQUAL <group___cmp_app_b_p_itf___breakpointhitcountconditions_1gae5790e1137ab2206443b77ddc299121d>` 1
+
+- #define :ref:`HIT_MULTIPLEOF <group___cmp_app_b_p_itf___breakpointhitcountconditions_1ga2202e6ceb39f86193b5040430558a913>` 2
+
+- #define :ref:`HIT_GTOREQTO <group___cmp_app_b_p_itf___breakpointhitcountconditions_1ga55105d39912fd7d7311efdac4378584f>` 3
+
+- #define :ref:`BP_STATE_REACHED <group___cmp_app_b_p_itf___breakpointhitcountconditions_1gace1187f7b9d6fe1374b4ca7b7aae268f>` 1
+
+- #define :ref:`BP_STATE_EXECUTED <group___cmp_app_b_p_itf___breakpointhitcountconditions_1ga28b24e4ed1779d32bd8a264650e7e135>` 2
+
+- #define :ref:`BP_STATE_ACTIVE <group___cmp_app_b_p_itf___breakpointhitcountconditions_1gaaa9f3c545917cb3e98b465ab103a4bbd>` 4
+
+- #define :ref:`FLOW_READ <group___cmp_app_b_p_itf___breakpointcontext_1ga9ad046ecb0345777fc6392b428b7cc51>` 1
+
+- #define :ref:`FLOW_WRITE <group___cmp_app_b_p_itf___breakpointcontext_1ga1454d2159bb67d8f80c64d9a071dcd1b>` 2
+
+- #define :ref:`FLOW_FORCE <group___cmp_app_b_p_itf___breakpointcontext_1ga5c5f1138772d48ebb4c10250aea500f0>` 3
+
+- #define :ref:`USE_appbpgetcallstack <group___cmp_app_b_p_itf_1gaf38dfe3133dc7261e65f3f0a419fd3a5>` :ref:`PFAPPBPGETCALLSTACK_IEC <group___cmp_app_b_p_itf_1ga612abaa2c5b30e1b43f7852904d54f86>` pfappbpgetcallstack;
+
+- #define :ref:`EXT_appbpgetcallstack <group___cmp_app_b_p_itf_1ga53556abb5643e09e8b780346c06702c7>` extern :ref:`PFAPPBPGETCALLSTACK_IEC <group___cmp_app_b_p_itf_1ga612abaa2c5b30e1b43f7852904d54f86>` pfappbpgetcallstack;
+
+- #define :ref:`GET_appbpgetcallstack <group___cmp_app_b_p_itf_1ga6e32e2b5a21c32168ced9d1e1416273f>` s_pfCMGetAPI2( "appbpgetcallstack", (RTS_VOID_FCTPTR *)&pfappbpgetcallstack, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x8E104280, 0xC4227279), 0x03050D00)
+
+- #define :ref:`CAL_appbpgetcallstack <group___cmp_app_b_p_itf_1gacfd9b5a6dcc9a66c0b8cdfe8a31bcf00>` pfappbpgetcallstack
+
+- #define :ref:`CHK_appbpgetcallstack <group___cmp_app_b_p_itf_1ga30f0da8b946c0e71f78f568dc3e87ffe>` (pfappbpgetcallstack != NULL)
+
+- #define :ref:`EXP_appbpgetcallstack <group___cmp_app_b_p_itf_1ga085b1f0039e4e7f87f576c8728088c43>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"appbpgetcallstack", (RTS_UINTPTR) :ref:`appbpgetcallstack <group___cmp_app_b_p_itf_1gaa37770bbeece01afd1c6f5187c50c320>` , 1, RTSITF_GET_SIGNATURE(0x8E104280, 0xC4227279), 0x03050D00)
+
+- #define :ref:`USE_AppBPInit <group___cmp_app_b_p_itf_1ga951329fe2948b590b640d80777a14c16>` :ref:`PFAPPBPINIT <group___cmp_app_b_p_itf_1ga23a04ea54d417c1cd5c6f50153f0d742>` pfAppBPInit;
+
+- #define :ref:`EXT_AppBPInit <group___cmp_app_b_p_itf_1ga0707b64be307d4fb2f741b1bc7d2ca94>` extern :ref:`PFAPPBPINIT <group___cmp_app_b_p_itf_1ga23a04ea54d417c1cd5c6f50153f0d742>` pfAppBPInit;
+
+- #define :ref:`GET_AppBPInit <group___cmp_app_b_p_itf_1ga82cfa685c4afa5fd7c927175cbb65f59>` s_pfCMGetAPI2( "AppBPInit", (RTS_VOID_FCTPTR *)&pfAppBPInit, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPInit <group___cmp_app_b_p_itf_1gab97a9158628af66ad49a79b27c21dcc2>` pfAppBPInit
+
+- #define :ref:`CHK_AppBPInit <group___cmp_app_b_p_itf_1ga0882a0f6960f74941e2627560577b121>` (pfAppBPInit != NULL)
+
+- #define :ref:`EXP_AppBPInit <group___cmp_app_b_p_itf_1gac05f66fb241f1398b87f5c4d6a797e70>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPInit", (RTS_UINTPTR) :ref:`AppBPInit <group___cmp_app_b_p_itf_1gaf41157f21189cc6262e9eb9c917834df>` , 0, 0)
+
+- #define :ref:`USE_AppBPExit <group___cmp_app_b_p_itf_1ga392c435e02fbcf5bb4359343d12db8ba>` :ref:`PFAPPBPEXIT <group___cmp_app_b_p_itf_1gaa2d58f119d8379e119d182ebb8e47013>` pfAppBPExit;
+
+- #define :ref:`EXT_AppBPExit <group___cmp_app_b_p_itf_1gac0550ad76a1a667633e8e4868a6bf23e>` extern :ref:`PFAPPBPEXIT <group___cmp_app_b_p_itf_1gaa2d58f119d8379e119d182ebb8e47013>` pfAppBPExit;
+
+- #define :ref:`GET_AppBPExit <group___cmp_app_b_p_itf_1gaede352856a878e2157813146a9193d6c>` s_pfCMGetAPI2( "AppBPExit", (RTS_VOID_FCTPTR *)&pfAppBPExit, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPExit <group___cmp_app_b_p_itf_1ga7479ac2c6c7462c0a6b08d48485658fa>` pfAppBPExit
+
+- #define :ref:`CHK_AppBPExit <group___cmp_app_b_p_itf_1gad4d53e64a0732b0e8e8a6ef375533608>` (pfAppBPExit != NULL)
+
+- #define :ref:`EXP_AppBPExit <group___cmp_app_b_p_itf_1ga381fadd3354217a944e0b3dc504872ec>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPExit", (RTS_UINTPTR) :ref:`AppBPExit <group___cmp_app_b_p_itf_1ga261acfbcb32c69dbd45b4946890ea1d1>` , 0, 0)
+
+- #define :ref:`USE_AppDebugHandler <group___cmp_app_b_p_itf_1gaecdceb9e8982691b681adb997a1d810c>` :ref:`PFAPPDEBUGHANDLER <group___cmp_app_b_p_itf_1ga8c8864b2e7f7c0030d68fcdb5dc1eede>` pfAppDebugHandler;
+
+- #define :ref:`EXT_AppDebugHandler <group___cmp_app_b_p_itf_1gaf8ea21de73488a76b723bc330576f4ca>` extern :ref:`PFAPPDEBUGHANDLER <group___cmp_app_b_p_itf_1ga8c8864b2e7f7c0030d68fcdb5dc1eede>` pfAppDebugHandler;
+
+- #define :ref:`GET_AppDebugHandler <group___cmp_app_b_p_itf_1gac7b5e73c523c79e8f1aa0f33bed20441>` s_pfCMGetAPI2( "AppDebugHandler", (RTS_VOID_FCTPTR *)&pfAppDebugHandler, (fl), 0, 0)
+
+- #define :ref:`CAL_AppDebugHandler <group___cmp_app_b_p_itf_1ga37f684cd721a2f3a8d3b66a96694986f>` pfAppDebugHandler
+
+- #define :ref:`CHK_AppDebugHandler <group___cmp_app_b_p_itf_1ga61ea760d40ca5f91bf53b5a79a4edbb5>` (pfAppDebugHandler != NULL)
+
+- #define :ref:`EXP_AppDebugHandler <group___cmp_app_b_p_itf_1ga89ebeabc8d92924dac1667d03d86b525>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppDebugHandler", (RTS_UINTPTR) :ref:`AppDebugHandler <group___cmp_app_b_p_itf_1ga6b17f465662ba51cf0832f8c2baf0dfd>` , 0, 0)
+
+- #define :ref:`USE_AppDebugHandler2 <group___cmp_app_b_p_itf_1ga2c61c83cad93f4dbb5adcc5615ad7b96>` :ref:`PFAPPDEBUGHANDLER2 <group___cmp_app_b_p_itf_1ga8159f96eafbca9584a7fa4a84cf02843>` pfAppDebugHandler2;
+
+- #define :ref:`EXT_AppDebugHandler2 <group___cmp_app_b_p_itf_1gaa2c7ddd65932e278aba57dac268371bd>` extern :ref:`PFAPPDEBUGHANDLER2 <group___cmp_app_b_p_itf_1ga8159f96eafbca9584a7fa4a84cf02843>` pfAppDebugHandler2;
+
+- #define :ref:`GET_AppDebugHandler2 <group___cmp_app_b_p_itf_1ga1bee9a470895221f6b95549967b47970>` s_pfCMGetAPI2( "AppDebugHandler2", (RTS_VOID_FCTPTR *)&pfAppDebugHandler2, (fl), 0, 0)
+
+- #define :ref:`CAL_AppDebugHandler2 <group___cmp_app_b_p_itf_1ga4ed386e8210e6b5df7ac4e7469426869>` pfAppDebugHandler2
+
+- #define :ref:`CHK_AppDebugHandler2 <group___cmp_app_b_p_itf_1ga6abfe043e8b515f7b004dde765a1dd98>` (pfAppDebugHandler2 != NULL)
+
+- #define :ref:`EXP_AppDebugHandler2 <group___cmp_app_b_p_itf_1ga3c2d5800f5e317451cebc650ccec0a57>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppDebugHandler2", (RTS_UINTPTR) :ref:`AppDebugHandler2 <group___cmp_app_b_p_itf_1gadc306395980c9fae234e95e8d7bdcdf1>` , 0, 0)
+
+- #define :ref:`USE_AppBPGetFirst <group___cmp_app_b_p_itf_1gacb01c0ff7b6a1f0d98af7681b93d3b52>` :ref:`PFAPPBPGETFIRST <group___cmp_app_b_p_itf_1ga6d1a88b76de6edc938a75dac78260e85>` pfAppBPGetFirst;
+
+- #define :ref:`EXT_AppBPGetFirst <group___cmp_app_b_p_itf_1ga1252aa78933681ce795d844a79e9629d>` extern :ref:`PFAPPBPGETFIRST <group___cmp_app_b_p_itf_1ga6d1a88b76de6edc938a75dac78260e85>` pfAppBPGetFirst;
+
+- #define :ref:`GET_AppBPGetFirst <group___cmp_app_b_p_itf_1gaf7b3b03a2b1654158115a0cc6fe65c11>` s_pfCMGetAPI2( "AppBPGetFirst", (RTS_VOID_FCTPTR *)&pfAppBPGetFirst, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPGetFirst <group___cmp_app_b_p_itf_1gaf734d9daa86b0335bcd3a894c70266f1>` pfAppBPGetFirst
+
+- #define :ref:`CHK_AppBPGetFirst <group___cmp_app_b_p_itf_1gab6139e52794a6fc91725197ca813b213>` (pfAppBPGetFirst != NULL)
+
+- #define :ref:`EXP_AppBPGetFirst <group___cmp_app_b_p_itf_1ga084f445260d26f5e4770e5582a061d86>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPGetFirst", (RTS_UINTPTR) :ref:`AppBPGetFirst <group___cmp_app_b_p_itf_1ga31dab43f80db08b619cc2b04249518ef>` , 0, 0)
+
+- #define :ref:`USE_AppBPGetNext <group___cmp_app_b_p_itf_1ga06406b21bf4679e0e7e900cf7d999c0b>` :ref:`PFAPPBPGETNEXT <group___cmp_app_b_p_itf_1ga7bfdb40f42365950de4c2136159c5638>` pfAppBPGetNext;
+
+- #define :ref:`EXT_AppBPGetNext <group___cmp_app_b_p_itf_1gae5a93c3826ec40ffd519dc3c70f234fa>` extern :ref:`PFAPPBPGETNEXT <group___cmp_app_b_p_itf_1ga7bfdb40f42365950de4c2136159c5638>` pfAppBPGetNext;
+
+- #define :ref:`GET_AppBPGetNext <group___cmp_app_b_p_itf_1ga190daa38b8289249ec6cafb573899c2f>` s_pfCMGetAPI2( "AppBPGetNext", (RTS_VOID_FCTPTR *)&pfAppBPGetNext, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPGetNext <group___cmp_app_b_p_itf_1gaa8c29837d0c34809be7da93130d16263>` pfAppBPGetNext
+
+- #define :ref:`CHK_AppBPGetNext <group___cmp_app_b_p_itf_1ga7bed455cee1c744aee4fde40e24840c2>` (pfAppBPGetNext != NULL)
+
+- #define :ref:`EXP_AppBPGetNext <group___cmp_app_b_p_itf_1gaf0462c38bb400a0980825db1c4ccb9cd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPGetNext", (RTS_UINTPTR) :ref:`AppBPGetNext <group___cmp_app_b_p_itf_1ga05a447ac5ee8e6482aeced2dbb058761>` , 0, 0)
+
+- #define :ref:`USE_AppBPDeleteAll <group___cmp_app_b_p_itf_1ga1e9074ce8e9472c4b88341db5611a14e>` :ref:`PFAPPBPDELETEALL <group___cmp_app_b_p_itf_1gad7c6032c6f9f001eaea8849fe1b124ec>` pfAppBPDeleteAll;
+
+- #define :ref:`EXT_AppBPDeleteAll <group___cmp_app_b_p_itf_1gaf5a6829149aeee2c73c1303d6b082c3d>` extern :ref:`PFAPPBPDELETEALL <group___cmp_app_b_p_itf_1gad7c6032c6f9f001eaea8849fe1b124ec>` pfAppBPDeleteAll;
+
+- #define :ref:`GET_AppBPDeleteAll <group___cmp_app_b_p_itf_1gaec25857b15b609e994fdeead9062d05c>` s_pfCMGetAPI2( "AppBPDeleteAll", (RTS_VOID_FCTPTR *)&pfAppBPDeleteAll, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPDeleteAll <group___cmp_app_b_p_itf_1ga19719ccee4460ffaf4396ee8369f5ecc>` pfAppBPDeleteAll
+
+- #define :ref:`CHK_AppBPDeleteAll <group___cmp_app_b_p_itf_1ga96d05d944804e986b3e2f8eae8b99932>` (pfAppBPDeleteAll != NULL)
+
+- #define :ref:`EXP_AppBPDeleteAll <group___cmp_app_b_p_itf_1ga793860cfc6479e5cd40e10a81ad37d74>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPDeleteAll", (RTS_UINTPTR) :ref:`AppBPDeleteAll <group___cmp_app_b_p_itf_1gac10f981959313826a493d6443ab88fa4>` , 0, 0)
+
+- #define :ref:`USE_AppBPDeleteAllWithExecutionpoints <group___cmp_app_b_p_itf_1ga09e2ffa696a14c99e7a8148a0b8abd82>` :ref:`PFAPPBPDELETEALLWITHEXECUTIONPOINTS <group___cmp_app_b_p_itf_1gac74d3ace55689f5bde0d456c5b6d116d>` pfAppBPDeleteAllWithExecutionpoints;
+
+- #define :ref:`EXT_AppBPDeleteAllWithExecutionpoints <group___cmp_app_b_p_itf_1ga5d50fc9f50e68af42a9fcf3d1c26a789>` extern :ref:`PFAPPBPDELETEALLWITHEXECUTIONPOINTS <group___cmp_app_b_p_itf_1gac74d3ace55689f5bde0d456c5b6d116d>` pfAppBPDeleteAllWithExecutionpoints;
+
+- #define :ref:`GET_AppBPDeleteAllWithExecutionpoints <group___cmp_app_b_p_itf_1gac7bb247983f3ef12ebba8422936c08ed>` s_pfCMGetAPI2( "AppBPDeleteAllWithExecutionpoints", (RTS_VOID_FCTPTR *)&pfAppBPDeleteAllWithExecutionpoints, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPDeleteAllWithExecutionpoints <group___cmp_app_b_p_itf_1gaf004c64b6f4c080bc8716fcf888ce0e6>` pfAppBPDeleteAllWithExecutionpoints
+
+- #define :ref:`CHK_AppBPDeleteAllWithExecutionpoints <group___cmp_app_b_p_itf_1ga27903111c03ce3131de71579d75d9020>` (pfAppBPDeleteAllWithExecutionpoints != NULL)
+
+- #define :ref:`EXP_AppBPDeleteAllWithExecutionpoints <group___cmp_app_b_p_itf_1gacf69c4e47c2975d65422b5b5ec1cdc82>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPDeleteAllWithExecutionpoints", (RTS_UINTPTR) :ref:`AppBPDeleteAllWithExecutionpoints <group___cmp_app_b_p_itf_1ga0ec5e0cc95b436933012dcc15ca3c9bc>` , 0, 0)
+
+- #define :ref:`USE_AppBPLeave <group___cmp_app_b_p_itf_1ga8418f5329d898da4e80f69e7a47c9403>` :ref:`PFAPPBPLEAVE <group___cmp_app_b_p_itf_1ga524571f60639373e3da743330e110dcf>` pfAppBPLeave;
+
+- #define :ref:`EXT_AppBPLeave <group___cmp_app_b_p_itf_1ga85487b3f6f4bd5ff2e17dd044676607b>` extern :ref:`PFAPPBPLEAVE <group___cmp_app_b_p_itf_1ga524571f60639373e3da743330e110dcf>` pfAppBPLeave;
+
+- #define :ref:`GET_AppBPLeave <group___cmp_app_b_p_itf_1ga20ece5781ff27d2c5b3375e322152f5f>` s_pfCMGetAPI2( "AppBPLeave", (RTS_VOID_FCTPTR *)&pfAppBPLeave, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPLeave <group___cmp_app_b_p_itf_1ga1c137959a38c60b2cd0da79845421b35>` pfAppBPLeave
+
+- #define :ref:`CHK_AppBPLeave <group___cmp_app_b_p_itf_1ga6425d704239a068051a72fab56ca3629>` (pfAppBPLeave != NULL)
+
+- #define :ref:`EXP_AppBPLeave <group___cmp_app_b_p_itf_1ga737057b4bffd6fd30d2da09b7dd0810e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPLeave", (RTS_UINTPTR) :ref:`AppBPLeave <group___cmp_app_b_p_itf_1ga9bf950f11374b74593bbe5a19501cbd5>` , 0, 0)
+
+- #define :ref:`USE_AppBPStep <group___cmp_app_b_p_itf_1ga58269630ce8e4162fd9e9b8f1298f408>` :ref:`PFAPPBPSTEP <group___cmp_app_b_p_itf_1ga704bfe9b0f0d3cbee509d990e85cc97c>` pfAppBPStep;
+
+- #define :ref:`EXT_AppBPStep <group___cmp_app_b_p_itf_1ga877421613ce432f83dd3bd3339f1a46d>` extern :ref:`PFAPPBPSTEP <group___cmp_app_b_p_itf_1ga704bfe9b0f0d3cbee509d990e85cc97c>` pfAppBPStep;
+
+- #define :ref:`GET_AppBPStep <group___cmp_app_b_p_itf_1ga2290ca0099e673458ef30ffb509c1363>` s_pfCMGetAPI2( "AppBPStep", (RTS_VOID_FCTPTR *)&pfAppBPStep, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPStep <group___cmp_app_b_p_itf_1ga462ef816f996692220b85aba9f1950ad>` pfAppBPStep
+
+- #define :ref:`CHK_AppBPStep <group___cmp_app_b_p_itf_1gaaffeb2e5cadd0d70395700b054555c3f>` (pfAppBPStep != NULL)
+
+- #define :ref:`EXP_AppBPStep <group___cmp_app_b_p_itf_1ga5c98a643511eb4753508e8e733b169c8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPStep", (RTS_UINTPTR) :ref:`AppBPStep <group___cmp_app_b_p_itf_1ga6a946d4501dc1c6cd8be704b565ca27f>` , 0, 0)
+
+- #define :ref:`USE_AppBPGetHitCount <group___cmp_app_b_p_itf_1gac755139c12cb14113a76b6d5c6c9f969>` :ref:`PFAPPBPGETHITCOUNT <group___cmp_app_b_p_itf_1gade1bb217be4dd4c46bf949278a27a20e>` pfAppBPGetHitCount;
+
+- #define :ref:`EXT_AppBPGetHitCount <group___cmp_app_b_p_itf_1gae5577b394935e2f876d94d986d20ed76>` extern :ref:`PFAPPBPGETHITCOUNT <group___cmp_app_b_p_itf_1gade1bb217be4dd4c46bf949278a27a20e>` pfAppBPGetHitCount;
+
+- #define :ref:`GET_AppBPGetHitCount <group___cmp_app_b_p_itf_1ga89e0b17ccd0ffc17676591a375452311>` s_pfCMGetAPI2( "AppBPGetHitCount", (RTS_VOID_FCTPTR *)&pfAppBPGetHitCount, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPGetHitCount <group___cmp_app_b_p_itf_1ga5fc9a0c566263768eb42c3ff247083a2>` pfAppBPGetHitCount
+
+- #define :ref:`CHK_AppBPGetHitCount <group___cmp_app_b_p_itf_1gaab0cec1d052eccb17997972654b7e51d>` (pfAppBPGetHitCount != NULL)
+
+- #define :ref:`EXP_AppBPGetHitCount <group___cmp_app_b_p_itf_1ga0bdd507e999dee7ba54a134f0e5b4147>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPGetHitCount", (RTS_UINTPTR) :ref:`AppBPGetHitCount <group___cmp_app_b_p_itf_1ga515a682e0e3efb371daac5526eb13f51>` , 0, 0)
+
+- #define :ref:`USE_AppBPUpdate <group___cmp_app_b_p_itf_1ga4b49569a5a3f10016cdc316e254253eb>` :ref:`PFAPPBPUPDATE <group___cmp_app_b_p_itf_1ga8a07549c567134f15c8d57617a77167f>` pfAppBPUpdate;
+
+- #define :ref:`EXT_AppBPUpdate <group___cmp_app_b_p_itf_1ga0fe0cec5ccc0e01fc85cf1cca1a71fb1>` extern :ref:`PFAPPBPUPDATE <group___cmp_app_b_p_itf_1ga8a07549c567134f15c8d57617a77167f>` pfAppBPUpdate;
+
+- #define :ref:`GET_AppBPUpdate <group___cmp_app_b_p_itf_1gab8479d16c64c039828a8e9209cc80ddd>` s_pfCMGetAPI2( "AppBPUpdate", (RTS_VOID_FCTPTR *)&pfAppBPUpdate, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPUpdate <group___cmp_app_b_p_itf_1ga83f234f4619a224cdaf668b2650f32c4>` pfAppBPUpdate
+
+- #define :ref:`CHK_AppBPUpdate <group___cmp_app_b_p_itf_1ga84a48bdcab01f789143317c21bcb215f>` (pfAppBPUpdate != NULL)
+
+- #define :ref:`EXP_AppBPUpdate <group___cmp_app_b_p_itf_1ga5e98e8ddf10d793bae2ad04ce390364a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPUpdate", (RTS_UINTPTR) :ref:`AppBPUpdate <group___cmp_app_b_p_itf_1gab7173ae79c940049c9c32423b5a47448>` , 0, 0)
+
+- #define :ref:`USE_AppBPGetFirstCallstackEntry <group___cmp_app_b_p_itf_1ga1db19442dba6e66d2939752f304f0db2>` :ref:`PFAPPBPGETFIRSTCALLSTACKENTRY <group___cmp_app_b_p_itf_1gabf8a2ee59690c149cab4385782d4bd3e>` pfAppBPGetFirstCallstackEntry;
+
+- #define :ref:`EXT_AppBPGetFirstCallstackEntry <group___cmp_app_b_p_itf_1ga46ef6a0bcb677bd47010dc716da07786>` extern :ref:`PFAPPBPGETFIRSTCALLSTACKENTRY <group___cmp_app_b_p_itf_1gabf8a2ee59690c149cab4385782d4bd3e>` pfAppBPGetFirstCallstackEntry;
+
+- #define :ref:`GET_AppBPGetFirstCallstackEntry <group___cmp_app_b_p_itf_1ga9a1a7f578e5ff3b42933392a0c5e4a5c>` s_pfCMGetAPI2( "AppBPGetFirstCallstackEntry", (RTS_VOID_FCTPTR *)&pfAppBPGetFirstCallstackEntry, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPGetFirstCallstackEntry <group___cmp_app_b_p_itf_1ga852db27c9939024fa798205584168ef4>` pfAppBPGetFirstCallstackEntry
+
+- #define :ref:`CHK_AppBPGetFirstCallstackEntry <group___cmp_app_b_p_itf_1ga5cab0ac6bea1817cfb3f9b4ff28f6cb3>` (pfAppBPGetFirstCallstackEntry != NULL)
+
+- #define :ref:`EXP_AppBPGetFirstCallstackEntry <group___cmp_app_b_p_itf_1ga19d69311539014f85d7f6e10ca3d355c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPGetFirstCallstackEntry", (RTS_UINTPTR) :ref:`AppBPGetFirstCallstackEntry <group___cmp_app_b_p_itf_1ga3d830adf0b9e04c9772e7b5776d65fc1>` , 0, 0)
+
+- #define :ref:`USE_AppBPGetFirstCallstackEntry2 <group___cmp_app_b_p_itf_1gaf811e2c300c8633d4792b904ecb254bf>` :ref:`PFAPPBPGETFIRSTCALLSTACKENTRY2 <group___cmp_app_b_p_itf_1ga81652bbebb07690a37bd978e18782cd4>` pfAppBPGetFirstCallstackEntry2;
+
+- #define :ref:`EXT_AppBPGetFirstCallstackEntry2 <group___cmp_app_b_p_itf_1gae493f6711788a3f0a5c545fbe4fcb94b>` extern :ref:`PFAPPBPGETFIRSTCALLSTACKENTRY2 <group___cmp_app_b_p_itf_1ga81652bbebb07690a37bd978e18782cd4>` pfAppBPGetFirstCallstackEntry2;
+
+- #define :ref:`GET_AppBPGetFirstCallstackEntry2 <group___cmp_app_b_p_itf_1ga4478d46cf8f392c43b3c01569863d392>` s_pfCMGetAPI2( "AppBPGetFirstCallstackEntry2", (RTS_VOID_FCTPTR *)&pfAppBPGetFirstCallstackEntry2, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPGetFirstCallstackEntry2 <group___cmp_app_b_p_itf_1ga0a935648b62bb14d38e39cebd6450c6c>` pfAppBPGetFirstCallstackEntry2
+
+- #define :ref:`CHK_AppBPGetFirstCallstackEntry2 <group___cmp_app_b_p_itf_1gad8b03c8aea53c254dddd1defaaed0094>` (pfAppBPGetFirstCallstackEntry2 != NULL)
+
+- #define :ref:`EXP_AppBPGetFirstCallstackEntry2 <group___cmp_app_b_p_itf_1gab226f16bc38a28fa01cbd6a841576080>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPGetFirstCallstackEntry2", (RTS_UINTPTR) :ref:`AppBPGetFirstCallstackEntry2 <group___cmp_app_b_p_itf_1ga1a7cd52a7364865bf3cc3887d3ec5ca6>` , 0, 0)
+
+- #define :ref:`USE_AppBPGetNextCallstackEntry <group___cmp_app_b_p_itf_1ga6968f6b4dc37581f495907775aef4127>` :ref:`PFAPPBPGETNEXTCALLSTACKENTRY <group___cmp_app_b_p_itf_1gac7b16bf8e0aeb735ad80ade8e2305f03>` pfAppBPGetNextCallstackEntry;
+
+- #define :ref:`EXT_AppBPGetNextCallstackEntry <group___cmp_app_b_p_itf_1gab50d3fa1b8debe4225082475985f55e8>` extern :ref:`PFAPPBPGETNEXTCALLSTACKENTRY <group___cmp_app_b_p_itf_1gac7b16bf8e0aeb735ad80ade8e2305f03>` pfAppBPGetNextCallstackEntry;
+
+- #define :ref:`GET_AppBPGetNextCallstackEntry <group___cmp_app_b_p_itf_1ga1644b0111d2adbb7e377957d110851e3>` s_pfCMGetAPI2( "AppBPGetNextCallstackEntry", (RTS_VOID_FCTPTR *)&pfAppBPGetNextCallstackEntry, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPGetNextCallstackEntry <group___cmp_app_b_p_itf_1gaebbd11a9d5f47e4974920a5de45d1147>` pfAppBPGetNextCallstackEntry
+
+- #define :ref:`CHK_AppBPGetNextCallstackEntry <group___cmp_app_b_p_itf_1ga544bd00cb79bbabf769e947af99897a0>` (pfAppBPGetNextCallstackEntry != NULL)
+
+- #define :ref:`EXP_AppBPGetNextCallstackEntry <group___cmp_app_b_p_itf_1ga2ebcddb634c5144018efe2456dee3899>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPGetNextCallstackEntry", (RTS_UINTPTR) :ref:`AppBPGetNextCallstackEntry <group___cmp_app_b_p_itf_1gacfb1706256de396263af5acc11fc6536>` , 0, 0)
+
+- #define :ref:`USE_AppBPGetNextCallstackEntry2 <group___cmp_app_b_p_itf_1gafaca484f672dc3cd897026d08c6be6a0>` :ref:`PFAPPBPGETNEXTCALLSTACKENTRY2 <group___cmp_app_b_p_itf_1ga9b77f315bc55a411e4ee26ee1d424a45>` pfAppBPGetNextCallstackEntry2;
+
+- #define :ref:`EXT_AppBPGetNextCallstackEntry2 <group___cmp_app_b_p_itf_1ga6f1a882fe977a2bed6e348ac0d5d1c08>` extern :ref:`PFAPPBPGETNEXTCALLSTACKENTRY2 <group___cmp_app_b_p_itf_1ga9b77f315bc55a411e4ee26ee1d424a45>` pfAppBPGetNextCallstackEntry2;
+
+- #define :ref:`GET_AppBPGetNextCallstackEntry2 <group___cmp_app_b_p_itf_1ga05e5dc3d8522c391f0435aa5b28ca467>` s_pfCMGetAPI2( "AppBPGetNextCallstackEntry2", (RTS_VOID_FCTPTR *)&pfAppBPGetNextCallstackEntry2, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPGetNextCallstackEntry2 <group___cmp_app_b_p_itf_1ga65becb3c9ca9b3c4a6e715d8dbd018c6>` pfAppBPGetNextCallstackEntry2
+
+- #define :ref:`CHK_AppBPGetNextCallstackEntry2 <group___cmp_app_b_p_itf_1ga53d9cba7bc8660b7cb1dd327f599a285>` (pfAppBPGetNextCallstackEntry2 != NULL)
+
+- #define :ref:`EXP_AppBPGetNextCallstackEntry2 <group___cmp_app_b_p_itf_1ga0446aafb639171ba033830f2d6cb4196>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPGetNextCallstackEntry2", (RTS_UINTPTR) :ref:`AppBPGetNextCallstackEntry2 <group___cmp_app_b_p_itf_1ga39c91fb9e55e9c85c241933360127ea2>` , 0, 0)
+
+- #define :ref:`USE_AppBPGetCallStack <group___cmp_app_b_p_itf_1ga42cc231c0da07aadd350e8eb0791bcae>` :ref:`PFAPPBPGETCALLSTACK <group___cmp_app_b_p_itf_1gae5af544b5d9ae950984e2105db35c4cd>` pfAppBPGetCallStack;
+
+- #define :ref:`EXT_AppBPGetCallStack <group___cmp_app_b_p_itf_1gaa27b7e51ede7f541fac941f4e3f3e282>` extern :ref:`PFAPPBPGETCALLSTACK <group___cmp_app_b_p_itf_1gae5af544b5d9ae950984e2105db35c4cd>` pfAppBPGetCallStack;
+
+- #define :ref:`GET_AppBPGetCallStack <group___cmp_app_b_p_itf_1ga8d19e5bee36933217eab85e9dcbd4d65>` s_pfCMGetAPI2( "AppBPGetCallStack", (RTS_VOID_FCTPTR *)&pfAppBPGetCallStack, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPGetCallStack <group___cmp_app_b_p_itf_1gad7503f4740ecb568a1f1715aa4131800>` pfAppBPGetCallStack
+
+- #define :ref:`CHK_AppBPGetCallStack <group___cmp_app_b_p_itf_1ga29104eb2f48764f9dd8ac73e20038649>` (pfAppBPGetCallStack != NULL)
+
+- #define :ref:`EXP_AppBPGetCallStack <group___cmp_app_b_p_itf_1ga2afdfc928e7e752da3a530dfa9f069d4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPGetCallStack", (RTS_UINTPTR) :ref:`AppBPGetCallStack <group___cmp_app_b_p_itf_1ga974fc162993b606d18a6578699c7b976>` , 0, 0)
+
+- #define :ref:`USE_AppBPServiceHandler2 <group___cmp_app_b_p_itf_1ga7ba7a97e8c91258df745ee830e8d3cbc>` :ref:`PFAPPBPSERVICEHANDLER2 <group___cmp_app_b_p_itf_1gadcbae39acba9225c0eee6b7b95bbb8a9>` pfAppBPServiceHandler2;
+
+- #define :ref:`EXT_AppBPServiceHandler2 <group___cmp_app_b_p_itf_1ga871673ffe5e4a9c4c3127df21b183c9f>` extern :ref:`PFAPPBPSERVICEHANDLER2 <group___cmp_app_b_p_itf_1gadcbae39acba9225c0eee6b7b95bbb8a9>` pfAppBPServiceHandler2;
+
+- #define :ref:`GET_AppBPServiceHandler2 <group___cmp_app_b_p_itf_1ga81a5fabfd2e775b878c56bf9a0821c3e>` s_pfCMGetAPI2( "AppBPServiceHandler2", (RTS_VOID_FCTPTR *)&pfAppBPServiceHandler2, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPServiceHandler2 <group___cmp_app_b_p_itf_1ga6e31818221012b1b161ff385ecfddb2e>` pfAppBPServiceHandler2
+
+- #define :ref:`CHK_AppBPServiceHandler2 <group___cmp_app_b_p_itf_1gabda69f9228da65253d5a3003f85eb20a>` (pfAppBPServiceHandler2 != NULL)
+
+- #define :ref:`EXP_AppBPServiceHandler2 <group___cmp_app_b_p_itf_1ga6a2b8f11e2ae06e96615a66f9dbeeedb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPServiceHandler2", (RTS_UINTPTR) :ref:`AppBPServiceHandler2 <group___cmp_app_b_p_itf_1gacd7603f9c27be9787861ee67dd8ac034>` , 0, 0)
+
+- #define :ref:`USE_AppBPSet <group___cmp_app_b_p_itf_1gaa8eec63475184b2a4d3045030a2b0e27>` :ref:`PFAPPBPSET <group___cmp_app_b_p_itf_1gaa95238b4fecfa17e5cc8f1e51d799398>` pfAppBPSet;
+
+- #define :ref:`EXT_AppBPSet <group___cmp_app_b_p_itf_1ga692345637328dbe1a7d7fc5a12c6b5aa>` extern :ref:`PFAPPBPSET <group___cmp_app_b_p_itf_1gaa95238b4fecfa17e5cc8f1e51d799398>` pfAppBPSet;
+
+- #define :ref:`GET_AppBPSet <group___cmp_app_b_p_itf_1gadd04752bf110f8d69676317fd26456b5>` s_pfCMGetAPI2( "AppBPSet", (RTS_VOID_FCTPTR *)&pfAppBPSet, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPSet <group___cmp_app_b_p_itf_1ga52cae3370c1ba0cb5314bfd32173a147>` pfAppBPSet
+
+- #define :ref:`CHK_AppBPSet <group___cmp_app_b_p_itf_1gac2db5d2272e381bbe3499ce38f83558a>` (pfAppBPSet != NULL)
+
+- #define :ref:`EXP_AppBPSet <group___cmp_app_b_p_itf_1ga062c65d737bd58a0729f6d01df62ba5f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPSet", (RTS_UINTPTR) :ref:`AppBPSet <group___cmp_app_b_p_itf_1ga3d1db256d194ff02f92517185968b118>` , 0, 0)
+
+- #define :ref:`USE_AppBPDelete <group___cmp_app_b_p_itf_1ga1b5d1bb674fd5ca248f6f1ccf4b51a00>` :ref:`PFAPPBPDELETE <group___cmp_app_b_p_itf_1ga464cbcb75712feb09cd5204856e4a2ce>` pfAppBPDelete;
+
+- #define :ref:`EXT_AppBPDelete <group___cmp_app_b_p_itf_1gafc32ec833297bb0d940df60c4add95a6>` extern :ref:`PFAPPBPDELETE <group___cmp_app_b_p_itf_1ga464cbcb75712feb09cd5204856e4a2ce>` pfAppBPDelete;
+
+- #define :ref:`GET_AppBPDelete <group___cmp_app_b_p_itf_1ga1ade7fb7e2131e31b73a4a3876c2c757>` s_pfCMGetAPI2( "AppBPDelete", (RTS_VOID_FCTPTR *)&pfAppBPDelete, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPDelete <group___cmp_app_b_p_itf_1ga61c501c74743a16fe8758d953ead58e6>` pfAppBPDelete
+
+- #define :ref:`CHK_AppBPDelete <group___cmp_app_b_p_itf_1gafc5ff86ca3192637a4e3d1005d9d4b9f>` (pfAppBPDelete != NULL)
+
+- #define :ref:`EXP_AppBPDelete <group___cmp_app_b_p_itf_1ga5b947962f6f98e9c467501cee6fbb96c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPDelete", (RTS_UINTPTR) :ref:`AppBPDelete <group___cmp_app_b_p_itf_1ga7edf589d6bf3beaa815adfd7ef8e3942>` , 0, 0)
+
+- #define :ref:`USE_AppBPDelete2 <group___cmp_app_b_p_itf_1gac4f09cae6a7c1f29f05657302d8746a9>` :ref:`PFAPPBPDELETE2 <group___cmp_app_b_p_itf_1ga2018c44c6251cf99fe8e913ab8b5b3ea>` pfAppBPDelete2;
+
+- #define :ref:`EXT_AppBPDelete2 <group___cmp_app_b_p_itf_1ga4d0585b6d0af2cff766129e8490db361>` extern :ref:`PFAPPBPDELETE2 <group___cmp_app_b_p_itf_1ga2018c44c6251cf99fe8e913ab8b5b3ea>` pfAppBPDelete2;
+
+- #define :ref:`GET_AppBPDelete2 <group___cmp_app_b_p_itf_1gaf5cd50b6f937bff1313e209df48ea43d>` s_pfCMGetAPI2( "AppBPDelete2", (RTS_VOID_FCTPTR *)&pfAppBPDelete2, (fl), 0, 0)
+
+- #define :ref:`CAL_AppBPDelete2 <group___cmp_app_b_p_itf_1ga6751d942f97db67ac4d4307bf3ab1904>` pfAppBPDelete2
+
+- #define :ref:`CHK_AppBPDelete2 <group___cmp_app_b_p_itf_1ga527aa5498a4556a4cd69dc66be16ca19>` (pfAppBPDelete2 != NULL)
+
+- #define :ref:`EXP_AppBPDelete2 <group___cmp_app_b_p_itf_1gae42ec1047642753a477992ada01ed4e5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppBPDelete2", (RTS_UINTPTR) :ref:`AppBPDelete2 <group___cmp_app_b_p_itf_1ga938b04235888f728e565b5d7a1660cf4>` , 0, 0)
+
+- #define :ref:`ITF_CmpAppBP <group___cmp_app_b_p_itf_1ga2cc0bf9425b4e8a03769b6cf8eb869e9>`
+
+- #define :ref:`EXTITF_CmpAppBP <group___cmp_app_b_p_itf_1ga2087fc64d287123d044fc0f5e6d4b121>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`APPBP_ENTER_BREAKPOINT_HANDLER <group___cmp_app_b_p_itf___breakpointhandler_1ga518fbb9c868a454fb81f9301bf76a61e>`)(struct DebugContext_ *pDebugContext)
+
+- typedef RTS_RESULT(* :ref:`APPBP_LEAVE_BREAKPOINT_HANDLER <group___cmp_app_b_p_itf___breakpointhandler_1gaa4661965c2f364519b0bb937919e7cd7>`)(struct DebugContext_ *pDebugContext)
+
+- typedef struct :ref:`BreakpointDesc_ <struct_breakpoint_desc__>` :ref:`BreakpointDesc <group___cmp_app_b_p_itf___breakpointdescription_1gaf4fefc2caa0bfc32073d57d8dd84bf9b>`
+
+- typedef struct :ref:`BreakpointContext_ <struct_breakpoint_context__>` :ref:`BreakpointContext <group___cmp_app_b_p_itf___breakpointcontext_1ga70333501b2874834e9c68fca22a09c20>`
+
+- typedef struct :ref:`Breakpoint_ <struct_breakpoint__>` :ref:`Breakpoint <group___cmp_app_b_p_itf___breakpointcontext_1ga4f21dd07bf35c4e74f810dc1e1c9ab1b>`
+
+- typedef struct :ref:`Flowpoint_ <struct_flowpoint__>` :ref:`Flowpoint <group___cmp_app_b_p_itf___breakpointcontext_1ga9c63f570abc5d5d5ac69b343a65e4893>`
+
+- typedef struct :ref:`DebugContext_ <struct_debug_context__>` :ref:`DebugContext <group___cmp_app_b_p_itf___breakpointcontext_1ga15b1fef62e04d4261ea416858756c6b1>`
+
+- typedef struct :ref:`tagCallstackEntry <structtag_callstack_entry>` :ref:`CallstackEntry <group___cmp_app_b_p_itf_1gac5c1fd273011cee138d7581a983305c7>`
+
+- typedef struct :ref:`tagappbpgetcallstack_struct <structtagappbpgetcallstack__struct>` :ref:`appbpgetcallstack_struct <group___cmp_app_b_p_itf_1ga6b09d6cdea58d8257dcfcdcf78d97744>`
+
+- typedef void(* :ref:`PFAPPBPGETCALLSTACK_IEC <group___cmp_app_b_p_itf_1ga612abaa2c5b30e1b43f7852904d54f86>`)(appbpgetcallstack_struct *p)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPINIT <group___cmp_app_b_p_itf_1ga23a04ea54d417c1cd5c6f50153f0d742>`)(APPLICATION *pApp)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPEXIT <group___cmp_app_b_p_itf_1gaa2d58f119d8379e119d182ebb8e47013>`)(APPLICATION *pApp)
+
+- typedef RTS_UINTPTR(* :ref:`PFAPPDEBUGHANDLER <group___cmp_app_b_p_itf_1ga8c8864b2e7f7c0030d68fcdb5dc1eede>`)(RTS_UINTPTR IP, RTS_UINTPTR SP, RTS_UINTPTR BP)
+
+- typedef RTS_UINTPTR(* :ref:`PFAPPDEBUGHANDLER2 <group___cmp_app_b_p_itf_1ga8159f96eafbca9584a7fa4a84cf02843>`)(BreakpointContext *pBPContext)
+
+- typedef :ref:`Breakpoint <group___cmp_app_b_p_itf___breakpointcontext_1ga4f21dd07bf35c4e74f810dc1e1c9ab1b>` *(* :ref:`PFAPPBPGETFIRST <group___cmp_app_b_p_itf_1ga6d1a88b76de6edc938a75dac78260e85>`)(APPLICATION *pApp, RTS_RESULT *pResult)
+
+- typedef :ref:`Breakpoint <group___cmp_app_b_p_itf___breakpointcontext_1ga4f21dd07bf35c4e74f810dc1e1c9ab1b>` *(* :ref:`PFAPPBPGETNEXT <group___cmp_app_b_p_itf_1ga7bfdb40f42365950de4c2136159c5638>`)(APPLICATION *pApp, Breakpoint *pPrevBreakpoint, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPDELETEALL <group___cmp_app_b_p_itf_1gad7c6032c6f9f001eaea8849fe1b124ec>`)(APPLICATION *pApp, RTS_UI32 ulSessionId)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPDELETEALLWITHEXECUTIONPOINTS <group___cmp_app_b_p_itf_1gac74d3ace55689f5bde0d456c5b6d116d>`)(APPLICATION *pApp, RTS_UI32 ulSessionId)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPLEAVE <group___cmp_app_b_p_itf_1ga524571f60639373e3da743330e110dcf>`)(APPLICATION *pApp)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPSTEP <group___cmp_app_b_p_itf_1ga704bfe9b0f0d3cbee509d990e85cc97c>`)(APPLICATION *pApp)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPGETHITCOUNT <group___cmp_app_b_p_itf_1gade1bb217be4dd4c46bf949278a27a20e>`)(APPLICATION *pApp, int *piHitCount)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPUPDATE <group___cmp_app_b_p_itf_1ga8a07549c567134f15c8d57617a77167f>`)(APPLICATION *pApp, RTS_SIZE ulTypeIn)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPGETFIRSTCALLSTACKENTRY <group___cmp_app_b_p_itf_1gabf8a2ee59690c149cab4385782d4bd3e>`)(APPLICATION *pApp, RegContext *pContext, CallstackEntry *pCallstackEntry)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPGETFIRSTCALLSTACKENTRY2 <group___cmp_app_b_p_itf_1ga81652bbebb07690a37bd978e18782cd4>`)(APPLICATION *pApp, RTS_HANDLE hIecTask, RegContext *pContext, CallstackEntry *pCallstackEntry)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPGETNEXTCALLSTACKENTRY <group___cmp_app_b_p_itf_1gac7b16bf8e0aeb735ad80ade8e2305f03>`)(APPLICATION *pApp, RegContext *pContext, CallstackEntry *pCallstackEntry)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPGETNEXTCALLSTACKENTRY2 <group___cmp_app_b_p_itf_1ga9b77f315bc55a411e4ee26ee1d424a45>`)(APPLICATION *pApp, int bIecCode, RegContext *pContext, CallstackEntry *pCallstackEntry)
+
+- typedef RTS_UI8(* :ref:`PFAPPBPGETCALLSTACK <group___cmp_app_b_p_itf_1gae5af544b5d9ae950984e2105db35c4cd>`)(APPLICATION *pApp, RTS_HANDLE hIecTask, CallstackEntry *pCallstackentries, RTS_UI8 byMaxEntries)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPSERVICEHANDLER2 <group___cmp_app_b_p_itf_1gadcbae39acba9225c0eee6b7b95bbb8a9>`)(RTS_UI32 ulChannelId, HEADER_TAG *pHeaderTag, PROTOCOL_DATA_UNIT pduData, PROTOCOL_DATA_UNIT *pduSendBuffer)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPSET <group___cmp_app_b_p_itf_1gaa95238b4fecfa17e5cc8f1e51d799398>`)(BreakpointDesc *pBpDesc, RTS_BOOL bPatchCode, Breakpoint **ppbpOut)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPDELETE <group___cmp_app_b_p_itf_1ga464cbcb75712feb09cd5204856e4a2ce>`)(Breakpoint *pbp)
+
+- typedef RTS_RESULT(* :ref:`PFAPPBPDELETE2 <group___cmp_app_b_p_itf_1ga2018c44c6251cf99fe8e913ab8b5b3ea>`)(Breakpoint *pbp, RTS_BOOL bRestoreCode, RTS_BOOL bInIecTask)
+
+- typedef :ref:`ICmpAppBP_C <struct_i_cmp_app_b_p___c>` :ref:`ICmpAppBP <group___cmp_app_b_p_itf_1gada6c257f18c24e966efe28f4da7de408>`
+
+Functions
+---------
+
+- void :ref:`appbpgetcallstack <group___cmp_app_b_p_itf_1gaa37770bbeece01afd1c6f5187c50c320>` (:ref:`appbpgetcallstack_struct <group___cmp_app_b_p_itf_1ga6b09d6cdea58d8257dcfcdcf78d97744>` * p)
+
+- RTS_RESULT :ref:`AppBPInit <group___cmp_app_b_p_itf_1gaf41157f21189cc6262e9eb9c917834df>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_RESULT :ref:`AppBPExit <group___cmp_app_b_p_itf_1ga261acfbcb32c69dbd45b4946890ea1d1>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_UINTPTR :ref:`AppDebugHandler <group___cmp_app_b_p_itf_1ga6b17f465662ba51cf0832f8c2baf0dfd>` (RTS_UINTPTR IP, RTS_UINTPTR SP, RTS_UINTPTR BP)
+
+- RTS_UINTPTR :ref:`AppDebugHandler2 <group___cmp_app_b_p_itf_1gadc306395980c9fae234e95e8d7bdcdf1>` (:ref:`BreakpointContext <group___cmp_app_b_p_itf___breakpointcontext_1ga70333501b2874834e9c68fca22a09c20>` * pBPContext)
+
+- :ref:`Breakpoint <group___cmp_app_b_p_itf___breakpointcontext_1ga4f21dd07bf35c4e74f810dc1e1c9ab1b>` * :ref:`AppBPGetFirst <group___cmp_app_b_p_itf_1ga31dab43f80db08b619cc2b04249518ef>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_RESULT * pResult)
+
+- :ref:`Breakpoint <group___cmp_app_b_p_itf___breakpointcontext_1ga4f21dd07bf35c4e74f810dc1e1c9ab1b>` * :ref:`AppBPGetNext <group___cmp_app_b_p_itf_1ga05a447ac5ee8e6482aeced2dbb058761>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, :ref:`Breakpoint <group___cmp_app_b_p_itf___breakpointcontext_1ga4f21dd07bf35c4e74f810dc1e1c9ab1b>` * pPrevBreakpoint, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`AppBPDeleteAll <group___cmp_app_b_p_itf_1gac10f981959313826a493d6443ab88fa4>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_UI32 ulSessionId)
+
+- RTS_RESULT :ref:`AppBPDeleteAllWithExecutionpoints <group___cmp_app_b_p_itf_1ga0ec5e0cc95b436933012dcc15ca3c9bc>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_UI32 ulSessionId)
+
+- RTS_RESULT :ref:`AppBPLeave <group___cmp_app_b_p_itf_1ga9bf950f11374b74593bbe5a19501cbd5>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_RESULT :ref:`AppBPStep <group___cmp_app_b_p_itf_1ga6a946d4501dc1c6cd8be704b565ca27f>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_RESULT :ref:`AppBPGetHitCount <group___cmp_app_b_p_itf_1ga515a682e0e3efb371daac5526eb13f51>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, int * piHitCount)
+
+- RTS_RESULT :ref:`AppBPUpdate <group___cmp_app_b_p_itf_1gab7173ae79c940049c9c32423b5a47448>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_SIZE ulTypeIn)
+
+- RTS_RESULT :ref:`AppBPGetFirstCallstackEntry <group___cmp_app_b_p_itf_1ga3d830adf0b9e04c9772e7b5776d65fc1>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>` * pContext, :ref:`CallstackEntry <group___cmp_app_b_p_itf_1gac5c1fd273011cee138d7581a983305c7>` * pCallstackEntry)
+
+- RTS_RESULT :ref:`AppBPGetFirstCallstackEntry2 <group___cmp_app_b_p_itf_1ga1a7cd52a7364865bf3cc3887d3ec5ca6>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_HANDLE hIecTask, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>` * pContext, :ref:`CallstackEntry <group___cmp_app_b_p_itf_1gac5c1fd273011cee138d7581a983305c7>` * pCallstackEntry)
+
+- RTS_RESULT :ref:`AppBPGetNextCallstackEntry <group___cmp_app_b_p_itf_1gacfb1706256de396263af5acc11fc6536>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>` * pContext, :ref:`CallstackEntry <group___cmp_app_b_p_itf_1gac5c1fd273011cee138d7581a983305c7>` * pCallstackEntry)
+
+- RTS_RESULT :ref:`AppBPGetNextCallstackEntry2 <group___cmp_app_b_p_itf_1ga39c91fb9e55e9c85c241933360127ea2>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, int bIecCode, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>` * pContext, :ref:`CallstackEntry <group___cmp_app_b_p_itf_1gac5c1fd273011cee138d7581a983305c7>` * pCallstackEntry)
+
+- RTS_UI8 :ref:`AppBPGetCallStack <group___cmp_app_b_p_itf_1ga974fc162993b606d18a6578699c7b976>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_HANDLE hIecTask, :ref:`CallstackEntry <group___cmp_app_b_p_itf_1gac5c1fd273011cee138d7581a983305c7>` * pCallstackentries, RTS_UI8 byMaxEntries)
+
+- RTS_RESULT :ref:`AppBPServiceHandler2 <group___cmp_app_b_p_itf_1gacd7603f9c27be9787861ee67dd8ac034>` (RTS_UI32 ulChannelId, :ref:`HEADER_TAG <struct_h_e_a_d_e_r___t_a_g>` * pHeaderTag, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduData, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>` * pduSendBuffer)
+
+- RTS_RESULT :ref:`AppBPSet <group___cmp_app_b_p_itf_1ga3d1db256d194ff02f92517185968b118>` (:ref:`BreakpointDesc <group___cmp_app_b_p_itf___breakpointdescription_1gaf4fefc2caa0bfc32073d57d8dd84bf9b>` * pBpDesc, RTS_BOOL bPatchCode, :ref:`Breakpoint <group___cmp_app_b_p_itf___breakpointcontext_1ga4f21dd07bf35c4e74f810dc1e1c9ab1b>` ** ppbpOut)
+
+- RTS_RESULT :ref:`AppBPDelete <group___cmp_app_b_p_itf_1ga7edf589d6bf3beaa815adfd7ef8e3942>` (:ref:`Breakpoint <group___cmp_app_b_p_itf___breakpointcontext_1ga4f21dd07bf35c4e74f810dc1e1c9ab1b>` * pbp)
+
+- RTS_RESULT :ref:`AppBPDelete2 <group___cmp_app_b_p_itf_1ga938b04235888f728e565b5d7a1660cf4>` (:ref:`Breakpoint <group___cmp_app_b_p_itf___breakpointcontext_1ga4f21dd07bf35c4e74f810dc1e1c9ab1b>` * pbp, RTS_BOOL bRestoreCode, RTS_BOOL bInIecTask)
+
+Detailed Description
+--------------------
+
+Definition in file CmpAppBPItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

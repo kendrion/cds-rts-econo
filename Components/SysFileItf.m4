@@ -1,13 +1,13 @@
 /**
  * <interfacename>SysFile</interfacename>
  * <description> 
- *	<p>The SysFile interface is projected to get access to the files of a filesystem.
- *	The filesystem can be on harddisk, a flash/flash disk, a RAM disk or what ever. The only
- *	requirement is, that the filesystem is non volatile!</p>
+ *	<p>The SysFile interface is projected to get access to the files of a file system.
+ *	The file system can be on hard-disk, a flash/flash disk, a RAM disk or what ever. The only
+ *	requirement is, that the file system is non volatile!</p>
  *  <p>Please read following notes if using the SysFileFlash with our SysFlash:
  *	This component needs a global
  *	define of the file table FILE_MAP. It has to be declared in sysdefines.h. Here is an example
- *	with the neccessay initializations:
+ *	with the necessary initializations:
  *	#define FILE1_SIZE	0x4000
  *	#define FILE2_SIZE	0x2000
  *	#define FILE3_SIZE	0x2000
@@ -28,7 +28,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -49,8 +49,8 @@ SET_INTERFACE_NAME(`SysFile')
  * <description>
  * Compiler switches to enable/disable single features in the component.
  * </description>
- * <element name="SYSFILE_DISABLE_FILE_CACHE">For each transmitted file, the CRC and size is stored in a central config file (cache). This can be disabled by this compiler switch.
- * <element name="SYSFILE_NOPLCLOGICMIGRATION">At startup SysFile.PlcLogicPrefix=0 checks for no bootprojects and than creates the new folder structure with SysFile.PlcLogicPrefix=1. This can be disabled by this compiler switch.
+ * <element name="SYSFILE_DISABLE_FILE_CACHE">For each transmitted file, the CRC and size is stored in a central configuration file (cache). This can be disabled by this compiler switch.
+ * <element name="SYSFILE_NOPLCLOGICMIGRATION">At startup SysFile.PlcLogicPrefix=0 checks for no boot application and than creates the new folder structure with SysFile.PlcLogicPrefix=1. This can be disabled by this compiler switch.
  * </element>
  */ 
 
@@ -61,7 +61,9 @@ SET_INTERFACE_NAME(`SysFile')
 #ifndef MAX_PATH_LEN
 	#define MAX_PATH_LEN							255
 #endif
-#define RTS_MAX_PATH_LEN							MAX_PATH_LEN
+#ifndef RTS_MAX_PATH_LEN
+	#define RTS_MAX_PATH_LEN						MAX_PATH_LEN
+#endif
 
 /**
  * <category>Static defines</category>
@@ -73,7 +75,7 @@ SET_INTERFACE_NAME(`SysFile')
 
 /**
  * <category>Static defines</category>
- * <description>File name prefix to make a file invisible e.g. for the filetransfer dialog. This prevents the corresponding file to be overwritten/read/compromized from outside.
+ * <description>File name prefix to make a file invisible e.g. for the file transfer dialog. This prevents the corresponding file to be overwritten/read/compromised from outside.
  * </description>
  */
 #ifndef SYSFILE_INVISIBLE_FILENAME_PREFIX
@@ -85,7 +87,7 @@ SET_INTERFACE_NAME(`SysFile')
  * <description>This is the name for a section which contains the name, CRC and size of a file. Is used as a cache for these values.
  *	Improves for example the performance of the file transfer. SYSFILE_DISABLE_FILE_CACHE disables this feature.
  *	NOTE:
- *	It is recommended to use a filereference in the configuration, to move these entries into a separate cfg-file. e.g.:
+ *	It is recommended to use a file reference in the configuration, to move these entries into a separate cfg-file. e.g.:
  *	[CmpSettings]
  *	FileReference.0=SysFileMap.cfg, SysFileMap
  * </description>
@@ -101,9 +103,9 @@ SET_INTERFACE_NAME(`SysFile')
  *	Several file paths could be entered, if they were indexed, e.g.:</p>
  *	<p>FilePath=D:/Temp/Default
  *	FilePath.1=./Boot, *.app, *.ap_, *.ret, *.frc
- *	FilePath.2=D:/Temp/Wildcards, *.txw</p>
+ *	FilePath.2=D:/Temp/Wild-cards, *.txw</p>
  *	<p>In this case, files with special extensions could be separated into several directories. File
- *	extensions can be specified with the wildcards '*'.</p>
+ *	extensions can be specified with the wild-cards '*'.</p>
  *	<p>If a file extension is not configured, the standard path (FilePath= or FilePath.1=) is used.</p>
  *	NOTE: Indexing starts with .1
  * </description>
@@ -135,9 +137,9 @@ SET_INTERFACE_NAME(`SysFile')
  *	Several file paths could be entered, if they were indexed, e.g.:</p>
  *	<p>IecFilePath=D:/Temp/IEC
  *	IecFilePath.1=./Boot, *.app, *.ap_, *.ret, *.frc
- *	IecFilePath.2=D:/Temp/Wildcards, *.txw</p>
+ *	IecFilePath.2=D:/Temp/Wild-cards, *.txw</p>
  *	<p>In this case, files with special extensions could be separated into several directories. File
- *	extensions can be specified with the wildcards '*'.</p>
+ *	extensions can be specified with the wild-cards '*'.</p>
  *	<p>If a file extension is not configured, the standard path (IecFilePath= or IecFilePath.1=) is used.</p>
  *	NOTE: Indexing starts with .1
  *	</description>
@@ -234,8 +236,8 @@ SET_INTERFACE_NAME(`SysFile')
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description><p>Setting to mark a placeholder as volatile, i.e. the specified folder is not created automatically at startup and the placeholder is visible in the filetransfer windows only when the folder exists.
- * This behavior is important for hot plug devices like usb sticks. 
+ * <description><p>Setting to mark a placeholder as volatile, i.e. the specified folder is not created automatically at startup and the placeholder is visible in the file transfer windows only when the folder exists.
+ * This behavior is important for hot plug devices like USB sticks. 
  * Example:
  *		PlaceholderFilePath.2=/mnt/USBDevice, $USBDev$
  *		PlaceholderFilePath.2.Volatile=1</p>
@@ -246,7 +248,7 @@ SET_INTERFACE_NAME(`SysFile')
 /**
  * <category>Settings</category>
  * <type>String</type>
- * <description><p>Setting to connect a placeholder virtually with a parent placeholder, i.e. in the filetransfer window this placeholder is reachable via its virtual parent placeholder.
+ * <description><p>Setting to connect a placeholder virtually with a parent placeholder, i.e. in the file transfer window this placeholder is reachable via its virtual parent placeholder.
  * Example:
  *		PlaceholderFilePath.1=/temp/oem, $oem$
  *		PlaceholderFilePath.1.VParent=$PlcLogic$
@@ -268,7 +270,7 @@ SET_INTERFACE_NAME(`SysFile')
 
 /**
  * <category>Static defines</category>
- * <description>Defines to specify the visu folder that is requested by every filetransfer/fileaccess on visu files. And we specify the placeholder for there files, for which
+ * <description>Defines to specify the visualization folder that is requested by every file transfer/file access on visualization files. And we specify the placeholder for there files, for which
  *	the destination folder can be specified with the setting "PlaceholderFilePath" (see details above).
  * </description>
  */
@@ -282,7 +284,7 @@ SET_INTERFACE_NAME(`SysFile')
 /**
  * <category>Static defines</category>
  * <description>
- * Defines to specify the plc logic folder that is requested by application and device related file transfers. 
+ * Defines to specify the PLC logic folder that is requested by application and device related file transfers. 
  * The destination folder can be specified with the setting "PlaceholderFilePath" (see details above).
  * </description>
  */
@@ -296,9 +298,9 @@ SET_INTERFACE_NAME(`SysFile')
 /**
  * <category>Static defines</category>
  * <description>
- * Setting to configure the plc logic placeholder prefix that is used now by all application related files.
- * -1 - old behaviour: flat file structure (default)
- *  0 - old behaviour: flat file structure, but Reset Origin Device will change that to 1
+ * Setting to configure the PLC logic placeholder prefix that is used now by all application related files.
+ * -1 - old behavior: flat file structure (default)
+ *  0 - old behavior: flat file structure, but Reset Origin Device will change that to 1
  *  1 - new folder structure:
  *    $PlcLogic$
  *    + &lt;application&gt;
@@ -368,6 +370,7 @@ SET_INTERFACE_NAME(`SysFile')
 	#define SYSFILE_CNC_PLACEHOLDER			"$_cnc$"
 #endif
 
+
 /** EXTERN LIB SECTION BEGIN **/
 /*  Comments are ignored for m4 compiler so restructured text can be used. changecom(`/*', `*/') */
 
@@ -390,12 +393,12 @@ extern "C" {
  * 	     SysFileGetPos();
  * 	     SysFileWrite();
  */
-#define RTS_ACCESS_MODE_AM_READ    0	/* Open an existing file with Read access. If file does not exist, Open fails */
-#define RTS_ACCESS_MODE_AM_WRITE    1	/* Create new file with Write access. If file does exist, content is discarded */
-#define RTS_ACCESS_MODE_AM_APPEND    2	/* Open an existing file with Append (only write) access. If file does not exist, Open fails */
-#define RTS_ACCESS_MODE_AM_READ_PLUS    3	/* Open an existing file with Read/Write access. If file does not exist, Open fails */
-#define RTS_ACCESS_MODE_AM_WRITE_PLUS    4	/* Create new file with Read/Write access. If file does exist, content is discarded */
-#define RTS_ACCESS_MODE_AM_APPEND_PLUS    5	/* Open an existing file with Append (read/write) access. If file does not exist, Open creates a new file */
+#define RTS_ACCESS_MODE_AM_READ    RTS_IEC_UDINT_C(0x0)	/* Open an existing file with Read access. If file does not exist, Open fails */
+#define RTS_ACCESS_MODE_AM_WRITE    RTS_IEC_UDINT_C(0x1)	/* Create new file with Write access. If file does exist, content is discarded */
+#define RTS_ACCESS_MODE_AM_APPEND    RTS_IEC_UDINT_C(0x2)	/* Open an existing file with Append (only write) access. If file does not exist, Open fails */
+#define RTS_ACCESS_MODE_AM_READ_PLUS    RTS_IEC_UDINT_C(0x3)	/* Open an existing file with Read/Write access. If file does not exist, Open fails */
+#define RTS_ACCESS_MODE_AM_WRITE_PLUS    RTS_IEC_UDINT_C(0x4)	/* Create new file with Read/Write access. If file does exist, content is discarded */
+#define RTS_ACCESS_MODE_AM_APPEND_PLUS    RTS_IEC_UDINT_C(0x5)	/* Open an existing file with Append (read/write) access. If file does not exist, Open creates a new file */
 /* Typed enum definition */
 #define RTS_ACCESS_MODE    RTS_IEC_UDINT
 
@@ -403,11 +406,11 @@ extern "C" {
  * | File status
  * | Actual file status of the specified file.
  */
-#define SYS_FILE_STATUS_FS_OK    0	/* File could be opened */
-#define SYS_FILE_STATUS_FS_NO_FILE    1	/* No file available */
-#define SYS_FILE_STATUS_FS_ILLEGAL_POS    2	/* Illegal position in the file */
-#define SYS_FILE_STATUS_FS_FULL    3	/* No more space on the filesystem */
-#define SYS_FILE_STATUS_FS_EOF    4	/* End of file reached */
+#define SYS_FILE_STATUS_FS_OK    RTS_IEC_INT_C(0x0)	/* File could be opened */
+#define SYS_FILE_STATUS_FS_NO_FILE    RTS_IEC_INT_C(0x1)	/* No file available */
+#define SYS_FILE_STATUS_FS_ILLEGAL_POS    RTS_IEC_INT_C(0x2)	/* Illegal position in the file */
+#define SYS_FILE_STATUS_FS_FULL    RTS_IEC_INT_C(0x3)	/* No more space on the file system */
+#define SYS_FILE_STATUS_FS_EOF    RTS_IEC_INT_C(0x4)	/* End of file reached */
 /* Typed enum definition */
 #define SYS_FILE_STATUS    RTS_IEC_INT
 
@@ -423,13 +426,332 @@ typedef struct tagSYS_FILETIME
 } SYS_FILETIME;
 
 /**
- * | Option for SysFileGetPath2, SysFileGetFullPath2, SysFileGetIecPath2
- * | Separation of directory or file
+ * Close a file specified by handle
+ * :return: Returns the runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfileclose_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_RESULT SysFileClose;		/* VAR_OUTPUT */	
+} sysfileclose_struct;
+
+DEF_API(`void',`CDECL',`sysfileclose',`(sysfileclose_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xC19E28BA),0x03050F00)
+
+/**
+ * | Copy one file to another.
+ * | A standard path will be added to the filename, if no path is specified.
+ * :return: The runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfilecopy_struct
+{
+	RTS_IEC_STRING *szDestFileName;		/* VAR_INPUT */	/* Destination file name. File name can contain an absolute or relative path to the file.
+ Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
+	RTS_IEC_STRING *szSourceFileName;	/* VAR_INPUT */	/* Source file name. File name can contain an absolute or relative path to the file.											
+ Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
+	RTS_IEC_XWORD *pulCopied;			/* VAR_INPUT */	/* Number of bytes copied */
+	RTS_IEC_RESULT SysFileCopy;			/* VAR_OUTPUT */	
+} sysfilecopy_struct;
+
+DEF_API(`void',`CDECL',`sysfilecopy',`(sysfilecopy_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xDB491610),0x03050F00)
+
+/**
+ * | Delete the file specified by name.
+ * | A standard path will be added in the runtime system to the filename, if no path is specified.
+ * :return: Returns the runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfiledelete_struct
+{
+	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.
+ Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
+	RTS_IEC_RESULT SysFileDelete;		/* VAR_OUTPUT */	
+} sysfiledelete_struct;
+
+DEF_API(`void',`CDECL',`sysfiledelete',`(sysfiledelete_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xA977F762),0x03050F00)
+
+/**
+ * Delete the file specified by handle
+ * :return: Returns the runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfiledeletebyhandle_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_RESULT SysFileDeleteByHandle;	/* VAR_OUTPUT */	
+} sysfiledeletebyhandle_struct;
+
+DEF_API(`void',`CDECL',`sysfiledeletebyhandle',`(sysfiledeletebyhandle_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xC812562E),0x03050F00)
+
+/**
+ *  Check, if end of file is reached
+ *
+ *  .. note::
+ * 		End of file is only checked after a read operation with SysFileRead! But after a SysFileWrite or SysFileSetPos call, the function
+ * 		returns ERR_FAILED (no end of file)!
+ * :return: Returns the runtime system error code (see CmpErrors.library):
+ *	+ ERR_OK: End of file reached at reading beyond the end of the file
+ *	+ ERR_FAILED: No end of file reached
+ *	+ ERR_PARAMETER: hFile is invalid
+ */
+typedef struct tagsysfileeof_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_RESULT SysFileEOF;			/* VAR_OUTPUT */	
+} sysfileeof_struct;
+
+DEF_API(`void',`CDECL',`sysfileeof',`(sysfileeof_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x30A3EB85),0x03050F00)
+
+/**
+ * Flush the file cache and write into the file
+ * :return: Returns the runtime system error code (see CmpErrors_Itfs.library):
+ *
+ * - ERR_OK: Succeeded flushing the file
+ * - ERR_FAILED: Error occurred during file flush
+ * - ERR_NOTIMPLEMENTED: File flush is not implemented
+ * - ERR_NOT_SUPPORTED: File flush not available on the target
+ */
+typedef struct tagsysfileflush_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_RESULT SysFileFlush;		/* VAR_OUTPUT */	
+} sysfileflush_struct;
+
+DEF_API(`void',`CDECL',`sysfileflush',`(sysfileflush_struct *p)',1,0x32985005,0x03050F00)
+
+/**
+ * Get the file name from file specified by handle
+ * :return: File name of the specified file
+ */
+typedef struct tagsysfilegetname_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_STRING *SysFileGetName;		/* VAR_OUTPUT */	
+} sysfilegetname_struct;
+
+DEF_API(`void',`CDECL',`sysfilegetname',`(sysfilegetname_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x4AEE0669),0x03050F00)
+
+/**
+ * Get the file name from file specified by handle
+ * :return: File name of the specified file
+ */
+typedef struct tagsysfilegetname2_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
+	RTS_IEC_STRING *SysFileGetName2;	/* VAR_OUTPUT */	
+} sysfilegetname2_struct;
+
+DEF_API(`void',`CDECL',`sysfilegetname2',`(sysfilegetname2_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x2856F375),0x03050F00)
+
+/**
+ * | Get the path of this file.
+ * | If a path is specified in the filename, the path will be extracted from the filename.
+ * | If no path is specified in the filename, the standard path for this file extension type will be returned.
+ * :return: The runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfilegetpath_struct
+{
+	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. Can contain an absolute or relative path */
+	RTS_IEC_STRING *szPath;				/* VAR_IN_OUT */	/* Path for this file */
+	RTS_IEC_DINT diMaxLen;				/* VAR_INPUT */	/* Maximum size in bytes of path length */
+	RTS_IEC_RESULT SysFileGetPath;		/* VAR_OUTPUT */	
+} sysfilegetpath_struct;
+
+DEF_API(`void',`CDECL',`sysfilegetpath',`(sysfilegetpath_struct *p)',1,0xE8836F87,0x03050F00)
+
+/**
+ * Get actual file pointer position
+ * :return: The runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfilegetpos_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_XWORD *pulPos;				/* VAR_INPUT */	/* Pointer to get actual position of the file pointer from the beginning of the file */
+	RTS_IEC_RESULT SysFileGetPos;		/* VAR_OUTPUT */	
+} sysfilegetpos_struct;
+
+DEF_API(`void',`CDECL',`sysfilegetpos',`(sysfilegetpos_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x4F0954A2),0x03050F00)
+
+/**
+ * | Get file size of the file specified by name.
+ * | A standard path will be added to the filename, if no path is specified.
+ * :return: Size of the file in bytes
+ */
+typedef struct tagsysfilegetsize_struct
+{
+	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.
+ Path entries must be separated with a Slash (/) and not with a Backslash (\\)! */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library):
+
+ - ERR_OK: Successful
+ - ERR_NO_OBJECT: File not available
+ - ERR_FAILED: Failed to get file size */
+	RTS_IEC_XWORD SysFileGetSize;		/* VAR_OUTPUT */	
+} sysfilegetsize_struct;
+
+DEF_API(`void',`CDECL',`sysfilegetsize',`(sysfilegetsize_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x0A16C4DB),0x03050F00)
+
+/**
+ * Get file size of the file specified by handle
+ * :return: Size of the file in bytes
+ */
+typedef struct tagsysfilegetsizebyhandle_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
+	RTS_IEC_XWORD SysFileGetSizeByHandle;	/* VAR_OUTPUT */	
+} sysfilegetsizebyhandle_struct;
+
+DEF_API(`void',`CDECL',`sysfilegetsizebyhandle',`(sysfilegetsizebyhandle_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x847C756B),0x03050F00)
+
+/**
+ * Get the file status
+ * :return: File status. See category file status
+ */
+typedef struct tagsysfilegetstatus_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_INT SysFileGetStatus;		/* VAR_OUTPUT, Enumeration: SYS_FILE_STATUS */
+} sysfilegetstatus_struct;
+
+DEF_API(`void',`CDECL',`sysfilegetstatus',`(sysfilegetstatus_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x31FB098C),0x03050F00)
+
+/**
+ * Get the file status
+ * :return: File status. See category file status
+ */
+typedef struct tagsysfilegetstatus2_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
+	RTS_IEC_INT SysFileGetStatus2;		/* VAR_OUTPUT, Enumeration: SYS_FILE_STATUS */
+} sysfilegetstatus2_struct;
+
+DEF_API(`void',`CDECL',`sysfilegetstatus2',`(sysfilegetstatus2_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x59D8FC78),0x03050F00)
+
+/**
+ * | Get file time of the specified file.
+ * | A standard path will be added to the filename, if no path is specified.
+ * :return: The runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfilegettime_struct
+{
+	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.	
+ Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
+	SYS_FILETIME *ptFileTime;			/* VAR_INPUT */	/* Pointer to get the file time results. */
+	RTS_IEC_RESULT SysFileGetTime;		/* VAR_OUTPUT */	
+} sysfilegettime_struct;
+
+DEF_API(`void',`CDECL',`sysfilegettime',`(sysfilegettime_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xB2AF6BDD),0x03050F00)
+
+/**
+ * | Open or create file. A standard path will be added to the filename, if no path is specified in the file name.
+ * | If a file extension is specified in the settings, this path will be used (see category settings).
+ *
+ * .. note:: File name can contain an absolute or relative path to the file. Path entries
+ *           must be separated with a Slash (/)  and not with a Backslash (\\)!
+ *
+ * :return: Handle to the file or RTS_INVALID_HANDLE if failed
+ */
+typedef struct tagsysfileopen_struct
+{
+	RTS_IEC_STRING *szFile;				/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.	
+ Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
+	RTS_IEC_UDINT am;					/* VAR_INPUT, Enumeration: ACCESS_MODE */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
+	RTS_IEC_HANDLE SysFileOpen;			/* VAR_OUTPUT */	
+} sysfileopen_struct;
+
+DEF_API(`void',`CDECL',`sysfileopen',`(sysfileopen_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xFE31259F),0x03050F00)
+
+/**
+ * Read number of bytes out of the file
+ * :return: Number of bytes read from file. 0=if failed
+ */
+typedef struct tagsysfileread_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_BYTE *pbyBuffer;			/* VAR_INPUT */	/* Pointer to buffer for read data */
+	RTS_IEC_XWORD ulSize;				/* VAR_INPUT */	/* Number of bytes to read from file. Must be less or equal the buffer size! */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
+	RTS_IEC_XWORD SysFileRead;			/* VAR_OUTPUT */	
+} sysfileread_struct;
+
+DEF_API(`void',`CDECL',`sysfileread',`(sysfileread_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xD962D4F9),0x03050F00)
+
+/**
+ * | Rename the file.
+ * | A standard path will be added to the filename, if no path is specified.
+ * :return: Returns the runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfilerename_struct
+{
+	RTS_IEC_STRING *szOldFileName;		/* VAR_INPUT */	/* Old file name. File name can contain an absolute or relative path to the file.
+ Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
+	RTS_IEC_STRING *szNewFileName;		/* VAR_INPUT */	/* New file name. File name can contain an absolute or relative path to the file.
+ Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
+	RTS_IEC_RESULT SysFileRename;		/* VAR_OUTPUT */	
+} sysfilerename_struct;
+
+DEF_API(`void',`CDECL',`sysfilerename',`(sysfilerename_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xF3B9A110),0x03050F00)
+
+/**
+ * Set the file pointer to the specified position
+ * :return: Returns the runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfilesetpos_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_XWORD ulOffset;				/* VAR_INPUT */	/* Offset to set from the beginning of the file */
+	RTS_IEC_RESULT SysFileSetPos;		/* VAR_OUTPUT */	
+} sysfilesetpos_struct;
+
+DEF_API(`void',`CDECL',`sysfilesetpos',`(sysfilesetpos_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xFC7A70CE),0x03050F00)
+
+/**
+ * Set a new filesize. May be larger or smaller than current size.
+ * :return: Returns the runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfiletruncate_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_XWORD ulSizeNew;			/* VAR_INPUT */	/* Size to set. */
+	RTS_IEC_RESULT SysFileTruncate;		/* VAR_OUTPUT */	
+} sysfiletruncate_struct;
+
+DEF_API(`void',`CDECL',`sysfiletruncate',`(sysfiletruncate_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xF2C7CF6C),0x03050F00)
+
+/**
+ * Write number of bytes to the file. File must be opened with |AM_WRITE| or |AM_APPEND|.
+ * :return: Number of bytes written to the file. 0=if failed
+ */
+typedef struct tagsysfilewrite_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_BYTE *pbyBuffer;			/* VAR_INPUT */	/* Pointer to buffer with data to write to file */
+	RTS_IEC_XWORD ulSize;				/* VAR_INPUT */	/* Number of bytes to write in the file. Must be less or equal the buffer size! */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
+	RTS_IEC_XWORD SysFileWrite;			/* VAR_OUTPUT */	
+} sysfilewrite_struct;
+
+DEF_API(`void',`CDECL',`sysfilewrite',`(sysfilewrite_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x6AE210A7),0x03050F00)
+
+#ifdef __cplusplus
+}
+#endif
+
+/** EXTERN LIB SECTION END **/
+
+
+/**
+ * <category>Path options</category>
+ * <description>
+ * Separation of directory or file for SysFileGetPath2, SysFileGetFullPath2, SysFileGetIecPath2
+ * </description>
  */
 #define SYSFILE_PATH_OPTION_UNKNOWN 0
 #define SYSFILE_PATH_OPTION_FILE 1
 #define SYSFILE_PATH_OPTION_DIRECTORY 2
 #define SYSFILE_PATH_OPTION_FILE_KEEP_NAME 3
+
 
 /**
  * <category>Event parameter</category>
@@ -499,315 +821,6 @@ typedef struct
  * <param name="pEventParam" type="IN/OUT">EVTPARAM_SysFileFlashGetFileMapIndex</param>
  */
 #define EVT_SysFileFlashGetFileMapIndex					MAKE_EVENTID(EVTCLASS_INFO, 3)
-
-/**
- * Close a file specified by handle
- * :return: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfileclose_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_RESULT SysFileClose;		/* VAR_OUTPUT */	
-} sysfileclose_struct;
-
-DEF_API(`void',`CDECL',`sysfileclose',`(sysfileclose_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xC19E28BA),0x03050500)
-
-/**
- * | Copy one file to another.
- * | A standard path will be added to the filename, if no path is specified.
- * :return: The runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfilecopy_struct
-{
-	RTS_IEC_STRING *szDestFileName;		/* VAR_INPUT */	/* Destination file name. File name can contain an absolute or relative path to the file.
- Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
-	RTS_IEC_STRING *szSourceFileName;	/* VAR_INPUT */	/* Source file name. File name can contain an absolute or relative path to the file.											
- Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
-	RTS_IEC_XWORD *pulCopied;			/* VAR_INPUT */	/* Number of bytes copied */
-	RTS_IEC_RESULT SysFileCopy;			/* VAR_OUTPUT */	
-} sysfilecopy_struct;
-
-DEF_API(`void',`CDECL',`sysfilecopy',`(sysfilecopy_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xDB491610),0x03050500)
-
-/**
- * | Delete the file specified by name.
- * | A standard path will be added in the runtime system to the filename, if no path is specified.
- * :return: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfiledelete_struct
-{
-	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.
- Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
-	RTS_IEC_RESULT SysFileDelete;		/* VAR_OUTPUT */	
-} sysfiledelete_struct;
-
-DEF_API(`void',`CDECL',`sysfiledelete',`(sysfiledelete_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xA977F762),0x03050500)
-
-/**
- * Delete the file specified by handle
- * :return: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfiledeletebyhandle_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_RESULT SysFileDeleteByHandle;	/* VAR_OUTPUT */	
-} sysfiledeletebyhandle_struct;
-
-DEF_API(`void',`CDECL',`sysfiledeletebyhandle',`(sysfiledeletebyhandle_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xC812562E),0x03050500)
-
-/**
- * Check, if end of file is reached
- * :return: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfileeof_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_RESULT SysFileEOF;			/* VAR_OUTPUT */	
-} sysfileeof_struct;
-
-DEF_API(`void',`CDECL',`sysfileeof',`(sysfileeof_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x30A3EB85),0x03050500)
-
-/**
- * Flush the file cache and write into the file
- * :return: Returns the runtime system error code (see CmpErrors_Itfs.library):
- *
- * - ERR_OK: Succeeded flushing the file
- * - ERR_FAILED: Error occurred during file flush
- * - ERR_NOTIMPLEMENTED: File flush is not implemented
- * - ERR_NOT_SUPPORTED: File flush not available on the target
- */
-typedef struct tagsysfileflush_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_RESULT SysFileFlush;		/* VAR_OUTPUT */	
-} sysfileflush_struct;
-
-DEF_API(`void',`CDECL',`sysfileflush',`(sysfileflush_struct *p)',1,0x32985005,0x03050500)
-
-/**
- * Get the file name from file specified by handle
- * :return: File name of the specified file
- */
-typedef struct tagsysfilegetname_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_STRING *SysFileGetName;		/* VAR_OUTPUT */	
-} sysfilegetname_struct;
-
-DEF_API(`void',`CDECL',`sysfilegetname',`(sysfilegetname_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x4AEE0669),0x03050500)
-
-/**
- * Get the file name from file specified by handle
- * :return: File name of the specified file
- */
-typedef struct tagsysfilegetname2_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
-	RTS_IEC_STRING *SysFileGetName2;	/* VAR_OUTPUT */	
-} sysfilegetname2_struct;
-
-DEF_API(`void',`CDECL',`sysfilegetname2',`(sysfilegetname2_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x2856F375),0x03050500)
-
-/**
- * | Get the path of this file.
- * | If a path is specified in the filename, the path will be extracted from the filename.
- * | If no path is specified in the filename, the standard path for this file extension type will be returned.
- * :return: The runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfilegetpath_struct
-{
-	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. Can contain an absolute or relative path */
-	RTS_IEC_STRING *szPath;				/* VAR_INPUT */	/* Path for this file */
-	RTS_IEC_DINT diMaxLen;				/* VAR_INPUT */	/* Maximum size in bytes of path length */
-	RTS_IEC_RESULT SysFileGetPath;		/* VAR_OUTPUT */	
-} sysfilegetpath_struct;
-
-DEF_API(`void',`CDECL',`sysfilegetpath',`(sysfilegetpath_struct *p)',1,0xE8836F87,0x03050500)
-
-/**
- * Get actual file pointer position
- * :return: The runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfilegetpos_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_XWORD *pulPos;				/* VAR_INPUT */	/* Pointer to get actual position of the file pointer from the beginning of the file */
-	RTS_IEC_RESULT SysFileGetPos;		/* VAR_OUTPUT */	
-} sysfilegetpos_struct;
-
-DEF_API(`void',`CDECL',`sysfilegetpos',`(sysfilegetpos_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x4F0954A2),0x03050500)
-
-/**
- * | Get file size of the file specified by name.
- * | A standard path will be added to the filename, if no path is specified.
- * :return: Size of the file in bytes
- */
-typedef struct tagsysfilegetsize_struct
-{
-	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.
- Path entries must be separated with a Slash (/) and not with a Backslash (\\)! */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library):
-
- - ERR_OK: Successful
- - ERR_NO_OBJECT: File not available
- - ERR_FAILED: Failed to get file size */
-	RTS_IEC_XWORD SysFileGetSize;		/* VAR_OUTPUT */	
-} sysfilegetsize_struct;
-
-DEF_API(`void',`CDECL',`sysfilegetsize',`(sysfilegetsize_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x0A16C4DB),0x03050500)
-
-/**
- * Get file size of the file specified by handle
- * :return: Size of the file in bytes
- */
-typedef struct tagsysfilegetsizebyhandle_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
-	RTS_IEC_XWORD SysFileGetSizeByHandle;	/* VAR_OUTPUT */	
-} sysfilegetsizebyhandle_struct;
-
-DEF_API(`void',`CDECL',`sysfilegetsizebyhandle',`(sysfilegetsizebyhandle_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x847C756B),0x03050500)
-
-/**
- * Get the file status
- * :return: File status. See category file status
- */
-typedef struct tagsysfilegetstatus_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_INT SysFileGetStatus;		/* VAR_OUTPUT, Enum: SYS_FILE_STATUS */
-} sysfilegetstatus_struct;
-
-DEF_API(`void',`CDECL',`sysfilegetstatus',`(sysfilegetstatus_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x31FB098C),0x03050500)
-
-/**
- * Get the file status
- * :return: File status. See category file status
- */
-typedef struct tagsysfilegetstatus2_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
-	RTS_IEC_INT SysFileGetStatus2;		/* VAR_OUTPUT, Enum: SYS_FILE_STATUS */
-} sysfilegetstatus2_struct;
-
-DEF_API(`void',`CDECL',`sysfilegetstatus2',`(sysfilegetstatus2_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x59D8FC78),0x03050500)
-
-/**
- * | Get file time of the specified file.
- * | A standard path will be added to the filename, if no path is specified.
- * :return: The runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfilegettime_struct
-{
-	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.	
- Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
-	SYS_FILETIME *ptFileTime;			/* VAR_INPUT */	/* Pointer to get the file time results. */
-	RTS_IEC_RESULT SysFileGetTime;		/* VAR_OUTPUT */	
-} sysfilegettime_struct;
-
-DEF_API(`void',`CDECL',`sysfilegettime',`(sysfilegettime_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xB2AF6BDD),0x03050500)
-
-/**
- * | Open or create file. A standard path will be added to the filename, if no path is specified in the file name.
- * | If a file extension is specified in the settings, this path will be used (see category settings).
- *
- * .. note:: File name can contain an absolute or relative path to the file. Path entries
- *           must be separated with a Slash (/)  and not with a Backslash (\\)!
- *
- * :return: Handle to the file or RTS_INVALID_HANDLE if failed
- */
-typedef struct tagsysfileopen_struct
-{
-	RTS_IEC_STRING *szFile;				/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.	
- Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
-	RTS_IEC_UDINT am;					/* VAR_INPUT, Enum: ACCESS_MODE */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
-	RTS_IEC_HANDLE SysFileOpen;			/* VAR_OUTPUT */	
-} sysfileopen_struct;
-
-DEF_API(`void',`CDECL',`sysfileopen',`(sysfileopen_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xFE31259F),0x03050500)
-
-/**
- * Read number of bytes out of the file
- * :return: Number of bytes read from file. 0=if failed
- */
-typedef struct tagsysfileread_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_BYTE *pbyBuffer;			/* VAR_INPUT */	/* Pointer to buffer for read data */
-	RTS_IEC_XWORD ulSize;				/* VAR_INPUT */	/* Number of bytes to read from file. Must be less or equal the buffer size! */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
-	RTS_IEC_XWORD SysFileRead;			/* VAR_OUTPUT */	
-} sysfileread_struct;
-
-DEF_API(`void',`CDECL',`sysfileread',`(sysfileread_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xD962D4F9),0x03050500)
-
-/**
- * | Rename the file.
- * | A standard path will be added to the filename, if no path is specified.
- * :return: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfilerename_struct
-{
-	RTS_IEC_STRING *szOldFileName;		/* VAR_INPUT */	/* Old file name. File name can contain an absolute or relative path to the file.
- Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
-	RTS_IEC_STRING *szNewFileName;		/* VAR_INPUT */	/* New file name. File name can contain an absolute or relative path to the file.
- Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
-	RTS_IEC_RESULT SysFileRename;		/* VAR_OUTPUT */	
-} sysfilerename_struct;
-
-DEF_API(`void',`CDECL',`sysfilerename',`(sysfilerename_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xF3B9A110),0x03050500)
-
-/**
- * Set the file pointer to the specified position
- * :return: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfilesetpos_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_XWORD ulOffset;				/* VAR_INPUT */	/* Offset to set from the beginning of the file */
-	RTS_IEC_RESULT SysFileSetPos;		/* VAR_OUTPUT */	
-} sysfilesetpos_struct;
-
-DEF_API(`void',`CDECL',`sysfilesetpos',`(sysfilesetpos_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xFC7A70CE),0x03050500)
-
-/**
- * Set a new filesize. May be larger or smaller than current size.
- * :return: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfiletruncate_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_XWORD ulSizeNew;			/* VAR_INPUT */	/* Size to set. */
-	RTS_IEC_RESULT SysFileTruncate;		/* VAR_OUTPUT */	
-} sysfiletruncate_struct;
-
-DEF_API(`void',`CDECL',`sysfiletruncate',`(sysfiletruncate_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xF2C7CF6C),0x03050600)
-
-/**
- * Write number of bytes to the file. File must be opened with |AM_WRITE| or |AM_APPEND|.
- * :return: Number of bytes written to the file. 0=if failed
- */
-typedef struct tagsysfilewrite_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_BYTE *pbyBuffer;			/* VAR_INPUT */	/* Pointer to buffer with data to write to file */
-	RTS_IEC_XWORD ulSize;				/* VAR_INPUT */	/* Number of bytes to write in the file. Must be less or equal the buffer size! */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
-	RTS_IEC_XWORD SysFileWrite;			/* VAR_OUTPUT */	
-} sysfilewrite_struct;
-
-DEF_API(`void',`CDECL',`sysfilewrite',`(sysfilewrite_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x6AE210A7),0x03050500)
-
-#ifdef __cplusplus
-}
-#endif
-
-/** EXTERN LIB SECTION END **/
-
 
 /**
  * <category>File info</category>
@@ -886,13 +899,25 @@ RTS_RESULT CDECL SysFileOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RT
  *	</ul>
  * </param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">File could be opened</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid parameter</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">Filename is empty or file not available</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OPERATION_DENIED">File access is denied (out of configured path)</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FILE_ERROR">File access is denied (file is write protected)</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Error occurred during write operation</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">No heap memory to finish operation</errorcode>
  * <result>Handle to the file or RTS_INVALID_HANDLE if failed</result>
  */
 DEF_CREATEITF_API(`RTS_HANDLE',`CDECL',`SysFileOpen',`(char *pszFile, RTS_ACCESS_MODE am, RTS_RESULT *pResult)')
 
 /**
- * <description>Open or create a file. File will be opened with no standard path. The file name
- *	will be used as it is.</description>
+ * <description>Platform specific implementation:
+ *	Open or create a file. File will be opened with no standard path. The file name will be used as it is.
+ *
+ *	IMPLEMENTATION NOTE:
+ *	The platform specific implementation should be POSIX compatible, but the behavior depends on the operating system
+ *  and/or the used file system!
+ * </description>
  * <param name="pszFile" type="IN">File name. File name can contain an absolute or relative path to the 
  *	file. Path entries must be separated with a '/' and not with a '\"!</param>
  * <param name="am" type="IN"><p>Requested access mode to the file:</p>
@@ -906,6 +931,13 @@ DEF_CREATEITF_API(`RTS_HANDLE',`CDECL',`SysFileOpen',`(char *pszFile, RTS_ACCESS
  *	</ul>
  * </param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">File could be opened</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid parameter</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">Filename is empty or file not available</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OPERATION_DENIED">File access is denied: out of configured path</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FILE_ERROR">File access is denied: file is write protected</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Error occurred during write operation</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">No heap memory to finish operation</errorcode>
  * <result>Handle to the file or RTS_INVALID_HANDLE if failed</result>
  */
 DEF_ITF_API(`RTS_HANDLE',`CDECL',`SysFileOpen_',`(char *pszFile, RTS_ACCESS_MODE am, RTS_RESULT *pResult)')
@@ -1178,7 +1210,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysFileGetPath',`(char *pszFileName, char *psz
  *	If no path is specified in the filename, the standard path for this file extension type will be returned.
  * </description>
  * <param name="pszFileName" type="IN">File name. Can contain an absolute or relative path</param>
- * <param name="nOption" type="IN">Separation of directory or file</param>
+ * <param name="nOption" type="IN">Separation of directory or file (see Path options)</param>
  * <param name="pszPath" type="OUT">Path for this file</param>
  * <param name="iMaxLen" type="IN">Maximum size in bytes of path length</param>
  * <result>error code</result>
@@ -1209,7 +1241,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysFileGetFullPath',`(char *pszFileName, char 
  *	Get the path of this file including the filename. If no path is specified in pszFileName, the filename is returned in pszPath.
  * </description>
  * <param name="pszFileName" type="IN">File name. Can contain an absolute or relative path</param>
- * <param name="nOption" type="IN">Separation of directory or file</param>
+ * <param name="nOption" type="IN">Separation of directory or file (see Path options)</param>
  * <param name="pszPath" type="OUT">Path for this file including the filename</param>
  * <param name="iMaxLen" type="IN">Maximum size in bytes of path length</param>
  * <result>error code</result>
@@ -1222,7 +1254,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysFileGetFullPath2',`(char *pszFileName, RTS_
 
 /**
  * <description>
- *	Get the path of this file for Iec applications. If a path is specified in the filename, the path will be extracted from the filename.
+ *	Get the path of this file for IEC applications. If a path is specified in the filename, the path will be extracted from the filename.
  *	If no path is specified in the filename, the standard path for this file extension type will be returned.
  * </description>
  * <param name="pszFileName" type="IN">File name. Can contain an absolute or relative path</param>
@@ -1234,11 +1266,11 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysFileGetIecPath',`(char *pszFileName, char *
 
 /**
  * <description>
- *	Get the path of this file for Iec applications. If a path is specified in the filename, the path will be extracted from the filename.
+ *	Get the path of this file for IEC applications. If a path is specified in the filename, the path will be extracted from the filename.
  *	If no path is specified in the filename, the standard path for this file extension type will be returned.
  * </description>
  * <param name="pszFileName" type="IN">File name. Can contain an absolute or relative path</param>
- * <param name="nOption" type="IN">Separation of directory or file</param>
+ * <param name="nOption" type="IN">Separation of directory or file (see Path options)</param>
  * <param name="pszPath" type="OUT">Path for this file</param>
  * <param name="iMaxLen" type="IN">Maximum size in bytes of path length</param>
  * <result>error code</result>
@@ -1296,7 +1328,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysFileGenerateCRC3_',`(char *pszFile, RTS_SIZ
  * <description>
  *	Generate the CRC32 of a file. Can be used to check file integrity.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant! Optimizations can be done here.
+ *	This interface function is implemented operating system dependent! Optimizations can be done here.
  * </description>
  * <param name="pszFile" type="IN">File name. Can contain an absolute or relative path</param>
  * <param name="ulSize" type="IN">Size to calculate checksum. 0 if real size of file should be used [default]</param>
@@ -1340,7 +1372,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysFileIsInvisible',`(char *pszFileName)')
  * <description>
  *	Set the size of the actual opened file.
  *  Used for increasing/decreasing the size of a file.
- *  The current fileoffset (filepointer) is not changed. 
+ *  The current file offset (file pointer) is not changed. 
  * </description>
  * <param name="hFile" type="IN">Handle to the file</param>
  * <param name="sSizeNew" type="IN">New size of the file, type: RTS_SIZE </param>
@@ -1410,19 +1442,19 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysFileSetIecPath',`(char *pszPath)')
 
 /**
  * <description>
- * Returns the plc logic prefix.
+ * Returns the PLC logic prefix.
  * </description>
- * <result>plc logic prefix</result>
+ * <result>PLC logic prefix</result>
  */
 DEF_ITF_API(`char *',`CDECL',`SysFileGetPlcLogicPrefix',`(void)')
 
 /**
  * <description>
- * Prepends the plc logic prefix to name and ext in the resulting pathOut, makes sure the extension is there at the cost of the filename.
+ * Prepends the PLC logic prefix to name and ext in the resulting pathOut, makes sure the extension is there at the cost of the filename.
  * </description>
  * <param name="pszPathOut" type="OUT">Resulting file path</param>
  * <param name="ulPathOutSize" type="IN">Size of resulting file path</param>
- * <param name="pszSubDir" type="IN">Name of subdir (optional, only used when plc logic prefix is set)</param>
+ * <param name="pszSubDir" type="IN">Name of subdirectory (optional, only used when PLC logic prefix is set)</param>
  * <param name="pszName" type="IN">Name of file</param>
  * <param name="pszExt" type="IN">>Extension of file</param>
  * <result>Error code</result>

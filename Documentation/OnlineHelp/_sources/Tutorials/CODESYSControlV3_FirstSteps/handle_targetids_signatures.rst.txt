@@ -1,0 +1,22 @@
+.. _handle_targetids_signatures:
+
+Handle the TargetIDs and Signatures
+===================================
+
+Every derivate of your targets will need to have their own TargetID. The
+TargetID is used to have a clear linkage between your device Description
+and your Target Runtime. So every time you need to make a change in the
+device description for a new target, you will need to request a new
+TargetID from 3S.
+
+This is necessary, because one part of the target signature is the
+TargetID. So, you will most likely need a new signature, too.
+
+If you have a huge amount of targets, you might like to manage them with
+the same target signature. In this case, you can request a range of
+signatures from 3S. Then you will get a new targetdefines.h which
+contains a new Signature in combination with a Device Mask. This is then
+valid for a specific range of TargetIDs.
+
+To include the new targetdefines.h in your system, you need to recompile the runtime or use the
+component :ref:`group___sys_target_o_e_m` as an addon fo a binary runtime.

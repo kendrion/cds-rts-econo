@@ -1,11 +1,11 @@
  /**
  * <interfacename>SysTimeRtc</interfacename>
  * <description> 
- *	The SysTimeRtc interface is projected to get access to an optional realtime clock
+ *	The SysTimeRtc interface is projected to get access to an optional real-time clock
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -37,7 +37,7 @@
  * <category>Control status HourMode</category>
  * <description></description>
  * <element name="RTC_12HOURS" type="IN">12 hours mode</element>
- * <element name="RTC_24HOURS" type="IN">24 hoursmode</element>
+ * <element name="RTC_24HOURS" type="IN">24 hours mode</element>
  */
 #define RTC_12HOURS		0
 #define RTC_24HOURS		1
@@ -46,7 +46,7 @@
  * <category>Control status CheckBattery</category>
  * <description></description>
  * <element name="RTC_BATTERY_FAILED" type="IN">Battery empty or failed</element>
- * <element name="RTC_BATTERY_OK" type="IN">Battery Ok</element>
+ * <element name="RTC_BATTERY_OK" type="IN">Battery OK</element>
  */
 #define RTC_BATTERY_FAILED		0
 #define RTC_BATTERY_OK			1
@@ -86,19 +86,19 @@ typedef struct tagRTS_SYSTIMEDATE
 /**
  * <category>Timezone information</category>
  * <description>
- *     This infomation describes a local timezone with standard- and daylight-saving-time
+ *     This information describes a local timezone with standard- and daylight-saving-time
  *     (also known as summer- and wintertime).
  * </description>
  */
 typedef struct tagTimezoneInformation
 {
-	RTS_IEC_UDINT ulStandardDate;		/* <element name="ulStandardDate" type="IN">Date to switch to standard time (from summer- to wintertime) [local time in seconds since 1.1.1970 00:00:00]</element> */
-	RTS_IEC_UDINT ulDaylightDate;		/* <element name="ulDaylightDate" type="IN">Date to switch to daylight savings time (from winter- to summertime) [local time in seconds since 1.1.1970 00:00:00]</element> */
+	RTS_IEC_UDINT ulStandardDate;			/* <element name="ulStandardDate" type="IN">Date to switch to standard time (from summer- to wintertime) [local time in seconds since 1.1.1970 00:00:00]</element> */
+	RTS_IEC_UDINT ulDaylightDate;			/* <element name="ulDaylightDate" type="IN">Date to switch to daylight savings time (from winter- to summertime) [local time in seconds since 1.1.1970 00:00:00]</element> */
 	RTS_IEC_STRING szStandardName[33];		/* <element name="szStandardName" type="IN">Standard name of the timezone (wintertime) [string with max. 32bytes]</element> */
 	RTS_IEC_STRING szDaylightName[33];		/* <element name="szDaylightName" type="IN">Daylight savings time name (summertime) [string with max. 32bytes]</element> */
-	RTS_IEC_INT iBias;		/* <element name="iBias" type="IN">UTC = local time + bias [minutes]</element> */
-	RTS_IEC_INT iStandardBias;		/* <element name="iStandardBias" type="IN">Additional offset at standard time (wintertime) [minutes]</element> */
-	RTS_IEC_INT iDaylightBias;		/* <element name="iDaylightBias" type="IN">Additional offset at daylight savings time (summertime) [minutes]</element> */
+	RTS_IEC_INT iBias;						/* <element name="iBias" type="IN">UTC = local time + bias [minutes]</element> */
+	RTS_IEC_INT iStandardBias;				/* <element name="iStandardBias" type="IN">Additional offset at standard time (wintertime) [minutes]</element> */
+	RTS_IEC_INT iDaylightBias;				/* <element name="iDaylightBias" type="IN">Additional offset at daylight savings time (summertime) [minutes]</element> */
 } TimezoneInformation;
 
 /**
@@ -338,17 +338,17 @@ typedef void (CDECL CDECL_EXT* PFSYSTIMERTCCONVERTHIGHRESTODATE_IEC) (systimertc
 
 /**
  * <description>
- * Convert a high resolution timestamp [UTC] to a structure format [Localtime]
+ * Convert a high resolution timestamp [UTC] to a structure format [local time]
  * </description>
- * <errorcode name="RTS_RESULT Result" TYPE="ERR_OK">Timestamp can be converted</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Timestamp failed to convert</errorcode>
+ * <errorcode name="RTS_RESULT Result" TYPE="ERR_OK">Time-stamp can be converted</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Time-stamp failed to convert</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_NOTIMPLEMENTED">Conversion is not available on the target</errorcode>
  * <result><p>RESULT: Returns the runtime system error code (see CmpErrors.library).</p></result>
  */
 typedef struct tagsystimertcconverthighrestolocal_struct
 {
 	RTS_IEC_ULINT *pTimestamp;			/* VAR_IN_OUT */	/* <param name="pTimestamp" type="IN">Milliseconds since 1.1.1970 00:00:000 [UTC]</param> */
-	RTS_SYSTIMEDATE *pDate;				/* VAR_IN_OUT */	/* <param name="pDate" type="OUT">Structure format [Localtime]</param> */
+	RTS_SYSTIMEDATE *pDate;				/* VAR_IN_OUT */	/* <param name="pDate" type="OUT">Structure format [local time]</param> */
 	RTS_IEC_RESULT SysTimeRtcConvertHighResToLocal;	/* VAR_OUTPUT */	
 } systimertcconverthighrestolocal_struct;
 
@@ -401,7 +401,7 @@ typedef void (CDECL CDECL_EXT* PFSYSTIMERTCCONVERTHIGHRESTOLOCAL_IEC) (systimert
 
 /**
  * <description>
- * This function converts the time given by time structure [Localtime] into a High Resolution Time of format SysTime [UTC].
+ * This function converts the time given by time structure [local time] into a High Resolution Time of format SysTime [UTC].
  *	</description>
  * <errorcode name="RTS_RESULT Result" TYPE="ERR_OK">DATE can be converted</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Date failed to convert</errorcode>
@@ -410,7 +410,7 @@ typedef void (CDECL CDECL_EXT* PFSYSTIMERTCCONVERTHIGHRESTOLOCAL_IEC) (systimert
  */
 typedef struct tagsystimertcconvertlocaltohighres_struct
 {
-	RTS_SYSTIMEDATE *pDate;				/* VAR_IN_OUT */	/* <param name="pDate" type="IN">Structure format [Localtime]</param> */
+	RTS_SYSTIMEDATE *pDate;				/* VAR_IN_OUT */	/* <param name="pDate" type="IN">Structure format [local time]</param> */
 	RTS_IEC_ULINT *pTimestamp;			/* VAR_IN_OUT */	/* <param name="pTimestamp" type="OUT">Milliseconds since 1.1.1970 00:00:000 [UTC]</param> */
 	RTS_IEC_RESULT SysTimeRtcConvertLocalToHighRes;	/* VAR_OUTPUT */	
 } systimertcconvertlocaltohighres_struct;
@@ -520,7 +520,7 @@ typedef void (CDECL CDECL_EXT* PFSYSTIMERTCCONVERTLOCALTOUTC_IEC) (systimertccon
 
 
 /**
- * <description>Convert UTC timestamp in seconds to a structured format</description>
+ * <description>Convert UTC time-stamp in seconds to a structured format</description>
  * <result><p>RESULT: Returns the runtime system error code (see CmpErrors.library).</p></result>
  */
 typedef struct tagsystimertcconvertutctodate_struct
@@ -635,7 +635,7 @@ typedef void (CDECL CDECL_EXT* PFSYSTIMERTCCONVERTUTCTOLOCAL_IEC) (systimertccon
 
 
 /**
- * <description>Returns the curent Rtc (realtime clock) value in UTC.
+ * <description>Returns the current RTC (real-time clock) value in UTC.
  *	<p>UTC time: current coordinated universal time; has replaced the Greenwich Mean Time.
  * The time zones are given as positive or negative deviation from UTC.:
  *	e.g. „UTC+1“ corresponds to the Central European Time (CET) and 
@@ -754,7 +754,7 @@ typedef void (CDECL CDECL_EXT* PFSYSTIMERTCGETTIMEZONE_IEC) (systimertcgettimezo
 
 
 /**
- * <description>Returns the Rtc (realtime clock) value with a high resolution in UTC.
+ * <description>Returns the RTC (real-time clock) value with a high resolution in UTC.
  *	<p>UTC time: current coordinated universal time; has replaced the Greenwich Mean Time.
  * The time zones are given as positive or negative deviation from UTC.:
  *	e.g. „UTC+1“ corresponds to the Central European Time (CET) and 
@@ -816,7 +816,7 @@ typedef void (CDECL CDECL_EXT* PFSYSTIMERTCHIGHRESGET_IEC) (systimertchighresget
 
 
 /**
- * <description>Set the Rtc (realtime clock) value with a high resolution.</description>
+ * <description>Set the RTC (real-time clock) value with a high resolution.</description>
  * <result><p>RESULT: Returns the runtime system error code (see CmpErrors.library).</p></result>
  */
 typedef struct tagsystimertchighresset_struct
@@ -873,7 +873,7 @@ typedef void (CDECL CDECL_EXT* PFSYSTIMERTCHIGHRESSET_IEC) (systimertchighresset
 
 
 /**
- * <description>Set the Rtc (realtime clock) value in UTC.
+ * <description>Set the RTC (real-time clock) value in UTC.
  *	<p>UTC time: current coordinated universal time; has replaced the Greenwich Mean Time.
  * The time zones are given as positive or negative deviation from UTC.:
  *	e.g. „UTC+1“ corresponds to the Central European Time (CET) and 
@@ -1000,12 +1000,12 @@ typedef void (CDECL CDECL_EXT* PFSYSTIMERTCSETTIMEZONE_IEC) (systimertcsettimezo
 extern "C" {
 #endif
 
-/* Init routines for OS specific modules */
+/* Initialization routines for OS specific modules */
 RTS_RESULT CDECL SysTimeRtcOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysTimeRtcOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
 /**
- * <description>Returns the Rtc value (realtime clock). The value is the elapsed number of seconds since
+ * <description>Returns the RTC value (real-time clock). The value is the elapsed number of seconds since
  *	1.1.1970 00:00:00 UTC time.</description>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <result>Seconds since 1.1.1970 00:00:00 UTC</result>
@@ -1062,12 +1062,12 @@ typedef RTS_UI32 (CDECL * PFSYSTIMERTCGET) (RTS_RESULT *pResult);
 /**
  * <description>
  * OPTIONAL INTERFACE FUNCTION
- * Set the Rtc value (realtime clock). The value is the elapsed number of seconds since
+ * Set the RTC value (real-time clock). The value is the elapsed number of seconds since
  *	1.1.1970 00:00:00 UTC time.
  * </description>
  * <param name="ulTimestamp" type="IN">Seconds since 1.1.1970 00:00:00 [UTC]</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Timestamp can be set</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Timestamp failed to set</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Time-stamp can be set</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Time-stamp failed to set</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_NOTIMPLEMENTED">Set is not available on the target</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_NO_ACCESS_RIGHTS">No access rights to set the system time</errorcode>
  * <result>error code</result>
@@ -1525,7 +1525,7 @@ typedef RTS_RESULT (CDECL * PFSYSTIMERTCCONTROL) (int iControlTag, int *piContro
 
 
 /**
- * <description>Returns the Rtc value (realtime clock). The value is the elapsed number of milliseconds since
+ * <description>Returns the RTC value (real-time clock). The value is the elapsed number of milliseconds since
  *	1.1.1970 00:00:00:000 UTC time.</description>
  * <param name="pTimestamp" type="OUT">Milliseconds since 1.1.1970 00:00:000 UTC</param>
  * <result>error code</result>
@@ -1582,12 +1582,12 @@ typedef RTS_RESULT (CDECL * PFSYSTIMERTCHIGHRESGET) (RTS_SYSTIME* pTimestampUtcH
 /**
  * <description>
  * OPTIONAL INTERFACE FUNCTION
- * Set the Rtc value (realtime clock). The value is the elapsed number of milliseconds since
+ * Set the RTC value (real-time clock). The value is the elapsed number of milliseconds since
  *	1.1.1970 00:00:00:000 UTC time.
  * </description>
  * <param name="pTimestamp" type="OUT">Milliseconds since 1.1.1970 00:00:000 UTC</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Timestamp can be set</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Timestamp failed to set</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Times-tamp can be set</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Times-tamp failed to set</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_NOTIMPLEMENTED">Set is not available on the target</errorcode>
  * <result>error code</result>
  */
@@ -1641,7 +1641,7 @@ typedef RTS_RESULT (CDECL * PFSYSTIMERTCHIGHRESSET) (RTS_SYSTIME* pTimestampUtcH
 
 
 /**
- * <description>Convert a high resolution timestamp [UTC] to a structure format [UTC]</description>
+ * <description>Convert a high resolution time-stamp [UTC] to a structure format [UTC]</description>
  * <param name="pTimestamp" type="IN">Milliseconds since 1.1.1970 00:00:000 [UTC]</param>
  * <param name="pDate" type="OUT">Structure format [UTC]</param>
  * <result>error code</result>
@@ -1696,7 +1696,7 @@ typedef RTS_RESULT (CDECL * PFSYSTIMERTCCONVERTHIGHRESTODATE) (RTS_SYSTIME *pTim
 
 
 /**
- * <description>Convert structure format [UTC] to a high resolution timestamp [UTC]</description>
+ * <description>Convert structure format [UTC] to a high resolution time-stamp [UTC]</description>
  * <param name="pDate" type="IN">Structure format [UTC]</param>
  * <param name="pTimestampUtcHighRes" type="OUT">Milliseconds since 1.1.1970 00:00:000 [UTC]</param>
  * <result>error code</result>
@@ -1753,12 +1753,12 @@ typedef RTS_RESULT (CDECL * PFSYSTIMERTCCONVERTDATETOHIGHRES) (RTS_SYSTIMEDATE *
 /**
  * <description>
  * OPTIONAL INTERFACE FUNCTION
- * Convert a high resolution timestamp [UTC ] to a structure format [Localtime].
+ * Convert a high resolution time-stamp [UTC ] to a structure format [local time].
  * </description>
  * <param name="pTimestampUtcHighRes" type="IN">Milliseconds since 1.1.1970 00:00:000 [UTC]</param>
- * <param name="pDate" type="OUT">Structure format [Localtime]</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Timestamp can be converted</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Timestamp failed to convert</errorcode>
+ * <param name="pDate" type="OUT">Structure format [local time]</param>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Time-stamp can be converted</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Time-stamp failed to convert</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_NOTIMPLEMENTED">Conversion is not available on the target</errorcode>
  * <result>error code</result>
  */
@@ -1814,9 +1814,9 @@ typedef RTS_RESULT (CDECL * PFSYSTIMERTCCONVERTHIGHRESTOLOCAL) (RTS_SYSTIME *pTi
 /**
  * <description>
  * OPTIONAL INTERFACE FUNCTION
- * Convert a structure format [Localtime] to a high resolution timestamp [UTC ].
+ * Convert a structure format [local time] to a high resolution time-stamp [UTC ].
  * </description>
- * <param name="pDate" type="IN">Structure format [Localtime]</param>
+ * <param name="pDate" type="IN">Structure format [local time]</param>
  * <param name="pTimestampUtcHighRes" type="OUT">Milliseconds since 1.1.1970 00:00:000 [UTC]</param>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">Date can be converted</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Date failed to convert</errorcode>
@@ -1872,6 +1872,68 @@ typedef RTS_RESULT (CDECL * PFSYSTIMERTCCONVERTLOCALTOHIGHRES) (RTS_SYSTIMEDATE 
 
 
 
+/**
+ * <description>
+ * Convert a RTS_SYSTIMEDATE into a string value represented in ISO 8601 standard.
+ * </description>
+ * <param name="date" type="IN">Structure format [can be UTC or local time]. If it is local time, the utcOffset parameter must be used to specify the correct timezone!</param>
+ * <param name="pszISO8601" type="IN">Pointer to get the converted string value</param>
+ * <param name="nLenISO8601" type="IN">Length of the pszISO8601 parameter</param>
+ * <param name="utcOffset" type="IN">UTF offset. If &gt;0 in eastern and &lt;0 in western regions!</param>
+ * <result>error code</result>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Date can be converted</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Date failed to convert</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">Invalid parameter</errorcode>
+ */
+RTS_RESULT CDECL SysTimeRtcConvertDateToISO8601(RTS_SYSTIMEDATE date, char *pszISO8601, RTS_UI32 nLenISO8601, RTS_I32 utcOffset);
+typedef RTS_RESULT (CDECL * PFSYSTIMERTCCONVERTDATETOISO8601) (RTS_SYSTIMEDATE date, char *pszISO8601, RTS_UI32 nLenISO8601, RTS_I32 utcOffset);
+#if defined(SYSTIMERTC_NOTIMPLEMENTED) || defined(SYSTIMERTCCONVERTDATETOISO8601_NOTIMPLEMENTED)
+	#define USE_SysTimeRtcConvertDateToISO8601
+	#define EXT_SysTimeRtcConvertDateToISO8601
+	#define GET_SysTimeRtcConvertDateToISO8601(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_SysTimeRtcConvertDateToISO8601(p0,p1,p2,p3)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_SysTimeRtcConvertDateToISO8601  FALSE
+	#define EXP_SysTimeRtcConvertDateToISO8601  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_SysTimeRtcConvertDateToISO8601
+	#define EXT_SysTimeRtcConvertDateToISO8601
+	#define GET_SysTimeRtcConvertDateToISO8601(fl)  CAL_CMGETAPI( "SysTimeRtcConvertDateToISO8601" ) 
+	#define CAL_SysTimeRtcConvertDateToISO8601  SysTimeRtcConvertDateToISO8601
+	#define CHK_SysTimeRtcConvertDateToISO8601  TRUE
+	#define EXP_SysTimeRtcConvertDateToISO8601  CAL_CMEXPAPI( "SysTimeRtcConvertDateToISO8601" ) 
+#elif defined(MIXED_LINK) && !defined(SYSTIMERTC_EXTERNAL)
+	#define USE_SysTimeRtcConvertDateToISO8601
+	#define EXT_SysTimeRtcConvertDateToISO8601
+	#define GET_SysTimeRtcConvertDateToISO8601(fl)  CAL_CMGETAPI( "SysTimeRtcConvertDateToISO8601" ) 
+	#define CAL_SysTimeRtcConvertDateToISO8601  SysTimeRtcConvertDateToISO8601
+	#define CHK_SysTimeRtcConvertDateToISO8601  TRUE
+	#define EXP_SysTimeRtcConvertDateToISO8601  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimeRtcConvertDateToISO8601", (RTS_UINTPTR)SysTimeRtcConvertDateToISO8601, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysTimeRtcSysTimeRtcConvertDateToISO8601
+	#define EXT_SysTimeRtcSysTimeRtcConvertDateToISO8601
+	#define GET_SysTimeRtcSysTimeRtcConvertDateToISO8601  ERR_OK
+	#define CAL_SysTimeRtcSysTimeRtcConvertDateToISO8601 pISysTimeRtc->ISysTimeRtcConvertDateToISO8601
+	#define CHK_SysTimeRtcSysTimeRtcConvertDateToISO8601 (pISysTimeRtc != NULL)
+	#define EXP_SysTimeRtcSysTimeRtcConvertDateToISO8601  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_SysTimeRtcConvertDateToISO8601
+	#define EXT_SysTimeRtcConvertDateToISO8601
+	#define GET_SysTimeRtcConvertDateToISO8601(fl)  CAL_CMGETAPI( "SysTimeRtcConvertDateToISO8601" ) 
+	#define CAL_SysTimeRtcConvertDateToISO8601 pISysTimeRtc->ISysTimeRtcConvertDateToISO8601
+	#define CHK_SysTimeRtcConvertDateToISO8601 (pISysTimeRtc != NULL)
+	#define EXP_SysTimeRtcConvertDateToISO8601  CAL_CMEXPAPI( "SysTimeRtcConvertDateToISO8601" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_SysTimeRtcConvertDateToISO8601  PFSYSTIMERTCCONVERTDATETOISO8601 pfSysTimeRtcConvertDateToISO8601;
+	#define EXT_SysTimeRtcConvertDateToISO8601  extern PFSYSTIMERTCCONVERTDATETOISO8601 pfSysTimeRtcConvertDateToISO8601;
+	#define GET_SysTimeRtcConvertDateToISO8601(fl)  s_pfCMGetAPI2( "SysTimeRtcConvertDateToISO8601", (RTS_VOID_FCTPTR *)&pfSysTimeRtcConvertDateToISO8601, (fl), 0, 0)
+	#define CAL_SysTimeRtcConvertDateToISO8601  pfSysTimeRtcConvertDateToISO8601
+	#define CHK_SysTimeRtcConvertDateToISO8601  (pfSysTimeRtcConvertDateToISO8601 != NULL)
+	#define EXP_SysTimeRtcConvertDateToISO8601  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimeRtcConvertDateToISO8601", (RTS_UINTPTR)SysTimeRtcConvertDateToISO8601, 0, 0) 
+#endif
+
+
+
+
 #ifdef __cplusplus
 }
 #endif
@@ -1896,6 +1958,7 @@ typedef struct
  	PFSYSTIMERTCCONVERTDATETOHIGHRES ISysTimeRtcConvertDateToHighRes;
  	PFSYSTIMERTCCONVERTHIGHRESTOLOCAL ISysTimeRtcConvertHighResToLocal;
  	PFSYSTIMERTCCONVERTLOCALTOHIGHRES ISysTimeRtcConvertLocalToHighRes;
+ 	PFSYSTIMERTCCONVERTDATETOISO8601 ISysTimeRtcConvertDateToISO8601;
  } ISysTimeRtc_C;
 
 #ifdef CPLUSPLUS
@@ -1917,6 +1980,7 @@ class ISysTimeRtc : public IBase
 		virtual RTS_RESULT CDECL ISysTimeRtcConvertDateToHighRes(RTS_SYSTIMEDATE *pDate, RTS_SYSTIME *pTimestampUtcHighRes) =0;
 		virtual RTS_RESULT CDECL ISysTimeRtcConvertHighResToLocal(RTS_SYSTIME *pTimestampUtcHighRes, RTS_SYSTIMEDATE *pDate) =0;
 		virtual RTS_RESULT CDECL ISysTimeRtcConvertLocalToHighRes(RTS_SYSTIMEDATE *pDate, RTS_SYSTIME *pTimestampUtcHighRes) =0;
+		virtual RTS_RESULT CDECL ISysTimeRtcConvertDateToISO8601(RTS_SYSTIMEDATE date, char *pszISO8601, RTS_UI32 nLenISO8601, RTS_I32 utcOffset) =0;
 };
 	#ifndef ITF_SysTimeRtc
 		#define ITF_SysTimeRtc static ISysTimeRtc *pISysTimeRtc = NULL;

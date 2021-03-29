@@ -1,0 +1,606 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_settings_itf_8h:
+
+===============================
+CmpSettingsItf.h File Reference
+===============================
+
+| #include ":ref:`CmpStd.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`_SelectableSettingEntry <struct___selectable_setting_entry>`
+
+- struct :ref:`_SelectableSetting <struct___selectable_setting>`
+
+- struct :ref:`SettingValue <union_setting_value>`
+
+- struct :ref:`_EditableSetting <struct___editable_setting>`
+
+- struct :ref:`_SettingEntry <struct___setting_entry>`
+
+- struct :ref:`_EVTPARAM_SettgReadSetting <struct___e_v_t_p_a_r_a_m___settg_read_setting>`
+
+- struct :ref:`_EVTPARAM_SettgWriteSetting <struct___e_v_t_p_a_r_a_m___settg_write_setting>`
+
+- struct :ref:`_EVTPARAM_SettgReadSettings <struct___e_v_t_p_a_r_a_m___settg_read_settings>`
+
+- struct :ref:`tagsettgbeginupdate_struct <structtagsettgbeginupdate__struct>`
+
+- struct :ref:`tagsettgendupdate_struct <structtagsettgendupdate__struct>`
+
+- struct :ref:`tagsettggetintvalue_struct <structtagsettggetintvalue__struct>`
+
+- struct :ref:`tagsettggetstringvalue_struct <structtagsettggetstringvalue__struct>`
+
+- struct :ref:`tagsettggetwstringvalue_struct <structtagsettggetwstringvalue__struct>`
+
+- struct :ref:`tagsettgremovekey_struct <structtagsettgremovekey__struct>`
+
+- struct :ref:`tagsettgsetintvalue_struct <structtagsettgsetintvalue__struct>`
+
+- struct :ref:`tagsettgsetstringvalue_struct <structtagsettgsetstringvalue__struct>`
+
+- struct :ref:`tagsettgsetwstringvalue_struct <structtagsettgsetwstringvalue__struct>`
+
+- struct :ref:`ICmpSettings_C <struct_i_cmp_settings___c>`
+
+Macros
+------
+
+- #define :ref:`STD_SETTINGS_DATABASE <group___cmp_settings_itf___staticdefines_1ga6c47f8ef11de2805b2023bc9f0cc347a>` "CODESYSControl"
+
+- #define :ref:`STD_SETTINGS_DATABASE_OLD2 <group___cmp_settings_itf___staticdefines_1ga509478f72229970cc4f4a743a8734304>` "CoDeSysControl"
+
+- #define :ref:`STD_SETTINGS_DATABASE_OLD <group___cmp_settings_itf___staticdefines_1gaa41cc0466eac24457428caf209d204c1>` "CoDeSysSP"
+
+- #define :ref:`FILE_END_OF_LINE_DELIMITER <group___cmp_settings_itf___staticdefines_1ga64a823095cb59d608359b7b8cd08079e>` "\r\n"
+
+- #define :ref:`CMPSETTINGS_NUM_OF_STATIC_FILES <group___cmp_settings_itf___staticdefines_1ga1eda69e5ba4811975eaa39639c4e1fcc>` 1
+
+- #define :ref:`CMPSETTINGS_MASTER_CONFIG <group___cmp_settings_itf___staticdefines_1gafd670f1c97260df5b645966a63a5da41>` "Master.cfg"
+
+- #define :ref:`CMPSETTINGS_STD_CONFIG <group___cmp_settings_itf___staticdefines_1gabaa1b37a20d1d22f38a7a9cf5adc0cf7>` :ref:`STD_SETTINGS_DATABASE <group___cmp_settings_itf___staticdefines_1ga6c47f8ef11de2805b2023bc9f0cc347a>` ".cfg"
+
+- #define :ref:`CMPSETTINGS_KEY_INT_IS_WRITEPROTECTED <group___cmp_settings_itf___settings_1gac3ceb951b88c2d24f33cac908bf5a19c>` "IsWriteProtected"
+
+- #define :ref:`CMPSETTINGS_KEY_INT_IS_WRITEPROTECTED_DEFAULT <group___cmp_settings_itf___settings_1gaedb926e98ef203b189e34e4168784ac6>` 0
+
+- #define :ref:`CMPSETTINGS_KEY_STRING_FILE_REFERENCE <group___cmp_settings_itf___settings_1gaaf6f823709d6bd521fe24d84786eaaff>` "FileReference"
+
+- #define :ref:`CMPSETTINGS_KEY_STRING_FILE_REFERENCE_DEFAULT <group___cmp_settings_itf___settings_1gae8a39fd0a778b407fa42b7c18572d982>` ""
+
+- #define :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` "SECURITY"
+
+- #define :ref:`USERDB_OBJECT_SETTINGS <group___cmp_settings_itf___staticdefines_1ga30a4f090903fb3b1e1b50b9f7b349da2>` "Device.Settings"
+
+- #define :ref:`CMPSETTINGS_CACHED <group___cmp_settings_itf___staticdefines_1ga50187b1432d4217a6384bc2a7879b74e>` 0
+
+- #define :ref:`CMPSETTINGS_NOT_CACHED <group___cmp_settings_itf___staticdefines_1gaff37bd0b731655dfc365e4826d5663cf>` 1
+
+- #define :ref:`CMPSETTINGS_SFLAGS_NONE <group___cmp_settings_itf___selectable_setting_entry_flags_1gae7069a6238ed4bb193cfd94a41eadacd>` 0x00000000
+
+- #define :ref:`CMPSETTINGS_EFLAGS_EDITABLE_STRING <group___cmp_settings_itf___editable_flags_1gacd4320127c82662f31f65c33be0ed42a>` 0x00000001
+
+- #define :ref:`CMPSETTINGS_EFLAGS_EDITABLE_INT <group___cmp_settings_itf___editable_flags_1gacad2163e74790035f1db5a38ad55c8b0>` 0x00000002
+
+- #define :ref:`CMPSETTINGS_EFLAGS_EDITABLE_WSTRING <group___cmp_settings_itf___editable_flags_1ga19fea5a75845c6c0d9bdef26d84fedc3>` 0x00000004
+
+- #define :ref:`CMPSETTINGS_FLAGS_NONE <group___cmp_settings_itf___setting_flags_1ga7f5b5041df6bd874c8a6b202b319a13e>` 0
+
+- #define :ref:`CMPSETTINGS_FLAGS_SELECTABLE <group___cmp_settings_itf___setting_flags_1ga8146c3170232bb6db6e09b2b9e87d3ac>` 0x00000001
+
+- #define :ref:`CMPSETTINGS_FLAGS_EDITABLE <group___cmp_settings_itf___setting_flags_1ga54914f63d4c5a20e70956651791976fd>` 0x00000002
+
+- #define :ref:`SETTG_NUM_OF_STATIC_SETTINGS <group___cmp_settings_itf___staticdefines_1gaf11de5cde137dba939befbcd03569f0b>` 10
+
+- #define :ref:`EVTPARAMID_CmpSettings_ReadSetting <group___cmp_settings_itf___staticdefines_1gac3d16012dd1e673590fa4f4ee8e424e5>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpSettings_ReadSetting <group___cmp_settings_itf___staticdefines_1gaa92e28870d6b75a093e357bd36987072>` 0x0001
+
+- #define :ref:`EVTPARAMID_CmpSettings_WriteSetting <group___cmp_settings_itf___staticdefines_1ga02082ed480185a862a396575e2bb5e4f>` 0x0002
+
+- #define :ref:`EVTVERSION_CmpSettings_WriteSetting <group___cmp_settings_itf___staticdefines_1ga750700c9c7ec0bbb6dc3955aa94e029c>` 0x0001
+
+- #define :ref:`EVTPARAMID_CmpSettings_ReadSettings <group___cmp_settings_itf___staticdefines_1gaf7da122de920905cbe114049ceb8c8f0>` 0x0003
+
+- #define :ref:`EVTVERSION_CmpSettings_ReadSettings <group___cmp_settings_itf___staticdefines_1ga0331f84a914939e52fc9e99ec77c81e5>` 0x0001
+
+- #define :ref:`EVT_Settg_ReadSetting <group___cmp_settings_itf___events_1gaa41007a91826be42e696079cafab45e5>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`EVT_Settg_WriteSetting <group___cmp_settings_itf___events_1gaa329991b843f9dd570e8ae7335f860cd>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+
+- #define :ref:`EVT_Settg_ReadSettings <group___cmp_settings_itf___events_1gaf0b81b548f82d6a85170dcd4de08d002>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 3)
+
+- #define :ref:`SRV_SETTG_READ_SETTINGS <group___cmp_settings_itf___onlineservices_1ga945ed69f9c4328ac7c281be47602c21c>` 0x06
+
+- #define :ref:`SRV_SETTG_WRITE_SETTINGS <group___cmp_settings_itf___onlineservices_1gacb22471190917bfc9e9c71b451d775b1>` 0x07
+
+- #define :ref:`SRV_SETTG_GET_INT_VALUE <group___cmp_settings_itf___onlineservices_1ga84ac20cb1209ac357914d622f7888257>` 0x01
+
+- #define :ref:`SRV_SETTG_SET_INT_VALUE <group___cmp_settings_itf___onlineservices_1ga5094a040a98fa4105ed1f9713d8ed8bd>` 0x02
+
+- #define :ref:`SRV_SETTG_GET_STRING_VALUE <group___cmp_settings_itf___onlineservices_1ga74b91b1e7ada8be435e541b9d35a4dbc>` 0x03
+
+- #define :ref:`SRV_SETTG_SET_STRING_VALUE <group___cmp_settings_itf___onlineservices_1ga76c95859b16275f35459a136ac10acfd>` 0x04
+
+- #define :ref:`SRV_SETTG_REMOVE_KEY <group___cmp_settings_itf___onlineservices_1gad48c7718c996c713adf957dff7788247>` 0x05
+
+- #define :ref:`TAGNEST_SETTG_GET_INT_VALUE <group___cmp_settings_itf___onlineservices_1ga80a6f429a31e77449c5ba0789bd646e1>` 0x81
+
+- #define :ref:`TAG_SETTG_GET_INT_RESPONSE <group___cmp_settings_itf___onlineservices_1ga73b60b2621e9295a692e17d45d31aa5a>` 0x01
+
+- #define :ref:`TAGNEST_SETTG_SET_INT_VALUE <group___cmp_settings_itf___onlineservices_1gae4833631eb28d6f8fe124217be9b1edf>` 0x81
+
+- #define :ref:`TAG_SETTG_SET_INT_RESPONSE <group___cmp_settings_itf___onlineservices_1ga8610a18c59417c004ff242319d364165>` 0x01
+
+- #define :ref:`TAGNEST_SETTG_GET_STRING_VALUE <group___cmp_settings_itf___onlineservices_1ga0d7091f158963120881d556d7621a749>` 0x81
+
+- #define :ref:`TAG_SETTG_GET_STRING_RESPONSE <group___cmp_settings_itf___onlineservices_1ga5c58c4a0d4e6483ff172e59d9aba2053>` 0x01
+
+- #define :ref:`TAGNEST_SETTG_SET_STRING_VALUE <group___cmp_settings_itf___onlineservices_1gac9415551b2877bbf4ac5157a96c2de99>` 0x81
+
+- #define :ref:`TAG_SETTG_SET_STRING_RESPONSE <group___cmp_settings_itf___onlineservices_1ga67977c25c45d26cce7cf8aa3ec4e36ff>` 0x01
+
+- #define :ref:`TAGNEST_SETTG_REMOVE_KEY <group___cmp_settings_itf___onlineservices_1ga5cc7c1c166668a4636141ba16b0609ba>` 0x81
+
+- #define :ref:`TAG_SETTG_REMOVE_KEY_RESPONSE <group___cmp_settings_itf___onlineservices_1ga025ac2a06e59753862d7cdebd6f7c2db>` 0x01
+
+- #define :ref:`TAG_SETTG_COMPONENT <group___cmp_settings_itf___onlineservices_1ga6de87a3fd2b5549c2703b86f0ed8dfe4>` 0x10
+
+- #define :ref:`TAG_SETTG_KEY <group___cmp_settings_itf___onlineservices_1gaa1273691a6bfa23b853f5d8ecfaed4f2>` 0x11
+
+- #define :ref:`TAG_SETTG_INT_VALUE <group___cmp_settings_itf___onlineservices_1gabe63e751b3aa0688d6771fc8b4e38793>` 0x12
+
+- #define :ref:`TAG_SETTG_STRING_VALUE <group___cmp_settings_itf___onlineservices_1ga1935f7cbdee95b198efb02fb7494b0b3>` 0x13
+
+- #define :ref:`TAG_SETTG_ERROR_RESPONSE_ <group___cmp_settings_itf___onlineservices_1ga29af38486b8184aff568d201b3527e02>` 0x14
+
+- #define :ref:`TAG_SETTG_RESULT <group___cmp_settings_itf___onlineservices_1ga36c0194b94d11057e541760fc535511b>` 0x15
+
+- #define :ref:`TAGNEST_SETTINGS <group___cmp_settings_itf___onlineservices_1ga0e508ba8feca209ff2a18a95deb54c5f>` 0x86
+
+- #define :ref:`TAGNEST_SETTING_INFO <group___cmp_settings_itf___onlineservices_1gacdf50cf334e8ebcc5b868f4d764b0a38>` 0x87
+
+- #define :ref:`TAG_SETTG_CATEGORY <group___cmp_settings_itf___onlineservices_1ga56b6e5abf08193290e5611859ba2ada3>` 0x20
+
+- #define :ref:`TAG_SETTG_DESCRIPTION <group___cmp_settings_itf___onlineservices_1ga5c5d42179a47fd2b5481cef88ad2325e>` 0x21
+
+- #define :ref:`TAG_SETTG_FLAGS <group___cmp_settings_itf___onlineservices_1ga9fcedd831fa33079af4bcaa380815d71>` 0x22
+
+- #define :ref:`TAGNEST_SETTG_SETTING_SELECTABLE <group___cmp_settings_itf___onlineservices_1ga71d1c14ff7df922c54c6170d400e08bf>` 0x88
+
+- #define :ref:`TAG_SETTG_SELECTED <group___cmp_settings_itf___onlineservices_1ga9a746398dc8eec0bfca5f28083f846ab>` 0x23
+
+- #define :ref:`TAG_SETTG_NUM_OF_SETTINGS <group___cmp_settings_itf___onlineservices_1gad9dc2348a09d371729b8e4b1b05b075c>` 0x24
+
+- #define :ref:`TAGNEST_SETTG_SETTING_SELECTABLE_ENTRY <group___cmp_settings_itf___onlineservices_1gacddacb439647fa5f91dcf6383a1fe46a>` 0x89
+
+- #define :ref:`TAG_SETTG_SETTING_FLAGS <group___cmp_settings_itf___onlineservices_1gae1545453ce2d14b899530c46b3b62f84>` 0x31
+
+- #define :ref:`TAG_SETTG_SETTING_NAME <group___cmp_settings_itf___onlineservices_1gaccd3c62d91e7abdde876e4fb3b6e0c16>` 0x32
+
+- #define :ref:`TAG_SETTG_SETTING_DESCRIPTION <group___cmp_settings_itf___onlineservices_1ga6ca761946a2abd58038beed50afcd751>` 0x33
+
+- #define :ref:`TAGNEST_SETTG_SETTING_EDITABLE <group___cmp_settings_itf___onlineservices_1ga3da5bc5023409118b7a9369bf94e4075>` 0x8A
+
+- #define :ref:`TAG_SETTG_SETTING_VALUE_INT <group___cmp_settings_itf___onlineservices_1gae26e3bce4af09ec7aea13ccb6fbbe522>` 0x40
+
+- #define :ref:`TAG_SETTG_SETTING_DEFAULTVALUE_INT <group___cmp_settings_itf___onlineservices_1ga60ae344b1a2a263e4f7eb929e65cd1ac>` 0x41
+
+- #define :ref:`TAG_SETTG_SETTING_VALUE_STRING <group___cmp_settings_itf___onlineservices_1ga456f3478fba6d6768f54d172cc24eeed>` 0x42
+
+- #define :ref:`TAG_SETTG_SETTING_DEFAULTVALUE_STRING <group___cmp_settings_itf___onlineservices_1gab48fa8c5bcd1dfde61a1e54119e1303b>` 0x43
+
+- #define :ref:`USE_settgbeginupdate <group___cmp_settings_itf_1ga49013fe1432fd33ef4485edd9f4fa0da>` :ref:`PFSETTGBEGINUPDATE_IEC <group___cmp_settings_itf_1ga2f07d0e0be85076a60d434e4c83969b6>` pfsettgbeginupdate;
+
+- #define :ref:`EXT_settgbeginupdate <group___cmp_settings_itf_1ga791f734377b3d1673a5d219b66ad4049>` extern :ref:`PFSETTGBEGINUPDATE_IEC <group___cmp_settings_itf_1ga2f07d0e0be85076a60d434e4c83969b6>` pfsettgbeginupdate;
+
+- #define :ref:`GET_settgbeginupdate <group___cmp_settings_itf_1ga0168ca34985f0caf9f672081ac7ba452>` s_pfCMGetAPI2( "settgbeginupdate", (RTS_VOID_FCTPTR *)&pfsettgbeginupdate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x8767D13E, 0x03050700)
+
+- #define :ref:`CAL_settgbeginupdate <group___cmp_settings_itf_1gaeca59e2d2fb6149f92f381f1ba59b017>` pfsettgbeginupdate
+
+- #define :ref:`CHK_settgbeginupdate <group___cmp_settings_itf_1ga02f050b541cdc628efdbf7338f3e3b21>` (pfsettgbeginupdate != NULL)
+
+- #define :ref:`EXP_settgbeginupdate <group___cmp_settings_itf_1gab8876585eeb3f3ff40721a496ce5ad55>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"settgbeginupdate", (RTS_UINTPTR) :ref:`settgbeginupdate <group___cmp_settings_itf_1ga1c247b6ac87d1f48e8669882598218c4>` , 1, 0x8767D13E, 0x03050700)
+
+- #define :ref:`USE_settgendupdate <group___cmp_settings_itf_1ga22395b7b72222324c843c304dcfc0ead>` :ref:`PFSETTGENDUPDATE_IEC <group___cmp_settings_itf_1ga48ba40592a4a335971d266248bc8c5af>` pfsettgendupdate;
+
+- #define :ref:`EXT_settgendupdate <group___cmp_settings_itf_1gac397d2d85c21540ec1b8ede4a2911b68>` extern :ref:`PFSETTGENDUPDATE_IEC <group___cmp_settings_itf_1ga48ba40592a4a335971d266248bc8c5af>` pfsettgendupdate;
+
+- #define :ref:`GET_settgendupdate <group___cmp_settings_itf_1ga4601c99663e7cb8136f2e720219d11f6>` s_pfCMGetAPI2( "settgendupdate", (RTS_VOID_FCTPTR *)&pfsettgendupdate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x460858D3, 0x03050700)
+
+- #define :ref:`CAL_settgendupdate <group___cmp_settings_itf_1ga9a19060e94257806ae0da664c423a2e6>` pfsettgendupdate
+
+- #define :ref:`CHK_settgendupdate <group___cmp_settings_itf_1ga1e652566cfe8f574d8b8eb6b77bf8da3>` (pfsettgendupdate != NULL)
+
+- #define :ref:`EXP_settgendupdate <group___cmp_settings_itf_1ga7f879332d455c368993a68787b2c875a>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"settgendupdate", (RTS_UINTPTR) :ref:`settgendupdate <group___cmp_settings_itf_1gad2bd2b8c0c25988d55e53807eeb4e563>` , 1, 0x460858D3, 0x03050700)
+
+- #define :ref:`USE_settggetintvalue <group___cmp_settings_itf_1ga0039e3df6a63e8e561863a1d9c0b6427>` :ref:`PFSETTGGETINTVALUE_IEC <group___cmp_settings_itf_1ga38b49e6c1f3e4fe87beffcb9150e1720>` pfsettggetintvalue;
+
+- #define :ref:`EXT_settggetintvalue <group___cmp_settings_itf_1gab7e6afa823b9de0bf6db33791d59cc57>` extern :ref:`PFSETTGGETINTVALUE_IEC <group___cmp_settings_itf_1ga38b49e6c1f3e4fe87beffcb9150e1720>` pfsettggetintvalue;
+
+- #define :ref:`GET_settggetintvalue <group___cmp_settings_itf_1ga94a5679ec820a66662c1cca5c2da9c1b>` s_pfCMGetAPI2( "settggetintvalue", (RTS_VOID_FCTPTR *)&pfsettggetintvalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x0065176D), 0x03050700)
+
+- #define :ref:`CAL_settggetintvalue <group___cmp_settings_itf_1gadee79e3ea16951e3cb14dfaaf8aa7109>` pfsettggetintvalue
+
+- #define :ref:`CHK_settggetintvalue <group___cmp_settings_itf_1ga1348b0fa166dee32bebf7c38371d5dd4>` (pfsettggetintvalue != NULL)
+
+- #define :ref:`EXP_settggetintvalue <group___cmp_settings_itf_1gac1652dd3999562adee8f0dd504936088>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"settggetintvalue", (RTS_UINTPTR) :ref:`settggetintvalue <group___cmp_settings_itf_1ga058405714f9bc20e18722d3a70380ae6>` , 1, RTSITF_GET_SIGNATURE(0, 0x0065176D), 0x03050700)
+
+- #define :ref:`USE_settggetstringvalue <group___cmp_settings_itf_1gab09a61516944365a5707cbb0eb9df4ef>` :ref:`PFSETTGGETSTRINGVALUE_IEC <group___cmp_settings_itf_1gab5a16be2f5b4d19af0690aae284069c8>` pfsettggetstringvalue;
+
+- #define :ref:`EXT_settggetstringvalue <group___cmp_settings_itf_1gaeaddbf31d267f7f50e43bf95a389901e>` extern :ref:`PFSETTGGETSTRINGVALUE_IEC <group___cmp_settings_itf_1gab5a16be2f5b4d19af0690aae284069c8>` pfsettggetstringvalue;
+
+- #define :ref:`GET_settggetstringvalue <group___cmp_settings_itf_1gaa66f20c5f45ca34dd600dbecc18b5689>` s_pfCMGetAPI2( "settggetstringvalue", (RTS_VOID_FCTPTR *)&pfsettggetstringvalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x366FF6F7), 0x03050700)
+
+- #define :ref:`CAL_settggetstringvalue <group___cmp_settings_itf_1ga28beb3b0966b0364155207a1c854bfb2>` pfsettggetstringvalue
+
+- #define :ref:`CHK_settggetstringvalue <group___cmp_settings_itf_1ga16914d43d7a93548f317586580384f0a>` (pfsettggetstringvalue != NULL)
+
+- #define :ref:`EXP_settggetstringvalue <group___cmp_settings_itf_1ga1ebc06022a6f4ef9100ca01c81a2541f>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"settggetstringvalue", (RTS_UINTPTR) :ref:`settggetstringvalue <group___cmp_settings_itf_1ga7f9f12abafe9aa41ff83fa41f1b16a98>` , 1, RTSITF_GET_SIGNATURE(0, 0x366FF6F7), 0x03050700)
+
+- #define :ref:`USE_settggetwstringvalue <group___cmp_settings_itf_1gae1d9c0c577d76381bb367520939a64c2>` :ref:`PFSETTGGETWSTRINGVALUE_IEC <group___cmp_settings_itf_1ga3652da67b073f26b911fe6c10560e518>` pfsettggetwstringvalue;
+
+- #define :ref:`EXT_settggetwstringvalue <group___cmp_settings_itf_1ga27fd7c63bf01092d05eded9476f424ef>` extern :ref:`PFSETTGGETWSTRINGVALUE_IEC <group___cmp_settings_itf_1ga3652da67b073f26b911fe6c10560e518>` pfsettggetwstringvalue;
+
+- #define :ref:`GET_settggetwstringvalue <group___cmp_settings_itf_1ga253ab302ecd35e335af1a4d71a2172af>` s_pfCMGetAPI2( "settggetwstringvalue", (RTS_VOID_FCTPTR *)&pfsettggetwstringvalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x17E6DC47), 0x03050700)
+
+- #define :ref:`CAL_settggetwstringvalue <group___cmp_settings_itf_1gafed60d14d6851d773a382093267566e5>` pfsettggetwstringvalue
+
+- #define :ref:`CHK_settggetwstringvalue <group___cmp_settings_itf_1gab40a6bac761edff57633b5a8eeeb8688>` (pfsettggetwstringvalue != NULL)
+
+- #define :ref:`EXP_settggetwstringvalue <group___cmp_settings_itf_1ga08dcff8dd8b1f8b619bf400528313168>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"settggetwstringvalue", (RTS_UINTPTR) :ref:`settggetwstringvalue <group___cmp_settings_itf_1gaae23386c075dbb861d83a77a89c2a6b7>` , 1, RTSITF_GET_SIGNATURE(0, 0x17E6DC47), 0x03050700)
+
+- #define :ref:`USE_settgremovekey <group___cmp_settings_itf_1ga7403a29de1e455c0de05cc01e94a2ef6>` :ref:`PFSETTGREMOVEKEY_IEC <group___cmp_settings_itf_1ga786e93a9922b722c834f4e34cc9e7af4>` pfsettgremovekey;
+
+- #define :ref:`EXT_settgremovekey <group___cmp_settings_itf_1ga96a36fa1f880ba425302f093ca438e96>` extern :ref:`PFSETTGREMOVEKEY_IEC <group___cmp_settings_itf_1ga786e93a9922b722c834f4e34cc9e7af4>` pfsettgremovekey;
+
+- #define :ref:`GET_settgremovekey <group___cmp_settings_itf_1gaa6f44d275919d1726de95f7cd6712e27>` s_pfCMGetAPI2( "settgremovekey", (RTS_VOID_FCTPTR *)&pfsettgremovekey, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xBA5C250F), 0x03050700)
+
+- #define :ref:`CAL_settgremovekey <group___cmp_settings_itf_1ga5f0b4bc037e073ebdbda8d83ad42b25e>` pfsettgremovekey
+
+- #define :ref:`CHK_settgremovekey <group___cmp_settings_itf_1gaefd615a938cbc42ffdd8bd8da26cf0e6>` (pfsettgremovekey != NULL)
+
+- #define :ref:`EXP_settgremovekey <group___cmp_settings_itf_1ga2b890987aae94a5045013c7913896526>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"settgremovekey", (RTS_UINTPTR) :ref:`settgremovekey <group___cmp_settings_itf_1ga4def6e66b8e047abe8cf8c4bb15236d8>` , 1, RTSITF_GET_SIGNATURE(0, 0xBA5C250F), 0x03050700)
+
+- #define :ref:`USE_settgsetintvalue <group___cmp_settings_itf_1gac9e5f7671ce53ae8b688f7d55063a9bd>` :ref:`PFSETTGSETINTVALUE_IEC <group___cmp_settings_itf_1gaaec31df635d52b746bd5daf5248d453d>` pfsettgsetintvalue;
+
+- #define :ref:`EXT_settgsetintvalue <group___cmp_settings_itf_1gac969953865c975321129a0bcfbf0c737>` extern :ref:`PFSETTGSETINTVALUE_IEC <group___cmp_settings_itf_1gaaec31df635d52b746bd5daf5248d453d>` pfsettgsetintvalue;
+
+- #define :ref:`GET_settgsetintvalue <group___cmp_settings_itf_1ga40d21457f537a1c16b37d2b7f605ceba>` s_pfCMGetAPI2( "settgsetintvalue", (RTS_VOID_FCTPTR *)&pfsettgsetintvalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xBC5E022C), 0x03050700)
+
+- #define :ref:`CAL_settgsetintvalue <group___cmp_settings_itf_1gadc2fd4dabda4945a06adba13eb2f0ed4>` pfsettgsetintvalue
+
+- #define :ref:`CHK_settgsetintvalue <group___cmp_settings_itf_1ga03003e48a1aba8fd8c2d1bd70dfbe2d3>` (pfsettgsetintvalue != NULL)
+
+- #define :ref:`EXP_settgsetintvalue <group___cmp_settings_itf_1ga1e66d2e818c5fb9fde6d54b66dca4de8>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"settgsetintvalue", (RTS_UINTPTR) :ref:`settgsetintvalue <group___cmp_settings_itf_1gad3a1ec9e6d1c5d1a9f5f573b97b4dc19>` , 1, RTSITF_GET_SIGNATURE(0, 0xBC5E022C), 0x03050700)
+
+- #define :ref:`USE_settgsetstringvalue <group___cmp_settings_itf_1ga66d2c6992e2dddb8f37faa39364b1683>` :ref:`PFSETTGSETSTRINGVALUE_IEC <group___cmp_settings_itf_1ga85e69ebcd34990ee27abc941f6e706ad>` pfsettgsetstringvalue;
+
+- #define :ref:`EXT_settgsetstringvalue <group___cmp_settings_itf_1gaf42a20715864bb3f84c1e99a5e105f92>` extern :ref:`PFSETTGSETSTRINGVALUE_IEC <group___cmp_settings_itf_1ga85e69ebcd34990ee27abc941f6e706ad>` pfsettgsetstringvalue;
+
+- #define :ref:`GET_settgsetstringvalue <group___cmp_settings_itf_1ga43e3ce2b5a548a1345689f7c40b49a54>` s_pfCMGetAPI2( "settgsetstringvalue", (RTS_VOID_FCTPTR *)&pfsettgsetstringvalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x63FA6ABA), 0x03050700)
+
+- #define :ref:`CAL_settgsetstringvalue <group___cmp_settings_itf_1ga9fec1876a7c01e1a002913b125d2da30>` pfsettgsetstringvalue
+
+- #define :ref:`CHK_settgsetstringvalue <group___cmp_settings_itf_1ga7ac732eab4f70379734ba54988e1f2d8>` (pfsettgsetstringvalue != NULL)
+
+- #define :ref:`EXP_settgsetstringvalue <group___cmp_settings_itf_1ga0978eec7ed0cac493b1adff9ae8bfece>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"settgsetstringvalue", (RTS_UINTPTR) :ref:`settgsetstringvalue <group___cmp_settings_itf_1ga28d689092768b2f3aedd39bc61c4254b>` , 1, RTSITF_GET_SIGNATURE(0, 0x63FA6ABA), 0x03050700)
+
+- #define :ref:`USE_settgsetwstringvalue <group___cmp_settings_itf_1ga79e9656d7b7f0bfd6bed8fbd056e866b>` :ref:`PFSETTGSETWSTRINGVALUE_IEC <group___cmp_settings_itf_1ga6d81d00eec52cb0339ed159f3878a9f2>` pfsettgsetwstringvalue;
+
+- #define :ref:`EXT_settgsetwstringvalue <group___cmp_settings_itf_1gaedd35857fee9d6234a6773cca8765176>` extern :ref:`PFSETTGSETWSTRINGVALUE_IEC <group___cmp_settings_itf_1ga6d81d00eec52cb0339ed159f3878a9f2>` pfsettgsetwstringvalue;
+
+- #define :ref:`GET_settgsetwstringvalue <group___cmp_settings_itf_1ga203610152dedb331cc9d9a7d177acb3c>` s_pfCMGetAPI2( "settgsetwstringvalue", (RTS_VOID_FCTPTR *)&pfsettgsetwstringvalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x61870FE4), 0x03050700)
+
+- #define :ref:`CAL_settgsetwstringvalue <group___cmp_settings_itf_1gaad184f25192296d15d0d11e163678305>` pfsettgsetwstringvalue
+
+- #define :ref:`CHK_settgsetwstringvalue <group___cmp_settings_itf_1ga86f6a9ad987398138dae09355db568da>` (pfsettgsetwstringvalue != NULL)
+
+- #define :ref:`EXP_settgsetwstringvalue <group___cmp_settings_itf_1ga83690dbaaf6952d52a5287c305f402be>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"settgsetwstringvalue", (RTS_UINTPTR) :ref:`settgsetwstringvalue <group___cmp_settings_itf_1gaa4ce33eff979c2db48ad57761d482a6f>` , 1, RTSITF_GET_SIGNATURE(0, 0x61870FE4), 0x03050700)
+
+- #define :ref:`USE_SettgSetDatabaseName <group___cmp_settings_itf_1ga29dfc39344048c9f3e9485b6676e969f>` :ref:`PFSETTGSETDATABASENAME <group___cmp_settings_itf_1ga90c49a8d4c944c25b19ff580be05e72d>` pfSettgSetDatabaseName;
+
+- #define :ref:`EXT_SettgSetDatabaseName <group___cmp_settings_itf_1gae52a99962251863e567b72d1bfc4c074>` extern :ref:`PFSETTGSETDATABASENAME <group___cmp_settings_itf_1ga90c49a8d4c944c25b19ff580be05e72d>` pfSettgSetDatabaseName;
+
+- #define :ref:`GET_SettgSetDatabaseName <group___cmp_settings_itf_1gabef42826a830fbd8a2ba757939b2639d>` s_pfCMGetAPI2( "SettgSetDatabaseName", (RTS_VOID_FCTPTR *)&pfSettgSetDatabaseName, (fl), 0, 0)
+
+- #define :ref:`CAL_SettgSetDatabaseName <group___cmp_settings_itf_1ga2bfcbea61d61527b12bb81fb005d3c1c>` pfSettgSetDatabaseName
+
+- #define :ref:`CHK_SettgSetDatabaseName <group___cmp_settings_itf_1ga8352c8c4dd1ebff1543cc132f99735a1>` (pfSettgSetDatabaseName != NULL)
+
+- #define :ref:`EXP_SettgSetDatabaseName <group___cmp_settings_itf_1ga9beed539366d4e53d00fa9fd10f8df36>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgSetDatabaseName", (RTS_UINTPTR) :ref:`SettgSetDatabaseName <group___cmp_settings_itf_1ga5b13294041c659d3855495a94fec3436>` , 0, 0)
+
+- #define :ref:`USE_SettgGetDatabaseName <group___cmp_settings_itf_1gaf47808d8ec2c32490e525d466f6c2016>` :ref:`PFSETTGGETDATABASENAME <group___cmp_settings_itf_1ga4570b6530ea09651509f368b2c0566a4>` pfSettgGetDatabaseName;
+
+- #define :ref:`EXT_SettgGetDatabaseName <group___cmp_settings_itf_1gaa1c07975863404906689405d4150e2e7>` extern :ref:`PFSETTGGETDATABASENAME <group___cmp_settings_itf_1ga4570b6530ea09651509f368b2c0566a4>` pfSettgGetDatabaseName;
+
+- #define :ref:`GET_SettgGetDatabaseName <group___cmp_settings_itf_1gab9857e8bf1f1b26f9fec0f2c2156e944>` s_pfCMGetAPI2( "SettgGetDatabaseName", (RTS_VOID_FCTPTR *)&pfSettgGetDatabaseName, (fl), 0, 0)
+
+- #define :ref:`CAL_SettgGetDatabaseName <group___cmp_settings_itf_1ga7ea33a5cea7dba10c7bc28f60fbd8638>` pfSettgGetDatabaseName
+
+- #define :ref:`CHK_SettgGetDatabaseName <group___cmp_settings_itf_1ga1b5980c3cacf52637f25d61113475d5d>` (pfSettgGetDatabaseName != NULL)
+
+- #define :ref:`EXP_SettgGetDatabaseName <group___cmp_settings_itf_1ga8183192ba2fd89a08891052b917e19cc>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgGetDatabaseName", (RTS_UINTPTR) :ref:`SettgGetDatabaseName <group___cmp_settings_itf_1ga21c32c1a063d877edc31b28dad65157c>` , 0, 0)
+
+- #define :ref:`USE_SettgBeginUpdate <group___cmp_settings_itf_1gad01a978550a4b88226deb1e2e801c364>` :ref:`PFSETTGBEGINUPDATE <group___cmp_settings_itf_1gae6e2bb2e1c9c2edbbce76c17ccb1129e>` pfSettgBeginUpdate;
+
+- #define :ref:`EXT_SettgBeginUpdate <group___cmp_settings_itf_1ga0c240839cd5ffb9f34f0c0c7234610c1>` extern :ref:`PFSETTGBEGINUPDATE <group___cmp_settings_itf_1gae6e2bb2e1c9c2edbbce76c17ccb1129e>` pfSettgBeginUpdate;
+
+- #define :ref:`GET_SettgBeginUpdate <group___cmp_settings_itf_1ga4bc19831bc520ed0c9fb938042a01f8d>` s_pfCMGetAPI2( "SettgBeginUpdate", (RTS_VOID_FCTPTR *)&pfSettgBeginUpdate, (fl), 0, 0)
+
+- #define :ref:`CAL_SettgBeginUpdate <group___cmp_settings_itf_1gadb52707a63ecf8c375786a088b1b0d5e>` pfSettgBeginUpdate
+
+- #define :ref:`CHK_SettgBeginUpdate <group___cmp_settings_itf_1ga854da9b8be44d5ef411dbf3f9484fcd5>` (pfSettgBeginUpdate != NULL)
+
+- #define :ref:`EXP_SettgBeginUpdate <group___cmp_settings_itf_1ga240d1cc03a15bb4ab9544e25020a40c0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgBeginUpdate", (RTS_UINTPTR) :ref:`SettgBeginUpdate <group___cmp_settings_itf_1ga3144a29b4f6138f5e17cb4f386c55cd8>` , 0, 0)
+
+- #define :ref:`USE_SettgEndUpdate <group___cmp_settings_itf_1gab0cdcacd9bc15bcb09abdc6f5a8be57e>` :ref:`PFSETTGENDUPDATE <group___cmp_settings_itf_1ga88f709864f257f126759adebcf73dc97>` pfSettgEndUpdate;
+
+- #define :ref:`EXT_SettgEndUpdate <group___cmp_settings_itf_1ga5b4ad733361ca11ad0c09fe6c1514592>` extern :ref:`PFSETTGENDUPDATE <group___cmp_settings_itf_1ga88f709864f257f126759adebcf73dc97>` pfSettgEndUpdate;
+
+- #define :ref:`GET_SettgEndUpdate <group___cmp_settings_itf_1gae45d22a8fe97339edede9ef85b9854a8>` s_pfCMGetAPI2( "SettgEndUpdate", (RTS_VOID_FCTPTR *)&pfSettgEndUpdate, (fl), 0, 0)
+
+- #define :ref:`CAL_SettgEndUpdate <group___cmp_settings_itf_1ga69ae1e24cc5b8814801889d65a2a2fe9>` pfSettgEndUpdate
+
+- #define :ref:`CHK_SettgEndUpdate <group___cmp_settings_itf_1ga5b81195f8fbdf906668bb174a33dc5cf>` (pfSettgEndUpdate != NULL)
+
+- #define :ref:`EXP_SettgEndUpdate <group___cmp_settings_itf_1ga421efe509299dce54301d3e86360dca4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgEndUpdate", (RTS_UINTPTR) :ref:`SettgEndUpdate <group___cmp_settings_itf_1ga86a918a1605515febd878a121d53e178>` , 0, 0)
+
+- #define :ref:`USE_SettgGetAccessCounter_ <group___cmp_settings_itf_1ga9b30b6152c257ae3ecdf965d2a02a4cb>` :ref:`PFSETTGGETACCESSCOUNTER_ <group___cmp_settings_itf_1ga749d4f33ed7eba88b06cd4ceae10a722>` pfSettgGetAccessCounter_;
+
+- #define :ref:`EXT_SettgGetAccessCounter_ <group___cmp_settings_itf_1ga3cca9a2f7a985a0b1c38cb6021108f0e>` extern :ref:`PFSETTGGETACCESSCOUNTER_ <group___cmp_settings_itf_1ga749d4f33ed7eba88b06cd4ceae10a722>` pfSettgGetAccessCounter_;
+
+- #define :ref:`GET_SettgGetAccessCounter_ <group___cmp_settings_itf_1ga1c0142a86926ff52973b8604bb82bbd8>` s_pfCMGetAPI2( "SettgGetAccessCounter_", (RTS_VOID_FCTPTR *)&pfSettgGetAccessCounter_, (fl), 0, 0)
+
+- #define :ref:`CAL_SettgGetAccessCounter_ <group___cmp_settings_itf_1ga73509479b6dd0ecae1215074e6511e39>` pfSettgGetAccessCounter_
+
+- #define :ref:`CHK_SettgGetAccessCounter_ <group___cmp_settings_itf_1ga709d962011437ee1d206bfa12d8a8a6d>` (pfSettgGetAccessCounter_ != NULL)
+
+- #define :ref:`EXP_SettgGetAccessCounter_ <group___cmp_settings_itf_1ga6cffdcf09d7b649a7ee9dbd4b2a643c5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgGetAccessCounter_", (RTS_UINTPTR) :ref:`SettgGetAccessCounter_ <group___cmp_settings_itf_1ga2ef4c36f8552703c5063003b5c0b0374>` , 0, 0)
+
+- #define :ref:`USE_SettgGetIntValue <group___cmp_settings_itf_1ga28ff22523f6368ce1748b1b60bb6b8b4>` :ref:`PFSETTGGETINTVALUE <group___cmp_settings_itf_1ga9002d62e8eb5c654497b2a017d33128b>` pfSettgGetIntValue;
+
+- #define :ref:`EXT_SettgGetIntValue <group___cmp_settings_itf_1gaa063bb6dde96ec5a26d202d7c6425176>` extern :ref:`PFSETTGGETINTVALUE <group___cmp_settings_itf_1ga9002d62e8eb5c654497b2a017d33128b>` pfSettgGetIntValue;
+
+- #define :ref:`GET_SettgGetIntValue <group___cmp_settings_itf_1ga4f61375d2c3a8b02e1e02eba9e36318c>` s_pfCMGetAPI2( "SettgGetIntValue", (RTS_VOID_FCTPTR *)&pfSettgGetIntValue, (fl), 0, 0)
+
+- #define :ref:`CAL_SettgGetIntValue <group___cmp_settings_itf_1ga594cbe4caf9942fa721fa67d1c3bce72>` pfSettgGetIntValue
+
+- #define :ref:`CHK_SettgGetIntValue <group___cmp_settings_itf_1ga0686f51a1325906718f36c80a2a63e85>` (pfSettgGetIntValue != NULL)
+
+- #define :ref:`EXP_SettgGetIntValue <group___cmp_settings_itf_1ga0a860498036182cfe3cafcefe2c5a1da>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgGetIntValue", (RTS_UINTPTR) :ref:`SettgGetIntValue <group___cmp_settings_itf_1ga800174c932098dfd6187bee4b301582d>` , 0, 0)
+
+- #define :ref:`USE_SettgSetIntValue <group___cmp_settings_itf_1ga7eded04fedfda1ed53541ecf316b0154>` :ref:`PFSETTGSETINTVALUE <group___cmp_settings_itf_1ga32083b4979786ed03b303acb6e75a80e>` pfSettgSetIntValue;
+
+- #define :ref:`EXT_SettgSetIntValue <group___cmp_settings_itf_1ga18e2b655e0a2fe1c307b33f9bb33dc0b>` extern :ref:`PFSETTGSETINTVALUE <group___cmp_settings_itf_1ga32083b4979786ed03b303acb6e75a80e>` pfSettgSetIntValue;
+
+- #define :ref:`GET_SettgSetIntValue <group___cmp_settings_itf_1gac484c4512be782801c8d48f016b36bd7>` s_pfCMGetAPI2( "SettgSetIntValue", (RTS_VOID_FCTPTR *)&pfSettgSetIntValue, (fl), 0, 0)
+
+- #define :ref:`CAL_SettgSetIntValue <group___cmp_settings_itf_1gae0fb89c77359a37207e0949eb56df05f>` pfSettgSetIntValue
+
+- #define :ref:`CHK_SettgSetIntValue <group___cmp_settings_itf_1gae38c57fdfe6eca2bc6898914317646cb>` (pfSettgSetIntValue != NULL)
+
+- #define :ref:`EXP_SettgSetIntValue <group___cmp_settings_itf_1ga59b3fd2e4b0ebef9a55da1de869c8015>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgSetIntValue", (RTS_UINTPTR) :ref:`SettgSetIntValue <group___cmp_settings_itf_1ga0826837193affcc9df43a85e3dbe1ab7>` , 0, 0)
+
+- #define :ref:`USE_SettgGetStringValue <group___cmp_settings_itf_1gaaa6a466c8c690bc7134deca253ee1c07>` :ref:`PFSETTGGETSTRINGVALUE <group___cmp_settings_itf_1ga547136dd8901840615b3c34d04fe98e0>` pfSettgGetStringValue;
+
+- #define :ref:`EXT_SettgGetStringValue <group___cmp_settings_itf_1gaae2d4dd1bd41648897c4fa754295768d>` extern :ref:`PFSETTGGETSTRINGVALUE <group___cmp_settings_itf_1ga547136dd8901840615b3c34d04fe98e0>` pfSettgGetStringValue;
+
+- #define :ref:`GET_SettgGetStringValue <group___cmp_settings_itf_1gaafc6df706486badef10f6f8d2f434b7e>` s_pfCMGetAPI2( "SettgGetStringValue", (RTS_VOID_FCTPTR *)&pfSettgGetStringValue, (fl), 0, 0)
+
+- #define :ref:`CAL_SettgGetStringValue <group___cmp_settings_itf_1ga39917aca9b307bdf6173a48b67707b22>` pfSettgGetStringValue
+
+- #define :ref:`CHK_SettgGetStringValue <group___cmp_settings_itf_1ga02cfa11c27b383bb24828f42be616cee>` (pfSettgGetStringValue != NULL)
+
+- #define :ref:`EXP_SettgGetStringValue <group___cmp_settings_itf_1ga9837be097eac54caeffba0102c789570>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgGetStringValue", (RTS_UINTPTR) :ref:`SettgGetStringValue <group___cmp_settings_itf_1gaefe39b5f3acb29bbb0e08a61edbbc9be>` , 0, 0)
+
+- #define :ref:`USE_SettgSetStringValue <group___cmp_settings_itf_1ga0c2871558617ad50e3c6c643ac076555>` :ref:`PFSETTGSETSTRINGVALUE <group___cmp_settings_itf_1ga419c6a525b3f146fc1f8a24e947c63f4>` pfSettgSetStringValue;
+
+- #define :ref:`EXT_SettgSetStringValue <group___cmp_settings_itf_1ga40d60433d1363f4f092f0b38ce935774>` extern :ref:`PFSETTGSETSTRINGVALUE <group___cmp_settings_itf_1ga419c6a525b3f146fc1f8a24e947c63f4>` pfSettgSetStringValue;
+
+- #define :ref:`GET_SettgSetStringValue <group___cmp_settings_itf_1gace8ddd1369db1c94b0bffecd38a564e0>` s_pfCMGetAPI2( "SettgSetStringValue", (RTS_VOID_FCTPTR *)&pfSettgSetStringValue, (fl), 0, 0)
+
+- #define :ref:`CAL_SettgSetStringValue <group___cmp_settings_itf_1ga14c76fdaebef001d8b46e835b57830aa>` pfSettgSetStringValue
+
+- #define :ref:`CHK_SettgSetStringValue <group___cmp_settings_itf_1gabb16a7874f05a16fb617250cc740d62e>` (pfSettgSetStringValue != NULL)
+
+- #define :ref:`EXP_SettgSetStringValue <group___cmp_settings_itf_1gae18aebc2e723fc3fe480bdf199ebccff>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgSetStringValue", (RTS_UINTPTR) :ref:`SettgSetStringValue <group___cmp_settings_itf_1ga9ab4d6ec4843927416dcf292f1845edc>` , 0, 0)
+
+- #define :ref:`USE_SettgGetWStringValue <group___cmp_settings_itf_1ga7c50bee0b9a4bd1c31a4ce1033610524>` :ref:`PFSETTGGETWSTRINGVALUE <group___cmp_settings_itf_1ga43520675c27ee5e34e8f81fac6e5a01b>` pfSettgGetWStringValue;
+
+- #define :ref:`EXT_SettgGetWStringValue <group___cmp_settings_itf_1ga9abb90ea7839a1af542d38e78f43258f>` extern :ref:`PFSETTGGETWSTRINGVALUE <group___cmp_settings_itf_1ga43520675c27ee5e34e8f81fac6e5a01b>` pfSettgGetWStringValue;
+
+- #define :ref:`GET_SettgGetWStringValue <group___cmp_settings_itf_1gabd559f3933d9797e219341644441ddf1>` s_pfCMGetAPI2( "SettgGetWStringValue", (RTS_VOID_FCTPTR *)&pfSettgGetWStringValue, (fl), 0, 0)
+
+- #define :ref:`CAL_SettgGetWStringValue <group___cmp_settings_itf_1gad16e596e18d84104b8672f8a0447fc80>` pfSettgGetWStringValue
+
+- #define :ref:`CHK_SettgGetWStringValue <group___cmp_settings_itf_1ga85f63ccaba852d7dc356059aef4c10b9>` (pfSettgGetWStringValue != NULL)
+
+- #define :ref:`EXP_SettgGetWStringValue <group___cmp_settings_itf_1gabcacdbde997b0a0d961394298794181c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgGetWStringValue", (RTS_UINTPTR) :ref:`SettgGetWStringValue <group___cmp_settings_itf_1ga77c04e408cacfe28972f2599d5dc7b77>` , 0, 0)
+
+- #define :ref:`USE_SettgSetWStringValue <group___cmp_settings_itf_1gae290de60caf35cbfe123663848d55a21>` :ref:`PFSETTGSETWSTRINGVALUE <group___cmp_settings_itf_1ga193f5da6a2735cb37d4e609358a5a9df>` pfSettgSetWStringValue;
+
+- #define :ref:`EXT_SettgSetWStringValue <group___cmp_settings_itf_1gaee2e226cb9ca18d80f5fe57d54748958>` extern :ref:`PFSETTGSETWSTRINGVALUE <group___cmp_settings_itf_1ga193f5da6a2735cb37d4e609358a5a9df>` pfSettgSetWStringValue;
+
+- #define :ref:`GET_SettgSetWStringValue <group___cmp_settings_itf_1gaca5ac06ef917a63daafea1bcd0bd1379>` s_pfCMGetAPI2( "SettgSetWStringValue", (RTS_VOID_FCTPTR *)&pfSettgSetWStringValue, (fl), 0, 0)
+
+- #define :ref:`CAL_SettgSetWStringValue <group___cmp_settings_itf_1gaa34d67b16cd370087980308a0afff067>` pfSettgSetWStringValue
+
+- #define :ref:`CHK_SettgSetWStringValue <group___cmp_settings_itf_1ga36e7a8559fad83070a8f89419589523c>` (pfSettgSetWStringValue != NULL)
+
+- #define :ref:`EXP_SettgSetWStringValue <group___cmp_settings_itf_1ga9ba2eb4f0133d024cd7f67de7f407fba>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgSetWStringValue", (RTS_UINTPTR) :ref:`SettgSetWStringValue <group___cmp_settings_itf_1ga3762379c74bf03d220be767f4421e302>` , 0, 0)
+
+- #define :ref:`USE_SettgRemoveKey <group___cmp_settings_itf_1ga52f95bb6d49f2f42b432d974329c03a1>` :ref:`PFSETTGREMOVEKEY <group___cmp_settings_itf_1ga20ae6c32de3874220ed714ca748b964d>` pfSettgRemoveKey;
+
+- #define :ref:`EXT_SettgRemoveKey <group___cmp_settings_itf_1gacf69f554e5b79eba0b91aa2cc6c9206a>` extern :ref:`PFSETTGREMOVEKEY <group___cmp_settings_itf_1ga20ae6c32de3874220ed714ca748b964d>` pfSettgRemoveKey;
+
+- #define :ref:`GET_SettgRemoveKey <group___cmp_settings_itf_1ga6c5dfad63b9de33acb2fef49643b2d1c>` s_pfCMGetAPI2( "SettgRemoveKey", (RTS_VOID_FCTPTR *)&pfSettgRemoveKey, (fl), 0, 0)
+
+- #define :ref:`CAL_SettgRemoveKey <group___cmp_settings_itf_1gae30b41e5558400a1411d2b7b8f764ba9>` pfSettgRemoveKey
+
+- #define :ref:`CHK_SettgRemoveKey <group___cmp_settings_itf_1ga32c70c489565d2b0d8ab94e2d647bc8d>` (pfSettgRemoveKey != NULL)
+
+- #define :ref:`EXP_SettgRemoveKey <group___cmp_settings_itf_1gac29a8bec6923cd803ad81b1c6475af93>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgRemoveKey", (RTS_UINTPTR) :ref:`SettgRemoveKey <group___cmp_settings_itf_1ga0c2e6a08f5072caea700a809f04d437b>` , 0, 0)
+
+- #define :ref:`USE_SettgClearComponent <group___cmp_settings_itf_1ga9693c2485d4376e9f22fae0eaaff3186>` :ref:`PFSETTGCLEARCOMPONENT <group___cmp_settings_itf_1gac138b609ab7cc22432b18771d506f4a0>` pfSettgClearComponent;
+
+- #define :ref:`EXT_SettgClearComponent <group___cmp_settings_itf_1ga5b1165cbf697a5bf77e1cff74ec5adfa>` extern :ref:`PFSETTGCLEARCOMPONENT <group___cmp_settings_itf_1gac138b609ab7cc22432b18771d506f4a0>` pfSettgClearComponent;
+
+- #define :ref:`GET_SettgClearComponent <group___cmp_settings_itf_1gaa51dae7a920a3c80af23ebe8c6162006>` s_pfCMGetAPI2( "SettgClearComponent", (RTS_VOID_FCTPTR *)&pfSettgClearComponent, (fl), 0, 0)
+
+- #define :ref:`CAL_SettgClearComponent <group___cmp_settings_itf_1gad7d9395345f364e71dadc385ae51b7be>` pfSettgClearComponent
+
+- #define :ref:`CHK_SettgClearComponent <group___cmp_settings_itf_1ga8548bbfa6d79bd7cb10f3dfc3f31fcb4>` (pfSettgClearComponent != NULL)
+
+- #define :ref:`EXP_SettgClearComponent <group___cmp_settings_itf_1ga8a83745f02422ce0decd8a786f24f537>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgClearComponent", (RTS_UINTPTR) :ref:`SettgClearComponent <group___cmp_settings_itf_1ga06ff561dfa54f44fa423c16bc2519837>` , 0, 0)
+
+- #define :ref:`ITF_CmpSettings <group___cmp_settings_itf_1ga64ea3c2d56d30b6ecc6536470c373331>`
+
+- #define :ref:`EXTITF_CmpSettings <group___cmp_settings_itf_1gad30a0c68940603f26aaf6fb4e47bc03e>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`_SelectableSettingEntry <struct___selectable_setting_entry>` :ref:`SelectableSettingEntry <group___cmp_settings_itf_1gacecd88d3ac4d937333060c61f33119e5>`
+
+- typedef struct :ref:`_SelectableSetting <struct___selectable_setting>` :ref:`SelectableSetting <group___cmp_settings_itf_1gaa357f19e667e0704f9a8a4a587b1b134>`
+
+- typedef struct :ref:`_EditableSetting <struct___editable_setting>` :ref:`EditableSetting <group___cmp_settings_itf_1gabdf4ffcf0d324068327fc47547d76a9a>`
+
+- typedef struct :ref:`_SettingEntry <struct___setting_entry>` :ref:`SettingEntry <group___cmp_settings_itf_1gac110039506bf146e630965a7925af2cd>`
+
+- typedef struct :ref:`_EVTPARAM_SettgReadSetting <struct___e_v_t_p_a_r_a_m___settg_read_setting>` :ref:`EVTPARAM_SettgReadSetting <group___cmp_settings_itf___staticdefines_1ga328b8a914b62a62d78c954be9ba9acd0>`
+
+- typedef struct :ref:`_EVTPARAM_SettgWriteSetting <struct___e_v_t_p_a_r_a_m___settg_write_setting>` :ref:`EVTPARAM_SettgWriteSetting <group___cmp_settings_itf___staticdefines_1ga36e53538b07583edfa6fc33308812cb7>`
+
+- typedef struct :ref:`_EVTPARAM_SettgReadSettings <struct___e_v_t_p_a_r_a_m___settg_read_settings>` :ref:`EVTPARAM_SettgReadSettings <group___cmp_settings_itf___staticdefines_1gab7d9f3841f8c5ce74439821bb234865f>`
+
+- typedef struct :ref:`tagsettgbeginupdate_struct <structtagsettgbeginupdate__struct>` :ref:`settgbeginupdate_struct <group___cmp_settings_itf_1ga49c970dace927f010cc12fa8e2359cd8>`
+
+- typedef void(* :ref:`PFSETTGBEGINUPDATE_IEC <group___cmp_settings_itf_1ga2f07d0e0be85076a60d434e4c83969b6>`)(settgbeginupdate_struct *p)
+
+- typedef struct :ref:`tagsettgendupdate_struct <structtagsettgendupdate__struct>` :ref:`settgendupdate_struct <group___cmp_settings_itf_1gac48f8e02e70ceeba8096a496be6e30ca>`
+
+- typedef void(* :ref:`PFSETTGENDUPDATE_IEC <group___cmp_settings_itf_1ga48ba40592a4a335971d266248bc8c5af>`)(settgendupdate_struct *p)
+
+- typedef struct :ref:`tagsettggetintvalue_struct <structtagsettggetintvalue__struct>` :ref:`settggetintvalue_struct <group___cmp_settings_itf_1ga06a50d00e609d3bdaaf8334011910031>`
+
+- typedef void(* :ref:`PFSETTGGETINTVALUE_IEC <group___cmp_settings_itf_1ga38b49e6c1f3e4fe87beffcb9150e1720>`)(settggetintvalue_struct *p)
+
+- typedef struct :ref:`tagsettggetstringvalue_struct <structtagsettggetstringvalue__struct>` :ref:`settggetstringvalue_struct <group___cmp_settings_itf_1gaf8f5c20db1b4f4b2785fd3ea78ff79bc>`
+
+- typedef void(* :ref:`PFSETTGGETSTRINGVALUE_IEC <group___cmp_settings_itf_1gab5a16be2f5b4d19af0690aae284069c8>`)(settggetstringvalue_struct *p)
+
+- typedef struct :ref:`tagsettggetwstringvalue_struct <structtagsettggetwstringvalue__struct>` :ref:`settggetwstringvalue_struct <group___cmp_settings_itf_1ga2837229feaa26f8d28fcec4d148f0053>`
+
+- typedef void(* :ref:`PFSETTGGETWSTRINGVALUE_IEC <group___cmp_settings_itf_1ga3652da67b073f26b911fe6c10560e518>`)(settggetwstringvalue_struct *p)
+
+- typedef struct :ref:`tagsettgremovekey_struct <structtagsettgremovekey__struct>` :ref:`settgremovekey_struct <group___cmp_settings_itf_1ga5ed7167510657423b8a55525c698bb24>`
+
+- typedef void(* :ref:`PFSETTGREMOVEKEY_IEC <group___cmp_settings_itf_1ga786e93a9922b722c834f4e34cc9e7af4>`)(settgremovekey_struct *p)
+
+- typedef struct :ref:`tagsettgsetintvalue_struct <structtagsettgsetintvalue__struct>` :ref:`settgsetintvalue_struct <group___cmp_settings_itf_1ga27bc1372ce37a2301f198eca0529f8b4>`
+
+- typedef void(* :ref:`PFSETTGSETINTVALUE_IEC <group___cmp_settings_itf_1gaaec31df635d52b746bd5daf5248d453d>`)(settgsetintvalue_struct *p)
+
+- typedef struct :ref:`tagsettgsetstringvalue_struct <structtagsettgsetstringvalue__struct>` :ref:`settgsetstringvalue_struct <group___cmp_settings_itf_1ga6c37ee5f078ce12587dd70b68726b2fd>`
+
+- typedef void(* :ref:`PFSETTGSETSTRINGVALUE_IEC <group___cmp_settings_itf_1ga85e69ebcd34990ee27abc941f6e706ad>`)(settgsetstringvalue_struct *p)
+
+- typedef struct :ref:`tagsettgsetwstringvalue_struct <structtagsettgsetwstringvalue__struct>` :ref:`settgsetwstringvalue_struct <group___cmp_settings_itf_1ga919221e6c976d0c3525382c1d19b7827>`
+
+- typedef void(* :ref:`PFSETTGSETWSTRINGVALUE_IEC <group___cmp_settings_itf_1ga6d81d00eec52cb0339ed159f3878a9f2>`)(settgsetwstringvalue_struct *p)
+
+- typedef RTS_RESULT(* :ref:`PFSETTGSETDATABASENAME <group___cmp_settings_itf_1ga90c49a8d4c944c25b19ff580be05e72d>`)(char *pszName)
+
+- typedef RTS_RESULT(* :ref:`PFSETTGGETDATABASENAME <group___cmp_settings_itf_1ga4570b6530ea09651509f368b2c0566a4>`)(char *pszName, RTS_SIZE nNameLen)
+
+- typedef RTS_RESULT(* :ref:`PFSETTGBEGINUPDATE <group___cmp_settings_itf_1gae6e2bb2e1c9c2edbbce76c17ccb1129e>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFSETTGENDUPDATE <group___cmp_settings_itf_1ga88f709864f257f126759adebcf73dc97>`)(void)
+
+- typedef RTS_I32(* :ref:`PFSETTGGETACCESSCOUNTER_ <group___cmp_settings_itf_1ga749d4f33ed7eba88b06cd4ceae10a722>`)(RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSETTGGETINTVALUE <group___cmp_settings_itf_1ga9002d62e8eb5c654497b2a017d33128b>`)(const char *pszComponent, const char *pszKey, RTS_I32 *piValue, int iDefault, int bCached)
+
+- typedef RTS_RESULT(* :ref:`PFSETTGSETINTVALUE <group___cmp_settings_itf_1ga32083b4979786ed03b303acb6e75a80e>`)(const char *pszComponent, const char *pszKey, RTS_I32 iValue, int iBase)
+
+- typedef RTS_RESULT(* :ref:`PFSETTGGETSTRINGVALUE <group___cmp_settings_itf_1ga547136dd8901840615b3c34d04fe98e0>`)(const char *pszComponent, const char *pszKey, char *pszValue, RTS_I32 *piLen, char *pszDefault, int bCached)
+
+- typedef RTS_RESULT(* :ref:`PFSETTGSETSTRINGVALUE <group___cmp_settings_itf_1ga419c6a525b3f146fc1f8a24e947c63f4>`)(const char *pszComponent, const char *pszKey, char *pszValue, RTS_I32 iLen)
+
+- typedef RTS_RESULT(* :ref:`PFSETTGGETWSTRINGVALUE <group___cmp_settings_itf_1ga43520675c27ee5e34e8f81fac6e5a01b>`)(const char *pszComponent, const char *pszKey, RTS_WCHAR *pwszValue, RTS_I32 *piLen, RTS_WCHAR *pwszDefault, int bCached)
+
+- typedef RTS_RESULT(* :ref:`PFSETTGSETWSTRINGVALUE <group___cmp_settings_itf_1ga193f5da6a2735cb37d4e609358a5a9df>`)(const char *pszComponent, const char *pszKey, RTS_WCHAR *pwszValue, RTS_I32 iLen)
+
+- typedef RTS_RESULT(* :ref:`PFSETTGREMOVEKEY <group___cmp_settings_itf_1ga20ae6c32de3874220ed714ca748b964d>`)(const char *pszComponent, const char *pszKey)
+
+- typedef RTS_RESULT(* :ref:`PFSETTGCLEARCOMPONENT <group___cmp_settings_itf_1gac138b609ab7cc22432b18771d506f4a0>`)(const char *pszComponent)
+
+- typedef :ref:`ICmpSettings_C <struct_i_cmp_settings___c>` :ref:`ICmpSettings <group___cmp_settings_itf_1gab38ea2e3be302ed8e8c25f98c1eb8c1a>`
+
+Functions
+---------
+
+- void :ref:`settgbeginupdate <group___cmp_settings_itf_1ga1c247b6ac87d1f48e8669882598218c4>` (:ref:`settgbeginupdate_struct <group___cmp_settings_itf_1ga49c970dace927f010cc12fa8e2359cd8>` * p)
+
+- void :ref:`settgendupdate <group___cmp_settings_itf_1gad2bd2b8c0c25988d55e53807eeb4e563>` (:ref:`settgendupdate_struct <group___cmp_settings_itf_1gac48f8e02e70ceeba8096a496be6e30ca>` * p)
+
+- void :ref:`settggetintvalue <group___cmp_settings_itf_1ga058405714f9bc20e18722d3a70380ae6>` (:ref:`settggetintvalue_struct <group___cmp_settings_itf_1ga06a50d00e609d3bdaaf8334011910031>` * p)
+
+- void :ref:`settggetstringvalue <group___cmp_settings_itf_1ga7f9f12abafe9aa41ff83fa41f1b16a98>` (:ref:`settggetstringvalue_struct <group___cmp_settings_itf_1gaf8f5c20db1b4f4b2785fd3ea78ff79bc>` * p)
+
+- void :ref:`settggetwstringvalue <group___cmp_settings_itf_1gaae23386c075dbb861d83a77a89c2a6b7>` (:ref:`settggetwstringvalue_struct <group___cmp_settings_itf_1ga2837229feaa26f8d28fcec4d148f0053>` * p)
+
+- void :ref:`settgremovekey <group___cmp_settings_itf_1ga4def6e66b8e047abe8cf8c4bb15236d8>` (:ref:`settgremovekey_struct <group___cmp_settings_itf_1ga5ed7167510657423b8a55525c698bb24>` * p)
+
+- void :ref:`settgsetintvalue <group___cmp_settings_itf_1gad3a1ec9e6d1c5d1a9f5f573b97b4dc19>` (:ref:`settgsetintvalue_struct <group___cmp_settings_itf_1ga27bc1372ce37a2301f198eca0529f8b4>` * p)
+
+- void :ref:`settgsetstringvalue <group___cmp_settings_itf_1ga28d689092768b2f3aedd39bc61c4254b>` (:ref:`settgsetstringvalue_struct <group___cmp_settings_itf_1ga6c37ee5f078ce12587dd70b68726b2fd>` * p)
+
+- void :ref:`settgsetwstringvalue <group___cmp_settings_itf_1gaa4ce33eff979c2db48ad57761d482a6f>` (:ref:`settgsetwstringvalue_struct <group___cmp_settings_itf_1ga919221e6c976d0c3525382c1d19b7827>` * p)
+
+- RTS_RESULT :ref:`SettgSetDatabaseName <group___cmp_settings_itf_1ga5b13294041c659d3855495a94fec3436>` (char * pszName)
+
+- RTS_RESULT :ref:`SettgGetDatabaseName <group___cmp_settings_itf_1ga21c32c1a063d877edc31b28dad65157c>` (char * pszName, RTS_SIZE nNameLen)
+
+- RTS_RESULT :ref:`SettgBeginUpdate <group___cmp_settings_itf_1ga3144a29b4f6138f5e17cb4f386c55cd8>` (void)
+
+- RTS_RESULT :ref:`SettgEndUpdate <group___cmp_settings_itf_1ga86a918a1605515febd878a121d53e178>` (void)
+
+- RTS_I32 :ref:`SettgGetAccessCounter_ <group___cmp_settings_itf_1ga2ef4c36f8552703c5063003b5c0b0374>` (RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SettgGetIntValue <group___cmp_settings_itf_1ga800174c932098dfd6187bee4b301582d>` (const char * pszComponent, const char * pszKey, RTS_I32 * piValue, int iDefault, int bCached)
+
+- RTS_RESULT :ref:`SettgSetIntValue <group___cmp_settings_itf_1ga0826837193affcc9df43a85e3dbe1ab7>` (const char * pszComponent, const char * pszKey, RTS_I32 iValue, int iBase)
+
+- RTS_RESULT :ref:`SettgGetStringValue <group___cmp_settings_itf_1gaefe39b5f3acb29bbb0e08a61edbbc9be>` (const char * pszComponent, const char * pszKey, char * pszValue, RTS_I32 * piLen, char * pszDefault, int bCached)
+
+- RTS_RESULT :ref:`SettgSetStringValue <group___cmp_settings_itf_1ga9ab4d6ec4843927416dcf292f1845edc>` (const char * pszComponent, const char * pszKey, char * pszValue, RTS_I32 iLen)
+
+- RTS_RESULT :ref:`SettgGetWStringValue <group___cmp_settings_itf_1ga77c04e408cacfe28972f2599d5dc7b77>` (const char * pszComponent, const char * pszKey, RTS_WCHAR * pwszValue, RTS_I32 * piLen, RTS_WCHAR * pwszDefault, int bCached)
+
+- RTS_RESULT :ref:`SettgSetWStringValue <group___cmp_settings_itf_1ga3762379c74bf03d220be767f4421e302>` (const char * pszComponent, const char * pszKey, RTS_WCHAR * pwszValue, RTS_I32 iLen)
+
+- RTS_RESULT :ref:`SettgRemoveKey <group___cmp_settings_itf_1ga0c2e6a08f5072caea700a809f04d437b>` (const char * pszComponent, const char * pszKey)
+
+- RTS_RESULT :ref:`SettgClearComponent <group___cmp_settings_itf_1ga06ff561dfa54f44fa423c16bc2519837>` (const char * pszComponent)
+
+Detailed Description
+--------------------
+
+Definition in file CmpSettingsItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

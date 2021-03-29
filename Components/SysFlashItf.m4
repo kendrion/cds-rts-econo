@@ -2,13 +2,13 @@
  * <interfacename>SysFlash</interfacename>
  * <description> 
  *	<p>The SysFlash interface is projected to get access to flash memory of a controller.
- *	It has to be adpated to your flash.</p>
+ *	It has to be adapted to your flash.</p>
  *	<p>There are functions to read and write to flash memory. It is used by some implementations
  *	of the file component (SysFileFlash) to store some files in flash, and by the 
  *	application component for execution of user code in flash. 
  *  The SysFlash Component divides two different kinds of flash areas:
  *  FA_CODE and FA_FILE. FA_FILE is only needed, if SysFileFlash is used.
- *  Please see further description for SysFileFlash and our Flash-Filesystem.
+ *  Please see further description for SysFileFlash and our Flash file system.
  *	Please note that the offsets of the files have to correspond with sector borders of the flash. One file should be
  *	stored in one sector.</p>
  *  <p>There is also the possibility to use more than one code area in the project and to move the 
@@ -18,7 +18,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -36,7 +36,7 @@ SET_INTERFACE_NAME(`SysFlash')
  * <type>Int</type>
  * <description>
  *	Max. size of a block, which is erased in one piece. If a block exceeds this size, the erase operation
- *  is splitted up into several calls of SysFlashErase_(), each limited to this value. 
+ *  is divided up into several calls of SysFlashErase_(), each limited to this value. 
  *  Should be set to a size, which is erased in below 1 second, because the CommCycleHook is called after
  *  each block to keep the rest of the RTS alive.  
  * </description>
@@ -51,7 +51,7 @@ SET_INTERFACE_NAME(`SysFlash')
  * <type>Int</type>
  * <description>
  *	Max. size of a block, which is read in one piece. If a block exceeds this size, the erase operation
- *  is splitted up into several calls of SysFlashRead_(), each limited to this value. 
+ *  is divided up into several calls of SysFlashRead_(), each limited to this value. 
  *  Should be set to a size, which is read in below 1 second, because the CommCycleHook is called after
  *  each block to keep the rest of the RTS alive.  
  * </description>
@@ -66,7 +66,7 @@ SET_INTERFACE_NAME(`SysFlash')
  * <type>Int</type>
  * <description>
  *	Max. size of a block, which is written in one piece. If a block exceeds this size, the write operation
- *  is splitted up into several calls of SysFlashWrite_(), each limited to this value. 
+ *  is divided up into several calls of SysFlashWrite_(), each limited to this value. 
  *  Should be set to a size, which is written in below 1 second, because the CommCycleHook is called after
  *  each block to keep the rest of the RTS alive.  
  * </description>
@@ -81,7 +81,7 @@ SET_INTERFACE_NAME(`SysFlash')
  * <type>Int</type>
  * <description>
  *	Max. size of a block, which is flushed in one piece. If a block exceeds this size, the flush operation
- *  is splitted up into several calls of SysFlashFlush_(), each limited to this value. 
+ *  is divided up into several calls of SysFlashFlush_(), each limited to this value. 
  *  Should be set to a size, which is flushed in below 1 second, because the CommCycleHook is called after
  *  each block to keep the rest of the RTS alive.  
  * </description>
@@ -119,12 +119,13 @@ RTS_RESULT CDECL SysFlashOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysFlashOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
 /**
- * <description>
- *	Init the flash system
+ * <description>Obsolete: SysFlashInit() is not called from the runtime. Use hook function (e.g. CH_INIT) instead.
+ *  <p>
+ *	Init the flash system </p>
  * </description>
  * <param name="fa" type="IN" range="[FA_UNKNOWN,FA_FILE,FA_CODE]">Flash area that shall be used for the operation. Now, FA_CODE and FA_FILE are defined.</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Flash init was successful</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_NOT_SUPPORTED">Type of Flasharea is not supported</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Flash initialization was successful</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_NOT_SUPPORTED">Type of flash area is not supported</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Flash could not be initialized </errorcode>
  * <result>error code</result>
  */
@@ -141,7 +142,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysFlashInit',`(FlashArea fa)')
  * <param name="ulSize" type="IN" range="[0,VALID_FLASH_SIZE,INVALID_FLASH_SIZE]">Size of flash area to erase</param>
  * <param name="ulOffset" type="IN" range="[0,VALID_FLASH_OFFSET,INVALID_FLASH_OFFSET]">Offset of flash area to erase. The function adds the start address of the flash to calculate the physical address of the area.</param>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">Flash erase was successful</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_NOT_SUPPORTED">Type of Flasharea is not supported</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_NOT_SUPPORTED">Type of flash area is not supported</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">size or offset wrong</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Flash could not be erased </errorcode>
  * <result>error code</result>
@@ -160,7 +161,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysFlashErase',`(FlashArea fa, RTS_SIZE ulSize
  * <param name="ulSize" type="IN" range="[0,VALID_BUFFER_SIZE,INVALID_BUFFER_SIZE]">Size of the buffer</param>
  * <param name="ulOffset" type="IN" range="[0,VALID_FLASH_OFFSET,INVALID_FLASH_OFFSET]">Offset of flash area to read from. The function adds the start address of the flash to calculate the physical address of the area.</param>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">Flash read was successful</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_NOT_SUPPORTED">Type of Flasharea is not supported</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_NOT_SUPPORTED">Type of flash area is not supported</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">pcDest,size or offset wrong or null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Flash could not be read </errorcode>
  * <result>error code</result>
@@ -179,7 +180,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysFlashRead',`(FlashArea fa, char *pcDest, RT
  * <param name="ulSize" type="IN" range="[0,VALID_BUFFER_SIZE,INVALID_BUFFER_SIZE]">Size of the buffer</param>
  * <param name="ulOffset" type="IN" range="[0,VALID_FLASH_OFFSET,INVALID_FLASH_OFFSET]">Offset of flash area to write to. The function adds the start address of the flash to calculate the physical address of the area.</param>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">Flash read was successful</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_NOT_SUPPORTED">Type of Flasharea is not supported</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_NOT_SUPPORTED">Type of flash area is not supported</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">pcSrc,size or offset wrong or null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Flash could not be read </errorcode>
  * <result>error code</result>
@@ -197,7 +198,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysFlashWrite',`(FlashArea fa, char *pcSource,
  * <param name="ulSize" type="IN" range="[0,VALID_BUFFER_SIZE,INVALID_BUFFER_SIZE]">Size of the buffer</param>
  * <param name="ulOffset" type="IN" range="[0,VALID_FLASH_OFFSET,INVALID_FLASH_OFFSET]">Offset of flash area to write to. The function adds the start address of the flash to calculate the physical address of the area.</param>
  * <errorcode name="RTS_RESULT Result" type="ERR_OK">Flash flush was successful</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_NOT_SUPPORTED">Type of Flasharea is not supported</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_NOT_SUPPORTED">Type of flash area is not supported</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">size or offset wrong or null</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Flash could not be flushed </errorcode>
  * <result>error code</result>
@@ -215,9 +216,9 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysFlashFlush',`(FlashArea fa, RTS_SIZE ulSize
  * <parampseudo name="bExceptionGenerated" type="OUT" range="[TRUE,FALSE]">An exception was generated.</parampseudo>
  * <parampseudo name="bPatternExists" type="OUT" range="[TRUE,FALSE]">The pattern could be read, using standard memory access.</parampseudo>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Startaddress was successful retrieved</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Type of Flasharea is not supported</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Startaddress could not be retrieved</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Start address was successful retrieved</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Type of flash area is not supported</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Start address could not be retrieved</errorcode>
  * <result>Physical address of flash area</result>
  */
 DEF_ITF_API(`RTS_UINTPTR',`CDECL',`SysFlashGetPhysicalAddress',`(FlashArea fa, RTS_RESULT *pResult)')
@@ -228,9 +229,9 @@ DEF_ITF_API(`RTS_UINTPTR',`CDECL',`SysFlashGetPhysicalAddress',`(FlashArea fa, R
  * </description>
  * <param name="fa" type="IN" range="[FA_UNKNOWN,FA_FILE,FA_CODE]">Flash area that shall be used for the operation. Now, FA_CODE and FA_FILE are defined.</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Flashsize was successful retrieved</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Type of Flasharea is not supported</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Flashsize could not be retrieved</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Flash size was successful retrieved</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Type of flash area is not supported</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Flash size could not be retrieved</errorcode>
  * <result>Size of flash area</result>
  */
 DEF_ITF_API(`RTS_SIZE',`CDECL',`SysFlashGetSize',`(FlashArea fa, RTS_RESULT *pResult)')
@@ -244,7 +245,7 @@ DEF_ITF_API(`RTS_SIZE',`CDECL',`SysFlashGetSize',`(FlashArea fa, RTS_RESULT *pRe
  * <param name="ulSize" type="IN" range="[0,VALID_BUFFER_SIZE,INVALID_BUFFER_SIZE]">Size of flash area to erase</param>
  * <param name="ulOffset" type="IN" range="[0,VALID_FLASH_OFFSET,INVALID_FLASH_OFFSET]">Offset of flash area to erase. The function adds the start address of the flash to calculate the physical address of the area.</param>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Flash was successfully erased</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Type of Flasharea is not supported</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Type of flash area is not supported</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">Size or Offset is not correct</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Flash could not be erased</errorcode>
  * <result>error code</result>
@@ -261,7 +262,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysFlashErase_',`(FlashArea fa, RTS_SIZE ulSiz
  * <param name="ulSize" type="IN" range="[0,VALID_BUFFER_SIZE,INVALID_BUFFER_SIZE]">Size of the buffer</param>
  * <param name="ulOffset" type="IN" range="[0,VALID_FLASH_OFFSET,INVALID_FLASH_OFFSET]">Offset of flash area to read from. The function adds the start address of the flash to calculate the physical address of the area.</param>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Flash was successfully read</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Type of Flasharea is not supported</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Type of flash area is not supported</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">Size or Offset is not correct</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Flash could not be read</errorcode>
  * <result>error code</result>
@@ -278,7 +279,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysFlashRead_',`(FlashArea fa, char *pcDest, R
  * <param name="ulSize" type="IN" range="[0,VALID_BUFFER_SIZE,INVALID_BUFFER_SIZE]">Size of the buffer</param>
  * <param name="ulOffset" type="IN" range="[0,VALID_FLASH_OFFSET,INVALID_FLASH_OFFSET]">Offset of flash area to write to. The function adds the start address of the flash to calculate the physical address of the area.</param>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Flash was successfully written</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Type of Flasharea is not supported</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Type of flash area is not supported</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">Size or Offset is not correct</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Flash could not be written</errorcode>
  * <result>error code</result>
@@ -296,7 +297,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysFlashWrite_',`(FlashArea fa, char *pcSource
  * <param name="ulSize" type="IN" range="[0,VALID_BUFFER_SIZE,INVALID_BUFFER_SIZE]">Size of the buffer</param>
  * <param name="ulOffset" type="IN" range="[0,VALID_FLASH_OFFSET,INVALID_FLASH_OFFSET]">Offset of flash area to write to. The function adds the start address of the flash to calculate the physical address of the area.</param>
   * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Flash was successfully flushed</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Type of Flasharea is not supported</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Type of flash area is not supported</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">Size or Offset is not correct</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Flash could not be flushed</errorcode>
  * <result>error code</result>

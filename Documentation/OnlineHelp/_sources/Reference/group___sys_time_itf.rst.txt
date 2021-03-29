@@ -1,0 +1,553 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_time_itf:
+
+==========
+SysTimeItf
+==========
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of SysTime.
+
+Detailed Description
+--------------------
+
+The SysTime interface is projected to get access to time tick values with different resolutions (millisecond, microsecond, nanosecond).
+
+All different ticks are wrapping around their natural data type limits (RTS_UI32 or RTS_SYSTIME). Therefore, they can be used to measure difference timings. They can't either be used to measure absolute timings nor can they be calculated from one to each other.
+
+Implementation Notes:
+
+  - All three different timers need their own handling of a wrap around, because they have a wrap around at different points in time at different boundaries. In practice, this implies the need for an own, static offset counter for every timer.
+
+  - If the timer is based on a periodic interrupt (e.g. millisecond tick), it works only as long as no interrupt lock is held. This might be the case in some flash drivers for example.
+
+  - Some timers are called very regularly. So if the wrap around of the timer source itself is very late (low frequency + large timer register), it might be enough for the system to detect timer overruns only at every call.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Settings <group___sys_time_itf___settings>`
+
+Data Structures
+---------------
+
+- struct :ref:`tagsystimegetms_struct <structtagsystimegetms__struct>`
+
+- struct :ref:`tagsystimegetns_struct <structtagsystimegetns__struct>`
+
+- struct :ref:`tagsystimegetus_struct <structtagsystimegetus__struct>`
+
+- struct :ref:`ISysTime_C <struct_i_sys_time___c>`
+
+Macros
+------
+
+- #define :ref:`_RTS_SYSTIME <group___sys_time_itf_1gaaf1cf18246c150405b48bfb9306b735c>`
+
+- #define :ref:`RTS_SYSTIME_MAX <group___sys_time_itf_1ga1321183beff6b4ebd89a9f325c57f568>` (~(( :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` )0))
+
+- #define :ref:`USE_systimegetms <group___sys_time_itf_1gaffae96d0867a727c1fe51e32cd0c9297>` :ref:`PFSYSTIMEGETMS_IEC <group___sys_time_itf_1ga418a4c4f2aea3036c3c896118bdf07c9>` pfsystimegetms;
+
+- #define :ref:`EXT_systimegetms <group___sys_time_itf_1gae3759f8c74ab063cfdcd8344d89f3ea4>` extern :ref:`PFSYSTIMEGETMS_IEC <group___sys_time_itf_1ga418a4c4f2aea3036c3c896118bdf07c9>` pfsystimegetms;
+
+- #define :ref:`GET_systimegetms <group___sys_time_itf_1ga260d3699ea6fd5cf75751b775980822b>` s_pfCMGetAPI2( "systimegetms", (RTS_VOID_FCTPTR *)&pfsystimegetms, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x9306CA2B), 0x03050500)
+
+- #define :ref:`CAL_systimegetms <group___sys_time_itf_1ga4a3f9822e21beeef771a26bb4821b4bd>` pfsystimegetms
+
+- #define :ref:`CHK_systimegetms <group___sys_time_itf_1ga04cab4af083e44f7cc37bfb5cf6ce949>` (pfsystimegetms != NULL)
+
+- #define :ref:`EXP_systimegetms <group___sys_time_itf_1gae4e7f068e0e779d20556221da8ad9a00>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimegetms", (RTS_UINTPTR) :ref:`systimegetms <group___sys_time_itf_1gab77e2618b8f1cf127526883480969a8a>` , 1, RTSITF_GET_SIGNATURE(0, 0x9306CA2B), 0x03050500)
+
+- #define :ref:`USE_systimegetns <group___sys_time_itf_1ga14420b3c9c83f2e442ad74deec0690a4>` :ref:`PFSYSTIMEGETNS_IEC <group___sys_time_itf_1gabe629188dfc8795503469d01918040c3>` pfsystimegetns;
+
+- #define :ref:`EXT_systimegetns <group___sys_time_itf_1gafcab9cdc5d8c137d953fb73622d00955>` extern :ref:`PFSYSTIMEGETNS_IEC <group___sys_time_itf_1gabe629188dfc8795503469d01918040c3>` pfsystimegetns;
+
+- #define :ref:`GET_systimegetns <group___sys_time_itf_1ga55c1a1a3e942b5d215b1faa574155d63>` s_pfCMGetAPI2( "systimegetns", (RTS_VOID_FCTPTR *)&pfsystimegetns, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x7EED4E09), 0x03050500)
+
+- #define :ref:`CAL_systimegetns <group___sys_time_itf_1ga189ae55bb60f4363f937e4a3442ba3bf>` pfsystimegetns
+
+- #define :ref:`CHK_systimegetns <group___sys_time_itf_1gadbd64ea6831b494bca872d01ed2da873>` (pfsystimegetns != NULL)
+
+- #define :ref:`EXP_systimegetns <group___sys_time_itf_1gab98dc1e1c14fc6a14eff3962e8fc16a6>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimegetns", (RTS_UINTPTR) :ref:`systimegetns <group___sys_time_itf_1ga14210114e502d8f93d9a8ce89e9aa460>` , 1, RTSITF_GET_SIGNATURE(0, 0x7EED4E09), 0x03050500)
+
+- #define :ref:`USE_systimegetus <group___sys_time_itf_1ga46103d5232ba5349ff8a5347df62f95d>` :ref:`PFSYSTIMEGETUS_IEC <group___sys_time_itf_1ga513c47b79d913baebe86f4882772b4e0>` pfsystimegetus;
+
+- #define :ref:`EXT_systimegetus <group___sys_time_itf_1gad13364c5d084136f1298f321f863b74d>` extern :ref:`PFSYSTIMEGETUS_IEC <group___sys_time_itf_1ga513c47b79d913baebe86f4882772b4e0>` pfsystimegetus;
+
+- #define :ref:`GET_systimegetus <group___sys_time_itf_1gadd477ef200be6f5a36d380e03a3c1ffa>` s_pfCMGetAPI2( "systimegetus", (RTS_VOID_FCTPTR *)&pfsystimegetus, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x6C6308BF), 0x03050500)
+
+- #define :ref:`CAL_systimegetus <group___sys_time_itf_1gaf61a066f1e10d74ec9105b41a1638906>` pfsystimegetus
+
+- #define :ref:`CHK_systimegetus <group___sys_time_itf_1gaf40869362aaad0dc9387bba8b836d2ed>` (pfsystimegetus != NULL)
+
+- #define :ref:`EXP_systimegetus <group___sys_time_itf_1ga1e0e4ad79be81dea1b8d4a86a7db8e74>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimegetus", (RTS_UINTPTR) :ref:`systimegetus <group___sys_time_itf_1ga48ffbaabd21f1fd0ecbf6844a6197361>` , 1, RTSITF_GET_SIGNATURE(0, 0x6C6308BF), 0x03050500)
+
+- #define :ref:`USE_SysTimeGetMs <group___sys_time_itf_1gac4762c1cd64e9adb1d249dacb8bfa241>` :ref:`PFSYSTIMEGETMS <group___sys_time_itf_1ga34b65003a1a4d4303540beb320ec7162>` pfSysTimeGetMs;
+
+- #define :ref:`EXT_SysTimeGetMs <group___sys_time_itf_1gaf092623a7809c1de3c25ca63d2ce4480>` extern :ref:`PFSYSTIMEGETMS <group___sys_time_itf_1ga34b65003a1a4d4303540beb320ec7162>` pfSysTimeGetMs;
+
+- #define :ref:`GET_SysTimeGetMs <group___sys_time_itf_1gac3bd6e235c502e3b925915449a7a5ecb>` s_pfCMGetAPI2( "SysTimeGetMs", (RTS_VOID_FCTPTR *)&pfSysTimeGetMs, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimeGetMs <group___sys_time_itf_1gad4f0aca033f6da4c18a8c07103332ddf>` pfSysTimeGetMs
+
+- #define :ref:`CHK_SysTimeGetMs <group___sys_time_itf_1gadcc16644dbf53fc75661beb5eb6f070f>` (pfSysTimeGetMs != NULL)
+
+- #define :ref:`EXP_SysTimeGetMs <group___sys_time_itf_1gad90d50d384912dfc88e7378af8a5a107>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimeGetMs", (RTS_UINTPTR) :ref:`SysTimeGetMs <group___sys_time_itf_1ga5da4ae803f6328356b5e07dfcc518d59>` , 0, 0)
+
+- #define :ref:`USE_SysTimeGetUs <group___sys_time_itf_1ga2079a17e0b5ce941e99dde0a6daf5bd6>` :ref:`PFSYSTIMEGETUS <group___sys_time_itf_1gac62444293c2fe5b6a97cfccd8dffa4fc>` pfSysTimeGetUs;
+
+- #define :ref:`EXT_SysTimeGetUs <group___sys_time_itf_1ga1f2cc3ad5b1aeff5c313dc303368004a>` extern :ref:`PFSYSTIMEGETUS <group___sys_time_itf_1gac62444293c2fe5b6a97cfccd8dffa4fc>` pfSysTimeGetUs;
+
+- #define :ref:`GET_SysTimeGetUs <group___sys_time_itf_1ga55d5f7293e72eb1060888e7ffa0dc231>` s_pfCMGetAPI2( "SysTimeGetUs", (RTS_VOID_FCTPTR *)&pfSysTimeGetUs, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimeGetUs <group___sys_time_itf_1ga6bac75a47b2e94bd7d237ed3fff5b25f>` pfSysTimeGetUs
+
+- #define :ref:`CHK_SysTimeGetUs <group___sys_time_itf_1gab71a91120358288b1b5798805c08f488>` (pfSysTimeGetUs != NULL)
+
+- #define :ref:`EXP_SysTimeGetUs <group___sys_time_itf_1ga3591e2d55ab627e2d4c0d0eea0d3532b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimeGetUs", (RTS_UINTPTR) :ref:`SysTimeGetUs <group___sys_time_itf_1gafd2b289865fce2eec1a6cd530276b7a6>` , 0, 0)
+
+- #define :ref:`USE_SysTimeGetNs <group___sys_time_itf_1ga80180b8b89966d07462510deca41de53>` :ref:`PFSYSTIMEGETNS <group___sys_time_itf_1ga647225e66f5435827cb94947fb0189a3>` pfSysTimeGetNs;
+
+- #define :ref:`EXT_SysTimeGetNs <group___sys_time_itf_1gac41cd278ac667e2b5a8d7264e7b55f2c>` extern :ref:`PFSYSTIMEGETNS <group___sys_time_itf_1ga647225e66f5435827cb94947fb0189a3>` pfSysTimeGetNs;
+
+- #define :ref:`GET_SysTimeGetNs <group___sys_time_itf_1gafd8bf75bad70512caed4343257067487>` s_pfCMGetAPI2( "SysTimeGetNs", (RTS_VOID_FCTPTR *)&pfSysTimeGetNs, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTimeGetNs <group___sys_time_itf_1ga6a432e497852181784ef1ed29b053c0a>` pfSysTimeGetNs
+
+- #define :ref:`CHK_SysTimeGetNs <group___sys_time_itf_1ga7e5035c2a4e7aea1937e675d9c1227c4>` (pfSysTimeGetNs != NULL)
+
+- #define :ref:`EXP_SysTimeGetNs <group___sys_time_itf_1ga4ad960641e84741f60299b795661075e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimeGetNs", (RTS_UINTPTR) :ref:`SysTimeGetNs <group___sys_time_itf_1ga17db7eb52dff7f98f0b75c134201d765>` , 0, 0)
+
+- #define :ref:`ITF_SysTime <group___sys_time_itf_1ga01b2e21e9f7d48c6c9033bf6ce08b448>`
+
+- #define :ref:`EXTITF_SysTime <group___sys_time_itf_1ga78e4c1113ae535d7f700605487bb4ab0>`
+
+Typedefs
+--------
+
+- typedef RTS_UI64 :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>`
+
+- typedef struct :ref:`tagsystimegetms_struct <structtagsystimegetms__struct>` :ref:`systimegetms_struct <group___sys_time_itf_1gad305e0daa69f3ab7656aa678a477a75b>`
+
+- typedef void(* :ref:`PFSYSTIMEGETMS_IEC <group___sys_time_itf_1ga418a4c4f2aea3036c3c896118bdf07c9>`)(systimegetms_struct *p)
+
+- typedef struct :ref:`tagsystimegetns_struct <structtagsystimegetns__struct>` :ref:`systimegetns_struct <group___sys_time_itf_1ga9030e2651ca6fca69fa2837273d05a27>`
+
+- typedef void(* :ref:`PFSYSTIMEGETNS_IEC <group___sys_time_itf_1gabe629188dfc8795503469d01918040c3>`)(systimegetns_struct *p)
+
+- typedef struct :ref:`tagsystimegetus_struct <structtagsystimegetus__struct>` :ref:`systimegetus_struct <group___sys_time_itf_1gad8128d22b8a1333eb17944ddca4a2711>`
+
+- typedef void(* :ref:`PFSYSTIMEGETUS_IEC <group___sys_time_itf_1ga513c47b79d913baebe86f4882772b4e0>`)(systimegetus_struct *p)
+
+- typedef RTS_UI32(* :ref:`PFSYSTIMEGETMS <group___sys_time_itf_1ga34b65003a1a4d4303540beb320ec7162>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMEGETUS <group___sys_time_itf_1gac62444293c2fe5b6a97cfccd8dffa4fc>`)(RTS_SYSTIME *pTime)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTIMEGETNS <group___sys_time_itf_1ga647225e66f5435827cb94947fb0189a3>`)(RTS_SYSTIME *pTime)
+
+- typedef :ref:`ISysTime_C <struct_i_sys_time___c>` :ref:`ISysTime <group___sys_time_itf_1ga17558f05ec461b9f48f05c0be1a3c389>`
+
+Functions
+---------
+
+- void :ref:`systimegetms <group___sys_time_itf_1gab77e2618b8f1cf127526883480969a8a>` (:ref:`systimegetms_struct <group___sys_time_itf_1gad305e0daa69f3ab7656aa678a477a75b>` * p)
+
+- void :ref:`systimegetns <group___sys_time_itf_1ga14210114e502d8f93d9a8ce89e9aa460>` (:ref:`systimegetns_struct <group___sys_time_itf_1ga9030e2651ca6fca69fa2837273d05a27>` * p)
+
+- void :ref:`systimegetus <group___sys_time_itf_1ga48ffbaabd21f1fd0ecbf6844a6197361>` (:ref:`systimegetus_struct <group___sys_time_itf_1gad8128d22b8a1333eb17944ddca4a2711>` * p)
+
+- RTS_RESULT :ref:`SysTimeOSInit <group___sys_time_itf_1gae708d649d8267b52af1016d33a6bcfd5>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysTimeOSHookFunction <group___sys_time_itf_1ga43a28d8f33a6f490aa932058c5d21394>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_UI32 :ref:`SysTimeGetMs <group___sys_time_itf_1ga5da4ae803f6328356b5e07dfcc518d59>` (void)
+
+- RTS_RESULT :ref:`SysTimeGetUs <group___sys_time_itf_1gafd2b289865fce2eec1a6cd530276b7a6>` (:ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` * pTime)
+
+- RTS_RESULT :ref:`SysTimeGetNs <group___sys_time_itf_1ga17db7eb52dff7f98f0b75c134201d765>` (:ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` * pTime)
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_time_itf_1gaaf1cf18246c150405b48bfb9306b735c:
+
+#define _RTS_SYSTIME
+^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga1321183beff6b4ebd89a9f325c57f568:
+
+#define RTS_SYSTIME_MAX (~(( :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` )0))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gaffae96d0867a727c1fe51e32cd0c9297:
+
+#define USE_systimegetms :ref:`PFSYSTIMEGETMS_IEC <group___sys_time_itf_1ga418a4c4f2aea3036c3c896118bdf07c9>` pfsystimegetms;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gae3759f8c74ab063cfdcd8344d89f3ea4:
+
+#define EXT_systimegetms extern :ref:`PFSYSTIMEGETMS_IEC <group___sys_time_itf_1ga418a4c4f2aea3036c3c896118bdf07c9>` pfsystimegetms;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga260d3699ea6fd5cf75751b775980822b:
+
+#define GET_systimegetms s_pfCMGetAPI2( "systimegetms", (RTS_VOID_FCTPTR *)&pfsystimegetms, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x9306CA2B), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga4a3f9822e21beeef771a26bb4821b4bd:
+
+#define CAL_systimegetms pfsystimegetms
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga04cab4af083e44f7cc37bfb5cf6ce949:
+
+#define CHK_systimegetms (pfsystimegetms != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gae4e7f068e0e779d20556221da8ad9a00:
+
+#define EXP_systimegetms s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimegetms", (RTS_UINTPTR) :ref:`systimegetms <group___sys_time_itf_1gab77e2618b8f1cf127526883480969a8a>` , 1, RTSITF_GET_SIGNATURE(0, 0x9306CA2B), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga14420b3c9c83f2e442ad74deec0690a4:
+
+#define USE_systimegetns :ref:`PFSYSTIMEGETNS_IEC <group___sys_time_itf_1gabe629188dfc8795503469d01918040c3>` pfsystimegetns;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gafcab9cdc5d8c137d953fb73622d00955:
+
+#define EXT_systimegetns extern :ref:`PFSYSTIMEGETNS_IEC <group___sys_time_itf_1gabe629188dfc8795503469d01918040c3>` pfsystimegetns;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga55c1a1a3e942b5d215b1faa574155d63:
+
+#define GET_systimegetns s_pfCMGetAPI2( "systimegetns", (RTS_VOID_FCTPTR *)&pfsystimegetns, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x7EED4E09), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga189ae55bb60f4363f937e4a3442ba3bf:
+
+#define CAL_systimegetns pfsystimegetns
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gadbd64ea6831b494bca872d01ed2da873:
+
+#define CHK_systimegetns (pfsystimegetns != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gab98dc1e1c14fc6a14eff3962e8fc16a6:
+
+#define EXP_systimegetns s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimegetns", (RTS_UINTPTR) :ref:`systimegetns <group___sys_time_itf_1ga14210114e502d8f93d9a8ce89e9aa460>` , 1, RTSITF_GET_SIGNATURE(0, 0x7EED4E09), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga46103d5232ba5349ff8a5347df62f95d:
+
+#define USE_systimegetus :ref:`PFSYSTIMEGETUS_IEC <group___sys_time_itf_1ga513c47b79d913baebe86f4882772b4e0>` pfsystimegetus;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gad13364c5d084136f1298f321f863b74d:
+
+#define EXT_systimegetus extern :ref:`PFSYSTIMEGETUS_IEC <group___sys_time_itf_1ga513c47b79d913baebe86f4882772b4e0>` pfsystimegetus;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gadd477ef200be6f5a36d380e03a3c1ffa:
+
+#define GET_systimegetus s_pfCMGetAPI2( "systimegetus", (RTS_VOID_FCTPTR *)&pfsystimegetus, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x6C6308BF), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gaf61a066f1e10d74ec9105b41a1638906:
+
+#define CAL_systimegetus pfsystimegetus
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gaf40869362aaad0dc9387bba8b836d2ed:
+
+#define CHK_systimegetus (pfsystimegetus != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga1e0e4ad79be81dea1b8d4a86a7db8e74:
+
+#define EXP_systimegetus s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systimegetus", (RTS_UINTPTR) :ref:`systimegetus <group___sys_time_itf_1ga48ffbaabd21f1fd0ecbf6844a6197361>` , 1, RTSITF_GET_SIGNATURE(0, 0x6C6308BF), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gac4762c1cd64e9adb1d249dacb8bfa241:
+
+#define USE_SysTimeGetMs :ref:`PFSYSTIMEGETMS <group___sys_time_itf_1ga34b65003a1a4d4303540beb320ec7162>` pfSysTimeGetMs;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gaf092623a7809c1de3c25ca63d2ce4480:
+
+#define EXT_SysTimeGetMs extern :ref:`PFSYSTIMEGETMS <group___sys_time_itf_1ga34b65003a1a4d4303540beb320ec7162>` pfSysTimeGetMs;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gac3bd6e235c502e3b925915449a7a5ecb:
+
+#define GET_SysTimeGetMs s_pfCMGetAPI2( "SysTimeGetMs", (RTS_VOID_FCTPTR *)&pfSysTimeGetMs, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gad4f0aca033f6da4c18a8c07103332ddf:
+
+#define CAL_SysTimeGetMs pfSysTimeGetMs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gadcc16644dbf53fc75661beb5eb6f070f:
+
+#define CHK_SysTimeGetMs (pfSysTimeGetMs != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gad90d50d384912dfc88e7378af8a5a107:
+
+#define EXP_SysTimeGetMs s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimeGetMs", (RTS_UINTPTR) :ref:`SysTimeGetMs <group___sys_time_itf_1ga5da4ae803f6328356b5e07dfcc518d59>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga2079a17e0b5ce941e99dde0a6daf5bd6:
+
+#define USE_SysTimeGetUs :ref:`PFSYSTIMEGETUS <group___sys_time_itf_1gac62444293c2fe5b6a97cfccd8dffa4fc>` pfSysTimeGetUs;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga1f2cc3ad5b1aeff5c313dc303368004a:
+
+#define EXT_SysTimeGetUs extern :ref:`PFSYSTIMEGETUS <group___sys_time_itf_1gac62444293c2fe5b6a97cfccd8dffa4fc>` pfSysTimeGetUs;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga55d5f7293e72eb1060888e7ffa0dc231:
+
+#define GET_SysTimeGetUs s_pfCMGetAPI2( "SysTimeGetUs", (RTS_VOID_FCTPTR *)&pfSysTimeGetUs, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga6bac75a47b2e94bd7d237ed3fff5b25f:
+
+#define CAL_SysTimeGetUs pfSysTimeGetUs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gab71a91120358288b1b5798805c08f488:
+
+#define CHK_SysTimeGetUs (pfSysTimeGetUs != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga3591e2d55ab627e2d4c0d0eea0d3532b:
+
+#define EXP_SysTimeGetUs s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimeGetUs", (RTS_UINTPTR) :ref:`SysTimeGetUs <group___sys_time_itf_1gafd2b289865fce2eec1a6cd530276b7a6>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga80180b8b89966d07462510deca41de53:
+
+#define USE_SysTimeGetNs :ref:`PFSYSTIMEGETNS <group___sys_time_itf_1ga647225e66f5435827cb94947fb0189a3>` pfSysTimeGetNs;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gac41cd278ac667e2b5a8d7264e7b55f2c:
+
+#define EXT_SysTimeGetNs extern :ref:`PFSYSTIMEGETNS <group___sys_time_itf_1ga647225e66f5435827cb94947fb0189a3>` pfSysTimeGetNs;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gafd8bf75bad70512caed4343257067487:
+
+#define GET_SysTimeGetNs s_pfCMGetAPI2( "SysTimeGetNs", (RTS_VOID_FCTPTR *)&pfSysTimeGetNs, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga6a432e497852181784ef1ed29b053c0a:
+
+#define CAL_SysTimeGetNs pfSysTimeGetNs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga7e5035c2a4e7aea1937e675d9c1227c4:
+
+#define CHK_SysTimeGetNs (pfSysTimeGetNs != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga4ad960641e84741f60299b795661075e:
+
+#define EXP_SysTimeGetNs s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTimeGetNs", (RTS_UINTPTR) :ref:`SysTimeGetNs <group___sys_time_itf_1ga17db7eb52dff7f98f0b75c134201d765>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga01b2e21e9f7d48c6c9033bf6ce08b448:
+
+#define ITF_SysTime
+^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga78e4c1113ae535d7f700605487bb4ab0:
+
+#define EXTITF_SysTime
+^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf:
+
+typedef RTS_UI64 RTS_SYSTIME
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gad305e0daa69f3ab7656aa678a477a75b:
+
+typedef struct tagsystimegetms_struct  systimegetms_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION BEGIN
+
+<SIL2>
+
+Returns a monotonic rising millisecond tick. This tick can be used for timeout and relative time measurements. NOTE: The real-time clock is not influencing this tick! RETURN: Returns the millisecond tick
+
+.. _group___sys_time_itf_1ga418a4c4f2aea3036c3c896118bdf07c9:
+
+typedef void( *  PFSYSTIMEGETMS_IEC) (systimegetms_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga9030e2651ca6fca69fa2837273d05a27:
+
+typedef struct tagsystimegetns_struct  systimegetns_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<SIL2>
+
+Returns a monotonic rising nanosecond tick. This tick can be used for very high resolution time measurements NOTE: The real-time clock does not influences this tick! RETURN: Returns the runtime system error code (see CmpErrors.library)
+
+.. _group___sys_time_itf_1gabe629188dfc8795503469d01918040c3:
+
+typedef void( *  PFSYSTIMEGETNS_IEC) (systimegetns_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gad8128d22b8a1333eb17944ddca4a2711:
+
+typedef struct tagsystimegetus_struct  systimegetus_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<SIL2>
+
+Returns a monotonic rising microsecond tick. This tick can be used for timeout and high resolution time measurements. NOTE: The real-time clock does not influences this tick! RETURN: Returns the runtime system error code (see CmpErrors.library)
+
+.. _group___sys_time_itf_1ga513c47b79d913baebe86f4882772b4e0:
+
+typedef void( *  PFSYSTIMEGETUS_IEC) (systimegetus_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga34b65003a1a4d4303540beb320ec7162:
+
+typedef RTS_UI32( *  PFSYSTIMEGETMS) (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gac62444293c2fe5b6a97cfccd8dffa4fc:
+
+typedef RTS_RESULT( *  PFSYSTIMEGETUS) (RTS_SYSTIME *pTime)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga647225e66f5435827cb94947fb0189a3:
+
+typedef RTS_RESULT( *  PFSYSTIMEGETNS) (RTS_SYSTIME *pTime)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga17558f05ec461b9f48f05c0be1a3c389:
+
+typedef ISysTime_C ISysTime
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___sys_time_itf_1gab77e2618b8f1cf127526883480969a8a:
+
+void systimegetms (systimegetms_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga14210114e502d8f93d9a8ce89e9aa460:
+
+void systimegetns (systimegetns_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga48ffbaabd21f1fd0ecbf6844a6197361:
+
+void systimegetus (systimegetus_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1gae708d649d8267b52af1016d33a6bcfd5:
+
+RTS_RESULT SysTimeOSInit (INIT_STRUCT *pInit)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION END
+
+.. _group___sys_time_itf_1ga43a28d8f33a6f490aa932058c5d21394:
+
+RTS_RESULT SysTimeOSHookFunction (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_time_itf_1ga5da4ae803f6328356b5e07dfcc518d59:
+
+RTS_UI32 SysTimeGetMs (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Return a monotonic, rising millisecond tick.
+
+**Returns:**
+
+Returns the millisecond tick
+
+.. _group___sys_time_itf_1gafd2b289865fce2eec1a6cd530276b7a6:
+
+RTS_RESULT SysTimeGetUs (RTS_SYSTIME *pTime)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Return a monotonic, rising microsecond tick.
+
+**Parameters**
+
++---------+-------+----------------------------------------------------------+
+| [inout] | pTime | Pointer to the time tick result RANGE=[NULL,VALID_PTIME] |
++---------+-------+----------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+--------------------------------+
+| ERR_OK        | Time was returned successfully |
++---------------+--------------------------------+
+| ERR_PARAMETER | pTime was NULL                 |
++---------------+--------------------------------+
+| ERR_FAILED    | Internal Error                 |
++---------------+--------------------------------+
+
+.. _group___sys_time_itf_1ga17db7eb52dff7f98f0b75c134201d765:
+
+RTS_RESULT SysTimeGetNs (RTS_SYSTIME *pTime)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Return a monotonic, rising nanosecond tick.
+
+**Parameters**
+
++---------+-------+----------------------------------------------------------+
+| [inout] | pTime | Pointer to the time tick result RANGE=[NULL,VALID_PTIME] |
++---------+-------+----------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+--------------------------------+
+| ERR_OK        | Time was returned successfully |
++---------------+--------------------------------+
+| ERR_PARAMETER | pTime was NULL                 |
++---------------+--------------------------------+
+| ERR_FAILED    | Internal Error                 |
++---------------+--------------------------------+
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

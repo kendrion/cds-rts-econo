@@ -6,29 +6,29 @@
  * <p>The following drawing describes the dependencies between the structures
  * of this and other components in this context:</p>
  * <pre>
- * +-----------+ 1   1 +-----------+ 1   n +---------+
- * | Task_Desc | ----- | Task_Info | ----- | SlotPOU |
- * +-----------+       +-----------+       +---------+
- *      | n   | 1
- *      |     '--------------.
- *      | 1                  | 1
- * +-------------+     +-----------+
- * | Application |     | SchedTask |
- * +-------------+     +-----------+
+ * +-------------+ 1    1 +-----------+ 1    n +---------+
+ * | Task_Desc   | -----o | Task_Info | -----o | SlotPOU |
+ * +-------------+        +-----------+        +---------+
+ *       | n  | 1
+ *       |    '-----------------.
+ *       | 1                    | 1
+ * +-------------+        +-----------+
+ * | Application |        | SchedTask |
+ * +-------------+        +-----------+
  * </pre>
  * <p>Depending on the Scheduler, the task might furthermore be mapped to
- * a hardware ressource or another operating system object.</p>
+ * a hardware resource or another operating system object.</p>
  * <p>CmpSchedule (Multitasking):</p>
  * <pre>
- * +-----------+ 1   1 +---------------+ 1   1 +----------------+
- * | SchedTask | ----- | SYS_TASK_INFO | ----- | OS Task Handle |
- * +-----------+       +---------------+       +----------------+
+ * +-----------+ 1    1 +----------------+ 1    1 +----------------+
+ * | SchedTask | -----o | SYS_TASK_INFO  | -----o | OS Task Handle |
+ * +-----------+        +----------------+        +----------------+
  * </pre>
  * <p>CmpScheduleTimer:</p>
  * <pre>
- * +-----------+ 1   1 +----------------+ 1   1 +-----------------+
- * | SchedTask | ----- | SYS_TIMER_INFO | ----- | HW Timer Handle |
- * +-----------+       +----------------+       +-----------------+
+ * +-----------+ 1    1 +----------------+ 1    1 +-----------------+
+ * | SchedTask | -----o | SYS_TIMER_INFO | -----o | HW Timer Handle |
+ * +-----------+        +----------------+        +-----------------+
  * </pre>
  * <p>CmpScheduleEmbedded:</p>
  * <pre>
@@ -48,7 +48,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -87,6 +87,7 @@
  *		1. To really activate the task trace, you have to set the setting "EnableTaskTrace=1" in the configuration!
  *		2. CmpSchedule must be built with the same compiler switch to activate additional tracing of the SchedulerTick and optional SchedulerTimeslicing!
  * </element>
+ * <element name="RTS_IECTASK_ENABLE_DEBUG_SYSTASK" type="IN">Enable IEC debug systask feature. This feature allows to debug IEC code of callbacks from system-tasks.</element>
  * <element name="CMPIECTASK_STACK_SIZE" type="IN">Define to specify the stack size for all IEC tasks. Default size = 1MB.</element>
  * <element name="CMPIECTASK_STACK_SIZE_ADDITIONAL" type="IN">Define to specify the additional stack size for all IEC tasks (depends on the platform). Default: 0.</element>
  * <element name="CMPIECTASK_SYNCHRONIZATION_USE_SYSSEM" type="IN">Use semaphores (SysSem) instead of using SysReadWriteLock by default! This is because SysReadWriteLock could have 
@@ -99,6 +100,14 @@
 	#define RTS_IECTASK_ENABLE_TASK_TRACE
 #endif
 
+#if !defined(SYSCPUMULTICORE_NOTIMPLEMENTED) && !defined(RTS_IECTASK_ENABLE_DEBUG_SYSTASK)
+	#define RTS_IECTASK_ENABLE_DEBUG_SYSTASK
+#endif
+
+/**
+ * <category>Static defines</category>
+ * <description>Use atomic bit access for status changes on multicore targets! Only in this case the bit field remains consistent.</description>
+ */
 #if !defined(SYSCPUMULTICORE_NOTIMPLEMENTED)
 	#define IECTASK_USE_ATOMIC_BITACCESS
 #endif
@@ -194,24 +203,24 @@ typedef struct
  *
  * - PHASE 1:
  *   This is the phase at the RUN/STOP transition until the safe state of the application/machine will be reached.
- *	 In this phase, we wait only for IEC tasks wich use mapped outputs!
+ *	 In this phase, we wait only for IEC tasks which use mapped outputs!
  *	 
  * - PHASE 2:
  *   This is the phase at the RUN/STOP transition after the safe state of the application/machine has been reached.
- *	 In this phase, we wait only for IEC tasks, wich don't use mapped outputs!
+ *	 In this phase, we wait only for IEC tasks, which don't use mapped outputs!
  *	 For this phase, there is a new setting for the timeout:
  *	    [CmpIecTask]
  *	    WaitForStop.TimeoutMs_2=25000
  *  
  * Reason for this feature:
  * - This is because typically non IO tasks (AlarmTasks, TrendTasks, etc.) need a much longer cycle time at the RUN/STOP transition than the IO tasks.
- *   And so sometimes a watchdog error occurres at this non IO tasks during normal RUN/STOP transition.
+ *   And so sometimes a watchdog error occurs at this non IO tasks during normal RUN/STOP transition.
  *  
  * NOTES:
- * - To disable this feature, you can use the following new setting in the cfg-file:
+ * - To disable this feature, you can use the following new setting in the CFG-file:
  *     [CmpIecTask]
  *     WaitForStop.SkipTasksWithoutOutputs=0
- * - If your plc does not use the standard CODESYS IO-configuration/IO-mapping, you have to switch off this feature!
+ * - If your PLC does not use the standard CODESYS IO-configuration/IO-mapping, you have to switch off this feature!
  *
  * </description>
  */
@@ -224,7 +233,7 @@ typedef struct
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Flag for using simple cycle mode. To use this feature, the setting "simple_cycle" must be activated in the corresponding devdesc too!
+ *	Flag for using simple cycle mode. To use this feature, the setting "simple_cycle" must be activated in the corresponding device description too!
  * </description>
  */
 #define IECTASKKEY_INT_SIMPLE_CYCLE							"Simple_Cycle"
@@ -251,7 +260,7 @@ typedef struct
  *	Name of the task, that controls the target visualization.
  *	NOTE:
  *	For this task, the standard exception handling is skipped, if RTS_STRUCTURED_EXCEPTION_HANDLING is defined additionally! So the application is not forced in stop.
- *	Only the visu task is set in exception state and is never scheduled! All other plc tasks are executed unchanged.
+ *	Only the visu task is set in exception state and is never scheduled! All other PLC tasks are executed unchanged.
  * </description>
  */
 #define IECTASKKEY_STRING_VISU_TASK							"VisuTask"
@@ -261,7 +270,7 @@ typedef struct
  * <type>Int</type>
  * <description>
  *	Setting enables the feature to fire a watchdog during an IO-update in an IEC task!
- *	Can be disabled if this causes problems in IEC applications and so the behaviour is similar to the runtime system before v3.5.12.0.
+ *	Can be disabled if this causes problems in IEC applications and so the behavior is similar to the runtime system before v3.5.12.0.
  * </description>
  */
 #define IECTASKKEY_INT_ENABLE_WATCHDOG_DURING_IOUPDATE		"EnableWatchdogDuringIOUpdate"
@@ -340,8 +349,8 @@ typedef struct
 /**
  * <category>OperationID</category>
  * <description>Operation ID for the supervision of the RUN-STOP transition of an application</description>
- * <param name="RTS_OPID_Application_RunStop" type="IN">The OperationID is the ID of the application (see APPLICATION.iId for details)</param>
- * <param name="RTS_OPID_Application_RunStop_Description" type="IN"></param>
+ * <param name="RTS_OPID_IecTask_WatchdogInIO" type="IN"></param>
+ * <param name="RTS_OPID_IecTask_WatchdogInIO_Description" type="IN"></param>
  */
 #define RTS_OPID_IecTask_WatchdogInIO				1
 #define RTS_OPID_IecTask_WatchdogInIO_Description	"Supervision of a watchdog error during IO-update (IEC task must leave IO update)"
@@ -478,8 +487,8 @@ typedef struct
 } SlotPOU;
 
 /**
- * <category>Iec Task Flags</category>
- * <element name="ITF_VISU_TASK" type="IN">This task is a visu task</element>
+ * <category>IEC Task Flags</category>
+ * <element name="ITF_VISU_TASK" type="IN">This task is a visualization task</element>
  */
 #define ITF_VISU_TASK				0x00000001
 #define ITF_DONT_SCHEDULE			0x00000002
@@ -497,8 +506,8 @@ typedef struct
 #define ITF_IN_DEBUG_CONTEXT		0x00002000
 
 /**
- * <category>Iec Task Bits</category>
- * <element name="ITF_VISU_TASK" type="IN">This task is a visu task</element>
+ * <category>IEC Task Bits</category>
+ * <element name="ITF_VISU_TASK" type="IN">This task is a visualization task</element>
  */
 #define ITF_BIT_VISU_TASK				0
 #define ITF_BIT_DONT_SCHEDULE			1
@@ -617,8 +626,55 @@ typedef struct
 #endif
 
 /**
- * <description>Local Task Description</description>
  * <SIL2/>
+ * <description>Task Description</description>
+ * 
+ * <p>The different measured jitter terms are defined in <em>RTS Docu: CODESYSControl V3: Manual: Overview of the Kernel Components and Main Functions: Jitter of IEC Tasks.</em>
+ * See: :ref:&amp;#96;ov_kernel_iec_task_jitter&amp;#96; </p>
+ * 
+ * <p>The measured jitter values J_per_current, J_per_min, and J_per_max are stored in the struct tagTask_Info.
+ * All other measured jitter and latency values are stored in this struct tagTask_Desc.</p>
+ * 
+ *	<element name="iId" type="OUT">Unique identifier of the IEC task. HIWORD is the application ID and LOWORD the task ID (see IecTaskCalculateId())</element>
+ *	<element name="bIgnoreWatchdogInCycle" type="OUT">TRUE = Disable watchdog for the rest of the cycle</element>
+ *	<element name="hSlotPOUPool" type="OUT">Handle to the memory pool created from StaticSlotPool</element>
+ *	<element name="hIecTask" type="OUT">Handle of the IEC task</element>
+ *	<element name="hSched" type="OUT">Scheduler task handle</element>
+ *	<element name="pAppl" type="OUT">Pointer to the application description</element>
+ *	<element name="pInfo" type="OUT">Pointer to the task info</element>
+ *	<element name="Context" type="OUT">Current register context (exception context) of the task, if the task is suspended</element>
+ *	<element name="tCycleStart" type="OUT">t_r: current release time of the task in microseconds</element>
+ *	<element name="tAccumulatedCycleTime" type="OUT">Accumulated cycle time</element>
+ *	<element name="ulStackSize" type="OUT">Reserved stack size for an IEC task (CMPIECTASK_STACK_SIZE) + additional stack size (CMPIECTASK_STACK_SIZE_ADDITIONAL)</element>
+ *	<element name="StaticSlotPool" type="OUT">Pointer to the static memory for a memory pool from a static memory buffer</element>
+ *	<element name="pCppInstance" type="OUT">Internal usage for C++</element>
+ *	<element name="ulWatchdogCycleCount" type="OUT">last IEC task cycle count, when the watchdog was checked</element>
+ *	<element name="ulFlags" type="OUT">Used by the macros above</element>
+ *	<element name="iWatchdogHitCount" type="OUT">Number of times the watchdog was hit</element>
+ *	<element name="iWatchdogDisable2Ref" type="OUT">Counter for IecTaskDisableWatchdog2 calls without a matching IecTaskEnableWatchdog2 call</element>
+ *	<element name="hTracePacket" type="OUT">Handle to the trace packet for IEC-task tracing (see setting "EnableTaskTrace")</element>
+ *	<element name="hTraceRecord" type="OUT">Handle to the trace record for IEC-task tracing (see setting "EnableTaskTrace")</element>
+ *	<element name="hJitterTracePacket" type="OUT">IEC task jitter trace package handle (see setting "EnableTaskTrace")</element>
+ *	<element name="hTRLatency" type="OUT">trace record handle for the current IEC task latency (see setting "EnableTaskTrace")</element>
+ *	<element name="hTRPeriodicJitter" type="OUT">trace record handle for the current IEC task periodic jitter trace (see setting "EnableTaskTrace")</element>
+ *	<element name="hTRMinReleaseTimeJitter" type="OUT">trace record handle for the current IEC task jitter based on t_r_min (see setting "EnableTaskTrace")</element>
+ *	<element name="pSEHContextHead" type="OUT">Pointer to the head of the registered exception frames</element>
+ *	<element name="nEnterWriteLock" type="OUT">Needed when SYSREADWRITELOCK_NOTIMPLEMENTED</element>
+ *	<element name="hRWLSync" type="OUT">Handle to the semaphore needed when SYSREADWRITELOCK_NOTIMPLEMENTED</element>
+ *	<element name="tReleaseTargetMin" type="OUT">t_r_target_min in microseconds = t_r_min + n * T0:
+ *												target task release time based on the task release time with the maximum negative periodic jitter (J_per_min)
+ *												with (n * T0) being a multiple of the ideal period and n being the number of cycles that have elapsed since the reference value t_r_min (respective J_per_min) was set</element>
+ *	<element name="bJitterValuesAreInitalized" type="OUT">t_r_target_min is initialized</element>
+ *	<element name="tReleasePrevious" type="OUT">t_r_previous: previous release time of the task in microseconds</element>
+ *	<element name="tPeriod" type="OUT">T_per in microseconds: task period = t_r - t_r_previous</element>
+ *	<element name="tInvocation" type="OUT">t_i: invocation time of the task in microseconds</element>
+ *	<element name="i64CurrentMinReleaseTimeJitter" type="OUT">J_t_r_min_current in microseconds = t_r - (t_r_min + nCycSince_t_r_min * T0):
+	                               deviation of the current task release time from the target task release time based on the task release time with the maximum negative periodic jitter</element>
+ *	<element name="i64MinMinReleaseTimeJitter" type="OUT">J_t_r_min_min in microseconds</element>
+ *	<element name="i64MaxMinReleaseTimeJitter" type="OUT">J_t_r_min_max in microseconds</element>
+ *	<element name="tCurrentLatency" type="OUT">L_current: Latency [in microseconds] is the delay between the invocation of a task [t_i] and the actual start of its execution (release) [t_r].</element>
+ *	<element name="tMinLatency" type="OUT">L_min: minimum latency in microseconds</element>
+ *	<element name="tMaxLatency" type="OUT">L_max: maximum latency in microseconds</element>
  */
 typedef struct tagTask_Desc
 {
@@ -639,13 +695,30 @@ typedef struct tagTask_Desc
 	RTS_UI32 ulFlags;
 	int iWatchdogHitCount;
 	RTS_I32 iWatchdogDisable2Ref;
-#ifdef RTS_IECTASK_ENABLE_TASK_TRACE
+#if defined(RTS_IECTASK_ENABLE_TASK_TRACE) && !defined(RTS_SIL2)
 	RTS_HANDLE hTracePacket;
 	RTS_HANDLE hTraceRecord;
+	RTS_HANDLE hJitterTracePacket;
+	RTS_HANDLE hTRLatency;
+	RTS_HANDLE hTRPeriodicJitter;
+	RTS_HANDLE hTRMinReleaseTimeJitter;
 #endif
 	SEHContext *pSEHContextHead;
 	RTS_I32 nEnterWriteLock;
 	RTS_HANDLE hRWLSync;
+#if !defined(RTS_SIL2)
+	RTS_SYSTIME tReleaseTargetMin;
+	RTS_BOOL bJitterValuesAreInitalized;
+	RTS_SYSTIME tReleasePrevious;
+	RTS_SYSTIME tPeriod;
+	RTS_SYSTIME tInvocation;
+	RTS_I64 i64CurrentMinReleaseTimeJitter;
+	RTS_I64 i64MinMinReleaseTimeJitter;
+	RTS_I64 i64MaxMinReleaseTimeJitter;
+	RTS_SYSTIME tCurrentLatency;
+	RTS_SYSTIME tMinLatency;
+	RTS_SYSTIME tMaxLatency;
+#endif
 } Task_Desc;
 
 typedef struct tagTASK_LIST
@@ -722,7 +795,7 @@ typedef struct tagSYSIECTASKINFO
 } SYSIECTASKINFO;
 
 /**
- * <description>This function return the iec task configuration </description>
+ * <description>This function return the IEC task configuration </description>
  */
 typedef struct tagiectaskgetconfig_struct
 {
@@ -868,19 +941,19 @@ typedef struct tagJitter_Distribution
  *     | Task_Info2.dwEventFunctionPointer:
  *     | Function pointer to the event check routine in case Task_Info2.KindOfTask = TaskEvent
  *
- *     .. code-block:: codesys
+ * .. code-block:: codesys
  *
  *         FUNCTION CheckEvent : BOOL
  *         VAR_INPUT
  *         END_VAR
  *
- *         (* This function checks wether the event is triggered *)
+ *         (* This function checks whether the event is triggered *)
  *         (* by returning TRUE: raising edge, status, etc. *)
  *
  *     | Task_Info2.dwTaskEntryFunctionPointer: 
  *     | Function pointer to the task code
  *
- *     .. code-block:: codesys
+ * .. code-block:: codesys
  *
  *         FUNCTION IecTaskCyclic : BOOL
  *         VAR_INPUT
@@ -903,10 +976,15 @@ typedef struct tagJitter_Distribution
  *         (* ------ mandatory cyclic task frame code end ------ *)
  *
  * Error code:
+ *
  *     + ERR_OK: The new task was successfully created.
+ *
  *     + ERR_FAILED: There was an error in a subsystem (e.g. the scheduler could not allocate his task handle).
+ *
  *     + ERR_PARAMETER: Invalid application- or task info pointer
+ *
  *     + ERR_OUT_OF_LIMITS: Maximum number of Tasks reached (target specific)
+ *
  *     + ERR_NOMEMORY: Unable to allocate the memory, that is necessary for the task description    
  *
  * :return: Handle to newly created task
@@ -967,13 +1045,13 @@ typedef void (CDECL CDECL_EXT* PFIECTASKCREATE_IEC) (iectaskcreate_struct *p);
 
 
 /**
- * Create a new IEC Task with taskgroup
- * If the taskgroup does not exist or is no IEC taskgroup, the function returns ERR_PARAMETER.
+ * Create a new IEC Task with task group
+ * If the task group does not exist or is no IEC task group, the function returns ERR_PARAMETER.
  * See IecTaskCreate for more details.
  * Error code:
  *     + ERR_OK: The new task was successfully created.
  *     + ERR_FAILED: There was an error in a subsystem (e.g. the scheduler could not allocate his task handle).
- *     + ERR_PARAMETER: Invalid application- or task info pointer, unknown IEC taskgroup
+ *     + ERR_PARAMETER: Invalid application- or task info pointer, unknown IEC task group
  *     + ERR_OUT_OF_LIMITS: Maximum number of Tasks reached (target specific)
  *     + ERR_NOMEMORY: Unable to allocate the memory, that is necessary for the task description    
  *
@@ -983,7 +1061,7 @@ typedef struct tagiectaskcreate2_struct
 {
 	APPLICATION *pApp;					/* VAR_INPUT */	/* Pointer to application that contains the task */
 	Task_Info *pTaskInfo;				/* VAR_INPUT */	/* Pointer to task information */
-	RTS_IEC_STRING *psTaskGroup;		/* VAR_INPUT */	/* Name of existing taskgroup */
+	RTS_IEC_STRING *psTaskGroup;		/* VAR_INPUT */	/* Name of existing task group */
 	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to error code */
 	RTS_IEC_HANDLE IecTaskCreate2;		/* VAR_OUTPUT */	
 } iectaskcreate2_struct;
@@ -1040,7 +1118,7 @@ typedef void (CDECL CDECL_EXT* PFIECTASKCREATE2_IEC) (iectaskcreate2_struct *p);
  *
  * This function creates an asynchronous job to delete the IEC task with the given handle and timeout value.
  * When the asynchronous job is successfully created the function returns immediately with ERR_PENDING.
- * There is no indication wether the following deletion of the IEC task itself is successful. 
+ * There is no indication whether the following deletion of the IEC task itself is successful. 
  *
  * .. note::
  *     Due to the asynchronous manner of the deletion a dynamically created IEC task may delete itself. 
@@ -1171,7 +1249,7 @@ typedef void (CDECL CDECL_EXT* PFIECTASKDISABLESCHEDULING_IEC) (iectaskdisablesc
  *
  * .. note::
  *     - You have to enable the watchdog of the task with |IecTaskEnableWatchdog| and _not_ with |IecTaskEnableWatchdog2|, because they act on different task flags!
- *     - The watchdog is disabled only for the current cycle! At the next cycle, the watchod is automatically enabled!
+ *     - The watchdog is disabled only for the current cycle! At the next cycle, the watchdog is automatically enabled!
  * :return: Returns the runtime system error code (see CmpErrors.library)
  *     + ERR_OK: The watchdog for the task was disabled
  *     + ERR_PARAMETER: The task handle was invalid
@@ -1482,7 +1560,7 @@ typedef void (CDECL CDECL_EXT* PFIECTASKENABLEWATCHDOG2_IEC) (iectaskenablewatch
 
 
 /**
- * Funktion to get own task handle
+ * Function to get own task handle
  * :return: Returns the current IEC task handle
  */
 typedef struct tagiectaskgetcurrent_struct
@@ -1711,7 +1789,7 @@ typedef void (CDECL CDECL_EXT* PFIECTASKGETINFO2_IEC) (iectaskgetinfo2_struct *p
 
 /**
  * Get the first IEC task in the specified application
- * :return: Returns the andle to the first IEC task 
+ * :return: Returns the handle to the first IEC task 
  */
 typedef struct tagiectaskgetnext_struct
 {
@@ -1952,6 +2030,10 @@ typedef void (CDECL CDECL_EXT* PFIECTASKRESETSTATISTICS_IEC) (iectaskresetstatis
  * Task info
  * Task information out of the task configuration
  * Note for SIL2: This information is already inside of the data area, so we don't need to tag it as safe anywhere.
+ *
+ * Note:
+ * This struct is used in CODESYS (AKA programming system) as well as in CODESYSControl (AKA run-time system).
+ * Whenever this struct is changed, a new version for its member dwVersion has to be used.
  */
 struct tagTask_Info
 {
@@ -1965,28 +2047,31 @@ struct tagTask_Info
 	RTS_IEC_STRING *pszExternalEvent;		/* Name of the event, if it is an external event task */
 	RTS_IEC_BYTE *dwTaskEntryFunctionPointer;		/* Function pointer to the task code */
 	RTS_IEC_DWORD dwWatchdogSensitivity;		/* Watchdog sensitivity */
-	RTS_IEC_DWORD dwInterval;		/* Interval in microseconds */
+	RTS_IEC_DWORD dwInterval;		/* T0: ideal period in microseconds */
 	RTS_IEC_DWORD dwWatchdogTime;		/* Watchdog time in microseconds */
 	RTS_IEC_DWORD dwCycleTime;		/* Cycle time in microseconds (last execution time) */
 	RTS_IEC_DWORD dwAverageCycleTime;		/* Average cycle time in microseconds */
 	RTS_IEC_DWORD dwMaxCycleTime;		/* Maximum cycle time in microseconds */
-	RTS_IEC_DWORD dwMinCycleTime;		/* Minumum cycle time in microseconds */
-	RTS_IEC_DINT iJitter;		/* Jitter in microseconds */
-	RTS_IEC_DINT iJitterMin;		/* Minimal jitter */
-	RTS_IEC_DINT iJitterMax;		/* Maximal jitter */
+	RTS_IEC_DWORD dwMinCycleTime;		/* Minimum cycle time in microseconds */
+	/* The measured jitter values J_per_current, J_per_min, and J_per_max are stored in this struct tagTask_Info.
+	   All other measured jitter and latency values are stored in the struct tagTask_Desc. */
+	RTS_IEC_DINT iJitter;			/* J_per in microseconds = T_per - T0:
+ 									   periodic jitter is the deviation of the cycle time of a task from the ideal period over a number of randomly selected cycles */
+	RTS_IEC_DINT iJitterMin;		/* J_per_min: minimum J_per in microseconds */
+	RTS_IEC_DINT iJitterMax;		/* J_per_max: maximum J_per in microseconds */
 	RTS_IEC_DWORD dwCycleCount;		/* Cycle counter */
 	RTS_IEC_WORD iState;		/* Task state. See category TaskState. */
 	RTS_IEC_WORD wNumOfJitterDistributions;		/* Number jitter statistical distribution entries */
 	Jitter_Distribution *pJitterDistribution;		/* Statistical jitter distribution entries */
-	RTS_IEC_BOOL bTimeSlicing;		/* Timeslicing enabled */
-#ifndef RTS_SIXTEENBITBYTES			/* only the byteaware structure needs a dummy byte here */ 
+	RTS_IEC_BOOL bTimeSlicing;		/* Time-slicing enabled */
+#ifndef RTS_SIXTEENBITBYTES			/* only the byte aware structure needs a dummy byte here */ 
 	RTS_IEC_BYTE byDummy;		
 #endif	
 	RTS_IEC_BOOL bShouldBlock;		/* Declared in IEC and evaluated there starting with compiler 3.5.6; If TRUE, the task will not call it's POUs */
 	RTS_IEC_BOOL bActive;			/* Declared in IEC and evaluated there starting with compiler 3.5.6; Will be FALSE when the task is not active */
 	RTS_IEC_DWORD dwIECCycleCount;		/* Cycle counter for execution of user code */
-	RTS_IEC_INT nCoreConfigured;	/* Needed for backward compatability for V3.5.11.0 */
-	RTS_IEC_INT nCoreCurrent;		/* Needed for backward compatability for V3.5.11.0 */
+	RTS_IEC_INT nCoreConfigured;	/* Needed for backward compatibility for V3.5.11.0 */
+	RTS_IEC_INT nCoreCurrent;		/* Needed for backward compatibility for V3.5.11.0 */
 	TaskGroup_Info *pTaskGroup;		/* Pointer to task group description since V3.5.12.0 */
     RTS_IEC_STRING *pszParentTaskName;		/* Name of the parent task if the type is TaskParentSync */
 };
@@ -2296,7 +2381,7 @@ typedef RTS_RESULT (CDECL * PFIECFREETASKS2) (APPLICATION *pApp, RTS_UI32 ulTime
 
 /**
  * <description>
- * <p>Main cycle of an Iec task</p>
+ * <p>Main cycle of an IEC task</p>
  * <p>Adopts the "running state" of the task, based on the current state of
  * it's application and starts the IEC task cycle:</p>
  * <ul>
@@ -2374,9 +2459,9 @@ typedef RTS_RESULT (CDECL * PFIECTASKCYCLE) (Task_Desc* pTask);
 
 
 /**
- * <description> Calculate jitter time of task </description>
+ * <description>Calculate jitter time of task</description>
  * <param name="pTask" type="IN">Pointer to task description</param>
- * <param name="ptNow" type="IN">Pointer to actual microsecond time tick</param>
+ * <param name="ptNow" type="IN">Pointer to current microsecond time tick</param>
  * <result>Error code</result>
  */
 RTS_RESULT CDECL IecTaskUpdateJitterTime(Task_Desc* pTask, RTS_SYSTIME *ptNow);
@@ -2423,6 +2508,69 @@ typedef RTS_RESULT (CDECL * PFIECTASKUPDATEJITTERTIME) (Task_Desc* pTask, RTS_SY
 	#define CAL_IecTaskUpdateJitterTime  pfIecTaskUpdateJitterTime
 	#define CHK_IecTaskUpdateJitterTime  (pfIecTaskUpdateJitterTime != NULL)
 	#define EXP_IecTaskUpdateJitterTime  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskUpdateJitterTime", (RTS_UINTPTR)IecTaskUpdateJitterTime, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Calculate jitter time of task</description>
+ *
+ * <h3>Pre-Conditions</h3>
+ * <p>This function is called from the function IecTaskCycle() and expects that the following has been set by the calling function:</p>
+ * <pre>
+ * CAL_SysTimeGetUs(&amp;tNow);
+ * pTask->t_r_previous = pTask->tCycleStart;
+ * pTask->tCycleStart  = tNow;
+ * </pre>
+ *
+ * <param name="pTask" type="IN">Pointer to task description</param>
+ * <result>Error code</result>
+ */
+RTS_RESULT CDECL IecTaskUpdateJitterTime2(Task_Desc* pTask);
+typedef RTS_RESULT (CDECL * PFIECTASKUPDATEJITTERTIME2) (Task_Desc* pTask);
+#if defined(CMPIECTASK_NOTIMPLEMENTED) || defined(IECTASKUPDATEJITTERTIME2_NOTIMPLEMENTED)
+	#define USE_IecTaskUpdateJitterTime2
+	#define EXT_IecTaskUpdateJitterTime2
+	#define GET_IecTaskUpdateJitterTime2(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_IecTaskUpdateJitterTime2(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_IecTaskUpdateJitterTime2  FALSE
+	#define EXP_IecTaskUpdateJitterTime2  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_IecTaskUpdateJitterTime2
+	#define EXT_IecTaskUpdateJitterTime2
+	#define GET_IecTaskUpdateJitterTime2(fl)  CAL_CMGETAPI( "IecTaskUpdateJitterTime2" ) 
+	#define CAL_IecTaskUpdateJitterTime2  IecTaskUpdateJitterTime2
+	#define CHK_IecTaskUpdateJitterTime2  TRUE
+	#define EXP_IecTaskUpdateJitterTime2  CAL_CMEXPAPI( "IecTaskUpdateJitterTime2" ) 
+#elif defined(MIXED_LINK) && !defined(CMPIECTASK_EXTERNAL)
+	#define USE_IecTaskUpdateJitterTime2
+	#define EXT_IecTaskUpdateJitterTime2
+	#define GET_IecTaskUpdateJitterTime2(fl)  CAL_CMGETAPI( "IecTaskUpdateJitterTime2" ) 
+	#define CAL_IecTaskUpdateJitterTime2  IecTaskUpdateJitterTime2
+	#define CHK_IecTaskUpdateJitterTime2  TRUE
+	#define EXP_IecTaskUpdateJitterTime2  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskUpdateJitterTime2", (RTS_UINTPTR)IecTaskUpdateJitterTime2, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpIecTaskIecTaskUpdateJitterTime2
+	#define EXT_CmpIecTaskIecTaskUpdateJitterTime2
+	#define GET_CmpIecTaskIecTaskUpdateJitterTime2  ERR_OK
+	#define CAL_CmpIecTaskIecTaskUpdateJitterTime2 pICmpIecTask->IIecTaskUpdateJitterTime2
+	#define CHK_CmpIecTaskIecTaskUpdateJitterTime2 (pICmpIecTask != NULL)
+	#define EXP_CmpIecTaskIecTaskUpdateJitterTime2  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_IecTaskUpdateJitterTime2
+	#define EXT_IecTaskUpdateJitterTime2
+	#define GET_IecTaskUpdateJitterTime2(fl)  CAL_CMGETAPI( "IecTaskUpdateJitterTime2" ) 
+	#define CAL_IecTaskUpdateJitterTime2 pICmpIecTask->IIecTaskUpdateJitterTime2
+	#define CHK_IecTaskUpdateJitterTime2 (pICmpIecTask != NULL)
+	#define EXP_IecTaskUpdateJitterTime2  CAL_CMEXPAPI( "IecTaskUpdateJitterTime2" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_IecTaskUpdateJitterTime2  PFIECTASKUPDATEJITTERTIME2 pfIecTaskUpdateJitterTime2;
+	#define EXT_IecTaskUpdateJitterTime2  extern PFIECTASKUPDATEJITTERTIME2 pfIecTaskUpdateJitterTime2;
+	#define GET_IecTaskUpdateJitterTime2(fl)  s_pfCMGetAPI2( "IecTaskUpdateJitterTime2", (RTS_VOID_FCTPTR *)&pfIecTaskUpdateJitterTime2, (fl), 0, 0)
+	#define CAL_IecTaskUpdateJitterTime2  pfIecTaskUpdateJitterTime2
+	#define CHK_IecTaskUpdateJitterTime2  (pfIecTaskUpdateJitterTime2 != NULL)
+	#define EXP_IecTaskUpdateJitterTime2  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskUpdateJitterTime2", (RTS_UINTPTR)IecTaskUpdateJitterTime2, 0, 0) 
 #endif
 
 
@@ -2704,7 +2852,7 @@ typedef RTS_UI32 (CDECL * PFIECTASKGETWAITFORSTOPTIMEOUT) (APPLICATION *pApp, RT
 
 
 /**
- * <description>Wait, if all Iec-Tasks has recognized the stop status of the application</description>
+ * <description>Wait, if all IEC-Tasks has recognized the stop status of the application</description>
  * <param name="pApp" type="IN">Pointer to specified application</param>
  * <param name="ulTimeoutMs" type="IN">Timeout in milliseconds to wait for stop.
  *	Some timeouts are predefined (see CmpStd.h):
@@ -2767,7 +2915,7 @@ typedef RTS_RESULT (CDECL * PFIECTASKSWAITFORSTOP) (APPLICATION *pApp, RTS_UI32 
 
 
 /**
- * <description>Init all outputs and write to the periphery.
+ * <description>Initialize all outputs and write to the periphery.
  *	NOTE: Application must be in stop before calling this function!</description>
  * <param name="pApp" type="IN">Pointer to specified application</param>
  * <result>Error code</result>
@@ -2878,7 +3026,7 @@ typedef RTS_RESULT (CDECL * PFIECTASKENTEREXCLUSIVESECTION) (void);
 
 
 /**
- * <description>Leave an exclusiv section, that has been started by TaskEnterExclusiveSection</description>
+ * <description>Leave an exclusive section, that has been started by TaskEnterExclusiveSection</description>
  * <result>Error code</result>
  */
 RTS_RESULT CDECL IecTaskLeaveExclusiveSection(void);
@@ -3101,12 +3249,12 @@ typedef RTS_RESULT (CDECL * PFIECTASKLEAVEEXCLUSIVESECTION2) (APPLICATION *pApp)
 
 /**
  * <description>
- * <p>External function is called by internal plc code to setup a plc task.
+ * <p>External function is called by internal PLC code to setup a PLC task.
  * If a task can not be created, an exception is thrown.</p>
  * </description>
- * <param name="p" type="IN" range="[VALID_SETUP_TASKS_PARAM]">Pointer to task configuration entry. Is an implicit generated plc data structure.</param>
+ * <param name="p" type="IN" range="[VALID_SETUP_TASKS_PARAM]">Pointer to task configuration entry. Is an implicit generated PLC data structure.</param>
  * <parampseudo name="p.pszApplicationName" type="IN" range="[NULL,VALID_APPNAME]">Application name</parampseudo>
- * <parampseudo name="p.wNumOfTasks" type="IN" range="[0..NUM_OF_STATIC_IEC_TASKS-1,NUM_OF_STATIC_IEC_TASKS..INT_MAX]">Nmber of configured tasks</parampseudo>
+ * <parampseudo name="p.wNumOfTasks" type="IN" range="[0..NUM_OF_STATIC_IEC_TASKS-1,NUM_OF_STATIC_IEC_TASKS..INT_MAX]">Number of configured tasks</parampseudo>
  * <parampseudo name="p.pptaskinfo" type="IN" range="[VALID_TASKINFO_LIST]">Only valid info structures are allowed.</parampseudo>
  * <parampseudo name="OperationMode" type="IN" range="[RTS_SIL2_OPMODE_SAFE,RTS_SIL2_OPMODE_DEBUG]">Operation mode</parampseudo>
  * <parampseudo name="bException" type="OUT">Indicates if the function call generated an exception</parampseudo>
@@ -3162,9 +3310,9 @@ typedef void (CDECL * PF__SYS__SETUP__TASKS) (sys_setup_tasks_struct* p);
 
 /**
  * <description>
- * <p>Register an IEC function function to a specific slot.</p>
+ * <p>Register an IEC function to a specific slot.</p>
  * <p>Slots are called in numbered order at specific positions in the task cycle</p>
- * <p>On SIL2 Runtimes, this call is only allowed in safety mode.</p>
+ * <p>On SIL2 runtime this call is only allowed in safety mode.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_REGISTER_SLOT_POU_PARAM]">IEC function call parameters.</param>
  * <parampseudo name="p.szApplicationName" type="IN" range="[NULL,VALID_APPNAME]">Application name</parampseudo>
@@ -3173,7 +3321,7 @@ typedef void (CDECL * PF__SYS__SETUP__TASKS) (sys_setup_tasks_struct* p);
  * <parampseudo name="p.nSlotNr" type="IN" range="[RTS_RANGE_OF_INT]">Slot number</parampseudo>
  * <parampseudo name="p.nReturnValue" type="OUT">Error Code</parampseudo>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Registration was successfull</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Registration was successful</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Call was not allowed in this context or registration failed</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Application- or function pointer was NULL</errorcode>
  */
@@ -3226,8 +3374,8 @@ typedef void (CDECL * PF__SYS__REGISTER__SLOT__POU) (sys_register_slot_pou_struc
 
 /**
  * <description>
- * <p>Unregister an IEC function function from a specific slot.</p>
- * <p>On SIL2 Runtimes, this call is only allowed in safety mode.</p>
+ * <p>Unregister an IEC function from a specific slot.</p>
+ * <p>On SIL2 runtime this call is only allowed in safety mode.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_UNREGISTER_SLOT_POU_PARAM]">IEC function call parameters.</param>
  * <parampseudo name="p.szApplicationName" type="IN" range="[NULL,VALID_APPNAME]">Application name</parampseudo>
@@ -3236,8 +3384,8 @@ typedef void (CDECL * PF__SYS__REGISTER__SLOT__POU) (sys_register_slot_pou_struc
  * <parampseudo name="p.nSlotNr" type="IN" range="[RTS_RANGE_OF_INT]">Slot number</parampseudo>
  * <parampseudo name="p.nReturnValue" type="OUT">Error Code</parampseudo>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Deregistration was successfull</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_FAILED">Call was not allowed in this context or deregistration failed</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">De-registration was successful</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Call was not allowed in this context or de-registration failed</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Application- or function pointer was NULL</errorcode>
  */
 void CDECL CDECL_EXT __sys__unregister__slot__pou(sys_register_slot_pou_struct* p);
@@ -3290,14 +3438,14 @@ typedef void (CDECL * PF__SYS__UNREGISTER__SLOT__POU) (sys_register_slot_pou_str
 /**
  * <description>
  * <p>Register the given callback to all existing tasks of the application</p>
- * <p>On SIL2 Runtimes, this call is ignored in safety mode.</p>
+ * <p>On SIL2 runtimes this call is ignored in safety mode.</p>
  * </description>
  * <param name="pApp" type="IN" range="[NULL,VALID_APPLICATION]">Pointer to an application</param>
- * <param name="nSlotNr" type="IN" range="[RTS_RANGE_OF_INT]">Slotnumber</param>
+ * <param name="nSlotNr" type="IN" range="[RTS_RANGE_OF_INT]">Slot number</param>
  * <param name="pfSlotCallback" type="IN" range="[NULL,VALID_SLOTFUNCTION]">Pointer to Slot Callback</param>
  * <param name="bIecCallback" type="IN" range="[0,1]">Defines if the function pointer is an IEC or a C function</param>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Registration was successfull</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Registration was successful</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Call was not allowed in this context or registration failed</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Application- or function pointer was NULL</errorcode>
  */
@@ -3353,15 +3501,15 @@ typedef RTS_RESULT (CDECL * PFIECTASKREGISTERSLOTCALLBACKS) (APPLICATION *pApp, 
 /**
  * <description>
  * <p>Unregister the given callback from all existing tasks of the application</p>
- * <p>On SIL2 Runtimes, this call is ignored in safety mode.</p>
+ * <p>On SIL2 runtime this call is ignored in safety mode.</p>
  * </description>
  * <param name="pApp" type="IN" range="[NULL,VALID_APPLICATION]">Pointer to an application</param>
- * <param name="nSlotNr" type="IN" range="[RTS_RANGE_OF_INT]">Slotnumber</param>
+ * <param name="nSlotNr" type="IN" range="[RTS_RANGE_OF_INT]">Slot number</param>
  * <param name="pfSlotCallback" type="IN" range="[NULL,VALID_SLOTFUNCTION]">Pointer to Slot Callback</param>
  * <param name="bIecCallback" type="IN" range="[0,1]">Defines if the function pointer is an IEC or a C function</param>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Deregistration was successfull</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_FAILED">Call was not allowed in this context or deregistration failed</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">De-registration was successful</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Call was not allowed in this context or de-registration failed</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Application- or function pointer was NULL</errorcode>
  */
 RTS_RESULT CDECL IecTaskUnregisterSlotCallbacks(APPLICATION *pApp, RTS_I32 nSlotNr, PF_SLOT_CALLBACK pfSlotCallback, int bIecCallback);
@@ -3416,15 +3564,15 @@ typedef RTS_RESULT (CDECL * PFIECTASKUNREGISTERSLOTCALLBACKS) (APPLICATION *pApp
 /**
  * <description>
  * <p>Register the given callback to one specific IEC task.</p>
- * <p>On SIL2 Runtimes, this call throws an exception in safety mode.</p>
+ * <p>On SIL2 runtime this call throws an exception in safety mode.</p>
  * </description>
  * <parampseudo name="OperationMode" type="IN" range="[RTS_SIL2_OPMODE_SAFE,RTS_SIL2_OPMODE_DEBUG]">Operation mode</parampseudo>
  * <param name="pTask" type="IN" range="[NULL,VALID_TASK]">Handle IEC Task</param>
- * <param name="nSlotNr" type="IN" range="[RTS_RANGE_OF_INT]">Slotnumber</param>
+ * <param name="nSlotNr" type="IN" range="[RTS_RANGE_OF_INT]">Slot number</param>
  * <param name="pfSlotCallback" type="IN" range="[NULL,VALID_SLOTFUNCTION]">Pointer to Slot Callback</param>
  * <param name="bIecCallback" type="IN" range="[0,1]">Defines if the function pointer is an IEC or a C function</param>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Registration was successfull</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Registration was successful</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Call was not allowed in this context or registration failed</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Application- or function pointer was NULL</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">New slot could not be registered</errorcode>
@@ -3481,16 +3629,16 @@ typedef RTS_RESULT (CDECL * PFIECTASKREGISTERSLOTCALLBACK) (Task_Desc *pTask, RT
 /**
  * <description>
  * <p>Unregister the given callback from the specific IEC task.</p>
- * <p>On SIL2 Runtimes, this call allows only IEC tasks in safety mode.</p>
+ * <p>On SIL2 runtime this call allows only IEC tasks in safety mode.</p>
  * </description>
  * <parampseudo name="OperationMode" type="IN" range="[RTS_SIL2_OPMODE_SAFE,RTS_SIL2_OPMODE_DEBUG]">Operation mode</parampseudo>
  * <param name="pTask" type="IN" range="[NULL,VALID_TASK]">Handle IEC Task</param>
- * <param name="nSlotNr" type="IN" range="[RTS_RANGE_OF_INT]">Slotnumber</param>
+ * <param name="nSlotNr" type="IN" range="[RTS_RANGE_OF_INT]">Slot number</param>
  * <param name="pfSlotCallback" type="IN" range="[NULL,VALID_SLOTFUNCTION]">Pointer to Slot Callback</param>
  * <param name="bIecCallback" type="IN" range="[0,1]">Defines if the function pointer is an IEC or a C function</param>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Registration was successfull</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_FAILED">Call was not allowed in this context or deregistration failed</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Registration was successful</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Call was not allowed in this context or de-registration failed</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Application- or function pointer was NULL</errorcode>
  */
 RTS_RESULT CDECL IecTaskUnregisterSlotCallback(Task_Desc *pTask, RTS_I32 nSlotNr, PF_SLOT_CALLBACK pfSlotCallback, int bIecCallback);
@@ -4102,7 +4250,7 @@ typedef RTS_RESULT (CDECL * PFIECTASKGETCONTEXT) (RTS_HANDLE hIecTask, RegContex
 
 
 /**
- * <description>Exception handler for the specified Iec task</description>
+ * <description>Exception handler for the specified IEC task</description>
  * <param name="hIecTask" type="IN">Handle to IEC task</param>
  * <param name="ulException" type="IN">Exception</param>
  * <param name="pContext" type="IN">Pointer to register context</param>
@@ -4285,8 +4433,8 @@ typedef RTS_HANDLE (CDECL * PFIECTASKGETHANDLEBYINDEX) (APPLICATION* pApp, int i
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <result>Handle to the task or RTS_INVALID_HANDLE if failed</result>
  */
-Task_Desc* CDECL IecTaskGetById(APPLICATION* pappl, int iId, RTS_RESULT *pResult);
-typedef Task_Desc* (CDECL * PFIECTASKGETBYID) (APPLICATION* pappl, int iId, RTS_RESULT *pResult);
+Task_Desc* CDECL IecTaskGetById(APPLICATION* pApp, int iId, RTS_RESULT *pResult);
+typedef Task_Desc* (CDECL * PFIECTASKGETBYID) (APPLICATION* pApp, int iId, RTS_RESULT *pResult);
 #if defined(CMPIECTASK_NOTIMPLEMENTED) || defined(IECTASKGETBYID_NOTIMPLEMENTED)
 	#define USE_IecTaskGetById
 	#define EXT_IecTaskGetById
@@ -4335,13 +4483,13 @@ typedef Task_Desc* (CDECL * PFIECTASKGETBYID) (APPLICATION* pappl, int iId, RTS_
 
 
 /**
- * <description>Returns the number of tasks of the specified applciation</description>
+ * <description>Returns the number of tasks of the specified application</description>
  * <param name="pAppl" type="IN">APPLICATION object</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <result>Error code</result>
  */
-int CDECL IecTaskGetNumOfTasks(APPLICATION* pAppl, RTS_RESULT *pResult);
-typedef int (CDECL * PFIECTASKGETNUMOFTASKS) (APPLICATION* pAppl, RTS_RESULT *pResult);
+int CDECL IecTaskGetNumOfTasks(APPLICATION* pApp, RTS_RESULT *pResult);
+typedef int (CDECL * PFIECTASKGETNUMOFTASKS) (APPLICATION* pApp, RTS_RESULT *pResult);
 #if defined(CMPIECTASK_NOTIMPLEMENTED) || defined(IECTASKGETNUMOFTASKS_NOTIMPLEMENTED)
 	#define USE_IecTaskGetNumOfTasks
 	#define EXT_IecTaskGetNumOfTasks
@@ -4688,7 +4836,7 @@ typedef RTS_RESULT (CDECL * PFIECTASKENABLEWATCHDOG) (RTS_HANDLE hIecTask);
  * <p>Disable watchdog for the specified task</p>
  *	NOTE:
  *	- You have to enable the watchdog of the task with IecTaskEnableWatchdog() and _not_ with IecTaskEnableWatchdog2(), because they act on different task flags!
- *	- The watchdog is disabled only for the current cycle! At the next cycle, the watchod is automatically enabled!
+ *	- The watchdog is disabled only for the current cycle! At the next cycle, the watchdog is automatically enabled!
  * </description>
  * <param name="hIecTask" type="IN" range="[RTS_INVALID_HANDLE,VALID_TASKHANDLE]">Handle of the task</param>
  * <result>Error code</result>
@@ -5015,7 +5163,7 @@ typedef RTS_HANDLE (CDECL * PFIECTASKGETFIRST) (char *pszAppName, RTS_RESULT *pR
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <errorcode name="pResult" type="ERR_OK">Task found</errorcode>
  * <errorcode name="pResult" type="ERR_NO_OBJECT">No task found</errorcode>
- * <errorcode name="pResult" type="ERR_PARAMETER">Application name was NULL, or handle to prev task was invalid</errorcode>
+ * <errorcode name="pResult" type="ERR_PARAMETER">Application name was NULL, or handle to previous task was invalid</errorcode>
  * <errorcode name="pResult" type="ERR_NOTINITIALIZED">The component was not correctly initialized</errorcode>
  * <result>Handle to the task or RTS_INVALID_HANDLE if failed</result>
  */
@@ -5142,7 +5290,7 @@ typedef RTS_HANDLE (CDECL * PFIECTASKGETFIRST2) (APPLICATION *pApp, RTS_RESULT *
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <errorcode name="pResult" type="ERR_OK">Task found</errorcode>
  * <errorcode name="pResult" type="ERR_NO_OBJECT">No task found</errorcode>
- * <errorcode name="pResult" type="ERR_PARAMETER">Application name was NULL, or handle to prev task was invalid</errorcode>
+ * <errorcode name="pResult" type="ERR_PARAMETER">Application name was NULL, or handle to previous task was invalid</errorcode>
  * <errorcode name="pResult" type="ERR_NOTINITIALIZED">The component was not correctly initialized</errorcode>
  * <result>Handle to the task or RTS_INVALID_HANDLE if failed</result>
  */
@@ -5258,8 +5406,8 @@ typedef RTS_HANDLE (CDECL * PFIECTASKRELOAD) (RTS_HANDLE hIecTask, RTS_UI32 ulTi
  * <p>Calculate a task ID based on an application index and a task index.</p>
  * <p>This ID corresponds directly to the IDs that are used in the CoDeSys
  * programming system to identify a task.</p>
- * <p>The valid range of iIndex depends on the cpu. The limit is always
- * the square route of UINT_MAX, because the upper half of the datatype
+ * <p>The valid range of iIndex depends on the CPU. The limit is always
+ * the square route of UINT_MAX, because the upper half of the data type
  * is used for the application ID, and the lower half for the task index.</p>
  * </description>
  * <param name="pApp" type="IN" range="[NULL,VALID_APPLICATION]">Pointer to the application of the task.</param>
@@ -5606,7 +5754,7 @@ typedef RTS_RESULT (CDECL * PFIECTASKDEBUGHANDLERLEAVE) (RTS_HANDLE hIecTask);
  * <p>ATTENTION: Instead of SysCpuCallIecFuncWithParams() this function is synchronized against an OnlineChange of the corresponding IEC application!!</p>
  *
  *  <p>IEC functions or methods of function block use all the same calling convention:
- *	They have no return value and exactly one parameter, which is a pointer to a struct that contains all required
+ *	They have no return value and exactly one parameter, which is a pointer to a structure that contains all required
  *  IN and OUT parameters.</p>
  *
  *	<p>IMPLEMENTATION NOTE: The content of the parameter structure must be copied completely on the stack as 
@@ -5622,10 +5770,10 @@ typedef RTS_RESULT (CDECL * PFIECTASKDEBUGHANDLERLEAVE) (RTS_HANDLE hIecTask);
  * <param name="hIecTask" type="IN">IecTask handle from the calling IEC task or RTS_INVALID_HANDLE, if it is a non IEC task!</param>
  * <param name="pApp" type="IN">Pointer to the application, in which the pfIECFunc is residing!</param>
  * <param name="pfIECFunc" type="IN" range="[NULL,VALID_IEC_FUNC,INVALID_IEC_FUNC]">Pointer to the IEC function that should be called</param>
- * <param name="pParam" type="INOUT" range="[NULL,VALID_PARAMETER]">Pointer to the parameter struct that contains the function parameters. ATTENTION: Can be NULL!</param>
+ * <param name="pParam" type="INOUT" range="[NULL,VALID_PARAMETER]">Pointer to the parameter structure that contains the function parameters. ATTENTION: Can be NULL!</param>
  * <param name="iSize" type="IN" range="[0,VALID_SIZE]">Size of the parameter structure to copy the content on stack. ATTENTION: Can be 0!</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Parameter check was successfull and pfIECFunc was called</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">pfIECFunc is NULL or for a paramter size > 0 pParam is NULL</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Parameter check was successful and pfIECFunc was called</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">pfIECFunc is NULL or for a parameter size > 0 pParam is NULL</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_NOTIMPLEMENTED">Function is not implemented</errorcode>
  * <result>error code</result>
  */
@@ -5678,6 +5826,314 @@ typedef RTS_RESULT (CDECL * PFIECTASKCALLIECFUNCWITHPARAMS) (RTS_HANDLE hIecTask
 
 
 
+/**
+ * <description>
+ * Adds a system task to an extra list of IEC tasks for debuggging IEC code and exceptions in callbacks
+ * <p>Typical usage after creating the system task:
+ * CAL_IecTaskExtraAdd(hNewSytemTask, CAL_SysTaskGetName(hNewSytemTask, NULL), &amp;Result);</p>
+ * Additionally an exception handler is required, see IecTaskExtraExceptionHandler.
+ * When the system task exits IecTaskExtraRemove will do the cleanup.
+ * </description>
+ * <param name="hSysTask" type="IN">System task handle returned by SysTaskCreate or SysTaskCreate2</param>
+ * <param name="pszTaskName" type="IN">Name of the system task returned by SysTaskGetName</param>
+ * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">The system task was successfully added</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">The task handle or the name was not valid</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_NOMEMORY">No memory left for managment structures</errorcode>
+ * <result>Extra IEC task handle or RTS_INVALID_HANDLE in case of an error</result>
+ */
+RTS_HANDLE CDECL IecTaskExtraAdd(RTS_HANDLE hSysTask, RTS_IEC_STRING *pszTaskName, RTS_RESULT *pResult);
+typedef RTS_HANDLE (CDECL * PFIECTASKEXTRAADD) (RTS_HANDLE hSysTask, RTS_IEC_STRING *pszTaskName, RTS_RESULT *pResult);
+#if defined(CMPIECTASK_NOTIMPLEMENTED) || defined(IECTASKEXTRAADD_NOTIMPLEMENTED)
+	#define USE_IecTaskExtraAdd
+	#define EXT_IecTaskExtraAdd
+	#define GET_IecTaskExtraAdd(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_IecTaskExtraAdd(p0,p1,p2)  (RTS_HANDLE)RTS_INVALID_HANDLE
+	#define CHK_IecTaskExtraAdd  FALSE
+	#define EXP_IecTaskExtraAdd  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_IecTaskExtraAdd
+	#define EXT_IecTaskExtraAdd
+	#define GET_IecTaskExtraAdd(fl)  CAL_CMGETAPI( "IecTaskExtraAdd" ) 
+	#define CAL_IecTaskExtraAdd  IecTaskExtraAdd
+	#define CHK_IecTaskExtraAdd  TRUE
+	#define EXP_IecTaskExtraAdd  CAL_CMEXPAPI( "IecTaskExtraAdd" ) 
+#elif defined(MIXED_LINK) && !defined(CMPIECTASK_EXTERNAL)
+	#define USE_IecTaskExtraAdd
+	#define EXT_IecTaskExtraAdd
+	#define GET_IecTaskExtraAdd(fl)  CAL_CMGETAPI( "IecTaskExtraAdd" ) 
+	#define CAL_IecTaskExtraAdd  IecTaskExtraAdd
+	#define CHK_IecTaskExtraAdd  TRUE
+	#define EXP_IecTaskExtraAdd  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExtraAdd", (RTS_UINTPTR)IecTaskExtraAdd, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpIecTaskIecTaskExtraAdd
+	#define EXT_CmpIecTaskIecTaskExtraAdd
+	#define GET_CmpIecTaskIecTaskExtraAdd  ERR_OK
+	#define CAL_CmpIecTaskIecTaskExtraAdd pICmpIecTask->IIecTaskExtraAdd
+	#define CHK_CmpIecTaskIecTaskExtraAdd (pICmpIecTask != NULL)
+	#define EXP_CmpIecTaskIecTaskExtraAdd  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_IecTaskExtraAdd
+	#define EXT_IecTaskExtraAdd
+	#define GET_IecTaskExtraAdd(fl)  CAL_CMGETAPI( "IecTaskExtraAdd" ) 
+	#define CAL_IecTaskExtraAdd pICmpIecTask->IIecTaskExtraAdd
+	#define CHK_IecTaskExtraAdd (pICmpIecTask != NULL)
+	#define EXP_IecTaskExtraAdd  CAL_CMEXPAPI( "IecTaskExtraAdd" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_IecTaskExtraAdd  PFIECTASKEXTRAADD pfIecTaskExtraAdd;
+	#define EXT_IecTaskExtraAdd  extern PFIECTASKEXTRAADD pfIecTaskExtraAdd;
+	#define GET_IecTaskExtraAdd(fl)  s_pfCMGetAPI2( "IecTaskExtraAdd", (RTS_VOID_FCTPTR *)&pfIecTaskExtraAdd, (fl), 0, 0)
+	#define CAL_IecTaskExtraAdd  pfIecTaskExtraAdd
+	#define CHK_IecTaskExtraAdd  (pfIecTaskExtraAdd != NULL)
+	#define EXP_IecTaskExtraAdd  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExtraAdd", (RTS_UINTPTR)IecTaskExtraAdd, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>
+ * Removes an extra IEC task from the extra list
+ * <p>Typical usage after the task exited:
+ * CAL_IecTaskExtraRemove(CAL_IecTaskExtraFind(hSytemTaskToRemove, NULL));</p>
+ * </description>
+ * <param name="hIecTask" type="IN">Extra IEC task handle returned by IecTaskExtraAdd or IecTaskExtraFind</param>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">The task was successfully removed</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">The task handle was not valid or it is no extra task</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">The task could not be removed</errorcode>
+ * <result>Error code</result>
+ */
+RTS_RESULT CDECL IecTaskExtraRemove(RTS_HANDLE hIecTask);
+typedef RTS_RESULT (CDECL * PFIECTASKEXTRAREMOVE) (RTS_HANDLE hIecTask);
+#if defined(CMPIECTASK_NOTIMPLEMENTED) || defined(IECTASKEXTRAREMOVE_NOTIMPLEMENTED)
+	#define USE_IecTaskExtraRemove
+	#define EXT_IecTaskExtraRemove
+	#define GET_IecTaskExtraRemove(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_IecTaskExtraRemove(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_IecTaskExtraRemove  FALSE
+	#define EXP_IecTaskExtraRemove  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_IecTaskExtraRemove
+	#define EXT_IecTaskExtraRemove
+	#define GET_IecTaskExtraRemove(fl)  CAL_CMGETAPI( "IecTaskExtraRemove" ) 
+	#define CAL_IecTaskExtraRemove  IecTaskExtraRemove
+	#define CHK_IecTaskExtraRemove  TRUE
+	#define EXP_IecTaskExtraRemove  CAL_CMEXPAPI( "IecTaskExtraRemove" ) 
+#elif defined(MIXED_LINK) && !defined(CMPIECTASK_EXTERNAL)
+	#define USE_IecTaskExtraRemove
+	#define EXT_IecTaskExtraRemove
+	#define GET_IecTaskExtraRemove(fl)  CAL_CMGETAPI( "IecTaskExtraRemove" ) 
+	#define CAL_IecTaskExtraRemove  IecTaskExtraRemove
+	#define CHK_IecTaskExtraRemove  TRUE
+	#define EXP_IecTaskExtraRemove  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExtraRemove", (RTS_UINTPTR)IecTaskExtraRemove, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpIecTaskIecTaskExtraRemove
+	#define EXT_CmpIecTaskIecTaskExtraRemove
+	#define GET_CmpIecTaskIecTaskExtraRemove  ERR_OK
+	#define CAL_CmpIecTaskIecTaskExtraRemove pICmpIecTask->IIecTaskExtraRemove
+	#define CHK_CmpIecTaskIecTaskExtraRemove (pICmpIecTask != NULL)
+	#define EXP_CmpIecTaskIecTaskExtraRemove  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_IecTaskExtraRemove
+	#define EXT_IecTaskExtraRemove
+	#define GET_IecTaskExtraRemove(fl)  CAL_CMGETAPI( "IecTaskExtraRemove" ) 
+	#define CAL_IecTaskExtraRemove pICmpIecTask->IIecTaskExtraRemove
+	#define CHK_IecTaskExtraRemove (pICmpIecTask != NULL)
+	#define EXP_IecTaskExtraRemove  CAL_CMEXPAPI( "IecTaskExtraRemove" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_IecTaskExtraRemove  PFIECTASKEXTRAREMOVE pfIecTaskExtraRemove;
+	#define EXT_IecTaskExtraRemove  extern PFIECTASKEXTRAREMOVE pfIecTaskExtraRemove;
+	#define GET_IecTaskExtraRemove(fl)  s_pfCMGetAPI2( "IecTaskExtraRemove", (RTS_VOID_FCTPTR *)&pfIecTaskExtraRemove, (fl), 0, 0)
+	#define CAL_IecTaskExtraRemove  pfIecTaskExtraRemove
+	#define CHK_IecTaskExtraRemove  (pfIecTaskExtraRemove != NULL)
+	#define EXP_IecTaskExtraRemove  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExtraRemove", (RTS_UINTPTR)IecTaskExtraRemove, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>
+ * Searches a prior added system task in the extra IEC task list
+ * </description>
+ * <param name="hSysTask" type="IN">System task handle returned by SysTaskCreate</param>
+ * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">The task was found</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_INVALID_HANDLE">The task was not found</errorcode>
+ * <result>Extra IEC task handle or RTS_INVALID_HANDLE in case given system task handle is not found</result>
+ */
+RTS_HANDLE CDECL IecTaskExtraFind(RTS_HANDLE hSysTask, RTS_RESULT *pResult);
+typedef RTS_HANDLE (CDECL * PFIECTASKEXTRAFIND) (RTS_HANDLE hSysTask, RTS_RESULT *pResult);
+#if defined(CMPIECTASK_NOTIMPLEMENTED) || defined(IECTASKEXTRAFIND_NOTIMPLEMENTED)
+	#define USE_IecTaskExtraFind
+	#define EXT_IecTaskExtraFind
+	#define GET_IecTaskExtraFind(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_IecTaskExtraFind(p0,p1)  (RTS_HANDLE)RTS_INVALID_HANDLE
+	#define CHK_IecTaskExtraFind  FALSE
+	#define EXP_IecTaskExtraFind  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_IecTaskExtraFind
+	#define EXT_IecTaskExtraFind
+	#define GET_IecTaskExtraFind(fl)  CAL_CMGETAPI( "IecTaskExtraFind" ) 
+	#define CAL_IecTaskExtraFind  IecTaskExtraFind
+	#define CHK_IecTaskExtraFind  TRUE
+	#define EXP_IecTaskExtraFind  CAL_CMEXPAPI( "IecTaskExtraFind" ) 
+#elif defined(MIXED_LINK) && !defined(CMPIECTASK_EXTERNAL)
+	#define USE_IecTaskExtraFind
+	#define EXT_IecTaskExtraFind
+	#define GET_IecTaskExtraFind(fl)  CAL_CMGETAPI( "IecTaskExtraFind" ) 
+	#define CAL_IecTaskExtraFind  IecTaskExtraFind
+	#define CHK_IecTaskExtraFind  TRUE
+	#define EXP_IecTaskExtraFind  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExtraFind", (RTS_UINTPTR)IecTaskExtraFind, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpIecTaskIecTaskExtraFind
+	#define EXT_CmpIecTaskIecTaskExtraFind
+	#define GET_CmpIecTaskIecTaskExtraFind  ERR_OK
+	#define CAL_CmpIecTaskIecTaskExtraFind pICmpIecTask->IIecTaskExtraFind
+	#define CHK_CmpIecTaskIecTaskExtraFind (pICmpIecTask != NULL)
+	#define EXP_CmpIecTaskIecTaskExtraFind  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_IecTaskExtraFind
+	#define EXT_IecTaskExtraFind
+	#define GET_IecTaskExtraFind(fl)  CAL_CMGETAPI( "IecTaskExtraFind" ) 
+	#define CAL_IecTaskExtraFind pICmpIecTask->IIecTaskExtraFind
+	#define CHK_IecTaskExtraFind (pICmpIecTask != NULL)
+	#define EXP_IecTaskExtraFind  CAL_CMEXPAPI( "IecTaskExtraFind" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_IecTaskExtraFind  PFIECTASKEXTRAFIND pfIecTaskExtraFind;
+	#define EXT_IecTaskExtraFind  extern PFIECTASKEXTRAFIND pfIecTaskExtraFind;
+	#define GET_IecTaskExtraFind(fl)  s_pfCMGetAPI2( "IecTaskExtraFind", (RTS_VOID_FCTPTR *)&pfIecTaskExtraFind, (fl), 0, 0)
+	#define CAL_IecTaskExtraFind  pfIecTaskExtraFind
+	#define CHK_IecTaskExtraFind  (pfIecTaskExtraFind != NULL)
+	#define EXP_IecTaskExtraFind  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExtraFind", (RTS_UINTPTR)IecTaskExtraFind, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>
+ * Sets the current application to the extra IEC task
+ * <p>IEC callback functions can be registered from different applications. Therefore the current application for the task is not set until the breakpoint is reached.</p>
+ * </description>
+ * <param name="hIecTask" type="IN">Extra IEC task handle returned by IecTaskExtraAdd or IecTaskExtraFind</param>
+ * <param name="pApp" type="IN">Pointer to current application</param>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">The application was successfully set for the task</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">The task handle was not valid or it is no extra task</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">The task could not be modified</errorcode>
+ * <result>Error code</result>
+ */
+RTS_RESULT CDECL IecTaskExtraSetApp(RTS_HANDLE hIecTask, APPLICATION *pApp);
+typedef RTS_RESULT (CDECL * PFIECTASKEXTRASETAPP) (RTS_HANDLE hIecTask, APPLICATION *pApp);
+#if defined(CMPIECTASK_NOTIMPLEMENTED) || defined(IECTASKEXTRASETAPP_NOTIMPLEMENTED)
+	#define USE_IecTaskExtraSetApp
+	#define EXT_IecTaskExtraSetApp
+	#define GET_IecTaskExtraSetApp(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_IecTaskExtraSetApp(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_IecTaskExtraSetApp  FALSE
+	#define EXP_IecTaskExtraSetApp  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_IecTaskExtraSetApp
+	#define EXT_IecTaskExtraSetApp
+	#define GET_IecTaskExtraSetApp(fl)  CAL_CMGETAPI( "IecTaskExtraSetApp" ) 
+	#define CAL_IecTaskExtraSetApp  IecTaskExtraSetApp
+	#define CHK_IecTaskExtraSetApp  TRUE
+	#define EXP_IecTaskExtraSetApp  CAL_CMEXPAPI( "IecTaskExtraSetApp" ) 
+#elif defined(MIXED_LINK) && !defined(CMPIECTASK_EXTERNAL)
+	#define USE_IecTaskExtraSetApp
+	#define EXT_IecTaskExtraSetApp
+	#define GET_IecTaskExtraSetApp(fl)  CAL_CMGETAPI( "IecTaskExtraSetApp" ) 
+	#define CAL_IecTaskExtraSetApp  IecTaskExtraSetApp
+	#define CHK_IecTaskExtraSetApp  TRUE
+	#define EXP_IecTaskExtraSetApp  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExtraSetApp", (RTS_UINTPTR)IecTaskExtraSetApp, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpIecTaskIecTaskExtraSetApp
+	#define EXT_CmpIecTaskIecTaskExtraSetApp
+	#define GET_CmpIecTaskIecTaskExtraSetApp  ERR_OK
+	#define CAL_CmpIecTaskIecTaskExtraSetApp pICmpIecTask->IIecTaskExtraSetApp
+	#define CHK_CmpIecTaskIecTaskExtraSetApp (pICmpIecTask != NULL)
+	#define EXP_CmpIecTaskIecTaskExtraSetApp  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_IecTaskExtraSetApp
+	#define EXT_IecTaskExtraSetApp
+	#define GET_IecTaskExtraSetApp(fl)  CAL_CMGETAPI( "IecTaskExtraSetApp" ) 
+	#define CAL_IecTaskExtraSetApp pICmpIecTask->IIecTaskExtraSetApp
+	#define CHK_IecTaskExtraSetApp (pICmpIecTask != NULL)
+	#define EXP_IecTaskExtraSetApp  CAL_CMEXPAPI( "IecTaskExtraSetApp" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_IecTaskExtraSetApp  PFIECTASKEXTRASETAPP pfIecTaskExtraSetApp;
+	#define EXT_IecTaskExtraSetApp  extern PFIECTASKEXTRASETAPP pfIecTaskExtraSetApp;
+	#define GET_IecTaskExtraSetApp(fl)  s_pfCMGetAPI2( "IecTaskExtraSetApp", (RTS_VOID_FCTPTR *)&pfIecTaskExtraSetApp, (fl), 0, 0)
+	#define CAL_IecTaskExtraSetApp  pfIecTaskExtraSetApp
+	#define CHK_IecTaskExtraSetApp  (pfIecTaskExtraSetApp != NULL)
+	#define EXP_IecTaskExtraSetApp  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExtraSetApp", (RTS_UINTPTR)IecTaskExtraSetApp, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>
+ * Exception handler for extra IEC tasks
+ * <p>The handler takes care of the current application. If the handler cannot handle the exception the result is ERR_FAILED. In this case an own handling is possible.
+ * If no own exception handling is required, only this function has to be called directly inside a local exception handler.</p>
+ * </description>
+ * <param name="hSysTask" type="IN">System task handle</param>
+ * <param name="ulException" type="IN">Exception number</param>
+ * <param name="Context" type="IN">Register context of the exception</param>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">The exception was successfully handled</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">The exception could not be handled</errorcode>
+ * <result>Error code</result>
+ */
+RTS_RESULT CDECL IecTaskExtraExceptionHandler(RTS_HANDLE hSysTask, RTS_UI32 ulException, RegContext Context);
+typedef RTS_RESULT (CDECL * PFIECTASKEXTRAEXCEPTIONHANDLER) (RTS_HANDLE hSysTask, RTS_UI32 ulException, RegContext Context);
+#if defined(CMPIECTASK_NOTIMPLEMENTED) || defined(IECTASKEXTRAEXCEPTIONHANDLER_NOTIMPLEMENTED)
+	#define USE_IecTaskExtraExceptionHandler
+	#define EXT_IecTaskExtraExceptionHandler
+	#define GET_IecTaskExtraExceptionHandler(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_IecTaskExtraExceptionHandler(p0,p1,p2)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_IecTaskExtraExceptionHandler  FALSE
+	#define EXP_IecTaskExtraExceptionHandler  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_IecTaskExtraExceptionHandler
+	#define EXT_IecTaskExtraExceptionHandler
+	#define GET_IecTaskExtraExceptionHandler(fl)  CAL_CMGETAPI( "IecTaskExtraExceptionHandler" ) 
+	#define CAL_IecTaskExtraExceptionHandler  IecTaskExtraExceptionHandler
+	#define CHK_IecTaskExtraExceptionHandler  TRUE
+	#define EXP_IecTaskExtraExceptionHandler  CAL_CMEXPAPI( "IecTaskExtraExceptionHandler" ) 
+#elif defined(MIXED_LINK) && !defined(CMPIECTASK_EXTERNAL)
+	#define USE_IecTaskExtraExceptionHandler
+	#define EXT_IecTaskExtraExceptionHandler
+	#define GET_IecTaskExtraExceptionHandler(fl)  CAL_CMGETAPI( "IecTaskExtraExceptionHandler" ) 
+	#define CAL_IecTaskExtraExceptionHandler  IecTaskExtraExceptionHandler
+	#define CHK_IecTaskExtraExceptionHandler  TRUE
+	#define EXP_IecTaskExtraExceptionHandler  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExtraExceptionHandler", (RTS_UINTPTR)IecTaskExtraExceptionHandler, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpIecTaskIecTaskExtraExceptionHandler
+	#define EXT_CmpIecTaskIecTaskExtraExceptionHandler
+	#define GET_CmpIecTaskIecTaskExtraExceptionHandler  ERR_OK
+	#define CAL_CmpIecTaskIecTaskExtraExceptionHandler pICmpIecTask->IIecTaskExtraExceptionHandler
+	#define CHK_CmpIecTaskIecTaskExtraExceptionHandler (pICmpIecTask != NULL)
+	#define EXP_CmpIecTaskIecTaskExtraExceptionHandler  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_IecTaskExtraExceptionHandler
+	#define EXT_IecTaskExtraExceptionHandler
+	#define GET_IecTaskExtraExceptionHandler(fl)  CAL_CMGETAPI( "IecTaskExtraExceptionHandler" ) 
+	#define CAL_IecTaskExtraExceptionHandler pICmpIecTask->IIecTaskExtraExceptionHandler
+	#define CHK_IecTaskExtraExceptionHandler (pICmpIecTask != NULL)
+	#define EXP_IecTaskExtraExceptionHandler  CAL_CMEXPAPI( "IecTaskExtraExceptionHandler" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_IecTaskExtraExceptionHandler  PFIECTASKEXTRAEXCEPTIONHANDLER pfIecTaskExtraExceptionHandler;
+	#define EXT_IecTaskExtraExceptionHandler  extern PFIECTASKEXTRAEXCEPTIONHANDLER pfIecTaskExtraExceptionHandler;
+	#define GET_IecTaskExtraExceptionHandler(fl)  s_pfCMGetAPI2( "IecTaskExtraExceptionHandler", (RTS_VOID_FCTPTR *)&pfIecTaskExtraExceptionHandler, (fl), 0, 0)
+	#define CAL_IecTaskExtraExceptionHandler  pfIecTaskExtraExceptionHandler
+	#define CHK_IecTaskExtraExceptionHandler  (pfIecTaskExtraExceptionHandler != NULL)
+	#define EXP_IecTaskExtraExceptionHandler  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IecTaskExtraExceptionHandler", (RTS_UINTPTR)IecTaskExtraExceptionHandler, 0, 0) 
+#endif
+
+
+
+
 #ifdef __cplusplus
 }
 #endif
@@ -5694,6 +6150,7 @@ typedef struct
  	PFIECFREETASKS2 IIecFreeTasks2;
  	PFIECTASKCYCLE IIecTaskCycle;
  	PFIECTASKUPDATEJITTERTIME IIecTaskUpdateJitterTime;
+ 	PFIECTASKUPDATEJITTERTIME2 IIecTaskUpdateJitterTime2;
  	PFIECTASKUPDATECYCLETIME IIecTaskUpdateCycleTime;
  	PFIECTASKSRESETALLOWED IIecTasksResetAllowed;
  	PFIECTASKSPREPARERESET IIecTasksPrepareReset;
@@ -5744,6 +6201,11 @@ typedef struct
  	PFIECTASKDEBUGHANDLERENTER IIecTaskDebugHandlerEnter;
  	PFIECTASKDEBUGHANDLERLEAVE IIecTaskDebugHandlerLeave;
  	PFIECTASKCALLIECFUNCWITHPARAMS IIecTaskCallIecFuncWithParams;
+ 	PFIECTASKEXTRAADD IIecTaskExtraAdd;
+ 	PFIECTASKEXTRAREMOVE IIecTaskExtraRemove;
+ 	PFIECTASKEXTRAFIND IIecTaskExtraFind;
+ 	PFIECTASKEXTRASETAPP IIecTaskExtraSetApp;
+ 	PFIECTASKEXTRAEXCEPTIONHANDLER IIecTaskExtraExceptionHandler;
  } ICmpIecTask_C;
 
 #ifdef CPLUSPLUS
@@ -5757,6 +6219,7 @@ class ICmpIecTask : public IBase
 		virtual RTS_RESULT CDECL IIecFreeTasks2(APPLICATION *pApp, RTS_UI32 ulTimeoutMs) =0;
 		virtual RTS_RESULT CDECL IIecTaskCycle(Task_Desc* pTask) =0;
 		virtual RTS_RESULT CDECL IIecTaskUpdateJitterTime(Task_Desc* pTask, RTS_SYSTIME *ptNow) =0;
+		virtual RTS_RESULT CDECL IIecTaskUpdateJitterTime2(Task_Desc* pTask) =0;
 		virtual RTS_RESULT CDECL IIecTaskUpdateCycleTime(Task_Desc* pTask, RTS_SYSTIME *ptActUs) =0;
 		virtual RTS_RESULT CDECL IIecTasksResetAllowed(APPLICATION *pApp) =0;
 		virtual RTS_RESULT CDECL IIecTasksPrepareReset(APPLICATION *pApp, int bResetOrigin) =0;
@@ -5784,8 +6247,8 @@ class ICmpIecTask : public IBase
 		virtual RTS_RESULT CDECL IIecTaskExceptionHandler(RTS_UI32 ulException, RegContext Context) =0;
 		virtual Task_Desc * CDECL IIecTaskGetByIndex(APPLICATION* pApp, int iIndex, RTS_RESULT *pResult) =0;
 		virtual RTS_HANDLE CDECL IIecTaskGetHandleByIndex(APPLICATION* pApp, int iIndex, RTS_RESULT *pResult) =0;
-		virtual Task_Desc* CDECL IIecTaskGetById(APPLICATION* pappl, int iId, RTS_RESULT *pResult) =0;
-		virtual int CDECL IIecTaskGetNumOfTasks(APPLICATION* pAppl, RTS_RESULT *pResult) =0;
+		virtual Task_Desc* CDECL IIecTaskGetById(APPLICATION* pApp, int iId, RTS_RESULT *pResult) =0;
+		virtual int CDECL IIecTaskGetNumOfTasks(APPLICATION* pApp, RTS_RESULT *pResult) =0;
 		virtual RTS_RESULT CDECL IIecTaskEnableSchedulingAll(APPLICATION *pApp) =0;
 		virtual RTS_RESULT CDECL IIecTaskDisableSchedulingAll(APPLICATION *pApp, RTS_HANDLE hIecTaskToExclude) =0;
 		virtual RTS_RESULT CDECL IIecTaskEnableScheduling(void) =0;
@@ -5807,6 +6270,11 @@ class ICmpIecTask : public IBase
 		virtual RTS_RESULT CDECL IIecTaskDebugHandlerEnter(void) =0;
 		virtual RTS_RESULT CDECL IIecTaskDebugHandlerLeave(void) =0;
 		virtual RTS_RESULT CDECL IIecTaskCallIecFuncWithParams(RTS_HANDLE hIecTask, APPLICATION *pApp, RTS_VOID_FCTPTR pfIECFunc, void* pParam, int iSize) =0;
+		virtual RTS_HANDLE CDECL IIecTaskExtraAdd(RTS_HANDLE hSysTask, RTS_IEC_STRING *pszTaskName, RTS_RESULT *pResult) =0;
+		virtual RTS_RESULT CDECL IIecTaskExtraRemove(RTS_HANDLE hIecTask) =0;
+		virtual RTS_HANDLE CDECL IIecTaskExtraFind(RTS_HANDLE hSysTask, RTS_RESULT *pResult) =0;
+		virtual RTS_RESULT CDECL IIecTaskExtraSetApp(RTS_HANDLE hIecTask, APPLICATION *pApp) =0;
+		virtual RTS_RESULT CDECL IIecTaskExtraExceptionHandler(RTS_HANDLE hSysTask, RTS_UI32 ulException, RegContext Context) =0;
 };
 	#ifndef ITF_CmpIecTask
 		#define ITF_CmpIecTask static ICmpIecTask *pICmpIecTask = NULL;

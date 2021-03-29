@@ -6,23 +6,23 @@
  * in or passed to the I/O Manager. The following is an overview over the most essential
  * structures and how they are passed to the I/O Manager:</p>
  * <pre>
- * .    +------------------+ UpdateConfiguration()
- * .  +------------------+ |
- * . +-----------------+ |-+
- * . | IoConfigTaskMap |-+
- * . +-------+---------+ ReadInputs() / WriteOutputs()
- * .         | 1                                  UpdateConfiguration()
- * .         |                       +--------------------+
- * .         | n                   +--------------------+ |
- * . +-------+--------------+     +-------------------+ |-+
- * . | IoConfigConnectorMap |     | IoConfigConnector |-+
- * . +-------+--------------+     +--------+----------+ StartBusCycle()
- * .         | 1                           | 1
- * .         |                             |
- * .         | n                           | n
- * . +-------+------------+ n   1 +--------+----------+
- * . | IoConfigChannelMap +-------+ IoConfigParameter |
- * . +--------------------+       +-------------------+
+ *      +------------------+ UpdateConfiguration()
+ *    +------------------+ |
+ *   +-----------------+ |-+
+ *   | IoConfigTaskMap |-+
+ *   +-------+---------+ ReadInputs() / WriteOutputs()
+ *           | 1                                  UpdateConfiguration()
+ *           |                       +--------------------+
+ *           | n                   +--------------------+ |
+ *   +-------+--------------+     +-------------------+ |-+
+ *   | IoConfigConnectorMap |     | IoConfigConnector |-+
+ *   +-------+--------------+     +--------+----------+ StartBusCycle()
+ *           | 1                           | 1
+ *           |                             |
+ *           | n                           | n
+ *   +-------+------------+ n   1 +--------+----------+
+ *   | IoConfigChannelMap +-------+ IoConfigParameter |
+ *   +--------------------+       +-------------------+
  * </pre>
  * <p>Most calls to the I/O Manager are just passed directly through to the drivers.
  * Depending on the kind of driver, this may passed through CmpIoDrvIEC or directly
@@ -30,66 +30,66 @@
  * <p>The following drawing illustrates how a call to e.g. ReadInputs() is passed
  * to the drivers if there is a C and an IEC driver registered and used in one task:</p>
  * <pre>
- * . +--------+    +--------+    +--------+   +-----------+   +--------+
- * . |IEC Task|    |CmpIoMgr|    |IoDrvInC|   |CmpIoDrvIEC|   |IoDrvLib|
- * . +--------+    +---+----+    +---+----+   +----+------+   +---+----+
- * .     |             |             |             |              |
- * .    +++            |             |             |              |
- * .    | |-----------+++            |             |              |
- * .    | |           | |-----------+++            |              |
- * .    | |           | |           | |            |              |
- * .    | |           | |           | |            |              |
- * .    | |           | |           | |            |              |
- * .    | |           | |...........+++            |              |
- * .    | |           | |            |             |              |
- * .    | |           | |------------+------------+++             |
- * .    | |           | |            |            | |             |
- * .    | |           | |            |            | |             |
- * .    | |           | |            |            | |------------+++
- * .    | |           | |            |            | |            | |
- * .    | |           | |            |            | |            | |
- * .    | |           | |            |            | |............+++
- * .    | |           | |.........................+++             |
- * .    | |...........+++            |             |              |
- * .    | |            |             |             |              |
- * .    | |            |             |             |              |
- * .    +++            |             |             |              |
- * .     |             |             |             |              |
- * .     |             |             |             |              |
+ *   +--------+    +--------+    +--------+   +-----------+   +--------+
+ *   |IEC Task|    |CmpIoMgr|    |IoDrvInC|   |CmpIoDrvIEC|   |IoDrvLib|
+ *   +--------+    +---+----+    +---+----+   +----+------+   +---+----+
+ *       |             |             |             |              |
+ *      +++            |             |             |              |
+ *      | |-----------+++            |             |              |
+ *      | |           | |-----------+++            |              |
+ *      | |           | |           | |            |              |
+ *      | |           | |           | |            |              |
+ *      | |           | |           | |            |              |
+ *      | |           | |...........+++            |              |
+ *      | |           | |            |             |              |
+ *      | |           | |------------+------------+++             |
+ *      | |           | |            |            | |             |
+ *      | |           | |            |            | |             |
+ *      | |           | |            |            | |------------+++
+ *      | |           | |            |            | |            | |
+ *      | |           | |            |            | |            | |
+ *      | |           | |            |            | |............+++
+ *      | |           | |.........................+++             |
+ *      | |...........+++            |             |              |
+ *      | |            |             |             |              |
+ *      | |            |             |             |              |
+ *      +++            |             |             |              |
+ *       |             |             |             |              |
+ *       |             |             |             |              |
  * </pre>
  * <p>The devices, which are configured in the CoDeSys programming system
  * are downloaded in form of connector lists. All connectors, specified
  * for the devices are downloaded in form of a list.</p>
- * <p>Beside neighbours, this list has although a parent role, that means,
+ * <p>Beside neighbors, this list has although a parent role, that means,
  * that every list member can point to it's parent.</p>
  * <p>For example:</p>
  * <pre>
- * .                      _____
- * .             _,.--''''     ''--..__
- * .          ,,          ___            --.._
- * .       _,i__       ,-ii_  `'--.._         `-..
- * .     ,;'   -._,;''   -._      `-.._       `-._
- * .  +----+      +----+      +----+      +----+      +-'--+
- * .  | A  |------+ B  |------| C  |------| D  |------+ E  |-----
- * .  +----+      +----+      +----+      +----+      +----+
+ *                        _____
+ *               _,.--''''     ''--..__
+ *            ,,          ___            --.._
+ *         _,i__       ,-ii_  `'--.._         `-..
+ *       ,;'   -._,;''   -._      `-.._       `-._
+ *    +----+      +----+      +----+      +----+      +-'--+
+ *    | A  |------+ B  |------| C  |------| D  |------+ E  |-----
+ *    +----+      +----+      +----+      +----+      +----+
  * </pre>
  * <p>This list represents the following tree:</p>
  * <pre>
- * .                 ,-.
- * .                ( A )
- * .                /`-'\
- * .              .'     |
- * .          ,-./       \,-.
- * .         ( B )       ( E )
- * .         /`-'\        `-'
- * .       .     |
- * .   ,-./       \,-.
- * .  ( C )       ( D )
- * .   -         -
+ *                   ,-.
+ *                  ( A )
+ *                  /`-'\
+ *                .'     |
+ *            ,-./       \,-.
+ *           ( B )       ( E )
+ *           /`-'\        `-'
+ *         .     |
+ *     ,-./       \,-.
+ *    ( C )       ( D )
+ *     -         -
  * </pre>
  * <p>The API functions within this component await always a pointer
- * to one of these connectors, when the input is a "Connecto List".
- * The count doesn't essentially need to specify the absolut size
+ * to one of these connectors, when the input is a "Connector List".
+ * The count doesn't essentially need to specify the absolute size
  * of the list, but the size, starting at the connector that we
  * passed to the function.</p>
  * <p>For example, if we want to iterate over the connector list above (in pseudo code):</p>
@@ -108,13 +108,13 @@
  * of remaining entries in the list, starting at the connector that was 
  * returned.</p>
  * <p>There are two different kinds of driver handles, that the I/O Manager
- * needs to differenciate:</p>
+ * needs to differentiate:</p>
  * <ul>
  *   <li>C Drivers</li>
  *   <li>IEC Drivers</li>
  * </ul>
  * <p>The I/O Manager provides a common function interface for C Components
- * and for IEC Applications. But while the Connectors and Paramter structures
+ * and for IEC Applications. But while the Connectors and Parameter structures
  * are completely the same for both sides, the driver handles are significantly
  * different. Internally the I/O manager works with C driver handles. The
  * abstraction to provide an IEC interface, which is based on Function Blocks,
@@ -122,8 +122,9 @@
  * <p>The component CmpIoDrvC manages all C drivers and CmpIoDrvIec manages all
  * IEC drivers.</p>
  * </description>
+ *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -147,8 +148,8 @@
  * <description>
  *	Compiler switches to enable/disable single features in the component.
  * </description>
- * <element name="CMPIECTASK_DONT_REGISTER_WATCHDOG_AT_SUPERVISOR">Switch to disable registering all hardware supported fieldbus watchdogs (e.g. Hilscher CIFX masters) at the CmpSupervisor!
- *	If this defined is set, the hardware supported fieldbus watchdogs are always enabled and cannot selectively be disabled via the CmpSupervisor!
+ * <element name="CMPIECTASK_DONT_REGISTER_WATCHDOG_AT_SUPERVISOR">Switch to disable registering all hardware supported field-bus watchdogs (e.g. HILSCHER CIFX masters) at the CmpSupervisor!
+ *	If this defined is set, the hardware supported field-bus watchdogs are always enabled and cannot selectively be disabled via the CmpSupervisor!
  * </element>
  */
 
@@ -179,7 +180,7 @@
 
 /**
  * <category>Static defines</category>
- * <description>Number of static scan entries to hold IO driver scan informarion to transmit all of the scanned connectors</description>
+ * <description>Number of static scan entries to hold IO driver scan information to transmit all of the scanned connectors</description>
  */
 #ifndef IOMGR_NUM_OF_STATIC_SCAN_ENTRIES
 	#define	IOMGR_NUM_OF_STATIC_SCAN_ENTRIES		1
@@ -187,8 +188,17 @@
 
 
 /**
+ * <category>Static defines</category>
+ * <description>Number of static AscncData entries for the function IoMgrReconfigure()</description>
+ */
+#ifndef IOMGR_NUM_OF_STATIC_ASYNC_DATA_ENTRIES
+	#define	IOMGR_NUM_OF_STATIC_ASYNC_DATA_ENTRIES		1
+#endif
+
+
+/**
  * <category>File name definitions</category>
- * <description>Name of the parameter storage to save the changed IO-config parameters</description>
+ * <description>Name of the parameter storage to save the changed IO-configuration parameters</description>
  */
 #ifndef IOMGR_PARAMETER_STORAGE_FILE
 	#define IOMGR_PARAMETER_STORAGE_FILE		"IoConfig.par"
@@ -197,7 +207,7 @@
 
 /**
  * <category>Watchdog definitions</category>
- * <description>This is the initial watchdogtask task delay. On the first download of a watchdog time, this time is recalculated</description>
+ * <description>This is the initial watchdog task delay. On the first download of a watchdog time, this time is recalculated</description>
  */
 #ifndef IOMGR_WATCHTDOGTASK_TASK_DELAY
 	#define IOMGR_WATCHTDOGTASK_TASK_DELAY		100
@@ -207,7 +217,7 @@
  * <category>Bus Cycle Type</category>
  * <description>
  * <p>
- *	Type of the bus cycle to differenciate between:
+ *	Type of the bus cycle to differentiate between:
  * </p>
  * <ul>
  *     <li>BCT_START: Bus Cycle is executed at the beginning of the task cycle</li>
@@ -270,7 +280,7 @@
 *     Setting to enable full IO-update consistency resp. disable DRVPROP_CONSISTENCY for all IO-drivers! This setting must be used, if consistency cannot be
 *     realized on this target by the IO-driver itself.
 *  NOTE:
-*     This settings must be enabled on targets with no strict priority scheduling for the IO-update tasks (for MultiCore targets) or on systems with 2 buscycle tasks (for SIL3).
+*     This settings must be enabled on targets with no strict priority scheduling for the IO-update tasks (for MultiCore targets) or on systems with 2 bus cycle tasks (for SIL3).
 * </description>
 */
 #define IOMGRKEY_INT_ENABLE_FULL_CONSISTENCY					"EnableFullConsistency"
@@ -301,110 +311,66 @@ extern "C" {
 #endif
 
 /**
- * <description>
- *		Parameter description. This entry describes completely a parameter of an connector.
- *	</description>
- * <param name="dwParameterId" type="IN">ID of the parameter. This ID is specified in the device description.</param>
- * <param name="dwValue" type="IN">Value (if is valud &lt; 4 bytes) or a pointer to the value of the parameter</param>
- * <param name="wType" type="IN">Type class of the parameter. See category "Type class" an here the enum TypeClass3 in SysInternalLibItf.h for detailed information.</param>
- * <param name="wLen" type="IN">Length of the parameter in bits</param>
- * <param name="dwFlags" type="IN">Parameter value flags.  See category "Parameter value flags" in CmpIoDrvItf.h for detailed information.</param>
- * <param name="dwDriverSpecific" type="IN">Driver specific entry. Reserved for the usage in the driver.</param>
+ *	Parameter description. This entry describes completely a parameter of an connector.
  */
 typedef struct tagIoConfigParameter
 {
-	RTS_IEC_DWORD dwParameterId;
-	RTS_IEC_BYTE *dwValue;
-	RTS_IEC_WORD wType;
-	RTS_IEC_WORD wLen;
-	RTS_IEC_DWORD dwFlags;
-	RTS_IEC_BYTE *dwDriverSpecific;
+	RTS_IEC_DWORD dwParameterId;		/* ID of the parameter. This ID is specified in the device description. */
+	RTS_IEC_BYTE *dwValue;		/* Value (if size is smaller or equal 4 bytes) or a pointer to the value of the parameter. */
+	RTS_IEC_WORD wType;		/* Type class of the parameter. See category "Type class" for detailed information. */
+	RTS_IEC_WORD wLen;		/* Length of the parameter in bits. */
+	RTS_IEC_DWORD dwFlags;		/* Parameter value flags.  See category "Parameter value flags" for detailed information. Bit 16 to 31 are used for extended parameters (size exceeding 65535 Bits,8192 Bytes) */
+	RTS_IEC_BYTE *dwDriverSpecific;		/* Driver specific entry. Reserved for the usage in the driver. */
 } IoConfigParameter;
 
 /**
- * <description>
- *		Connector information. Each device is described completely as a set of one input- and one or more
- *		output-conenctors. 
- *	</description>
- * <param name="wType" type="IN">Type of the connector. See category "Connector types" for detailed information.</param>
- * <param name="wOptions" type="IN">Connector options. See category "Connector options" for detailed information.</param>
- * <param name="dwFlags" type="IN">Connector flags. See category "Connector flags" for detailed information.</param>
- * <param name="hIoDrv" type="IN">Registered instance handle of the IO-driver, that operates this device respectively this connector</param>
- * <param name="dwNumOfParameters" type="IN">Number of parameters in the parameter list</param>
- * <param name="pParameterList" type="IN">Pointer to the parameter list, that contains all parameters of this connector</param>
- * <param name="pFather" type="IN">Pointer to the father connector to describe the device tree</param>
- * <SIL2/>
- */
-typedef struct tagIoConfigConnector
-{
-	RTS_IEC_WORD wType;		
-	RTS_IEC_WORD wOptions;		
-	RTS_IEC_DWORD dwFlags;		
-	RTS_IEC_HANDLE hIoDrv;		
-	RTS_IEC_DWORD dwNumOfParameters;		
-	IoConfigParameter *pParameterList;		
-	struct tagIoConfigConnector *pFather;		
-} IoConfigConnector;
-
-/**
- * <description>
- *		Mapping information for a single channel. Every I/O-channel is described as a parameter, but with special meanings.
- *		The datatype of a channel can be simple (BOOL, BYTE, WORD, etc.) or array of simple types.
- *	</description>
- * <param name="pParameter" type="IN">Pointer to the parameter description</param>
- * <param name="pbyIecAddress" type="IN">Pointer to the parameter in the process image on the IEC side</param>
- * <param name="wParameterBitOffset" type="IN">Bitoffset of the device</param>
- * <param name="wIecAddressBitOffset" type="IN">Bitoffset of pbyIecAddress in the IEC process image</param>
- * <param name="wSize" type="IN">Size in bits of the channel</param>
- * <param name="wBaseTypeInformation" type="IN">If this field is unequal zero, it is used for the base type information. With this information, a correct swapping operation can be executed.</param>
- * <param name="dwDriverSpecific" type="IN">Driver specific entry. Reserved for the usage in the driver.</param>
- * <SIL2/>
+ *	Mapping information for a single channel. Every I/O-channel is described as a parameter, but with special meanings. The data type of a channel can be simple (BOOL, BYTE, WORD, etc.) or array of simple types.
  */
 typedef struct tagIoConfigChannelMap
 {
-	IoConfigParameter *pParameter;
-	RTS_IEC_BYTE *pbyIecAddress;
-	RTS_IEC_WORD wParameterBitOffset;
-	RTS_IEC_WORD wIecAddressBitOffset;
-	RTS_IEC_WORD wSize;
-	RTS_IEC_WORD wBaseTypeInformation;
-	RTS_IEC_BYTE *dwDriverSpecific;
+	IoConfigParameter *pParameter;		/* Pointer to the parameter description. */
+	RTS_IEC_BYTE *pbyIecAddress;		/* Pointer to the parameter in the process image on the IEC side. */
+	RTS_IEC_WORD wParameterBitOffset;		/* Bit offset of the device. */
+	RTS_IEC_WORD wIecAddressBitOffset;		/* Bit offset of pbyIecAddress in the IEC process image. */
+	RTS_IEC_WORD wSize;		/* Size in bits of the channel. */
+	RTS_IEC_WORD wBaseTypeInformation;		/* If this field is unequal zero, it is used for the base type information. With this information, a correct swapping operation can be executed. */
+	RTS_IEC_BYTE *dwDriverSpecific;		/* Driver specific entry. Reserved for the usage in the driver. */
 } IoConfigChannelMap;
 
 /**
- * <description>
- *		Connector map to describe all IO-channels of one connector
- *	</description>
- * <param name="pConnector" type="IN">Pointer to the corresponding connector</param>
- * <param name="dwIoMgrSpecific" type="IN">IO-manager specific entry</param>
- * <param name="dwNumOfChannels" type="IN">Number of channels in the channel map list</param>
- * <param name="pChannelMapList" type="IN">Pointer to channel map list</param>
- * <SIL2/>
+ *		Connector information. Each device is described completely as a set of one input- and one or more output-connectors. 
+ */
+typedef struct tagIoConfigConnector
+{
+	RTS_IEC_WORD wType;		/* Type of the connector. See category "Connector types" for detailed information. */
+	RTS_IEC_WORD wOptions;		/* Connector options. See category "Connector options" for detailed information. */
+	RTS_IEC_DWORD dwFlags;		/* Connector flags. See category "Connector flags" for detailed information. */
+	RTS_IEC_HANDLE hIoDrv;		/* Registered instance handle of the IO-driver, that operates this device respectively this connector. */
+	RTS_IEC_DWORD dwNumOfParameters;		/* Number of parameters in the parameter list. */
+	IoConfigParameter *pParameterList;		/* Pointer to the parameter list, that contains all parameters of this connector. */
+	struct tagIoConfigConnector *pFather;		/* Pointer to the father connector to describe the device tree. */
+} IoConfigConnector;
+
+/**
+ *	Connector map to describe all IO-channels of one connector
  */
 typedef struct tagIoConfigConnectorMap
 {
-	IoConfigConnector *pConnector;
-	RTS_IEC_BYTE *dwIoMgrSpecific;
-	RTS_IEC_DWORD dwNumOfChannels;
-	IoConfigChannelMap *pChannelMapList;
+	IoConfigConnector *pConnector;		/* Pointer to the corresponding connector. */
+	RTS_IEC_BYTE *dwIoMgrSpecific;		/* IO-manager specific entry. */
+	RTS_IEC_DWORD dwNumOfChannels;		/* Number of channels in the channel map list. */
+	IoConfigChannelMap *pChannelMapList;		/* Pointer to channel map list. */
 } IoConfigConnectorMap;
 
 /**
- * <description>
- *		Mapping description for each task.
- *	</description>
- * <param name="dwTaskId" type="IN">Index of the IEC task</param>
- * <param name="wType" type="IN">Input or output type. See category "Task map types" for detailed information.</param>
- * <param name="wNumOfConnectorMap" type="IN">Number of connector maps int the connector map list</param>
- * <param name="pConnectorMapList" type="IN">Pointer to the connector map list</param>
- * <SIL2/>
+ *	Mapping description for each task.
  */
 typedef struct tagIoConfigTaskMap
 {
-	RTS_IEC_DWORD dwTaskId;		
-	RTS_IEC_WORD wType;		
-	RTS_IEC_WORD wNumOfConnectorMap;		
-	IoConfigConnectorMap *pConnectorMapList;		
+	RTS_IEC_DWORD dwTaskId;		/* Index of the IEC task. */
+	RTS_IEC_WORD wType;		/* Input or output type. See category "Task map types" for detailed information. */
+	RTS_IEC_WORD wNumOfConnectorMap;		/* Number of connector maps int the connector map list. */
+	IoConfigConnectorMap *pConnectorMapList;		/* Pointer to the connector map list. */
 } IoConfigTaskMap;
 
 /**
@@ -434,35 +400,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCONFIGGETCONNECTOR_IEC) (iomgrconfiggetcon
 	#define GET_iomgrconfiggetconnector(fl)  CAL_CMGETAPI( "iomgrconfiggetconnector" ) 
 	#define CAL_iomgrconfiggetconnector  iomgrconfiggetconnector
 	#define CHK_iomgrconfiggetconnector  TRUE
-	#define EXP_iomgrconfiggetconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnector", (RTS_UINTPTR)iomgrconfiggetconnector, 1, RTSITF_GET_SIGNATURE(0, 0xB093BAED), 0x03050800) 
+	#define EXP_iomgrconfiggetconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnector", (RTS_UINTPTR)iomgrconfiggetconnector, 1, RTSITF_GET_SIGNATURE(0, 0xB093BAED), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrconfiggetconnector
 	#define EXT_iomgrconfiggetconnector
 	#define GET_iomgrconfiggetconnector(fl)  CAL_CMGETAPI( "iomgrconfiggetconnector" ) 
 	#define CAL_iomgrconfiggetconnector  iomgrconfiggetconnector
 	#define CHK_iomgrconfiggetconnector  TRUE
-	#define EXP_iomgrconfiggetconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnector", (RTS_UINTPTR)iomgrconfiggetconnector, 1, RTSITF_GET_SIGNATURE(0, 0xB093BAED), 0x03050800) 
+	#define EXP_iomgrconfiggetconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnector", (RTS_UINTPTR)iomgrconfiggetconnector, 1, RTSITF_GET_SIGNATURE(0, 0xB093BAED), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrconfiggetconnector
 	#define EXT_CmpIoMgriomgrconfiggetconnector
 	#define GET_CmpIoMgriomgrconfiggetconnector  ERR_OK
 	#define CAL_CmpIoMgriomgrconfiggetconnector  iomgrconfiggetconnector
 	#define CHK_CmpIoMgriomgrconfiggetconnector  TRUE
-	#define EXP_CmpIoMgriomgrconfiggetconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnector", (RTS_UINTPTR)iomgrconfiggetconnector, 1, RTSITF_GET_SIGNATURE(0, 0xB093BAED), 0x03050800) 
+	#define EXP_CmpIoMgriomgrconfiggetconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnector", (RTS_UINTPTR)iomgrconfiggetconnector, 1, RTSITF_GET_SIGNATURE(0, 0xB093BAED), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrconfiggetconnector
 	#define EXT_iomgrconfiggetconnector
 	#define GET_iomgrconfiggetconnector(fl)  CAL_CMGETAPI( "iomgrconfiggetconnector" ) 
 	#define CAL_iomgrconfiggetconnector  iomgrconfiggetconnector
 	#define CHK_iomgrconfiggetconnector  TRUE
-	#define EXP_iomgrconfiggetconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnector", (RTS_UINTPTR)iomgrconfiggetconnector, 1, RTSITF_GET_SIGNATURE(0, 0xB093BAED), 0x03050800) 
+	#define EXP_iomgrconfiggetconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnector", (RTS_UINTPTR)iomgrconfiggetconnector, 1, RTSITF_GET_SIGNATURE(0, 0xB093BAED), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrconfiggetconnector  PFIOMGRCONFIGGETCONNECTOR_IEC pfiomgrconfiggetconnector;
 	#define EXT_iomgrconfiggetconnector  extern PFIOMGRCONFIGGETCONNECTOR_IEC pfiomgrconfiggetconnector;
-	#define GET_iomgrconfiggetconnector(fl)  s_pfCMGetAPI2( "iomgrconfiggetconnector", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetconnector, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB093BAED), 0x03050800)
+	#define GET_iomgrconfiggetconnector(fl)  s_pfCMGetAPI2( "iomgrconfiggetconnector", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetconnector, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB093BAED), 0x03050F00)
 	#define CAL_iomgrconfiggetconnector  pfiomgrconfiggetconnector
 	#define CHK_iomgrconfiggetconnector  (pfiomgrconfiggetconnector != NULL)
-	#define EXP_iomgrconfiggetconnector   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnector", (RTS_UINTPTR)iomgrconfiggetconnector, 1, RTSITF_GET_SIGNATURE(0, 0xB093BAED), 0x03050800) 
+	#define EXP_iomgrconfiggetconnector   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnector", (RTS_UINTPTR)iomgrconfiggetconnector, 1, RTSITF_GET_SIGNATURE(0, 0xB093BAED), 0x03050F00) 
 #endif
 
 
@@ -493,35 +459,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCONFIGGETCONNECTORBYDRIVER_IEC) (iomgrconf
 	#define GET_iomgrconfiggetconnectorbydriver(fl)  CAL_CMGETAPI( "iomgrconfiggetconnectorbydriver" ) 
 	#define CAL_iomgrconfiggetconnectorbydriver  iomgrconfiggetconnectorbydriver
 	#define CHK_iomgrconfiggetconnectorbydriver  TRUE
-	#define EXP_iomgrconfiggetconnectorbydriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorbydriver", (RTS_UINTPTR)iomgrconfiggetconnectorbydriver, 1, RTSITF_GET_SIGNATURE(0, 0x076B9D1E), 0x03050800) 
+	#define EXP_iomgrconfiggetconnectorbydriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorbydriver", (RTS_UINTPTR)iomgrconfiggetconnectorbydriver, 1, RTSITF_GET_SIGNATURE(0, 0x076B9D1E), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrconfiggetconnectorbydriver
 	#define EXT_iomgrconfiggetconnectorbydriver
 	#define GET_iomgrconfiggetconnectorbydriver(fl)  CAL_CMGETAPI( "iomgrconfiggetconnectorbydriver" ) 
 	#define CAL_iomgrconfiggetconnectorbydriver  iomgrconfiggetconnectorbydriver
 	#define CHK_iomgrconfiggetconnectorbydriver  TRUE
-	#define EXP_iomgrconfiggetconnectorbydriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorbydriver", (RTS_UINTPTR)iomgrconfiggetconnectorbydriver, 1, RTSITF_GET_SIGNATURE(0, 0x076B9D1E), 0x03050800) 
+	#define EXP_iomgrconfiggetconnectorbydriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorbydriver", (RTS_UINTPTR)iomgrconfiggetconnectorbydriver, 1, RTSITF_GET_SIGNATURE(0, 0x076B9D1E), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrconfiggetconnectorbydriver
 	#define EXT_CmpIoMgriomgrconfiggetconnectorbydriver
 	#define GET_CmpIoMgriomgrconfiggetconnectorbydriver  ERR_OK
 	#define CAL_CmpIoMgriomgrconfiggetconnectorbydriver  iomgrconfiggetconnectorbydriver
 	#define CHK_CmpIoMgriomgrconfiggetconnectorbydriver  TRUE
-	#define EXP_CmpIoMgriomgrconfiggetconnectorbydriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorbydriver", (RTS_UINTPTR)iomgrconfiggetconnectorbydriver, 1, RTSITF_GET_SIGNATURE(0, 0x076B9D1E), 0x03050800) 
+	#define EXP_CmpIoMgriomgrconfiggetconnectorbydriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorbydriver", (RTS_UINTPTR)iomgrconfiggetconnectorbydriver, 1, RTSITF_GET_SIGNATURE(0, 0x076B9D1E), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrconfiggetconnectorbydriver
 	#define EXT_iomgrconfiggetconnectorbydriver
 	#define GET_iomgrconfiggetconnectorbydriver(fl)  CAL_CMGETAPI( "iomgrconfiggetconnectorbydriver" ) 
 	#define CAL_iomgrconfiggetconnectorbydriver  iomgrconfiggetconnectorbydriver
 	#define CHK_iomgrconfiggetconnectorbydriver  TRUE
-	#define EXP_iomgrconfiggetconnectorbydriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorbydriver", (RTS_UINTPTR)iomgrconfiggetconnectorbydriver, 1, RTSITF_GET_SIGNATURE(0, 0x076B9D1E), 0x03050800) 
+	#define EXP_iomgrconfiggetconnectorbydriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorbydriver", (RTS_UINTPTR)iomgrconfiggetconnectorbydriver, 1, RTSITF_GET_SIGNATURE(0, 0x076B9D1E), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrconfiggetconnectorbydriver  PFIOMGRCONFIGGETCONNECTORBYDRIVER_IEC pfiomgrconfiggetconnectorbydriver;
 	#define EXT_iomgrconfiggetconnectorbydriver  extern PFIOMGRCONFIGGETCONNECTORBYDRIVER_IEC pfiomgrconfiggetconnectorbydriver;
-	#define GET_iomgrconfiggetconnectorbydriver(fl)  s_pfCMGetAPI2( "iomgrconfiggetconnectorbydriver", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetconnectorbydriver, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x076B9D1E), 0x03050800)
+	#define GET_iomgrconfiggetconnectorbydriver(fl)  s_pfCMGetAPI2( "iomgrconfiggetconnectorbydriver", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetconnectorbydriver, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x076B9D1E), 0x03050F00)
 	#define CAL_iomgrconfiggetconnectorbydriver  pfiomgrconfiggetconnectorbydriver
 	#define CHK_iomgrconfiggetconnectorbydriver  (pfiomgrconfiggetconnectorbydriver != NULL)
-	#define EXP_iomgrconfiggetconnectorbydriver   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorbydriver", (RTS_UINTPTR)iomgrconfiggetconnectorbydriver, 1, RTSITF_GET_SIGNATURE(0, 0x076B9D1E), 0x03050800) 
+	#define EXP_iomgrconfiggetconnectorbydriver   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorbydriver", (RTS_UINTPTR)iomgrconfiggetconnectorbydriver, 1, RTSITF_GET_SIGNATURE(0, 0x076B9D1E), 0x03050F00) 
 #endif
 
 
@@ -550,35 +516,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCONFIGGETCONNECTORLIST_IEC) (iomgrconfigge
 	#define GET_iomgrconfiggetconnectorlist(fl)  CAL_CMGETAPI( "iomgrconfiggetconnectorlist" ) 
 	#define CAL_iomgrconfiggetconnectorlist  iomgrconfiggetconnectorlist
 	#define CHK_iomgrconfiggetconnectorlist  TRUE
-	#define EXP_iomgrconfiggetconnectorlist  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorlist", (RTS_UINTPTR)iomgrconfiggetconnectorlist, 1, RTSITF_GET_SIGNATURE(0, 0x6E3F45DC), 0x03050800) 
+	#define EXP_iomgrconfiggetconnectorlist  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorlist", (RTS_UINTPTR)iomgrconfiggetconnectorlist, 1, RTSITF_GET_SIGNATURE(0, 0x6E3F45DC), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrconfiggetconnectorlist
 	#define EXT_iomgrconfiggetconnectorlist
 	#define GET_iomgrconfiggetconnectorlist(fl)  CAL_CMGETAPI( "iomgrconfiggetconnectorlist" ) 
 	#define CAL_iomgrconfiggetconnectorlist  iomgrconfiggetconnectorlist
 	#define CHK_iomgrconfiggetconnectorlist  TRUE
-	#define EXP_iomgrconfiggetconnectorlist  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorlist", (RTS_UINTPTR)iomgrconfiggetconnectorlist, 1, RTSITF_GET_SIGNATURE(0, 0x6E3F45DC), 0x03050800) 
+	#define EXP_iomgrconfiggetconnectorlist  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorlist", (RTS_UINTPTR)iomgrconfiggetconnectorlist, 1, RTSITF_GET_SIGNATURE(0, 0x6E3F45DC), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrconfiggetconnectorlist
 	#define EXT_CmpIoMgriomgrconfiggetconnectorlist
 	#define GET_CmpIoMgriomgrconfiggetconnectorlist  ERR_OK
 	#define CAL_CmpIoMgriomgrconfiggetconnectorlist  iomgrconfiggetconnectorlist
 	#define CHK_CmpIoMgriomgrconfiggetconnectorlist  TRUE
-	#define EXP_CmpIoMgriomgrconfiggetconnectorlist  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorlist", (RTS_UINTPTR)iomgrconfiggetconnectorlist, 1, RTSITF_GET_SIGNATURE(0, 0x6E3F45DC), 0x03050800) 
+	#define EXP_CmpIoMgriomgrconfiggetconnectorlist  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorlist", (RTS_UINTPTR)iomgrconfiggetconnectorlist, 1, RTSITF_GET_SIGNATURE(0, 0x6E3F45DC), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrconfiggetconnectorlist
 	#define EXT_iomgrconfiggetconnectorlist
 	#define GET_iomgrconfiggetconnectorlist(fl)  CAL_CMGETAPI( "iomgrconfiggetconnectorlist" ) 
 	#define CAL_iomgrconfiggetconnectorlist  iomgrconfiggetconnectorlist
 	#define CHK_iomgrconfiggetconnectorlist  TRUE
-	#define EXP_iomgrconfiggetconnectorlist  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorlist", (RTS_UINTPTR)iomgrconfiggetconnectorlist, 1, RTSITF_GET_SIGNATURE(0, 0x6E3F45DC), 0x03050800) 
+	#define EXP_iomgrconfiggetconnectorlist  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorlist", (RTS_UINTPTR)iomgrconfiggetconnectorlist, 1, RTSITF_GET_SIGNATURE(0, 0x6E3F45DC), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrconfiggetconnectorlist  PFIOMGRCONFIGGETCONNECTORLIST_IEC pfiomgrconfiggetconnectorlist;
 	#define EXT_iomgrconfiggetconnectorlist  extern PFIOMGRCONFIGGETCONNECTORLIST_IEC pfiomgrconfiggetconnectorlist;
-	#define GET_iomgrconfiggetconnectorlist(fl)  s_pfCMGetAPI2( "iomgrconfiggetconnectorlist", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetconnectorlist, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x6E3F45DC), 0x03050800)
+	#define GET_iomgrconfiggetconnectorlist(fl)  s_pfCMGetAPI2( "iomgrconfiggetconnectorlist", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetconnectorlist, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x6E3F45DC), 0x03050F00)
 	#define CAL_iomgrconfiggetconnectorlist  pfiomgrconfiggetconnectorlist
 	#define CHK_iomgrconfiggetconnectorlist  (pfiomgrconfiggetconnectorlist != NULL)
-	#define EXP_iomgrconfiggetconnectorlist   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorlist", (RTS_UINTPTR)iomgrconfiggetconnectorlist, 1, RTSITF_GET_SIGNATURE(0, 0x6E3F45DC), 0x03050800) 
+	#define EXP_iomgrconfiggetconnectorlist   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetconnectorlist", (RTS_UINTPTR)iomgrconfiggetconnectorlist, 1, RTSITF_GET_SIGNATURE(0, 0x6E3F45DC), 0x03050F00) 
 #endif
 
 
@@ -608,35 +574,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCONFIGGETDRIVER_IEC) (iomgrconfiggetdriver
 	#define GET_iomgrconfiggetdriver(fl)  CAL_CMGETAPI( "iomgrconfiggetdriver" ) 
 	#define CAL_iomgrconfiggetdriver  iomgrconfiggetdriver
 	#define CHK_iomgrconfiggetdriver  TRUE
-	#define EXP_iomgrconfiggetdriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetdriver", (RTS_UINTPTR)iomgrconfiggetdriver, 1, RTSITF_GET_SIGNATURE(0, 0xA6C591A7), 0x03050800) 
+	#define EXP_iomgrconfiggetdriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetdriver", (RTS_UINTPTR)iomgrconfiggetdriver, 1, RTSITF_GET_SIGNATURE(0, 0xA6C591A7), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrconfiggetdriver
 	#define EXT_iomgrconfiggetdriver
 	#define GET_iomgrconfiggetdriver(fl)  CAL_CMGETAPI( "iomgrconfiggetdriver" ) 
 	#define CAL_iomgrconfiggetdriver  iomgrconfiggetdriver
 	#define CHK_iomgrconfiggetdriver  TRUE
-	#define EXP_iomgrconfiggetdriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetdriver", (RTS_UINTPTR)iomgrconfiggetdriver, 1, RTSITF_GET_SIGNATURE(0, 0xA6C591A7), 0x03050800) 
+	#define EXP_iomgrconfiggetdriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetdriver", (RTS_UINTPTR)iomgrconfiggetdriver, 1, RTSITF_GET_SIGNATURE(0, 0xA6C591A7), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrconfiggetdriver
 	#define EXT_CmpIoMgriomgrconfiggetdriver
 	#define GET_CmpIoMgriomgrconfiggetdriver  ERR_OK
 	#define CAL_CmpIoMgriomgrconfiggetdriver  iomgrconfiggetdriver
 	#define CHK_CmpIoMgriomgrconfiggetdriver  TRUE
-	#define EXP_CmpIoMgriomgrconfiggetdriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetdriver", (RTS_UINTPTR)iomgrconfiggetdriver, 1, RTSITF_GET_SIGNATURE(0, 0xA6C591A7), 0x03050800) 
+	#define EXP_CmpIoMgriomgrconfiggetdriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetdriver", (RTS_UINTPTR)iomgrconfiggetdriver, 1, RTSITF_GET_SIGNATURE(0, 0xA6C591A7), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrconfiggetdriver
 	#define EXT_iomgrconfiggetdriver
 	#define GET_iomgrconfiggetdriver(fl)  CAL_CMGETAPI( "iomgrconfiggetdriver" ) 
 	#define CAL_iomgrconfiggetdriver  iomgrconfiggetdriver
 	#define CHK_iomgrconfiggetdriver  TRUE
-	#define EXP_iomgrconfiggetdriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetdriver", (RTS_UINTPTR)iomgrconfiggetdriver, 1, RTSITF_GET_SIGNATURE(0, 0xA6C591A7), 0x03050800) 
+	#define EXP_iomgrconfiggetdriver  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetdriver", (RTS_UINTPTR)iomgrconfiggetdriver, 1, RTSITF_GET_SIGNATURE(0, 0xA6C591A7), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrconfiggetdriver  PFIOMGRCONFIGGETDRIVER_IEC pfiomgrconfiggetdriver;
 	#define EXT_iomgrconfiggetdriver  extern PFIOMGRCONFIGGETDRIVER_IEC pfiomgrconfiggetdriver;
-	#define GET_iomgrconfiggetdriver(fl)  s_pfCMGetAPI2( "iomgrconfiggetdriver", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetdriver, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA6C591A7), 0x03050800)
+	#define GET_iomgrconfiggetdriver(fl)  s_pfCMGetAPI2( "iomgrconfiggetdriver", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetdriver, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA6C591A7), 0x03050F00)
 	#define CAL_iomgrconfiggetdriver  pfiomgrconfiggetdriver
 	#define CHK_iomgrconfiggetdriver  (pfiomgrconfiggetdriver != NULL)
-	#define EXP_iomgrconfiggetdriver   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetdriver", (RTS_UINTPTR)iomgrconfiggetdriver, 1, RTSITF_GET_SIGNATURE(0, 0xA6C591A7), 0x03050800) 
+	#define EXP_iomgrconfiggetdriver   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetdriver", (RTS_UINTPTR)iomgrconfiggetdriver, 1, RTSITF_GET_SIGNATURE(0, 0xA6C591A7), 0x03050F00) 
 #endif
 
 
@@ -666,35 +632,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCONFIGGETFIRSTCHILD_IEC) (iomgrconfiggetfi
 	#define GET_iomgrconfiggetfirstchild(fl)  CAL_CMGETAPI( "iomgrconfiggetfirstchild" ) 
 	#define CAL_iomgrconfiggetfirstchild  iomgrconfiggetfirstchild
 	#define CHK_iomgrconfiggetfirstchild  TRUE
-	#define EXP_iomgrconfiggetfirstchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstchild", (RTS_UINTPTR)iomgrconfiggetfirstchild, 1, RTSITF_GET_SIGNATURE(0, 0xB89B6273), 0x03050800) 
+	#define EXP_iomgrconfiggetfirstchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstchild", (RTS_UINTPTR)iomgrconfiggetfirstchild, 1, RTSITF_GET_SIGNATURE(0, 0xB89B6273), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrconfiggetfirstchild
 	#define EXT_iomgrconfiggetfirstchild
 	#define GET_iomgrconfiggetfirstchild(fl)  CAL_CMGETAPI( "iomgrconfiggetfirstchild" ) 
 	#define CAL_iomgrconfiggetfirstchild  iomgrconfiggetfirstchild
 	#define CHK_iomgrconfiggetfirstchild  TRUE
-	#define EXP_iomgrconfiggetfirstchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstchild", (RTS_UINTPTR)iomgrconfiggetfirstchild, 1, RTSITF_GET_SIGNATURE(0, 0xB89B6273), 0x03050800) 
+	#define EXP_iomgrconfiggetfirstchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstchild", (RTS_UINTPTR)iomgrconfiggetfirstchild, 1, RTSITF_GET_SIGNATURE(0, 0xB89B6273), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrconfiggetfirstchild
 	#define EXT_CmpIoMgriomgrconfiggetfirstchild
 	#define GET_CmpIoMgriomgrconfiggetfirstchild  ERR_OK
 	#define CAL_CmpIoMgriomgrconfiggetfirstchild  iomgrconfiggetfirstchild
 	#define CHK_CmpIoMgriomgrconfiggetfirstchild  TRUE
-	#define EXP_CmpIoMgriomgrconfiggetfirstchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstchild", (RTS_UINTPTR)iomgrconfiggetfirstchild, 1, RTSITF_GET_SIGNATURE(0, 0xB89B6273), 0x03050800) 
+	#define EXP_CmpIoMgriomgrconfiggetfirstchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstchild", (RTS_UINTPTR)iomgrconfiggetfirstchild, 1, RTSITF_GET_SIGNATURE(0, 0xB89B6273), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrconfiggetfirstchild
 	#define EXT_iomgrconfiggetfirstchild
 	#define GET_iomgrconfiggetfirstchild(fl)  CAL_CMGETAPI( "iomgrconfiggetfirstchild" ) 
 	#define CAL_iomgrconfiggetfirstchild  iomgrconfiggetfirstchild
 	#define CHK_iomgrconfiggetfirstchild  TRUE
-	#define EXP_iomgrconfiggetfirstchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstchild", (RTS_UINTPTR)iomgrconfiggetfirstchild, 1, RTSITF_GET_SIGNATURE(0, 0xB89B6273), 0x03050800) 
+	#define EXP_iomgrconfiggetfirstchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstchild", (RTS_UINTPTR)iomgrconfiggetfirstchild, 1, RTSITF_GET_SIGNATURE(0, 0xB89B6273), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrconfiggetfirstchild  PFIOMGRCONFIGGETFIRSTCHILD_IEC pfiomgrconfiggetfirstchild;
 	#define EXT_iomgrconfiggetfirstchild  extern PFIOMGRCONFIGGETFIRSTCHILD_IEC pfiomgrconfiggetfirstchild;
-	#define GET_iomgrconfiggetfirstchild(fl)  s_pfCMGetAPI2( "iomgrconfiggetfirstchild", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetfirstchild, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB89B6273), 0x03050800)
+	#define GET_iomgrconfiggetfirstchild(fl)  s_pfCMGetAPI2( "iomgrconfiggetfirstchild", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetfirstchild, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB89B6273), 0x03050F00)
 	#define CAL_iomgrconfiggetfirstchild  pfiomgrconfiggetfirstchild
 	#define CHK_iomgrconfiggetfirstchild  (pfiomgrconfiggetfirstchild != NULL)
-	#define EXP_iomgrconfiggetfirstchild   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstchild", (RTS_UINTPTR)iomgrconfiggetfirstchild, 1, RTSITF_GET_SIGNATURE(0, 0xB89B6273), 0x03050800) 
+	#define EXP_iomgrconfiggetfirstchild   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstchild", (RTS_UINTPTR)iomgrconfiggetfirstchild, 1, RTSITF_GET_SIGNATURE(0, 0xB89B6273), 0x03050F00) 
 #endif
 
 
@@ -724,35 +690,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCONFIGGETFIRSTCONNECTOR_IEC) (iomgrconfigg
 	#define GET_iomgrconfiggetfirstconnector(fl)  CAL_CMGETAPI( "iomgrconfiggetfirstconnector" ) 
 	#define CAL_iomgrconfiggetfirstconnector  iomgrconfiggetfirstconnector
 	#define CHK_iomgrconfiggetfirstconnector  TRUE
-	#define EXP_iomgrconfiggetfirstconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstconnector", (RTS_UINTPTR)iomgrconfiggetfirstconnector, 1, RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA), 0x03050800) 
+	#define EXP_iomgrconfiggetfirstconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstconnector", (RTS_UINTPTR)iomgrconfiggetfirstconnector, 1, RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrconfiggetfirstconnector
 	#define EXT_iomgrconfiggetfirstconnector
 	#define GET_iomgrconfiggetfirstconnector(fl)  CAL_CMGETAPI( "iomgrconfiggetfirstconnector" ) 
 	#define CAL_iomgrconfiggetfirstconnector  iomgrconfiggetfirstconnector
 	#define CHK_iomgrconfiggetfirstconnector  TRUE
-	#define EXP_iomgrconfiggetfirstconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstconnector", (RTS_UINTPTR)iomgrconfiggetfirstconnector, 1, RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA), 0x03050800) 
+	#define EXP_iomgrconfiggetfirstconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstconnector", (RTS_UINTPTR)iomgrconfiggetfirstconnector, 1, RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrconfiggetfirstconnector
 	#define EXT_CmpIoMgriomgrconfiggetfirstconnector
 	#define GET_CmpIoMgriomgrconfiggetfirstconnector  ERR_OK
 	#define CAL_CmpIoMgriomgrconfiggetfirstconnector  iomgrconfiggetfirstconnector
 	#define CHK_CmpIoMgriomgrconfiggetfirstconnector  TRUE
-	#define EXP_CmpIoMgriomgrconfiggetfirstconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstconnector", (RTS_UINTPTR)iomgrconfiggetfirstconnector, 1, RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA), 0x03050800) 
+	#define EXP_CmpIoMgriomgrconfiggetfirstconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstconnector", (RTS_UINTPTR)iomgrconfiggetfirstconnector, 1, RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrconfiggetfirstconnector
 	#define EXT_iomgrconfiggetfirstconnector
 	#define GET_iomgrconfiggetfirstconnector(fl)  CAL_CMGETAPI( "iomgrconfiggetfirstconnector" ) 
 	#define CAL_iomgrconfiggetfirstconnector  iomgrconfiggetfirstconnector
 	#define CHK_iomgrconfiggetfirstconnector  TRUE
-	#define EXP_iomgrconfiggetfirstconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstconnector", (RTS_UINTPTR)iomgrconfiggetfirstconnector, 1, RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA), 0x03050800) 
+	#define EXP_iomgrconfiggetfirstconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstconnector", (RTS_UINTPTR)iomgrconfiggetfirstconnector, 1, RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrconfiggetfirstconnector  PFIOMGRCONFIGGETFIRSTCONNECTOR_IEC pfiomgrconfiggetfirstconnector;
 	#define EXT_iomgrconfiggetfirstconnector  extern PFIOMGRCONFIGGETFIRSTCONNECTOR_IEC pfiomgrconfiggetfirstconnector;
-	#define GET_iomgrconfiggetfirstconnector(fl)  s_pfCMGetAPI2( "iomgrconfiggetfirstconnector", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetfirstconnector, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA), 0x03050800)
+	#define GET_iomgrconfiggetfirstconnector(fl)  s_pfCMGetAPI2( "iomgrconfiggetfirstconnector", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetfirstconnector, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA), 0x03050F00)
 	#define CAL_iomgrconfiggetfirstconnector  pfiomgrconfiggetfirstconnector
 	#define CHK_iomgrconfiggetfirstconnector  (pfiomgrconfiggetfirstconnector != NULL)
-	#define EXP_iomgrconfiggetfirstconnector   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstconnector", (RTS_UINTPTR)iomgrconfiggetfirstconnector, 1, RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA), 0x03050800) 
+	#define EXP_iomgrconfiggetfirstconnector   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetfirstconnector", (RTS_UINTPTR)iomgrconfiggetfirstconnector, 1, RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA), 0x03050F00) 
 #endif
 
 
@@ -782,35 +748,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCONFIGGETNEXTCHILD_IEC) (iomgrconfiggetnex
 	#define GET_iomgrconfiggetnextchild(fl)  CAL_CMGETAPI( "iomgrconfiggetnextchild" ) 
 	#define CAL_iomgrconfiggetnextchild  iomgrconfiggetnextchild
 	#define CHK_iomgrconfiggetnextchild  TRUE
-	#define EXP_iomgrconfiggetnextchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextchild", (RTS_UINTPTR)iomgrconfiggetnextchild, 1, RTSITF_GET_SIGNATURE(0, 0x2F87EBF8), 0x03050800) 
+	#define EXP_iomgrconfiggetnextchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextchild", (RTS_UINTPTR)iomgrconfiggetnextchild, 1, RTSITF_GET_SIGNATURE(0, 0x2F87EBF8), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrconfiggetnextchild
 	#define EXT_iomgrconfiggetnextchild
 	#define GET_iomgrconfiggetnextchild(fl)  CAL_CMGETAPI( "iomgrconfiggetnextchild" ) 
 	#define CAL_iomgrconfiggetnextchild  iomgrconfiggetnextchild
 	#define CHK_iomgrconfiggetnextchild  TRUE
-	#define EXP_iomgrconfiggetnextchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextchild", (RTS_UINTPTR)iomgrconfiggetnextchild, 1, RTSITF_GET_SIGNATURE(0, 0x2F87EBF8), 0x03050800) 
+	#define EXP_iomgrconfiggetnextchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextchild", (RTS_UINTPTR)iomgrconfiggetnextchild, 1, RTSITF_GET_SIGNATURE(0, 0x2F87EBF8), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrconfiggetnextchild
 	#define EXT_CmpIoMgriomgrconfiggetnextchild
 	#define GET_CmpIoMgriomgrconfiggetnextchild  ERR_OK
 	#define CAL_CmpIoMgriomgrconfiggetnextchild  iomgrconfiggetnextchild
 	#define CHK_CmpIoMgriomgrconfiggetnextchild  TRUE
-	#define EXP_CmpIoMgriomgrconfiggetnextchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextchild", (RTS_UINTPTR)iomgrconfiggetnextchild, 1, RTSITF_GET_SIGNATURE(0, 0x2F87EBF8), 0x03050800) 
+	#define EXP_CmpIoMgriomgrconfiggetnextchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextchild", (RTS_UINTPTR)iomgrconfiggetnextchild, 1, RTSITF_GET_SIGNATURE(0, 0x2F87EBF8), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrconfiggetnextchild
 	#define EXT_iomgrconfiggetnextchild
 	#define GET_iomgrconfiggetnextchild(fl)  CAL_CMGETAPI( "iomgrconfiggetnextchild" ) 
 	#define CAL_iomgrconfiggetnextchild  iomgrconfiggetnextchild
 	#define CHK_iomgrconfiggetnextchild  TRUE
-	#define EXP_iomgrconfiggetnextchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextchild", (RTS_UINTPTR)iomgrconfiggetnextchild, 1, RTSITF_GET_SIGNATURE(0, 0x2F87EBF8), 0x03050800) 
+	#define EXP_iomgrconfiggetnextchild  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextchild", (RTS_UINTPTR)iomgrconfiggetnextchild, 1, RTSITF_GET_SIGNATURE(0, 0x2F87EBF8), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrconfiggetnextchild  PFIOMGRCONFIGGETNEXTCHILD_IEC pfiomgrconfiggetnextchild;
 	#define EXT_iomgrconfiggetnextchild  extern PFIOMGRCONFIGGETNEXTCHILD_IEC pfiomgrconfiggetnextchild;
-	#define GET_iomgrconfiggetnextchild(fl)  s_pfCMGetAPI2( "iomgrconfiggetnextchild", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetnextchild, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x2F87EBF8), 0x03050800)
+	#define GET_iomgrconfiggetnextchild(fl)  s_pfCMGetAPI2( "iomgrconfiggetnextchild", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetnextchild, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x2F87EBF8), 0x03050F00)
 	#define CAL_iomgrconfiggetnextchild  pfiomgrconfiggetnextchild
 	#define CHK_iomgrconfiggetnextchild  (pfiomgrconfiggetnextchild != NULL)
-	#define EXP_iomgrconfiggetnextchild   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextchild", (RTS_UINTPTR)iomgrconfiggetnextchild, 1, RTSITF_GET_SIGNATURE(0, 0x2F87EBF8), 0x03050800) 
+	#define EXP_iomgrconfiggetnextchild   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextchild", (RTS_UINTPTR)iomgrconfiggetnextchild, 1, RTSITF_GET_SIGNATURE(0, 0x2F87EBF8), 0x03050F00) 
 #endif
 
 
@@ -840,35 +806,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCONFIGGETNEXTCONNECTOR_IEC) (iomgrconfigge
 	#define GET_iomgrconfiggetnextconnector(fl)  CAL_CMGETAPI( "iomgrconfiggetnextconnector" ) 
 	#define CAL_iomgrconfiggetnextconnector  iomgrconfiggetnextconnector
 	#define CHK_iomgrconfiggetnextconnector  TRUE
-	#define EXP_iomgrconfiggetnextconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextconnector", (RTS_UINTPTR)iomgrconfiggetnextconnector, 1, RTSITF_GET_SIGNATURE(0, 0xA5BCF071), 0x03050800) 
+	#define EXP_iomgrconfiggetnextconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextconnector", (RTS_UINTPTR)iomgrconfiggetnextconnector, 1, RTSITF_GET_SIGNATURE(0, 0xA5BCF071), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrconfiggetnextconnector
 	#define EXT_iomgrconfiggetnextconnector
 	#define GET_iomgrconfiggetnextconnector(fl)  CAL_CMGETAPI( "iomgrconfiggetnextconnector" ) 
 	#define CAL_iomgrconfiggetnextconnector  iomgrconfiggetnextconnector
 	#define CHK_iomgrconfiggetnextconnector  TRUE
-	#define EXP_iomgrconfiggetnextconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextconnector", (RTS_UINTPTR)iomgrconfiggetnextconnector, 1, RTSITF_GET_SIGNATURE(0, 0xA5BCF071), 0x03050800) 
+	#define EXP_iomgrconfiggetnextconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextconnector", (RTS_UINTPTR)iomgrconfiggetnextconnector, 1, RTSITF_GET_SIGNATURE(0, 0xA5BCF071), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrconfiggetnextconnector
 	#define EXT_CmpIoMgriomgrconfiggetnextconnector
 	#define GET_CmpIoMgriomgrconfiggetnextconnector  ERR_OK
 	#define CAL_CmpIoMgriomgrconfiggetnextconnector  iomgrconfiggetnextconnector
 	#define CHK_CmpIoMgriomgrconfiggetnextconnector  TRUE
-	#define EXP_CmpIoMgriomgrconfiggetnextconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextconnector", (RTS_UINTPTR)iomgrconfiggetnextconnector, 1, RTSITF_GET_SIGNATURE(0, 0xA5BCF071), 0x03050800) 
+	#define EXP_CmpIoMgriomgrconfiggetnextconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextconnector", (RTS_UINTPTR)iomgrconfiggetnextconnector, 1, RTSITF_GET_SIGNATURE(0, 0xA5BCF071), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrconfiggetnextconnector
 	#define EXT_iomgrconfiggetnextconnector
 	#define GET_iomgrconfiggetnextconnector(fl)  CAL_CMGETAPI( "iomgrconfiggetnextconnector" ) 
 	#define CAL_iomgrconfiggetnextconnector  iomgrconfiggetnextconnector
 	#define CHK_iomgrconfiggetnextconnector  TRUE
-	#define EXP_iomgrconfiggetnextconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextconnector", (RTS_UINTPTR)iomgrconfiggetnextconnector, 1, RTSITF_GET_SIGNATURE(0, 0xA5BCF071), 0x03050800) 
+	#define EXP_iomgrconfiggetnextconnector  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextconnector", (RTS_UINTPTR)iomgrconfiggetnextconnector, 1, RTSITF_GET_SIGNATURE(0, 0xA5BCF071), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrconfiggetnextconnector  PFIOMGRCONFIGGETNEXTCONNECTOR_IEC pfiomgrconfiggetnextconnector;
 	#define EXT_iomgrconfiggetnextconnector  extern PFIOMGRCONFIGGETNEXTCONNECTOR_IEC pfiomgrconfiggetnextconnector;
-	#define GET_iomgrconfiggetnextconnector(fl)  s_pfCMGetAPI2( "iomgrconfiggetnextconnector", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetnextconnector, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA5BCF071), 0x03050800)
+	#define GET_iomgrconfiggetnextconnector(fl)  s_pfCMGetAPI2( "iomgrconfiggetnextconnector", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetnextconnector, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA5BCF071), 0x03050F00)
 	#define CAL_iomgrconfiggetnextconnector  pfiomgrconfiggetnextconnector
 	#define CHK_iomgrconfiggetnextconnector  (pfiomgrconfiggetnextconnector != NULL)
-	#define EXP_iomgrconfiggetnextconnector   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextconnector", (RTS_UINTPTR)iomgrconfiggetnextconnector, 1, RTSITF_GET_SIGNATURE(0, 0xA5BCF071), 0x03050800) 
+	#define EXP_iomgrconfiggetnextconnector   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetnextconnector", (RTS_UINTPTR)iomgrconfiggetnextconnector, 1, RTSITF_GET_SIGNATURE(0, 0xA5BCF071), 0x03050F00) 
 #endif
 
 
@@ -897,35 +863,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCONFIGGETPARAMETER_IEC) (iomgrconfiggetpar
 	#define GET_iomgrconfiggetparameter(fl)  CAL_CMGETAPI( "iomgrconfiggetparameter" ) 
 	#define CAL_iomgrconfiggetparameter  iomgrconfiggetparameter
 	#define CHK_iomgrconfiggetparameter  TRUE
-	#define EXP_iomgrconfiggetparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparameter", (RTS_UINTPTR)iomgrconfiggetparameter, 1, RTSITF_GET_SIGNATURE(0, 0xC7A23B05), 0x03050800) 
+	#define EXP_iomgrconfiggetparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparameter", (RTS_UINTPTR)iomgrconfiggetparameter, 1, RTSITF_GET_SIGNATURE(0, 0xC7A23B05), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrconfiggetparameter
 	#define EXT_iomgrconfiggetparameter
 	#define GET_iomgrconfiggetparameter(fl)  CAL_CMGETAPI( "iomgrconfiggetparameter" ) 
 	#define CAL_iomgrconfiggetparameter  iomgrconfiggetparameter
 	#define CHK_iomgrconfiggetparameter  TRUE
-	#define EXP_iomgrconfiggetparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparameter", (RTS_UINTPTR)iomgrconfiggetparameter, 1, RTSITF_GET_SIGNATURE(0, 0xC7A23B05), 0x03050800) 
+	#define EXP_iomgrconfiggetparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparameter", (RTS_UINTPTR)iomgrconfiggetparameter, 1, RTSITF_GET_SIGNATURE(0, 0xC7A23B05), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrconfiggetparameter
 	#define EXT_CmpIoMgriomgrconfiggetparameter
 	#define GET_CmpIoMgriomgrconfiggetparameter  ERR_OK
 	#define CAL_CmpIoMgriomgrconfiggetparameter  iomgrconfiggetparameter
 	#define CHK_CmpIoMgriomgrconfiggetparameter  TRUE
-	#define EXP_CmpIoMgriomgrconfiggetparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparameter", (RTS_UINTPTR)iomgrconfiggetparameter, 1, RTSITF_GET_SIGNATURE(0, 0xC7A23B05), 0x03050800) 
+	#define EXP_CmpIoMgriomgrconfiggetparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparameter", (RTS_UINTPTR)iomgrconfiggetparameter, 1, RTSITF_GET_SIGNATURE(0, 0xC7A23B05), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrconfiggetparameter
 	#define EXT_iomgrconfiggetparameter
 	#define GET_iomgrconfiggetparameter(fl)  CAL_CMGETAPI( "iomgrconfiggetparameter" ) 
 	#define CAL_iomgrconfiggetparameter  iomgrconfiggetparameter
 	#define CHK_iomgrconfiggetparameter  TRUE
-	#define EXP_iomgrconfiggetparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparameter", (RTS_UINTPTR)iomgrconfiggetparameter, 1, RTSITF_GET_SIGNATURE(0, 0xC7A23B05), 0x03050800) 
+	#define EXP_iomgrconfiggetparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparameter", (RTS_UINTPTR)iomgrconfiggetparameter, 1, RTSITF_GET_SIGNATURE(0, 0xC7A23B05), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrconfiggetparameter  PFIOMGRCONFIGGETPARAMETER_IEC pfiomgrconfiggetparameter;
 	#define EXT_iomgrconfiggetparameter  extern PFIOMGRCONFIGGETPARAMETER_IEC pfiomgrconfiggetparameter;
-	#define GET_iomgrconfiggetparameter(fl)  s_pfCMGetAPI2( "iomgrconfiggetparameter", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetparameter, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC7A23B05), 0x03050800)
+	#define GET_iomgrconfiggetparameter(fl)  s_pfCMGetAPI2( "iomgrconfiggetparameter", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetparameter, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC7A23B05), 0x03050F00)
 	#define CAL_iomgrconfiggetparameter  pfiomgrconfiggetparameter
 	#define CHK_iomgrconfiggetparameter  (pfiomgrconfiggetparameter != NULL)
-	#define EXP_iomgrconfiggetparameter   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparameter", (RTS_UINTPTR)iomgrconfiggetparameter, 1, RTSITF_GET_SIGNATURE(0, 0xC7A23B05), 0x03050800) 
+	#define EXP_iomgrconfiggetparameter   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparameter", (RTS_UINTPTR)iomgrconfiggetparameter, 1, RTSITF_GET_SIGNATURE(0, 0xC7A23B05), 0x03050F00) 
 #endif
 
 
@@ -954,35 +920,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCONFIGGETPARAMETERVALUEBYTE_IEC) (iomgrcon
 	#define GET_iomgrconfiggetparametervaluebyte(fl)  CAL_CMGETAPI( "iomgrconfiggetparametervaluebyte" ) 
 	#define CAL_iomgrconfiggetparametervaluebyte  iomgrconfiggetparametervaluebyte
 	#define CHK_iomgrconfiggetparametervaluebyte  TRUE
-	#define EXP_iomgrconfiggetparametervaluebyte  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluebyte", (RTS_UINTPTR)iomgrconfiggetparametervaluebyte, 1, RTSITF_GET_SIGNATURE(0, 0xDE4EF488), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervaluebyte  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluebyte", (RTS_UINTPTR)iomgrconfiggetparametervaluebyte, 1, RTSITF_GET_SIGNATURE(0, 0xDE4EF488), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrconfiggetparametervaluebyte
 	#define EXT_iomgrconfiggetparametervaluebyte
 	#define GET_iomgrconfiggetparametervaluebyte(fl)  CAL_CMGETAPI( "iomgrconfiggetparametervaluebyte" ) 
 	#define CAL_iomgrconfiggetparametervaluebyte  iomgrconfiggetparametervaluebyte
 	#define CHK_iomgrconfiggetparametervaluebyte  TRUE
-	#define EXP_iomgrconfiggetparametervaluebyte  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluebyte", (RTS_UINTPTR)iomgrconfiggetparametervaluebyte, 1, RTSITF_GET_SIGNATURE(0, 0xDE4EF488), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervaluebyte  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluebyte", (RTS_UINTPTR)iomgrconfiggetparametervaluebyte, 1, RTSITF_GET_SIGNATURE(0, 0xDE4EF488), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrconfiggetparametervaluebyte
 	#define EXT_CmpIoMgriomgrconfiggetparametervaluebyte
 	#define GET_CmpIoMgriomgrconfiggetparametervaluebyte  ERR_OK
 	#define CAL_CmpIoMgriomgrconfiggetparametervaluebyte  iomgrconfiggetparametervaluebyte
 	#define CHK_CmpIoMgriomgrconfiggetparametervaluebyte  TRUE
-	#define EXP_CmpIoMgriomgrconfiggetparametervaluebyte  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluebyte", (RTS_UINTPTR)iomgrconfiggetparametervaluebyte, 1, RTSITF_GET_SIGNATURE(0, 0xDE4EF488), 0x03050800) 
+	#define EXP_CmpIoMgriomgrconfiggetparametervaluebyte  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluebyte", (RTS_UINTPTR)iomgrconfiggetparametervaluebyte, 1, RTSITF_GET_SIGNATURE(0, 0xDE4EF488), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrconfiggetparametervaluebyte
 	#define EXT_iomgrconfiggetparametervaluebyte
 	#define GET_iomgrconfiggetparametervaluebyte(fl)  CAL_CMGETAPI( "iomgrconfiggetparametervaluebyte" ) 
 	#define CAL_iomgrconfiggetparametervaluebyte  iomgrconfiggetparametervaluebyte
 	#define CHK_iomgrconfiggetparametervaluebyte  TRUE
-	#define EXP_iomgrconfiggetparametervaluebyte  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluebyte", (RTS_UINTPTR)iomgrconfiggetparametervaluebyte, 1, RTSITF_GET_SIGNATURE(0, 0xDE4EF488), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervaluebyte  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluebyte", (RTS_UINTPTR)iomgrconfiggetparametervaluebyte, 1, RTSITF_GET_SIGNATURE(0, 0xDE4EF488), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrconfiggetparametervaluebyte  PFIOMGRCONFIGGETPARAMETERVALUEBYTE_IEC pfiomgrconfiggetparametervaluebyte;
 	#define EXT_iomgrconfiggetparametervaluebyte  extern PFIOMGRCONFIGGETPARAMETERVALUEBYTE_IEC pfiomgrconfiggetparametervaluebyte;
-	#define GET_iomgrconfiggetparametervaluebyte(fl)  s_pfCMGetAPI2( "iomgrconfiggetparametervaluebyte", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetparametervaluebyte, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xDE4EF488), 0x03050800)
+	#define GET_iomgrconfiggetparametervaluebyte(fl)  s_pfCMGetAPI2( "iomgrconfiggetparametervaluebyte", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetparametervaluebyte, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xDE4EF488), 0x03050F00)
 	#define CAL_iomgrconfiggetparametervaluebyte  pfiomgrconfiggetparametervaluebyte
 	#define CHK_iomgrconfiggetparametervaluebyte  (pfiomgrconfiggetparametervaluebyte != NULL)
-	#define EXP_iomgrconfiggetparametervaluebyte   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluebyte", (RTS_UINTPTR)iomgrconfiggetparametervaluebyte, 1, RTSITF_GET_SIGNATURE(0, 0xDE4EF488), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervaluebyte   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluebyte", (RTS_UINTPTR)iomgrconfiggetparametervaluebyte, 1, RTSITF_GET_SIGNATURE(0, 0xDE4EF488), 0x03050F00) 
 #endif
 
 
@@ -1011,35 +977,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCONFIGGETPARAMETERVALUEDWORD_IEC) (iomgrco
 	#define GET_iomgrconfiggetparametervaluedword(fl)  CAL_CMGETAPI( "iomgrconfiggetparametervaluedword" ) 
 	#define CAL_iomgrconfiggetparametervaluedword  iomgrconfiggetparametervaluedword
 	#define CHK_iomgrconfiggetparametervaluedword  TRUE
-	#define EXP_iomgrconfiggetparametervaluedword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluedword", (RTS_UINTPTR)iomgrconfiggetparametervaluedword, 1, RTSITF_GET_SIGNATURE(0, 0x6F885F72), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervaluedword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluedword", (RTS_UINTPTR)iomgrconfiggetparametervaluedword, 1, RTSITF_GET_SIGNATURE(0, 0x6F885F72), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrconfiggetparametervaluedword
 	#define EXT_iomgrconfiggetparametervaluedword
 	#define GET_iomgrconfiggetparametervaluedword(fl)  CAL_CMGETAPI( "iomgrconfiggetparametervaluedword" ) 
 	#define CAL_iomgrconfiggetparametervaluedword  iomgrconfiggetparametervaluedword
 	#define CHK_iomgrconfiggetparametervaluedword  TRUE
-	#define EXP_iomgrconfiggetparametervaluedword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluedword", (RTS_UINTPTR)iomgrconfiggetparametervaluedword, 1, RTSITF_GET_SIGNATURE(0, 0x6F885F72), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervaluedword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluedword", (RTS_UINTPTR)iomgrconfiggetparametervaluedword, 1, RTSITF_GET_SIGNATURE(0, 0x6F885F72), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrconfiggetparametervaluedword
 	#define EXT_CmpIoMgriomgrconfiggetparametervaluedword
 	#define GET_CmpIoMgriomgrconfiggetparametervaluedword  ERR_OK
 	#define CAL_CmpIoMgriomgrconfiggetparametervaluedword  iomgrconfiggetparametervaluedword
 	#define CHK_CmpIoMgriomgrconfiggetparametervaluedword  TRUE
-	#define EXP_CmpIoMgriomgrconfiggetparametervaluedword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluedword", (RTS_UINTPTR)iomgrconfiggetparametervaluedword, 1, RTSITF_GET_SIGNATURE(0, 0x6F885F72), 0x03050800) 
+	#define EXP_CmpIoMgriomgrconfiggetparametervaluedword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluedword", (RTS_UINTPTR)iomgrconfiggetparametervaluedword, 1, RTSITF_GET_SIGNATURE(0, 0x6F885F72), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrconfiggetparametervaluedword
 	#define EXT_iomgrconfiggetparametervaluedword
 	#define GET_iomgrconfiggetparametervaluedword(fl)  CAL_CMGETAPI( "iomgrconfiggetparametervaluedword" ) 
 	#define CAL_iomgrconfiggetparametervaluedword  iomgrconfiggetparametervaluedword
 	#define CHK_iomgrconfiggetparametervaluedword  TRUE
-	#define EXP_iomgrconfiggetparametervaluedword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluedword", (RTS_UINTPTR)iomgrconfiggetparametervaluedword, 1, RTSITF_GET_SIGNATURE(0, 0x6F885F72), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervaluedword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluedword", (RTS_UINTPTR)iomgrconfiggetparametervaluedword, 1, RTSITF_GET_SIGNATURE(0, 0x6F885F72), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrconfiggetparametervaluedword  PFIOMGRCONFIGGETPARAMETERVALUEDWORD_IEC pfiomgrconfiggetparametervaluedword;
 	#define EXT_iomgrconfiggetparametervaluedword  extern PFIOMGRCONFIGGETPARAMETERVALUEDWORD_IEC pfiomgrconfiggetparametervaluedword;
-	#define GET_iomgrconfiggetparametervaluedword(fl)  s_pfCMGetAPI2( "iomgrconfiggetparametervaluedword", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetparametervaluedword, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x6F885F72), 0x03050800)
+	#define GET_iomgrconfiggetparametervaluedword(fl)  s_pfCMGetAPI2( "iomgrconfiggetparametervaluedword", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetparametervaluedword, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x6F885F72), 0x03050F00)
 	#define CAL_iomgrconfiggetparametervaluedword  pfiomgrconfiggetparametervaluedword
 	#define CHK_iomgrconfiggetparametervaluedword  (pfiomgrconfiggetparametervaluedword != NULL)
-	#define EXP_iomgrconfiggetparametervaluedword   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluedword", (RTS_UINTPTR)iomgrconfiggetparametervaluedword, 1, RTSITF_GET_SIGNATURE(0, 0x6F885F72), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervaluedword   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluedword", (RTS_UINTPTR)iomgrconfiggetparametervaluedword, 1, RTSITF_GET_SIGNATURE(0, 0x6F885F72), 0x03050F00) 
 #endif
 
 
@@ -1068,35 +1034,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCONFIGGETPARAMETERVALUEPOINTER_IEC) (iomgr
 	#define GET_iomgrconfiggetparametervaluepointer(fl)  CAL_CMGETAPI( "iomgrconfiggetparametervaluepointer" ) 
 	#define CAL_iomgrconfiggetparametervaluepointer  iomgrconfiggetparametervaluepointer
 	#define CHK_iomgrconfiggetparametervaluepointer  TRUE
-	#define EXP_iomgrconfiggetparametervaluepointer  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluepointer", (RTS_UINTPTR)iomgrconfiggetparametervaluepointer, 1, RTSITF_GET_SIGNATURE(0, 0x633BC6E3), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervaluepointer  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluepointer", (RTS_UINTPTR)iomgrconfiggetparametervaluepointer, 1, RTSITF_GET_SIGNATURE(0, 0x633BC6E3), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrconfiggetparametervaluepointer
 	#define EXT_iomgrconfiggetparametervaluepointer
 	#define GET_iomgrconfiggetparametervaluepointer(fl)  CAL_CMGETAPI( "iomgrconfiggetparametervaluepointer" ) 
 	#define CAL_iomgrconfiggetparametervaluepointer  iomgrconfiggetparametervaluepointer
 	#define CHK_iomgrconfiggetparametervaluepointer  TRUE
-	#define EXP_iomgrconfiggetparametervaluepointer  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluepointer", (RTS_UINTPTR)iomgrconfiggetparametervaluepointer, 1, RTSITF_GET_SIGNATURE(0, 0x633BC6E3), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervaluepointer  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluepointer", (RTS_UINTPTR)iomgrconfiggetparametervaluepointer, 1, RTSITF_GET_SIGNATURE(0, 0x633BC6E3), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrconfiggetparametervaluepointer
 	#define EXT_CmpIoMgriomgrconfiggetparametervaluepointer
 	#define GET_CmpIoMgriomgrconfiggetparametervaluepointer  ERR_OK
 	#define CAL_CmpIoMgriomgrconfiggetparametervaluepointer  iomgrconfiggetparametervaluepointer
 	#define CHK_CmpIoMgriomgrconfiggetparametervaluepointer  TRUE
-	#define EXP_CmpIoMgriomgrconfiggetparametervaluepointer  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluepointer", (RTS_UINTPTR)iomgrconfiggetparametervaluepointer, 1, RTSITF_GET_SIGNATURE(0, 0x633BC6E3), 0x03050800) 
+	#define EXP_CmpIoMgriomgrconfiggetparametervaluepointer  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluepointer", (RTS_UINTPTR)iomgrconfiggetparametervaluepointer, 1, RTSITF_GET_SIGNATURE(0, 0x633BC6E3), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrconfiggetparametervaluepointer
 	#define EXT_iomgrconfiggetparametervaluepointer
 	#define GET_iomgrconfiggetparametervaluepointer(fl)  CAL_CMGETAPI( "iomgrconfiggetparametervaluepointer" ) 
 	#define CAL_iomgrconfiggetparametervaluepointer  iomgrconfiggetparametervaluepointer
 	#define CHK_iomgrconfiggetparametervaluepointer  TRUE
-	#define EXP_iomgrconfiggetparametervaluepointer  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluepointer", (RTS_UINTPTR)iomgrconfiggetparametervaluepointer, 1, RTSITF_GET_SIGNATURE(0, 0x633BC6E3), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervaluepointer  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluepointer", (RTS_UINTPTR)iomgrconfiggetparametervaluepointer, 1, RTSITF_GET_SIGNATURE(0, 0x633BC6E3), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrconfiggetparametervaluepointer  PFIOMGRCONFIGGETPARAMETERVALUEPOINTER_IEC pfiomgrconfiggetparametervaluepointer;
 	#define EXT_iomgrconfiggetparametervaluepointer  extern PFIOMGRCONFIGGETPARAMETERVALUEPOINTER_IEC pfiomgrconfiggetparametervaluepointer;
-	#define GET_iomgrconfiggetparametervaluepointer(fl)  s_pfCMGetAPI2( "iomgrconfiggetparametervaluepointer", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetparametervaluepointer, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x633BC6E3), 0x03050800)
+	#define GET_iomgrconfiggetparametervaluepointer(fl)  s_pfCMGetAPI2( "iomgrconfiggetparametervaluepointer", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetparametervaluepointer, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x633BC6E3), 0x03050F00)
 	#define CAL_iomgrconfiggetparametervaluepointer  pfiomgrconfiggetparametervaluepointer
 	#define CHK_iomgrconfiggetparametervaluepointer  (pfiomgrconfiggetparametervaluepointer != NULL)
-	#define EXP_iomgrconfiggetparametervaluepointer   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluepointer", (RTS_UINTPTR)iomgrconfiggetparametervaluepointer, 1, RTSITF_GET_SIGNATURE(0, 0x633BC6E3), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervaluepointer   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervaluepointer", (RTS_UINTPTR)iomgrconfiggetparametervaluepointer, 1, RTSITF_GET_SIGNATURE(0, 0x633BC6E3), 0x03050F00) 
 #endif
 
 
@@ -1125,35 +1091,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCONFIGGETPARAMETERVALUEWORD_IEC) (iomgrcon
 	#define GET_iomgrconfiggetparametervalueword(fl)  CAL_CMGETAPI( "iomgrconfiggetparametervalueword" ) 
 	#define CAL_iomgrconfiggetparametervalueword  iomgrconfiggetparametervalueword
 	#define CHK_iomgrconfiggetparametervalueword  TRUE
-	#define EXP_iomgrconfiggetparametervalueword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervalueword", (RTS_UINTPTR)iomgrconfiggetparametervalueword, 1, RTSITF_GET_SIGNATURE(0, 0x522D5073), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervalueword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervalueword", (RTS_UINTPTR)iomgrconfiggetparametervalueword, 1, RTSITF_GET_SIGNATURE(0, 0x522D5073), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrconfiggetparametervalueword
 	#define EXT_iomgrconfiggetparametervalueword
 	#define GET_iomgrconfiggetparametervalueword(fl)  CAL_CMGETAPI( "iomgrconfiggetparametervalueword" ) 
 	#define CAL_iomgrconfiggetparametervalueword  iomgrconfiggetparametervalueword
 	#define CHK_iomgrconfiggetparametervalueword  TRUE
-	#define EXP_iomgrconfiggetparametervalueword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervalueword", (RTS_UINTPTR)iomgrconfiggetparametervalueword, 1, RTSITF_GET_SIGNATURE(0, 0x522D5073), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervalueword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervalueword", (RTS_UINTPTR)iomgrconfiggetparametervalueword, 1, RTSITF_GET_SIGNATURE(0, 0x522D5073), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrconfiggetparametervalueword
 	#define EXT_CmpIoMgriomgrconfiggetparametervalueword
 	#define GET_CmpIoMgriomgrconfiggetparametervalueword  ERR_OK
 	#define CAL_CmpIoMgriomgrconfiggetparametervalueword  iomgrconfiggetparametervalueword
 	#define CHK_CmpIoMgriomgrconfiggetparametervalueword  TRUE
-	#define EXP_CmpIoMgriomgrconfiggetparametervalueword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervalueword", (RTS_UINTPTR)iomgrconfiggetparametervalueword, 1, RTSITF_GET_SIGNATURE(0, 0x522D5073), 0x03050800) 
+	#define EXP_CmpIoMgriomgrconfiggetparametervalueword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervalueword", (RTS_UINTPTR)iomgrconfiggetparametervalueword, 1, RTSITF_GET_SIGNATURE(0, 0x522D5073), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrconfiggetparametervalueword
 	#define EXT_iomgrconfiggetparametervalueword
 	#define GET_iomgrconfiggetparametervalueword(fl)  CAL_CMGETAPI( "iomgrconfiggetparametervalueword" ) 
 	#define CAL_iomgrconfiggetparametervalueword  iomgrconfiggetparametervalueword
 	#define CHK_iomgrconfiggetparametervalueword  TRUE
-	#define EXP_iomgrconfiggetparametervalueword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervalueword", (RTS_UINTPTR)iomgrconfiggetparametervalueword, 1, RTSITF_GET_SIGNATURE(0, 0x522D5073), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervalueword  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervalueword", (RTS_UINTPTR)iomgrconfiggetparametervalueword, 1, RTSITF_GET_SIGNATURE(0, 0x522D5073), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrconfiggetparametervalueword  PFIOMGRCONFIGGETPARAMETERVALUEWORD_IEC pfiomgrconfiggetparametervalueword;
 	#define EXT_iomgrconfiggetparametervalueword  extern PFIOMGRCONFIGGETPARAMETERVALUEWORD_IEC pfiomgrconfiggetparametervalueword;
-	#define GET_iomgrconfiggetparametervalueword(fl)  s_pfCMGetAPI2( "iomgrconfiggetparametervalueword", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetparametervalueword, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x522D5073), 0x03050800)
+	#define GET_iomgrconfiggetparametervalueword(fl)  s_pfCMGetAPI2( "iomgrconfiggetparametervalueword", (RTS_VOID_FCTPTR *)&pfiomgrconfiggetparametervalueword, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x522D5073), 0x03050F00)
 	#define CAL_iomgrconfiggetparametervalueword  pfiomgrconfiggetparametervalueword
 	#define CHK_iomgrconfiggetparametervalueword  (pfiomgrconfiggetparametervalueword != NULL)
-	#define EXP_iomgrconfiggetparametervalueword   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervalueword", (RTS_UINTPTR)iomgrconfiggetparametervalueword, 1, RTSITF_GET_SIGNATURE(0, 0x522D5073), 0x03050800) 
+	#define EXP_iomgrconfiggetparametervalueword   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfiggetparametervalueword", (RTS_UINTPTR)iomgrconfiggetparametervalueword, 1, RTSITF_GET_SIGNATURE(0, 0x522D5073), 0x03050F00) 
 #endif
 
 
@@ -1182,35 +1148,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCONFIGRESETDIAGNOSIS_IEC) (iomgrconfigrese
 	#define GET_iomgrconfigresetdiagnosis(fl)  CAL_CMGETAPI( "iomgrconfigresetdiagnosis" ) 
 	#define CAL_iomgrconfigresetdiagnosis  iomgrconfigresetdiagnosis
 	#define CHK_iomgrconfigresetdiagnosis  TRUE
-	#define EXP_iomgrconfigresetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigresetdiagnosis", (RTS_UINTPTR)iomgrconfigresetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x6B60C0F6), 0x03050800) 
+	#define EXP_iomgrconfigresetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigresetdiagnosis", (RTS_UINTPTR)iomgrconfigresetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x6B60C0F6), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrconfigresetdiagnosis
 	#define EXT_iomgrconfigresetdiagnosis
 	#define GET_iomgrconfigresetdiagnosis(fl)  CAL_CMGETAPI( "iomgrconfigresetdiagnosis" ) 
 	#define CAL_iomgrconfigresetdiagnosis  iomgrconfigresetdiagnosis
 	#define CHK_iomgrconfigresetdiagnosis  TRUE
-	#define EXP_iomgrconfigresetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigresetdiagnosis", (RTS_UINTPTR)iomgrconfigresetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x6B60C0F6), 0x03050800) 
+	#define EXP_iomgrconfigresetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigresetdiagnosis", (RTS_UINTPTR)iomgrconfigresetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x6B60C0F6), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrconfigresetdiagnosis
 	#define EXT_CmpIoMgriomgrconfigresetdiagnosis
 	#define GET_CmpIoMgriomgrconfigresetdiagnosis  ERR_OK
 	#define CAL_CmpIoMgriomgrconfigresetdiagnosis  iomgrconfigresetdiagnosis
 	#define CHK_CmpIoMgriomgrconfigresetdiagnosis  TRUE
-	#define EXP_CmpIoMgriomgrconfigresetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigresetdiagnosis", (RTS_UINTPTR)iomgrconfigresetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x6B60C0F6), 0x03050800) 
+	#define EXP_CmpIoMgriomgrconfigresetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigresetdiagnosis", (RTS_UINTPTR)iomgrconfigresetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x6B60C0F6), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrconfigresetdiagnosis
 	#define EXT_iomgrconfigresetdiagnosis
 	#define GET_iomgrconfigresetdiagnosis(fl)  CAL_CMGETAPI( "iomgrconfigresetdiagnosis" ) 
 	#define CAL_iomgrconfigresetdiagnosis  iomgrconfigresetdiagnosis
 	#define CHK_iomgrconfigresetdiagnosis  TRUE
-	#define EXP_iomgrconfigresetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigresetdiagnosis", (RTS_UINTPTR)iomgrconfigresetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x6B60C0F6), 0x03050800) 
+	#define EXP_iomgrconfigresetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigresetdiagnosis", (RTS_UINTPTR)iomgrconfigresetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x6B60C0F6), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrconfigresetdiagnosis  PFIOMGRCONFIGRESETDIAGNOSIS_IEC pfiomgrconfigresetdiagnosis;
 	#define EXT_iomgrconfigresetdiagnosis  extern PFIOMGRCONFIGRESETDIAGNOSIS_IEC pfiomgrconfigresetdiagnosis;
-	#define GET_iomgrconfigresetdiagnosis(fl)  s_pfCMGetAPI2( "iomgrconfigresetdiagnosis", (RTS_VOID_FCTPTR *)&pfiomgrconfigresetdiagnosis, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x6B60C0F6), 0x03050800)
+	#define GET_iomgrconfigresetdiagnosis(fl)  s_pfCMGetAPI2( "iomgrconfigresetdiagnosis", (RTS_VOID_FCTPTR *)&pfiomgrconfigresetdiagnosis, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x6B60C0F6), 0x03050F00)
 	#define CAL_iomgrconfigresetdiagnosis  pfiomgrconfigresetdiagnosis
 	#define CHK_iomgrconfigresetdiagnosis  (pfiomgrconfigresetdiagnosis != NULL)
-	#define EXP_iomgrconfigresetdiagnosis   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigresetdiagnosis", (RTS_UINTPTR)iomgrconfigresetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x6B60C0F6), 0x03050800) 
+	#define EXP_iomgrconfigresetdiagnosis   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigresetdiagnosis", (RTS_UINTPTR)iomgrconfigresetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x6B60C0F6), 0x03050F00) 
 #endif
 
 
@@ -1239,35 +1205,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCONFIGSETDIAGNOSIS_IEC) (iomgrconfigsetdia
 	#define GET_iomgrconfigsetdiagnosis(fl)  CAL_CMGETAPI( "iomgrconfigsetdiagnosis" ) 
 	#define CAL_iomgrconfigsetdiagnosis  iomgrconfigsetdiagnosis
 	#define CHK_iomgrconfigsetdiagnosis  TRUE
-	#define EXP_iomgrconfigsetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigsetdiagnosis", (RTS_UINTPTR)iomgrconfigsetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9), 0x03050800) 
+	#define EXP_iomgrconfigsetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigsetdiagnosis", (RTS_UINTPTR)iomgrconfigsetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrconfigsetdiagnosis
 	#define EXT_iomgrconfigsetdiagnosis
 	#define GET_iomgrconfigsetdiagnosis(fl)  CAL_CMGETAPI( "iomgrconfigsetdiagnosis" ) 
 	#define CAL_iomgrconfigsetdiagnosis  iomgrconfigsetdiagnosis
 	#define CHK_iomgrconfigsetdiagnosis  TRUE
-	#define EXP_iomgrconfigsetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigsetdiagnosis", (RTS_UINTPTR)iomgrconfigsetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9), 0x03050800) 
+	#define EXP_iomgrconfigsetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigsetdiagnosis", (RTS_UINTPTR)iomgrconfigsetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrconfigsetdiagnosis
 	#define EXT_CmpIoMgriomgrconfigsetdiagnosis
 	#define GET_CmpIoMgriomgrconfigsetdiagnosis  ERR_OK
 	#define CAL_CmpIoMgriomgrconfigsetdiagnosis  iomgrconfigsetdiagnosis
 	#define CHK_CmpIoMgriomgrconfigsetdiagnosis  TRUE
-	#define EXP_CmpIoMgriomgrconfigsetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigsetdiagnosis", (RTS_UINTPTR)iomgrconfigsetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9), 0x03050800) 
+	#define EXP_CmpIoMgriomgrconfigsetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigsetdiagnosis", (RTS_UINTPTR)iomgrconfigsetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrconfigsetdiagnosis
 	#define EXT_iomgrconfigsetdiagnosis
 	#define GET_iomgrconfigsetdiagnosis(fl)  CAL_CMGETAPI( "iomgrconfigsetdiagnosis" ) 
 	#define CAL_iomgrconfigsetdiagnosis  iomgrconfigsetdiagnosis
 	#define CHK_iomgrconfigsetdiagnosis  TRUE
-	#define EXP_iomgrconfigsetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigsetdiagnosis", (RTS_UINTPTR)iomgrconfigsetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9), 0x03050800) 
+	#define EXP_iomgrconfigsetdiagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigsetdiagnosis", (RTS_UINTPTR)iomgrconfigsetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrconfigsetdiagnosis  PFIOMGRCONFIGSETDIAGNOSIS_IEC pfiomgrconfigsetdiagnosis;
 	#define EXT_iomgrconfigsetdiagnosis  extern PFIOMGRCONFIGSETDIAGNOSIS_IEC pfiomgrconfigsetdiagnosis;
-	#define GET_iomgrconfigsetdiagnosis(fl)  s_pfCMGetAPI2( "iomgrconfigsetdiagnosis", (RTS_VOID_FCTPTR *)&pfiomgrconfigsetdiagnosis, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9), 0x03050800)
+	#define GET_iomgrconfigsetdiagnosis(fl)  s_pfCMGetAPI2( "iomgrconfigsetdiagnosis", (RTS_VOID_FCTPTR *)&pfiomgrconfigsetdiagnosis, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9), 0x03050F00)
 	#define CAL_iomgrconfigsetdiagnosis  pfiomgrconfigsetdiagnosis
 	#define CHK_iomgrconfigsetdiagnosis  (pfiomgrconfigsetdiagnosis != NULL)
-	#define EXP_iomgrconfigsetdiagnosis   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigsetdiagnosis", (RTS_UINTPTR)iomgrconfigsetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9), 0x03050800) 
+	#define EXP_iomgrconfigsetdiagnosis   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrconfigsetdiagnosis", (RTS_UINTPTR)iomgrconfigsetdiagnosis, 1, RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9), 0x03050F00) 
 #endif
 
 
@@ -1296,35 +1262,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCOPYINPUTBE_IEC) (iomgrcopyinputbe_struct 
 	#define GET_iomgrcopyinputbe(fl)  CAL_CMGETAPI( "iomgrcopyinputbe" ) 
 	#define CAL_iomgrcopyinputbe  iomgrcopyinputbe
 	#define CHK_iomgrcopyinputbe  TRUE
-	#define EXP_iomgrcopyinputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputbe", (RTS_UINTPTR)iomgrcopyinputbe, 1, RTSITF_GET_SIGNATURE(0, 0x072C6C71), 0x03050800) 
+	#define EXP_iomgrcopyinputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputbe", (RTS_UINTPTR)iomgrcopyinputbe, 1, 0, 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrcopyinputbe
 	#define EXT_iomgrcopyinputbe
 	#define GET_iomgrcopyinputbe(fl)  CAL_CMGETAPI( "iomgrcopyinputbe" ) 
 	#define CAL_iomgrcopyinputbe  iomgrcopyinputbe
 	#define CHK_iomgrcopyinputbe  TRUE
-	#define EXP_iomgrcopyinputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputbe", (RTS_UINTPTR)iomgrcopyinputbe, 1, RTSITF_GET_SIGNATURE(0, 0x072C6C71), 0x03050800) 
+	#define EXP_iomgrcopyinputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputbe", (RTS_UINTPTR)iomgrcopyinputbe, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrcopyinputbe
 	#define EXT_CmpIoMgriomgrcopyinputbe
 	#define GET_CmpIoMgriomgrcopyinputbe  ERR_OK
 	#define CAL_CmpIoMgriomgrcopyinputbe  iomgrcopyinputbe
 	#define CHK_CmpIoMgriomgrcopyinputbe  TRUE
-	#define EXP_CmpIoMgriomgrcopyinputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputbe", (RTS_UINTPTR)iomgrcopyinputbe, 1, RTSITF_GET_SIGNATURE(0, 0x072C6C71), 0x03050800) 
+	#define EXP_CmpIoMgriomgrcopyinputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputbe", (RTS_UINTPTR)iomgrcopyinputbe, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrcopyinputbe
 	#define EXT_iomgrcopyinputbe
 	#define GET_iomgrcopyinputbe(fl)  CAL_CMGETAPI( "iomgrcopyinputbe" ) 
 	#define CAL_iomgrcopyinputbe  iomgrcopyinputbe
 	#define CHK_iomgrcopyinputbe  TRUE
-	#define EXP_iomgrcopyinputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputbe", (RTS_UINTPTR)iomgrcopyinputbe, 1, RTSITF_GET_SIGNATURE(0, 0x072C6C71), 0x03050800) 
+	#define EXP_iomgrcopyinputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputbe", (RTS_UINTPTR)iomgrcopyinputbe, 1, 0, 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrcopyinputbe  PFIOMGRCOPYINPUTBE_IEC pfiomgrcopyinputbe;
 	#define EXT_iomgrcopyinputbe  extern PFIOMGRCOPYINPUTBE_IEC pfiomgrcopyinputbe;
-	#define GET_iomgrcopyinputbe(fl)  s_pfCMGetAPI2( "iomgrcopyinputbe", (RTS_VOID_FCTPTR *)&pfiomgrcopyinputbe, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x072C6C71), 0x03050800)
+	#define GET_iomgrcopyinputbe(fl)  s_pfCMGetAPI2( "iomgrcopyinputbe", (RTS_VOID_FCTPTR *)&pfiomgrcopyinputbe, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
 	#define CAL_iomgrcopyinputbe  pfiomgrcopyinputbe
 	#define CHK_iomgrcopyinputbe  (pfiomgrcopyinputbe != NULL)
-	#define EXP_iomgrcopyinputbe   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputbe", (RTS_UINTPTR)iomgrcopyinputbe, 1, RTSITF_GET_SIGNATURE(0, 0x072C6C71), 0x03050800) 
+	#define EXP_iomgrcopyinputbe   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputbe", (RTS_UINTPTR)iomgrcopyinputbe, 1, 0, 0x03050F00) 
 #endif
 
 
@@ -1353,35 +1319,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCOPYINPUTLE_IEC) (iomgrcopyinputle_struct 
 	#define GET_iomgrcopyinputle(fl)  CAL_CMGETAPI( "iomgrcopyinputle" ) 
 	#define CAL_iomgrcopyinputle  iomgrcopyinputle
 	#define CHK_iomgrcopyinputle  TRUE
-	#define EXP_iomgrcopyinputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputle", (RTS_UINTPTR)iomgrcopyinputle, 1, RTSITF_GET_SIGNATURE(0, 0xD4FB4CB6), 0x03050800) 
+	#define EXP_iomgrcopyinputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputle", (RTS_UINTPTR)iomgrcopyinputle, 1, 0, 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrcopyinputle
 	#define EXT_iomgrcopyinputle
 	#define GET_iomgrcopyinputle(fl)  CAL_CMGETAPI( "iomgrcopyinputle" ) 
 	#define CAL_iomgrcopyinputle  iomgrcopyinputle
 	#define CHK_iomgrcopyinputle  TRUE
-	#define EXP_iomgrcopyinputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputle", (RTS_UINTPTR)iomgrcopyinputle, 1, RTSITF_GET_SIGNATURE(0, 0xD4FB4CB6), 0x03050800) 
+	#define EXP_iomgrcopyinputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputle", (RTS_UINTPTR)iomgrcopyinputle, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrcopyinputle
 	#define EXT_CmpIoMgriomgrcopyinputle
 	#define GET_CmpIoMgriomgrcopyinputle  ERR_OK
 	#define CAL_CmpIoMgriomgrcopyinputle  iomgrcopyinputle
 	#define CHK_CmpIoMgriomgrcopyinputle  TRUE
-	#define EXP_CmpIoMgriomgrcopyinputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputle", (RTS_UINTPTR)iomgrcopyinputle, 1, RTSITF_GET_SIGNATURE(0, 0xD4FB4CB6), 0x03050800) 
+	#define EXP_CmpIoMgriomgrcopyinputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputle", (RTS_UINTPTR)iomgrcopyinputle, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrcopyinputle
 	#define EXT_iomgrcopyinputle
 	#define GET_iomgrcopyinputle(fl)  CAL_CMGETAPI( "iomgrcopyinputle" ) 
 	#define CAL_iomgrcopyinputle  iomgrcopyinputle
 	#define CHK_iomgrcopyinputle  TRUE
-	#define EXP_iomgrcopyinputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputle", (RTS_UINTPTR)iomgrcopyinputle, 1, RTSITF_GET_SIGNATURE(0, 0xD4FB4CB6), 0x03050800) 
+	#define EXP_iomgrcopyinputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputle", (RTS_UINTPTR)iomgrcopyinputle, 1, 0, 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrcopyinputle  PFIOMGRCOPYINPUTLE_IEC pfiomgrcopyinputle;
 	#define EXT_iomgrcopyinputle  extern PFIOMGRCOPYINPUTLE_IEC pfiomgrcopyinputle;
-	#define GET_iomgrcopyinputle(fl)  s_pfCMGetAPI2( "iomgrcopyinputle", (RTS_VOID_FCTPTR *)&pfiomgrcopyinputle, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xD4FB4CB6), 0x03050800)
+	#define GET_iomgrcopyinputle(fl)  s_pfCMGetAPI2( "iomgrcopyinputle", (RTS_VOID_FCTPTR *)&pfiomgrcopyinputle, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
 	#define CAL_iomgrcopyinputle  pfiomgrcopyinputle
 	#define CHK_iomgrcopyinputle  (pfiomgrcopyinputle != NULL)
-	#define EXP_iomgrcopyinputle   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputle", (RTS_UINTPTR)iomgrcopyinputle, 1, RTSITF_GET_SIGNATURE(0, 0xD4FB4CB6), 0x03050800) 
+	#define EXP_iomgrcopyinputle   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyinputle", (RTS_UINTPTR)iomgrcopyinputle, 1, 0, 0x03050F00) 
 #endif
 
 
@@ -1410,35 +1376,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCOPYOUTPUTBE_IEC) (iomgrcopyoutputbe_struc
 	#define GET_iomgrcopyoutputbe(fl)  CAL_CMGETAPI( "iomgrcopyoutputbe" ) 
 	#define CAL_iomgrcopyoutputbe  iomgrcopyoutputbe
 	#define CHK_iomgrcopyoutputbe  TRUE
-	#define EXP_iomgrcopyoutputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputbe", (RTS_UINTPTR)iomgrcopyoutputbe, 1, RTSITF_GET_SIGNATURE(0, 0xCDB7B2BE), 0x03050800) 
+	#define EXP_iomgrcopyoutputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputbe", (RTS_UINTPTR)iomgrcopyoutputbe, 1, 0, 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrcopyoutputbe
 	#define EXT_iomgrcopyoutputbe
 	#define GET_iomgrcopyoutputbe(fl)  CAL_CMGETAPI( "iomgrcopyoutputbe" ) 
 	#define CAL_iomgrcopyoutputbe  iomgrcopyoutputbe
 	#define CHK_iomgrcopyoutputbe  TRUE
-	#define EXP_iomgrcopyoutputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputbe", (RTS_UINTPTR)iomgrcopyoutputbe, 1, RTSITF_GET_SIGNATURE(0, 0xCDB7B2BE), 0x03050800) 
+	#define EXP_iomgrcopyoutputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputbe", (RTS_UINTPTR)iomgrcopyoutputbe, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrcopyoutputbe
 	#define EXT_CmpIoMgriomgrcopyoutputbe
 	#define GET_CmpIoMgriomgrcopyoutputbe  ERR_OK
 	#define CAL_CmpIoMgriomgrcopyoutputbe  iomgrcopyoutputbe
 	#define CHK_CmpIoMgriomgrcopyoutputbe  TRUE
-	#define EXP_CmpIoMgriomgrcopyoutputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputbe", (RTS_UINTPTR)iomgrcopyoutputbe, 1, RTSITF_GET_SIGNATURE(0, 0xCDB7B2BE), 0x03050800) 
+	#define EXP_CmpIoMgriomgrcopyoutputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputbe", (RTS_UINTPTR)iomgrcopyoutputbe, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrcopyoutputbe
 	#define EXT_iomgrcopyoutputbe
 	#define GET_iomgrcopyoutputbe(fl)  CAL_CMGETAPI( "iomgrcopyoutputbe" ) 
 	#define CAL_iomgrcopyoutputbe  iomgrcopyoutputbe
 	#define CHK_iomgrcopyoutputbe  TRUE
-	#define EXP_iomgrcopyoutputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputbe", (RTS_UINTPTR)iomgrcopyoutputbe, 1, RTSITF_GET_SIGNATURE(0, 0xCDB7B2BE), 0x03050800) 
+	#define EXP_iomgrcopyoutputbe  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputbe", (RTS_UINTPTR)iomgrcopyoutputbe, 1, 0, 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrcopyoutputbe  PFIOMGRCOPYOUTPUTBE_IEC pfiomgrcopyoutputbe;
 	#define EXT_iomgrcopyoutputbe  extern PFIOMGRCOPYOUTPUTBE_IEC pfiomgrcopyoutputbe;
-	#define GET_iomgrcopyoutputbe(fl)  s_pfCMGetAPI2( "iomgrcopyoutputbe", (RTS_VOID_FCTPTR *)&pfiomgrcopyoutputbe, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xCDB7B2BE), 0x03050800)
+	#define GET_iomgrcopyoutputbe(fl)  s_pfCMGetAPI2( "iomgrcopyoutputbe", (RTS_VOID_FCTPTR *)&pfiomgrcopyoutputbe, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
 	#define CAL_iomgrcopyoutputbe  pfiomgrcopyoutputbe
 	#define CHK_iomgrcopyoutputbe  (pfiomgrcopyoutputbe != NULL)
-	#define EXP_iomgrcopyoutputbe   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputbe", (RTS_UINTPTR)iomgrcopyoutputbe, 1, RTSITF_GET_SIGNATURE(0, 0xCDB7B2BE), 0x03050800) 
+	#define EXP_iomgrcopyoutputbe   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputbe", (RTS_UINTPTR)iomgrcopyoutputbe, 1, 0, 0x03050F00) 
 #endif
 
 
@@ -1467,35 +1433,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRCOPYOUTPUTLE_IEC) (iomgrcopyoutputle_struc
 	#define GET_iomgrcopyoutputle(fl)  CAL_CMGETAPI( "iomgrcopyoutputle" ) 
 	#define CAL_iomgrcopyoutputle  iomgrcopyoutputle
 	#define CHK_iomgrcopyoutputle  TRUE
-	#define EXP_iomgrcopyoutputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputle", (RTS_UINTPTR)iomgrcopyoutputle, 1, RTSITF_GET_SIGNATURE(0, 0x5FC818BC), 0x03050800) 
+	#define EXP_iomgrcopyoutputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputle", (RTS_UINTPTR)iomgrcopyoutputle, 1, 0, 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrcopyoutputle
 	#define EXT_iomgrcopyoutputle
 	#define GET_iomgrcopyoutputle(fl)  CAL_CMGETAPI( "iomgrcopyoutputle" ) 
 	#define CAL_iomgrcopyoutputle  iomgrcopyoutputle
 	#define CHK_iomgrcopyoutputle  TRUE
-	#define EXP_iomgrcopyoutputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputle", (RTS_UINTPTR)iomgrcopyoutputle, 1, RTSITF_GET_SIGNATURE(0, 0x5FC818BC), 0x03050800) 
+	#define EXP_iomgrcopyoutputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputle", (RTS_UINTPTR)iomgrcopyoutputle, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrcopyoutputle
 	#define EXT_CmpIoMgriomgrcopyoutputle
 	#define GET_CmpIoMgriomgrcopyoutputle  ERR_OK
 	#define CAL_CmpIoMgriomgrcopyoutputle  iomgrcopyoutputle
 	#define CHK_CmpIoMgriomgrcopyoutputle  TRUE
-	#define EXP_CmpIoMgriomgrcopyoutputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputle", (RTS_UINTPTR)iomgrcopyoutputle, 1, RTSITF_GET_SIGNATURE(0, 0x5FC818BC), 0x03050800) 
+	#define EXP_CmpIoMgriomgrcopyoutputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputle", (RTS_UINTPTR)iomgrcopyoutputle, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrcopyoutputle
 	#define EXT_iomgrcopyoutputle
 	#define GET_iomgrcopyoutputle(fl)  CAL_CMGETAPI( "iomgrcopyoutputle" ) 
 	#define CAL_iomgrcopyoutputle  iomgrcopyoutputle
 	#define CHK_iomgrcopyoutputle  TRUE
-	#define EXP_iomgrcopyoutputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputle", (RTS_UINTPTR)iomgrcopyoutputle, 1, RTSITF_GET_SIGNATURE(0, 0x5FC818BC), 0x03050800) 
+	#define EXP_iomgrcopyoutputle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputle", (RTS_UINTPTR)iomgrcopyoutputle, 1, 0, 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrcopyoutputle  PFIOMGRCOPYOUTPUTLE_IEC pfiomgrcopyoutputle;
 	#define EXT_iomgrcopyoutputle  extern PFIOMGRCOPYOUTPUTLE_IEC pfiomgrcopyoutputle;
-	#define GET_iomgrcopyoutputle(fl)  s_pfCMGetAPI2( "iomgrcopyoutputle", (RTS_VOID_FCTPTR *)&pfiomgrcopyoutputle, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x5FC818BC), 0x03050800)
+	#define GET_iomgrcopyoutputle(fl)  s_pfCMGetAPI2( "iomgrcopyoutputle", (RTS_VOID_FCTPTR *)&pfiomgrcopyoutputle, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
 	#define CAL_iomgrcopyoutputle  pfiomgrcopyoutputle
 	#define CHK_iomgrcopyoutputle  (pfiomgrcopyoutputle != NULL)
-	#define EXP_iomgrcopyoutputle   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputle", (RTS_UINTPTR)iomgrcopyoutputle, 1, RTSITF_GET_SIGNATURE(0, 0x5FC818BC), 0x03050800) 
+	#define EXP_iomgrcopyoutputle   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrcopyoutputle", (RTS_UINTPTR)iomgrcopyoutputle, 1, 0, 0x03050F00) 
 #endif
 
 
@@ -1524,35 +1490,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRGETBUSCYCLETYPE_IEC) (iomgrgetbuscycletype
 	#define GET_iomgrgetbuscycletype(fl)  CAL_CMGETAPI( "iomgrgetbuscycletype" ) 
 	#define CAL_iomgrgetbuscycletype  iomgrgetbuscycletype
 	#define CHK_iomgrgetbuscycletype  TRUE
-	#define EXP_iomgrgetbuscycletype  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetbuscycletype", (RTS_UINTPTR)iomgrgetbuscycletype, 1, RTSITF_GET_SIGNATURE(0, 0x8334DD20), 0x03050800) 
+	#define EXP_iomgrgetbuscycletype  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetbuscycletype", (RTS_UINTPTR)iomgrgetbuscycletype, 1, RTSITF_GET_SIGNATURE(0, 0x8334DD20), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrgetbuscycletype
 	#define EXT_iomgrgetbuscycletype
 	#define GET_iomgrgetbuscycletype(fl)  CAL_CMGETAPI( "iomgrgetbuscycletype" ) 
 	#define CAL_iomgrgetbuscycletype  iomgrgetbuscycletype
 	#define CHK_iomgrgetbuscycletype  TRUE
-	#define EXP_iomgrgetbuscycletype  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetbuscycletype", (RTS_UINTPTR)iomgrgetbuscycletype, 1, RTSITF_GET_SIGNATURE(0, 0x8334DD20), 0x03050800) 
+	#define EXP_iomgrgetbuscycletype  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetbuscycletype", (RTS_UINTPTR)iomgrgetbuscycletype, 1, RTSITF_GET_SIGNATURE(0, 0x8334DD20), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrgetbuscycletype
 	#define EXT_CmpIoMgriomgrgetbuscycletype
 	#define GET_CmpIoMgriomgrgetbuscycletype  ERR_OK
 	#define CAL_CmpIoMgriomgrgetbuscycletype  iomgrgetbuscycletype
 	#define CHK_CmpIoMgriomgrgetbuscycletype  TRUE
-	#define EXP_CmpIoMgriomgrgetbuscycletype  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetbuscycletype", (RTS_UINTPTR)iomgrgetbuscycletype, 1, RTSITF_GET_SIGNATURE(0, 0x8334DD20), 0x03050800) 
+	#define EXP_CmpIoMgriomgrgetbuscycletype  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetbuscycletype", (RTS_UINTPTR)iomgrgetbuscycletype, 1, RTSITF_GET_SIGNATURE(0, 0x8334DD20), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrgetbuscycletype
 	#define EXT_iomgrgetbuscycletype
 	#define GET_iomgrgetbuscycletype(fl)  CAL_CMGETAPI( "iomgrgetbuscycletype" ) 
 	#define CAL_iomgrgetbuscycletype  iomgrgetbuscycletype
 	#define CHK_iomgrgetbuscycletype  TRUE
-	#define EXP_iomgrgetbuscycletype  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetbuscycletype", (RTS_UINTPTR)iomgrgetbuscycletype, 1, RTSITF_GET_SIGNATURE(0, 0x8334DD20), 0x03050800) 
+	#define EXP_iomgrgetbuscycletype  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetbuscycletype", (RTS_UINTPTR)iomgrgetbuscycletype, 1, RTSITF_GET_SIGNATURE(0, 0x8334DD20), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrgetbuscycletype  PFIOMGRGETBUSCYCLETYPE_IEC pfiomgrgetbuscycletype;
 	#define EXT_iomgrgetbuscycletype  extern PFIOMGRGETBUSCYCLETYPE_IEC pfiomgrgetbuscycletype;
-	#define GET_iomgrgetbuscycletype(fl)  s_pfCMGetAPI2( "iomgrgetbuscycletype", (RTS_VOID_FCTPTR *)&pfiomgrgetbuscycletype, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x8334DD20), 0x03050800)
+	#define GET_iomgrgetbuscycletype(fl)  s_pfCMGetAPI2( "iomgrgetbuscycletype", (RTS_VOID_FCTPTR *)&pfiomgrgetbuscycletype, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x8334DD20), 0x03050F00)
 	#define CAL_iomgrgetbuscycletype  pfiomgrgetbuscycletype
 	#define CHK_iomgrgetbuscycletype  (pfiomgrgetbuscycletype != NULL)
-	#define EXP_iomgrgetbuscycletype   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetbuscycletype", (RTS_UINTPTR)iomgrgetbuscycletype, 1, RTSITF_GET_SIGNATURE(0, 0x8334DD20), 0x03050800) 
+	#define EXP_iomgrgetbuscycletype   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetbuscycletype", (RTS_UINTPTR)iomgrgetbuscycletype, 1, RTSITF_GET_SIGNATURE(0, 0x8334DD20), 0x03050F00) 
 #endif
 
 
@@ -1581,35 +1547,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRGETCONFIGAPPLICATION_IEC) (iomgrgetconfiga
 	#define GET_iomgrgetconfigapplication(fl)  CAL_CMGETAPI( "iomgrgetconfigapplication" ) 
 	#define CAL_iomgrgetconfigapplication  iomgrgetconfigapplication
 	#define CHK_iomgrgetconfigapplication  TRUE
-	#define EXP_iomgrgetconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetconfigapplication", (RTS_UINTPTR)iomgrgetconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xF82C99F4), 0x03050800) 
+	#define EXP_iomgrgetconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetconfigapplication", (RTS_UINTPTR)iomgrgetconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xF82C99F4), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrgetconfigapplication
 	#define EXT_iomgrgetconfigapplication
 	#define GET_iomgrgetconfigapplication(fl)  CAL_CMGETAPI( "iomgrgetconfigapplication" ) 
 	#define CAL_iomgrgetconfigapplication  iomgrgetconfigapplication
 	#define CHK_iomgrgetconfigapplication  TRUE
-	#define EXP_iomgrgetconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetconfigapplication", (RTS_UINTPTR)iomgrgetconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xF82C99F4), 0x03050800) 
+	#define EXP_iomgrgetconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetconfigapplication", (RTS_UINTPTR)iomgrgetconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xF82C99F4), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrgetconfigapplication
 	#define EXT_CmpIoMgriomgrgetconfigapplication
 	#define GET_CmpIoMgriomgrgetconfigapplication  ERR_OK
 	#define CAL_CmpIoMgriomgrgetconfigapplication  iomgrgetconfigapplication
 	#define CHK_CmpIoMgriomgrgetconfigapplication  TRUE
-	#define EXP_CmpIoMgriomgrgetconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetconfigapplication", (RTS_UINTPTR)iomgrgetconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xF82C99F4), 0x03050800) 
+	#define EXP_CmpIoMgriomgrgetconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetconfigapplication", (RTS_UINTPTR)iomgrgetconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xF82C99F4), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrgetconfigapplication
 	#define EXT_iomgrgetconfigapplication
 	#define GET_iomgrgetconfigapplication(fl)  CAL_CMGETAPI( "iomgrgetconfigapplication" ) 
 	#define CAL_iomgrgetconfigapplication  iomgrgetconfigapplication
 	#define CHK_iomgrgetconfigapplication  TRUE
-	#define EXP_iomgrgetconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetconfigapplication", (RTS_UINTPTR)iomgrgetconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xF82C99F4), 0x03050800) 
+	#define EXP_iomgrgetconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetconfigapplication", (RTS_UINTPTR)iomgrgetconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xF82C99F4), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrgetconfigapplication  PFIOMGRGETCONFIGAPPLICATION_IEC pfiomgrgetconfigapplication;
 	#define EXT_iomgrgetconfigapplication  extern PFIOMGRGETCONFIGAPPLICATION_IEC pfiomgrgetconfigapplication;
-	#define GET_iomgrgetconfigapplication(fl)  s_pfCMGetAPI2( "iomgrgetconfigapplication", (RTS_VOID_FCTPTR *)&pfiomgrgetconfigapplication, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xF82C99F4), 0x03050800)
+	#define GET_iomgrgetconfigapplication(fl)  s_pfCMGetAPI2( "iomgrgetconfigapplication", (RTS_VOID_FCTPTR *)&pfiomgrgetconfigapplication, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xF82C99F4), 0x03050F00)
 	#define CAL_iomgrgetconfigapplication  pfiomgrgetconfigapplication
 	#define CHK_iomgrgetconfigapplication  (pfiomgrgetconfigapplication != NULL)
-	#define EXP_iomgrgetconfigapplication   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetconfigapplication", (RTS_UINTPTR)iomgrgetconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xF82C99F4), 0x03050800) 
+	#define EXP_iomgrgetconfigapplication   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetconfigapplication", (RTS_UINTPTR)iomgrgetconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xF82C99F4), 0x03050F00) 
 #endif
 
 
@@ -1638,35 +1604,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRGETDRIVERPROPERTIES_IEC) (iomgrgetdriverpr
 	#define GET_iomgrgetdriverproperties(fl)  CAL_CMGETAPI( "iomgrgetdriverproperties" ) 
 	#define CAL_iomgrgetdriverproperties  iomgrgetdriverproperties
 	#define CHK_iomgrgetdriverproperties  TRUE
-	#define EXP_iomgrgetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetdriverproperties", (RTS_UINTPTR)iomgrgetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0xEC0D662D), 0x03050800) 
+	#define EXP_iomgrgetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetdriverproperties", (RTS_UINTPTR)iomgrgetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0xEC0D662D), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrgetdriverproperties
 	#define EXT_iomgrgetdriverproperties
 	#define GET_iomgrgetdriverproperties(fl)  CAL_CMGETAPI( "iomgrgetdriverproperties" ) 
 	#define CAL_iomgrgetdriverproperties  iomgrgetdriverproperties
 	#define CHK_iomgrgetdriverproperties  TRUE
-	#define EXP_iomgrgetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetdriverproperties", (RTS_UINTPTR)iomgrgetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0xEC0D662D), 0x03050800) 
+	#define EXP_iomgrgetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetdriverproperties", (RTS_UINTPTR)iomgrgetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0xEC0D662D), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrgetdriverproperties
 	#define EXT_CmpIoMgriomgrgetdriverproperties
 	#define GET_CmpIoMgriomgrgetdriverproperties  ERR_OK
 	#define CAL_CmpIoMgriomgrgetdriverproperties  iomgrgetdriverproperties
 	#define CHK_CmpIoMgriomgrgetdriverproperties  TRUE
-	#define EXP_CmpIoMgriomgrgetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetdriverproperties", (RTS_UINTPTR)iomgrgetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0xEC0D662D), 0x03050800) 
+	#define EXP_CmpIoMgriomgrgetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetdriverproperties", (RTS_UINTPTR)iomgrgetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0xEC0D662D), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrgetdriverproperties
 	#define EXT_iomgrgetdriverproperties
 	#define GET_iomgrgetdriverproperties(fl)  CAL_CMGETAPI( "iomgrgetdriverproperties" ) 
 	#define CAL_iomgrgetdriverproperties  iomgrgetdriverproperties
 	#define CHK_iomgrgetdriverproperties  TRUE
-	#define EXP_iomgrgetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetdriverproperties", (RTS_UINTPTR)iomgrgetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0xEC0D662D), 0x03050800) 
+	#define EXP_iomgrgetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetdriverproperties", (RTS_UINTPTR)iomgrgetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0xEC0D662D), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrgetdriverproperties  PFIOMGRGETDRIVERPROPERTIES_IEC pfiomgrgetdriverproperties;
 	#define EXT_iomgrgetdriverproperties  extern PFIOMGRGETDRIVERPROPERTIES_IEC pfiomgrgetdriverproperties;
-	#define GET_iomgrgetdriverproperties(fl)  s_pfCMGetAPI2( "iomgrgetdriverproperties", (RTS_VOID_FCTPTR *)&pfiomgrgetdriverproperties, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xEC0D662D), 0x03050800)
+	#define GET_iomgrgetdriverproperties(fl)  s_pfCMGetAPI2( "iomgrgetdriverproperties", (RTS_VOID_FCTPTR *)&pfiomgrgetdriverproperties, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xEC0D662D), 0x03050F00)
 	#define CAL_iomgrgetdriverproperties  pfiomgrgetdriverproperties
 	#define CHK_iomgrgetdriverproperties  (pfiomgrgetdriverproperties != NULL)
-	#define EXP_iomgrgetdriverproperties   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetdriverproperties", (RTS_UINTPTR)iomgrgetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0xEC0D662D), 0x03050800) 
+	#define EXP_iomgrgetdriverproperties   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetdriverproperties", (RTS_UINTPTR)iomgrgetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0xEC0D662D), 0x03050F00) 
 #endif
 
 
@@ -1695,35 +1661,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRGETFIRSTDRIVERINSTANCE_IEC) (iomgrgetfirst
 	#define GET_iomgrgetfirstdriverinstance(fl)  CAL_CMGETAPI( "iomgrgetfirstdriverinstance" ) 
 	#define CAL_iomgrgetfirstdriverinstance  iomgrgetfirstdriverinstance
 	#define CHK_iomgrgetfirstdriverinstance  TRUE
-	#define EXP_iomgrgetfirstdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetfirstdriverinstance", (RTS_UINTPTR)iomgrgetfirstdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x7823BC76), 0x03050800) 
+	#define EXP_iomgrgetfirstdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetfirstdriverinstance", (RTS_UINTPTR)iomgrgetfirstdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x7823BC76), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrgetfirstdriverinstance
 	#define EXT_iomgrgetfirstdriverinstance
 	#define GET_iomgrgetfirstdriverinstance(fl)  CAL_CMGETAPI( "iomgrgetfirstdriverinstance" ) 
 	#define CAL_iomgrgetfirstdriverinstance  iomgrgetfirstdriverinstance
 	#define CHK_iomgrgetfirstdriverinstance  TRUE
-	#define EXP_iomgrgetfirstdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetfirstdriverinstance", (RTS_UINTPTR)iomgrgetfirstdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x7823BC76), 0x03050800) 
+	#define EXP_iomgrgetfirstdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetfirstdriverinstance", (RTS_UINTPTR)iomgrgetfirstdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x7823BC76), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrgetfirstdriverinstance
 	#define EXT_CmpIoMgriomgrgetfirstdriverinstance
 	#define GET_CmpIoMgriomgrgetfirstdriverinstance  ERR_OK
 	#define CAL_CmpIoMgriomgrgetfirstdriverinstance  iomgrgetfirstdriverinstance
 	#define CHK_CmpIoMgriomgrgetfirstdriverinstance  TRUE
-	#define EXP_CmpIoMgriomgrgetfirstdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetfirstdriverinstance", (RTS_UINTPTR)iomgrgetfirstdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x7823BC76), 0x03050800) 
+	#define EXP_CmpIoMgriomgrgetfirstdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetfirstdriverinstance", (RTS_UINTPTR)iomgrgetfirstdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x7823BC76), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrgetfirstdriverinstance
 	#define EXT_iomgrgetfirstdriverinstance
 	#define GET_iomgrgetfirstdriverinstance(fl)  CAL_CMGETAPI( "iomgrgetfirstdriverinstance" ) 
 	#define CAL_iomgrgetfirstdriverinstance  iomgrgetfirstdriverinstance
 	#define CHK_iomgrgetfirstdriverinstance  TRUE
-	#define EXP_iomgrgetfirstdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetfirstdriverinstance", (RTS_UINTPTR)iomgrgetfirstdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x7823BC76), 0x03050800) 
+	#define EXP_iomgrgetfirstdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetfirstdriverinstance", (RTS_UINTPTR)iomgrgetfirstdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x7823BC76), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrgetfirstdriverinstance  PFIOMGRGETFIRSTDRIVERINSTANCE_IEC pfiomgrgetfirstdriverinstance;
 	#define EXT_iomgrgetfirstdriverinstance  extern PFIOMGRGETFIRSTDRIVERINSTANCE_IEC pfiomgrgetfirstdriverinstance;
-	#define GET_iomgrgetfirstdriverinstance(fl)  s_pfCMGetAPI2( "iomgrgetfirstdriverinstance", (RTS_VOID_FCTPTR *)&pfiomgrgetfirstdriverinstance, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x7823BC76), 0x03050800)
+	#define GET_iomgrgetfirstdriverinstance(fl)  s_pfCMGetAPI2( "iomgrgetfirstdriverinstance", (RTS_VOID_FCTPTR *)&pfiomgrgetfirstdriverinstance, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x7823BC76), 0x03050F00)
 	#define CAL_iomgrgetfirstdriverinstance  pfiomgrgetfirstdriverinstance
 	#define CHK_iomgrgetfirstdriverinstance  (pfiomgrgetfirstdriverinstance != NULL)
-	#define EXP_iomgrgetfirstdriverinstance   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetfirstdriverinstance", (RTS_UINTPTR)iomgrgetfirstdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x7823BC76), 0x03050800) 
+	#define EXP_iomgrgetfirstdriverinstance   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetfirstdriverinstance", (RTS_UINTPTR)iomgrgetfirstdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x7823BC76), 0x03050F00) 
 #endif
 
 
@@ -1751,35 +1717,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRGETMODULEDIAGNOSIS_IEC) (iomgrgetmoduledia
 	#define GET_iomgrgetmodulediagnosis(fl)  CAL_CMGETAPI( "iomgrgetmodulediagnosis" ) 
 	#define CAL_iomgrgetmodulediagnosis  iomgrgetmodulediagnosis
 	#define CHK_iomgrgetmodulediagnosis  TRUE
-	#define EXP_iomgrgetmodulediagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetmodulediagnosis", (RTS_UINTPTR)iomgrgetmodulediagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x5DA78ABA), 0x03050800) 
+	#define EXP_iomgrgetmodulediagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetmodulediagnosis", (RTS_UINTPTR)iomgrgetmodulediagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x5DA78ABA), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrgetmodulediagnosis
 	#define EXT_iomgrgetmodulediagnosis
 	#define GET_iomgrgetmodulediagnosis(fl)  CAL_CMGETAPI( "iomgrgetmodulediagnosis" ) 
 	#define CAL_iomgrgetmodulediagnosis  iomgrgetmodulediagnosis
 	#define CHK_iomgrgetmodulediagnosis  TRUE
-	#define EXP_iomgrgetmodulediagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetmodulediagnosis", (RTS_UINTPTR)iomgrgetmodulediagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x5DA78ABA), 0x03050800) 
+	#define EXP_iomgrgetmodulediagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetmodulediagnosis", (RTS_UINTPTR)iomgrgetmodulediagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x5DA78ABA), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrgetmodulediagnosis
 	#define EXT_CmpIoMgriomgrgetmodulediagnosis
 	#define GET_CmpIoMgriomgrgetmodulediagnosis  ERR_OK
 	#define CAL_CmpIoMgriomgrgetmodulediagnosis  iomgrgetmodulediagnosis
 	#define CHK_CmpIoMgriomgrgetmodulediagnosis  TRUE
-	#define EXP_CmpIoMgriomgrgetmodulediagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetmodulediagnosis", (RTS_UINTPTR)iomgrgetmodulediagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x5DA78ABA), 0x03050800) 
+	#define EXP_CmpIoMgriomgrgetmodulediagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetmodulediagnosis", (RTS_UINTPTR)iomgrgetmodulediagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x5DA78ABA), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrgetmodulediagnosis
 	#define EXT_iomgrgetmodulediagnosis
 	#define GET_iomgrgetmodulediagnosis(fl)  CAL_CMGETAPI( "iomgrgetmodulediagnosis" ) 
 	#define CAL_iomgrgetmodulediagnosis  iomgrgetmodulediagnosis
 	#define CHK_iomgrgetmodulediagnosis  TRUE
-	#define EXP_iomgrgetmodulediagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetmodulediagnosis", (RTS_UINTPTR)iomgrgetmodulediagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x5DA78ABA), 0x03050800) 
+	#define EXP_iomgrgetmodulediagnosis  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetmodulediagnosis", (RTS_UINTPTR)iomgrgetmodulediagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x5DA78ABA), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrgetmodulediagnosis  PFIOMGRGETMODULEDIAGNOSIS_IEC pfiomgrgetmodulediagnosis;
 	#define EXT_iomgrgetmodulediagnosis  extern PFIOMGRGETMODULEDIAGNOSIS_IEC pfiomgrgetmodulediagnosis;
-	#define GET_iomgrgetmodulediagnosis(fl)  s_pfCMGetAPI2( "iomgrgetmodulediagnosis", (RTS_VOID_FCTPTR *)&pfiomgrgetmodulediagnosis, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x5DA78ABA), 0x03050800)
+	#define GET_iomgrgetmodulediagnosis(fl)  s_pfCMGetAPI2( "iomgrgetmodulediagnosis", (RTS_VOID_FCTPTR *)&pfiomgrgetmodulediagnosis, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x5DA78ABA), 0x03050F00)
 	#define CAL_iomgrgetmodulediagnosis  pfiomgrgetmodulediagnosis
 	#define CHK_iomgrgetmodulediagnosis  (pfiomgrgetmodulediagnosis != NULL)
-	#define EXP_iomgrgetmodulediagnosis   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetmodulediagnosis", (RTS_UINTPTR)iomgrgetmodulediagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x5DA78ABA), 0x03050800) 
+	#define EXP_iomgrgetmodulediagnosis   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetmodulediagnosis", (RTS_UINTPTR)iomgrgetmodulediagnosis, 1, RTSITF_GET_SIGNATURE(0, 0x5DA78ABA), 0x03050F00) 
 #endif
 
 
@@ -1809,35 +1775,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRGETNEXTDRIVERINSTANCE_IEC) (iomgrgetnextdr
 	#define GET_iomgrgetnextdriverinstance(fl)  CAL_CMGETAPI( "iomgrgetnextdriverinstance" ) 
 	#define CAL_iomgrgetnextdriverinstance  iomgrgetnextdriverinstance
 	#define CHK_iomgrgetnextdriverinstance  TRUE
-	#define EXP_iomgrgetnextdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetnextdriverinstance", (RTS_UINTPTR)iomgrgetnextdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x0B47742F), 0x03050800) 
+	#define EXP_iomgrgetnextdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetnextdriverinstance", (RTS_UINTPTR)iomgrgetnextdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x0B47742F), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrgetnextdriverinstance
 	#define EXT_iomgrgetnextdriverinstance
 	#define GET_iomgrgetnextdriverinstance(fl)  CAL_CMGETAPI( "iomgrgetnextdriverinstance" ) 
 	#define CAL_iomgrgetnextdriverinstance  iomgrgetnextdriverinstance
 	#define CHK_iomgrgetnextdriverinstance  TRUE
-	#define EXP_iomgrgetnextdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetnextdriverinstance", (RTS_UINTPTR)iomgrgetnextdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x0B47742F), 0x03050800) 
+	#define EXP_iomgrgetnextdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetnextdriverinstance", (RTS_UINTPTR)iomgrgetnextdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x0B47742F), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrgetnextdriverinstance
 	#define EXT_CmpIoMgriomgrgetnextdriverinstance
 	#define GET_CmpIoMgriomgrgetnextdriverinstance  ERR_OK
 	#define CAL_CmpIoMgriomgrgetnextdriverinstance  iomgrgetnextdriverinstance
 	#define CHK_CmpIoMgriomgrgetnextdriverinstance  TRUE
-	#define EXP_CmpIoMgriomgrgetnextdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetnextdriverinstance", (RTS_UINTPTR)iomgrgetnextdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x0B47742F), 0x03050800) 
+	#define EXP_CmpIoMgriomgrgetnextdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetnextdriverinstance", (RTS_UINTPTR)iomgrgetnextdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x0B47742F), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrgetnextdriverinstance
 	#define EXT_iomgrgetnextdriverinstance
 	#define GET_iomgrgetnextdriverinstance(fl)  CAL_CMGETAPI( "iomgrgetnextdriverinstance" ) 
 	#define CAL_iomgrgetnextdriverinstance  iomgrgetnextdriverinstance
 	#define CHK_iomgrgetnextdriverinstance  TRUE
-	#define EXP_iomgrgetnextdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetnextdriverinstance", (RTS_UINTPTR)iomgrgetnextdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x0B47742F), 0x03050800) 
+	#define EXP_iomgrgetnextdriverinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetnextdriverinstance", (RTS_UINTPTR)iomgrgetnextdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x0B47742F), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrgetnextdriverinstance  PFIOMGRGETNEXTDRIVERINSTANCE_IEC pfiomgrgetnextdriverinstance;
 	#define EXT_iomgrgetnextdriverinstance  extern PFIOMGRGETNEXTDRIVERINSTANCE_IEC pfiomgrgetnextdriverinstance;
-	#define GET_iomgrgetnextdriverinstance(fl)  s_pfCMGetAPI2( "iomgrgetnextdriverinstance", (RTS_VOID_FCTPTR *)&pfiomgrgetnextdriverinstance, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x0B47742F), 0x03050800)
+	#define GET_iomgrgetnextdriverinstance(fl)  s_pfCMGetAPI2( "iomgrgetnextdriverinstance", (RTS_VOID_FCTPTR *)&pfiomgrgetnextdriverinstance, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x0B47742F), 0x03050F00)
 	#define CAL_iomgrgetnextdriverinstance  pfiomgrgetnextdriverinstance
 	#define CHK_iomgrgetnextdriverinstance  (pfiomgrgetnextdriverinstance != NULL)
-	#define EXP_iomgrgetnextdriverinstance   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetnextdriverinstance", (RTS_UINTPTR)iomgrgetnextdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x0B47742F), 0x03050800) 
+	#define EXP_iomgrgetnextdriverinstance   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrgetnextdriverinstance", (RTS_UINTPTR)iomgrgetnextdriverinstance, 1, RTSITF_GET_SIGNATURE(0, 0x0B47742F), 0x03050F00) 
 #endif
 
 
@@ -1865,35 +1831,172 @@ typedef void (CDECL CDECL_EXT* PFIOMGRIDENTIFY_IEC) (iomgridentify_struct *p);
 	#define GET_iomgridentify(fl)  CAL_CMGETAPI( "iomgridentify" ) 
 	#define CAL_iomgridentify  iomgridentify
 	#define CHK_iomgridentify  TRUE
-	#define EXP_iomgridentify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgridentify", (RTS_UINTPTR)iomgridentify, 1, RTSITF_GET_SIGNATURE(0, 0xC48724F5), 0x03050800) 
+	#define EXP_iomgridentify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgridentify", (RTS_UINTPTR)iomgridentify, 1, RTSITF_GET_SIGNATURE(0, 0xC48724F5), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgridentify
 	#define EXT_iomgridentify
 	#define GET_iomgridentify(fl)  CAL_CMGETAPI( "iomgridentify" ) 
 	#define CAL_iomgridentify  iomgridentify
 	#define CHK_iomgridentify  TRUE
-	#define EXP_iomgridentify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgridentify", (RTS_UINTPTR)iomgridentify, 1, RTSITF_GET_SIGNATURE(0, 0xC48724F5), 0x03050800) 
+	#define EXP_iomgridentify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgridentify", (RTS_UINTPTR)iomgridentify, 1, RTSITF_GET_SIGNATURE(0, 0xC48724F5), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgridentify
 	#define EXT_CmpIoMgriomgridentify
 	#define GET_CmpIoMgriomgridentify  ERR_OK
 	#define CAL_CmpIoMgriomgridentify  iomgridentify
 	#define CHK_CmpIoMgriomgridentify  TRUE
-	#define EXP_CmpIoMgriomgridentify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgridentify", (RTS_UINTPTR)iomgridentify, 1, RTSITF_GET_SIGNATURE(0, 0xC48724F5), 0x03050800) 
+	#define EXP_CmpIoMgriomgridentify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgridentify", (RTS_UINTPTR)iomgridentify, 1, RTSITF_GET_SIGNATURE(0, 0xC48724F5), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgridentify
 	#define EXT_iomgridentify
 	#define GET_iomgridentify(fl)  CAL_CMGETAPI( "iomgridentify" ) 
 	#define CAL_iomgridentify  iomgridentify
 	#define CHK_iomgridentify  TRUE
-	#define EXP_iomgridentify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgridentify", (RTS_UINTPTR)iomgridentify, 1, RTSITF_GET_SIGNATURE(0, 0xC48724F5), 0x03050800) 
+	#define EXP_iomgridentify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgridentify", (RTS_UINTPTR)iomgridentify, 1, RTSITF_GET_SIGNATURE(0, 0xC48724F5), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgridentify  PFIOMGRIDENTIFY_IEC pfiomgridentify;
 	#define EXT_iomgridentify  extern PFIOMGRIDENTIFY_IEC pfiomgridentify;
-	#define GET_iomgridentify(fl)  s_pfCMGetAPI2( "iomgridentify", (RTS_VOID_FCTPTR *)&pfiomgridentify, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC48724F5), 0x03050800)
+	#define GET_iomgridentify(fl)  s_pfCMGetAPI2( "iomgridentify", (RTS_VOID_FCTPTR *)&pfiomgridentify, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC48724F5), 0x03050F00)
 	#define CAL_iomgridentify  pfiomgridentify
 	#define CHK_iomgridentify  (pfiomgridentify != NULL)
-	#define EXP_iomgridentify   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgridentify", (RTS_UINTPTR)iomgridentify, 1, RTSITF_GET_SIGNATURE(0, 0xC48724F5), 0x03050800) 
+	#define EXP_iomgridentify   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgridentify", (RTS_UINTPTR)iomgridentify, 1, RTSITF_GET_SIGNATURE(0, 0xC48724F5), 0x03050F00) 
+#endif
+
+
+/**
+ * This function acquires the mutual-exclusion locks for the given operations
+ * for critical sections inside the I/O driver's implementation of IoDrvReadInputs(), IoDrvWriteOutputs(), and IoDrvStartBusCycle().
+ * The locks can be released with the function ``IoMgrLockLeave()``.
+ * While a lock is held, any other thread is blocked from acquiring the lock and waits until the lock is released.
+ * 
+ * IMPLEMENTATION NOTE: The behavior of the ``dwLockScope`` parameter can't be implemented on all platforms.
+ * Platforms without synchronization functionality may not be able to implement this behavior.
+ * IoMgrEmbedded of the CODESYSControlEmbedded runtime system for example can only disable and enable all interrupts.
+ * 
+ * :return: error code
+ *    + ERR_OK: Locks were successfully acquired.
+ *    + ERR_PARAMETER: The ``pbyIoDrv`` parameter is ``NULL`` (only implementations that use this parameter),
+ *      or the ``dwLockScope`` parameter has none of the GVL LockScopes set (only implementations that use this parameter).
+ *    + ERR_FAILED: No driver entry for pbyIoDrv found in device pool.
+ */
+typedef struct tagiomgrlockenter_struct
+{
+	RTS_IEC_HANDLE hIoDrv;				/* VAR_INPUT */	/* Handle to the driver instance which is returned by the function IoMgrRegisterInstance2(). */
+	RTS_IEC_DWORD dwLockScope;			/* VAR_INPUT */	/* The operations for which to acquire locks. See GVL LockScopes for detailed information. */
+	RTS_IEC_RESULT IoMgrLockEnter;		/* VAR_OUTPUT */	
+} iomgrlockenter_struct;
+
+void CDECL CDECL_EXT iomgrlockenter(iomgrlockenter_struct *p);
+typedef void (CDECL CDECL_EXT* PFIOMGRLOCKENTER_IEC) (iomgrlockenter_struct *p);
+#if defined(CMPIOMGR_NOTIMPLEMENTED) || defined(IOMGRLOCKENTER_NOTIMPLEMENTED)
+	#define USE_iomgrlockenter
+	#define EXT_iomgrlockenter
+	#define GET_iomgrlockenter(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_iomgrlockenter(p0) 
+	#define CHK_iomgrlockenter  FALSE
+	#define EXP_iomgrlockenter  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_iomgrlockenter
+	#define EXT_iomgrlockenter
+	#define GET_iomgrlockenter(fl)  CAL_CMGETAPI( "iomgrlockenter" ) 
+	#define CAL_iomgrlockenter  iomgrlockenter
+	#define CHK_iomgrlockenter  TRUE
+	#define EXP_iomgrlockenter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrlockenter", (RTS_UINTPTR)iomgrlockenter, 1, 0x3517831C, 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
+	#define USE_iomgrlockenter
+	#define EXT_iomgrlockenter
+	#define GET_iomgrlockenter(fl)  CAL_CMGETAPI( "iomgrlockenter" ) 
+	#define CAL_iomgrlockenter  iomgrlockenter
+	#define CHK_iomgrlockenter  TRUE
+	#define EXP_iomgrlockenter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrlockenter", (RTS_UINTPTR)iomgrlockenter, 1, 0x3517831C, 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpIoMgriomgrlockenter
+	#define EXT_CmpIoMgriomgrlockenter
+	#define GET_CmpIoMgriomgrlockenter  ERR_OK
+	#define CAL_CmpIoMgriomgrlockenter  iomgrlockenter
+	#define CHK_CmpIoMgriomgrlockenter  TRUE
+	#define EXP_CmpIoMgriomgrlockenter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrlockenter", (RTS_UINTPTR)iomgrlockenter, 1, 0x3517831C, 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_iomgrlockenter
+	#define EXT_iomgrlockenter
+	#define GET_iomgrlockenter(fl)  CAL_CMGETAPI( "iomgrlockenter" ) 
+	#define CAL_iomgrlockenter  iomgrlockenter
+	#define CHK_iomgrlockenter  TRUE
+	#define EXP_iomgrlockenter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrlockenter", (RTS_UINTPTR)iomgrlockenter, 1, 0x3517831C, 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_iomgrlockenter  PFIOMGRLOCKENTER_IEC pfiomgrlockenter;
+	#define EXT_iomgrlockenter  extern PFIOMGRLOCKENTER_IEC pfiomgrlockenter;
+	#define GET_iomgrlockenter(fl)  s_pfCMGetAPI2( "iomgrlockenter", (RTS_VOID_FCTPTR *)&pfiomgrlockenter, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x3517831C, 0x03050F00)
+	#define CAL_iomgrlockenter  pfiomgrlockenter
+	#define CHK_iomgrlockenter  (pfiomgrlockenter != NULL)
+	#define EXP_iomgrlockenter   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrlockenter", (RTS_UINTPTR)iomgrlockenter, 1, 0x3517831C, 0x03050F00) 
+#endif
+
+
+/**
+ * This function releases the mutual-exclusion locks (that were acquired with the function ``IoMgrLockEnter()``) for the given operations.
+ * 
+ * IMPLEMENTATION NOTE: The behavior of the ``dwLockScope`` parameter can't be implemented on all platforms.
+ * Platforms without synchronization functionality may not be able to implement this behavior.
+ * IoMgrEmbedded of the CODESYSControlEmbedded runtime system for example can only disable and enable all interrupts.
+ * 
+ * :return: error code
+ *    + ERR_OK: Locks were successfully released.
+ *    + ERR_PARAMETER: The ``pbyIoDrv`` parameter is ``NULL`` (only implementations that use this parameter),
+ *      or the ``dwLockScope`` parameter has none of the GVL LockScopes set (only implementations that use this parameter).
+ *    + ERR_FAILED: No driver entry for pbyIoDrv found in device pool.
+ */
+typedef struct tagiomgrlockleave_struct
+{
+	RTS_IEC_HANDLE hIoDrv;				/* VAR_INPUT */	/* Handle to the driver instance which is returned by the function IoMgrRegisterInstance2(). */
+	RTS_IEC_DWORD dwLockScope;			/* VAR_INPUT */	/* The operations for which to release the locks. See GVL LockScopes for detailed information. */
+	RTS_IEC_RESULT IoMgrLockLeave;		/* VAR_OUTPUT */	
+} iomgrlockleave_struct;
+
+void CDECL CDECL_EXT iomgrlockleave(iomgrlockleave_struct *p);
+typedef void (CDECL CDECL_EXT* PFIOMGRLOCKLEAVE_IEC) (iomgrlockleave_struct *p);
+#if defined(CMPIOMGR_NOTIMPLEMENTED) || defined(IOMGRLOCKLEAVE_NOTIMPLEMENTED)
+	#define USE_iomgrlockleave
+	#define EXT_iomgrlockleave
+	#define GET_iomgrlockleave(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_iomgrlockleave(p0) 
+	#define CHK_iomgrlockleave  FALSE
+	#define EXP_iomgrlockleave  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_iomgrlockleave
+	#define EXT_iomgrlockleave
+	#define GET_iomgrlockleave(fl)  CAL_CMGETAPI( "iomgrlockleave" ) 
+	#define CAL_iomgrlockleave  iomgrlockleave
+	#define CHK_iomgrlockleave  TRUE
+	#define EXP_iomgrlockleave  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrlockleave", (RTS_UINTPTR)iomgrlockleave, 1, 0x3CFC293B, 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
+	#define USE_iomgrlockleave
+	#define EXT_iomgrlockleave
+	#define GET_iomgrlockleave(fl)  CAL_CMGETAPI( "iomgrlockleave" ) 
+	#define CAL_iomgrlockleave  iomgrlockleave
+	#define CHK_iomgrlockleave  TRUE
+	#define EXP_iomgrlockleave  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrlockleave", (RTS_UINTPTR)iomgrlockleave, 1, 0x3CFC293B, 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpIoMgriomgrlockleave
+	#define EXT_CmpIoMgriomgrlockleave
+	#define GET_CmpIoMgriomgrlockleave  ERR_OK
+	#define CAL_CmpIoMgriomgrlockleave  iomgrlockleave
+	#define CHK_CmpIoMgriomgrlockleave  TRUE
+	#define EXP_CmpIoMgriomgrlockleave  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrlockleave", (RTS_UINTPTR)iomgrlockleave, 1, 0x3CFC293B, 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_iomgrlockleave
+	#define EXT_iomgrlockleave
+	#define GET_iomgrlockleave(fl)  CAL_CMGETAPI( "iomgrlockleave" ) 
+	#define CAL_iomgrlockleave  iomgrlockleave
+	#define CHK_iomgrlockleave  TRUE
+	#define EXP_iomgrlockleave  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrlockleave", (RTS_UINTPTR)iomgrlockleave, 1, 0x3CFC293B, 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_iomgrlockleave  PFIOMGRLOCKLEAVE_IEC pfiomgrlockleave;
+	#define EXT_iomgrlockleave  extern PFIOMGRLOCKLEAVE_IEC pfiomgrlockleave;
+	#define GET_iomgrlockleave(fl)  s_pfCMGetAPI2( "iomgrlockleave", (RTS_VOID_FCTPTR *)&pfiomgrlockleave, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x3CFC293B, 0x03050F00)
+	#define CAL_iomgrlockleave  pfiomgrlockleave
+	#define CHK_iomgrlockleave  (pfiomgrlockleave != NULL)
+	#define EXP_iomgrlockleave   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrlockleave", (RTS_UINTPTR)iomgrlockleave, 1, 0x3CFC293B, 0x03050F00) 
 #endif
 
 
@@ -1921,35 +2024,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRREADINPUTS_IEC) (iomgrreadinputs_struct *p
 	#define GET_iomgrreadinputs(fl)  CAL_CMGETAPI( "iomgrreadinputs" ) 
 	#define CAL_iomgrreadinputs  iomgrreadinputs
 	#define CHK_iomgrreadinputs  TRUE
-	#define EXP_iomgrreadinputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadinputs", (RTS_UINTPTR)iomgrreadinputs, 1, RTSITF_GET_SIGNATURE(0, 0x3BCE0A42), 0x03050800) 
+	#define EXP_iomgrreadinputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadinputs", (RTS_UINTPTR)iomgrreadinputs, 1, 0, 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrreadinputs
 	#define EXT_iomgrreadinputs
 	#define GET_iomgrreadinputs(fl)  CAL_CMGETAPI( "iomgrreadinputs" ) 
 	#define CAL_iomgrreadinputs  iomgrreadinputs
 	#define CHK_iomgrreadinputs  TRUE
-	#define EXP_iomgrreadinputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadinputs", (RTS_UINTPTR)iomgrreadinputs, 1, RTSITF_GET_SIGNATURE(0, 0x3BCE0A42), 0x03050800) 
+	#define EXP_iomgrreadinputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadinputs", (RTS_UINTPTR)iomgrreadinputs, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrreadinputs
 	#define EXT_CmpIoMgriomgrreadinputs
 	#define GET_CmpIoMgriomgrreadinputs  ERR_OK
 	#define CAL_CmpIoMgriomgrreadinputs  iomgrreadinputs
 	#define CHK_CmpIoMgriomgrreadinputs  TRUE
-	#define EXP_CmpIoMgriomgrreadinputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadinputs", (RTS_UINTPTR)iomgrreadinputs, 1, RTSITF_GET_SIGNATURE(0, 0x3BCE0A42), 0x03050800) 
+	#define EXP_CmpIoMgriomgrreadinputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadinputs", (RTS_UINTPTR)iomgrreadinputs, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrreadinputs
 	#define EXT_iomgrreadinputs
 	#define GET_iomgrreadinputs(fl)  CAL_CMGETAPI( "iomgrreadinputs" ) 
 	#define CAL_iomgrreadinputs  iomgrreadinputs
 	#define CHK_iomgrreadinputs  TRUE
-	#define EXP_iomgrreadinputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadinputs", (RTS_UINTPTR)iomgrreadinputs, 1, RTSITF_GET_SIGNATURE(0, 0x3BCE0A42), 0x03050800) 
+	#define EXP_iomgrreadinputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadinputs", (RTS_UINTPTR)iomgrreadinputs, 1, 0, 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrreadinputs  PFIOMGRREADINPUTS_IEC pfiomgrreadinputs;
 	#define EXT_iomgrreadinputs  extern PFIOMGRREADINPUTS_IEC pfiomgrreadinputs;
-	#define GET_iomgrreadinputs(fl)  s_pfCMGetAPI2( "iomgrreadinputs", (RTS_VOID_FCTPTR *)&pfiomgrreadinputs, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x3BCE0A42), 0x03050800)
+	#define GET_iomgrreadinputs(fl)  s_pfCMGetAPI2( "iomgrreadinputs", (RTS_VOID_FCTPTR *)&pfiomgrreadinputs, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
 	#define CAL_iomgrreadinputs  pfiomgrreadinputs
 	#define CHK_iomgrreadinputs  (pfiomgrreadinputs != NULL)
-	#define EXP_iomgrreadinputs   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadinputs", (RTS_UINTPTR)iomgrreadinputs, 1, RTSITF_GET_SIGNATURE(0, 0x3BCE0A42), 0x03050800) 
+	#define EXP_iomgrreadinputs   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadinputs", (RTS_UINTPTR)iomgrreadinputs, 1, 0, 0x03050F00) 
 #endif
 
 
@@ -1982,35 +2085,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRREADPARAMETER_IEC) (iomgrreadparameter_str
 	#define GET_iomgrreadparameter(fl)  CAL_CMGETAPI( "iomgrreadparameter" ) 
 	#define CAL_iomgrreadparameter  iomgrreadparameter
 	#define CHK_iomgrreadparameter  TRUE
-	#define EXP_iomgrreadparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadparameter", (RTS_UINTPTR)iomgrreadparameter, 1, RTSITF_GET_SIGNATURE(0, 0xD37BF5DF), 0x03050800) 
+	#define EXP_iomgrreadparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadparameter", (RTS_UINTPTR)iomgrreadparameter, 1, RTSITF_GET_SIGNATURE(0, 0xD37BF5DF), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrreadparameter
 	#define EXT_iomgrreadparameter
 	#define GET_iomgrreadparameter(fl)  CAL_CMGETAPI( "iomgrreadparameter" ) 
 	#define CAL_iomgrreadparameter  iomgrreadparameter
 	#define CHK_iomgrreadparameter  TRUE
-	#define EXP_iomgrreadparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadparameter", (RTS_UINTPTR)iomgrreadparameter, 1, RTSITF_GET_SIGNATURE(0, 0xD37BF5DF), 0x03050800) 
+	#define EXP_iomgrreadparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadparameter", (RTS_UINTPTR)iomgrreadparameter, 1, RTSITF_GET_SIGNATURE(0, 0xD37BF5DF), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrreadparameter
 	#define EXT_CmpIoMgriomgrreadparameter
 	#define GET_CmpIoMgriomgrreadparameter  ERR_OK
 	#define CAL_CmpIoMgriomgrreadparameter  iomgrreadparameter
 	#define CHK_CmpIoMgriomgrreadparameter  TRUE
-	#define EXP_CmpIoMgriomgrreadparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadparameter", (RTS_UINTPTR)iomgrreadparameter, 1, RTSITF_GET_SIGNATURE(0, 0xD37BF5DF), 0x03050800) 
+	#define EXP_CmpIoMgriomgrreadparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadparameter", (RTS_UINTPTR)iomgrreadparameter, 1, RTSITF_GET_SIGNATURE(0, 0xD37BF5DF), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrreadparameter
 	#define EXT_iomgrreadparameter
 	#define GET_iomgrreadparameter(fl)  CAL_CMGETAPI( "iomgrreadparameter" ) 
 	#define CAL_iomgrreadparameter  iomgrreadparameter
 	#define CHK_iomgrreadparameter  TRUE
-	#define EXP_iomgrreadparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadparameter", (RTS_UINTPTR)iomgrreadparameter, 1, RTSITF_GET_SIGNATURE(0, 0xD37BF5DF), 0x03050800) 
+	#define EXP_iomgrreadparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadparameter", (RTS_UINTPTR)iomgrreadparameter, 1, RTSITF_GET_SIGNATURE(0, 0xD37BF5DF), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrreadparameter  PFIOMGRREADPARAMETER_IEC pfiomgrreadparameter;
 	#define EXT_iomgrreadparameter  extern PFIOMGRREADPARAMETER_IEC pfiomgrreadparameter;
-	#define GET_iomgrreadparameter(fl)  s_pfCMGetAPI2( "iomgrreadparameter", (RTS_VOID_FCTPTR *)&pfiomgrreadparameter, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xD37BF5DF), 0x03050800)
+	#define GET_iomgrreadparameter(fl)  s_pfCMGetAPI2( "iomgrreadparameter", (RTS_VOID_FCTPTR *)&pfiomgrreadparameter, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xD37BF5DF), 0x03050F00)
 	#define CAL_iomgrreadparameter  pfiomgrreadparameter
 	#define CHK_iomgrreadparameter  (pfiomgrreadparameter != NULL)
-	#define EXP_iomgrreadparameter   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadparameter", (RTS_UINTPTR)iomgrreadparameter, 1, RTSITF_GET_SIGNATURE(0, 0xD37BF5DF), 0x03050800) 
+	#define EXP_iomgrreadparameter   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreadparameter", (RTS_UINTPTR)iomgrreadparameter, 1, RTSITF_GET_SIGNATURE(0, 0xD37BF5DF), 0x03050F00) 
 #endif
 
 
@@ -2046,35 +2149,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRRECONFIGURE_IEC) (iomgrreconfigure_struct 
 	#define GET_iomgrreconfigure(fl)  CAL_CMGETAPI( "iomgrreconfigure" ) 
 	#define CAL_iomgrreconfigure  iomgrreconfigure
 	#define CHK_iomgrreconfigure  TRUE
-	#define EXP_iomgrreconfigure  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreconfigure", (RTS_UINTPTR)iomgrreconfigure, 1, RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390), 0x03050800) 
+	#define EXP_iomgrreconfigure  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreconfigure", (RTS_UINTPTR)iomgrreconfigure, 1, RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrreconfigure
 	#define EXT_iomgrreconfigure
 	#define GET_iomgrreconfigure(fl)  CAL_CMGETAPI( "iomgrreconfigure" ) 
 	#define CAL_iomgrreconfigure  iomgrreconfigure
 	#define CHK_iomgrreconfigure  TRUE
-	#define EXP_iomgrreconfigure  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreconfigure", (RTS_UINTPTR)iomgrreconfigure, 1, RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390), 0x03050800) 
+	#define EXP_iomgrreconfigure  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreconfigure", (RTS_UINTPTR)iomgrreconfigure, 1, RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrreconfigure
 	#define EXT_CmpIoMgriomgrreconfigure
 	#define GET_CmpIoMgriomgrreconfigure  ERR_OK
 	#define CAL_CmpIoMgriomgrreconfigure  iomgrreconfigure
 	#define CHK_CmpIoMgriomgrreconfigure  TRUE
-	#define EXP_CmpIoMgriomgrreconfigure  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreconfigure", (RTS_UINTPTR)iomgrreconfigure, 1, RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390), 0x03050800) 
+	#define EXP_CmpIoMgriomgrreconfigure  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreconfigure", (RTS_UINTPTR)iomgrreconfigure, 1, RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrreconfigure
 	#define EXT_iomgrreconfigure
 	#define GET_iomgrreconfigure(fl)  CAL_CMGETAPI( "iomgrreconfigure" ) 
 	#define CAL_iomgrreconfigure  iomgrreconfigure
 	#define CHK_iomgrreconfigure  TRUE
-	#define EXP_iomgrreconfigure  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreconfigure", (RTS_UINTPTR)iomgrreconfigure, 1, RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390), 0x03050800) 
+	#define EXP_iomgrreconfigure  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreconfigure", (RTS_UINTPTR)iomgrreconfigure, 1, RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrreconfigure  PFIOMGRRECONFIGURE_IEC pfiomgrreconfigure;
 	#define EXT_iomgrreconfigure  extern PFIOMGRRECONFIGURE_IEC pfiomgrreconfigure;
-	#define GET_iomgrreconfigure(fl)  s_pfCMGetAPI2( "iomgrreconfigure", (RTS_VOID_FCTPTR *)&pfiomgrreconfigure, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390), 0x03050800)
+	#define GET_iomgrreconfigure(fl)  s_pfCMGetAPI2( "iomgrreconfigure", (RTS_VOID_FCTPTR *)&pfiomgrreconfigure, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390), 0x03050F00)
 	#define CAL_iomgrreconfigure  pfiomgrreconfigure
 	#define CHK_iomgrreconfigure  (pfiomgrreconfigure != NULL)
-	#define EXP_iomgrreconfigure   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreconfigure", (RTS_UINTPTR)iomgrreconfigure, 1, RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390), 0x03050800) 
+	#define EXP_iomgrreconfigure   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrreconfigure", (RTS_UINTPTR)iomgrreconfigure, 1, RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390), 0x03050F00) 
 #endif
 
 
@@ -2102,35 +2205,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRREGISTERCONFIGAPPLICATION_IEC) (iomgrregis
 	#define GET_iomgrregisterconfigapplication(fl)  CAL_CMGETAPI( "iomgrregisterconfigapplication" ) 
 	#define CAL_iomgrregisterconfigapplication  iomgrregisterconfigapplication
 	#define CHK_iomgrregisterconfigapplication  TRUE
-	#define EXP_iomgrregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterconfigapplication", (RTS_UINTPTR)iomgrregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8), 0x03050800) 
+	#define EXP_iomgrregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterconfigapplication", (RTS_UINTPTR)iomgrregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrregisterconfigapplication
 	#define EXT_iomgrregisterconfigapplication
 	#define GET_iomgrregisterconfigapplication(fl)  CAL_CMGETAPI( "iomgrregisterconfigapplication" ) 
 	#define CAL_iomgrregisterconfigapplication  iomgrregisterconfigapplication
 	#define CHK_iomgrregisterconfigapplication  TRUE
-	#define EXP_iomgrregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterconfigapplication", (RTS_UINTPTR)iomgrregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8), 0x03050800) 
+	#define EXP_iomgrregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterconfigapplication", (RTS_UINTPTR)iomgrregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrregisterconfigapplication
 	#define EXT_CmpIoMgriomgrregisterconfigapplication
 	#define GET_CmpIoMgriomgrregisterconfigapplication  ERR_OK
 	#define CAL_CmpIoMgriomgrregisterconfigapplication  iomgrregisterconfigapplication
 	#define CHK_CmpIoMgriomgrregisterconfigapplication  TRUE
-	#define EXP_CmpIoMgriomgrregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterconfigapplication", (RTS_UINTPTR)iomgrregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8), 0x03050800) 
+	#define EXP_CmpIoMgriomgrregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterconfigapplication", (RTS_UINTPTR)iomgrregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrregisterconfigapplication
 	#define EXT_iomgrregisterconfigapplication
 	#define GET_iomgrregisterconfigapplication(fl)  CAL_CMGETAPI( "iomgrregisterconfigapplication" ) 
 	#define CAL_iomgrregisterconfigapplication  iomgrregisterconfigapplication
 	#define CHK_iomgrregisterconfigapplication  TRUE
-	#define EXP_iomgrregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterconfigapplication", (RTS_UINTPTR)iomgrregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8), 0x03050800) 
+	#define EXP_iomgrregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterconfigapplication", (RTS_UINTPTR)iomgrregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrregisterconfigapplication  PFIOMGRREGISTERCONFIGAPPLICATION_IEC pfiomgrregisterconfigapplication;
 	#define EXT_iomgrregisterconfigapplication  extern PFIOMGRREGISTERCONFIGAPPLICATION_IEC pfiomgrregisterconfigapplication;
-	#define GET_iomgrregisterconfigapplication(fl)  s_pfCMGetAPI2( "iomgrregisterconfigapplication", (RTS_VOID_FCTPTR *)&pfiomgrregisterconfigapplication, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8), 0x03050800)
+	#define GET_iomgrregisterconfigapplication(fl)  s_pfCMGetAPI2( "iomgrregisterconfigapplication", (RTS_VOID_FCTPTR *)&pfiomgrregisterconfigapplication, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8), 0x03050F00)
 	#define CAL_iomgrregisterconfigapplication  pfiomgrregisterconfigapplication
 	#define CHK_iomgrregisterconfigapplication  (pfiomgrregisterconfigapplication != NULL)
-	#define EXP_iomgrregisterconfigapplication   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterconfigapplication", (RTS_UINTPTR)iomgrregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8), 0x03050800) 
+	#define EXP_iomgrregisterconfigapplication   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterconfigapplication", (RTS_UINTPTR)iomgrregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8), 0x03050F00) 
 #endif
 
 
@@ -2160,35 +2263,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRREGISTERINSTANCE2_IEC) (iomgrregisterinsta
 	#define GET_iomgrregisterinstance2(fl)  CAL_CMGETAPI( "iomgrregisterinstance2" ) 
 	#define CAL_iomgrregisterinstance2  iomgrregisterinstance2
 	#define CHK_iomgrregisterinstance2  TRUE
-	#define EXP_iomgrregisterinstance2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterinstance2", (RTS_UINTPTR)iomgrregisterinstance2, 1, RTSITF_GET_SIGNATURE(0, 0x4219F9A3), 0x03050800) 
+	#define EXP_iomgrregisterinstance2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterinstance2", (RTS_UINTPTR)iomgrregisterinstance2, 1, RTSITF_GET_SIGNATURE(0, 0x4219F9A3), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrregisterinstance2
 	#define EXT_iomgrregisterinstance2
 	#define GET_iomgrregisterinstance2(fl)  CAL_CMGETAPI( "iomgrregisterinstance2" ) 
 	#define CAL_iomgrregisterinstance2  iomgrregisterinstance2
 	#define CHK_iomgrregisterinstance2  TRUE
-	#define EXP_iomgrregisterinstance2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterinstance2", (RTS_UINTPTR)iomgrregisterinstance2, 1, RTSITF_GET_SIGNATURE(0, 0x4219F9A3), 0x03050800) 
+	#define EXP_iomgrregisterinstance2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterinstance2", (RTS_UINTPTR)iomgrregisterinstance2, 1, RTSITF_GET_SIGNATURE(0, 0x4219F9A3), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrregisterinstance2
 	#define EXT_CmpIoMgriomgrregisterinstance2
 	#define GET_CmpIoMgriomgrregisterinstance2  ERR_OK
 	#define CAL_CmpIoMgriomgrregisterinstance2  iomgrregisterinstance2
 	#define CHK_CmpIoMgriomgrregisterinstance2  TRUE
-	#define EXP_CmpIoMgriomgrregisterinstance2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterinstance2", (RTS_UINTPTR)iomgrregisterinstance2, 1, RTSITF_GET_SIGNATURE(0, 0x4219F9A3), 0x03050800) 
+	#define EXP_CmpIoMgriomgrregisterinstance2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterinstance2", (RTS_UINTPTR)iomgrregisterinstance2, 1, RTSITF_GET_SIGNATURE(0, 0x4219F9A3), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrregisterinstance2
 	#define EXT_iomgrregisterinstance2
 	#define GET_iomgrregisterinstance2(fl)  CAL_CMGETAPI( "iomgrregisterinstance2" ) 
 	#define CAL_iomgrregisterinstance2  iomgrregisterinstance2
 	#define CHK_iomgrregisterinstance2  TRUE
-	#define EXP_iomgrregisterinstance2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterinstance2", (RTS_UINTPTR)iomgrregisterinstance2, 1, RTSITF_GET_SIGNATURE(0, 0x4219F9A3), 0x03050800) 
+	#define EXP_iomgrregisterinstance2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterinstance2", (RTS_UINTPTR)iomgrregisterinstance2, 1, RTSITF_GET_SIGNATURE(0, 0x4219F9A3), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrregisterinstance2  PFIOMGRREGISTERINSTANCE2_IEC pfiomgrregisterinstance2;
 	#define EXT_iomgrregisterinstance2  extern PFIOMGRREGISTERINSTANCE2_IEC pfiomgrregisterinstance2;
-	#define GET_iomgrregisterinstance2(fl)  s_pfCMGetAPI2( "iomgrregisterinstance2", (RTS_VOID_FCTPTR *)&pfiomgrregisterinstance2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x4219F9A3), 0x03050800)
+	#define GET_iomgrregisterinstance2(fl)  s_pfCMGetAPI2( "iomgrregisterinstance2", (RTS_VOID_FCTPTR *)&pfiomgrregisterinstance2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x4219F9A3), 0x03050F00)
 	#define CAL_iomgrregisterinstance2  pfiomgrregisterinstance2
 	#define CHK_iomgrregisterinstance2  (pfiomgrregisterinstance2 != NULL)
-	#define EXP_iomgrregisterinstance2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterinstance2", (RTS_UINTPTR)iomgrregisterinstance2, 1, RTSITF_GET_SIGNATURE(0, 0x4219F9A3), 0x03050800) 
+	#define EXP_iomgrregisterinstance2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrregisterinstance2", (RTS_UINTPTR)iomgrregisterinstance2, 1, RTSITF_GET_SIGNATURE(0, 0x4219F9A3), 0x03050F00) 
 #endif
 
 
@@ -2218,35 +2321,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRSCANMODULES_IEC) (iomgrscanmodules_struct 
 	#define GET_iomgrscanmodules(fl)  CAL_CMGETAPI( "iomgrscanmodules" ) 
 	#define CAL_iomgrscanmodules  iomgrscanmodules
 	#define CHK_iomgrscanmodules  TRUE
-	#define EXP_iomgrscanmodules  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrscanmodules", (RTS_UINTPTR)iomgrscanmodules, 1, RTSITF_GET_SIGNATURE(0, 0xF31DBCAE), 0x03050800) 
+	#define EXP_iomgrscanmodules  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrscanmodules", (RTS_UINTPTR)iomgrscanmodules, 1, RTSITF_GET_SIGNATURE(0, 0xF31DBCAE), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrscanmodules
 	#define EXT_iomgrscanmodules
 	#define GET_iomgrscanmodules(fl)  CAL_CMGETAPI( "iomgrscanmodules" ) 
 	#define CAL_iomgrscanmodules  iomgrscanmodules
 	#define CHK_iomgrscanmodules  TRUE
-	#define EXP_iomgrscanmodules  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrscanmodules", (RTS_UINTPTR)iomgrscanmodules, 1, RTSITF_GET_SIGNATURE(0, 0xF31DBCAE), 0x03050800) 
+	#define EXP_iomgrscanmodules  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrscanmodules", (RTS_UINTPTR)iomgrscanmodules, 1, RTSITF_GET_SIGNATURE(0, 0xF31DBCAE), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrscanmodules
 	#define EXT_CmpIoMgriomgrscanmodules
 	#define GET_CmpIoMgriomgrscanmodules  ERR_OK
 	#define CAL_CmpIoMgriomgrscanmodules  iomgrscanmodules
 	#define CHK_CmpIoMgriomgrscanmodules  TRUE
-	#define EXP_CmpIoMgriomgrscanmodules  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrscanmodules", (RTS_UINTPTR)iomgrscanmodules, 1, RTSITF_GET_SIGNATURE(0, 0xF31DBCAE), 0x03050800) 
+	#define EXP_CmpIoMgriomgrscanmodules  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrscanmodules", (RTS_UINTPTR)iomgrscanmodules, 1, RTSITF_GET_SIGNATURE(0, 0xF31DBCAE), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrscanmodules
 	#define EXT_iomgrscanmodules
 	#define GET_iomgrscanmodules(fl)  CAL_CMGETAPI( "iomgrscanmodules" ) 
 	#define CAL_iomgrscanmodules  iomgrscanmodules
 	#define CHK_iomgrscanmodules  TRUE
-	#define EXP_iomgrscanmodules  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrscanmodules", (RTS_UINTPTR)iomgrscanmodules, 1, RTSITF_GET_SIGNATURE(0, 0xF31DBCAE), 0x03050800) 
+	#define EXP_iomgrscanmodules  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrscanmodules", (RTS_UINTPTR)iomgrscanmodules, 1, RTSITF_GET_SIGNATURE(0, 0xF31DBCAE), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrscanmodules  PFIOMGRSCANMODULES_IEC pfiomgrscanmodules;
 	#define EXT_iomgrscanmodules  extern PFIOMGRSCANMODULES_IEC pfiomgrscanmodules;
-	#define GET_iomgrscanmodules(fl)  s_pfCMGetAPI2( "iomgrscanmodules", (RTS_VOID_FCTPTR *)&pfiomgrscanmodules, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xF31DBCAE), 0x03050800)
+	#define GET_iomgrscanmodules(fl)  s_pfCMGetAPI2( "iomgrscanmodules", (RTS_VOID_FCTPTR *)&pfiomgrscanmodules, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xF31DBCAE), 0x03050F00)
 	#define CAL_iomgrscanmodules  pfiomgrscanmodules
 	#define CHK_iomgrscanmodules  (pfiomgrscanmodules != NULL)
-	#define EXP_iomgrscanmodules   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrscanmodules", (RTS_UINTPTR)iomgrscanmodules, 1, RTSITF_GET_SIGNATURE(0, 0xF31DBCAE), 0x03050800) 
+	#define EXP_iomgrscanmodules   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrscanmodules", (RTS_UINTPTR)iomgrscanmodules, 1, RTSITF_GET_SIGNATURE(0, 0xF31DBCAE), 0x03050F00) 
 #endif
 
 
@@ -2275,35 +2378,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRSETDRIVERPROPERTIES_IEC) (iomgrsetdriverpr
 	#define GET_iomgrsetdriverproperties(fl)  CAL_CMGETAPI( "iomgrsetdriverproperties" ) 
 	#define CAL_iomgrsetdriverproperties  iomgrsetdriverproperties
 	#define CHK_iomgrsetdriverproperties  TRUE
-	#define EXP_iomgrsetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperties", (RTS_UINTPTR)iomgrsetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0x607A5D95), 0x03050800) 
+	#define EXP_iomgrsetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperties", (RTS_UINTPTR)iomgrsetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0x607A5D95), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrsetdriverproperties
 	#define EXT_iomgrsetdriverproperties
 	#define GET_iomgrsetdriverproperties(fl)  CAL_CMGETAPI( "iomgrsetdriverproperties" ) 
 	#define CAL_iomgrsetdriverproperties  iomgrsetdriverproperties
 	#define CHK_iomgrsetdriverproperties  TRUE
-	#define EXP_iomgrsetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperties", (RTS_UINTPTR)iomgrsetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0x607A5D95), 0x03050800) 
+	#define EXP_iomgrsetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperties", (RTS_UINTPTR)iomgrsetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0x607A5D95), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrsetdriverproperties
 	#define EXT_CmpIoMgriomgrsetdriverproperties
 	#define GET_CmpIoMgriomgrsetdriverproperties  ERR_OK
 	#define CAL_CmpIoMgriomgrsetdriverproperties  iomgrsetdriverproperties
 	#define CHK_CmpIoMgriomgrsetdriverproperties  TRUE
-	#define EXP_CmpIoMgriomgrsetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperties", (RTS_UINTPTR)iomgrsetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0x607A5D95), 0x03050800) 
+	#define EXP_CmpIoMgriomgrsetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperties", (RTS_UINTPTR)iomgrsetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0x607A5D95), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrsetdriverproperties
 	#define EXT_iomgrsetdriverproperties
 	#define GET_iomgrsetdriverproperties(fl)  CAL_CMGETAPI( "iomgrsetdriverproperties" ) 
 	#define CAL_iomgrsetdriverproperties  iomgrsetdriverproperties
 	#define CHK_iomgrsetdriverproperties  TRUE
-	#define EXP_iomgrsetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperties", (RTS_UINTPTR)iomgrsetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0x607A5D95), 0x03050800) 
+	#define EXP_iomgrsetdriverproperties  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperties", (RTS_UINTPTR)iomgrsetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0x607A5D95), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrsetdriverproperties  PFIOMGRSETDRIVERPROPERTIES_IEC pfiomgrsetdriverproperties;
 	#define EXT_iomgrsetdriverproperties  extern PFIOMGRSETDRIVERPROPERTIES_IEC pfiomgrsetdriverproperties;
-	#define GET_iomgrsetdriverproperties(fl)  s_pfCMGetAPI2( "iomgrsetdriverproperties", (RTS_VOID_FCTPTR *)&pfiomgrsetdriverproperties, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x607A5D95), 0x03050800)
+	#define GET_iomgrsetdriverproperties(fl)  s_pfCMGetAPI2( "iomgrsetdriverproperties", (RTS_VOID_FCTPTR *)&pfiomgrsetdriverproperties, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x607A5D95), 0x03050F00)
 	#define CAL_iomgrsetdriverproperties  pfiomgrsetdriverproperties
 	#define CHK_iomgrsetdriverproperties  (pfiomgrsetdriverproperties != NULL)
-	#define EXP_iomgrsetdriverproperties   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperties", (RTS_UINTPTR)iomgrsetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0x607A5D95), 0x03050800) 
+	#define EXP_iomgrsetdriverproperties   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperties", (RTS_UINTPTR)iomgrsetdriverproperties, 1, RTSITF_GET_SIGNATURE(0, 0x607A5D95), 0x03050F00) 
 #endif
 
 
@@ -2333,35 +2436,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRSETDRIVERPROPERTY_IEC) (iomgrsetdriverprop
 	#define GET_iomgrsetdriverproperty(fl)  CAL_CMGETAPI( "iomgrsetdriverproperty" ) 
 	#define CAL_iomgrsetdriverproperty  iomgrsetdriverproperty
 	#define CHK_iomgrsetdriverproperty  TRUE
-	#define EXP_iomgrsetdriverproperty  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperty", (RTS_UINTPTR)iomgrsetdriverproperty, 1, RTSITF_GET_SIGNATURE(0, 0x936FC5C4), 0x03050800) 
+	#define EXP_iomgrsetdriverproperty  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperty", (RTS_UINTPTR)iomgrsetdriverproperty, 1, RTSITF_GET_SIGNATURE(0, 0x936FC5C4), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrsetdriverproperty
 	#define EXT_iomgrsetdriverproperty
 	#define GET_iomgrsetdriverproperty(fl)  CAL_CMGETAPI( "iomgrsetdriverproperty" ) 
 	#define CAL_iomgrsetdriverproperty  iomgrsetdriverproperty
 	#define CHK_iomgrsetdriverproperty  TRUE
-	#define EXP_iomgrsetdriverproperty  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperty", (RTS_UINTPTR)iomgrsetdriverproperty, 1, RTSITF_GET_SIGNATURE(0, 0x936FC5C4), 0x03050800) 
+	#define EXP_iomgrsetdriverproperty  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperty", (RTS_UINTPTR)iomgrsetdriverproperty, 1, RTSITF_GET_SIGNATURE(0, 0x936FC5C4), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrsetdriverproperty
 	#define EXT_CmpIoMgriomgrsetdriverproperty
 	#define GET_CmpIoMgriomgrsetdriverproperty  ERR_OK
 	#define CAL_CmpIoMgriomgrsetdriverproperty  iomgrsetdriverproperty
 	#define CHK_CmpIoMgriomgrsetdriverproperty  TRUE
-	#define EXP_CmpIoMgriomgrsetdriverproperty  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperty", (RTS_UINTPTR)iomgrsetdriverproperty, 1, RTSITF_GET_SIGNATURE(0, 0x936FC5C4), 0x03050800) 
+	#define EXP_CmpIoMgriomgrsetdriverproperty  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperty", (RTS_UINTPTR)iomgrsetdriverproperty, 1, RTSITF_GET_SIGNATURE(0, 0x936FC5C4), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrsetdriverproperty
 	#define EXT_iomgrsetdriverproperty
 	#define GET_iomgrsetdriverproperty(fl)  CAL_CMGETAPI( "iomgrsetdriverproperty" ) 
 	#define CAL_iomgrsetdriverproperty  iomgrsetdriverproperty
 	#define CHK_iomgrsetdriverproperty  TRUE
-	#define EXP_iomgrsetdriverproperty  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperty", (RTS_UINTPTR)iomgrsetdriverproperty, 1, RTSITF_GET_SIGNATURE(0, 0x936FC5C4), 0x03050800) 
+	#define EXP_iomgrsetdriverproperty  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperty", (RTS_UINTPTR)iomgrsetdriverproperty, 1, RTSITF_GET_SIGNATURE(0, 0x936FC5C4), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrsetdriverproperty  PFIOMGRSETDRIVERPROPERTY_IEC pfiomgrsetdriverproperty;
 	#define EXT_iomgrsetdriverproperty  extern PFIOMGRSETDRIVERPROPERTY_IEC pfiomgrsetdriverproperty;
-	#define GET_iomgrsetdriverproperty(fl)  s_pfCMGetAPI2( "iomgrsetdriverproperty", (RTS_VOID_FCTPTR *)&pfiomgrsetdriverproperty, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x936FC5C4), 0x03050800)
+	#define GET_iomgrsetdriverproperty(fl)  s_pfCMGetAPI2( "iomgrsetdriverproperty", (RTS_VOID_FCTPTR *)&pfiomgrsetdriverproperty, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x936FC5C4), 0x03050F00)
 	#define CAL_iomgrsetdriverproperty  pfiomgrsetdriverproperty
 	#define CHK_iomgrsetdriverproperty  (pfiomgrsetdriverproperty != NULL)
-	#define EXP_iomgrsetdriverproperty   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperty", (RTS_UINTPTR)iomgrsetdriverproperty, 1, RTSITF_GET_SIGNATURE(0, 0x936FC5C4), 0x03050800) 
+	#define EXP_iomgrsetdriverproperty   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrsetdriverproperty", (RTS_UINTPTR)iomgrsetdriverproperty, 1, RTSITF_GET_SIGNATURE(0, 0x936FC5C4), 0x03050F00) 
 #endif
 
 
@@ -2389,44 +2492,40 @@ typedef void (CDECL CDECL_EXT* PFIOMGRSTARTBUSCYCLE_IEC) (iomgrstartbuscycle_str
 	#define GET_iomgrstartbuscycle(fl)  CAL_CMGETAPI( "iomgrstartbuscycle" ) 
 	#define CAL_iomgrstartbuscycle  iomgrstartbuscycle
 	#define CHK_iomgrstartbuscycle  TRUE
-	#define EXP_iomgrstartbuscycle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle", (RTS_UINTPTR)iomgrstartbuscycle, 1, RTSITF_GET_SIGNATURE(0, 0x09EEEC27), 0x03050800) 
+	#define EXP_iomgrstartbuscycle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle", (RTS_UINTPTR)iomgrstartbuscycle, 1, RTSITF_GET_SIGNATURE(0, 0x09EEEC27), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrstartbuscycle
 	#define EXT_iomgrstartbuscycle
 	#define GET_iomgrstartbuscycle(fl)  CAL_CMGETAPI( "iomgrstartbuscycle" ) 
 	#define CAL_iomgrstartbuscycle  iomgrstartbuscycle
 	#define CHK_iomgrstartbuscycle  TRUE
-	#define EXP_iomgrstartbuscycle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle", (RTS_UINTPTR)iomgrstartbuscycle, 1, RTSITF_GET_SIGNATURE(0, 0x09EEEC27), 0x03050800) 
+	#define EXP_iomgrstartbuscycle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle", (RTS_UINTPTR)iomgrstartbuscycle, 1, RTSITF_GET_SIGNATURE(0, 0x09EEEC27), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrstartbuscycle
 	#define EXT_CmpIoMgriomgrstartbuscycle
 	#define GET_CmpIoMgriomgrstartbuscycle  ERR_OK
 	#define CAL_CmpIoMgriomgrstartbuscycle  iomgrstartbuscycle
 	#define CHK_CmpIoMgriomgrstartbuscycle  TRUE
-	#define EXP_CmpIoMgriomgrstartbuscycle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle", (RTS_UINTPTR)iomgrstartbuscycle, 1, RTSITF_GET_SIGNATURE(0, 0x09EEEC27), 0x03050800) 
+	#define EXP_CmpIoMgriomgrstartbuscycle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle", (RTS_UINTPTR)iomgrstartbuscycle, 1, RTSITF_GET_SIGNATURE(0, 0x09EEEC27), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrstartbuscycle
 	#define EXT_iomgrstartbuscycle
 	#define GET_iomgrstartbuscycle(fl)  CAL_CMGETAPI( "iomgrstartbuscycle" ) 
 	#define CAL_iomgrstartbuscycle  iomgrstartbuscycle
 	#define CHK_iomgrstartbuscycle  TRUE
-	#define EXP_iomgrstartbuscycle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle", (RTS_UINTPTR)iomgrstartbuscycle, 1, RTSITF_GET_SIGNATURE(0, 0x09EEEC27), 0x03050800) 
+	#define EXP_iomgrstartbuscycle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle", (RTS_UINTPTR)iomgrstartbuscycle, 1, RTSITF_GET_SIGNATURE(0, 0x09EEEC27), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrstartbuscycle  PFIOMGRSTARTBUSCYCLE_IEC pfiomgrstartbuscycle;
 	#define EXT_iomgrstartbuscycle  extern PFIOMGRSTARTBUSCYCLE_IEC pfiomgrstartbuscycle;
-	#define GET_iomgrstartbuscycle(fl)  s_pfCMGetAPI2( "iomgrstartbuscycle", (RTS_VOID_FCTPTR *)&pfiomgrstartbuscycle, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x09EEEC27), 0x03050800)
+	#define GET_iomgrstartbuscycle(fl)  s_pfCMGetAPI2( "iomgrstartbuscycle", (RTS_VOID_FCTPTR *)&pfiomgrstartbuscycle, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x09EEEC27), 0x03050F00)
 	#define CAL_iomgrstartbuscycle  pfiomgrstartbuscycle
 	#define CHK_iomgrstartbuscycle  (pfiomgrstartbuscycle != NULL)
-	#define EXP_iomgrstartbuscycle   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle", (RTS_UINTPTR)iomgrstartbuscycle, 1, RTSITF_GET_SIGNATURE(0, 0x09EEEC27), 0x03050800) 
+	#define EXP_iomgrstartbuscycle   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle", (RTS_UINTPTR)iomgrstartbuscycle, 1, RTSITF_GET_SIGNATURE(0, 0x09EEEC27), 0x03050F00) 
 #endif
 
 
 /**
- * start the bus cycle for a specific connector, and pass
- * * the type of this call as an additional option. This way,
- * * the driver knows in which conditions (see BusCycleType)
- * * was called, by calling IoMgrGetBusCycleType().
- * 
+ * Start the bus cycle for a specific connector, and pass the type of this call as an additional option. This way, the driver knows in which conditions (see BusCycleType) was called, by calling IoMgrGetBusCycleType().
  */
 typedef struct tagiomgrstartbuscycle2_struct
 {
@@ -2450,35 +2549,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRSTARTBUSCYCLE2_IEC) (iomgrstartbuscycle2_s
 	#define GET_iomgrstartbuscycle2(fl)  CAL_CMGETAPI( "iomgrstartbuscycle2" ) 
 	#define CAL_iomgrstartbuscycle2  iomgrstartbuscycle2
 	#define CHK_iomgrstartbuscycle2  TRUE
-	#define EXP_iomgrstartbuscycle2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle2", (RTS_UINTPTR)iomgrstartbuscycle2, 1, RTSITF_GET_SIGNATURE(0, 0x8AB99A18), 0x03050800) 
+	#define EXP_iomgrstartbuscycle2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle2", (RTS_UINTPTR)iomgrstartbuscycle2, 1, RTSITF_GET_SIGNATURE(0, 0x8AB99A18), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrstartbuscycle2
 	#define EXT_iomgrstartbuscycle2
 	#define GET_iomgrstartbuscycle2(fl)  CAL_CMGETAPI( "iomgrstartbuscycle2" ) 
 	#define CAL_iomgrstartbuscycle2  iomgrstartbuscycle2
 	#define CHK_iomgrstartbuscycle2  TRUE
-	#define EXP_iomgrstartbuscycle2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle2", (RTS_UINTPTR)iomgrstartbuscycle2, 1, RTSITF_GET_SIGNATURE(0, 0x8AB99A18), 0x03050800) 
+	#define EXP_iomgrstartbuscycle2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle2", (RTS_UINTPTR)iomgrstartbuscycle2, 1, RTSITF_GET_SIGNATURE(0, 0x8AB99A18), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrstartbuscycle2
 	#define EXT_CmpIoMgriomgrstartbuscycle2
 	#define GET_CmpIoMgriomgrstartbuscycle2  ERR_OK
 	#define CAL_CmpIoMgriomgrstartbuscycle2  iomgrstartbuscycle2
 	#define CHK_CmpIoMgriomgrstartbuscycle2  TRUE
-	#define EXP_CmpIoMgriomgrstartbuscycle2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle2", (RTS_UINTPTR)iomgrstartbuscycle2, 1, RTSITF_GET_SIGNATURE(0, 0x8AB99A18), 0x03050800) 
+	#define EXP_CmpIoMgriomgrstartbuscycle2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle2", (RTS_UINTPTR)iomgrstartbuscycle2, 1, RTSITF_GET_SIGNATURE(0, 0x8AB99A18), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrstartbuscycle2
 	#define EXT_iomgrstartbuscycle2
 	#define GET_iomgrstartbuscycle2(fl)  CAL_CMGETAPI( "iomgrstartbuscycle2" ) 
 	#define CAL_iomgrstartbuscycle2  iomgrstartbuscycle2
 	#define CHK_iomgrstartbuscycle2  TRUE
-	#define EXP_iomgrstartbuscycle2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle2", (RTS_UINTPTR)iomgrstartbuscycle2, 1, RTSITF_GET_SIGNATURE(0, 0x8AB99A18), 0x03050800) 
+	#define EXP_iomgrstartbuscycle2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle2", (RTS_UINTPTR)iomgrstartbuscycle2, 1, RTSITF_GET_SIGNATURE(0, 0x8AB99A18), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrstartbuscycle2  PFIOMGRSTARTBUSCYCLE2_IEC pfiomgrstartbuscycle2;
 	#define EXT_iomgrstartbuscycle2  extern PFIOMGRSTARTBUSCYCLE2_IEC pfiomgrstartbuscycle2;
-	#define GET_iomgrstartbuscycle2(fl)  s_pfCMGetAPI2( "iomgrstartbuscycle2", (RTS_VOID_FCTPTR *)&pfiomgrstartbuscycle2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x8AB99A18), 0x03050800)
+	#define GET_iomgrstartbuscycle2(fl)  s_pfCMGetAPI2( "iomgrstartbuscycle2", (RTS_VOID_FCTPTR *)&pfiomgrstartbuscycle2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x8AB99A18), 0x03050F00)
 	#define CAL_iomgrstartbuscycle2  pfiomgrstartbuscycle2
 	#define CHK_iomgrstartbuscycle2  (pfiomgrstartbuscycle2 != NULL)
-	#define EXP_iomgrstartbuscycle2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle2", (RTS_UINTPTR)iomgrstartbuscycle2, 1, RTSITF_GET_SIGNATURE(0, 0x8AB99A18), 0x03050800) 
+	#define EXP_iomgrstartbuscycle2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrstartbuscycle2", (RTS_UINTPTR)iomgrstartbuscycle2, 1, RTSITF_GET_SIGNATURE(0, 0x8AB99A18), 0x03050F00) 
 #endif
 
 
@@ -2506,35 +2605,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRUNREGISTERCONFIGAPPLICATION_IEC) (iomgrunr
 	#define GET_iomgrunregisterconfigapplication(fl)  CAL_CMGETAPI( "iomgrunregisterconfigapplication" ) 
 	#define CAL_iomgrunregisterconfigapplication  iomgrunregisterconfigapplication
 	#define CHK_iomgrunregisterconfigapplication  TRUE
-	#define EXP_iomgrunregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterconfigapplication", (RTS_UINTPTR)iomgrunregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xECB18F2E), 0x03050800) 
+	#define EXP_iomgrunregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterconfigapplication", (RTS_UINTPTR)iomgrunregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xECB18F2E), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrunregisterconfigapplication
 	#define EXT_iomgrunregisterconfigapplication
 	#define GET_iomgrunregisterconfigapplication(fl)  CAL_CMGETAPI( "iomgrunregisterconfigapplication" ) 
 	#define CAL_iomgrunregisterconfigapplication  iomgrunregisterconfigapplication
 	#define CHK_iomgrunregisterconfigapplication  TRUE
-	#define EXP_iomgrunregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterconfigapplication", (RTS_UINTPTR)iomgrunregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xECB18F2E), 0x03050800) 
+	#define EXP_iomgrunregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterconfigapplication", (RTS_UINTPTR)iomgrunregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xECB18F2E), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrunregisterconfigapplication
 	#define EXT_CmpIoMgriomgrunregisterconfigapplication
 	#define GET_CmpIoMgriomgrunregisterconfigapplication  ERR_OK
 	#define CAL_CmpIoMgriomgrunregisterconfigapplication  iomgrunregisterconfigapplication
 	#define CHK_CmpIoMgriomgrunregisterconfigapplication  TRUE
-	#define EXP_CmpIoMgriomgrunregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterconfigapplication", (RTS_UINTPTR)iomgrunregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xECB18F2E), 0x03050800) 
+	#define EXP_CmpIoMgriomgrunregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterconfigapplication", (RTS_UINTPTR)iomgrunregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xECB18F2E), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrunregisterconfigapplication
 	#define EXT_iomgrunregisterconfigapplication
 	#define GET_iomgrunregisterconfigapplication(fl)  CAL_CMGETAPI( "iomgrunregisterconfigapplication" ) 
 	#define CAL_iomgrunregisterconfigapplication  iomgrunregisterconfigapplication
 	#define CHK_iomgrunregisterconfigapplication  TRUE
-	#define EXP_iomgrunregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterconfigapplication", (RTS_UINTPTR)iomgrunregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xECB18F2E), 0x03050800) 
+	#define EXP_iomgrunregisterconfigapplication  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterconfigapplication", (RTS_UINTPTR)iomgrunregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xECB18F2E), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrunregisterconfigapplication  PFIOMGRUNREGISTERCONFIGAPPLICATION_IEC pfiomgrunregisterconfigapplication;
 	#define EXT_iomgrunregisterconfigapplication  extern PFIOMGRUNREGISTERCONFIGAPPLICATION_IEC pfiomgrunregisterconfigapplication;
-	#define GET_iomgrunregisterconfigapplication(fl)  s_pfCMGetAPI2( "iomgrunregisterconfigapplication", (RTS_VOID_FCTPTR *)&pfiomgrunregisterconfigapplication, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xECB18F2E), 0x03050800)
+	#define GET_iomgrunregisterconfigapplication(fl)  s_pfCMGetAPI2( "iomgrunregisterconfigapplication", (RTS_VOID_FCTPTR *)&pfiomgrunregisterconfigapplication, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xECB18F2E), 0x03050F00)
 	#define CAL_iomgrunregisterconfigapplication  pfiomgrunregisterconfigapplication
 	#define CHK_iomgrunregisterconfigapplication  (pfiomgrunregisterconfigapplication != NULL)
-	#define EXP_iomgrunregisterconfigapplication   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterconfigapplication", (RTS_UINTPTR)iomgrunregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xECB18F2E), 0x03050800) 
+	#define EXP_iomgrunregisterconfigapplication   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterconfigapplication", (RTS_UINTPTR)iomgrunregisterconfigapplication, 1, RTSITF_GET_SIGNATURE(0, 0xECB18F2E), 0x03050F00) 
 #endif
 
 
@@ -2562,35 +2661,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRUNREGISTERINSTANCE_IEC) (iomgrunregisterin
 	#define GET_iomgrunregisterinstance(fl)  CAL_CMGETAPI( "iomgrunregisterinstance" ) 
 	#define CAL_iomgrunregisterinstance  iomgrunregisterinstance
 	#define CHK_iomgrunregisterinstance  TRUE
-	#define EXP_iomgrunregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterinstance", (RTS_UINTPTR)iomgrunregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0x830B7CC7), 0x03050800) 
+	#define EXP_iomgrunregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterinstance", (RTS_UINTPTR)iomgrunregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0x830B7CC7), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrunregisterinstance
 	#define EXT_iomgrunregisterinstance
 	#define GET_iomgrunregisterinstance(fl)  CAL_CMGETAPI( "iomgrunregisterinstance" ) 
 	#define CAL_iomgrunregisterinstance  iomgrunregisterinstance
 	#define CHK_iomgrunregisterinstance  TRUE
-	#define EXP_iomgrunregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterinstance", (RTS_UINTPTR)iomgrunregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0x830B7CC7), 0x03050800) 
+	#define EXP_iomgrunregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterinstance", (RTS_UINTPTR)iomgrunregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0x830B7CC7), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrunregisterinstance
 	#define EXT_CmpIoMgriomgrunregisterinstance
 	#define GET_CmpIoMgriomgrunregisterinstance  ERR_OK
 	#define CAL_CmpIoMgriomgrunregisterinstance  iomgrunregisterinstance
 	#define CHK_CmpIoMgriomgrunregisterinstance  TRUE
-	#define EXP_CmpIoMgriomgrunregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterinstance", (RTS_UINTPTR)iomgrunregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0x830B7CC7), 0x03050800) 
+	#define EXP_CmpIoMgriomgrunregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterinstance", (RTS_UINTPTR)iomgrunregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0x830B7CC7), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrunregisterinstance
 	#define EXT_iomgrunregisterinstance
 	#define GET_iomgrunregisterinstance(fl)  CAL_CMGETAPI( "iomgrunregisterinstance" ) 
 	#define CAL_iomgrunregisterinstance  iomgrunregisterinstance
 	#define CHK_iomgrunregisterinstance  TRUE
-	#define EXP_iomgrunregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterinstance", (RTS_UINTPTR)iomgrunregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0x830B7CC7), 0x03050800) 
+	#define EXP_iomgrunregisterinstance  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterinstance", (RTS_UINTPTR)iomgrunregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0x830B7CC7), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrunregisterinstance  PFIOMGRUNREGISTERINSTANCE_IEC pfiomgrunregisterinstance;
 	#define EXT_iomgrunregisterinstance  extern PFIOMGRUNREGISTERINSTANCE_IEC pfiomgrunregisterinstance;
-	#define GET_iomgrunregisterinstance(fl)  s_pfCMGetAPI2( "iomgrunregisterinstance", (RTS_VOID_FCTPTR *)&pfiomgrunregisterinstance, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x830B7CC7), 0x03050800)
+	#define GET_iomgrunregisterinstance(fl)  s_pfCMGetAPI2( "iomgrunregisterinstance", (RTS_VOID_FCTPTR *)&pfiomgrunregisterinstance, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x830B7CC7), 0x03050F00)
 	#define CAL_iomgrunregisterinstance  pfiomgrunregisterinstance
 	#define CHK_iomgrunregisterinstance  (pfiomgrunregisterinstance != NULL)
-	#define EXP_iomgrunregisterinstance   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterinstance", (RTS_UINTPTR)iomgrunregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0x830B7CC7), 0x03050800) 
+	#define EXP_iomgrunregisterinstance   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrunregisterinstance", (RTS_UINTPTR)iomgrunregisterinstance, 1, RTSITF_GET_SIGNATURE(0, 0x830B7CC7), 0x03050F00) 
 #endif
 
 
@@ -2619,35 +2718,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRUPDATECONFIGURATION_IEC) (iomgrupdateconfi
 	#define GET_iomgrupdateconfiguration(fl)  CAL_CMGETAPI( "iomgrupdateconfiguration" ) 
 	#define CAL_iomgrupdateconfiguration  iomgrupdateconfiguration
 	#define CHK_iomgrupdateconfiguration  TRUE
-	#define EXP_iomgrupdateconfiguration  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration", (RTS_UINTPTR)iomgrupdateconfiguration, 1, RTSITF_GET_SIGNATURE(0, 0xB1381773), 0x03050800) 
+	#define EXP_iomgrupdateconfiguration  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration", (RTS_UINTPTR)iomgrupdateconfiguration, 1, RTSITF_GET_SIGNATURE(0, 0xB1381773), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrupdateconfiguration
 	#define EXT_iomgrupdateconfiguration
 	#define GET_iomgrupdateconfiguration(fl)  CAL_CMGETAPI( "iomgrupdateconfiguration" ) 
 	#define CAL_iomgrupdateconfiguration  iomgrupdateconfiguration
 	#define CHK_iomgrupdateconfiguration  TRUE
-	#define EXP_iomgrupdateconfiguration  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration", (RTS_UINTPTR)iomgrupdateconfiguration, 1, RTSITF_GET_SIGNATURE(0, 0xB1381773), 0x03050800) 
+	#define EXP_iomgrupdateconfiguration  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration", (RTS_UINTPTR)iomgrupdateconfiguration, 1, RTSITF_GET_SIGNATURE(0, 0xB1381773), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrupdateconfiguration
 	#define EXT_CmpIoMgriomgrupdateconfiguration
 	#define GET_CmpIoMgriomgrupdateconfiguration  ERR_OK
 	#define CAL_CmpIoMgriomgrupdateconfiguration  iomgrupdateconfiguration
 	#define CHK_CmpIoMgriomgrupdateconfiguration  TRUE
-	#define EXP_CmpIoMgriomgrupdateconfiguration  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration", (RTS_UINTPTR)iomgrupdateconfiguration, 1, RTSITF_GET_SIGNATURE(0, 0xB1381773), 0x03050800) 
+	#define EXP_CmpIoMgriomgrupdateconfiguration  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration", (RTS_UINTPTR)iomgrupdateconfiguration, 1, RTSITF_GET_SIGNATURE(0, 0xB1381773), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrupdateconfiguration
 	#define EXT_iomgrupdateconfiguration
 	#define GET_iomgrupdateconfiguration(fl)  CAL_CMGETAPI( "iomgrupdateconfiguration" ) 
 	#define CAL_iomgrupdateconfiguration  iomgrupdateconfiguration
 	#define CHK_iomgrupdateconfiguration  TRUE
-	#define EXP_iomgrupdateconfiguration  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration", (RTS_UINTPTR)iomgrupdateconfiguration, 1, RTSITF_GET_SIGNATURE(0, 0xB1381773), 0x03050800) 
+	#define EXP_iomgrupdateconfiguration  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration", (RTS_UINTPTR)iomgrupdateconfiguration, 1, RTSITF_GET_SIGNATURE(0, 0xB1381773), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrupdateconfiguration  PFIOMGRUPDATECONFIGURATION_IEC pfiomgrupdateconfiguration;
 	#define EXT_iomgrupdateconfiguration  extern PFIOMGRUPDATECONFIGURATION_IEC pfiomgrupdateconfiguration;
-	#define GET_iomgrupdateconfiguration(fl)  s_pfCMGetAPI2( "iomgrupdateconfiguration", (RTS_VOID_FCTPTR *)&pfiomgrupdateconfiguration, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB1381773), 0x03050800)
+	#define GET_iomgrupdateconfiguration(fl)  s_pfCMGetAPI2( "iomgrupdateconfiguration", (RTS_VOID_FCTPTR *)&pfiomgrupdateconfiguration, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB1381773), 0x03050F00)
 	#define CAL_iomgrupdateconfiguration  pfiomgrupdateconfiguration
 	#define CHK_iomgrupdateconfiguration  (pfiomgrupdateconfiguration != NULL)
-	#define EXP_iomgrupdateconfiguration   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration", (RTS_UINTPTR)iomgrupdateconfiguration, 1, RTSITF_GET_SIGNATURE(0, 0xB1381773), 0x03050800) 
+	#define EXP_iomgrupdateconfiguration   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration", (RTS_UINTPTR)iomgrupdateconfiguration, 1, RTSITF_GET_SIGNATURE(0, 0xB1381773), 0x03050F00) 
 #endif
 
 
@@ -2677,35 +2776,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRUPDATECONFIGURATION2_IEC) (iomgrupdateconf
 	#define GET_iomgrupdateconfiguration2(fl)  CAL_CMGETAPI( "iomgrupdateconfiguration2" ) 
 	#define CAL_iomgrupdateconfiguration2  iomgrupdateconfiguration2
 	#define CHK_iomgrupdateconfiguration2  TRUE
-	#define EXP_iomgrupdateconfiguration2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration2", (RTS_UINTPTR)iomgrupdateconfiguration2, 1, RTSITF_GET_SIGNATURE(0, 0x44CD4528), 0x03050800) 
+	#define EXP_iomgrupdateconfiguration2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration2", (RTS_UINTPTR)iomgrupdateconfiguration2, 1, RTSITF_GET_SIGNATURE(0, 0x44CD4528), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrupdateconfiguration2
 	#define EXT_iomgrupdateconfiguration2
 	#define GET_iomgrupdateconfiguration2(fl)  CAL_CMGETAPI( "iomgrupdateconfiguration2" ) 
 	#define CAL_iomgrupdateconfiguration2  iomgrupdateconfiguration2
 	#define CHK_iomgrupdateconfiguration2  TRUE
-	#define EXP_iomgrupdateconfiguration2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration2", (RTS_UINTPTR)iomgrupdateconfiguration2, 1, RTSITF_GET_SIGNATURE(0, 0x44CD4528), 0x03050800) 
+	#define EXP_iomgrupdateconfiguration2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration2", (RTS_UINTPTR)iomgrupdateconfiguration2, 1, RTSITF_GET_SIGNATURE(0, 0x44CD4528), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrupdateconfiguration2
 	#define EXT_CmpIoMgriomgrupdateconfiguration2
 	#define GET_CmpIoMgriomgrupdateconfiguration2  ERR_OK
 	#define CAL_CmpIoMgriomgrupdateconfiguration2  iomgrupdateconfiguration2
 	#define CHK_CmpIoMgriomgrupdateconfiguration2  TRUE
-	#define EXP_CmpIoMgriomgrupdateconfiguration2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration2", (RTS_UINTPTR)iomgrupdateconfiguration2, 1, RTSITF_GET_SIGNATURE(0, 0x44CD4528), 0x03050800) 
+	#define EXP_CmpIoMgriomgrupdateconfiguration2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration2", (RTS_UINTPTR)iomgrupdateconfiguration2, 1, RTSITF_GET_SIGNATURE(0, 0x44CD4528), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrupdateconfiguration2
 	#define EXT_iomgrupdateconfiguration2
 	#define GET_iomgrupdateconfiguration2(fl)  CAL_CMGETAPI( "iomgrupdateconfiguration2" ) 
 	#define CAL_iomgrupdateconfiguration2  iomgrupdateconfiguration2
 	#define CHK_iomgrupdateconfiguration2  TRUE
-	#define EXP_iomgrupdateconfiguration2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration2", (RTS_UINTPTR)iomgrupdateconfiguration2, 1, RTSITF_GET_SIGNATURE(0, 0x44CD4528), 0x03050800) 
+	#define EXP_iomgrupdateconfiguration2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration2", (RTS_UINTPTR)iomgrupdateconfiguration2, 1, RTSITF_GET_SIGNATURE(0, 0x44CD4528), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrupdateconfiguration2  PFIOMGRUPDATECONFIGURATION2_IEC pfiomgrupdateconfiguration2;
 	#define EXT_iomgrupdateconfiguration2  extern PFIOMGRUPDATECONFIGURATION2_IEC pfiomgrupdateconfiguration2;
-	#define GET_iomgrupdateconfiguration2(fl)  s_pfCMGetAPI2( "iomgrupdateconfiguration2", (RTS_VOID_FCTPTR *)&pfiomgrupdateconfiguration2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x44CD4528), 0x03050800)
+	#define GET_iomgrupdateconfiguration2(fl)  s_pfCMGetAPI2( "iomgrupdateconfiguration2", (RTS_VOID_FCTPTR *)&pfiomgrupdateconfiguration2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x44CD4528), 0x03050F00)
 	#define CAL_iomgrupdateconfiguration2  pfiomgrupdateconfiguration2
 	#define CHK_iomgrupdateconfiguration2  (pfiomgrupdateconfiguration2 != NULL)
-	#define EXP_iomgrupdateconfiguration2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration2", (RTS_UINTPTR)iomgrupdateconfiguration2, 1, RTSITF_GET_SIGNATURE(0, 0x44CD4528), 0x03050800) 
+	#define EXP_iomgrupdateconfiguration2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdateconfiguration2", (RTS_UINTPTR)iomgrupdateconfiguration2, 1, RTSITF_GET_SIGNATURE(0, 0x44CD4528), 0x03050F00) 
 #endif
 
 
@@ -2734,35 +2833,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRUPDATEMAPPING_IEC) (iomgrupdatemapping_str
 	#define GET_iomgrupdatemapping(fl)  CAL_CMGETAPI( "iomgrupdatemapping" ) 
 	#define CAL_iomgrupdatemapping  iomgrupdatemapping
 	#define CHK_iomgrupdatemapping  TRUE
-	#define EXP_iomgrupdatemapping  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping", (RTS_UINTPTR)iomgrupdatemapping, 1, RTSITF_GET_SIGNATURE(0, 0x0A15126C), 0x03050800) 
+	#define EXP_iomgrupdatemapping  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping", (RTS_UINTPTR)iomgrupdatemapping, 1, 0, 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrupdatemapping
 	#define EXT_iomgrupdatemapping
 	#define GET_iomgrupdatemapping(fl)  CAL_CMGETAPI( "iomgrupdatemapping" ) 
 	#define CAL_iomgrupdatemapping  iomgrupdatemapping
 	#define CHK_iomgrupdatemapping  TRUE
-	#define EXP_iomgrupdatemapping  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping", (RTS_UINTPTR)iomgrupdatemapping, 1, RTSITF_GET_SIGNATURE(0, 0x0A15126C), 0x03050800) 
+	#define EXP_iomgrupdatemapping  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping", (RTS_UINTPTR)iomgrupdatemapping, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrupdatemapping
 	#define EXT_CmpIoMgriomgrupdatemapping
 	#define GET_CmpIoMgriomgrupdatemapping  ERR_OK
 	#define CAL_CmpIoMgriomgrupdatemapping  iomgrupdatemapping
 	#define CHK_CmpIoMgriomgrupdatemapping  TRUE
-	#define EXP_CmpIoMgriomgrupdatemapping  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping", (RTS_UINTPTR)iomgrupdatemapping, 1, RTSITF_GET_SIGNATURE(0, 0x0A15126C), 0x03050800) 
+	#define EXP_CmpIoMgriomgrupdatemapping  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping", (RTS_UINTPTR)iomgrupdatemapping, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrupdatemapping
 	#define EXT_iomgrupdatemapping
 	#define GET_iomgrupdatemapping(fl)  CAL_CMGETAPI( "iomgrupdatemapping" ) 
 	#define CAL_iomgrupdatemapping  iomgrupdatemapping
 	#define CHK_iomgrupdatemapping  TRUE
-	#define EXP_iomgrupdatemapping  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping", (RTS_UINTPTR)iomgrupdatemapping, 1, RTSITF_GET_SIGNATURE(0, 0x0A15126C), 0x03050800) 
+	#define EXP_iomgrupdatemapping  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping", (RTS_UINTPTR)iomgrupdatemapping, 1, 0, 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrupdatemapping  PFIOMGRUPDATEMAPPING_IEC pfiomgrupdatemapping;
 	#define EXT_iomgrupdatemapping  extern PFIOMGRUPDATEMAPPING_IEC pfiomgrupdatemapping;
-	#define GET_iomgrupdatemapping(fl)  s_pfCMGetAPI2( "iomgrupdatemapping", (RTS_VOID_FCTPTR *)&pfiomgrupdatemapping, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x0A15126C), 0x03050800)
+	#define GET_iomgrupdatemapping(fl)  s_pfCMGetAPI2( "iomgrupdatemapping", (RTS_VOID_FCTPTR *)&pfiomgrupdatemapping, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
 	#define CAL_iomgrupdatemapping  pfiomgrupdatemapping
 	#define CHK_iomgrupdatemapping  (pfiomgrupdatemapping != NULL)
-	#define EXP_iomgrupdatemapping   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping", (RTS_UINTPTR)iomgrupdatemapping, 1, RTSITF_GET_SIGNATURE(0, 0x0A15126C), 0x03050800) 
+	#define EXP_iomgrupdatemapping   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping", (RTS_UINTPTR)iomgrupdatemapping, 1, 0, 0x03050F00) 
 #endif
 
 
@@ -2792,35 +2891,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRUPDATEMAPPING2_IEC) (iomgrupdatemapping2_s
 	#define GET_iomgrupdatemapping2(fl)  CAL_CMGETAPI( "iomgrupdatemapping2" ) 
 	#define CAL_iomgrupdatemapping2  iomgrupdatemapping2
 	#define CHK_iomgrupdatemapping2  TRUE
-	#define EXP_iomgrupdatemapping2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping2", (RTS_UINTPTR)iomgrupdatemapping2, 1, RTSITF_GET_SIGNATURE(0, 0x775F7CAD), 0x03050800) 
+	#define EXP_iomgrupdatemapping2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping2", (RTS_UINTPTR)iomgrupdatemapping2, 1, 0, 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrupdatemapping2
 	#define EXT_iomgrupdatemapping2
 	#define GET_iomgrupdatemapping2(fl)  CAL_CMGETAPI( "iomgrupdatemapping2" ) 
 	#define CAL_iomgrupdatemapping2  iomgrupdatemapping2
 	#define CHK_iomgrupdatemapping2  TRUE
-	#define EXP_iomgrupdatemapping2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping2", (RTS_UINTPTR)iomgrupdatemapping2, 1, RTSITF_GET_SIGNATURE(0, 0x775F7CAD), 0x03050800) 
+	#define EXP_iomgrupdatemapping2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping2", (RTS_UINTPTR)iomgrupdatemapping2, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrupdatemapping2
 	#define EXT_CmpIoMgriomgrupdatemapping2
 	#define GET_CmpIoMgriomgrupdatemapping2  ERR_OK
 	#define CAL_CmpIoMgriomgrupdatemapping2  iomgrupdatemapping2
 	#define CHK_CmpIoMgriomgrupdatemapping2  TRUE
-	#define EXP_CmpIoMgriomgrupdatemapping2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping2", (RTS_UINTPTR)iomgrupdatemapping2, 1, RTSITF_GET_SIGNATURE(0, 0x775F7CAD), 0x03050800) 
+	#define EXP_CmpIoMgriomgrupdatemapping2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping2", (RTS_UINTPTR)iomgrupdatemapping2, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrupdatemapping2
 	#define EXT_iomgrupdatemapping2
 	#define GET_iomgrupdatemapping2(fl)  CAL_CMGETAPI( "iomgrupdatemapping2" ) 
 	#define CAL_iomgrupdatemapping2  iomgrupdatemapping2
 	#define CHK_iomgrupdatemapping2  TRUE
-	#define EXP_iomgrupdatemapping2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping2", (RTS_UINTPTR)iomgrupdatemapping2, 1, RTSITF_GET_SIGNATURE(0, 0x775F7CAD), 0x03050800) 
+	#define EXP_iomgrupdatemapping2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping2", (RTS_UINTPTR)iomgrupdatemapping2, 1, 0, 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrupdatemapping2  PFIOMGRUPDATEMAPPING2_IEC pfiomgrupdatemapping2;
 	#define EXT_iomgrupdatemapping2  extern PFIOMGRUPDATEMAPPING2_IEC pfiomgrupdatemapping2;
-	#define GET_iomgrupdatemapping2(fl)  s_pfCMGetAPI2( "iomgrupdatemapping2", (RTS_VOID_FCTPTR *)&pfiomgrupdatemapping2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x775F7CAD), 0x03050800)
+	#define GET_iomgrupdatemapping2(fl)  s_pfCMGetAPI2( "iomgrupdatemapping2", (RTS_VOID_FCTPTR *)&pfiomgrupdatemapping2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
 	#define CAL_iomgrupdatemapping2  pfiomgrupdatemapping2
 	#define CHK_iomgrupdatemapping2  (pfiomgrupdatemapping2 != NULL)
-	#define EXP_iomgrupdatemapping2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping2", (RTS_UINTPTR)iomgrupdatemapping2, 1, RTSITF_GET_SIGNATURE(0, 0x775F7CAD), 0x03050800) 
+	#define EXP_iomgrupdatemapping2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrupdatemapping2", (RTS_UINTPTR)iomgrupdatemapping2, 1, 0, 0x03050F00) 
 #endif
 
 
@@ -2848,35 +2947,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRWATCHDOGTRIGGER_IEC) (iomgrwatchdogtrigger
 	#define GET_iomgrwatchdogtrigger(fl)  CAL_CMGETAPI( "iomgrwatchdogtrigger" ) 
 	#define CAL_iomgrwatchdogtrigger  iomgrwatchdogtrigger
 	#define CHK_iomgrwatchdogtrigger  TRUE
-	#define EXP_iomgrwatchdogtrigger  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwatchdogtrigger", (RTS_UINTPTR)iomgrwatchdogtrigger, 1, RTSITF_GET_SIGNATURE(0, 0x986DFD93), 0x03050800) 
+	#define EXP_iomgrwatchdogtrigger  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwatchdogtrigger", (RTS_UINTPTR)iomgrwatchdogtrigger, 1, RTSITF_GET_SIGNATURE(0, 0x986DFD93), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrwatchdogtrigger
 	#define EXT_iomgrwatchdogtrigger
 	#define GET_iomgrwatchdogtrigger(fl)  CAL_CMGETAPI( "iomgrwatchdogtrigger" ) 
 	#define CAL_iomgrwatchdogtrigger  iomgrwatchdogtrigger
 	#define CHK_iomgrwatchdogtrigger  TRUE
-	#define EXP_iomgrwatchdogtrigger  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwatchdogtrigger", (RTS_UINTPTR)iomgrwatchdogtrigger, 1, RTSITF_GET_SIGNATURE(0, 0x986DFD93), 0x03050800) 
+	#define EXP_iomgrwatchdogtrigger  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwatchdogtrigger", (RTS_UINTPTR)iomgrwatchdogtrigger, 1, RTSITF_GET_SIGNATURE(0, 0x986DFD93), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrwatchdogtrigger
 	#define EXT_CmpIoMgriomgrwatchdogtrigger
 	#define GET_CmpIoMgriomgrwatchdogtrigger  ERR_OK
 	#define CAL_CmpIoMgriomgrwatchdogtrigger  iomgrwatchdogtrigger
 	#define CHK_CmpIoMgriomgrwatchdogtrigger  TRUE
-	#define EXP_CmpIoMgriomgrwatchdogtrigger  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwatchdogtrigger", (RTS_UINTPTR)iomgrwatchdogtrigger, 1, RTSITF_GET_SIGNATURE(0, 0x986DFD93), 0x03050800) 
+	#define EXP_CmpIoMgriomgrwatchdogtrigger  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwatchdogtrigger", (RTS_UINTPTR)iomgrwatchdogtrigger, 1, RTSITF_GET_SIGNATURE(0, 0x986DFD93), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrwatchdogtrigger
 	#define EXT_iomgrwatchdogtrigger
 	#define GET_iomgrwatchdogtrigger(fl)  CAL_CMGETAPI( "iomgrwatchdogtrigger" ) 
 	#define CAL_iomgrwatchdogtrigger  iomgrwatchdogtrigger
 	#define CHK_iomgrwatchdogtrigger  TRUE
-	#define EXP_iomgrwatchdogtrigger  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwatchdogtrigger", (RTS_UINTPTR)iomgrwatchdogtrigger, 1, RTSITF_GET_SIGNATURE(0, 0x986DFD93), 0x03050800) 
+	#define EXP_iomgrwatchdogtrigger  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwatchdogtrigger", (RTS_UINTPTR)iomgrwatchdogtrigger, 1, RTSITF_GET_SIGNATURE(0, 0x986DFD93), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrwatchdogtrigger  PFIOMGRWATCHDOGTRIGGER_IEC pfiomgrwatchdogtrigger;
 	#define EXT_iomgrwatchdogtrigger  extern PFIOMGRWATCHDOGTRIGGER_IEC pfiomgrwatchdogtrigger;
-	#define GET_iomgrwatchdogtrigger(fl)  s_pfCMGetAPI2( "iomgrwatchdogtrigger", (RTS_VOID_FCTPTR *)&pfiomgrwatchdogtrigger, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x986DFD93), 0x03050800)
+	#define GET_iomgrwatchdogtrigger(fl)  s_pfCMGetAPI2( "iomgrwatchdogtrigger", (RTS_VOID_FCTPTR *)&pfiomgrwatchdogtrigger, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x986DFD93), 0x03050F00)
 	#define CAL_iomgrwatchdogtrigger  pfiomgrwatchdogtrigger
 	#define CHK_iomgrwatchdogtrigger  (pfiomgrwatchdogtrigger != NULL)
-	#define EXP_iomgrwatchdogtrigger   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwatchdogtrigger", (RTS_UINTPTR)iomgrwatchdogtrigger, 1, RTSITF_GET_SIGNATURE(0, 0x986DFD93), 0x03050800) 
+	#define EXP_iomgrwatchdogtrigger   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwatchdogtrigger", (RTS_UINTPTR)iomgrwatchdogtrigger, 1, RTSITF_GET_SIGNATURE(0, 0x986DFD93), 0x03050F00) 
 #endif
 
 
@@ -2904,35 +3003,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRWRITEOUTPUTS_IEC) (iomgrwriteoutputs_struc
 	#define GET_iomgrwriteoutputs(fl)  CAL_CMGETAPI( "iomgrwriteoutputs" ) 
 	#define CAL_iomgrwriteoutputs  iomgrwriteoutputs
 	#define CHK_iomgrwriteoutputs  TRUE
-	#define EXP_iomgrwriteoutputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteoutputs", (RTS_UINTPTR)iomgrwriteoutputs, 1, RTSITF_GET_SIGNATURE(0, 0xDA3433B3), 0x03050800) 
+	#define EXP_iomgrwriteoutputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteoutputs", (RTS_UINTPTR)iomgrwriteoutputs, 1, 0, 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrwriteoutputs
 	#define EXT_iomgrwriteoutputs
 	#define GET_iomgrwriteoutputs(fl)  CAL_CMGETAPI( "iomgrwriteoutputs" ) 
 	#define CAL_iomgrwriteoutputs  iomgrwriteoutputs
 	#define CHK_iomgrwriteoutputs  TRUE
-	#define EXP_iomgrwriteoutputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteoutputs", (RTS_UINTPTR)iomgrwriteoutputs, 1, RTSITF_GET_SIGNATURE(0, 0xDA3433B3), 0x03050800) 
+	#define EXP_iomgrwriteoutputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteoutputs", (RTS_UINTPTR)iomgrwriteoutputs, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrwriteoutputs
 	#define EXT_CmpIoMgriomgrwriteoutputs
 	#define GET_CmpIoMgriomgrwriteoutputs  ERR_OK
 	#define CAL_CmpIoMgriomgrwriteoutputs  iomgrwriteoutputs
 	#define CHK_CmpIoMgriomgrwriteoutputs  TRUE
-	#define EXP_CmpIoMgriomgrwriteoutputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteoutputs", (RTS_UINTPTR)iomgrwriteoutputs, 1, RTSITF_GET_SIGNATURE(0, 0xDA3433B3), 0x03050800) 
+	#define EXP_CmpIoMgriomgrwriteoutputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteoutputs", (RTS_UINTPTR)iomgrwriteoutputs, 1, 0, 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrwriteoutputs
 	#define EXT_iomgrwriteoutputs
 	#define GET_iomgrwriteoutputs(fl)  CAL_CMGETAPI( "iomgrwriteoutputs" ) 
 	#define CAL_iomgrwriteoutputs  iomgrwriteoutputs
 	#define CHK_iomgrwriteoutputs  TRUE
-	#define EXP_iomgrwriteoutputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteoutputs", (RTS_UINTPTR)iomgrwriteoutputs, 1, RTSITF_GET_SIGNATURE(0, 0xDA3433B3), 0x03050800) 
+	#define EXP_iomgrwriteoutputs  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteoutputs", (RTS_UINTPTR)iomgrwriteoutputs, 1, 0, 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrwriteoutputs  PFIOMGRWRITEOUTPUTS_IEC pfiomgrwriteoutputs;
 	#define EXT_iomgrwriteoutputs  extern PFIOMGRWRITEOUTPUTS_IEC pfiomgrwriteoutputs;
-	#define GET_iomgrwriteoutputs(fl)  s_pfCMGetAPI2( "iomgrwriteoutputs", (RTS_VOID_FCTPTR *)&pfiomgrwriteoutputs, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xDA3433B3), 0x03050800)
+	#define GET_iomgrwriteoutputs(fl)  s_pfCMGetAPI2( "iomgrwriteoutputs", (RTS_VOID_FCTPTR *)&pfiomgrwriteoutputs, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
 	#define CAL_iomgrwriteoutputs  pfiomgrwriteoutputs
 	#define CHK_iomgrwriteoutputs  (pfiomgrwriteoutputs != NULL)
-	#define EXP_iomgrwriteoutputs   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteoutputs", (RTS_UINTPTR)iomgrwriteoutputs, 1, RTSITF_GET_SIGNATURE(0, 0xDA3433B3), 0x03050800) 
+	#define EXP_iomgrwriteoutputs   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteoutputs", (RTS_UINTPTR)iomgrwriteoutputs, 1, 0, 0x03050F00) 
 #endif
 
 
@@ -2965,35 +3064,35 @@ typedef void (CDECL CDECL_EXT* PFIOMGRWRITEPARAMETER_IEC) (iomgrwriteparameter_s
 	#define GET_iomgrwriteparameter(fl)  CAL_CMGETAPI( "iomgrwriteparameter" ) 
 	#define CAL_iomgrwriteparameter  iomgrwriteparameter
 	#define CHK_iomgrwriteparameter  TRUE
-	#define EXP_iomgrwriteparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteparameter", (RTS_UINTPTR)iomgrwriteparameter, 1, RTSITF_GET_SIGNATURE(0, 0xAD04F7E8), 0x03050800) 
+	#define EXP_iomgrwriteparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteparameter", (RTS_UINTPTR)iomgrwriteparameter, 1, RTSITF_GET_SIGNATURE(0, 0xAD04F7E8), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
 	#define USE_iomgrwriteparameter
 	#define EXT_iomgrwriteparameter
 	#define GET_iomgrwriteparameter(fl)  CAL_CMGETAPI( "iomgrwriteparameter" ) 
 	#define CAL_iomgrwriteparameter  iomgrwriteparameter
 	#define CHK_iomgrwriteparameter  TRUE
-	#define EXP_iomgrwriteparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteparameter", (RTS_UINTPTR)iomgrwriteparameter, 1, RTSITF_GET_SIGNATURE(0, 0xAD04F7E8), 0x03050800) 
+	#define EXP_iomgrwriteparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteparameter", (RTS_UINTPTR)iomgrwriteparameter, 1, RTSITF_GET_SIGNATURE(0, 0xAD04F7E8), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_CmpIoMgriomgrwriteparameter
 	#define EXT_CmpIoMgriomgrwriteparameter
 	#define GET_CmpIoMgriomgrwriteparameter  ERR_OK
 	#define CAL_CmpIoMgriomgrwriteparameter  iomgrwriteparameter
 	#define CHK_CmpIoMgriomgrwriteparameter  TRUE
-	#define EXP_CmpIoMgriomgrwriteparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteparameter", (RTS_UINTPTR)iomgrwriteparameter, 1, RTSITF_GET_SIGNATURE(0, 0xAD04F7E8), 0x03050800) 
+	#define EXP_CmpIoMgriomgrwriteparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteparameter", (RTS_UINTPTR)iomgrwriteparameter, 1, RTSITF_GET_SIGNATURE(0, 0xAD04F7E8), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_iomgrwriteparameter
 	#define EXT_iomgrwriteparameter
 	#define GET_iomgrwriteparameter(fl)  CAL_CMGETAPI( "iomgrwriteparameter" ) 
 	#define CAL_iomgrwriteparameter  iomgrwriteparameter
 	#define CHK_iomgrwriteparameter  TRUE
-	#define EXP_iomgrwriteparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteparameter", (RTS_UINTPTR)iomgrwriteparameter, 1, RTSITF_GET_SIGNATURE(0, 0xAD04F7E8), 0x03050800) 
+	#define EXP_iomgrwriteparameter  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteparameter", (RTS_UINTPTR)iomgrwriteparameter, 1, RTSITF_GET_SIGNATURE(0, 0xAD04F7E8), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_iomgrwriteparameter  PFIOMGRWRITEPARAMETER_IEC pfiomgrwriteparameter;
 	#define EXT_iomgrwriteparameter  extern PFIOMGRWRITEPARAMETER_IEC pfiomgrwriteparameter;
-	#define GET_iomgrwriteparameter(fl)  s_pfCMGetAPI2( "iomgrwriteparameter", (RTS_VOID_FCTPTR *)&pfiomgrwriteparameter, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xAD04F7E8), 0x03050800)
+	#define GET_iomgrwriteparameter(fl)  s_pfCMGetAPI2( "iomgrwriteparameter", (RTS_VOID_FCTPTR *)&pfiomgrwriteparameter, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xAD04F7E8), 0x03050F00)
 	#define CAL_iomgrwriteparameter  pfiomgrwriteparameter
 	#define CHK_iomgrwriteparameter  (pfiomgrwriteparameter != NULL)
-	#define EXP_iomgrwriteparameter   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteparameter", (RTS_UINTPTR)iomgrwriteparameter, 1, RTSITF_GET_SIGNATURE(0, 0xAD04F7E8), 0x03050800) 
+	#define EXP_iomgrwriteparameter   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"iomgrwriteparameter", (RTS_UINTPTR)iomgrwriteparameter, 1, RTSITF_GET_SIGNATURE(0, 0xAD04F7E8), 0x03050F00) 
 #endif
 
 
@@ -3125,14 +3224,14 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent after the config application is started</description>
+ * <description>Event is sent after the IO-configuration application is started</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpIoMgr</param>
  */
 #define EVT_ConfigAppStartedDone								MAKE_EVENTID(EVTCLASS_INFO, 3)
 
 /**
  * <category>Events</category>
- * <description>Event is sent before the config application is stopped</description>
+ * <description>Event is sent before the IO-configuration application is stopped</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpIoMgr</param>
  */
 #define EVT_PrepareConfigAppStopped								MAKE_EVENTID(EVTCLASS_INFO, 4)
@@ -3160,10 +3259,22 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent after the config application is stopped</description>
+ * <description>Event is sent after the IO-configuration application is stopped</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpIoMgr</param>
  */
 #define EVT_ConfigAppStoppedDone								MAKE_EVENTID(EVTCLASS_INFO, 8)
+
+/**
+ * <category>Lock Scopes</category>
+ * <description>
+ * <p>Scopes for mutual-exclusion locks to be used with the <code>ui32LockScope</code> parameters of the functions <code>IoMgrLockEnter()</code> and <code>IoMgrLockLeave()</code>.</p>
+ * <p>Note: Use both locks <code>IOMGR_LOCK_READ_INPUTS | IOMGR_LOCK_WRITE_OUTPUTS</code> in the function <code>StartBusCycle()</code>.</p>
+ * </description>
+ * <element name="IOMGR_LOCK_WRITE_OUTPUTS">Lock critical sections in IoDrvWriteOutputs() and IoDrvStartBusCycle().</element>
+ * <element name="IOMGR_LOCK_READ_INPUTS">Lock critical sections in IoDrvReadInputs() and IoDrvStartBusCycle().</element>
+ */
+#define IOMGR_LOCK_READ_INPUTS		UINT32_C(0x0001)
+#define IOMGR_LOCK_WRITE_OUTPUTS	UINT32_C(0x0002)
 
 
 typedef struct
@@ -3352,7 +3463,7 @@ typedef void (CDECL CDECL_EXT* PFIOMGRREGISTERINSTANCE_IEC) (iomgrregisterinstan
  * <param name="pIBase" type="IN" range="[NULL,VALID_IBASE]">IBase interface of the IO-driver</param>
  * <param name="bIecDriver" type="IN" range="[0,1]">Specifies if IBase describes a C or an IEC driver</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <parampseudo name="bException" type="OUT">Exception occured, because MemPool is full</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception occurred, because MemPool is full</parampseudo>
  * <parampseudo name="DevicePool" type="IN" range="[VALID_MEMPOOL,FULL_MEMPOOL]">State of MemPool</parampseudo>
  * <errorcode name="RTS_RESULT" type="ERR_OK">Driver was successfully registered</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">No driver pool was found</errorcode>
@@ -3416,7 +3527,7 @@ typedef RTS_HANDLE (CDECL * PFIOMGRREGISTERINSTANCE2) (IBase *pIBase, int bIecDr
  * </description>
  * <param name="pIBase" type="IN" range="[NULL,VALID_IBASE,INVALID_IBASE]">IBase interface of the IO-driver</param>
  * <parampseudo name="SIL2ModeDebug" type="IN" range="[0,1]">SIL2 safety mode</parampseudo>
- * <parampseudo name="bException" type="OUT">Exception occured, not allowed in safety mode</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception occurred, not allowed in safety mode</parampseudo>
  * <errorcode name="RTS_RESULT" type="ERR_OK">Driver unregistered successfully</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter invalid or driver not found</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The I/O Manager component was not correctly initialized</errorcode>
@@ -3715,7 +3826,7 @@ typedef RTS_RESULT (CDECL * PFIOMGRGETDRIVERPROPERTIES) (IBase *pIBase, RTS_UI32
 
 /**
  * <description>
- * <p>Modify a Property Bitfield of a driver.</p>
+ * <p>Modify a Property bit field of a driver.</p>
  * <p>The bits in the mask ulProperty are set or reset, depending on the value of bValue.</p>
  * </description>
  * <param name="pIBase" type="IN" range="[NULL,VALID_IBASE]">Pointer to IBase interface of the driver</param>
@@ -3778,10 +3889,10 @@ typedef RTS_RESULT (CDECL * PFIOMGRSETDRIVERPROPERTY) (IBase *pIBase, RTS_UI32 u
  * <description>
  * <p>Register the name of the application that contains the IO-configuration.</p>
  * </description>
- * <param name="pszConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP_NAME]">Pointer to the name of the IO-config application</param>
- * <parampseudo name="pszRegisteredConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP_NAME,INVALID_CONFIGAPP_NAME]">Registered Config Application</parampseudo>
+ * <param name="pszConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP_NAME]">Pointer to the name of the IO-configuration application</param>
+ * <parampseudo name="pszRegisteredConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP_NAME,INVALID_CONFIGAPP_NAME]">Registered IO-configuration application</parampseudo>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">The config application was registered</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">The IO-configuration application was registered</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_DUPLICATE">Another application is already registered</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pszConfigApplication was NULL</errorcode>
  */
@@ -3838,12 +3949,12 @@ typedef RTS_RESULT (CDECL * PFIOMGRREGISTERCONFIGAPPLICATION) (char *pszConfigAp
  * <description>
  * <p>Unregister the name of the application that contains the IO-configuration.</p>
  * </description>
- * <param name="pszConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP]">Pointer to the name of the IO-config application</param>
+ * <param name="pszConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP]">Pointer to the name of the IO-configuration application</param>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">The config application was unregistered</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_FAILED">The application is not the registered config application</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">The IO-configuration application was unregistered</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">The application is not the registered IO-configuration application</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pszConfigApplication was NULL</errorcode>
- * <parampseudo name="pszRegisteredConfigApplication" type="IN" range="[NULL,VALID_REGISTERED_CONFIGAPP]">Registered Config Application</parampseudo>
+ * <parampseudo name="pszRegisteredConfigApplication" type="IN" range="[NULL,VALID_REGISTERED_CONFIGAPP]">Registered IO-configuration application</parampseudo>
  * <parampseudo name="bException" type="OUT">SIL2 Runtime: Exception if not in Debug Mode</parampseudo>
  * <parampseudo name="bSIL2SafeMode" type="IN" range="[0,1]">SIL2 Runtime: SIL2 OpMode</parampseudo>
  * <result>error code</result>
@@ -3902,11 +4013,11 @@ typedef RTS_RESULT (CDECL * PFIOMGRUNREGISTERCONFIGAPPLICATION) (char *pszConfig
  * <p>Return the name of the application that contains the I/O configuration.</p>
  * <p>If the parameter pszConfigApplication is NULL, only the size of the string is returned.</p>
  * </description>
- * <param name="pszConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP]">Pointer to get the name of the IO-config application</param>
- * <param name="pnMaxLen" type="INOUT" range="[NULL,VALID_CONFIGAPP_LENGTH]">IN: size of pszConfigApplication, OUT: Size of config application if psz</param>
- * <parampseudo name="pszRegisteredConfigApplication" type="IN" range="[NULL,VALID_REGISTERED_CONFIGAPP]">Registered Config Application</parampseudo>
- * <errorcode name="RTS_RESULT" type="ERR_OK">The config application was retrieved successfully</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">No config application registered</errorcode>
+ * <param name="pszConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP]">Pointer to get the name of the IO-configuration application</param>
+ * <param name="pnMaxLen" type="INOUT" range="[NULL,VALID_CONFIGAPP_LENGTH]">IN: size of pszConfigApplication, OUT: Size of IO-configuration application name</param>
+ * <parampseudo name="pszRegisteredConfigApplication" type="IN" range="[NULL,VALID_REGISTERED_CONFIGAPP]">Registered IO-configuration application</parampseudo>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">The IO-configuration application was retrieved successfully</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">No IO-configuration application registered</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pnMaxLen was NULL</errorcode>
  * <result>error code</result>
  */
@@ -3968,13 +4079,13 @@ typedef RTS_RESULT (CDECL * PFIOMGRGETCONFIGAPPLICATION) (char *pszConfigApplica
  * too, but then with the parameter pConnectorList set to NULL.</p>
  * <p>Note: When an I/O driver returns ERR_EXCEPTION, the I/O Manager puts 
  * the application into an exception state. All other errors are just, logged.</p>
- * <p>Note2: On SIL2 runtimes, any error code that is returned by the I/O
+ * <p>Note2: On SIL2 runtime any error code that is returned by the I/O
  * driver, leads to an exception.</p>
  * </description>
  * <param name="pConnectorList" type="IN" range="[NULL,VALID_CONNECTORLIST]">Pointer to the complete connector list of the IO-configuration</param>
  * <param name="nCount" type="INOUT" range="[0,VALID_CONNECTORCOUNT]">Number of connectors in the connector list</param>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Update Configuration of all drivers was successfull</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Update Configuration of all drivers was successful</errorcode>
  */
 RTS_RESULT CDECL IoMgrUpdateConfiguration(IoConfigConnector *pConnectorList, int nCount);
 typedef RTS_RESULT (CDECL * PFIOMGRUPDATECONFIGURATION) (IoConfigConnector *pConnectorList, int nCount);
@@ -4034,7 +4145,7 @@ typedef RTS_RESULT (CDECL * PFIOMGRUPDATECONFIGURATION) (IoConfigConnector *pCon
  * too, but then with the parameter pConnectorList set to NULL.</p>
  * <p>Note: When an I/O driver returns ERR_EXCEPTION, the I/O Manager puts 
  * the application into an exception state. All other errors are just, logged.</p>
- * <p>Note2: On SIL2 runtimes, any error code that is returned by the I/O
+ * <p>Note2: On SIL2 runtime any error code that is returned by the I/O
  * driver, leads to an exception.</p>
  * </description>
  * <param name="pConnectorList" type="IN" range="[NULL,VALID_CONNECTORLIST]">Pointer to the complete connector list of the IO-configuration</param>
@@ -4043,7 +4154,7 @@ typedef RTS_RESULT (CDECL * PFIOMGRUPDATECONFIGURATION) (IoConfigConnector *pCon
  * <parampseudo name="bUpdateConfigFailed" type="IN" range="[0,1]">Pointer to the application name in which context this function is called</parampseudo>
  * <parampseudo name="bException" type="OUT">Exception is thrown as UpdateConfiguration failed</parampseudo>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Update Configuration of all drivers was successfull</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Update Configuration of all drivers was successful</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Update Configuration of at least one driver failed</errorcode>
  */
 RTS_RESULT CDECL IoMgrUpdateConfiguration2(IoConfigConnector *pConnectorList, int nCount, char *pszConfigApplication);
@@ -4221,14 +4332,14 @@ typedef RTS_RESULT (CDECL * PFIOMGRUPDATEMAPPING) (IoConfigTaskMap *pTaskMapList
  * <p>Interface to inform all IO-drivers about a new IO-mapping.</p>
  * <p>Note: When an I/O driver returns ERR_EXCEPTION, the I/O Manager puts 
  * the application into an exception state. All other errors are just, logged.</p>
- * <p>Note2: On SIL2 runtimes, any error code that is returned by the I/O
+ * <p>Note2: On SIL2 runtime any error code that is returned by the I/O
  * driver, leads to an exception.</p>
  * </description>
  * <param name="pTaskMapList" type="IN" range="[NULL,VALID_TASKMAPLIST,INVALID_TASKMAPLIST]">Pointer to the complete task map list</param>
  * <param name="nCount" type="IN" range="[0,VALID_TASKMAPCOUNT]">Number of task map entries in the list</param>
  * <param name="pszConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP]">Pointer to the application name in which context this function is called</param>
- * <parampseudo name="dwTaskId" type="IN" range="[0,1,NUM_OF_STATIC_IEC_TASKS]">Exception is thrown if Taskmap is corrupted, or TaskId invalid</parampseudo>
- * <parampseudo name="bException" type="OUT">Exception is thrown if Taskmap is corrupted, or TaskId invalid</parampseudo>
+ * <parampseudo name="dwTaskId" type="IN" range="[0,1,NUM_OF_STATIC_IEC_TASKS]">Exception is thrown if task mapping is corrupted, or TaskId invalid</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception is thrown if task mapping is corrupted, or TaskId invalid</parampseudo>
  * <parampseudo name="bUpdateMappingFailed" type="IN" range="[0,1]">UpdateMapping Failed in IoDriver</parampseudo>
  * <result>error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">All registered drivers where informed about the change</errorcode>
@@ -4294,7 +4405,7 @@ typedef RTS_RESULT (CDECL * PFIOMGRUPDATEMAPPING2) (IoConfigTaskMap *pTaskMapLis
  *	This sequence is called asynchronously so the asynchronous state is transported in pudi</p>
  *
  *	NOTE:
- *	If the CmpAsyncMgr ist not available, the reconfiguration is done synchronously!
+ *	If the CmpAsyncMgr is not available, the reconfiguration is done synchronously!
  *
  * </description>
  * <param name="pConnector" type="IN" range="[NULL,VALID_CONNECTOR_1,INVALID_CONNECTOR]">Pointer to the connector to reconfigure</param>
@@ -4302,7 +4413,7 @@ typedef RTS_RESULT (CDECL * PFIOMGRUPDATEMAPPING2) (IoConfigTaskMap *pTaskMapLis
  * <parampseudo name="SIL2OpModeSafe" type="IN" range="[0,1]">Is not allowed in SIL2 Mode</parampseudo>
  * <parampseudo name="bException" type="OUT">Exception if in Safe Mode</parampseudo> 
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Asynchronous reconfigure can be startet</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Asynchronous reconfigure can be started</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">One of the parameter is NULL</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">CmpAsyncMgr is not available</errorcode>
  */
@@ -4357,6 +4468,143 @@ typedef RTS_RESULT (CDECL * PFIOMGRRECONFIGURE) (IoConfigConnector *pConnector, 
 
 /**
  * <description>
+ * <p>Acquires mutual-exclusion locks.</p>
+ * <p>This function acquires the mutual-exclusion locks for the given operations
+ * for critical sections inside the I/O driver's implementation of IoDrvReadInputs(), IoDrvWriteOutputs(), and IoDrvStartBusCycle().
+ * The locks can be released with the function <code>IoMgrLockLeave()</code>.
+ * While a lock is held, any other thread is blocked from acquiring the lock and waits until the lock is released.</p>
+ * 
+ * <p>IMPLEMENTATION NOTE: The behavior of the <code>ui32LockScope</code> parameter can't be implemented on all platforms.
+ * Platforms without synchronization functionality may not be able to implement this behavior.
+ * IoMgrEmbedded of the CODESYSControlEmbedded runtime system for example can only disable and enable all interrupts.</p>
+ * </description>
+ * <param name="pIBase" type="IN" range="[NULL,VALID_PIBASE]">Pointer to the IBase interface of the driver (not used by all implementations).</param>
+ * <param name="ui32LockScope" type="IN" range="[RTS_RANGE_OF_RTS_UI32]">The operations for which to acquire locks. See category "Lock Scopes" for detailed information.</param>
+ * <parampseudo name="bTimerOccured" type="OUT" range="[TRUE,FALSE]">Specifies, if a timer was able to run, during the lock, or not</parampseudo>
+ * <result>error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Locks were successfully acquired.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">The <code>pIBase</code> parameter is <code>NULL</code> (only implementations that use this parameter),
+ * or the <code>ui32OpsLock</code> parameter has none of the category "Locks for operations" set (only implementations that use this parameter).</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">No driver entry for pIBase found in device pool.</errorcode>
+ */
+RTS_RESULT CDECL IoMgrLockEnter(IBase *pIBase, const RTS_UI32 ui32LockScope);
+typedef RTS_RESULT (CDECL * PFIOMGRLOCKENTER) (IBase *pIBase, const RTS_UI32 ui32LockScope);
+#if defined(CMPIOMGR_NOTIMPLEMENTED) || defined(IOMGRLOCKENTER_NOTIMPLEMENTED)
+	#define USE_IoMgrLockEnter
+	#define EXT_IoMgrLockEnter
+	#define GET_IoMgrLockEnter(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_IoMgrLockEnter(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_IoMgrLockEnter  FALSE
+	#define EXP_IoMgrLockEnter  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_IoMgrLockEnter
+	#define EXT_IoMgrLockEnter
+	#define GET_IoMgrLockEnter(fl)  CAL_CMGETAPI( "IoMgrLockEnter" ) 
+	#define CAL_IoMgrLockEnter  IoMgrLockEnter
+	#define CHK_IoMgrLockEnter  TRUE
+	#define EXP_IoMgrLockEnter  CAL_CMEXPAPI( "IoMgrLockEnter" ) 
+#elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
+	#define USE_IoMgrLockEnter
+	#define EXT_IoMgrLockEnter
+	#define GET_IoMgrLockEnter(fl)  CAL_CMGETAPI( "IoMgrLockEnter" ) 
+	#define CAL_IoMgrLockEnter  IoMgrLockEnter
+	#define CHK_IoMgrLockEnter  TRUE
+	#define EXP_IoMgrLockEnter  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IoMgrLockEnter", (RTS_UINTPTR)IoMgrLockEnter, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpIoMgrIoMgrLockEnter
+	#define EXT_CmpIoMgrIoMgrLockEnter
+	#define GET_CmpIoMgrIoMgrLockEnter  ERR_OK
+	#define CAL_CmpIoMgrIoMgrLockEnter pICmpIoMgr->IIoMgrLockEnter
+	#define CHK_CmpIoMgrIoMgrLockEnter (pICmpIoMgr != NULL)
+	#define EXP_CmpIoMgrIoMgrLockEnter  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_IoMgrLockEnter
+	#define EXT_IoMgrLockEnter
+	#define GET_IoMgrLockEnter(fl)  CAL_CMGETAPI( "IoMgrLockEnter" ) 
+	#define CAL_IoMgrLockEnter pICmpIoMgr->IIoMgrLockEnter
+	#define CHK_IoMgrLockEnter (pICmpIoMgr != NULL)
+	#define EXP_IoMgrLockEnter  CAL_CMEXPAPI( "IoMgrLockEnter" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_IoMgrLockEnter  PFIOMGRLOCKENTER pfIoMgrLockEnter;
+	#define EXT_IoMgrLockEnter  extern PFIOMGRLOCKENTER pfIoMgrLockEnter;
+	#define GET_IoMgrLockEnter(fl)  s_pfCMGetAPI2( "IoMgrLockEnter", (RTS_VOID_FCTPTR *)&pfIoMgrLockEnter, (fl), 0, 0)
+	#define CAL_IoMgrLockEnter  pfIoMgrLockEnter
+	#define CHK_IoMgrLockEnter  (pfIoMgrLockEnter != NULL)
+	#define EXP_IoMgrLockEnter  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IoMgrLockEnter", (RTS_UINTPTR)IoMgrLockEnter, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>
+ * <p>Releases mutual-exclusion locks.</p>
+ * <p>This function releases the mutual-exclusion locks (that were acquired with the function <code>IoMgrLockEnter()</code>) for the given operations.</p>
+ * 
+ * <p>IMPLEMENTATION NOTE: The behavior of the <code>ui32LockScope</code> parameter can't be implemented on all platforms.
+ * Platforms without synchronization functionality may not be able to implement this behavior.
+ * IoMgrEmbedded of the CODESYSControlEmbedded runtime system for example can only disable and enable all interrupts.</p>
+ * </description>
+ * <param name="pIBase" type="IN" range="[NULL,VALID_PIBASE]">Pointer to the IBase interface of the driver (not used by all implementations).</param>
+ * <param name="ui32LockScope" type="IN" range="[RTS_RANGE_OF_RTS_UI32]">The operations for which to release the locks. See category "Lock Scopes" for detailed information.</param>
+ * <parampseudo name="bTimerOccured" type="OUT" range="[TRUE,FALSE]">Specifies, if a timer was able to run, during the lock, or not</parampseudo>
+ * <result>error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Locks were successfully released.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">The <code>pIBase</code> parameter is <code>NULL</code> (only implementations that use this parameter),
+ * or the <code>ui32OpsLock</code> parameter has none of the category "Locks for operations" set (only implementations that use this parameter).</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">No driver entry for pIBase found in device pool.</errorcode>
+ */
+RTS_RESULT CDECL IoMgrLockLeave(IBase *pIBase, const RTS_UI32 ui32LockScope);
+typedef RTS_RESULT (CDECL * PFIOMGRLOCKLEAVE) (IBase *pIBase, const RTS_UI32 ui32LockScope);
+#if defined(CMPIOMGR_NOTIMPLEMENTED) || defined(IOMGRLOCKLEAVE_NOTIMPLEMENTED)
+	#define USE_IoMgrLockLeave
+	#define EXT_IoMgrLockLeave
+	#define GET_IoMgrLockLeave(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_IoMgrLockLeave(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_IoMgrLockLeave  FALSE
+	#define EXP_IoMgrLockLeave  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_IoMgrLockLeave
+	#define EXT_IoMgrLockLeave
+	#define GET_IoMgrLockLeave(fl)  CAL_CMGETAPI( "IoMgrLockLeave" ) 
+	#define CAL_IoMgrLockLeave  IoMgrLockLeave
+	#define CHK_IoMgrLockLeave  TRUE
+	#define EXP_IoMgrLockLeave  CAL_CMEXPAPI( "IoMgrLockLeave" ) 
+#elif defined(MIXED_LINK) && !defined(CMPIOMGR_EXTERNAL)
+	#define USE_IoMgrLockLeave
+	#define EXT_IoMgrLockLeave
+	#define GET_IoMgrLockLeave(fl)  CAL_CMGETAPI( "IoMgrLockLeave" ) 
+	#define CAL_IoMgrLockLeave  IoMgrLockLeave
+	#define CHK_IoMgrLockLeave  TRUE
+	#define EXP_IoMgrLockLeave  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IoMgrLockLeave", (RTS_UINTPTR)IoMgrLockLeave, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpIoMgrIoMgrLockLeave
+	#define EXT_CmpIoMgrIoMgrLockLeave
+	#define GET_CmpIoMgrIoMgrLockLeave  ERR_OK
+	#define CAL_CmpIoMgrIoMgrLockLeave pICmpIoMgr->IIoMgrLockLeave
+	#define CHK_CmpIoMgrIoMgrLockLeave (pICmpIoMgr != NULL)
+	#define EXP_CmpIoMgrIoMgrLockLeave  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_IoMgrLockLeave
+	#define EXT_IoMgrLockLeave
+	#define GET_IoMgrLockLeave(fl)  CAL_CMGETAPI( "IoMgrLockLeave" ) 
+	#define CAL_IoMgrLockLeave pICmpIoMgr->IIoMgrLockLeave
+	#define CHK_IoMgrLockLeave (pICmpIoMgr != NULL)
+	#define EXP_IoMgrLockLeave  CAL_CMEXPAPI( "IoMgrLockLeave" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_IoMgrLockLeave  PFIOMGRLOCKLEAVE pfIoMgrLockLeave;
+	#define EXT_IoMgrLockLeave  extern PFIOMGRLOCKLEAVE pfIoMgrLockLeave;
+	#define GET_IoMgrLockLeave(fl)  s_pfCMGetAPI2( "IoMgrLockLeave", (RTS_VOID_FCTPTR *)&pfIoMgrLockLeave, (fl), 0, 0)
+	#define CAL_IoMgrLockLeave  pfIoMgrLockLeave
+	#define CHK_IoMgrLockLeave  (pfIoMgrLockLeave != NULL)
+	#define EXP_IoMgrLockLeave  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"IoMgrLockLeave", (RTS_UINTPTR)IoMgrLockLeave, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>
  * <p>Interface to perform an update of all inputs of one task.</p>
  * <p>This function is called once out of each IEC-task, in which inputs are referenced.
  * This call is passed to every I/O driver that is used by this task.</p>
@@ -4364,8 +4612,8 @@ typedef RTS_RESULT (CDECL * PFIOMGRRECONFIGURE) (IoConfigConnector *pConnector, 
  * </description>
  * <param name="pTaskMap" type="IN" range="[NULL,VALID_TASKMAP,INVALID_TASKMAP]">Pointer to the task map, which references all input channels of the task</param>
  * <parampseudo name="hIoDrv" type="IN" range="[NULL,VALID_TASKMAP_IBASE]">hIoDrv May be NULL</parampseudo>
- * <parampseudo name="dwIoMgrSpecific" type="IN" range="[0,1]">dwIoMgrSpecific contains a valid cound or not</parampseudo>
- * <parampseudo name="IsCalled" type="OUT">Is Testdriver called or not</parampseudo>
+ * <parampseudo name="dwIoMgrSpecific" type="IN" range="[0,1]">dwIoMgrSpecific contains a valid count or not</parampseudo>
+ * <parampseudo name="IsCalled" type="OUT">Is test driver called or not</parampseudo>
  * <parampseudo name="bException" type="OUT">Exception thrown</parampseudo>
  * <result>error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">All registered drivers where called</errorcode>
@@ -4430,9 +4678,9 @@ typedef RTS_RESULT (CDECL * PFIOMGRREADINPUTS) (IoConfigTaskMap *pTaskMap);
  * </description>
  * <param name="pTaskMap" type="IN" range="[NULL,VALID_TASKMAP,INVALID_TASKMAP]">Pointer to the task map, which references all output channels of the task</param>
  * <parampseudo name="hIoDrv" type="IN" range="[NULL,VALID_TASKMAP_IBASE]">hIoDrv May be NULL</parampseudo>
- * <parampseudo name="dwIoMgrSpecific" type="IN" range="[0,1]">dwIoMgrSpecific contains a valid cound or not</parampseudo>
+ * <parampseudo name="dwIoMgrSpecific" type="IN" range="[0,1]">dwIoMgrSpecific contains a valid count or not</parampseudo>
  * <parampseudo name="bFlowControlError" type="IN" range="[0,1]">Error in FlowControl</parampseudo>
- * <parampseudo name="IsCalled" type="OUT">Is Testdriver called or not</parampseudo>
+ * <parampseudo name="IsCalled" type="OUT">Is test driver called or not</parampseudo>
  * <parampseudo name="bException" type="OUT">Exception thrown</parampseudo> 
  * <result>error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">All registered drivers where called</errorcode>
@@ -4552,9 +4800,9 @@ typedef RTS_RESULT (CDECL * PFIOMGRSTARTBUSCYCLE) (IoConfigConnector *pConnector
  * <description>
  * <p>This function is called for every connector that has the setting "needs bus cycle"
  * in the device description. It is only called once and only from the context of the
- * so called "buscycle task". This task can be specified globally (= default for all
+ * so called "bus cycle task". This task can be specified globally (= default for all
  * drivers), or specifically for every driver.</p>
- * <p>The parameter dwType defines if the function was calle at the beginning
+ * <p>The parameter dwType defines if the function was called at the beginning
  * or at the end of the IEC task cycle. This value, can actively be requested
  * by the driver, by calling IoMgrGetBusCycleType().</p>
  * </description>
@@ -4988,7 +5236,7 @@ typedef RTS_RESULT (CDECL * PFIOMGRWATCHDOGTRIGGER) (IoConfigConnector *pConnect
  * </description>
  * <param name="pConnector" type="IN" range="[NULL,VALID_CONNECTOR,INVALID_CONNECTOR]">Pointer to connector</param>
  * <param name="dwParameterId" type="IN" range="[VALID_PARAMETERID,INVALID_PARAMETERID]">ID of the parameter. Is defined in the device description.</param>
- * <parampseudo name="bException" type="OUT">Exception occured for Invalid Connector</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception occurred for Invalid Connector</parampseudo>
  * <result>Parameter or NULL if failed</result>
  */
 IoConfigParameter* CDECL IoMgrConfigGetParameter(IoConfigConnector *pConnector, RTS_UI32 dwParameterId);
@@ -5046,7 +5294,7 @@ typedef IoConfigParameter* (CDECL * PFIOMGRCONFIGGETPARAMETER) (IoConfigConnecto
  * </description>
  * <param name="pParameter" type="IN" range="[NULL,VALID_PARAMETER_BYTE,VALID_PARAMETER_WORD,VALID_PARAMETER_DWORD,INVALID_PARAMETER_DWORD_LEN,INVALID_PARAMETER_DWORD]">Pointer to the parameter</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <parampseudo name="bException" type="OUT">Exception occured for Invalid Parameter</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception occurred for Invalid Parameter</parampseudo>
  * <result>Value of the parameter or 0 if failed. Please check always pResult additionally!</result>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Value was read successfully</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pParameter was NULL or Parameter has not the value flag</errorcode>
@@ -5106,7 +5354,7 @@ typedef RTS_UI32 (CDECL * PFIOMGRCONFIGGETPARAMETERVALUEDWORD) (IoConfigParamete
  * </description>
  * <param name="pParameter" type="IN" range="[NULL,VALID_PARAMETER_BYTE,VALID_PARAMETER_WORD,VALID_PARAMETER_DWORD,INVALID_PARAMETER_WORD_LEN,INVALID_PARAMETER_WORD]">Pointer to the parameter</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <parampseudo name="bException" type="OUT">Exception occured for Invalid Parameter</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception occurred for Invalid Parameter</parampseudo>
  * <result>Value of the parameter or 0 if failed. Please check always pResult additionally!</result>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Value was read successfully</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pParameter was NULL or Parameter has not the value flag</errorcode>
@@ -5166,7 +5414,7 @@ typedef unsigned short (CDECL * PFIOMGRCONFIGGETPARAMETERVALUEWORD) (IoConfigPar
  * </description>
  * <param name="pParameter" type="IN" range="[NULL,VALID_PARAMETER_BYTE,VALID_PARAMETER_WORD,VALID_PARAMETER_DWORD,INVALID_PARAMETER_BYTE_LEN,INVALID_PARAMETER_BYTE]">Pointer to the parameter</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <parampseudo name="bException" type="OUT">Exception occured for Invalid Parameter</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception occurred for Invalid Parameter</parampseudo>
  * <result>Value of the parameter or 0 if failed. Please check always pResult additionally!</result>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Value was read successfully</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pParameter was NULL or Parameter has not the value flag</errorcode>
@@ -5226,7 +5474,7 @@ typedef unsigned char (CDECL * PFIOMGRCONFIGGETPARAMETERVALUEBYTE) (IoConfigPara
  * </description>
  * <param name="pParameter" type="IN" range="[NULL,VALID_PARAMETER_POINTER,INVALID_PARAMETER]">Pointer to the parameter</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <parampseudo name="bException" type="OUT">Exception occured for Invalid Parameter</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception occurred for Invalid Parameter</parampseudo>
  * <result>Pointer to the value or NULL if failed. Please check always pResult additionally!</result>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Value was read successfully</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pParameter was NULL or Parameter has not the value flag</errorcode>
@@ -5288,7 +5536,7 @@ typedef void * (CDECL * PFIOMGRCONFIGGETPARAMETERVALUEPOINTER) (IoConfigParamete
  * <param name="pConnectorList" type="IN" range="[NULL,VALID_CONNECTORLIST,INVALID_CONNECTORLIST]">Pointer to connector list</param>
  * <param name="pnCount" type="INOUT" range="[NULL,VALID_CONNECTORCOUNT_P]">Pointer to number of elements in list</param>
  * <param name="wType" type="IN" range="[0,VALID_MODULE_TYPE]">Type of the connector</param>
- * <parampseudo name="bException" type="OUT">Exception if Connectorlist is invalid</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception if connector list is invalid</parampseudo>
  * <result>Pointer to the connector or NULL if not found</result>
  */
 IoConfigConnector* CDECL IoMgrConfigGetFirstConnector(IoConfigConnector *pConnectorList, int *pnCount, unsigned short wType);
@@ -5348,7 +5596,7 @@ typedef IoConfigConnector* (CDECL * PFIOMGRCONFIGGETFIRSTCONNECTOR) (IoConfigCon
  * <param name="pConnectorList" type="IN" range="[NULL,VALID_CONNECTORLIST,INVALID_CONNECTORLIST]">Pointer to connector list</param>
  * <param name="pnCount" type="INOUT" range="[NULL,VALID_CONNECTORCOUNT_P]">Pointer to number of elements in list</param>
  * <param name="wType" type="IN" range="[0,VALID_MODULE_TYPE]">Type of the connector</param>
- * <parampseudo name="bException" type="OUT">Exception if Connectorlist is invalid</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception if connector list is invalid</parampseudo>
  * <result>Pointer to the connector or NULL if not found</result>
  */
 IoConfigConnector* CDECL IoMgrConfigGetNextConnector(IoConfigConnector *pConnectorList, int *pnCount, unsigned short wType);
@@ -5408,7 +5656,7 @@ typedef IoConfigConnector* (CDECL * PFIOMGRCONFIGGETNEXTCONNECTOR) (IoConfigConn
  * <param name="pConnectorList" type="IN" range="[NULL,VALID_CONNECTORLIST,INVALID_CONNECTORLIST]">Pointer to connector list</param>
  * <param name="pnCount" type="INOUT" range="[NULL,VALID_CONNECTORCOUNT_P]">Pointer to number of elements in list</param>
  * <param name="pFather" type="IN" range="[NULL,VALID_PARENTCONNECTOR,INVALID_PARENTCONNECTOR]">Pointer to the father connector</param>
- * <parampseudo name="bException" type="OUT">Exception at Connectorlist check</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception at connector list check</parampseudo>
  * <result>Pointer to the child connector or NULL if not found</result>
  */
 IoConfigConnector* CDECL IoMgrConfigGetFirstChild(IoConfigConnector *pConnectorList, int *pnCount, IoConfigConnector *pFather);
@@ -5468,7 +5716,7 @@ typedef IoConfigConnector* (CDECL * PFIOMGRCONFIGGETFIRSTCHILD) (IoConfigConnect
  * <param name="pConnectorList" type="IN" range="[NULL,VALID_CONNECTORLIST,INVALID_CONNECTORLIST]">Pointer to connector list</param>
  * <param name="pnCount" type="INOUT" range="[NULL,VALID_CONNECTORCOUNT_P]">Pointer to number of elements in list</param>
  * <param name="pFather" type="IN" range="[NULL,VALID_PARENTCONNECTOR,INVALID_PARENTCONNECTOR]">Pointer to the father connector</param>
- * <parampseudo name="bException" type="OUT">Exception at Connectorlist check</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception at connector list check</parampseudo>
  * <result>Pointer to the child connector or NULL if not found</result>
  */
 IoConfigConnector* CDECL IoMgrConfigGetNextChild(IoConfigConnector *pConnectorList, int *pnCount, IoConfigConnector *pFather);
@@ -5527,7 +5775,7 @@ typedef IoConfigConnector* (CDECL * PFIOMGRCONFIGGETNEXTCHILD) (IoConfigConnecto
  * </description>
  * <parampseudo name="RegisteredConnectorList" type="IN"  range="[NULL,VALID_CONNECTORLIST,INVALID_CONNECTORLIST]">Registered Pointer to connector list</parampseudo>
  * <param name="ppConnectorList" type="OUT">Pointer to connector list</param>
- * <parampseudo name="bException" type="OUT">Exception if Connectorlist is invalid</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception if connector list is invalid</parampseudo>
  * <param name="pnCount" type="INOUT"  range="[NULL,VALID_CONNECTORCOUNT_P]">Number of elements in the list</param>
  * <result>error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">There was a list registered and at least the size could be returned</errorcode>
@@ -5588,14 +5836,14 @@ typedef RTS_RESULT (CDECL * PFIOMGRCONFIGGETCONNECTORLIST) (IoConfigConnector **
  * <description>
  * <p>Get the connector specified by ModuleType and ModuleInstance number</p>
  * <p>pnCount is decreased and contains the rest of elements, still remaining in list! </p>
- * <p>Might be called with NULL as Connectorlist, then the Connectorlist and pnCount from the last call to UpdateConfiguration is used </p>
+ * <p>Might be called with NULL as connector list, then the connector list and pnCount from the last call to UpdateConfiguration is used </p>
  * <p>Returns NULL if pnCount is NULL, if ulInstance is greater than nCount, no fitting Connector with given Instance and Type is found or (if pConnectorList is Null, the last stored ConnectorList is also NULL) </p>
  * </description>
  * <param name="pConnectorList" type="IN" range="[NULL,VALID_CONNECTORLIST,INVALID_CONNECTORLIST]">Pointer to connector list</param>
- * <param name="pnCount" type="INOUT" range="[NULL,VALID_CONNECTORCOUNT_P_P,INVALID_CONNECTORCOUNT_P_P]">Number of elements in the list</param>
+ * <param name="pnCount" type="INOUT" range="[NULL,VALID_CONNECTORCOUNT_P]">Number of elements in the list</param>
  * <param name="ulModuleType" type="IN" range="[0,VALID_MODULE_TYPE]">Module type</param>
  * <param name="ulInstance" type="IN" range="[0,VALID_INSTANCE_COUNT,INVALID_INSTANCE_COUNT]">Instance number</param>
- * <parampseudo name="Exception" type="OUT">Exception may be thrown if problem occurs while checking Connectorlist</parampseudo>
+ * <parampseudo name="Exception" type="OUT">Exception may be thrown if problem occurs while checking connector list</parampseudo>
  * <result>Pointer to found connector or NULL</result>
  */
 IoConfigConnector* CDECL IoMgrConfigGetConnector(IoConfigConnector *pConnectorList, int *pnCount, RTS_UI32 ulModuleType, RTS_UI32 ulInstance);
@@ -5711,7 +5959,7 @@ typedef RTS_RESULT (CDECL * PFIOMGRCONFIGSETDIAGNOSIS) (IoConfigConnector *pConn
  * <description>
  * <p>Interface to reset the diagnostic flags in the connector.</p>
  * <p>Only the bits that are specified with 1 in the passed ulFlags parameter
- * will be resetted.</p>
+ * will be reset.</p>
  * </description>
  * <param name="pConnector" type="IN" range="[NULL,VALID_CONNECTOR,INVALID_CONNECTOR]">Pointer to connector</param>
  * <param name="ulFlags" type="IN" range="[0x0001,0x0010,0x0020,0x0040,0x0080,0x0100,0x0200,0x0400,0x0800]">Flags to write</param>
@@ -5779,7 +6027,7 @@ typedef RTS_RESULT (CDECL * PFIOMGRCONFIGRESETDIAGNOSIS) (IoConfigConnector *pCo
  * <param name="ulParameterId" type="IN" range="[VALID_PARAMETERID_1,INVALID_PARAMETERID_1]">ID of the parameter. Is defined in the device description.</param>
  * <param name="pData" type="IN" range="[NULL,VALID_PDATA]">Pointer to read in the parameter value</param>
  * <param name="ulBitSize" type="IN" range="[0,VALID_BITSIZE]">Bits to read</param>
- * <param name="ulBitOffset" type="IN" range="[0,VALID_BITOFFSET]">Bitoffset of the parameter value</param>
+ * <param name="ulBitOffset" type="IN" range="[0,VALID_BITOFFSET]">Bit offset of the parameter value</param>
  * <parampseudo name="bSafetyMode" type="IN" range="[0,1]">According to SIL2 operation mode this function may not be called</parampseudo>
  * <result>error code</result>
  */
@@ -5842,7 +6090,7 @@ typedef RTS_RESULT (CDECL * PFIOMGRREADPARAMETER) (RTS_UI32 ulModuleType, RTS_UI
  * <param name="ulParameterId" type="IN" range="[VALID_PARAMETERID_1,INVALID_PARAMETERID_1]">ID of the parameter. Is defined in the device description.</param>
  * <param name="pData" type="IN" range="[NULL,VALID_PDATA]">Pointer to the parameter write value</param>
  * <param name="ulBitSize" type="IN" range="[0,VALID_BITSIZE]">Bits to write</param>
- * <param name="ulBitOffset" type="IN" range="[0,VALID_BITOFFSET]">Bitoffset of the parameter value</param>
+ * <param name="ulBitOffset" type="IN" range="[0,VALID_BITOFFSET]">Bit offset of the parameter value</param>
  * <parampseudo name="bSafetyMode" type="IN" range="[0,1]">According to SIL2 operation mode this function may not be called</parampseudo>
  * <parampseudo name="bException" type="OUT">SIL2 Runtime: Exception is thrown if not in DebugMode</parampseudo>
  * <result>error code</result>
@@ -6266,6 +6514,8 @@ typedef struct
  	PFIOMGRUPDATEMAPPING IIoMgrUpdateMapping;
  	PFIOMGRUPDATEMAPPING2 IIoMgrUpdateMapping2;
  	PFIOMGRRECONFIGURE IIoMgrReconfigure;
+ 	PFIOMGRLOCKENTER IIoMgrLockEnter;
+ 	PFIOMGRLOCKLEAVE IIoMgrLockLeave;
  	PFIOMGRREADINPUTS IIoMgrReadInputs;
  	PFIOMGRWRITEOUTPUTS IIoMgrWriteOutputs;
  	PFIOMGRSTARTBUSCYCLE IIoMgrStartBusCycle;
@@ -6321,6 +6571,8 @@ class ICmpIoMgr : public IBase
 		virtual RTS_RESULT CDECL IIoMgrUpdateMapping(IoConfigTaskMap *pTaskMapList, int nCount) =0;
 		virtual RTS_RESULT CDECL IIoMgrUpdateMapping2(IoConfigTaskMap *pTaskMapList, int nCount, char *pszConfigApplication) =0;
 		virtual RTS_RESULT CDECL IIoMgrReconfigure(IoConfigConnector *pConnector, RTS_UI32 *pui32State) =0;
+		virtual RTS_RESULT CDECL IIoMgrLockEnter(IBase *pIBase, const RTS_UI32 ui32LockScope) =0;
+		virtual RTS_RESULT CDECL IIoMgrLockLeave(IBase *pIBase, const RTS_UI32 ui32LockScope) =0;
 		virtual RTS_RESULT CDECL IIoMgrReadInputs(IoConfigTaskMap *pTaskMap) =0;
 		virtual RTS_RESULT CDECL IIoMgrWriteOutputs(IoConfigTaskMap *pTaskMap) =0;
 		virtual RTS_RESULT CDECL IIoMgrStartBusCycle(IoConfigConnector *pConnector) =0;

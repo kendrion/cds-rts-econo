@@ -1,0 +1,137 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of struct.rst template
+
+.. _struct_a_s_y_n_c_j_o_b___i_n_f_o3:
+
+===============================
+ASYNCJOB_INFO3 Struct Reference
+===============================
+
+| #include ":ref:`CmpAsyncMgrItf.h <_cmp_async_mgr_itf_8h>`"
+
+Data Fields
+-----------
+
+- :ref:`PFASYNCJOBFUNCTION <group___cmp_async_mgr_itf___settings_1gabcc43f52a641ac404460670ed66ebb3a>` :ref:`pfJob <group___cmp_async_mgr_itf_1gaa2e950a6dc34689ff12885b36c6da74b>`
+- void * :ref:`pParam <group___cmp_async_mgr_itf_1gac052e6ec3bb6a88de18a66cee9eb3ed5>`
+- void * :ref:`pInstance <group___cmp_async_mgr_itf_1ga0180b562ee50f034d88bbbb3f386f812>`
+- RTS_UI32 * :ref:`pulState <group___cmp_async_mgr_itf_1ga2ffc1f688a79be6307b645d5ba2ca58b>`
+- int :ref:`bIecFunc <group___cmp_async_mgr_itf_1ga7bdc59d85fe5cb331e2291f168be31fe>`
+- RTS_UI32 :ref:`ulType <group___cmp_async_mgr_itf_1gaf854ba937bf3ede18c1add5f9ae9dbd9>`
+- RTS_UI32 :ref:`ulTimeout <group___cmp_async_mgr_itf_1ga92898a0745926b641105ca2081d0106a>`
+- :ref:`ASYNCJOB_PARAM <union_a_s_y_n_c_j_o_b___p_a_r_a_m>` * :ref:`pJobParam <group___cmp_async_mgr_itf_1ga0ae31aff3f2527f3a15bb95ea1423776>`
+- RTS_UI32 :ref:`ulJobReturnVal <group___cmp_async_mgr_itf_1ga0445bd25e6d7458634212fbab0a05882>`
+- RTS_UI32 :ref:`ulStartTime <group___cmp_async_mgr_itf_1gafda612a8f9c9aa3a0512c8efa441bd2f>`
+- :ref:`PFTASKEXCEPTIONHANDLER <group___sys_task_itf___settings_1ga292ffd009d5a17d2499c8a6e2b14669b>` :ref:`pfExceptionHandler <group___cmp_async_mgr_itf_1ga6e0c51ed83d524bbaaa7be51987f5669>`
+- RTS_HANDLE * :ref:`phJob <group___cmp_async_mgr_itf_1ga86705c4186decf0b390ccdd5166c63c3>`
+- :ref:`PFASYNCMGREXCEPTIONHANDLER <group___cmp_async_mgr_itf_1ga09c0352a7a7751f3a73ec88653f566e0>` :ref:`pfAsyncMgrExceptionHandler <group___cmp_async_mgr_itf_1ga7cc1ebdaa3c6e57b641e176326fc5ced>`
+
+Detailed Description
+--------------------
+
+
+
+Field Documentation
+-------------------
+
+.. _group___cmp_async_mgr_itf_1gaa2e950a6dc34689ff12885b36c6da74b:
+
+PFASYNCJOBFUNCTION ASYNCJOB_INFO3::pfJob
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Pointer to the job function, which is executed asynchronously
+
+.. _group___cmp_async_mgr_itf_1gac052e6ec3bb6a88de18a66cee9eb3ed5:
+
+void* ASYNCJOB_INFO3::pParam
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Pointer to the parameters for the function
+
+.. _group___cmp_async_mgr_itf_1ga0180b562ee50f034d88bbbb3f386f812:
+
+void* ASYNCJOB_INFO3::pInstance
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Optional pointer to the instance (IEC function block or class). Can be NULL.
+
+.. _group___cmp_async_mgr_itf_1ga2ffc1f688a79be6307b645d5ba2ca58b:
+
+RTS_UI32* ASYNCJOB_INFO3::pulState
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Pointer to actual state of the asynchronous job. NOTE: Can be NULL for fire and forget jobs, which are released automatically at the end of job execution
+
+.. _group___cmp_async_mgr_itf_1ga7bdc59d85fe5cb331e2291f168be31fe:
+
+int ASYNCJOB_INFO3::bIecFunc
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gaf854ba937bf3ede18c1add5f9ae9dbd9:
+
+RTS_UI32 ASYNCJOB_INFO3::ulType
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Type of asynchronous job (task, event or hook driven)
+
+.. _group___cmp_async_mgr_itf_1ga92898a0745926b641105ca2081d0106a:
+
+RTS_UI32 ASYNCJOB_INFO3::ulTimeout
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Timeout in [milliseconds], until the job must be started! If the job is not started within this timeout, the state of the job is marked with ASYNCSTATE_TIMEOUT and the job is removed from the queue.
+
+.. _group___cmp_async_mgr_itf_1ga0ae31aff3f2527f3a15bb95ea1423776:
+
+ASYNCJOB_PARAM* ASYNCJOB_INFO3::pJobParam
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Specific Parameters for the job types (task, event or hook driven)
+
+.. _group___cmp_async_mgr_itf_1ga0445bd25e6d7458634212fbab0a05882:
+
+RTS_UI32 ASYNCJOB_INFO3::ulJobReturnVal
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Return code of the job if finished
+
+.. _group___cmp_async_mgr_itf_1gafda612a8f9c9aa3a0512c8efa441bd2f:
+
+RTS_UI32 ASYNCJOB_INFO3::ulStartTime
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Start time of the job (in ms by SysTimeGetMs)
+
+.. _group___cmp_async_mgr_itf_1ga6e0c51ed83d524bbaaa7be51987f5669:
+
+PFTASKEXCEPTIONHANDLER ASYNCJOB_INFO3::pfExceptionHandler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Optional exception handle which is called, if an exception occurred during asynchronous job execution.
+
+.. _group___cmp_async_mgr_itf_1ga86705c4186decf0b390ccdd5166c63c3:
+
+RTS_HANDLE* ASYNCJOB_INFO3::phJob
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Pointer to the handle of the job. Is returned in AsyncAdd2.
+
+.. _group___cmp_async_mgr_itf_1ga7cc1ebdaa3c6e57b641e176326fc5ced:
+
+PFASYNCMGREXCEPTIONHANDLER ASYNCJOB_INFO3::pfAsyncMgrExceptionHandler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Optional exception handler which is called, if an exception occurred during asynchronous job execution. This exception handler is called with the parameters of the job which caused the exception.
+
+The documentation for this struct was generated from the following file:
+------------------------------------------------------------------------
+
+CmpAsyncMgrItf.h
+
+.. last line of struct.rst template
+.. last line of composition.rst template
+
+

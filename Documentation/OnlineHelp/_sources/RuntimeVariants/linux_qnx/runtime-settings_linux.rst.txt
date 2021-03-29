@@ -1,0 +1,38 @@
+.. _runtime-settings_linux:
+
+Customizing CODESYS Control runtime with settings
+=================================================
+
+A very wide range of settings is available to customize many aspects of your CODESYS Control runtime's behavior.  Each setting is implemented as a key-value pair within a section named after the component that should be configured. Every component documents its available settings in its interface definition file (e.g. CmpWebServerItf.m4). You can browse through these interface definitions in the API Reference documentation.
+
+As a first example, the startup behavior of ``CmpWebServer``, which is used for the Web Visualization, can be modified through the settings mechanism. Simply add a new section (or extend an existing section) in your CODESYSControl.cfg:
+
+    *Always make sure that only one section for each component exists in a configuration file*
+
+    .. code-block:: none
+
+        [CmpWebServer]
+        StartupType=1   # Start WebServer at runtime startup
+
+    Reference: CmpWebServer :ref:`group___cmp_web_server_itf___settings`
+
+To the end user, all settings in CODESYSControl.cfg should be read-only. If you wish to allow for modifications of some settings, put them in a separate configuration file and paste this snippet in your CODESYSControl.cfg:
+
+    .. code-block:: none
+
+        [CmpSettings]
+        FileReference.0=/etc/CODESYSControl_User.cfg
+        FileReference.0.IsWriteProtected=0
+
+    Reference: CmpSettings :ref:`group___cmp_settings_itf___settings`
+
+In some cases, for example for on-site updates, it may be useful to download CODESYS applications to your target through a USB stick. In that case, specify the name of the application (in that case "Application") in your configuration file, to have it automatically started as a boot application:
+
+    .. code-block:: none
+
+        [CmpApp]
+        Application.1=Application
+
+    Reference: CmpApp :ref:`group___cmp_app_itf___settings`
+
+These are only few examples of how you can customize the runtime's behavior through settings. Most components allows for modifications through their settings. Refer to the API Reference documentation for details.

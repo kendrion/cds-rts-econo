@@ -1,0 +1,642 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_crypto_itf_8h:
+
+=============================
+CmpCryptoItf.h File Reference
+=============================
+
+| #include ":ref:`CmpStd.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`tagRtsByteString <structtag_rts_byte_string>`
+
+- struct :ref:`RtsCryptoKeyStorage <union_rts_crypto_key_storage>`
+
+- struct :ref:`tagRtsCryptoKey <structtag_rts_crypto_key>`
+
+- struct :ref:`tagRtsScryptParameter <structtag_rts_scrypt_parameter>`
+
+- struct :ref:`RtsKdfParameter <union_rts_kdf_parameter>`
+
+- struct :ref:`RtsSymmetricCipherInfo <struct_rts_symmetric_cipher_info>`
+
+- struct :ref:`RtsDigestInfo <struct_rts_digest_info>`
+
+- struct :ref:`RtsCryptoInfo <struct_rts_crypto_info>`
+
+- struct :ref:`ICmpCrypto_C <struct_i_cmp_crypto___c>`
+
+Macros
+------
+
+- #define :ref:`RTSCRYPTOID_AES_128_CBC <group___cmp_crypto_itf_1ga4306da0e0090da745de1883a8d2bbc38>` RTS_IEC_UDINT_C(0x1001)	/* AES 128 bit key in CBC mode */
+
+- #define :ref:`RTSCRYPTOID_AES_128_CFB <group___cmp_crypto_itf_1ga1f6aadd46c1ff34a62f7438fdf7b7ea1>` RTS_IEC_UDINT_C(0x1002)	/* AES 128 bit key in CFB mode */
+
+- #define :ref:`RTSCRYPTOID_AES_256_CBC <group___cmp_crypto_itf_1gaf54a93a155fe2d77ecbde373c7a6765d>` RTS_IEC_UDINT_C(0x1003)	/* AES 256 bit key in CBC mode */
+
+- #define :ref:`RTSCRYPTOID_DES_CBC <group___cmp_crypto_itf_1ga8fffcf421fdf1c371ec1818e8025fa3a>` RTS_IEC_UDINT_C(0x1004)	/* DES 64 bit key in CBC mode */
+
+- #define :ref:`RTSCRYPTOID_AES_256_CTR <group___cmp_crypto_itf_1ga8906b0502e9f9f9ba17873b7b5ddcd56>` RTS_IEC_UDINT_C(0x1005)	/* AES 256 bit key in CTR mode */
+
+- #define :ref:`RTSCRYPTOID_RSA <group___cmp_crypto_itf_1gafffe0cff7a4cc24f883e002907222b61>` RTS_IEC_UDINT_C(0x2001)	/* Plain RSA asymmetric encryption. Not recommended. */
+
+- #define :ref:`RTSCRYPTOID_RSA_OAEP_PADDING <group___cmp_crypto_itf_1ga394ed1b060ced887164d811ff1017aa2>` RTS_IEC_UDINT_C(0x2002)	/* RSA asymmetric encryption with OAEP (SHA1) padding. */
+
+- #define :ref:`RTSCRYPTOID_RSA_PKCS1_V15_PADDING <group___cmp_crypto_itf_1gadc9cfae374494cd06ba2187bf1c0a98a>` RTS_IEC_UDINT_C(0x2003)	/* RSA asymmetric encryption with #PKCS1 v1.5 padding. Not recommended. */
+
+- #define :ref:`RTSCRYPTOID_RSA_OAEP_SHA256_PADDING <group___cmp_crypto_itf_1gae0a5126dbaaa566d0dfba824bc0199c0>` RTS_IEC_UDINT_C(0x2004)	/* RSA asymmetric encryption with OAEP (SHA-256) padding. */
+
+- #define :ref:`RTSCRYPTOID_HASH_MD5 <group___cmp_crypto_itf_1ga8f37e7aacffc86aa1a12d2acddee1885>` RTS_IEC_UDINT_C(0x3001)	/* MD5 checksum. Not cryptographically safe. */
+
+- #define :ref:`RTSCRYPTOID_HASH_SHA1 <group___cmp_crypto_itf_1ga445ace011d861ed03693a271ca755c4f>` RTS_IEC_UDINT_C(0x3002)	/* SHA1 checksum. Not cryptographically safe. */
+
+- #define :ref:`RTSCRYPTOID_HASH_SHA224 <group___cmp_crypto_itf_1ga77cda608a4fc6fc499c6de2fb8c1bce9>` RTS_IEC_UDINT_C(0x3003)	/* SHA-224 checksum. */
+
+- #define :ref:`RTSCRYPTOID_HASH_SHA256 <group___cmp_crypto_itf_1ga44a7b195ac4a89a2cf540c10d4c9d4b6>` RTS_IEC_UDINT_C(0x3004)	/* SHA-256 checksum. */
+
+- #define :ref:`RTSCRYPTOID_HASH_SHA384 <group___cmp_crypto_itf_1ga4ed0205c01437979b35757c38595e272>` RTS_IEC_UDINT_C(0x3005)	/* SHA-384 checksum. */
+
+- #define :ref:`RTSCRYPTOID_HASH_SHA512 <group___cmp_crypto_itf_1ga7d613f0f24d09d2602d76953df34d8a9>` RTS_IEC_UDINT_C(0x3006)	/* SHA-512 checksum. */
+
+- #define :ref:`RTSCRYPTOID_HMAC_MD5 <group___cmp_crypto_itf_1ga513e22e97af8b17a27aa289435b48aef>` RTS_IEC_UDINT_C(0x4001)	/* HMAC based on MD5. Not cryptographically safe. */
+
+- #define :ref:`RTSCRYPTOID_HMAC_SHA1 <group___cmp_crypto_itf_1gac8066488efef4706865e9832311a998a>` RTS_IEC_UDINT_C(0x4002)	/* HMAC based on SHA1. Not cryptographically safe. */
+
+- #define :ref:`RTSCRYPTOID_HMAC_SHA224 <group___cmp_crypto_itf_1gaea48bdd131669179efe06a28fb9264f5>` RTS_IEC_UDINT_C(0x4003)	/* HMAC based on SHA-224. */
+
+- #define :ref:`RTSCRYPTOID_HMAC_SHA256 <group___cmp_crypto_itf_1gada73673421a61ffab3a289f743d5af11>` RTS_IEC_UDINT_C(0x4004)	/* HMAC based on SHA-256. */
+
+- #define :ref:`RTSCRYPTOID_HMAC_SHA384 <group___cmp_crypto_itf_1ga5cea65bb643859fe8518a2e16d2d7184>` RTS_IEC_UDINT_C(0x4005)	/* HMAC based on SHA-384. */
+
+- #define :ref:`RTSCRYPTOID_HMAC_SHA512 <group___cmp_crypto_itf_1ga391c952586743f76434a1d7b353c5406>` RTS_IEC_UDINT_C(0x4006)	/* HMAC based on SHA-512. */
+
+- #define :ref:`RTSCRYPTOID_RSA_PKCS1_V15_SHA1 <group___cmp_crypto_itf_1ga6f38750cbff797a51bfeba2ad977bf20>` RTS_IEC_UDINT_C(0x5001)	/* Asymmetric signature based on RSA, SHA1 and #PKCS1 v1.5 padding. Not recommended. */
+
+- #define :ref:`RTSCRYPTOID_RSA_PKCS1_V15_SHA256 <group___cmp_crypto_itf_1ga3fdafe4ffb8148efda138167b417f0dd>` RTS_IEC_UDINT_C(0x5002)	/* Asymmetric signature based on RSA, SHA-256 and #PKCS1 v1.5 padding. Not recommended. */
+
+- #define :ref:`RTSCRYPTOID_RSA_OAEP_SHA1 <group___cmp_crypto_itf_1gaac1499cc28b42159b8232035857adf1c>` RTS_IEC_UDINT_C(0x5003)	/* Not supported. */
+
+- #define :ref:`RTSCRYPTOID_RSA_OAEP_SHA256 <group___cmp_crypto_itf_1ga80ee561ad84b4f27c70f894fcb64f358>` RTS_IEC_UDINT_C(0x5004)	/* Not supported. */
+
+- #define :ref:`RTSCRYPTOID_RSA_PSS_SHA256 <group___cmp_crypto_itf_1ga6c4537f16010c33adc0daff913610ffb>` RTS_IEC_UDINT_C(0x5005)	/* Asymmetric signature based on RSA, SHA-256 and PSS padding. Not recommended. */
+
+- #define :ref:`RTSCRYPTOID_KDF_PSHA1 <group___cmp_crypto_itf_1gaf29fb5052907b5d531d01bc46d40a578>` RTS_IEC_UDINT_C(0x6001)	/* TLS key derivation function based on SHA1. Not recommeded for key generation based on passwords. */
+
+- #define :ref:`RTSCRYPTOID_KDF_PSHA256 <group___cmp_crypto_itf_1ga9ec4f5a2608d6c44121c30043e2ad69f>` RTS_IEC_UDINT_C(0x6002)	/* TLS key derivation function based on SHA-256. Not recommeded for key generation based on passwords. */
+
+- #define :ref:`RTSCRYPTOID_KDF_SCRYPT <group___cmp_crypto_itf_1ga85e656ed37902a0b0875f82520373f3f>` RTS_IEC_UDINT_C(0x6003)	/* Scrypt key derivation function. Recommeded to expand passwords into cryptographic keys, or to hash passwords. */
+
+- #define :ref:`RTSCRYPTOID <group___cmp_crypto_itf_1ga9ff781cd99b0d7c7e41e5a67d760942c>` RTS_IEC_UDINT
+
+- #define :ref:`KEYTYPE_KEY <group___cmp_crypto_itf_1gab7f2ff673c7ad06c8aea24e3916ccbcd>` RTS_IEC_DINT_C(0x0)	/* The key is directly available. Stored in a RTS_BYTESTRING. */
+
+- #define :ref:`KEYTYPE_CERTHANDLE <group___cmp_crypto_itf_1gad3506c98fc067cf967054383b50e78c9>` RTS_IEC_DINT_C(0x1)	/* The key is identified by a handle to the certificat. Only used for asymmetric keys. */
+
+- #define :ref:`KEYTYPE_CERTCONTENT <group___cmp_crypto_itf_1ga57af89a54ff4166bca45ee3187e94e9c>` RTS_IEC_DINT_C(0x2)	/* The key is identified by the certificate context. Only used for asymmetric keys. */
+
+- #define :ref:`RTSCRYPTOKEYTYPE <group___cmp_crypto_itf_1ga5bfe2d9255372e6ff9ba086ca0bdf0cb>` RTS_IEC_DINT
+
+- #define :ref:`RTSCRYPTOTYPE_SYMMETRIC <group___cmp_crypto_itf_1ga5c97fc51b25624b5e3a14e3cbc920e6f>` RTS_IEC_UDINT_C(0x1000)
+
+- #define :ref:`RTSCRYPTOTYPE_ASYMMETRIC <group___cmp_crypto_itf_1ga31e83979a94bcd8958b848272b17d48b>` RTS_IEC_UDINT_C(0x2000)
+
+- #define :ref:`RTSCRYPTOTYPE_HASH <group___cmp_crypto_itf_1gaedd941515517f9dc39ac09ae1e0198f0>` RTS_IEC_UDINT_C(0x3000)
+
+- #define :ref:`RTSCRYPTOTYPE_HMAC <group___cmp_crypto_itf_1gafc3a000b42b753e45c127e06817709c8>` RTS_IEC_UDINT_C(0x4000)
+
+- #define :ref:`RTSCRYPTOTYPE_SIGNATURE <group___cmp_crypto_itf_1ga49e5af0f1ca0ee7ba59f8f59c6347f31>` RTS_IEC_UDINT_C(0x5000)
+
+- #define :ref:`RTSCRYPTOTYPE_KEYDERIVE <group___cmp_crypto_itf_1ga7aa03171b15db13d5555171e9bc8402a>` RTS_IEC_UDINT_C(0x6000)
+
+- #define :ref:`RTSCRYPTOTYPE <group___cmp_crypto_itf_1ga26348a92c0683e8dc903eb35648f7dfa>` RTS_IEC_UDINT
+
+- #define :ref:`KEYTYPE_KEY <group___cmp_crypto_itf_1gab7f2ff673c7ad06c8aea24e3916ccbcd>` RTS_IEC_DINT_C(0x0)	/* The key is directly available. Stored in a RTS_BYTESTRING. */
+
+- #define :ref:`KEYTYPE_CERTHANDLE <group___cmp_crypto_itf_1gad3506c98fc067cf967054383b50e78c9>` RTS_IEC_DINT_C(0x1)	/* The key is identified by a handle to the certificat. Only used for asymmetric keys. */
+
+- #define :ref:`KEYTYPE_CERTCONTENT <group___cmp_crypto_itf_1ga57af89a54ff4166bca45ee3187e94e9c>` RTS_IEC_DINT_C(0x2)	/* The key is identified by the certificate context. Only used for asymmetric keys. */
+
+- #define :ref:`RTSCRYPTOKEYTYPE <group___cmp_crypto_itf_1ga5bfe2d9255372e6ff9ba086ca0bdf0cb>` RTS_IEC_DINT
+
+- #define :ref:`CMPCRYPTO_KEY_INT_MINRSALEN <group___cmp_crypto_itf___security_settings_1ga26271cd7b0a50f10c30fe50f9aca0d89>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".RSAMinKeyLen"
+
+- #define :ref:`CMPCRYPTO_KEY_INT_MINRSALEN_DESC <group___cmp_crypto_itf___security_settings_1gabb7caa2569c502cbc44adcd82670d296>` "Mininmal key length for RSA keys."
+
+- #define :ref:`CMPCRYPTO_VALUE_MINRSALEN_DEFAULT <group___cmp_crypto_itf___security_settings_1ga1f51c4f79f54e11d1976f4b127516d82>` 2048
+
+- #define :ref:`USE_CryptoGetAlgorithmById <group___cmp_crypto_itf_1ga753e3032c87e78bee11fb40cd2cb78e4>` :ref:`PFCRYPTOGETALGORITHMBYID <group___cmp_crypto_itf_1ga67e7dbdeddb775d0ec200367836ac2b7>` pfCryptoGetAlgorithmById;
+
+- #define :ref:`EXT_CryptoGetAlgorithmById <group___cmp_crypto_itf_1ga67f13890ddd513121586baa20db7d971>` extern :ref:`PFCRYPTOGETALGORITHMBYID <group___cmp_crypto_itf_1ga67e7dbdeddb775d0ec200367836ac2b7>` pfCryptoGetAlgorithmById;
+
+- #define :ref:`GET_CryptoGetAlgorithmById <group___cmp_crypto_itf_1gaf7c0a8604e686a962665011b7da25cc2>` s_pfCMGetAPI2( "CryptoGetAlgorithmById", (RTS_VOID_FCTPTR *)&pfCryptoGetAlgorithmById, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoGetAlgorithmById <group___cmp_crypto_itf_1gafd3abcbaa7c3d26df7d8c1487e43b16c>` pfCryptoGetAlgorithmById
+
+- #define :ref:`CHK_CryptoGetAlgorithmById <group___cmp_crypto_itf_1ga95a8ad0316bdc886b022cc63cf458af1>` (pfCryptoGetAlgorithmById != NULL)
+
+- #define :ref:`EXP_CryptoGetAlgorithmById <group___cmp_crypto_itf_1ga6bdddbdf144dd9b62c24965feaf773e9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoGetAlgorithmById", (RTS_UINTPTR) :ref:`CryptoGetAlgorithmById <group___cmp_crypto_itf_1ga6adac43e15d3676e5f10fcefa8c9f9d0>` , 0, 0)
+
+- #define :ref:`USE_CryptoGetFirstAlgorithm <group___cmp_crypto_itf_1ga5b8b47be44aa66ab6956ce1412f854ee>` :ref:`PFCRYPTOGETFIRSTALGORITHM <group___cmp_crypto_itf_1ga817c5687d69d7db783761b4fec5e6baf>` pfCryptoGetFirstAlgorithm;
+
+- #define :ref:`EXT_CryptoGetFirstAlgorithm <group___cmp_crypto_itf_1ga182ce45d318e21512c79263abcb0cbda>` extern :ref:`PFCRYPTOGETFIRSTALGORITHM <group___cmp_crypto_itf_1ga817c5687d69d7db783761b4fec5e6baf>` pfCryptoGetFirstAlgorithm;
+
+- #define :ref:`GET_CryptoGetFirstAlgorithm <group___cmp_crypto_itf_1gaa1891e11969831a65cb15162938a5c23>` s_pfCMGetAPI2( "CryptoGetFirstAlgorithm", (RTS_VOID_FCTPTR *)&pfCryptoGetFirstAlgorithm, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoGetFirstAlgorithm <group___cmp_crypto_itf_1ga42aba548a56b42242c6845c3cbf22082>` pfCryptoGetFirstAlgorithm
+
+- #define :ref:`CHK_CryptoGetFirstAlgorithm <group___cmp_crypto_itf_1ga01e04ad7f70196d9747bfe0dbf540722>` (pfCryptoGetFirstAlgorithm != NULL)
+
+- #define :ref:`EXP_CryptoGetFirstAlgorithm <group___cmp_crypto_itf_1gabc327d643d9137c2de38cd2b21b8e17f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoGetFirstAlgorithm", (RTS_UINTPTR) :ref:`CryptoGetFirstAlgorithm <group___cmp_crypto_itf_1ga2bdafb7e661ec24a3fa7c05d3996e646>` , 0, 0)
+
+- #define :ref:`USE_CryptoGetNextAlgorithm <group___cmp_crypto_itf_1ga515617e7f1b0bf17b1a1020d156f3c72>` :ref:`PFCRYPTOGETNEXTALGORITHM <group___cmp_crypto_itf_1gaf4f02cfe16f62c4ae75c33e9dbef211e>` pfCryptoGetNextAlgorithm;
+
+- #define :ref:`EXT_CryptoGetNextAlgorithm <group___cmp_crypto_itf_1ga90234842e80596c76e0d9eed1e4ca035>` extern :ref:`PFCRYPTOGETNEXTALGORITHM <group___cmp_crypto_itf_1gaf4f02cfe16f62c4ae75c33e9dbef211e>` pfCryptoGetNextAlgorithm;
+
+- #define :ref:`GET_CryptoGetNextAlgorithm <group___cmp_crypto_itf_1ga2fb009ec11579c03a1971603fad723fc>` s_pfCMGetAPI2( "CryptoGetNextAlgorithm", (RTS_VOID_FCTPTR *)&pfCryptoGetNextAlgorithm, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoGetNextAlgorithm <group___cmp_crypto_itf_1ga86202486346d384ca932aa79730338e0>` pfCryptoGetNextAlgorithm
+
+- #define :ref:`CHK_CryptoGetNextAlgorithm <group___cmp_crypto_itf_1gaa2e5433f415ad2e8c2d98bc5d1695ed1>` (pfCryptoGetNextAlgorithm != NULL)
+
+- #define :ref:`EXP_CryptoGetNextAlgorithm <group___cmp_crypto_itf_1ga968f49b2fb7a9731761cf7b3bf794ffb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoGetNextAlgorithm", (RTS_UINTPTR) :ref:`CryptoGetNextAlgorithm <group___cmp_crypto_itf_1ga44eaa8678f492ac2f76981d13bf10ec3>` , 0, 0)
+
+- #define :ref:`USE_CryptoGetAlgorithmInfo <group___cmp_crypto_itf_1ga240bb3f34bc2bea878affe11a7b4242a>` :ref:`PFCRYPTOGETALGORITHMINFO <group___cmp_crypto_itf_1ga69ceb3fa3c3ad31b0a15201092d60f60>` pfCryptoGetAlgorithmInfo;
+
+- #define :ref:`EXT_CryptoGetAlgorithmInfo <group___cmp_crypto_itf_1ga5059887a74523bdb426cbb7fe421ee50>` extern :ref:`PFCRYPTOGETALGORITHMINFO <group___cmp_crypto_itf_1ga69ceb3fa3c3ad31b0a15201092d60f60>` pfCryptoGetAlgorithmInfo;
+
+- #define :ref:`GET_CryptoGetAlgorithmInfo <group___cmp_crypto_itf_1ga95713cc57d228c98be48042722293da8>` s_pfCMGetAPI2( "CryptoGetAlgorithmInfo", (RTS_VOID_FCTPTR *)&pfCryptoGetAlgorithmInfo, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoGetAlgorithmInfo <group___cmp_crypto_itf_1gab55d3dc493a3433964045ed66ea72043>` pfCryptoGetAlgorithmInfo
+
+- #define :ref:`CHK_CryptoGetAlgorithmInfo <group___cmp_crypto_itf_1ga550769b532ab3f0b2a3cd2e647b8750c>` (pfCryptoGetAlgorithmInfo != NULL)
+
+- #define :ref:`EXP_CryptoGetAlgorithmInfo <group___cmp_crypto_itf_1ga5212936d15c3bc165ff8f6ec540f7bee>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoGetAlgorithmInfo", (RTS_UINTPTR) :ref:`CryptoGetAlgorithmInfo <group___cmp_crypto_itf_1ga82610c2d435311134fd49595a56e4e6d>` , 0, 0)
+
+- #define :ref:`USE_CryptoSymmetricEncrypt <group___cmp_crypto_itf_1ga76f77d114b4fc5864d6760163f8931fc>` :ref:`PFCRYPTOSYMMETRICENCRYPT <group___cmp_crypto_itf_1ga0a630f4f3912490ae5c6965b8a43b486>` pfCryptoSymmetricEncrypt;
+
+- #define :ref:`EXT_CryptoSymmetricEncrypt <group___cmp_crypto_itf_1ga7366526cdea38dff2b09aa82fadd3b95>` extern :ref:`PFCRYPTOSYMMETRICENCRYPT <group___cmp_crypto_itf_1ga0a630f4f3912490ae5c6965b8a43b486>` pfCryptoSymmetricEncrypt;
+
+- #define :ref:`GET_CryptoSymmetricEncrypt <group___cmp_crypto_itf_1gae51bf7362087f0df7dd2bfcf40f5601c>` s_pfCMGetAPI2( "CryptoSymmetricEncrypt", (RTS_VOID_FCTPTR *)&pfCryptoSymmetricEncrypt, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoSymmetricEncrypt <group___cmp_crypto_itf_1gafd121daa6d3736a97f6d7b17486357d3>` pfCryptoSymmetricEncrypt
+
+- #define :ref:`CHK_CryptoSymmetricEncrypt <group___cmp_crypto_itf_1gad5f14a2688d51fdc188383bb550e0db4>` (pfCryptoSymmetricEncrypt != NULL)
+
+- #define :ref:`EXP_CryptoSymmetricEncrypt <group___cmp_crypto_itf_1ga3584713b35a012f8c2131a824133bd26>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoSymmetricEncrypt", (RTS_UINTPTR) :ref:`CryptoSymmetricEncrypt <group___cmp_crypto_itf_1gafdf81c6a74fda3f2dc5328c7e92cd1e6>` , 0, 0)
+
+- #define :ref:`USE_CryptoSymmetricDecrypt <group___cmp_crypto_itf_1ga201d5c872a692e7bacfe3a55a2807363>` :ref:`PFCRYPTOSYMMETRICDECRYPT <group___cmp_crypto_itf_1ga997252e560c29e9a8eac61aee1834c29>` pfCryptoSymmetricDecrypt;
+
+- #define :ref:`EXT_CryptoSymmetricDecrypt <group___cmp_crypto_itf_1ga74fe32f6e846dc09abaf7e42433a1379>` extern :ref:`PFCRYPTOSYMMETRICDECRYPT <group___cmp_crypto_itf_1ga997252e560c29e9a8eac61aee1834c29>` pfCryptoSymmetricDecrypt;
+
+- #define :ref:`GET_CryptoSymmetricDecrypt <group___cmp_crypto_itf_1ga3c53d707ffc7e34a697fe3cc3fcacc46>` s_pfCMGetAPI2( "CryptoSymmetricDecrypt", (RTS_VOID_FCTPTR *)&pfCryptoSymmetricDecrypt, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoSymmetricDecrypt <group___cmp_crypto_itf_1gad42dbf8ef269a926282c660c7559ac79>` pfCryptoSymmetricDecrypt
+
+- #define :ref:`CHK_CryptoSymmetricDecrypt <group___cmp_crypto_itf_1ga4006033f861207f42b382a4558c03777>` (pfCryptoSymmetricDecrypt != NULL)
+
+- #define :ref:`EXP_CryptoSymmetricDecrypt <group___cmp_crypto_itf_1gabc2681b2034c57d1749b8a02d45ca8c2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoSymmetricDecrypt", (RTS_UINTPTR) :ref:`CryptoSymmetricDecrypt <group___cmp_crypto_itf_1ga9aab33e1f8dd7f5629d205ed2a75967e>` , 0, 0)
+
+- #define :ref:`USE_CryptoAsymmetricEncrypt <group___cmp_crypto_itf_1gad909d57436364cc37d235a7e6d0efa13>` :ref:`PFCRYPTOASYMMETRICENCRYPT <group___cmp_crypto_itf_1ga6f8fb0b3d89faa5372ee0125ebf6b27f>` pfCryptoAsymmetricEncrypt;
+
+- #define :ref:`EXT_CryptoAsymmetricEncrypt <group___cmp_crypto_itf_1ga285886dcc047bed766e229c779a9fb36>` extern :ref:`PFCRYPTOASYMMETRICENCRYPT <group___cmp_crypto_itf_1ga6f8fb0b3d89faa5372ee0125ebf6b27f>` pfCryptoAsymmetricEncrypt;
+
+- #define :ref:`GET_CryptoAsymmetricEncrypt <group___cmp_crypto_itf_1ga73f315cd5d75429556683e459847cb48>` s_pfCMGetAPI2( "CryptoAsymmetricEncrypt", (RTS_VOID_FCTPTR *)&pfCryptoAsymmetricEncrypt, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoAsymmetricEncrypt <group___cmp_crypto_itf_1ga7712d6cab44f592d424da4df5ad96cc6>` pfCryptoAsymmetricEncrypt
+
+- #define :ref:`CHK_CryptoAsymmetricEncrypt <group___cmp_crypto_itf_1ga5c9f22ad5665b023076e9cb6238666c2>` (pfCryptoAsymmetricEncrypt != NULL)
+
+- #define :ref:`EXP_CryptoAsymmetricEncrypt <group___cmp_crypto_itf_1ga2e40ba48054d1a4f590c8a350924f479>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoAsymmetricEncrypt", (RTS_UINTPTR) :ref:`CryptoAsymmetricEncrypt <group___cmp_crypto_itf_1ga303ccce6c893471eddceee7b6dd3a860>` , 0, 0)
+
+- #define :ref:`USE_CryptoAsymmetricDecrypt <group___cmp_crypto_itf_1gace6e629796114c087c844ca5d18ec907>` :ref:`PFCRYPTOASYMMETRICDECRYPT <group___cmp_crypto_itf_1ga4dd38cc948a39622851bc56a85b4c326>` pfCryptoAsymmetricDecrypt;
+
+- #define :ref:`EXT_CryptoAsymmetricDecrypt <group___cmp_crypto_itf_1ga332a675208e51a1f511a00263465d92a>` extern :ref:`PFCRYPTOASYMMETRICDECRYPT <group___cmp_crypto_itf_1ga4dd38cc948a39622851bc56a85b4c326>` pfCryptoAsymmetricDecrypt;
+
+- #define :ref:`GET_CryptoAsymmetricDecrypt <group___cmp_crypto_itf_1ga8568545e82c4f3cb13329e914d3a7346>` s_pfCMGetAPI2( "CryptoAsymmetricDecrypt", (RTS_VOID_FCTPTR *)&pfCryptoAsymmetricDecrypt, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoAsymmetricDecrypt <group___cmp_crypto_itf_1ga81922e230592c1448eb4a7110c1e45f5>` pfCryptoAsymmetricDecrypt
+
+- #define :ref:`CHK_CryptoAsymmetricDecrypt <group___cmp_crypto_itf_1ga113bc43cf462539fa1726f8a50080114>` (pfCryptoAsymmetricDecrypt != NULL)
+
+- #define :ref:`EXP_CryptoAsymmetricDecrypt <group___cmp_crypto_itf_1gaa409f3f70efe97b171b0a200b11bd534>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoAsymmetricDecrypt", (RTS_UINTPTR) :ref:`CryptoAsymmetricDecrypt <group___cmp_crypto_itf_1gad2949a344c7ade1e77d6c45c73ccb53d>` , 0, 0)
+
+- #define :ref:`USE_CryptoGetAsymmetricKeyLength <group___cmp_crypto_itf_1ga0aad6e9b69df92cc7bd3f8accc2694dd>` :ref:`PFCRYPTOGETASYMMETRICKEYLENGTH <group___cmp_crypto_itf_1gabbdca9311d21a35dd6527d0d5a17d04d>` pfCryptoGetAsymmetricKeyLength;
+
+- #define :ref:`EXT_CryptoGetAsymmetricKeyLength <group___cmp_crypto_itf_1ga497d6341098221c8ce09902eae7dc2c4>` extern :ref:`PFCRYPTOGETASYMMETRICKEYLENGTH <group___cmp_crypto_itf_1gabbdca9311d21a35dd6527d0d5a17d04d>` pfCryptoGetAsymmetricKeyLength;
+
+- #define :ref:`GET_CryptoGetAsymmetricKeyLength <group___cmp_crypto_itf_1ga17b3eb91d552f9d37942222e3af2dfe2>` s_pfCMGetAPI2( "CryptoGetAsymmetricKeyLength", (RTS_VOID_FCTPTR *)&pfCryptoGetAsymmetricKeyLength, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoGetAsymmetricKeyLength <group___cmp_crypto_itf_1gafef9b3c305c3fc6d674d0b22be45f9c7>` pfCryptoGetAsymmetricKeyLength
+
+- #define :ref:`CHK_CryptoGetAsymmetricKeyLength <group___cmp_crypto_itf_1gab116062032adcc7d1c4348372b6a0ed2>` (pfCryptoGetAsymmetricKeyLength != NULL)
+
+- #define :ref:`EXP_CryptoGetAsymmetricKeyLength <group___cmp_crypto_itf_1gade3b2af79a9b68fba545c5b2b506af9a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoGetAsymmetricKeyLength", (RTS_UINTPTR) :ref:`CryptoGetAsymmetricKeyLength <group___cmp_crypto_itf_1ga27140cdb3795580aea51ad0a92675c4d>` , 0, 0)
+
+- #define :ref:`USE_CryptoGenerateAsymmetricKeyPair <group___cmp_crypto_itf_1gac3b25eca1cf8d27a314cd5050753c3a0>` :ref:`PFCRYPTOGENERATEASYMMETRICKEYPAIR <group___cmp_crypto_itf_1gab6f4ea9b487d3aec48c181bb9a0cb6cf>` pfCryptoGenerateAsymmetricKeyPair;
+
+- #define :ref:`EXT_CryptoGenerateAsymmetricKeyPair <group___cmp_crypto_itf_1ga1b93c60bcab17b061c7aac8bae6f9e84>` extern :ref:`PFCRYPTOGENERATEASYMMETRICKEYPAIR <group___cmp_crypto_itf_1gab6f4ea9b487d3aec48c181bb9a0cb6cf>` pfCryptoGenerateAsymmetricKeyPair;
+
+- #define :ref:`GET_CryptoGenerateAsymmetricKeyPair <group___cmp_crypto_itf_1ga794e5d1da8524d9bb50460cf7f0cedfa>` s_pfCMGetAPI2( "CryptoGenerateAsymmetricKeyPair", (RTS_VOID_FCTPTR *)&pfCryptoGenerateAsymmetricKeyPair, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoGenerateAsymmetricKeyPair <group___cmp_crypto_itf_1ga7d20d53e0b2ed957b8c5b831549d1679>` pfCryptoGenerateAsymmetricKeyPair
+
+- #define :ref:`CHK_CryptoGenerateAsymmetricKeyPair <group___cmp_crypto_itf_1gab021bef1f813318b9bd1e6c924efd0d9>` (pfCryptoGenerateAsymmetricKeyPair != NULL)
+
+- #define :ref:`EXP_CryptoGenerateAsymmetricKeyPair <group___cmp_crypto_itf_1ga8f7c369111affc85057929fc8428229c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoGenerateAsymmetricKeyPair", (RTS_UINTPTR) :ref:`CryptoGenerateAsymmetricKeyPair <group___cmp_crypto_itf_1gab42b2a13675a8732f28c5694642b690a>` , 0, 0)
+
+- #define :ref:`USE_CryptoExportAsymmetricKey <group___cmp_crypto_itf_1gabea49a88cc223bcd000f8f55471f09f3>` :ref:`PFCRYPTOEXPORTASYMMETRICKEY <group___cmp_crypto_itf_1ga2b59d366103e4d1ec02803e827fc727a>` pfCryptoExportAsymmetricKey;
+
+- #define :ref:`EXT_CryptoExportAsymmetricKey <group___cmp_crypto_itf_1ga54c773cd97ff6f9028c1bf239c87d6cb>` extern :ref:`PFCRYPTOEXPORTASYMMETRICKEY <group___cmp_crypto_itf_1ga2b59d366103e4d1ec02803e827fc727a>` pfCryptoExportAsymmetricKey;
+
+- #define :ref:`GET_CryptoExportAsymmetricKey <group___cmp_crypto_itf_1gac1d068cfbf3359ca9d8ed26c661a05f3>` s_pfCMGetAPI2( "CryptoExportAsymmetricKey", (RTS_VOID_FCTPTR *)&pfCryptoExportAsymmetricKey, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoExportAsymmetricKey <group___cmp_crypto_itf_1ga2b1b5cbbccba5f37528158e59b62807d>` pfCryptoExportAsymmetricKey
+
+- #define :ref:`CHK_CryptoExportAsymmetricKey <group___cmp_crypto_itf_1gaf891963fada6e4aba6684d4b121fec77>` (pfCryptoExportAsymmetricKey != NULL)
+
+- #define :ref:`EXP_CryptoExportAsymmetricKey <group___cmp_crypto_itf_1gaef1d1a7303842c4a7d9a639e1329c606>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoExportAsymmetricKey", (RTS_UINTPTR) :ref:`CryptoExportAsymmetricKey <group___cmp_crypto_itf_1ga98892ba015f32267df26c5251e9a4c05>` , 0, 0)
+
+- #define :ref:`USE_CryptoImportAsymmetricKey <group___cmp_crypto_itf_1ga8bcb45d14124fcae734b52b4de16aa32>` :ref:`PFCRYPTOIMPORTASYMMETRICKEY <group___cmp_crypto_itf_1ga572c879e0e4b4ed3002c3673d8598047>` pfCryptoImportAsymmetricKey;
+
+- #define :ref:`EXT_CryptoImportAsymmetricKey <group___cmp_crypto_itf_1ga9c329775836cbd6b29543b04f69442da>` extern :ref:`PFCRYPTOIMPORTASYMMETRICKEY <group___cmp_crypto_itf_1ga572c879e0e4b4ed3002c3673d8598047>` pfCryptoImportAsymmetricKey;
+
+- #define :ref:`GET_CryptoImportAsymmetricKey <group___cmp_crypto_itf_1gad2d6a8280ac0b1589fa34dd66f624243>` s_pfCMGetAPI2( "CryptoImportAsymmetricKey", (RTS_VOID_FCTPTR *)&pfCryptoImportAsymmetricKey, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoImportAsymmetricKey <group___cmp_crypto_itf_1ga5f46f196e208215e27972992a5e327c2>` pfCryptoImportAsymmetricKey
+
+- #define :ref:`CHK_CryptoImportAsymmetricKey <group___cmp_crypto_itf_1gaa6cad6105eed39fc529f8446e95629cd>` (pfCryptoImportAsymmetricKey != NULL)
+
+- #define :ref:`EXP_CryptoImportAsymmetricKey <group___cmp_crypto_itf_1ga8f8e2da7d06ed32a0505a12413251f2c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoImportAsymmetricKey", (RTS_UINTPTR) :ref:`CryptoImportAsymmetricKey <group___cmp_crypto_itf_1ga31ee17a992ef7d3315888a80a89020d5>` , 0, 0)
+
+- #define :ref:`USE_CryptoStorePrivateKey <group___cmp_crypto_itf_1ga58e05593a1e010178167044e4d76abdd>` :ref:`PFCRYPTOSTOREPRIVATEKEY <group___cmp_crypto_itf_1ga337c9d57f5ba12390651bf09a8c60305>` pfCryptoStorePrivateKey;
+
+- #define :ref:`EXT_CryptoStorePrivateKey <group___cmp_crypto_itf_1gaa82779e229de4aa5c80acd82da5adacb>` extern :ref:`PFCRYPTOSTOREPRIVATEKEY <group___cmp_crypto_itf_1ga337c9d57f5ba12390651bf09a8c60305>` pfCryptoStorePrivateKey;
+
+- #define :ref:`GET_CryptoStorePrivateKey <group___cmp_crypto_itf_1gacdc3a7c0ff951e728a448c3444b8ce72>` s_pfCMGetAPI2( "CryptoStorePrivateKey", (RTS_VOID_FCTPTR *)&pfCryptoStorePrivateKey, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoStorePrivateKey <group___cmp_crypto_itf_1gacc1cbecb4b34d21a6efc5f35689ffe21>` pfCryptoStorePrivateKey
+
+- #define :ref:`CHK_CryptoStorePrivateKey <group___cmp_crypto_itf_1gaf6965a36d61f7ec91900b52307de6796>` (pfCryptoStorePrivateKey != NULL)
+
+- #define :ref:`EXP_CryptoStorePrivateKey <group___cmp_crypto_itf_1ga00b54126beb3b2cae14dd0063941cd0f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoStorePrivateKey", (RTS_UINTPTR) :ref:`CryptoStorePrivateKey <group___cmp_crypto_itf_1ga91e57973bb4a64788a20a1ebd4272d22>` , 0, 0)
+
+- #define :ref:`USE_CryptoLoadPrivateKey <group___cmp_crypto_itf_1ga465e198baf035c4348752cf61f7d5e6e>` :ref:`PFCRYPTOLOADPRIVATEKEY <group___cmp_crypto_itf_1ga208e00a44b8008739f4a54b5d635bc13>` pfCryptoLoadPrivateKey;
+
+- #define :ref:`EXT_CryptoLoadPrivateKey <group___cmp_crypto_itf_1gad5c1f06f0e62ae8fd59c56cc20d73604>` extern :ref:`PFCRYPTOLOADPRIVATEKEY <group___cmp_crypto_itf_1ga208e00a44b8008739f4a54b5d635bc13>` pfCryptoLoadPrivateKey;
+
+- #define :ref:`GET_CryptoLoadPrivateKey <group___cmp_crypto_itf_1gac7d4e1083f9210f11ef4be243244916c>` s_pfCMGetAPI2( "CryptoLoadPrivateKey", (RTS_VOID_FCTPTR *)&pfCryptoLoadPrivateKey, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoLoadPrivateKey <group___cmp_crypto_itf_1ga8f1f4b7d2d731e0c764df06939420c2d>` pfCryptoLoadPrivateKey
+
+- #define :ref:`CHK_CryptoLoadPrivateKey <group___cmp_crypto_itf_1ga33ec8cdd703b0c9b39f98acdfc6b6cd3>` (pfCryptoLoadPrivateKey != NULL)
+
+- #define :ref:`EXP_CryptoLoadPrivateKey <group___cmp_crypto_itf_1gab240469ce792509ff1922759ae0d6849>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoLoadPrivateKey", (RTS_UINTPTR) :ref:`CryptoLoadPrivateKey <group___cmp_crypto_itf_1ga6898de9834bccf40aa8becdf7520b80e>` , 0, 0)
+
+- #define :ref:`USE_CryptoDeletePrivateKey <group___cmp_crypto_itf_1ga41bb6fbfe8023120f7c4273d195fc418>` :ref:`PFCRYPTODELETEPRIVATEKEY <group___cmp_crypto_itf_1gab93984d6030f20d0d372d881760ac1b2>` pfCryptoDeletePrivateKey;
+
+- #define :ref:`EXT_CryptoDeletePrivateKey <group___cmp_crypto_itf_1ga601d4d8e281a8f6ffde14da6b0a9b648>` extern :ref:`PFCRYPTODELETEPRIVATEKEY <group___cmp_crypto_itf_1gab93984d6030f20d0d372d881760ac1b2>` pfCryptoDeletePrivateKey;
+
+- #define :ref:`GET_CryptoDeletePrivateKey <group___cmp_crypto_itf_1gac5d57dc4b3a2daa3575877f2930f1f58>` s_pfCMGetAPI2( "CryptoDeletePrivateKey", (RTS_VOID_FCTPTR *)&pfCryptoDeletePrivateKey, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoDeletePrivateKey <group___cmp_crypto_itf_1gacaed23fc496334b738345c5e50f81893>` pfCryptoDeletePrivateKey
+
+- #define :ref:`CHK_CryptoDeletePrivateKey <group___cmp_crypto_itf_1ga14ab58e72928ffbd057f769d3f4a4c6f>` (pfCryptoDeletePrivateKey != NULL)
+
+- #define :ref:`EXP_CryptoDeletePrivateKey <group___cmp_crypto_itf_1gac1a668a6d3af209eedfc9c3c494926ef>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoDeletePrivateKey", (RTS_UINTPTR) :ref:`CryptoDeletePrivateKey <group___cmp_crypto_itf_1gaabbb90df619bea1a5438699d868d4cc8>` , 0, 0)
+
+- #define :ref:`USE_CryptoGenerateHash <group___cmp_crypto_itf_1ga164681c2a8254d5efcb1ce4b6ae06489>` :ref:`PFCRYPTOGENERATEHASH <group___cmp_crypto_itf_1gaec37971b9bceadb480d0ba6252e6fc66>` pfCryptoGenerateHash;
+
+- #define :ref:`EXT_CryptoGenerateHash <group___cmp_crypto_itf_1ga228e7b7a65c33bc069b3571839ca3378>` extern :ref:`PFCRYPTOGENERATEHASH <group___cmp_crypto_itf_1gaec37971b9bceadb480d0ba6252e6fc66>` pfCryptoGenerateHash;
+
+- #define :ref:`GET_CryptoGenerateHash <group___cmp_crypto_itf_1gac015a85df310652377cff927fbb99f11>` s_pfCMGetAPI2( "CryptoGenerateHash", (RTS_VOID_FCTPTR *)&pfCryptoGenerateHash, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoGenerateHash <group___cmp_crypto_itf_1ga723dda1a6262ad09e4999993d63c75f7>` pfCryptoGenerateHash
+
+- #define :ref:`CHK_CryptoGenerateHash <group___cmp_crypto_itf_1ga5aba2143124793242f644887403a9ca8>` (pfCryptoGenerateHash != NULL)
+
+- #define :ref:`EXP_CryptoGenerateHash <group___cmp_crypto_itf_1ga6892eefa447fbeeb40250d36a2df3095>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoGenerateHash", (RTS_UINTPTR) :ref:`CryptoGenerateHash <group___cmp_crypto_itf_1ga9d85cdae0f377005ced85fca7367fc4a>` , 0, 0)
+
+- #define :ref:`USE_CryptoDeriveKey <group___cmp_crypto_itf_1ga8204ca89255bd8fb30d063c75a250484>` :ref:`PFCRYPTODERIVEKEY <group___cmp_crypto_itf_1ga034ff7c8fd91f4c96f8ffbb64b88d114>` pfCryptoDeriveKey;
+
+- #define :ref:`EXT_CryptoDeriveKey <group___cmp_crypto_itf_1ga433dee6c92240a54595066eda1d2e923>` extern :ref:`PFCRYPTODERIVEKEY <group___cmp_crypto_itf_1ga034ff7c8fd91f4c96f8ffbb64b88d114>` pfCryptoDeriveKey;
+
+- #define :ref:`GET_CryptoDeriveKey <group___cmp_crypto_itf_1gaa51577c6f80f0ea4385aabb573dcea98>` s_pfCMGetAPI2( "CryptoDeriveKey", (RTS_VOID_FCTPTR *)&pfCryptoDeriveKey, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoDeriveKey <group___cmp_crypto_itf_1ga5ea3961f4e20e483bbf13eea2f5a64a8>` pfCryptoDeriveKey
+
+- #define :ref:`CHK_CryptoDeriveKey <group___cmp_crypto_itf_1ga7c03106fce937d2d6058e354658a2aa1>` (pfCryptoDeriveKey != NULL)
+
+- #define :ref:`EXP_CryptoDeriveKey <group___cmp_crypto_itf_1ga017f574ed21f30a519ac58eee1b73bcb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoDeriveKey", (RTS_UINTPTR) :ref:`CryptoDeriveKey <group___cmp_crypto_itf_1ga32e92e2f3317f67d4eac8b6605edd9d3>` , 0, 0)
+
+- #define :ref:`USE_CryptoHMACSign <group___cmp_crypto_itf_1ga4a8ccf87ab9f83b612f25ee81da5e72d>` :ref:`PFCRYPTOHMACSIGN <group___cmp_crypto_itf_1ga9b8133afde107c6d9cfdc8ccf78db533>` pfCryptoHMACSign;
+
+- #define :ref:`EXT_CryptoHMACSign <group___cmp_crypto_itf_1ga7b357d3978240cec6134331219d23257>` extern :ref:`PFCRYPTOHMACSIGN <group___cmp_crypto_itf_1ga9b8133afde107c6d9cfdc8ccf78db533>` pfCryptoHMACSign;
+
+- #define :ref:`GET_CryptoHMACSign <group___cmp_crypto_itf_1ga65c94e1c316076a0b35852bf4ecdf56e>` s_pfCMGetAPI2( "CryptoHMACSign", (RTS_VOID_FCTPTR *)&pfCryptoHMACSign, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoHMACSign <group___cmp_crypto_itf_1ga4350db6e968c9131ef8f2e4d8685af63>` pfCryptoHMACSign
+
+- #define :ref:`CHK_CryptoHMACSign <group___cmp_crypto_itf_1gadb9ddaf71d6b7628e049a72e7ec03bc7>` (pfCryptoHMACSign != NULL)
+
+- #define :ref:`EXP_CryptoHMACSign <group___cmp_crypto_itf_1ga94cc8c03f4682f12957d74867ba16d15>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoHMACSign", (RTS_UINTPTR) :ref:`CryptoHMACSign <group___cmp_crypto_itf_1ga93928baec523a0c3ad06cdf37e41cdcb>` , 0, 0)
+
+- #define :ref:`USE_CryptoHMACVerify <group___cmp_crypto_itf_1ga30bb22fde95c090934de9f5b810d0632>` :ref:`PFCRYPTOHMACVERIFY <group___cmp_crypto_itf_1ga54f7764f1efd5a85dbf1cc1479bf6be4>` pfCryptoHMACVerify;
+
+- #define :ref:`EXT_CryptoHMACVerify <group___cmp_crypto_itf_1gae21f2888b8f21d18eb96d22fad763231>` extern :ref:`PFCRYPTOHMACVERIFY <group___cmp_crypto_itf_1ga54f7764f1efd5a85dbf1cc1479bf6be4>` pfCryptoHMACVerify;
+
+- #define :ref:`GET_CryptoHMACVerify <group___cmp_crypto_itf_1ga54cc4930575669bd438fdf61d1069f6c>` s_pfCMGetAPI2( "CryptoHMACVerify", (RTS_VOID_FCTPTR *)&pfCryptoHMACVerify, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoHMACVerify <group___cmp_crypto_itf_1ga35c0d115986d96b75bf737ec5e8876e4>` pfCryptoHMACVerify
+
+- #define :ref:`CHK_CryptoHMACVerify <group___cmp_crypto_itf_1gaf793ee8d8b697b6089323a07039bf25d>` (pfCryptoHMACVerify != NULL)
+
+- #define :ref:`EXP_CryptoHMACVerify <group___cmp_crypto_itf_1ga6c885bf6d647b8ab83e2d52fb4050a7c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoHMACVerify", (RTS_UINTPTR) :ref:`CryptoHMACVerify <group___cmp_crypto_itf_1ga8a0843ac9387d6be09e56dedc07bd5d8>` , 0, 0)
+
+- #define :ref:`USE_CryptoSignatureGenerate <group___cmp_crypto_itf_1gaf6a300c492d2b834e7fcad4c22ded08f>` :ref:`PFCRYPTOSIGNATUREGENERATE <group___cmp_crypto_itf_1ga8f3976a788e320acf42c8a93f697d213>` pfCryptoSignatureGenerate;
+
+- #define :ref:`EXT_CryptoSignatureGenerate <group___cmp_crypto_itf_1gafb1dfb8c5453a6889daf52832308bee0>` extern :ref:`PFCRYPTOSIGNATUREGENERATE <group___cmp_crypto_itf_1ga8f3976a788e320acf42c8a93f697d213>` pfCryptoSignatureGenerate;
+
+- #define :ref:`GET_CryptoSignatureGenerate <group___cmp_crypto_itf_1ga68edf339353807f8d5070d3b6db3565a>` s_pfCMGetAPI2( "CryptoSignatureGenerate", (RTS_VOID_FCTPTR *)&pfCryptoSignatureGenerate, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoSignatureGenerate <group___cmp_crypto_itf_1ga6c3ae5f63f94fb6eacac6c1d6c1793f2>` pfCryptoSignatureGenerate
+
+- #define :ref:`CHK_CryptoSignatureGenerate <group___cmp_crypto_itf_1ga963304425b246867e0704062002e9b7f>` (pfCryptoSignatureGenerate != NULL)
+
+- #define :ref:`EXP_CryptoSignatureGenerate <group___cmp_crypto_itf_1gad11711f1ef245a93d46818e6d4097025>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoSignatureGenerate", (RTS_UINTPTR) :ref:`CryptoSignatureGenerate <group___cmp_crypto_itf_1ga85c1b6ecc79525bf0bf39b159c63a4db>` , 0, 0)
+
+- #define :ref:`USE_CryptoSignatureVerify <group___cmp_crypto_itf_1ga950e9a25d15690b5927f92daab723109>` :ref:`PFCRYPTOSIGNATUREVERIFY <group___cmp_crypto_itf_1ga31393f5fbada5b4dcffbf0435f466af3>` pfCryptoSignatureVerify;
+
+- #define :ref:`EXT_CryptoSignatureVerify <group___cmp_crypto_itf_1ga60bd9de9cc0e4f6fb10becc33e1fc1e8>` extern :ref:`PFCRYPTOSIGNATUREVERIFY <group___cmp_crypto_itf_1ga31393f5fbada5b4dcffbf0435f466af3>` pfCryptoSignatureVerify;
+
+- #define :ref:`GET_CryptoSignatureVerify <group___cmp_crypto_itf_1ga94602119ade95094674defc941e66dff>` s_pfCMGetAPI2( "CryptoSignatureVerify", (RTS_VOID_FCTPTR *)&pfCryptoSignatureVerify, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoSignatureVerify <group___cmp_crypto_itf_1gad975ae363831e46d662f209095f7a12c>` pfCryptoSignatureVerify
+
+- #define :ref:`CHK_CryptoSignatureVerify <group___cmp_crypto_itf_1ga05f39f9245790d85c368e9358db80289>` (pfCryptoSignatureVerify != NULL)
+
+- #define :ref:`EXP_CryptoSignatureVerify <group___cmp_crypto_itf_1gacde98a7a53f415236db836334a04e09b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoSignatureVerify", (RTS_UINTPTR) :ref:`CryptoSignatureVerify <group___cmp_crypto_itf_1ga5bc6bfa2f81eb3074693486292b43b73>` , 0, 0)
+
+- #define :ref:`USE_CryptoGenerateRandomNumber <group___cmp_crypto_itf_1ga39525252e966d4551877549c5e3ff76f>` :ref:`PFCRYPTOGENERATERANDOMNUMBER <group___cmp_crypto_itf_1gabe99033669c301b89f640dae71d293ab>` pfCryptoGenerateRandomNumber;
+
+- #define :ref:`EXT_CryptoGenerateRandomNumber <group___cmp_crypto_itf_1gac6bcb8347c20f7ca793f8076bf76f34b>` extern :ref:`PFCRYPTOGENERATERANDOMNUMBER <group___cmp_crypto_itf_1gabe99033669c301b89f640dae71d293ab>` pfCryptoGenerateRandomNumber;
+
+- #define :ref:`GET_CryptoGenerateRandomNumber <group___cmp_crypto_itf_1ga618e4ce87224bdcc84045e79ffc9a352>` s_pfCMGetAPI2( "CryptoGenerateRandomNumber", (RTS_VOID_FCTPTR *)&pfCryptoGenerateRandomNumber, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoGenerateRandomNumber <group___cmp_crypto_itf_1gab8bb0de78a285c3a4f2ae5e27973b5f0>` pfCryptoGenerateRandomNumber
+
+- #define :ref:`CHK_CryptoGenerateRandomNumber <group___cmp_crypto_itf_1gac94ee2b5d25de3e4abaade842259f1f4>` (pfCryptoGenerateRandomNumber != NULL)
+
+- #define :ref:`EXP_CryptoGenerateRandomNumber <group___cmp_crypto_itf_1ga2ac521286f47c38f1ef1c39f2cb99adf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoGenerateRandomNumber", (RTS_UINTPTR) :ref:`CryptoGenerateRandomNumber <group___cmp_crypto_itf_1ga77e847cf24ef6da255e92733d20aec04>` , 0, 0)
+
+- #define :ref:`USE_CryptoKeyInit <group___cmp_crypto_itf_1gaee86d67d6deae2ace1c021cadbd470fc>` :ref:`PFCRYPTOKEYINIT <group___cmp_crypto_itf_1ga6c348b598e82f8d727a37c1a81fc84b8>` pfCryptoKeyInit;
+
+- #define :ref:`EXT_CryptoKeyInit <group___cmp_crypto_itf_1ga9a647c32bc043244eb9e92e3a774da2a>` extern :ref:`PFCRYPTOKEYINIT <group___cmp_crypto_itf_1ga6c348b598e82f8d727a37c1a81fc84b8>` pfCryptoKeyInit;
+
+- #define :ref:`GET_CryptoKeyInit <group___cmp_crypto_itf_1ga02796369501f216d68e06f5f6aa38158>` s_pfCMGetAPI2( "CryptoKeyInit", (RTS_VOID_FCTPTR *)&pfCryptoKeyInit, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoKeyInit <group___cmp_crypto_itf_1ga53c3eba32153dc854e173eb0a052c1fb>` pfCryptoKeyInit
+
+- #define :ref:`CHK_CryptoKeyInit <group___cmp_crypto_itf_1gae62dcc881b9158756f0aa0fd20bcc443>` (pfCryptoKeyInit != NULL)
+
+- #define :ref:`EXP_CryptoKeyInit <group___cmp_crypto_itf_1ga2b76a8294ef3dc43c3df153dd9738b70>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoKeyInit", (RTS_UINTPTR) :ref:`CryptoKeyInit <group___cmp_crypto_itf_1ga2e650e42b02d37eb9782fa67e8661283>` , 0, 0)
+
+- #define :ref:`USE_CryptoKeyExit <group___cmp_crypto_itf_1ga6d1e2b147ad36354b6234391a8559a95>` :ref:`PFCRYPTOKEYEXIT <group___cmp_crypto_itf_1gad96ea1c4d7678799d6292d147ca9d40a>` pfCryptoKeyExit;
+
+- #define :ref:`EXT_CryptoKeyExit <group___cmp_crypto_itf_1ga101a51841889e5766ca217c968927d24>` extern :ref:`PFCRYPTOKEYEXIT <group___cmp_crypto_itf_1gad96ea1c4d7678799d6292d147ca9d40a>` pfCryptoKeyExit;
+
+- #define :ref:`GET_CryptoKeyExit <group___cmp_crypto_itf_1ga0d4d0dc32c36468736f8c2f350fbe5fe>` s_pfCMGetAPI2( "CryptoKeyExit", (RTS_VOID_FCTPTR *)&pfCryptoKeyExit, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoKeyExit <group___cmp_crypto_itf_1ga5254b8110372d08f489de53769f4c885>` pfCryptoKeyExit
+
+- #define :ref:`CHK_CryptoKeyExit <group___cmp_crypto_itf_1ga898c0f2e8eb9265135476bd81938ffd7>` (pfCryptoKeyExit != NULL)
+
+- #define :ref:`EXP_CryptoKeyExit <group___cmp_crypto_itf_1ga39b780e8381f50ef7f73987c996914f2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoKeyExit", (RTS_UINTPTR) :ref:`CryptoKeyExit <group___cmp_crypto_itf_1ga0082d8c356d9b9ffabd3ea536892e298>` , 0, 0)
+
+- #define :ref:`USE_CryptoRtsByteStringInit <group___cmp_crypto_itf_1gae827c5fecb977af27d1fb84daef8836e>` :ref:`PFCRYPTORTSBYTESTRINGINIT <group___cmp_crypto_itf_1gaee5f694078122f29df92c8d5a8fb7248>` pfCryptoRtsByteStringInit;
+
+- #define :ref:`EXT_CryptoRtsByteStringInit <group___cmp_crypto_itf_1ga0806e52594b9066fc19d4e3aac9947f6>` extern :ref:`PFCRYPTORTSBYTESTRINGINIT <group___cmp_crypto_itf_1gaee5f694078122f29df92c8d5a8fb7248>` pfCryptoRtsByteStringInit;
+
+- #define :ref:`GET_CryptoRtsByteStringInit <group___cmp_crypto_itf_1ga3fd59e0d6f5aaa4a527e7718ad7f9c83>` s_pfCMGetAPI2( "CryptoRtsByteStringInit", (RTS_VOID_FCTPTR *)&pfCryptoRtsByteStringInit, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoRtsByteStringInit <group___cmp_crypto_itf_1gac3181eecb175ed0e5086afe753bf6336>` pfCryptoRtsByteStringInit
+
+- #define :ref:`CHK_CryptoRtsByteStringInit <group___cmp_crypto_itf_1gadc1c8f58da4fa95fe296e40c9a95e26e>` (pfCryptoRtsByteStringInit != NULL)
+
+- #define :ref:`EXP_CryptoRtsByteStringInit <group___cmp_crypto_itf_1ga945118affa444d10f03fcf25b46217dd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoRtsByteStringInit", (RTS_UINTPTR) :ref:`CryptoRtsByteStringInit <group___cmp_crypto_itf_1gaad378d3097c39b18dce00a7139447658>` , 0, 0)
+
+- #define :ref:`USE_CryptoRtsByteStringInit2 <group___cmp_crypto_itf_1ga5ceb9efedb5cc2b34cd61a5f9772d579>` :ref:`PFCRYPTORTSBYTESTRINGINIT2 <group___cmp_crypto_itf_1ga585ffc47e06d20ff2b28ac3277741d3c>` pfCryptoRtsByteStringInit2;
+
+- #define :ref:`EXT_CryptoRtsByteStringInit2 <group___cmp_crypto_itf_1gaec0a17e9d4dd0caaafb3548a11aee481>` extern :ref:`PFCRYPTORTSBYTESTRINGINIT2 <group___cmp_crypto_itf_1ga585ffc47e06d20ff2b28ac3277741d3c>` pfCryptoRtsByteStringInit2;
+
+- #define :ref:`GET_CryptoRtsByteStringInit2 <group___cmp_crypto_itf_1ga039bcd1b4b4ed7f7f1e2c521bb64655d>` s_pfCMGetAPI2( "CryptoRtsByteStringInit2", (RTS_VOID_FCTPTR *)&pfCryptoRtsByteStringInit2, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoRtsByteStringInit2 <group___cmp_crypto_itf_1ga2de538046453e4d3320659b2cbb03feb>` pfCryptoRtsByteStringInit2
+
+- #define :ref:`CHK_CryptoRtsByteStringInit2 <group___cmp_crypto_itf_1gaaa931db1471dc7c5024643aa7c6ad247>` (pfCryptoRtsByteStringInit2 != NULL)
+
+- #define :ref:`EXP_CryptoRtsByteStringInit2 <group___cmp_crypto_itf_1ga7904cdc0415a9c4d5d04d37c2c52717a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoRtsByteStringInit2", (RTS_UINTPTR) :ref:`CryptoRtsByteStringInit2 <group___cmp_crypto_itf_1gac3d559e2f116cbb70687ede2b2f03c19>` , 0, 0)
+
+- #define :ref:`USE_CryptoRtsByteStringInit3 <group___cmp_crypto_itf_1gac9bd68664e4253390b4f33e0474e16f3>` :ref:`PFCRYPTORTSBYTESTRINGINIT3 <group___cmp_crypto_itf_1ga83e58d77e8f580a23dc288d647cf2009>` pfCryptoRtsByteStringInit3;
+
+- #define :ref:`EXT_CryptoRtsByteStringInit3 <group___cmp_crypto_itf_1gafd040689b98c84722adb200d0bac07a8>` extern :ref:`PFCRYPTORTSBYTESTRINGINIT3 <group___cmp_crypto_itf_1ga83e58d77e8f580a23dc288d647cf2009>` pfCryptoRtsByteStringInit3;
+
+- #define :ref:`GET_CryptoRtsByteStringInit3 <group___cmp_crypto_itf_1ga722a7f363e9e725e8c9c9d9e87934131>` s_pfCMGetAPI2( "CryptoRtsByteStringInit3", (RTS_VOID_FCTPTR *)&pfCryptoRtsByteStringInit3, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoRtsByteStringInit3 <group___cmp_crypto_itf_1ga3d422973153c1ab65692e397f76d6938>` pfCryptoRtsByteStringInit3
+
+- #define :ref:`CHK_CryptoRtsByteStringInit3 <group___cmp_crypto_itf_1ga82c674792da7e766f25476e8895fd2a3>` (pfCryptoRtsByteStringInit3 != NULL)
+
+- #define :ref:`EXP_CryptoRtsByteStringInit3 <group___cmp_crypto_itf_1ga1b71c0e763dc4309f31beda9eff95a0f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoRtsByteStringInit3", (RTS_UINTPTR) :ref:`CryptoRtsByteStringInit3 <group___cmp_crypto_itf_1ga611af48c3f19325d420a98138ac44f9b>` , 0, 0)
+
+- #define :ref:`USE_CryptoRtsByteStringExit <group___cmp_crypto_itf_1ga496408af1669550cf853bdf7ab81829a>` :ref:`PFCRYPTORTSBYTESTRINGEXIT <group___cmp_crypto_itf_1ga82bcf8f8653d6ae5ada6762f1414b2d8>` pfCryptoRtsByteStringExit;
+
+- #define :ref:`EXT_CryptoRtsByteStringExit <group___cmp_crypto_itf_1gaee55a2640b5b4cf4179fa3c3ba75eda0>` extern :ref:`PFCRYPTORTSBYTESTRINGEXIT <group___cmp_crypto_itf_1ga82bcf8f8653d6ae5ada6762f1414b2d8>` pfCryptoRtsByteStringExit;
+
+- #define :ref:`GET_CryptoRtsByteStringExit <group___cmp_crypto_itf_1gab98410cb20544c5b5d26c6ecf487d6e7>` s_pfCMGetAPI2( "CryptoRtsByteStringExit", (RTS_VOID_FCTPTR *)&pfCryptoRtsByteStringExit, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoRtsByteStringExit <group___cmp_crypto_itf_1ga56657343cb58f4676c94b43e35d6f82f>` pfCryptoRtsByteStringExit
+
+- #define :ref:`CHK_CryptoRtsByteStringExit <group___cmp_crypto_itf_1gab1affa71d0c1c5efe9482935e01de8dc>` (pfCryptoRtsByteStringExit != NULL)
+
+- #define :ref:`EXP_CryptoRtsByteStringExit <group___cmp_crypto_itf_1ga1d678bbb43a85f3962bdfd2e6a00b23a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoRtsByteStringExit", (RTS_UINTPTR) :ref:`CryptoRtsByteStringExit <group___cmp_crypto_itf_1ga96c8707378e2064d18f26066067de953>` , 0, 0)
+
+- #define :ref:`USE_CryptoBase64Encode <group___cmp_crypto_itf_1gafc3d5dfde1a4cd15ea16906504659e68>` :ref:`PFCRYPTOBASE64ENCODE <group___cmp_crypto_itf_1gabd72d1cce82142e738746fb607ca52e0>` pfCryptoBase64Encode;
+
+- #define :ref:`EXT_CryptoBase64Encode <group___cmp_crypto_itf_1ga2c3c452b3249e7a7602af5fde21e5cbe>` extern :ref:`PFCRYPTOBASE64ENCODE <group___cmp_crypto_itf_1gabd72d1cce82142e738746fb607ca52e0>` pfCryptoBase64Encode;
+
+- #define :ref:`GET_CryptoBase64Encode <group___cmp_crypto_itf_1ga60a334c5c7f0961c3c32da4855ac93e1>` s_pfCMGetAPI2( "CryptoBase64Encode", (RTS_VOID_FCTPTR *)&pfCryptoBase64Encode, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoBase64Encode <group___cmp_crypto_itf_1ga131334bee7bfc566affe61773c95762d>` pfCryptoBase64Encode
+
+- #define :ref:`CHK_CryptoBase64Encode <group___cmp_crypto_itf_1gac5926b8b9348285bb6e1959204661f75>` (pfCryptoBase64Encode != NULL)
+
+- #define :ref:`EXP_CryptoBase64Encode <group___cmp_crypto_itf_1ga112084453eed968010e8e53a44238906>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoBase64Encode", (RTS_UINTPTR) :ref:`CryptoBase64Encode <group___cmp_crypto_itf_1ga2dbd25e1e1b4ab23336226e806556918>` , 0, 0)
+
+- #define :ref:`USE_CryptoBase64Decode <group___cmp_crypto_itf_1ga52f51b9e264dc36a78a2fe2b2b940de1>` :ref:`PFCRYPTOBASE64DECODE <group___cmp_crypto_itf_1ga6b499a69efba3f854f0872e971e221bb>` pfCryptoBase64Decode;
+
+- #define :ref:`EXT_CryptoBase64Decode <group___cmp_crypto_itf_1ga3bb46937d08ae3b101fde107d5516ebc>` extern :ref:`PFCRYPTOBASE64DECODE <group___cmp_crypto_itf_1ga6b499a69efba3f854f0872e971e221bb>` pfCryptoBase64Decode;
+
+- #define :ref:`GET_CryptoBase64Decode <group___cmp_crypto_itf_1ga99eabcd2b29f5898ab0829c506ee3599>` s_pfCMGetAPI2( "CryptoBase64Decode", (RTS_VOID_FCTPTR *)&pfCryptoBase64Decode, (fl), 0, 0)
+
+- #define :ref:`CAL_CryptoBase64Decode <group___cmp_crypto_itf_1ga9d8f0edd3ad97f97aefa1ef49ad082b5>` pfCryptoBase64Decode
+
+- #define :ref:`CHK_CryptoBase64Decode <group___cmp_crypto_itf_1gaeeae5989ea8abc0692f18f92038d117a>` (pfCryptoBase64Decode != NULL)
+
+- #define :ref:`EXP_CryptoBase64Decode <group___cmp_crypto_itf_1gaf3d21ad63e72181d92832ffe7d0780a1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoBase64Decode", (RTS_UINTPTR) :ref:`CryptoBase64Decode <group___cmp_crypto_itf_1gac077b08ca1a77c100cb33b2f9f963ec6>` , 0, 0)
+
+- #define :ref:`ITF_CmpCrypto <group___cmp_crypto_itf_1ga2aed92746d74b0c2be2734a8eb481f83>`
+
+- #define :ref:`EXTITF_CmpCrypto <group___cmp_crypto_itf_1ga921fabd3625d4c16db0cf2b2ef09dfa5>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagRtsByteString <structtag_rts_byte_string>` :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>`
+
+- typedef struct :ref:`tagRtsCryptoKey <structtag_rts_crypto_key>` :ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>`
+
+- typedef struct :ref:`tagRtsScryptParameter <structtag_rts_scrypt_parameter>` :ref:`RtsScryptParameter <group___cmp_crypto_itf_1ga5d600d911c889f3a1fe34d9535eac5bf>`
+
+- typedef RTS_HANDLE(* :ref:`PFCRYPTOGETALGORITHMBYID <group___cmp_crypto_itf_1ga67e7dbdeddb775d0ec200367836ac2b7>`)(RTS_UI32 ui32CryptoID, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFCRYPTOGETFIRSTALGORITHM <group___cmp_crypto_itf_1ga817c5687d69d7db783761b4fec5e6baf>`)(RTS_UI32 ui32CryptoType, char *pszName, RTS_I32 i32MaxNameLen, RTS_UI32 *pui32CryptoID, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFCRYPTOGETNEXTALGORITHM <group___cmp_crypto_itf_1gaf4f02cfe16f62c4ae75c33e9dbef211e>`)(RTS_HANDLE hCrypto, RTS_UI32 ui32CryptoType, char *pszName, RTS_I32 i32MaxNameLen, RTS_UI32 *pui32CryptoID, RTS_RESULT *pResult)
+
+- typedef :ref:`RtsCryptoInfo <struct_rts_crypto_info>` *(* :ref:`PFCRYPTOGETALGORITHMINFO <group___cmp_crypto_itf_1ga69ceb3fa3c3ad31b0a15201092d60f60>`)(RTS_HANDLE hCrypto, RTS_RESULT *pCryptoInfo)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOSYMMETRICENCRYPT <group___cmp_crypto_itf_1ga0a630f4f3912490ae5c6965b8a43b486>`)(RTS_HANDLE hAlgo, RtsByteString *pPlainText, RtsCryptoKey key, RtsByteString *pInitVector, RTS_BOOL bEnablePadding, RtsByteString *pCipherText)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOSYMMETRICDECRYPT <group___cmp_crypto_itf_1ga997252e560c29e9a8eac61aee1834c29>`)(RTS_HANDLE hAlgo, RtsByteString *pCipherText, RtsCryptoKey key, RtsByteString *pInitVector, RTS_BOOL bEnablePadding, RtsByteString *pPlainText)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOASYMMETRICENCRYPT <group___cmp_crypto_itf_1ga6f8fb0b3d89faa5372ee0125ebf6b27f>`)(RTS_HANDLE hAlgo, RtsByteString *pPlainText, RtsCryptoKey publicKey, RtsByteString *pCipherText)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOASYMMETRICDECRYPT <group___cmp_crypto_itf_1ga4dd38cc948a39622851bc56a85b4c326>`)(RTS_HANDLE hAlgo, RtsByteString *pCipherText, RtsCryptoKey privateKey, RtsByteString *pPlainText)
+
+- typedef RTS_UI32(* :ref:`PFCRYPTOGETASYMMETRICKEYLENGTH <group___cmp_crypto_itf_1gabbdca9311d21a35dd6527d0d5a17d04d>`)(RtsCryptoKey asymmetricKey, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOGENERATEASYMMETRICKEYPAIR <group___cmp_crypto_itf_1gab6f4ea9b487d3aec48c181bb9a0cb6cf>`)(RTS_IEC_HANDLE hAlgo, RTS_IEC_UDINT ui32KeyLen, RtsCryptoKey *pKeyPair, RTS_BOOL bPrivateKeyExportable)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOEXPORTASYMMETRICKEY <group___cmp_crypto_itf_1ga2b59d366103e4d1ec02803e827fc727a>`)(RtsCryptoKey key, RTS_BOOL bBase64, RTS_BOOL bPrivateKey, RtsByteString *pData)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOIMPORTASYMMETRICKEY <group___cmp_crypto_itf_1ga572c879e0e4b4ed3002c3673d8598047>`)(RtsByteString data, RTS_BOOL bBase64, RTS_BOOL bPrivateKey, RtsCryptoKey *pKey)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOSTOREPRIVATEKEY <group___cmp_crypto_itf_1ga337c9d57f5ba12390651bf09a8c60305>`)(RtsCryptoKey key, RtsByteString *pKeyIdentifier)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOLOADPRIVATEKEY <group___cmp_crypto_itf_1ga208e00a44b8008739f4a54b5d635bc13>`)(RtsByteString keyIdentifier, RtsCryptoKey *pKey)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTODELETEPRIVATEKEY <group___cmp_crypto_itf_1gab93984d6030f20d0d372d881760ac1b2>`)(RtsByteString keyIdentifier)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOGENERATEHASH <group___cmp_crypto_itf_1gaec37971b9bceadb480d0ba6252e6fc66>`)(RTS_HANDLE hAlgo, RtsByteString *pData, RtsByteString *pHash)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTODERIVEKEY <group___cmp_crypto_itf_1ga034ff7c8fd91f4c96f8ffbb64b88d114>`)(RTS_HANDLE hAlgo, RtsByteString *pKey, RtsByteString *pSalt, RtsKdfParameter *pSpecificParameters, RtsByteString *pDerivedKey)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOHMACSIGN <group___cmp_crypto_itf_1ga9b8133afde107c6d9cfdc8ccf78db533>`)(RTS_HANDLE hAlgo, RtsByteString *pData, RtsCryptoKey key, RtsByteString *pSignature)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOHMACVERIFY <group___cmp_crypto_itf_1ga54f7764f1efd5a85dbf1cc1479bf6be4>`)(RTS_HANDLE hAlgo, RtsByteString *pData, RtsCryptoKey key, RtsByteString *pSignature)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOSIGNATUREGENERATE <group___cmp_crypto_itf_1ga8f3976a788e320acf42c8a93f697d213>`)(RTS_HANDLE hAlgo, RtsByteString *pData, RtsCryptoKey privateKey, RtsByteString *pSignature)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOSIGNATUREVERIFY <group___cmp_crypto_itf_1ga31393f5fbada5b4dcffbf0435f466af3>`)(RTS_HANDLE hAlgo, RtsByteString *pData, RtsCryptoKey publicKey, RtsByteString *pSignature)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOGENERATERANDOMNUMBER <group___cmp_crypto_itf_1gabe99033669c301b89f640dae71d293ab>`)(RTS_UI32 ui32NumOfRandomBytes, RtsByteString *pRandom)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOKEYINIT <group___cmp_crypto_itf_1ga6c348b598e82f8d727a37c1a81fc84b8>`)(RtsCryptoKey *pKey, RtsCryptoKeyStorage key, RTS_IEC_DINT keyType)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOKEYEXIT <group___cmp_crypto_itf_1gad96ea1c4d7678799d6292d147ca9d40a>`)(RtsCryptoKey *pKey)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTORTSBYTESTRINGINIT <group___cmp_crypto_itf_1gaee5f694078122f29df92c8d5a8fb7248>`)(RtsByteString *pByteString)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTORTSBYTESTRINGINIT2 <group___cmp_crypto_itf_1ga585ffc47e06d20ff2b28ac3277741d3c>`)(RtsByteString *pByteString, RTS_UI32 ui32BufferSize, RTS_UI8 *pBuffer)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTORTSBYTESTRINGINIT3 <group___cmp_crypto_itf_1ga83e58d77e8f580a23dc288d647cf2009>`)(RtsByteString *pByteString, RTS_UI32 ui32BufferSize, RTS_UI8 *pBuffer, RTS_BOOL bEmptyBuffer)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTORTSBYTESTRINGEXIT <group___cmp_crypto_itf_1ga82bcf8f8653d6ae5ada6762f1414b2d8>`)(RtsByteString *pByteString)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOBASE64ENCODE <group___cmp_crypto_itf_1gabd72d1cce82142e738746fb607ca52e0>`)(RtsByteString *input, RtsByteString *base64Output)
+
+- typedef RTS_RESULT(* :ref:`PFCRYPTOBASE64DECODE <group___cmp_crypto_itf_1ga6b499a69efba3f854f0872e971e221bb>`)(RtsByteString *base64Input, RtsByteString *output)
+
+- typedef :ref:`ICmpCrypto_C <struct_i_cmp_crypto___c>` :ref:`ICmpCrypto <group___cmp_crypto_itf_1gabb70df803f41bdbaeb33e055d0e56345>`
+
+Functions
+---------
+
+- RTS_HANDLE :ref:`CryptoGetAlgorithmById <group___cmp_crypto_itf_1ga6adac43e15d3676e5f10fcefa8c9f9d0>` (RTS_UI32 ui32CryptoID, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`CryptoGetFirstAlgorithm <group___cmp_crypto_itf_1ga2bdafb7e661ec24a3fa7c05d3996e646>` (RTS_UI32 ui32CryptoType, char * pszName, RTS_I32 i32MaxNameLen, RTS_UI32 * pui32CryptoID, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`CryptoGetNextAlgorithm <group___cmp_crypto_itf_1ga44eaa8678f492ac2f76981d13bf10ec3>` (RTS_HANDLE hCrypto, RTS_UI32 ui32CryptoType, char * pszName, RTS_I32 i32MaxNameLen, RTS_UI32 * pui32CryptoID, RTS_RESULT * pResult)
+
+- :ref:`RtsCryptoInfo <struct_rts_crypto_info>` * :ref:`CryptoGetAlgorithmInfo <group___cmp_crypto_itf_1ga82610c2d435311134fd49595a56e4e6d>` (RTS_HANDLE hCrypto, RTS_RESULT * pCryptoInfo)
+
+- RTS_RESULT :ref:`CryptoSymmetricEncrypt <group___cmp_crypto_itf_1gafdf81c6a74fda3f2dc5328c7e92cd1e6>` (RTS_HANDLE hAlgo, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pPlainText, :ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>`  key, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pInitVector, RTS_BOOL bEnablePadding, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pCipherText)
+
+- RTS_RESULT :ref:`CryptoSymmetricDecrypt <group___cmp_crypto_itf_1ga9aab33e1f8dd7f5629d205ed2a75967e>` (RTS_HANDLE hAlgo, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pCipherText, :ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>`  key, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pInitVector, RTS_BOOL bEnablePadding, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pPlainText)
+
+- RTS_RESULT :ref:`CryptoAsymmetricEncrypt <group___cmp_crypto_itf_1ga303ccce6c893471eddceee7b6dd3a860>` (RTS_HANDLE hAlgo, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pPlainText, :ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>`  publicKey, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pCipherText)
+
+- RTS_RESULT :ref:`CryptoAsymmetricDecrypt <group___cmp_crypto_itf_1gad2949a344c7ade1e77d6c45c73ccb53d>` (RTS_HANDLE hAlgo, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pCipherText, :ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>`  privateKey, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pPlainText)
+
+- RTS_UI32 :ref:`CryptoGetAsymmetricKeyLength <group___cmp_crypto_itf_1ga27140cdb3795580aea51ad0a92675c4d>` (:ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>`  asymmetricKey, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`CryptoGenerateAsymmetricKeyPair <group___cmp_crypto_itf_1gab42b2a13675a8732f28c5694642b690a>` (RTS_IEC_HANDLE hAlgo, RTS_IEC_UDINT ui32KeyLen, :ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>` * pKeyPair, RTS_BOOL bPrivateKeyExportable)
+
+- RTS_RESULT :ref:`CryptoExportAsymmetricKey <group___cmp_crypto_itf_1ga98892ba015f32267df26c5251e9a4c05>` (:ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>`  key, RTS_BOOL bBase64, RTS_BOOL bPrivateKey, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pData)
+
+- RTS_RESULT :ref:`CryptoImportAsymmetricKey <group___cmp_crypto_itf_1ga31ee17a992ef7d3315888a80a89020d5>` (:ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>`  data, RTS_BOOL bBase64, RTS_BOOL bPrivateKey, :ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>` * pKey)
+
+- RTS_RESULT :ref:`CryptoStorePrivateKey <group___cmp_crypto_itf_1ga91e57973bb4a64788a20a1ebd4272d22>` (:ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>`  key, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pKeyIdentifier)
+
+- RTS_RESULT :ref:`CryptoLoadPrivateKey <group___cmp_crypto_itf_1ga6898de9834bccf40aa8becdf7520b80e>` (:ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>`  keyIdentifier, :ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>` * pKey)
+
+- RTS_RESULT :ref:`CryptoDeletePrivateKey <group___cmp_crypto_itf_1gaabbb90df619bea1a5438699d868d4cc8>` (:ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>`  keyIdentifier)
+
+- RTS_RESULT :ref:`CryptoGenerateHash <group___cmp_crypto_itf_1ga9d85cdae0f377005ced85fca7367fc4a>` (RTS_HANDLE hAlgo, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pData, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pHash)
+
+- RTS_RESULT :ref:`CryptoDeriveKey <group___cmp_crypto_itf_1ga32e92e2f3317f67d4eac8b6605edd9d3>` (RTS_HANDLE hAlgo, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pKey, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pSalt, :ref:`RtsKdfParameter <union_rts_kdf_parameter>` * pSpecificParameters, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pDerivedKey)
+
+- RTS_RESULT :ref:`CryptoHMACSign <group___cmp_crypto_itf_1ga93928baec523a0c3ad06cdf37e41cdcb>` (RTS_HANDLE hAlgo, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pData, :ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>`  key, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pSignature)
+
+- RTS_RESULT :ref:`CryptoHMACVerify <group___cmp_crypto_itf_1ga8a0843ac9387d6be09e56dedc07bd5d8>` (RTS_HANDLE hAlgo, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pData, :ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>`  key, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pSignature)
+
+- RTS_RESULT :ref:`CryptoSignatureGenerate <group___cmp_crypto_itf_1ga85c1b6ecc79525bf0bf39b159c63a4db>` (RTS_HANDLE hAlgo, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pData, :ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>`  privateKey, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pSignature)
+
+- RTS_RESULT :ref:`CryptoSignatureVerify <group___cmp_crypto_itf_1ga5bc6bfa2f81eb3074693486292b43b73>` (RTS_HANDLE hAlgo, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pData, :ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>`  publicKey, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pSignature)
+
+- RTS_RESULT :ref:`CryptoGenerateRandomNumber <group___cmp_crypto_itf_1ga77e847cf24ef6da255e92733d20aec04>` (RTS_UI32 ui32NumOfRandomBytes, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pRandom)
+
+- RTS_RESULT :ref:`CryptoKeyInit <group___cmp_crypto_itf_1ga2e650e42b02d37eb9782fa67e8661283>` (:ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>` * pKey, :ref:`RtsCryptoKeyStorage <union_rts_crypto_key_storage>`  key, RTS_IEC_DINT keyType)
+
+- RTS_RESULT :ref:`CryptoKeyExit <group___cmp_crypto_itf_1ga0082d8c356d9b9ffabd3ea536892e298>` (:ref:`RtsCryptoKey <group___cmp_crypto_itf_1ga9eda126f6497b16d886d8c2fae345687>` * pKey)
+
+- RTS_RESULT :ref:`CryptoRtsByteStringInit <group___cmp_crypto_itf_1gaad378d3097c39b18dce00a7139447658>` (:ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pByteString)
+
+- RTS_RESULT :ref:`CryptoRtsByteStringInit2 <group___cmp_crypto_itf_1gac3d559e2f116cbb70687ede2b2f03c19>` (:ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pByteString, RTS_UI32 ui32BufferSize, RTS_UI8 * pBuffer)
+
+- RTS_RESULT :ref:`CryptoRtsByteStringInit3 <group___cmp_crypto_itf_1ga611af48c3f19325d420a98138ac44f9b>` (:ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pByteString, RTS_UI32 ui32BufferSize, RTS_UI8 * pBuffer, RTS_BOOL bEmptyBuffer)
+
+- RTS_RESULT :ref:`CryptoRtsByteStringExit <group___cmp_crypto_itf_1ga96c8707378e2064d18f26066067de953>` (:ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * pByteString)
+
+- RTS_RESULT :ref:`CryptoBase64Encode <group___cmp_crypto_itf_1ga2dbd25e1e1b4ab23336226e806556918>` (:ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * input, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * base64Output)
+
+- RTS_RESULT :ref:`CryptoBase64Decode <group___cmp_crypto_itf_1gac077b08ca1a77c100cb33b2f9f963ec6>` (:ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * base64Input, :ref:`RtsByteString <group___cmp_crypto_itf_1ga0d96060febb92297b9262b8cd1d3a1e6>` * output)
+
+Detailed Description
+--------------------
+
+Definition in file CmpCryptoItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

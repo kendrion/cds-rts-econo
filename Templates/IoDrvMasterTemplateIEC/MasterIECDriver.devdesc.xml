@@ -21,7 +21,7 @@
 			<!-- Range 0-32767 managed by 3S – Smart Software Solutions; Range 32768 – end can be used by customer -->
 			<Id>1001 0001</Id>
 			<!-- First 2 Byte is an unique number for each customer (assigned by 3S – Smart Software Solutions) -->
-			<Version>3.5.10.0</Version>
+			<Version>3.5.15.0</Version>
 			<!-- Format has to be 1.2.3.4 -->
 		</DeviceIdentification>
 		<DeviceInfo>
@@ -35,7 +35,7 @@
 		</DeviceInfo>
 		<!-- moduleType: distinct information for the I/O driver;  Range 0x0 – 0x7fff is assigned by 3S – Smart Software Solutions; Range from 0x8000 is customer specific -->
 		<!-- hostpath: regulates the membership of a parent to a child connector, with hostpath=9 we are connected with the PLC  -->
-		<Connector moduleType="256" interface="Common.PCI" role="child" explicit="false" connectorId="9" hostpath="-1">
+		<Connector moduleType="256" interface="Common.PCI" role="child" explicit="false" connectorId="9" hostpath="-1" hideInStatusPage="true">
 			<!-- Under PLC node -> defined over "interface="Common.PCI"". The child connector has its Hostpath always set to -1. -->
 			<InterfaceName name="local:PCI">PCI-Bus</InterfaceName>
 			<Slot count="1" allowEmpty="false"/>
@@ -101,7 +101,7 @@
 				<ts:section name="library-management">
 					<ts:section name="placeholder-libraries">
 						<ts:setting name="IoDrvMasterTemplateIEC" type="string" access="visible">
-							<ts:value>IoDrvMasterTemplateIEC, 3.5.10.0 (MyCompany)</ts:value>
+							<ts:value>IoDrvMasterTemplateIEC, 3.5.15.0 (MyCompany)</ts:value>
 							<!-- Note: Normally this is defined in PLC devdesc! It's only included here to use a default PLC Win Control where placeholder is missing -->
 						</ts:setting>
 					</ts:section>

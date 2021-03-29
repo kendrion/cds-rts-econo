@@ -1,0 +1,1476 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_srv_itf:
+
+=========
+CmpSrvItf
+=========
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpSrv.
+
+Detailed Description
+--------------------
+
+Interface of the level 7 server.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Event parameter <group___cmp_srv_itf___eventparameter>`
+
+- :ref:`Events <group___cmp_srv_itf___events>`
+
+- :ref:`Service Groups <group___cmp_srv_itf___service_groups>`
+
+- :ref:`Service reply tags <group___cmp_srv_itf___servicereplytags>`
+
+- :ref:`Static defines <group___cmp_srv_itf___staticdefines>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpSrv_C <struct_i_cmp_srv___c>`
+
+Macros
+------
+
+- #define :ref:`HEADERTAG_3S <group___cmp_srv_itf_1ga0046428262063f454be57aa827cdfd98>` 0xCD55
+
+- #define :ref:`HEADERTAG_CRYPT <group___cmp_srv_itf_1ga7c5366bf491add14d2855bf0afb01071>` 0x7557
+
+- #define :ref:`HEADERTAG_SAFETY <group___cmp_srv_itf_1gab722842fef72272a2e942b9cf5aed4fe>` 0x5AF4
+
+- #define :ref:`HEADERTAG_EDGE <group___cmp_srv_itf_1gaacda1d5c60eb28a894c1365b7b1ba715>` 0xED6E
+
+- #define :ref:`HEADERTAG_OEM_START <group___cmp_srv_itf_1ga0dc0f08f15874e80bfe9fbda11c6731e>` 0xFF00
+
+- #define :ref:`HEADERTAG_OEM_END <group___cmp_srv_itf_1ga48e38b4ce94aace16d91b6378d265bc7>` 0xFFFF
+
+- #define :ref:`USE_ServerAppHandleRequest3 <group___cmp_srv_itf_1ga19707179128bab1041be4d2d22af1426>` :ref:`PFSERVERAPPHANDLEREQUEST3 <group___cmp_srv_itf_1gac7cde8caa5504a311a41a1395c8159d5>` pfServerAppHandleRequest3;
+
+- #define :ref:`EXT_ServerAppHandleRequest3 <group___cmp_srv_itf_1ga2f89b57fdf6a0c3d17b423bd2a09cd7c>` extern :ref:`PFSERVERAPPHANDLEREQUEST3 <group___cmp_srv_itf_1gac7cde8caa5504a311a41a1395c8159d5>` pfServerAppHandleRequest3;
+
+- #define :ref:`GET_ServerAppHandleRequest3 <group___cmp_srv_itf_1gad635bc0fcb706f2a4610d16f5f950f0d>` s_pfCMGetAPI2( "ServerAppHandleRequest3", (RTS_VOID_FCTPTR *)&pfServerAppHandleRequest3, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerAppHandleRequest3 <group___cmp_srv_itf_1ga2a29b470694d4d5748dc9f1d0de0790c>` pfServerAppHandleRequest3
+
+- #define :ref:`CHK_ServerAppHandleRequest3 <group___cmp_srv_itf_1ga365ed594289128110377cfa96c19ceeb>` (pfServerAppHandleRequest3 != NULL)
+
+- #define :ref:`EXP_ServerAppHandleRequest3 <group___cmp_srv_itf_1ga4384d039f71a40fb202ca7c4bccaf96a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerAppHandleRequest3", (RTS_UINTPTR) :ref:`ServerAppHandleRequest3 <group___cmp_srv_itf_1gadd61540aa74bae25150b1d4fe96609ef>` , 0, 0)
+
+- #define :ref:`USE_ServerRegisterServiceHandler <group___cmp_srv_itf_1gaaa397be7ace2139a06fa3b9436b3a4af>` :ref:`PFSERVERREGISTERSERVICEHANDLER <group___cmp_srv_itf_1ga4f6aec15011fd70f47689e74c281fa1d>` pfServerRegisterServiceHandler;
+
+- #define :ref:`EXT_ServerRegisterServiceHandler <group___cmp_srv_itf_1ga196cfe48bddf73c35ee4c3b97d2cce21>` extern :ref:`PFSERVERREGISTERSERVICEHANDLER <group___cmp_srv_itf_1ga4f6aec15011fd70f47689e74c281fa1d>` pfServerRegisterServiceHandler;
+
+- #define :ref:`GET_ServerRegisterServiceHandler <group___cmp_srv_itf_1ga5d242feb57a80bbd8f937f1f928d7848>` s_pfCMGetAPI2( "ServerRegisterServiceHandler", (RTS_VOID_FCTPTR *)&pfServerRegisterServiceHandler, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerRegisterServiceHandler <group___cmp_srv_itf_1ga2856f1042149ceed6f26b39cc37f0562>` pfServerRegisterServiceHandler
+
+- #define :ref:`CHK_ServerRegisterServiceHandler <group___cmp_srv_itf_1gabcfc4749cc84d5655790405b1d696069>` (pfServerRegisterServiceHandler != NULL)
+
+- #define :ref:`EXP_ServerRegisterServiceHandler <group___cmp_srv_itf_1gaa11131860dfcd54f297287bfac4aebc1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerRegisterServiceHandler", (RTS_UINTPTR) :ref:`ServerRegisterServiceHandler <group___cmp_srv_itf_1ga485f7aaf5009723d62200f31f6e2d65f>` , 0, 0)
+
+- #define :ref:`USE_ServerRegisterServiceHandler2 <group___cmp_srv_itf_1gae1c59f13e639cade9ffb23ab483ccb99>` :ref:`PFSERVERREGISTERSERVICEHANDLER2 <group___cmp_srv_itf_1gac4917017297fddbfbbf689d2490d8e07>` pfServerRegisterServiceHandler2;
+
+- #define :ref:`EXT_ServerRegisterServiceHandler2 <group___cmp_srv_itf_1ga33926f1d64de7283cbccfbcbaa968a54>` extern :ref:`PFSERVERREGISTERSERVICEHANDLER2 <group___cmp_srv_itf_1gac4917017297fddbfbbf689d2490d8e07>` pfServerRegisterServiceHandler2;
+
+- #define :ref:`GET_ServerRegisterServiceHandler2 <group___cmp_srv_itf_1ga682849e81f7ca0453900340855cee306>` s_pfCMGetAPI2( "ServerRegisterServiceHandler2", (RTS_VOID_FCTPTR *)&pfServerRegisterServiceHandler2, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerRegisterServiceHandler2 <group___cmp_srv_itf_1ga959c78cf50d5bf7f0f540262330c909a>` pfServerRegisterServiceHandler2
+
+- #define :ref:`CHK_ServerRegisterServiceHandler2 <group___cmp_srv_itf_1gaf5a2a9864a218cd9b7bafaff403dfd1f>` (pfServerRegisterServiceHandler2 != NULL)
+
+- #define :ref:`EXP_ServerRegisterServiceHandler2 <group___cmp_srv_itf_1ga967606e82a72e15ec945dcaf1222cee0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerRegisterServiceHandler2", (RTS_UINTPTR) :ref:`ServerRegisterServiceHandler2 <group___cmp_srv_itf_1gae85b4c0435220a9662226d3f6538942b>` , 0, 0)
+
+- #define :ref:`USE_ServerRegisterServiceHandler3 <group___cmp_srv_itf_1gaddae8407988de5cf1e0f2d3c492caa4c>` :ref:`PFSERVERREGISTERSERVICEHANDLER3 <group___cmp_srv_itf_1ga12ee732589557fb2cc031186b62b0b7c>` pfServerRegisterServiceHandler3;
+
+- #define :ref:`EXT_ServerRegisterServiceHandler3 <group___cmp_srv_itf_1gae82575bc9545982061fd6e3c042972e0>` extern :ref:`PFSERVERREGISTERSERVICEHANDLER3 <group___cmp_srv_itf_1ga12ee732589557fb2cc031186b62b0b7c>` pfServerRegisterServiceHandler3;
+
+- #define :ref:`GET_ServerRegisterServiceHandler3 <group___cmp_srv_itf_1ga121215f2f5c0452cc6e1b8744c490312>` s_pfCMGetAPI2( "ServerRegisterServiceHandler3", (RTS_VOID_FCTPTR *)&pfServerRegisterServiceHandler3, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerRegisterServiceHandler3 <group___cmp_srv_itf_1ga12b191decc00dd1a61caef84e2a4a3e2>` pfServerRegisterServiceHandler3
+
+- #define :ref:`CHK_ServerRegisterServiceHandler3 <group___cmp_srv_itf_1gac877fb685d7e29829f7de61678f9f4ca>` (pfServerRegisterServiceHandler3 != NULL)
+
+- #define :ref:`EXP_ServerRegisterServiceHandler3 <group___cmp_srv_itf_1ga2a55c5df7856c0098b5002ce8d089844>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerRegisterServiceHandler3", (RTS_UINTPTR) :ref:`ServerRegisterServiceHandler3 <group___cmp_srv_itf_1gae52a96e6cd998e926a403173667e95a7>` , 0, 0)
+
+- #define :ref:`USE_ServerUnRegisterServiceHandler <group___cmp_srv_itf_1ga930f14f8cfe62dd36c0b4b1afd4a5ed8>` :ref:`PFSERVERUNREGISTERSERVICEHANDLER <group___cmp_srv_itf_1gacb310076ba0511c3e9ad92036823b267>` pfServerUnRegisterServiceHandler;
+
+- #define :ref:`EXT_ServerUnRegisterServiceHandler <group___cmp_srv_itf_1gab4568f731878f5c7290f5c031bfb1f8a>` extern :ref:`PFSERVERUNREGISTERSERVICEHANDLER <group___cmp_srv_itf_1gacb310076ba0511c3e9ad92036823b267>` pfServerUnRegisterServiceHandler;
+
+- #define :ref:`GET_ServerUnRegisterServiceHandler <group___cmp_srv_itf_1ga21c6e0f0b405b3dedac2ebd591397b9b>` s_pfCMGetAPI2( "ServerUnRegisterServiceHandler", (RTS_VOID_FCTPTR *)&pfServerUnRegisterServiceHandler, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerUnRegisterServiceHandler <group___cmp_srv_itf_1ga2a10c4e215af336e3290f94539f2ba90>` pfServerUnRegisterServiceHandler
+
+- #define :ref:`CHK_ServerUnRegisterServiceHandler <group___cmp_srv_itf_1ga4d236d4d42da353273843704765dc384>` (pfServerUnRegisterServiceHandler != NULL)
+
+- #define :ref:`EXP_ServerUnRegisterServiceHandler <group___cmp_srv_itf_1ga444f4b458e6ad4b78a276e3d56e8a6f3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerUnRegisterServiceHandler", (RTS_UINTPTR) :ref:`ServerUnRegisterServiceHandler <group___cmp_srv_itf_1ga34a0a4d439a54dd5e75fe2f414ca0a58>` , 0, 0)
+
+- #define :ref:`USE_ServerRegisterProtocolHandler <group___cmp_srv_itf_1gae85d0b7fd201d238c8776322400bc99a>` :ref:`PFSERVERREGISTERPROTOCOLHANDLER <group___cmp_srv_itf_1ga4553119c110b2a0c9b8bd4ba6456b955>` pfServerRegisterProtocolHandler;
+
+- #define :ref:`EXT_ServerRegisterProtocolHandler <group___cmp_srv_itf_1gab79614a97aa39d07052d8cf02e801cf2>` extern :ref:`PFSERVERREGISTERPROTOCOLHANDLER <group___cmp_srv_itf_1ga4553119c110b2a0c9b8bd4ba6456b955>` pfServerRegisterProtocolHandler;
+
+- #define :ref:`GET_ServerRegisterProtocolHandler <group___cmp_srv_itf_1gafc1a8a44df11d0a96eea350d2276c415>` s_pfCMGetAPI2( "ServerRegisterProtocolHandler", (RTS_VOID_FCTPTR *)&pfServerRegisterProtocolHandler, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerRegisterProtocolHandler <group___cmp_srv_itf_1gad0d9376cd59f98ac423ca15ffe1d77ff>` pfServerRegisterProtocolHandler
+
+- #define :ref:`CHK_ServerRegisterProtocolHandler <group___cmp_srv_itf_1ga34107c5becb3a95ebbc6b72ec0b5dded>` (pfServerRegisterProtocolHandler != NULL)
+
+- #define :ref:`EXP_ServerRegisterProtocolHandler <group___cmp_srv_itf_1gac5b09fbb71b15c2e12e6e4bdc5492ebd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerRegisterProtocolHandler", (RTS_UINTPTR) :ref:`ServerRegisterProtocolHandler <group___cmp_srv_itf_1ga362a87043d6c86695ef3cfc1b4525579>` , 0, 0)
+
+- #define :ref:`USE_ServerRegisterProtocolHandler2 <group___cmp_srv_itf_1ga2f83d3d81ffc8daef8bd30451dabd26b>` :ref:`PFSERVERREGISTERPROTOCOLHANDLER2 <group___cmp_srv_itf_1gabce937f923dea2a75c182d2f3bfc53df>` pfServerRegisterProtocolHandler2;
+
+- #define :ref:`EXT_ServerRegisterProtocolHandler2 <group___cmp_srv_itf_1gadbf011d0909cfdd59848ce3f04aaf03c>` extern :ref:`PFSERVERREGISTERPROTOCOLHANDLER2 <group___cmp_srv_itf_1gabce937f923dea2a75c182d2f3bfc53df>` pfServerRegisterProtocolHandler2;
+
+- #define :ref:`GET_ServerRegisterProtocolHandler2 <group___cmp_srv_itf_1ga2b1339840622f6cbd1660ef9fb0d830c>` s_pfCMGetAPI2( "ServerRegisterProtocolHandler2", (RTS_VOID_FCTPTR *)&pfServerRegisterProtocolHandler2, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerRegisterProtocolHandler2 <group___cmp_srv_itf_1ga2e49aa64442a43934856f6adead69074>` pfServerRegisterProtocolHandler2
+
+- #define :ref:`CHK_ServerRegisterProtocolHandler2 <group___cmp_srv_itf_1gaf7b19b202adfd6e3e2f33b120b21d0f7>` (pfServerRegisterProtocolHandler2 != NULL)
+
+- #define :ref:`EXP_ServerRegisterProtocolHandler2 <group___cmp_srv_itf_1ga3ae8b1015e7532d1ab90e1ea29e27d8d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerRegisterProtocolHandler2", (RTS_UINTPTR) :ref:`ServerRegisterProtocolHandler2 <group___cmp_srv_itf_1ga4032fd640d13076a903f3541679f3a87>` , 0, 0)
+
+- #define :ref:`USE_ServerUnRegisterProtocolHandler <group___cmp_srv_itf_1gaf754823321f07332a9fa274e173d262e>` :ref:`PFSERVERUNREGISTERPROTOCOLHANDLER <group___cmp_srv_itf_1ga27b3d633e424864036ec74dc03fade7a>` pfServerUnRegisterProtocolHandler;
+
+- #define :ref:`EXT_ServerUnRegisterProtocolHandler <group___cmp_srv_itf_1ga68a950eab8666edd1c78060dfbbdd4d9>` extern :ref:`PFSERVERUNREGISTERPROTOCOLHANDLER <group___cmp_srv_itf_1ga27b3d633e424864036ec74dc03fade7a>` pfServerUnRegisterProtocolHandler;
+
+- #define :ref:`GET_ServerUnRegisterProtocolHandler <group___cmp_srv_itf_1ga2b34e886bf02d578346ea5ae7e0b33a6>` s_pfCMGetAPI2( "ServerUnRegisterProtocolHandler", (RTS_VOID_FCTPTR *)&pfServerUnRegisterProtocolHandler, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerUnRegisterProtocolHandler <group___cmp_srv_itf_1ga97d99f8694f695ef838092b79f0ad027>` pfServerUnRegisterProtocolHandler
+
+- #define :ref:`CHK_ServerUnRegisterProtocolHandler <group___cmp_srv_itf_1ga5afac2ad72c245de79ebadbde67362db>` (pfServerUnRegisterProtocolHandler != NULL)
+
+- #define :ref:`EXP_ServerUnRegisterProtocolHandler <group___cmp_srv_itf_1ga280803a590d0e8ad3a73d37e6cad70a9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerUnRegisterProtocolHandler", (RTS_UINTPTR) :ref:`ServerUnRegisterProtocolHandler <group___cmp_srv_itf_1ga7e9ff60fc3a285f61e7470662385ef14>` , 0, 0)
+
+- #define :ref:`USE_ServerFinishRequest <group___cmp_srv_itf_1gaa76aa1952bc60ee4c60d1f9a613ea21e>` :ref:`PFSERVERFINISHREQUEST <group___cmp_srv_itf_1gae79d01dfff9c2164d74cadeeff56083a>` pfServerFinishRequest;
+
+- #define :ref:`EXT_ServerFinishRequest <group___cmp_srv_itf_1ga1d96b8995927cee89a8f357a7d72b605>` extern :ref:`PFSERVERFINISHREQUEST <group___cmp_srv_itf_1gae79d01dfff9c2164d74cadeeff56083a>` pfServerFinishRequest;
+
+- #define :ref:`GET_ServerFinishRequest <group___cmp_srv_itf_1ga0af1f69982e4528fdb55aa56ed02da03>` s_pfCMGetAPI2( "ServerFinishRequest", (RTS_VOID_FCTPTR *)&pfServerFinishRequest, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerFinishRequest <group___cmp_srv_itf_1ga3bcbc511fb1a4f851fc1a93f506fd25f>` pfServerFinishRequest
+
+- #define :ref:`CHK_ServerFinishRequest <group___cmp_srv_itf_1ga56ddfbd8c4718e2d5485358b925f438a>` (pfServerFinishRequest != NULL)
+
+- #define :ref:`EXP_ServerFinishRequest <group___cmp_srv_itf_1gad29c1e364e3fe2fbcb45def51d0ed6ff>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerFinishRequest", (RTS_UINTPTR) :ref:`ServerFinishRequest <group___cmp_srv_itf_1gaeac2e260382c3b9ef40e6ba1def76e0c>` , 0, 0)
+
+- #define :ref:`USE_ServerGenerateSessionId <group___cmp_srv_itf_1ga815c8afcf793b1123c3f83a1ae974490>` :ref:`PFSERVERGENERATESESSIONID <group___cmp_srv_itf_1gae8dff254322104ea4e24aa9c14dc5df4>` pfServerGenerateSessionId;
+
+- #define :ref:`EXT_ServerGenerateSessionId <group___cmp_srv_itf_1ga633a375c638d2c82a6c72ace14f8bcb2>` extern :ref:`PFSERVERGENERATESESSIONID <group___cmp_srv_itf_1gae8dff254322104ea4e24aa9c14dc5df4>` pfServerGenerateSessionId;
+
+- #define :ref:`GET_ServerGenerateSessionId <group___cmp_srv_itf_1ga623b56fce0284992bc640824e982dcd8>` s_pfCMGetAPI2( "ServerGenerateSessionId", (RTS_VOID_FCTPTR *)&pfServerGenerateSessionId, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerGenerateSessionId <group___cmp_srv_itf_1ga506e8662c23f8ae78573f70b3e1597ab>` pfServerGenerateSessionId
+
+- #define :ref:`CHK_ServerGenerateSessionId <group___cmp_srv_itf_1ga3bbc10e392fa2c12b61bc29ba4ab6e89>` (pfServerGenerateSessionId != NULL)
+
+- #define :ref:`EXP_ServerGenerateSessionId <group___cmp_srv_itf_1gad0e59ea03fff6aa8a56d672ecac1790b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerGenerateSessionId", (RTS_UINTPTR) :ref:`ServerGenerateSessionId <group___cmp_srv_itf_1gafc3e3143d0d038cfdb26c563d0f62af0>` , 0, 0)
+
+- #define :ref:`USE_ServerGetSessionId <group___cmp_srv_itf_1gabd19dde40ab29fd0ddaa442e8a44b7c9>` :ref:`PFSERVERGETSESSIONID <group___cmp_srv_itf_1gac6943a6b3a79da533be829956550fb00>` pfServerGetSessionId;
+
+- #define :ref:`EXT_ServerGetSessionId <group___cmp_srv_itf_1gabcd0617adf4c950926b373eb10d90a98>` extern :ref:`PFSERVERGETSESSIONID <group___cmp_srv_itf_1gac6943a6b3a79da533be829956550fb00>` pfServerGetSessionId;
+
+- #define :ref:`GET_ServerGetSessionId <group___cmp_srv_itf_1ga18d7b8a096451f32f02a5098ca0607c8>` s_pfCMGetAPI2( "ServerGetSessionId", (RTS_VOID_FCTPTR *)&pfServerGetSessionId, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerGetSessionId <group___cmp_srv_itf_1gadbf4aea0f9f12d7ceaa62ef9a5959750>` pfServerGetSessionId
+
+- #define :ref:`CHK_ServerGetSessionId <group___cmp_srv_itf_1ga90202f7ca825c48684d3cad053352a53>` (pfServerGetSessionId != NULL)
+
+- #define :ref:`EXP_ServerGetSessionId <group___cmp_srv_itf_1gadde9407d90c518f95c00f2eba02a25d9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerGetSessionId", (RTS_UINTPTR) :ref:`ServerGetSessionId <group___cmp_srv_itf_1ga10d3760ff6b77de724ac210cb8a0a4a9>` , 0, 0)
+
+- #define :ref:`USE_ServerGetMaxChannels <group___cmp_srv_itf_1ga69ecc8cba0bdb4a37735b986cbd25c0a>` :ref:`PFSERVERGETMAXCHANNELS <group___cmp_srv_itf_1ga70b4336bfaf84458a5423242f3cff518>` pfServerGetMaxChannels;
+
+- #define :ref:`EXT_ServerGetMaxChannels <group___cmp_srv_itf_1gab60bea8ec2d77ad7c5587c8fc4371cb0>` extern :ref:`PFSERVERGETMAXCHANNELS <group___cmp_srv_itf_1ga70b4336bfaf84458a5423242f3cff518>` pfServerGetMaxChannels;
+
+- #define :ref:`GET_ServerGetMaxChannels <group___cmp_srv_itf_1ga356890da0d183823bc0c36d4dbef46ab>` s_pfCMGetAPI2( "ServerGetMaxChannels", (RTS_VOID_FCTPTR *)&pfServerGetMaxChannels, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerGetMaxChannels <group___cmp_srv_itf_1ga6820b6c9d2e57450b2de8a2b0b405251>` pfServerGetMaxChannels
+
+- #define :ref:`CHK_ServerGetMaxChannels <group___cmp_srv_itf_1ga25e20a512d19246096bb288fc6d7b6f6>` (pfServerGetMaxChannels != NULL)
+
+- #define :ref:`EXP_ServerGetMaxChannels <group___cmp_srv_itf_1ga0b93d9418f3d0baea00322c5d2b14c8a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerGetMaxChannels", (RTS_UINTPTR) :ref:`ServerGetMaxChannels <group___cmp_srv_itf_1gafa508e300d932cd0732ee7881c413e03>` , 0, 0)
+
+- #define :ref:`USE_ServerGetChannelInfoByIndex <group___cmp_srv_itf_1ga9e454dbea277f4e427f47a3658c3e5ef>` :ref:`PFSERVERGETCHANNELINFOBYINDEX <group___cmp_srv_itf_1ga66329610027fe8c75566e18de8927251>` pfServerGetChannelInfoByIndex;
+
+- #define :ref:`EXT_ServerGetChannelInfoByIndex <group___cmp_srv_itf_1ga7f1e840c8699e15fa1e60892cec44f8c>` extern :ref:`PFSERVERGETCHANNELINFOBYINDEX <group___cmp_srv_itf_1ga66329610027fe8c75566e18de8927251>` pfServerGetChannelInfoByIndex;
+
+- #define :ref:`GET_ServerGetChannelInfoByIndex <group___cmp_srv_itf_1gadb07e151ef663d487c26473daeda539d>` s_pfCMGetAPI2( "ServerGetChannelInfoByIndex", (RTS_VOID_FCTPTR *)&pfServerGetChannelInfoByIndex, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerGetChannelInfoByIndex <group___cmp_srv_itf_1ga161ef2d413577637685222a69457b018>` pfServerGetChannelInfoByIndex
+
+- #define :ref:`CHK_ServerGetChannelInfoByIndex <group___cmp_srv_itf_1ga64bc62616b43a16515d87ebad435e0b8>` (pfServerGetChannelInfoByIndex != NULL)
+
+- #define :ref:`EXP_ServerGetChannelInfoByIndex <group___cmp_srv_itf_1ga4d5526c3065cb6d4dc7655ab91c38605>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerGetChannelInfoByIndex", (RTS_UINTPTR) :ref:`ServerGetChannelInfoByIndex <group___cmp_srv_itf_1ga9735307044d638000c3f2241bff60362>` , 0, 0)
+
+- #define :ref:`USE_ServerGetStatus <group___cmp_srv_itf_1ga2dced1e3c76603c4a3e1fc28ab345b80>` :ref:`PFSERVERGETSTATUS <group___cmp_srv_itf_1gaaee6abfba620dfde1087921232223f99>` pfServerGetStatus;
+
+- #define :ref:`EXT_ServerGetStatus <group___cmp_srv_itf_1ga53ca40e502c5caa9b6a34a0428dc705a>` extern :ref:`PFSERVERGETSTATUS <group___cmp_srv_itf_1gaaee6abfba620dfde1087921232223f99>` pfServerGetStatus;
+
+- #define :ref:`GET_ServerGetStatus <group___cmp_srv_itf_1ga4562fc324c9619a7daf7037a221ac154>` s_pfCMGetAPI2( "ServerGetStatus", (RTS_VOID_FCTPTR *)&pfServerGetStatus, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerGetStatus <group___cmp_srv_itf_1gac549628582d6c98cac2034ec1a13b58c>` pfServerGetStatus
+
+- #define :ref:`CHK_ServerGetStatus <group___cmp_srv_itf_1gaab9723c39b3873b13ec228064b42e69d>` (pfServerGetStatus != NULL)
+
+- #define :ref:`EXP_ServerGetStatus <group___cmp_srv_itf_1ga6400c76385f3afc6f429f481ccca73ba>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerGetStatus", (RTS_UINTPTR) :ref:`ServerGetStatus <group___cmp_srv_itf_1ga75d24b922e6819c69632a5f22fcfcf00>` , 0, 0)
+
+- #define :ref:`USE_ServerSetRedundancyMode <group___cmp_srv_itf_1ga22bb8907ee1b6a05e4a8b72d43f01fcd>` :ref:`PFSERVERSETREDUNDANCYMODE <group___cmp_srv_itf_1gab89715466933a64b85df8839d65ee91a>` pfServerSetRedundancyMode;
+
+- #define :ref:`EXT_ServerSetRedundancyMode <group___cmp_srv_itf_1ga04aaa80624e2879502afe1102872863b>` extern :ref:`PFSERVERSETREDUNDANCYMODE <group___cmp_srv_itf_1gab89715466933a64b85df8839d65ee91a>` pfServerSetRedundancyMode;
+
+- #define :ref:`GET_ServerSetRedundancyMode <group___cmp_srv_itf_1ga250d2208577cb2d92751c5e2d7f9db15>` s_pfCMGetAPI2( "ServerSetRedundancyMode", (RTS_VOID_FCTPTR *)&pfServerSetRedundancyMode, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerSetRedundancyMode <group___cmp_srv_itf_1ga704b5ebc27a6b0632c837be44c55cdf5>` pfServerSetRedundancyMode
+
+- #define :ref:`CHK_ServerSetRedundancyMode <group___cmp_srv_itf_1ga03fa3aabab297668894c865d93647772>` (pfServerSetRedundancyMode != NULL)
+
+- #define :ref:`EXP_ServerSetRedundancyMode <group___cmp_srv_itf_1ga953a64308cd98037dd0221acb5a2e879>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerSetRedundancyMode", (RTS_UINTPTR) :ref:`ServerSetRedundancyMode <group___cmp_srv_itf_1ga8d2b08b616998a2c73b2e01bdace4753>` , 0, 0)
+
+- #define :ref:`USE_ServerHandleRequest <group___cmp_srv_itf_1ga0baa709579c01080b83b70e2b3895944>` :ref:`PFSERVERHANDLEREQUEST <group___cmp_srv_itf_1ga2b14752bffdaec1f28489c6593a88758>` pfServerHandleRequest;
+
+- #define :ref:`EXT_ServerHandleRequest <group___cmp_srv_itf_1gae492b223689518d4ee3f0ceed3d947b0>` extern :ref:`PFSERVERHANDLEREQUEST <group___cmp_srv_itf_1ga2b14752bffdaec1f28489c6593a88758>` pfServerHandleRequest;
+
+- #define :ref:`GET_ServerHandleRequest <group___cmp_srv_itf_1gaa25b862c16118133250eb2dd50b7001f>` s_pfCMGetAPI2( "ServerHandleRequest", (RTS_VOID_FCTPTR *)&pfServerHandleRequest, (fl), 0, 0)
+
+- #define :ref:`CAL_ServerHandleRequest <group___cmp_srv_itf_1ga90440d23050403a62e075fa0709b000a>` pfServerHandleRequest
+
+- #define :ref:`CHK_ServerHandleRequest <group___cmp_srv_itf_1gad142190151ef5eaff77487e54daabfa7>` (pfServerHandleRequest != NULL)
+
+- #define :ref:`EXP_ServerHandleRequest <group___cmp_srv_itf_1gaa1cfc7f40ee46b23ec80843f1100f638>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerHandleRequest", (RTS_UINTPTR) :ref:`ServerHandleRequest <group___cmp_srv_itf_1ga16c7f32f6b6792df66637c74803b67d4>` , 0, 0)
+
+- #define :ref:`USE_SrvGetUserNotificationService <group___cmp_srv_itf_1gab47cd3f3b50fd9e4dca25f1b0b6547a4>` :ref:`PFSRVGETUSERNOTIFICATIONSERVICE <group___cmp_srv_itf_1ga881abe77c95337879d57ee9e1ab76565>` pfSrvGetUserNotificationService;
+
+- #define :ref:`EXT_SrvGetUserNotificationService <group___cmp_srv_itf_1gae72bec8f470352071d55548cc09a3d60>` extern :ref:`PFSRVGETUSERNOTIFICATIONSERVICE <group___cmp_srv_itf_1ga881abe77c95337879d57ee9e1ab76565>` pfSrvGetUserNotificationService;
+
+- #define :ref:`GET_SrvGetUserNotificationService <group___cmp_srv_itf_1ga2861aa146548955af1c57b3ba8cf5559>` s_pfCMGetAPI2( "SrvGetUserNotificationService", (RTS_VOID_FCTPTR *)&pfSrvGetUserNotificationService, (fl), 0, 0)
+
+- #define :ref:`CAL_SrvGetUserNotificationService <group___cmp_srv_itf_1gaaef746735be83ac282ab66e23a884a70>` pfSrvGetUserNotificationService
+
+- #define :ref:`CHK_SrvGetUserNotificationService <group___cmp_srv_itf_1ga6416fb626ef6a29b35a862f32af5b227>` (pfSrvGetUserNotificationService != NULL)
+
+- #define :ref:`EXP_SrvGetUserNotificationService <group___cmp_srv_itf_1gae3964d2382b6b06c8f8c056941ee4d7f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SrvGetUserNotificationService", (RTS_UINTPTR) :ref:`SrvGetUserNotificationService <group___cmp_srv_itf_1ga15f99c5983f0573542aef291a6097bde>` , 0, 0)
+
+- #define :ref:`USE_SrvGetUserNotificationService2 <group___cmp_srv_itf_1ga44e7c7e4a112834f90b039e24a856a9c>` :ref:`PFSRVGETUSERNOTIFICATIONSERVICE2 <group___cmp_srv_itf_1ga249ab23e1ebf35388b2566c573e6bd20>` pfSrvGetUserNotificationService2;
+
+- #define :ref:`EXT_SrvGetUserNotificationService2 <group___cmp_srv_itf_1gae3dcce36a2021679bd64ce950caf9d0b>` extern :ref:`PFSRVGETUSERNOTIFICATIONSERVICE2 <group___cmp_srv_itf_1ga249ab23e1ebf35388b2566c573e6bd20>` pfSrvGetUserNotificationService2;
+
+- #define :ref:`GET_SrvGetUserNotificationService2 <group___cmp_srv_itf_1ga289afc8e21477b83a0170ed0458223c9>` s_pfCMGetAPI2( "SrvGetUserNotificationService2", (RTS_VOID_FCTPTR *)&pfSrvGetUserNotificationService2, (fl), 0, 0)
+
+- #define :ref:`CAL_SrvGetUserNotificationService2 <group___cmp_srv_itf_1gaf42d93803ee33c1dc45f6a8f21d1991f>` pfSrvGetUserNotificationService2
+
+- #define :ref:`CHK_SrvGetUserNotificationService2 <group___cmp_srv_itf_1ga1c8560b3feb0e67fee1bb1cdc9f5a3bf>` (pfSrvGetUserNotificationService2 != NULL)
+
+- #define :ref:`EXP_SrvGetUserNotificationService2 <group___cmp_srv_itf_1ga23cc71f428e4f06231a4728b8c7de240>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SrvGetUserNotificationService2", (RTS_UINTPTR) :ref:`SrvGetUserNotificationService2 <group___cmp_srv_itf_1ga10067ebfcec16fafbf3d4f2b27c41de5>` , 0, 0)
+
+- #define :ref:`ITF_CmpSrv <group___cmp_srv_itf_1ga576259b0ba6642dd1867ab9e2e096b75>`
+
+- #define :ref:`EXTITF_CmpSrv <group___cmp_srv_itf_1gabed52952896368f8abf4a8d276e498c1>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFServiceHandler <group___cmp_srv_itf_1gacb5ca4819ab517448b674d3c4f9f6f0e>`)(RTS_UI32 ulChannelId, HEADER_TAG *pHeaderTag, PROTOCOL_DATA_UNIT pduData, PROTOCOL_DATA_UNIT pduSendBuffer)
+
+- typedef RTS_RESULT(* :ref:`PFServiceHandler2 <group___cmp_srv_itf_1gab2edd68e91d1ddae625c41e33ce27b5d>`)(RTS_HANDLE hRouter, RTS_UI32 ulChannelId, HEADER_TAG *pHeaderTag, PROTOCOL_DATA_UNIT pduData, PROTOCOL_DATA_UNIT pduSendBuffer)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERAPPHANDLEREQUEST3 <group___cmp_srv_itf_1gac7cde8caa5504a311a41a1395c8159d5>`)(RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply, RTS_UI32 bFirstCall)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERREGISTERSERVICEHANDLER <group___cmp_srv_itf_1ga4f6aec15011fd70f47689e74c281fa1d>`)(RTS_UI32 ulServiceGroup, PFServiceHandler pfServiceHandler)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERREGISTERSERVICEHANDLER2 <group___cmp_srv_itf_1gac4917017297fddbfbbf689d2490d8e07>`)(RTS_UI32 ulServiceGroup, PFServiceHandler pfServiceHandler, char *pszRouter)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERREGISTERSERVICEHANDLER3 <group___cmp_srv_itf_1ga12ee732589557fb2cc031186b62b0b7c>`)(RTS_UI32 ulServiceGroup, PFServiceHandler2 pfServiceHandler2)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERUNREGISTERSERVICEHANDLER <group___cmp_srv_itf_1gacb310076ba0511c3e9ad92036823b267>`)(RTS_UI32 ulServiceGroup, PFServiceHandler pfServiceHandler)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERREGISTERPROTOCOLHANDLER <group___cmp_srv_itf_1ga4553119c110b2a0c9b8bd4ba6456b955>`)(RTS_UI16 usProtocolId, PFServiceHandler pfServiceHandler)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERREGISTERPROTOCOLHANDLER2 <group___cmp_srv_itf_1gabce937f923dea2a75c182d2f3bfc53df>`)(RTS_UI16 usProtocolId, PFServiceHandler pfServiceHandler, char *pszRouter)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERUNREGISTERPROTOCOLHANDLER <group___cmp_srv_itf_1ga27b3d633e424864036ec74dc03fade7a>`)(RTS_UI16 usProtocolId, PFServiceHandler pfServiceHandler)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERFINISHREQUEST <group___cmp_srv_itf_1gae79d01dfff9c2164d74cadeeff56083a>`)(RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduData)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERGENERATESESSIONID <group___cmp_srv_itf_1gae8dff254322104ea4e24aa9c14dc5df4>`)(RTS_UI32 *pulSessionId)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERGETSESSIONID <group___cmp_srv_itf_1gac6943a6b3a79da533be829956550fb00>`)(RTS_UI32 ulChannelHandle, RTS_UI32 *pulSessionId)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERGETMAXCHANNELS <group___cmp_srv_itf_1ga70b4336bfaf84458a5423242f3cff518>`)(RTS_UI16 *pwMaxChannels)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERGETCHANNELINFOBYINDEX <group___cmp_srv_itf_1ga66329610027fe8c75566e18de8927251>`)(RTS_UI16 ui16ChannelIndex, RTS_UI32 *pui32ServerState, CHANNELINFO *pChInfoBuffer, RTS_SIZE *psiBufferLen)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERGETSTATUS <group___cmp_srv_itf_1gaaee6abfba620dfde1087921232223f99>`)(RTS_UI32 ulChannelHandle, RTS_UI16 *pusStatus, RTS_UI8 *pbyScalingFactor, RTS_I32 *pnItemsComplete, RTS_I32 *pnTotalItems)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERSETREDUNDANCYMODE <group___cmp_srv_itf_1gab89715466933a64b85df8839d65ee91a>`)(RTS_BOOL bRedundant)
+
+- typedef RTS_RESULT(* :ref:`PFSERVERHANDLEREQUEST <group___cmp_srv_itf_1ga2b14752bffdaec1f28489c6593a88758>`)(RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply)
+
+- typedef RTS_RESULT(* :ref:`PFSRVGETUSERNOTIFICATIONSERVICE <group___cmp_srv_itf_1ga881abe77c95337879d57ee9e1ab76565>`)(BINTAGWRITER *pWriter, PROTOCOL_DATA_UNIT *pduSendBuffer)
+
+- typedef RTS_RESULT(* :ref:`PFSRVGETUSERNOTIFICATIONSERVICE2 <group___cmp_srv_itf_1ga249ab23e1ebf35388b2566c573e6bd20>`)(BINTAGWRITER *pWriter, PROTOCOL_DATA_UNIT *pduSendBuffer, unsigned long ulTagId)
+
+- typedef :ref:`ICmpSrv_C <struct_i_cmp_srv___c>` :ref:`ICmpSrv <group___cmp_srv_itf_1ga6988cf0c8f48e1808fc020f1e5858552>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`ServerAppHandleRequest3 <group___cmp_srv_itf_1gadd61540aa74bae25150b1d4fe96609ef>` (RTS_UI32 ulChannelId, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduRequest, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduReply, RTS_UI32 bFirstCall)
+
+- RTS_RESULT :ref:`ServerRegisterServiceHandler <group___cmp_srv_itf_1ga485f7aaf5009723d62200f31f6e2d65f>` (RTS_UI32 ulServiceGroup, :ref:`PFServiceHandler <group___cmp_srv_itf_1gacb5ca4819ab517448b674d3c4f9f6f0e>`  pfServiceHandler)
+
+- RTS_RESULT :ref:`ServerRegisterServiceHandler2 <group___cmp_srv_itf_1gae85b4c0435220a9662226d3f6538942b>` (RTS_UI32 ulServiceGroup, :ref:`PFServiceHandler <group___cmp_srv_itf_1gacb5ca4819ab517448b674d3c4f9f6f0e>`  pfServiceHandler, char * pszRouter)
+
+- RTS_RESULT :ref:`ServerRegisterServiceHandler3 <group___cmp_srv_itf_1gae52a96e6cd998e926a403173667e95a7>` (RTS_UI32 ulServiceGroup, :ref:`PFServiceHandler2 <group___cmp_srv_itf_1gab2edd68e91d1ddae625c41e33ce27b5d>`  pfServiceHandler2)
+
+- RTS_RESULT :ref:`ServerUnRegisterServiceHandler <group___cmp_srv_itf_1ga34a0a4d439a54dd5e75fe2f414ca0a58>` (RTS_UI32 ulServiceGroup, :ref:`PFServiceHandler <group___cmp_srv_itf_1gacb5ca4819ab517448b674d3c4f9f6f0e>`  pfServiceHandler)
+
+- RTS_RESULT :ref:`ServerRegisterProtocolHandler <group___cmp_srv_itf_1ga362a87043d6c86695ef3cfc1b4525579>` (RTS_UI16 usProtocolId, :ref:`PFServiceHandler <group___cmp_srv_itf_1gacb5ca4819ab517448b674d3c4f9f6f0e>`  pfServiceHandler)
+
+- RTS_RESULT :ref:`ServerRegisterProtocolHandler2 <group___cmp_srv_itf_1ga4032fd640d13076a903f3541679f3a87>` (RTS_UI16 usProtocolId, :ref:`PFServiceHandler <group___cmp_srv_itf_1gacb5ca4819ab517448b674d3c4f9f6f0e>`  pfServiceHandler, char * pszRouter)
+
+- RTS_RESULT :ref:`ServerUnRegisterProtocolHandler <group___cmp_srv_itf_1ga7e9ff60fc3a285f61e7470662385ef14>` (RTS_UI16 usProtocolId, :ref:`PFServiceHandler <group___cmp_srv_itf_1gacb5ca4819ab517448b674d3c4f9f6f0e>`  pfServiceHandler)
+
+- RTS_RESULT :ref:`ServerFinishRequest <group___cmp_srv_itf_1gaeac2e260382c3b9ef40e6ba1def76e0c>` (RTS_UI32 ulChannelId, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduData)
+
+- RTS_RESULT :ref:`ServerGenerateSessionId <group___cmp_srv_itf_1gafc3e3143d0d038cfdb26c563d0f62af0>` (RTS_UI32 * pulSessionId)
+
+- RTS_RESULT :ref:`ServerGetSessionId <group___cmp_srv_itf_1ga10d3760ff6b77de724ac210cb8a0a4a9>` (RTS_UI32 ulChannelHandle, RTS_UI32 * pulSessionId)
+
+- RTS_RESULT :ref:`ServerGetMaxChannels <group___cmp_srv_itf_1gafa508e300d932cd0732ee7881c413e03>` (RTS_UI16 * pwMaxChannels)
+
+- RTS_RESULT :ref:`ServerGetChannelInfoByIndex <group___cmp_srv_itf_1ga9735307044d638000c3f2241bff60362>` (RTS_UI16 ui16ChannelIndex, RTS_UI32 * pui32ServerState, :ref:`CHANNELINFO <struct_c_h_a_n_n_e_l_i_n_f_o>` * pChInfoBuffer, RTS_SIZE * psiBufferLen)
+
+- RTS_RESULT :ref:`ServerGetStatus <group___cmp_srv_itf_1ga75d24b922e6819c69632a5f22fcfcf00>` (RTS_UI32 ulChannelHandle, RTS_UI16 * pusStatus, RTS_UI8 * pbyScalingFactor, RTS_I32 * pnItemsComplete, RTS_I32 * pnTotalItems)
+
+- RTS_RESULT :ref:`ServerSetRedundancyMode <group___cmp_srv_itf_1ga8d2b08b616998a2c73b2e01bdace4753>` (RTS_BOOL bRedundant)
+
+- RTS_RESULT :ref:`ServerHandleRequest <group___cmp_srv_itf_1ga16c7f32f6b6792df66637c74803b67d4>` (RTS_UI32 ulChannelId, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduRequest, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduReply)
+
+- RTS_RESULT :ref:`SrvGetUserNotificationService <group___cmp_srv_itf_1ga15f99c5983f0573542aef291a6097bde>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>` * pduSendBuffer)
+
+- RTS_RESULT :ref:`SrvGetUserNotificationService2 <group___cmp_srv_itf_1ga10067ebfcec16fafbf3d4f2b27c41de5>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>` * pduSendBuffer, unsigned long ulTagId)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_srv_itf_1ga0046428262063f454be57aa827cdfd98:
+
+#define HEADERTAG_3S 0xCD55
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Defines the default CoDeSys layer 7 protocol.
+
+.. _group___cmp_srv_itf_1ga7c5366bf491add14d2855bf0afb01071:
+
+#define HEADERTAG_CRYPT 0x7557
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Defines the default CoDeSys encrypted layer 7 protocol.
+
+.. _group___cmp_srv_itf_1gab722842fef72272a2e942b9cf5aed4fe:
+
+#define HEADERTAG_SAFETY 0x5AF4
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Defines the default safety communication layer 7 protocol.
+
+.. _group___cmp_srv_itf_1gaacda1d5c60eb28a894c1365b7b1ba715:
+
+#define HEADERTAG_EDGE 0xED6E
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Defines the default edge - automation server layer 7 protocol.
+
+.. _group___cmp_srv_itf_1ga0dc0f08f15874e80bfe9fbda11c6731e:
+
+#define HEADERTAG_OEM_START 0xFF00
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Reserved range for OEM specific protocol handlers: 0xFF00..0xFFFF.
+
+.. _group___cmp_srv_itf_1ga48e38b4ce94aace16d91b6378d265bc7:
+
+#define HEADERTAG_OEM_END 0xFFFF
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Reserved range for OEM specific protocol handlers: 0xFF00..0xFFFF.
+
+.. _group___cmp_srv_itf_1ga19707179128bab1041be4d2d22af1426:
+
+#define USE_ServerAppHandleRequest3 :ref:`PFSERVERAPPHANDLEREQUEST3 <group___cmp_srv_itf_1gac7cde8caa5504a311a41a1395c8159d5>` pfServerAppHandleRequest3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga2f89b57fdf6a0c3d17b423bd2a09cd7c:
+
+#define EXT_ServerAppHandleRequest3 extern :ref:`PFSERVERAPPHANDLEREQUEST3 <group___cmp_srv_itf_1gac7cde8caa5504a311a41a1395c8159d5>` pfServerAppHandleRequest3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gad635bc0fcb706f2a4610d16f5f950f0d:
+
+#define GET_ServerAppHandleRequest3 s_pfCMGetAPI2( "ServerAppHandleRequest3", (RTS_VOID_FCTPTR *)&pfServerAppHandleRequest3, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga2a29b470694d4d5748dc9f1d0de0790c:
+
+#define CAL_ServerAppHandleRequest3 pfServerAppHandleRequest3
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga365ed594289128110377cfa96c19ceeb:
+
+#define CHK_ServerAppHandleRequest3 (pfServerAppHandleRequest3 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga4384d039f71a40fb202ca7c4bccaf96a:
+
+#define EXP_ServerAppHandleRequest3 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerAppHandleRequest3", (RTS_UINTPTR) :ref:`ServerAppHandleRequest3 <group___cmp_srv_itf_1gadd61540aa74bae25150b1d4fe96609ef>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gaaa397be7ace2139a06fa3b9436b3a4af:
+
+#define USE_ServerRegisterServiceHandler :ref:`PFSERVERREGISTERSERVICEHANDLER <group___cmp_srv_itf_1ga4f6aec15011fd70f47689e74c281fa1d>` pfServerRegisterServiceHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga196cfe48bddf73c35ee4c3b97d2cce21:
+
+#define EXT_ServerRegisterServiceHandler extern :ref:`PFSERVERREGISTERSERVICEHANDLER <group___cmp_srv_itf_1ga4f6aec15011fd70f47689e74c281fa1d>` pfServerRegisterServiceHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga5d242feb57a80bbd8f937f1f928d7848:
+
+#define GET_ServerRegisterServiceHandler s_pfCMGetAPI2( "ServerRegisterServiceHandler", (RTS_VOID_FCTPTR *)&pfServerRegisterServiceHandler, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga2856f1042149ceed6f26b39cc37f0562:
+
+#define CAL_ServerRegisterServiceHandler pfServerRegisterServiceHandler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gabcfc4749cc84d5655790405b1d696069:
+
+#define CHK_ServerRegisterServiceHandler (pfServerRegisterServiceHandler != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gaa11131860dfcd54f297287bfac4aebc1:
+
+#define EXP_ServerRegisterServiceHandler s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerRegisterServiceHandler", (RTS_UINTPTR) :ref:`ServerRegisterServiceHandler <group___cmp_srv_itf_1ga485f7aaf5009723d62200f31f6e2d65f>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gae1c59f13e639cade9ffb23ab483ccb99:
+
+#define USE_ServerRegisterServiceHandler2 :ref:`PFSERVERREGISTERSERVICEHANDLER2 <group___cmp_srv_itf_1gac4917017297fddbfbbf689d2490d8e07>` pfServerRegisterServiceHandler2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga33926f1d64de7283cbccfbcbaa968a54:
+
+#define EXT_ServerRegisterServiceHandler2 extern :ref:`PFSERVERREGISTERSERVICEHANDLER2 <group___cmp_srv_itf_1gac4917017297fddbfbbf689d2490d8e07>` pfServerRegisterServiceHandler2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga682849e81f7ca0453900340855cee306:
+
+#define GET_ServerRegisterServiceHandler2 s_pfCMGetAPI2( "ServerRegisterServiceHandler2", (RTS_VOID_FCTPTR *)&pfServerRegisterServiceHandler2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga959c78cf50d5bf7f0f540262330c909a:
+
+#define CAL_ServerRegisterServiceHandler2 pfServerRegisterServiceHandler2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gaf5a2a9864a218cd9b7bafaff403dfd1f:
+
+#define CHK_ServerRegisterServiceHandler2 (pfServerRegisterServiceHandler2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga967606e82a72e15ec945dcaf1222cee0:
+
+#define EXP_ServerRegisterServiceHandler2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerRegisterServiceHandler2", (RTS_UINTPTR) :ref:`ServerRegisterServiceHandler2 <group___cmp_srv_itf_1gae85b4c0435220a9662226d3f6538942b>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gaddae8407988de5cf1e0f2d3c492caa4c:
+
+#define USE_ServerRegisterServiceHandler3 :ref:`PFSERVERREGISTERSERVICEHANDLER3 <group___cmp_srv_itf_1ga12ee732589557fb2cc031186b62b0b7c>` pfServerRegisterServiceHandler3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gae82575bc9545982061fd6e3c042972e0:
+
+#define EXT_ServerRegisterServiceHandler3 extern :ref:`PFSERVERREGISTERSERVICEHANDLER3 <group___cmp_srv_itf_1ga12ee732589557fb2cc031186b62b0b7c>` pfServerRegisterServiceHandler3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga121215f2f5c0452cc6e1b8744c490312:
+
+#define GET_ServerRegisterServiceHandler3 s_pfCMGetAPI2( "ServerRegisterServiceHandler3", (RTS_VOID_FCTPTR *)&pfServerRegisterServiceHandler3, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga12b191decc00dd1a61caef84e2a4a3e2:
+
+#define CAL_ServerRegisterServiceHandler3 pfServerRegisterServiceHandler3
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gac877fb685d7e29829f7de61678f9f4ca:
+
+#define CHK_ServerRegisterServiceHandler3 (pfServerRegisterServiceHandler3 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga2a55c5df7856c0098b5002ce8d089844:
+
+#define EXP_ServerRegisterServiceHandler3 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerRegisterServiceHandler3", (RTS_UINTPTR) :ref:`ServerRegisterServiceHandler3 <group___cmp_srv_itf_1gae52a96e6cd998e926a403173667e95a7>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga930f14f8cfe62dd36c0b4b1afd4a5ed8:
+
+#define USE_ServerUnRegisterServiceHandler :ref:`PFSERVERUNREGISTERSERVICEHANDLER <group___cmp_srv_itf_1gacb310076ba0511c3e9ad92036823b267>` pfServerUnRegisterServiceHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gab4568f731878f5c7290f5c031bfb1f8a:
+
+#define EXT_ServerUnRegisterServiceHandler extern :ref:`PFSERVERUNREGISTERSERVICEHANDLER <group___cmp_srv_itf_1gacb310076ba0511c3e9ad92036823b267>` pfServerUnRegisterServiceHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga21c6e0f0b405b3dedac2ebd591397b9b:
+
+#define GET_ServerUnRegisterServiceHandler s_pfCMGetAPI2( "ServerUnRegisterServiceHandler", (RTS_VOID_FCTPTR *)&pfServerUnRegisterServiceHandler, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga2a10c4e215af336e3290f94539f2ba90:
+
+#define CAL_ServerUnRegisterServiceHandler pfServerUnRegisterServiceHandler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga4d236d4d42da353273843704765dc384:
+
+#define CHK_ServerUnRegisterServiceHandler (pfServerUnRegisterServiceHandler != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga444f4b458e6ad4b78a276e3d56e8a6f3:
+
+#define EXP_ServerUnRegisterServiceHandler s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerUnRegisterServiceHandler", (RTS_UINTPTR) :ref:`ServerUnRegisterServiceHandler <group___cmp_srv_itf_1ga34a0a4d439a54dd5e75fe2f414ca0a58>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gae85d0b7fd201d238c8776322400bc99a:
+
+#define USE_ServerRegisterProtocolHandler :ref:`PFSERVERREGISTERPROTOCOLHANDLER <group___cmp_srv_itf_1ga4553119c110b2a0c9b8bd4ba6456b955>` pfServerRegisterProtocolHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gab79614a97aa39d07052d8cf02e801cf2:
+
+#define EXT_ServerRegisterProtocolHandler extern :ref:`PFSERVERREGISTERPROTOCOLHANDLER <group___cmp_srv_itf_1ga4553119c110b2a0c9b8bd4ba6456b955>` pfServerRegisterProtocolHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gafc1a8a44df11d0a96eea350d2276c415:
+
+#define GET_ServerRegisterProtocolHandler s_pfCMGetAPI2( "ServerRegisterProtocolHandler", (RTS_VOID_FCTPTR *)&pfServerRegisterProtocolHandler, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gad0d9376cd59f98ac423ca15ffe1d77ff:
+
+#define CAL_ServerRegisterProtocolHandler pfServerRegisterProtocolHandler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga34107c5becb3a95ebbc6b72ec0b5dded:
+
+#define CHK_ServerRegisterProtocolHandler (pfServerRegisterProtocolHandler != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gac5b09fbb71b15c2e12e6e4bdc5492ebd:
+
+#define EXP_ServerRegisterProtocolHandler s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerRegisterProtocolHandler", (RTS_UINTPTR) :ref:`ServerRegisterProtocolHandler <group___cmp_srv_itf_1ga362a87043d6c86695ef3cfc1b4525579>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga2f83d3d81ffc8daef8bd30451dabd26b:
+
+#define USE_ServerRegisterProtocolHandler2 :ref:`PFSERVERREGISTERPROTOCOLHANDLER2 <group___cmp_srv_itf_1gabce937f923dea2a75c182d2f3bfc53df>` pfServerRegisterProtocolHandler2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gadbf011d0909cfdd59848ce3f04aaf03c:
+
+#define EXT_ServerRegisterProtocolHandler2 extern :ref:`PFSERVERREGISTERPROTOCOLHANDLER2 <group___cmp_srv_itf_1gabce937f923dea2a75c182d2f3bfc53df>` pfServerRegisterProtocolHandler2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga2b1339840622f6cbd1660ef9fb0d830c:
+
+#define GET_ServerRegisterProtocolHandler2 s_pfCMGetAPI2( "ServerRegisterProtocolHandler2", (RTS_VOID_FCTPTR *)&pfServerRegisterProtocolHandler2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga2e49aa64442a43934856f6adead69074:
+
+#define CAL_ServerRegisterProtocolHandler2 pfServerRegisterProtocolHandler2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gaf7b19b202adfd6e3e2f33b120b21d0f7:
+
+#define CHK_ServerRegisterProtocolHandler2 (pfServerRegisterProtocolHandler2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga3ae8b1015e7532d1ab90e1ea29e27d8d:
+
+#define EXP_ServerRegisterProtocolHandler2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerRegisterProtocolHandler2", (RTS_UINTPTR) :ref:`ServerRegisterProtocolHandler2 <group___cmp_srv_itf_1ga4032fd640d13076a903f3541679f3a87>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gaf754823321f07332a9fa274e173d262e:
+
+#define USE_ServerUnRegisterProtocolHandler :ref:`PFSERVERUNREGISTERPROTOCOLHANDLER <group___cmp_srv_itf_1ga27b3d633e424864036ec74dc03fade7a>` pfServerUnRegisterProtocolHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga68a950eab8666edd1c78060dfbbdd4d9:
+
+#define EXT_ServerUnRegisterProtocolHandler extern :ref:`PFSERVERUNREGISTERPROTOCOLHANDLER <group___cmp_srv_itf_1ga27b3d633e424864036ec74dc03fade7a>` pfServerUnRegisterProtocolHandler;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga2b34e886bf02d578346ea5ae7e0b33a6:
+
+#define GET_ServerUnRegisterProtocolHandler s_pfCMGetAPI2( "ServerUnRegisterProtocolHandler", (RTS_VOID_FCTPTR *)&pfServerUnRegisterProtocolHandler, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga97d99f8694f695ef838092b79f0ad027:
+
+#define CAL_ServerUnRegisterProtocolHandler pfServerUnRegisterProtocolHandler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga5afac2ad72c245de79ebadbde67362db:
+
+#define CHK_ServerUnRegisterProtocolHandler (pfServerUnRegisterProtocolHandler != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga280803a590d0e8ad3a73d37e6cad70a9:
+
+#define EXP_ServerUnRegisterProtocolHandler s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerUnRegisterProtocolHandler", (RTS_UINTPTR) :ref:`ServerUnRegisterProtocolHandler <group___cmp_srv_itf_1ga7e9ff60fc3a285f61e7470662385ef14>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gaa76aa1952bc60ee4c60d1f9a613ea21e:
+
+#define USE_ServerFinishRequest :ref:`PFSERVERFINISHREQUEST <group___cmp_srv_itf_1gae79d01dfff9c2164d74cadeeff56083a>` pfServerFinishRequest;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga1d96b8995927cee89a8f357a7d72b605:
+
+#define EXT_ServerFinishRequest extern :ref:`PFSERVERFINISHREQUEST <group___cmp_srv_itf_1gae79d01dfff9c2164d74cadeeff56083a>` pfServerFinishRequest;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga0af1f69982e4528fdb55aa56ed02da03:
+
+#define GET_ServerFinishRequest s_pfCMGetAPI2( "ServerFinishRequest", (RTS_VOID_FCTPTR *)&pfServerFinishRequest, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga3bcbc511fb1a4f851fc1a93f506fd25f:
+
+#define CAL_ServerFinishRequest pfServerFinishRequest
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga56ddfbd8c4718e2d5485358b925f438a:
+
+#define CHK_ServerFinishRequest (pfServerFinishRequest != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gad29c1e364e3fe2fbcb45def51d0ed6ff:
+
+#define EXP_ServerFinishRequest s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerFinishRequest", (RTS_UINTPTR) :ref:`ServerFinishRequest <group___cmp_srv_itf_1gaeac2e260382c3b9ef40e6ba1def76e0c>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga815c8afcf793b1123c3f83a1ae974490:
+
+#define USE_ServerGenerateSessionId :ref:`PFSERVERGENERATESESSIONID <group___cmp_srv_itf_1gae8dff254322104ea4e24aa9c14dc5df4>` pfServerGenerateSessionId;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga633a375c638d2c82a6c72ace14f8bcb2:
+
+#define EXT_ServerGenerateSessionId extern :ref:`PFSERVERGENERATESESSIONID <group___cmp_srv_itf_1gae8dff254322104ea4e24aa9c14dc5df4>` pfServerGenerateSessionId;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga623b56fce0284992bc640824e982dcd8:
+
+#define GET_ServerGenerateSessionId s_pfCMGetAPI2( "ServerGenerateSessionId", (RTS_VOID_FCTPTR *)&pfServerGenerateSessionId, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga506e8662c23f8ae78573f70b3e1597ab:
+
+#define CAL_ServerGenerateSessionId pfServerGenerateSessionId
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga3bbc10e392fa2c12b61bc29ba4ab6e89:
+
+#define CHK_ServerGenerateSessionId (pfServerGenerateSessionId != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gad0e59ea03fff6aa8a56d672ecac1790b:
+
+#define EXP_ServerGenerateSessionId s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerGenerateSessionId", (RTS_UINTPTR) :ref:`ServerGenerateSessionId <group___cmp_srv_itf_1gafc3e3143d0d038cfdb26c563d0f62af0>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gabd19dde40ab29fd0ddaa442e8a44b7c9:
+
+#define USE_ServerGetSessionId :ref:`PFSERVERGETSESSIONID <group___cmp_srv_itf_1gac6943a6b3a79da533be829956550fb00>` pfServerGetSessionId;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gabcd0617adf4c950926b373eb10d90a98:
+
+#define EXT_ServerGetSessionId extern :ref:`PFSERVERGETSESSIONID <group___cmp_srv_itf_1gac6943a6b3a79da533be829956550fb00>` pfServerGetSessionId;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga18d7b8a096451f32f02a5098ca0607c8:
+
+#define GET_ServerGetSessionId s_pfCMGetAPI2( "ServerGetSessionId", (RTS_VOID_FCTPTR *)&pfServerGetSessionId, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gadbf4aea0f9f12d7ceaa62ef9a5959750:
+
+#define CAL_ServerGetSessionId pfServerGetSessionId
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga90202f7ca825c48684d3cad053352a53:
+
+#define CHK_ServerGetSessionId (pfServerGetSessionId != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gadde9407d90c518f95c00f2eba02a25d9:
+
+#define EXP_ServerGetSessionId s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerGetSessionId", (RTS_UINTPTR) :ref:`ServerGetSessionId <group___cmp_srv_itf_1ga10d3760ff6b77de724ac210cb8a0a4a9>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga69ecc8cba0bdb4a37735b986cbd25c0a:
+
+#define USE_ServerGetMaxChannels :ref:`PFSERVERGETMAXCHANNELS <group___cmp_srv_itf_1ga70b4336bfaf84458a5423242f3cff518>` pfServerGetMaxChannels;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gab60bea8ec2d77ad7c5587c8fc4371cb0:
+
+#define EXT_ServerGetMaxChannels extern :ref:`PFSERVERGETMAXCHANNELS <group___cmp_srv_itf_1ga70b4336bfaf84458a5423242f3cff518>` pfServerGetMaxChannels;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga356890da0d183823bc0c36d4dbef46ab:
+
+#define GET_ServerGetMaxChannels s_pfCMGetAPI2( "ServerGetMaxChannels", (RTS_VOID_FCTPTR *)&pfServerGetMaxChannels, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga6820b6c9d2e57450b2de8a2b0b405251:
+
+#define CAL_ServerGetMaxChannels pfServerGetMaxChannels
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga25e20a512d19246096bb288fc6d7b6f6:
+
+#define CHK_ServerGetMaxChannels (pfServerGetMaxChannels != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga0b93d9418f3d0baea00322c5d2b14c8a:
+
+#define EXP_ServerGetMaxChannels s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerGetMaxChannels", (RTS_UINTPTR) :ref:`ServerGetMaxChannels <group___cmp_srv_itf_1gafa508e300d932cd0732ee7881c413e03>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga9e454dbea277f4e427f47a3658c3e5ef:
+
+#define USE_ServerGetChannelInfoByIndex :ref:`PFSERVERGETCHANNELINFOBYINDEX <group___cmp_srv_itf_1ga66329610027fe8c75566e18de8927251>` pfServerGetChannelInfoByIndex;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga7f1e840c8699e15fa1e60892cec44f8c:
+
+#define EXT_ServerGetChannelInfoByIndex extern :ref:`PFSERVERGETCHANNELINFOBYINDEX <group___cmp_srv_itf_1ga66329610027fe8c75566e18de8927251>` pfServerGetChannelInfoByIndex;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gadb07e151ef663d487c26473daeda539d:
+
+#define GET_ServerGetChannelInfoByIndex s_pfCMGetAPI2( "ServerGetChannelInfoByIndex", (RTS_VOID_FCTPTR *)&pfServerGetChannelInfoByIndex, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga161ef2d413577637685222a69457b018:
+
+#define CAL_ServerGetChannelInfoByIndex pfServerGetChannelInfoByIndex
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga64bc62616b43a16515d87ebad435e0b8:
+
+#define CHK_ServerGetChannelInfoByIndex (pfServerGetChannelInfoByIndex != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga4d5526c3065cb6d4dc7655ab91c38605:
+
+#define EXP_ServerGetChannelInfoByIndex s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerGetChannelInfoByIndex", (RTS_UINTPTR) :ref:`ServerGetChannelInfoByIndex <group___cmp_srv_itf_1ga9735307044d638000c3f2241bff60362>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga2dced1e3c76603c4a3e1fc28ab345b80:
+
+#define USE_ServerGetStatus :ref:`PFSERVERGETSTATUS <group___cmp_srv_itf_1gaaee6abfba620dfde1087921232223f99>` pfServerGetStatus;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga53ca40e502c5caa9b6a34a0428dc705a:
+
+#define EXT_ServerGetStatus extern :ref:`PFSERVERGETSTATUS <group___cmp_srv_itf_1gaaee6abfba620dfde1087921232223f99>` pfServerGetStatus;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga4562fc324c9619a7daf7037a221ac154:
+
+#define GET_ServerGetStatus s_pfCMGetAPI2( "ServerGetStatus", (RTS_VOID_FCTPTR *)&pfServerGetStatus, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gac549628582d6c98cac2034ec1a13b58c:
+
+#define CAL_ServerGetStatus pfServerGetStatus
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gaab9723c39b3873b13ec228064b42e69d:
+
+#define CHK_ServerGetStatus (pfServerGetStatus != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga6400c76385f3afc6f429f481ccca73ba:
+
+#define EXP_ServerGetStatus s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerGetStatus", (RTS_UINTPTR) :ref:`ServerGetStatus <group___cmp_srv_itf_1ga75d24b922e6819c69632a5f22fcfcf00>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga22bb8907ee1b6a05e4a8b72d43f01fcd:
+
+#define USE_ServerSetRedundancyMode :ref:`PFSERVERSETREDUNDANCYMODE <group___cmp_srv_itf_1gab89715466933a64b85df8839d65ee91a>` pfServerSetRedundancyMode;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga04aaa80624e2879502afe1102872863b:
+
+#define EXT_ServerSetRedundancyMode extern :ref:`PFSERVERSETREDUNDANCYMODE <group___cmp_srv_itf_1gab89715466933a64b85df8839d65ee91a>` pfServerSetRedundancyMode;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga250d2208577cb2d92751c5e2d7f9db15:
+
+#define GET_ServerSetRedundancyMode s_pfCMGetAPI2( "ServerSetRedundancyMode", (RTS_VOID_FCTPTR *)&pfServerSetRedundancyMode, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga704b5ebc27a6b0632c837be44c55cdf5:
+
+#define CAL_ServerSetRedundancyMode pfServerSetRedundancyMode
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga03fa3aabab297668894c865d93647772:
+
+#define CHK_ServerSetRedundancyMode (pfServerSetRedundancyMode != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga953a64308cd98037dd0221acb5a2e879:
+
+#define EXP_ServerSetRedundancyMode s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerSetRedundancyMode", (RTS_UINTPTR) :ref:`ServerSetRedundancyMode <group___cmp_srv_itf_1ga8d2b08b616998a2c73b2e01bdace4753>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga0baa709579c01080b83b70e2b3895944:
+
+#define USE_ServerHandleRequest :ref:`PFSERVERHANDLEREQUEST <group___cmp_srv_itf_1ga2b14752bffdaec1f28489c6593a88758>` pfServerHandleRequest;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gae492b223689518d4ee3f0ceed3d947b0:
+
+#define EXT_ServerHandleRequest extern :ref:`PFSERVERHANDLEREQUEST <group___cmp_srv_itf_1ga2b14752bffdaec1f28489c6593a88758>` pfServerHandleRequest;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gaa25b862c16118133250eb2dd50b7001f:
+
+#define GET_ServerHandleRequest s_pfCMGetAPI2( "ServerHandleRequest", (RTS_VOID_FCTPTR *)&pfServerHandleRequest, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga90440d23050403a62e075fa0709b000a:
+
+#define CAL_ServerHandleRequest pfServerHandleRequest
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gad142190151ef5eaff77487e54daabfa7:
+
+#define CHK_ServerHandleRequest (pfServerHandleRequest != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gaa1cfc7f40ee46b23ec80843f1100f638:
+
+#define EXP_ServerHandleRequest s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ServerHandleRequest", (RTS_UINTPTR) :ref:`ServerHandleRequest <group___cmp_srv_itf_1ga16c7f32f6b6792df66637c74803b67d4>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gab47cd3f3b50fd9e4dca25f1b0b6547a4:
+
+#define USE_SrvGetUserNotificationService :ref:`PFSRVGETUSERNOTIFICATIONSERVICE <group___cmp_srv_itf_1ga881abe77c95337879d57ee9e1ab76565>` pfSrvGetUserNotificationService;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gae72bec8f470352071d55548cc09a3d60:
+
+#define EXT_SrvGetUserNotificationService extern :ref:`PFSRVGETUSERNOTIFICATIONSERVICE <group___cmp_srv_itf_1ga881abe77c95337879d57ee9e1ab76565>` pfSrvGetUserNotificationService;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga2861aa146548955af1c57b3ba8cf5559:
+
+#define GET_SrvGetUserNotificationService s_pfCMGetAPI2( "SrvGetUserNotificationService", (RTS_VOID_FCTPTR *)&pfSrvGetUserNotificationService, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gaaef746735be83ac282ab66e23a884a70:
+
+#define CAL_SrvGetUserNotificationService pfSrvGetUserNotificationService
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga6416fb626ef6a29b35a862f32af5b227:
+
+#define CHK_SrvGetUserNotificationService (pfSrvGetUserNotificationService != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gae3964d2382b6b06c8f8c056941ee4d7f:
+
+#define EXP_SrvGetUserNotificationService s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SrvGetUserNotificationService", (RTS_UINTPTR) :ref:`SrvGetUserNotificationService <group___cmp_srv_itf_1ga15f99c5983f0573542aef291a6097bde>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga44e7c7e4a112834f90b039e24a856a9c:
+
+#define USE_SrvGetUserNotificationService2 :ref:`PFSRVGETUSERNOTIFICATIONSERVICE2 <group___cmp_srv_itf_1ga249ab23e1ebf35388b2566c573e6bd20>` pfSrvGetUserNotificationService2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gae3dcce36a2021679bd64ce950caf9d0b:
+
+#define EXT_SrvGetUserNotificationService2 extern :ref:`PFSRVGETUSERNOTIFICATIONSERVICE2 <group___cmp_srv_itf_1ga249ab23e1ebf35388b2566c573e6bd20>` pfSrvGetUserNotificationService2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga289afc8e21477b83a0170ed0458223c9:
+
+#define GET_SrvGetUserNotificationService2 s_pfCMGetAPI2( "SrvGetUserNotificationService2", (RTS_VOID_FCTPTR *)&pfSrvGetUserNotificationService2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gaf42d93803ee33c1dc45f6a8f21d1991f:
+
+#define CAL_SrvGetUserNotificationService2 pfSrvGetUserNotificationService2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga1c8560b3feb0e67fee1bb1cdc9f5a3bf:
+
+#define CHK_SrvGetUserNotificationService2 (pfSrvGetUserNotificationService2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga23cc71f428e4f06231a4728b8c7de240:
+
+#define EXP_SrvGetUserNotificationService2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SrvGetUserNotificationService2", (RTS_UINTPTR) :ref:`SrvGetUserNotificationService2 <group___cmp_srv_itf_1ga10067ebfcec16fafbf3d4f2b27c41de5>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga576259b0ba6642dd1867ab9e2e096b75:
+
+#define ITF_CmpSrv
+^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gabed52952896368f8abf4a8d276e498c1:
+
+#define EXTITF_CmpSrv
+^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_srv_itf_1gacb5ca4819ab517448b674d3c4f9f6f0e:
+
+typedef RTS_RESULT( * PFServiceHandler) (RTS_UI32 ulChannelId, HEADER_TAG *pHeaderTag, PROTOCOL_DATA_UNIT pduData, PROTOCOL_DATA_UNIT pduSendBuffer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Servers register this callback function to process services of a service group. The reply to such a request must be sent using FinishRequest.
+
+**Parameters**
+
++---------+---------------+------------------------------------------------------------------------------------------+
+| [in]    | ulChannelId   | Id of the channel on which the request arrived                                           |
++---------+---------------+------------------------------------------------------------------------------------------+
+| [in]    | pHeaderTag    | Pointer to the header structure of the message                                           |
++---------+---------------+------------------------------------------------------------------------------------------+
+| [in]    | pduData       | References the request data (without header)                                             |
++---------+---------------+------------------------------------------------------------------------------------------+
+| [in]    | pduSendBuffer | Contains the length of the buffer for the reply data, and the buffer for the replay data |
++---------+---------------+------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Should return ERR_OK (succeeded immediately) or ERR_PENDING (service is handled asynchronously). All other results abort the request.
+
+.. _group___cmp_srv_itf_1gab2edd68e91d1ddae625c41e33ce27b5d:
+
+typedef RTS_RESULT( * PFServiceHandler2) (RTS_HANDLE hRouter, RTS_UI32 ulChannelId, HEADER_TAG *pHeaderTag, PROTOCOL_DATA_UNIT pduData, PROTOCOL_DATA_UNIT pduSendBuffer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Obsolete: Use PFServiceHandler (above) instead. Will be removed in future versions!
+
+Servers register this callback function to process services of a service group. The reply to such a request must be sent using FinishRequest.
+
+**Parameters**
+
++---------+---------------+------------------------------------------------------------------------------------------+
+| [in]    | hRouter       | Obsolete parameter, should be set to RTS_INVALID_HANDLE.                                 |
++---------+---------------+------------------------------------------------------------------------------------------+
+| [in]    | ulChannelId   | Id of the channel on which the request arrived                                           |
++---------+---------------+------------------------------------------------------------------------------------------+
+| [in]    | pHeaderTag    | Pointer to the header structure of the message                                           |
++---------+---------------+------------------------------------------------------------------------------------------+
+| [in]    | pduData       | References the request data (without header)                                             |
++---------+---------------+------------------------------------------------------------------------------------------+
+| [in]    | pduSendBuffer | Contains the length of the buffer for the reply data, and the buffer for the replay data |
++---------+---------------+------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Should return ERR_OK (succeeded immediately) or ERR_PENDING (service is handled asynchronously). All other results abort the request.
+
+.. _group___cmp_srv_itf_1gac7cde8caa5504a311a41a1395c8159d5:
+
+typedef RTS_RESULT( *  PFSERVERAPPHANDLEREQUEST3) (RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply, RTS_UI32 bFirstCall)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga4f6aec15011fd70f47689e74c281fa1d:
+
+typedef RTS_RESULT( *  PFSERVERREGISTERSERVICEHANDLER) (RTS_UI32 ulServiceGroup, PFServiceHandler pfServiceHandler)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gac4917017297fddbfbbf689d2490d8e07:
+
+typedef RTS_RESULT( *  PFSERVERREGISTERSERVICEHANDLER2) (RTS_UI32 ulServiceGroup, PFServiceHandler pfServiceHandler, char *pszRouter)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga12ee732589557fb2cc031186b62b0b7c:
+
+typedef RTS_RESULT( *  PFSERVERREGISTERSERVICEHANDLER3) (RTS_UI32 ulServiceGroup, PFServiceHandler2 pfServiceHandler2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gacb310076ba0511c3e9ad92036823b267:
+
+typedef RTS_RESULT( *  PFSERVERUNREGISTERSERVICEHANDLER) (RTS_UI32 ulServiceGroup, PFServiceHandler pfServiceHandler)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga4553119c110b2a0c9b8bd4ba6456b955:
+
+typedef RTS_RESULT( *  PFSERVERREGISTERPROTOCOLHANDLER) (RTS_UI16 usProtocolId, PFServiceHandler pfServiceHandler)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gabce937f923dea2a75c182d2f3bfc53df:
+
+typedef RTS_RESULT( *  PFSERVERREGISTERPROTOCOLHANDLER2) (RTS_UI16 usProtocolId, PFServiceHandler pfServiceHandler, char *pszRouter)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga27b3d633e424864036ec74dc03fade7a:
+
+typedef RTS_RESULT( *  PFSERVERUNREGISTERPROTOCOLHANDLER) (RTS_UI16 usProtocolId, PFServiceHandler pfServiceHandler)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gae79d01dfff9c2164d74cadeeff56083a:
+
+typedef RTS_RESULT( *  PFSERVERFINISHREQUEST) (RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduData)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gae8dff254322104ea4e24aa9c14dc5df4:
+
+typedef RTS_RESULT( *  PFSERVERGENERATESESSIONID) (RTS_UI32 *pulSessionId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gac6943a6b3a79da533be829956550fb00:
+
+typedef RTS_RESULT( *  PFSERVERGETSESSIONID) (RTS_UI32 ulChannelHandle, RTS_UI32 *pulSessionId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga70b4336bfaf84458a5423242f3cff518:
+
+typedef RTS_RESULT( *  PFSERVERGETMAXCHANNELS) (RTS_UI16 *pwMaxChannels)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga66329610027fe8c75566e18de8927251:
+
+typedef RTS_RESULT( *  PFSERVERGETCHANNELINFOBYINDEX) (RTS_UI16 ui16ChannelIndex, RTS_UI32 *pui32ServerState, CHANNELINFO *pChInfoBuffer, RTS_SIZE *psiBufferLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gaaee6abfba620dfde1087921232223f99:
+
+typedef RTS_RESULT( *  PFSERVERGETSTATUS) (RTS_UI32 ulChannelHandle, RTS_UI16 *pusStatus, RTS_UI8 *pbyScalingFactor, RTS_I32 *pnItemsComplete, RTS_I32 *pnTotalItems)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1gab89715466933a64b85df8839d65ee91a:
+
+typedef RTS_RESULT( *  PFSERVERSETREDUNDANCYMODE) (RTS_BOOL bRedundant)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga2b14752bffdaec1f28489c6593a88758:
+
+typedef RTS_RESULT( *  PFSERVERHANDLEREQUEST) (RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga881abe77c95337879d57ee9e1ab76565:
+
+typedef RTS_RESULT( *  PFSRVGETUSERNOTIFICATIONSERVICE) (BINTAGWRITER *pWriter, PROTOCOL_DATA_UNIT *pduSendBuffer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga249ab23e1ebf35388b2566c573e6bd20:
+
+typedef RTS_RESULT( *  PFSRVGETUSERNOTIFICATIONSERVICE2) (BINTAGWRITER *pWriter, PROTOCOL_DATA_UNIT *pduSendBuffer, unsigned long ulTagId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_srv_itf_1ga6988cf0c8f48e1808fc020f1e5858552:
+
+typedef ICmpSrv_C ICmpSrv
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_srv_itf_1gadd61540aa74bae25150b1d4fe96609ef:
+
+RTS_RESULT ServerAppHandleRequest3 (RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply, RTS_UI32 bFirstCall)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Handle one service request from the communication layer below (channel server)
+
+**Parameters**
+
++---------+-------------+---------------------------------------------------------------------------------------------+
+| [in]    | ulChannelId | Id of the channel on which the request arrived                                              |
++---------+-------------+---------------------------------------------------------------------------------------------+
+| [in]    | pduRequest  | Pointer to the request                                                                      |
++---------+-------------+---------------------------------------------------------------------------------------------+
+| [out]   | pduReply    | Pointer to the request reply buffer                                                         |
++---------+-------------+---------------------------------------------------------------------------------------------+
+| [in]    | bFirstCall  | 0: Tells the function, if it was already called for the same request before (0) or not (1). |
++---------+-------------+---------------------------------------------------------------------------------------------+
+
+**Return values**
+
++----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_OK         | Received service was completely handled.                                                                                                                 |
++----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_PENDING    | Received service will be handled asynchronously, but the caller has not to take care about this anymore.                                                 |
++----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_CALL_AGAIN | Received service will be handled asynchronously. To progress this function have to be called again for the same received service data with bFirstCall=0. |
++----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_...        | Another error occurred, channel should be closed.                                                                                                        |
++----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_srv_itf_1ga485f7aaf5009723d62200f31f6e2d65f:
+
+RTS_RESULT ServerRegisterServiceHandler (RTS_UI32 ulServiceGroup, PFServiceHandler pfServiceHandler)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Register a handler for requests to a specific service group
+
+**Parameters**
+
++---------+------------------+-------------------------------------------------------------+
+| [in]    | ulServiceGroup   | The service group which is handled by the provided function |
++---------+------------------+-------------------------------------------------------------+
+| [in]    | pfServiceHandler | A handler function.                                         |
++---------+------------------+-------------------------------------------------------------+
+
+.. _group___cmp_srv_itf_1gae85b4c0435220a9662226d3f6538942b:
+
+RTS_RESULT ServerRegisterServiceHandler2 (RTS_UI32 ulServiceGroup, PFServiceHandler pfServiceHandler, char *pszRouter)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Obsolete: Use ServerRegisterServiceHandler instead. Will be removed in future versions!
+
+Register a handler for requests to a specific service group
+
+**Parameters**
+
++---------+------------------+-------------------------------------------------------------+
+| [in]    | ulServiceGroup   | The service group which is handled by the provided function |
++---------+------------------+-------------------------------------------------------------+
+| [in]    | pfServiceHandler | A handler function.                                         |
++---------+------------------+-------------------------------------------------------------+
+| [in]    | pszRouter        | Obsolete parameter, should be set to NULL.                  |
++---------+------------------+-------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_srv_itf_1gae52a96e6cd998e926a403173667e95a7:
+
+RTS_RESULT ServerRegisterServiceHandler3 (RTS_UI32 ulServiceGroup, PFServiceHandler2 pfServiceHandler2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Obsolete: Use ServerRegisterServiceHandler instead. Will be removed in future versions!
+
+Register a handler for requests to a specific service group
+
+**Parameters**
+
++---------+-------------------+-------------------------------------------------------------+
+| [in]    | ulServiceGroup    | The service group which is handled by the provided function |
++---------+-------------------+-------------------------------------------------------------+
+| [in]    | pfServiceHandler2 | A handler function.                                         |
++---------+-------------------+-------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_srv_itf_1ga34a0a4d439a54dd5e75fe2f414ca0a58:
+
+RTS_RESULT ServerUnRegisterServiceHandler (RTS_UI32 ulServiceGroup, PFServiceHandler pfServiceHandler)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Unregister a handler for requests to a specific service group
+
+**Parameters**
+
++---------+------------------+-------------------------------------------------------------+
+| [in]    | ulServiceGroup   | The service group which is handled by the provided function |
++---------+------------------+-------------------------------------------------------------+
+| [in]    | pfServiceHandler | A handler function.                                         |
++---------+------------------+-------------------------------------------------------------+
+
+.. _group___cmp_srv_itf_1ga362a87043d6c86695ef3cfc1b4525579:
+
+RTS_RESULT ServerRegisterProtocolHandler (RTS_UI16 usProtocolId, PFServiceHandler pfServiceHandler)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Register a handler for requests of a specific protocol other then HEADERTAG_3S. All requests with that protocol will be sent to this handler.
+
+**Parameters**
+
++---------+------------------+-----------------------------------------------------------+
+| [in]    | usProtocolId     | The protocol id which is handled by the provided function |
++---------+------------------+-----------------------------------------------------------+
+| [in]    | pfServiceHandler | A handler function.                                       |
++---------+------------------+-----------------------------------------------------------+
+
+.. _group___cmp_srv_itf_1ga4032fd640d13076a903f3541679f3a87:
+
+RTS_RESULT ServerRegisterProtocolHandler2 (RTS_UI16 usProtocolId, PFServiceHandler pfServiceHandler, char *pszRouter)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Obsolete: Use ServerRegisterProtocolHandler instead. Will be removed in future versions!
+
+Register a handler for requests of a specific protocol other then HEADERTAG_3S. All requests with that protocol will be sent to this handler.
+
+**Parameters**
+
++---------+------------------+-----------------------------------------------------------+
+| [in]    | usProtocolId     | The protocol id which is handled by the provided function |
++---------+------------------+-----------------------------------------------------------+
+| [in]    | pfServiceHandler | A handler function.                                       |
++---------+------------------+-----------------------------------------------------------+
+| [in]    | pszRouter        | Obsolete parameter, should be set to NULL.                |
++---------+------------------+-----------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_srv_itf_1ga7e9ff60fc3a285f61e7470662385ef14:
+
+RTS_RESULT ServerUnRegisterProtocolHandler (RTS_UI16 usProtocolId, PFServiceHandler pfServiceHandler)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Unregister a handler for requests of a specific protocol.
+
+**Parameters**
+
++---------+------------------+-----------------------------------------------------------+
+| [in]    | usProtocolId     | The protocol id which is handled by the provided function |
++---------+------------------+-----------------------------------------------------------+
+| [in]    | pfServiceHandler | A handler function.                                       |
++---------+------------------+-----------------------------------------------------------+
+
+.. _group___cmp_srv_itf_1gaeac2e260382c3b9ef40e6ba1def76e0c:
+
+RTS_RESULT ServerFinishRequest (RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduData)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Send a reply to a request previously received by a service handler
+
+**Parameters**
+
++---------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulChannelId | Id of the channel on which to answer a reply. Must be the same that was passed in to the service handler function.                                                                                       |
++---------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pduData     | Contains the buffer and the length of the reply data. Buffer must be the same as the one passed in to the service handler function, the length must not be greater then the maximum reply buffer length. |
++---------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_srv_itf_1gafc3e3143d0d038cfdb26c563d0f62af0:
+
+RTS_RESULT ServerGenerateSessionId (RTS_UI32 *pulSessionId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Generates a session Id, which is just a random number.
+
+**Parameters**
+
++---------+--------------+----------------------------------------------+
+| [out]   | pulSessionId | Pointer to get back the generated session Id |
++---------+--------------+----------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_srv_itf_1ga10d3760ff6b77de724ac210cb8a0a4a9:
+
+RTS_RESULT ServerGetSessionId (RTS_UI32 ulChannelHandle, RTS_UI32 *pulSessionId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieves the stored session id from the session instance assigned to this channel.
+
+**Parameters**
+
++---------+-----------------+------------------------------------------------------------+
+| [in]    | ulChannelHandle | Id of the channel for which the session id should be read. |
++---------+-----------------+------------------------------------------------------------+
+| [out]   | pulSessionId    | Pointer to return the session id.                          |
++---------+-----------------+------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_srv_itf_1gafa508e300d932cd0732ee7881c413e03:
+
+RTS_RESULT ServerGetMaxChannels (RTS_UI16 *pwMaxChannels)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieves the number of available server channels. This is equal to the max. number of clients, which can be connected at the same time.
+
+**Parameters**
+
++---------+---------------+---------------------+
+| [out]   | pwMaxChannels | Number of channels. |
++---------+---------------+---------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_srv_itf_1ga9735307044d638000c3f2241bff60362:
+
+RTS_RESULT ServerGetChannelInfoByIndex (RTS_UI16 ui16ChannelIndex, RTS_UI32 *pui32ServerState, CHANNELINFO *pChInfoBuffer, RTS_SIZE *psiBufferLen)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieves general information for the specified server channel. This function is intended for information purposes only.
+
+**Parameters**
+
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ui16ChannelIndex | Index of the channel. Allowed range: 0..MaxChannels-1.                                                                                                               |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pui32ServerState | State of the server channel, see category "channel server state" for CSSTATE_ values in CmpCommunicationLibItf.                                                      |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [inout] | pChInfoBuffer    | Caller allocated buffer, which is filled by the :ref:`CHANNELINFO <struct_c_h_a_n_n_e_l_i_n_f_o>` structure. If the state is CSSTATE_FREE, no structure is returned. |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [inout] | psiBufferLen     | Pointer to the size of the buffer in bytes, returns the number of copied bytes.                                                                                      |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_srv_itf_1ga75d24b922e6819c69632a5f22fcfcf00:
+
+RTS_RESULT ServerGetStatus (RTS_UI32 ulChannelHandle, RTS_UI16 *pusStatus, RTS_UI8 *pbyScalingFactor, RTS_I32 *pnItemsComplete, RTS_I32 *pnTotalItems)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the current status of an active channel.
+
+**Parameters**
+
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | wChannelHandle   | Id of the channel                                                                                                                                                                                        |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pusStatus        | Is set to the current progress state. The PROGRESS_xxx constants define valid values.                                                                                                                    |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pbyScalingFactor | Provides the scaling factor for pnItemsComplete and pnTotalItems. These values have been scaled down by dividing them through 2^ScalingFactor (i.e. they have been right shifted by ScalingFactor bits). |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pnItemsComplete  | Number of items completed (e.g. the number of bytes transfered).                                                                                                                                         |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pnTotalItems     | Total number of item. Is set to -1 if unknown.                                                                                                                                                           |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_srv_itf_1ga8d2b08b616998a2c73b2e01bdace4753:
+
+RTS_RESULT ServerSetRedundancyMode (RTS_BOOL bRedundant)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Set redundancy mode to enable synchronous execution of services (called by CmpRedundancy)
+**Returns:**
+
+error code
+
+.. _group___cmp_srv_itf_1ga16c7f32f6b6792df66637c74803b67d4:
+
+RTS_RESULT ServerHandleRequest (RTS_UI32 ulChannelId, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Handle one request (called by CmpRedundancy)
+
+**Parameters**
+
++---------+-------------+------------------------------------------------+
+| [in]    | ulChannelId | Id of the channel on which the request arrived |
++---------+-------------+------------------------------------------------+
+| [in]    | pduRequest  | Pointer to the request                         |
++---------+-------------+------------------------------------------------+
+| [out]   | pduReply    | Pointer to the request reply                   |
++---------+-------------+------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_srv_itf_1ga15f99c5983f0573542aef291a6097bde:
+
+RTS_RESULT SrvGetUserNotificationService (BINTAGWRITER *pWriter, PROTOCOL_DATA_UNIT *pduSendBuffer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the last log entry of class LOG_USER_NOTIFY as a top-level online service tag
+
+**Parameters**
+
++---------+---------------+----------------------------------------------------------------------+
+| [in]    | pWriter       | Pointer to the bintag writer to get the service tag                  |
++---------+---------------+----------------------------------------------------------------------+
+| [in]    | pduSendBuffer | Pointer to the send buffer to reset the content of the bintag writer |
++---------+---------------+----------------------------------------------------------------------+
+
+**Returns:**
+
+Error code:
+
+  - ERR_OK: There is still an unread log entry of the type LOG_USER_NOTIFY
+
+  - ERR_NO_OBJECT: No pending log entry of the type LOG_USER_NOTIFY
+
+  - ERR_NOT_SUPPORTED: Service not supported
+
+.. _group___cmp_srv_itf_1ga10067ebfcec16fafbf3d4f2b27c41de5:
+
+RTS_RESULT SrvGetUserNotificationService2 (BINTAGWRITER *pWriter, PROTOCOL_DATA_UNIT *pduSendBuffer, unsigned long ulTagId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the last log entry of class LOG_USER_NOTIFY as a top-level online service tag
+
+**Parameters**
+
++---------+---------------+----------------------------------------------------------------------+
+| [in]    | pWriter       | Pointer to the bintag writer to get the service tag                  |
++---------+---------------+----------------------------------------------------------------------+
+| [in]    | pduSendBuffer | Pointer to the send buffer to reset the content of the bintag writer |
++---------+---------------+----------------------------------------------------------------------+
+| [in]    | ulTagId       | TagId to send user notify info                                       |
++---------+---------------+----------------------------------------------------------------------+
+
+**Returns:**
+
+Error code:
+
+  - ERR_OK: There is still an unread log entry of the type LOG_USER_NOTIFY
+
+  - ERR_NO_OBJECT: No pending log entry of the type LOG_USER_NOTIFY
+
+  - ERR_NOT_SUPPORTED: Service not supported
+
+cmpsrv
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

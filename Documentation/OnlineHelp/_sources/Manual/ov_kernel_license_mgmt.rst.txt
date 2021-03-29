@@ -1,0 +1,191 @@
+.. _ov_kernel_license_mgmt:
+
+License Management
+------------------
+
+There are 2 different kind of licensing mechanisms in the runtime
+system:
+
+-  | Device type license:
+   | A device vendor can license single features for his device. So the
+     license is available on every device of the same type.
+
+-  | Single license:
+   | Single features or some libraries from the CODESYS store are
+     licensed per a single device. This is called single licensing.
+
+Both mechanisms are described now in detail.
+
+Device type license
+~~~~~~~~~~~~~~~~~~~
+
+Extra license fees have to be paid for various features of CODESYS. The
+use of this license is granted per device variant instead of one specific
+device.
+
+This chapter describes the protection of features that have been
+licensed for a certain device type.
+
+The check is performed by components which an OEM has already purchased
+and is to prevent the customer of an OEM from using non-free components
+on controllers of other manufacturers who have not purchased such
+components. Furthermore, the license check is to make sure an end user
+can only work with components which have actually been tested and
+activated for the device in question.
+
+A working license check needs a license file (3s.dat) which must be part
+of the controller firmware. It defines which features are activated and
+also contains the exact ID of the runtime system. So it can only be used
+on the device in question. The license file is part of the runtime toolkit
+delivery. It can be found in the folder "Configuration". The file must
+be made available in the directory of the runtime system.
+
+For informations about how to map the file to different paths, see FilePath_3SDat_.
+
+Every single controller type has its own ID consisting of vendor ID and
+device ID. An OEM can freely define the device IDs for their controllers
+but needs to register them at 3S to enable 3S to generate the license
+files.
+
+If the license file is missing or is incorrect, the non-free components
+will either not run at all or run in a demo mode and the logger will
+issue an error message. The visualization in demo mode displays a box on
+the upper right of the screen that identifies the demo mode. The demo
+mode of the field bus stacks are indicated with an orange icon (instead
+of the green icon) in the device tree.
+
+This works on components only from CODESYS V3.4 or higher. Devices with
+an older version of CODESYS which work with non-free components of an
+older version are not affected by this licensing mechanism
+
+The actual license check takes place at runtime. If OEMs want to prevent
+that customers using a non-licensed field bus when programming their
+application, they can do so by making an entry in the device description
+(see "allowonly" property of a Connector in device description file).
+
+OEM licensing
+~~~~~~~~~~~~~
+
+We encourage our customers to let CODESYS GmbH maintain the device variants,
+as it is much easier to upgrade specific devices to new versions. Additionally
+it lowers the complexity of maintaining the variants on both sides.
+
+But as this makes only sense to a specific number of variants, we allow our OEM
+customers to maintain their own device variants if necessary. The sales aspect
+of such a configuration needs to be cleared first.
+
+Technically this means, that we provide only one delivery, which has a "mask"
+set, so that the customer can change the device ID, and still use the same 3S.dat
+licenses.
+
+The device ID can then be changed by overloading the component SysTask. To overload
+it, there is a template in the toolkit, named "SysTaskOEM".
+
+The drawback is, that the end-user can then use every license, which is enabled
+in the 3S.dat file. But this is not always intended. To enable the OEM customer
+to decide by himself which license he will enable for his users, there are two
+possibilities:
+
+1. Maintain different 3S.dat files. Then the firmware needs to place the active one
+   in the right path, or overload the mapping, if it was mapped like described in FilePath_3SDat_.
+2. Mark the licenses as "dynamic". This feature needs an adaptation, which needs
+   to be done in cooperation of a CODESYS Engineer. Alle licenses, marked as "dynamic"
+   are not directly usable. They need to be enabled by a component in the runtime system.
+
+The drawback of solution (2) is, that it is more complex to implement, and that the
+user can't use the demo mode of features, which are not enabled.
+
+Single license
+~~~~~~~~~~~~~~
+
+Single device licenses are managed different from device type licenses.
+Here we use the technology of WIBU Systems called CodeMeter (see tutorial :download:`WIBU CodeMeter <CODESYSControlV3_CodeMeter_Tutorial.pdf>` 
+for additional information).
+
+Licenses can be stored here on 2 different types of containers:
+
+A. | Dongle:
+   | A license dongle can be used and is available in different hardware
+     designs (USB, SD-card, CF-card)
+
+B. | SoftContainer:
+   | Here we need some hardware characteristics to bind the licenses.
+     Typical a hardware serial number is used here.
+   | Before you can install licenses on the device, you have to install
+     an empty container. For this you need a generated wbb-File. Every
+     WIBU license provider has to generate a wbb file. This is needed to
+     create an empty soft container during startup of the runtime
+     system.
+
+    To install an empty container during startup of the runtime system
+    you have to register the wbb-File in CODESYSControl.cfg:
+
+    | [CmpCodeMeter]
+    | InstallCmActContainer=1
+    | InitLicenseFile.<n>=<Vendor>License.wbb
+
+    | <n> is here a continous rising number beginning with 0.
+    | <Vendor> is the license vendor name.
+
+    Steps to create a wbb file:
+
+    1. Install the newest WIBI CodeMeter DevKit
+
+    2. Install your Template wbb and wbc file (provided by WIBU):
+
+       a) Open CodeMeter Control Center
+
+       b) File / Import License: wbb
+
+       c) File / Import License: wbc
+
+    3. Create your wbb file with the command line tool CmBoxPgm.exe:
+
+    CmBoxPgm.exe /f<Firmcode> /p0 /ca /lif:<Vendor>License.wbb
+    /lpn:"LicenseLIF" /lpid:0001 /lfs:cus:CODESYSPlugIn
+
+    | <Firmcode> Firmcode of the license provider
+    | <Vendor> is the license vendor name.
+
+Windows systems
+^^^^^^^^^^^^^^^
+
+On Windows systems you have to install the so called WIBU CodeMeter
+Runtime. This is automatically installed at CODESYS Control Win and
+CODESYS Control RTE by the setup. Under CODESYS Control Linux SL the
+runtime is installed too.
+
+Embedded systems
+^^^^^^^^^^^^^^^^
+
+On embedded systems you have to define the following macros for
+different aspects:
+
+-  | RTS\_CODEMETER\_EMBEDDED (Default):
+   | This compiler switch must be set on non Windows and Linux/x86
+     systems (without CodeMeter runtime). Accesses to dongles are
+     supported.
+
+-  | RTS\_CODEMETER\_SOFTLICENSING:
+   | With this compiler switch the support of SoftContainers is enabled.
+     To support this you have to implement the
+     SysTargetGetSerialNumber\_Secure() interface function in your
+     SysTargetOEM component. Here the serial number of the device must
+     be returned to bind the soft licenses.
+
+*Specialties for VxWorks:*
+
+**Under VxWorks only SoftContainers are supported at the moment!** This
+is because for the Dongle support you have to deactivate the file cache
+globally for this partition, but in fact this means a deactivation of
+the complete file cache which is not practicable.
+
+*Specialties for WindowsCE:*
+
+**Under WindowsCE only the Dongles are supported!** This is because the
+WIBU CodeMeter Runtime is not supported anymore for higher or equal
+WindowsCE V7!
+
+SoftContainers are only supported on platforms, on which the controller
+vendor supports a safe and unique serial number! For this support please
+contact CODESYS GmbH.

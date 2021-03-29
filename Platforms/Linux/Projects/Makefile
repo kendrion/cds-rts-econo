@@ -20,7 +20,7 @@ help:
 	@echo "4) Component commands";
 	@echo "cmp        DEP=<path to Dep.m4>:   build component as libCmp<xyz>.so"
 	@echo "clean_cmp  DEP=<path to Dep.m4>:   clean component"
-	@echo "deploy_cmp DEP=<path to Dep.m4>:   build and deploy libCmp<xyz>.so to target"
+	@echo "deploy_cmp DEP=<path to Dep.m4>:   builed and deploy libCmp<xyz>.so to target"
 	@echo ""
 	@echo ""
 	@echo "**NOTE**"
@@ -77,5 +77,10 @@ clean:
 	find ../../../Components -name *.o -exec rm {} \;
 	find ../../../Components__CONFIDENTIAL__ -name *.o -exec rm {} \;
 	find ../../../Components__AddOns__ -name *.o -exec rm {} \;
-	find ../../../../ContribConfidential/C-sources -name *.o -exec rm {} \; || true
+	find ../../../../../ContribConfidential/C-sources -name *.o -exec rm {} \; || true
 	find ../../../../../../ContribConfidential/C-sources -name *.o -exec rm {} \; || true
+	find $(ContribConfidentialDir) -name *.o -exec rm {} \; || true
+	find ../../../../../Contrib/C-sources -name *.o -exec rm {} \; || true
+	find ../../../../../../Contrib/C-sources -name *.o -exec rm {} \; || true
+	find $(ContribDir) -name *.o -exec rm {} \; || true
+

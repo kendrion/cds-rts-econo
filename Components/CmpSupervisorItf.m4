@@ -2,20 +2,20 @@
  * <interfacename>CmpSupervisor</interfacename>
  * <description> 
  * This interface provides a generic and easy to handle supervisor for all vital operations in the runtime system.
- * This interface can be used for example to retrigger a hardware watchdog to detect a failure in such a vital operation (in case of a software error).
+ * This interface can be used for example to re-trigger a hardware watchdog to detect a failure in such a vital operation (in case of a software error).
  *
  * Interface can be used to: 
  * <ul>
  *		<li>Register/unregister a vital operation for supervision</li>
- *		<li>Retrigger a vital operation to be alive</li>
+ *		<li>Re-trigger a vital operation to be alive</li>
  *		<li>There is an explicit dead signal for desperate situations such as memory overwrite, etc. For these operations stTimeoutUs should be set to 0 to disable time check</li>
- *		<li>Interfaces to read the global state of all vital operations and to interate over all vital operations</li>
+ *		<li>Interfaces to read the global state of all vital operations and to iterate over all vital operations</li>
  * </ul>
  * <p>
  * Use case: Use supervisor to support a hardware watchdog:
- * A cyclic task checks SupervisorOperationGetState2() periodically and retriggers the hardware watchdog. In case the nNumOfFailedOperations is greater than 0 the cyclic task can
+ * A cyclic task checks SupervisorOperationGetState2() periodically and re-triggers the hardware watchdog. In case the nNumOfFailedOperations is greater than 0 the cyclic task can
  * <ul>
- *		<li>just prevent the retriggering of the hardware watchdog so that it expires or</li>
+ *		<li>just prevent the re-triggering of the hardware watchdog so that it expires or</li>
  *		<li>check the causing operation and in the case it is not that important, give a second chance by reactivating its supervision.
  *			This is done by iterating through all operations by SupervisorOperationGetFirst(), SupervisorOperationGetNext(), and SupervisorOperationGetEntry() to find the causing operation
  *			and then by calling SupervisorOperationDisable() followed by SupervisorOperationEnable() to reactivate the supervision of the operation.</li>
@@ -24,7 +24,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -55,7 +55,7 @@ SET_INTERFACE_NAME(`CmpSupervisor')
 /**
  * <category>Supervisor flags</category>
  * <element name="RTS_SUPERVISOR_FLAG_NONE" type="IN">No flag specified</element>
- * <element name="RTS_SUPERVISOR_FLAG_RESET_NECESSARY" type="IN">TODO</element>
+ * <element name="RTS_SUPERVISOR_FLAG_RESET_NECESSARY" type="IN">Operation failed and so a reset is necessary!</element>
  * <element name="RTS_SUPERVISOR_FLAG_WATCHDOG" type="IN">This is a watchdog (consumer), that uses the supervisor to protect the controller!
  *	NOTE:
  *	This consumer can be disabled via the standard function SupervisorOperationDisable() and so this watchdog will not expire, if any of the supervisor operations will fail!
@@ -137,7 +137,7 @@ typedef struct tagSupervisorState
 } SupervisorState;
 
 /**
- * Reassures the alive state of the operation with the given timestamp in order to retrigger the hardware watchdog
+ * Reassures the alive state of the operation with the given timestamp in order to re-trigger the hardware watchdog
  *
  * :return: Error code
  *
@@ -159,12 +159,12 @@ typedef struct tagsupervisoroperationalive_struct
 DEF_API(`void',`CDECL',`supervisoroperationalive',`(supervisoroperationalive_struct *p)',1,0x33C47EE3,0x03050C00)
 
 /**
- * Signals a desperate situation of an operation in order to prevent the retriggering of the hardware watchdog. After this call, the operation is marked immediate as failed!
+ * Signals a desperate situation of an operation in order to prevent the re-triggering of the hardware watchdog. After this call, the operation is marked immediate as failed!
  *
  * :return: Error code
  *
  * Error code:
- *     + ERR_OK: Dead state was successfully signalled
+ *     + ERR_OK: Dead state was successfully signaled
  *     + ERR_NOTINITIALIZED: The operation memory is not initialized
  *     + ERR_INVALID_HANDLE: The handle to the operation is invalid
  *     + ERR_PARAMETER: The handle to the operation is invalid
@@ -320,7 +320,7 @@ DEF_API(`void',`CDECL',`supervisoroperationgetstate2',`(supervisoroperationgetst
 
 /**
  * Register an operation for supervision.
- * The operation will be regtistered disabled! To activate the supervision you have to call a subsequent SupervisorOperationEnable()!
+ * The operation will be registered disabled! To activate the supervision you have to call a subsequent SupervisorOperationEnable()!
  *
  * Error code:
  *     + ERR_OK: Operation was successfully registered
@@ -398,12 +398,12 @@ extern "C" {
 /**
  * <description>
  * Register an operation for supervision.
- * The operation will be regtistered disabled! To activate the supervision you have to call a subsequent SupervisorOperationEnable()!
+ * The operation will be registered disabled! To activate the supervision you have to call a subsequent SupervisorOperationEnable()!
  *
  * NOTES:
  * - Any consumer/hardware watchdog, which controls all vital operations can be registered as a normal operation, but have to set the RTS_SUPERVISOR_FLAG_WATCHDOG flag in its SupervisorEntry!
  * - Additionally the consumer have to check its bEnable flag additionally to the state of the supervisor, if a vital operation will fail! If the bEnable flag is FALSE, you have to continue
- *   retriggering the watchdog, because your watchdog expiration is selectively be disabled!
+ *   re-triggering the watchdog, because your watchdog expiration is selectively be disabled!
  * </description>
  * <param name="ui32OperationID" type="IN">Unique operation ID</element>
  * <param name="cmpId" type="IN">ComponentID of the component which operation is supervised</element>
@@ -529,7 +529,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SupervisorOperationDisable', `(RTS_HANDLE hO
 
 /**
  * <description>
- * Reassures the alive state of the operation with the given timestamp in order to retrigger the hardware watchdog
+ * Reassures the alive state of the operation with the given timestamp in order to re-trigger the hardware watchdog
  * </description>
  * <param name="hOperation" type="IN">Handle to the operation</param>
  * <param name="pstTimestampUs" type="IN">Pointer to timestamp. May be NULL, if time check is enabled timestamp is set to current time.</param>
@@ -545,11 +545,11 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SupervisorOperationAlive', `(RTS_HANDLE hOpe
 
 /**
  * <description>
- * Signals a desperate situation of an operation in order to prevent the retriggering of the hardware watchdog. After this call, the operation is marked immediate as failed!
+ * Signals a desperate situation of an operation in order to prevent the re-triggering of the hardware watchdog. After this call, the operation is marked immediate as failed!
  * </description>
  * <param name="hOperation" type="IN">Handle to the operation</param>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Dead state was successfully signalled</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Dead state was successfully signaled</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_NOTINITIALIZED">The operation memory is not initialized</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_INVALID_HANDLE">The handle to the operation is invalid</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">The handle to the operation is invalid</errorcode>
@@ -574,7 +574,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SupervisorOperationSetTimeout', `(RTS_HANDLE
 
 /**
  * <description>
- * Get operation specified by operationid and componentid.
+ * Get operation specified by operation id and component id.
  * </description>
  * <param name="ui32OperationID" type="IN">Unique operation ID</element>
  * <param name="cmpId" type="IN">ComponentID of the component which operation is supervised</element>

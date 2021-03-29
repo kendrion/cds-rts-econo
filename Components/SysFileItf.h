@@ -1,13 +1,13 @@
  /**
  * <interfacename>SysFile</interfacename>
  * <description> 
- *	<p>The SysFile interface is projected to get access to the files of a filesystem.
- *	The filesystem can be on harddisk, a flash/flash disk, a RAM disk or what ever. The only
- *	requirement is, that the filesystem is non volatile!</p>
+ *	<p>The SysFile interface is projected to get access to the files of a file system.
+ *	The file system can be on hard-disk, a flash/flash disk, a RAM disk or what ever. The only
+ *	requirement is, that the file system is non volatile!</p>
  *  <p>Please read following notes if using the SysFileFlash with our SysFlash:
  *	This component needs a global
  *	define of the file table FILE_MAP. It has to be declared in sysdefines.h. Here is an example
- *	with the neccessay initializations:
+ *	with the necessary initializations:
  *	#define FILE1_SIZE	0x4000
  *	#define FILE2_SIZE	0x2000
  *	#define FILE3_SIZE	0x2000
@@ -28,7 +28,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -62,8 +62,8 @@
  * <description>
  * Compiler switches to enable/disable single features in the component.
  * </description>
- * <element name="SYSFILE_DISABLE_FILE_CACHE">For each transmitted file, the CRC and size is stored in a central config file (cache). This can be disabled by this compiler switch.
- * <element name="SYSFILE_NOPLCLOGICMIGRATION">At startup SysFile.PlcLogicPrefix=0 checks for no bootprojects and than creates the new folder structure with SysFile.PlcLogicPrefix=1. This can be disabled by this compiler switch.
+ * <element name="SYSFILE_DISABLE_FILE_CACHE">For each transmitted file, the CRC and size is stored in a central configuration file (cache). This can be disabled by this compiler switch.
+ * <element name="SYSFILE_NOPLCLOGICMIGRATION">At startup SysFile.PlcLogicPrefix=0 checks for no boot application and than creates the new folder structure with SysFile.PlcLogicPrefix=1. This can be disabled by this compiler switch.
  * </element>
  */ 
 
@@ -74,7 +74,9 @@
 #ifndef MAX_PATH_LEN
 	#define MAX_PATH_LEN							255
 #endif
-#define RTS_MAX_PATH_LEN							MAX_PATH_LEN
+#ifndef RTS_MAX_PATH_LEN
+	#define RTS_MAX_PATH_LEN						MAX_PATH_LEN
+#endif
 
 /**
  * <category>Static defines</category>
@@ -86,7 +88,7 @@
 
 /**
  * <category>Static defines</category>
- * <description>File name prefix to make a file invisible e.g. for the filetransfer dialog. This prevents the corresponding file to be overwritten/read/compromized from outside.
+ * <description>File name prefix to make a file invisible e.g. for the file transfer dialog. This prevents the corresponding file to be overwritten/read/compromised from outside.
  * </description>
  */
 #ifndef SYSFILE_INVISIBLE_FILENAME_PREFIX
@@ -98,7 +100,7 @@
  * <description>This is the name for a section which contains the name, CRC and size of a file. Is used as a cache for these values.
  *	Improves for example the performance of the file transfer. SYSFILE_DISABLE_FILE_CACHE disables this feature.
  *	NOTE:
- *	It is recommended to use a filereference in the configuration, to move these entries into a separate cfg-file. e.g.:
+ *	It is recommended to use a file reference in the configuration, to move these entries into a separate cfg-file. e.g.:
  *	[CmpSettings]
  *	FileReference.0=SysFileMap.cfg, SysFileMap
  * </description>
@@ -114,9 +116,9 @@
  *	Several file paths could be entered, if they were indexed, e.g.:</p>
  *	<p>FilePath=D:/Temp/Default
  *	FilePath.1=./Boot, *.app, *.ap_, *.ret, *.frc
- *	FilePath.2=D:/Temp/Wildcards, *.txw</p>
+ *	FilePath.2=D:/Temp/Wild-cards, *.txw</p>
  *	<p>In this case, files with special extensions could be separated into several directories. File
- *	extensions can be specified with the wildcards '*'.</p>
+ *	extensions can be specified with the wild-cards '*'.</p>
  *	<p>If a file extension is not configured, the standard path (FilePath= or FilePath.1=) is used.</p>
  *	NOTE: Indexing starts with .1
  * </description>
@@ -148,9 +150,9 @@
  *	Several file paths could be entered, if they were indexed, e.g.:</p>
  *	<p>IecFilePath=D:/Temp/IEC
  *	IecFilePath.1=./Boot, *.app, *.ap_, *.ret, *.frc
- *	IecFilePath.2=D:/Temp/Wildcards, *.txw</p>
+ *	IecFilePath.2=D:/Temp/Wild-cards, *.txw</p>
  *	<p>In this case, files with special extensions could be separated into several directories. File
- *	extensions can be specified with the wildcards '*'.</p>
+ *	extensions can be specified with the wild-cards '*'.</p>
  *	<p>If a file extension is not configured, the standard path (IecFilePath= or IecFilePath.1=) is used.</p>
  *	NOTE: Indexing starts with .1
  *	</description>
@@ -247,8 +249,8 @@
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description><p>Setting to mark a placeholder as volatile, i.e. the specified folder is not created automatically at startup and the placeholder is visible in the filetransfer windows only when the folder exists.
- * This behavior is important for hot plug devices like usb sticks. 
+ * <description><p>Setting to mark a placeholder as volatile, i.e. the specified folder is not created automatically at startup and the placeholder is visible in the file transfer windows only when the folder exists.
+ * This behavior is important for hot plug devices like USB sticks. 
  * Example:
  *		PlaceholderFilePath.2=/mnt/USBDevice, $USBDev$
  *		PlaceholderFilePath.2.Volatile=1</p>
@@ -259,7 +261,7 @@
 /**
  * <category>Settings</category>
  * <type>String</type>
- * <description><p>Setting to connect a placeholder virtually with a parent placeholder, i.e. in the filetransfer window this placeholder is reachable via its virtual parent placeholder.
+ * <description><p>Setting to connect a placeholder virtually with a parent placeholder, i.e. in the file transfer window this placeholder is reachable via its virtual parent placeholder.
  * Example:
  *		PlaceholderFilePath.1=/temp/oem, $oem$
  *		PlaceholderFilePath.1.VParent=$PlcLogic$
@@ -281,7 +283,7 @@
 
 /**
  * <category>Static defines</category>
- * <description>Defines to specify the visu folder that is requested by every filetransfer/fileaccess on visu files. And we specify the placeholder for there files, for which
+ * <description>Defines to specify the visualization folder that is requested by every file transfer/file access on visualization files. And we specify the placeholder for there files, for which
  *	the destination folder can be specified with the setting "PlaceholderFilePath" (see details above).
  * </description>
  */
@@ -295,7 +297,7 @@
 /**
  * <category>Static defines</category>
  * <description>
- * Defines to specify the plc logic folder that is requested by application and device related file transfers. 
+ * Defines to specify the PLC logic folder that is requested by application and device related file transfers. 
  * The destination folder can be specified with the setting "PlaceholderFilePath" (see details above).
  * </description>
  */
@@ -309,9 +311,9 @@
 /**
  * <category>Static defines</category>
  * <description>
- * Setting to configure the plc logic placeholder prefix that is used now by all application related files.
- * -1 - old behaviour: flat file structure (default)
- *  0 - old behaviour: flat file structure, but Reset Origin Device will change that to 1
+ * Setting to configure the PLC logic placeholder prefix that is used now by all application related files.
+ * -1 - old behavior: flat file structure (default)
+ *  0 - old behavior: flat file structure, but Reset Origin Device will change that to 1
  *  1 - new folder structure:
  *    $PlcLogic$
  *    + &lt;application&gt;
@@ -381,6 +383,7 @@
 	#define SYSFILE_CNC_PLACEHOLDER			"$_cnc$"
 #endif
 
+
 /** EXTERN LIB SECTION BEGIN **/
 /*  Comments are ignored for m4 compiler so restructured text can be used.  */
 
@@ -403,12 +406,12 @@ extern "C" {
  * 	     SysFileGetPos();
  * 	     SysFileWrite();
  */
-#define RTS_ACCESS_MODE_AM_READ    0	/* Open an existing file with Read access. If file does not exist, Open fails */
-#define RTS_ACCESS_MODE_AM_WRITE    1	/* Create new file with Write access. If file does exist, content is discarded */
-#define RTS_ACCESS_MODE_AM_APPEND    2	/* Open an existing file with Append (only write) access. If file does not exist, Open fails */
-#define RTS_ACCESS_MODE_AM_READ_PLUS    3	/* Open an existing file with Read/Write access. If file does not exist, Open fails */
-#define RTS_ACCESS_MODE_AM_WRITE_PLUS    4	/* Create new file with Read/Write access. If file does exist, content is discarded */
-#define RTS_ACCESS_MODE_AM_APPEND_PLUS    5	/* Open an existing file with Append (read/write) access. If file does not exist, Open creates a new file */
+#define RTS_ACCESS_MODE_AM_READ    RTS_IEC_UDINT_C(0x0)	/* Open an existing file with Read access. If file does not exist, Open fails */
+#define RTS_ACCESS_MODE_AM_WRITE    RTS_IEC_UDINT_C(0x1)	/* Create new file with Write access. If file does exist, content is discarded */
+#define RTS_ACCESS_MODE_AM_APPEND    RTS_IEC_UDINT_C(0x2)	/* Open an existing file with Append (only write) access. If file does not exist, Open fails */
+#define RTS_ACCESS_MODE_AM_READ_PLUS    RTS_IEC_UDINT_C(0x3)	/* Open an existing file with Read/Write access. If file does not exist, Open fails */
+#define RTS_ACCESS_MODE_AM_WRITE_PLUS    RTS_IEC_UDINT_C(0x4)	/* Create new file with Read/Write access. If file does exist, content is discarded */
+#define RTS_ACCESS_MODE_AM_APPEND_PLUS    RTS_IEC_UDINT_C(0x5)	/* Open an existing file with Append (read/write) access. If file does not exist, Open creates a new file */
 /* Typed enum definition */
 #define RTS_ACCESS_MODE    RTS_IEC_UDINT
 
@@ -416,11 +419,11 @@ extern "C" {
  * | File status
  * | Actual file status of the specified file.
  */
-#define SYS_FILE_STATUS_FS_OK    0	/* File could be opened */
-#define SYS_FILE_STATUS_FS_NO_FILE    1	/* No file available */
-#define SYS_FILE_STATUS_FS_ILLEGAL_POS    2	/* Illegal position in the file */
-#define SYS_FILE_STATUS_FS_FULL    3	/* No more space on the filesystem */
-#define SYS_FILE_STATUS_FS_EOF    4	/* End of file reached */
+#define SYS_FILE_STATUS_FS_OK    RTS_IEC_INT_C(0x0)	/* File could be opened */
+#define SYS_FILE_STATUS_FS_NO_FILE    RTS_IEC_INT_C(0x1)	/* No file available */
+#define SYS_FILE_STATUS_FS_ILLEGAL_POS    RTS_IEC_INT_C(0x2)	/* Illegal position in the file */
+#define SYS_FILE_STATUS_FS_FULL    RTS_IEC_INT_C(0x3)	/* No more space on the file system */
+#define SYS_FILE_STATUS_FS_EOF    RTS_IEC_INT_C(0x4)	/* End of file reached */
 /* Typed enum definition */
 #define SYS_FILE_STATUS    RTS_IEC_INT
 
@@ -436,13 +439,1277 @@ typedef struct tagSYS_FILETIME
 } SYS_FILETIME;
 
 /**
- * | Option for SysFileGetPath2, SysFileGetFullPath2, SysFileGetIecPath2
- * | Separation of directory or file
+ * Close a file specified by handle
+ * :return: Returns the runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfileclose_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_RESULT SysFileClose;		/* VAR_OUTPUT */	
+} sysfileclose_struct;
+
+void CDECL CDECL_EXT sysfileclose(sysfileclose_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILECLOSE_IEC) (sysfileclose_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILECLOSE_NOTIMPLEMENTED)
+	#define USE_sysfileclose
+	#define EXT_sysfileclose
+	#define GET_sysfileclose(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfileclose(p0) 
+	#define CHK_sysfileclose  FALSE
+	#define EXP_sysfileclose  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfileclose
+	#define EXT_sysfileclose
+	#define GET_sysfileclose(fl)  CAL_CMGETAPI( "sysfileclose" ) 
+	#define CAL_sysfileclose  sysfileclose
+	#define CHK_sysfileclose  TRUE
+	#define EXP_sysfileclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileclose", (RTS_UINTPTR)sysfileclose, 1, RTSITF_GET_SIGNATURE(0, 0xC19E28BA), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfileclose
+	#define EXT_sysfileclose
+	#define GET_sysfileclose(fl)  CAL_CMGETAPI( "sysfileclose" ) 
+	#define CAL_sysfileclose  sysfileclose
+	#define CHK_sysfileclose  TRUE
+	#define EXP_sysfileclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileclose", (RTS_UINTPTR)sysfileclose, 1, RTSITF_GET_SIGNATURE(0, 0xC19E28BA), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfileclose
+	#define EXT_SysFilesysfileclose
+	#define GET_SysFilesysfileclose  ERR_OK
+	#define CAL_SysFilesysfileclose  sysfileclose
+	#define CHK_SysFilesysfileclose  TRUE
+	#define EXP_SysFilesysfileclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileclose", (RTS_UINTPTR)sysfileclose, 1, RTSITF_GET_SIGNATURE(0, 0xC19E28BA), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfileclose
+	#define EXT_sysfileclose
+	#define GET_sysfileclose(fl)  CAL_CMGETAPI( "sysfileclose" ) 
+	#define CAL_sysfileclose  sysfileclose
+	#define CHK_sysfileclose  TRUE
+	#define EXP_sysfileclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileclose", (RTS_UINTPTR)sysfileclose, 1, RTSITF_GET_SIGNATURE(0, 0xC19E28BA), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfileclose  PFSYSFILECLOSE_IEC pfsysfileclose;
+	#define EXT_sysfileclose  extern PFSYSFILECLOSE_IEC pfsysfileclose;
+	#define GET_sysfileclose(fl)  s_pfCMGetAPI2( "sysfileclose", (RTS_VOID_FCTPTR *)&pfsysfileclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC19E28BA), 0x03050F00)
+	#define CAL_sysfileclose  pfsysfileclose
+	#define CHK_sysfileclose  (pfsysfileclose != NULL)
+	#define EXP_sysfileclose   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileclose", (RTS_UINTPTR)sysfileclose, 1, RTSITF_GET_SIGNATURE(0, 0xC19E28BA), 0x03050F00) 
+#endif
+
+
+/**
+ * | Copy one file to another.
+ * | A standard path will be added to the filename, if no path is specified.
+ * :return: The runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfilecopy_struct
+{
+	RTS_IEC_STRING *szDestFileName;		/* VAR_INPUT */	/* Destination file name. File name can contain an absolute or relative path to the file.
+ Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
+	RTS_IEC_STRING *szSourceFileName;	/* VAR_INPUT */	/* Source file name. File name can contain an absolute or relative path to the file.											
+ Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
+	RTS_IEC_XWORD *pulCopied;			/* VAR_INPUT */	/* Number of bytes copied */
+	RTS_IEC_RESULT SysFileCopy;			/* VAR_OUTPUT */	
+} sysfilecopy_struct;
+
+void CDECL CDECL_EXT sysfilecopy(sysfilecopy_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILECOPY_IEC) (sysfilecopy_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILECOPY_NOTIMPLEMENTED)
+	#define USE_sysfilecopy
+	#define EXT_sysfilecopy
+	#define GET_sysfilecopy(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfilecopy(p0) 
+	#define CHK_sysfilecopy  FALSE
+	#define EXP_sysfilecopy  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfilecopy
+	#define EXT_sysfilecopy
+	#define GET_sysfilecopy(fl)  CAL_CMGETAPI( "sysfilecopy" ) 
+	#define CAL_sysfilecopy  sysfilecopy
+	#define CHK_sysfilecopy  TRUE
+	#define EXP_sysfilecopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilecopy", (RTS_UINTPTR)sysfilecopy, 1, RTSITF_GET_SIGNATURE(0, 0xDB491610), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfilecopy
+	#define EXT_sysfilecopy
+	#define GET_sysfilecopy(fl)  CAL_CMGETAPI( "sysfilecopy" ) 
+	#define CAL_sysfilecopy  sysfilecopy
+	#define CHK_sysfilecopy  TRUE
+	#define EXP_sysfilecopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilecopy", (RTS_UINTPTR)sysfilecopy, 1, RTSITF_GET_SIGNATURE(0, 0xDB491610), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfilecopy
+	#define EXT_SysFilesysfilecopy
+	#define GET_SysFilesysfilecopy  ERR_OK
+	#define CAL_SysFilesysfilecopy  sysfilecopy
+	#define CHK_SysFilesysfilecopy  TRUE
+	#define EXP_SysFilesysfilecopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilecopy", (RTS_UINTPTR)sysfilecopy, 1, RTSITF_GET_SIGNATURE(0, 0xDB491610), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfilecopy
+	#define EXT_sysfilecopy
+	#define GET_sysfilecopy(fl)  CAL_CMGETAPI( "sysfilecopy" ) 
+	#define CAL_sysfilecopy  sysfilecopy
+	#define CHK_sysfilecopy  TRUE
+	#define EXP_sysfilecopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilecopy", (RTS_UINTPTR)sysfilecopy, 1, RTSITF_GET_SIGNATURE(0, 0xDB491610), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfilecopy  PFSYSFILECOPY_IEC pfsysfilecopy;
+	#define EXT_sysfilecopy  extern PFSYSFILECOPY_IEC pfsysfilecopy;
+	#define GET_sysfilecopy(fl)  s_pfCMGetAPI2( "sysfilecopy", (RTS_VOID_FCTPTR *)&pfsysfilecopy, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xDB491610), 0x03050F00)
+	#define CAL_sysfilecopy  pfsysfilecopy
+	#define CHK_sysfilecopy  (pfsysfilecopy != NULL)
+	#define EXP_sysfilecopy   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilecopy", (RTS_UINTPTR)sysfilecopy, 1, RTSITF_GET_SIGNATURE(0, 0xDB491610), 0x03050F00) 
+#endif
+
+
+/**
+ * | Delete the file specified by name.
+ * | A standard path will be added in the runtime system to the filename, if no path is specified.
+ * :return: Returns the runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfiledelete_struct
+{
+	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.
+ Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
+	RTS_IEC_RESULT SysFileDelete;		/* VAR_OUTPUT */	
+} sysfiledelete_struct;
+
+void CDECL CDECL_EXT sysfiledelete(sysfiledelete_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEDELETE_IEC) (sysfiledelete_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEDELETE_NOTIMPLEMENTED)
+	#define USE_sysfiledelete
+	#define EXT_sysfiledelete
+	#define GET_sysfiledelete(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfiledelete(p0) 
+	#define CHK_sysfiledelete  FALSE
+	#define EXP_sysfiledelete  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfiledelete
+	#define EXT_sysfiledelete
+	#define GET_sysfiledelete(fl)  CAL_CMGETAPI( "sysfiledelete" ) 
+	#define CAL_sysfiledelete  sysfiledelete
+	#define CHK_sysfiledelete  TRUE
+	#define EXP_sysfiledelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledelete", (RTS_UINTPTR)sysfiledelete, 1, RTSITF_GET_SIGNATURE(0, 0xA977F762), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfiledelete
+	#define EXT_sysfiledelete
+	#define GET_sysfiledelete(fl)  CAL_CMGETAPI( "sysfiledelete" ) 
+	#define CAL_sysfiledelete  sysfiledelete
+	#define CHK_sysfiledelete  TRUE
+	#define EXP_sysfiledelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledelete", (RTS_UINTPTR)sysfiledelete, 1, RTSITF_GET_SIGNATURE(0, 0xA977F762), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfiledelete
+	#define EXT_SysFilesysfiledelete
+	#define GET_SysFilesysfiledelete  ERR_OK
+	#define CAL_SysFilesysfiledelete  sysfiledelete
+	#define CHK_SysFilesysfiledelete  TRUE
+	#define EXP_SysFilesysfiledelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledelete", (RTS_UINTPTR)sysfiledelete, 1, RTSITF_GET_SIGNATURE(0, 0xA977F762), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfiledelete
+	#define EXT_sysfiledelete
+	#define GET_sysfiledelete(fl)  CAL_CMGETAPI( "sysfiledelete" ) 
+	#define CAL_sysfiledelete  sysfiledelete
+	#define CHK_sysfiledelete  TRUE
+	#define EXP_sysfiledelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledelete", (RTS_UINTPTR)sysfiledelete, 1, RTSITF_GET_SIGNATURE(0, 0xA977F762), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfiledelete  PFSYSFILEDELETE_IEC pfsysfiledelete;
+	#define EXT_sysfiledelete  extern PFSYSFILEDELETE_IEC pfsysfiledelete;
+	#define GET_sysfiledelete(fl)  s_pfCMGetAPI2( "sysfiledelete", (RTS_VOID_FCTPTR *)&pfsysfiledelete, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA977F762), 0x03050F00)
+	#define CAL_sysfiledelete  pfsysfiledelete
+	#define CHK_sysfiledelete  (pfsysfiledelete != NULL)
+	#define EXP_sysfiledelete   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledelete", (RTS_UINTPTR)sysfiledelete, 1, RTSITF_GET_SIGNATURE(0, 0xA977F762), 0x03050F00) 
+#endif
+
+
+/**
+ * Delete the file specified by handle
+ * :return: Returns the runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfiledeletebyhandle_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_RESULT SysFileDeleteByHandle;	/* VAR_OUTPUT */	
+} sysfiledeletebyhandle_struct;
+
+void CDECL CDECL_EXT sysfiledeletebyhandle(sysfiledeletebyhandle_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEDELETEBYHANDLE_IEC) (sysfiledeletebyhandle_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEDELETEBYHANDLE_NOTIMPLEMENTED)
+	#define USE_sysfiledeletebyhandle
+	#define EXT_sysfiledeletebyhandle
+	#define GET_sysfiledeletebyhandle(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfiledeletebyhandle(p0) 
+	#define CHK_sysfiledeletebyhandle  FALSE
+	#define EXP_sysfiledeletebyhandle  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfiledeletebyhandle
+	#define EXT_sysfiledeletebyhandle
+	#define GET_sysfiledeletebyhandle(fl)  CAL_CMGETAPI( "sysfiledeletebyhandle" ) 
+	#define CAL_sysfiledeletebyhandle  sysfiledeletebyhandle
+	#define CHK_sysfiledeletebyhandle  TRUE
+	#define EXP_sysfiledeletebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledeletebyhandle", (RTS_UINTPTR)sysfiledeletebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0xC812562E), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfiledeletebyhandle
+	#define EXT_sysfiledeletebyhandle
+	#define GET_sysfiledeletebyhandle(fl)  CAL_CMGETAPI( "sysfiledeletebyhandle" ) 
+	#define CAL_sysfiledeletebyhandle  sysfiledeletebyhandle
+	#define CHK_sysfiledeletebyhandle  TRUE
+	#define EXP_sysfiledeletebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledeletebyhandle", (RTS_UINTPTR)sysfiledeletebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0xC812562E), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfiledeletebyhandle
+	#define EXT_SysFilesysfiledeletebyhandle
+	#define GET_SysFilesysfiledeletebyhandle  ERR_OK
+	#define CAL_SysFilesysfiledeletebyhandle  sysfiledeletebyhandle
+	#define CHK_SysFilesysfiledeletebyhandle  TRUE
+	#define EXP_SysFilesysfiledeletebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledeletebyhandle", (RTS_UINTPTR)sysfiledeletebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0xC812562E), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfiledeletebyhandle
+	#define EXT_sysfiledeletebyhandle
+	#define GET_sysfiledeletebyhandle(fl)  CAL_CMGETAPI( "sysfiledeletebyhandle" ) 
+	#define CAL_sysfiledeletebyhandle  sysfiledeletebyhandle
+	#define CHK_sysfiledeletebyhandle  TRUE
+	#define EXP_sysfiledeletebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledeletebyhandle", (RTS_UINTPTR)sysfiledeletebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0xC812562E), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfiledeletebyhandle  PFSYSFILEDELETEBYHANDLE_IEC pfsysfiledeletebyhandle;
+	#define EXT_sysfiledeletebyhandle  extern PFSYSFILEDELETEBYHANDLE_IEC pfsysfiledeletebyhandle;
+	#define GET_sysfiledeletebyhandle(fl)  s_pfCMGetAPI2( "sysfiledeletebyhandle", (RTS_VOID_FCTPTR *)&pfsysfiledeletebyhandle, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC812562E), 0x03050F00)
+	#define CAL_sysfiledeletebyhandle  pfsysfiledeletebyhandle
+	#define CHK_sysfiledeletebyhandle  (pfsysfiledeletebyhandle != NULL)
+	#define EXP_sysfiledeletebyhandle   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledeletebyhandle", (RTS_UINTPTR)sysfiledeletebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0xC812562E), 0x03050F00) 
+#endif
+
+
+/**
+ *  Check, if end of file is reached
+ *
+ *  .. note::
+ * 		End of file is only checked after a read operation with SysFileRead! But after a SysFileWrite or SysFileSetPos call, the function
+ * 		returns ERR_FAILED (no end of file)!
+ * :return: Returns the runtime system error code (see CmpErrors.library):
+ *	+ ERR_OK: End of file reached at reading beyond the end of the file
+ *	+ ERR_FAILED: No end of file reached
+ *	+ ERR_PARAMETER: hFile is invalid
+ */
+typedef struct tagsysfileeof_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_RESULT SysFileEOF;			/* VAR_OUTPUT */	
+} sysfileeof_struct;
+
+void CDECL CDECL_EXT sysfileeof(sysfileeof_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEEOF_IEC) (sysfileeof_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEEOF_NOTIMPLEMENTED)
+	#define USE_sysfileeof
+	#define EXT_sysfileeof
+	#define GET_sysfileeof(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfileeof(p0) 
+	#define CHK_sysfileeof  FALSE
+	#define EXP_sysfileeof  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfileeof
+	#define EXT_sysfileeof
+	#define GET_sysfileeof(fl)  CAL_CMGETAPI( "sysfileeof" ) 
+	#define CAL_sysfileeof  sysfileeof
+	#define CHK_sysfileeof  TRUE
+	#define EXP_sysfileeof  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileeof", (RTS_UINTPTR)sysfileeof, 1, RTSITF_GET_SIGNATURE(0, 0x30A3EB85), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfileeof
+	#define EXT_sysfileeof
+	#define GET_sysfileeof(fl)  CAL_CMGETAPI( "sysfileeof" ) 
+	#define CAL_sysfileeof  sysfileeof
+	#define CHK_sysfileeof  TRUE
+	#define EXP_sysfileeof  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileeof", (RTS_UINTPTR)sysfileeof, 1, RTSITF_GET_SIGNATURE(0, 0x30A3EB85), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfileeof
+	#define EXT_SysFilesysfileeof
+	#define GET_SysFilesysfileeof  ERR_OK
+	#define CAL_SysFilesysfileeof  sysfileeof
+	#define CHK_SysFilesysfileeof  TRUE
+	#define EXP_SysFilesysfileeof  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileeof", (RTS_UINTPTR)sysfileeof, 1, RTSITF_GET_SIGNATURE(0, 0x30A3EB85), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfileeof
+	#define EXT_sysfileeof
+	#define GET_sysfileeof(fl)  CAL_CMGETAPI( "sysfileeof" ) 
+	#define CAL_sysfileeof  sysfileeof
+	#define CHK_sysfileeof  TRUE
+	#define EXP_sysfileeof  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileeof", (RTS_UINTPTR)sysfileeof, 1, RTSITF_GET_SIGNATURE(0, 0x30A3EB85), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfileeof  PFSYSFILEEOF_IEC pfsysfileeof;
+	#define EXT_sysfileeof  extern PFSYSFILEEOF_IEC pfsysfileeof;
+	#define GET_sysfileeof(fl)  s_pfCMGetAPI2( "sysfileeof", (RTS_VOID_FCTPTR *)&pfsysfileeof, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x30A3EB85), 0x03050F00)
+	#define CAL_sysfileeof  pfsysfileeof
+	#define CHK_sysfileeof  (pfsysfileeof != NULL)
+	#define EXP_sysfileeof   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileeof", (RTS_UINTPTR)sysfileeof, 1, RTSITF_GET_SIGNATURE(0, 0x30A3EB85), 0x03050F00) 
+#endif
+
+
+/**
+ * Flush the file cache and write into the file
+ * :return: Returns the runtime system error code (see CmpErrors_Itfs.library):
+ *
+ * - ERR_OK: Succeeded flushing the file
+ * - ERR_FAILED: Error occurred during file flush
+ * - ERR_NOTIMPLEMENTED: File flush is not implemented
+ * - ERR_NOT_SUPPORTED: File flush not available on the target
+ */
+typedef struct tagsysfileflush_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_RESULT SysFileFlush;		/* VAR_OUTPUT */	
+} sysfileflush_struct;
+
+void CDECL CDECL_EXT sysfileflush(sysfileflush_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEFLUSH_IEC) (sysfileflush_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEFLUSH_NOTIMPLEMENTED)
+	#define USE_sysfileflush
+	#define EXT_sysfileflush
+	#define GET_sysfileflush(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfileflush(p0) 
+	#define CHK_sysfileflush  FALSE
+	#define EXP_sysfileflush  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfileflush
+	#define EXT_sysfileflush
+	#define GET_sysfileflush(fl)  CAL_CMGETAPI( "sysfileflush" ) 
+	#define CAL_sysfileflush  sysfileflush
+	#define CHK_sysfileflush  TRUE
+	#define EXP_sysfileflush  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileflush", (RTS_UINTPTR)sysfileflush, 1, 0x32985005, 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfileflush
+	#define EXT_sysfileflush
+	#define GET_sysfileflush(fl)  CAL_CMGETAPI( "sysfileflush" ) 
+	#define CAL_sysfileflush  sysfileflush
+	#define CHK_sysfileflush  TRUE
+	#define EXP_sysfileflush  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileflush", (RTS_UINTPTR)sysfileflush, 1, 0x32985005, 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfileflush
+	#define EXT_SysFilesysfileflush
+	#define GET_SysFilesysfileflush  ERR_OK
+	#define CAL_SysFilesysfileflush  sysfileflush
+	#define CHK_SysFilesysfileflush  TRUE
+	#define EXP_SysFilesysfileflush  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileflush", (RTS_UINTPTR)sysfileflush, 1, 0x32985005, 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfileflush
+	#define EXT_sysfileflush
+	#define GET_sysfileflush(fl)  CAL_CMGETAPI( "sysfileflush" ) 
+	#define CAL_sysfileflush  sysfileflush
+	#define CHK_sysfileflush  TRUE
+	#define EXP_sysfileflush  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileflush", (RTS_UINTPTR)sysfileflush, 1, 0x32985005, 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfileflush  PFSYSFILEFLUSH_IEC pfsysfileflush;
+	#define EXT_sysfileflush  extern PFSYSFILEFLUSH_IEC pfsysfileflush;
+	#define GET_sysfileflush(fl)  s_pfCMGetAPI2( "sysfileflush", (RTS_VOID_FCTPTR *)&pfsysfileflush, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x32985005, 0x03050F00)
+	#define CAL_sysfileflush  pfsysfileflush
+	#define CHK_sysfileflush  (pfsysfileflush != NULL)
+	#define EXP_sysfileflush   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileflush", (RTS_UINTPTR)sysfileflush, 1, 0x32985005, 0x03050F00) 
+#endif
+
+
+/**
+ * Get the file name from file specified by handle
+ * :return: File name of the specified file
+ */
+typedef struct tagsysfilegetname_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_STRING *SysFileGetName;		/* VAR_OUTPUT */	
+} sysfilegetname_struct;
+
+void CDECL CDECL_EXT sysfilegetname(sysfilegetname_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEGETNAME_IEC) (sysfilegetname_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETNAME_NOTIMPLEMENTED)
+	#define USE_sysfilegetname
+	#define EXT_sysfilegetname
+	#define GET_sysfilegetname(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfilegetname(p0) 
+	#define CHK_sysfilegetname  FALSE
+	#define EXP_sysfilegetname  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfilegetname
+	#define EXT_sysfilegetname
+	#define GET_sysfilegetname(fl)  CAL_CMGETAPI( "sysfilegetname" ) 
+	#define CAL_sysfilegetname  sysfilegetname
+	#define CHK_sysfilegetname  TRUE
+	#define EXP_sysfilegetname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname", (RTS_UINTPTR)sysfilegetname, 1, RTSITF_GET_SIGNATURE(0, 0x4AEE0669), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfilegetname
+	#define EXT_sysfilegetname
+	#define GET_sysfilegetname(fl)  CAL_CMGETAPI( "sysfilegetname" ) 
+	#define CAL_sysfilegetname  sysfilegetname
+	#define CHK_sysfilegetname  TRUE
+	#define EXP_sysfilegetname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname", (RTS_UINTPTR)sysfilegetname, 1, RTSITF_GET_SIGNATURE(0, 0x4AEE0669), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfilegetname
+	#define EXT_SysFilesysfilegetname
+	#define GET_SysFilesysfilegetname  ERR_OK
+	#define CAL_SysFilesysfilegetname  sysfilegetname
+	#define CHK_SysFilesysfilegetname  TRUE
+	#define EXP_SysFilesysfilegetname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname", (RTS_UINTPTR)sysfilegetname, 1, RTSITF_GET_SIGNATURE(0, 0x4AEE0669), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfilegetname
+	#define EXT_sysfilegetname
+	#define GET_sysfilegetname(fl)  CAL_CMGETAPI( "sysfilegetname" ) 
+	#define CAL_sysfilegetname  sysfilegetname
+	#define CHK_sysfilegetname  TRUE
+	#define EXP_sysfilegetname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname", (RTS_UINTPTR)sysfilegetname, 1, RTSITF_GET_SIGNATURE(0, 0x4AEE0669), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfilegetname  PFSYSFILEGETNAME_IEC pfsysfilegetname;
+	#define EXT_sysfilegetname  extern PFSYSFILEGETNAME_IEC pfsysfilegetname;
+	#define GET_sysfilegetname(fl)  s_pfCMGetAPI2( "sysfilegetname", (RTS_VOID_FCTPTR *)&pfsysfilegetname, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x4AEE0669), 0x03050F00)
+	#define CAL_sysfilegetname  pfsysfilegetname
+	#define CHK_sysfilegetname  (pfsysfilegetname != NULL)
+	#define EXP_sysfilegetname   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname", (RTS_UINTPTR)sysfilegetname, 1, RTSITF_GET_SIGNATURE(0, 0x4AEE0669), 0x03050F00) 
+#endif
+
+
+/**
+ * Get the file name from file specified by handle
+ * :return: File name of the specified file
+ */
+typedef struct tagsysfilegetname2_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
+	RTS_IEC_STRING *SysFileGetName2;	/* VAR_OUTPUT */	
+} sysfilegetname2_struct;
+
+void CDECL CDECL_EXT sysfilegetname2(sysfilegetname2_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEGETNAME2_IEC) (sysfilegetname2_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETNAME2_NOTIMPLEMENTED)
+	#define USE_sysfilegetname2
+	#define EXT_sysfilegetname2
+	#define GET_sysfilegetname2(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfilegetname2(p0) 
+	#define CHK_sysfilegetname2  FALSE
+	#define EXP_sysfilegetname2  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfilegetname2
+	#define EXT_sysfilegetname2
+	#define GET_sysfilegetname2(fl)  CAL_CMGETAPI( "sysfilegetname2" ) 
+	#define CAL_sysfilegetname2  sysfilegetname2
+	#define CHK_sysfilegetname2  TRUE
+	#define EXP_sysfilegetname2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname2", (RTS_UINTPTR)sysfilegetname2, 1, RTSITF_GET_SIGNATURE(0, 0x2856F375), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfilegetname2
+	#define EXT_sysfilegetname2
+	#define GET_sysfilegetname2(fl)  CAL_CMGETAPI( "sysfilegetname2" ) 
+	#define CAL_sysfilegetname2  sysfilegetname2
+	#define CHK_sysfilegetname2  TRUE
+	#define EXP_sysfilegetname2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname2", (RTS_UINTPTR)sysfilegetname2, 1, RTSITF_GET_SIGNATURE(0, 0x2856F375), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfilegetname2
+	#define EXT_SysFilesysfilegetname2
+	#define GET_SysFilesysfilegetname2  ERR_OK
+	#define CAL_SysFilesysfilegetname2  sysfilegetname2
+	#define CHK_SysFilesysfilegetname2  TRUE
+	#define EXP_SysFilesysfilegetname2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname2", (RTS_UINTPTR)sysfilegetname2, 1, RTSITF_GET_SIGNATURE(0, 0x2856F375), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfilegetname2
+	#define EXT_sysfilegetname2
+	#define GET_sysfilegetname2(fl)  CAL_CMGETAPI( "sysfilegetname2" ) 
+	#define CAL_sysfilegetname2  sysfilegetname2
+	#define CHK_sysfilegetname2  TRUE
+	#define EXP_sysfilegetname2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname2", (RTS_UINTPTR)sysfilegetname2, 1, RTSITF_GET_SIGNATURE(0, 0x2856F375), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfilegetname2  PFSYSFILEGETNAME2_IEC pfsysfilegetname2;
+	#define EXT_sysfilegetname2  extern PFSYSFILEGETNAME2_IEC pfsysfilegetname2;
+	#define GET_sysfilegetname2(fl)  s_pfCMGetAPI2( "sysfilegetname2", (RTS_VOID_FCTPTR *)&pfsysfilegetname2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x2856F375), 0x03050F00)
+	#define CAL_sysfilegetname2  pfsysfilegetname2
+	#define CHK_sysfilegetname2  (pfsysfilegetname2 != NULL)
+	#define EXP_sysfilegetname2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname2", (RTS_UINTPTR)sysfilegetname2, 1, RTSITF_GET_SIGNATURE(0, 0x2856F375), 0x03050F00) 
+#endif
+
+
+/**
+ * | Get the path of this file.
+ * | If a path is specified in the filename, the path will be extracted from the filename.
+ * | If no path is specified in the filename, the standard path for this file extension type will be returned.
+ * :return: The runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfilegetpath_struct
+{
+	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. Can contain an absolute or relative path */
+	RTS_IEC_STRING *szPath;				/* VAR_IN_OUT */	/* Path for this file */
+	RTS_IEC_DINT diMaxLen;				/* VAR_INPUT */	/* Maximum size in bytes of path length */
+	RTS_IEC_RESULT SysFileGetPath;		/* VAR_OUTPUT */	
+} sysfilegetpath_struct;
+
+void CDECL CDECL_EXT sysfilegetpath(sysfilegetpath_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEGETPATH_IEC) (sysfilegetpath_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETPATH_NOTIMPLEMENTED)
+	#define USE_sysfilegetpath
+	#define EXT_sysfilegetpath
+	#define GET_sysfilegetpath(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfilegetpath(p0) 
+	#define CHK_sysfilegetpath  FALSE
+	#define EXP_sysfilegetpath  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfilegetpath
+	#define EXT_sysfilegetpath
+	#define GET_sysfilegetpath(fl)  CAL_CMGETAPI( "sysfilegetpath" ) 
+	#define CAL_sysfilegetpath  sysfilegetpath
+	#define CHK_sysfilegetpath  TRUE
+	#define EXP_sysfilegetpath  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpath", (RTS_UINTPTR)sysfilegetpath, 1, 0xE8836F87, 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfilegetpath
+	#define EXT_sysfilegetpath
+	#define GET_sysfilegetpath(fl)  CAL_CMGETAPI( "sysfilegetpath" ) 
+	#define CAL_sysfilegetpath  sysfilegetpath
+	#define CHK_sysfilegetpath  TRUE
+	#define EXP_sysfilegetpath  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpath", (RTS_UINTPTR)sysfilegetpath, 1, 0xE8836F87, 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfilegetpath
+	#define EXT_SysFilesysfilegetpath
+	#define GET_SysFilesysfilegetpath  ERR_OK
+	#define CAL_SysFilesysfilegetpath  sysfilegetpath
+	#define CHK_SysFilesysfilegetpath  TRUE
+	#define EXP_SysFilesysfilegetpath  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpath", (RTS_UINTPTR)sysfilegetpath, 1, 0xE8836F87, 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfilegetpath
+	#define EXT_sysfilegetpath
+	#define GET_sysfilegetpath(fl)  CAL_CMGETAPI( "sysfilegetpath" ) 
+	#define CAL_sysfilegetpath  sysfilegetpath
+	#define CHK_sysfilegetpath  TRUE
+	#define EXP_sysfilegetpath  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpath", (RTS_UINTPTR)sysfilegetpath, 1, 0xE8836F87, 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfilegetpath  PFSYSFILEGETPATH_IEC pfsysfilegetpath;
+	#define EXT_sysfilegetpath  extern PFSYSFILEGETPATH_IEC pfsysfilegetpath;
+	#define GET_sysfilegetpath(fl)  s_pfCMGetAPI2( "sysfilegetpath", (RTS_VOID_FCTPTR *)&pfsysfilegetpath, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE8836F87, 0x03050F00)
+	#define CAL_sysfilegetpath  pfsysfilegetpath
+	#define CHK_sysfilegetpath  (pfsysfilegetpath != NULL)
+	#define EXP_sysfilegetpath   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpath", (RTS_UINTPTR)sysfilegetpath, 1, 0xE8836F87, 0x03050F00) 
+#endif
+
+
+/**
+ * Get actual file pointer position
+ * :return: The runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfilegetpos_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_XWORD *pulPos;				/* VAR_INPUT */	/* Pointer to get actual position of the file pointer from the beginning of the file */
+	RTS_IEC_RESULT SysFileGetPos;		/* VAR_OUTPUT */	
+} sysfilegetpos_struct;
+
+void CDECL CDECL_EXT sysfilegetpos(sysfilegetpos_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEGETPOS_IEC) (sysfilegetpos_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETPOS_NOTIMPLEMENTED)
+	#define USE_sysfilegetpos
+	#define EXT_sysfilegetpos
+	#define GET_sysfilegetpos(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfilegetpos(p0) 
+	#define CHK_sysfilegetpos  FALSE
+	#define EXP_sysfilegetpos  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfilegetpos
+	#define EXT_sysfilegetpos
+	#define GET_sysfilegetpos(fl)  CAL_CMGETAPI( "sysfilegetpos" ) 
+	#define CAL_sysfilegetpos  sysfilegetpos
+	#define CHK_sysfilegetpos  TRUE
+	#define EXP_sysfilegetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpos", (RTS_UINTPTR)sysfilegetpos, 1, RTSITF_GET_SIGNATURE(0, 0x4F0954A2), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfilegetpos
+	#define EXT_sysfilegetpos
+	#define GET_sysfilegetpos(fl)  CAL_CMGETAPI( "sysfilegetpos" ) 
+	#define CAL_sysfilegetpos  sysfilegetpos
+	#define CHK_sysfilegetpos  TRUE
+	#define EXP_sysfilegetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpos", (RTS_UINTPTR)sysfilegetpos, 1, RTSITF_GET_SIGNATURE(0, 0x4F0954A2), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfilegetpos
+	#define EXT_SysFilesysfilegetpos
+	#define GET_SysFilesysfilegetpos  ERR_OK
+	#define CAL_SysFilesysfilegetpos  sysfilegetpos
+	#define CHK_SysFilesysfilegetpos  TRUE
+	#define EXP_SysFilesysfilegetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpos", (RTS_UINTPTR)sysfilegetpos, 1, RTSITF_GET_SIGNATURE(0, 0x4F0954A2), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfilegetpos
+	#define EXT_sysfilegetpos
+	#define GET_sysfilegetpos(fl)  CAL_CMGETAPI( "sysfilegetpos" ) 
+	#define CAL_sysfilegetpos  sysfilegetpos
+	#define CHK_sysfilegetpos  TRUE
+	#define EXP_sysfilegetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpos", (RTS_UINTPTR)sysfilegetpos, 1, RTSITF_GET_SIGNATURE(0, 0x4F0954A2), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfilegetpos  PFSYSFILEGETPOS_IEC pfsysfilegetpos;
+	#define EXT_sysfilegetpos  extern PFSYSFILEGETPOS_IEC pfsysfilegetpos;
+	#define GET_sysfilegetpos(fl)  s_pfCMGetAPI2( "sysfilegetpos", (RTS_VOID_FCTPTR *)&pfsysfilegetpos, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x4F0954A2), 0x03050F00)
+	#define CAL_sysfilegetpos  pfsysfilegetpos
+	#define CHK_sysfilegetpos  (pfsysfilegetpos != NULL)
+	#define EXP_sysfilegetpos   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpos", (RTS_UINTPTR)sysfilegetpos, 1, RTSITF_GET_SIGNATURE(0, 0x4F0954A2), 0x03050F00) 
+#endif
+
+
+/**
+ * | Get file size of the file specified by name.
+ * | A standard path will be added to the filename, if no path is specified.
+ * :return: Size of the file in bytes
+ */
+typedef struct tagsysfilegetsize_struct
+{
+	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.
+ Path entries must be separated with a Slash (/) and not with a Backslash (\\)! */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library):
+
+ - ERR_OK: Successful
+ - ERR_NO_OBJECT: File not available
+ - ERR_FAILED: Failed to get file size */
+	RTS_IEC_XWORD SysFileGetSize;		/* VAR_OUTPUT */	
+} sysfilegetsize_struct;
+
+void CDECL CDECL_EXT sysfilegetsize(sysfilegetsize_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEGETSIZE_IEC) (sysfilegetsize_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETSIZE_NOTIMPLEMENTED)
+	#define USE_sysfilegetsize
+	#define EXT_sysfilegetsize
+	#define GET_sysfilegetsize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfilegetsize(p0) 
+	#define CHK_sysfilegetsize  FALSE
+	#define EXP_sysfilegetsize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfilegetsize
+	#define EXT_sysfilegetsize
+	#define GET_sysfilegetsize(fl)  CAL_CMGETAPI( "sysfilegetsize" ) 
+	#define CAL_sysfilegetsize  sysfilegetsize
+	#define CHK_sysfilegetsize  TRUE
+	#define EXP_sysfilegetsize  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsize", (RTS_UINTPTR)sysfilegetsize, 1, RTSITF_GET_SIGNATURE(0, 0x0A16C4DB), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfilegetsize
+	#define EXT_sysfilegetsize
+	#define GET_sysfilegetsize(fl)  CAL_CMGETAPI( "sysfilegetsize" ) 
+	#define CAL_sysfilegetsize  sysfilegetsize
+	#define CHK_sysfilegetsize  TRUE
+	#define EXP_sysfilegetsize  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsize", (RTS_UINTPTR)sysfilegetsize, 1, RTSITF_GET_SIGNATURE(0, 0x0A16C4DB), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfilegetsize
+	#define EXT_SysFilesysfilegetsize
+	#define GET_SysFilesysfilegetsize  ERR_OK
+	#define CAL_SysFilesysfilegetsize  sysfilegetsize
+	#define CHK_SysFilesysfilegetsize  TRUE
+	#define EXP_SysFilesysfilegetsize  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsize", (RTS_UINTPTR)sysfilegetsize, 1, RTSITF_GET_SIGNATURE(0, 0x0A16C4DB), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfilegetsize
+	#define EXT_sysfilegetsize
+	#define GET_sysfilegetsize(fl)  CAL_CMGETAPI( "sysfilegetsize" ) 
+	#define CAL_sysfilegetsize  sysfilegetsize
+	#define CHK_sysfilegetsize  TRUE
+	#define EXP_sysfilegetsize  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsize", (RTS_UINTPTR)sysfilegetsize, 1, RTSITF_GET_SIGNATURE(0, 0x0A16C4DB), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfilegetsize  PFSYSFILEGETSIZE_IEC pfsysfilegetsize;
+	#define EXT_sysfilegetsize  extern PFSYSFILEGETSIZE_IEC pfsysfilegetsize;
+	#define GET_sysfilegetsize(fl)  s_pfCMGetAPI2( "sysfilegetsize", (RTS_VOID_FCTPTR *)&pfsysfilegetsize, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x0A16C4DB), 0x03050F00)
+	#define CAL_sysfilegetsize  pfsysfilegetsize
+	#define CHK_sysfilegetsize  (pfsysfilegetsize != NULL)
+	#define EXP_sysfilegetsize   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsize", (RTS_UINTPTR)sysfilegetsize, 1, RTSITF_GET_SIGNATURE(0, 0x0A16C4DB), 0x03050F00) 
+#endif
+
+
+/**
+ * Get file size of the file specified by handle
+ * :return: Size of the file in bytes
+ */
+typedef struct tagsysfilegetsizebyhandle_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
+	RTS_IEC_XWORD SysFileGetSizeByHandle;	/* VAR_OUTPUT */	
+} sysfilegetsizebyhandle_struct;
+
+void CDECL CDECL_EXT sysfilegetsizebyhandle(sysfilegetsizebyhandle_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEGETSIZEBYHANDLE_IEC) (sysfilegetsizebyhandle_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETSIZEBYHANDLE_NOTIMPLEMENTED)
+	#define USE_sysfilegetsizebyhandle
+	#define EXT_sysfilegetsizebyhandle
+	#define GET_sysfilegetsizebyhandle(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfilegetsizebyhandle(p0) 
+	#define CHK_sysfilegetsizebyhandle  FALSE
+	#define EXP_sysfilegetsizebyhandle  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfilegetsizebyhandle
+	#define EXT_sysfilegetsizebyhandle
+	#define GET_sysfilegetsizebyhandle(fl)  CAL_CMGETAPI( "sysfilegetsizebyhandle" ) 
+	#define CAL_sysfilegetsizebyhandle  sysfilegetsizebyhandle
+	#define CHK_sysfilegetsizebyhandle  TRUE
+	#define EXP_sysfilegetsizebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsizebyhandle", (RTS_UINTPTR)sysfilegetsizebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0x847C756B), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfilegetsizebyhandle
+	#define EXT_sysfilegetsizebyhandle
+	#define GET_sysfilegetsizebyhandle(fl)  CAL_CMGETAPI( "sysfilegetsizebyhandle" ) 
+	#define CAL_sysfilegetsizebyhandle  sysfilegetsizebyhandle
+	#define CHK_sysfilegetsizebyhandle  TRUE
+	#define EXP_sysfilegetsizebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsizebyhandle", (RTS_UINTPTR)sysfilegetsizebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0x847C756B), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfilegetsizebyhandle
+	#define EXT_SysFilesysfilegetsizebyhandle
+	#define GET_SysFilesysfilegetsizebyhandle  ERR_OK
+	#define CAL_SysFilesysfilegetsizebyhandle  sysfilegetsizebyhandle
+	#define CHK_SysFilesysfilegetsizebyhandle  TRUE
+	#define EXP_SysFilesysfilegetsizebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsizebyhandle", (RTS_UINTPTR)sysfilegetsizebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0x847C756B), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfilegetsizebyhandle
+	#define EXT_sysfilegetsizebyhandle
+	#define GET_sysfilegetsizebyhandle(fl)  CAL_CMGETAPI( "sysfilegetsizebyhandle" ) 
+	#define CAL_sysfilegetsizebyhandle  sysfilegetsizebyhandle
+	#define CHK_sysfilegetsizebyhandle  TRUE
+	#define EXP_sysfilegetsizebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsizebyhandle", (RTS_UINTPTR)sysfilegetsizebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0x847C756B), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfilegetsizebyhandle  PFSYSFILEGETSIZEBYHANDLE_IEC pfsysfilegetsizebyhandle;
+	#define EXT_sysfilegetsizebyhandle  extern PFSYSFILEGETSIZEBYHANDLE_IEC pfsysfilegetsizebyhandle;
+	#define GET_sysfilegetsizebyhandle(fl)  s_pfCMGetAPI2( "sysfilegetsizebyhandle", (RTS_VOID_FCTPTR *)&pfsysfilegetsizebyhandle, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x847C756B), 0x03050F00)
+	#define CAL_sysfilegetsizebyhandle  pfsysfilegetsizebyhandle
+	#define CHK_sysfilegetsizebyhandle  (pfsysfilegetsizebyhandle != NULL)
+	#define EXP_sysfilegetsizebyhandle   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsizebyhandle", (RTS_UINTPTR)sysfilegetsizebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0x847C756B), 0x03050F00) 
+#endif
+
+
+/**
+ * Get the file status
+ * :return: File status. See category file status
+ */
+typedef struct tagsysfilegetstatus_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_INT SysFileGetStatus;		/* VAR_OUTPUT, Enumeration: SYS_FILE_STATUS */
+} sysfilegetstatus_struct;
+
+void CDECL CDECL_EXT sysfilegetstatus(sysfilegetstatus_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEGETSTATUS_IEC) (sysfilegetstatus_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETSTATUS_NOTIMPLEMENTED)
+	#define USE_sysfilegetstatus
+	#define EXT_sysfilegetstatus
+	#define GET_sysfilegetstatus(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfilegetstatus(p0) 
+	#define CHK_sysfilegetstatus  FALSE
+	#define EXP_sysfilegetstatus  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfilegetstatus
+	#define EXT_sysfilegetstatus
+	#define GET_sysfilegetstatus(fl)  CAL_CMGETAPI( "sysfilegetstatus" ) 
+	#define CAL_sysfilegetstatus  sysfilegetstatus
+	#define CHK_sysfilegetstatus  TRUE
+	#define EXP_sysfilegetstatus  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus", (RTS_UINTPTR)sysfilegetstatus, 1, RTSITF_GET_SIGNATURE(0, 0x31FB098C), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfilegetstatus
+	#define EXT_sysfilegetstatus
+	#define GET_sysfilegetstatus(fl)  CAL_CMGETAPI( "sysfilegetstatus" ) 
+	#define CAL_sysfilegetstatus  sysfilegetstatus
+	#define CHK_sysfilegetstatus  TRUE
+	#define EXP_sysfilegetstatus  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus", (RTS_UINTPTR)sysfilegetstatus, 1, RTSITF_GET_SIGNATURE(0, 0x31FB098C), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfilegetstatus
+	#define EXT_SysFilesysfilegetstatus
+	#define GET_SysFilesysfilegetstatus  ERR_OK
+	#define CAL_SysFilesysfilegetstatus  sysfilegetstatus
+	#define CHK_SysFilesysfilegetstatus  TRUE
+	#define EXP_SysFilesysfilegetstatus  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus", (RTS_UINTPTR)sysfilegetstatus, 1, RTSITF_GET_SIGNATURE(0, 0x31FB098C), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfilegetstatus
+	#define EXT_sysfilegetstatus
+	#define GET_sysfilegetstatus(fl)  CAL_CMGETAPI( "sysfilegetstatus" ) 
+	#define CAL_sysfilegetstatus  sysfilegetstatus
+	#define CHK_sysfilegetstatus  TRUE
+	#define EXP_sysfilegetstatus  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus", (RTS_UINTPTR)sysfilegetstatus, 1, RTSITF_GET_SIGNATURE(0, 0x31FB098C), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfilegetstatus  PFSYSFILEGETSTATUS_IEC pfsysfilegetstatus;
+	#define EXT_sysfilegetstatus  extern PFSYSFILEGETSTATUS_IEC pfsysfilegetstatus;
+	#define GET_sysfilegetstatus(fl)  s_pfCMGetAPI2( "sysfilegetstatus", (RTS_VOID_FCTPTR *)&pfsysfilegetstatus, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x31FB098C), 0x03050F00)
+	#define CAL_sysfilegetstatus  pfsysfilegetstatus
+	#define CHK_sysfilegetstatus  (pfsysfilegetstatus != NULL)
+	#define EXP_sysfilegetstatus   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus", (RTS_UINTPTR)sysfilegetstatus, 1, RTSITF_GET_SIGNATURE(0, 0x31FB098C), 0x03050F00) 
+#endif
+
+
+/**
+ * Get the file status
+ * :return: File status. See category file status
+ */
+typedef struct tagsysfilegetstatus2_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
+	RTS_IEC_INT SysFileGetStatus2;		/* VAR_OUTPUT, Enumeration: SYS_FILE_STATUS */
+} sysfilegetstatus2_struct;
+
+void CDECL CDECL_EXT sysfilegetstatus2(sysfilegetstatus2_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEGETSTATUS2_IEC) (sysfilegetstatus2_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETSTATUS2_NOTIMPLEMENTED)
+	#define USE_sysfilegetstatus2
+	#define EXT_sysfilegetstatus2
+	#define GET_sysfilegetstatus2(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfilegetstatus2(p0) 
+	#define CHK_sysfilegetstatus2  FALSE
+	#define EXP_sysfilegetstatus2  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfilegetstatus2
+	#define EXT_sysfilegetstatus2
+	#define GET_sysfilegetstatus2(fl)  CAL_CMGETAPI( "sysfilegetstatus2" ) 
+	#define CAL_sysfilegetstatus2  sysfilegetstatus2
+	#define CHK_sysfilegetstatus2  TRUE
+	#define EXP_sysfilegetstatus2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus2", (RTS_UINTPTR)sysfilegetstatus2, 1, RTSITF_GET_SIGNATURE(0, 0x59D8FC78), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfilegetstatus2
+	#define EXT_sysfilegetstatus2
+	#define GET_sysfilegetstatus2(fl)  CAL_CMGETAPI( "sysfilegetstatus2" ) 
+	#define CAL_sysfilegetstatus2  sysfilegetstatus2
+	#define CHK_sysfilegetstatus2  TRUE
+	#define EXP_sysfilegetstatus2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus2", (RTS_UINTPTR)sysfilegetstatus2, 1, RTSITF_GET_SIGNATURE(0, 0x59D8FC78), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfilegetstatus2
+	#define EXT_SysFilesysfilegetstatus2
+	#define GET_SysFilesysfilegetstatus2  ERR_OK
+	#define CAL_SysFilesysfilegetstatus2  sysfilegetstatus2
+	#define CHK_SysFilesysfilegetstatus2  TRUE
+	#define EXP_SysFilesysfilegetstatus2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus2", (RTS_UINTPTR)sysfilegetstatus2, 1, RTSITF_GET_SIGNATURE(0, 0x59D8FC78), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfilegetstatus2
+	#define EXT_sysfilegetstatus2
+	#define GET_sysfilegetstatus2(fl)  CAL_CMGETAPI( "sysfilegetstatus2" ) 
+	#define CAL_sysfilegetstatus2  sysfilegetstatus2
+	#define CHK_sysfilegetstatus2  TRUE
+	#define EXP_sysfilegetstatus2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus2", (RTS_UINTPTR)sysfilegetstatus2, 1, RTSITF_GET_SIGNATURE(0, 0x59D8FC78), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfilegetstatus2  PFSYSFILEGETSTATUS2_IEC pfsysfilegetstatus2;
+	#define EXT_sysfilegetstatus2  extern PFSYSFILEGETSTATUS2_IEC pfsysfilegetstatus2;
+	#define GET_sysfilegetstatus2(fl)  s_pfCMGetAPI2( "sysfilegetstatus2", (RTS_VOID_FCTPTR *)&pfsysfilegetstatus2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x59D8FC78), 0x03050F00)
+	#define CAL_sysfilegetstatus2  pfsysfilegetstatus2
+	#define CHK_sysfilegetstatus2  (pfsysfilegetstatus2 != NULL)
+	#define EXP_sysfilegetstatus2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus2", (RTS_UINTPTR)sysfilegetstatus2, 1, RTSITF_GET_SIGNATURE(0, 0x59D8FC78), 0x03050F00) 
+#endif
+
+
+/**
+ * | Get file time of the specified file.
+ * | A standard path will be added to the filename, if no path is specified.
+ * :return: The runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfilegettime_struct
+{
+	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.	
+ Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
+	SYS_FILETIME *ptFileTime;			/* VAR_INPUT */	/* Pointer to get the file time results. */
+	RTS_IEC_RESULT SysFileGetTime;		/* VAR_OUTPUT */	
+} sysfilegettime_struct;
+
+void CDECL CDECL_EXT sysfilegettime(sysfilegettime_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEGETTIME_IEC) (sysfilegettime_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETTIME_NOTIMPLEMENTED)
+	#define USE_sysfilegettime
+	#define EXT_sysfilegettime
+	#define GET_sysfilegettime(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfilegettime(p0) 
+	#define CHK_sysfilegettime  FALSE
+	#define EXP_sysfilegettime  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfilegettime
+	#define EXT_sysfilegettime
+	#define GET_sysfilegettime(fl)  CAL_CMGETAPI( "sysfilegettime" ) 
+	#define CAL_sysfilegettime  sysfilegettime
+	#define CHK_sysfilegettime  TRUE
+	#define EXP_sysfilegettime  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegettime", (RTS_UINTPTR)sysfilegettime, 1, RTSITF_GET_SIGNATURE(0, 0xB2AF6BDD), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfilegettime
+	#define EXT_sysfilegettime
+	#define GET_sysfilegettime(fl)  CAL_CMGETAPI( "sysfilegettime" ) 
+	#define CAL_sysfilegettime  sysfilegettime
+	#define CHK_sysfilegettime  TRUE
+	#define EXP_sysfilegettime  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegettime", (RTS_UINTPTR)sysfilegettime, 1, RTSITF_GET_SIGNATURE(0, 0xB2AF6BDD), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfilegettime
+	#define EXT_SysFilesysfilegettime
+	#define GET_SysFilesysfilegettime  ERR_OK
+	#define CAL_SysFilesysfilegettime  sysfilegettime
+	#define CHK_SysFilesysfilegettime  TRUE
+	#define EXP_SysFilesysfilegettime  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegettime", (RTS_UINTPTR)sysfilegettime, 1, RTSITF_GET_SIGNATURE(0, 0xB2AF6BDD), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfilegettime
+	#define EXT_sysfilegettime
+	#define GET_sysfilegettime(fl)  CAL_CMGETAPI( "sysfilegettime" ) 
+	#define CAL_sysfilegettime  sysfilegettime
+	#define CHK_sysfilegettime  TRUE
+	#define EXP_sysfilegettime  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegettime", (RTS_UINTPTR)sysfilegettime, 1, RTSITF_GET_SIGNATURE(0, 0xB2AF6BDD), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfilegettime  PFSYSFILEGETTIME_IEC pfsysfilegettime;
+	#define EXT_sysfilegettime  extern PFSYSFILEGETTIME_IEC pfsysfilegettime;
+	#define GET_sysfilegettime(fl)  s_pfCMGetAPI2( "sysfilegettime", (RTS_VOID_FCTPTR *)&pfsysfilegettime, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB2AF6BDD), 0x03050F00)
+	#define CAL_sysfilegettime  pfsysfilegettime
+	#define CHK_sysfilegettime  (pfsysfilegettime != NULL)
+	#define EXP_sysfilegettime   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegettime", (RTS_UINTPTR)sysfilegettime, 1, RTSITF_GET_SIGNATURE(0, 0xB2AF6BDD), 0x03050F00) 
+#endif
+
+
+/**
+ * | Open or create file. A standard path will be added to the filename, if no path is specified in the file name.
+ * | If a file extension is specified in the settings, this path will be used (see category settings).
+ *
+ * .. note:: File name can contain an absolute or relative path to the file. Path entries
+ *           must be separated with a Slash (/)  and not with a Backslash (\\)!
+ *
+ * :return: Handle to the file or RTS_INVALID_HANDLE if failed
+ */
+typedef struct tagsysfileopen_struct
+{
+	RTS_IEC_STRING *szFile;				/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.	
+ Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
+	RTS_IEC_UDINT am;					/* VAR_INPUT, Enumeration: ACCESS_MODE */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
+	RTS_IEC_HANDLE SysFileOpen;			/* VAR_OUTPUT */	
+} sysfileopen_struct;
+
+void CDECL CDECL_EXT sysfileopen(sysfileopen_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEOPEN_IEC) (sysfileopen_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEOPEN_NOTIMPLEMENTED)
+	#define USE_sysfileopen
+	#define EXT_sysfileopen
+	#define GET_sysfileopen(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfileopen(p0) 
+	#define CHK_sysfileopen  FALSE
+	#define EXP_sysfileopen  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfileopen
+	#define EXT_sysfileopen
+	#define GET_sysfileopen(fl)  CAL_CMGETAPI( "sysfileopen" ) 
+	#define CAL_sysfileopen  sysfileopen
+	#define CHK_sysfileopen  TRUE
+	#define EXP_sysfileopen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileopen", (RTS_UINTPTR)sysfileopen, 1, RTSITF_GET_SIGNATURE(0, 0xFE31259F), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfileopen
+	#define EXT_sysfileopen
+	#define GET_sysfileopen(fl)  CAL_CMGETAPI( "sysfileopen" ) 
+	#define CAL_sysfileopen  sysfileopen
+	#define CHK_sysfileopen  TRUE
+	#define EXP_sysfileopen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileopen", (RTS_UINTPTR)sysfileopen, 1, RTSITF_GET_SIGNATURE(0, 0xFE31259F), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfileopen
+	#define EXT_SysFilesysfileopen
+	#define GET_SysFilesysfileopen  ERR_OK
+	#define CAL_SysFilesysfileopen  sysfileopen
+	#define CHK_SysFilesysfileopen  TRUE
+	#define EXP_SysFilesysfileopen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileopen", (RTS_UINTPTR)sysfileopen, 1, RTSITF_GET_SIGNATURE(0, 0xFE31259F), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfileopen
+	#define EXT_sysfileopen
+	#define GET_sysfileopen(fl)  CAL_CMGETAPI( "sysfileopen" ) 
+	#define CAL_sysfileopen  sysfileopen
+	#define CHK_sysfileopen  TRUE
+	#define EXP_sysfileopen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileopen", (RTS_UINTPTR)sysfileopen, 1, RTSITF_GET_SIGNATURE(0, 0xFE31259F), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfileopen  PFSYSFILEOPEN_IEC pfsysfileopen;
+	#define EXT_sysfileopen  extern PFSYSFILEOPEN_IEC pfsysfileopen;
+	#define GET_sysfileopen(fl)  s_pfCMGetAPI2( "sysfileopen", (RTS_VOID_FCTPTR *)&pfsysfileopen, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xFE31259F), 0x03050F00)
+	#define CAL_sysfileopen  pfsysfileopen
+	#define CHK_sysfileopen  (pfsysfileopen != NULL)
+	#define EXP_sysfileopen   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileopen", (RTS_UINTPTR)sysfileopen, 1, RTSITF_GET_SIGNATURE(0, 0xFE31259F), 0x03050F00) 
+#endif
+
+
+/**
+ * Read number of bytes out of the file
+ * :return: Number of bytes read from file. 0=if failed
+ */
+typedef struct tagsysfileread_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_BYTE *pbyBuffer;			/* VAR_INPUT */	/* Pointer to buffer for read data */
+	RTS_IEC_XWORD ulSize;				/* VAR_INPUT */	/* Number of bytes to read from file. Must be less or equal the buffer size! */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
+	RTS_IEC_XWORD SysFileRead;			/* VAR_OUTPUT */	
+} sysfileread_struct;
+
+void CDECL CDECL_EXT sysfileread(sysfileread_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEREAD_IEC) (sysfileread_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEREAD_NOTIMPLEMENTED)
+	#define USE_sysfileread
+	#define EXT_sysfileread
+	#define GET_sysfileread(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfileread(p0) 
+	#define CHK_sysfileread  FALSE
+	#define EXP_sysfileread  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfileread
+	#define EXT_sysfileread
+	#define GET_sysfileread(fl)  CAL_CMGETAPI( "sysfileread" ) 
+	#define CAL_sysfileread  sysfileread
+	#define CHK_sysfileread  TRUE
+	#define EXP_sysfileread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileread", (RTS_UINTPTR)sysfileread, 1, RTSITF_GET_SIGNATURE(0, 0xD962D4F9), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfileread
+	#define EXT_sysfileread
+	#define GET_sysfileread(fl)  CAL_CMGETAPI( "sysfileread" ) 
+	#define CAL_sysfileread  sysfileread
+	#define CHK_sysfileread  TRUE
+	#define EXP_sysfileread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileread", (RTS_UINTPTR)sysfileread, 1, RTSITF_GET_SIGNATURE(0, 0xD962D4F9), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfileread
+	#define EXT_SysFilesysfileread
+	#define GET_SysFilesysfileread  ERR_OK
+	#define CAL_SysFilesysfileread  sysfileread
+	#define CHK_SysFilesysfileread  TRUE
+	#define EXP_SysFilesysfileread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileread", (RTS_UINTPTR)sysfileread, 1, RTSITF_GET_SIGNATURE(0, 0xD962D4F9), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfileread
+	#define EXT_sysfileread
+	#define GET_sysfileread(fl)  CAL_CMGETAPI( "sysfileread" ) 
+	#define CAL_sysfileread  sysfileread
+	#define CHK_sysfileread  TRUE
+	#define EXP_sysfileread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileread", (RTS_UINTPTR)sysfileread, 1, RTSITF_GET_SIGNATURE(0, 0xD962D4F9), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfileread  PFSYSFILEREAD_IEC pfsysfileread;
+	#define EXT_sysfileread  extern PFSYSFILEREAD_IEC pfsysfileread;
+	#define GET_sysfileread(fl)  s_pfCMGetAPI2( "sysfileread", (RTS_VOID_FCTPTR *)&pfsysfileread, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xD962D4F9), 0x03050F00)
+	#define CAL_sysfileread  pfsysfileread
+	#define CHK_sysfileread  (pfsysfileread != NULL)
+	#define EXP_sysfileread   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileread", (RTS_UINTPTR)sysfileread, 1, RTSITF_GET_SIGNATURE(0, 0xD962D4F9), 0x03050F00) 
+#endif
+
+
+/**
+ * | Rename the file.
+ * | A standard path will be added to the filename, if no path is specified.
+ * :return: Returns the runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfilerename_struct
+{
+	RTS_IEC_STRING *szOldFileName;		/* VAR_INPUT */	/* Old file name. File name can contain an absolute or relative path to the file.
+ Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
+	RTS_IEC_STRING *szNewFileName;		/* VAR_INPUT */	/* New file name. File name can contain an absolute or relative path to the file.
+ Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
+	RTS_IEC_RESULT SysFileRename;		/* VAR_OUTPUT */	
+} sysfilerename_struct;
+
+void CDECL CDECL_EXT sysfilerename(sysfilerename_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILERENAME_IEC) (sysfilerename_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILERENAME_NOTIMPLEMENTED)
+	#define USE_sysfilerename
+	#define EXT_sysfilerename
+	#define GET_sysfilerename(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfilerename(p0) 
+	#define CHK_sysfilerename  FALSE
+	#define EXP_sysfilerename  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfilerename
+	#define EXT_sysfilerename
+	#define GET_sysfilerename(fl)  CAL_CMGETAPI( "sysfilerename" ) 
+	#define CAL_sysfilerename  sysfilerename
+	#define CHK_sysfilerename  TRUE
+	#define EXP_sysfilerename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilerename", (RTS_UINTPTR)sysfilerename, 1, RTSITF_GET_SIGNATURE(0, 0xF3B9A110), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfilerename
+	#define EXT_sysfilerename
+	#define GET_sysfilerename(fl)  CAL_CMGETAPI( "sysfilerename" ) 
+	#define CAL_sysfilerename  sysfilerename
+	#define CHK_sysfilerename  TRUE
+	#define EXP_sysfilerename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilerename", (RTS_UINTPTR)sysfilerename, 1, RTSITF_GET_SIGNATURE(0, 0xF3B9A110), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfilerename
+	#define EXT_SysFilesysfilerename
+	#define GET_SysFilesysfilerename  ERR_OK
+	#define CAL_SysFilesysfilerename  sysfilerename
+	#define CHK_SysFilesysfilerename  TRUE
+	#define EXP_SysFilesysfilerename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilerename", (RTS_UINTPTR)sysfilerename, 1, RTSITF_GET_SIGNATURE(0, 0xF3B9A110), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfilerename
+	#define EXT_sysfilerename
+	#define GET_sysfilerename(fl)  CAL_CMGETAPI( "sysfilerename" ) 
+	#define CAL_sysfilerename  sysfilerename
+	#define CHK_sysfilerename  TRUE
+	#define EXP_sysfilerename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilerename", (RTS_UINTPTR)sysfilerename, 1, RTSITF_GET_SIGNATURE(0, 0xF3B9A110), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfilerename  PFSYSFILERENAME_IEC pfsysfilerename;
+	#define EXT_sysfilerename  extern PFSYSFILERENAME_IEC pfsysfilerename;
+	#define GET_sysfilerename(fl)  s_pfCMGetAPI2( "sysfilerename", (RTS_VOID_FCTPTR *)&pfsysfilerename, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xF3B9A110), 0x03050F00)
+	#define CAL_sysfilerename  pfsysfilerename
+	#define CHK_sysfilerename  (pfsysfilerename != NULL)
+	#define EXP_sysfilerename   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilerename", (RTS_UINTPTR)sysfilerename, 1, RTSITF_GET_SIGNATURE(0, 0xF3B9A110), 0x03050F00) 
+#endif
+
+
+/**
+ * Set the file pointer to the specified position
+ * :return: Returns the runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfilesetpos_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_XWORD ulOffset;				/* VAR_INPUT */	/* Offset to set from the beginning of the file */
+	RTS_IEC_RESULT SysFileSetPos;		/* VAR_OUTPUT */	
+} sysfilesetpos_struct;
+
+void CDECL CDECL_EXT sysfilesetpos(sysfilesetpos_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILESETPOS_IEC) (sysfilesetpos_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILESETPOS_NOTIMPLEMENTED)
+	#define USE_sysfilesetpos
+	#define EXT_sysfilesetpos
+	#define GET_sysfilesetpos(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfilesetpos(p0) 
+	#define CHK_sysfilesetpos  FALSE
+	#define EXP_sysfilesetpos  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfilesetpos
+	#define EXT_sysfilesetpos
+	#define GET_sysfilesetpos(fl)  CAL_CMGETAPI( "sysfilesetpos" ) 
+	#define CAL_sysfilesetpos  sysfilesetpos
+	#define CHK_sysfilesetpos  TRUE
+	#define EXP_sysfilesetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilesetpos", (RTS_UINTPTR)sysfilesetpos, 1, RTSITF_GET_SIGNATURE(0, 0xFC7A70CE), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfilesetpos
+	#define EXT_sysfilesetpos
+	#define GET_sysfilesetpos(fl)  CAL_CMGETAPI( "sysfilesetpos" ) 
+	#define CAL_sysfilesetpos  sysfilesetpos
+	#define CHK_sysfilesetpos  TRUE
+	#define EXP_sysfilesetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilesetpos", (RTS_UINTPTR)sysfilesetpos, 1, RTSITF_GET_SIGNATURE(0, 0xFC7A70CE), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfilesetpos
+	#define EXT_SysFilesysfilesetpos
+	#define GET_SysFilesysfilesetpos  ERR_OK
+	#define CAL_SysFilesysfilesetpos  sysfilesetpos
+	#define CHK_SysFilesysfilesetpos  TRUE
+	#define EXP_SysFilesysfilesetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilesetpos", (RTS_UINTPTR)sysfilesetpos, 1, RTSITF_GET_SIGNATURE(0, 0xFC7A70CE), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfilesetpos
+	#define EXT_sysfilesetpos
+	#define GET_sysfilesetpos(fl)  CAL_CMGETAPI( "sysfilesetpos" ) 
+	#define CAL_sysfilesetpos  sysfilesetpos
+	#define CHK_sysfilesetpos  TRUE
+	#define EXP_sysfilesetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilesetpos", (RTS_UINTPTR)sysfilesetpos, 1, RTSITF_GET_SIGNATURE(0, 0xFC7A70CE), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfilesetpos  PFSYSFILESETPOS_IEC pfsysfilesetpos;
+	#define EXT_sysfilesetpos  extern PFSYSFILESETPOS_IEC pfsysfilesetpos;
+	#define GET_sysfilesetpos(fl)  s_pfCMGetAPI2( "sysfilesetpos", (RTS_VOID_FCTPTR *)&pfsysfilesetpos, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xFC7A70CE), 0x03050F00)
+	#define CAL_sysfilesetpos  pfsysfilesetpos
+	#define CHK_sysfilesetpos  (pfsysfilesetpos != NULL)
+	#define EXP_sysfilesetpos   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilesetpos", (RTS_UINTPTR)sysfilesetpos, 1, RTSITF_GET_SIGNATURE(0, 0xFC7A70CE), 0x03050F00) 
+#endif
+
+
+/**
+ * Set a new filesize. May be larger or smaller than current size.
+ * :return: Returns the runtime system error code (see CmpErrors.library)
+ */
+typedef struct tagsysfiletruncate_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_XWORD ulSizeNew;			/* VAR_INPUT */	/* Size to set. */
+	RTS_IEC_RESULT SysFileTruncate;		/* VAR_OUTPUT */	
+} sysfiletruncate_struct;
+
+void CDECL CDECL_EXT sysfiletruncate(sysfiletruncate_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILETRUNCATE_IEC) (sysfiletruncate_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILETRUNCATE_NOTIMPLEMENTED)
+	#define USE_sysfiletruncate
+	#define EXT_sysfiletruncate
+	#define GET_sysfiletruncate(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfiletruncate(p0) 
+	#define CHK_sysfiletruncate  FALSE
+	#define EXP_sysfiletruncate  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfiletruncate
+	#define EXT_sysfiletruncate
+	#define GET_sysfiletruncate(fl)  CAL_CMGETAPI( "sysfiletruncate" ) 
+	#define CAL_sysfiletruncate  sysfiletruncate
+	#define CHK_sysfiletruncate  TRUE
+	#define EXP_sysfiletruncate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiletruncate", (RTS_UINTPTR)sysfiletruncate, 1, RTSITF_GET_SIGNATURE(0, 0xF2C7CF6C), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfiletruncate
+	#define EXT_sysfiletruncate
+	#define GET_sysfiletruncate(fl)  CAL_CMGETAPI( "sysfiletruncate" ) 
+	#define CAL_sysfiletruncate  sysfiletruncate
+	#define CHK_sysfiletruncate  TRUE
+	#define EXP_sysfiletruncate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiletruncate", (RTS_UINTPTR)sysfiletruncate, 1, RTSITF_GET_SIGNATURE(0, 0xF2C7CF6C), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfiletruncate
+	#define EXT_SysFilesysfiletruncate
+	#define GET_SysFilesysfiletruncate  ERR_OK
+	#define CAL_SysFilesysfiletruncate  sysfiletruncate
+	#define CHK_SysFilesysfiletruncate  TRUE
+	#define EXP_SysFilesysfiletruncate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiletruncate", (RTS_UINTPTR)sysfiletruncate, 1, RTSITF_GET_SIGNATURE(0, 0xF2C7CF6C), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfiletruncate
+	#define EXT_sysfiletruncate
+	#define GET_sysfiletruncate(fl)  CAL_CMGETAPI( "sysfiletruncate" ) 
+	#define CAL_sysfiletruncate  sysfiletruncate
+	#define CHK_sysfiletruncate  TRUE
+	#define EXP_sysfiletruncate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiletruncate", (RTS_UINTPTR)sysfiletruncate, 1, RTSITF_GET_SIGNATURE(0, 0xF2C7CF6C), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfiletruncate  PFSYSFILETRUNCATE_IEC pfsysfiletruncate;
+	#define EXT_sysfiletruncate  extern PFSYSFILETRUNCATE_IEC pfsysfiletruncate;
+	#define GET_sysfiletruncate(fl)  s_pfCMGetAPI2( "sysfiletruncate", (RTS_VOID_FCTPTR *)&pfsysfiletruncate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xF2C7CF6C), 0x03050F00)
+	#define CAL_sysfiletruncate  pfsysfiletruncate
+	#define CHK_sysfiletruncate  (pfsysfiletruncate != NULL)
+	#define EXP_sysfiletruncate   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiletruncate", (RTS_UINTPTR)sysfiletruncate, 1, RTSITF_GET_SIGNATURE(0, 0xF2C7CF6C), 0x03050F00) 
+#endif
+
+
+/**
+ * Write number of bytes to the file. File must be opened with |AM_WRITE| or |AM_APPEND|.
+ * :return: Number of bytes written to the file. 0=if failed
+ */
+typedef struct tagsysfilewrite_struct
+{
+	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
+	RTS_IEC_BYTE *pbyBuffer;			/* VAR_INPUT */	/* Pointer to buffer with data to write to file */
+	RTS_IEC_XWORD ulSize;				/* VAR_INPUT */	/* Number of bytes to write in the file. Must be less or equal the buffer size! */
+	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
+	RTS_IEC_XWORD SysFileWrite;			/* VAR_OUTPUT */	
+} sysfilewrite_struct;
+
+void CDECL CDECL_EXT sysfilewrite(sysfilewrite_struct *p);
+typedef void (CDECL CDECL_EXT* PFSYSFILEWRITE_IEC) (sysfilewrite_struct *p);
+#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEWRITE_NOTIMPLEMENTED)
+	#define USE_sysfilewrite
+	#define EXT_sysfilewrite
+	#define GET_sysfilewrite(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_sysfilewrite(p0) 
+	#define CHK_sysfilewrite  FALSE
+	#define EXP_sysfilewrite  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_sysfilewrite
+	#define EXT_sysfilewrite
+	#define GET_sysfilewrite(fl)  CAL_CMGETAPI( "sysfilewrite" ) 
+	#define CAL_sysfilewrite  sysfilewrite
+	#define CHK_sysfilewrite  TRUE
+	#define EXP_sysfilewrite  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilewrite", (RTS_UINTPTR)sysfilewrite, 1, RTSITF_GET_SIGNATURE(0, 0x6AE210A7), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
+	#define USE_sysfilewrite
+	#define EXT_sysfilewrite
+	#define GET_sysfilewrite(fl)  CAL_CMGETAPI( "sysfilewrite" ) 
+	#define CAL_sysfilewrite  sysfilewrite
+	#define CHK_sysfilewrite  TRUE
+	#define EXP_sysfilewrite  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilewrite", (RTS_UINTPTR)sysfilewrite, 1, RTSITF_GET_SIGNATURE(0, 0x6AE210A7), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysFilesysfilewrite
+	#define EXT_SysFilesysfilewrite
+	#define GET_SysFilesysfilewrite  ERR_OK
+	#define CAL_SysFilesysfilewrite  sysfilewrite
+	#define CHK_SysFilesysfilewrite  TRUE
+	#define EXP_SysFilesysfilewrite  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilewrite", (RTS_UINTPTR)sysfilewrite, 1, RTSITF_GET_SIGNATURE(0, 0x6AE210A7), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_sysfilewrite
+	#define EXT_sysfilewrite
+	#define GET_sysfilewrite(fl)  CAL_CMGETAPI( "sysfilewrite" ) 
+	#define CAL_sysfilewrite  sysfilewrite
+	#define CHK_sysfilewrite  TRUE
+	#define EXP_sysfilewrite  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilewrite", (RTS_UINTPTR)sysfilewrite, 1, RTSITF_GET_SIGNATURE(0, 0x6AE210A7), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_sysfilewrite  PFSYSFILEWRITE_IEC pfsysfilewrite;
+	#define EXT_sysfilewrite  extern PFSYSFILEWRITE_IEC pfsysfilewrite;
+	#define GET_sysfilewrite(fl)  s_pfCMGetAPI2( "sysfilewrite", (RTS_VOID_FCTPTR *)&pfsysfilewrite, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x6AE210A7), 0x03050F00)
+	#define CAL_sysfilewrite  pfsysfilewrite
+	#define CHK_sysfilewrite  (pfsysfilewrite != NULL)
+	#define EXP_sysfilewrite   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilewrite", (RTS_UINTPTR)sysfilewrite, 1, RTSITF_GET_SIGNATURE(0, 0x6AE210A7), 0x03050F00) 
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+
+/** EXTERN LIB SECTION END **/
+
+
+/**
+ * <category>Path options</category>
+ * <description>
+ * Separation of directory or file for SysFileGetPath2, SysFileGetFullPath2, SysFileGetIecPath2
+ * </description>
  */
 #define SYSFILE_PATH_OPTION_UNKNOWN 0
 #define SYSFILE_PATH_OPTION_FILE 1
 #define SYSFILE_PATH_OPTION_DIRECTORY 2
 #define SYSFILE_PATH_OPTION_FILE_KEEP_NAME 3
+
 
 /**
  * <category>Event parameter</category>
@@ -512,1260 +1779,6 @@ typedef struct
  * <param name="pEventParam" type="IN/OUT">EVTPARAM_SysFileFlashGetFileMapIndex</param>
  */
 #define EVT_SysFileFlashGetFileMapIndex					MAKE_EVENTID(EVTCLASS_INFO, 3)
-
-/**
- * Close a file specified by handle
- * :return: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfileclose_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_RESULT SysFileClose;		/* VAR_OUTPUT */	
-} sysfileclose_struct;
-
-void CDECL CDECL_EXT sysfileclose(sysfileclose_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILECLOSE_IEC) (sysfileclose_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILECLOSE_NOTIMPLEMENTED)
-	#define USE_sysfileclose
-	#define EXT_sysfileclose
-	#define GET_sysfileclose(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfileclose(p0) 
-	#define CHK_sysfileclose  FALSE
-	#define EXP_sysfileclose  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfileclose
-	#define EXT_sysfileclose
-	#define GET_sysfileclose(fl)  CAL_CMGETAPI( "sysfileclose" ) 
-	#define CAL_sysfileclose  sysfileclose
-	#define CHK_sysfileclose  TRUE
-	#define EXP_sysfileclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileclose", (RTS_UINTPTR)sysfileclose, 1, RTSITF_GET_SIGNATURE(0, 0xC19E28BA), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfileclose
-	#define EXT_sysfileclose
-	#define GET_sysfileclose(fl)  CAL_CMGETAPI( "sysfileclose" ) 
-	#define CAL_sysfileclose  sysfileclose
-	#define CHK_sysfileclose  TRUE
-	#define EXP_sysfileclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileclose", (RTS_UINTPTR)sysfileclose, 1, RTSITF_GET_SIGNATURE(0, 0xC19E28BA), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfileclose
-	#define EXT_SysFilesysfileclose
-	#define GET_SysFilesysfileclose  ERR_OK
-	#define CAL_SysFilesysfileclose  sysfileclose
-	#define CHK_SysFilesysfileclose  TRUE
-	#define EXP_SysFilesysfileclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileclose", (RTS_UINTPTR)sysfileclose, 1, RTSITF_GET_SIGNATURE(0, 0xC19E28BA), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfileclose
-	#define EXT_sysfileclose
-	#define GET_sysfileclose(fl)  CAL_CMGETAPI( "sysfileclose" ) 
-	#define CAL_sysfileclose  sysfileclose
-	#define CHK_sysfileclose  TRUE
-	#define EXP_sysfileclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileclose", (RTS_UINTPTR)sysfileclose, 1, RTSITF_GET_SIGNATURE(0, 0xC19E28BA), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfileclose  PFSYSFILECLOSE_IEC pfsysfileclose;
-	#define EXT_sysfileclose  extern PFSYSFILECLOSE_IEC pfsysfileclose;
-	#define GET_sysfileclose(fl)  s_pfCMGetAPI2( "sysfileclose", (RTS_VOID_FCTPTR *)&pfsysfileclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC19E28BA), 0x03050500)
-	#define CAL_sysfileclose  pfsysfileclose
-	#define CHK_sysfileclose  (pfsysfileclose != NULL)
-	#define EXP_sysfileclose   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileclose", (RTS_UINTPTR)sysfileclose, 1, RTSITF_GET_SIGNATURE(0, 0xC19E28BA), 0x03050500) 
-#endif
-
-
-/**
- * | Copy one file to another.
- * | A standard path will be added to the filename, if no path is specified.
- * :return: The runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfilecopy_struct
-{
-	RTS_IEC_STRING *szDestFileName;		/* VAR_INPUT */	/* Destination file name. File name can contain an absolute or relative path to the file.
- Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
-	RTS_IEC_STRING *szSourceFileName;	/* VAR_INPUT */	/* Source file name. File name can contain an absolute or relative path to the file.											
- Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
-	RTS_IEC_XWORD *pulCopied;			/* VAR_INPUT */	/* Number of bytes copied */
-	RTS_IEC_RESULT SysFileCopy;			/* VAR_OUTPUT */	
-} sysfilecopy_struct;
-
-void CDECL CDECL_EXT sysfilecopy(sysfilecopy_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILECOPY_IEC) (sysfilecopy_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILECOPY_NOTIMPLEMENTED)
-	#define USE_sysfilecopy
-	#define EXT_sysfilecopy
-	#define GET_sysfilecopy(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfilecopy(p0) 
-	#define CHK_sysfilecopy  FALSE
-	#define EXP_sysfilecopy  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfilecopy
-	#define EXT_sysfilecopy
-	#define GET_sysfilecopy(fl)  CAL_CMGETAPI( "sysfilecopy" ) 
-	#define CAL_sysfilecopy  sysfilecopy
-	#define CHK_sysfilecopy  TRUE
-	#define EXP_sysfilecopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilecopy", (RTS_UINTPTR)sysfilecopy, 1, RTSITF_GET_SIGNATURE(0, 0xDB491610), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfilecopy
-	#define EXT_sysfilecopy
-	#define GET_sysfilecopy(fl)  CAL_CMGETAPI( "sysfilecopy" ) 
-	#define CAL_sysfilecopy  sysfilecopy
-	#define CHK_sysfilecopy  TRUE
-	#define EXP_sysfilecopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilecopy", (RTS_UINTPTR)sysfilecopy, 1, RTSITF_GET_SIGNATURE(0, 0xDB491610), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfilecopy
-	#define EXT_SysFilesysfilecopy
-	#define GET_SysFilesysfilecopy  ERR_OK
-	#define CAL_SysFilesysfilecopy  sysfilecopy
-	#define CHK_SysFilesysfilecopy  TRUE
-	#define EXP_SysFilesysfilecopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilecopy", (RTS_UINTPTR)sysfilecopy, 1, RTSITF_GET_SIGNATURE(0, 0xDB491610), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfilecopy
-	#define EXT_sysfilecopy
-	#define GET_sysfilecopy(fl)  CAL_CMGETAPI( "sysfilecopy" ) 
-	#define CAL_sysfilecopy  sysfilecopy
-	#define CHK_sysfilecopy  TRUE
-	#define EXP_sysfilecopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilecopy", (RTS_UINTPTR)sysfilecopy, 1, RTSITF_GET_SIGNATURE(0, 0xDB491610), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfilecopy  PFSYSFILECOPY_IEC pfsysfilecopy;
-	#define EXT_sysfilecopy  extern PFSYSFILECOPY_IEC pfsysfilecopy;
-	#define GET_sysfilecopy(fl)  s_pfCMGetAPI2( "sysfilecopy", (RTS_VOID_FCTPTR *)&pfsysfilecopy, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xDB491610), 0x03050500)
-	#define CAL_sysfilecopy  pfsysfilecopy
-	#define CHK_sysfilecopy  (pfsysfilecopy != NULL)
-	#define EXP_sysfilecopy   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilecopy", (RTS_UINTPTR)sysfilecopy, 1, RTSITF_GET_SIGNATURE(0, 0xDB491610), 0x03050500) 
-#endif
-
-
-/**
- * | Delete the file specified by name.
- * | A standard path will be added in the runtime system to the filename, if no path is specified.
- * :return: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfiledelete_struct
-{
-	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.
- Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
-	RTS_IEC_RESULT SysFileDelete;		/* VAR_OUTPUT */	
-} sysfiledelete_struct;
-
-void CDECL CDECL_EXT sysfiledelete(sysfiledelete_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEDELETE_IEC) (sysfiledelete_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEDELETE_NOTIMPLEMENTED)
-	#define USE_sysfiledelete
-	#define EXT_sysfiledelete
-	#define GET_sysfiledelete(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfiledelete(p0) 
-	#define CHK_sysfiledelete  FALSE
-	#define EXP_sysfiledelete  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfiledelete
-	#define EXT_sysfiledelete
-	#define GET_sysfiledelete(fl)  CAL_CMGETAPI( "sysfiledelete" ) 
-	#define CAL_sysfiledelete  sysfiledelete
-	#define CHK_sysfiledelete  TRUE
-	#define EXP_sysfiledelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledelete", (RTS_UINTPTR)sysfiledelete, 1, RTSITF_GET_SIGNATURE(0, 0xA977F762), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfiledelete
-	#define EXT_sysfiledelete
-	#define GET_sysfiledelete(fl)  CAL_CMGETAPI( "sysfiledelete" ) 
-	#define CAL_sysfiledelete  sysfiledelete
-	#define CHK_sysfiledelete  TRUE
-	#define EXP_sysfiledelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledelete", (RTS_UINTPTR)sysfiledelete, 1, RTSITF_GET_SIGNATURE(0, 0xA977F762), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfiledelete
-	#define EXT_SysFilesysfiledelete
-	#define GET_SysFilesysfiledelete  ERR_OK
-	#define CAL_SysFilesysfiledelete  sysfiledelete
-	#define CHK_SysFilesysfiledelete  TRUE
-	#define EXP_SysFilesysfiledelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledelete", (RTS_UINTPTR)sysfiledelete, 1, RTSITF_GET_SIGNATURE(0, 0xA977F762), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfiledelete
-	#define EXT_sysfiledelete
-	#define GET_sysfiledelete(fl)  CAL_CMGETAPI( "sysfiledelete" ) 
-	#define CAL_sysfiledelete  sysfiledelete
-	#define CHK_sysfiledelete  TRUE
-	#define EXP_sysfiledelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledelete", (RTS_UINTPTR)sysfiledelete, 1, RTSITF_GET_SIGNATURE(0, 0xA977F762), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfiledelete  PFSYSFILEDELETE_IEC pfsysfiledelete;
-	#define EXT_sysfiledelete  extern PFSYSFILEDELETE_IEC pfsysfiledelete;
-	#define GET_sysfiledelete(fl)  s_pfCMGetAPI2( "sysfiledelete", (RTS_VOID_FCTPTR *)&pfsysfiledelete, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA977F762), 0x03050500)
-	#define CAL_sysfiledelete  pfsysfiledelete
-	#define CHK_sysfiledelete  (pfsysfiledelete != NULL)
-	#define EXP_sysfiledelete   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledelete", (RTS_UINTPTR)sysfiledelete, 1, RTSITF_GET_SIGNATURE(0, 0xA977F762), 0x03050500) 
-#endif
-
-
-/**
- * Delete the file specified by handle
- * :return: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfiledeletebyhandle_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_RESULT SysFileDeleteByHandle;	/* VAR_OUTPUT */	
-} sysfiledeletebyhandle_struct;
-
-void CDECL CDECL_EXT sysfiledeletebyhandle(sysfiledeletebyhandle_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEDELETEBYHANDLE_IEC) (sysfiledeletebyhandle_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEDELETEBYHANDLE_NOTIMPLEMENTED)
-	#define USE_sysfiledeletebyhandle
-	#define EXT_sysfiledeletebyhandle
-	#define GET_sysfiledeletebyhandle(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfiledeletebyhandle(p0) 
-	#define CHK_sysfiledeletebyhandle  FALSE
-	#define EXP_sysfiledeletebyhandle  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfiledeletebyhandle
-	#define EXT_sysfiledeletebyhandle
-	#define GET_sysfiledeletebyhandle(fl)  CAL_CMGETAPI( "sysfiledeletebyhandle" ) 
-	#define CAL_sysfiledeletebyhandle  sysfiledeletebyhandle
-	#define CHK_sysfiledeletebyhandle  TRUE
-	#define EXP_sysfiledeletebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledeletebyhandle", (RTS_UINTPTR)sysfiledeletebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0xC812562E), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfiledeletebyhandle
-	#define EXT_sysfiledeletebyhandle
-	#define GET_sysfiledeletebyhandle(fl)  CAL_CMGETAPI( "sysfiledeletebyhandle" ) 
-	#define CAL_sysfiledeletebyhandle  sysfiledeletebyhandle
-	#define CHK_sysfiledeletebyhandle  TRUE
-	#define EXP_sysfiledeletebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledeletebyhandle", (RTS_UINTPTR)sysfiledeletebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0xC812562E), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfiledeletebyhandle
-	#define EXT_SysFilesysfiledeletebyhandle
-	#define GET_SysFilesysfiledeletebyhandle  ERR_OK
-	#define CAL_SysFilesysfiledeletebyhandle  sysfiledeletebyhandle
-	#define CHK_SysFilesysfiledeletebyhandle  TRUE
-	#define EXP_SysFilesysfiledeletebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledeletebyhandle", (RTS_UINTPTR)sysfiledeletebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0xC812562E), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfiledeletebyhandle
-	#define EXT_sysfiledeletebyhandle
-	#define GET_sysfiledeletebyhandle(fl)  CAL_CMGETAPI( "sysfiledeletebyhandle" ) 
-	#define CAL_sysfiledeletebyhandle  sysfiledeletebyhandle
-	#define CHK_sysfiledeletebyhandle  TRUE
-	#define EXP_sysfiledeletebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledeletebyhandle", (RTS_UINTPTR)sysfiledeletebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0xC812562E), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfiledeletebyhandle  PFSYSFILEDELETEBYHANDLE_IEC pfsysfiledeletebyhandle;
-	#define EXT_sysfiledeletebyhandle  extern PFSYSFILEDELETEBYHANDLE_IEC pfsysfiledeletebyhandle;
-	#define GET_sysfiledeletebyhandle(fl)  s_pfCMGetAPI2( "sysfiledeletebyhandle", (RTS_VOID_FCTPTR *)&pfsysfiledeletebyhandle, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC812562E), 0x03050500)
-	#define CAL_sysfiledeletebyhandle  pfsysfiledeletebyhandle
-	#define CHK_sysfiledeletebyhandle  (pfsysfiledeletebyhandle != NULL)
-	#define EXP_sysfiledeletebyhandle   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiledeletebyhandle", (RTS_UINTPTR)sysfiledeletebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0xC812562E), 0x03050500) 
-#endif
-
-
-/**
- * Check, if end of file is reached
- * :return: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfileeof_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_RESULT SysFileEOF;			/* VAR_OUTPUT */	
-} sysfileeof_struct;
-
-void CDECL CDECL_EXT sysfileeof(sysfileeof_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEEOF_IEC) (sysfileeof_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEEOF_NOTIMPLEMENTED)
-	#define USE_sysfileeof
-	#define EXT_sysfileeof
-	#define GET_sysfileeof(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfileeof(p0) 
-	#define CHK_sysfileeof  FALSE
-	#define EXP_sysfileeof  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfileeof
-	#define EXT_sysfileeof
-	#define GET_sysfileeof(fl)  CAL_CMGETAPI( "sysfileeof" ) 
-	#define CAL_sysfileeof  sysfileeof
-	#define CHK_sysfileeof  TRUE
-	#define EXP_sysfileeof  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileeof", (RTS_UINTPTR)sysfileeof, 1, RTSITF_GET_SIGNATURE(0, 0x30A3EB85), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfileeof
-	#define EXT_sysfileeof
-	#define GET_sysfileeof(fl)  CAL_CMGETAPI( "sysfileeof" ) 
-	#define CAL_sysfileeof  sysfileeof
-	#define CHK_sysfileeof  TRUE
-	#define EXP_sysfileeof  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileeof", (RTS_UINTPTR)sysfileeof, 1, RTSITF_GET_SIGNATURE(0, 0x30A3EB85), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfileeof
-	#define EXT_SysFilesysfileeof
-	#define GET_SysFilesysfileeof  ERR_OK
-	#define CAL_SysFilesysfileeof  sysfileeof
-	#define CHK_SysFilesysfileeof  TRUE
-	#define EXP_SysFilesysfileeof  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileeof", (RTS_UINTPTR)sysfileeof, 1, RTSITF_GET_SIGNATURE(0, 0x30A3EB85), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfileeof
-	#define EXT_sysfileeof
-	#define GET_sysfileeof(fl)  CAL_CMGETAPI( "sysfileeof" ) 
-	#define CAL_sysfileeof  sysfileeof
-	#define CHK_sysfileeof  TRUE
-	#define EXP_sysfileeof  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileeof", (RTS_UINTPTR)sysfileeof, 1, RTSITF_GET_SIGNATURE(0, 0x30A3EB85), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfileeof  PFSYSFILEEOF_IEC pfsysfileeof;
-	#define EXT_sysfileeof  extern PFSYSFILEEOF_IEC pfsysfileeof;
-	#define GET_sysfileeof(fl)  s_pfCMGetAPI2( "sysfileeof", (RTS_VOID_FCTPTR *)&pfsysfileeof, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x30A3EB85), 0x03050500)
-	#define CAL_sysfileeof  pfsysfileeof
-	#define CHK_sysfileeof  (pfsysfileeof != NULL)
-	#define EXP_sysfileeof   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileeof", (RTS_UINTPTR)sysfileeof, 1, RTSITF_GET_SIGNATURE(0, 0x30A3EB85), 0x03050500) 
-#endif
-
-
-/**
- * Flush the file cache and write into the file
- * :return: Returns the runtime system error code (see CmpErrors_Itfs.library):
- *
- * - ERR_OK: Succeeded flushing the file
- * - ERR_FAILED: Error occurred during file flush
- * - ERR_NOTIMPLEMENTED: File flush is not implemented
- * - ERR_NOT_SUPPORTED: File flush not available on the target
- */
-typedef struct tagsysfileflush_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_RESULT SysFileFlush;		/* VAR_OUTPUT */	
-} sysfileflush_struct;
-
-void CDECL CDECL_EXT sysfileflush(sysfileflush_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEFLUSH_IEC) (sysfileflush_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEFLUSH_NOTIMPLEMENTED)
-	#define USE_sysfileflush
-	#define EXT_sysfileflush
-	#define GET_sysfileflush(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfileflush(p0) 
-	#define CHK_sysfileflush  FALSE
-	#define EXP_sysfileflush  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfileflush
-	#define EXT_sysfileflush
-	#define GET_sysfileflush(fl)  CAL_CMGETAPI( "sysfileflush" ) 
-	#define CAL_sysfileflush  sysfileflush
-	#define CHK_sysfileflush  TRUE
-	#define EXP_sysfileflush  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileflush", (RTS_UINTPTR)sysfileflush, 1, 0x32985005, 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfileflush
-	#define EXT_sysfileflush
-	#define GET_sysfileflush(fl)  CAL_CMGETAPI( "sysfileflush" ) 
-	#define CAL_sysfileflush  sysfileflush
-	#define CHK_sysfileflush  TRUE
-	#define EXP_sysfileflush  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileflush", (RTS_UINTPTR)sysfileflush, 1, 0x32985005, 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfileflush
-	#define EXT_SysFilesysfileflush
-	#define GET_SysFilesysfileflush  ERR_OK
-	#define CAL_SysFilesysfileflush  sysfileflush
-	#define CHK_SysFilesysfileflush  TRUE
-	#define EXP_SysFilesysfileflush  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileflush", (RTS_UINTPTR)sysfileflush, 1, 0x32985005, 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfileflush
-	#define EXT_sysfileflush
-	#define GET_sysfileflush(fl)  CAL_CMGETAPI( "sysfileflush" ) 
-	#define CAL_sysfileflush  sysfileflush
-	#define CHK_sysfileflush  TRUE
-	#define EXP_sysfileflush  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileflush", (RTS_UINTPTR)sysfileflush, 1, 0x32985005, 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfileflush  PFSYSFILEFLUSH_IEC pfsysfileflush;
-	#define EXT_sysfileflush  extern PFSYSFILEFLUSH_IEC pfsysfileflush;
-	#define GET_sysfileflush(fl)  s_pfCMGetAPI2( "sysfileflush", (RTS_VOID_FCTPTR *)&pfsysfileflush, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x32985005, 0x03050500)
-	#define CAL_sysfileflush  pfsysfileflush
-	#define CHK_sysfileflush  (pfsysfileflush != NULL)
-	#define EXP_sysfileflush   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileflush", (RTS_UINTPTR)sysfileflush, 1, 0x32985005, 0x03050500) 
-#endif
-
-
-/**
- * Get the file name from file specified by handle
- * :return: File name of the specified file
- */
-typedef struct tagsysfilegetname_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_STRING *SysFileGetName;		/* VAR_OUTPUT */	
-} sysfilegetname_struct;
-
-void CDECL CDECL_EXT sysfilegetname(sysfilegetname_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEGETNAME_IEC) (sysfilegetname_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETNAME_NOTIMPLEMENTED)
-	#define USE_sysfilegetname
-	#define EXT_sysfilegetname
-	#define GET_sysfilegetname(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfilegetname(p0) 
-	#define CHK_sysfilegetname  FALSE
-	#define EXP_sysfilegetname  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfilegetname
-	#define EXT_sysfilegetname
-	#define GET_sysfilegetname(fl)  CAL_CMGETAPI( "sysfilegetname" ) 
-	#define CAL_sysfilegetname  sysfilegetname
-	#define CHK_sysfilegetname  TRUE
-	#define EXP_sysfilegetname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname", (RTS_UINTPTR)sysfilegetname, 1, RTSITF_GET_SIGNATURE(0, 0x4AEE0669), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfilegetname
-	#define EXT_sysfilegetname
-	#define GET_sysfilegetname(fl)  CAL_CMGETAPI( "sysfilegetname" ) 
-	#define CAL_sysfilegetname  sysfilegetname
-	#define CHK_sysfilegetname  TRUE
-	#define EXP_sysfilegetname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname", (RTS_UINTPTR)sysfilegetname, 1, RTSITF_GET_SIGNATURE(0, 0x4AEE0669), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfilegetname
-	#define EXT_SysFilesysfilegetname
-	#define GET_SysFilesysfilegetname  ERR_OK
-	#define CAL_SysFilesysfilegetname  sysfilegetname
-	#define CHK_SysFilesysfilegetname  TRUE
-	#define EXP_SysFilesysfilegetname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname", (RTS_UINTPTR)sysfilegetname, 1, RTSITF_GET_SIGNATURE(0, 0x4AEE0669), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfilegetname
-	#define EXT_sysfilegetname
-	#define GET_sysfilegetname(fl)  CAL_CMGETAPI( "sysfilegetname" ) 
-	#define CAL_sysfilegetname  sysfilegetname
-	#define CHK_sysfilegetname  TRUE
-	#define EXP_sysfilegetname  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname", (RTS_UINTPTR)sysfilegetname, 1, RTSITF_GET_SIGNATURE(0, 0x4AEE0669), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfilegetname  PFSYSFILEGETNAME_IEC pfsysfilegetname;
-	#define EXT_sysfilegetname  extern PFSYSFILEGETNAME_IEC pfsysfilegetname;
-	#define GET_sysfilegetname(fl)  s_pfCMGetAPI2( "sysfilegetname", (RTS_VOID_FCTPTR *)&pfsysfilegetname, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x4AEE0669), 0x03050500)
-	#define CAL_sysfilegetname  pfsysfilegetname
-	#define CHK_sysfilegetname  (pfsysfilegetname != NULL)
-	#define EXP_sysfilegetname   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname", (RTS_UINTPTR)sysfilegetname, 1, RTSITF_GET_SIGNATURE(0, 0x4AEE0669), 0x03050500) 
-#endif
-
-
-/**
- * Get the file name from file specified by handle
- * :return: File name of the specified file
- */
-typedef struct tagsysfilegetname2_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
-	RTS_IEC_STRING *SysFileGetName2;	/* VAR_OUTPUT */	
-} sysfilegetname2_struct;
-
-void CDECL CDECL_EXT sysfilegetname2(sysfilegetname2_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEGETNAME2_IEC) (sysfilegetname2_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETNAME2_NOTIMPLEMENTED)
-	#define USE_sysfilegetname2
-	#define EXT_sysfilegetname2
-	#define GET_sysfilegetname2(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfilegetname2(p0) 
-	#define CHK_sysfilegetname2  FALSE
-	#define EXP_sysfilegetname2  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfilegetname2
-	#define EXT_sysfilegetname2
-	#define GET_sysfilegetname2(fl)  CAL_CMGETAPI( "sysfilegetname2" ) 
-	#define CAL_sysfilegetname2  sysfilegetname2
-	#define CHK_sysfilegetname2  TRUE
-	#define EXP_sysfilegetname2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname2", (RTS_UINTPTR)sysfilegetname2, 1, RTSITF_GET_SIGNATURE(0, 0x2856F375), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfilegetname2
-	#define EXT_sysfilegetname2
-	#define GET_sysfilegetname2(fl)  CAL_CMGETAPI( "sysfilegetname2" ) 
-	#define CAL_sysfilegetname2  sysfilegetname2
-	#define CHK_sysfilegetname2  TRUE
-	#define EXP_sysfilegetname2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname2", (RTS_UINTPTR)sysfilegetname2, 1, RTSITF_GET_SIGNATURE(0, 0x2856F375), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfilegetname2
-	#define EXT_SysFilesysfilegetname2
-	#define GET_SysFilesysfilegetname2  ERR_OK
-	#define CAL_SysFilesysfilegetname2  sysfilegetname2
-	#define CHK_SysFilesysfilegetname2  TRUE
-	#define EXP_SysFilesysfilegetname2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname2", (RTS_UINTPTR)sysfilegetname2, 1, RTSITF_GET_SIGNATURE(0, 0x2856F375), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfilegetname2
-	#define EXT_sysfilegetname2
-	#define GET_sysfilegetname2(fl)  CAL_CMGETAPI( "sysfilegetname2" ) 
-	#define CAL_sysfilegetname2  sysfilegetname2
-	#define CHK_sysfilegetname2  TRUE
-	#define EXP_sysfilegetname2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname2", (RTS_UINTPTR)sysfilegetname2, 1, RTSITF_GET_SIGNATURE(0, 0x2856F375), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfilegetname2  PFSYSFILEGETNAME2_IEC pfsysfilegetname2;
-	#define EXT_sysfilegetname2  extern PFSYSFILEGETNAME2_IEC pfsysfilegetname2;
-	#define GET_sysfilegetname2(fl)  s_pfCMGetAPI2( "sysfilegetname2", (RTS_VOID_FCTPTR *)&pfsysfilegetname2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x2856F375), 0x03050500)
-	#define CAL_sysfilegetname2  pfsysfilegetname2
-	#define CHK_sysfilegetname2  (pfsysfilegetname2 != NULL)
-	#define EXP_sysfilegetname2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetname2", (RTS_UINTPTR)sysfilegetname2, 1, RTSITF_GET_SIGNATURE(0, 0x2856F375), 0x03050500) 
-#endif
-
-
-/**
- * | Get the path of this file.
- * | If a path is specified in the filename, the path will be extracted from the filename.
- * | If no path is specified in the filename, the standard path for this file extension type will be returned.
- * :return: The runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfilegetpath_struct
-{
-	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. Can contain an absolute or relative path */
-	RTS_IEC_STRING *szPath;				/* VAR_INPUT */	/* Path for this file */
-	RTS_IEC_DINT diMaxLen;				/* VAR_INPUT */	/* Maximum size in bytes of path length */
-	RTS_IEC_RESULT SysFileGetPath;		/* VAR_OUTPUT */	
-} sysfilegetpath_struct;
-
-void CDECL CDECL_EXT sysfilegetpath(sysfilegetpath_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEGETPATH_IEC) (sysfilegetpath_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETPATH_NOTIMPLEMENTED)
-	#define USE_sysfilegetpath
-	#define EXT_sysfilegetpath
-	#define GET_sysfilegetpath(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfilegetpath(p0) 
-	#define CHK_sysfilegetpath  FALSE
-	#define EXP_sysfilegetpath  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfilegetpath
-	#define EXT_sysfilegetpath
-	#define GET_sysfilegetpath(fl)  CAL_CMGETAPI( "sysfilegetpath" ) 
-	#define CAL_sysfilegetpath  sysfilegetpath
-	#define CHK_sysfilegetpath  TRUE
-	#define EXP_sysfilegetpath  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpath", (RTS_UINTPTR)sysfilegetpath, 1, 0xE8836F87, 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfilegetpath
-	#define EXT_sysfilegetpath
-	#define GET_sysfilegetpath(fl)  CAL_CMGETAPI( "sysfilegetpath" ) 
-	#define CAL_sysfilegetpath  sysfilegetpath
-	#define CHK_sysfilegetpath  TRUE
-	#define EXP_sysfilegetpath  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpath", (RTS_UINTPTR)sysfilegetpath, 1, 0xE8836F87, 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfilegetpath
-	#define EXT_SysFilesysfilegetpath
-	#define GET_SysFilesysfilegetpath  ERR_OK
-	#define CAL_SysFilesysfilegetpath  sysfilegetpath
-	#define CHK_SysFilesysfilegetpath  TRUE
-	#define EXP_SysFilesysfilegetpath  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpath", (RTS_UINTPTR)sysfilegetpath, 1, 0xE8836F87, 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfilegetpath
-	#define EXT_sysfilegetpath
-	#define GET_sysfilegetpath(fl)  CAL_CMGETAPI( "sysfilegetpath" ) 
-	#define CAL_sysfilegetpath  sysfilegetpath
-	#define CHK_sysfilegetpath  TRUE
-	#define EXP_sysfilegetpath  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpath", (RTS_UINTPTR)sysfilegetpath, 1, 0xE8836F87, 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfilegetpath  PFSYSFILEGETPATH_IEC pfsysfilegetpath;
-	#define EXT_sysfilegetpath  extern PFSYSFILEGETPATH_IEC pfsysfilegetpath;
-	#define GET_sysfilegetpath(fl)  s_pfCMGetAPI2( "sysfilegetpath", (RTS_VOID_FCTPTR *)&pfsysfilegetpath, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE8836F87, 0x03050500)
-	#define CAL_sysfilegetpath  pfsysfilegetpath
-	#define CHK_sysfilegetpath  (pfsysfilegetpath != NULL)
-	#define EXP_sysfilegetpath   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpath", (RTS_UINTPTR)sysfilegetpath, 1, 0xE8836F87, 0x03050500) 
-#endif
-
-
-/**
- * Get actual file pointer position
- * :return: The runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfilegetpos_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_XWORD *pulPos;				/* VAR_INPUT */	/* Pointer to get actual position of the file pointer from the beginning of the file */
-	RTS_IEC_RESULT SysFileGetPos;		/* VAR_OUTPUT */	
-} sysfilegetpos_struct;
-
-void CDECL CDECL_EXT sysfilegetpos(sysfilegetpos_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEGETPOS_IEC) (sysfilegetpos_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETPOS_NOTIMPLEMENTED)
-	#define USE_sysfilegetpos
-	#define EXT_sysfilegetpos
-	#define GET_sysfilegetpos(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfilegetpos(p0) 
-	#define CHK_sysfilegetpos  FALSE
-	#define EXP_sysfilegetpos  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfilegetpos
-	#define EXT_sysfilegetpos
-	#define GET_sysfilegetpos(fl)  CAL_CMGETAPI( "sysfilegetpos" ) 
-	#define CAL_sysfilegetpos  sysfilegetpos
-	#define CHK_sysfilegetpos  TRUE
-	#define EXP_sysfilegetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpos", (RTS_UINTPTR)sysfilegetpos, 1, RTSITF_GET_SIGNATURE(0, 0x4F0954A2), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfilegetpos
-	#define EXT_sysfilegetpos
-	#define GET_sysfilegetpos(fl)  CAL_CMGETAPI( "sysfilegetpos" ) 
-	#define CAL_sysfilegetpos  sysfilegetpos
-	#define CHK_sysfilegetpos  TRUE
-	#define EXP_sysfilegetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpos", (RTS_UINTPTR)sysfilegetpos, 1, RTSITF_GET_SIGNATURE(0, 0x4F0954A2), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfilegetpos
-	#define EXT_SysFilesysfilegetpos
-	#define GET_SysFilesysfilegetpos  ERR_OK
-	#define CAL_SysFilesysfilegetpos  sysfilegetpos
-	#define CHK_SysFilesysfilegetpos  TRUE
-	#define EXP_SysFilesysfilegetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpos", (RTS_UINTPTR)sysfilegetpos, 1, RTSITF_GET_SIGNATURE(0, 0x4F0954A2), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfilegetpos
-	#define EXT_sysfilegetpos
-	#define GET_sysfilegetpos(fl)  CAL_CMGETAPI( "sysfilegetpos" ) 
-	#define CAL_sysfilegetpos  sysfilegetpos
-	#define CHK_sysfilegetpos  TRUE
-	#define EXP_sysfilegetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpos", (RTS_UINTPTR)sysfilegetpos, 1, RTSITF_GET_SIGNATURE(0, 0x4F0954A2), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfilegetpos  PFSYSFILEGETPOS_IEC pfsysfilegetpos;
-	#define EXT_sysfilegetpos  extern PFSYSFILEGETPOS_IEC pfsysfilegetpos;
-	#define GET_sysfilegetpos(fl)  s_pfCMGetAPI2( "sysfilegetpos", (RTS_VOID_FCTPTR *)&pfsysfilegetpos, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x4F0954A2), 0x03050500)
-	#define CAL_sysfilegetpos  pfsysfilegetpos
-	#define CHK_sysfilegetpos  (pfsysfilegetpos != NULL)
-	#define EXP_sysfilegetpos   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetpos", (RTS_UINTPTR)sysfilegetpos, 1, RTSITF_GET_SIGNATURE(0, 0x4F0954A2), 0x03050500) 
-#endif
-
-
-/**
- * | Get file size of the file specified by name.
- * | A standard path will be added to the filename, if no path is specified.
- * :return: Size of the file in bytes
- */
-typedef struct tagsysfilegetsize_struct
-{
-	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.
- Path entries must be separated with a Slash (/) and not with a Backslash (\\)! */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library):
-
- - ERR_OK: Successful
- - ERR_NO_OBJECT: File not available
- - ERR_FAILED: Failed to get file size */
-	RTS_IEC_XWORD SysFileGetSize;		/* VAR_OUTPUT */	
-} sysfilegetsize_struct;
-
-void CDECL CDECL_EXT sysfilegetsize(sysfilegetsize_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEGETSIZE_IEC) (sysfilegetsize_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETSIZE_NOTIMPLEMENTED)
-	#define USE_sysfilegetsize
-	#define EXT_sysfilegetsize
-	#define GET_sysfilegetsize(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfilegetsize(p0) 
-	#define CHK_sysfilegetsize  FALSE
-	#define EXP_sysfilegetsize  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfilegetsize
-	#define EXT_sysfilegetsize
-	#define GET_sysfilegetsize(fl)  CAL_CMGETAPI( "sysfilegetsize" ) 
-	#define CAL_sysfilegetsize  sysfilegetsize
-	#define CHK_sysfilegetsize  TRUE
-	#define EXP_sysfilegetsize  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsize", (RTS_UINTPTR)sysfilegetsize, 1, RTSITF_GET_SIGNATURE(0, 0x0A16C4DB), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfilegetsize
-	#define EXT_sysfilegetsize
-	#define GET_sysfilegetsize(fl)  CAL_CMGETAPI( "sysfilegetsize" ) 
-	#define CAL_sysfilegetsize  sysfilegetsize
-	#define CHK_sysfilegetsize  TRUE
-	#define EXP_sysfilegetsize  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsize", (RTS_UINTPTR)sysfilegetsize, 1, RTSITF_GET_SIGNATURE(0, 0x0A16C4DB), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfilegetsize
-	#define EXT_SysFilesysfilegetsize
-	#define GET_SysFilesysfilegetsize  ERR_OK
-	#define CAL_SysFilesysfilegetsize  sysfilegetsize
-	#define CHK_SysFilesysfilegetsize  TRUE
-	#define EXP_SysFilesysfilegetsize  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsize", (RTS_UINTPTR)sysfilegetsize, 1, RTSITF_GET_SIGNATURE(0, 0x0A16C4DB), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfilegetsize
-	#define EXT_sysfilegetsize
-	#define GET_sysfilegetsize(fl)  CAL_CMGETAPI( "sysfilegetsize" ) 
-	#define CAL_sysfilegetsize  sysfilegetsize
-	#define CHK_sysfilegetsize  TRUE
-	#define EXP_sysfilegetsize  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsize", (RTS_UINTPTR)sysfilegetsize, 1, RTSITF_GET_SIGNATURE(0, 0x0A16C4DB), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfilegetsize  PFSYSFILEGETSIZE_IEC pfsysfilegetsize;
-	#define EXT_sysfilegetsize  extern PFSYSFILEGETSIZE_IEC pfsysfilegetsize;
-	#define GET_sysfilegetsize(fl)  s_pfCMGetAPI2( "sysfilegetsize", (RTS_VOID_FCTPTR *)&pfsysfilegetsize, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x0A16C4DB), 0x03050500)
-	#define CAL_sysfilegetsize  pfsysfilegetsize
-	#define CHK_sysfilegetsize  (pfsysfilegetsize != NULL)
-	#define EXP_sysfilegetsize   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsize", (RTS_UINTPTR)sysfilegetsize, 1, RTSITF_GET_SIGNATURE(0, 0x0A16C4DB), 0x03050500) 
-#endif
-
-
-/**
- * Get file size of the file specified by handle
- * :return: Size of the file in bytes
- */
-typedef struct tagsysfilegetsizebyhandle_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
-	RTS_IEC_XWORD SysFileGetSizeByHandle;	/* VAR_OUTPUT */	
-} sysfilegetsizebyhandle_struct;
-
-void CDECL CDECL_EXT sysfilegetsizebyhandle(sysfilegetsizebyhandle_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEGETSIZEBYHANDLE_IEC) (sysfilegetsizebyhandle_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETSIZEBYHANDLE_NOTIMPLEMENTED)
-	#define USE_sysfilegetsizebyhandle
-	#define EXT_sysfilegetsizebyhandle
-	#define GET_sysfilegetsizebyhandle(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfilegetsizebyhandle(p0) 
-	#define CHK_sysfilegetsizebyhandle  FALSE
-	#define EXP_sysfilegetsizebyhandle  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfilegetsizebyhandle
-	#define EXT_sysfilegetsizebyhandle
-	#define GET_sysfilegetsizebyhandle(fl)  CAL_CMGETAPI( "sysfilegetsizebyhandle" ) 
-	#define CAL_sysfilegetsizebyhandle  sysfilegetsizebyhandle
-	#define CHK_sysfilegetsizebyhandle  TRUE
-	#define EXP_sysfilegetsizebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsizebyhandle", (RTS_UINTPTR)sysfilegetsizebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0x847C756B), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfilegetsizebyhandle
-	#define EXT_sysfilegetsizebyhandle
-	#define GET_sysfilegetsizebyhandle(fl)  CAL_CMGETAPI( "sysfilegetsizebyhandle" ) 
-	#define CAL_sysfilegetsizebyhandle  sysfilegetsizebyhandle
-	#define CHK_sysfilegetsizebyhandle  TRUE
-	#define EXP_sysfilegetsizebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsizebyhandle", (RTS_UINTPTR)sysfilegetsizebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0x847C756B), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfilegetsizebyhandle
-	#define EXT_SysFilesysfilegetsizebyhandle
-	#define GET_SysFilesysfilegetsizebyhandle  ERR_OK
-	#define CAL_SysFilesysfilegetsizebyhandle  sysfilegetsizebyhandle
-	#define CHK_SysFilesysfilegetsizebyhandle  TRUE
-	#define EXP_SysFilesysfilegetsizebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsizebyhandle", (RTS_UINTPTR)sysfilegetsizebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0x847C756B), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfilegetsizebyhandle
-	#define EXT_sysfilegetsizebyhandle
-	#define GET_sysfilegetsizebyhandle(fl)  CAL_CMGETAPI( "sysfilegetsizebyhandle" ) 
-	#define CAL_sysfilegetsizebyhandle  sysfilegetsizebyhandle
-	#define CHK_sysfilegetsizebyhandle  TRUE
-	#define EXP_sysfilegetsizebyhandle  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsizebyhandle", (RTS_UINTPTR)sysfilegetsizebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0x847C756B), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfilegetsizebyhandle  PFSYSFILEGETSIZEBYHANDLE_IEC pfsysfilegetsizebyhandle;
-	#define EXT_sysfilegetsizebyhandle  extern PFSYSFILEGETSIZEBYHANDLE_IEC pfsysfilegetsizebyhandle;
-	#define GET_sysfilegetsizebyhandle(fl)  s_pfCMGetAPI2( "sysfilegetsizebyhandle", (RTS_VOID_FCTPTR *)&pfsysfilegetsizebyhandle, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x847C756B), 0x03050500)
-	#define CAL_sysfilegetsizebyhandle  pfsysfilegetsizebyhandle
-	#define CHK_sysfilegetsizebyhandle  (pfsysfilegetsizebyhandle != NULL)
-	#define EXP_sysfilegetsizebyhandle   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetsizebyhandle", (RTS_UINTPTR)sysfilegetsizebyhandle, 1, RTSITF_GET_SIGNATURE(0, 0x847C756B), 0x03050500) 
-#endif
-
-
-/**
- * Get the file status
- * :return: File status. See category file status
- */
-typedef struct tagsysfilegetstatus_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_INT SysFileGetStatus;		/* VAR_OUTPUT, Enum: SYS_FILE_STATUS */
-} sysfilegetstatus_struct;
-
-void CDECL CDECL_EXT sysfilegetstatus(sysfilegetstatus_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEGETSTATUS_IEC) (sysfilegetstatus_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETSTATUS_NOTIMPLEMENTED)
-	#define USE_sysfilegetstatus
-	#define EXT_sysfilegetstatus
-	#define GET_sysfilegetstatus(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfilegetstatus(p0) 
-	#define CHK_sysfilegetstatus  FALSE
-	#define EXP_sysfilegetstatus  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfilegetstatus
-	#define EXT_sysfilegetstatus
-	#define GET_sysfilegetstatus(fl)  CAL_CMGETAPI( "sysfilegetstatus" ) 
-	#define CAL_sysfilegetstatus  sysfilegetstatus
-	#define CHK_sysfilegetstatus  TRUE
-	#define EXP_sysfilegetstatus  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus", (RTS_UINTPTR)sysfilegetstatus, 1, RTSITF_GET_SIGNATURE(0, 0x31FB098C), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfilegetstatus
-	#define EXT_sysfilegetstatus
-	#define GET_sysfilegetstatus(fl)  CAL_CMGETAPI( "sysfilegetstatus" ) 
-	#define CAL_sysfilegetstatus  sysfilegetstatus
-	#define CHK_sysfilegetstatus  TRUE
-	#define EXP_sysfilegetstatus  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus", (RTS_UINTPTR)sysfilegetstatus, 1, RTSITF_GET_SIGNATURE(0, 0x31FB098C), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfilegetstatus
-	#define EXT_SysFilesysfilegetstatus
-	#define GET_SysFilesysfilegetstatus  ERR_OK
-	#define CAL_SysFilesysfilegetstatus  sysfilegetstatus
-	#define CHK_SysFilesysfilegetstatus  TRUE
-	#define EXP_SysFilesysfilegetstatus  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus", (RTS_UINTPTR)sysfilegetstatus, 1, RTSITF_GET_SIGNATURE(0, 0x31FB098C), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfilegetstatus
-	#define EXT_sysfilegetstatus
-	#define GET_sysfilegetstatus(fl)  CAL_CMGETAPI( "sysfilegetstatus" ) 
-	#define CAL_sysfilegetstatus  sysfilegetstatus
-	#define CHK_sysfilegetstatus  TRUE
-	#define EXP_sysfilegetstatus  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus", (RTS_UINTPTR)sysfilegetstatus, 1, RTSITF_GET_SIGNATURE(0, 0x31FB098C), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfilegetstatus  PFSYSFILEGETSTATUS_IEC pfsysfilegetstatus;
-	#define EXT_sysfilegetstatus  extern PFSYSFILEGETSTATUS_IEC pfsysfilegetstatus;
-	#define GET_sysfilegetstatus(fl)  s_pfCMGetAPI2( "sysfilegetstatus", (RTS_VOID_FCTPTR *)&pfsysfilegetstatus, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x31FB098C), 0x03050500)
-	#define CAL_sysfilegetstatus  pfsysfilegetstatus
-	#define CHK_sysfilegetstatus  (pfsysfilegetstatus != NULL)
-	#define EXP_sysfilegetstatus   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus", (RTS_UINTPTR)sysfilegetstatus, 1, RTSITF_GET_SIGNATURE(0, 0x31FB098C), 0x03050500) 
-#endif
-
-
-/**
- * Get the file status
- * :return: File status. See category file status
- */
-typedef struct tagsysfilegetstatus2_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
-	RTS_IEC_INT SysFileGetStatus2;		/* VAR_OUTPUT, Enum: SYS_FILE_STATUS */
-} sysfilegetstatus2_struct;
-
-void CDECL CDECL_EXT sysfilegetstatus2(sysfilegetstatus2_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEGETSTATUS2_IEC) (sysfilegetstatus2_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETSTATUS2_NOTIMPLEMENTED)
-	#define USE_sysfilegetstatus2
-	#define EXT_sysfilegetstatus2
-	#define GET_sysfilegetstatus2(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfilegetstatus2(p0) 
-	#define CHK_sysfilegetstatus2  FALSE
-	#define EXP_sysfilegetstatus2  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfilegetstatus2
-	#define EXT_sysfilegetstatus2
-	#define GET_sysfilegetstatus2(fl)  CAL_CMGETAPI( "sysfilegetstatus2" ) 
-	#define CAL_sysfilegetstatus2  sysfilegetstatus2
-	#define CHK_sysfilegetstatus2  TRUE
-	#define EXP_sysfilegetstatus2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus2", (RTS_UINTPTR)sysfilegetstatus2, 1, RTSITF_GET_SIGNATURE(0, 0x59D8FC78), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfilegetstatus2
-	#define EXT_sysfilegetstatus2
-	#define GET_sysfilegetstatus2(fl)  CAL_CMGETAPI( "sysfilegetstatus2" ) 
-	#define CAL_sysfilegetstatus2  sysfilegetstatus2
-	#define CHK_sysfilegetstatus2  TRUE
-	#define EXP_sysfilegetstatus2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus2", (RTS_UINTPTR)sysfilegetstatus2, 1, RTSITF_GET_SIGNATURE(0, 0x59D8FC78), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfilegetstatus2
-	#define EXT_SysFilesysfilegetstatus2
-	#define GET_SysFilesysfilegetstatus2  ERR_OK
-	#define CAL_SysFilesysfilegetstatus2  sysfilegetstatus2
-	#define CHK_SysFilesysfilegetstatus2  TRUE
-	#define EXP_SysFilesysfilegetstatus2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus2", (RTS_UINTPTR)sysfilegetstatus2, 1, RTSITF_GET_SIGNATURE(0, 0x59D8FC78), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfilegetstatus2
-	#define EXT_sysfilegetstatus2
-	#define GET_sysfilegetstatus2(fl)  CAL_CMGETAPI( "sysfilegetstatus2" ) 
-	#define CAL_sysfilegetstatus2  sysfilegetstatus2
-	#define CHK_sysfilegetstatus2  TRUE
-	#define EXP_sysfilegetstatus2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus2", (RTS_UINTPTR)sysfilegetstatus2, 1, RTSITF_GET_SIGNATURE(0, 0x59D8FC78), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfilegetstatus2  PFSYSFILEGETSTATUS2_IEC pfsysfilegetstatus2;
-	#define EXT_sysfilegetstatus2  extern PFSYSFILEGETSTATUS2_IEC pfsysfilegetstatus2;
-	#define GET_sysfilegetstatus2(fl)  s_pfCMGetAPI2( "sysfilegetstatus2", (RTS_VOID_FCTPTR *)&pfsysfilegetstatus2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x59D8FC78), 0x03050500)
-	#define CAL_sysfilegetstatus2  pfsysfilegetstatus2
-	#define CHK_sysfilegetstatus2  (pfsysfilegetstatus2 != NULL)
-	#define EXP_sysfilegetstatus2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegetstatus2", (RTS_UINTPTR)sysfilegetstatus2, 1, RTSITF_GET_SIGNATURE(0, 0x59D8FC78), 0x03050500) 
-#endif
-
-
-/**
- * | Get file time of the specified file.
- * | A standard path will be added to the filename, if no path is specified.
- * :return: The runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfilegettime_struct
-{
-	RTS_IEC_STRING *szFileName;			/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.	
- Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
-	SYS_FILETIME *ptFileTime;			/* VAR_INPUT */	/* Pointer to get the file time results. */
-	RTS_IEC_RESULT SysFileGetTime;		/* VAR_OUTPUT */	
-} sysfilegettime_struct;
-
-void CDECL CDECL_EXT sysfilegettime(sysfilegettime_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEGETTIME_IEC) (sysfilegettime_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEGETTIME_NOTIMPLEMENTED)
-	#define USE_sysfilegettime
-	#define EXT_sysfilegettime
-	#define GET_sysfilegettime(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfilegettime(p0) 
-	#define CHK_sysfilegettime  FALSE
-	#define EXP_sysfilegettime  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfilegettime
-	#define EXT_sysfilegettime
-	#define GET_sysfilegettime(fl)  CAL_CMGETAPI( "sysfilegettime" ) 
-	#define CAL_sysfilegettime  sysfilegettime
-	#define CHK_sysfilegettime  TRUE
-	#define EXP_sysfilegettime  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegettime", (RTS_UINTPTR)sysfilegettime, 1, RTSITF_GET_SIGNATURE(0, 0xB2AF6BDD), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfilegettime
-	#define EXT_sysfilegettime
-	#define GET_sysfilegettime(fl)  CAL_CMGETAPI( "sysfilegettime" ) 
-	#define CAL_sysfilegettime  sysfilegettime
-	#define CHK_sysfilegettime  TRUE
-	#define EXP_sysfilegettime  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegettime", (RTS_UINTPTR)sysfilegettime, 1, RTSITF_GET_SIGNATURE(0, 0xB2AF6BDD), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfilegettime
-	#define EXT_SysFilesysfilegettime
-	#define GET_SysFilesysfilegettime  ERR_OK
-	#define CAL_SysFilesysfilegettime  sysfilegettime
-	#define CHK_SysFilesysfilegettime  TRUE
-	#define EXP_SysFilesysfilegettime  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegettime", (RTS_UINTPTR)sysfilegettime, 1, RTSITF_GET_SIGNATURE(0, 0xB2AF6BDD), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfilegettime
-	#define EXT_sysfilegettime
-	#define GET_sysfilegettime(fl)  CAL_CMGETAPI( "sysfilegettime" ) 
-	#define CAL_sysfilegettime  sysfilegettime
-	#define CHK_sysfilegettime  TRUE
-	#define EXP_sysfilegettime  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegettime", (RTS_UINTPTR)sysfilegettime, 1, RTSITF_GET_SIGNATURE(0, 0xB2AF6BDD), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfilegettime  PFSYSFILEGETTIME_IEC pfsysfilegettime;
-	#define EXT_sysfilegettime  extern PFSYSFILEGETTIME_IEC pfsysfilegettime;
-	#define GET_sysfilegettime(fl)  s_pfCMGetAPI2( "sysfilegettime", (RTS_VOID_FCTPTR *)&pfsysfilegettime, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB2AF6BDD), 0x03050500)
-	#define CAL_sysfilegettime  pfsysfilegettime
-	#define CHK_sysfilegettime  (pfsysfilegettime != NULL)
-	#define EXP_sysfilegettime   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilegettime", (RTS_UINTPTR)sysfilegettime, 1, RTSITF_GET_SIGNATURE(0, 0xB2AF6BDD), 0x03050500) 
-#endif
-
-
-/**
- * | Open or create file. A standard path will be added to the filename, if no path is specified in the file name.
- * | If a file extension is specified in the settings, this path will be used (see category settings).
- *
- * .. note:: File name can contain an absolute or relative path to the file. Path entries
- *           must be separated with a Slash (/)  and not with a Backslash (\\)!
- *
- * :return: Handle to the file or RTS_INVALID_HANDLE if failed
- */
-typedef struct tagsysfileopen_struct
-{
-	RTS_IEC_STRING *szFile;				/* VAR_INPUT */	/* File name. File name can contain an absolute or relative path to the file.	
- Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
-	RTS_IEC_UDINT am;					/* VAR_INPUT, Enum: ACCESS_MODE */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
-	RTS_IEC_HANDLE SysFileOpen;			/* VAR_OUTPUT */	
-} sysfileopen_struct;
-
-void CDECL CDECL_EXT sysfileopen(sysfileopen_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEOPEN_IEC) (sysfileopen_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEOPEN_NOTIMPLEMENTED)
-	#define USE_sysfileopen
-	#define EXT_sysfileopen
-	#define GET_sysfileopen(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfileopen(p0) 
-	#define CHK_sysfileopen  FALSE
-	#define EXP_sysfileopen  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfileopen
-	#define EXT_sysfileopen
-	#define GET_sysfileopen(fl)  CAL_CMGETAPI( "sysfileopen" ) 
-	#define CAL_sysfileopen  sysfileopen
-	#define CHK_sysfileopen  TRUE
-	#define EXP_sysfileopen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileopen", (RTS_UINTPTR)sysfileopen, 1, RTSITF_GET_SIGNATURE(0, 0xFE31259F), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfileopen
-	#define EXT_sysfileopen
-	#define GET_sysfileopen(fl)  CAL_CMGETAPI( "sysfileopen" ) 
-	#define CAL_sysfileopen  sysfileopen
-	#define CHK_sysfileopen  TRUE
-	#define EXP_sysfileopen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileopen", (RTS_UINTPTR)sysfileopen, 1, RTSITF_GET_SIGNATURE(0, 0xFE31259F), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfileopen
-	#define EXT_SysFilesysfileopen
-	#define GET_SysFilesysfileopen  ERR_OK
-	#define CAL_SysFilesysfileopen  sysfileopen
-	#define CHK_SysFilesysfileopen  TRUE
-	#define EXP_SysFilesysfileopen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileopen", (RTS_UINTPTR)sysfileopen, 1, RTSITF_GET_SIGNATURE(0, 0xFE31259F), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfileopen
-	#define EXT_sysfileopen
-	#define GET_sysfileopen(fl)  CAL_CMGETAPI( "sysfileopen" ) 
-	#define CAL_sysfileopen  sysfileopen
-	#define CHK_sysfileopen  TRUE
-	#define EXP_sysfileopen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileopen", (RTS_UINTPTR)sysfileopen, 1, RTSITF_GET_SIGNATURE(0, 0xFE31259F), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfileopen  PFSYSFILEOPEN_IEC pfsysfileopen;
-	#define EXT_sysfileopen  extern PFSYSFILEOPEN_IEC pfsysfileopen;
-	#define GET_sysfileopen(fl)  s_pfCMGetAPI2( "sysfileopen", (RTS_VOID_FCTPTR *)&pfsysfileopen, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xFE31259F), 0x03050500)
-	#define CAL_sysfileopen  pfsysfileopen
-	#define CHK_sysfileopen  (pfsysfileopen != NULL)
-	#define EXP_sysfileopen   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileopen", (RTS_UINTPTR)sysfileopen, 1, RTSITF_GET_SIGNATURE(0, 0xFE31259F), 0x03050500) 
-#endif
-
-
-/**
- * Read number of bytes out of the file
- * :return: Number of bytes read from file. 0=if failed
- */
-typedef struct tagsysfileread_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_BYTE *pbyBuffer;			/* VAR_INPUT */	/* Pointer to buffer for read data */
-	RTS_IEC_XWORD ulSize;				/* VAR_INPUT */	/* Number of bytes to read from file. Must be less or equal the buffer size! */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
-	RTS_IEC_XWORD SysFileRead;			/* VAR_OUTPUT */	
-} sysfileread_struct;
-
-void CDECL CDECL_EXT sysfileread(sysfileread_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEREAD_IEC) (sysfileread_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEREAD_NOTIMPLEMENTED)
-	#define USE_sysfileread
-	#define EXT_sysfileread
-	#define GET_sysfileread(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfileread(p0) 
-	#define CHK_sysfileread  FALSE
-	#define EXP_sysfileread  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfileread
-	#define EXT_sysfileread
-	#define GET_sysfileread(fl)  CAL_CMGETAPI( "sysfileread" ) 
-	#define CAL_sysfileread  sysfileread
-	#define CHK_sysfileread  TRUE
-	#define EXP_sysfileread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileread", (RTS_UINTPTR)sysfileread, 1, RTSITF_GET_SIGNATURE(0, 0xD962D4F9), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfileread
-	#define EXT_sysfileread
-	#define GET_sysfileread(fl)  CAL_CMGETAPI( "sysfileread" ) 
-	#define CAL_sysfileread  sysfileread
-	#define CHK_sysfileread  TRUE
-	#define EXP_sysfileread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileread", (RTS_UINTPTR)sysfileread, 1, RTSITF_GET_SIGNATURE(0, 0xD962D4F9), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfileread
-	#define EXT_SysFilesysfileread
-	#define GET_SysFilesysfileread  ERR_OK
-	#define CAL_SysFilesysfileread  sysfileread
-	#define CHK_SysFilesysfileread  TRUE
-	#define EXP_SysFilesysfileread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileread", (RTS_UINTPTR)sysfileread, 1, RTSITF_GET_SIGNATURE(0, 0xD962D4F9), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfileread
-	#define EXT_sysfileread
-	#define GET_sysfileread(fl)  CAL_CMGETAPI( "sysfileread" ) 
-	#define CAL_sysfileread  sysfileread
-	#define CHK_sysfileread  TRUE
-	#define EXP_sysfileread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileread", (RTS_UINTPTR)sysfileread, 1, RTSITF_GET_SIGNATURE(0, 0xD962D4F9), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfileread  PFSYSFILEREAD_IEC pfsysfileread;
-	#define EXT_sysfileread  extern PFSYSFILEREAD_IEC pfsysfileread;
-	#define GET_sysfileread(fl)  s_pfCMGetAPI2( "sysfileread", (RTS_VOID_FCTPTR *)&pfsysfileread, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xD962D4F9), 0x03050500)
-	#define CAL_sysfileread  pfsysfileread
-	#define CHK_sysfileread  (pfsysfileread != NULL)
-	#define EXP_sysfileread   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfileread", (RTS_UINTPTR)sysfileread, 1, RTSITF_GET_SIGNATURE(0, 0xD962D4F9), 0x03050500) 
-#endif
-
-
-/**
- * | Rename the file.
- * | A standard path will be added to the filename, if no path is specified.
- * :return: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfilerename_struct
-{
-	RTS_IEC_STRING *szOldFileName;		/* VAR_INPUT */	/* Old file name. File name can contain an absolute or relative path to the file.
- Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
-	RTS_IEC_STRING *szNewFileName;		/* VAR_INPUT */	/* New file name. File name can contain an absolute or relative path to the file.
- Path entries must be separated with a Slash (/)  and not with a Backslash (\\)! */
-	RTS_IEC_RESULT SysFileRename;		/* VAR_OUTPUT */	
-} sysfilerename_struct;
-
-void CDECL CDECL_EXT sysfilerename(sysfilerename_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILERENAME_IEC) (sysfilerename_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILERENAME_NOTIMPLEMENTED)
-	#define USE_sysfilerename
-	#define EXT_sysfilerename
-	#define GET_sysfilerename(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfilerename(p0) 
-	#define CHK_sysfilerename  FALSE
-	#define EXP_sysfilerename  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfilerename
-	#define EXT_sysfilerename
-	#define GET_sysfilerename(fl)  CAL_CMGETAPI( "sysfilerename" ) 
-	#define CAL_sysfilerename  sysfilerename
-	#define CHK_sysfilerename  TRUE
-	#define EXP_sysfilerename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilerename", (RTS_UINTPTR)sysfilerename, 1, RTSITF_GET_SIGNATURE(0, 0xF3B9A110), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfilerename
-	#define EXT_sysfilerename
-	#define GET_sysfilerename(fl)  CAL_CMGETAPI( "sysfilerename" ) 
-	#define CAL_sysfilerename  sysfilerename
-	#define CHK_sysfilerename  TRUE
-	#define EXP_sysfilerename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilerename", (RTS_UINTPTR)sysfilerename, 1, RTSITF_GET_SIGNATURE(0, 0xF3B9A110), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfilerename
-	#define EXT_SysFilesysfilerename
-	#define GET_SysFilesysfilerename  ERR_OK
-	#define CAL_SysFilesysfilerename  sysfilerename
-	#define CHK_SysFilesysfilerename  TRUE
-	#define EXP_SysFilesysfilerename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilerename", (RTS_UINTPTR)sysfilerename, 1, RTSITF_GET_SIGNATURE(0, 0xF3B9A110), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfilerename
-	#define EXT_sysfilerename
-	#define GET_sysfilerename(fl)  CAL_CMGETAPI( "sysfilerename" ) 
-	#define CAL_sysfilerename  sysfilerename
-	#define CHK_sysfilerename  TRUE
-	#define EXP_sysfilerename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilerename", (RTS_UINTPTR)sysfilerename, 1, RTSITF_GET_SIGNATURE(0, 0xF3B9A110), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfilerename  PFSYSFILERENAME_IEC pfsysfilerename;
-	#define EXT_sysfilerename  extern PFSYSFILERENAME_IEC pfsysfilerename;
-	#define GET_sysfilerename(fl)  s_pfCMGetAPI2( "sysfilerename", (RTS_VOID_FCTPTR *)&pfsysfilerename, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xF3B9A110), 0x03050500)
-	#define CAL_sysfilerename  pfsysfilerename
-	#define CHK_sysfilerename  (pfsysfilerename != NULL)
-	#define EXP_sysfilerename   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilerename", (RTS_UINTPTR)sysfilerename, 1, RTSITF_GET_SIGNATURE(0, 0xF3B9A110), 0x03050500) 
-#endif
-
-
-/**
- * Set the file pointer to the specified position
- * :return: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfilesetpos_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_XWORD ulOffset;				/* VAR_INPUT */	/* Offset to set from the beginning of the file */
-	RTS_IEC_RESULT SysFileSetPos;		/* VAR_OUTPUT */	
-} sysfilesetpos_struct;
-
-void CDECL CDECL_EXT sysfilesetpos(sysfilesetpos_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILESETPOS_IEC) (sysfilesetpos_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILESETPOS_NOTIMPLEMENTED)
-	#define USE_sysfilesetpos
-	#define EXT_sysfilesetpos
-	#define GET_sysfilesetpos(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfilesetpos(p0) 
-	#define CHK_sysfilesetpos  FALSE
-	#define EXP_sysfilesetpos  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfilesetpos
-	#define EXT_sysfilesetpos
-	#define GET_sysfilesetpos(fl)  CAL_CMGETAPI( "sysfilesetpos" ) 
-	#define CAL_sysfilesetpos  sysfilesetpos
-	#define CHK_sysfilesetpos  TRUE
-	#define EXP_sysfilesetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilesetpos", (RTS_UINTPTR)sysfilesetpos, 1, RTSITF_GET_SIGNATURE(0, 0xFC7A70CE), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfilesetpos
-	#define EXT_sysfilesetpos
-	#define GET_sysfilesetpos(fl)  CAL_CMGETAPI( "sysfilesetpos" ) 
-	#define CAL_sysfilesetpos  sysfilesetpos
-	#define CHK_sysfilesetpos  TRUE
-	#define EXP_sysfilesetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilesetpos", (RTS_UINTPTR)sysfilesetpos, 1, RTSITF_GET_SIGNATURE(0, 0xFC7A70CE), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfilesetpos
-	#define EXT_SysFilesysfilesetpos
-	#define GET_SysFilesysfilesetpos  ERR_OK
-	#define CAL_SysFilesysfilesetpos  sysfilesetpos
-	#define CHK_SysFilesysfilesetpos  TRUE
-	#define EXP_SysFilesysfilesetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilesetpos", (RTS_UINTPTR)sysfilesetpos, 1, RTSITF_GET_SIGNATURE(0, 0xFC7A70CE), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfilesetpos
-	#define EXT_sysfilesetpos
-	#define GET_sysfilesetpos(fl)  CAL_CMGETAPI( "sysfilesetpos" ) 
-	#define CAL_sysfilesetpos  sysfilesetpos
-	#define CHK_sysfilesetpos  TRUE
-	#define EXP_sysfilesetpos  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilesetpos", (RTS_UINTPTR)sysfilesetpos, 1, RTSITF_GET_SIGNATURE(0, 0xFC7A70CE), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfilesetpos  PFSYSFILESETPOS_IEC pfsysfilesetpos;
-	#define EXT_sysfilesetpos  extern PFSYSFILESETPOS_IEC pfsysfilesetpos;
-	#define GET_sysfilesetpos(fl)  s_pfCMGetAPI2( "sysfilesetpos", (RTS_VOID_FCTPTR *)&pfsysfilesetpos, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xFC7A70CE), 0x03050500)
-	#define CAL_sysfilesetpos  pfsysfilesetpos
-	#define CHK_sysfilesetpos  (pfsysfilesetpos != NULL)
-	#define EXP_sysfilesetpos   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilesetpos", (RTS_UINTPTR)sysfilesetpos, 1, RTSITF_GET_SIGNATURE(0, 0xFC7A70CE), 0x03050500) 
-#endif
-
-
-/**
- * Set a new filesize. May be larger or smaller than current size.
- * :return: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsysfiletruncate_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_XWORD ulSizeNew;			/* VAR_INPUT */	/* Size to set. */
-	RTS_IEC_RESULT SysFileTruncate;		/* VAR_OUTPUT */	
-} sysfiletruncate_struct;
-
-void CDECL CDECL_EXT sysfiletruncate(sysfiletruncate_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILETRUNCATE_IEC) (sysfiletruncate_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILETRUNCATE_NOTIMPLEMENTED)
-	#define USE_sysfiletruncate
-	#define EXT_sysfiletruncate
-	#define GET_sysfiletruncate(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfiletruncate(p0) 
-	#define CHK_sysfiletruncate  FALSE
-	#define EXP_sysfiletruncate  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfiletruncate
-	#define EXT_sysfiletruncate
-	#define GET_sysfiletruncate(fl)  CAL_CMGETAPI( "sysfiletruncate" ) 
-	#define CAL_sysfiletruncate  sysfiletruncate
-	#define CHK_sysfiletruncate  TRUE
-	#define EXP_sysfiletruncate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiletruncate", (RTS_UINTPTR)sysfiletruncate, 1, RTSITF_GET_SIGNATURE(0, 0xF2C7CF6C), 0x03050600) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfiletruncate
-	#define EXT_sysfiletruncate
-	#define GET_sysfiletruncate(fl)  CAL_CMGETAPI( "sysfiletruncate" ) 
-	#define CAL_sysfiletruncate  sysfiletruncate
-	#define CHK_sysfiletruncate  TRUE
-	#define EXP_sysfiletruncate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiletruncate", (RTS_UINTPTR)sysfiletruncate, 1, RTSITF_GET_SIGNATURE(0, 0xF2C7CF6C), 0x03050600) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfiletruncate
-	#define EXT_SysFilesysfiletruncate
-	#define GET_SysFilesysfiletruncate  ERR_OK
-	#define CAL_SysFilesysfiletruncate  sysfiletruncate
-	#define CHK_SysFilesysfiletruncate  TRUE
-	#define EXP_SysFilesysfiletruncate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiletruncate", (RTS_UINTPTR)sysfiletruncate, 1, RTSITF_GET_SIGNATURE(0, 0xF2C7CF6C), 0x03050600) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfiletruncate
-	#define EXT_sysfiletruncate
-	#define GET_sysfiletruncate(fl)  CAL_CMGETAPI( "sysfiletruncate" ) 
-	#define CAL_sysfiletruncate  sysfiletruncate
-	#define CHK_sysfiletruncate  TRUE
-	#define EXP_sysfiletruncate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiletruncate", (RTS_UINTPTR)sysfiletruncate, 1, RTSITF_GET_SIGNATURE(0, 0xF2C7CF6C), 0x03050600) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfiletruncate  PFSYSFILETRUNCATE_IEC pfsysfiletruncate;
-	#define EXT_sysfiletruncate  extern PFSYSFILETRUNCATE_IEC pfsysfiletruncate;
-	#define GET_sysfiletruncate(fl)  s_pfCMGetAPI2( "sysfiletruncate", (RTS_VOID_FCTPTR *)&pfsysfiletruncate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xF2C7CF6C), 0x03050600)
-	#define CAL_sysfiletruncate  pfsysfiletruncate
-	#define CHK_sysfiletruncate  (pfsysfiletruncate != NULL)
-	#define EXP_sysfiletruncate   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfiletruncate", (RTS_UINTPTR)sysfiletruncate, 1, RTSITF_GET_SIGNATURE(0, 0xF2C7CF6C), 0x03050600) 
-#endif
-
-
-/**
- * Write number of bytes to the file. File must be opened with |AM_WRITE| or |AM_APPEND|.
- * :return: Number of bytes written to the file. 0=if failed
- */
-typedef struct tagsysfilewrite_struct
-{
-	RTS_IEC_HANDLE hFile;				/* VAR_INPUT */	/* Handle of the file */
-	RTS_IEC_BYTE *pbyBuffer;			/* VAR_INPUT */	/* Pointer to buffer with data to write to file */
-	RTS_IEC_XWORD ulSize;				/* VAR_INPUT */	/* Number of bytes to write in the file. Must be less or equal the buffer size! */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
-	RTS_IEC_XWORD SysFileWrite;			/* VAR_OUTPUT */	
-} sysfilewrite_struct;
-
-void CDECL CDECL_EXT sysfilewrite(sysfilewrite_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSFILEWRITE_IEC) (sysfilewrite_struct *p);
-#if defined(SYSFILE_NOTIMPLEMENTED) || defined(SYSFILEWRITE_NOTIMPLEMENTED)
-	#define USE_sysfilewrite
-	#define EXT_sysfilewrite
-	#define GET_sysfilewrite(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_sysfilewrite(p0) 
-	#define CHK_sysfilewrite  FALSE
-	#define EXP_sysfilewrite  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_sysfilewrite
-	#define EXT_sysfilewrite
-	#define GET_sysfilewrite(fl)  CAL_CMGETAPI( "sysfilewrite" ) 
-	#define CAL_sysfilewrite  sysfilewrite
-	#define CHK_sysfilewrite  TRUE
-	#define EXP_sysfilewrite  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilewrite", (RTS_UINTPTR)sysfilewrite, 1, RTSITF_GET_SIGNATURE(0, 0x6AE210A7), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSFILE_EXTERNAL)
-	#define USE_sysfilewrite
-	#define EXT_sysfilewrite
-	#define GET_sysfilewrite(fl)  CAL_CMGETAPI( "sysfilewrite" ) 
-	#define CAL_sysfilewrite  sysfilewrite
-	#define CHK_sysfilewrite  TRUE
-	#define EXP_sysfilewrite  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilewrite", (RTS_UINTPTR)sysfilewrite, 1, RTSITF_GET_SIGNATURE(0, 0x6AE210A7), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysFilesysfilewrite
-	#define EXT_SysFilesysfilewrite
-	#define GET_SysFilesysfilewrite  ERR_OK
-	#define CAL_SysFilesysfilewrite  sysfilewrite
-	#define CHK_SysFilesysfilewrite  TRUE
-	#define EXP_SysFilesysfilewrite  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilewrite", (RTS_UINTPTR)sysfilewrite, 1, RTSITF_GET_SIGNATURE(0, 0x6AE210A7), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_sysfilewrite
-	#define EXT_sysfilewrite
-	#define GET_sysfilewrite(fl)  CAL_CMGETAPI( "sysfilewrite" ) 
-	#define CAL_sysfilewrite  sysfilewrite
-	#define CHK_sysfilewrite  TRUE
-	#define EXP_sysfilewrite  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilewrite", (RTS_UINTPTR)sysfilewrite, 1, RTSITF_GET_SIGNATURE(0, 0x6AE210A7), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_sysfilewrite  PFSYSFILEWRITE_IEC pfsysfilewrite;
-	#define EXT_sysfilewrite  extern PFSYSFILEWRITE_IEC pfsysfilewrite;
-	#define GET_sysfilewrite(fl)  s_pfCMGetAPI2( "sysfilewrite", (RTS_VOID_FCTPTR *)&pfsysfilewrite, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x6AE210A7), 0x03050500)
-	#define CAL_sysfilewrite  pfsysfilewrite
-	#define CHK_sysfilewrite  (pfsysfilewrite != NULL)
-	#define EXP_sysfilewrite   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysfilewrite", (RTS_UINTPTR)sysfilewrite, 1, RTSITF_GET_SIGNATURE(0, 0x6AE210A7), 0x03050500) 
-#endif
-
-
-#ifdef __cplusplus
-}
-#endif
-
-/** EXTERN LIB SECTION END **/
-
 
 /**
  * <category>File info</category>
@@ -1844,6 +1857,13 @@ RTS_RESULT CDECL SysFileOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RT
  *	</ul>
  * </param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">File could be opened</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid parameter</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">Filename is empty or file not available</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OPERATION_DENIED">File access is denied (out of configured path)</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FILE_ERROR">File access is denied (file is write protected)</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Error occurred during write operation</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">No heap memory to finish operation</errorcode>
  * <result>Handle to the file or RTS_INVALID_HANDLE if failed</result>
  */
 RTS_HANDLE CDECL SysFileOpen(char *pszFile, RTS_ACCESS_MODE am, RTS_RESULT *pResult);
@@ -1896,8 +1916,13 @@ typedef RTS_HANDLE (CDECL * PFSYSFILEOPEN) (char *pszFile, RTS_ACCESS_MODE am, R
 
 
 /**
- * <description>Open or create a file. File will be opened with no standard path. The file name
- *	will be used as it is.</description>
+ * <description>Platform specific implementation:
+ *	Open or create a file. File will be opened with no standard path. The file name will be used as it is.
+ *
+ *	IMPLEMENTATION NOTE:
+ *	The platform specific implementation should be POSIX compatible, but the behavior depends on the operating system
+ *  and/or the used file system!
+ * </description>
  * <param name="pszFile" type="IN">File name. File name can contain an absolute or relative path to the 
  *	file. Path entries must be separated with a '/' and not with a '\"!</param>
  * <param name="am" type="IN"><p>Requested access mode to the file:</p>
@@ -1911,6 +1936,13 @@ typedef RTS_HANDLE (CDECL * PFSYSFILEOPEN) (char *pszFile, RTS_ACCESS_MODE am, R
  *	</ul>
  * </param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">File could be opened</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid parameter</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">Filename is empty or file not available</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OPERATION_DENIED">File access is denied: out of configured path</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FILE_ERROR">File access is denied: file is write protected</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Error occurred during write operation</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">No heap memory to finish operation</errorcode>
  * <result>Handle to the file or RTS_INVALID_HANDLE if failed</result>
  */
 RTS_HANDLE CDECL SysFileOpen_(char *pszFile, RTS_ACCESS_MODE am, RTS_RESULT *pResult);
@@ -3264,7 +3296,7 @@ typedef RTS_RESULT (CDECL * PFSYSFILEGETPATH) (char *pszFileName, char *pszPath,
  *	If no path is specified in the filename, the standard path for this file extension type will be returned.
  * </description>
  * <param name="pszFileName" type="IN">File name. Can contain an absolute or relative path</param>
- * <param name="nOption" type="IN">Separation of directory or file</param>
+ * <param name="nOption" type="IN">Separation of directory or file (see Path options)</param>
  * <param name="pszPath" type="OUT">Path for this file</param>
  * <param name="iMaxLen" type="IN">Maximum size in bytes of path length</param>
  * <result>error code</result>
@@ -3389,7 +3421,7 @@ typedef RTS_RESULT (CDECL * PFSYSFILEGETFULLPATH) (char *pszFileName, char *pszP
  *	Get the path of this file including the filename. If no path is specified in pszFileName, the filename is returned in pszPath.
  * </description>
  * <param name="pszFileName" type="IN">File name. Can contain an absolute or relative path</param>
- * <param name="nOption" type="IN">Separation of directory or file</param>
+ * <param name="nOption" type="IN">Separation of directory or file (see Path options)</param>
  * <param name="pszPath" type="OUT">Path for this file including the filename</param>
  * <param name="iMaxLen" type="IN">Maximum size in bytes of path length</param>
  * <result>error code</result>
@@ -3449,7 +3481,7 @@ typedef RTS_RESULT (CDECL * PFSYSFILEGETFULLPATH2) (char *pszFileName, RTS_I32 n
 
 /**
  * <description>
- *	Get the path of this file for Iec applications. If a path is specified in the filename, the path will be extracted from the filename.
+ *	Get the path of this file for IEC applications. If a path is specified in the filename, the path will be extracted from the filename.
  *	If no path is specified in the filename, the standard path for this file extension type will be returned.
  * </description>
  * <param name="pszFileName" type="IN">File name. Can contain an absolute or relative path</param>
@@ -3508,11 +3540,11 @@ typedef RTS_RESULT (CDECL * PFSYSFILEGETIECPATH) (char *pszFileName, char *pszPa
 
 /**
  * <description>
- *	Get the path of this file for Iec applications. If a path is specified in the filename, the path will be extracted from the filename.
+ *	Get the path of this file for IEC applications. If a path is specified in the filename, the path will be extracted from the filename.
  *	If no path is specified in the filename, the standard path for this file extension type will be returned.
  * </description>
  * <param name="pszFileName" type="IN">File name. Can contain an absolute or relative path</param>
- * <param name="nOption" type="IN">Separation of directory or file</param>
+ * <param name="nOption" type="IN">Separation of directory or file (see Path options)</param>
  * <param name="pszPath" type="OUT">Path for this file</param>
  * <param name="iMaxLen" type="IN">Maximum size in bytes of path length</param>
  * <result>error code</result>
@@ -3805,7 +3837,7 @@ typedef RTS_RESULT (CDECL * PFSYSFILEGENERATECRC3_) (char *pszFile, RTS_SIZE ulS
  * <description>
  *	Generate the CRC32 of a file. Can be used to check file integrity.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant! Optimizations can be done here.
+ *	This interface function is implemented operating system dependent! Optimizations can be done here.
  * </description>
  * <param name="pszFile" type="IN">File name. Can contain an absolute or relative path</param>
  * <param name="ulSize" type="IN">Size to calculate checksum. 0 if real size of file should be used [default]</param>
@@ -3990,7 +4022,7 @@ typedef RTS_RESULT (CDECL * PFSYSFILEISINVISIBLE) (char *pszFileName);
  * <description>
  *	Set the size of the actual opened file.
  *  Used for increasing/decreasing the size of a file.
- *  The current fileoffset (filepointer) is not changed. 
+ *  The current file offset (file pointer) is not changed. 
  * </description>
  * <param name="hFile" type="IN">Handle to the file</param>
  * <param name="sSizeNew" type="IN">New size of the file, type: RTS_SIZE </param>
@@ -4295,9 +4327,9 @@ typedef RTS_RESULT (CDECL * PFSYSFILESETIECPATH) (char *pszPath);
 
 /**
  * <description>
- * Returns the plc logic prefix.
+ * Returns the PLC logic prefix.
  * </description>
- * <result>plc logic prefix</result>
+ * <result>PLC logic prefix</result>
  */
 char * CDECL SysFileGetPlcLogicPrefix(void);
 typedef char * (CDECL * PFSYSFILEGETPLCLOGICPREFIX) (void);
@@ -4350,11 +4382,11 @@ typedef char * (CDECL * PFSYSFILEGETPLCLOGICPREFIX) (void);
 
 /**
  * <description>
- * Prepends the plc logic prefix to name and ext in the resulting pathOut, makes sure the extension is there at the cost of the filename.
+ * Prepends the PLC logic prefix to name and ext in the resulting pathOut, makes sure the extension is there at the cost of the filename.
  * </description>
  * <param name="pszPathOut" type="OUT">Resulting file path</param>
  * <param name="ulPathOutSize" type="IN">Size of resulting file path</param>
- * <param name="pszSubDir" type="IN">Name of subdir (optional, only used when plc logic prefix is set)</param>
+ * <param name="pszSubDir" type="IN">Name of subdirectory (optional, only used when PLC logic prefix is set)</param>
  * <param name="pszName" type="IN">Name of file</param>
  * <param name="pszExt" type="IN">>Extension of file</param>
  * <result>Error code</result>

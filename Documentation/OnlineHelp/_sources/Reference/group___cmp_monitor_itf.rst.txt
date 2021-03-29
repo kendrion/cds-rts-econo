@@ -1,0 +1,697 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_monitor_itf:
+
+=============
+CmpMonitorItf
+=============
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpMonitor.
+
+Detailed Description
+--------------------
+
+Interface of the monitoring component, that provides monitoring of IEC variables.
+
+NOTE:
+
+  - Use CmpMonitor2 instead
+
+  - If you have to support previous CODESYS version before v3.5.0.0, this component must be integrated in parallel to CmpMonitor2!
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Event parameter <group___cmp_monitor_itf___eventparameter>`
+
+- :ref:`Events <group___cmp_monitor_itf___events>`
+
+- :ref:`Features <group___cmp_monitor_itf___features>`
+
+- :ref:`Settings <group___cmp_monitor_itf___settings>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpMonitor_C <struct_i_cmp_monitor___c>`
+
+Macros
+------
+
+- #define :ref:`SRV_MONITORLISTONCE <group___cmp_monitor_itf_1gaef0c9ce65f7ad72470172ebf1e9d28b1>` 1
+
+- #define :ref:`SRV_WRITE_VARIABLES <group___cmp_monitor_itf_1ga77a420b51cdc1aca8e4af12df868ba4f>` 2
+
+- #define :ref:`SRV_FORCE_VARIABLES <group___cmp_monitor_itf_1ga5deeea912d9aad0b87b8e9a6475a0e53>` 3
+
+- #define :ref:`TAG_MONITORING <group___cmp_monitor_itf_1ga2e06aebabe762dfde30e3147e0e43dee>` 0x81
+
+- #define :ref:`TAG_MON_DEREF <group___cmp_monitor_itf_1ga1cf9fb05755c77ae6e9c2ad1fc38b8ae>` 0x82
+
+- #define :ref:`TAG_MON_COMPO <group___cmp_monitor_itf_1gac4790dd74065edaea2c91a38517ea8b0>` 0x83
+
+- #define :ref:`TAG_MON_ARRAYACCESS <group___cmp_monitor_itf_1gaf765e1b6cb3d1157ba35cc6405b4b340>` 0x84
+
+- #define :ref:`TAG_MON_INDEX_REF <group___cmp_monitor_itf_1ga9926254618fdcb7013176d32d45a2b6f>` 0x85
+
+- #define :ref:`TAG_MON_OPERATOR <group___cmp_monitor_itf_1gab76a7cf101bed5f4ea8eb56bc1216e8c>` 0x86
+
+- #define :ref:`TAG_MON_NEW_BIT <group___cmp_monitor_itf_1gabbc3245e0806dab6c550c9320c47e9cf>` 0x87
+
+- #define :ref:`TAG_MON_PROP_EXT <group___cmp_monitor_itf_1gafc3aae5dec682947f05a2678fc5d8eb8>` 0x88
+
+- #define :ref:`TAG_MON_FUNC_CALL <group___cmp_monitor_itf_1ga0f970765b3077a89e6a97f8a73c874a0>` 0x89
+
+- #define :ref:`TAG_MON_FUNC_PARAM_INFO <group___cmp_monitor_itf_1ga5a77ecb8f2e2529c4eaf0ddeb8aad88c>` 0x8A
+
+- #define :ref:`TAG_MON_APPLICATION <group___cmp_monitor_itf_1ga04b8bd308d660de65b28dbe1d11bb2aa>` 0x10
+
+- #define :ref:`TAG_MON_SIMPLEDATA <group___cmp_monitor_itf_1gae542841323386e1d1a9db55e0fea7100>` 0x11
+
+- #define :ref:`TAG_MON_STACKRELATIVE <group___cmp_monitor_itf_1ga0be9135ddc9e137c5c10096b8399ea0a>` 0x12
+
+- #define :ref:`TAG_MON_COMPO_DATA <group___cmp_monitor_itf_1ga4e6d45f707fadec3126efbe7ffcc341c>` 0x13
+
+- #define :ref:`TAG_MON_VAR_ID <group___cmp_monitor_itf_1ga1a99bbfcd26a052d59cfd64fcc034124>` 0x14
+
+- #define :ref:`TAG_MON_PARAMETER_TYPE <group___cmp_monitor_itf_1ga86d48f003493e6305c6d621d85bbc522>` 0x16
+
+- #define :ref:`TAG_MON_DEREF_DATA <group___cmp_monitor_itf_1ga736f1d3d915eac1184fc7883805e265e>` 0x17
+
+- #define :ref:`TAG_MON_BIT_DATA <group___cmp_monitor_itf_1gae55082259bd863cc151c695223ba4dca>` 0x18
+
+- #define :ref:`TAG_MON_CONNECTOR_DIAG <group___cmp_monitor_itf_1ga840e3882af3c08ea8f8638c88378b4e9>` 0x19
+
+- #define :ref:`TAG_MON_PROPERTY_CALL <group___cmp_monitor_itf_1ga182909ae82ada64f3a31f6901478a879>` 0x20
+
+- #define :ref:`TAG_MON_ARRAY_DATA <group___cmp_monitor_itf_1gaec6c803c029091f07ebe07923d7353f2>` 0x21
+
+- #define :ref:`TAG_MON_ARRAY_BOUNDS <group___cmp_monitor_itf_1ga7cc5e56f8896800a6e296deda1ee1b95>` 0x22
+
+- #define :ref:`TAG_MON_OPERATOR_DATA <group___cmp_monitor_itf_1gacace37d881be6e0f55aee7109871b6f9>` 0x23
+
+- #define :ref:`TAG_MON_SIGNED_CONST <group___cmp_monitor_itf_1ga5df87fc724bb2370854fff16357c8c2c>` 0x24
+
+- #define :ref:`TAG_MON_NEW_BITDATA <group___cmp_monitor_itf_1gadb8e011425a42706f0307eb9980737be>` 0x25
+
+- #define :ref:`TAG_MON_STACKRELATIVE_SP <group___cmp_monitor_itf_1gad05d4bb8d3c02ce255b2dd4cc06802fa>` 0x26
+
+- #define :ref:`TAG_MON_PROPEXT_DATA <group___cmp_monitor_itf_1ga684f299640190af7c0a2d47a7d947a16>` 0x27
+
+- #define :ref:`TAG_MON_FUNC_CALL_DATA <group___cmp_monitor_itf_1ga95e3b71aefd025b55b5bb2b1949c6008>` 0x28
+
+- #define :ref:`TAG_MON_FUNC_PARAM_INFO_DATA <group___cmp_monitor_itf_1ga74e4a7094c34473164cfff9534822ac1>` 0x29
+
+- #define :ref:`TAG_MON_PROPERTY_CALL_REFERENCE <group___cmp_monitor_itf_1gadb115df1de603a4fc256e7eb81a09e90>` 0x2A
+
+- #define :ref:`TAG_MON_PROPEXT_DATA_REF <group___cmp_monitor_itf_1ga3cd40fe1804432692e1681367729acc0>` 0x2B
+
+- #define :ref:`USE_MonitoringHasFeature <group___cmp_monitor_itf_1ga61d9d43c72af623482e5f49e06d60e18>` :ref:`PFMONITORINGHASFEATURE <group___cmp_monitor_itf_1ga441ffbe19473a4643251dc8498fffa7d>` pfMonitoringHasFeature;
+
+- #define :ref:`EXT_MonitoringHasFeature <group___cmp_monitor_itf_1ga7958a20312ea5920d3cc384992bfe3b7>` extern :ref:`PFMONITORINGHASFEATURE <group___cmp_monitor_itf_1ga441ffbe19473a4643251dc8498fffa7d>` pfMonitoringHasFeature;
+
+- #define :ref:`GET_MonitoringHasFeature <group___cmp_monitor_itf_1gabf1aa1453695c0c3732267d8e5e6430a>` s_pfCMGetAPI2( "MonitoringHasFeature", (RTS_VOID_FCTPTR *)&pfMonitoringHasFeature, (fl), 0, 0)
+
+- #define :ref:`CAL_MonitoringHasFeature <group___cmp_monitor_itf_1ga0677fd3a87e28888706213db8732257d>` pfMonitoringHasFeature
+
+- #define :ref:`CHK_MonitoringHasFeature <group___cmp_monitor_itf_1ga14e8b869d430687711d2a2485ef52439>` (pfMonitoringHasFeature != NULL)
+
+- #define :ref:`EXP_MonitoringHasFeature <group___cmp_monitor_itf_1gae3a8eaa97d139e004b794191569918e4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MonitoringHasFeature", (RTS_UINTPTR) :ref:`MonitoringHasFeature <group___cmp_monitor_itf_1ga0656885c9ab8b763c43046baed0649ca>` , 0, 0)
+
+- #define :ref:`USE_MonitoringReadValue <group___cmp_monitor_itf_1ga59beda5c4cae891eb37b1c28a93682b0>` :ref:`PFMONITORINGREADVALUE <group___cmp_monitor_itf_1ga005291a8061f35440f721a87f7f46894>` pfMonitoringReadValue;
+
+- #define :ref:`EXT_MonitoringReadValue <group___cmp_monitor_itf_1ga925fec5cb3772d2f93293d6bbaa35677>` extern :ref:`PFMONITORINGREADVALUE <group___cmp_monitor_itf_1ga005291a8061f35440f721a87f7f46894>` pfMonitoringReadValue;
+
+- #define :ref:`GET_MonitoringReadValue <group___cmp_monitor_itf_1gaec3e3906898581b35fd6c8f1d289855a>` s_pfCMGetAPI2( "MonitoringReadValue", (RTS_VOID_FCTPTR *)&pfMonitoringReadValue, (fl), 0, 0)
+
+- #define :ref:`CAL_MonitoringReadValue <group___cmp_monitor_itf_1gade1e05ca96fb873a905fb497f4b3a5df>` pfMonitoringReadValue
+
+- #define :ref:`CHK_MonitoringReadValue <group___cmp_monitor_itf_1gaf5a2dfa254612039323ae1394f6a384a>` (pfMonitoringReadValue != NULL)
+
+- #define :ref:`EXP_MonitoringReadValue <group___cmp_monitor_itf_1gaa696892f0995b02324a02ab29e0fb245>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MonitoringReadValue", (RTS_UINTPTR) :ref:`MonitoringReadValue <group___cmp_monitor_itf_1ga062955768afa92e7f1db2be8cd5ebf7d>` , 0, 0)
+
+- #define :ref:`USE_MonitoringReadValue2 <group___cmp_monitor_itf_1ga70fa84766755574f4636830baab6adff>` :ref:`PFMONITORINGREADVALUE2 <group___cmp_monitor_itf_1gae5261b1174ef191e8bd054b32e3a7cdf>` pfMonitoringReadValue2;
+
+- #define :ref:`EXT_MonitoringReadValue2 <group___cmp_monitor_itf_1ga63e8622b2d5f0cc9ec4ad294dcace64f>` extern :ref:`PFMONITORINGREADVALUE2 <group___cmp_monitor_itf_1gae5261b1174ef191e8bd054b32e3a7cdf>` pfMonitoringReadValue2;
+
+- #define :ref:`GET_MonitoringReadValue2 <group___cmp_monitor_itf_1ga6157227f29094d93f8cd7c8b36964d30>` s_pfCMGetAPI2( "MonitoringReadValue2", (RTS_VOID_FCTPTR *)&pfMonitoringReadValue2, (fl), 0, 0)
+
+- #define :ref:`CAL_MonitoringReadValue2 <group___cmp_monitor_itf_1gae8c009d07ff76332afa6d17c3d20abe2>` pfMonitoringReadValue2
+
+- #define :ref:`CHK_MonitoringReadValue2 <group___cmp_monitor_itf_1ga8d7ed2a75bed9caaad1703dfee76b849>` (pfMonitoringReadValue2 != NULL)
+
+- #define :ref:`EXP_MonitoringReadValue2 <group___cmp_monitor_itf_1gad92efc247464bf85f2758954504c409a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MonitoringReadValue2", (RTS_UINTPTR) :ref:`MonitoringReadValue2 <group___cmp_monitor_itf_1ga1b6b7e70c66a6173ddbc3f3d93cbb2e9>` , 0, 0)
+
+- #define :ref:`USE_MonitoringWriteValue <group___cmp_monitor_itf_1ga0fa531f9ae3ac2b752376c6371eb0a11>` :ref:`PFMONITORINGWRITEVALUE <group___cmp_monitor_itf_1ga35a50d49f3b078d8084cb15311d21908>` pfMonitoringWriteValue;
+
+- #define :ref:`EXT_MonitoringWriteValue <group___cmp_monitor_itf_1gaa702563bfb943a7b3b9450da99446532>` extern :ref:`PFMONITORINGWRITEVALUE <group___cmp_monitor_itf_1ga35a50d49f3b078d8084cb15311d21908>` pfMonitoringWriteValue;
+
+- #define :ref:`GET_MonitoringWriteValue <group___cmp_monitor_itf_1ga6a3f39c1c9ce68bbfda85b46e9b57004>` s_pfCMGetAPI2( "MonitoringWriteValue", (RTS_VOID_FCTPTR *)&pfMonitoringWriteValue, (fl), 0, 0)
+
+- #define :ref:`CAL_MonitoringWriteValue <group___cmp_monitor_itf_1ga5eff8d07f65ea7705cbd294eb492adda>` pfMonitoringWriteValue
+
+- #define :ref:`CHK_MonitoringWriteValue <group___cmp_monitor_itf_1ga22cba689b2260782845cc0480713586a>` (pfMonitoringWriteValue != NULL)
+
+- #define :ref:`EXP_MonitoringWriteValue <group___cmp_monitor_itf_1gaebf8fe25f7e5eb939aca5c0283395324>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MonitoringWriteValue", (RTS_UINTPTR) :ref:`MonitoringWriteValue <group___cmp_monitor_itf_1ga7505a75a3288f1da7178999479b866e9>` , 0, 0)
+
+- #define :ref:`USE_MonitoringWriteValue2 <group___cmp_monitor_itf_1ga44033cd33a6ae2b64286c07979273a2d>` :ref:`PFMONITORINGWRITEVALUE2 <group___cmp_monitor_itf_1ga8ca3d4349c48df38c9aa17fce7105db6>` pfMonitoringWriteValue2;
+
+- #define :ref:`EXT_MonitoringWriteValue2 <group___cmp_monitor_itf_1gaf0a79419a5c7c8da879947ad4d040a9b>` extern :ref:`PFMONITORINGWRITEVALUE2 <group___cmp_monitor_itf_1ga8ca3d4349c48df38c9aa17fce7105db6>` pfMonitoringWriteValue2;
+
+- #define :ref:`GET_MonitoringWriteValue2 <group___cmp_monitor_itf_1ga286bad644b8a5ec7283d0b70d869042e>` s_pfCMGetAPI2( "MonitoringWriteValue2", (RTS_VOID_FCTPTR *)&pfMonitoringWriteValue2, (fl), 0, 0)
+
+- #define :ref:`CAL_MonitoringWriteValue2 <group___cmp_monitor_itf_1ga405ec0e40371c9f3f64d8b02c8ac3c22>` pfMonitoringWriteValue2
+
+- #define :ref:`CHK_MonitoringWriteValue2 <group___cmp_monitor_itf_1gaa7ad47912d441af960e61e2007a06dd3>` (pfMonitoringWriteValue2 != NULL)
+
+- #define :ref:`EXP_MonitoringWriteValue2 <group___cmp_monitor_itf_1ga150c76e191ce75e74e12d724c2b94ca9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MonitoringWriteValue2", (RTS_UINTPTR) :ref:`MonitoringWriteValue2 <group___cmp_monitor_itf_1ga7988a37716aa163cfc00df480eb0e828>` , 0, 0)
+
+- #define :ref:`ITF_CmpMonitor <group___cmp_monitor_itf_1ga32de8e5e21fd88506093ad6d4672e02c>`
+
+- #define :ref:`EXTITF_CmpMonitor <group___cmp_monitor_itf_1ga3b0f8fdbc6363527ed41ee795e0ecdb6>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFMONITORINGHASFEATURE <group___cmp_monitor_itf_1ga441ffbe19473a4643251dc8498fffa7d>`)(unsigned long ulFeatures)
+
+- typedef RTS_RESULT(* :ref:`PFMONITORINGREADVALUE <group___cmp_monitor_itf_1ga005291a8061f35440f721a87f7f46894>`)(APPLICATION *pappl, BINTAGREADER *preader, RTS_UI8 *pbyValue, RTS_UI16 usSize)
+
+- typedef RTS_RESULT(* :ref:`PFMONITORINGREADVALUE2 <group___cmp_monitor_itf_1gae5261b1174ef191e8bd054b32e3a7cdf>`)(APPLICATION *pappl, BINTAGREADER *preader, RTS_UI8 *pbyValue, RTS_UI16 usSize, int bIec)
+
+- typedef RTS_RESULT(* :ref:`PFMONITORINGWRITEVALUE <group___cmp_monitor_itf_1ga35a50d49f3b078d8084cb15311d21908>`)(APPLICATION *pappl, BINTAGREADER *preader, RTS_UI8 *pbyValue, RTS_UI16 usSize)
+
+- typedef RTS_RESULT(* :ref:`PFMONITORINGWRITEVALUE2 <group___cmp_monitor_itf_1ga8ca3d4349c48df38c9aa17fce7105db6>`)(APPLICATION *pappl, BINTAGREADER *preader, RTS_UI8 *pbyValue, RTS_UI16 usSize, int bIec)
+
+- typedef :ref:`ICmpMonitor_C <struct_i_cmp_monitor___c>` :ref:`ICmpMonitor <group___cmp_monitor_itf_1ga458e4cd89ea038109f55261317e60fd1>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`MonitoringHasFeature <group___cmp_monitor_itf_1ga0656885c9ab8b763c43046baed0649ca>` (unsigned long ulFeatures)
+
+- RTS_RESULT :ref:`MonitoringReadValue <group___cmp_monitor_itf_1ga062955768afa92e7f1db2be8cd5ebf7d>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pappl, :ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * preader, RTS_UI8 * pbyValue, RTS_UI16 usSize)
+
+- RTS_RESULT :ref:`MonitoringReadValue2 <group___cmp_monitor_itf_1ga1b6b7e70c66a6173ddbc3f3d93cbb2e9>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pappl, :ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * preader, RTS_UI8 * pbyValue, RTS_UI16 usSize, int bIec)
+
+- RTS_RESULT :ref:`MonitoringWriteValue <group___cmp_monitor_itf_1ga7505a75a3288f1da7178999479b866e9>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pappl, :ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * preader, RTS_UI8 * pbyValue, RTS_UI16 usSize)
+
+- RTS_RESULT :ref:`MonitoringWriteValue2 <group___cmp_monitor_itf_1ga7988a37716aa163cfc00df480eb0e828>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pappl, :ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * preader, RTS_UI8 * pbyValue, RTS_UI16 usSize, int bIec)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_monitor_itf_1gaef0c9ce65f7ad72470172ebf1e9d28b1:
+
+#define SRV_MONITORLISTONCE 1
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga77a420b51cdc1aca8e4af12df868ba4f:
+
+#define SRV_WRITE_VARIABLES 2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga5deeea912d9aad0b87b8e9a6475a0e53:
+
+#define SRV_FORCE_VARIABLES 3
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga2e06aebabe762dfde30e3147e0e43dee:
+
+#define TAG_MONITORING 0x81
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga1cf9fb05755c77ae6e9c2ad1fc38b8ae:
+
+#define TAG_MON_DEREF 0x82
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gac4790dd74065edaea2c91a38517ea8b0:
+
+#define TAG_MON_COMPO 0x83
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gaf765e1b6cb3d1157ba35cc6405b4b340:
+
+#define TAG_MON_ARRAYACCESS 0x84
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga9926254618fdcb7013176d32d45a2b6f:
+
+#define TAG_MON_INDEX_REF 0x85
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gab76a7cf101bed5f4ea8eb56bc1216e8c:
+
+#define TAG_MON_OPERATOR 0x86
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gabbc3245e0806dab6c550c9320c47e9cf:
+
+#define TAG_MON_NEW_BIT 0x87
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gafc3aae5dec682947f05a2678fc5d8eb8:
+
+#define TAG_MON_PROP_EXT 0x88
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga0f970765b3077a89e6a97f8a73c874a0:
+
+#define TAG_MON_FUNC_CALL 0x89
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga5a77ecb8f2e2529c4eaf0ddeb8aad88c:
+
+#define TAG_MON_FUNC_PARAM_INFO 0x8A
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga04b8bd308d660de65b28dbe1d11bb2aa:
+
+#define TAG_MON_APPLICATION 0x10
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gae542841323386e1d1a9db55e0fea7100:
+
+#define TAG_MON_SIMPLEDATA 0x11
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga0be9135ddc9e137c5c10096b8399ea0a:
+
+#define TAG_MON_STACKRELATIVE 0x12
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga4e6d45f707fadec3126efbe7ffcc341c:
+
+#define TAG_MON_COMPO_DATA 0x13
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga1a99bbfcd26a052d59cfd64fcc034124:
+
+#define TAG_MON_VAR_ID 0x14
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga86d48f003493e6305c6d621d85bbc522:
+
+#define TAG_MON_PARAMETER_TYPE 0x16
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga736f1d3d915eac1184fc7883805e265e:
+
+#define TAG_MON_DEREF_DATA 0x17
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gae55082259bd863cc151c695223ba4dca:
+
+#define TAG_MON_BIT_DATA 0x18
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga840e3882af3c08ea8f8638c88378b4e9:
+
+#define TAG_MON_CONNECTOR_DIAG 0x19
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga182909ae82ada64f3a31f6901478a879:
+
+#define TAG_MON_PROPERTY_CALL 0x20
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gaec6c803c029091f07ebe07923d7353f2:
+
+#define TAG_MON_ARRAY_DATA 0x21
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga7cc5e56f8896800a6e296deda1ee1b95:
+
+#define TAG_MON_ARRAY_BOUNDS 0x22
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gacace37d881be6e0f55aee7109871b6f9:
+
+#define TAG_MON_OPERATOR_DATA 0x23
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga5df87fc724bb2370854fff16357c8c2c:
+
+#define TAG_MON_SIGNED_CONST 0x24
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gadb8e011425a42706f0307eb9980737be:
+
+#define TAG_MON_NEW_BITDATA 0x25
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gad05d4bb8d3c02ce255b2dd4cc06802fa:
+
+#define TAG_MON_STACKRELATIVE_SP 0x26
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga684f299640190af7c0a2d47a7d947a16:
+
+#define TAG_MON_PROPEXT_DATA 0x27
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga95e3b71aefd025b55b5bb2b1949c6008:
+
+#define TAG_MON_FUNC_CALL_DATA 0x28
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga74e4a7094c34473164cfff9534822ac1:
+
+#define TAG_MON_FUNC_PARAM_INFO_DATA 0x29
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gadb115df1de603a4fc256e7eb81a09e90:
+
+#define TAG_MON_PROPERTY_CALL_REFERENCE 0x2A
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga3cd40fe1804432692e1681367729acc0:
+
+#define TAG_MON_PROPEXT_DATA_REF 0x2B
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga61d9d43c72af623482e5f49e06d60e18:
+
+#define USE_MonitoringHasFeature :ref:`PFMONITORINGHASFEATURE <group___cmp_monitor_itf_1ga441ffbe19473a4643251dc8498fffa7d>` pfMonitoringHasFeature;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga7958a20312ea5920d3cc384992bfe3b7:
+
+#define EXT_MonitoringHasFeature extern :ref:`PFMONITORINGHASFEATURE <group___cmp_monitor_itf_1ga441ffbe19473a4643251dc8498fffa7d>` pfMonitoringHasFeature;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gabf1aa1453695c0c3732267d8e5e6430a:
+
+#define GET_MonitoringHasFeature s_pfCMGetAPI2( "MonitoringHasFeature", (RTS_VOID_FCTPTR *)&pfMonitoringHasFeature, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga0677fd3a87e28888706213db8732257d:
+
+#define CAL_MonitoringHasFeature pfMonitoringHasFeature
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga14e8b869d430687711d2a2485ef52439:
+
+#define CHK_MonitoringHasFeature (pfMonitoringHasFeature != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gae3a8eaa97d139e004b794191569918e4:
+
+#define EXP_MonitoringHasFeature s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MonitoringHasFeature", (RTS_UINTPTR) :ref:`MonitoringHasFeature <group___cmp_monitor_itf_1ga0656885c9ab8b763c43046baed0649ca>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga59beda5c4cae891eb37b1c28a93682b0:
+
+#define USE_MonitoringReadValue :ref:`PFMONITORINGREADVALUE <group___cmp_monitor_itf_1ga005291a8061f35440f721a87f7f46894>` pfMonitoringReadValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga925fec5cb3772d2f93293d6bbaa35677:
+
+#define EXT_MonitoringReadValue extern :ref:`PFMONITORINGREADVALUE <group___cmp_monitor_itf_1ga005291a8061f35440f721a87f7f46894>` pfMonitoringReadValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gaec3e3906898581b35fd6c8f1d289855a:
+
+#define GET_MonitoringReadValue s_pfCMGetAPI2( "MonitoringReadValue", (RTS_VOID_FCTPTR *)&pfMonitoringReadValue, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gade1e05ca96fb873a905fb497f4b3a5df:
+
+#define CAL_MonitoringReadValue pfMonitoringReadValue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gaf5a2dfa254612039323ae1394f6a384a:
+
+#define CHK_MonitoringReadValue (pfMonitoringReadValue != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gaa696892f0995b02324a02ab29e0fb245:
+
+#define EXP_MonitoringReadValue s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MonitoringReadValue", (RTS_UINTPTR) :ref:`MonitoringReadValue <group___cmp_monitor_itf_1ga062955768afa92e7f1db2be8cd5ebf7d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga70fa84766755574f4636830baab6adff:
+
+#define USE_MonitoringReadValue2 :ref:`PFMONITORINGREADVALUE2 <group___cmp_monitor_itf_1gae5261b1174ef191e8bd054b32e3a7cdf>` pfMonitoringReadValue2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga63e8622b2d5f0cc9ec4ad294dcace64f:
+
+#define EXT_MonitoringReadValue2 extern :ref:`PFMONITORINGREADVALUE2 <group___cmp_monitor_itf_1gae5261b1174ef191e8bd054b32e3a7cdf>` pfMonitoringReadValue2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga6157227f29094d93f8cd7c8b36964d30:
+
+#define GET_MonitoringReadValue2 s_pfCMGetAPI2( "MonitoringReadValue2", (RTS_VOID_FCTPTR *)&pfMonitoringReadValue2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gae8c009d07ff76332afa6d17c3d20abe2:
+
+#define CAL_MonitoringReadValue2 pfMonitoringReadValue2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga8d7ed2a75bed9caaad1703dfee76b849:
+
+#define CHK_MonitoringReadValue2 (pfMonitoringReadValue2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gad92efc247464bf85f2758954504c409a:
+
+#define EXP_MonitoringReadValue2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MonitoringReadValue2", (RTS_UINTPTR) :ref:`MonitoringReadValue2 <group___cmp_monitor_itf_1ga1b6b7e70c66a6173ddbc3f3d93cbb2e9>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga0fa531f9ae3ac2b752376c6371eb0a11:
+
+#define USE_MonitoringWriteValue :ref:`PFMONITORINGWRITEVALUE <group___cmp_monitor_itf_1ga35a50d49f3b078d8084cb15311d21908>` pfMonitoringWriteValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gaa702563bfb943a7b3b9450da99446532:
+
+#define EXT_MonitoringWriteValue extern :ref:`PFMONITORINGWRITEVALUE <group___cmp_monitor_itf_1ga35a50d49f3b078d8084cb15311d21908>` pfMonitoringWriteValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga6a3f39c1c9ce68bbfda85b46e9b57004:
+
+#define GET_MonitoringWriteValue s_pfCMGetAPI2( "MonitoringWriteValue", (RTS_VOID_FCTPTR *)&pfMonitoringWriteValue, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga5eff8d07f65ea7705cbd294eb492adda:
+
+#define CAL_MonitoringWriteValue pfMonitoringWriteValue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga22cba689b2260782845cc0480713586a:
+
+#define CHK_MonitoringWriteValue (pfMonitoringWriteValue != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gaebf8fe25f7e5eb939aca5c0283395324:
+
+#define EXP_MonitoringWriteValue s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MonitoringWriteValue", (RTS_UINTPTR) :ref:`MonitoringWriteValue <group___cmp_monitor_itf_1ga7505a75a3288f1da7178999479b866e9>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga44033cd33a6ae2b64286c07979273a2d:
+
+#define USE_MonitoringWriteValue2 :ref:`PFMONITORINGWRITEVALUE2 <group___cmp_monitor_itf_1ga8ca3d4349c48df38c9aa17fce7105db6>` pfMonitoringWriteValue2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gaf0a79419a5c7c8da879947ad4d040a9b:
+
+#define EXT_MonitoringWriteValue2 extern :ref:`PFMONITORINGWRITEVALUE2 <group___cmp_monitor_itf_1ga8ca3d4349c48df38c9aa17fce7105db6>` pfMonitoringWriteValue2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga286bad644b8a5ec7283d0b70d869042e:
+
+#define GET_MonitoringWriteValue2 s_pfCMGetAPI2( "MonitoringWriteValue2", (RTS_VOID_FCTPTR *)&pfMonitoringWriteValue2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga405ec0e40371c9f3f64d8b02c8ac3c22:
+
+#define CAL_MonitoringWriteValue2 pfMonitoringWriteValue2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gaa7ad47912d441af960e61e2007a06dd3:
+
+#define CHK_MonitoringWriteValue2 (pfMonitoringWriteValue2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga150c76e191ce75e74e12d724c2b94ca9:
+
+#define EXP_MonitoringWriteValue2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MonitoringWriteValue2", (RTS_UINTPTR) :ref:`MonitoringWriteValue2 <group___cmp_monitor_itf_1ga7988a37716aa163cfc00df480eb0e828>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga32de8e5e21fd88506093ad6d4672e02c:
+
+#define ITF_CmpMonitor
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga3b0f8fdbc6363527ed41ee795e0ecdb6:
+
+#define EXTITF_CmpMonitor
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_monitor_itf_1ga441ffbe19473a4643251dc8498fffa7d:
+
+typedef RTS_RESULT( *  PFMONITORINGHASFEATURE) (unsigned long ulFeatures)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga005291a8061f35440f721a87f7f46894:
+
+typedef RTS_RESULT( *  PFMONITORINGREADVALUE) (APPLICATION *pappl, BINTAGREADER *preader, RTS_UI8 *pbyValue, RTS_UI16 usSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1gae5261b1174ef191e8bd054b32e3a7cdf:
+
+typedef RTS_RESULT( *  PFMONITORINGREADVALUE2) (APPLICATION *pappl, BINTAGREADER *preader, RTS_UI8 *pbyValue, RTS_UI16 usSize, int bIec)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga35a50d49f3b078d8084cb15311d21908:
+
+typedef RTS_RESULT( *  PFMONITORINGWRITEVALUE) (APPLICATION *pappl, BINTAGREADER *preader, RTS_UI8 *pbyValue, RTS_UI16 usSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga8ca3d4349c48df38c9aa17fce7105db6:
+
+typedef RTS_RESULT( *  PFMONITORINGWRITEVALUE2) (APPLICATION *pappl, BINTAGREADER *preader, RTS_UI8 *pbyValue, RTS_UI16 usSize, int bIec)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor_itf_1ga458e4cd89ea038109f55261317e60fd1:
+
+typedef ICmpMonitor_C ICmpMonitor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_monitor_itf_1ga0656885c9ab8b763c43046baed0649ca:
+
+RTS_RESULT MonitoringHasFeature (unsigned long ulFeatures)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Routine to check, if a scheduler has the specified feature.
+
+**Parameters**
+
++---------+------------+-------------------------------------------------------+
+| [in]    | ulFeatures | Feature flags, See corresponding category "Features". |
++---------+------------+-------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK if the flags are supported, an error code otherwise
+
+.. _group___cmp_monitor_itf_1ga062955768afa92e7f1db2be8cd5ebf7d:
+
+RTS_RESULT MonitoringReadValue (APPLICATION *pappl, BINTAGREADER *preader, RTS_UI8 *pbyValue, RTS_UI16 usSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Routine to read a value via a monitoring service. Note: this function is equivalent to calling MonitoringReadValue2 with bIec = 0.
+
+**Parameters**
+
++---------+----------+-------------------------------------------------------------------------+
+| [in]    | pappl    | Pointer to application.                                                 |
++---------+----------+-------------------------------------------------------------------------+
+| [in]    | preader  | the reader specifying the location of the value to monitor.             |
++---------+----------+-------------------------------------------------------------------------+
+| [in]    | pbyValue | pointer to the destination address were the retrieved value is written. |
++---------+----------+-------------------------------------------------------------------------+
+| [in]    | usSize   | size of value to read.                                                  |
++---------+----------+-------------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK if the value could be retrieved successfully
+
+.. _group___cmp_monitor_itf_1ga1b6b7e70c66a6173ddbc3f3d93cbb2e9:
+
+RTS_RESULT MonitoringReadValue2 (APPLICATION *pappl, BINTAGREADER *preader, RTS_UI8 *pbyValue, RTS_UI16 usSize, int bIec)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Routine to read a value via a monitoring service.
+
+**Parameters**
+
++---------+----------+-------------------------------------------------------------------------+
+| [in]    | pappl    | Pointer to application.                                                 |
++---------+----------+-------------------------------------------------------------------------+
+| [in]    | preader  | the reader specifying the location of the value to monitor.             |
++---------+----------+-------------------------------------------------------------------------+
+| [in]    | pbyValue | pointer to the destination address were the retrieved value is written. |
++---------+----------+-------------------------------------------------------------------------+
+| [in]    | usSize   | size of value to read.                                                  |
++---------+----------+-------------------------------------------------------------------------+
+| [in]    | bIec     | whether the call is done from an IEC task or not                        |
++---------+----------+-------------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK if the value could be retrieved successfully
+
+.. _group___cmp_monitor_itf_1ga7505a75a3288f1da7178999479b866e9:
+
+RTS_RESULT MonitoringWriteValue (APPLICATION *pappl, BINTAGREADER *preader, RTS_UI8 *pbyValue, RTS_UI16 usSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Routine to write a value via a monitoring service. Note: this function is equivalent to calling MonitoringWriteValue2 with bIec = 0.
+
+**Parameters**
+
++---------+----------+-----------------------------------------------------------+
+| [in]    | pappl    | Pointer to application.                                   |
++---------+----------+-----------------------------------------------------------+
+| [in]    | preader  | the reader specifying the location of the value to write. |
++---------+----------+-----------------------------------------------------------+
+| [in]    | pbyValue | pointer to the source address of the value to write.      |
++---------+----------+-----------------------------------------------------------+
+| [in]    | usSize   | size of value to read.                                    |
++---------+----------+-----------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK if the value could be written successfully
+
+.. _group___cmp_monitor_itf_1ga7988a37716aa163cfc00df480eb0e828:
+
+RTS_RESULT MonitoringWriteValue2 (APPLICATION *pappl, BINTAGREADER *preader, RTS_UI8 *pbyValue, RTS_UI16 usSize, int bIec)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Routine to write a value via a monitoring service.
+
+**Parameters**
+
++---------+----------+-----------------------------------------------------------+
+| [in]    | pappl    | Pointer to application.                                   |
++---------+----------+-----------------------------------------------------------+
+| [in]    | preader  | the reader specifying the location of the value to write. |
++---------+----------+-----------------------------------------------------------+
+| [in]    | pbyValue | pointer to the source address of the value to write.      |
++---------+----------+-----------------------------------------------------------+
+| [in]    | usSize   | size of value to read.                                    |
++---------+----------+-----------------------------------------------------------+
+| [in]    | bIec     | whether the call is done from an IEC task or not          |
++---------+----------+-----------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK if the value could be written successfully
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

@@ -1,11 +1,11 @@
  /**VISU_ET_FILESTREAMINGDLGRESULT
  * <interfacename>CmpVisuHandler</interfacename>
  * <description> 
- *	Interface for the visu handler component.
+ *	Interface for the visualization handler component.
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -65,8 +65,8 @@ typedef RTS_IEC_WORD	IecID;
 #define VISU_ET_FILETRANSFERRESULT					0x00000210
 #define VISU_ET_FILESTREAMINGDLGRESULT				0x00000211
 #define VISU_ET_FILESTREAMINGDATA					0x00000212
-#define VISU_ET_FILESTREAMINGRESULT					0x00000213		/* Sent only in case of failure when streaming data from the plc to the visualization */
-#define VISU_ET_FILESTREAMINGCOUNTTOTALBYTES		0x00000214		/* Sent only in case of streaming data from the visualization to the plc and contains the total amount of bytes to send (used for a simple error processing) */
+#define VISU_ET_FILESTREAMINGRESULT					0x00000213		/* Sent only in case of failure when streaming data from the PLC to the visualization */
+#define VISU_ET_FILESTREAMINGCOUNTTOTALBYTES		0x00000214		/* Sent only in case of streaming data from the visualization to the PLC and contains the total amount of bytes to send (used for a simple error processing) */
 #define VISU_ET_PRINT								0x00000400
 #define	VISU_ET_GESTURE_SPREADPINCH					0x00000801		/* all gesture events have the 0x800 bit set; this bit should not be set in other event tags */
 #define	VISU_ET_GESTURE_PAN							0x00000802
@@ -112,47 +112,55 @@ typedef RTS_IEC_WORD	IecID;
 /* Typed enum definition */
 #define VISUENUMCLIENTTAG    RTS_IEC_INT
 
-/* This flag will start the targetvisu, either as an own process or within the runtimesystem process.
+/* This flag will start the target-visualization, either as an own process or within the runtime system process.
 	dwParam1 will be a pointer to a <Vish_Starttargetvisu_Params>
 */
 #define VISU_STARTVISU_TARGETVISU				0x00000001	
-/* This flag will start a webserver, allowing webclients to connect to the running visu
-	As starting/stopping the webserver is implemented using a reference counting mechanism,
+/* This flag will start a web-server, allowing web-clients to connect to the running visualization
+	As starting/stopping the web-server is implemented using a reference counting mechanism,
 	a call with this tag must be followed by a call with VISU_STARTVISU_WEBSERVER_RELEASE.
  */
 #define VISU_STARTVISU_WEBSERVER				0x00000002
-/* This type will start the targetvisu, similar to VISU_STARTVISU_TARGETVISU, with the difference that
-	the handle to the targetvisuinstance will be returned. dwParam1 will be a pointer to a  <Vish_Starttargetvisu_Params>
+/* This type will start the target-visualization, similar to VISU_STARTVISU_TARGETVISU, with the difference that
+	the handle to the target-visualization instance will be returned. dwParam1 will be a pointer to a  <Vish_Starttargetvisu_Params>
 	dwParam2 a pointer to a RTS_HANDLE, that will receive the result! If dwParam points to a valid handle than this
-	targetvisuinstance will be released before creating a new one. */
+	target-visualization instance will be released before creating a new one. */
 #define VISU_STARTVISU_TARGETVISU_WITHHANDLE	0x00000003
-/* This type will stop an existing targetvisu. dwParam1 will be the handle to the targetvisuinstance. */
+/* This type will stop an existing target-visualization. dwParam1 will be the handle to the target-visualization instance. */
 #define VISU_STARTVISU_TARGETVISU_CLOSE			0x00000004
-/* This type will start the targetvisu, similar to VISU_STARTVISU_TARGETVISU_WITHHANDLE; The difference is that calling this
-	tag allows to pass further information to the targetvisualization; This information is passed in the structure behind dwParam1
+/* This type will start the target-visualization, similar to VISU_STARTVISU_TARGETVISU_WITHHANDLE; The difference is that calling this
+	tag allows to pass further information to the target-visualization; This information is passed in the structure behind dwParam1
 	dwParam1 will be a pointer to a  <Vish_Starttargetvisu_Params> or an extension of this structure
 	dwParam2 a pointer to a RTS_HANDLE, that will receive the result! If dwParam points to a valid handle than this
-	targetvisuinstance will be released before creating a new one. 
-	Older runtimes might not support this tag; in this case, ERR_NOTIMPLEMENTED will be returned so that a compatibility call with
+	target-visualization instance will be released before creating a new one. 
+	Older runtime might not support this tag; in this case, ERR_NOTIMPLEMENTED will be returned so that a compatibility call with
 	VISU_STARTVISU_TARGETVISU_WITHHANDLE can be done.
 */
 #define VISU_STARTVISU_TARGETVISU_WITHHANDLE2	0x00000005
-/* This type will release a webserver. As starting/stopping the webserver is implemented using a reference counting mechanism,
-	a call with this tag must be prepended by a call with VISU_STARTVISU_WEBSERVER. */
+/* This type will release a web-server. As starting/stopping the web-server is implemented using a reference counting mechanism,
+	a call with this tag must be prepared by a call with VISU_STARTVISU_WEBSERVER. */
 #define VISU_STARTVISU_WEBSERVER_RELEASE		0x00000006
 
-/* This flag can be passed to <see>VishPostClientRequest</see>. The intention is to restart the targetvisualization. */
+/* This flag can be passed to <see>VishPostClientRequest</see>. The intention is to restart the target-visualization. */
 #define VISU_CLIENTREQUEST_RESTARTTARGETVISUIFNOTRUNNING			1
 
-/* This flag can be passed to <see>VishPostClientRequest</see>. The intention is to close all open targetvisualization windows. */
+/* This flag can be passed to <see>VishPostClientRequest</see>. The intention is to close all open target-visualization windows. */
 #define VISU_CLIENTREQUEST_REMOVEALLTARGETVISUCLIENTS				2	
 
 /* This flag can be passed to <see>VishPostClientRequest</see>. The intention is to force a repaint in all open visualization clients. */
 #define VISU_CLIENTREQUEST_INVALIDATEALLCIENTS						3
 
 
+/**
+* <category>Settings</category>
+* <description>Set the maximum number of clients where the registration can be pending at the same time. Default is 50.</description>
+*/
+#define CMPVISUHANDLER_KEY_CLIENTS_REQUEST_LIMIT					"ClientsRequestLimit"
+#define CMPVISUHANDLER_VALUE_CLIENTS_REQUEST_DEFAULT				INT32_C(50)
+
+
 /********************************************************************************
-* Interface to IEC part of Visualisation
+* Interface to IEC part of visualization
 ********************************************************************************/
 
 /*
@@ -200,7 +208,7 @@ extern "C" {
 #define VISU_TYPES_TYPE_LREAL    22	/* x */
 #define VISU_TYPES_TYPE_REF    23	
 #define VISU_TYPES_TYPE_SUBRANGE    24	/* this class is only used for load and save
-						  in all other cases a subrange type behaves like the basetype! */
+						  in all other cases a subrange type behaves like the base type! */
 #define VISU_TYPES_TYPE_LBITORBYTE    25	
 #define VISU_TYPES_TYPE_LINT    26	/* x */
 #define VISU_TYPES_TYPE_ULINT    27	/* x */
@@ -214,17 +222,17 @@ extern "C" {
 #define VISU_TYPES    RTS_IEC_INT
 
 /**
- * <description>Enum: VisuEnumClientTag</description>
+ * <description>Enumeration: VisuEnumClientTag</description>
  */
 #define VISUENUMCLIENTTAG_UNDEFINED    0	
 #define VISUENUMCLIENTTAG_NAME    1	
 #define VISUENUMCLIENTTAG_ADDRESSIPV4    2	
-#define VISUENUMCLIENTTAG_RTVID		3		/* format is encoded in a string, 8 hex digits for the targetid, a space, 8 hex digits for the version */
-/* Typed enum definition */
+#define VISUENUMCLIENTTAG_RTVID		3		/* format is encoded in a string, 8 hex digits for the target id, a space, 8 hex digits for the version */
+/* Typed enumeration definition */
 #define VISUENUMCLIENTTAG    RTS_IEC_INT
 
 /**
- * This structure is an extension of Vish_Starttargetvisu_Params; can be passed to VishStartVisu using the starttype VISU_STARTVISU_TARGETVISU_WITHRESULT2 
+ * This structure is an extension of Vish_Starttargetvisu_Params; can be passed to VishStartVisu using the start type VISU_STARTVISU_TARGETVISU_WITHRESULT2 
  */
 typedef struct tagVish_Starttargetvisu_Params2
 {
@@ -235,10 +243,10 @@ CHECKED_OMIT */
 	RTS_IEC_INT iWidth;		
 	RTS_IEC_INT iHeight;		
 	RTS_IEC_STRING *stApp;		
-	RTS_IEC_UINT uiAntiAliasing;		/* Information about the antialiasing settings chosen by the configuration. */
-	RTS_IEC_UINT uiWindowType;		/* Information about the frame type of the targetvisu window (fullscreen, with window frame, without window frame,...); Reserved for future use; not yet implemented */
-	RTS_IEC_UINT uiUpdateRateMs;		/* The cyclic update rate in milliseconds of the targetvisualization window; Reserved for future use; not yet implemented */
-	RTS_IEC_UINT uiFlags;		/* Some flags regarding the targetvisualizations; Reserved for future use; not yet implemented */
+	RTS_IEC_UINT uiAntiAliasing;		/* Information about the anti-aliasing settings chosen by the configuration. */
+	RTS_IEC_UINT uiWindowType;		/* Information about the frame type of the target-visualization window (full-screen, with window frame, without window frame,...); Reserved for future use; not yet implemented */
+	RTS_IEC_UINT uiUpdateRateMs;		/* The cyclic update rate in milliseconds of the target-visualization window; Reserved for future use; not yet implemented */
+	RTS_IEC_UINT uiFlags;		/* Some flags regarding the target-visualizations; Reserved for future use; not yet implemented */
 } Vish_Starttargetvisu_Params2;
 
 /**
@@ -247,10 +255,10 @@ CHECKED_OMIT */
 typedef struct tagVisu_InputChecks
 {
 	RTS_IEC_INT iVersion;		/* for extensibility */
-	RTS_IEC_BYTE *pMin;		/* will point to the typespecific min value. For the converted code
+	RTS_IEC_BYTE *pMin;		/* will point to the type specific min value. For the converted code
  this component contains the name of variable holding the minimum
  value resp. a string with the constant value */
-	RTS_IEC_BYTE *pMax;		/* will point to the typespecific max value. For the converted code
+	RTS_IEC_BYTE *pMax;		/* will point to the type specific max value. For the converted code
  this component contains the name of variable holding the maximum
  value resp. a string with the constant value */
 } Visu_InputChecks;
@@ -261,10 +269,10 @@ typedef struct tagVisu_InputChecks
 typedef struct tagVisu_InputChecks2
 {
 	RTS_IEC_INT iVersion;		/* for extensibility */
-	RTS_IEC_BYTE *pMin;		/* will point to the typespecific min value. For the converted code
+	RTS_IEC_BYTE *pMin;		/* will point to the type specific min value. For the converted code
  this component contains the name of variable holding the minimum
  value resp. a string with the constant value */
-	RTS_IEC_BYTE *pMax;		/* will point to the typespecific max value. For the converted code
+	RTS_IEC_BYTE *pMax;		/* will point to the type specific max value. For the converted code
  this component contains the name of variable holding the maximum
  value resp. a string with the constant value */
 	RTS_IEC_DINT diMaxLen;		
@@ -299,8 +307,8 @@ typedef struct tagVish_Starttargetvisu_Params
  */
 typedef struct tagWebserverInitParameter
 {
-	RTS_IEC_STRING stStartHTMName[81];		/* This string defines a start htm filename, which will be opened,
- when only ip-address and port is entered in the webbrowser. */
+	RTS_IEC_STRING stStartHTMName[81];		/* This string defines a start HTM filename, which will be opened,
+ when only IP-address and port is entered in the web-browser. */
 } WebserverInitParameter;
 
 /**
@@ -334,7 +342,7 @@ CHECKED_OMIT */
  */
 typedef struct tagvishbufferprintf_struct
 {
-	RTS_IEC_STRING *pstFormat;			/* VAR_INPUT */	/* the formatstring */
+	RTS_IEC_STRING *pstFormat;			/* VAR_INPUT */	/* the format string */
 	RTS_IEC_DWORD *pVarAdr;				/* VAR_INPUT */	/* the address of the variable that shall be printed */
 	RTS_IEC_DWORD dwVarType;			/* VAR_INPUT */	/* the type of the variable as defined in visu_types */
 	RTS_IEC_BYTE *pBuffer;				/* VAR_INPUT */	/* the buffer where the text is to be printed */
@@ -394,7 +402,7 @@ typedef void (CDECL CDECL_EXT* PFVISHBUFFERPRINTF_IEC) (vishbufferprintf_struct 
  */
 typedef struct tagvishbufferprintfw_struct
 {
-	RTS_IEC_WSTRING *wstFormat;			/* VAR_INPUT */	/* the formatstring */
+	RTS_IEC_WSTRING *wstFormat;			/* VAR_INPUT */	/* the format string */
 	RTS_IEC_DWORD *pVarAdr;				/* VAR_INPUT */	/* the address of the variable that shall be printed */
 	RTS_IEC_DWORD dwVarType;			/* VAR_INPUT */	/* the type of the variable as defined in visu_types */
 	RTS_IEC_BYTE *pBuffer;				/* VAR_INPUT */	/* the buffer where the text is to be printed */
@@ -459,7 +467,7 @@ typedef struct tagvishconfigureeventbuffer_struct
 {
 	RTS_IEC_STRING stAppName[81];		/* VAR_INPUT */	/* The application for which the event buffer should be configured */
 	RTS_IEC_UINT bufferSize;			/* VAR_INPUT */	/* The number of entries that should have a location within this buffer. In
- fact this is the size of the eventqueue / eventbuffer within the runtime
+ fact this is the size of the event-queue / event-buffer within the runtime
  system before events are dropped. */
 	RTS_IEC_UINT eventExtensionSize;	/* VAR_INPUT */	/* The size in bytes that each single event structure is increased for
  keeping data per event. Additionally inserted data will be located at 
@@ -1058,7 +1066,7 @@ typedef void (CDECL CDECL_EXT* PFVISHREMOVECURRENTEVENT_IEC) (vishremovecurrente
 
 
 /**
- * | Registers the IEC-ID of the client and the paintbuffer of this client
+ * | Registers the IEC-ID of the client and the paint-buffer of this client
  * | in the runtime system. 
  * | A id of -1 means that the client was not registered!
  * | A dwExternID of 0xFFFFFFFE, i.e. REMOVE_CLIENT means that the client with IEC_ID id
@@ -1124,7 +1132,7 @@ typedef void (CDECL CDECL_EXT* PFVISHSETCLIENTDATA_IEC) (vishsetclientdata_struc
 
 /**
  * | Provides functionality to start a visu in the runtime system. Can be used for starting
- * | a targetvisu or a webserver for example.
+ * | a target-visualization or a web-server for example.
  */
 typedef struct tagvishstartvisu_struct
 {
@@ -1251,7 +1259,7 @@ typedef void (CDECL CDECL_EXT* PFVISHWRITEVALUEIFVALID_IEC) (vishwritevalueifval
 
 
 /********************************************************************************
-* END Interface to IEC part of Visualisation
+* END Interface to IEC part of visualization
 ********************************************************************************/
 
 
@@ -1260,7 +1268,7 @@ extern "C" {
 #endif
 
 /********************************************************************************
-* Interface to Visualisationclients
+* Interface to visualization clients
 ********************************************************************************/
 #define SUCCESSFULLY_REGISTERED	0
 #define NOT_REGISTERED			0xFFFFFFFF
@@ -1272,13 +1280,14 @@ extern "C" {
 #define INVALID_APPLICATION			0xFFFFFFFD
 #define NO_MORE_MEMORY				0xFFFFFFFC
 #define TOO_MANY_CLIENTTAGS			0xFFFFFFFB
+#define TOO_MANY_CLIENT_REQUESTS	0xFFFFFFF9
 #define MAXIMAL_VALID_EXTERN_ID		0xAFFFFFFF		/* all values above will be treated as errors */
 
 #define INVALID_IEC_ID			0xFFFF
 #define UNSET_IEC_ID			0xFFFE
 
 /**
- * <description> Function to register a new client in the runtimesystem. A 
+ * <description> Function to register a new client in the runtime system. A 
  * ID will be returned that can be used to poll if the ID has been registered in the IEC-Task. </description>
  * <param name="pszAppName">The application to whose visualization the client wants to connect</param>
  * <param name="dwFlags">Some flags can be given here to set how the client will be created,
@@ -1333,7 +1342,7 @@ typedef ExternID (CDECL * PFVISHREGISTERCLIENT) (char* pszAppName, RTS_IEC_DWORD
 
 
 /**
- * <description> Function to register a new client in the runtimesystem. A 
+ * <description> Function to register a new client in the runtime system. A 
  * ID will be returned that can be used to poll if the ID has been registered in the IEC-Task. </description>
  * <param name="pszAppName">The application to whose visualization the client wants to connect</param>
  * <param name="dwFlags">Some flags can be given here to set how the client will be created,
@@ -1444,7 +1453,7 @@ typedef RTS_UI32 (CDECL * PFVISHISREGISTERED) (ExternID extID);
 
 
 /**
- * <description> Function to remove a Visuclient with a specific ID.</description>
+ * <description> Function to remove a visualization client with a specific ID.</description>
  * <result></result>
  */
 void CDECL VishRemoveClient(ExternID extID);
@@ -1495,12 +1504,12 @@ typedef void (CDECL * PFVISHREMOVECLIENT) (ExternID extID);
 
 
 /**
- * <description> Function to deliver the current event, inkl. monitoring</description>
+ * <description> Function to deliver the current event, incl. monitoring</description>
  * <param name="pEvent">The Event to handle</param>
- * <param name="pCmdsResult">Will get the paintbuffer that contains the current data for painting. If there
+ * <param name="pCmdsResult">Will get the paint-buffer that contains the current data for painting. If there
  * is nothing to paint NULL will be returned. pCmdsResult may not be NULL!</param>
- * <result>An errorcode signaling whether the call was successfull. ERR_OK, if everything is ok, ERR_NOBUFFER if
- *	the event could not be added to the underlying eventbuffer. A returnvalue of INVALID_IEC_ID
+ * <result>An error code signaling whether the call was successful. ERR_OK, if everything is OK, ERR_NOBUFFER if
+ *	the event could not be added to the underlying event buffer. A return value of INVALID_IEC_ID
  * signals that the request concerned a not registered Client. This could also be the result of a download between
  * the calls to GetPaintData.</result>
  */
@@ -1552,16 +1561,16 @@ typedef int (CDECL * PFVISHGETPAINTDATA) (EventStruct* pEvent, CommandBuffer** p
 
 
 /**
- * <description> Function to deliver the current event, inkl. monitoring</description>
+ * <description> Function to deliver the current event, incl. monitoring</description>
  * <param name="pEvent">The Event to handle</param>
  * <param name="pOptExtensionData">Extension data that will be appended to the event. The size must be known
- * by the caller (in fact there must be a protocol between visu client and iec-visu to use this). If NULL, then
+ * by the caller (in fact there must be a protocol between visualization client and IEC-visualization to use this). If NULL, then
  * no data will be appended to the event. The content of this data will be copied by this call so it is valid to 
  * free or reuse the given pointer afterwards.</param>
- * <param name="pCmdsResult">Will get the paintbuffer that contains the current data for painting. If there
+ * <param name="pCmdsResult">Will get the paint-buffer that contains the current data for painting. If there
  * is nothing to paint NULL will be returned. pCmdsResult may not be NULL!</param>
- * <result>An errorcode signaling whether the call was successfull. ERR_OK, if everything is ok, ERR_NOBUFFER if
- *	the event could not be added to the underlying eventbuffer. A returnvalue of INVALID_IEC_ID
+ * <result>An error code signaling whether the call was successful. ERR_OK, if everything is OK, ERR_NOBUFFER if
+ *	the event could not be added to the underlying event-buffer. A return value of INVALID_IEC_ID
  * signals that the request concerned a not registered Client. This could also be the result of a download between
  * the calls to GetPaintData.</result>
  */
@@ -1613,11 +1622,11 @@ typedef int (CDECL * PFVISHGETPAINTDATA2) (EventStruct2* pEvent, EventExtensionD
 
 
 /**
- * <description> Function to deliver the current event, inkl. monitoring. This call will only post an event to the queue
+ * <description> Function to deliver the current event, incl. monitoring. This call will only post an event to the queue
  *	it will not retrieve the currently available paint data! </description>
  * <param name="pEvent">The Event to handle</param>
- * <result>An errorcode signaling whether the call was successfull. ERR_OK, if everything is ok, ERR_NOBUFFER if
- *	the event could not be added to the underlying eventbuffer. A returnvalue of INVALID_IEC_ID
+ * <result>An error code signaling whether the call was successful. ERR_OK, if everything is OK, ERR_NOBUFFER if
+ *	the event could not be added to the underlying event-buffer. A return value of INVALID_IEC_ID
  * signals that the request concerned a not registered Client. This could also be the result of a download between
  * the calls to GetPaintData.</result>
  */
@@ -1669,15 +1678,15 @@ typedef int (CDECL * PFVISHPOSTEVENT) (EventStruct* pEvent);
 
 
 /**
- * <description> Function to deliver the current event, inkl. monitoring. This call will only post an event to the queue
+ * <description> Function to deliver the current event, incl. monitoring. This call will only post an event to the queue
  *	it will not retrieve the currently available paint data! </description>
  * <param name="pEvent">The Event to handle</param>
  * <param name="pOptExtensionData">Extension data that will be appended to the event. The size must be known
- * by the caller (in fact there must be a protocol between visu client and iec-visu to use this). If NULL, then
+ * by the caller (in fact there must be a protocol between visualization client and IEC-visualization to use this). If NULL, then
  * no data will be appended to the event. The content of this data will be copied by this call so it is valid to 
  * free or reuse the given pointer afterwards.</param>
- * <result>An errorcode signaling whether the call was successfull. ERR_OK, if everything is ok, ERR_NOBUFFER if
- *	the event could not be added to the underlying eventbuffer. A returnvalue of INVALID_IEC_ID
+ * <result>An error code signaling whether the call was successful. ERR_OK, if everything is OK, ERR_NOBUFFER if
+ *	the event could not be added to the underlying event-buffer. A return value of INVALID_IEC_ID
  * signals that the request concerned a not registered Client. This could also be the result of a download between
  * the calls to GetPaintData.</result>
  */
@@ -1729,10 +1738,10 @@ typedef int (CDECL * PFVISHPOSTEVENT2) (EventStruct2* pEvent, EventExtensionData
 
 
 /**
- * <description> Function that releases the paintbuffer, ie. allows an update of the visualization. 
- *	Call this function after the client has finished using the paintbuffer, ie. the client has interpreted the 
+ * <description> Function that releases the paint-buffer, i.e. allows an update of the visualization. 
+ *	Call this function after the client has finished using the paint-buffer, i.e. the client has interpreted the 
  *	commands or copied the buffer. </description>
- * <param name="extID">The externid whose paintbuffer should be released.</param>
+ * <param name="extID">The external id whose paint-buffer should be released.</param>
  * <result>ERR_OK, ERR_PARAMETER or ERR_FAILED if the buffer is already released.</result>
  */
 RTS_RESULT CDECL VishReleasePaintBuffer(ExternID extID);
@@ -1939,7 +1948,7 @@ typedef void (CDECL * PFVISHINITEVENTSTRUCT2) (EventStruct2* pEvent);
  *	</description>
  * <param name="pszAppName">The application name</param>
  * <param name="dwFlags">The flags</param>
- * <result>A Errorvalue if the call was successful. ERR_OK, if everything is ok. </result>
+ * <result>A Error value if the call was successful. ERR_OK, if everything is OK. </result>
  */
 int CDECL VishPostClientRequest(char* pszAppName, RTS_IEC_DWORD dwFlags);
 typedef int (CDECL * PFVISHPOSTCLIENTREQUEST) (char* pszAppName, RTS_IEC_DWORD dwFlags);
@@ -1991,7 +2000,7 @@ typedef int (CDECL * PFVISHPOSTCLIENTREQUEST) (char* pszAppName, RTS_IEC_DWORD d
 /**
  * <description> Function to set up a new paint buffer based on shared memory. Is only used in case
  * of the 2-process target visualization.</description>
- * <param name="extID">The externid whose paintbuffer should be set up.</param>
+ * <param name="extID">The external id whose paint-buffer should be set up.</param>
  * <param name="pszShmName">The name of the shared memory, that is used for the paint buffer</param>
  * <result>ERR_OK in case of success, ERR_NOT_SUPPORTED in case of the 1-process target visualization.
  * Other error codes in case of failure</result>
@@ -2045,7 +2054,7 @@ typedef RTS_RESULT (CDECL * PFVISHSETUPPAINTBUFFER) (ExternID extID, char* pszSh
 
 /**
  * <description>Function to obtain the maximum size of data, that can be read from a file,
- * when transferring data from the visualization to the plc by streaming.</description>
+ * when transferring data from the visualization to the PLC by streaming.</description>
  * <result>The maximum size</result>
  */
 RTS_UI32 CDECL VishGetFileStreamingChunkSize(void);
@@ -2108,7 +2117,7 @@ typedef enum
 } VishFileTransferType;
 
 /**
- * <description>Enum: VisuEnumFileTransferControlFlags</description>
+ * <description>Enumeration: VisuEnumFileTransferControlFlags</description>
  */
 #define VISUENUMFILETRANSFERCONTROLFLAGS_USEORIGINALFILENAME    0x00000004	
 #define VISUENUMFILETRANSFERCONTROLFLAGS_CONFIRMFILEOVERWRITEINPLC    0x00000008	
@@ -2127,7 +2136,7 @@ typedef struct
 
 
 /**
- * <description> Function to initiate a file transfer between a visu client and the plc.</description>
+ * <description> Function to initiate a file transfer between a visualization client and the PLC.</description>
  * <param name="configuration">The configuration parameters for the file transfer.</param>
  * <result>Error code.</result>
  */
@@ -2179,7 +2188,7 @@ typedef RTS_RESULT (CDECL * PFVISHINITIATEFILETRANSFER) (const VishFileTransferC
 
 
 /**
- * <description> Function which is used by a file transfer between a visu client and the plc to ask for the file info.</description>
+ * <description> Function which is used by a file transfer between a visualization client and the PLC to ask for the file info.</description>
  * <param name="pszFileName">The file name for which the file info is needed.</param>
  * <param name="pfi">The file info which is the result.</param>
  * <result>Error code.</result>
@@ -2246,8 +2255,8 @@ typedef RTS_RESULT (CDECL * PFVISHFILETRANSFERGETFILEINFO) (const char* pszFileN
 #define VISH_IPC_REMOVEINSTANCE		"VishRemoveInstance"
 #define VISH_IPC_REGISTERBITMAPPOOL	"VishRegisterBitmapPool"
 #define VISH_IPC_POSTEVENT			"VishPostEvent"
-#define VISH_IPC_GETTARGETVISUSETTINGS	"VishGetTargetvisuSettings"	/* special function only for the two process targetvisu */
-#define VISH_IPC_SENDCLIENTREQUEST	"VishSendClientRequest"	/* special function to control visu clients */
+#define VISH_IPC_GETTARGETVISUSETTINGS	"VishGetTargetvisuSettings"	/* special function only for the two process target-visualization */
+#define VISH_IPC_SENDCLIENTREQUEST	"VishSendClientRequest"	/* special function to control visualization clients */
 
 /*********************************************************************************
 * END: Function definitions that could be called via IPC

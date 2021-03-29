@@ -110,27 +110,15 @@ RTS_RESULT CDECL CCmpOpenSSLOEM::ITlsClose(RTS_HANDLE hTlsConn)
 	return TlsClose(hTlsConn);
 }
 
-void CDECL CCmpOpenSSLOEM::ITlsRandAdd(const RTS_UI8* pui8Buffer, RTS_I32 i32BufferSize, RTS_REAL64 r64Entroy)
+void CDECL CCmpOpenSSLOEM::ITlsRandAdd(const RTS_UI8* pui8Buffer, RTS_I32 i32BufferSize, RTS_REAL64 r64Entropy)
 {
-	TlsRandAdd(pui8Buffer,i32BufferSize,r64Entroy);
+	TlsRandAdd(pui8Buffer,i32BufferSize,r64Entropy);
 }
 
 RTS_BOOL CDECL CCmpOpenSSLOEM::ITlsRandCheckStatus(void)
 {
 	return TlsRandCheckStatus();
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -245,24 +233,6 @@ CLASSID CDECL CCmpOpenSSLOEM::ISysSock2GetClassId(RTS_RESULT *pResult)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 RTS_HANDLE CDECL CCmpOpenSSLOEM::ICryptoGetAlgorithmById(RTS_UI32 ui32CryptoID, RTS_RESULT* pResult)
 {
 	return CryptoGetAlgorithmById(ui32CryptoID,pResult);
@@ -308,9 +278,44 @@ RTS_UI32 CDECL CCmpOpenSSLOEM::ICryptoGetAsymmetricKeyLength(RtsCryptoKey asymme
 	return CryptoGetAsymmetricKeyLength(asymmetricKey,pResult);
 }
 
+RTS_RESULT CDECL CCmpOpenSSLOEM::ICryptoGenerateAsymmetricKeyPair(RTS_IEC_HANDLE hAlgo, RTS_IEC_UDINT ui32KeyLen, RtsCryptoKey *pKeyPair, RTS_BOOL bPrivateKeyExportable)
+{
+	return CryptoGenerateAsymmetricKeyPair(hAlgo,ui32KeyLen,pKeyPair,bPrivateKeyExportable);
+}
+
+RTS_RESULT CDECL CCmpOpenSSLOEM::ICryptoExportAsymmetricKey(RtsCryptoKey key, RTS_BOOL bBase64, RTS_BOOL bPrivateKey, RtsByteString *pData)
+{
+	return CryptoExportAsymmetricKey(key,bBase64,bPrivateKey,pData);
+}
+
+RTS_RESULT CDECL CCmpOpenSSLOEM::ICryptoImportAsymmetricKey(RtsByteString data, RTS_BOOL bBase64, RTS_BOOL bPrivateKey, RtsCryptoKey *pKey)
+{
+	return CryptoImportAsymmetricKey(data,bBase64,bPrivateKey,pKey);
+}
+
+RTS_RESULT CDECL CCmpOpenSSLOEM::ICryptoStorePrivateKey(RtsCryptoKey key, RtsByteString *pKeyIdentifier)
+{
+	return CryptoStorePrivateKey(key,pKeyIdentifier);
+}
+
+RTS_RESULT CDECL CCmpOpenSSLOEM::ICryptoLoadPrivateKey(RtsByteString keyIdentifier, RtsCryptoKey *pKey)
+{
+	return CryptoLoadPrivateKey(keyIdentifier,pKey);
+}
+
+RTS_RESULT CDECL CCmpOpenSSLOEM::ICryptoDeletePrivateKey(RtsByteString keyIdentifier)
+{
+	return CryptoDeletePrivateKey(keyIdentifier);
+}
+
 RTS_RESULT CDECL CCmpOpenSSLOEM::ICryptoGenerateHash(RTS_HANDLE hAlgo, RtsByteString* pData, RtsByteString* pHash)
 {
 	return CryptoGenerateHash(hAlgo,pData,pHash);
+}
+
+RTS_RESULT CDECL CCmpOpenSSLOEM::ICryptoDeriveKey(RTS_HANDLE hAlgo, RtsByteString *pKey, RtsByteString *pSalt, RtsKdfParameter* pSpecificParameters, RtsByteString *pDerivedKey)
+{
+	return CryptoDeriveKey(hAlgo,pKey,pSalt,pSpecificParameters,pDerivedKey);
 }
 
 RTS_RESULT CDECL CCmpOpenSSLOEM::ICryptoHMACSign(RTS_HANDLE hAlgo, RtsByteString* pData, RtsCryptoKey key, RtsByteString* pSignature)
@@ -358,40 +363,25 @@ RTS_RESULT CDECL CCmpOpenSSLOEM::ICryptoRtsByteStringInit2(RtsByteString* pByteS
 	return CryptoRtsByteStringInit2(pByteString,ui32BufferSize,pBuffer);
 }
 
+RTS_RESULT CDECL CCmpOpenSSLOEM::ICryptoRtsByteStringInit3(RtsByteString* pByteString, RTS_UI32 ui32BufferSize, RTS_UI8* pBuffer, RTS_BOOL bEmptyBuffer)
+{
+	return CryptoRtsByteStringInit3(pByteString,ui32BufferSize,pBuffer,bEmptyBuffer);
+}
+
 RTS_RESULT CDECL CCmpOpenSSLOEM::ICryptoRtsByteStringExit(RtsByteString* pByteString)
 {
 	return CryptoRtsByteStringExit(pByteString);
 }
 
+RTS_RESULT CDECL CCmpOpenSSLOEM::ICryptoBase64Encode(RtsByteString *input, RtsByteString* base64Output)
+{
+	return CryptoBase64Encode(input,base64Output);
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+RTS_RESULT CDECL CCmpOpenSSLOEM::ICryptoBase64Decode(RtsByteString *base64Input, RtsByteString *output)
+{
+	return CryptoBase64Decode(base64Input,output);
+}
 
 
 
@@ -465,6 +455,16 @@ RTS_BOOL CDECL CCmpOpenSSLOEM::IX509CertIsSelfSigned(RTS_HANDLE hCert, RTS_RESUL
 RTS_BOOL CDECL CCmpOpenSSLOEM::IX509CertHasExtendedKeyUsage(RTS_HANDLE hCert, RTS_UI32 numOfExKeyUsages, RtsOID *pExKeyUsages, RTS_RESULT *pResult)
 {
 	return X509CertHasExtendedKeyUsage(hCert,numOfExKeyUsages,pExKeyUsages,pResult);
+}
+
+RTS_BOOL CDECL CCmpOpenSSLOEM::IX509CertCheckHost(RTS_HANDLE hCert, char *pszHostName, RTSX509CERTCHECKFLAGS flags, RTS_RESULT *pResult)
+{
+	return X509CertCheckHost(hCert,pszHostName,flags,pResult);
+}
+
+RTS_BOOL CDECL CCmpOpenSSLOEM::IX509CertCheckIP(RTS_HANDLE hCert, INADDR *pIP, RTSX509CERTCHECKFLAGS flags, RTS_RESULT *pResult)
+{
+	return X509CertCheckIP(hCert,pIP,flags,pResult);
 }
 
 RTS_BOOL CDECL CCmpOpenSSLOEM::IX509CertCompare(RTS_HANDLE hCert1, RTS_HANDLE hCert2)

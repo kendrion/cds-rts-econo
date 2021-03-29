@@ -11,7 +11,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -35,7 +35,7 @@ enum
 	GWDOT_VIRTUALCHANNELREF
 };
 
-/* This struct is used to pass name/value pairs in different contexts */
+/* This structure is used to pass name/value pairs in different contexts */
 typedef struct 
 {
 	RTS_WCHAR *wszName;
@@ -107,7 +107,7 @@ typedef struct
  */
 typedef struct
 {
-	RTS_SIZE nStructSize;			/* Size of this struct. Allows for future extension of this struct */
+	RTS_SIZE nStructSize;			/* Size of this structure. Allows for future extension of this structure */
 
 	RTS_INT nOpenRequests;			/* Number of requests currently waiting to be handled for this channel */
 
@@ -129,7 +129,7 @@ typedef struct
  * </param>
  * <param name="pInfo" type="IN">
  *   Additional information about the added object. Depending on the object type
- *   an extension of the GWOBJECTINFO struct will be passed.
+ *   an extension of the GWOBJECTINFO structure will be passed.
  * </param>
  */
 typedef void (CDECL *PFOBJECTADDED)(RTS_HANDLE hListenerId, RTS_INT nObjType, GWDOBJECTINFO *pInfo);
@@ -166,8 +166,7 @@ typedef struct
  * </description>
  * <param name="callbacks" type="IN">callback functions of the listener</param>
  * <param name="phListenerId" type="OUT">
- *   Will be set to a unique number that identifies the listener. Use this value in a call to 
- *   unsubscribe.
+ *   Will be set to a unique number that identifies the listener. Use this value in a call to unsubscribe
  * </param>
  */
 DEF_API(`RTS_RESULT',`CDECL',`GWDRegisterListener',`(GWDLISTENERCALLBACKS callbacks, RTS_HANDLE *phListenerId)')
@@ -187,7 +186,7 @@ DEF_API(`RTS_RESULT',`CDECL',`GWDUnregisterListener',`(RTS_HANDLE hListenerId)')
  * <param name="ulChannelId" type="IN">id of the channel as provided in the addObject callback</param>
  * <param name="pState" type="OUT">
  *   Will be filled with the current channel state. Must not be NULL and the nStructSize member of the
- *   struct must be set to thesize of the structure provided. 
+ *   structure must be set to the size of the structure provided. 
  *   On success this member will be set to the size of the structure actually used, which is less or equal
  *   to the provided size. If a component passes in an extension of GWDCHANNELSTATE it must be prepared
  *   that the gateway only fills the basic structure.

@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -41,7 +41,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>String</type>
  * <description>
- *	Name of the blockdriver instance.
+ *	Name of the block driver instance.
  *  Example: Com.0.Name=MyCom
  *  Only for BlkDrvCom.
  * </description>
@@ -142,7 +142,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  *  throughput is somewhat less than without this feature. So this feature is recommended
  *  for media sharing one physical channel for both directions (e. g. RS485) or if a device
  *  has not the capability of full-duplex communication. Only in this cases the parameter
- *  value shold be set to 1.
+ *  value should be set to 1.
  *  The recommended value 2 (default), let the driver detect the setting of the peer automatically.
  *  If both peers use the value 2, they will both enable this feature. 
  *  If EnableAutoAddressing and HalfDuplexAutoNegotiate are set to 2 (auto detection), the
@@ -185,11 +185,11 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  *  when communication runs with a medium or high load. This issue can lead to several 
  *  (very) sporadic symptoms:
  *  - slow communication (gaps for a few seconds)
- *  - shutdown of the Gateway or the CODESYSControl proccess (restart is possible in most cases)
+ *  - shutdown of the Gateway or the CODESYSControl process (restart is possible in most cases)
  *  - BSODs or system reboots. 
  *  If this symptoms occur in combination with a USB/RS232 adapter, please check, if there is
  *  an updated driver available. For some drivers exist also some timeout settings in the
- *  Microsoft Windows Device Manager (Control Panel), to adjust the behaviour of the 
+ *  Microsoft Windows Device Manager (Control Panel), to adjust the behavior of the 
  *  virtual COM port.
  *  Last you can try to increase this parameter to workaround the issue. Typical values are in the
  *  range of 0..100 (ms). 
@@ -307,7 +307,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>String</type>
  * <description>
- *	The basename for the used sharedmemory. Only for BlkDrvShm.
+ *	The base name for the used shared memory. Only for BlkDrvShm.
  * </description>
  */
 #define BLKDRVSHMKEY_STRING_BASENAME							"BaseName"
@@ -317,7 +317,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Optional setting to force the local address the blockdriver should use. Only for BlkDrvShm.
+ *	Optional setting to force the local address the block driver should use. Only for BlkDrvShm.
  * </description>
  */
 #define BLKDRVSHMKEY_INT_FORCEDADDRESS						"ForcedAddress"
@@ -344,17 +344,19 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Defines the maximal number of interfaces (ip addresses), which are used by the CmpBlkDrvUdp. This is also the limitation
- *  for the number of interface configurations.
+ *	Defines the maximal number of interfaces (IP addresses), which are used by the BlkDrvUdp and registered 
+ *  at the router.
  *  There are two typical use cases for this setting:
  *	1. Systems on which more than 8 network adapters should be used by this block driver.
  *  Example:
  *	MaxInterfaces=10
- *  2. Define a white list for ip addresses. All other interfaces are ignored by the CmpBlkDrvUdp.
+ *  2. Define a white list for IP addresses or adapters. All other interfaces are ignored by the BlkDrvUdp.
  *	Example:
  *	MaxInterfaces=2
- *  itf.0.ipaddress=192.168.100.1 
+ *  itf.0.AdapterName=Lan1
  *  itf.1.ipaddress=192.168.200.1
+ *  If the list contains less interfaces to be used than MaxInterfaces, then the remaining instances will be 
+ *  assigned to further network adapters of the system. Interfaces marked with "DoNotUse=1" are not counted.
  * </description>
  */
 #define BLKDRVUDPKEY_INT_MAX_INTERFACES							"MaxInterfaces"
@@ -366,18 +368,46 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>String</type>
  * <description>
- *	Settings prefix for blockdriver Udp. Has to be used for all settings, which refer only to one interface. 
- *  Example: itf.0.ipaddress=192.168.100.1
+ *	Setting prefix for CmpBlkDrvUdp. Has to be used for all settings, which refer only to one interface. 
+ *  The index number, separated by dots, must start with 0 and has to be increased by one for each configured interface.
+ *  Interfaces can be configured by their Unicode or ASCII name or by their IP address. If for a index number
+ *  was found a "AdapterNameUnicode" setting, the settings "AdapterName" and "ipaddress" are ignored. The setting
+ *  "ipaddress" is also ignored, if the setting "AdapterName" was found for the same index. 
+ *  Example: 
+ *  itf.0.AdapterNameUnicode="L\00a\00n\001\00"
+ *  itf.1.AdapterName=Lan2
+ *  itf.2.ipaddress=192.168.100.0
  * </description>
  */
 #define BLKDRVUDPKEY_STRING_PREFIX								"itf"
 
 /**
  * <category>Settings</category>
+ * <type>WString</type>
+. * <description>Setting for referencing a network adapter by its Unicode adapter name. Only for BlkDrvUdp.
+ .*	Example: itf.0.AdapterNameUnicode="L\00a\00n\001\00"
+ * </description>
+ */
+#define BLKDRVUDPKEY_WSTRING_ADAPTER_NAME_UNICODE				"AdapterNameUnicode"
+
+/**
+ * <category>Settings</category>
+ * <type>String</type>
+ * <description>Setting for referencing a network adapter by its ASCII adapter name. Only for BlkDrvUdp.
+ *  Only evaluated, if no "AdapterNameUnicode" setting for the same adapter index exists.
+ *	Example: itf.0.AdapterName=Lan1
+ * </description>
+ */
+#define BLKDRVUDPKEY_STRING_ADAPTER_NAME						"AdapterName"
+
+
+/**
+ * <category>Settings</category>
  * <type>String</type>
  * <description>
  *	IP address of the interface. Also the network base address can be specified. Only for BlkDrvUdp.
- *  Example: itf.0.ipaddress=192.168.100.1
+ *  Only evaluated, if no "AdapterNameUnicode" and no "AdapterName" setting for the same adapter index exists.
+ *  Example: itf.0.ipaddress=192.168.100.0
  * </description>
  */
 #define BLKDRVUDPKEY_STRING_IPADDRESS							"ipaddress"
@@ -386,8 +416,24 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>String</type>
  * <description>
- *	Name of the ethernet UDP interface. Default value is "ether x", whereas x is count from 0. Only for BlkDrvUdp.
- *  Example: itf.0.name=MySpecialInterface
+ *  Setting to tell the BlkDrvUdp, if the specified adapter should be used or not
+ *  (DoNotUse=0 [default] means the adapter is used, all other values mean the adapter is ignored).
+ *	Example: 
+ *  itf.0.AdapterName=Lan1
+ *  itf.0.DoNotUse=1
+ * </description>
+ */
+#define BLKDRVUDPKEY_STRING_DO_NOT_USE							"DoNotUse"
+
+/**
+ * <category>Settings</category>
+ * <type>String</type>
+ * <description>
+ *	Name of the interface's UDP block driver instance. Used for registration at the router to identify the block driver
+ *  instance by the router. Default value is "ether x", whereas x is count from 0. Only for BlkDrvUdp.
+ *  Example:
+ *  itf.0.ipaddress=192.168.100.0
+ *  itf.0.name=MySpecialInterface
  * </description>
  */
 #define BLKDRVUDPKEY_STRING_INTERFACE_NAME						"name"
@@ -396,7 +442,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>String</type>
  * <description>
- *	Network mask of the interface. Setting is only needed, if the networkmask can not be retrieved from the
+ *	Network mask of the interface. Setting is only needed, if the network mask can not be retrieved from the
  *	operating system. Only for BlkDrvUdp.
  *  Example: itf.0.networkmask=255.255.255.0
  * </description>
@@ -432,12 +478,12 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	If no portindex (see above) is set for a network interface, then the CmpBlkDrvUdp tries to find a free port in the
+ *	If no port index (see above) is set for a network interface, then the CmpBlkDrvUdp tries to find a free port in the
  *  range 1740..1743 and uses the first free one. The search for a free port starts at 1740 plus the value of this setting
  *  and wraps around, so at any case all four ports will be checked until a free one is found. Usually the setting is used
  *  for devices which run several instances of the CODESYS runtime system (also Gateway, PLCHandler, OPC Server) to get 
- *  independently of the starting sequence always the same port offset for each instance. This setting is evaulated globally
- *  for all adapters, thus there is no need to know the network adapter configuation of the device.
+ *  independently of the starting sequence always the same port offset for each instance. This setting is evaluated globally
+ *  for all adapters, thus there is no need to know the network adapter configuration of the device.
  *  The allowed range of the setting is 0..3. Only for BlkDrvUdp.
  *  Example: DefaultPortIndex=3
  * </description>
@@ -451,13 +497,13 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Sorts at startup the network adapters to register them in a defined sequenze. This setting can be used
+ *	Sorts at startup the network adapters to register them in a defined sequence. This setting can be used
  *  to get more stable addresses over several reboots, if the platform do not have a specific sorting order
- *  for network adapters. Typcially this may used on Microsoft Windows systems, to be independent from the
+ *  for network adapters. Typically this may used on Microsoft Windows systems, to be independent from the
  *  order of the network adapters, which is reported to change sometimes on Windows updates.
  *  Possible values: 
  *  0: No sort. Keep the system order of the network adapters.
- *  1: sort adapters by ip address. 
+ *  1: sort adapters by IP address. 
  * </description>
  */
 #define BLKDRVUDPKEY_INT_SORT_ADAPTERS_AT_STARTUP				"SortAdaptersAtStartup"
@@ -469,7 +515,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Sets the network adapter scan interval in seconds. The network adapter scan checks, if the ip address or
+ *	Sets the network adapter scan interval in seconds. The network adapter scan checks, if the IP address or
  *  subnet mask of the network adapters has changed or if adapters has been added or removed. If a change is 
  *  detected, the CmpBlkDrvUdp updates its configuration and registers/unregisters the affected instances at
  *  the CmpRouter. 0 means the cyclic call is disabled.
@@ -482,16 +528,16 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>String</type>
  * <description>
- *  Global setting for all ethernet interfaces. Is only evaluated, if the subnetmask is set to 0.0.0.0 by
+ *  Global setting for all Ethernet interfaces. Is only evaluated, if the subnet mask is set to 0.0.0.0 by
  *  using the setting above. Only for BlkDrvUdp.
  *  By default the broadcasts are sent to the local broadcast address (e. g. to 192.168.1.255), even if the
- *  subnetmask is set to 0.0.0.0 with the obove setting. Thus the setting of the subnet mask affects only
+ *  subnet mask is set to 0.0.0.0 with the above setting. Thus the setting of the subnet mask affects only
  *  the number of bits, which are taken from the IP address to create the CoDeSys address. With the option
  *  SendGlobalBroadcast=1, the CmpBlkDrvUdp sends global broadcasts (to 255.255.255.255) instead of 
  *  local broadcasts. If the network infrastructure gateway is configured to forward global broadcasts 
- *  also to other networks, then the CoDeSys network scan can also find devices outside the local ip-network. 
- *  In genreal, global broadcasts should be avoided, because at least on multi homed systems (more than one 
- *  IP address) the exact behaviour depends on the operating system. So for example on older Windows versions
+ *  also to other networks, then the CoDeSys network scan can also find devices outside the local IP-network. 
+ *  In general, global broadcasts should be avoided, because at least on multi homed systems (more than one 
+ *  IP address) the exact behavior depends on the operating system. So for example on older Windows versions
  *  (including Windows XP SP3!) this leads typically to "spoofed" packets with a wrong source IP address.
  *  See also Microsoft KB175396.
  *  Example: SendGlobalBroadcast=1
@@ -514,7 +560,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
 /**
  * <category>Static defines</category>
  * <description>
- * Oldfashioned #defines for BLKDRVUDPKEY_INT_BINDOPTION. For a detailed description see there.
+ * Old fashioned #defines for BLKDRVUDPKEY_INT_BINDOPTION. For a detailed description see there.
  * #define SOCK_BIND_INADDR_ANY
  * is replaced by
  * #define BLKDRVUDPKEY_INT_BINDOPTION_DEFAULT UDP_BIND_INADDR_ANY
@@ -531,8 +577,8 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>String</type>
  * <description>
- *  Global setting for all ethernet interfaces. Only for BlkDrvUdp.
- *  There are 3 different bind behaviours for the CmpBlkDrvUdp available, which must NOT be combined which each other:
+ *  Global setting for all Ethernet interfaces. Only for BlkDrvUdp.
+ *  There are 3 different bind behaviors for the CmpBlkDrvUdp available, which must NOT be combined which each other:
  * 
  *  1. BindOption = UDP_BIND_ADDRESS
  *  One socket is used per interface. This socket is bound to the IP-Address of this interface and we assume,
@@ -567,7 +613,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Static defines</category>
  * <description> 
     Options for the CmpBlkDrvUdp to sort packages after receiving or before sending. Sorting for incoming and 
-	outgoing packages can be used seperately or in combination.
+	outgoing packages can be used separately or in combination.
  * </description>
  */
 #define UDP_PACKET_SORT_NONE		0
@@ -577,7 +623,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
 /**
  * <category>Static defines</category>
  * <description>
- * Oldfashioned #defines for BLKDRVUDPKEY_INT_PACKET_SORT_OPTION. For a detailed description see there.
+ * Old fashioned #defines for BLKDRVUDPKEY_INT_PACKET_SORT_OPTION. For a detailed description see there.
  * #define SOCK_SORT_INCOMING_PACKETS
  * is replaced by
  * #define BLKDRVUDPKEY_INT_PACKET_SORT_OPTION_DEFAULT UDP_PACKET_SORT_INCOMING
@@ -593,35 +639,35 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>String</type>
  * <description>
- *  Global setting for all ethernet interfaces. Only for BlkDrvUdp.
+ *  Global setting for all Ethernet interfaces. Only for BlkDrvUdp.
  *  For some special uses cases, there is the need to assign packages after receiving or before sending to another
- *  ethernet adapter:
+ *  Ethernet adapter:
  * 
  *  1. SortOption = UDP_PACKET_SORT_NONE
  *  Nothing special is done (default).
  *
  *  2. SortOption = UDP_PACKET_SORT_INCOMING
  * The option UDP_PACKET_SORT_INCOMING can be set in combination with the bind option SOCK_BIND_INADDR_ANY 
- * (see above) to allow also small systems to use more than one ethernet interfaces. By activating this, the
+ * (see above) to allow also small systems to use more than one Ethernet interfaces. By activating this, the
  * CmpBlkDrvUdp tries to assign all incoming packages to the adapter from which it was received. So this can
- * be a workaround, if the socket layer mixes up the incomming packets.
+ * be a workaround, if the socket layer mixes up the incoming packets.
  *
  *  3. SortOption = UDP_PACKET_SORT_OUTGOING
  * Special option for system environments, in which the subnet mask in the settings of the CmpBlkDrvUdp is set 
  * to 0.0.0.0 instead of the one used in the configuration of the network adapter. If this is done, the
- * blockdriver address contains the complete ip-address (e.g. 0000.C0A8.010A instead of 000A) of a node.
+ * block driver address contains the complete IP-address (e.g. 0000.C0A8.010A instead of 000A) of a node.
  * By default the broadcasts are still sent to the local broadcast address (e. g. to 192.168.1.255). By setting 
  * the option SendGlobalBroadcast=1, the CmpBlkDrvUdp sends global broadcasts (to 255.255.255.255) instead of 
  * the local broadcasts.
  * Doing this has one big drawback, if there is more than one network adapter in the CoDeSys runtime system or 
  * gateway available: The CmpRouter has no chance to check, over which network adapter another node can be reached
- * directly, because of the subnet mask 0.0.0.0 any ip-address seems to be in the local network of each network 
+ * directly, because of the subnet mask 0.0.0.0 any IP-address seems to be in the local network of each network 
  * adapter. This can lead to packages, which are sent using a "wrong" network adapter.
  * With the static define UDP_PACKET_SORT_OUTGOING, the CmpBlkDrvUdp checks, if the destination ip-address is
  * reachable directly using the network adapter, to which the current socket was bound to, by checking the destination
- * ip-address against the ip-address and the real subnet mask of this adapter. If the destination address is not inside
+ * IP-address against the IP-address and the real subnet mask of this adapter. If the destination address is not inside
  * this local network, then the CmpBlkDrvUdp tries to find another socket, which was bound to another adapter,
- * which can address the destination ip-address directly. If there was found such a socket, the sender address of
+ * which can address the destination IP-address directly. If there was found such a socket, the sender address of
  * the block is patched and the block is sent directly to the destination using this socket. 
  * ATTENTION: Please use this option (and also the subnet mask 0.0.0.0) very carefully! 
  * All in all this setting overcomes only a few handicaps of setting the subnet mask to 0.0.0.0. You will still
@@ -631,17 +677,17 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  *    OPC-Server, if you use the ARTI3 interface to connect to a runtime system with the mask 0.0.0.0.
  * B. The CmpBlkDrvUdp is designed for local communication inside the ip-subnet. Even with the option 
  *    SendGlobalBroadcast=1 typically global broadcasts are not forwarded by the network infrastructure gateways 
- *    or routers, thus you will not see nodes outside of your local ip-network in the CoDeSys network scan. 
- *    Furthermore the communication posibilities depend on the currently active configuration of these routing
+ *    or routers, thus you will not see nodes outside of your local IP-network in the CoDeSys network scan. 
+ *    Furthermore the communication possibilities depend on the currently active configuration of these routing
  *    devices. Please check this for your exact devices very carefully!
  * C. With the option UDP_PACKET_SORT_OUTGOING in combination with the subnet mask 0.0.0.0, the CmpBlkDrvUdp tries 
- *    to reimplement the behavior of the underlaying Tcp/Ip stack. If this does not fit, the routing is still not
+ *    to re-implement the behavior of the underlaying TCP/IP stack. If this does not fit, the routing is still not
  *    possible. 
  * D. The algorithm can only sort blocks on the sender side. If the block is not sent directly to the receiver, but
- *    over further CoDeSys runtime systems or gateways to route the block using the CoDeSys routing mechanism, all 
+ *    over further CODESYS runtime systems or gateways to route the block using the CoDeSys routing mechanism, all 
  *    systems in the middle will behave in the same way as without the option UDP_PACKET_SORT_OUTGOING.     
  * E. Also with the option UDP_PACKET_SORT_OUTGOING, the communication components have no chance to know, over 
- *    which network adapter a block has to be sent, when the destination ip-address is outside the local network 
+ *    which network adapter a block has to be sent, when the destination IP-address is outside the local network 
  *    of all network adapters. Because this routing is done by the network stack on the local and also remote systems
  *    (infrastructure gateways or routers) and there is no common way to get the exact route before sending a package.
  * The option UDP_PACKET_SORT_OUTGOING is activated by default in the GatewayService and also in the PLCHandler/
@@ -649,7 +695,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * On PLC-side there is usually no need to activate this option.
  *
  *  4. SortOption = (UDP_PACKET_SORT_INCOMING | UDP_PACKET_SORT_OUTGOING)
- *  Packet soorting is activated in both directions (see above).
+ *  Packet sorting is activated in both directions (see above).
  * </description>
  */
 #define BLKDRVUDPKEY_INT_PACKET_SORT_OPTION								"SortOption"
@@ -704,7 +750,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <type>Int</type>
  * <description>
  *	By default the server of the CmpBlkDrvTcp retrieves the number of channels from the CmpChannelServer and allows
- *  (number of channels + 1) incomming connections. This value can be adapted by the setting MaxServerConnections.
+ *  (number of channels + 1) incoming connections. This value can be adapted by the setting MaxServerConnections.
  *  Only for BlkDrvTcp.
  * </description>
  */
@@ -716,7 +762,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <description>
  *	If activated (1), only localhost communication is allowed. The same can be achieved by the settings
  *	LocalAddress=127.0.0.1 and PeerAddress=127.0.0.1. In opposite to these, LocalAccessOnly is also
- *  setable by a compiler define. Only for BlkDrvTcp.
+ *  settable by a compiler define. Only for BlkDrvTcp.
  * </description>
  */
 #define BLKDRVTCPKEY_INT_LOCAL_ACCESS_ONLY						"LocalAccessOnly"
@@ -728,7 +774,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>String</type>
  * <description>
- *	Ip address to which the sockets will be bound. If set to a valid ip address, only connection requests received on the
+ *	IP address to which the sockets will be bound. If set to a valid IP address, only connection requests received on the
  *  related adapter are accepted by the server. Also the client acts in a similar way and sends the connect request
  *  only on this adapter. Only for BlkDrvTcp.
  * </description>
@@ -739,7 +785,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>String</type>
  * <description>
- *	If set to a valid ip address, the CmpBlkDrvTcp only accepts connection requests from this or connects only to this peer.
+ *	If set to a valid IP address, the CmpBlkDrvTcp only accepts connection requests from this or connects only to this peer.
  *  Only for BlkDrvTcp.
  * </description>
  */
@@ -749,7 +795,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Tcp port number on which the block driver Tcp listens for incoming connection requests. Only for BlkDrvTcp.
+ *	TCP port number on which the block driver TCP listens for incoming connection requests. Only for BlkDrvTcp.
  * </description>
  */
 #define BLKDRVTCPKEY_INT_LISTENPORT								"ListenPort"
@@ -761,8 +807,8 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  * <category>Settings</category>
  * <type>String</type>
  * <description>
- *	Ip address, which is used for calculating the local CODESYS address. If neither this setting nor the setting LocalAddress
- *  is set to a valid ip address, the ip address of the first found ethernet adapter is used.
+ *	IP address, which is used for calculating the local CODESYS address. If neither this setting nor the setting LocalAddress
+ *  is set to a valid IP address, the IP address of the first found Ethernet adapter is used.
  *  In opposite to LocalAddress/PeerAddress, this setting has no influence to the communication. It is only used internally
  *  and for display/logger purposes. 
  *  Only for BlkDrvTcp.
@@ -923,7 +969,7 @@ SET_INTERFACE_NAME(`CmpBlkDrv')
  *  throughput is somewhat less than without this feature. So this feature is recommended
  *  for media sharing one physical channel for both directions (e. g. RS485) or if a device
  *  has not the capability of full-duplex communication. Only in this cases the parameter
- *  value shold be set to 1.
+ *  value should be set to 1.
  *  The recommended value 2 (default), let the driver detect the setting of the peer automatically.
  *  If both peers use the value 2, they will both enable this feature.
  *  If EnableAutoAddressing and HalfDuplexAutoNegotiate are set to 2 (auto detection), the

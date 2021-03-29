@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DeviceDescription xmlns="http://www.3s-software.com/schemas/DeviceDescription-1.0.xsd" xmlns:ts="http://www.3s-software.com/schemas/TargetSettings-0.1.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Types namespace="local">
+		<!-- Input information -->
+		<ArrayType name="InputParam_t" 	basetype="std:BYTE">
+			<FirstDimension>
+				<LowerBorder>0</LowerBorder>
+				<UpperBorder>199</UpperBorder>
+			</FirstDimension>
+		</ArrayType>
+
+		<!-- Output information -->
+		<ArrayType name="OutputParam_t" basetype="std:BYTE">
+			<FirstDimension>
+				<LowerBorder>0</LowerBorder>
+				<UpperBorder>199</UpperBorder>
+			</FirstDimension>
+		</ArrayType>
+	</Types>
+	<Device>
+		<DeviceIdentification>
+			<!-- The information of this section is used for management in the device repository. It is not downloaded -->
+			<!-- Range 0-32767 managed by 3S ? Smart Software Solutions; Range 32768 ? end can be used by customer -->
+			<Type>32768</Type>
+			<!-- Id is a unsigned long in hex formnat. First part (unsigned short) of Id is vendor id. 0001 is reserved for template devices. Must be replaced with your vendor id! Second part is vendor specific. -->
+			<Id>0002 0001</Id>
+			<!-- Format has to be 1.2.3.4 -->
+			<Version>1.0.0.0</Version>
+		</DeviceIdentification>
+		<DeviceInfo>
+			<Name name="local:SubModelName">IOCOPY_SAMPLE</Name>
+			<Description name="local:DeviceDescription">IO Copy SAMPLE</Description>
+			<Vendor name="local:VendorName">Sample Corporation</Vendor>
+			<OrderNumber>0001</OrderNumber>
+		</DeviceInfo>
+		<!-- Child connector. The moduleType of the connector is evaluated by the IO driver. The interface must be of the same name as in the parent connector -->
+		<Connector moduleType="32768" interface="Common.PCI" role="child" explicit="false" connectorId="1" hostpath="-1">
+			<Slot count="1" allowEmpty="false"></Slot>
+		</Connector>
+		<!-- Parent connector. The moduleType is downloaded and can be evaluated by the IO driver, e.g. with CAL_IoMgrConfigGetFirstConnector .
+		      The interface must be of the same name as in the child connector of the submodules-->
+		<Connector moduleType="32769" interface="local.myInternalModuleConnector" role="parent" explicit="false" connectorId="2" hostpath="1">
+			<!-- The interface name is used in for the tabs shown in CoDeSys (for example I/O mapping).  The given name is used as a prefix to the specific tab page. -->
+			<InterfaceName name="local:myInternalModuleConnector">Internal</InterfaceName>
+			<DriverInfo needsBusCycle="true"></DriverInfo>
+			<HostParameterSet>
+				<Parameter ParameterId="2000000000" type="local:InputParam_t">
+					<Attributes channel="input" download="true" functional="false" offlineaccess="readwrite" onlineaccess="readwrite" />
+					<Name name="local:2000000000">InputParam</Name>
+					<Description name="local:2000000000.Desc">Input Param</Description>
+				</Parameter>
+				<Parameter ParameterId="2000001000" type="local:OutputParam_t">
+					<Attributes channel="output" download="true" functional="false" offlineaccess="readwrite" onlineaccess="readwrite" />
+					<Name name="local:2000001000">OutputParam</Name>
+					<Description name="local:2000001000.Desc">Output Param</Description>
+				</Parameter>
+			</HostParameterSet>
+		</Connector>
+	</Device>
+</DeviceDescription>

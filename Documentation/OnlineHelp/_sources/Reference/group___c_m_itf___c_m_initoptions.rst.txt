@@ -1,0 +1,84 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___c_m_itf___c_m_initoptions:
+
+==============
+CMInit options
+==============
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Macros
+------
+
+- #define :ref:`RTS_CMINIT_OPTION_SETTINGSFILEISOPTIONAL <group___c_m_itf___c_m_initoptions_1gafea196fa341e0bb59ec032d7051daff9>` UINT32_C(0x00000001)
+
+- #define :ref:`RTS_CMINIT_OPTION_DONTCALLINITHOOKS <group___c_m_itf___c_m_initoptions_1gae839a8968bc34b256b5a523531a0c366>` UINT32_C(0x00000002)
+
+- #define :ref:`RTS_CMINIT_OPTION_INITTASK <group___c_m_itf___c_m_initoptions_1gab6959f8200c30bd599c754490753e1dd>` UINT32_C(0x00000004)
+
+- #define :ref:`RTS_CMINIT_OPTION_COMMCYCLETASK <group___c_m_itf___c_m_initoptions_1ga95353c5bc746838da916a2faee2d7602>` UINT32_C(0x00000008)
+
+- #define :ref:`RTS_CMINIT_OPTION_EXITTASK <group___c_m_itf___c_m_initoptions_1gaa968c35daae42e3975e9029ae98c777c>` UINT32_C(0x00000010)
+
+- #define :ref:`RTS_CMINIT_OPTION_STD <group___c_m_itf___c_m_initoptions_1ga545c1d0961b7e1b9f1f82f54c7e45882>` ( :ref:`RTS_CMINIT_OPTION_INITTASK <group___c_m_itf___c_m_initoptions_1gab6959f8200c30bd599c754490753e1dd>` | :ref:`RTS_CMINIT_OPTION_EXITTASK <group___c_m_itf___c_m_initoptions_1gaa968c35daae42e3975e9029ae98c777c>` | :ref:`RTS_CMINIT_OPTION_COMMCYCLETASK <group___c_m_itf___c_m_initoptions_1ga95353c5bc746838da916a2faee2d7602>` )
+
+Macro Definition Documentation
+------------------------------
+.. _group___c_m_itf___c_m_initoptions_1gafea196fa341e0bb59ec032d7051daff9:
+
+#define RTS_CMINIT_OPTION_SETTINGSFILEISOPTIONAL UINT32_C(0x00000001)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Specifies, if the settings file is only used optional
+
+.. _group___c_m_itf___c_m_initoptions_1gae839a8968bc34b256b5a523531a0c366:
+
+#define RTS_CMINIT_OPTION_DONTCALLINITHOOKS UINT32_C(0x00000002)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If this option is set, the CMInit sequence is stopped right after CH_INIT hook. To finish the startup sequence, you have to call :ref:`CMInitEnd() <group___c_m_itf_1ga83b61cae6ab87284f41f66db8d1d76d0>` afterwards. This can be used, if you have to do things first before all other components, but you need here the runtime system components.
+
+.. _group___c_m_itf___c_m_initoptions_1gab6959f8200c30bd599c754490753e1dd:
+
+#define RTS_CMINIT_OPTION_INITTASK UINT32_C(0x00000004)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Call CH_INIT_XXX hooks out of a SysTask
+
+.. _group___c_m_itf___c_m_initoptions_1ga95353c5bc746838da916a2faee2d7602:
+
+#define RTS_CMINIT_OPTION_COMMCYCLETASK UINT32_C(0x00000008)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Call CH_COMM_CYCLE out of a SysTask
+
+.. _group___c_m_itf___c_m_initoptions_1gaa968c35daae42e3975e9029ae98c777c:
+
+#define RTS_CMINIT_OPTION_EXITTASK UINT32_C(0x00000010)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Call CH_EXIT_XXX hooks out of a SysTask
+
+.. _group___c_m_itf___c_m_initoptions_1ga545c1d0961b7e1b9f1f82f54c7e45882:
+
+#define RTS_CMINIT_OPTION_STD ( :ref:`RTS_CMINIT_OPTION_INITTASK <group___c_m_itf___c_m_initoptions_1gab6959f8200c30bd599c754490753e1dd>` | :ref:`RTS_CMINIT_OPTION_EXITTASK <group___c_m_itf___c_m_initoptions_1gaa968c35daae42e3975e9029ae98c777c>` | :ref:`RTS_CMINIT_OPTION_COMMCYCLETASK <group___c_m_itf___c_m_initoptions_1ga95353c5bc746838da916a2faee2d7602>` )
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

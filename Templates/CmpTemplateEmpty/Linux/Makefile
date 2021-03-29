@@ -1,68 +1,132 @@
-######################################################################################
-######################################################################################
-## Copyright:»··© 3S - Smart Software Solutions GmbH, Kempten                       ##
-## Program: »···Linux dynamic linking makefile                                      ##
-## Module: »····Makefile                                                            ##
-## Version:»····0.1                                                                 ##
-## Author:      3s-software. (PhB)                                                  ##
-######################################################################################
+##############################################################################
+#
+#	Copyright:		© 3S - Smart Software Solutions GmbH, Kempten
+#	Module: 		generic makefile for building of runtime cmps
+#	Description:
+#				Follow the steps below to build your component
+#
+# 	Required tools:
+#				make
+#				cross-toolchain (compiler/linker)
+# 				gnu m4  (-> apt-get install m4)
+# 				fromdos (-> apt-get install tofrodos)
+#
+##############################################################################
 
-TARGET = CmpTemplateEmpty
 
-INCLUDE = -I../ -I../../../Components -I../../../Platforms/Linux
-BUILDUTILS = ../../../BuildUtils
+# 1. set name of component
+TARGET=$(strip $(shell basename $(realpath ../)))
+#TARGET= CmpTemplate
 
-CXX = gcc
-# TRG_X86 | TRG_PPC | TRG_ARM | TRG_CORTEX
-CXXFLAGS = -DTRG_X86
+# 2. set name of shared object
+SONAME= lib${TARGET}.so
 
-DEBFLAGS = -g
-LDLIBS = -lpthread
-CXXFLAGS += -DALIGNATTRIB= -DCDECL= -DHANDLE_WIN32_PRAGMA -DDLL_DECL= -D_REENTRANT= -DHUGEPTR= 
-CXXFLAGS += -O0 -Wall -Wno-unused
-CXXFLAGS += $(INCLUDE)
-CXXFLAGS += -DLINUX
-CXXFLAGS += $(DEBFLAGS)
-CXXFLAGS += -fPIC
-LDFLAGS += $(LDLIBS)
+# 2. set version of component (so version)
+MAJORVER?=0
+MINORVER?=1
 
-MAJORVER = 0
-MINORVER = 1
-SONAME = lib$(TARGET).so
+# 3. set sources of component
+# from m4:
+SRC = $(foreach f,$(shell sed -n '/SOURCES/ {s/COMPONENT_SOURCES(`//g; s/[,`)]/ /g; s/\([[:alnum:]]*\.c\)./\1/g;  p}' ../*Dep.m4), ../$f)
+# or
+#SRC = ../${TARGET}.c
 
-SRC =  ../$(TARGET).c
+# objects:
 OBJ = $(SRC:.c=.o)
 
-all: $(SONAME)
+# 4. set runtime sdk path (e.g. relative)
+CDSDIR=../../../
+BUILDUTILS= ${CDSDIR}/BuildUtils
 
-$(SONAME): ../$(TARGET)Dep.h ../$(TARGET)Itf.h $(OBJ)   
-	$(CXX) -shared $(CXXFLAGS) $(LDFLAGS) $(OBJ) -lc -Wl,-soname,$(SONAME) -o $(SONAME)
+# 5. set Dependency and Interface headers
+DEP = ../${TARGET}Dep
 
-.c.o: 
-	$(CXX) -fPIC -c $(CXXFLAGS) -o $*.o $<
-	
-$(TARGET).o: $(OBJ)
-	
-../$(TARGET)Dep.h: ../$(TARGET)Dep.m4 ../$(TARGET)Itf.m4
+#
+ITF = ../${TARGET}Itf
+
+# 6. set default includes for the runtime
+CFLAGS +=  -I../ -I${CDSDIR}/Components -I${CDSDIR}/Platforms/Linux
+
+# 7. set runtime cpu type: TRG_X86 | TRG_PPC | TRG_ARM | TRG_CORTEX | TRG_SH | TRG_MIPS
+CFLAGS += -DTRG_CORTEX
+# 64bit X86/ARM -> also set TRG_64BIT
+#CFLAGS += -DTRG_64BIT
+
+# 8. set compiler
+#CC=arm-poky-linux-gnueabi-gcc
+#CFLAGS +=
+
+# 9. additional includes
+CFLAGS += -DLINUX -DCDECL= -DDLL_DECL= -DHUGEPTR=
+CFLAGS += -g -O0 -Wall -Wextra -Wno-unused
+
+# 10. additional libraries
+#LDFLAGS+=
+
+
+vpath+=${CDSDIR}/Components/
+#
+# RULES
+#
+
+all: checkpaths $(SONAME)
+
+
+.PHONY=checkpaths
+checkpaths:
+	@echo "**********************"
+	@echo "Target: ${TARGET}"
+	@echo "Soname: ${SONAME}"
+	@echo "Src:    ${SRC}"
+	@echo "Obj:    ${OBJ}"
+	@echo "Dep:    ${DEP}"
+	@echo "Itf:    ${ITF}"
+	@echo "**********************"
+	@echo ""
+
+
+all: $(SONAME) checkpaths
+
+%.o: %.c
+	@echo "**********************"
+	@echo "compile: $@ from $<"
+	$(CC) -fPIC -c $(CFLAGS) -o $@  $<
+	@echo "**********************"
+	@echo ""
+
+${SONAME}: $(DEP).h $(ITF).h $(OBJ)
+	@echo "**********************"
+	@echo "link: $@"
+	$(CC) -shared $(OBJ) -Wl,-soname,$(SONAME) -o $(SONAME) $(LDFLAGS)
+	@echo "**********************"
+	@echo ""
+
+$(DEP).h: $(DEP).m4 $(ITF).m4
+	@echo "**********************"
+	@echo "build: $@ from $<"
 	rm -f $(OBJ)
-	fromdos ../$(TARGET)Dep.m4
-	m4 -I$(BUILDUTILS)/M4Defs -I../../../Components -I../ Implementation.m4 - < ../$(TARGET)Dep.m4 > ../$(TARGET)Dep.h
+	fromdos $(DEP).m4
+	m4 -I$(BUILDUTILS)/M4Defs -I$(CDSDIR)/Components -I../ Implementation.m4 - < $(DEP).m4 > $(DEP).h
+	@echo "**********************"
+	@echo ""
 
-../$(TARGET)Itf.h: ../$(TARGET)Itf.m4
+$(ITF).h: $(ITF).m4
+	@echo "**********************"
+	@echo "build: $@ from $<"
 	rm -f $(OBJ)
-	fromdos ../$(TARGET)Itf.m4
-	m4 -I$(BUILDUTILS)/M4Defs Exports.m4 - < ../$(TARGET)Itf.m4 > ../$(TARGET)Itf.h
+	fromdos $(ITF).m4
+	m4 -I$(BUILDUTILS)/M4Defs Exports.m4 - < $(ITF).m4 > $(ITF).h
+	@echo "**********************"
+	@echo ""
 
 clean:
-	rm -f $(OBJ) *~ core .depend $(SONAME)
-
-cleanall: clean
-	rm -f ../$(TARGET)Dep.h ../$(TARGET)Itf.h
-
-.depend:
-	$(CXX) $(CXXFLAGS) -M $(SRC) > $@
-
-ifeq (.depend,$(wildcard .depend))
-include .depend
-endif
+	@echo ""
+	@echo "**********************"
+	@echo "clean up"
+	rm -f $(OBJ);
+	rm -f $(SONAME);
+	rm -f $(ITF).h;
+	rm -f $(DEP).h;
+	@echo "**********************"
+	@echo ""
 

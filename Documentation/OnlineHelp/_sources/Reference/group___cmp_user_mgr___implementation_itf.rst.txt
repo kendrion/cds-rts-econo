@@ -1,0 +1,747 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_user_mgr___implementation_itf:
+
+============================
+CmpUserMgr_ImplementationItf
+============================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpUserMgr_Implementation.
+
+Detailed Description
+--------------------
+
+External implementation of CmpUserMgr functions for authentication, authorization, and uesrobject handling
+**Copyright:**
+
+Copyright (c) 2020 CODESYS Development GmbH. All rights reserved.
+
+Data Structures
+---------------
+
+- struct :ref:`tagusermgrchangemypassword_struct <structtagusermgrchangemypassword__struct>`
+
+- struct :ref:`tagusermgrgetuseraccessrights_struct <structtagusermgrgetuseraccessrights__struct>`
+
+- struct :ref:`tagusermgrhasuseraccessrights_struct <structtagusermgrhasuseraccessrights__struct>`
+
+- struct :ref:`tagusermgrisactive_struct <structtagusermgrisactive__struct>`
+
+- struct :ref:`tagusermgrlogin_struct <structtagusermgrlogin__struct>`
+
+- struct :ref:`tagusermgrlogout_struct <structtagusermgrlogout__struct>`
+
+- struct :ref:`tagusermgrobjectadd_struct <structtagusermgrobjectadd__struct>`
+
+- struct :ref:`tagusermgrobjectremove_struct <structtagusermgrobjectremove__struct>`
+
+- struct :ref:`tagusermgrobjectsetusedrights_struct <structtagusermgrobjectsetusedrights__struct>`
+
+- struct :ref:`tagusermgrrelogin_struct <structtagusermgrrelogin__struct>`
+
+- struct :ref:`ICmpUserMgr_Implementation_C <struct_i_cmp_user_mgr___implementation___c>`
+
+Macros
+------
+
+- #define :ref:`USE_usermgrchangemypassword <group___cmp_user_mgr___implementation_itf_1gaf13db33251a3f9c5fa483fdc60e9b3d3>` :ref:`PFUSERMGRCHANGEMYPASSWORD_IEC <group___cmp_user_mgr___implementation_itf_1ga1b961e84efc344acca6c2ed6f88b3ad7>` pfusermgrchangemypassword;
+
+- #define :ref:`EXT_usermgrchangemypassword <group___cmp_user_mgr___implementation_itf_1gac67b7107ed5c66b64d9a461d483da7df>` extern :ref:`PFUSERMGRCHANGEMYPASSWORD_IEC <group___cmp_user_mgr___implementation_itf_1ga1b961e84efc344acca6c2ed6f88b3ad7>` pfusermgrchangemypassword;
+
+- #define :ref:`GET_usermgrchangemypassword <group___cmp_user_mgr___implementation_itf_1gaa828fb945ba409b0a41c0448781100dd>` s_pfCMGetAPI2( "usermgrchangemypassword", (RTS_VOID_FCTPTR *)&pfusermgrchangemypassword, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x25575868, 0x03051100)
+
+- #define :ref:`CAL_usermgrchangemypassword <group___cmp_user_mgr___implementation_itf_1gaa49d03d61ad5e57874beb4a9f0aae668>` pfusermgrchangemypassword
+
+- #define :ref:`CHK_usermgrchangemypassword <group___cmp_user_mgr___implementation_itf_1gacbf3f2ae92f51204cb2640b85bc39eeb>` (pfusermgrchangemypassword != NULL)
+
+- #define :ref:`EXP_usermgrchangemypassword <group___cmp_user_mgr___implementation_itf_1gabe542b7e4dd91eae695d76e4400297c2>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrchangemypassword", (RTS_UINTPTR) :ref:`usermgrchangemypassword <group___cmp_user_mgr___implementation_itf_1ga00d7ab6483e565055a2aaea15d63b7e0>` , 1, 0x25575868, 0x03051100)
+
+- #define :ref:`USE_usermgrgetuseraccessrights <group___cmp_user_mgr___implementation_itf_1ga2bb81c2d912b520eb657e17b0bf1c16d>` :ref:`PFUSERMGRGETUSERACCESSRIGHTS_IEC <group___cmp_user_mgr___implementation_itf_1ga35d10b998eafcc28e16be85d51b43111>` pfusermgrgetuseraccessrights;
+
+- #define :ref:`EXT_usermgrgetuseraccessrights <group___cmp_user_mgr___implementation_itf_1ga165b937132d6ef2a980edb472e5dd8d1>` extern :ref:`PFUSERMGRGETUSERACCESSRIGHTS_IEC <group___cmp_user_mgr___implementation_itf_1ga35d10b998eafcc28e16be85d51b43111>` pfusermgrgetuseraccessrights;
+
+- #define :ref:`GET_usermgrgetuseraccessrights <group___cmp_user_mgr___implementation_itf_1ga27e405c4f842d32a2db71947ea5834f4>` s_pfCMGetAPI2( "usermgrgetuseraccessrights", (RTS_VOID_FCTPTR *)&pfusermgrgetuseraccessrights, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xB30BF82F, 0x03051100)
+
+- #define :ref:`CAL_usermgrgetuseraccessrights <group___cmp_user_mgr___implementation_itf_1ga986ba72ca9f5f3102d0d8a7fba415099>` pfusermgrgetuseraccessrights
+
+- #define :ref:`CHK_usermgrgetuseraccessrights <group___cmp_user_mgr___implementation_itf_1gaddccc30ad87076cc6c1463b56b8edbac>` (pfusermgrgetuseraccessrights != NULL)
+
+- #define :ref:`EXP_usermgrgetuseraccessrights <group___cmp_user_mgr___implementation_itf_1gabe34138cee4e3403e4600ebcfb7c9b69>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrgetuseraccessrights", (RTS_UINTPTR) :ref:`usermgrgetuseraccessrights <group___cmp_user_mgr___implementation_itf_1ga965424efcd80dccae7e508764bd1a416>` , 1, 0xB30BF82F, 0x03051100)
+
+- #define :ref:`USE_usermgrhasuseraccessrights <group___cmp_user_mgr___implementation_itf_1ga4a5c6012d0ca85f55ab951107ff52eda>` :ref:`PFUSERMGRHASUSERACCESSRIGHTS_IEC <group___cmp_user_mgr___implementation_itf_1ga129b3693c483d5c88f10abbc3791cabd>` pfusermgrhasuseraccessrights;
+
+- #define :ref:`EXT_usermgrhasuseraccessrights <group___cmp_user_mgr___implementation_itf_1gac2f2cb8254461c08a9f0bf612b23ca6f>` extern :ref:`PFUSERMGRHASUSERACCESSRIGHTS_IEC <group___cmp_user_mgr___implementation_itf_1ga129b3693c483d5c88f10abbc3791cabd>` pfusermgrhasuseraccessrights;
+
+- #define :ref:`GET_usermgrhasuseraccessrights <group___cmp_user_mgr___implementation_itf_1ga5833a8b6c1ae610b7e7bd1fd26c601aa>` s_pfCMGetAPI2( "usermgrhasuseraccessrights", (RTS_VOID_FCTPTR *)&pfusermgrhasuseraccessrights, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xB4009E6D, 0x03051100)
+
+- #define :ref:`CAL_usermgrhasuseraccessrights <group___cmp_user_mgr___implementation_itf_1ga4cf19ca3e432e97540e4e9c55803761d>` pfusermgrhasuseraccessrights
+
+- #define :ref:`CHK_usermgrhasuseraccessrights <group___cmp_user_mgr___implementation_itf_1ga7901d74c7d214855118fdbf9894afc4c>` (pfusermgrhasuseraccessrights != NULL)
+
+- #define :ref:`EXP_usermgrhasuseraccessrights <group___cmp_user_mgr___implementation_itf_1ga066c08d6af381d87bf0f002a20cbac13>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrhasuseraccessrights", (RTS_UINTPTR) :ref:`usermgrhasuseraccessrights <group___cmp_user_mgr___implementation_itf_1gac7e24ea6f37d7b1e36ba20c3f7aff61e>` , 1, 0xB4009E6D, 0x03051100)
+
+- #define :ref:`USE_usermgrisactive <group___cmp_user_mgr___implementation_itf_1ga486b9a4d28088dbd77edfac247a6ff4c>` :ref:`PFUSERMGRISACTIVE_IEC <group___cmp_user_mgr___implementation_itf_1ga5b2481c379d62fac70e60a7ad5b825bf>` pfusermgrisactive;
+
+- #define :ref:`EXT_usermgrisactive <group___cmp_user_mgr___implementation_itf_1gaa16eb4e14587481b72d75eff7ddd7c0a>` extern :ref:`PFUSERMGRISACTIVE_IEC <group___cmp_user_mgr___implementation_itf_1ga5b2481c379d62fac70e60a7ad5b825bf>` pfusermgrisactive;
+
+- #define :ref:`GET_usermgrisactive <group___cmp_user_mgr___implementation_itf_1ga8cd3e9cd1f799d5825ef915efdc2c6b9>` s_pfCMGetAPI2( "usermgrisactive", (RTS_VOID_FCTPTR *)&pfusermgrisactive, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x29D8803F, 0x03051100)
+
+- #define :ref:`CAL_usermgrisactive <group___cmp_user_mgr___implementation_itf_1gaa90fba2a89a393308362dfcded48a21e>` pfusermgrisactive
+
+- #define :ref:`CHK_usermgrisactive <group___cmp_user_mgr___implementation_itf_1ga940edc12a7e43d919901d3f22607676a>` (pfusermgrisactive != NULL)
+
+- #define :ref:`EXP_usermgrisactive <group___cmp_user_mgr___implementation_itf_1ga2e946922c9a59e9e37224bb9b27a65e1>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrisactive", (RTS_UINTPTR) :ref:`usermgrisactive <group___cmp_user_mgr___implementation_itf_1gae7b9df8eea8d686a77e5b39823b059a7>` , 1, 0x29D8803F, 0x03051100)
+
+- #define :ref:`USE_usermgrlogin <group___cmp_user_mgr___implementation_itf_1ga2abd8127248ebd4469c819e12042f98c>` :ref:`PFUSERMGRLOGIN_IEC <group___cmp_user_mgr___implementation_itf_1gada2e827d8ec62f175627a2e9a1a4e3f2>` pfusermgrlogin;
+
+- #define :ref:`EXT_usermgrlogin <group___cmp_user_mgr___implementation_itf_1ga3c2dda5a688d49a58b156a258b930f6f>` extern :ref:`PFUSERMGRLOGIN_IEC <group___cmp_user_mgr___implementation_itf_1gada2e827d8ec62f175627a2e9a1a4e3f2>` pfusermgrlogin;
+
+- #define :ref:`GET_usermgrlogin <group___cmp_user_mgr___implementation_itf_1gaedec93fa2b19e13b9207fba92f55cbfa>` s_pfCMGetAPI2( "usermgrlogin", (RTS_VOID_FCTPTR *)&pfusermgrlogin, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE7251EF7, 0x03051100)
+
+- #define :ref:`CAL_usermgrlogin <group___cmp_user_mgr___implementation_itf_1ga7004e5747e4156f6c8fad2c0f3d57466>` pfusermgrlogin
+
+- #define :ref:`CHK_usermgrlogin <group___cmp_user_mgr___implementation_itf_1ga5dfef8242714f1d6f840e71503dbb38a>` (pfusermgrlogin != NULL)
+
+- #define :ref:`EXP_usermgrlogin <group___cmp_user_mgr___implementation_itf_1gaf4ddfeb1cac76adfbcf71fb94b2d6f2b>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrlogin", (RTS_UINTPTR) :ref:`usermgrlogin <group___cmp_user_mgr___implementation_itf_1ga82bbdab97d6b12ac01c8e14714ff2301>` , 1, 0xE7251EF7, 0x03051100)
+
+- #define :ref:`USE_usermgrlogout <group___cmp_user_mgr___implementation_itf_1ga98d2a0cf938e03a57a2321dd667ec19e>` :ref:`PFUSERMGRLOGOUT_IEC <group___cmp_user_mgr___implementation_itf_1ga1f90e2cc497dc118cac721be54913fe1>` pfusermgrlogout;
+
+- #define :ref:`EXT_usermgrlogout <group___cmp_user_mgr___implementation_itf_1gaa1b839509d699a0f6b82144fc1ecc398>` extern :ref:`PFUSERMGRLOGOUT_IEC <group___cmp_user_mgr___implementation_itf_1ga1f90e2cc497dc118cac721be54913fe1>` pfusermgrlogout;
+
+- #define :ref:`GET_usermgrlogout <group___cmp_user_mgr___implementation_itf_1ga280203c042512903d043ef5ec2838a00>` s_pfCMGetAPI2( "usermgrlogout", (RTS_VOID_FCTPTR *)&pfusermgrlogout, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xC9A61E57, 0x03051100)
+
+- #define :ref:`CAL_usermgrlogout <group___cmp_user_mgr___implementation_itf_1ga9438428890bcac736b61cb44ab2eb2b5>` pfusermgrlogout
+
+- #define :ref:`CHK_usermgrlogout <group___cmp_user_mgr___implementation_itf_1ga14487de38feba4692fb3a5b24fd29a3e>` (pfusermgrlogout != NULL)
+
+- #define :ref:`EXP_usermgrlogout <group___cmp_user_mgr___implementation_itf_1ga654a6b6d343546036dd9c01b1e3cab3d>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrlogout", (RTS_UINTPTR) :ref:`usermgrlogout <group___cmp_user_mgr___implementation_itf_1ga8772c23027809d0c16d2f956c7e791b0>` , 1, 0xC9A61E57, 0x03051100)
+
+- #define :ref:`USE_usermgrobjectadd <group___cmp_user_mgr___implementation_itf_1ga29ab3d53a016587303c205f29290741e>` :ref:`PFUSERMGROBJECTADD_IEC <group___cmp_user_mgr___implementation_itf_1ga8494bbeeb5defd89f0eba2dfa8db0ffa>` pfusermgrobjectadd;
+
+- #define :ref:`EXT_usermgrobjectadd <group___cmp_user_mgr___implementation_itf_1gad898dfcf32a3e002bcae447fb1f3cbe2>` extern :ref:`PFUSERMGROBJECTADD_IEC <group___cmp_user_mgr___implementation_itf_1ga8494bbeeb5defd89f0eba2dfa8db0ffa>` pfusermgrobjectadd;
+
+- #define :ref:`GET_usermgrobjectadd <group___cmp_user_mgr___implementation_itf_1ga397ab4d8d70eb5fd81e93a7d6849d978>` s_pfCMGetAPI2( "usermgrobjectadd", (RTS_VOID_FCTPTR *)&pfusermgrobjectadd, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xDF2F6AEC, 0x03051100)
+
+- #define :ref:`CAL_usermgrobjectadd <group___cmp_user_mgr___implementation_itf_1gaf690f51afdad60ee344b60d7b4b02acc>` pfusermgrobjectadd
+
+- #define :ref:`CHK_usermgrobjectadd <group___cmp_user_mgr___implementation_itf_1gaec91ddb3d446d09ad390a99116ae0c4b>` (pfusermgrobjectadd != NULL)
+
+- #define :ref:`EXP_usermgrobjectadd <group___cmp_user_mgr___implementation_itf_1gac1f38c7e0439f69cb4828c9e7d3f0d41>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrobjectadd", (RTS_UINTPTR) :ref:`usermgrobjectadd <group___cmp_user_mgr___implementation_itf_1gaf59a22ceec4da99c00bddd3a3a0dd8d7>` , 1, 0xDF2F6AEC, 0x03051100)
+
+- #define :ref:`USE_usermgrobjectremove <group___cmp_user_mgr___implementation_itf_1ga982e12189e32582641c9ff4f94fd18b7>` :ref:`PFUSERMGROBJECTREMOVE_IEC <group___cmp_user_mgr___implementation_itf_1ga51bdd287bc7081e8a69b9dc6bccf2fe7>` pfusermgrobjectremove;
+
+- #define :ref:`EXT_usermgrobjectremove <group___cmp_user_mgr___implementation_itf_1ga646067165e81db0af4984e92482a804d>` extern :ref:`PFUSERMGROBJECTREMOVE_IEC <group___cmp_user_mgr___implementation_itf_1ga51bdd287bc7081e8a69b9dc6bccf2fe7>` pfusermgrobjectremove;
+
+- #define :ref:`GET_usermgrobjectremove <group___cmp_user_mgr___implementation_itf_1ga45531ba25564d5f6167b20c694d06f01>` s_pfCMGetAPI2( "usermgrobjectremove", (RTS_VOID_FCTPTR *)&pfusermgrobjectremove, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xAFB36783, 0x03051100)
+
+- #define :ref:`CAL_usermgrobjectremove <group___cmp_user_mgr___implementation_itf_1ga42723adf50ae0cb290098f9a01b4625b>` pfusermgrobjectremove
+
+- #define :ref:`CHK_usermgrobjectremove <group___cmp_user_mgr___implementation_itf_1gacd9bff98eab413e163119b9751d7b8da>` (pfusermgrobjectremove != NULL)
+
+- #define :ref:`EXP_usermgrobjectremove <group___cmp_user_mgr___implementation_itf_1ga2d2866daa18894442c88091ed387d0c0>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrobjectremove", (RTS_UINTPTR) :ref:`usermgrobjectremove <group___cmp_user_mgr___implementation_itf_1gacfc19c5b7c01b939cc5495f7d2d30084>` , 1, 0xAFB36783, 0x03051100)
+
+- #define :ref:`USE_usermgrobjectsetusedrights <group___cmp_user_mgr___implementation_itf_1gaea8e5f63ef520fabf8cb2b2a2dcb5da8>` :ref:`PFUSERMGROBJECTSETUSEDRIGHTS_IEC <group___cmp_user_mgr___implementation_itf_1ga03075ba3a61c4419c4a8ae88a8f9f196>` pfusermgrobjectsetusedrights;
+
+- #define :ref:`EXT_usermgrobjectsetusedrights <group___cmp_user_mgr___implementation_itf_1ga8f6b2f889a7a99a08c6898315590ecbd>` extern :ref:`PFUSERMGROBJECTSETUSEDRIGHTS_IEC <group___cmp_user_mgr___implementation_itf_1ga03075ba3a61c4419c4a8ae88a8f9f196>` pfusermgrobjectsetusedrights;
+
+- #define :ref:`GET_usermgrobjectsetusedrights <group___cmp_user_mgr___implementation_itf_1ga08655e775fd5efc1b9e76ddda80bf40c>` s_pfCMGetAPI2( "usermgrobjectsetusedrights", (RTS_VOID_FCTPTR *)&pfusermgrobjectsetusedrights, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xAA821FF5, 0x03051100)
+
+- #define :ref:`CAL_usermgrobjectsetusedrights <group___cmp_user_mgr___implementation_itf_1gaab08f89bb91d879a3f6d16a662a499c2>` pfusermgrobjectsetusedrights
+
+- #define :ref:`CHK_usermgrobjectsetusedrights <group___cmp_user_mgr___implementation_itf_1gac21795649cf12916049a00d35bd6f7b8>` (pfusermgrobjectsetusedrights != NULL)
+
+- #define :ref:`EXP_usermgrobjectsetusedrights <group___cmp_user_mgr___implementation_itf_1ga4970d934bfdbef9d4918f47ee0e277f5>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrobjectsetusedrights", (RTS_UINTPTR) :ref:`usermgrobjectsetusedrights <group___cmp_user_mgr___implementation_itf_1ga51609801ee26a488bad5ff8ad2861d3f>` , 1, 0xAA821FF5, 0x03051100)
+
+- #define :ref:`USE_usermgrrelogin <group___cmp_user_mgr___implementation_itf_1gad360929f8a2bb032a3d75980b570d853>` :ref:`PFUSERMGRRELOGIN_IEC <group___cmp_user_mgr___implementation_itf_1gae5da0717ebaf0e605a0a4ac47d4159eb>` pfusermgrrelogin;
+
+- #define :ref:`EXT_usermgrrelogin <group___cmp_user_mgr___implementation_itf_1gafb21b72038c43fb2ec71fd7523d3419f>` extern :ref:`PFUSERMGRRELOGIN_IEC <group___cmp_user_mgr___implementation_itf_1gae5da0717ebaf0e605a0a4ac47d4159eb>` pfusermgrrelogin;
+
+- #define :ref:`GET_usermgrrelogin <group___cmp_user_mgr___implementation_itf_1ga945306b7e72bc7838b395487f47105c2>` s_pfCMGetAPI2( "usermgrrelogin", (RTS_VOID_FCTPTR *)&pfusermgrrelogin, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x69692107, 0x03051100)
+
+- #define :ref:`CAL_usermgrrelogin <group___cmp_user_mgr___implementation_itf_1ga14d649f656c7d854b89ba3e23399835d>` pfusermgrrelogin
+
+- #define :ref:`CHK_usermgrrelogin <group___cmp_user_mgr___implementation_itf_1gadf33addf0a9e3ec29686811aa0707e33>` (pfusermgrrelogin != NULL)
+
+- #define :ref:`EXP_usermgrrelogin <group___cmp_user_mgr___implementation_itf_1ga218cb499842ece04d4397b381f1f6a98>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrrelogin", (RTS_UINTPTR) :ref:`usermgrrelogin <group___cmp_user_mgr___implementation_itf_1ga94ecd96a72b8e079ba3c0d0fe19ae5e4>` , 1, 0x69692107, 0x03051100)
+
+- #define :ref:`ITF_CmpUserMgr_Implementation <group___cmp_user_mgr___implementation_itf_1gaf2b4339b84d76b48b4f4e6dd61e22db5>`
+
+- #define :ref:`EXTITF_CmpUserMgr_Implementation <group___cmp_user_mgr___implementation_itf_1gaacba2f1827531f6709887051c17bee9b>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagusermgrchangemypassword_struct <structtagusermgrchangemypassword__struct>` :ref:`usermgrchangemypassword_struct <group___cmp_user_mgr___implementation_itf_1ga81aacadd34d4d40e151f38b5968717cd>`
+
+- typedef void(* :ref:`PFUSERMGRCHANGEMYPASSWORD_IEC <group___cmp_user_mgr___implementation_itf_1ga1b961e84efc344acca6c2ed6f88b3ad7>`)(usermgrchangemypassword_struct *p)
+
+- typedef struct :ref:`tagusermgrgetuseraccessrights_struct <structtagusermgrgetuseraccessrights__struct>` :ref:`usermgrgetuseraccessrights_struct <group___cmp_user_mgr___implementation_itf_1ga0817a788b6755627dc09e42826366942>`
+
+- typedef void(* :ref:`PFUSERMGRGETUSERACCESSRIGHTS_IEC <group___cmp_user_mgr___implementation_itf_1ga35d10b998eafcc28e16be85d51b43111>`)(usermgrgetuseraccessrights_struct *p)
+
+- typedef struct :ref:`tagusermgrhasuseraccessrights_struct <structtagusermgrhasuseraccessrights__struct>` :ref:`usermgrhasuseraccessrights_struct <group___cmp_user_mgr___implementation_itf_1ga8017750c4a31e01ff25fb5bc1254abc4>`
+
+- typedef void(* :ref:`PFUSERMGRHASUSERACCESSRIGHTS_IEC <group___cmp_user_mgr___implementation_itf_1ga129b3693c483d5c88f10abbc3791cabd>`)(usermgrhasuseraccessrights_struct *p)
+
+- typedef struct :ref:`tagusermgrisactive_struct <structtagusermgrisactive__struct>` :ref:`usermgrisactive_struct <group___cmp_user_mgr___implementation_itf_1ga2990e79f6e5a79ba55fcba7251c39890>`
+
+- typedef void(* :ref:`PFUSERMGRISACTIVE_IEC <group___cmp_user_mgr___implementation_itf_1ga5b2481c379d62fac70e60a7ad5b825bf>`)(usermgrisactive_struct *p)
+
+- typedef struct :ref:`tagusermgrlogin_struct <structtagusermgrlogin__struct>` :ref:`usermgrlogin_struct <group___cmp_user_mgr___implementation_itf_1ga24e8a6e3d02d0a2950f9e28787ca1d3a>`
+
+- typedef void(* :ref:`PFUSERMGRLOGIN_IEC <group___cmp_user_mgr___implementation_itf_1gada2e827d8ec62f175627a2e9a1a4e3f2>`)(usermgrlogin_struct *p)
+
+- typedef struct :ref:`tagusermgrlogout_struct <structtagusermgrlogout__struct>` :ref:`usermgrlogout_struct <group___cmp_user_mgr___implementation_itf_1ga956c889774ba0b5f7e5b01bcd8c0638d>`
+
+- typedef void(* :ref:`PFUSERMGRLOGOUT_IEC <group___cmp_user_mgr___implementation_itf_1ga1f90e2cc497dc118cac721be54913fe1>`)(usermgrlogout_struct *p)
+
+- typedef struct :ref:`tagusermgrobjectadd_struct <structtagusermgrobjectadd__struct>` :ref:`usermgrobjectadd_struct <group___cmp_user_mgr___implementation_itf_1gaeba0006e979bae366e9a95afc8699193>`
+
+- typedef void(* :ref:`PFUSERMGROBJECTADD_IEC <group___cmp_user_mgr___implementation_itf_1ga8494bbeeb5defd89f0eba2dfa8db0ffa>`)(usermgrobjectadd_struct *p)
+
+- typedef struct :ref:`tagusermgrobjectremove_struct <structtagusermgrobjectremove__struct>` :ref:`usermgrobjectremove_struct <group___cmp_user_mgr___implementation_itf_1ga27ec38237ff5074115355b7293e1fac2>`
+
+- typedef void(* :ref:`PFUSERMGROBJECTREMOVE_IEC <group___cmp_user_mgr___implementation_itf_1ga51bdd287bc7081e8a69b9dc6bccf2fe7>`)(usermgrobjectremove_struct *p)
+
+- typedef struct :ref:`tagusermgrobjectsetusedrights_struct <structtagusermgrobjectsetusedrights__struct>` :ref:`usermgrobjectsetusedrights_struct <group___cmp_user_mgr___implementation_itf_1ga3a7e9f99f4e2f20c58de1482dfaca638>`
+
+- typedef void(* :ref:`PFUSERMGROBJECTSETUSEDRIGHTS_IEC <group___cmp_user_mgr___implementation_itf_1ga03075ba3a61c4419c4a8ae88a8f9f196>`)(usermgrobjectsetusedrights_struct *p)
+
+- typedef struct :ref:`tagusermgrrelogin_struct <structtagusermgrrelogin__struct>` :ref:`usermgrrelogin_struct <group___cmp_user_mgr___implementation_itf_1ga3d3f0f5a0746298b1ba7790b320c5a15>`
+
+- typedef void(* :ref:`PFUSERMGRRELOGIN_IEC <group___cmp_user_mgr___implementation_itf_1gae5da0717ebaf0e605a0a4ac47d4159eb>`)(usermgrrelogin_struct *p)
+
+- typedef :ref:`ICmpUserMgr_Implementation_C <struct_i_cmp_user_mgr___implementation___c>` :ref:`ICmpUserMgr_Implementation <group___cmp_user_mgr___implementation_itf_1gab3f7f3c14b818268f5acdb0f11ebf875>`
+
+Functions
+---------
+
+- void :ref:`usermgrchangemypassword <group___cmp_user_mgr___implementation_itf_1ga00d7ab6483e565055a2aaea15d63b7e0>` (:ref:`usermgrchangemypassword_struct <group___cmp_user_mgr___implementation_itf_1ga81aacadd34d4d40e151f38b5968717cd>` * p)
+
+- void :ref:`usermgrgetuseraccessrights <group___cmp_user_mgr___implementation_itf_1ga965424efcd80dccae7e508764bd1a416>` (:ref:`usermgrgetuseraccessrights_struct <group___cmp_user_mgr___implementation_itf_1ga0817a788b6755627dc09e42826366942>` * p)
+
+- void :ref:`usermgrhasuseraccessrights <group___cmp_user_mgr___implementation_itf_1gac7e24ea6f37d7b1e36ba20c3f7aff61e>` (:ref:`usermgrhasuseraccessrights_struct <group___cmp_user_mgr___implementation_itf_1ga8017750c4a31e01ff25fb5bc1254abc4>` * p)
+
+- void :ref:`usermgrisactive <group___cmp_user_mgr___implementation_itf_1gae7b9df8eea8d686a77e5b39823b059a7>` (:ref:`usermgrisactive_struct <group___cmp_user_mgr___implementation_itf_1ga2990e79f6e5a79ba55fcba7251c39890>` * p)
+
+- void :ref:`usermgrlogin <group___cmp_user_mgr___implementation_itf_1ga82bbdab97d6b12ac01c8e14714ff2301>` (:ref:`usermgrlogin_struct <group___cmp_user_mgr___implementation_itf_1ga24e8a6e3d02d0a2950f9e28787ca1d3a>` * p)
+
+- void :ref:`usermgrlogout <group___cmp_user_mgr___implementation_itf_1ga8772c23027809d0c16d2f956c7e791b0>` (:ref:`usermgrlogout_struct <group___cmp_user_mgr___implementation_itf_1ga956c889774ba0b5f7e5b01bcd8c0638d>` * p)
+
+- void :ref:`usermgrobjectadd <group___cmp_user_mgr___implementation_itf_1gaf59a22ceec4da99c00bddd3a3a0dd8d7>` (:ref:`usermgrobjectadd_struct <group___cmp_user_mgr___implementation_itf_1gaeba0006e979bae366e9a95afc8699193>` * p)
+
+- void :ref:`usermgrobjectremove <group___cmp_user_mgr___implementation_itf_1gacfc19c5b7c01b939cc5495f7d2d30084>` (:ref:`usermgrobjectremove_struct <group___cmp_user_mgr___implementation_itf_1ga27ec38237ff5074115355b7293e1fac2>` * p)
+
+- void :ref:`usermgrobjectsetusedrights <group___cmp_user_mgr___implementation_itf_1ga51609801ee26a488bad5ff8ad2861d3f>` (:ref:`usermgrobjectsetusedrights_struct <group___cmp_user_mgr___implementation_itf_1ga3a7e9f99f4e2f20c58de1482dfaca638>` * p)
+
+- void :ref:`usermgrrelogin <group___cmp_user_mgr___implementation_itf_1ga94ecd96a72b8e079ba3c0d0fe19ae5e4>` (:ref:`usermgrrelogin_struct <group___cmp_user_mgr___implementation_itf_1ga3d3f0f5a0746298b1ba7790b320c5a15>` * p)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_user_mgr___implementation_itf_1gaf13db33251a3f9c5fa483fdc60e9b3d3:
+
+#define USE_usermgrchangemypassword :ref:`PFUSERMGRCHANGEMYPASSWORD_IEC <group___cmp_user_mgr___implementation_itf_1ga1b961e84efc344acca6c2ed6f88b3ad7>` pfusermgrchangemypassword;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gac67b7107ed5c66b64d9a461d483da7df:
+
+#define EXT_usermgrchangemypassword extern :ref:`PFUSERMGRCHANGEMYPASSWORD_IEC <group___cmp_user_mgr___implementation_itf_1ga1b961e84efc344acca6c2ed6f88b3ad7>` pfusermgrchangemypassword;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaa828fb945ba409b0a41c0448781100dd:
+
+#define GET_usermgrchangemypassword s_pfCMGetAPI2( "usermgrchangemypassword", (RTS_VOID_FCTPTR *)&pfusermgrchangemypassword, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x25575868, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaa49d03d61ad5e57874beb4a9f0aae668:
+
+#define CAL_usermgrchangemypassword pfusermgrchangemypassword
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gacbf3f2ae92f51204cb2640b85bc39eeb:
+
+#define CHK_usermgrchangemypassword (pfusermgrchangemypassword != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gabe542b7e4dd91eae695d76e4400297c2:
+
+#define EXP_usermgrchangemypassword s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrchangemypassword", (RTS_UINTPTR) :ref:`usermgrchangemypassword <group___cmp_user_mgr___implementation_itf_1ga00d7ab6483e565055a2aaea15d63b7e0>` , 1, 0x25575868, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga2bb81c2d912b520eb657e17b0bf1c16d:
+
+#define USE_usermgrgetuseraccessrights :ref:`PFUSERMGRGETUSERACCESSRIGHTS_IEC <group___cmp_user_mgr___implementation_itf_1ga35d10b998eafcc28e16be85d51b43111>` pfusermgrgetuseraccessrights;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga165b937132d6ef2a980edb472e5dd8d1:
+
+#define EXT_usermgrgetuseraccessrights extern :ref:`PFUSERMGRGETUSERACCESSRIGHTS_IEC <group___cmp_user_mgr___implementation_itf_1ga35d10b998eafcc28e16be85d51b43111>` pfusermgrgetuseraccessrights;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga27e405c4f842d32a2db71947ea5834f4:
+
+#define GET_usermgrgetuseraccessrights s_pfCMGetAPI2( "usermgrgetuseraccessrights", (RTS_VOID_FCTPTR *)&pfusermgrgetuseraccessrights, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xB30BF82F, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga986ba72ca9f5f3102d0d8a7fba415099:
+
+#define CAL_usermgrgetuseraccessrights pfusermgrgetuseraccessrights
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaddccc30ad87076cc6c1463b56b8edbac:
+
+#define CHK_usermgrgetuseraccessrights (pfusermgrgetuseraccessrights != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gabe34138cee4e3403e4600ebcfb7c9b69:
+
+#define EXP_usermgrgetuseraccessrights s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrgetuseraccessrights", (RTS_UINTPTR) :ref:`usermgrgetuseraccessrights <group___cmp_user_mgr___implementation_itf_1ga965424efcd80dccae7e508764bd1a416>` , 1, 0xB30BF82F, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga4a5c6012d0ca85f55ab951107ff52eda:
+
+#define USE_usermgrhasuseraccessrights :ref:`PFUSERMGRHASUSERACCESSRIGHTS_IEC <group___cmp_user_mgr___implementation_itf_1ga129b3693c483d5c88f10abbc3791cabd>` pfusermgrhasuseraccessrights;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gac2f2cb8254461c08a9f0bf612b23ca6f:
+
+#define EXT_usermgrhasuseraccessrights extern :ref:`PFUSERMGRHASUSERACCESSRIGHTS_IEC <group___cmp_user_mgr___implementation_itf_1ga129b3693c483d5c88f10abbc3791cabd>` pfusermgrhasuseraccessrights;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga5833a8b6c1ae610b7e7bd1fd26c601aa:
+
+#define GET_usermgrhasuseraccessrights s_pfCMGetAPI2( "usermgrhasuseraccessrights", (RTS_VOID_FCTPTR *)&pfusermgrhasuseraccessrights, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xB4009E6D, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga4cf19ca3e432e97540e4e9c55803761d:
+
+#define CAL_usermgrhasuseraccessrights pfusermgrhasuseraccessrights
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga7901d74c7d214855118fdbf9894afc4c:
+
+#define CHK_usermgrhasuseraccessrights (pfusermgrhasuseraccessrights != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga066c08d6af381d87bf0f002a20cbac13:
+
+#define EXP_usermgrhasuseraccessrights s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrhasuseraccessrights", (RTS_UINTPTR) :ref:`usermgrhasuseraccessrights <group___cmp_user_mgr___implementation_itf_1gac7e24ea6f37d7b1e36ba20c3f7aff61e>` , 1, 0xB4009E6D, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga486b9a4d28088dbd77edfac247a6ff4c:
+
+#define USE_usermgrisactive :ref:`PFUSERMGRISACTIVE_IEC <group___cmp_user_mgr___implementation_itf_1ga5b2481c379d62fac70e60a7ad5b825bf>` pfusermgrisactive;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaa16eb4e14587481b72d75eff7ddd7c0a:
+
+#define EXT_usermgrisactive extern :ref:`PFUSERMGRISACTIVE_IEC <group___cmp_user_mgr___implementation_itf_1ga5b2481c379d62fac70e60a7ad5b825bf>` pfusermgrisactive;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga8cd3e9cd1f799d5825ef915efdc2c6b9:
+
+#define GET_usermgrisactive s_pfCMGetAPI2( "usermgrisactive", (RTS_VOID_FCTPTR *)&pfusermgrisactive, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x29D8803F, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaa90fba2a89a393308362dfcded48a21e:
+
+#define CAL_usermgrisactive pfusermgrisactive
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga940edc12a7e43d919901d3f22607676a:
+
+#define CHK_usermgrisactive (pfusermgrisactive != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga2e946922c9a59e9e37224bb9b27a65e1:
+
+#define EXP_usermgrisactive s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrisactive", (RTS_UINTPTR) :ref:`usermgrisactive <group___cmp_user_mgr___implementation_itf_1gae7b9df8eea8d686a77e5b39823b059a7>` , 1, 0x29D8803F, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga2abd8127248ebd4469c819e12042f98c:
+
+#define USE_usermgrlogin :ref:`PFUSERMGRLOGIN_IEC <group___cmp_user_mgr___implementation_itf_1gada2e827d8ec62f175627a2e9a1a4e3f2>` pfusermgrlogin;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga3c2dda5a688d49a58b156a258b930f6f:
+
+#define EXT_usermgrlogin extern :ref:`PFUSERMGRLOGIN_IEC <group___cmp_user_mgr___implementation_itf_1gada2e827d8ec62f175627a2e9a1a4e3f2>` pfusermgrlogin;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaedec93fa2b19e13b9207fba92f55cbfa:
+
+#define GET_usermgrlogin s_pfCMGetAPI2( "usermgrlogin", (RTS_VOID_FCTPTR *)&pfusermgrlogin, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE7251EF7, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga7004e5747e4156f6c8fad2c0f3d57466:
+
+#define CAL_usermgrlogin pfusermgrlogin
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga5dfef8242714f1d6f840e71503dbb38a:
+
+#define CHK_usermgrlogin (pfusermgrlogin != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaf4ddfeb1cac76adfbcf71fb94b2d6f2b:
+
+#define EXP_usermgrlogin s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrlogin", (RTS_UINTPTR) :ref:`usermgrlogin <group___cmp_user_mgr___implementation_itf_1ga82bbdab97d6b12ac01c8e14714ff2301>` , 1, 0xE7251EF7, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga98d2a0cf938e03a57a2321dd667ec19e:
+
+#define USE_usermgrlogout :ref:`PFUSERMGRLOGOUT_IEC <group___cmp_user_mgr___implementation_itf_1ga1f90e2cc497dc118cac721be54913fe1>` pfusermgrlogout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaa1b839509d699a0f6b82144fc1ecc398:
+
+#define EXT_usermgrlogout extern :ref:`PFUSERMGRLOGOUT_IEC <group___cmp_user_mgr___implementation_itf_1ga1f90e2cc497dc118cac721be54913fe1>` pfusermgrlogout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga280203c042512903d043ef5ec2838a00:
+
+#define GET_usermgrlogout s_pfCMGetAPI2( "usermgrlogout", (RTS_VOID_FCTPTR *)&pfusermgrlogout, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xC9A61E57, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga9438428890bcac736b61cb44ab2eb2b5:
+
+#define CAL_usermgrlogout pfusermgrlogout
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga14487de38feba4692fb3a5b24fd29a3e:
+
+#define CHK_usermgrlogout (pfusermgrlogout != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga654a6b6d343546036dd9c01b1e3cab3d:
+
+#define EXP_usermgrlogout s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrlogout", (RTS_UINTPTR) :ref:`usermgrlogout <group___cmp_user_mgr___implementation_itf_1ga8772c23027809d0c16d2f956c7e791b0>` , 1, 0xC9A61E57, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga29ab3d53a016587303c205f29290741e:
+
+#define USE_usermgrobjectadd :ref:`PFUSERMGROBJECTADD_IEC <group___cmp_user_mgr___implementation_itf_1ga8494bbeeb5defd89f0eba2dfa8db0ffa>` pfusermgrobjectadd;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gad898dfcf32a3e002bcae447fb1f3cbe2:
+
+#define EXT_usermgrobjectadd extern :ref:`PFUSERMGROBJECTADD_IEC <group___cmp_user_mgr___implementation_itf_1ga8494bbeeb5defd89f0eba2dfa8db0ffa>` pfusermgrobjectadd;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga397ab4d8d70eb5fd81e93a7d6849d978:
+
+#define GET_usermgrobjectadd s_pfCMGetAPI2( "usermgrobjectadd", (RTS_VOID_FCTPTR *)&pfusermgrobjectadd, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xDF2F6AEC, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaf690f51afdad60ee344b60d7b4b02acc:
+
+#define CAL_usermgrobjectadd pfusermgrobjectadd
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaec91ddb3d446d09ad390a99116ae0c4b:
+
+#define CHK_usermgrobjectadd (pfusermgrobjectadd != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gac1f38c7e0439f69cb4828c9e7d3f0d41:
+
+#define EXP_usermgrobjectadd s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrobjectadd", (RTS_UINTPTR) :ref:`usermgrobjectadd <group___cmp_user_mgr___implementation_itf_1gaf59a22ceec4da99c00bddd3a3a0dd8d7>` , 1, 0xDF2F6AEC, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga982e12189e32582641c9ff4f94fd18b7:
+
+#define USE_usermgrobjectremove :ref:`PFUSERMGROBJECTREMOVE_IEC <group___cmp_user_mgr___implementation_itf_1ga51bdd287bc7081e8a69b9dc6bccf2fe7>` pfusermgrobjectremove;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga646067165e81db0af4984e92482a804d:
+
+#define EXT_usermgrobjectremove extern :ref:`PFUSERMGROBJECTREMOVE_IEC <group___cmp_user_mgr___implementation_itf_1ga51bdd287bc7081e8a69b9dc6bccf2fe7>` pfusermgrobjectremove;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga45531ba25564d5f6167b20c694d06f01:
+
+#define GET_usermgrobjectremove s_pfCMGetAPI2( "usermgrobjectremove", (RTS_VOID_FCTPTR *)&pfusermgrobjectremove, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xAFB36783, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga42723adf50ae0cb290098f9a01b4625b:
+
+#define CAL_usermgrobjectremove pfusermgrobjectremove
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gacd9bff98eab413e163119b9751d7b8da:
+
+#define CHK_usermgrobjectremove (pfusermgrobjectremove != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga2d2866daa18894442c88091ed387d0c0:
+
+#define EXP_usermgrobjectremove s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrobjectremove", (RTS_UINTPTR) :ref:`usermgrobjectremove <group___cmp_user_mgr___implementation_itf_1gacfc19c5b7c01b939cc5495f7d2d30084>` , 1, 0xAFB36783, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaea8e5f63ef520fabf8cb2b2a2dcb5da8:
+
+#define USE_usermgrobjectsetusedrights :ref:`PFUSERMGROBJECTSETUSEDRIGHTS_IEC <group___cmp_user_mgr___implementation_itf_1ga03075ba3a61c4419c4a8ae88a8f9f196>` pfusermgrobjectsetusedrights;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga8f6b2f889a7a99a08c6898315590ecbd:
+
+#define EXT_usermgrobjectsetusedrights extern :ref:`PFUSERMGROBJECTSETUSEDRIGHTS_IEC <group___cmp_user_mgr___implementation_itf_1ga03075ba3a61c4419c4a8ae88a8f9f196>` pfusermgrobjectsetusedrights;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga08655e775fd5efc1b9e76ddda80bf40c:
+
+#define GET_usermgrobjectsetusedrights s_pfCMGetAPI2( "usermgrobjectsetusedrights", (RTS_VOID_FCTPTR *)&pfusermgrobjectsetusedrights, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xAA821FF5, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaab08f89bb91d879a3f6d16a662a499c2:
+
+#define CAL_usermgrobjectsetusedrights pfusermgrobjectsetusedrights
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gac21795649cf12916049a00d35bd6f7b8:
+
+#define CHK_usermgrobjectsetusedrights (pfusermgrobjectsetusedrights != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga4970d934bfdbef9d4918f47ee0e277f5:
+
+#define EXP_usermgrobjectsetusedrights s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrobjectsetusedrights", (RTS_UINTPTR) :ref:`usermgrobjectsetusedrights <group___cmp_user_mgr___implementation_itf_1ga51609801ee26a488bad5ff8ad2861d3f>` , 1, 0xAA821FF5, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gad360929f8a2bb032a3d75980b570d853:
+
+#define USE_usermgrrelogin :ref:`PFUSERMGRRELOGIN_IEC <group___cmp_user_mgr___implementation_itf_1gae5da0717ebaf0e605a0a4ac47d4159eb>` pfusermgrrelogin;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gafb21b72038c43fb2ec71fd7523d3419f:
+
+#define EXT_usermgrrelogin extern :ref:`PFUSERMGRRELOGIN_IEC <group___cmp_user_mgr___implementation_itf_1gae5da0717ebaf0e605a0a4ac47d4159eb>` pfusermgrrelogin;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga945306b7e72bc7838b395487f47105c2:
+
+#define GET_usermgrrelogin s_pfCMGetAPI2( "usermgrrelogin", (RTS_VOID_FCTPTR *)&pfusermgrrelogin, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x69692107, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga14d649f656c7d854b89ba3e23399835d:
+
+#define CAL_usermgrrelogin pfusermgrrelogin
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gadf33addf0a9e3ec29686811aa0707e33:
+
+#define CHK_usermgrrelogin (pfusermgrrelogin != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga218cb499842ece04d4397b381f1f6a98:
+
+#define EXP_usermgrrelogin s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"usermgrrelogin", (RTS_UINTPTR) :ref:`usermgrrelogin <group___cmp_user_mgr___implementation_itf_1ga94ecd96a72b8e079ba3c0d0fe19ae5e4>` , 1, 0x69692107, 0x03051100)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaf2b4339b84d76b48b4f4e6dd61e22db5:
+
+#define ITF_CmpUserMgr_Implementation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaacba2f1827531f6709887051c17bee9b:
+
+#define EXTITF_CmpUserMgr_Implementation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_user_mgr___implementation_itf_1ga81aacadd34d4d40e151f38b5968717cd:
+
+typedef struct tagusermgrchangemypassword_struct  usermgrchangemypassword_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION BEGIN
+
+Changes the users password :return: Error code + ERR_OK: Password changed successfully + ERR_NOTINITIALIZED: The user management is not initialized or it is not loaded yet + ERR_OPERATION_DENIED: Password change is either not supported or not allowed + ERR_USER_MISMATCH: User name does not match + ERR_INVALID_HANDLE: hUser is invalid or unknown
+
+.. _group___cmp_user_mgr___implementation_itf_1ga1b961e84efc344acca6c2ed6f88b3ad7:
+
+typedef void( *  PFUSERMGRCHANGEMYPASSWORD_IEC) (usermgrchangemypassword_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga0817a788b6755627dc09e42826366942:
+
+typedef struct tagusermgrgetuseraccessrights_struct  usermgrgetuseraccessrights_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Gets user access rights on the specified object (authorization)! :return: Error code + ERR_OK: If user has the requested rights on the object or if no user management is configured + ERR_PARAMETER: If user is not available or the object does not exist + ERR_FAILED: If something failed retrieving the access rights + ERR_NO_ACCESS_RIGHTS: Explicitly denied rights + ERR_INVALID_HANDLE: hUser is invalid or unknown
+
+.. _group___cmp_user_mgr___implementation_itf_1ga35d10b998eafcc28e16be85d51b43111:
+
+typedef void( *  PFUSERMGRGETUSERACCESSRIGHTS_IEC) (usermgrgetuseraccessrights_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga8017750c4a31e01ff25fb5bc1254abc4:
+
+typedef struct tagusermgrhasuseraccessrights_struct  usermgrhasuseraccessrights_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Checks user access rights on the specified object (authorization)! :return: Error code + ERR_OK: If user has the requested rights on the object or if no user management is configured + ERR_PARAMETER: If user is not available or the object does not exist + ERR_FAILED: If something failed retrieving the access rights + ERR_NO_ACCESS_RIGHTS: Explicitly denied rights + ERR_INVALID_HANDLE: hUser is invalid or unknown
+
+.. _group___cmp_user_mgr___implementation_itf_1ga129b3693c483d5c88f10abbc3791cabd:
+
+typedef void( *  PFUSERMGRHASUSERACCESSRIGHTS_IEC) (usermgrhasuseraccessrights_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga2990e79f6e5a79ba55fcba7251c39890:
+
+typedef struct tagusermgrisactive_struct  usermgrisactive_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Checks if the user management is active. :return: TRUE: The user management is activated or enforced. FALSE: The user management is not activated.
+
+.. _group___cmp_user_mgr___implementation_itf_1ga5b2481c379d62fac70e60a7ad5b825bf:
+
+typedef void( *  PFUSERMGRISACTIVE_IEC) (usermgrisactive_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga24e8a6e3d02d0a2950f9e28787ca1d3a:
+
+typedef struct tagusermgrlogin_struct  usermgrlogin_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Logs user in to the runtime system requiring an active user management. :return: Handle to the user or RTS_INVALID_HANDLE if not available
+
+.. _group___cmp_user_mgr___implementation_itf_1gada2e827d8ec62f175627a2e9a1a4e3f2:
+
+typedef void( *  PFUSERMGRLOGIN_IEC) (usermgrlogin_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga956c889774ba0b5f7e5b01bcd8c0638d:
+
+typedef struct tagusermgrlogout_struct  usermgrlogout_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Logout specified by the user :return: Error code + ERR_OK: User is available and logout succeeded + ERR_PARAMETER: If user is not available + ERR_INVALID_HANDLE: hUser is invalid or unknown
+
+.. _group___cmp_user_mgr___implementation_itf_1ga1f90e2cc497dc118cac721be54913fe1:
+
+typedef void( *  PFUSERMGRLOGOUT_IEC) (usermgrlogout_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaeba0006e979bae366e9a95afc8699193:
+
+typedef struct tagusermgrobjectadd_struct  usermgrobjectadd_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Adds a new object to the user management, so the access rights can be configured on that object.
+
+.. note:: The name of the object must include the full name-space with "Device" as the root node, e.g. "Device.MyObject" or if it's a file system object with "/" as the root node. :return: Handle to the object or RTS_INVALID_HANDLE if it could not be added
+
+.. _group___cmp_user_mgr___implementation_itf_1ga8494bbeeb5defd89f0eba2dfa8db0ffa:
+
+typedef void( *  PFUSERMGROBJECTADD_IEC) (usermgrobjectadd_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga27ec38237ff5074115355b7293e1fac2:
+
+typedef struct tagusermgrobjectremove_struct  usermgrobjectremove_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Removes an object from the user management and all its children :return: Error code + ERR_OK: Object could be removed + ERR_PARAMETER: Invalid object handle
+
+.. _group___cmp_user_mgr___implementation_itf_1ga51bdd287bc7081e8a69b9dc6bccf2fe7:
+
+typedef void( *  PFUSERMGROBJECTREMOVE_IEC) (usermgrobjectremove_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga3a7e9f99f4e2f20c58de1482dfaca638:
+
+typedef struct tagusermgrobjectsetusedrights_struct  usermgrobjectsetusedrights_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+| Sets the used access rights for the object specified by handle. | The rights are additionally stored in an internal list. In case USERDB_RIGHT_NONE is passed for ulUsedRights the previously stored rights are retrieved for this object. :return: Error code + ERR_OK: Rights are successfully set + ERR_PARAMETER: Invalid object handle + ERR_NO_OBJECT: Object was not found for rights retrieval
+
+.. _group___cmp_user_mgr___implementation_itf_1ga03075ba3a61c4419c4a8ae88a8f9f196:
+
+typedef void( *  PFUSERMGROBJECTSETUSEDRIGHTS_IEC) (usermgrobjectsetusedrights_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga3d3f0f5a0746298b1ba7790b320c5a15:
+
+typedef struct tagusermgrrelogin_struct  usermgrrelogin_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Re-logs user in to the runtime system using an active user management. The user name must match to the user name used for the initial login of the user. :return: Error code + ERR_OK: User/password combination is valid + ERR_NOTINITIALIZED: The user management is not initialized or it is not loaded yet + ERR_RELOGIN: hUser known, but not logged in + ERR_FAILED: Password is wrong. + ERR_USER_MISMATCH: User name does not match + ERR_INVALID_HANDLE: hUser is invalid or unknown
+
+.. _group___cmp_user_mgr___implementation_itf_1gae5da0717ebaf0e605a0a4ac47d4159eb:
+
+typedef void( *  PFUSERMGRRELOGIN_IEC) (usermgrrelogin_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gab3f7f3c14b818268f5acdb0f11ebf875:
+
+typedef ICmpUserMgr_Implementation_C ICmpUserMgr_Implementation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_user_mgr___implementation_itf_1ga00d7ab6483e565055a2aaea15d63b7e0:
+
+void usermgrchangemypassword (usermgrchangemypassword_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga965424efcd80dccae7e508764bd1a416:
+
+void usermgrgetuseraccessrights (usermgrgetuseraccessrights_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gac7e24ea6f37d7b1e36ba20c3f7aff61e:
+
+void usermgrhasuseraccessrights (usermgrhasuseraccessrights_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gae7b9df8eea8d686a77e5b39823b059a7:
+
+void usermgrisactive (usermgrisactive_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga82bbdab97d6b12ac01c8e14714ff2301:
+
+void usermgrlogin (usermgrlogin_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga8772c23027809d0c16d2f956c7e791b0:
+
+void usermgrlogout (usermgrlogout_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gaf59a22ceec4da99c00bddd3a3a0dd8d7:
+
+void usermgrobjectadd (usermgrobjectadd_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1gacfc19c5b7c01b939cc5495f7d2d30084:
+
+void usermgrobjectremove (usermgrobjectremove_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga51609801ee26a488bad5ff8ad2861d3f:
+
+void usermgrobjectsetusedrights (usermgrobjectsetusedrights_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr___implementation_itf_1ga94ecd96a72b8e079ba3c0d0fe19ae5e4:
+
+void usermgrrelogin (usermgrrelogin_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

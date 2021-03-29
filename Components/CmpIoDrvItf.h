@@ -4,14 +4,14 @@
  * <p>Standard IO-driver interface.</p>
  * <p>THis interface is used for I/O drivers written in C as well as I/O
  * drivers written in IEC. IEC I/O drivers are typically written as a function
- * block, which implementes the IIoDrv Interface.</p>
+ * block, which implements the IIoDrv Interface.</p>
  * <p>To be able to access this IEC interface from C (which is for example
  * necessary for the IoMgr), the component CmpIoDrvIec acts as a wrapper
  * between C and IEC and implements exactly this interface.</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -48,14 +48,14 @@
  * <element name="CT_CANOPEN_SAFETY">Safety Master and Slave</element>
  * <element name="CT_J1939_MANAGER">J1939 Manager</element>
  * <element name="CT_J1939_ECU">J1939 ECU</element>
- * <element name="CT_PROFIBUS_MASTER">Profibus Master</element>
- * <element name="CT_PROFIBUS_SLAVE">Profibus Slave</element>
- * <element name="CT_PROFIBUS_DEVICE">Profibus Device</element>
- * <element name="CT_PROFIBUS_MOD_MASTER">Profibus modular Master</element>
- * <element name="CT_PROFIBUS_MOD_SLAVE">Profibus modular Slave</element>
- * <element name="CT_DEVICENET_MASTER">Profibus DeviceNet Master</element>
- * <element name="CT_DEVICENET_SLAVE">Profibus DeviceNet Slave</element>
- * <element name="CT_DEVICENET_DEVICE">Profibus DeviceNet Device</element>
+ * <element name="CT_PROFIBUS_MASTER">PROFIBUS Master</element>
+ * <element name="CT_PROFIBUS_SLAVE">PROFIBUS Slave</element>
+ * <element name="CT_PROFIBUS_DEVICE">PROFIBUS Device</element>
+ * <element name="CT_PROFIBUS_MOD_MASTER">PROFIBUS modular Master</element>
+ * <element name="CT_PROFIBUS_MOD_SLAVE">PROFIBUS modular Slave</element>
+ * <element name="CT_DEVICENET_MASTER">DeviceNet Master</element>
+ * <element name="CT_DEVICENET_SLAVE">DeviceNet Slave</element>
+ * <element name="CT_DEVICENET_DEVICE">DeviceNet Device</element>
  * <element name="CT_ETHERCAT_MASTER">EtherCAT Master</element>
  * <element name="CT_ETHERCAT_SLAVE">EtherCAT Slave</element>
  * <element name="CT_ETHERCAT_DEVICE">EtherCAT Device</element>
@@ -236,7 +236,7 @@
  * </description>
  * <element name="PVF_FUNCTION">Functional access to the parameter, Value is a function pointer.</element>
  * <element name="PVF_POINTER">Value is a pointer to the value</element>
- * <element name="PVF_VALUE">Obsolete: NOT USED. Value can be interpreted directly as a value (max. 32 Bit datatypes)</element>
+ * <element name="PVF_VALUE">Obsolete: NOT USED. Value can be interpreted directly as a value (max. 32 Bit data types)</element>
  * <element name="PVF_READ">Parameter can be read</element>
  * <element name="PVF_WRITE">Parameter can be written</element>
  */
@@ -247,7 +247,7 @@
 #define PVF_WRITE				0x0020
 
 /**
- * <category>Fieldbus independent parameters</category>
+ * <category>Field-bus independent parameters</category>
  * <description>
  * </description>
  * <element name="FIP_NETX_DEVICE">Parameter to identify netX devices.</element>
@@ -260,13 +260,34 @@
 /**
  * <category>Driver property flags</category>
  * <description>
+ * <p>These property flags can be used by I/O drivers to influence the behavior of the I/O Manager.</p>
+ * 
+ * <p>NOTE:<br/>
+ * The driver property flags <code>DRVPROP_CONSISTENCY</code> and <code>DRVPROP_NO_SYNC</code>
+ * influence the task synchronization behavior of the I/O Manager (CmpIoMgr):</p>
+ * 
+ * <p>Case 1: Neither DRVPROP_CONSISTENCY nor DRVPROP_NO_SYNC is set:<br/>
+ * All calls of ReadInputs, WriteOutputs, and StartBusCycle are mutually locked with the same lock. No concurrent calls of these functions are possible at all.</p>
+ * 
+ * <p>Case 2: DRVPROP_CONSISTENCY is set:<br/>
+ * Same lock as in case 1, but during the execution of ReadInputs further concurrent calls (only) of ReadInputs are allowed - analogous behavior with WriteOutputs.</p>
+ * 
+ * <p>Case 3: DRVPROP_NO_SYNC is set:<br/>
+ * The I/O manager does not synchronize concurrent calls of ReadInputs, WriteOutputs, and StartBusCycle at all.
+ * The I/O driver can use the functions IoMgrLockEnter() and IoMgrLockLeave() for synchronization:<br/>
+ *     - IOMGR_LOCK_READ_INPUTS		locks critical sections in IoDrvReadInputs() and IoDrvStartBusCycle().<br/>
+ *     - IOMGR_LOCK_WRITE_OUTPUTS	locks critical sections in IoDrvWriteOutputs() and IoDrvStartBusCycle().</p>
+ * 
+ * <p>IMPLEMENTATION NOTE: The behavior of the DRVPROP_CONSISTENCY and DRVPROP_NO_SYNC diver property flags can't be implemented on all platforms.
+ * Platforms without synchronization functionality may not be able to implement this behavior.
+ * IoMgrEmbedded of the CODESYSControlEmbedded runtime system for example can only disable and enable all interrupts.</p>
  * </description>
  * <element name="DRVPROP_CONSISTENCY">
- * The io driver realizes bit-consistency by its own (atomar bit access).
+ * The I/O driver realizes bit-consistency by its own (atomic bit access).
  * If this flag is 0, the I/O Manager takes care about the consistency.
  * </element>
  * <element name="DRVPROP_WATCHTDOG">
- * The io driver needs a cyclic call to the IoDrvWatchdogTrigger interface
+ * The I/O driver needs a cyclic call to the IoDrvWatchdogTrigger interface
  * function. This property is deprecated.
  * </element>
  * <element name="DRVPROP_REDUNDANCY">
@@ -288,6 +309,13 @@
  *	In this case, IoDrvGetModuleDiagnosis is called with:	IoDrvGetModuleDiagnosis(hIoDrv, NULL);
  *	This must be handled correctly in the IO-driver!
  * </element>
+ * <element name="DRVPROP_NO_SYNC">
+ * Disable synchronization for ReadInputs/WriteOutputs/StartBusCycle in the I/O Manager (CmpIoMgr).
+ * In this case the I/O driver has to implement the synchronization of these functions itself.
+ * CmpIoMgr provides the following functions that can be used by the I/O driver for synchronization:
+ *	IoMgrLockEnter()
+ *	IoMgrLockLeave()
+ * </element>
  */
 #define DRVPROP_CONSISTENCY			0x0001
 #define DRVPROP_WATCHTDOG			0x0002
@@ -296,14 +324,15 @@
 #define DRVPROP_ERROR_ACTIVE		0x0010
 #define DRVPROP_ERROR_PASSIVE		0x0020
 #define DRVPROP_BACKGROUND_GETDIAG	0x0040
+#define DRVPROP_NO_SYNC				0x0080
 
 /**
  * <category>Channel Map List Swapping Information</category>
  * <description>
- * <p>Every Io driver needs information on the base data type of an io channel
- * to perform a correct swapping operation.The basedata type and some
+ * <p>Every Io driver needs information on the base data type of an IO channel
+ * to perform a correct swapping operation.The base data type and some
  * additional swapping information can be found in the wDummy Byte of the
- * ChannelMapList struct.</p>
+ * ChannelMapList structure.</p>
  * </description>
  * <element name="CMLSI_BaseTypeMask">
  * This is the mask of the base type information
@@ -313,7 +342,7 @@
  * information. The base type is of type TypClass3 of component SysInternalLib.
  * </element>
  * <element name="CMLSI_SwappingEnabled">
- * If this bit is set, the driver has to determine, if the io channel must be
+ * If this bit is set, the driver has to determine, if the IO channel must be
  * swapped.
  * </element>
  */
@@ -626,7 +655,7 @@ typedef RTS_RESULT (CDECL * PFIODRVGETINFO) (RTS_HANDLE hIoDrv, IoDrvInfo **ppIo
  * driver, it has to call this function manually.</p>
  * </description>
  * <param name="hIoDrv" type="IN">Handle to the IO-driver instance</param> 
- * <param name="pConnector" type="IN">Pointer to the connector, that the diagostic information is requested</param> 
+ * <param name="pConnector" type="IN">Pointer to the connector, that the diagnostic information is requested</param> 
  * <result>Error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK"></errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">...</errorcode>
@@ -682,8 +711,8 @@ typedef RTS_RESULT (CDECL * PFIODRVGETMODULEDIAGNOSIS) (RTS_HANDLE hIoDrv, IoCon
 
 /**
  * <description>
- * <p>Identify plugable I/O card or slave.</p>
- * <p>If the configurator supports scanning of modules, this
+ * <p>Identify pluggable I/O card or slave.</p>
+ * <p>If the field-bus editor supports scanning of modules, this
  * function can be used our of a communication service to
  * identify a module on the bus or locally on the PLC. This 
  * This might be done by a blinking LED or whatever the hardware
@@ -823,7 +852,7 @@ typedef RTS_RESULT (CDECL * PFIODRVREADINPUTS) (RTS_HANDLE hIoDrv, IoConfigConne
  * <p>Scan for submodules of a connector.</p>
  * <p>This function is executed when the driver is downloaded. It
  * is called over a communication service.</p>
- * <p>The I/O driver should search for connected subumodules and
+ * <p>The I/O driver should search for connected submodules and
  * return them via ppConnectorList.</p>
  * <p>NOTE: This interface is called synchronously and the buffer for
  * the connector list has to be allocated by the driver.</p>
@@ -905,7 +934,7 @@ typedef RTS_RESULT (CDECL * PFIODRVSCANMODULES) (RTS_HANDLE hIoDrv, IoConfigConn
  * at the beginning or at the end of the task cycle.</p>
  * </description>
  * <param name="hIoDrv" type="IN">Handle to the IO-driver instance</param>
- * <param name="pConnector" type="IN">Pointer to the connector, on which the buscycle must be triggered</param> 
+ * <param name="pConnector" type="IN">Pointer to the connector, on which the bus cycle must be triggered</param> 
  * <result>Error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">Bus cycle was triggered</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">hIoDrv was invalid or pConnector NULL</errorcode>
@@ -986,7 +1015,7 @@ typedef RTS_RESULT (CDECL * PFIODRVSTARTBUSCYCLE) (RTS_HANDLE hIoDrv, IoConfigCo
  * </param> 
  * <param name="nCount" type="IN">Number of entries in the connector list</param> 
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">UpdateConfiguration was successfull and found a driver</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">UpdateConfiguration was successful and found a driver</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">No connector for this driver was found</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NO_LICENSE">No license for this driver</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_EXCEPTION">If a driver returns ERR_EXCEPTION, an RTSEXCPT_IO_CONFIG_ERROR exception is generated and all applications will go in exception state!</errorcode>
@@ -1046,7 +1075,7 @@ typedef RTS_RESULT (CDECL * PFIODRVUPDATECONFIGURATION) (RTS_HANDLE hIoDrv, IoCo
  * <p>This functions gives the drivers a chance to optimize
  * their internal data structures based on the real task map
  * lists. The function is called on every initialization
- * of the application (download, bootproject,...).</p>
+ * of the application (download, boot application,...).</p>
  * </description>
  * <param name="hIoDrv" type="IN">Handle to the IO-driver instance</param> 
  * <param name="pTaskMapList" type="IN">Pointer to the task map list of one task</param> 
@@ -1111,12 +1140,12 @@ typedef RTS_RESULT (CDECL * PFIODRVUPDATEMAPPING) (RTS_HANDLE hIoDrv, IoConfigTa
 
 /**
  * <description>
- * Trigger the hardware watchdog of this fieldbus master / IO system.
+ * Trigger the hardware watchdog of this field-bus master / IO system.
  * </description>
  * <param name="hIoDrv" type="IN">Handle to the IO-driver instance</param>
- * <param name="pConnector" type="IN">Pointer to the connector, on which the watchdog should be retriggered</param> 
+ * <param name="pConnector" type="IN">Pointer to the connector, on which the watchdog should be re-triggered</param> 
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Watchdog successfully retriggered</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Watchdog successfully re-triggered</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">Watchdog not available</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">Watchdog interface not implemented</errorcode>
  */
@@ -1180,7 +1209,7 @@ typedef RTS_RESULT (CDECL * PFIODRVWATCHDOGTRIGGER) (RTS_HANDLE hIoDrv, IoConfig
  * than one connector, it might get more than one call with
  * a different subset of the task map list.</p>
  * <p>The I/O driver should write out the data to the local
- * hardware, a buffer or a fieldbus.</p>
+ * hardware, a buffer or a field-bus.</p>
  * </description>
  * <param name="hIoDrv" type="IN">Handle to the IO-driver instance</param> 
  * <param name="pConnectorMapList" type="IN">Pointer to the connector map list</param> 

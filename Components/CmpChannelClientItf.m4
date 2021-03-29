@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -67,7 +67,7 @@ DEF_ITF_API(`int',`CDECL',`NetClientOpenChannel',`(PEERADDRESS addrReceiver, RTS
  * <param name="pdwCommBufferSize" type="OUT"> The communication buffer used for this channel.</param>
  * <param name="pbBigEndianByteOrder" type="OUT">
  *		True if the target system uses big endian byte order. Since that is typically used by motorola processors 
- *      (PowerPC etc.), it sometimes is also  referred to as "Motorola Byteorder" 
+ *      (PowerPC etc.), it sometimes is also  referred to as "Motorola byte order" 
  * </param>
  *
  * <result>
@@ -95,7 +95,7 @@ DEF_ITF_API(`int',`CDECL',`NetClientCloseChannel',`(unsigned short wChannelHandl
  *    This call will fail, if
  *     - the channel is not in send mode
  *	   - the channel is already sending
- *     - the size of the data is greater then the commbuffersize returned by NetClientOpenChannel
+ *     - the size of the data is greater then the communication buffer size returned by NetClientOpenChannel
  *  </description>
  *
  *	<param name="wChannelHandle" type="IN"> Handle to a channel as returned by NetClientOpenChannel</param>
@@ -114,7 +114,7 @@ DEF_ITF_API(`int',`CDECL',`NetClientSend',`(unsigned short wChannelHandle, PROTO
  *		Handle to a channel as returned by NetClientOpenChannel
  *	</param>
  *	<param name="pusStatus" type="OUT">
- *		Is set to the current progress state. The PROGRESS_xxx constants define valied values.
+ *		Is set to the current progress state. The PROGRESS_xxx constants define valid values.
  *	</param>
  *  <param name="pbyScalingFactor" type="OUT">
  *		Provides the scaling factor for pnItemsComplete and pnTotalItems. These values have been scaled
@@ -173,7 +173,7 @@ DEF_ITF_API(`int',`CDECL',`NetClientHandleMetaResponse',`(RTS_HANDLE hRouter, PE
  *   Calls the pfChannelHandler once for each active server channel 
  * </description>
  * <param name="pfChannelHandler" type="IN"> Function to be called for each channel </param>
- * <param name="pParam" type="INOUT"> This param is passed to pfChannelHandler. </param>
+ * <param name="pParam" type="INOUT"> This parameter is passed to pfChannelHandler. </param>
 */
 DEF_ITF_API(`void',`CDECL',`NetClientForEachChannel',`(PFCHANNELHANDLER pfChannelHandler, void * pParam)')
 
@@ -191,7 +191,7 @@ DEF_ITF_API(`int',`CDECL',`NetClientMessageReceived',`(CHANNELBUFFER *pChBuffer,
 
 /**
  * <description>
- *   Called when a unrecoverable error occurs for pfChBuffer, eg. ERR_CHANNEL_BROKEN.
+ *   Called when a unrecoverable error occurs for pfChBuffer, e.g. ERR_CHANNEL_BROKEN.
  *   The channel must be closed by the net client.
  * </description>
  *	<param name="pChBuffer" type="IN"></param>

@@ -1,0 +1,59 @@
+.. _important_runtime_defines:
+
+Important Runtime Defines
+=========================
+
+There are some important runtime defines that can be adapted to optimize
+the memory usage and behavior of a CAN runtime system (see
+CAADefinesGeneric.h).
+
+| **CL2_NNET:** Maximum number of CAN interfaces. If your runtime has a
+  maximum number of 2 CAN interfaces and there should be no support for
+  other CAN drivers, then set this define to 2 to optimize the memory
+  footprint.
+| Default: 2
+| **CL2_NRXMSG:** Default number of initially allocated receive messages
+  per driver instance. Will be used if driver calls CmdRegister with
+  ctMessages = 0.
+| Default: 100
+
+| **CL2_QUEUE_ADAPTION:** If set to true, then the number of receive
+  messages will automatically extended if receive message handles are
+  running short. It is recommended to activate this feature. Otherwise
+  there could be lost receive messages.
+| Default: 1
+| **CL2_NDRV_CTX:** Number of driver contexts which should be allocated
+  in static memory. Each DriverOpenH needs one driver context. Set this
+  define to a number greater or equal 0. If number of driver context is
+  not sufficient DriverOpenH will allocate further memory.
+| Default: 0
+
+| **CL2_NREVENTTABLE:** Number of Event Tables (round about 16k per
+  table) which should be allocated in static memory. An event table is
+  only required if CAA Callback is present and application uses receiver
+  events (Fieldbus stacks work without events). At most one Event Table
+  per physical CAN network (CL2_NNET) is required. If not enough memory
+  is allocated in static memory, memory will be allocated dynamically
+  when application uses events the first time (CreateReceiver with
+  eEvent != 0).
+| Default: 0
+| **CL2_NPRIO:** Number of message priorities supported by CL2. For
+  fieldbus stacks only 3 priorities are required!
+| Default: 8
+| **CL2_SZRIDP:** Receiver context pool size in byte. Each receiver
+  needs one receiver context with roundabout 32 byte on 32 bit targets.
+  If more receivers are created, memory will be dynamically extended.
+| Default: 2048 (32 bit), 4096 (64 bit)
+
+| **CL2_SZRECEIVER_QUEUE:** Static memory for receiver queues in byte.
+  Each receiver with xAlwaysNewest=FALSE needs one receiver queue with
+  roundabout 44 byte on 32 bit targets. If more receivers with queue are
+  created, memory will be dynamically extended.
+| Default: 2048 (32 bit), 4096 (64 bit)
+| **CL2_CALLBACK:** Enables the callback support of CL2. You can disable
+  this for saving memory as it is not used by our CAN-based stacks (see
+  also CL2_NREVENTTABLE).
+| Default: depends on availability of CAA_CB
+
+
+

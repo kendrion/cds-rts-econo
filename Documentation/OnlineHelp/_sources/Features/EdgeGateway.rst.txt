@@ -1,0 +1,52 @@
+.. _feature__edge_gateway:
+
+
+Edge Gateway
+============
+
+The Edge Gateway is a component, that connects a gateway or runtime system with a CODESYS Automation Server.
+
+The connection is done via the WebSocket protocol. Configuration is done by a CODESYS Edge Gateway PlugIn.
+
+
+Required features
+-----------------
+
+- :ref:`feature__p_l_c_handler`
+
+- :ref:`feature__encrypted_communication`
+
+Required components
+-------------------
+
+The following runtime system components are necessary for this feature:
+
+- :ref:`CmpEdgeGateway <group___cmp_edge_gateway_dep>`
+
+- :ref:`CmpWebSocketClient <group___cmp_web_socket_client_dep>`
+
+- :ref:`CmpAsyncMgr <group___cmp_async_mgr_dep>`
+
+- :ref:`SysSemCount <group___sys_sem_count_dep>`
+
+Compiler Defines
+----------------
+
+- Platforms/All/COMPILER_DEFINES: NO_PARAMETERLIST_IN_MACROS
+
+- Platforms/All/COMPILER_DEFINES: ARTI_LINKINMODULE
+
+- Platforms/All/COMPILER_DEFINES: ARTI_SWAP_PROTOCOL_HEADER
+
+- Platforms/All/COMPILER_DEFINES: GWCLIENT3_LINKINMODULE
+
+- Platforms/Linux/CFLAGS_FEATURES: -DPLC_HANDLER_COMPONENT
+
+- Platforms/Linux/CXXFLAGS_FEATURES: -DPLC_HANDLER_COMPONENT
+
+- Platforms/Linux/CFLAGS_FEATURES: -DCMPPLCHANDLER_DISABLE_EXTREF
+
+- Platforms/Linux/CXXFLAGS_FEATURES: -DCMPPLCHANDLER_DISABLE_EXTREF
+
+- Platforms/Windows/COMPILER_DEFINES: CMPLPLCHANDLERMAIN_NOTIMPLEMENTED
+

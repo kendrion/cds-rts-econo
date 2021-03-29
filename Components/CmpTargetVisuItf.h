@@ -1,11 +1,11 @@
  /**
  * <interfacename>CmpTargetVisu</interfacename>
  * <description> 
- *	Interface for the target visu.
+ *	Interface for the target visualization.
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -28,25 +28,25 @@
 
 /**
  * <category>Settings</category>
- * <description>Setting that decides about the maxmimum numer of entries in the bitmapbuffer.</description>
+ * <description>Setting that decides about the maximum number of entries in the bitmap buffer.</description>
  */
 #define CMPTARGETVISU_KEY_BMPBUFFERSIZE "BitmapbufferSize"
 #define CMPTARGETVISU_VALUE_BMPBUFFERSIZE_DEFAULT 50
 
 /**
  * <category>Settings</category>
- * <description>Setting that decides about the rate at which the targetvisu checks for updates of the
- * content of the display. This value in ms is no realtime value, so there can be quite some jitter on this value.</description>
- * <remarks>This setting is obsolete for the targetvisualization when working with recent programming environment and visu-profiles. The evaluation of this setting
+ * <description>Setting that decides about the rate at which the target visualization checks for updates of the
+ * content of the display. This value in ms is no real-time value, so there can be quite some jitter on this value.</description>
+ * <remarks>This setting is obsolete for the target-visualization when working with recent programming environment and visualization-profiles. The evaluation of this setting
  *	might disappear sometimes in the future.
- *	Nevertheless, the setting is still evaluated and respected by the remote targetvisualization.</remarks>
+ *	Nevertheless, the setting is still evaluated and respected by the remote target-visualization.</remarks>
  */
 #define CMPTARGETVISU_KEY_UPDATERATEMS "Updaterate_ms"
 #define CMPTARGETVISU_VALUE_UPDATERATEMS_DEFAULT 200
 
 /**
  * <category>Settings</category>
- * <description>Setting that decides about the font that is used for displaying tooltips.</description>
+ * <description>Setting that decides about the font that is used for displaying tool-tips.</description>
  */
 #define CMPTARGETVISU_KEY_TOOLTIPFONT "TooltipFont"
 #define CMPTARGETVISU_VALUE_TOOLTIPFONT_DEFAULT "Arial"
@@ -54,22 +54,22 @@
 
 /**
  * <category>Settings</category>
- * <description>Setting that decides about the fontsize that is used for displaying tooltips.</description>
+ * <description>Setting that decides about the font-size that is used for displaying tool-tips.</description>
  */
 #define CMPTARGETVISU_KEY_TOOLTIPFONTSIZE "TooltipFontSize"
 #define CMPTARGETVISU_VALUE_TOOLTIPFONTSIZE_DEFAULT 11
 
 /**
  * <category>Settings</category>
- * <description>An internal setting affecting the startup of the targetvisualization. This settings should not be
- *	activated without knowledge of the effects! Activating this setting will only work together with a singletasking window component!</description>
+ * <description>An internal setting affecting the startup of the target-visualization. This settings should not be
+ *	activated without knowledge of the effects! Activating this setting will only work together with a single tasking window component!</description>
  */
 #define CMPTARGETVISU_KEY_ASYNCINITIALIZATION					"AsyncInitialization"
 #define CMPTARGETVISU_VALUE_ASYNCINITIALIZATION_DEFAULT			0
 
 /**
  * <category>Settings</category>
- * <description>An internal settings affecting the task handling of the targetvisualization. This setting should not be
+ * <description>An internal settings affecting the task handling of the target-visualization. This setting should not be
  *	activated without knowledge of the effects!</description>
  */
 #define CMPTARGETVISU_KEY_SIMULATESINGLETASKING					"SimulateSingletasking"
@@ -79,7 +79,7 @@
 
 /**
  * <category>Settings</category>
- * <description>Special setting, probably only for touch systems to hide the cursor on the targetvisu window. Set to 1 if the cursor should be hidden.
+ * <description>Special setting, probably only for touch systems to hide the cursor on the target-visualization window. Set to 1 if the cursor should be hidden.
  *	</description>
  */
 #define CMPTARGETVISU_KEY_HIDECURSOR					"HideCursorCompletely"
@@ -106,8 +106,8 @@
  * <description>A setting affecting the evaluation of gestures. As the gestures "Pan" and "Flick" both react to a movement of a single touch,
  *  it is necessary to decide which one to raise. 
  *	For this mechanism, a distance and a velocity is calculated. To be able to calculate a reliable velocity, 
- *	we have to wait a short amount of time before comparing the according touch positions. This minimum waittime in milliseconds is defined by this setting.
- *  Please remark that an according "onetouch" gesture will not be started before this time is elapsed.
+ *	we have to wait a short amount of time before comparing the according touch positions. This minimum wait-time in milliseconds is defined by this setting.
+ *  Please remark that an according "one touch" gesture will not be started before this time is elapsed.
  *	Please remark that this value must be non negative.
  *	</description>
  */
@@ -131,7 +131,7 @@
 
 /**
  * <category>Settings</category>
- * <description>Setting affecting the way the support of touch/multitouch features is detected. The following
+ * <description>Setting affecting the way the support of touch/multi-touch features is detected. The following
  *	values are possible at the moment:
  *		o 0: No touch support at all
  *		o 1: Derive touch support from the according operating system window
@@ -153,10 +153,10 @@
 
 /**
  * <category>Settings</category>
- * <description>Setting that allows to define additional range(s) of keycodes that will be accepted by the visualization
- *	and transferred to the IEC-Visualization. There these additional keycodes are typically captured by additionally defined
+ * <description>Setting that allows to define additional range(s) of key-codes that will be accepted by the visualization
+ *	and transferred to the IEC-Visualization. There these additional key-codes are typically captured by additionally defined
  *	keys (targetsetting "visualization\keyboardusage\additionalkeys"). 
- *	Without such an additional configuration, only the standard keycodes (as described at the targetsetting "visualization\keyboardusage\basekeys") 
+ *	Without such an additional configuration, only the standard key-codes (as described at the target-setting "visualization\keyboardusage\basekeys") 
  *	are accepted. Ranges are defined in combination with the setting "AdditionalKeyCodeRangeMax"
  *	The list of ranges must be indexed, starting by 0, e.g:
  *	Example for the following (unmapped) range: 55-66,78,90
@@ -167,8 +167,8 @@
  *	AdditionalKeyCodeRangeMax.1=78
  *	AdditionalKeyCodeRangeMax.2=90
  *	</description>
- *	<remarks>The numeric values of keycodes in this range will be converted only if there is an according entry "AdditionalKeyCodeOffset". If there
- *	is no such value, then the keycode value will simply be truncated from RTS_I32 to RTS_UI16.
+ *	<remarks>The numeric values of key-codes in this range will be converted only if there is an according entry "AdditionalKeyCodeOffset". If there
+ *	is no such value, then the key-code value will simply be truncated from RTS_I32 to RTS_UI16.
  *	</remarks>
  */
 #define CMPTARGETVISU_KEY_ADDITIONALKEYCODERANGEMIN						"AdditionalKeyCodeRangeMin"
@@ -178,10 +178,10 @@
 
 /**
  * <category>Settings</category>
- * <description>Setting that allows to define additional range(s) of keycodes that will be accepted by the visualization
- *	and transferred to the IEC-Visualization. There these additional keycodes are typically captured by additionally defined
+ * <description>Setting that allows to define additional range(s) of key-codes that will be accepted by the visualization
+ *	and transferred to the IEC-Visualization. There these additional key-codes are typically captured by additionally defined
  *	keys (targetsetting "visualization\keyboardusage\additionalkeys"). 
- *	Without such an additional configuration, only the standard keycodes (as described at the targetsetting "visualization\keyboardusage\basekeys") 
+ *	Without such an additional configuration, only the standard key-codes (as described at the targetsetting "visualization\keyboardusage\basekeys") 
  *	are accepted. Ranges are defined in combination with the setting "AdditionalKeyCodeRangeMin"
  *	The list of ranges must be indexed, starting by 0, e.g:
  *	Example for the following (unmapped) range: 55-66,78,90
@@ -192,8 +192,8 @@
  *	AdditionalKeyCodeRangeMax.1=78
  *	AdditionalKeyCodeRangeMax.2=90
  *	</description>
- *	<remarks>The numeric values of keycodes in this range will be converted only if there is an according entry "AdditionalKeyCodeOffset". If there
- *	is no such value, then the keycode value will simply be truncated from RTS_I32 to RTS_UI16.
+ *	<remarks>The numeric values of key-codes in this range will be converted only if there is an according entry "AdditionalKeyCodeOffset". If there
+ *	is no such value, then the key-code value will simply be truncated from RTS_I32 to RTS_UI16.
  *	</remarks>
  */
 #define CMPTARGETVISU_KEY_ADDITIONALKEYCODERANGEMAX						"AdditionalKeyCodeRangeMax"
@@ -203,15 +203,15 @@
 
 /**
  * <category>Settings</category>
- * <description>Setting that allows to map keycodes of the related range ("AdditionalKeyCodeRangeMin", "AdditionalKeyCodeRangeMax", relation by index) 
+ * <description>Setting that allows to map key-codes of the related range ("AdditionalKeyCodeRangeMin", "AdditionalKeyCodeRangeMax", relation by index) 
  *	to the accepted range of an RTS_UI16.
- *	The mapped keycode is typically declared by additionally defined keys (targetsetting "visualization\keyboardusage\additionalkeys"). 
- *	This setting is optional. If there is no such setting declaration for a specific keycode range, then these will not become mapped.
+ *	The mapped key-code is typically declared by additionally defined keys (targetsetting "visualization\keyboardusage\additionalkeys"). 
+ *	This setting is optional. If there is no such setting declaration for a specific key-code range, then these will not become mapped.
  *	As an example for a mapping, have a look at the following declaration:
  *	AdditionalKeyCodeRangeMin.0=2000000
  *	AdditionalKeyCodeRangeMax.0=2000008
  *	AdditionalKeyCodeOffset.0=1999800
- *	In this example OS keycodes in the range [2000000, 2000008] will be mapped to the IEC keycodes [200, 208]
+ *	In this example OS key-codes in the range [2000000, 2000008] will be mapped to the IEC key-codes [200, 208]
  *	</description>
  */
 #define CMPTARGETVISU_KEY_ADDITIONALKEYCODEOFFSET						"AdditionalKeyCodeOffset"
@@ -221,9 +221,9 @@
 
 /**
  * <category>Settings</category>
- * <description>Setting that decides at whitch position in whitch size and in which window type 
- * the targetvisu window should open. When the values 0,0,0,0,0 where used the targetvisu
- * window opens in fullscreen mode </description>
+ * <description>Setting that decides at witch position in witch size and in which window type 
+ * the target-visualization window should open. When the values 0,0,0,0,0 where used the target-visualization
+ * window opens in full-screen mode </description>
  *
  */
 #define CMPTARGETVISU_KEY_WINDOWPOSITION_X "WindowPositionX"
@@ -249,8 +249,8 @@
 /**
  * <category>Settings</category>
  * <description>
- * Setting for the initial directory when opening or saving a file. The OS specific file path seperator
- * must be used. The configured path has to end with the seperator.
+ * Setting for the initial directory when opening or saving a file. The OS specific file path separator
+ * must be used. The configured path has to end with the separator.
  * The "FileOpenSavePath" is updated automatically with the path selected in the last file open or save.
  * The "FileOpenSavePathFallback" is used whenever the "FileOpenSavePath" is not available, e.g. if it
  * points to a directory on a storage device that has been removed.
@@ -312,11 +312,11 @@ typedef RTS_RESULT (CDECL * PFEXECUTEPAINTCOMMANDS) (TargetvisuParams* pParams, 
 
 
 /**
- * <description> Creates an instance of a targetvisualisation, ie. creates a window etc. </description>
- * <param name="pszApplication" type="IN">The application the targetvisu should connect to.</param>
- * <param name="pWindowRect" type="IN">An optional rectangle that will be the rectangle of the targetvisu window. 
+ * <description> Creates an instance of a target-visualization, i-e. creates a window etc. </description>
+ * <param name="pszApplication" type="IN">The application the target-visualization should connect to.</param>
+ * <param name="pWindowRect" type="IN">An optional rectangle that will be the rectangle of the target-visualization window. 
  * If this parameter is NULL, then the whole Screen will be used.</param>
- * <param name="pHandleRet" type="OUT">A handle to the created instance of the targetvisu.</param>
+ * <param name="pHandleRet" type="OUT">A handle to the created instance of the target-visualization.</param>
  * <result>error code</result>
  */
 RTS_RESULT CDECL CreateTargetvisuInstance(char* pszApplication, RTS_Rectangle* pWindowRect, RTS_HANDLE* pHandleRet);
@@ -367,34 +367,34 @@ typedef RTS_RESULT (CDECL * PFCREATETARGETVISUINSTANCE) (char* pszApplication, R
 
 
 /**
- * <description>Special flag that will be set when the targetvisualization is executed (ie. drawn) on a different plc than
+ * <description>Special flag that will be set when the target-visualization is executed (ie. drawn) on a different PLC than
  * the paint commands are calculated. Probably only relevant when using CmpVisuHandlerRemote.</description>
  */
 #define CMPTARGETVISU_FLAGS_REMOTE							0x0001
 /**
- * <description>Special flag that can be set when the targetvisualization is executed (ie. drawn) on a different plc than
- * the paint commands are calculated. If this flag is set, then the visu will be drawn in best fit mode.</description>
+ * <description>Special flag that can be set when the target-visualization is executed (ie. drawn) on a different PLC than
+ * the paint commands are calculated. If this flag is set, then the visualization will be drawn in best fit mode.</description>
  */
 #define CMPTARGETVISU_FLAGS_REMOTE_BESTFIT					0x0002			
 /**
- * <description>Special flag that can be set when the targetvisualization should measure the time that is necessary for executing
+ * <description>Special flag that can be set when the target-visualization should measure the time that is necessary for executing
  *	the paint commands. The result of this measurement is sent to the IEC visualization using an input event.</description>
  */
 #define CMPTARGETVISU_FLAGS_MEASURE_PAINTCOMMANDEXECUTION	0x0004
 /**
- * <description>Special flag that can be set when the targetvisualization should measure the reaction time on mouse down events.
+ * <description>Special flag that can be set when the target-visualization should measure the reaction time on mouse down events.
  *	the paint commands. The result of this measurement is sent to the IEC visualization using an input event.</description>
  * <remarks>Mouse events that are raised faster than the reaction can be drawn cannot be measured using this mechanism</remarks>
  */
 #define CMPTARGETVISU_FLAGS_MEASURE_MOUSEDOWNREACTION		0x0008
 /**
- * <description>Special flag that can be set when the targetvisualization should measure the reaction time on mouse down events.
+ * <description>Special flag that can be set when the target-visualization should measure the reaction time on mouse down events.
  *	the paint commands. The result of this measurement is sent to the IEC visualization using an input event.</description>
  * <remarks>Mouse events that are raised faster than the reaction can be drawn cannot be measured using this mechanism</remarks>
  */
 #define CMPTARGETVISU_FLAGS_MEASURE_PAINTINGTOSCREEN		0x0010
 /**
- * <description>Flag that activates the evaluation of touch events in the targetvisualization (of course only if supported by the
+ * <description>Flag that activates the evaluation of touch events in the target-visualization (of course only if supported by the
  *	according system implementation.</description>
  */
 #define CMPTARGETVISU_FLAGS_ACTIVATE_TOUCHHANDLING			0x0020
@@ -403,19 +403,26 @@ typedef RTS_RESULT (CDECL * PFCREATETARGETVISUINSTANCE) (char* pszApplication, R
  */
 #define CMPTARGETVISU_FLAGS_ACTIVATE_KEYBOARD				0x0040
 /**
- * <description>Special flag that can be set when the targetvisualization is executed (ie. drawn) on a different plc than
- * the paint commands are calculated. If this flag is set, then the visu will be drawn with scale type isotropic when best fit mode is set.</description>
+ * <description>Special flag that can be set when the target-visualization is executed (i.e. drawn) on a different PLC than
+ * the paint commands are calculated. If this flag is set, then the visualization will be drawn with scale type isotropic when best fit mode is set.</description>
  */
 #define CMPTARGETVISU_FLAGS_REMOTE_SCALETYPEISOTROPIC		0x0080
 
 /**
- * <description>Special flag that can be set when the targetvisualization is executed (ie. drawn) on a different plc than
- * the paint commands are calculated. If this flag is set, then the visu and the visualization dialogs will be drawn in best fit mode.</description>
+ * <description>Special flag that can be set when the target-visualization is executed (i.e. drawn) on a different PLC than
+ * the paint commands are calculated. If this flag is set, then the visualization and the visualization dialogs will be drawn in best fit mode.</description>
  */
 #define CMPTARGETVISU_FLAGS_REMOTE_BESTFIT_FOR_DIALOGS		0x0100
 
+ /**
+ * <description>Special flag that creates a window with fully transparent background. 
+ * Please remark that this feature is only supported at the moment by Qt-Based implementations. 
+ * </description>
+ */
+#define CMPTARGETVISU_FLAGS_TRANSPARENT_BACKGROUND			0x0400
+
 /**
- * <description>Notification that can be sent to the targetvisualization to signal that new paint data is available for execution.
+ * <description>Notification that can be sent to the target-visualization to signal that new paint data is available for execution.
  *	Arguments are not used at the moment.</description>
  */
 #define	CMPTARGETVISU_NOTIFY_TAG_PAINTDATA_AVAILABLE			1
@@ -424,7 +431,7 @@ typedef RTS_RESULT (CDECL * PFCREATETARGETVISUINSTANCE) (char* pszApplication, R
 /**
  * <category>Event parameter</category>
  * <element name="pszImageId" type="IN">The ID of the image that should be (re)loaded.</element>
- * <element name="pszImagePath" type="IN">The filepath of the image that should be (re)loaded.</element>
+ * <element name="pszImagePath" type="IN">The file-path of the image that should be (re)loaded.</element>
  */
 typedef struct
 {
@@ -446,7 +453,7 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent when the paintbuffer was painted to the system layer.</description>
+ * <description>Event is sent when the paint-buffer was painted to the system layer.</description>
  */
  #define EVT_CallbackContentPainted			MAKE_EVENTID(EVTCLASS_INFO, 2)
 
@@ -463,21 +470,21 @@ typedef struct
 
 typedef struct
 {
-	char* pszApplication;				/* The application, the targetvisu should connect to */
-	RTS_Rectangle* pOptWindowRect;		/* An optional rectangle that will be the rectangle of the targetvisu window. 
+	char* pszApplication;				/* The application, the target-visualization should connect to */
+	RTS_Rectangle* pOptWindowRect;		/* An optional rectangle that will be the rectangle of the target-visualization window. 
 										* If this parameter is NULL, then the whole Screen will be used.*/
-	RTS_IEC_UINT uiAntiAliasing;	/* Information about the antialiasing settings chosen by the configuration. 0 -> No Antialiasing; 1 -> High quality antialiasing */
-	RTS_IEC_UINT uiWindowType;		/* Information about the frame type of the targetvisu window (fullscreen, with window frame, without window frame,...); Reserved for future use; not yet implemented */
-	RTS_IEC_UINT uiUpdateRateMs;	/* The cyclic update rate in milliseconds of the targetvisualization window; Reserved for future use; not yet implemented */
-	RTS_IEC_UINT uiFlags;			/* Some flags regarding the targetvisualizations */
+	RTS_IEC_UINT uiAntiAliasing;	/* Information about the anti-aliasing settings chosen by the configuration. 0 -> No anti-aliasing; 1 -> High quality anti-aliasing */
+	RTS_IEC_UINT uiWindowType;		/* Information about the frame type of the target-visualization window (full-screen, with window frame, without window frame,...); Reserved for future use; not yet implemented */
+	RTS_IEC_UINT uiUpdateRateMs;	/* The cyclic update rate in milliseconds of the target-visualization window; Reserved for future use; not yet implemented */
+	RTS_IEC_UINT uiFlags;			/* Some flags regarding the target-visualizations */
 	char szOptionalStartVisu[CMPTARGETVISU_MAXSTARTVISUSIZE];		/* can be used for optionally setting a different start visualization than the default one; if an empty string is passed here, the default start visualization will be used */
-	char szOptionalClientName[CMPTARGETVISU_MAXCLIENTNAMESIZE];		/* optional name of the client that will be passed to the iec visualization; empty string is the default */
+	char szOptionalClientName[CMPTARGETVISU_MAXCLIENTNAMESIZE];		/* optional name of the client that will be passed to the IEC visualization; empty string is the default */
 } CmpTargetvisuCreateInformation;
 
 /**
- * <description> Creates an instance of a targetvisualisation, ie. creates a window etc. In fact, this is an extension of <see>CreateTargetvisuInstance</see></description>
- * <param name="pCreateInformation" type="IN">The information used for creating the targetvisualization.</param>
- * <param name="pHandleRet" type="OUT">A handle to the created instance of the targetvisu.</param>
+ * <description> Creates an instance of a target-visualization, ie. creates a window etc. In fact, this is an extension of <see>CreateTargetvisuInstance</see></description>
+ * <param name="pCreateInformation" type="IN">The information used for creating the target-visualization.</param>
+ * <param name="pHandleRet" type="OUT">A handle to the created instance of the target-visualization.</param>
  * <result>error code</result>
  */
 RTS_RESULT CDECL CreateTargetvisuInstance2(CmpTargetvisuCreateInformation* pCreateInformation, RTS_HANDLE* pHandleRet);
@@ -530,7 +537,7 @@ typedef RTS_RESULT (CDECL * PFCREATETARGETVISUINSTANCE2) (CmpTargetvisuCreateInf
 
 
 /**
- * <description> Destroys an instance of a targetvisualization. </description>
+ * <description> Destroys an instance of a target-visualization. </description>
  * <param name="hTargetVisu" type="IN">The instance that should be destroyed.</param>
  * <result>error code</result>
  */
@@ -583,12 +590,12 @@ typedef RTS_RESULT (CDECL * PFDESTROYTARGETVISUINSTANCE) (RTS_HANDLE hTargetVisu
 
 typedef enum 
 {
-	TCB_BEFORERUNNING,		/* called before the message loop for the targetvisualization is started */
-	TCB_REMOVING,			/* called when a targetvisu instance is being removed, in this callback this will be the last chance to access the targetvisuinstance */
-	TCB_CREATED,					/* called when a targetvisu instance is created; ulParam1 will point to the CmpTargetvisuCreateInformation that was used for creating this instance */	
+	TCB_BEFORERUNNING,		/* called before the message loop for the target-visualization is started */
+	TCB_REMOVING,			/* called when a target-visualization instance is being removed, in this callback this will be the last chance to access the target-visualization instance */
+	TCB_CREATED,					/* called when a target-visualization instance is created; ulParam1 will point to the CmpTargetvisuCreateInformation that was used for creating this instance */	
 	TCB_GETCLIENTIDFAILED,			/* called when the polling for a valid client id failed; ulParam1 will be the error code that caused the problem */
-	TCB_WINDOWOPENED,				/* called when the targetvisualization window is created. Take care, this event might be called from different threads! */
-	TCB_WINDOWCREATIONFAILED		/* called when the creation of the targetvisualization window failed; ulParam1 will be the error code that caused the problem. Take care, this event might be called from different threads! */
+	TCB_WINDOWOPENED,				/* called when the target-visualization window is created. Take care, this event might be called from different threads! */
+	TCB_WINDOWCREATIONFAILED		/* called when the creation of the target-visualization window failed; ulParam1 will be the error code that caused the problem. Take care, this event might be called from different threads! */
 } TargetvisuCallback;
 
 typedef RTS_RESULT (CDECL *PFTARGETVISUCALLBACK)(RTS_HANDLE hTargetVisu, TargetvisuCallback wcb, RTS_UINTPTR ulCallbackParam, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
@@ -706,13 +713,13 @@ extern "C" {
 #endif
 
 /**
- * This function will be called cylically by the generic visualization libraries for active targetvisualization clients when it is
+ * This function will be called cyclically by the generic visualization libraries for active target-visualization clients when it is
  * supported by these libraries.
- * The call is used for implementing a targetvisualization without the need for multitasking systems.
+ * The call is used for implementing a target-visualization without the need for multitasking systems.
  */
 typedef struct tagtargetvisucyclic_struct
 {
-	RTS_IEC_XWORD dwTargetVisuHandle;	/* VAR_INPUT */	/* The handle of the targetvisualization instance that should be called. */
+	RTS_IEC_XWORD dwTargetVisuHandle;	/* VAR_INPUT */	/* The handle of the target-visualization instance that should be called. */
 	RTS_IEC_UDINT TargetVisuCyclic;		/* VAR_OUTPUT */	
 } targetvisucyclic_struct;
 
@@ -764,7 +771,7 @@ typedef void (CDECL CDECL_EXT* PFTARGETVISUCYCLIC_IEC) (targetvisucyclic_struct 
 
 
 /**
- * This function can be used to find out the handle of the targetvisualization when having the according identification
+ * This function can be used to find out the handle of the target-visualization when having the according identification
  */
 typedef struct tagtargetvisufindbyid_struct
 {
@@ -821,14 +828,14 @@ typedef void (CDECL CDECL_EXT* PFTARGETVISUFINDBYID_IEC) (targetvisufindbyid_str
 
 
 /**
- * This function can be used to send notifications to a targetvisualization instance.
+ * This function can be used to send notifications to a target-visualization instance.
  * As those notifications are usually sent in an asynchronous way, do not expect immediate
  * effects when this function returned!
  */
 typedef struct tagtargetvisunotify_struct
 {
-	RTS_IEC_HANDLE hTargetVisu;			/* VAR_INPUT */	/* The handle of the targetvisualization */
-	RTS_IEC_DWORD dwTag;				/* VAR_INPUT */	/* The tag that signals which kind of information should be sent to the targetvisualization */
+	RTS_IEC_HANDLE hTargetVisu;			/* VAR_INPUT */	/* The handle of the target-visualization */
+	RTS_IEC_DWORD dwTag;				/* VAR_INPUT */	/* The tag that signals which kind of information should be sent to the target-visualization */
 	RTS_IEC_BYTE *pParam;				/* VAR_INPUT */	/* This parameter can hold data that is related to the tag. The interpretation of this
  data depends on dwTag. It can as well be interpreted as a numeric (and thus non pointer) value */
 	RTS_IEC_RESULT TargetVisuNotify;	/* VAR_OUTPUT */	

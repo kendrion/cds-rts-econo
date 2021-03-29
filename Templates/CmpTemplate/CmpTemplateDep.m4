@@ -2,17 +2,17 @@
  *  <name>Component Template</name>
  *  <description> 
  *  An example on how to implement a component.
- *  This component does no usefull work and it exports no functions
+ *  This component does no useful work and it exports no functions
  *  which are intended to be used for anything. Use at your own risk.
  *  </description>
  *  <copyright>
- *  Copyright (c) 2017-2019 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ *  Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
 SET_COMPONENT_NAME(`CmpTemplate')
 COMPONENT_SOURCES(`CmpTemplate.c')
 
-COMPONENT_VERSION(`0x03050E1E')
+COMPONENT_VERSION(`0x03051014')
 
 /* NOTE: REPLACE 0x0001 BY YOUR VENDORID */
 COMPONENT_VENDORID(`0x0001')				
@@ -37,6 +37,7 @@ USE_ITF(`CmpIecTaskItf.m4')
 USE_ITF(`CmpEventMgrItf.m4')
 USE_ITF(`SysTimeItf.m4')
 USE_ITF(`SysEventItf.m4')
+USE_ITF(`SysSemItf.m4')
 USE_ITF(`SysExceptItf.m4')
 USE_ITF(`CmpScheduleItf.m4')
 USE_ITF(`SysCpuHandlingItf.m4')
@@ -45,10 +46,15 @@ USE_ITF(`CmpMonitorItf.m4')
 USE_ITF(`CmpIecVarAccessItf.m4')
 USE_ITF(`SysTimeRtcItf.m4')
 USE_ITF(`CmpUserMgrItf.m4')
+USE_ITF(`CmpDeviceItf.m4')
 USE_ITF(`CmpSupervisorItf.m4')
 USE_ITF(`CMUtilsItf.m4')
 USE_ITF(`CmpMemPoolItf.m4')
 USE_ITF(`CmpMemPoolHashItf.m4')
+USE_ITF(`SysCpuMultiCoreItf.m4')
+USE_ITF(`CmpAsyncMgrItf.m4')
+USE_ITF(`CmpMonitor2Itf.m4')
+USE_ITF(`CmpAppForceItf.m4')
 
 REQUIRED_IMPORTS(
 ServerRegisterServiceHandler,
@@ -113,6 +119,7 @@ SchedRegisterExternalEvent,
 SchedPostExternalEvent,
 SchedUnregisterExternalEvent,
 CMUtlvsnprintf,
+CMUtlSafeStrNCpy,
 MemPoolCreateStatic,
 MemPoolCreateDynamic,
 MemPoolCreate,
@@ -162,8 +169,16 @@ UserMgrObjectAdd,
 UserMgrObjectRemove,
 UserMgrObjectOpen,
 UserMgrObjectClose,
+UserMgrObjectAddGroup,
+UserMgrObjectSetGroupRights,
 UserMgrHasAccessRights,
 UserMgrAddOnlineAccessError,
+UserMgrGetUserName,
+UserMgrAddGroup,
+UserMgrAddUser,
+UserMgrGroupAddUser,
+UserMgrGetGroup,
+DevGetSessionUser,
 SupervisorOperationGetState2,
 SupervisorOperationRegister,
 SupervisorOperationUnregister,
@@ -177,4 +192,15 @@ MemPoolCreateHashTable2,
 MemPoolDeleteHashTable,
 MemPoolGetBlockHashed,
 MemPoolGetBlockByHash,
-MemPoolRemoveBlockHashed)
+MemPoolRemoveBlockHashed,
+SysEventCreate,
+SysEventDelete,
+SysEventWait,
+SysEventSet,
+SysSemCreate,
+SysSemDelete,
+SysSemEnter,
+SysSemLeave,
+SysMCBDSet,
+AsyncAdd2,
+AsyncRemove)

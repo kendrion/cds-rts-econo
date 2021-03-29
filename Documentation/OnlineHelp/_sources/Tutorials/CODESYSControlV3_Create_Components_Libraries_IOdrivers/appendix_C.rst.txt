@@ -1,0 +1,147 @@
+.. _tutorial_creating_components_libraries_iodrivers_appendix_c:
+
+C: [Step by Step] Creating a new I/O Driver
+===========================================
+
+To create a new I/O driver, the IoDrvVerySimple component can be used as
+a starting point. The IoDrvVerySimple is included in the runtime system
+delivery.
+
+To copy and rename the files, you can use the Python script
+gen_cmp_from_temp.py or copy and rename them manually. To run the
+script, you need Python installed. The steps are the same as for
+creating a new component. See description above.
+
+Notes:
+
+-  An I/O driver implementation will need some functions from other
+   components of the runtime system. Add those existing interfaces to
+   the \*Dep.m4 file. For example:
+
+   .. code-block:: c#
+
+      IMPLEMENT_ITF(`CmpIoDrvItf.m4')
+   
+      USE_ITF(`CmpIoMgrItf.m4')
+   
+      REQUIRED_IMPORTS(
+      CMRegisterInstance,
+      IoMgrConfigGetParameter,
+      IoMgrConfigGetFirstConnector,
+      IoMgrConfigGetNextConnector,
+      IoMgrConfigGetFirstChild,
+      IoMgrConfigGetNextChild,
+      IoMgrConfigGetParameterValueWord,
+      IoMgrConfigSetDiagnosis,
+      IoMgrConfigResetDiagnosis,
+      IoMgrSetDriverProperties,
+      IoDrvCreate,
+      IoDrvDelete,
+      IoMgrCopyInputLE,
+      IoMgrCopyOutputLE)
+
+-  These functions, included in the template, are needed to implement
+   the I/O Driver interface:
+
+   a. IoDrvCreate
+
+   b. IoDrvDelete
+
+   c. IoDrvGetInfo
+
+   d. IoUpdateConfiguration
+
+   e. IoDrvUpdateMapping
+
+   f. IoDrvReadInputs
+
+   g. IoDrvWriteOutputs
+
+   h. IoDrvStartBusCycle
+
+   i. IoDrvScanModules
+
+   j. IoDrvGetModuleDiagnosis
+
+   k. IoDrvIdentify
+
+   l. IoDrvWatchdogTrigger
+
+Now, your component should compile without errors. In the current state
+it won’t run, because we removed the assignment which made the link
+between the driver and the physical I/O area. The purpose of this was,
+that we want to support more than one I/O channel and therefore, we need
+to make a link between every parameter and the corresponding address in
+the I/O area.
+
+In the next step, we want to create a device description, which
+describes the I/O layout for the CODESYS programming system. The
+templates contain examples of their device descriptions. What you
+configure here, will be visible to
+
+-  your driver, through the download of the CODESYS application, and
+
+-  the user when he opens the configuration editor for your device in
+   CODESYS.
+
+For our example we are using the following parameters:
+
+-  Vendor Name: 393218 (type: STRING)
+
+-  Device Name: 393219 (type: STRING)
+
+-  Inputs: 1000 - 1999 (type: DWORD)
+
+-  Outputs: 2000 - 2999 (type: DWORD)
+
+As a starting point for the device description, it’s possible to use the
+device description from the „IoDrvTemplate“, “IoDrvSimple” or
+“IoDrvVerySimple. But in the end it shouldn’t contain more than two
+connectors, one with the hostparameter set, defined above.
+
+After this, we need to adapt our device driver to handle those new
+parameters.
+
+-  Add a static array to simulate our I/O area:
+
+   .. code-block:: c#
+
+      #define MAX_CHANNELS 128
+      #define MAX_DRIVERS 1
+      static unsigned long s_ulyIO[MAX_DRIVERS][MAX_CHANNELS];
+
+In the code of the template, only one input and one output channel
+are configured in IoDrvUpdateConfiguration(). Change this to
+configure all channels, which are defined in the device
+description. Save a direct pointer to the I/O area in the field
+dwDriverSpecific of the parameters, corresponding to the channels.
+For example:
+
+   .. code-block:: c#
+
+      /* inputs */
+      for(i=0; i < MAX_CHANNELS; i++) {
+         pParameter = CAL_IoMgrConfigGetParameter(pConnector,1000+i);
+         if (pParameter != NULL) {
+            pParameter->dwDriverSpecific =
+            (unsigned long)&s_ulyIO[0][i];
+            s_ulyIO[0][i] = i+1;
+         }
+         else
+            break;
+      }
+      /* outputs */
+      for(/* continue */; i < MAX_CHANNELS; i++) {
+         pParameter = CAL_IoMgrConfigGetParameter(pConnector,2000+i);
+         if (pParameter != NULL)
+            pParameter->dwDriverSpecific =
+            (unsigned long)&s_ulyIO[0][i];
+         else
+            break;
+      }
+
+Change the „pbyDeviceAddress“ in IoDrvReadInputs() and
+IoDrvWriteOutputs() from „pInfo->hSpecific“ to
+„pConnectorMapList[i].pChannelMapList[j].pParameter->dwDriverSpecific“.
+Because this is the value, where we saved our I/O address in
+IoDrvUpdateConfiguration in the previous step.

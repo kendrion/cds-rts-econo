@@ -1,0 +1,132 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_target_itf___operating_system_i_d:
+
+===================
+Operating System ID
+===================
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Macros
+------
+
+- #define :ref:`SYSTARGET_OSTABLE <group___sys_target_itf___operating_system_i_d_1gaf6862bb72cd03a0a208af4b2ec355d8d>` {\
+{ 1, "---" },\
+{ 2, "Windows" },\
+{ 3, "Windows RTE" },\
+{ 4, "Windows CE" },\
+{ 5, "Linux" },\
+{ 6, "VxWorks" },\
+{ 7, "QNX" },\
+{ 8, "UCOS" },\
+{ 0, NULL }\
+}
+
+- #define :ref:`SYSTARGET_GET_OSNAME <group___sys_target_itf___operating_system_i_d_1gaa22c63bf967deab7844ea0be194c2187>` {\
+int i;\
+RTS_ID_TO_NAME aOSNames[] = :ref:`SYSTARGET_OSTABLE <group___sys_target_itf___operating_system_i_d_1gaf6862bb72cd03a0a208af4b2ec355d8d>` ;\
+pszOSName = aOSNames[0].pszName;\
+for (i = 0; aOSNames[i].pszName != NULL; i++)\
+{\
+if (aOSNames[i].id == ulOperatingSystemId)\
+{\
+pszOSName = aOSNames[i].pszName;\
+break;\
+}\
+}\
+}
+
+- #define :ref:`SYSTARGET_ARCHITECTURE_16BIT <group___sys_target_itf___operating_system_i_d_1gac88f5f0461e97ea01c5c572cb68cddda>` "16Bit"
+
+- #define :ref:`SYSTARGET_ARCHITECTURE_32BIT <group___sys_target_itf___operating_system_i_d_1ga714e8b84321fd2a28a7950ee95fc3c3f>` "32Bit"
+
+- #define :ref:`SYSTARGET_ARCHITECTURE_64BIT <group___sys_target_itf___operating_system_i_d_1gaebe3b17f162397a2b664232f7c8a1d3d>` "64Bit"
+
+- #define :ref:`SYSTARGET_GET_ARCHITECTURE <group___sys_target_itf___operating_system_i_d_1ga342832be2d5968a6860bddde4e7e2e01>` :ref:`SYSTARGET_ARCHITECTURE_32BIT <group___sys_target_itf___operating_system_i_d_1ga714e8b84321fd2a28a7950ee95fc3c3f>`
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_target_itf___operating_system_i_d_1gaf6862bb72cd03a0a208af4b2ec355d8d:
+
+#define SYSTARGET_OSTABLE
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Value:**
+
+.. parsed-literal::
+
+    {\\
+    { 1, "---" },\\
+    { 2, "Windows" },\\
+    { 3, "Windows RTE" },\\
+    { 4, "Windows CE" },\\
+    { 5, "Linux" },\\
+    { 6, "VxWorks" },\\
+    { 7, "QNX" },\\
+    { 8, "UCOS" },\\
+    { 0, NULL }\\
+    }
+
+Specifies which operating system is used. With these defines, operating system specific code can be managed. No operating system or proprietary used Windows operating system (user mode) Windows operating system (RTE) Windows CE operating system Linux operating system VxWorks operating system QNX operating system UCOS operating system
+
+.. _group___sys_target_itf___operating_system_i_d_1gaa22c63bf967deab7844ea0be194c2187:
+
+#define SYSTARGET_GET_OSNAME
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Value:**
+
+.. parsed-literal::
+
+    {\\
+    int i;\\
+    RTS_ID_TO_NAME aOSNames[] = :ref:`SYSTARGET_OSTABLE <group___sys_target_itf___operating_system_i_d_1gaf6862bb72cd03a0a208af4b2ec355d8d>` ;\\
+    pszOSName = aOSNames[0].pszName;\\
+    for (i = 0; aOSNames[i].pszName != NULL; i++)\\
+    {\\
+    if (aOSNames[i].id == ulOperatingSystemId)\\
+    {\\
+    pszOSName = aOSNames[i].pszName;\\
+    break;\\
+    }\\
+    }\\
+    }
+
+.. _group___sys_target_itf___operating_system_i_d_1gac88f5f0461e97ea01c5c572cb68cddda:
+
+#define SYSTARGET_ARCHITECTURE_16BIT "16Bit"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_target_itf___operating_system_i_d_1ga714e8b84321fd2a28a7950ee95fc3c3f:
+
+#define SYSTARGET_ARCHITECTURE_32BIT "32Bit"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_target_itf___operating_system_i_d_1gaebe3b17f162397a2b664232f7c8a1d3d:
+
+#define SYSTARGET_ARCHITECTURE_64BIT "64Bit"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_target_itf___operating_system_i_d_1ga342832be2d5968a6860bddde4e7e2e01:
+
+#define SYSTARGET_GET_ARCHITECTURE :ref:`SYSTARGET_ARCHITECTURE_32BIT <group___sys_target_itf___operating_system_i_d_1ga714e8b84321fd2a28a7950ee95fc3c3f>`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

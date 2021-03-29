@@ -6,7 +6,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -119,7 +119,7 @@ RTS_RESULT CDECL SysEventOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, R
 
 /**
  * <description>
- *	<p>Create a new event object specified with name. Two components can open the same event, if they sepecify
+ *	<p>Create a new event object specified with name. Two components can open the same event, if they specify
  *	the same name.</p>
  *	<p>IMPLEMENTATION NOTE:</p>
  *	<ul>
@@ -146,7 +146,7 @@ RTS_RESULT CDECL SysEventOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, R
 DEF_CREATEITF_API(`RTS_HANDLE',`CDECL',`SysEventCreate',`(char *pszName, RTS_RESULT *pResult)')
 
 /**
- * <description>Delete an exisiting event object</description>
+ * <description>Delete an existing event object</description>
  * <param name="hEvent" type="IN">Handle to the event. If hEvent is RTS_INVALID_HANDLE, 
  *	function returned with an error</param>
  * <result>error code</result>

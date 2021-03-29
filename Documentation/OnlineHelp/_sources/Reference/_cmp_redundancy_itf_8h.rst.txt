@@ -1,0 +1,746 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_redundancy_itf_8h:
+
+=================================
+CmpRedundancyItf.h File Reference
+=================================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpItf.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`tagRedundancyState <structtag_redundancy_state>`
+
+- struct :ref:`tagSYNC_INFO <structtag_s_y_n_c___i_n_f_o>`
+
+- struct :ref:`tagRedundancyTlgHeader <structtag_redundancy_tlg_header>`
+
+- struct :ref:`tagCLIENT_REPLY <structtag_c_l_i_e_n_t___r_e_p_l_y>`
+
+- struct :ref:`tagarearegister_struct <structtagarearegister__struct>`
+
+- struct :ref:`tagarearegistersegment_struct <structtagarearegistersegment__struct>`
+
+- struct :ref:`tagredundancycycleend_struct <structtagredundancycycleend__struct>`
+
+- struct :ref:`tagunregisterareas_struct <structtagunregisterareas__struct>`
+
+- struct :ref:`tagredundancycyclestart_struct <structtagredundancycyclestart__struct>`
+
+- struct :ref:`taggetredundancystate_struct <structtaggetredundancystate__struct>`
+
+- struct :ref:`taggetsyncinformation_struct <structtaggetsyncinformation__struct>`
+
+- struct :ref:`tagswitchtosimulation_struct <structtagswitchtosimulation__struct>`
+
+- struct :ref:`tagswitchtostandalone_struct <structtagswitchtostandalone__struct>`
+
+- struct :ref:`tagswitchtostandby_struct <structtagswitchtostandby__struct>`
+
+- struct :ref:`tagswitchtoactive_struct <structtagswitchtoactive__struct>`
+
+- struct :ref:`tagsynchronize_struct <structtagsynchronize__struct>`
+
+- struct :ref:`taggetplcident_struct <structtaggetplcident__struct>`
+
+- struct :ref:`tagredundancysynchronizedata_struct <structtagredundancysynchronizedata__struct>`
+
+- struct :ref:`taggetconnectionstate_struct <structtaggetconnectionstate__struct>`
+
+- struct :ref:`ICmpRedundancy_C <struct_i_cmp_redundancy___c>`
+
+Macros
+------
+
+- #define :ref:`RDCY_SRV_WRITESETT <group___cmp_redundancy_itf_1gae96a07d7daf9f527f9f8d43c2c3b388a>` 0x01
+
+- #define :ref:`RDCY_SRV_READSETT <group___cmp_redundancy_itf_1ga50e24c74d5a9694b6438f4d7bf989a0d>` 0x02
+
+- #define :ref:`RDCY_SRV_READETHERCATNICSETTING <group___cmp_redundancy_itf_1ga61523c81b2f6e7abf357589b9dde987b>` 0x03
+
+- #define :ref:`RDCY_SRV_READRDCYSTATE <group___cmp_redundancy_itf_1gafecd2dfc305d20ee3441ca8245cd80e0>` 0x04
+
+- #define :ref:`RDCY_SRV_SWITCHOVER <group___cmp_redundancy_itf_1gab7a645fd77893f7155587318bc1dbeee>` 0x05
+
+- #define :ref:`RDCY_SRV_SYNCHRONIZE <group___cmp_redundancy_itf_1ga465a0bae81d2500ee15095422ccfe7a7>` 0x06
+
+- #define :ref:`RDCY_SRV_SETSIMULATIONMODE <group___cmp_redundancy_itf_1ga09bdd21cebe492c17a71f9ef1d7ca941>` 0x07
+
+- #define :ref:`RDCY_SRV_SWITCHTOSTANDALONE <group___cmp_redundancy_itf_1ga0cda988bddd714983e5d34847a966ca1>` 0x08
+
+- #define :ref:`RDCY_SRV_SWITCHTOACTIVE <group___cmp_redundancy_itf_1ga7bf0ffe47432bceadaec7fbc8bb3c3a5>` 0x09
+
+- #define :ref:`TAG_SESSION_ID <group___cmp_redundancy_itf_1gafae0982246719b63bbe4ce30b5b35a41>` 0x10
+
+- #define :ref:`TAG_SETT_IPADDRESSLOCAL_FIRSTLINK <group___cmp_redundancy_itf_1ga804d249f730fb2880397d9bdfeed72cc>` 0x11
+
+- #define :ref:`TAG_SETT_IPADDRESSPEER_FIRSTLINK <group___cmp_redundancy_itf_1ga04c94e8c369d25ad7040754403a31504>` 0x12
+
+- #define :ref:`TAG_SETT_PORT_FIRSTLINK <group___cmp_redundancy_itf_1ga8ea65b3024c1b2345c5f81d8506fbcdb>` 0x13
+
+- #define :ref:`TAG_SETT_USESECONDLINK <group___cmp_redundancy_itf_1ga50113426810b7da45a7eb26dddf51db0>` 0x14
+
+- #define :ref:`TAG_SETT_IPADDRESSLOCAL_SECONDLINK <group___cmp_redundancy_itf_1ga0c023809bdd118a665935cb603e3f6d1>` 0x15
+
+- #define :ref:`TAG_SETT_IPADDRESSPEER_SECONDLINK <group___cmp_redundancy_itf_1gabd60b6019996330745a9724d9f526737>` 0x16
+
+- #define :ref:`TAG_SETT_PORT_SECONDLINK <group___cmp_redundancy_itf_1gabd895b21d8d02068bc4cd2db6eb4fcec>` 0x17
+
+- #define :ref:`TAG_SETT_BOOTUPWAITTIME <group___cmp_redundancy_itf_1gab8677770df7fa408dd2ae21cd204c0a3>` 0x18
+
+- #define :ref:`TAG_SETT_TCPWAITTIME <group___cmp_redundancy_itf_1ga77b5ffd682365c73dc6f5c928fbbd248>` 0x19
+
+- #define :ref:`TAG_SETT_STANDBYWAITTIME <group___cmp_redundancy_itf_1gab3f92647791a540d37d927c8a5f09e17>` 0x1A
+
+- #define :ref:`TAG_SETT_LOCKTIMEOUT <group___cmp_redundancy_itf_1ga44f2fa5911c2511e3bef33d5e0c2e244>` 0x1B
+
+- #define :ref:`TAG_SETT_BOOTPROJECTNAME <group___cmp_redundancy_itf_1ga1c597bc09dbd877a817ec4fcb060b9b6>` 0x1C
+
+- #define :ref:`TAG_SETT_REDUNDANCYTASKNAME <group___cmp_redundancy_itf_1gaef35080da08af92b340a46da5e1c527d>` 0x1D
+
+- #define :ref:`TAG_SETT_SERVICEWAITTIME <group___cmp_redundancy_itf_1ga1b08073565d19357c1b831e992103ee0>` 0x1E
+
+- #define :ref:`TAG_SETT_SERVICE <group___cmp_redundancy_itf_1gad4bbf0a1db709e9b8c4187670459cc8e>` 0x1F
+
+- #define :ref:`TAG_SETT_FIELDBUSES <group___cmp_redundancy_itf_1ga8f99846575f3db5cf3fc699bfebb54e8>` 0x20
+
+- #define :ref:`TAG_SETT_ETHERCATNICSETTING <group___cmp_redundancy_itf_1gae7d166770a94bcd1ba00f8c94003ff09>` 0x21
+
+- #define :ref:`TAG_SETT_MACADDRESSLOCAL_FIRSTLINK <group___cmp_redundancy_itf_1ga479b6026c7201af254d75a4169af0192>` 0x22
+
+- #define :ref:`TAG_SETT_REDUNDANCYFRAMEWAITTIME <group___cmp_redundancy_itf_1gae5f85915ee6c86d1f7664e5f2e320cdb>` 0x23
+
+- #define :ref:`TAG_SETT_GETFRAMESLEEPTIME <group___cmp_redundancy_itf_1gaefee8a02c9248066a8e618025a3f20e6>` 0x24
+
+- #define :ref:`TAG_SETT_DATAVIASYNCWAITTIME <group___cmp_redundancy_itf_1ga1d661015f36c76621c7665a498a9c8f5>` 0x25
+
+- #define :ref:`TAG_SETT_DATAVIASYNCLEEPTIME <group___cmp_redundancy_itf_1ga80daa90a31f7a1bc205c096eeca38b7e>` 0x26
+
+- #define :ref:`TAG_SETT_ETHERCATNICSETTINGREDUNDANCY <group___cmp_redundancy_itf_1ga515b3aa26f3419482b3fca4dfac4d624>` 0x27
+
+- #define :ref:`RDCY_ACK <group___cmp_redundancy_itf_1ga238605a0bdfe05ff5b1d4881aff67841>` 0x81
+
+- #define :ref:`TAG_SETT_RDCYCONNECTION <group___cmp_redundancy_itf_1ga64ee1597f7b496d34c08949b009a6f19>` 0x82
+
+- #define :ref:`TAG_RDCY_SUCCESS <group___cmp_redundancy_itf_1ga971c839d67b08b9226a168ce3a4dc3fa>` 0x2A
+
+- #define :ref:`TAG_RDCY_ERROR <group___cmp_redundancy_itf_1ga9f9a8eb7029f35fa9888c1f7caf7f488>` 0x2B
+
+- #define :ref:`TAG_RDCY_STATE <group___cmp_redundancy_itf_1ga6ebca0b93adb28ea714deca47c6d11bf>` 0x2C
+
+- #define :ref:`TAG_SETT_SYNCWAITTIME <group___cmp_redundancy_itf_1ga7a7b67f20fad52cb96bbfd428b4159a9>` 0x2D
+
+- #define :ref:`MAX_REDU_SYNC_FILES <group___cmp_redundancy_itf___staticdefines_1ga2874e9a9228a47389dd8b54e7821c69d>` 100
+
+- #define :ref:`RDCYKEY_INT_BOOTUPWAITTIME <group___cmp_redundancy_itf_1ga79035f86ea36351498906b17be43d300>` "BootupWaitTime"
+
+- #define :ref:`RDCYVALUE_INT_BOOTUPWAITTIME_DEFAULT <group___cmp_redundancy_itf_1ga394cea1567a41717bb51fd059ad4b81c>` 5000
+
+- #define :ref:`RDCYKEY_INT_TCPWAITTIME <group___cmp_redundancy_itf_1ga9e33430a77ba8f2e195254aadb7c64bd>` "TcpWaitTime"
+
+- #define :ref:`RDCYVALUE_INT_TCPWAITTIME_DEFAULT <group___cmp_redundancy_itf_1ga1f02170b142630f4ac4beb8b33f140bf>` 2000
+
+- #define :ref:`RDCYKEY_INT_RECONNECTWAITTIME <group___cmp_redundancy_itf_1ga670bec42328b36c5ee288d36ef9a7bbc>` "ReconnectWaitTime"
+
+- #define :ref:`RDCYVALUE_INT_RECONNECTWAITTIME_DEFAULT <group___cmp_redundancy_itf_1gadb1c2bfee0f380ecfe1e35edc03b5d63>` 5000
+
+- #define :ref:`RDCYKEY_INT_STANDBYWAITTIME <group___cmp_redundancy_itf_1ga185610f200c635a6bd8937309aa7aa04>` "StandbyWaitTime"
+
+- #define :ref:`RDCYVALUE_INT_STANDBYWAITTIME_DEFAULT <group___cmp_redundancy_itf_1ga389ac542bb79e1d21eb35657a26598ce>` 30
+
+- #define :ref:`RDCYKEY_INT_SYNCWAITTIME <group___cmp_redundancy_itf_1ga9be10f16735375741c8039a5cb443465>` "SyncWaitTime"
+
+- #define :ref:`RDCYKEY_INT_LOCKTIMEOUT <group___cmp_redundancy_itf_1ga6e2af35ea62fec35dd300d5774e9b238>` "LockTimeout"
+
+- #define :ref:`RDCYVALUE_INT_LOCKTIMEOUT_DEFAULT <group___cmp_redundancy_itf_1ga3261ed888db61b9c1ec6cd173e6b1088>` 50
+
+- #define :ref:`RDCYKEY_STRING_BOOTPROJECTNAME <group___cmp_redundancy_itf_1ga91a933c564c8ccd5450e51c7636e51e8>` "Bootproject"
+
+- #define :ref:`RDCYVALUE_STRING_BOOTPROJECTNAME_DEFAULT <group___cmp_redundancy_itf_1ga4cb58f8acef9cefd44d4e657a539fa26>` ""
+
+- #define :ref:`RDCYKEY_STRING_REDUNDANCYMAINTASKNAME <group___cmp_redundancy_itf_1gacf2e2c258e8ce27dfe9c3997846cccbb>` "RedundancyTaskName"
+
+- #define :ref:`RDCYVALUE_STRING_REDUNDANCYMAINTASKNAME_DEFAULT <group___cmp_redundancy_itf_1ga594a082af5a36993753fa76a2291515c>` ""
+
+- #define :ref:`RDCYKEY_INT_SERVICEWAITTIME <group___cmp_redundancy_itf_1ga17c30dd944ae7d2d82bef1985b178f4d>` "Service.WaitTime"
+
+- #define :ref:`RDCYVALUE_INT_SERVICEWAITTIME_DEFAULT <group___cmp_redundancy_itf_1ga3cc7d3ea46cf4dee7607bb1488d4ac88>` 1000
+
+- #define :ref:`RDCYKEY_INT_EVTTRGSTARTENDCALL <group___cmp_redundancy_itf_1ga672a213d60b554466473ea2cee5f8476>` "EvtTrgStartEndCall"
+
+- #define :ref:`RDCYVALUE_INT_EVTTRGSTARTENDCALL_DEFAULT <group___cmp_redundancy_itf_1ga62b97b854be63cc66a708e9230137dea>` TRUE
+
+- #define :ref:`RDCYKEY_INT_PROFIBUS <group___cmp_redundancy_itf_1gaac06b79590e4762dcf4002b637fd339e>` "Profibus"
+
+- #define :ref:`RDCYKEY_INT_PROFIBUSCIF50 <group___cmp_redundancy_itf_1gad0b0756ab5d56a388c816407d80895b8>` "ProfibusCIF50"
+
+- #define :ref:`RDCYVALUE_INT_PROFIBUS_DEFAULT <group___cmp_redundancy_itf_1ga627bd3d8af9cf7749811dd10437282f7>` FALSE
+
+- #define :ref:`RDCYKEY_INT_ETHERCAT <group___cmp_redundancy_itf_1gabe276a08ad6b6d51c7f5e7982f03ba79>` "Ethercat"
+
+- #define :ref:`RDCYVALUE_INT_ETHERCAT_DEFAULT <group___cmp_redundancy_itf_1gab656cad45f996e3e4b907ba38425c39c>` FALSE
+
+- #define :ref:`RDCYKEY_INT_DEBUGMESSAGES <group___cmp_redundancy_itf_1ga34c9684f65423e75d823c212c52ef476>` "DebugMessages"
+
+- #define :ref:`RDCYVALUE_INT_DEBUGMESSAGES_DEFAULT <group___cmp_redundancy_itf_1ga62c9ef624a6364f38e3409b5342714f5>` FALSE
+
+- #define :ref:`RDCYKEY_INT_DEBUGMESSAGESTASKTIME <group___cmp_redundancy_itf_1ga2e659a100b83f1a78e86c79b83ab8f5d>` "DebugMessagesTaskTime"
+
+- #define :ref:`RDCYVALUE_INT_DEBUGMESSAGESTASKTIME_DEFAULT <group___cmp_redundancy_itf_1ga3a9b0eb78030356d511488a7171a25a8>` FALSE
+
+- #define :ref:`RDCYKEY_INT_CALLVFINIT <group___cmp_redundancy_itf_1ga6ee97709afe350b01730f3b312655f8f>` "CallVfInit"
+
+- #define :ref:`RDCYVALUE_INT_CALLVFINIT_DEFAULT <group___cmp_redundancy_itf_1ga23a981e6529caa7a537e224f5d73c746>` TRUE
+
+- #define :ref:`RDCYKEY_INT_SIMULATION <group___cmp_redundancy_itf_1gae4219a9a98212abfd04f04b7616d85ac>` "Simulation"
+
+- #define :ref:`RDCYVALUE_INT_SIMULATION_DEFAULT <group___cmp_redundancy_itf_1ga68e61678bcd78ce7522b2860e28cc05d>` FALSE
+
+- #define :ref:`RDCYKEY_INT_SYNCHROPHASELENGTH <group___cmp_redundancy_itf_1gaad52f851da14ea50aa816baffecee6f5>` "SynchroPhaseLength"
+
+- #define :ref:`RDCYVALUE_INT_SYNCHROPHASELENGTH_DEFAULT <group___cmp_redundancy_itf_1ga2d1b8fefa224d6b4c3076d2fd6fa432c>` 0
+
+- #define :ref:`RDCYKEY_INT_EXTRASTANDBYWAITTIME <group___cmp_redundancy_itf_1gad35f09a337a6749b4a237cf9a65a28f0>` "ExtraStandbyWaitTime"
+
+- #define :ref:`RDCYVALUE_INT_EXTRASTANDBYWAITTIME_DEFAULT <group___cmp_redundancy_itf_1ga51e926fb6f8eeae73cc7229bcaf587bd>` 0
+
+- #define :ref:`RDCYKEY_INT_STANDALONEAFTERSTANDBY <group___cmp_redundancy_itf_1ga211ef0b915ca5101cabb0d63698a65ef>` "StandaloneAfterStandby"
+
+- #define :ref:`RDCYVALUE_INT_STANDALONEAFTERSTANDBY_DEFAULT <group___cmp_redundancy_itf_1ga40557a3c397b183dec872d62a5b358b6>` 2
+
+- #define :ref:`RDCYKEY_INT_INPUTAREACRCCHECK <group___cmp_redundancy_itf_1ga1818e6eb97ae10c2467d25f2f73c002a>` "InputAreaCrcCheck"
+
+- #define :ref:`RDCYVALUE_INT_INPUTAREACRCCHECK_DEFAULT <group___cmp_redundancy_itf_1gaf860f8c3efbd6a93649619ce9a48e2f9>` FALSE
+
+- #define :ref:`RDCYKEY_INT_AREASYNCTLGCRCCHECK <group___cmp_redundancy_itf_1ga94d456e27e7232c66b94d1b071672224>` "AreaSyncTelegramCrcCheck"
+
+- #define :ref:`RDCYVALUE_INT_AREASYNCTLGCRCCHECK_DEFAULT <group___cmp_redundancy_itf_1gaccb56e6e4a313eb5362bf2fe066f76d9>` FALSE
+
+- #define :ref:`RDCYKEY_INT_CMPSRV_SERVICEWAITTIME <group___cmp_redundancy_itf_1ga6d3e7c087138089edeec51e01db403c0>` "Service.WaitTime"
+
+- #define :ref:`RDCYVALUE_INT_CMPSRV_SERVICEWAITTIME_DEFAULT <group___cmp_redundancy_itf_1ga468dc65fe9cb9d7150ca6a3d21b4a30f>` 1000
+
+- #define :ref:`RDCYKEY_INT_PLCIDENT <group___cmp_redundancy_itf_1ga072d4fb9fdac51a754161af16d3274e6>` "PlcIdent"
+
+- #define :ref:`RDCYVALUE_INT_PLCIDENT_DEFAULT <group___cmp_redundancy_itf_1gaf9279a83614d60e05f11c9ff36ff358d>` 0
+
+- #define :ref:`RDCYKEY_INT_SYNCBEFORETASKCYCLE <group___cmp_redundancy_itf_1gae04dc166c80c34bc9dbb2763e6860d3a>` "SyncBeforeTaskCycle"
+
+- #define :ref:`RDCYVALUE_INT_SYNCBEFORETASKCYCLE_DEFAULT <group___cmp_redundancy_itf_1ga4cece7d55782b6f9eb79c0cecf756bda>` FALSE
+
+- #define :ref:`RDCYKEY_INT_DATASYNCALWAYS <group___cmp_redundancy_itf___settings_1ga074e5795ccefefe6f1f38a96e59aadf7>` "DataSyncAlways"
+
+- #define :ref:`RDCYVALUE_INT_DATASYNCALWAYS_DEFAULT <group___cmp_redundancy_itf___settings_1ga98dfd601a6cd3ebeca413d95f73ebb0b>` FALSE
+
+- #define :ref:`RDCYKEY_INT_CHECKBOOTAPPGUID <group___cmp_redundancy_itf___settings_1ga945faeb1e2e068b4111da85b41f874a5>` "CheckBootApplicationGuid"
+
+- #define :ref:`RDCYVALUE_INT_CHECKBOOTAPPGUID_DEFAULT <group___cmp_redundancy_itf___settings_1gac642b5e6bd4cdcfe760f84c01f518c73>` FALSE
+
+- #define :ref:`EVTPARAMID_CmpRedundancy_vfInit <group___cmp_redundancy_itf___settings_1gada5890de6fae4a519f755d095ba05bed>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpRedundancy_vfInit <group___cmp_redundancy_itf___settings_1ga76c7b44b856150576e3cc198196c0dbe>` 0x0001
+
+- #define :ref:`EVT_CmpRedundancy_vfInit <group___cmp_redundancy_itf___settings_1ga3e3feb269771cdc7f1c8e7496183cb27>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`PLC_IDENT_PLC_ID_NONE <group___cmp_redundancy_itf_1gaa00bab3fb51171c0535f8c7e9dc832ef>` RTS_IEC_INT_C(0x0)	/* Not specified */
+
+- #define :ref:`PLC_IDENT_PLC_ID_1 <group___cmp_redundancy_itf_1gaf5ee61b282e5486b89950021636d8985>` RTS_IEC_INT_C(0x1)	/* PLC 1 */
+
+- #define :ref:`PLC_IDENT_PLC_ID_2 <group___cmp_redundancy_itf_1gad70c6b52a3aef18a1f103e432a73b384>` RTS_IEC_INT_C(0x2)	/* PLC 2 */
+
+- #define :ref:`PLC_IDENT <group___cmp_redundancy_itf_1ga308fa5c6d1f2af95bc7e3c3aad524979>` RTS_IEC_INT
+
+- #define :ref:`USE_arearegister <group___cmp_redundancy_itf_1gaaa12ebe5e06299c722934ebcc631178b>` :ref:`PFAREAREGISTER_IEC <group___cmp_redundancy_itf_1ga986b449c6f52659951ffb79897dc7406>` pfarearegister;
+
+- #define :ref:`EXT_arearegister <group___cmp_redundancy_itf_1ga10bfc19a8b46709af2f9aaa1601e09a4>` extern :ref:`PFAREAREGISTER_IEC <group___cmp_redundancy_itf_1ga986b449c6f52659951ffb79897dc7406>` pfarearegister;
+
+- #define :ref:`GET_arearegister <group___cmp_redundancy_itf_1gaf0546ebb58985e2048c80f0c403a100c>` s_pfCMGetAPI2( "arearegister", (RTS_VOID_FCTPTR *)&pfarearegister, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0, 0x0)
+
+- #define :ref:`CAL_arearegister <group___cmp_redundancy_itf_1ga84c0c11e9211808a90be5ca186285eaf>` pfarearegister
+
+- #define :ref:`CHK_arearegister <group___cmp_redundancy_itf_1ga942cd0537fd0ccc674066471133965e2>` (pfarearegister != NULL)
+
+- #define :ref:`EXP_arearegister <group___cmp_redundancy_itf_1ga60883097197b08b83250bb07a8c6117e>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"arearegister", (RTS_UINTPTR) :ref:`arearegister <group___cmp_redundancy_itf_1ga0c10fff3e2b67dc6d4bfb6bad9f954d6>` , 1, 0x0, 0x0)
+
+- #define :ref:`USE_arearegistersegment <group___cmp_redundancy_itf_1ga11453dd7cd1604538bb425773738b5d9>` :ref:`PFAREAREGISTERSEGMENT_IEC <group___cmp_redundancy_itf_1gaa983a1b08c7ae831dd64a9cacb64fa57>` pfarearegistersegment;
+
+- #define :ref:`EXT_arearegistersegment <group___cmp_redundancy_itf_1ga6444d70af08554da6d414dd735d79dd0>` extern :ref:`PFAREAREGISTERSEGMENT_IEC <group___cmp_redundancy_itf_1gaa983a1b08c7ae831dd64a9cacb64fa57>` pfarearegistersegment;
+
+- #define :ref:`GET_arearegistersegment <group___cmp_redundancy_itf_1ga7b6541673b1eca37ffee6eb6c7b30799>` s_pfCMGetAPI2( "arearegistersegment", (RTS_VOID_FCTPTR *)&pfarearegistersegment, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0, 0x0)
+
+- #define :ref:`CAL_arearegistersegment <group___cmp_redundancy_itf_1ga3f34c76563220e6c9fc7236e0af1b8a3>` pfarearegistersegment
+
+- #define :ref:`CHK_arearegistersegment <group___cmp_redundancy_itf_1gadf939d0b3a371de8e0c0d2bfe6257037>` (pfarearegistersegment != NULL)
+
+- #define :ref:`EXP_arearegistersegment <group___cmp_redundancy_itf_1ga054a27866c745514b056d7e23df24a10>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"arearegistersegment", (RTS_UINTPTR) :ref:`arearegistersegment <group___cmp_redundancy_itf_1gaca8401df1aff570d7fbdadd0c0ba382c>` , 1, 0x0, 0x0)
+
+- #define :ref:`USE_unregisterareas <group___cmp_redundancy_itf_1ga2bf9700ec03b97ed6f5772358c446168>` :ref:`PFUNREGISTERAREAS_IEC <group___cmp_redundancy_itf_1gaa64800229deb2b08f8e50c72c7d1e8be>` pfunregisterareas;
+
+- #define :ref:`EXT_unregisterareas <group___cmp_redundancy_itf_1ga052e43163386b6947bf2f43dc6d2f5e5>` extern :ref:`PFUNREGISTERAREAS_IEC <group___cmp_redundancy_itf_1gaa64800229deb2b08f8e50c72c7d1e8be>` pfunregisterareas;
+
+- #define :ref:`GET_unregisterareas <group___cmp_redundancy_itf_1ga03478eaa371b1e140db638e92e25cad9>` s_pfCMGetAPI2( "unregisterareas", (RTS_VOID_FCTPTR *)&pfunregisterareas, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0, 0x0)
+
+- #define :ref:`CAL_unregisterareas <group___cmp_redundancy_itf_1gad402c8b8f61953dfde5cd67e59130f26>` pfunregisterareas
+
+- #define :ref:`CHK_unregisterareas <group___cmp_redundancy_itf_1gac3152b2022542b7eff585d63897513cb>` (pfunregisterareas != NULL)
+
+- #define :ref:`EXP_unregisterareas <group___cmp_redundancy_itf_1ga102f7ebe394473d9f08a1ad5020de0cc>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"unregisterareas", (RTS_UINTPTR) :ref:`unregisterareas <group___cmp_redundancy_itf_1gaa43c2bba813a2219570d5a10969d9674>` , 1, 0x0, 0x0)
+
+- #define :ref:`USE_redundancycycleend <group___cmp_redundancy_itf_1gad4169408ebe48a07244e7fc38dd6c9d5>` :ref:`PFREDUNDANCYCYCLEEND_IEC <group___cmp_redundancy_itf_1gadc286ed858d38894288cbf32a54f0d5b>` pfredundancycycleend;
+
+- #define :ref:`EXT_redundancycycleend <group___cmp_redundancy_itf_1gab2d404f75f5c67e0687739eb64d6e894>` extern :ref:`PFREDUNDANCYCYCLEEND_IEC <group___cmp_redundancy_itf_1gadc286ed858d38894288cbf32a54f0d5b>` pfredundancycycleend;
+
+- #define :ref:`GET_redundancycycleend <group___cmp_redundancy_itf_1ga18ab3cb1423f4801d57c2c606eea9c3a>` s_pfCMGetAPI2( "redundancycycleend", (RTS_VOID_FCTPTR *)&pfredundancycycleend, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0, 0x0)
+
+- #define :ref:`CAL_redundancycycleend <group___cmp_redundancy_itf_1ga1d3c8be3a2908f8a68a3404bccab149f>` pfredundancycycleend
+
+- #define :ref:`CHK_redundancycycleend <group___cmp_redundancy_itf_1gaf019a1f707e7af0687909d20f94a368c>` (pfredundancycycleend != NULL)
+
+- #define :ref:`EXP_redundancycycleend <group___cmp_redundancy_itf_1ga7f71734b6482fcb083471d7477272f10>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"redundancycycleend", (RTS_UINTPTR) :ref:`redundancycycleend <group___cmp_redundancy_itf_1gab1be23cd29d288a54122e7bf597d79ab>` , 1, 0x0, 0x0)
+
+- #define :ref:`USE_redundancycyclestart <group___cmp_redundancy_itf_1gafc31315f140854af22e580e3196e8f7d>` :ref:`PFREDUNDANCYCYCLESTART_IEC <group___cmp_redundancy_itf_1ga9aaa1968a87ca50ec8a76ef4490b6964>` pfredundancycyclestart;
+
+- #define :ref:`EXT_redundancycyclestart <group___cmp_redundancy_itf_1gaedfa05418b445bed50dc89726672089e>` extern :ref:`PFREDUNDANCYCYCLESTART_IEC <group___cmp_redundancy_itf_1ga9aaa1968a87ca50ec8a76ef4490b6964>` pfredundancycyclestart;
+
+- #define :ref:`GET_redundancycyclestart <group___cmp_redundancy_itf_1ga8272efe6fade4f200d5be7b01c5628f0>` s_pfCMGetAPI2( "redundancycyclestart", (RTS_VOID_FCTPTR *)&pfredundancycyclestart, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0, 0x0)
+
+- #define :ref:`CAL_redundancycyclestart <group___cmp_redundancy_itf_1ga374fa69561b20d457914befbe990c5cc>` pfredundancycyclestart
+
+- #define :ref:`CHK_redundancycyclestart <group___cmp_redundancy_itf_1gaa5e06a3d08cf0b0b8ac5c766a8133fca>` (pfredundancycyclestart != NULL)
+
+- #define :ref:`EXP_redundancycyclestart <group___cmp_redundancy_itf_1ga7f3fee81e1db4fee2344aaeb7d1ebda0>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"redundancycyclestart", (RTS_UINTPTR) :ref:`redundancycyclestart <group___cmp_redundancy_itf_1ga9bfdf2c2c1e85d2730b605b06ceea825>` , 1, 0x0, 0x0)
+
+- #define :ref:`USE_getredundancystate <group___cmp_redundancy_itf_1ga94c0a6064dac8aa765f2c0eb7abb7b88>` :ref:`PFGETREDUNDANCYSTATE_IEC <group___cmp_redundancy_itf_1ga2e0760fd9b09aa1d1cea7cff3032df7a>` pfgetredundancystate;
+
+- #define :ref:`EXT_getredundancystate <group___cmp_redundancy_itf_1ga1a99207668e0ade82fcc5990c3216d40>` extern :ref:`PFGETREDUNDANCYSTATE_IEC <group___cmp_redundancy_itf_1ga2e0760fd9b09aa1d1cea7cff3032df7a>` pfgetredundancystate;
+
+- #define :ref:`GET_getredundancystate <group___cmp_redundancy_itf_1ga290c3d87cbf1a93aa0147c9090f90b5f>` s_pfCMGetAPI2( "getredundancystate", (RTS_VOID_FCTPTR *)&pfgetredundancystate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0, 0x0)
+
+- #define :ref:`CAL_getredundancystate <group___cmp_redundancy_itf_1ga3396e7ab68c662694a8824207d9d4ad9>` pfgetredundancystate
+
+- #define :ref:`CHK_getredundancystate <group___cmp_redundancy_itf_1gad44711bc51ace2663b6aa43df396f465>` (pfgetredundancystate != NULL)
+
+- #define :ref:`EXP_getredundancystate <group___cmp_redundancy_itf_1gace286af16da2cc2ccb2a49b33cc7a8df>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getredundancystate", (RTS_UINTPTR) :ref:`getredundancystate <group___cmp_redundancy_itf_1ga576dadfc96d6ba198f1010789e076ab3>` , 1, 0x0, 0x0)
+
+- #define :ref:`USE_getsyncinformation <group___cmp_redundancy_itf_1ga446b63aa595b141438458b7beeafdb50>` :ref:`PFGETSYNCINFORMATION_IEC <group___cmp_redundancy_itf_1ga33f10e06391e5c82e56a678144b3f976>` pfgetsyncinformation;
+
+- #define :ref:`EXT_getsyncinformation <group___cmp_redundancy_itf_1gaf65065e5dffe73b6f5605ea6aa184147>` extern :ref:`PFGETSYNCINFORMATION_IEC <group___cmp_redundancy_itf_1ga33f10e06391e5c82e56a678144b3f976>` pfgetsyncinformation;
+
+- #define :ref:`GET_getsyncinformation <group___cmp_redundancy_itf_1ga6c83129da9f24d5375c7bb00133557a9>` s_pfCMGetAPI2( "getsyncinformation", (RTS_VOID_FCTPTR *)&pfgetsyncinformation, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x7312487E, 0x03050F00)
+
+- #define :ref:`CAL_getsyncinformation <group___cmp_redundancy_itf_1ga45f6ccb85adb53942dcb35d21238194d>` pfgetsyncinformation
+
+- #define :ref:`CHK_getsyncinformation <group___cmp_redundancy_itf_1ga960cdc3e9fdab7227d89692d0ec0131e>` (pfgetsyncinformation != NULL)
+
+- #define :ref:`EXP_getsyncinformation <group___cmp_redundancy_itf_1ga219e704836699113a4052536975fb67c>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getsyncinformation", (RTS_UINTPTR) :ref:`getsyncinformation <group___cmp_redundancy_itf_1ga7dcd7a88c80122ce8de0510544c9faaf>` , 1, 0x7312487E, 0x03050F00)
+
+- #define :ref:`USE_switchtosimulation <group___cmp_redundancy_itf_1ga27d964e5e9248c9bd84dc8d8ddd5e2f5>` :ref:`PFSWITCHTOSIMULATION_IEC <group___cmp_redundancy_itf_1ga13459b04c78fb05d8ce528949b00fea4>` pfswitchtosimulation;
+
+- #define :ref:`EXT_switchtosimulation <group___cmp_redundancy_itf_1gacfd3383036e60894ef0b735c6dce87aa>` extern :ref:`PFSWITCHTOSIMULATION_IEC <group___cmp_redundancy_itf_1ga13459b04c78fb05d8ce528949b00fea4>` pfswitchtosimulation;
+
+- #define :ref:`GET_switchtosimulation <group___cmp_redundancy_itf_1gacf40ead93d9b7b3fc93a1f77dd992684>` s_pfCMGetAPI2( "switchtosimulation", (RTS_VOID_FCTPTR *)&pfswitchtosimulation, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0, 0x0)
+
+- #define :ref:`CAL_switchtosimulation <group___cmp_redundancy_itf_1gad072e25ef267595fa3110cc12eea13a9>` pfswitchtosimulation
+
+- #define :ref:`CHK_switchtosimulation <group___cmp_redundancy_itf_1ga50145374b58bae44bb567584926d0adf>` (pfswitchtosimulation != NULL)
+
+- #define :ref:`EXP_switchtosimulation <group___cmp_redundancy_itf_1gaa866e35cbbc0f7c00a0c47b103a28eca>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"switchtosimulation", (RTS_UINTPTR) :ref:`switchtosimulation <group___cmp_redundancy_itf_1ga80861ceb9461fc2406ab26f47cbe8b52>` , 1, 0x0, 0x0)
+
+- #define :ref:`USE_switchtostandalone <group___cmp_redundancy_itf_1gaaa92f66165decdc1b6237745c2e44e2c>` :ref:`PFSWITCHTOSTANDALONE_IEC <group___cmp_redundancy_itf_1ga092ca4d693b310f36c74350df2c41b92>` pfswitchtostandalone;
+
+- #define :ref:`EXT_switchtostandalone <group___cmp_redundancy_itf_1gaec80695e8bf629d23ee362ce5fd1f774>` extern :ref:`PFSWITCHTOSTANDALONE_IEC <group___cmp_redundancy_itf_1ga092ca4d693b310f36c74350df2c41b92>` pfswitchtostandalone;
+
+- #define :ref:`GET_switchtostandalone <group___cmp_redundancy_itf_1ga47320ab59658bb02cc2c5d620fe2a3a0>` s_pfCMGetAPI2( "switchtostandalone", (RTS_VOID_FCTPTR *)&pfswitchtostandalone, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0, 0x0)
+
+- #define :ref:`CAL_switchtostandalone <group___cmp_redundancy_itf_1ga511c906a90ddbbf2a2cce33585314dda>` pfswitchtostandalone
+
+- #define :ref:`CHK_switchtostandalone <group___cmp_redundancy_itf_1ga356f585a5091155da79c7a39d0400350>` (pfswitchtostandalone != NULL)
+
+- #define :ref:`EXP_switchtostandalone <group___cmp_redundancy_itf_1ga180adcf256d4ddecdba44bcf35188582>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"switchtostandalone", (RTS_UINTPTR) :ref:`switchtostandalone <group___cmp_redundancy_itf_1ga301cfee21890fcc300d5ae19fe8fb179>` , 1, 0x0, 0x0)
+
+- #define :ref:`USE_switchtostandby <group___cmp_redundancy_itf_1ga06da09ddd92e773dcf1e17a1bc3a6acc>` :ref:`PFSWITCHTOSTANDBY_IEC <group___cmp_redundancy_itf_1ga5e41a6727f4ec53ed0c46975c5ae5a53>` pfswitchtostandby;
+
+- #define :ref:`EXT_switchtostandby <group___cmp_redundancy_itf_1ga3097d3684b02104b279e55153ab893a6>` extern :ref:`PFSWITCHTOSTANDBY_IEC <group___cmp_redundancy_itf_1ga5e41a6727f4ec53ed0c46975c5ae5a53>` pfswitchtostandby;
+
+- #define :ref:`GET_switchtostandby <group___cmp_redundancy_itf_1ga12ed57bf7d00df860b2eb5a5b30ae9dd>` s_pfCMGetAPI2( "switchtostandby", (RTS_VOID_FCTPTR *)&pfswitchtostandby, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0, 0x0)
+
+- #define :ref:`CAL_switchtostandby <group___cmp_redundancy_itf_1ga5b34012150d70e7467b980b52f26446b>` pfswitchtostandby
+
+- #define :ref:`CHK_switchtostandby <group___cmp_redundancy_itf_1gaf9742ad2711f8cadda409ba48001207c>` (pfswitchtostandby != NULL)
+
+- #define :ref:`EXP_switchtostandby <group___cmp_redundancy_itf_1ga0004ac8f3b29bfeec18c87ffa944312a>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"switchtostandby", (RTS_UINTPTR) :ref:`switchtostandby <group___cmp_redundancy_itf_1ga58716957758c14dbd8615a7c7ce7830c>` , 1, 0x0, 0x0)
+
+- #define :ref:`USE_switchtoactive <group___cmp_redundancy_itf_1ga3e3ba7941c045f1f1c2bc33abc208fbb>` :ref:`PFSWITCHTOACTIVE_IEC <group___cmp_redundancy_itf_1ga1ece91b685532422d1c4d8b1923cfbe7>` pfswitchtoactive;
+
+- #define :ref:`EXT_switchtoactive <group___cmp_redundancy_itf_1ga5fe05ce2f1df601cf38a4c6704648221>` extern :ref:`PFSWITCHTOACTIVE_IEC <group___cmp_redundancy_itf_1ga1ece91b685532422d1c4d8b1923cfbe7>` pfswitchtoactive;
+
+- #define :ref:`GET_switchtoactive <group___cmp_redundancy_itf_1ga30eefda5806c39b5c1d47859498c427e>` s_pfCMGetAPI2( "switchtoactive", (RTS_VOID_FCTPTR *)&pfswitchtoactive, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0, 0x0)
+
+- #define :ref:`CAL_switchtoactive <group___cmp_redundancy_itf_1ga540c5669c10878dcfb034cd0f6882737>` pfswitchtoactive
+
+- #define :ref:`CHK_switchtoactive <group___cmp_redundancy_itf_1ga5a05b035a473eab5a9756e226338e9a6>` (pfswitchtoactive != NULL)
+
+- #define :ref:`EXP_switchtoactive <group___cmp_redundancy_itf_1ga7b10e259168b61b924bd0090a7a3652f>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"switchtoactive", (RTS_UINTPTR) :ref:`switchtoactive <group___cmp_redundancy_itf_1ga0d38d8ffde71a90aa9d1aef7b7485663>` , 1, 0x0, 0x0)
+
+- #define :ref:`USE_synchronize <group___cmp_redundancy_itf_1ga68a8b02197c92a096a1d4b8dfbc06aa8>` :ref:`PFSYNCHRONIZE_IEC <group___cmp_redundancy_itf_1ga5cd7beaea879d33dd2d9ae961d99c72e>` pfsynchronize;
+
+- #define :ref:`EXT_synchronize <group___cmp_redundancy_itf_1ga165df615f8a843621cf5447c679d2adc>` extern :ref:`PFSYNCHRONIZE_IEC <group___cmp_redundancy_itf_1ga5cd7beaea879d33dd2d9ae961d99c72e>` pfsynchronize;
+
+- #define :ref:`GET_synchronize <group___cmp_redundancy_itf_1gaa160869736ddd57f3f80c23b7244a211>` s_pfCMGetAPI2( "synchronize", (RTS_VOID_FCTPTR *)&pfsynchronize, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0, 0x0)
+
+- #define :ref:`CAL_synchronize <group___cmp_redundancy_itf_1gabe6322f1d174e016d224e560fc457063>` pfsynchronize
+
+- #define :ref:`CHK_synchronize <group___cmp_redundancy_itf_1gaab8256a2961db015baf3d2fd4db68f6f>` (pfsynchronize != NULL)
+
+- #define :ref:`EXP_synchronize <group___cmp_redundancy_itf_1ga3338d4fe1a15cf6089cb53ca310756f2>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"synchronize", (RTS_UINTPTR) :ref:`synchronize <group___cmp_redundancy_itf_1ga34cf799e921c2ceed3318e54643e6a4a>` , 1, 0x0, 0x0)
+
+- #define :ref:`USE_getplcident <group___cmp_redundancy_itf_1ga5512643a1f58775a9bf8cc67e6b9676d>` :ref:`PFGETPLCIDENT_IEC <group___cmp_redundancy_itf_1ga58809fbaad01922c614bc54e12b1159a>` pfgetplcident;
+
+- #define :ref:`EXT_getplcident <group___cmp_redundancy_itf_1ga8941a6a5d309e76d400a97cff1fb40f9>` extern :ref:`PFGETPLCIDENT_IEC <group___cmp_redundancy_itf_1ga58809fbaad01922c614bc54e12b1159a>` pfgetplcident;
+
+- #define :ref:`GET_getplcident <group___cmp_redundancy_itf_1gaac2a5205b0c657f140b0e1355a11b47e>` s_pfCMGetAPI2( "getplcident", (RTS_VOID_FCTPTR *)&pfgetplcident, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE8999A90, 0x03050E00)
+
+- #define :ref:`CAL_getplcident <group___cmp_redundancy_itf_1ga8be1b5e67b09887f40de9f2e1b4722a9>` pfgetplcident
+
+- #define :ref:`CHK_getplcident <group___cmp_redundancy_itf_1gab1112e696af7798590f6966ea6edcc3e>` (pfgetplcident != NULL)
+
+- #define :ref:`EXP_getplcident <group___cmp_redundancy_itf_1ga9bcc0b2ff2dab217e61395fe0d5063d7>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getplcident", (RTS_UINTPTR) :ref:`getplcident <group___cmp_redundancy_itf_1gaf079b18ce89b15540a931eaa3b45f403>` , 1, 0xE8999A90, 0x03050E00)
+
+- #define :ref:`USE_redundancysynchronizedata <group___cmp_redundancy_itf_1ga113c2fe073dde9036875e8c60b799a0e>` :ref:`PFREDUNDANCYSYNCHRONIZEDATA_IEC <group___cmp_redundancy_itf_1gab24e1917bae5c29a7b4c95b7707a6712>` pfredundancysynchronizedata;
+
+- #define :ref:`EXT_redundancysynchronizedata <group___cmp_redundancy_itf_1gaba5e2d76a387cf9094dbf75ff5318c45>` extern :ref:`PFREDUNDANCYSYNCHRONIZEDATA_IEC <group___cmp_redundancy_itf_1gab24e1917bae5c29a7b4c95b7707a6712>` pfredundancysynchronizedata;
+
+- #define :ref:`GET_redundancysynchronizedata <group___cmp_redundancy_itf_1ga76a55da7f34976bff65aa956a87ef570>` s_pfCMGetAPI2( "redundancysynchronizedata", (RTS_VOID_FCTPTR *)&pfredundancysynchronizedata, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xBF757A6F, 0x03051000)
+
+- #define :ref:`CAL_redundancysynchronizedata <group___cmp_redundancy_itf_1ga0a81c33de40fbeb56de23c01172732fc>` pfredundancysynchronizedata
+
+- #define :ref:`CHK_redundancysynchronizedata <group___cmp_redundancy_itf_1gaa8d03a125a0b2b5c707545500dd5976a>` (pfredundancysynchronizedata != NULL)
+
+- #define :ref:`EXP_redundancysynchronizedata <group___cmp_redundancy_itf_1gacc9e8e905d39124557af4dd6687167a1>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"redundancysynchronizedata", (RTS_UINTPTR) :ref:`redundancysynchronizedata <group___cmp_redundancy_itf_1ga74170e11a4270131c730c3759006f4f0>` , 1, 0xBF757A6F, 0x03051000)
+
+- #define :ref:`USE_getconnectionstate <group___cmp_redundancy_itf_1gabe2a0a62bf950f61db21a9d2a1840fad>` :ref:`PFGETCONNECTIONSTATE_IEC <group___cmp_redundancy_itf_1ga58a8baf06cda29157ad2678c162d7d1f>` pfgetconnectionstate;
+
+- #define :ref:`EXT_getconnectionstate <group___cmp_redundancy_itf_1gafdc718bc06cd7e2a0564729a21f9417e>` extern :ref:`PFGETCONNECTIONSTATE_IEC <group___cmp_redundancy_itf_1ga58a8baf06cda29157ad2678c162d7d1f>` pfgetconnectionstate;
+
+- #define :ref:`GET_getconnectionstate <group___cmp_redundancy_itf_1gab4ccc2bdf89061155d2e9113cd8fa30a>` s_pfCMGetAPI2( "getconnectionstate", (RTS_VOID_FCTPTR *)&pfgetconnectionstate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x5802A20A, 0x03051000)
+
+- #define :ref:`CAL_getconnectionstate <group___cmp_redundancy_itf_1ga5997a4ba01abb44faf23e30bbf7c009d>` pfgetconnectionstate
+
+- #define :ref:`CHK_getconnectionstate <group___cmp_redundancy_itf_1ga83c86de76664b132f1fefb986ac0cb88>` (pfgetconnectionstate != NULL)
+
+- #define :ref:`EXP_getconnectionstate <group___cmp_redundancy_itf_1ga644b2cb8f35d291a51b4c45e15af1bbe>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getconnectionstate", (RTS_UINTPTR) :ref:`getconnectionstate <group___cmp_redundancy_itf_1ga84419945bb2459cb919f3b8edf9620c2>` , 1, 0x5802A20A, 0x03051000)
+
+- #define :ref:`USE_RedundancyAreaRegister <group___cmp_redundancy_itf_1ga5c501f09527073ac51e91bf2b8a191ad>` :ref:`PFREDUNDANCYAREAREGISTER <group___cmp_redundancy_itf_1ga2cfe8fbed4c72918cf42dfb2965b3d8d>` pfRedundancyAreaRegister;
+
+- #define :ref:`EXT_RedundancyAreaRegister <group___cmp_redundancy_itf_1gaeea90131ab4f23c2b9726b391244805e>` extern :ref:`PFREDUNDANCYAREAREGISTER <group___cmp_redundancy_itf_1ga2cfe8fbed4c72918cf42dfb2965b3d8d>` pfRedundancyAreaRegister;
+
+- #define :ref:`GET_RedundancyAreaRegister <group___cmp_redundancy_itf_1ga1c925d9b3ccfd1bf69c99df216a4dd49>` s_pfCMGetAPI2( "RedundancyAreaRegister", (RTS_VOID_FCTPTR *)&pfRedundancyAreaRegister, (fl), 0, 0)
+
+- #define :ref:`CAL_RedundancyAreaRegister <group___cmp_redundancy_itf_1ga9d8ff9ac006991a35368df9c9a027ad7>` pfRedundancyAreaRegister
+
+- #define :ref:`CHK_RedundancyAreaRegister <group___cmp_redundancy_itf_1gae72ff57e0787715a8b4308a172277fab>` (pfRedundancyAreaRegister != NULL)
+
+- #define :ref:`EXP_RedundancyAreaRegister <group___cmp_redundancy_itf_1gad792fd5c20a4778e6bd5ac393002f281>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RedundancyAreaRegister", (RTS_UINTPTR) :ref:`RedundancyAreaRegister <group___cmp_redundancy_itf_1gaf2c843aba8f718d6d56f5fffeaf76c2e>` , 0, 0)
+
+- #define :ref:`USE_RedundancyAreaRegisterSegment <group___cmp_redundancy_itf_1ga8e6635ee0f0b882b5548f324b0ae258b>` :ref:`PFREDUNDANCYAREAREGISTERSEGMENT <group___cmp_redundancy_itf_1ga65bdecfe4662854a53ef0656707640a2>` pfRedundancyAreaRegisterSegment;
+
+- #define :ref:`EXT_RedundancyAreaRegisterSegment <group___cmp_redundancy_itf_1ga4da57b6ac9c67d3662816d1b2fcf69df>` extern :ref:`PFREDUNDANCYAREAREGISTERSEGMENT <group___cmp_redundancy_itf_1ga65bdecfe4662854a53ef0656707640a2>` pfRedundancyAreaRegisterSegment;
+
+- #define :ref:`GET_RedundancyAreaRegisterSegment <group___cmp_redundancy_itf_1ga046b03667d649dd5c87aedc9b0377766>` s_pfCMGetAPI2( "RedundancyAreaRegisterSegment", (RTS_VOID_FCTPTR *)&pfRedundancyAreaRegisterSegment, (fl), 0, 0)
+
+- #define :ref:`CAL_RedundancyAreaRegisterSegment <group___cmp_redundancy_itf_1ga5978fae4dd0537d49fde732666e819c0>` pfRedundancyAreaRegisterSegment
+
+- #define :ref:`CHK_RedundancyAreaRegisterSegment <group___cmp_redundancy_itf_1ga87019b4ac427509669e1ee217de89917>` (pfRedundancyAreaRegisterSegment != NULL)
+
+- #define :ref:`EXP_RedundancyAreaRegisterSegment <group___cmp_redundancy_itf_1gac1e0ad39066061e0d4ee9d3e0115e4e6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RedundancyAreaRegisterSegment", (RTS_UINTPTR) :ref:`RedundancyAreaRegisterSegment <group___cmp_redundancy_itf_1gaa9a90e9310fb193a966c0b330fb28cfd>` , 0, 0)
+
+- #define :ref:`USE_RedundancyUnregisterAreas <group___cmp_redundancy_itf_1ga5142bc3f8062f475fedb5e3e3351cd30>` :ref:`PFREDUNDANCYUNREGISTERAREAS <group___cmp_redundancy_itf_1gaceff90aac585f7a0d62e47d493f06233>` pfRedundancyUnregisterAreas;
+
+- #define :ref:`EXT_RedundancyUnregisterAreas <group___cmp_redundancy_itf_1ga67eb77498544903a0f39aa44716bc9b3>` extern :ref:`PFREDUNDANCYUNREGISTERAREAS <group___cmp_redundancy_itf_1gaceff90aac585f7a0d62e47d493f06233>` pfRedundancyUnregisterAreas;
+
+- #define :ref:`GET_RedundancyUnregisterAreas <group___cmp_redundancy_itf_1gae1d525de6591f8e83700e4db452b9096>` s_pfCMGetAPI2( "RedundancyUnregisterAreas", (RTS_VOID_FCTPTR *)&pfRedundancyUnregisterAreas, (fl), 0, 0)
+
+- #define :ref:`CAL_RedundancyUnregisterAreas <group___cmp_redundancy_itf_1ga31c10b482a23a1cc8495717cd248fbd8>` pfRedundancyUnregisterAreas
+
+- #define :ref:`CHK_RedundancyUnregisterAreas <group___cmp_redundancy_itf_1ga8ac3f1208089aa9c2487269dc7db0469>` (pfRedundancyUnregisterAreas != NULL)
+
+- #define :ref:`EXP_RedundancyUnregisterAreas <group___cmp_redundancy_itf_1ga578c51f8ac8c7901ddb6e46c6bc0929e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RedundancyUnregisterAreas", (RTS_UINTPTR) :ref:`RedundancyUnregisterAreas <group___cmp_redundancy_itf_1ga0784fd328c24b8874f45ee4cfe30f759>` , 0, 0)
+
+- #define :ref:`USE_RedundancyCycleEnd <group___cmp_redundancy_itf_1gab1e9c3bf6460fee529e11e8bd2e92934>` :ref:`PFREDUNDANCYCYCLEEND <group___cmp_redundancy_itf_1ga197f0ab5293792b22fff916d4214cbea>` pfRedundancyCycleEnd;
+
+- #define :ref:`EXT_RedundancyCycleEnd <group___cmp_redundancy_itf_1gabc3f2b53fb473fcf95d2994fbc9961d4>` extern :ref:`PFREDUNDANCYCYCLEEND <group___cmp_redundancy_itf_1ga197f0ab5293792b22fff916d4214cbea>` pfRedundancyCycleEnd;
+
+- #define :ref:`GET_RedundancyCycleEnd <group___cmp_redundancy_itf_1gacce58cd04376068455624c8f0b9a8cc8>` s_pfCMGetAPI2( "RedundancyCycleEnd", (RTS_VOID_FCTPTR *)&pfRedundancyCycleEnd, (fl), 0, 0)
+
+- #define :ref:`CAL_RedundancyCycleEnd <group___cmp_redundancy_itf_1gaacd5f9fc17f38b04ca293618752624fe>` pfRedundancyCycleEnd
+
+- #define :ref:`CHK_RedundancyCycleEnd <group___cmp_redundancy_itf_1ga8aca3e781532648eadda2931e1154333>` (pfRedundancyCycleEnd != NULL)
+
+- #define :ref:`EXP_RedundancyCycleEnd <group___cmp_redundancy_itf_1gabfc4dbd9631053b99748c3b106b8f786>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RedundancyCycleEnd", (RTS_UINTPTR) :ref:`RedundancyCycleEnd <group___cmp_redundancy_itf_1ga26e0c696641e9e11c5f9af46f7048215>` , 0, 0)
+
+- #define :ref:`USE_RedundancyCycleStart <group___cmp_redundancy_itf_1gaa14cb6c09cc854e4c2c01ad4aa814b45>` :ref:`PFREDUNDANCYCYCLESTART <group___cmp_redundancy_itf_1gae3d285a970cc452da68bf107ea3be0b8>` pfRedundancyCycleStart;
+
+- #define :ref:`EXT_RedundancyCycleStart <group___cmp_redundancy_itf_1ga1015f8f07154315ff8b727be14a7a0bf>` extern :ref:`PFREDUNDANCYCYCLESTART <group___cmp_redundancy_itf_1gae3d285a970cc452da68bf107ea3be0b8>` pfRedundancyCycleStart;
+
+- #define :ref:`GET_RedundancyCycleStart <group___cmp_redundancy_itf_1gacf8393ebdd25cf491182eba020afa0c1>` s_pfCMGetAPI2( "RedundancyCycleStart", (RTS_VOID_FCTPTR *)&pfRedundancyCycleStart, (fl), 0, 0)
+
+- #define :ref:`CAL_RedundancyCycleStart <group___cmp_redundancy_itf_1ga699e6e9975b65d6315314359122caccd>` pfRedundancyCycleStart
+
+- #define :ref:`CHK_RedundancyCycleStart <group___cmp_redundancy_itf_1ga882224e30e646a9e598dc09dd86d6573>` (pfRedundancyCycleStart != NULL)
+
+- #define :ref:`EXP_RedundancyCycleStart <group___cmp_redundancy_itf_1gaa49fec88699f04411650d152fd3b2d94>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RedundancyCycleStart", (RTS_UINTPTR) :ref:`RedundancyCycleStart <group___cmp_redundancy_itf_1ga68eef26167cc366c8bd64034e14f84e4>` , 0, 0)
+
+- #define :ref:`USE_RedundancyGetState <group___cmp_redundancy_itf_1ga6e97699cbad1d8eeead3c427a91cdb1e>` :ref:`PFREDUNDANCYGETSTATE <group___cmp_redundancy_itf_1ga195208864ecbc6fd9356c1a8526e4670>` pfRedundancyGetState;
+
+- #define :ref:`EXT_RedundancyGetState <group___cmp_redundancy_itf_1ga2a5dd65d792e997aa4f0a206fca2d682>` extern :ref:`PFREDUNDANCYGETSTATE <group___cmp_redundancy_itf_1ga195208864ecbc6fd9356c1a8526e4670>` pfRedundancyGetState;
+
+- #define :ref:`GET_RedundancyGetState <group___cmp_redundancy_itf_1gaf8decb0ea7394f94605d5f1e6f92531b>` s_pfCMGetAPI2( "RedundancyGetState", (RTS_VOID_FCTPTR *)&pfRedundancyGetState, (fl), 0, 0)
+
+- #define :ref:`CAL_RedundancyGetState <group___cmp_redundancy_itf_1ga6f6c59f7ed6a56b931f26e089954b719>` pfRedundancyGetState
+
+- #define :ref:`CHK_RedundancyGetState <group___cmp_redundancy_itf_1gab41756b89786e08f507f868bc5d96002>` (pfRedundancyGetState != NULL)
+
+- #define :ref:`EXP_RedundancyGetState <group___cmp_redundancy_itf_1gae0c8ea821aacfbd87d5205aa0c403539>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RedundancyGetState", (RTS_UINTPTR) :ref:`RedundancyGetState <group___cmp_redundancy_itf_1ga760495dc4557e42b067250b03bcce016>` , 0, 0)
+
+- #define :ref:`USE_RedundancySwitchToSimulation <group___cmp_redundancy_itf_1gaac0b2c39330f0e73e2da024f7515b0b5>` :ref:`PFREDUNDANCYSWITCHTOSIMULATION <group___cmp_redundancy_itf_1gacc1324322bd2b65055d38c8f770abb9f>` pfRedundancySwitchToSimulation;
+
+- #define :ref:`EXT_RedundancySwitchToSimulation <group___cmp_redundancy_itf_1gae20066c93e4e035e41613ed0e15c6d1b>` extern :ref:`PFREDUNDANCYSWITCHTOSIMULATION <group___cmp_redundancy_itf_1gacc1324322bd2b65055d38c8f770abb9f>` pfRedundancySwitchToSimulation;
+
+- #define :ref:`GET_RedundancySwitchToSimulation <group___cmp_redundancy_itf_1ga190f3b93c3f404838722cc27c0e0ab18>` s_pfCMGetAPI2( "RedundancySwitchToSimulation", (RTS_VOID_FCTPTR *)&pfRedundancySwitchToSimulation, (fl), 0, 0)
+
+- #define :ref:`CAL_RedundancySwitchToSimulation <group___cmp_redundancy_itf_1ga4f35f2100832b8bf6d065b3aa87bbff7>` pfRedundancySwitchToSimulation
+
+- #define :ref:`CHK_RedundancySwitchToSimulation <group___cmp_redundancy_itf_1ga5b2bc8beec66603152f5bfddfd640f48>` (pfRedundancySwitchToSimulation != NULL)
+
+- #define :ref:`EXP_RedundancySwitchToSimulation <group___cmp_redundancy_itf_1gac0b416dbc6a93828b8ad88edc1a8e656>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RedundancySwitchToSimulation", (RTS_UINTPTR) :ref:`RedundancySwitchToSimulation <group___cmp_redundancy_itf_1ga989b540b847d7a0255ce052768e54b5e>` , 0, 0)
+
+- #define :ref:`USE_RedundancySwitchToStandalone <group___cmp_redundancy_itf_1ga05617c7e257e005f59f0e776476b83d6>` :ref:`PFREDUNDANCYSWITCHTOSTANDALONE <group___cmp_redundancy_itf_1ga8283b8023e3869004c399044326b2909>` pfRedundancySwitchToStandalone;
+
+- #define :ref:`EXT_RedundancySwitchToStandalone <group___cmp_redundancy_itf_1ga5c8f2ca05f979adc5925c2765155dfb3>` extern :ref:`PFREDUNDANCYSWITCHTOSTANDALONE <group___cmp_redundancy_itf_1ga8283b8023e3869004c399044326b2909>` pfRedundancySwitchToStandalone;
+
+- #define :ref:`GET_RedundancySwitchToStandalone <group___cmp_redundancy_itf_1gad57c0f56e4b05d629f798360c2ec366d>` s_pfCMGetAPI2( "RedundancySwitchToStandalone", (RTS_VOID_FCTPTR *)&pfRedundancySwitchToStandalone, (fl), 0, 0)
+
+- #define :ref:`CAL_RedundancySwitchToStandalone <group___cmp_redundancy_itf_1gaa72f24ed8f34e1871dd3f315fa8c753e>` pfRedundancySwitchToStandalone
+
+- #define :ref:`CHK_RedundancySwitchToStandalone <group___cmp_redundancy_itf_1gaf8ded8198267980972e7f7386b115fd1>` (pfRedundancySwitchToStandalone != NULL)
+
+- #define :ref:`EXP_RedundancySwitchToStandalone <group___cmp_redundancy_itf_1gab45df5a92bc10b6e31de23c31d16790d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RedundancySwitchToStandalone", (RTS_UINTPTR) :ref:`RedundancySwitchToStandalone <group___cmp_redundancy_itf_1ga3996627874324d8e88581feeccc38206>` , 0, 0)
+
+- #define :ref:`USE_RedundancySwitchToStandby <group___cmp_redundancy_itf_1gacd40ef0f2c766da427855d8a289bd6b3>` :ref:`PFREDUNDANCYSWITCHTOSTANDBY <group___cmp_redundancy_itf_1gaa92aa4383e8a4c171ee301c5ae48f0b0>` pfRedundancySwitchToStandby;
+
+- #define :ref:`EXT_RedundancySwitchToStandby <group___cmp_redundancy_itf_1ga0b61c5882af8b82c981802b0ac722847>` extern :ref:`PFREDUNDANCYSWITCHTOSTANDBY <group___cmp_redundancy_itf_1gaa92aa4383e8a4c171ee301c5ae48f0b0>` pfRedundancySwitchToStandby;
+
+- #define :ref:`GET_RedundancySwitchToStandby <group___cmp_redundancy_itf_1ga2f389077b9d96b1852e20ac111a3dfaa>` s_pfCMGetAPI2( "RedundancySwitchToStandby", (RTS_VOID_FCTPTR *)&pfRedundancySwitchToStandby, (fl), 0, 0)
+
+- #define :ref:`CAL_RedundancySwitchToStandby <group___cmp_redundancy_itf_1gabf4a18e9a439b94d8851ec11343701c0>` pfRedundancySwitchToStandby
+
+- #define :ref:`CHK_RedundancySwitchToStandby <group___cmp_redundancy_itf_1ga5b62e6fc767587ebf46f893a0f51492c>` (pfRedundancySwitchToStandby != NULL)
+
+- #define :ref:`EXP_RedundancySwitchToStandby <group___cmp_redundancy_itf_1gae17c5c7a6101c624af7dcb240191bb2c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RedundancySwitchToStandby", (RTS_UINTPTR) :ref:`RedundancySwitchToStandby <group___cmp_redundancy_itf_1ga57d06d129f2bcc4159747feec767bbf3>` , 0, 0)
+
+- #define :ref:`USE_RedundancySwitchToActive <group___cmp_redundancy_itf_1ga104d801168fac838992edb4d54c47af0>` :ref:`PFREDUNDANCYSWITCHTOACTIVE <group___cmp_redundancy_itf_1ga3f9bec239597e8e800019066d3ba880e>` pfRedundancySwitchToActive;
+
+- #define :ref:`EXT_RedundancySwitchToActive <group___cmp_redundancy_itf_1ga029e8d2de05d73b238cafda75d0e8252>` extern :ref:`PFREDUNDANCYSWITCHTOACTIVE <group___cmp_redundancy_itf_1ga3f9bec239597e8e800019066d3ba880e>` pfRedundancySwitchToActive;
+
+- #define :ref:`GET_RedundancySwitchToActive <group___cmp_redundancy_itf_1ga09459979a4e96027a3aa665d3593bcb2>` s_pfCMGetAPI2( "RedundancySwitchToActive", (RTS_VOID_FCTPTR *)&pfRedundancySwitchToActive, (fl), 0, 0)
+
+- #define :ref:`CAL_RedundancySwitchToActive <group___cmp_redundancy_itf_1ga27d25817500e1aec12e185869b6c010d>` pfRedundancySwitchToActive
+
+- #define :ref:`CHK_RedundancySwitchToActive <group___cmp_redundancy_itf_1ga166680ba271a495991a4abbba9ff3328>` (pfRedundancySwitchToActive != NULL)
+
+- #define :ref:`EXP_RedundancySwitchToActive <group___cmp_redundancy_itf_1gadedd1f619ce2b1a583d4a96dce856f89>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RedundancySwitchToActive", (RTS_UINTPTR) :ref:`RedundancySwitchToActive <group___cmp_redundancy_itf_1ga5db28c197ea9cd17b970f305c1316ca6>` , 0, 0)
+
+- #define :ref:`USE_RedundancySynchronize <group___cmp_redundancy_itf_1gad9d19c09fa2667c359da82635aa1df56>` :ref:`PFREDUNDANCYSYNCHRONIZE <group___cmp_redundancy_itf_1ga6f50d4376fd07c6c26a966405617cd91>` pfRedundancySynchronize;
+
+- #define :ref:`EXT_RedundancySynchronize <group___cmp_redundancy_itf_1ga0f72c156ebbb513b705318857c672113>` extern :ref:`PFREDUNDANCYSYNCHRONIZE <group___cmp_redundancy_itf_1ga6f50d4376fd07c6c26a966405617cd91>` pfRedundancySynchronize;
+
+- #define :ref:`GET_RedundancySynchronize <group___cmp_redundancy_itf_1gaa123a7eb53c42aa385aa983c71f47729>` s_pfCMGetAPI2( "RedundancySynchronize", (RTS_VOID_FCTPTR *)&pfRedundancySynchronize, (fl), 0, 0)
+
+- #define :ref:`CAL_RedundancySynchronize <group___cmp_redundancy_itf_1ga92b150e15604a058f3c4b89a3bf5f53a>` pfRedundancySynchronize
+
+- #define :ref:`CHK_RedundancySynchronize <group___cmp_redundancy_itf_1ga96477905d85547f91077acb11b3f2c30>` (pfRedundancySynchronize != NULL)
+
+- #define :ref:`EXP_RedundancySynchronize <group___cmp_redundancy_itf_1ga9f05d96d7a1c6b667a92b91a4b87ddaf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RedundancySynchronize", (RTS_UINTPTR) :ref:`RedundancySynchronize <group___cmp_redundancy_itf_1ga4aa99ae17fef5e537b07980f41fc0576>` , 0, 0)
+
+- #define :ref:`ITF_CmpRedundancy <group___cmp_redundancy_itf_1ga0dd3ecee7f66540f8b9bc98c212fc0a8>`
+
+- #define :ref:`EXTITF_CmpRedundancy <group___cmp_redundancy_itf_1gac8b7911dd91162a2809e3125142ba9e5>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagRedundancyState <structtag_redundancy_state>` :ref:`RedundancyState <group___cmp_redundancy_itf_1gac5758e0f67b24a0fd33d0eb02f0fd6ed>`
+
+- typedef struct :ref:`tagSYNC_INFO <structtag_s_y_n_c___i_n_f_o>` :ref:`SYNC_INFO <group___cmp_redundancy_itf_1ga1e6a03954009eefb145a57050e4eba69>`
+
+- typedef struct :ref:`tagRedundancyTlgHeader <structtag_redundancy_tlg_header>` :ref:`RedundancyTlgHeader <group___cmp_redundancy_itf_1ga1e58f398eb3ea0878131a8911b644609>`
+
+- typedef struct :ref:`tagCLIENT_REPLY <structtag_c_l_i_e_n_t___r_e_p_l_y>` :ref:`CLIENT_REPLY <group___cmp_redundancy_itf_1ga9aca827043efb8b7c5d41e1c7b5341af>`
+
+- typedef struct :ref:`tagarearegister_struct <structtagarearegister__struct>` :ref:`arearegister_struct <group___cmp_redundancy_itf_1gab7f9229af993fcc1d30516a2806fab91>`
+
+- typedef void(* :ref:`PFAREAREGISTER_IEC <group___cmp_redundancy_itf_1ga986b449c6f52659951ffb79897dc7406>`)(arearegister_struct *p)
+
+- typedef struct :ref:`tagarearegistersegment_struct <structtagarearegistersegment__struct>` :ref:`arearegistersegment_struct <group___cmp_redundancy_itf_1ga6d86ff0b6a010cdb1f9fdb5b10b7a87f>`
+
+- typedef void(* :ref:`PFAREAREGISTERSEGMENT_IEC <group___cmp_redundancy_itf_1gaa983a1b08c7ae831dd64a9cacb64fa57>`)(arearegistersegment_struct *p)
+
+- typedef struct :ref:`tagredundancycycleend_struct <structtagredundancycycleend__struct>` :ref:`redundancycycleend_struct <group___cmp_redundancy_itf_1gab81e258d5594e94adf36fa3af9d10e39>`
+
+- typedef struct :ref:`tagunregisterareas_struct <structtagunregisterareas__struct>` :ref:`unregisterareas_struct <group___cmp_redundancy_itf_1gadd9130b43f7ce5977243f1699755cf6a>`
+
+- typedef void(* :ref:`PFUNREGISTERAREAS_IEC <group___cmp_redundancy_itf_1gaa64800229deb2b08f8e50c72c7d1e8be>`)(unregisterareas_struct *p)
+
+- typedef void(* :ref:`PFREDUNDANCYCYCLEEND_IEC <group___cmp_redundancy_itf_1gadc286ed858d38894288cbf32a54f0d5b>`)(redundancycycleend_struct *p)
+
+- typedef struct :ref:`tagredundancycyclestart_struct <structtagredundancycyclestart__struct>` :ref:`redundancycyclestart_struct <group___cmp_redundancy_itf_1gaebcc4a895b191220a2d1b2ab025f586a>`
+
+- typedef void(* :ref:`PFREDUNDANCYCYCLESTART_IEC <group___cmp_redundancy_itf_1ga9aaa1968a87ca50ec8a76ef4490b6964>`)(redundancycyclestart_struct *p)
+
+- typedef struct :ref:`taggetredundancystate_struct <structtaggetredundancystate__struct>` :ref:`getredundancystate_struct <group___cmp_redundancy_itf_1ga13235d10c01b8fd28b255308389d8f59>`
+
+- typedef void(* :ref:`PFGETREDUNDANCYSTATE_IEC <group___cmp_redundancy_itf_1ga2e0760fd9b09aa1d1cea7cff3032df7a>`)(getredundancystate_struct *p)
+
+- typedef struct :ref:`taggetsyncinformation_struct <structtaggetsyncinformation__struct>` :ref:`getsyncinformation_struct <group___cmp_redundancy_itf_1gaa47459b3c654f058fadf055f5e43edb2>`
+
+- typedef void(* :ref:`PFGETSYNCINFORMATION_IEC <group___cmp_redundancy_itf_1ga33f10e06391e5c82e56a678144b3f976>`)(getsyncinformation_struct *p)
+
+- typedef struct :ref:`tagswitchtosimulation_struct <structtagswitchtosimulation__struct>` :ref:`switchtosimulation_struct <group___cmp_redundancy_itf_1ga092c601c30fc129e3f1104da84f5a14c>`
+
+- typedef void(* :ref:`PFSWITCHTOSIMULATION_IEC <group___cmp_redundancy_itf_1ga13459b04c78fb05d8ce528949b00fea4>`)(switchtosimulation_struct *p)
+
+- typedef struct :ref:`tagswitchtostandalone_struct <structtagswitchtostandalone__struct>` :ref:`switchtostandalone_struct <group___cmp_redundancy_itf_1ga8f7a449a761e0ee7fd32be29d3e9224a>`
+
+- typedef void(* :ref:`PFSWITCHTOSTANDALONE_IEC <group___cmp_redundancy_itf_1ga092ca4d693b310f36c74350df2c41b92>`)(switchtostandalone_struct *p)
+
+- typedef struct :ref:`tagswitchtostandby_struct <structtagswitchtostandby__struct>` :ref:`switchtostandby_struct <group___cmp_redundancy_itf_1ga36d76eff3906c29ea16ba9da2f07bbac>`
+
+- typedef void(* :ref:`PFSWITCHTOSTANDBY_IEC <group___cmp_redundancy_itf_1ga5e41a6727f4ec53ed0c46975c5ae5a53>`)(switchtostandby_struct *p)
+
+- typedef struct :ref:`tagswitchtoactive_struct <structtagswitchtoactive__struct>` :ref:`switchtoactive_struct <group___cmp_redundancy_itf_1gab24363868395d8934ae2ed5ac5b07261>`
+
+- typedef void(* :ref:`PFSWITCHTOACTIVE_IEC <group___cmp_redundancy_itf_1ga1ece91b685532422d1c4d8b1923cfbe7>`)(switchtoactive_struct *p)
+
+- typedef struct :ref:`tagsynchronize_struct <structtagsynchronize__struct>` :ref:`synchronize_struct <group___cmp_redundancy_itf_1ga61bc0e8b8a5e12157c74b05c88a72522>`
+
+- typedef void(* :ref:`PFSYNCHRONIZE_IEC <group___cmp_redundancy_itf_1ga5cd7beaea879d33dd2d9ae961d99c72e>`)(synchronize_struct *p)
+
+- typedef struct :ref:`taggetplcident_struct <structtaggetplcident__struct>` :ref:`getplcident_struct <group___cmp_redundancy_itf_1ga7ee70fc3d7b120986335dcea087a13b2>`
+
+- typedef void(* :ref:`PFGETPLCIDENT_IEC <group___cmp_redundancy_itf_1ga58809fbaad01922c614bc54e12b1159a>`)(getplcident_struct *p)
+
+- typedef struct :ref:`tagredundancysynchronizedata_struct <structtagredundancysynchronizedata__struct>` :ref:`redundancysynchronizedata_struct <group___cmp_redundancy_itf_1gaf0a216dd9c81241e1c8deffe56c12c98>`
+
+- typedef void(* :ref:`PFREDUNDANCYSYNCHRONIZEDATA_IEC <group___cmp_redundancy_itf_1gab24e1917bae5c29a7b4c95b7707a6712>`)(redundancysynchronizedata_struct *p)
+
+- typedef struct :ref:`taggetconnectionstate_struct <structtaggetconnectionstate__struct>` :ref:`getconnectionstate_struct <group___cmp_redundancy_itf_1ga3919406ccbebf64a3842a87b0590e142>`
+
+- typedef void(* :ref:`PFGETCONNECTIONSTATE_IEC <group___cmp_redundancy_itf_1ga58a8baf06cda29157ad2678c162d7d1f>`)(getconnectionstate_struct *p)
+
+- typedef RTS_IEC_BOOL(* :ref:`PFREDUNDANCYAREAREGISTER <group___cmp_redundancy_itf_1ga2cfe8fbed4c72918cf42dfb2965b3d8d>`)(unsigned char *pbyArea, RTS_UI32 ulSize, RDCY_AREA_TYPE eType)
+
+- typedef RTS_IEC_BOOL(* :ref:`PFREDUNDANCYAREAREGISTERSEGMENT <group___cmp_redundancy_itf_1ga65bdecfe4662854a53ef0656707640a2>`)(RTS_UI16 usSegment, RDCY_AREA_TYPE eType)
+
+- typedef RTS_IEC_BOOL(* :ref:`PFREDUNDANCYUNREGISTERAREAS <group___cmp_redundancy_itf_1gaceff90aac585f7a0d62e47d493f06233>`)(void)
+
+- typedef RTS_IEC_BOOL(* :ref:`PFREDUNDANCYCYCLEEND <group___cmp_redundancy_itf_1ga197f0ab5293792b22fff916d4214cbea>`)(void)
+
+- typedef RTS_IEC_BOOL(* :ref:`PFREDUNDANCYCYCLESTART <group___cmp_redundancy_itf_1gae3d285a970cc452da68bf107ea3be0b8>`)(void)
+
+- typedef RTS_IEC_BOOL(* :ref:`PFREDUNDANCYGETSTATE <group___cmp_redundancy_itf_1ga195208864ecbc6fd9356c1a8526e4670>`)(RedundancyState *pState)
+
+- typedef RTS_IEC_BOOL(* :ref:`PFREDUNDANCYSWITCHTOSIMULATION <group___cmp_redundancy_itf_1gacc1324322bd2b65055d38c8f770abb9f>`)(void)
+
+- typedef RTS_IEC_BOOL(* :ref:`PFREDUNDANCYSWITCHTOSTANDALONE <group___cmp_redundancy_itf_1ga8283b8023e3869004c399044326b2909>`)(void)
+
+- typedef RTS_IEC_BOOL(* :ref:`PFREDUNDANCYSWITCHTOSTANDBY <group___cmp_redundancy_itf_1gaa92aa4383e8a4c171ee301c5ae48f0b0>`)(void)
+
+- typedef RTS_IEC_BOOL(* :ref:`PFREDUNDANCYSWITCHTOACTIVE <group___cmp_redundancy_itf_1ga3f9bec239597e8e800019066d3ba880e>`)(void)
+
+- typedef RTS_IEC_BOOL(* :ref:`PFREDUNDANCYSYNCHRONIZE <group___cmp_redundancy_itf_1ga6f50d4376fd07c6c26a966405617cd91>`)(void)
+
+- typedef :ref:`ICmpRedundancy_C <struct_i_cmp_redundancy___c>` :ref:`ICmpRedundancy <group___cmp_redundancy_itf_1ga68e81713996b40e816cbeed65d36cf6d>`
+
+Enumerations
+------------
+
+- enum :ref:`RDCY_STATE <group___cmp_redundancy_itf_1ga37d0780292ead094a126f2ea2ad10f7d>` { :ref:`RS_START <group___cmp_redundancy_itf_1gga37d0780292ead094a126f2ea2ad10f7dab940da3e3105f29e43536410e06aed93>`, :ref:`RS_SYNCHRO <group___cmp_redundancy_itf_1gga37d0780292ead094a126f2ea2ad10f7dac1bd9f88abada2e8e389fe53205da8b2>`, :ref:`RS_CYCLE_ACTIVE <group___cmp_redundancy_itf_1gga37d0780292ead094a126f2ea2ad10f7da38303db0be28ef158bfa5452e6929a12>`, :ref:`RS_CYCLE_STANDBY <group___cmp_redundancy_itf_1gga37d0780292ead094a126f2ea2ad10f7dae3945b54a2932c67539697b3413d4e0d>`, :ref:`RS_CYCLE_STANDALONE <group___cmp_redundancy_itf_1gga37d0780292ead094a126f2ea2ad10f7dad28052814cd559cfa6022c0289b6a01a>`, :ref:`RS_CYCLE_ERROR <group___cmp_redundancy_itf_1gga37d0780292ead094a126f2ea2ad10f7dad08755d8e6c06bccaad17de88b9f31f0>`, :ref:`RS_SIMULATION <group___cmp_redundancy_itf_1gga37d0780292ead094a126f2ea2ad10f7daf8a8cc198fc1cf9addc790d7a07c369f>`, :ref:`RS_BOOTUP_ERROR <group___cmp_redundancy_itf_1gga37d0780292ead094a126f2ea2ad10f7da84f5d3a2b2becb23f7b65ca442489c18>`, :ref:`RS_SHUTDOWN_ACTIVE <group___cmp_redundancy_itf_1gga37d0780292ead094a126f2ea2ad10f7daacdf28ced34cf398d0d3a2b3f9298531>`, :ref:`RS_SHUTDOWN_STANDBY <group___cmp_redundancy_itf_1gga37d0780292ead094a126f2ea2ad10f7da49bbe0570561eccaa5243e81ce2ad5ef>`, :ref:`RS_SYNCHRO_ERROR <group___cmp_redundancy_itf_1gga37d0780292ead094a126f2ea2ad10f7da3d85da028bbe8c260fba8321ca46789d>`, :ref:`RS_SIMULATION_START <group___cmp_redundancy_itf_1gga37d0780292ead094a126f2ea2ad10f7dad93c8c9707393d73f895bf7c73bb3ae8>`, :ref:`RS_NO_LICENSE <group___cmp_redundancy_itf_1gga37d0780292ead094a126f2ea2ad10f7da4b11f764b1f7d4097f4d2d16b2b5dc01>` }
+
+- enum :ref:`RDCY_ERROR <group___cmp_redundancy_itf_1ga19cebc1900585838605f8ae89e2b6a51>` { :ref:`RDCY_NO_ERROR <group___cmp_redundancy_itf_1gga19cebc1900585838605f8ae89e2b6a51a92b10a25e023981355e770900c4760fb>`, :ref:`RDCY_ERR_FAILED <group___cmp_redundancy_itf_1gga19cebc1900585838605f8ae89e2b6a51a080b8cfb19c718641e063fffe05b73cd>`, :ref:`RDCY_BOOTUP_ERROR <group___cmp_redundancy_itf_1gga19cebc1900585838605f8ae89e2b6a51a4572217ee5b3041b9ba7fcc898414df9>`, :ref:`RDCY_SYNCHRO_ERROR <group___cmp_redundancy_itf_1gga19cebc1900585838605f8ae89e2b6a51af2c35728263791443f77359879bb91b2>`, :ref:`RDCY_CYCLE_ERROR <group___cmp_redundancy_itf_1gga19cebc1900585838605f8ae89e2b6a51a3d2d56f36d1c8adf795b6d1970df983f>`, :ref:`RDCY_LINK_ERROR <group___cmp_redundancy_itf_1gga19cebc1900585838605f8ae89e2b6a51afd91d205157dc85df90886dddbd7d703>`, :ref:`RDCY_FIELDBUS_ERROR <group___cmp_redundancy_itf_1gga19cebc1900585838605f8ae89e2b6a51a2ae675e1564fc7a62ca95c7b46413459>`, :ref:`RDCY_RECEIVEMESSAGE_ERROR <group___cmp_redundancy_itf_1gga19cebc1900585838605f8ae89e2b6a51a817d3122d89d31bdf332f239523bf46f>`, :ref:`RDCY_NOMESSAGE_ERROR <group___cmp_redundancy_itf_1gga19cebc1900585838605f8ae89e2b6a51a6ba4a3279b486f9b7ad5063b911480e3>`, :ref:`RDCY_WRONGMESSAGE_ERROR <group___cmp_redundancy_itf_1gga19cebc1900585838605f8ae89e2b6a51a2b8f0176bb1bd67a7d3745b6de5e3b3f>`, :ref:`RDCY_CONFIG_ERROR <group___cmp_redundancy_itf_1gga19cebc1900585838605f8ae89e2b6a51a52592476d76b8120462d8a9c13558025>`, :ref:`RDCY_INPUTAREACRC_ERROR <group___cmp_redundancy_itf_1gga19cebc1900585838605f8ae89e2b6a51a755afdac3ef7fdf3cc86f2e0c6e54c62>`, :ref:`RDCY_NO_LICENSE_ERROR <group___cmp_redundancy_itf_1gga19cebc1900585838605f8ae89e2b6a51ac5d80e957f53ec6b1ad9a84a11b5eb81>` }
+
+- enum :ref:`RDCY_AREA_TYPE <group___cmp_redundancy_itf_1ga187db713ec4f1402790808ed42227e8b>` { :ref:`AREA_NONE <group___cmp_redundancy_itf_1gga187db713ec4f1402790808ed42227e8ba63dff4e57f02465779e266cbadcf840f>`, :ref:`AREA_INPUT <group___cmp_redundancy_itf_1gga187db713ec4f1402790808ed42227e8ba06c9041037d6cc333beb1cfed3d01c2b>`, :ref:`AREA_SYNCHRO <group___cmp_redundancy_itf_1gga187db713ec4f1402790808ed42227e8ba552415140da26af887df6644af55c1d6>`, :ref:`AREA_OUTPUT <group___cmp_redundancy_itf_1gga187db713ec4f1402790808ed42227e8ba9aa8f63a6cd0ea9f8a3ae5a343869323>`, :ref:`AREA_PASSIVEACTIVE <group___cmp_redundancy_itf_1gga187db713ec4f1402790808ed42227e8ba2737c3de7bbcb8d8d4ad6689623a4c0f>` }
+
+- enum :ref:`REDUNDANCY_COMM_MODE <group___cmp_redundancy_itf_1gae9015dc80362e86c441a3b750d366dee>` { :ref:`RCOM_SyncReceive <group___cmp_redundancy_itf_1ggae9015dc80362e86c441a3b750d366deead61e08df175a53fb7fb9d7f152c98f1e>`, :ref:`RCOM_SyncSend <group___cmp_redundancy_itf_1ggae9015dc80362e86c441a3b750d366deea125798a51a801e614f179d5611c91c35>`, :ref:`RCOM_DataClient <group___cmp_redundancy_itf_1ggae9015dc80362e86c441a3b750d366deea8cf63a0f00dd4936572fe6b457562086>`, :ref:`RCOM_DataServer <group___cmp_redundancy_itf_1ggae9015dc80362e86c441a3b750d366deeaeb8d9a8ac2bbc7be728e8626abb3db83>`, :ref:`RCOM_DataWork <group___cmp_redundancy_itf_1ggae9015dc80362e86c441a3b750d366deeaa2ca1bda5a8bd074a2072c0ea00f95eb>` }
+
+Functions
+---------
+
+- void :ref:`arearegister <group___cmp_redundancy_itf_1ga0c10fff3e2b67dc6d4bfb6bad9f954d6>` (:ref:`arearegister_struct <group___cmp_redundancy_itf_1gab7f9229af993fcc1d30516a2806fab91>` * p)
+
+- void :ref:`arearegistersegment <group___cmp_redundancy_itf_1gaca8401df1aff570d7fbdadd0c0ba382c>` (:ref:`arearegistersegment_struct <group___cmp_redundancy_itf_1ga6d86ff0b6a010cdb1f9fdb5b10b7a87f>` * p)
+
+- void :ref:`unregisterareas <group___cmp_redundancy_itf_1gaa43c2bba813a2219570d5a10969d9674>` (:ref:`unregisterareas_struct <group___cmp_redundancy_itf_1gadd9130b43f7ce5977243f1699755cf6a>` * p)
+
+- void :ref:`redundancycycleend <group___cmp_redundancy_itf_1gab1be23cd29d288a54122e7bf597d79ab>` (:ref:`redundancycycleend_struct <group___cmp_redundancy_itf_1gab81e258d5594e94adf36fa3af9d10e39>` * p)
+
+- void :ref:`redundancycyclestart <group___cmp_redundancy_itf_1ga9bfdf2c2c1e85d2730b605b06ceea825>` (:ref:`redundancycyclestart_struct <group___cmp_redundancy_itf_1gaebcc4a895b191220a2d1b2ab025f586a>` * p)
+
+- void :ref:`getredundancystate <group___cmp_redundancy_itf_1ga576dadfc96d6ba198f1010789e076ab3>` (:ref:`getredundancystate_struct <group___cmp_redundancy_itf_1ga13235d10c01b8fd28b255308389d8f59>` * p)
+
+- void :ref:`getsyncinformation <group___cmp_redundancy_itf_1ga7dcd7a88c80122ce8de0510544c9faaf>` (:ref:`getsyncinformation_struct <group___cmp_redundancy_itf_1gaa47459b3c654f058fadf055f5e43edb2>` * p)
+
+- void :ref:`switchtosimulation <group___cmp_redundancy_itf_1ga80861ceb9461fc2406ab26f47cbe8b52>` (:ref:`switchtosimulation_struct <group___cmp_redundancy_itf_1ga092c601c30fc129e3f1104da84f5a14c>` * p)
+
+- void :ref:`switchtostandalone <group___cmp_redundancy_itf_1ga301cfee21890fcc300d5ae19fe8fb179>` (:ref:`switchtostandalone_struct <group___cmp_redundancy_itf_1ga8f7a449a761e0ee7fd32be29d3e9224a>` * p)
+
+- void :ref:`switchtostandby <group___cmp_redundancy_itf_1ga58716957758c14dbd8615a7c7ce7830c>` (:ref:`switchtostandby_struct <group___cmp_redundancy_itf_1ga36d76eff3906c29ea16ba9da2f07bbac>` * p)
+
+- void :ref:`switchtoactive <group___cmp_redundancy_itf_1ga0d38d8ffde71a90aa9d1aef7b7485663>` (:ref:`switchtoactive_struct <group___cmp_redundancy_itf_1gab24363868395d8934ae2ed5ac5b07261>` * p)
+
+- void :ref:`synchronize <group___cmp_redundancy_itf_1ga34cf799e921c2ceed3318e54643e6a4a>` (:ref:`synchronize_struct <group___cmp_redundancy_itf_1ga61bc0e8b8a5e12157c74b05c88a72522>` * p)
+
+- void :ref:`getplcident <group___cmp_redundancy_itf_1gaf079b18ce89b15540a931eaa3b45f403>` (:ref:`getplcident_struct <group___cmp_redundancy_itf_1ga7ee70fc3d7b120986335dcea087a13b2>` * p)
+
+- void :ref:`redundancysynchronizedata <group___cmp_redundancy_itf_1ga74170e11a4270131c730c3759006f4f0>` (:ref:`redundancysynchronizedata_struct <group___cmp_redundancy_itf_1gaf0a216dd9c81241e1c8deffe56c12c98>` * p)
+
+- void :ref:`getconnectionstate <group___cmp_redundancy_itf_1ga84419945bb2459cb919f3b8edf9620c2>` (:ref:`getconnectionstate_struct <group___cmp_redundancy_itf_1ga3919406ccbebf64a3842a87b0590e142>` * p)
+
+- RTS_IEC_BOOL :ref:`RedundancyAreaRegister <group___cmp_redundancy_itf_1gaf2c843aba8f718d6d56f5fffeaf76c2e>` (unsigned char * pbyArea, RTS_UI32 ulSize, :ref:`RDCY_AREA_TYPE <group___cmp_redundancy_itf_1ga187db713ec4f1402790808ed42227e8b>`  eType)
+
+- RTS_IEC_BOOL :ref:`RedundancyAreaRegisterSegment <group___cmp_redundancy_itf_1gaa9a90e9310fb193a966c0b330fb28cfd>` (RTS_UI16 usSegment, :ref:`RDCY_AREA_TYPE <group___cmp_redundancy_itf_1ga187db713ec4f1402790808ed42227e8b>`  eType)
+
+- RTS_IEC_BOOL :ref:`RedundancyUnregisterAreas <group___cmp_redundancy_itf_1ga0784fd328c24b8874f45ee4cfe30f759>` (void)
+
+- RTS_IEC_BOOL :ref:`RedundancyCycleEnd <group___cmp_redundancy_itf_1ga26e0c696641e9e11c5f9af46f7048215>` (void)
+
+- RTS_IEC_BOOL :ref:`RedundancyCycleStart <group___cmp_redundancy_itf_1ga68eef26167cc366c8bd64034e14f84e4>` (void)
+
+- RTS_IEC_BOOL :ref:`RedundancyGetState <group___cmp_redundancy_itf_1ga760495dc4557e42b067250b03bcce016>` (:ref:`RedundancyState <group___cmp_redundancy_itf_1gac5758e0f67b24a0fd33d0eb02f0fd6ed>` * pState)
+
+- RTS_IEC_BOOL :ref:`RedundancySwitchToSimulation <group___cmp_redundancy_itf_1ga989b540b847d7a0255ce052768e54b5e>` (void)
+
+- RTS_IEC_BOOL :ref:`RedundancySwitchToStandalone <group___cmp_redundancy_itf_1ga3996627874324d8e88581feeccc38206>` (void)
+
+- RTS_IEC_BOOL :ref:`RedundancySwitchToStandby <group___cmp_redundancy_itf_1ga57d06d129f2bcc4159747feec767bbf3>` (void)
+
+- RTS_IEC_BOOL :ref:`RedundancySwitchToActive <group___cmp_redundancy_itf_1ga5db28c197ea9cd17b970f305c1316ca6>` (void)
+
+- RTS_IEC_BOOL :ref:`RedundancySynchronize <group___cmp_redundancy_itf_1ga4aa99ae17fef5e537b07980f41fc0576>` (void)
+
+Detailed Description
+--------------------
+
+Definition in file CmpRedundancyItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

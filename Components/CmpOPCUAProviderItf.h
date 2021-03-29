@@ -1,16 +1,16 @@
  /**
- * <interfacename>CmpOPCUAServer</interfacename>
+ * <interfacename>CmpOPCUAProvider</interfacename>
  * <description></description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
  
 /*
  * Description of the OPC UA Provider interface. This interface is used to add
  * different data sources to an existing OPC UA server. The OPC UA server calls
- * the provider interface to fullfill the different requests of OPC UA.
+ * the provider interface to fulfill the different requests of OPC UA.
  *
  * Version 1.0 of the interface supports the following features of OPC UA.
  * -> Data Access
@@ -31,6 +31,7 @@
 
 
 
+#include "CmpIecVarAccessItf.h"
 
 /* OPC UA Stack header files */
 #include "opcua.h"
@@ -38,8 +39,8 @@
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>Use the nodename of the PLC instead of the device name as display name of the PLC node within the OPC UA namespace.
- * Note: This setting will be used by the CmpOPCUAPROVIDERIecVarAccess.</description>
+ * <description>Use the node name of the PLC instead of the device name as display name of the PLC node within the OPC UA name space.
+ * Note: This setting will be used by the CmpOPCUAProviderIecVarAccess.</description>
  */
 #define CMPOPCUAPROVIDERIECVARACCESS_KEY_USE_NODENAME               "UseNodeName"
 #ifndef CMPOPCUAPROVIDERIECVARACCESS_VALUE_USE_NODENAME_DEFAULT
@@ -49,9 +50,9 @@
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>Use the CODESYS node name of the PLC instead of the device name for node ids within the OPC UA namespace.
+ * <description>Use the CODESYS node name of the PLC instead of the device name for node ids within the OPC UA name space.
  * This will also change the browse name and display name of the PLC node.
- * Note: This setting will be used by the CmpOPCUAPROVIDERIecVarAccess. After changing the node name 
+ * Note: This setting will be used by the CmpOPCUAProviderIecVarAccess. After changing the node name 
  * (either by CODESYS or by the PLCHandler) a restart of the PLC is required to update all node ids.</description>
  */
 #define CMPOPCUAPROVIDERIECVARACCESS_KEY_USE_NODENAME_FORIDS               "UseNodeNameForNodeIds"
@@ -59,17 +60,44 @@
     #define CMPOPCUAPROVIDERIECVARACCESS_VALUE_USE_NODENAME_FORIDS_DEFAULT		0
 #endif
 
+
+/**
+ * <category>Event parameter</category>
+ * <element name="hInterface" type="OUT">Handle of the IecVarAccess interface.</element>
+ * <element name="hNode" type="OUT">Handle of the IEC variable.</element>
+ * <element name="pVarInfo" type="OUT">Variable information context of the IEC variable.</element>
+ * <element name="hideSymbol" type="IN">Set by the event handler. TRUE: The symbol is not shown in the adress space. FALSE: The symbol is shown.</element>
+ */
+typedef struct
+{
+	RTS_HANDLE hInterface;
+	RTS_HANDLE hNode;
+    VariableInformationStruct2 *pVarInfo;
+	RTS_BOOL hideSymbol;
+} EVTPARAM_CmpOPCUAProviderHideIecVariable;
+#define EVTPARAMID_CmpOPCUAProviderHideIecVariable						0x0001
+#define EVTVERSION_CmpOPCUAProviderHideIecVariable						0x0001
+
+/**
+ * <category>Events</category>
+ * <description>Event is sent when browsing nodes, reading, wriging or creating monitored items. The event handler 
+ *	has the possiblity to hide this symbol from the OPC UA adress space and prevent read and write access.</description>
+ * <param name="pEventParam" type="IN">EVTPARAMID_CmpOPCUAProviderHideIecVariable</param>
+ */
+#define EVT_CmpOPCUAProviderHideIecVariable							MAKE_EVENTID(EVTCLASS_INFO, 1)
+
+
 /**
  * <category>viewservices</category>
  * <description>View Services of the provider</description>
  * <element name="ui32SessionID" type="IN">Session ID of the current request</element>
  * <element name="pNodeToBrowse" type="IN">Information for node to browse</element>
  * <element name="pViewDescription" type="IN">Information of the view to browse this node</element>
- * <element name="pReference" type="INOUT">References allocaed by the server. Provider fill this up.</element>
+ * <element name="pReference" type="INOUT">References allocated by the server. Provider fill this up.</element>
  * <element name="ui32NumNodes" type="INOUT">Number of nodes, first cycle get number of nodes to fill to allocate memory.</element>
  * <element name="ui32CurrentNode" type="INOUT">Current node to fill with data.</element>
  * <element name="ui32MaxNumOfResults" type="IN">Maximum count of result nodes.</element>
- * <element name="hProviderContinueInfo" type="INOUT">Information created by the provider to perform the browsenext operation.</element>
+ * <element name="hProviderContinueInfo" type="INOUT">Information created by the provider to perform the browse next operation.</element>
  * <element name="bClearProviderContinureInfo" type="IN">The provider should clear the continuation info.</element>
  * <element name="bFinished" type="OUT">Set by the provider. Set to true if all nodes are added. Indicates that the server can call the next Provider.</element>
  */
@@ -91,8 +119,8 @@ typedef struct _OpcUaProvider_BrowseContext
  * <category>viewservices</category>
  * <description></description>
  * <element name="ui32SessionID" type="IN">Session ID of the current request</element>
- * <element name="pNodeToRegister" type="IN">Node that should be registerd.</element>
- * <element name="pRegisterdNode" type="OUT">Handle for client to access the registerd node. NodeID have to be an integer type.</element>
+ * <element name="pNodeToRegister" type="IN">Node that should be registered.</element>
+ * <element name="pRegisterdNode" type="OUT">Handle for client to access the registered node. NodeID have to be an integer type.</element>
  */
 typedef struct _OpcUaProvider_RegisterNodeContext
 {
@@ -105,7 +133,7 @@ typedef struct _OpcUaProvider_RegisterNodeContext
  * <category>viewservices</category>
  * <description></description>
  * <element name="ui32SessionID" type="IN">Session ID of the current request</element>
- * <element name="pRegisterdNode" type="IN">Handle of the registerd node. All ressources needed to create the handle have to be freed up.</element>
+ * <element name="pRegisterdNode" type="IN">Handle of the registered node. All resources needed to create the handle have to be freed up.</element>
  */
 typedef struct _OpcUaProvider_UnregisterNodeContext
 {
@@ -125,7 +153,7 @@ typedef struct _OpcUaProvider_UnregisterNodeContext
  * CreateMonitoredItem service.</p>
  * <element name="ui32SessionID" type="IN">Session ID of the current request</element>
  * <element name="pItemToCreate" type="IN">Information for node to monitor</element>
- * <element name="pValue" type="OUT">Sampledata value. Created by the provider. Server clones this value.</element>
+ * <element name="pValue" type="OUT">Sample data value. Created by the provider. Server clones this value.</element>
  * <element name="pProviderInformation" type="OUT">Information of the provider needed to identify the monitored item quickly (Index, Handle).</element>
  */
 typedef struct _OpcUaProvider_CreateMonitoredItemContext
@@ -139,7 +167,7 @@ typedef struct _OpcUaProvider_CreateMonitoredItemContext
 /**
  * <category>monitoreditemservices</category>
  * <element name="ui32SessionID" type="IN">Session ID of the current request</element>
- * <element name="pProviderInformation" type="IN">Information of item. Free ressources.</element>
+ * <element name="pProviderInformation" type="IN">Information of item. Free resources.</element>
  */
 typedef struct _OpcUaProvider_DeleteMonitoredItemContext
 {
@@ -151,7 +179,7 @@ typedef struct _OpcUaProvider_DeleteMonitoredItemContext
  * <category>monitoreditemservices</category>
  * <element name="ui32SessionID" type="IN">Session ID of the current request</element>
  * <element name="pProviderInformation" type="IN">Information of provider created with CreateMonitoredItem.</element>
- * <element name="pDataValue" type="IN">Pointer to datavalue where to store the sample.</element>
+ * <element name="pDataValue" type="IN">Pointer to data value where to store the sample.</element>
  */
 typedef struct _OpcUaProvider_SampleMonitoredItemContext
 {
@@ -163,9 +191,9 @@ typedef struct _OpcUaProvider_SampleMonitoredItemContext
 /**
  * <category>attributeservices</category>
  * <element name="ui32SessionID" type="IN">Session ID of the current request</element>
- * <element name="pNodeToRead" type="IN">Informaiton of the node to be read. Contains AttributeId and NodeID</element>
+ * <element name="pNodeToRead" type="IN">Information of the node to be read. Contains AttributeId and NodeID</element>
  * <element name="eTimestampsToReturn" type="IN">Timestamps to add to the data value.</element>
- * <element name="pDataValue" type="OUT">Pointer to datavalue where to store the values.</element>
+ * <element name="pDataValue" type="OUT">Pointer to data value where to store the values.</element>
  */
 typedef struct _OpcUaProvider_ReadContext
 {
@@ -178,7 +206,7 @@ typedef struct _OpcUaProvider_ReadContext
 /**
  * <category>attributeservices</category>
  * <element name="ui32SessionID" type="IN">Session ID of the current request</element>
- * <element name="pNodeToRead" type="IN">Informaiton of the node to be written. Contains AttributeId, NodeID and value.</element>
+ * <element name="pNodeToRead" type="IN">Information of the node to be written. Contains AttributeId, NodeID and value.</element>
  */
 typedef struct _OpcUaProvider_WriteContext
 {
@@ -305,7 +333,7 @@ typedef RTS_RESULT (CDECL * PFOPCUAPROVIDERDELETE) (RTS_HANDLE hOpcUaProvider);
 /**
  * <description>This function is called by the OPC UA server to initialize the provider. After the call to this function the provider
  * should be ready to be used.</description>
- * <result>Function returns OpcUa_Good if everything went fine. Return OpcUa_Bad if an error occures.</result>
+ * <result>Function returns OpcUa_Good if everything went fine. Return OpcUa_Bad if an error occurs.</result>
  */
 STATICITF_DEF OpcUa_StatusCode CDECL OpcUaProviderInitialize(RTS_HANDLE hProvider);
 typedef OpcUa_StatusCode (CDECL * PFOPCUAPROVIDERINITIALIZE) (RTS_HANDLE hProvider);
@@ -357,8 +385,8 @@ typedef OpcUa_StatusCode (CDECL * PFOPCUAPROVIDERINITIALIZE) (RTS_HANDLE hProvid
 
 
 /**
- * <description>This function is called by the OPC UA server to cleanup the provider. Ressources schould be clean up.</description>
- * <result>Function returns OpcUa_Good if everything went fine. Return OpcUa_Bad if an error occures.</result>
+ * <description>This function is called by the OPC UA server to cleanup the provider. Resources should be clean up.</description>
+ * <result>Function returns OpcUa_Good if everything went fine. Return OpcUa_Bad if an error occurs.</result>
  */
 STATICITF_DEF OpcUa_StatusCode CDECL OpcUaProviderCleanup(RTS_HANDLE hProvider);
 typedef OpcUa_StatusCode (CDECL * PFOPCUAPROVIDERCLEANUP) (RTS_HANDLE hProvider);
@@ -424,7 +452,7 @@ typedef OpcUa_StatusCode (CDECL * PFOPCUAPROVIDERCLEANUP) (RTS_HANDLE hProvider)
  * <p>For the values pReference and ui32NumNodes of a_pContext there is a special 
  * handling. The provider will be called two times. At the first call pReference 
  * will be OpcUa_Null. This call is used to count the number of resulting nodes.
- * The neede memory is allocated by the server and within the second run of 
+ * The needed memory is allocated by the server and within the second run of 
  * Browse the references can be filled up by the provider. The current index is 
  * part of the context.</p>
  * </description>
@@ -484,21 +512,21 @@ typedef OpcUa_StatusCode (CDECL * PFOPCUAPROVIDERBROWSE) (RTS_HANDLE hProvider, 
 /**
  * <category>monitoreditemservices</category>
  * <description><p>Function to create a monitored item.</p>
- * <p>For a detaild description of the CreateMonitoredItem service see OPC UA Part 4 chapter 5.12.2</p>
+ * <p>For a detailed description of the CreateMonitoredItem service see OPC UA Part 4 chapter 5.12.2</p>
  * <p>This function is called while the server runs the CreateMonitoredItems service.
  * The server performs as much as he can. Only the sampling of the values is done
  * by the provider. If this function is called, the provider should check if
- * the requested node is in his datasources. If the value is found the following
+ * the requested node is in his data sources. If the value is found the following
  * steps are done:</p>
- *	<p>1. A sample item containg a complete sample of the value is generated. 
+ *	<p>1. A sample item containing a complete sample of the value is generated. 
  *		The server will use this sample as template. The value is cloned as often
  *		as needed to perform the request of the client</p>
  *	<p>2. The provider should fill up his own information of this data value.
  *		This information is passed to the provider to perform the sampling. It 
  *		should be possible that the provider has direct access to the value 
  *		using the stored informations.</p>
- * <p>The function has to return OpcUa_BadNodeIdUnknown to indicate the the node
- * is not known in the datasources. The next provider will be called then.</p>
+ * <p>The function has to return OpcUa_BadNodeIdUnknown to indicate the node
+ * is not known in the data sources. The next provider will be called then.</p>
  * <param type="INOUT", name="pContext">Create MonitoredItemContext. Contains information about the value to be monitored</param>
  * <result><p>Function returns OpcUa_Good if everything went fine. For OpcUa_Bad... error codes refer to table 38 of OPC UA spec Part 4</p>
  *					<p>The error code OpcUa_BadNodeIdUnknown is used to indicate that the next provider have called.</p>
@@ -619,7 +647,7 @@ typedef OpcUa_StatusCode (CDECL * PFOPCUAPROVIDERDELETEMONITOREDITEM) (RTS_HANDL
  * CreateMonitoredItem function and other stuff dedicated to this item.</p>
  * <p>The DataValues are freed by the server.</p></description>
  * <param type="IN" name="pContext">Information of item to sample.</param>
- * <result>Function returns OpcUa_Good if everything went fine. Return OpcUa_Bad if an error occures.</result>
+ * <result>Function returns OpcUa_Good if everything went fine. Return OpcUa_Bad if an error occurs.</result>
  */
 STATICITF_DEF OpcUa_StatusCode CDECL OpcUaProviderSampleMonitoredItem(RTS_HANDLE hProvider, OpcUaProvider_SampleMonitoredItemContext *pContext);
 typedef OpcUa_StatusCode (CDECL * PFOPCUAPROVIDERSAMPLEMONITOREDITEM) (RTS_HANDLE hProvider, OpcUaProvider_SampleMonitoredItemContext *pContext);
@@ -676,7 +704,7 @@ typedef OpcUa_StatusCode (CDECL * PFOPCUAPROVIDERSAMPLEMONITOREDITEM) (RTS_HANDL
  * <p>If the provider is the owner of the specified node it should fill up the value in the ReadContext. If the node is not known to the 
  * provider the provider MUST return OpcUa_BadNodeIdUnknown.</p></description>
  * <param type="IN" name="pContext">Information of item to read.</param>
- * <result>Function returns OpcUa_Good if everything went fine. Return OpcUa_Bad if an error occures.</result>
+ * <result>Function returns OpcUa_Good if everything went fine. Return OpcUa_Bad if an error occurs.</result>
  */
 STATICITF_DEF OpcUa_StatusCode CDECL OpcUaProviderRead(RTS_HANDLE hProvider, OpcUaProvider_ReadContext *pContext);
 typedef OpcUa_StatusCode (CDECL * PFOPCUAPROVIDERREAD) (RTS_HANDLE hProvider, OpcUaProvider_ReadContext *pContext);
@@ -730,10 +758,10 @@ typedef OpcUa_StatusCode (CDECL * PFOPCUAPROVIDERREAD) (RTS_HANDLE hProvider, Op
 /**
  * <category>attributeservices</category>
  * <description><p>This function is used to write to a specific node item</p>
- * If the provider is the owner of the speficif node it should write the value to the node if possible. If the node is not known to the 
- * provider the proivder MUST return OpcUa_BadNodeIdUnknown.</description>
+ * If the provider is the owner of the specific node it should write the value to the node if possible. If the node is not known to the 
+ * provider the provider MUST return OpcUa_BadNodeIdUnknown.</description>
  * <param type="IN" name="pContext">Information of node to write.</param>
- * <result>Function returns OpcUa_Good if everything went fine. Return OpcUa_Bad if an error occures.</result>
+ * <result>Function returns OpcUa_Good if everything went fine. Return OpcUa_Bad if an error occurs.</result>
  */
 STATICITF_DEF OpcUa_StatusCode CDECL OpcUaProviderWrite(RTS_HANDLE hProvider, OpcUaProvider_WriteContext *pContext);
 typedef OpcUa_StatusCode (CDECL * PFOPCUAPROVIDERWRITE) (RTS_HANDLE hProvider, OpcUaProvider_WriteContext *pContext);

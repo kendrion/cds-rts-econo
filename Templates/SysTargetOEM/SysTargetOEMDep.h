@@ -10,7 +10,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 #define CMPID_SysTargetOEM 0x12345
@@ -27,9 +27,9 @@
 
 
 
-#define CMP_VERSION         UINT32_C(0x03050E00)
-#define CMP_VERSION_STRING "3.5.14.0"
-#define CMP_VERSION_RC      3,5,14,0
+#define CMP_VERSION         UINT32_C(0x03051000)
+#define CMP_VERSION_STRING "3.5.16.0"
+#define CMP_VERSION_RC      3,5,16,0
 #define CMP_VENDORID       RTS_VENDORID_3S
 
 #ifndef WIN32_RESOURCES
@@ -59,11 +59,18 @@
 #include "SysCpuHandlingItf.h"
 
 
+#include "SysFileItf.h"
 
 
 
 
 
+
+
+
+/**
+ * \file SysTargetItf.h
+ */
 #include "SysTargetItf.h"
 
 
@@ -75,7 +82,9 @@
     
 
 
+
       
+
 
 
      
@@ -95,7 +104,11 @@
 
 
 
+
+
      
+
+
 
 
 
@@ -136,7 +149,16 @@
                 pIBase->Release(pIBase); \
             } \
         } \
-        if (pISysCpuHandling == NULL && s_pfCMCreateInstance != NULL) \
+        if (pISysFile == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CSysFile, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pISysFile = (ISysFile *)pIBase->QueryInterface(pIBase, ITFID_ISysFile, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          if (pISysCpuHandling == NULL && s_pfCMCreateInstance != NULL) \
         { \
             pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CSysCpuHandling, &initResult); \
             if (pIBase != NULL) \
@@ -197,7 +219,8 @@
     {\
         pICmpLog = NULL; \
         pICMUtils = NULL; \
-        pISysCpuHandling = NULL; \
+        pISysFile = NULL; \
+          pISysCpuHandling = NULL; \
           pISysTarget = NULL; \
           pISysMem = NULL; \
           pICmpEventMgr = NULL; \
@@ -230,7 +253,17 @@
                     pICMUtils = NULL; \
             } \
         } \
-        if (pISysCpuHandling != NULL) \
+        if (pISysFile != NULL) \
+        { \
+            pIBase = (IBase *)pISysFile->QueryInterface(pISysFile, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pISysFile = NULL; \
+            } \
+        } \
+          if (pISysCpuHandling != NULL) \
         { \
             pIBase = (IBase *)pISysCpuHandling->QueryInterface(pISysCpuHandling, ITFID_IBase, &exitResult); \
             if (pIBase != NULL) \
@@ -321,6 +354,8 @@
           if (ERR_OK == importResult ) importResult = GET_SettgGetStringValue(0);\
           if (ERR_OK == importResult ) importResult = GET_SettgGetWStringValue(0);\
           if (ERR_OK == importResult ) importResult = GET_CMCheckSysTargetSignature(0);\
+          if (ERR_OK == importResult ) importResult = GET_CMUtlSafeStrCat(0);\
+          if (ERR_OK == importResult ) importResult = GET_CMUtlSafeStrCpy(0);\
           if (ERR_OK == importResult ) importResult = GET_CMUtlsnprintf(0);\
           if (ERR_OK == importResult ) importResult = GET_CMUtlStrToW(0);\
           if (ERR_OK == importResult ) importResult = GET_CMUtlwstrlen(0);\
@@ -329,6 +364,7 @@
           if (ERR_OK == importResult ) TempResult = GET_EventPost2(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_EventDelete(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_EventCreate3(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_SysFileCopy(CM_IMPORT_OPTIONAL_FUNCTION);\
            \
         /* To make LINT happy */\
         TempResult = TempResult;\
@@ -365,7 +401,7 @@
 #else
 #define EXPORT_EXTREF2_STMT
 #endif
-#if !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
+#if !defined(SYSTARGETOEM_DISABLE_CMPITF) && !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
 #define EXPORT_CMPITF_STMT \
     {\
         { (RTS_VOID_FCTPTR)SysTargetSetNodeName, "SysTargetSetNodeName", 0, 0 },\
@@ -454,7 +490,9 @@
 	ITF_CmpEventMgr     \
 	ITF_SysMem     \
 	ITF_SysTarget     \
-	ITF_SysCpuHandling      \
+	ITF_SysCpuHandling     \
+	ITF_SysFile      \
+    USE_SysFileCopy      \
     USE_EventCreate3      \
     USE_EventDelete      \
     USE_EventPost2      \
@@ -463,6 +501,8 @@
     USE_CMUtlwstrlen      \
     USE_CMUtlStrToW      \
     USE_CMUtlsnprintf      \
+    USE_CMUtlSafeStrCpy      \
+    USE_CMUtlSafeStrCat      \
     USE_CMCheckSysTargetSignature      \
     USE_SettgGetWStringValue      \
     USE_SettgGetStringValue      \
@@ -493,7 +533,9 @@
 	ITF_CmpEventMgr    \
 	ITF_SysMem    \
 	ITF_SysTarget    \
-	ITF_SysCpuHandling     \
+	ITF_SysCpuHandling    \
+	ITF_SysFile     \
+    USE_SysFileCopy      \
     USE_EventCreate3      \
     USE_EventDelete      \
     USE_EventPost2      \
@@ -502,6 +544,8 @@
     USE_CMUtlwstrlen      \
     USE_CMUtlStrToW      \
     USE_CMUtlsnprintf      \
+    USE_CMUtlSafeStrCpy      \
+    USE_CMUtlSafeStrCat      \
     USE_CMCheckSysTargetSignature      \
     USE_SettgGetWStringValue      \
     USE_SettgGetStringValue      \
@@ -521,7 +565,9 @@
 	EXTITF_CmpEventMgr    \
 	EXTITF_SysMem    \
 	EXTITF_SysTarget    \
-	EXTITF_SysCpuHandling     \
+	EXTITF_SysCpuHandling    \
+	EXTITF_SysFile     \
+    EXT_SysFileCopy  \
     EXT_EventCreate3  \
     EXT_EventDelete  \
     EXT_EventPost2  \
@@ -530,6 +576,8 @@
     EXT_CMUtlwstrlen  \
     EXT_CMUtlStrToW  \
     EXT_CMUtlsnprintf  \
+    EXT_CMUtlSafeStrCpy  \
+    EXT_CMUtlSafeStrCat  \
     EXT_CMCheckSysTargetSignature  \
     EXT_SettgGetWStringValue  \
     EXT_SettgGetStringValue  \

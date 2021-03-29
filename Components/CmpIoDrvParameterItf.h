@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -64,11 +64,11 @@ typedef struct
  * <p>Read a driver specific parameters.</p>
  * <p>These parameters can be read by the application, as
  * well as, by an online service, which is triggered from
- * the device configurator plugin in the CoDeSys programming
+ * the device editor plugin in the CoDeSys programming
  * system.</p>
  * <p>Note: If the I/O driver returns an error, the I/O
  * Manager may try to read the parameter himself</p>
- * <p>Note2: On SIL2 runtimes, this interface is not supported.</p>
+ * <p>Note2: On SIL2 runtime this interface is not supported.</p>
  * </description>
  * <param name="hDevice" type="IN" range="[RTS_INVALID_HANDLE,VALID_IODRIVER]">Handle to the IO-driver instance</param>
  * <param name="pConnector" type="IN" range="[NULL,VALID_CONNECTOR]">Pointer to the connector (might be determined with IoMgrConfigGetConnector).</param>
@@ -138,10 +138,10 @@ typedef RTS_RESULT (CDECL * PFIODRVREADPARAMETER) (RTS_HANDLE hDevice, IoConfigC
  * <p>Write a driver specific parameters.</p>
  * <p>These parameters can be written by the application, as
  * well as, by an online service, which is triggered from
- * the device configurator plugin in the CoDeSys programming
+ * the device editor plugin in the CoDeSys programming
  * system.</p>
- * <p>Note: On SIL2 runtimes, this interface is not supported. And if called in safe-mode,
- * on SIL2 Runtimes, an exception is generated.</p>
+ * <p>Note: On SIL2 runtime this interface is not supported. And if called in safe-mode,
+ * on SIL2 runtime an exception is generated.</p>
  * </description>
  * <param name="hDevice" type="IN" range="[RTS_INVALID_HANDLE,VALID_IODRIVER]">Handle to the IO-driver instance</param>
  * <param name="pConnector" type="IN" range="[NULL,VALID_CONNECTOR]">Pointer to the connector (might be determined with IoMgrConfigGetConnector).</param>

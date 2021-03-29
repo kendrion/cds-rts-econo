@@ -1,0 +1,27 @@
+#!/bin/sh
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+
+CONFIGFILE_USER=/etc/CODESYSControl_User.cfg
+STARTSCRIPT=/etc/init.d/codesyscontrol
+
+make_config () {
+  chmod a+rw ${CONFIGFILE_USER}
+}
+
+make_daemon () {
+  ${STARTSCRIPT} start
+  update-rc.d codesyscontrol defaults
+}
+
+case "$1" in
+  configure)
+    echo "make config rw"
+    make_config
+
+    echo "create and install daemon"
+    make_daemon
+  ;;
+esac
+
+exit 0

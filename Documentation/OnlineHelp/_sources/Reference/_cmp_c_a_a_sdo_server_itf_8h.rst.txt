@@ -1,0 +1,214 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_c_a_a_sdo_server_itf_8h:
+
+===================================
+CmpCAASdoServerItf.h File Reference
+===================================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpItf.h`"
+| #include ":ref:`CAADefines.h`"
+| #include ":ref:`CAATypes.h`"
+| #include ":ref:`ServerSdo.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`isdohandler_struct <structisdohandler__struct>`
+
+- struct :ref:`tagisdohandler_handledownloadrequest_struct <structtagisdohandler__handledownloadrequest__struct>`
+
+- struct :ref:`tagisdohandler_handleuploadrequest_struct <structtagisdohandler__handleuploadrequest__struct>`
+
+- struct :ref:`tagisdohandler_endupload_struct <structtagisdohandler__endupload__struct>`
+
+- struct :ref:`tagisdohandler_enddownload_struct <structtagisdohandler__enddownload__struct>`
+
+- struct :ref:`tagsdoserveropen_struct <structtagsdoserveropen__struct>`
+
+- struct :ref:`tagsdoserverclose_struct <structtagsdoserverclose__struct>`
+
+- struct :ref:`tagsdoserverdocycle_struct <structtagsdoserverdocycle__struct>`
+
+- struct :ref:`ICmpCAASdoServer_C <struct_i_cmp_c_a_a_sdo_server___c>`
+
+Macros
+------
+
+- #define :ref:`CSS_NO_ERROR <_cmp_c_a_a_sdo_server_itf_8h_1a387c2caaa0d17f4d158461bdd799caad>` ((CAA_ERROR)0)
+
+- #define :ref:`CSS_FIRST_ERROR <_cmp_c_a_a_sdo_server_itf_8h_1adfb9a42e76ab3aa81c2303a5e5f91ac7>` ((CAA_ERROR)10600)
+
+- #define :ref:`CSS_ERR_NOT_SUPPORTED <_cmp_c_a_a_sdo_server_itf_8h_1a2fb7d7c9fbf9322be0d72b0c2625e100>` ((CAA_ERROR)10601)
+
+- #define :ref:`CSS_ERR_CREATING_HANDLER <_cmp_c_a_a_sdo_server_itf_8h_1ab09b336ada9ad69f4bd9dc6436b56c45>` ((CAA_ERROR)10602)
+
+- #define :ref:`CSS_ERR_NO_MEMORY <_cmp_c_a_a_sdo_server_itf_8h_1a9abc60eaf1951c9e029dadbbf19ee464>` ((CAA_ERROR)10603)
+
+- #define :ref:`CSS_ERR_INVALID_HANDLE <_cmp_c_a_a_sdo_server_itf_8h_1ae193ec9d3e46bdf4cb6ff919f2fbee02>` ((CAA_ERROR)10604)
+
+- #define :ref:`CSS_ERR_WRONG_PARAMETER <_cmp_c_a_a_sdo_server_itf_8h_1afa66e0d51cd900fcfcd60fd1f3086fe5>` ((CAA_ERROR)10605)
+
+- #define :ref:`CSS_ERR_INVALID_DRIVER <_cmp_c_a_a_sdo_server_itf_8h_1a108d932f0dba0027ff92cb045572293f>` ((CAA_ERROR)10606)
+
+- #define :ref:`CSS_ERR_INVALID_CHANNEL <_cmp_c_a_a_sdo_server_itf_8h_1a6891c6b460b0358dda02338ae04e410c>` ((CAA_ERROR)10607)
+
+- #define :ref:`CSS_ERR_INTERNAL_ERROR <_cmp_c_a_a_sdo_server_itf_8h_1a670ca6243ea7f74293a8e9dec68d3acf>` ((CAA_ERROR)10608)
+
+- #define :ref:`CSS_ERR_TRANSMISSION_ERROR <_cmp_c_a_a_sdo_server_itf_8h_1a412e5b1215b3e650d42bd06a408510ec>` ((CAA_ERROR)10609)
+
+- #define :ref:`CSS_LAST_ERROR <_cmp_c_a_a_sdo_server_itf_8h_1a18da112d0547f439af8c1b6f2743fb88>` ((CAA_ERROR)10629)
+
+- #define :ref:`USE_CSS_SDOServerOpen <_cmp_c_a_a_sdo_server_itf_8h_1a5bed43e687c500b39323d668c21e246d>` :ref:`PFCSS_SDOSERVEROPEN <_cmp_c_a_a_sdo_server_itf_8h_1a5846202b85b3f61ccda82d24ded2364f>` pfCSS_SDOServerOpen;
+
+- #define :ref:`EXT_CSS_SDOServerOpen <_cmp_c_a_a_sdo_server_itf_8h_1abb2bdec08e703b0cca02a93cd2fe9ea4>` extern :ref:`PFCSS_SDOSERVEROPEN <_cmp_c_a_a_sdo_server_itf_8h_1a5846202b85b3f61ccda82d24ded2364f>` pfCSS_SDOServerOpen;
+
+- #define :ref:`GET_CSS_SDOServerOpen <_cmp_c_a_a_sdo_server_itf_8h_1abfbb33c6efd83d2c252dc83d1a8a8573>` s_pfCMGetAPI2( "CSS_SDOServerOpen", (RTS_VOID_FCTPTR *)&pfCSS_SDOServerOpen, (fl), 0, 0)
+
+- #define :ref:`CAL_CSS_SDOServerOpen <_cmp_c_a_a_sdo_server_itf_8h_1a0f3eb684ec26d294078e900b83cac7de>` pfCSS_SDOServerOpen
+
+- #define :ref:`CHK_CSS_SDOServerOpen <_cmp_c_a_a_sdo_server_itf_8h_1a53ba5953566530fe9d6f759f83f029d1>` (pfCSS_SDOServerOpen != NULL)
+
+- #define :ref:`EXP_CSS_SDOServerOpen <_cmp_c_a_a_sdo_server_itf_8h_1a569296e9d6df1268e568b5a9f6ee5149>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CSS_SDOServerOpen", (RTS_UINTPTR) :ref:`CSS_SDOServerOpen <_cmp_c_a_a_sdo_server_itf_8h_1a335b404a06123b68454059e4c5118494>` , 0, 0)
+
+- #define :ref:`USE_CSS_SDOServerOpenLegacy <_cmp_c_a_a_sdo_server_itf_8h_1acb0f0d411ce7cea9496b85ffd0f837cf>` :ref:`PFCSS_SDOSERVEROPENLEGACY <_cmp_c_a_a_sdo_server_itf_8h_1ab4e7bcfdbc84956f01b2558fa3fe9c3f>` pfCSS_SDOServerOpenLegacy;
+
+- #define :ref:`EXT_CSS_SDOServerOpenLegacy <_cmp_c_a_a_sdo_server_itf_8h_1ab19ed78dad581b2e330b723c448ec694>` extern :ref:`PFCSS_SDOSERVEROPENLEGACY <_cmp_c_a_a_sdo_server_itf_8h_1ab4e7bcfdbc84956f01b2558fa3fe9c3f>` pfCSS_SDOServerOpenLegacy;
+
+- #define :ref:`GET_CSS_SDOServerOpenLegacy <_cmp_c_a_a_sdo_server_itf_8h_1a259dec4fd48f68f0dc113e09cd7bf1fa>` s_pfCMGetAPI2( "CSS_SDOServerOpenLegacy", (RTS_VOID_FCTPTR *)&pfCSS_SDOServerOpenLegacy, (fl), 0, 0)
+
+- #define :ref:`CAL_CSS_SDOServerOpenLegacy <_cmp_c_a_a_sdo_server_itf_8h_1adfe838b963a4d5353f49fd28df2aef80>` pfCSS_SDOServerOpenLegacy
+
+- #define :ref:`CHK_CSS_SDOServerOpenLegacy <_cmp_c_a_a_sdo_server_itf_8h_1acaeb5920527f3b07f023b41d2d45af06>` (pfCSS_SDOServerOpenLegacy != NULL)
+
+- #define :ref:`EXP_CSS_SDOServerOpenLegacy <_cmp_c_a_a_sdo_server_itf_8h_1a9d88038dafce428b53a9e1132f20641e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CSS_SDOServerOpenLegacy", (RTS_UINTPTR) :ref:`CSS_SDOServerOpenLegacy <_cmp_c_a_a_sdo_server_itf_8h_1a6b963a4b58d93c0993c0cab656efd950>` , 0, 0)
+
+- #define :ref:`USE_CSS_SDOServerClose <_cmp_c_a_a_sdo_server_itf_8h_1a10581b3dffea1bab9c497d35988f7ec1>` :ref:`PFCSS_SDOSERVERCLOSE <_cmp_c_a_a_sdo_server_itf_8h_1acd58663bd843c66568e8e21ccb32b410>` pfCSS_SDOServerClose;
+
+- #define :ref:`EXT_CSS_SDOServerClose <_cmp_c_a_a_sdo_server_itf_8h_1ae223df34f129dfd55234d17299ff7825>` extern :ref:`PFCSS_SDOSERVERCLOSE <_cmp_c_a_a_sdo_server_itf_8h_1acd58663bd843c66568e8e21ccb32b410>` pfCSS_SDOServerClose;
+
+- #define :ref:`GET_CSS_SDOServerClose <_cmp_c_a_a_sdo_server_itf_8h_1aba1b8e39614b2bc8abfc8e97bdc67fe6>` s_pfCMGetAPI2( "CSS_SDOServerClose", (RTS_VOID_FCTPTR *)&pfCSS_SDOServerClose, (fl), 0, 0)
+
+- #define :ref:`CAL_CSS_SDOServerClose <_cmp_c_a_a_sdo_server_itf_8h_1ae0154f292b6626b4127428b73da14a56>` pfCSS_SDOServerClose
+
+- #define :ref:`CHK_CSS_SDOServerClose <_cmp_c_a_a_sdo_server_itf_8h_1acc74c6e4b949fa1f1f292caa9a8a31aa>` (pfCSS_SDOServerClose != NULL)
+
+- #define :ref:`EXP_CSS_SDOServerClose <_cmp_c_a_a_sdo_server_itf_8h_1a9212611c442d037180d701d98871f1f8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CSS_SDOServerClose", (RTS_UINTPTR) :ref:`CSS_SDOServerClose <_cmp_c_a_a_sdo_server_itf_8h_1a7213c547901864e3f2f5d64e37e98693>` , 0, 0)
+
+- #define :ref:`USE_CSS_SDOServerDoCycle <_cmp_c_a_a_sdo_server_itf_8h_1a017c1a8263518342d9a4244b4a161a49>` :ref:`PFCSS_SDOSERVERDOCYCLE <_cmp_c_a_a_sdo_server_itf_8h_1af26958c153b2e72f06a8dc1870e83947>` pfCSS_SDOServerDoCycle;
+
+- #define :ref:`EXT_CSS_SDOServerDoCycle <_cmp_c_a_a_sdo_server_itf_8h_1abf017c3a994e8975977a28a11649c547>` extern :ref:`PFCSS_SDOSERVERDOCYCLE <_cmp_c_a_a_sdo_server_itf_8h_1af26958c153b2e72f06a8dc1870e83947>` pfCSS_SDOServerDoCycle;
+
+- #define :ref:`GET_CSS_SDOServerDoCycle <_cmp_c_a_a_sdo_server_itf_8h_1a3d6424c8fe6d9123ccfb42fc498035de>` s_pfCMGetAPI2( "CSS_SDOServerDoCycle", (RTS_VOID_FCTPTR *)&pfCSS_SDOServerDoCycle, (fl), 0, 0)
+
+- #define :ref:`CAL_CSS_SDOServerDoCycle <_cmp_c_a_a_sdo_server_itf_8h_1adef7e09590190c199ad7c6503f6fb6db>` pfCSS_SDOServerDoCycle
+
+- #define :ref:`CHK_CSS_SDOServerDoCycle <_cmp_c_a_a_sdo_server_itf_8h_1aacc9b9c61cbc774366a6c84b52592156>` (pfCSS_SDOServerDoCycle != NULL)
+
+- #define :ref:`EXP_CSS_SDOServerDoCycle <_cmp_c_a_a_sdo_server_itf_8h_1aae7ccf9c014d85d9a61f9843c39fe296>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CSS_SDOServerDoCycle", (RTS_UINTPTR) :ref:`CSS_SDOServerDoCycle <_cmp_c_a_a_sdo_server_itf_8h_1a497febf397e3053294e268c96d15a33f>` , 0, 0)
+
+- #define :ref:`USE_sdoserveropen <_cmp_c_a_a_sdo_server_itf_8h_1adf070bff840a5a48ec25d78cb629d84c>` :ref:`PFSDOSERVEROPEN_IEC <_cmp_c_a_a_sdo_server_itf_8h_1a26693259cef829409a0b5d21ff487e07>` pfsdoserveropen;
+
+- #define :ref:`EXT_sdoserveropen <_cmp_c_a_a_sdo_server_itf_8h_1a7603fbe80b27c39a9f651784ce281820>` extern :ref:`PFSDOSERVEROPEN_IEC <_cmp_c_a_a_sdo_server_itf_8h_1a26693259cef829409a0b5d21ff487e07>` pfsdoserveropen;
+
+- #define :ref:`GET_sdoserveropen <_cmp_c_a_a_sdo_server_itf_8h_1a45818e9725dea88ca7153dc2c9268a26>` s_pfCMGetAPI2( "sdoserveropen", (RTS_VOID_FCTPTR *)&pfsdoserveropen, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0, 0x0)
+
+- #define :ref:`CAL_sdoserveropen <_cmp_c_a_a_sdo_server_itf_8h_1a040fed718cb0e35bf8ecefb54cb09719>` pfsdoserveropen
+
+- #define :ref:`CHK_sdoserveropen <_cmp_c_a_a_sdo_server_itf_8h_1ad2aca5e266544a8b1f0b926c7c416eea>` (pfsdoserveropen != NULL)
+
+- #define :ref:`EXP_sdoserveropen <_cmp_c_a_a_sdo_server_itf_8h_1a8feadec9935e90d2940d5b4ae43055b4>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sdoserveropen", (RTS_UINTPTR) :ref:`sdoserveropen <_cmp_c_a_a_sdo_server_itf_8h_1ab5209661d61992bf0acd9aad9bca4dd3>` , 1, 0x0, 0x0)
+
+- #define :ref:`USE_sdoserverclose <_cmp_c_a_a_sdo_server_itf_8h_1aad8a932440b3e0519132a7f823cde1ea>` :ref:`PFSDOSERVERCLOSE_IEC <_cmp_c_a_a_sdo_server_itf_8h_1a95c9f69cf3416b0840a05a1f8802d4a2>` pfsdoserverclose;
+
+- #define :ref:`EXT_sdoserverclose <_cmp_c_a_a_sdo_server_itf_8h_1ad036539e37d5e0e0b737867a25ef33b2>` extern :ref:`PFSDOSERVERCLOSE_IEC <_cmp_c_a_a_sdo_server_itf_8h_1a95c9f69cf3416b0840a05a1f8802d4a2>` pfsdoserverclose;
+
+- #define :ref:`GET_sdoserverclose <_cmp_c_a_a_sdo_server_itf_8h_1a8c7627bef9f3fce8df0456c6d5bad883>` s_pfCMGetAPI2( "sdoserverclose", (RTS_VOID_FCTPTR *)&pfsdoserverclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0, 0x0)
+
+- #define :ref:`CAL_sdoserverclose <_cmp_c_a_a_sdo_server_itf_8h_1ab2e86926daf81840996d0e38fca1e169>` pfsdoserverclose
+
+- #define :ref:`CHK_sdoserverclose <_cmp_c_a_a_sdo_server_itf_8h_1a45367da119ff225a6d826d81b461be90>` (pfsdoserverclose != NULL)
+
+- #define :ref:`EXP_sdoserverclose <_cmp_c_a_a_sdo_server_itf_8h_1ad364fa3432ba275136c75c298a7dbd61>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sdoserverclose", (RTS_UINTPTR) :ref:`sdoserverclose <_cmp_c_a_a_sdo_server_itf_8h_1a8786d55a9a938d379f3de2aa8b2d333d>` , 1, 0x0, 0x0)
+
+- #define :ref:`USE_sdoserverdocycle <_cmp_c_a_a_sdo_server_itf_8h_1aa27825eeb2dfa1bee7519611262220fe>` :ref:`PFSDOSERVERDOCYCLE_IEC <_cmp_c_a_a_sdo_server_itf_8h_1a2d7f890a200e9f4d72ed943a8275bc67>` pfsdoserverdocycle;
+
+- #define :ref:`EXT_sdoserverdocycle <_cmp_c_a_a_sdo_server_itf_8h_1a56b5654610e145f6115b2ae5a99abd7c>` extern :ref:`PFSDOSERVERDOCYCLE_IEC <_cmp_c_a_a_sdo_server_itf_8h_1a2d7f890a200e9f4d72ed943a8275bc67>` pfsdoserverdocycle;
+
+- #define :ref:`GET_sdoserverdocycle <_cmp_c_a_a_sdo_server_itf_8h_1a0381c52e76eeb311ffc69b60da9d4a83>` s_pfCMGetAPI2( "sdoserverdocycle", (RTS_VOID_FCTPTR *)&pfsdoserverdocycle, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0, 0x0)
+
+- #define :ref:`CAL_sdoserverdocycle <_cmp_c_a_a_sdo_server_itf_8h_1afc6515cffb746f0bd7fc60a88e5bc746>` pfsdoserverdocycle
+
+- #define :ref:`CHK_sdoserverdocycle <_cmp_c_a_a_sdo_server_itf_8h_1a8210df35d581fa93f12c9e681238e3a5>` (pfsdoserverdocycle != NULL)
+
+- #define :ref:`EXP_sdoserverdocycle <_cmp_c_a_a_sdo_server_itf_8h_1a37bdbefab0558b1fdc94933e27edb8bc>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sdoserverdocycle", (RTS_UINTPTR) :ref:`sdoserverdocycle <_cmp_c_a_a_sdo_server_itf_8h_1ae96ef5366687974eaaa8550297b99384>` , 1, 0x0, 0x0)
+
+- #define :ref:`ITF_CmpCAASdoServer <_cmp_c_a_a_sdo_server_itf_8h_1a0c60f4337eeaf1fa3e3b5d9baed31dc3>`
+
+- #define :ref:`EXTITF_CmpCAASdoServer <_cmp_c_a_a_sdo_server_itf_8h_1ab49a8d078d53cf7cd344f702ad0ce20d>`
+
+Typedefs
+--------
+
+- typedef CAA_HANDLE(CAAFKT * :ref:`PFCSS_SDOSERVEROPEN <_cmp_c_a_a_sdo_server_itf_8h_1a5846202b85b3f61ccda82d24ded2364f>`)(CAA_HANDLE hDriver, CAA_USINT usiNodeId, CSS_CSDOHandler ISDOHandler, CAA_ERROR *peError)
+
+- typedef CAA_HANDLE(CAAFKT * :ref:`PFCSS_SDOSERVEROPENLEGACY <_cmp_c_a_a_sdo_server_itf_8h_1ab4e7bcfdbc84956f01b2558fa3fe9c3f>`)(CAA_HANDLE hDriver, CAA_USINT usiNodeId, CSS_CSDOHandler ISDOHandler, CAA_ERROR *peError)
+
+- typedef CAA_ERROR(CAAFKT * :ref:`PFCSS_SDOSERVERCLOSE <_cmp_c_a_a_sdo_server_itf_8h_1acd58663bd843c66568e8e21ccb32b410>`)(CAA_HANDLE hServer)
+
+- typedef CAA_ERROR(CAAFKT * :ref:`PFCSS_SDOSERVERDOCYCLE <_cmp_c_a_a_sdo_server_itf_8h_1af26958c153b2e72f06a8dc1870e83947>`)(CAA_HANDLE hServer)
+
+- typedef struct :ref:`tagisdohandler_handledownloadrequest_struct <structtagisdohandler__handledownloadrequest__struct>` :ref:`isdohandler_handledownloadrequest_struct <_cmp_c_a_a_sdo_server_itf_8h_1a2d09b2e223f70068a5e79dcc6dfe481e>`
+
+- typedef struct :ref:`tagisdohandler_handleuploadrequest_struct <structtagisdohandler__handleuploadrequest__struct>` :ref:`isdohandler_handleuploadrequest_struct <_cmp_c_a_a_sdo_server_itf_8h_1aa6d500e265ad3f696d324e845829e33f>`
+
+- typedef struct :ref:`tagisdohandler_endupload_struct <structtagisdohandler__endupload__struct>` :ref:`isdohandler_endupload_struct <_cmp_c_a_a_sdo_server_itf_8h_1aad0755ce8152813332e68c5b3b975a03>`
+
+- typedef struct :ref:`tagisdohandler_enddownload_struct <structtagisdohandler__enddownload__struct>` :ref:`isdohandler_enddownload_struct <_cmp_c_a_a_sdo_server_itf_8h_1af58b65f8f203a9462fa997f2c9419832>`
+
+- typedef struct :ref:`tagsdoserveropen_struct <structtagsdoserveropen__struct>` :ref:`sdoserveropen_struct <_cmp_c_a_a_sdo_server_itf_8h_1a756ae774efb3ed12c16e33006de0539e>`
+
+- typedef void(* :ref:`PFSDOSERVEROPEN_IEC <_cmp_c_a_a_sdo_server_itf_8h_1a26693259cef829409a0b5d21ff487e07>`)(sdoserveropen_struct *p)
+
+- typedef struct :ref:`tagsdoserverclose_struct <structtagsdoserverclose__struct>` :ref:`sdoserverclose_struct <_cmp_c_a_a_sdo_server_itf_8h_1a7ce6c1b57c0bbc265506851ea2fd3b0d>`
+
+- typedef void(* :ref:`PFSDOSERVERCLOSE_IEC <_cmp_c_a_a_sdo_server_itf_8h_1a95c9f69cf3416b0840a05a1f8802d4a2>`)(sdoserverclose_struct *p)
+
+- typedef struct :ref:`tagsdoserverdocycle_struct <structtagsdoserverdocycle__struct>` :ref:`sdoserverdocycle_struct <_cmp_c_a_a_sdo_server_itf_8h_1a9e4f6b58ee6cecb21d543b620d0753d0>`
+
+- typedef void(* :ref:`PFSDOSERVERDOCYCLE_IEC <_cmp_c_a_a_sdo_server_itf_8h_1a2d7f890a200e9f4d72ed943a8275bc67>`)(sdoserverdocycle_struct *p)
+
+- typedef :ref:`ICmpCAASdoServer_C <struct_i_cmp_c_a_a_sdo_server___c>` :ref:`ICmpCAASdoServer <_cmp_c_a_a_sdo_server_itf_8h_1a72ea5ea97714e0685fe7327e05583cea>`
+
+Functions
+---------
+
+- CAA_HANDLE CAAFKT :ref:`CSS_SDOServerOpen <_cmp_c_a_a_sdo_server_itf_8h_1a335b404a06123b68454059e4c5118494>` (CAA_HANDLE hDriver, CAA_USINT usiNodeId, CSS_CSDOHandler ISDOHandler, CAA_ERROR * peError)
+
+- CAA_HANDLE CAAFKT :ref:`CSS_SDOServerOpenLegacy <_cmp_c_a_a_sdo_server_itf_8h_1a6b963a4b58d93c0993c0cab656efd950>` (CAA_HANDLE hDriver, CAA_USINT usiNodeId, CSS_CSDOHandler ISDOHandler, CAA_ERROR * peError)
+
+- CAA_ERROR CAAFKT :ref:`CSS_SDOServerClose <_cmp_c_a_a_sdo_server_itf_8h_1a7213c547901864e3f2f5d64e37e98693>` (CAA_HANDLE hServer)
+
+- CAA_ERROR CAAFKT :ref:`CSS_SDOServerDoCycle <_cmp_c_a_a_sdo_server_itf_8h_1a497febf397e3053294e268c96d15a33f>` (CAA_HANDLE hServer)
+
+- void :ref:`sdoserveropen <_cmp_c_a_a_sdo_server_itf_8h_1ab5209661d61992bf0acd9aad9bca4dd3>` (:ref:`sdoserveropen_struct <_cmp_c_a_a_sdo_server_itf_8h_1a756ae774efb3ed12c16e33006de0539e>` * p)
+
+- void :ref:`sdoserverclose <_cmp_c_a_a_sdo_server_itf_8h_1a8786d55a9a938d379f3de2aa8b2d333d>` (:ref:`sdoserverclose_struct <_cmp_c_a_a_sdo_server_itf_8h_1a7ce6c1b57c0bbc265506851ea2fd3b0d>` * p)
+
+- void :ref:`sdoserverdocycle <_cmp_c_a_a_sdo_server_itf_8h_1ae96ef5366687974eaaa8550297b99384>` (:ref:`sdoserverdocycle_struct <_cmp_c_a_a_sdo_server_itf_8h_1a9e4f6b58ee6cecb21d543b620d0753d0>` * p)
+
+Detailed Description
+--------------------
+
+Definition in file CmpCAASdoServerItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

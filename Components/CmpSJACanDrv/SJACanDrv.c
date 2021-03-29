@@ -2,9 +2,9 @@
 *
 *	Copyright:	© 3S - Smart Software Solutions GmbH, Kempten
 *	Program:		Runtime System for the CoDeSys Soft-Plc
-*	Module: 		CAACanDmyDrv.c
-*	Version:		2.4
-*	Purpose:		Implementaion of CAA SJA Can Mini Driver
+*	Module: 		CmpSJACanDrv.c
+*	Version:		3.5.16.0
+*	Purpose:		Implementation of CAA SJA Can Mini Driver
 *
 ******************************************************************************/
 
@@ -70,7 +70,7 @@ typedef union sja_bt1_tag
 {
 	struct
 	{
-		CL2I_BYTE SAM		: 1;	/* 7 Sampling*/
+		CL2I_BYTE SAM	: 1;	/* 7 Sampling*/
 		CL2I_BYTE TSEG2	: 3;	/* 6 Time Segment 2*/
 		CL2I_BYTE TSEG1	: 4;	/* 3 Time Segment 1*/
 	} X;
@@ -108,6 +108,20 @@ static SJA_BTR btrv16[]={
 									{0,0x16}, /*  800 kBit 7 */
 									{0,0x14}  /* 1000 kBit 8 */
 		};
+
+#if LOG_SJA
+	/* this is only suitable for debugging with 1 CAN controller!! */
+	#define MAX_INTS_LOG_ENTRIES 10*600
+	typedef struct interruptLog_tag
+	{
+		unsigned char byStatusReg;
+		unsigned char byIntReg;
+		unsigned char byTxErrs;
+		unsigned char byRxErrs;
+	}interruptLog;
+	static interruptLog s_theInterruptLog[MAX_INTS_LOG_ENTRIES];
+	static int s_nInts = 0;
+#endif
 
 #define SJA_NBAUD (sizeof(btrv)/sizeof(SJA_BTR))
 
@@ -344,7 +358,7 @@ void SjaInitAllControllersForUse(void)
 		if(s_Can[iCtrl].usVendorID == VENDOR_ID_PEAK && 
 			(s_Can[iCtrl].usDeviceID == DEVICE_ID_PEAK || s_Can[iCtrl].usDeviceID == DEVICE_ID_PEAK2 || s_Can[iCtrl].usDeviceID == DEVICE_ID_PEAK3 ||
 			s_Can[iCtrl].usDeviceID == DEVICE_ID_PEAK4 || s_Can[iCtrl].usDeviceID == DEVICE_ID_PEAK5 || s_Can[iCtrl].usDeviceID == DEVICE_ID_PEAK6 ||
-			s_Can[iCtrl].usDeviceID == DEVICE_ID_PEAK7 || s_Can[iCtrl].usDeviceID == DEVICE_ID_PEAK8))
+			s_Can[iCtrl].usDeviceID == DEVICE_ID_PEAK7 || s_Can[iCtrl].usDeviceID == DEVICE_ID_PEAK8 || s_Can[iCtrl].usDeviceID == DEVICE_ID_PEAK9))
 		{ 
 			if(!s_Can[iCtrl].bIsSecondCtrl)
 			{
@@ -397,7 +411,7 @@ void SjaInitAllControllersForUse(void)
 				s_Can[iCtrl].pCanRegs = CAL_SysSharedMemoryGetPointer(s_Can[iCtrl].hShmSja, &Result);			
 
 				IntDesc.BusType = BT_PCI;
-				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitiv as always on the PCI.*/
+				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitive as always on the PCI.*/
 				IntDesc.busSpecific.pciInterrupt.ulBusNumber = s_Can[iCtrl].ulBusNr;
 				IntDesc.busSpecific.pciInterrupt.ulDevciceNumber = s_Can[iCtrl].ulDevice;
 				IntDesc.busSpecific.pciInterrupt.ulFunctionNumber = s_Can[iCtrl].ulFunction;
@@ -480,7 +494,7 @@ void SjaInitAllControllersForUse(void)
 				s_Can[iCtrl].pCanRegs = CAL_SysSharedMemoryGetPointer(s_Can[iCtrl].hShmSja, &Result);			
 
 				IntDesc.BusType = BT_PCI;
-				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitiv as always on the PCI.*/
+				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitive as always on the PCI.*/
 				IntDesc.busSpecific.pciInterrupt.ulBusNumber = s_Can[iCtrl].ulBusNr;
 				IntDesc.busSpecific.pciInterrupt.ulDevciceNumber = s_Can[iCtrl].ulDevice;
 				IntDesc.busSpecific.pciInterrupt.ulFunctionNumber = s_Can[iCtrl].ulFunction;
@@ -536,7 +550,7 @@ void SjaInitAllControllersForUse(void)
 				s_Can[iCtrl].pCanRegs = CAL_SysSharedMemoryGetPointer(s_Can[iCtrl].hShmSja, &Result);			
 
 				IntDesc.BusType = BT_PCI;
-				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitiv as always on the PCI.*/
+				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitive as always on the PCI.*/
 				IntDesc.busSpecific.pciInterrupt.ulBusNumber = s_Can[iCtrl].ulBusNr;
 				IntDesc.busSpecific.pciInterrupt.ulDevciceNumber = s_Can[iCtrl].ulDevice;
 				IntDesc.busSpecific.pciInterrupt.ulFunctionNumber = s_Can[iCtrl].ulFunction;
@@ -600,7 +614,7 @@ void SjaInitAllControllersForUse(void)
 				s_Can[iCtrl].pHelpCtrl = CAL_SysSharedMemoryGetPointer(s_Can[iCtrl].hShmHelpCtrl, &Result);
 
 				IntDesc.BusType = BT_PCI;
-				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitiv as always on the PCI.*/
+				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitive as always on the PCI.*/
 				IntDesc.busSpecific.pciInterrupt.ulBusNumber = s_Can[iCtrl].ulBusNr;
 				IntDesc.busSpecific.pciInterrupt.ulDevciceNumber = s_Can[iCtrl].ulDevice;
 				IntDesc.busSpecific.pciInterrupt.ulFunctionNumber = s_Can[iCtrl].ulFunction;
@@ -678,7 +692,7 @@ void SjaInitAllControllersForUse(void)
 					s_Can[iCtrl].pHelpCtrl[3] = 3;
 
 				IntDesc.BusType = BT_PCI;
-				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitiv as always on the PCI.*/
+				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitive as always on the PCI.*/
 				IntDesc.busSpecific.pciInterrupt.ulBusNumber = s_Can[iCtrl].ulBusNr;
 				IntDesc.busSpecific.pciInterrupt.ulDevciceNumber = s_Can[iCtrl].ulDevice;
 				IntDesc.busSpecific.pciInterrupt.ulFunctionNumber = s_Can[iCtrl].ulFunction;
@@ -752,7 +766,7 @@ void SjaInitAllControllersForUse(void)
 				
 
 				IntDesc.BusType = BT_PCI;
-				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitiv as always on the PCI.*/
+				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitive as always on the PCI.*/
 				IntDesc.busSpecific.pciInterrupt.ulBusNumber = s_Can[iCtrl].ulBusNr;
 				IntDesc.busSpecific.pciInterrupt.ulDevciceNumber = s_Can[iCtrl].ulDevice;
 				IntDesc.busSpecific.pciInterrupt.ulFunctionNumber = s_Can[iCtrl].ulFunction;
@@ -817,7 +831,7 @@ void SjaInitAllControllersForUse(void)
 			s_Can[iCtrl].pCanRegs = CAL_SysSharedMemoryGetPointer(s_Can[iCtrl].hShmSja, &Result);
 
 			IntDesc.BusType = BT_PCI;
-			IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitiv as always on the PCI.*/
+			IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitive as always on the PCI.*/
 			IntDesc.busSpecific.pciInterrupt.ulBusNumber = s_Can[iCtrl].ulBusNr;
 			IntDesc.busSpecific.pciInterrupt.ulDevciceNumber = s_Can[iCtrl].ulDevice;
 			IntDesc.busSpecific.pciInterrupt.ulFunctionNumber = s_Can[iCtrl].ulFunction;
@@ -839,7 +853,7 @@ void SjaInitAllControllersForUse(void)
 				s_Can[iCtrl].pCanRegs = s_Can[iCtrl-1].pCanRegs + 0x200;
 
 				IntDesc.BusType = BT_PCI;
-				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitiv as always on the PCI.*/
+				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitive as always on the PCI.*/
 				IntDesc.busSpecific.pciInterrupt.ulBusNumber = s_Can[iCtrl].ulBusNr;
 				IntDesc.busSpecific.pciInterrupt.ulDevciceNumber = s_Can[iCtrl].ulDevice;
 				IntDesc.busSpecific.pciInterrupt.ulFunctionNumber = s_Can[iCtrl].ulFunction;
@@ -884,7 +898,7 @@ void SjaInitAllControllersForUse(void)
 				s_Can[iCtrl].pCanRegs = CAL_SysSharedMemoryGetPointer(s_Can[iCtrl].hShmSja, &Result);			
 
 				IntDesc.BusType = BT_PCI;
-				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitiv as always on the PCI.*/
+				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitive as always on the PCI.*/
 				IntDesc.busSpecific.pciInterrupt.ulBusNumber = s_Can[iCtrl].ulBusNr;
 				IntDesc.busSpecific.pciInterrupt.ulDevciceNumber = s_Can[iCtrl].ulDevice;
 				IntDesc.busSpecific.pciInterrupt.ulFunctionNumber = s_Can[iCtrl].ulFunction;
@@ -963,7 +977,7 @@ void SjaInitAllControllersForUse(void)
 				s_Can[iCtrl].pCanRegs = CAL_SysSharedMemoryGetPointer(s_Can[iCtrl].hShmSja, &Result);			
 
 				IntDesc.BusType = BT_PCI;
-				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitiv as always on the PCI.*/
+				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitive as always on the PCI.*/
 				IntDesc.busSpecific.pciInterrupt.ulBusNumber = s_Can[iCtrl].ulBusNr;
 				IntDesc.busSpecific.pciInterrupt.ulDevciceNumber = s_Can[iCtrl].ulDevice;
 				IntDesc.busSpecific.pciInterrupt.ulFunctionNumber = s_Can[iCtrl].ulFunction;
@@ -1042,7 +1056,7 @@ void SjaInitAllControllersForUse(void)
 				s_Can[iCtrl].pCanRegs = CAL_SysSharedMemoryGetPointer(s_Can[iCtrl].hShmSja, &Result);			
 
 				IntDesc.BusType = BT_PCI;
-				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitiv as always on the PCI.*/
+				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitive as always on the PCI.*/
 				IntDesc.busSpecific.pciInterrupt.ulBusNumber = s_Can[iCtrl].ulBusNr;
 				IntDesc.busSpecific.pciInterrupt.ulDevciceNumber = s_Can[iCtrl].ulDevice;
 				IntDesc.busSpecific.pciInterrupt.ulFunctionNumber = s_Can[iCtrl].ulFunction;
@@ -1136,7 +1150,7 @@ void SjaInitAllControllersForUse(void)
 				*/
 
 				IntDesc.BusType = BT_PCI;
-				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitiv as always on the PCI.*/
+				IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitive as always on the PCI.*/
 				IntDesc.busSpecific.pciInterrupt.ulBusNumber = s_Can[iCtrl].ulBusNr;
 				IntDesc.busSpecific.pciInterrupt.ulDevciceNumber = s_Can[iCtrl].ulDevice;
 				IntDesc.busSpecific.pciInterrupt.ulFunctionNumber = s_Can[iCtrl].ulFunction;
@@ -1203,7 +1217,7 @@ void SjaInitAllControllersForUse(void)
 				else
 				{ /*Ok, connect the interrupt.*/
 					IntDesc.BusType = BT_PCI;
-					IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitiv as always on the PCI.*/
+					IntDesc.InterruptMode = IM_LevelSensitive; /*IM_Level_Sensitive as always on the PCI.*/
 					IntDesc.busSpecific.pciInterrupt.ulBusNumber = s_Can[iCtrl].ulBusNr;
 					IntDesc.busSpecific.pciInterrupt.ulDevciceNumber = s_Can[iCtrl].ulDevice;
 					IntDesc.busSpecific.pciInterrupt.ulFunctionNumber = s_Can[iCtrl].ulFunction;
@@ -1293,7 +1307,7 @@ void SjaInitAllControllersForUse(void)
 				if(s_Can[iCtrl].ulBusType == BT_PCI)
 				{
 					IntDesc.BusType = BT_PCI;
-					IntDesc.InterruptMode = s_Can[iCtrl].ulIntEdgeTrig; /*IM_Level_Sensitiv as always on the PCI.*/
+					IntDesc.InterruptMode = s_Can[iCtrl].ulIntEdgeTrig; /*IM_Level_Sensitive as always on the PCI.*/
 					IntDesc.busSpecific.pciInterrupt.ulBusNumber = s_Can[iCtrl].ulBusNr;
 					IntDesc.busSpecific.pciInterrupt.ulDevciceNumber = s_Can[iCtrl].ulDevice;
 					IntDesc.busSpecific.pciInterrupt.ulFunctionNumber = s_Can[iCtrl].ulFunction;
@@ -1355,6 +1369,7 @@ static CAA_ERROR CMD_Setup(CL2I_BYTE byNet)
 	pNet = s_Can[byCtrl].pCanRegs;
 	if(!pNet)
 	{
+		CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_ERROR, ERR_FAILED, 0, "CmpSJACanDrv: ***Error*** wrong NET-ID.");
 		return CMD_SETUP_ERROR;
 	}
 
@@ -1373,7 +1388,7 @@ static CAA_ERROR CMD_Setup(CL2I_BYTE byNet)
 		s_hTxBlock[byCtrl] = CAA_hINVALID;
 	}
 
-	/* Enable Interrupts, for second controllers its ok to fail */
+	/* Enable Interrupts, for second controllers it's ok to fail */
 	CAL_SysIntDisable(s_Can[byCtrl].hInt); 
 	CAL_SysIntEnable(s_Can[byCtrl].hInt); 
 
@@ -1421,6 +1436,7 @@ static CAA_ERROR CMD_Init(CL2I_BYTE byNet, CL2I_WORD wBaudrate)
 
 	if(!pNet)
 	{
+		CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_ERROR, ERR_FAILED, 0, "CmpSJACanDrv: ***Error*** No valid NET-ID.");
 		return CMD_SETUP_ERROR;
 	}
 
@@ -1428,8 +1444,10 @@ static CAA_ERROR CMD_Init(CL2I_BYTE byNet, CL2I_WORD wBaudrate)
 	SjaWriteRegister(s_byDriver[byNet],pNet,SJA_IRen,0);
 
 	if (!CheckForSJAAvailableHere(s_byDriver[byNet], pNet))
+	{
+		CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_ERROR, ERR_FAILED, 0, "CmpSJACanDrv: ***Error*** No CAN Chip detected.");
 		return CMD_SETUP_ERROR;
-
+	}
 	/* Reenter Reset Mode*/
 	SjaWriteRegister(s_byDriver[byNet],pNet,SJA_CR_MODE,1);
 
@@ -1502,9 +1520,11 @@ static CAA_ERROR CMD_Init(CL2I_BYTE byNet, CL2I_WORD wBaudrate)
 	CAA_MEMSET(s_pInfo[s_byDriver[byNet]], 0, sizeof(CL2I_INFO));
 	s_pInfo[s_byDriver[byNet]]->byBusState = (CL2I_BYTE)CL2_ERR_FREE;
 
+	SjaWriteRegister(s_byDriver[byNet],pNet,SJA_TX_ERRCTR,0);
+
 	/* Leave Reset Mode */
 	SjaWriteRegister(s_byDriver[byNet],pNet,SJA_CR_MODE,0);
- 
+	CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "CmpSJACanDrv: CMD Init OK."); 
 	return CMD_NO_ERROR;
 }
 
@@ -1598,7 +1618,7 @@ static CAA_BOOL CMD_Send(CL2I_BYTE byNet, CAA_HANDLE hBlock, CL2I_BYTE byPrio, C
 
 	s_hTxBlock[s_byDriver[byNet]] = hBlock;
 	
-	/* Trigger Transmision */
+	/* Trigger Transmission */
 	/*g_DebugSent++;*/
 	SjaWriteRegister(s_byDriver[byNet],pNet,SJA_CMD,CMD_TXREQUEST);
 	return CMD_SND_OK;
@@ -1731,6 +1751,14 @@ static CAA_ERROR CMD_ResetAlarm(CL2I_BYTE byNet)
 		return CMD_SETUP_ERROR;
 	}
 
+/*	s_Can[s_byDriver[byNet]].reset_current = CAL_SysTimeGetMs();
+
+	if (s_Can[s_byDriver[byNet]].reset_last != 0 && 
+	   (s_Can[s_byDriver[byNet]].reset_current - s_Can[s_byDriver[byNet]].reset_last < 1000) ) 
+	{
+		return CMD_NO_ERROR;
+	}
+*/
 	pInfo->uiBusAlarm = 0;
 	SjaWriteRegister(s_byDriver[byNet],pNet,SJA_CR_MODE,0);
 
@@ -1838,7 +1866,7 @@ void HUGEPTR CDECL SJA_Interrupt_Handler(RTS_UINTPTR ulAdditionalInfo)
 			continue;
 
 		if((s_Can[i].usDeviceID == DEVICE_ID_PEAK || s_Can[i].usDeviceID == DEVICE_ID_PEAK2 || s_Can[i].usDeviceID == DEVICE_ID_PEAK3 || s_Can[i].usDeviceID == DEVICE_ID_PEAK4 ||
-			s_Can[i].usDeviceID == DEVICE_ID_PEAK5 || s_Can[i].usDeviceID == DEVICE_ID_PEAK6 || s_Can[i].usDeviceID == DEVICE_ID_PEAK7 || s_Can[i].usDeviceID == DEVICE_ID_PEAK8) && 
+			s_Can[i].usDeviceID == DEVICE_ID_PEAK5 || s_Can[i].usDeviceID == DEVICE_ID_PEAK6 || s_Can[i].usDeviceID == DEVICE_ID_PEAK7 || s_Can[i].usDeviceID == DEVICE_ID_PEAK8 || s_Can[i].usDeviceID == DEVICE_ID_PEAK9) && 
 			s_Can[i].usVendorID == VENDOR_ID_PEAK &&
 			!s_Can[i].bIsSecondCtrl)
 		{
@@ -1880,7 +1908,25 @@ void CAAFKT SJA_CanMiniDriver_Handler(void)
 
 				pInfo->ctRxErrors = SjaReadRegister(byDriver,pNet,SJA_RX_ERRCTR);
 				pInfo->ctTxErrors = SjaReadRegister(byDriver,pNet,SJA_TX_ERRCTR);
-	
+
+#if LOG_SJA
+				if (istate == 0)
+				{
+					/* debug break */
+					s_nInts = s_nInts;
+				}
+
+				if (s_nInts < MAX_INTS_LOG_ENTRIES)
+				{
+					s_theInterruptLog[s_nInts].byStatusReg = sstate;
+					s_theInterruptLog[s_nInts].byIntReg = istate;
+					s_theInterruptLog[s_nInts].byTxErrs = pInfo->ctTxErrors;
+					s_theInterruptLog[s_nInts].byRxErrs = pInfo->ctRxErrors;
+				}
+				s_nInts++;
+				if (s_nInts == MAX_INTS_LOG_ENTRIES)
+					s_nInts = 0;
+#endif
 				while(istate != 0)
 				{
 					/* Transmit Interrupt */
@@ -1967,6 +2013,7 @@ void CAAFKT SJA_CanMiniDriver_Handler(void)
 						}
 						if(sstate & SJA_STAT_BS)
 						{
+							/* real bus off by hardware */
 							SjaWriteRegister(byDriver,pNet,SJA_CR_MODE,1); /*Enter reset mode.*/
 
 							pInfo->byBusState = (CL2I_BYTE)CL2_BUSOFF;
@@ -1976,12 +2023,30 @@ void CAAFKT SJA_CanMiniDriver_Handler(void)
 								pInfo->uiBusAlarm = 1;
 							}
 						}
-						if(sstate == 0x50)
+						if(sstate == (SJA_STAT_ERR | SJA_STAT_RX) /* 0x50 */)
+							/* || sstate == SJA_STAT_TX) 0x20 leads to new unhandled case (tx full and tx status interrupts..)*/
 						{
 							if(byDummy > 126)
 							{ /*If the transmit error counter is higher than the CAA-defined count, we assume busoff.*/
 								SjaWriteRegister(byDriver,pNet,SJA_CR_MODE,1); /*Enter reset mode.*/
 								pInfo->byBusState = (CL2I_BYTE)CL2_BUSOFF;
+								pInfo->uiBusAlarm++;
+								if(pInfo->uiBusAlarm == 0)
+								{
+									pInfo->uiBusAlarm = 1;
+								}
+							}
+						}
+						else if(sstate == SJA_STAT_TX) /* 0x20 */
+						{
+							pInfo->ctRxErrors = SjaReadRegister(byDriver,pNet,SJA_RX_ERRCTR);
+							pInfo->ctTxErrors = SjaReadRegister(byDriver,pNet,SJA_TX_ERRCTR);
+
+							if(pInfo->ctTxErrors > 126)
+							{ /*If the transmit error counter is higher than the CAA-defined count, we assume busoff.*/
+								SjaWriteRegister(byDriver,pNet,SJA_CR_MODE,1); /*Enter reset mode.*/
+								pInfo->byBusState = (CL2I_BYTE)CL2_BUSOFF;
+
 								pInfo->uiBusAlarm++;
 								if(pInfo->uiBusAlarm == 0)
 								{
@@ -2072,16 +2137,22 @@ static int CheckForSJAAvailableHere(int iDev, unsigned char* pController)
 	unsigned char regbuff[32] = {0};
 
 	if(!pController)
+	{
+		CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_ERROR, ERR_PARAMETER, 0, "CmpSJACanDrv: CheckForSJAAvailableHere: Error parameter.");
 		return 0;
-
-	if (CmpSjaDisableChipTest()) /* some FPGA based SJA can't do PeliCAN */
+	}
+	if (CmpSjaDisableChipTest() == 1) /* some FPGA based SJA can't do PeliCAN */
+	{
+		CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "CmpSJACanDrv: CheckForSJAAvailableHere: OK, check disabled.");
 		return 1;
+	}
 
 	/*First set the SJA to resetmode.*/
 	if(!SjaEnterResetMode(iDev,pController,1000))
 	{
-		/*Entering restmdoe failed.*/
+		/*Entering reset mode failed.*/
 		iRes = 0;
+		CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_ERROR, ERR_FAILED, 0, "CmpSJACanDrv: ***Error*** Enter reset mode failed. Set DisableSjaChipCheck=1?");
 		return iRes;
 	}
 
@@ -2089,48 +2160,60 @@ static int CheckForSJAAvailableHere(int iDev, unsigned char* pController)
 	SjaWriteRegister(iDev, pController,SJA_CLK_DIV,(unsigned char)(SjaReadRegister(iDev, pController,SJA_CLK_DIV) & 0x7f));
 	/*In BasicMode the CMD-registers reads always 0xff.*/
 	if(SjaReadRegister(iDev, pController,SJA_CMD) != 0xff)
+	{
+		CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_ERROR, ERR_FAILED, 0, "CmpSJACanDrv: ***Error*** Check basic mode failed. Set DisableSjaChipCheck=1?");
 		return 0;
-
+	}
 	/*Set the SJA to PeliCAN-mode.*/
 	SjaWriteRegister(iDev, pController,SJA_CLK_DIV,(unsigned char)(SjaReadRegister(iDev,pController,SJA_CLK_DIV) | 0x80));
 	/*In PeliCAN-mode the CMD-registers reads always 0x00.*/
 	if(SjaReadRegister(iDev, pController,SJA_CMD) != 0x00)
+	{
+		CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_ERROR, ERR_FAILED, 0, "CmpSJACanDrv: ***Error*** Check PeliCAN mode failed. Set DisableSjaChipCheck=1?");
 		return 0;
-
+	}
 	/*We leave the SJA in resetmode and in case we just wrote to an unknown hardware, we cannot make the writes undone.*/
 
-	/*Now further checks as I learned from PCANView-code, supplied by PEAK.*/
-    for (i = 6; i <= 23; i++)
-    {
-		if (i <= 8 || i == 13 || i >= 16) 
+	if (CmpSjaDisableChipTest() != 2 || CmpSjaDisableChipTest() == 0)
+	{ /*In case of 0 the test has been performed in the past as well. In case of 2 */
+	  /*Now (new behavior!) with the value 2 all tests, except this extended one, should be performed. */
+		/*Now further checks are performed, not available on some FPGA implementations.*/
+		for (i = 6; i <= 23; i++)
 		{
-            regbuff[i] = SjaReadRegister(iDev, pController,i); 
-            SjaWriteRegister(iDev, pController,i, (unsigned char)(i + 5));
-            n = SjaReadRegister(iDev,pController,i);
-            if (n != i + 5) 
+			if (i < 8 || i == 13 || i >= 16) 
 			{
-                iRes = 0 ;
-            }
-        }
-	}
+				regbuff[i] = SjaReadRegister(iDev, pController,i); 
+				SjaWriteRegister(iDev, pController,i, (unsigned char)(i + 5));
+				n = SjaReadRegister(iDev,pController,i);
+				if (n != i + 5) 
+				{
+					CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_ERROR, ERR_FAILED, 0, "CmpSJACanDrv: ***Error*** Extended check failed.i=%d.  Set DisableSjaChipCheck > 1?",i);
+					iRes = 0 ;
+				}
+			}
+		}
 
-	for (i = 6; i <= 23; i++)
-    {
-		if (i <= 8 || i == 13 || i >= 16) 
+		for (i = 6; i <= 23; i++)
 		{
-            n = SjaReadRegister(iDev, pController,i);
-            if (n != i + 5) 
+			if (i < 8 || i == 13 || i >= 16) 
 			{
-                iRes = 0 ;
-            }
-        }
+				n = SjaReadRegister(iDev, pController,i);
+				if (n != i + 5) 
+				{
+					iRes = 0 ;
+					CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_ERROR, ERR_FAILED, 0, "CmpSJACanDrv: ***Error*** 2nd Extended check failed.i=%d.  Set DisableSjaChipCheck > 1?",i);
+				}
+			}
+		}
+
+		/* restore registers up to 'i'*/
+		for (j = 6; j <= i; j++)
+			if (j < 8 || j == 13 || j >= 16)
+				SjaWriteRegister(iDev, pController,j, regbuff[j]);
 	}
-
-    /* restore registers up to 'i'*/
-    for (j = 6; j <= i; j++)
-        if (j <= 8 || j == 13 || j >= 16)
-            SjaWriteRegister(iDev, pController,j, regbuff[j]);
-
+	else
+		iRes = 1;
+	
 	return iRes;
 }
 

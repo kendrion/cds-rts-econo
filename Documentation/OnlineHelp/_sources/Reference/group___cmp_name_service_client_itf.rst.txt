@@ -1,0 +1,988 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_name_service_client_itf:
+
+=======================
+CmpNameServiceClientItf
+=======================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpNameServiceClient.
+
+Detailed Description
+--------------------
+
+External interface for the naming service client
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Settings <group___cmp_name_service_client_itf___settings>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpNameServiceClient_C <struct_i_cmp_name_service_client___c>`
+
+Macros
+------
+
+- #define :ref:`USE_NSClientHandleData <group___cmp_name_service_client_itf_1ga428defc4a421704b4fd772118b89acf4>` :ref:`PFNSCLIENTHANDLEDATA <group___cmp_name_service_client_itf_1gaccb5239888dcbd12e3fcbb51e7d71333>` pfNSClientHandleData;
+
+- #define :ref:`EXT_NSClientHandleData <group___cmp_name_service_client_itf_1ga2b77b0a23976d859830ea140553c54fb>` extern :ref:`PFNSCLIENTHANDLEDATA <group___cmp_name_service_client_itf_1gaccb5239888dcbd12e3fcbb51e7d71333>` pfNSClientHandleData;
+
+- #define :ref:`GET_NSClientHandleData <group___cmp_name_service_client_itf_1ga37f417cc8f3245fac291a0534710faf2>` s_pfCMGetAPI2( "NSClientHandleData", (RTS_VOID_FCTPTR *)&pfNSClientHandleData, (fl), 0, 0)
+
+- #define :ref:`CAL_NSClientHandleData <group___cmp_name_service_client_itf_1gab4c44a546a6fb9f4057dd0b6e0b2bf66>` pfNSClientHandleData
+
+- #define :ref:`CHK_NSClientHandleData <group___cmp_name_service_client_itf_1ga65d34aa744dd92c80129c0514e3879dd>` (pfNSClientHandleData != NULL)
+
+- #define :ref:`EXP_NSClientHandleData <group___cmp_name_service_client_itf_1ga8e720e4f5eeac93101da42e9253c807d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSClientHandleData", (RTS_UINTPTR) :ref:`NSClientHandleData <group___cmp_name_service_client_itf_1ga757cf20c2236dcb918eadcc9342f5c32>` , 0, 0)
+
+- #define :ref:`USE_NSResolveName <group___cmp_name_service_client_itf_1gaa47fb156a70656eebc1238419e5eae46>` :ref:`PFNSRESOLVENAME <group___cmp_name_service_client_itf_1gae1a89fa7acd74710d4ffad5677a7df50>` pfNSResolveName;
+
+- #define :ref:`EXT_NSResolveName <group___cmp_name_service_client_itf_1gad4cfa813c80b61e0e264b24ca4cd856b>` extern :ref:`PFNSRESOLVENAME <group___cmp_name_service_client_itf_1gae1a89fa7acd74710d4ffad5677a7df50>` pfNSResolveName;
+
+- #define :ref:`GET_NSResolveName <group___cmp_name_service_client_itf_1gad2c6edf87ee22cd630945121f8efbfa5>` s_pfCMGetAPI2( "NSResolveName", (RTS_VOID_FCTPTR *)&pfNSResolveName, (fl), 0, 0)
+
+- #define :ref:`CAL_NSResolveName <group___cmp_name_service_client_itf_1ga447aae25948c457309ba779097112028>` pfNSResolveName
+
+- #define :ref:`CHK_NSResolveName <group___cmp_name_service_client_itf_1gabac3c9cc2c8d8d8fd4dec61200edd08e>` (pfNSResolveName != NULL)
+
+- #define :ref:`EXP_NSResolveName <group___cmp_name_service_client_itf_1ga40cb423517e30e20dbbf1dc1c2cb700a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveName", (RTS_UINTPTR) :ref:`NSResolveName <group___cmp_name_service_client_itf_1ga0d1be22d775264af48ab460af623763f>` , 0, 0)
+
+- #define :ref:`USE_NSResolveName3 <group___cmp_name_service_client_itf_1ga01457a494602232950edc45d8f5c2f6a>` :ref:`PFNSRESOLVENAME3 <group___cmp_name_service_client_itf_1ga7d93c0acab79088df77361148c78b4e4>` pfNSResolveName3;
+
+- #define :ref:`EXT_NSResolveName3 <group___cmp_name_service_client_itf_1ga6b9e00a351f10720122b4a08f9aee9a9>` extern :ref:`PFNSRESOLVENAME3 <group___cmp_name_service_client_itf_1ga7d93c0acab79088df77361148c78b4e4>` pfNSResolveName3;
+
+- #define :ref:`GET_NSResolveName3 <group___cmp_name_service_client_itf_1ga4a6699d4ca05d9849cca6126829c4047>` s_pfCMGetAPI2( "NSResolveName3", (RTS_VOID_FCTPTR *)&pfNSResolveName3, (fl), 0, 0)
+
+- #define :ref:`CAL_NSResolveName3 <group___cmp_name_service_client_itf_1ga2c0e8515891deeda42070952380ee5c0>` pfNSResolveName3
+
+- #define :ref:`CHK_NSResolveName3 <group___cmp_name_service_client_itf_1ga869c311e66b6988e6d6d77abb9da7e8b>` (pfNSResolveName3 != NULL)
+
+- #define :ref:`EXP_NSResolveName3 <group___cmp_name_service_client_itf_1gabe5b1ccffed9688d100c3007c241605b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveName3", (RTS_UINTPTR) :ref:`NSResolveName3 <group___cmp_name_service_client_itf_1ga047b2f3a83563e5553715d8403ca8ed4>` , 0, 0)
+
+- #define :ref:`USE_NSResolveAddress <group___cmp_name_service_client_itf_1gabdaf9663ed89ea7a09efa9b41e894c24>` :ref:`PFNSRESOLVEADDRESS <group___cmp_name_service_client_itf_1ga6231f71de2a42c40f43a12856dfb96cd>` pfNSResolveAddress;
+
+- #define :ref:`EXT_NSResolveAddress <group___cmp_name_service_client_itf_1ga87f7b460b326a83802e02f00fa5bd52d>` extern :ref:`PFNSRESOLVEADDRESS <group___cmp_name_service_client_itf_1ga6231f71de2a42c40f43a12856dfb96cd>` pfNSResolveAddress;
+
+- #define :ref:`GET_NSResolveAddress <group___cmp_name_service_client_itf_1ga562f5b0c7e776860c963391ebaaa073a>` s_pfCMGetAPI2( "NSResolveAddress", (RTS_VOID_FCTPTR *)&pfNSResolveAddress, (fl), 0, 0)
+
+- #define :ref:`CAL_NSResolveAddress <group___cmp_name_service_client_itf_1gab1d7d90161584e6e59a478dd7bf0fe5e>` pfNSResolveAddress
+
+- #define :ref:`CHK_NSResolveAddress <group___cmp_name_service_client_itf_1ga7b89cc6703b743212f0736e63c90022b>` (pfNSResolveAddress != NULL)
+
+- #define :ref:`EXP_NSResolveAddress <group___cmp_name_service_client_itf_1ga507586f21823fdb109f2793984e4f98a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveAddress", (RTS_UINTPTR) :ref:`NSResolveAddress <group___cmp_name_service_client_itf_1ga27827a9db89e986d9239c872971553f5>` , 0, 0)
+
+- #define :ref:`USE_NSResolveAddress2 <group___cmp_name_service_client_itf_1gabbe8b5442dd7c2bd2f96137d7aa049d7>` :ref:`PFNSRESOLVEADDRESS2 <group___cmp_name_service_client_itf_1gac28cc659691d00f6bc58a7413f157197>` pfNSResolveAddress2;
+
+- #define :ref:`EXT_NSResolveAddress2 <group___cmp_name_service_client_itf_1ga9195640c420d9d36c633fb835e7fcda4>` extern :ref:`PFNSRESOLVEADDRESS2 <group___cmp_name_service_client_itf_1gac28cc659691d00f6bc58a7413f157197>` pfNSResolveAddress2;
+
+- #define :ref:`GET_NSResolveAddress2 <group___cmp_name_service_client_itf_1gaf7b6c74342607eebbd49e14c1d056b00>` s_pfCMGetAPI2( "NSResolveAddress2", (RTS_VOID_FCTPTR *)&pfNSResolveAddress2, (fl), 0, 0)
+
+- #define :ref:`CAL_NSResolveAddress2 <group___cmp_name_service_client_itf_1ga67a5908f6a4a12050a4f3c2b6a5f1642>` pfNSResolveAddress2
+
+- #define :ref:`CHK_NSResolveAddress2 <group___cmp_name_service_client_itf_1ga18585bf0067e708171b4cf74fdbcd9c0>` (pfNSResolveAddress2 != NULL)
+
+- #define :ref:`EXP_NSResolveAddress2 <group___cmp_name_service_client_itf_1ga320d3d63a522e5bc15f4d603c414459a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveAddress2", (RTS_UINTPTR) :ref:`NSResolveAddress2 <group___cmp_name_service_client_itf_1ga81e4e93aefd9454aac1406a5c6a3f2be>` , 0, 0)
+
+- #define :ref:`USE_NSResolveAddress3 <group___cmp_name_service_client_itf_1ga27e066b74f699bfc4d254d3b33c341ef>` :ref:`PFNSRESOLVEADDRESS3 <group___cmp_name_service_client_itf_1ga37979dd0f23407b25fddff092a297760>` pfNSResolveAddress3;
+
+- #define :ref:`EXT_NSResolveAddress3 <group___cmp_name_service_client_itf_1gaa38e3430741ddc33370465bdfb64bdea>` extern :ref:`PFNSRESOLVEADDRESS3 <group___cmp_name_service_client_itf_1ga37979dd0f23407b25fddff092a297760>` pfNSResolveAddress3;
+
+- #define :ref:`GET_NSResolveAddress3 <group___cmp_name_service_client_itf_1ga5037d7bcf33bc3ac3ca47ff00d2c4b73>` s_pfCMGetAPI2( "NSResolveAddress3", (RTS_VOID_FCTPTR *)&pfNSResolveAddress3, (fl), 0, 0)
+
+- #define :ref:`CAL_NSResolveAddress3 <group___cmp_name_service_client_itf_1ga658db3b1e808a2ff12039cf64388a852>` pfNSResolveAddress3
+
+- #define :ref:`CHK_NSResolveAddress3 <group___cmp_name_service_client_itf_1ga6b01e6211c77266484de2a75ea4548c2>` (pfNSResolveAddress3 != NULL)
+
+- #define :ref:`EXP_NSResolveAddress3 <group___cmp_name_service_client_itf_1ga392d7a8b801732d109d9e16e0a356bca>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveAddress3", (RTS_UINTPTR) :ref:`NSResolveAddress3 <group___cmp_name_service_client_itf_1ga814e0166aa6f9bdc9019296bc19c147e>` , 0, 0)
+
+- #define :ref:`USE_NSResolveBlkDrvAddress2 <group___cmp_name_service_client_itf_1ga4068bfb7c5abd54dfb7b49d0af7832c0>` :ref:`PFNSRESOLVEBLKDRVADDRESS2 <group___cmp_name_service_client_itf_1ga615a538ec568e66904d1432dbe0afeae>` pfNSResolveBlkDrvAddress2;
+
+- #define :ref:`EXT_NSResolveBlkDrvAddress2 <group___cmp_name_service_client_itf_1ga5206b3138b6164f2b5b1ffdae3ecc226>` extern :ref:`PFNSRESOLVEBLKDRVADDRESS2 <group___cmp_name_service_client_itf_1ga615a538ec568e66904d1432dbe0afeae>` pfNSResolveBlkDrvAddress2;
+
+- #define :ref:`GET_NSResolveBlkDrvAddress2 <group___cmp_name_service_client_itf_1gacc57f2bdcf95e8b43545a8934f070815>` s_pfCMGetAPI2( "NSResolveBlkDrvAddress2", (RTS_VOID_FCTPTR *)&pfNSResolveBlkDrvAddress2, (fl), 0, 0)
+
+- #define :ref:`CAL_NSResolveBlkDrvAddress2 <group___cmp_name_service_client_itf_1ga812f6ff7d8795484e56950bb128fff79>` pfNSResolveBlkDrvAddress2
+
+- #define :ref:`CHK_NSResolveBlkDrvAddress2 <group___cmp_name_service_client_itf_1gad3e0fa78bd55f6cd527a67bc2cb9576f>` (pfNSResolveBlkDrvAddress2 != NULL)
+
+- #define :ref:`EXP_NSResolveBlkDrvAddress2 <group___cmp_name_service_client_itf_1gac37e051b1f60cd7cb7f2bfaa6d2baac1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveBlkDrvAddress2", (RTS_UINTPTR) :ref:`NSResolveBlkDrvAddress2 <group___cmp_name_service_client_itf_1gabbbe8cda510898d7479aa053b839249c>` , 0, 0)
+
+- #define :ref:`USE_NSResolveBlkDrvAddress3 <group___cmp_name_service_client_itf_1ga92db287bf2fa7717826820a4c7f58d9c>` :ref:`PFNSRESOLVEBLKDRVADDRESS3 <group___cmp_name_service_client_itf_1ga0fcf2a70c744eda91bb57cd903b05f85>` pfNSResolveBlkDrvAddress3;
+
+- #define :ref:`EXT_NSResolveBlkDrvAddress3 <group___cmp_name_service_client_itf_1gaff72ea32c6ff229bf594a4e5d42b9ecd>` extern :ref:`PFNSRESOLVEBLKDRVADDRESS3 <group___cmp_name_service_client_itf_1ga0fcf2a70c744eda91bb57cd903b05f85>` pfNSResolveBlkDrvAddress3;
+
+- #define :ref:`GET_NSResolveBlkDrvAddress3 <group___cmp_name_service_client_itf_1gab88496a0159bda4192f29c2249207223>` s_pfCMGetAPI2( "NSResolveBlkDrvAddress3", (RTS_VOID_FCTPTR *)&pfNSResolveBlkDrvAddress3, (fl), 0, 0)
+
+- #define :ref:`CAL_NSResolveBlkDrvAddress3 <group___cmp_name_service_client_itf_1gaa00f4d1949f8d7676fe3bfb462d8fa0d>` pfNSResolveBlkDrvAddress3
+
+- #define :ref:`CHK_NSResolveBlkDrvAddress3 <group___cmp_name_service_client_itf_1ga7a452d323a50d663d6daaef3d8057a91>` (pfNSResolveBlkDrvAddress3 != NULL)
+
+- #define :ref:`EXP_NSResolveBlkDrvAddress3 <group___cmp_name_service_client_itf_1ga45ce4bc196abafe8b40af4157cb271a8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveBlkDrvAddress3", (RTS_UINTPTR) :ref:`NSResolveBlkDrvAddress3 <group___cmp_name_service_client_itf_1ga0053b9c8d7638fec725e9e0bd634a18d>` , 0, 0)
+
+- #define :ref:`USE_NSResolveAll <group___cmp_name_service_client_itf_1ga2f80dfde14fec94f5959dfed20391618>` :ref:`PFNSRESOLVEALL <group___cmp_name_service_client_itf_1ga2b2de27e487c6dad09a078204d1c4c81>` pfNSResolveAll;
+
+- #define :ref:`EXT_NSResolveAll <group___cmp_name_service_client_itf_1gaaeb244e50cc7eaa8c37188bd2f2e94ac>` extern :ref:`PFNSRESOLVEALL <group___cmp_name_service_client_itf_1ga2b2de27e487c6dad09a078204d1c4c81>` pfNSResolveAll;
+
+- #define :ref:`GET_NSResolveAll <group___cmp_name_service_client_itf_1gaaa33ea98b6515b73c82fa80c99bc3454>` s_pfCMGetAPI2( "NSResolveAll", (RTS_VOID_FCTPTR *)&pfNSResolveAll, (fl), 0, 0)
+
+- #define :ref:`CAL_NSResolveAll <group___cmp_name_service_client_itf_1ga880b0b86e79cdc255bd934653c38575b>` pfNSResolveAll
+
+- #define :ref:`CHK_NSResolveAll <group___cmp_name_service_client_itf_1gaff97dc8b1d7b99c150b5d1a0fefb96c6>` (pfNSResolveAll != NULL)
+
+- #define :ref:`EXP_NSResolveAll <group___cmp_name_service_client_itf_1ga783b892fc8e68d4ca1040a82689e967f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveAll", (RTS_UINTPTR) :ref:`NSResolveAll <group___cmp_name_service_client_itf_1ga44c747b6ec51cbe607311aa516d19ad5>` , 0, 0)
+
+- #define :ref:`USE_NSResolveAll2 <group___cmp_name_service_client_itf_1ga6b161d8d016def9b784845df7a72c252>` :ref:`PFNSRESOLVEALL2 <group___cmp_name_service_client_itf_1ga3a5b887014e0746754a98c28978f181e>` pfNSResolveAll2;
+
+- #define :ref:`EXT_NSResolveAll2 <group___cmp_name_service_client_itf_1gadbc084a95e857208f263519f15ddf525>` extern :ref:`PFNSRESOLVEALL2 <group___cmp_name_service_client_itf_1ga3a5b887014e0746754a98c28978f181e>` pfNSResolveAll2;
+
+- #define :ref:`GET_NSResolveAll2 <group___cmp_name_service_client_itf_1gaddbd928d6181cecce8edd231a7a96418>` s_pfCMGetAPI2( "NSResolveAll2", (RTS_VOID_FCTPTR *)&pfNSResolveAll2, (fl), 0, 0)
+
+- #define :ref:`CAL_NSResolveAll2 <group___cmp_name_service_client_itf_1gad4b26274c106056d1b55d9e91080cafd>` pfNSResolveAll2
+
+- #define :ref:`CHK_NSResolveAll2 <group___cmp_name_service_client_itf_1ga4f568f405f7431b27615547c671d9db1>` (pfNSResolveAll2 != NULL)
+
+- #define :ref:`EXP_NSResolveAll2 <group___cmp_name_service_client_itf_1ga6bfc6752edc75aac0ffe0afb12664989>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveAll2", (RTS_UINTPTR) :ref:`NSResolveAll2 <group___cmp_name_service_client_itf_1ga1a91919cd550e76a388a9b208c144e8a>` , 0, 0)
+
+- #define :ref:`USE_NSResolveAll3 <group___cmp_name_service_client_itf_1gaab0b2e29a88d63c0de15add0a5463b55>` :ref:`PFNSRESOLVEALL3 <group___cmp_name_service_client_itf_1gaec4b208fcef289a23f5c2437545c509b>` pfNSResolveAll3;
+
+- #define :ref:`EXT_NSResolveAll3 <group___cmp_name_service_client_itf_1gaa6e27b4cda8a143225ce5e334fad1662>` extern :ref:`PFNSRESOLVEALL3 <group___cmp_name_service_client_itf_1gaec4b208fcef289a23f5c2437545c509b>` pfNSResolveAll3;
+
+- #define :ref:`GET_NSResolveAll3 <group___cmp_name_service_client_itf_1ga67621dc1e0c143e8f73b23cdc79f1bc6>` s_pfCMGetAPI2( "NSResolveAll3", (RTS_VOID_FCTPTR *)&pfNSResolveAll3, (fl), 0, 0)
+
+- #define :ref:`CAL_NSResolveAll3 <group___cmp_name_service_client_itf_1gadffdfa7ebb84ad50c63ba79d8b57bfac>` pfNSResolveAll3
+
+- #define :ref:`CHK_NSResolveAll3 <group___cmp_name_service_client_itf_1ga1981aa9aa7f10f6486b6da7fb61aece1>` (pfNSResolveAll3 != NULL)
+
+- #define :ref:`EXP_NSResolveAll3 <group___cmp_name_service_client_itf_1gac4b54747aaa00fbe0f565c012419abaf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveAll3", (RTS_UINTPTR) :ref:`NSResolveAll3 <group___cmp_name_service_client_itf_1gab3e56180d1be42125bf0a6d3c2a2a4f8>` , 0, 0)
+
+- #define :ref:`USE_NSAdjustResolveTimeout <group___cmp_name_service_client_itf_1gae1bd020ce9abf06dbe8bb80c7241c09c>` :ref:`PFNSADJUSTRESOLVETIMEOUT <group___cmp_name_service_client_itf_1gafbe96efee9801fa086248acf1d561505>` pfNSAdjustResolveTimeout;
+
+- #define :ref:`EXT_NSAdjustResolveTimeout <group___cmp_name_service_client_itf_1gaeb0a37cda4aa3b39561dc691a6b50ea5>` extern :ref:`PFNSADJUSTRESOLVETIMEOUT <group___cmp_name_service_client_itf_1gafbe96efee9801fa086248acf1d561505>` pfNSAdjustResolveTimeout;
+
+- #define :ref:`GET_NSAdjustResolveTimeout <group___cmp_name_service_client_itf_1ga2ecda174300826f3043c6844b6f98c1b>` s_pfCMGetAPI2( "NSAdjustResolveTimeout", (RTS_VOID_FCTPTR *)&pfNSAdjustResolveTimeout, (fl), 0, 0)
+
+- #define :ref:`CAL_NSAdjustResolveTimeout <group___cmp_name_service_client_itf_1ga5359d0a38f2f02e8bea7ff3e0f25a2aa>` pfNSAdjustResolveTimeout
+
+- #define :ref:`CHK_NSAdjustResolveTimeout <group___cmp_name_service_client_itf_1gadb22bc7973aa7071a7810fe67fceb98f>` (pfNSAdjustResolveTimeout != NULL)
+
+- #define :ref:`EXP_NSAdjustResolveTimeout <group___cmp_name_service_client_itf_1ga5dee757ca21a08f15e84bd36a6b2736e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSAdjustResolveTimeout", (RTS_UINTPTR) :ref:`NSAdjustResolveTimeout <group___cmp_name_service_client_itf_1gaabfbca9a8549b262fae760fd5df6202a>` , 0, 0)
+
+- #define :ref:`ITF_CmpNameServiceClient <group___cmp_name_service_client_itf_1ga605d5e7cf7212faa9d7a28927d7e00b7>`
+
+- #define :ref:`EXTITF_CmpNameServiceClient <group___cmp_name_service_client_itf_1ga37db05cfd2280fee2157822296e21295>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFNSCLIENTHANDLEDATA <group___cmp_name_service_client_itf_1gaccb5239888dcbd12e3fcbb51e7d71333>`)(RTS_HANDLE hRouter, RTS_HANDLE hNetworkInterface, RTS_UI8 byServiceId, RTS_UI8 byMessageId, PEERADDRESS addrSender, PEERADDRESS addrReceiver, PROTOCOL_DATA_UNIT pduData, RTS_RESULT nRouterError)
+
+- typedef void(* :ref:`PFHANDLENSRESPONSE <group___cmp_name_service_client_itf_1gae16712f006028dcf0ae3f767b0d90328>`)(RTS_RESULT nResult, NODEADDRESS addrNode, NODEINFOPACKED *pNodeInfo, unsigned short wVersion, RTS_HANDLE dwRequestId, int bComplete)
+
+- typedef void(* :ref:`PFHANDLENSRESPONSE2 <group___cmp_name_service_client_itf_1gab7397425d7a54a28d9219a8368669a47>`)(RTS_RESULT nResult, NODEADDRESS addrNode, NODEINFOPACKED2 *pNodeInfo2, unsigned short wVersion, RTS_HANDLE dwRequestId, int bComplete)
+
+- typedef void(* :ref:`PFHANDLENSRESPONSE3 <group___cmp_name_service_client_itf_1gadde298508191e9a1ca418a75c21a8678>`)(RTS_RESULT nResult, NODEADDRESS addrNode, NODEINFOPACKED3 *pNodeInfo3, unsigned short wVersion, RTS_UI8 byClientBlkDrvType, RTS_HANDLE dwRequestId, int bComplete)
+
+- typedef RTS_RESULT(* :ref:`PFNSRESOLVENAME <group___cmp_name_service_client_itf_1gae1a89fa7acd74710d4ffad5677a7df50>`)(const RTS_WCHAR *pwszName, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE pfCallback)
+
+- typedef RTS_RESULT(* :ref:`PFNSRESOLVENAME3 <group___cmp_name_service_client_itf_1ga7d93c0acab79088df77361148c78b4e4>`)(const RTS_WCHAR *pwszName, RTS_UI32 dwTimeout, RTS_BOOL bFinishWithFirstNode, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE3 pfCallback3)
+
+- typedef RTS_RESULT(* :ref:`PFNSRESOLVEADDRESS <group___cmp_name_service_client_itf_1ga6231f71de2a42c40f43a12856dfb96cd>`)(NODEADDRESS addrNode, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE pfCallback)
+
+- typedef RTS_RESULT(* :ref:`PFNSRESOLVEADDRESS2 <group___cmp_name_service_client_itf_1gac28cc659691d00f6bc58a7413f157197>`)(NODEADDRESS addrNode, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE2 pfCallback2)
+
+- typedef RTS_RESULT(* :ref:`PFNSRESOLVEADDRESS3 <group___cmp_name_service_client_itf_1ga37979dd0f23407b25fddff092a297760>`)(NODEADDRESS addrNode, RTS_UI32 dwTimeout, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE3 pfCallback3)
+
+- typedef RTS_RESULT(* :ref:`PFNSRESOLVEBLKDRVADDRESS2 <group___cmp_name_service_client_itf_1ga615a538ec568e66904d1432dbe0afeae>`)(RTS_UI8 byBlkDrvType, RTS_UI8 byFlags, RTS_UI8 byAddrBitLength, NETWORKADDRESS *pNetworkAddr, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE2 pfCallback2)
+
+- typedef RTS_RESULT(* :ref:`PFNSRESOLVEBLKDRVADDRESS3 <group___cmp_name_service_client_itf_1ga0fcf2a70c744eda91bb57cd903b05f85>`)(RTS_UI8 byBlkDrvType, RTS_UI8 byFlags, RTS_UI8 byAddrBitLength, NETWORKADDRESS *pNetworkAddr, RTS_UI32 dwTimeout, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE3 pfCallback3)
+
+- typedef RTS_RESULT(* :ref:`PFNSRESOLVEALL <group___cmp_name_service_client_itf_1ga2b2de27e487c6dad09a078204d1c4c81>`)(RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE pfCallback)
+
+- typedef RTS_RESULT(* :ref:`PFNSRESOLVEALL2 <group___cmp_name_service_client_itf_1ga3a5b887014e0746754a98c28978f181e>`)(RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE2 pfCallback2)
+
+- typedef RTS_RESULT(* :ref:`PFNSRESOLVEALL3 <group___cmp_name_service_client_itf_1gaec4b208fcef289a23f5c2437545c509b>`)(RTS_UI32 dwTimeout, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE3 pfCallback3)
+
+- typedef RTS_RESULT(* :ref:`PFNSADJUSTRESOLVETIMEOUT <group___cmp_name_service_client_itf_1gafbe96efee9801fa086248acf1d561505>`)(RTS_UI32 dwRemainingTimeout, RTS_HANDLE dwRequestId)
+
+- typedef :ref:`ICmpNameServiceClient_C <struct_i_cmp_name_service_client___c>` :ref:`ICmpNameServiceClient <group___cmp_name_service_client_itf_1ga21ef1098749be210922fb5ad6ee4a952>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`NSClientHandleData <group___cmp_name_service_client_itf_1ga757cf20c2236dcb918eadcc9342f5c32>` (RTS_HANDLE hRouter, RTS_HANDLE hNetworkInterface, RTS_UI8 byServiceId, RTS_UI8 byMessageId, :ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>`  addrSender, :ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>`  addrReceiver, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduData, RTS_RESULT nRouterError)
+
+- RTS_RESULT :ref:`NSResolveName <group___cmp_name_service_client_itf_1ga0d1be22d775264af48ab460af623763f>` (const RTS_WCHAR * pwszName, RTS_HANDLE dwRequestId, :ref:`PFHANDLENSRESPONSE <group___cmp_name_service_client_itf_1gae16712f006028dcf0ae3f767b0d90328>`  pfCallback)
+
+- RTS_RESULT :ref:`NSResolveName3 <group___cmp_name_service_client_itf_1ga047b2f3a83563e5553715d8403ca8ed4>` (const RTS_WCHAR * pwszName, RTS_UI32 dwTimeout, RTS_BOOL bFinishWithFirstNode, RTS_HANDLE dwRequestId, :ref:`PFHANDLENSRESPONSE3 <group___cmp_name_service_client_itf_1gadde298508191e9a1ca418a75c21a8678>`  pfCallback3)
+
+- RTS_RESULT :ref:`NSResolveAddress <group___cmp_name_service_client_itf_1ga27827a9db89e986d9239c872971553f5>` (:ref:`NODEADDRESS <struct_n_o_d_e_a_d_d_r_e_s_s>`  addrNode, RTS_HANDLE dwRequestId, :ref:`PFHANDLENSRESPONSE <group___cmp_name_service_client_itf_1gae16712f006028dcf0ae3f767b0d90328>`  pfCallback)
+
+- RTS_RESULT :ref:`NSResolveAddress2 <group___cmp_name_service_client_itf_1ga81e4e93aefd9454aac1406a5c6a3f2be>` (:ref:`NODEADDRESS <struct_n_o_d_e_a_d_d_r_e_s_s>`  addrNode, RTS_HANDLE dwRequestId, :ref:`PFHANDLENSRESPONSE2 <group___cmp_name_service_client_itf_1gab7397425d7a54a28d9219a8368669a47>`  pfCallback2)
+
+- RTS_RESULT :ref:`NSResolveAddress3 <group___cmp_name_service_client_itf_1ga814e0166aa6f9bdc9019296bc19c147e>` (:ref:`NODEADDRESS <struct_n_o_d_e_a_d_d_r_e_s_s>`  addrNode, RTS_UI32 dwTimeout, RTS_HANDLE dwRequestId, :ref:`PFHANDLENSRESPONSE3 <group___cmp_name_service_client_itf_1gadde298508191e9a1ca418a75c21a8678>`  pfCallback3)
+
+- RTS_RESULT :ref:`NSResolveBlkDrvAddress2 <group___cmp_name_service_client_itf_1gabbbe8cda510898d7479aa053b839249c>` (RTS_UI8 byBlkDrvType, RTS_UI8 byFlags, RTS_UI8 byAddrBitLength, :ref:`NETWORKADDRESS <struct_n_e_t_w_o_r_k_a_d_d_r_e_s_s>` * pNetworkAddr, RTS_HANDLE dwRequestId, :ref:`PFHANDLENSRESPONSE2 <group___cmp_name_service_client_itf_1gab7397425d7a54a28d9219a8368669a47>`  pfCallback2)
+
+- RTS_RESULT :ref:`NSResolveBlkDrvAddress3 <group___cmp_name_service_client_itf_1ga0053b9c8d7638fec725e9e0bd634a18d>` (RTS_UI8 byBlkDrvType, RTS_UI8 byFlags, RTS_UI8 byAddrBitLength, :ref:`NETWORKADDRESS <struct_n_e_t_w_o_r_k_a_d_d_r_e_s_s>` * pNetworkAddr, RTS_UI32 dwTimeout, RTS_HANDLE dwRequestId, :ref:`PFHANDLENSRESPONSE3 <group___cmp_name_service_client_itf_1gadde298508191e9a1ca418a75c21a8678>`  pfCallback3)
+
+- RTS_RESULT :ref:`NSResolveAll <group___cmp_name_service_client_itf_1ga44c747b6ec51cbe607311aa516d19ad5>` (RTS_HANDLE dwRequestId, :ref:`PFHANDLENSRESPONSE <group___cmp_name_service_client_itf_1gae16712f006028dcf0ae3f767b0d90328>`  pfCallback)
+
+- RTS_RESULT :ref:`NSResolveAll2 <group___cmp_name_service_client_itf_1ga1a91919cd550e76a388a9b208c144e8a>` (RTS_HANDLE dwRequestId, :ref:`PFHANDLENSRESPONSE2 <group___cmp_name_service_client_itf_1gab7397425d7a54a28d9219a8368669a47>`  pfCallback2)
+
+- RTS_RESULT :ref:`NSResolveAll3 <group___cmp_name_service_client_itf_1gab3e56180d1be42125bf0a6d3c2a2a4f8>` (RTS_UI32 dwTimeout, RTS_HANDLE dwRequestId, :ref:`PFHANDLENSRESPONSE3 <group___cmp_name_service_client_itf_1gadde298508191e9a1ca418a75c21a8678>`  pfCallback3)
+
+- RTS_RESULT :ref:`NSAdjustResolveTimeout <group___cmp_name_service_client_itf_1gaabfbca9a8549b262fae760fd5df6202a>` (RTS_UI32 dwRemainingTimeout, RTS_HANDLE dwRequestId)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_name_service_client_itf_1ga428defc4a421704b4fd772118b89acf4:
+
+#define USE_NSClientHandleData :ref:`PFNSCLIENTHANDLEDATA <group___cmp_name_service_client_itf_1gaccb5239888dcbd12e3fcbb51e7d71333>` pfNSClientHandleData;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga2b77b0a23976d859830ea140553c54fb:
+
+#define EXT_NSClientHandleData extern :ref:`PFNSCLIENTHANDLEDATA <group___cmp_name_service_client_itf_1gaccb5239888dcbd12e3fcbb51e7d71333>` pfNSClientHandleData;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga37f417cc8f3245fac291a0534710faf2:
+
+#define GET_NSClientHandleData s_pfCMGetAPI2( "NSClientHandleData", (RTS_VOID_FCTPTR *)&pfNSClientHandleData, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gab4c44a546a6fb9f4057dd0b6e0b2bf66:
+
+#define CAL_NSClientHandleData pfNSClientHandleData
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga65d34aa744dd92c80129c0514e3879dd:
+
+#define CHK_NSClientHandleData (pfNSClientHandleData != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga8e720e4f5eeac93101da42e9253c807d:
+
+#define EXP_NSClientHandleData s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSClientHandleData", (RTS_UINTPTR) :ref:`NSClientHandleData <group___cmp_name_service_client_itf_1ga757cf20c2236dcb918eadcc9342f5c32>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gaa47fb156a70656eebc1238419e5eae46:
+
+#define USE_NSResolveName :ref:`PFNSRESOLVENAME <group___cmp_name_service_client_itf_1gae1a89fa7acd74710d4ffad5677a7df50>` pfNSResolveName;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gad4cfa813c80b61e0e264b24ca4cd856b:
+
+#define EXT_NSResolveName extern :ref:`PFNSRESOLVENAME <group___cmp_name_service_client_itf_1gae1a89fa7acd74710d4ffad5677a7df50>` pfNSResolveName;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gad2c6edf87ee22cd630945121f8efbfa5:
+
+#define GET_NSResolveName s_pfCMGetAPI2( "NSResolveName", (RTS_VOID_FCTPTR *)&pfNSResolveName, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga447aae25948c457309ba779097112028:
+
+#define CAL_NSResolveName pfNSResolveName
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gabac3c9cc2c8d8d8fd4dec61200edd08e:
+
+#define CHK_NSResolveName (pfNSResolveName != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga40cb423517e30e20dbbf1dc1c2cb700a:
+
+#define EXP_NSResolveName s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveName", (RTS_UINTPTR) :ref:`NSResolveName <group___cmp_name_service_client_itf_1ga0d1be22d775264af48ab460af623763f>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga01457a494602232950edc45d8f5c2f6a:
+
+#define USE_NSResolveName3 :ref:`PFNSRESOLVENAME3 <group___cmp_name_service_client_itf_1ga7d93c0acab79088df77361148c78b4e4>` pfNSResolveName3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga6b9e00a351f10720122b4a08f9aee9a9:
+
+#define EXT_NSResolveName3 extern :ref:`PFNSRESOLVENAME3 <group___cmp_name_service_client_itf_1ga7d93c0acab79088df77361148c78b4e4>` pfNSResolveName3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga4a6699d4ca05d9849cca6126829c4047:
+
+#define GET_NSResolveName3 s_pfCMGetAPI2( "NSResolveName3", (RTS_VOID_FCTPTR *)&pfNSResolveName3, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga2c0e8515891deeda42070952380ee5c0:
+
+#define CAL_NSResolveName3 pfNSResolveName3
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga869c311e66b6988e6d6d77abb9da7e8b:
+
+#define CHK_NSResolveName3 (pfNSResolveName3 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gabe5b1ccffed9688d100c3007c241605b:
+
+#define EXP_NSResolveName3 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveName3", (RTS_UINTPTR) :ref:`NSResolveName3 <group___cmp_name_service_client_itf_1ga047b2f3a83563e5553715d8403ca8ed4>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gabdaf9663ed89ea7a09efa9b41e894c24:
+
+#define USE_NSResolveAddress :ref:`PFNSRESOLVEADDRESS <group___cmp_name_service_client_itf_1ga6231f71de2a42c40f43a12856dfb96cd>` pfNSResolveAddress;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga87f7b460b326a83802e02f00fa5bd52d:
+
+#define EXT_NSResolveAddress extern :ref:`PFNSRESOLVEADDRESS <group___cmp_name_service_client_itf_1ga6231f71de2a42c40f43a12856dfb96cd>` pfNSResolveAddress;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga562f5b0c7e776860c963391ebaaa073a:
+
+#define GET_NSResolveAddress s_pfCMGetAPI2( "NSResolveAddress", (RTS_VOID_FCTPTR *)&pfNSResolveAddress, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gab1d7d90161584e6e59a478dd7bf0fe5e:
+
+#define CAL_NSResolveAddress pfNSResolveAddress
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga7b89cc6703b743212f0736e63c90022b:
+
+#define CHK_NSResolveAddress (pfNSResolveAddress != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga507586f21823fdb109f2793984e4f98a:
+
+#define EXP_NSResolveAddress s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveAddress", (RTS_UINTPTR) :ref:`NSResolveAddress <group___cmp_name_service_client_itf_1ga27827a9db89e986d9239c872971553f5>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gabbe8b5442dd7c2bd2f96137d7aa049d7:
+
+#define USE_NSResolveAddress2 :ref:`PFNSRESOLVEADDRESS2 <group___cmp_name_service_client_itf_1gac28cc659691d00f6bc58a7413f157197>` pfNSResolveAddress2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga9195640c420d9d36c633fb835e7fcda4:
+
+#define EXT_NSResolveAddress2 extern :ref:`PFNSRESOLVEADDRESS2 <group___cmp_name_service_client_itf_1gac28cc659691d00f6bc58a7413f157197>` pfNSResolveAddress2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gaf7b6c74342607eebbd49e14c1d056b00:
+
+#define GET_NSResolveAddress2 s_pfCMGetAPI2( "NSResolveAddress2", (RTS_VOID_FCTPTR *)&pfNSResolveAddress2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga67a5908f6a4a12050a4f3c2b6a5f1642:
+
+#define CAL_NSResolveAddress2 pfNSResolveAddress2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga18585bf0067e708171b4cf74fdbcd9c0:
+
+#define CHK_NSResolveAddress2 (pfNSResolveAddress2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga320d3d63a522e5bc15f4d603c414459a:
+
+#define EXP_NSResolveAddress2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveAddress2", (RTS_UINTPTR) :ref:`NSResolveAddress2 <group___cmp_name_service_client_itf_1ga81e4e93aefd9454aac1406a5c6a3f2be>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga27e066b74f699bfc4d254d3b33c341ef:
+
+#define USE_NSResolveAddress3 :ref:`PFNSRESOLVEADDRESS3 <group___cmp_name_service_client_itf_1ga37979dd0f23407b25fddff092a297760>` pfNSResolveAddress3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gaa38e3430741ddc33370465bdfb64bdea:
+
+#define EXT_NSResolveAddress3 extern :ref:`PFNSRESOLVEADDRESS3 <group___cmp_name_service_client_itf_1ga37979dd0f23407b25fddff092a297760>` pfNSResolveAddress3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga5037d7bcf33bc3ac3ca47ff00d2c4b73:
+
+#define GET_NSResolveAddress3 s_pfCMGetAPI2( "NSResolveAddress3", (RTS_VOID_FCTPTR *)&pfNSResolveAddress3, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga658db3b1e808a2ff12039cf64388a852:
+
+#define CAL_NSResolveAddress3 pfNSResolveAddress3
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga6b01e6211c77266484de2a75ea4548c2:
+
+#define CHK_NSResolveAddress3 (pfNSResolveAddress3 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga392d7a8b801732d109d9e16e0a356bca:
+
+#define EXP_NSResolveAddress3 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveAddress3", (RTS_UINTPTR) :ref:`NSResolveAddress3 <group___cmp_name_service_client_itf_1ga814e0166aa6f9bdc9019296bc19c147e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga4068bfb7c5abd54dfb7b49d0af7832c0:
+
+#define USE_NSResolveBlkDrvAddress2 :ref:`PFNSRESOLVEBLKDRVADDRESS2 <group___cmp_name_service_client_itf_1ga615a538ec568e66904d1432dbe0afeae>` pfNSResolveBlkDrvAddress2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga5206b3138b6164f2b5b1ffdae3ecc226:
+
+#define EXT_NSResolveBlkDrvAddress2 extern :ref:`PFNSRESOLVEBLKDRVADDRESS2 <group___cmp_name_service_client_itf_1ga615a538ec568e66904d1432dbe0afeae>` pfNSResolveBlkDrvAddress2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gacc57f2bdcf95e8b43545a8934f070815:
+
+#define GET_NSResolveBlkDrvAddress2 s_pfCMGetAPI2( "NSResolveBlkDrvAddress2", (RTS_VOID_FCTPTR *)&pfNSResolveBlkDrvAddress2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga812f6ff7d8795484e56950bb128fff79:
+
+#define CAL_NSResolveBlkDrvAddress2 pfNSResolveBlkDrvAddress2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gad3e0fa78bd55f6cd527a67bc2cb9576f:
+
+#define CHK_NSResolveBlkDrvAddress2 (pfNSResolveBlkDrvAddress2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gac37e051b1f60cd7cb7f2bfaa6d2baac1:
+
+#define EXP_NSResolveBlkDrvAddress2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveBlkDrvAddress2", (RTS_UINTPTR) :ref:`NSResolveBlkDrvAddress2 <group___cmp_name_service_client_itf_1gabbbe8cda510898d7479aa053b839249c>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga92db287bf2fa7717826820a4c7f58d9c:
+
+#define USE_NSResolveBlkDrvAddress3 :ref:`PFNSRESOLVEBLKDRVADDRESS3 <group___cmp_name_service_client_itf_1ga0fcf2a70c744eda91bb57cd903b05f85>` pfNSResolveBlkDrvAddress3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gaff72ea32c6ff229bf594a4e5d42b9ecd:
+
+#define EXT_NSResolveBlkDrvAddress3 extern :ref:`PFNSRESOLVEBLKDRVADDRESS3 <group___cmp_name_service_client_itf_1ga0fcf2a70c744eda91bb57cd903b05f85>` pfNSResolveBlkDrvAddress3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gab88496a0159bda4192f29c2249207223:
+
+#define GET_NSResolveBlkDrvAddress3 s_pfCMGetAPI2( "NSResolveBlkDrvAddress3", (RTS_VOID_FCTPTR *)&pfNSResolveBlkDrvAddress3, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gaa00f4d1949f8d7676fe3bfb462d8fa0d:
+
+#define CAL_NSResolveBlkDrvAddress3 pfNSResolveBlkDrvAddress3
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga7a452d323a50d663d6daaef3d8057a91:
+
+#define CHK_NSResolveBlkDrvAddress3 (pfNSResolveBlkDrvAddress3 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga45ce4bc196abafe8b40af4157cb271a8:
+
+#define EXP_NSResolveBlkDrvAddress3 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveBlkDrvAddress3", (RTS_UINTPTR) :ref:`NSResolveBlkDrvAddress3 <group___cmp_name_service_client_itf_1ga0053b9c8d7638fec725e9e0bd634a18d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga2f80dfde14fec94f5959dfed20391618:
+
+#define USE_NSResolveAll :ref:`PFNSRESOLVEALL <group___cmp_name_service_client_itf_1ga2b2de27e487c6dad09a078204d1c4c81>` pfNSResolveAll;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gaaeb244e50cc7eaa8c37188bd2f2e94ac:
+
+#define EXT_NSResolveAll extern :ref:`PFNSRESOLVEALL <group___cmp_name_service_client_itf_1ga2b2de27e487c6dad09a078204d1c4c81>` pfNSResolveAll;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gaaa33ea98b6515b73c82fa80c99bc3454:
+
+#define GET_NSResolveAll s_pfCMGetAPI2( "NSResolveAll", (RTS_VOID_FCTPTR *)&pfNSResolveAll, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga880b0b86e79cdc255bd934653c38575b:
+
+#define CAL_NSResolveAll pfNSResolveAll
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gaff97dc8b1d7b99c150b5d1a0fefb96c6:
+
+#define CHK_NSResolveAll (pfNSResolveAll != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga783b892fc8e68d4ca1040a82689e967f:
+
+#define EXP_NSResolveAll s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveAll", (RTS_UINTPTR) :ref:`NSResolveAll <group___cmp_name_service_client_itf_1ga44c747b6ec51cbe607311aa516d19ad5>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga6b161d8d016def9b784845df7a72c252:
+
+#define USE_NSResolveAll2 :ref:`PFNSRESOLVEALL2 <group___cmp_name_service_client_itf_1ga3a5b887014e0746754a98c28978f181e>` pfNSResolveAll2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gadbc084a95e857208f263519f15ddf525:
+
+#define EXT_NSResolveAll2 extern :ref:`PFNSRESOLVEALL2 <group___cmp_name_service_client_itf_1ga3a5b887014e0746754a98c28978f181e>` pfNSResolveAll2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gaddbd928d6181cecce8edd231a7a96418:
+
+#define GET_NSResolveAll2 s_pfCMGetAPI2( "NSResolveAll2", (RTS_VOID_FCTPTR *)&pfNSResolveAll2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gad4b26274c106056d1b55d9e91080cafd:
+
+#define CAL_NSResolveAll2 pfNSResolveAll2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga4f568f405f7431b27615547c671d9db1:
+
+#define CHK_NSResolveAll2 (pfNSResolveAll2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga6bfc6752edc75aac0ffe0afb12664989:
+
+#define EXP_NSResolveAll2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveAll2", (RTS_UINTPTR) :ref:`NSResolveAll2 <group___cmp_name_service_client_itf_1ga1a91919cd550e76a388a9b208c144e8a>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gaab0b2e29a88d63c0de15add0a5463b55:
+
+#define USE_NSResolveAll3 :ref:`PFNSRESOLVEALL3 <group___cmp_name_service_client_itf_1gaec4b208fcef289a23f5c2437545c509b>` pfNSResolveAll3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gaa6e27b4cda8a143225ce5e334fad1662:
+
+#define EXT_NSResolveAll3 extern :ref:`PFNSRESOLVEALL3 <group___cmp_name_service_client_itf_1gaec4b208fcef289a23f5c2437545c509b>` pfNSResolveAll3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga67621dc1e0c143e8f73b23cdc79f1bc6:
+
+#define GET_NSResolveAll3 s_pfCMGetAPI2( "NSResolveAll3", (RTS_VOID_FCTPTR *)&pfNSResolveAll3, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gadffdfa7ebb84ad50c63ba79d8b57bfac:
+
+#define CAL_NSResolveAll3 pfNSResolveAll3
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga1981aa9aa7f10f6486b6da7fb61aece1:
+
+#define CHK_NSResolveAll3 (pfNSResolveAll3 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gac4b54747aaa00fbe0f565c012419abaf:
+
+#define EXP_NSResolveAll3 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSResolveAll3", (RTS_UINTPTR) :ref:`NSResolveAll3 <group___cmp_name_service_client_itf_1gab3e56180d1be42125bf0a6d3c2a2a4f8>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gae1bd020ce9abf06dbe8bb80c7241c09c:
+
+#define USE_NSAdjustResolveTimeout :ref:`PFNSADJUSTRESOLVETIMEOUT <group___cmp_name_service_client_itf_1gafbe96efee9801fa086248acf1d561505>` pfNSAdjustResolveTimeout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gaeb0a37cda4aa3b39561dc691a6b50ea5:
+
+#define EXT_NSAdjustResolveTimeout extern :ref:`PFNSADJUSTRESOLVETIMEOUT <group___cmp_name_service_client_itf_1gafbe96efee9801fa086248acf1d561505>` pfNSAdjustResolveTimeout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga2ecda174300826f3043c6844b6f98c1b:
+
+#define GET_NSAdjustResolveTimeout s_pfCMGetAPI2( "NSAdjustResolveTimeout", (RTS_VOID_FCTPTR *)&pfNSAdjustResolveTimeout, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga5359d0a38f2f02e8bea7ff3e0f25a2aa:
+
+#define CAL_NSAdjustResolveTimeout pfNSAdjustResolveTimeout
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gadb22bc7973aa7071a7810fe67fceb98f:
+
+#define CHK_NSAdjustResolveTimeout (pfNSAdjustResolveTimeout != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga5dee757ca21a08f15e84bd36a6b2736e:
+
+#define EXP_NSAdjustResolveTimeout s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NSAdjustResolveTimeout", (RTS_UINTPTR) :ref:`NSAdjustResolveTimeout <group___cmp_name_service_client_itf_1gaabfbca9a8549b262fae760fd5df6202a>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga605d5e7cf7212faa9d7a28927d7e00b7:
+
+#define ITF_CmpNameServiceClient
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga37db05cfd2280fee2157822296e21295:
+
+#define EXTITF_CmpNameServiceClient
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_name_service_client_itf_1gaccb5239888dcbd12e3fcbb51e7d71333:
+
+typedef RTS_RESULT( *  PFNSCLIENTHANDLEDATA) (RTS_HANDLE hRouter, RTS_HANDLE hNetworkInterface, RTS_UI8 byServiceId, RTS_UI8 byMessageId, PEERADDRESS addrSender, PEERADDRESS addrReceiver, PROTOCOL_DATA_UNIT pduData, RTS_RESULT nRouterError)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gae16712f006028dcf0ae3f767b0d90328:
+
+typedef void( * PFHANDLENSRESPONSE) (RTS_RESULT nResult, NODEADDRESS addrNode, NODEINFOPACKED *pNodeInfo, unsigned short wVersion, RTS_HANDLE dwRequestId, int bComplete)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gab7397425d7a54a28d9219a8368669a47:
+
+typedef void( * PFHANDLENSRESPONSE2) (RTS_RESULT nResult, NODEADDRESS addrNode, NODEINFOPACKED2 *pNodeInfo2, unsigned short wVersion, RTS_HANDLE dwRequestId, int bComplete)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gadde298508191e9a1ca418a75c21a8678:
+
+typedef void( * PFHANDLENSRESPONSE3) (RTS_RESULT nResult, NODEADDRESS addrNode, NODEINFOPACKED3 *pNodeInfo3, unsigned short wVersion, RTS_UI8 byClientBlkDrvType, RTS_HANDLE dwRequestId, int bComplete)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gae1a89fa7acd74710d4ffad5677a7df50:
+
+typedef RTS_RESULT( *  PFNSRESOLVENAME) (const RTS_WCHAR *pwszName, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE pfCallback)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga7d93c0acab79088df77361148c78b4e4:
+
+typedef RTS_RESULT( *  PFNSRESOLVENAME3) (const RTS_WCHAR *pwszName, RTS_UI32 dwTimeout, RTS_BOOL bFinishWithFirstNode, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE3 pfCallback3)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga6231f71de2a42c40f43a12856dfb96cd:
+
+typedef RTS_RESULT( *  PFNSRESOLVEADDRESS) (NODEADDRESS addrNode, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE pfCallback)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gac28cc659691d00f6bc58a7413f157197:
+
+typedef RTS_RESULT( *  PFNSRESOLVEADDRESS2) (NODEADDRESS addrNode, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE2 pfCallback2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga37979dd0f23407b25fddff092a297760:
+
+typedef RTS_RESULT( *  PFNSRESOLVEADDRESS3) (NODEADDRESS addrNode, RTS_UI32 dwTimeout, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE3 pfCallback3)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga615a538ec568e66904d1432dbe0afeae:
+
+typedef RTS_RESULT( *  PFNSRESOLVEBLKDRVADDRESS2) (RTS_UI8 byBlkDrvType, RTS_UI8 byFlags, RTS_UI8 byAddrBitLength, NETWORKADDRESS *pNetworkAddr, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE2 pfCallback2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga0fcf2a70c744eda91bb57cd903b05f85:
+
+typedef RTS_RESULT( *  PFNSRESOLVEBLKDRVADDRESS3) (RTS_UI8 byBlkDrvType, RTS_UI8 byFlags, RTS_UI8 byAddrBitLength, NETWORKADDRESS *pNetworkAddr, RTS_UI32 dwTimeout, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE3 pfCallback3)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga2b2de27e487c6dad09a078204d1c4c81:
+
+typedef RTS_RESULT( *  PFNSRESOLVEALL) (RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE pfCallback)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga3a5b887014e0746754a98c28978f181e:
+
+typedef RTS_RESULT( *  PFNSRESOLVEALL2) (RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE2 pfCallback2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gaec4b208fcef289a23f5c2437545c509b:
+
+typedef RTS_RESULT( *  PFNSRESOLVEALL3) (RTS_UI32 dwTimeout, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE3 pfCallback3)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1gafbe96efee9801fa086248acf1d561505:
+
+typedef RTS_RESULT( *  PFNSADJUSTRESOLVETIMEOUT) (RTS_UI32 dwRemainingTimeout, RTS_HANDLE dwRequestId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_name_service_client_itf_1ga21ef1098749be210922fb5ad6ee4a952:
+
+typedef ICmpNameServiceClient_C ICmpNameServiceClient
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_name_service_client_itf_1ga757cf20c2236dcb918eadcc9342f5c32:
+
+RTS_RESULT NSClientHandleData (RTS_HANDLE hRouter, RTS_HANDLE hNetworkInterface, RTS_UI8 byServiceId, RTS_UI8 byMessageId, PEERADDRESS addrSender, PEERADDRESS addrReceiver, PROTOCOL_DATA_UNIT pduData, RTS_RESULT nRouterError)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Protocol handler of CmpNameServiceClient. Attention: Must only be called by CmpRouter to forward an incoming data package.
+
+**Parameters**
+
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hRouter           | Handle of router instance calling this function. For L4 client implementations, by default it is called by the router instance 0. For L4 server implementations, it is called by the router instance which has received the package originally.                                                                           |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hNetworkInterface | Handle of the network interface receiving originally the package                                                                                                                                                                                                                                                          |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | byServiceId       | The protocol id of the package                                                                                                                                                                                                                                                                                            |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | byMessageId       | The message id of the package                                                                                                                                                                                                                                                                                             |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | addrSender        | Sender address. The pointer within will not be valid after this function returns.                                                                                                                                                                                                                                         |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | addrReceiver      | Receiver address (either the address of this node or a broadcast address). The pointer within will not be valid after this function returns.                                                                                                                                                                              |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pduData           | The received data. The data pointer will not be valid after this function returns.                                                                                                                                                                                                                                        |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | nRouterError      | If this value is not ERR_OK, then this message has been generated by an intermediate node in response to a message previously sent by this node, that could not be delivered. nRouterError identifies the kind of error that happened. pduData then contains a detailed error description depending on the kind of error. |
++---------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_name_service_client_itf_1ga0d1be22d775264af48ab460af623763f:
+
+RTS_RESULT NSResolveName (const RTS_WCHAR *pwszName, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE pfCallback)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieve the node information for the node with name pwszName. The result is returned asynchronously by calling the pfCallback function, as soon as a node answers. If the node is not unique in the PLC network all nodes with the specified name will answer. The end of the scan is indicated by calling pfCallback with ERR_TIMEOUT. In some cases the pfCallback might be called before this function returns. The caller must be prepared to deal with that situation.
+
+**Parameters**
+
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------+
+| [in]    | pwszName    | The name of the node to find                                                                                          |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------+
+| [in]    | dwRequestId | Identifies the request. Parallel running requests should have a unique id. Returned again by the pfCallback function. |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfCallback  | The function to be called when retrieving an answer.                                                                  |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_name_service_client_itf_1ga047b2f3a83563e5553715d8403ca8ed4:
+
+RTS_RESULT NSResolveName3 (const RTS_WCHAR *pwszName, RTS_UI32 dwTimeout, RTS_BOOL bFinishWithFirstNode, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE3 pfCallback3)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieve the node information for the node with name pwszName. The result is returned asynchronously by calling the pfCallback function, as soon as a node answers. If the node is not unique in the PLC network all nodes with the specified name will answer. Setting the parameter bFinishWithFirstNode to TRUE is useful, if the client want to connect to the first answering node without waiting for the timeout. Typically this is used, if unique node names in the network are assured. The end of the scan is only indicated by calling pfCallback with ERR_TIMEOUT, if bFinishWithFirstNode was set to FALSE or if no node has answered the request. In some cases the pfCallback might be called before this function returns. The caller must be prepared to deal with that situation.
+
+**Parameters**
+
++---------+----------------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pwszName             | The name of the node to find                                                                                           |
++---------+----------------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | dwTimeout            | Overall timeout in ms for this operation. If 0, the default NAMESERVICESRVKEY_INT_SCAN_TIME is used.                   |
++---------+----------------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bFinishWithFirstNode | If TRUE, pfCallback will be called only once for this request. Further answering nodes are ignored.                    |
++---------+----------------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | dwRequestId          | Identifies the request. Parallel running requests should have a unique id. Returned again by the pfCallback3 function. |
++---------+----------------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfCallback3          | The function to be called when retrieving an answer.                                                                   |
++---------+----------------------+------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_name_service_client_itf_1ga27827a9db89e986d9239c872971553f5:
+
+RTS_RESULT NSResolveAddress (NODEADDRESS addrNode, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE pfCallback)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieve the node information for the node with the given address. The result is returned asynchronously by calling the pfCallback function, as soon as the node answers. pfCallback will be called only once for this request. In some cases the pfCallback might be called before this function returns. The caller must be prepared to deal with that situation.
+
+**Parameters**
+
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------+
+| [in]    | addrNode    | Address of the node to find.                                                                                          |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------+
+| [in]    | dwRequestId | Identifies the request. Parallel running requests should have a unique id. Returned again by the pfCallback function. |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfCallback  | The function to be called when retrieving an answer.                                                                  |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_name_service_client_itf_1ga81e4e93aefd9454aac1406a5c6a3f2be:
+
+RTS_RESULT NSResolveAddress2 (NODEADDRESS addrNode, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE2 pfCallback2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieve the node information for the node with the given address. The result is returned asynchronously by calling the pfCallback2 function, as soon as the node answers. pfCallback2 will be called only once for this request. In some cases the pfCallback2 might be called before this function returns. The caller must be prepared to deal with that situation.
+
+**Parameters**
+
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | addrNode    | Address of the node to find.                                                                                           |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | dwRequestId | Identifies the request. Parallel running requests should have a unique id. Returned again by the pfCallback2 function. |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfCallback2 | The function to be called when retrieving an answer.                                                                   |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_name_service_client_itf_1ga814e0166aa6f9bdc9019296bc19c147e:
+
+RTS_RESULT NSResolveAddress3 (NODEADDRESS addrNode, RTS_UI32 dwTimeout, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE3 pfCallback3)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieve the node information for the node with the given address. The result is returned asynchronously by calling the pfCallback3 function, as soon as the node answers. pfCallback3 will be called only once for this request. In some cases the pfCallback3 might be called before this function returns. The caller must be prepared to deal with that situation.
+
+**Parameters**
+
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | addrNode    | Address of the node to find.                                                                                           |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | dwTimeout   | Overall timeout in ms for this operation. If 0, the default NAMESERVICESRVKEY_INT_SCAN_TIME is used.                   |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | dwRequestId | Identifies the request. Parallel running requests should have a unique id. Returned again by the pfCallback3 function. |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfCallback3 | The function to be called when retrieving an answer.                                                                   |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_name_service_client_itf_1gabbbe8cda510898d7479aa053b839249c:
+
+RTS_RESULT NSResolveBlkDrvAddress2 (RTS_UI8 byBlkDrvType, RTS_UI8 byFlags, RTS_UI8 byAddrBitLength, NETWORKADDRESS *pNetworkAddr, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE2 pfCallback2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieve the node information for the node with the given block driver address. This is specified by the block driver type and the address in the local network (e. g. IP-address and port). If RTS_BLK_DRV_TYPE_NONE is passed, the function returns the address of the own runtime system. In this special use case the node info may not contain a valid node info. The result is returned asynchronously by calling the pfCallback2 function, as soon as the node answers. pfCallback2 will be called only once for this request. In some cases the pfCallback2 might be called before this function returns. The caller must be prepared to deal with that situation.
+
+**Parameters**
+
++---------+-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | byBlkDrvType    | The type of the block driver, which should resolve the address. If set to RTS_BLK_DRV_TYPE_NONE, the address of the own runtime system is returned.        |
++---------+-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | byFlags         | For future use, must be 0.                                                                                                                                 |
++---------+-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | byAddrBitLength | Bit length of the network address. Must match with the block driver configuration. Should be 0, if RTS_BLK_DRV_TYPE_NONE is used to get the own node info. |
++---------+-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pNetworkAddr    | Local network address of the node to find. Should be NULL, if RTS_BLK_DRV_TYPE_NONE is used to get the own node info.                                      |
++---------+-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | dwRequestId     | Identifies the request. Returned again by the pfCallback2 function. Parallel running requests should have a unique id.                                     |
++---------+-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfCallback2     | The function to be called when retrieving an answer.                                                                                                       |
++---------+-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_name_service_client_itf_1ga0053b9c8d7638fec725e9e0bd634a18d:
+
+RTS_RESULT NSResolveBlkDrvAddress3 (RTS_UI8 byBlkDrvType, RTS_UI8 byFlags, RTS_UI8 byAddrBitLength, NETWORKADDRESS *pNetworkAddr, RTS_UI32 dwTimeout, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE3 pfCallback3)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieve the node information for the node with the given block driver address. This is specified by the block driver type and the address in the local network (e. g. IP-address and port). If RTS_BLK_DRV_TYPE_NONE is passed, the function returns the address of the own runtime system. In this special use case the node info may not contain a valid node info. The result is returned asynchronously by calling the pfCallback3 function, as soon as the node answers. pfCallback3 will be called only once for this request. In some cases the pfCallback3 might be called before this function returns. The caller must be prepared to deal with that situation.
+
+**Parameters**
+
++---------+-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | byBlkDrvType    | The type of the block driver, which should resolve the address. If set to RTS_BLK_DRV_TYPE_NONE, the address of the own runtime system is returned.        |
++---------+-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | byFlags         | For future use, must be 0.                                                                                                                                 |
++---------+-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | byAddrBitLength | Bit length of the network address. Must match with the block driver configuration. Should be 0, if RTS_BLK_DRV_TYPE_NONE is used to get the own node info. |
++---------+-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pNetworkAddr    | Local network address of the node to find. Should be NULL, if RTS_BLK_DRV_TYPE_NONE is used to get the own node info.                                      |
++---------+-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | dwTimeout       | Overall timeout in ms for this operation. If 0, the default NAMESERVICESRVKEY_INT_SCAN_TIME is used.                                                       |
++---------+-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | dwRequestId     | Identifies the request. Returned again by the pfCallback3 function. Parallel running requests should have a unique id.                                     |
++---------+-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfCallback3     | The function to be called when retrieving an answer.                                                                                                       |
++---------+-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_name_service_client_itf_1ga44c747b6ec51cbe607311aa516d19ad5:
+
+RTS_RESULT NSResolveAll (RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE pfCallback)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieve all nodes in the network. The result is returned asynchronously by calling the pfCallback function once for every answering node. That means pfCallback will be called an unknown number of times. bComplete will not resolve to TRUE until nResult is set to ERR_TIMEOUT. Thus ERR_TIMEOUT is an expected result for this request. In some cases the pfCallback might be called before this function returns. The caller must be prepared to deal with that situation.
+
+**Parameters**
+
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------+
+| [in]    | dwRequestId | Identifies the request. Parallel running requests should have a unique id. Returned again by the pfCallback function. |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfCallback  | The function to be called when retrieving an answer.                                                                  |
++---------+-------------+-----------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_name_service_client_itf_1ga1a91919cd550e76a388a9b208c144e8a:
+
+RTS_RESULT NSResolveAll2 (RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE2 pfCallback2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieve all nodes in the network. The result is returned asynchronously by calling the pfCallback2 function once for every answering node. That means pfCallback2 will be called an unknown number of times. bComplete will not resolve to TRUE until nResult is set to ERR_TIMEOUT. Thus ERR_TIMEOUT is an expected result for this request. In some cases the pfCallback2 might be called before this function returns. The caller must be prepared to deal with that situation.
+
+**Parameters**
+
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | dwRequestId | Identifies the request. Parallel running requests should have a unique id. Returned again by the pfCallback2 function. |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfCallback2 | The function to be called when retrieving an answer.                                                                   |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_name_service_client_itf_1gab3e56180d1be42125bf0a6d3c2a2a4f8:
+
+RTS_RESULT NSResolveAll3 (RTS_UI32 dwTimeout, RTS_HANDLE dwRequestId, PFHANDLENSRESPONSE3 pfCallback3)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieve all nodes in the network. The result is returned asynchronously by calling the pfCallback3 function once for every answering node. That means pfCallback3 will be called an unknown number of times. bComplete will not resolve to TRUE until nResult is set to ERR_TIMEOUT. Thus ERR_TIMEOUT is an expected result for this request. In some cases the pfCallback3 might be called before this function returns. The caller must be prepared to deal with that situation.
+
+**Parameters**
+
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | dwTimeout   | Overall timeout in ms for this operation. If 0, the default NAMESERVICESRVKEY_INT_SCAN_TIME is used.                   |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | dwRequestId | Identifies the request. Parallel running requests should have a unique id. Returned again by the pfCallback3 function. |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfCallback3 | The function to be called when retrieving an answer.                                                                   |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_name_service_client_itf_1gaabfbca9a8549b262fae760fd5df6202a:
+
+RTS_RESULT NSAdjustResolveTimeout (RTS_UI32 dwRemainingTimeout, RTS_HANDLE dwRequestId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+With this function the remaining timeout of all NSResolve... functions can be adjusted. The typical use case is to set the timeout to 0, as soon as the expected node has answered. Beside the new timeout the running NSResolve... function is not affected in its behavior.
+
+**Parameters**
+
++---------+--------------------+----------------------------------------------------------------+
+| [in]    | dwRemainingTimeout | Remaining timeout in ms for already running resolve request.   |
++---------+--------------------+----------------------------------------------------------------+
+| [in]    | dwRequestId        | Id of the request, whose remaining resolve time should be set. |
++---------+--------------------+----------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

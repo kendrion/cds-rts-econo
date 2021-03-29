@@ -1,28 +1,28 @@
 /**
  * <interfacename>CmpHilscherCIFX</interfacename>
  * <description>
- *	Interface for accessing Hilscher NetX cards.
+ *	Interface for accessing HILSCHER NetX cards.
  *
- *	Hilscher PC cards (CIFX) must be typically loaded with two firmware parts which are provided by Hilscher:
- *		1. Bootloader:
+ *	HILSCHER PC cards (CIFX) must be typically loaded with two firmware parts which are provided by HILSCHER:
+ *		1. Boot loader:
  *			Has mostly the ending .bin (e.g. NETX100-BSL.bin)	
  *		2. Firmware file:
- *			This file contains the fieldbus specific stack.
- *			Mostly this file has the format cifx_ _ _.nxf. e.g. "cifxdpm.nxf" for a Profibus DP Master or "cifxdps.nxf" for a Profibus DP Slave firmware.
+ *			This file contains the field-bus specific stack.
+ *			Mostly this file has the format cifx_ _ _.nxf. e.g. "cifxdpm.nxf" for a PROFIBUS DP Master or "cifxdps.nxf" for a PROFIBUS DP Slave firmware.
  *
- *	The configuration of the bootloader and firmware files can be done in several ways. A Hilscher Card is addressed here via its Card Index or Slot Number and
- *	optional the so called channel. Some Hilscher Cards has one or optional two separate channels on the NetX to support multi fieldbus strands.
- *  In the following examples, the devicenumber [n] starts with 0!
+ *	The configuration of the boot loader and firmware files can be done in several ways. A HILSCHER Card is addressed here via its Card Index or Slot Number and
+ *	optional the so called channel. Some HILSCHER Cards has one or optional two separate channels on the NetX to support multi field-bus strands.
+ *  In the following examples, the device number [n] starts with 0!
  *	All of these configurations must be done under the section:
  *		[CmpHilscherCIFX]
  *
- *	1. Global configuiration for all cards:
- *		The bootloader can be configured for all cards the folllowing way:
+ *	1. Global configuration for all cards:
+ *		The boot loader can be configured for all cards the following way:
  *			BootloaderFile=./HilscherCIFX/Firmware/NETX100-BSL.bin
  *
  *	2. Configuration via Card Index:
  *		A card index is the logical number of the card beginning with 0.
- *		- Bootloader:
+ *		- Boot loader:
  *			Device.n.BootloaderFile=./HilscherCIFX/Firmware/NETX100-BSL.bin
  *		- Firmware: 
  *			Device.n.FirmwareFile=./HilscherCIFX/Firmware/cifxdpm.nxf
@@ -36,21 +36,21 @@
  *		- or per single card with:
  *			Device.n.DynamicFirmware=1
  *
- *		To specify the firmware matching to the corresponding fieldbus type there are 3 options:
+ *		To specify the firmware matching to the corresponding field-bus type there are 3 options:
   *		1. Default firmware:
  *			You can specify the path to all firmware files:
  *				FirmwareFilePath=./HilscherCIFX/Firmware
- *			With this we try to match the bustype to the default firmware (e.g. "ProfibusMaster" -> cifxdpm.nxf)!
+ *			With this we try to match the bus type to the default firmware (e.g. "ProfibusMaster" -> cifxdpm.nxf)!
  *
- *		2. You can specify a firmware matching to the corresponding fieldbus by its name (only one firmware for a fieldbus type can be configured for all cards):
+ *		2. You can specify a firmware matching to the corresponding field-bus by its name (only one firmware for a field-bus type can be configured for all cards):
  *				FirmwareFile.0=ProfinetMaster, ./HilscherCIFX/Firmware/cifxpnm.nxf
  *			or specify the corresponding device number (so different firmwares per device can be configured):
  *				Device.n.FirmwareFile.0=ProfinetMaster, ./HilscherCIFX/Firmware/cifxpnm.nxf
  *				Device.n.FirmwareFile.1.1=EthernetIPMaster, ./HilscherCIFX/Firmware/cifxeim.nxf
- *			For the list of possible fieldbus type names see the defines CIFX_NAME_XXX.
+ *			For the list of possible field-bus type names see the defines CIFX_NAME_XXX.
  *
- *		3. You can specify a firmware matching to the corresponding fieldbus by its name as a key with a list of filenames and versions.
- *			The version is optained via EVT_CIFX_GETFIRMWARE/EVTPARAM_CIFX_GetFirmware. 
+ *		3. You can specify a firmware matching to the corresponding field-bus by its name as a key with a list of filenames and versions.
+ *			The version is obtained via EVT_CIFX_GETFIRMWARE/EVTPARAM_CIFX_GetFirmware. 
  *			In case the version is set in the event callback, it is matched with a list of elements, configured as:
  *				<MasterName>.n=<FirmwareName>, [<FirmwareVersion>]
  *				Example:
@@ -58,12 +58,12 @@
  *				ProfibusMaster.1=cifxdpm2.nxf, 0x01020306
  *				ProfinetMaster.0=cifXpnm.nxf, 0x01020304
  *				ProfinetMaster.1=cifXpnm2.nxf, 0x01020306
- *			For the list of possible fieldbus type names see the defines CIFX_NAME_XXX. The path is taken from the FirmwareFilePath configuiration.
+ *			For the list of possible field-bus type names see the defines CIFX_NAME_XXX. The path is taken from the FirmwareFilePath configuration.
 
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -84,8 +84,8 @@ REF_ITF(`CMUtilsHashItf.m4')
 	#include <cifx/cifXUser.h>
 #else
  #ifdef PATHS_RELATIVE
-	#include "./CmpHilscherCIFX/Source/cifXUser.h"
-	#include "./CmpHilscherCIFX/Source/OS_Includes.h"
+	#include "./Source/cifXUser.h"
+	#include "./Source/OS_Includes.h"
  #else
 	#include "cifXUser.h"
 	#include "OS_Includes.h"
@@ -100,8 +100,8 @@ REF_ITF(`CMUtilsHashItf.m4')
  * <element name="CIFX_TOOLKIT_DMA">Switch to enable DMA transfer mode</element>
  * <element name="CIFX_TOOLKIT_ENABLE_DSR_LOCK">Interrupt lock must be enabled to use interrupt mode to synchronize the interrupt handler against the DSR task!
  *	If not, you got race conditions on multicore CPUs!</element>
- * <element name="CIFX_TOOLKIT_3S">Switch to build the component with the hilscher toolkit source based on the 3S-OS-Abstraction layer</element>
- * <element name="CIFX_LIB">Switch to build the component based on the cifX ibrary from hilscher</element>
+ * <element name="CIFX_TOOLKIT_3S">Switch to build the component with the HILSCHER toolkit source based on the 3S-OS-Abstraction layer</element>
+ * <element name="CIFX_LIB">Switch to build the component based on the cifX library from HILSCHER</element>
  */
 #define CIFX_TOOLKIT_ENABLE_DSR_LOCK
 
@@ -135,7 +135,7 @@ REF_ITF(`CMUtilsHashItf.m4')
 #endif
 
 /**
-* Definition of the supported fieldbus firmware names 
+* Definition of the supported field-bus firmware names 
 */
 #define CIFX_NAME_PROFIBUS_MASTER		"ProfibusMaster"
 #define CIFX_NAME_PROFIBUS_SLAVE		"ProfibusSlave"
@@ -225,7 +225,7 @@ REF_ITF(`CMUtilsHashItf.m4')
 /**
  * <category>Settings</category>
  * <type>String</type>
- * <description>Setting to define the bootloader file.
+ * <description>Setting to define the boot loader file.
  *
  * Example:
  *		BootloaderFile=NETX100-BSL.bin
@@ -364,7 +364,7 @@ REF_ITF(`CMUtilsHashItf.m4')
 /**
  * <category>Settings</category>
  * <type>int</type>
- * <description>Create a seperate task to receive packets from the netX dpm.</description>
+ * <description>Create a separate task to receive packets from the netX DPM.</description>
  */
 #define CMPHILSCHERCIFX_INT_RECV_PKT_IN_OWN_TASK							"RecvPktInOwnTask"
 #ifndef CMPHILSCHERCIFX_INT_RECV_PKT_IN_OWN_TASK_DEFAULT
@@ -375,8 +375,8 @@ REF_ITF(`CMUtilsHashItf.m4')
 /**
  * <category>Settings</category>
  * <type>int</type>
- * <description>Create a seperate task to receive packets from the netX dpm.
- * ATTENTION: The hilscher Toolkit must be implemented with interrupts and the ReceiveTimeout must be != 0. If not
+ * <description>Create a separate task to receive packets from the netX DPM.
+ * ATTENTION: The HILSCHER Toolkit must be implemented with interrupts and the ReceiveTimeout must be != 0. If not
  * an endless loop occurs.</description>
  */
 #define CMPHILSCHERCIFX_INT_RECV_PKT_TASK_PRIORITY							"RecvPktTaskPriority"
@@ -390,7 +390,7 @@ REF_ITF(`CMUtilsHashItf.m4')
  * <category>Defines</category>
  * <description>
 	Defines for different queueing mechanism
-	CIFX_QUEUE_FIFO: Fifo queue
+	CIFX_QUEUE_FIFO: FIFO queue
 	CIFX_QUEUE_SRCID: Packet with the same SrcId are returned.
    </description>
 */
@@ -406,7 +406,7 @@ REF_ITF(`CMUtilsHashItf.m4')
  * <element name="hShmBoard" type="IN">Handle to mapped DPM</element>
  * <element name="hDsrEventhInt" type="IN">Handle to Dsr event</element>
  * <element name="hDsrTask" type="IN">Handle to Dsr task</element>
- * <element name="pDeviceInstance" type="IN">Handle to device instance (Hilscher toolkit device instance)</element>
+ * <element name="pDeviceInstance" type="IN">Handle to device instance (HILSCHER toolkit device instance)</element>
  * <element name="ulDevNr" type="IN">Device number</element>
  * <element name="ulChannel" type="IN">Channel number</element>
  * <element name="ulSlotNr" type="IN">Slot number</element>
@@ -420,7 +420,7 @@ REF_ITF(`CMUtilsHashItf.m4')
  * <element name="usSubVendorID" type="IN">PCI SubVendor ID</element>
  * <element name="usSubDeviceID" type="IN">PCI SubDevice ID</element>
  * <element name="usBusType" type="IN">PCI bus type</element>
- * <element name="usConnectorType" type="IN">Connector type of the fieldbus that should run on the CIFX card. E.g. CT_PROFIBUS_MASTER to load a Profibus Firmware
+ * <element name="usConnectorType" type="IN">Connector type of the field-bus that should run on the CIFX card. E.g. CT_PROFIBUS_MASTER to load a Profibus Firmware
  *		on the NetX. See category "Connector types" in CmpIoDrvItf.h for detailed information.</element>
  * <element name="byIntVec" type="IN">PCI interrupt vector</element>
  * <element name="ulIntAll" type="IN">PCI interrupt mask</element>
@@ -533,7 +533,7 @@ typedef struct
 
 /**
  * <category>Event parameter</category>
- * <element name="hPkt" type="OUT">Msg Handle of the Packet</element>
+ * <element name="hPkt" type="OUT">Message handle of the packet</element>
  * <element name="ulPutInQueue" type="OUT">If this value is unequal 0, the hMsg is stored in the Indication queue (default). Otherwise not.</element>
  * <element name="ulGenerateAsyncEvent" type="OUT">If this value is unequal 0, the hMsg is send in an asynchronous event(0 is default). Otherwise not. If both values are 0, the hMsg is released.</element>
  * <element name="eAsyncEvent" type="OUT">CAA event, which should be send asynchronous.</element>
@@ -548,7 +548,7 @@ typedef struct
 
 /**
  * <category>Event parameter</category>
- * <element name="hPkt" type="OUT">Msg Handle of the Packet</element>
+ * <element name="hPkt" type="OUT">Message handle of the packet</element>
  * <element name="ulPutInQueue" type="OUT">If this value is unequal 0, the hMsg is stored in the Indication queue (default). Otherwise not.</element>
  * <element name="ulGenerateAsyncEvent" type="OUT">If this value is unequal 0, the hMsg is send in an asynchronous event(0 is default). Otherwise not. If both values are 0, the hMsg is released.</element>
  * <element name="eAsyncEvent" type="OUT">CAA event, which should be send asynchronous.</element>
@@ -570,7 +570,7 @@ typedef struct
  * <element name="ulStep" type="OUT">Actual download step</element>
  * <element name="ulMaxStep" type="OUT">Maximal number of steps</element>
  * <element name="pvUser" type="OUT">User data</element>
- * <element name="lError" type="OUT">cifx error code, if download fails</element>
+ * <element name="lError" type="OUT">CIFX error code, if download fails</element>
  * <element name="bFinished" type="OUT">Finish flag, TRUE if download is finished</element>
  */
 typedef struct
@@ -605,7 +605,7 @@ typedef struct
  *	pDevInfo->pDeviceInstance must be provided as the parameter ulAdditionalInfo for the interrupt handler, if interrupt handler is 
  *	handled directly in the event!!
  * </element>
- * <element name="Result" type="OUT">With the result, the behaviour of the kernel can be managed in the event handler:
+ * <element name="Result" type="OUT">With the result, the behavior of the kernel can be managed in the event handler:
  *		ERR_OK: Interrupt is registered and enabled by the event handler itself
  *		ERR_NOTIMPLEMENTED: [default] Interrupt will be registered and enabled by the kernel via SysInt component
  *		ERR_FAILED: Interrupt will not be activated by the kernel via SysInt component, because a serious error occurred!
@@ -637,7 +637,7 @@ typedef struct
  * <category>Event parameter</category>
  * <element name="pDevInfo" type="IN">Pointer to device info of the device</element>
  * <element name="pszFile" type="OUT">Pointer to return firmware filename (including path, relative or absolute)</element>
- * <element name="iLen" type="IN">Max lenght of pszFile</element>
+ * <element name="iLen" type="IN">Max length of pszFile</element>
  * <element name="result" type="OUT">Error code of the operation</element>
  * <element name="firmwareVersion" type="OUT">Optional version to select from configured firmware files (see Dynamic configuration 3.3 above)</element>
  */
@@ -709,8 +709,8 @@ typedef struct
 /**
  * <category>Events</category>
  * <description>
-	Event is sent on a file download to cifx, but only if no other callback is defined.
-	(See cifx Device Driver Manual)
+	Event is sent on a file download to CIFX, but only if no other callback is defined.
+	(See CIFX Device Driver Manual)
    </description>
  * <param name="pEventParam" type="IN">EVTPARAM_LoadProgress</param>
  */
@@ -719,8 +719,8 @@ typedef struct
 /**
  * <category>Events</category>
  * <description>
-	Event is sent on a file upload from cifx, but only if no other callback is defined.
-	(See cifx Device Driver Manual)
+	Event is sent on a file upload from CIFX, but only if no other callback is defined.
+	(See CIFX Device Driver Manual)
    </description>
  * <param name="pEventParam" type="IN">EVTPARAM_LoadProgress</param>
  */
@@ -729,8 +729,8 @@ typedef struct
 /**
  * <category>Events</category>
  * <description>
-	Event is sent if the cifx is bussy and cannot handle a packet, but only if no other callback is defined.
-	(See cifx Device Driver Manual)
+	Event is sent if the CIFX is busy and cannot handle a packet, but only if no other callback is defined.
+	(See CIFX Device Driver Manual)
    </description>
  * <param name="pEventParam" type="IN">EVTPARAM_PacketUnhandled</param>
  */
@@ -739,12 +739,12 @@ typedef struct
 /**
  * <category>Events</category>
  * <description>
- *	Event is sent when an indication was passed to the runtime system (cifx application). The user can decide, what should happen with the Indication.
+ *	Event is sent when an indication was passed to the runtime system (CIFX application). The user can decide, what should happen with the Indication.
  *	On default it is stored in the Indication Queue and the user can get the packet with the ChannelGetPacket service (ulPutInQueue != 0). If ulPutInQueue is 0, the packet
  *	is not stored in a queue. If the user sets the parameter ulGenerateAsyncEvent to 1, a asynchronous CAA_CB event, set in parameter eAsyncEvent (Source: CB_DRIVER) is generated. 
  *  As an parameter hMsg is passed to the callback.
  *	IMPORTANT: If the user wants to use the packet in an asynchronous event, he has to call MBM_MsgAddRef for hMsg in the EVT_PACKET_INDICATION callback. In addition to that 
- *  the user has to call MBM_MsgRelease in the async event callback. Otherwise the hMsg is already released, when the async callback is called or there is a memory leak.
+ *  the user has to call MBM_MsgRelease in the asynchronous event callback. Otherwise the hMsg is already released, when the asynchronous callback is called or there is a memory leak.
  *  </description>
  * <param name="pEventParam" type="IN">CIFX_IndicationParam</param>
  */
@@ -762,12 +762,12 @@ typedef struct
 /**
  * <category>Events</category>
  * <description>
- *	Event is sent when an confirmation was passed to the runtime system (cifx application). The user can decide, what should happen with the Indication.
+ *	Event is sent when an confirmation was passed to the runtime system (CIFX application). The user can decide, what should happen with the Indication.
  *	On default it is stored in the confirmation Queue and the user can get the packet with the ChannelGetPacket service (ulPutInQueue != 0). If ulPutInQueue is 0, the packet
  *	is not stored in a queue. If the user sets the parameter ulGenerateAsyncEvent to 1, a asynchronous CAA_CB event, set in parameter eAsyncEvent (Source: CB_DRIVER) is generated. 
  *  As an parameter hMsg is passed to the callback.
  *	IMPORTANT: If the user wants to use the packet in an asynchronous event, he has to call MBM_MsgAddRef for hMsg in the EVT_PACKET_INDICATION callback. In addition to that 
- *  the user has to call MBM_MsgRelease in the async event callback. Otherwise the hMsg is already released, when the async callback is called or there is a memory leak.
+ *  the user has to call MBM_MsgRelease in the asynchronous event callback. Otherwise the hMsg is already released, when the asynchronous callback is called or there is a memory leak.
  *  </description>
  * <param name="pEventParam" type="IN">CIFX_ConfirmationParam</param>
  */

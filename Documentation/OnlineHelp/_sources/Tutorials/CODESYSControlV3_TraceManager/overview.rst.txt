@@ -1,0 +1,53 @@
+﻿
+.. _overview:
+.. index:: Trace Manager
+.. index:: persistent trace
+
+Overview
+========
+
+| The trace functionality is provided with the 'Trace Editor' in CODESYS.
+  It allows to capture the progression of the values of variables on the
+  PLC over a certain time, similar to a digital sampling oscilloscope.
+  Additionally a trigger can be set to control the data capturing with
+  input (trigger) signals. The values of trace variables are steadily
+  written to a CODESYS buffer of a specified size. The values then can be
+  observed in form of a two-dimensional graph plotted as a function of
+  time.
+
+.. image:: images/trace_example.png
+
+For how to configure a trace please see the CODESYS Help.
+
+The Trace Manager *CmpTraceMgr* is a component of the runtime system
+CODESYS Control V3. This component handles all kind of traces
+and trace configurations.
+
+The Trace Manager has an enhanced functionality. It is possible...
+
+-  to configure and trace parameters of the control system (like the
+   temperature curve of the CPU or the battery)
+-  to read out device traces (like the trace of the electric current of
+   a drive)
+-  to trace system variables of other runtime system components.
+
+A trace configuration is called a “\ *trace packet*\ ”. A single
+variable inside a trace packet is called a “\ *trace record*\ ” (which
+is stored in a data set that consists of a value and the corresponding
+timestamp of the shot).
+
+A trace record can be an IEC variable, a system variable or an
+I/O configuration variable. So, for example dynamical values like the current
+values of a drive, can be stored in a record.
+
+Every component (runtime or IEC) can define a trace packet resp. a trace
+configuration. The trace editor integrated in CODESYS uses the same
+component for storing and managing the user traces.
+
+The trace editor in the CODESYS programming system can display all
+registered trace packets. For this you can use the upload command in the Trace menu to display all stored traces configurations in the runtime system.
+
+The trace configuration and the values can be stored in a file. This
+feature is called “\ *persistent trace*\ ”. So, after a reboot of the controller,
+the persistent trace configuration will automatically be loaded and
+restarted.

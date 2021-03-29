@@ -1,0 +1,740 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_monitor2_itf:
+
+==============
+CmpMonitor2Itf
+==============
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpMonitor2.
+
+Detailed Description
+--------------------
+
+Interface of the new monitoring component, that provides monitoring of IEC variables.
+
+Main advantages of this component against CmpMonitor:
+
+  - Minimal stack usage (no recursive function calls) so it is more useful for embedded devices
+
+  - Less code and data usage
+
+  - All variable access mechanisms are available by default
+
+  - Address checking is done for each access layer
+
+  - Structured exception handling is fully integrated So the new monitoring component is recommended for all newer runtime systems and especially for targets with low resources. CODESYS higher or equal v3.5.0.0 automatically adapts the monitoring, if this new component is integrated in the runtime.
+
+NOTE:
+
+  - Not compatible with older version of CODESYS (before v3.5.0.0). To support older versions the CmpMonitor must be integrated in parallel.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Event parameter <group___cmp_monitor2_itf___eventparameter>`
+
+- :ref:`Events <group___cmp_monitor2_itf___events>`
+
+- :ref:`Features <group___cmp_monitor2_itf___features>`
+
+- :ref:`Settings <group___cmp_monitor2_itf___settings>`
+
+- :ref:`Static defines <group___cmp_monitor2_itf___staticdefines>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpMonitor2_C <struct_i_cmp_monitor2___c>`
+
+Macros
+------
+
+- #define :ref:`SRV_MONITORING2_READ <group___cmp_monitor2_itf_1ga83baea256dae502cea73c8bc9fbf853c>` 1
+
+- #define :ref:`SRV_MONITORING2_WRITE <group___cmp_monitor2_itf_1ga0c16c92150d5735655be4c8731b6aac8>` 2
+
+- #define :ref:`SRV_MONITORING2_FORCE <group___cmp_monitor2_itf_1ga7f027db96bb40595e440999fc1c33c52>` 3
+
+- #define :ref:`TAG_MONITORING2_APP_HEADER <group___cmp_monitor2_itf_1ga9f300ffa570a06b96bd62cf0b3d0138f>` 0x01
+
+- #define :ref:`TAG_MONITORING2_READ_EXP_LIST <group___cmp_monitor2_itf_1ga7e803390e21df1522c69e91689daa21b>` 0x02
+
+- #define :ref:`TAG_MONITORING2_WF_EXP_LIST <group___cmp_monitor2_itf_1gac3726fefdf8b83251134bb59fad68827>` 0x03
+
+- #define :ref:`TAG_MONITORING2_READ_VALUE_LIST <group___cmp_monitor2_itf_1ga1d866339d71d10507d69c814d0604a44>` 0x40
+
+- #define :ref:`TAG_MONITORING2_READ_ERROR <group___cmp_monitor2_itf_1ga2444e916eb58b396cc53bcdca8f85072>` 0x41
+
+- #define :ref:`TAG_MONITORING2_READ_EXP_LIST2 <group___cmp_monitor2_itf_1gaa9acb901790c0fa111d1e80ddb11ec4a>` 0x81
+
+- #define :ref:`TAG_MONITORING2_READ_EXP_INFO <group___cmp_monitor2_itf_1gad824fe6f8a12e1204befa2cd5517a00a>` 0x82
+
+- #define :ref:`TAG_MONITORING2_READ_EXP_LIST2_VARID <group___cmp_monitor2_itf_1ga22099b07abd9e978e0cc9d1ef12d00b5>` 0x01
+
+- #define :ref:`TAG_MONITORING2_READ_EXP_LIST2_DATASIZE <group___cmp_monitor2_itf_1gafb281a7a0f7dec607db5d92cc4a6b66a>` 0x02
+
+- #define :ref:`TAG_MONITORING2_READ_EXP_LIST2_TYPECLASS <group___cmp_monitor2_itf_1gab12706d32c178253287042523ee05932>` 0x03
+
+- #define :ref:`TAG_MONITORING2_READ_EXP_LIST2_BYTECODESIZE <group___cmp_monitor2_itf_1gace5a47a0bc8438c8f9790895b9eaaa28>` 0x04
+
+- #define :ref:`TAG_MONITORING2_READ_EXP_LIST2_BYTECODE <group___cmp_monitor2_itf_1ga85ce708f338bd3612f4d25d4f526dbde>` 0x05
+
+- #define :ref:`USE_Monitoring2HasFeature <group___cmp_monitor2_itf_1ga8d9166cfe1110cb45b228f5ab37508f8>` :ref:`PFMONITORING2HASFEATURE <group___cmp_monitor2_itf_1ga832a9b7139fb617c881275ac23eea35b>` pfMonitoring2HasFeature;
+
+- #define :ref:`EXT_Monitoring2HasFeature <group___cmp_monitor2_itf_1gaca6633512f7c8a6c04321ebc88c05ebd>` extern :ref:`PFMONITORING2HASFEATURE <group___cmp_monitor2_itf_1ga832a9b7139fb617c881275ac23eea35b>` pfMonitoring2HasFeature;
+
+- #define :ref:`GET_Monitoring2HasFeature <group___cmp_monitor2_itf_1ga06f3a1142d5ff5057cd99dfa7700f5cf>` s_pfCMGetAPI2( "Monitoring2HasFeature", (RTS_VOID_FCTPTR *)&pfMonitoring2HasFeature, (fl), 0, 0)
+
+- #define :ref:`CAL_Monitoring2HasFeature <group___cmp_monitor2_itf_1ga7b6f9e0134a9d541a883fe6c29aed274>` pfMonitoring2HasFeature
+
+- #define :ref:`CHK_Monitoring2HasFeature <group___cmp_monitor2_itf_1ga5ca0a1aca24626e0d419be7d741fa197>` (pfMonitoring2HasFeature != NULL)
+
+- #define :ref:`EXP_Monitoring2HasFeature <group___cmp_monitor2_itf_1gacd26737ff9e35f62191ef80851908012>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"Monitoring2HasFeature", (RTS_UINTPTR) :ref:`Monitoring2HasFeature <group___cmp_monitor2_itf_1ga0bb98b0ac8e9a989a37497e20b44e7df>` , 0, 0)
+
+- #define :ref:`USE_Monitoring2ReadValue <group___cmp_monitor2_itf_1ga7a20e2a04fbe920abdb045000fe31c7e>` :ref:`PFMONITORING2READVALUE <group___cmp_monitor2_itf_1ga4a27151dbb1021787e21b41b7d8c983d>` pfMonitoring2ReadValue;
+
+- #define :ref:`EXT_Monitoring2ReadValue <group___cmp_monitor2_itf_1ga461e5dbdf8a74130e7c2ebd73841ad61>` extern :ref:`PFMONITORING2READVALUE <group___cmp_monitor2_itf_1ga4a27151dbb1021787e21b41b7d8c983d>` pfMonitoring2ReadValue;
+
+- #define :ref:`GET_Monitoring2ReadValue <group___cmp_monitor2_itf_1ga3b34e4dc5c39c1b616723dbb81068fa8>` s_pfCMGetAPI2( "Monitoring2ReadValue", (RTS_VOID_FCTPTR *)&pfMonitoring2ReadValue, (fl), 0, 0)
+
+- #define :ref:`CAL_Monitoring2ReadValue <group___cmp_monitor2_itf_1ga9797386c06ffbcd75e921b7e680cc3de>` pfMonitoring2ReadValue
+
+- #define :ref:`CHK_Monitoring2ReadValue <group___cmp_monitor2_itf_1ga5ac7279d8591d12f6d82d8546d219a8b>` (pfMonitoring2ReadValue != NULL)
+
+- #define :ref:`EXP_Monitoring2ReadValue <group___cmp_monitor2_itf_1ga3aa45ff6f48d71348bca70545aa3eed2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"Monitoring2ReadValue", (RTS_UINTPTR) :ref:`Monitoring2ReadValue <group___cmp_monitor2_itf_1gaa571014a7704c0b8a464d2ce9c57610e>` , 0, 0)
+
+- #define :ref:`USE_Monitoring2ReadValue2 <group___cmp_monitor2_itf_1ga0962e968baba4ba7a00f81848702052a>` :ref:`PFMONITORING2READVALUE2 <group___cmp_monitor2_itf_1gae9ce4d995f5cc7fa110e3bb4c947e5f5>` pfMonitoring2ReadValue2;
+
+- #define :ref:`EXT_Monitoring2ReadValue2 <group___cmp_monitor2_itf_1ga383d77b2c77afa1115c03f71e6ca24fd>` extern :ref:`PFMONITORING2READVALUE2 <group___cmp_monitor2_itf_1gae9ce4d995f5cc7fa110e3bb4c947e5f5>` pfMonitoring2ReadValue2;
+
+- #define :ref:`GET_Monitoring2ReadValue2 <group___cmp_monitor2_itf_1ga4018cc5e3300bbe70bdae62be36b1ad2>` s_pfCMGetAPI2( "Monitoring2ReadValue2", (RTS_VOID_FCTPTR *)&pfMonitoring2ReadValue2, (fl), 0, 0)
+
+- #define :ref:`CAL_Monitoring2ReadValue2 <group___cmp_monitor2_itf_1ga792eee1d99d0322bc3ca631bc87af53e>` pfMonitoring2ReadValue2
+
+- #define :ref:`CHK_Monitoring2ReadValue2 <group___cmp_monitor2_itf_1gab7d67154ea347c56ae9c45eaf781f9be>` (pfMonitoring2ReadValue2 != NULL)
+
+- #define :ref:`EXP_Monitoring2ReadValue2 <group___cmp_monitor2_itf_1ga7e3a04c972d28930c70e825927e63318>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"Monitoring2ReadValue2", (RTS_UINTPTR) :ref:`Monitoring2ReadValue2 <group___cmp_monitor2_itf_1ga323f5349d2d57e9a0fdba39e32edb723>` , 0, 0)
+
+- #define :ref:`USE_Monitoring2ExecuteCode <group___cmp_monitor2_itf_1ga98501f2f57d5da7a17f6a996cea4bea7>` :ref:`PFMONITORING2EXECUTECODE <group___cmp_monitor2_itf_1ga81b008923b546a3bb630e96e2f3a6533>` pfMonitoring2ExecuteCode;
+
+- #define :ref:`EXT_Monitoring2ExecuteCode <group___cmp_monitor2_itf_1ga1d2fa8c133b918ba4b0559e8e5d7f259>` extern :ref:`PFMONITORING2EXECUTECODE <group___cmp_monitor2_itf_1ga81b008923b546a3bb630e96e2f3a6533>` pfMonitoring2ExecuteCode;
+
+- #define :ref:`GET_Monitoring2ExecuteCode <group___cmp_monitor2_itf_1ga5ecfd0773fabb8a2e8069214ed726867>` s_pfCMGetAPI2( "Monitoring2ExecuteCode", (RTS_VOID_FCTPTR *)&pfMonitoring2ExecuteCode, (fl), 0, 0)
+
+- #define :ref:`CAL_Monitoring2ExecuteCode <group___cmp_monitor2_itf_1gab212bde08d8e6663d0b3a74553e3b0de>` pfMonitoring2ExecuteCode
+
+- #define :ref:`CHK_Monitoring2ExecuteCode <group___cmp_monitor2_itf_1ga146f9721b716aeb0ed815d61f500cad5>` (pfMonitoring2ExecuteCode != NULL)
+
+- #define :ref:`EXP_Monitoring2ExecuteCode <group___cmp_monitor2_itf_1gaf143e8d5d6a363751d8d42f47b485474>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"Monitoring2ExecuteCode", (RTS_UINTPTR) :ref:`Monitoring2ExecuteCode <group___cmp_monitor2_itf_1ga115a74548e674b27fcf113028a79639b>` , 0, 0)
+
+- #define :ref:`USE_Monitoring2WriteValue <group___cmp_monitor2_itf_1ga7425084716e87e12e7c01359cbdfe010>` :ref:`PFMONITORING2WRITEVALUE <group___cmp_monitor2_itf_1ga1f629d57537bec7711a4a5c41daca7be>` pfMonitoring2WriteValue;
+
+- #define :ref:`EXT_Monitoring2WriteValue <group___cmp_monitor2_itf_1ga4f76cfa5464f2d305cb9d28650a3e1c6>` extern :ref:`PFMONITORING2WRITEVALUE <group___cmp_monitor2_itf_1ga1f629d57537bec7711a4a5c41daca7be>` pfMonitoring2WriteValue;
+
+- #define :ref:`GET_Monitoring2WriteValue <group___cmp_monitor2_itf_1gab9fd61e64d8e8978b939fab44f2b7ac5>` s_pfCMGetAPI2( "Monitoring2WriteValue", (RTS_VOID_FCTPTR *)&pfMonitoring2WriteValue, (fl), 0, 0)
+
+- #define :ref:`CAL_Monitoring2WriteValue <group___cmp_monitor2_itf_1ga931c9f2f66880277a282c06f71c82bae>` pfMonitoring2WriteValue
+
+- #define :ref:`CHK_Monitoring2WriteValue <group___cmp_monitor2_itf_1ga92788254fd3a00b51e79d0126a9b0fbe>` (pfMonitoring2WriteValue != NULL)
+
+- #define :ref:`EXP_Monitoring2WriteValue <group___cmp_monitor2_itf_1ga9aae25d0f7e225fd731da3996bb10eeb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"Monitoring2WriteValue", (RTS_UINTPTR) :ref:`Monitoring2WriteValue <group___cmp_monitor2_itf_1ga983ce0c24b89aed70423a63fb49cec1c>` , 0, 0)
+
+- #define :ref:`USE_Monitoring2WriteValue2 <group___cmp_monitor2_itf_1gae4f8da4c47ad7b3d9ea188f0e9d9222b>` :ref:`PFMONITORING2WRITEVALUE2 <group___cmp_monitor2_itf_1gac4a1ceada114a9d3b835b4049291e2ca>` pfMonitoring2WriteValue2;
+
+- #define :ref:`EXT_Monitoring2WriteValue2 <group___cmp_monitor2_itf_1gaea697577841d71b791b5196f970ac6cf>` extern :ref:`PFMONITORING2WRITEVALUE2 <group___cmp_monitor2_itf_1gac4a1ceada114a9d3b835b4049291e2ca>` pfMonitoring2WriteValue2;
+
+- #define :ref:`GET_Monitoring2WriteValue2 <group___cmp_monitor2_itf_1gadf9cd258e66338280854e2420a6a77fa>` s_pfCMGetAPI2( "Monitoring2WriteValue2", (RTS_VOID_FCTPTR *)&pfMonitoring2WriteValue2, (fl), 0, 0)
+
+- #define :ref:`CAL_Monitoring2WriteValue2 <group___cmp_monitor2_itf_1gae9718a57f71e3b43ca2b2c1f1442c92c>` pfMonitoring2WriteValue2
+
+- #define :ref:`CHK_Monitoring2WriteValue2 <group___cmp_monitor2_itf_1ga6f2aabd32c4f806696ced985b1c26565>` (pfMonitoring2WriteValue2 != NULL)
+
+- #define :ref:`EXP_Monitoring2WriteValue2 <group___cmp_monitor2_itf_1ga8dcf48b4ab15ab957fdf74b129eeeee1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"Monitoring2WriteValue2", (RTS_UINTPTR) :ref:`Monitoring2WriteValue2 <group___cmp_monitor2_itf_1ga247dbe54bee04e5f1f7ecfc80fa1d4d1>` , 0, 0)
+
+- #define :ref:`ITF_CmpMonitor2 <group___cmp_monitor2_itf_1gaa19cbf77798a425fe57d17016199441d>`
+
+- #define :ref:`EXTITF_CmpMonitor2 <group___cmp_monitor2_itf_1ga5ab357dac0dc8c6a74ec8a4242c67c0a>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFMONITORING2HASFEATURE <group___cmp_monitor2_itf_1ga832a9b7139fb617c881275ac23eea35b>`)(RTS_UI32 ulFeatures)
+
+- typedef RTS_RESULT(* :ref:`PFMONITORING2READVALUE <group___cmp_monitor2_itf_1ga4a27151dbb1021787e21b41b7d8c983d>`)(APPLICATION *pApp, RTS_UI16 usSizeCodeBytes, const RTS_UI8 *pCode, RTS_UI8 *pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 *pMonError)
+
+- typedef RTS_RESULT(* :ref:`PFMONITORING2READVALUE2 <group___cmp_monitor2_itf_1gae9ce4d995f5cc7fa110e3bb4c947e5f5>`)(APPLICATION *pApp, RTS_SIZE szStackElems, RTS_UINTPTR *pStack, RTS_UI16 usSizeCodeBytes, const RTS_UI8 *pCode, RTS_UI8 *pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 *pMonError)
+
+- typedef RTS_RESULT(* :ref:`PFMONITORING2EXECUTECODE <group___cmp_monitor2_itf_1ga81b008923b546a3bb630e96e2f3a6533>`)(APPLICATION *pApp, RTS_SIZE szStackElems, RTS_UINTPTR *pStack, RTS_UI16 usSizeCodeBytes, const RTS_UI8 *pCode, RTS_UI32 *pMonError)
+
+- typedef RTS_RESULT(* :ref:`PFMONITORING2WRITEVALUE <group___cmp_monitor2_itf_1ga1f629d57537bec7711a4a5c41daca7be>`)(APPLICATION *pApp, RTS_UI16 usSizeCodeBytes, const RTS_UI8 *pCode, const RTS_UI8 *pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 *pMonError)
+
+- typedef RTS_RESULT(* :ref:`PFMONITORING2WRITEVALUE2 <group___cmp_monitor2_itf_1gac4a1ceada114a9d3b835b4049291e2ca>`)(APPLICATION *pApp, RTS_SIZE szStackElems, RTS_UINTPTR *pStack, RTS_UI16 usSizeCodeBytes, const RTS_UI8 *pCode, const RTS_UI8 *pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 *pMonError)
+
+- typedef :ref:`ICmpMonitor2_C <struct_i_cmp_monitor2___c>` :ref:`ICmpMonitor2 <group___cmp_monitor2_itf_1gad97b5c9e7f77ee5285b0f66b5f392b71>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`Monitoring2HasFeature <group___cmp_monitor2_itf_1ga0bb98b0ac8e9a989a37497e20b44e7df>` (RTS_UI32 ulFeatures)
+
+- RTS_RESULT :ref:`Monitoring2ReadValue <group___cmp_monitor2_itf_1gaa571014a7704c0b8a464d2ce9c57610e>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_UI16 usSizeCodeBytes, const RTS_UI8 * pCode, RTS_UI8 * pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 * pMonError)
+
+- RTS_RESULT :ref:`Monitoring2ReadValue2 <group___cmp_monitor2_itf_1ga323f5349d2d57e9a0fdba39e32edb723>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_SIZE szStackElems, RTS_UINTPTR * pStack, RTS_UI16 usSizeCodeBytes, const RTS_UI8 * pCode, RTS_UI8 * pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 * pMonError)
+
+- RTS_RESULT :ref:`Monitoring2ExecuteCode <group___cmp_monitor2_itf_1ga115a74548e674b27fcf113028a79639b>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_SIZE szStackElems, RTS_UINTPTR * pStack, RTS_UI16 usSizeCodeBytes, const RTS_UI8 * pCode, RTS_UI32 * pMonError)
+
+- RTS_RESULT :ref:`Monitoring2WriteValue <group___cmp_monitor2_itf_1ga983ce0c24b89aed70423a63fb49cec1c>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_UI16 usSizeCodeBytes, const RTS_UI8 * pCode, const RTS_UI8 * pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 * pMonError)
+
+- RTS_RESULT :ref:`Monitoring2WriteValue2 <group___cmp_monitor2_itf_1ga247dbe54bee04e5f1f7ecfc80fa1d4d1>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_SIZE szStackElems, RTS_UINTPTR * pStack, RTS_UI16 usSizeCodeBytes, const RTS_UI8 * pCode, const RTS_UI8 * pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 * pMonError)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_monitor2_itf_1ga83baea256dae502cea73c8bc9fbf853c:
+
+#define SRV_MONITORING2_READ 1
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga0c16c92150d5735655be4c8731b6aac8:
+
+#define SRV_MONITORING2_WRITE 2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga7f027db96bb40595e440999fc1c33c52:
+
+#define SRV_MONITORING2_FORCE 3
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga9f300ffa570a06b96bd62cf0b3d0138f:
+
+#define TAG_MONITORING2_APP_HEADER 0x01
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga7e803390e21df1522c69e91689daa21b:
+
+#define TAG_MONITORING2_READ_EXP_LIST 0x02
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gac3726fefdf8b83251134bb59fad68827:
+
+#define TAG_MONITORING2_WF_EXP_LIST 0x03
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga1d866339d71d10507d69c814d0604a44:
+
+#define TAG_MONITORING2_READ_VALUE_LIST 0x40
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga2444e916eb58b396cc53bcdca8f85072:
+
+#define TAG_MONITORING2_READ_ERROR 0x41
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gaa9acb901790c0fa111d1e80ddb11ec4a:
+
+#define TAG_MONITORING2_READ_EXP_LIST2 0x81
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gad824fe6f8a12e1204befa2cd5517a00a:
+
+#define TAG_MONITORING2_READ_EXP_INFO 0x82
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga22099b07abd9e978e0cc9d1ef12d00b5:
+
+#define TAG_MONITORING2_READ_EXP_LIST2_VARID 0x01
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gafb281a7a0f7dec607db5d92cc4a6b66a:
+
+#define TAG_MONITORING2_READ_EXP_LIST2_DATASIZE 0x02
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gab12706d32c178253287042523ee05932:
+
+#define TAG_MONITORING2_READ_EXP_LIST2_TYPECLASS 0x03
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gace5a47a0bc8438c8f9790895b9eaaa28:
+
+#define TAG_MONITORING2_READ_EXP_LIST2_BYTECODESIZE 0x04
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga85ce708f338bd3612f4d25d4f526dbde:
+
+#define TAG_MONITORING2_READ_EXP_LIST2_BYTECODE 0x05
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga8d9166cfe1110cb45b228f5ab37508f8:
+
+#define USE_Monitoring2HasFeature :ref:`PFMONITORING2HASFEATURE <group___cmp_monitor2_itf_1ga832a9b7139fb617c881275ac23eea35b>` pfMonitoring2HasFeature;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gaca6633512f7c8a6c04321ebc88c05ebd:
+
+#define EXT_Monitoring2HasFeature extern :ref:`PFMONITORING2HASFEATURE <group___cmp_monitor2_itf_1ga832a9b7139fb617c881275ac23eea35b>` pfMonitoring2HasFeature;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga06f3a1142d5ff5057cd99dfa7700f5cf:
+
+#define GET_Monitoring2HasFeature s_pfCMGetAPI2( "Monitoring2HasFeature", (RTS_VOID_FCTPTR *)&pfMonitoring2HasFeature, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga7b6f9e0134a9d541a883fe6c29aed274:
+
+#define CAL_Monitoring2HasFeature pfMonitoring2HasFeature
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga5ca0a1aca24626e0d419be7d741fa197:
+
+#define CHK_Monitoring2HasFeature (pfMonitoring2HasFeature != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gacd26737ff9e35f62191ef80851908012:
+
+#define EXP_Monitoring2HasFeature s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"Monitoring2HasFeature", (RTS_UINTPTR) :ref:`Monitoring2HasFeature <group___cmp_monitor2_itf_1ga0bb98b0ac8e9a989a37497e20b44e7df>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga7a20e2a04fbe920abdb045000fe31c7e:
+
+#define USE_Monitoring2ReadValue :ref:`PFMONITORING2READVALUE <group___cmp_monitor2_itf_1ga4a27151dbb1021787e21b41b7d8c983d>` pfMonitoring2ReadValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga461e5dbdf8a74130e7c2ebd73841ad61:
+
+#define EXT_Monitoring2ReadValue extern :ref:`PFMONITORING2READVALUE <group___cmp_monitor2_itf_1ga4a27151dbb1021787e21b41b7d8c983d>` pfMonitoring2ReadValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga3b34e4dc5c39c1b616723dbb81068fa8:
+
+#define GET_Monitoring2ReadValue s_pfCMGetAPI2( "Monitoring2ReadValue", (RTS_VOID_FCTPTR *)&pfMonitoring2ReadValue, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga9797386c06ffbcd75e921b7e680cc3de:
+
+#define CAL_Monitoring2ReadValue pfMonitoring2ReadValue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga5ac7279d8591d12f6d82d8546d219a8b:
+
+#define CHK_Monitoring2ReadValue (pfMonitoring2ReadValue != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga3aa45ff6f48d71348bca70545aa3eed2:
+
+#define EXP_Monitoring2ReadValue s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"Monitoring2ReadValue", (RTS_UINTPTR) :ref:`Monitoring2ReadValue <group___cmp_monitor2_itf_1gaa571014a7704c0b8a464d2ce9c57610e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga0962e968baba4ba7a00f81848702052a:
+
+#define USE_Monitoring2ReadValue2 :ref:`PFMONITORING2READVALUE2 <group___cmp_monitor2_itf_1gae9ce4d995f5cc7fa110e3bb4c947e5f5>` pfMonitoring2ReadValue2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga383d77b2c77afa1115c03f71e6ca24fd:
+
+#define EXT_Monitoring2ReadValue2 extern :ref:`PFMONITORING2READVALUE2 <group___cmp_monitor2_itf_1gae9ce4d995f5cc7fa110e3bb4c947e5f5>` pfMonitoring2ReadValue2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga4018cc5e3300bbe70bdae62be36b1ad2:
+
+#define GET_Monitoring2ReadValue2 s_pfCMGetAPI2( "Monitoring2ReadValue2", (RTS_VOID_FCTPTR *)&pfMonitoring2ReadValue2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga792eee1d99d0322bc3ca631bc87af53e:
+
+#define CAL_Monitoring2ReadValue2 pfMonitoring2ReadValue2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gab7d67154ea347c56ae9c45eaf781f9be:
+
+#define CHK_Monitoring2ReadValue2 (pfMonitoring2ReadValue2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga7e3a04c972d28930c70e825927e63318:
+
+#define EXP_Monitoring2ReadValue2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"Monitoring2ReadValue2", (RTS_UINTPTR) :ref:`Monitoring2ReadValue2 <group___cmp_monitor2_itf_1ga323f5349d2d57e9a0fdba39e32edb723>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga98501f2f57d5da7a17f6a996cea4bea7:
+
+#define USE_Monitoring2ExecuteCode :ref:`PFMONITORING2EXECUTECODE <group___cmp_monitor2_itf_1ga81b008923b546a3bb630e96e2f3a6533>` pfMonitoring2ExecuteCode;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga1d2fa8c133b918ba4b0559e8e5d7f259:
+
+#define EXT_Monitoring2ExecuteCode extern :ref:`PFMONITORING2EXECUTECODE <group___cmp_monitor2_itf_1ga81b008923b546a3bb630e96e2f3a6533>` pfMonitoring2ExecuteCode;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga5ecfd0773fabb8a2e8069214ed726867:
+
+#define GET_Monitoring2ExecuteCode s_pfCMGetAPI2( "Monitoring2ExecuteCode", (RTS_VOID_FCTPTR *)&pfMonitoring2ExecuteCode, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gab212bde08d8e6663d0b3a74553e3b0de:
+
+#define CAL_Monitoring2ExecuteCode pfMonitoring2ExecuteCode
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga146f9721b716aeb0ed815d61f500cad5:
+
+#define CHK_Monitoring2ExecuteCode (pfMonitoring2ExecuteCode != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gaf143e8d5d6a363751d8d42f47b485474:
+
+#define EXP_Monitoring2ExecuteCode s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"Monitoring2ExecuteCode", (RTS_UINTPTR) :ref:`Monitoring2ExecuteCode <group___cmp_monitor2_itf_1ga115a74548e674b27fcf113028a79639b>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga7425084716e87e12e7c01359cbdfe010:
+
+#define USE_Monitoring2WriteValue :ref:`PFMONITORING2WRITEVALUE <group___cmp_monitor2_itf_1ga1f629d57537bec7711a4a5c41daca7be>` pfMonitoring2WriteValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga4f76cfa5464f2d305cb9d28650a3e1c6:
+
+#define EXT_Monitoring2WriteValue extern :ref:`PFMONITORING2WRITEVALUE <group___cmp_monitor2_itf_1ga1f629d57537bec7711a4a5c41daca7be>` pfMonitoring2WriteValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gab9fd61e64d8e8978b939fab44f2b7ac5:
+
+#define GET_Monitoring2WriteValue s_pfCMGetAPI2( "Monitoring2WriteValue", (RTS_VOID_FCTPTR *)&pfMonitoring2WriteValue, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga931c9f2f66880277a282c06f71c82bae:
+
+#define CAL_Monitoring2WriteValue pfMonitoring2WriteValue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga92788254fd3a00b51e79d0126a9b0fbe:
+
+#define CHK_Monitoring2WriteValue (pfMonitoring2WriteValue != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga9aae25d0f7e225fd731da3996bb10eeb:
+
+#define EXP_Monitoring2WriteValue s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"Monitoring2WriteValue", (RTS_UINTPTR) :ref:`Monitoring2WriteValue <group___cmp_monitor2_itf_1ga983ce0c24b89aed70423a63fb49cec1c>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gae4f8da4c47ad7b3d9ea188f0e9d9222b:
+
+#define USE_Monitoring2WriteValue2 :ref:`PFMONITORING2WRITEVALUE2 <group___cmp_monitor2_itf_1gac4a1ceada114a9d3b835b4049291e2ca>` pfMonitoring2WriteValue2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gaea697577841d71b791b5196f970ac6cf:
+
+#define EXT_Monitoring2WriteValue2 extern :ref:`PFMONITORING2WRITEVALUE2 <group___cmp_monitor2_itf_1gac4a1ceada114a9d3b835b4049291e2ca>` pfMonitoring2WriteValue2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gadf9cd258e66338280854e2420a6a77fa:
+
+#define GET_Monitoring2WriteValue2 s_pfCMGetAPI2( "Monitoring2WriteValue2", (RTS_VOID_FCTPTR *)&pfMonitoring2WriteValue2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gae9718a57f71e3b43ca2b2c1f1442c92c:
+
+#define CAL_Monitoring2WriteValue2 pfMonitoring2WriteValue2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga6f2aabd32c4f806696ced985b1c26565:
+
+#define CHK_Monitoring2WriteValue2 (pfMonitoring2WriteValue2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga8dcf48b4ab15ab957fdf74b129eeeee1:
+
+#define EXP_Monitoring2WriteValue2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"Monitoring2WriteValue2", (RTS_UINTPTR) :ref:`Monitoring2WriteValue2 <group___cmp_monitor2_itf_1ga247dbe54bee04e5f1f7ecfc80fa1d4d1>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gaa19cbf77798a425fe57d17016199441d:
+
+#define ITF_CmpMonitor2
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga5ab357dac0dc8c6a74ec8a4242c67c0a:
+
+#define EXTITF_CmpMonitor2
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_monitor2_itf_1ga832a9b7139fb617c881275ac23eea35b:
+
+typedef RTS_RESULT( *  PFMONITORING2HASFEATURE) (RTS_UI32 ulFeatures)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga4a27151dbb1021787e21b41b7d8c983d:
+
+typedef RTS_RESULT( *  PFMONITORING2READVALUE) (APPLICATION *pApp, RTS_UI16 usSizeCodeBytes, const RTS_UI8 *pCode, RTS_UI8 *pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 *pMonError)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gae9ce4d995f5cc7fa110e3bb4c947e5f5:
+
+typedef RTS_RESULT( *  PFMONITORING2READVALUE2) (APPLICATION *pApp, RTS_SIZE szStackElems, RTS_UINTPTR *pStack, RTS_UI16 usSizeCodeBytes, const RTS_UI8 *pCode, RTS_UI8 *pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 *pMonError)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga81b008923b546a3bb630e96e2f3a6533:
+
+typedef RTS_RESULT( *  PFMONITORING2EXECUTECODE) (APPLICATION *pApp, RTS_SIZE szStackElems, RTS_UINTPTR *pStack, RTS_UI16 usSizeCodeBytes, const RTS_UI8 *pCode, RTS_UI32 *pMonError)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1ga1f629d57537bec7711a4a5c41daca7be:
+
+typedef RTS_RESULT( *  PFMONITORING2WRITEVALUE) (APPLICATION *pApp, RTS_UI16 usSizeCodeBytes, const RTS_UI8 *pCode, const RTS_UI8 *pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 *pMonError)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gac4a1ceada114a9d3b835b4049291e2ca:
+
+typedef RTS_RESULT( *  PFMONITORING2WRITEVALUE2) (APPLICATION *pApp, RTS_SIZE szStackElems, RTS_UINTPTR *pStack, RTS_UI16 usSizeCodeBytes, const RTS_UI8 *pCode, const RTS_UI8 *pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 *pMonError)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_monitor2_itf_1gad97b5c9e7f77ee5285b0f66b5f392b71:
+
+typedef ICmpMonitor2_C ICmpMonitor2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_monitor2_itf_1ga0bb98b0ac8e9a989a37497e20b44e7df:
+
+RTS_RESULT Monitoring2HasFeature (RTS_UI32 ulFeatures)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Routine to check whether the new monitoring component has the specified feature.
+
+**Parameters**
+
++---------+------------+-------------------------------------------------------+
+| [in]    | ulFeatures | Feature flags, See corresponding category "Features". |
++---------+------------+-------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK if the flags are supported, an error code otherwise
+
+.. _group___cmp_monitor2_itf_1gaa571014a7704c0b8a464d2ce9c57610e:
+
+RTS_RESULT Monitoring2ReadValue (APPLICATION *pApp, RTS_UI16 usSizeCodeBytes, const RTS_UI8 *pCode, RTS_UI8 *pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 *pMonError)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Obsolete: the use of this function is only safe when called from the context of the communication task. Use Monitoring2ReadValue2 instead.
+
+Routine to read a monitoring expression given as a byte-code program to be executed in the byte-code interpreter of CmpMonitor2.
+
+Note: this function may only be called if the user does have access right USERDB_RIGHT_VIEW.
+
+The byte-code program expects no inputs and, after successful execution, must have the address of the data to read on the top of the interpreter stack.
+
+**Parameters**
+
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | pApp             | Pointer to the application. May be null if an IO-configuration parameters is read.             |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | usSizeCodeBytes  | The size of the byte code in bytes.                                                            |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | pCode            | Pointer th the byte-code program.                                                              |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | pbyValue         | pointer to the destination address were the retrieved value is written.                        |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | ulSizeValueBytes | size of value to read, in bytes.                                                               |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [out]   | pMonError        | The detailed error value if the return value is ERR_FAILED, see MONITORING_ERR_in CmpErrors.h. |
++---------+------------------+------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK if the value could be written successfully
+**Returns:**
+
+ERR_PARAMETER if pCode, pbyValue, or pMonError is NULL
+**Returns:**
+
+ERR_FAILED if the value could not be written successfully,pMonError will hold a detailed error.
+
+.. _group___cmp_monitor2_itf_1ga323f5349d2d57e9a0fdba39e32edb723:
+
+RTS_RESULT Monitoring2ReadValue2 (APPLICATION *pApp, RTS_SIZE szStackElems, RTS_UINTPTR *pStack, RTS_UI16 usSizeCodeBytes, const RTS_UI8 *pCode, RTS_UI8 *pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 *pMonError)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Routine to read a monitoring expression given as a byte-code program to be executed in the byte-code interpreter of CmpMonitor2.
+
+Note: this function may only be called if the user does have access right USERDB_RIGHT_VIEW.
+
+The byte-code program expects no inputs and, after successful execution, must have the address of the data to read on the top of the interpreter stack.
+
+The stack for the byte-code interpreter is passed in by the caller. This is done to make the function thread-safe by not sharing any data between threads. The size of the stack depends on the kind of byte-code programs to be executed. For example, if strings are to be read, the entire string must fit onto the stack. Apart from that, it depends on the "nesting depth" of the program. For most reasonable expressions of numeric type, a stack size of 32 elements should be enough.
+
+**Parameters**
+
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | pApp             | Pointer to the application. May be null if an IO-configuration parameters is read.             |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | szStackElems     | The size of the interpreter stack pStack in elements.                                          |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | pStack           | The pointer to the interpreter stack.                                                          |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | usSizeCodeBytes  | The size of the byte code in bytes.                                                            |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | pCode            | Pointer th the byte-code program.                                                              |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | pbyValue         | pointer to the destination address were the retrieved value is written.                        |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | ulSizeValueBytes | size of value to read, in bytes.                                                               |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [out]   | pMonError        | The detailed error value if the return value is ERR_FAILED, see MONITORING_ERR_in CmpErrors.h. |
++---------+------------------+------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK if the value could be written successfully
+**Returns:**
+
+ERR_PARAMETER if pStack pCode, pbyValue, or pMonError is NULL, or if szStackElems is 0
+**Returns:**
+
+ERR_FAILED if the value could not be written successfully,pMonError will hold a detailed error.
+
+.. _group___cmp_monitor2_itf_1ga115a74548e674b27fcf113028a79639b:
+
+RTS_RESULT Monitoring2ExecuteCode (APPLICATION *pApp, RTS_SIZE szStackElems, RTS_UINTPTR *pStack, RTS_UI16 usSizeCodeBytes, const RTS_UI8 *pCode, RTS_UI32 *pMonError)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Routine to execute IEC expressions given as a byte-code program to be executed in the byte-code interpreter of CmpMonitor2.
+
+Note: this function may only be called if the user does have access right USERDB_RIGHT_VIEW.
+
+The stack for the byte-code interpreter is passed in by the caller. This is done to make the function thread-safe by not sharing any data between threads. The size of the stack depends on the kind of byte-code programs to be executed. For example, if strings are to be read, the entire string must fit onto the stack. Apart from that, it depends on the "nesting depth" of the program.
+
+**Parameters**
+
++---------+-----------------+------------------------------------------------------------------------------------------------+
+| [in]    | pApp            | Pointer to the application. May be null if an IO-configuration parameters is read.             |
++---------+-----------------+------------------------------------------------------------------------------------------------+
+| [in]    | szStackElems    | The size of the interpreter stack pStack in elements.                                          |
++---------+-----------------+------------------------------------------------------------------------------------------------+
+| [in]    | pStack          | The pointer to the interpreter stack.                                                          |
++---------+-----------------+------------------------------------------------------------------------------------------------+
+| [in]    | usSizeCodeBytes | The size of the byte code in bytes.                                                            |
++---------+-----------------+------------------------------------------------------------------------------------------------+
+| [in]    | pCode           | Pointer th the byte-code program.                                                              |
++---------+-----------------+------------------------------------------------------------------------------------------------+
+| [out]   | pMonError       | The detailed error value if the return value is ERR_FAILED, see MONITORING_ERR_in CmpErrors.h. |
++---------+-----------------+------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK if the value could be written successfully
+**Returns:**
+
+ERR_PARAMETER if pStack pCode, pbyValue, or pMonError is NULL, or if szStackElems is 0
+**Returns:**
+
+ERR_FAILED if the value could not be written successfully,pMonError will hold a detailed error.
+
+.. _group___cmp_monitor2_itf_1ga983ce0c24b89aed70423a63fb49cec1c:
+
+RTS_RESULT Monitoring2WriteValue (APPLICATION *pApp, RTS_UI16 usSizeCodeBytes, const RTS_UI8 *pCode, const RTS_UI8 *pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 *pMonError)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Obsolete: the use of this function is only safe when called from the context of the communication task. Use Monitoring2WriteValue2 instead.
+
+Routine to write a monitoring expression given as a byte-code program to be executed in the byte-code interpreter of CmpMonitor2.
+
+Before the value is written, the event EVT_CmpMonitor2_PrepareWrite is raised, which can lead to an abortion of the write. After a successful write, the event EVT_CmpMonitor2_WriteDone is raised.
+
+If the operation OP_APP_WRITE_VARIABLES is disabled for the application, the function returns with an error.
+
+Note: this function may only be called if the user does have access right USERDB_RIGHT_MODIFY.
+
+The byte-code program expects three arguments on the F-Stack: the address of the data to write (type void), the length of the data to write in chars (type RTS_UI32), and the mode of operation (type RTS_UI32) which is either MODE_ADDR (0) or MODE_WRITE (1). For the detailed explanation of these inputs see FS_CmpMonitor2.doc, section 3.3. Note: the byte-code programs created by the OnlineManager in CODESYS behave as described above.
+
+**Parameters**
+
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | pApp             | Pointer to application. May be null if an IO-configuration parameters is written.              |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | usSizeCodeBytes  | The size of the byte code in bytes.                                                            |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | pCode            | Pointer th the byte-code program.                                                              |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | pbyValue         | pointer to the source address of the value to write.                                           |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | ulSizeValueBytes | size of the value to write.                                                                    |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [out]   | pMonError        | The detailed error value if the return value is ERR_FAILED, see MONITORING_ERR_in CmpErrors.h. |
++---------+------------------+------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK if the value could be written successfully
+**Returns:**
+
+ERR_PARAMETER if pCode, pbyValue, or pMonError is NULL
+**Returns:**
+
+ERR_FAILED if the value could not be written successfully,pMonError will hold a detailed error.
+
+.. _group___cmp_monitor2_itf_1ga247dbe54bee04e5f1f7ecfc80fa1d4d1:
+
+RTS_RESULT Monitoring2WriteValue2 (APPLICATION *pApp, RTS_SIZE szStackElems, RTS_UINTPTR *pStack, RTS_UI16 usSizeCodeBytes, const RTS_UI8 *pCode, const RTS_UI8 *pbyValue, RTS_UI32 ulSizeValueBytes, RTS_UI32 *pMonError)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Routine to write a monitoring expression given as a byte-code program to be executed in the byte-code interpreter of CmpMonitor2.
+
+Before the value is written, the event EVT_CmpMonitor2_PrepareWrite is raised, which can lead to an abortion of the write. After a successful write, the event EVT_CmpMonitor2_WriteDone is raised.
+
+If the operation OP_APP_WRITE_VARIABLES is disabled for the application, the function returns with an error.
+
+Note: this function may only be called if the user does have access right USERDB_RIGHT_MODIFY.
+
+The stack for the byte-code interpreter is passed in by the caller. This is done to make the function thread-safe by not sharing any data between threads. The size of the stack depends on the kind of byte-code programs to be executed. For most reasonable expressions of numeric type, a stack size of 32 elements should be enough.
+
+The byte-code program expects three arguments on the F-Stack: the address of the data to write (type void), the length of the data to write in chars (type RTS_UI32), and the mode of operation (type RTS_UI32) which is either MODE_ADDR (0) or MODE_WRITE (1). For the detailed explanation of these inputs see FS_CmpMonitor2.doc, section 3.3. Note: the byte-code programs created by the OnlineManager in CODESYS behave as described above.
+
+**Parameters**
+
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | pApp             | Pointer to application. May be null if an IO-configuration parameters is written.              |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | szStackElems     | The size of the interpreter stack pStack in elements.                                          |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | pStack           | The pointer to the interpreter stack.                                                          |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | usSizeCodeBytes  | The size of the byte code in bytes.                                                            |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | pCode            | Pointer th the byte-code program.                                                              |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | pbyValue         | pointer to the source address of the value to write.                                           |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [in]    | ulSizeValueBytes | size of the value to write.                                                                    |
++---------+------------------+------------------------------------------------------------------------------------------------+
+| [out]   | pMonError        | The detailed error value if the return value is ERR_FAILED, see MONITORING_ERR_in CmpErrors.h. |
++---------+------------------+------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+ERR_OK if the value could be written successfully
+**Returns:**
+
+ERR_PARAMETER if pStack, pCode, pbyValue, or pMonError is NULL or if szStackElems is 0
+**Returns:**
+
+ERR_FAILED if the value could not be written successfully,pMonError will hold a detailed error.
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

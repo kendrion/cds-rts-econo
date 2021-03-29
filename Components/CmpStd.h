@@ -15,7 +15,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2019 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -80,9 +80,9 @@ typedef void*	OBJREF;
 /*
  * The RTS_VERSION below is to be changed only by 3S - Smart Software Solutions. 
  */
-#define RTS_VERSION							UINT32_C(0x03050E28)
-#define RTS_VERSION_STRING					"3.5.14.40"
-#define RTS_VERSION_RC						3,5,14,40
+#define RTS_VERSION							UINT32_C(0x03051028)
+#define RTS_VERSION_STRING					"3.5.16.40"
+#define RTS_VERSION_RC						3,5,16,40
 
 #define RTS_GETVERSION_MAJOR(version)		(((version)>>24) & UINT32_C(0x000000FF))
 #define RTS_GETVERSION_SUB(version)			(((version)>>16) & UINT32_C(0x000000FF))
@@ -150,6 +150,10 @@ typedef void*	OBJREF;
 	#endif
 #endif
 
+
+#ifndef RTS_OS_KEYPRESSED
+	#define RTS_OS_KEYPRESSED			FALSE
+#endif
 
 #define RTS_MAXSTR				80
 
@@ -245,6 +249,7 @@ typedef void*	OBJREF;
 #endif
 
 	typedef char				RTS_CSTRING;
+	typedef char				RTS_UTF8STRING;
 
 #	ifndef RTS_WCHAR_DEFINED
 #		define RTS_WCHAR_DEFINED
@@ -372,6 +377,22 @@ typedef struct
 	typedef RTS_IEC_UDINT	RTS_IEC_RESULT;
 #endif	/*IECBASETYPES_DEFINED*/
 
+/**
+*	<description>
+*	Data type RTS_GUID:
+*	Structure with a defined length of 16 octets on all plattforms to transport the packet representation of a GUID in a binary format.
+*	The internal representation of each RTS_GUID field is defined in Intel byte order. 
+*
+*   ATTENTION:
+*   To write platform independent code, the RTS_GUID structure must only be used like this:
+*   - Never access struct fields of RTS_GUID directly!
+*	- Never interpret the content of variables of type RTS_GUID!
+*	- Do not implement own code for RTS_GUID from/to string. Use the conversion functions CMUtlGUIDToString() and CMUtlStringToGUID() instead. 
+*     These are implemented platform specificly and are aware of the internal format. 
+*   - Beside the string conversion, variables of type RTS_GUID should be stored and compared only. 
+*     For this memcpy()/memcmp() with sizeof(RTS_GUID) as length parameter should be used. 
+*	</description>
+*/
 /* <SIL2/> */
 typedef struct tagRTS_GUID
 {
@@ -379,7 +400,8 @@ typedef struct tagRTS_GUID
 	RTS_UI16 data2;
 	RTS_UI16 data3;
 #ifdef RTS_SIXTEENBITBYTES
-	RTS_UI16 data4[4];
+	/* note: this field must contain packed bytes, i.e 8 octets! */
+	RTS_UI16 data4packed[4];
 #else
 	RTS_UI8 data4[8];
 #endif
@@ -479,7 +501,6 @@ typedef struct tagCMP_EXT_FUNCTION_REF
 	#define sizeof_RTS_RESULT				sizeof_RTS_UI32
 	#define sizeof_RTS_HANDLE				sizeof_RTS_UI32
 	#define sizeof_RTS_WCHAR				sizeof_RTS_UI16
-	#define sizeof_RTS_GUID					16
 	#define sizeof_RTS_IEC_DATE_AND_TIME	sizeof_RTS_UI32
 	#define sizeof_AREA_INFO				(sizeof(AREA_INFO) * 2)
 	#define sizeof_EXT_REF_INFO				(sizeof(EXT_REF_INFO) * 2)
@@ -505,10 +526,14 @@ typedef struct tagCMP_EXT_FUNCTION_REF
 	#define RTS_BITS_IN_BYTE				8
 #endif
 
+#define RTS_EMPTY_STRING			""
+#define RTS_IS_EMPTY_STRING(s)		((char *)s == NULL || strcmp((char *)s, RTS_EMPTY_STRING) == 0)
 
 #define RTS_TIMEOUT_INFINITE	(~(RTS_UI32)0)
 #define RTS_TIMEOUT_DEFAULT		(RTS_UI32)(-2)
 #define RTS_TIMEOUT_NO_WAIT		(0)
+
+#define RTS_INVALID_FILETRANSFER	(RTS_UI32)(-1)
 
 #include "CmpItf.h"
 
@@ -548,12 +573,6 @@ extern "C"
 	#define COMPONENT_NAME_POSTFIX
 #endif
 
-#ifdef RTS_COMPACT
-	#ifdef RTS_STRUCTURED_EXCEPTION_HANDLING
-		#define RTS_IECTASK_STRUCTURED_EXCEPTION_HANDLING
-	#endif
-#endif
-
 #ifdef TRG_64BIT
 #	ifndef CM_OBJECT_MANAGER_ENABLED
 #		define CM_OBJECT_MANAGER_ENABLED
@@ -563,5 +582,21 @@ extern "C"
 #endif
 
 #endif /* RC_INVOKED */
+
+#if !defined(RTS_CONSOLE_BANNER) && !defined(RTS_DISABLE_CONSOLE_BANNER)
+	#define RTS_CONSOLE_BANNER		" _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/\n"\
+									"_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/\n"\
+									"\n"\
+									"        _/_/_/_/      _/_/_/_/    _/_/_/_/_/    _/_/_/_/_/_/    _/_/_/_/_/  _/_/    _/_/    _/_/_/_/_/          _/\n"\
+									"     _/_/_/_/_/_/  _/_/_/_/_/_/  _/_/_/_/_/_/  _/_/_/_/_/_/  _/_/_/_/_/_/  _/_/    _/_/  _/_/_/_/_/_/        _/_/_/\n"\
+									"    _/_/    _/_/  _/_/    _/_/  _/_/    _/_/  _/_/          _/_/          _/_/    _/_/  _/_/              _/_/_/_/_/\n"\
+									"   _/_/          _/_/    _/_/  _/_/    _/_/  _/_/_/_/        _/_/_/_/      _/_/_/_/      _/_/_/_/      _/_/_/_/_/_/_/\n"\
+									"  _/_/    _/_/  _/_/    _/_/  _/_/    _/_/  _/_/                  _/_/      _/_/              _/_/      _/_/_/_/_/\n"\
+									" _/_/_/_/_/_/  _/_/_/_/_/_/  _/_/_/_/_/_/  _/_/_/_/_/_/  _/_/_/_/_/_/      _/_/      _/_/_/_/_/_/        _/_/_/\n"\
+									"  _/_/_/_/      _/_/_/_/    _/_/_/_/_/    _/_/_/_/_/_/  _/_/_/_/_/        _/_/      _/_/_/_/_/            _/\n"\
+									"\n"\
+									" _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/\n"\
+									"_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/"
+#endif
 
 #endif /*__RTSSTD_H__*/

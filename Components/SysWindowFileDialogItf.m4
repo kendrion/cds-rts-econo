@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -20,7 +20,7 @@ typedef struct
 	/* the number of filters */
 	int iFilterCount;
 	/* an array of pointers to strings where each is a description of a filter. the form of such a filter is
-	<description>|<filter>, eg. "Txt-Files|*.txt" */
+	<description>|<filter>, e.g. "Txt-Files|*.txt" */
 	char** ppFilters;		
 } SysWinFileDlgOpenFilters;
 
@@ -30,7 +30,7 @@ typedef struct
 	RTS_IEC_BOOL	bSaveDlg;		/* if true a save dialog will be shown, otherwise an open dialog */
 	RTS_IEC_STRING*	pszInitFile;	/* the initially selected file or NULL if there is no preselection */
 	RTS_IEC_STRING* pszTitle;		/* the title of the dialog, may be NULL */
-	RTS_IEC_DWORD	dwFlags;		/* some flags, TODO: define */
+	RTS_IEC_DWORD	dwFlags;		/* flags */
 	RTS_IEC_DWORD	dwAdditional;	/* some additional data, depending on the flags, not yet implemented */
 } SysWinFileDlgOpenOptions;
 

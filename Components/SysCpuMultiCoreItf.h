@@ -3,9 +3,9 @@
  * <description>
  * <p>This interface provides functions to manage multi core cpu system.</p>
  * <p>Naming convention: In this interface a core describes a logical processor, a logical CPU, independent of the physical hardware. 
- * A CoreId is a zero based number of a core, corresponding to the position of a bit in the CoreBits bitfield. E.g., a dual core processor 
- * with hyperthreading supplies four logical processors, SysMCGetNumOfCores returns 4 cores and they are numbered from 0 to 3.</p>
- * <p>The bitfield is placed in a processor word (XWORD ulCoreBits) inside the CpuCoreBits union in case the number of cores fits there in,
+ * A CoreId is a zero based number of a core, corresponding to the position of a bit in the CoreBits bit-field. E.g., a dual core processor 
+ * with hyper-threading supplies four logical processors, SysMCGetNumOfCores returns 4 cores and they are numbered from 0 to 3.</p>
+ * <p>The bit-field is placed in a processor word (XWORD ulCoreBits) inside the CpuCoreBits union in case the number of cores fits there in,
  * i.e. up to 32 cores on a 32 bit system, up to 64 cores on a 64 bit system. In case the number of cores exceed these values 
  * (i.e. nNumOfCores > SYSMCBITSPERXWORD), an allocated array of XWORDs is used (pulCoreBits) and this is where the functions SysMCBDAlloc 
  * and SysMCBDFree come in handy.</p>
@@ -16,7 +16,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -57,9 +57,25 @@ typedef struct
  * <description>Event is sent before start of the specified application</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpApp</param>
  */
-#define EVT_GroupBinding					                    MAKE_EVENTID(EVTCLASS_INFO, 1)
+#define EVT_GroupBinding										MAKE_EVENTID(EVTCLASS_INFO, 1)
 
+/**
+ * <category>Event parameter</category>
+ * <element name="pCoreBinding" type="IN">Overwrite the cores the IEC core set should contain.</element>
+ */
+typedef struct
+{
+    struct tagCpuCoreBindingDesc* pCoreBinding;
+} EVTPARAM_SysCpuMC_IecCoreSetOverwrite;
+#define EVTPARAMID_SysCpuMC_IecCoreSetOverwrite					0x0002
+#define EVTVERSION_SysCpuMC_IecCoreSetOverwrite					0x0001
 
+/**
+ * <category>Events</category>
+ * <description>Event is sent after licence functions are registered - if the process is not bound and no setting in the configuration file applies</description>
+ * <param name="pEventParam" type="IN">EVTPARAM_CmpApp</param>
+ */
+#define EVT_IecCoreSetOverwrite									MAKE_EVENTID(EVTCLASS_INFO, 2)
 
 /**
  * <category>Settings</category>
@@ -119,11 +135,11 @@ typedef struct
  *  Default: Tasks will be freely moved around the cores by the operating system. 
  *  Depending of the binding set by SysMCSetTaskGroupBinding the task will behave differently:
  *      1. No bits set in the CpuCoreBindingDesc: All Cores will be used by the tasks. Tasks can be freely moved by the operating system.
- *      2. Bits set in the CpuCoreBindingDesc: The taks will be freely moved by the operating system within the specified cores. Note: This is not supported by all operating systems.
+ *      2. Bits set in the CpuCoreBindingDesc: The tasks will be freely moved by the operating system within the specified cores. Note: This is not supported by all operating systems.
  * </element>
  * <element name="SYSMC_TASKGROUPOPTION_MULTICORE_SEQUENCIAL_PINNED" type="IN">The tasks of this group will be sequentially pinned.
  * The pinning is done by pinning each task one by one to the next configured core and then start over again. The task with the highest priority is pinned first.
- * The core used by the system group is stepped over in the first pinnig cycle.</element>
+ * The core used by the system group is stepped over in the first pining cycle.</element>
  * <element name="SYSMC_TASKGROUPOPTION_SINGLECORE" type="IN">The tasks of this group will be pinned to the same core.
  *  Depending of the binding set by SysMCSetTaskGroupBinding the task will behave differently
  *      1. No bits set in the CpuCoreBindingDesc: A core is selected by the runtime system.</element>
@@ -132,7 +148,7 @@ typedef struct
  * <element name="SYSMC_TASKGROUPMASK_OPTIONS" type="IN">Mask to select the options part of the flag field.</element>
  * <element name="SYSMC_TASKGROUPOPTION_GROUP_CONF" type="IN">Flag that indicates this group is in configuration mode.</element>
  * <element name="SYSMC_TASKGROUPOPTION_IEC_TASKS" type="IN">Flag that this task group contains contain IEC Tasks.</element>
- * <element name="SYSMC_TASKGROUPOPTION_AUTODELETE" type="IN">Flag to indicate that this group shold be deleted automatically if the last task was removed from this group.</element>
+ * <element name="SYSMC_TASKGROUPOPTION_AUTODELETE" type="IN">Flag to indicate that this group should be deleted automatically if the last task was removed from this group.</element>
  */
 #define SYSMC_TASKGROUPMASK_STRATEGY                        0x000000FF
 #define SYSMC_TASKGROUPOPTION_MULTICORE_FREEFLOATING		0x00000000
@@ -165,7 +181,7 @@ typedef struct
 
 /**
  * <category>Settings</category>
- * <description>A base setting to configure task groups. The following subsettings are available: Name, Option and CoreSet. The numbering starts with 1.
+ * <description>A base setting to configure task groups. The following sub-settings are available: Name, Option and CoreSet. The numbering starts with 1.
  * Example to bind all system tasks to core 0:
  * TaskGroup.1.Name=System
  * TaskGroup.1.Option=1
@@ -201,8 +217,8 @@ typedef struct
  * <category>Settings</category>
  * <type>String</type>
  * <description>Setting to configure a set of cores for a task group.
- * There is a placeholder for the highest core id named MAXCOREID to configure independently of the current num of cores.
- * To build more comlex expressions a range and a subtraction operator are provided.
+ * There is a placeholder for the highest core id named MAXCOREID to configure independently of the current number of cores.
+ * To build more complex expressions a range and a subtraction operator are provided.
  * Example:
  * TaskGroup.2.CoreSet={0..MAXCOREID-1}
  * TaskGroup.3.CoreSet={0,1,2}
@@ -826,7 +842,7 @@ typedef void (CDECL CDECL_EXT* PFSYSMCGETTASKBINDING_IEC) (sysmcgettaskbinding_s
 extern "C" {
 #endif
 
-/* Init routines for OS specific modules */
+/* Initialization routines for OS specific modules */
 RTS_RESULT CDECL SysCpuMultiCoreOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysCpuMultiCoreOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
@@ -837,9 +853,9 @@ RTS_RESULT CDECL SysCpuMultiCoreOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulPa
  * </description>
  * <param name="pszTaskGroup" type="IN">The name of the task group to add</param>
  * <param name="taskGroupOptions" type="IN">See 'Task group options'</param>
- * <param name="pResult" type="IN">Pointer to a variable to return an errorcode (optional)</param>
+ * <param name="pResult" type="IN">Pointer to a variable to return an error code (optional)</param>
  * <result>Returns the handle to the newly added task group or RTS_INVALID_HANDLE.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The required memory pool was not initialized.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">Not enough memory to allocate.</errorcode>
  */
@@ -898,8 +914,8 @@ typedef RTS_HANDLE (CDECL * PFSYSMCADDTASKGROUP) (char *pszTaskGroup, RTS_UI32 t
  * This function removes a task group. The group is not deleted until the internal reference counter reaches zero. 
  * </description>
  * <param name="hTaskGroup" type="IN">The handle to a previous added task group</param>
- * <result>Returns an errorcode.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <result>Returns an error code.</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">The given handle is invalid.</errorcode>
  */
 RTS_RESULT CDECL SysMCRemoveTaskGroup(RTS_HANDLE hTaskGroup);
@@ -958,9 +974,9 @@ typedef RTS_RESULT (CDECL * PFSYSMCREMOVETASKGROUP) (RTS_HANDLE hTaskGroup);
  * </description>
  * <param name="pszTaskGroup" type="IN">The name of the task group to search for</param>
  * <param name="bIecTaskGroup" type="IN">Search IEC task groups only (TRUE), search all task groups (FALSE)</param>
- * <param name="pResult" type="IN">Pointer to a variable to return an errorcode (optional)</param>
+ * <param name="pResult" type="IN">Pointer to a variable to return an error code (optional)</param>
  * <result>Returns the handle to the searched task group or RTS_INVALID_HANDLE.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The required memory pool was not initialized.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">The task group was not found.</errorcode>
  */
@@ -1018,9 +1034,9 @@ typedef RTS_HANDLE (CDECL * PFSYSMCFINDTASKGROUP) (char *pszTaskGroup, RTS_I32 b
  * <p>Task group maintenance</p>
  * This function returns the first found task group. The returned handle may be used for SysMCGetNextTaskGroup.
  * </description>
- * <param name="pResult" type="IN">Pointer to a variable to return an errorcode</param>
+ * <param name="pResult" type="IN">Pointer to a variable to return an error code</param>
  * <result>Returns the handle to the searched task group or RTS_INVALID_HANDLE.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The required memory pool was not initialized.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">The task group was not found.</errorcode>
  */
@@ -1079,9 +1095,9 @@ typedef RTS_HANDLE (CDECL * PFSYSMCGETFIRSTTASKGROUP) (RTS_RESULT *pResult);
  * This function returns the next found task group and is used to iterate through all task groups until the result is ERR_END_OF_OBJECT.
  * </description>
  * <param name="hPrevTaskGroup" type="IN">The handle to a previous found task group</param>
- * <param name="pResult" type="IN">Pointer to a variable to return an errorcode</param>
+ * <param name="pResult" type="IN">Pointer to a variable to return an error code</param>
  * <result>Returns the handle to the searched task group or RTS_INVALID_HANDLE.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The required memory pool was not initialized.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">The given handle is invalid.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_END_OF_OBJECT">There are no more task groups to find.</errorcode>
@@ -1141,9 +1157,9 @@ typedef RTS_HANDLE (CDECL * PFSYSMCGETNEXTTASKGROUP) (RTS_HANDLE hPrevTaskGroup,
  * This function returns the name of a task group with the given handle.
  * </description>
  * <param name="hTaskGroup" type="IN">The handle to a task group</param>
- * <param name="pResult" type="IN">Pointer to a variable to return an errorcode</param>
+ * <param name="pResult" type="IN">Pointer to a variable to return an error code</param>
  * <result>Returns a pointer to the name of the task group or NULL.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The required memory pool was not initialized.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">The given handle is invalid.</errorcode>
  */
@@ -1202,9 +1218,9 @@ typedef char* (CDECL * PFSYSMCGETTASKGROUPNAME) (RTS_HANDLE hTaskGroup, RTS_RESU
  * This function returns the binding description of a task group with the given handle.
  * </description>
  * <param name="hTaskGroup" type="IN">The handle to a task group</param>
- * <param name="pResult" type="IN">Pointer to a variable to return an errorcode</param>
+ * <param name="pResult" type="IN">Pointer to a variable to return an error code</param>
  * <result>Returns a pointer to binding description of the task group or NULL.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The required memory pool was not initialized.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">The given handle is invalid.</errorcode>
  */
@@ -1263,9 +1279,9 @@ typedef CpuCoreBindingDesc* (CDECL * PFSYSMCGETTASKGROUPBINDING) (RTS_HANDLE hTa
  * This function returns the options of a task group with the given handle.
  * </description>
  * <param name="hTaskGroup" type="IN">The handle to a task group</param>
- * <param name="pResult" type="IN">Pointer to a variable to return an errorcode</param>
+ * <param name="pResult" type="IN">Pointer to a variable to return an error code</param>
  * <result>Returns the options of the task group (see 'Task group options').</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The required memory pool was not initialized.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">The given handle is invalid.</errorcode>
  */
@@ -1326,8 +1342,8 @@ typedef RTS_UI32 (CDECL * PFSYSMCGETTASKGROUPOPTIONS) (RTS_HANDLE hTaskGroup, RT
  * </description>
  * <param name="hTaskGroup" type="IN">The handle to a task group</param>
  * <param name="taskGroupOptions" type="IN">See 'Task group options'</param>
- * <result>Returns an errorcode.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <result>Returns an error code.</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The required memory pool was not initialized.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">The given handle is invalid.</errorcode>
  */
@@ -1388,8 +1404,8 @@ typedef RTS_RESULT (CDECL * PFSYSMCCHANGETASKGROUPSTRATEGY) (RTS_HANDLE hTaskGro
  * </description>
  * <param name="hTaskGroup" type="IN">The handle to a task group</param>
  * <param name="pBindingDesc" type="IN">Pointer to the description of the core binding.</param>
- * <result>Returns an errorcode.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <result>Returns an error code.</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The required memory pool was not initialized.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">The given handle is invalid.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">The given binding description is invalid.</errorcode>
@@ -1454,8 +1470,8 @@ typedef RTS_RESULT (CDECL * PFSYSMCSETTASKGROUPBINDING) (RTS_HANDLE hTaskGroup, 
  * </description>
  * <param name="hSysTask" type="IN">The handle to a SysTask</param>
  * <param name="hTaskGroup" type="IN">The handle to a task group</param>
- * <result>Returns an errorcode.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <result>Returns an error code.</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The required memory pool was not initialized.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">The given handle is invalid.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">The given SysTask handle is invalid.</errorcode>
@@ -1520,8 +1536,8 @@ typedef RTS_RESULT (CDECL * PFSYSMCADDTOTASKGROUP) (RTS_HANDLE hSysTask, RTS_HAN
  * </description>
  * <param name="hSysTask" type="IN">The handle to a SysTask</param>
  * <param name="hTaskGroup" type="IN">The handle to a task group</param>
- * <result>Returns an errorcode.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <result>Returns an error code.</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The required memory pool was not initialized.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">The given handle is invalid.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">The given SysTask handle is invalid.</errorcode>
@@ -1582,8 +1598,8 @@ typedef RTS_RESULT (CDECL * PFSYSMCREMOVEFROMTASKGROUP) (RTS_HANDLE hSysTask, RT
  * This function starts the configuration mode of task groups.
  * </description>
  * <param name="hTaskGroup" type="IN">The handle to a task group</param>
- * <result>Returns an errorcode.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <result>Returns an error code.</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">The given handle is invalid.</errorcode>
  */
 RTS_RESULT CDECL SysMCBeginTaskGroupConf(RTS_HANDLE hTaskGroup);
@@ -1642,8 +1658,8 @@ typedef RTS_RESULT (CDECL * PFSYSMCBEGINTASKGROUPCONF) (RTS_HANDLE hTaskGroup);
  * NOTE: In case the process is bound to one core, no task binding is possible at all, but the function returns ERR_OK anyway.
  * </description>
  * <param name="hTaskGroup" type="IN">The handle to a task group</param>
- * <result>Returns an errorcode.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <result>Returns an error code.</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">The given handle is invalid.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">The binding configuration is invalid.</errorcode>
  */
@@ -1701,7 +1717,7 @@ typedef RTS_RESULT (CDECL * PFSYSMCENDTASKGROUPCONF) (RTS_HANDLE hTaskGroup);
  * <p>CpuCoreBindingDesc helper function</p>
  * SysMCBDAlloc allocates a CpuCoreBindingDesc which should be freed with SysMCBDFree after usage. Initializes the nNumOfCores member. In case nNumOfCores > SYSMCBITSPERXWORD an array of appropriate XWORDs is allocated to pulCoreBits.
  * </description>
- * <param name="pResult" type="IN">Pointer to a variable to return an errorcode (optional)</param>
+ * <param name="pResult" type="IN">Pointer to a variable to return an error code (optional)</param>
  * <result>Returns a pointer to CpuCoreBindingDesc or NULL if no memory is available.</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">A valid pointer is returned.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">Not enough memory is available.</errorcode>
@@ -1762,8 +1778,8 @@ typedef CpuCoreBindingDesc * (CDECL * PFSYSMCBDALLOC) (RTS_RESULT* pResult);
  * SysMCBDFree frees an CpuCoreBindingDesc which should be allocated with SysMCBDAlloc before usage.
  * </description>
  * <param name="pBindingDesc" type="IN">Pointer to the description of the core binding.</param>
- * <result>Returns an errorcode.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Memory is sucessfully freed.</errorcode>
+ * <result>Returns an error code.</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Memory is successfully freed.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">No appropriate memory block was found.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">CpuCoreBindingDesc is invalid pointer.</errorcode>
  */
@@ -1822,8 +1838,8 @@ typedef RTS_RESULT (CDECL * PFSYSMCBDFREE) (CpuCoreBindingDesc *pBindingDesc);
  * SysMCBDZero clears all the CpuCoreBits of the given CpuCoreBindingDesc. SysMCBDZero should be called prior to any call of SysMCBDSet.
  * </description>
  * <param name="pBindingDesc" type="IN">Pointer to the description of the core binding.</param>
- * <result>Returns an errorcode.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Operation sucessfully finished.</errorcode>
+ * <result>Returns an error code.</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Operation successfully finished.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">CpuCoreBindingDesc is invalid pointer.</errorcode>
  */
 RTS_RESULT CDECL SysMCBDZero(CpuCoreBindingDesc *pBindingDesc);
@@ -1882,8 +1898,8 @@ typedef RTS_RESULT (CDECL * PFSYSMCBDZERO) (CpuCoreBindingDesc *pBindingDesc);
  * </description>
  * <param name="pBindingDesc" type="IN">Pointer to the description of the core binding.</param>
  * <param name="uCoreId" type="IN">Identifies the core ID. Starting with 0=first core, ...</param>
- * <result>Returns an errorcode.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Operation sucessfully finished.</errorcode>
+ * <result>Returns an error code.</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Operation successfully finished.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">CpuCoreBindingDesc is invalid pointer or uCoreId is invalid.</errorcode>
  */
 RTS_RESULT CDECL SysMCBDSet(CpuCoreBindingDesc *pBindingDesc, RTS_UI32 uCoreId);
@@ -1940,10 +1956,10 @@ typedef RTS_RESULT (CDECL * PFSYSMCBDSET) (CpuCoreBindingDesc *pBindingDesc, RTS
  * <p>CpuCoreBindingDesc helper function</p>
  * SysMCBDReset resets the appropriate bit for uCoreId in the CpuCoreBindingDesc.CpuCoreBits, i.e. clears it.
  * </description>
- * <result>Returns an errorcode.</result>
+ * <result>Returns an error code.</result>
  * <param name="pBindingDesc" type="IN">Pointer to the description of the core binding.</param>
  * <param name="uCoreId" type="IN">Identifies the core ID. Starting with 0=first core, ...</param>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Operation sucessfully finished.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Operation successfully finished.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">CpuCoreBindingDesc is invalid pointer or uCoreId is invalid.</errorcode>
  */
 RTS_RESULT CDECL SysMCBDReset(CpuCoreBindingDesc *pBindingDesc, RTS_UI32 uCoreId);
@@ -1998,9 +2014,9 @@ typedef RTS_RESULT (CDECL * PFSYSMCBDRESET) (CpuCoreBindingDesc *pBindingDesc, R
 /**
  * <description>
  * <p>CpuCoreBindingDesc helper function</p>
- * SysMCBDIsSet tests the appropriate bit for uCoreId in CpuCoreBindingDesc.CpuCoreBits: see errorcode
+ * SysMCBDIsSet tests the appropriate bit for uCoreId in CpuCoreBindingDesc.CpuCoreBits: see error code
  * </description>
- * <result>Returns an errorcode.</result>
+ * <result>Returns an error code.</result>
  * <param name="pBindingDesc" type="IN">Pointer to the description of the core binding.</param>
  * <param name="uCoreId" type="IN">Identifies the core ID. Starting with 0=first core, ...</param>
  * <errorcode name="RTS_RESULT" type="ERR_OK">Bit is set.</errorcode>
@@ -2063,8 +2079,8 @@ typedef RTS_RESULT (CDECL * PFSYSMCBDISSET) (CpuCoreBindingDesc *pBindingDesc, R
  * </description>
  * <result>Returns the number of the bits set.</result>
  * <param name="pBindingDesc" type="IN">Pointer to the description of the core binding.</param>
- * <param name="pResult" type="IN">Pointer to a variable to return an errorcode (optional)</param>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Operation sucessfully finished.</errorcode>
+ * <param name="pResult" type="IN">Pointer to a variable to return an error code (optional)</param>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Operation successfully finished.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">CpuCoreBindingDesc is invalid pointer.</errorcode>
  */
 RTS_UI32 CDECL SysMCBDCount(CpuCoreBindingDesc *pBindingDesc, RTS_RESULT* pResult);
@@ -2122,7 +2138,7 @@ typedef RTS_UI32 (CDECL * PFSYSMCBDCOUNT) (CpuCoreBindingDesc *pBindingDesc, RTS
  * SysMCBDGetFirstID returns the CoreId (i.e. the position) of the first set bit in CpuCoreBindingDesc.CpuCoreBits.
  * </description>
  * <param name="pBindingDesc" type="IN">Pointer to the description of the core binding.</param>
- * <param name="pResult" type="IN">Pointer to a variable to return an errorcode.</param>
+ * <param name="pResult" type="IN">Pointer to a variable to return an error code.</param>
  * <result>Returns a valid CoreId if ERR_OK, otherwise the result is undefined.</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">First found CoreId is returned.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">CpuCoreBindingDesc is invalid pointer.</errorcode>
@@ -2184,7 +2200,7 @@ typedef RTS_UI32 (CDECL * PFSYSMCBDGETFIRSTID) (CpuCoreBindingDesc *pBindingDesc
  * </description>
  * <param name="pBindingDesc" type="IN">Pointer to the description of the core binding.</param>
  * <param name="uPrevCoreID" type="IN">CoreId found by SysMCBDGetFirstID or a previous call of SysMCBDGetNextID.</param>
- * <param name="pResult" type="IN">Pointer to a variable to return an errorcode.</param>
+ * <param name="pResult" type="IN">Pointer to a variable to return an error code.</param>
  * <result>Returns a valid CoreId if ERR_OK, otherwise the result is undefined.</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">Next found CoreId is returned.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">CpuCoreBindingDesc is invalid pointer.</errorcode>
@@ -2249,7 +2265,7 @@ typedef RTS_UI32 (CDECL * PFSYSMCBDGETNEXTID) (CpuCoreBindingDesc *pBindingDesc,
  * <param name="pBindingDesc" type="IN">Pointer to the binding description for the new core binding.</param>
  * <param name="hProcess" type="IN">Handle of the process to bind.</param>
  * <result>Returns the result.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter is invalid, e.g. core does not exist.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_OPERATION_DENIED">Operation is denied on OS level.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">Handle is invalid.</errorcode>
@@ -2370,7 +2386,7 @@ typedef RTS_RESULT (CDECL * PFSYSMCBINDPROCESS_) (CpuCoreBindingDesc *pBindingDe
  * <param name="pBindingDesc" type="IN">Pointer to the binding description for the new core binding.</param>
  * <param name="hTask" type="IN">Handle of the task to bind.</param>
  * <result>Returns the result.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter is invalid, e.g. core does not exist.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_OPERATION_DENIED">Operation is denied on OS level.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">Handle is invalid.</errorcode>
@@ -2490,7 +2506,7 @@ typedef RTS_RESULT (CDECL * PFSYSMCBINDTASK_) (CpuCoreBindingDesc *pBindingDesc,
  * </description>
  * <param name="hProcess" type="IN">Handle of the process to unbind.</param>
  * <result>Returns the result.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter is invalid.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_OPERATION_DENIED">Operation is denied on OS level.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">Handle is invalid.</errorcode>
@@ -2609,7 +2625,7 @@ typedef RTS_RESULT (CDECL * PFSYSMCUNBINDPROCESS_) (RTS_IEC_HANDLE hProcess);
  * </description>
  * <param name="hTask" type="IN">Handle of the task to unbind.</param>
  * <result>Returns the result.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter is invalid.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_OPERATION_DENIED">Operation is denied on OS level.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_INVALID_HANDLE">Handle is invalid.</errorcode>
@@ -2732,7 +2748,7 @@ typedef RTS_RESULT (CDECL * PFSYSMCUNBINDTASK_) (RTS_IEC_HANDLE hTask);
  * </param>
  * <param name="pPercent" type="OUT">CPU-Core load in percent.</param>
  * <result>Returns the result.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter is invalid, e.g. core does not exist.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">Function is not initialized.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOBUFFER">Not enough memory for the performance counters</errorcode>
@@ -2846,9 +2862,9 @@ typedef RTS_RESULT (CDECL * PFSYSMCGETLOAD_) (RTS_UI32 uCoreID, RTS_UI8 *pPercen
  * <description>
  * <p>Function to get the number of cores available for use by the runtime system.</p>
  * </description>
- * <param name="pResult" type="IN">Pointer to a variable to return an errorcode (optional)</param>
+ * <param name="pResult" type="IN">Pointer to a variable to return an error code (optional)</param>
  * <result>Returns the number of cores.</result>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Function failed for any reason on OS level.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">Function is not implemented.</errorcode> 
  */
@@ -2966,7 +2982,7 @@ typedef RTS_UI32 (CDECL * PFSYSMCGETNUMOFCORES_) (RTS_RESULT* pResult);
  * <param name="hProcess" type="IN">Handle of the process or RTS_INVALID_HANDLE for current process.</param>
  * <param name="pBindingDesc" type="OUT">Pointer to the binding description for the core binding.</param>
  * <result>Returns the result.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter is invalid.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Function failed for any reason on OS level.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">Function is not implemented.</errorcode> 
@@ -3088,7 +3104,7 @@ typedef RTS_RESULT (CDECL * PFSYSMCGETPROCESSBINDING_) (RTS_IEC_HANDLE hProcess,
  * <param name="hTask" type="IN">Handle of the task or RTS_INVALID_HANDLE for current task.</param>
  * <param name="pBindingDesc" type="OUT">Pointer to the binding description for the core binding.</param>
  * <result>Returns the result.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter is invalid.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Function failed for any reason on OS level.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">Function is not implemented.</errorcode> 
@@ -3201,9 +3217,9 @@ typedef RTS_RESULT (CDECL * PFSYSMCGETTASKBINDING_) (RTS_IEC_HANDLE hTask, CpuCo
  * <description>
  * <p>Function to read current CoreId the calling process or task is running on.</p>
  * </description>
- * <param name="pResult" type="IN">Pointer to a variable to return an errorcode (optional)</param>
+ * <param name="pResult" type="IN">Pointer to a variable to return an error code (optional)</param>
  * <result>Returns the current CoreId.</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Call was sucessfull.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Call was successful.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Function failed for any reason on OS level.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">Function is not implemented.</errorcode> 
  * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">Function is not supported.</errorcode>
@@ -3311,6 +3327,64 @@ typedef RTS_UI32 (CDECL * PFSYSMCGETCURRENTCOREID_) (RTS_RESULT* pResult);
 
 
 
+/**
+ * <description>
+ * Function to check, if all IEC task groups are licensed!
+ * </description>
+ * <param name="pnCoresLicensed" type="OUT">Pointer to get number of licensed cores. Can be called with NULL.</param>
+ * <result>error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">All IEC task groups are licensed</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_LICENSE_MISSING">At least one IEC task group is not licensed!s</errorcode>
+ */
+RTS_RESULT CDECL SysMCCheckMultiCoreLicense(RTS_UI32 *pnCoresLicensed);
+typedef RTS_RESULT (CDECL * PFSYSMCCHECKMULTICORELICENSE) (RTS_UI32 *pnCoresLicensed);
+#if defined(SYSCPUMULTICORE_NOTIMPLEMENTED) || defined(SYSMCCHECKMULTICORELICENSE_NOTIMPLEMENTED)
+	#define USE_SysMCCheckMultiCoreLicense
+	#define EXT_SysMCCheckMultiCoreLicense
+	#define GET_SysMCCheckMultiCoreLicense(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_SysMCCheckMultiCoreLicense(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_SysMCCheckMultiCoreLicense  FALSE
+	#define EXP_SysMCCheckMultiCoreLicense  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_SysMCCheckMultiCoreLicense
+	#define EXT_SysMCCheckMultiCoreLicense
+	#define GET_SysMCCheckMultiCoreLicense(fl)  CAL_CMGETAPI( "SysMCCheckMultiCoreLicense" ) 
+	#define CAL_SysMCCheckMultiCoreLicense  SysMCCheckMultiCoreLicense
+	#define CHK_SysMCCheckMultiCoreLicense  TRUE
+	#define EXP_SysMCCheckMultiCoreLicense  CAL_CMEXPAPI( "SysMCCheckMultiCoreLicense" ) 
+#elif defined(MIXED_LINK) && !defined(SYSCPUMULTICORE_EXTERNAL)
+	#define USE_SysMCCheckMultiCoreLicense
+	#define EXT_SysMCCheckMultiCoreLicense
+	#define GET_SysMCCheckMultiCoreLicense(fl)  CAL_CMGETAPI( "SysMCCheckMultiCoreLicense" ) 
+	#define CAL_SysMCCheckMultiCoreLicense  SysMCCheckMultiCoreLicense
+	#define CHK_SysMCCheckMultiCoreLicense  TRUE
+	#define EXP_SysMCCheckMultiCoreLicense  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCCheckMultiCoreLicense", (RTS_UINTPTR)SysMCCheckMultiCoreLicense, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysCpuMultiCoreSysMCCheckMultiCoreLicense
+	#define EXT_SysCpuMultiCoreSysMCCheckMultiCoreLicense
+	#define GET_SysCpuMultiCoreSysMCCheckMultiCoreLicense  ERR_OK
+	#define CAL_SysCpuMultiCoreSysMCCheckMultiCoreLicense pISysCpuMultiCore->ISysMCCheckMultiCoreLicense
+	#define CHK_SysCpuMultiCoreSysMCCheckMultiCoreLicense (pISysCpuMultiCore != NULL)
+	#define EXP_SysCpuMultiCoreSysMCCheckMultiCoreLicense  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_SysMCCheckMultiCoreLicense
+	#define EXT_SysMCCheckMultiCoreLicense
+	#define GET_SysMCCheckMultiCoreLicense(fl)  CAL_CMGETAPI( "SysMCCheckMultiCoreLicense" ) 
+	#define CAL_SysMCCheckMultiCoreLicense pISysCpuMultiCore->ISysMCCheckMultiCoreLicense
+	#define CHK_SysMCCheckMultiCoreLicense (pISysCpuMultiCore != NULL)
+	#define EXP_SysMCCheckMultiCoreLicense  CAL_CMEXPAPI( "SysMCCheckMultiCoreLicense" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_SysMCCheckMultiCoreLicense  PFSYSMCCHECKMULTICORELICENSE pfSysMCCheckMultiCoreLicense;
+	#define EXT_SysMCCheckMultiCoreLicense  extern PFSYSMCCHECKMULTICORELICENSE pfSysMCCheckMultiCoreLicense;
+	#define GET_SysMCCheckMultiCoreLicense(fl)  s_pfCMGetAPI2( "SysMCCheckMultiCoreLicense", (RTS_VOID_FCTPTR *)&pfSysMCCheckMultiCoreLicense, (fl), 0, 0)
+	#define CAL_SysMCCheckMultiCoreLicense  pfSysMCCheckMultiCoreLicense
+	#define CHK_SysMCCheckMultiCoreLicense  (pfSysMCCheckMultiCoreLicense != NULL)
+	#define EXP_SysMCCheckMultiCoreLicense  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysMCCheckMultiCoreLicense", (RTS_UINTPTR)SysMCCheckMultiCoreLicense, 0, 0) 
+#endif
+
+
+
+
 #ifdef __cplusplus
 }
 #endif
@@ -3361,6 +3435,7 @@ typedef struct
  	PFSYSMCGETTASKBINDING_ ISysMCGetTaskBinding_;
  	PFSYSMCGETCURRENTCOREID ISysMCGetCurrentCoreID;
  	PFSYSMCGETCURRENTCOREID_ ISysMCGetCurrentCoreID_;
+ 	PFSYSMCCHECKMULTICORELICENSE ISysMCCheckMultiCoreLicense;
  } ISysCpuMultiCore_C;
 
 #ifdef CPLUSPLUS
@@ -3408,6 +3483,7 @@ class ISysCpuMultiCore : public IBase
 		virtual RTS_RESULT CDECL ISysMCGetTaskBinding_(RTS_IEC_HANDLE hTask, CpuCoreBindingDesc *pBindingDesc) =0;
 		virtual RTS_UI32 CDECL ISysMCGetCurrentCoreID(RTS_RESULT* pResult) =0;
 		virtual RTS_UI32 CDECL ISysMCGetCurrentCoreID_(RTS_RESULT* pResult) =0;
+		virtual RTS_RESULT CDECL ISysMCCheckMultiCoreLicense(RTS_UI32 *pnCoresLicensed) =0;
 };
 	#ifndef ITF_SysCpuMultiCore
 		#define ITF_SysCpuMultiCore static ISysCpuMultiCore *pISysCpuMultiCore = NULL;

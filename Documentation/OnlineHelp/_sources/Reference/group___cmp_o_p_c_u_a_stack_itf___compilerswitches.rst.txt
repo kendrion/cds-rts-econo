@@ -1,0 +1,50 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_o_p_c_u_a_stack_itf___compilerswitches:
+
+=================
+Compiler switches
+=================
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Macros
+------
+
+- #define :ref:`CMPOPCUASTACK_SUPPORT_SECURE_COMMUNICATION <group___cmp_o_p_c_u_a_stack_itf___compilerswitches_1gaff9d912bc95f35bbe81fc86e30e9aed2>` 1
+
+- #define :ref:`CMPOPCUASTACK_ALLOW_SHA1_BASED_SECURITY <group___cmp_o_p_c_u_a_stack_itf___compilerswitches_1ga471fa75969b5fd916fc7bc322936c694>` 0
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_o_p_c_u_a_stack_itf___compilerswitches_1gaff9d912bc95f35bbe81fc86e30e9aed2:
+
+#define CMPOPCUASTACK_SUPPORT_SECURE_COMMUNICATION 1
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This switch enables or disables the implementation of the OPC UA security policies inside the OPC UA stack. By default the implementation will be there if the required interfaces are implemented. Other components can use the switch to determine if the security policies of the UA Stack are available at compile time.
+
+.. _group___cmp_o_p_c_u_a_stack_itf___compilerswitches_1ga471fa75969b5fd916fc7bc322936c694:
+
+#define CMPOPCUASTACK_ALLOW_SHA1_BASED_SECURITY 0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This switch enables or disables availability of SHA1 based encryption profiles as defined by the OPC UA specification (Basic128Rsa15, Basic256). These profiles use SHA1 as hashing algorithm. Since 2005 ( https://www.schneier.com/blog/archives/2005/02/sha1_broken.html) SHA1 is broken. In 2017 the first collision was generated ( https://shattered.io/). As a result SHA1 based profiles will be disabled by default.
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

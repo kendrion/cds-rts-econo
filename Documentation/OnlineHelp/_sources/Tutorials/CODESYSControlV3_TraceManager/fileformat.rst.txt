@@ -1,0 +1,176 @@
+.. _fileformat:
+.. index:: trace file
+
+Specification of the Memory Format of the Trace File
+----------------------------------------------------
+
+Trace Packet of a Trace File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A trace packet can be stored permanently on the runtime system. This
+feature can be enabled in the trace packet configuration with the option
+“persistent trace”. If this option is selected, the trace configuration
+(and the values if available) will be stored in a so-called *trace file*.
+
+The format of a trace file is CSV to be portable. A trace file can be
+uploaded to CODESYS and offline be loaded.
+
+The format consists of a header part and a data part. The header part of
+the variables is defined in two columns. The first one is used as “key”,
+the second one is used as “value”. The keys are always listed with dot
+notation with full path. The structure is in substance similar to the
+trace configuration passed from the programming system to the runtime
+system. The structure is essentially conform to the trace configuration
+as it is transmitted from the programming system to the runtime system.
+
+Example:
+
+::
+
+  [key]; [value]
+  Name; TestPacket
+  Trigger.Variable.Name; Counter
+  Trigger.Variable.AddrFlags; 0x00000000
+  Trigger.Variable.Class; 0
+  Trigger.Variable.Size; 0
+  Trigger.Level; 0
+
+Trace variables require different parameters depending on the address
+flags.
+
+TRACE\_VAR\_ADDRESS\_FLAGS\_AREA\_OFFSET: (Convert IEC Pointer to Area Offset)
+
+-  **Name** (string)
+-  **AddrFlags** (hex number)
+-  **Area** (unsigned integer)
+-  **Offset** (hex number)
+-  **Class** (unsigned integer)
+-  **Size** (unsigned integer)
+
+TRACE\_VAR\_ADDRESS\_FLAGS\_POINTER:
+
+-  **Name** (string)
+-  **AddrFlags** (hex number)
+-  **Address** (hex number)
+-  **Class** (unsigned integer)
+-  **Size** (unsigned integer)
+
+TRACE\_VAR\_ADDRESS\_FLAGS\_IOCONFIG:
+
+-  **Name** (string)
+-  **AddrFlags** (hex number)
+-  **ParameterID** (unsigned integer)
+-  **ModuleType** (unsigned integer)
+-  **Instance** (unsigned integer)
+-  **ByteOffset** (hex number)
+-  **Class** (unsigned integer)
+-  **Size** (unsigned integer)
+
+TRACE\_VAR\_ADDRESS\_FLAGS\_PROPERTY:
+
+-  **Name** (string)
+-  **AddrFlags** (hex number)
+-  **Instance.Area** (unsigned integer)
+-  **Instance.Offset** (hex number)
+-  **PropertyFunction.Area** (unsigned integer)
+-  **PropertyFunction.Offset** (hex number)
+-  **Class** (unsigned integer)
+-  **Size** (unsigned integer)
+
+Trace Records of a Trace File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The records are numbered from 0 to n and the number is set as prefix
+before the name (e.g. „0.Name; Counter“). The header is followed by the data. 
+In order to avoid redundancy, no further key name is added.
+
+The first entry is a key without value:
+
+::
+
+  <number>.Data;
+
+The values itself consist of:
+
+::
+
+  <empty field>; <time stamp>; <value>
+
+Example:
+
+::
+
+ 0.Data;
+ ; 2490; 231
+ ; 2500; 232
+
+Listing of a record with all possible entries (the optional fields are
+written `cursive`):
+
+::
+
+  [key]; [value]
+  0.Name; IecTest
+  ApplicationName; <Name der Applikation>
+  ApplicationDataGuid; aaaaaaaa-bbbbbbbb-cccccccc-dddddddd
+  IecTaskName; <Name der IEC Task>
+  Comment;
+  Trigger.Variable.Name; <Name der Trigger Variablen>
+  Trigger.Variable.AddrFlags; 0x00000011
+  `Trigger.Variable.Area;`
+  `Trigger.Variable.Offset; 0x00000000`
+  `Trigger.Variable.Address; 0x00000000`
+  `Trigger.Variable.ParameterID; 0`
+  `Trigger.Variable.ModuleType; 0`
+  `Trigger.Variable.Instance; 0`
+  `Trigger.Variable.ByteOffset; 0x00000000`
+  `Trigger.Variable.Instance.Area; 0`
+  `Trigger.Variable.Instance.Offset; 0x00000000`
+  `Trigger.Variable.PropertyFunction.Area; 0`
+  `Trigger.Variable.PropertyFunction.Offset; 0x00000000`
+  Trigger.Variable.Class; 0
+  Trigger.Variable.Size; 1
+  Trigger.Level; 0
+  Trigger.Flags; 0
+  Trigger.Edge; 1
+  Trigger.Position; 0
+  Condition.Name; (null)
+  Condition.AddrFlags; 0x00000000
+  Condition.Class; 0
+  Condition.Size; 0
+  EveryNCycles; 1
+  BufferEntries; 600
+  Flags; 5
+
+  0.Variable; DWORD1
+  0.Address.AddrFlags; 0x00000011
+  0.Address.Area; 0
+  0.Address.Offset; 0x00000000
+  0.Address.Address; 0x00000000
+  0.Address.ParameterID; 0
+  0.Address.ModuleType; 0
+  0.Address.Instance; 0
+  0.Address.ByteOffset; 0x00000000
+  0.Address.Instance.Area; 0
+  0.Address.Instance.Offset; 0x00000000
+  0.Address.PropertyFunction.Area; 0
+  0.Address.PropertyFunction.Offset; 0x00000000
+  0.Class; 4
+  0.Size; 4
+  0.GraphColor; 4278190335
+  0.MinWarningColor; 0
+  0.MaxWarningColor; 0
+  0.CriticalLowerLimit; 0.000000
+  0.CriticalUpperLimit; 0.000000
+  0.ActivateMinWarning; 0
+  0.ActivateMaxWarning; 0
+  0.YAxis; 0
+  0.Data;
+  ; 2490; 231
+  ; 2500; 232
+  ; 2510; 233
+  ; 2520; 234
+  ; 2530; 235
+  ; 2540; 236
+  ; 2550; 237
+  etc.

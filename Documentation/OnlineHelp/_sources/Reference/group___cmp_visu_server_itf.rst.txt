@@ -1,0 +1,225 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_visu_server_itf:
+
+================
+CmpVisuServerItf
+================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpVisuServer.
+
+Detailed Description
+--------------------
+
+Interface for the visualization server.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Event parameter <group___cmp_visu_server_itf___eventparameter>`
+
+- :ref:`Events <group___cmp_visu_server_itf___events>`
+
+- :ref:`Online tags <group___cmp_visu_server_itf___onlinetags>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpVisuServer_C <struct_i_cmp_visu_server___c>`
+
+Macros
+------
+
+- #define :ref:`USE_HandleVisuService <group___cmp_visu_server_itf_1gaf8ec5d6a7b8557c013b4664bb7005b15>` :ref:`PFHANDLEVISUSERVICE <group___cmp_visu_server_itf_1gac3909482ff5482b377aafb7c966ec345>` pfHandleVisuService;
+
+- #define :ref:`EXT_HandleVisuService <group___cmp_visu_server_itf_1ga16d146d3e33ba540033ca496a3276b86>` extern :ref:`PFHANDLEVISUSERVICE <group___cmp_visu_server_itf_1gac3909482ff5482b377aafb7c966ec345>` pfHandleVisuService;
+
+- #define :ref:`GET_HandleVisuService <group___cmp_visu_server_itf_1ga6cbc0fb3f5ad811d8b59033f8a066c5b>` s_pfCMGetAPI2( "HandleVisuService", (RTS_VOID_FCTPTR *)&pfHandleVisuService, (fl), 0, 0)
+
+- #define :ref:`CAL_HandleVisuService <group___cmp_visu_server_itf_1ga6633e99a5ac7088d7ab3e4396d2fa0eb>` pfHandleVisuService
+
+- #define :ref:`CHK_HandleVisuService <group___cmp_visu_server_itf_1gaafd17c317aa2dbf25832b94b3ad4a24f>` (pfHandleVisuService != NULL)
+
+- #define :ref:`EXP_HandleVisuService <group___cmp_visu_server_itf_1ga4192300e3f7c465827264d29233669e8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"HandleVisuService", (RTS_UINTPTR) :ref:`HandleVisuService <group___cmp_visu_server_itf_1ga525728b87dd4fd961e8c817f8fd35dc0>` , 0, 0)
+
+- #define :ref:`USE_RemoveClientsAndContinuationInfo <group___cmp_visu_server_itf_1ga0481a9e488ecf44bd6aa25f5a5086b5f>` :ref:`PFREMOVECLIENTSANDCONTINUATIONINFO <group___cmp_visu_server_itf_1gaa6ce68e4d578e8ad107ae0c30985cc08>` pfRemoveClientsAndContinuationInfo;
+
+- #define :ref:`EXT_RemoveClientsAndContinuationInfo <group___cmp_visu_server_itf_1gaed0259a68dc411383c4b7c848be0f790>` extern :ref:`PFREMOVECLIENTSANDCONTINUATIONINFO <group___cmp_visu_server_itf_1gaa6ce68e4d578e8ad107ae0c30985cc08>` pfRemoveClientsAndContinuationInfo;
+
+- #define :ref:`GET_RemoveClientsAndContinuationInfo <group___cmp_visu_server_itf_1ga858bb3c4838bad604871524c6cd679b7>` s_pfCMGetAPI2( "RemoveClientsAndContinuationInfo", (RTS_VOID_FCTPTR *)&pfRemoveClientsAndContinuationInfo, (fl), 0, 0)
+
+- #define :ref:`CAL_RemoveClientsAndContinuationInfo <group___cmp_visu_server_itf_1gab5700e90486763a11574d9e331ff6607>` pfRemoveClientsAndContinuationInfo
+
+- #define :ref:`CHK_RemoveClientsAndContinuationInfo <group___cmp_visu_server_itf_1ga4a3fca854ba3b86b1623a6e6a433b5be>` (pfRemoveClientsAndContinuationInfo != NULL)
+
+- #define :ref:`EXP_RemoveClientsAndContinuationInfo <group___cmp_visu_server_itf_1ga55e62b12ade4b0538e83e42499c5391b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RemoveClientsAndContinuationInfo", (RTS_UINTPTR) :ref:`RemoveClientsAndContinuationInfo <group___cmp_visu_server_itf_1ga465684215a4307536a3b5829d0c2f505>` , 0, 0)
+
+- #define :ref:`ITF_CmpVisuServer <group___cmp_visu_server_itf_1ga6106a6c924993ac5f542e02f1846455d>`
+
+- #define :ref:`EXTITF_CmpVisuServer <group___cmp_visu_server_itf_1ga4e3d2e205d46594f35fd22cbbbc0d930>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFHANDLEVISUSERVICE <group___cmp_visu_server_itf_1gac3909482ff5482b377aafb7c966ec345>`)(RTS_UI32 ulChannelId, HEADER_TAG *pHeaderTag, PROTOCOL_DATA_UNIT pduData, PROTOCOL_DATA_UNIT *pduSendBuffer)
+
+- typedef RTS_RESULT(* :ref:`PFREMOVECLIENTSANDCONTINUATIONINFO <group___cmp_visu_server_itf_1gaa6ce68e4d578e8ad107ae0c30985cc08>`)(RTS_UI32 ulChannelId)
+
+- typedef :ref:`ICmpVisuServer_C <struct_i_cmp_visu_server___c>` :ref:`ICmpVisuServer <group___cmp_visu_server_itf_1ga3b8ca60daee3703c6ac8602870094ca5>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`HandleVisuService <group___cmp_visu_server_itf_1ga525728b87dd4fd961e8c817f8fd35dc0>` (RTS_UI32 ulChannelId, :ref:`HEADER_TAG <struct_h_e_a_d_e_r___t_a_g>` * pHeaderTag, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduData, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>` * pduSendBuffer)
+
+- RTS_RESULT :ref:`RemoveClientsAndContinuationInfo <group___cmp_visu_server_itf_1ga465684215a4307536a3b5829d0c2f505>` (RTS_UI32 ulChannelId)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_visu_server_itf_1gaf8ec5d6a7b8557c013b4664bb7005b15:
+
+#define USE_HandleVisuService :ref:`PFHANDLEVISUSERVICE <group___cmp_visu_server_itf_1gac3909482ff5482b377aafb7c966ec345>` pfHandleVisuService;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_server_itf_1ga16d146d3e33ba540033ca496a3276b86:
+
+#define EXT_HandleVisuService extern :ref:`PFHANDLEVISUSERVICE <group___cmp_visu_server_itf_1gac3909482ff5482b377aafb7c966ec345>` pfHandleVisuService;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_server_itf_1ga6cbc0fb3f5ad811d8b59033f8a066c5b:
+
+#define GET_HandleVisuService s_pfCMGetAPI2( "HandleVisuService", (RTS_VOID_FCTPTR *)&pfHandleVisuService, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_server_itf_1ga6633e99a5ac7088d7ab3e4396d2fa0eb:
+
+#define CAL_HandleVisuService pfHandleVisuService
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_server_itf_1gaafd17c317aa2dbf25832b94b3ad4a24f:
+
+#define CHK_HandleVisuService (pfHandleVisuService != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_server_itf_1ga4192300e3f7c465827264d29233669e8:
+
+#define EXP_HandleVisuService s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"HandleVisuService", (RTS_UINTPTR) :ref:`HandleVisuService <group___cmp_visu_server_itf_1ga525728b87dd4fd961e8c817f8fd35dc0>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_server_itf_1ga0481a9e488ecf44bd6aa25f5a5086b5f:
+
+#define USE_RemoveClientsAndContinuationInfo :ref:`PFREMOVECLIENTSANDCONTINUATIONINFO <group___cmp_visu_server_itf_1gaa6ce68e4d578e8ad107ae0c30985cc08>` pfRemoveClientsAndContinuationInfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_server_itf_1gaed0259a68dc411383c4b7c848be0f790:
+
+#define EXT_RemoveClientsAndContinuationInfo extern :ref:`PFREMOVECLIENTSANDCONTINUATIONINFO <group___cmp_visu_server_itf_1gaa6ce68e4d578e8ad107ae0c30985cc08>` pfRemoveClientsAndContinuationInfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_server_itf_1ga858bb3c4838bad604871524c6cd679b7:
+
+#define GET_RemoveClientsAndContinuationInfo s_pfCMGetAPI2( "RemoveClientsAndContinuationInfo", (RTS_VOID_FCTPTR *)&pfRemoveClientsAndContinuationInfo, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_server_itf_1gab5700e90486763a11574d9e331ff6607:
+
+#define CAL_RemoveClientsAndContinuationInfo pfRemoveClientsAndContinuationInfo
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_server_itf_1ga4a3fca854ba3b86b1623a6e6a433b5be:
+
+#define CHK_RemoveClientsAndContinuationInfo (pfRemoveClientsAndContinuationInfo != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_server_itf_1ga55e62b12ade4b0538e83e42499c5391b:
+
+#define EXP_RemoveClientsAndContinuationInfo s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"RemoveClientsAndContinuationInfo", (RTS_UINTPTR) :ref:`RemoveClientsAndContinuationInfo <group___cmp_visu_server_itf_1ga465684215a4307536a3b5829d0c2f505>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_server_itf_1ga6106a6c924993ac5f542e02f1846455d:
+
+#define ITF_CmpVisuServer
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_server_itf_1ga4e3d2e205d46594f35fd22cbbbc0d930:
+
+#define EXTITF_CmpVisuServer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_visu_server_itf_1gac3909482ff5482b377aafb7c966ec345:
+
+typedef RTS_RESULT( *  PFHANDLEVISUSERVICE) (RTS_UI32 ulChannelId, HEADER_TAG *pHeaderTag, PROTOCOL_DATA_UNIT pduData, PROTOCOL_DATA_UNIT *pduSendBuffer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_server_itf_1gaa6ce68e4d578e8ad107ae0c30985cc08:
+
+typedef RTS_RESULT( *  PFREMOVECLIENTSANDCONTINUATIONINFO) (RTS_UI32 ulChannelId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_visu_server_itf_1ga3b8ca60daee3703c6ac8602870094ca5:
+
+typedef ICmpVisuServer_C ICmpVisuServer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_visu_server_itf_1ga525728b87dd4fd961e8c817f8fd35dc0:
+
+RTS_RESULT HandleVisuService (RTS_UI32 ulChannelId, HEADER_TAG *pHeaderTag, PROTOCOL_DATA_UNIT pduData, PROTOCOL_DATA_UNIT *pduSendBuffer)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Handles visualization services
+
+**Parameters**
+
++---------+---------------+------------------------------------------------+
+| [in]    | ulChannelId   | Id of the channel on which the request arrived |
++---------+---------------+------------------------------------------------+
+| [in]    | pHeaderTag    | Header of the actual visualization service     |
++---------+---------------+------------------------------------------------+
+| [in]    | pduData       | Data unit of the visualization service         |
++---------+---------------+------------------------------------------------+
+| [in]    | pduSendBuffer | Pointer to the sent data unit                  |
++---------+---------------+------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+.. _group___cmp_visu_server_itf_1ga465684215a4307536a3b5829d0c2f505:
+
+RTS_RESULT RemoveClientsAndContinuationInfo (RTS_UI32 ulChannelId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Removes clients and continuation info for a specific channel id.
+
+**Parameters**
+
++---------+-------------+------------------------------------------------+
+| [in]    | ulChannelId | Id of the channel on which the request arrived |
++---------+-------------+------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

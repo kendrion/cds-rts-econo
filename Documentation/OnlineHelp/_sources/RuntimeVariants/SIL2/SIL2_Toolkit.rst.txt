@@ -1,0 +1,102 @@
+.. _codesyscontrolv3_runtimevariants_sil2_toolkit:
+
+SIL2 Runtime Toolkit (SDK)
+==========================
+
+.. contents::
+   :local:
+   :depth: 4
+
+Getting Started
+---------------
+
+CODESYS Safety SIL2 is based on the embedded runtime of CODESYS. The safety
+manuals, which are delivered as part of the toolkit, are covering mainly
+the safety measures and safety requirements. The functional aspect, which
+is necessary while porting the runtime is not described there.
+
+The basic porting of the runtime system is exactly the same as for an embedded
+system. The only difference is, that you are bound to a specific configuration,
+and that you need to implement a few things differently. The following
+chapter describes exactly those differences.
+
+Runtime Configuration
+---------------------
+
+With CODESYS Safety SIL2 you are not fully free in the selection of your runtime
+components. You need to choose the certified variants of all components, which
+are involved in executing the IEC application.
+
+The following components need to be choosen, despite there might be other variants,
+which can be used in standard runtimes:
+
+- CmpAppEmbedded
+- CmpScheduleTimer
+- CmpSIL2
+
+The selection of those components might give you additional dependencies, which
+you need to fulfill. For example:
+
+- SysTimer
+- SysInt
+- SysFlash
+- ...
+
+For a full Safety SIL2 configuration, you also need to respect a few defines, which
+will make your runtime configuration a bit more strict. For a full list, please have
+a look into the Safety SIL2 manual.
+
+- RTS_SIL2
+- RTS_COMPACT
+
+If you haven't done an adaptation of CmpScheduleTimer before, you will need to
+implement a few macros, which are necessary to handle the IEC task contexts. Again,
+please refer to the Safety SIL2 manual for a full list.
+
+- RTS_CPU_CONTEXT_BUFFER: Defines a context buffer structure similar to 'jmpbuf' for
+  setjmp / longjmp.
+- RTS_CPU_CALL_ON_STACK: Call a function, but switch to a new stack before.
+- RTS_CPU_GET_STACK_BASE: Calculate the initial base address of a stack.
+- RTS_CPU_STORE_CONTEXT: Save the current context similar to 'setjmp'.
+- RTS_CPU_RESTORE_CONTEXT: Restore a previously saved context, similar to 'longjmp'.
+- RTS_CPU_RESTORE_CONTEXT_EXCEPTION: Same as RTS_CPU_RESTORE_CONTEXT(), but recover
+  from an exception or trap.
+
+List of safe functions
+----------------------
+
+All functions, which can be used in a Safety SIL2 IEC application, need to be listed
+in the macro 'SIL2_EXTERNAL_FUNCTIONS'. This list can be extended by defining your
+own external functions in 'SIL2_ADDITIONAL_EXTERNAL_FUNCTIONS'.
+
+.. code-block:: C
+
+ #define SIL2_ADDITIONAL_EXTERNAL_FUNCTIONS \
+ 	{(RTS_VOID_FCTPTR)mySafeFunc1, "mySafeFunc1"}, \
+ 	{(RTS_VOID_FCTPTR)mySafeFunc2, "mySafeFunc2"}, \
+ 	{(RTS_VOID_FCTPTR)mySafeFunc3, "mySafeFunc3"}, \
+ 	...
+
+Adding safe and non-safe IO-drivers
+-----------------------------------
+
+The runtime component IoDrvUnsafeBridge manages all I/O-driver components of the runtime.
+All safety relevant I/O-drivers have to be registered in a list of safe I/O-drivers.
+These I/O-drivers are directly called by the runtime in safe context and not via component IoDrvUnsafeBridge.
+All safety relevant data of safe I/O-drivers shall be placed in safety relevant and MPU protected memory.
+Therefore the safety relevant data must be marked with RTS_SIL2_ATTRIBUTE.
+All non-safe I/O-drivers are called by the component IoDrvUnsafeBridge and are working on a copy of the I/O configuration placed in non-safe memory.
+
+List of safe I/O-drivers
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: C
+
+ #define SUPPORTED_SAFE_IODRIVERS_LIST \
+         CT_CANOPEN_SAFETY, \
+	      0
+ 	...
+
+This list contains by default all certified I/O drivers supported by 3S.
+The list can be modified by the OEM. None of the drivers listed here are handled by the IoDrvUnsafeBridge component.
+Note: if the IoDrvUnsafeBridge component is absent from the system, this define is ineffective and all drivers are regarded as safe.

@@ -1,0 +1,831 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_security_manager_itf:
+
+=====================
+CmpSecurityManagerItf
+=====================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpSecurityManager.
+
+Detailed Description
+--------------------
+
+The security manager interface is used to specify the level of all available security features in one central component. Additionally the X.509 certificates for servers in the runtime system can be specified here.
+
+The actual available security features (for which the level can be specified) are: 1. Programming system communication: encrypted / unencrypted 2. IEC application code and boot application: signed / unsigned, encrypted / unencrypted 3. WebServer: HTTP / HTTPS
+
+NOTE: This list will be extended in the future, if new security features are available and the corresponding security level must be specified!
+
+SECURITY-NOTE: The security manager must be linked statically to the runtime system core to prevent, that it cannot be removed or replaced by a malware!
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Compiler switch <group___cmp_security_manager_itf___compilerswitch>`
+
+- :ref:`Event parameter <group___cmp_security_manager_itf___eventparameter>`
+
+- :ref:`Events <group___cmp_security_manager_itf___events>`
+
+- :ref:`Online services <group___cmp_security_manager_itf___onlineservices>`
+
+- :ref:`SecurityEditableFlags <group___cmp_security_manager_itf___security_editable_flags>`
+
+- :ref:`SecuritySelectableFlags <group___cmp_security_manager_itf___security_selectable_flags>`
+
+- :ref:`SecuritySettingFlags <group___cmp_security_manager_itf___security_setting_flags>`
+
+- :ref:`SecuritySettings <group___cmp_security_manager_itf___security_settings>`
+
+- :ref:`Settings <group___cmp_security_manager_itf___settings>`
+
+- :ref:`Static defines <group___cmp_security_manager_itf___staticdefines>`
+
+Data Structures
+---------------
+
+- struct :ref:`_SecuritySetting <struct___security_setting>`
+
+- struct :ref:`_SecuritySelectableSetting <struct___security_selectable_setting>`
+
+- struct :ref:`_SecuritySettingValue <union___security_setting_value>`
+
+- struct :ref:`_SecurityEditableSetting <struct___security_editable_setting>`
+
+- struct :ref:`ICmpSecurityManager_C <struct_i_cmp_security_manager___c>`
+
+Macros
+------
+
+- #define :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_LIST <group___cmp_security_manager_itf_1ga35939aaaf3fa5936143cdba336a6296a>` {\
+{(RTS_I32) :ref:`CREATE_SELFSIGNED_CERT_YES <group___cmp_security_manager_itf_1ggaf936bfb1da8d8e891c8f75cec7e827faae78d10739cde48314e4b64310857aedb>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_YES <group___cmp_security_manager_itf___security_settings_1ga6165135e114cdddf74e347d97ef33084>` , "Create a self-signed cert"},\
+{(RTS_I32) :ref:`CREATE_SELFSIGNED_CERT_NO <group___cmp_security_manager_itf_1ggaf936bfb1da8d8e891c8f75cec7e827faa4ae0110527fddceb670cbb793e994ead>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_NO <group___cmp_security_manager_itf___security_settings_1gadb37ab51f0a2f28dc40698556341930f>` , "Don't create a self-signed cert"}\
+}
+
+- #define :ref:`USE_SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1ga570498e6606ebd9db966a1783fc3151b>` :ref:`PFSECMANREGISTERSELECTABLESETTING <group___cmp_security_manager_itf_1ga88611cd16cd6131f6e9a786764816383>` pfSecManRegisterSelectableSetting;
+
+- #define :ref:`EXT_SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1gabb5ea91909860a4f851691b286e65ff9>` extern :ref:`PFSECMANREGISTERSELECTABLESETTING <group___cmp_security_manager_itf_1ga88611cd16cd6131f6e9a786764816383>` pfSecManRegisterSelectableSetting;
+
+- #define :ref:`GET_SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1gae8ab600fd91811dc73fd75e331d79004>` s_pfCMGetAPI2( "SecManRegisterSelectableSetting", (RTS_VOID_FCTPTR *)&pfSecManRegisterSelectableSetting, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1ga843308af9a6ca67988233d4a300273f5>` pfSecManRegisterSelectableSetting
+
+- #define :ref:`CHK_SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1ga1a47527d7359f45b6e7b6132e4615afe>` (pfSecManRegisterSelectableSetting != NULL)
+
+- #define :ref:`EXP_SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1ga39306ef38694d99175390b2c453d07ee>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManRegisterSelectableSetting", (RTS_UINTPTR) :ref:`SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1gaf76f47f0adf081fe1df891172f801f1c>` , 0, 0)
+
+- #define :ref:`USE_SecManRegisterEditableSetting <group___cmp_security_manager_itf_1gaf6ddbbf5fa555a17fd14f565de4400c6>` :ref:`PFSECMANREGISTEREDITABLESETTING <group___cmp_security_manager_itf_1ga9f18ea91c01f0a1ac2ff0c429bc02a82>` pfSecManRegisterEditableSetting;
+
+- #define :ref:`EXT_SecManRegisterEditableSetting <group___cmp_security_manager_itf_1ga0550c9ef8c63dc7989402568d80eec9b>` extern :ref:`PFSECMANREGISTEREDITABLESETTING <group___cmp_security_manager_itf_1ga9f18ea91c01f0a1ac2ff0c429bc02a82>` pfSecManRegisterEditableSetting;
+
+- #define :ref:`GET_SecManRegisterEditableSetting <group___cmp_security_manager_itf_1ga203e4019e39fc73e1cccc915c51192c8>` s_pfCMGetAPI2( "SecManRegisterEditableSetting", (RTS_VOID_FCTPTR *)&pfSecManRegisterEditableSetting, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManRegisterEditableSetting <group___cmp_security_manager_itf_1gafbf787dd1fd5ea88db603da05ec4b41b>` pfSecManRegisterEditableSetting
+
+- #define :ref:`CHK_SecManRegisterEditableSetting <group___cmp_security_manager_itf_1gac8dc09bbb44f7ae233e0a9501c0f0e60>` (pfSecManRegisterEditableSetting != NULL)
+
+- #define :ref:`EXP_SecManRegisterEditableSetting <group___cmp_security_manager_itf_1gaa3bcb8ce3ecbc4e9808831fa8334c0de>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManRegisterEditableSetting", (RTS_UINTPTR) :ref:`SecManRegisterEditableSetting <group___cmp_security_manager_itf_1ga463715ff698601288f82a1614d708012>` , 0, 0)
+
+- #define :ref:`USE_SecManUnregisterSetting <group___cmp_security_manager_itf_1ga1832e46a229cd9d52bda548447e97e41>` :ref:`PFSECMANUNREGISTERSETTING <group___cmp_security_manager_itf_1ga975a7fe30e9e9cbb4a11a38652427100>` pfSecManUnregisterSetting;
+
+- #define :ref:`EXT_SecManUnregisterSetting <group___cmp_security_manager_itf_1ga01564123d1f0a0e17d4f7727a9ccde62>` extern :ref:`PFSECMANUNREGISTERSETTING <group___cmp_security_manager_itf_1ga975a7fe30e9e9cbb4a11a38652427100>` pfSecManUnregisterSetting;
+
+- #define :ref:`GET_SecManUnregisterSetting <group___cmp_security_manager_itf_1gad44956bb82f89785e1ad036384f3f5f2>` s_pfCMGetAPI2( "SecManUnregisterSetting", (RTS_VOID_FCTPTR *)&pfSecManUnregisterSetting, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManUnregisterSetting <group___cmp_security_manager_itf_1ga4a16bcfc9274ab1a7996fb2cc7ab31af>` pfSecManUnregisterSetting
+
+- #define :ref:`CHK_SecManUnregisterSetting <group___cmp_security_manager_itf_1gad707646448dd9b1d047741ceed76ddff>` (pfSecManUnregisterSetting != NULL)
+
+- #define :ref:`EXP_SecManUnregisterSetting <group___cmp_security_manager_itf_1ga20456e615a605a817dcfcc9f3f7391d3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManUnregisterSetting", (RTS_UINTPTR) :ref:`SecManUnregisterSetting <group___cmp_security_manager_itf_1gaa8aeb0dbc5985248b43b53bfdf037d63>` , 0, 0)
+
+- #define :ref:`USE_SecManFindSetting <group___cmp_security_manager_itf_1ga27784b05224adda779a4950d1730d8eb>` :ref:`PFSECMANFINDSETTING <group___cmp_security_manager_itf_1ga315b3f28e1573604111d4829636dbd94>` pfSecManFindSetting;
+
+- #define :ref:`EXT_SecManFindSetting <group___cmp_security_manager_itf_1gaac562ef87b08bff00174f61d2beb8d79>` extern :ref:`PFSECMANFINDSETTING <group___cmp_security_manager_itf_1ga315b3f28e1573604111d4829636dbd94>` pfSecManFindSetting;
+
+- #define :ref:`GET_SecManFindSetting <group___cmp_security_manager_itf_1gabde2e5e40846549e79b35817619ea017>` s_pfCMGetAPI2( "SecManFindSetting", (RTS_VOID_FCTPTR *)&pfSecManFindSetting, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManFindSetting <group___cmp_security_manager_itf_1gafadcbd952f4f4510b9550f61e178ac42>` pfSecManFindSetting
+
+- #define :ref:`CHK_SecManFindSetting <group___cmp_security_manager_itf_1gacdd7d7bbd43f6836fb903e053b4349a5>` (pfSecManFindSetting != NULL)
+
+- #define :ref:`EXP_SecManFindSetting <group___cmp_security_manager_itf_1ga343953406be9ac2ea8cc295af44dd350>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManFindSetting", (RTS_UINTPTR) :ref:`SecManFindSetting <group___cmp_security_manager_itf_1ga60689d648cafeaf6a7ca8db7740abaa6>` , 0, 0)
+
+- #define :ref:`USE_SecManGetSelectableSetting <group___cmp_security_manager_itf_1ga7e390651f75d499a08d2031f61643d4d>` :ref:`PFSECMANGETSELECTABLESETTING <group___cmp_security_manager_itf_1gad9dfeb0362be5ef1280bffbcc26142c8>` pfSecManGetSelectableSetting;
+
+- #define :ref:`EXT_SecManGetSelectableSetting <group___cmp_security_manager_itf_1ga4c30997eababe42234001489030df92f>` extern :ref:`PFSECMANGETSELECTABLESETTING <group___cmp_security_manager_itf_1gad9dfeb0362be5ef1280bffbcc26142c8>` pfSecManGetSelectableSetting;
+
+- #define :ref:`GET_SecManGetSelectableSetting <group___cmp_security_manager_itf_1ga7b6fa50373a5dbf456fa54faf776100c>` s_pfCMGetAPI2( "SecManGetSelectableSetting", (RTS_VOID_FCTPTR *)&pfSecManGetSelectableSetting, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManGetSelectableSetting <group___cmp_security_manager_itf_1ga32d775d2e6297fa93da19403cf16f3bf>` pfSecManGetSelectableSetting
+
+- #define :ref:`CHK_SecManGetSelectableSetting <group___cmp_security_manager_itf_1gab0601ac96e802666034145a55ce73f3e>` (pfSecManGetSelectableSetting != NULL)
+
+- #define :ref:`EXP_SecManGetSelectableSetting <group___cmp_security_manager_itf_1gac3829125dd3302255d8483e85f4a853f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManGetSelectableSetting", (RTS_UINTPTR) :ref:`SecManGetSelectableSetting <group___cmp_security_manager_itf_1ga7c32a95c317e180c6346bc4a675e34e3>` , 0, 0)
+
+- #define :ref:`USE_SecManGetEditableSetting <group___cmp_security_manager_itf_1gabcdeb00469122d73d52a7fc59145eeab>` :ref:`PFSECMANGETEDITABLESETTING <group___cmp_security_manager_itf_1ga1bf37c94aeb24264a4db192863c4123e>` pfSecManGetEditableSetting;
+
+- #define :ref:`EXT_SecManGetEditableSetting <group___cmp_security_manager_itf_1gad997828298ff4f1a63031795fc66fbdf>` extern :ref:`PFSECMANGETEDITABLESETTING <group___cmp_security_manager_itf_1ga1bf37c94aeb24264a4db192863c4123e>` pfSecManGetEditableSetting;
+
+- #define :ref:`GET_SecManGetEditableSetting <group___cmp_security_manager_itf_1ga4ec2ae7d77643bf5e91a46a92f108b32>` s_pfCMGetAPI2( "SecManGetEditableSetting", (RTS_VOID_FCTPTR *)&pfSecManGetEditableSetting, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManGetEditableSetting <group___cmp_security_manager_itf_1gaf43c2a37f86736551fd71e489a7fcebd>` pfSecManGetEditableSetting
+
+- #define :ref:`CHK_SecManGetEditableSetting <group___cmp_security_manager_itf_1ga83983d0cce4a6c2b10fcdc63acc82407>` (pfSecManGetEditableSetting != NULL)
+
+- #define :ref:`EXP_SecManGetEditableSetting <group___cmp_security_manager_itf_1ga4f89f7dfc61968ab337cc87b1a541c83>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManGetEditableSetting", (RTS_UINTPTR) :ref:`SecManGetEditableSetting <group___cmp_security_manager_itf_1gac609e6d32c1ce75d98e0c71e22023221>` , 0, 0)
+
+- #define :ref:`USE_SecManFillCertificateInfo <group___cmp_security_manager_itf_1ga5c7e81fdc79586efefae035e863e9c0e>` :ref:`PFSECMANFILLCERTIFICATEINFO <group___cmp_security_manager_itf_1ga59cd2b6ef621c29fbdc289709a10f613>` pfSecManFillCertificateInfo;
+
+- #define :ref:`EXT_SecManFillCertificateInfo <group___cmp_security_manager_itf_1ga5028004dccf7f4d0ba6f96ae2a6a6d87>` extern :ref:`PFSECMANFILLCERTIFICATEINFO <group___cmp_security_manager_itf_1ga59cd2b6ef621c29fbdc289709a10f613>` pfSecManFillCertificateInfo;
+
+- #define :ref:`GET_SecManFillCertificateInfo <group___cmp_security_manager_itf_1ga435fa1151ad1d65e71e6f6e5ec35beae>` s_pfCMGetAPI2( "SecManFillCertificateInfo", (RTS_VOID_FCTPTR *)&pfSecManFillCertificateInfo, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManFillCertificateInfo <group___cmp_security_manager_itf_1ga6725f364406c47e8bfa997aa70063c0f>` pfSecManFillCertificateInfo
+
+- #define :ref:`CHK_SecManFillCertificateInfo <group___cmp_security_manager_itf_1ga9cd998364a1f187ab41248254612700a>` (pfSecManFillCertificateInfo != NULL)
+
+- #define :ref:`EXP_SecManFillCertificateInfo <group___cmp_security_manager_itf_1gaa44a8cb2e44511e7297af91b77cc6e6b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManFillCertificateInfo", (RTS_UINTPTR) :ref:`SecManFillCertificateInfo <group___cmp_security_manager_itf_1ga9358c64f6efe1568056e2b031d01a091>` , 0, 0)
+
+- #define :ref:`USE_SecManCheckTlsContext <group___cmp_security_manager_itf_1ga56a49ea4f2395b8e25ea452b327cdac4>` :ref:`PFSECMANCHECKTLSCONTEXT <group___cmp_security_manager_itf_1ga55952535fa6c9cf41d55a3c36e93492a>` pfSecManCheckTlsContext;
+
+- #define :ref:`EXT_SecManCheckTlsContext <group___cmp_security_manager_itf_1ga43c7767a0d335209dbccb213a983ff1f>` extern :ref:`PFSECMANCHECKTLSCONTEXT <group___cmp_security_manager_itf_1ga55952535fa6c9cf41d55a3c36e93492a>` pfSecManCheckTlsContext;
+
+- #define :ref:`GET_SecManCheckTlsContext <group___cmp_security_manager_itf_1ga871e4369948d7ba2a206b51e45e6cfa7>` s_pfCMGetAPI2( "SecManCheckTlsContext", (RTS_VOID_FCTPTR *)&pfSecManCheckTlsContext, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManCheckTlsContext <group___cmp_security_manager_itf_1gaf44c5b136f515132998a3edcd180ee96>` pfSecManCheckTlsContext
+
+- #define :ref:`CHK_SecManCheckTlsContext <group___cmp_security_manager_itf_1ga5e8de9e022128672f009f8969dd5d5e4>` (pfSecManCheckTlsContext != NULL)
+
+- #define :ref:`EXP_SecManCheckTlsContext <group___cmp_security_manager_itf_1ga46d7ec3175de9f265a082b1a7a8ecbf0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManCheckTlsContext", (RTS_UINTPTR) :ref:`SecManCheckTlsContext <group___cmp_security_manager_itf_1ga7c5a289e7d7c8a907da11f7480f5d72e>` , 0, 0)
+
+- #define :ref:`ITF_CmpSecurityManager <group___cmp_security_manager_itf_1gabb8559ed66b1ca13dd086babf0f2f536>`
+
+- #define :ref:`EXTITF_CmpSecurityManager <group___cmp_security_manager_itf_1gad28f8c197d677a8154c5311d6692743f>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`_SecuritySetting <struct___security_setting>` :ref:`SecuritySetting <group___cmp_security_manager_itf_1ga2f1b7f04346c3edc9ea7f6466034dde6>`
+
+- typedef struct :ref:`_SecuritySelectableSetting <struct___security_selectable_setting>` :ref:`SecuritySelectableSetting <group___cmp_security_manager_itf_1ga88fb4838e84e3e4a0fb5335b3dae82a5>`
+
+- typedef union :ref:`_SecuritySettingValue <union___security_setting_value>` :ref:`SecuritySettingValue <group___cmp_security_manager_itf_1gac5532c61f8490e8516c74d9ecbdce621>`
+
+- typedef struct :ref:`_SecurityEditableSetting <struct___security_editable_setting>` :ref:`SecurityEditableSetting <group___cmp_security_manager_itf_1ga67af4a9d927839a7122ae38e56266cbb>`
+
+- typedef RTS_HANDLE(* :ref:`PFSECMANREGISTERSELECTABLESETTING <group___cmp_security_manager_itf_1ga88611cd16cd6131f6e9a786764816383>`)(CMPID cmpId, const char *pszKey, const char *pszDescription, const char *pszDefaultSecName, const SecuritySelectableSetting *pList, RTS_UI32 ui32Settings, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSECMANREGISTEREDITABLESETTING <group___cmp_security_manager_itf_1ga9f18ea91c01f0a1ac2ff0c429bc02a82>`)(CMPID cmpId, const char *pszKey, const char *pszDescription, SecurityEditableSetting setting, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSECMANUNREGISTERSETTING <group___cmp_security_manager_itf_1ga975a7fe30e9e9cbb4a11a38652427100>`)(RTS_HANDLE hSecuritySetting)
+
+- typedef RTS_HANDLE(* :ref:`PFSECMANFINDSETTING <group___cmp_security_manager_itf_1ga315b3f28e1573604111d4829636dbd94>`)(CMPID cmpId, const char *pszKey, RTS_RESULT *pResult)
+
+- typedef :ref:`SecurityEditableSetting <group___cmp_security_manager_itf_1ga67af4a9d927839a7122ae38e56266cbb>` *(* :ref:`PFSECMANGETEDITABLESETTING <group___cmp_security_manager_itf_1ga1bf37c94aeb24264a4db192863c4123e>`)(RTS_HANDLE hSecuritySetting, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSECMANFILLCERTIFICATEINFO <group___cmp_security_manager_itf_1ga59cd2b6ef621c29fbdc289709a10f613>`)(CMPID cmpId, RtsX509CertInfo *pCertInfo)
+
+- typedef RTS_RESULT(* :ref:`PFSECMANCHECKTLSCONTEXT <group___cmp_security_manager_itf_1ga55952535fa6c9cf41d55a3c36e93492a>`)(RTS_UI32 ui32TlsMethod, char *pszCipherList, RTS_I32 i32VerifyMode)
+
+- typedef :ref:`ICmpSecurityManager_C <struct_i_cmp_security_manager___c>` :ref:`ICmpSecurityManager <group___cmp_security_manager_itf_1gaa1fb4c1920957a44b230de3a550debee>`
+
+Enumerations
+------------
+
+- enum :ref:`SECURITY_CREATESELFSIGNEDCERT_IDS <group___cmp_security_manager_itf_1gaf936bfb1da8d8e891c8f75cec7e827fa>` { :ref:`CREATE_SELFSIGNED_CERT_YES <group___cmp_security_manager_itf_1ggaf936bfb1da8d8e891c8f75cec7e827faae78d10739cde48314e4b64310857aedb>`, :ref:`CREATE_SELFSIGNED_CERT_NO <group___cmp_security_manager_itf_1ggaf936bfb1da8d8e891c8f75cec7e827faa4ae0110527fddceb670cbb793e994ead>` }
+
+Functions
+---------
+
+- RTS_HANDLE :ref:`SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1gaf76f47f0adf081fe1df891172f801f1c>` (CMPID cmpId, const char * pszKey, const char * pszDescription, const char * pszDefaultSecName, const :ref:`SecuritySelectableSetting <group___cmp_security_manager_itf_1ga88fb4838e84e3e4a0fb5335b3dae82a5>` * pList, RTS_UI32 ui32Settings, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SecManRegisterEditableSetting <group___cmp_security_manager_itf_1ga463715ff698601288f82a1614d708012>` (CMPID cmpId, const char * pszKey, const char * pszDescription, :ref:`SecurityEditableSetting <group___cmp_security_manager_itf_1ga67af4a9d927839a7122ae38e56266cbb>`  setting, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SecManUnregisterSetting <group___cmp_security_manager_itf_1gaa8aeb0dbc5985248b43b53bfdf037d63>` (RTS_HANDLE hSecuritySetting)
+
+- RTS_HANDLE :ref:`SecManFindSetting <group___cmp_security_manager_itf_1ga60689d648cafeaf6a7ca8db7740abaa6>` (CMPID cmpId, const char * pszKey, RTS_RESULT * pResult)
+
+- const :ref:`SecuritySelectableSetting <group___cmp_security_manager_itf_1ga88fb4838e84e3e4a0fb5335b3dae82a5>` * :ref:`SecManGetSelectableSetting <group___cmp_security_manager_itf_1ga7c32a95c317e180c6346bc4a675e34e3>` (RTS_HANDLE hSecuritySetting, RTS_RESULT * pResult)
+
+- :ref:`SecurityEditableSetting <group___cmp_security_manager_itf_1ga67af4a9d927839a7122ae38e56266cbb>` * :ref:`SecManGetEditableSetting <group___cmp_security_manager_itf_1gac609e6d32c1ce75d98e0c71e22023221>` (RTS_HANDLE hSecuritySetting, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SecManFillCertificateInfo <group___cmp_security_manager_itf_1ga9358c64f6efe1568056e2b031d01a091>` (CMPID cmpId, :ref:`RtsX509CertInfo <group___cmp_x509_cert_itf_1ga96114d4c034d1905d83ce6d9a53c9a16>` * pCertInfo)
+
+- RTS_RESULT :ref:`SecManCheckTlsContext <group___cmp_security_manager_itf_1ga7c5a289e7d7c8a907da11f7480f5d72e>` (RTS_UI32 ui32TlsMethod, char * pszCipherList, RTS_I32 i32VerifyMode)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_security_manager_itf_1ga35939aaaf3fa5936143cdba336a6296a:
+
+#define SECURITY_VALUE_CREATE_SELFSIGNED_CERT_LIST
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Value:**
+
+.. parsed-literal::
+
+    {\\
+    {(RTS_I32) :ref:`CREATE_SELFSIGNED_CERT_YES <group___cmp_security_manager_itf_1ggaf936bfb1da8d8e891c8f75cec7e827faae78d10739cde48314e4b64310857aedb>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_YES <group___cmp_security_manager_itf___security_settings_1ga6165135e114cdddf74e347d97ef33084>` , "Create a self-signed cert"},\\
+    {(RTS_I32) :ref:`CREATE_SELFSIGNED_CERT_NO <group___cmp_security_manager_itf_1ggaf936bfb1da8d8e891c8f75cec7e827faa4ae0110527fddceb670cbb793e994ead>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_NO <group___cmp_security_manager_itf___security_settings_1gadb37ab51f0a2f28dc40698556341930f>` , "Don't create a self-signed cert"}\\
+    }
+
+.. _group___cmp_security_manager_itf_1ga570498e6606ebd9db966a1783fc3151b:
+
+#define USE_SecManRegisterSelectableSetting :ref:`PFSECMANREGISTERSELECTABLESETTING <group___cmp_security_manager_itf_1ga88611cd16cd6131f6e9a786764816383>` pfSecManRegisterSelectableSetting;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gabb5ea91909860a4f851691b286e65ff9:
+
+#define EXT_SecManRegisterSelectableSetting extern :ref:`PFSECMANREGISTERSELECTABLESETTING <group___cmp_security_manager_itf_1ga88611cd16cd6131f6e9a786764816383>` pfSecManRegisterSelectableSetting;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gae8ab600fd91811dc73fd75e331d79004:
+
+#define GET_SecManRegisterSelectableSetting s_pfCMGetAPI2( "SecManRegisterSelectableSetting", (RTS_VOID_FCTPTR *)&pfSecManRegisterSelectableSetting, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga843308af9a6ca67988233d4a300273f5:
+
+#define CAL_SecManRegisterSelectableSetting pfSecManRegisterSelectableSetting
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga1a47527d7359f45b6e7b6132e4615afe:
+
+#define CHK_SecManRegisterSelectableSetting (pfSecManRegisterSelectableSetting != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga39306ef38694d99175390b2c453d07ee:
+
+#define EXP_SecManRegisterSelectableSetting s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManRegisterSelectableSetting", (RTS_UINTPTR) :ref:`SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1gaf76f47f0adf081fe1df891172f801f1c>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gaf6ddbbf5fa555a17fd14f565de4400c6:
+
+#define USE_SecManRegisterEditableSetting :ref:`PFSECMANREGISTEREDITABLESETTING <group___cmp_security_manager_itf_1ga9f18ea91c01f0a1ac2ff0c429bc02a82>` pfSecManRegisterEditableSetting;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga0550c9ef8c63dc7989402568d80eec9b:
+
+#define EXT_SecManRegisterEditableSetting extern :ref:`PFSECMANREGISTEREDITABLESETTING <group___cmp_security_manager_itf_1ga9f18ea91c01f0a1ac2ff0c429bc02a82>` pfSecManRegisterEditableSetting;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga203e4019e39fc73e1cccc915c51192c8:
+
+#define GET_SecManRegisterEditableSetting s_pfCMGetAPI2( "SecManRegisterEditableSetting", (RTS_VOID_FCTPTR *)&pfSecManRegisterEditableSetting, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gafbf787dd1fd5ea88db603da05ec4b41b:
+
+#define CAL_SecManRegisterEditableSetting pfSecManRegisterEditableSetting
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gac8dc09bbb44f7ae233e0a9501c0f0e60:
+
+#define CHK_SecManRegisterEditableSetting (pfSecManRegisterEditableSetting != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gaa3bcb8ce3ecbc4e9808831fa8334c0de:
+
+#define EXP_SecManRegisterEditableSetting s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManRegisterEditableSetting", (RTS_UINTPTR) :ref:`SecManRegisterEditableSetting <group___cmp_security_manager_itf_1ga463715ff698601288f82a1614d708012>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga1832e46a229cd9d52bda548447e97e41:
+
+#define USE_SecManUnregisterSetting :ref:`PFSECMANUNREGISTERSETTING <group___cmp_security_manager_itf_1ga975a7fe30e9e9cbb4a11a38652427100>` pfSecManUnregisterSetting;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga01564123d1f0a0e17d4f7727a9ccde62:
+
+#define EXT_SecManUnregisterSetting extern :ref:`PFSECMANUNREGISTERSETTING <group___cmp_security_manager_itf_1ga975a7fe30e9e9cbb4a11a38652427100>` pfSecManUnregisterSetting;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gad44956bb82f89785e1ad036384f3f5f2:
+
+#define GET_SecManUnregisterSetting s_pfCMGetAPI2( "SecManUnregisterSetting", (RTS_VOID_FCTPTR *)&pfSecManUnregisterSetting, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga4a16bcfc9274ab1a7996fb2cc7ab31af:
+
+#define CAL_SecManUnregisterSetting pfSecManUnregisterSetting
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gad707646448dd9b1d047741ceed76ddff:
+
+#define CHK_SecManUnregisterSetting (pfSecManUnregisterSetting != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga20456e615a605a817dcfcc9f3f7391d3:
+
+#define EXP_SecManUnregisterSetting s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManUnregisterSetting", (RTS_UINTPTR) :ref:`SecManUnregisterSetting <group___cmp_security_manager_itf_1gaa8aeb0dbc5985248b43b53bfdf037d63>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga27784b05224adda779a4950d1730d8eb:
+
+#define USE_SecManFindSetting :ref:`PFSECMANFINDSETTING <group___cmp_security_manager_itf_1ga315b3f28e1573604111d4829636dbd94>` pfSecManFindSetting;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gaac562ef87b08bff00174f61d2beb8d79:
+
+#define EXT_SecManFindSetting extern :ref:`PFSECMANFINDSETTING <group___cmp_security_manager_itf_1ga315b3f28e1573604111d4829636dbd94>` pfSecManFindSetting;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gabde2e5e40846549e79b35817619ea017:
+
+#define GET_SecManFindSetting s_pfCMGetAPI2( "SecManFindSetting", (RTS_VOID_FCTPTR *)&pfSecManFindSetting, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gafadcbd952f4f4510b9550f61e178ac42:
+
+#define CAL_SecManFindSetting pfSecManFindSetting
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gacdd7d7bbd43f6836fb903e053b4349a5:
+
+#define CHK_SecManFindSetting (pfSecManFindSetting != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga343953406be9ac2ea8cc295af44dd350:
+
+#define EXP_SecManFindSetting s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManFindSetting", (RTS_UINTPTR) :ref:`SecManFindSetting <group___cmp_security_manager_itf_1ga60689d648cafeaf6a7ca8db7740abaa6>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga7e390651f75d499a08d2031f61643d4d:
+
+#define USE_SecManGetSelectableSetting :ref:`PFSECMANGETSELECTABLESETTING <group___cmp_security_manager_itf_1gad9dfeb0362be5ef1280bffbcc26142c8>` pfSecManGetSelectableSetting;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga4c30997eababe42234001489030df92f:
+
+#define EXT_SecManGetSelectableSetting extern :ref:`PFSECMANGETSELECTABLESETTING <group___cmp_security_manager_itf_1gad9dfeb0362be5ef1280bffbcc26142c8>` pfSecManGetSelectableSetting;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga7b6fa50373a5dbf456fa54faf776100c:
+
+#define GET_SecManGetSelectableSetting s_pfCMGetAPI2( "SecManGetSelectableSetting", (RTS_VOID_FCTPTR *)&pfSecManGetSelectableSetting, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga32d775d2e6297fa93da19403cf16f3bf:
+
+#define CAL_SecManGetSelectableSetting pfSecManGetSelectableSetting
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gab0601ac96e802666034145a55ce73f3e:
+
+#define CHK_SecManGetSelectableSetting (pfSecManGetSelectableSetting != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gac3829125dd3302255d8483e85f4a853f:
+
+#define EXP_SecManGetSelectableSetting s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManGetSelectableSetting", (RTS_UINTPTR) :ref:`SecManGetSelectableSetting <group___cmp_security_manager_itf_1ga7c32a95c317e180c6346bc4a675e34e3>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gabcdeb00469122d73d52a7fc59145eeab:
+
+#define USE_SecManGetEditableSetting :ref:`PFSECMANGETEDITABLESETTING <group___cmp_security_manager_itf_1ga1bf37c94aeb24264a4db192863c4123e>` pfSecManGetEditableSetting;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gad997828298ff4f1a63031795fc66fbdf:
+
+#define EXT_SecManGetEditableSetting extern :ref:`PFSECMANGETEDITABLESETTING <group___cmp_security_manager_itf_1ga1bf37c94aeb24264a4db192863c4123e>` pfSecManGetEditableSetting;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga4ec2ae7d77643bf5e91a46a92f108b32:
+
+#define GET_SecManGetEditableSetting s_pfCMGetAPI2( "SecManGetEditableSetting", (RTS_VOID_FCTPTR *)&pfSecManGetEditableSetting, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gaf43c2a37f86736551fd71e489a7fcebd:
+
+#define CAL_SecManGetEditableSetting pfSecManGetEditableSetting
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga83983d0cce4a6c2b10fcdc63acc82407:
+
+#define CHK_SecManGetEditableSetting (pfSecManGetEditableSetting != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga4f89f7dfc61968ab337cc87b1a541c83:
+
+#define EXP_SecManGetEditableSetting s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManGetEditableSetting", (RTS_UINTPTR) :ref:`SecManGetEditableSetting <group___cmp_security_manager_itf_1gac609e6d32c1ce75d98e0c71e22023221>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga5c7e81fdc79586efefae035e863e9c0e:
+
+#define USE_SecManFillCertificateInfo :ref:`PFSECMANFILLCERTIFICATEINFO <group___cmp_security_manager_itf_1ga59cd2b6ef621c29fbdc289709a10f613>` pfSecManFillCertificateInfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga5028004dccf7f4d0ba6f96ae2a6a6d87:
+
+#define EXT_SecManFillCertificateInfo extern :ref:`PFSECMANFILLCERTIFICATEINFO <group___cmp_security_manager_itf_1ga59cd2b6ef621c29fbdc289709a10f613>` pfSecManFillCertificateInfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga435fa1151ad1d65e71e6f6e5ec35beae:
+
+#define GET_SecManFillCertificateInfo s_pfCMGetAPI2( "SecManFillCertificateInfo", (RTS_VOID_FCTPTR *)&pfSecManFillCertificateInfo, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga6725f364406c47e8bfa997aa70063c0f:
+
+#define CAL_SecManFillCertificateInfo pfSecManFillCertificateInfo
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga9cd998364a1f187ab41248254612700a:
+
+#define CHK_SecManFillCertificateInfo (pfSecManFillCertificateInfo != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gaa44a8cb2e44511e7297af91b77cc6e6b:
+
+#define EXP_SecManFillCertificateInfo s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManFillCertificateInfo", (RTS_UINTPTR) :ref:`SecManFillCertificateInfo <group___cmp_security_manager_itf_1ga9358c64f6efe1568056e2b031d01a091>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga56a49ea4f2395b8e25ea452b327cdac4:
+
+#define USE_SecManCheckTlsContext :ref:`PFSECMANCHECKTLSCONTEXT <group___cmp_security_manager_itf_1ga55952535fa6c9cf41d55a3c36e93492a>` pfSecManCheckTlsContext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga43c7767a0d335209dbccb213a983ff1f:
+
+#define EXT_SecManCheckTlsContext extern :ref:`PFSECMANCHECKTLSCONTEXT <group___cmp_security_manager_itf_1ga55952535fa6c9cf41d55a3c36e93492a>` pfSecManCheckTlsContext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga871e4369948d7ba2a206b51e45e6cfa7:
+
+#define GET_SecManCheckTlsContext s_pfCMGetAPI2( "SecManCheckTlsContext", (RTS_VOID_FCTPTR *)&pfSecManCheckTlsContext, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gaf44c5b136f515132998a3edcd180ee96:
+
+#define CAL_SecManCheckTlsContext pfSecManCheckTlsContext
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga5e8de9e022128672f009f8969dd5d5e4:
+
+#define CHK_SecManCheckTlsContext (pfSecManCheckTlsContext != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga46d7ec3175de9f265a082b1a7a8ecbf0:
+
+#define EXP_SecManCheckTlsContext s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManCheckTlsContext", (RTS_UINTPTR) :ref:`SecManCheckTlsContext <group___cmp_security_manager_itf_1ga7c5a289e7d7c8a907da11f7480f5d72e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gabb8559ed66b1ca13dd086babf0f2f536:
+
+#define ITF_CmpSecurityManager
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gad28f8c197d677a8154c5311d6692743f:
+
+#define EXTITF_CmpSecurityManager
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_security_manager_itf_1ga2f1b7f04346c3edc9ea7f6466034dde6:
+
+typedef struct _SecuritySetting  SecuritySetting
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Entry of one security feature to be managed by the CmpSecurityManager.
+
+.. _group___cmp_security_manager_itf_1ga88fb4838e84e3e4a0fb5335b3dae82a5:
+
+typedef struct _SecuritySelectableSetting  SecuritySelectableSetting
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This structure stores a single entry of a selectable setting. Each possible selection is a single structure element when registering the setting. The registration can be done using SecManRegisterSelectableSetting function. The selected setting can be retrieved by using SecManGetSelectableSetting.
+
+.. _group___cmp_security_manager_itf_1gac5532c61f8490e8516c74d9ecbdce621:
+
+typedef union _SecuritySettingValue  SecuritySettingValue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Union to store an editable integer, string or wstring value. Value can be specified in the security manager.
+
+.. _group___cmp_security_manager_itf_1ga67af4a9d927839a7122ae38e56266cbb:
+
+typedef struct _SecurityEditableSetting  SecurityEditableSetting
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This structure stores a editable setting. The setting can be registered using SecManRegisterEditableSetting function. The default value given when registering will be returned until the setting has been changed by the someone. Then the changed value will be returned. To indicate if a string or an integer is stored use either CMPSECMAN_FLAGS_STRINGSETTING or CMPSECMAN_FLAGS_INTSETTING. The corresponding field in the secValue union is then used. Use the function SecManGetEditableSetting to retrieve the valued stored.
+
+.. _group___cmp_security_manager_itf_1ga88611cd16cd6131f6e9a786764816383:
+
+typedef RTS_HANDLE( *  PFSECMANREGISTERSELECTABLESETTING) (CMPID cmpId, const char *pszKey, const char *pszDescription, const char *pszDefaultSecName, const SecuritySelectableSetting *pList, RTS_UI32 ui32Settings, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga9f18ea91c01f0a1ac2ff0c429bc02a82:
+
+typedef RTS_HANDLE( *  PFSECMANREGISTEREDITABLESETTING) (CMPID cmpId, const char *pszKey, const char *pszDescription, SecurityEditableSetting setting, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga975a7fe30e9e9cbb4a11a38652427100:
+
+typedef RTS_RESULT( *  PFSECMANUNREGISTERSETTING) (RTS_HANDLE hSecuritySetting)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga315b3f28e1573604111d4829636dbd94:
+
+typedef RTS_HANDLE( *  PFSECMANFINDSETTING) (CMPID cmpId, const char *pszKey, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga1bf37c94aeb24264a4db192863c4123e:
+
+typedef SecurityEditableSetting*( *  PFSECMANGETEDITABLESETTING) (RTS_HANDLE hSecuritySetting, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga59cd2b6ef621c29fbdc289709a10f613:
+
+typedef RTS_RESULT( *  PFSECMANFILLCERTIFICATEINFO) (CMPID cmpId, RtsX509CertInfo *pCertInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1ga55952535fa6c9cf41d55a3c36e93492a:
+
+typedef RTS_RESULT( *  PFSECMANCHECKTLSCONTEXT) (RTS_UI32 ui32TlsMethod, char *pszCipherList, RTS_I32 i32VerifyMode)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_security_manager_itf_1gaa1fb4c1920957a44b230de3a550debee:
+
+typedef ICmpSecurityManager_C ICmpSecurityManager
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Enumeration Type Documentation
+------------------------------
+
+.. _group___cmp_security_manager_itf_1gaf936bfb1da8d8e891c8f75cec7e827fa:
+
+enum SECURITY_CREATESELFSIGNEDCERT_IDS
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+SecurityIDs
+
+
+**Enumerator:**
+
++----------------------------+
+| CREATE_SELFSIGNED_CERT_YES |
++----------------------------+
+| CREATE_SELFSIGNED_CERT_NO  |
++----------------------------+
+
+Function Documentation
+----------------------
+
+.. _group___cmp_security_manager_itf_1gaf76f47f0adf081fe1df891172f801f1c:
+
+RTS_HANDLE SecManRegisterSelectableSetting (CMPID cmpId, const char *pszKey, const char *pszDescription, const char *pszDefaultSecName, const SecuritySelectableSetting *pList, RTS_UI32 ui32Settings, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to register one security setting of a component.
+
+**Parameters**
+
++---------+--------------+----------------------------------------------------------+
+| [in]    | pEntry       | Pointer to description structure of the security setting |
++---------+--------------+----------------------------------------------------------+
+| [in]    | pSettings    | Pointer to the security settings list                    |
++---------+--------------+----------------------------------------------------------+
+| [in]    | ui32Settings | Number of security settings in the list                  |
++---------+--------------+----------------------------------------------------------+
+| [out]   | pResult      | Pointer to error code                                    |
++---------+--------------+----------------------------------------------------------+
+
+**Return values**
+
++--------------------+-----------------------------------------------------------------------------+
+| ERR_OK             | Settings could be registered                                                |
++--------------------+-----------------------------------------------------------------------------+
+| ERR_NOTINITIALIZED | CmpSecurityManager is not yet initialized                                   |
++--------------------+-----------------------------------------------------------------------------+
+| ERR_NO_MEMORY      | No memory to register security settings                                     |
++--------------------+-----------------------------------------------------------------------------+
+| ERR_DUPLICATE      | The setting was registered already. The handle of the existing is returned. |
++--------------------+-----------------------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the registered security settings
+
+.. _group___cmp_security_manager_itf_1ga463715ff698601288f82a1614d708012:
+
+RTS_HANDLE SecManRegisterEditableSetting (CMPID cmpId, const char *pszKey, const char *pszDescription, SecurityEditableSetting setting, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to register one security setting of a component.
+
+**Parameters**
+
++---------+----------+----------------------------------------------------------+
+| [in]    | pEntry   | Pointer to description structure of the security setting |
++---------+----------+----------------------------------------------------------+
+| [in]    | pSetting | Pointer to the editable security settings                |
++---------+----------+----------------------------------------------------------+
+| [out]   | pResult  | Pointer to error code                                    |
++---------+----------+----------------------------------------------------------+
+
+**Return values**
+
++--------------------+-----------------------------------------------------------------------------+
+| ERR_OK             | Settings could be registered                                                |
++--------------------+-----------------------------------------------------------------------------+
+| ERR_NOTINITIALIZED | CmpSecurityManager is not yet initialized                                   |
++--------------------+-----------------------------------------------------------------------------+
+| ERR_NO_MEMORY      | No memory to register security settings                                     |
++--------------------+-----------------------------------------------------------------------------+
+| ERR_DUPLICATE      | The setting was registered already. The handle of the existing is returned. |
++--------------------+-----------------------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the registered security settings
+
+.. _group___cmp_security_manager_itf_1gaa8aeb0dbc5985248b43b53bfdf037d63:
+
+RTS_RESULT SecManUnregisterSetting (RTS_HANDLE hSecuritySetting)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Unregister security setting
+
+**Parameters**
+
++---------+------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hSecuritySetting | Handle to the security settings returned by :ref:`SecManRegisterSelectableSetting() <group___cmp_security_manager_itf_1gaf76f47f0adf081fe1df891172f801f1c>` or SecManFindSettings() or :ref:`SecManRegisterEditableSetting() <group___cmp_security_manager_itf_1ga463715ff698601288f82a1614d708012>` |
++---------+------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Result of the operation
+
+**Return values**
+
++---------------+--------------------------+
+| ERR_OK        | Unregister succeeded     |
++---------------+--------------------------+
+| ERR_PARAMETER | hSecuritySetting invalid |
++---------------+--------------------------+
+
+.. _group___cmp_security_manager_itf_1ga60689d648cafeaf6a7ca8db7740abaa6:
+
+RTS_HANDLE SecManFindSetting (CMPID cmpId, const char *pszKey, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Find settings specified by componentID and usageID
+
+**Parameters**
+
++---------+---------+-----------------------------------------------------------+
+| [in]    | cmpId   | ComponentID of the server that provides security features |
++---------+---------+-----------------------------------------------------------+
+| [in]    | pszKey  | Name of the setting                                       |
++---------+---------+-----------------------------------------------------------+
+| [out]   | pResult | Pointer to error code                                     |
++---------+---------+-----------------------------------------------------------+
+
+**Return values**
+
++--------------------+-------------------------------------------+
+| ERR_OK             | Settings could be found                   |
++--------------------+-------------------------------------------+
+| ERR_NOTINITIALIZED | CmpSecurityManager is not yet initialized |
++--------------------+-------------------------------------------+
+| ERR_NO_OBJECT      | No settings registered                    |
++--------------------+-------------------------------------------+
+
+**Returns:**
+
+Handle to the registered security settings
+
+.. _group___cmp_security_manager_itf_1ga7c32a95c317e180c6346bc4a675e34e3:
+
+const SecuritySelectableSetting* SecManGetSelectableSetting (RTS_HANDLE hSecuritySetting, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the selected setting because of the security policy of the target!
+
+**Parameters**
+
++---------+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hSecuritySetting | Handle to the security settings returned by :ref:`SecManRegisterSelectableSetting() <group___cmp_security_manager_itf_1gaf76f47f0adf081fe1df891172f801f1c>` or SecManFindSettings() |
++---------+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult          | Pointer to error code                                                                                                                                                               |
++---------+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+-----------------------------+
+| ERR_OK        | One setting is returned     |
++---------------+-----------------------------+
+| ERR_PARAMETER | hSecuritySetting is invalid |
++---------------+-----------------------------+
+| ERR_NO_OBJECT | No setting selected         |
++---------------+-----------------------------+
+
+**Returns:**
+
+Pointer to the security setting which is selected on the target
+
+.. _group___cmp_security_manager_itf_1gac609e6d32c1ce75d98e0c71e22023221:
+
+SecurityEditableSetting* SecManGetEditableSetting (RTS_HANDLE hSecuritySetting, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the edited value setting because of the security policy of the target!
+
+**Parameters**
+
++---------+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hSecuritySetting | Handle to the security settings returned by :ref:`SecManRegisterSelectableSetting() <group___cmp_security_manager_itf_1gaf76f47f0adf081fe1df891172f801f1c>` or SecManFindSettings() |
++---------+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult          | Pointer to error code                                                                                                                                                               |
++---------+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+-----------------------------+
+| ERR_OK        | One setting is returned     |
++---------------+-----------------------------+
+| ERR_PARAMETER | hSecuritySetting is invalid |
++---------------+-----------------------------+
+| ERR_NO_OBJECT | No setting selected         |
++---------------+-----------------------------+
+
+**Returns:**
+
+Pointer to the security setting which is selected on the target
+
+.. _group___cmp_security_manager_itf_1ga9358c64f6efe1568056e2b031d01a091:
+
+RTS_RESULT SecManFillCertificateInfo (CMPID cmpId, RtsX509CertInfo *pCertInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to overload the certificate info from a specified server resp. for a usage
+
+**Parameters**
+
++---------+-----------+-----------------------------------------------------------+
+| [in]    | cmpId     | ComponentID of the server that provides security features |
++---------+-----------+-----------------------------------------------------------+
+| [in]    | pCertInfo | Pointer to the preinitialized certificate info            |
++---------+-----------+-----------------------------------------------------------+
+
+**Returns:**
+
+Result of the operation
+
+**Return values**
+
++--------------------+---------------------------------+
+| ERR_OK             | Certificate info was overloaded |
++--------------------+---------------------------------+
+| ERR_NOTIMPLEMENTED | No overload done                |
++--------------------+---------------------------------+
+
+.. _group___cmp_security_manager_itf_1ga7c5a289e7d7c8a907da11f7480f5d72e:
+
+RTS_RESULT SecManCheckTlsContext (RTS_UI32 ui32TlsMethod, char *pszCipherList, RTS_I32 i32VerifyMode)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function checks a TLS context that is created via :ref:`TlsCreateContext() <group___cmp_tls_itf_1gacc000e3cd5fa34999896abf07160003c>` resp. :ref:`TlsCreateContext2() <group___cmp_tls_itf_1ga3b3f5ee888d46abc4757a7f0d9d6c560>` . Here the TlsMethod, CipherList and VerifyMethod can be checked against own security policy!
+
+NOTE: This is only a callback function from the implementation of the CmpTlsItf! So don't us it directly!
+
+**Parameters**
+
++---------+---------------+------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ui32TlsMethod | Mode of the TLS connections. See: TLS_METHOD_... macros                                                                      |
++---------+---------------+------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | szCipherList  | Cipher selection of the TLS connection. See CipherList setting for details. If NULL the default of the setting will be used. |
++---------+---------------+------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | i32VerifyMode | Verify mode of the TLS connection. See: TLS_VERIFY... macros. Default server: NONE; Default client: VERIFY_PEER.             |
++---------+---------------+------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Result of the operation
+
+**Return values**
+
++------------+--------------------------------------------------------------------+
+| ERR_OK     | All context settings are complying the security policy             |
++------------+--------------------------------------------------------------------+
+| ERR_FAILED | At least one context setting is not complying the security policy! |
++------------+--------------------------------------------------------------------+
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

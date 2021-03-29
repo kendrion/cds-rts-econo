@@ -1,0 +1,914 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>7.1.2.129. CmpWebSocketClientItf &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/theme.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7.1.2.130. CmpX509Cert_ImplementationItf" href="group___cmp_x509_cert___implementation_itf.html" />
+    <link rel="prev" title="7.1.2.128. CmpWebServerItf" href="group___cmp_web_server_itf.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="group___cmp_x509_cert___implementation_itf.html" title="7.1.2.130. CmpX509Cert_ImplementationItf"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="group___cmp_web_server_itf.html" title="7.1.2.128. CmpWebServerItf"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. Reference Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">7.1. API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="group___cmp_web_server_itf.html"
+                        title="previous chapter">7.1.2.128. CmpWebServerItf</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="group___cmp_x509_cert___implementation_itf.html"
+                        title="next chapter">7.1.2.130. CmpX509Cert_ImplementationItf</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="cmpwebsocketclientitf">
+<span id="group-cmp-web-socket-client-itf"></span><h1>7.1.2.129. CmpWebSocketClientItf<a class="headerlink" href="#cmpwebsocketclientitf" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#detailed-description" id="id103">Detailed Description</a></p></li>
+<li><p><a class="reference internal" href="#data-structures" id="id104">Data Structures</a></p></li>
+<li><p><a class="reference internal" href="#macros" id="id105">Macros</a></p></li>
+<li><p><a class="reference internal" href="#typedefs" id="id106">Typedefs</a></p></li>
+<li><p><a class="reference internal" href="#enumerations" id="id107">Enumerations</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id108">Functions</a></p></li>
+<li><p><a class="reference internal" href="#macro-definition-documentation" id="id109">Macro Definition Documentation</a></p></li>
+<li><p><a class="reference internal" href="#typedef-documentation" id="id110">Typedef Documentation</a></p></li>
+<li><p><a class="reference internal" href="#enumeration-type-documentation" id="id111">Enumeration Type Documentation</a></p></li>
+<li><p><a class="reference internal" href="#function-documentation" id="id112">Function Documentation</a></p></li>
+</ul>
+</div>
+<p>Interface of CmpWebSocketClient.</p>
+<div class="section" id="detailed-description">
+<h2><a class="toc-backref" href="#id103">Detailed Description</a><a class="headerlink" href="#detailed-description" title="Permalink to this headline">¶</a></h2>
+<p>This component contains an implementation of the WebSocket protocol on the client side. See RFC-6455 ( <a class="reference external" href="https://tools.ietf.org/html/rfc6455">https://tools.ietf.org/html/rfc6455</a>) for details.</p>
+<p>The following features are supported:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Connect to WebSocket server using plaintext connection. (ws:// schema)</p></li>
+<li><p>Connect to WebSocket server using TLS connection. (wss:// schema)</p></li>
+<li><p>Send binary and text frames.</p></li>
+<li><p>Do a fragmented transfer. Fragmentation has to be done by using implementation.</p></li>
+<li><p>Receive binary and text frames.</p></li>
+<li><p>Receive a fragmented transfer. Defragmentation has to be done by using implementation;</p></li>
+<li><p>Ping / Pong is handled by the implementation. The using implementation is notified if a Ping or Pong was received.</p></li>
+</ul>
+</div></blockquote>
+<p>The configuration of the TLS connection has to be done by the using implementation. A TLS context must be configured to the needs of the application. This TLS context is passed to the WebSocket implementation. It is used to create a secure socket. If needed a callback for the server certificate validation can be added to this TLS context. The TLS context must use a TLS client method.</p>
+<p>The Implementation will parse the given URL and get the host (or IP-address), port (if set) and path (if set) from that URL. If no port is given default ports will be used. (80 for ws:// schema, 443 for wss:// schema).</p>
+<p><strong>Copyright:</strong></p>
+<p>Copyright (c) 2018 CODESYS Development GmbH. All rights reserved.</p>
+</div>
+<div class="section" id="data-structures">
+<h2><a class="toc-backref" href="#id104">Data Structures</a><a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>struct <a class="reference internal" href="struct_ws_client_proxy.html#struct-ws-client-proxy"><span class="std std-ref">WsClientProxy</span></a></p></li>
+<li><p>struct <a class="reference internal" href="struct_i_cmp_web_socket_client___c.html#struct-i-cmp-web-socket-client-c"><span class="std std-ref">ICmpWebSocketClient_C</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="macros">
+<h2><a class="toc-backref" href="#id105">Macros</a><a class="headerlink" href="#macros" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gae076bec893870f9f7ff0cc2cc8aab84f"><span class="std std-ref">USE_WsClientCreate</span></a> <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gac36ad1d51e399fa3c1c9281d2b45240a"><span class="std std-ref">PFWSCLIENTCREATE</span></a> pfWsClientCreate;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gac31757a800014fdce132b399a6c0b3fd"><span class="std std-ref">EXT_WsClientCreate</span></a> extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gac36ad1d51e399fa3c1c9281d2b45240a"><span class="std std-ref">PFWSCLIENTCREATE</span></a> pfWsClientCreate;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga318df5e37b460a147dbeece58a28b1a1"><span class="std std-ref">GET_WsClientCreate</span></a> s_pfCMGetAPI2( “WsClientCreate”, (RTS_VOID_FCTPTR <a href="#id1"><span class="problematic" id="id2">*</span></a>)&amp;pfWsClientCreate, (fl), 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaedc5a9b1b342fb3cad2bd58faf645533"><span class="std std-ref">CAL_WsClientCreate</span></a> pfWsClientCreate</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gae7f1dc24a65923fd2bdc4cc5b921fcc4"><span class="std std-ref">CHK_WsClientCreate</span></a> (pfWsClientCreate != NULL)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga31544df22f270711902374c23276fc9b"><span class="std std-ref">EXP_WsClientCreate</span></a> s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientCreate”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga828537331f0d1d76c5c93e0673db0745"><span class="std std-ref">WsClientCreate</span></a> , 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gabd09a63e99ef0f67419bfbfbe4df872b"><span class="std std-ref">USE_WsClientDelete</span></a> <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga20cb5922e463f0c7564e2c88b7febba1"><span class="std std-ref">PFWSCLIENTDELETE</span></a> pfWsClientDelete;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga45173284fe20e83a1285a774c44d8452"><span class="std std-ref">EXT_WsClientDelete</span></a> extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga20cb5922e463f0c7564e2c88b7febba1"><span class="std std-ref">PFWSCLIENTDELETE</span></a> pfWsClientDelete;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga453ad3f33be5b84952aa8a1a23c503fc"><span class="std std-ref">GET_WsClientDelete</span></a> s_pfCMGetAPI2( “WsClientDelete”, (RTS_VOID_FCTPTR <a href="#id3"><span class="problematic" id="id4">*</span></a>)&amp;pfWsClientDelete, (fl), 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gad461ce8891ba546ec80259d71949b842"><span class="std std-ref">CAL_WsClientDelete</span></a> pfWsClientDelete</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga4ae1338d449aeb05cd5fe27576ddca95"><span class="std std-ref">CHK_WsClientDelete</span></a> (pfWsClientDelete != NULL)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga83a79524bbeddd3d947623e3f5ce1d3b"><span class="std std-ref">EXP_WsClientDelete</span></a> s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientDelete”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga6feb84d7cadd98622aa0671e368c197f"><span class="std std-ref">WsClientDelete</span></a> , 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga1b1a8172f8a4547bfed61378d6872ffe"><span class="std std-ref">USE_WsClientConnect</span></a> <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaaee28adf798be4b4c849b47dbf2a09ca"><span class="std std-ref">PFWSCLIENTCONNECT</span></a> pfWsClientConnect;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga42c6d3f3ceff5ad329c4ef6ccde1db04"><span class="std std-ref">EXT_WsClientConnect</span></a> extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaaee28adf798be4b4c849b47dbf2a09ca"><span class="std std-ref">PFWSCLIENTCONNECT</span></a> pfWsClientConnect;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga42ed817db23d0bd5d12184d10bc6ee0c"><span class="std std-ref">GET_WsClientConnect</span></a> s_pfCMGetAPI2( “WsClientConnect”, (RTS_VOID_FCTPTR <a href="#id5"><span class="problematic" id="id6">*</span></a>)&amp;pfWsClientConnect, (fl), 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga9cc46806e05ad56841d36fc7cc6914b9"><span class="std std-ref">CAL_WsClientConnect</span></a> pfWsClientConnect</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaf7d46ea095c2b35e9395443ad24f2b44"><span class="std std-ref">CHK_WsClientConnect</span></a> (pfWsClientConnect != NULL)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga13645a235bb4673ba1be4b65e103b53c"><span class="std std-ref">EXP_WsClientConnect</span></a> s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientConnect”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gab2eee7ff752a31ed81a85f59ad843b2d"><span class="std std-ref">WsClientConnect</span></a> , 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga5528afe0ac4a188c76bfbeafdcc251bc"><span class="std std-ref">USE_WsClientDisconnect</span></a> <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga7499096f7f841a55df7aa075ec6cdf8f"><span class="std std-ref">PFWSCLIENTDISCONNECT</span></a> pfWsClientDisconnect;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga8ed1c68e060450428481732f3e711af6"><span class="std std-ref">EXT_WsClientDisconnect</span></a> extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga7499096f7f841a55df7aa075ec6cdf8f"><span class="std std-ref">PFWSCLIENTDISCONNECT</span></a> pfWsClientDisconnect;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaa0e75b1ea72c9cddbeea17b06c403c65"><span class="std std-ref">GET_WsClientDisconnect</span></a> s_pfCMGetAPI2( “WsClientDisconnect”, (RTS_VOID_FCTPTR <a href="#id7"><span class="problematic" id="id8">*</span></a>)&amp;pfWsClientDisconnect, (fl), 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga6377b5f04f6ab6fa74caef6e9e1549fc"><span class="std std-ref">CAL_WsClientDisconnect</span></a> pfWsClientDisconnect</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaa59bd0921e243eba89fee2b33b066ec2"><span class="std std-ref">CHK_WsClientDisconnect</span></a> (pfWsClientDisconnect != NULL)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga96847fe7cad584fe3996ba623ad42b4f"><span class="std std-ref">EXP_WsClientDisconnect</span></a> s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientDisconnect”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga8c014856cd0d94b7617dd12d9375366b"><span class="std std-ref">WsClientDisconnect</span></a> , 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga447b2886ca2826e9afa27c75d8dbedcb"><span class="std std-ref">USE_WsClientSend</span></a> <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga24e2736ac8ca48bba0f5c66386b93914"><span class="std std-ref">PFWSCLIENTSEND</span></a> pfWsClientSend;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga4d2932d110d170fa59e7484a27023f41"><span class="std std-ref">EXT_WsClientSend</span></a> extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga24e2736ac8ca48bba0f5c66386b93914"><span class="std std-ref">PFWSCLIENTSEND</span></a> pfWsClientSend;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga70eb83eae00f56055a45800ebfd1d999"><span class="std std-ref">GET_WsClientSend</span></a> s_pfCMGetAPI2( “WsClientSend”, (RTS_VOID_FCTPTR <a href="#id9"><span class="problematic" id="id10">*</span></a>)&amp;pfWsClientSend, (fl), 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga78c7281ea8f29d4cf1806d2936e22808"><span class="std std-ref">CAL_WsClientSend</span></a> pfWsClientSend</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaf2ab416c644f57aef01ebbcc6678f404"><span class="std std-ref">CHK_WsClientSend</span></a> (pfWsClientSend != NULL)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga47fbfc038d345274a72642671ca93d4f"><span class="std std-ref">EXP_WsClientSend</span></a> s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientSend”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gad2166f0e930e7bb0e137559ea6fc81a3"><span class="std std-ref">WsClientSend</span></a> , 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaf8e78c1b2657b08a65c69bbca9167c47"><span class="std std-ref">USE_WsClientProcess</span></a> <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaed4f980f607da4589a6cf1e56bdbe5f6"><span class="std std-ref">PFWSCLIENTPROCESS</span></a> pfWsClientProcess;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga07b648c18dd5973f236c6d82845975e1"><span class="std std-ref">EXT_WsClientProcess</span></a> extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaed4f980f607da4589a6cf1e56bdbe5f6"><span class="std std-ref">PFWSCLIENTPROCESS</span></a> pfWsClientProcess;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gac73a963f5c67287533d3b113ca2bf671"><span class="std std-ref">GET_WsClientProcess</span></a> s_pfCMGetAPI2( “WsClientProcess”, (RTS_VOID_FCTPTR <a href="#id11"><span class="problematic" id="id12">*</span></a>)&amp;pfWsClientProcess, (fl), 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga4112a5975e24094fed9038d1ad241b5d"><span class="std std-ref">CAL_WsClientProcess</span></a> pfWsClientProcess</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaad3e400a644b1af1f1767369c485c8b8"><span class="std std-ref">CHK_WsClientProcess</span></a> (pfWsClientProcess != NULL)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga4a0924bb5513f99ef078ca5d9b2a9922"><span class="std std-ref">EXP_WsClientProcess</span></a> s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientProcess”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaed578d2029b8064031595ee11ed603d9"><span class="std std-ref">WsClientProcess</span></a> , 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gabb724246b1ed1460cf58b11f44cfe7e9"><span class="std std-ref">USE_WsClientGetHttpHeader</span></a> <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga98aa4170a2db6f12c931c19df7f28d75"><span class="std std-ref">PFWSCLIENTGETHTTPHEADER</span></a> pfWsClientGetHttpHeader;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gafa13d501a97bb64986f43e3c3ced9471"><span class="std std-ref">EXT_WsClientGetHttpHeader</span></a> extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga98aa4170a2db6f12c931c19df7f28d75"><span class="std std-ref">PFWSCLIENTGETHTTPHEADER</span></a> pfWsClientGetHttpHeader;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga82e9ded65def353dd1ca362eb5d83920"><span class="std std-ref">GET_WsClientGetHttpHeader</span></a> s_pfCMGetAPI2( “WsClientGetHttpHeader”, (RTS_VOID_FCTPTR <a href="#id13"><span class="problematic" id="id14">*</span></a>)&amp;pfWsClientGetHttpHeader, (fl), 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga3cf5fedc3514d39144ee60fb6e5b346c"><span class="std std-ref">CAL_WsClientGetHttpHeader</span></a> pfWsClientGetHttpHeader</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga4e805fa38dc3776ae10109c8d106b8ee"><span class="std std-ref">CHK_WsClientGetHttpHeader</span></a> (pfWsClientGetHttpHeader != NULL)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gade1f6a305b9b1bb84b2f0d21b4f0ed0f"><span class="std std-ref">EXP_WsClientGetHttpHeader</span></a> s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientGetHttpHeader”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga415f483f071bd66d48d07726bd5131ea"><span class="std std-ref">WsClientGetHttpHeader</span></a> , 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gae65fba37f5a69ec6fe20d8fb0e5c2893"><span class="std std-ref">USE_WsClientSetCookie</span></a> <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga64ce44b23213bf63a05f763fff5ad26c"><span class="std std-ref">PFWSCLIENTSETCOOKIE</span></a> pfWsClientSetCookie;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gae886c8a6b4ea0061424e64b0973d7527"><span class="std std-ref">EXT_WsClientSetCookie</span></a> extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga64ce44b23213bf63a05f763fff5ad26c"><span class="std std-ref">PFWSCLIENTSETCOOKIE</span></a> pfWsClientSetCookie;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga72da9cfd37234bb8cb3e45cb9d9f7ae6"><span class="std std-ref">GET_WsClientSetCookie</span></a> s_pfCMGetAPI2( “WsClientSetCookie”, (RTS_VOID_FCTPTR <a href="#id15"><span class="problematic" id="id16">*</span></a>)&amp;pfWsClientSetCookie, (fl), 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga5b7e88afe06122089b170c5932b7ff14"><span class="std std-ref">CAL_WsClientSetCookie</span></a> pfWsClientSetCookie</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga19dbde63ac2d7088c5c2bba7062034de"><span class="std std-ref">CHK_WsClientSetCookie</span></a> (pfWsClientSetCookie != NULL)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga090b7c35b8b5c54d0157ac5047e9ffd2"><span class="std std-ref">EXP_WsClientSetCookie</span></a> s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientSetCookie”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga1c2d2ae401dee73244533b3e97ffe9dd"><span class="std std-ref">WsClientSetCookie</span></a> , 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga3fadfae4364b0c7f503e79dcbaada530"><span class="std std-ref">USE_WsClientSetProxy</span></a> <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga5d4091e8c558f3f0e5dad303620da84d"><span class="std std-ref">PFWSCLIENTSETPROXY</span></a> pfWsClientSetProxy;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaa108f2b699d3a0d9ee07bf6fbd1a8430"><span class="std std-ref">EXT_WsClientSetProxy</span></a> extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga5d4091e8c558f3f0e5dad303620da84d"><span class="std std-ref">PFWSCLIENTSETPROXY</span></a> pfWsClientSetProxy;</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga31a45b81c71f0d20bce6a40c40d785dc"><span class="std std-ref">GET_WsClientSetProxy</span></a> s_pfCMGetAPI2( “WsClientSetProxy”, (RTS_VOID_FCTPTR <a href="#id17"><span class="problematic" id="id18">*</span></a>)&amp;pfWsClientSetProxy, (fl), 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaa1acb6a6b2d3733553d098b16d6f59e7"><span class="std std-ref">CAL_WsClientSetProxy</span></a> pfWsClientSetProxy</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gad893f6c37855b9994f176d30e30cd241"><span class="std std-ref">CHK_WsClientSetProxy</span></a> (pfWsClientSetProxy != NULL)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga995702bfeed47e4c74ee5f9b67483c80"><span class="std std-ref">EXP_WsClientSetProxy</span></a> s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientSetProxy”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga1999c8a3a1cfa1fbefc16bf0a6542854"><span class="std std-ref">WsClientSetProxy</span></a> , 0, 0)</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga55953dcc6c117e652a3060d5f7381f32"><span class="std std-ref">ITF_CmpWebSocketClient</span></a></p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gafa5f258f54d156ba50e543d3afcbdd64"><span class="std std-ref">EXTITF_CmpWebSocketClient</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="typedefs">
+<h2><a class="toc-backref" href="#id106">Typedefs</a><a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>typedef void(* <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaa01c61054651cc483d084b70c2242460"><span class="std std-ref">PFDATARECEIVEDCALLBACK</span></a>)(RTS_HANDLE hClient, void <a href="#id19"><span class="problematic" id="id20">*</span></a>pUserData, RTS_UI8 <a href="#id21"><span class="problematic" id="id22">*</span></a>pData, RTS_SIZE dataSize, RTS_BOOL bBinaryMode, RTS_BOOL bFinalFragmet)</p></li>
+<li><p>typedef void(* <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gade19a2a40fc07b1120f2fd8e3ebf83b6"><span class="std std-ref">PFSTATECHANGECLALLBACK</span></a>)(RTS_HANDLE hClient, void <a href="#id23"><span class="problematic" id="id24">*</span></a>pUserData, WsClientState newState, WebSocketStatus statusCode)</p></li>
+<li><p>typedef RTS_HANDLE(* <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gac36ad1d51e399fa3c1c9281d2b45240a"><span class="std std-ref">PFWSCLIENTCREATE</span></a>)(RTS_SIZE bufferSize, char <a href="#id25"><span class="problematic" id="id26">*</span></a>pszUrl, char <a href="#id27"><span class="problematic" id="id28">*</span></a>pszProto, RTS_HANDLE hTlsContext, void <a href="#id29"><span class="problematic" id="id30">*</span></a>pUserData, PFDATARECEIVEDCALLBACK pfDataReceivedCallback, PFSTATECHANGECLALLBACK pfStateChangeCallback, RTS_RESULT <a href="#id31"><span class="problematic" id="id32">*</span></a>pResult)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga20cb5922e463f0c7564e2c88b7febba1"><span class="std std-ref">PFWSCLIENTDELETE</span></a>)(RTS_HANDLE hClient)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaaee28adf798be4b4c849b47dbf2a09ca"><span class="std std-ref">PFWSCLIENTCONNECT</span></a>)(RTS_HANDLE hClient)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga7499096f7f841a55df7aa075ec6cdf8f"><span class="std std-ref">PFWSCLIENTDISCONNECT</span></a>)(RTS_HANDLE hClient, WebSocketStatus statusCode)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga24e2736ac8ca48bba0f5c66386b93914"><span class="std std-ref">PFWSCLIENTSEND</span></a>)(RTS_HANDLE hClient, RTS_UI8 <a href="#id33"><span class="problematic" id="id34">*</span></a>pSendData, RTS_SIZE dataSize, RTS_BOOL bBinaryMode, RTS_BOOL bFinalFragmet)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaed4f980f607da4589a6cf1e56bdbe5f6"><span class="std std-ref">PFWSCLIENTPROCESS</span></a>)(RTS_HANDLE hClient, RTS_UI32 ui32Timeout)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga98aa4170a2db6f12c931c19df7f28d75"><span class="std std-ref">PFWSCLIENTGETHTTPHEADER</span></a>)(RTS_HANDLE hClient, RTS_UI8 <a href="#id35"><span class="problematic" id="id36">**</span></a>ppHeader)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga64ce44b23213bf63a05f763fff5ad26c"><span class="std std-ref">PFWSCLIENTSETCOOKIE</span></a>)(RTS_HANDLE hClient, RTS_UI8 <a href="#id37"><span class="problematic" id="id38">*</span></a>pCookieName, RTS_UI8 <a href="#id39"><span class="problematic" id="id40">*</span></a>pCookieValue)</p></li>
+<li><p>typedef RTS_RESULT(* <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga5d4091e8c558f3f0e5dad303620da84d"><span class="std std-ref">PFWSCLIENTSETPROXY</span></a>)(RTS_HANDLE hClient, WsClientProxy <a href="#id41"><span class="problematic" id="id42">*</span></a>pProxy)</p></li>
+<li><p>typedef <a class="reference internal" href="struct_i_cmp_web_socket_client___c.html#struct-i-cmp-web-socket-client-c"><span class="std std-ref">ICmpWebSocketClient_C</span></a> <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga70dc734f127003963241044305430fd4"><span class="std std-ref">ICmpWebSocketClient</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="enumerations">
+<h2><a class="toc-backref" href="#id107">Enumerations</a><a class="headerlink" href="#enumerations" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>enum <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga7ca615b8b1393c323b49562a6391daa4"><span class="std std-ref">WebSocketStatus</span></a> { <span class="xref std std-ref">WebSocketStatus_Not_Relevant</span>, <span class="xref std std-ref">WebSocketStatus_Close_Normal</span>, <span class="xref std std-ref">WebSocketStatus_Close_GoingAway</span>, <span class="xref std std-ref">WebSocketStatus_Close_Protocol</span>, <span class="xref std std-ref">WebSocketStatus_Close_Type</span>, <span class="xref std std-ref">WebSocketStatus_Close_Inconsistent</span>, <span class="xref std std-ref">WebSocketStatus_Close_Policy</span>, <span class="xref std std-ref">WebSocketStatus_Close_Toobig</span>, <span class="xref std std-ref">WebSocketStatus_Close_Extension</span>, <span class="xref std std-ref">WebSocketStatus_Close_Unexpected</span> }</p></li>
+<li><p>enum <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gae14697c6e6daa42a59774b2a4a6e204e"><span class="std std-ref">WsClientState</span></a> { <span class="xref std std-ref">WsClientState_Initial</span>, <span class="xref std std-ref">WsClientState_InConnect</span>, <span class="xref std std-ref">WsClientState_InConnect_HandshakeSent</span>, <span class="xref std std-ref">WsClientState_Connected</span>, <span class="xref std std-ref">WsClientState_PingReceived</span>, <span class="xref std std-ref">WsClientState_PongReceived</span>, <span class="xref std std-ref">WsClientState_FrameSentCompletly</span>, <span class="xref std std-ref">WsClientState_ConnectionClosedByServer</span>, <span class="xref std std-ref">WsClientState_ConnectionClosedLocally</span>, <span class="xref std std-ref">WsClientState_InConnect_InitialResponseReceived</span>, <span class="xref std std-ref">WsClientState_InConnect_InProxyConnect</span>, <span class="xref std std-ref">WsClientState_InConnect_ProxyConnected</span>, <span class="xref std std-ref">WsClientState_InConnect_TlsStarted</span> }</p></li>
+<li><p>enum <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaa8c502e96af9e90da873ac9f6dbe7910"><span class="std std-ref">WsClientProxyType</span></a> { <span class="xref std std-ref">WsClientProxyType_None</span>, <span class="xref std std-ref">WsClientProxyType_Http</span> }</p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2><a class="toc-backref" href="#id108">Functions</a><a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga828537331f0d1d76c5c93e0673db0745"><span class="std std-ref">WsClientCreate</span></a> (RTS_SIZE bufferSize, char * pszUrl, char * pszProto, RTS_HANDLE hTlsContext, void * pUserData, <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaa01c61054651cc483d084b70c2242460"><span class="std std-ref">PFDATARECEIVEDCALLBACK</span></a>  pfDataReceivedCallback, <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gade19a2a40fc07b1120f2fd8e3ebf83b6"><span class="std std-ref">PFSTATECHANGECLALLBACK</span></a>  pfStateChangeCallback, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga6feb84d7cadd98622aa0671e368c197f"><span class="std std-ref">WsClientDelete</span></a> (RTS_HANDLE hClient)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gab2eee7ff752a31ed81a85f59ad843b2d"><span class="std std-ref">WsClientConnect</span></a> (RTS_HANDLE hClient)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga8c014856cd0d94b7617dd12d9375366b"><span class="std std-ref">WsClientDisconnect</span></a> (RTS_HANDLE hClient, <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga7ca615b8b1393c323b49562a6391daa4"><span class="std std-ref">WebSocketStatus</span></a>  statusCode)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gad2166f0e930e7bb0e137559ea6fc81a3"><span class="std std-ref">WsClientSend</span></a> (RTS_HANDLE hClient, RTS_UI8 * pSendData, RTS_SIZE dataSize, RTS_BOOL bBinaryMode, RTS_BOOL bFinalFragmet)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaed578d2029b8064031595ee11ed603d9"><span class="std std-ref">WsClientProcess</span></a> (RTS_HANDLE hClient, RTS_UI32 ui32Timeout)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga415f483f071bd66d48d07726bd5131ea"><span class="std std-ref">WsClientGetHttpHeader</span></a> (RTS_HANDLE hClient, RTS_UI8 ** ppHeader)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga1c2d2ae401dee73244533b3e97ffe9dd"><span class="std std-ref">WsClientSetCookie</span></a> (RTS_HANDLE hClient, RTS_UI8 * pCookieName, RTS_UI8 * pCookieValue)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga1999c8a3a1cfa1fbefc16bf0a6542854"><span class="std std-ref">WsClientSetProxy</span></a> (RTS_HANDLE hClient, <a class="reference internal" href="struct_ws_client_proxy.html#struct-ws-client-proxy"><span class="std std-ref">WsClientProxy</span></a> * pProxy)</p></li>
+</ul>
+</div>
+<div class="section" id="macro-definition-documentation">
+<h2><a class="toc-backref" href="#id109">Macro Definition Documentation</a><a class="headerlink" href="#macro-definition-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="define-use-wsclientcreate-pfwsclientcreate-pfwsclientcreate">
+<span id="group-cmp-web-socket-client-itf-1gae076bec893870f9f7ff0cc2cc8aab84f"></span><h3>#define USE_WsClientCreate <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gac36ad1d51e399fa3c1c9281d2b45240a"><span class="std std-ref">PFWSCLIENTCREATE</span></a> pfWsClientCreate;<a class="headerlink" href="#define-use-wsclientcreate-pfwsclientcreate-pfwsclientcreate" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-wsclientcreate-extern-pfwsclientcreate-pfwsclientcreate">
+<span id="group-cmp-web-socket-client-itf-1gac31757a800014fdce132b399a6c0b3fd"></span><h3>#define EXT_WsClientCreate extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gac36ad1d51e399fa3c1c9281d2b45240a"><span class="std std-ref">PFWSCLIENTCREATE</span></a> pfWsClientCreate;<a class="headerlink" href="#define-ext-wsclientcreate-extern-pfwsclientcreate-pfwsclientcreate" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-wsclientcreate-s-pfcmgetapi2-wsclientcreate-rts-void-fctptr-pfwsclientcreate-fl-0-0">
+<span id="group-cmp-web-socket-client-itf-1ga318df5e37b460a147dbeece58a28b1a1"></span><h3>#define GET_WsClientCreate s_pfCMGetAPI2( “WsClientCreate”, (RTS_VOID_FCTPTR <a href="#id43"><span class="problematic" id="id44">*</span></a>)&amp;pfWsClientCreate, (fl), 0, 0)<a class="headerlink" href="#define-get-wsclientcreate-s-pfcmgetapi2-wsclientcreate-rts-void-fctptr-pfwsclientcreate-fl-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-wsclientcreate-pfwsclientcreate">
+<span id="group-cmp-web-socket-client-itf-1gaedc5a9b1b342fb3cad2bd58faf645533"></span><h3>#define CAL_WsClientCreate pfWsClientCreate<a class="headerlink" href="#define-cal-wsclientcreate-pfwsclientcreate" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-wsclientcreate-pfwsclientcreate-null">
+<span id="group-cmp-web-socket-client-itf-1gae7f1dc24a65923fd2bdc4cc5b921fcc4"></span><h3>#define CHK_WsClientCreate (pfWsClientCreate != NULL)<a class="headerlink" href="#define-chk-wsclientcreate-pfwsclientcreate-null" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-wsclientcreate-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientcreate-rts-uintptr-wsclientcreate-0-0">
+<span id="group-cmp-web-socket-client-itf-1ga31544df22f270711902374c23276fc9b"></span><h3>#define EXP_WsClientCreate s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientCreate”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga828537331f0d1d76c5c93e0673db0745"><span class="std std-ref">WsClientCreate</span></a> , 0, 0)<a class="headerlink" href="#define-exp-wsclientcreate-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientcreate-rts-uintptr-wsclientcreate-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-wsclientdelete-pfwsclientdelete-pfwsclientdelete">
+<span id="group-cmp-web-socket-client-itf-1gabd09a63e99ef0f67419bfbfbe4df872b"></span><h3>#define USE_WsClientDelete <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga20cb5922e463f0c7564e2c88b7febba1"><span class="std std-ref">PFWSCLIENTDELETE</span></a> pfWsClientDelete;<a class="headerlink" href="#define-use-wsclientdelete-pfwsclientdelete-pfwsclientdelete" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-wsclientdelete-extern-pfwsclientdelete-pfwsclientdelete">
+<span id="group-cmp-web-socket-client-itf-1ga45173284fe20e83a1285a774c44d8452"></span><h3>#define EXT_WsClientDelete extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga20cb5922e463f0c7564e2c88b7febba1"><span class="std std-ref">PFWSCLIENTDELETE</span></a> pfWsClientDelete;<a class="headerlink" href="#define-ext-wsclientdelete-extern-pfwsclientdelete-pfwsclientdelete" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-wsclientdelete-s-pfcmgetapi2-wsclientdelete-rts-void-fctptr-pfwsclientdelete-fl-0-0">
+<span id="group-cmp-web-socket-client-itf-1ga453ad3f33be5b84952aa8a1a23c503fc"></span><h3>#define GET_WsClientDelete s_pfCMGetAPI2( “WsClientDelete”, (RTS_VOID_FCTPTR <a href="#id45"><span class="problematic" id="id46">*</span></a>)&amp;pfWsClientDelete, (fl), 0, 0)<a class="headerlink" href="#define-get-wsclientdelete-s-pfcmgetapi2-wsclientdelete-rts-void-fctptr-pfwsclientdelete-fl-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-wsclientdelete-pfwsclientdelete">
+<span id="group-cmp-web-socket-client-itf-1gad461ce8891ba546ec80259d71949b842"></span><h3>#define CAL_WsClientDelete pfWsClientDelete<a class="headerlink" href="#define-cal-wsclientdelete-pfwsclientdelete" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-wsclientdelete-pfwsclientdelete-null">
+<span id="group-cmp-web-socket-client-itf-1ga4ae1338d449aeb05cd5fe27576ddca95"></span><h3>#define CHK_WsClientDelete (pfWsClientDelete != NULL)<a class="headerlink" href="#define-chk-wsclientdelete-pfwsclientdelete-null" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-wsclientdelete-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientdelete-rts-uintptr-wsclientdelete-0-0">
+<span id="group-cmp-web-socket-client-itf-1ga83a79524bbeddd3d947623e3f5ce1d3b"></span><h3>#define EXP_WsClientDelete s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientDelete”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga6feb84d7cadd98622aa0671e368c197f"><span class="std std-ref">WsClientDelete</span></a> , 0, 0)<a class="headerlink" href="#define-exp-wsclientdelete-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientdelete-rts-uintptr-wsclientdelete-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-wsclientconnect-pfwsclientconnect-pfwsclientconnect">
+<span id="group-cmp-web-socket-client-itf-1ga1b1a8172f8a4547bfed61378d6872ffe"></span><h3>#define USE_WsClientConnect <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaaee28adf798be4b4c849b47dbf2a09ca"><span class="std std-ref">PFWSCLIENTCONNECT</span></a> pfWsClientConnect;<a class="headerlink" href="#define-use-wsclientconnect-pfwsclientconnect-pfwsclientconnect" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-wsclientconnect-extern-pfwsclientconnect-pfwsclientconnect">
+<span id="group-cmp-web-socket-client-itf-1ga42c6d3f3ceff5ad329c4ef6ccde1db04"></span><h3>#define EXT_WsClientConnect extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaaee28adf798be4b4c849b47dbf2a09ca"><span class="std std-ref">PFWSCLIENTCONNECT</span></a> pfWsClientConnect;<a class="headerlink" href="#define-ext-wsclientconnect-extern-pfwsclientconnect-pfwsclientconnect" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-wsclientconnect-s-pfcmgetapi2-wsclientconnect-rts-void-fctptr-pfwsclientconnect-fl-0-0">
+<span id="group-cmp-web-socket-client-itf-1ga42ed817db23d0bd5d12184d10bc6ee0c"></span><h3>#define GET_WsClientConnect s_pfCMGetAPI2( “WsClientConnect”, (RTS_VOID_FCTPTR <a href="#id47"><span class="problematic" id="id48">*</span></a>)&amp;pfWsClientConnect, (fl), 0, 0)<a class="headerlink" href="#define-get-wsclientconnect-s-pfcmgetapi2-wsclientconnect-rts-void-fctptr-pfwsclientconnect-fl-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-wsclientconnect-pfwsclientconnect">
+<span id="group-cmp-web-socket-client-itf-1ga9cc46806e05ad56841d36fc7cc6914b9"></span><h3>#define CAL_WsClientConnect pfWsClientConnect<a class="headerlink" href="#define-cal-wsclientconnect-pfwsclientconnect" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-wsclientconnect-pfwsclientconnect-null">
+<span id="group-cmp-web-socket-client-itf-1gaf7d46ea095c2b35e9395443ad24f2b44"></span><h3>#define CHK_WsClientConnect (pfWsClientConnect != NULL)<a class="headerlink" href="#define-chk-wsclientconnect-pfwsclientconnect-null" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-wsclientconnect-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientconnect-rts-uintptr-wsclientconnect-0-0">
+<span id="group-cmp-web-socket-client-itf-1ga13645a235bb4673ba1be4b65e103b53c"></span><h3>#define EXP_WsClientConnect s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientConnect”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gab2eee7ff752a31ed81a85f59ad843b2d"><span class="std std-ref">WsClientConnect</span></a> , 0, 0)<a class="headerlink" href="#define-exp-wsclientconnect-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientconnect-rts-uintptr-wsclientconnect-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-wsclientdisconnect-pfwsclientdisconnect-pfwsclientdisconnect">
+<span id="group-cmp-web-socket-client-itf-1ga5528afe0ac4a188c76bfbeafdcc251bc"></span><h3>#define USE_WsClientDisconnect <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga7499096f7f841a55df7aa075ec6cdf8f"><span class="std std-ref">PFWSCLIENTDISCONNECT</span></a> pfWsClientDisconnect;<a class="headerlink" href="#define-use-wsclientdisconnect-pfwsclientdisconnect-pfwsclientdisconnect" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-wsclientdisconnect-extern-pfwsclientdisconnect-pfwsclientdisconnect">
+<span id="group-cmp-web-socket-client-itf-1ga8ed1c68e060450428481732f3e711af6"></span><h3>#define EXT_WsClientDisconnect extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga7499096f7f841a55df7aa075ec6cdf8f"><span class="std std-ref">PFWSCLIENTDISCONNECT</span></a> pfWsClientDisconnect;<a class="headerlink" href="#define-ext-wsclientdisconnect-extern-pfwsclientdisconnect-pfwsclientdisconnect" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-wsclientdisconnect-s-pfcmgetapi2-wsclientdisconnect-rts-void-fctptr-pfwsclientdisconnect-fl-0-0">
+<span id="group-cmp-web-socket-client-itf-1gaa0e75b1ea72c9cddbeea17b06c403c65"></span><h3>#define GET_WsClientDisconnect s_pfCMGetAPI2( “WsClientDisconnect”, (RTS_VOID_FCTPTR <a href="#id49"><span class="problematic" id="id50">*</span></a>)&amp;pfWsClientDisconnect, (fl), 0, 0)<a class="headerlink" href="#define-get-wsclientdisconnect-s-pfcmgetapi2-wsclientdisconnect-rts-void-fctptr-pfwsclientdisconnect-fl-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-wsclientdisconnect-pfwsclientdisconnect">
+<span id="group-cmp-web-socket-client-itf-1ga6377b5f04f6ab6fa74caef6e9e1549fc"></span><h3>#define CAL_WsClientDisconnect pfWsClientDisconnect<a class="headerlink" href="#define-cal-wsclientdisconnect-pfwsclientdisconnect" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-wsclientdisconnect-pfwsclientdisconnect-null">
+<span id="group-cmp-web-socket-client-itf-1gaa59bd0921e243eba89fee2b33b066ec2"></span><h3>#define CHK_WsClientDisconnect (pfWsClientDisconnect != NULL)<a class="headerlink" href="#define-chk-wsclientdisconnect-pfwsclientdisconnect-null" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-wsclientdisconnect-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientdisconnect-rts-uintptr-wsclientdisconnect-0-0">
+<span id="group-cmp-web-socket-client-itf-1ga96847fe7cad584fe3996ba623ad42b4f"></span><h3>#define EXP_WsClientDisconnect s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientDisconnect”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga8c014856cd0d94b7617dd12d9375366b"><span class="std std-ref">WsClientDisconnect</span></a> , 0, 0)<a class="headerlink" href="#define-exp-wsclientdisconnect-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientdisconnect-rts-uintptr-wsclientdisconnect-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-wsclientsend-pfwsclientsend-pfwsclientsend">
+<span id="group-cmp-web-socket-client-itf-1ga447b2886ca2826e9afa27c75d8dbedcb"></span><h3>#define USE_WsClientSend <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga24e2736ac8ca48bba0f5c66386b93914"><span class="std std-ref">PFWSCLIENTSEND</span></a> pfWsClientSend;<a class="headerlink" href="#define-use-wsclientsend-pfwsclientsend-pfwsclientsend" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-wsclientsend-extern-pfwsclientsend-pfwsclientsend">
+<span id="group-cmp-web-socket-client-itf-1ga4d2932d110d170fa59e7484a27023f41"></span><h3>#define EXT_WsClientSend extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga24e2736ac8ca48bba0f5c66386b93914"><span class="std std-ref">PFWSCLIENTSEND</span></a> pfWsClientSend;<a class="headerlink" href="#define-ext-wsclientsend-extern-pfwsclientsend-pfwsclientsend" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-wsclientsend-s-pfcmgetapi2-wsclientsend-rts-void-fctptr-pfwsclientsend-fl-0-0">
+<span id="group-cmp-web-socket-client-itf-1ga70eb83eae00f56055a45800ebfd1d999"></span><h3>#define GET_WsClientSend s_pfCMGetAPI2( “WsClientSend”, (RTS_VOID_FCTPTR <a href="#id51"><span class="problematic" id="id52">*</span></a>)&amp;pfWsClientSend, (fl), 0, 0)<a class="headerlink" href="#define-get-wsclientsend-s-pfcmgetapi2-wsclientsend-rts-void-fctptr-pfwsclientsend-fl-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-wsclientsend-pfwsclientsend">
+<span id="group-cmp-web-socket-client-itf-1ga78c7281ea8f29d4cf1806d2936e22808"></span><h3>#define CAL_WsClientSend pfWsClientSend<a class="headerlink" href="#define-cal-wsclientsend-pfwsclientsend" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-wsclientsend-pfwsclientsend-null">
+<span id="group-cmp-web-socket-client-itf-1gaf2ab416c644f57aef01ebbcc6678f404"></span><h3>#define CHK_WsClientSend (pfWsClientSend != NULL)<a class="headerlink" href="#define-chk-wsclientsend-pfwsclientsend-null" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-wsclientsend-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientsend-rts-uintptr-wsclientsend-0-0">
+<span id="group-cmp-web-socket-client-itf-1ga47fbfc038d345274a72642671ca93d4f"></span><h3>#define EXP_WsClientSend s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientSend”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gad2166f0e930e7bb0e137559ea6fc81a3"><span class="std std-ref">WsClientSend</span></a> , 0, 0)<a class="headerlink" href="#define-exp-wsclientsend-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientsend-rts-uintptr-wsclientsend-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-wsclientprocess-pfwsclientprocess-pfwsclientprocess">
+<span id="group-cmp-web-socket-client-itf-1gaf8e78c1b2657b08a65c69bbca9167c47"></span><h3>#define USE_WsClientProcess <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaed4f980f607da4589a6cf1e56bdbe5f6"><span class="std std-ref">PFWSCLIENTPROCESS</span></a> pfWsClientProcess;<a class="headerlink" href="#define-use-wsclientprocess-pfwsclientprocess-pfwsclientprocess" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-wsclientprocess-extern-pfwsclientprocess-pfwsclientprocess">
+<span id="group-cmp-web-socket-client-itf-1ga07b648c18dd5973f236c6d82845975e1"></span><h3>#define EXT_WsClientProcess extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaed4f980f607da4589a6cf1e56bdbe5f6"><span class="std std-ref">PFWSCLIENTPROCESS</span></a> pfWsClientProcess;<a class="headerlink" href="#define-ext-wsclientprocess-extern-pfwsclientprocess-pfwsclientprocess" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-wsclientprocess-s-pfcmgetapi2-wsclientprocess-rts-void-fctptr-pfwsclientprocess-fl-0-0">
+<span id="group-cmp-web-socket-client-itf-1gac73a963f5c67287533d3b113ca2bf671"></span><h3>#define GET_WsClientProcess s_pfCMGetAPI2( “WsClientProcess”, (RTS_VOID_FCTPTR <a href="#id53"><span class="problematic" id="id54">*</span></a>)&amp;pfWsClientProcess, (fl), 0, 0)<a class="headerlink" href="#define-get-wsclientprocess-s-pfcmgetapi2-wsclientprocess-rts-void-fctptr-pfwsclientprocess-fl-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-wsclientprocess-pfwsclientprocess">
+<span id="group-cmp-web-socket-client-itf-1ga4112a5975e24094fed9038d1ad241b5d"></span><h3>#define CAL_WsClientProcess pfWsClientProcess<a class="headerlink" href="#define-cal-wsclientprocess-pfwsclientprocess" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-wsclientprocess-pfwsclientprocess-null">
+<span id="group-cmp-web-socket-client-itf-1gaad3e400a644b1af1f1767369c485c8b8"></span><h3>#define CHK_WsClientProcess (pfWsClientProcess != NULL)<a class="headerlink" href="#define-chk-wsclientprocess-pfwsclientprocess-null" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-wsclientprocess-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientprocess-rts-uintptr-wsclientprocess-0-0">
+<span id="group-cmp-web-socket-client-itf-1ga4a0924bb5513f99ef078ca5d9b2a9922"></span><h3>#define EXP_WsClientProcess s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientProcess”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1gaed578d2029b8064031595ee11ed603d9"><span class="std std-ref">WsClientProcess</span></a> , 0, 0)<a class="headerlink" href="#define-exp-wsclientprocess-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientprocess-rts-uintptr-wsclientprocess-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-wsclientgethttpheader-pfwsclientgethttpheader-pfwsclientgethttpheader">
+<span id="group-cmp-web-socket-client-itf-1gabb724246b1ed1460cf58b11f44cfe7e9"></span><h3>#define USE_WsClientGetHttpHeader <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga98aa4170a2db6f12c931c19df7f28d75"><span class="std std-ref">PFWSCLIENTGETHTTPHEADER</span></a> pfWsClientGetHttpHeader;<a class="headerlink" href="#define-use-wsclientgethttpheader-pfwsclientgethttpheader-pfwsclientgethttpheader" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-wsclientgethttpheader-extern-pfwsclientgethttpheader-pfwsclientgethttpheader">
+<span id="group-cmp-web-socket-client-itf-1gafa13d501a97bb64986f43e3c3ced9471"></span><h3>#define EXT_WsClientGetHttpHeader extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga98aa4170a2db6f12c931c19df7f28d75"><span class="std std-ref">PFWSCLIENTGETHTTPHEADER</span></a> pfWsClientGetHttpHeader;<a class="headerlink" href="#define-ext-wsclientgethttpheader-extern-pfwsclientgethttpheader-pfwsclientgethttpheader" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-wsclientgethttpheader-s-pfcmgetapi2-wsclientgethttpheader-rts-void-fctptr-pfwsclientgethttpheader-fl-0-0">
+<span id="group-cmp-web-socket-client-itf-1ga82e9ded65def353dd1ca362eb5d83920"></span><h3>#define GET_WsClientGetHttpHeader s_pfCMGetAPI2( “WsClientGetHttpHeader”, (RTS_VOID_FCTPTR <a href="#id55"><span class="problematic" id="id56">*</span></a>)&amp;pfWsClientGetHttpHeader, (fl), 0, 0)<a class="headerlink" href="#define-get-wsclientgethttpheader-s-pfcmgetapi2-wsclientgethttpheader-rts-void-fctptr-pfwsclientgethttpheader-fl-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-wsclientgethttpheader-pfwsclientgethttpheader">
+<span id="group-cmp-web-socket-client-itf-1ga3cf5fedc3514d39144ee60fb6e5b346c"></span><h3>#define CAL_WsClientGetHttpHeader pfWsClientGetHttpHeader<a class="headerlink" href="#define-cal-wsclientgethttpheader-pfwsclientgethttpheader" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-wsclientgethttpheader-pfwsclientgethttpheader-null">
+<span id="group-cmp-web-socket-client-itf-1ga4e805fa38dc3776ae10109c8d106b8ee"></span><h3>#define CHK_WsClientGetHttpHeader (pfWsClientGetHttpHeader != NULL)<a class="headerlink" href="#define-chk-wsclientgethttpheader-pfwsclientgethttpheader-null" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-wsclientgethttpheader-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientgethttpheader-rts-uintptr-wsclientgethttpheader-0-0">
+<span id="group-cmp-web-socket-client-itf-1gade1f6a305b9b1bb84b2f0d21b4f0ed0f"></span><h3>#define EXP_WsClientGetHttpHeader s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientGetHttpHeader”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga415f483f071bd66d48d07726bd5131ea"><span class="std std-ref">WsClientGetHttpHeader</span></a> , 0, 0)<a class="headerlink" href="#define-exp-wsclientgethttpheader-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientgethttpheader-rts-uintptr-wsclientgethttpheader-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-wsclientsetcookie-pfwsclientsetcookie-pfwsclientsetcookie">
+<span id="group-cmp-web-socket-client-itf-1gae65fba37f5a69ec6fe20d8fb0e5c2893"></span><h3>#define USE_WsClientSetCookie <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga64ce44b23213bf63a05f763fff5ad26c"><span class="std std-ref">PFWSCLIENTSETCOOKIE</span></a> pfWsClientSetCookie;<a class="headerlink" href="#define-use-wsclientsetcookie-pfwsclientsetcookie-pfwsclientsetcookie" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-wsclientsetcookie-extern-pfwsclientsetcookie-pfwsclientsetcookie">
+<span id="group-cmp-web-socket-client-itf-1gae886c8a6b4ea0061424e64b0973d7527"></span><h3>#define EXT_WsClientSetCookie extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga64ce44b23213bf63a05f763fff5ad26c"><span class="std std-ref">PFWSCLIENTSETCOOKIE</span></a> pfWsClientSetCookie;<a class="headerlink" href="#define-ext-wsclientsetcookie-extern-pfwsclientsetcookie-pfwsclientsetcookie" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-wsclientsetcookie-s-pfcmgetapi2-wsclientsetcookie-rts-void-fctptr-pfwsclientsetcookie-fl-0-0">
+<span id="group-cmp-web-socket-client-itf-1ga72da9cfd37234bb8cb3e45cb9d9f7ae6"></span><h3>#define GET_WsClientSetCookie s_pfCMGetAPI2( “WsClientSetCookie”, (RTS_VOID_FCTPTR <a href="#id57"><span class="problematic" id="id58">*</span></a>)&amp;pfWsClientSetCookie, (fl), 0, 0)<a class="headerlink" href="#define-get-wsclientsetcookie-s-pfcmgetapi2-wsclientsetcookie-rts-void-fctptr-pfwsclientsetcookie-fl-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-wsclientsetcookie-pfwsclientsetcookie">
+<span id="group-cmp-web-socket-client-itf-1ga5b7e88afe06122089b170c5932b7ff14"></span><h3>#define CAL_WsClientSetCookie pfWsClientSetCookie<a class="headerlink" href="#define-cal-wsclientsetcookie-pfwsclientsetcookie" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-wsclientsetcookie-pfwsclientsetcookie-null">
+<span id="group-cmp-web-socket-client-itf-1ga19dbde63ac2d7088c5c2bba7062034de"></span><h3>#define CHK_WsClientSetCookie (pfWsClientSetCookie != NULL)<a class="headerlink" href="#define-chk-wsclientsetcookie-pfwsclientsetcookie-null" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-wsclientsetcookie-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientsetcookie-rts-uintptr-wsclientsetcookie-0-0">
+<span id="group-cmp-web-socket-client-itf-1ga090b7c35b8b5c54d0157ac5047e9ffd2"></span><h3>#define EXP_WsClientSetCookie s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientSetCookie”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga1c2d2ae401dee73244533b3e97ffe9dd"><span class="std std-ref">WsClientSetCookie</span></a> , 0, 0)<a class="headerlink" href="#define-exp-wsclientsetcookie-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientsetcookie-rts-uintptr-wsclientsetcookie-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-use-wsclientsetproxy-pfwsclientsetproxy-pfwsclientsetproxy">
+<span id="group-cmp-web-socket-client-itf-1ga3fadfae4364b0c7f503e79dcbaada530"></span><h3>#define USE_WsClientSetProxy <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga5d4091e8c558f3f0e5dad303620da84d"><span class="std std-ref">PFWSCLIENTSETPROXY</span></a> pfWsClientSetProxy;<a class="headerlink" href="#define-use-wsclientsetproxy-pfwsclientsetproxy-pfwsclientsetproxy" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-ext-wsclientsetproxy-extern-pfwsclientsetproxy-pfwsclientsetproxy">
+<span id="group-cmp-web-socket-client-itf-1gaa108f2b699d3a0d9ee07bf6fbd1a8430"></span><h3>#define EXT_WsClientSetProxy extern <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga5d4091e8c558f3f0e5dad303620da84d"><span class="std std-ref">PFWSCLIENTSETPROXY</span></a> pfWsClientSetProxy;<a class="headerlink" href="#define-ext-wsclientsetproxy-extern-pfwsclientsetproxy-pfwsclientsetproxy" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-get-wsclientsetproxy-s-pfcmgetapi2-wsclientsetproxy-rts-void-fctptr-pfwsclientsetproxy-fl-0-0">
+<span id="group-cmp-web-socket-client-itf-1ga31a45b81c71f0d20bce6a40c40d785dc"></span><h3>#define GET_WsClientSetProxy s_pfCMGetAPI2( “WsClientSetProxy”, (RTS_VOID_FCTPTR <a href="#id59"><span class="problematic" id="id60">*</span></a>)&amp;pfWsClientSetProxy, (fl), 0, 0)<a class="headerlink" href="#define-get-wsclientsetproxy-s-pfcmgetapi2-wsclientsetproxy-rts-void-fctptr-pfwsclientsetproxy-fl-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-cal-wsclientsetproxy-pfwsclientsetproxy">
+<span id="group-cmp-web-socket-client-itf-1gaa1acb6a6b2d3733553d098b16d6f59e7"></span><h3>#define CAL_WsClientSetProxy pfWsClientSetProxy<a class="headerlink" href="#define-cal-wsclientsetproxy-pfwsclientsetproxy" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-chk-wsclientsetproxy-pfwsclientsetproxy-null">
+<span id="group-cmp-web-socket-client-itf-1gad893f6c37855b9994f176d30e30cd241"></span><h3>#define CHK_WsClientSetProxy (pfWsClientSetProxy != NULL)<a class="headerlink" href="#define-chk-wsclientsetproxy-pfwsclientsetproxy-null" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-exp-wsclientsetproxy-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientsetproxy-rts-uintptr-wsclientsetproxy-0-0">
+<span id="group-cmp-web-socket-client-itf-1ga995702bfeed47e4c74ee5f9b67483c80"></span><h3>#define EXP_WsClientSetProxy s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)”WsClientSetProxy”, (RTS_UINTPTR) <a class="reference internal" href="#group-cmp-web-socket-client-itf-1ga1999c8a3a1cfa1fbefc16bf0a6542854"><span class="std std-ref">WsClientSetProxy</span></a> , 0, 0)<a class="headerlink" href="#define-exp-wsclientsetproxy-s-pfcmregisterapi-const-cmp-ext-function-ref-wsclientsetproxy-rts-uintptr-wsclientsetproxy-0-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-itf-cmpwebsocketclient">
+<span id="group-cmp-web-socket-client-itf-1ga55953dcc6c117e652a3060d5f7381f32"></span><h3>#define ITF_CmpWebSocketClient<a class="headerlink" href="#define-itf-cmpwebsocketclient" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-extitf-cmpwebsocketclient">
+<span id="group-cmp-web-socket-client-itf-1gafa5f258f54d156ba50e543d3afcbdd64"></span><h3>#define EXTITF_CmpWebSocketClient<a class="headerlink" href="#define-extitf-cmpwebsocketclient" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="typedef-documentation">
+<h2><a class="toc-backref" href="#id110">Typedef Documentation</a><a class="headerlink" href="#typedef-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="typedef-void-pfdatareceivedcallback-rts-handle-hclient-void-puserdata-rts-ui8-pdata-rts-size-datasize-rts-bool-bbinarymode-rts-bool-bfinalfragmet">
+<span id="group-cmp-web-socket-client-itf-1gaa01c61054651cc483d084b70c2242460"></span><h3>typedef void( * PFDATARECEIVEDCALLBACK) (RTS_HANDLE hClient, void <a href="#id61"><span class="problematic" id="id62">*</span></a>pUserData, RTS_UI8 <a href="#id63"><span class="problematic" id="id64">*</span></a>pData, RTS_SIZE dataSize, RTS_BOOL bBinaryMode, RTS_BOOL bFinalFragmet)<a class="headerlink" href="#typedef-void-pfdatareceivedcallback-rts-handle-hclient-void-puserdata-rts-ui8-pdata-rts-size-datasize-rts-bool-bbinarymode-rts-bool-bfinalfragmet" title="Permalink to this headline">¶</a></h3>
+<p>Callback function if a complete frame is received from the WebSocket. A single frame is completely defragmented by the WebSocket implementation. A fragmented transfer where multiple frames are used must be defragmented by the caller.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 10%" />
+<col style="width: 84%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hClient</p></td>
+<td><p>Handle to the client that received the frame.</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>pUserData</p></td>
+<td><p>Pointer to user defined data.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>pData</p></td>
+<td><p>Pointer to the received data.</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>dataSize</p></td>
+<td><p>Size of available data.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>bBinaryMode</p></td>
+<td><p>TRUE if a binary frame is received. FALSE if a text frame is received.</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>bFinalFragmet</p></td>
+<td><p>TRUE if this is the final fragment. This can happen for the first frame. If FALSE this is part of a fragmented transfer.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="typedef-void-pfstatechangeclallback-rts-handle-hclient-void-puserdata-wsclientstate-newstate-websocketstatus-statuscode">
+<span id="group-cmp-web-socket-client-itf-1gade19a2a40fc07b1120f2fd8e3ebf83b6"></span><h3>typedef void( * PFSTATECHANGECLALLBACK) (RTS_HANDLE hClient, void <a href="#id65"><span class="problematic" id="id66">*</span></a>pUserData, WsClientState newState, WebSocketStatus statusCode)<a class="headerlink" href="#typedef-void-pfstatechangeclallback-rts-handle-hclient-void-puserdata-wsclientstate-newstate-websocketstatus-statuscode" title="Permalink to this headline">¶</a></h3>
+<p>Callback function to inform on state changes of the WebSocket connection. Note: For WsClientState_PingReceived and WsClientState_PongReceived are used informational. Internal no state is changed.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 12%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hClient</p></td>
+<td><p>Handle to the client that received the frame.</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>pUserData</p></td>
+<td><p>Pointer to user defined data.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>newState</p></td>
+<td><p>New state of the WebSocket connection.</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>statusCode</p></td>
+<td><p>This is used when the state changes to ConnectionClosed. This is the reason why.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="typedef-rts-handle-pfwsclientcreate-rts-size-buffersize-char-pszurl-char-pszproto-rts-handle-htlscontext-void-puserdata-pfdatareceivedcallback-pfdatareceivedcallback-pfstatechangeclallback-pfstatechangecallback-rts-result-presult">
+<span id="group-cmp-web-socket-client-itf-1gac36ad1d51e399fa3c1c9281d2b45240a"></span><h3>typedef RTS_HANDLE( *  PFWSCLIENTCREATE) (RTS_SIZE bufferSize, char <a href="#id67"><span class="problematic" id="id68">*</span></a>pszUrl, char <a href="#id69"><span class="problematic" id="id70">*</span></a>pszProto, RTS_HANDLE hTlsContext, void <a href="#id71"><span class="problematic" id="id72">*</span></a>pUserData, PFDATARECEIVEDCALLBACK pfDataReceivedCallback, PFSTATECHANGECLALLBACK pfStateChangeCallback, RTS_RESULT <a href="#id73"><span class="problematic" id="id74">*</span></a>pResult)<a class="headerlink" href="#typedef-rts-handle-pfwsclientcreate-rts-size-buffersize-char-pszurl-char-pszproto-rts-handle-htlscontext-void-puserdata-pfdatareceivedcallback-pfdatareceivedcallback-pfstatechangeclallback-pfstatechangecallback-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfwsclientdelete-rts-handle-hclient">
+<span id="group-cmp-web-socket-client-itf-1ga20cb5922e463f0c7564e2c88b7febba1"></span><h3>typedef RTS_RESULT( *  PFWSCLIENTDELETE) (RTS_HANDLE hClient)<a class="headerlink" href="#typedef-rts-result-pfwsclientdelete-rts-handle-hclient" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfwsclientconnect-rts-handle-hclient">
+<span id="group-cmp-web-socket-client-itf-1gaaee28adf798be4b4c849b47dbf2a09ca"></span><h3>typedef RTS_RESULT( *  PFWSCLIENTCONNECT) (RTS_HANDLE hClient)<a class="headerlink" href="#typedef-rts-result-pfwsclientconnect-rts-handle-hclient" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfwsclientdisconnect-rts-handle-hclient-websocketstatus-statuscode">
+<span id="group-cmp-web-socket-client-itf-1ga7499096f7f841a55df7aa075ec6cdf8f"></span><h3>typedef RTS_RESULT( *  PFWSCLIENTDISCONNECT) (RTS_HANDLE hClient, WebSocketStatus statusCode)<a class="headerlink" href="#typedef-rts-result-pfwsclientdisconnect-rts-handle-hclient-websocketstatus-statuscode" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfwsclientsend-rts-handle-hclient-rts-ui8-psenddata-rts-size-datasize-rts-bool-bbinarymode-rts-bool-bfinalfragmet">
+<span id="group-cmp-web-socket-client-itf-1ga24e2736ac8ca48bba0f5c66386b93914"></span><h3>typedef RTS_RESULT( *  PFWSCLIENTSEND) (RTS_HANDLE hClient, RTS_UI8 <a href="#id75"><span class="problematic" id="id76">*</span></a>pSendData, RTS_SIZE dataSize, RTS_BOOL bBinaryMode, RTS_BOOL bFinalFragmet)<a class="headerlink" href="#typedef-rts-result-pfwsclientsend-rts-handle-hclient-rts-ui8-psenddata-rts-size-datasize-rts-bool-bbinarymode-rts-bool-bfinalfragmet" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfwsclientprocess-rts-handle-hclient-rts-ui32-ui32timeout">
+<span id="group-cmp-web-socket-client-itf-1gaed4f980f607da4589a6cf1e56bdbe5f6"></span><h3>typedef RTS_RESULT( *  PFWSCLIENTPROCESS) (RTS_HANDLE hClient, RTS_UI32 ui32Timeout)<a class="headerlink" href="#typedef-rts-result-pfwsclientprocess-rts-handle-hclient-rts-ui32-ui32timeout" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfwsclientgethttpheader-rts-handle-hclient-rts-ui8-ppheader">
+<span id="group-cmp-web-socket-client-itf-1ga98aa4170a2db6f12c931c19df7f28d75"></span><h3>typedef RTS_RESULT( *  PFWSCLIENTGETHTTPHEADER) (RTS_HANDLE hClient, RTS_UI8 <a href="#id77"><span class="problematic" id="id78">**</span></a>ppHeader)<a class="headerlink" href="#typedef-rts-result-pfwsclientgethttpheader-rts-handle-hclient-rts-ui8-ppheader" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfwsclientsetcookie-rts-handle-hclient-rts-ui8-pcookiename-rts-ui8-pcookievalue">
+<span id="group-cmp-web-socket-client-itf-1ga64ce44b23213bf63a05f763fff5ad26c"></span><h3>typedef RTS_RESULT( *  PFWSCLIENTSETCOOKIE) (RTS_HANDLE hClient, RTS_UI8 <a href="#id79"><span class="problematic" id="id80">*</span></a>pCookieName, RTS_UI8 <a href="#id81"><span class="problematic" id="id82">*</span></a>pCookieValue)<a class="headerlink" href="#typedef-rts-result-pfwsclientsetcookie-rts-handle-hclient-rts-ui8-pcookiename-rts-ui8-pcookievalue" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-rts-result-pfwsclientsetproxy-rts-handle-hclient-wsclientproxy-pproxy">
+<span id="group-cmp-web-socket-client-itf-1ga5d4091e8c558f3f0e5dad303620da84d"></span><h3>typedef RTS_RESULT( *  PFWSCLIENTSETPROXY) (RTS_HANDLE hClient, WsClientProxy <a href="#id83"><span class="problematic" id="id84">*</span></a>pProxy)<a class="headerlink" href="#typedef-rts-result-pfwsclientsetproxy-rts-handle-hclient-wsclientproxy-pproxy" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-icmpwebsocketclient-c-icmpwebsocketclient">
+<span id="group-cmp-web-socket-client-itf-1ga70dc734f127003963241044305430fd4"></span><h3>typedef ICmpWebSocketClient_C ICmpWebSocketClient<a class="headerlink" href="#typedef-icmpwebsocketclient-c-icmpwebsocketclient" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="enumeration-type-documentation">
+<h2><a class="toc-backref" href="#id111">Enumeration Type Documentation</a><a class="headerlink" href="#enumeration-type-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="enum-websocketstatus">
+<span id="group-cmp-web-socket-client-itf-1ga7ca615b8b1393c323b49562a6391daa4"></span><h3>enum WebSocketStatus<a class="headerlink" href="#enum-websocketstatus" title="Permalink to this headline">¶</a></h3>
+<p><strong>Enumerator:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>WebSocketStatus_Not_Relevant</p></td>
+</tr>
+<tr class="row-even"><td><p>WebSocketStatus_Close_Normal</p></td>
+</tr>
+<tr class="row-odd"><td><p>WebSocketStatus_Close_GoingAway</p></td>
+</tr>
+<tr class="row-even"><td><p>WebSocketStatus_Close_Protocol</p></td>
+</tr>
+<tr class="row-odd"><td><p>WebSocketStatus_Close_Type</p></td>
+</tr>
+<tr class="row-even"><td><p>WebSocketStatus_Close_Inconsistent</p></td>
+</tr>
+<tr class="row-odd"><td><p>WebSocketStatus_Close_Policy</p></td>
+</tr>
+<tr class="row-even"><td><p>WebSocketStatus_Close_Toobig</p></td>
+</tr>
+<tr class="row-odd"><td><p>WebSocketStatus_Close_Extension</p></td>
+</tr>
+<tr class="row-even"><td><p>WebSocketStatus_Close_Unexpected</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="enum-wsclientstate">
+<span id="group-cmp-web-socket-client-itf-1gae14697c6e6daa42a59774b2a4a6e204e"></span><h3>enum WsClientState<a class="headerlink" href="#enum-wsclientstate" title="Permalink to this headline">¶</a></h3>
+<p><strong>Enumerator:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>WsClientState_Initial</p></td>
+</tr>
+<tr class="row-even"><td><p>WsClientState_InConnect</p></td>
+</tr>
+<tr class="row-odd"><td><p>WsClientState_InConnect_HandshakeSent</p></td>
+</tr>
+<tr class="row-even"><td><p>WsClientState_Connected</p></td>
+</tr>
+<tr class="row-odd"><td><p>WsClientState_PingReceived</p></td>
+</tr>
+<tr class="row-even"><td><p>WsClientState_PongReceived</p></td>
+</tr>
+<tr class="row-odd"><td><p>WsClientState_FrameSentCompletly</p></td>
+</tr>
+<tr class="row-even"><td><p>WsClientState_ConnectionClosedByServer</p></td>
+</tr>
+<tr class="row-odd"><td><p>WsClientState_ConnectionClosedLocally</p></td>
+</tr>
+<tr class="row-even"><td><p>WsClientState_InConnect_InitialResponseReceived</p></td>
+</tr>
+<tr class="row-odd"><td><p>WsClientState_InConnect_InProxyConnect</p></td>
+</tr>
+<tr class="row-even"><td><p>WsClientState_InConnect_ProxyConnected</p></td>
+</tr>
+<tr class="row-odd"><td><p>WsClientState_InConnect_TlsStarted</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="enum-wsclientproxytype">
+<span id="group-cmp-web-socket-client-itf-1gaa8c502e96af9e90da873ac9f6dbe7910"></span><h3>enum WsClientProxyType<a class="headerlink" href="#enum-wsclientproxytype" title="Permalink to this headline">¶</a></h3>
+<p><strong>Enumerator:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>WsClientProxyType_None</p></td>
+</tr>
+<tr class="row-even"><td><p>WsClientProxyType_Http</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="function-documentation">
+<h2><a class="toc-backref" href="#id112">Function Documentation</a><a class="headerlink" href="#function-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rts-handle-wsclientcreate-rts-size-buffersize-char-pszurl-char-pszproto-rts-handle-htlscontext-void-puserdata-pfdatareceivedcallback-pfdatareceivedcallback-pfstatechangeclallback-pfstatechangecallback-rts-result-presult">
+<span id="group-cmp-web-socket-client-itf-1ga828537331f0d1d76c5c93e0673db0745"></span><h3>RTS_HANDLE WsClientCreate (RTS_SIZE bufferSize, char <a href="#id85"><span class="problematic" id="id86">*</span></a>pszUrl, char <a href="#id87"><span class="problematic" id="id88">*</span></a>pszProto, RTS_HANDLE hTlsContext, void <a href="#id89"><span class="problematic" id="id90">*</span></a>pUserData, PFDATARECEIVEDCALLBACK pfDataReceivedCallback, PFSTATECHANGECLALLBACK pfStateChangeCallback, RTS_RESULT <a href="#id91"><span class="problematic" id="id92">*</span></a>pResult)<a class="headerlink" href="#rts-handle-wsclientcreate-rts-size-buffersize-char-pszurl-char-pszproto-rts-handle-htlscontext-void-puserdata-pfdatareceivedcallback-pfdatareceivedcallback-pfstatechangeclallback-pfstatechangecallback-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+<p>Create a new WebSocket client.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 2%" />
+<col style="width: 4%" />
+<col style="width: 94%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>bufferSize</p></td>
+<td><p>Set this to the maximum data size size needed.</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>pszUrl</p></td>
+<td><p>URL to connect to. The official scheme for WebSockets ws://host[:port][/path] (plain text) or wss://[:port][/path] (TLS connection) is expected here. The parts are used in that way: host (Mandatory): Used for HOST in the HTTP GET request. Used to resolve the Server. You can use a host name or IP-address. If a host name is used and scheme is WSS a SNI will be added to the TLS handshake. port (Optional): Port to connect to. path (Optional): Path is used in the HTTP GET request. If not available a ‘/’ will be added to the HTTP GET request.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>pszProto</p></td>
+<td><p>Protocol used inside the websocket handshake header. May be NULL.</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>hTlsContext</p></td>
+<td><p>The TLC context to use if a wss:// scheme is given.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>pUserData</p></td>
+<td><p>Pointer to a user defined value. This is passed to the two callbacks.</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>pfDataReceivedCallback</p></td>
+<td><p>Callback function used if a data frame is received.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>pfStateChangeCallback</p></td>
+<td><p>Callback function used to send state changes.</p></td>
+</tr>
+<tr class="row-even"><td><p>[out]</p></td>
+<td><p>pResult</p></td>
+<td><p>Error Code:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ERR_OK: WebSocket client created successfully.</p></li>
+<li><p>ERR_PARAMETER: One of the parameters is invalid.</p></li>
+<li><p>ERR_INVALID_URL: The given URL is invalid.</p></li>
+<li><p>ERR_INVALID_HANDLE: A wss:// scheme is given, but hTlsContext is invalid.</p></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Handle to the WebSocket. RTS_INVALID_HANDLE in case of an error.</p>
+</div>
+<div class="section" id="rts-result-wsclientdelete-rts-handle-hclient">
+<span id="group-cmp-web-socket-client-itf-1ga6feb84d7cadd98622aa0671e368c197f"></span><h3>RTS_RESULT WsClientDelete (RTS_HANDLE hClient)<a class="headerlink" href="#rts-result-wsclientdelete-rts-handle-hclient" title="Permalink to this headline">¶</a></h3>
+<p>Delete a WebSocket client.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 21%" />
+<col style="width: 58%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hSocket</p></td>
+<td><p>Handle to the WebSocket</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Either ERR_OK or ERR_INVALID_HANDLE in case hClient is unknown.</p>
+</div>
+<div class="section" id="rts-result-wsclientconnect-rts-handle-hclient">
+<span id="group-cmp-web-socket-client-itf-1gab2eee7ff752a31ed81a85f59ad843b2d"></span><h3>RTS_RESULT WsClientConnect (RTS_HANDLE hClient)<a class="headerlink" href="#rts-result-wsclientconnect-rts-handle-hclient" title="Permalink to this headline">¶</a></h3>
+<p>Connects the WebSocket to the WebSocket server.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 21%" />
+<col style="width: 58%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hClient</p></td>
+<td><p>Handle to the WebSocket</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error Code:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ERR_INVALID_HANDLE: The given hClient is unknown.</p></li>
+<li><p>ERR_SOCK_HOSTNOTFOUND: The host of the URL could not be found.</p></li>
+<li><p>ERR_FAILED: Some internal error occurred.</p></li>
+<li><p>ERR_PENDING: Connection pending. Will be finished within WsClientProcess. Wait for state callback with WsClientState_Connected.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="rts-result-wsclientdisconnect-rts-handle-hclient-websocketstatus-statuscode">
+<span id="group-cmp-web-socket-client-itf-1ga8c014856cd0d94b7617dd12d9375366b"></span><h3>RTS_RESULT WsClientDisconnect (RTS_HANDLE hClient, WebSocketStatus statusCode)<a class="headerlink" href="#rts-result-wsclientdisconnect-rts-handle-hclient-websocketstatus-statuscode" title="Permalink to this headline">¶</a></h3>
+<p>Disconnects the WebSocket. Sends a FIN frame to the server. Use WsClientConnect to reestablish the connection the same server.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 17%" />
+<col style="width: 70%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hClient</p></td>
+<td><p>Handle to the WebSocket.</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>statusCode</p></td>
+<td><p>Status code why the connection is beeing closed.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error Code:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ERR_INVALID_HANDLE: The given hClient is unknown.</p></li>
+<li><p>ERR_OK: The connection is closed.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="rts-result-wsclientsend-rts-handle-hclient-rts-ui8-psenddata-rts-size-datasize-rts-bool-bbinarymode-rts-bool-bfinalfragmet">
+<span id="group-cmp-web-socket-client-itf-1gad2166f0e930e7bb0e137559ea6fc81a3"></span><h3>RTS_RESULT WsClientSend (RTS_HANDLE hClient, RTS_UI8 <a href="#id93"><span class="problematic" id="id94">*</span></a>pSendData, RTS_SIZE dataSize, RTS_BOOL bBinaryMode, RTS_BOOL bFinalFragmet)<a class="headerlink" href="#rts-result-wsclientsend-rts-handle-hclient-rts-ui8-psenddata-rts-size-datasize-rts-bool-bbinarymode-rts-bool-bfinalfragmet" title="Permalink to this headline">¶</a></h3>
+<p>Send a data frame to the server.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 86%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hClient</p></td>
+<td><p>Handle to the WebSocket.</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>pSendData</p></td>
+<td><p>Pointer to the data to send.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>dataSize</p></td>
+<td><p>Size of the data to send.</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>bBinaryMode</p></td>
+<td><p>If TRUE, a binary frame will be sent. If FALSE, a text frame will be sent.</p></td>
+</tr>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>bFinalFragmet</p></td>
+<td><p>Use this to signal that this is the final frame. If not set the subsequent calls will send send continuation frames until bFinalFragmet is set to TRUE.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error Code:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ERR_OK: Frame is sent.</p></li>
+<li><p>ERR_BUFFERSIZE: Too much data to send.</p></li>
+<li><p>ERR_PENDING: Parts where sent. Sending is finished in WsClientProcess.</p></li>
+<li><p>ERR_CALL_AGAIN: No data sent. Call again.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="rts-result-wsclientprocess-rts-handle-hclient-rts-ui32-ui32timeout">
+<span id="group-cmp-web-socket-client-itf-1gaed578d2029b8064031595ee11ed603d9"></span><h3>RTS_RESULT WsClientProcess (RTS_HANDLE hClient, RTS_UI32 ui32Timeout)<a class="headerlink" href="#rts-result-wsclientprocess-rts-handle-hclient-rts-ui32-ui32timeout" title="Permalink to this headline">¶</a></h3>
+<p>Call this function cyclically in a way of your needs. This function will process incoming packets, defragment them, finishes handshaking, etc.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 24%" />
+<col style="width: 60%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hClient</p></td>
+<td><p>Handle to the WebSocket</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>ui32Timeout</p></td>
+<td><p>Timeout used for SysSockSelect.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error Code:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ERR_INVALID_HANDLE: The hClient is unknown.</p></li>
+<li><p>ERR_OK: This is returned otherwise. To signal state changes the state change callback is used.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="rts-result-wsclientgethttpheader-rts-handle-hclient-rts-ui8-ppheader">
+<span id="group-cmp-web-socket-client-itf-1ga415f483f071bd66d48d07726bd5131ea"></span><h3>RTS_RESULT WsClientGetHttpHeader (RTS_HANDLE hClient, RTS_UI8 <a href="#id95"><span class="problematic" id="id96">**</span></a>ppHeader)<a class="headerlink" href="#rts-result-wsclientgethttpheader-rts-handle-hclient-rts-ui8-ppheader" title="Permalink to this headline">¶</a></h3>
+<p>Function to retrieve a pointer to the header of the initial HTTP response. Can only be called in the context of the callback PFSTATECHANGECLALLBACK during the state WsClientState_InConnect_InitialResponseReceived.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 15%" />
+<col style="width: 72%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hClient</p></td>
+<td><p>Handle to the WebSocket</p></td>
+</tr>
+<tr class="row-even"><td><p>[out]</p></td>
+<td><p>ppHeader</p></td>
+<td><p>Pointer to Pointer to the retrieved HTTP header</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error Code:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ERR_INVALID_HANDLE: The hClient is unknown.</p></li>
+<li><p>ERR_PARAMETER: ppHeader is NULL.</p></li>
+<li><p>ERR_INVALID_STATE: The client is not in the state WsClientState_InConnect_InitialResponseReceived.</p></li>
+<li><p>ERR_OK: The HTTP header has been successfully retrieved.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="rts-result-wsclientsetcookie-rts-handle-hclient-rts-ui8-pcookiename-rts-ui8-pcookievalue">
+<span id="group-cmp-web-socket-client-itf-1ga1c2d2ae401dee73244533b3e97ffe9dd"></span><h3>RTS_RESULT WsClientSetCookie (RTS_HANDLE hClient, RTS_UI8 <a href="#id97"><span class="problematic" id="id98">*</span></a>pCookieName, RTS_UI8 <a href="#id99"><span class="problematic" id="id100">*</span></a>pCookieValue)<a class="headerlink" href="#rts-result-wsclientsetcookie-rts-handle-hclient-rts-ui8-pcookiename-rts-ui8-pcookievalue" title="Permalink to this headline">¶</a></h3>
+<p>Function to store a cookie to be sent with the initial HTTP request.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 29%" />
+<col style="width: 52%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hClient</p></td>
+<td><p>Handle to the WebSocket</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>pCookieName</p></td>
+<td><p>Name of the cookie</p></td>
+</tr>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>pCookieValue</p></td>
+<td><p>Value of the cookie</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error Code:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ERR_INVALID_HANDLE: The hClient is unknown.</p></li>
+<li><p>ERR_PARAMETER: pCookieName or pCookieValue is NULL.</p></li>
+<li><p>ERR_NOMEMORY: No heap memory to store the cookie.</p></li>
+<li><p>ERR_FAILED: An internal error occured storing the cookie into the internal websocket structure.</p></li>
+<li><p>ERR_OK: The cookie has been successfully stored.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="rts-result-wsclientsetproxy-rts-handle-hclient-wsclientproxy-pproxy">
+<span id="group-cmp-web-socket-client-itf-1ga1999c8a3a1cfa1fbefc16bf0a6542854"></span><h3>RTS_RESULT WsClientSetProxy (RTS_HANDLE hClient, WsClientProxy <a href="#id101"><span class="problematic" id="id102">*</span></a>pProxy)<a class="headerlink" href="#rts-result-wsclientsetproxy-rts-handle-hclient-wsclientproxy-pproxy" title="Permalink to this headline">¶</a></h3>
+<p>Function to configure a proxy server for the connection.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 85%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>hClient</p></td>
+<td><p>Handle to the WebSocket</p></td>
+</tr>
+<tr class="row-even"><td><p>[in]</p></td>
+<td><p>pProxy</p></td>
+<td><p>Pointer to the proxy description (see definition of <a class="reference internal" href="struct_ws_client_proxy.html#struct-ws-client-proxy"><span class="std std-ref">WsClientProxy</span></a> )</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Error Code:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ERR_INVALID_HANDLE: The hClient is unknown.</p></li>
+<li><p>ERR_PARAMETER: pProxy is NULL.</p></li>
+<li><p>ERR_OK: The proxy configuration has been set successfully.</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="group___cmp_x509_cert___implementation_itf.html" title="7.1.2.130. CmpX509Cert_ImplementationItf"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="group___cmp_web_server_itf.html" title="7.1.2.128. CmpWebServerItf"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. Reference Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >7.1. API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

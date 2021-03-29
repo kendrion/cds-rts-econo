@@ -7,7 +7,7 @@
  *	<ul>
  *		<li>startup and shutdown of the runtime system</li>
  *		<li>loading and unloading all components</li>
- *		<li>intializing all components</li>
+ *		<li>initializing all components</li>
  *		<li>linking all functions, including the external IEC library functions</li>
  *		<li>checking the consistency of calling a function (matching function prototypes)</li>
  *	</ul>
@@ -15,11 +15,11 @@
  *	<p>If the components are linked static, there are two different ways to specify the component list:</p>
  *	<ul>
  *		<li>Static list: The list of static loaded components can be specified as a calling option for the CMInit()
- *		interface method. The name of the component on the entry funtion of each component must be specified.
+ *		interface method. The name of the component on the entry function of each component must be specified.
  *		See the description of the CMInit() method for detailed information.</li>
  *		<li>Settings: The settings component has a settings interface, where the component list can be specified.
  *		Here only the component name must be specified. In this case, the function MainLoadComponent() must be
- *		impleemnted in the Main module and here all static linked components must be added to the list. The advantage
+ *		implemented in the Main module and here all static linked components must be added to the list. The advantage
  *		of this method is that in the settings you can specify, which static component can be loaded or not. This
  *		is quite flexible.</li>
  *	</ul>
@@ -32,7 +32,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -58,12 +58,12 @@ REF_ITF(`SysIntItf.m4')
  *		<li>Complete dynamically linked runtime system (each component is a separate loadable module):
  *			-- Nothing must be specified in each component.</li>
  *		<li>Static linked runtime system, that can be extended via separate, dynamically linkable components
- *			and all interface functions should be overloadable:
+ *			and all interface functions should be over loadable:
  *			DYNAMIC_LINK must be specified for the runtime system.
  *			-- Nothing must be specified in the external component.</li>
  *		<li>C++ runtime system: 
  *			CPLUSPLUS must be specified always in each component, that is used in a C++ runtime system.
- *			This is independant, if the kernel or a separate component is linked (static or dynamically linked!</li>
+ *			This is independent, if the kernel or a separate component is linked (static or dynamically linked!</li>
  *	</ul>
  * </description>
  * <element name="STATIC_LINK">All components are linked statically to the component manager during compile time.
@@ -104,8 +104,8 @@ REF_ITF(`SysIntItf.m4')
  *	Compiler switches to enable/disable single features in the component.
  * </description>
  * <element name="CM_SYSTARGET_DISABLE_OVERLOADABLE_FUNCTIONS">Switch to disable the possibility to overload the SysTarget functions</element>
- * <element name="CM_DISABLE_API_SIGNATURE_CHECK">Switch to disable the signature check of all api functions</element>
- * <element name="CM_DISABLE_API_VERSION_CHECK">Switch to disable the version check of all api functions</element>
+ * <element name="CM_DISABLE_API_SIGNATURE_CHECK">Switch to disable the signature check of all API functions</element>
+ * <element name="CM_DISABLE_API_VERSION_CHECK">Switch to disable the version check of all API functions</element>
  * <element name="CM_NO_EXIT">Switch to disable definite exit or shutdown process of the runtime system</element>
  * <element name="CM_NO_DYNAMIC_COMPONENTS">Switch to disable dynamic loadable components</element>
  */
@@ -114,7 +114,13 @@ REF_ITF(`SysIntItf.m4')
 	#define CM_NO_DYNAMIC_COMPONENTS
 #endif
 
-
+/**
+ * <category>Static defines</category>
+ * <description>Timeout in [ms] to wait for executing CH_INIT_XXX or CH_EXIT_XXX hooks, if they are executed out of an own task (see options RTS_CMINIT_OPTION_INITTASK and RTS_CMINIT_OPTION_EXITTASK)</description>
+ */
+#ifndef RTS_CM_INIT_EXIT_HOOKS_TIMEOUT_MS
+	#define RTS_CM_INIT_EXIT_HOOKS_TIMEOUT_MS			300000
+#endif
 
 /**
  * <category>Static defines</category>
@@ -124,7 +130,7 @@ REF_ITF(`SysIntItf.m4')
 
 /**
  * <category>Static defines</category>
- * <description>Maximum length of api function name</description>
+ * <description>Maximum length of API function name</description>
  */
 #define MAX_API_NAME							64
 
@@ -135,7 +141,7 @@ REF_ITF(`SysIntItf.m4')
  */
 #ifndef CM_NUM_OF_STATIC_COMPONENTS
 	#if defined(CPLUSPLUS)
-		#define CM_NUM_OF_STATIC_COMPONENTS		110
+		#define CM_NUM_OF_STATIC_COMPONENTS		150
 	#else
 		#define CM_NUM_OF_STATIC_COMPONENTS		40
 	#endif
@@ -168,8 +174,8 @@ REF_ITF(`SysIntItf.m4')
 /**
  * <category>Static defines</category>
  * <description>
- *	Significant mask to check different versions of an api function. If the significant
- *	parts of the version don't match, the api versions don't match!
+ *	Significant mask to check different versions of an API function. If the significant
+ *	parts of the version don't match, the API versions don't match!
  * </description>
  */
 #ifndef CM_API_VERSION_CHECK_MASK
@@ -179,7 +185,7 @@ REF_ITF(`SysIntItf.m4')
 /**
  * <category>Static defines</category>
  * <description>
- *	Specifies the minimum supported version of all api functions.
+ *	Specifies the minimum supported version of all API functions.
  * </description>
  */
 #ifndef CM_API_VERSION_CHECK_MINIMUM
@@ -190,8 +196,8 @@ REF_ITF(`SysIntItf.m4')
 /**
  * <category>Static defines</category>
  * <description>
- *	Significant mask to check different versions of an external library api function. If the significant
- *	parts of the version don't match, the api versions don't match!
+ *	Significant mask to check different versions of an external library API function. If the significant
+ *	parts of the version don't match, the API versions don't match!
  * </description>
  */
 #ifndef CM_EXTLIB_API_VERSION_CHECK_MASK
@@ -201,7 +207,7 @@ REF_ITF(`SysIntItf.m4')
 /**
  * <category>Static defines</category>
  * <description>
- *	Specifies the minimum supported version of all external library api functions.
+ *	Specifies the minimum supported version of all external library API functions.
  * </description>
  */
 #ifndef CM_EXTLIB_API_VERSION_CHECK_MINIMUM
@@ -249,7 +255,7 @@ REF_ITF(`SysIntItf.m4')
  * <type>Int</type>
  * <description>
  *	Setting to define the minimal interval (in ms) in which the function CMCallExtraCommCycleHook() calls on
- *  non-multitaskling systems the CommCycleHook additionally.
+ *  non-multitasking systems the CommCycleHook additionally.
  * </description>
  */
 #define CMPMGR_KEY_INT_MINIMAL_COMM_CYCLE_HOOK_INTERVAL					"MinimalCommCycleHookInterval"
@@ -257,17 +263,33 @@ REF_ITF(`SysIntItf.m4')
 	#define CMPMGR_VALUE_INT_MINIMAL_COMM_CYCLE_HOOK_INTERVAL_DEFAULT	250
 #endif
 
+#ifdef SYSTARGET_OS_WINDOWS_CE
+	/**
+	 * <category>Settings</category>
+	 * <type>Int</type>
+	 * <description>
+	 *	Setting to define the sleep time (in ms) after each comm cycle on WinCE targets. 
+	 * </description>
+	 */
+	#define CMPMGR_KEY_INT_WINCE_COMM_CYCLE_INTERVAL						"WinCE.CommCycleInterval"
+	#ifndef CMPMGR_VALUE_INT_WINCE_COMM_CYCLE_INTERVAL_DEFAULT
+		#define CMPMGR_VALUE_INT_WINCE_COMM_CYCLE_INTERVAL_DEFAULT			9
+		#define CMPMGR_VALUE_COMM_CYCLE_INTERVAL_DEFAULT					CMPMGR_VALUE_INT_WINCE_COMM_CYCLE_INTERVAL_DEFAULT
+	#endif
+#endif
+
 /**
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Setting to define the sleep time (in ms) after each comm cycle on WinCE targets. 
+ *	Setting to specify the comm cycle interval in [ms] (interval in which CH_COMM_CYCLE hook is called). 
  * </description>
  */
-#define CMPMGR_KEY_INT_WINCE_COMM_CYCLE_INTERVAL						"WinCE.CommCycleInterval"
-#ifndef CMPMGR_VALUE_INT_WINCE_COMM_CYCLE_INTERVAL_DEFAULT
-	#define CMPMGR_VALUE_INT_WINCE_COMM_CYCLE_INTERVAL_DEFAULT			9
+#define CMPMGR_KEY_INT_COMM_CYCLE_INTERVAL									"CommCycleInterval"
+#ifndef CMPMGR_VALUE_COMM_CYCLE_INTERVAL_DEFAULT
+	#define CMPMGR_VALUE_COMM_CYCLE_INTERVAL_DEFAULT						10
 #endif
+
 
 /**
  * <category>Settings</category>
@@ -353,7 +375,7 @@ typedef struct
  * <category>Event parameter</category>
  * <element name="bLastCall" type="IN">This value will be != 0 for the last call of this event, otherwise 0.</element>
  * <element name="bFurtherCallNecessary" type="OUT">Callees of the event can set this value to <c>!= 0</c> if they expect a further call of
- *	the same event with inbetween comm cycle calls. It is not expected that a callee sets this value to <c>0</c>!</element>
+ *	the same event with in between comm cycle calls. It is not expected that a callee sets this value to <c>0</c>!</element>
  */
 typedef struct
 {
@@ -380,7 +402,12 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent before shutdown of the runtime system</description>
+ * <description>Event is sent before shutdown of the runtime system
+ *
+ *	NOTE:
+ *	The CH_COMM_CYCLE is still running during executing this event, if RTS_CMINIT_OPTION_COMMCYCLETASK was specified in CMInit3() at startup of the runtime!
+ *
+ * </description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpMgr_Shutdown</param>
  */
 #define EVT_CmpMgr_PrepareShutdown				MAKE_EVENTID(EVTCLASS_INFO, 1)
@@ -438,22 +465,30 @@ typedef struct
 
  /**
  * <category>Events</category>
- * <description>Event to get informed when a license was requrested. Only for informational use. 
- * No result of the event will be evaulated.</description>
+ * <description>Event to get informed when a license was requested. Only for informational use. 
+ * No result of the event will be evaluated.</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpMgr_LicenseRequest</param>
  */
 #define EVT_CmpMgr_LicenseRequest				MAKE_EVENTID(EVTCLASS_INFO, 8)
 
 /**
  * <category>CMInit options</category>
- * <element name="RTS_CMINIT_OPTION_SETTINGSFILEISOPTIONAL" type="IN">Specifies, if the Settingsfile is only used optional</element> 
+ * <element name="RTS_CMINIT_OPTION_SETTINGSFILEISOPTIONAL" type="IN">Specifies, if the settings file is only used optional</element> 
  * <element name="RTS_CMINIT_OPTION_DONTCALLINITHOOKS" type="IN">If this option is set, the CMInit sequence is stopped right after CH_INIT hook.
  *	To finish the startup sequence, you have to call CMInitEnd() afterwards.
- *	This can be used, if you have to do things first before before all other components, but you need here the runtime system components.
+ *	This can be used, if you have to do things first before all other components, but you need here the runtime system components.
  * </element> 
+ * <element name="RTS_CMINIT_OPTION_INITTASK" type="IN">Call CH_INIT_XXX hooks out of a SysTask</element> 
+ * <element name="RTS_CMINIT_OPTION_COMMCYCLETASK" type="IN">Call CH_COMM_CYCLE out of a SysTask</element> 
+ * <element name="RTS_CMINIT_OPTION_EXITTASK" type="IN">Call CH_EXIT_XXX hooks out of a SysTask</element> 
  */
 #define RTS_CMINIT_OPTION_SETTINGSFILEISOPTIONAL			UINT32_C(0x00000001)
 #define RTS_CMINIT_OPTION_DONTCALLINITHOOKS					UINT32_C(0x00000002)
+#define RTS_CMINIT_OPTION_INITTASK							UINT32_C(0x00000004)
+#define RTS_CMINIT_OPTION_COMMCYCLETASK						UINT32_C(0x00000008)
+#define RTS_CMINIT_OPTION_EXITTASK							UINT32_C(0x00000010)
+
+#define RTS_CMINIT_OPTION_STD								(RTS_CMINIT_OPTION_INITTASK | RTS_CMINIT_OPTION_EXITTASK | RTS_CMINIT_OPTION_COMMCYCLETASK)
 
 /**
  * <category>ComponentType</category>
@@ -590,7 +625,7 @@ typedef struct
 	IBase *pIBase;
 } InstanceEntry;
 
-/* Api list */
+/* API list */
 typedef struct tagApi_ENTRY
 {
 	char szAPIName[MAX_API_NAME];
@@ -732,7 +767,7 @@ typedef struct tagcmaddcomponent_struct
 	RTS_IEC_HANDLE CMAddComponent;		/* VAR_OUTPUT */	
 } cmaddcomponent_struct;
 
-DEF_API(`void',`CDECL',`cmaddcomponent',`(cmaddcomponent_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x3FB931A6),0x03050D00)
+DEF_API(`void',`CDECL',`cmaddcomponent',`(cmaddcomponent_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x3FB931A6),0x03051000)
 
 /**
  * <description>cmaddcomponent2</description>
@@ -746,7 +781,7 @@ typedef struct tagcmaddcomponent2_struct
 	RTS_IEC_HANDLE CMAddComponent2;		/* VAR_OUTPUT */	
 } cmaddcomponent2_struct;
 
-DEF_API(`void',`CDECL',`cmaddcomponent2',`(cmaddcomponent2_struct *p)',1,0x1057D488,0x03050D00)
+DEF_API(`void',`CDECL',`cmaddcomponent2',`(cmaddcomponent2_struct *p)',1,0x1057D488,0x03051000)
 
 /**
  * <description>cmexitcomponent</description>
@@ -757,7 +792,7 @@ typedef struct tagcmexitcomponent_struct
 	RTS_IEC_RESULT CMExitComponent;		/* VAR_OUTPUT */	
 } cmexitcomponent_struct;
 
-DEF_API(`void',`CDECL',`cmexitcomponent',`(cmexitcomponent_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x0DDC8E7F),0x03050D00)
+DEF_API(`void',`CDECL',`cmexitcomponent',`(cmexitcomponent_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x0DDC8E7F),0x03051000)
 
 /**
  * <description>cmgetcomponentbyname</description>
@@ -769,7 +804,19 @@ typedef struct tagcmgetcomponentbyname_struct
 	RTS_IEC_HANDLE CMGetComponentByName;	/* VAR_OUTPUT */	
 } cmgetcomponentbyname_struct;
 
-DEF_API(`void',`CDECL',`cmgetcomponentbyname',`(cmgetcomponentbyname_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x1C90B550),0x03050D00)
+DEF_API(`void',`CDECL',`cmgetcomponentbyname',`(cmgetcomponentbyname_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x1C90B550),0x03051000)
+
+/**
+ * <description>Get the core version of the runtime.</description>
+ * <result><p>RESULT: Returns the runtime system error code (see CmpErrors.library).</p></result>
+ */
+typedef struct tagcmgetcoreversion_struct
+{
+	RTS_IEC_UDINT *pudiCoreVersion;		/* VAR_INPUT */	/* <param name="pudiCoreVersion" type="OUT">Pointer to the core version of the runtime</param> */
+	RTS_IEC_RESULT CMGetCoreVersion;	/* VAR_OUTPUT */	
+} cmgetcoreversion_struct;
+
+DEF_API(`void',`CDECL',`cmgetcoreversion',`(cmgetcoreversion_struct *p)',1,0x83B57980,0x03051000)
 
 /**
  * <description>cminitcomponent</description>
@@ -780,7 +827,7 @@ typedef struct tagcminitcomponent_struct
 	RTS_IEC_RESULT CMInitComponent;		/* VAR_OUTPUT */	
 } cminitcomponent_struct;
 
-DEF_API(`void',`CDECL',`cminitcomponent',`(cminitcomponent_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xAD863340),0x03050D00)
+DEF_API(`void',`CDECL',`cminitcomponent',`(cminitcomponent_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xAD863340),0x03051000)
 
 /**
  * OBSOLETE FUNCTION: Use CMRegisterLicenseFunctions instead
@@ -791,7 +838,7 @@ typedef struct tagcmregistergetuserlicensevalue_struct
 	RTS_IEC_RESULT CMRegisterGetUserLicenseValue;	/* VAR_OUTPUT */	
 } cmregistergetuserlicensevalue_struct;
 
-DEF_API(`void',`CDECL',`cmregistergetuserlicensevalue',`(cmregistergetuserlicensevalue_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x84364FC6),0x03050D00)
+DEF_API(`void',`CDECL',`cmregistergetuserlicensevalue',`(cmregistergetuserlicensevalue_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x84364FC6),0x03051000)
 
 /**
  * <description>cmregisterlicensefunctions</description>
@@ -802,7 +849,7 @@ typedef struct tagcmregisterlicensefunctions_struct
 	RTS_IEC_RESULT CMRegisterLicenseFunctions;	/* VAR_OUTPUT */	
 } cmregisterlicensefunctions_struct;
 
-DEF_API(`void',`CDECL',`cmregisterlicensefunctions',`(cmregisterlicensefunctions_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xC18CCC88),0x03050D00)
+DEF_API(`void',`CDECL',`cmregisterlicensefunctions',`(cmregisterlicensefunctions_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xC18CCC88),0x03051000)
 
 /**
  * <description>cmremovecomponent</description>
@@ -813,7 +860,7 @@ typedef struct tagcmremovecomponent_struct
 	RTS_IEC_RESULT CMRemoveComponent;	/* VAR_OUTPUT */	
 } cmremovecomponent_struct;
 
-DEF_API(`void',`CDECL',`cmremovecomponent',`(cmremovecomponent_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xB53B03F4),0x03050D00)
+DEF_API(`void',`CDECL',`cmremovecomponent',`(cmremovecomponent_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xB53B03F4),0x03051000)
 
 /**
  * <description>cmshutdown</description>
@@ -824,7 +871,7 @@ typedef struct tagcmshutdown_struct
 	RTS_IEC_RESULT CMShutDown;			/* VAR_OUTPUT */	
 } cmshutdown_struct;
 
-DEF_API(`void',`CDECL',`cmshutdown',`(cmshutdown_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x28C83A52),0x03050D00)
+DEF_API(`void',`CDECL',`cmshutdown',`(cmshutdown_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x28C83A52),0x03051000)
 
 /**
  * OBSOLETE FUNCTION: Use CMUnregisterLicenseFunctions instead
@@ -835,7 +882,7 @@ typedef struct tagcmunregistergetuserlicensevalue_struct
 	RTS_IEC_RESULT CMUnregisterGetUserLicenseValue;	/* VAR_OUTPUT */	
 } cmunregistergetuserlicensevalue_struct;
 
-DEF_API(`void',`CDECL',`cmunregistergetuserlicensevalue',`(cmunregistergetuserlicensevalue_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xE400F55F),0x03050D00)
+DEF_API(`void',`CDECL',`cmunregistergetuserlicensevalue',`(cmunregistergetuserlicensevalue_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xE400F55F),0x03051000)
 
 /**
  * <description>cmunregisterlicensefunctions</description>
@@ -846,7 +893,7 @@ typedef struct tagcmunregisterlicensefunctions_struct
 	RTS_IEC_RESULT CMUnregisterLicenseFunctions;	/* VAR_OUTPUT */	
 } cmunregisterlicensefunctions_struct;
 
-DEF_API(`void',`CDECL',`cmunregisterlicensefunctions',`(cmunregisterlicensefunctions_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x7144A275),0x03050D00)
+DEF_API(`void',`CDECL',`cmunregisterlicensefunctions',`(cmunregisterlicensefunctions_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x7144A275),0x03051000)
 
 /**
  * <description>cmutlcwstrcpy</description>
@@ -859,7 +906,7 @@ typedef struct tagcmutlcwstrcpy_struct
 	RTS_IEC_RESULT CMUtlcwstrcpy;		/* VAR_OUTPUT */	
 } cmutlcwstrcpy_struct;
 
-DEF_API(`void',`CDECL',`cmutlcwstrcpy',`(cmutlcwstrcpy_struct *p)',1,RTSITF_GET_SIGNATURE(0x09DB4923, 0xCCB6DDB5),0x03050D00)
+DEF_API(`void',`CDECL',`cmutlcwstrcpy',`(cmutlcwstrcpy_struct *p)',1,RTSITF_GET_SIGNATURE(0x09DB4923, 0xCCB6DDB5),0x03051000)
 
 /**
  * <description>cmutlsafestrcpy</description>
@@ -872,7 +919,7 @@ typedef struct tagcmutlsafestrcpy_struct
 	RTS_IEC_RESULT CMUtlSafeStrCpy;		/* VAR_OUTPUT */	
 } cmutlsafestrcpy_struct;
 
-DEF_API(`void',`CDECL',`cmutlsafestrcpy',`(cmutlsafestrcpy_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x794C4461),0x03050D00)
+DEF_API(`void',`CDECL',`cmutlsafestrcpy',`(cmutlsafestrcpy_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x794C4461),0x03051000)
 
 /**
  * <description>cmutlstricmp</description>
@@ -884,7 +931,7 @@ typedef struct tagcmutlstricmp_struct
 	RTS_IEC_DINT CMUtlStrICmp;			/* VAR_OUTPUT */	
 } cmutlstricmp_struct;
 
-DEF_API(`void',`CDECL',`cmutlstricmp',`(cmutlstricmp_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xF3161529),0x03050D00)
+DEF_API(`void',`CDECL',`cmutlstricmp',`(cmutlstricmp_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xF3161529),0x03051000)
 
 /**
  * <description>cmutlutf8tow</description>
@@ -898,7 +945,7 @@ typedef struct tagcmutlutf8tow_struct
 	RTS_IEC_RESULT CMUtlUtf8ToW;		/* VAR_OUTPUT */	
 } cmutlutf8tow_struct;
 
-DEF_API(`void',`CDECL',`cmutlutf8tow',`(cmutlutf8tow_struct *p)',1,RTSITF_GET_SIGNATURE(0xB78A45E0, 0x76EB6470),0x03050D00)
+DEF_API(`void',`CDECL',`cmutlutf8tow',`(cmutlutf8tow_struct *p)',1,RTSITF_GET_SIGNATURE(0xB78A45E0, 0x76EB6470),0x03051000)
 
 /**
  * <description>cmutlwstrcpy</description>
@@ -911,7 +958,7 @@ typedef struct tagcmutlwstrcpy_struct
 	RTS_IEC_RESULT CMUtlwstrcpy;		/* VAR_OUTPUT */	
 } cmutlwstrcpy_struct;
 
-DEF_API(`void',`CDECL',`cmutlwstrcpy',`(cmutlwstrcpy_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x92BF32B1),0x03050D00)
+DEF_API(`void',`CDECL',`cmutlwstrcpy',`(cmutlwstrcpy_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x92BF32B1),0x03051000)
 
 /**
  * <description>cmutlwtoutf8</description>
@@ -925,7 +972,7 @@ typedef struct tagcmutlwtoutf8_struct
 	RTS_IEC_RESULT CMUtlWToUtf8;		/* VAR_OUTPUT */	
 } cmutlwtoutf8_struct;
 
-DEF_API(`void',`CDECL',`cmutlwtoutf8',`(cmutlwtoutf8_struct *p)',1,RTSITF_GET_SIGNATURE(0xAE6E95C8, 0x61F1F05D),0x03050D00)
+DEF_API(`void',`CDECL',`cmutlwtoutf8',`(cmutlwtoutf8_struct *p)',1,RTSITF_GET_SIGNATURE(0xAE6E95C8, 0x61F1F05D),0x03051000)
 
 #ifdef __cplusplus
 }
@@ -1002,7 +1049,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMInit', `(char *pszSettingsFile, StaticComp
  * </description>
  * <param name="pszSettingsFile" type="IN">Pointer to name of the configuration file</param>
  * <param name="pStaticComponents" type="IN">Pointer to list of components with name and entry routine to initialize without configuration</param>
- * <param name="bSettingsFileIsOptional" type="IN">Specifies, if the Settingsfile is only used optionally</param>
+ * <param name="bSettingsFileIsOptional" type="IN">Specifies, if the Settings file is only used optionally</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `CMInit2', `(char *pszSettingsFile, StaticComponent *pStaticComponents, int bSettingsFileIsOptional)')
@@ -1013,14 +1060,14 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMInit2', `(char *pszSettingsFile, StaticCom
  * </description>
  * <param name="pszSettingsFile" type="IN">Pointer to name of the configuration file</param>
  * <param name="pStaticComponents" type="IN">Pointer to list of components with name and entry routine to initialize without configuration</param>
- * <param name="options" type="IN">Options for the init sequence of the component manager. See category "CMInit options" for details.</param>
+ * <param name="options" type="IN">Options for the initialize sequence of the component manager. See category "CMInit options" for details.</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `CMInit3', `(char *pszSettingsFile, StaticComponent *pStaticComponents, RTS_UI32 options)')
 
 /**
  * <description> 
- *   Called to deinitialize the component manager
+ *   Called to release the component manager
  * </description>
  * <result>error code</result>
  */
@@ -1064,7 +1111,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMDebugOutArg', `(const char *szFormat, va_l
  * </description>
  * <param name="pExpTable" type="IN">Table of functions to be registered</param>
  * <param name="CmpId" type="IN">Component identifier</param>
- * <param name="bExternalLibrary" type="IN">Can be used as external library in the plc program</param>
+ * <param name="bExternalLibrary" type="IN">Can be used as external library in the PLC program</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `CMRegisterAPI', `(const CMP_EXT_FUNCTION_REF *pExpTable, RTS_UINTPTR dummy, int bExternalLibrary, RTS_UI32 cmpId)')
@@ -1075,7 +1122,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMRegisterAPI', `(const CMP_EXT_FUNCTION_REF
  * </description>
  * <param name="pszAPIName" type="IN">Name of the API routine</param>
  * <param name="pfAPIFunction" type="IN">Function pointer of the API routine</param>
- * <param name="bExternalLibrary" type="IN">Can be used as external library in the plc program</param>
+ * <param name="bExternalLibrary" type="IN">Can be used as external library in the PLC program</param>
  * <param name="ulSignatureID" type="IN">SignatureID of the function prototype</param>
  * <param name="ulVersion" type="IN">Actual supported implementation version</param>
  * <result>error code</result>
@@ -1144,7 +1191,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMReleaseAPI', `(RTS_VOID_FCTPTR pfAPIFuncti
  * </description>
  * <param name="pszComponent" type="IN">Name of the component</param>
  * <param name="pResult" type="INOUT">Pointer to error code</param>
- * <result>Component handle or RTS_INVALID_HANDLE, if an error is occured</result>
+ * <result>Component handle or RTS_INVALID_HANDLE, if an error is occurred</result>
  */
 DEF_ITF_API(`RTS_HANDLE', `CDECL', `CMLoadComponent', `(char *pszComponent, RTS_RESULT *pResult)')
 DEF_API(`void',`CDECL',`cmloadcomponent',`(cmloadcomponent_struct *p)',1,0)
@@ -1157,7 +1204,7 @@ DEF_API(`void',`CDECL',`cmloadcomponent',`(cmloadcomponent_struct *p)',1,0)
  * <param name="pszComponent" type="IN">Name of the component</param>
  * <param name="iType" type="IN">Type of the component. See category "ComponentType" for details.</param>
  * <param name="pResult" type="INOUT">Pointer to error code</param>
- * <result>Component handle or RTS_INVALID_HANDLE, if an error is occured</result>
+ * <result>Component handle or RTS_INVALID_HANDLE, if an error is occurred</result>
  */
 DEF_ITF_API(`RTS_HANDLE', `CDECL', `CMLoadComponent2', `(char *pszComponent, RTS_UI16 iType, RTS_RESULT *pResult)')
 
@@ -1170,7 +1217,7 @@ DEF_ITF_API(`RTS_HANDLE', `CDECL', `CMLoadComponent2', `(char *pszComponent, RTS
  * <param name="pszFilePath" type="IN">Complete file path of the component</param>
  * <param name="iType" type="IN">Type of the component. See category "ComponentType" for details.</param>
  * <param name="pResult" type="INOUT">Pointer to error code</param>
- * <result>Component handle or RTS_INVALID_HANDLE, if an error is occured</result>
+ * <result>Component handle or RTS_INVALID_HANDLE, if an error is occurred</result>
  */
 DEF_ITF_API(`RTS_HANDLE', `CDECL', `CMLoadComponent3', `(char *pszComponent, char *pszFilePath, RTS_UI16 iType, RTS_RESULT *pResult)')
 
@@ -1237,9 +1284,20 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMRemoveComponent', `(RTS_HANDLE hComponent)
  * </description>
  * <param name="pszCmpName" type="IN">Name of the component</param>
  * <param name="pResult" type="INOUT">Pointer to error code</param>
- * <result>Component handle or RTS_INVALID_HANDLE, if an error is occured</result>
+ * <result>Component handle or RTS_INVALID_HANDLE, if an error is occurred</result>
  */
 DEF_ITF_API(`RTS_HANDLE',`CDECL',`CMGetComponentByName',`(char *pszCmpName, RTS_RESULT *pResult)')
+
+/**
+ * <description> 
+ *	Get the core version of the runtime.
+ * </description>
+ * <param name="pui32CoreVersion" type="INOUT">Pointer to the core version of the runtime</param>
+ * <result>error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Core version successfully retrieved</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Could not retrieve core version, because pui32CoreVersion is NULL</errorcode>
+ */
+DEF_ITF_API(`RTS_RESULT',`CDECL',`CMGetCoreVersion',`(RTS_UI32 *pui32CoreVersion)')
 
 /**
  * <description> 
@@ -1286,7 +1344,7 @@ DEF_ITF_API(`int',`CDECL',`CMGetNumOfComponents',`(void)')
  *	Returns the registered component specified by index
  * </description>
  * <param name="iIndex" type="IN">Index of the component in the list</param>
- * <result>Pointer to component or NULL if index ist out of range</result>
+ * <result>Pointer to component or NULL if index is out of range</result>
  */
 DEF_ITF_API(`COMPONENT_ENTRY*',`CDECL',`CMGetComponentByIndex',`(int iIndex)')
 
@@ -1351,7 +1409,7 @@ DEF_ITF_API(`IBase*', `CDECL', `CMGetInstance', `(CLASSID ClassId, OBJID ObjId, 
 
 /**
  * <description>
- *	Register an exisiting instance to the component manager. 
+ *	Register an existing instance to the component manager. 
  * </description>
  * <param name="ClassId" type="IN">ClassId of the class to create an object</param>
  * <param name="ObjId" type="IN">Index number of the instance</param>
@@ -1385,8 +1443,8 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMGetInstanceList', `(ITFID ItfId, RTS_HANDL
  *   Called to call all components with the specified hook
  * </description>
  * <param name="ulHook" type="IN">Hook (for definition, look into CmpItf.h)</param>
- * <param name="ulParam1" type="IN">First parameter. Hook dependant</param>
- * <param name="ulParam2" type="IN">Second parameter. Hook dependant</param>
+ * <param name="ulParam1" type="IN">First parameter. Hook dependent</param>
+ * <param name="ulParam2" type="IN">Second parameter. Hook dependent</param>
  * <param name="bReverse" type="IN">Called the components in the opposite order as they were loaded</param>
  * <result>error code</result>
  */
@@ -1398,9 +1456,9 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMCallHook', `(RTS_UI32 ulHook, RTS_UINTPTR 
  * </description>
  * <param name="usComponentTypeMask" type="IN" range="[CMPTYPE_ALL,CMPTYPE_SAFETY,CMPTYPE_STANDARD]">ComponentType mask. See corresponding category</param>
  * <param name="ulHook" type="IN" range="[CH_COMM_CYCLE,CMCALLHOOK_PSEUDOHOOK,RTS_UI32_MAX]">Hook (for definition, look into CmpItf.h)</param>
- * <param name="ulParam1" type="IN" range="[0,CMCALLHOOK_TEST1]">First parameter. Hook dependant</param>
- * <param name="ulParam2" type="IN" range="[0,CMCALLHOOK_TEST2]">Second parameter. Hook dependant</param>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Hookfunction successfully called</errorcode>
+ * <param name="ulParam1" type="IN" range="[0,CMCALLHOOK_TEST1]">First parameter. Hook dependent</param>
+ * <param name="ulParam2" type="IN" range="[0,CMCALLHOOK_TEST2]">Second parameter. Hook dependent</param>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Hook function successfully called</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Component Pool not initialized or any Component responded with some error</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PENDING">Any Component responded with ERR_PENDING</errorcode>
  * <result>error code</result>
@@ -1419,7 +1477,7 @@ DEF_ITF_API(`int', `CDECL', `CMIsDemo', `(void)')
  * <result>
  *  <ul>
  *   <li>ERR_OK</li>
- *   <li>ERR_DUPLICATE: If init end is still done, this error message will be returned</li>
+ *   <li>ERR_DUPLICATE: If initialization end is still done, this error message will be returned</li>
  *  </ul>
  * </result>
  */
@@ -1427,7 +1485,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMInitEnd', `(void)')
 
 /**
  * <description>
- *	Functtion checks, if the SysTarget component is originally signed and was not modified.
+ *	Function checks, if the SysTarget component is originally signed and was not modified.
  * </description>
  * <result>error code: ERR_OK: SysTarget is signed, ERR_FAILED: SysTarget was modified or is unsigned</result>
  */
@@ -1468,8 +1526,8 @@ DEF_ITF_API(`int', `CDECL', `CMConfDynLicChallenge', `(RTS_UI32 ulLicenseID, RTS
 
 /**
  * <description> 
- *   Function to call the CommCycleHook of all components from outside the CM, if neccessary. This function is 
- *   intended to be called on singletasking systems (with CmpScheduleTimer or CmpScheduleEmbedded) during long
+ *   Function to call the CommCycleHook of all components from outside the CM, if necessary. This function is 
+ *   intended to be called on single tasking systems (with CmpScheduleTimer or CmpScheduleEmbedded) during long
  *   lasting operations. For example SysFlash calls this function to keep the communication alive during writing
  *   long memory areas. 
  *   Before calling the CommCycleHook, the function internally checks the following conditions:
@@ -1480,7 +1538,7 @@ DEF_ITF_API(`int', `CDECL', `CMConfDynLicChallenge', `(RTS_UI32 ulLicenseID, RTS
  *   On multitasking systems this function has no effect. Use AsyncServices instead.  
  * </description>
  * <param name="ulParam1" type="IN">Type of the COMM_CYCLE_HOOK. See CM_HOOK_TYPE... types.</param>
- * <param name="ulParam2" type="IN">Second parameter. Hook dependant, typically 0</param>
+ * <param name="ulParam2" type="IN">Second parameter. Hook dependent, typically 0</param>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `CMCallExtraCommCycleHook', `(RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)')
@@ -1533,6 +1591,81 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `CMIsOperationDisabled', `(CMPID cmpId, RTS_U
  * <result>Error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `CMProfiling', `(char *pszInfo, CMPID cmpId, char *pszComponentName, char *pszModuleName, RTS_I32 nLine, RTS_I32 iID)')
+
+/**
+ * <description> 
+ *   Function returns the cycle time ms of the last CH_COMM_CYCLE call.
+ * </description>
+ * <result>Last CommCycle time in [ms]</result>
+ */
+DEF_ITF_API(`RTS_UI32', `CDECL', `CMGetLastCommCycle', `(void)')
+
+/**
+ * <description> 
+ *   Function to check if a CMInit3() option is available.
+ * </description>
+ * <param name="option" type="IN">Option to check if it is supported, See "CMInit options" for details.</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Option is supported</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">Option is not supported</errorcode>
+ */
+DEF_ITF_API(`RTS_RESULT', `CDECL', `CMIsOptionSupported', `(RTS_UI32 option)')
+
+/**
+ * <description> 
+ *   Function to check if a CMInit3 option is set.
+ * </description>
+ * <param name="option" type="IN">Option to check if it is set, See "CMInit options" for details.</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Option is set</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Option is not set</errorcode>
+ */
+DEF_ITF_API(`RTS_RESULT', `CDECL', `CMIsOptionSet', `(RTS_UI32 option)')
+
+/**
+ * <description> 
+ *   Function to get the name of a hook.
+ * </description>
+ * <param name="hook" type="IN">Hook to the get the name. See CmpItf.h for hook definitions.</param>
+ * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <result>Pointer to hook name</result>
+ */
+DEF_ITF_API(`char*', `CDECL', `CMGetHookName', `(RTS_UI32 hook, RTS_RESULT *pResult)')
+
+/**
+ * <description> 
+ * Get a list of hook entries from startHook to endHook (exclusive)
+ * </description>
+ * <param name="startHook" type="IN">Hook to start the table with</param>
+ * <param name="endHook" type="IN">Hook to end the table (exclusive)</param>
+ * <param name="pnEntries" type="OUT">Pointer to return the number of entries</param>
+ * <result>Pointer to hook entry table</result>
+ */
+DEF_ITF_API(`const RTS_ID_TO_NAME*', `CDECL', `CMGetHookEntries', `(RTS_UI32 startHook, RTS_UI32 endHook, RTS_UI32 *pnEntries)')
+
+/**
+ * <description> 
+ * Calls a sequence of init-hooks
+ * NOTE: Use this function only if you know what you are doing!
+ * </description>
+ * <param name="paHookTable" type="IN">List of init-hook entries build up by CMGetHookEntries</param>
+ * <param name="nTableEntries" type="IN">Number of entries in paHookTable</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Sequence was successful</errorcode>
+ */
+DEF_ITF_API(`RTS_RESULT', `CDECL', `CMInitSequence', `(const RTS_ID_TO_NAME *paHookTable, RTS_UI32 nTableEntries)')
+
+/**
+ * <description> 
+ * Calls a sequence of exit-hooks
+ * NOTE: Use this function only if you know what you are doing!
+ * </description>
+ * <param name="paHookTable" type="IN">List of exit-hook entries build up by CMGetHookEntries</param>
+ * <param name="nTableEntries" type="IN">Number of entries in paHookTable</param>
+ * <result>Error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Sequence was successful</errorcode>
+ */
+DEF_ITF_API(`RTS_RESULT', `CDECL', `CMExitSequence', `(const RTS_ID_TO_NAME *paHookTable, RTS_UI32 nTableEntries)')
 
 #ifdef __cplusplus
 }

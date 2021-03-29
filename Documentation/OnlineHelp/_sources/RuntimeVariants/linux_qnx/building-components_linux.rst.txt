@@ -1,0 +1,180 @@
+Extending CODESYS Control runtime with own components
+=====================================================
+
+The component-based architecture permits easy extensions to the CODESYS Control runtime. Available templates and examples for common use cases further simplify the extension process.
+
+Build, load and debug your first component
+------------------------------------------
+
+Create a new component from a template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Navigate to the ``Templates/`` directory of your delivery and use our Python script to create a new component:
+
+    | -t *specifies the template to use*
+    | -c *specifies the name of your component*
+    | -a *specifies the target CPU architecture* (X86 | PPC | ARM | CORTEX)
+
+    .. code-block:: shell
+
+        python gen_cmp_from_temp.py -t CmpTemplateEmpty -c CmpTutorial -a X86
+
+Adjust CMPID and VENDORID
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Navigate to the new directory ``CmpTutorial/`` and adjust the IDs in ``CmpTutorialDep.m4``:
+
+    ::
+
+        COMPONENT_VENDORID(`0x0001')        /* Replace with your vendor id */
+
+        #define CMPID_CmpTutorial   0x2000  /* choose an arbitrary, unique CMPID */
+
+Build your new component
+~~~~~~~~~~~~~~~~~~~~~~~~
+The following tools are required to build a custom component for your CODESYS Control runtime:
+
+    - cross compiler for your Linux target
+    - GNU m4
+    - GNU make
+    - fromdos (alternatively: dos2unix)
+
+Navigate to ``CmpTutorial/Linux`` and adjust the values in ``Makefile``
+
+    ::
+
+        ...
+        CC=arm-poky-linux-gnueabi-gcc   # Set to your cross-gcc for your target hardware
+        CFLAGS +=                       # Add your custom compile flags
+
+        ...
+        fromdos ../$(TARGET)Dep.m4    # optional: change to dos2unix
+
+        ...
+        fromdos ../$(TARGET)Itf.m4    # optional: change to dos2unix
+
+Alternatively, you can just source your toolchain's environment-file, if available:
+
+    .. code-block:: shell
+
+        . /path/to/toolchain/environment-setup
+
+Finally, build your component by typing
+
+    .. code-block:: shell
+
+        make
+
+from within the ``Linux/`` directory. This will create a new file ``libCmpTutorial.so``.
+
+Load your new component
+~~~~~~~~~~~~~~~~~~~~~~~
+Copy your component to your target
+
+    .. code-block:: shell
+
+        scp libCmpTutorial.so root@192.168.0.1:codesys
+
+and add a new entry to your CODESYSControl.cfg:
+
+    .. code-block:: none
+
+        [ComponentManager]
+        Component.0=CmpTutorial
+
+Start your CODESYS Control runtime by prepending ``LD_LIBRARY_PATH``
+
+    | *LD_LIBRARY_PATH can contain multiple paths separated by a colon*
+
+    .. code-block:: shell
+
+        LD_LIBRARY_PATH=/root/codesys ./codesyscontrol -d CODESYSControl.cfg
+
+or export ``LD_LIBRARY_PATH`` as an environment variable:
+
+    .. code-block:: shell
+
+        export LD_LIBRARY_PATH=/root/codesys
+        ./codesyscontrol -d CODESYSControl.cfg
+
+Verify your new component
+~~~~~~~~~~~~~~~~~~~~~~~~~
+When starting your CODESYS Control runtime, it lists all loaded components. Dynamic components are listed after all static components. To verify your new component is loaded, look for this entry in the log:
+
+    .. code-block:: none
+
+        Cmp=CM, Class=1, Error=0, Info=10, pszInfo= Dynamic: <cmp>CmpTutorial</cmp>, <id>0x00012000</id> <ver>3.5.16.0</ver>
+
+Common pitfalls
+~~~~~~~~~~~~~~~
+There are three common causes if you do not see your component on startup.
+
+Make sure you started CODESYS Control with the ``-d`` argument. If you see a message such as
+
+    .. code-block:: none
+
+        libCmpTutorial.so: cannot open shared object file: No such file or directory
+
+at the very top of CODESYS Control's output, it indicates that either ``LD_LIBRARY_PATH`` is not set correctly or you used the wrong compiler for your component. For example, you used an x86 compiler when your actual target architecture is ARM. Check your ``Makefile`` and ensure that the correct compiler is set. You can verify the shared object with
+
+    .. code-block:: shell
+
+        file libCmpTutorial.so
+        libCmpTutorial.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), statically linked
+
+If you do not see above error message, it means that no attempt is made to load your component. If that is the case, verify you correctly added your component to CODESYSControl.cfg.
+
+Debugging your component
+~~~~~~~~~~~~~~~~~~~~~~~~
+CODESYS Control runtime is fully debuggable with ``gdb``. This also applies to all of your custom components.
+
+Debugging locally
+^^^^^^^^^^^^^^^^^
+
+    .. code-block:: none
+
+        gdb ./codesyscontrol
+        (gdb) handle SIG40 noprint
+        (gdb) break CmpTutorial.c:HookFunction
+        No source file named CmpTutorial.c.
+        Make breakpoint pending on future shared library load? (y or [n]) y
+        Breakpoint 1 (CmpTutorial.c:HookFunction) pending.
+        (gdb) run -d CODESYSControl.cfg
+
+As CODESYS Control runtime uses some signals internally, it is advisable to ignore these signals when attached with ``gdb``. Initially it is enough to ignore ``SIG40``, which is done by the first command. Next, a breakpoint is set in the ``HookFunction`` of your component. This function is called cyclically by the runtime, so expect the breakpoint to be hit a lot. Because the component is loaded as shared library, ``gdb`` is unaware where exactly to set the breakpoint at first. This is why it has to be set to ``pending`` at this point. Just after the ``run`` command, the breakpoint should be hit the first time:
+
+    .. code-block:: none
+
+        Breakpoint 1, HookFunction (ulHook=1, ulParam1=0, ulParam2=0) at ../CmpTutorial.c:98
+        98              switch (ulHook)
+
+Debugging remotely
+^^^^^^^^^^^^^^^^^^
+
+If your target has no native ``gdb``, ``gdbserver`` can be used instead to debug from a remote computer:
+
+    *Important: Make sure your LD_LIBRARY_PATH references an absolute path in that case. Otherwise debugging symbols may not be available*
+
+    .. code-block:: none
+
+        gdbserver *:27015 ./codesyscontrol -d CODESYSControl.cfg
+        Process ./codesyscontrol created; pid = 1798486
+        Listening on port 27015
+
+This will trigger ``gdbserver`` to listen for remote connections from any IP on port 27015. On the host, run ``gdb`` and connect to your target:
+
+    .. code-block:: none
+
+        gdb
+        (gdb) target remote 192.168.0.1:27015
+        (gdb) handle SIG40 noprint
+        (gdb) break CmpTutorial.c:HookFunction
+        No source file named CmpTutorial.c.
+        Make breakpoint pending on future shared library load? (y or [n]) y
+        Breakpoint 1 (CmpTutorial.c:HookFunction) pending.
+        (gdb) continue
+        Breakpoint 1, HookFunction (ulHook=1, ulParam1=0, ulParam2=0) at ../CmpTutorial.c:98
+        98              switch (ulHook)
+
+Own components: Recommended Tutorials
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Build a new statically linked runtime

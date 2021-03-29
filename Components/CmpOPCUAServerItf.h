@@ -3,7 +3,7 @@
  * <description></description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -30,7 +30,7 @@
 /**
  * <category>Settings</category>
  * <type>String</type>
- * <description>Configure the name network adapter to be used by the OPC UA server. By Default OPC UA will bind to ANY adress.</description>
+ * <description>Configure the name network adapter to be used by the OPC UA server. By Default OPC UA will bind to ANY address.</description>
  */
 #define CMPOPCUAKEY_STRING_NETWORK_ADAPTER					"NetworkAdapter"
 #ifndef CMPOPCUAVALUE_STRING_NETWORK_ADAPTER_DEFAULT	
@@ -50,7 +50,7 @@
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>Use this setting to add the loopback adapter as an OPC UA endpoint if it is missing in your configuration.</description>
+ * <description>Use this setting to add the loop-back adapter as an OPC UA endpoint if it is missing in your configuration.</description>
  */
 #define CMPOPCUAKEY_INT_USE_LOOPBACK						"UseLoopback"
 #ifndef CMPOPCUAVALUE_INT_USE_LOOPBACK_DEFAULT	
@@ -62,15 +62,36 @@
  * <type>Int</type>
  * <description>Use this setting to set the network adapter update rate in ms. This rate is used to rescan the adapters and to add / remove the adapters.</description>
  */
-#define CMPOPCUASERVERKEY_INT_ADAPTER_UPDATE_RATE						"AdapterUpdateReate"
+#define CMPOPCUASERVERKEY_INT_ADAPTER_UPDATE_RATE						"AdapterUpdateRate"
 #ifndef CMPOPCUASERVERVALUE_INT_ADAPTER_UPDATE_RATE_DEFAULT
 #define CMPOPCUASERVERVALUE_INT_ADAPTER_UPDATE_RATE_DEFAULT		5000
+#endif
+
+ /**
+ * <category>Settings</category>
+ * <type>Int</type>
+ * <description>Use this setting to set the minimum sampling rate of monitored items in ms.</description>
+ */
+#define CMPOPCUASERVERKEY_INT_ITEM_MIN_SAMPLING_RATE					"ItemMinSamplingRate"
+#ifndef CMPOPCUASERVERVALUE_INT_ITEM_MIN_SAMPLING_RATE_DEFAULT
+#define CMPOPCUASERVERVALUE_INT_ITEM_MIN_SAMPLING_RATE_DEFAULT			100
+#endif
+
+/**
+ * <category>Settings</category>
+ * <type>Int</type>
+ * <description>Use this setting to configure how many worker tasks are created. The default of -1 will create between 1 and <Num of CPU-cores> - 1 
+ * worker tasks. The worker tasks are responsible to to the sampling of monitored items.</description>
+ */
+#define CMPOPCUASERVERKEY_INT_NUM_OF_WORKERS					"NumOfWorkerTasks"
+#ifndef CMPOPCUASERVERVALUE_INT_NUM_OF_WORKERS_DEFAULT
+#define CMPOPCUASERVERVALUE_INT_NUM_OF_WORKERS_DEFAULT			-1
 #endif
 
 
 /**
  * <category>SecuritySettings</category>
- * <description>Availabe security policies.</description>
+ * <description>Available security policies.</description>
  * <element name="CmpOPCUAServer_SecurityPolicy_Basic128Rsa15" type="IN">Support of http://opcfoundation.org/UA/SecurityPolicy#Basic128Rsa15 and higher</element>
  * <element name="CmpOPCUAServer_SecurityPolicy_Basic256" type="IN">Support of http://opcfoundation.org/UA/SecurityPolicy#Basic256 and higher</element>
  * <element name="CmpOPCUAServer_SecurityPolicy_Basic256Sha256" type="IN">Support of http://opcfoundation.org/UA/SecurityPolicy#Basic256Sha256 and higher</element>
@@ -111,9 +132,9 @@
  * <category>SecuritySettings</category>
  * <description>Available communication modes.</description>
  * <element name="CmpOPCUAServer_CommunicationMode_OnlyPlaintext" type="IN">No security Available: Only security policy None allowed. (Default without CmpSecurityManager)</element>
- * <element name="CmpOPCUAServer_CommunicationMode_PlainAndSecure" type="IN">Support all available modes. Inlcudes None, Signed, Signed + Encrypted (Default with CmpSecurityManager)</element>
+ * <element name="CmpOPCUAServer_CommunicationMode_PlainAndSecure" type="IN">Support all available modes. Includes None, Signed, Signed + Encrypted (Default with CmpSecurityManager)</element>
  * <element name="CmpOPCUAServer_CommunicationMode_OnlySigned" type="IN">Support for the selected secure policies. But only signing will be activated.</element>
- * <element name="CmpOPCUAServer_CommunicationMode_SignedAndEncrypted" type="IN">Support of the selected secure policies. Avtivate Signing and Encryption. [HIGHES SECURITY LEVEL]</element>
+ * <element name="CmpOPCUAServer_CommunicationMode_SignedAndEncrypted" type="IN">Support of the selected secure policies. Activate Signing and Encryption. [HIGHES SECURITY LEVEL]</element>
  */   
 #define CMPOPCUASERVER_KEY_STRING_COMMMODE					CMPSETTINGS_CATEGORY_SECURITY ".CommunicationMode"
 #define CMPOPCUASERVER_KEY_STRING_COMMMODE_DESC				"Mode of the communication"
@@ -139,7 +160,7 @@ typedef enum
 																{(RTS_I32)CmpOPCUAServer_CommMode_SignedAndEncrypted, CMPSECMAN_SFLAGS_NONE, CMPOPCUASERVER_VALUE_COMMMODE_SIGNED_AND_ENCRYPTED, "Only signed and encrypted communications profiles are added [HIGHEST_SECURITY_LEVEL]"},\
 																{(RTS_I32)CmpOPCUAServer_CommMode_MinSigned, CMPSECMAN_SFLAGS_NONE, CMPOPCUASERVER_VALUE_COMMMODE_MIN_SIGNED, "Enforce a signed communication. Encryption optional available."},\
 																{(RTS_I32)CmpOPCUAServer_CommMode_PlainAndSecure, CMPSECMAN_SFLAGS_NONE, CMPOPCUASERVER_VALUE_COMMMODE_ALL, "Add all available modes. No security, just signed, signed and encrypted"},\
-																{(RTS_I32)CmpOPCUAServer_CommMode_OnlyPlaintext, CMPSECMAN_SFLAGS_NONE, CMPOPCUASERVER_VALUE_COMMMODE_ONLY_PLAINTEXT, "Support only plaintext communication. Default without security manager."}\
+																{(RTS_I32)CmpOPCUAServer_CommMode_OnlyPlaintext, CMPSECMAN_SFLAGS_NONE, CMPOPCUASERVER_VALUE_COMMMODE_ONLY_PLAINTEXT, "Support only plain-text communication. Default without security manager."}\
 															}
 /**
  * <category>SecuritySettings</category>
@@ -172,8 +193,8 @@ typedef enum
 /**
  * <category>SecuritySettings</category>
  * <description>This setting allows to control the behavior of the user authentication of the CmpOPCUAServer.</description>
- * <element name="CmpOPCUAServer_UserAuthentication_Disabled" type="IN">Deactivates the user authentication for the OPC UA server. Only Anonymus token will be available.</element>
- * <element name="CmpOPCUAServer_UserAuthentication_Enabled" type="IN">Activates the user authenticaiton for the OPC UA Server. [Default]</element>
+ * <element name="CmpOPCUAServer_UserAuthentication_Disabled" type="IN">Deactivates the user authentication for the OPC UA server. Only anonymous token will be available.</element>
+ * <element name="CmpOPCUAServer_UserAuthentication_Enabled" type="IN">Activates the user authentication for the OPC UA Server. [Default]</element>
  * <element name="CmpOPCUAServer_UserAuthentication_Enforced" type="IN">Enforces that the users must login. No Anonymous token will be available.</element>
  */
 #define CMPOPCUASERVER_KEY_STRING_USER_AUTHENTICATION			CMPSETTINGS_CATEGORY_SECURITY ".UserAuthentication"
@@ -202,9 +223,9 @@ typedef enum
 
 /**
  * <category>SecuritySettings</category>
- * <description>This setting controls if the username / password authentication token can be transmitted in plain text. This would be the case if SecurityPolicy None is activated without a server certificate.</description>
- * <element name="CmpOPCUAServer_AllowUserPasswordOnPlaintext_Allowed" type="IN">Allows to transmit the password in a plaintext way.</element>
- * <element name="CmpOPCUAServer_AllowUserPasswordOnPlaintext_Forbidden" type="IN">Forbids to tramsit the password in a plaintext way.</element>
+ * <description>This setting controls if the user name / password authentication token can be transmitted in plain text. This would be the case if SecurityPolicy None is activated without a server certificate.</description>
+ * <element name="CmpOPCUAServer_AllowUserPasswordOnPlaintext_Allowed" type="IN">Allows to transmit the password in a plain-text way.</element>
+ * <element name="CmpOPCUAServer_AllowUserPasswordOnPlaintext_Forbidden" type="IN">Forbids to transmit the password in a plain-text way.</element>
  */
 #define CMPOPCUASERVER_KEY_STRING_ALLOW_USERPASSWORD_ON_PLAINTEXT			CMPSETTINGS_CATEGORY_SECURITY ".AllowUserPasswordOnPlaintext"
 #define CMPOPCUASERVER_KEY_STRING_ALLOW_USERPASSWORD_ON_PLAINTEXT_DESC		"Configuration for the user authentication."
@@ -346,7 +367,7 @@ typedef struct _OpcUaObjectDescription OpcUaObjectDescription;
  * <element name="i32ValueRank">ValueRank of the value. Mandatory.</element>
  * <element name="accessLevel">Access level of the node. If bValueAvailable == OpcUa_True this will be changed to CurrentRead. Mandatory.</element>
  * <element name="useraccesslevel">Access level of the node with user rights taken into account. If pszObject is set the CmpUserMgr will be called to get the rights. Mandatory.</element>
- * <element name="historizing">Flag if historizing is available. By now not supported by the OPC UA server. Mandatory.</element>
+ * <element name="historizing">Flag if historicity is available. By now not supported by the OPC UA server. Mandatory.</element>
  * <element name="bArrayDimensionSet">Flag if the array dimension is set.</element>
  * <element name="arrayDimensions">Description of the array dimensions. Mandatory if the ValueRank is not Scalar.</element>
  * <element name="bMinimumSamplingIntervalSet">Flag if the minimum sampling interval is set.</element>
@@ -581,9 +602,9 @@ typedef struct tagOpcUaServer_Session_Information
 {
 	RTS_IEC_DWORD dwSessionId;		
 	INADDR clientAddress;		/* SessionID of the session. */
-	RTS_IEC_WSTRING pwsSessionName[256];		/* IpAddress of the client. In host byteorder. */
-	RTS_IEC_WSTRING pwsApplicationName[256];		/* Sessionname. This is set by the client. */
-	RTS_IEC_WSTRING pwsApplicationUri[256];		/* Applicationname of client. */
+	RTS_IEC_WSTRING pwsSessionName[256];		/* IpAddress of the client. In host byte order. */
+	RTS_IEC_WSTRING pwsApplicationName[256];		/* Session name. This is set by the client. */
+	RTS_IEC_WSTRING pwsApplicationUri[256];		/* Application name of client. */
 	RTS_IEC_WSTRING pwsProductUri[256];		/* URI of the client instance. */
 	RTS_IEC_WSTRING pwsSecurityPolicy[256];		/* URI of client type. */
 	RTS_IEC_DWORD securityMode;		/* Security profile used by this session. */
@@ -596,7 +617,7 @@ typedef struct tagOpcUaServer_Session_Information
  * OpcUaServerGetNextSession to get the initial session configuration. To get notified about 
  * changes register to the EVT_CmpOPCUAServerSessionsChanged event.</description>
  *
- * :return: SessionId of the first session. 0xFFFFFFFF if no session is availble.</result>
+ * :return: SessionId of the first session. 0xFFFFFFFF if no session is available.</result>
  */
 typedef struct tagopcuaservergetfirstsession_struct
 {
@@ -654,7 +675,7 @@ typedef void (CDECL CDECL_EXT* PFOPCUASERVERGETFIRSTSESSION_IEC) (opcuaserverget
 /**
  * This function returns the next available session.</description>
  *
- * :result: SessionId of the first session. 0xFFFFFFFF if no session is availble.
+ * :result: SessionId of the first session. 0xFFFFFFFF if no session is available.
  */
 typedef struct tagopcuaservergetnextsession_struct
 {
@@ -917,11 +938,11 @@ typedef RTS_RESULT (CDECL * PFOPCUASERVERUNREGISTERPROVIDER) (OpcUaProvider_Info
 
 
 /**
- * <description>Check if to follow OPCU UA referencetype ID. Since referencetype IDs may are derived only the server who knows all IDs can check this.</description>
- * <param name="pRequestedReference" type="IN">The referencetype ID the client requested.</param>
+ * <description>Check if to follow OPCU UA reference type ID. Since reference type IDs may are derived only the server who knows all IDs can check this.</description>
+ * <param name="pRequestedReference" type="IN">The reference type ID the client requested.</param>
  * <param name="bIncludeSubtypes" type="IN">The flag if subtypes should be followed too. Set by the client.</param>
- * <param name="pReferenceToCheck" type="IN">The referencetype ID the compare against. Usually the referencetype ID of the current node (e.g. while browsing) in the adress space.</param>
- * <result>The function returns OpcUa_True if following the referencetype ID is allowed. OpcUa_False is returned otherwise.</result>
+ * <param name="pReferenceToCheck" type="IN">The reference type ID the compare against. Usually the reference type ID of the current node (e.g. while browsing) in the address space.</param>
+ * <result>The function returns OpcUa_True if following the reference type ID is allowed. OpcUa_False is returned otherwise.</result>
  **/
 OpcUa_Boolean CDECL OpcUaServerCheckReferenceRecursive(const OpcUa_NodeId* pRequestedReference, OpcUa_Boolean bIncludeSubtypes, const OpcUa_NodeId* pReferenceToCheck);
 typedef OpcUa_Boolean (CDECL * PFOPCUASERVERCHECKREFERENCERECURSIVE) (const OpcUa_NodeId* pRequestedReference, OpcUa_Boolean bIncludeSubtypes, const OpcUa_NodeId* pReferenceToCheck);
@@ -973,8 +994,8 @@ typedef OpcUa_Boolean (CDECL * PFOPCUASERVERCHECKREFERENCERECURSIVE) (const OpcU
 
 
 /**
- * <description>This function checks if a referencetype ID is valid.</description>
- * <param name="pRefTypeId" type="IN">Referecetype ID to check.</param>
+ * <description>This function checks if a reference type ID is valid.</description>
+ * <param name="pRefTypeId" type="IN">Referece type ID to check.</param>
  * <result>Returns either OpcUa_Good or OpcUa_BadRefereceTypeIdInvalid.</result>
  **/
 OpcUa_StatusCode CDECL OpcUaServerCheckIfReferenceIsValid(const OpcUa_NodeId* pRefTypeId);
@@ -1027,9 +1048,9 @@ typedef OpcUa_StatusCode (CDECL * PFOPCUASERVERCHECKIFREFERENCEISVALID) (const O
 
 
 /**
- * <description>Get the namespace index of the given namespace. Do not relay on constant referencetype IDs. They may depend on the registration order of different providers.</description>
- * <param name="pNamespace" type="IN">The namespace of interest.</param>
- * <result>-1: If the namespace is not registered yet. index: The index of the namespace. This does not change while the server is running.</result>
+ * <description>Get the name space index of the given name space. Do not relay on constant reference type IDs. They may depend on the registration order of different providers.</description>
+ * <param name="pNamespace" type="IN">The name space of interest.</param>
+ * <result>-1: If the name space is not registered yet. index: The index of the namespace. This does not change while the server is running.</result>
  **/
 OpcUa_Int16 CDECL OpcUaServerGetNamespaceIndex(OpcUa_String* pNamespace);
 typedef OpcUa_Int16 (CDECL * PFOPCUASERVERGETNAMESPACEINDEX) (OpcUa_String* pNamespace);
@@ -1081,9 +1102,9 @@ typedef OpcUa_Int16 (CDECL * PFOPCUASERVERGETNAMESPACEINDEX) (OpcUa_String* pNam
 
 
 /**
- * <description>Register a new namespace to the server. If the namespace is registered already this index is returned.</description>
- * <param name="pNamespace" type="IN">Namespace to register at the server.</param>
- * <result>Returns the index of the registered namespace.</result>
+ * <description>Register a new name space to the server. If the name space is registered already this index is returned.</description>
+ * <param name="pNamespace" type="IN">Name space to register at the server.</param>
+ * <result>Returns the index of the registered name space.</result>
  **/
 OpcUa_Int16 CDECL OpcUaServerRegisterNamespace(OpcUa_String* pNamespace);
 typedef OpcUa_Int16 (CDECL * PFOPCUASERVERREGISTERNAMESPACE) (OpcUa_String* pNamespace);
@@ -1139,7 +1160,7 @@ typedef OpcUa_Int16 (CDECL * PFOPCUASERVERREGISTERNAMESPACE) (OpcUa_String* pNam
  * <param name="pString" type="IN">String to parse.</param>
  * <param name="pRangeArray" type="INOUT">Pointer to the arrays where to store the parsed index ranges.</param>
  * <param name="pMaxRanges" type="IN">Maximum length of the array.</param>
- * <result>Returns the index of the registered namespace.</result>
+ * <result>Returns the index of the registered name space.</result>
  **/
 OpcUa_StatusCode CDECL OpcUaServerParseIndexRange(const OpcUa_String *pString, NumericRange *pRangeArray, OpcUa_UInt32 *pMaxRanges);
 typedef OpcUa_StatusCode (CDECL * PFOPCUASERVERPARSEINDEXRANGE) (const OpcUa_String *pString, NumericRange *pRangeArray, OpcUa_UInt32 *pMaxRanges);
@@ -1449,7 +1470,7 @@ typedef RTS_RESULT (CDECL * PFOPCUASERVERREMOVENODES) (OpcUaProvider_Info* provi
 
 /**
  * <description>Registers a node defined by a provider as an event notifier. The node should have the SubscriptToEvents flags set. Since events are ordered hierarchical the parent
- * event notifier node has to be given. This function allows to notify the events in a performant way. The corresponding references have to be added by the provider by himself.</description>
+ * event notifier node has to be given. This function allows to notify the events in a performing way. The corresponding references have to be added by the provider by himself.</description>
  * <param name="pNode" type="IN">NodeId of the EventNotifier node</param>
  * <param name="pParentNotifier" type="IN">Pointer to the parent EventNotifier node. If NULL the server node will be assumed.</param>
  * <param name="pResult" type="IN">Pointer to result. 
@@ -1566,14 +1587,14 @@ typedef RTS_RESULT (CDECL * PFOPCUASERVERUNREGISTEREVENTNOTIFIER) (RTS_HANDLE hN
  * <description>Registers a new event at the server. This function registers the event fields of the event type to fire this event.
  * This registered event is used to fire an actual event. The fired event contains only the corresponding values. They have to have
  * the same order as registered in this function. The mandatory fields of the BaseEventType are added by default. They don't have to be set. These are:
- *  - EventType: The value will be filled up by the server. Type of the event: Datatype: OpcUa_NodeId
- *  - EventId: Unique Id of the event: Datatype: OpcUa_ByteString
- *  - SourceNode: NodeId of the event source node. Datatype: OpcUa_NodeId
- *  - SourceName: Name of the event source. Datatype: OpcUa_String
- *  - Time: UtcTimestamp when the event occurred. Datatype: OpcUa_DateTime
- *  - ReceiveTime: The value will be filled up by the server. Datatype: OpcUa_DateTime.</param>
- *  - Message: Message of the event. Datatype: OpcUa_LocalizedText
- *  - Severity: Severity of the event. Datatype: OpcUa_UInt16. Range from 1 to 1000 is allowed
+ *  - EventType: The value will be filled up by the server. Type of the event: Data type: OpcUa_NodeId
+ *  - EventId: Unique Id of the event: Data type: OpcUa_ByteString
+ *  - SourceNode: NodeId of the event source node. Data type: OpcUa_NodeId
+ *  - SourceName: Name of the event source. Data type: OpcUa_String
+ *  - Time: UtcTimestamp when the event occurred. Data type: OpcUa_DateTime
+ *  - ReceiveTime: The value will be filled up by the server. Data type: OpcUa_DateTime.</param>
+ *  - Message: Message of the event. Data type: OpcUa_LocalizedText
+ *  - Severity: Severity of the event. Data type: OpcUa_UInt16. Range from 1 to 1000 is allowed
  * <param name="providerInterface" type="IN">Pointer to the provider which registered this event.</param>
  * <param name="pEventTypeId" type="IN">NodeId of the event type.</param>
  * <param name="ui32NumOfFields" type="IN">Number of browse paths of the event.</param>
@@ -1635,7 +1656,7 @@ typedef RTS_HANDLE (CDECL * PFOPCUASERVERREGISTEREVENT) (OpcUaProvider_Info* pro
 
 
 /**
- * <description>Unregisters an event event.</description>
+ * <description>Unregisters an event</description>
  * <param name="hNotifier" type="IN">Handle to the event</param>
  * <result>Result of operation. ERR_OK if everything went fine. ERR_INVALID_HANDLE if hEvent was not a valid handle. ERR_FAILED in other cases.</result>
  */
@@ -1697,12 +1718,12 @@ typedef RTS_RESULT (CDECL * PFOPCUASERVERUNREGISTEREVENT) (RTS_HANDLE hEvent);
  * <param name="pValues" type="IN">Pointer to the event instance values. Must have the same order as the registered fields of hEvent.
  * Note: The mandatory event fields of the BaseEventType must be available in pValues. Since EventType and ReceiveTime are handled by the server internally these values don't have to be set in pValues.
 *  Therefor the minimum number of values is 6. The following order is used, Add the additional fields after these fields:
- *  1. EventId: Unique Id of the event: Datatype: OpcUa_ByteString
- *  2. SourceNode: NodeId of the event source node. Datatype: OpcUa_NodeId
- *  3. SourceName: Name of the event source. Datatype: OpcUa_String
- *  4. Time: UtcTimestamp when the event occurred. Datatype: OpcUa_UtcTime
- *  5. Message: Message of the event. Datatype: OpcUa_LocalizedText
- *  6. Severity: Severity of the event. Datatype: OpcUa_UInt16. Range from 1 to 1000 is allowed</param>
+ *  1. EventId: Unique Id of the event: Data type: OpcUa_ByteString
+ *  2. SourceNode: NodeId of the event source node. Data type: OpcUa_NodeId
+ *  3. SourceName: Name of the event source. Data type: OpcUa_String
+ *  4. Time: UtcTimestamp when the event occurred. Data type: OpcUa_UtcTime
+ *  5. Message: Message of the event. Data type: OpcUa_LocalizedText
+ *  6. Severity: Severity of the event. Data type: OpcUa_UInt16. Range from 1 to 1000 is allowed</param>
  * <result>Result of the Operation. 
  *      - ERR_OK if everything went fine. 
  *      - ERR_PARAMETER if some parameter is invalid.
@@ -1998,7 +2019,7 @@ typedef RTS_RESULT (CDECL * PFOPCUASERVERGETSESSIONINFO) (RTS_UI32 ui32SessionId
  * <param name="ui32SessionId" type="IN">SessionID of the session.</param>
  * <param name="pszObject">Object where to check the access rights.</param>
  * <param name="ui32RequestedRights" type="IN">Requested rights on this object.</param>
- * <result> - ERR_OK: Access allowd.
+ * <result> - ERR_OK: Access allowed.
  *          - ERR_NO_ACCESS_RIGHTS: Access denied. 
  */
 RTS_RESULT CDECL OpcUaServerCheckAccessRights(RTS_UI32 ui32SessionId, char* pszObject, RTS_UI32 ui32RequestedRights);

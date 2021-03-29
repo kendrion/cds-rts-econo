@@ -1,0 +1,50 @@
+.. _tutorial_cmpscheduletimer:
+
+CmpScheduleTimer
+================
+
+Introduction
+------------
+
+The timer scheduler can be used on controllers without an operating system, but with the support of CPU timers! You can use these timers to schedule IEC tasks in a very exact time interval
+of a CPU timer.
+
+This scheduler fits well on small embedded systems, that provide more
+than one timer. So it is possible to setup multiple periodic IEC tasks
+on different timers. Therefore it is possible that a higher priority
+timer interrupts a lower priority one. Furthermore, the communication is
+running in a background loop and cannot harm the execution of the IEC
+tasks.
+
+
+
+Feature
+-------
+
+:ref:`feature_schedule_timer`
+
+Use cases
+---------
+
+Systems with fix CPU timers
+...........................
+
+TODO
+
+Systems with configurable timers
+................................
+
+TODO
+
+Systems with several CPU timers
+..................................
+
+You can use one high priority timer to supervise all IEC tasks. The following settings are used to configure this feature (see :ref:`group___cmp_schedule_itf`:
+
+- SCHEDULETIMERKEY_USE_WATCHDOG_TIMER
+
+- CMPSCHEDULETIMER_WATCHDOG_PRIORITY
+
+- CMPSCHEDULETIMER_WATCHDOG_INTERVAL
+
+

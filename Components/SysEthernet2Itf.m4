@@ -1,19 +1,19 @@
 /**
  * <interfacename>SysEthernet</interfacename>
  * <description> 
- *	<p>The SysEthernet interface contains low level routines for a direct access to an ethernet controller.
+ *	<p>The SysEthernet interface contains low level routines for a direct access to an Ethernet controller.
  *	This interface is typically used by an EtherCAT driver.</p>
- *	<p>All other ethernet communciation components use higher level routines (see SysSocket interface).</p>
+ *	<p>All other Ethernet communication components use higher level routines (see SysSocket interface).</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
 SET_INTERFACE_NAME(`SysEthernet2')
 
-/*Possible values for the flags in the EthernetframeAddInfo struct are:*/
+/* Possible values for the flags in the EthernetframeAddInfo structure are: */
 #define EAI_FLG_QUALITY_GOOD	0x00000001
 #define EAI_FLG_CRC_ERROR		0x00000002
 #define EAI_FLG_ALIGNMENT_ERROR	0x00000004
@@ -25,6 +25,7 @@ typedef struct
 	unsigned long ulDummy;
 	unsigned __int64 liTimestamp;
 	unsigned __int64 liTimestampHR;
+	void* pHWInfo; /*Used to pass information about the adapter that received the frame, for now the MAC. */ 
 }EthernetframeAddInfo;
 
 
@@ -114,14 +115,20 @@ DEF_ITF_API(`void',`CDECL',`sendIPethframe2',`(SendIPEthernetInterface2* psfi)',
  */
 DEF_ITF_API(`void',`CDECL',`getIPethframe2',`(GetIPEthernetInterface2* pgei)',1)
 
-typedef void (CDECL * PFETHFRAMERECEIVED)(void);
+typedef void (CDECL * PFETHFRAMERECEIVED)(unsigned char* pFrameData, unsigned long ulSize, RTS_UINTPTR pAddInfo);
+
+#define PURPOSE_IS_GETMEDIACOUNTERS 1
+#define PURPOSE_IS_GETINTERFACECOUNTERS 2
+#define PURPOSE_IS_CLEARMEDIACOUNTERS 3
+#define PURPOSE_IS_CLEARINTERFACECOUNTERS 4
+typedef RTS_RESULT (CDECL * PFMULTIPURPOSEFUNKTION)(int iPurpose, unsigned char* pMacAddr, size_t sMacAddr, void* pParam, size_t sParam);
 
 typedef struct _EthernetAdapterDescription
 {
 	unsigned char aucMacAddress[6];
 	int iAdapterNum;
 	int iMasterNum;
-	int bAdapterOpen;
+	int bAdapterOpen; /*bit 0: opened by AdapterOpen, bit 1: opened by AdapterOpenComm.*/
 	PFGETIPETHFRAME pfgetIPethframe;
 	PFSENDIPETHFRAME pfsendIPethframe;
 	PFGETADAPTERINFO pfgetadapterinfo;
@@ -137,8 +144,13 @@ typedef struct _EthernetAdapterDescription
 	char szDriverName[32];
 	PFGETIPETHFRAME2 pfgetIPethframe2;
 	PFSENDIPETHFRAME2 pfsendIPethframe2;
+	PFOPENETHERNET pfopenethernetcomm;
+	PFMULTIPURPOSEFUNKTION pfMultiPurposeFunktion;
 }EthernetAdapterDescription;
+
 DEF_API(`RTS_RESULT',`CDECL',`SysEthernetRegisterEthernetAdapter',`(EthernetAdapterDescription* pAdapterDesc, int bUnregister)',1)
+
+
 #ifdef __cplusplus
 }
 #endif

@@ -6,13 +6,13 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
 SET_INTERFACE_NAME(`SysWindowNative')
 
-/* Init routines for OS specific modules */
+/* Initialization routines for OS specific modules */
 RTS_RESULT CDECL SysWindowNativeOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysWindowNativeOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
@@ -57,7 +57,7 @@ typedef struct _tagSysWindowNativeInputMouse
 typedef struct _tagSysWindowNativeInputKey
 {
 	SysWindowNativeKeyEventType		eventType;
-	/* The keycodes have values that are defined in the header SysWindowKeyMapping.h */
+	/* The key codes have values that are defined in the header SysWindowKeyMapping.h */
 	int								iKeyCode;
 	/* The values of the modifiers are defined in the header SysWindowKeyMapping.h */
 	unsigned int					uiModifiers;
@@ -122,7 +122,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SysWindowNativeRaiseInput', `(SysWindowNativ
 
 /**
  * <description>This method will be called cyclically from the context of the IEC-Visualization-Task in environments using the embedded
- *	targetvisualization. The call is intended to do the processing of the pending input events as well as painting the content of the visualization.
+ *	target-visualization. The call is intended to do the processing of the pending input events as well as painting the content of the visualization.
  *	</description>
  * <param name="hWindow" type="IN">The handle of the window that should be processed.</param>
  * <result>A result code.</result>

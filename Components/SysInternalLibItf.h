@@ -1,10 +1,10 @@
  /**
  * <interfacename>SysInternalLib</interfacename>
  * <description> 
- *	<p>The SysInternalLib interface is projected to implement all platform dependant routines for:
+ *	<p>The SysInternalLib interface is projected to implement all platform dependent routines for:
  *	<ul>
  *		<li>Standard library routines</li>
- *		<li>Datatype conversion</li>
+ *		<li>Data type conversion</li>
  *	</ul>
  *	This routines are used by CoDeSys for the Iec standard library implementation.</p>
  *
@@ -13,7 +13,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -48,7 +48,7 @@ extern "C" {
  * <SIL2/>
  * <category>Type class</category>
  * <description>
- *  Describes the type class correspoding to an <see>IIECType</see> instance.
+ *  Describes the type class corresponding to an <see>IIECType</see> instance.
  * </description>
  */
 typedef enum 
@@ -143,7 +143,7 @@ static const unsigned int varname[] = { \
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for a memcopy wrapper.</description>
+ * <description>Structure for a memcopy wrapper.</description>
  */
 typedef struct
 {
@@ -156,7 +156,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for a strcmp wrapper.</description>
+ * <description>Structure for a strcmp wrapper.</description>
  */
 typedef struct
 {
@@ -168,7 +168,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for a wstrcmp wrapper.</description>
+ * <description>Structure for a wstrcmp wrapper.</description>
  */
 typedef struct
 {
@@ -180,7 +180,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for a time output as 32-bit value.</description>
+ * <description>Structure for a time output as 32-bit value.</description>
  */
 typedef struct
 {
@@ -190,7 +190,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for a time output as 64-bit value.</description>
+ * <description>Structure for a time output as 64-bit value.</description>
  */
 typedef struct
 {
@@ -199,7 +199,7 @@ typedef struct
 
 /**
  * <category>External IEC interface</category>
- * <description>Struct for exchange_and_add operator.</description>
+ * <description>Structure for exchange_and_add operator.</description>
  */
 typedef struct
 {
@@ -210,7 +210,7 @@ typedef struct
 
 /**
  * <category>External IEC interface</category>
- * <description>Struct for test_and_set operator.</description>
+ * <description>Structure for test_and_set operator.</description>
  */
 typedef struct
 {
@@ -220,7 +220,7 @@ typedef struct
 
 /**
  * <category>External IEC interface</category>
- * <description>Struct for compare_and_swap operator.</description>
+ * <description>Structure for compare_and_swap operator.</description>
  */
 typedef struct
 {
@@ -232,7 +232,7 @@ typedef struct
 
 /**
  * <category>External IEC interface</category>
- * <description>Struct for setting memory.</description>
+ * <description>Structure for setting memory.</description>
  */
 typedef struct
 {
@@ -253,7 +253,7 @@ typedef struct
 
 /**
  * <category>External IEC interface</category>
- * <description>Struct for registering an exception handler within IEC.</description>
+ * <description>Structure for registering an exception handler within IEC.</description>
  */
 typedef struct
 {
@@ -267,7 +267,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct to compare two 32-bit real values.</description>
+ * <description>Structure to compare two 32-bit real values.</description>
  */
 typedef struct
 {
@@ -279,7 +279,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with three 32-bit real values.</description>
+ * <description>Structure for operation with three 32-bit real values.</description>
  */
 typedef struct 
 {
@@ -292,7 +292,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with two 32-bit real values.</description>
+ * <description>Structure for operation with two 32-bit real values.</description>
  */
 typedef struct 
 {
@@ -304,7 +304,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with one 32-bit real value.</description>
+ * <description>Structure for operation with one 32-bit real value.</description>
  */
 typedef struct 
 {
@@ -315,7 +315,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct to compare two 64-bit real values.</description>
+ * <description>Structure to compare two 64-bit real values.</description>
  */
 typedef struct 
 {
@@ -327,7 +327,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with three 64-bit real values.</description>
+ * <description>Structure for operation with three 64-bit real values.</description>
  */
 typedef struct 
 {
@@ -340,7 +340,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for conversion of a 32-bit real value to a 32-bit integer value.</description>
+ * <description>Structure for conversion of a 32-bit real value to a 32-bit integer value.</description>
  */
 typedef struct
 {
@@ -351,7 +351,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for conversion of a 64-bit real value to a 32-bit integer value.</description>
+ * <description>Structure for conversion of a 64-bit real value to a 32-bit integer value.</description>
  */
 typedef struct
 {
@@ -362,7 +362,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with two 64-bit real values.</description>
+ * <description>Structure for operation with two 64-bit real values.</description>
  */
 typedef struct 
 {
@@ -374,7 +374,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with one 64-bit real value.</description>
+ * <description>Structure for operation with one 64-bit real value.</description>
  */
 typedef struct 
 {
@@ -385,7 +385,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct to compare two 64-bit integer values.</description>
+ * <description>Structure to compare two 64-bit integer values.</description>
  */
 typedef struct 
 {
@@ -397,7 +397,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with three 64-bit integer values.</description>
+ * <description>Structure for operation with three 64-bit integer values.</description>
  */
 typedef struct 
 {
@@ -410,7 +410,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with two 64-bit integer values.</description>
+ * <description>Structure for operation with two 64-bit integer values.</description>
  */
 typedef struct 
 {
@@ -422,7 +422,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with one 64-bit integer value.</description>
+ * <description>Structure for operation with one 64-bit integer value.</description>
  */
 typedef struct 
 {
@@ -433,7 +433,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct to compare two 64-bit unsigned integer values.</description>
+ * <description>Structure to compare two 64-bit unsigned integer values.</description>
  */
 typedef struct 
 {
@@ -445,7 +445,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with three 64-bit unsigned integer values.</description>
+ * <description>Structure for operation with three 64-bit unsigned integer values.</description>
  */
 typedef struct 
 {
@@ -458,7 +458,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with two 64-bit unsigned integer values.</description>
+ * <description>Structure for operation with two 64-bit unsigned integer values.</description>
  */
 typedef struct 
 {
@@ -470,7 +470,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for shift operations on a 64-bit unsigned integer value.</description>
+ * <description>Structure for shift operations on a 64-bit unsigned integer value.</description>
  */
 typedef struct 
 {
@@ -487,7 +487,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for shift operations on a 64-bit integer value.</description>
+ * <description>Structure for shift operations on a 64-bit integer value.</description>
  */
 typedef struct 
 {
@@ -504,7 +504,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with one 64-bit unsigned integer value.</description>
+ * <description>Structure for operation with one 64-bit unsigned integer value.</description>
  */
 typedef struct 
 {
@@ -515,7 +515,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with one 32-bit integer value.</description>
+ * <description>Structure for operation with one 32-bit integer value.</description>
  */
 typedef struct 
 {
@@ -526,7 +526,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with two 32-bit integer values.</description>
+ * <description>Structure for operation with two 32-bit integer values.</description>
  */
 typedef struct 
 {	RTS_IEC_DINT in1;
@@ -537,7 +537,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with three 32-bit integer values.</description>
+ * <description>Structure for operation with three 32-bit integer values.</description>
  */
 typedef struct 
 {
@@ -550,7 +550,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for shift operations on a 32-bit integer value.</description>
+ * <description>Structure for shift operations on a 32-bit integer value.</description>
  */
 typedef struct 
 {
@@ -565,7 +565,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with two 32-bit unsigned integer values.</description>
+ * <description>Structure for operation with two 32-bit unsigned integer values.</description>
  */
 typedef struct 
 {
@@ -577,7 +577,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for operation with three 32-bit unsigned integer values.</description>
+ * <description>Structure for operation with three 32-bit unsigned integer values.</description>
  */
 typedef struct 
 {
@@ -590,7 +590,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for shift operations on a 32-bit unsigned integer value.</description>
+ * <description>Structure for shift operations on a 32-bit unsigned integer value.</description>
  */
 typedef struct 
 {
@@ -605,7 +605,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for conversion of a 64-bit integer value to any 32-bit value.</description>
+ * <description>Structure for conversion of a 64-bit integer value to any 32-bit value.</description>
  */
 typedef struct
 {
@@ -616,7 +616,7 @@ typedef struct
 
 /**
  * <category>External IEC interface</category>
- * <description>Struct to read a 64-bit integer value atomic.</description>
+ * <description>Structure to read a 64-bit integer value atomic.</description>
  */
 typedef struct
 {
@@ -626,7 +626,7 @@ typedef struct
 
 /**
  * <category>External IEC interface</category>
- * <description>Struct to read a 64-bit integer value atomic.</description>
+ * <description>Structure to read a 64-bit integer value atomic.</description>
  */
 typedef struct
 {
@@ -638,7 +638,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for conversion of any 32-bit value to a 64-bit integer value.</description>
+ * <description>Structure for conversion of any 32-bit value to a 64-bit integer value.</description>
  */
 typedef struct
 {
@@ -650,7 +650,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for conversion of a 32-bit real value to any 32-bit value.</description>
+ * <description>Structure for conversion of a 32-bit real value to any 32-bit value.</description>
  */
 typedef struct
 {
@@ -662,7 +662,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for conversion of any 32-bit value to a 32-bit real value.</description>
+ * <description>Structure for conversion of any 32-bit value to a 32-bit real value.</description>
  */
 typedef struct
 {
@@ -674,7 +674,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for conversion of a 32-bit real value to any 64-bit value.</description>
+ * <description>Structure for conversion of a 32-bit real value to any 64-bit value.</description>
  */
 typedef struct
 {
@@ -686,7 +686,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for conversion of any 64-bit value to a 32-bit real value.</description>
+ * <description>Structure for conversion of any 64-bit value to a 32-bit real value.</description>
  */
 typedef struct
 {
@@ -698,7 +698,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for conversion of a 64-bit real value to any 32-bit value.</description>
+ * <description>Structure for conversion of a 64-bit real value to any 32-bit value.</description>
  */
 typedef struct
 {
@@ -710,7 +710,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for conversion of any 32-bit value to a 64-bit real value.</description>
+ * <description>Structure for conversion of any 32-bit value to a 64-bit real value.</description>
  */
 typedef struct
 {
@@ -722,7 +722,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for conversion of a 64-bit real value to any 64-bit value.</description>
+ * <description>Structure for conversion of a 64-bit real value to any 64-bit value.</description>
  */
 typedef struct
 {
@@ -735,7 +735,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for conversion of any 64-bit value to a 64-bit real value.</description>
+ * <description>Structure for conversion of any 64-bit value to a 64-bit real value.</description>
  */
 typedef struct
 {
@@ -748,7 +748,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for conversion of a 64-bit real value to a 32-bit real value.</description>
+ * <description>Structure for conversion of a 64-bit real value to a 32-bit real value.</description>
  */
 typedef struct 
 {
@@ -759,7 +759,7 @@ typedef struct
 /**
  * <SIL2/>
  * <category>External IEC interface</category>
- * <description>Struct for conversion of a 32-bit real value to a 64-bit real value.</description>
+ * <description>Structure for conversion of a 32-bit real value to a 64-bit real value.</description>
  */
 typedef struct 
 {
@@ -770,7 +770,7 @@ typedef struct
 
 /**
  * <category>External IEC interface</category>
- * <description>Struct to read a 64-bit integer value atomic.</description>
+ * <description>Structure to read a 64-bit integer value atomic.</description>
  */
 typedef struct
 {
@@ -780,7 +780,7 @@ typedef struct
 
 /**
  * <category>External IEC interface</category>
- * <description>Struct to read a 64-bit integer value atomic.</description>
+ * <description>Structure to read a 64-bit integer value atomic.</description>
  */
 typedef struct
 {
@@ -1488,7 +1488,7 @@ typedef void (CDECL * PFREAL32__MUL) (real_2op_struct* p);
 /**
  * <description>
  * <p>This function makes a division of two variables. The inputs are 32-bit real values.</p>
- * <p>The behaviour for divisor = 0.0 might be platform dependent.</p>
+ * <p>The behavior for divisor = 0.0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_REAL_2OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in1" type="IN" range="[RTS_RANGE_OF_RTS_IEC_REAL]">Dividend</parampseudo>
@@ -1762,7 +1762,7 @@ typedef void (CDECL * PFREAL32__TRUNC) (real_trunc_struct* p);
 /**
  * <description>
  * <p>This function calculates the tangent of a 32-bit real value.</p>
- * <p>The behaviour for input values that are multiples of PI_HALF might be platform dependent.</p>
+ * <p>The behavior for input values that are multiples of PI_HALF might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_REAL_1OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[(RTS_IEC_REAL)-PI_HALF,(RTS_IEC_REAL)-PI_HALF+MIN_DELTA..(RTS_IEC_REAL)0,(RTS_IEC_REAL)0..(RTS_IEC_REAL)PI_HALF-MIN_DELTA,(RTS_IEC_REAL)PI_HALF]">Input</parampseudo>
@@ -1977,7 +1977,7 @@ typedef void (CDECL * PFREAL32__ATAN) (real_1op_struct* p);
 /**
  * <description>
  * <p>This function calculates the arc sine (inverse function of sine) of a 32-bit real value.</p>
- * <p>The behaviour for input values &lt; -1.0 and &gt; 1.0 might be platform dependent.</p>
+ * <p>The behavior for input values &lt; -1.0 and &gt; 1.0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_REAL_1OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[(RTS_IEC_REAL)-1.01,(RTS_IEC_REAL)-1.0..(RTS_IEC_REAL)1.0,(RTS_IEC_REAL)1.01]">Input</parampseudo>
@@ -2033,7 +2033,7 @@ typedef void (CDECL * PFREAL32__ASIN) (real_1op_struct* p);
 /**
  * <description>
  * <p>This function calculates the arc cosine (inverse function of cosine) of a 32-bit real value.</p>
- * <p>The behaviour for input values &lt; -1.0 and &gt; 1.0 might be platform dependent.</p>
+ * <p>The behavior for input values &lt; -1.0 and &gt; 1.0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_REAL_1OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[(RTS_IEC_REAL)-1.01,(RTS_IEC_REAL)-1.0..(RTS_IEC_REAL)1.0,(RTS_IEC_REAL)1.01]">Input</parampseudo>
@@ -2089,7 +2089,7 @@ typedef void (CDECL * PFREAL32__ACOS) (real_1op_struct* p);
 /**
  * <description>
  * <p>This function calculates the natural logarithm of a 32-bit real value.</p>
- * <p>The behaviour for input values &lt;= 0.0 might be platform dependent.</p>
+ * <p>The behavior for input values &lt;= 0.0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_REAL_1OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[(RTS_IEC_REAL)0.0,(RTS_IEC_REAL)0.01..RTS_IEC_REAL_MAX]">Input</parampseudo>
@@ -2146,7 +2146,7 @@ typedef void (CDECL * PFREAL32__LN) (real_1op_struct* p);
 /**
  * <description>
  * <p>This function calculates the logarithm in Base 10 of a 32-bit real value.</p>
- * <p>The behaviour for input values &lt;= 0.0 might be platform dependent.</p>
+ * <p>The behavior for input values &lt;= 0.0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_REAL_1OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[(RTS_IEC_REAL)0.0,(RTS_IEC_REAL)0.01..RTS_IEC_REAL_MAX]">Input</parampseudo>
@@ -2257,7 +2257,7 @@ typedef void (CDECL * PFREAL32__EXP) (real_1op_struct* p);
 /**
  * <description>
  * <p>This function calculates the square root of a 32-bit real value.</p>
- * <p>The behaviour for input values &lt; 0.0 might be platform dependent.</p>
+ * <p>The behavior for input values &lt; 0.0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_REAL_1OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[(RTS_IEC_REAL)-0.01,(RTS_IEC_REAL)0.0..RTS_IEC_REAL_MAX]">Input</parampseudo>
@@ -2365,15 +2365,15 @@ typedef void (CDECL * PFREAL32__ABS) (real_1op_struct* p);
 
 /**
  * <description>
- * <p>This function calculates the exponation of a variable with another variable.</p>
- * <p>The behaviour for input values in1 = 0.0 and in2 &lt; 0.0 might be platform dependent.</p>
+ * <p>This function calculates the power of a variable with another variable.</p>
+ * <p>The behavior for input values in1 = 0.0 and in2 &lt; 0.0 might be platform dependent.</p>
  * <p>The inputs are 32-bit real values.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_REAL_2OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in1" type="IN" range="[RTS_RANGE_OF_RTS_IEC_REAL]">Base</parampseudo>
  * <parampseudo name="in2" type="IN" range="[RTS_RANGE_OF_RTS_IEC_REAL]">Exponent</parampseudo>
  * <parampseudo name="bInfinity" type="OUT">The return value is infinity</parampseudo>
- * <parampseudo name="out" type="OUT">The exponation of in1 with in2 as 32-bit real value or NaN.</parampseudo>
+ * <parampseudo name="out" type="OUT">The power of in1 with in2 as 32-bit real value or NaN.</parampseudo>
  */
 void CDECL CDECL_EXT real32__expt(real_2op_struct* p);
 typedef void (CDECL * PFREAL32__EXPT) (real_2op_struct* p);
@@ -2917,7 +2917,7 @@ typedef void (CDECL CDECL_EXT* PFREAL64__MUL_IEC) (lreal_2op_struct* p);
 /**
  * <description>
  * <p>This function makes a division of two variables. The inputs are 64-bit real values.</p>
- * <p>The behaviour for divisor = 0.0 might be platform dependent.</p>
+ * <p>The behavior for divisor = 0.0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_LREAL_2OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in1" type="IN" range="[RTS_RANGE_OF_RTS_IEC_LREAL]">Dividend</parampseudo>
@@ -3191,7 +3191,7 @@ typedef void (CDECL CDECL_EXT* PFREAL64__TRUNC_IEC) (lreal_trunc_struct* p);
 /**
  * <description>
  * <p>This function calculates the tangent of a 64-bit real value.</p>
- * <p>The behaviour for input values that are multiples of PI_HALF might be platform dependent.</p>
+ * <p>The behavior for input values that are multiples of PI_HALF might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_LREAL_1OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[(RTS_IEC_LREAL)-PI_HALF,(RTS_IEC_LREAL)-PI_HALF+MIN_DELTA..(RTS_IEC_LREAL)0,(RTS_IEC_LREAL)0..(RTS_IEC_LREAL)PI_HALF-MIN_DELTA,(RTS_IEC_LREAL)PI_HALF]">Input</parampseudo>
@@ -3406,7 +3406,7 @@ typedef void (CDECL CDECL_EXT* PFREAL64__ATAN_IEC) (lreal_1op_struct* p);
 /**
  * <description>
  * <p>This function calculates the arc sine (inverse function of sine) of a 64-bit real value.</p>
- * <p>The behaviour for input values &lt; -1.0 and &gt; 1.0 might be platform dependent.</p>
+ * <p>The behavior for input values &lt; -1.0 and &gt; 1.0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_LREAL_1OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[(RTS_IEC_LREAL)-1.01,(RTS_IEC_LREAL)-1.0..(RTS_IEC_LREAL)1.0,(RTS_IEC_LREAL)1.01]">Input</parampseudo>
@@ -3462,7 +3462,7 @@ typedef void (CDECL CDECL_EXT* PFREAL64__ASIN_IEC) (lreal_1op_struct* p);
 /**
  * <description>
  * <p>This function calculates the arc cosine (inverse function of cosine) of a 64-bit real value.</p>
- * <p>The behaviour for input values &lt; -1.0 and &gt; 1.0 might be platform dependent.</p>
+ * <p>The behavior for input values &lt; -1.0 and &gt; 1.0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_LREAL_1OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[(RTS_IEC_LREAL)-1.01,(RTS_IEC_LREAL)-1.0..(RTS_IEC_LREAL)1.0,(RTS_IEC_LREAL)1.01]">Input</parampseudo>
@@ -3518,7 +3518,7 @@ typedef void (CDECL CDECL_EXT* PFREAL64__ACOS_IEC) (lreal_1op_struct* p);
 /**
  * <description>
  * <p>This function calculates the natural logarithm of a 64-bit real value.</p>
- * <p>The behaviour for input values &lt;= 0.0 might be platform dependent.</p>
+ * <p>The behavior for input values &lt;= 0.0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_LREAL_1OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[0.0,0.01..RTS_IEC_LREAL_MAX]">Input</parampseudo>
@@ -3575,7 +3575,7 @@ typedef void (CDECL CDECL_EXT* PFREAL64__LN_IEC) (lreal_1op_struct* p);
 /**
  * <description>
  * <p>This function calculates the logarithm in Base 10 of a 64-bit real value.</p>
- * <p>The behaviour for input values &lt;= 0.0 might be platform dependent.</p>
+ * <p>The behavior for input values &lt;= 0.0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_LREAL_1OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[(RTS_IEC_LREAL)0.0,(RTS_IEC_LREAL)0.01..RTS_IEC_LREAL_MAX]">Input</parampseudo>
@@ -3686,7 +3686,7 @@ typedef void (CDECL CDECL_EXT* PFREAL64__EXP_IEC) (lreal_1op_struct* p);
 /**
  * <description>
  * <p>This function calculates the square root of a 64-bit real value.</p>
- * <p>The behaviour for input values &lt; 0.0 might be platform dependent.</p>
+ * <p>The behavior for input values &lt; 0.0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_LREAL_1OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[(RTS_IEC_LREAL)-0.01,(RTS_IEC_LREAL)0.0..RTS_IEC_LREAL_MAX]">Input</parampseudo>
@@ -3794,15 +3794,15 @@ typedef void (CDECL CDECL_EXT* PFREAL64__ABS_IEC) (lreal_1op_struct* p);
 
 /**
  * <description>
- * <p>This function calculates the exponation of a variable with another variable.</p>
- * <p>The behaviour for input values in1 = 0.0 and in2 &lt; 0.0 might be platform dependent.</p>
+ * <p>This function calculates the power of a variable with another variable.</p>
+ * <p>The behavior for input values in1 = 0.0 and in2 &lt; 0.0 might be platform dependent.</p>
  * <p>The inputs are 64-bit real values.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_LREAL_2OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in1" type="IN" range="[RTS_RANGE_OF_RTS_IEC_LREAL]">Base</parampseudo>
  * <parampseudo name="in2" type="IN" range="[RTS_RANGE_OF_RTS_IEC_LREAL]">Exponent</parampseudo>
  * <parampseudo name="bInfinity" type="OUT">The return value is infinity</parampseudo>
- * <parampseudo name="out" type="OUT">The exponation of in1 with in2 as 64-bit real value or NaN.</parampseudo>
+ * <parampseudo name="out" type="OUT">The power of in1 with in2 as 64-bit real value or NaN.</parampseudo>
  */
 void CDECL CDECL_EXT real64__expt(lreal_2op_struct* p);
 typedef void (CDECL CDECL_EXT* PFREAL64__EXPT_IEC) (lreal_2op_struct* p);
@@ -4016,7 +4016,7 @@ typedef void (CDECL CDECL_EXT* PFINT64__MUL_IEC) (lint_2op_struct* p);
 /**
  * <description>
  * <p>This function makes a division of two variables. The inputs are 64-bit integer values.</p>
- * <p>The behaviour for divisor = 0 might be platform dependent.</p>
+ * <p>The behavior for divisor = 0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_LINT_2OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in1" type="IN" range="[RTS_RANGE_OF_RTS_IEC_LINT]">Dividend</parampseudo>
@@ -4887,7 +4887,7 @@ typedef void (CDECL CDECL_EXT* PFUINT64__MUL_IEC) (ulint_2op_struct* p);
 /**
  * <description>
  * <p>This function makes a division of two variables. The inputs are 64-bit unsigned integer values.</p>
- * <p>The behaviour for divisor = 0 might be platform dependent.</p>
+ * <p>The behavior for divisor = 0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_ULINT_2OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in1" type="IN" range="[RTS_RANGE_OF_RTS_IEC_ULINT]">Dividend</parampseudo>
@@ -6049,7 +6049,7 @@ typedef void (CDECL * PFUINT32__MUL) (udint_2op_struct* p);
 /**
  * <description>
  * <p>This function makes a division of two variables. The inputs are 32-bit integer values.</p>
- * <p>The behaviour for divisor = 0 might be platform dependent.</p>
+ * <p>The behavior for divisor = 0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_DINT_2OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in1" type="IN" range="[RTS_RANGE_OF_RTS_IEC_DINT]">Dividend</parampseudo>
@@ -6161,7 +6161,7 @@ typedef void (CDECL * PFINT32__MOD) (dint_2op_struct* p);
 /**
  * <description>
  * <p>This function makes a division of two variables. The inputs are 32-bit unsigned integer values.</p>
- * <p>The behaviour for divisor =0 might be platform dependent.</p>
+ * <p>The behavior for divisor =0 might be platform dependent.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_UDINT_2OP_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in1" type="IN" range="[RTS_RANGE_OF_RTS_IEC_UDINT]">Dividend</parampseudo>
@@ -6664,7 +6664,7 @@ typedef void (CDECL * PFUINT32__SHR) (udint_shift_struct* p);
 /**
  * <description>
  * <p>This function makes a bitwise right-shift on a 32-bit integer value.</p>
- * <p>The the newly exposed bits will be filled with the value of the topmost bit, that is 1 for negative and 0 for positive input values.</p>
+ * <p>The newly exposed bits will be filled with the value of the topmost bit, that is 1 for negative and 0 for positive input values.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_DINT_SHIFT_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in1" type="IN" range="[RTS_RANGE_OF_RTS_IEC_DINT]">Operand to be shifted to the right</parampseudo>
@@ -6722,7 +6722,7 @@ typedef void (CDECL * PFINT32__SHR) (dint_shift_struct* p);
  * <description>
  * <p>This function Converts any 32-bit numeric data type to a 64-bit integer value.</p>
  * <p>Data types with less than 32 bits are allowed but the input value has to be casted to 32 bits before.</p>
- * <p>Only integer datatypes are allowed.</p>
+ * <p>Only integer data types are allowed.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_ANY32_TO_INT64_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[ANY_MIN,ANY_MID,ANY_MAX]">Input data</parampseudo>
@@ -6781,7 +6781,7 @@ typedef void (CDECL CDECL_EXT* PFANY32__TO__INT64_IEC) (any32_to_int64_struct* p
  * <description>
  * <p>This function Converts a 64-bit integer value to any 32-bit numeric data type.</p>
  * <p>Data types with less than 32 bits are allowed but the output value is casted to 32 bits.</p>
- * <p>Only integer datatypes are allowed.</p>
+ * <p>Only integer data types are allowed.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_INT64_TO_ANY32_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[ANY_MIN,ANY_MID,ANY_MAX]">Input value</parampseudo>
@@ -6953,7 +6953,7 @@ typedef void (CDECL CDECL_EXT* PFINT64__ATOMICWRITE_IEC) (int64_atomicwrite_stru
  * <description>
  * <p>This function Converts a 32-bit real value to any 32-bit numeric data type.</p>
  * <p>Data types with less than 32 bits are allowed but the output value is casted to 32 bits.</p>
- * <p>Only integer datatypes are allowed.</p>
+ * <p>Only integer data types are allowed.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_REAL32_TO_ANY32_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[ANY_MIN,ANY_MID,ANY_MAX]">Input value</parampseudo>
@@ -7012,7 +7012,7 @@ typedef void (CDECL * PFREAL32__TO__ANY32) (real32_to_any32_struct* p);
  * <description>
  * <p>This function Converts any 32-bit numeric data type to a 32-bit real value.</p>
  * <p>Data types with less than 32 bits are allowed but the input value has to be casted to 32 bits before.</p>
- * <p>Only integer datatypes are allowed.</p>
+ * <p>Only integer data types are allowed.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_ANY32_TO_REAL32_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[ANY_MIN,ANY_MID,ANY_MAX]">Input data</parampseudo>
@@ -7128,7 +7128,7 @@ typedef void (CDECL CDECL_EXT* PFREAL32__TO__ANY64_IEC) (real32_to_any64_struct*
  * <description>
  * <p>This function Converts any 64-bit numeric data type to a 32-bit real value.</p>
  * <p>Data types with less than 64 bits are allowed but the input value has to be casted to 64 bits before.</p>
- * <p>Only integer datatypes are allowed.</p>
+ * <p>Only integer data types are allowed.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_ANY64_TO_REAL32_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[ANY_MIN,ANY_MID,ANY_MAX]">Input data</parampseudo>
@@ -7187,7 +7187,7 @@ typedef void (CDECL CDECL_EXT* PFANY64__TO__REAL32_IEC) (any64_to_real32_struct*
  * <description>
  * <p>This function Converts a 64-bit real value to any 32-bit numeric data type.</p>
  * <p>Data types with less than 32 bits are allowed but the output value is casted to 32 bits.</p>
- * <p>Only integer datatypes are allowed.</p>
+ * <p>Only integer data types are allowed.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_REAL64_TO_ANY32_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[ANY_MIN,ANY_MID,ANY_MAX]">Input value</parampseudo>
@@ -7246,7 +7246,7 @@ typedef void (CDECL CDECL_EXT* PFREAL64__TO__ANY32_IEC) (real64_to_any32_struct*
  * <description>
  * <p>This function Converts any 32-bit numeric data type to a 64-bit real value.</p>
  * <p>Data types with less than 32 bits are allowed but the input value has to be casted to 32 bits before.</p>
- * <p>Only integer datatypes are allowed.</p>
+ * <p>Only integer data types are allowed.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_ANY32_TO_REAL64_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[ANY_MIN,ANY_MID,ANY_MAX]">Input data</parampseudo>
@@ -7362,7 +7362,7 @@ typedef void (CDECL CDECL_EXT* PFREAL64__TO__ANY64_IEC) (real64_to_any64_struct*
  * <description>
  * <p>This function Converts any 64-bit numeric data type to a 64-bit real value.</p>
  * <p>Data types with less than 64 bits are allowed but the input value has to be casted to 64 bits before.</p>
- * <p>Only integer datatypes are allowed.</p>
+ * <p>Only integer data types are allowed.</p>
  * </description>
  * <param name="p" type="IN" range="[VALID_ANY64_TO_REAL64_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="in" type="IN" range="[ANY_MIN, ANY_MID, ANY_MAX]">Input data</parampseudo>
@@ -7805,7 +7805,7 @@ typedef void (CDECL * PFEXCHANGE__AND__ADD) (exchange_and_add_struct* p);
  * <description>
  * This function is trying to set bit 0 of the address, passed via pdwTest.
  * If the bit was zero, the operation succeeds, if the bit was already set, the operation fails.
- * Note, that this operation also fails under the folling conditions:
+ * Note, that this operation also fails under the following conditions:
  * <ul>
  *     <li>pdwTest is NULL</li>
  *     <li>pdwTest is not 32Bit aligned</li>
@@ -7882,7 +7882,7 @@ typedef void (CDECL * PFTEST__AND__SET) (test_and_set_struct* p);
  * <parampseudo name="pAddress" type="IN" range="[NULL,VALID_CAS_ADDRESS]">Pointer to the location, that should be updated.</parampseudo>
  * <parampseudo name="xwExpected" type="IN" range="[RTS_RANGE_OF_RTS_IEC_XWORD]">The value, which was read from the location of pAddress.</parampseudo>
  * <parampseudo name="xwNewValue" type="IN" range="[RTS_RANGE_OF_RTS_IEC_XWORD]">The value that should be copied to the location of pAddress.</parampseudo>
- * <parampseudo name="out" type="OUT">1 if swapped, 0 if an error occured</parampseudo>
+ * <parampseudo name="out" type="OUT">1 if swapped, 0 if an error occurred</parampseudo>
  * <result>BOOL: TRUE on success, FALSE on error</result>
  */
 void CDECL CDECL_EXT compare__and__swap(compare_and_swap_struct* p);
@@ -7987,7 +7987,7 @@ typedef void (CDECL CDECL_EXT* PF__MEMSET_IEC) (__memset_struct *p);
 /**
  * <description>A simple exception handling function</description>
  * <param name="p" type="IN">Pointer to the input structure</param>
- * <parampseudo name="out" type="OUT">ExceptionCode or 0 for noeexception</parampseudo>
+ * <parampseudo name="out" type="OUT">ExceptionCode or 0 for no exception</parampseudo>
  */
 void CDECL CDECL_EXT trycatch(trycatch_struct *p);
 typedef void (CDECL CDECL_EXT* PFTRYCATCH_IEC) (trycatch_struct *p);
@@ -8095,7 +8095,7 @@ typedef void (CDECL CDECL_EXT* PFSYSTIMELOCK_IEC) (systimelock_struct *p);
 
 
 /**
- * <description>Function to set the actual timestamp for all IEC timers. Differnt to SysTimeLock, the timer continues</description>
+ * <description>Function to set the actual timestamp for all IEC timers. Different to SysTimeLock, the timer continues</description>
  * <result><p>RESULT: Returns always 0</p></result>
  */
 typedef struct tagsystimeset_struct
@@ -8430,7 +8430,7 @@ typedef RTS_UI16 (CDECL * PFSYSTIMEUNSET) (void);
 
 
 /**
- * <description>Function to set the actual timestamp for all IEC timers. Differnt to SysTimeLock, the timer continues</description>
+ * <description>Function to set the actual timestamp for all IEC timers. Different to SysTimeLock, the timer continues</description>
  * <param name="p" type="IN" range="[VALID_SYSTIMESET_STRUCT]">Pointer to the input structure</param>
  * <parampseudo name="ulTick" type="IN" range="[RTS_RANGE_OF_RTS_IEC_TIME]">Tick</parampseudo>
  * <parampseudo name="tTimeout" type="IN" range="[RTS_RANGE_OF_RTS_IEC_TIME]">Timeout</parampseudo>
@@ -8489,7 +8489,7 @@ typedef RTS_UI16 (CDECL * PFSYSTIMESET) (RTS_UI32 ulTick, RTS_UI32 tTimeout);
 /**
  * <description>Returns the size in bytes, of the specified IEC data type.</description>
  * <param name="tc" type="IN" range="[0..TYPE3_MAX_TYPE]">Pointer to the input structure</param>
- * <result>Size in Bytes of Datatype, or 0 if unspecified</result>
+ * <result>Size in Bytes of data type, or 0 if unspecified</result>
  */
 unsigned int CDECL SysGetTypeSize(TypeClass3 tc);
 typedef unsigned int (CDECL * PFSYSGETTYPESIZE) (TypeClass3 tc);

@@ -1,0 +1,130 @@
+=============================
+CODESYS Control - Whats's new
+=============================
+
+.. _CODESYSControlV3_WhatsNew:
+
+We provide a list of all new features and significant improvements of CODESYS Control for each release version.
+
+In the chapter `General Recommendations`_ we provide some issues for OEM customers to take care about.
+
+Features
+========
+
+v3.5.16.0
+---------
+
++-------------------------------+-------------------------------------------------------------------------+-----------------------------------------------------+
+| Feature                       | Description                                                             | References                                          |
++===============================+=========================================================================+=====================================================+
+| OPC UA Client                 | The OPC UA client is realized in a separate runtime system component    | Feature :ref:`OPC UA Client <feature_opcua_client>` |
+|                               | and can be used out of a runtime system component or IEC-application.   |                                                     |
+|                               |                                                                         |                                                     |
++-------------------------------+-------------------------------------------------------------------------+-----------------------------------------------------+
+| Redesign DeviceUserManagement | Because of some security aspects, the DeviceUserManagement (which       | Feature :ref:`User Manager <feature_user_manager>`  |
+|                               | consists now of the CmpUserMgr and the backend components CmpUserDBFile,|                                                     |
+|                               | CmpUserGroupsDBFile and CmpUserObjectDBFile) is redesigned.             |                                                     |
+|                               | Additionally the interfaces of the backend components are splitted      |                                                     |
+|                               | into a mandatory and an optional interface to make it easier to         |                                                     |
+|                               | implement an own device user management.                                |                                                     |
+|                               |                                                                         |                                                     |
+|                               | A detailled description can be found here                               |                                                     |
+|                               | :ref:`usermanagement_update_information`.                               |                                                     |
++-------------------------------+-------------------------------------------------------------------------+-----------------------------------------------------+
+
+v3.5.15.0
+---------
+
++------------------+-------------------------------------------------------------------------+-----------------------------------------------------+
+| Feature          | Description                                                             | References                                          |
++==================+=========================================================================+=====================================================+
+| Edge Gateway     | The Edge Gateway is a separate runtime system component upon the        | Feature :ref:`Edge Gateway <feature_edge_gateway>`  |
+|                  | gateway, which is able to connect to a CODESYS Automation Server and    |                                                     |
+|                  | manages the access to the underlaying PLC network.                      |                                                     |
+|                  |                                                                         |                                                     |
++------------------+-------------------------------------------------------------------------+-----------------------------------------------------+
+
+v3.5.14.0
+---------
+
++------------------+-------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Feature          | Description                                                             | References                                                               |
++==================+=========================================================================+==========================================================================+
+| PLCHandler       | 64-bit version for Windows and Linux                                    |                                                                          |
+|                  +-------------------------------------------------------------------------+--------------------------------------------------------------------------+
+|                  | Encrypted communication                                                 |                                                                          |
+|                  +-------------------------------------------------------------------------+--------------------------------------------------------------------------+
+|                  | Standard monitoring for embedded controllers                            |                                                                          |
++------------------+-------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| OPC UA Server    | Access to complex data types via single query                           | Feature :ref:`OPC UA Server <feature_opcua_server>`                      |
++------------------+-------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Security         | Encrypted communication configurable as user option                     | Feature :ref:`Encrypted Communication <feature_encrypted_communication>` |
+|                  +-------------------------------------------------------------------------+--------------------------------------------------------------------------+
+|                  | User management configurable as optional or obligatory                  | Feature :ref:`User Management <feature_user_manager>`                    |
+|                  |                                                                         +--------------------------------------------------------------------------+
+|                  |                                                                         | Feature :ref:`Security Management <feature_security_manager>`            |
++------------------+-------------------------------------------------------------------------+--------------------------------------------------------------------------+
+
+v3.5.13.0
+---------
+
++------------------+-------------------------------------------------------------------------+-------------------------------------------------------+
+| Feature          | Description                                                             | References                                            |
++==================+=========================================================================+=======================================================+
+| Multicore        | Multicore support in the runtime system for Windows, Linux and VxWorks  | Feature :ref:`MultiCore <feature_multicore>`          |
++------------------+-------------------------------------------------------------------------+-------------------------------------------------------+
+| OPC UA Server    | User management support                                                 | Feature :ref:`User Management <feature_user_manager>` |
++------------------+-------------------------------------------------------------------------+-------------------------------------------------------+
+| Symbolconfig     | Configurable set of different symbols for separate clients based on the | Feature :ref:`User Management <feature_user_manager>` |
+|                  | user management.                                                        |                                                       |
++------------------+-------------------------------------------------------------------------+-------------------------------------------------------+
+| PLCHandler       | Backup & Restore IEC Applications                                       |                                                       |
++------------------+-------------------------------------------------------------------------+-------------------------------------------------------+
+
+
+_`General Recommendations`
+==========================
+      
+Integration of OpenSSL
+----------------------
+
+To realize most of the security features, you need a crypto component. In the runtime system we use OpenSSL by default. The integration of OpenSSL can be done in 2 ways:
+    
+    1. Operating system integrated OpenSSL:
+    
+       If your operating system contains an implementation of OpenSSL, you can use the CmpOpenSSL component of the runtime system without the OpenSSL implementation. In this case you have to defined the compiler switch CMPOPENSSL_USE_SYSLIB
+       building the runtime system.
+
+
+    2. Using the OpenSSL source components shipped with the runtime system:
+    
+       If your operating system does not contain an implementation of OpenSSL, you can use the CmpOpenSSL component of the runtime system with the OpenSSL implementation. In this case you must not define the compiler switch CMPOPENSSL_USE_SYSLIB
+       building the runtime system! Additionally you have to include all OpenSSL modules into your build environement specified in CmpOpenSSLDep.h.
+       
+    For details see the feature description under "Runtime System Documentation/Features/Security/OpenSSL".
+
+Target Serial Numbers
+---------------------
+
+    There are 2 different serial numbers provided in the runtime system for different needs. These are described in the following chapters.
+
+Official Serial Number
+~~~~~~~~~~~~~~~~~~~~~~
+
+    This is the official serial number of the device, typically visible on a label on the controller. This serial number is used to uniquely identify a target e.g. for the "interactive login" feature or 
+    the CODESYS Automation Server!
+    
+    **Recommendations:**
+   
+    So we recommend to support this official serial number on every target! For this you have to implement the interface function SysTargetGetSerialNumber() in your SysTargetOEM component.
+    This serial number is additionally used for the "New scan information in the communication dialog in CODESYS" since v3.5.10.0!
+    
+Secure Serial Number
+~~~~~~~~~~~~~~~~~~~~
+
+    This is the secure serial number that based on hardware characteristics of the device. This serial number is used e.g. to bind licenses at this single device and so this feature must be 
+    implemented with a higher security level. So this secure serial number must not be modifiable e.g. like retrieving from a local file.
+    
+    **Recommendations:**
+    
+    We recommend this secure serial number for targets, that intend to use WIBU CodeMeter softcontainer support and for targets, that has the possibility to use secure hardware characteristics for this secure serial number. 

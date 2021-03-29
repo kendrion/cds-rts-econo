@@ -1,0 +1,67 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of struct.rst template
+
+.. _structtagcmptlsconnect__struct:
+
+========================================
+tagcmptlsconnect_struct Struct Reference
+========================================
+
+| #include ":ref:`CmpTls_ImplementationItf.h <_cmp_tls___implementation_itf_8h>`"
+
+Data Fields
+-----------
+
+- RTS_IEC_HANDLE :ref:`hTlsConn <group___cmp_tls___implementation_itf_1ga5bf36a0e1485fcbc7aa61e3f63c81da0>`
+- RTS_IEC_RESULT :ref:`CmpTlsConnect <group___cmp_tls___implementation_itf_1gaa4900a878f91c44436a21e5c76b18ca1>`
+
+Detailed Description
+--------------------
+
+Starts handshaking on the client side. This data is likley to read and write data.
+
+:return: Result of this operation. May be one of these values:
+
+  - ERR_OK: No error. Everything worked as expected.
+
+  - ERR_NOTINITIALIZED: The TLS component was not initialized proberly.
+
+  - ERR_TLS_CONNECTION_CLOSED: The TLS connection is closed. Use TlsShutdown to shutdown locally.
+
+  - ERR_TLS_WANT_READ: The operation needs TO read data FROM the IO system. There is no data available.
+
+  - ERR_TLS_WANT_WRITE: The operation needs to write data to the IO system. This is not possible.
+
+  - ERR_TLS_RETRY_OPERATION: Something went wrong. Try the same function call again
+
+  - ERR_TLS_IO_SYSTEM: An error in the unterlaying IO system.
+
+  - ERR_TLS_INTERNAL: An internal Error of the TLS Component
+
+  - ERR_FAILED: Unknown error.
+
+Field Documentation
+-------------------
+
+.. _group___cmp_tls___implementation_itf_1ga5bf36a0e1485fcbc7aa61e3f63c81da0:
+
+RTS_IEC_HANDLE tagcmptlsconnect_struct::hTlsConn
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_tls___implementation_itf_1gaa4900a878f91c44436a21e5c76b18ca1:
+
+RTS_IEC_RESULT tagcmptlsconnect_struct::CmpTlsConnect
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The documentation for this struct was generated from the following file:
+------------------------------------------------------------------------
+
+CmpTls_ImplementationItf.h
+
+.. last line of struct.rst template
+.. last line of composition.rst template
+
+

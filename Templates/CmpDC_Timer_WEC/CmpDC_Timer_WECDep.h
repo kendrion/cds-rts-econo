@@ -14,7 +14,7 @@
  *  and this leads to one cycle of the EtherCAT master task. 
  *  </description>
  *  <copyright>
- *  (c) 2003-2018 CODESYS GmbH
+ *  (c) 2003-2018 CODESYS Development GmbH
  *  </copyright>
  */
 #ifndef _CMPDC_TIMER_WECDEP_H_
@@ -29,9 +29,9 @@
 
 
 
-#define CMP_VERSION         UINT32_C(0x03050E00)
-#define CMP_VERSION_STRING "3.5.14.0"
-#define CMP_VERSION_RC      3,5,14,0
+#define CMP_VERSION         UINT32_C(0x03051000)
+#define CMP_VERSION_STRING "3.5.16.0"
+#define CMP_VERSION_RC      3,5,16,0
 
 /* NOTE: REPLACE 0x0000 BY YOUR VENDORID */
 #define CMP_VENDORID       0x0000
@@ -50,7 +50,15 @@
 
 
 
+
+/**
+ * \file CmpDC_Timer_WECItf.h
+ */
 #include "CmpDC_Timer_WECItf.h"
+
+/**
+ * \file CmpEventCallbackItf.h
+ */
 #include "CmpEventCallbackItf.h"
 
 
@@ -347,7 +355,7 @@
 #else
 #define EXPORT_EXTREF2_STMT
 #endif
-#if !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
+#if !defined(CMPDC_TIMER_WEC_DISABLE_CMPITF) && !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
 #define EXPORT_CMPITF_STMT \
     {\
           \

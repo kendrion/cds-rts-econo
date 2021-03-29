@@ -6,7 +6,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -25,6 +25,22 @@ extern "C" {
 /* Init routines for OS specific modules */
 RTS_RESULT CDECL SysModuleOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysModuleOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
+
+/**
+ * <category>Settings</category>
+ * <type>String</type>
+ * <description>
+ * Setting to set VxWorks loadModule() options:
+ * Proximity: loadModule( ) with default / proximity heap flag  
+ * Common: loadModule( ) with common heap flag (only available for VxWorks 7)
+ * </description>
+ */
+#define SYSMODULEKEY_STRING_VXWORKS_LOAD_MODULE_HEAP            "VxWorks.LoadModuleHeap"
+#define SYSMODULEVALUE_STRING_VXWORKS_LOAD_MODULE_PROXIMITY     "Proximity"
+#define SYSMODULEVALUE_STRING_VXWORKS_LOAD_MODULE_COMMON        "Common"
+#ifndef SYSMODULEVALUE_STRING_VXWORKS_LOAD_MODULE_DEFAULT
+  #define SYSMODULEVALUE_STRING_VXWORKS_LOAD_MODULE_DEFAULT     SYSMODULEVALUE_STRING_VXWORKS_LOAD_MODULE_PROXIMITY
+#endif
 
 /**
  * <description>

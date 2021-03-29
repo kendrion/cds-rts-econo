@@ -74,10 +74,18 @@ static RTS_HANDLE s_hEventChSChannelClosed = RTS_INVALID_HANDLE;
 static RTS_HANDLE s_hEventSupervisorStateChanged = RTS_INVALID_HANDLE;
 
 static RTS_HANDLE s_hEventUserMgrDatabaseChanged = RTS_INVALID_HANDLE;
+static RTS_HANDLE s_hEventUserMgrCreateDefaultDatabase = RTS_INVALID_HANDLE;
+static RTS_HANDLE s_hEventUserMgrConvertOldDatabaseAnnounce = RTS_INVALID_HANDLE;
+static RTS_HANDLE s_hEventUserMgrConvertOldDatabaseFinish = RTS_INVALID_HANDLE;
 
 static RTS_HANDLE s_hEventLogAdd = RTS_INVALID_HANDLE;
 static RTS_HANDLE s_hEventDenyDownload = RTS_INVALID_HANDLE;
 static RTS_HANDLE s_hEventDenyOnlineChange = RTS_INVALID_HANDLE;
+
+static RTS_HANDLE s_hEventIecCoreSetOverwrite = RTS_INVALID_HANDLE;
+
+static RTS_HANDLE s_hEventForceDone = RTS_INVALID_HANDLE;
+static RTS_HANDLE s_hEventReleaseAllForceValues = RTS_INVALID_HANDLE;
 
 static void CDECL CBApp(EventParam *pEventParam);
 static void CDECL CBBreakpoints(EventParam *pEventParam);
@@ -90,6 +98,8 @@ static void CDECL CBChannelServer(EventParam *pEventParam);
 static void CDECL CBSupervisor(EventParam *pEventParam);
 static void CDECL CBUserMgr(EventParam *pEventParam);
 static void CDECL CBLogger(EventParam *pEventParam);
+static void CDECL CBMultiCore(EventParam *pEventParam);
+static void CDECL CBAppForce(EventParam *pEventParam);
 
 static RTS_RESULT CDECL CreateEvents(void)
 {
@@ -98,6 +108,7 @@ static RTS_RESULT CDECL CreateEvents(void)
 	{
 		s_hEventTest = CAL_EventCreate2(EVT_Test, COMPONENT_ID, 1, NULL);
 	}
+
 	return ERR_OK;
 }
 
@@ -107,6 +118,24 @@ static RTS_RESULT CDECL DeleteEvents(void)
 	{
 		CAL_EventDelete(s_hEventTest);
 	}
+	return ERR_OK;
+}
+
+static RTS_RESULT CDECL Init2HookHandleEvents(void)
+{
+	/* These special two events are fired after CH_INIT2 but before or with CH_INIT3, so we have to register this early. */
+	if (CHK_EventOpen)
+	{
+		s_hEventUserMgrConvertOldDatabaseAnnounce = CAL_EventOpen(EVT_UserMgrConvertOldDatabaseAnnounce, CMPID_CmpUserMgr, NULL);
+		s_hEventUserMgrConvertOldDatabaseFinish = CAL_EventOpen(EVT_UserMgrConvertOldDatabaseFinish, CMPID_CmpUserMgr, NULL);
+	}
+
+	if (CHK_EventRegisterCallbackFunction)
+	{
+		CAL_EventRegisterCallbackFunction(s_hEventUserMgrConvertOldDatabaseAnnounce, CBUserMgr, 0);
+		CAL_EventRegisterCallbackFunction(s_hEventUserMgrConvertOldDatabaseFinish, CBUserMgr, 0);
+	}
+
 	return ERR_OK;
 }
 
@@ -171,10 +200,16 @@ static RTS_RESULT CDECL RegisterEventHandler(void)
 		s_hEventSupervisorStateChanged = CAL_EventOpen(EVT_Supervisor_StateChanged, CMPID_CmpSupervisor, NULL);
 
 		s_hEventUserMgrDatabaseChanged = CAL_EventOpen(EVT_UserMgrDatabaseChanged, CMPID_CmpUserMgr, NULL);
+		s_hEventUserMgrCreateDefaultDatabase = CAL_EventOpen(EVT_UserMgrCreateDefaultDatabase, CMPID_CmpUserMgr, NULL);
 
 		s_hEventLogAdd = CAL_EventOpen(EVT_LogAdd, CMPID_CmpLog, NULL);
 		s_hEventDenyDownload = CAL_EventOpen(EVT_DenyDownload, CMPID_CmpApp, NULL);
 		s_hEventDenyOnlineChange = CAL_EventOpen(EVT_DenyOnlineChange, CMPID_CmpApp, NULL);
+
+		s_hEventIecCoreSetOverwrite = CAL_EventOpen(EVT_IecCoreSetOverwrite, CMPID_SysCpuMultiCore, NULL);
+
+		s_hEventForceDone = CAL_EventOpen(EVT_CmpMonitor2_ForceDone, CMPID_CmpMonitor, NULL);
+		s_hEventReleaseAllForceValues = CAL_EventOpen(EVT_AppReleaseAllForceValues, CMPID_CmpAppForce, NULL);
 	}
 	if (CHK_EventRegisterCallbackFunction)
 	{
@@ -242,9 +277,16 @@ static RTS_RESULT CDECL RegisterEventHandler(void)
 
 		/* CmpUserMgr event */
 		CAL_EventRegisterCallbackFunction(s_hEventUserMgrDatabaseChanged, CBUserMgr, 0);
+		CAL_EventRegisterCallbackFunction(s_hEventUserMgrCreateDefaultDatabase, CBUserMgr, 0);
 
 		/* CmpLog event */
 		CAL_EventRegisterCallbackFunction(s_hEventLogAdd, CBLogger, 0);
+
+		/* SysCpuMultiCore event */
+		CAL_EventRegisterCallbackFunction(s_hEventIecCoreSetOverwrite, CBMultiCore, 0);
+
+		CAL_EventRegisterCallbackFunction(s_hEventForceDone, CBMonitoring, 0);
+		CAL_EventRegisterCallbackFunction(s_hEventReleaseAllForceValues, CBAppForce, 0);
 	}
 	/* Register callback Interface */
 	pIBase = (IBase *)CreateInstance(CLASSID_CCmpTemplate, NULL);
@@ -318,8 +360,16 @@ static RTS_RESULT CDECL UnregisterEventHandler(void)
 		CAL_EventUnregisterCallbackFunction(s_hEventSupervisorStateChanged, CBSupervisor);
 
 		CAL_EventUnregisterCallbackFunction(s_hEventUserMgrDatabaseChanged, CBUserMgr);
+		CAL_EventUnregisterCallbackFunction(s_hEventUserMgrCreateDefaultDatabase, CBUserMgr);
+		CAL_EventUnregisterCallbackFunction(s_hEventUserMgrConvertOldDatabaseAnnounce, CBUserMgr);
+		CAL_EventUnregisterCallbackFunction(s_hEventUserMgrConvertOldDatabaseFinish, CBUserMgr);
 
 		CAL_EventUnregisterCallbackFunction(s_hEventLogAdd, CBLogger);
+
+		CAL_EventUnregisterCallbackFunction(s_hEventIecCoreSetOverwrite, CBMultiCore);
+
+		CAL_EventUnregisterCallbackFunction(s_hEventForceDone, CBMonitoring);
+		CAL_EventUnregisterCallbackFunction(s_hEventReleaseAllForceValues, CBAppForce);
 	}
 	/* Unregister callback Interface */
 	pIBase = (IBase *)CreateInstance(CLASSID_CCmpTemplate, NULL);
@@ -384,6 +434,13 @@ static RTS_RESULT CDECL UnregisterEventHandler(void)
 		CAL_EventClose(s_hEventSupervisorStateChanged);
 
 		CAL_EventClose(s_hEventUserMgrDatabaseChanged);
+		CAL_EventClose(s_hEventUserMgrCreateDefaultDatabase);
+		CAL_EventClose(s_hEventUserMgrConvertOldDatabaseAnnounce);
+		CAL_EventClose(s_hEventUserMgrConvertOldDatabaseFinish);
+
+		CAL_EventClose(s_hEventIecCoreSetOverwrite);
+
+		CAL_EventClose(s_hEventForceDone);
 	}
 	return ERR_OK;
 }
@@ -880,11 +937,25 @@ static void CDECL CBApp(EventParam *pEventParam)
 		{
 			if (pEventParam->usParamId == EVTPARAMID_CmpAppComm)
 			{
+				char szUserTruncated[20] = "UNKNOWN";
+				RTS_HANDLE hUser;
 				EVTPARAM_CmpAppComm *pParam = (EVTPARAM_CmpAppComm *)pEventParam->pParameter;
+				
+#ifndef CMPUSERMGR_NOTIMPLEMENTED
+				if (CHK_DevGetSessionUser && CHK_UserMgrGetUserName && pParam->ulSessionId != 0)
+				{
+					char szUser[256];
+					int iMaxLen = sizeof(szUser);
+					hUser = CAL_DevGetSessionUser(pParam->ulSessionId, NULL);
+					CAL_UserMgrGetUserName(hUser, szUser, iMaxLen);
+					CAL_CMUtlSafeStrNCpy(szUserTruncated, sizeof(szUserTruncated), szUser, sizeof(szUserTruncated));
+				}
+#endif
+
 				if (pEventParam->EventId == EVT_Login)
-					CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** EVT_Login received: App=%s, SessionId=%lx, AppSessionId=0x%lx ***", pParam->pApp->szName, pParam->ulSessionId, pParam->ulAppSessionId);
+					CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** EVT_Login received: App=%s, SessionId=%lx, AppSessionId=0x%lx, User=%s ***", pParam->pApp->szName, pParam->ulSessionId, pParam->ulAppSessionId, szUserTruncated);
 				else
-					CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** EVT_Logout received: App=%s, SessionId=0x%lx, AppSessionId=0x%lx ***", pParam->pApp->szName, pParam->ulSessionId, pParam->ulAppSessionId);
+					CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** EVT_Logout received: App=%s, SessionId=0x%lx, AppSessionId=0x%lx, User=%s ***", pParam->pApp->szName, pParam->ulSessionId, pParam->ulAppSessionId, szUserTruncated);
 			}
 			break;
 		}
@@ -974,6 +1045,35 @@ static void CDECL CBMonitoring(EventParam *pEventParam)
 				/*TODO: pParam->bDeny = 1;*/
 				pParam->cmpId = COMPONENT_ID;
 			}
+			break;
+		}
+		case EVT_CmpMonitor2_ForceDone:
+		{
+			/* Test for CDS-71363 */
+			EVTPARAM_CmpMonitor2Force *p = (EVTPARAM_CmpMonitor2Force*)pEventParam->pParameter;
+
+			if (p->pDataRef->drtDataRefType == DRT_AREA_OFFSET)
+			{
+				CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** EVT_CmpMonitor2_ForceDone received for DRT_AREA_OFFSET");
+				CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** ForceFlag =%d, area=%d, offset=%d, size=%d"
+					, p->usForceFlag, p->pDataRef->DataRefUnion.areaoffsetRef.usArea
+					, p->pDataRef->DataRefUnion.areaoffsetRef.ulOffset
+					, p->pDataRef->DataRefUnion.areaoffsetRef.usSize);
+			}
+			else if (p->pDataRef->drtDataRefType == DRT_AREA_OFFSET_BIT)
+			{
+				CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** EVT_CmpMonitor2_ForceDone received for DRT_AREA_OFFSET_BIT");
+				CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** ForceFlag =%d, bitoffset=%d, area=%d, offset=%d, size=%d"
+					, p->usForceFlag, p->pDataRef->DataRefUnion.areaoffsetBitRef.usBit
+					, p->pDataRef->DataRefUnion.areaoffsetBitRef.usArea
+					, p->pDataRef->DataRefUnion.areaoffsetBitRef.ulOffset
+					, p->pDataRef->DataRefUnion.areaoffsetBitRef.usSize);
+			}
+			else if (p->pDataRef->drtDataRefType == DRT_PROPERTY)
+			{
+				CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** EVT_CmpMonitor2_ForceDone received for DRT_PROPERTY");
+			}
+
 			break;
 		}
 		default:
@@ -1162,6 +1262,74 @@ static void CDECL CBSupervisor(EventParam *pEventParam)
 	}
 }
 
+static RTS_RESULT createMinimalUserMgmt(RTS_HANDLE hUser)
+{
+	RTS_RESULT Result = ERR_OK, res;
+
+	if (CHK_UserMgrAddGroup && CHK_UserMgrGetGroup && CHK_UserMgrObjectOpen && CHK_UserMgrObjectAddGroup && CHK_UserMgrObjectSetGroupRights)
+	{
+		RTS_HANDLE hObject, hGroupAdmin;
+
+		res = CAL_UserMgrAddGroup(hUser, USERDB_GROUP_ADMINISTRATOR);
+		Result = RTS_GETRESULT(res, Result);
+		hGroupAdmin = CAL_UserMgrGetGroup(USERDB_GROUP_ADMINISTRATOR, &res);
+		Result = RTS_GETRESULT(res, Result);
+
+		hObject = CAL_UserMgrObjectOpen("Device", &res);
+		Result = RTS_GETRESULT(res, Result);
+		res = CAL_UserMgrObjectAddGroup(hObject, hGroupAdmin);
+		Result = RTS_GETRESULT(res, Result);
+		res = CAL_UserMgrObjectSetGroupRights(hObject, hGroupAdmin, USERDB_RIGHT_ALL);
+		Result = RTS_GETRESULT(res, Result);
+
+		hObject = CAL_UserMgrObjectOpen("/", &res);
+		Result = RTS_GETRESULT(res, Result);
+		res = CAL_UserMgrObjectAddGroup(hObject, hGroupAdmin);
+		Result = RTS_GETRESULT(res, Result);
+		res = CAL_UserMgrObjectSetGroupRights(hObject, hGroupAdmin, USERDB_RIGHT_ALL);
+		Result = RTS_GETRESULT(res, Result);
+	}
+	return Result;
+}
+
+static RTS_RESULT createDummyUser(RTS_HANDLE hUser)
+{
+	RTS_RESULT Result = ERR_OK, res;
+
+	if (CHK_UserMgrAddUser && CHK_UserMgrAddGroup && CHK_UserMgrGetGroup && CHK_UserMgrGroupAddUser && CHK_UserMgrObjectOpen && CHK_UserMgrObjectAddGroup && CHK_UserMgrObjectSetGroupRights)
+	{
+		RTS_HANDLE hObject, hDummyGroup;
+		UserMgrCredentials cred;
+
+		cred.credentialsType = UserMgrCredentials_Type_Password;
+		cred.credential.pwd.pszPassword = "password";
+
+		res = CAL_UserMgrAddUser(hUser, "DummyUser", &cred);
+		Result = RTS_GETRESULT(res, Result);
+		res = CAL_UserMgrAddGroup(hUser, "DummyGroup");
+		Result = RTS_GETRESULT(res, Result);
+		hDummyGroup = CAL_UserMgrGetGroup("DummyGroup", &res);
+		Result = RTS_GETRESULT(res, Result);
+		res = CAL_UserMgrGroupAddUser(hUser, "DummyGroup", "DummyUser");
+		Result = RTS_GETRESULT(res, Result);
+
+		hObject = CAL_UserMgrObjectOpen("Device", &res);
+		Result = RTS_GETRESULT(res, Result);
+		res = CAL_UserMgrObjectAddGroup(hObject, hDummyGroup);
+		Result = RTS_GETRESULT(res, Result);
+		res = CAL_UserMgrObjectSetGroupRights(hObject, hDummyGroup, USERDB_RIGHT_VIEW);
+		Result = RTS_GETRESULT(res, Result);
+
+		hObject = CAL_UserMgrObjectOpen("/", &res);
+		Result = RTS_GETRESULT(res, Result);
+		res = CAL_UserMgrObjectAddGroup(hObject, hDummyGroup);
+		Result = RTS_GETRESULT(res, Result);
+		res = CAL_UserMgrObjectSetGroupRights(hObject, hDummyGroup, USERDB_RIGHT_VIEW);
+		Result = RTS_GETRESULT(res, Result);
+	}
+	return Result;
+}
+
 static void CDECL CBUserMgr(EventParam *pEventParam)
 {
 	switch (pEventParam->EventId)
@@ -1170,6 +1338,35 @@ static void CDECL CBUserMgr(EventParam *pEventParam)
 		{
 			EVTPARAM_CmpUserMgrDatabaseChanged *pParam = (EVTPARAM_CmpUserMgrDatabaseChanged *)pEventParam->pParameter;
 			CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** EVT_UserMgrDatabaseChanged received: UserManagementChanged=%d, RightsManagementChanged=%d", pParam->bUserManagementChanged, pParam->bRightsManagementChanged);
+			break;
+		}
+		case EVT_UserMgrCreateDefaultDatabase:
+		{
+			EVTPARAM_CmpUserMgrAdjustDatabase *pParam = (EVTPARAM_CmpUserMgrAdjustDatabase *)pEventParam->pParameter;
+			CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** EVT_UserMgrDatabaseCreateDefault received: Result=%d", pParam->Result);
+			/*
+			pParam->Result = createMinimalUserMgmt(pParam->hUser);
+			CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** EVT_UserMgrDatabaseCreateDefault received -> Creating minimal user management: Result=%d", pParam->Result);
+			*/
+			break;
+		}
+		case EVT_UserMgrConvertOldDatabaseAnnounce:
+		{
+			EVTPARAM_CmpUserMgrAdjustDatabase *pParam = (EVTPARAM_CmpUserMgrAdjustDatabase *)pEventParam->pParameter;
+			/*
+			pParam->Result = ERR_OPERATION_DENIED;
+			*/
+			CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** EVT_UserMgrConvertOldDatabaseAnnounce received: Result=%d", pParam->Result);
+			break;
+		}
+		case EVT_UserMgrConvertOldDatabaseFinish:
+		{
+			EVTPARAM_CmpUserMgrAdjustDatabase *pParam = (EVTPARAM_CmpUserMgrAdjustDatabase *)pEventParam->pParameter;
+			CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** EVT_UserMgrConvertOldDatabaseFinish received: Result=%d", pParam->Result);
+			/*
+			pParam->Result = createDummyUser(pParam->hUser);
+			CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** EVT_UserMgrConvertOldDatabaseFinish received -> Creating dummy user: Result=%d", pParam->Result);
+			*/
 			break;
 		}
 		default:
@@ -1197,5 +1394,43 @@ static void CDECL CBLogger(EventParam *pEventParam)
 		}
 		default:
 			break;
+	}
+}
+
+static void CDECL CBMultiCore(EventParam *pEventParam)
+{
+	switch (pEventParam->EventId)
+	{
+		case EVT_IecCoreSetOverwrite:
+		{
+			EVTPARAM_SysCpuMC_IecCoreSetOverwrite *pParam = (EVTPARAM_SysCpuMC_IecCoreSetOverwrite *)pEventParam->pParameter;
+			RTS_RESULT res;
+
+			if (CHK_SysMCBDSet)
+			{
+				res = CAL_SysMCBDSet(pParam->pCoreBinding, 1);
+				if (res == ERR_OK)
+					res = CAL_SysMCBDSet(pParam->pCoreBinding, 3);
+			}
+			break;
+		}
+		default:
+			break;
+	}
+}
+
+static void CDECL CBAppForce(EventParam *pEventParam)
+{
+	switch (pEventParam->EventId)
+	{
+	case EVT_AppReleaseAllForceValues:
+	{
+		EVTPARAM_AppForceReleaseAllForceValues *p = (EVTPARAM_AppForceReleaseAllForceValues *)pEventParam->pParameter;
+
+		CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0, "*** EVT_AppReleaseAllForceValues received: Application=%s, shutdown %d", p->pApp->szBootprojectName, p->bShutdown);
+		break;
+	}
+	default:
+		break;
 	}
 }

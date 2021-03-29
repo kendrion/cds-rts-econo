@@ -1,0 +1,106 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_log_backend_itf_8h:
+
+=================================
+CmpLogBackendItf.h File Reference
+=================================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`stdarg.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpLogBackend_C <struct_i_cmp_log_backend___c>`
+
+Macros
+------
+
+- #define :ref:`USE_LogBackendCreate <group___cmp_log_backend_itf_1ga34b386e3e1a5751b47178ca1e27bb562>`
+
+- #define :ref:`EXT_LogBackendCreate <group___cmp_log_backend_itf_1gad4ed487cd49e533130e8956c2f976444>`
+
+- #define :ref:`GET_LogBackendCreate <group___cmp_log_backend_itf_1ga1eaf44dbbac2798c1dfb5a54b1c77006>` ERR_OK
+
+- #define :ref:`CAL_LogBackendCreate <group___cmp_log_backend_itf_1ga360cda93b8118601f883201c5c8131cf>` (\
+(p0 = (IBase *)s_pfCMCreateInstance(p1, NULL)) == NULL ? RTS_INVALID_HANDLE : \
+(\
+(((IBase *)p0)->ClassId = p1) == CLASSID_INVALID ? RTS_INVALID_HANDLE :\
+(\
+(((IBase *)p0)->hInstance = (( :ref:`ICmpLogBackend <group___cmp_log_backend_itf_1ga8a75c550e8aaffbbd38b4d99e4d5dd29>` *)((IBase *)p0)->QueryInterface((IBase *)p0, ITFID_ICmpLogBackend, NULL))->ILogBackendCreate(p0,p1,p2)) == RTS_INVALID_HANDLE ? (s_pfCMDeleteInstance2(p1, (IBase *)p0) ? RTS_INVALID_HANDLE : RTS_INVALID_HANDLE) : \
+(\
+((IBase *)p0)->QueryInterface((IBase *)p0, ITFID_ICmpLogBackend, NULL)\
+)\
+)\
+)\
+)
+
+- #define :ref:`CHK_LogBackendCreate <group___cmp_log_backend_itf_1ga122582177d8be04d05ac19d306b3fde3>` TRUE
+
+- #define :ref:`EXP_LogBackendCreate <group___cmp_log_backend_itf_1gae96c06b2f04510ae70f4b167518522ab>` ERR_OK
+
+- #define :ref:`USE_LogBackendDelete <group___cmp_log_backend_itf_1ga1ac91b75e93a832b0f9f990395325f0f>`
+
+- #define :ref:`EXT_LogBackendDelete <group___cmp_log_backend_itf_1gaf680fe88c6703c2479e77f254d7b00ce>`
+
+- #define :ref:`GET_LogBackendDelete <group___cmp_log_backend_itf_1ga61041a3a1a2b47f1a3b4715dd4c53d23>` ERR_OK
+
+- #define :ref:`CAL_LogBackendDelete <group___cmp_log_backend_itf_1ga9979060daf869be9666b4181a4f010d9>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpLogBackend <group___cmp_log_backend_itf_1ga8a75c550e8aaffbbd38b4d99e4d5dd29>` *)p0)->ILogBackendDelete((( :ref:`ICmpLogBackend <group___cmp_log_backend_itf_1ga8a75c550e8aaffbbd38b4d99e4d5dd29>` *)p0)->pBase->hInstance) != ERR_OK ? \
+ERR_FAILED :\
+s_pfCMDeleteInstance2((( :ref:`ICmpLogBackend <group___cmp_log_backend_itf_1ga8a75c550e8aaffbbd38b4d99e4d5dd29>` *)p0)->pBase->ClassId, (( :ref:`ICmpLogBackend <group___cmp_log_backend_itf_1ga8a75c550e8aaffbbd38b4d99e4d5dd29>` *)p0)->pBase))
+
+- #define :ref:`CHK_LogBackendDelete <group___cmp_log_backend_itf_1ga332df47266d00c71692745c8b09e059d>` TRUE
+
+- #define :ref:`EXP_LogBackendDelete <group___cmp_log_backend_itf_1ga854b5967427a7ea1007423ca64623982>` ERR_OK
+
+- #define :ref:`USE_LogBackendAdd <group___cmp_log_backend_itf_1ga8a0357a1093200ee70bd5ebe6e34d744>`
+
+- #define :ref:`EXT_LogBackendAdd <group___cmp_log_backend_itf_1gabbf2f3a19bf8ecf4fe27415a759899fa>`
+
+- #define :ref:`GET_LogBackendAdd <group___cmp_log_backend_itf_1ga00f37090810739370af1084a5c9de306>` ERR_OK
+
+- #define :ref:`CAL_LogBackendAdd <group___cmp_log_backend_itf_1gaef4865042e15d231a403bd2bd4ca129f>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_HANDLE)RTS_INVALID_HANDLE : ((( :ref:`ICmpLogBackend <group___cmp_log_backend_itf_1ga8a75c550e8aaffbbd38b4d99e4d5dd29>` *)p0)->pBase->hInstance = (( :ref:`ICmpLogBackend <group___cmp_log_backend_itf_1ga8a75c550e8aaffbbd38b4d99e4d5dd29>` *)p0)->ILogBackendAdd((( :ref:`ICmpLogBackend <group___cmp_log_backend_itf_1ga8a75c550e8aaffbbd38b4d99e4d5dd29>` *)p0)->pBase->hInstance,p1,p2,p3)))
+
+- #define :ref:`CHK_LogBackendAdd <group___cmp_log_backend_itf_1ga17ab3507b2325d242aa7b744b256f542>` TRUE
+
+- #define :ref:`EXP_LogBackendAdd <group___cmp_log_backend_itf_1gae5a43b66c22710d10035c9058b5a0090>` ERR_OK
+
+- #define :ref:`ITF_CmpLogBackend <group___cmp_log_backend_itf_1ga32763e375b3336c43e1a27cd6a2896bb>`
+
+- #define :ref:`EXTITF_CmpLogBackend <group___cmp_log_backend_itf_1ga3aa16db4fc49bbc915b88f7c55de06f2>`
+
+Typedefs
+--------
+
+- typedef RTS_HANDLE(* :ref:`PFLOGBACKENDCREATE <group___cmp_log_backend_itf_1ga8f057d97753ef4d728ad23bdba20f803>`)(RTS_HANDLE hICmpLogBackend, CLASSID ClassId, struct tagLogOptions *pOptions)
+
+- typedef RTS_RESULT(* :ref:`PFLOGBACKENDDELETE <group___cmp_log_backend_itf_1ga68675ceccd20868d7ee616e2adbed43c>`)(RTS_HANDLE hBackend)
+
+- typedef RTS_HANDLE(* :ref:`PFLOGBACKENDADD <group___cmp_log_backend_itf_1gaf964183b550ef8f64469a3eb6e86e9d7>`)(RTS_HANDLE hBackend, struct tagLogOptions *pOptions, struct tagLogEntry *pLog, RTS_RESULT *pResult)
+
+- typedef :ref:`ICmpLogBackend_C <struct_i_cmp_log_backend___c>` :ref:`ICmpLogBackend <group___cmp_log_backend_itf_1ga8a75c550e8aaffbbd38b4d99e4d5dd29>`
+
+Functions
+---------
+
+- STATICITF_DEF RTS_HANDLE :ref:`LogBackendCreate <group___cmp_log_backend_itf_1ga9626deb9c7302d2303d3f15305bd828f>` (RTS_HANDLE hICmpLogBackend, CLASSID ClassId, struct :ref:`tagLogOptions <structtag_log_options>` * pOptions)
+
+- STATICITF_DEF RTS_RESULT :ref:`LogBackendDelete <group___cmp_log_backend_itf_1gab7b89b051d8918b0f11b55997ee8c5ab>` (RTS_HANDLE hBackend)
+
+- STATICITF_DEF RTS_HANDLE :ref:`LogBackendAdd <group___cmp_log_backend_itf_1ga22a628a6153c67a6ec72caedb87fde88>` (RTS_HANDLE hBackend, struct :ref:`tagLogOptions <structtag_log_options>` * pOptions, struct :ref:`tagLogEntry <structtag_log_entry>` * pLog, RTS_RESULT * pResult)
+
+Detailed Description
+--------------------
+
+Definition in file CmpLogBackendItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

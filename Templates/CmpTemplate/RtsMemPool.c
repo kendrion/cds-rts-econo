@@ -935,6 +935,8 @@ RTS_RESULT CDECL MemPoolExamples(void)
 		
 	/* ATTENTION: This is only testcode to detect any error in the template implementation! Don't use RTS_ASSERT() in realtime controller software! */
 	if (result != ERR_OK)
+	{
 		RTS_ASSERT(result == ERR_OK);
+	}
 	return result;
 }

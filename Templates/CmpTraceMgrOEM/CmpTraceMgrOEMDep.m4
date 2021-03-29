@@ -5,13 +5,13 @@
  *  Here an own system variable is handled.
  *  </description>
  *  <copyright>
- *  Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ *  Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
 SET_COMPONENT_NAME(`CmpTraceMgrOEM')
 COMPONENT_SOURCES(`CmpTraceMgrOEM.c')
 
-COMPONENT_VERSION(`0x03050E00')
+COMPONENT_VERSION(`0x03051000')
 
 /* NOTE: REPLACE 0x0001 BY YOUR VENDORID */
 COMPONENT_VENDORID(`0x0001')				
@@ -26,6 +26,7 @@ IMPLEMENT_ITF(`CmpTraceMgrOEMItf.m4',`CmpEventCallbackItf.m4')
 
 USE_ITF(`CmpEventMgrItf.m4')
 USE_ITF(`CmpTraceMgrItf.m4')
+USE_ITF(`SysMemItf.m4')
 
 REQUIRED_IMPORTS(
 EventCreate,
@@ -44,15 +45,18 @@ TraceMgrPacketDelete,
 TraceMgrRecordAdd,
 TraceMgrRecordRemove,
 TraceMgrPacketComplete,
+TraceMgrPacketGetConfig,
 TraceMgrPacketStart,
 TraceMgrRecordUpdate2,
 TraceMgrRecordUpdate3,
 TraceMgrPacketGetState,
-TraceMgrRecordGetConfig)
-
-OPTIONAL_IMPORTS(
-EventOpen,
-EventClose,
-EventRegisterCallbackFunction,
-EventUnregisterCallbackFunction)
+TraceMgrRecordGetConfig,
+TraceMgrPacketReadBegin,
+TraceMgrPacketReadEnd,
+TraceMgrPacketReadFirst2,
+TraceMgrPacketReadNext2,
+TraceMgrPacketRead,
+TraceMgrDeviceTaskUpdate,
+SysMemAllocData,
+SysMemFreeData)
 

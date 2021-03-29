@@ -7,11 +7,11 @@
  *  <name>Component Template</name>
  *  <description> 
  *  An example on how to implement a component.
- *  This component does no usefull work and it exports no functions
+ *  This component does no useful work and it exports no functions
  *  which are intended to be used for anything. Use at your own risk.
  *  </description>
  *  <copyright>
- *  Copyright (c) 2017-2019 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ *  Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
 #ifndef _CMPTEMPLATEDEP_H_
@@ -26,9 +26,9 @@
 
 
 
-#define CMP_VERSION         UINT32_C(0x03050E1E)
-#define CMP_VERSION_STRING "3.5.14.30"
-#define CMP_VERSION_RC      3,5,14,30
+#define CMP_VERSION         UINT32_C(0x03051014)
+#define CMP_VERSION_STRING "3.5.16.20"
+#define CMP_VERSION_RC      3,5,16,20
 
 /* NOTE: REPLACE 0x0001 BY YOUR VENDORID */
 #define CMP_VENDORID       0x0001
@@ -47,7 +47,15 @@
 
 
 
+
+/**
+ * \file CmpTemplateItf.h
+ */
 #include "CmpTemplateItf.h"
+
+/**
+ * \file CmpEventCallbackItf.h
+ */
 #include "CmpEventCallbackItf.h"
 
 
@@ -94,6 +102,9 @@
 #include "SysEventItf.h"
 
 
+#include "SysSemItf.h"
+
+
 #include "SysExceptItf.h"
 
 
@@ -118,6 +129,9 @@
 #include "CmpUserMgrItf.h"
 
 
+#include "CmpDeviceItf.h"
+
+
 #include "CmpSupervisorItf.h"
 
 
@@ -130,8 +144,21 @@
 #include "CmpMemPoolHashItf.h"
 
 
+#include "SysCpuMultiCoreItf.h"
+
+
+#include "CmpAsyncMgrItf.h"
+
+
+#include "CmpMonitor2Itf.h"
+
+
+#include "CmpAppForceItf.h"
+
+
 
     
+
 
 
 
@@ -311,7 +338,27 @@
 
 
 
+
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -383,6 +430,25 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
      
 
 
@@ -409,7 +475,43 @@
                 pIBase->Release(pIBase); \
             } \
         } \
-        if (pICmpMemPoolHash == NULL && s_pfCMCreateInstance != NULL) \
+        if (pICmpAppForce == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCmpAppForce, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pICmpAppForce = (ICmpAppForce *)pIBase->QueryInterface(pIBase, ITFID_ICmpAppForce, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          if (pICmpMonitor2 == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCmpMonitor2, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pICmpMonitor2 = (ICmpMonitor2 *)pIBase->QueryInterface(pIBase, ITFID_ICmpMonitor2, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          if (pICmpAsyncMgr == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCmpAsyncMgr, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pICmpAsyncMgr = (ICmpAsyncMgr *)pIBase->QueryInterface(pIBase, ITFID_ICmpAsyncMgr, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          if (pISysCpuMultiCore == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CSysCpuMultiCore, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pISysCpuMultiCore = (ISysCpuMultiCore *)pIBase->QueryInterface(pIBase, ITFID_ISysCpuMultiCore, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          if (pICmpMemPoolHash == NULL && s_pfCMCreateInstance != NULL) \
         { \
             pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCmpMemPoolHash, &initResult); \
             if (pIBase != NULL) \
@@ -434,6 +536,15 @@
             if (pIBase != NULL) \
             { \
                 pICmpSupervisor = (ICmpSupervisor *)pIBase->QueryInterface(pIBase, ITFID_ICmpSupervisor, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          if (pICmpDevice == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCmpDevice, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pICmpDevice = (ICmpDevice *)pIBase->QueryInterface(pIBase, ITFID_ICmpDevice, &initResult); \
                 pIBase->Release(pIBase); \
             } \
         } \
@@ -506,6 +617,15 @@
             if (pIBase != NULL) \
             { \
                 pISysExcept = (ISysExcept *)pIBase->QueryInterface(pIBase, ITFID_ISysExcept, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          if (pISysSem == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CSysSem, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pISysSem = (ISysSem *)pIBase->QueryInterface(pIBase, ITFID_ISysSem, &initResult); \
                 pIBase->Release(pIBase); \
             } \
         } \
@@ -623,10 +743,15 @@
     {\
         pICmpLog = NULL; \
         pICMUtils = NULL; \
-        pICmpMemPoolHash = NULL; \
+        pICmpAppForce = NULL; \
+          pICmpMonitor2 = NULL; \
+          pICmpAsyncMgr = NULL; \
+          pISysCpuMultiCore = NULL; \
+          pICmpMemPoolHash = NULL; \
           pICmpMemPool = NULL; \
           /*Obsolete include CMUtils*/ \
 		  pICmpSupervisor = NULL; \
+          pICmpDevice = NULL; \
           pICmpUserMgr = NULL; \
           pISysTimeRtc = NULL; \
           pICmpIecVarAccess = NULL; \
@@ -635,6 +760,7 @@
           pISysCpuHandling = NULL; \
           pICmpSchedule = NULL; \
           pISysExcept = NULL; \
+          pISysSem = NULL; \
           pISysEvent = NULL; \
           pISysTime = NULL; \
           pICmpEventMgr = NULL; \
@@ -673,7 +799,47 @@
                     pICMUtils = NULL; \
             } \
         } \
-        if (pICmpMemPoolHash != NULL) \
+        if (pICmpAppForce != NULL) \
+        { \
+            pIBase = (IBase *)pICmpAppForce->QueryInterface(pICmpAppForce, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pICmpAppForce = NULL; \
+            } \
+        } \
+          if (pICmpMonitor2 != NULL) \
+        { \
+            pIBase = (IBase *)pICmpMonitor2->QueryInterface(pICmpMonitor2, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pICmpMonitor2 = NULL; \
+            } \
+        } \
+          if (pICmpAsyncMgr != NULL) \
+        { \
+            pIBase = (IBase *)pICmpAsyncMgr->QueryInterface(pICmpAsyncMgr, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pICmpAsyncMgr = NULL; \
+            } \
+        } \
+          if (pISysCpuMultiCore != NULL) \
+        { \
+            pIBase = (IBase *)pISysCpuMultiCore->QueryInterface(pISysCpuMultiCore, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pISysCpuMultiCore = NULL; \
+            } \
+        } \
+          if (pICmpMemPoolHash != NULL) \
         { \
             pIBase = (IBase *)pICmpMemPoolHash->QueryInterface(pICmpMemPoolHash, ITFID_IBase, &exitResult); \
             if (pIBase != NULL) \
@@ -702,6 +868,16 @@
                  pIBase->Release(pIBase); \
                  if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
                     pICmpSupervisor = NULL; \
+            } \
+        } \
+          if (pICmpDevice != NULL) \
+        { \
+            pIBase = (IBase *)pICmpDevice->QueryInterface(pICmpDevice, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pICmpDevice = NULL; \
             } \
         } \
           if (pICmpUserMgr != NULL) \
@@ -782,6 +958,16 @@
                  pIBase->Release(pIBase); \
                  if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
                     pISysExcept = NULL; \
+            } \
+        } \
+          if (pISysSem != NULL) \
+        { \
+            pIBase = (IBase *)pISysSem->QueryInterface(pISysSem, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pISysSem = NULL; \
             } \
         } \
           if (pISysEvent != NULL) \
@@ -924,7 +1110,18 @@
         INIT_STMT   \
         TempResult = GET_LogAdd(CM_IMPORT_OPTIONAL_FUNCTION); \
         TempResult = GET_CMUtlMemCpy(CM_IMPORT_OPTIONAL_FUNCTION); \
-        if (ERR_OK == importResult ) TempResult = GET_MemPoolRemoveBlockHashed(CM_IMPORT_OPTIONAL_FUNCTION);\
+        if (ERR_OK == importResult ) TempResult = GET_AsyncRemove(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_AsyncAdd2(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_SysMCBDSet(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_SysSemLeave(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_SysSemEnter(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_SysSemDelete(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_SysSemCreate(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_SysEventSet(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_SysEventWait(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_SysEventDelete(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_SysEventCreate(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_MemPoolRemoveBlockHashed(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_MemPoolGetBlockByHash(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_MemPoolGetBlockHashed(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_MemPoolDeleteHashTable(CM_IMPORT_OPTIONAL_FUNCTION);\
@@ -938,8 +1135,16 @@
           if (ERR_OK == importResult ) TempResult = GET_SupervisorOperationUnregister(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_SupervisorOperationRegister(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_SupervisorOperationGetState2(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_DevGetSessionUser(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_UserMgrGetGroup(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_UserMgrGroupAddUser(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_UserMgrAddUser(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_UserMgrAddGroup(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_UserMgrGetUserName(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_UserMgrAddOnlineAccessError(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_UserMgrHasAccessRights(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_UserMgrObjectSetGroupRights(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_UserMgrObjectAddGroup(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_UserMgrObjectClose(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_UserMgrObjectOpen(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_UserMgrObjectRemove(CM_IMPORT_OPTIONAL_FUNCTION);\
@@ -987,6 +1192,7 @@
           if (ERR_OK == importResult ) importResult = GET_MemPoolCreate(0);\
           if (ERR_OK == importResult ) importResult = GET_MemPoolCreateDynamic(0);\
           if (ERR_OK == importResult ) importResult = GET_MemPoolCreateStatic(0);\
+          if (ERR_OK == importResult ) importResult = GET_CMUtlSafeStrNCpy(0);\
           if (ERR_OK == importResult ) importResult = GET_CMUtlvsnprintf(0);\
           if (ERR_OK == importResult ) importResult = GET_SchedUnregisterExternalEvent(0);\
           if (ERR_OK == importResult ) importResult = GET_SchedPostExternalEvent(0);\
@@ -1080,7 +1286,7 @@
 #else
 #define EXPORT_EXTREF2_STMT
 #endif
-#if !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
+#if !defined(CMPTEMPLATE_DISABLE_CMPITF) && !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
 #define EXPORT_CMPITF_STMT \
     {\
         { (RTS_VOID_FCTPTR)CmpTemplateSingleton, "CmpTemplateSingleton", 0, 0 },\
@@ -1163,6 +1369,7 @@
 	ITF_CmpEventMgr     \
 	ITF_SysTime     \
 	ITF_SysEvent     \
+	ITF_SysSem     \
 	ITF_SysExcept     \
 	ITF_CmpSchedule     \
 	ITF_SysCpuHandling     \
@@ -1171,10 +1378,15 @@
 	ITF_CmpIecVarAccess     \
 	ITF_SysTimeRtc     \
 	ITF_CmpUserMgr     \
+	ITF_CmpDevice     \
 	ITF_CmpSupervisor     \
 	/*obsolete entry ITF_CMUtils*/      \
 	ITF_CmpMemPool     \
-	ITF_CmpMemPoolHash      \
+	ITF_CmpMemPoolHash     \
+	ITF_SysCpuMultiCore     \
+	ITF_CmpAsyncMgr     \
+	ITF_CmpMonitor2     \
+	ITF_CmpAppForce      \
     USE_ServerRegisterServiceHandler      \
     USE_ServerUnRegisterServiceHandler      \
     USE_ServerFinishRequest      \
@@ -1237,6 +1449,7 @@
     USE_SchedPostExternalEvent      \
     USE_SchedUnregisterExternalEvent      \
     USE_CMUtlvsnprintf      \
+    USE_CMUtlSafeStrNCpy      \
     USE_MemPoolCreateStatic      \
     USE_MemPoolCreateDynamic      \
     USE_MemPoolCreate      \
@@ -1284,8 +1497,16 @@
     USE_UserMgrObjectRemove      \
     USE_UserMgrObjectOpen      \
     USE_UserMgrObjectClose      \
+    USE_UserMgrObjectAddGroup      \
+    USE_UserMgrObjectSetGroupRights      \
     USE_UserMgrHasAccessRights      \
     USE_UserMgrAddOnlineAccessError      \
+    USE_UserMgrGetUserName      \
+    USE_UserMgrAddGroup      \
+    USE_UserMgrAddUser      \
+    USE_UserMgrGroupAddUser      \
+    USE_UserMgrGetGroup      \
+    USE_DevGetSessionUser      \
     USE_SupervisorOperationGetState2      \
     USE_SupervisorOperationRegister      \
     USE_SupervisorOperationUnregister      \
@@ -1299,7 +1520,18 @@
     USE_MemPoolDeleteHashTable      \
     USE_MemPoolGetBlockHashed      \
     USE_MemPoolGetBlockByHash      \
-    USE_MemPoolRemoveBlockHashed     
+    USE_MemPoolRemoveBlockHashed      \
+    USE_SysEventCreate      \
+    USE_SysEventDelete      \
+    USE_SysEventWait      \
+    USE_SysEventSet      \
+    USE_SysSemCreate      \
+    USE_SysSemDelete      \
+    USE_SysSemEnter      \
+    USE_SysSemLeave      \
+    USE_SysMCBDSet      \
+    USE_AsyncAdd2      \
+    USE_AsyncRemove     
 #define USEIMPORT_STMT \
     /*lint -save --e{551} */ \
     static volatile PF_REGISTER_API s_pfCMRegisterAPI; \
@@ -1326,6 +1558,7 @@
 	ITF_CmpEventMgr    \
 	ITF_SysTime    \
 	ITF_SysEvent    \
+	ITF_SysSem    \
 	ITF_SysExcept    \
 	ITF_CmpSchedule    \
 	ITF_SysCpuHandling    \
@@ -1334,10 +1567,15 @@
 	ITF_CmpIecVarAccess    \
 	ITF_SysTimeRtc    \
 	ITF_CmpUserMgr    \
+	ITF_CmpDevice    \
 	ITF_CmpSupervisor    \
 	/*obsolete entry ITF_CMUtils*/     \
 	ITF_CmpMemPool    \
-	ITF_CmpMemPoolHash     \
+	ITF_CmpMemPoolHash    \
+	ITF_SysCpuMultiCore    \
+	ITF_CmpAsyncMgr    \
+	ITF_CmpMonitor2    \
+	ITF_CmpAppForce     \
     USE_ServerRegisterServiceHandler      \
     USE_ServerUnRegisterServiceHandler      \
     USE_ServerFinishRequest      \
@@ -1400,6 +1638,7 @@
     USE_SchedPostExternalEvent      \
     USE_SchedUnregisterExternalEvent      \
     USE_CMUtlvsnprintf      \
+    USE_CMUtlSafeStrNCpy      \
     USE_MemPoolCreateStatic      \
     USE_MemPoolCreateDynamic      \
     USE_MemPoolCreate      \
@@ -1447,8 +1686,16 @@
     USE_UserMgrObjectRemove      \
     USE_UserMgrObjectOpen      \
     USE_UserMgrObjectClose      \
+    USE_UserMgrObjectAddGroup      \
+    USE_UserMgrObjectSetGroupRights      \
     USE_UserMgrHasAccessRights      \
     USE_UserMgrAddOnlineAccessError      \
+    USE_UserMgrGetUserName      \
+    USE_UserMgrAddGroup      \
+    USE_UserMgrAddUser      \
+    USE_UserMgrGroupAddUser      \
+    USE_UserMgrGetGroup      \
+    USE_DevGetSessionUser      \
     USE_SupervisorOperationGetState2      \
     USE_SupervisorOperationRegister      \
     USE_SupervisorOperationUnregister      \
@@ -1462,7 +1709,18 @@
     USE_MemPoolDeleteHashTable      \
     USE_MemPoolGetBlockHashed      \
     USE_MemPoolGetBlockByHash      \
-    USE_MemPoolRemoveBlockHashed     
+    USE_MemPoolRemoveBlockHashed      \
+    USE_SysEventCreate      \
+    USE_SysEventDelete      \
+    USE_SysEventWait      \
+    USE_SysEventSet      \
+    USE_SysSemCreate      \
+    USE_SysSemDelete      \
+    USE_SysSemEnter      \
+    USE_SysSemLeave      \
+    USE_SysMCBDSet      \
+    USE_AsyncAdd2      \
+    USE_AsyncRemove     
 #define USEEXTERN_STMT \
     EXT_CMUtlMemCpy  \
     EXT_LogAdd \
@@ -1478,6 +1736,7 @@
 	EXTITF_CmpEventMgr    \
 	EXTITF_SysTime    \
 	EXTITF_SysEvent    \
+	EXTITF_SysSem    \
 	EXTITF_SysExcept    \
 	EXTITF_CmpSchedule    \
 	EXTITF_SysCpuHandling    \
@@ -1486,10 +1745,15 @@
 	EXTITF_CmpIecVarAccess    \
 	EXTITF_SysTimeRtc    \
 	EXTITF_CmpUserMgr    \
+	EXTITF_CmpDevice    \
 	EXTITF_CmpSupervisor    \
 	/*obsolete entry EXTITF_CMUtils*/     \
 	EXTITF_CmpMemPool    \
-	EXTITF_CmpMemPoolHash     \
+	EXTITF_CmpMemPoolHash    \
+	EXTITF_SysCpuMultiCore    \
+	EXTITF_CmpAsyncMgr    \
+	EXTITF_CmpMonitor2    \
+	EXTITF_CmpAppForce     \
     EXT_ServerRegisterServiceHandler  \
     EXT_ServerUnRegisterServiceHandler  \
     EXT_ServerFinishRequest  \
@@ -1552,6 +1816,7 @@
     EXT_SchedPostExternalEvent  \
     EXT_SchedUnregisterExternalEvent  \
     EXT_CMUtlvsnprintf  \
+    EXT_CMUtlSafeStrNCpy  \
     EXT_MemPoolCreateStatic  \
     EXT_MemPoolCreateDynamic  \
     EXT_MemPoolCreate  \
@@ -1599,8 +1864,16 @@
     EXT_UserMgrObjectRemove  \
     EXT_UserMgrObjectOpen  \
     EXT_UserMgrObjectClose  \
+    EXT_UserMgrObjectAddGroup  \
+    EXT_UserMgrObjectSetGroupRights  \
     EXT_UserMgrHasAccessRights  \
     EXT_UserMgrAddOnlineAccessError  \
+    EXT_UserMgrGetUserName  \
+    EXT_UserMgrAddGroup  \
+    EXT_UserMgrAddUser  \
+    EXT_UserMgrGroupAddUser  \
+    EXT_UserMgrGetGroup  \
+    EXT_DevGetSessionUser  \
     EXT_SupervisorOperationGetState2  \
     EXT_SupervisorOperationRegister  \
     EXT_SupervisorOperationUnregister  \
@@ -1614,7 +1887,18 @@
     EXT_MemPoolDeleteHashTable  \
     EXT_MemPoolGetBlockHashed  \
     EXT_MemPoolGetBlockByHash  \
-    EXT_MemPoolRemoveBlockHashed 
+    EXT_MemPoolRemoveBlockHashed  \
+    EXT_SysEventCreate  \
+    EXT_SysEventDelete  \
+    EXT_SysEventWait  \
+    EXT_SysEventSet  \
+    EXT_SysSemCreate  \
+    EXT_SysSemDelete  \
+    EXT_SysSemEnter  \
+    EXT_SysSemLeave  \
+    EXT_SysMCBDSet  \
+    EXT_AsyncAdd2  \
+    EXT_AsyncRemove 
 #ifndef COMPONENT_NAME
     #error COMPONENT_NAME is not defined. This prevents the component from being linked statically. Use SET_COMPONENT_NAME(<name_of_your_component>) to set the name of the component in your .m4 component description.
 #endif

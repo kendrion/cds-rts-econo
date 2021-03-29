@@ -10,7 +10,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2019 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2021 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 #ifndef _SYSTARGETDEP_H_
@@ -25,9 +25,9 @@
 
 
 
-#define CMP_VERSION         UINT32_C(0x03050E28)
-#define CMP_VERSION_STRING "3.5.14.40"
-#define CMP_VERSION_RC      3,5,14,40
+#define CMP_VERSION         UINT32_C(0x03051028)
+#define CMP_VERSION_STRING "3.5.16.40"
+#define CMP_VERSION_RC      3,5,16,40
 #define CMP_VENDORID       RTS_VENDORID_3S
 
 #ifndef WIN32_RESOURCES
@@ -66,11 +66,22 @@
 #include "SysSocketItf.h"
 
 
+#include "SysTimeItf.h"
+
+
+#include "CmpCryptoItf.h"
+
+
+
+#include "SysTarget.h"
 
 
 
 
 
+/**
+ * \file SysTargetItf.h
+ */
 #include "SysTargetItf.h"
 
 
@@ -80,6 +91,9 @@
 
 
     
+
+
+
 
 
 
@@ -105,6 +119,9 @@
 
 
 
+
+
+
      
 
     
@@ -128,7 +145,11 @@
 
 
 
+
+
      
+
+
 
 
 
@@ -175,7 +196,25 @@
                 pIBase->Release(pIBase); \
             } \
         } \
-        if (pISysSocket == NULL && s_pfCMCreateInstance != NULL) \
+        if (pICmpCrypto == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCmpCrypto, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pICmpCrypto = (ICmpCrypto *)pIBase->QueryInterface(pIBase, ITFID_ICmpCrypto, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          if (pISysTime == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CSysTime, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pISysTime = (ISysTime *)pIBase->QueryInterface(pIBase, ITFID_ISysTime, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          if (pISysSocket == NULL && s_pfCMCreateInstance != NULL) \
         { \
             pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CSysSocket, &initResult); \
             if (pIBase != NULL) \
@@ -263,7 +302,9 @@
     {\
         pICmpLog = NULL; \
         pICMUtils = NULL; \
-        pISysSocket = NULL; \
+        pICmpCrypto = NULL; \
+          pISysTime = NULL; \
+          pISysSocket = NULL; \
           pICmpEventMgr = NULL; \
           pICmpChecksum = NULL; \
           pICmpSIL2 = NULL; \
@@ -299,7 +340,27 @@
                     pICMUtils = NULL; \
             } \
         } \
-        if (pISysSocket != NULL) \
+        if (pICmpCrypto != NULL) \
+        { \
+            pIBase = (IBase *)pICmpCrypto->QueryInterface(pICmpCrypto, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pICmpCrypto = NULL; \
+            } \
+        } \
+          if (pISysTime != NULL) \
+        { \
+            pIBase = (IBase *)pISysTime->QueryInterface(pISysTime, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pISysTime = NULL; \
+            } \
+        } \
+          if (pISysSocket != NULL) \
         { \
             pIBase = (IBase *)pISysSocket->QueryInterface(pISysSocket, ITFID_IBase, &exitResult); \
             if (pIBase != NULL) \
@@ -410,7 +471,8 @@
         INIT_STMT   \
         TempResult = GET_LogAdd(CM_IMPORT_OPTIONAL_FUNCTION); \
         TempResult = GET_CMUtlMemCpy(CM_IMPORT_OPTIONAL_FUNCTION); \
-        if (ERR_OK == importResult ) importResult = GET_SysTargetGetVersion(0);\
+        if (ERR_OK == importResult ) importResult = GET_SysTargetSetNodeName(0);\
+          if (ERR_OK == importResult ) importResult = GET_SysTargetGetVersion(0);\
           if (ERR_OK == importResult ) importResult = GET_SysTargetGetId(0);\
           if (ERR_OK == importResult ) importResult = GET_SysTargetGetType(0);\
           if (ERR_OK == importResult ) importResult = GET_SysTargetGetConfiguredNodeName(0);\
@@ -419,6 +481,7 @@
           if (ERR_OK == importResult ) importResult = GET_SysMemSwap(0);\
           if (ERR_OK == importResult ) importResult = GET_SettgRemoveKey(0);\
           if (ERR_OK == importResult ) importResult = GET_SettgSetWStringValue(0);\
+          if (ERR_OK == importResult ) importResult = GET_SettgSetStringValue(0);\
           if (ERR_OK == importResult ) importResult = GET_SettgGetIntValue(0);\
           if (ERR_OK == importResult ) importResult = GET_SettgGetStringValue(0);\
           if (ERR_OK == importResult ) importResult = GET_SettgGetWStringValue(0);\
@@ -431,6 +494,8 @@
           if (ERR_OK == importResult ) importResult = GET_CMUtlSafeStrCat(0);\
           if (ERR_OK == importResult ) importResult = GET_CMUtlsnprintf(0);\
           if (ERR_OK == importResult ) importResult = GET_CMUtlSafeStrCpy(0);\
+          if (ERR_OK == importResult ) TempResult = GET_SysTimeGetUs(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_SysTimeGetMs(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_SysSockGetNextAdapterInfo(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_SysSockGetFirstAdapterInfo(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_EventUnregisterCallbackFunction(CM_IMPORT_OPTIONAL_FUNCTION);\
@@ -440,6 +505,7 @@
           if (ERR_OK == importResult ) TempResult = GET_EventPost2(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_EventDelete(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_EventCreate3(CM_IMPORT_OPTIONAL_FUNCTION);\
+          if (ERR_OK == importResult ) TempResult = GET_CryptoGenerateRandomNumber(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_CRC32Finish(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_CRC32Update(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_CRC32Init(CM_IMPORT_OPTIONAL_FUNCTION);\
@@ -480,7 +546,7 @@
 #else
 #define EXPORT_EXTREF2_STMT
 #endif
-#if !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
+#if !defined(SYSTARGET_DISABLE_CMPITF) && !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
 #define EXPORT_CMPITF_STMT \
     {\
         { (RTS_VOID_FCTPTR)SysTargetSetNodeName, "SysTargetSetNodeName", 0, 0 },\
@@ -572,11 +638,14 @@
 	ITF_CmpSIL2     \
 	ITF_CmpChecksum     \
 	ITF_CmpEventMgr     \
-	ITF_SysSocket      \
+	ITF_SysSocket     \
+	ITF_SysTime     \
+	ITF_CmpCrypto      \
     USE_SIL2CheckCallerContext      \
     USE_CRC32Init      \
     USE_CRC32Update      \
     USE_CRC32Finish      \
+    USE_CryptoGenerateRandomNumber      \
     USE_EventCreate3      \
     USE_EventDelete      \
     USE_EventPost2      \
@@ -586,6 +655,8 @@
     USE_EventUnregisterCallbackFunction      \
     USE_SysSockGetFirstAdapterInfo      \
     USE_SysSockGetNextAdapterInfo      \
+    USE_SysTimeGetMs      \
+    USE_SysTimeGetUs      \
     USE_CMUtlSafeStrCpy      \
     USE_CMUtlsnprintf      \
     USE_CMUtlSafeStrCat      \
@@ -598,6 +669,7 @@
     USE_SettgGetWStringValue      \
     USE_SettgGetStringValue      \
     USE_SettgGetIntValue      \
+    USE_SettgSetStringValue      \
     USE_SettgSetWStringValue      \
     USE_SettgRemoveKey      \
     USE_SysMemSwap      \
@@ -606,7 +678,8 @@
     USE_SysTargetGetConfiguredNodeName      \
     USE_SysTargetGetType      \
     USE_SysTargetGetId      \
-    USE_SysTargetGetVersion     
+    USE_SysTargetGetVersion      \
+    USE_SysTargetSetNodeName     
 #define USEIMPORT_STMT \
     /*lint -save --e{551} */ \
     static volatile PF_REGISTER_API s_pfCMRegisterAPI; \
@@ -630,11 +703,14 @@
 	ITF_CmpSIL2    \
 	ITF_CmpChecksum    \
 	ITF_CmpEventMgr    \
-	ITF_SysSocket     \
+	ITF_SysSocket    \
+	ITF_SysTime    \
+	ITF_CmpCrypto     \
     USE_SIL2CheckCallerContext      \
     USE_CRC32Init      \
     USE_CRC32Update      \
     USE_CRC32Finish      \
+    USE_CryptoGenerateRandomNumber      \
     USE_EventCreate3      \
     USE_EventDelete      \
     USE_EventPost2      \
@@ -644,6 +720,8 @@
     USE_EventUnregisterCallbackFunction      \
     USE_SysSockGetFirstAdapterInfo      \
     USE_SysSockGetNextAdapterInfo      \
+    USE_SysTimeGetMs      \
+    USE_SysTimeGetUs      \
     USE_CMUtlSafeStrCpy      \
     USE_CMUtlsnprintf      \
     USE_CMUtlSafeStrCat      \
@@ -656,6 +734,7 @@
     USE_SettgGetWStringValue      \
     USE_SettgGetStringValue      \
     USE_SettgGetIntValue      \
+    USE_SettgSetStringValue      \
     USE_SettgSetWStringValue      \
     USE_SettgRemoveKey      \
     USE_SysMemSwap      \
@@ -664,7 +743,8 @@
     USE_SysTargetGetConfiguredNodeName      \
     USE_SysTargetGetType      \
     USE_SysTargetGetId      \
-    USE_SysTargetGetVersion     
+    USE_SysTargetGetVersion      \
+    USE_SysTargetSetNodeName     
 #define USEEXTERN_STMT \
     EXT_CMUtlMemCpy  \
     EXT_LogAdd \
@@ -677,11 +757,14 @@
 	EXTITF_CmpSIL2    \
 	EXTITF_CmpChecksum    \
 	EXTITF_CmpEventMgr    \
-	EXTITF_SysSocket     \
+	EXTITF_SysSocket    \
+	EXTITF_SysTime    \
+	EXTITF_CmpCrypto     \
     EXT_SIL2CheckCallerContext  \
     EXT_CRC32Init  \
     EXT_CRC32Update  \
     EXT_CRC32Finish  \
+    EXT_CryptoGenerateRandomNumber  \
     EXT_EventCreate3  \
     EXT_EventDelete  \
     EXT_EventPost2  \
@@ -691,6 +774,8 @@
     EXT_EventUnregisterCallbackFunction  \
     EXT_SysSockGetFirstAdapterInfo  \
     EXT_SysSockGetNextAdapterInfo  \
+    EXT_SysTimeGetMs  \
+    EXT_SysTimeGetUs  \
     EXT_CMUtlSafeStrCpy  \
     EXT_CMUtlsnprintf  \
     EXT_CMUtlSafeStrCat  \
@@ -703,6 +788,7 @@
     EXT_SettgGetWStringValue  \
     EXT_SettgGetStringValue  \
     EXT_SettgGetIntValue  \
+    EXT_SettgSetStringValue  \
     EXT_SettgSetWStringValue  \
     EXT_SettgRemoveKey  \
     EXT_SysMemSwap  \
@@ -711,7 +797,8 @@
     EXT_SysTargetGetConfiguredNodeName  \
     EXT_SysTargetGetType  \
     EXT_SysTargetGetId  \
-    EXT_SysTargetGetVersion 
+    EXT_SysTargetGetVersion  \
+    EXT_SysTargetSetNodeName 
 #ifndef COMPONENT_NAME
     #error COMPONENT_NAME is not defined. This prevents the component from being linked statically. Use SET_COMPONENT_NAME(<name_of_your_component>) to set the name of the component in your .m4 component description.
 #endif

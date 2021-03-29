@@ -1,4 +1,13 @@
- 
+ /**
+ * <interfacename>SysNativeCommonControls</interfacename>
+ * <description></description>
+ *
+ * <copyright>
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * </copyright>
+ */
+
+
 	
 	
 #ifndef _SYSNATIVECOMMONCONTROLSITF_H_
@@ -25,8 +34,8 @@
 
 /**
  * <category>Settings</category>
- * <description>Setting defining whether on certain platforms (e.g. Linux/QT) plugins displaying
- * special web content are enabled (value 1) or not (value 0). For security reasons plugins are
+ * <description>Setting defining whether on certain platforms (e.g. Linux/QT) plug-ins displaying
+ * special web content are enabled (value 1) or not (value 0). For security reasons plug-ins are
  * disabled by default.
  * </description>
  */

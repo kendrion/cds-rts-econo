@@ -16,6 +16,14 @@ define(DIVERT_ENDINTERFACEDEF,6)
 define(DIVERT_ENTRYFUN,7)
 define(DIVERT_ENDFILE,100)
 
+
+% -----------------------------
+% The SET_PLACEHOLDER_NAME macro is to be ignored. It
+% is used by the delivery manager only.
+% -----------------------------
+define(`SET_PLACEHOLDER_NAME',`dnl')
+')
+
 define(`GEN_INCLUDE', dnl
 `ifelse(`-1',regexp(`$1',`\.m4$'), dnl
 		`error(`m4:'__file__`('__line__`):The first parameter "'$1`" is not a .m4 file

@@ -1,0 +1,249 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>OPC UA Client &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/theme.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7.2.2.8. Redundancy" href="Redundancy.html" />
+    <link rel="prev" title="OPC UA Server" href="OPCUA_Server.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Redundancy.html" title="7.2.2.8. Redundancy"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="OPCUA_Server.html" title="OPC UA Server"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. Reference Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >7.2. Features</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index___p_l_c___features.html" >7.2.2. PLC Features</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="OPCUA.html" accesskey="U">7.2.2.7. OPC UA</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="OPCUA_Server.html"
+                        title="previous chapter">OPC UA Server</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Redundancy.html"
+                        title="next chapter">7.2.2.8. Redundancy</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="opc-ua-client">
+<span id="feature-opcua-client"></span><span id="feature-o-p-c-u-a-client"></span><h1>OPC UA Client<a class="headerlink" href="#opc-ua-client" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#supported-features" id="id2">Supported features</a></p></li>
+<li><p><a class="reference internal" href="#known-restrictions" id="id3">Known restrictions</a></p></li>
+<li><p><a class="reference internal" href="#platforms" id="id4">Platforms</a></p></li>
+<li><p><a class="reference internal" href="#required-features" id="id5">Required features</a></p></li>
+<li><p><a class="reference internal" href="#required-target-settings" id="id6">Required target settings</a></p></li>
+<li><p><a class="reference internal" href="#required-components" id="id7">Required components</a></p></li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#id1">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The OPC UA client can be used to connect to other OPC UA servers and exchange
+data with them. The client itself is more like an SDK. There are no ready to
+use types of clients. Instead the client provides an API to connect to
+an OPC UA server and execute the different kind of OPC UA requests. An
+exception to this is the handling of subscriptions and monitored items.
+There are services to add and remove subscriptions as well as monitored
+items. The complete publishing is then handled by the client implementation
+automatically. Additionally the client detects connection interrupts on it’s own
+and tries to reconnect to the server. However, if the session has a timeout,
+a reconnect is not done automatically.</p>
+</div>
+<div class="section" id="supported-features">
+<h2><a class="toc-backref" href="#id2">Supported features</a><a class="headerlink" href="#supported-features" title="Permalink to this headline">¶</a></h2>
+<p>The OPC UA client actually is a counterpart to the OPC UA server. This
+results in the following supported services:</p>
+<div class="section" id="discovery">
+<h3>Discovery<a class="headerlink" href="#discovery" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>GetEndpoints</p></li>
+<li><p>FindServers</p></li>
+<li><p>FindServersOnNetwork</p></li>
+</ul>
+</div>
+<div class="section" id="session">
+<h3>Session<a class="headerlink" href="#session" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>CreateSession</p></li>
+<li><p>ActivateSession</p></li>
+<li><p>DeleteSession</p></li>
+</ul>
+</div>
+<div class="section" id="view">
+<h3>View<a class="headerlink" href="#view" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Browse</p></li>
+<li><p>BrowserNext</p></li>
+<li><p>RegisterNodes</p></li>
+<li><p>UnregisterNodes</p></li>
+<li><p>TranslateBrowsePathsToNodeIds</p></li>
+</ul>
+</div>
+<div class="section" id="attribute">
+<h3>Attribute<a class="headerlink" href="#attribute" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Read</p></li>
+<li><p>Write</p></li>
+</ul>
+</div>
+<div class="section" id="subscription">
+<h3>Subscription<a class="headerlink" href="#subscription" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>CreateSubscription</p></li>
+<li><p>MofifySubscription</p></li>
+<li><p>SetPublishing</p></li>
+<li><p>Publish (Handled by the Runtime itself)</p></li>
+<li><p>DeleteSubscription</p></li>
+</ul>
+</div>
+<div class="section" id="monitoreditems">
+<h3>MonitoredItems<a class="headerlink" href="#monitoreditems" title="Permalink to this headline">¶</a></h3>
+<p>The client is able to handle both types of monitored items (event and sampling).
+The only difference in handling is the callbacks that are called for both
+types.</p>
+<ul class="simple">
+<li><p>CreateMonitoredItems</p></li>
+<li><p>DeleteMonitoredItems</p></li>
+<li><p>ModifyMonitoredItems</p></li>
+<li><p>SetMonitoringMode</p></li>
+</ul>
+</div>
+<div class="section" id="security">
+<h3>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h3>
+<p>The OPC UA client uses the existing security related runtime interfaces
+to handle the encryption algorithms and certificates. The client registers
+itself to the certificate store for easy configuration of the client
+certificates.</p>
+<div class="section" id="securityprofiles">
+<h4>SecurityProfiles:<a class="headerlink" href="#securityprofiles" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>None</p></li>
+<li><p>Basic256Sha256 (Sign, Sign_and_Encrypt)</p></li>
+</ul>
+</div>
+<div class="section" id="user-token-policy">
+<h4>User token policy:<a class="headerlink" href="#user-token-policy" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Anonymouse</p></li>
+<li><p>Username</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="known-restrictions">
+<h2><a class="toc-backref" href="#id3">Known restrictions</a><a class="headerlink" href="#known-restrictions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>The client is not able to handle republish right now.</p></li>
+<li><p>The client does not support other user tokes then Anonymous and Username</p></li>
+<li><p>The client does not support the security policies added with OPC UA 1.04</p></li>
+</ul>
+</div>
+<div class="section" id="platforms">
+<h2><a class="toc-backref" href="#id4">Platforms</a><a class="headerlink" href="#platforms" title="Permalink to this headline">¶</a></h2>
+<p>As the OPC UA client is completely ported to the CODESYS runtime system
+the client works out of the box on all platforms that supports required
+components needed by this component. The current used resources depends
+on use cases implemented with this client SDK. The unterlying OPC UA
+stack is identical for the server and the client components and is only
+instantiated once.</p>
+</div>
+<div class="section" id="required-features">
+<h2><a class="toc-backref" href="#id5">Required features</a><a class="headerlink" href="#required-features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="OPCUA.html#feature-o-p-c-u-a"><span class="std std-ref">OPC UA</span></a></p></li>
+<li><p><a class="reference internal" href="Runtime.html#feature-runtime"><span class="std std-ref">Base runtime feature</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="required-target-settings">
+<h2><a class="toc-backref" href="#id6">Required target settings</a><a class="headerlink" href="#required-target-settings" title="Permalink to this headline">¶</a></h2>
+<p>The following target settings are necessary for this feature:</p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">Components_CmpOPCUAClient_SourceDir</span></p></li>
+</ul>
+</div>
+<div class="section" id="required-components">
+<h2><a class="toc-backref" href="#id7">Required components</a><a class="headerlink" href="#required-components" title="Permalink to this headline">¶</a></h2>
+<p>The following runtime system components are necessary for this feature:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../Reference/group___cmp_o_p_c_u_a_client_dep.html#group-cmp-o-p-c-u-a-client-dep"><span class="std std-ref">CmpOPCUAClient</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Redundancy.html" title="7.2.2.8. Redundancy"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="OPCUA_Server.html" title="OPC UA Server"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. Reference Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >7.2. Features</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index___p_l_c___features.html" >7.2.2. PLC Features</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="OPCUA.html" >7.2.2.7. OPC UA</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

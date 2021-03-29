@@ -1,0 +1,438 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_archive_itf:
+
+=============
+CmpArchiveItf
+=============
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpArchive.
+
+Detailed Description
+--------------------
+
+=== PROTOTYPE: DONT USE YET! === Interface to handle different archive formats and compress algorithms.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Archive access modes <group___cmp_archive_itf___archiveaccessmodes>`
+
+- :ref:`Archive compress algorithms <group___cmp_archive_itf___archivecompressalgorithms>`
+
+- :ref:`Archive entry <group___cmp_archive_itf___archiveentry>`
+
+- :ref:`Archive formats <group___cmp_archive_itf___archiveformats>`
+
+- :ref:`Static defines <group___cmp_archive_itf___staticdefines>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpArchive_C <struct_i_cmp_archive___c>`
+
+Macros
+------
+
+- #define :ref:`USE_ArchOpen <group___cmp_archive_itf_1ga5171899433645527181ac9323ea93c2b>` :ref:`PFARCHOPEN <group___cmp_archive_itf_1ga9a76f5ad8b3b8fe8a2a94ab723bb412c>` pfArchOpen;
+
+- #define :ref:`EXT_ArchOpen <group___cmp_archive_itf_1ga74ec9235a364be4983a7bbc271fda34a>` extern :ref:`PFARCHOPEN <group___cmp_archive_itf_1ga9a76f5ad8b3b8fe8a2a94ab723bb412c>` pfArchOpen;
+
+- #define :ref:`GET_ArchOpen <group___cmp_archive_itf_1ga2b3c397c0ba5505157dba538eaee1e3e>` s_pfCMGetAPI2( "ArchOpen", (RTS_VOID_FCTPTR *)&pfArchOpen, (fl), 0, 0)
+
+- #define :ref:`CAL_ArchOpen <group___cmp_archive_itf_1gaccd8f7fdb3b9b1ce8320b8fda5e5b272>` pfArchOpen
+
+- #define :ref:`CHK_ArchOpen <group___cmp_archive_itf_1ga9f7ccf329936075ad3b53b3d0ed72396>` (pfArchOpen != NULL)
+
+- #define :ref:`EXP_ArchOpen <group___cmp_archive_itf_1ga3424713de3b8c5b205391d2db47a550a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ArchOpen", (RTS_UINTPTR) :ref:`ArchOpen <group___cmp_archive_itf_1ga0400057d31685fe9c88ebd1a1ff45044>` , 0, 0)
+
+- #define :ref:`USE_ArchWrite <group___cmp_archive_itf_1ga0ff47e0de63caacc0864e9f7616d3e01>` :ref:`PFARCHWRITE <group___cmp_archive_itf_1gaba9b4f2edbfffcdba9da8e8c1796d9b5>` pfArchWrite;
+
+- #define :ref:`EXT_ArchWrite <group___cmp_archive_itf_1gad57c3a48307b9b0185e4a69995c274af>` extern :ref:`PFARCHWRITE <group___cmp_archive_itf_1gaba9b4f2edbfffcdba9da8e8c1796d9b5>` pfArchWrite;
+
+- #define :ref:`GET_ArchWrite <group___cmp_archive_itf_1ga5420e211fc28333f70a0140f541e64f4>` s_pfCMGetAPI2( "ArchWrite", (RTS_VOID_FCTPTR *)&pfArchWrite, (fl), 0, 0)
+
+- #define :ref:`CAL_ArchWrite <group___cmp_archive_itf_1gab3bf2ca0dcb95f55c6290b9b0a98c336>` pfArchWrite
+
+- #define :ref:`CHK_ArchWrite <group___cmp_archive_itf_1gae478cbc14bf9dc6a564b82afd71ceef4>` (pfArchWrite != NULL)
+
+- #define :ref:`EXP_ArchWrite <group___cmp_archive_itf_1gaa0acecc313968206e534a59e811b428f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ArchWrite", (RTS_UINTPTR) :ref:`ArchWrite <group___cmp_archive_itf_1gac95621315fbc52c4d40c9c2a0b485ef6>` , 0, 0)
+
+- #define :ref:`USE_ArchWriteFile <group___cmp_archive_itf_1gac5ebc6a7a620cfae81ec2dc6c4b4a972>` :ref:`PFARCHWRITEFILE <group___cmp_archive_itf_1gac909f7314b62da15ca9b5fb771bf6152>` pfArchWriteFile;
+
+- #define :ref:`EXT_ArchWriteFile <group___cmp_archive_itf_1gae2b4fa4584a8c61540df4477b26618ab>` extern :ref:`PFARCHWRITEFILE <group___cmp_archive_itf_1gac909f7314b62da15ca9b5fb771bf6152>` pfArchWriteFile;
+
+- #define :ref:`GET_ArchWriteFile <group___cmp_archive_itf_1ga831f42b6c52983dcb36b9e51a09a9823>` s_pfCMGetAPI2( "ArchWriteFile", (RTS_VOID_FCTPTR *)&pfArchWriteFile, (fl), 0, 0)
+
+- #define :ref:`CAL_ArchWriteFile <group___cmp_archive_itf_1ga0ddb541fb037a4c183fbfaf3064aa5c2>` pfArchWriteFile
+
+- #define :ref:`CHK_ArchWriteFile <group___cmp_archive_itf_1gaa10a11285be7b247b31ab3548e29c811>` (pfArchWriteFile != NULL)
+
+- #define :ref:`EXP_ArchWriteFile <group___cmp_archive_itf_1ga06933db6c9c34c92e9d7ed050de82b56>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ArchWriteFile", (RTS_UINTPTR) :ref:`ArchWriteFile <group___cmp_archive_itf_1ga8a3a9cf05b6f0356581b8650d0f2299d>` , 0, 0)
+
+- #define :ref:`USE_ArchRead <group___cmp_archive_itf_1gac4e4dfea7b31479df980ee0f7bb175d4>` :ref:`PFARCHREAD <group___cmp_archive_itf_1gac30bed7deeeef4b18a28450187a37096>` pfArchRead;
+
+- #define :ref:`EXT_ArchRead <group___cmp_archive_itf_1gac0b79b2624a6ae2efefaf447d845d29d>` extern :ref:`PFARCHREAD <group___cmp_archive_itf_1gac30bed7deeeef4b18a28450187a37096>` pfArchRead;
+
+- #define :ref:`GET_ArchRead <group___cmp_archive_itf_1gad0b95c82be75a93b711632860053b4d0>` s_pfCMGetAPI2( "ArchRead", (RTS_VOID_FCTPTR *)&pfArchRead, (fl), 0, 0)
+
+- #define :ref:`CAL_ArchRead <group___cmp_archive_itf_1ga398f6287690c290c893fa0e8ed9d0df4>` pfArchRead
+
+- #define :ref:`CHK_ArchRead <group___cmp_archive_itf_1ga56c8da24cf93960de7bbfd3d14e9c441>` (pfArchRead != NULL)
+
+- #define :ref:`EXP_ArchRead <group___cmp_archive_itf_1gae13faa37ffb4fcce5af88cc3a8b44e93>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ArchRead", (RTS_UINTPTR) :ref:`ArchRead <group___cmp_archive_itf_1gae27c59eb93729cf63ceefb1060278fe5>` , 0, 0)
+
+- #define :ref:`USE_ArchClose <group___cmp_archive_itf_1gad8ca277beadfc4394e802692f4b90052>` :ref:`PFARCHCLOSE <group___cmp_archive_itf_1ga53f251300fa12545fd2f9a47fa671ffb>` pfArchClose;
+
+- #define :ref:`EXT_ArchClose <group___cmp_archive_itf_1gae7a0247bdb413826b71a9af29e4d751d>` extern :ref:`PFARCHCLOSE <group___cmp_archive_itf_1ga53f251300fa12545fd2f9a47fa671ffb>` pfArchClose;
+
+- #define :ref:`GET_ArchClose <group___cmp_archive_itf_1ga45d9403d6f5f4f43c71e80829e1b6172>` s_pfCMGetAPI2( "ArchClose", (RTS_VOID_FCTPTR *)&pfArchClose, (fl), 0, 0)
+
+- #define :ref:`CAL_ArchClose <group___cmp_archive_itf_1ga2a81d1aeba857128e8ce1c2227cdbced>` pfArchClose
+
+- #define :ref:`CHK_ArchClose <group___cmp_archive_itf_1ga64b3cdfdbcd3e5f4c24841496006fad9>` (pfArchClose != NULL)
+
+- #define :ref:`EXP_ArchClose <group___cmp_archive_itf_1gad7a540ee6e8739d35678b4da0f0c003b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ArchClose", (RTS_UINTPTR) :ref:`ArchClose <group___cmp_archive_itf_1ga8931f310240877074510b2eda500af72>` , 0, 0)
+
+- #define :ref:`USE_ArchGetPath <group___cmp_archive_itf_1gab8e1d535ef6ff28d61626875f6322530>` :ref:`PFARCHGETPATH <group___cmp_archive_itf_1ga9c241ea09e76951231ae85c8fc49dabc>` pfArchGetPath;
+
+- #define :ref:`EXT_ArchGetPath <group___cmp_archive_itf_1gafe31865a88350cac90178c14b0f6ef62>` extern :ref:`PFARCHGETPATH <group___cmp_archive_itf_1ga9c241ea09e76951231ae85c8fc49dabc>` pfArchGetPath;
+
+- #define :ref:`GET_ArchGetPath <group___cmp_archive_itf_1ga5dee7376496369501e145dd030f282b0>` s_pfCMGetAPI2( "ArchGetPath", (RTS_VOID_FCTPTR *)&pfArchGetPath, (fl), 0, 0)
+
+- #define :ref:`CAL_ArchGetPath <group___cmp_archive_itf_1gadc3358037a73a9ba010020b30bbef2bb>` pfArchGetPath
+
+- #define :ref:`CHK_ArchGetPath <group___cmp_archive_itf_1ga784558608ae296862e4a18bddea296b4>` (pfArchGetPath != NULL)
+
+- #define :ref:`EXP_ArchGetPath <group___cmp_archive_itf_1gacb08e313d3ff8948201168e455908e1c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ArchGetPath", (RTS_UINTPTR) :ref:`ArchGetPath <group___cmp_archive_itf_1ga5eb9327ce2cce13bae544c198dc43d9e>` , 0, 0)
+
+- #define :ref:`ITF_CmpArchive <group___cmp_archive_itf_1ga3876a39ce60f09f001b0d9d1b2d71a85>`
+
+- #define :ref:`EXTITF_CmpArchive <group___cmp_archive_itf_1gaf6249c8fad5d46292f3e3e2af61b393c>`
+
+Typedefs
+--------
+
+- typedef void(* :ref:`PFARCHIVE_CALLBACK_READ <group___cmp_archive_itf_1ga1cd4e79a1b5041e55c044e5fea455bd1>`)(RTS_ARCH_READ_ENTRY *pEntry)
+
+- typedef RTS_HANDLE(* :ref:`PFARCHOPEN <group___cmp_archive_itf_1ga9a76f5ad8b3b8fe8a2a94ab723bb412c>`)(RTS_UTF8STRING *pName, RTS_UTF8STRING *pPath, RTS_UI32 accessMode, RTS_UI32 format, RTS_UI32 compress, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFARCHWRITE <group___cmp_archive_itf_1gaba9b4f2edbfffcdba9da8e8c1796d9b5>`)(RTS_HANDLE hArch, RTS_ARCH_ENTRY *pEntry, RTS_UI8 *pData, RTS_SIZE len)
+
+- typedef RTS_RESULT(* :ref:`PFARCHWRITEFILE <group___cmp_archive_itf_1gac909f7314b62da15ca9b5fb771bf6152>`)(RTS_HANDLE hArch, RTS_ARCH_ENTRY *pEntry, RTS_HANDLE hFile)
+
+- typedef RTS_RESULT(* :ref:`PFARCHREAD <group___cmp_archive_itf_1gac30bed7deeeef4b18a28450187a37096>`)(RTS_HANDLE hArch, PFARCHIVE_CALLBACK_READ pfReadCallback, void *pUserParameter)
+
+- typedef RTS_RESULT(* :ref:`PFARCHCLOSE <group___cmp_archive_itf_1ga53f251300fa12545fd2f9a47fa671ffb>`)(RTS_HANDLE hArch)
+
+- typedef RTS_UTF8STRING *(* :ref:`PFARCHGETPATH <group___cmp_archive_itf_1ga9c241ea09e76951231ae85c8fc49dabc>`)(RTS_HANDLE hArch, RTS_RESULT *pResult)
+
+- typedef :ref:`ICmpArchive_C <struct_i_cmp_archive___c>` :ref:`ICmpArchive <group___cmp_archive_itf_1ga56b43a7930d9aa66e0aad442d0aa4023>`
+
+Functions
+---------
+
+- RTS_HANDLE :ref:`ArchOpen <group___cmp_archive_itf_1ga0400057d31685fe9c88ebd1a1ff45044>` (RTS_UTF8STRING * pName, RTS_UTF8STRING * pPath, RTS_UI32 accessMode, RTS_UI32 format, RTS_UI32 compress, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`ArchWrite <group___cmp_archive_itf_1gac95621315fbc52c4d40c9c2a0b485ef6>` (RTS_HANDLE hArch, :ref:`RTS_ARCH_ENTRY <struct_r_t_s___a_r_c_h___e_n_t_r_y>` * pEntry, RTS_UI8 * pData, RTS_SIZE len)
+
+- RTS_RESULT :ref:`ArchWriteFile <group___cmp_archive_itf_1ga8a3a9cf05b6f0356581b8650d0f2299d>` (RTS_HANDLE hArch, :ref:`RTS_ARCH_ENTRY <struct_r_t_s___a_r_c_h___e_n_t_r_y>` * pEntry, RTS_HANDLE hFile)
+
+- RTS_RESULT :ref:`ArchRead <group___cmp_archive_itf_1gae27c59eb93729cf63ceefb1060278fe5>` (RTS_HANDLE hArch, :ref:`PFARCHIVE_CALLBACK_READ <group___cmp_archive_itf_1ga1cd4e79a1b5041e55c044e5fea455bd1>`  pfReadCallback, void * pUserParameter)
+
+- RTS_RESULT :ref:`ArchClose <group___cmp_archive_itf_1ga8931f310240877074510b2eda500af72>` (RTS_HANDLE hArch)
+
+- RTS_UTF8STRING * :ref:`ArchGetPath <group___cmp_archive_itf_1ga5eb9327ce2cce13bae544c198dc43d9e>` (RTS_HANDLE hArch, RTS_RESULT * pResult)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_archive_itf_1ga5171899433645527181ac9323ea93c2b:
+
+#define USE_ArchOpen :ref:`PFARCHOPEN <group___cmp_archive_itf_1ga9a76f5ad8b3b8fe8a2a94ab723bb412c>` pfArchOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga74ec9235a364be4983a7bbc271fda34a:
+
+#define EXT_ArchOpen extern :ref:`PFARCHOPEN <group___cmp_archive_itf_1ga9a76f5ad8b3b8fe8a2a94ab723bb412c>` pfArchOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga2b3c397c0ba5505157dba538eaee1e3e:
+
+#define GET_ArchOpen s_pfCMGetAPI2( "ArchOpen", (RTS_VOID_FCTPTR *)&pfArchOpen, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gaccd8f7fdb3b9b1ce8320b8fda5e5b272:
+
+#define CAL_ArchOpen pfArchOpen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga9f7ccf329936075ad3b53b3d0ed72396:
+
+#define CHK_ArchOpen (pfArchOpen != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga3424713de3b8c5b205391d2db47a550a:
+
+#define EXP_ArchOpen s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ArchOpen", (RTS_UINTPTR) :ref:`ArchOpen <group___cmp_archive_itf_1ga0400057d31685fe9c88ebd1a1ff45044>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga0ff47e0de63caacc0864e9f7616d3e01:
+
+#define USE_ArchWrite :ref:`PFARCHWRITE <group___cmp_archive_itf_1gaba9b4f2edbfffcdba9da8e8c1796d9b5>` pfArchWrite;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gad57c3a48307b9b0185e4a69995c274af:
+
+#define EXT_ArchWrite extern :ref:`PFARCHWRITE <group___cmp_archive_itf_1gaba9b4f2edbfffcdba9da8e8c1796d9b5>` pfArchWrite;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga5420e211fc28333f70a0140f541e64f4:
+
+#define GET_ArchWrite s_pfCMGetAPI2( "ArchWrite", (RTS_VOID_FCTPTR *)&pfArchWrite, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gab3bf2ca0dcb95f55c6290b9b0a98c336:
+
+#define CAL_ArchWrite pfArchWrite
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gae478cbc14bf9dc6a564b82afd71ceef4:
+
+#define CHK_ArchWrite (pfArchWrite != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gaa0acecc313968206e534a59e811b428f:
+
+#define EXP_ArchWrite s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ArchWrite", (RTS_UINTPTR) :ref:`ArchWrite <group___cmp_archive_itf_1gac95621315fbc52c4d40c9c2a0b485ef6>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gac5ebc6a7a620cfae81ec2dc6c4b4a972:
+
+#define USE_ArchWriteFile :ref:`PFARCHWRITEFILE <group___cmp_archive_itf_1gac909f7314b62da15ca9b5fb771bf6152>` pfArchWriteFile;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gae2b4fa4584a8c61540df4477b26618ab:
+
+#define EXT_ArchWriteFile extern :ref:`PFARCHWRITEFILE <group___cmp_archive_itf_1gac909f7314b62da15ca9b5fb771bf6152>` pfArchWriteFile;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga831f42b6c52983dcb36b9e51a09a9823:
+
+#define GET_ArchWriteFile s_pfCMGetAPI2( "ArchWriteFile", (RTS_VOID_FCTPTR *)&pfArchWriteFile, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga0ddb541fb037a4c183fbfaf3064aa5c2:
+
+#define CAL_ArchWriteFile pfArchWriteFile
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gaa10a11285be7b247b31ab3548e29c811:
+
+#define CHK_ArchWriteFile (pfArchWriteFile != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga06933db6c9c34c92e9d7ed050de82b56:
+
+#define EXP_ArchWriteFile s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ArchWriteFile", (RTS_UINTPTR) :ref:`ArchWriteFile <group___cmp_archive_itf_1ga8a3a9cf05b6f0356581b8650d0f2299d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gac4e4dfea7b31479df980ee0f7bb175d4:
+
+#define USE_ArchRead :ref:`PFARCHREAD <group___cmp_archive_itf_1gac30bed7deeeef4b18a28450187a37096>` pfArchRead;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gac0b79b2624a6ae2efefaf447d845d29d:
+
+#define EXT_ArchRead extern :ref:`PFARCHREAD <group___cmp_archive_itf_1gac30bed7deeeef4b18a28450187a37096>` pfArchRead;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gad0b95c82be75a93b711632860053b4d0:
+
+#define GET_ArchRead s_pfCMGetAPI2( "ArchRead", (RTS_VOID_FCTPTR *)&pfArchRead, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga398f6287690c290c893fa0e8ed9d0df4:
+
+#define CAL_ArchRead pfArchRead
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga56c8da24cf93960de7bbfd3d14e9c441:
+
+#define CHK_ArchRead (pfArchRead != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gae13faa37ffb4fcce5af88cc3a8b44e93:
+
+#define EXP_ArchRead s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ArchRead", (RTS_UINTPTR) :ref:`ArchRead <group___cmp_archive_itf_1gae27c59eb93729cf63ceefb1060278fe5>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gad8ca277beadfc4394e802692f4b90052:
+
+#define USE_ArchClose :ref:`PFARCHCLOSE <group___cmp_archive_itf_1ga53f251300fa12545fd2f9a47fa671ffb>` pfArchClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gae7a0247bdb413826b71a9af29e4d751d:
+
+#define EXT_ArchClose extern :ref:`PFARCHCLOSE <group___cmp_archive_itf_1ga53f251300fa12545fd2f9a47fa671ffb>` pfArchClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga45d9403d6f5f4f43c71e80829e1b6172:
+
+#define GET_ArchClose s_pfCMGetAPI2( "ArchClose", (RTS_VOID_FCTPTR *)&pfArchClose, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga2a81d1aeba857128e8ce1c2227cdbced:
+
+#define CAL_ArchClose pfArchClose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga64b3cdfdbcd3e5f4c24841496006fad9:
+
+#define CHK_ArchClose (pfArchClose != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gad7a540ee6e8739d35678b4da0f0c003b:
+
+#define EXP_ArchClose s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ArchClose", (RTS_UINTPTR) :ref:`ArchClose <group___cmp_archive_itf_1ga8931f310240877074510b2eda500af72>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gab8e1d535ef6ff28d61626875f6322530:
+
+#define USE_ArchGetPath :ref:`PFARCHGETPATH <group___cmp_archive_itf_1ga9c241ea09e76951231ae85c8fc49dabc>` pfArchGetPath;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gafe31865a88350cac90178c14b0f6ef62:
+
+#define EXT_ArchGetPath extern :ref:`PFARCHGETPATH <group___cmp_archive_itf_1ga9c241ea09e76951231ae85c8fc49dabc>` pfArchGetPath;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga5dee7376496369501e145dd030f282b0:
+
+#define GET_ArchGetPath s_pfCMGetAPI2( "ArchGetPath", (RTS_VOID_FCTPTR *)&pfArchGetPath, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gadc3358037a73a9ba010020b30bbef2bb:
+
+#define CAL_ArchGetPath pfArchGetPath
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga784558608ae296862e4a18bddea296b4:
+
+#define CHK_ArchGetPath (pfArchGetPath != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gacb08e313d3ff8948201168e455908e1c:
+
+#define EXP_ArchGetPath s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"ArchGetPath", (RTS_UINTPTR) :ref:`ArchGetPath <group___cmp_archive_itf_1ga5eb9327ce2cce13bae544c198dc43d9e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga3876a39ce60f09f001b0d9d1b2d71a85:
+
+#define ITF_CmpArchive
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gaf6249c8fad5d46292f3e3e2af61b393c:
+
+#define EXTITF_CmpArchive
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_archive_itf_1ga1cd4e79a1b5041e55c044e5fea455bd1:
+
+typedef void( * PFARCHIVE_CALLBACK_READ) (RTS_ARCH_READ_ENTRY *pEntry)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Callback function
+
+**Parameters**
+
++---------+--------+--------------------------------------------------------------------------------------+
+| [in]    | pEntry | Pointer to archive read entry. NOTE: Is called several times for each entry segment! |
++---------+--------+--------------------------------------------------------------------------------------+
+
+.. _group___cmp_archive_itf_1ga9a76f5ad8b3b8fe8a2a94ab723bb412c:
+
+typedef RTS_HANDLE( *  PFARCHOPEN) (RTS_UTF8STRING *pName, RTS_UTF8STRING *pPath, RTS_UI32 accessMode, RTS_UI32 format, RTS_UI32 compress, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gaba9b4f2edbfffcdba9da8e8c1796d9b5:
+
+typedef RTS_RESULT( *  PFARCHWRITE) (RTS_HANDLE hArch, RTS_ARCH_ENTRY *pEntry, RTS_UI8 *pData, RTS_SIZE len)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gac909f7314b62da15ca9b5fb771bf6152:
+
+typedef RTS_RESULT( *  PFARCHWRITEFILE) (RTS_HANDLE hArch, RTS_ARCH_ENTRY *pEntry, RTS_HANDLE hFile)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gac30bed7deeeef4b18a28450187a37096:
+
+typedef RTS_RESULT( *  PFARCHREAD) (RTS_HANDLE hArch, PFARCHIVE_CALLBACK_READ pfReadCallback, void *pUserParameter)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga53f251300fa12545fd2f9a47fa671ffb:
+
+typedef RTS_RESULT( *  PFARCHCLOSE) (RTS_HANDLE hArch)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga9c241ea09e76951231ae85c8fc49dabc:
+
+typedef RTS_UTF8STRING*( *  PFARCHGETPATH) (RTS_HANDLE hArch, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga56b43a7930d9aa66e0aad442d0aa4023:
+
+typedef ICmpArchive_C ICmpArchive
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_archive_itf_1ga0400057d31685fe9c88ebd1a1ff45044:
+
+RTS_HANDLE ArchOpen (RTS_UTF8STRING *pName, RTS_UTF8STRING *pPath, RTS_UI32 accessMode, RTS_UI32 format, RTS_UI32 compress, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gac95621315fbc52c4d40c9c2a0b485ef6:
+
+RTS_RESULT ArchWrite (RTS_HANDLE hArch, RTS_ARCH_ENTRY *pEntry, RTS_UI8 *pData, RTS_SIZE len)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga8a3a9cf05b6f0356581b8650d0f2299d:
+
+RTS_RESULT ArchWriteFile (RTS_HANDLE hArch, RTS_ARCH_ENTRY *pEntry, RTS_HANDLE hFile)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1gae27c59eb93729cf63ceefb1060278fe5:
+
+RTS_RESULT ArchRead (RTS_HANDLE hArch, PFARCHIVE_CALLBACK_READ pfReadCallback, void *pUserParameter)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga8931f310240877074510b2eda500af72:
+
+RTS_RESULT ArchClose (RTS_HANDLE hArch)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_archive_itf_1ga5eb9327ce2cce13bae544c198dc43d9e:
+
+RTS_UTF8STRING* ArchGetPath (RTS_HANDLE hArch, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

@@ -13,7 +13,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -41,44 +41,37 @@ extern "C" {
 /**
  * <description>Enum: RtsCryptoID</description>
  */
-
-/* --- Symmetric chipers --- */
-#define RTSCRYPTOID_AES_128_CBC				RTS_IEC_UDINT_C(0x1001)
-#define RTSCRYPTOID_AES_128_CFB				RTS_IEC_UDINT_C(0x1002)	
-#define RTSCRYPTOID_AES_256_CBC				RTS_IEC_UDINT_C(0x1003)	
-#define RTSCRYPTOID_DES_CBC					RTS_IEC_UDINT_C(0x1004)	
-#define RTSCRYPTOID_AES_256_CTR				RTS_IEC_UDINT_C(0x1005)
-
-/* --- Asymmetric Cipers --- */	
-#define RTSCRYPTOID_RSA						RTS_IEC_UDINT_C(0x2001)
-#define RTSCRYPTOID_RSA_OAEP_PADDING		RTS_IEC_UDINT_C(0x2002)	
-#define RTSCRYPTOID_RSA_PKCS1_V15_PADDING   RTS_IEC_UDINT_C(0x2003)	
-
-/* --- Hash functions --- */
-#define RTSCRYPTOID_HASH_MD5				RTS_IEC_UDINT_C(0x3001)	
-#define RTSCRYPTOID_HASH_SHA1				RTS_IEC_UDINT_C(0x3002)	
-#define RTSCRYPTOID_HASH_SHA224				RTS_IEC_UDINT_C(0x3003)	
-#define RTSCRYPTOID_HASH_SHA256				RTS_IEC_UDINT_C(0x3004)	
-#define RTSCRYPTOID_HASH_SHA384				RTS_IEC_UDINT_C(0x3005)	
-#define RTSCRYPTOID_HASH_SHA512				RTS_IEC_UDINT_C(0x3006)	
-
-/* --- Signature Functions --- */
-/* HMAC Functions */
-#define RTSCRYPTOID_HMAC_MD5				RTS_IEC_UDINT_C(0x4001)
-#define RTSCRYPTOID_HMAC_SHA1				RTS_IEC_UDINT_C(0x4002)	
-#define RTSCRYPTOID_HMAC_SHA224				RTS_IEC_UDINT_C(0x4003)	
-#define RTSCRYPTOID_HMAC_SHA256				RTS_IEC_UDINT_C(0x4004)	
-#define RTSCRYPTOID_HMAC_SHA384				RTS_IEC_UDINT_C(0x4005)	
-#define RTSCRYPTOID_HMAC_SHA512				RTS_IEC_UDINT_C(0x4006)	
-
-/* RSA Functions */
-#define RTSCRYPTOID_RSA_OAEP_SHA1			RTS_IEC_UDINT_C(0x5003)
-#define RTSCRYPTOID_RSA_OAEP_SHA256			RTS_IEC_UDINT_C(0x5004)	
-#define RTSCRYPTOID_RSA_PKCS1_V15_SHA1		RTS_IEC_UDINT_C(0x5001)	
-#define RTSCRYPTOID_RSA_PKCS1_V15_SHA256    RTS_IEC_UDINT_C(0x5002)	
-
+#define RTSCRYPTOID_AES_128_CBC    RTS_IEC_UDINT_C(0x1001)	/* AES 128 bit key in CBC mode */
+#define RTSCRYPTOID_AES_128_CFB    RTS_IEC_UDINT_C(0x1002)	/* AES 128 bit key in CFB mode */
+#define RTSCRYPTOID_AES_256_CBC    RTS_IEC_UDINT_C(0x1003)	/* AES 256 bit key in CBC mode */
+#define RTSCRYPTOID_DES_CBC    RTS_IEC_UDINT_C(0x1004)	/* DES 64 bit key in CBC mode */
+#define RTSCRYPTOID_AES_256_CTR    RTS_IEC_UDINT_C(0x1005)	/* AES 256 bit key in CTR mode */
+#define RTSCRYPTOID_RSA    RTS_IEC_UDINT_C(0x2001)	/* Plain RSA asymmetric encryption. Not recommended. */
+#define RTSCRYPTOID_RSA_OAEP_PADDING    RTS_IEC_UDINT_C(0x2002)	/* RSA asymmetric encryption with OAEP (SHA1) padding. */
+#define RTSCRYPTOID_RSA_PKCS1_V15_PADDING    RTS_IEC_UDINT_C(0x2003)	/* RSA asymmetric encryption with #PKCS1 v1.5 padding. Not recommended. */
+#define RTSCRYPTOID_RSA_OAEP_SHA256_PADDING    RTS_IEC_UDINT_C(0x2004)	/* RSA asymmetric encryption with OAEP (SHA-256) padding. */
+#define RTSCRYPTOID_HASH_MD5    RTS_IEC_UDINT_C(0x3001)	/* MD5 checksum. Not cryptographically safe. */
+#define RTSCRYPTOID_HASH_SHA1    RTS_IEC_UDINT_C(0x3002)	/* SHA1 checksum. Not cryptographically safe. */
+#define RTSCRYPTOID_HASH_SHA224    RTS_IEC_UDINT_C(0x3003)	/* SHA-224 checksum. */
+#define RTSCRYPTOID_HASH_SHA256    RTS_IEC_UDINT_C(0x3004)	/* SHA-256 checksum. */
+#define RTSCRYPTOID_HASH_SHA384    RTS_IEC_UDINT_C(0x3005)	/* SHA-384 checksum. */
+#define RTSCRYPTOID_HASH_SHA512    RTS_IEC_UDINT_C(0x3006)	/* SHA-512 checksum. */
+#define RTSCRYPTOID_HMAC_MD5    RTS_IEC_UDINT_C(0x4001)	/* HMAC based on MD5. Not cryptographically safe. */
+#define RTSCRYPTOID_HMAC_SHA1    RTS_IEC_UDINT_C(0x4002)	/* HMAC based on SHA1. Not cryptographically safe. */
+#define RTSCRYPTOID_HMAC_SHA224    RTS_IEC_UDINT_C(0x4003)	/* HMAC based on SHA-224. */
+#define RTSCRYPTOID_HMAC_SHA256    RTS_IEC_UDINT_C(0x4004)	/* HMAC based on SHA-256. */
+#define RTSCRYPTOID_HMAC_SHA384    RTS_IEC_UDINT_C(0x4005)	/* HMAC based on SHA-384. */
+#define RTSCRYPTOID_HMAC_SHA512    RTS_IEC_UDINT_C(0x4006)	/* HMAC based on SHA-512. */
+#define RTSCRYPTOID_RSA_PKCS1_V15_SHA1    RTS_IEC_UDINT_C(0x5001)	/* Asymmetric signature based on RSA, SHA1 and #PKCS1 v1.5 padding. Not recommended. */
+#define RTSCRYPTOID_RSA_PKCS1_V15_SHA256    RTS_IEC_UDINT_C(0x5002)	/* Asymmetric signature based on RSA, SHA-256 and #PKCS1 v1.5 padding. Not recommended. */
+#define RTSCRYPTOID_RSA_OAEP_SHA1    RTS_IEC_UDINT_C(0x5003)	/* Not supported. */
+#define RTSCRYPTOID_RSA_OAEP_SHA256    RTS_IEC_UDINT_C(0x5004)	/* Not supported. */
+#define RTSCRYPTOID_RSA_PSS_SHA256    RTS_IEC_UDINT_C(0x5005)	/* Asymmetric signature based on RSA, SHA-256 and PSS padding. Not recommended. */
+#define RTSCRYPTOID_KDF_PSHA1    RTS_IEC_UDINT_C(0x6001)	/* TLS key derivation function based on SHA1. Not recommeded for key generation based on passwords. */
+#define RTSCRYPTOID_KDF_PSHA256    RTS_IEC_UDINT_C(0x6002)	/* TLS key derivation function based on SHA-256. Not recommeded for key generation based on passwords. */
+#define RTSCRYPTOID_KDF_SCRYPT    RTS_IEC_UDINT_C(0x6003)	/* Scrypt key derivation function. Recommeded to expand passwords into cryptographic keys, or to hash passwords. */
 /* Typed enum definition */
-#define RTSCRYPTOID							RTS_IEC_UDINT
+#define RTSCRYPTOID    RTS_IEC_UDINT
 
 /**
  * <description>Enum: RtsCryptoKeyType</description>
@@ -97,15 +90,25 @@ extern "C" {
 #define RTSCRYPTOTYPE_HASH    RTS_IEC_UDINT_C(0x3000)	
 #define RTSCRYPTOTYPE_HMAC    RTS_IEC_UDINT_C(0x4000)	
 #define RTSCRYPTOTYPE_SIGNATURE    RTS_IEC_UDINT_C(0x5000)	
+#define RTSCRYPTOTYPE_KEYDERIVE    RTS_IEC_UDINT_C(0x6000)	
 /* Typed enum definition */
 #define RTSCRYPTOTYPE    RTS_IEC_UDINT
+
+/**
+ * <description>Enum: RtsCryptoKeyType</description>
+ */
+#define KEYTYPE_KEY    RTS_IEC_DINT_C(0x0)	/* The key is directly available. Stored in a RTS_BYTESTRING. */
+#define KEYTYPE_CERTHANDLE    RTS_IEC_DINT_C(0x1)	/* The key is identified by a handle to the certificat. Only used for asymmetric keys. */
+#define KEYTYPE_CERTCONTENT    RTS_IEC_DINT_C(0x2)	/* The key is identified by the certificate context. Only used for asymmetric keys. */
+/* Typed enum definition */
+#define RTSCRYPTOKEYTYPE    RTS_IEC_DINT
 
 /**
  * This a representation of a byte string.
  */
 typedef struct tagRtsByteString
 {
-	RTS_IEC_UDINT ui32Len;		/* Current lenght of data stored in the buffer. */
+	RTS_IEC_UDINT ui32Len;		/* Current length of data stored in the buffer. */
 	RTS_IEC_UDINT ui32MaxLen;		/* The allocated size of the buffer. */
 	RTS_IEC_BYTE *pByData;		/* Pointer to buffer */
 	RTS_IEC_BOOL xDynamic;		/* Indicates if the data was allocated dynamically */
@@ -126,1074 +129,26 @@ typedef union
 typedef struct tagRtsCryptoKey
 {
 	RTS_IEC_DINT keyType;		/* The type of the key. */
-	RtsCryptoKeyStorage key;		/* Information of the key. Acturally only the KeyType_Key is supported. */
+	RtsCryptoKeyStorage key;		/* Information of the key. Actually only the KeyType_Key is supported. */
 } RtsCryptoKey;
 
 /**
- * Perform a asymmetric decryption using the algorithm handle.
- * :return: Result of the operation
+ * <description>RtsScryptParameter</description>
  */
-typedef struct tagcryptoasymmetricdecrypt_struct
+typedef struct tagRtsScryptParameter
 {
-	RTS_IEC_HANDLE hAlgo;				/* VAR_INPUT */	/* Handle to the algorithm. */
-	RtsByteString *pCipherText;			/* VAR_INPUT */	/* Data to be decrypted */
-	RtsCryptoKey privateKey;			/* VAR_INPUT */	/* Private key used to decrypt the data. */
-	RtsByteString *pPlainText;			/* VAR_INPUT */	/* Decrypted data. */
-	RTS_IEC_RESULT CryptoAsymmetricDecrypt;	/* VAR_OUTPUT */	
-} cryptoasymmetricdecrypt_struct;
-
-void CDECL CDECL_EXT cryptoasymmetricdecrypt(cryptoasymmetricdecrypt_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOASYMMETRICDECRYPT_IEC) (cryptoasymmetricdecrypt_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOASYMMETRICDECRYPT_NOTIMPLEMENTED)
-	#define USE_cryptoasymmetricdecrypt
-	#define EXT_cryptoasymmetricdecrypt
-	#define GET_cryptoasymmetricdecrypt(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptoasymmetricdecrypt(p0) 
-	#define CHK_cryptoasymmetricdecrypt  FALSE
-	#define EXP_cryptoasymmetricdecrypt  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptoasymmetricdecrypt
-	#define EXT_cryptoasymmetricdecrypt
-	#define GET_cryptoasymmetricdecrypt(fl)  CAL_CMGETAPI( "cryptoasymmetricdecrypt" ) 
-	#define CAL_cryptoasymmetricdecrypt  cryptoasymmetricdecrypt
-	#define CHK_cryptoasymmetricdecrypt  TRUE
-	#define EXP_cryptoasymmetricdecrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptoasymmetricdecrypt", (RTS_UINTPTR)cryptoasymmetricdecrypt, 1, 0x126B86CC, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptoasymmetricdecrypt
-	#define EXT_cryptoasymmetricdecrypt
-	#define GET_cryptoasymmetricdecrypt(fl)  CAL_CMGETAPI( "cryptoasymmetricdecrypt" ) 
-	#define CAL_cryptoasymmetricdecrypt  cryptoasymmetricdecrypt
-	#define CHK_cryptoasymmetricdecrypt  TRUE
-	#define EXP_cryptoasymmetricdecrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptoasymmetricdecrypt", (RTS_UINTPTR)cryptoasymmetricdecrypt, 1, 0x126B86CC, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptoasymmetricdecrypt
-	#define EXT_CmpCryptocryptoasymmetricdecrypt
-	#define GET_CmpCryptocryptoasymmetricdecrypt  ERR_OK
-	#define CAL_CmpCryptocryptoasymmetricdecrypt  cryptoasymmetricdecrypt
-	#define CHK_CmpCryptocryptoasymmetricdecrypt  TRUE
-	#define EXP_CmpCryptocryptoasymmetricdecrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptoasymmetricdecrypt", (RTS_UINTPTR)cryptoasymmetricdecrypt, 1, 0x126B86CC, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptoasymmetricdecrypt
-	#define EXT_cryptoasymmetricdecrypt
-	#define GET_cryptoasymmetricdecrypt(fl)  CAL_CMGETAPI( "cryptoasymmetricdecrypt" ) 
-	#define CAL_cryptoasymmetricdecrypt  cryptoasymmetricdecrypt
-	#define CHK_cryptoasymmetricdecrypt  TRUE
-	#define EXP_cryptoasymmetricdecrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptoasymmetricdecrypt", (RTS_UINTPTR)cryptoasymmetricdecrypt, 1, 0x126B86CC, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptoasymmetricdecrypt  PFCRYPTOASYMMETRICDECRYPT_IEC pfcryptoasymmetricdecrypt;
-	#define EXT_cryptoasymmetricdecrypt  extern PFCRYPTOASYMMETRICDECRYPT_IEC pfcryptoasymmetricdecrypt;
-	#define GET_cryptoasymmetricdecrypt(fl)  s_pfCMGetAPI2( "cryptoasymmetricdecrypt", (RTS_VOID_FCTPTR *)&pfcryptoasymmetricdecrypt, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x126B86CC, 0x03050B00)
-	#define CAL_cryptoasymmetricdecrypt  pfcryptoasymmetricdecrypt
-	#define CHK_cryptoasymmetricdecrypt  (pfcryptoasymmetricdecrypt != NULL)
-	#define EXP_cryptoasymmetricdecrypt   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptoasymmetricdecrypt", (RTS_UINTPTR)cryptoasymmetricdecrypt, 1, 0x126B86CC, 0x03050B00) 
-#endif
-
+	RTS_IEC_UDINT iterations;		
+	RTS_IEC_UDINT blockSize;		/* How many iterations are done. Affects CPU and RAM usage. */
+	RTS_IEC_UDINT parallelismFactor;		/* The block size affects memory an CPU usage. */
+} RtsScryptParameter;
 
 /**
- * Perform a asymmetric encryption using the algorithm handle.
- * :return: Result of the operation
+ * <description>RtsKdfParameter</description>
  */
-typedef struct tagcryptoasymmetricencrypt_struct
+typedef union
 {
-	RTS_IEC_HANDLE hAlgo;				/* VAR_INPUT */	/* Handle to the algorithm. */
-	RtsByteString *pPlainText;			/* VAR_INPUT */	/* Data to be encrypted */
-	RtsCryptoKey publicKey;				/* VAR_INPUT */	/* Public key used to encrypt the data. */
-	RtsByteString *pCipherText;			/* VAR_INPUT */	/* Encrypted data. */
-	RTS_IEC_RESULT CryptoAsymmetricEncrypt;	/* VAR_OUTPUT */	
-} cryptoasymmetricencrypt_struct;
-
-void CDECL CDECL_EXT cryptoasymmetricencrypt(cryptoasymmetricencrypt_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOASYMMETRICENCRYPT_IEC) (cryptoasymmetricencrypt_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOASYMMETRICENCRYPT_NOTIMPLEMENTED)
-	#define USE_cryptoasymmetricencrypt
-	#define EXT_cryptoasymmetricencrypt
-	#define GET_cryptoasymmetricencrypt(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptoasymmetricencrypt(p0) 
-	#define CHK_cryptoasymmetricencrypt  FALSE
-	#define EXP_cryptoasymmetricencrypt  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptoasymmetricencrypt
-	#define EXT_cryptoasymmetricencrypt
-	#define GET_cryptoasymmetricencrypt(fl)  CAL_CMGETAPI( "cryptoasymmetricencrypt" ) 
-	#define CAL_cryptoasymmetricencrypt  cryptoasymmetricencrypt
-	#define CHK_cryptoasymmetricencrypt  TRUE
-	#define EXP_cryptoasymmetricencrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptoasymmetricencrypt", (RTS_UINTPTR)cryptoasymmetricencrypt, 1, 0xC14613D0, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptoasymmetricencrypt
-	#define EXT_cryptoasymmetricencrypt
-	#define GET_cryptoasymmetricencrypt(fl)  CAL_CMGETAPI( "cryptoasymmetricencrypt" ) 
-	#define CAL_cryptoasymmetricencrypt  cryptoasymmetricencrypt
-	#define CHK_cryptoasymmetricencrypt  TRUE
-	#define EXP_cryptoasymmetricencrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptoasymmetricencrypt", (RTS_UINTPTR)cryptoasymmetricencrypt, 1, 0xC14613D0, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptoasymmetricencrypt
-	#define EXT_CmpCryptocryptoasymmetricencrypt
-	#define GET_CmpCryptocryptoasymmetricencrypt  ERR_OK
-	#define CAL_CmpCryptocryptoasymmetricencrypt  cryptoasymmetricencrypt
-	#define CHK_CmpCryptocryptoasymmetricencrypt  TRUE
-	#define EXP_CmpCryptocryptoasymmetricencrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptoasymmetricencrypt", (RTS_UINTPTR)cryptoasymmetricencrypt, 1, 0xC14613D0, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptoasymmetricencrypt
-	#define EXT_cryptoasymmetricencrypt
-	#define GET_cryptoasymmetricencrypt(fl)  CAL_CMGETAPI( "cryptoasymmetricencrypt" ) 
-	#define CAL_cryptoasymmetricencrypt  cryptoasymmetricencrypt
-	#define CHK_cryptoasymmetricencrypt  TRUE
-	#define EXP_cryptoasymmetricencrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptoasymmetricencrypt", (RTS_UINTPTR)cryptoasymmetricencrypt, 1, 0xC14613D0, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptoasymmetricencrypt  PFCRYPTOASYMMETRICENCRYPT_IEC pfcryptoasymmetricencrypt;
-	#define EXT_cryptoasymmetricencrypt  extern PFCRYPTOASYMMETRICENCRYPT_IEC pfcryptoasymmetricencrypt;
-	#define GET_cryptoasymmetricencrypt(fl)  s_pfCMGetAPI2( "cryptoasymmetricencrypt", (RTS_VOID_FCTPTR *)&pfcryptoasymmetricencrypt, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xC14613D0, 0x03050B00)
-	#define CAL_cryptoasymmetricencrypt  pfcryptoasymmetricencrypt
-	#define CHK_cryptoasymmetricencrypt  (pfcryptoasymmetricencrypt != NULL)
-	#define EXP_cryptoasymmetricencrypt   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptoasymmetricencrypt", (RTS_UINTPTR)cryptoasymmetricencrypt, 1, 0xC14613D0, 0x03050B00) 
-#endif
-
-
-/**
- * Calculate the message digest of the given data.
- * :return: Result of the operation
- */
-typedef struct tagcryptogeneratehash_struct
-{
-	RTS_IEC_HANDLE hAlgo;				/* VAR_INPUT */	/* Handle to the algorithm. */
-	RtsByteString *pData;				/* VAR_INPUT */	/* Data to calculate the message digest. */
-	RtsByteString *pHash;				/* VAR_INPUT */	/* Calculated message digest. */
-	RTS_IEC_RESULT CryptoGenerateHash;	/* VAR_OUTPUT */	
-} cryptogeneratehash_struct;
-
-void CDECL CDECL_EXT cryptogeneratehash(cryptogeneratehash_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOGENERATEHASH_IEC) (cryptogeneratehash_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOGENERATEHASH_NOTIMPLEMENTED)
-	#define USE_cryptogeneratehash
-	#define EXT_cryptogeneratehash
-	#define GET_cryptogeneratehash(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptogeneratehash(p0) 
-	#define CHK_cryptogeneratehash  FALSE
-	#define EXP_cryptogeneratehash  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptogeneratehash
-	#define EXT_cryptogeneratehash
-	#define GET_cryptogeneratehash(fl)  CAL_CMGETAPI( "cryptogeneratehash" ) 
-	#define CAL_cryptogeneratehash  cryptogeneratehash
-	#define CHK_cryptogeneratehash  TRUE
-	#define EXP_cryptogeneratehash  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogeneratehash", (RTS_UINTPTR)cryptogeneratehash, 1, 0x34E1A812, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptogeneratehash
-	#define EXT_cryptogeneratehash
-	#define GET_cryptogeneratehash(fl)  CAL_CMGETAPI( "cryptogeneratehash" ) 
-	#define CAL_cryptogeneratehash  cryptogeneratehash
-	#define CHK_cryptogeneratehash  TRUE
-	#define EXP_cryptogeneratehash  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogeneratehash", (RTS_UINTPTR)cryptogeneratehash, 1, 0x34E1A812, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptogeneratehash
-	#define EXT_CmpCryptocryptogeneratehash
-	#define GET_CmpCryptocryptogeneratehash  ERR_OK
-	#define CAL_CmpCryptocryptogeneratehash  cryptogeneratehash
-	#define CHK_CmpCryptocryptogeneratehash  TRUE
-	#define EXP_CmpCryptocryptogeneratehash  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogeneratehash", (RTS_UINTPTR)cryptogeneratehash, 1, 0x34E1A812, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptogeneratehash
-	#define EXT_cryptogeneratehash
-	#define GET_cryptogeneratehash(fl)  CAL_CMGETAPI( "cryptogeneratehash" ) 
-	#define CAL_cryptogeneratehash  cryptogeneratehash
-	#define CHK_cryptogeneratehash  TRUE
-	#define EXP_cryptogeneratehash  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogeneratehash", (RTS_UINTPTR)cryptogeneratehash, 1, 0x34E1A812, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptogeneratehash  PFCRYPTOGENERATEHASH_IEC pfcryptogeneratehash;
-	#define EXT_cryptogeneratehash  extern PFCRYPTOGENERATEHASH_IEC pfcryptogeneratehash;
-	#define GET_cryptogeneratehash(fl)  s_pfCMGetAPI2( "cryptogeneratehash", (RTS_VOID_FCTPTR *)&pfcryptogeneratehash, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x34E1A812, 0x03050B00)
-	#define CAL_cryptogeneratehash  pfcryptogeneratehash
-	#define CHK_cryptogeneratehash  (pfcryptogeneratehash != NULL)
-	#define EXP_cryptogeneratehash   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogeneratehash", (RTS_UINTPTR)cryptogeneratehash, 1, 0x34E1A812, 0x03050B00) 
-#endif
-
-
-/**
- * Generate a number of cryptographic strong bytes.
- * :return: Function returns ERR_OK if the bytes could be generated
- */
-typedef struct tagcryptogeneraterandomnumber_struct
-{
-	RTS_IEC_UDINT ui32NumOfRandomBytes;	/* VAR_INPUT */	/* Number of bytes needed. */
-	RtsByteString *pRandom;				/* VAR_INPUT */	/* Buffer to store the bytes. */
-	RTS_IEC_RESULT CryptoGenerateRandomNumber;	/* VAR_OUTPUT */	
-} cryptogeneraterandomnumber_struct;
-
-void CDECL CDECL_EXT cryptogeneraterandomnumber(cryptogeneraterandomnumber_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOGENERATERANDOMNUMBER_IEC) (cryptogeneraterandomnumber_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOGENERATERANDOMNUMBER_NOTIMPLEMENTED)
-	#define USE_cryptogeneraterandomnumber
-	#define EXT_cryptogeneraterandomnumber
-	#define GET_cryptogeneraterandomnumber(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptogeneraterandomnumber(p0) 
-	#define CHK_cryptogeneraterandomnumber  FALSE
-	#define EXP_cryptogeneraterandomnumber  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptogeneraterandomnumber
-	#define EXT_cryptogeneraterandomnumber
-	#define GET_cryptogeneraterandomnumber(fl)  CAL_CMGETAPI( "cryptogeneraterandomnumber" ) 
-	#define CAL_cryptogeneraterandomnumber  cryptogeneraterandomnumber
-	#define CHK_cryptogeneraterandomnumber  TRUE
-	#define EXP_cryptogeneraterandomnumber  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogeneraterandomnumber", (RTS_UINTPTR)cryptogeneraterandomnumber, 1, 0xF9FC5437, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptogeneraterandomnumber
-	#define EXT_cryptogeneraterandomnumber
-	#define GET_cryptogeneraterandomnumber(fl)  CAL_CMGETAPI( "cryptogeneraterandomnumber" ) 
-	#define CAL_cryptogeneraterandomnumber  cryptogeneraterandomnumber
-	#define CHK_cryptogeneraterandomnumber  TRUE
-	#define EXP_cryptogeneraterandomnumber  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogeneraterandomnumber", (RTS_UINTPTR)cryptogeneraterandomnumber, 1, 0xF9FC5437, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptogeneraterandomnumber
-	#define EXT_CmpCryptocryptogeneraterandomnumber
-	#define GET_CmpCryptocryptogeneraterandomnumber  ERR_OK
-	#define CAL_CmpCryptocryptogeneraterandomnumber  cryptogeneraterandomnumber
-	#define CHK_CmpCryptocryptogeneraterandomnumber  TRUE
-	#define EXP_CmpCryptocryptogeneraterandomnumber  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogeneraterandomnumber", (RTS_UINTPTR)cryptogeneraterandomnumber, 1, 0xF9FC5437, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptogeneraterandomnumber
-	#define EXT_cryptogeneraterandomnumber
-	#define GET_cryptogeneraterandomnumber(fl)  CAL_CMGETAPI( "cryptogeneraterandomnumber" ) 
-	#define CAL_cryptogeneraterandomnumber  cryptogeneraterandomnumber
-	#define CHK_cryptogeneraterandomnumber  TRUE
-	#define EXP_cryptogeneraterandomnumber  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogeneraterandomnumber", (RTS_UINTPTR)cryptogeneraterandomnumber, 1, 0xF9FC5437, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptogeneraterandomnumber  PFCRYPTOGENERATERANDOMNUMBER_IEC pfcryptogeneraterandomnumber;
-	#define EXT_cryptogeneraterandomnumber  extern PFCRYPTOGENERATERANDOMNUMBER_IEC pfcryptogeneraterandomnumber;
-	#define GET_cryptogeneraterandomnumber(fl)  s_pfCMGetAPI2( "cryptogeneraterandomnumber", (RTS_VOID_FCTPTR *)&pfcryptogeneraterandomnumber, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xF9FC5437, 0x03050B00)
-	#define CAL_cryptogeneraterandomnumber  pfcryptogeneraterandomnumber
-	#define CHK_cryptogeneraterandomnumber  (pfcryptogeneraterandomnumber != NULL)
-	#define EXP_cryptogeneraterandomnumber   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogeneraterandomnumber", (RTS_UINTPTR)cryptogeneraterandomnumber, 1, 0xF9FC5437, 0x03050B00) 
-#endif
-
-
-/**
- * Get a handle to the algorithm using a specific ID
- * :return: Handle to the crypto algorithm
- */
-typedef struct tagcryptogetalgorithmbyid_struct
-{
-	RTS_IEC_UDINT ui32CryptoID;			/* VAR_INPUT, Enum: RTSCRYPTOID */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Result of the operation. Can be NULL. */
-	RTS_IEC_HANDLE CryptoGetAlgorithmById;	/* VAR_OUTPUT */	
-} cryptogetalgorithmbyid_struct;
-
-void CDECL CDECL_EXT cryptogetalgorithmbyid(cryptogetalgorithmbyid_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOGETALGORITHMBYID_IEC) (cryptogetalgorithmbyid_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOGETALGORITHMBYID_NOTIMPLEMENTED)
-	#define USE_cryptogetalgorithmbyid
-	#define EXT_cryptogetalgorithmbyid
-	#define GET_cryptogetalgorithmbyid(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptogetalgorithmbyid(p0) 
-	#define CHK_cryptogetalgorithmbyid  FALSE
-	#define EXP_cryptogetalgorithmbyid  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptogetalgorithmbyid
-	#define EXT_cryptogetalgorithmbyid
-	#define GET_cryptogetalgorithmbyid(fl)  CAL_CMGETAPI( "cryptogetalgorithmbyid" ) 
-	#define CAL_cryptogetalgorithmbyid  cryptogetalgorithmbyid
-	#define CHK_cryptogetalgorithmbyid  TRUE
-	#define EXP_cryptogetalgorithmbyid  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetalgorithmbyid", (RTS_UINTPTR)cryptogetalgorithmbyid, 1, 0x3D0776D3, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptogetalgorithmbyid
-	#define EXT_cryptogetalgorithmbyid
-	#define GET_cryptogetalgorithmbyid(fl)  CAL_CMGETAPI( "cryptogetalgorithmbyid" ) 
-	#define CAL_cryptogetalgorithmbyid  cryptogetalgorithmbyid
-	#define CHK_cryptogetalgorithmbyid  TRUE
-	#define EXP_cryptogetalgorithmbyid  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetalgorithmbyid", (RTS_UINTPTR)cryptogetalgorithmbyid, 1, 0x3D0776D3, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptogetalgorithmbyid
-	#define EXT_CmpCryptocryptogetalgorithmbyid
-	#define GET_CmpCryptocryptogetalgorithmbyid  ERR_OK
-	#define CAL_CmpCryptocryptogetalgorithmbyid  cryptogetalgorithmbyid
-	#define CHK_CmpCryptocryptogetalgorithmbyid  TRUE
-	#define EXP_CmpCryptocryptogetalgorithmbyid  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetalgorithmbyid", (RTS_UINTPTR)cryptogetalgorithmbyid, 1, 0x3D0776D3, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptogetalgorithmbyid
-	#define EXT_cryptogetalgorithmbyid
-	#define GET_cryptogetalgorithmbyid(fl)  CAL_CMGETAPI( "cryptogetalgorithmbyid" ) 
-	#define CAL_cryptogetalgorithmbyid  cryptogetalgorithmbyid
-	#define CHK_cryptogetalgorithmbyid  TRUE
-	#define EXP_cryptogetalgorithmbyid  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetalgorithmbyid", (RTS_UINTPTR)cryptogetalgorithmbyid, 1, 0x3D0776D3, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptogetalgorithmbyid  PFCRYPTOGETALGORITHMBYID_IEC pfcryptogetalgorithmbyid;
-	#define EXT_cryptogetalgorithmbyid  extern PFCRYPTOGETALGORITHMBYID_IEC pfcryptogetalgorithmbyid;
-	#define GET_cryptogetalgorithmbyid(fl)  s_pfCMGetAPI2( "cryptogetalgorithmbyid", (RTS_VOID_FCTPTR *)&pfcryptogetalgorithmbyid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x3D0776D3, 0x03050B00)
-	#define CAL_cryptogetalgorithmbyid  pfcryptogetalgorithmbyid
-	#define CHK_cryptogetalgorithmbyid  (pfcryptogetalgorithmbyid != NULL)
-	#define EXP_cryptogetalgorithmbyid   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetalgorithmbyid", (RTS_UINTPTR)cryptogetalgorithmbyid, 1, 0x3D0776D3, 0x03050B00) 
-#endif
-
-
-/**
- * Get the asymmetric key size in bits.
- * :return: Size of the asymmetric key in bits
- */
-typedef struct tagcryptogetasymmetrickeylength_struct
-{
-	RtsCryptoKey asymmetricKey;			/* VAR_INPUT */	/* Asymmetric key of intrest. */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Operation Result */
-	RTS_IEC_UDINT CryptoGetAsymmetricKeyLength;	/* VAR_OUTPUT */	
-} cryptogetasymmetrickeylength_struct;
-
-void CDECL CDECL_EXT cryptogetasymmetrickeylength(cryptogetasymmetrickeylength_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOGETASYMMETRICKEYLENGTH_IEC) (cryptogetasymmetrickeylength_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOGETASYMMETRICKEYLENGTH_NOTIMPLEMENTED)
-	#define USE_cryptogetasymmetrickeylength
-	#define EXT_cryptogetasymmetrickeylength
-	#define GET_cryptogetasymmetrickeylength(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptogetasymmetrickeylength(p0) 
-	#define CHK_cryptogetasymmetrickeylength  FALSE
-	#define EXP_cryptogetasymmetrickeylength  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptogetasymmetrickeylength
-	#define EXT_cryptogetasymmetrickeylength
-	#define GET_cryptogetasymmetrickeylength(fl)  CAL_CMGETAPI( "cryptogetasymmetrickeylength" ) 
-	#define CAL_cryptogetasymmetrickeylength  cryptogetasymmetrickeylength
-	#define CHK_cryptogetasymmetrickeylength  TRUE
-	#define EXP_cryptogetasymmetrickeylength  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetasymmetrickeylength", (RTS_UINTPTR)cryptogetasymmetrickeylength, 1, 0, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptogetasymmetrickeylength
-	#define EXT_cryptogetasymmetrickeylength
-	#define GET_cryptogetasymmetrickeylength(fl)  CAL_CMGETAPI( "cryptogetasymmetrickeylength" ) 
-	#define CAL_cryptogetasymmetrickeylength  cryptogetasymmetrickeylength
-	#define CHK_cryptogetasymmetrickeylength  TRUE
-	#define EXP_cryptogetasymmetrickeylength  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetasymmetrickeylength", (RTS_UINTPTR)cryptogetasymmetrickeylength, 1, 0, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptogetasymmetrickeylength
-	#define EXT_CmpCryptocryptogetasymmetrickeylength
-	#define GET_CmpCryptocryptogetasymmetrickeylength  ERR_OK
-	#define CAL_CmpCryptocryptogetasymmetrickeylength  cryptogetasymmetrickeylength
-	#define CHK_CmpCryptocryptogetasymmetrickeylength  TRUE
-	#define EXP_CmpCryptocryptogetasymmetrickeylength  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetasymmetrickeylength", (RTS_UINTPTR)cryptogetasymmetrickeylength, 1, 0, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptogetasymmetrickeylength
-	#define EXT_cryptogetasymmetrickeylength
-	#define GET_cryptogetasymmetrickeylength(fl)  CAL_CMGETAPI( "cryptogetasymmetrickeylength" ) 
-	#define CAL_cryptogetasymmetrickeylength  cryptogetasymmetrickeylength
-	#define CHK_cryptogetasymmetrickeylength  TRUE
-	#define EXP_cryptogetasymmetrickeylength  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetasymmetrickeylength", (RTS_UINTPTR)cryptogetasymmetrickeylength, 1, 0, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptogetasymmetrickeylength  PFCRYPTOGETASYMMETRICKEYLENGTH_IEC pfcryptogetasymmetrickeylength;
-	#define EXT_cryptogetasymmetrickeylength  extern PFCRYPTOGETASYMMETRICKEYLENGTH_IEC pfcryptogetasymmetrickeylength;
-	#define GET_cryptogetasymmetrickeylength(fl)  s_pfCMGetAPI2( "cryptogetasymmetrickeylength", (RTS_VOID_FCTPTR *)&pfcryptogetasymmetrickeylength, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050B00)
-	#define CAL_cryptogetasymmetrickeylength  pfcryptogetasymmetrickeylength
-	#define CHK_cryptogetasymmetrickeylength  (pfcryptogetasymmetrickeylength != NULL)
-	#define EXP_cryptogetasymmetrickeylength   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetasymmetrickeylength", (RTS_UINTPTR)cryptogetasymmetrickeylength, 1, 0, 0x03050B00) 
-#endif
-
-
-/**
- * Get the first algorthm matching the type given. Use this with the GetNext function to iterate over algorthmes of a specific type.
- * :return: Handle to the crypto algorithm
- */
-typedef struct tagcryptogetfirstalgorithm_struct
-{
-	RTS_IEC_UDINT ui32CryptoType;		/* VAR_INPUT, Enum: RTSCRYPTOTYPE */
-	RTS_IEC_STRING *pszName;			/* VAR_INPUT */	/* Name of the algorthm. Can be NULL. */
-	RTS_IEC_DINT i32MaxNameLen;			/* VAR_INPUT */	/* Maximum length of the name buffer */
-	RTS_IEC_UDINT *pui32CryptoID;		/* VAR_INPUT */	/* ID of the algorithm. */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Result of the operation. Can be NULL. */
-	RTS_IEC_HANDLE CryptoGetFirstAlgorithm;	/* VAR_OUTPUT */	
-} cryptogetfirstalgorithm_struct;
-
-void CDECL CDECL_EXT cryptogetfirstalgorithm(cryptogetfirstalgorithm_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOGETFIRSTALGORITHM_IEC) (cryptogetfirstalgorithm_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOGETFIRSTALGORITHM_NOTIMPLEMENTED)
-	#define USE_cryptogetfirstalgorithm
-	#define EXT_cryptogetfirstalgorithm
-	#define GET_cryptogetfirstalgorithm(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptogetfirstalgorithm(p0) 
-	#define CHK_cryptogetfirstalgorithm  FALSE
-	#define EXP_cryptogetfirstalgorithm  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptogetfirstalgorithm
-	#define EXT_cryptogetfirstalgorithm
-	#define GET_cryptogetfirstalgorithm(fl)  CAL_CMGETAPI( "cryptogetfirstalgorithm" ) 
-	#define CAL_cryptogetfirstalgorithm  cryptogetfirstalgorithm
-	#define CHK_cryptogetfirstalgorithm  TRUE
-	#define EXP_cryptogetfirstalgorithm  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetfirstalgorithm", (RTS_UINTPTR)cryptogetfirstalgorithm, 1, 0xC8A4A345, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptogetfirstalgorithm
-	#define EXT_cryptogetfirstalgorithm
-	#define GET_cryptogetfirstalgorithm(fl)  CAL_CMGETAPI( "cryptogetfirstalgorithm" ) 
-	#define CAL_cryptogetfirstalgorithm  cryptogetfirstalgorithm
-	#define CHK_cryptogetfirstalgorithm  TRUE
-	#define EXP_cryptogetfirstalgorithm  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetfirstalgorithm", (RTS_UINTPTR)cryptogetfirstalgorithm, 1, 0xC8A4A345, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptogetfirstalgorithm
-	#define EXT_CmpCryptocryptogetfirstalgorithm
-	#define GET_CmpCryptocryptogetfirstalgorithm  ERR_OK
-	#define CAL_CmpCryptocryptogetfirstalgorithm  cryptogetfirstalgorithm
-	#define CHK_CmpCryptocryptogetfirstalgorithm  TRUE
-	#define EXP_CmpCryptocryptogetfirstalgorithm  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetfirstalgorithm", (RTS_UINTPTR)cryptogetfirstalgorithm, 1, 0xC8A4A345, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptogetfirstalgorithm
-	#define EXT_cryptogetfirstalgorithm
-	#define GET_cryptogetfirstalgorithm(fl)  CAL_CMGETAPI( "cryptogetfirstalgorithm" ) 
-	#define CAL_cryptogetfirstalgorithm  cryptogetfirstalgorithm
-	#define CHK_cryptogetfirstalgorithm  TRUE
-	#define EXP_cryptogetfirstalgorithm  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetfirstalgorithm", (RTS_UINTPTR)cryptogetfirstalgorithm, 1, 0xC8A4A345, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptogetfirstalgorithm  PFCRYPTOGETFIRSTALGORITHM_IEC pfcryptogetfirstalgorithm;
-	#define EXT_cryptogetfirstalgorithm  extern PFCRYPTOGETFIRSTALGORITHM_IEC pfcryptogetfirstalgorithm;
-	#define GET_cryptogetfirstalgorithm(fl)  s_pfCMGetAPI2( "cryptogetfirstalgorithm", (RTS_VOID_FCTPTR *)&pfcryptogetfirstalgorithm, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xC8A4A345, 0x03050B00)
-	#define CAL_cryptogetfirstalgorithm  pfcryptogetfirstalgorithm
-	#define CHK_cryptogetfirstalgorithm  (pfcryptogetfirstalgorithm != NULL)
-	#define EXP_cryptogetfirstalgorithm   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetfirstalgorithm", (RTS_UINTPTR)cryptogetfirstalgorithm, 1, 0xC8A4A345, 0x03050B00) 
-#endif
-
-
-/**
- * Get the next algorthm matching the type given.
- * :return:  Handle to the crypto algorithm
- */
-typedef struct tagcryptogetnextalgorithm_struct
-{
-	RTS_IEC_HANDLE hCrypto;				/* VAR_INPUT */	/* Handle to the last algorithem. */
-	RTS_IEC_UDINT ui32CryptoType;		/* VAR_INPUT, Enum: RTSCRYPTOTYPE */
-	RTS_IEC_STRING *pszName;			/* VAR_INPUT */	/* Name of the agorithm. Can be NULL. */
-	RTS_IEC_DINT i32MaxNameLen;			/* VAR_INPUT */	/* Maximum length of the name buffer */
-	RTS_IEC_UDINT *pui32CryptoID;		/* VAR_INPUT */	/* ID of the agorithm. */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Result of the operation. Can be NULL. */
-	RTS_IEC_HANDLE CryptoGetNextAlgorithm;	/* VAR_OUTPUT */	
-} cryptogetnextalgorithm_struct;
-
-void CDECL CDECL_EXT cryptogetnextalgorithm(cryptogetnextalgorithm_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOGETNEXTALGORITHM_IEC) (cryptogetnextalgorithm_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOGETNEXTALGORITHM_NOTIMPLEMENTED)
-	#define USE_cryptogetnextalgorithm
-	#define EXT_cryptogetnextalgorithm
-	#define GET_cryptogetnextalgorithm(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptogetnextalgorithm(p0) 
-	#define CHK_cryptogetnextalgorithm  FALSE
-	#define EXP_cryptogetnextalgorithm  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptogetnextalgorithm
-	#define EXT_cryptogetnextalgorithm
-	#define GET_cryptogetnextalgorithm(fl)  CAL_CMGETAPI( "cryptogetnextalgorithm" ) 
-	#define CAL_cryptogetnextalgorithm  cryptogetnextalgorithm
-	#define CHK_cryptogetnextalgorithm  TRUE
-	#define EXP_cryptogetnextalgorithm  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetnextalgorithm", (RTS_UINTPTR)cryptogetnextalgorithm, 1, 0x79EC29C8, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptogetnextalgorithm
-	#define EXT_cryptogetnextalgorithm
-	#define GET_cryptogetnextalgorithm(fl)  CAL_CMGETAPI( "cryptogetnextalgorithm" ) 
-	#define CAL_cryptogetnextalgorithm  cryptogetnextalgorithm
-	#define CHK_cryptogetnextalgorithm  TRUE
-	#define EXP_cryptogetnextalgorithm  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetnextalgorithm", (RTS_UINTPTR)cryptogetnextalgorithm, 1, 0x79EC29C8, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptogetnextalgorithm
-	#define EXT_CmpCryptocryptogetnextalgorithm
-	#define GET_CmpCryptocryptogetnextalgorithm  ERR_OK
-	#define CAL_CmpCryptocryptogetnextalgorithm  cryptogetnextalgorithm
-	#define CHK_CmpCryptocryptogetnextalgorithm  TRUE
-	#define EXP_CmpCryptocryptogetnextalgorithm  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetnextalgorithm", (RTS_UINTPTR)cryptogetnextalgorithm, 1, 0x79EC29C8, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptogetnextalgorithm
-	#define EXT_cryptogetnextalgorithm
-	#define GET_cryptogetnextalgorithm(fl)  CAL_CMGETAPI( "cryptogetnextalgorithm" ) 
-	#define CAL_cryptogetnextalgorithm  cryptogetnextalgorithm
-	#define CHK_cryptogetnextalgorithm  TRUE
-	#define EXP_cryptogetnextalgorithm  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetnextalgorithm", (RTS_UINTPTR)cryptogetnextalgorithm, 1, 0x79EC29C8, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptogetnextalgorithm  PFCRYPTOGETNEXTALGORITHM_IEC pfcryptogetnextalgorithm;
-	#define EXT_cryptogetnextalgorithm  extern PFCRYPTOGETNEXTALGORITHM_IEC pfcryptogetnextalgorithm;
-	#define GET_cryptogetnextalgorithm(fl)  s_pfCMGetAPI2( "cryptogetnextalgorithm", (RTS_VOID_FCTPTR *)&pfcryptogetnextalgorithm, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x79EC29C8, 0x03050B00)
-	#define CAL_cryptogetnextalgorithm  pfcryptogetnextalgorithm
-	#define CHK_cryptogetnextalgorithm  (pfcryptogetnextalgorithm != NULL)
-	#define EXP_cryptogetnextalgorithm   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptogetnextalgorithm", (RTS_UINTPTR)cryptogetnextalgorithm, 1, 0x79EC29C8, 0x03050B00) 
-#endif
-
-
-/**
- *Generate a hashed message authentication code (HMAC) OF the given data AND key.
- * :return: Result of the operation
- */
-typedef struct tagcryptohmacsign_struct
-{
-	RTS_IEC_HANDLE hAlgo;				/* VAR_INPUT */	/* Handle to the algorithm. */
-	RtsByteString *pData;				/* VAR_INPUT */	/* Data to calculate the HMAC. */
-	RtsCryptoKey key;					/* VAR_INPUT */	/* Key to be used for the HMAC calcuation */
-	RtsByteString *pSignature;			/* VAR_INPUT */	/* Calculated HMAC */
-	RTS_IEC_RESULT CryptoHMACSign;		/* VAR_OUTPUT */	
-} cryptohmacsign_struct;
-
-void CDECL CDECL_EXT cryptohmacsign(cryptohmacsign_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOHMACSIGN_IEC) (cryptohmacsign_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOHMACSIGN_NOTIMPLEMENTED)
-	#define USE_cryptohmacsign
-	#define EXT_cryptohmacsign
-	#define GET_cryptohmacsign(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptohmacsign(p0) 
-	#define CHK_cryptohmacsign  FALSE
-	#define EXP_cryptohmacsign  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptohmacsign
-	#define EXT_cryptohmacsign
-	#define GET_cryptohmacsign(fl)  CAL_CMGETAPI( "cryptohmacsign" ) 
-	#define CAL_cryptohmacsign  cryptohmacsign
-	#define CHK_cryptohmacsign  TRUE
-	#define EXP_cryptohmacsign  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptohmacsign", (RTS_UINTPTR)cryptohmacsign, 1, 0x931A9470, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptohmacsign
-	#define EXT_cryptohmacsign
-	#define GET_cryptohmacsign(fl)  CAL_CMGETAPI( "cryptohmacsign" ) 
-	#define CAL_cryptohmacsign  cryptohmacsign
-	#define CHK_cryptohmacsign  TRUE
-	#define EXP_cryptohmacsign  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptohmacsign", (RTS_UINTPTR)cryptohmacsign, 1, 0x931A9470, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptohmacsign
-	#define EXT_CmpCryptocryptohmacsign
-	#define GET_CmpCryptocryptohmacsign  ERR_OK
-	#define CAL_CmpCryptocryptohmacsign  cryptohmacsign
-	#define CHK_CmpCryptocryptohmacsign  TRUE
-	#define EXP_CmpCryptocryptohmacsign  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptohmacsign", (RTS_UINTPTR)cryptohmacsign, 1, 0x931A9470, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptohmacsign
-	#define EXT_cryptohmacsign
-	#define GET_cryptohmacsign(fl)  CAL_CMGETAPI( "cryptohmacsign" ) 
-	#define CAL_cryptohmacsign  cryptohmacsign
-	#define CHK_cryptohmacsign  TRUE
-	#define EXP_cryptohmacsign  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptohmacsign", (RTS_UINTPTR)cryptohmacsign, 1, 0x931A9470, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptohmacsign  PFCRYPTOHMACSIGN_IEC pfcryptohmacsign;
-	#define EXT_cryptohmacsign  extern PFCRYPTOHMACSIGN_IEC pfcryptohmacsign;
-	#define GET_cryptohmacsign(fl)  s_pfCMGetAPI2( "cryptohmacsign", (RTS_VOID_FCTPTR *)&pfcryptohmacsign, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x931A9470, 0x03050B00)
-	#define CAL_cryptohmacsign  pfcryptohmacsign
-	#define CHK_cryptohmacsign  (pfcryptohmacsign != NULL)
-	#define EXP_cryptohmacsign   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptohmacsign", (RTS_UINTPTR)cryptohmacsign, 1, 0x931A9470, 0x03050B00) 
-#endif
-
-
-/**
- * Verify a recieved hashed message authentication code (HMAC).
- * :return: Function returns ERR_OK if the HMAC is valid.
- */
-typedef struct tagcryptohmacverify_struct
-{
-	RTS_IEC_HANDLE hAlgo;				/* VAR_INPUT */	/* Handle to the algorithm. */
-	RtsByteString *pData;				/* VAR_INPUT */	/* Data to calculate the HMAC. */
-	RtsCryptoKey key;					/* VAR_INPUT */	/* Key to be used for the HMAC calcuation */
-	RtsByteString *pSignature;			/* VAR_INPUT */	/* Recieved HMAC */
-	RTS_IEC_RESULT CryptoHMACVerify;	/* VAR_OUTPUT */	
-} cryptohmacverify_struct;
-
-void CDECL CDECL_EXT cryptohmacverify(cryptohmacverify_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOHMACVERIFY_IEC) (cryptohmacverify_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOHMACVERIFY_NOTIMPLEMENTED)
-	#define USE_cryptohmacverify
-	#define EXT_cryptohmacverify
-	#define GET_cryptohmacverify(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptohmacverify(p0) 
-	#define CHK_cryptohmacverify  FALSE
-	#define EXP_cryptohmacverify  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptohmacverify
-	#define EXT_cryptohmacverify
-	#define GET_cryptohmacverify(fl)  CAL_CMGETAPI( "cryptohmacverify" ) 
-	#define CAL_cryptohmacverify  cryptohmacverify
-	#define CHK_cryptohmacverify  TRUE
-	#define EXP_cryptohmacverify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptohmacverify", (RTS_UINTPTR)cryptohmacverify, 1, 0x49EEB4A9, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptohmacverify
-	#define EXT_cryptohmacverify
-	#define GET_cryptohmacverify(fl)  CAL_CMGETAPI( "cryptohmacverify" ) 
-	#define CAL_cryptohmacverify  cryptohmacverify
-	#define CHK_cryptohmacverify  TRUE
-	#define EXP_cryptohmacverify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptohmacverify", (RTS_UINTPTR)cryptohmacverify, 1, 0x49EEB4A9, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptohmacverify
-	#define EXT_CmpCryptocryptohmacverify
-	#define GET_CmpCryptocryptohmacverify  ERR_OK
-	#define CAL_CmpCryptocryptohmacverify  cryptohmacverify
-	#define CHK_CmpCryptocryptohmacverify  TRUE
-	#define EXP_CmpCryptocryptohmacverify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptohmacverify", (RTS_UINTPTR)cryptohmacverify, 1, 0x49EEB4A9, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptohmacverify
-	#define EXT_cryptohmacverify
-	#define GET_cryptohmacverify(fl)  CAL_CMGETAPI( "cryptohmacverify" ) 
-	#define CAL_cryptohmacverify  cryptohmacverify
-	#define CHK_cryptohmacverify  TRUE
-	#define EXP_cryptohmacverify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptohmacverify", (RTS_UINTPTR)cryptohmacverify, 1, 0x49EEB4A9, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptohmacverify  PFCRYPTOHMACVERIFY_IEC pfcryptohmacverify;
-	#define EXT_cryptohmacverify  extern PFCRYPTOHMACVERIFY_IEC pfcryptohmacverify;
-	#define GET_cryptohmacverify(fl)  s_pfCMGetAPI2( "cryptohmacverify", (RTS_VOID_FCTPTR *)&pfcryptohmacverify, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x49EEB4A9, 0x03050B00)
-	#define CAL_cryptohmacverify  pfcryptohmacverify
-	#define CHK_cryptohmacverify  (pfcryptohmacverify != NULL)
-	#define EXP_cryptohmacverify   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptohmacverify", (RTS_UINTPTR)cryptohmacverify, 1, 0x49EEB4A9, 0x03050B00) 
-#endif
-
-
-/**
- * <description>cryptokeyexit</description>
- */
-typedef struct tagcryptokeyexit_struct
-{
-	RtsCryptoKey *pKey;					/* VAR_INPUT */	
-	RTS_IEC_RESULT CryptoKeyExit;		/* VAR_OUTPUT */	
-} cryptokeyexit_struct;
-
-void CDECL CDECL_EXT cryptokeyexit(cryptokeyexit_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOKEYEXIT_IEC) (cryptokeyexit_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOKEYEXIT_NOTIMPLEMENTED)
-	#define USE_cryptokeyexit
-	#define EXT_cryptokeyexit
-	#define GET_cryptokeyexit(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptokeyexit(p0) 
-	#define CHK_cryptokeyexit  FALSE
-	#define EXP_cryptokeyexit  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptokeyexit
-	#define EXT_cryptokeyexit
-	#define GET_cryptokeyexit(fl)  CAL_CMGETAPI( "cryptokeyexit" ) 
-	#define CAL_cryptokeyexit  cryptokeyexit
-	#define CHK_cryptokeyexit  TRUE
-	#define EXP_cryptokeyexit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptokeyexit", (RTS_UINTPTR)cryptokeyexit, 1, 0xD71ED5F3, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptokeyexit
-	#define EXT_cryptokeyexit
-	#define GET_cryptokeyexit(fl)  CAL_CMGETAPI( "cryptokeyexit" ) 
-	#define CAL_cryptokeyexit  cryptokeyexit
-	#define CHK_cryptokeyexit  TRUE
-	#define EXP_cryptokeyexit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptokeyexit", (RTS_UINTPTR)cryptokeyexit, 1, 0xD71ED5F3, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptokeyexit
-	#define EXT_CmpCryptocryptokeyexit
-	#define GET_CmpCryptocryptokeyexit  ERR_OK
-	#define CAL_CmpCryptocryptokeyexit  cryptokeyexit
-	#define CHK_CmpCryptocryptokeyexit  TRUE
-	#define EXP_CmpCryptocryptokeyexit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptokeyexit", (RTS_UINTPTR)cryptokeyexit, 1, 0xD71ED5F3, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptokeyexit
-	#define EXT_cryptokeyexit
-	#define GET_cryptokeyexit(fl)  CAL_CMGETAPI( "cryptokeyexit" ) 
-	#define CAL_cryptokeyexit  cryptokeyexit
-	#define CHK_cryptokeyexit  TRUE
-	#define EXP_cryptokeyexit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptokeyexit", (RTS_UINTPTR)cryptokeyexit, 1, 0xD71ED5F3, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptokeyexit  PFCRYPTOKEYEXIT_IEC pfcryptokeyexit;
-	#define EXT_cryptokeyexit  extern PFCRYPTOKEYEXIT_IEC pfcryptokeyexit;
-	#define GET_cryptokeyexit(fl)  s_pfCMGetAPI2( "cryptokeyexit", (RTS_VOID_FCTPTR *)&pfcryptokeyexit, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xD71ED5F3, 0x03050B00)
-	#define CAL_cryptokeyexit  pfcryptokeyexit
-	#define CHK_cryptokeyexit  (pfcryptokeyexit != NULL)
-	#define EXP_cryptokeyexit   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptokeyexit", (RTS_UINTPTR)cryptokeyexit, 1, 0xD71ED5F3, 0x03050B00) 
-#endif
-
-
-/**
- * <description>cryptokeyinit</description>
- */
-typedef struct tagcryptokeyinit_struct
-{
-	RtsCryptoKey *pKey;					/* VAR_INPUT */	
-	RtsCryptoKeyStorage key;			/* VAR_INPUT */	
-	RTS_IEC_DINT keyType;				/* VAR_INPUT, Enum: RTSCRYPTOKEYTYPE */
-	RTS_IEC_RESULT CryptoKeyInit;		/* VAR_OUTPUT */	
-} cryptokeyinit_struct;
-
-void CDECL CDECL_EXT cryptokeyinit(cryptokeyinit_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOKEYINIT_IEC) (cryptokeyinit_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOKEYINIT_NOTIMPLEMENTED)
-	#define USE_cryptokeyinit
-	#define EXT_cryptokeyinit
-	#define GET_cryptokeyinit(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptokeyinit(p0) 
-	#define CHK_cryptokeyinit  FALSE
-	#define EXP_cryptokeyinit  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptokeyinit
-	#define EXT_cryptokeyinit
-	#define GET_cryptokeyinit(fl)  CAL_CMGETAPI( "cryptokeyinit" ) 
-	#define CAL_cryptokeyinit  cryptokeyinit
-	#define CHK_cryptokeyinit  TRUE
-	#define EXP_cryptokeyinit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptokeyinit", (RTS_UINTPTR)cryptokeyinit, 1, 0xE8E228B3, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptokeyinit
-	#define EXT_cryptokeyinit
-	#define GET_cryptokeyinit(fl)  CAL_CMGETAPI( "cryptokeyinit" ) 
-	#define CAL_cryptokeyinit  cryptokeyinit
-	#define CHK_cryptokeyinit  TRUE
-	#define EXP_cryptokeyinit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptokeyinit", (RTS_UINTPTR)cryptokeyinit, 1, 0xE8E228B3, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptokeyinit
-	#define EXT_CmpCryptocryptokeyinit
-	#define GET_CmpCryptocryptokeyinit  ERR_OK
-	#define CAL_CmpCryptocryptokeyinit  cryptokeyinit
-	#define CHK_CmpCryptocryptokeyinit  TRUE
-	#define EXP_CmpCryptocryptokeyinit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptokeyinit", (RTS_UINTPTR)cryptokeyinit, 1, 0xE8E228B3, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptokeyinit
-	#define EXT_cryptokeyinit
-	#define GET_cryptokeyinit(fl)  CAL_CMGETAPI( "cryptokeyinit" ) 
-	#define CAL_cryptokeyinit  cryptokeyinit
-	#define CHK_cryptokeyinit  TRUE
-	#define EXP_cryptokeyinit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptokeyinit", (RTS_UINTPTR)cryptokeyinit, 1, 0xE8E228B3, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptokeyinit  PFCRYPTOKEYINIT_IEC pfcryptokeyinit;
-	#define EXT_cryptokeyinit  extern PFCRYPTOKEYINIT_IEC pfcryptokeyinit;
-	#define GET_cryptokeyinit(fl)  s_pfCMGetAPI2( "cryptokeyinit", (RTS_VOID_FCTPTR *)&pfcryptokeyinit, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE8E228B3, 0x03050B00)
-	#define CAL_cryptokeyinit  pfcryptokeyinit
-	#define CHK_cryptokeyinit  (pfcryptokeyinit != NULL)
-	#define EXP_cryptokeyinit   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptokeyinit", (RTS_UINTPTR)cryptokeyinit, 1, 0xE8E228B3, 0x03050B00) 
-#endif
-
-
-/**
- * <description>cryptortsbytestringexit</description>
- */
-typedef struct tagcryptortsbytestringexit_struct
-{
-	RtsByteString *pByteString;			/* VAR_INPUT */	
-	RTS_IEC_RESULT CryptoRtsByteStringExit;	/* VAR_OUTPUT */	
-} cryptortsbytestringexit_struct;
-
-void CDECL CDECL_EXT cryptortsbytestringexit(cryptortsbytestringexit_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTORTSBYTESTRINGEXIT_IEC) (cryptortsbytestringexit_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTORTSBYTESTRINGEXIT_NOTIMPLEMENTED)
-	#define USE_cryptortsbytestringexit
-	#define EXT_cryptortsbytestringexit
-	#define GET_cryptortsbytestringexit(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptortsbytestringexit(p0) 
-	#define CHK_cryptortsbytestringexit  FALSE
-	#define EXP_cryptortsbytestringexit  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptortsbytestringexit
-	#define EXT_cryptortsbytestringexit
-	#define GET_cryptortsbytestringexit(fl)  CAL_CMGETAPI( "cryptortsbytestringexit" ) 
-	#define CAL_cryptortsbytestringexit  cryptortsbytestringexit
-	#define CHK_cryptortsbytestringexit  TRUE
-	#define EXP_cryptortsbytestringexit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptortsbytestringexit", (RTS_UINTPTR)cryptortsbytestringexit, 1, 0x16B297C5, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptortsbytestringexit
-	#define EXT_cryptortsbytestringexit
-	#define GET_cryptortsbytestringexit(fl)  CAL_CMGETAPI( "cryptortsbytestringexit" ) 
-	#define CAL_cryptortsbytestringexit  cryptortsbytestringexit
-	#define CHK_cryptortsbytestringexit  TRUE
-	#define EXP_cryptortsbytestringexit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptortsbytestringexit", (RTS_UINTPTR)cryptortsbytestringexit, 1, 0x16B297C5, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptortsbytestringexit
-	#define EXT_CmpCryptocryptortsbytestringexit
-	#define GET_CmpCryptocryptortsbytestringexit  ERR_OK
-	#define CAL_CmpCryptocryptortsbytestringexit  cryptortsbytestringexit
-	#define CHK_CmpCryptocryptortsbytestringexit  TRUE
-	#define EXP_CmpCryptocryptortsbytestringexit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptortsbytestringexit", (RTS_UINTPTR)cryptortsbytestringexit, 1, 0x16B297C5, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptortsbytestringexit
-	#define EXT_cryptortsbytestringexit
-	#define GET_cryptortsbytestringexit(fl)  CAL_CMGETAPI( "cryptortsbytestringexit" ) 
-	#define CAL_cryptortsbytestringexit  cryptortsbytestringexit
-	#define CHK_cryptortsbytestringexit  TRUE
-	#define EXP_cryptortsbytestringexit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptortsbytestringexit", (RTS_UINTPTR)cryptortsbytestringexit, 1, 0x16B297C5, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptortsbytestringexit  PFCRYPTORTSBYTESTRINGEXIT_IEC pfcryptortsbytestringexit;
-	#define EXT_cryptortsbytestringexit  extern PFCRYPTORTSBYTESTRINGEXIT_IEC pfcryptortsbytestringexit;
-	#define GET_cryptortsbytestringexit(fl)  s_pfCMGetAPI2( "cryptortsbytestringexit", (RTS_VOID_FCTPTR *)&pfcryptortsbytestringexit, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x16B297C5, 0x03050B00)
-	#define CAL_cryptortsbytestringexit  pfcryptortsbytestringexit
-	#define CHK_cryptortsbytestringexit  (pfcryptortsbytestringexit != NULL)
-	#define EXP_cryptortsbytestringexit   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptortsbytestringexit", (RTS_UINTPTR)cryptortsbytestringexit, 1, 0x16B297C5, 0x03050B00) 
-#endif
-
-
-/**
- * <description>cryptortsbytestringinit</description>
- */
-typedef struct tagcryptortsbytestringinit_struct
-{
-	RtsByteString *pByteString;			/* VAR_INPUT */	
-	RTS_IEC_RESULT CryptoRtsByteStringInit;	/* VAR_OUTPUT */	
-} cryptortsbytestringinit_struct;
-
-void CDECL CDECL_EXT cryptortsbytestringinit(cryptortsbytestringinit_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTORTSBYTESTRINGINIT_IEC) (cryptortsbytestringinit_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTORTSBYTESTRINGINIT_NOTIMPLEMENTED)
-	#define USE_cryptortsbytestringinit
-	#define EXT_cryptortsbytestringinit
-	#define GET_cryptortsbytestringinit(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptortsbytestringinit(p0) 
-	#define CHK_cryptortsbytestringinit  FALSE
-	#define EXP_cryptortsbytestringinit  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptortsbytestringinit
-	#define EXT_cryptortsbytestringinit
-	#define GET_cryptortsbytestringinit(fl)  CAL_CMGETAPI( "cryptortsbytestringinit" ) 
-	#define CAL_cryptortsbytestringinit  cryptortsbytestringinit
-	#define CHK_cryptortsbytestringinit  TRUE
-	#define EXP_cryptortsbytestringinit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptortsbytestringinit", (RTS_UINTPTR)cryptortsbytestringinit, 1, 0xC1B4C2F9, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptortsbytestringinit
-	#define EXT_cryptortsbytestringinit
-	#define GET_cryptortsbytestringinit(fl)  CAL_CMGETAPI( "cryptortsbytestringinit" ) 
-	#define CAL_cryptortsbytestringinit  cryptortsbytestringinit
-	#define CHK_cryptortsbytestringinit  TRUE
-	#define EXP_cryptortsbytestringinit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptortsbytestringinit", (RTS_UINTPTR)cryptortsbytestringinit, 1, 0xC1B4C2F9, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptortsbytestringinit
-	#define EXT_CmpCryptocryptortsbytestringinit
-	#define GET_CmpCryptocryptortsbytestringinit  ERR_OK
-	#define CAL_CmpCryptocryptortsbytestringinit  cryptortsbytestringinit
-	#define CHK_CmpCryptocryptortsbytestringinit  TRUE
-	#define EXP_CmpCryptocryptortsbytestringinit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptortsbytestringinit", (RTS_UINTPTR)cryptortsbytestringinit, 1, 0xC1B4C2F9, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptortsbytestringinit
-	#define EXT_cryptortsbytestringinit
-	#define GET_cryptortsbytestringinit(fl)  CAL_CMGETAPI( "cryptortsbytestringinit" ) 
-	#define CAL_cryptortsbytestringinit  cryptortsbytestringinit
-	#define CHK_cryptortsbytestringinit  TRUE
-	#define EXP_cryptortsbytestringinit  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptortsbytestringinit", (RTS_UINTPTR)cryptortsbytestringinit, 1, 0xC1B4C2F9, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptortsbytestringinit  PFCRYPTORTSBYTESTRINGINIT_IEC pfcryptortsbytestringinit;
-	#define EXT_cryptortsbytestringinit  extern PFCRYPTORTSBYTESTRINGINIT_IEC pfcryptortsbytestringinit;
-	#define GET_cryptortsbytestringinit(fl)  s_pfCMGetAPI2( "cryptortsbytestringinit", (RTS_VOID_FCTPTR *)&pfcryptortsbytestringinit, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xC1B4C2F9, 0x03050B00)
-	#define CAL_cryptortsbytestringinit  pfcryptortsbytestringinit
-	#define CHK_cryptortsbytestringinit  (pfcryptortsbytestringinit != NULL)
-	#define EXP_cryptortsbytestringinit   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptortsbytestringinit", (RTS_UINTPTR)cryptortsbytestringinit, 1, 0xC1B4C2F9, 0x03050B00) 
-#endif
-
-
-/**
- * Sign the data using a specific message digest and the private key.
- * :return: Result of the operation.
- */
-typedef struct tagcryptosignaturegenerate_struct
-{
-	RTS_IEC_HANDLE hAlgo;				/* VAR_INPUT */	/* Handle to the algorithm. */
-	RtsByteString *pData;				/* VAR_INPUT */	/* Data to be signed. */
-	RtsCryptoKey privateKey;			/* VAR_INPUT */	/* Key to be used signing. Has to be a private key. */
-	RtsByteString *pSignature;			/* VAR_INPUT */	/* Calculated signature of the data. */
-	RTS_IEC_RESULT CryptoSignatureGenerate;	/* VAR_OUTPUT */	
-} cryptosignaturegenerate_struct;
-
-void CDECL CDECL_EXT cryptosignaturegenerate(cryptosignaturegenerate_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOSIGNATUREGENERATE_IEC) (cryptosignaturegenerate_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOSIGNATUREGENERATE_NOTIMPLEMENTED)
-	#define USE_cryptosignaturegenerate
-	#define EXT_cryptosignaturegenerate
-	#define GET_cryptosignaturegenerate(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptosignaturegenerate(p0) 
-	#define CHK_cryptosignaturegenerate  FALSE
-	#define EXP_cryptosignaturegenerate  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptosignaturegenerate
-	#define EXT_cryptosignaturegenerate
-	#define GET_cryptosignaturegenerate(fl)  CAL_CMGETAPI( "cryptosignaturegenerate" ) 
-	#define CAL_cryptosignaturegenerate  cryptosignaturegenerate
-	#define CHK_cryptosignaturegenerate  TRUE
-	#define EXP_cryptosignaturegenerate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosignaturegenerate", (RTS_UINTPTR)cryptosignaturegenerate, 1, 0x0C2FBF80, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptosignaturegenerate
-	#define EXT_cryptosignaturegenerate
-	#define GET_cryptosignaturegenerate(fl)  CAL_CMGETAPI( "cryptosignaturegenerate" ) 
-	#define CAL_cryptosignaturegenerate  cryptosignaturegenerate
-	#define CHK_cryptosignaturegenerate  TRUE
-	#define EXP_cryptosignaturegenerate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosignaturegenerate", (RTS_UINTPTR)cryptosignaturegenerate, 1, 0x0C2FBF80, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptosignaturegenerate
-	#define EXT_CmpCryptocryptosignaturegenerate
-	#define GET_CmpCryptocryptosignaturegenerate  ERR_OK
-	#define CAL_CmpCryptocryptosignaturegenerate  cryptosignaturegenerate
-	#define CHK_CmpCryptocryptosignaturegenerate  TRUE
-	#define EXP_CmpCryptocryptosignaturegenerate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosignaturegenerate", (RTS_UINTPTR)cryptosignaturegenerate, 1, 0x0C2FBF80, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptosignaturegenerate
-	#define EXT_cryptosignaturegenerate
-	#define GET_cryptosignaturegenerate(fl)  CAL_CMGETAPI( "cryptosignaturegenerate" ) 
-	#define CAL_cryptosignaturegenerate  cryptosignaturegenerate
-	#define CHK_cryptosignaturegenerate  TRUE
-	#define EXP_cryptosignaturegenerate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosignaturegenerate", (RTS_UINTPTR)cryptosignaturegenerate, 1, 0x0C2FBF80, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptosignaturegenerate  PFCRYPTOSIGNATUREGENERATE_IEC pfcryptosignaturegenerate;
-	#define EXT_cryptosignaturegenerate  extern PFCRYPTOSIGNATUREGENERATE_IEC pfcryptosignaturegenerate;
-	#define GET_cryptosignaturegenerate(fl)  s_pfCMGetAPI2( "cryptosignaturegenerate", (RTS_VOID_FCTPTR *)&pfcryptosignaturegenerate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0C2FBF80, 0x03050B00)
-	#define CAL_cryptosignaturegenerate  pfcryptosignaturegenerate
-	#define CHK_cryptosignaturegenerate  (pfcryptosignaturegenerate != NULL)
-	#define EXP_cryptosignaturegenerate   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosignaturegenerate", (RTS_UINTPTR)cryptosignaturegenerate, 1, 0x0C2FBF80, 0x03050B00) 
-#endif
-
-
-/**
- * Verify a recieved signature
- * :return: unction returns ERR_OK if the signature is valid.
- */
-typedef struct tagcryptosignatureverify_struct
-{
-	RTS_IEC_HANDLE hAlgo;				/* VAR_INPUT */	/* Handle to the algorithm. */
-	RtsByteString *pData;				/* VAR_INPUT */	/* Data to verify. */
-	RtsCryptoKey publicKey;				/* VAR_INPUT */	/* Public key of the sender. */
-	RtsByteString *pSignature;			/* VAR_INPUT */	/* Received signature. */
-	RTS_IEC_RESULT CryptoSignatureVerify;	/* VAR_OUTPUT */	
-} cryptosignatureverify_struct;
-
-void CDECL CDECL_EXT cryptosignatureverify(cryptosignatureverify_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOSIGNATUREVERIFY_IEC) (cryptosignatureverify_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOSIGNATUREVERIFY_NOTIMPLEMENTED)
-	#define USE_cryptosignatureverify
-	#define EXT_cryptosignatureverify
-	#define GET_cryptosignatureverify(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptosignatureverify(p0) 
-	#define CHK_cryptosignatureverify  FALSE
-	#define EXP_cryptosignatureverify  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptosignatureverify
-	#define EXT_cryptosignatureverify
-	#define GET_cryptosignatureverify(fl)  CAL_CMGETAPI( "cryptosignatureverify" ) 
-	#define CAL_cryptosignatureverify  cryptosignatureverify
-	#define CHK_cryptosignatureverify  TRUE
-	#define EXP_cryptosignatureverify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosignatureverify", (RTS_UINTPTR)cryptosignatureverify, 1, 0x3F425BB9, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptosignatureverify
-	#define EXT_cryptosignatureverify
-	#define GET_cryptosignatureverify(fl)  CAL_CMGETAPI( "cryptosignatureverify" ) 
-	#define CAL_cryptosignatureverify  cryptosignatureverify
-	#define CHK_cryptosignatureverify  TRUE
-	#define EXP_cryptosignatureverify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosignatureverify", (RTS_UINTPTR)cryptosignatureverify, 1, 0x3F425BB9, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptosignatureverify
-	#define EXT_CmpCryptocryptosignatureverify
-	#define GET_CmpCryptocryptosignatureverify  ERR_OK
-	#define CAL_CmpCryptocryptosignatureverify  cryptosignatureverify
-	#define CHK_CmpCryptocryptosignatureverify  TRUE
-	#define EXP_CmpCryptocryptosignatureverify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosignatureverify", (RTS_UINTPTR)cryptosignatureverify, 1, 0x3F425BB9, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptosignatureverify
-	#define EXT_cryptosignatureverify
-	#define GET_cryptosignatureverify(fl)  CAL_CMGETAPI( "cryptosignatureverify" ) 
-	#define CAL_cryptosignatureverify  cryptosignatureverify
-	#define CHK_cryptosignatureverify  TRUE
-	#define EXP_cryptosignatureverify  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosignatureverify", (RTS_UINTPTR)cryptosignatureverify, 1, 0x3F425BB9, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptosignatureverify  PFCRYPTOSIGNATUREVERIFY_IEC pfcryptosignatureverify;
-	#define EXT_cryptosignatureverify  extern PFCRYPTOSIGNATUREVERIFY_IEC pfcryptosignatureverify;
-	#define GET_cryptosignatureverify(fl)  s_pfCMGetAPI2( "cryptosignatureverify", (RTS_VOID_FCTPTR *)&pfcryptosignatureverify, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x3F425BB9, 0x03050B00)
-	#define CAL_cryptosignatureverify  pfcryptosignatureverify
-	#define CHK_cryptosignatureverify  (pfcryptosignatureverify != NULL)
-	#define EXP_cryptosignatureverify   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosignatureverify", (RTS_UINTPTR)cryptosignatureverify, 1, 0x3F425BB9, 0x03050B00) 
-#endif
-
-
-/**
- * Perform a symmetric decryption using the algorithm handle.
- * :return: Result of the operation
- */
-typedef struct tagcryptosymmetricdecrypt_struct
-{
-	RTS_IEC_HANDLE hAlgo;				/* VAR_INPUT */	/* Handle to the algorithm. */
-	RtsByteString *pCipherText;			/* VAR_INPUT */	/* Data to be decrypted */
-	RtsCryptoKey key;					/* VAR_INPUT */	/* Key to decrypt the data. Has to be a KeyType_Key key. */
-	RtsByteString *pInitVector;			/* VAR_INPUT */	/* Init vector of the decrypt. */
-	RTS_IEC_BOOL xEnablePadding;		/* VAR_INPUT */	/* Enables padding. If this is not enabled the ciphertext length has to match a multiple of the block length. */
-	RtsByteString *pPlainText;			/* VAR_INPUT */	/* Decrypted data. */
-	RTS_IEC_RESULT CryptoSymmetricDecrypt;	/* VAR_OUTPUT */	
-} cryptosymmetricdecrypt_struct;
-
-void CDECL CDECL_EXT cryptosymmetricdecrypt(cryptosymmetricdecrypt_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOSYMMETRICDECRYPT_IEC) (cryptosymmetricdecrypt_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOSYMMETRICDECRYPT_NOTIMPLEMENTED)
-	#define USE_cryptosymmetricdecrypt
-	#define EXT_cryptosymmetricdecrypt
-	#define GET_cryptosymmetricdecrypt(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptosymmetricdecrypt(p0) 
-	#define CHK_cryptosymmetricdecrypt  FALSE
-	#define EXP_cryptosymmetricdecrypt  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptosymmetricdecrypt
-	#define EXT_cryptosymmetricdecrypt
-	#define GET_cryptosymmetricdecrypt(fl)  CAL_CMGETAPI( "cryptosymmetricdecrypt" ) 
-	#define CAL_cryptosymmetricdecrypt  cryptosymmetricdecrypt
-	#define CHK_cryptosymmetricdecrypt  TRUE
-	#define EXP_cryptosymmetricdecrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosymmetricdecrypt", (RTS_UINTPTR)cryptosymmetricdecrypt, 1, 0xF3963545, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptosymmetricdecrypt
-	#define EXT_cryptosymmetricdecrypt
-	#define GET_cryptosymmetricdecrypt(fl)  CAL_CMGETAPI( "cryptosymmetricdecrypt" ) 
-	#define CAL_cryptosymmetricdecrypt  cryptosymmetricdecrypt
-	#define CHK_cryptosymmetricdecrypt  TRUE
-	#define EXP_cryptosymmetricdecrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosymmetricdecrypt", (RTS_UINTPTR)cryptosymmetricdecrypt, 1, 0xF3963545, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptosymmetricdecrypt
-	#define EXT_CmpCryptocryptosymmetricdecrypt
-	#define GET_CmpCryptocryptosymmetricdecrypt  ERR_OK
-	#define CAL_CmpCryptocryptosymmetricdecrypt  cryptosymmetricdecrypt
-	#define CHK_CmpCryptocryptosymmetricdecrypt  TRUE
-	#define EXP_CmpCryptocryptosymmetricdecrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosymmetricdecrypt", (RTS_UINTPTR)cryptosymmetricdecrypt, 1, 0xF3963545, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptosymmetricdecrypt
-	#define EXT_cryptosymmetricdecrypt
-	#define GET_cryptosymmetricdecrypt(fl)  CAL_CMGETAPI( "cryptosymmetricdecrypt" ) 
-	#define CAL_cryptosymmetricdecrypt  cryptosymmetricdecrypt
-	#define CHK_cryptosymmetricdecrypt  TRUE
-	#define EXP_cryptosymmetricdecrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosymmetricdecrypt", (RTS_UINTPTR)cryptosymmetricdecrypt, 1, 0xF3963545, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptosymmetricdecrypt  PFCRYPTOSYMMETRICDECRYPT_IEC pfcryptosymmetricdecrypt;
-	#define EXT_cryptosymmetricdecrypt  extern PFCRYPTOSYMMETRICDECRYPT_IEC pfcryptosymmetricdecrypt;
-	#define GET_cryptosymmetricdecrypt(fl)  s_pfCMGetAPI2( "cryptosymmetricdecrypt", (RTS_VOID_FCTPTR *)&pfcryptosymmetricdecrypt, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xF3963545, 0x03050B00)
-	#define CAL_cryptosymmetricdecrypt  pfcryptosymmetricdecrypt
-	#define CHK_cryptosymmetricdecrypt  (pfcryptosymmetricdecrypt != NULL)
-	#define EXP_cryptosymmetricdecrypt   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosymmetricdecrypt", (RTS_UINTPTR)cryptosymmetricdecrypt, 1, 0xF3963545, 0x03050B00) 
-#endif
-
-
-/**
- * Perform a symmetric encryption using the algorithm handle.
- * :return: Result of the operation
- */
-typedef struct tagcryptosymmetricencrypt_struct
-{
-	RTS_IEC_HANDLE hAlgo;				/* VAR_INPUT */	/* Handle to the algorithm. */
-	RtsByteString *pPlainText;			/* VAR_INPUT */	/* Data to be encrypted */
-	RtsCryptoKey key;					/* VAR_INPUT */	/* Key to encrypt the data. Has to be a KeyType_Key key. */
-	RtsByteString *pInitVector;			/* VAR_INPUT */	/* Init vector of the ecryption */
-	RTS_IEC_BOOL xEnablePadding;		/* VAR_INPUT */	/* Enables padding. If this is not enabled the plaintext length has to match a multiple of the block length. */
-	RtsByteString *pCipherText;			/* VAR_INPUT */	/* Encrypted data. */
-	RTS_IEC_RESULT CryptoSymmetricEncrypt;	/* VAR_OUTPUT */	
-} cryptosymmetricencrypt_struct;
-
-void CDECL CDECL_EXT cryptosymmetricencrypt(cryptosymmetricencrypt_struct *p);
-typedef void (CDECL CDECL_EXT* PFCRYPTOSYMMETRICENCRYPT_IEC) (cryptosymmetricencrypt_struct *p);
-#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOSYMMETRICENCRYPT_NOTIMPLEMENTED)
-	#define USE_cryptosymmetricencrypt
-	#define EXT_cryptosymmetricencrypt
-	#define GET_cryptosymmetricencrypt(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cryptosymmetricencrypt(p0) 
-	#define CHK_cryptosymmetricencrypt  FALSE
-	#define EXP_cryptosymmetricencrypt  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cryptosymmetricencrypt
-	#define EXT_cryptosymmetricencrypt
-	#define GET_cryptosymmetricencrypt(fl)  CAL_CMGETAPI( "cryptosymmetricencrypt" ) 
-	#define CAL_cryptosymmetricencrypt  cryptosymmetricencrypt
-	#define CHK_cryptosymmetricencrypt  TRUE
-	#define EXP_cryptosymmetricencrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosymmetricencrypt", (RTS_UINTPTR)cryptosymmetricencrypt, 1, 0x8D659084, 0x03050B00) 
-#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
-	#define USE_cryptosymmetricencrypt
-	#define EXT_cryptosymmetricencrypt
-	#define GET_cryptosymmetricencrypt(fl)  CAL_CMGETAPI( "cryptosymmetricencrypt" ) 
-	#define CAL_cryptosymmetricencrypt  cryptosymmetricencrypt
-	#define CHK_cryptosymmetricencrypt  TRUE
-	#define EXP_cryptosymmetricencrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosymmetricencrypt", (RTS_UINTPTR)cryptosymmetricencrypt, 1, 0x8D659084, 0x03050B00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpCryptocryptosymmetricencrypt
-	#define EXT_CmpCryptocryptosymmetricencrypt
-	#define GET_CmpCryptocryptosymmetricencrypt  ERR_OK
-	#define CAL_CmpCryptocryptosymmetricencrypt  cryptosymmetricencrypt
-	#define CHK_CmpCryptocryptosymmetricencrypt  TRUE
-	#define EXP_CmpCryptocryptosymmetricencrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosymmetricencrypt", (RTS_UINTPTR)cryptosymmetricencrypt, 1, 0x8D659084, 0x03050B00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cryptosymmetricencrypt
-	#define EXT_cryptosymmetricencrypt
-	#define GET_cryptosymmetricencrypt(fl)  CAL_CMGETAPI( "cryptosymmetricencrypt" ) 
-	#define CAL_cryptosymmetricencrypt  cryptosymmetricencrypt
-	#define CHK_cryptosymmetricencrypt  TRUE
-	#define EXP_cryptosymmetricencrypt  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosymmetricencrypt", (RTS_UINTPTR)cryptosymmetricencrypt, 1, 0x8D659084, 0x03050B00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cryptosymmetricencrypt  PFCRYPTOSYMMETRICENCRYPT_IEC pfcryptosymmetricencrypt;
-	#define EXT_cryptosymmetricencrypt  extern PFCRYPTOSYMMETRICENCRYPT_IEC pfcryptosymmetricencrypt;
-	#define GET_cryptosymmetricencrypt(fl)  s_pfCMGetAPI2( "cryptosymmetricencrypt", (RTS_VOID_FCTPTR *)&pfcryptosymmetricencrypt, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x8D659084, 0x03050B00)
-	#define CAL_cryptosymmetricencrypt  pfcryptosymmetricencrypt
-	#define CHK_cryptosymmetricencrypt  (pfcryptosymmetricencrypt != NULL)
-	#define EXP_cryptosymmetricencrypt   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cryptosymmetricencrypt", (RTS_UINTPTR)cryptosymmetricencrypt, 1, 0x8D659084, 0x03050B00) 
-#endif
-
+	RtsScryptParameter scrypt;		
+} RtsKdfParameter;
 
 #ifdef __cplusplus
 }
@@ -1202,10 +157,22 @@ typedef void (CDECL CDECL_EXT* PFCRYPTOSYMMETRICENCRYPT_IEC) (cryptosymmetricenc
 /** EXTERN LIB SECTION END **/
 
 /**
+ * <category>SecuritySettings</category>
+ * <description>Editable security setting: Minumum asymmetric RSA key length
+ * </description>
+ */
+#define CMPCRYPTO_KEY_INT_MINRSALEN					CMPSETTINGS_CATEGORY_SECURITY ".RSAMinKeyLen"
+#define CMPCRYPTO_KEY_INT_MINRSALEN_DESC			"Mininmal key length for RSA keys."
+
+#ifndef CMPCRYPTO_VALUE_MINRSALEN_DEFAULT
+	#define CMPCRYPTO_VALUE_MINRSALEN_DEFAULT		2048
+#endif
+
+/**
  * <description>Information of symmetric ciphers.</description>
  * <param name="ui32KeyLen">The length of the key id bytes.</param>
  * <param name="ui32BlockSize">Block size of the cipher in bytes.</param>
- * <param name="ui32InitVLen">Init vector size in bytes.</param>
+ * <param name="ui32InitVLen">Initialization vector size in bytes.</param>
  */
 typedef struct
 {
@@ -1225,7 +192,7 @@ typedef struct
 
 
 /**
- * <description>Information of a specific crypto algorithm.</description>
+ * <description>Information of a specific cryptographic algorithm.</description>
  * <param name="ui32CryptoType">Type of the algorithm. See: Crypto Types</param>
  * <param name="ui32CryptoId">ID of the algorithm.</param>
  * <param name="pszCryptoName">Name of the algorithm.</param>
@@ -1254,7 +221,7 @@ extern "C" {
  * <description>Get a handle to the algorithm using a specific ID</description>
  * <param name="ui32CryptoID" type="IN">ID of the algorithm</param>
  * <param name="pResult" type="IN">Error code: Result of the operation. Can be NULL.</param>
- * <result>Handle to the crypto algorithm</result>
+ * <result>Handle to the cryptographic algorithm</result>
  */
 RTS_HANDLE CDECL CryptoGetAlgorithmById(RTS_UI32 ui32CryptoID, RTS_RESULT* pResult);
 typedef RTS_HANDLE (CDECL * PFCRYPTOGETALGORITHMBYID) (RTS_UI32 ui32CryptoID, RTS_RESULT* pResult);
@@ -1307,13 +274,13 @@ typedef RTS_HANDLE (CDECL * PFCRYPTOGETALGORITHMBYID) (RTS_UI32 ui32CryptoID, RT
 
 /**
  * <description>Get the first algorithm matching the type given. Use this with the 
- * GetNext function to iterate over algorithmes of a specific type.</description>
+ * GetNext function to iterate over algorithms of a specific type.</description>
  * <param name="ui32CryptoType" type="IN">Type of the algorithm. See: Crypto Types</param>
  * <param name="pszName" type="OUT">Name of the algorithm. Can be NULL.</param>
  * <param name="i32MaxNameLen" type="OUT">Maximum length of the name buffer</param>
  * <param name="pui32CryptoID" type="OUT">ID of the algorithm.</param>
  * <param name="pResult" type="IN">Error code: Result of the operation. Can be NULL.</param>
- * <result>Handle to the crypto algorithm</result>
+ * <result>Handle to the cryptographic algorithm</result>
  */
 RTS_HANDLE CDECL CryptoGetFirstAlgorithm(RTS_UI32 ui32CryptoType, char *pszName, RTS_I32 i32MaxNameLen, RTS_UI32 *pui32CryptoID, RTS_RESULT *pResult);
 typedef RTS_HANDLE (CDECL * PFCRYPTOGETFIRSTALGORITHM) (RTS_UI32 ui32CryptoType, char *pszName, RTS_I32 i32MaxNameLen, RTS_UI32 *pui32CryptoID, RTS_RESULT *pResult);
@@ -1372,7 +339,7 @@ typedef RTS_HANDLE (CDECL * PFCRYPTOGETFIRSTALGORITHM) (RTS_UI32 ui32CryptoType,
  * <param name="i32MaxNameLen" type="OUT">Maximum length of the name buffer</param>
  * <param name="pui32CryptoID" type="OUT">ID of the algorithm.</param>
  * <param name="pResult" type="IN">Error code: Result of the operation. Can be NULL.</param>
- * <result>Handle to the crypto algorithm</result>
+ * <result>Handle to the cryptographic algorithm</result>
  */
 RTS_HANDLE CDECL CryptoGetNextAlgorithm(RTS_HANDLE hCrypto, RTS_UI32 ui32CryptoType, char *pszName, RTS_I32 i32MaxNameLen, RTS_UI32 *pui32CryptoID, RTS_RESULT *pResult);
 typedef RTS_HANDLE (CDECL * PFCRYPTOGETNEXTALGORITHM) (RTS_HANDLE hCrypto, RTS_UI32 ui32CryptoType, char *pszName, RTS_I32 i32MaxNameLen, RTS_UI32 *pui32CryptoID, RTS_RESULT *pResult);
@@ -1483,8 +450,8 @@ typedef RtsCryptoInfo* (CDECL * PFCRYPTOGETALGORITHMINFO) (RTS_HANDLE hCrypto, R
  * <param name="hAlgo" type="IN">Handle to the algorithm.</param>
  * <param name="pPlainText" type="IN">Data to be encrypted</param>
  * <param name="key" type="IN">Key to encrypt the data. Has to be a KeyType_Key key.</param>
- * <param name="pInitVector" type="IN">Init vector of the ecryption</param>
- * <param name="bEnablePadding" type="IN">Enables the padding of the algorithm. If padding is not enabled the plaintext length has to match a multiple of the cipher block length</param>
+ * <param name="pInitVector" type="IN">Initialization vector of the encryption</param>
+ * <param name="bEnablePadding" type="IN">Enables the padding of the algorithm. If padding is not enabled the plain text length has to match a multiple of the cipher block length</param>
  * <param name="pCipherText" type="OUT">Encrypted data.</param>
  * <result>Error code: Result of the operation</result>
  */
@@ -1542,8 +509,8 @@ typedef RTS_RESULT (CDECL * PFCRYPTOSYMMETRICENCRYPT) (RTS_HANDLE hAlgo, RtsByte
  * <param name="hAlgo" type="IN">Handle to the algorithm.</param>
  * <param name="pCipherText" type="IN">Data to be decrypted</param>
  * <param name="key" type="IN">Key to decrypt the data. Has to be a KeyType_Key key.</param>
- * <param name="pInitVector" type="IN">Init vector of the decrypt.</param>
- * <param name="bEnablePadding" type="IN">Enables the padding of the algorithm. If padding is not enabled the plaintext length has to match a multiple of the cipher block length</param>
+ * <param name="pInitVector" type="IN">Initialization vector of the decrypt.</param>
+ * <param name="bEnablePadding" type="IN">Enables the padding of the algorithm. If padding is not enabled the plain text length has to match a multiple of the cipher block length</param>
  * <param name="pCipherText" type="OUT">Decrypted data.</param>
  * <result>Error code: Result of the operation</result>
  */
@@ -1712,7 +679,7 @@ typedef RTS_RESULT (CDECL * PFCRYPTOASYMMETRICDECRYPT) (RTS_HANDLE hAlgo, RtsByt
 
 /**
  * <description>Get the private key size in bits.</description>
- * <param name="priavteKey" type="IN">Asymmetric key of intrest. Use X509CertGetPublicKey or X509CertGetPrivateKey to get the asymmetric key.</param>
+ * <param name="priavteKey" type="IN">Asymmetric key of interest. Use X509CertGetPublicKey or X509CertGetPrivateKey to get the asymmetric key.</param>
  * <param name="pResult" type="OUT">Error code: Operation Result</param>
  * <result>Size of the private key in bits</result>
  */
@@ -1760,6 +727,375 @@ typedef RTS_UI32 (CDECL * PFCRYPTOGETASYMMETRICKEYLENGTH) (RtsCryptoKey asymmetr
 	#define CAL_CryptoGetAsymmetricKeyLength  pfCryptoGetAsymmetricKeyLength
 	#define CHK_CryptoGetAsymmetricKeyLength  (pfCryptoGetAsymmetricKeyLength != NULL)
 	#define EXP_CryptoGetAsymmetricKeyLength  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoGetAsymmetricKeyLength", (RTS_UINTPTR)CryptoGetAsymmetricKeyLength, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Generate an asymmetric key pair that can be used by the specified algorithm.</description>
+ * <param name="hAlgo" type="IN">Handle to the algorithm.</param>
+ * <param name="ui32KeyLen" type="IN">Length of the key in bits. If 0, the configured minimal key length is used. May be omitted on ECC keys.</param>
+ * <param name="pKeyPair" type="OUT">The generated key pair. Can be used for public or private key operations.</param>
+ * <param name="pPublicKey" type="OUT">The corresponding public key. May be used for any suitable operation.</param>
+ * <result>Operation result.
+ *		- ERR_OK: KeyPair generated.
+ *		- ERR_INVALID_HANDLE: hAlgo was not a valid handle.
+ *		- ERR_PARAMETER: pKeyPair was NULL
+ *		- ERR_SIZE_MISMATCH: ui32KeyLen did not meet the minimal required key length.
+ *		- ERR_NOT_SUPPORTED: The algorithm passed with hAlgo does not support key generation.
+ *		- ERR_FAILED: Some internal error happened.
+ * </result>
+ */	
+RTS_RESULT CDECL CryptoGenerateAsymmetricKeyPair(RTS_IEC_HANDLE hAlgo, RTS_IEC_UDINT ui32KeyLen, RtsCryptoKey *pKeyPair, RTS_BOOL bPrivateKeyExportable);
+typedef RTS_RESULT (CDECL * PFCRYPTOGENERATEASYMMETRICKEYPAIR) (RTS_IEC_HANDLE hAlgo, RTS_IEC_UDINT ui32KeyLen, RtsCryptoKey *pKeyPair, RTS_BOOL bPrivateKeyExportable);
+#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOGENERATEASYMMETRICKEYPAIR_NOTIMPLEMENTED)
+	#define USE_CryptoGenerateAsymmetricKeyPair
+	#define EXT_CryptoGenerateAsymmetricKeyPair
+	#define GET_CryptoGenerateAsymmetricKeyPair(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CryptoGenerateAsymmetricKeyPair(p0,p1,p2,p3)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CryptoGenerateAsymmetricKeyPair  FALSE
+	#define EXP_CryptoGenerateAsymmetricKeyPair  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CryptoGenerateAsymmetricKeyPair
+	#define EXT_CryptoGenerateAsymmetricKeyPair
+	#define GET_CryptoGenerateAsymmetricKeyPair(fl)  CAL_CMGETAPI( "CryptoGenerateAsymmetricKeyPair" ) 
+	#define CAL_CryptoGenerateAsymmetricKeyPair  CryptoGenerateAsymmetricKeyPair
+	#define CHK_CryptoGenerateAsymmetricKeyPair  TRUE
+	#define EXP_CryptoGenerateAsymmetricKeyPair  CAL_CMEXPAPI( "CryptoGenerateAsymmetricKeyPair" ) 
+#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
+	#define USE_CryptoGenerateAsymmetricKeyPair
+	#define EXT_CryptoGenerateAsymmetricKeyPair
+	#define GET_CryptoGenerateAsymmetricKeyPair(fl)  CAL_CMGETAPI( "CryptoGenerateAsymmetricKeyPair" ) 
+	#define CAL_CryptoGenerateAsymmetricKeyPair  CryptoGenerateAsymmetricKeyPair
+	#define CHK_CryptoGenerateAsymmetricKeyPair  TRUE
+	#define EXP_CryptoGenerateAsymmetricKeyPair  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoGenerateAsymmetricKeyPair", (RTS_UINTPTR)CryptoGenerateAsymmetricKeyPair, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpCryptoCryptoGenerateAsymmetricKeyPair
+	#define EXT_CmpCryptoCryptoGenerateAsymmetricKeyPair
+	#define GET_CmpCryptoCryptoGenerateAsymmetricKeyPair  ERR_OK
+	#define CAL_CmpCryptoCryptoGenerateAsymmetricKeyPair pICmpCrypto->ICryptoGenerateAsymmetricKeyPair
+	#define CHK_CmpCryptoCryptoGenerateAsymmetricKeyPair (pICmpCrypto != NULL)
+	#define EXP_CmpCryptoCryptoGenerateAsymmetricKeyPair  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CryptoGenerateAsymmetricKeyPair
+	#define EXT_CryptoGenerateAsymmetricKeyPair
+	#define GET_CryptoGenerateAsymmetricKeyPair(fl)  CAL_CMGETAPI( "CryptoGenerateAsymmetricKeyPair" ) 
+	#define CAL_CryptoGenerateAsymmetricKeyPair pICmpCrypto->ICryptoGenerateAsymmetricKeyPair
+	#define CHK_CryptoGenerateAsymmetricKeyPair (pICmpCrypto != NULL)
+	#define EXP_CryptoGenerateAsymmetricKeyPair  CAL_CMEXPAPI( "CryptoGenerateAsymmetricKeyPair" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CryptoGenerateAsymmetricKeyPair  PFCRYPTOGENERATEASYMMETRICKEYPAIR pfCryptoGenerateAsymmetricKeyPair;
+	#define EXT_CryptoGenerateAsymmetricKeyPair  extern PFCRYPTOGENERATEASYMMETRICKEYPAIR pfCryptoGenerateAsymmetricKeyPair;
+	#define GET_CryptoGenerateAsymmetricKeyPair(fl)  s_pfCMGetAPI2( "CryptoGenerateAsymmetricKeyPair", (RTS_VOID_FCTPTR *)&pfCryptoGenerateAsymmetricKeyPair, (fl), 0, 0)
+	#define CAL_CryptoGenerateAsymmetricKeyPair  pfCryptoGenerateAsymmetricKeyPair
+	#define CHK_CryptoGenerateAsymmetricKeyPair  (pfCryptoGenerateAsymmetricKeyPair != NULL)
+	#define EXP_CryptoGenerateAsymmetricKeyPair  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoGenerateAsymmetricKeyPair", (RTS_UINTPTR)CryptoGenerateAsymmetricKeyPair, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>This function can be used to export asymmetric keys.</description>
+ * <param name="key" type="IN">The key to be exported.</param>
+ * <param name="bBase64" type="IN">Export the key in BASE64 encoding. Otherwise ASN.1 will be used.</param>
+ * <param name="bPrivateKey" type="IN">TRUE: Export the private key. FALSE: Export the public key.</param>
+ * <param name="pData" type="OUT">Pointer to the buffer where to store the key. Note: 
+ *		If pData->pByData == NULL, the needed length to store the key wil be returned in ui32Len;
+ *		If pData->pByData != NULL, the data will be written. A Maximum of ui32MaxLen will be written. The written lenth is stored within ui32Len.</param>
+ * <result>Operation result. 
+ *		- ERR_OK: Key exported successfully or lenght returned.
+ *		- ERR_PARAMETER: key was invalid or pData was NULL.
+ *		- ERR_NOT_SUPPORTED: It is not allowed to export this private key.</result>
+ *		- ERR_FAILED: The key was not exported.
+ * </result>
+ */
+RTS_RESULT CDECL CryptoExportAsymmetricKey(RtsCryptoKey key, RTS_BOOL bBase64, RTS_BOOL bPrivateKey, RtsByteString *pData);
+typedef RTS_RESULT (CDECL * PFCRYPTOEXPORTASYMMETRICKEY) (RtsCryptoKey key, RTS_BOOL bBase64, RTS_BOOL bPrivateKey, RtsByteString *pData);
+#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOEXPORTASYMMETRICKEY_NOTIMPLEMENTED)
+	#define USE_CryptoExportAsymmetricKey
+	#define EXT_CryptoExportAsymmetricKey
+	#define GET_CryptoExportAsymmetricKey(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CryptoExportAsymmetricKey(p0,p1,p2,p3)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CryptoExportAsymmetricKey  FALSE
+	#define EXP_CryptoExportAsymmetricKey  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CryptoExportAsymmetricKey
+	#define EXT_CryptoExportAsymmetricKey
+	#define GET_CryptoExportAsymmetricKey(fl)  CAL_CMGETAPI( "CryptoExportAsymmetricKey" ) 
+	#define CAL_CryptoExportAsymmetricKey  CryptoExportAsymmetricKey
+	#define CHK_CryptoExportAsymmetricKey  TRUE
+	#define EXP_CryptoExportAsymmetricKey  CAL_CMEXPAPI( "CryptoExportAsymmetricKey" ) 
+#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
+	#define USE_CryptoExportAsymmetricKey
+	#define EXT_CryptoExportAsymmetricKey
+	#define GET_CryptoExportAsymmetricKey(fl)  CAL_CMGETAPI( "CryptoExportAsymmetricKey" ) 
+	#define CAL_CryptoExportAsymmetricKey  CryptoExportAsymmetricKey
+	#define CHK_CryptoExportAsymmetricKey  TRUE
+	#define EXP_CryptoExportAsymmetricKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoExportAsymmetricKey", (RTS_UINTPTR)CryptoExportAsymmetricKey, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpCryptoCryptoExportAsymmetricKey
+	#define EXT_CmpCryptoCryptoExportAsymmetricKey
+	#define GET_CmpCryptoCryptoExportAsymmetricKey  ERR_OK
+	#define CAL_CmpCryptoCryptoExportAsymmetricKey pICmpCrypto->ICryptoExportAsymmetricKey
+	#define CHK_CmpCryptoCryptoExportAsymmetricKey (pICmpCrypto != NULL)
+	#define EXP_CmpCryptoCryptoExportAsymmetricKey  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CryptoExportAsymmetricKey
+	#define EXT_CryptoExportAsymmetricKey
+	#define GET_CryptoExportAsymmetricKey(fl)  CAL_CMGETAPI( "CryptoExportAsymmetricKey" ) 
+	#define CAL_CryptoExportAsymmetricKey pICmpCrypto->ICryptoExportAsymmetricKey
+	#define CHK_CryptoExportAsymmetricKey (pICmpCrypto != NULL)
+	#define EXP_CryptoExportAsymmetricKey  CAL_CMEXPAPI( "CryptoExportAsymmetricKey" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CryptoExportAsymmetricKey  PFCRYPTOEXPORTASYMMETRICKEY pfCryptoExportAsymmetricKey;
+	#define EXT_CryptoExportAsymmetricKey  extern PFCRYPTOEXPORTASYMMETRICKEY pfCryptoExportAsymmetricKey;
+	#define GET_CryptoExportAsymmetricKey(fl)  s_pfCMGetAPI2( "CryptoExportAsymmetricKey", (RTS_VOID_FCTPTR *)&pfCryptoExportAsymmetricKey, (fl), 0, 0)
+	#define CAL_CryptoExportAsymmetricKey  pfCryptoExportAsymmetricKey
+	#define CHK_CryptoExportAsymmetricKey  (pfCryptoExportAsymmetricKey != NULL)
+	#define EXP_CryptoExportAsymmetricKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoExportAsymmetricKey", (RTS_UINTPTR)CryptoExportAsymmetricKey, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>This function can be used to import asymmetric keys.</description>
+ * <param name="data" type="IN">The data to be imported.</param>
+ * <param name="bBase64" type="IN">TRUE: Import the key in BASE64 encoding. FALSE: Import the key in ASN.1 encoding.</param>
+ * <param name="bPrivateKey" type="IN">TRUE: Import a private key. FALSE:  Import a public key.</param>
+ * <param name="pKey" type="IN">The key generated from the imported data.</param>
+ * <result>Operation result.
+ *		- ERR_OK: The key was imported successfully.
+ *		- ERR_PARAMETER: pKey was NULL or data was invalid.
+ * 		- ERR_FAILED: The key was not imported successfully.
+ * </result>
+ */
+RTS_RESULT CDECL CryptoImportAsymmetricKey(RtsByteString data, RTS_BOOL bBase64, RTS_BOOL bPrivateKey, RtsCryptoKey *pKey);
+typedef RTS_RESULT (CDECL * PFCRYPTOIMPORTASYMMETRICKEY) (RtsByteString data, RTS_BOOL bBase64, RTS_BOOL bPrivateKey, RtsCryptoKey *pKey);
+#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOIMPORTASYMMETRICKEY_NOTIMPLEMENTED)
+	#define USE_CryptoImportAsymmetricKey
+	#define EXT_CryptoImportAsymmetricKey
+	#define GET_CryptoImportAsymmetricKey(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CryptoImportAsymmetricKey(p0,p1,p2,p3)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CryptoImportAsymmetricKey  FALSE
+	#define EXP_CryptoImportAsymmetricKey  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CryptoImportAsymmetricKey
+	#define EXT_CryptoImportAsymmetricKey
+	#define GET_CryptoImportAsymmetricKey(fl)  CAL_CMGETAPI( "CryptoImportAsymmetricKey" ) 
+	#define CAL_CryptoImportAsymmetricKey  CryptoImportAsymmetricKey
+	#define CHK_CryptoImportAsymmetricKey  TRUE
+	#define EXP_CryptoImportAsymmetricKey  CAL_CMEXPAPI( "CryptoImportAsymmetricKey" ) 
+#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
+	#define USE_CryptoImportAsymmetricKey
+	#define EXT_CryptoImportAsymmetricKey
+	#define GET_CryptoImportAsymmetricKey(fl)  CAL_CMGETAPI( "CryptoImportAsymmetricKey" ) 
+	#define CAL_CryptoImportAsymmetricKey  CryptoImportAsymmetricKey
+	#define CHK_CryptoImportAsymmetricKey  TRUE
+	#define EXP_CryptoImportAsymmetricKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoImportAsymmetricKey", (RTS_UINTPTR)CryptoImportAsymmetricKey, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpCryptoCryptoImportAsymmetricKey
+	#define EXT_CmpCryptoCryptoImportAsymmetricKey
+	#define GET_CmpCryptoCryptoImportAsymmetricKey  ERR_OK
+	#define CAL_CmpCryptoCryptoImportAsymmetricKey pICmpCrypto->ICryptoImportAsymmetricKey
+	#define CHK_CmpCryptoCryptoImportAsymmetricKey (pICmpCrypto != NULL)
+	#define EXP_CmpCryptoCryptoImportAsymmetricKey  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CryptoImportAsymmetricKey
+	#define EXT_CryptoImportAsymmetricKey
+	#define GET_CryptoImportAsymmetricKey(fl)  CAL_CMGETAPI( "CryptoImportAsymmetricKey" ) 
+	#define CAL_CryptoImportAsymmetricKey pICmpCrypto->ICryptoImportAsymmetricKey
+	#define CHK_CryptoImportAsymmetricKey (pICmpCrypto != NULL)
+	#define EXP_CryptoImportAsymmetricKey  CAL_CMEXPAPI( "CryptoImportAsymmetricKey" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CryptoImportAsymmetricKey  PFCRYPTOIMPORTASYMMETRICKEY pfCryptoImportAsymmetricKey;
+	#define EXT_CryptoImportAsymmetricKey  extern PFCRYPTOIMPORTASYMMETRICKEY pfCryptoImportAsymmetricKey;
+	#define GET_CryptoImportAsymmetricKey(fl)  s_pfCMGetAPI2( "CryptoImportAsymmetricKey", (RTS_VOID_FCTPTR *)&pfCryptoImportAsymmetricKey, (fl), 0, 0)
+	#define CAL_CryptoImportAsymmetricKey  pfCryptoImportAsymmetricKey
+	#define CHK_CryptoImportAsymmetricKey  (pfCryptoImportAsymmetricKey != NULL)
+	#define EXP_CryptoImportAsymmetricKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoImportAsymmetricKey", (RTS_UINTPTR)CryptoImportAsymmetricKey, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>This function can be used to store a private key that was imported or generated within the components internal data store.</description>
+ * <param name="key" type="IN">The private key stored.</param>
+ * <param name="pKeyIdentifier" type="OUT">A bytestring where the key identifier is stored. This identifier can be used to access 
+ *	the key later. The identifier does not contain any sensitive data.</param>
+ * <result>Operation result.
+ *		- ERR_OK: The key was stored successfully.
+ *		- ERR_PARAMETER: key was not valid or pKeyIdentifier is invalid.
+ * 		- ERR_NOT_SUPPORTED: The key is not a private key that can be stored.
+ *		- ERR_FAILED: Some internal error happened.
+ * </result>
+ */
+RTS_RESULT CDECL CryptoStorePrivateKey(RtsCryptoKey key, RtsByteString *pKeyIdentifier);
+typedef RTS_RESULT (CDECL * PFCRYPTOSTOREPRIVATEKEY) (RtsCryptoKey key, RtsByteString *pKeyIdentifier);
+#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOSTOREPRIVATEKEY_NOTIMPLEMENTED)
+	#define USE_CryptoStorePrivateKey
+	#define EXT_CryptoStorePrivateKey
+	#define GET_CryptoStorePrivateKey(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CryptoStorePrivateKey(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CryptoStorePrivateKey  FALSE
+	#define EXP_CryptoStorePrivateKey  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CryptoStorePrivateKey
+	#define EXT_CryptoStorePrivateKey
+	#define GET_CryptoStorePrivateKey(fl)  CAL_CMGETAPI( "CryptoStorePrivateKey" ) 
+	#define CAL_CryptoStorePrivateKey  CryptoStorePrivateKey
+	#define CHK_CryptoStorePrivateKey  TRUE
+	#define EXP_CryptoStorePrivateKey  CAL_CMEXPAPI( "CryptoStorePrivateKey" ) 
+#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
+	#define USE_CryptoStorePrivateKey
+	#define EXT_CryptoStorePrivateKey
+	#define GET_CryptoStorePrivateKey(fl)  CAL_CMGETAPI( "CryptoStorePrivateKey" ) 
+	#define CAL_CryptoStorePrivateKey  CryptoStorePrivateKey
+	#define CHK_CryptoStorePrivateKey  TRUE
+	#define EXP_CryptoStorePrivateKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoStorePrivateKey", (RTS_UINTPTR)CryptoStorePrivateKey, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpCryptoCryptoStorePrivateKey
+	#define EXT_CmpCryptoCryptoStorePrivateKey
+	#define GET_CmpCryptoCryptoStorePrivateKey  ERR_OK
+	#define CAL_CmpCryptoCryptoStorePrivateKey pICmpCrypto->ICryptoStorePrivateKey
+	#define CHK_CmpCryptoCryptoStorePrivateKey (pICmpCrypto != NULL)
+	#define EXP_CmpCryptoCryptoStorePrivateKey  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CryptoStorePrivateKey
+	#define EXT_CryptoStorePrivateKey
+	#define GET_CryptoStorePrivateKey(fl)  CAL_CMGETAPI( "CryptoStorePrivateKey" ) 
+	#define CAL_CryptoStorePrivateKey pICmpCrypto->ICryptoStorePrivateKey
+	#define CHK_CryptoStorePrivateKey (pICmpCrypto != NULL)
+	#define EXP_CryptoStorePrivateKey  CAL_CMEXPAPI( "CryptoStorePrivateKey" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CryptoStorePrivateKey  PFCRYPTOSTOREPRIVATEKEY pfCryptoStorePrivateKey;
+	#define EXT_CryptoStorePrivateKey  extern PFCRYPTOSTOREPRIVATEKEY pfCryptoStorePrivateKey;
+	#define GET_CryptoStorePrivateKey(fl)  s_pfCMGetAPI2( "CryptoStorePrivateKey", (RTS_VOID_FCTPTR *)&pfCryptoStorePrivateKey, (fl), 0, 0)
+	#define CAL_CryptoStorePrivateKey  pfCryptoStorePrivateKey
+	#define CHK_CryptoStorePrivateKey  (pfCryptoStorePrivateKey != NULL)
+	#define EXP_CryptoStorePrivateKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoStorePrivateKey", (RTS_UINTPTR)CryptoStorePrivateKey, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>This function can be used to load a private key from the components internal data store.</description>
+ * <param name="keyIdentifier" type="IN">The identifier of the key got from CryptoStorePrivateKey.</param>
+ * <param name="pKey" type="OUT">The private key retrieved from the internal storage.</param>
+ * <result>Operation result.
+ *		- ERR_OK: The key was stored successfully.
+ *		- ERR_PARAMETER: keyIdentifier was not valid or pKey == NULL.
+ * 		- ERR_NO_OBJECT: No key matching the identifier is available.
+ *		- ERR_FAILED: Some internal error happened.
+ * </result>
+ */
+RTS_RESULT CDECL CryptoLoadPrivateKey(RtsByteString keyIdentifier, RtsCryptoKey *pKey);
+typedef RTS_RESULT (CDECL * PFCRYPTOLOADPRIVATEKEY) (RtsByteString keyIdentifier, RtsCryptoKey *pKey);
+#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOLOADPRIVATEKEY_NOTIMPLEMENTED)
+	#define USE_CryptoLoadPrivateKey
+	#define EXT_CryptoLoadPrivateKey
+	#define GET_CryptoLoadPrivateKey(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CryptoLoadPrivateKey(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CryptoLoadPrivateKey  FALSE
+	#define EXP_CryptoLoadPrivateKey  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CryptoLoadPrivateKey
+	#define EXT_CryptoLoadPrivateKey
+	#define GET_CryptoLoadPrivateKey(fl)  CAL_CMGETAPI( "CryptoLoadPrivateKey" ) 
+	#define CAL_CryptoLoadPrivateKey  CryptoLoadPrivateKey
+	#define CHK_CryptoLoadPrivateKey  TRUE
+	#define EXP_CryptoLoadPrivateKey  CAL_CMEXPAPI( "CryptoLoadPrivateKey" ) 
+#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
+	#define USE_CryptoLoadPrivateKey
+	#define EXT_CryptoLoadPrivateKey
+	#define GET_CryptoLoadPrivateKey(fl)  CAL_CMGETAPI( "CryptoLoadPrivateKey" ) 
+	#define CAL_CryptoLoadPrivateKey  CryptoLoadPrivateKey
+	#define CHK_CryptoLoadPrivateKey  TRUE
+	#define EXP_CryptoLoadPrivateKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoLoadPrivateKey", (RTS_UINTPTR)CryptoLoadPrivateKey, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpCryptoCryptoLoadPrivateKey
+	#define EXT_CmpCryptoCryptoLoadPrivateKey
+	#define GET_CmpCryptoCryptoLoadPrivateKey  ERR_OK
+	#define CAL_CmpCryptoCryptoLoadPrivateKey pICmpCrypto->ICryptoLoadPrivateKey
+	#define CHK_CmpCryptoCryptoLoadPrivateKey (pICmpCrypto != NULL)
+	#define EXP_CmpCryptoCryptoLoadPrivateKey  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CryptoLoadPrivateKey
+	#define EXT_CryptoLoadPrivateKey
+	#define GET_CryptoLoadPrivateKey(fl)  CAL_CMGETAPI( "CryptoLoadPrivateKey" ) 
+	#define CAL_CryptoLoadPrivateKey pICmpCrypto->ICryptoLoadPrivateKey
+	#define CHK_CryptoLoadPrivateKey (pICmpCrypto != NULL)
+	#define EXP_CryptoLoadPrivateKey  CAL_CMEXPAPI( "CryptoLoadPrivateKey" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CryptoLoadPrivateKey  PFCRYPTOLOADPRIVATEKEY pfCryptoLoadPrivateKey;
+	#define EXT_CryptoLoadPrivateKey  extern PFCRYPTOLOADPRIVATEKEY pfCryptoLoadPrivateKey;
+	#define GET_CryptoLoadPrivateKey(fl)  s_pfCMGetAPI2( "CryptoLoadPrivateKey", (RTS_VOID_FCTPTR *)&pfCryptoLoadPrivateKey, (fl), 0, 0)
+	#define CAL_CryptoLoadPrivateKey  pfCryptoLoadPrivateKey
+	#define CHK_CryptoLoadPrivateKey  (pfCryptoLoadPrivateKey != NULL)
+	#define EXP_CryptoLoadPrivateKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoLoadPrivateKey", (RTS_UINTPTR)CryptoLoadPrivateKey, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>This function can be used to delete a private key from the components internal data store.</description>
+ * <param name="keyIdentifier" type="IN">The identifier of the key got from CryptoStorePrivateKey.</param>
+ * <result>Operation result.
+ *		- ERR_OK: The key was stored successfully.
+ *		- ERR_PARAMETER: keyIdentifier was not valid or pKey == NULL.
+ * 		- ERR_NO_OBJECT: No key matching the identifier is available.
+ *		- ERR_FAILED: Some internal error happened.
+ * </result>
+ */
+RTS_RESULT CDECL CryptoDeletePrivateKey(RtsByteString keyIdentifier);
+typedef RTS_RESULT (CDECL * PFCRYPTODELETEPRIVATEKEY) (RtsByteString keyIdentifier);
+#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTODELETEPRIVATEKEY_NOTIMPLEMENTED)
+	#define USE_CryptoDeletePrivateKey
+	#define EXT_CryptoDeletePrivateKey
+	#define GET_CryptoDeletePrivateKey(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CryptoDeletePrivateKey(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CryptoDeletePrivateKey  FALSE
+	#define EXP_CryptoDeletePrivateKey  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CryptoDeletePrivateKey
+	#define EXT_CryptoDeletePrivateKey
+	#define GET_CryptoDeletePrivateKey(fl)  CAL_CMGETAPI( "CryptoDeletePrivateKey" ) 
+	#define CAL_CryptoDeletePrivateKey  CryptoDeletePrivateKey
+	#define CHK_CryptoDeletePrivateKey  TRUE
+	#define EXP_CryptoDeletePrivateKey  CAL_CMEXPAPI( "CryptoDeletePrivateKey" ) 
+#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
+	#define USE_CryptoDeletePrivateKey
+	#define EXT_CryptoDeletePrivateKey
+	#define GET_CryptoDeletePrivateKey(fl)  CAL_CMGETAPI( "CryptoDeletePrivateKey" ) 
+	#define CAL_CryptoDeletePrivateKey  CryptoDeletePrivateKey
+	#define CHK_CryptoDeletePrivateKey  TRUE
+	#define EXP_CryptoDeletePrivateKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoDeletePrivateKey", (RTS_UINTPTR)CryptoDeletePrivateKey, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpCryptoCryptoDeletePrivateKey
+	#define EXT_CmpCryptoCryptoDeletePrivateKey
+	#define GET_CmpCryptoCryptoDeletePrivateKey  ERR_OK
+	#define CAL_CmpCryptoCryptoDeletePrivateKey pICmpCrypto->ICryptoDeletePrivateKey
+	#define CHK_CmpCryptoCryptoDeletePrivateKey (pICmpCrypto != NULL)
+	#define EXP_CmpCryptoCryptoDeletePrivateKey  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CryptoDeletePrivateKey
+	#define EXT_CryptoDeletePrivateKey
+	#define GET_CryptoDeletePrivateKey(fl)  CAL_CMGETAPI( "CryptoDeletePrivateKey" ) 
+	#define CAL_CryptoDeletePrivateKey pICmpCrypto->ICryptoDeletePrivateKey
+	#define CHK_CryptoDeletePrivateKey (pICmpCrypto != NULL)
+	#define EXP_CryptoDeletePrivateKey  CAL_CMEXPAPI( "CryptoDeletePrivateKey" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CryptoDeletePrivateKey  PFCRYPTODELETEPRIVATEKEY pfCryptoDeletePrivateKey;
+	#define EXT_CryptoDeletePrivateKey  extern PFCRYPTODELETEPRIVATEKEY pfCryptoDeletePrivateKey;
+	#define GET_CryptoDeletePrivateKey(fl)  s_pfCMGetAPI2( "CryptoDeletePrivateKey", (RTS_VOID_FCTPTR *)&pfCryptoDeletePrivateKey, (fl), 0, 0)
+	#define CAL_CryptoDeletePrivateKey  pfCryptoDeletePrivateKey
+	#define CHK_CryptoDeletePrivateKey  (pfCryptoDeletePrivateKey != NULL)
+	#define EXP_CryptoDeletePrivateKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoDeletePrivateKey", (RTS_UINTPTR)CryptoDeletePrivateKey, 0, 0) 
 #endif
 
 
@@ -1822,10 +1158,84 @@ typedef RTS_RESULT (CDECL * PFCRYPTOGENERATEHASH) (RTS_HANDLE hAlgo, RtsByteStri
 
 
 /**
+ * <description>This function derives a new key from an existing secret (key) and an corresponding salt. 
+ * The functions generates keys of the requested size which is given in pDerivedKey->ui32MaxLen. If setup 
+ * properly this function provides a secure way to store passwords within the file system. By now two
+ * classes of algorithms can be use:
+ *	1. P_SHA(1, 256): This algorithm can be used to derive session keys from some kind of secret data. 
+ *		If this algorithm is used the pSpecificParameters is not evaluated an should be NULL. This algorithm is quite fast.
+ *	2. SCRYPT: This algorithm can be used to generate strong keys from weak passwords, or to store passwords 
+ *		in a secure way within the file system. This algorithm makes use of the pSpecificParameters and requires this parameter.
+ * 		Depending on the configuration given in pSpecificParameters this algorithm is time and memory consuming.
+ *		For details see RFC-7914.
+ * </description>
+ * <param name="hAlgo" type="IN">Handle of the used algoritm. Should be one of RTSCRYPTOID_KDF_* algorithms.</param>
+ * <param name="pKey" type="IN">The key that should be derived. The function reads pKey->ui32Len bytes of the given buffer.</param>
+ * <param name="pSalt" type="IN">The SALT that should be used to derive the key. The function reads pSalt->ui32Len bytes of the given buffer.</param>
+ * <param name="pSpecificParameters" type="IN">Some additional algorithm specific parameters. By now only used for scrypt.</param>
+ * <param name="pDerivedKey" type="IN">Destination where to store the derived key. The function generates a key with the size of pDerivedKey->ui32MaxLen.
+ *	 The size of the derived key will be stored in pDerivedKey->ui32Len.</param>
+ * <result>Operation result.
+ *		- ERR_OK: The key was derived successfully.
+ *		- ERR_INVALID_HANDLE: hAlgo was not a valid handle to derive keys.
+ *		- ERR_PARAMETER: One of the other parameters was invalid.
+ * 		- ERR_FAILED: some internal error happened.
+ * </result>
+ */
+RTS_RESULT CDECL CryptoDeriveKey(RTS_HANDLE hAlgo, RtsByteString *pKey, RtsByteString *pSalt, RtsKdfParameter* pSpecificParameters, RtsByteString *pDerivedKey);
+typedef RTS_RESULT (CDECL * PFCRYPTODERIVEKEY) (RTS_HANDLE hAlgo, RtsByteString *pKey, RtsByteString *pSalt, RtsKdfParameter* pSpecificParameters, RtsByteString *pDerivedKey);
+#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTODERIVEKEY_NOTIMPLEMENTED)
+	#define USE_CryptoDeriveKey
+	#define EXT_CryptoDeriveKey
+	#define GET_CryptoDeriveKey(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CryptoDeriveKey(p0,p1,p2,p3,p4)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CryptoDeriveKey  FALSE
+	#define EXP_CryptoDeriveKey  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CryptoDeriveKey
+	#define EXT_CryptoDeriveKey
+	#define GET_CryptoDeriveKey(fl)  CAL_CMGETAPI( "CryptoDeriveKey" ) 
+	#define CAL_CryptoDeriveKey  CryptoDeriveKey
+	#define CHK_CryptoDeriveKey  TRUE
+	#define EXP_CryptoDeriveKey  CAL_CMEXPAPI( "CryptoDeriveKey" ) 
+#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
+	#define USE_CryptoDeriveKey
+	#define EXT_CryptoDeriveKey
+	#define GET_CryptoDeriveKey(fl)  CAL_CMGETAPI( "CryptoDeriveKey" ) 
+	#define CAL_CryptoDeriveKey  CryptoDeriveKey
+	#define CHK_CryptoDeriveKey  TRUE
+	#define EXP_CryptoDeriveKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoDeriveKey", (RTS_UINTPTR)CryptoDeriveKey, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpCryptoCryptoDeriveKey
+	#define EXT_CmpCryptoCryptoDeriveKey
+	#define GET_CmpCryptoCryptoDeriveKey  ERR_OK
+	#define CAL_CmpCryptoCryptoDeriveKey pICmpCrypto->ICryptoDeriveKey
+	#define CHK_CmpCryptoCryptoDeriveKey (pICmpCrypto != NULL)
+	#define EXP_CmpCryptoCryptoDeriveKey  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CryptoDeriveKey
+	#define EXT_CryptoDeriveKey
+	#define GET_CryptoDeriveKey(fl)  CAL_CMGETAPI( "CryptoDeriveKey" ) 
+	#define CAL_CryptoDeriveKey pICmpCrypto->ICryptoDeriveKey
+	#define CHK_CryptoDeriveKey (pICmpCrypto != NULL)
+	#define EXP_CryptoDeriveKey  CAL_CMEXPAPI( "CryptoDeriveKey" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CryptoDeriveKey  PFCRYPTODERIVEKEY pfCryptoDeriveKey;
+	#define EXT_CryptoDeriveKey  extern PFCRYPTODERIVEKEY pfCryptoDeriveKey;
+	#define GET_CryptoDeriveKey(fl)  s_pfCMGetAPI2( "CryptoDeriveKey", (RTS_VOID_FCTPTR *)&pfCryptoDeriveKey, (fl), 0, 0)
+	#define CAL_CryptoDeriveKey  pfCryptoDeriveKey
+	#define CHK_CryptoDeriveKey  (pfCryptoDeriveKey != NULL)
+	#define EXP_CryptoDeriveKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoDeriveKey", (RTS_UINTPTR)CryptoDeriveKey, 0, 0) 
+#endif
+
+
+
+
+/**
  * <description>Generate a hashed message authentication code (HMAC) of the given data and key.</description>
  * <param name="hAlgo" type="IN">Handle to the algorithm.</param>
  * <param name="pData" type="IN">Data to calculate the HMAC.</param>
- * <param name="key" type="IN">Key to be used for the HMAC calcuation</param>
+ * <param name="key" type="IN">Key to be used for the HMAC calculation</param>
  * <param name="pSignature" type="OUT">Calculated HMAC</param>
  * <result>Error code Result of the operation</result>
  **/
@@ -1879,11 +1289,11 @@ typedef RTS_RESULT (CDECL * PFCRYPTOHMACSIGN) (RTS_HANDLE hAlgo, RtsByteString* 
 
 
 /**
- * <description>Verify a recieved hashed message authentication code (HMAC).</description>
+ * <description>Verify a received hashed message authentication code (HMAC).</description>
  * <param name="hAlgo" type="IN">Handle to the algorithm.</param>
  * <param name="pData" type="IN">Data to calculate the HMAC.</param>
- * <param name="key" type="IN">Key to be used for the HMAC calcuation</param>
- * <param name="pSignature" type="IN">Recieved HMAC</param>
+ * <param name="key" type="IN">Key to be used for the HMAC calculation</param>
+ * <param name="pSignature" type="IN">Received HMAC</param>
  * <result>Error Code Function returns ERR_OK if the HMAC is valid.</result>
  **/
 RTS_RESULT CDECL CryptoHMACVerify(RTS_HANDLE hAlgo, RtsByteString* pData, RtsCryptoKey key, RtsByteString* pSignature);
@@ -2105,7 +1515,7 @@ typedef RTS_RESULT (CDECL * PFCRYPTOGENERATERANDOMNUMBER) (RTS_UI32 ui32NumOfRan
 
 
 /**
- * <description>Initialize a crypto key.</description>
+ * <description>Initialize a cryptographic key.</description>
  * <param name="pKey" type="IN">Pointer to the key to be initialized.</param>
  * <param name="key" type="IN">Content of the key.</param>
  * <param name="type" type="IN">Type of the key.</param>
@@ -2161,7 +1571,7 @@ typedef RTS_RESULT (CDECL * PFCRYPTOKEYINIT) (RtsCryptoKey* pKey, RtsCryptoKeySt
 
 
 /**
- * <description>Clean up a crypto key.</description>
+ * <description>Clean up a cryptographic key.</description>
  * <param name="pKey" type="IN">Key to be clean up.</param>
  * <result>Operation result.</result>
  **/
@@ -2215,8 +1625,8 @@ typedef RTS_RESULT (CDECL * PFCRYPTOKEYEXIT) (RtsCryptoKey* pKey);
 
 
 /**
- * <description>Initialize a byte string.</description>
- * <param name="pByteString" type="IN">Pointer to the key to be initialized.</param>
+ * <description>Initialize a RtsByteString string.</description>
+ * <param name="pByteString" type="IN">Pointer to the RtsByteString to be initialized.</param>
  * <result>Operation result.</result>
  **/
 RTS_RESULT CDECL CryptoRtsByteStringInit(RtsByteString* pByteString);
@@ -2270,7 +1680,9 @@ typedef RTS_RESULT (CDECL * PFCRYPTORTSBYTESTRINGINIT) (RtsByteString* pByteStri
 
 /**
  * <description>Initialize a byte string.</description>
- * <param name="pByteString" type="IN">Pointer to the key to be initialized.</param>
+ * <param name="pByteString" type="IN">Pointer to the RtsByteString to be initialized.</param>
+ * <param name="ui32BufferSize" type="IN">Buffersize needed for this byte string.</param>
+ * <param name="pBuffer" type="IN">Pointer to a optional static buffer. If NULL is passed the function will allocated ui32BufferSize bytes from the heap.</param>
  * <result>Operation result.</result>
  **/
 RTS_RESULT CDECL CryptoRtsByteStringInit2(RtsByteString* pByteString, RTS_UI32 ui32BufferSize, RTS_UI8* pBuffer);
@@ -2317,6 +1729,63 @@ typedef RTS_RESULT (CDECL * PFCRYPTORTSBYTESTRINGINIT2) (RtsByteString* pByteStr
 	#define CAL_CryptoRtsByteStringInit2  pfCryptoRtsByteStringInit2
 	#define CHK_CryptoRtsByteStringInit2  (pfCryptoRtsByteStringInit2 != NULL)
 	#define EXP_CryptoRtsByteStringInit2  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoRtsByteStringInit2", (RTS_UINTPTR)CryptoRtsByteStringInit2, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Initialize a byte string.</description>
+ * <param name="pByteString" type="IN">Pointer to the RtsByteString to be initialized.</param>
+ * <param name="ui32BufferSize" type="IN">Buffersize needed for this byte string.</param>
+ * <param name="pBuffer" type="IN">Pointer to a optional static buffer. If NULL is passed the function will allocated ui32BufferSize bytes from the heap.</param>
+ * <param name="bEmptyBuffer" type="IN">Used for static buffers. If FALSE pByteString->ui32Lenght will be set to ui32BufferSize. Must be TRUE if pBuffer == NULL</param>
+ * <result>Operation result.</result>
+ **/
+RTS_RESULT CDECL CryptoRtsByteStringInit3(RtsByteString* pByteString, RTS_UI32 ui32BufferSize, RTS_UI8* pBuffer, RTS_BOOL bEmptyBuffer);
+typedef RTS_RESULT (CDECL * PFCRYPTORTSBYTESTRINGINIT3) (RtsByteString* pByteString, RTS_UI32 ui32BufferSize, RTS_UI8* pBuffer, RTS_BOOL bEmptyBuffer);
+#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTORTSBYTESTRINGINIT3_NOTIMPLEMENTED)
+	#define USE_CryptoRtsByteStringInit3
+	#define EXT_CryptoRtsByteStringInit3
+	#define GET_CryptoRtsByteStringInit3(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CryptoRtsByteStringInit3(p0,p1,p2,p3)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CryptoRtsByteStringInit3  FALSE
+	#define EXP_CryptoRtsByteStringInit3  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CryptoRtsByteStringInit3
+	#define EXT_CryptoRtsByteStringInit3
+	#define GET_CryptoRtsByteStringInit3(fl)  CAL_CMGETAPI( "CryptoRtsByteStringInit3" ) 
+	#define CAL_CryptoRtsByteStringInit3  CryptoRtsByteStringInit3
+	#define CHK_CryptoRtsByteStringInit3  TRUE
+	#define EXP_CryptoRtsByteStringInit3  CAL_CMEXPAPI( "CryptoRtsByteStringInit3" ) 
+#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
+	#define USE_CryptoRtsByteStringInit3
+	#define EXT_CryptoRtsByteStringInit3
+	#define GET_CryptoRtsByteStringInit3(fl)  CAL_CMGETAPI( "CryptoRtsByteStringInit3" ) 
+	#define CAL_CryptoRtsByteStringInit3  CryptoRtsByteStringInit3
+	#define CHK_CryptoRtsByteStringInit3  TRUE
+	#define EXP_CryptoRtsByteStringInit3  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoRtsByteStringInit3", (RTS_UINTPTR)CryptoRtsByteStringInit3, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpCryptoCryptoRtsByteStringInit3
+	#define EXT_CmpCryptoCryptoRtsByteStringInit3
+	#define GET_CmpCryptoCryptoRtsByteStringInit3  ERR_OK
+	#define CAL_CmpCryptoCryptoRtsByteStringInit3 pICmpCrypto->ICryptoRtsByteStringInit3
+	#define CHK_CmpCryptoCryptoRtsByteStringInit3 (pICmpCrypto != NULL)
+	#define EXP_CmpCryptoCryptoRtsByteStringInit3  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CryptoRtsByteStringInit3
+	#define EXT_CryptoRtsByteStringInit3
+	#define GET_CryptoRtsByteStringInit3(fl)  CAL_CMGETAPI( "CryptoRtsByteStringInit3" ) 
+	#define CAL_CryptoRtsByteStringInit3 pICmpCrypto->ICryptoRtsByteStringInit3
+	#define CHK_CryptoRtsByteStringInit3 (pICmpCrypto != NULL)
+	#define EXP_CryptoRtsByteStringInit3  CAL_CMEXPAPI( "CryptoRtsByteStringInit3" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CryptoRtsByteStringInit3  PFCRYPTORTSBYTESTRINGINIT3 pfCryptoRtsByteStringInit3;
+	#define EXT_CryptoRtsByteStringInit3  extern PFCRYPTORTSBYTESTRINGINIT3 pfCryptoRtsByteStringInit3;
+	#define GET_CryptoRtsByteStringInit3(fl)  s_pfCMGetAPI2( "CryptoRtsByteStringInit3", (RTS_VOID_FCTPTR *)&pfCryptoRtsByteStringInit3, (fl), 0, 0)
+	#define CAL_CryptoRtsByteStringInit3  pfCryptoRtsByteStringInit3
+	#define CHK_CryptoRtsByteStringInit3  (pfCryptoRtsByteStringInit3 != NULL)
+	#define EXP_CryptoRtsByteStringInit3  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoRtsByteStringInit3", (RTS_UINTPTR)CryptoRtsByteStringInit3, 0, 0) 
 #endif
 
 
@@ -2376,6 +1845,128 @@ typedef RTS_RESULT (CDECL * PFCRYPTORTSBYTESTRINGEXIT) (RtsByteString* pByteStri
 
 
 
+/**
+ * <description>Converts an binary blob into an BASE64 encoded block.
+ * 	Note: The size of the BASE64 output must be at least CEIL(inputSize / 3) * 4 bytes.
+ * </description>
+ * <param name="input" type="IN">Input to be encoded in BASE64</param>
+ * <param name="base64Output" type="IN">Buffer to store the BASE64 data</param>
+ * <result>Error Code:
+ *		- ERR_OK: Encoding successful.
+ *		- ERR_PARAMETER: Invalid parameter given.
+ *		- ERR_BUFFERSIZE: The base64Output was too small.
+ * </result>
+ **/
+RTS_RESULT CDECL CryptoBase64Encode(RtsByteString *input, RtsByteString* base64Output);
+typedef RTS_RESULT (CDECL * PFCRYPTOBASE64ENCODE) (RtsByteString *input, RtsByteString* base64Output);
+#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOBASE64ENCODE_NOTIMPLEMENTED)
+	#define USE_CryptoBase64Encode
+	#define EXT_CryptoBase64Encode
+	#define GET_CryptoBase64Encode(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CryptoBase64Encode(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CryptoBase64Encode  FALSE
+	#define EXP_CryptoBase64Encode  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CryptoBase64Encode
+	#define EXT_CryptoBase64Encode
+	#define GET_CryptoBase64Encode(fl)  CAL_CMGETAPI( "CryptoBase64Encode" ) 
+	#define CAL_CryptoBase64Encode  CryptoBase64Encode
+	#define CHK_CryptoBase64Encode  TRUE
+	#define EXP_CryptoBase64Encode  CAL_CMEXPAPI( "CryptoBase64Encode" ) 
+#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
+	#define USE_CryptoBase64Encode
+	#define EXT_CryptoBase64Encode
+	#define GET_CryptoBase64Encode(fl)  CAL_CMGETAPI( "CryptoBase64Encode" ) 
+	#define CAL_CryptoBase64Encode  CryptoBase64Encode
+	#define CHK_CryptoBase64Encode  TRUE
+	#define EXP_CryptoBase64Encode  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoBase64Encode", (RTS_UINTPTR)CryptoBase64Encode, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpCryptoCryptoBase64Encode
+	#define EXT_CmpCryptoCryptoBase64Encode
+	#define GET_CmpCryptoCryptoBase64Encode  ERR_OK
+	#define CAL_CmpCryptoCryptoBase64Encode pICmpCrypto->ICryptoBase64Encode
+	#define CHK_CmpCryptoCryptoBase64Encode (pICmpCrypto != NULL)
+	#define EXP_CmpCryptoCryptoBase64Encode  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CryptoBase64Encode
+	#define EXT_CryptoBase64Encode
+	#define GET_CryptoBase64Encode(fl)  CAL_CMGETAPI( "CryptoBase64Encode" ) 
+	#define CAL_CryptoBase64Encode pICmpCrypto->ICryptoBase64Encode
+	#define CHK_CryptoBase64Encode (pICmpCrypto != NULL)
+	#define EXP_CryptoBase64Encode  CAL_CMEXPAPI( "CryptoBase64Encode" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CryptoBase64Encode  PFCRYPTOBASE64ENCODE pfCryptoBase64Encode;
+	#define EXT_CryptoBase64Encode  extern PFCRYPTOBASE64ENCODE pfCryptoBase64Encode;
+	#define GET_CryptoBase64Encode(fl)  s_pfCMGetAPI2( "CryptoBase64Encode", (RTS_VOID_FCTPTR *)&pfCryptoBase64Encode, (fl), 0, 0)
+	#define CAL_CryptoBase64Encode  pfCryptoBase64Encode
+	#define CHK_CryptoBase64Encode  (pfCryptoBase64Encode != NULL)
+	#define EXP_CryptoBase64Encode  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoBase64Encode", (RTS_UINTPTR)CryptoBase64Encode, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>DEcodes an BASE64 block into an binary blob.
+ * 	Note: The size of the output must be at least CEIL(base64InputSize / 4) * 3 bytes.
+ * </description>
+ * <param name="base64Input" type="IN">Input of BASE64 encoded data.</param>
+ * <param name="output" type="IN">Buffer to store the decoded data</param>
+ * <result>Error Code:
+ *		- ERR_OK: Decoding successful.
+ *		- ERR_PARAMETER: Invalid parameter given.
+ *		- ERR_BUFFERSIZE: The base64Output was too small.
+ * </result>
+ **/
+RTS_RESULT CDECL CryptoBase64Decode(RtsByteString *base64Input, RtsByteString *output);
+typedef RTS_RESULT (CDECL * PFCRYPTOBASE64DECODE) (RtsByteString *base64Input, RtsByteString *output);
+#if defined(CMPCRYPTO_NOTIMPLEMENTED) || defined(CRYPTOBASE64DECODE_NOTIMPLEMENTED)
+	#define USE_CryptoBase64Decode
+	#define EXT_CryptoBase64Decode
+	#define GET_CryptoBase64Decode(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_CryptoBase64Decode(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_CryptoBase64Decode  FALSE
+	#define EXP_CryptoBase64Decode  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_CryptoBase64Decode
+	#define EXT_CryptoBase64Decode
+	#define GET_CryptoBase64Decode(fl)  CAL_CMGETAPI( "CryptoBase64Decode" ) 
+	#define CAL_CryptoBase64Decode  CryptoBase64Decode
+	#define CHK_CryptoBase64Decode  TRUE
+	#define EXP_CryptoBase64Decode  CAL_CMEXPAPI( "CryptoBase64Decode" ) 
+#elif defined(MIXED_LINK) && !defined(CMPCRYPTO_EXTERNAL)
+	#define USE_CryptoBase64Decode
+	#define EXT_CryptoBase64Decode
+	#define GET_CryptoBase64Decode(fl)  CAL_CMGETAPI( "CryptoBase64Decode" ) 
+	#define CAL_CryptoBase64Decode  CryptoBase64Decode
+	#define CHK_CryptoBase64Decode  TRUE
+	#define EXP_CryptoBase64Decode  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoBase64Decode", (RTS_UINTPTR)CryptoBase64Decode, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpCryptoCryptoBase64Decode
+	#define EXT_CmpCryptoCryptoBase64Decode
+	#define GET_CmpCryptoCryptoBase64Decode  ERR_OK
+	#define CAL_CmpCryptoCryptoBase64Decode pICmpCrypto->ICryptoBase64Decode
+	#define CHK_CmpCryptoCryptoBase64Decode (pICmpCrypto != NULL)
+	#define EXP_CmpCryptoCryptoBase64Decode  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_CryptoBase64Decode
+	#define EXT_CryptoBase64Decode
+	#define GET_CryptoBase64Decode(fl)  CAL_CMGETAPI( "CryptoBase64Decode" ) 
+	#define CAL_CryptoBase64Decode pICmpCrypto->ICryptoBase64Decode
+	#define CHK_CryptoBase64Decode (pICmpCrypto != NULL)
+	#define EXP_CryptoBase64Decode  CAL_CMEXPAPI( "CryptoBase64Decode" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_CryptoBase64Decode  PFCRYPTOBASE64DECODE pfCryptoBase64Decode;
+	#define EXT_CryptoBase64Decode  extern PFCRYPTOBASE64DECODE pfCryptoBase64Decode;
+	#define GET_CryptoBase64Decode(fl)  s_pfCMGetAPI2( "CryptoBase64Decode", (RTS_VOID_FCTPTR *)&pfCryptoBase64Decode, (fl), 0, 0)
+	#define CAL_CryptoBase64Decode  pfCryptoBase64Decode
+	#define CHK_CryptoBase64Decode  (pfCryptoBase64Decode != NULL)
+	#define EXP_CryptoBase64Decode  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CryptoBase64Decode", (RTS_UINTPTR)CryptoBase64Decode, 0, 0) 
+#endif
+
+
+
+
 #ifdef __cplusplus
 }
 #endif
@@ -2394,7 +1985,14 @@ typedef struct
  	PFCRYPTOASYMMETRICENCRYPT ICryptoAsymmetricEncrypt;
  	PFCRYPTOASYMMETRICDECRYPT ICryptoAsymmetricDecrypt;
  	PFCRYPTOGETASYMMETRICKEYLENGTH ICryptoGetAsymmetricKeyLength;
+ 	PFCRYPTOGENERATEASYMMETRICKEYPAIR ICryptoGenerateAsymmetricKeyPair;
+ 	PFCRYPTOEXPORTASYMMETRICKEY ICryptoExportAsymmetricKey;
+ 	PFCRYPTOIMPORTASYMMETRICKEY ICryptoImportAsymmetricKey;
+ 	PFCRYPTOSTOREPRIVATEKEY ICryptoStorePrivateKey;
+ 	PFCRYPTOLOADPRIVATEKEY ICryptoLoadPrivateKey;
+ 	PFCRYPTODELETEPRIVATEKEY ICryptoDeletePrivateKey;
  	PFCRYPTOGENERATEHASH ICryptoGenerateHash;
+ 	PFCRYPTODERIVEKEY ICryptoDeriveKey;
  	PFCRYPTOHMACSIGN ICryptoHMACSign;
  	PFCRYPTOHMACVERIFY ICryptoHMACVerify;
  	PFCRYPTOSIGNATUREGENERATE ICryptoSignatureGenerate;
@@ -2404,7 +2002,10 @@ typedef struct
  	PFCRYPTOKEYEXIT ICryptoKeyExit;
  	PFCRYPTORTSBYTESTRINGINIT ICryptoRtsByteStringInit;
  	PFCRYPTORTSBYTESTRINGINIT2 ICryptoRtsByteStringInit2;
+ 	PFCRYPTORTSBYTESTRINGINIT3 ICryptoRtsByteStringInit3;
  	PFCRYPTORTSBYTESTRINGEXIT ICryptoRtsByteStringExit;
+ 	PFCRYPTOBASE64ENCODE ICryptoBase64Encode;
+ 	PFCRYPTOBASE64DECODE ICryptoBase64Decode;
  } ICmpCrypto_C;
 
 #ifdef CPLUSPLUS
@@ -2420,7 +2021,14 @@ class ICmpCrypto : public IBase
 		virtual RTS_RESULT CDECL ICryptoAsymmetricEncrypt(RTS_HANDLE hAlgo, RtsByteString* pPlainText, RtsCryptoKey publicKey, RtsByteString* pCipherText) =0;
 		virtual RTS_RESULT CDECL ICryptoAsymmetricDecrypt(RTS_HANDLE hAlgo, RtsByteString* pCipherText, RtsCryptoKey privateKey, RtsByteString* pPlainText) =0;
 		virtual RTS_UI32 CDECL ICryptoGetAsymmetricKeyLength(RtsCryptoKey asymmetricKey, RTS_RESULT* pResult) =0;
+		virtual RTS_RESULT CDECL ICryptoGenerateAsymmetricKeyPair(RTS_IEC_HANDLE hAlgo, RTS_IEC_UDINT ui32KeyLen, RtsCryptoKey *pKeyPair, RTS_BOOL bPrivateKeyExportable) =0;
+		virtual RTS_RESULT CDECL ICryptoExportAsymmetricKey(RtsCryptoKey key, RTS_BOOL bBase64, RTS_BOOL bPrivateKey, RtsByteString *pData) =0;
+		virtual RTS_RESULT CDECL ICryptoImportAsymmetricKey(RtsByteString data, RTS_BOOL bBase64, RTS_BOOL bPrivateKey, RtsCryptoKey *pKey) =0;
+		virtual RTS_RESULT CDECL ICryptoStorePrivateKey(RtsCryptoKey key, RtsByteString *pKeyIdentifier) =0;
+		virtual RTS_RESULT CDECL ICryptoLoadPrivateKey(RtsByteString keyIdentifier, RtsCryptoKey *pKey) =0;
+		virtual RTS_RESULT CDECL ICryptoDeletePrivateKey(RtsByteString keyIdentifier) =0;
 		virtual RTS_RESULT CDECL ICryptoGenerateHash(RTS_HANDLE hAlgo, RtsByteString* pData, RtsByteString* pHash) =0;
+		virtual RTS_RESULT CDECL ICryptoDeriveKey(RTS_HANDLE hAlgo, RtsByteString *pKey, RtsByteString *pSalt, RtsKdfParameter* pSpecificParameters, RtsByteString *pDerivedKey) =0;
 		virtual RTS_RESULT CDECL ICryptoHMACSign(RTS_HANDLE hAlgo, RtsByteString* pData, RtsCryptoKey key, RtsByteString* pSignature) =0;
 		virtual RTS_RESULT CDECL ICryptoHMACVerify(RTS_HANDLE hAlgo, RtsByteString* pData, RtsCryptoKey key, RtsByteString* pSignature) =0;
 		virtual RTS_RESULT CDECL ICryptoSignatureGenerate(RTS_HANDLE hAlgo, RtsByteString* pData, RtsCryptoKey privateKey, RtsByteString* pSignature) =0;
@@ -2430,7 +2038,10 @@ class ICmpCrypto : public IBase
 		virtual RTS_RESULT CDECL ICryptoKeyExit(RtsCryptoKey* pKey) =0;
 		virtual RTS_RESULT CDECL ICryptoRtsByteStringInit(RtsByteString* pByteString) =0;
 		virtual RTS_RESULT CDECL ICryptoRtsByteStringInit2(RtsByteString* pByteString, RTS_UI32 ui32BufferSize, RTS_UI8* pBuffer) =0;
+		virtual RTS_RESULT CDECL ICryptoRtsByteStringInit3(RtsByteString* pByteString, RTS_UI32 ui32BufferSize, RTS_UI8* pBuffer, RTS_BOOL bEmptyBuffer) =0;
 		virtual RTS_RESULT CDECL ICryptoRtsByteStringExit(RtsByteString* pByteString) =0;
+		virtual RTS_RESULT CDECL ICryptoBase64Encode(RtsByteString *input, RtsByteString* base64Output) =0;
+		virtual RTS_RESULT CDECL ICryptoBase64Decode(RtsByteString *base64Input, RtsByteString *output) =0;
 };
 	#ifndef ITF_CmpCrypto
 		#define ITF_CmpCrypto static ICmpCrypto *pICmpCrypto = NULL;

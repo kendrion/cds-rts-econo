@@ -8,6 +8,12 @@
 
 #define MY_SYSTARGET_NODE_NAME		"MyDevice"
 
+#ifdef WIN32
+	/* copied from standard runtime for Windows */
+	#define HMI_NODENAME_POSTFIX	"_HMI"
+	static const RTS_WCHAR * sc_wszErrorName = L"<NoName>";
+#endif
+
 USEIMPORT_STMT
 
 RTS_RESULT CDECL SysTargetOSInit(INIT_STRUCT *pInit)
@@ -31,7 +37,7 @@ RTS_RESULT CDECL SysTargetOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, 
 #ifdef WIN32
 #if 0
 	/*If 0: In case this is used, an additional dependency to SysFileItf.m4 and SysFileCopy has to be added to the Dep.m4.*/
-	/* If this is used with Control Win V3, in a SysTargetOEM.dll, remember to add 
+	/* If this is used with Control / HMI Win V3, in a SysTargetOEM.dll, remember to add 
 		OverloadableFunctions=1 and the Component.xx=SysTargetOEM
 		to both:
 		- the configuration file of the runtime CodesysControl.cfg AND
@@ -45,7 +51,8 @@ RTS_RESULT CDECL SysTargetOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, 
 	switch (ulHook)
 	{
 		case CH_INIT2:
-			CAL_SysFileCopy("3s.dat",".\\lic\\3s.dat",&uiCopied);
+			if (CHK_SysFileCopy)
+				CAL_SysFileCopy("3s.dat",".\\lic\\3s.dat",&uiCopied);
 			break;
 		default:
 			break;
@@ -68,6 +75,59 @@ RTS_RESULT CDECL SysTargetOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, 
 
 RTS_RESULT CDECL SysTargetGetNodeName(RTS_WCHAR * pwszName, RTS_SIZE *pnMaxLength)
 {
+#if defined(SYSTARGET_OS_WINDOWS)
+	/* Win V3 Control or HMI */
+	RTS_SIZE uiLen;
+	if (pnMaxLength == NULL)
+		return ERR_PARAMETER;
+
+	uiLen = *pnMaxLength;
+	if (SysTargetGetConfiguredNodeName(pwszName, &uiLen) != ERR_OK)
+	{
+		char szName[255 + sizeof(HMI_NODENAME_POSTFIX)];
+		DWORD nSize = sizeof(szName);
+
+		szName[0] = 0;
+
+		if (GetComputerName(szName, &nSize))
+		{
+			if (pwszName != NULL)
+			{
+				if (strlen(szName) >= *pnMaxLength)
+				{
+					szName[*pnMaxLength - 3] = 0;
+					CAL_CMUtlSafeStrCat(szName, sizeof(szName), "...");
+				}
+				else
+				{
+#if defined SYSTARGET_HMI
+					CAL_CMUtlSafeStrCat(szName, sizeof(szName), HMI_NODENAME_POSTFIX);
+#endif
+				}
+				CAL_CMUtlStrToW(szName, pwszName, *pnMaxLength);
+				*pnMaxLength = (RTS_SIZE)CAL_CMUtlwstrlen(pwszName) + 1;
+			}
+			else
+				*pnMaxLength = (RTS_SIZE)strlen(szName) + 1;
+		}
+		else
+		{
+			if (pwszName != NULL && CAL_CMUtlwstrlen(sc_wszErrorName) < *pnMaxLength)
+			{
+				CAL_CMUtlwstrcpy(pwszName, *pnMaxLength, sc_wszErrorName);
+#if defined SYSTARGET_HMI
+				CAL_CMUtlwstrcat(pwszName, *pnMaxLength, RTS_WTEXT(HMI_NODENAME_POSTFIX));
+#endif
+				*pnMaxLength = (RTS_SIZE)CAL_CMUtlwstrlen(pwszName) + 1;
+			}
+			else
+				*pnMaxLength = (RTS_SIZE)strlen(szName) + 1;
+		}
+	}
+	else
+		*pnMaxLength = uiLen;
+#else
+	/* other OS */
 	RTS_SIZE uiLen;
 
 	if (pnMaxLength == NULL)
@@ -83,6 +143,7 @@ RTS_RESULT CDECL SysTargetGetNodeName(RTS_WCHAR * pwszName, RTS_SIZE *pnMaxLengt
 	}
 	else
 		*pnMaxLength = uiLen;
+#endif
 	return ERR_OK;
 }
 

@@ -1,0 +1,745 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_x509_cert___implementation_itf_8h:
+
+==============================================
+CmpX509Cert_ImplementationItf.h File Reference
+==============================================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpX509CertItf.h <_cmp_x509_cert_itf_8h>`"
+
+Data Structures
+---------------
+
+- struct :ref:`tagrtsoidclear_struct <structtagrtsoidclear__struct>`
+
+- struct :ref:`tagrtsoidcreate_struct <structtagrtsoidcreate__struct>`
+
+- struct :ref:`tagrtsoidgetid_struct <structtagrtsoidgetid__struct>`
+
+- struct :ref:`tagrtsoidgetname_struct <structtagrtsoidgetname__struct>`
+
+- struct :ref:`tagx509certcheckhost_struct <structtagx509certcheckhost__struct>`
+
+- struct :ref:`tagx509certcheckip_struct <structtagx509certcheckip__struct>`
+
+- struct :ref:`tagx509certclose_struct <structtagx509certclose__struct>`
+
+- struct :ref:`tagx509certcmsdecrypt_struct <structtagx509certcmsdecrypt__struct>`
+
+- struct :ref:`tagx509certcmsverify_struct <structtagx509certcmsverify__struct>`
+
+- struct :ref:`tagx509certcreatecsr_struct <structtagx509certcreatecsr__struct>`
+
+- struct :ref:`tagx509certcreateselfsigned_struct <structtagx509certcreateselfsigned__struct>`
+
+- struct :ref:`tagx509certgetbinary_struct <structtagx509certgetbinary__struct>`
+
+- struct :ref:`tagx509certgetcontent_struct <structtagx509certgetcontent__struct>`
+
+- struct :ref:`tagx509certgetprivatekey_struct <structtagx509certgetprivatekey__struct>`
+
+- struct :ref:`tagx509certgetpublickey_struct <structtagx509certgetpublickey__struct>`
+
+- struct :ref:`tagx509certgetthumbprint_struct <structtagx509certgetthumbprint__struct>`
+
+- struct :ref:`tagx509certhasextendedkeyusage_struct <structtagx509certhasextendedkeyusage__struct>`
+
+- struct :ref:`tagx509certinfoexit_struct <structtagx509certinfoexit__struct>`
+
+- struct :ref:`tagx509certinfoinit_struct <structtagx509certinfoinit__struct>`
+
+- struct :ref:`tagx509certisdatevalid_struct <structtagx509certisdatevalid__struct>`
+
+- struct :ref:`tagx509certisselfsigned_struct <structtagx509certisselfsigned__struct>`
+
+- struct :ref:`tagx509certkeyclose_struct <structtagx509certkeyclose__struct>`
+
+- struct :ref:`tagx509certstoreaddcert_struct <structtagx509certstoreaddcert__struct>`
+
+- struct :ref:`tagx509certstoreclose_struct <structtagx509certstoreclose__struct>`
+
+- struct :ref:`tagx509certstoregetfirstcert_struct <structtagx509certstoregetfirstcert__struct>`
+
+- struct :ref:`tagx509certstoregetnextcert_struct <structtagx509certstoregetnextcert__struct>`
+
+- struct :ref:`tagx509certstoregetregisteredcert_struct <structtagx509certstoregetregisteredcert__struct>`
+
+- struct :ref:`tagx509certstoreopen_struct <structtagx509certstoreopen__struct>`
+
+- struct :ref:`tagx509certstoreregister_struct <structtagx509certstoreregister__struct>`
+
+- struct :ref:`tagx509certstoreremovecert_struct <structtagx509certstoreremovecert__struct>`
+
+- struct :ref:`tagx509certstoresearchgetfirst_struct <structtagx509certstoresearchgetfirst__struct>`
+
+- struct :ref:`tagx509certstoresearchgetnext_struct <structtagx509certstoresearchgetnext__struct>`
+
+- struct :ref:`tagx509certstoreunregister_struct <structtagx509certstoreunregister__struct>`
+
+- struct :ref:`tagx509certverify_struct <structtagx509certverify__struct>`
+
+- struct :ref:`tagx509parsecertificate_struct <structtagx509parsecertificate__struct>`
+
+- struct :ref:`ICmpX509Cert_Implementation_C <struct_i_cmp_x509_cert___implementation___c>`
+
+Macros
+------
+
+- #define :ref:`USE_rtsoidclear <group___cmp_x509_cert___implementation_itf_1gad8e50e1a6155429c50d4ee2b10e17fb3>` :ref:`PFRTSOIDCLEAR_IEC <group___cmp_x509_cert___implementation_itf_1ga63870d037f0dd395276826d8bf33e0cb>` pfrtsoidclear;
+
+- #define :ref:`EXT_rtsoidclear <group___cmp_x509_cert___implementation_itf_1gab2213342105a89a193f94c7ee4e2a819>` extern :ref:`PFRTSOIDCLEAR_IEC <group___cmp_x509_cert___implementation_itf_1ga63870d037f0dd395276826d8bf33e0cb>` pfrtsoidclear;
+
+- #define :ref:`GET_rtsoidclear <group___cmp_x509_cert___implementation_itf_1ga73c943878f76555204aaf4366ac10b23>` s_pfCMGetAPI2( "rtsoidclear", (RTS_VOID_FCTPTR *)&pfrtsoidclear, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xB53A1CAF, 0x03050F00)
+
+- #define :ref:`CAL_rtsoidclear <group___cmp_x509_cert___implementation_itf_1ga475533f845885be11293215ce56261f5>` pfrtsoidclear
+
+- #define :ref:`CHK_rtsoidclear <group___cmp_x509_cert___implementation_itf_1ga057aea259f8bd8613abcd3066127ba4c>` (pfrtsoidclear != NULL)
+
+- #define :ref:`EXP_rtsoidclear <group___cmp_x509_cert___implementation_itf_1gaccd0e09122e6e3f17c9b7dfd78294127>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtsoidclear", (RTS_UINTPTR) :ref:`rtsoidclear <group___cmp_x509_cert___implementation_itf_1gace185c5fcf05bd2c3dbc4c2e67b6dce1>` , 1, 0xB53A1CAF, 0x03050F00)
+
+- #define :ref:`USE_rtsoidcreate <group___cmp_x509_cert___implementation_itf_1ga2cf1041e7eb47560643189ea889738b5>` :ref:`PFRTSOIDCREATE_IEC <group___cmp_x509_cert___implementation_itf_1ga7b18429a95b3c6ec8be0c352cd8302cd>` pfrtsoidcreate;
+
+- #define :ref:`EXT_rtsoidcreate <group___cmp_x509_cert___implementation_itf_1gab91eca53dbe36d23ca64fc9c2c58137f>` extern :ref:`PFRTSOIDCREATE_IEC <group___cmp_x509_cert___implementation_itf_1ga7b18429a95b3c6ec8be0c352cd8302cd>` pfrtsoidcreate;
+
+- #define :ref:`GET_rtsoidcreate <group___cmp_x509_cert___implementation_itf_1ga62f6778973d1a2e48b121b9e13cbf52a>` s_pfCMGetAPI2( "rtsoidcreate", (RTS_VOID_FCTPTR *)&pfrtsoidcreate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE11A70BD, 0x03050F00)
+
+- #define :ref:`CAL_rtsoidcreate <group___cmp_x509_cert___implementation_itf_1ga5c1a475d271941455f2eb9a14d905dc6>` pfrtsoidcreate
+
+- #define :ref:`CHK_rtsoidcreate <group___cmp_x509_cert___implementation_itf_1ga5cbcb187dc5992f084cbbea1640dd7c4>` (pfrtsoidcreate != NULL)
+
+- #define :ref:`EXP_rtsoidcreate <group___cmp_x509_cert___implementation_itf_1ga822f963539cf54b92aac9a99c9f68e66>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtsoidcreate", (RTS_UINTPTR) :ref:`rtsoidcreate <group___cmp_x509_cert___implementation_itf_1ga7374233d9aae434d090a745f626aa958>` , 1, 0xE11A70BD, 0x03050F00)
+
+- #define :ref:`USE_rtsoidgetid <group___cmp_x509_cert___implementation_itf_1ga46a171d1874bd7094b8fb7ca222ea910>` :ref:`PFRTSOIDGETID_IEC <group___cmp_x509_cert___implementation_itf_1gabe02b9b1a1e2d20cadc6a4705463721d>` pfrtsoidgetid;
+
+- #define :ref:`EXT_rtsoidgetid <group___cmp_x509_cert___implementation_itf_1gad7ac253661c5ca01e635413f0de26d5d>` extern :ref:`PFRTSOIDGETID_IEC <group___cmp_x509_cert___implementation_itf_1gabe02b9b1a1e2d20cadc6a4705463721d>` pfrtsoidgetid;
+
+- #define :ref:`GET_rtsoidgetid <group___cmp_x509_cert___implementation_itf_1ga82bd18513aa1205863f1f5fc49138842>` s_pfCMGetAPI2( "rtsoidgetid", (RTS_VOID_FCTPTR *)&pfrtsoidgetid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xB69D55FF, 0x03050F00)
+
+- #define :ref:`CAL_rtsoidgetid <group___cmp_x509_cert___implementation_itf_1gabab24f722d26eda80cda9c2f1d67fbe2>` pfrtsoidgetid
+
+- #define :ref:`CHK_rtsoidgetid <group___cmp_x509_cert___implementation_itf_1gac3b64fe151bc9da8ebfb3cf81a2c6d96>` (pfrtsoidgetid != NULL)
+
+- #define :ref:`EXP_rtsoidgetid <group___cmp_x509_cert___implementation_itf_1ga238e244bc82d052adce5ccd456788e8b>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtsoidgetid", (RTS_UINTPTR) :ref:`rtsoidgetid <group___cmp_x509_cert___implementation_itf_1ga51a287f5ae86834e5c6c224c33f65946>` , 1, 0xB69D55FF, 0x03050F00)
+
+- #define :ref:`USE_rtsoidgetname <group___cmp_x509_cert___implementation_itf_1ga71cdb42aace630197b19b22bd606008e>` :ref:`PFRTSOIDGETNAME_IEC <group___cmp_x509_cert___implementation_itf_1ga070e61cbbea3597c142a3023304b7377>` pfrtsoidgetname;
+
+- #define :ref:`EXT_rtsoidgetname <group___cmp_x509_cert___implementation_itf_1gac3d1aac091a8819f126296e43c11cf25>` extern :ref:`PFRTSOIDGETNAME_IEC <group___cmp_x509_cert___implementation_itf_1ga070e61cbbea3597c142a3023304b7377>` pfrtsoidgetname;
+
+- #define :ref:`GET_rtsoidgetname <group___cmp_x509_cert___implementation_itf_1gabfaa66c5f6d2a349f60b0d61c693dc19>` s_pfCMGetAPI2( "rtsoidgetname", (RTS_VOID_FCTPTR *)&pfrtsoidgetname, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xBEA6E204, 0x03050F00)
+
+- #define :ref:`CAL_rtsoidgetname <group___cmp_x509_cert___implementation_itf_1ga63a3a4d8b50c50f41ffa7ac90b219683>` pfrtsoidgetname
+
+- #define :ref:`CHK_rtsoidgetname <group___cmp_x509_cert___implementation_itf_1gae4c46cb5c9fb4b2e72de65e9185697cd>` (pfrtsoidgetname != NULL)
+
+- #define :ref:`EXP_rtsoidgetname <group___cmp_x509_cert___implementation_itf_1gacbe0e1ad833ec9c2c41f8fa101ff7beb>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"rtsoidgetname", (RTS_UINTPTR) :ref:`rtsoidgetname <group___cmp_x509_cert___implementation_itf_1gaf1214a265443a014e1181cf12e089977>` , 1, 0xBEA6E204, 0x03050F00)
+
+- #define :ref:`USE_x509certcheckhost <group___cmp_x509_cert___implementation_itf_1gaf3c33127961f653a0f1c812da75d0133>` :ref:`PFX509CERTCHECKHOST_IEC <group___cmp_x509_cert___implementation_itf_1gae7b04a3174085fe6c013526b4665a34b>` pfx509certcheckhost;
+
+- #define :ref:`EXT_x509certcheckhost <group___cmp_x509_cert___implementation_itf_1gabec1a456625c871c847afbd744cd15b9>` extern :ref:`PFX509CERTCHECKHOST_IEC <group___cmp_x509_cert___implementation_itf_1gae7b04a3174085fe6c013526b4665a34b>` pfx509certcheckhost;
+
+- #define :ref:`GET_x509certcheckhost <group___cmp_x509_cert___implementation_itf_1gac5374aad587ee1676b317270da944327>` s_pfCMGetAPI2( "x509certcheckhost", (RTS_VOID_FCTPTR *)&pfx509certcheckhost, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x7EE75544, 0x03050F00)
+
+- #define :ref:`CAL_x509certcheckhost <group___cmp_x509_cert___implementation_itf_1ga2fad4b0ff4af7b00877a70a2986e236a>` pfx509certcheckhost
+
+- #define :ref:`CHK_x509certcheckhost <group___cmp_x509_cert___implementation_itf_1ga5be6d527a89819c758f87c45a8f0ae63>` (pfx509certcheckhost != NULL)
+
+- #define :ref:`EXP_x509certcheckhost <group___cmp_x509_cert___implementation_itf_1gab46bb1dde8399aadc34914e3e914c861>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certcheckhost", (RTS_UINTPTR) :ref:`x509certcheckhost <group___cmp_x509_cert___implementation_itf_1ga69a1b86324e73b9521bc5140034e62a5>` , 1, 0x7EE75544, 0x03050F00)
+
+- #define :ref:`USE_x509certcheckip <group___cmp_x509_cert___implementation_itf_1gaf75cbf6421fbeb3e2d59a720d20247c2>` :ref:`PFX509CERTCHECKIP_IEC <group___cmp_x509_cert___implementation_itf_1gacf86a2bd5f8f0f5d106ecde34b66b7a6>` pfx509certcheckip;
+
+- #define :ref:`EXT_x509certcheckip <group___cmp_x509_cert___implementation_itf_1ga5251aedb5a2cbd396b821aeb2636f5b9>` extern :ref:`PFX509CERTCHECKIP_IEC <group___cmp_x509_cert___implementation_itf_1gacf86a2bd5f8f0f5d106ecde34b66b7a6>` pfx509certcheckip;
+
+- #define :ref:`GET_x509certcheckip <group___cmp_x509_cert___implementation_itf_1ga2a29b30c9fb946d9b99f2a721003fa5a>` s_pfCMGetAPI2( "x509certcheckip", (RTS_VOID_FCTPTR *)&pfx509certcheckip, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x9F16A670, 0x03050F00)
+
+- #define :ref:`CAL_x509certcheckip <group___cmp_x509_cert___implementation_itf_1ga8e03438c6bd4a1d233b6b2d1289598d7>` pfx509certcheckip
+
+- #define :ref:`CHK_x509certcheckip <group___cmp_x509_cert___implementation_itf_1ga44a6a5fa9050cd0f71d7bbaa7ceddff0>` (pfx509certcheckip != NULL)
+
+- #define :ref:`EXP_x509certcheckip <group___cmp_x509_cert___implementation_itf_1ga386ab4ec9650b144dca6727d74c3a679>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certcheckip", (RTS_UINTPTR) :ref:`x509certcheckip <group___cmp_x509_cert___implementation_itf_1ga964ea62f3dd3607a69d356b6576f9d38>` , 1, 0x9F16A670, 0x03050F00)
+
+- #define :ref:`USE_x509certclose <group___cmp_x509_cert___implementation_itf_1ga70ac762dc78c0117490c2a983993630e>` :ref:`PFX509CERTCLOSE_IEC <group___cmp_x509_cert___implementation_itf_1gac19c18e5d4b2c17a09c0bb4b1b001465>` pfx509certclose;
+
+- #define :ref:`EXT_x509certclose <group___cmp_x509_cert___implementation_itf_1gabe79c8263ce719dee09331cc45debfc4>` extern :ref:`PFX509CERTCLOSE_IEC <group___cmp_x509_cert___implementation_itf_1gac19c18e5d4b2c17a09c0bb4b1b001465>` pfx509certclose;
+
+- #define :ref:`GET_x509certclose <group___cmp_x509_cert___implementation_itf_1gad54988a253747023173fc944200515b5>` s_pfCMGetAPI2( "x509certclose", (RTS_VOID_FCTPTR *)&pfx509certclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x150A5E6B, 0x03050F00)
+
+- #define :ref:`CAL_x509certclose <group___cmp_x509_cert___implementation_itf_1ga15b0cfebdc47672a2b4a941c744f22a7>` pfx509certclose
+
+- #define :ref:`CHK_x509certclose <group___cmp_x509_cert___implementation_itf_1gadf1ae918a0bb01b764e84b53ba38464a>` (pfx509certclose != NULL)
+
+- #define :ref:`EXP_x509certclose <group___cmp_x509_cert___implementation_itf_1gab59a07522d6e05fb8587525a242eb539>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certclose", (RTS_UINTPTR) :ref:`x509certclose <group___cmp_x509_cert___implementation_itf_1ga410be71aa936cd20f75acb73cb9b6955>` , 1, 0x150A5E6B, 0x03050F00)
+
+- #define :ref:`USE_x509certcmsdecrypt <group___cmp_x509_cert___implementation_itf_1gaae990bfec73d34d50f6c20f3491f9eaf>` :ref:`PFX509CERTCMSDECRYPT_IEC <group___cmp_x509_cert___implementation_itf_1ga7945f6ec36e8bf035c15b71dacfa80d8>` pfx509certcmsdecrypt;
+
+- #define :ref:`EXT_x509certcmsdecrypt <group___cmp_x509_cert___implementation_itf_1gad7174327a34c19ad06116fcca37ec99b>` extern :ref:`PFX509CERTCMSDECRYPT_IEC <group___cmp_x509_cert___implementation_itf_1ga7945f6ec36e8bf035c15b71dacfa80d8>` pfx509certcmsdecrypt;
+
+- #define :ref:`GET_x509certcmsdecrypt <group___cmp_x509_cert___implementation_itf_1ga581c966ec503075fb2c310e9af776c90>` s_pfCMGetAPI2( "x509certcmsdecrypt", (RTS_VOID_FCTPTR *)&pfx509certcmsdecrypt, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xCCAD85D1, 0x03050F00)
+
+- #define :ref:`CAL_x509certcmsdecrypt <group___cmp_x509_cert___implementation_itf_1ga0cf087315f877d3984626affb480eefd>` pfx509certcmsdecrypt
+
+- #define :ref:`CHK_x509certcmsdecrypt <group___cmp_x509_cert___implementation_itf_1ga32085948ff12e1de7eb0822a8f465c81>` (pfx509certcmsdecrypt != NULL)
+
+- #define :ref:`EXP_x509certcmsdecrypt <group___cmp_x509_cert___implementation_itf_1ga5a273882c60fd37c8783d4f35e869c8b>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certcmsdecrypt", (RTS_UINTPTR) :ref:`x509certcmsdecrypt <group___cmp_x509_cert___implementation_itf_1gad3f4745b05614813656bc26fbbbbcc34>` , 1, 0xCCAD85D1, 0x03050F00)
+
+- #define :ref:`USE_x509certcmsverify <group___cmp_x509_cert___implementation_itf_1gad992f8f49cbf04809c38a32eb9e5335c>` :ref:`PFX509CERTCMSVERIFY_IEC <group___cmp_x509_cert___implementation_itf_1ga39c53ea9baa83b9cef8e19afda3a5060>` pfx509certcmsverify;
+
+- #define :ref:`EXT_x509certcmsverify <group___cmp_x509_cert___implementation_itf_1ga7bcc0ca87020897338f63e3bc880f323>` extern :ref:`PFX509CERTCMSVERIFY_IEC <group___cmp_x509_cert___implementation_itf_1ga39c53ea9baa83b9cef8e19afda3a5060>` pfx509certcmsverify;
+
+- #define :ref:`GET_x509certcmsverify <group___cmp_x509_cert___implementation_itf_1ga35fd05cab46820075023a627465f71d0>` s_pfCMGetAPI2( "x509certcmsverify", (RTS_VOID_FCTPTR *)&pfx509certcmsverify, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x73653424, 0x03050F00)
+
+- #define :ref:`CAL_x509certcmsverify <group___cmp_x509_cert___implementation_itf_1gab0870e0d53973b1437e74bebe0cfd60f>` pfx509certcmsverify
+
+- #define :ref:`CHK_x509certcmsverify <group___cmp_x509_cert___implementation_itf_1ga8296aae5e1b428d8163ac103395399ad>` (pfx509certcmsverify != NULL)
+
+- #define :ref:`EXP_x509certcmsverify <group___cmp_x509_cert___implementation_itf_1gad540e50093c8ab826a583f6bb271f13c>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certcmsverify", (RTS_UINTPTR) :ref:`x509certcmsverify <group___cmp_x509_cert___implementation_itf_1gab760d6c7a1ca538ca7491665686430ae>` , 1, 0x73653424, 0x03050F00)
+
+- #define :ref:`USE_x509certcreatecsr <group___cmp_x509_cert___implementation_itf_1ga32448128211ba856a7735e016d445b79>` :ref:`PFX509CERTCREATECSR_IEC <group___cmp_x509_cert___implementation_itf_1ga881e13f320f87646b7915488781685e9>` pfx509certcreatecsr;
+
+- #define :ref:`EXT_x509certcreatecsr <group___cmp_x509_cert___implementation_itf_1ga465e0a1025da1b175c5b3c5e8b482c7f>` extern :ref:`PFX509CERTCREATECSR_IEC <group___cmp_x509_cert___implementation_itf_1ga881e13f320f87646b7915488781685e9>` pfx509certcreatecsr;
+
+- #define :ref:`GET_x509certcreatecsr <group___cmp_x509_cert___implementation_itf_1gaa38e9b40e6220bb07fc997c41a315865>` s_pfCMGetAPI2( "x509certcreatecsr", (RTS_VOID_FCTPTR *)&pfx509certcreatecsr, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xF64C1D04, 0x03050F00)
+
+- #define :ref:`CAL_x509certcreatecsr <group___cmp_x509_cert___implementation_itf_1ga6a66024f3358b2d706bacb86861612ed>` pfx509certcreatecsr
+
+- #define :ref:`CHK_x509certcreatecsr <group___cmp_x509_cert___implementation_itf_1ga38028bbb4aa9e5e38cfd8fcb6a977021>` (pfx509certcreatecsr != NULL)
+
+- #define :ref:`EXP_x509certcreatecsr <group___cmp_x509_cert___implementation_itf_1ga7dc58d94cf991657ccc6d79d0a153aba>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certcreatecsr", (RTS_UINTPTR) :ref:`x509certcreatecsr <group___cmp_x509_cert___implementation_itf_1ga4f76ce8b895afe74b664ce931e4a784f>` , 1, 0xF64C1D04, 0x03050F00)
+
+- #define :ref:`USE_x509certcreateselfsigned <group___cmp_x509_cert___implementation_itf_1gabb2f062cb8a1aec2b8f16c88af4a09a9>` :ref:`PFX509CERTCREATESELFSIGNED_IEC <group___cmp_x509_cert___implementation_itf_1gaf3a379dcbf9954e12039ad8d4d2a0d81>` pfx509certcreateselfsigned;
+
+- #define :ref:`EXT_x509certcreateselfsigned <group___cmp_x509_cert___implementation_itf_1ga6a9c554b52dfcfc169b94127db4d4101>` extern :ref:`PFX509CERTCREATESELFSIGNED_IEC <group___cmp_x509_cert___implementation_itf_1gaf3a379dcbf9954e12039ad8d4d2a0d81>` pfx509certcreateselfsigned;
+
+- #define :ref:`GET_x509certcreateselfsigned <group___cmp_x509_cert___implementation_itf_1gab75f411655ab25fb2359afddb1a1f90d>` s_pfCMGetAPI2( "x509certcreateselfsigned", (RTS_VOID_FCTPTR *)&pfx509certcreateselfsigned, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x6765E8BD, 0x03050F00)
+
+- #define :ref:`CAL_x509certcreateselfsigned <group___cmp_x509_cert___implementation_itf_1gaa5a0d1141776648f669aa9a2a7a02e9e>` pfx509certcreateselfsigned
+
+- #define :ref:`CHK_x509certcreateselfsigned <group___cmp_x509_cert___implementation_itf_1gad0208071c2b94beba64625b328c78024>` (pfx509certcreateselfsigned != NULL)
+
+- #define :ref:`EXP_x509certcreateselfsigned <group___cmp_x509_cert___implementation_itf_1ga52e82c397bd3ef6ed78ac3236c0254f8>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certcreateselfsigned", (RTS_UINTPTR) :ref:`x509certcreateselfsigned <group___cmp_x509_cert___implementation_itf_1ga327eff8530bc545390b3020d02af9c55>` , 1, 0x6765E8BD, 0x03050F00)
+
+- #define :ref:`USE_x509certgetbinary <group___cmp_x509_cert___implementation_itf_1ga2968684bb961ce52225947c925b0e3b9>` :ref:`PFX509CERTGETBINARY_IEC <group___cmp_x509_cert___implementation_itf_1gaf20f4a3a679dc156e57ec8286069b148>` pfx509certgetbinary;
+
+- #define :ref:`EXT_x509certgetbinary <group___cmp_x509_cert___implementation_itf_1ga200e62925a396a2d6d7199f4d927394a>` extern :ref:`PFX509CERTGETBINARY_IEC <group___cmp_x509_cert___implementation_itf_1gaf20f4a3a679dc156e57ec8286069b148>` pfx509certgetbinary;
+
+- #define :ref:`GET_x509certgetbinary <group___cmp_x509_cert___implementation_itf_1ga25dd241a4dce69be5815796e76575088>` s_pfCMGetAPI2( "x509certgetbinary", (RTS_VOID_FCTPTR *)&pfx509certgetbinary, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x6F7D6C42, 0x03050F00)
+
+- #define :ref:`CAL_x509certgetbinary <group___cmp_x509_cert___implementation_itf_1ga8900ef938c778ab485fbfab5da733131>` pfx509certgetbinary
+
+- #define :ref:`CHK_x509certgetbinary <group___cmp_x509_cert___implementation_itf_1gac0bb693ced486b5404d7bc372b64a8d8>` (pfx509certgetbinary != NULL)
+
+- #define :ref:`EXP_x509certgetbinary <group___cmp_x509_cert___implementation_itf_1ga6cf2451e7e16dfa347f9f43c4aa572a7>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certgetbinary", (RTS_UINTPTR) :ref:`x509certgetbinary <group___cmp_x509_cert___implementation_itf_1gad4ab36b7790b1bb19d27587a601004ee>` , 1, 0x6F7D6C42, 0x03050F00)
+
+- #define :ref:`USE_x509certgetcontent <group___cmp_x509_cert___implementation_itf_1gacadf3da739dc37d4286e48d44a9c197b>` :ref:`PFX509CERTGETCONTENT_IEC <group___cmp_x509_cert___implementation_itf_1ga9c2023d6aec438ae8ff8b27ae8a90f89>` pfx509certgetcontent;
+
+- #define :ref:`EXT_x509certgetcontent <group___cmp_x509_cert___implementation_itf_1ga928b0cc8db60292d7d99d4b62255bfaf>` extern :ref:`PFX509CERTGETCONTENT_IEC <group___cmp_x509_cert___implementation_itf_1ga9c2023d6aec438ae8ff8b27ae8a90f89>` pfx509certgetcontent;
+
+- #define :ref:`GET_x509certgetcontent <group___cmp_x509_cert___implementation_itf_1gac18f27fa8ef01f1d803d86647a76254f>` s_pfCMGetAPI2( "x509certgetcontent", (RTS_VOID_FCTPTR *)&pfx509certgetcontent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xDA69570E, 0x03050F00)
+
+- #define :ref:`CAL_x509certgetcontent <group___cmp_x509_cert___implementation_itf_1gac28720009f77cac64556c03eca28358e>` pfx509certgetcontent
+
+- #define :ref:`CHK_x509certgetcontent <group___cmp_x509_cert___implementation_itf_1ga211f07a283c4c0b697025afb0982ff27>` (pfx509certgetcontent != NULL)
+
+- #define :ref:`EXP_x509certgetcontent <group___cmp_x509_cert___implementation_itf_1gac6caa8ca160f597969ff4c9e86c13657>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certgetcontent", (RTS_UINTPTR) :ref:`x509certgetcontent <group___cmp_x509_cert___implementation_itf_1ga068c1c4ef60a609e3828cf3737bc6ab5>` , 1, 0xDA69570E, 0x03050F00)
+
+- #define :ref:`USE_x509certgetprivatekey <group___cmp_x509_cert___implementation_itf_1gaa01a030f86cdebe6305992f3605326dd>` :ref:`PFX509CERTGETPRIVATEKEY_IEC <group___cmp_x509_cert___implementation_itf_1ga139102047767bf2c6d1a74958f7e0db6>` pfx509certgetprivatekey;
+
+- #define :ref:`EXT_x509certgetprivatekey <group___cmp_x509_cert___implementation_itf_1ga65dc3702ab68e405817972409855f0e4>` extern :ref:`PFX509CERTGETPRIVATEKEY_IEC <group___cmp_x509_cert___implementation_itf_1ga139102047767bf2c6d1a74958f7e0db6>` pfx509certgetprivatekey;
+
+- #define :ref:`GET_x509certgetprivatekey <group___cmp_x509_cert___implementation_itf_1ga4e62ddc2d7785c36b34d40de68711c8a>` s_pfCMGetAPI2( "x509certgetprivatekey", (RTS_VOID_FCTPTR *)&pfx509certgetprivatekey, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x279C9A63, 0x03050F00)
+
+- #define :ref:`CAL_x509certgetprivatekey <group___cmp_x509_cert___implementation_itf_1ga0194e35945c17f2c6ef5cf73d960d2bb>` pfx509certgetprivatekey
+
+- #define :ref:`CHK_x509certgetprivatekey <group___cmp_x509_cert___implementation_itf_1ga04fa5b5f9643d288144f0ebfcb396bf7>` (pfx509certgetprivatekey != NULL)
+
+- #define :ref:`EXP_x509certgetprivatekey <group___cmp_x509_cert___implementation_itf_1ga6933c38af1c4a8116628093bbe7cca40>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certgetprivatekey", (RTS_UINTPTR) :ref:`x509certgetprivatekey <group___cmp_x509_cert___implementation_itf_1ga2ff276e1876f4425a67c395f00a22bf9>` , 1, 0x279C9A63, 0x03050F00)
+
+- #define :ref:`USE_x509certgetpublickey <group___cmp_x509_cert___implementation_itf_1ga9cc2f6e0f8f82e150f2eef050ecd84e1>` :ref:`PFX509CERTGETPUBLICKEY_IEC <group___cmp_x509_cert___implementation_itf_1ga6ec61d3579710b1de01f5a56c0557a35>` pfx509certgetpublickey;
+
+- #define :ref:`EXT_x509certgetpublickey <group___cmp_x509_cert___implementation_itf_1gae46a123d53e3559588e980f632afa952>` extern :ref:`PFX509CERTGETPUBLICKEY_IEC <group___cmp_x509_cert___implementation_itf_1ga6ec61d3579710b1de01f5a56c0557a35>` pfx509certgetpublickey;
+
+- #define :ref:`GET_x509certgetpublickey <group___cmp_x509_cert___implementation_itf_1gaa08c74df9b942d76a1f6c91e29325ecd>` s_pfCMGetAPI2( "x509certgetpublickey", (RTS_VOID_FCTPTR *)&pfx509certgetpublickey, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x35142E48, 0x03050F00)
+
+- #define :ref:`CAL_x509certgetpublickey <group___cmp_x509_cert___implementation_itf_1gacfe8c3a3326150976c0b10c825b8b86b>` pfx509certgetpublickey
+
+- #define :ref:`CHK_x509certgetpublickey <group___cmp_x509_cert___implementation_itf_1gaf6a108bc96a1385590beb1370aba0649>` (pfx509certgetpublickey != NULL)
+
+- #define :ref:`EXP_x509certgetpublickey <group___cmp_x509_cert___implementation_itf_1ga12e41c3cc7a94d5aaf885eeb23ad4603>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certgetpublickey", (RTS_UINTPTR) :ref:`x509certgetpublickey <group___cmp_x509_cert___implementation_itf_1ga3b219c410e55b5e0e3a2569c472cfb9b>` , 1, 0x35142E48, 0x03050F00)
+
+- #define :ref:`USE_x509certgetthumbprint <group___cmp_x509_cert___implementation_itf_1ga82839e84e9b35d257aa3289f55311ab1>` :ref:`PFX509CERTGETTHUMBPRINT_IEC <group___cmp_x509_cert___implementation_itf_1ga922299c4b6018eaa151bbc78de163d3b>` pfx509certgetthumbprint;
+
+- #define :ref:`EXT_x509certgetthumbprint <group___cmp_x509_cert___implementation_itf_1ga5f03586b1b5166e2a38a9d154cd805d3>` extern :ref:`PFX509CERTGETTHUMBPRINT_IEC <group___cmp_x509_cert___implementation_itf_1ga922299c4b6018eaa151bbc78de163d3b>` pfx509certgetthumbprint;
+
+- #define :ref:`GET_x509certgetthumbprint <group___cmp_x509_cert___implementation_itf_1ga4c59aa63784447f0577fa0cc07e9be65>` s_pfCMGetAPI2( "x509certgetthumbprint", (RTS_VOID_FCTPTR *)&pfx509certgetthumbprint, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x5B1EA1C5, 0x03050F00)
+
+- #define :ref:`CAL_x509certgetthumbprint <group___cmp_x509_cert___implementation_itf_1gabdc9b60658aa20fcd85e779eff9179e6>` pfx509certgetthumbprint
+
+- #define :ref:`CHK_x509certgetthumbprint <group___cmp_x509_cert___implementation_itf_1ga4a8e63f32329e5b5a275e51d391b3078>` (pfx509certgetthumbprint != NULL)
+
+- #define :ref:`EXP_x509certgetthumbprint <group___cmp_x509_cert___implementation_itf_1ga15b34c6c43ecdbbdac80c9bc2e393df8>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certgetthumbprint", (RTS_UINTPTR) :ref:`x509certgetthumbprint <group___cmp_x509_cert___implementation_itf_1ga79bb07781fe8a394e88a56e97594a2c6>` , 1, 0x5B1EA1C5, 0x03050F00)
+
+- #define :ref:`USE_x509certhasextendedkeyusage <group___cmp_x509_cert___implementation_itf_1gaa4507b2c25c892bd24441211ae6f2420>` :ref:`PFX509CERTHASEXTENDEDKEYUSAGE_IEC <group___cmp_x509_cert___implementation_itf_1ga60c077c03b95954e79824dd794fe30eb>` pfx509certhasextendedkeyusage;
+
+- #define :ref:`EXT_x509certhasextendedkeyusage <group___cmp_x509_cert___implementation_itf_1gaeda6ead8828da846f39ff6da97451df4>` extern :ref:`PFX509CERTHASEXTENDEDKEYUSAGE_IEC <group___cmp_x509_cert___implementation_itf_1ga60c077c03b95954e79824dd794fe30eb>` pfx509certhasextendedkeyusage;
+
+- #define :ref:`GET_x509certhasextendedkeyusage <group___cmp_x509_cert___implementation_itf_1ga1f6970104faf4a26dc03f20960534aa9>` s_pfCMGetAPI2( "x509certhasextendedkeyusage", (RTS_VOID_FCTPTR *)&pfx509certhasextendedkeyusage, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xFA59BB5D, 0x03050F00)
+
+- #define :ref:`CAL_x509certhasextendedkeyusage <group___cmp_x509_cert___implementation_itf_1ga0c82c0dad5a1a4ec732448cbb6f9ba35>` pfx509certhasextendedkeyusage
+
+- #define :ref:`CHK_x509certhasextendedkeyusage <group___cmp_x509_cert___implementation_itf_1ga8d2e0b28c6724b1594961629f4449e40>` (pfx509certhasextendedkeyusage != NULL)
+
+- #define :ref:`EXP_x509certhasextendedkeyusage <group___cmp_x509_cert___implementation_itf_1ga3d3b70dd3c0e31782a5c7a5f2088b8e6>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certhasextendedkeyusage", (RTS_UINTPTR) :ref:`x509certhasextendedkeyusage <group___cmp_x509_cert___implementation_itf_1gabe77c635923fdb56e1e12da9d937ae4f>` , 1, 0xFA59BB5D, 0x03050F00)
+
+- #define :ref:`USE_x509certinfoexit <group___cmp_x509_cert___implementation_itf_1gabc86f709f8c2103c0c4700835f00dfde>` :ref:`PFX509CERTINFOEXIT_IEC <group___cmp_x509_cert___implementation_itf_1ga06e0c59b674157f7a157e0b5edd4e0d3>` pfx509certinfoexit;
+
+- #define :ref:`EXT_x509certinfoexit <group___cmp_x509_cert___implementation_itf_1ga97959955074bfae7ff3e2dcdca0dc3c9>` extern :ref:`PFX509CERTINFOEXIT_IEC <group___cmp_x509_cert___implementation_itf_1ga06e0c59b674157f7a157e0b5edd4e0d3>` pfx509certinfoexit;
+
+- #define :ref:`GET_x509certinfoexit <group___cmp_x509_cert___implementation_itf_1ga14f14db05bcd705a41af9ab76aafa4d6>` s_pfCMGetAPI2( "x509certinfoexit", (RTS_VOID_FCTPTR *)&pfx509certinfoexit, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x4F4B0310, 0x03050F00)
+
+- #define :ref:`CAL_x509certinfoexit <group___cmp_x509_cert___implementation_itf_1ga146d73cab568bb7c87623d5b294713bb>` pfx509certinfoexit
+
+- #define :ref:`CHK_x509certinfoexit <group___cmp_x509_cert___implementation_itf_1ga73e009c330acea727954c0725689f41c>` (pfx509certinfoexit != NULL)
+
+- #define :ref:`EXP_x509certinfoexit <group___cmp_x509_cert___implementation_itf_1gab7c8d2bf51ff22aa9e1c0e5a444f151b>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certinfoexit", (RTS_UINTPTR) :ref:`x509certinfoexit <group___cmp_x509_cert___implementation_itf_1ga824cc1b0775f768175144a5c106aed4f>` , 1, 0x4F4B0310, 0x03050F00)
+
+- #define :ref:`USE_x509certinfoinit <group___cmp_x509_cert___implementation_itf_1gae0f547a99bca660db84ab2d4d524ca9e>` :ref:`PFX509CERTINFOINIT_IEC <group___cmp_x509_cert___implementation_itf_1ga108b3d9ec46c0510fdd99cfecc9d301a>` pfx509certinfoinit;
+
+- #define :ref:`EXT_x509certinfoinit <group___cmp_x509_cert___implementation_itf_1gad9e4a36a3beb79d22463800e1721d1e2>` extern :ref:`PFX509CERTINFOINIT_IEC <group___cmp_x509_cert___implementation_itf_1ga108b3d9ec46c0510fdd99cfecc9d301a>` pfx509certinfoinit;
+
+- #define :ref:`GET_x509certinfoinit <group___cmp_x509_cert___implementation_itf_1ga5204cde86b5c4547141b123cfbdd0fe1>` s_pfCMGetAPI2( "x509certinfoinit", (RTS_VOID_FCTPTR *)&pfx509certinfoinit, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xD52F28DD, 0x03050F00)
+
+- #define :ref:`CAL_x509certinfoinit <group___cmp_x509_cert___implementation_itf_1ga819fd98e6b8b007cdc043a407f6db391>` pfx509certinfoinit
+
+- #define :ref:`CHK_x509certinfoinit <group___cmp_x509_cert___implementation_itf_1gae6b3c0032f3b9363a9dabcb57125236c>` (pfx509certinfoinit != NULL)
+
+- #define :ref:`EXP_x509certinfoinit <group___cmp_x509_cert___implementation_itf_1gabd531e9ce21fc790fb1c4c23313f6b4c>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certinfoinit", (RTS_UINTPTR) :ref:`x509certinfoinit <group___cmp_x509_cert___implementation_itf_1ga657fbf87ec47b5067bb9814dd43efc52>` , 1, 0xD52F28DD, 0x03050F00)
+
+- #define :ref:`USE_x509certisdatevalid <group___cmp_x509_cert___implementation_itf_1ga841277860f065318eab1d9e34c523ca5>` :ref:`PFX509CERTISDATEVALID_IEC <group___cmp_x509_cert___implementation_itf_1gaa21f5390f88f504d56b81bbe3560981a>` pfx509certisdatevalid;
+
+- #define :ref:`EXT_x509certisdatevalid <group___cmp_x509_cert___implementation_itf_1ga110f883242dda777fd9c8452f42f5c00>` extern :ref:`PFX509CERTISDATEVALID_IEC <group___cmp_x509_cert___implementation_itf_1gaa21f5390f88f504d56b81bbe3560981a>` pfx509certisdatevalid;
+
+- #define :ref:`GET_x509certisdatevalid <group___cmp_x509_cert___implementation_itf_1gacb0c8296762a267c9bf56bfd23c6574a>` s_pfCMGetAPI2( "x509certisdatevalid", (RTS_VOID_FCTPTR *)&pfx509certisdatevalid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xB5AE8B3D, 0x03050F00)
+
+- #define :ref:`CAL_x509certisdatevalid <group___cmp_x509_cert___implementation_itf_1gaf405fd80e3e037a2771398b64a8f98ea>` pfx509certisdatevalid
+
+- #define :ref:`CHK_x509certisdatevalid <group___cmp_x509_cert___implementation_itf_1ga48d62f500624335c935dc049ce1ad091>` (pfx509certisdatevalid != NULL)
+
+- #define :ref:`EXP_x509certisdatevalid <group___cmp_x509_cert___implementation_itf_1gafe7b7c5f2ab88e0a654f49d5d3657fcf>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certisdatevalid", (RTS_UINTPTR) :ref:`x509certisdatevalid <group___cmp_x509_cert___implementation_itf_1gadc404b88fc34bf1efb5cce63534056b8>` , 1, 0xB5AE8B3D, 0x03050F00)
+
+- #define :ref:`USE_x509certisselfsigned <group___cmp_x509_cert___implementation_itf_1ga60eff3ec36f4d7eb14250e462d1f2928>` :ref:`PFX509CERTISSELFSIGNED_IEC <group___cmp_x509_cert___implementation_itf_1ga6938981b02595eaa4ccc4bdc105bd606>` pfx509certisselfsigned;
+
+- #define :ref:`EXT_x509certisselfsigned <group___cmp_x509_cert___implementation_itf_1ga90f1c91265a529886087743ff75cd8e4>` extern :ref:`PFX509CERTISSELFSIGNED_IEC <group___cmp_x509_cert___implementation_itf_1ga6938981b02595eaa4ccc4bdc105bd606>` pfx509certisselfsigned;
+
+- #define :ref:`GET_x509certisselfsigned <group___cmp_x509_cert___implementation_itf_1ga88b72942f414e814d72691009646c2e6>` s_pfCMGetAPI2( "x509certisselfsigned", (RTS_VOID_FCTPTR *)&pfx509certisselfsigned, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x1B7D16BF, 0x03050F00)
+
+- #define :ref:`CAL_x509certisselfsigned <group___cmp_x509_cert___implementation_itf_1gaaf0ff0b35c2ef06365764edb8d4537c9>` pfx509certisselfsigned
+
+- #define :ref:`CHK_x509certisselfsigned <group___cmp_x509_cert___implementation_itf_1ga34b46a435683cdf82797ffc3e4dd29d9>` (pfx509certisselfsigned != NULL)
+
+- #define :ref:`EXP_x509certisselfsigned <group___cmp_x509_cert___implementation_itf_1gaec7dce3f4172447932c563b951632551>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certisselfsigned", (RTS_UINTPTR) :ref:`x509certisselfsigned <group___cmp_x509_cert___implementation_itf_1gac27bd08a6ce040ff7e2daa36805ff308>` , 1, 0x1B7D16BF, 0x03050F00)
+
+- #define :ref:`USE_x509certkeyclose <group___cmp_x509_cert___implementation_itf_1ga44570aae5f9f45111f92f3f884660548>` :ref:`PFX509CERTKEYCLOSE_IEC <group___cmp_x509_cert___implementation_itf_1ga43573b2c6ac4f0b8f77c3c7e3e797b03>` pfx509certkeyclose;
+
+- #define :ref:`EXT_x509certkeyclose <group___cmp_x509_cert___implementation_itf_1ga79c1efb9b1c16cd893ab514399573b3c>` extern :ref:`PFX509CERTKEYCLOSE_IEC <group___cmp_x509_cert___implementation_itf_1ga43573b2c6ac4f0b8f77c3c7e3e797b03>` pfx509certkeyclose;
+
+- #define :ref:`GET_x509certkeyclose <group___cmp_x509_cert___implementation_itf_1gaa3e5898d2ea05c1b10c38085d3d5bfa6>` s_pfCMGetAPI2( "x509certkeyclose", (RTS_VOID_FCTPTR *)&pfx509certkeyclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x6A598D05, 0x03050F00)
+
+- #define :ref:`CAL_x509certkeyclose <group___cmp_x509_cert___implementation_itf_1ga278b7ae8dae309b649cddc1506c713c9>` pfx509certkeyclose
+
+- #define :ref:`CHK_x509certkeyclose <group___cmp_x509_cert___implementation_itf_1ga8bf9dfe58fcf7ef6442943fb5dd71c4d>` (pfx509certkeyclose != NULL)
+
+- #define :ref:`EXP_x509certkeyclose <group___cmp_x509_cert___implementation_itf_1ga7328671d481e74cb3e6094cde12af10a>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certkeyclose", (RTS_UINTPTR) :ref:`x509certkeyclose <group___cmp_x509_cert___implementation_itf_1ga49a5d1b4d4125d96e13bfd26f7927363>` , 1, 0x6A598D05, 0x03050F00)
+
+- #define :ref:`USE_x509certstoreaddcert <group___cmp_x509_cert___implementation_itf_1gad30835a86a107646f57eea68f0b8f837>` :ref:`PFX509CERTSTOREADDCERT_IEC <group___cmp_x509_cert___implementation_itf_1ga7888b3b9810b504e2018fc946dd91846>` pfx509certstoreaddcert;
+
+- #define :ref:`EXT_x509certstoreaddcert <group___cmp_x509_cert___implementation_itf_1ga4dcafd80bb014310d88885ab9040ba9e>` extern :ref:`PFX509CERTSTOREADDCERT_IEC <group___cmp_x509_cert___implementation_itf_1ga7888b3b9810b504e2018fc946dd91846>` pfx509certstoreaddcert;
+
+- #define :ref:`GET_x509certstoreaddcert <group___cmp_x509_cert___implementation_itf_1ga5c2286a5b0c1319c46e5366a9c234fc3>` s_pfCMGetAPI2( "x509certstoreaddcert", (RTS_VOID_FCTPTR *)&pfx509certstoreaddcert, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x690E5D79, 0x03050F00)
+
+- #define :ref:`CAL_x509certstoreaddcert <group___cmp_x509_cert___implementation_itf_1ga6f02245f232d2c3e754bf5c21cbf8291>` pfx509certstoreaddcert
+
+- #define :ref:`CHK_x509certstoreaddcert <group___cmp_x509_cert___implementation_itf_1gad6fbb990e949abd4c24170baf4f72aa1>` (pfx509certstoreaddcert != NULL)
+
+- #define :ref:`EXP_x509certstoreaddcert <group___cmp_x509_cert___implementation_itf_1ga38f5bc75eba77e676b4ebef128cb3f95>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certstoreaddcert", (RTS_UINTPTR) :ref:`x509certstoreaddcert <group___cmp_x509_cert___implementation_itf_1ga37a6b9a9f4d6976667c5b9ba36ecdbc4>` , 1, 0x690E5D79, 0x03050F00)
+
+- #define :ref:`USE_x509certstoreclose <group___cmp_x509_cert___implementation_itf_1gad71506178c2a06cdbab824166cd26520>` :ref:`PFX509CERTSTORECLOSE_IEC <group___cmp_x509_cert___implementation_itf_1gac0ce2cdb7740d49d8594219fd7d0a88f>` pfx509certstoreclose;
+
+- #define :ref:`EXT_x509certstoreclose <group___cmp_x509_cert___implementation_itf_1gad106f0ff6bb8f1db655d6148e604d908>` extern :ref:`PFX509CERTSTORECLOSE_IEC <group___cmp_x509_cert___implementation_itf_1gac0ce2cdb7740d49d8594219fd7d0a88f>` pfx509certstoreclose;
+
+- #define :ref:`GET_x509certstoreclose <group___cmp_x509_cert___implementation_itf_1gabd7d13a33b1ffb9893497fc9b70398cb>` s_pfCMGetAPI2( "x509certstoreclose", (RTS_VOID_FCTPTR *)&pfx509certstoreclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x048C3968, 0x03050F00)
+
+- #define :ref:`CAL_x509certstoreclose <group___cmp_x509_cert___implementation_itf_1ga50acea1d23960e8769b449df69e14762>` pfx509certstoreclose
+
+- #define :ref:`CHK_x509certstoreclose <group___cmp_x509_cert___implementation_itf_1ga3720a7869223f39cea24fc10d63177d9>` (pfx509certstoreclose != NULL)
+
+- #define :ref:`EXP_x509certstoreclose <group___cmp_x509_cert___implementation_itf_1ga36beda113637a93bbea39a708521d8eb>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certstoreclose", (RTS_UINTPTR) :ref:`x509certstoreclose <group___cmp_x509_cert___implementation_itf_1gabcecbdf91f57fd80d36a0ebcb06d747b>` , 1, 0x048C3968, 0x03050F00)
+
+- #define :ref:`USE_x509certstoregetfirstcert <group___cmp_x509_cert___implementation_itf_1ga67b409ea2dfa6b7babe2b63d251eab58>` :ref:`PFX509CERTSTOREGETFIRSTCERT_IEC <group___cmp_x509_cert___implementation_itf_1ga69771f6e725bc96c46c574fb84a2b331>` pfx509certstoregetfirstcert;
+
+- #define :ref:`EXT_x509certstoregetfirstcert <group___cmp_x509_cert___implementation_itf_1ga69bb148ed063ac7fed7b8e357518cf63>` extern :ref:`PFX509CERTSTOREGETFIRSTCERT_IEC <group___cmp_x509_cert___implementation_itf_1ga69771f6e725bc96c46c574fb84a2b331>` pfx509certstoregetfirstcert;
+
+- #define :ref:`GET_x509certstoregetfirstcert <group___cmp_x509_cert___implementation_itf_1ga780d784adf21883d3b094824202cc813>` s_pfCMGetAPI2( "x509certstoregetfirstcert", (RTS_VOID_FCTPTR *)&pfx509certstoregetfirstcert, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x9165907D, 0x03050F00)
+
+- #define :ref:`CAL_x509certstoregetfirstcert <group___cmp_x509_cert___implementation_itf_1gaeffcc5cbde02789f717eb140706eec5a>` pfx509certstoregetfirstcert
+
+- #define :ref:`CHK_x509certstoregetfirstcert <group___cmp_x509_cert___implementation_itf_1ga5f084b35b5f175c1b6e0dce8bb42180a>` (pfx509certstoregetfirstcert != NULL)
+
+- #define :ref:`EXP_x509certstoregetfirstcert <group___cmp_x509_cert___implementation_itf_1ga3caca35e90100fdf62c302c1809f3c5c>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certstoregetfirstcert", (RTS_UINTPTR) :ref:`x509certstoregetfirstcert <group___cmp_x509_cert___implementation_itf_1gac14fc5af262d185948ace8263b10733b>` , 1, 0x9165907D, 0x03050F00)
+
+- #define :ref:`USE_x509certstoregetnextcert <group___cmp_x509_cert___implementation_itf_1gae5315e3f3909c7e157e21ae9cc73e084>` :ref:`PFX509CERTSTOREGETNEXTCERT_IEC <group___cmp_x509_cert___implementation_itf_1ga89b7747fe17b74b897de76ffcb6aa78e>` pfx509certstoregetnextcert;
+
+- #define :ref:`EXT_x509certstoregetnextcert <group___cmp_x509_cert___implementation_itf_1ga5cbc88349b7c3539f42015339aaa4079>` extern :ref:`PFX509CERTSTOREGETNEXTCERT_IEC <group___cmp_x509_cert___implementation_itf_1ga89b7747fe17b74b897de76ffcb6aa78e>` pfx509certstoregetnextcert;
+
+- #define :ref:`GET_x509certstoregetnextcert <group___cmp_x509_cert___implementation_itf_1ga38075ed9b6340a150bbe438d0214a882>` s_pfCMGetAPI2( "x509certstoregetnextcert", (RTS_VOID_FCTPTR *)&pfx509certstoregetnextcert, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x894377FA, 0x03050F00)
+
+- #define :ref:`CAL_x509certstoregetnextcert <group___cmp_x509_cert___implementation_itf_1gae529bdf6e02e17a64baec6d505fd696c>` pfx509certstoregetnextcert
+
+- #define :ref:`CHK_x509certstoregetnextcert <group___cmp_x509_cert___implementation_itf_1ga7e3932664f953b1d3cd9fb2fc536ae42>` (pfx509certstoregetnextcert != NULL)
+
+- #define :ref:`EXP_x509certstoregetnextcert <group___cmp_x509_cert___implementation_itf_1ga9ba5a6f87186bf50a1c3b08eba1c4de7>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certstoregetnextcert", (RTS_UINTPTR) :ref:`x509certstoregetnextcert <group___cmp_x509_cert___implementation_itf_1ga32f7fe3f9239d0d4d4ee63aea7800f26>` , 1, 0x894377FA, 0x03050F00)
+
+- #define :ref:`USE_x509certstoregetregisteredcert <group___cmp_x509_cert___implementation_itf_1ga46b7b63d89815d9d070bfda2a0e79eb9>` :ref:`PFX509CERTSTOREGETREGISTEREDCERT_IEC <group___cmp_x509_cert___implementation_itf_1ga0744a50f615a65a6faae05bd432f948b>` pfx509certstoregetregisteredcert;
+
+- #define :ref:`EXT_x509certstoregetregisteredcert <group___cmp_x509_cert___implementation_itf_1ga1f6a41e4d5ff1fa420a953ded0a1f075>` extern :ref:`PFX509CERTSTOREGETREGISTEREDCERT_IEC <group___cmp_x509_cert___implementation_itf_1ga0744a50f615a65a6faae05bd432f948b>` pfx509certstoregetregisteredcert;
+
+- #define :ref:`GET_x509certstoregetregisteredcert <group___cmp_x509_cert___implementation_itf_1ga6d62390b09987b961bdde71551e429cb>` s_pfCMGetAPI2( "x509certstoregetregisteredcert", (RTS_VOID_FCTPTR *)&pfx509certstoregetregisteredcert, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x8C0F7D34, 0x03050F00)
+
+- #define :ref:`CAL_x509certstoregetregisteredcert <group___cmp_x509_cert___implementation_itf_1gac7bf789db3c44695391c8649fca925e8>` pfx509certstoregetregisteredcert
+
+- #define :ref:`CHK_x509certstoregetregisteredcert <group___cmp_x509_cert___implementation_itf_1gaba329689b28a4607c4ba0cdbd447845e>` (pfx509certstoregetregisteredcert != NULL)
+
+- #define :ref:`EXP_x509certstoregetregisteredcert <group___cmp_x509_cert___implementation_itf_1ga5a208b62fee10361e6deee5e161d8861>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certstoregetregisteredcert", (RTS_UINTPTR) :ref:`x509certstoregetregisteredcert <group___cmp_x509_cert___implementation_itf_1gac2d54f292ae981f158a7604b65eceeba>` , 1, 0x8C0F7D34, 0x03050F00)
+
+- #define :ref:`USE_x509certstoreopen <group___cmp_x509_cert___implementation_itf_1gab71e8e25b58f14d0845e00fe0631de7e>` :ref:`PFX509CERTSTOREOPEN_IEC <group___cmp_x509_cert___implementation_itf_1ga7df7e200fd72c5a34755de03bea8fec6>` pfx509certstoreopen;
+
+- #define :ref:`EXT_x509certstoreopen <group___cmp_x509_cert___implementation_itf_1gade19cca9581c4d15276439aaf68e85c5>` extern :ref:`PFX509CERTSTOREOPEN_IEC <group___cmp_x509_cert___implementation_itf_1ga7df7e200fd72c5a34755de03bea8fec6>` pfx509certstoreopen;
+
+- #define :ref:`GET_x509certstoreopen <group___cmp_x509_cert___implementation_itf_1ga0a0a6b4f09ac9561ddd18b5d4dbf589e>` s_pfCMGetAPI2( "x509certstoreopen", (RTS_VOID_FCTPTR *)&pfx509certstoreopen, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xFE7CCE6C, 0x03050F00)
+
+- #define :ref:`CAL_x509certstoreopen <group___cmp_x509_cert___implementation_itf_1ga710184aedd0422d03ba045d8233d7d3d>` pfx509certstoreopen
+
+- #define :ref:`CHK_x509certstoreopen <group___cmp_x509_cert___implementation_itf_1ga68ee8862a425c165fafe1a628cbfad3f>` (pfx509certstoreopen != NULL)
+
+- #define :ref:`EXP_x509certstoreopen <group___cmp_x509_cert___implementation_itf_1gaf302d99cdcc9763b2789d5b4bfdfcffb>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certstoreopen", (RTS_UINTPTR) :ref:`x509certstoreopen <group___cmp_x509_cert___implementation_itf_1ga5f443868c7ddcd00562d400ad1933b85>` , 1, 0xFE7CCE6C, 0x03050F00)
+
+- #define :ref:`USE_x509certstoreregister <group___cmp_x509_cert___implementation_itf_1ga7ec862715b53f67ad1ee1c1fe2c48810>` :ref:`PFX509CERTSTOREREGISTER_IEC <group___cmp_x509_cert___implementation_itf_1ga1110ab40689971023faad486cf6aafe1>` pfx509certstoreregister;
+
+- #define :ref:`EXT_x509certstoreregister <group___cmp_x509_cert___implementation_itf_1gafae24047cb93d2b098137a67909a7921>` extern :ref:`PFX509CERTSTOREREGISTER_IEC <group___cmp_x509_cert___implementation_itf_1ga1110ab40689971023faad486cf6aafe1>` pfx509certstoreregister;
+
+- #define :ref:`GET_x509certstoreregister <group___cmp_x509_cert___implementation_itf_1gada3d1cdedc9e253cbf8026e2ff9d16fa>` s_pfCMGetAPI2( "x509certstoreregister", (RTS_VOID_FCTPTR *)&pfx509certstoreregister, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x35F7F607, 0x03050F00)
+
+- #define :ref:`CAL_x509certstoreregister <group___cmp_x509_cert___implementation_itf_1ga6f1f26df0b2eae97896703e2c3c388d8>` pfx509certstoreregister
+
+- #define :ref:`CHK_x509certstoreregister <group___cmp_x509_cert___implementation_itf_1ga819bf21f18fedd0f8deba183d768394e>` (pfx509certstoreregister != NULL)
+
+- #define :ref:`EXP_x509certstoreregister <group___cmp_x509_cert___implementation_itf_1ga3b1bd46a7381289ba88b887833483d50>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certstoreregister", (RTS_UINTPTR) :ref:`x509certstoreregister <group___cmp_x509_cert___implementation_itf_1ga8b9968db05d6ccf6e20d7f59fb26faf2>` , 1, 0x35F7F607, 0x03050F00)
+
+- #define :ref:`USE_x509certstoreremovecert <group___cmp_x509_cert___implementation_itf_1gaeb2109eacce00df820db7d0c84cd604a>` :ref:`PFX509CERTSTOREREMOVECERT_IEC <group___cmp_x509_cert___implementation_itf_1ga7d335ce1fee064548acc672cdac78e44>` pfx509certstoreremovecert;
+
+- #define :ref:`EXT_x509certstoreremovecert <group___cmp_x509_cert___implementation_itf_1ga88ef0c17bbe8d269b6e3b7c6db73f58e>` extern :ref:`PFX509CERTSTOREREMOVECERT_IEC <group___cmp_x509_cert___implementation_itf_1ga7d335ce1fee064548acc672cdac78e44>` pfx509certstoreremovecert;
+
+- #define :ref:`GET_x509certstoreremovecert <group___cmp_x509_cert___implementation_itf_1ga118d7600702608ff55ae249af7682ee5>` s_pfCMGetAPI2( "x509certstoreremovecert", (RTS_VOID_FCTPTR *)&pfx509certstoreremovecert, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0E795BC4, 0x03050F00)
+
+- #define :ref:`CAL_x509certstoreremovecert <group___cmp_x509_cert___implementation_itf_1gab46a87501c9ec11b8587e7b4f0f4a329>` pfx509certstoreremovecert
+
+- #define :ref:`CHK_x509certstoreremovecert <group___cmp_x509_cert___implementation_itf_1gaedab7dae23078fa333c5d202f976f49a>` (pfx509certstoreremovecert != NULL)
+
+- #define :ref:`EXP_x509certstoreremovecert <group___cmp_x509_cert___implementation_itf_1gaf1693147ec1fa918edf918ab0e7cae58>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certstoreremovecert", (RTS_UINTPTR) :ref:`x509certstoreremovecert <group___cmp_x509_cert___implementation_itf_1ga1d41fa3b474c932b9cc583f9c6534c3d>` , 1, 0x0E795BC4, 0x03050F00)
+
+- #define :ref:`USE_x509certstoresearchgetfirst <group___cmp_x509_cert___implementation_itf_1gaa636a97ec141f15722a48206b87e3d1b>` :ref:`PFX509CERTSTORESEARCHGETFIRST_IEC <group___cmp_x509_cert___implementation_itf_1ga4eb2d719ee01d0db3fdce619a3565d6c>` pfx509certstoresearchgetfirst;
+
+- #define :ref:`EXT_x509certstoresearchgetfirst <group___cmp_x509_cert___implementation_itf_1gac5b40ae84be6f506da3d279f631c1929>` extern :ref:`PFX509CERTSTORESEARCHGETFIRST_IEC <group___cmp_x509_cert___implementation_itf_1ga4eb2d719ee01d0db3fdce619a3565d6c>` pfx509certstoresearchgetfirst;
+
+- #define :ref:`GET_x509certstoresearchgetfirst <group___cmp_x509_cert___implementation_itf_1ga8382798c49b570fce3738f863692faae>` s_pfCMGetAPI2( "x509certstoresearchgetfirst", (RTS_VOID_FCTPTR *)&pfx509certstoresearchgetfirst, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
+
+- #define :ref:`CAL_x509certstoresearchgetfirst <group___cmp_x509_cert___implementation_itf_1ga120b7f84c006b24f76b66032febebdb7>` pfx509certstoresearchgetfirst
+
+- #define :ref:`CHK_x509certstoresearchgetfirst <group___cmp_x509_cert___implementation_itf_1ga73582e220debec7ea77f8cd808a30672>` (pfx509certstoresearchgetfirst != NULL)
+
+- #define :ref:`EXP_x509certstoresearchgetfirst <group___cmp_x509_cert___implementation_itf_1ga0872584cb76df527f1afcb0c0d3b4884>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certstoresearchgetfirst", (RTS_UINTPTR) :ref:`x509certstoresearchgetfirst <group___cmp_x509_cert___implementation_itf_1ga40201f4447607b6b6e58f5f9583998e3>` , 1, 0, 0x03050F00)
+
+- #define :ref:`USE_x509certstoresearchgetnext <group___cmp_x509_cert___implementation_itf_1ga1549f9f6f401c1f116a97188ea7f1832>` :ref:`PFX509CERTSTORESEARCHGETNEXT_IEC <group___cmp_x509_cert___implementation_itf_1ga8d19cb951bfe4a15e597f9f49d031c5e>` pfx509certstoresearchgetnext;
+
+- #define :ref:`EXT_x509certstoresearchgetnext <group___cmp_x509_cert___implementation_itf_1gae052a639ffbd55c252775314ff3f1c90>` extern :ref:`PFX509CERTSTORESEARCHGETNEXT_IEC <group___cmp_x509_cert___implementation_itf_1ga8d19cb951bfe4a15e597f9f49d031c5e>` pfx509certstoresearchgetnext;
+
+- #define :ref:`GET_x509certstoresearchgetnext <group___cmp_x509_cert___implementation_itf_1gaf1488d877959aa535eef520b50dc4974>` s_pfCMGetAPI2( "x509certstoresearchgetnext", (RTS_VOID_FCTPTR *)&pfx509certstoresearchgetnext, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050F00)
+
+- #define :ref:`CAL_x509certstoresearchgetnext <group___cmp_x509_cert___implementation_itf_1gac2e57b6bb308bd25565c0d963f202808>` pfx509certstoresearchgetnext
+
+- #define :ref:`CHK_x509certstoresearchgetnext <group___cmp_x509_cert___implementation_itf_1ga4ede2734107890e90869fe90d88a9998>` (pfx509certstoresearchgetnext != NULL)
+
+- #define :ref:`EXP_x509certstoresearchgetnext <group___cmp_x509_cert___implementation_itf_1ga2d60e100ccc02607f0bb5d0072f65ec9>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certstoresearchgetnext", (RTS_UINTPTR) :ref:`x509certstoresearchgetnext <group___cmp_x509_cert___implementation_itf_1ga0af1987f2c15a7f333f8c03edbf55523>` , 1, 0, 0x03050F00)
+
+- #define :ref:`USE_x509certstoreunregister <group___cmp_x509_cert___implementation_itf_1ga6f44e5259e12b407d7b330b0179d40a4>` :ref:`PFX509CERTSTOREUNREGISTER_IEC <group___cmp_x509_cert___implementation_itf_1gab05f468a305a9ac76313375255b5d1eb>` pfx509certstoreunregister;
+
+- #define :ref:`EXT_x509certstoreunregister <group___cmp_x509_cert___implementation_itf_1gaebf24834ac12ebff174ecd2db9c689d1>` extern :ref:`PFX509CERTSTOREUNREGISTER_IEC <group___cmp_x509_cert___implementation_itf_1gab05f468a305a9ac76313375255b5d1eb>` pfx509certstoreunregister;
+
+- #define :ref:`GET_x509certstoreunregister <group___cmp_x509_cert___implementation_itf_1ga92537a64747d4c4a9ed78f3ec21dac43>` s_pfCMGetAPI2( "x509certstoreunregister", (RTS_VOID_FCTPTR *)&pfx509certstoreunregister, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE41C13F3, 0x03050F00)
+
+- #define :ref:`CAL_x509certstoreunregister <group___cmp_x509_cert___implementation_itf_1gac71024769787de1603b1f9ff77858111>` pfx509certstoreunregister
+
+- #define :ref:`CHK_x509certstoreunregister <group___cmp_x509_cert___implementation_itf_1gabb439bdc1ced9879eb6196d69334d385>` (pfx509certstoreunregister != NULL)
+
+- #define :ref:`EXP_x509certstoreunregister <group___cmp_x509_cert___implementation_itf_1ga8ea60fbc2292039512546a500f38cac7>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certstoreunregister", (RTS_UINTPTR) :ref:`x509certstoreunregister <group___cmp_x509_cert___implementation_itf_1gaf562eaba2aa4ae1e41b94b5ea23da577>` , 1, 0xE41C13F3, 0x03050F00)
+
+- #define :ref:`USE_x509certverify <group___cmp_x509_cert___implementation_itf_1gab7870fa0374e4425df941e09f024fea8>` :ref:`PFX509CERTVERIFY_IEC <group___cmp_x509_cert___implementation_itf_1ga3c3dee82ed4ee35176e64ac74749685c>` pfx509certverify;
+
+- #define :ref:`EXT_x509certverify <group___cmp_x509_cert___implementation_itf_1gadac779f3597dd8fc2112cf68370e4e52>` extern :ref:`PFX509CERTVERIFY_IEC <group___cmp_x509_cert___implementation_itf_1ga3c3dee82ed4ee35176e64ac74749685c>` pfx509certverify;
+
+- #define :ref:`GET_x509certverify <group___cmp_x509_cert___implementation_itf_1ga7514b3cd676499034ede78879eb0c3cf>` s_pfCMGetAPI2( "x509certverify", (RTS_VOID_FCTPTR *)&pfx509certverify, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x9822EB29, 0x03050F00)
+
+- #define :ref:`CAL_x509certverify <group___cmp_x509_cert___implementation_itf_1ga4c9815b87318f8630ed6067a7b156835>` pfx509certverify
+
+- #define :ref:`CHK_x509certverify <group___cmp_x509_cert___implementation_itf_1ga34b7c75fd96fc1c0120662fd4e403fd4>` (pfx509certverify != NULL)
+
+- #define :ref:`EXP_x509certverify <group___cmp_x509_cert___implementation_itf_1ga0ff5392824bd2096d44fe2b0c97f433e>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509certverify", (RTS_UINTPTR) :ref:`x509certverify <group___cmp_x509_cert___implementation_itf_1ga3fa95e90733a1e6576a3cacb8cdb0ab8>` , 1, 0x9822EB29, 0x03050F00)
+
+- #define :ref:`USE_x509parsecertificate <group___cmp_x509_cert___implementation_itf_1gab993c9c92727f441c5d57d09ccdc358e>` :ref:`PFX509PARSECERTIFICATE_IEC <group___cmp_x509_cert___implementation_itf_1gaccddeaa853e1854956ec0a0fa8be70ff>` pfx509parsecertificate;
+
+- #define :ref:`EXT_x509parsecertificate <group___cmp_x509_cert___implementation_itf_1ga0691a549ee953a800f65aea68ff2b458>` extern :ref:`PFX509PARSECERTIFICATE_IEC <group___cmp_x509_cert___implementation_itf_1gaccddeaa853e1854956ec0a0fa8be70ff>` pfx509parsecertificate;
+
+- #define :ref:`GET_x509parsecertificate <group___cmp_x509_cert___implementation_itf_1ga07d824096c320f42454fafa2103886c7>` s_pfCMGetAPI2( "x509parsecertificate", (RTS_VOID_FCTPTR *)&pfx509parsecertificate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x01B27207, 0x03050F00)
+
+- #define :ref:`CAL_x509parsecertificate <group___cmp_x509_cert___implementation_itf_1ga2ee59a567d14e1f98dd3e350d9d9b5d2>` pfx509parsecertificate
+
+- #define :ref:`CHK_x509parsecertificate <group___cmp_x509_cert___implementation_itf_1gad070a52d164bbf35a98bf0b538808cfe>` (pfx509parsecertificate != NULL)
+
+- #define :ref:`EXP_x509parsecertificate <group___cmp_x509_cert___implementation_itf_1gad4df942944163048b9cc1c5e577397a0>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"x509parsecertificate", (RTS_UINTPTR) :ref:`x509parsecertificate <group___cmp_x509_cert___implementation_itf_1ga3eb1ea6e82283c8d75569bf7e1ef84fb>` , 1, 0x01B27207, 0x03050F00)
+
+- #define :ref:`ITF_CmpX509Cert_Implementation <group___cmp_x509_cert___implementation_itf_1ga2f7f0863bcdf92f9fc05b24f5865c8a7>`
+
+- #define :ref:`EXTITF_CmpX509Cert_Implementation <group___cmp_x509_cert___implementation_itf_1ga89c0bf63f6771112ef1f48ce3d868baa>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagrtsoidclear_struct <structtagrtsoidclear__struct>` :ref:`rtsoidclear_struct <group___cmp_x509_cert___implementation_itf_1gafcc94a09699b2c1d2ee6040b978d951d>`
+
+- typedef void(* :ref:`PFRTSOIDCLEAR_IEC <group___cmp_x509_cert___implementation_itf_1ga63870d037f0dd395276826d8bf33e0cb>`)(rtsoidclear_struct *p)
+
+- typedef struct :ref:`tagrtsoidcreate_struct <structtagrtsoidcreate__struct>` :ref:`rtsoidcreate_struct <group___cmp_x509_cert___implementation_itf_1gae8fc99c19e3b1ddcf63bf0947c9be613>`
+
+- typedef void(* :ref:`PFRTSOIDCREATE_IEC <group___cmp_x509_cert___implementation_itf_1ga7b18429a95b3c6ec8be0c352cd8302cd>`)(rtsoidcreate_struct *p)
+
+- typedef struct :ref:`tagrtsoidgetid_struct <structtagrtsoidgetid__struct>` :ref:`rtsoidgetid_struct <group___cmp_x509_cert___implementation_itf_1ga1d173a7d842f7f4e432ff0d7cbb6fcae>`
+
+- typedef void(* :ref:`PFRTSOIDGETID_IEC <group___cmp_x509_cert___implementation_itf_1gabe02b9b1a1e2d20cadc6a4705463721d>`)(rtsoidgetid_struct *p)
+
+- typedef struct :ref:`tagrtsoidgetname_struct <structtagrtsoidgetname__struct>` :ref:`rtsoidgetname_struct <group___cmp_x509_cert___implementation_itf_1ga0133de2e20fc71996c5fbbb5298360e0>`
+
+- typedef void(* :ref:`PFRTSOIDGETNAME_IEC <group___cmp_x509_cert___implementation_itf_1ga070e61cbbea3597c142a3023304b7377>`)(rtsoidgetname_struct *p)
+
+- typedef struct :ref:`tagx509certcheckhost_struct <structtagx509certcheckhost__struct>` :ref:`x509certcheckhost_struct <group___cmp_x509_cert___implementation_itf_1gad3a3a2659f44d0244ebe39f53f69825e>`
+
+- typedef void(* :ref:`PFX509CERTCHECKHOST_IEC <group___cmp_x509_cert___implementation_itf_1gae7b04a3174085fe6c013526b4665a34b>`)(x509certcheckhost_struct *p)
+
+- typedef struct :ref:`tagx509certcheckip_struct <structtagx509certcheckip__struct>` :ref:`x509certcheckip_struct <group___cmp_x509_cert___implementation_itf_1ga31a817026ab583383b71200c4254258b>`
+
+- typedef void(* :ref:`PFX509CERTCHECKIP_IEC <group___cmp_x509_cert___implementation_itf_1gacf86a2bd5f8f0f5d106ecde34b66b7a6>`)(x509certcheckip_struct *p)
+
+- typedef struct :ref:`tagx509certclose_struct <structtagx509certclose__struct>` :ref:`x509certclose_struct <group___cmp_x509_cert___implementation_itf_1gaa5e901025f321eb85340d7c06421e06b>`
+
+- typedef void(* :ref:`PFX509CERTCLOSE_IEC <group___cmp_x509_cert___implementation_itf_1gac19c18e5d4b2c17a09c0bb4b1b001465>`)(x509certclose_struct *p)
+
+- typedef struct :ref:`tagx509certcmsdecrypt_struct <structtagx509certcmsdecrypt__struct>` :ref:`x509certcmsdecrypt_struct <group___cmp_x509_cert___implementation_itf_1gadf1937df8773a0a0b094b224df0fd26e>`
+
+- typedef void(* :ref:`PFX509CERTCMSDECRYPT_IEC <group___cmp_x509_cert___implementation_itf_1ga7945f6ec36e8bf035c15b71dacfa80d8>`)(x509certcmsdecrypt_struct *p)
+
+- typedef struct :ref:`tagx509certcmsverify_struct <structtagx509certcmsverify__struct>` :ref:`x509certcmsverify_struct <group___cmp_x509_cert___implementation_itf_1gafac39e3b759169fad4221cb3df68d6be>`
+
+- typedef void(* :ref:`PFX509CERTCMSVERIFY_IEC <group___cmp_x509_cert___implementation_itf_1ga39c53ea9baa83b9cef8e19afda3a5060>`)(x509certcmsverify_struct *p)
+
+- typedef struct :ref:`tagx509certcreatecsr_struct <structtagx509certcreatecsr__struct>` :ref:`x509certcreatecsr_struct <group___cmp_x509_cert___implementation_itf_1ga0dadd6dd0c7edecd136a948232478030>`
+
+- typedef void(* :ref:`PFX509CERTCREATECSR_IEC <group___cmp_x509_cert___implementation_itf_1ga881e13f320f87646b7915488781685e9>`)(x509certcreatecsr_struct *p)
+
+- typedef struct :ref:`tagx509certcreateselfsigned_struct <structtagx509certcreateselfsigned__struct>` :ref:`x509certcreateselfsigned_struct <group___cmp_x509_cert___implementation_itf_1ga5d036b907174889ef244b73dc016635a>`
+
+- typedef void(* :ref:`PFX509CERTCREATESELFSIGNED_IEC <group___cmp_x509_cert___implementation_itf_1gaf3a379dcbf9954e12039ad8d4d2a0d81>`)(x509certcreateselfsigned_struct *p)
+
+- typedef struct :ref:`tagx509certgetbinary_struct <structtagx509certgetbinary__struct>` :ref:`x509certgetbinary_struct <group___cmp_x509_cert___implementation_itf_1ga26988016ddca0cf250a81220c830185b>`
+
+- typedef void(* :ref:`PFX509CERTGETBINARY_IEC <group___cmp_x509_cert___implementation_itf_1gaf20f4a3a679dc156e57ec8286069b148>`)(x509certgetbinary_struct *p)
+
+- typedef struct :ref:`tagx509certgetcontent_struct <structtagx509certgetcontent__struct>` :ref:`x509certgetcontent_struct <group___cmp_x509_cert___implementation_itf_1gab8bd0d4e0f482175e3e4f3a80cc63ea9>`
+
+- typedef void(* :ref:`PFX509CERTGETCONTENT_IEC <group___cmp_x509_cert___implementation_itf_1ga9c2023d6aec438ae8ff8b27ae8a90f89>`)(x509certgetcontent_struct *p)
+
+- typedef struct :ref:`tagx509certgetprivatekey_struct <structtagx509certgetprivatekey__struct>` :ref:`x509certgetprivatekey_struct <group___cmp_x509_cert___implementation_itf_1ga780ea0b9092f3bda04043b493c6ea9b9>`
+
+- typedef void(* :ref:`PFX509CERTGETPRIVATEKEY_IEC <group___cmp_x509_cert___implementation_itf_1ga139102047767bf2c6d1a74958f7e0db6>`)(x509certgetprivatekey_struct *p)
+
+- typedef struct :ref:`tagx509certgetpublickey_struct <structtagx509certgetpublickey__struct>` :ref:`x509certgetpublickey_struct <group___cmp_x509_cert___implementation_itf_1ga03bf08e33f8d1b105290a75147149d26>`
+
+- typedef void(* :ref:`PFX509CERTGETPUBLICKEY_IEC <group___cmp_x509_cert___implementation_itf_1ga6ec61d3579710b1de01f5a56c0557a35>`)(x509certgetpublickey_struct *p)
+
+- typedef struct :ref:`tagx509certgetthumbprint_struct <structtagx509certgetthumbprint__struct>` :ref:`x509certgetthumbprint_struct <group___cmp_x509_cert___implementation_itf_1gafecb082e4ad9bdd8315e058ebd02a951>`
+
+- typedef void(* :ref:`PFX509CERTGETTHUMBPRINT_IEC <group___cmp_x509_cert___implementation_itf_1ga922299c4b6018eaa151bbc78de163d3b>`)(x509certgetthumbprint_struct *p)
+
+- typedef struct :ref:`tagx509certhasextendedkeyusage_struct <structtagx509certhasextendedkeyusage__struct>` :ref:`x509certhasextendedkeyusage_struct <group___cmp_x509_cert___implementation_itf_1ga2b80987803d3338bba115f67f0064f10>`
+
+- typedef void(* :ref:`PFX509CERTHASEXTENDEDKEYUSAGE_IEC <group___cmp_x509_cert___implementation_itf_1ga60c077c03b95954e79824dd794fe30eb>`)(x509certhasextendedkeyusage_struct *p)
+
+- typedef struct :ref:`tagx509certinfoexit_struct <structtagx509certinfoexit__struct>` :ref:`x509certinfoexit_struct <group___cmp_x509_cert___implementation_itf_1gac6c9c52d9283560d3f4b4ab19fd68437>`
+
+- typedef void(* :ref:`PFX509CERTINFOEXIT_IEC <group___cmp_x509_cert___implementation_itf_1ga06e0c59b674157f7a157e0b5edd4e0d3>`)(x509certinfoexit_struct *p)
+
+- typedef struct :ref:`tagx509certinfoinit_struct <structtagx509certinfoinit__struct>` :ref:`x509certinfoinit_struct <group___cmp_x509_cert___implementation_itf_1gadd1275e76287d75d6947ef832e5e1d99>`
+
+- typedef void(* :ref:`PFX509CERTINFOINIT_IEC <group___cmp_x509_cert___implementation_itf_1ga108b3d9ec46c0510fdd99cfecc9d301a>`)(x509certinfoinit_struct *p)
+
+- typedef struct :ref:`tagx509certisdatevalid_struct <structtagx509certisdatevalid__struct>` :ref:`x509certisdatevalid_struct <group___cmp_x509_cert___implementation_itf_1gab6f41785cd2e15d2465630547b8c44d5>`
+
+- typedef void(* :ref:`PFX509CERTISDATEVALID_IEC <group___cmp_x509_cert___implementation_itf_1gaa21f5390f88f504d56b81bbe3560981a>`)(x509certisdatevalid_struct *p)
+
+- typedef struct :ref:`tagx509certisselfsigned_struct <structtagx509certisselfsigned__struct>` :ref:`x509certisselfsigned_struct <group___cmp_x509_cert___implementation_itf_1gacf974dca8f5f9759004c8e71fdcbe2d8>`
+
+- typedef void(* :ref:`PFX509CERTISSELFSIGNED_IEC <group___cmp_x509_cert___implementation_itf_1ga6938981b02595eaa4ccc4bdc105bd606>`)(x509certisselfsigned_struct *p)
+
+- typedef struct :ref:`tagx509certkeyclose_struct <structtagx509certkeyclose__struct>` :ref:`x509certkeyclose_struct <group___cmp_x509_cert___implementation_itf_1gafe8fd8964fb2c44d5fc93ee77c2db2be>`
+
+- typedef void(* :ref:`PFX509CERTKEYCLOSE_IEC <group___cmp_x509_cert___implementation_itf_1ga43573b2c6ac4f0b8f77c3c7e3e797b03>`)(x509certkeyclose_struct *p)
+
+- typedef struct :ref:`tagx509certstoreaddcert_struct <structtagx509certstoreaddcert__struct>` :ref:`x509certstoreaddcert_struct <group___cmp_x509_cert___implementation_itf_1ga474903b03da8ccf644e2320cace78536>`
+
+- typedef void(* :ref:`PFX509CERTSTOREADDCERT_IEC <group___cmp_x509_cert___implementation_itf_1ga7888b3b9810b504e2018fc946dd91846>`)(x509certstoreaddcert_struct *p)
+
+- typedef struct :ref:`tagx509certstoreclose_struct <structtagx509certstoreclose__struct>` :ref:`x509certstoreclose_struct <group___cmp_x509_cert___implementation_itf_1gaabfc06dc7257c425651d4ee5b178429a>`
+
+- typedef void(* :ref:`PFX509CERTSTORECLOSE_IEC <group___cmp_x509_cert___implementation_itf_1gac0ce2cdb7740d49d8594219fd7d0a88f>`)(x509certstoreclose_struct *p)
+
+- typedef struct :ref:`tagx509certstoregetfirstcert_struct <structtagx509certstoregetfirstcert__struct>` :ref:`x509certstoregetfirstcert_struct <group___cmp_x509_cert___implementation_itf_1ga9178369e5850a911fba9b9c35103acbf>`
+
+- typedef void(* :ref:`PFX509CERTSTOREGETFIRSTCERT_IEC <group___cmp_x509_cert___implementation_itf_1ga69771f6e725bc96c46c574fb84a2b331>`)(x509certstoregetfirstcert_struct *p)
+
+- typedef struct :ref:`tagx509certstoregetnextcert_struct <structtagx509certstoregetnextcert__struct>` :ref:`x509certstoregetnextcert_struct <group___cmp_x509_cert___implementation_itf_1ga9dc17d300dd4982b26af1640e2230bcf>`
+
+- typedef void(* :ref:`PFX509CERTSTOREGETNEXTCERT_IEC <group___cmp_x509_cert___implementation_itf_1ga89b7747fe17b74b897de76ffcb6aa78e>`)(x509certstoregetnextcert_struct *p)
+
+- typedef struct :ref:`tagx509certstoregetregisteredcert_struct <structtagx509certstoregetregisteredcert__struct>` :ref:`x509certstoregetregisteredcert_struct <group___cmp_x509_cert___implementation_itf_1ga75ecd0f0652a89353ca5b60ec2a1ba0b>`
+
+- typedef void(* :ref:`PFX509CERTSTOREGETREGISTEREDCERT_IEC <group___cmp_x509_cert___implementation_itf_1ga0744a50f615a65a6faae05bd432f948b>`)(x509certstoregetregisteredcert_struct *p)
+
+- typedef struct :ref:`tagx509certstoreopen_struct <structtagx509certstoreopen__struct>` :ref:`x509certstoreopen_struct <group___cmp_x509_cert___implementation_itf_1gaeb1cecb322bff68041a6652448ec19a0>`
+
+- typedef void(* :ref:`PFX509CERTSTOREOPEN_IEC <group___cmp_x509_cert___implementation_itf_1ga7df7e200fd72c5a34755de03bea8fec6>`)(x509certstoreopen_struct *p)
+
+- typedef struct :ref:`tagx509certstoreregister_struct <structtagx509certstoreregister__struct>` :ref:`x509certstoreregister_struct <group___cmp_x509_cert___implementation_itf_1ga4fb20cd1398f5e3bbc040d1958b18382>`
+
+- typedef void(* :ref:`PFX509CERTSTOREREGISTER_IEC <group___cmp_x509_cert___implementation_itf_1ga1110ab40689971023faad486cf6aafe1>`)(x509certstoreregister_struct *p)
+
+- typedef struct :ref:`tagx509certstoreremovecert_struct <structtagx509certstoreremovecert__struct>` :ref:`x509certstoreremovecert_struct <group___cmp_x509_cert___implementation_itf_1ga4c40cb8e3ac31a33efe665f29375405b>`
+
+- typedef void(* :ref:`PFX509CERTSTOREREMOVECERT_IEC <group___cmp_x509_cert___implementation_itf_1ga7d335ce1fee064548acc672cdac78e44>`)(x509certstoreremovecert_struct *p)
+
+- typedef struct :ref:`tagx509certstoresearchgetfirst_struct <structtagx509certstoresearchgetfirst__struct>` :ref:`x509certstoresearchgetfirst_struct <group___cmp_x509_cert___implementation_itf_1ga9b4d98119ac59209654624b3e05daf90>`
+
+- typedef void(* :ref:`PFX509CERTSTORESEARCHGETFIRST_IEC <group___cmp_x509_cert___implementation_itf_1ga4eb2d719ee01d0db3fdce619a3565d6c>`)(x509certstoresearchgetfirst_struct *p)
+
+- typedef struct :ref:`tagx509certstoresearchgetnext_struct <structtagx509certstoresearchgetnext__struct>` :ref:`x509certstoresearchgetnext_struct <group___cmp_x509_cert___implementation_itf_1ga3238c30257bccb0f5cfd3f6da142aad8>`
+
+- typedef void(* :ref:`PFX509CERTSTORESEARCHGETNEXT_IEC <group___cmp_x509_cert___implementation_itf_1ga8d19cb951bfe4a15e597f9f49d031c5e>`)(x509certstoresearchgetnext_struct *p)
+
+- typedef struct :ref:`tagx509certstoreunregister_struct <structtagx509certstoreunregister__struct>` :ref:`x509certstoreunregister_struct <group___cmp_x509_cert___implementation_itf_1ga29b992937349e5b0156eae542b0d02e2>`
+
+- typedef void(* :ref:`PFX509CERTSTOREUNREGISTER_IEC <group___cmp_x509_cert___implementation_itf_1gab05f468a305a9ac76313375255b5d1eb>`)(x509certstoreunregister_struct *p)
+
+- typedef struct :ref:`tagx509certverify_struct <structtagx509certverify__struct>` :ref:`x509certverify_struct <group___cmp_x509_cert___implementation_itf_1ga4c76f6182de50365fd1343719db96807>`
+
+- typedef void(* :ref:`PFX509CERTVERIFY_IEC <group___cmp_x509_cert___implementation_itf_1ga3c3dee82ed4ee35176e64ac74749685c>`)(x509certverify_struct *p)
+
+- typedef struct :ref:`tagx509parsecertificate_struct <structtagx509parsecertificate__struct>` :ref:`x509parsecertificate_struct <group___cmp_x509_cert___implementation_itf_1ga0a52e762be835bab4c3428725a6df8e6>`
+
+- typedef void(* :ref:`PFX509PARSECERTIFICATE_IEC <group___cmp_x509_cert___implementation_itf_1gaccddeaa853e1854956ec0a0fa8be70ff>`)(x509parsecertificate_struct *p)
+
+- typedef :ref:`ICmpX509Cert_Implementation_C <struct_i_cmp_x509_cert___implementation___c>` :ref:`ICmpX509Cert_Implementation <group___cmp_x509_cert___implementation_itf_1ga67425c11bce85f9ddde73fe06cf53a94>`
+
+Functions
+---------
+
+- void :ref:`rtsoidclear <group___cmp_x509_cert___implementation_itf_1gace185c5fcf05bd2c3dbc4c2e67b6dce1>` (:ref:`rtsoidclear_struct <group___cmp_x509_cert___implementation_itf_1gafcc94a09699b2c1d2ee6040b978d951d>` * p)
+
+- void :ref:`rtsoidcreate <group___cmp_x509_cert___implementation_itf_1ga7374233d9aae434d090a745f626aa958>` (:ref:`rtsoidcreate_struct <group___cmp_x509_cert___implementation_itf_1gae8fc99c19e3b1ddcf63bf0947c9be613>` * p)
+
+- void :ref:`rtsoidgetid <group___cmp_x509_cert___implementation_itf_1ga51a287f5ae86834e5c6c224c33f65946>` (:ref:`rtsoidgetid_struct <group___cmp_x509_cert___implementation_itf_1ga1d173a7d842f7f4e432ff0d7cbb6fcae>` * p)
+
+- void :ref:`rtsoidgetname <group___cmp_x509_cert___implementation_itf_1gaf1214a265443a014e1181cf12e089977>` (:ref:`rtsoidgetname_struct <group___cmp_x509_cert___implementation_itf_1ga0133de2e20fc71996c5fbbb5298360e0>` * p)
+
+- void :ref:`x509certcheckhost <group___cmp_x509_cert___implementation_itf_1ga69a1b86324e73b9521bc5140034e62a5>` (:ref:`x509certcheckhost_struct <group___cmp_x509_cert___implementation_itf_1gad3a3a2659f44d0244ebe39f53f69825e>` * p)
+
+- void :ref:`x509certcheckip <group___cmp_x509_cert___implementation_itf_1ga964ea62f3dd3607a69d356b6576f9d38>` (:ref:`x509certcheckip_struct <group___cmp_x509_cert___implementation_itf_1ga31a817026ab583383b71200c4254258b>` * p)
+
+- void :ref:`x509certclose <group___cmp_x509_cert___implementation_itf_1ga410be71aa936cd20f75acb73cb9b6955>` (:ref:`x509certclose_struct <group___cmp_x509_cert___implementation_itf_1gaa5e901025f321eb85340d7c06421e06b>` * p)
+
+- void :ref:`x509certcmsdecrypt <group___cmp_x509_cert___implementation_itf_1gad3f4745b05614813656bc26fbbbbcc34>` (:ref:`x509certcmsdecrypt_struct <group___cmp_x509_cert___implementation_itf_1gadf1937df8773a0a0b094b224df0fd26e>` * p)
+
+- void :ref:`x509certcmsverify <group___cmp_x509_cert___implementation_itf_1gab760d6c7a1ca538ca7491665686430ae>` (:ref:`x509certcmsverify_struct <group___cmp_x509_cert___implementation_itf_1gafac39e3b759169fad4221cb3df68d6be>` * p)
+
+- void :ref:`x509certcreatecsr <group___cmp_x509_cert___implementation_itf_1ga4f76ce8b895afe74b664ce931e4a784f>` (:ref:`x509certcreatecsr_struct <group___cmp_x509_cert___implementation_itf_1ga0dadd6dd0c7edecd136a948232478030>` * p)
+
+- void :ref:`x509certcreateselfsigned <group___cmp_x509_cert___implementation_itf_1ga327eff8530bc545390b3020d02af9c55>` (:ref:`x509certcreateselfsigned_struct <group___cmp_x509_cert___implementation_itf_1ga5d036b907174889ef244b73dc016635a>` * p)
+
+- void :ref:`x509certgetbinary <group___cmp_x509_cert___implementation_itf_1gad4ab36b7790b1bb19d27587a601004ee>` (:ref:`x509certgetbinary_struct <group___cmp_x509_cert___implementation_itf_1ga26988016ddca0cf250a81220c830185b>` * p)
+
+- void :ref:`x509certgetcontent <group___cmp_x509_cert___implementation_itf_1ga068c1c4ef60a609e3828cf3737bc6ab5>` (:ref:`x509certgetcontent_struct <group___cmp_x509_cert___implementation_itf_1gab8bd0d4e0f482175e3e4f3a80cc63ea9>` * p)
+
+- void :ref:`x509certgetprivatekey <group___cmp_x509_cert___implementation_itf_1ga2ff276e1876f4425a67c395f00a22bf9>` (:ref:`x509certgetprivatekey_struct <group___cmp_x509_cert___implementation_itf_1ga780ea0b9092f3bda04043b493c6ea9b9>` * p)
+
+- void :ref:`x509certgetpublickey <group___cmp_x509_cert___implementation_itf_1ga3b219c410e55b5e0e3a2569c472cfb9b>` (:ref:`x509certgetpublickey_struct <group___cmp_x509_cert___implementation_itf_1ga03bf08e33f8d1b105290a75147149d26>` * p)
+
+- void :ref:`x509certgetthumbprint <group___cmp_x509_cert___implementation_itf_1ga79bb07781fe8a394e88a56e97594a2c6>` (:ref:`x509certgetthumbprint_struct <group___cmp_x509_cert___implementation_itf_1gafecb082e4ad9bdd8315e058ebd02a951>` * p)
+
+- void :ref:`x509certhasextendedkeyusage <group___cmp_x509_cert___implementation_itf_1gabe77c635923fdb56e1e12da9d937ae4f>` (:ref:`x509certhasextendedkeyusage_struct <group___cmp_x509_cert___implementation_itf_1ga2b80987803d3338bba115f67f0064f10>` * p)
+
+- void :ref:`x509certinfoexit <group___cmp_x509_cert___implementation_itf_1ga824cc1b0775f768175144a5c106aed4f>` (:ref:`x509certinfoexit_struct <group___cmp_x509_cert___implementation_itf_1gac6c9c52d9283560d3f4b4ab19fd68437>` * p)
+
+- void :ref:`x509certinfoinit <group___cmp_x509_cert___implementation_itf_1ga657fbf87ec47b5067bb9814dd43efc52>` (:ref:`x509certinfoinit_struct <group___cmp_x509_cert___implementation_itf_1gadd1275e76287d75d6947ef832e5e1d99>` * p)
+
+- void :ref:`x509certisdatevalid <group___cmp_x509_cert___implementation_itf_1gadc404b88fc34bf1efb5cce63534056b8>` (:ref:`x509certisdatevalid_struct <group___cmp_x509_cert___implementation_itf_1gab6f41785cd2e15d2465630547b8c44d5>` * p)
+
+- void :ref:`x509certisselfsigned <group___cmp_x509_cert___implementation_itf_1gac27bd08a6ce040ff7e2daa36805ff308>` (:ref:`x509certisselfsigned_struct <group___cmp_x509_cert___implementation_itf_1gacf974dca8f5f9759004c8e71fdcbe2d8>` * p)
+
+- void :ref:`x509certkeyclose <group___cmp_x509_cert___implementation_itf_1ga49a5d1b4d4125d96e13bfd26f7927363>` (:ref:`x509certkeyclose_struct <group___cmp_x509_cert___implementation_itf_1gafe8fd8964fb2c44d5fc93ee77c2db2be>` * p)
+
+- void :ref:`x509certstoreaddcert <group___cmp_x509_cert___implementation_itf_1ga37a6b9a9f4d6976667c5b9ba36ecdbc4>` (:ref:`x509certstoreaddcert_struct <group___cmp_x509_cert___implementation_itf_1ga474903b03da8ccf644e2320cace78536>` * p)
+
+- void :ref:`x509certstoreclose <group___cmp_x509_cert___implementation_itf_1gabcecbdf91f57fd80d36a0ebcb06d747b>` (:ref:`x509certstoreclose_struct <group___cmp_x509_cert___implementation_itf_1gaabfc06dc7257c425651d4ee5b178429a>` * p)
+
+- void :ref:`x509certstoregetfirstcert <group___cmp_x509_cert___implementation_itf_1gac14fc5af262d185948ace8263b10733b>` (:ref:`x509certstoregetfirstcert_struct <group___cmp_x509_cert___implementation_itf_1ga9178369e5850a911fba9b9c35103acbf>` * p)
+
+- void :ref:`x509certstoregetnextcert <group___cmp_x509_cert___implementation_itf_1ga32f7fe3f9239d0d4d4ee63aea7800f26>` (:ref:`x509certstoregetnextcert_struct <group___cmp_x509_cert___implementation_itf_1ga9dc17d300dd4982b26af1640e2230bcf>` * p)
+
+- void :ref:`x509certstoregetregisteredcert <group___cmp_x509_cert___implementation_itf_1gac2d54f292ae981f158a7604b65eceeba>` (:ref:`x509certstoregetregisteredcert_struct <group___cmp_x509_cert___implementation_itf_1ga75ecd0f0652a89353ca5b60ec2a1ba0b>` * p)
+
+- void :ref:`x509certstoreopen <group___cmp_x509_cert___implementation_itf_1ga5f443868c7ddcd00562d400ad1933b85>` (:ref:`x509certstoreopen_struct <group___cmp_x509_cert___implementation_itf_1gaeb1cecb322bff68041a6652448ec19a0>` * p)
+
+- void :ref:`x509certstoreregister <group___cmp_x509_cert___implementation_itf_1ga8b9968db05d6ccf6e20d7f59fb26faf2>` (:ref:`x509certstoreregister_struct <group___cmp_x509_cert___implementation_itf_1ga4fb20cd1398f5e3bbc040d1958b18382>` * p)
+
+- void :ref:`x509certstoreremovecert <group___cmp_x509_cert___implementation_itf_1ga1d41fa3b474c932b9cc583f9c6534c3d>` (:ref:`x509certstoreremovecert_struct <group___cmp_x509_cert___implementation_itf_1ga4c40cb8e3ac31a33efe665f29375405b>` * p)
+
+- void :ref:`x509certstoresearchgetfirst <group___cmp_x509_cert___implementation_itf_1ga40201f4447607b6b6e58f5f9583998e3>` (:ref:`x509certstoresearchgetfirst_struct <group___cmp_x509_cert___implementation_itf_1ga9b4d98119ac59209654624b3e05daf90>` * p)
+
+- void :ref:`x509certstoresearchgetnext <group___cmp_x509_cert___implementation_itf_1ga0af1987f2c15a7f333f8c03edbf55523>` (:ref:`x509certstoresearchgetnext_struct <group___cmp_x509_cert___implementation_itf_1ga3238c30257bccb0f5cfd3f6da142aad8>` * p)
+
+- void :ref:`x509certstoreunregister <group___cmp_x509_cert___implementation_itf_1gaf562eaba2aa4ae1e41b94b5ea23da577>` (:ref:`x509certstoreunregister_struct <group___cmp_x509_cert___implementation_itf_1ga29b992937349e5b0156eae542b0d02e2>` * p)
+
+- void :ref:`x509certverify <group___cmp_x509_cert___implementation_itf_1ga3fa95e90733a1e6576a3cacb8cdb0ab8>` (:ref:`x509certverify_struct <group___cmp_x509_cert___implementation_itf_1ga4c76f6182de50365fd1343719db96807>` * p)
+
+- void :ref:`x509parsecertificate <group___cmp_x509_cert___implementation_itf_1ga3eb1ea6e82283c8d75569bf7e1ef84fb>` (:ref:`x509parsecertificate_struct <group___cmp_x509_cert___implementation_itf_1ga0a52e762be835bab4c3428725a6df8e6>` * p)
+
+Detailed Description
+--------------------
+
+Definition in file CmpX509Cert_ImplementationItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

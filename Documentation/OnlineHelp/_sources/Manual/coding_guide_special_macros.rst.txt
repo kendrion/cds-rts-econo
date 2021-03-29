@@ -1,0 +1,73 @@
+.. _coding_guide_special_macros:
+
+Use of special macros
+---------------------
+
+1. Assertions:
+
+   Avoid assertion macros in real error conditions. Asserts should only catch
+   error conditions which the developer doesn't await and which
+   cannot occur under normal operations. Those errors are typically
+   caused by corrupted memory or false locking. If you need an
+   assert, the RTS\_ASSERT macro should be used. This macro can be
+   defined in the file sysdefines.h and should only be valid debug builds!
+   
+   Reason:
+   
+   Sometimes runtime systems are build as debug builds for productive controllers and so there is a chance, that an assertion could occur during runtime! In this case
+   the PLC operates uncontrolled and is halted, if it runs into an assertion!
+   
+   So use assertions only in situations, which cannot be handled correctly with an error code!
+
+2. OBSOLETE: 
+
+   Prefix HUGEPTR macro for all pointer variables or use for copying
+   operations, which address a memory area above 64 kB. 
+   
+   Because we do not support a 16bit platform any longer, this coding guideline is obsolete.
+ 
+   .. code-block:: C
+ 
+        unsigned char HUGEPTR *pbyBuffer; /* or */
+        memcpy((unsigned char HUGEPTR *)pbyDest, (unsigned char HUGEPTR *)pbySrc, Len);
+
+3. Declare USEEXTERN_STMT instead of USE_STMT in further C-modules of a component:
+
+   If a component is splitted into several C-modules, the main module get the USE_STMT at the beginning of the file, but in the other C-modules you have to specify 
+   the USEEXTERN_STMT statement at the beginning.
+
+4. Declare USEIMPORT_STMT instead of USEEXTERN_STMT in further C-modules of a system component:
+
+   If a system component is splitted into several C-modules, the main module get the USE_STMT at the beginning of the file, but in the other C-modules you have to specify 
+   the USEIMPORT_STMT statement at the beginning. This is because here every C-module has the chance to get the pointer of the component manager to import further functions
+   of other components, which is operating system or platform specific.
+
+5. Result value via pointer:
+
+   RTS\_SETRESULT should be used, if a function has a pointer to return the result of the operation. So the macro get a pointer to the result and the result itself. And the 
+   pointer to the result can be NULL, if the result is not used by the caller.
+
+   .. code-block:: C
+
+        RTS_HANDLE MyFunction(RTS_RESULT pResult)
+        {
+            /* pResult can be NULL! */
+            RTS_RESULT Result = OtherFunction();
+            
+            RTS_SETRESULT(pResult, Result);
+            return handle;
+        }
+
+6. Merging result values:
+
+   If you would like to merge an error result of several function calls, you can do this with RTS\_GETRESULT.
+
+   .. code-block:: C
+  
+        RTS_RESULT result = FunctionCall1();
+        result = RTS_GETRESULT( FunctionCall2(), result );
+        result = RTS_GETRESULT( FunctionCall3(), result );        
+        return result;
+
+    So both functions are called, but if one of them returns an error, the
+    first error code will be transported to the result at the end.

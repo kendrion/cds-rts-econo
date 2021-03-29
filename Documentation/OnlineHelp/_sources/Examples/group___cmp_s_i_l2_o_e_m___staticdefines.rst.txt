@@ -1,0 +1,191 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines:
+
+==============
+Static defines
+==============
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Data Structures
+---------------
+
+- struct :ref:`SIL2_RUNTIMECHECK_RANGE_INFO <struct_s_i_l2___r_u_n_t_i_m_e_c_h_e_c_k___r_a_n_g_e___i_n_f_o>`
+
+Macros
+------
+
+- #define :ref:`SIL2OEMCTXSTACKSIZE <group___cmp_s_i_l2_o_e_m___staticdefines_1gaa4ac37734a3f639fbab66eb1eae8962d>` 20
+
+- #define :ref:`CMPSIL2_RUNTIMECHECK_DEFAULT_BLOCKSIZE <group___cmp_s_i_l2_o_e_m___staticdefines_1gadd728bec6b8cc3e7f8c6109f4adfcbdd>` 0x1000
+
+- #define :ref:`CMPSIL2_RUNTIMECHECK_RANGES <group___cmp_s_i_l2_o_e_m___staticdefines_1gab4ee5dc07f010f2f03c2534ba2694226>` { (RTS_HANDLE) 0x00000000, 0x0000 }
+
+Typedefs
+--------
+
+- typedef struct :ref:`SIL2_RUNTIMECHECK_RANGE_INFO <struct_s_i_l2___r_u_n_t_i_m_e_c_h_e_c_k___r_a_n_g_e___i_n_f_o>` :ref:`SIL2_RUNTIMECHECK_RANGE_INFO <group___cmp_s_i_l2_o_e_m___staticdefines_1ga8513753074fbd929b38a40bf25c81d91>`
+
+Functions
+---------
+
+- void :ref:`_mpuEnable_ <group___cmp_s_i_l2_o_e_m___staticdefines_1ga91e265587c5b3f02c6dcc26a2fb5f039>` (void)
+
+- void :ref:`_mpuDisable_ <group___cmp_s_i_l2_o_e_m___staticdefines_1ga4d7807ff7486e23a51df3552456576be>` (void)
+
+- void :ref:`SIL2OEMSwitchToSafeCtx <group___cmp_s_i_l2_o_e_m___staticdefines_1gae90606eaf1c367eb8ff684cde206c4cd>` (void)
+
+- void :ref:`SIL2OEMSwitchToUnsafeCtx <group___cmp_s_i_l2_o_e_m___staticdefines_1gaabca4ed43a0d4eb9d16f7cb3ae03f701>` (void)
+
+- void :ref:`SIL2OEMSwitchToPreviousCtx <group___cmp_s_i_l2_o_e_m___staticdefines_1gad5b101965c149f5d51ed83c48610038c>` (void)
+
+- void :ref:`SIL2OEMSwitchToSafeCtx_nolock <group___cmp_s_i_l2_o_e_m___staticdefines_1ga683c2643520e6532813a87ddc8404e3f>` (void)
+
+- void :ref:`SIL2OEMSwitchToPreviousCtx_nolock <group___cmp_s_i_l2_o_e_m___staticdefines_1gacaa46a01cb6e301c0010b1512a6d68de>` (void)
+
+- RTS_RESULT :ref:`CmpSIL2OEMHookFunction <group___cmp_s_i_l2_o_e_m___staticdefines_1gad11c59d8ab09ce5379cffb4ec626e1fa>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- void :ref:`SIL2OEMException <group___cmp_s_i_l2_o_e_m___staticdefines_1ga18773ad5b541c2d47a6b9c6321379f77>` (RTS_SIL2_EXCEPTION Exception)
+
+- RTS_SIL2_OPMODE :ref:`SIL2OEMGetOperationMode <group___cmp_s_i_l2_o_e_m___staticdefines_1gadf5a291c36c5b17da4958b7f32710d7b>` (void)
+
+- RTS_UI32 :ref:`SIL2OEMGetCallerContext <group___cmp_s_i_l2_o_e_m___staticdefines_1ga7430aa78af60c412d55bbda4af49bae1>` (void)
+
+- RTS_SIL2_ADDRESSSTATE :ref:`SIL2OEMGetMemoryState <group___cmp_s_i_l2_o_e_m___staticdefines_1ga12c8a7ab6630ef4eb56b0e12947abec9>` (RTS_UI8 * pAddress, RTS_UI32 ulLength)
+
+- RTS_RESULT :ref:`SIL2OEMEnterDebugMode <group___cmp_s_i_l2_o_e_m___staticdefines_1ga62576d17b76bd27547fddc0f0f7f5665>` (void)
+
+- RTS_RESULT :ref:`SIL2OEMStackIsValid <group___cmp_s_i_l2_o_e_m___staticdefines_1ga255fd372de5d2411332f0ba94bc8cc41>` (void)
+
+- RTS_RESULT :ref:`SIL2OEMExecuteNonSafetyJob <group___cmp_s_i_l2_o_e_m___staticdefines_1gaa56ac50fb0426a44a8691acb560d6b31>` (void(*)(void *pParam) pfNonSafetyJob, void * pParam)
+
+- RTS_RESULT :ref:`SIL2OEMExecuteNonSafetyJob2 <group___cmp_s_i_l2_o_e_m___staticdefines_1ga28aabdcbbe7f639607257f717d8f21a4>` (void(*)(void *pParam) pfNonSafetyJob, void * pParam, RTS_SIZE iSize)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1gaa4ac37734a3f639fbab66eb1eae8962d:
+
+#define SIL2OEMCTXSTACKSIZE 20
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Maximum depth of context switches
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1gadd728bec6b8cc3e7f8c6109f4adfcbdd:
+
+#define CMPSIL2_RUNTIMECHECK_DEFAULT_BLOCKSIZE 0x1000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1gab4ee5dc07f010f2f03c2534ba2694226:
+
+#define CMPSIL2_RUNTIMECHECK_RANGES { (RTS_HANDLE) 0x00000000, 0x0000 }
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1ga8513753074fbd929b38a40bf25c81d91:
+
+typedef struct SIL2_RUNTIMECHECK_RANGE_INFO SIL2_RUNTIMECHECK_RANGE_INFO
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1ga91e265587c5b3f02c6dcc26a2fb5f039:
+
+void _mpuEnable_ (void)
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1ga4d7807ff7486e23a51df3552456576be:
+
+void _mpuDisable_ (void)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1gae90606eaf1c367eb8ff684cde206c4cd:
+
+void SIL2OEMSwitchToSafeCtx (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1gaabca4ed43a0d4eb9d16f7cb3ae03f701:
+
+void SIL2OEMSwitchToUnsafeCtx (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1gad5b101965c149f5d51ed83c48610038c:
+
+void SIL2OEMSwitchToPreviousCtx (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1ga683c2643520e6532813a87ddc8404e3f:
+
+void SIL2OEMSwitchToSafeCtx_nolock (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1gacaa46a01cb6e301c0010b1512a6d68de:
+
+void SIL2OEMSwitchToPreviousCtx_nolock (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1gad11c59d8ab09ce5379cffb4ec626e1fa:
+
+RTS_RESULT CmpSIL2OEMHookFunction (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1ga18773ad5b541c2d47a6b9c6321379f77:
+
+void SIL2OEMException (RTS_SIL2_EXCEPTION Exception)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1gadf5a291c36c5b17da4958b7f32710d7b:
+
+RTS_SIL2_OPMODE SIL2OEMGetOperationMode (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1ga7430aa78af60c412d55bbda4af49bae1:
+
+RTS_UI32 SIL2OEMGetCallerContext (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1ga12c8a7ab6630ef4eb56b0e12947abec9:
+
+RTS_SIL2_ADDRESSSTATE SIL2OEMGetMemoryState (RTS_UI8 *pAddress, RTS_UI32 ulLength)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1ga62576d17b76bd27547fddc0f0f7f5665:
+
+RTS_RESULT SIL2OEMEnterDebugMode (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1ga255fd372de5d2411332f0ba94bc8cc41:
+
+RTS_RESULT SIL2OEMStackIsValid (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1gaa56ac50fb0426a44a8691acb560d6b31:
+
+RTS_RESULT SIL2OEMExecuteNonSafetyJob (void(*pfNonSafetyJob)(void *pParam), void *pParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_o_e_m___staticdefines_1ga28aabdcbbe7f639607257f717d8f21a4:
+
+RTS_RESULT SIL2OEMExecuteNonSafetyJob2 (void(*pfNonSafetyJob)(void *pParam), void *pParam, RTS_SIZE iSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

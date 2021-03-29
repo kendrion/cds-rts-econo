@@ -12,13 +12,13 @@
  *	So the new monitoring component is recommended for all newer runtime systems and especially for targets with low resources.
  *	CODESYS higher or equal v3.5.0.0 automatically adapts the monitoring, if this new component is integrated in the runtime.
  *
- *	Disadvantage:
+ *	NOTE:
  *	- Not compatible with older version of CODESYS (before v3.5.0.0). To support older versions the CmpMonitor must be integrated in parallel.
  *
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -126,9 +126,15 @@ SET_INTERFACE_NAME(`CmpMonitor2')
 #define EVT_CmpMonitor2_ForceDone						MAKE_EVENTID(EVTCLASS_INFO, 4)
 
 /**
+ * <category>Static defines</category>
+ * <description>Bit access flag for EVTPARAM_CmpMonitor2Write.usBit below</description>
+ */
+#define RTS_MONITOR2_BITACCESS 0x8000
+
+/**
  * <category>Event parameter</category>
  * <element name="usSize" type="IN">Size of the variable</element>
- * <element name="dummy" type="IN">Alignment dummy</element>
+ * <element name="usBit" type="IN">Bit number when bit access flag is set (e.g. 0x8000 = bit 0), ohterwise 0</element>
  * <element name="pAddress" type="IN">Pointer to the variable value</element>
  * <element name="pValue" type="IN">Pointer to the write value</element>
  * <element name="bDeny" type="IN">1=Writing variable is denied, 0=Variable can be written</element>
@@ -137,7 +143,7 @@ SET_INTERFACE_NAME(`CmpMonitor2')
 typedef struct
 {
 	RTS_UI16 usSize;
-	RTS_UI16 dummy;
+	RTS_UI16 usBit;
 #ifdef TRG_64BIT
 	RTS_UI32 dummy2;
 #endif
@@ -152,6 +158,16 @@ EVTPARAM_CmpMonitor2Write;
 #define EVTVERSION_CmpMonitor2Write	0x0002
 
 /**
+ * <category>Force flags</category>
+ * <description>Force flags for EVTPARAM_CmpMonitor2Force.usForceFlag below</description>
+ * <element name="RTS_MONITOR2_FORCEFLAG_UNFORCE" type="IN">Unforce value</element>
+ * <element name="RTS_MONITOR2_FORCEFLAG_UNFORCEANDRESTORE" type="IN"Unforce and restore value</element>
+ * <element name="RTS_MONITOR2_FORCEFLAG_FORCE" type="IN">Force value</element> */
+#define RTS_MONITOR2_FORCEFLAG_UNFORCE				0
+#define RTS_MONITOR2_FORCEFLAG_UNFORCEANDRESTORE	1
+#define RTS_MONITOR2_FORCEFLAG_FORCE				0xFFFF
+
+/**
  * <category>Event parameter</category>
  * <element name="usForceFlag" type="IN">Force flags</element>
  * <element name="dummy" type="IN">Alignment dummy</element>
@@ -160,6 +176,8 @@ EVTPARAM_CmpMonitor2Write;
  * <element name="pAddress" type="IN">Pointer to the variable value, if it is a simple data type (no property variable!)</element>
  * <element name="bDeny" type="IN">1=Forcing variable is denied, 0=Variable can be forced</element>
  * <element name="cmpId" type="IN">ComponentID which denies this write operation</element>
+ * <element name="ulSizeValueBytes" type="IN">Size of the variable</element>
+ * <element name="pValue" type="IN">Pointer to the write value</element>
  */
 typedef struct
 {
@@ -173,6 +191,8 @@ typedef struct
 	RTS_UI8* pAddress;
 	RTS_I32 bDeny;
 	CMPID cmpId;
+	RTS_UI32 ulSizeValueBytes;
+	const unsigned char* pValue;
 }
 EVTPARAM_CmpMonitor2Force;
 
@@ -208,7 +228,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`Monitoring2HasFeature',`(RTS_UI32 ulFeatures)'
  *  must have the address of the data to read on the top of the interpreter stack.
  * </description>
  * <param name="pApp" type="IN">Pointer to the application.  May be null if an
- *    IO config paramters is read.</param>
+ *    IO-configuration parameters is read.</param>
  * <param name="usSizeCodeBytes" type="IN">The size of the byte code in bytes.</param>
  * <param name="pCode" type="IN">Pointer th the byte-code program.</param>
  * <param name="pbyValue" type="IN">pointer to the destination address were the retrieved value is written.</param> 
@@ -241,7 +261,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`Monitoring2ReadValue',`(APPLICATION* pApp, RTS
  *  expressions of numeric type, a stack size of 32 elements should be enough.
  * </description>
  * <param name="pApp" type="IN">Pointer to the application.  May be null if an
- *    IO config paramters is read.</param>
+ *    IO-configuration parameters is read.</param>
  * <param name="szStackElems" type="IN">The size of the interpreter stack pStack in elements.</param>
  * <param name="pStack" type="IN">The pointer to the interpreter stack.</param>
  * <param name="usSizeCodeBytes" type="IN">The size of the byte code in bytes.</param>
@@ -272,7 +292,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`Monitoring2ReadValue2',`(APPLICATION* pApp, RT
  *  Apart from that, it depends on the "nesting depth" of the program.
  * </description>
  * <param name="pApp" type="IN">Pointer to the application.  May be null if an
- *    IO config paramters is read.</param>
+ *    IO-configuration parameters is read.</param>
  * <param name="szStackElems" type="IN">The size of the interpreter stack pStack in elements.</param>
  * <param name="pStack" type="IN">The pointer to the interpreter stack.</param>
  * <param name="usSizeCodeBytes" type="IN">The size of the byte code in bytes.</param>
@@ -313,7 +333,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`Monitoring2ExecuteCode',`(APPLICATION* pApp, R
  *  as described above.
  * </description>
  * <param name="pApp" type="IN">Pointer to application.  May be null if an
- *    IO config paramters is written.</param>
+ *    IO-configuration parameters is written.</param>
  * <param name="usSizeCodeBytes" type="IN">The size of the byte code in bytes.</param>
  * <param name="pCode" type="IN">Pointer th the byte-code program.</param>
  * <param name="pbyValue" type="IN">pointer to the source address of the value to write.</param> 
@@ -357,7 +377,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`Monitoring2WriteValue',`(APPLICATION* pApp,  R
  *  as described above.
  * </description>
  * <param name="pApp" type="IN">Pointer to application.  May be null if an
- *    IO config paramters is written.</param>
+ *    IO-configuration parameters is written.</param>
  * <param name="szStackElems" type="IN">The size of the interpreter stack pStack in elements.</param>
  * <param name="pStack" type="IN">The pointer to the interpreter stack.</param>
  * <param name="usSizeCodeBytes" type="IN">The size of the byte code in bytes.</param>

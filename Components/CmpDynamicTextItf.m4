@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -94,6 +94,35 @@ DEF_API(`void', `CDECL', `dynamictextgetdefaulttext', `(dynamictextgettext_struc
  * <description> WString version of VisuFctGetDefaultText, for further documentation see VisuFctGetDefaultText </description>
  */
 DEF_API(`void', `CDECL', `dynamictextgetdefaulttextw', `(dynamictextgettextw_struct *pEntry)', 1, 0)
+
+typedef struct tagdynamictextiterateindices_callback_struct
+{
+	RTS_IEC_STRING *pstId;		/* VAR_INPUT */	/* The id of the current entry */
+	RTS_IEC_UXINT iterationData;		/* VAR_INPUT */	/* User provided value that will transparently be passed to all calls of pfIterationCallback */
+	RTS_IEC_BOOL dynamictextiterateindices_callback;
+} dynamictextiterateindices_callback_struct;
+
+typedef void (CDECL *PF_DYNAMICTEXT_ITERATEINDICES_CALLBACK)(dynamictextiterateindices_callback_struct* p);
+
+/**
+ * This function can be used to iterate over all indexes of a given textlist. An according callback
+ * will be called once for each entry in the textlist. 
+ * Please remark: The order of the entries that are returned may be undefined.
+ */
+typedef struct tagdynamictextiterateindices_struct
+{
+	RTS_IEC_STRING *pstTextList;		/* VAR_INPUT */	/* The name of the textlist that should be iterated */
+	RTS_IEC_BYTE *pfIterationCallback;	/* VAR_INPUT */	/* The callback function that will be called for every index in the textlist
+															* a POINTER TO STRING argument reflecting an ID within the textlist. 
+																The given POINTER should not be stored for time longer than the overall iteration and the 
+																POINTER should not be dereferenced directly but instead it should be copied to a temporary variable before access.
+															* a __UXINT value reflecting the value passed in iterationData
+															If the callback function returns FALSE, then the iteration will be canceled. */
+	RTS_IEC_UXINT iterationData;		/* VAR_INPUT */	/* User provided value that will transparently be passed to all calls of pfIterationCallback */
+	RTS_IEC_RESULT DynamicTextIterateIndices;	/* VAR_OUTPUT */	
+} dynamictextiterateindices_struct;
+
+DEF_API(`void',`CDECL',`dynamictextiterateindices',`(dynamictextiterateindices_struct *p)',1,RTSITF_GET_SIGNATURE(0xC14365D4, 0),0x03050F00)
 
 /**
  * <description>This function loads the default texts from the currently registered text files.

@@ -1,0 +1,713 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_bitmap_pool_itf:
+
+================
+CmpBitmapPoolItf
+================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpBitmapPool.
+
+Detailed Description
+--------------------
+
+Interface for the bitmap pool manager.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`BimapPool Settings <group___cmp_bitmap_pool_itf___bimap_pool_settings>`
+
+Data Structures
+---------------
+
+- struct :ref:`bitmappoolregister_struct <structbitmappoolregister__struct>`
+
+- struct :ref:`bitmappoolunregister_struct <structbitmappoolunregister__struct>`
+
+- struct :ref:`ICmpBitmapPool_C <struct_i_cmp_bitmap_pool___c>`
+
+Macros
+------
+
+- #define :ref:`BMPPOOL_KEY_BASEPATH <group___cmp_bitmap_pool_itf_1ga5042f9ee06c87fae051529473e98d482>` "BitmapPath"
+
+- #define :ref:`BMPPOOL_VALUE_BASEPATH_DEFAULT <group___cmp_bitmap_pool_itf_1ga1befae123feaeb98dc891f4fede99a74>` ""
+
+- #define :ref:`USE_bmppoolregister <group___cmp_bitmap_pool_itf_1ga1a3cd3a569b137712d179f8c9b8d565c>` :ref:`PFBMPPOOLREGISTER_IEC <group___cmp_bitmap_pool_itf_1ga8fc6f138d1f75c6a6cafa0cc90d15f7f>` pfbmppoolregister;
+
+- #define :ref:`EXT_bmppoolregister <group___cmp_bitmap_pool_itf_1gaa55659fc1c36aadff9a6f291ebba1cf2>` extern :ref:`PFBMPPOOLREGISTER_IEC <group___cmp_bitmap_pool_itf_1ga8fc6f138d1f75c6a6cafa0cc90d15f7f>` pfbmppoolregister;
+
+- #define :ref:`GET_bmppoolregister <group___cmp_bitmap_pool_itf_1ga3b7db625076bc353f5ed0cad38716c41>` s_pfCMGetAPI2( "bmppoolregister", (RTS_VOID_FCTPTR *)&pfbmppoolregister, (fl), 0, 0)
+
+- #define :ref:`CAL_bmppoolregister <group___cmp_bitmap_pool_itf_1ga0dc05709c33c89ef463e327a3b98de4f>` pfbmppoolregister
+
+- #define :ref:`CHK_bmppoolregister <group___cmp_bitmap_pool_itf_1ga4d2fcbd5abd2f428462812b0d0c1f063>` (pfbmppoolregister != NULL)
+
+- #define :ref:`EXP_bmppoolregister <group___cmp_bitmap_pool_itf_1gac2e2c54331c3dffffb0b02160f08b2f2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"bmppoolregister", (RTS_UINTPTR) :ref:`bmppoolregister <group___cmp_bitmap_pool_itf_1gae1fa11204c2ef2a2708d3b6af39a61ce>` , 1, 0)
+
+- #define :ref:`USE_bmppoolunregister <group___cmp_bitmap_pool_itf_1ga88e45b887052108d62cfe65a5470cf0c>` :ref:`PFBMPPOOLUNREGISTER_IEC <group___cmp_bitmap_pool_itf_1gae43b05c51ff057114d5de5b8c6499ef5>` pfbmppoolunregister;
+
+- #define :ref:`EXT_bmppoolunregister <group___cmp_bitmap_pool_itf_1ga43a6db35459979638c3a6e511b5dc5be>` extern :ref:`PFBMPPOOLUNREGISTER_IEC <group___cmp_bitmap_pool_itf_1gae43b05c51ff057114d5de5b8c6499ef5>` pfbmppoolunregister;
+
+- #define :ref:`GET_bmppoolunregister <group___cmp_bitmap_pool_itf_1ga283c392dd6f2355516a5b24ea799461d>` s_pfCMGetAPI2( "bmppoolunregister", (RTS_VOID_FCTPTR *)&pfbmppoolunregister, (fl), 0, 0)
+
+- #define :ref:`CAL_bmppoolunregister <group___cmp_bitmap_pool_itf_1ga520d66c13518d98918307bdb35125ac6>` pfbmppoolunregister
+
+- #define :ref:`CHK_bmppoolunregister <group___cmp_bitmap_pool_itf_1gaadf7176660af9fcb5f8534ad60e1d292>` (pfbmppoolunregister != NULL)
+
+- #define :ref:`EXP_bmppoolunregister <group___cmp_bitmap_pool_itf_1gab16c017ec7f52323ae1985775c29e549>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"bmppoolunregister", (RTS_UINTPTR) :ref:`bmppoolunregister <group___cmp_bitmap_pool_itf_1ga938e9d1aa18a7a2376f3ce7b7c5d0329>` , 1, 0)
+
+- #define :ref:`USE_BmpPoolRegister <group___cmp_bitmap_pool_itf_1gaabdf26522f105727a546cd235328ebaa>` :ref:`PFBMPPOOLREGISTER <group___cmp_bitmap_pool_itf_1gab2fbcdc435895f38354561058fac2df9>` pfBmpPoolRegister;
+
+- #define :ref:`EXT_BmpPoolRegister <group___cmp_bitmap_pool_itf_1ga1a6f099278acfe17ab35087d1c0ab184>` extern :ref:`PFBMPPOOLREGISTER <group___cmp_bitmap_pool_itf_1gab2fbcdc435895f38354561058fac2df9>` pfBmpPoolRegister;
+
+- #define :ref:`GET_BmpPoolRegister <group___cmp_bitmap_pool_itf_1ga9e50c50bd10fe452291fb651b0cd89dd>` s_pfCMGetAPI2( "BmpPoolRegister", (RTS_VOID_FCTPTR *)&pfBmpPoolRegister, (fl), 0, 0)
+
+- #define :ref:`CAL_BmpPoolRegister <group___cmp_bitmap_pool_itf_1gad85563ec16f43de31419534e9a71710d>` pfBmpPoolRegister
+
+- #define :ref:`CHK_BmpPoolRegister <group___cmp_bitmap_pool_itf_1gae7284304d60fe619bc594fb51c560c88>` (pfBmpPoolRegister != NULL)
+
+- #define :ref:`EXP_BmpPoolRegister <group___cmp_bitmap_pool_itf_1ga901f74d90153e553e5fbb5c15582dbb1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BmpPoolRegister", (RTS_UINTPTR) :ref:`BmpPoolRegister <group___cmp_bitmap_pool_itf_1ga06d3360f92af0ed306053d321b0fa5c1>` , 0, 0)
+
+- #define :ref:`USE_BmpPoolUnregister <group___cmp_bitmap_pool_itf_1ga123d38ee3cc28798e7dddc34ad9b6e00>` :ref:`PFBMPPOOLUNREGISTER <group___cmp_bitmap_pool_itf_1ga685b0bf00508db3a8cbba0c0afdec480>` pfBmpPoolUnregister;
+
+- #define :ref:`EXT_BmpPoolUnregister <group___cmp_bitmap_pool_itf_1ga85c77139a83216b84da2953cce0601ae>` extern :ref:`PFBMPPOOLUNREGISTER <group___cmp_bitmap_pool_itf_1ga685b0bf00508db3a8cbba0c0afdec480>` pfBmpPoolUnregister;
+
+- #define :ref:`GET_BmpPoolUnregister <group___cmp_bitmap_pool_itf_1ga3f1353f457f23d3d35058e1d5a37c7c1>` s_pfCMGetAPI2( "BmpPoolUnregister", (RTS_VOID_FCTPTR *)&pfBmpPoolUnregister, (fl), 0, 0)
+
+- #define :ref:`CAL_BmpPoolUnregister <group___cmp_bitmap_pool_itf_1gaff650488d94f1d512e72e7ace9445400>` pfBmpPoolUnregister
+
+- #define :ref:`CHK_BmpPoolUnregister <group___cmp_bitmap_pool_itf_1gaaf6cc94e7a09a7193c30805907bd88c0>` (pfBmpPoolUnregister != NULL)
+
+- #define :ref:`EXP_BmpPoolUnregister <group___cmp_bitmap_pool_itf_1ga07c0db57bdfe83642ab9b6047668f83e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BmpPoolUnregister", (RTS_UINTPTR) :ref:`BmpPoolUnregister <group___cmp_bitmap_pool_itf_1ga4f82b131a40504d02d5232db793229b7>` , 0, 0)
+
+- #define :ref:`USE_BmpPoolGetPath <group___cmp_bitmap_pool_itf_1ga36260397647d28e24123f5bee2d3d596>` :ref:`PFBMPPOOLGETPATH <group___cmp_bitmap_pool_itf_1gae07b4cbbfc71ef20e00213e03518c1ab>` pfBmpPoolGetPath;
+
+- #define :ref:`EXT_BmpPoolGetPath <group___cmp_bitmap_pool_itf_1gadd420d33118f0c9a9121417e4383f483>` extern :ref:`PFBMPPOOLGETPATH <group___cmp_bitmap_pool_itf_1gae07b4cbbfc71ef20e00213e03518c1ab>` pfBmpPoolGetPath;
+
+- #define :ref:`GET_BmpPoolGetPath <group___cmp_bitmap_pool_itf_1ga76a9dca6bfcea1423bbb97b26377c67e>` s_pfCMGetAPI2( "BmpPoolGetPath", (RTS_VOID_FCTPTR *)&pfBmpPoolGetPath, (fl), 0, 0)
+
+- #define :ref:`CAL_BmpPoolGetPath <group___cmp_bitmap_pool_itf_1ga52fb1f288e0c12aeec914b681521ee78>` pfBmpPoolGetPath
+
+- #define :ref:`CHK_BmpPoolGetPath <group___cmp_bitmap_pool_itf_1gae38901d1190aaab74da41e615ec43ecf>` (pfBmpPoolGetPath != NULL)
+
+- #define :ref:`EXP_BmpPoolGetPath <group___cmp_bitmap_pool_itf_1ga61b326eb1643396f575386fd74f1013a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BmpPoolGetPath", (RTS_UINTPTR) :ref:`BmpPoolGetPath <group___cmp_bitmap_pool_itf_1ga4b6072abf80cf8fa8edc8943f286eb64>` , 0, 0)
+
+- #define :ref:`USE_BmpPoolClear <group___cmp_bitmap_pool_itf_1ga1541788cfda4aa1c2163033510a2ee2a>` :ref:`PFBMPPOOLCLEAR <group___cmp_bitmap_pool_itf_1ga3e1031441aee0d815a0194bcf59d3012>` pfBmpPoolClear;
+
+- #define :ref:`EXT_BmpPoolClear <group___cmp_bitmap_pool_itf_1ga49228e1565ae1af48c019152cb781bb3>` extern :ref:`PFBMPPOOLCLEAR <group___cmp_bitmap_pool_itf_1ga3e1031441aee0d815a0194bcf59d3012>` pfBmpPoolClear;
+
+- #define :ref:`GET_BmpPoolClear <group___cmp_bitmap_pool_itf_1ga4faa2a79f9bf0760e6930b1e5752224e>` s_pfCMGetAPI2( "BmpPoolClear", (RTS_VOID_FCTPTR *)&pfBmpPoolClear, (fl), 0, 0)
+
+- #define :ref:`CAL_BmpPoolClear <group___cmp_bitmap_pool_itf_1gaf7ae5f86b473ffdfad9ccb1571c5499f>` pfBmpPoolClear
+
+- #define :ref:`CHK_BmpPoolClear <group___cmp_bitmap_pool_itf_1ga00963b3d4dcd4b45e21e5b9ade150cf7>` (pfBmpPoolClear != NULL)
+
+- #define :ref:`EXP_BmpPoolClear <group___cmp_bitmap_pool_itf_1gaf1d21ac112f3f26b4021549e520ce4c2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BmpPoolClear", (RTS_UINTPTR) :ref:`BmpPoolClear <group___cmp_bitmap_pool_itf_1ga8a158e40a26b71fa32ef7dc8c93600cb>` , 0, 0)
+
+- #define :ref:`USE_BmpPoolReadContents <group___cmp_bitmap_pool_itf_1ga4113428f0805720d7c99c51ef60b56da>` :ref:`PFBMPPOOLREADCONTENTS <group___cmp_bitmap_pool_itf_1gae4dd1f3833aa87669f8c31e5662cc05d>` pfBmpPoolReadContents;
+
+- #define :ref:`EXT_BmpPoolReadContents <group___cmp_bitmap_pool_itf_1gac558f73c05a6f690ada6e9001e075495>` extern :ref:`PFBMPPOOLREADCONTENTS <group___cmp_bitmap_pool_itf_1gae4dd1f3833aa87669f8c31e5662cc05d>` pfBmpPoolReadContents;
+
+- #define :ref:`GET_BmpPoolReadContents <group___cmp_bitmap_pool_itf_1ga48137307401ca447e6608a2c88aaf5de>` s_pfCMGetAPI2( "BmpPoolReadContents", (RTS_VOID_FCTPTR *)&pfBmpPoolReadContents, (fl), 0, 0)
+
+- #define :ref:`CAL_BmpPoolReadContents <group___cmp_bitmap_pool_itf_1gaf178823772954c0c783b6c77e495bace>` pfBmpPoolReadContents
+
+- #define :ref:`CHK_BmpPoolReadContents <group___cmp_bitmap_pool_itf_1ga91c8f80e663d2ea85610922a8bd6aaef>` (pfBmpPoolReadContents != NULL)
+
+- #define :ref:`EXP_BmpPoolReadContents <group___cmp_bitmap_pool_itf_1ga44cb0e2f404f9843462adce0d7ad503c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BmpPoolReadContents", (RTS_UINTPTR) :ref:`BmpPoolReadContents <group___cmp_bitmap_pool_itf_1gab89e1f60a780e304d0cb5fe579e2c29b>` , 0, 0)
+
+- #define :ref:`USE_BmpPoolWriteContents <group___cmp_bitmap_pool_itf_1ga4ea786d5348ef7c1cbd1d2f8e62012a5>` :ref:`PFBMPPOOLWRITECONTENTS <group___cmp_bitmap_pool_itf_1gaf053d70b67ce861e9c65df4145b81120>` pfBmpPoolWriteContents;
+
+- #define :ref:`EXT_BmpPoolWriteContents <group___cmp_bitmap_pool_itf_1ga5dc09c4617d03072d2af2bf699b9e3aa>` extern :ref:`PFBMPPOOLWRITECONTENTS <group___cmp_bitmap_pool_itf_1gaf053d70b67ce861e9c65df4145b81120>` pfBmpPoolWriteContents;
+
+- #define :ref:`GET_BmpPoolWriteContents <group___cmp_bitmap_pool_itf_1ga64d02e9995467cf7b2db55a639bb712e>` s_pfCMGetAPI2( "BmpPoolWriteContents", (RTS_VOID_FCTPTR *)&pfBmpPoolWriteContents, (fl), 0, 0)
+
+- #define :ref:`CAL_BmpPoolWriteContents <group___cmp_bitmap_pool_itf_1ga960eddabca69594797146027d7c34c21>` pfBmpPoolWriteContents
+
+- #define :ref:`CHK_BmpPoolWriteContents <group___cmp_bitmap_pool_itf_1ga03ee6b7c76a3ccb5662f9d87678ee2f3>` (pfBmpPoolWriteContents != NULL)
+
+- #define :ref:`EXP_BmpPoolWriteContents <group___cmp_bitmap_pool_itf_1ga22666dc57793e7ab71cd95c44789b288>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BmpPoolWriteContents", (RTS_UINTPTR) :ref:`BmpPoolWriteContents <group___cmp_bitmap_pool_itf_1ga13de31534f081b6a690c71943360b3b4>` , 0, 0)
+
+- #define :ref:`USE_BmpPoolForeachEntry <group___cmp_bitmap_pool_itf_1ga5cd4934b9e951497fc912bfd8968fbd7>` :ref:`PFBMPPOOLFOREACHENTRY <group___cmp_bitmap_pool_itf_1ga3d9156e7087442c424a0513270f45331>` pfBmpPoolForeachEntry;
+
+- #define :ref:`EXT_BmpPoolForeachEntry <group___cmp_bitmap_pool_itf_1ga060a1036b9f833bfd742d4d532503324>` extern :ref:`PFBMPPOOLFOREACHENTRY <group___cmp_bitmap_pool_itf_1ga3d9156e7087442c424a0513270f45331>` pfBmpPoolForeachEntry;
+
+- #define :ref:`GET_BmpPoolForeachEntry <group___cmp_bitmap_pool_itf_1ga906e769faec24baf0989e1e91d757900>` s_pfCMGetAPI2( "BmpPoolForeachEntry", (RTS_VOID_FCTPTR *)&pfBmpPoolForeachEntry, (fl), 0, 0)
+
+- #define :ref:`CAL_BmpPoolForeachEntry <group___cmp_bitmap_pool_itf_1ga64e180cc41a67b04d2ae7e83440446b2>` pfBmpPoolForeachEntry
+
+- #define :ref:`CHK_BmpPoolForeachEntry <group___cmp_bitmap_pool_itf_1ga8256b854e3c997ea386391d023b97b9d>` (pfBmpPoolForeachEntry != NULL)
+
+- #define :ref:`EXP_BmpPoolForeachEntry <group___cmp_bitmap_pool_itf_1gad6395d5ac1bf20ead57b41681e0886a9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BmpPoolForeachEntry", (RTS_UINTPTR) :ref:`BmpPoolForeachEntry <group___cmp_bitmap_pool_itf_1gacf4e7b1faa63ebc191b615a25a78a388>` , 0, 0)
+
+- #define :ref:`ITF_CmpBitmapPool <group___cmp_bitmap_pool_itf_1ga765efd7115bcd169518b16ac0740e880>`
+
+- #define :ref:`EXTITF_CmpBitmapPool <group___cmp_bitmap_pool_itf_1ga1e063731166c6abd281985911625d568>`
+
+Typedefs
+--------
+
+- typedef void(* :ref:`PFBMPPOOLREGISTER_IEC <group___cmp_bitmap_pool_itf_1ga8fc6f138d1f75c6a6cafa0cc90d15f7f>`)(bitmappoolregister_struct *pEntry)
+
+- typedef void(* :ref:`PFBMPPOOLUNREGISTER_IEC <group___cmp_bitmap_pool_itf_1gae43b05c51ff057114d5de5b8c6499ef5>`)(bitmappoolunregister_struct *pEntry)
+
+- typedef RTS_RESULT(* :ref:`PFBMPPOOLREGISTER <group___cmp_bitmap_pool_itf_1gab2fbcdc435895f38354561058fac2df9>`)(const char *pszBmpId, const char *pszPath)
+
+- typedef RTS_RESULT(* :ref:`PFBMPPOOLUNREGISTER <group___cmp_bitmap_pool_itf_1ga685b0bf00508db3a8cbba0c0afdec480>`)(const char *pszBmpId)
+
+- typedef RTS_RESULT(* :ref:`PFBMPPOOLGETPATH <group___cmp_bitmap_pool_itf_1gae07b4cbbfc71ef20e00213e03518c1ab>`)(const char *pszBmpId, const char **ppszBmpPath)
+
+- typedef RTS_RESULT(* :ref:`PFBMPPOOLCLEAR <group___cmp_bitmap_pool_itf_1ga3e1031441aee0d815a0194bcf59d3012>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFBMPPOOLREADCONTENTS <group___cmp_bitmap_pool_itf_1gae4dd1f3833aa87669f8c31e5662cc05d>`)(char *pszFilePath, RTS_BOOL bDelete)
+
+- typedef RTS_RESULT(* :ref:`PFBMPPOOLWRITECONTENTS <group___cmp_bitmap_pool_itf_1gaf053d70b67ce861e9c65df4145b81120>`)(char **ppszFilePath)
+
+- typedef RTS_RESULT(* :ref:`PFForeachBmpPoolEntry <group___cmp_bitmap_pool_itf_1ga13ce69458dc6786683a60323dca9ad61>`)(void *pData, char *pszId, char *pszPath)
+
+- typedef RTS_RESULT(* :ref:`PFBMPPOOLFOREACHENTRY <group___cmp_bitmap_pool_itf_1ga3d9156e7087442c424a0513270f45331>`)(void *pData, PFForeachBmpPoolEntry pfCallback)
+
+- typedef :ref:`ICmpBitmapPool_C <struct_i_cmp_bitmap_pool___c>` :ref:`ICmpBitmapPool <group___cmp_bitmap_pool_itf_1gaf24d4c6a93cb18dc054683eae7bba8bf>`
+
+Functions
+---------
+
+- void :ref:`bmppoolregister <group___cmp_bitmap_pool_itf_1gae1fa11204c2ef2a2708d3b6af39a61ce>` (:ref:`bitmappoolregister_struct <structbitmappoolregister__struct>` * pEntry)
+
+- void :ref:`bmppoolunregister <group___cmp_bitmap_pool_itf_1ga938e9d1aa18a7a2376f3ce7b7c5d0329>` (:ref:`bitmappoolunregister_struct <structbitmappoolunregister__struct>` * pEntry)
+
+- RTS_RESULT :ref:`BmpPoolRegister <group___cmp_bitmap_pool_itf_1ga06d3360f92af0ed306053d321b0fa5c1>` (const char * pszBmpId, const char * pszPath)
+
+- RTS_RESULT :ref:`BmpPoolUnregister <group___cmp_bitmap_pool_itf_1ga4f82b131a40504d02d5232db793229b7>` (const char * pszBmpId)
+
+- RTS_RESULT :ref:`BmpPoolGetPath <group___cmp_bitmap_pool_itf_1ga4b6072abf80cf8fa8edc8943f286eb64>` (const char * pszBmpId, const char ** ppszBmpPath)
+
+- RTS_RESULT :ref:`BmpPoolClear <group___cmp_bitmap_pool_itf_1ga8a158e40a26b71fa32ef7dc8c93600cb>` (void)
+
+- RTS_RESULT :ref:`BmpPoolReadContents <group___cmp_bitmap_pool_itf_1gab89e1f60a780e304d0cb5fe579e2c29b>` (char * pszFilePath, RTS_BOOL bDelete)
+
+- RTS_RESULT :ref:`BmpPoolWriteContents <group___cmp_bitmap_pool_itf_1ga13de31534f081b6a690c71943360b3b4>` (char ** ppszFilePath)
+
+- RTS_RESULT :ref:`BmpPoolForeachEntry <group___cmp_bitmap_pool_itf_1gacf4e7b1faa63ebc191b615a25a78a388>` (void * pData, :ref:`PFForeachBmpPoolEntry <group___cmp_bitmap_pool_itf_1ga13ce69458dc6786683a60323dca9ad61>`  pfCallback)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_bitmap_pool_itf_1ga5042f9ee06c87fae051529473e98d482:
+
+#define BMPPOOL_KEY_BASEPATH "BitmapPath"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Setting which decides about the path where the configuration file and all the bitmaps are saved. Default is the current working directory.
+
+.. _group___cmp_bitmap_pool_itf_1ga1befae123feaeb98dc891f4fede99a74:
+
+#define BMPPOOL_VALUE_BASEPATH_DEFAULT ""
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga1a3cd3a569b137712d179f8c9b8d565c:
+
+#define USE_bmppoolregister :ref:`PFBMPPOOLREGISTER_IEC <group___cmp_bitmap_pool_itf_1ga8fc6f138d1f75c6a6cafa0cc90d15f7f>` pfbmppoolregister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gaa55659fc1c36aadff9a6f291ebba1cf2:
+
+#define EXT_bmppoolregister extern :ref:`PFBMPPOOLREGISTER_IEC <group___cmp_bitmap_pool_itf_1ga8fc6f138d1f75c6a6cafa0cc90d15f7f>` pfbmppoolregister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga3b7db625076bc353f5ed0cad38716c41:
+
+#define GET_bmppoolregister s_pfCMGetAPI2( "bmppoolregister", (RTS_VOID_FCTPTR *)&pfbmppoolregister, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga0dc05709c33c89ef463e327a3b98de4f:
+
+#define CAL_bmppoolregister pfbmppoolregister
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga4d2fcbd5abd2f428462812b0d0c1f063:
+
+#define CHK_bmppoolregister (pfbmppoolregister != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gac2e2c54331c3dffffb0b02160f08b2f2:
+
+#define EXP_bmppoolregister s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"bmppoolregister", (RTS_UINTPTR) :ref:`bmppoolregister <group___cmp_bitmap_pool_itf_1gae1fa11204c2ef2a2708d3b6af39a61ce>` , 1, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga88e45b887052108d62cfe65a5470cf0c:
+
+#define USE_bmppoolunregister :ref:`PFBMPPOOLUNREGISTER_IEC <group___cmp_bitmap_pool_itf_1gae43b05c51ff057114d5de5b8c6499ef5>` pfbmppoolunregister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga43a6db35459979638c3a6e511b5dc5be:
+
+#define EXT_bmppoolunregister extern :ref:`PFBMPPOOLUNREGISTER_IEC <group___cmp_bitmap_pool_itf_1gae43b05c51ff057114d5de5b8c6499ef5>` pfbmppoolunregister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga283c392dd6f2355516a5b24ea799461d:
+
+#define GET_bmppoolunregister s_pfCMGetAPI2( "bmppoolunregister", (RTS_VOID_FCTPTR *)&pfbmppoolunregister, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga520d66c13518d98918307bdb35125ac6:
+
+#define CAL_bmppoolunregister pfbmppoolunregister
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gaadf7176660af9fcb5f8534ad60e1d292:
+
+#define CHK_bmppoolunregister (pfbmppoolunregister != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gab16c017ec7f52323ae1985775c29e549:
+
+#define EXP_bmppoolunregister s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"bmppoolunregister", (RTS_UINTPTR) :ref:`bmppoolunregister <group___cmp_bitmap_pool_itf_1ga938e9d1aa18a7a2376f3ce7b7c5d0329>` , 1, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gaabdf26522f105727a546cd235328ebaa:
+
+#define USE_BmpPoolRegister :ref:`PFBMPPOOLREGISTER <group___cmp_bitmap_pool_itf_1gab2fbcdc435895f38354561058fac2df9>` pfBmpPoolRegister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga1a6f099278acfe17ab35087d1c0ab184:
+
+#define EXT_BmpPoolRegister extern :ref:`PFBMPPOOLREGISTER <group___cmp_bitmap_pool_itf_1gab2fbcdc435895f38354561058fac2df9>` pfBmpPoolRegister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga9e50c50bd10fe452291fb651b0cd89dd:
+
+#define GET_BmpPoolRegister s_pfCMGetAPI2( "BmpPoolRegister", (RTS_VOID_FCTPTR *)&pfBmpPoolRegister, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gad85563ec16f43de31419534e9a71710d:
+
+#define CAL_BmpPoolRegister pfBmpPoolRegister
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gae7284304d60fe619bc594fb51c560c88:
+
+#define CHK_BmpPoolRegister (pfBmpPoolRegister != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga901f74d90153e553e5fbb5c15582dbb1:
+
+#define EXP_BmpPoolRegister s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BmpPoolRegister", (RTS_UINTPTR) :ref:`BmpPoolRegister <group___cmp_bitmap_pool_itf_1ga06d3360f92af0ed306053d321b0fa5c1>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga123d38ee3cc28798e7dddc34ad9b6e00:
+
+#define USE_BmpPoolUnregister :ref:`PFBMPPOOLUNREGISTER <group___cmp_bitmap_pool_itf_1ga685b0bf00508db3a8cbba0c0afdec480>` pfBmpPoolUnregister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga85c77139a83216b84da2953cce0601ae:
+
+#define EXT_BmpPoolUnregister extern :ref:`PFBMPPOOLUNREGISTER <group___cmp_bitmap_pool_itf_1ga685b0bf00508db3a8cbba0c0afdec480>` pfBmpPoolUnregister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga3f1353f457f23d3d35058e1d5a37c7c1:
+
+#define GET_BmpPoolUnregister s_pfCMGetAPI2( "BmpPoolUnregister", (RTS_VOID_FCTPTR *)&pfBmpPoolUnregister, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gaff650488d94f1d512e72e7ace9445400:
+
+#define CAL_BmpPoolUnregister pfBmpPoolUnregister
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gaaf6cc94e7a09a7193c30805907bd88c0:
+
+#define CHK_BmpPoolUnregister (pfBmpPoolUnregister != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga07c0db57bdfe83642ab9b6047668f83e:
+
+#define EXP_BmpPoolUnregister s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BmpPoolUnregister", (RTS_UINTPTR) :ref:`BmpPoolUnregister <group___cmp_bitmap_pool_itf_1ga4f82b131a40504d02d5232db793229b7>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga36260397647d28e24123f5bee2d3d596:
+
+#define USE_BmpPoolGetPath :ref:`PFBMPPOOLGETPATH <group___cmp_bitmap_pool_itf_1gae07b4cbbfc71ef20e00213e03518c1ab>` pfBmpPoolGetPath;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gadd420d33118f0c9a9121417e4383f483:
+
+#define EXT_BmpPoolGetPath extern :ref:`PFBMPPOOLGETPATH <group___cmp_bitmap_pool_itf_1gae07b4cbbfc71ef20e00213e03518c1ab>` pfBmpPoolGetPath;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga76a9dca6bfcea1423bbb97b26377c67e:
+
+#define GET_BmpPoolGetPath s_pfCMGetAPI2( "BmpPoolGetPath", (RTS_VOID_FCTPTR *)&pfBmpPoolGetPath, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga52fb1f288e0c12aeec914b681521ee78:
+
+#define CAL_BmpPoolGetPath pfBmpPoolGetPath
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gae38901d1190aaab74da41e615ec43ecf:
+
+#define CHK_BmpPoolGetPath (pfBmpPoolGetPath != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga61b326eb1643396f575386fd74f1013a:
+
+#define EXP_BmpPoolGetPath s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BmpPoolGetPath", (RTS_UINTPTR) :ref:`BmpPoolGetPath <group___cmp_bitmap_pool_itf_1ga4b6072abf80cf8fa8edc8943f286eb64>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga1541788cfda4aa1c2163033510a2ee2a:
+
+#define USE_BmpPoolClear :ref:`PFBMPPOOLCLEAR <group___cmp_bitmap_pool_itf_1ga3e1031441aee0d815a0194bcf59d3012>` pfBmpPoolClear;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga49228e1565ae1af48c019152cb781bb3:
+
+#define EXT_BmpPoolClear extern :ref:`PFBMPPOOLCLEAR <group___cmp_bitmap_pool_itf_1ga3e1031441aee0d815a0194bcf59d3012>` pfBmpPoolClear;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga4faa2a79f9bf0760e6930b1e5752224e:
+
+#define GET_BmpPoolClear s_pfCMGetAPI2( "BmpPoolClear", (RTS_VOID_FCTPTR *)&pfBmpPoolClear, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gaf7ae5f86b473ffdfad9ccb1571c5499f:
+
+#define CAL_BmpPoolClear pfBmpPoolClear
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga00963b3d4dcd4b45e21e5b9ade150cf7:
+
+#define CHK_BmpPoolClear (pfBmpPoolClear != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gaf1d21ac112f3f26b4021549e520ce4c2:
+
+#define EXP_BmpPoolClear s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BmpPoolClear", (RTS_UINTPTR) :ref:`BmpPoolClear <group___cmp_bitmap_pool_itf_1ga8a158e40a26b71fa32ef7dc8c93600cb>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga4113428f0805720d7c99c51ef60b56da:
+
+#define USE_BmpPoolReadContents :ref:`PFBMPPOOLREADCONTENTS <group___cmp_bitmap_pool_itf_1gae4dd1f3833aa87669f8c31e5662cc05d>` pfBmpPoolReadContents;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gac558f73c05a6f690ada6e9001e075495:
+
+#define EXT_BmpPoolReadContents extern :ref:`PFBMPPOOLREADCONTENTS <group___cmp_bitmap_pool_itf_1gae4dd1f3833aa87669f8c31e5662cc05d>` pfBmpPoolReadContents;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga48137307401ca447e6608a2c88aaf5de:
+
+#define GET_BmpPoolReadContents s_pfCMGetAPI2( "BmpPoolReadContents", (RTS_VOID_FCTPTR *)&pfBmpPoolReadContents, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gaf178823772954c0c783b6c77e495bace:
+
+#define CAL_BmpPoolReadContents pfBmpPoolReadContents
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga91c8f80e663d2ea85610922a8bd6aaef:
+
+#define CHK_BmpPoolReadContents (pfBmpPoolReadContents != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga44cb0e2f404f9843462adce0d7ad503c:
+
+#define EXP_BmpPoolReadContents s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BmpPoolReadContents", (RTS_UINTPTR) :ref:`BmpPoolReadContents <group___cmp_bitmap_pool_itf_1gab89e1f60a780e304d0cb5fe579e2c29b>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga4ea786d5348ef7c1cbd1d2f8e62012a5:
+
+#define USE_BmpPoolWriteContents :ref:`PFBMPPOOLWRITECONTENTS <group___cmp_bitmap_pool_itf_1gaf053d70b67ce861e9c65df4145b81120>` pfBmpPoolWriteContents;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga5dc09c4617d03072d2af2bf699b9e3aa:
+
+#define EXT_BmpPoolWriteContents extern :ref:`PFBMPPOOLWRITECONTENTS <group___cmp_bitmap_pool_itf_1gaf053d70b67ce861e9c65df4145b81120>` pfBmpPoolWriteContents;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga64d02e9995467cf7b2db55a639bb712e:
+
+#define GET_BmpPoolWriteContents s_pfCMGetAPI2( "BmpPoolWriteContents", (RTS_VOID_FCTPTR *)&pfBmpPoolWriteContents, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga960eddabca69594797146027d7c34c21:
+
+#define CAL_BmpPoolWriteContents pfBmpPoolWriteContents
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga03ee6b7c76a3ccb5662f9d87678ee2f3:
+
+#define CHK_BmpPoolWriteContents (pfBmpPoolWriteContents != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga22666dc57793e7ab71cd95c44789b288:
+
+#define EXP_BmpPoolWriteContents s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BmpPoolWriteContents", (RTS_UINTPTR) :ref:`BmpPoolWriteContents <group___cmp_bitmap_pool_itf_1ga13de31534f081b6a690c71943360b3b4>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga5cd4934b9e951497fc912bfd8968fbd7:
+
+#define USE_BmpPoolForeachEntry :ref:`PFBMPPOOLFOREACHENTRY <group___cmp_bitmap_pool_itf_1ga3d9156e7087442c424a0513270f45331>` pfBmpPoolForeachEntry;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga060a1036b9f833bfd742d4d532503324:
+
+#define EXT_BmpPoolForeachEntry extern :ref:`PFBMPPOOLFOREACHENTRY <group___cmp_bitmap_pool_itf_1ga3d9156e7087442c424a0513270f45331>` pfBmpPoolForeachEntry;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga906e769faec24baf0989e1e91d757900:
+
+#define GET_BmpPoolForeachEntry s_pfCMGetAPI2( "BmpPoolForeachEntry", (RTS_VOID_FCTPTR *)&pfBmpPoolForeachEntry, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga64e180cc41a67b04d2ae7e83440446b2:
+
+#define CAL_BmpPoolForeachEntry pfBmpPoolForeachEntry
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga8256b854e3c997ea386391d023b97b9d:
+
+#define CHK_BmpPoolForeachEntry (pfBmpPoolForeachEntry != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gad6395d5ac1bf20ead57b41681e0886a9:
+
+#define EXP_BmpPoolForeachEntry s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"BmpPoolForeachEntry", (RTS_UINTPTR) :ref:`BmpPoolForeachEntry <group___cmp_bitmap_pool_itf_1gacf4e7b1faa63ebc191b615a25a78a388>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga765efd7115bcd169518b16ac0740e880:
+
+#define ITF_CmpBitmapPool
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga1e063731166c6abd281985911625d568:
+
+#define EXTITF_CmpBitmapPool
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_bitmap_pool_itf_1ga8fc6f138d1f75c6a6cafa0cc90d15f7f:
+
+typedef void( *  PFBMPPOOLREGISTER_IEC) (bitmappoolregister_struct *pEntry)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gae43b05c51ff057114d5de5b8c6499ef5:
+
+typedef void( *  PFBMPPOOLUNREGISTER_IEC) (bitmappoolunregister_struct *pEntry)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gab2fbcdc435895f38354561058fac2df9:
+
+typedef RTS_RESULT( *  PFBMPPOOLREGISTER) (const char *pszBmpId, const char *pszPath)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga685b0bf00508db3a8cbba0c0afdec480:
+
+typedef RTS_RESULT( *  PFBMPPOOLUNREGISTER) (const char *pszBmpId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gae07b4cbbfc71ef20e00213e03518c1ab:
+
+typedef RTS_RESULT( *  PFBMPPOOLGETPATH) (const char *pszBmpId, const char **ppszBmpPath)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga3e1031441aee0d815a0194bcf59d3012:
+
+typedef RTS_RESULT( *  PFBMPPOOLCLEAR) (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gae4dd1f3833aa87669f8c31e5662cc05d:
+
+typedef RTS_RESULT( *  PFBMPPOOLREADCONTENTS) (char *pszFilePath, RTS_BOOL bDelete)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gaf053d70b67ce861e9c65df4145b81120:
+
+typedef RTS_RESULT( *  PFBMPPOOLWRITECONTENTS) (char **ppszFilePath)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1ga13ce69458dc6786683a60323dca9ad61:
+
+typedef RTS_RESULT( * PFForeachBmpPoolEntry) (void *pData, char *pszId, char *pszPath)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This callback function can be implemented by components iterating over the content of an imagepool using BmpPoolForeachEntry.
+
+**Parameters**
+
++---------+---------+----------------------------------------------------------------+
+| [in]    | pData   | The pointer that was passed in the call to BmpPoolForeachEntry |
++---------+---------+----------------------------------------------------------------+
+| [in]    | pszId   | The id of an entry                                             |
++---------+---------+----------------------------------------------------------------+
+| [in]    | pszPath | The path of an entry                                           |
++---------+---------+----------------------------------------------------------------+
+
+**Returns:**
+
+Should return ERR_OK to continue the iteration or an error code to cancel the iteration.
+
+.. _group___cmp_bitmap_pool_itf_1ga3d9156e7087442c424a0513270f45331:
+
+typedef RTS_RESULT( *  PFBMPPOOLFOREACHENTRY) (void *pData, PFForeachBmpPoolEntry pfCallback)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_bitmap_pool_itf_1gaf24d4c6a93cb18dc054683eae7bba8bf:
+
+typedef ICmpBitmapPool_C ICmpBitmapPool
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_bitmap_pool_itf_1gae1fa11204c2ef2a2708d3b6af39a61ce:
+
+void bmppoolregister (bitmappoolregister_struct *pEntry)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add a bitmap pool entry from PLC program
+
+**Parameters**
+
++---------+--------+----------------------------+
+| [in]    | pEntry | Pointer to entry structure |
++---------+--------+----------------------------+
+
+.. _group___cmp_bitmap_pool_itf_1ga938e9d1aa18a7a2376f3ce7b7c5d0329:
+
+void bmppoolunregister (bitmappoolunregister_struct *pEntry)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Remove a bitmap pool entry from PLC program
+
+**Parameters**
+
++---------+--------+----------------------------+
+| [in]    | pEntry | Pointer to entry structure |
++---------+--------+----------------------------+
+
+.. _group___cmp_bitmap_pool_itf_1ga06d3360f92af0ed306053d321b0fa5c1:
+
+RTS_RESULT BmpPoolRegister (const char *pszBmpId, const char *pszPath)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Registers a bitmap within the bitmappool.
+
+**Parameters**
+
++---------+----------+------------------------------------+
+| [in]    | pszBmpId | Id of the bitmap to register.      |
++---------+----------+------------------------------------+
+| [in]    | pszPath  | The path of the registered bitmap. |
++---------+----------+------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_bitmap_pool_itf_1ga4f82b131a40504d02d5232db793229b7:
+
+RTS_RESULT BmpPoolUnregister (const char *pszBmpId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Removes a bitmap from the bitmappool.
+
+**Parameters**
+
++---------+----------+----------------------------+
+| [in]    | pszBmpId | Id of the searched bitmap. |
++---------+----------+----------------------------+
+
+**Returns:**
+
+error code: ERR_OK in case of success, ERR_PARAMETER if the bitmap is not registered
+
+.. _group___cmp_bitmap_pool_itf_1ga4b6072abf80cf8fa8edc8943f286eb64:
+
+RTS_RESULT BmpPoolGetPath (const char *pszBmpId, const char **ppszBmpPath)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+OBSOLETE FUNCTION: This function should not be used anymore.
+
+Returns the path of a bitmap that is handled by the BitmapPool
+
+**Parameters**
+
++---------+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pszBmpId   | Id of the searched bitmap.                                                                                                                                                                    |
++---------+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pszBmpPath | A string containing the path of the requested bitmap or NULL if it hasn't been found. The returned pointer will point to a string within the bitmap pool, so do not free the returned string. |
++---------+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code: ERR_OK, ERR_PARAMETER or ERR_INVALIDID if the bitmap is not registered
+
+.. _group___cmp_bitmap_pool_itf_1ga8a158e40a26b71fa32ef7dc8c93600cb:
+
+RTS_RESULT BmpPoolClear (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Clears the content of the bitmappool
+**Returns:**
+
+error code
+
+.. _group___cmp_bitmap_pool_itf_1gab89e1f60a780e304d0cb5fe579e2c29b:
+
+RTS_RESULT BmpPoolReadContents (char *pszFilePath, RTS_BOOL bDelete)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Loads the contents of the bitmappool from the configured location.
+**Returns:**
+
+error code
+
+.. _group___cmp_bitmap_pool_itf_1ga13de31534f081b6a690c71943360b3b4:
+
+RTS_RESULT BmpPoolWriteContents (char **ppszFilePath)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Saves the contents of the bitmappool in the configured location.
+**Returns:**
+
+error code
+
+.. _group___cmp_bitmap_pool_itf_1gacf4e7b1faa63ebc191b615a25a78a388:
+
+RTS_RESULT BmpPoolForeachEntry (void *pData, PFForeachBmpPoolEntry pfCallback)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Call this function to iterate over all entries of the imagepool.
+
+**Parameters**
+
++---------+------------+---------------------------------------------------------------------------+
+| [in]    | pData      | A pointer to arbitrary data that will be passed to each callback.         |
++---------+------------+---------------------------------------------------------------------------+
+| [in]    | pfCallback | The callback function that will be called for each entry of the imagepool |
++---------+------------+---------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

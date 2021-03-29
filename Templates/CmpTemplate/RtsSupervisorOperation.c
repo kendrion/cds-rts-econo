@@ -21,14 +21,18 @@ static RTS_HANDLE s_hOperationDead = RTS_INVALID_HANDLE;
 /**
  * <category>OperationID</category>
  * <description>Operation ID for the supervision</description>
- * <param name="RTS_OPID_CmpTemplate_TestAlive" type="IN">The OperationID</param>
+ * <param name="RTS_OPID_CmpTemplate_TestAlive" type="IN"></param>
  * <param name="RTS_OPID_CmpTemplate_TestAlive_Description" type="IN"></param>
- * <param name="RTS_OPID_CmpTemplate_TestDead" type="IN">The OperationID</param>
- * <param name="RTS_OPID_CmpTemplate_TestDead_Description" type="IN"></param>
  */
 #define RTS_OPID_CmpTemplate_TestAlive					1
 #define RTS_OPID_CmpTemplate_TestAlive_Description		"Test operation alive"
 
+/**
+ * <category>OperationID</category>
+ * <description>Operation ID for the supervision</description>
+ * <param name="RTS_OPID_CmpTemplate_TestDead" type="IN"></param>
+ * <param name="RTS_OPID_CmpTemplate_TestDead_Description" type="IN"></param>
+ */
 #define RTS_OPID_CmpTemplate_TestDead					2
 #define RTS_OPID_CmpTemplate_TestDead_Description		"Test operation dead"
 

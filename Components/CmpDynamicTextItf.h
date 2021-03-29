@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -330,6 +330,80 @@ typedef void (CDECL CDECL_EXT* PFDYNAMICTEXTGETDEFAULTTEXTW_IEC) (dynamictextget
 	#define CAL_dynamictextgetdefaulttextw  pfdynamictextgetdefaulttextw
 	#define CHK_dynamictextgetdefaulttextw  (pfdynamictextgetdefaulttextw != NULL)
 	#define EXP_dynamictextgetdefaulttextw   s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"dynamictextgetdefaulttextw", (RTS_UINTPTR)dynamictextgetdefaulttextw, 1, 0) 
+#endif
+
+
+typedef struct tagdynamictextiterateindices_callback_struct
+{
+	RTS_IEC_STRING *pstId;		/* VAR_INPUT */	/* The id of the current entry */
+	RTS_IEC_UXINT iterationData;		/* VAR_INPUT */	/* User provided value that will transparently be passed to all calls of pfIterationCallback */
+	RTS_IEC_BOOL dynamictextiterateindices_callback;
+} dynamictextiterateindices_callback_struct;
+
+typedef void (CDECL *PF_DYNAMICTEXT_ITERATEINDICES_CALLBACK)(dynamictextiterateindices_callback_struct* p);
+
+/**
+ * This function can be used to iterate over all indexes of a given textlist. An according callback
+ * will be called once for each entry in the textlist. 
+ * Please remark: The order of the entries that are returned may be undefined.
+ */
+typedef struct tagdynamictextiterateindices_struct
+{
+	RTS_IEC_STRING *pstTextList;		/* VAR_INPUT */	/* The name of the textlist that should be iterated */
+	RTS_IEC_BYTE *pfIterationCallback;	/* VAR_INPUT */	/* The callback function that will be called for every index in the textlist
+															* a POINTER TO STRING argument reflecting an ID within the textlist. 
+																The given POINTER should not be stored for time longer than the overall iteration and the 
+																POINTER should not be dereferenced directly but instead it should be copied to a temporary variable before access.
+															* a __UXINT value reflecting the value passed in iterationData
+															If the callback function returns FALSE, then the iteration will be canceled. */
+	RTS_IEC_UXINT iterationData;		/* VAR_INPUT */	/* User provided value that will transparently be passed to all calls of pfIterationCallback */
+	RTS_IEC_RESULT DynamicTextIterateIndices;	/* VAR_OUTPUT */	
+} dynamictextiterateindices_struct;
+
+void CDECL CDECL_EXT dynamictextiterateindices(dynamictextiterateindices_struct *p);
+typedef void (CDECL CDECL_EXT* PFDYNAMICTEXTITERATEINDICES_IEC) (dynamictextiterateindices_struct *p);
+#if defined(CMPDYNAMICTEXT_NOTIMPLEMENTED) || defined(DYNAMICTEXTITERATEINDICES_NOTIMPLEMENTED)
+	#define USE_dynamictextiterateindices
+	#define EXT_dynamictextiterateindices
+	#define GET_dynamictextiterateindices(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_dynamictextiterateindices(p0) 
+	#define CHK_dynamictextiterateindices  FALSE
+	#define EXP_dynamictextiterateindices  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_dynamictextiterateindices
+	#define EXT_dynamictextiterateindices
+	#define GET_dynamictextiterateindices(fl)  CAL_CMGETAPI( "dynamictextiterateindices" ) 
+	#define CAL_dynamictextiterateindices  dynamictextiterateindices
+	#define CHK_dynamictextiterateindices  TRUE
+	#define EXP_dynamictextiterateindices  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"dynamictextiterateindices", (RTS_UINTPTR)dynamictextiterateindices, 1, RTSITF_GET_SIGNATURE(0xC14365D4, 0), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(CMPDYNAMICTEXT_EXTERNAL)
+	#define USE_dynamictextiterateindices
+	#define EXT_dynamictextiterateindices
+	#define GET_dynamictextiterateindices(fl)  CAL_CMGETAPI( "dynamictextiterateindices" ) 
+	#define CAL_dynamictextiterateindices  dynamictextiterateindices
+	#define CHK_dynamictextiterateindices  TRUE
+	#define EXP_dynamictextiterateindices  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"dynamictextiterateindices", (RTS_UINTPTR)dynamictextiterateindices, 1, RTSITF_GET_SIGNATURE(0xC14365D4, 0), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpDynamicTextdynamictextiterateindices
+	#define EXT_CmpDynamicTextdynamictextiterateindices
+	#define GET_CmpDynamicTextdynamictextiterateindices  ERR_OK
+	#define CAL_CmpDynamicTextdynamictextiterateindices  dynamictextiterateindices
+	#define CHK_CmpDynamicTextdynamictextiterateindices  TRUE
+	#define EXP_CmpDynamicTextdynamictextiterateindices  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"dynamictextiterateindices", (RTS_UINTPTR)dynamictextiterateindices, 1, RTSITF_GET_SIGNATURE(0xC14365D4, 0), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_dynamictextiterateindices
+	#define EXT_dynamictextiterateindices
+	#define GET_dynamictextiterateindices(fl)  CAL_CMGETAPI( "dynamictextiterateindices" ) 
+	#define CAL_dynamictextiterateindices  dynamictextiterateindices
+	#define CHK_dynamictextiterateindices  TRUE
+	#define EXP_dynamictextiterateindices  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"dynamictextiterateindices", (RTS_UINTPTR)dynamictextiterateindices, 1, RTSITF_GET_SIGNATURE(0xC14365D4, 0), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_dynamictextiterateindices  PFDYNAMICTEXTITERATEINDICES_IEC pfdynamictextiterateindices;
+	#define EXT_dynamictextiterateindices  extern PFDYNAMICTEXTITERATEINDICES_IEC pfdynamictextiterateindices;
+	#define GET_dynamictextiterateindices(fl)  s_pfCMGetAPI2( "dynamictextiterateindices", (RTS_VOID_FCTPTR *)&pfdynamictextiterateindices, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0xC14365D4, 0), 0x03050F00)
+	#define CAL_dynamictextiterateindices  pfdynamictextiterateindices
+	#define CHK_dynamictextiterateindices  (pfdynamictextiterateindices != NULL)
+	#define EXP_dynamictextiterateindices   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"dynamictextiterateindices", (RTS_UINTPTR)dynamictextiterateindices, 1, RTSITF_GET_SIGNATURE(0xC14365D4, 0), 0x03050F00) 
 #endif
 
 

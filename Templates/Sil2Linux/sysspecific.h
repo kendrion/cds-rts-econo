@@ -17,6 +17,9 @@
 #define HANDLE2FD(h)	(int)(unsigned long)h
 #define FD2HANDLE(fd)	(RTS_HANDLE)(unsigned long)(fd)
 
+#define NSEC_PER_SEC	1000000000
+#define USEC_PER_SEC	1000000
+
 /* Debugging  ---------------------------------------------------------------------------------------- */
 #ifdef RTS_DEBUG
 

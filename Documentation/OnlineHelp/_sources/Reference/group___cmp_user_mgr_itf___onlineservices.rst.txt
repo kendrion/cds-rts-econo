@@ -1,0 +1,197 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_user_mgr_itf___onlineservices:
+
+===============
+Online services
+===============
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Macros
+------
+
+- #define :ref:`SRV_READ_USER_RIGHTS_MGMT <group___cmp_user_mgr_itf___onlineservices_1gacef4a7b224327f2cf1b04f4009ea24d0>` 0x03
+
+- #define :ref:`SRV_WRITE_USER_RIGHTS_MGMT <group___cmp_user_mgr_itf___onlineservices_1ga825249e308916a093df50b4419735f0f>` 0x04
+
+- #define :ref:`SRV_USER_ADD <group___cmp_user_mgr_itf___onlineservices_1gaf67f2fd059868948147be761490e735b>` 0x05
+
+- #define :ref:`SRV_USER_DELETE <group___cmp_user_mgr_itf___onlineservices_1gaedd0ea5f028d55c90905f839bcda8b33>` 0x06
+
+- #define :ref:`SRV_USER_CHANGE_PASSWORD <group___cmp_user_mgr_itf___onlineservices_1ga07728691eed1243773584b62dc62667f>` 0x07
+
+- #define :ref:`SRV_UPDATE_CURRENT_USER_CREDENTIALS <group___cmp_user_mgr_itf___onlineservices_1ga56597de1c1bbd8a5303a00a992acce4c>` 0x08
+
+- #define :ref:`SRV_ADD_USER <group___cmp_user_mgr_itf___onlineservices_1ga5bfcf46b41f87da099fc52c672778776>` 0x09
+
+- #define :ref:`SRV_REMOVE_USER <group___cmp_user_mgr_itf___onlineservices_1gade2d15e1b4e3a24d737a9629d13761d9>` 0x0A
+
+- #define :ref:`SRV_SET_USER_PROPERTY <group___cmp_user_mgr_itf___onlineservices_1ga3d54e00474f713a9d7dcdc3ee4c08d15>` 0x0B
+
+- #define :ref:`SRV_SET_CREDENTIALS_USER <group___cmp_user_mgr_itf___onlineservices_1ga6ea6ceb781d0fa6e59e52f0d0eb3bbcf>` 0x0C
+
+- #define :ref:`SRV_ADD_GROUP <group___cmp_user_mgr_itf___onlineservices_1ga0e4a58363c6c1bc8baeeefca7ff922ef>` 0x0D
+
+- #define :ref:`SRV_REMOVE_GROUP <group___cmp_user_mgr_itf___onlineservices_1gae5414064d86ebac211e9722c8df86f2a>` 0x0E
+
+- #define :ref:`SRV_SET_GROUP_CONFIG <group___cmp_user_mgr_itf___onlineservices_1ga53174818a134cf22025f4ff7dedf97d3>` 0x0F
+
+- #define :ref:`SRV_EXPORT_USER_MGMT <group___cmp_user_mgr_itf___onlineservices_1ga2f431b9d700f120c7e75da7abcd44159>` 0x10
+
+- #define :ref:`SRV_IMPORT_USER_MGMT <group___cmp_user_mgr_itf___onlineservices_1gadf4110acd3ab9a74deaed78f2fcf2212>` 0x11
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_user_mgr_itf___onlineservices_1gacef4a7b224327f2cf1b04f4009ea24d0:
+
+#define SRV_READ_USER_RIGHTS_MGMT 0x03
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_CMPUSERMGR
+
+Service: SRV_READ_USER_RIGHTS_MGMT
+
+Request tags:
+
+  - Tag GroupDB Properties. (0..1) (Binary): Handle of the last object received.
+
+Response tags:
+
+  - Tag Object (0..n): An object of the user rights management.
+
+    - Tag Serviceresult (0..1) (RTS_UI16): Errorcode of the operation
+
+    - Tag GroupDB Properties. (0..1) (Binary): Handle of the last object transmitted. Send this within the next request to get the next bunch of objects.
+
+    - Tag ObjectName (1) (RTS_UTF8STRING): The name of the object.
+
+    - Tag ID (1) (RTS_UI32): ID of the object.
+
+    - Tag ParentID (1) (RTS_UI32): ID of the parent object.
+
+    - Tag UsedRights (0..1) (RTS_UI32): The evaluated rights of this object.
+
+    - Tag ObjectProperty (0..1) (RTS_UI32): The properties of the object
+
+    - Tag Group (0..n): A group that has configured rights on an object.
+
+      - Tag GroupName (1) (RTS_UTF8STRING): The name of the group
+
+      - Tag GarntedRights (0..1) (RTS_UI32): The granted rights on that object.
+
+      - Tag DeniedRights (0..1) (RTS_UI32): The denied rights on that object.
+
+.. _group___cmp_user_mgr_itf___onlineservices_1ga825249e308916a093df50b4419735f0f:
+
+#define SRV_WRITE_USER_RIGHTS_MGMT 0x04
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_CMPUSERMGR
+
+Service: SRV_READ_USER_RIGHTS_MGMT
+
+Request tags:
+
+  - Tag Object (0..n): An object of the user rights management.
+
+    - Tag ObjectName (1) (RTS_UTF8STRING): The name of the object.
+
+    - Tag ID (1) (RTS_UI32): ID of the object.
+
+    - Tag ParentID (1) (RTS_UI32): ID of the parent object.
+
+    - Tag Group (0..n): A group that has configured rights on an object.
+
+      - Tag GroupName (1) (RTS_UTF8STRING): The name of the group
+
+      - Tag GarntedRights (0..1) (RTS_UI32): The granted rights on that object.
+
+      - Tag DeniedRights (0..1) (RTS_UI32): The denied rights on that object.
+
+Response tags:
+
+  - Tag Serviceresult (0..1) (RTS_UI16): Errorcode of the operation
+
+.. _group___cmp_user_mgr_itf___onlineservices_1gaf67f2fd059868948147be761490e735b:
+
+#define SRV_USER_ADD 0x05
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr_itf___onlineservices_1gaedd0ea5f028d55c90905f839bcda8b33:
+
+#define SRV_USER_DELETE 0x06
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr_itf___onlineservices_1ga07728691eed1243773584b62dc62667f:
+
+#define SRV_USER_CHANGE_PASSWORD 0x07
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr_itf___onlineservices_1ga56597de1c1bbd8a5303a00a992acce4c:
+
+#define SRV_UPDATE_CURRENT_USER_CREDENTIALS 0x08
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr_itf___onlineservices_1ga5bfcf46b41f87da099fc52c672778776:
+
+#define SRV_ADD_USER 0x09
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr_itf___onlineservices_1gade2d15e1b4e3a24d737a9629d13761d9:
+
+#define SRV_REMOVE_USER 0x0A
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr_itf___onlineservices_1ga3d54e00474f713a9d7dcdc3ee4c08d15:
+
+#define SRV_SET_USER_PROPERTY 0x0B
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr_itf___onlineservices_1ga6ea6ceb781d0fa6e59e52f0d0eb3bbcf:
+
+#define SRV_SET_CREDENTIALS_USER 0x0C
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr_itf___onlineservices_1ga0e4a58363c6c1bc8baeeefca7ff922ef:
+
+#define SRV_ADD_GROUP 0x0D
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr_itf___onlineservices_1gae5414064d86ebac211e9722c8df86f2a:
+
+#define SRV_REMOVE_GROUP 0x0E
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr_itf___onlineservices_1ga53174818a134cf22025f4ff7dedf97d3:
+
+#define SRV_SET_GROUP_CONFIG 0x0F
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr_itf___onlineservices_1ga2f431b9d700f120c7e75da7abcd44159:
+
+#define SRV_EXPORT_USER_MGMT 0x10
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_mgr_itf___onlineservices_1gadf4110acd3ab9a74deaed78f2fcf2212:
+
+#define SRV_IMPORT_USER_MGMT 0x11
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

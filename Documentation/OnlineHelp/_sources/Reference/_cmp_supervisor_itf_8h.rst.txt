@@ -1,0 +1,526 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_supervisor_itf_8h:
+
+=================================
+CmpSupervisorItf.h File Reference
+=================================
+
+| #include ":ref:`CmpStd.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`EVTPARAM_CmpSupervisor_StateChanged <struct_e_v_t_p_a_r_a_m___cmp_supervisor___state_changed>`
+
+- struct :ref:`tagSupervisorInstance <structtag_supervisor_instance>`
+
+- struct :ref:`tagSupervisorEntry <structtag_supervisor_entry>`
+
+- struct :ref:`tagSupervisorState <structtag_supervisor_state>`
+
+- struct :ref:`tagsupervisoroperationalive_struct <structtagsupervisoroperationalive__struct>`
+
+- struct :ref:`tagsupervisoroperationdead_struct <structtagsupervisoroperationdead__struct>`
+
+- struct :ref:`tagsupervisoroperationdisable_struct <structtagsupervisoroperationdisable__struct>`
+
+- struct :ref:`tagsupervisoroperationenable_struct <structtagsupervisoroperationenable__struct>`
+
+- struct :ref:`tagsupervisoroperationgetentry_struct <structtagsupervisoroperationgetentry__struct>`
+
+- struct :ref:`tagsupervisoroperationgetfirst_struct <structtagsupervisoroperationgetfirst__struct>`
+
+- struct :ref:`tagsupervisoroperationgetnext_struct <structtagsupervisoroperationgetnext__struct>`
+
+- struct :ref:`tagsupervisoroperationgetstate_struct <structtagsupervisoroperationgetstate__struct>`
+
+- struct :ref:`tagsupervisoroperationgetstate2_struct <structtagsupervisoroperationgetstate2__struct>`
+
+- struct :ref:`tagsupervisoroperationregister_struct <structtagsupervisoroperationregister__struct>`
+
+- struct :ref:`tagsupervisoroperationsettimeout_struct <structtagsupervisoroperationsettimeout__struct>`
+
+- struct :ref:`tagsupervisoroperationunregister_struct <structtagsupervisoroperationunregister__struct>`
+
+- struct :ref:`ICmpSupervisor_C <struct_i_cmp_supervisor___c>`
+
+Macros
+------
+
+- #define :ref:`SUPERVISORKEY_INT_COMM_CYCLE_TIMEOUT <group___cmp_supervisor_itf___settings_1ga0c773a856c209155a6f9c07912c3e9d0>` "CommCycleTimeout"
+
+- #define :ref:`SUPERVISORKEY_INT_COMM_CYCLE_TIMEOUT_DEFAULT <group___cmp_supervisor_itf___settings_1ga627d5c21282f810d01d89b063ef3ba1b>` INT32_C(60)
+
+- #define :ref:`RTS_OPID_CommCycle <group___cmp_supervisor_itf___operation_i_d_1gadbec9321287198f74d403cd70b899cb6>` 1
+
+- #define :ref:`RTS_OPID_CommCycle_Description <group___cmp_supervisor_itf___operation_i_d_1gafdcce38cfd4cf3402d7038657ddb1f96>` "Comm Cycle"
+
+- #define :ref:`RTS_SUPERVISOR_FLAG_NONE <group___cmp_supervisor_itf___supervisorflags_1ga966394bf030f5602116b5d24252ebfc3>` 0
+
+- #define :ref:`RTS_SUPERVISOR_FLAG_RESET_NECESSARY <group___cmp_supervisor_itf___supervisorflags_1gabf6d7d6433ba44fda7f4196d7828b76a>` 0x00000001
+
+- #define :ref:`RTS_SUPERVISOR_FLAG_WATCHDOG <group___cmp_supervisor_itf___supervisorflags_1ga3d744812f6ff07bd423588cd95901102>` 0x00010000
+
+- #define :ref:`EVTPARAMID_CmpSupervisor_StateChanged <group___cmp_supervisor_itf___eventparameter_1ga31b3c73939c613b2ceddf866428286e6>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpSupervisor_StateChanged <group___cmp_supervisor_itf___eventparameter_1ga67e4939df3b7d1443b94ef9494c91333>` 0x0001
+
+- #define :ref:`EVT_Supervisor_StateChanged <group___cmp_supervisor_itf___events_1ga8cb8f1e14e24463eb772a4e05a63612b>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`USE_supervisoroperationalive <group___cmp_supervisor_itf_1ga2114ff3e85f411c09e69d362c9e25cc9>` :ref:`PFSUPERVISOROPERATIONALIVE_IEC <group___cmp_supervisor_itf_1ga2dbed1f0c26617e6a029ce8980c63b62>` pfsupervisoroperationalive;
+
+- #define :ref:`EXT_supervisoroperationalive <group___cmp_supervisor_itf_1gacd43029e227566bf67408ed3742f5595>` extern :ref:`PFSUPERVISOROPERATIONALIVE_IEC <group___cmp_supervisor_itf_1ga2dbed1f0c26617e6a029ce8980c63b62>` pfsupervisoroperationalive;
+
+- #define :ref:`GET_supervisoroperationalive <group___cmp_supervisor_itf_1ga70977dfb4937292ebb197a087ba92e04>` s_pfCMGetAPI2( "supervisoroperationalive", (RTS_VOID_FCTPTR *)&pfsupervisoroperationalive, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x33C47EE3, 0x03050C00)
+
+- #define :ref:`CAL_supervisoroperationalive <group___cmp_supervisor_itf_1ga2150493a606ae4365da02af365175282>` pfsupervisoroperationalive
+
+- #define :ref:`CHK_supervisoroperationalive <group___cmp_supervisor_itf_1ga47fbdd615c60be1c78be0be7566674fa>` (pfsupervisoroperationalive != NULL)
+
+- #define :ref:`EXP_supervisoroperationalive <group___cmp_supervisor_itf_1gad13ec398fd31a97ca7d63559ac2a175d>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"supervisoroperationalive", (RTS_UINTPTR) :ref:`supervisoroperationalive <group___cmp_supervisor_itf_1gac0a7a129a5c987b831ec797872246339>` , 1, 0x33C47EE3, 0x03050C00)
+
+- #define :ref:`USE_supervisoroperationdead <group___cmp_supervisor_itf_1ga687086bac547d6130cc998d29b7457b5>` :ref:`PFSUPERVISOROPERATIONDEAD_IEC <group___cmp_supervisor_itf_1ga784e37ba413b1037dc25b5a6f097e39e>` pfsupervisoroperationdead;
+
+- #define :ref:`EXT_supervisoroperationdead <group___cmp_supervisor_itf_1ga4ffb06bbe23d866e07f77bd848206650>` extern :ref:`PFSUPERVISOROPERATIONDEAD_IEC <group___cmp_supervisor_itf_1ga784e37ba413b1037dc25b5a6f097e39e>` pfsupervisoroperationdead;
+
+- #define :ref:`GET_supervisoroperationdead <group___cmp_supervisor_itf_1ga1eb8adfbd3edc54fc91476433b23135e>` s_pfCMGetAPI2( "supervisoroperationdead", (RTS_VOID_FCTPTR *)&pfsupervisoroperationdead, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x709DF6D1, 0x03050C00)
+
+- #define :ref:`CAL_supervisoroperationdead <group___cmp_supervisor_itf_1gad35747ac1f64ffcbe3be3de3f866fa64>` pfsupervisoroperationdead
+
+- #define :ref:`CHK_supervisoroperationdead <group___cmp_supervisor_itf_1ga6f0ee12ec9d97bdcf74b8cbf3712b87a>` (pfsupervisoroperationdead != NULL)
+
+- #define :ref:`EXP_supervisoroperationdead <group___cmp_supervisor_itf_1gae81d83de6565ee4b7cdea10e4f3f7bf9>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"supervisoroperationdead", (RTS_UINTPTR) :ref:`supervisoroperationdead <group___cmp_supervisor_itf_1ga8dcb0fa7062fe9595daaf61013c25ab3>` , 1, 0x709DF6D1, 0x03050C00)
+
+- #define :ref:`USE_supervisoroperationdisable <group___cmp_supervisor_itf_1ga1a583fffb071f01ad78da347f621a2ec>` :ref:`PFSUPERVISOROPERATIONDISABLE_IEC <group___cmp_supervisor_itf_1ga06dcae0cb67c8ec06bcbb3b88f0d18b0>` pfsupervisoroperationdisable;
+
+- #define :ref:`EXT_supervisoroperationdisable <group___cmp_supervisor_itf_1ga973d95b090ba81c63b37370864a3226d>` extern :ref:`PFSUPERVISOROPERATIONDISABLE_IEC <group___cmp_supervisor_itf_1ga06dcae0cb67c8ec06bcbb3b88f0d18b0>` pfsupervisoroperationdisable;
+
+- #define :ref:`GET_supervisoroperationdisable <group___cmp_supervisor_itf_1ga44596676bbb54212499087f453f5e191>` s_pfCMGetAPI2( "supervisoroperationdisable", (RTS_VOID_FCTPTR *)&pfsupervisoroperationdisable, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xD5C85590, 0x03050C00)
+
+- #define :ref:`CAL_supervisoroperationdisable <group___cmp_supervisor_itf_1ga710fd47c10577e3ee9c4b4a98366a9b0>` pfsupervisoroperationdisable
+
+- #define :ref:`CHK_supervisoroperationdisable <group___cmp_supervisor_itf_1ga48f30ea6846fcbcb5f61ddf44f2327c0>` (pfsupervisoroperationdisable != NULL)
+
+- #define :ref:`EXP_supervisoroperationdisable <group___cmp_supervisor_itf_1ga2cb8b626d862c6b1705609f946c21f63>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"supervisoroperationdisable", (RTS_UINTPTR) :ref:`supervisoroperationdisable <group___cmp_supervisor_itf_1gac55e43b69b3a230991035f10c402d563>` , 1, 0xD5C85590, 0x03050C00)
+
+- #define :ref:`USE_supervisoroperationenable <group___cmp_supervisor_itf_1ga44369ccec31ac232649c561cc4186275>` :ref:`PFSUPERVISOROPERATIONENABLE_IEC <group___cmp_supervisor_itf_1gaf06a66d2dfa877b22e43ea0451783efd>` pfsupervisoroperationenable;
+
+- #define :ref:`EXT_supervisoroperationenable <group___cmp_supervisor_itf_1ga6e1553694286291ef2629ca1198fd33e>` extern :ref:`PFSUPERVISOROPERATIONENABLE_IEC <group___cmp_supervisor_itf_1gaf06a66d2dfa877b22e43ea0451783efd>` pfsupervisoroperationenable;
+
+- #define :ref:`GET_supervisoroperationenable <group___cmp_supervisor_itf_1ga7bf751e2c8a4973ae11350f971149cbd>` s_pfCMGetAPI2( "supervisoroperationenable", (RTS_VOID_FCTPTR *)&pfsupervisoroperationenable, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x8FCDAEB8, 0x03050C00)
+
+- #define :ref:`CAL_supervisoroperationenable <group___cmp_supervisor_itf_1gae2390eb35bde1d26ac12e3c6c1e28cbd>` pfsupervisoroperationenable
+
+- #define :ref:`CHK_supervisoroperationenable <group___cmp_supervisor_itf_1gaee3ee4d0cc62620f402d228ed9a2de9a>` (pfsupervisoroperationenable != NULL)
+
+- #define :ref:`EXP_supervisoroperationenable <group___cmp_supervisor_itf_1ga120744d5be8d7ac6fed602cfb566f4db>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"supervisoroperationenable", (RTS_UINTPTR) :ref:`supervisoroperationenable <group___cmp_supervisor_itf_1gae800bf94ffde820c2ea32930766194b8>` , 1, 0x8FCDAEB8, 0x03050C00)
+
+- #define :ref:`USE_supervisoroperationgetentry <group___cmp_supervisor_itf_1gaf6c4e9e8af450a1e3b17f3d38e7c4482>` :ref:`PFSUPERVISOROPERATIONGETENTRY_IEC <group___cmp_supervisor_itf_1ga4af1938407701adc343988f5f0318668>` pfsupervisoroperationgetentry;
+
+- #define :ref:`EXT_supervisoroperationgetentry <group___cmp_supervisor_itf_1gab157dfdefb2c85017bc93002d084da78>` extern :ref:`PFSUPERVISOROPERATIONGETENTRY_IEC <group___cmp_supervisor_itf_1ga4af1938407701adc343988f5f0318668>` pfsupervisoroperationgetentry;
+
+- #define :ref:`GET_supervisoroperationgetentry <group___cmp_supervisor_itf_1ga4fea31c03be8f76ccdb729b27fbe8053>` s_pfCMGetAPI2( "supervisoroperationgetentry", (RTS_VOID_FCTPTR *)&pfsupervisoroperationgetentry, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050C00)
+
+- #define :ref:`CAL_supervisoroperationgetentry <group___cmp_supervisor_itf_1gaa01292b7cc15838c178e28a6d51d27b1>` pfsupervisoroperationgetentry
+
+- #define :ref:`CHK_supervisoroperationgetentry <group___cmp_supervisor_itf_1ga816b753b37e1b5a8535108a1b20dd17a>` (pfsupervisoroperationgetentry != NULL)
+
+- #define :ref:`EXP_supervisoroperationgetentry <group___cmp_supervisor_itf_1gacf3786f816be6d634e7c0b31e0d10fb7>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"supervisoroperationgetentry", (RTS_UINTPTR) :ref:`supervisoroperationgetentry <group___cmp_supervisor_itf_1ga6115bad74184a04fb61acd15f9d006db>` , 1, 0, 0x03050C00)
+
+- #define :ref:`USE_supervisoroperationgetfirst <group___cmp_supervisor_itf_1ga42b9d0a8abbda9b4ec5d74c7f3bbb436>` :ref:`PFSUPERVISOROPERATIONGETFIRST_IEC <group___cmp_supervisor_itf_1ga9a63969914c9676597517e1755ae24dd>` pfsupervisoroperationgetfirst;
+
+- #define :ref:`EXT_supervisoroperationgetfirst <group___cmp_supervisor_itf_1ga3bf4cf2167e3295b3676895693d79cc5>` extern :ref:`PFSUPERVISOROPERATIONGETFIRST_IEC <group___cmp_supervisor_itf_1ga9a63969914c9676597517e1755ae24dd>` pfsupervisoroperationgetfirst;
+
+- #define :ref:`GET_supervisoroperationgetfirst <group___cmp_supervisor_itf_1ga5c3d40bb77f3f8949bfbb398c24644bc>` s_pfCMGetAPI2( "supervisoroperationgetfirst", (RTS_VOID_FCTPTR *)&pfsupervisoroperationgetfirst, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x33144D0D, 0x03050C00)
+
+- #define :ref:`CAL_supervisoroperationgetfirst <group___cmp_supervisor_itf_1ga56d44def7a0ce98e29ed37578f2ec093>` pfsupervisoroperationgetfirst
+
+- #define :ref:`CHK_supervisoroperationgetfirst <group___cmp_supervisor_itf_1ga123dbef52531d0c1a46e0de1900e711f>` (pfsupervisoroperationgetfirst != NULL)
+
+- #define :ref:`EXP_supervisoroperationgetfirst <group___cmp_supervisor_itf_1ga9244307ca3f96032530037b512f5b033>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"supervisoroperationgetfirst", (RTS_UINTPTR) :ref:`supervisoroperationgetfirst <group___cmp_supervisor_itf_1ga26996a95c88f4dd74aede4aaadbe7245>` , 1, 0x33144D0D, 0x03050C00)
+
+- #define :ref:`USE_supervisoroperationgetnext <group___cmp_supervisor_itf_1ga6b52fe1c9fe13f334318ca974d933ef1>` :ref:`PFSUPERVISOROPERATIONGETNEXT_IEC <group___cmp_supervisor_itf_1ga98365907fa50c9f338da8cd2fd4316c2>` pfsupervisoroperationgetnext;
+
+- #define :ref:`EXT_supervisoroperationgetnext <group___cmp_supervisor_itf_1ga3c739229c342daa6f13ca5318adcbb83>` extern :ref:`PFSUPERVISOROPERATIONGETNEXT_IEC <group___cmp_supervisor_itf_1ga98365907fa50c9f338da8cd2fd4316c2>` pfsupervisoroperationgetnext;
+
+- #define :ref:`GET_supervisoroperationgetnext <group___cmp_supervisor_itf_1ga9486da489e0587bd59bd9241bf7a7d84>` s_pfCMGetAPI2( "supervisoroperationgetnext", (RTS_VOID_FCTPTR *)&pfsupervisoroperationgetnext, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x45054F88, 0x03050C00)
+
+- #define :ref:`CAL_supervisoroperationgetnext <group___cmp_supervisor_itf_1ga40e5c30ac7068789757fee4c06364246>` pfsupervisoroperationgetnext
+
+- #define :ref:`CHK_supervisoroperationgetnext <group___cmp_supervisor_itf_1ga65ccad376a9289842fb02bde56b5e19a>` (pfsupervisoroperationgetnext != NULL)
+
+- #define :ref:`EXP_supervisoroperationgetnext <group___cmp_supervisor_itf_1ga132a79423e0acc96ed3941f1dc06d436>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"supervisoroperationgetnext", (RTS_UINTPTR) :ref:`supervisoroperationgetnext <group___cmp_supervisor_itf_1gab44bbf7eace5c757d53ddc0dbbe7104b>` , 1, 0x45054F88, 0x03050C00)
+
+- #define :ref:`USE_supervisoroperationgetstate <group___cmp_supervisor_itf_1ga009aef74ae8e5b66f2d1a7c2fe081bb3>` :ref:`PFSUPERVISOROPERATIONGETSTATE_IEC <group___cmp_supervisor_itf_1gab8a8a7c322328f45ffc477d1aabd4122>` pfsupervisoroperationgetstate;
+
+- #define :ref:`EXT_supervisoroperationgetstate <group___cmp_supervisor_itf_1ga02d69ee9ae681fb34326e28ea5797ff4>` extern :ref:`PFSUPERVISOROPERATIONGETSTATE_IEC <group___cmp_supervisor_itf_1gab8a8a7c322328f45ffc477d1aabd4122>` pfsupervisoroperationgetstate;
+
+- #define :ref:`GET_supervisoroperationgetstate <group___cmp_supervisor_itf_1ga46615ae508da61e03e6b6794bf4754b4>` s_pfCMGetAPI2( "supervisoroperationgetstate", (RTS_VOID_FCTPTR *)&pfsupervisoroperationgetstate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0, 0x03050C00)
+
+- #define :ref:`CAL_supervisoroperationgetstate <group___cmp_supervisor_itf_1ga7e6dc59bbee9793589ad13bae666e100>` pfsupervisoroperationgetstate
+
+- #define :ref:`CHK_supervisoroperationgetstate <group___cmp_supervisor_itf_1ga1426fc6fbf008023bb8dea64901a895c>` (pfsupervisoroperationgetstate != NULL)
+
+- #define :ref:`EXP_supervisoroperationgetstate <group___cmp_supervisor_itf_1ga132926529a28b4a7326e01319d9630d5>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"supervisoroperationgetstate", (RTS_UINTPTR) :ref:`supervisoroperationgetstate <group___cmp_supervisor_itf_1ga89c18ac1b9a24f1a03f23dcfe1b99e57>` , 1, 0, 0x03050C00)
+
+- #define :ref:`USE_supervisoroperationgetstate2 <group___cmp_supervisor_itf_1ga0736ae664210d08355a5c10cc4272d24>` :ref:`PFSUPERVISOROPERATIONGETSTATE2_IEC <group___cmp_supervisor_itf_1gab630177a76402acbb449083266c8a596>` pfsupervisoroperationgetstate2;
+
+- #define :ref:`EXT_supervisoroperationgetstate2 <group___cmp_supervisor_itf_1gaf62c22fb92da4cc4eed79ff0ab127949>` extern :ref:`PFSUPERVISOROPERATIONGETSTATE2_IEC <group___cmp_supervisor_itf_1gab630177a76402acbb449083266c8a596>` pfsupervisoroperationgetstate2;
+
+- #define :ref:`GET_supervisoroperationgetstate2 <group___cmp_supervisor_itf_1gac6e8aa9e2cd29cbea80daa5b6e738d9b>` s_pfCMGetAPI2( "supervisoroperationgetstate2", (RTS_VOID_FCTPTR *)&pfsupervisoroperationgetstate2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x284A6A2A, 0x03050C00)
+
+- #define :ref:`CAL_supervisoroperationgetstate2 <group___cmp_supervisor_itf_1ga4dd9452f1c546e52e5475cf1a71a4aac>` pfsupervisoroperationgetstate2
+
+- #define :ref:`CHK_supervisoroperationgetstate2 <group___cmp_supervisor_itf_1ga93dab08b7acb474500e9919d97b1ec99>` (pfsupervisoroperationgetstate2 != NULL)
+
+- #define :ref:`EXP_supervisoroperationgetstate2 <group___cmp_supervisor_itf_1ga7c6c9881252bbe9ce7756ede4c604f4d>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"supervisoroperationgetstate2", (RTS_UINTPTR) :ref:`supervisoroperationgetstate2 <group___cmp_supervisor_itf_1ga8d4dcc422dea19a988f7c58d4d0945d6>` , 1, 0x284A6A2A, 0x03050C00)
+
+- #define :ref:`USE_supervisoroperationregister <group___cmp_supervisor_itf_1ga7e5cd3e97352bc0df8f066c6d1011459>` :ref:`PFSUPERVISOROPERATIONREGISTER_IEC <group___cmp_supervisor_itf_1ga1629c87de54744bbcc4d5ddbf3b54ab2>` pfsupervisoroperationregister;
+
+- #define :ref:`EXT_supervisoroperationregister <group___cmp_supervisor_itf_1ga24a548a47a3ad56dd72f6680348b671e>` extern :ref:`PFSUPERVISOROPERATIONREGISTER_IEC <group___cmp_supervisor_itf_1ga1629c87de54744bbcc4d5ddbf3b54ab2>` pfsupervisoroperationregister;
+
+- #define :ref:`GET_supervisoroperationregister <group___cmp_supervisor_itf_1gaaf4754ea4e9c1f438c33046654732675>` s_pfCMGetAPI2( "supervisoroperationregister", (RTS_VOID_FCTPTR *)&pfsupervisoroperationregister, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x6D8179C0, 0x03050C00)
+
+- #define :ref:`CAL_supervisoroperationregister <group___cmp_supervisor_itf_1gacff96e2215a0e995349d6ac2b5f4e526>` pfsupervisoroperationregister
+
+- #define :ref:`CHK_supervisoroperationregister <group___cmp_supervisor_itf_1ga4c3751190deeae3881a95544f0747b15>` (pfsupervisoroperationregister != NULL)
+
+- #define :ref:`EXP_supervisoroperationregister <group___cmp_supervisor_itf_1gad438454c5beb1fde72c0bd487f8c8a15>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"supervisoroperationregister", (RTS_UINTPTR) :ref:`supervisoroperationregister <group___cmp_supervisor_itf_1gadfdc987827d52f9ab2a80b6d4d618e45>` , 1, 0x6D8179C0, 0x03050C00)
+
+- #define :ref:`USE_supervisoroperationsettimeout <group___cmp_supervisor_itf_1ga40ac9314c5c96b827a4978b70104146e>` :ref:`PFSUPERVISOROPERATIONSETTIMEOUT_IEC <group___cmp_supervisor_itf_1ga0400388dcbea851ef5cf58eafa75fabe>` pfsupervisoroperationsettimeout;
+
+- #define :ref:`EXT_supervisoroperationsettimeout <group___cmp_supervisor_itf_1gaf1510f3a16061440fce589381bee1f9d>` extern :ref:`PFSUPERVISOROPERATIONSETTIMEOUT_IEC <group___cmp_supervisor_itf_1ga0400388dcbea851ef5cf58eafa75fabe>` pfsupervisoroperationsettimeout;
+
+- #define :ref:`GET_supervisoroperationsettimeout <group___cmp_supervisor_itf_1ga07509558034fd06310b0013f054db695>` s_pfCMGetAPI2( "supervisoroperationsettimeout", (RTS_VOID_FCTPTR *)&pfsupervisoroperationsettimeout, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xDB1591C0, 0x03050C00)
+
+- #define :ref:`CAL_supervisoroperationsettimeout <group___cmp_supervisor_itf_1ga7fa6bfff1755224af8571b8daff32042>` pfsupervisoroperationsettimeout
+
+- #define :ref:`CHK_supervisoroperationsettimeout <group___cmp_supervisor_itf_1gaa580d3a5893e4a0fc064ffc3a1c83ccf>` (pfsupervisoroperationsettimeout != NULL)
+
+- #define :ref:`EXP_supervisoroperationsettimeout <group___cmp_supervisor_itf_1ga656cffecefd3602bb079cc9a7dc77ea1>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"supervisoroperationsettimeout", (RTS_UINTPTR) :ref:`supervisoroperationsettimeout <group___cmp_supervisor_itf_1ga68be5d31b40e8056a7fef4870f179d97>` , 1, 0xDB1591C0, 0x03050C00)
+
+- #define :ref:`USE_supervisoroperationunregister <group___cmp_supervisor_itf_1gab25d304a5a828d6416a683df04ef766e>` :ref:`PFSUPERVISOROPERATIONUNREGISTER_IEC <group___cmp_supervisor_itf_1ga7afc0011b64270de598dde0b0cef7ab4>` pfsupervisoroperationunregister;
+
+- #define :ref:`EXT_supervisoroperationunregister <group___cmp_supervisor_itf_1ga4e70bdb52dbcc0c322770b75f29765ae>` extern :ref:`PFSUPERVISOROPERATIONUNREGISTER_IEC <group___cmp_supervisor_itf_1ga7afc0011b64270de598dde0b0cef7ab4>` pfsupervisoroperationunregister;
+
+- #define :ref:`GET_supervisoroperationunregister <group___cmp_supervisor_itf_1ga13c5a85a50df5132086e83578a2bf491>` s_pfCMGetAPI2( "supervisoroperationunregister", (RTS_VOID_FCTPTR *)&pfsupervisoroperationunregister, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xF19896D6, 0x03050C00)
+
+- #define :ref:`CAL_supervisoroperationunregister <group___cmp_supervisor_itf_1gaece347a683b1521703d9b9a5bfd38335>` pfsupervisoroperationunregister
+
+- #define :ref:`CHK_supervisoroperationunregister <group___cmp_supervisor_itf_1gafa797c00b471a844043d03eba927d2eb>` (pfsupervisoroperationunregister != NULL)
+
+- #define :ref:`EXP_supervisoroperationunregister <group___cmp_supervisor_itf_1ga63788c07f54b0a17f73ad524d6b2f7d5>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"supervisoroperationunregister", (RTS_UINTPTR) :ref:`supervisoroperationunregister <group___cmp_supervisor_itf_1gaaf431f60a1a7abb8c6f828d7931abfbb>` , 1, 0xF19896D6, 0x03050C00)
+
+- #define :ref:`USE_SupervisorOperationRegister <group___cmp_supervisor_itf_1ga5a973040b8481978346a6fc31d887a63>` :ref:`PFSUPERVISOROPERATIONREGISTER <group___cmp_supervisor_itf_1ga6ba9ec16535bc242e96d36917168645d>` pfSupervisorOperationRegister;
+
+- #define :ref:`EXT_SupervisorOperationRegister <group___cmp_supervisor_itf_1ga00f291bad9b997b0994cfc1acd0d08f2>` extern :ref:`PFSUPERVISOROPERATIONREGISTER <group___cmp_supervisor_itf_1ga6ba9ec16535bc242e96d36917168645d>` pfSupervisorOperationRegister;
+
+- #define :ref:`GET_SupervisorOperationRegister <group___cmp_supervisor_itf_1ga145e3fb6714c3d33a5ed9ad587c314bb>` s_pfCMGetAPI2( "SupervisorOperationRegister", (RTS_VOID_FCTPTR *)&pfSupervisorOperationRegister, (fl), 0, 0)
+
+- #define :ref:`CAL_SupervisorOperationRegister <group___cmp_supervisor_itf_1ga05c43bc43419a54548649c2af1cccb7d>` pfSupervisorOperationRegister
+
+- #define :ref:`CHK_SupervisorOperationRegister <group___cmp_supervisor_itf_1gac1dfd56ed3b966b5a43143893fb06d10>` (pfSupervisorOperationRegister != NULL)
+
+- #define :ref:`EXP_SupervisorOperationRegister <group___cmp_supervisor_itf_1gafd344409bc6505932d7d8db3ce42079a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SupervisorOperationRegister", (RTS_UINTPTR) :ref:`SupervisorOperationRegister <group___cmp_supervisor_itf_1gacaad16db3866a6c3138b34f0cff9f994>` , 0, 0)
+
+- #define :ref:`USE_SupervisorOperationUnregister <group___cmp_supervisor_itf_1ga8cef8d3b622cafe85dab772f5a51ae1f>` :ref:`PFSUPERVISOROPERATIONUNREGISTER <group___cmp_supervisor_itf_1ga7be057ff6b6f3d8b0b17625e667b4808>` pfSupervisorOperationUnregister;
+
+- #define :ref:`EXT_SupervisorOperationUnregister <group___cmp_supervisor_itf_1ga4e0705027f06f76340d02a3548c98781>` extern :ref:`PFSUPERVISOROPERATIONUNREGISTER <group___cmp_supervisor_itf_1ga7be057ff6b6f3d8b0b17625e667b4808>` pfSupervisorOperationUnregister;
+
+- #define :ref:`GET_SupervisorOperationUnregister <group___cmp_supervisor_itf_1ga531555ac917ea52bdf106021ee378d90>` s_pfCMGetAPI2( "SupervisorOperationUnregister", (RTS_VOID_FCTPTR *)&pfSupervisorOperationUnregister, (fl), 0, 0)
+
+- #define :ref:`CAL_SupervisorOperationUnregister <group___cmp_supervisor_itf_1ga571e107d7325f9b6e5c112f1db4015c6>` pfSupervisorOperationUnregister
+
+- #define :ref:`CHK_SupervisorOperationUnregister <group___cmp_supervisor_itf_1ga42771f9d0b23c5f1d707de5a73bea845>` (pfSupervisorOperationUnregister != NULL)
+
+- #define :ref:`EXP_SupervisorOperationUnregister <group___cmp_supervisor_itf_1ga3233626e36482a18f82476dd2ff1fa03>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SupervisorOperationUnregister", (RTS_UINTPTR) :ref:`SupervisorOperationUnregister <group___cmp_supervisor_itf_1ga9e06546fdd64023fb60462bf5bdc44b7>` , 0, 0)
+
+- #define :ref:`USE_SupervisorOperationGetState <group___cmp_supervisor_itf_1ga8f105569ef004c14ce0f0a909a745582>` :ref:`PFSUPERVISOROPERATIONGETSTATE <group___cmp_supervisor_itf_1ga5404990d817acd151df511b750e01f50>` pfSupervisorOperationGetState;
+
+- #define :ref:`EXT_SupervisorOperationGetState <group___cmp_supervisor_itf_1gaa3f08d4c76e567ac57729ce7c348acc2>` extern :ref:`PFSUPERVISOROPERATIONGETSTATE <group___cmp_supervisor_itf_1ga5404990d817acd151df511b750e01f50>` pfSupervisorOperationGetState;
+
+- #define :ref:`GET_SupervisorOperationGetState <group___cmp_supervisor_itf_1ga93d38c83f65c4756c5d4782ba1d8523a>` s_pfCMGetAPI2( "SupervisorOperationGetState", (RTS_VOID_FCTPTR *)&pfSupervisorOperationGetState, (fl), 0, 0)
+
+- #define :ref:`CAL_SupervisorOperationGetState <group___cmp_supervisor_itf_1ga0619b02de46e10e61f54199b13cf3a49>` pfSupervisorOperationGetState
+
+- #define :ref:`CHK_SupervisorOperationGetState <group___cmp_supervisor_itf_1ga439cc6ad5ac0f251a83503998d4f6b55>` (pfSupervisorOperationGetState != NULL)
+
+- #define :ref:`EXP_SupervisorOperationGetState <group___cmp_supervisor_itf_1ga07077d96288369d12183db82b604b30a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SupervisorOperationGetState", (RTS_UINTPTR) :ref:`SupervisorOperationGetState <group___cmp_supervisor_itf_1gacdec02d481b824d9717baa21365c9f3c>` , 0, 0)
+
+- #define :ref:`USE_SupervisorOperationGetState2 <group___cmp_supervisor_itf_1gac47436d9d21641af68babbb47f98ad8f>` :ref:`PFSUPERVISOROPERATIONGETSTATE2 <group___cmp_supervisor_itf_1ga52ef665a92b037e48fdef8eff5d7123e>` pfSupervisorOperationGetState2;
+
+- #define :ref:`EXT_SupervisorOperationGetState2 <group___cmp_supervisor_itf_1ga0326a4e83bebe1e47b20d9d0c078b6b2>` extern :ref:`PFSUPERVISOROPERATIONGETSTATE2 <group___cmp_supervisor_itf_1ga52ef665a92b037e48fdef8eff5d7123e>` pfSupervisorOperationGetState2;
+
+- #define :ref:`GET_SupervisorOperationGetState2 <group___cmp_supervisor_itf_1ga217aa5be8842c9b94afc9d99e2f8f19a>` s_pfCMGetAPI2( "SupervisorOperationGetState2", (RTS_VOID_FCTPTR *)&pfSupervisorOperationGetState2, (fl), 0, 0)
+
+- #define :ref:`CAL_SupervisorOperationGetState2 <group___cmp_supervisor_itf_1gae37b014aa36031d68de929c74bbce095>` pfSupervisorOperationGetState2
+
+- #define :ref:`CHK_SupervisorOperationGetState2 <group___cmp_supervisor_itf_1gaa8532b01da5c354a916809124ec49fe2>` (pfSupervisorOperationGetState2 != NULL)
+
+- #define :ref:`EXP_SupervisorOperationGetState2 <group___cmp_supervisor_itf_1ga9c43245ea9c77b10477d8b53351ed5fa>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SupervisorOperationGetState2", (RTS_UINTPTR) :ref:`SupervisorOperationGetState2 <group___cmp_supervisor_itf_1gae5bbfb7a4b6b5a024a3e5d6de4af17b7>` , 0, 0)
+
+- #define :ref:`USE_SupervisorOperationGetFirst <group___cmp_supervisor_itf_1ga754bef8d59128c6acfe14fbbd596b178>` :ref:`PFSUPERVISOROPERATIONGETFIRST <group___cmp_supervisor_itf_1gadc6bdb247ab760bc00b46ab0f6111b70>` pfSupervisorOperationGetFirst;
+
+- #define :ref:`EXT_SupervisorOperationGetFirst <group___cmp_supervisor_itf_1ga67a7a655dbcd5b6426596f300aa04b25>` extern :ref:`PFSUPERVISOROPERATIONGETFIRST <group___cmp_supervisor_itf_1gadc6bdb247ab760bc00b46ab0f6111b70>` pfSupervisorOperationGetFirst;
+
+- #define :ref:`GET_SupervisorOperationGetFirst <group___cmp_supervisor_itf_1ga5535ab4103220e11a24c8a4741c5a4ad>` s_pfCMGetAPI2( "SupervisorOperationGetFirst", (RTS_VOID_FCTPTR *)&pfSupervisorOperationGetFirst, (fl), 0, 0)
+
+- #define :ref:`CAL_SupervisorOperationGetFirst <group___cmp_supervisor_itf_1gaf1195582d1368aea2c253b217d2a4a2b>` pfSupervisorOperationGetFirst
+
+- #define :ref:`CHK_SupervisorOperationGetFirst <group___cmp_supervisor_itf_1gae1df5ba2faec60972a3e844f1ab82293>` (pfSupervisorOperationGetFirst != NULL)
+
+- #define :ref:`EXP_SupervisorOperationGetFirst <group___cmp_supervisor_itf_1gafd2fb1f5176dcff5a4e1f21b256875fd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SupervisorOperationGetFirst", (RTS_UINTPTR) :ref:`SupervisorOperationGetFirst <group___cmp_supervisor_itf_1ga3cbf7aa4cb85263deb0877fa2bafc503>` , 0, 0)
+
+- #define :ref:`USE_SupervisorOperationGetNext <group___cmp_supervisor_itf_1gafb065bffb67316c65f4b746cdefd411b>` :ref:`PFSUPERVISOROPERATIONGETNEXT <group___cmp_supervisor_itf_1ga8474e280cb9ab2e630ca331edd13ecab>` pfSupervisorOperationGetNext;
+
+- #define :ref:`EXT_SupervisorOperationGetNext <group___cmp_supervisor_itf_1ga3b659d53d146b1bce581008e34139955>` extern :ref:`PFSUPERVISOROPERATIONGETNEXT <group___cmp_supervisor_itf_1ga8474e280cb9ab2e630ca331edd13ecab>` pfSupervisorOperationGetNext;
+
+- #define :ref:`GET_SupervisorOperationGetNext <group___cmp_supervisor_itf_1ga9646b9a6b827e9daf1f3d8951cf82e4b>` s_pfCMGetAPI2( "SupervisorOperationGetNext", (RTS_VOID_FCTPTR *)&pfSupervisorOperationGetNext, (fl), 0, 0)
+
+- #define :ref:`CAL_SupervisorOperationGetNext <group___cmp_supervisor_itf_1ga6e03fde13c25f38576cbf5500f37720d>` pfSupervisorOperationGetNext
+
+- #define :ref:`CHK_SupervisorOperationGetNext <group___cmp_supervisor_itf_1ga596351015949dc7c9db916be90304a1b>` (pfSupervisorOperationGetNext != NULL)
+
+- #define :ref:`EXP_SupervisorOperationGetNext <group___cmp_supervisor_itf_1gaf49b0ff05970da621473d1b3db4fe593>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SupervisorOperationGetNext", (RTS_UINTPTR) :ref:`SupervisorOperationGetNext <group___cmp_supervisor_itf_1gaaed285cec0f28c3923c1c082a033bf7b>` , 0, 0)
+
+- #define :ref:`USE_SupervisorOperationGetEntry <group___cmp_supervisor_itf_1gab736c3206d788e0a5fdd3a3f23a09405>` :ref:`PFSUPERVISOROPERATIONGETENTRY <group___cmp_supervisor_itf_1gab7fd94c79eafb176e9f2a99173fcf555>` pfSupervisorOperationGetEntry;
+
+- #define :ref:`EXT_SupervisorOperationGetEntry <group___cmp_supervisor_itf_1ga22d77fc78d54f2886cf9b794fcd1266c>` extern :ref:`PFSUPERVISOROPERATIONGETENTRY <group___cmp_supervisor_itf_1gab7fd94c79eafb176e9f2a99173fcf555>` pfSupervisorOperationGetEntry;
+
+- #define :ref:`GET_SupervisorOperationGetEntry <group___cmp_supervisor_itf_1ga0204cb05dae37c4f99d959e4dea4a09e>` s_pfCMGetAPI2( "SupervisorOperationGetEntry", (RTS_VOID_FCTPTR *)&pfSupervisorOperationGetEntry, (fl), 0, 0)
+
+- #define :ref:`CAL_SupervisorOperationGetEntry <group___cmp_supervisor_itf_1ga003cc26324e14afb5939de413ede3932>` pfSupervisorOperationGetEntry
+
+- #define :ref:`CHK_SupervisorOperationGetEntry <group___cmp_supervisor_itf_1ga06f0f0422b7d91a41880485bb5ea80fa>` (pfSupervisorOperationGetEntry != NULL)
+
+- #define :ref:`EXP_SupervisorOperationGetEntry <group___cmp_supervisor_itf_1gafb5c746f1f4dc7a0f20123a7c90aea59>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SupervisorOperationGetEntry", (RTS_UINTPTR) :ref:`SupervisorOperationGetEntry <group___cmp_supervisor_itf_1gabb75661f7eecd9418d7e81cdf8de2af6>` , 0, 0)
+
+- #define :ref:`USE_SupervisorOperationEnable <group___cmp_supervisor_itf_1ga6c9a198e7214f0bff6ad2b5f9491970c>` :ref:`PFSUPERVISOROPERATIONENABLE <group___cmp_supervisor_itf_1gaa00354655720ff77793fb4b5fe1d4f13>` pfSupervisorOperationEnable;
+
+- #define :ref:`EXT_SupervisorOperationEnable <group___cmp_supervisor_itf_1ga0d660b58996f15d1886789c38623a4b3>` extern :ref:`PFSUPERVISOROPERATIONENABLE <group___cmp_supervisor_itf_1gaa00354655720ff77793fb4b5fe1d4f13>` pfSupervisorOperationEnable;
+
+- #define :ref:`GET_SupervisorOperationEnable <group___cmp_supervisor_itf_1ga548939c9ea6b79c784ad5d8b6faf37e5>` s_pfCMGetAPI2( "SupervisorOperationEnable", (RTS_VOID_FCTPTR *)&pfSupervisorOperationEnable, (fl), 0, 0)
+
+- #define :ref:`CAL_SupervisorOperationEnable <group___cmp_supervisor_itf_1ga2ac507e42dc8888e378eef1cc04a3f85>` pfSupervisorOperationEnable
+
+- #define :ref:`CHK_SupervisorOperationEnable <group___cmp_supervisor_itf_1gab4c521d8cd34419f52025b25502294a4>` (pfSupervisorOperationEnable != NULL)
+
+- #define :ref:`EXP_SupervisorOperationEnable <group___cmp_supervisor_itf_1gaac60fc6de0067cd21a822d2bdab777ce>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SupervisorOperationEnable", (RTS_UINTPTR) :ref:`SupervisorOperationEnable <group___cmp_supervisor_itf_1ga6f99a56ecdd03f4d2829d7a5ec784496>` , 0, 0)
+
+- #define :ref:`USE_SupervisorOperationDisable <group___cmp_supervisor_itf_1ga557fcea0950977995713bf22f4088927>` :ref:`PFSUPERVISOROPERATIONDISABLE <group___cmp_supervisor_itf_1ga2e9e56224cecb7b11e58984f8ca3e21a>` pfSupervisorOperationDisable;
+
+- #define :ref:`EXT_SupervisorOperationDisable <group___cmp_supervisor_itf_1ga96861a5f2f1e9398c1e0b87e1a88105c>` extern :ref:`PFSUPERVISOROPERATIONDISABLE <group___cmp_supervisor_itf_1ga2e9e56224cecb7b11e58984f8ca3e21a>` pfSupervisorOperationDisable;
+
+- #define :ref:`GET_SupervisorOperationDisable <group___cmp_supervisor_itf_1ga473280390e34bea63098e5290ad6a748>` s_pfCMGetAPI2( "SupervisorOperationDisable", (RTS_VOID_FCTPTR *)&pfSupervisorOperationDisable, (fl), 0, 0)
+
+- #define :ref:`CAL_SupervisorOperationDisable <group___cmp_supervisor_itf_1ga70061dd89ff475383d30767310c884f4>` pfSupervisorOperationDisable
+
+- #define :ref:`CHK_SupervisorOperationDisable <group___cmp_supervisor_itf_1ga0cbf6afa7ff4f0c7c567b1edfba6644e>` (pfSupervisorOperationDisable != NULL)
+
+- #define :ref:`EXP_SupervisorOperationDisable <group___cmp_supervisor_itf_1ga6e5f2f16d64c01f2f3b7b5d0ca5a0071>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SupervisorOperationDisable", (RTS_UINTPTR) :ref:`SupervisorOperationDisable <group___cmp_supervisor_itf_1gacd0be713c20c1ee14e63fd69c082fbfc>` , 0, 0)
+
+- #define :ref:`USE_SupervisorOperationAlive <group___cmp_supervisor_itf_1ga71527e2528a1031a3a976c81c31b29b1>` :ref:`PFSUPERVISOROPERATIONALIVE <group___cmp_supervisor_itf_1ga864ebc5a4eae8d7fa902ffe9f024fa36>` pfSupervisorOperationAlive;
+
+- #define :ref:`EXT_SupervisorOperationAlive <group___cmp_supervisor_itf_1ga67750b5c7490470d4d92a22938f49d20>` extern :ref:`PFSUPERVISOROPERATIONALIVE <group___cmp_supervisor_itf_1ga864ebc5a4eae8d7fa902ffe9f024fa36>` pfSupervisorOperationAlive;
+
+- #define :ref:`GET_SupervisorOperationAlive <group___cmp_supervisor_itf_1gae8cf550d35a43680d15ecfcf4a157a9b>` s_pfCMGetAPI2( "SupervisorOperationAlive", (RTS_VOID_FCTPTR *)&pfSupervisorOperationAlive, (fl), 0, 0)
+
+- #define :ref:`CAL_SupervisorOperationAlive <group___cmp_supervisor_itf_1gad23c575bb160028410855f86da860f14>` pfSupervisorOperationAlive
+
+- #define :ref:`CHK_SupervisorOperationAlive <group___cmp_supervisor_itf_1gadd0c4b59e95d73633c3ef9008114c420>` (pfSupervisorOperationAlive != NULL)
+
+- #define :ref:`EXP_SupervisorOperationAlive <group___cmp_supervisor_itf_1gab804d0354ace5e172c13dbaee055fd7e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SupervisorOperationAlive", (RTS_UINTPTR) :ref:`SupervisorOperationAlive <group___cmp_supervisor_itf_1gaf925c810eccab73369cb322d07b6837c>` , 0, 0)
+
+- #define :ref:`USE_SupervisorOperationDead <group___cmp_supervisor_itf_1gaf5caeec599b8e7dca4949fa3b16372a1>` :ref:`PFSUPERVISOROPERATIONDEAD <group___cmp_supervisor_itf_1gaea9f29b511a88b384d7e94128ede64c0>` pfSupervisorOperationDead;
+
+- #define :ref:`EXT_SupervisorOperationDead <group___cmp_supervisor_itf_1ga49b6f24a766efe82e8af764e8a1ce3dd>` extern :ref:`PFSUPERVISOROPERATIONDEAD <group___cmp_supervisor_itf_1gaea9f29b511a88b384d7e94128ede64c0>` pfSupervisorOperationDead;
+
+- #define :ref:`GET_SupervisorOperationDead <group___cmp_supervisor_itf_1ga49df9d8605a572083f87458c277f2818>` s_pfCMGetAPI2( "SupervisorOperationDead", (RTS_VOID_FCTPTR *)&pfSupervisorOperationDead, (fl), 0, 0)
+
+- #define :ref:`CAL_SupervisorOperationDead <group___cmp_supervisor_itf_1ga1b6fcce8d140526a1cb8fd78ce2bf1ef>` pfSupervisorOperationDead
+
+- #define :ref:`CHK_SupervisorOperationDead <group___cmp_supervisor_itf_1ga383261985e4a05be9dfede4a80ff7f78>` (pfSupervisorOperationDead != NULL)
+
+- #define :ref:`EXP_SupervisorOperationDead <group___cmp_supervisor_itf_1gad061caa9eb10bdde51689000e8b99a3d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SupervisorOperationDead", (RTS_UINTPTR) :ref:`SupervisorOperationDead <group___cmp_supervisor_itf_1gaba4768133a5a019cf1dc650cb8fcced4>` , 0, 0)
+
+- #define :ref:`USE_SupervisorOperationSetTimeout <group___cmp_supervisor_itf_1ga6187161b28201abe336ee0ee3c57af29>` :ref:`PFSUPERVISOROPERATIONSETTIMEOUT <group___cmp_supervisor_itf_1ga248253dadbf0d80df7a04b4fd8e348d7>` pfSupervisorOperationSetTimeout;
+
+- #define :ref:`EXT_SupervisorOperationSetTimeout <group___cmp_supervisor_itf_1ga551586957f945b6c02022600dab33a80>` extern :ref:`PFSUPERVISOROPERATIONSETTIMEOUT <group___cmp_supervisor_itf_1ga248253dadbf0d80df7a04b4fd8e348d7>` pfSupervisorOperationSetTimeout;
+
+- #define :ref:`GET_SupervisorOperationSetTimeout <group___cmp_supervisor_itf_1ga1d688f5624a34e6048e2b8ae6363172b>` s_pfCMGetAPI2( "SupervisorOperationSetTimeout", (RTS_VOID_FCTPTR *)&pfSupervisorOperationSetTimeout, (fl), 0, 0)
+
+- #define :ref:`CAL_SupervisorOperationSetTimeout <group___cmp_supervisor_itf_1gaf106dcac7e4e585d15c027927671bdc4>` pfSupervisorOperationSetTimeout
+
+- #define :ref:`CHK_SupervisorOperationSetTimeout <group___cmp_supervisor_itf_1ga084afec14dfaaf0783d3c55cd04a6f2e>` (pfSupervisorOperationSetTimeout != NULL)
+
+- #define :ref:`EXP_SupervisorOperationSetTimeout <group___cmp_supervisor_itf_1gaa53169a9923fe5f5c9294162540cb68d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SupervisorOperationSetTimeout", (RTS_UINTPTR) :ref:`SupervisorOperationSetTimeout <group___cmp_supervisor_itf_1gae23842f61fa651d1d954652952667cce>` , 0, 0)
+
+- #define :ref:`USE_SupervisorOperationGet <group___cmp_supervisor_itf_1ga819c63654db5a2278d612cbef0eab9df>` :ref:`PFSUPERVISOROPERATIONGET <group___cmp_supervisor_itf_1gae58a12219e21dc0629da8fb3c501b3bc>` pfSupervisorOperationGet;
+
+- #define :ref:`EXT_SupervisorOperationGet <group___cmp_supervisor_itf_1gaa7b875d8e7e7e8c9a31c56f47ac4f595>` extern :ref:`PFSUPERVISOROPERATIONGET <group___cmp_supervisor_itf_1gae58a12219e21dc0629da8fb3c501b3bc>` pfSupervisorOperationGet;
+
+- #define :ref:`GET_SupervisorOperationGet <group___cmp_supervisor_itf_1ga7f14501a6ad88445d19f7694c7d8ea8c>` s_pfCMGetAPI2( "SupervisorOperationGet", (RTS_VOID_FCTPTR *)&pfSupervisorOperationGet, (fl), 0, 0)
+
+- #define :ref:`CAL_SupervisorOperationGet <group___cmp_supervisor_itf_1ga253e96f8a4262b59384abd249fb67921>` pfSupervisorOperationGet
+
+- #define :ref:`CHK_SupervisorOperationGet <group___cmp_supervisor_itf_1gad7cf94ecee855eed858b8170211426d5>` (pfSupervisorOperationGet != NULL)
+
+- #define :ref:`EXP_SupervisorOperationGet <group___cmp_supervisor_itf_1gaf1216b36caeca5234e599d4b94fa97f3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SupervisorOperationGet", (RTS_UINTPTR) :ref:`SupervisorOperationGet <group___cmp_supervisor_itf_1gaa11f7969bc152187cb3554397dd5926a>` , 0, 0)
+
+- #define :ref:`ITF_CmpSupervisor <group___cmp_supervisor_itf_1ga5ef77c4264ec564be325cf64b1c22647>`
+
+- #define :ref:`EXTITF_CmpSupervisor <group___cmp_supervisor_itf_1ga0430ec3a9357ebefd47ee79248d82641>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagSupervisorInstance <structtag_supervisor_instance>` :ref:`SupervisorInstance <group___cmp_supervisor_itf_1gad27ca62deb757661318372b7a906b11a>`
+
+- typedef struct :ref:`tagSupervisorEntry <structtag_supervisor_entry>` :ref:`SupervisorEntry <group___cmp_supervisor_itf_1gac2f1c534073a2587fbc7a26c27aef946>`
+
+- typedef struct :ref:`tagSupervisorState <structtag_supervisor_state>` :ref:`SupervisorState <group___cmp_supervisor_itf_1ga8287bdd1cf976595e1a9d736d2d67edf>`
+
+- typedef struct :ref:`tagsupervisoroperationalive_struct <structtagsupervisoroperationalive__struct>` :ref:`supervisoroperationalive_struct <group___cmp_supervisor_itf_1ga846325ed24f11b162facafe30c6fbe24>`
+
+- typedef void(* :ref:`PFSUPERVISOROPERATIONALIVE_IEC <group___cmp_supervisor_itf_1ga2dbed1f0c26617e6a029ce8980c63b62>`)(supervisoroperationalive_struct *p)
+
+- typedef struct :ref:`tagsupervisoroperationdead_struct <structtagsupervisoroperationdead__struct>` :ref:`supervisoroperationdead_struct <group___cmp_supervisor_itf_1ga7a84350ddcfebdaf41ddc332608c75b9>`
+
+- typedef void(* :ref:`PFSUPERVISOROPERATIONDEAD_IEC <group___cmp_supervisor_itf_1ga784e37ba413b1037dc25b5a6f097e39e>`)(supervisoroperationdead_struct *p)
+
+- typedef struct :ref:`tagsupervisoroperationdisable_struct <structtagsupervisoroperationdisable__struct>` :ref:`supervisoroperationdisable_struct <group___cmp_supervisor_itf_1gae38d1edbf53969313dfb891430e08700>`
+
+- typedef void(* :ref:`PFSUPERVISOROPERATIONDISABLE_IEC <group___cmp_supervisor_itf_1ga06dcae0cb67c8ec06bcbb3b88f0d18b0>`)(supervisoroperationdisable_struct *p)
+
+- typedef struct :ref:`tagsupervisoroperationenable_struct <structtagsupervisoroperationenable__struct>` :ref:`supervisoroperationenable_struct <group___cmp_supervisor_itf_1ga26ed6fa798d390d5d44cff6b213fe066>`
+
+- typedef void(* :ref:`PFSUPERVISOROPERATIONENABLE_IEC <group___cmp_supervisor_itf_1gaf06a66d2dfa877b22e43ea0451783efd>`)(supervisoroperationenable_struct *p)
+
+- typedef struct :ref:`tagsupervisoroperationgetentry_struct <structtagsupervisoroperationgetentry__struct>` :ref:`supervisoroperationgetentry_struct <group___cmp_supervisor_itf_1gaa1d539eba0d7e724c079cf07a0209d25>`
+
+- typedef void(* :ref:`PFSUPERVISOROPERATIONGETENTRY_IEC <group___cmp_supervisor_itf_1ga4af1938407701adc343988f5f0318668>`)(supervisoroperationgetentry_struct *p)
+
+- typedef struct :ref:`tagsupervisoroperationgetfirst_struct <structtagsupervisoroperationgetfirst__struct>` :ref:`supervisoroperationgetfirst_struct <group___cmp_supervisor_itf_1ga9dfc1be586f832b4fcbbd36523c065d3>`
+
+- typedef void(* :ref:`PFSUPERVISOROPERATIONGETFIRST_IEC <group___cmp_supervisor_itf_1ga9a63969914c9676597517e1755ae24dd>`)(supervisoroperationgetfirst_struct *p)
+
+- typedef struct :ref:`tagsupervisoroperationgetnext_struct <structtagsupervisoroperationgetnext__struct>` :ref:`supervisoroperationgetnext_struct <group___cmp_supervisor_itf_1ga51e0dca475cf46c8ba5f68e5780ed0eb>`
+
+- typedef void(* :ref:`PFSUPERVISOROPERATIONGETNEXT_IEC <group___cmp_supervisor_itf_1ga98365907fa50c9f338da8cd2fd4316c2>`)(supervisoroperationgetnext_struct *p)
+
+- typedef struct :ref:`tagsupervisoroperationgetstate_struct <structtagsupervisoroperationgetstate__struct>` :ref:`supervisoroperationgetstate_struct <group___cmp_supervisor_itf_1ga8f0e2a222bbbf233fb746032a117cb03>`
+
+- typedef void(* :ref:`PFSUPERVISOROPERATIONGETSTATE_IEC <group___cmp_supervisor_itf_1gab8a8a7c322328f45ffc477d1aabd4122>`)(supervisoroperationgetstate_struct *p)
+
+- typedef struct :ref:`tagsupervisoroperationgetstate2_struct <structtagsupervisoroperationgetstate2__struct>` :ref:`supervisoroperationgetstate2_struct <group___cmp_supervisor_itf_1ga9968531ccfc5eff6e58ee37c0cf039c7>`
+
+- typedef void(* :ref:`PFSUPERVISOROPERATIONGETSTATE2_IEC <group___cmp_supervisor_itf_1gab630177a76402acbb449083266c8a596>`)(supervisoroperationgetstate2_struct *p)
+
+- typedef struct :ref:`tagsupervisoroperationregister_struct <structtagsupervisoroperationregister__struct>` :ref:`supervisoroperationregister_struct <group___cmp_supervisor_itf_1ga9b1de9a499b8d381eb8072d6af47034d>`
+
+- typedef void(* :ref:`PFSUPERVISOROPERATIONREGISTER_IEC <group___cmp_supervisor_itf_1ga1629c87de54744bbcc4d5ddbf3b54ab2>`)(supervisoroperationregister_struct *p)
+
+- typedef struct :ref:`tagsupervisoroperationsettimeout_struct <structtagsupervisoroperationsettimeout__struct>` :ref:`supervisoroperationsettimeout_struct <group___cmp_supervisor_itf_1ga630622d790bf644a619f30a68248d17d>`
+
+- typedef void(* :ref:`PFSUPERVISOROPERATIONSETTIMEOUT_IEC <group___cmp_supervisor_itf_1ga0400388dcbea851ef5cf58eafa75fabe>`)(supervisoroperationsettimeout_struct *p)
+
+- typedef struct :ref:`tagsupervisoroperationunregister_struct <structtagsupervisoroperationunregister__struct>` :ref:`supervisoroperationunregister_struct <group___cmp_supervisor_itf_1gae489b5f9a98507897d96ae37852926ba>`
+
+- typedef void(* :ref:`PFSUPERVISOROPERATIONUNREGISTER_IEC <group___cmp_supervisor_itf_1ga7afc0011b64270de598dde0b0cef7ab4>`)(supervisoroperationunregister_struct *p)
+
+- typedef RTS_HANDLE(* :ref:`PFSUPERVISOROPERATIONREGISTER <group___cmp_supervisor_itf_1ga6ba9ec16535bc242e96d36917168645d>`)(RTS_UI32 ui32OperationID, CMPID cmpId, char *pszOperationDescription, RTS_SYSTIME stTimeoutUs, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSUPERVISOROPERATIONUNREGISTER <group___cmp_supervisor_itf_1ga7be057ff6b6f3d8b0b17625e667b4808>`)(RTS_HANDLE hOperation)
+
+- typedef :ref:`SupervisorState <group___cmp_supervisor_itf_1ga8287bdd1cf976595e1a9d736d2d67edf>` *(* :ref:`PFSUPERVISOROPERATIONGETSTATE <group___cmp_supervisor_itf_1ga5404990d817acd151df511b750e01f50>`)(RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSUPERVISOROPERATIONGETSTATE2 <group___cmp_supervisor_itf_1ga52ef665a92b037e48fdef8eff5d7123e>`)(SupervisorState *pSupervisorState)
+
+- typedef RTS_HANDLE(* :ref:`PFSUPERVISOROPERATIONGETFIRST <group___cmp_supervisor_itf_1gadc6bdb247ab760bc00b46ab0f6111b70>`)(RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSUPERVISOROPERATIONGETNEXT <group___cmp_supervisor_itf_1ga8474e280cb9ab2e630ca331edd13ecab>`)(RTS_HANDLE hPrevOperation, RTS_RESULT *pResult)
+
+- typedef :ref:`SupervisorEntry <group___cmp_supervisor_itf_1gac2f1c534073a2587fbc7a26c27aef946>` *(* :ref:`PFSUPERVISOROPERATIONGETENTRY <group___cmp_supervisor_itf_1gab7fd94c79eafb176e9f2a99173fcf555>`)(RTS_HANDLE hOperation, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSUPERVISOROPERATIONENABLE <group___cmp_supervisor_itf_1gaa00354655720ff77793fb4b5fe1d4f13>`)(RTS_HANDLE hOperation)
+
+- typedef RTS_RESULT(* :ref:`PFSUPERVISOROPERATIONDISABLE <group___cmp_supervisor_itf_1ga2e9e56224cecb7b11e58984f8ca3e21a>`)(RTS_HANDLE hOperation)
+
+- typedef RTS_RESULT(* :ref:`PFSUPERVISOROPERATIONALIVE <group___cmp_supervisor_itf_1ga864ebc5a4eae8d7fa902ffe9f024fa36>`)(RTS_HANDLE hOperation, RTS_SYSTIME *pstTimestampUs)
+
+- typedef RTS_RESULT(* :ref:`PFSUPERVISOROPERATIONDEAD <group___cmp_supervisor_itf_1gaea9f29b511a88b384d7e94128ede64c0>`)(RTS_HANDLE hOperation)
+
+- typedef RTS_RESULT(* :ref:`PFSUPERVISOROPERATIONSETTIMEOUT <group___cmp_supervisor_itf_1ga248253dadbf0d80df7a04b4fd8e348d7>`)(RTS_HANDLE hOperation, RTS_SYSTIME stTimeoutUs)
+
+- typedef RTS_HANDLE(* :ref:`PFSUPERVISOROPERATIONGET <group___cmp_supervisor_itf_1gae58a12219e21dc0629da8fb3c501b3bc>`)(RTS_UI32 ui32OperationID, RTS_UI32 cmpId, RTS_RESULT *pResult)
+
+- typedef :ref:`ICmpSupervisor_C <struct_i_cmp_supervisor___c>` :ref:`ICmpSupervisor <group___cmp_supervisor_itf_1ga31438eae3c22cefc55b017a59e1ffe69>`
+
+Functions
+---------
+
+- void :ref:`supervisoroperationalive <group___cmp_supervisor_itf_1gac0a7a129a5c987b831ec797872246339>` (:ref:`supervisoroperationalive_struct <group___cmp_supervisor_itf_1ga846325ed24f11b162facafe30c6fbe24>` * p)
+
+- void :ref:`supervisoroperationdead <group___cmp_supervisor_itf_1ga8dcb0fa7062fe9595daaf61013c25ab3>` (:ref:`supervisoroperationdead_struct <group___cmp_supervisor_itf_1ga7a84350ddcfebdaf41ddc332608c75b9>` * p)
+
+- void :ref:`supervisoroperationdisable <group___cmp_supervisor_itf_1gac55e43b69b3a230991035f10c402d563>` (:ref:`supervisoroperationdisable_struct <group___cmp_supervisor_itf_1gae38d1edbf53969313dfb891430e08700>` * p)
+
+- void :ref:`supervisoroperationenable <group___cmp_supervisor_itf_1gae800bf94ffde820c2ea32930766194b8>` (:ref:`supervisoroperationenable_struct <group___cmp_supervisor_itf_1ga26ed6fa798d390d5d44cff6b213fe066>` * p)
+
+- void :ref:`supervisoroperationgetentry <group___cmp_supervisor_itf_1ga6115bad74184a04fb61acd15f9d006db>` (:ref:`supervisoroperationgetentry_struct <group___cmp_supervisor_itf_1gaa1d539eba0d7e724c079cf07a0209d25>` * p)
+
+- void :ref:`supervisoroperationgetfirst <group___cmp_supervisor_itf_1ga26996a95c88f4dd74aede4aaadbe7245>` (:ref:`supervisoroperationgetfirst_struct <group___cmp_supervisor_itf_1ga9dfc1be586f832b4fcbbd36523c065d3>` * p)
+
+- void :ref:`supervisoroperationgetnext <group___cmp_supervisor_itf_1gab44bbf7eace5c757d53ddc0dbbe7104b>` (:ref:`supervisoroperationgetnext_struct <group___cmp_supervisor_itf_1ga51e0dca475cf46c8ba5f68e5780ed0eb>` * p)
+
+- void :ref:`supervisoroperationgetstate <group___cmp_supervisor_itf_1ga89c18ac1b9a24f1a03f23dcfe1b99e57>` (:ref:`supervisoroperationgetstate_struct <group___cmp_supervisor_itf_1ga8f0e2a222bbbf233fb746032a117cb03>` * p)
+
+- void :ref:`supervisoroperationgetstate2 <group___cmp_supervisor_itf_1ga8d4dcc422dea19a988f7c58d4d0945d6>` (:ref:`supervisoroperationgetstate2_struct <group___cmp_supervisor_itf_1ga9968531ccfc5eff6e58ee37c0cf039c7>` * p)
+
+- void :ref:`supervisoroperationregister <group___cmp_supervisor_itf_1gadfdc987827d52f9ab2a80b6d4d618e45>` (:ref:`supervisoroperationregister_struct <group___cmp_supervisor_itf_1ga9b1de9a499b8d381eb8072d6af47034d>` * p)
+
+- void :ref:`supervisoroperationsettimeout <group___cmp_supervisor_itf_1ga68be5d31b40e8056a7fef4870f179d97>` (:ref:`supervisoroperationsettimeout_struct <group___cmp_supervisor_itf_1ga630622d790bf644a619f30a68248d17d>` * p)
+
+- void :ref:`supervisoroperationunregister <group___cmp_supervisor_itf_1gaaf431f60a1a7abb8c6f828d7931abfbb>` (:ref:`supervisoroperationunregister_struct <group___cmp_supervisor_itf_1gae489b5f9a98507897d96ae37852926ba>` * p)
+
+- RTS_HANDLE :ref:`SupervisorOperationRegister <group___cmp_supervisor_itf_1gacaad16db3866a6c3138b34f0cff9f994>` (RTS_UI32 ui32OperationID, CMPID cmpId, char * pszOperationDescription, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>`  stTimeoutUs, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SupervisorOperationUnregister <group___cmp_supervisor_itf_1ga9e06546fdd64023fb60462bf5bdc44b7>` (RTS_HANDLE hOperation)
+
+- :ref:`SupervisorState <group___cmp_supervisor_itf_1ga8287bdd1cf976595e1a9d736d2d67edf>` * :ref:`SupervisorOperationGetState <group___cmp_supervisor_itf_1gacdec02d481b824d9717baa21365c9f3c>` (RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SupervisorOperationGetState2 <group___cmp_supervisor_itf_1gae5bbfb7a4b6b5a024a3e5d6de4af17b7>` (:ref:`SupervisorState <group___cmp_supervisor_itf_1ga8287bdd1cf976595e1a9d736d2d67edf>` * pSupervisorState)
+
+- RTS_HANDLE :ref:`SupervisorOperationGetFirst <group___cmp_supervisor_itf_1ga3cbf7aa4cb85263deb0877fa2bafc503>` (RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SupervisorOperationGetNext <group___cmp_supervisor_itf_1gaaed285cec0f28c3923c1c082a033bf7b>` (RTS_HANDLE hPrevOperation, RTS_RESULT * pResult)
+
+- :ref:`SupervisorEntry <group___cmp_supervisor_itf_1gac2f1c534073a2587fbc7a26c27aef946>` * :ref:`SupervisorOperationGetEntry <group___cmp_supervisor_itf_1gabb75661f7eecd9418d7e81cdf8de2af6>` (RTS_HANDLE hOperation, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SupervisorOperationEnable <group___cmp_supervisor_itf_1ga6f99a56ecdd03f4d2829d7a5ec784496>` (RTS_HANDLE hOperation)
+
+- RTS_RESULT :ref:`SupervisorOperationDisable <group___cmp_supervisor_itf_1gacd0be713c20c1ee14e63fd69c082fbfc>` (RTS_HANDLE hOperation)
+
+- RTS_RESULT :ref:`SupervisorOperationAlive <group___cmp_supervisor_itf_1gaf925c810eccab73369cb322d07b6837c>` (RTS_HANDLE hOperation, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` * pstTimestampUs)
+
+- RTS_RESULT :ref:`SupervisorOperationDead <group___cmp_supervisor_itf_1gaba4768133a5a019cf1dc650cb8fcced4>` (RTS_HANDLE hOperation)
+
+- RTS_RESULT :ref:`SupervisorOperationSetTimeout <group___cmp_supervisor_itf_1gae23842f61fa651d1d954652952667cce>` (RTS_HANDLE hOperation, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>`  stTimeoutUs)
+
+- RTS_HANDLE :ref:`SupervisorOperationGet <group___cmp_supervisor_itf_1gaa11f7969bc152187cb3554397dd5926a>` (RTS_UI32 ui32OperationID, RTS_UI32 cmpId, RTS_RESULT * pResult)
+
+Detailed Description
+--------------------
+
+Definition in file CmpSupervisorItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

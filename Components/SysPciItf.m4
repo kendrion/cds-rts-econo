@@ -6,7 +6,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -31,7 +31,7 @@ SET_INTERFACE_NAME(`SysPci')
 
 /**
  * <category>Static defines</category>
- * <description>Maxmimum number of PCI devices on the bus</description>
+ * <description>Maximum number of PCI devices on the bus</description>
  */
 #ifndef PCI_MAX_DEVICES
 	#define PCI_MAX_DEVICES					32
@@ -39,7 +39,7 @@ SET_INTERFACE_NAME(`SysPci')
 
 /**
  * <category>Static defines</category>
- * <description>Maxmimum number of PCI busses on the target</description>
+ * <description>Maximum number of PCI buses on the target</description>
  */
 #ifndef PCI_MAX_BUSSES
 	#define PCI_MAX_BUSSES					20
@@ -63,7 +63,7 @@ SET_INTERFACE_NAME(`SysPci')
 
 /**
  * <category>Static defines</category>
- * <description>Pci configuration definitions</description>
+ * <description>PCI configuration definitions</description>
  */
 #define	PCI_CFG_VENDOR_ID	0x00
 #define	PCI_CFG_DEVICE_ID	0x02
@@ -101,7 +101,7 @@ SET_INTERFACE_NAME(`SysPci')
  * <type>Int</type>
  * <description>
  * Address Offset of PCI addresses. This may be used for some
- * VxWorks BSPs, which have 1:1 virt:phys mapping in gerneral,
+ * VxWorks BSPs, which have 1:1 virtual:physical mapping in general,
  * but a special mapping for PCI addresses. The offset is just
  * added on the scanned PCI addresses.
  * </description>
@@ -228,7 +228,7 @@ typedef struct tagsyspcigetconfigentry_struct
 DEF_API(`void',`CDECL',`syspcigetconfigentry',`(syspcigetconfigentry_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x1B98EF98),0x03050500)
 
 /**
- * <description>Read one PCI config value
+ * <description>Read one PCI configuration value
  * This function allows to read single configuration values of a PCI card by returning a pointer on the associated memory address (pbyData).
  * Thereby the associated bus entry is identified via the bus, device and function number. The component to be read out is indicated
  * by the PciOffset.
@@ -240,7 +240,7 @@ typedef struct tagsyspcireadvalue_struct
 	RTS_IEC_WORD usBus;					/* VAR_INPUT */	/* <param name="usBus" type="IN">PCI bus number (index)</param> */
 	RTS_IEC_WORD usDevice;				/* VAR_INPUT */	/* <param name="usDevice" type="IN">PCI device number (index)</param> */
 	RTS_IEC_WORD usFunction;			/* VAR_INPUT */	/* <param name="usFunction" type="IN">PCI function number (index)</param> */
-	RTS_IEC_WORD usPciOffset;			/* VAR_INPUT */	/* <param name="usPciOffset" type="IN">Offset in the PCI config</param> */
+	RTS_IEC_WORD usPciOffset;			/* VAR_INPUT */	/* <param name="usPciOffset" type="IN">Offset in the PCI configuration</param> */
 	RTS_IEC_BYTE *pbyData;				/* VAR_INPUT */	/* <param name="pbyData" type="OUT">Pointer to data to read to PCI</param> */
 	RTS_IEC_WORD usSize;				/* VAR_INPUT */	/* <param name="usSize" type="IN">Size in byte of data to read</param> */
 	RTS_IEC_RESULT SysPciReadValue;		/* VAR_OUTPUT */	
@@ -249,7 +249,7 @@ typedef struct tagsyspcireadvalue_struct
 DEF_API(`void',`CDECL',`syspcireadvalue',`(syspcireadvalue_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x622E6E70),0x03050500)
 
 /**
- * <description>Set one PCI config entry.
+ * <description>Set one PCI configuration entry.
  * This function allows to write an entry to the PCI bus. The entry is a structure of type PCI-INFO and is transmitted to the
  * function SysPciSetConfigEntry via a pointer on it. The structure contains the configuration data of the PCI card being identified
  * by the bus, device and function number.
@@ -299,7 +299,7 @@ DEF_API(`void',`CDECL',`syspciwritevalue',`(syspciwritevalue_struct *p)',1,RTSIT
 extern "C" {
 #endif
 
-/* Init routines for OS specific modules */
+/* Initialization routines for OS specific modules */
 RTS_RESULT CDECL SysPciOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysPciOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
@@ -314,7 +314,7 @@ RTS_RESULT CDECL SysPciOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS
 DEF_ITF_API(`RTS_RESULT',`CDECL',`SysPciGetCardInfo',`(unsigned short usVendorId, unsigned short usDeviceId, unsigned short usCardIndex, PCI_INFO *pPciInfo)')
 
 /**
- * <description>Get one PCI config entry</description>
+ * <description>Get one PCI configuration entry</description>
  * <param name="usBus" type="IN">PCI bus number (index)</param>
  * <param name="usDevice" type="IN">PCI device number (index)</param>
  * <param name="usFunction" type="IN">PCI function number (index)</param>
@@ -324,7 +324,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysPciGetCardInfo',`(unsigned short usVendorId
 DEF_ITF_API(`RTS_RESULT',`CDECL',`SysPciGetConfigEntry',`(unsigned short usBus, unsigned short usDevice, unsigned short usFunction, PCI_INFO *pPciInfo)')
 
 /**
- * <description>Set one PCI config entry</description>
+ * <description>Set one PCI configuration entry</description>
  * <param name="usBus" type="IN">PCI bus number (index)</param>
  * <param name="usDevice" type="IN">PCI device number (index)</param>
  * <param name="usFunction" type="IN">PCI function number (index)</param>
@@ -334,11 +334,11 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysPciGetConfigEntry',`(unsigned short usBus, 
 DEF_ITF_API(`RTS_RESULT',`CDECL',`SysPciSetConfigEntry',`(unsigned short usBus, unsigned short usDevice, unsigned short usFunction, PCI_INFO *pPciInfo)')
 
 /**
- * <description>Write one PCI config value</description>
+ * <description>Write one PCI configuration value</description>
  * <param name="usBus" type="IN">PCI bus number (index)</param>
  * <param name="usDevice" type="IN">PCI device number (index)</param>
  * <param name="usFunction" type="IN">PCI function number (index)</param>
- * <param name="usPciOffset" type="IN">Offset in the PCI config entry</param>
+ * <param name="usPciOffset" type="IN">Offset in the PCI configuration entry</param>
  * <param name="pbyData" type="IN">Pointer to data to write to PCI</param>
  * <param name="usSize" type="IN">Size in byte of data to write</param>
  * <result>error code</result>
@@ -346,11 +346,11 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SysPciSetConfigEntry',`(unsigned short usBus, 
 DEF_ITF_API(`RTS_RESULT',`CDECL',`SysPciWriteValue',`(unsigned short usBus, unsigned short usDevice, unsigned short usFunction, unsigned short usPciOffset, unsigned char *pbyData, unsigned short usSize)')
 
 /**
- * <description>Read one PCI config value</description>
+ * <description>Read one PCI configuration value</description>
  * <param name="usBus" type="IN">PCI bus number (index)</param>
  * <param name="usDevice" type="IN">PCI device number (index)</param>
  * <param name="usFunction" type="IN">PCI function number (index)</param>
- * <param name="usPciOffset" type="IN">Offset in the PCI config entry</param>
+ * <param name="usPciOffset" type="IN">Offset in the PCI configuration entry</param>
  * <param name="pbyData" type="OUT">Pointer to data to read to PCI</param>
  * <param name="usSize" type="IN">Size in byte of data to read</param>
  * <result>error code</result>

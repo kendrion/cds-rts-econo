@@ -1,0 +1,249 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>6.2.3.7. B: [Step by Step] Compiling a Component &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/theme.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6.2.3.8. C: [Step by Step] Creating a new I/O Driver" href="appendix_C.html" />
+    <link rel="prev" title="6.2.3.6. A: [Step by Step] Creating a new Component" href="appendix_A.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="appendix_C.html" title="6.2.3.8. C: [Step by Step] Creating a new I/O Driver"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="appendix_A.html" title="6.2.3.6. A: [Step by Step] Creating a new Component"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >6. Tutorials / HowTos</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">6.2.3. Creating Runtime System Components, Libraries and I/O Drivers</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="appendix_A.html"
+                        title="previous chapter">6.2.3.6. A: [Step by Step] Creating a new Component</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="appendix_C.html"
+                        title="next chapter">6.2.3.8. C: [Step by Step] Creating a new I/O Driver</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="b-step-by-step-compiling-a-component">
+<span id="tutorial-creating-components-libraries-iodrivers-appendix-b"></span><h1>6.2.3.7. B: [Step by Step] Compiling a Component<a class="headerlink" href="#b-step-by-step-compiling-a-component" title="Permalink to this headline">¶</a></h1>
+<p>How to compile your component exactly depends hardly on the
+Platform/toolchain you are using. We cannot describe every IDE or
+Makefile mechanism here, but we picked up a few examples.</p>
+<ul>
+<li><p>Create a new project to compile the source files of our new
+component:</p>
+<ol class="loweralpha">
+<li><p>VxWorks / Tornado:</p>
+<ol class="lowerroman simple">
+<li><p><em>File -&gt; New Project</em></p></li>
+<li><p>Select „Create downloadable application modules for VxWorks“</p></li>
+<li><p>Finish the Wizard</p></li>
+<li><p><em>Right click on new Project -&gt; Add files …</em></p></li>
+<li><p>Select your Source file (CmpTest.c)</p></li>
+</ol>
+</li>
+<li><p>VxWorks / Workbench:</p>
+<ol class="lowerroman">
+<li><p><em>File -&gt; New -&gt; VxWorks Downloadable Kernel Module Project</em></p></li>
+<li><p>Finish the Wizard</p></li>
+<li><p>Delete second build-target named &lt;project-name&gt;_partialImage</p></li>
+<li><p>Delete reference to &lt;project-name&gt;_partialImage from first
+build target</p></li>
+<li><p>Copy your Component folder under your newly created project.</p></li>
+<li><p><em>Right click on the project -&gt; Refresh</em></p></li>
+<li><p><em>Right click on the build target -&gt; Edit content</em></p></li>
+<li><p>Select your source file (CmpTest.c) and press „Add“</p></li>
+<li><p><em>Right click on the project -&gt; Build Options -&gt; Set Active Build Spec…</em></p></li>
+<li><div class="line-block">
+<div class="line">Select the corresponding build specification for your platforms</div>
+<div class="line">(Note, that we only support the GNU compiler)</div>
+</div>
+</li>
+</ol>
+</li>
+<li><p>Visual Studio 2015:</p>
+<ol class="lowerroman simple">
+<li><p>File -&gt; New -&gt; Project</p></li>
+<li><p>Visual C++ -&gt; Win32 and here select a “Win32 Project”</p></li>
+<li><p>Select a name and the path for the project and solution</p></li>
+<li><p>Select in the Wizard “Application Settings” and select here “DLL”</p></li>
+<li><p>Check “Empty project” and uncheck “Precompiled header”</p></li>
+<li><p>Uncheck optional “Security Development Lifecycle (SDL) checks” if not necessary</p></li>
+<li><p>Finish the Wizard</p></li>
+<li><p>Change to „Solution Explorer“ Tab</p></li>
+<li><p><em>Right click on „Source Files“ -&gt; Add -&gt; Existing Item…</em></p></li>
+<li><p>Select you source file (CmpTest.c)</p></li>
+<li><p><em>Right click on „Header Files“ -&gt; Add -&gt; Existing Item…</em></p></li>
+<li><p>Select your header files (*Itf.h and *Dep.h) and both M4 files</p></li>
+<li><p>Right click on each m4 file and select <em>Properties</em></p></li>
+<li><p>Go to category <em>General</em> and select in “Excluded From Build” the option “Yes”</p></li>
+<li><p>Close the property dialog with saving the changes</p></li>
+</ol>
+</li>
+<li><p>Linux:</p>
+<ol class="lowerroman simple">
+<li><p>Use the supported makefile under Templates/CmpTemplate/Linux as a basis for your component</p></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><div class="line-block">
+<div class="line">Add Compiler Defines and Include Paths:</div>
+<div class="line">The most essential preprocessor defines are:</div>
+<div class="line">STATIC_LINK, DYNAMIC_LINK and for some RISC CPUs also
+NO_PRAGMA_PACK</div>
+</div>
+<ol class="loweralpha">
+<li><p>VxWorks / Tornado:</p>
+<ol class="lowerroman simple">
+<li><p>Change to the „Builds“ Tab</p></li>
+<li><p><em>Right click on the „Build Spec“ under your project -&gt;
+Properties</em></p></li>
+<li><p>Change to the „C/C++ Compiler“ Tab</p></li>
+<li><p>Add the following compiler flags:</p>
+<ol class="arabic simple">
+<li><p>-DMIXED_LINK (that’s always necessary in VxWorks)</p></li>
+<li><p>-I&lt;path-to-runtime-interfaces&gt;/Components</p></li>
+<li><p>-I&lt;path-to-runtime-interfaces&gt;/Platforms/VxWorks</p></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>VxWorks / Workbench:</p>
+<ol class="lowerroman">
+<li><p><em>Right click on build target -&gt; Properties</em></p></li>
+<li><p>Change to „Build Macros“ Tab</p></li>
+<li><p>Add the following Define:</p>
+<ol class="arabic simple">
+<li><p>-DMIXED_LINK (that’s always necessary in VxWorks)</p></li>
+</ol>
+</li>
+<li><p>Change to „Build Paths“ Tab</p></li>
+<li><p>Add the following Build Paths to your configuration:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>-I&lt;path-to-runtime-interfaces&gt;/Components</p></li>
+<li><p>-I&lt;path-to-runtime-interfaces&gt;/Platforms/VxWorks</p></li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</li>
+<li><p>Visual Studio 2015:</p>
+<ol class="lowerroman simple">
+<li><p><em>Project -&gt; Properties</em></p></li>
+<li><p>Change to „C/C++“ Category</p></li>
+<li><p>Select Category „General“</p></li>
+<li><dl class="simple">
+<dt>Add the following paths, comma separated to „Additional</dt><dd><p>Include Directories“:</p>
+<ol class="arabic simple">
+<li><p>&lt;path-to-runtime-interfaces&gt;/Components</p></li>
+<li><p>&lt;path-to-runtime-interfaces&gt;/Platforms/Windows</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+</li>
+<li><p>Linux:</p></li>
+</ol>
+<blockquote>
+<div><ol class="lowerroman simple">
+<li><p>Additional hints:</p>
+<ul class="simple">
+<li><p>The template makefile requires the tools “m4” and “to/fromdos”
+installed to work properly, usually they are included in your
+Linux derivate, or at least installable via the default package
+mechanism.</p></li>
+</ul>
+</li>
+<li><p>Adopt and check the following variables in the makefile:</p></li>
+</ol>
+<blockquote>
+<div><ul>
+<li><p>TARGET: should be the component name (without lib prefix and
+without “.so” extension): “CmpTemplate” is the default
+(this leads to an object called “libCmpTemplate.so”).</p></li>
+<li><p>INCLUDE: should include all required include paths for compilation</p></li>
+<li><p>CXXFLAGS</p>
+<p>–&gt;  TRG_ define: at least one “TRG_” define is required: choose the correct one from “TRG_X86 | TRG_PPC | TRG_ARM | TRG_CORTEX”.</p>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="appendix_C.html" title="6.2.3.8. C: [Step by Step] Creating a new I/O Driver"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="appendix_A.html" title="6.2.3.6. A: [Step by Step] Creating a new Component"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >6. Tutorials / HowTos</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >6.2.3. Creating Runtime System Components, Libraries and I/O Drivers</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

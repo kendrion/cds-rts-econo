@@ -1,0 +1,22 @@
+.. _note_creating_precompiled_lib_modules:
+
+
+Note for creating precompiled library modules and distributing them as part of IEC libraries
+============================================================================================
+
+For this use case it is not necessary to create an AP Plug-In supporting
+a certain compiler toolchain. The compiled component can be created
+through the usual C development workflows.
+
+There are two important constraints to consider though when compared to
+a regular runtime system component:
+
+1. The created component may only export functions marked as externally
+   implemented library functions (the default setting when exporting an
+   IEC interface to M4/C in CODESYS)
+
+2. The names of the C functions must bear the string “_cext” in their
+   name. Otherwise the component manager will refuse to make the
+   functions from the modules loaded by the C-Integration available to
+   other components and applications. This is a security feature.
+

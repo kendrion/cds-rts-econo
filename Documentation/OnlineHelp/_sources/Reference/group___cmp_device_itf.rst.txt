@@ -1,0 +1,963 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_device_itf:
+
+============
+CmpDeviceItf
+============
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpDevice.
+
+Detailed Description
+--------------------
+
+Interface for the device component. This is the first component, that contacts a client to get online access to the target. Here for example the target identification is checked.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`DevSrvSession flags <group___cmp_device_itf___dev_srv_sessionflags>`
+
+- :ref:`Device description <group___cmp_device_itf___devicedescription>`
+
+- :ref:`Device operation mode <group___cmp_device_itf___deviceoperationmode>`
+
+- :ref:`Event parameter <group___cmp_device_itf___eventparameter>`
+
+- :ref:`Events <group___cmp_device_itf___events>`
+
+- :ref:`Interactive login commands <group___cmp_device_itf___interactivelogincommands>`
+
+- :ref:`Interactive login mode flags <group___cmp_device_itf___interactiveloginmodeflags>`
+
+- :ref:`Online service tags <group___cmp_device_itf___onlineservicetags>`
+
+- :ref:`Online services <group___cmp_device_itf___onlineservices>`
+
+- :ref:`Operations <group___cmp_device_itf___operations>`
+
+- :ref:`Reset Origin Configuration <group___cmp_device_itf___reset_origin_configuration>`
+
+- :ref:`Reset Origin Configuration Descriptions <group___cmp_device_itf___reset_origin_configuration_descriptions>`
+
+- :ref:`Settings <group___cmp_device_itf___settings>`
+
+- :ref:`Settings flags <group___cmp_device_itf___settingsflags>`
+
+- :ref:`Static defines <group___cmp_device_itf___staticdefines>`
+
+- :ref:`Target identification <group___cmp_device_itf___targetidentification>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpDevice_C <struct_i_cmp_device___c>`
+
+Macros
+------
+
+- #define :ref:`DEV_SRV_SESSION_ID_EMPTY <group___cmp_device_itf_1ga97dd15775944de44d5f65b33fdb821b4>` 0x00000000
+
+- #define :ref:`DEV_SRV_SESSION_ID_INVALID <group___cmp_device_itf_1gacf06b1834c934132f357ff46cb8ac81f>` 0x00000001
+
+- #define :ref:`DEV_SRV_SESSION_ID_INITAL_REQUEST <group___cmp_device_itf_1ga920f29287a4c1389ad17d91cf5dd5c82>` 0x00000011
+
+- #define :ref:`DEV_SRV_SESSION_ID_REMOTE_VISU_CLIENT <group___cmp_device_itf_1gaa5c6987d8242522ad7c286f24cb87515>` 0x00000815
+
+- #define :ref:`DEV_SRV_SESSION_ID_WEBSERVER <group___cmp_device_itf_1gaeac39c4b2ba3430b1e2cf96363453946>` 0x0000ABCD
+
+- #define :ref:`DEV_SRV_SESSION_ID_VALIDATION_BIT <group___cmp_device_itf_1ga1bda1039f5d77ccb500884a7370881ef>` 0x80000000
+
+- #define :ref:`USE_DevGetIdent <group___cmp_device_itf_1gafb5fe42b6cc66fcc5b6446a63f2013d8>` :ref:`PFDEVGETIDENT <group___cmp_device_itf_1ga874a05966636d08e3dd2300066006430>` pfDevGetIdent;
+
+- #define :ref:`EXT_DevGetIdent <group___cmp_device_itf_1ga172514cada7fb619e7f6143e9cce7bde>` extern :ref:`PFDEVGETIDENT <group___cmp_device_itf_1ga874a05966636d08e3dd2300066006430>` pfDevGetIdent;
+
+- #define :ref:`GET_DevGetIdent <group___cmp_device_itf_1gaaae67f251130ddbb36473e72869f10dd>` s_pfCMGetAPI2( "DevGetIdent", (RTS_VOID_FCTPTR *)&pfDevGetIdent, (fl), 0, 0)
+
+- #define :ref:`CAL_DevGetIdent <group___cmp_device_itf_1ga1f3fae2dfd94d3437ca9d48d1c2f12e4>` pfDevGetIdent
+
+- #define :ref:`CHK_DevGetIdent <group___cmp_device_itf_1ga96465ef36cf9b0a4aa6f33a389c9c863>` (pfDevGetIdent != NULL)
+
+- #define :ref:`EXP_DevGetIdent <group___cmp_device_itf_1gadddc1d17de0ea204ffe031c8e2d68178>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetIdent", (RTS_UINTPTR) :ref:`DevGetIdent <group___cmp_device_itf_1ga7e038012152c3ae365e69a885947f614>` , 0, 0)
+
+- #define :ref:`USE_DevCheckTargetIdent <group___cmp_device_itf_1ga0ad3e50a2b80100b5007dfedcb55f814>` :ref:`PFDEVCHECKTARGETIDENT <group___cmp_device_itf_1gab2dc397ec30519f673b0b0e4fc17e3d6>` pfDevCheckTargetIdent;
+
+- #define :ref:`EXT_DevCheckTargetIdent <group___cmp_device_itf_1ga8375b870a0a364d6d6bc08cdba150e6d>` extern :ref:`PFDEVCHECKTARGETIDENT <group___cmp_device_itf_1gab2dc397ec30519f673b0b0e4fc17e3d6>` pfDevCheckTargetIdent;
+
+- #define :ref:`GET_DevCheckTargetIdent <group___cmp_device_itf_1ga5f6ed2aed1937b24646716e6c5a0cb90>` s_pfCMGetAPI2( "DevCheckTargetIdent", (RTS_VOID_FCTPTR *)&pfDevCheckTargetIdent, (fl), 0, 0)
+
+- #define :ref:`CAL_DevCheckTargetIdent <group___cmp_device_itf_1ga5b2d2fab7b50e7cae1d41848958ee461>` pfDevCheckTargetIdent
+
+- #define :ref:`CHK_DevCheckTargetIdent <group___cmp_device_itf_1ga8367fdd5302b9932a56614be17f46ff4>` (pfDevCheckTargetIdent != NULL)
+
+- #define :ref:`EXP_DevCheckTargetIdent <group___cmp_device_itf_1ga5523b4740e144d442660ab61e586a07a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevCheckTargetIdent", (RTS_UINTPTR) :ref:`DevCheckTargetIdent <group___cmp_device_itf_1gaf0f698f604236df7b31a3111690d680c>` , 0, 0)
+
+- #define :ref:`USE_DevSetOperationMode <group___cmp_device_itf_1gacd134e73c41e844c0ca1a7c150d4ce84>` :ref:`PFDEVSETOPERATIONMODE <group___cmp_device_itf_1ga3d0523aca8e07219e8dbe44b7bb33f34>` pfDevSetOperationMode;
+
+- #define :ref:`EXT_DevSetOperationMode <group___cmp_device_itf_1gaa9a5d1e339ce379a24e22c5d154ce3af>` extern :ref:`PFDEVSETOPERATIONMODE <group___cmp_device_itf_1ga3d0523aca8e07219e8dbe44b7bb33f34>` pfDevSetOperationMode;
+
+- #define :ref:`GET_DevSetOperationMode <group___cmp_device_itf_1gadb958ea1c07ad39c7abde0b6346de61a>` s_pfCMGetAPI2( "DevSetOperationMode", (RTS_VOID_FCTPTR *)&pfDevSetOperationMode, (fl), 0, 0)
+
+- #define :ref:`CAL_DevSetOperationMode <group___cmp_device_itf_1gae51c614fca7799db49182a0d79c98867>` pfDevSetOperationMode
+
+- #define :ref:`CHK_DevSetOperationMode <group___cmp_device_itf_1ga91d8de59566f526c00a59a9cc040fee1>` (pfDevSetOperationMode != NULL)
+
+- #define :ref:`EXP_DevSetOperationMode <group___cmp_device_itf_1gab3d296c63af3e63009d21daa2dfcd3bd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevSetOperationMode", (RTS_UINTPTR) :ref:`DevSetOperationMode <group___cmp_device_itf_1gaa0cf71c2add8bce1463fd231501212bb>` , 0, 0)
+
+- #define :ref:`USE_DevGetOperationMode <group___cmp_device_itf_1gaac3096af26570b364b7239344a27eca4>` :ref:`PFDEVGETOPERATIONMODE <group___cmp_device_itf_1ga97766b1af6d9ff29f3f6e8c0410a371f>` pfDevGetOperationMode;
+
+- #define :ref:`EXT_DevGetOperationMode <group___cmp_device_itf_1ga8d3a5846e8ee393477eaa37791ffb57a>` extern :ref:`PFDEVGETOPERATIONMODE <group___cmp_device_itf_1ga97766b1af6d9ff29f3f6e8c0410a371f>` pfDevGetOperationMode;
+
+- #define :ref:`GET_DevGetOperationMode <group___cmp_device_itf_1ga7c8bc6947e7dd57c529145c8f6c0e35f>` s_pfCMGetAPI2( "DevGetOperationMode", (RTS_VOID_FCTPTR *)&pfDevGetOperationMode, (fl), 0, 0)
+
+- #define :ref:`CAL_DevGetOperationMode <group___cmp_device_itf_1ga5cdf1ea553cb0cb3a197a22e7f8cedc8>` pfDevGetOperationMode
+
+- #define :ref:`CHK_DevGetOperationMode <group___cmp_device_itf_1gae7aa3a3db6a5fbf8cf20c83f0fd0ab7b>` (pfDevGetOperationMode != NULL)
+
+- #define :ref:`EXP_DevGetOperationMode <group___cmp_device_itf_1ga0a428c34cf3b4b10f8bdfacf21ec06cd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetOperationMode", (RTS_UINTPTR) :ref:`DevGetOperationMode <group___cmp_device_itf_1ga755258387b6981d8e151b4cfe0182350>` , 0, 0)
+
+- #define :ref:`USE_DevGetSessionId <group___cmp_device_itf_1ga9cebd9215075ccf7af69849af32e7a67>` :ref:`PFDEVGETSESSIONID <group___cmp_device_itf_1ga81d0aa13d40c29b190bec02b698294ef>` pfDevGetSessionId;
+
+- #define :ref:`EXT_DevGetSessionId <group___cmp_device_itf_1ga28ea7472aa231e7b4c241e6f9d9a74f5>` extern :ref:`PFDEVGETSESSIONID <group___cmp_device_itf_1ga81d0aa13d40c29b190bec02b698294ef>` pfDevGetSessionId;
+
+- #define :ref:`GET_DevGetSessionId <group___cmp_device_itf_1gadbd8a2d5720ba7ec3f129aba328dc98b>` s_pfCMGetAPI2( "DevGetSessionId", (RTS_VOID_FCTPTR *)&pfDevGetSessionId, (fl), 0, 0)
+
+- #define :ref:`CAL_DevGetSessionId <group___cmp_device_itf_1ga9b0e05841bbe43f35f1a28348e29ce58>` pfDevGetSessionId
+
+- #define :ref:`CHK_DevGetSessionId <group___cmp_device_itf_1gaead4b9b8361c9a0b11b5abb5a0631c64>` (pfDevGetSessionId != NULL)
+
+- #define :ref:`EXP_DevGetSessionId <group___cmp_device_itf_1ga0bff68e7a57c9b2ca6873b621de5d453>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetSessionId", (RTS_UINTPTR) :ref:`DevGetSessionId <group___cmp_device_itf_1gac59c464cacd0ed223fc678d838e4d6b2>` , 0, 0)
+
+- #define :ref:`USE_DevGetSessionUser <group___cmp_device_itf_1ga77a1608a1b1fd760fa9b6a665ae4a104>` :ref:`PFDEVGETSESSIONUSER <group___cmp_device_itf_1ga7460af1c2a1cdea783ea28df779b4e66>` pfDevGetSessionUser;
+
+- #define :ref:`EXT_DevGetSessionUser <group___cmp_device_itf_1ga8ad9b3ac886ab88d8132cedf07e64790>` extern :ref:`PFDEVGETSESSIONUSER <group___cmp_device_itf_1ga7460af1c2a1cdea783ea28df779b4e66>` pfDevGetSessionUser;
+
+- #define :ref:`GET_DevGetSessionUser <group___cmp_device_itf_1ga8f7c60f7f0eae13fc600670027236efa>` s_pfCMGetAPI2( "DevGetSessionUser", (RTS_VOID_FCTPTR *)&pfDevGetSessionUser, (fl), 0, 0)
+
+- #define :ref:`CAL_DevGetSessionUser <group___cmp_device_itf_1ga6eeac7ecbb87a3847e88fafa0b738386>` pfDevGetSessionUser
+
+- #define :ref:`CHK_DevGetSessionUser <group___cmp_device_itf_1ga58a4a997ec6607303f1e70972cf55c02>` (pfDevGetSessionUser != NULL)
+
+- #define :ref:`EXP_DevGetSessionUser <group___cmp_device_itf_1ga783070c696a762d27cd94bb09d43a32d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetSessionUser", (RTS_UINTPTR) :ref:`DevGetSessionUser <group___cmp_device_itf_1ga6b6a2121a2c903d3d24663e8afed5bc3>` , 0, 0)
+
+- #define :ref:`USE_DevGetSessionAuthType <group___cmp_device_itf_1ga990f9181f25130bb6afa4f60fb717ee7>` :ref:`PFDEVGETSESSIONAUTHTYPE <group___cmp_device_itf_1ga91a6b113cf061fc0ae7e7e0d740e9dec>` pfDevGetSessionAuthType;
+
+- #define :ref:`EXT_DevGetSessionAuthType <group___cmp_device_itf_1ga16c590f27107b3d7a57ac8761375ed5c>` extern :ref:`PFDEVGETSESSIONAUTHTYPE <group___cmp_device_itf_1ga91a6b113cf061fc0ae7e7e0d740e9dec>` pfDevGetSessionAuthType;
+
+- #define :ref:`GET_DevGetSessionAuthType <group___cmp_device_itf_1ga106b9f98262a934983497ea6556d0a9f>` s_pfCMGetAPI2( "DevGetSessionAuthType", (RTS_VOID_FCTPTR *)&pfDevGetSessionAuthType, (fl), 0, 0)
+
+- #define :ref:`CAL_DevGetSessionAuthType <group___cmp_device_itf_1ga8ac4f4e7669671c88e7dc536f33e12ec>` pfDevGetSessionAuthType
+
+- #define :ref:`CHK_DevGetSessionAuthType <group___cmp_device_itf_1gac2252910f6f716c8dcee64780d0f7cb9>` (pfDevGetSessionAuthType != NULL)
+
+- #define :ref:`EXP_DevGetSessionAuthType <group___cmp_device_itf_1ga4b5a194b936c0bee7c0eee7358c04296>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetSessionAuthType", (RTS_UINTPTR) :ref:`DevGetSessionAuthType <group___cmp_device_itf_1ga7b088b1e8c9c7131297fe9c04470666e>` , 0, 0)
+
+- #define :ref:`USE_DevGetSessionFlags <group___cmp_device_itf_1ga85bcbcaa2df9182004f4b1169cdc83d3>` :ref:`PFDEVGETSESSIONFLAGS <group___cmp_device_itf_1ga60002bcd53e4f98a7f31336f8c6aba13>` pfDevGetSessionFlags;
+
+- #define :ref:`EXT_DevGetSessionFlags <group___cmp_device_itf_1ga0fc42c8e559bbdb63b0100e0d050edba>` extern :ref:`PFDEVGETSESSIONFLAGS <group___cmp_device_itf_1ga60002bcd53e4f98a7f31336f8c6aba13>` pfDevGetSessionFlags;
+
+- #define :ref:`GET_DevGetSessionFlags <group___cmp_device_itf_1gaed2a8a45583b9228211ac7e64edc52d7>` s_pfCMGetAPI2( "DevGetSessionFlags", (RTS_VOID_FCTPTR *)&pfDevGetSessionFlags, (fl), 0, 0)
+
+- #define :ref:`CAL_DevGetSessionFlags <group___cmp_device_itf_1ga41d1e7aee95c12a9f4c21233c1bb1934>` pfDevGetSessionFlags
+
+- #define :ref:`CHK_DevGetSessionFlags <group___cmp_device_itf_1ga43f544d00392c203769aaaa4552d14e8>` (pfDevGetSessionFlags != NULL)
+
+- #define :ref:`EXP_DevGetSessionFlags <group___cmp_device_itf_1gae4ad8b71f550aa5fff75958c1f7540b4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetSessionFlags", (RTS_UINTPTR) :ref:`DevGetSessionFlags <group___cmp_device_itf_1ga2749a6bdc512ab3e18e0b30bf3cea9b3>` , 0, 0)
+
+- #define :ref:`USE_DevIsValidRequest <group___cmp_device_itf_1gadee9db7c8cee6ee642bc2a4fab904bb4>` :ref:`PFDEVISVALIDREQUEST <group___cmp_device_itf_1ga6a607e9882c1bba3d94343355543bbef>` pfDevIsValidRequest;
+
+- #define :ref:`EXT_DevIsValidRequest <group___cmp_device_itf_1gafdc6ec96e206b127efbed15c00ad4f1f>` extern :ref:`PFDEVISVALIDREQUEST <group___cmp_device_itf_1ga6a607e9882c1bba3d94343355543bbef>` pfDevIsValidRequest;
+
+- #define :ref:`GET_DevIsValidRequest <group___cmp_device_itf_1gaf77acf873da3bdd234ddff41ad106de6>` s_pfCMGetAPI2( "DevIsValidRequest", (RTS_VOID_FCTPTR *)&pfDevIsValidRequest, (fl), 0, 0)
+
+- #define :ref:`CAL_DevIsValidRequest <group___cmp_device_itf_1gaee6c11ec5e6ef1edb0a7dca1ea4fe84a>` pfDevIsValidRequest
+
+- #define :ref:`CHK_DevIsValidRequest <group___cmp_device_itf_1ga9c187653e14c558e56290b2bd862dc69>` (pfDevIsValidRequest != NULL)
+
+- #define :ref:`EXP_DevIsValidRequest <group___cmp_device_itf_1ga666c7bbd7e6a13e51670fced45207a92>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevIsValidRequest", (RTS_UINTPTR) :ref:`DevIsValidRequest <group___cmp_device_itf_1gaeebf4a3f354b6c4293ad27314b525ba6>` , 0, 0)
+
+- #define :ref:`USE_DevResetOrigin <group___cmp_device_itf_1gaf7fc89f072a670a82c8d70926ce8e38c>` :ref:`PFDEVRESETORIGIN <group___cmp_device_itf_1gada6db8c03258aba5fc3b20aec9ee9d34>` pfDevResetOrigin;
+
+- #define :ref:`EXT_DevResetOrigin <group___cmp_device_itf_1ga2128b05af51d25388536c4d91ca2424f>` extern :ref:`PFDEVRESETORIGIN <group___cmp_device_itf_1gada6db8c03258aba5fc3b20aec9ee9d34>` pfDevResetOrigin;
+
+- #define :ref:`GET_DevResetOrigin <group___cmp_device_itf_1ga61cf19774b75ee07c3d4b5c1cc93abba>` s_pfCMGetAPI2( "DevResetOrigin", (RTS_VOID_FCTPTR *)&pfDevResetOrigin, (fl), 0, 0)
+
+- #define :ref:`CAL_DevResetOrigin <group___cmp_device_itf_1ga9a98eb6a1078270fef8bcf844fcaee4e>` pfDevResetOrigin
+
+- #define :ref:`CHK_DevResetOrigin <group___cmp_device_itf_1ga111f2f400247c78a951958c009a80d0e>` (pfDevResetOrigin != NULL)
+
+- #define :ref:`EXP_DevResetOrigin <group___cmp_device_itf_1ga7a4637360b4d424ebf188d263203bc44>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevResetOrigin", (RTS_UINTPTR) :ref:`DevResetOrigin <group___cmp_device_itf_1gad4b80db094b020326925f45f437d378a>` , 0, 0)
+
+- #define :ref:`USE_DevResetOriginGetConfig <group___cmp_device_itf_1ga858f9854794c9e825feff0e042c969dd>` :ref:`PFDEVRESETORIGINGETCONFIG <group___cmp_device_itf_1gafa65466359610f73ae49910d5db06f38>` pfDevResetOriginGetConfig;
+
+- #define :ref:`EXT_DevResetOriginGetConfig <group___cmp_device_itf_1gae4e6e7b9ecb6610d6dbf1e2c1ed155b6>` extern :ref:`PFDEVRESETORIGINGETCONFIG <group___cmp_device_itf_1gafa65466359610f73ae49910d5db06f38>` pfDevResetOriginGetConfig;
+
+- #define :ref:`GET_DevResetOriginGetConfig <group___cmp_device_itf_1gab13ae6369e6610eec3d29168efd29739>` s_pfCMGetAPI2( "DevResetOriginGetConfig", (RTS_VOID_FCTPTR *)&pfDevResetOriginGetConfig, (fl), 0, 0)
+
+- #define :ref:`CAL_DevResetOriginGetConfig <group___cmp_device_itf_1ga0acb6e1cebb24f7cc41a05314503f3d9>` pfDevResetOriginGetConfig
+
+- #define :ref:`CHK_DevResetOriginGetConfig <group___cmp_device_itf_1ga5338382f3785a06279fc26c3199dcc41>` (pfDevResetOriginGetConfig != NULL)
+
+- #define :ref:`EXP_DevResetOriginGetConfig <group___cmp_device_itf_1ga0c6cf83022b84ca42c00adfb001986af>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevResetOriginGetConfig", (RTS_UINTPTR) :ref:`DevResetOriginGetConfig <group___cmp_device_itf_1ga0ecec541d502361695d4bcbafeab380e>` , 0, 0)
+
+- #define :ref:`ITF_CmpDevice <group___cmp_device_itf_1gac5d20fb8566ac06e86ba607e73175f34>`
+
+- #define :ref:`EXTITF_CmpDevice <group___cmp_device_itf_1gaeea2cebbbd0315af60ed3cd8a021abdc>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFDEVGETIDENT <group___cmp_device_itf_1ga874a05966636d08e3dd2300066006430>`)(DeviceIdentification *pDevIdent)
+
+- typedef RTS_RESULT(* :ref:`PFDEVCHECKTARGETIDENT <group___cmp_device_itf_1gab2dc397ec30519f673b0b0e4fc17e3d6>`)(TargetIdent *pTargetIdentReq, TargetIdent *pTargetIdent)
+
+- typedef RTS_RESULT(* :ref:`PFDEVSETOPERATIONMODE <group___cmp_device_itf_1ga3d0523aca8e07219e8dbe44b7bb33f34>`)(RTS_UI32 ui32OperationMode, CMPID *pCmpIdDisabled)
+
+- typedef RTS_RESULT(* :ref:`PFDEVGETOPERATIONMODE <group___cmp_device_itf_1ga97766b1af6d9ff29f3f6e8c0410a371f>`)(RTS_UI32 *pui32OperationMode)
+
+- typedef RTS_RESULT(* :ref:`PFDEVGETSESSIONID <group___cmp_device_itf_1ga81d0aa13d40c29b190bec02b698294ef>`)(RTS_UI32 ulChannelHandle, RTS_UI32 *pulSessionId)
+
+- typedef RTS_HANDLE(* :ref:`PFDEVGETSESSIONUSER <group___cmp_device_itf_1ga7460af1c2a1cdea783ea28df779b4e66>`)(RTS_UI32 ui32SessionId, RTS_RESULT *pResult)
+
+- typedef RTS_UI32(* :ref:`PFDEVGETSESSIONAUTHTYPE <group___cmp_device_itf_1ga91a6b113cf061fc0ae7e7e0d740e9dec>`)(RTS_UI32 ui32SessionId, RTS_RESULT *pResult)
+
+- typedef RTS_UI32(* :ref:`PFDEVGETSESSIONFLAGS <group___cmp_device_itf_1ga60002bcd53e4f98a7f31336f8c6aba13>`)(RTS_UI32 ui32SessionId, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFDEVISVALIDREQUEST <group___cmp_device_itf_1ga6a607e9882c1bba3d94343355543bbef>`)(RTS_UI32 ulChannelHandle, HEADER_TAG_EXT *pHeaderTag, PROTOCOL_DATA_UNIT *pPduReply)
+
+- typedef RTS_RESULT(* :ref:`PFDEVRESETORIGIN <group___cmp_device_itf_1gada6db8c03258aba5fc3b20aec9ee9d34>`)(RTS_HANDLE hUser, RTS_UI32 ui32ResetOriginConfig, RTS_UI32 *pui32ResetOriginResults)
+
+- typedef RTS_RESULT(* :ref:`PFDEVRESETORIGINGETCONFIG <group___cmp_device_itf_1gafa65466359610f73ae49910d5db06f38>`)(RTS_HANDLE hUser, RTS_UI32 *pui32ResetOriginConfigOptions, RTS_UI32 *pui32ResetOriginConfigRights)
+
+- typedef :ref:`ICmpDevice_C <struct_i_cmp_device___c>` :ref:`ICmpDevice <group___cmp_device_itf_1gaa258f9635c2734d26d8b1401f85b40d1>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`DevGetIdent <group___cmp_device_itf_1ga7e038012152c3ae365e69a885947f614>` (:ref:`DeviceIdentification <struct_device_identification>` * pDevIdent)
+
+- RTS_RESULT :ref:`DevCheckTargetIdent <group___cmp_device_itf_1gaf0f698f604236df7b31a3111690d680c>` (:ref:`TargetIdent <struct_target_ident>` * pTargetIdentReq, :ref:`TargetIdent <struct_target_ident>` * pTargetIdent)
+
+- RTS_RESULT :ref:`DevSetOperationMode <group___cmp_device_itf_1gaa0cf71c2add8bce1463fd231501212bb>` (RTS_UI32 ui32OperationMode, CMPID * pCmpIdDisabled)
+
+- RTS_RESULT :ref:`DevGetOperationMode <group___cmp_device_itf_1ga755258387b6981d8e151b4cfe0182350>` (RTS_UI32 * pui32OperationMode)
+
+- RTS_RESULT :ref:`DevGetSessionId <group___cmp_device_itf_1gac59c464cacd0ed223fc678d838e4d6b2>` (RTS_UI32 ulChannelHandle, RTS_UI32 * pulSessionId)
+
+- RTS_HANDLE :ref:`DevGetSessionUser <group___cmp_device_itf_1ga6b6a2121a2c903d3d24663e8afed5bc3>` (RTS_UI32 ui32SessionId, RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`DevGetSessionAuthType <group___cmp_device_itf_1ga7b088b1e8c9c7131297fe9c04470666e>` (RTS_UI32 ui32SessionId, RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`DevGetSessionFlags <group___cmp_device_itf_1ga2749a6bdc512ab3e18e0b30bf3cea9b3>` (RTS_UI32 ui32SessionId, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`DevIsValidRequest <group___cmp_device_itf_1gaeebf4a3f354b6c4293ad27314b525ba6>` (RTS_UI32 ulChannelHandle, :ref:`HEADER_TAG_EXT <struct_h_e_a_d_e_r___t_a_g___e_x_t>` * pHeaderTag, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>` * pPduReply)
+
+- RTS_RESULT :ref:`DevResetOrigin <group___cmp_device_itf_1gad4b80db094b020326925f45f437d378a>` (RTS_HANDLE hUser, RTS_UI32 ui32ResetOriginConfig, RTS_UI32 * pui32ResetOriginResults)
+
+- RTS_RESULT :ref:`DevResetOriginGetConfig <group___cmp_device_itf_1ga0ecec541d502361695d4bcbafeab380e>` (RTS_HANDLE hUser, RTS_UI32 * pui32ResetOriginConfigOptions, RTS_UI32 * pui32ResetOriginConfigRights)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_device_itf_1ga97dd15775944de44d5f65b33fdb821b4:
+
+#define DEV_SRV_SESSION_ID_EMPTY 0x00000000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Defines some special values for session ids
+
+.. _group___cmp_device_itf_1gacf06b1834c934132f357ff46cb8ac81f:
+
+#define DEV_SRV_SESSION_ID_INVALID 0x00000001
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga920f29287a4c1389ad17d91cf5dd5c82:
+
+#define DEV_SRV_SESSION_ID_INITAL_REQUEST 0x00000011
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gaa5c6987d8242522ad7c286f24cb87515:
+
+#define DEV_SRV_SESSION_ID_REMOTE_VISU_CLIENT 0x00000815
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gaeac39c4b2ba3430b1e2cf96363453946:
+
+#define DEV_SRV_SESSION_ID_WEBSERVER 0x0000ABCD
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga1bda1039f5d77ccb500884a7370881ef:
+
+#define DEV_SRV_SESSION_ID_VALIDATION_BIT 0x80000000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gafb5fe42b6cc66fcc5b6446a63f2013d8:
+
+#define USE_DevGetIdent :ref:`PFDEVGETIDENT <group___cmp_device_itf_1ga874a05966636d08e3dd2300066006430>` pfDevGetIdent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga172514cada7fb619e7f6143e9cce7bde:
+
+#define EXT_DevGetIdent extern :ref:`PFDEVGETIDENT <group___cmp_device_itf_1ga874a05966636d08e3dd2300066006430>` pfDevGetIdent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gaaae67f251130ddbb36473e72869f10dd:
+
+#define GET_DevGetIdent s_pfCMGetAPI2( "DevGetIdent", (RTS_VOID_FCTPTR *)&pfDevGetIdent, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga1f3fae2dfd94d3437ca9d48d1c2f12e4:
+
+#define CAL_DevGetIdent pfDevGetIdent
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga96465ef36cf9b0a4aa6f33a389c9c863:
+
+#define CHK_DevGetIdent (pfDevGetIdent != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gadddc1d17de0ea204ffe031c8e2d68178:
+
+#define EXP_DevGetIdent s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetIdent", (RTS_UINTPTR) :ref:`DevGetIdent <group___cmp_device_itf_1ga7e038012152c3ae365e69a885947f614>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga0ad3e50a2b80100b5007dfedcb55f814:
+
+#define USE_DevCheckTargetIdent :ref:`PFDEVCHECKTARGETIDENT <group___cmp_device_itf_1gab2dc397ec30519f673b0b0e4fc17e3d6>` pfDevCheckTargetIdent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga8375b870a0a364d6d6bc08cdba150e6d:
+
+#define EXT_DevCheckTargetIdent extern :ref:`PFDEVCHECKTARGETIDENT <group___cmp_device_itf_1gab2dc397ec30519f673b0b0e4fc17e3d6>` pfDevCheckTargetIdent;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga5f6ed2aed1937b24646716e6c5a0cb90:
+
+#define GET_DevCheckTargetIdent s_pfCMGetAPI2( "DevCheckTargetIdent", (RTS_VOID_FCTPTR *)&pfDevCheckTargetIdent, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga5b2d2fab7b50e7cae1d41848958ee461:
+
+#define CAL_DevCheckTargetIdent pfDevCheckTargetIdent
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga8367fdd5302b9932a56614be17f46ff4:
+
+#define CHK_DevCheckTargetIdent (pfDevCheckTargetIdent != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga5523b4740e144d442660ab61e586a07a:
+
+#define EXP_DevCheckTargetIdent s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevCheckTargetIdent", (RTS_UINTPTR) :ref:`DevCheckTargetIdent <group___cmp_device_itf_1gaf0f698f604236df7b31a3111690d680c>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gacd134e73c41e844c0ca1a7c150d4ce84:
+
+#define USE_DevSetOperationMode :ref:`PFDEVSETOPERATIONMODE <group___cmp_device_itf_1ga3d0523aca8e07219e8dbe44b7bb33f34>` pfDevSetOperationMode;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gaa9a5d1e339ce379a24e22c5d154ce3af:
+
+#define EXT_DevSetOperationMode extern :ref:`PFDEVSETOPERATIONMODE <group___cmp_device_itf_1ga3d0523aca8e07219e8dbe44b7bb33f34>` pfDevSetOperationMode;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gadb958ea1c07ad39c7abde0b6346de61a:
+
+#define GET_DevSetOperationMode s_pfCMGetAPI2( "DevSetOperationMode", (RTS_VOID_FCTPTR *)&pfDevSetOperationMode, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gae51c614fca7799db49182a0d79c98867:
+
+#define CAL_DevSetOperationMode pfDevSetOperationMode
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga91d8de59566f526c00a59a9cc040fee1:
+
+#define CHK_DevSetOperationMode (pfDevSetOperationMode != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gab3d296c63af3e63009d21daa2dfcd3bd:
+
+#define EXP_DevSetOperationMode s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevSetOperationMode", (RTS_UINTPTR) :ref:`DevSetOperationMode <group___cmp_device_itf_1gaa0cf71c2add8bce1463fd231501212bb>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gaac3096af26570b364b7239344a27eca4:
+
+#define USE_DevGetOperationMode :ref:`PFDEVGETOPERATIONMODE <group___cmp_device_itf_1ga97766b1af6d9ff29f3f6e8c0410a371f>` pfDevGetOperationMode;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga8d3a5846e8ee393477eaa37791ffb57a:
+
+#define EXT_DevGetOperationMode extern :ref:`PFDEVGETOPERATIONMODE <group___cmp_device_itf_1ga97766b1af6d9ff29f3f6e8c0410a371f>` pfDevGetOperationMode;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga7c8bc6947e7dd57c529145c8f6c0e35f:
+
+#define GET_DevGetOperationMode s_pfCMGetAPI2( "DevGetOperationMode", (RTS_VOID_FCTPTR *)&pfDevGetOperationMode, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga5cdf1ea553cb0cb3a197a22e7f8cedc8:
+
+#define CAL_DevGetOperationMode pfDevGetOperationMode
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gae7aa3a3db6a5fbf8cf20c83f0fd0ab7b:
+
+#define CHK_DevGetOperationMode (pfDevGetOperationMode != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga0a428c34cf3b4b10f8bdfacf21ec06cd:
+
+#define EXP_DevGetOperationMode s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetOperationMode", (RTS_UINTPTR) :ref:`DevGetOperationMode <group___cmp_device_itf_1ga755258387b6981d8e151b4cfe0182350>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga9cebd9215075ccf7af69849af32e7a67:
+
+#define USE_DevGetSessionId :ref:`PFDEVGETSESSIONID <group___cmp_device_itf_1ga81d0aa13d40c29b190bec02b698294ef>` pfDevGetSessionId;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga28ea7472aa231e7b4c241e6f9d9a74f5:
+
+#define EXT_DevGetSessionId extern :ref:`PFDEVGETSESSIONID <group___cmp_device_itf_1ga81d0aa13d40c29b190bec02b698294ef>` pfDevGetSessionId;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gadbd8a2d5720ba7ec3f129aba328dc98b:
+
+#define GET_DevGetSessionId s_pfCMGetAPI2( "DevGetSessionId", (RTS_VOID_FCTPTR *)&pfDevGetSessionId, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga9b0e05841bbe43f35f1a28348e29ce58:
+
+#define CAL_DevGetSessionId pfDevGetSessionId
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gaead4b9b8361c9a0b11b5abb5a0631c64:
+
+#define CHK_DevGetSessionId (pfDevGetSessionId != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga0bff68e7a57c9b2ca6873b621de5d453:
+
+#define EXP_DevGetSessionId s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetSessionId", (RTS_UINTPTR) :ref:`DevGetSessionId <group___cmp_device_itf_1gac59c464cacd0ed223fc678d838e4d6b2>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga77a1608a1b1fd760fa9b6a665ae4a104:
+
+#define USE_DevGetSessionUser :ref:`PFDEVGETSESSIONUSER <group___cmp_device_itf_1ga7460af1c2a1cdea783ea28df779b4e66>` pfDevGetSessionUser;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga8ad9b3ac886ab88d8132cedf07e64790:
+
+#define EXT_DevGetSessionUser extern :ref:`PFDEVGETSESSIONUSER <group___cmp_device_itf_1ga7460af1c2a1cdea783ea28df779b4e66>` pfDevGetSessionUser;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga8f7c60f7f0eae13fc600670027236efa:
+
+#define GET_DevGetSessionUser s_pfCMGetAPI2( "DevGetSessionUser", (RTS_VOID_FCTPTR *)&pfDevGetSessionUser, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga6eeac7ecbb87a3847e88fafa0b738386:
+
+#define CAL_DevGetSessionUser pfDevGetSessionUser
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga58a4a997ec6607303f1e70972cf55c02:
+
+#define CHK_DevGetSessionUser (pfDevGetSessionUser != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga783070c696a762d27cd94bb09d43a32d:
+
+#define EXP_DevGetSessionUser s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetSessionUser", (RTS_UINTPTR) :ref:`DevGetSessionUser <group___cmp_device_itf_1ga6b6a2121a2c903d3d24663e8afed5bc3>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga990f9181f25130bb6afa4f60fb717ee7:
+
+#define USE_DevGetSessionAuthType :ref:`PFDEVGETSESSIONAUTHTYPE <group___cmp_device_itf_1ga91a6b113cf061fc0ae7e7e0d740e9dec>` pfDevGetSessionAuthType;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga16c590f27107b3d7a57ac8761375ed5c:
+
+#define EXT_DevGetSessionAuthType extern :ref:`PFDEVGETSESSIONAUTHTYPE <group___cmp_device_itf_1ga91a6b113cf061fc0ae7e7e0d740e9dec>` pfDevGetSessionAuthType;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga106b9f98262a934983497ea6556d0a9f:
+
+#define GET_DevGetSessionAuthType s_pfCMGetAPI2( "DevGetSessionAuthType", (RTS_VOID_FCTPTR *)&pfDevGetSessionAuthType, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga8ac4f4e7669671c88e7dc536f33e12ec:
+
+#define CAL_DevGetSessionAuthType pfDevGetSessionAuthType
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gac2252910f6f716c8dcee64780d0f7cb9:
+
+#define CHK_DevGetSessionAuthType (pfDevGetSessionAuthType != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga4b5a194b936c0bee7c0eee7358c04296:
+
+#define EXP_DevGetSessionAuthType s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetSessionAuthType", (RTS_UINTPTR) :ref:`DevGetSessionAuthType <group___cmp_device_itf_1ga7b088b1e8c9c7131297fe9c04470666e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga85bcbcaa2df9182004f4b1169cdc83d3:
+
+#define USE_DevGetSessionFlags :ref:`PFDEVGETSESSIONFLAGS <group___cmp_device_itf_1ga60002bcd53e4f98a7f31336f8c6aba13>` pfDevGetSessionFlags;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga0fc42c8e559bbdb63b0100e0d050edba:
+
+#define EXT_DevGetSessionFlags extern :ref:`PFDEVGETSESSIONFLAGS <group___cmp_device_itf_1ga60002bcd53e4f98a7f31336f8c6aba13>` pfDevGetSessionFlags;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gaed2a8a45583b9228211ac7e64edc52d7:
+
+#define GET_DevGetSessionFlags s_pfCMGetAPI2( "DevGetSessionFlags", (RTS_VOID_FCTPTR *)&pfDevGetSessionFlags, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga41d1e7aee95c12a9f4c21233c1bb1934:
+
+#define CAL_DevGetSessionFlags pfDevGetSessionFlags
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga43f544d00392c203769aaaa4552d14e8:
+
+#define CHK_DevGetSessionFlags (pfDevGetSessionFlags != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gae4ad8b71f550aa5fff75958c1f7540b4:
+
+#define EXP_DevGetSessionFlags s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetSessionFlags", (RTS_UINTPTR) :ref:`DevGetSessionFlags <group___cmp_device_itf_1ga2749a6bdc512ab3e18e0b30bf3cea9b3>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gadee9db7c8cee6ee642bc2a4fab904bb4:
+
+#define USE_DevIsValidRequest :ref:`PFDEVISVALIDREQUEST <group___cmp_device_itf_1ga6a607e9882c1bba3d94343355543bbef>` pfDevIsValidRequest;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gafdc6ec96e206b127efbed15c00ad4f1f:
+
+#define EXT_DevIsValidRequest extern :ref:`PFDEVISVALIDREQUEST <group___cmp_device_itf_1ga6a607e9882c1bba3d94343355543bbef>` pfDevIsValidRequest;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gaf77acf873da3bdd234ddff41ad106de6:
+
+#define GET_DevIsValidRequest s_pfCMGetAPI2( "DevIsValidRequest", (RTS_VOID_FCTPTR *)&pfDevIsValidRequest, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gaee6c11ec5e6ef1edb0a7dca1ea4fe84a:
+
+#define CAL_DevIsValidRequest pfDevIsValidRequest
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga9c187653e14c558e56290b2bd862dc69:
+
+#define CHK_DevIsValidRequest (pfDevIsValidRequest != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga666c7bbd7e6a13e51670fced45207a92:
+
+#define EXP_DevIsValidRequest s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevIsValidRequest", (RTS_UINTPTR) :ref:`DevIsValidRequest <group___cmp_device_itf_1gaeebf4a3f354b6c4293ad27314b525ba6>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gaf7fc89f072a670a82c8d70926ce8e38c:
+
+#define USE_DevResetOrigin :ref:`PFDEVRESETORIGIN <group___cmp_device_itf_1gada6db8c03258aba5fc3b20aec9ee9d34>` pfDevResetOrigin;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga2128b05af51d25388536c4d91ca2424f:
+
+#define EXT_DevResetOrigin extern :ref:`PFDEVRESETORIGIN <group___cmp_device_itf_1gada6db8c03258aba5fc3b20aec9ee9d34>` pfDevResetOrigin;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga61cf19774b75ee07c3d4b5c1cc93abba:
+
+#define GET_DevResetOrigin s_pfCMGetAPI2( "DevResetOrigin", (RTS_VOID_FCTPTR *)&pfDevResetOrigin, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga9a98eb6a1078270fef8bcf844fcaee4e:
+
+#define CAL_DevResetOrigin pfDevResetOrigin
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga111f2f400247c78a951958c009a80d0e:
+
+#define CHK_DevResetOrigin (pfDevResetOrigin != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga7a4637360b4d424ebf188d263203bc44:
+
+#define EXP_DevResetOrigin s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevResetOrigin", (RTS_UINTPTR) :ref:`DevResetOrigin <group___cmp_device_itf_1gad4b80db094b020326925f45f437d378a>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga858f9854794c9e825feff0e042c969dd:
+
+#define USE_DevResetOriginGetConfig :ref:`PFDEVRESETORIGINGETCONFIG <group___cmp_device_itf_1gafa65466359610f73ae49910d5db06f38>` pfDevResetOriginGetConfig;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gae4e6e7b9ecb6610d6dbf1e2c1ed155b6:
+
+#define EXT_DevResetOriginGetConfig extern :ref:`PFDEVRESETORIGINGETCONFIG <group___cmp_device_itf_1gafa65466359610f73ae49910d5db06f38>` pfDevResetOriginGetConfig;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gab13ae6369e6610eec3d29168efd29739:
+
+#define GET_DevResetOriginGetConfig s_pfCMGetAPI2( "DevResetOriginGetConfig", (RTS_VOID_FCTPTR *)&pfDevResetOriginGetConfig, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga0acb6e1cebb24f7cc41a05314503f3d9:
+
+#define CAL_DevResetOriginGetConfig pfDevResetOriginGetConfig
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga5338382f3785a06279fc26c3199dcc41:
+
+#define CHK_DevResetOriginGetConfig (pfDevResetOriginGetConfig != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga0c6cf83022b84ca42c00adfb001986af:
+
+#define EXP_DevResetOriginGetConfig s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevResetOriginGetConfig", (RTS_UINTPTR) :ref:`DevResetOriginGetConfig <group___cmp_device_itf_1ga0ecec541d502361695d4bcbafeab380e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gac5d20fb8566ac06e86ba607e73175f34:
+
+#define ITF_CmpDevice
+^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gaeea2cebbbd0315af60ed3cd8a021abdc:
+
+#define EXTITF_CmpDevice
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_device_itf_1ga874a05966636d08e3dd2300066006430:
+
+typedef RTS_RESULT( *  PFDEVGETIDENT) (DeviceIdentification *pDevIdent)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gab2dc397ec30519f673b0b0e4fc17e3d6:
+
+typedef RTS_RESULT( *  PFDEVCHECKTARGETIDENT) (TargetIdent *pTargetIdentReq, TargetIdent *pTargetIdent)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga3d0523aca8e07219e8dbe44b7bb33f34:
+
+typedef RTS_RESULT( *  PFDEVSETOPERATIONMODE) (RTS_UI32 ui32OperationMode, CMPID *pCmpIdDisabled)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga97766b1af6d9ff29f3f6e8c0410a371f:
+
+typedef RTS_RESULT( *  PFDEVGETOPERATIONMODE) (RTS_UI32 *pui32OperationMode)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga81d0aa13d40c29b190bec02b698294ef:
+
+typedef RTS_RESULT( *  PFDEVGETSESSIONID) (RTS_UI32 ulChannelHandle, RTS_UI32 *pulSessionId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga7460af1c2a1cdea783ea28df779b4e66:
+
+typedef RTS_HANDLE( *  PFDEVGETSESSIONUSER) (RTS_UI32 ui32SessionId, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga91a6b113cf061fc0ae7e7e0d740e9dec:
+
+typedef RTS_UI32( *  PFDEVGETSESSIONAUTHTYPE) (RTS_UI32 ui32SessionId, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga60002bcd53e4f98a7f31336f8c6aba13:
+
+typedef RTS_UI32( *  PFDEVGETSESSIONFLAGS) (RTS_UI32 ui32SessionId, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1ga6a607e9882c1bba3d94343355543bbef:
+
+typedef RTS_RESULT( *  PFDEVISVALIDREQUEST) (RTS_UI32 ulChannelHandle, HEADER_TAG_EXT *pHeaderTag, PROTOCOL_DATA_UNIT *pPduReply)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gada6db8c03258aba5fc3b20aec9ee9d34:
+
+typedef RTS_RESULT( *  PFDEVRESETORIGIN) (RTS_HANDLE hUser, RTS_UI32 ui32ResetOriginConfig, RTS_UI32 *pui32ResetOriginResults)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gafa65466359610f73ae49910d5db06f38:
+
+typedef RTS_RESULT( *  PFDEVRESETORIGINGETCONFIG) (RTS_HANDLE hUser, RTS_UI32 *pui32ResetOriginConfigOptions, RTS_UI32 *pui32ResetOriginConfigRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_device_itf_1gaa258f9635c2734d26d8b1401f85b40d1:
+
+typedef ICmpDevice_C ICmpDevice
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_device_itf_1ga7e038012152c3ae365e69a885947f614:
+
+RTS_RESULT DevGetIdent (DeviceIdentification *pDevIdent)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieves the target identification
+
+**Parameters**
+
++---------+-----------+-----------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pDevIdent | Pointer to identification. Is filled by the function. If string pointer are NULL, the real size of the strings is returned. |
++---------+-----------+-----------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_device_itf_1gaf0f698f604236df7b31a3111690d680c:
+
+RTS_RESULT DevCheckTargetIdent (TargetIdent *pTargetIdentReq, TargetIdent *pTargetIdent)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Checks the compatibility between a requested identification and the target identification
+
+**Parameters**
+
++---------+-----------------+-----------------------------------------------------------------------------------+
+| [in]    | pTargetIdentReq | Requested target identification to check. Must not be NULL!                       |
++---------+-----------------+-----------------------------------------------------------------------------------+
+| [in]    | pTargetIdent    | Own target identity. Can be NULL, then the built in target identification is used |
++---------+-----------------+-----------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++----------------------+--------------------------------------------+
+| ERR_OK               | Target identifications matched             |
++----------------------+--------------------------------------------+
+| ERR_PARAMETER        | pTargetIdentReq is NULL                    |
++----------------------+--------------------------------------------+
+| ERR_TYPE_MISMATCH    | Type mismatch                              |
++----------------------+--------------------------------------------+
+| ERR_ID_MISMATCH      | ID mismatch                                |
++----------------------+--------------------------------------------+
+| ERR_VERSION_MISMATCH | Version mismatch. Versions not compatible! |
++----------------------+--------------------------------------------+
+
+.. _group___cmp_device_itf_1gaa0cf71c2add8bce1463fd231501212bb:
+
+RTS_RESULT DevSetOperationMode (RTS_UI32 ui32OperationMode, CMPID *pCmpIdDisabled)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to set the operation mode of the device. Usually this is called by an online service, received from the development system. Switching to the new operation mode may be denied by another component.
+
+**Returns:**
+
+  - ERR_OK: New operation mode was successfully set
+
+  - ERR_OPERATION_DENIED: The component returned in pCmpIdDisabled has denied the new operation mode
+
+  - ERR_FAILED: Operation mode could not be set because of another error Pointer to ComponentID to get the component, which disabled the operation. Can be NULL.
+
+.. _group___cmp_device_itf_1ga755258387b6981d8e151b4cfe0182350:
+
+RTS_RESULT DevGetOperationMode (RTS_UI32 *pui32OperationMode)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to get the current operation mode of the device.
+
+**Returns:**
+
+  - ERR_OK: Current operation mode was returned in pui32Operation. See category Device operation mode for possible values.
+
+  - ERR_PARAMETER: pui32Operation was a pointer to NULL.
+
+.. _group___cmp_device_itf_1gac59c464cacd0ed223fc678d838e4d6b2:
+
+RTS_RESULT DevGetSessionId (RTS_UI32 ulChannelHandle, RTS_UI32 *pulSessionId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieves the stored session id from the first session instance assigned to this channel.
+
+**Parameters**
+
++---------+-----------------+------------------------------------------------------------+
+| [in]    | ulChannelHandle | Id of the channel for which the session id should be read. |
++---------+-----------------+------------------------------------------------------------+
+| [out]   | pulSessionId    | Pointer to return the session id.                          |
++---------+-----------------+------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_device_itf_1ga6b6a2121a2c903d3d24663e8afed5bc3:
+
+RTS_HANDLE DevGetSessionUser (RTS_UI32 ui32SessionId, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieves the user handle assigned to the session.
+
+**Parameters**
+
++---------+---------------+-----------------------------------------------------+
+| [in]    | ui32SessionId | Session id of which the user handle should be read. |
++---------+---------------+-----------------------------------------------------+
+| [out]   | pResult       | Pointer to error code                               |
++---------+---------------+-----------------------------------------------------+
+
+**Return values**
+
++--------------------+-------------------------------------------+
+| ERR_OK             | User is available                         |
++--------------------+-------------------------------------------+
+| ERR_NOTINITIALIZED | The session management is not initialized |
++--------------------+-------------------------------------------+
+| ERR_NO_OBJECT      | The session is not available              |
++--------------------+-------------------------------------------+
+
+**Returns:**
+
+Handle of the user or RTS_INVALID_HANDLE if not available
+
+.. _group___cmp_device_itf_1ga7b088b1e8c9c7131297fe9c04470666e:
+
+RTS_UI32 DevGetSessionAuthType (RTS_UI32 ui32SessionId, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieves the authentication type used for the session.
+
+**Parameters**
+
++---------+---------------+-------------------------------------------------------------+
+| [in]    | ui32SessionId | Session id of which the authentication type should be read. |
++---------+---------------+-------------------------------------------------------------+
+| [out]   | pResult       | Pointer to error code                                       |
++---------+---------------+-------------------------------------------------------------+
+
+**Return values**
+
++--------------------+-------------------------------------------+
+| ERR_OK             | Authentication type was read successfully |
++--------------------+-------------------------------------------+
+| ERR_NOTINITIALIZED | The session management is not initialized |
++--------------------+-------------------------------------------+
+| ERR_NO_OBJECT      | The session is not available              |
++--------------------+-------------------------------------------+
+
+**Returns:**
+
+Crypt type (see CmpUserMgrItf) or USERMGR_CRYPT_INVALID if not available
+
+.. _group___cmp_device_itf_1ga2749a6bdc512ab3e18e0b30bf3cea9b3:
+
+RTS_UI32 DevGetSessionFlags (RTS_UI32 ui32SessionId, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieves the specific flags describing the session.
+
+**Parameters**
+
++---------+---------------+-------------------------------------------------------+
+| [in]    | ui32SessionId | Session id of which the session flags should be read. |
++---------+---------------+-------------------------------------------------------+
+| [out]   | pResult       | Pointer to error code                                 |
++---------+---------------+-------------------------------------------------------+
+
+**Return values**
+
++--------------------+-------------------------------------------+
+| ERR_OK             | Flags were read successfully              |
++--------------------+-------------------------------------------+
+| ERR_NOTINITIALIZED | The session management is not initialized |
++--------------------+-------------------------------------------+
+| ERR_NO_OBJECT      | The session is not available              |
++--------------------+-------------------------------------------+
+
+**Returns:**
+
+Session flags
+
+.. _group___cmp_device_itf_1gaeebf4a3f354b6c4293ad27314b525ba6:
+
+RTS_RESULT DevIsValidRequest (RTS_UI32 ulChannelHandle, HEADER_TAG_EXT *pHeaderTag, PROTOCOL_DATA_UNIT *pPduReply)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Checks if a request is valid.
+
+**Parameters**
+
++---------+-----------------+------------------------------------------------------+
+| [in]    | ulChannelHandle | Id of the channel on which the request was received. |
++---------+-----------------+------------------------------------------------------+
+| [in]    | pHeaderTag      | Pointer to the header of the request to check.       |
++---------+-----------------+------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_device_itf_1gad4b80db094b020326925f45f437d378a:
+
+RTS_RESULT DevResetOrigin (RTS_HANDLE hUser, RTS_UI32 ui32ResetOriginConfig, RTS_UI32 *pui32ResetOriginResults)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Reset origin device. Only supported if CmpEventMgr is available.
+
+**Parameters**
+
++---------+-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hUser                   | User handle of the current user.                                                                                                                             |
++---------+-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ui32ResetOriginConfig   | Configuration bit vector. See category "Reset Origin Configuration".                                                                                         |
++---------+-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pui32ResetOriginResults | Optional: pointer to the bit vector indicating the results for the requested configuration (bit=1: error deleting the corresponding object, bit=0: success). |
++---------+-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+  - ERR_OK: Reset origin device successful
+
+  - ERR_FAILED: At least one object could not be deleted. Check pui32Results for more information.
+
+.. _group___cmp_device_itf_1ga0ecec541d502361695d4bcbafeab380e:
+
+RTS_RESULT DevResetOriginGetConfig (RTS_HANDLE hUser, RTS_UI32 *pui32ResetOriginConfigOptions, RTS_UI32 *pui32ResetOriginConfigRights)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get configuration for reset origin device. Returns the bit vector for objects that are handled by the reset and the corresponding rights for the specified user.
+
+**Parameters**
+
++---------+-------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hUser                         | User handle of the current user.                                                                                                                                                                                                                                                                       |
++---------+-------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pui32ResetOriginConfigOptions | Required: Pointer to the Configuration bit vector representing the possible objects that are handled. See category "Reset Origin Configuration".                                                                                                                                                       |
++---------+-------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pui32ResetOriginConfigRights  | Optional: pointer to the bit vector indicating the access rights for the specified user to delete the objects represented in pui32ResetOriginConfigOptions (bit=0: the current user is allowed to delete the corresponding object, bit=1: the user is not allowed to delete the corresponding object). |
++---------+-------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+  - ERR_OK: Configuration retrieved successfully
+
+  - ERR_PARAMETER: pui32ResetOriginConfigOptions is NULL
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -34,7 +34,7 @@
 #endif /* BMPPOOL_VALUE_CONTENTFILE_IPC_DEFAULT */
 
 #ifndef BMPPOOL_VALUE_CONTENTFILE_IPC_DEFAULT_EXTENSION
-	/* tmb was chosen (instead of possibly tmp) to be able to distinguis between the temporary files used in the filetransfer and
+	/* tmb was chosen (instead of possibly tmp) to be able to distinguish between the temporary files used in the file transfer and
 		this temporary file */
 	#define BMPPOOL_VALUE_CONTENTFILE_IPC_DEFAULT_EXTENSION ".tmb"			
 #endif /* BMPPOOL_VALUE_CONTENTFILE_IPC_DEFAULT_EXTENSION */
@@ -65,7 +65,7 @@ extern "C" {
 #endif
 
 /**
- * <description> Add a bitmap pool entry from plc program</description>
+ * <description> Add a bitmap pool entry from PLC program</description>
  * <param name="pEntry" type="IN">Pointer to entry structure</param>
  * <result></result>
  */
@@ -117,7 +117,7 @@ typedef void (CDECL CDECL_EXT* PFBMPPOOLREGISTER_IEC) (bitmappoolregister_struct
 
 
 /**
- * <description> Remove a bitmap pool entry from plc program</description>
+ * <description> Remove a bitmap pool entry from PLC program</description>
  * <param name="pEntry" type="IN">Pointer to entry structure</param>
  * <result></result>
  */

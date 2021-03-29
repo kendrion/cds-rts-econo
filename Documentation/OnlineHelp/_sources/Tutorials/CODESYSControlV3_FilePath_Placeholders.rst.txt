@@ -1,0 +1,814 @@
+.. _tutorial_filepath_and_placeholders:
+
+=======================================
+CODESYS Control Filepath & Placeholders
+=======================================
+
+.. contents::
+   :local:
+   :depth: 1
+
+.. _filepath_placeholders_introduction:
+
+Introduction
+============
+
+Accessing files on a PLC can be done online via services and is usable in the file transfer UI within CODESYS or programmatically with methods of the PLCHandler. From an IEC program file-access-libraries are provided like CAA File or SysFile/SysDir. Components of the Runtime system usually written in C/C++ use the SysFile/SysDir interface functions.
+
+In order to control the entire file access, path configurations (FilePath and Placeholders) and `Security Settings <security_settings_>`_ are provided.
+
+FilePath and Placeholders are introduced with the runtime system of CODESYS V3.5 SP8. The general intention of this feature is to group and redirect files on the PLC and completely separate them from runtime sytem kernel files.
+
+With the `"FilePath" <FilePath_>`_ setting the standard path for file access of the runtime system may be changed from its default, the execution directory. Individual files without any paths can be redirected to other paths or folders with their full filename or a group of files with wildcards.
+`Placeholders`_ are virtual folders to group files or to access files outside of the standard path.
+In addition this feature is a requirement for the new `Backup&Restore`_ feature.
+
+In the following chapter special `Use Cases`_ are discussed. Frequently asked questions are answered in the `FAQ`_ chapter. For further detail a `Technical Reference <technical_reference_>`_ chapter is provided.
+
+In the standard runtime system the configuration of filepaths and placeholders is done in the file "CODESYSControl.cfg" in the section [SysFile]. An empty section means that there are no filepaths but placeholders are  implicitly configured, see `Implicit configuration`_.
+
+All configured paths are checked at startup of the runtime system and created if necessary, except for placeholders which are configured as `".Volatile" <volatile_option_>`_ or `".CreateOnWrite" <createonwrite_option_>`_.
+
+.. important:: You have to keep in mind that paths are handled case sensitive on all platforms. It is highly recommended to use a slash (not a backslash) as folder separator on all systems.
+
+
+_`Use Cases`
+============
+
+How to redirect all files to a dedicated folder or drive
+--------------------------------------------------------
+Configure the following setting to change the standard path:
+
+.. code-block:: ini
+
+	[SysFile]
+	FilePath=/myfiles
+
+In the example all files (files that are accessed via SysFile or CAA File interface functions) are redirected to "/myfiles". Visu files are implicitly redirected into a subdirectory of the standard path when using the old folder structure. In this case visu files are redirected to "/myfiles/visu".
+
+
+How to redirect application related files
+-----------------------------------------
+Using the old flat folder structure, configure:
+
+.. code-block:: ini
+
+	[SysFile]
+	FilePath.1=/myplc/myapp,  *.app, *.crc, *.ret
+
+With the old behavior wildcards for application related files still work with V3.5 SP8 and later. The files in the example are explicitly redirected to "/myplc/myapp".
+
+With the `new folder structure <New folder structure via PlcLogicPrefix_>`_ wildcards for application related files are obsolet, because these files are prefixed with the `PlcLogicPrefix <plclogicprefix_setting_>`_, i.e., "$PlcLogic$/<application name>". With the following configuration
+
+.. code-block:: ini
+
+	[SysFile]
+	PlcLogicPrefix=1
+	PlaceholderFilePath=/myplc, $PlcLogic$" 
+
+application related files are redirected to "/myplc/Application", assuming that the application is named "Application".
+
+.. note:: With this configuration the whole new folder structure under "$PlcLogic$" is redirected to "/myplc". Single subfolders like "$visu$" may be redirected to a different folder additionally, see `New folder structure via PlcLogicPrefix`_.
+
+
+How to use a combination of "FilePath" and "PlaceholderFilePath"
+----------------------------------------------------------------
+Let's start with the redirection of the standard path to "/myfiles" and an explicit placeholder for visu files:
+
+.. code-block:: ini
+
+	[SysFile]
+	FilePath=/myfiles
+	PlaceholderFilePath=visu, $visu$
+
+In this case we have an absolute standard path for all files and additionally a relative path (i.e., a subdirectory) "visu" for the visu files (which is the default), which resolves to "/myfiles/visu" because of the "FilePath" setting.
+
+Changing the visu configuration to an absolute path looks like this:
+
+.. code-block:: ini
+
+	[SysFile]
+	FilePath=/myfiles
+	PlaceholderFilePath=/myvisu, $visu$
+
+In this case all visu files are redirected to "/myvisu" regardless of the absolute standard path for all other files.
+
+Using the new folder structure with the same configuration:
+
+.. code-block:: ini
+
+	[SysFile]
+	PlcLogicPrefix=1
+	FilePath=/myfiles
+	PlaceholderFilePath=/myvisu, $visu$
+
+In this case all visu files are redirected to "/myvisu" again regardless of the absolute standard path. But where all the other files go depends on their source:
+
+- trend and alarm files will go to "/myfiles/PlcLogic/trend" and "/myfiles/PlcLogic/alarms"
+- files from IEC will go to "/myfiles/PlcLogic"
+- application related files will go to "/myfiles/PlcLogic/Application", assuming that the application is named Application.
+
+On top of that using wildcards:
+
+.. code-block:: ini
+
+	[SysFile]
+	PlcLogicPrefix=1
+	FilePath=/myfiles
+	PlaceholderFilePath=/myvisu, $visu$
+	FilePath.1=texts, *.txt
+
+The same as above except for files that have no path and match with the "\*.txt" wildcard, they are redirected to "/myfiles/texts" because of the "FilePath" setting.
+
+Conclusion: With "FilePath" the whole file tree can be redirected to a dedicated folder. With "PlaceholderFilePath" one can redirect group of files, and relative filepaths or placeholders are prefixed with the "FilePath".
+
+For more information see `FilePath`_, `Placeholders`_, `PlcLogicPrefix <plclogicprefix_setting_>`_,  `New folder structure via PlcLogicPrefix`_.
+
+
+How to include a removable USB flash drive or memory card into the filetransfer dialog
+--------------------------------------------------------------------------------------
+Configure
+
+.. code-block:: ini
+
+	[SysFile]
+	PlaceholderFilePath.1=/mnt/USBDevice, $USBDev$
+	PlaceholderFilePath.1.Volatile=1
+	PlaceholderFilePath.1.View=1
+
+Since V3.5 SP6 the runtime system checks if this configured path exists. If it does it is displayed as "$USBDev$" placeholder in the filetransfer dialog. See placeholder option `".Volatile"`_ for details.
+
+
+How to access a file via placeholder from IEC
+---------------------------------------------
+Here is an example using the SysFile library. In IEC the '$' is an escape character. To use the '$' itself it has to be doubled:
+
+.. code-block:: codesys
+
+	VAR
+		Result : RTS_IEC_RESULT;
+		hFile : RTS_IEC_HANDLE;
+	END_VAR
+	
+	hFile := SysFileOpen('$$visu$$/test.bmp', ACCESS_MODE.AM_READ, ADR(Result));
+	IF (hFile <> RTS_INVALID_HANDLE) THEN
+		SysFileClose(hFile);
+	END_IF
+
+See `Placeholders`_ for details.
+
+
+How to redirect the (web) visu files to a larger storage device
+---------------------------------------------------------------
+Since V3.5 SP6 a "$visu$" placeholder is provided to achieve this:
+
+.. code-block:: ini
+
+	[SysFile]
+	PlaceholderFilePath.1=/mnt/larger_device/, $visu$
+
+but this setting is fixed, there is no possibility to change this setting on the fly or in dependency of the presence of a removable device.
+
+
+How to redirect the trend data base files to a large and fast storage device
+----------------------------------------------------------------------------
+A trend data base can grow very fast to a big file. To regard this one may configure:
+
+.. code-block:: ini
+
+	[SysFile]
+	PlaceholderFilePath.1=/mnt/fast_device/, $trend$
+
+Since V3.5 SP8 the trend data base uses the "$trend$" placeholder to access all its files. See `Known placeholders`_ for other predefined placeholders.
+
+
+How to redirect the alarms data base files to a secure and reliable storage device
+----------------------------------------------------------------------------------
+Configure
+
+.. code-block:: ini
+
+	[SysFile]
+	PlaceholderFilePath.1=/mnt/secure_device/, $alarms$
+
+Since V3.5 SP8 the alarms data base uses the "$alarms$" placeholder to access all its files. See `Known placeholders`_ for other predefined placeholders.
+
+
+.. _FilePath_3SDat:
+
+_`How to hide 3S.dat`
+---------------------
+Configure
+
+.. code-block:: ini
+
+	[SysFile]
+	FilePath.1=/hidden_path/, 3S.dat
+
+Since V3.5 SP8 an extra "IecFilePath.1=/hidden_path/, 3S.dat" to correctly access "3S.dat" from IEC is not necessary any more, because "3S.dat" is now only controlled by "FilePath". A configuration via "IecFilePath" for "3S.dat" will be ignored. See `"FilePath" <filepath_setting_>`_ for more information.
+
+
+_`How to access files that are redirected via wildcards` in the filetransfer dialog
+-----------------------------------------------------------------------------------
+There may be the following configuration:
+
+.. code-block:: ini
+
+	[SysFile]
+	FilePath.1=/Temp/Wildcards, *.txw
+
+To access these files via filetransfer and include them in the backup configure the following placeholder:
+
+.. code-block:: ini
+
+	PlaceholderFilePath.1.View=1
+	PlaceholderFilePath.1.VParent=$PlcLogic$
+	PlaceholderFilePath.1=/Temp/Wildcards, $Wildcards$
+
+With the option `".View=1" <view_option_>`_ the placeholder shows up in the filetransfer dialog. With the option `".VParent=$PlcLogic$" <vparent_option_>`_ the placeholder shows up additionally as child of the "$PlcLogic$" placeholder. 
+
+Every file that is accessible via filetransfer as a child of "$PlcLogic$" can be backed up with the already implemented `simple backup mode <Backup&Restore_>`_. On the other hand, any file that is not accessible via filetransfer can not be backed up.
+
+.. _tutorial_filepath_and_placeholders_exclude_files_from_transfer:
+
+_`How to exclude files from file(transfer) actions`
+---------------------------------------------------
+
+- Files and directories starting with a "." are hidden fo the filetransfer by default (e.g. ".UserDatabase.csv" or ".GroupDatabase.csv")!
+
+- Although configuration files may be viewable in the filetransfer dialog in CODEDSYS no online file accesss is possible on these files since V3.5 SP13. I.e. any read, write, delete, rename access is denied.
+
+- In addition, a component can blacklist a file of importance, then no online file access is possible as well.
+  Files can be hidden from filetransfer (see `How to hide 3S.dat`_).
+
+- File access to folders outside of the standard path is denied by default (see `ForceOnlineFilePath <forceonlinefilepath_setting_>`_) since V3.5 SP13.
+  See `Security Settings <security_settings_>`_ for more details.
+
+How to protect files from IEC access
+------------------------------------
+
+A component can blacklist a file of importance, i.e. no file access from IEC is possible. File access from IEC to folders outside of the standard path may be denied with the `ForceIecFilePath <forceiecfilepath_setting_>`_ setting. 
+See `Security Settings <security_settings_>`_ for more details.
+
+
+.. _security_settings:
+
+Security Settings
+=================
+
+To secure file access of the PLC there are several possibilities:
+
+- | `ForceFilePath <forcefilepath_setting_>`_/`ForceIecFilePath <forceiecfilepath_setting_>`_ with whitelist
+  | Sandbox setting for all file access or IEC only
+  | A whitelist is formed out of all configured paths (`FilePath`_ and `Placeholders`_).
+
+- | Blacklist (introduced with SP12)
+  | Components may register their files in a blacklist, i.e. access is denied from IEC and online so far (see SysFile interface description for details).
+
+- | `ForceOnlineFilePath <forceonlinefilepath_setting_>`_ with whitelist (introduced with SP13, active by default)
+  | Sandbox setting for online file access only
+  | A whitelist is formed out of all configured paths (`FilePath`_ and `Placeholders`_).
+
+- | `DenyOnlineAccessCfgFile <denyonlineaccesscfgfile_setting_>`_: Explicitly deny online access to configuration files (introduced with SP13, active by default)
+  | The startup configuration file and all configuration file references are protected against any file access via online services
+
+Introduced with V.3.5 SP13, and accompanied with Security Advisory 2018-04, file access via online services is put into a sandbox by default (`ForceOnlineFilePath <forceonlinefilepath_setting_>`_). This is the same behaviour as already available with `ForceFilePath <forcefilepath_setting_>`_ and `ForceIecFilePath <forceiecfilepath_setting_>`_:
+File access is allowed within the configured paths (sandbox) but access with an absolut path that is not in the whitelist of configured paths or a directory-traversal path (i.e. a path that contains "..") is denied.
+
+Another security aspect for online file access is the user rights management. Individual folder access rights may be determined in the file tree of the PLC in the Access Rights tab of the Device page.
+For more information see CODESYS Help Tab ‘Access Rights’.
+
+
+_`FAQ`
+======
+
+How does the runtime sytem resolve these new double placeholders?
+-----------------------------------------------------------------
+Since V3.5 SP8 the visu files for example are accessed with a double placeholder like "$PlcLogic$/$visu$/my.svg". The runtime system primarily resolves the first placeholder "$PlcLogic$". With this placeholder the whole PlcLogic tree can be redirected to another place than the default: a subdirectory of the execution folder. Next the second placeholder is resolved and it replaces the former one, i.e., the last placeholder wins. In the default configuration of the new folder structure the placeholders are resolved to corresponding subdirectories, i.e., "$PlcLogic$/$visu$/my.svg" is finally resolved to "PlcLogic/visu/my.svg".
+
+With this double-stage resolving of the "$PlcLogic$/$visu$" placeholder there is the possibility to redirect just the visu files with the "$visu$" placeholder or the whole PlcLogic tree with the "$PlcLogic$" placeholder.
+
+Given the following configuration:
+
+.. code-block:: ini
+
+	[SysFile]
+	PlcLogicPrefix=1
+	PlaceholderFilePath=/myplc, $PlcLogic$" 
+	PlaceholderFilePath.1=/myvisu, $visu$
+
+In this case we have the new folder structure and the first placeholder "$PlcLogic$" is resolved to "/myplc" but the "$visu$" placeholder is resolved to "/myvisu" and this replaces the former resolve. Therefore "$PlcLogic$/$visu$/my.svg" finally resolves to "/myvisu/my.svg".
+
+Regarding now the compatibility with the old flat folder structure with the double placeholder "$PlcLogic$/$visu$/my.svg": Primarily the first placeholder "$PlcLogic$" is resolved. But because the default configuration of the "$visu$" placeholder for the old flat folder structure is just "visu" the double placeholder is finally resolved to "visu/my.svg".
+
+
+What requirements are substantial for Backup&Restore?
+-----------------------------------------------------
+- First of all CODESYS and RTS must be at least of V3.5 SP8.
+- Then "PlcLogicPrefix=1" must be configured in the [SysFile] section (see `"PlcLogicPrefix" <plclogicprefix_setting_>`_).
+- To ensure that files that are redirected via wildcards are included in the backup, see `How to access files that are redirected via wildcards`_.
+- The device description must be updated at least to V3.5.80.
+- Then there should be a new tab "Backup and Restore" in the "Device" page.
+- To "Read backup information from device" there should be at least one application on the device.
+- It is recommended to set the device to STOP especially to backup data base files in a consistent state.
+
+See chapter `Backup&Restore`_ for more information.
+
+
+How can I reverse the implicit setting "IecFilePath=$PlcLogic$" without abandoning the new folder structure by setting "PlcLogicPrefix=-1"?
+-------------------------------------------------------------------------------------------------------------------------------------------
+First of all a note that this undermines the Backup&Restore feature for IEC files with that setting!
+
+With configuring "IecFilePath=" IecFilePath is set to the standard path ("IecFilePath=," works for this prior to CDS-46893, or V3.5 SP9 respectively).
+
+
+I forgot the placeholder markers "$" in my configuration, I configured "PlaceholderFilePath=hi, there", what gives?
+-------------------------------------------------------------------------------------------------------------------
+A folder "hi" will be created. A virtual folder "there" will show up in the "Device/Files" dialog with a normal yellowish folder icon but this virtual folder is not resolved to "hi" because it is not recognized as a placeholder and therefore points into the void. Going into that folder there is not even a ".." entry to go back. By copying a file into "there" an appropriate folder is created in the standard path. Then there are two entries named "there" in the "Device/Files" dialog: the physical one and the virtual one and both they lead to the physical one now. This is probably not the intention.
+
+
+.. _technical_reference:
+
+Technical Reference
+===================
+
+_`FilePath`
+-----------
+
+With the `"FilePath" <filepath_setting_>`_ setting it is possible to configure the standard path of the runtime system (as known as the runtime system root directory, not to be mistaken with the root directoy of the underlying file system). Individual files without any paths can be redirected to other paths or folders with their full filename or a group of files with wildcards to meet one's needs. This configuration can be done differently for C ("FilePath") and IEC ("IecFilePath") file access.
+
+These settings concern files and folders that are created and accessed via SysFile/SysDir or CAA File interface functions, except the files are accessed via an absolute path.
+
+If only "FilePath" is configured, file access from IEC falls back to the configuration of "FilePath". On the other hand if "IecFilePath" is configured only, the file access from C is not affected.
+When "IecFilePath" is set, there is no fallback to "Filepath" settings. In this case file access from IEC to specific files configured with FilePath is possible only when configured with IecFilePath too.
+e.g.:
+
+.. code-block:: ini
+
+	[SysFile]
+	FilePath=/ata0a/
+	IecFilePath=/ata0b/
+	FilePath.1=/ata0, test.txt
+	IecFilePath.1=/ata0, test.txt
+
+The last line is necessary when access from IEC is desired.
+An exception to this is the license file "3S.dat". Since V3.5 SP8 or CDS-35792 respectively, this file is resolved according to "FilePath" consistent from C as well as from IEC.
+
+.. important:: Since V3.5 SP8 and with PlcLogicPrefix=1 (see `"PlcLogicPrefix"`_) "IecFilePath" is implicitly set to "$PlcLogic$"!
+
+With the "Force" flags file access can be forced to stay inside the configured paths (like a sandbox). All configured paths form a whitelist of allowed paths, i.e., absolute paths that are not in the whitelist and directory-traversal paths (i.e. paths that contain "..") are prohibited then.
+
+
+Configuration
+~~~~~~~~~~~~~
+.. _filepath_setting:
+
+**"FilePath"**
+
+| type=String
+| Setting to configure the standard path for file access, for all filenames with no specified path or for directory access.
+| The setting has the following structure:
+
+.. code-block:: ini
+
+	FilePath=<directory path, relative or absolute>{[, filedesc]}
+
+A filedesc is either a filename or a wildcard to match a specific file extension, it is optional and may be repeated.
+
+Several file paths could be configured, if they were indexed, e.g.:
+
+.. code-block:: ini
+
+	[SysFile]
+	FilePath=/Temp/Default
+	FilePath.1=./Boot, *.app, *.ap_, *.ret, *.frc
+	FilePath.2=/Temp/Wildcards, *.txw
+	FilePath.3=/Temp/Wildcards, File7.txt
+
+In this case, files with special extensions or a special name could be separated into several directories. File extensions are specified with the wildcards '*'.
+
+.. note:: If the new folder structure is used (see `New folder structure via PlcLogicPrefix`_) these application related files of "FilePath.1" are now redirected to an application folder (prefixed with "$PlcLogic/<application>"), i.e., especially these wildcards are obsolete and won't work any more.
+
+.. note:: A double extension like \*.trace.csv hasn't matched at no time. 
+
+If only a path but no file wildcard or filename is specified, the standard path for all file or directory access is configured, e.g.:
+
+.. code-block:: ini
+
+	FilePath=/Temp/Default
+
+.. _forcefilepath_setting:
+
+**"ForceFilePath"**
+
+| *- Security setting -*
+| type=Int
+| default=0
+| Setting to put the PLC into a sandbox for file access, i.e. file access is only allowed inside the configured paths.
+
+.. note:: This setting controls all file access from C, from IEC and via online services.
+
+If an absolute or directory-traversal file path (i.e. a path that contains "..") is requested and this path is not a configured path an error is returned for this operation (ERR_OPERATION_DENIED).
+
+.. code-block:: ini
+
+	[SysFile]
+	FilePath=/Data/PlcSandbox
+	ForceFilePath=1
+
+In this configuration all file access to the PLC is allowed only inside of "/Data/PlcSandbox".
+
+.. _iecfilepath_setting:
+
+**"IecFilePath"**
+
+| type=String
+| Setting to configure the standard IEC path for file access, for all filenames with no specified path or for directory access.
+
+.. note:: THIS IS USED ONLY FOR ALL FILE ACCESS ROUTINES OUT OF THE IEC PROGRAM!
+
+Several file paths could be configured, if they were indexed, e.g.:
+
+.. code-block:: ini
+
+	[SysFile]
+	IecFilePath=/Temp/Default/IEC
+	IecFilePath.1=./Boot, *.app, *.ap_, *.ret, *.frc
+	IecFilePath.2=/Temp/Wildcards, *.txw
+	IecFilePath.3=/Temp/Wildcards, File7.txt
+
+In this case, files with special extensions or a special name could be separated into several directories. File extensions can be specified with the wildcards '*'.
+
+.. note:: If the new folder structure is used (see `New folder structure via PlcLogicPrefix`_) these application related files of "IecFilePath.1" are now redirected to an application folder (prefixed with "$PlcLogic/<application>"), i.e., especially these wildcards are obsolete and won't work any more.
+
+If only a path but no file wildcard or filename is specified, the standard path for all IEC file or directory access is configired, e.g.:
+
+.. code-block:: ini
+
+	IecFilePath=/Temp/Default/IEC
+
+.. note:: If the new folder structure is used "IecFilePath" is implicitly set to "$PlcLogic$" if not configured.
+
+.. _forceiecfilepath_setting:
+
+**"ForceIecFilePath"**
+
+| *- Security setting -*
+| type=Int
+| default=0
+| Setting to put the PLC into a sandbox for file access from IEC, i.e. file access is only allowed inside the configured paths.
+
+.. note:: This setting controls all file access from IEC but ForceFilePath (if set) dominates this setting.
+
+If an absolute or directory-traversal file path (i.e. a path that contains "..") is requested and this path is not a configured path an error is returned for this operation (ERR_OPERATION_DENIED).
+
+.. code-block:: ini
+
+	[SysFile]
+	PlcLogicPrefix=1
+	ForceIecFilePath=1
+
+In this configuration all file access to the PLC is allowed only inside of "$PlcLogic$", because "IecFilePath" is implicitly set to "$PlcLogic$" when "PlcLogicPrefix=1".
+
+.. _forceonlinefilepath_setting:
+
+**"ForceOnlineFilePath"**
+
+| *- Security setting -*
+| type=Int
+| default=1
+| Setting to put the PLC into a sandbox for online file access, i.e. file access is only allowed inside the configured paths.
+
+.. note:: This setting controls all online file access but ForceFilePath (if set) dominates this setting.
+
+If an absolute or directory-traversal file path (i.e. a path that contains "..") is requested and this path is not a configured path an error is returned for this operation (ERR_OPERATION_DENIED).
+
+To restore the old behaviour this setting may be configured as follows:
+
+.. code-block:: ini
+
+	[SysFile]
+	ForceOnlineFilePath=0
+
+BUT WE HIGHLY RECOMMEND, TO LEAVE THIS SETTING AT ITS DEFAULT VALUE! (see Security Advisory 2018-04)
+
+.. _denyonlineaccesscfgfile_setting:
+
+**"DenyOnlineAccessCfgFile"**
+
+| *- Security setting -*
+| type=Int
+| default=1
+| Setting to deny online file access to the configuration file and all its references.
+| If a configuration file is requested, an error is returned at this operation (ERR_OPERATION_DENIED).
+
+.. note:: This setting is independent of any Force settings.
+
+To restore the old behaviour this setting may be configured as follows:
+
+.. code-block:: ini
+
+	[SysFile]
+	DenyOnlineAccessCfgFile=0
+
+BUT WE HIGHLY RECOMMEND, TO LEAVE THIS SETTING AT ITS DEFAULT VALUE! (see Security Advisory 2018-04)
+
+
+_`Placeholders`
+---------------
+
+Placeholders are virtual folders to group files or to access files outside of the standard path (even if "ForceFilePath" is set). They are marked like "$Placeholder$", i.e., the name is enclosed in "$". This is mandatory to let the runtime system recognize the placeholder.
+
+.. important:: If a placeholder is used in a file path, its name must not contain any characters that are invalid for filenames such as slashes, backslashes, colons, asterisks, question marks and the like.
+
+Placeholders are resolved to their configured paths consistent from C and IEC. If a placeholder can't be resolved it is replaced by a folder with the placeholder's name. E.g. "$Placeholder$/filename.ext" is replaced with "Placeholder/filename.ext" if "$Placeholder$" is not configured.
+
+In IEC the '$' is an escape character. To use the '$' itself it has to be doubled:
+
+.. code-block:: codesys
+
+	hFile := SysFileOpen('$$visu$$/test.bmp', ACCESS_MODE.AM_READ, ADR(Result));
+
+
+Display of placeholders
+~~~~~~~~~~~~~~~~~~~~~~~
+In the "Device/Files" dialog (as known as filetransfer dialog) placeholders have an icon different to the normal yellowish folder icon (assuming the `".View" <view_option_>`_ option is set). Placeholders which lead to subdirectories inside the standard path are internally marked as redundant and their icon is a gray one. This regards to all the implicitly configured placeholders (see `Known placeholders`_, `Implicit configuration`_). On the other hand placeholders which are explicitly configured and lead to a different path or even to another device have a blue icon.
+
+All placeholders show up within the standard path, and if a virtual parent is configured they can be found inside their parent placeholder folder too - but not inside the corresponding physical folder. This regards to the implicitly configured placeholders for applicaton related files such as "$visu$", "$trend$ and the like (see `Known placeholders`_).
+
+In the "Device/Files" dialog placeholders can't be created, renamed or deleted. These options are disabled.
+
+Independant of the `".View" <view_option_>`_ option while opening a placeholder folder explicitly the placeholders inside are visible. This is important for the backup of the "$PlcLogic$" folder.
+
+In case the `".View" <view_option_>`_ option is not set, calling SysDirOpen("") and then SysDirRead() successively from IEC one doesn't get the placeholders even one is redirected to "$PlcLogic$" because the opening path is not a placeholder. To view the placeholders inside "$PlcLogic$" one have to call explicitly SysDirOpen("$$PlcLogic$$").
+
+
+Configuration
+~~~~~~~~~~~~~
+**"PlaceholderFilePath"**
+
+| type=String
+| Setting to configure a placeholder file path for file access. A placeholder is used like a relative path, but with special placeholder marks, e.g.: "$visu$/mainwindows.bmp"
+| The setting has the following structure:
+
+.. code-block:: ini
+
+	PlaceholderFilePath=<directory path, relative or absolute>, <placeholder>
+
+Example:
+
+.. code-block:: ini
+
+	[SysFile]
+	PlaceholderFilePath=/MyPlace/, $MyPlace$
+
+Several file paths could be configured, if they were indexed, e.g.:
+
+.. code-block:: ini
+
+	PlaceholderFilePath.1=visu/, $visu$
+
+.. note:: The trailing slash of the path is optional, it is added automatically.
+
+Placeholder options
+~~~~~~~~~~~~~~~~~~~
+.. _view_option:
+
+**".View"**
+
+| type=Int
+| Setting to make a single placeholder visible in the file transfer window. The default setting is 0 (invisible).
+| Example:
+
+.. code-block:: ini
+
+	[SysFile]
+	PlaceholderFilePath=/MyPlace/, $MyPlace$
+	PlaceholderFilePath.View=1
+
+**"PlaceholderFilePath.All.View"**
+
+| type=Int
+| Setting to make all placeholders visible in the file transfer window at once. The default setting is 0 (invisible).
+| A single placeholder can be hidden by setting its `".View" <view_option_>`_ option to 0.
+| Example:
+
+.. code-block:: ini
+
+	[SysFile]
+	PlaceholderFilePath=/MyPlace/, $MyPlace$
+	PlaceholderFilePath.1=visu/, $visu$
+	PlaceholderFilePath.2=/Temp, $Temp$
+	PlaceholderFilePath.All.View=1
+	PlaceholderFilePath.2.View=0
+
+In this example the placeholders "$MyPlace$" and "$visu$" are visible in the file transfer window while "$Temp$" is not. But all three placeholders are accessible e.g. from IEC.
+
+.. _volatile_option:
+
+**".Volatile"**
+
+| type=Int
+| Setting to mark a placeholder as volatile, i.e., the specified folder is not created automatically at startup and the placeholder is visible in the filetransfer window only when the folder exists. The default setting is 0 (not volatile).
+| This behavior is important for hot plug devices like USB flash drives. Therefore the configured path is not created on write access.
+| Example:
+
+.. code-block:: ini
+
+	[SysFile]
+	PlaceholderFilePath.2=/mnt/USBDevice, $USBDev$
+	PlaceholderFilePath.2.Volatile=1
+	PlaceholderFilePath.2.View=1
+
+.. note:: The `".View" <view_option_>`_ option is not implicitly set.
+
+.. _vparent_option:
+
+**".VParent"**
+
+| type=String
+| Setting to virtually connect a placeholder with a parent placeholder, i.e., in the filetransfer window this placeholder is reachable via its virtual parent placeholder additionally.
+| Example:
+
+.. code-block:: ini
+
+	[SysFile]
+	PlaceholderFilePath.1=/temp/oem, $oem$
+	PlaceholderFilePath.1.VParent=$PlcLogic$
+	PlaceholderFilePath.1.View=1
+
+The oem placeholder is virtually placed under "$PlcLogic$" but physically at /temp/oem.
+
+.. note:: The `".View" <view_option_>`_ option is not implicitly set.
+
+.. _createonwrite_option:
+
+**".CreateOnWrite"**
+
+| type=Int
+| Setting to mark a placeholder so that the specified folder is created when a file is to be written in that folder, the  folder is not created at startup, the placeholder is visible in the filetransfer window only when the folder exists. The default setting is 0 (create at startup).
+| Example:
+
+.. code-block:: ini
+
+	[SysFile]
+	PlaceholderFilePath.2=/Temp, $Temp$
+	PlaceholderFilePath.2.CreateOnWrite=1
+	PlaceholderFilePath.2.View=1
+
+.. note:: The `".View" <view_option_>`_ option is not implicitly set.
+
+
+_`Known placeholders`
+~~~~~~~~~~~~~~~~~~~~~
+| "$PlcLogic$"
+| "$visu$"
+| "$trend$"
+| "$alarms$"
+| "$ac_persistence$"
+| "$TBF$"
+| "$_cnc$"
+
+All these placeholders are configured implicitly at startup. And then they are created except "$TBF$" which has the ".CreateOnWrite" option set. Their path depends on the `"PlcLogicPrefix"`_ setting.
+
+
+_`New folder structure via PlcLogicPrefix`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _plclogicprefix_setting:
+
+**"PlcLogicPrefix"**
+
+| type=Int
+| Setting to configure the plc logic placeholder prefix that is used now by all application related files.
+
+-1 - old behaviour: no prefix and a flat file structure (default):
+
+	| [$PlcLogic$]
+	| [$visu$]
+	| [$_cnc$]
+	| all other known placeholders are set to the standard path
+
+0 - migration: starting with old behaviour (no prefix and a flat file structure), but "Reset Origin Device" or a startup with no bootproject will install the new folder structure and change that value to 1
+
+1 - new folder structure:
+
+	| [$PlcLogic$]
+	| + [<application>]
+	| + [$trend$]
+	| + [$alarms$]
+	| + [$ac_persistence$]
+	| + [$visu$]
+	| + [$_cnc$]
+
+With the new folder structure ...
+
+- file access from IEC is redirected to "$PlcLogic$". To achieve this "IecFilePath=$PlcLogic$" is implicitly set, if "IecFilePath" is not explicitly configured otherwise.
+- all application related files are prefixed with "$PlcLogic$/<application>", i.e., a redirection with wildcards (see `"FilePath" <filepath_setting_>`_) does not work for these files any more. Application related files are:
+
+	| - <application>.app
+	| - <application>.crc
+	| - <application>.ret
+	| - <application>.frc
+	| - <application>.xml
+	| - <application>.core
+	| - <application>.trace.csv
+
+- the new feature `Backup&Restore`_ is enabled.
+
+
+_`Implicit configuration`
+~~~~~~~~~~~~~~~~~~~~~~~~~
+If not configured otherwise the implicit file path configuration is as follows:
+
+.. code-block:: ini
+
+	[SysFile]
+	#if (PlcLogicPrefix==1)
+	IecFilePath=$PlcLogic$
+	PlaceholderFilePath=PlcLogic/, $PlcLogic$
+	PlaceholderFilePath.1=$PlcLogic$/visu/, $visu$
+	PlaceholderFilePath.1.VParent=$PlcLogic$
+	PlaceholderFilePath.2=$PlcLogic$/trend/, $trend$
+	PlaceholderFilePath.2.VParent=$PlcLogic$
+	PlaceholderFilePath.3=$PlcLogic$/alarms/, $alarms$
+	PlaceholderFilePath.3.VParent=$PlcLogic$
+	PlaceholderFilePath.4=$PlcLogic$/ac_persistence/, $ac_persistence$
+	PlaceholderFilePath.4.VParent=$PlcLogic$
+	PlaceholderFilePath.5=TBF/, $TBF$
+	PlaceholderFilePath.5.CreateOnWrite=1
+	PlaceholderFilePath.6=$PlcLogic$/_cnc/, $_cnc$
+	PlaceholderFilePath.6.VParent=$PlcLogic$
+	#else
+	IecFilePath=
+	PlaceholderFilePath=PlcLogic/, $PlcLogic$
+	PlaceholderFilePath.1=visu/, $visu$
+	PlaceholderFilePath.2=, $trend$
+	PlaceholderFilePath.3=, $alarms$
+	PlaceholderFilePath.4=, $ac_persistence$
+	PlaceholderFilePath.5=TBF/, $TBF$
+	PlaceholderFilePath.5.CreateOnWrite=1
+	PlaceholderFilePath.6=_cnc/, $_cnc$
+	#endif
+
+An extra Placeholder "$IecFilePath$" is added with the path of "IecFilePath" in order to ensure access to IEC files via file transfer.
+Prior to CODESYS V3.5 SP10 this placeholder was only available, when "IecFilePath" was set explicitely in the configuration file.
+
+Individual known placeholders may be explicitly configured which override the single implicit setting such as:
+
+.. code-block:: ini
+
+	[SysFile]
+	PlaceholderFilePath=/mnt/slow_device/, $PlcLogic$
+	PlaceholderFilePath.1=/mnt/fast_device/, $trend$
+	PlaceholderFilePath.2=/mnt/secure_device/, $alarms$
+
+The above listed implicit ".VParent" setting will be preserved until not otherwise configured. E.g.:
+
+.. code-block:: ini
+
+	PlaceholderFilePath.3=/somewhere/, $_cnc$
+	PlaceholderFilePath.3.VParent=
+
+In this case the placeholder "$_cnc$" is no longer found under "$PlcLogic$" but in the standard path only.
+
+As shown in the examples the explicitly configired placeholders use their own consecutive numbering. There is no need to match with the numbering of the implicit configuration.
+
+
+_`Backup&Restore`
+=================
+
+The new feature of V3.5 SP8 "Backup&Restore of application related files" has the aim to backup and restore all files an application deals with, i.e., the application itself and all files it reads or writes, such as visu files, data base files, the retain variable file, all files accessed via IEC.
+
+To bundle all these files a new folder and file structure is introduced:
+
+::
+
+	[$PlcLogic$]
+	+ [<applicaton>]
+	  - <application>.app
+	  - <application>.crc
+	  - <application>.ret
+	  - <application>.frc
+	  - <application>.xml
+	  - <application>.core
+	  - <application>.trace.csv
+	- <files created out of IEC>
+	- IoConfig.par
+	+ [$trend$]
+	+ [$alarms$]
+	+ [$ac_persistence$]
+	+ [$visu$]
+	[$TBF$]
+
+To switch to this new folder and file structure "PlcLogicPrefix=1" must be configured in the [SysFile] section (see `"PlcLogicPrefix" <plclogicprefix_setting_>`_).
+
+With the simple mode implemented in V3.5 SP8 CODESYS fetches the contents of the "$PlcLogic$" folder and all its subfolders (either physical or virtual, except the redundant ones) via file transter from the RTS. The files are then put into an archive with a .tbf extension. TBF stands for Target Backup File. The restore of all the application related files works vice versa. Backup and restore of the complete runtime system will be provided in the future within CDS-45479.
+
+A special treatment is done to retains which are written to a file by the RTS just before the backup information is given to CODESYS.
+
+Datebase files may be not consistent when the RTS is not in STOP.
+
+The folder "$TBF$" is considered to hold backup archives on the RTS file system and CODESYS looks there and displays these archives as a choice to restore from. This folder is not created by the RTS at startup but only when an archive is stored in there.
+
+This chapter is just a short summary of this new feature. A separate documentation will be provided in the future with CDS-44812.
+

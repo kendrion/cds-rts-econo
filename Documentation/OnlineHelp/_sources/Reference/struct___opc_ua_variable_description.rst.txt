@@ -1,0 +1,125 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of struct.rst template
+
+.. _struct___opc_ua_variable_description:
+
+==========================================
+_OpcUaVariableDescription Struct Reference
+==========================================
+
+| #include ":ref:`CmpOPCUAServerItf.h <_cmp_o_p_c_u_a_server_itf_8h>`"
+
+Data Fields
+-----------
+
+- OpcUa_Boolean :ref:`bValueAvailable <group___cmp_o_p_c_u_a_server_itf_1ga4f41ad825ea316727fe2b8fb394a0147>`
+- OpcUa_Variant :ref:`value <group___cmp_o_p_c_u_a_server_itf_1ga76753536d943491123fea4e04a745e69>`
+- OpcUa_NodeId :ref:`dataType <group___cmp_o_p_c_u_a_server_itf_1ga2fcf4facfac37f29874dd4a736dc1dbc>`
+- OpcUa_Int32 :ref:`i32ValueRank <group___cmp_o_p_c_u_a_server_itf_1ga57391ae292b70e72276bcabfb1f1c08c>`
+- OpcUa_Byte :ref:`accessLevel <group___cmp_o_p_c_u_a_server_itf_1gab6c3d72d0838e08bb2c074308a7dff9e>`
+- OpcUa_Byte :ref:`useraccesslevel <group___cmp_o_p_c_u_a_server_itf_1ga10c350c5d1b6de72189ef899822acc36>`
+- OpcUa_Boolean :ref:`historizing <group___cmp_o_p_c_u_a_server_itf_1ga0ab934fc492e6bed7a57115b17788b36>`
+- OpcUa_Boolean :ref:`bArrayDimensionSet <group___cmp_o_p_c_u_a_server_itf_1gaf2129f8b21276f1a09d5ee5c6c1325e9>`
+- OpcUa_Variant :ref:`arrayDimensions <group___cmp_o_p_c_u_a_server_itf_1gaf1d468f3d0efbf0e14fe7d77d2eb9ba5>`
+- OpcUa_Boolean :ref:`bMinimumSamplingIntervalSet <group___cmp_o_p_c_u_a_server_itf_1gaa5a4dc41f1f094fb5e1d8dd91f6cea9a>`
+- OpcUa_Double :ref:`minimumSamplingInterval <group___cmp_o_p_c_u_a_server_itf_1ga3f7bebf9332f050ef1a01b605a090332>`
+
+Detailed Description
+--------------------
+
+Additional fields for nodes of NodeClass Variable.
+
+Field Documentation
+-------------------
+
+.. _group___cmp_o_p_c_u_a_server_itf_1ga4f41ad825ea316727fe2b8fb394a0147:
+
+OpcUa_Boolean _OpcUaVariableDescription::bValueAvailable
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Static value of the node. Flag if the value is set or not:
+
+  - If this value is OpcUa_True the read operation will be done by the server. This is useful for static values. Write access will be denied.
+
+  - If this value is OpcUa_False the OPC UA Server will call OpcUaProviderRead of the provider that has added this node. OpcUaProviderWrite to write this node.
+
+.. _group___cmp_o_p_c_u_a_server_itf_1ga76753536d943491123fea4e04a745e69:
+
+OpcUa_Variant _OpcUaVariableDescription::value
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_o_p_c_u_a_server_itf_1ga2fcf4facfac37f29874dd4a736dc1dbc:
+
+OpcUa_NodeId _OpcUaVariableDescription::dataType
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+NodeID of the data type node. Mandatory.
+
+.. _group___cmp_o_p_c_u_a_server_itf_1ga57391ae292b70e72276bcabfb1f1c08c:
+
+OpcUa_Int32 _OpcUaVariableDescription::i32ValueRank
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+ValueRank of the value. Mandatory.
+
+.. _group___cmp_o_p_c_u_a_server_itf_1gab6c3d72d0838e08bb2c074308a7dff9e:
+
+OpcUa_Byte _OpcUaVariableDescription::accessLevel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Access level of the node. If bValueAvailable == OpcUa_True this will be changed to CurrentRead. Mandatory.
+
+.. _group___cmp_o_p_c_u_a_server_itf_1ga10c350c5d1b6de72189ef899822acc36:
+
+OpcUa_Byte _OpcUaVariableDescription::useraccesslevel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Access level of the node with user rights taken into account. If pszObject is set the CmpUserMgr will be called to get the rights. Mandatory.
+
+.. _group___cmp_o_p_c_u_a_server_itf_1ga0ab934fc492e6bed7a57115b17788b36:
+
+OpcUa_Boolean _OpcUaVariableDescription::historizing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Flag if historicity is available. By now not supported by the OPC UA server. Mandatory.
+
+.. _group___cmp_o_p_c_u_a_server_itf_1gaf2129f8b21276f1a09d5ee5c6c1325e9:
+
+OpcUa_Boolean _OpcUaVariableDescription::bArrayDimensionSet
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Flag if the array dimension is set.
+
+.. _group___cmp_o_p_c_u_a_server_itf_1gaf1d468f3d0efbf0e14fe7d77d2eb9ba5:
+
+OpcUa_Variant _OpcUaVariableDescription::arrayDimensions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Description of the array dimensions. Mandatory if the ValueRank is not Scalar.
+
+.. _group___cmp_o_p_c_u_a_server_itf_1gaa5a4dc41f1f094fb5e1d8dd91f6cea9a:
+
+OpcUa_Boolean _OpcUaVariableDescription::bMinimumSamplingIntervalSet
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Flag if the minimum sampling interval is set.
+
+.. _group___cmp_o_p_c_u_a_server_itf_1ga3f7bebf9332f050ef1a01b605a090332:
+
+OpcUa_Double _OpcUaVariableDescription::minimumSamplingInterval
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Minimum sampling interval of this node.
+
+The documentation for this struct was generated from the following file:
+------------------------------------------------------------------------
+
+CmpOPCUAServerItf.h
+
+.. last line of struct.rst template
+.. last line of composition.rst template
+
+

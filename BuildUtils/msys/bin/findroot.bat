@@ -52,4 +52,4 @@ IF exist "..\..\..\..\..\..\..\CoDeSys-RT\%m4defspath%" set ppath="../../../../.
 IF NOT %ppath%=="" goto finish
 
 :finish
-echo Root path: %ppath%
+rem echo Root path: %ppath%

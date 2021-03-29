@@ -2,11 +2,11 @@
  * <interfacename>SysGraphic</interfacename>
  * <description> 
  *	<p>The SysGraphic interface is projected to get access to the graphic library routines
- *	of a system. This is the system interface typically for the CoDeSys target visualization.</p>
+ *	of a system. This is the system interface typically for the CODESYS target visualization.</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -44,7 +44,7 @@
 #define TF_AUTO_SHRINK_TEXT				0x00000010
 #define TF_CALCULATE_RESULTING_POSITION	0x00000020
 #define TF_DRAW_RELATIVE				0x00000040
-#define TF_ROTATE						0x00000080		/* The orientation of the textrectangle should be used for rotating the text */
+#define TF_ROTATE						0x00000080		/* The orientation of the text rectangle should be used for rotating the text */
 #define TF_LINEBREAK					0x00000100
 #define	TF_ELLIPSIS						0x00000200
 #define	TF_SAVE_PREVIOUS_POSITION		0x00000400		/* See comment of VISU_DTF_SAVE_PREVIOUS_POSITION in library VisuElemBase. */
@@ -53,12 +53,12 @@
 #define TF_DONT_MODIFY_TEXT_RECT		0x00002000		
 #define TF_BGELEM						0x80000000
 #define TF_WSTRING						0x40000000
-#define TF_MEASURE_ALL					0x00002000		/* Can be used for SysGraphicGetTextExtent: Whole text will be measured and not stopped at first linebreak. */
-#define TF_ANTIALIASING_INACTIVE		0x00004000		/* A special flag, used to deactivate the antialiasing feature temporarily */
+#define TF_MEASURE_ALL					0x00002000		/* Can be used for SysGraphicGetTextExtent: Whole text will be measured and not stopped at first line-break. */
+#define TF_ANTIALIASING_INACTIVE		0x00004000		/* A special flag, used to deactivate the anti-aliasing feature temporarily */
 
 /**
  * <category>Font style</category>
- * <description>Styleflags for fonts</description>
+ * <description>Style flags for fonts</description>
  */
 #define FF_ITALIC		0x0001
 #define FF_BOLD			0x0002
@@ -69,7 +69,7 @@
 
 /**
  * <category>Bitmap style</category>
- * <description>Styleflags that effect the drawing of images</description>
+ * <description>Style flags that effect the drawing of images</description>
  */
 #define BMPF_ISOTROPIC		0x00000001
 #define BMPF_ANISOTROPIC	0x00000002
@@ -93,7 +93,7 @@
 
 /**
  * <category>Pen style</category>
- * <description>Styleflags that effect the drawing of lines</description>
+ * <description>Style flags that effect the drawing of lines</description>
  */
 #define PF_SOLID			0 			/* pen is solid */
 #define PF_DASH				1			/* pen is dashed */
@@ -104,7 +104,7 @@
 
 /**
  * <category>Pen LineCapStyle</category>
- * <description>Styleflags that effect the linecap, means start and end of the line </description>
+ * <description>Style flags that effect the line-cap, means start and end of the line </description>
  */	
 #define CAPSTYLE_FLAT		0x0000	/* default-value: flat cap, like no setting */
 #define CAPSTYLE_SQUARE		0x0001  /* square cap, is added to the end of the line */
@@ -112,61 +112,73 @@
 
 /**
  * <category>Pen LineJoinStyle</category>
- * <description>Styleflags that effect the linejoin, means the corners of e.g. a polygon </description>
+ * <description>Style flags that effect the line join, means the corners of e.g. a polygon </description>
  */	
 #define LINEJOIN_MITER		0x0000	/* default-value: sharp line join */
-#define LINEJOIN_BEVEL		0x0001  /* flatened line join */
+#define LINEJOIN_BEVEL		0x0001  /* flattened line join */
 #define LINEJOIN_ROUND		0x0002  /* round line join */
 #define LINEJOIN_MITER_NEW	0x0003  /* new default-value */
 
 /**
  * <category>Brush style</category>
- * <description>Styleflags that effect the drawing of filled shapes</description>
+ * <description>Style flags that effect the drawing of filled shapes</description>
  */
 #define BF_SOLID		0x0000			/* a solid brush */
 #define BF_NULL			0x0001			/* a hollow brush */
 
 /**
  * <category>Feature Flags</category>
- * <description>Feature flags that tell the kernel part of the targetvisualization what features are supported by the
+ * <description>Feature flags that tell the kernel part of the target-visualization what features are supported by the
 	SysGraphic implementation</description>
  */
 #define SYSGRAPHIC_FEATURES_ALL				0xffffffff
 /**
  * <category>Feature Flags</category>
- * <description>If this flag is set, then the implementation is able to work with ansi strings. If this flag is
- *	not active, then the methods of SysGraphic should only be called with unicode strings.</description>
+ * <description>If this flag is set, then the implementation is able to work with ANSI strings. If this flag is
+ *	not active, then the methods of SysGraphic should only be called with Unicode strings.</description>
  */
 #define SYSGRAPHIC_FEATURE_ANSISUPPORT		0x00000001
 /**
  * <category>Feature Flags</category>
- * <description>If this flag is not set, then the invalidation rect of the element line is increased by one pixel.</description>
+ * <description>If this flag is not set, then the invalidation rectangle of the element line is increased by one pixel.</description>
  */
 #define SYSGRAPHIC_FEATURE_EXACTLINE		0x00000002
 /**
  * <category>Feature Flags</category>
- * <description>If this flag is not set, then the graphics libaray does not support text rotation.</description>
+ * <description>If this flag is not set, then the graphics library does not support text rotation.</description>
  */
 #define SYSGRAPHIC_FEATURE_TEXTROTATION		0x00000004
 
 /**
- * <category>Antialiasing modes</category>
- * <description>This mode for the antialiasing feature means that antialiasing is completely disabled. This is the default for 
+ * <category>Anti-aliasing modes</category>
+ * <description>This mode for the anti-aliasing feature means that anti-aliasing is completely disabled. This is the default for 
  *	newly created device contexts.</description>
  */
 #define SYSGRAPHIC_ANTIALIASING_NONE		0x00000000
 
 /**
- * <category>Antialiasing modes</category>
- * <description>This mode for the antialiasing feature means that antialiasing in a lower quality (better performance) is enabled</description>
+ * <category>Anti-aliasing modes</category>
+ * <description>This mode for the anti-aliasing feature means that anti-aliasing in a lower quality (better performance) is enabled</description>
  */
 #define SYSGRAPHIC_ANTIALIASING_LOWQUALITY	0x00000001
 
 /**
- * <category>Antialiasing modes</category>
- * <description>This mode for the antialiasing feature means that antialiasing in a high quality (worse performance) is enabled</description>
+ * <category>Anti-aliasing modes</category>
+ * <description>This mode for the anti-aliasing feature means that anti-aliasing in a high quality (worse performance) is enabled</description>
  */
 #define SYSGRAPHIC_ANTIALIASING_HIGHQUALITY	0x00000002
+
+/*
+ * <category>Compositing modes</category>
+ * <description>The compositing mode that blends the source color value with the existing color in the destination. Another name for this compositing is "SourceOver"
+ */
+#define SYSGRAPHIC_COMPOSITINGMODE_BLEND	0x00000000
+
+/*
+ * <category>Compositing modes</category>
+ * <description>The compositing mode that uses the source color value for drawing without color blending. Another name for this compositing is "Source"
+ */
+#define SYSGRAPHIC_COMPOSITINGMODE_COPY		0x00000001
 
 /**
  * <description>Setting which decides if another font should be used.</description>
@@ -191,10 +203,10 @@
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	This setting can be used on windows runtimes when the imlementation using SysGraphic (GDI) is used. In this situation,
+ *	This setting can be used on windows runtime when the implementation using SysGraphic (GDI) is used. In this situation,
  *	this option can be set to 1 to save memory, when this is necessary. In such a save memory situation, transparent images
  *	will be drawn in a non optimized way!
- *	By default, the optimized drawing that consumes more memory is activated (ie. default value is 0).
+ *	By default, the optimized drawing that consumes more memory is activated (i.e. default value is 0).
  * (probably only relevant for Windows CE).
  * </description>
  */	
@@ -207,7 +219,7 @@
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	By default, under Windows CE the target visu changes the system memory settings so that target visu 
+ *	By default, under Windows CE the target visualization changes the system memory settings so that target-visualization 
  *  has enough working memory on smaller CE 4/5 devices. This is bad for other applications.
  *	This option can be set to 1 to leave memory settings as they are
  *	default value is 0: memory settings are changed (backward compatible)
@@ -222,7 +234,7 @@
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	for converting jpegs into bmps, a big conversion byte array is used
+ *	for converting JPEGS into BMPs, a big conversion byte array is used
  *  This setting defines the size of this array 
  *	default value is 1024 * 768 * 3
  *  !! Note that from V3.5.14.0 on, the default value is higher if the 
@@ -246,7 +258,7 @@
  * <description>
  *	Typically PNG images including palette information are converted during loading into flat RGB pixels. This costs
  *  more memory but typically yields better performance when the image is drawn.
- *	If performance is not an issue but the addtional memory consumption of such PNG images (compared to BMP) is, then
+ *	If performance is not an issue but the additional memory consumption of such PNG images (compared to BMP) is, then
  *	this setting can be set to 1.
  * </description>
  */	
@@ -260,10 +272,10 @@
  * <type>Int</type>
  * <description>
  *  Only relevant for Windows CE: Defines the way how rectangles are drawn.
- *  Starting with 3.5 SP 1 the height and the width of rectangles are decremented by 1, due to a wrong bugfix (paint bug when drawing and invalidating 
+ *  Starting with 3.5 SP 1 the height and the width of rectangles are decremented by 1, due to a wrong bug fix (paint bug when drawing and invalidating 
  *  rectangles with bar meters, where the origin of the bug was a wrong invalidation and not wrong painting of the rectangles)
  *  Before 3.5 SP 1 the rectangles are drawn correctly.
- *  The default value is 1 to use the correct behaviour before 3.5 SP 1
+ *  The default value is 1 to use the correct behavior before 3.5 SP 1
  * </description>
  */	
 #define SYSGRAPHIC_WINCE_OLD_DRAW_RECT_METHOD					"WinCE.UseOldDrawRectMethod" 
@@ -295,8 +307,8 @@
  * <description>
  *  Special setting for SysGraphicGDIPlus. If this setting is not 0, then a proxy
  *	process will be used for rendering SVG images instead of directly accessing SVGRenderer.dll.
- *	Usecases for this setting are either 64-Bit runtimes that cannot directly include SVGRenderer.dll
- *	or runtimes that are started/stopped multiple times within the same process (like VisuClientX).
+ *	Use-cases for this setting are either 64-Bit runtime that cannot directly include SVGRenderer.dll
+ *	or runtime that are started/stopped multiple times within the same process (like VisuClientX).
  *	Default value is 0
  * </description>
  */	
@@ -319,7 +331,7 @@ typedef struct
 extern "C" {
 #endif
 
-/* Init routines for OS specific modules */
+/* Initialization routines for OS specific modules */
 RTS_RESULT CDECL SysGraphicOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysGraphicOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
@@ -596,7 +608,7 @@ typedef RTS_RESULT (CDECL * PFSYSGRAPHICRELEASEDEVICECONTEXT) (RTS_HANDLE hWindo
  *	Remember to release such a device context using <see>SysGraphicReleaseDeviceContextForWindowDeviceContext</see>
  *	and not with <see>SysGraphicDeleteDeviceContext</see> or <see>SysGraphicReleaseDeviceContext</see>!</p>
  *  <p>This method should be used when the SysWindow component wants to use SysGraphic methods directly.
- *	The intent of this method is to allow the syswindow component to convert a system specific device context
+ *	The intent of this method is to allow the SysWindow component to convert a system specific device context
  *	to a device context that the SysGraphic component can work with.</p>
  *	<p>This can be necessary in the following situation:
  *	<ul>
@@ -604,7 +616,7 @@ typedef RTS_RESULT (CDECL * PFSYSGRAPHICRELEASEDEVICECONTEXT) (RTS_HANDLE hWindo
  *		<li>SysWindow wants to call methods from SysGraphic on this device context</li>
  *		<li>The actual type SysGraphic uses for a device context is different than the operating system's type</li>
  *	</ul></p>
- *	<p>The previous siutation will work correctly only when both SysGraphic and SysWindow use the same datatype 
+ *	<p>The previous situation will work correctly only when both SysGraphic and SysWindow use the same data type 
  *	for device contexts.</p></description>
  * <param name="hWindow" type="IN">Handle to the actual window</param>
  * <param name="hDCWindow" type="IN">Handle to the device context of the actual window</param>
@@ -1432,7 +1444,7 @@ typedef RTS_RESULT (CDECL * PFSYSGRAPHICGETTEXTMETRICS) (RTS_HANDLE hDC, SYS_TEX
  * <description>
  *	Function to calculate the size of a given text with the currently selected font. 
  *  Use case (1): The function will treat the string as a single line string, 
- *  ie. it will cut the string after a possible linefeed and calculate the size of the first line only!
+ *  i.e. it will cut the string after a possible linefeed and calculate the size of the first line only!
  *  Use case (2): The string will be formated and measured as defined by it's ulDrawFlags.
  *  Here, also text with flag TF_LINEBREAK will be measured, as it will be drawn.
  *  For using this case, the flag TF_MEASURE_ALL has to be used additional.
@@ -1886,7 +1898,7 @@ typedef RTS_RESULT (CDECL * PFSYSGRAPHICCREATEGRADIENTBRUSH) (RTS_HANDLE hDC, Gr
 #define PAT_DENSE_VERY		6
 
 /**
- * <description>Creates a brush representing a spedific repeating pattern that can be used to fill elements.</description>
+ * <description>Creates a brush representing a specific repeating pattern that can be used to fill elements.</description>
  * <param name="hDC" type="IN">Handle to device context</param>
  * <param name="patternType" type="IN">The type of pattern used by this brush</param>
  * <param name="rectangle" type="IN">The foreground color of the pattern</param>
@@ -2471,7 +2483,7 @@ typedef RTS_RESULT (CDECL * PFSYSGRAPHICCREATEBITMAP) (RTS_HANDLE hDC, const cha
  * <param name="rPos" type="IN">Position of the rectangle</param>
  * <param name="ulTransparentColor" type="IN">Contains the color that should be used as the transparent color. Will only be evaluated when
  *	the according flag is set. 
- *	Additionally, this paramter can be ignored, when it is already evaluated by SysGraphicCreateBitmap!</param>
+ *	Additionally, this parameter can be ignored, when it is already evaluated by SysGraphicCreateBitmap!</param>
  * <param name="ulFlags" type="IN">Flags. Defined in IEC-Code for Visualization</param>
  * <result>error code</result>
  */
@@ -2797,7 +2809,7 @@ typedef RTS_RESULT (CDECL * PFSYSGRAPHICSETCLIPRECTANGLE) (RTS_HANDLE hDC, RTS_R
 
 
 /**
- * <description>This function and <see>SysGraphicEndPaint</see> are used to encapsule some paint calls
+ * <description>This function and <see>SysGraphicEndPaint</see> are used to encapsulate some paint calls
  *	together. An implementing platform could use this encapsulation for some optimizations. For every
  *	call to SysGraphicBeginPaint there will be an according call to SysGraphicEndPaint.</description>
  * <param name="hDC" type="IN">The device context that will be drawn onto until the next call to 
@@ -2855,7 +2867,7 @@ typedef RTS_RESULT (CDECL * PFSYSGRAPHICBEGINPAINT) (RTS_HANDLE hDC, RTS_HANDLE*
 
 
 /**
- * <description>This function and <see>SysGraphicBeginPaint</see> are used to encapsule some paint calls
+ * <description>This function and <see>SysGraphicBeginPaint</see> are used to encapsulate some paint calls
  *	together. An implementing platform could use this encapsulation for some optimizations. For every
  *	call to SysGraphicBeginPaint there will be an according call to SysGraphicEndPaint.</description>
  * <param name="hDC" type="IN">The device context that has been drawn onto until this call</param>
@@ -2911,11 +2923,11 @@ typedef RTS_RESULT (CDECL * PFSYSGRAPHICENDPAINT) (RTS_HANDLE hDC, RTS_HANDLE hP
 
 
 /**
- * <description>This function allows the sysgraphic implementation to give a hint to the kernel part of the targetvisualization
+ * <description>This function allows the SysGraphic implementation to give a hint to the kernel part of the target-visualization
  *	about some more or less optional feature that can be supported by an implementation. 
- *	As this function was introduced lateron, it should be included as an optional import to prevent inconsistencies. Additionally, calling code
+ *	As this function was introduced later on, it should be included as an optional import to prevent inconsistencies. Additionally, calling code
  *	should assume a result of SYSGRAPHIC_FEATURES_ALL in case this function is not implemented for compatibility reasons.</description>
- * <result>The optional features that are implemented by the current sysgraphic implementation as a combination of the 
+ * <result>The optional features that are implemented by the current SysGraphic implementation as a combination of the 
  *	flag values SYSGRAPHIC_FEATURES_...</result>
  */
 RTS_UI32 CDECL SysGraphicGetFeatureFlags(void);
@@ -2972,9 +2984,9 @@ typedef RTS_UI32 (CDECL * PFSYSGRAPHICGETFEATUREFLAGS) (void);
  *	these properties of the screen device context.</description>
  * <param name="hDC" type="IN">The device context of the printer that has to be prepared by this call.</param>
  * <param name="phOptionalResultData" type="OUT">An optional pointer to a handle that allows this method to allocate data that can be 
- *	released lateron in the call to <see>SysGraphicFinishPrinting</see>. If such data is not necessary on a specific platform implementation,
+ *	released later on in the call to <see>SysGraphicFinishPrinting</see>. If such data is not necessary on a specific platform implementation,
  *	this pointer can be NULL so that nothing can be returned here.</param>
- * <param name="prWindow" type="IN">A pointer to a rectangle that describes the extent of the targetvisualization window on the screen.</param>
+ * <param name="prWindow" type="IN">A pointer to a rectangle that describes the extent of the target-visualization window on the screen.</param>
  * <param name="prPrintOutput" type="IN">A pointer to a rectangle that describes the extent of the destination on the printer.</param>
  * <result>An error code</result>
  */
@@ -3080,12 +3092,12 @@ typedef RTS_RESULT (CDECL * PFSYSGRAPHICFINISHPRINTING) (RTS_HANDLE hDC, RTS_HAN
 
 
 /**
- * <description>This function assigns the antialiasing mode to a device context. By default, a device context should be in mode 
- *	<see>SYSGRAPHIC_ANTIALIASING_NONE</see>. If a device does not support antialiased drawing, it should return ERR_NOT_SUPPORTED.
- *	To tell the programming system, whether the antialiasing feature is supported, the targetsetting "visualization\targetsupport\targetvisualization_antialiasing"
+ * <description>This function assigns the anti-aliasing mode to a device context. By default, a device context should be in mode 
+ *	<see>SYSGRAPHIC_ANTIALIASING_NONE</see>. If a device does not support anti-aliased drawing, it should return ERR_NOT_SUPPORTED.
+ *	To tell the programming system, whether the anti-aliasing feature is supported, the target-setting "visualization\targetsupport\targetvisualization_antialiasing"
  *	can be used.</description>
- * <param name="hDC" type="IN">The device context to assign the antialiasing mode to.</param>
- * <param name="uiAntiAliasingSettings" type="IN">The antialiasing mode (SYSGRAPHIC_ANTIALIASING_NONE,...).</param>
+ * <param name="hDC" type="IN">The device context to assign the anti-aliasing mode to.</param>
+ * <param name="uiAntiAliasingSettings" type="IN">The anti-aliasing mode (SYSGRAPHIC_ANTIALIASING_NONE,...).</param>
  * <result>An error code</result>
  */
 RTS_RESULT CDECL SysGraphicSetAntiAliasingMode(RTS_HANDLE hDC, RTS_UI32 uiAntiAliasingSettings);
@@ -3196,13 +3208,13 @@ typedef RTS_RESULT (CDECL * PFSYSGRAPHICGETSYSWINDOWFONT) (RTS_HANDLE hDC, RTS_H
 
 
 /**
- * <description>This function is optional and can be implemented by systems that need a valid backbuffer for painting to the foreground. 
+ * <description>This function is optional and can be implemented by systems that need a valid back-buffer for painting to the foreground. 
  *  This fact probably depends on the underlying graphics system (for Windows or native systems, this is probably not necessary, for QT based 
  *	systems, an implementation might be necessary. The resulting list of invalidated rectangles should be reset in an implementation of
  *	<see>SysGraphicResetInvalidation</see></description>	
  * <param name="hDC" type="IN">The device context to invalidate in.</param>
  * <param name="rect" type="IN">The rectangle that is invalidated by the visualization. An implementation can use this call for example
- *	to fill a clip region so that only valid content will be drawn into the backbuffer.</param>
+ *	to fill a clip region so that only valid content will be drawn into the back-buffer.</param>
  * <result>An error code</result>
 */ 
 RTS_RESULT CDECL SysGraphicInvalidateRectangle(RTS_HANDLE hDC, RTS_Rectangle rect);
@@ -3369,8 +3381,8 @@ typedef RTS_RESULT (CDECL * PFSYSGRAPHICINVALIDATECLIENTAREA) (RTS_HANDLE hDC);
 
 /**
  * <description>Creates an affine transformation object. 
- *	Such transformations can be used for client local animations (eg. when
- *	displaying the preview of multitouch gestures) or for drawing transformed elements (eg. rotated images or text).
+ *	Such transformations can be used for client local animations (e.g. when
+ *	displaying the preview of multi-touch gestures) or for drawing transformed elements (e.g. rotated images or text).
  *	Usually such transformations are represented by transformation matrices.
  *	If affine transformations are not supported by the implementing platform, *pResult should be set to ERR_NOTIMPLEMENTED. In such
  *	a situation, some features might not work correctly.</description>	
@@ -3428,8 +3440,8 @@ typedef RTS_HANDLE (CDECL * PFSYSGRAPHICCREATETRANSFORMATION) (RTS_RESULT* pResu
 
 /**
  * <description>Creates an affine transformation object using the given matrix members.
- *	Such transformations can be used for client local animations (eg. when
- *	displaying the preview of multitouch gestures) or for drawing transformed elements (eg. rotated images or text).
+ *	Such transformations can be used for client local animations (e.g. when
+ *	displaying the preview of multi-touch gestures) or for drawing transformed elements (e.g. rotated images or text).
  *	Usually such transformations are represented by transformation matrices.
  *	If affine transformations are not supported by the implementing platform, *pResult should be set to ERR_NOTIMPLEMENTED. In such
  *	a situation, some features might not work correctly.</description>	
@@ -3716,7 +3728,7 @@ typedef RTS_RESULT (CDECL * PFSYSGRAPHICTRANSFORMATIONTRANSLATE) (RTS_HANDLE hTr
 
 /**
  * <description>Activates an affine transformation object on the given device context. This transformation will be applied to modify
- *	all followup drawing operations on this device context until a different (or no) transformation is set.</description>	
+ *	all follow up drawing operations on this device context until a different (or no) transformation is set.</description>	
  * <param name="hdc" type="IN">The device context to apply the transformation on.</param>
  * <param name="hTransform" type="IN">The transformation to apply. Pass RTS_INVALID_HANDLE to deactivate any transformations.</param>
  * <result>An error code</result>
@@ -3772,7 +3784,7 @@ typedef RTS_RESULT (CDECL * PFSYSGRAPHICSETACTIVETRANSFORMATION) (RTS_HANDLE hdc
 
 /**
  * <description>Returns the currently active affine transformation object on the given device context.</description>	
- * <param name="hdc" type="IN">The device context to retrieve the the transformation from.</param>
+ * <param name="hdc" type="IN">The device context to retrieve the transformation from.</param>
  * <param name="hTransform" type="IN">The transformation to apply. Pass RTS_INVALID_HANDLE to deactivate any transformations.</param>
  * <param name="pResult" type="OUT">Optional pointer to error code</param>
  * <result>The handle or the active transformation or RTS_INVALID_HANDLE if there was no active one..</result>
@@ -3941,6 +3953,117 @@ typedef RTS_RESULT (CDECL * PFSYSGRAPHICTRANSFORMATIONTRANSFORM) (RTS_HANDLE hTr
 
 
 
+/**
+ * <description>This function explicitly assigns the given compositing mode to the given device context.</description>
+ * <param name="hDC" type="IN">A handle to the device context.</param>
+ * <param name="compositingMode" type="IN">The compositing mode to use for the following paint operations until changed again. Value must be one of SYSGRAPHIC_COMPOSITINGMODE_*</param>
+ * <remark>Compositing modes are only relevant when a platform supports semi transparent drawing. On other problems it is no problem to leave these functions not implemented.
+ * <result>An error code</result>
+*/
+RTS_RESULT CDECL SysGraphicSetCompositingMode(RTS_HANDLE hDC, RTS_UI32 compositingMode);
+typedef RTS_RESULT (CDECL * PFSYSGRAPHICSETCOMPOSITINGMODE) (RTS_HANDLE hDC, RTS_UI32 compositingMode);
+#if defined(SYSGRAPHIC_NOTIMPLEMENTED) || defined(SYSGRAPHICSETCOMPOSITINGMODE_NOTIMPLEMENTED)
+	#define USE_SysGraphicSetCompositingMode
+	#define EXT_SysGraphicSetCompositingMode
+	#define GET_SysGraphicSetCompositingMode(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_SysGraphicSetCompositingMode(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_SysGraphicSetCompositingMode  FALSE
+	#define EXP_SysGraphicSetCompositingMode  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_SysGraphicSetCompositingMode
+	#define EXT_SysGraphicSetCompositingMode
+	#define GET_SysGraphicSetCompositingMode(fl)  CAL_CMGETAPI( "SysGraphicSetCompositingMode" ) 
+	#define CAL_SysGraphicSetCompositingMode  SysGraphicSetCompositingMode
+	#define CHK_SysGraphicSetCompositingMode  TRUE
+	#define EXP_SysGraphicSetCompositingMode  CAL_CMEXPAPI( "SysGraphicSetCompositingMode" ) 
+#elif defined(MIXED_LINK) && !defined(SYSGRAPHIC_EXTERNAL)
+	#define USE_SysGraphicSetCompositingMode
+	#define EXT_SysGraphicSetCompositingMode
+	#define GET_SysGraphicSetCompositingMode(fl)  CAL_CMGETAPI( "SysGraphicSetCompositingMode" ) 
+	#define CAL_SysGraphicSetCompositingMode  SysGraphicSetCompositingMode
+	#define CHK_SysGraphicSetCompositingMode  TRUE
+	#define EXP_SysGraphicSetCompositingMode  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicSetCompositingMode", (RTS_UINTPTR)SysGraphicSetCompositingMode, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysGraphicSysGraphicSetCompositingMode
+	#define EXT_SysGraphicSysGraphicSetCompositingMode
+	#define GET_SysGraphicSysGraphicSetCompositingMode  ERR_OK
+	#define CAL_SysGraphicSysGraphicSetCompositingMode pISysGraphic->ISysGraphicSetCompositingMode
+	#define CHK_SysGraphicSysGraphicSetCompositingMode (pISysGraphic != NULL)
+	#define EXP_SysGraphicSysGraphicSetCompositingMode  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_SysGraphicSetCompositingMode
+	#define EXT_SysGraphicSetCompositingMode
+	#define GET_SysGraphicSetCompositingMode(fl)  CAL_CMGETAPI( "SysGraphicSetCompositingMode" ) 
+	#define CAL_SysGraphicSetCompositingMode pISysGraphic->ISysGraphicSetCompositingMode
+	#define CHK_SysGraphicSetCompositingMode (pISysGraphic != NULL)
+	#define EXP_SysGraphicSetCompositingMode  CAL_CMEXPAPI( "SysGraphicSetCompositingMode" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_SysGraphicSetCompositingMode  PFSYSGRAPHICSETCOMPOSITINGMODE pfSysGraphicSetCompositingMode;
+	#define EXT_SysGraphicSetCompositingMode  extern PFSYSGRAPHICSETCOMPOSITINGMODE pfSysGraphicSetCompositingMode;
+	#define GET_SysGraphicSetCompositingMode(fl)  s_pfCMGetAPI2( "SysGraphicSetCompositingMode", (RTS_VOID_FCTPTR *)&pfSysGraphicSetCompositingMode, (fl), 0, 0)
+	#define CAL_SysGraphicSetCompositingMode  pfSysGraphicSetCompositingMode
+	#define CHK_SysGraphicSetCompositingMode  (pfSysGraphicSetCompositingMode != NULL)
+	#define EXP_SysGraphicSetCompositingMode  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicSetCompositingMode", (RTS_UINTPTR)SysGraphicSetCompositingMode, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>This function retrieves the current compositing mode of the given device context.</description>
+ * <param name="hDC" type="IN">A handle to the device context.</param>
+ * <param name="pResult" type="OUT">Optional pointer to error code.</param>
+ * <remark>Compositing modes are only relevant when a platform supports semi transparent drawing. On other problems it is no problem to leave these functions not implemented.
+ * <result>An error code</result>
+*/
+RTS_UI32 CDECL SysGraphicGetCompositingMode(RTS_HANDLE hDC, RTS_RESULT* pResult);
+typedef RTS_UI32 (CDECL * PFSYSGRAPHICGETCOMPOSITINGMODE) (RTS_HANDLE hDC, RTS_RESULT* pResult);
+#if defined(SYSGRAPHIC_NOTIMPLEMENTED) || defined(SYSGRAPHICGETCOMPOSITINGMODE_NOTIMPLEMENTED)
+	#define USE_SysGraphicGetCompositingMode
+	#define EXT_SysGraphicGetCompositingMode
+	#define GET_SysGraphicGetCompositingMode(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_SysGraphicGetCompositingMode(p0,p1)  (RTS_UI32)ERR_NOTIMPLEMENTED
+	#define CHK_SysGraphicGetCompositingMode  FALSE
+	#define EXP_SysGraphicGetCompositingMode  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_SysGraphicGetCompositingMode
+	#define EXT_SysGraphicGetCompositingMode
+	#define GET_SysGraphicGetCompositingMode(fl)  CAL_CMGETAPI( "SysGraphicGetCompositingMode" ) 
+	#define CAL_SysGraphicGetCompositingMode  SysGraphicGetCompositingMode
+	#define CHK_SysGraphicGetCompositingMode  TRUE
+	#define EXP_SysGraphicGetCompositingMode  CAL_CMEXPAPI( "SysGraphicGetCompositingMode" ) 
+#elif defined(MIXED_LINK) && !defined(SYSGRAPHIC_EXTERNAL)
+	#define USE_SysGraphicGetCompositingMode
+	#define EXT_SysGraphicGetCompositingMode
+	#define GET_SysGraphicGetCompositingMode(fl)  CAL_CMGETAPI( "SysGraphicGetCompositingMode" ) 
+	#define CAL_SysGraphicGetCompositingMode  SysGraphicGetCompositingMode
+	#define CHK_SysGraphicGetCompositingMode  TRUE
+	#define EXP_SysGraphicGetCompositingMode  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicGetCompositingMode", (RTS_UINTPTR)SysGraphicGetCompositingMode, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysGraphicSysGraphicGetCompositingMode
+	#define EXT_SysGraphicSysGraphicGetCompositingMode
+	#define GET_SysGraphicSysGraphicGetCompositingMode  ERR_OK
+	#define CAL_SysGraphicSysGraphicGetCompositingMode pISysGraphic->ISysGraphicGetCompositingMode
+	#define CHK_SysGraphicSysGraphicGetCompositingMode (pISysGraphic != NULL)
+	#define EXP_SysGraphicSysGraphicGetCompositingMode  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_SysGraphicGetCompositingMode
+	#define EXT_SysGraphicGetCompositingMode
+	#define GET_SysGraphicGetCompositingMode(fl)  CAL_CMGETAPI( "SysGraphicGetCompositingMode" ) 
+	#define CAL_SysGraphicGetCompositingMode pISysGraphic->ISysGraphicGetCompositingMode
+	#define CHK_SysGraphicGetCompositingMode (pISysGraphic != NULL)
+	#define EXP_SysGraphicGetCompositingMode  CAL_CMEXPAPI( "SysGraphicGetCompositingMode" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_SysGraphicGetCompositingMode  PFSYSGRAPHICGETCOMPOSITINGMODE pfSysGraphicGetCompositingMode;
+	#define EXT_SysGraphicGetCompositingMode  extern PFSYSGRAPHICGETCOMPOSITINGMODE pfSysGraphicGetCompositingMode;
+	#define GET_SysGraphicGetCompositingMode(fl)  s_pfCMGetAPI2( "SysGraphicGetCompositingMode", (RTS_VOID_FCTPTR *)&pfSysGraphicGetCompositingMode, (fl), 0, 0)
+	#define CAL_SysGraphicGetCompositingMode  pfSysGraphicGetCompositingMode
+	#define CHK_SysGraphicGetCompositingMode  (pfSysGraphicGetCompositingMode != NULL)
+	#define EXP_SysGraphicGetCompositingMode  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysGraphicGetCompositingMode", (RTS_UINTPTR)SysGraphicGetCompositingMode, 0, 0) 
+#endif
+
+
+
 
 #ifdef __cplusplus
 }
@@ -3968,6 +4091,8 @@ typedef struct
  	PFSYSGRAPHICGETACTIVETRANSFORMATION ISysGraphicGetActiveTransformation;
  	PFSYSGRAPHICCLONETRANSFORMATION ISysGraphicCloneTransformation;
  	PFSYSGRAPHICTRANSFORMATIONTRANSFORM ISysGraphicTransformationTransform;
+ 	PFSYSGRAPHICSETCOMPOSITINGMODE ISysGraphicSetCompositingMode;
+ 	PFSYSGRAPHICGETCOMPOSITINGMODE ISysGraphicGetCompositingMode;
  } ISysGraphic_C;
 
 #ifdef CPLUSPLUS
@@ -3991,6 +4116,8 @@ class ISysGraphic : public IBase
 		virtual RTS_HANDLE CDECL ISysGraphicGetActiveTransformation(RTS_RESULT* pResult) =0;
 		virtual RTS_HANDLE CDECL ISysGraphicCloneTransformation(RTS_HANDLE hTransform, RTS_RESULT* pResult) =0;
 		virtual RTS_RESULT CDECL ISysGraphicTransformationTransform(RTS_REAL32 m11, RTS_REAL32 m12, RTS_REAL32 m21, RTS_REAL32 m22, RTS_REAL32 dx, RTS_REAL32 dy) =0;
+		virtual RTS_RESULT CDECL ISysGraphicSetCompositingMode(RTS_HANDLE hDC, RTS_UI32 compositingMode) =0;
+		virtual RTS_UI32 CDECL ISysGraphicGetCompositingMode(RTS_HANDLE hDC, RTS_RESULT* pResult) =0;
 };
 	#ifndef ITF_SysGraphic
 		#define ITF_SysGraphic static ISysGraphic *pISysGraphic = NULL;

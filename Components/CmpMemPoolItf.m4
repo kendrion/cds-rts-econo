@@ -5,63 +5,63 @@
  *
  *  <p>A MemPool has the following structure:</p>
  *  <pre>
- *. 
- *. -------------- Pool Control Block                -------------- Block Control Block
- *. |nRefCount   |  Reference Counter                |pBCB        |  Pointer to next BCB
- *. |Blocksize   |  data size of single block        |pPCB        |  Pointer to PCB
- *. |pBlocksInUse|  List of used blocks              `------------'
- *. |pBCB        |  List of free blocks              
- *. |...         |
- *. `-------------
- *.
- *.                      provided
- *.                      Memory Area
- *.                      .--------------------------.
- *.                      | PCB                      |
- *.   List of free Blocks|  Blocksize               |      List of used Blocks
- *.                      |  pBlocksInUse            |===========.
- *.         .=========== |  pBCB                    |           |
- *.         |            |......................... |           |
- *.         |            | BCB                      | &lt;========='
- *.         |            |                          | ---.
- *.         |            |......................... |    |
- *.         |            | DATA                     |    |
- *.         |            |                          |    |
- *.         |            |......................... |    |
- *.         |            | BCB                      | &lt;--'
- *.         |            |                          | ---.
- *.         |            |......................... |    |
- *.         |            | DATA                     |    |
- *.         |            |                          |    |
- *.         |            |......................... |    |
- *.         |            |                          | &lt;--'
- *.         |           ~~~                        ~~~
- *.         |
- *.         |           ~~~                        ~~~
- *.         '=========&gt;  |......................... |
- *.                      | BCB                      | ---.
- *.                      |                          |    |
- *.                      |......................... |    |
- *.                      | DATA                     |    |
- *.                      |                          |    |
- *.                      |......................... | &lt;--'
- *.                      | BCB                      | ---.
- *.                      |                          |    |
- *.                     ~~~                        ~~   ~~~
- *.
- *.                     ~~~                        ~~~
- *.                      |                          |
- *.                      |                          |
- *.                      .--------------------------.
- *.                      End of Memory Area
- *.
- *.
+ *  
+ *  -------------- Pool Control Block                -------------- Block Control Block
+ *  |nRefCount   |  Reference Counter                |pBCB        |  Pointer to next BCB
+ *  |Blocksize   |  data size of single block        |pPCB        |  Pointer to PCB
+ *  |pBlocksInUse|  List of used blocks              `------------'
+ *  |pBCB        |  List of free blocks              
+ *  |...         |
+ *  `-------------
+ * 
+ *                       provided
+ *                       Memory Area
+ *                       .--------------------------.
+ *                       | PCB                      |
+ *    List of free Blocks|  Blocksize               |      List of used Blocks
+ *                       |  pBlocksInUse            |===========.
+ *          .=========== |  pBCB                    |           |
+ *          |            |......................... |           |
+ *          |            | BCB                      | &lt;========='
+ *          |            |                          | ---.
+ *          |            |......................... |    |
+ *          |            | DATA                     |    |
+ *          |            |                          |    |
+ *          |            |......................... |    |
+ *          |            | BCB                      | &lt;--'
+ *          |            |                          | ---.
+ *          |            |......................... |    |
+ *          |            | DATA                     |    |
+ *          |            |                          |    |
+ *          |            |......................... |    |
+ *          |            |                          | &lt;--'
+ *          |           ~~~                        ~~~
+ *          |
+ *          |           ~~~                        ~~~
+ *          '=========&gt;  |......................... |
+ *                       | BCB                      | ---.
+ *                       |                          |    |
+ *                       |......................... |    |
+ *                       | DATA                     |    |
+ *                       |                          |    |
+ *                       |......................... | &lt;--'
+ *                       | BCB                      | ---.
+ *                       |                          |    |
+ *                      ~~~                        ~~   ~~~
+ * 
+ *                      ~~~                        ~~~
+ *                       |                          |
+ *                       |                          |
+ *                       .--------------------------.
+ *                       End of Memory Area
+ * 
+ * 
  * </pre>
  * 
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -70,9 +70,10 @@ SET_INTERFACE_NAME(`CmpMemPool')
 /**
  * <category>Compiler switch</category>
  * <description>
- *	Compiler switches configure the behaviour of the mempool.
+ *	Compiler switches configure the behavior of the memory pool.
  * </description>
  * <element name="MEMPOOL_DISABLE_HEAP_MEMORY">Switch to disable dynamic memory</element>
+ * <element name="MEMPOOL_8BYTE_ALIGNED">Force 8 byte alignment of blocks. Note, that this doesn't affect the alignment of the header.</element>
  */
 
 #ifdef RTS_MEMPOOL_VER2
@@ -84,10 +85,13 @@ SET_INTERFACE_NAME(`CmpMemPool')
 	#define MEMPOOL_8BYTE_ALIGNED
 #endif
 
+#ifndef MEMPOOL_HEADER_ALIGNMENT
+	#define MEMPOOL_HEADER_ALIGNMENT 4
+#endif
 #ifdef MEMPOOL_8BYTE_ALIGNED
-	#define MEMPOOL_ALIGN_MODULO			8
+	#define MEMPOOL_BLOCK_ALIGNMENT  8
 #else
-	#define MEMPOOL_ALIGN_MODULO			sizeof(void*)
+	#define MEMPOOL_BLOCK_ALIGNMENT			sizeof(void*)
 #endif
 
 /* Init value to write over a deleted object */
@@ -99,7 +103,7 @@ SET_INTERFACE_NAME(`CmpMemPool')
 /**
  * <category>Macros</category>
  * <description>Macros to handle static size of a MemPool</description>
- * <element name="MEM_GET_STATIC_LEN" type="IN">Can be use to calculate the brutto size of a static MemPool by specifying the structure of one element.
+ * <element name="MEM_GET_STATIC_LEN" type="IN">Can be use to calculate the gross size of a static MemPool by specifying the structure of one element.
  *  Usage:
  *		#define NUM_OF_STATIC_ELEMENTS		10
  *		typedef struct
@@ -108,7 +112,7 @@ SET_INTERFACE_NAME(`CmpMemPool')
  *		} StructNameOfOneElement;
  *		static RTS_UI8 s_StaticMemPool[MEM_GET_STATIC_LEN(NUM_OF_STATIC_ELEMENTS, StructNameOfOneElement)];
  * </element>
- * <element name="MEM_GET_STATIC_LEN_" type="IN">Can be use to calculate the brutto size of a static MemPool by specifying the size of one element.
+ * <element name="MEM_GET_STATIC_LEN_" type="IN">Can be use to calculate the gross size of a static MemPool by specifying the size of one element.
  *  Usage:
  *		#define NUM_OF_STATIC_ELEMENTS		10
  *		typedef struct
@@ -118,8 +122,9 @@ SET_INTERFACE_NAME(`CmpMemPool')
  *		static RTS_UI8 s_StaticMemPool[MEM_GET_STATIC_LEN_(NUM_OF_STATIC_ELEMENTS, sizeof(StructNameOfOneElement))];
  * </element>
  */
-#define MEM_GET_STATIC_LEN(Num, Struct)		(sizeof(RTS_PCB) + 2 * MEMPOOL_ALIGN_MODULO + (Num) * ALIGN_SIZE(sizeof(Struct), MEMPOOL_ALIGN_MODULO) + (Num) * sizeof(RTS_BCB))
-#define MEM_GET_STATIC_LEN_(Num, Size)		(sizeof(RTS_PCB) + 2 * MEMPOOL_ALIGN_MODULO + (Num) * ALIGN_SIZE(Size, MEMPOOL_ALIGN_MODULO) + (Num) * sizeof(RTS_BCB))
+#define MEM_GET_STATIC_LEN(Num, Struct)				(sizeof(RTS_PCB) + 2 * MEMPOOL_BLOCK_ALIGNMENT + (Num) * ALIGN_SIZE(sizeof(Struct), MEMPOOL_BLOCK_ALIGNMENT) + (Num) * sizeof(RTS_BCB))
+#define MEM_GET_STATIC_LEN_(Num, Size)				(sizeof(RTS_PCB) + 2 * MEMPOOL_BLOCK_ALIGNMENT + (Num) * ALIGN_SIZE(Size, MEMPOOL_BLOCK_ALIGNMENT) + (Num) * sizeof(RTS_BCB))
+#define MEM_GET_STATIC_LEN2(Num, Size, HeaderType)	(sizeof(HeaderType) + 2 * MEMPOOL_BLOCK_ALIGNMENT + (Num) * ALIGN_SIZE(Size, MEMPOOL_BLOCK_ALIGNMENT) + (Num) * sizeof(RTS_BCB))
 
 /**
  * <category>Static defines</category>
@@ -129,6 +134,8 @@ SET_INTERFACE_NAME(`CmpMemPool')
  */
 #define MEM_POOL_FLAGS_BLOCK_NONE			0x00000000
 #define MEM_POOL_FLAGS_BLOCK_DELETE			0x00000001
+
+#define MEM_POOL_FLAGS_BLOCK_IS_DELETE(pBCB) ((pBCB->flags & MEM_POOL_FLAGS_BLOCK_DELETE) != 0)
 
 /*
  * <SIL2/>
@@ -159,17 +166,31 @@ typedef struct RTS_BCBtag
  */
 #define MEM_POOL_OPTION_STATIC				0x00000001
 #define MEM_POOL_OPTION_DYNAMIC				0x00000002
-
 #define MEM_POOL_OPTION_NOSYNC				0x00000010		
-
 #define MEM_POOL_OPTION_UNALIGNED			0x00000100
 
+
+/**
+ * The following macros can be used with a pointer to a PEB, PCB or MemPoolConfiguraion structure.
+ * They all have the same ->options member, on which we are operating.
+ */
+#define MEM_POOL_OPTION_IS_STATIC(pConfiguration)  ((pConfiguration->options & MEM_POOL_OPTION_STATIC) != 0)
+#define MEM_POOL_OPTION_IS_DYNAMIC(pConfiguration) ((pConfiguration->options & MEM_POOL_OPTION_DYNAMIC) != 0)
+#define MEM_POOL_OPTION_IS_NOSYNC(pConfiguration)  ((pConfiguration->options & MEM_POOL_OPTION_NOSYNC) != 0)
+
+#define MEM_POOL_OPTION_SET_STATIC(pConfiguration)  do { pConfiguration->options |= MEM_POOL_OPTION_STATIC;  } while(0)
+#define MEM_POOL_OPTION_SET_DYNAMIC(pConfiguration) do { pConfiguration->options |= MEM_POOL_OPTION_DYNAMIC; } while(0)
+#define MEM_POOL_OPTION_SET_NOSYNC(pConfiguration)  do { pConfiguration->options |= MEM_POOL_OPTION_NOSYNC;  } while(0)
+
+#define MEM_POOL_OPTION_RESET_STATIC(pConfiguration)  do { pConfiguration->options &= ~MEM_POOL_OPTION_STATIC;  } while(0)
+#define MEM_POOL_OPTION_RESET_DYNAMIC(pConfiguration) do { pConfiguration->options &= ~MEM_POOL_OPTION_DYNAMIC; } while(0)
+#define MEM_POOL_OPTION_RESET_NOSYNC(pConfiguration)  do { pConfiguration->options &= ~MEM_POOL_OPTION_NOSYNC;  } while(0)
 
 /**
  * <SIL2/> 
  * <category>Extension block</category>
  * <description>Pool Extension Block</description>
- * <element name="options" type="IN">Flags for internal unsage of the MemPool. See the category "MemPool options" for detailed information</element>
+ * <element name="options" type="IN">Flags for internal usage of the MemPool. See the category "MemPool options" for detailed information</element>
  * <element name="pPEB" type="IN">Pointer to the extension block (heap/dynamic) or NULL</element>
  */
 typedef struct RTS_PEBtag
@@ -266,7 +287,7 @@ typedef struct
  * <element name="MEM_GET_NEXT" type="IN">Get next block element of a MemPool</element>
  * <element name="MEM_GET_DATA" type="IN">Get data pointer of a MemPool block _including_ blocks which are still marked as deleted!</element>
  * <element name="MEM_GET_DATA_SKIP_DELETE" type="IN">Get data pointer of a MemPool block _without_ a block marked as "to delete"!
- *		A block is marked as "to delete", if MemPoolRemoveUsedBlock() was called during somebody else interated over the pool. And so the block is only marked as "to delete" and should be deleted in the next 
+ *		A block is marked as "to delete", if MemPoolRemoveUsedBlock() was called during somebody else iterated over the pool. And so the block is only marked as "to delete" and should be deleted in the next 
  *		suitable moment.
  *
  *		NOTE:
@@ -406,6 +427,8 @@ DEF_ITF_API(`RTS_HANDLE',`CDECL',`MemPoolCreate',`(MemPoolConfiguration *pConfig
  * <param name="pszComponentName" type="IN">Component name</param>
  * <param name="ulBlockSize" type="IN">Size of each memory block in the pool</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">MemPool created successfully</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_NOMEMORY">No memory available</errorcode>
  * <result>Handle to the memory pool</result>
  */
 DEF_ITF_API(`RTS_HANDLE',`CDECL',`MemPoolCreateDynamic',`(char *pszComponentName, RTS_SIZE ulNumBlocks, RTS_SIZE ulBlockSize, RTS_RESULT *pResult)')
@@ -434,20 +457,23 @@ DEF_ITF_API(`RTS_HANDLE',`CDECL',`MemPoolCreateDynamic',`(char *pszComponentName
  * <param name="pMemory" type="IN" range="[NULL,VALID_MEM]">Pointer to the static memory</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">MemPool created successfully</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pMemory was NULL</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_NOMEMORY">ulMemSize was not large enough, to hold at leaset one block</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">Invalid parameter(e.g. pMemory = NULL)</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_NOMEMORY">ulMemSize was not large enough, to hold at least one block</errorcode>
  * <result>Handle to the memory pool</result>
  */
 DEF_ITF_API(`RTS_HANDLE',`CDECL',`MemPoolCreateStatic',`(RTS_SIZE ulBlockSize, RTS_SIZE ulMemSize, void* pMemory, RTS_RESULT *pResult)')
 
 /**
  * <description>
- *	Extend dynamic an existing pool
+ *	Extend dynamically an existing pool
  * </description>
  * <param name="hMemPool" type="IN">Handle to the pool</param>
  * <param name="pszComponentName" type="IN">Component name</param>
  * <param name="ulNumBlocks" type="IN">Number of blocks to extend</param>
  * <result>error code</result>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">MemPool extended successfully</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">ulNumBlocks was 0</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_INVALID_HANDLE">hMemPool was RTS_INVALID_HANDLE</errorcode>
  */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`MemPoolExtendDynamic',`(RTS_HANDLE hMemPool, char *pszComponentName, RTS_SIZE ulNumBlocks)')
 
@@ -630,7 +656,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`MemPoolRemoveUsedBlockFromPool',`(void* pBlock
 
 /**
  * <description>
- *	Lock the access to a pool to be threadsafe.
+ *	Lock the access to a pool to be thread safe.
  * </description>
  * <param name="pBlock" type="IN">Pointer to the memory block</param>
  * <result>error code</result>
@@ -667,7 +693,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`MemPoolReleaseBlocks',`(RTS_HANDLE hMemPool, R
  * </description>
  * <param name="hMemPool" type="IN" range="[VALID_MEMPOOLHANDLE,NULL]">Handle to the memory pool</param>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Pool was sucessfully locked</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Pool was successfully locked</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter is wrong</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Pool could not be locked, SysInt or SysSem had problems</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">SysInt or SysSem are not implemented</errorcode>
@@ -681,7 +707,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`MemPoolLock',`(RTS_HANDLE hMemPool)')
  * </description>
  * <param name="hMemPool" type="IN" range="[VALID_MEMPOOLHANDLE,NULL]">Handle to the memory pool</param>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Pool was sucessfully unlocked</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Pool was successfully unlocked</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter is wrong</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Pool could not be unlocked, SysInt or SysSem had problems</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">SysInt or SysSem are not implemented</errorcode>
@@ -718,7 +744,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`MemPoolIsValidBlock',`(RTS_HANDLE hMemPool, vo
 
 /**
  * <description>
- *	Get the first memory block out of the pool. Can be used for explicite iteration routines.
+ *	Get the first memory block out of the pool. Can be used for explicit iteration routines.
  * </description>
  * <param name="hMemPool" type="IN">Handle to the memory pool</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
@@ -728,7 +754,7 @@ DEF_ITF_API(`void*',`CDECL',`MemPoolGetFirstBlock',`(RTS_HANDLE hMemPool, RTS_RE
 
 /**
  * <description>
- *	Get the next memory block out of the pool. Can be used for explicite iteration routines.
+ *	Get the next memory block out of the pool. Can be used for explicit iteration routines.
  * </description>
  * <param name="hMemPool" type="IN">Handle to the memory pool</param>
  * <param name="pPrevBlock" type="IN">Pointer to previous memory block</param>
@@ -738,7 +764,7 @@ DEF_ITF_API(`void*',`CDECL',`MemPoolGetFirstBlock',`(RTS_HANDLE hMemPool, RTS_RE
 DEF_ITF_API(`void*',`CDECL',`MemPoolGetNextBlock',`(RTS_HANDLE hMemPool, void *pPrevBlock, RTS_RESULT *pResult)')
 
 
-/*==== MemPool operations based on reference counter on the mempool to realize nearly locking free iterators (function postfix "_LF") ===========================*/
+/*==== MemPool operations based on reference counter on the memory pool to realize nearly locking free iterators (function postfix "_LF") ===========================*/
 
 /**
  * <description>
@@ -754,7 +780,7 @@ DEF_ITF_API(`void*',`CDECL',`MemPoolGetNextBlock',`(RTS_HANDLE hMemPool, void *p
  * </description>
  * <param name="hMemPool" type="IN" range="[VALID_MEMPOOLHANDLE,NULL]">Handle to the memory pool</param>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Pool was sucessfully occupied</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Pool was successfully occupied</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Pool handle is invalid</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">Occupying the pool could not be done before CH_INIT_SYSTEM. Not relevant for SIL2</errorcode>
  */
@@ -766,7 +792,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`MemPoolAddRef_LF',`(RTS_HANDLE hMemPool)')
  * </description>
  * <param name="hMemPool" type="IN" range="[VALID_MEMPOOLHANDLE,NULL]">Handle to the memory pool</param>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Pool was sucessfully freed</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Pool was successfully freed</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Pool handle is invalid</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">Free the pool could not be done before CH_INIT_SYSTEM. Not relevant for SIL2</errorcode>
  */
@@ -777,16 +803,16 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`MemPoolReleaseRef_LF',`(RTS_HANDLE hMemPool)')
  *	Lock the access to the complete pool. SIL2 Implementation is using INT Locks.
  *
  *	NOTE:
- *  - Function can return ERR_NO_CONSISTENCY to signalize, that the refcount in the pool is >0 and so someone is still in an iteration loop after MemPoolAddRef_LF()! 
+ *  - Function can return ERR_NO_CONSISTENCY to signalize, that the reference counter in the pool is >0 and so someone is still in an iteration loop after MemPoolAddRef_LF()! 
  * </description>
  * <param name="hMemPool" type="IN" range="[VALID_MEMPOOLHANDLE,NULL]">Handle to the memory pool</param>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Pool was sucessfully locked</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Pool was successfully locked</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter is wrong</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Pool could not be locked, SysInt or SysSem had problems</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">SysInt or SysSem are not implemented</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">Lock cannot be done before CH_INIT_SYSTEM, not relevant for SIL2</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NO_CONSISTENCY">Lock is done, but the refcount in the pool is >0 and so someone is still in an iteration loop after MemPoolAddRef()!</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_CONSISTENCY">Lock is done, but the reference counter in the pool is >0 and so someone is still in an iteration loop after MemPoolAddRef()!</errorcode>
  */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`MemPoolLock_LF',`(RTS_HANDLE hMemPool)')
 
@@ -796,7 +822,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`MemPoolLock_LF',`(RTS_HANDLE hMemPool)')
  * </description>
  * <param name="hMemPool" type="IN" range="[VALID_MEMPOOLHANDLE,NULL]">Handle to the memory pool</param>
  * <result>Error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Pool was sucessfully unlocked</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Pool was successfully unlocked</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter is wrong</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Pool could not be unlocked, SysInt or SysSem had problems</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTIMPLEMENTED">SysInt or SysSem are not implemented</errorcode>

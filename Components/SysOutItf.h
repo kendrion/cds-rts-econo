@@ -6,7 +6,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -36,7 +36,7 @@
 extern "C" {
 #endif
 
-/* Init routines for OS specific modules */
+/* Initialization routines for OS specific modules */
 RTS_RESULT CDECL SysOutOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysOutOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
@@ -152,7 +152,7 @@ typedef RTS_RESULT (CDECL * PFSYSOUTVPRINTF) (char *szFormat, va_list *pargList)
 
 /**
  * <description>
- *	Debug output fo a formatted string on the standard console output.
+ *	Debug output for a formatted string on the standard console output.
  *	NOTE: Actual time should be added in front of each debug output string
  * </description>
  * <param name="szFormat" type="IN">Format string with optional arguments</param>

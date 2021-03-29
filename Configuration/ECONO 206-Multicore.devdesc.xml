@@ -7,7 +7,7 @@
     <DeviceIdentification>
       <Type>4102</Type>
       <Id>10a4 0062</Id>
-      <Version>3.5.14.40</Version>
+      <Version>3.5.16.40</Version>
     </DeviceIdentification>
     <DeviceInfo>
       <Name name="local:typename">ECONO 206-Multicore</Name>
@@ -15,7 +15,7 @@
       <Vendor name="local:3S">Kendrion Kuhnke Automation</Vendor>
       <OrderNumber>???</OrderNumber>
     </DeviceInfo>
-    <DriverInfo needsBusCycle="false">
+    <DriverInfo needsBusCycle="false" enableDiagnosis="true">
       <RequiredLib libname="IoStandard" vendor="System" version="*" identifier="iostandardlib" placeholderlib="IoStandard"/>
       <RequiredLibEx client="3SLicense" libname="3SLicense" vendor="3S - Smart Software Solutions GmbH" version="0.0.0.0" identifier="_3S_LICENSE" placeholderlib="3SLicense"/>
       <RequiredLib libname="SM3_Basic" placeholderlib="SM3_Basic" vendor="3S - Smart Software Solutions GmbH" version="*" identifier="deviceLib"/>
@@ -33,7 +33,7 @@
       <ts:TargetSettings>
         <ts:section name="runtime_identification">
           <ts:setting name="version" type="string" access="visible">
-            <ts:value>3.5.14.40</ts:value>
+            <ts:value>3.5.16.40</ts:value>
           </ts:setting>
         </ts:section>
         <ts:section name="onlinemanager">
@@ -375,29 +375,6 @@
               </ts:setting>
               <ts:setting name="event-id" type="string" access="visible">
                 <ts:value>CmpApp.EventIDs.EVT_PrepareExit</ts:value>
-              </ts:setting>
-              <ts:setting name="parameter-id" type="string" access="visible">
-                <ts:value>CmpApp.EventIDs.EVTPARAMID_CmpApp</ts:value>
-              </ts:setting>
-              <ts:setting name="parameter-version" type="string" access="visible">
-                <ts:value>CmpApp.EventIDs.EVTVERSION_CmpApp</ts:value>
-              </ts:setting>
-              <ts:setting name="parameter-struct" type="string" access="visible">
-                <ts:value>CmpApp.EVTPARAM_CmpApp</ts:value>
-              </ts:setting>
-            </ts:section>
-            <ts:section name="systemevent">
-              <ts:setting name="eventname" type="string" access="visible">
-                <ts:value>ExitDone</ts:value>
-              </ts:setting>
-              <ts:setting name="description" type="string" access="visible">
-                <ts:value>Called after application is exited. Context=Communication task. Debugging=Disabled</ts:value>
-              </ts:setting>
-              <ts:setting name="component-id" type="string" access="visible">
-                <ts:value>CmpApp.EventIDs.CMPID_CmpApp</ts:value>
-              </ts:setting>
-              <ts:setting name="event-id" type="string" access="visible">
-                <ts:value>CmpApp.EventIDs.EVT_ExitDone</ts:value>
               </ts:setting>
               <ts:setting name="parameter-id" type="string" access="visible">
                 <ts:value>CmpApp.EventIDs.EVTPARAMID_CmpApp</ts:value>
@@ -793,6 +770,9 @@
               <ts:value>low linux default priority (SCHED OTHER 20)</ts:value>
             </ts:setting>
           </ts:section>
+          <ts:setting name="cycletimedefault" type="string" access="visible">
+            <ts:value>t#4ms</ts:value>
+          </ts:setting>
           <ts:section name="taskgroups">
             <ts:setting name="taskgroups-editable" type="boolean" access="visible">
               <ts:value>1</ts:value>
@@ -813,19 +793,19 @@
           <ts:section name="placeholder-libraries">
             <!-- **********************************************  3S Placeholder  ***************************************************** -->
             <ts:setting name="IoDrvEL6224" type="string" access="visible">
-              <ts:value>IoDrvEL6224, 3.5.13.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvEL6224, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IoDrvEL6731" type="string" access="visible">
-              <ts:value>IoDrvEL6731, 3.5.14.30 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvEL6731, 3.5.15.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IODrvEtherCAT" type="string" access="visible">
-              <ts:value>IODrvEtherCAT, 3.5.14.30 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IODrvEtherCAT, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IoDrvEtherNetIP" type="string" access="visible">
-              <ts:value>IoDrvEtherNetIP, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvEtherNetIP, 3.5.16.40 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IoDrvEtherNetIPAdapter" type="string" access="visible">
-              <ts:value>IoDrvEtherNetIPAdapter, 3.5.14.10 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvEtherNetIPAdapter, 3.5.16.30 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="EtherNetIP Services" type="string" access="visible">
               <ts:value>EtherNetIP Services, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
@@ -834,13 +814,13 @@
               <ts:value>IoDrvBase, 3.5.13.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="IoDriver Utility" type="string" access="visible">
-              <ts:value>IoDrvUtility, 3.5.11.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvUtility, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="CanConfig" type="string" access="visible">
-              <ts:value>3S CANopenStack, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>3S CANopenStack, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="3S CANopenStack" type="string" access="visible">
-              <ts:value>3S CANopenStack, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>3S CANopenStack, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="3S CANopenDevice" type="string" access="visible">
               <ts:value>3S CANopenDevice, 3.5.3.150 (3S - Smart Software Solutions GmbH)</ts:value>
@@ -849,10 +829,10 @@
               <ts:value>3S CANopenSafety, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="3S CANopenSlaveStack" type="string" access="visible">
-              <ts:value>3S CANopenSlaveStack, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>3S CANopenSlaveStack, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="3S CANopenStackUnsafe" type="string" access="visible">
-              <ts:value>3S CANopenStackUnsafe, 3.5.9.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>3S CANopenStackUnsafe, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="CANopenSafetyTypes" type="string" access="visible">
               <ts:value>CANopenSafetyTypes, 3.5.5.0 (3S - Smart Software Solutions GmbH)</ts:value>
@@ -861,31 +841,31 @@
               <ts:value>3S CANopenSafety Slave, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="3S CANopenSlaveStack Unsafe" type="string" access="visible">
-              <ts:value>3S CANopenSlaveStack Unsafe, 3.5.10.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>3S CANopenSlaveStack Unsafe, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="CANbusDevice" type="string" access="visible">
-              <ts:value>CANbusDevice, 3.5.10.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>CANbusDevice, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="ModbusTCP Slave" type="string" access="visible">
-              <ts:value>ModbusTCP Slave, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>ModbusTCP Slave, 3.5.16.40 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IoDrvModbusBase" type="string" access="visible">
-              <ts:value>IoDrvModbusBase, 3.5.13.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvModbusBase, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IoDrvModbusTCP" type="string" access="visible">
-              <ts:value>IoDrvModbusTCP, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvModbusTCP, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="Rts Service Handler" type="string" access="visible">
               <ts:value>Rts Service Handler, 3.5.5.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="CmpApp" type="string" access="visible">
-              <ts:value>CmpApp, 3.5.14.0 (System)</ts:value>
+              <ts:value>CmpApp, 3.5.15.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpAppBP" type="string" access="visible">
               <ts:value>CmpAppBP, 3.5.13.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpAsyncMgr" type="string" access="visible">
-              <ts:value>CmpAsyncMgr, 3.5.14.30 (System)</ts:value>
+              <ts:value>CmpAsyncMgr, 3.5.15.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpBinTagUtilIec" type="string" access="visible">
               <ts:value>CmpBinTagUtilIec, 3.5.5.0 (System)</ts:value>
@@ -903,13 +883,13 @@
               <ts:value>CmpChecksum, 3.5.5.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpDynamicText" type="string" access="visible">
-              <ts:value>CmpDynamicText, 3.5.9.0 (System)</ts:value>
+              <ts:value>CmpDynamicText, 3.5.15.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpErrors" type="string" access="visible">
               <ts:value>CmpErrors, 3.3.1.40 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpEventMgr" type="string" access="visible">
-              <ts:value>CmpEventMgr, 3.5.14.0 (System)</ts:value>
+              <ts:value>CmpEventMgr, 3.5.16.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpHilscherCIFX" type="string" access="visible">
               <ts:value>CmpHilscherCIFX, 3.5.13.0 (System)</ts:value>
@@ -918,7 +898,7 @@
               <ts:value>CmpIecTask, 3.5.14.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpIecVarAccess" type="string" access="visible">
-              <ts:value>CmpIecVarAccess, 3.5.13.0 (System)</ts:value>
+              <ts:value>CmpIecVarAccess, 3.5.15.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpIoDrvC" type="string" access="visible">
               <ts:value>CmpIoDrvC, 3.5.2.0 (System)</ts:value>
@@ -927,7 +907,7 @@
               <ts:value>CmpIoMgr, 3.1.3.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpLog" type="string" access="visible">
-              <ts:value>CmpLog, 3.5.5.0 (System)</ts:value>
+              <ts:value>CmpLog, 3.5.16.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpNameServiceClientIec" type="string" access="visible">
               <ts:value>CmpNameServiceClientIec, 3.5.5.0 (System)</ts:value>
@@ -939,13 +919,13 @@
               <ts:value>CmpOPCUAServer, 3.5.12.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpPLCHandler" type="string" access="visible">
-              <ts:value>CmpPLCHandler, 3.5.13.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>CmpPLCHandler, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="CmpRouter" type="string" access="visible">
               <ts:value>CmpRouter, 3.5.2.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpSchedule" type="string" access="visible">
-              <ts:value>CmpSchedule, 3.5.13.0 (System)</ts:value>
+              <ts:value>CmpSchedule, 3.5.15.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpSercos3Master" type="string" access="visible">
               <ts:value>CmpSercos3Master, 3.5.6.0 (3S - Smart Software Solutions GmbH)</ts:value>
@@ -963,60 +943,54 @@
               <ts:value>CmpSrv, 3.5.5.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpSysEthernet" type="string" access="visible">
-              <ts:value>SysEthernet, 3.5.12.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>SysEthernet, 3.5.16.10 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="CmpTargetVisu" type="string" access="visible">
               <ts:value>CmpTargetVisu, 3.5.5.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpTraceMgr" type="string" access="visible">
-              <ts:value>CmpTraceMgr, 3.5.11.0 (System)</ts:value>
+              <ts:value>CmpTraceMgr, 3.5.16.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpVisuHandler" type="string" access="visible">
-              <ts:value>CmpVisuHandler, 3.5.14.0 (System)</ts:value>
+              <ts:value>CmpVisuHandler, 3.5.16.10 (System)</ts:value>
             </ts:setting>
             <ts:setting name="Component Manager" type="string" access="visible">
-              <ts:value>Component Manager, 3.5.13.0 (System)</ts:value>
+              <ts:value>Component Manager, 3.5.16.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CommFB" type="string" access="visible">
-              <ts:value>CommFB, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
-            </ts:setting>
-            <ts:setting name="DHCP" type="string" access="visible">
-              <ts:value>DHCP Client, 3.5.11.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>CommFB, 3.5.16.30 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IoDrvProfinet" type="string" access="visible">
-              <ts:value>IoDrvProfinet, 3.5.14.30 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvProfinet, 3.5.16.40 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="Profinet" type="string" access="visible">
-              <ts:value>Profinet, 3.5.14.40 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>Profinet, 3.5.16.30 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="ARP" type="string" access="visible">
               <ts:value>ARP, 3.5.11.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="RPC" type="string" access="visible">
-              <ts:value>Remote Procedure Calls, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>Remote Procedure Calls, 3.5.16.20 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IoDrvCifXBase" type="string" access="visible">
-              <ts:value>IoDrvCifXBase, 3.5.14.30 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvCifXBase, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <!-- Take care, the IoDrvCIFXProfibus library is resolved by two placeholders! -->
             <ts:setting name="IoDrvCIFXProfibus" type="string" access="visible">
-              <ts:value>IoDrvCIFXProfibus, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
-            </ts:setting>
-            <ts:setting name="IoDrvCIFXProfiNet" type="string" access="visible">
-              <ts:value>IoDrvCIFXProfiNet, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvCIFXProfibus, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IoDrvCIFXEthernetIP" type="string" access="visible">
-              <ts:value>IoDrvCIFXEthernetIP, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvCIFXEthernetIP, 3.5.16.30 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IoDrvJ1939" type="string" access="visible">
-              <ts:value>IoDrvJ1939, 3.5.14.10 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvJ1939, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <!-- Take care, the IoDrvCIFXProfibus library is resolved by two placeholders! -->
             <ts:setting name="IoDrvProfibusMaster" type="string" access="visible">
-              <ts:value>IoDrvCIFXProfibus, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvCIFXProfibus, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IoStandard" type="string" access="visible">
-              <ts:value>IoStandard, 3.5.13.0 (System)</ts:value>
+              <ts:value>IoStandard, 3.5.16.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="iParServer" type="string" access="visible">
               <ts:value>iParServer, 3.5.10.0 (3S - Smart Software Solutions GmbH)</ts:value>
@@ -1025,7 +999,7 @@
               <ts:value>SDO Server, 3.5.8.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="SysCom" type="string" access="visible">
-              <ts:value>SysCom, 3.5.5.0 (System)</ts:value>
+              <ts:value>SysCom, 3.5.15.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysCpuHandling" type="string" access="visible">
               <ts:value>SysCpuHandling, 3.5.13.0 (System)</ts:value>
@@ -1034,7 +1008,7 @@
               <ts:value>SysCpuMultiCore, 3.5.11.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysDir" type="string" access="visible">
-              <ts:value>SysDir, 3.5.12.0 (System)</ts:value>
+              <ts:value>SysDir, 3.5.15.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysEvent" type="string" access="visible">
               <ts:value>SysEvent, 3.5.5.0 (System)</ts:value>
@@ -1043,10 +1017,10 @@
               <ts:value>SysExcept, 3.5.7.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysFile" type="string" access="visible">
-              <ts:value>SysFile, 3.5.9.0 (System)</ts:value>
+              <ts:value>SysFile, 3.5.15.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysFileAsync" type="string" access="visible">
-              <ts:value>SysFileAsync, 3.5.14.30 (System)</ts:value>
+              <ts:value>SysFileAsync, 3.5.15.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysInt" type="string" access="visible">
               <ts:value>SysInt, 3.5.5.0 (System)</ts:value>
@@ -1061,22 +1035,25 @@
               <ts:value>SysPort, 3.5.5.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysProcess" type="string" access="visible">
-              <ts:value>SysProcess, 3.5.7.0 (System)</ts:value>
+              <ts:value>SysProcess, 3.5.16.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysReadWriteLock" type="string" access="visible">
               <ts:value>SysReadWriteLock, 3.5.11.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysSem" type="string" access="visible">
-              <ts:value>SysSem, 3.5.5.0 (System)</ts:value>
+              <ts:value>SysSem, 3.5.16.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysSemProcess" type="string" access="visible">
               <ts:value>SysSemProcess, 3.5.5.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysShm" type="string" access="visible">
-              <ts:value>SysShm, 3.5.8.0 (System)</ts:value>
+              <ts:value>SysShm, 3.5.16.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysSocket" type="string" access="visible">
-              <ts:value>SysSocket, 3.5.14.0 (System)</ts:value>
+              <ts:value>SysSocket, 3.5.15.0 (System)</ts:value>
+            </ts:setting>
+            <ts:setting name="SysSocket Implementation" type="string" access="visible">
+              <ts:value>SysSocket Implementation, 3.5.15.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysSocketAsync" type="string" access="visible">
               <ts:value>SysSocketAsync, 3.5.5.0 (System)</ts:value>
@@ -1107,31 +1084,31 @@
               <ts:value>CmpXMLParser, 3.5.5.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysSafetyIoBase" type="string" access="visible">
-              <ts:value>SysSafetyIoBase, 3.5.14.10 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>SysSafetyIoBase, 3.5.15.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IoDrvSafetySp" type="string" access="visible">
-              <ts:value>IoDrvSafetySp, 3.5.14.10 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvSafetySp, 3.5.15.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="UDP" type="string" access="visible">
-              <ts:value>UDP, 3.5.10.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>UDP, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="TCP" type="string" access="visible">
-              <ts:value>TCP, 3.5.9.50 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>TCP, 3.5.15.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="CIP Encapsulation" type="string" access="visible">
-              <ts:value>CIP Encapsulation Layer, 3.5.13.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>CIP Encapsulation Layer, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="CIP Object" type="string" access="visible">
-              <ts:value>CIP Object, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>CIP Object, 3.5.16.30 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="CANopenSafetyBase" type="string" access="visible">
               <ts:value>CANopenSafetyBase, 3.5.9.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="MemoryUtils" type="string" access="visible">
-              <ts:value>MemoryUtils, 3.5.13.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>MemoryUtils, 3.5.15.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="Redundancy" type="string" access="visible">
-              <ts:value>Redundancy, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>Redundancy, 3.5.15.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <!-- **********************************************  CAA Placeholder  ***************************************************** -->
             <ts:setting name="CAA Async Manager" type="string" access="visible">
@@ -1144,7 +1121,7 @@
               <ts:value>CAA Callback Extern, 3.5.11.0 (CAA Technical Workgroup)</ts:value>
             </ts:setting>
             <ts:setting name="CAA CanL2" type="string" access="visible">
-              <ts:value>CAA Can Low Level Extern, 3.5.13.0 (CAA Technical Workgroup)</ts:value>
+              <ts:value>CAA Can Low Level Extern, 3.5.16.0 (CAA Technical Workgroup)</ts:value>
             </ts:setting>
             <ts:setting name="CAA CanL2I" type="string" access="visible">
               <ts:value>CAA Can Low Level Imp Extern, 3.5.11.0 (CAA Technical Workgroup)</ts:value>
@@ -1156,7 +1133,7 @@
               <ts:value>CAA CANopen Stack, 3.5.10.0 (CAA Technical Workgroup)</ts:value>
             </ts:setting>
             <ts:setting name="CAA CiA405" type="string" access="visible">
-              <ts:value>CAA CiA 405, 3.5.14.0 (CAA Technical Workgroup)</ts:value>
+              <ts:value>CAA CiA 405, 3.5.15.0 (CAA Technical Workgroup)</ts:value>
             </ts:setting>
             <ts:setting name="CAA DTUtility" type="string" access="visible">
               <ts:value>CAA DTUtil Extern, 3.5.12.0 (CAA Technical Workgroup)</ts:value>
@@ -1165,7 +1142,7 @@
               <ts:value>CAA FB Factory, 3.5.13.0 (CAA Technical Workgroup)</ts:value>
             </ts:setting>
             <ts:setting name="CAA File" type="string" access="visible">
-              <ts:value>CAA File, 3.5.13.40 (CAA Technical Workgroup)</ts:value>
+              <ts:value>CAA File, 3.5.15.0 (CAA Technical Workgroup)</ts:value>
             </ts:setting>
             <ts:setting name="CAA List And Tree" type="string" access="visible">
               <ts:value>CAA List And Tree, 3.5.11.0 (CAA Technical Workgroup)</ts:value>
@@ -1180,10 +1157,10 @@
               <ts:value>CAA Memory, 3.5.12.0 (CAA Technical Workgroup)</ts:value>
             </ts:setting>
             <ts:setting name="CAA NetBaseSrv" type="string" access="visible">
-              <ts:value>CAA Net Base Services, 3.5.14.0 (CAA Technical Workgroup)</ts:value>
+              <ts:value>CAA Net Base Services, 3.5.15.0 (CAA Technical Workgroup)</ts:value>
             </ts:setting>
             <ts:setting name="CAA ResMan" type="string" access="visible">
-              <ts:value>CAA Ressource Manager Extern, 3.5.11.0 (CAA Technical Workgroup)</ts:value>
+              <ts:value>CAA Ressource Manager Extern, 3.5.16.0 (CAA Technical Workgroup)</ts:value>
             </ts:setting>
             <ts:setting name="CAA RTCLK" type="string" access="visible">
               <ts:value>CAA Real Time Clock Extern, 3.5.10.0 (CAA Technical Workgroup)</ts:value>
@@ -1192,7 +1169,7 @@
               <ts:value>CAA Segmented Buffer Manager Extern, 3.5.11.0 (CAA Technical Workgroup)</ts:value>
             </ts:setting>
             <ts:setting name="CAA SerialCom" type="string" access="visible">
-              <ts:value>CAA SerialCom, 3.5.12.0 (CAA Technical Workgroup)</ts:value>
+              <ts:value>CAA SerialCom, 3.5.15.0 (CAA Technical Workgroup)</ts:value>
             </ts:setting>
             <ts:setting name="CAA Storage" type="string" access="visible">
               <ts:value>CAA Storage, 3.5.13.0 (CAA Technical Workgroup)</ts:value>
@@ -1210,7 +1187,7 @@
               <ts:value>CAA Types Extern, 3.5.13.0 (CAA Technical Workgroup)</ts:value>
             </ts:setting>
             <ts:setting name="CAA Device Diagnosis" type="string" access="visible">
-              <ts:value>CAA Device Diagnosis, 3.5.14.0 (CAA Technical Workgroup)</ts:value>
+              <ts:value>CAA Device Diagnosis, 3.5.15.0 (CAA Technical Workgroup)</ts:value>
             </ts:setting>
             <!-- **********************************************  FDT Placeholders  *************************************************************-->
             <ts:setting name="FDT_ProfibusDriver" type="string" access="visible">
@@ -1218,28 +1195,78 @@
             </ts:setting>
             <!-- **********************************************  NetVar Placeholders  *************************************************************-->
             <ts:setting name="NetVarUdp" type="string" access="visible">
-              <ts:value>NetVarUdp, 3.5.12.0 (System)</ts:value>
+              <ts:value>NetVarUdp, 3.5.16.0 (System)</ts:value>
             </ts:setting>
             <!-- *********************************  Security related Placeholders  *************************************************************-->
+            <ts:setting name="CmpCrypto" type="string" access="visible">
+              <ts:value>CmpCrypto, 3.5.15.0 (System)</ts:value>
+            </ts:setting>
+            <ts:setting name="CmpTls" type="string" access="visible">
+              <ts:value>CmpTls, 3.5.15.0 (System)</ts:value>
+            </ts:setting>
+            <ts:setting name="CmpX509Cert" type="string" access="visible">
+              <ts:value>CmpX509Cert, 3.5.15.0 (System)</ts:value>
+            </ts:setting>
+            <ts:setting name="SysSocket2" type="string" access="visible">
+              <ts:value>SysSocket2, 3.5.16.10 (System)</ts:value>
+            </ts:setting>
+            <ts:setting name="SysSocket2 Implementation" type="string" access="visible">
+              <ts:value>SysSocket2 Implementation, 3.5.16.0 (System)</ts:value>
+            </ts:setting>
             <!-- *********************************  BACnet  *************************************************************-->
             <ts:setting name="CmpBACnet" type="string" access="visible">
-              <ts:value>CmpBACnet, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>CmpBACnet, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <!-- *********************************  KNX  *************************************************************-->
             <ts:setting name="CmpKNX" type="string" access="visible">
               <ts:value>CmpKNX, 3.5.13.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
-            <ts:setting name="CmpCrypto" type="string" access="visible">
-              <ts:value>CmpCrypto, 3.5.11.0 (System)</ts:value>
+            <!-- *********************************  CmpCharDevice Container ********************************************************-->
+            <ts:setting name="CmpCharDevice" type="string" access="visible">
+              <ts:value>CmpCharDevice, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
-            <ts:setting name="CmpTls" type="string" access="visible">
-              <ts:value>CmpTls, 3.5.10.0 (System)</ts:value>
+            <!-- *********************************  optional Runtime components **********************************************-->
+            <ts:setting name="CmpOPCUAClient Implementation" type="string" access="visible">
+              <ts:value>NotImplementedByDevice, 3.5.15.0 (System)</ts:value>
             </ts:setting>
-            <ts:setting name="CmpX509Cert" type="string" access="visible">
-              <ts:value>CmpX509Cert, 3.5.11.0 (System)</ts:value>
+            <ts:setting name="Redundancy Implementation" type="string" access="visible">
+              <ts:value>NotImplementedByDevice, 3.5.15.0 (System)</ts:value>
             </ts:setting>
-            <ts:setting name="SysSocket2" type="string" access="visible">
-              <ts:value>SysSocket2, 3.5.14.0 (System)</ts:value>
+            <ts:setting name="CmpRedundancyConnection Implementation" type="string" access="visible">
+              <ts:value>NotImplementedByDevice, 3.5.15.0 (System)</ts:value>
+            </ts:setting>
+            <ts:setting name="CmpCharDevice Implementation" type="string" access="visible">
+              <ts:value>CmpCharDevice Implementation, 3.5.16.0 (3S - Smart Software Solutions GmbH)</ts:value>
+            </ts:setting>
+            <ts:setting name="CmpEventMgr Implementation" type="string" access="visible">
+              <ts:value>CmpEventMgr Implementation, 3.5.16.0 (System)</ts:value>
+            </ts:setting>
+            <ts:setting name="CmpIecVarAccess Implementation" type="string" access="visible">
+              <ts:value>CmpIecVarAccess Implementation, 3.5.15.0 (System)</ts:value>
+            </ts:setting>
+            <ts:setting name="CmpOPCUAStack Implementation" type="string" access="visible">
+              <ts:value>CmpOPCUAStack Implementation, 3.5.16.0 (System)</ts:value>
+            </ts:setting>
+            <ts:setting name="CmpTls Implementation" type="string" access="visible">
+              <ts:value>CmpTls Implementation, 3.5.15.0 (System)</ts:value>
+            </ts:setting>
+            <ts:setting name="CmpCrypto Implementation" type="string" access="visible">
+              <ts:value>CmpCrypto Implementation, 3.5.16.0 (System)</ts:value>
+            </ts:setting>
+            <ts:setting name="CmpX509Cert Implementation" type="string" access="visible">
+              <ts:value>CmpX509Cert Implementation, 3.5.15.0 (System)</ts:value>
+            </ts:setting>
+            <ts:setting name="CmpUserMgr Implementation" type="string" access="visible">
+              <ts:value>CmpUserMgr Implementation, 3.5.16.20 (System)</ts:value>
+            </ts:setting>
+            <ts:setting name="SysProcess Implementation" type="string" access="visible">
+              <ts:value>SysProcess Implementation, 3.5.16.0 (System)</ts:value>
+            </ts:setting>
+            <ts:setting name="SysSem Implementation" type="string" access="visible">
+              <ts:value>SysSem Implementation, 3.5.16.0 (System)</ts:value>
+            </ts:setting>
+            <ts:setting name="SysShm Implementation" type="string" access="visible">
+              <ts:value>SysShm Implementation, 3.5.16.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpCodeMeter" type="string" access="visible">
               <ts:value>CmpCodeMeter, 3.5.5.0 (System)</ts:value>
@@ -1341,7 +1368,7 @@
             <ts:value>0</ts:value>
           </ts:setting>
           <ts:setting name="atomic-read-write-64-bit" type="boolean" access="visible">
-            <ts:value>0</ts:value>
+            <ts:value>1</ts:value>
           </ts:setting>
           <ts:setting name="load-store-register-exclusive" type="boolean" access="visible">
             <ts:value>1</ts:value>

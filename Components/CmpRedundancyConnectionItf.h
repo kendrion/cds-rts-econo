@@ -8,19 +8,19 @@
  *	by implementing this interface and replacing the default component based on IP protocols.
  *	There are two different kinds of data exchange:
  *	<ul>
- *		<li>Sending and receiving synchronisation messages</li>
+ *		<li>Sending and receiving synchronization messages</li>
  *		<li>Sending and receiving data messages</li>
  *	</ul>
  *	</p>
- *	<p> Synchronisation messages are used during redundant operation. They are exchanged every task cycle.
- *	Data messages are used during synchronisation phase. They are used to transmit the boot application file, and global data.
+ *	<p> Synchronization messages are used during redundant operation. They are exchanged every task cycle.
+ *	Data messages are used during synchronization phase. They are used to transmit the boot application file, and global data.
  *	</p>
- *	<p> Default implementation is using UDP for synchronisation messages, and TCP for data messages.
+ *	<p> Default implementation is using UDP for synchronization messages, and TCP for data messages.
  *	</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -47,23 +47,23 @@ extern "C" {
 
 /**
  * <description>
- *	Open a redundancy connection for synchronisation. This connection will be used to receive data from redundancy partner. Synchronisation messages
- *	are quite small, but must be transmitted in realtime.
+ *	Open a redundancy connection for synchronization. This connection will be used to receive data from redundancy partner. Synchronization messages
+ *	are quite small, but must be transmitted in real-time.
  * </description>
  * <param name="mode" type="IN">Indicates if the socked was opened in sync mode or data mode, and if used for send or received, or server or client.
  *	The following modes apply:
  *	RCOM_SyncReceive: Open a redundancy connection for sync messages receive.
- *		A UDP socket is opend and bind to local address in default implementation.
+ *		A UDP socket is opened and bind to local address in default implementation.
  *	RCOM_SyncSend: Open a redundancy connection for sync messages transmit.
- *		A UDP socket is opend in default implementation.
+ *		A UDP socket is opened in default implementation.
  *	RCOM_DataClient: Open a redundancy connection for data exchange. This connection will be used as client side for data transfer.
  *		The standby partner is playing the role of the communication client.
  *		Data transfer messages are quite big, and should be transmitted as fast as possible.
- *		A TCP socket is opend in default implementation, and connect to partner.
+ *		A TCP socket is opened in default implementation, and connect to partner.
  *	RCOM_DataServer: Open a redundancy connection for data exchange. This connection will be used as server side for data transfer.
  *		The standalone and active partner is playing the role of the communication server.
  *		Data transfer messages are quite big, and should be transmitted as fast as possible.
- *		A TCP socket is opend in default implementation, and bind and listen. This socket is waiting for a client connection.
+ *		A TCP socket is opened in default implementation, and bind and listen. This socket is waiting for a client connection.
  * </param>
  * <result>Handle of connection, for example socket number. Will be used to send and receive data. In case of error RTS_INVALID_HANDLE will be returned.</result>
  */
@@ -233,7 +233,7 @@ typedef RTS_UI32 (CDECL * PFRDCYCONNECTIONGETOWNADDRESS) (void);
 
 /**
  * <description>
- *	Receive synchronisation data from partner device. 
+ *	Receive synchronization data from partner device. 
  * </description>
  * <param name="hConnection" type="IN">Handle to the connection, previously opened with RdcyConnectionOpen</param>
  * <param name="pbyData" type="IN">Buffer to receive the received data</param>
@@ -349,7 +349,7 @@ typedef RTS_UI32 (CDECL * PFRDCYCONNECTIONGETRECEIVESIZE) (RTS_HANDLE hConnectio
 
 /**
  * <description>
- *	Send synchronisation data to partner device. 
+ *	Send synchronization data to partner device. 
  * </description>
  * <param name="hConnection" type="IN">Handle to the connection, previously opened with RdcyConnectionOpen</param>
  * <param name="pbyData" type="IN">Buffer with data to send</param>
@@ -528,7 +528,7 @@ typedef RTS_UI32 (CDECL * PFRDCYCONNECTIONSENDDATA) (RTS_HANDLE hConnection, cha
 
 /**
  * <description>
- *	Called when initializing the redundancy component with the redundancy connection settings from the CODESYS control config file.
+ *	Called when initializing the redundancy component with the redundancy connection settings from the CODESYS control configuration file.
  *	Connection settings are for e.g. IP / MAC / ... addresses of the redundancy partners, ports, timeouts, ... depending on the used communication.
  * </description>
  * <result>ERR_OK in case of success, ERR_FAILED in case of error.</result>
@@ -584,7 +584,7 @@ typedef RTS_RESULT (CDECL * PFRDCYCONNECTIONREADSETTINGS) (void);
 
 /**
  * <description>
- *	Called when service is received to read the redundancy settings from the CODESYS control config file.
+ *	Called when service is received to read the redundancy settings from the CODESYS control configuration file.
  * </description>
  * <param name="pwriter" type="IN">Pointer to the writer to write the settings to.</param>
  * <result>ERR_OK in case of success, ERR_FAILED in case of error.</result>
@@ -640,7 +640,7 @@ typedef RTS_RESULT (CDECL * PFRDCYCONNECTIONSRVREADSETTINGS) (BINTAGWRITER *pwri
 
 /**
  * <description>
- *	Called when service is received to write the redundancy settings from CODESYS into the CODESYS control config file.
+ *	Called when service is received to write the redundancy settings from CODESYS into the CODESYS control configuration file.
  * </description>
  * <param name="preader" type="IN">Pointer to the reader from which the settings can be read.</param>
  * <result>ERR_OK in case of success, ERR_FAILED in case of error.</result>
@@ -805,6 +805,79 @@ typedef RTS_UI32 (CDECL * PFRDCYCONNECTIONGETDATAMESSAGESIZE) (void);
 
 
 
+
+
+/**
+ * <description>REDU_IP_CONNECTION_INFO</description>
+ */
+typedef struct tagREDUNDANCY_CONNECTION_INFO
+{
+	RTS_IEC_INT nConnectionsConfigured;		/* Number of configured  connections (1 or 2) */
+	RTS_IEC_INT nConnectionsWorking;		/* Number of working connections */
+	RTS_IEC_UDINT diTickSend;		/* Tick count of message sent */
+	RTS_IEC_BOOL bConnectionStatusLink1;		/* Status of link 1. TRUE in case connected. */
+	RTS_IEC_BOOL bConnectionStatusLink2;		/* Status of link 2. TRUE in case connected. */
+} REDUNDANCY_CONNECTION_INFO;
+
+/**
+ * <description>getconnectioninfo</description>
+ */
+typedef struct taggetconnectioninfo_struct
+{
+	REDUNDANCY_CONNECTION_INFO *pConnectionInfo;	/* VAR_INPUT */	/* Pointer to connection info structure */
+	RTS_IEC_RESULT GetConnectionInfo;	/* VAR_OUTPUT */	
+} getconnectioninfo_struct;
+
+void CDECL CDECL_EXT getconnectioninfo(getconnectioninfo_struct *p);
+typedef void (CDECL CDECL_EXT* PFGETCONNECTIONINFO_IEC) (getconnectioninfo_struct *p);
+#if defined(CMPREDUNDANCYCONNECTION_NOTIMPLEMENTED) || defined(GETCONNECTIONINFO_NOTIMPLEMENTED)
+	#define USE_getconnectioninfo
+	#define EXT_getconnectioninfo
+	#define GET_getconnectioninfo(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_getconnectioninfo(p0) 
+	#define CHK_getconnectioninfo  FALSE
+	#define EXP_getconnectioninfo  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_getconnectioninfo
+	#define EXT_getconnectioninfo
+	#define GET_getconnectioninfo(fl)  CAL_CMGETAPI( "getconnectioninfo" ) 
+	#define CAL_getconnectioninfo  getconnectioninfo
+	#define CHK_getconnectioninfo  TRUE
+	#define EXP_getconnectioninfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getconnectioninfo", (RTS_UINTPTR)getconnectioninfo, 1, 0x2F0D4581, 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(CMPREDUNDANCYCONNECTION_EXTERNAL)
+	#define USE_getconnectioninfo
+	#define EXT_getconnectioninfo
+	#define GET_getconnectioninfo(fl)  CAL_CMGETAPI( "getconnectioninfo" ) 
+	#define CAL_getconnectioninfo  getconnectioninfo
+	#define CHK_getconnectioninfo  TRUE
+	#define EXP_getconnectioninfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getconnectioninfo", (RTS_UINTPTR)getconnectioninfo, 1, 0x2F0D4581, 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpRedundancyConnectiongetconnectioninfo
+	#define EXT_CmpRedundancyConnectiongetconnectioninfo
+	#define GET_CmpRedundancyConnectiongetconnectioninfo  ERR_OK
+	#define CAL_CmpRedundancyConnectiongetconnectioninfo  getconnectioninfo
+	#define CHK_CmpRedundancyConnectiongetconnectioninfo  TRUE
+	#define EXP_CmpRedundancyConnectiongetconnectioninfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getconnectioninfo", (RTS_UINTPTR)getconnectioninfo, 1, 0x2F0D4581, 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_getconnectioninfo
+	#define EXT_getconnectioninfo
+	#define GET_getconnectioninfo(fl)  CAL_CMGETAPI( "getconnectioninfo" ) 
+	#define CAL_getconnectioninfo  getconnectioninfo
+	#define CHK_getconnectioninfo  TRUE
+	#define EXP_getconnectioninfo  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getconnectioninfo", (RTS_UINTPTR)getconnectioninfo, 1, 0x2F0D4581, 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_getconnectioninfo  PFGETCONNECTIONINFO_IEC pfgetconnectioninfo;
+	#define EXT_getconnectioninfo  extern PFGETCONNECTIONINFO_IEC pfgetconnectioninfo;
+	#define GET_getconnectioninfo(fl)  s_pfCMGetAPI2( "getconnectioninfo", (RTS_VOID_FCTPTR *)&pfgetconnectioninfo, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x2F0D4581, 0x03050F00)
+	#define CAL_getconnectioninfo  pfgetconnectioninfo
+	#define CHK_getconnectioninfo  (pfgetconnectioninfo != NULL)
+	#define EXP_getconnectioninfo   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"getconnectioninfo", (RTS_UINTPTR)getconnectioninfo, 1, 0x2F0D4581, 0x03050F00) 
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #ifdef __cplusplus
 }

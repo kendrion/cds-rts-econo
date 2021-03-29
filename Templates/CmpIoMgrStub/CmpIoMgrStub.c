@@ -21,9 +21,9 @@ DLL_DECL int CDECL ComponentEntry(INIT_STRUCT *pInitStruct)
 		pfExportFunctions	OUT Pointer to function that exports component functions
 		pfImportFunctions	OUT Pointer to function that imports functions from other components
 		pfGetVersion		OUT Pointer to function to get component version
-		pfRegisterAPI		IN	Pointer to component mangager function to register a api function
-		pfGetAPI			IN	Pointer to component mangager function to get a api function
-		pfCallHook			IN	Pointer to component mangager function to call a hook function
+		pfRegisterAPI		IN	Pointer to component manager function to register a API function
+		pfGetAPI			IN	Pointer to component manager function to get a API function
+		pfCallHook			IN	Pointer to component manager function to call a hook function
 	Return					ERR_OK if library could be initialized, else error code
 */
 {
@@ -184,6 +184,16 @@ void CDECL CDECL_EXT iomgrupdatemapping2(iomgrupdatemapping2_struct *p)
 void CDECL CDECL_EXT iomgrreconfigure(iomgrreconfigure_struct *p)
 {
 	p->IoMgrReconfigure = ERR_NOTIMPLEMENTED;
+}
+
+void CDECL CDECL_EXT iomgrlockenter(iomgrlockenter_struct *p)
+{
+	p->IoMgrLockEnter = ERR_NOTIMPLEMENTED;
+}
+
+void CDECL CDECL_EXT iomgrlockleave(iomgrlockleave_struct *p)
+{
+	p->IoMgrLockLeave = ERR_NOTIMPLEMENTED;
 }
 
 void CDECL CDECL_EXT iomgrreadinputs(iomgrreadinputs_struct *p)
@@ -442,6 +452,16 @@ RTS_RESULT CDECL IoMgrUpdateMapping2(IoConfigTaskMap *pTaskMapList, int nCount, 
 }
 
 RTS_RESULT CDECL IoMgrReconfigure(IoConfigConnector *pConnector, RTS_UI32 *pui32State)
+{
+	return ERR_NOTIMPLEMENTED;
+}
+
+RTS_RESULT CDECL IoMgrLockEnter(IBase *pIBase, const RTS_UI32 ui32LockScope)
+{
+	return ERR_NOTIMPLEMENTED;
+}
+
+RTS_RESULT CDECL IoMgrLockLeave(IBase *pIBase, const RTS_UI32 ui32LockScope)
 {
 	return ERR_NOTIMPLEMENTED;
 }

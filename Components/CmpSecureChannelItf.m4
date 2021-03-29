@@ -10,7 +10,7 @@
  *           The security manager must be linked statically to the runtime system core to prevent, that it cannot be removed or replaced by a malware!
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -21,7 +21,7 @@ REF_ITF(`CmpSecurityManagerItf.m4')
 
 #ifndef PLC_HANDLER
 	#ifdef CMPSECURECHANNEL_EXTERNAL
-		#error CmpSecureChannel must not be overloadable so defining CMPSECURECHANNEL_EXTERNAL is forbidden because of security requirements!
+		#error CmpSecureChannel must not be over loadable so defining CMPSECURECHANNEL_EXTERNAL is forbidden because of security requirements!
 	#endif
 #endif
 	
@@ -36,7 +36,7 @@ typedef struct
 	RTS_UI16		ui16ServiceGroup;	/* Not Used -> Set to 0 */
 	RTS_UI16		ui16Service;		/* Not Used -> Set to 0 */
 	RTS_UI32		ui32SessionID;		/* Not Used -> Set to 0 */
-	RTS_UI32		ui32ServiceLength;	/* Length of the data following after this hader */
+	RTS_UI32		ui32ServiceLength;	/* Length of the data following after this header */
 	RTS_UI32		ui32NumBlocks;		/* Number of TLS record protocol blocks following in this message */
 	RTS_UI8			ui8MajorVersion;	/* Major Version of TLS protocol inside CDS */
 	RTS_UI8			ui8MinorVersion;	/* Minor version of TLS protocol inside CDS */
@@ -85,7 +85,7 @@ typedef enum
 			
 /**
  * <category>SecuritySettings</category>
- * <description>Security setting to specify, if a selfsigned cert should be created by default if not available</description>
+ * <description>Security setting to specify, if a self-signed cert should be created by default if not available</description>
  */
 #define CMPSECCHANNEL_KEY_STRING_CREATE_SELFSIGNED_CERT				SECURITY_KEY_STRING_CREATE_SELFSIGNED_CERT
 #define CMPSECCHANNEL_KEY_STRING_CREATE_SELFSIGNED_CERT_DESC		SECURITY_KEY_STRING_CREATE_SELFSIGNED_CERT_DESC
@@ -115,17 +115,17 @@ extern "C" {
 /* -- Functions exported to the layer 4 network component. Only to be called by CmpChannelServer. -- */
 
 /**
- * <description>Handle one sevice request from the communication layer below (channel server)</description>
+ * <description>Handle one service request from the communication layer below (channel server)</description>
  * <param name="ui32ChannelHandle" type="IN">Id of the channel on which the request arrived</param>
  * <param name="pduRequest" type="IN">Pointer to the request</param>
  * <param name="pduReply" type="OUT">Pointer to the request reply buffer</param>
  * <param name="bFirstCall" type="IN">0: Tells the function, if it was already called for the same request before (0) or not (1).</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Received service was completely handeled.</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Received service was completely handled.</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PENDING">Received service will be handled asynchronously, 
  * but the caller has not to take care about this anymore.</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_CALL_AGAIN">Received service will be handled asynchronously. 
  * To progress this function have to be called again for the same received service data with bFirstCall=0.</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_...">Another error occured, channel should be closed.</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_...">Another error occurred, channel should be closed.</errorcode>
  * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT',`CDECL',`SecChServerHandleRequest',`(RTS_UI32 ui32ChannelHandle, PROTOCOL_DATA_UNIT pduRequest, PROTOCOL_DATA_UNIT pduReply, RTS_UI32 bFirstCall)')
@@ -139,18 +139,18 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SecChServerHandleRequest',`(RTS_UI32 ui32Chann
 *   Retrieves the number of available server channels.
 *   This is equal to the max. number of clients, which can be connected at the same time.
 * </description>
-* <param name="pui16MaxChannels" type="OUT">Number of of channels.</param>
+* <param name="pui16MaxChannels" type="OUT">Number of channels.</param>
 * <result>error code</result>
 */
 DEF_ITF_API(`RTS_RESULT',`CDECL', `SecChServerGetMaxChannels',`(RTS_UI16 *pui16MaxChannels)')
 
 /**
 * <description>
-*   Retrieves general information for the specified server channel. This function is intended for information purpoeses only.
+*   Retrieves general information for the specified server channel. This function is intended for information purposes only.
 * </description>
 * <param name="ui16ChannelIndex" type="IN">Index of the channel. Allowed range: 0..MaxChannels-1.</param>
 * <param name="pui32ServerState" type="OUT">State of the server channel, see category "channel server state" for CSSTATE_ values in CmpCommunicationLibItf.</param>
-* <param name="pChInfoBuffer" type="INOUT">Caller allocated buffer, which is filled by the CHANNELINFO structure. If the the state is CSSTATE_FREE, no structure is returned.</param>
+* <param name="pChInfoBuffer" type="INOUT">Caller allocated buffer, which is filled by the CHANNELINFO structure. If the state is CSSTATE_FREE, no structure is returned.</param>
 * <param name="psiBufferLen" type="INOUT">Pointer to the size of the buffer in bytes, returns the number of copied bytes.</param>
 * <result>error code</result>
 */
@@ -164,7 +164,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL', `SecChServerGetChannelInfoByIndex',`(RTS_UI16 
 *		Id of the channel
 *	</param>
 *	<param name="pui16Status" type="OUT">
-*		Is set to the current progress state. The PROGRESS_xxx constants define valied values.
+*		Is set to the current progress state. The PROGRESS_xxx constants define valid values.
 *	</param>
 *  <param name="pui8ScalingFactor" type="OUT">
 *		Provides the scaling factor for pnItemsComplete and pnTotalItems. These values have been scaled
@@ -172,7 +172,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL', `SecChServerGetChannelInfoByIndex',`(RTS_UI16 
 *		(i.e. they have been right shifted by ScalingFactor bits).
 *  </param>
 *	<param name="pi32ItemsComplete" type="OUT">
-*		Number of items completed (eg. the number of bytes transfered).
+*		Number of items completed (e.g. the number of bytes transfered).
 *  </param>
 * 	<param name="pi32TotalItems" type="OUT">
 *		Total number of item. Is set to -1 if unknown.
@@ -201,26 +201,6 @@ DEF_ITF_API(`RTS_RESULT',`CDECL', `SecChServerGetRequest',`(RTS_UI32 ui32Channel
 * <result>error code</result>
 */
 DEF_ITF_API(`RTS_RESULT',`CDECL', `SecChServerFinishRequest',`(RTS_UI32 ui32ChannelHandle, PROTOCOL_DATA_UNIT pduData)')
-
-/**
-* <description>
-*   Stores the session id in the channel server status structure.
-* </description>
-* <param name="ui32ChannelHandle" type="IN">Id of the channel for which the session id should be set.</param>
-* <param name="ui32SessionId" type="IN">New session id fo the channel.</param>
-* <result>error code</result>
-*/
-DEF_ITF_API(`RTS_RESULT',`CDECL', `SecChServerSetSessionId',`(RTS_UI32 ui32ChannelHandle, RTS_UI32 ui32SessionId)')
-
-/**
-* <description>
-*   Retrieves the stored session id from the channel server status structure.
-* </description>
-* <param name="ui32ChannelHandle" type="IN">Id of the channel for which the session id should be read.</param>
-* <param name="pui32SessionId" type="OUT">Pointer to return the session id.</param>
-* <result>error code</result>
-*/
-DEF_ITF_API(`RTS_RESULT',`CDECL', `SecChServerGetSessionId',`(RTS_UI32 ui32ChannelHandle, RTS_UI32 *pui32SessionId)')
 
 /**
  * <description>

@@ -1,0 +1,244 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_app_force_itf_8h:
+
+===============================
+CmpAppForceItf.h File Reference
+===============================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpAppItf.h <_cmp_app_itf_8h>`"
+| #include ":ref:`CmpSrvItf.h <_cmp_srv_itf_8h>`"
+
+Data Structures
+---------------
+
+- struct :ref:`tagForceVarDesc <structtag_force_var_desc>`
+
+- struct :ref:`EVTPARAM_AppForceReleaseAllForceValues <struct_e_v_t_p_a_r_a_m___app_force_release_all_force_values>`
+
+- struct :ref:`ICmpAppForce_C <struct_i_cmp_app_force___c>`
+
+Macros
+------
+
+- #define :ref:`APPL_STATIC_FORCE_ENTRIES <group___cmp_app_force_itf___staticdefines_1gabba0c85526602a057dd6bd22d1ccbd13>` 10
+
+- #define :ref:`APPKEY_INT_PERSISTENT_FORCE <group___cmp_app_force_itf___settings_1ga73a859caf9fccb1e0ac22662da8a4005>` "PersistentForce"
+
+- #define :ref:`APPVALUE_INT_PERSISTENT_FORCE_DEFAULT <group___cmp_app_force_itf___settings_1ga9caff5a74a270747592ce348b440f516>` 0
+
+- #define :ref:`RTS_FORCEFLAGS_SAFEDOLDVALUE <group___cmp_app_force_itf___settings_1ga60914a2c801003e597ebcc9550bee58e>` 1
+
+- #define :ref:`RTS_FORCEFLAGS_RESTORE <group___cmp_app_force_itf___settings_1ga2e13ebc5ba1d2c9a793ecb902dc3c5f7>` 2
+
+- #define :ref:`EVTPARAMID_AppForceReleaseAllForceValues <group___cmp_app_force_itf___eventparameter_1ga25c836fa7bfe8de92e368977dc38297e>` 0x0001
+
+- #define :ref:`EVTVERSION_AppForceReleaseAllForceValues <group___cmp_app_force_itf___eventparameter_1ga5f767cae699dc766c153f8c8791a9746>` 0x0001
+
+- #define :ref:`EVT_AppReleaseAllForceValues <group___cmp_app_force_itf___events_1ga5a35d1b98e232f47c02d916daffe2e1c>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`USE_AppForceInit <group___cmp_app_force_itf_1ga1c644958adc91efd0bda35a18e95ee8e>` :ref:`PFAPPFORCEINIT <group___cmp_app_force_itf_1ga7acf8e9482497f15d8dd27f528ec0d1d>` pfAppForceInit;
+
+- #define :ref:`EXT_AppForceInit <group___cmp_app_force_itf_1ga9a36f31c7b524d9d6bb84121f495b4e6>` extern :ref:`PFAPPFORCEINIT <group___cmp_app_force_itf_1ga7acf8e9482497f15d8dd27f528ec0d1d>` pfAppForceInit;
+
+- #define :ref:`GET_AppForceInit <group___cmp_app_force_itf_1ga7e7190bac323f687e4b2f44c747996bd>` s_pfCMGetAPI2( "AppForceInit", (RTS_VOID_FCTPTR *)&pfAppForceInit, (fl), 0, 0)
+
+- #define :ref:`CAL_AppForceInit <group___cmp_app_force_itf_1ga073adcf1cc3619cb0905f52fa68116a1>` pfAppForceInit
+
+- #define :ref:`CHK_AppForceInit <group___cmp_app_force_itf_1gabda5956649aa2d0483aba8522a48b9d3>` (pfAppForceInit != NULL)
+
+- #define :ref:`EXP_AppForceInit <group___cmp_app_force_itf_1gaa95d36701a58228d2da29d9f3f96138b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppForceInit", (RTS_UINTPTR) :ref:`AppForceInit <group___cmp_app_force_itf_1gae246c9ef57f3f6559c8412216831bbde>` , 0, 0)
+
+- #define :ref:`USE_AppForceExit <group___cmp_app_force_itf_1gad47c40268923d812a19f853a5b8dc1ba>` :ref:`PFAPPFORCEEXIT <group___cmp_app_force_itf_1ga47cf74fa9dec2d3044b2674abbc6455d>` pfAppForceExit;
+
+- #define :ref:`EXT_AppForceExit <group___cmp_app_force_itf_1ga48f97230ef517728310a1437839cfb56>` extern :ref:`PFAPPFORCEEXIT <group___cmp_app_force_itf_1ga47cf74fa9dec2d3044b2674abbc6455d>` pfAppForceExit;
+
+- #define :ref:`GET_AppForceExit <group___cmp_app_force_itf_1ga1b8dc1bbd4bcacf82618f20e48ff1563>` s_pfCMGetAPI2( "AppForceExit", (RTS_VOID_FCTPTR *)&pfAppForceExit, (fl), 0, 0)
+
+- #define :ref:`CAL_AppForceExit <group___cmp_app_force_itf_1gad2eb8449b25b1f02b348bb75c3fc3591>` pfAppForceExit
+
+- #define :ref:`CHK_AppForceExit <group___cmp_app_force_itf_1ga1a176dddf14e3b078c5a837fefb967b3>` (pfAppForceExit != NULL)
+
+- #define :ref:`EXP_AppForceExit <group___cmp_app_force_itf_1gaa31be326908c23b0599d09c2cec36c33>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppForceExit", (RTS_UINTPTR) :ref:`AppForceExit <group___cmp_app_force_itf_1ga1b933ba01700b00a089950b006d298f2>` , 0, 0)
+
+- #define :ref:`USE_AppAddForceValue <group___cmp_app_force_itf_1ga84b9325a1c75253cd207e9ae66fb442c>` :ref:`PFAPPADDFORCEVALUE <group___cmp_app_force_itf_1gac57f9950e1afe216ce5843ea05586a5f>` pfAppAddForceValue;
+
+- #define :ref:`EXT_AppAddForceValue <group___cmp_app_force_itf_1gab990d7a33e817734186c1737a893b7c8>` extern :ref:`PFAPPADDFORCEVALUE <group___cmp_app_force_itf_1gac57f9950e1afe216ce5843ea05586a5f>` pfAppAddForceValue;
+
+- #define :ref:`GET_AppAddForceValue <group___cmp_app_force_itf_1ga8a579dd59aec67100d0527eb844ff84f>` s_pfCMGetAPI2( "AppAddForceValue", (RTS_VOID_FCTPTR *)&pfAppAddForceValue, (fl), 0, 0)
+
+- #define :ref:`CAL_AppAddForceValue <group___cmp_app_force_itf_1gaaa06c050813b80c517e70ca36734bca7>` pfAppAddForceValue
+
+- #define :ref:`CHK_AppAddForceValue <group___cmp_app_force_itf_1ga4d79cdae1bb0bc61e3950bdd67d9bd21>` (pfAppAddForceValue != NULL)
+
+- #define :ref:`EXP_AppAddForceValue <group___cmp_app_force_itf_1gab4efb3b3714c7b0443bd535998284e0d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppAddForceValue", (RTS_UINTPTR) :ref:`AppAddForceValue <group___cmp_app_force_itf_1gae57ee365d68d6b09cad4338e1631af03>` , 0, 0)
+
+- #define :ref:`USE_AppReleaseForceValue <group___cmp_app_force_itf_1gaf5a07e024e986a1a1354bf9d6a92d598>` :ref:`PFAPPRELEASEFORCEVALUE <group___cmp_app_force_itf_1ga258ac3290855b8f4c4e799ed94e0fba1>` pfAppReleaseForceValue;
+
+- #define :ref:`EXT_AppReleaseForceValue <group___cmp_app_force_itf_1ga0e0c945da9dc4c6cd58779b52fa98b47>` extern :ref:`PFAPPRELEASEFORCEVALUE <group___cmp_app_force_itf_1ga258ac3290855b8f4c4e799ed94e0fba1>` pfAppReleaseForceValue;
+
+- #define :ref:`GET_AppReleaseForceValue <group___cmp_app_force_itf_1ga54edd7f6a81e2519deffadc77f944f26>` s_pfCMGetAPI2( "AppReleaseForceValue", (RTS_VOID_FCTPTR *)&pfAppReleaseForceValue, (fl), 0, 0)
+
+- #define :ref:`CAL_AppReleaseForceValue <group___cmp_app_force_itf_1ga3b912ce7055e024d87dfe477710a0a28>` pfAppReleaseForceValue
+
+- #define :ref:`CHK_AppReleaseForceValue <group___cmp_app_force_itf_1ga4577de95b04593cd15ed3f2248ec726c>` (pfAppReleaseForceValue != NULL)
+
+- #define :ref:`EXP_AppReleaseForceValue <group___cmp_app_force_itf_1ga67d920028fc03324a1e48b28983b624e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppReleaseForceValue", (RTS_UINTPTR) :ref:`AppReleaseForceValue <group___cmp_app_force_itf_1ga7c48dc3d1bc8ea87a13e40515febabe6>` , 0, 0)
+
+- #define :ref:`USE_AppGetFirstForce <group___cmp_app_force_itf_1ga8621282e5d6b3ba337a5b21b6a2aa50b>` :ref:`PFAPPGETFIRSTFORCE <group___cmp_app_force_itf_1gaf7b7645a67547c12130b8fd9ccb17774>` pfAppGetFirstForce;
+
+- #define :ref:`EXT_AppGetFirstForce <group___cmp_app_force_itf_1gad47f041d681cb1d09bf44cda06057ace>` extern :ref:`PFAPPGETFIRSTFORCE <group___cmp_app_force_itf_1gaf7b7645a67547c12130b8fd9ccb17774>` pfAppGetFirstForce;
+
+- #define :ref:`GET_AppGetFirstForce <group___cmp_app_force_itf_1gacb5a377efb6315dc1fb834e1bd6b106b>` s_pfCMGetAPI2( "AppGetFirstForce", (RTS_VOID_FCTPTR *)&pfAppGetFirstForce, (fl), 0, 0)
+
+- #define :ref:`CAL_AppGetFirstForce <group___cmp_app_force_itf_1ga9ad37e87bd169ad3b204ec1a05d022f9>` pfAppGetFirstForce
+
+- #define :ref:`CHK_AppGetFirstForce <group___cmp_app_force_itf_1ga3abd3096145aae8120d61b8b6608213a>` (pfAppGetFirstForce != NULL)
+
+- #define :ref:`EXP_AppGetFirstForce <group___cmp_app_force_itf_1gae275f2380a11cbed77a0d48c796e4038>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppGetFirstForce", (RTS_UINTPTR) :ref:`AppGetFirstForce <group___cmp_app_force_itf_1ga6a1f7cdb9f655ce9ffb204c0cebe4961>` , 0, 0)
+
+- #define :ref:`USE_AppGetNextForce <group___cmp_app_force_itf_1ga29f3460446fd44a90a7175fc9b114588>` :ref:`PFAPPGETNEXTFORCE <group___cmp_app_force_itf_1ga068a8fbacbaa5c9ded4350aa66b78b0b>` pfAppGetNextForce;
+
+- #define :ref:`EXT_AppGetNextForce <group___cmp_app_force_itf_1ga6c25dc3775bd1f7e76dc4372cd785341>` extern :ref:`PFAPPGETNEXTFORCE <group___cmp_app_force_itf_1ga068a8fbacbaa5c9ded4350aa66b78b0b>` pfAppGetNextForce;
+
+- #define :ref:`GET_AppGetNextForce <group___cmp_app_force_itf_1ga4303a906f7410135625237d7bfab3dba>` s_pfCMGetAPI2( "AppGetNextForce", (RTS_VOID_FCTPTR *)&pfAppGetNextForce, (fl), 0, 0)
+
+- #define :ref:`CAL_AppGetNextForce <group___cmp_app_force_itf_1gae4bcd2995d377e4c86e75fa43dd1c531>` pfAppGetNextForce
+
+- #define :ref:`CHK_AppGetNextForce <group___cmp_app_force_itf_1gac5d58f88e50d29078403aee2e3e64dee>` (pfAppGetNextForce != NULL)
+
+- #define :ref:`EXP_AppGetNextForce <group___cmp_app_force_itf_1ga18131157520dd85bdec5a96ae212ddbb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppGetNextForce", (RTS_UINTPTR) :ref:`AppGetNextForce <group___cmp_app_force_itf_1ga9e33fd11584189ba5fae6561c5ef257a>` , 0, 0)
+
+- #define :ref:`USE_AppReleaseAllForceValues <group___cmp_app_force_itf_1gaa3cc184e704afcc07c72818777d53ef8>` :ref:`PFAPPRELEASEALLFORCEVALUES <group___cmp_app_force_itf_1gad45d0f0f7d40ec1fd456937b500ec846>` pfAppReleaseAllForceValues;
+
+- #define :ref:`EXT_AppReleaseAllForceValues <group___cmp_app_force_itf_1gac496296b1ec90e2a23cbf61fe71b1e0d>` extern :ref:`PFAPPRELEASEALLFORCEVALUES <group___cmp_app_force_itf_1gad45d0f0f7d40ec1fd456937b500ec846>` pfAppReleaseAllForceValues;
+
+- #define :ref:`GET_AppReleaseAllForceValues <group___cmp_app_force_itf_1ga5224061f3e4d529d69c917eb5253f5b2>` s_pfCMGetAPI2( "AppReleaseAllForceValues", (RTS_VOID_FCTPTR *)&pfAppReleaseAllForceValues, (fl), 0, 0)
+
+- #define :ref:`CAL_AppReleaseAllForceValues <group___cmp_app_force_itf_1gae1ce3e57f389386e6f373390643774c4>` pfAppReleaseAllForceValues
+
+- #define :ref:`CHK_AppReleaseAllForceValues <group___cmp_app_force_itf_1ga959e9bab93c264029e4eb87267e7bb6c>` (pfAppReleaseAllForceValues != NULL)
+
+- #define :ref:`EXP_AppReleaseAllForceValues <group___cmp_app_force_itf_1ga4fe3bc7d271ea44be5b6278849dd5522>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppReleaseAllForceValues", (RTS_UINTPTR) :ref:`AppReleaseAllForceValues <group___cmp_app_force_itf_1ga6faabff4065941c309e45af74d20285d>` , 0, 0)
+
+- #define :ref:`USE_AppLoadPersistentForce <group___cmp_app_force_itf_1ga13b16935aa8098cc6c3ed782607065ad>` :ref:`PFAPPLOADPERSISTENTFORCE <group___cmp_app_force_itf_1ga884d53080d05af84b642fdf3ef624427>` pfAppLoadPersistentForce;
+
+- #define :ref:`EXT_AppLoadPersistentForce <group___cmp_app_force_itf_1ga159fc7ed3fcd8a70908d14b418e54004>` extern :ref:`PFAPPLOADPERSISTENTFORCE <group___cmp_app_force_itf_1ga884d53080d05af84b642fdf3ef624427>` pfAppLoadPersistentForce;
+
+- #define :ref:`GET_AppLoadPersistentForce <group___cmp_app_force_itf_1ga1e8288f5172697dda38d61101b1d156c>` s_pfCMGetAPI2( "AppLoadPersistentForce", (RTS_VOID_FCTPTR *)&pfAppLoadPersistentForce, (fl), 0, 0)
+
+- #define :ref:`CAL_AppLoadPersistentForce <group___cmp_app_force_itf_1gad635111b79bdd71e6b30c9af3c464ca5>` pfAppLoadPersistentForce
+
+- #define :ref:`CHK_AppLoadPersistentForce <group___cmp_app_force_itf_1ga780211f65bba2eff7caf25ead178a893>` (pfAppLoadPersistentForce != NULL)
+
+- #define :ref:`EXP_AppLoadPersistentForce <group___cmp_app_force_itf_1gaf25012b3c1d24a9e05d81f13d2103f75>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppLoadPersistentForce", (RTS_UINTPTR) :ref:`AppLoadPersistentForce <group___cmp_app_force_itf_1ga04743604219f5407c12af22729dfcb79>` , 0, 0)
+
+- #define :ref:`USE_AppCreatePersistentForce <group___cmp_app_force_itf_1ga63b48da1a3b01d599b1835e238ca67ef>` :ref:`PFAPPCREATEPERSISTENTFORCE <group___cmp_app_force_itf_1ga51083abf5001f8ce4f3b5ca30312d01c>` pfAppCreatePersistentForce;
+
+- #define :ref:`EXT_AppCreatePersistentForce <group___cmp_app_force_itf_1gab5adcaeebf9939a8f7ab9937a3ad8ce9>` extern :ref:`PFAPPCREATEPERSISTENTFORCE <group___cmp_app_force_itf_1ga51083abf5001f8ce4f3b5ca30312d01c>` pfAppCreatePersistentForce;
+
+- #define :ref:`GET_AppCreatePersistentForce <group___cmp_app_force_itf_1ga73a5b382253e3f472060c772998373f4>` s_pfCMGetAPI2( "AppCreatePersistentForce", (RTS_VOID_FCTPTR *)&pfAppCreatePersistentForce, (fl), 0, 0)
+
+- #define :ref:`CAL_AppCreatePersistentForce <group___cmp_app_force_itf_1ga5145b14f889da4a0c871d8fc08064f43>` pfAppCreatePersistentForce
+
+- #define :ref:`CHK_AppCreatePersistentForce <group___cmp_app_force_itf_1ga2267bd1a27db951788927fe3d947191a>` (pfAppCreatePersistentForce != NULL)
+
+- #define :ref:`EXP_AppCreatePersistentForce <group___cmp_app_force_itf_1ga3b1b86e20a5f46ecdc39ba9ed2112065>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppCreatePersistentForce", (RTS_UINTPTR) :ref:`AppCreatePersistentForce <group___cmp_app_force_itf_1gaf243de2829be678b0b04786bf769046b>` , 0, 0)
+
+- #define :ref:`USE_AppDeletePersistentForce <group___cmp_app_force_itf_1gaea92c5a703fe8f27a4378da52f6fc158>` :ref:`PFAPPDELETEPERSISTENTFORCE <group___cmp_app_force_itf_1ga50ab73c65113d3697b42a52447bbac3c>` pfAppDeletePersistentForce;
+
+- #define :ref:`EXT_AppDeletePersistentForce <group___cmp_app_force_itf_1gad1a1bcb2bd2390f34b2155dd0ce0a927>` extern :ref:`PFAPPDELETEPERSISTENTFORCE <group___cmp_app_force_itf_1ga50ab73c65113d3697b42a52447bbac3c>` pfAppDeletePersistentForce;
+
+- #define :ref:`GET_AppDeletePersistentForce <group___cmp_app_force_itf_1gaa8b247a48379d4c1100039daabb68702>` s_pfCMGetAPI2( "AppDeletePersistentForce", (RTS_VOID_FCTPTR *)&pfAppDeletePersistentForce, (fl), 0, 0)
+
+- #define :ref:`CAL_AppDeletePersistentForce <group___cmp_app_force_itf_1gad9efd9ecd8fc586b6c6c1d1efcaf0c9d>` pfAppDeletePersistentForce
+
+- #define :ref:`CHK_AppDeletePersistentForce <group___cmp_app_force_itf_1ga58c1b9ac3a063f64df825d6fe35f02d0>` (pfAppDeletePersistentForce != NULL)
+
+- #define :ref:`EXP_AppDeletePersistentForce <group___cmp_app_force_itf_1ga9acbb4a3098f496d367964640544bebc>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppDeletePersistentForce", (RTS_UINTPTR) :ref:`AppDeletePersistentForce <group___cmp_app_force_itf_1ga9a0d1804daf655d8cde1e3bb2f379947>` , 0, 0)
+
+- #define :ref:`USE_AppForceServiceHandler2 <group___cmp_app_force_itf_1gacbfb06bf7b73f5ae2fb383a4f8a1816c>` :ref:`PFAPPFORCESERVICEHANDLER2 <group___cmp_app_force_itf_1ga9d69813626db97a4304b2b1fe9734792>` pfAppForceServiceHandler2;
+
+- #define :ref:`EXT_AppForceServiceHandler2 <group___cmp_app_force_itf_1gae9cee55a8c4d1ff85bdf843726fe3c68>` extern :ref:`PFAPPFORCESERVICEHANDLER2 <group___cmp_app_force_itf_1ga9d69813626db97a4304b2b1fe9734792>` pfAppForceServiceHandler2;
+
+- #define :ref:`GET_AppForceServiceHandler2 <group___cmp_app_force_itf_1ga0d84c970918bc8d27121f52769f3af60>` s_pfCMGetAPI2( "AppForceServiceHandler2", (RTS_VOID_FCTPTR *)&pfAppForceServiceHandler2, (fl), 0, 0)
+
+- #define :ref:`CAL_AppForceServiceHandler2 <group___cmp_app_force_itf_1ga54035862ae7c1ec836f796729aa073c6>` pfAppForceServiceHandler2
+
+- #define :ref:`CHK_AppForceServiceHandler2 <group___cmp_app_force_itf_1ga1d91d79afa4de52353d0f72566e4a334>` (pfAppForceServiceHandler2 != NULL)
+
+- #define :ref:`EXP_AppForceServiceHandler2 <group___cmp_app_force_itf_1gab0d35462a27fc0833814f5b9dd2795f5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AppForceServiceHandler2", (RTS_UINTPTR) :ref:`AppForceServiceHandler2 <group___cmp_app_force_itf_1gaf09bb31a03c43da06c30bf9645a90956>` , 0, 0)
+
+- #define :ref:`ITF_CmpAppForce <group___cmp_app_force_itf_1gafa0024e16afe36a26f75724c26e2364b>`
+
+- #define :ref:`EXTITF_CmpAppForce <group___cmp_app_force_itf_1ga834205acd7224bd87b49706607bb0186>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagForceVarDesc <structtag_force_var_desc>` :ref:`ForceVarDesc <group___cmp_app_force_itf___settings_1ga177d30545bdc0e439e640466188d23b0>`
+
+- typedef RTS_RESULT(* :ref:`PFAPPFORCEINIT <group___cmp_app_force_itf_1ga7acf8e9482497f15d8dd27f528ec0d1d>`)(APPLICATION *pApp)
+
+- typedef RTS_RESULT(* :ref:`PFAPPFORCEEXIT <group___cmp_app_force_itf_1ga47cf74fa9dec2d3044b2674abbc6455d>`)(APPLICATION *pApp, int bShutdown)
+
+- typedef RTS_RESULT(* :ref:`PFAPPADDFORCEVALUE <group___cmp_app_force_itf_1gac57f9950e1afe216ce5843ea05586a5f>`)(APPLICATION *pApp, VarDataRef *pDataRef, VarValue *pValue)
+
+- typedef RTS_RESULT(* :ref:`PFAPPRELEASEFORCEVALUE <group___cmp_app_force_itf_1ga258ac3290855b8f4c4e799ed94e0fba1>`)(APPLICATION *pApp, VarDataRef *pDataRef, int bRestoreValue)
+
+- typedef :ref:`ForceVarDesc <group___cmp_app_force_itf___settings_1ga177d30545bdc0e439e640466188d23b0>` *(* :ref:`PFAPPGETFIRSTFORCE <group___cmp_app_force_itf_1gaf7b7645a67547c12130b8fd9ccb17774>`)(APPLICATION *pApp, RTS_RESULT *pResult)
+
+- typedef :ref:`ForceVarDesc <group___cmp_app_force_itf___settings_1ga177d30545bdc0e439e640466188d23b0>` *(* :ref:`PFAPPGETNEXTFORCE <group___cmp_app_force_itf_1ga068a8fbacbaa5c9ded4350aa66b78b0b>`)(APPLICATION *pApp, ForceVarDesc *pPrevForce, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFAPPRELEASEALLFORCEVALUES <group___cmp_app_force_itf_1gad45d0f0f7d40ec1fd456937b500ec846>`)(APPLICATION *pApp, int bShutdown)
+
+- typedef RTS_RESULT(* :ref:`PFAPPLOADPERSISTENTFORCE <group___cmp_app_force_itf_1ga884d53080d05af84b642fdf3ef624427>`)(APPLICATION *pApp)
+
+- typedef RTS_RESULT(* :ref:`PFAPPCREATEPERSISTENTFORCE <group___cmp_app_force_itf_1ga51083abf5001f8ce4f3b5ca30312d01c>`)(APPLICATION *pApp)
+
+- typedef RTS_RESULT(* :ref:`PFAPPDELETEPERSISTENTFORCE <group___cmp_app_force_itf_1ga50ab73c65113d3697b42a52447bbac3c>`)(APPLICATION *pApp)
+
+- typedef RTS_RESULT(* :ref:`PFAPPFORCESERVICEHANDLER2 <group___cmp_app_force_itf_1ga9d69813626db97a4304b2b1fe9734792>`)(RTS_UI32 ulChannelId, HEADER_TAG *pHeaderTag, PROTOCOL_DATA_UNIT pduData, PROTOCOL_DATA_UNIT *pduSendBuffer)
+
+- typedef :ref:`ICmpAppForce_C <struct_i_cmp_app_force___c>` :ref:`ICmpAppForce <group___cmp_app_force_itf_1ga54a6f1be99f6dfd941411c438523199a>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`AppForceInit <group___cmp_app_force_itf_1gae246c9ef57f3f6559c8412216831bbde>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_RESULT :ref:`AppForceExit <group___cmp_app_force_itf_1ga1b933ba01700b00a089950b006d298f2>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, int bShutdown)
+
+- RTS_RESULT :ref:`AppAddForceValue <group___cmp_app_force_itf_1gae57ee365d68d6b09cad4338e1631af03>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, :ref:`VarDataRef <group___cmp_app_itf_1ga51361a0fdd7ac8b491d32e18f15b5ba2>` * pDataRef, :ref:`VarValue <group___cmp_app_itf_1gabad6f24dff9cb81dfa4a5f0ca92ef522>` * pValue)
+
+- RTS_RESULT :ref:`AppReleaseForceValue <group___cmp_app_force_itf_1ga7c48dc3d1bc8ea87a13e40515febabe6>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, :ref:`VarDataRef <group___cmp_app_itf_1ga51361a0fdd7ac8b491d32e18f15b5ba2>` * pDataRef, int bRestoreValue)
+
+- :ref:`ForceVarDesc <group___cmp_app_force_itf___settings_1ga177d30545bdc0e439e640466188d23b0>` * :ref:`AppGetFirstForce <group___cmp_app_force_itf_1ga6a1f7cdb9f655ce9ffb204c0cebe4961>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, RTS_RESULT * pResult)
+
+- :ref:`ForceVarDesc <group___cmp_app_force_itf___settings_1ga177d30545bdc0e439e640466188d23b0>` * :ref:`AppGetNextForce <group___cmp_app_force_itf_1ga9e33fd11584189ba5fae6561c5ef257a>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, :ref:`ForceVarDesc <group___cmp_app_force_itf___settings_1ga177d30545bdc0e439e640466188d23b0>` * pPrevForce, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`AppReleaseAllForceValues <group___cmp_app_force_itf_1ga6faabff4065941c309e45af74d20285d>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp, int bShutdown)
+
+- RTS_RESULT :ref:`AppLoadPersistentForce <group___cmp_app_force_itf_1ga04743604219f5407c12af22729dfcb79>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_RESULT :ref:`AppCreatePersistentForce <group___cmp_app_force_itf_1gaf243de2829be678b0b04786bf769046b>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_RESULT :ref:`AppDeletePersistentForce <group___cmp_app_force_itf_1ga9a0d1804daf655d8cde1e3bb2f379947>` (:ref:`APPLICATION <group___cmp_app_itf___applicationdescription_1gac7bd19d792c2ff88bf331821dd1978b7>` * pApp)
+
+- RTS_RESULT :ref:`AppForceServiceHandler2 <group___cmp_app_force_itf_1gaf09bb31a03c43da06c30bf9645a90956>` (RTS_UI32 ulChannelId, :ref:`HEADER_TAG <struct_h_e_a_d_e_r___t_a_g>` * pHeaderTag, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduData, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>` * pduSendBuffer)
+
+Detailed Description
+--------------------
+
+Definition in file CmpAppForceItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

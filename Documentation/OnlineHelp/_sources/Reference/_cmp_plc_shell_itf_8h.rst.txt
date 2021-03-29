@@ -1,0 +1,285 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_plc_shell_itf_8h:
+
+===============================
+CmpPlcShellItf.h File Reference
+===============================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpEventCallbackItf.h <_cmp_event_callback_itf_8h>`"
+
+Data Structures
+---------------
+
+- struct :ref:`_PlcShellCommandEntry <struct___plc_shell_command_entry>`
+
+- struct :ref:`EVTPARAM_PlcShellCommand <struct_e_v_t_p_a_r_a_m___plc_shell_command>`
+
+- struct :ref:`EVTPARAM_PlcShellCommandRegister <struct_e_v_t_p_a_r_a_m___plc_shell_command_register>`
+
+- struct :ref:`tagplcshellappend_struct <structtagplcshellappend__struct>`
+
+- struct :ref:`tagplcshellregister_struct <structtagplcshellregister__struct>`
+
+- struct :ref:`tagplcshellseteof_struct <structtagplcshellseteof__struct>`
+
+- struct :ref:`tagplcshellskip_struct <structtagplcshellskip__struct>`
+
+- struct :ref:`tagplcshellunregister_struct <structtagplcshellunregister__struct>`
+
+- struct :ref:`ICmpPlcShell_C <struct_i_cmp_plc_shell___c>`
+
+Macros
+------
+
+- #define :ref:`USERDB_OBJECT_PLCSHELL <group___cmp_plc_shell_itf___staticdefines_1ga4ec9b78e34ef9e7fdeb2375bdc28c753>` "Device.PlcShell"
+
+- #define :ref:`PLCSHELL_MAX_CMD_LEN <group___cmp_plc_shell_itf___staticdefines_1ga1931a720901eed45a307fa816091431a>` 32
+
+- #define :ref:`PLCSHELL_MAX_HELP_LEN <group___cmp_plc_shell_itf___staticdefines_1ga9cdd702891384c2449f7ebce15e29012>` 128
+
+- #define :ref:`PLC_COMMAND <group___cmp_plc_shell_itf___plc_shell_command_entry_1ga64bfd990974056ad221f26a2c79b9124>` 0x01
+
+- #define :ref:`PLC_COMMAND_CANCEL <group___cmp_plc_shell_itf___plc_shell_command_entry_1ga391a0c5c93b7bda3c36c5107196d2527>` 0x02
+
+- #define :ref:`TAG_COMMAND <group___cmp_plc_shell_itf___plc_shell_command_entry_1gafe8712d8744ed465c8a7e6af536d55fb>` 0x10
+
+- #define :ref:`TAG_SESSION_ID <group___cmp_plc_shell_itf___plc_shell_command_entry_1gafae0982246719b63bbe4ce30b5b35a41>` 0x11
+
+- #define :ref:`TAG_ARGS <group___cmp_plc_shell_itf___plc_shell_command_entry_1gab5939334cb202d444c21597c20a543f0>` 0x12
+
+- #define :ref:`TAG_BLOCKS <group___cmp_plc_shell_itf___plc_shell_command_entry_1ga964c524d0ec5819df5ad5ff31d7e95b0>` 0x13
+
+- #define :ref:`PLC_ACK <group___cmp_plc_shell_itf___plc_shell_command_entry_1ga0113d1c5e38960552b81ffcd64872a67>` 0x81
+
+- #define :ref:`PLC_END <group___cmp_plc_shell_itf___plc_shell_command_entry_1gac373de92e2db45d7891934cf36bb0aac>` 0x82
+
+- #define :ref:`TAG_REPLY <group___cmp_plc_shell_itf___plc_shell_command_entry_1ga26c68c40b46f98ddbca6a42910251ef1>` 0x20
+
+- #define :ref:`EVTPARAMID_PlcShellCommand <group___cmp_plc_shell_itf___eventparameter_1gab4b852a8a530a4e6405cbc65115aa30d>` 0x0001
+
+- #define :ref:`EVTVERSION_PlcShellCommand <group___cmp_plc_shell_itf___eventparameter_1gad36b6c70bb885ed5256faaa15de7aa81>` 0x0001
+
+- #define :ref:`EVTPARAMID_PlcShellCommandRegister <group___cmp_plc_shell_itf___eventparameter_1ga25991f4007e935de5fa3f09fd3717040>` 0x0001
+
+- #define :ref:`EVTVERSION_PlcShellCommandRegister <group___cmp_plc_shell_itf___eventparameter_1gaa96095f487b443eec92ea1447a79bc38>` 0x0001
+
+- #define :ref:`EVT_PlcShellCommand <group___cmp_plc_shell_itf___events_1ga15646b9cc8a805414bc5bd38352451ba>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`EVT_PlcShellCommandRegister <group___cmp_plc_shell_itf___events_1ga5ba42c23b9944602c2421f26e3e342ae>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+
+- #define :ref:`USE_plcshellappend <group___cmp_plc_shell_itf_1ga1d96d77b9f48316d96884156ca80b160>` :ref:`PFPLCSHELLAPPEND_IEC <group___cmp_plc_shell_itf_1ga39e5e1e6edd16f9ed5b672a015ad2be0>` pfplcshellappend;
+
+- #define :ref:`EXT_plcshellappend <group___cmp_plc_shell_itf_1gaf5831f7a85fa66e246511e71a5946f4c>` extern :ref:`PFPLCSHELLAPPEND_IEC <group___cmp_plc_shell_itf_1ga39e5e1e6edd16f9ed5b672a015ad2be0>` pfplcshellappend;
+
+- #define :ref:`GET_plcshellappend <group___cmp_plc_shell_itf_1ga1f88268fc6d225f53bcc63d6720b657d>` s_pfCMGetAPI2( "plcshellappend", (RTS_VOID_FCTPTR *)&pfplcshellappend, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x5F41CE4A, 0x03050500)
+
+- #define :ref:`CAL_plcshellappend <group___cmp_plc_shell_itf_1ga4a4181511b0dd4e8663021e23e99ed42>` pfplcshellappend
+
+- #define :ref:`CHK_plcshellappend <group___cmp_plc_shell_itf_1ga3dfcfe6672413a7cd31d72abe4de0cc2>` (pfplcshellappend != NULL)
+
+- #define :ref:`EXP_plcshellappend <group___cmp_plc_shell_itf_1ga53e13afd50cb1ccd77e0b50e51875054>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"plcshellappend", (RTS_UINTPTR) :ref:`plcshellappend <group___cmp_plc_shell_itf_1gacfb89d227e69420a44344c7cd62a3136>` , 1, 0x5F41CE4A, 0x03050500)
+
+- #define :ref:`USE_plcshellregister <group___cmp_plc_shell_itf_1ga6b4c0a228b3e73cf85e5a94541773966>` :ref:`PFPLCSHELLREGISTER_IEC <group___cmp_plc_shell_itf_1ga2587c1d4226820941a855cdee28d0d08>` pfplcshellregister;
+
+- #define :ref:`EXT_plcshellregister <group___cmp_plc_shell_itf_1gadfb31bf56ff28b09292772d9997c514c>` extern :ref:`PFPLCSHELLREGISTER_IEC <group___cmp_plc_shell_itf_1ga2587c1d4226820941a855cdee28d0d08>` pfplcshellregister;
+
+- #define :ref:`GET_plcshellregister <group___cmp_plc_shell_itf_1gaee7ea15490a0752fd3c8d6531b3cb10c>` s_pfCMGetAPI2( "plcshellregister", (RTS_VOID_FCTPTR *)&pfplcshellregister, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x4A20A9BA, 0x03050500)
+
+- #define :ref:`CAL_plcshellregister <group___cmp_plc_shell_itf_1ga32f455bf946f100efca0d8b5aa5bff89>` pfplcshellregister
+
+- #define :ref:`CHK_plcshellregister <group___cmp_plc_shell_itf_1ga8bc159c8cf369d8ca764fc10cf9de152>` (pfplcshellregister != NULL)
+
+- #define :ref:`EXP_plcshellregister <group___cmp_plc_shell_itf_1gaa94cd7ec131a2d9c7a030349043016d9>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"plcshellregister", (RTS_UINTPTR) :ref:`plcshellregister <group___cmp_plc_shell_itf_1ga2a9185bcafdc8b85755be5e3af5999b9>` , 1, 0x4A20A9BA, 0x03050500)
+
+- #define :ref:`USE_plcshellseteof <group___cmp_plc_shell_itf_1gac4aede421821b4f308430914ad43a896>` :ref:`PFPLCSHELLSETEOF_IEC <group___cmp_plc_shell_itf_1gadf26dea521c69c1db2e7408a003b84a6>` pfplcshellseteof;
+
+- #define :ref:`EXT_plcshellseteof <group___cmp_plc_shell_itf_1ga3fa98ed1a4fc5abf70dfc22b4882bbe5>` extern :ref:`PFPLCSHELLSETEOF_IEC <group___cmp_plc_shell_itf_1gadf26dea521c69c1db2e7408a003b84a6>` pfplcshellseteof;
+
+- #define :ref:`GET_plcshellseteof <group___cmp_plc_shell_itf_1ga391eeae6b44c0f03629d5c6e8a4d7143>` s_pfCMGetAPI2( "plcshellseteof", (RTS_VOID_FCTPTR *)&pfplcshellseteof, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x1C411A51, 0x03050500)
+
+- #define :ref:`CAL_plcshellseteof <group___cmp_plc_shell_itf_1ga575adb6126e3e086cf5f6e86deb44d05>` pfplcshellseteof
+
+- #define :ref:`CHK_plcshellseteof <group___cmp_plc_shell_itf_1gaa8e935ace7c6341d0f2659c3aab5b6c9>` (pfplcshellseteof != NULL)
+
+- #define :ref:`EXP_plcshellseteof <group___cmp_plc_shell_itf_1ga8e1085eb7d0425d91f7acaab0b4c17bc>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"plcshellseteof", (RTS_UINTPTR) :ref:`plcshellseteof <group___cmp_plc_shell_itf_1gace351c3d75a6cd0bd0be0535aecac4de>` , 1, 0x1C411A51, 0x03050500)
+
+- #define :ref:`USE_plcshellskip <group___cmp_plc_shell_itf_1gabd219c874885ac7b386161ff9b0bb4fe>` :ref:`PFPLCSHELLSKIP_IEC <group___cmp_plc_shell_itf_1ga601b9c06df2ed4507bde9283cb85a8d3>` pfplcshellskip;
+
+- #define :ref:`EXT_plcshellskip <group___cmp_plc_shell_itf_1gadc90dee664b3cbd3aadc08dafa9890f0>` extern :ref:`PFPLCSHELLSKIP_IEC <group___cmp_plc_shell_itf_1ga601b9c06df2ed4507bde9283cb85a8d3>` pfplcshellskip;
+
+- #define :ref:`GET_plcshellskip <group___cmp_plc_shell_itf_1ga09d2e6ed93f01e4fd926a74e962ccee5>` s_pfCMGetAPI2( "plcshellskip", (RTS_VOID_FCTPTR *)&pfplcshellskip, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xD5ADBD5C, 0x03050500)
+
+- #define :ref:`CAL_plcshellskip <group___cmp_plc_shell_itf_1ga2871956f68dcc63210871dccd67fd957>` pfplcshellskip
+
+- #define :ref:`CHK_plcshellskip <group___cmp_plc_shell_itf_1gaf08642bf3275aae6d3a5d5a7a1cf4cad>` (pfplcshellskip != NULL)
+
+- #define :ref:`EXP_plcshellskip <group___cmp_plc_shell_itf_1gabe0d8fb738aefbbb959c3a88422216fe>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"plcshellskip", (RTS_UINTPTR) :ref:`plcshellskip <group___cmp_plc_shell_itf_1ga7f3a613ce00d52b61eec2cf2c95302df>` , 1, 0xD5ADBD5C, 0x03050500)
+
+- #define :ref:`USE_plcshellunregister <group___cmp_plc_shell_itf_1gacdd74595040b1f5ac75b0010868301df>` :ref:`PFPLCSHELLUNREGISTER_IEC <group___cmp_plc_shell_itf_1ga4b7b52fc0df949cd6b58aefe5b9b43b2>` pfplcshellunregister;
+
+- #define :ref:`EXT_plcshellunregister <group___cmp_plc_shell_itf_1gaf95e260a4f66e6f6720a82addd1e5a21>` extern :ref:`PFPLCSHELLUNREGISTER_IEC <group___cmp_plc_shell_itf_1ga4b7b52fc0df949cd6b58aefe5b9b43b2>` pfplcshellunregister;
+
+- #define :ref:`GET_plcshellunregister <group___cmp_plc_shell_itf_1ga8cd6360a9426436783c020fc57404016>` s_pfCMGetAPI2( "plcshellunregister", (RTS_VOID_FCTPTR *)&pfplcshellunregister, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x68D86B06, 0x03050500)
+
+- #define :ref:`CAL_plcshellunregister <group___cmp_plc_shell_itf_1ga50b480e67d4c7b1c37d9e0c793e7911c>` pfplcshellunregister
+
+- #define :ref:`CHK_plcshellunregister <group___cmp_plc_shell_itf_1ga619fada1a21c2529f56fa65d0d52dbdf>` (pfplcshellunregister != NULL)
+
+- #define :ref:`EXP_plcshellunregister <group___cmp_plc_shell_itf_1gaaff2cb645c1d65000e9d04e5c7234b97>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"plcshellunregister", (RTS_UINTPTR) :ref:`plcshellunregister <group___cmp_plc_shell_itf_1ga3d074b1cafe53d6958c6999f1478ad58>` , 1, 0x68D86B06, 0x03050500)
+
+- #define :ref:`USE_PlcShellRegister <group___cmp_plc_shell_itf_1ga4a9689e20b79aad8bdb0ca9fb4cf9e58>` :ref:`PFPLCSHELLREGISTER <group___cmp_plc_shell_itf_1ga3660f68201332267d3301996b8a70e01>` pfPlcShellRegister;
+
+- #define :ref:`EXT_PlcShellRegister <group___cmp_plc_shell_itf_1gae29676198b45314d2dd1ba88722a236f>` extern :ref:`PFPLCSHELLREGISTER <group___cmp_plc_shell_itf_1ga3660f68201332267d3301996b8a70e01>` pfPlcShellRegister;
+
+- #define :ref:`GET_PlcShellRegister <group___cmp_plc_shell_itf_1ga185245b094b2831048f78754b9cf4cc5>` s_pfCMGetAPI2( "PlcShellRegister", (RTS_VOID_FCTPTR *)&pfPlcShellRegister, (fl), 0, 0)
+
+- #define :ref:`CAL_PlcShellRegister <group___cmp_plc_shell_itf_1gad79ad9f34af41b97185fb43a8f42d80c>` pfPlcShellRegister
+
+- #define :ref:`CHK_PlcShellRegister <group___cmp_plc_shell_itf_1gac7f1f92d6afa0410660646a0e3a1a54b>` (pfPlcShellRegister != NULL)
+
+- #define :ref:`EXP_PlcShellRegister <group___cmp_plc_shell_itf_1gaf72657c1874da7618d1f8bfdfa79f4a3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"PlcShellRegister", (RTS_UINTPTR) :ref:`PlcShellRegister <group___cmp_plc_shell_itf_1ga984d8f2f1f4fe07ba3e51fda73cb3911>` , 0, 0)
+
+- #define :ref:`USE_PlcShellUnregister <group___cmp_plc_shell_itf_1ga3ecf5a466fc6646e172251a63a462f59>` :ref:`PFPLCSHELLUNREGISTER <group___cmp_plc_shell_itf_1ga96187df242fb4d2a3fa4e92ef6cabba6>` pfPlcShellUnregister;
+
+- #define :ref:`EXT_PlcShellUnregister <group___cmp_plc_shell_itf_1gaa56e8eeec91445dfe4997b8da1eb2114>` extern :ref:`PFPLCSHELLUNREGISTER <group___cmp_plc_shell_itf_1ga96187df242fb4d2a3fa4e92ef6cabba6>` pfPlcShellUnregister;
+
+- #define :ref:`GET_PlcShellUnregister <group___cmp_plc_shell_itf_1ga66a96a127d1e808c21ea4dcb1d66df1c>` s_pfCMGetAPI2( "PlcShellUnregister", (RTS_VOID_FCTPTR *)&pfPlcShellUnregister, (fl), 0, 0)
+
+- #define :ref:`CAL_PlcShellUnregister <group___cmp_plc_shell_itf_1gaf41202a2e725057cdf1d99c1df51f046>` pfPlcShellUnregister
+
+- #define :ref:`CHK_PlcShellUnregister <group___cmp_plc_shell_itf_1gaaa98789a3838142c2f759cb3c9f9cfd8>` (pfPlcShellUnregister != NULL)
+
+- #define :ref:`EXP_PlcShellUnregister <group___cmp_plc_shell_itf_1ga3b61cd3f1c6e9abdd6a957a40f517bef>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"PlcShellUnregister", (RTS_UINTPTR) :ref:`PlcShellUnregister <group___cmp_plc_shell_itf_1gad2332a8832392229eabe4a2cefbd5df5>` , 0, 0)
+
+- #define :ref:`USE_PlcShellSetEof <group___cmp_plc_shell_itf_1ga40bc022c2f189f122a87242db4591bdc>` :ref:`PFPLCSHELLSETEOF <group___cmp_plc_shell_itf_1ga8905e10520cb1fdcd7bd8bed54164b80>` pfPlcShellSetEof;
+
+- #define :ref:`EXT_PlcShellSetEof <group___cmp_plc_shell_itf_1ga54a322a838f0673e057ae7ffac436327>` extern :ref:`PFPLCSHELLSETEOF <group___cmp_plc_shell_itf_1ga8905e10520cb1fdcd7bd8bed54164b80>` pfPlcShellSetEof;
+
+- #define :ref:`GET_PlcShellSetEof <group___cmp_plc_shell_itf_1ga4148c4cf66121f2a3cdd83bfe1ed19ff>` s_pfCMGetAPI2( "PlcShellSetEof", (RTS_VOID_FCTPTR *)&pfPlcShellSetEof, (fl), 0, 0)
+
+- #define :ref:`CAL_PlcShellSetEof <group___cmp_plc_shell_itf_1gafc80b74fbe284e753af098ad2a113ea5>` pfPlcShellSetEof
+
+- #define :ref:`CHK_PlcShellSetEof <group___cmp_plc_shell_itf_1gad50614224c57ea490096db3747d0c80a>` (pfPlcShellSetEof != NULL)
+
+- #define :ref:`EXP_PlcShellSetEof <group___cmp_plc_shell_itf_1ga4288c26285dee004df80fc8dd85bee0d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"PlcShellSetEof", (RTS_UINTPTR) :ref:`PlcShellSetEof <group___cmp_plc_shell_itf_1ga01cf373f03302baec79a02fd5a10f4f8>` , 0, 0)
+
+- #define :ref:`USE_PlcShellEof <group___cmp_plc_shell_itf_1gad0d1407e2410872f6bdd238b766483c2>` :ref:`PFPLCSHELLEOF <group___cmp_plc_shell_itf_1ga58ce233bc6dcb1fc6de9672d5bfd48cc>` pfPlcShellEof;
+
+- #define :ref:`EXT_PlcShellEof <group___cmp_plc_shell_itf_1gaa0357d097bea2e49127760e301829672>` extern :ref:`PFPLCSHELLEOF <group___cmp_plc_shell_itf_1ga58ce233bc6dcb1fc6de9672d5bfd48cc>` pfPlcShellEof;
+
+- #define :ref:`GET_PlcShellEof <group___cmp_plc_shell_itf_1ga0204737a105a57749e560744f385b22b>` s_pfCMGetAPI2( "PlcShellEof", (RTS_VOID_FCTPTR *)&pfPlcShellEof, (fl), 0, 0)
+
+- #define :ref:`CAL_PlcShellEof <group___cmp_plc_shell_itf_1ga054d6e50c549c1cf385ea9755f05f231>` pfPlcShellEof
+
+- #define :ref:`CHK_PlcShellEof <group___cmp_plc_shell_itf_1ga666828f30d280275e887fb0a17877104>` (pfPlcShellEof != NULL)
+
+- #define :ref:`EXP_PlcShellEof <group___cmp_plc_shell_itf_1ga40af08f04959bbcfcd31281289ae0d4c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"PlcShellEof", (RTS_UINTPTR) :ref:`PlcShellEof <group___cmp_plc_shell_itf_1gaba7dca4830fdfa59244d0d03f4b0f798>` , 0, 0)
+
+- #define :ref:`USE_PlcShellSkip <group___cmp_plc_shell_itf_1ga45eb7dd56727c581409e2f4ad5cc8a3c>` :ref:`PFPLCSHELLSKIP <group___cmp_plc_shell_itf_1ga181796a52a33fa99519f7080774f5d7c>` pfPlcShellSkip;
+
+- #define :ref:`EXT_PlcShellSkip <group___cmp_plc_shell_itf_1gaa5569c5a29b924e2d574ce8d21081776>` extern :ref:`PFPLCSHELLSKIP <group___cmp_plc_shell_itf_1ga181796a52a33fa99519f7080774f5d7c>` pfPlcShellSkip;
+
+- #define :ref:`GET_PlcShellSkip <group___cmp_plc_shell_itf_1ga23cde93d1e4a6a0ad69f7218e9ad833a>` s_pfCMGetAPI2( "PlcShellSkip", (RTS_VOID_FCTPTR *)&pfPlcShellSkip, (fl), 0, 0)
+
+- #define :ref:`CAL_PlcShellSkip <group___cmp_plc_shell_itf_1ga217b3183f4642bf52c3f913ce9eba208>` pfPlcShellSkip
+
+- #define :ref:`CHK_PlcShellSkip <group___cmp_plc_shell_itf_1ga6c5164631d8828839103128a4e696060>` (pfPlcShellSkip != NULL)
+
+- #define :ref:`EXP_PlcShellSkip <group___cmp_plc_shell_itf_1ga1bb9b05273ed3fbdc66c5489f95fc32b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"PlcShellSkip", (RTS_UINTPTR) :ref:`PlcShellSkip <group___cmp_plc_shell_itf_1ga757626cbb55adeb2608c69836624857b>` , 0, 0)
+
+- #define :ref:`USE_PlcShellAppend <group___cmp_plc_shell_itf_1ga2b82a25fb4feb6cdea53cf09cec42edd>` :ref:`PFPLCSHELLAPPEND <group___cmp_plc_shell_itf_1gab89235c74212dc2e49baa56dd1ea4a72>` pfPlcShellAppend;
+
+- #define :ref:`EXT_PlcShellAppend <group___cmp_plc_shell_itf_1gabc2a25ae6d8ec85325c22865859026c5>` extern :ref:`PFPLCSHELLAPPEND <group___cmp_plc_shell_itf_1gab89235c74212dc2e49baa56dd1ea4a72>` pfPlcShellAppend;
+
+- #define :ref:`GET_PlcShellAppend <group___cmp_plc_shell_itf_1ga3f506b74793e8d33092ce6d0bfd4b404>` s_pfCMGetAPI2( "PlcShellAppend", (RTS_VOID_FCTPTR *)&pfPlcShellAppend, (fl), 0, 0)
+
+- #define :ref:`CAL_PlcShellAppend <group___cmp_plc_shell_itf_1gaa102f754bbb554c4eefc5abbb8d7745d>` pfPlcShellAppend
+
+- #define :ref:`CHK_PlcShellAppend <group___cmp_plc_shell_itf_1ga0ad5b79ba4cb940e54947a54aa6c166d>` (pfPlcShellAppend != NULL)
+
+- #define :ref:`EXP_PlcShellAppend <group___cmp_plc_shell_itf_1gaa8518c7a1b15abb0de88ab2900df24d1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"PlcShellAppend", (RTS_UINTPTR) :ref:`PlcShellAppend <group___cmp_plc_shell_itf_1gaa73dc6d443ba493a43be4f2ec1461410>` , 0, 0)
+
+- #define :ref:`ITF_CmpPlcShell <group___cmp_plc_shell_itf_1gabe5676534b50dc5344965b9836b64b41>`
+
+- #define :ref:`EXTITF_CmpPlcShell <group___cmp_plc_shell_itf_1ga0c361f4b65d46e30aa6a2977af96346a>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`_PlcShellCommandEntry <struct___plc_shell_command_entry>` :ref:`PlcShellCommandEntry <group___cmp_plc_shell_itf___plc_shell_command_entry_1ga8e4277de25a214c1b238ec31aeb25330>`
+
+- typedef struct :ref:`tagplcshellappend_struct <structtagplcshellappend__struct>` :ref:`plcshellappend_struct <group___cmp_plc_shell_itf_1ga6391e768167107bfbe6fec7e521b2eb8>`
+
+- typedef void(* :ref:`PFPLCSHELLAPPEND_IEC <group___cmp_plc_shell_itf_1ga39e5e1e6edd16f9ed5b672a015ad2be0>`)(plcshellappend_struct *p)
+
+- typedef struct :ref:`tagplcshellregister_struct <structtagplcshellregister__struct>` :ref:`plcshellregister_struct <group___cmp_plc_shell_itf_1gaca715acc8c35f793c3795763d7042f80>`
+
+- typedef void(* :ref:`PFPLCSHELLREGISTER_IEC <group___cmp_plc_shell_itf_1ga2587c1d4226820941a855cdee28d0d08>`)(plcshellregister_struct *p)
+
+- typedef struct :ref:`tagplcshellseteof_struct <structtagplcshellseteof__struct>` :ref:`plcshellseteof_struct <group___cmp_plc_shell_itf_1ga475e346b117951185d3be99c7eb57533>`
+
+- typedef void(* :ref:`PFPLCSHELLSETEOF_IEC <group___cmp_plc_shell_itf_1gadf26dea521c69c1db2e7408a003b84a6>`)(plcshellseteof_struct *p)
+
+- typedef struct :ref:`tagplcshellskip_struct <structtagplcshellskip__struct>` :ref:`plcshellskip_struct <group___cmp_plc_shell_itf_1gace70c70086dc0f25428a829b017b27de>`
+
+- typedef void(* :ref:`PFPLCSHELLSKIP_IEC <group___cmp_plc_shell_itf_1ga601b9c06df2ed4507bde9283cb85a8d3>`)(plcshellskip_struct *p)
+
+- typedef struct :ref:`tagplcshellunregister_struct <structtagplcshellunregister__struct>` :ref:`plcshellunregister_struct <group___cmp_plc_shell_itf_1ga27df0ce79fa5be658b5340411311d5a5>`
+
+- typedef void(* :ref:`PFPLCSHELLUNREGISTER_IEC <group___cmp_plc_shell_itf_1ga4b7b52fc0df949cd6b58aefe5b9b43b2>`)(plcshellunregister_struct *p)
+
+- typedef RTS_RESULT(* :ref:`PFPLCSHELLREGISTER <group___cmp_plc_shell_itf_1ga3660f68201332267d3301996b8a70e01>`)(char *pszName, char *pszHelp, PFEVENTCALLBACKFUNCTION pfCallbackFunction, int bIec)
+
+- typedef RTS_RESULT(* :ref:`PFPLCSHELLUNREGISTER <group___cmp_plc_shell_itf_1ga96187df242fb4d2a3fa4e92ef6cabba6>`)(PFEVENTCALLBACKFUNCTION pfCallbackFunction)
+
+- typedef RTS_RESULT(* :ref:`PFPLCSHELLSETEOF <group___cmp_plc_shell_itf_1ga8905e10520cb1fdcd7bd8bed54164b80>`)(unsigned int uiEofPos)
+
+- typedef RTS_RESULT(* :ref:`PFPLCSHELLEOF <group___cmp_plc_shell_itf_1ga58ce233bc6dcb1fc6de9672d5bfd48cc>`)(int iBlockID)
+
+- typedef RTS_RESULT(* :ref:`PFPLCSHELLSKIP <group___cmp_plc_shell_itf_1ga181796a52a33fa99519f7080774f5d7c>`)(int iBlockID)
+
+- typedef RTS_RESULT(* :ref:`PFPLCSHELLAPPEND <group___cmp_plc_shell_itf_1gab89235c74212dc2e49baa56dd1ea4a72>`)(const char *pszString, int iBlockID)
+
+- typedef :ref:`ICmpPlcShell_C <struct_i_cmp_plc_shell___c>` :ref:`ICmpPlcShell <group___cmp_plc_shell_itf_1ga6d5e455f3f3f241bbe14c60443d97a20>`
+
+Functions
+---------
+
+- void :ref:`plcshellappend <group___cmp_plc_shell_itf_1gacfb89d227e69420a44344c7cd62a3136>` (:ref:`plcshellappend_struct <group___cmp_plc_shell_itf_1ga6391e768167107bfbe6fec7e521b2eb8>` * p)
+
+- void :ref:`plcshellregister <group___cmp_plc_shell_itf_1ga2a9185bcafdc8b85755be5e3af5999b9>` (:ref:`plcshellregister_struct <group___cmp_plc_shell_itf_1gaca715acc8c35f793c3795763d7042f80>` * p)
+
+- void :ref:`plcshellseteof <group___cmp_plc_shell_itf_1gace351c3d75a6cd0bd0be0535aecac4de>` (:ref:`plcshellseteof_struct <group___cmp_plc_shell_itf_1ga475e346b117951185d3be99c7eb57533>` * p)
+
+- void :ref:`plcshellskip <group___cmp_plc_shell_itf_1ga7f3a613ce00d52b61eec2cf2c95302df>` (:ref:`plcshellskip_struct <group___cmp_plc_shell_itf_1gace70c70086dc0f25428a829b017b27de>` * p)
+
+- void :ref:`plcshellunregister <group___cmp_plc_shell_itf_1ga3d074b1cafe53d6958c6999f1478ad58>` (:ref:`plcshellunregister_struct <group___cmp_plc_shell_itf_1ga27df0ce79fa5be658b5340411311d5a5>` * p)
+
+- RTS_RESULT :ref:`PlcShellRegister <group___cmp_plc_shell_itf_1ga984d8f2f1f4fe07ba3e51fda73cb3911>` (char * pszName, char * pszHelp, :ref:`PFEVENTCALLBACKFUNCTION <group___cmp_event_callback_itf_1ga0909f3063bc8707374393a0bd4cebf0d>`  pfCallbackFunction, int bIec)
+
+- RTS_RESULT :ref:`PlcShellUnregister <group___cmp_plc_shell_itf_1gad2332a8832392229eabe4a2cefbd5df5>` (:ref:`PFEVENTCALLBACKFUNCTION <group___cmp_event_callback_itf_1ga0909f3063bc8707374393a0bd4cebf0d>`  pfCallbackFunction)
+
+- RTS_RESULT :ref:`PlcShellSetEof <group___cmp_plc_shell_itf_1ga01cf373f03302baec79a02fd5a10f4f8>` (unsigned int uiEofPos)
+
+- RTS_RESULT :ref:`PlcShellEof <group___cmp_plc_shell_itf_1gaba7dca4830fdfa59244d0d03f4b0f798>` (int iBlockID)
+
+- RTS_RESULT :ref:`PlcShellSkip <group___cmp_plc_shell_itf_1ga757626cbb55adeb2608c69836624857b>` (int iBlockID)
+
+- RTS_RESULT :ref:`PlcShellAppend <group___cmp_plc_shell_itf_1gaa73dc6d443ba493a43be4f2ec1461410>` (const char * pszString, int iBlockID)
+
+Detailed Description
+--------------------
+
+Definition in file CmpPlcShellItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

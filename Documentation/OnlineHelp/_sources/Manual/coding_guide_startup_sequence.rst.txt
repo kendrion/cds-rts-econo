@@ -1,0 +1,74 @@
+.. _coding_guide_startup_sequence:
+
+Startup sequence
+----------------
+
+The startup and initialization sequence is provided with the following hook id's in the ulHook parameter of the HookFunction() of a component:
+
+.. code-block:: C
+
+    static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+
+
+-  | CH\_INIT\_SYSTEM / CH\_INIT\_SYSTEM2:
+   | Hooks reserved for the system components for initialization! A standard component can ignore these hooks.
+
+-  | CH\_INIT:
+   | Init your own component local variables.
+
+-  | CH\_INIT2:
+   | You can call other component interface functions.
+   | An event provider must create here its event object!
+
+-  | CH\_INIT3:
+   | Further initialization operations.
+   | An event consumer can open here the existing event and register its
+     callback routine
+
+-  | CH\_INIT\_SYSTEM\_TASKS:
+   | At this hook the system components start their tasks. A standard component can ignore this hook.
+
+-  | CH\_INIT\_TASKS:
+   | At this hook you can start tasks. In this hook your component must be aware of multitasking calls!
+
+-  | CH\_INIT\_COMM:
+   | Here the communication servers are started and open the runtime from outside.
+
+-  | CH\_INIT\_FINISHED:
+   | Final call to signalize all components, that the runtime system startup has finished.
+
+The same in the opposite direction for the shutdown sequence, which is explained in the following chapter.
+
+
+Shutdown sequence
+-----------------
+
+A dedicated shutdown sequence is not available on most controllers! This is because the power is immediately switched off and there mostly no uninterruptible power supply (UPS) 
+available.
+
+But on systems with a dedicated shutdown behaviour, the runtime system has the possibility to handle this sequence in the reverse order as the startup sequence.
+
+-  | CH\_EXIT\_COMM:
+   | Here the communication servers are stopped.
+
+-  | CH\_EXIT\_TASKS:
+   | At this hook you have to exit/stop your tasks.
+
+-  | CH\_EXIT\_SYSTEM\_TASKS:
+   | At this hook the system components stopped their tasks.
+
+-  | CH\_EXIT3:
+   | First deinitialization operations.
+   | An event consumer can close here the existing event and unregister its
+     callback routine
+
+-  | CH\_EXIT2:
+   | Second deinitialization operations.
+   | An event provider must delete here its event object!
+
+-  | CH\_EXIT:
+   | Release your own component local variables.
+
+-  | CH\_EXIT\_SYSTEM / CH\_EXIT\_SYSTEM2:
+   | Hooks reserved for the system components! A standard component can ignore these hooks.

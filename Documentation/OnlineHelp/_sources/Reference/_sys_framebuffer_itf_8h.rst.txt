@@ -1,0 +1,265 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __sys_framebuffer_itf_8h:
+
+==================================
+SysFramebufferItf.h File Reference
+==================================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`SysGraphicBase.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`FBPixel_24 <struct_f_b_pixel__24>`
+
+- struct :ref:`FBFontCharStruct <struct_f_b_font_char_struct>`
+
+- struct :ref:`FBFontArea <struct_f_b_font_area>`
+
+- struct :ref:`FBFont <struct_f_b_font>`
+
+- struct :ref:`FontFile_TOCEntry <struct_font_file___t_o_c_entry>`
+
+- struct :ref:`FontFile_Header <struct_font_file___header>`
+
+- struct :ref:`FontFile_Sect_FontInfo <struct_font_file___sect___font_info>`
+
+- struct :ref:`ISysFramebuffer_C <struct_i_sys_framebuffer___c>`
+
+Macros
+------
+
+- #define :ref:`FB_PAL_CONV_BUFFER_SIZE <group___sys_framebuffer_itf_1ga05a07b88a1cce45a9e11dd80e16026ac>` 16
+
+- #define :ref:`FB_PLATFORM <group___sys_framebuffer_itf_1gaf59d3aab09f93b2a7fc459387659564a>` FB_PLATFORM_32_LE
+
+- #define :ref:`FB_USE_SQRT <group___sys_framebuffer_itf_1ga217d12ddb4e112355bf489f3d3c98544>` FB_YES		/* default FB_NO		//use square root function or use an approximation? */
+
+- #define :ref:`FB_USE_FLOAT <group___sys_framebuffer_itf_1gaea26eb07ff76844635e1ee8f3e4b828e>` FB_NO		/* default FB_NO		//use float values or avoid them (e.g. by alternative algorithms) */
+
+- #define :ref:`FB_USE_MOD <group___sys_framebuffer_itf_1ga9c3bfb2131a9f15014d6b7de8051eef9>` FB_NO		/* default FB_NO		//use native modulo operator? */
+
+- #define :ref:`FB_FONT_TRUETYPE <group___sys_framebuffer_itf_1ga4e8c608e2c8aa93e69bfa17e83e1747d>` FB_NO		/* default FB_NO; must be FB_NO because TrueType fonts are not implemented yet */
+
+- #define :ref:`FB_TEST_VIDEODRIVER <group___sys_framebuffer_itf_1ga479363c9eae741abe771b699e3732ab8>` FB_NO		/* default FB_NO */
+
+- #define :ref:`FB_OVERRIDES_BITBLT <group___sys_framebuffer_itf_1ga6799b4f1cdfd736ccac3c87e76a4720a>` FB_NO		/* default FB_NO*/
+
+- #define :ref:`FB_OVERRIDES_STRETCHBLT <group___sys_framebuffer_itf_1ga1068d0a9bbd2930d626fed50522660f8>` FB_NO		/* default FB_NO */
+
+- #define :ref:`FB_SUPPORTS_LARGE_UNICODEFONTS <group___sys_framebuffer_itf_1ga562969ca127c0f73ffe2b646fbf45401>` FB_YES		/* default FB_NO*/
+
+- #define :ref:`FB_CLIP_MODE <group___sys_framebuffer_itf_1gac469b711f4412fb7c104cab8f9487f1b>` FB_CLIP_PIXELBASED
+
+- #define :ref:`FB_CLIP_FORCE_PIXELBASED <group___sys_framebuffer_itf_1ga06fad19d0ecd091ea23e6210b1620d9f>` FB_NO
+
+- #define :ref:`FB_PF_INDEXED_COLOR_1 <group___sys_framebuffer_itf_1gab32badf75bf6beefced79947b307c9d3>` 1	/* packed pixels:	[11111111]	         					- 2 indexed FBPaletteEntries */
+
+- #define :ref:`FB_PF_INDEXED_COLOR_2 <group___sys_framebuffer_itf_1gac0f35b1c82cdd12b0496f8f4ed535355>` 2	/* packed pixels:	[2 2 2 2 ]	         					- 4 indexed FBPaletteEntries */
+
+- #define :ref:`FB_PF_INDEXED_COLOR_4 <group___sys_framebuffer_itf_1ga200783b56c1b48597a30d737f90a27f6>` 3	/* packed pixels:	[4   4   ]	         					- 16 indexed FBPaletteEntries */
+
+- #define :ref:`FB_PF_INDEXED_COLOR_8 <group___sys_framebuffer_itf_1ga25d8ac5ab035a98dab619bfc4dada753>` 4	/* packed pixels:	[8       ]	         					- 256 indexed FBPaletteEntries */
+
+- #define :ref:`FB_PF_DIRECT_COLOR_8 <group___sys_framebuffer_itf_1gac14bcda410e21354eb8ca9bd78e8ebac>` 5	/* Direct Color:		[RRRGGGBB]	         					- 8 reds, 8 greens, 4 blues */
+
+- #define :ref:`FB_PF_DIRECT_COLOR_15 <group___sys_framebuffer_itf_1ga09439cce5d3c5e0b1ae5928f17087da7>` 6	/* High Color 15bpp:	[ RRRRRGG|GGGBBBBB]  					- 32 reds, 32 greens, 32 blues */
+
+- #define :ref:`FB_PF_DIRECT_COLOR_16 <group___sys_framebuffer_itf_1ga87bf6514a41f617160da5093640ab371>` 7	/* High Color 16bpp:	[RRRRRGGG|GGGBBBBB]  					- 32 reds, 64 greens, 32 blues */
+
+- #define :ref:`FB_PF_DIRECT_COLOR_24 <group___sys_framebuffer_itf_1ga400fb40ccc514fe3c1deba48ab605e2b>` 8	/* True Color 24bpp:	[RRRRRRRR|GGGGGGGG|BBBBBBBB]			- 256 reds, 256 greens, 256 blues */
+
+- #define :ref:`FB_PF_DIRECT_COLOR_32 <group___sys_framebuffer_itf_1gac1059f24865a9b6458e4568d36ae78bc>` 9	/* True Color 32bpp;	[AAAAAAAA|RRRRRRRR|GGGGGGGG|BBBBBBBB]	- 256 alpha channels, 256 reds, 256 greens, 256 blues */
+
+- #define :ref:`FB_PF_DIRECT_COLOR_32_RGB <group___sys_framebuffer_itf_1gac243f7b86b6c3917fd5192c4c65fafb0>` 10	/* True Color 32bpp:	[        |RRRRRRRR|GGGGGGGG|BBBBBBBB]	- 256 reds, 256 greens, 256 blues, 1 byte ignored */
+
+- #define :ref:`FB_PF <group___sys_framebuffer_itf_1gae5fc875da0d946f96d79dfc5c122a706>` :ref:`FB_PF_DIRECT_COLOR_24 <group___sys_framebuffer_itf_1ga400fb40ccc514fe3c1deba48ab605e2b>`
+
+- #define :ref:`FB_NUM_FONTS <group___sys_framebuffer_itf_1gafc4da1df0c702463c14da9c035370c6a>` 12
+
+- #define :ref:`FB_SIZE_X <group___sys_framebuffer_itf_1gaca2363b8acef1902625b026cd92ef014>` 640
+
+- #define :ref:`FB_SIZE_Y <group___sys_framebuffer_itf_1gae82651b718e1c48fc8ce22c7614c93f6>` 480
+
+- #define :ref:`FB_BYTES_PER_PIXEL <group___sys_framebuffer_itf_1gaeb43e745f0bfe82304d1a1df6e32145d>` (( :ref:`FB_BITS_PER_PIXEL <group___sys_framebuffer_itf_1gaf914dc31e9b9b5d923b213bf42b7aac0>` +7)/8)
+
+- #define :ref:`FB_CHAR_BMPOFFSET <group___sys_framebuffer_itf_1ga62fc34d1d69a1f314467041f9f996fde>` RTS_UI32
+
+- #define :ref:`FB_BITS_PER_PIXEL <group___sys_framebuffer_itf_1gaf914dc31e9b9b5d923b213bf42b7aac0>` 24
+
+- #define :ref:`MAGICNUMBER_FONTFILE <group___sys_framebuffer_itf_1gae84d2e024bc9ac28d7a9e1ec95971ade>` 64266447  /* Ascii: FbFt (FramebufferFont)*/
+
+- #define :ref:`FILEFORMAT_FONTFILE <group___sys_framebuffer_itf_1ga13807478c1ab1bebef62932e9594bd71>` 0	/* for a possible change of the fileformat */
+
+- #define :ref:`CHARACTERDATA_ID <group___sys_framebuffer_itf_1gaff9e0ebfa0a5db00979135b100f628eb>` 1
+
+- #define :ref:`CHARACTERDESC_ID <group___sys_framebuffer_itf_1ga92ca9ba4d2abac9102ce1d0384074ff3>` 3
+
+- #define :ref:`FONTAREA_ID <group___sys_framebuffer_itf_1gac59d93a9c90a60f2b8a36954e2922fd2>` 8
+
+- #define :ref:`FONTINFO_ID <group___sys_framebuffer_itf_1gae1c6a612351ca87f4cb41a4dc3596b08>` 10
+
+- #define :ref:`USE_SysFramebufferDeviceInit <group___sys_framebuffer_itf_1ga1f76f04b4cf5ed9ad87861999251a08a>` :ref:`PFSYSFRAMEBUFFERDEVICEINIT <group___sys_framebuffer_itf_1gada3f54346a4e5386000243896fe7d6fa>` pfSysFramebufferDeviceInit;
+
+- #define :ref:`EXT_SysFramebufferDeviceInit <group___sys_framebuffer_itf_1ga08284b6b5d2e81a00d00f834564eb59e>` extern :ref:`PFSYSFRAMEBUFFERDEVICEINIT <group___sys_framebuffer_itf_1gada3f54346a4e5386000243896fe7d6fa>` pfSysFramebufferDeviceInit;
+
+- #define :ref:`GET_SysFramebufferDeviceInit <group___sys_framebuffer_itf_1ga1738805f056d9d01f4b3a0bfba231376>` s_pfCMGetAPI2( "SysFramebufferDeviceInit", (RTS_VOID_FCTPTR *)&pfSysFramebufferDeviceInit, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFramebufferDeviceInit <group___sys_framebuffer_itf_1gaf1b78a8153b2f8d7e99755790715feb0>` pfSysFramebufferDeviceInit
+
+- #define :ref:`CHK_SysFramebufferDeviceInit <group___sys_framebuffer_itf_1gaa4e3c101140fa138ea16674e589d9666>` (pfSysFramebufferDeviceInit != NULL)
+
+- #define :ref:`EXP_SysFramebufferDeviceInit <group___sys_framebuffer_itf_1ga182216a2de503010da1cca9818bdb2d4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFramebufferDeviceInit", (RTS_UINTPTR) :ref:`SysFramebufferDeviceInit <group___sys_framebuffer_itf_1ga0f76241b7e85e119c6d87da1f21413a8>` , 0, 0)
+
+- #define :ref:`USE_SysFramebufferBeginPaint <group___sys_framebuffer_itf_1ga2f5504fa697542372bdb2d7c659731da>` :ref:`PFSYSFRAMEBUFFERBEGINPAINT <group___sys_framebuffer_itf_1gab772ebe1e42387cd595b1b0d52414a45>` pfSysFramebufferBeginPaint;
+
+- #define :ref:`EXT_SysFramebufferBeginPaint <group___sys_framebuffer_itf_1ga0049d37587042d6899005f11e6562877>` extern :ref:`PFSYSFRAMEBUFFERBEGINPAINT <group___sys_framebuffer_itf_1gab772ebe1e42387cd595b1b0d52414a45>` pfSysFramebufferBeginPaint;
+
+- #define :ref:`GET_SysFramebufferBeginPaint <group___sys_framebuffer_itf_1ga4ab8607becbb09ed9e79a3b9e668a292>` s_pfCMGetAPI2( "SysFramebufferBeginPaint", (RTS_VOID_FCTPTR *)&pfSysFramebufferBeginPaint, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFramebufferBeginPaint <group___sys_framebuffer_itf_1ga8330eb8c92c759314aa3ff63f7af485a>` pfSysFramebufferBeginPaint
+
+- #define :ref:`CHK_SysFramebufferBeginPaint <group___sys_framebuffer_itf_1gacdda9ede793eed62ad706ceffbee0250>` (pfSysFramebufferBeginPaint != NULL)
+
+- #define :ref:`EXP_SysFramebufferBeginPaint <group___sys_framebuffer_itf_1gaed5c385832c69c4424a11c752f5859b1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFramebufferBeginPaint", (RTS_UINTPTR) :ref:`SysFramebufferBeginPaint <group___sys_framebuffer_itf_1ga509cc040359ac9b914d44efbafc15d03>` , 0, 0)
+
+- #define :ref:`USE_SysFramebufferEndPaint <group___sys_framebuffer_itf_1gab67204e157e386f2db0375d8e4214f14>` :ref:`PFSYSFRAMEBUFFERENDPAINT <group___sys_framebuffer_itf_1ga92f4e56f855464bb85fab2280371e42a>` pfSysFramebufferEndPaint;
+
+- #define :ref:`EXT_SysFramebufferEndPaint <group___sys_framebuffer_itf_1gae8100b8e11dd10fb9681e0dc941c6fef>` extern :ref:`PFSYSFRAMEBUFFERENDPAINT <group___sys_framebuffer_itf_1ga92f4e56f855464bb85fab2280371e42a>` pfSysFramebufferEndPaint;
+
+- #define :ref:`GET_SysFramebufferEndPaint <group___sys_framebuffer_itf_1ga6154aee7796848d96bc0c3d8a79a3a3f>` s_pfCMGetAPI2( "SysFramebufferEndPaint", (RTS_VOID_FCTPTR *)&pfSysFramebufferEndPaint, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFramebufferEndPaint <group___sys_framebuffer_itf_1gab046d0d6a91fcdf1a652ba3f7a6a9fb3>` pfSysFramebufferEndPaint
+
+- #define :ref:`CHK_SysFramebufferEndPaint <group___sys_framebuffer_itf_1ga24af5c0cf31f8b767ae9510d7144c892>` (pfSysFramebufferEndPaint != NULL)
+
+- #define :ref:`EXP_SysFramebufferEndPaint <group___sys_framebuffer_itf_1ga8bf68f7d155969366e306736cb7848f8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFramebufferEndPaint", (RTS_UINTPTR) :ref:`SysFramebufferEndPaint <group___sys_framebuffer_itf_1ga87908940647a98d13d61b598b70e1b92>` , 0, 0)
+
+- #define :ref:`USE_SysFramebufferFlush <group___sys_framebuffer_itf_1ga5d88cd220467e2ba812ff37aa847873d>` :ref:`PFSYSFRAMEBUFFERFLUSH <group___sys_framebuffer_itf_1gac51c4b83e28f052ceac14fbe33dd72e6>` pfSysFramebufferFlush;
+
+- #define :ref:`EXT_SysFramebufferFlush <group___sys_framebuffer_itf_1ga5921f4b2139fc11c4d26dbe91f447db2>` extern :ref:`PFSYSFRAMEBUFFERFLUSH <group___sys_framebuffer_itf_1gac51c4b83e28f052ceac14fbe33dd72e6>` pfSysFramebufferFlush;
+
+- #define :ref:`GET_SysFramebufferFlush <group___sys_framebuffer_itf_1ga6de928ff82c60905af8d8352196f0614>` s_pfCMGetAPI2( "SysFramebufferFlush", (RTS_VOID_FCTPTR *)&pfSysFramebufferFlush, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFramebufferFlush <group___sys_framebuffer_itf_1ga5cae272ceb184a3102b40b6ddddec201>` pfSysFramebufferFlush
+
+- #define :ref:`CHK_SysFramebufferFlush <group___sys_framebuffer_itf_1gaead846550751c8ab4e755d2b8b15f9c5>` (pfSysFramebufferFlush != NULL)
+
+- #define :ref:`EXP_SysFramebufferFlush <group___sys_framebuffer_itf_1ga488a5ef3289fe02c4882df586eecdfcf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFramebufferFlush", (RTS_UINTPTR) :ref:`SysFramebufferFlush <group___sys_framebuffer_itf_1ga2140264f5e6bf6f5fa461d91a63a019d>` , 0, 0)
+
+- #define :ref:`USE_SysFramebufferGetCurrentAddress <group___sys_framebuffer_itf_1ga3b56e142e4a0f1024a5ab4b07b8fbab5>` :ref:`PFSYSFRAMEBUFFERGETCURRENTADDRESS <group___sys_framebuffer_itf_1gaced78d95bc024f72b9ee577fd1c9536e>` pfSysFramebufferGetCurrentAddress;
+
+- #define :ref:`EXT_SysFramebufferGetCurrentAddress <group___sys_framebuffer_itf_1ga3263f828c7dece17958358ae2ab7213d>` extern :ref:`PFSYSFRAMEBUFFERGETCURRENTADDRESS <group___sys_framebuffer_itf_1gaced78d95bc024f72b9ee577fd1c9536e>` pfSysFramebufferGetCurrentAddress;
+
+- #define :ref:`GET_SysFramebufferGetCurrentAddress <group___sys_framebuffer_itf_1gab874878417eb125fb17b076644620c45>` s_pfCMGetAPI2( "SysFramebufferGetCurrentAddress", (RTS_VOID_FCTPTR *)&pfSysFramebufferGetCurrentAddress, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFramebufferGetCurrentAddress <group___sys_framebuffer_itf_1ga0a23433309cd13f56ba964ec6a4d7924>` pfSysFramebufferGetCurrentAddress
+
+- #define :ref:`CHK_SysFramebufferGetCurrentAddress <group___sys_framebuffer_itf_1ga4cfd094081c647b3bb07a9438b566ff5>` (pfSysFramebufferGetCurrentAddress != NULL)
+
+- #define :ref:`EXP_SysFramebufferGetCurrentAddress <group___sys_framebuffer_itf_1ga44444d4f73f5c533cc43ce6637724dec>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFramebufferGetCurrentAddress", (RTS_UINTPTR) :ref:`SysFramebufferGetCurrentAddress <group___sys_framebuffer_itf_1ga0770d295f27778ecbf2791ae5e3a89ab>` , 0, 0)
+
+- #define :ref:`USE_SysFramebufferEnableColorPalette8 <group___sys_framebuffer_itf_1gac836cee58ad6b24b1b838787f7833850>` :ref:`PFSYSFRAMEBUFFERENABLECOLORPALETTE8 <group___sys_framebuffer_itf_1ga495a7ae1f6cbb3262cb035747b73a1a4>` pfSysFramebufferEnableColorPalette8;
+
+- #define :ref:`EXT_SysFramebufferEnableColorPalette8 <group___sys_framebuffer_itf_1gad142b761dffb31d0c8950dabca1560c3>` extern :ref:`PFSYSFRAMEBUFFERENABLECOLORPALETTE8 <group___sys_framebuffer_itf_1ga495a7ae1f6cbb3262cb035747b73a1a4>` pfSysFramebufferEnableColorPalette8;
+
+- #define :ref:`GET_SysFramebufferEnableColorPalette8 <group___sys_framebuffer_itf_1gaa47425e9e68f6209be3017f1c5d1348e>` s_pfCMGetAPI2( "SysFramebufferEnableColorPalette8", (RTS_VOID_FCTPTR *)&pfSysFramebufferEnableColorPalette8, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFramebufferEnableColorPalette8 <group___sys_framebuffer_itf_1gae76693276f6d95628e20d24e1179cf78>` pfSysFramebufferEnableColorPalette8
+
+- #define :ref:`CHK_SysFramebufferEnableColorPalette8 <group___sys_framebuffer_itf_1gaafa68f098a89c655580afe3f4310d6a8>` (pfSysFramebufferEnableColorPalette8 != NULL)
+
+- #define :ref:`EXP_SysFramebufferEnableColorPalette8 <group___sys_framebuffer_itf_1gae5c5c95475f4ffe3a021356dffa5fe8c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFramebufferEnableColorPalette8", (RTS_UINTPTR) :ref:`SysFramebufferEnableColorPalette8 <group___sys_framebuffer_itf_1gaf04742f20b6d31db351369415d00ae33>` , 0, 0)
+
+- #define :ref:`USE_SysFramebufferGetFontList <group___sys_framebuffer_itf_1gab306fe4ff93d0189f52ca1aedb3bec51>` :ref:`PFSYSFRAMEBUFFERGETFONTLIST <group___sys_framebuffer_itf_1gaab9366838ed61b97fd97b26acd13035f>` pfSysFramebufferGetFontList;
+
+- #define :ref:`EXT_SysFramebufferGetFontList <group___sys_framebuffer_itf_1gad9ea8fecd9f614a534ad4234f7359945>` extern :ref:`PFSYSFRAMEBUFFERGETFONTLIST <group___sys_framebuffer_itf_1gaab9366838ed61b97fd97b26acd13035f>` pfSysFramebufferGetFontList;
+
+- #define :ref:`GET_SysFramebufferGetFontList <group___sys_framebuffer_itf_1ga56768d965118f6768917bf2e76913ae6>` s_pfCMGetAPI2( "SysFramebufferGetFontList", (RTS_VOID_FCTPTR *)&pfSysFramebufferGetFontList, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFramebufferGetFontList <group___sys_framebuffer_itf_1gaae5fdac509a9a2f7c9f1c1771e2448c7>` pfSysFramebufferGetFontList
+
+- #define :ref:`CHK_SysFramebufferGetFontList <group___sys_framebuffer_itf_1ga1b482ed116f3a7183fdd60943ea6cdfe>` (pfSysFramebufferGetFontList != NULL)
+
+- #define :ref:`EXP_SysFramebufferGetFontList <group___sys_framebuffer_itf_1gade35297f2f8e88a56747b753df354938>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFramebufferGetFontList", (RTS_UINTPTR) :ref:`SysFramebufferGetFontList <group___sys_framebuffer_itf_1ga213cfcc916ca5f97a1d908c8bbe30afe>` , 0, 0)
+
+- #define :ref:`USE_SysFramebufferGetFont <group___sys_framebuffer_itf_1ga10f5e74ffb478cfb3ac38ca3b0604525>` :ref:`PFSYSFRAMEBUFFERGETFONT <group___sys_framebuffer_itf_1ga24e1103aa7f085f08a4077e9ce0150d3>` pfSysFramebufferGetFont;
+
+- #define :ref:`EXT_SysFramebufferGetFont <group___sys_framebuffer_itf_1ga07f48e31091b0081a5950f9648ed294c>` extern :ref:`PFSYSFRAMEBUFFERGETFONT <group___sys_framebuffer_itf_1ga24e1103aa7f085f08a4077e9ce0150d3>` pfSysFramebufferGetFont;
+
+- #define :ref:`GET_SysFramebufferGetFont <group___sys_framebuffer_itf_1ga7d5972e9c5af680ffb92e8f7f50694a8>` s_pfCMGetAPI2( "SysFramebufferGetFont", (RTS_VOID_FCTPTR *)&pfSysFramebufferGetFont, (fl), 0, 0)
+
+- #define :ref:`CAL_SysFramebufferGetFont <group___sys_framebuffer_itf_1gadef164f11e0efd720f0f80c60986e931>` pfSysFramebufferGetFont
+
+- #define :ref:`CHK_SysFramebufferGetFont <group___sys_framebuffer_itf_1gafbec814947778f4c30d178dcde55e23a>` (pfSysFramebufferGetFont != NULL)
+
+- #define :ref:`EXP_SysFramebufferGetFont <group___sys_framebuffer_itf_1ga8f6b37b719ae8a5052a5cc2ca09ab430>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysFramebufferGetFont", (RTS_UINTPTR) :ref:`SysFramebufferGetFont <group___sys_framebuffer_itf_1gad0d9ec820a80bbd832b083b32f8f29c4>` , 0, 0)
+
+- #define :ref:`ITF_SysFramebuffer <group___sys_framebuffer_itf_1gac1394941d5a6401bfe45f413e46a63fc>`
+
+- #define :ref:`EXTITF_SysFramebuffer <group___sys_framebuffer_itf_1ga15c8cacd1edbf0c7384f36d39351b349>`
+
+Typedefs
+--------
+
+- typedef :ref:`FBPixel_24 <struct_f_b_pixel__24>` :ref:`FBPixel <group___sys_framebuffer_itf_1ga792c83f8ae3bc98bb17a0994553de74e>`
+
+- typedef struct :ref:`FBFontCharStruct <struct_f_b_font_char_struct>` :ref:`FBFontChar <group___sys_framebuffer_itf_1gaaced0112821007d563b0e816384929ff>`
+
+- typedef RTS_RESULT(* :ref:`PFSYSFRAMEBUFFERDEVICEINIT <group___sys_framebuffer_itf_1gada3f54346a4e5386000243896fe7d6fa>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFSYSFRAMEBUFFERBEGINPAINT <group___sys_framebuffer_itf_1gab772ebe1e42387cd595b1b0d52414a45>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFSYSFRAMEBUFFERENDPAINT <group___sys_framebuffer_itf_1ga92f4e56f855464bb85fab2280371e42a>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFSYSFRAMEBUFFERFLUSH <group___sys_framebuffer_itf_1gac51c4b83e28f052ceac14fbe33dd72e6>`)(RTS_Rectangle *aInvalidate, RTS_UI32 uiNumRects)
+
+- typedef RTS_RESULT(* :ref:`PFSYSFRAMEBUFFERGETCURRENTADDRESS <group___sys_framebuffer_itf_1gaced78d95bc024f72b9ee577fd1c9536e>`)(FBPixel **pAddress)
+
+- typedef RTS_RESULT(* :ref:`PFSYSFRAMEBUFFERENABLECOLORPALETTE8 <group___sys_framebuffer_itf_1ga495a7ae1f6cbb3262cb035747b73a1a4>`)(RTS_UI8 *pPalette)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSFRAMEBUFFERGETFONTLIST <group___sys_framebuffer_itf_1gaab9366838ed61b97fd97b26acd13035f>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFSYSFRAMEBUFFERGETFONT <group___sys_framebuffer_itf_1ga24e1103aa7f085f08a4077e9ce0150d3>`)(FBFont **ppFont, char *pszFontName, RTS_UI8 ucFontSize, RTS_UI32 uiFlags)
+
+- typedef :ref:`ISysFramebuffer_C <struct_i_sys_framebuffer___c>` :ref:`ISysFramebuffer <group___sys_framebuffer_itf_1ga0631aa429be0d9b499fa39ad7e1c1a00>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`SysFramebufferOSInit <group___sys_framebuffer_itf_1gaf7925bab5fe1838be71d8927030f0a60>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysFramebufferOSHookFunction <group___sys_framebuffer_itf_1ga6f2b996d67ab4f44819add693cff0388>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_RESULT :ref:`SysFramebufferDeviceInit <group___sys_framebuffer_itf_1ga0f76241b7e85e119c6d87da1f21413a8>` (void)
+
+- RTS_RESULT :ref:`SysFramebufferBeginPaint <group___sys_framebuffer_itf_1ga509cc040359ac9b914d44efbafc15d03>` (void)
+
+- RTS_RESULT :ref:`SysFramebufferEndPaint <group___sys_framebuffer_itf_1ga87908940647a98d13d61b598b70e1b92>` (void)
+
+- RTS_RESULT :ref:`SysFramebufferFlush <group___sys_framebuffer_itf_1ga2140264f5e6bf6f5fa461d91a63a019d>` (RTS_Rectangle * aInvalidate, RTS_UI32 uiNumRects)
+
+- RTS_RESULT :ref:`SysFramebufferGetCurrentAddress <group___sys_framebuffer_itf_1ga0770d295f27778ecbf2791ae5e3a89ab>` (:ref:`FBPixel <group___sys_framebuffer_itf_1ga792c83f8ae3bc98bb17a0994553de74e>` ** pAddress)
+
+- RTS_RESULT :ref:`SysFramebufferEnableColorPalette8 <group___sys_framebuffer_itf_1gaf04742f20b6d31db351369415d00ae33>` (RTS_UI8 * pPalette)
+
+- RTS_HANDLE :ref:`SysFramebufferGetFontList <group___sys_framebuffer_itf_1ga213cfcc916ca5f97a1d908c8bbe30afe>` (void)
+
+- RTS_RESULT :ref:`SysFramebufferGetFont <group___sys_framebuffer_itf_1gad0d9ec820a80bbd832b083b32f8f29c4>` (:ref:`FBFont <struct_f_b_font>` ** ppFont, char * pszFontName, RTS_UI8 ucFontSize, RTS_UI32 uiFlags)
+
+Detailed Description
+--------------------
+
+Definition in file SysFramebufferItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

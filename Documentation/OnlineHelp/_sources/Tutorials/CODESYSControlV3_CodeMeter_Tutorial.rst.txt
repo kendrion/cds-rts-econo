@@ -1,0 +1,330 @@
+.. _tutorial_codemeter:
+
+==================
+CodeMeter Tutorial
+==================
+
+.. contents::
+   :local:
+   :depth: 1
+
+Introduction
+============
+
+The product suite `CodeMeter <http://www.wibu.com/codemeter.html>`_ from `WIBU <http://www.wibu.com>`_ Systems consist of software and hardware solutions (see [1]_, [2]_, [3]_, [4]_, [5]_). 
+
+It can be used for the following applications:
+
+- Licensing:
+  For single licensing of features
+
+- Security:
+
+  - For protecting software (encryption)
+  - Encrypting/decrypting data
+  - Storing secret data (like private keys of X.509 certificates)
+  
+   
+CodeMeter is available in two different solutions, which can be used in parallel:
+
+1. `CodeMeter software solution`_
+  
+2. `CodeMeter hardware solution`_
+
+The support for both solutions is fully integrated in CODESYS and the Runtime System. In the Runtime System, this is implemented in the component CmpCodeMeter.
+
+The hardware and software CodeMeter support can be realized in two different ways dependening on the used operating system:
+
+1. `CodeMeter Runtime <http://www.wibu.com/codemeter/codemeter-runtime.html>`_:
+
+   For Windows, Linux or OS X based systems, the CodeMeter Runtime is available as a separate installer and is running as a separate process. The Runtime System supports a CodeMeter 
+   Runtime by default.
+  
+2. `CodeMeter Embedded <http://www.wibu.com/codemeter/codemeter-embedded.html>`_:
+
+   Alternatively you can use the CodeMeter solution on any system, on which the Runtime System is ported. This is called CodeMeter Embedded. 
+   To support CodeMeter Embedded, you have to set the following compiler switch when compiling the Runtime System:   
+   
+      .. code-block:: c
+       
+         RTS_CODEMETER_EMBEDDED
+            
+   The `CodeMeter hardware solution`_ on CodeMeter Embedded is only supported for the following operating systems:
+       
+       - Windows
+       - Windows CE
+       - Linux
+       - VxWorks  
+   
+   See `Mass Storage Communication`_ for restrictions using the `CodeMeter hardware solution`_ on these operating systems!
+
+   
+
+   
+Temper-proof
+============
+
+**IMPORTANT:**
+
+If you use WIBU CodeMeter in your runtime system, the runtime system must be protected to be **temper-proof**! This is because the license protection for example can be leveraged, if 
+the CodeMeter code is patched.
+
+This can be realized typically in three ways:
+
+1. Secure boot systems:
+   
+   If your BIOS and OperatingSystem is realized as a secure boot system, then it is ok, if the runtime system is signed as is only executed by the OperatingSystem, if it is not modified 
+   and was originally provided by the OEM customer!
+   
+2. Normal boot system:
+   
+   Here the runtime system must be encrypted _and_ signed! The signature check is done typically out of the runtime system and so we have to protect this sequence by an encryption.
+   **NOTE:** Not the whole runtime system should be running unencrypted in memory!
+     
+3. Typical isolated PLC firmare:
+   
+   If the runtime system/firmware cannot be accessed from the enduser in any case and is only accessable by the OEM customer, the runtime can be treated as temper-proof.
+     
+     
+Accessing the CodeMeter features
+================================
+
+Access to all CodeMeter features in the Runtime System you get via the CmpCodeMeter Interface (see RuntimeSystemDocumentation/Reference/CmpCodeMeterItf).     
+
+Access to all CodeMeter features in the IEC-Application you get via the CmpCodeMeter.library.     
+     
+     
+_`CodeMeter software solution`
+==============================
+
+The SoftLicensing solution `CmActLicense <http://www.wibu.com/codemeter/cmactlicense.html>`_ is based on encrypted files which are bound on controller specific attributes 
+(like serialnumber, processorID or similar). This is used to store all secret information and to store the license entries. It is fully intergrated in the CODESYS Runtime System.
+
+To activate this feature, you have to set the compiler switch compiling the Runtime System:
+
+    .. code-block:: c
+
+       RTS_CODEMETER_SOFTLICENSING
+
+As mentioned above, the software solution must comply 2 requirements:
+
+REQ 1. _`Unique hardware attribute`:
+
+       The solution must be bounded on a secure hardware attribute. This hardware attribute must be robust against modifiying and so it must be derived from
+       the hardware (like a build in serial number, unique processorID, etc.).
+       
+       This attribute is requested in side the Runtime System from the following SysTargetItf function (see RuntimeSystemDocumentation/Reference/SysTargetItf): 
+       
+            .. code-block:: c
+       
+               RTS_RESULT CDECL SysTargetGetSerialNumber_Secure(char **ppszSerialNumber, RTS_I32 *pnMaxLen);
+
+REQ 2. Integrity of the Runtime System:
+
+       The Runtime System must be protected against compromizing the CodeMeter component/interface and the external library functions that provides the access to these
+       security functions!
+
+Both requirements must be proved in a FMEA analysis process in cooperation with 3S-Smart Software Solutions GmbH! So please contact the sales team for details, if you intend 
+to integrate the CodeMeter software solution into your controller!
+
+Creating an empty SoftLicense container
+---------------------------------------
+
+To create an empty SoftLicense license container, you need a so called wbb file. This wbb file contains the firmcode of the license vendor (see `Licensing`_).
+
+3S-Smart Software Solutions GmbH provides a wbb file to install an empty license container for 3S licenses.
+
+The empty container will be bound on the secure serial number (see above `Unique hardware attribute`_) at the first license installation operation! After this, the container is bound on this target
+resp the `Unique hardware attribute`_.
+
+
+_`CodeMeter hardware solution`
+==============================
+
+There are several devices named `CmDongle <http://www.wibu.com/codemeter/cmdongle.html>`_ provided by WIBU, in which the CodeMeter solution is integrated. The devices are based on a smart card chip
+technology. All of these devices can be used to store secret data, licenses and to encrypt/decrypt data.
+
+The CmDongle is available in the following different designs:
+
+- `USB-Dongle`_
+- `Memory-cards`_
+- `ASIC`_
+
+Supported Features
+------------------
+
+1. Each CmDongle offers 328 kByte of memory for your licenses, which can accommodate up to 2,000 licenses with different license models. Each of these licenses may be a multi-user license
+   with thousands of concurrent seats.
+
+2. The CodeMeter devices supports the following crypto algorithms:
+
+   - 128 bit AES
+   - SHA-256
+   - 2048 bit RSA
+   - 224 bit ECC 
+
+3. The used SmartCard chip contains a random number generator according to FIPS140-1 and is certified according to EAL 5+ including a certified crypto library.
+
+
+.. _USB-Dongle:      
+
+USB-Dongle
+----------
+
+WIBU CodeMeter USB-dongles are available without or with flash memory (can be used to store files on it).
+
+The WIBU dongles can operate in 2 different modes:
+
+    1. Human Interface Device (HID) mode [recommended]
+
+    2. Mass Storage Communication mode
+
+In which mode the dongle is operating by default is dongle dependant. You can change the mode of a dongle with the command line tool "cmu32.exe" which is shipped with the CodeMeter Runtime
+installation package.
+
+To show the current mode of the dongle you have to enter the following command line (3-1234567 must be replaced by the real serial number of your dongle):
+
+    .. code-block:: c
+        
+       cmu32 --serial 3-1234567 --show-config-disk
+        
+To change the mode of the dongle to HID mode you have to enter the following command line (3-1234567 must be replaced by the real serial number of your dongle):
+
+    .. code-block:: c
+        
+       cmu32 --serial 3-1234567 --set-config-disk HidCommunication
+
+Both modes are described below.
+
+Variants accessing USB-dongles
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Accessing via _`Human Interface Device` (HID)
+
+   In which default mode the dongle is operating is dongle dependant. Newer CodeMeter dongles are configured by default as a HID device (Human Interface Device). 
+   
+   This is supported on the following operating systems within the Runtime System:
+
+   - Windows
+   - Windows CE
+   - Linux
+   - VxWorks
+
+2. Accessing via _`Mass Storage Communication` (MSC)
+
+   USB-dongles with a flash on it or older USB dongle without flash are working in the "Mass Storage Communication" mode. These dongles are accessed from the Runtime System via the 
+   filesystem of the operating system (Mass Storage Communication). This causes a problem on operating systems that use a file chache for accessing files!
+   
+    **NOTES:**
+
+       1. Under these operating systems (Linux, VxWorks), you have to switch off globally the file cache to get the dongle to operate correctly, but this will reduce the file access times dramatically!!
+          This is because you write an encrypted files on the USB-dongle and get back unencrypted files decrypted by the dongle. But this doesn't work if you have a file cache. In this case you get back the 
+          last written encrypted file and not the unencrypted file!
+       
+          Under Windows the file cache can be disabled per file, so here we have no problem. But for example under Linux and VxWorks the USB-dongles cannot be used this way! In this cases you have to use
+          the `Human Interface Device`_ mode.
+
+       2. If your USB WIBU Dongle is working in "Mass Storage Communication" mode and it is not recognized by a 
+          Meter Embedded Runtime (non Windows platform), please change the dongle to HID mode an check if this fixes your problem!
+
+
+.. _Memory-cards:
+
+Memory-cards
+------------
+
+There are different types of WIBU CodeMeter memory cards available:
+
+- SD/microSD cards
+- CF/CFast cards
+
+
+.. _ASIC:
+
+ASIC
+----
+
+WIBU CodeMeter `ASICs <https://cdn.wibu.com/fileadmin/wibu_downloads/CodeMeter_Datasheets/Seriennummer_03/ASIC/CmASIC_150x-03-EN.pdf>`_ can be used to integrate directly on the controller board design.
+All features are available.
+
+
+Operating system specific issues
+================================
+
+On some operating systems there are special issues or jobs that must be done by the OEM customer to support CodeMeter correctly.
+
+VxWorks
+-------
+
+Requirements for the VxWorks Kernel Image ( --> VIP Kernel Configuration ):
+
+- INCLUDE_USB      --> USB Common Stack
+- INCLUDE_USB_INIT --> USB Common Stack Initialization
+- USB Host Controller:
+  - INCLUDE_EHCI   --> Target / Hardware specific 
+  - INCLUDE_EHCI_INIT
+- INCLUDE_HCD_BUS  --> USB Host Controller Start
+- (opt.) FOLDER_USB_GEN2_DEVICES --> USB Generation 2 Class Device Drivers 
+- (opt.) FOLDER_USB_GEN2_DEVICES_INIT
+- INCLUDE_USB_HOST_CLASS_INIT --> USB Host Class Driver Initialization
+- INCLUDE_POSIX_PTHREADS      --> Support for POSIX Threads in the kernel
+- INCLUDE_POSIX_SEM           --> Support for POSIX Semaphores in the kernel
+
+Windows CE
+----------
+
+Under Windows CE you need for the `Human Interface Device`_ (HID) dongle support the WibuCmHID.dll, which is part of the Runtime System delivery since v3.5.9.0.
+This Dll must be available in the \Windows directory on the controller to recognize a HID-Dongles during startup of the Runtime System.
+
+Additionally you need the following entries in the registry:
+
+    .. code-block:: python
+
+       [HKEY_LOCAL_MACHINE\Drivers\USB\LoadClients\1615\Default\3\WibuCmHID]
+       "Dll"="WibuCmHID.DLL"
+         
+       [HKEY_LOCAL_MACHINE\Drivers\USB\ClientDrivers\WibuCmHID]
+       "Prefix"="WCH"
+       "Dll"="WibuCmHID.DLL"
+
+
+_`Licensing`
+============
+
+WIBU CodeMeter can be used for single licensing of features via `CodeMeter License Models <http://www.wibu.com/codemeter/license-models.html>`_. The license can be stored on `CodeMeter software solution`_ and
+`CodeMeter hardware solution`_. A License is bound per license vendor to a so called Firmcode. And each feature has its own ProductCode to check the corresponding license.
+
+In CODESYS you can get access to the installed CodeMeter licenses via:
+
+- the CmpCodeMeter interface in the Runtime System (see RuntimeSystemDocumentation/Reference/CmpCodeMeterItf)
+- the CmpCodeMeter.library out of the IEC-Application
+  
+3S-Smart Software Solutions GmbH licenses
+-----------------------------------------
+
+3S-Smart Software Solutions GmbH uses its own Firmcode to protect their licensed features.
+
+In the CODESYS you can use the following build in operator to check 3S license features:
+
+    UDINT __CHECKLICENSE (DWORD productID, BOOL xDoChallenge);
+    
+productID is the ID of the feature. xDoChallenge enables/disables an integrity check of the underlying library. A check can consume some time on low performant embedded controllers.
+  
+The return value is -1 for a Demo license and 0 if the license is invalid. If the license is valid, the license value is returned.
+
+
+Other vendor licenses
+---------------------
+
+If another vendor (like OEM customer) would like to license own features, they have to contact `WIBU Systems <http://www.wibu.com>`_ to get their own licensing infrastructure.
+
+
+
+ 
+.. rubric:: Bibliography
+
+.. [1] CodeMeter http://www.wibu.com/codemeter.html
+.. [2] CodeMeter Runtime http://www.wibu.com/codemeter/codemeter-runtime.html
+.. [3] CmDongle http://www.wibu.com/codemeter/cmdongle.html
+.. [4] CmActLicense http://www.wibu.com/codemeter/cmactlicense.html
+.. [5] WIBU http://www.wibu.com

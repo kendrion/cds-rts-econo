@@ -6,23 +6,23 @@
  * in or passed to the I/O Manager. The following is an overview over the most essential
  * structures and how they are passed to the I/O Manager:</p>
  * <pre>
- * .    +------------------+ UpdateConfiguration()
- * .  +------------------+ |
- * . +-----------------+ |-+
- * . | IoConfigTaskMap |-+
- * . +-------+---------+ ReadInputs() / WriteOutputs()
- * .         | 1                                  UpdateConfiguration()
- * .         |                       +--------------------+
- * .         | n                   +--------------------+ |
- * . +-------+--------------+     +-------------------+ |-+
- * . | IoConfigConnectorMap |     | IoConfigConnector |-+
- * . +-------+--------------+     +--------+----------+ StartBusCycle()
- * .         | 1                           | 1
- * .         |                             |
- * .         | n                           | n
- * . +-------+------------+ n   1 +--------+----------+
- * . | IoConfigChannelMap +-------+ IoConfigParameter |
- * . +--------------------+       +-------------------+
+ *      +------------------+ UpdateConfiguration()
+ *    +------------------+ |
+ *   +-----------------+ |-+
+ *   | IoConfigTaskMap |-+
+ *   +-------+---------+ ReadInputs() / WriteOutputs()
+ *           | 1                                  UpdateConfiguration()
+ *           |                       +--------------------+
+ *           | n                   +--------------------+ |
+ *   +-------+--------------+     +-------------------+ |-+
+ *   | IoConfigConnectorMap |     | IoConfigConnector |-+
+ *   +-------+--------------+     +--------+----------+ StartBusCycle()
+ *           | 1                           | 1
+ *           |                             |
+ *           | n                           | n
+ *   +-------+------------+ n   1 +--------+----------+
+ *   | IoConfigChannelMap +-------+ IoConfigParameter |
+ *   +--------------------+       +-------------------+
  * </pre>
  * <p>Most calls to the I/O Manager are just passed directly through to the drivers.
  * Depending on the kind of driver, this may passed through CmpIoDrvIEC or directly
@@ -30,66 +30,66 @@
  * <p>The following drawing illustrates how a call to e.g. ReadInputs() is passed
  * to the drivers if there is a C and an IEC driver registered and used in one task:</p>
  * <pre>
- * . +--------+    +--------+    +--------+   +-----------+   +--------+
- * . |IEC Task|    |CmpIoMgr|    |IoDrvInC|   |CmpIoDrvIEC|   |IoDrvLib|
- * . +--------+    +---+----+    +---+----+   +----+------+   +---+----+
- * .     |             |             |             |              |
- * .    +++            |             |             |              |
- * .    | |-----------+++            |             |              |
- * .    | |           | |-----------+++            |              |
- * .    | |           | |           | |            |              |
- * .    | |           | |           | |            |              |
- * .    | |           | |           | |            |              |
- * .    | |           | |...........+++            |              |
- * .    | |           | |            |             |              |
- * .    | |           | |------------+------------+++             |
- * .    | |           | |            |            | |             |
- * .    | |           | |            |            | |             |
- * .    | |           | |            |            | |------------+++
- * .    | |           | |            |            | |            | |
- * .    | |           | |            |            | |            | |
- * .    | |           | |            |            | |............+++
- * .    | |           | |.........................+++             |
- * .    | |...........+++            |             |              |
- * .    | |            |             |             |              |
- * .    | |            |             |             |              |
- * .    +++            |             |             |              |
- * .     |             |             |             |              |
- * .     |             |             |             |              |
+ *   +--------+    +--------+    +--------+   +-----------+   +--------+
+ *   |IEC Task|    |CmpIoMgr|    |IoDrvInC|   |CmpIoDrvIEC|   |IoDrvLib|
+ *   +--------+    +---+----+    +---+----+   +----+------+   +---+----+
+ *       |             |             |             |              |
+ *      +++            |             |             |              |
+ *      | |-----------+++            |             |              |
+ *      | |           | |-----------+++            |              |
+ *      | |           | |           | |            |              |
+ *      | |           | |           | |            |              |
+ *      | |           | |           | |            |              |
+ *      | |           | |...........+++            |              |
+ *      | |           | |            |             |              |
+ *      | |           | |------------+------------+++             |
+ *      | |           | |            |            | |             |
+ *      | |           | |            |            | |             |
+ *      | |           | |            |            | |------------+++
+ *      | |           | |            |            | |            | |
+ *      | |           | |            |            | |            | |
+ *      | |           | |            |            | |............+++
+ *      | |           | |.........................+++             |
+ *      | |...........+++            |             |              |
+ *      | |            |             |             |              |
+ *      | |            |             |             |              |
+ *      +++            |             |             |              |
+ *       |             |             |             |              |
+ *       |             |             |             |              |
  * </pre>
  * <p>The devices, which are configured in the CoDeSys programming system
  * are downloaded in form of connector lists. All connectors, specified
  * for the devices are downloaded in form of a list.</p>
- * <p>Beside neighbours, this list has although a parent role, that means,
+ * <p>Beside neighbors, this list has although a parent role, that means,
  * that every list member can point to it's parent.</p>
  * <p>For example:</p>
  * <pre>
- * .                      _____
- * .             _,.--''''     `'''`--..__
- * .          ,,'          ___            `--.._
- * .       _,i__       ,-ii_  `''`--.._         `-..
- * .     ,;''   `'-._,;''   `'-._      ``-.._       `-._
- * .  +----+      +----+      +----+      +----+      +-'--+
- * .  | A  |------+ B  |------| C  |------| D  |------+ E  |-----
- * .  +----+      +----+      +----+      +----+      +----+
+ *                        _____
+ *               _,.--''''     `'''`--..__
+ *            ,,'          ___            `--.._
+ *         _,i__       ,-ii_  `''`--.._         `-..
+ *       ,;''   `'-._,;''   `'-._      ``-.._       `-._
+ *    +----+      +----+      +----+      +----+      +-'--+
+ *    | A  |------+ B  |------| C  |------| D  |------+ E  |-----
+ *    +----+      +----+      +----+      +----+      +----+
  * </pre>
  * <p>This list represents the following tree:</p>
  * <pre>
- * .                 ,-.
- * .                ( A )
- * .                /`-'\
- * .              .'     |
- * .          ,-./       \,-.
- * .         ( B )       ( E )
- * .         /`-'\        `-'
- * .       .'     |
- * .   ,-./       \,-.
- * .  ( C )       ( D )
- * .   `-'         `-'
+ *                   ,-.
+ *                  ( A )
+ *                  /`-'\
+ *                .'     |
+ *            ,-./       \,-.
+ *           ( B )       ( E )
+ *           /`-'\        `-'
+ *         .'     |
+ *     ,-./       \,-.
+ *    ( C )       ( D )
+ *     `-'         `-'
  * </pre>
  * <p>The API functions within this component await always a pointer
- * to one of these connectors, when the input is a "Connecto List".
- * The count doesn't essentially need to specify the absolut size
+ * to one of these connectors, when the input is a "Connector List".
+ * The count doesn't essentially need to specify the absolute size
  * of the list, but the size, starting at the connector that we
  * passed to the function.</p>
  * <p>For example, if we want to iterate over the connector list above (in pseudo code):</p>
@@ -108,13 +108,13 @@
  * of remaining entries in the list, starting at the connector that was 
  * returned.</p>
  * <p>There are two different kinds of driver handles, that the I/O Manager
- * needs to differenciate:</p>
+ * needs to differentiate:</p>
  * <ul>
  *   <li>C Drivers</li>
  *   <li>IEC Drivers</li>
  * </ul>
  * <p>The I/O Manager provides a common function interface for C Components
- * and for IEC Applications. But while the Connectors and Paramter structures
+ * and for IEC Applications. But while the Connectors and Parameter structures
  * are completely the same for both sides, the driver handles are significantly
  * different. Internally the I/O manager works with C driver handles. The
  * abstraction to provide an IEC interface, which is based on Function Blocks,
@@ -122,8 +122,9 @@
  * <p>The component CmpIoDrvC manages all C drivers and CmpIoDrvIec manages all
  * IEC drivers.</p>
  * </description>
+ *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -134,8 +135,8 @@ SET_INTERFACE_NAME(`CmpIoMgr')
  * <description>
  *	Compiler switches to enable/disable single features in the component.
  * </description>
- * <element name="CMPIECTASK_DONT_REGISTER_WATCHDOG_AT_SUPERVISOR">Switch to disable registering all hardware supported fieldbus watchdogs (e.g. Hilscher CIFX masters) at the CmpSupervisor!
- *	If this defined is set, the hardware supported fieldbus watchdogs are always enabled and cannot selectively be disabled via the CmpSupervisor!
+ * <element name="CMPIECTASK_DONT_REGISTER_WATCHDOG_AT_SUPERVISOR">Switch to disable registering all hardware supported field-bus watchdogs (e.g. HILSCHER CIFX masters) at the CmpSupervisor!
+ *	If this defined is set, the hardware supported field-bus watchdogs are always enabled and cannot selectively be disabled via the CmpSupervisor!
  * </element>
  */
 
@@ -166,7 +167,7 @@ SET_INTERFACE_NAME(`CmpIoMgr')
 
 /**
  * <category>Static defines</category>
- * <description>Number of static scan entries to hold IO driver scan informarion to transmit all of the scanned connectors</description>
+ * <description>Number of static scan entries to hold IO driver scan information to transmit all of the scanned connectors</description>
  */
 #ifndef IOMGR_NUM_OF_STATIC_SCAN_ENTRIES
 	#define	IOMGR_NUM_OF_STATIC_SCAN_ENTRIES		1
@@ -174,8 +175,17 @@ SET_INTERFACE_NAME(`CmpIoMgr')
 
 
 /**
+ * <category>Static defines</category>
+ * <description>Number of static AscncData entries for the function IoMgrReconfigure()</description>
+ */
+#ifndef IOMGR_NUM_OF_STATIC_ASYNC_DATA_ENTRIES
+	#define	IOMGR_NUM_OF_STATIC_ASYNC_DATA_ENTRIES		1
+#endif
+
+
+/**
  * <category>File name definitions</category>
- * <description>Name of the parameter storage to save the changed IO-config parameters</description>
+ * <description>Name of the parameter storage to save the changed IO-configuration parameters</description>
  */
 #ifndef IOMGR_PARAMETER_STORAGE_FILE
 	#define IOMGR_PARAMETER_STORAGE_FILE		"IoConfig.par"
@@ -184,7 +194,7 @@ SET_INTERFACE_NAME(`CmpIoMgr')
 
 /**
  * <category>Watchdog definitions</category>
- * <description>This is the initial watchdogtask task delay. On the first download of a watchdog time, this time is recalculated</description>
+ * <description>This is the initial watchdog task delay. On the first download of a watchdog time, this time is recalculated</description>
  */
 #ifndef IOMGR_WATCHTDOGTASK_TASK_DELAY
 	#define IOMGR_WATCHTDOGTASK_TASK_DELAY		100
@@ -194,7 +204,7 @@ SET_INTERFACE_NAME(`CmpIoMgr')
  * <category>Bus Cycle Type</category>
  * <description>
  * <p>
- *	Type of the bus cycle to differenciate between:
+ *	Type of the bus cycle to differentiate between:
  * </p>
  * <ul>
  *     <li>BCT_START: Bus Cycle is executed at the beginning of the task cycle</li>
@@ -257,7 +267,7 @@ SET_INTERFACE_NAME(`CmpIoMgr')
 *     Setting to enable full IO-update consistency resp. disable DRVPROP_CONSISTENCY for all IO-drivers! This setting must be used, if consistency cannot be
 *     realized on this target by the IO-driver itself.
 *  NOTE:
-*     This settings must be enabled on targets with no strict priority scheduling for the IO-update tasks (for MultiCore targets) or on systems with 2 buscycle tasks (for SIL3).
+*     This settings must be enabled on targets with no strict priority scheduling for the IO-update tasks (for MultiCore targets) or on systems with 2 bus cycle tasks (for SIL3).
 * </description>
 */
 #define IOMGRKEY_INT_ENABLE_FULL_CONSISTENCY					"EnableFullConsistency"
@@ -288,110 +298,66 @@ extern "C" {
 #endif
 
 /**
- * <description>
- *		Parameter description. This entry describes completely a parameter of an connector.
- *	</description>
- * <param name="dwParameterId" type="IN">ID of the parameter. This ID is specified in the device description.</param>
- * <param name="dwValue" type="IN">Value (if is valud &lt; 4 bytes) or a pointer to the value of the parameter</param>
- * <param name="wType" type="IN">Type class of the parameter. See category "Type class" an here the enum TypeClass3 in SysInternalLibItf.h for detailed information.</param>
- * <param name="wLen" type="IN">Length of the parameter in bits</param>
- * <param name="dwFlags" type="IN">Parameter value flags.  See category "Parameter value flags" in CmpIoDrvItf.h for detailed information.</param>
- * <param name="dwDriverSpecific" type="IN">Driver specific entry. Reserved for the usage in the driver.</param>
+ *	Parameter description. This entry describes completely a parameter of an connector.
  */
 typedef struct tagIoConfigParameter
 {
-	RTS_IEC_DWORD dwParameterId;
-	RTS_IEC_BYTE *dwValue;
-	RTS_IEC_WORD wType;
-	RTS_IEC_WORD wLen;
-	RTS_IEC_DWORD dwFlags;
-	RTS_IEC_BYTE *dwDriverSpecific;
+	RTS_IEC_DWORD dwParameterId;		/* ID of the parameter. This ID is specified in the device description. */
+	RTS_IEC_BYTE *dwValue;		/* Value (if size is smaller or equal 4 bytes) or a pointer to the value of the parameter. */
+	RTS_IEC_WORD wType;		/* Type class of the parameter. See category "Type class" for detailed information. */
+	RTS_IEC_WORD wLen;		/* Length of the parameter in bits. */
+	RTS_IEC_DWORD dwFlags;		/* Parameter value flags.  See category "Parameter value flags" for detailed information. Bit 16 to 31 are used for extended parameters (size exceeding 65535 Bits,8192 Bytes) */
+	RTS_IEC_BYTE *dwDriverSpecific;		/* Driver specific entry. Reserved for the usage in the driver. */
 } IoConfigParameter;
 
 /**
- * <description>
- *		Connector information. Each device is described completely as a set of one input- and one or more
- *		output-conenctors. 
- *	</description>
- * <param name="wType" type="IN">Type of the connector. See category "Connector types" for detailed information.</param>
- * <param name="wOptions" type="IN">Connector options. See category "Connector options" for detailed information.</param>
- * <param name="dwFlags" type="IN">Connector flags. See category "Connector flags" for detailed information.</param>
- * <param name="hIoDrv" type="IN">Registered instance handle of the IO-driver, that operates this device respectively this connector</param>
- * <param name="dwNumOfParameters" type="IN">Number of parameters in the parameter list</param>
- * <param name="pParameterList" type="IN">Pointer to the parameter list, that contains all parameters of this connector</param>
- * <param name="pFather" type="IN">Pointer to the father connector to describe the device tree</param>
- * <SIL2/>
- */
-typedef struct tagIoConfigConnector
-{
-	RTS_IEC_WORD wType;		
-	RTS_IEC_WORD wOptions;		
-	RTS_IEC_DWORD dwFlags;		
-	RTS_IEC_HANDLE hIoDrv;		
-	RTS_IEC_DWORD dwNumOfParameters;		
-	IoConfigParameter *pParameterList;		
-	struct tagIoConfigConnector *pFather;		
-} IoConfigConnector;
-
-/**
- * <description>
- *		Mapping information for a single channel. Every I/O-channel is described as a parameter, but with special meanings.
- *		The datatype of a channel can be simple (BOOL, BYTE, WORD, etc.) or array of simple types.
- *	</description>
- * <param name="pParameter" type="IN">Pointer to the parameter description</param>
- * <param name="pbyIecAddress" type="IN">Pointer to the parameter in the process image on the IEC side</param>
- * <param name="wParameterBitOffset" type="IN">Bitoffset of the device</param>
- * <param name="wIecAddressBitOffset" type="IN">Bitoffset of pbyIecAddress in the IEC process image</param>
- * <param name="wSize" type="IN">Size in bits of the channel</param>
- * <param name="wBaseTypeInformation" type="IN">If this field is unequal zero, it is used for the base type information. With this information, a correct swapping operation can be executed.</param>
- * <param name="dwDriverSpecific" type="IN">Driver specific entry. Reserved for the usage in the driver.</param>
- * <SIL2/>
+ *	Mapping information for a single channel. Every I/O-channel is described as a parameter, but with special meanings. The data type of a channel can be simple (BOOL, BYTE, WORD, etc.) or array of simple types.
  */
 typedef struct tagIoConfigChannelMap
 {
-	IoConfigParameter *pParameter;
-	RTS_IEC_BYTE *pbyIecAddress;
-	RTS_IEC_WORD wParameterBitOffset;
-	RTS_IEC_WORD wIecAddressBitOffset;
-	RTS_IEC_WORD wSize;
-	RTS_IEC_WORD wBaseTypeInformation;
-	RTS_IEC_BYTE *dwDriverSpecific;
+	IoConfigParameter *pParameter;		/* Pointer to the parameter description. */
+	RTS_IEC_BYTE *pbyIecAddress;		/* Pointer to the parameter in the process image on the IEC side. */
+	RTS_IEC_WORD wParameterBitOffset;		/* Bit offset of the device. */
+	RTS_IEC_WORD wIecAddressBitOffset;		/* Bit offset of pbyIecAddress in the IEC process image. */
+	RTS_IEC_WORD wSize;		/* Size in bits of the channel. */
+	RTS_IEC_WORD wBaseTypeInformation;		/* If this field is unequal zero, it is used for the base type information. With this information, a correct swapping operation can be executed. */
+	RTS_IEC_BYTE *dwDriverSpecific;		/* Driver specific entry. Reserved for the usage in the driver. */
 } IoConfigChannelMap;
 
 /**
- * <description>
- *		Connector map to describe all IO-channels of one connector
- *	</description>
- * <param name="pConnector" type="IN">Pointer to the corresponding connector</param>
- * <param name="dwIoMgrSpecific" type="IN">IO-manager specific entry</param>
- * <param name="dwNumOfChannels" type="IN">Number of channels in the channel map list</param>
- * <param name="pChannelMapList" type="IN">Pointer to channel map list</param>
- * <SIL2/>
+ *		Connector information. Each device is described completely as a set of one input- and one or more output-connectors. 
+ */
+typedef struct tagIoConfigConnector
+{
+	RTS_IEC_WORD wType;		/* Type of the connector. See category "Connector types" for detailed information. */
+	RTS_IEC_WORD wOptions;		/* Connector options. See category "Connector options" for detailed information. */
+	RTS_IEC_DWORD dwFlags;		/* Connector flags. See category "Connector flags" for detailed information. */
+	RTS_IEC_HANDLE hIoDrv;		/* Registered instance handle of the IO-driver, that operates this device respectively this connector. */
+	RTS_IEC_DWORD dwNumOfParameters;		/* Number of parameters in the parameter list. */
+	IoConfigParameter *pParameterList;		/* Pointer to the parameter list, that contains all parameters of this connector. */
+	struct tagIoConfigConnector *pFather;		/* Pointer to the father connector to describe the device tree. */
+} IoConfigConnector;
+
+/**
+ *	Connector map to describe all IO-channels of one connector
  */
 typedef struct tagIoConfigConnectorMap
 {
-	IoConfigConnector *pConnector;
-	RTS_IEC_BYTE *dwIoMgrSpecific;
-	RTS_IEC_DWORD dwNumOfChannels;
-	IoConfigChannelMap *pChannelMapList;
+	IoConfigConnector *pConnector;		/* Pointer to the corresponding connector. */
+	RTS_IEC_BYTE *dwIoMgrSpecific;		/* IO-manager specific entry. */
+	RTS_IEC_DWORD dwNumOfChannels;		/* Number of channels in the channel map list. */
+	IoConfigChannelMap *pChannelMapList;		/* Pointer to channel map list. */
 } IoConfigConnectorMap;
 
 /**
- * <description>
- *		Mapping description for each task.
- *	</description>
- * <param name="dwTaskId" type="IN">Index of the IEC task</param>
- * <param name="wType" type="IN">Input or output type. See category "Task map types" for detailed information.</param>
- * <param name="wNumOfConnectorMap" type="IN">Number of connector maps int the connector map list</param>
- * <param name="pConnectorMapList" type="IN">Pointer to the connector map list</param>
- * <SIL2/>
+ *	Mapping description for each task.
  */
 typedef struct tagIoConfigTaskMap
 {
-	RTS_IEC_DWORD dwTaskId;		
-	RTS_IEC_WORD wType;		
-	RTS_IEC_WORD wNumOfConnectorMap;		
-	IoConfigConnectorMap *pConnectorMapList;		
+	RTS_IEC_DWORD dwTaskId;		/* Index of the IEC task. */
+	RTS_IEC_WORD wType;		/* Input or output type. See category "Task map types" for detailed information. */
+	RTS_IEC_WORD wNumOfConnectorMap;		/* Number of connector maps int the connector map list. */
+	IoConfigConnectorMap *pConnectorMapList;		/* Pointer to the connector map list. */
 } IoConfigTaskMap;
 
 /**
@@ -406,7 +372,7 @@ typedef struct tagiomgrconfiggetconnector_struct
 	IoConfigConnector *IoMgrConfigGetConnector;	/* VAR_OUTPUT */	
 } iomgrconfiggetconnector_struct;
 
-DEF_API(`void',`CDECL',`iomgrconfiggetconnector',`(iomgrconfiggetconnector_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xB093BAED),0x03050800)
+DEF_API(`void',`CDECL',`iomgrconfiggetconnector',`(iomgrconfiggetconnector_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xB093BAED),0x03050F00)
 
 /**
  * <description>iomgrconfiggetconnectorbydriver</description>
@@ -420,7 +386,7 @@ typedef struct tagiomgrconfiggetconnectorbydriver_struct
 	IoConfigConnector *IoMgrConfigGetConnectorByDriver;	/* VAR_OUTPUT */	
 } iomgrconfiggetconnectorbydriver_struct;
 
-DEF_API(`void',`CDECL',`iomgrconfiggetconnectorbydriver',`(iomgrconfiggetconnectorbydriver_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x076B9D1E),0x03050800)
+DEF_API(`void',`CDECL',`iomgrconfiggetconnectorbydriver',`(iomgrconfiggetconnectorbydriver_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x076B9D1E),0x03050F00)
 
 /**
  * <description>iomgrconfiggetconnectorlist</description>
@@ -432,7 +398,7 @@ typedef struct tagiomgrconfiggetconnectorlist_struct
 	RTS_IEC_RESULT IoMgrConfigGetConnectorList;	/* VAR_OUTPUT */	
 } iomgrconfiggetconnectorlist_struct;
 
-DEF_API(`void',`CDECL',`iomgrconfiggetconnectorlist',`(iomgrconfiggetconnectorlist_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x6E3F45DC),0x03050800)
+DEF_API(`void',`CDECL',`iomgrconfiggetconnectorlist',`(iomgrconfiggetconnectorlist_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x6E3F45DC),0x03050F00)
 
 /**
  * <description>iomgrconfiggetdriver</description>
@@ -445,7 +411,7 @@ typedef struct tagiomgrconfiggetdriver_struct
 	IBase *IoMgrConfigGetDriver;		/* VAR_OUTPUT */	
 } iomgrconfiggetdriver_struct;
 
-DEF_API(`void',`CDECL',`iomgrconfiggetdriver',`(iomgrconfiggetdriver_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xA6C591A7),0x03050800)
+DEF_API(`void',`CDECL',`iomgrconfiggetdriver',`(iomgrconfiggetdriver_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xA6C591A7),0x03050F00)
 
 /**
  * <description>iomgrconfiggetfirstchild</description>
@@ -458,7 +424,7 @@ typedef struct tagiomgrconfiggetfirstchild_struct
 	IoConfigConnector *IoMgrConfigGetFirstChild;	/* VAR_OUTPUT */	
 } iomgrconfiggetfirstchild_struct;
 
-DEF_API(`void',`CDECL',`iomgrconfiggetfirstchild',`(iomgrconfiggetfirstchild_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xB89B6273),0x03050800)
+DEF_API(`void',`CDECL',`iomgrconfiggetfirstchild',`(iomgrconfiggetfirstchild_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xB89B6273),0x03050F00)
 
 /**
  * <description>iomgrconfiggetfirstconnector</description>
@@ -471,7 +437,7 @@ typedef struct tagiomgrconfiggetfirstconnector_struct
 	IoConfigConnector *IoMgrConfigGetFirstConnector;	/* VAR_OUTPUT */	
 } iomgrconfiggetfirstconnector_struct;
 
-DEF_API(`void',`CDECL',`iomgrconfiggetfirstconnector',`(iomgrconfiggetfirstconnector_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA),0x03050800)
+DEF_API(`void',`CDECL',`iomgrconfiggetfirstconnector',`(iomgrconfiggetfirstconnector_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x1AEDD2CA),0x03050F00)
 
 /**
  * <description>iomgrconfiggetnextchild</description>
@@ -484,7 +450,7 @@ typedef struct tagiomgrconfiggetnextchild_struct
 	IoConfigConnector *IoMgrConfigGetNextChild;	/* VAR_OUTPUT */	
 } iomgrconfiggetnextchild_struct;
 
-DEF_API(`void',`CDECL',`iomgrconfiggetnextchild',`(iomgrconfiggetnextchild_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x2F87EBF8),0x03050800)
+DEF_API(`void',`CDECL',`iomgrconfiggetnextchild',`(iomgrconfiggetnextchild_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x2F87EBF8),0x03050F00)
 
 /**
  * <description>iomgrconfiggetnextconnector</description>
@@ -497,7 +463,7 @@ typedef struct tagiomgrconfiggetnextconnector_struct
 	IoConfigConnector *IoMgrConfigGetNextConnector;	/* VAR_OUTPUT */	
 } iomgrconfiggetnextconnector_struct;
 
-DEF_API(`void',`CDECL',`iomgrconfiggetnextconnector',`(iomgrconfiggetnextconnector_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xA5BCF071),0x03050800)
+DEF_API(`void',`CDECL',`iomgrconfiggetnextconnector',`(iomgrconfiggetnextconnector_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xA5BCF071),0x03050F00)
 
 /**
  * <description>iomgrconfiggetparameter</description>
@@ -509,7 +475,7 @@ typedef struct tagiomgrconfiggetparameter_struct
 	IoConfigParameter *IoMgrConfigGetParameter;	/* VAR_OUTPUT */	
 } iomgrconfiggetparameter_struct;
 
-DEF_API(`void',`CDECL',`iomgrconfiggetparameter',`(iomgrconfiggetparameter_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xC7A23B05),0x03050800)
+DEF_API(`void',`CDECL',`iomgrconfiggetparameter',`(iomgrconfiggetparameter_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xC7A23B05),0x03050F00)
 
 /**
  * <description>iomgrconfiggetparametervaluebyte</description>
@@ -521,7 +487,7 @@ typedef struct tagiomgrconfiggetparametervaluebyte_struct
 	RTS_IEC_BYTE IoMgrConfigGetParameterValueByte;	/* VAR_OUTPUT */	
 } iomgrconfiggetparametervaluebyte_struct;
 
-DEF_API(`void',`CDECL',`iomgrconfiggetparametervaluebyte',`(iomgrconfiggetparametervaluebyte_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xDE4EF488),0x03050800)
+DEF_API(`void',`CDECL',`iomgrconfiggetparametervaluebyte',`(iomgrconfiggetparametervaluebyte_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xDE4EF488),0x03050F00)
 
 /**
  * <description>iomgrconfiggetparametervaluedword</description>
@@ -533,7 +499,7 @@ typedef struct tagiomgrconfiggetparametervaluedword_struct
 	RTS_IEC_DWORD IoMgrConfigGetParameterValueDword;	/* VAR_OUTPUT */	
 } iomgrconfiggetparametervaluedword_struct;
 
-DEF_API(`void',`CDECL',`iomgrconfiggetparametervaluedword',`(iomgrconfiggetparametervaluedword_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x6F885F72),0x03050800)
+DEF_API(`void',`CDECL',`iomgrconfiggetparametervaluedword',`(iomgrconfiggetparametervaluedword_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x6F885F72),0x03050F00)
 
 /**
  * <description>iomgrconfiggetparametervaluepointer</description>
@@ -545,7 +511,7 @@ typedef struct tagiomgrconfiggetparametervaluepointer_struct
 	RTS_IEC_BYTE *IoMgrConfigGetParameterValuePointer;	/* VAR_OUTPUT */	
 } iomgrconfiggetparametervaluepointer_struct;
 
-DEF_API(`void',`CDECL',`iomgrconfiggetparametervaluepointer',`(iomgrconfiggetparametervaluepointer_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x633BC6E3),0x03050800)
+DEF_API(`void',`CDECL',`iomgrconfiggetparametervaluepointer',`(iomgrconfiggetparametervaluepointer_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x633BC6E3),0x03050F00)
 
 /**
  * <description>iomgrconfiggetparametervalueword</description>
@@ -557,7 +523,7 @@ typedef struct tagiomgrconfiggetparametervalueword_struct
 	RTS_IEC_WORD IoMgrConfigGetParameterValueWord;	/* VAR_OUTPUT */	
 } iomgrconfiggetparametervalueword_struct;
 
-DEF_API(`void',`CDECL',`iomgrconfiggetparametervalueword',`(iomgrconfiggetparametervalueword_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x522D5073),0x03050800)
+DEF_API(`void',`CDECL',`iomgrconfiggetparametervalueword',`(iomgrconfiggetparametervalueword_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x522D5073),0x03050F00)
 
 /**
  * <description>iomgrconfigresetdiagnosis</description>
@@ -569,7 +535,7 @@ typedef struct tagiomgrconfigresetdiagnosis_struct
 	RTS_IEC_UDINT IoMgrConfigResetDiagnosis;	/* VAR_OUTPUT */	
 } iomgrconfigresetdiagnosis_struct;
 
-DEF_API(`void',`CDECL',`iomgrconfigresetdiagnosis',`(iomgrconfigresetdiagnosis_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x6B60C0F6),0x03050800)
+DEF_API(`void',`CDECL',`iomgrconfigresetdiagnosis',`(iomgrconfigresetdiagnosis_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x6B60C0F6),0x03050F00)
 
 /**
  * <description>iomgrconfigsetdiagnosis</description>
@@ -581,7 +547,7 @@ typedef struct tagiomgrconfigsetdiagnosis_struct
 	RTS_IEC_UDINT IoMgrConfigSetDiagnosis;	/* VAR_OUTPUT */	
 } iomgrconfigsetdiagnosis_struct;
 
-DEF_API(`void',`CDECL',`iomgrconfigsetdiagnosis',`(iomgrconfigsetdiagnosis_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9),0x03050800)
+DEF_API(`void',`CDECL',`iomgrconfigsetdiagnosis',`(iomgrconfigsetdiagnosis_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xE0CCC2C9),0x03050F00)
 
 /**
  * <description>iomgrcopyinputbe</description>
@@ -593,7 +559,7 @@ typedef struct tagiomgrcopyinputbe_struct
 	RTS_IEC_RESULT IoMgrCopyInputBE;	/* VAR_OUTPUT */	
 } iomgrcopyinputbe_struct;
 
-DEF_API(`void',`CDECL',`iomgrcopyinputbe',`(iomgrcopyinputbe_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x072C6C71),0x03050800)
+DEF_API(`void',`CDECL',`iomgrcopyinputbe',`(iomgrcopyinputbe_struct *p)',1,0,0x03050F00)
 
 /**
  * <description>iomgrcopyinputle</description>
@@ -605,7 +571,7 @@ typedef struct tagiomgrcopyinputle_struct
 	RTS_IEC_RESULT IoMgrCopyInputLE;	/* VAR_OUTPUT */	
 } iomgrcopyinputle_struct;
 
-DEF_API(`void',`CDECL',`iomgrcopyinputle',`(iomgrcopyinputle_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xD4FB4CB6),0x03050800)
+DEF_API(`void',`CDECL',`iomgrcopyinputle',`(iomgrcopyinputle_struct *p)',1,0,0x03050F00)
 
 /**
  * <description>iomgrcopyoutputbe</description>
@@ -617,7 +583,7 @@ typedef struct tagiomgrcopyoutputbe_struct
 	RTS_IEC_RESULT IoMgrCopyOutputBE;	/* VAR_OUTPUT */	
 } iomgrcopyoutputbe_struct;
 
-DEF_API(`void',`CDECL',`iomgrcopyoutputbe',`(iomgrcopyoutputbe_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xCDB7B2BE),0x03050800)
+DEF_API(`void',`CDECL',`iomgrcopyoutputbe',`(iomgrcopyoutputbe_struct *p)',1,0,0x03050F00)
 
 /**
  * <description>iomgrcopyoutputle</description>
@@ -629,7 +595,7 @@ typedef struct tagiomgrcopyoutputle_struct
 	RTS_IEC_RESULT IoMgrCopyOutputLE;	/* VAR_OUTPUT */	
 } iomgrcopyoutputle_struct;
 
-DEF_API(`void',`CDECL',`iomgrcopyoutputle',`(iomgrcopyoutputle_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x5FC818BC),0x03050800)
+DEF_API(`void',`CDECL',`iomgrcopyoutputle',`(iomgrcopyoutputle_struct *p)',1,0,0x03050F00)
 
 /**
  * <description>iomgrgetbuscycletype</description>
@@ -641,7 +607,7 @@ typedef struct tagiomgrgetbuscycletype_struct
 	RTS_IEC_UDINT IoMgrGetBusCycleType;	/* VAR_OUTPUT */	
 } iomgrgetbuscycletype_struct;
 
-DEF_API(`void',`CDECL',`iomgrgetbuscycletype',`(iomgrgetbuscycletype_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x8334DD20),0x03050800)
+DEF_API(`void',`CDECL',`iomgrgetbuscycletype',`(iomgrgetbuscycletype_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x8334DD20),0x03050F00)
 
 /**
  * <description>iomgrgetconfigapplication</description>
@@ -653,7 +619,7 @@ typedef struct tagiomgrgetconfigapplication_struct
 	RTS_IEC_RESULT IoMgrGetConfigApplication;	/* VAR_OUTPUT */	
 } iomgrgetconfigapplication_struct;
 
-DEF_API(`void',`CDECL',`iomgrgetconfigapplication',`(iomgrgetconfigapplication_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xF82C99F4),0x03050800)
+DEF_API(`void',`CDECL',`iomgrgetconfigapplication',`(iomgrgetconfigapplication_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xF82C99F4),0x03050F00)
 
 /**
  * <description>iomgrgetdriverproperties</description>
@@ -665,7 +631,7 @@ typedef struct tagiomgrgetdriverproperties_struct
 	RTS_IEC_RESULT IoMgrGetDriverProperties;	/* VAR_OUTPUT */	
 } iomgrgetdriverproperties_struct;
 
-DEF_API(`void',`CDECL',`iomgrgetdriverproperties',`(iomgrgetdriverproperties_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xEC0D662D),0x03050800)
+DEF_API(`void',`CDECL',`iomgrgetdriverproperties',`(iomgrgetdriverproperties_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xEC0D662D),0x03050F00)
 
 /**
  * <description>iomgrgetfirstdriverinstance</description>
@@ -677,7 +643,7 @@ typedef struct tagiomgrgetfirstdriverinstance_struct
 	IBase *IoMgrGetFirstDriverInstance;	/* VAR_OUTPUT */	
 } iomgrgetfirstdriverinstance_struct;
 
-DEF_API(`void',`CDECL',`iomgrgetfirstdriverinstance',`(iomgrgetfirstdriverinstance_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x7823BC76),0x03050800)
+DEF_API(`void',`CDECL',`iomgrgetfirstdriverinstance',`(iomgrgetfirstdriverinstance_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x7823BC76),0x03050F00)
 
 /**
  * <description>iomgrgetmodulediagnosis</description>
@@ -688,7 +654,7 @@ typedef struct tagiomgrgetmodulediagnosis_struct
 	RTS_IEC_UDINT IoMgrGetModuleDiagnosis;	/* VAR_OUTPUT */	
 } iomgrgetmodulediagnosis_struct;
 
-DEF_API(`void',`CDECL',`iomgrgetmodulediagnosis',`(iomgrgetmodulediagnosis_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x5DA78ABA),0x03050800)
+DEF_API(`void',`CDECL',`iomgrgetmodulediagnosis',`(iomgrgetmodulediagnosis_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x5DA78ABA),0x03050F00)
 
 /**
  * <description>iomgrgetnextdriverinstance</description>
@@ -701,7 +667,7 @@ typedef struct tagiomgrgetnextdriverinstance_struct
 	IBase *IoMgrGetNextDriverInstance;	/* VAR_OUTPUT */	
 } iomgrgetnextdriverinstance_struct;
 
-DEF_API(`void',`CDECL',`iomgrgetnextdriverinstance',`(iomgrgetnextdriverinstance_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x0B47742F),0x03050800)
+DEF_API(`void',`CDECL',`iomgrgetnextdriverinstance',`(iomgrgetnextdriverinstance_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x0B47742F),0x03050F00)
 
 /**
  * <description>iomgridentify</description>
@@ -712,7 +678,54 @@ typedef struct tagiomgridentify_struct
 	RTS_IEC_UDINT IoMgrIdentify;		/* VAR_OUTPUT */	
 } iomgridentify_struct;
 
-DEF_API(`void',`CDECL',`iomgridentify',`(iomgridentify_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xC48724F5),0x03050800)
+DEF_API(`void',`CDECL',`iomgridentify',`(iomgridentify_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xC48724F5),0x03050F00)
+
+/**
+ * This function acquires the mutual-exclusion locks for the given operations
+ * for critical sections inside the I/O driver's implementation of IoDrvReadInputs(), IoDrvWriteOutputs(), and IoDrvStartBusCycle().
+ * The locks can be released with the function ``IoMgrLockLeave()``.
+ * While a lock is held, any other thread is blocked from acquiring the lock and waits until the lock is released.
+ * 
+ * IMPLEMENTATION NOTE: The behavior of the ``dwLockScope`` parameter can't be implemented on all platforms.
+ * Platforms without synchronization functionality may not be able to implement this behavior.
+ * IoMgrEmbedded of the CODESYSControlEmbedded runtime system for example can only disable and enable all interrupts.
+ * 
+ * :return: error code
+ *    + ERR_OK: Locks were successfully acquired.
+ *    + ERR_PARAMETER: The ``pbyIoDrv`` parameter is ``NULL`` (only implementations that use this parameter),
+ *      or the ``dwLockScope`` parameter has none of the GVL LockScopes set (only implementations that use this parameter).
+ *    + ERR_FAILED: No driver entry for pbyIoDrv found in device pool.
+ */
+typedef struct tagiomgrlockenter_struct
+{
+	RTS_IEC_HANDLE hIoDrv;				/* VAR_INPUT */	/* Handle to the driver instance which is returned by the function IoMgrRegisterInstance2(). */
+	RTS_IEC_DWORD dwLockScope;			/* VAR_INPUT */	/* The operations for which to acquire locks. See GVL LockScopes for detailed information. */
+	RTS_IEC_RESULT IoMgrLockEnter;		/* VAR_OUTPUT */	
+} iomgrlockenter_struct;
+
+DEF_API(`void',`CDECL',`iomgrlockenter',`(iomgrlockenter_struct *p)',1,0x3517831C,0x03050F00)
+
+/**
+ * This function releases the mutual-exclusion locks (that were acquired with the function ``IoMgrLockEnter()``) for the given operations.
+ * 
+ * IMPLEMENTATION NOTE: The behavior of the ``dwLockScope`` parameter can't be implemented on all platforms.
+ * Platforms without synchronization functionality may not be able to implement this behavior.
+ * IoMgrEmbedded of the CODESYSControlEmbedded runtime system for example can only disable and enable all interrupts.
+ * 
+ * :return: error code
+ *    + ERR_OK: Locks were successfully released.
+ *    + ERR_PARAMETER: The ``pbyIoDrv`` parameter is ``NULL`` (only implementations that use this parameter),
+ *      or the ``dwLockScope`` parameter has none of the GVL LockScopes set (only implementations that use this parameter).
+ *    + ERR_FAILED: No driver entry for pbyIoDrv found in device pool.
+ */
+typedef struct tagiomgrlockleave_struct
+{
+	RTS_IEC_HANDLE hIoDrv;				/* VAR_INPUT */	/* Handle to the driver instance which is returned by the function IoMgrRegisterInstance2(). */
+	RTS_IEC_DWORD dwLockScope;			/* VAR_INPUT */	/* The operations for which to release the locks. See GVL LockScopes for detailed information. */
+	RTS_IEC_RESULT IoMgrLockLeave;		/* VAR_OUTPUT */	
+} iomgrlockleave_struct;
+
+DEF_API(`void',`CDECL',`iomgrlockleave',`(iomgrlockleave_struct *p)',1,0x3CFC293B,0x03050F00)
 
 /**
  * <description>iomgrreadinputs</description>
@@ -723,7 +736,7 @@ typedef struct tagiomgrreadinputs_struct
 	RTS_IEC_UDINT IoMgrReadInputs;		/* VAR_OUTPUT */	
 } iomgrreadinputs_struct;
 
-DEF_API(`void',`CDECL',`iomgrreadinputs',`(iomgrreadinputs_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x3BCE0A42),0x03050800)
+DEF_API(`void',`CDECL',`iomgrreadinputs',`(iomgrreadinputs_struct *p)',1,0,0x03050F00)
 
 /**
  * <description>iomgrreadparameter</description>
@@ -739,7 +752,7 @@ typedef struct tagiomgrreadparameter_struct
 	RTS_IEC_UDINT IoMgrReadParameter;	/* VAR_OUTPUT */	
 } iomgrreadparameter_struct;
 
-DEF_API(`void',`CDECL',`iomgrreadparameter',`(iomgrreadparameter_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xD37BF5DF),0x03050800)
+DEF_API(`void',`CDECL',`iomgrreadparameter',`(iomgrreadparameter_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xD37BF5DF),0x03050F00)
 
 /**
  * | Reconfigure a single connector respectively the corresponding master.
@@ -758,7 +771,7 @@ typedef struct tagiomgrreconfigure_struct
 	RTS_IEC_RESULT IoMgrReconfigure;	/* VAR_OUTPUT */	
 } iomgrreconfigure_struct;
 
-DEF_API(`void',`CDECL',`iomgrreconfigure',`(iomgrreconfigure_struct *p)',1,RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390),0x03050800)
+DEF_API(`void',`CDECL',`iomgrreconfigure',`(iomgrreconfigure_struct *p)',1,RTSITF_GET_SIGNATURE(0x7DDF91C4, 0x731E5390),0x03050F00)
 
 /**
  * <description>iomgrregisterconfigapplication</description>
@@ -769,7 +782,7 @@ typedef struct tagiomgrregisterconfigapplication_struct
 	RTS_IEC_RESULT IoMgrRegisterConfigApplication;	/* VAR_OUTPUT */	
 } iomgrregisterconfigapplication_struct;
 
-DEF_API(`void',`CDECL',`iomgrregisterconfigapplication',`(iomgrregisterconfigapplication_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8),0x03050800)
+DEF_API(`void',`CDECL',`iomgrregisterconfigapplication',`(iomgrregisterconfigapplication_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xBEF7EAA8),0x03050F00)
 
 /**
  * <description>iomgrregisterinstance2</description>
@@ -782,7 +795,7 @@ typedef struct tagiomgrregisterinstance2_struct
 	RTS_IEC_HANDLE IoMgrRegisterInstance2;	/* VAR_OUTPUT */	
 } iomgrregisterinstance2_struct;
 
-DEF_API(`void',`CDECL',`iomgrregisterinstance2',`(iomgrregisterinstance2_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x4219F9A3),0x03050800)
+DEF_API(`void',`CDECL',`iomgrregisterinstance2',`(iomgrregisterinstance2_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x4219F9A3),0x03050F00)
 
 /**
  * <description>iomgrscanmodules</description>
@@ -795,7 +808,7 @@ typedef struct tagiomgrscanmodules_struct
 	RTS_IEC_UDINT IoMgrScanModules;		/* VAR_OUTPUT */	
 } iomgrscanmodules_struct;
 
-DEF_API(`void',`CDECL',`iomgrscanmodules',`(iomgrscanmodules_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xF31DBCAE),0x03050800)
+DEF_API(`void',`CDECL',`iomgrscanmodules',`(iomgrscanmodules_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xF31DBCAE),0x03050F00)
 
 /**
  * <description>iomgrsetdriverproperties</description>
@@ -807,7 +820,7 @@ typedef struct tagiomgrsetdriverproperties_struct
 	RTS_IEC_RESULT IoMgrSetDriverProperties;	/* VAR_OUTPUT */	
 } iomgrsetdriverproperties_struct;
 
-DEF_API(`void',`CDECL',`iomgrsetdriverproperties',`(iomgrsetdriverproperties_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x607A5D95),0x03050800)
+DEF_API(`void',`CDECL',`iomgrsetdriverproperties',`(iomgrsetdriverproperties_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x607A5D95),0x03050F00)
 
 /**
  * <description>iomgrsetdriverproperty</description>
@@ -820,7 +833,7 @@ typedef struct tagiomgrsetdriverproperty_struct
 	RTS_IEC_RESULT IoMgrSetDriverProperty;	/* VAR_OUTPUT */	
 } iomgrsetdriverproperty_struct;
 
-DEF_API(`void',`CDECL',`iomgrsetdriverproperty',`(iomgrsetdriverproperty_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x936FC5C4),0x03050800)
+DEF_API(`void',`CDECL',`iomgrsetdriverproperty',`(iomgrsetdriverproperty_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x936FC5C4),0x03050F00)
 
 /**
  * <description>iomgrstartbuscycle</description>
@@ -831,14 +844,10 @@ typedef struct tagiomgrstartbuscycle_struct
 	RTS_IEC_UDINT IoMgrStartBusCycle;	/* VAR_OUTPUT */	
 } iomgrstartbuscycle_struct;
 
-DEF_API(`void',`CDECL',`iomgrstartbuscycle',`(iomgrstartbuscycle_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x09EEEC27),0x03050800)
+DEF_API(`void',`CDECL',`iomgrstartbuscycle',`(iomgrstartbuscycle_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x09EEEC27),0x03050F00)
 
 /**
- * start the bus cycle for a specific connector, and pass
- * * the type of this call as an additional option. This way,
- * * the driver knows in which conditions (see BusCycleType)
- * * was called, by calling IoMgrGetBusCycleType().
- * 
+ * Start the bus cycle for a specific connector, and pass the type of this call as an additional option. This way, the driver knows in which conditions (see BusCycleType) was called, by calling IoMgrGetBusCycleType().
  */
 typedef struct tagiomgrstartbuscycle2_struct
 {
@@ -847,7 +856,7 @@ typedef struct tagiomgrstartbuscycle2_struct
 	RTS_IEC_UDINT IoMgrStartBusCycle2;	/* VAR_OUTPUT */	
 } iomgrstartbuscycle2_struct;
 
-DEF_API(`void',`CDECL',`iomgrstartbuscycle2',`(iomgrstartbuscycle2_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x8AB99A18),0x03050800)
+DEF_API(`void',`CDECL',`iomgrstartbuscycle2',`(iomgrstartbuscycle2_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x8AB99A18),0x03050F00)
 
 /**
  * <description>iomgrunregisterconfigapplication</description>
@@ -858,7 +867,7 @@ typedef struct tagiomgrunregisterconfigapplication_struct
 	RTS_IEC_RESULT IoMgrUnregisterConfigApplication;	/* VAR_OUTPUT */	
 } iomgrunregisterconfigapplication_struct;
 
-DEF_API(`void',`CDECL',`iomgrunregisterconfigapplication',`(iomgrunregisterconfigapplication_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xECB18F2E),0x03050800)
+DEF_API(`void',`CDECL',`iomgrunregisterconfigapplication',`(iomgrunregisterconfigapplication_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xECB18F2E),0x03050F00)
 
 /**
  * <description>iomgrunregisterinstance</description>
@@ -869,7 +878,7 @@ typedef struct tagiomgrunregisterinstance_struct
 	RTS_IEC_RESULT IoMgrUnregisterInstance;	/* VAR_OUTPUT */	
 } iomgrunregisterinstance_struct;
 
-DEF_API(`void',`CDECL',`iomgrunregisterinstance',`(iomgrunregisterinstance_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x830B7CC7),0x03050800)
+DEF_API(`void',`CDECL',`iomgrunregisterinstance',`(iomgrunregisterinstance_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x830B7CC7),0x03050F00)
 
 /**
  * <description>iomgrupdateconfiguration</description>
@@ -881,7 +890,7 @@ typedef struct tagiomgrupdateconfiguration_struct
 	RTS_IEC_UDINT IoMgrUpdateConfiguration;	/* VAR_OUTPUT */	
 } iomgrupdateconfiguration_struct;
 
-DEF_API(`void',`CDECL',`iomgrupdateconfiguration',`(iomgrupdateconfiguration_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xB1381773),0x03050800)
+DEF_API(`void',`CDECL',`iomgrupdateconfiguration',`(iomgrupdateconfiguration_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xB1381773),0x03050F00)
 
 /**
  * <description>iomgrupdateconfiguration2</description>
@@ -894,7 +903,7 @@ typedef struct tagiomgrupdateconfiguration2_struct
 	RTS_IEC_UDINT IoMgrUpdateConfiguration2;	/* VAR_OUTPUT */	
 } iomgrupdateconfiguration2_struct;
 
-DEF_API(`void',`CDECL',`iomgrupdateconfiguration2',`(iomgrupdateconfiguration2_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x44CD4528),0x03050800)
+DEF_API(`void',`CDECL',`iomgrupdateconfiguration2',`(iomgrupdateconfiguration2_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x44CD4528),0x03050F00)
 
 /**
  * <description>iomgrupdatemapping</description>
@@ -906,7 +915,7 @@ typedef struct tagiomgrupdatemapping_struct
 	RTS_IEC_UDINT IoMgrUpdateMapping;	/* VAR_OUTPUT */	
 } iomgrupdatemapping_struct;
 
-DEF_API(`void',`CDECL',`iomgrupdatemapping',`(iomgrupdatemapping_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x0A15126C),0x03050800)
+DEF_API(`void',`CDECL',`iomgrupdatemapping',`(iomgrupdatemapping_struct *p)',1,0,0x03050F00)
 
 /**
  * <description>iomgrupdatemapping2</description>
@@ -919,7 +928,7 @@ typedef struct tagiomgrupdatemapping2_struct
 	RTS_IEC_UDINT IoMgrUpdateMapping2;	/* VAR_OUTPUT */	
 } iomgrupdatemapping2_struct;
 
-DEF_API(`void',`CDECL',`iomgrupdatemapping2',`(iomgrupdatemapping2_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x775F7CAD),0x03050800)
+DEF_API(`void',`CDECL',`iomgrupdatemapping2',`(iomgrupdatemapping2_struct *p)',1,0,0x03050F00)
 
 /**
  * <description>iomgrwatchdogtrigger</description>
@@ -930,7 +939,7 @@ typedef struct tagiomgrwatchdogtrigger_struct
 	RTS_IEC_UDINT IoMgrWatchdogTrigger;	/* VAR_OUTPUT */	
 } iomgrwatchdogtrigger_struct;
 
-DEF_API(`void',`CDECL',`iomgrwatchdogtrigger',`(iomgrwatchdogtrigger_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x986DFD93),0x03050800)
+DEF_API(`void',`CDECL',`iomgrwatchdogtrigger',`(iomgrwatchdogtrigger_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0x986DFD93),0x03050F00)
 
 /**
  * <description>iomgrwriteoutputs</description>
@@ -941,7 +950,7 @@ typedef struct tagiomgrwriteoutputs_struct
 	RTS_IEC_UDINT IoMgrWriteOutputs;	/* VAR_OUTPUT */	
 } iomgrwriteoutputs_struct;
 
-DEF_API(`void',`CDECL',`iomgrwriteoutputs',`(iomgrwriteoutputs_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xDA3433B3),0x03050800)
+DEF_API(`void',`CDECL',`iomgrwriteoutputs',`(iomgrwriteoutputs_struct *p)',1,0,0x03050F00)
 
 /**
  * <description>iomgrwriteparameter</description>
@@ -957,7 +966,7 @@ typedef struct tagiomgrwriteparameter_struct
 	RTS_IEC_UDINT IoMgrWriteParameter;	/* VAR_OUTPUT */	
 } iomgrwriteparameter_struct;
 
-DEF_API(`void',`CDECL',`iomgrwriteparameter',`(iomgrwriteparameter_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xAD04F7E8),0x03050800)
+DEF_API(`void',`CDECL',`iomgrwriteparameter',`(iomgrwriteparameter_struct *p)',1,RTSITF_GET_SIGNATURE(0, 0xAD04F7E8),0x03050F00)
 
 #ifdef __cplusplus
 }
@@ -1042,14 +1051,14 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent after the config application is started</description>
+ * <description>Event is sent after the IO-configuration application is started</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpIoMgr</param>
  */
 #define EVT_ConfigAppStartedDone								MAKE_EVENTID(EVTCLASS_INFO, 3)
 
 /**
  * <category>Events</category>
- * <description>Event is sent before the config application is stopped</description>
+ * <description>Event is sent before the IO-configuration application is stopped</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpIoMgr</param>
  */
 #define EVT_PrepareConfigAppStopped								MAKE_EVENTID(EVTCLASS_INFO, 4)
@@ -1077,10 +1086,22 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent after the config application is stopped</description>
+ * <description>Event is sent after the IO-configuration application is stopped</description>
  * <param name="pEventParam" type="IN">EVTPARAM_CmpIoMgr</param>
  */
 #define EVT_ConfigAppStoppedDone								MAKE_EVENTID(EVTCLASS_INFO, 8)
+
+/**
+ * <category>Lock Scopes</category>
+ * <description>
+ * <p>Scopes for mutual-exclusion locks to be used with the <code>ui32LockScope</code> parameters of the functions <code>IoMgrLockEnter()</code> and <code>IoMgrLockLeave()</code>.</p>
+ * <p>Note: Use both locks <code>IOMGR_LOCK_READ_INPUTS | IOMGR_LOCK_WRITE_OUTPUTS</code> in the function <code>StartBusCycle()</code>.</p>
+ * </description>
+ * <element name="IOMGR_LOCK_WRITE_OUTPUTS">Lock critical sections in IoDrvWriteOutputs() and IoDrvStartBusCycle().</element>
+ * <element name="IOMGR_LOCK_READ_INPUTS">Lock critical sections in IoDrvReadInputs() and IoDrvStartBusCycle().</element>
+ */
+#define IOMGR_LOCK_READ_INPUTS		UINT32_C(0x0001)
+#define IOMGR_LOCK_WRITE_OUTPUTS	UINT32_C(0x0002)
 
 
 typedef struct
@@ -1130,7 +1151,7 @@ DEF_API(`void',`CDECL',`iomgrregisterinstance',`(iomgrregisterinstance_struct *p
  * <param name="pIBase" type="IN" range="[NULL,VALID_IBASE]">IBase interface of the IO-driver</param>
  * <param name="bIecDriver" type="IN" range="[0,1]">Specifies if IBase describes a C or an IEC driver</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <parampseudo name="bException" type="OUT">Exception occured, because MemPool is full</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception occurred, because MemPool is full</parampseudo>
  * <parampseudo name="DevicePool" type="IN" range="[VALID_MEMPOOL,FULL_MEMPOOL]">State of MemPool</parampseudo>
  * <errorcode name="RTS_RESULT" type="ERR_OK">Driver was successfully registered</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">No driver pool was found</errorcode>
@@ -1147,7 +1168,7 @@ DEF_ITF_API(`RTS_HANDLE',`CDECL',`IoMgrRegisterInstance2',`(IBase *pIBase, int b
  * </description>
  * <param name="pIBase" type="IN" range="[NULL,VALID_IBASE,INVALID_IBASE]">IBase interface of the IO-driver</param>
  * <parampseudo name="SIL2ModeDebug" type="IN" range="[0,1]">SIL2 safety mode</parampseudo>
- * <parampseudo name="bException" type="OUT">Exception occured, not allowed in safety mode</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception occurred, not allowed in safety mode</parampseudo>
  * <errorcode name="RTS_RESULT" type="ERR_OK">Driver unregistered successfully</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Parameter invalid or driver not found</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOTINITIALIZED">The I/O Manager component was not correctly initialized</errorcode>
@@ -1211,7 +1232,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`IoMgrGetDriverProperties',`(IBase *pIBase, RTS
 
 /**
  * <description>
- * <p>Modify a Property Bitfield of a driver.</p>
+ * <p>Modify a Property bit field of a driver.</p>
  * <p>The bits in the mask ulProperty are set or reset, depending on the value of bValue.</p>
  * </description>
  * <param name="pIBase" type="IN" range="[NULL,VALID_IBASE]">Pointer to IBase interface of the driver</param>
@@ -1227,10 +1248,10 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`IoMgrSetDriverProperty',`(IBase *pIBase, RTS_U
  * <description>
  * <p>Register the name of the application that contains the IO-configuration.</p>
  * </description>
- * <param name="pszConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP_NAME]">Pointer to the name of the IO-config application</param>
- * <parampseudo name="pszRegisteredConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP_NAME,INVALID_CONFIGAPP_NAME]">Registered Config Application</parampseudo>
+ * <param name="pszConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP_NAME]">Pointer to the name of the IO-configuration application</param>
+ * <parampseudo name="pszRegisteredConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP_NAME,INVALID_CONFIGAPP_NAME]">Registered IO-configuration application</parampseudo>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">The config application was registered</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">The IO-configuration application was registered</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_DUPLICATE">Another application is already registered</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pszConfigApplication was NULL</errorcode>
  */
@@ -1240,12 +1261,12 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrRegisterConfigApplication', `(char *psz
  * <description>
  * <p>Unregister the name of the application that contains the IO-configuration.</p>
  * </description>
- * <param name="pszConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP]">Pointer to the name of the IO-config application</param>
+ * <param name="pszConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP]">Pointer to the name of the IO-configuration application</param>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">The config application was unregistered</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_FAILED">The application is not the registered config application</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">The IO-configuration application was unregistered</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">The application is not the registered IO-configuration application</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pszConfigApplication was NULL</errorcode>
- * <parampseudo name="pszRegisteredConfigApplication" type="IN" range="[NULL,VALID_REGISTERED_CONFIGAPP]">Registered Config Application</parampseudo>
+ * <parampseudo name="pszRegisteredConfigApplication" type="IN" range="[NULL,VALID_REGISTERED_CONFIGAPP]">Registered IO-configuration application</parampseudo>
  * <parampseudo name="bException" type="OUT">SIL2 Runtime: Exception if not in Debug Mode</parampseudo>
  * <parampseudo name="bSIL2SafeMode" type="IN" range="[0,1]">SIL2 Runtime: SIL2 OpMode</parampseudo>
  * <result>error code</result>
@@ -1257,11 +1278,11 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrUnregisterConfigApplication', `(char *p
  * <p>Return the name of the application that contains the I/O configuration.</p>
  * <p>If the parameter pszConfigApplication is NULL, only the size of the string is returned.</p>
  * </description>
- * <param name="pszConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP]">Pointer to get the name of the IO-config application</param>
- * <param name="pnMaxLen" type="INOUT" range="[NULL,VALID_CONFIGAPP_LENGTH]">IN: size of pszConfigApplication, OUT: Size of config application if psz</param>
- * <parampseudo name="pszRegisteredConfigApplication" type="IN" range="[NULL,VALID_REGISTERED_CONFIGAPP]">Registered Config Application</parampseudo>
- * <errorcode name="RTS_RESULT" type="ERR_OK">The config application was retrieved successfully</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">No config application registered</errorcode>
+ * <param name="pszConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP]">Pointer to get the name of the IO-configuration application</param>
+ * <param name="pnMaxLen" type="INOUT" range="[NULL,VALID_CONFIGAPP_LENGTH]">IN: size of pszConfigApplication, OUT: Size of IO-configuration application name</param>
+ * <parampseudo name="pszRegisteredConfigApplication" type="IN" range="[NULL,VALID_REGISTERED_CONFIGAPP]">Registered IO-configuration application</parampseudo>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">The IO-configuration application was retrieved successfully</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_NO_OBJECT">No IO-configuration application registered</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pnMaxLen was NULL</errorcode>
  * <result>error code</result>
  */
@@ -1276,13 +1297,13 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrGetConfigApplication', `(char *pszConfi
  * too, but then with the parameter pConnectorList set to NULL.</p>
  * <p>Note: When an I/O driver returns ERR_EXCEPTION, the I/O Manager puts 
  * the application into an exception state. All other errors are just, logged.</p>
- * <p>Note2: On SIL2 runtimes, any error code that is returned by the I/O
+ * <p>Note2: On SIL2 runtime any error code that is returned by the I/O
  * driver, leads to an exception.</p>
  * </description>
  * <param name="pConnectorList" type="IN" range="[NULL,VALID_CONNECTORLIST]">Pointer to the complete connector list of the IO-configuration</param>
  * <param name="nCount" type="INOUT" range="[0,VALID_CONNECTORCOUNT]">Number of connectors in the connector list</param>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Update Configuration of all drivers was successfull</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Update Configuration of all drivers was successful</errorcode>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrUpdateConfiguration', `(IoConfigConnector *pConnectorList, int nCount)')
 
@@ -1295,7 +1316,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrUpdateConfiguration', `(IoConfigConnect
  * too, but then with the parameter pConnectorList set to NULL.</p>
  * <p>Note: When an I/O driver returns ERR_EXCEPTION, the I/O Manager puts 
  * the application into an exception state. All other errors are just, logged.</p>
- * <p>Note2: On SIL2 runtimes, any error code that is returned by the I/O
+ * <p>Note2: On SIL2 runtime any error code that is returned by the I/O
  * driver, leads to an exception.</p>
  * </description>
  * <param name="pConnectorList" type="IN" range="[NULL,VALID_CONNECTORLIST]">Pointer to the complete connector list of the IO-configuration</param>
@@ -1304,7 +1325,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrUpdateConfiguration', `(IoConfigConnect
  * <parampseudo name="bUpdateConfigFailed" type="IN" range="[0,1]">Pointer to the application name in which context this function is called</parampseudo>
  * <parampseudo name="bException" type="OUT">Exception is thrown as UpdateConfiguration failed</parampseudo>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Update Configuration of all drivers was successfull</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Update Configuration of all drivers was successful</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Update Configuration of at least one driver failed</errorcode>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrUpdateConfiguration2', `(IoConfigConnector *pConnectorList, int nCount, char *pszConfigApplication)')
@@ -1341,14 +1362,14 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrUpdateMapping', `(IoConfigTaskMap *pTas
  * <p>Interface to inform all IO-drivers about a new IO-mapping.</p>
  * <p>Note: When an I/O driver returns ERR_EXCEPTION, the I/O Manager puts 
  * the application into an exception state. All other errors are just, logged.</p>
- * <p>Note2: On SIL2 runtimes, any error code that is returned by the I/O
+ * <p>Note2: On SIL2 runtime any error code that is returned by the I/O
  * driver, leads to an exception.</p>
  * </description>
  * <param name="pTaskMapList" type="IN" range="[NULL,VALID_TASKMAPLIST,INVALID_TASKMAPLIST]">Pointer to the complete task map list</param>
  * <param name="nCount" type="IN" range="[0,VALID_TASKMAPCOUNT]">Number of task map entries in the list</param>
  * <param name="pszConfigApplication" type="IN" range="[NULL,VALID_CONFIGAPP]">Pointer to the application name in which context this function is called</param>
- * <parampseudo name="dwTaskId" type="IN" range="[0,1,NUM_OF_STATIC_IEC_TASKS]">Exception is thrown if Taskmap is corrupted, or TaskId invalid</parampseudo>
- * <parampseudo name="bException" type="OUT">Exception is thrown if Taskmap is corrupted, or TaskId invalid</parampseudo>
+ * <parampseudo name="dwTaskId" type="IN" range="[0,1,NUM_OF_STATIC_IEC_TASKS]">Exception is thrown if task mapping is corrupted, or TaskId invalid</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception is thrown if task mapping is corrupted, or TaskId invalid</parampseudo>
  * <parampseudo name="bUpdateMappingFailed" type="IN" range="[0,1]">UpdateMapping Failed in IoDriver</parampseudo>
  * <result>error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">All registered drivers where informed about the change</errorcode>
@@ -1367,7 +1388,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrUpdateMapping2', `(IoConfigTaskMap *pTa
  *	This sequence is called asynchronously so the asynchronous state is transported in pudi</p>
  *
  *	NOTE:
- *	If the CmpAsyncMgr ist not available, the reconfiguration is done synchronously!
+ *	If the CmpAsyncMgr is not available, the reconfiguration is done synchronously!
  *
  * </description>
  * <param name="pConnector" type="IN" range="[NULL,VALID_CONNECTOR_1,INVALID_CONNECTOR]">Pointer to the connector to reconfigure</param>
@@ -1375,11 +1396,54 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrUpdateMapping2', `(IoConfigTaskMap *pTa
  * <parampseudo name="SIL2OpModeSafe" type="IN" range="[0,1]">Is not allowed in SIL2 Mode</parampseudo>
  * <parampseudo name="bException" type="OUT">Exception if in Safe Mode</parampseudo> 
  * <result>error code</result>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Asynchronous reconfigure can be startet</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Asynchronous reconfigure can be started</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">One of the parameter is NULL</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">CmpAsyncMgr is not available</errorcode>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrReconfigure', `(IoConfigConnector *pConnector, RTS_UI32 *pui32State)')
+
+/**
+ * <description>
+ * <p>Acquires mutual-exclusion locks.</p>
+ * <p>This function acquires the mutual-exclusion locks for the given operations
+ * for critical sections inside the I/O driver's implementation of IoDrvReadInputs(), IoDrvWriteOutputs(), and IoDrvStartBusCycle().
+ * The locks can be released with the function <code>IoMgrLockLeave()</code>.
+ * While a lock is held, any other thread is blocked from acquiring the lock and waits until the lock is released.</p>
+ * 
+ * <p>IMPLEMENTATION NOTE: The behavior of the <code>ui32LockScope</code> parameter can't be implemented on all platforms.
+ * Platforms without synchronization functionality may not be able to implement this behavior.
+ * IoMgrEmbedded of the CODESYSControlEmbedded runtime system for example can only disable and enable all interrupts.</p>
+ * </description>
+ * <param name="pIBase" type="IN" range="[NULL,VALID_PIBASE]">Pointer to the IBase interface of the driver (not used by all implementations).</param>
+ * <param name="ui32LockScope" type="IN" range="[RTS_RANGE_OF_RTS_UI32]">The operations for which to acquire locks. See category "Lock Scopes" for detailed information.</param>
+ * <parampseudo name="bTimerOccured" type="OUT" range="[TRUE,FALSE]">Specifies, if a timer was able to run, during the lock, or not</parampseudo>
+ * <result>error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Locks were successfully acquired.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">The <code>pIBase</code> parameter is <code>NULL</code> (only implementations that use this parameter),
+ * or the <code>ui32OpsLock</code> parameter has none of the category "Locks for operations" set (only implementations that use this parameter).</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">No driver entry for pIBase found in device pool.</errorcode>
+ */
+DEF_ITF_API(`RTS_RESULT',`CDECL',`IoMgrLockEnter',`(IBase *pIBase, const RTS_UI32 ui32LockScope)')
+
+/**
+ * <description>
+ * <p>Releases mutual-exclusion locks.</p>
+ * <p>This function releases the mutual-exclusion locks (that were acquired with the function <code>IoMgrLockEnter()</code>) for the given operations.</p>
+ * 
+ * <p>IMPLEMENTATION NOTE: The behavior of the <code>ui32LockScope</code> parameter can't be implemented on all platforms.
+ * Platforms without synchronization functionality may not be able to implement this behavior.
+ * IoMgrEmbedded of the CODESYSControlEmbedded runtime system for example can only disable and enable all interrupts.</p>
+ * </description>
+ * <param name="pIBase" type="IN" range="[NULL,VALID_PIBASE]">Pointer to the IBase interface of the driver (not used by all implementations).</param>
+ * <param name="ui32LockScope" type="IN" range="[RTS_RANGE_OF_RTS_UI32]">The operations for which to release the locks. See category "Lock Scopes" for detailed information.</param>
+ * <parampseudo name="bTimerOccured" type="OUT" range="[TRUE,FALSE]">Specifies, if a timer was able to run, during the lock, or not</parampseudo>
+ * <result>error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Locks were successfully released.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">The <code>pIBase</code> parameter is <code>NULL</code> (only implementations that use this parameter),
+ * or the <code>ui32OpsLock</code> parameter has none of the category "Locks for operations" set (only implementations that use this parameter).</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">No driver entry for pIBase found in device pool.</errorcode>
+ */
+DEF_ITF_API(`RTS_RESULT',`CDECL',`IoMgrLockLeave',`(IBase *pIBase, const RTS_UI32 ui32LockScope)')
 
 /**
  * <description>
@@ -1390,8 +1454,8 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrReconfigure', `(IoConfigConnector *pCon
  * </description>
  * <param name="pTaskMap" type="IN" range="[NULL,VALID_TASKMAP,INVALID_TASKMAP]">Pointer to the task map, which references all input channels of the task</param>
  * <parampseudo name="hIoDrv" type="IN" range="[NULL,VALID_TASKMAP_IBASE]">hIoDrv May be NULL</parampseudo>
- * <parampseudo name="dwIoMgrSpecific" type="IN" range="[0,1]">dwIoMgrSpecific contains a valid cound or not</parampseudo>
- * <parampseudo name="IsCalled" type="OUT">Is Testdriver called or not</parampseudo>
+ * <parampseudo name="dwIoMgrSpecific" type="IN" range="[0,1]">dwIoMgrSpecific contains a valid count or not</parampseudo>
+ * <parampseudo name="IsCalled" type="OUT">Is test driver called or not</parampseudo>
  * <parampseudo name="bException" type="OUT">Exception thrown</parampseudo>
  * <result>error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">All registered drivers where called</errorcode>
@@ -1409,9 +1473,9 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrReadInputs', `(IoConfigTaskMap *pTaskMa
  * </description>
  * <param name="pTaskMap" type="IN" range="[NULL,VALID_TASKMAP,INVALID_TASKMAP]">Pointer to the task map, which references all output channels of the task</param>
  * <parampseudo name="hIoDrv" type="IN" range="[NULL,VALID_TASKMAP_IBASE]">hIoDrv May be NULL</parampseudo>
- * <parampseudo name="dwIoMgrSpecific" type="IN" range="[0,1]">dwIoMgrSpecific contains a valid cound or not</parampseudo>
+ * <parampseudo name="dwIoMgrSpecific" type="IN" range="[0,1]">dwIoMgrSpecific contains a valid count or not</parampseudo>
  * <parampseudo name="bFlowControlError" type="IN" range="[0,1]">Error in FlowControl</parampseudo>
- * <parampseudo name="IsCalled" type="OUT">Is Testdriver called or not</parampseudo>
+ * <parampseudo name="IsCalled" type="OUT">Is test driver called or not</parampseudo>
  * <parampseudo name="bException" type="OUT">Exception thrown</parampseudo> 
  * <result>error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">All registered drivers where called</errorcode>
@@ -1437,9 +1501,9 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrStartBusCycle', `(IoConfigConnector *pC
  * <description>
  * <p>This function is called for every connector that has the setting "needs bus cycle"
  * in the device description. It is only called once and only from the context of the
- * so called "buscycle task". This task can be specified globally (= default for all
+ * so called "bus cycle task". This task can be specified globally (= default for all
  * drivers), or specifically for every driver.</p>
- * <p>The parameter dwType defines if the function was calle at the beginning
+ * <p>The parameter dwType defines if the function was called at the beginning
  * or at the end of the IEC task cycle. This value, can actively be requested
  * by the driver, by calling IoMgrGetBusCycleType().</p>
  * </description>
@@ -1544,7 +1608,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrWatchdogTrigger', `(IoConfigConnector *
  * </description>
  * <param name="pConnector" type="IN" range="[NULL,VALID_CONNECTOR,INVALID_CONNECTOR]">Pointer to connector</param>
  * <param name="dwParameterId" type="IN" range="[VALID_PARAMETERID,INVALID_PARAMETERID]">ID of the parameter. Is defined in the device description.</param>
- * <parampseudo name="bException" type="OUT">Exception occured for Invalid Connector</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception occurred for Invalid Connector</parampseudo>
  * <result>Parameter or NULL if failed</result>
  */
 DEF_ITF_API(`IoConfigParameter*', `CDECL', `IoMgrConfigGetParameter', `(IoConfigConnector *pConnector, RTS_UI32 dwParameterId)')
@@ -1555,7 +1619,7 @@ DEF_ITF_API(`IoConfigParameter*', `CDECL', `IoMgrConfigGetParameter', `(IoConfig
  * </description>
  * <param name="pParameter" type="IN" range="[NULL,VALID_PARAMETER_BYTE,VALID_PARAMETER_WORD,VALID_PARAMETER_DWORD,INVALID_PARAMETER_DWORD_LEN,INVALID_PARAMETER_DWORD]">Pointer to the parameter</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <parampseudo name="bException" type="OUT">Exception occured for Invalid Parameter</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception occurred for Invalid Parameter</parampseudo>
  * <result>Value of the parameter or 0 if failed. Please check always pResult additionally!</result>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Value was read successfully</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pParameter was NULL or Parameter has not the value flag</errorcode>
@@ -1568,7 +1632,7 @@ DEF_ITF_API(`RTS_UI32', `CDECL', `IoMgrConfigGetParameterValueDword', `(IoConfig
  * </description>
  * <param name="pParameter" type="IN" range="[NULL,VALID_PARAMETER_BYTE,VALID_PARAMETER_WORD,VALID_PARAMETER_DWORD,INVALID_PARAMETER_WORD_LEN,INVALID_PARAMETER_WORD]">Pointer to the parameter</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <parampseudo name="bException" type="OUT">Exception occured for Invalid Parameter</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception occurred for Invalid Parameter</parampseudo>
  * <result>Value of the parameter or 0 if failed. Please check always pResult additionally!</result>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Value was read successfully</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pParameter was NULL or Parameter has not the value flag</errorcode>
@@ -1581,7 +1645,7 @@ DEF_ITF_API(`unsigned short', `CDECL', `IoMgrConfigGetParameterValueWord', `(IoC
  * </description>
  * <param name="pParameter" type="IN" range="[NULL,VALID_PARAMETER_BYTE,VALID_PARAMETER_WORD,VALID_PARAMETER_DWORD,INVALID_PARAMETER_BYTE_LEN,INVALID_PARAMETER_BYTE]">Pointer to the parameter</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <parampseudo name="bException" type="OUT">Exception occured for Invalid Parameter</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception occurred for Invalid Parameter</parampseudo>
  * <result>Value of the parameter or 0 if failed. Please check always pResult additionally!</result>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Value was read successfully</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pParameter was NULL or Parameter has not the value flag</errorcode>
@@ -1594,7 +1658,7 @@ DEF_ITF_API(`unsigned char', `CDECL', `IoMgrConfigGetParameterValueByte', `(IoCo
  * </description>
  * <param name="pParameter" type="IN" range="[NULL,VALID_PARAMETER_POINTER,INVALID_PARAMETER]">Pointer to the parameter</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
- * <parampseudo name="bException" type="OUT">Exception occured for Invalid Parameter</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception occurred for Invalid Parameter</parampseudo>
  * <result>Pointer to the value or NULL if failed. Please check always pResult additionally!</result>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Value was read successfully</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pParameter was NULL or Parameter has not the value flag</errorcode>
@@ -1609,7 +1673,7 @@ DEF_ITF_API(`void *', `CDECL', `IoMgrConfigGetParameterValuePointer', `(IoConfig
  * <param name="pConnectorList" type="IN" range="[NULL,VALID_CONNECTORLIST,INVALID_CONNECTORLIST]">Pointer to connector list</param>
  * <param name="pnCount" type="INOUT" range="[NULL,VALID_CONNECTORCOUNT_P]">Pointer to number of elements in list</param>
  * <param name="wType" type="IN" range="[0,VALID_MODULE_TYPE]">Type of the connector</param>
- * <parampseudo name="bException" type="OUT">Exception if Connectorlist is invalid</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception if connector list is invalid</parampseudo>
  * <result>Pointer to the connector or NULL if not found</result>
  */
 DEF_ITF_API(`IoConfigConnector*', `CDECL', `IoMgrConfigGetFirstConnector', `(IoConfigConnector *pConnectorList, int *pnCount, unsigned short wType)')
@@ -1622,7 +1686,7 @@ DEF_ITF_API(`IoConfigConnector*', `CDECL', `IoMgrConfigGetFirstConnector', `(IoC
  * <param name="pConnectorList" type="IN" range="[NULL,VALID_CONNECTORLIST,INVALID_CONNECTORLIST]">Pointer to connector list</param>
  * <param name="pnCount" type="INOUT" range="[NULL,VALID_CONNECTORCOUNT_P]">Pointer to number of elements in list</param>
  * <param name="wType" type="IN" range="[0,VALID_MODULE_TYPE]">Type of the connector</param>
- * <parampseudo name="bException" type="OUT">Exception if Connectorlist is invalid</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception if connector list is invalid</parampseudo>
  * <result>Pointer to the connector or NULL if not found</result>
  */
 DEF_ITF_API(`IoConfigConnector*', `CDECL', `IoMgrConfigGetNextConnector', `(IoConfigConnector *pConnectorList, int *pnCount, unsigned short wType)')
@@ -1635,7 +1699,7 @@ DEF_ITF_API(`IoConfigConnector*', `CDECL', `IoMgrConfigGetNextConnector', `(IoCo
  * <param name="pConnectorList" type="IN" range="[NULL,VALID_CONNECTORLIST,INVALID_CONNECTORLIST]">Pointer to connector list</param>
  * <param name="pnCount" type="INOUT" range="[NULL,VALID_CONNECTORCOUNT_P]">Pointer to number of elements in list</param>
  * <param name="pFather" type="IN" range="[NULL,VALID_PARENTCONNECTOR,INVALID_PARENTCONNECTOR]">Pointer to the father connector</param>
- * <parampseudo name="bException" type="OUT">Exception at Connectorlist check</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception at connector list check</parampseudo>
  * <result>Pointer to the child connector or NULL if not found</result>
  */
 DEF_ITF_API(`IoConfigConnector*', `CDECL', `IoMgrConfigGetFirstChild', `(IoConfigConnector *pConnectorList, int *pnCount, IoConfigConnector *pFather)')
@@ -1648,7 +1712,7 @@ DEF_ITF_API(`IoConfigConnector*', `CDECL', `IoMgrConfigGetFirstChild', `(IoConfi
  * <param name="pConnectorList" type="IN" range="[NULL,VALID_CONNECTORLIST,INVALID_CONNECTORLIST]">Pointer to connector list</param>
  * <param name="pnCount" type="INOUT" range="[NULL,VALID_CONNECTORCOUNT_P]">Pointer to number of elements in list</param>
  * <param name="pFather" type="IN" range="[NULL,VALID_PARENTCONNECTOR,INVALID_PARENTCONNECTOR]">Pointer to the father connector</param>
- * <parampseudo name="bException" type="OUT">Exception at Connectorlist check</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception at connector list check</parampseudo>
  * <result>Pointer to the child connector or NULL if not found</result>
  */
 DEF_ITF_API(`IoConfigConnector*', `CDECL', `IoMgrConfigGetNextChild', `(IoConfigConnector *pConnectorList, int *pnCount, IoConfigConnector *pFather)')
@@ -1660,7 +1724,7 @@ DEF_ITF_API(`IoConfigConnector*', `CDECL', `IoMgrConfigGetNextChild', `(IoConfig
  * </description>
  * <parampseudo name="RegisteredConnectorList" type="IN"  range="[NULL,VALID_CONNECTORLIST,INVALID_CONNECTORLIST]">Registered Pointer to connector list</parampseudo>
  * <param name="ppConnectorList" type="OUT">Pointer to connector list</param>
- * <parampseudo name="bException" type="OUT">Exception if Connectorlist is invalid</parampseudo>
+ * <parampseudo name="bException" type="OUT">Exception if connector list is invalid</parampseudo>
  * <param name="pnCount" type="INOUT"  range="[NULL,VALID_CONNECTORCOUNT_P]">Number of elements in the list</param>
  * <result>error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">There was a list registered and at least the size could be returned</errorcode>
@@ -1674,14 +1738,14 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrConfigGetConnectorList', `(IoConfigConn
  * <description>
  * <p>Get the connector specified by ModuleType and ModuleInstance number</p>
  * <p>pnCount is decreased and contains the rest of elements, still remaining in list! </p>
- * <p>Might be called with NULL as Connectorlist, then the Connectorlist and pnCount from the last call to UpdateConfiguration is used </p>
+ * <p>Might be called with NULL as connector list, then the connector list and pnCount from the last call to UpdateConfiguration is used </p>
  * <p>Returns NULL if pnCount is NULL, if ulInstance is greater than nCount, no fitting Connector with given Instance and Type is found or (if pConnectorList is Null, the last stored ConnectorList is also NULL) </p>
  * </description>
  * <param name="pConnectorList" type="IN" range="[NULL,VALID_CONNECTORLIST,INVALID_CONNECTORLIST]">Pointer to connector list</param>
- * <param name="pnCount" type="INOUT" range="[NULL,VALID_CONNECTORCOUNT_P_P,INVALID_CONNECTORCOUNT_P_P]">Number of elements in the list</param>
+ * <param name="pnCount" type="INOUT" range="[NULL,VALID_CONNECTORCOUNT_P]">Number of elements in the list</param>
  * <param name="ulModuleType" type="IN" range="[0,VALID_MODULE_TYPE]">Module type</param>
  * <param name="ulInstance" type="IN" range="[0,VALID_INSTANCE_COUNT,INVALID_INSTANCE_COUNT]">Instance number</param>
- * <parampseudo name="Exception" type="OUT">Exception may be thrown if problem occurs while checking Connectorlist</parampseudo>
+ * <parampseudo name="Exception" type="OUT">Exception may be thrown if problem occurs while checking connector list</parampseudo>
  * <result>Pointer to found connector or NULL</result>
  */
 DEF_ITF_API(`IoConfigConnector*', `CDECL', `IoMgrConfigGetConnector', `(IoConfigConnector *pConnectorList, int *pnCount, RTS_UI32 ulModuleType, RTS_UI32 ulInstance)')
@@ -1703,7 +1767,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrConfigSetDiagnosis', `(IoConfigConnecto
  * <description>
  * <p>Interface to reset the diagnostic flags in the connector.</p>
  * <p>Only the bits that are specified with 1 in the passed ulFlags parameter
- * will be resetted.</p>
+ * will be reset.</p>
  * </description>
  * <param name="pConnector" type="IN" range="[NULL,VALID_CONNECTOR,INVALID_CONNECTOR]">Pointer to connector</param>
  * <param name="ulFlags" type="IN" range="[0x0001,0x0010,0x0020,0x0040,0x0080,0x0100,0x0200,0x0400,0x0800]">Flags to write</param>
@@ -1724,7 +1788,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrConfigResetDiagnosis', `(IoConfigConnec
  * <param name="ulParameterId" type="IN" range="[VALID_PARAMETERID_1,INVALID_PARAMETERID_1]">ID of the parameter. Is defined in the device description.</param>
  * <param name="pData" type="IN" range="[NULL,VALID_PDATA]">Pointer to read in the parameter value</param>
  * <param name="ulBitSize" type="IN" range="[0,VALID_BITSIZE]">Bits to read</param>
- * <param name="ulBitOffset" type="IN" range="[0,VALID_BITOFFSET]">Bitoffset of the parameter value</param>
+ * <param name="ulBitOffset" type="IN" range="[0,VALID_BITOFFSET]">Bit offset of the parameter value</param>
  * <parampseudo name="bSafetyMode" type="IN" range="[0,1]">According to SIL2 operation mode this function may not be called</parampseudo>
  * <result>error code</result>
  */
@@ -1740,7 +1804,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrReadParameter', `(RTS_UI32 ulModuleType
  * <param name="ulParameterId" type="IN" range="[VALID_PARAMETERID_1,INVALID_PARAMETERID_1]">ID of the parameter. Is defined in the device description.</param>
  * <param name="pData" type="IN" range="[NULL,VALID_PDATA]">Pointer to the parameter write value</param>
  * <param name="ulBitSize" type="IN" range="[0,VALID_BITSIZE]">Bits to write</param>
- * <param name="ulBitOffset" type="IN" range="[0,VALID_BITOFFSET]">Bitoffset of the parameter value</param>
+ * <param name="ulBitOffset" type="IN" range="[0,VALID_BITOFFSET]">Bit offset of the parameter value</param>
  * <parampseudo name="bSafetyMode" type="IN" range="[0,1]">According to SIL2 operation mode this function may not be called</parampseudo>
  * <parampseudo name="bException" type="OUT">SIL2 Runtime: Exception is thrown if not in DebugMode</parampseudo>
  * <result>error code</result>

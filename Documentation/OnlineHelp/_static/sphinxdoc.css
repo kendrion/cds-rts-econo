@@ -45,6 +45,8 @@ div.bodywrapper {
 div.body {
     margin: 0;
     padding: 0.5em 20px 20px 20px;
+    max-width: 90%;
+    overflow-x: auto;
 }
 
 div.related {
@@ -74,13 +76,13 @@ div.related ul li a {
     margin: 0;
     padding: 0 5px 0 5px;
     line-height: 1.75em;
-	color: #E3000F
-	text-decoration: none;
+    color: #E3000F
+    text-decoration: none;
 }
 
 div.related ul li a:hover {
     color: #E3000F;
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 div.sphinxsidebarwrapper {
@@ -106,7 +108,7 @@ div.sphinxsidebar h3, div.sphinxsidebar h4 {
 }
 
 div.sphinxsidebar h3 a {
-    color: white;
+    color: black;
 }
 
 div.sphinxsidebar ul {
@@ -141,13 +143,13 @@ p {
 }
 
 a {
-	color: #E3000F;
-	text-decoration: none;
+    color: #E3000F;
+    text-decoration: none;
 }
 
 a:hover {
     color: #E3000F;
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 div.body a {
@@ -272,11 +274,23 @@ div.topic {
 
 table {
     border-collapse: collapse;
-    margin: 0 -0.5em 0 -0.5em;
 }
 
-table td, table th {
-    padding: 0.2em 0.5em 0.2em 0.5em;
+table, th, td {
+    border: 1px solid black;
+}
+
+table td {
+    padding: 8px;
+}
+
+table th {
+    padding: 8px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: grey;
+    color: white;
 }
 
 div.admonition, div.warning {
@@ -342,26 +356,130 @@ div.viewcode-block:target {
 }
 
 #header {
-	position: relative;
-	margin-bottom: 25px;
-	margin-top: 25px;
-	z-index: 2;
-	height: 95px;
-	background-color: #001F3E;
-	width: 100%;
-	height: 130px;
+    position: relative;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    z-index: 2;
+    height: 95px;
+    background-color: #001F3E;
+    width: 100%;
+    height: 130px;
 }
 
 #logo {
-	position: absolute;
-	z-index: 502;
-	top:-17px;
-	left:20px;
+    position: absolute;
+    z-index: 502;
+    top:-17px;
+    left:20px;
 }
 
 #logo-store {
-	position: absolute;
-	z-index: 502;
-	top:-17px;
-	left:154px;
+    position: absolute;
+    z-index: 502;
+    top:-17px;
+    left:154px;
+}
+
+.section {
+    margin-left: 2em;
+}
+
+.section h2 {
+    margin-left: -1em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.section h3 {
+    font-family: 'Consolas', 'Deja Vu Sans Mono',
+                 'Bitstream Vera Sans Mono', monospace;
+    margin-left: -1em;
+    margin-top: 2em;
+    margin-bottom: 1.5em;
+}
+
+.section ul {
+    margin-left: -2em;
+}
+
+.section table {
+    margin: 1.4em 0;
+}
+
+.toctree-wrapper ul {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 1.2em;
+}
+
+.toctree-wrapper li::before {
+    content: "●";
+    display: block;
+    float: left;
+    width: 1.2em;
+}
+
+.toctree-wrapper li.parent::before {
+    content: "";
+}
+
+.toctree-wrapper button {
+  cursor: pointer;
+  display: block;
+  float: left;
+  width: 1.2em;
+  margin: 0 0.35em 0 -0.25em;
+  padding: 0;
+  line-height: 150%;
+  border: 0;
+  background: transparent;
+}
+
+.toctree-wrapper button::before {
+  content: "►";
+}
+
+.toctree-wrapper button.expanded::before {
+  content: "▼";
+}
+
+.flex-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: left;
+  max-width: 70em;
+  margin: 2em auto 2em 0;
+}
+
+.flex-container > a {
+  margin: 1em;
+  text-decoration: none;
+  color: inherit;
+}
+
+.flex-container > a > div {
+  border: 1px solid #404040;
+  min-width: 18em;
+}
+
+.flex-container div > span{
+  margin: 0.8em;
+}
+
+.flex-container .icon {
+  display: inline-block;
+  margin: 0.8em;
+  margin-right: 0;
+  width: 3em;
+  height: 3em;
+  vertical-align: middle;
+}
+
+.runtime-backgorund {
+    height: 180px;
+    width: 100%;
+    margin: 1em auto;
+    background-image: url(CODESYS-Runtime.jpg);
+    background-position: center 75%;
+    background-size: cover;
 }

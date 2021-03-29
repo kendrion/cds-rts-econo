@@ -1,10 +1,11 @@
  /**
  * <interfacename>SysCpuBreakpoints</interfacename>
  * <description> 
+ *  Interface to handle hardware breakpoints
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 

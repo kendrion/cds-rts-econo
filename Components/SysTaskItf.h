@@ -1,95 +1,107 @@
  /**
  * <interfacename>SysTask</interfacename>
  * <description> 
- *	<p>The SysTask interface is projected to handle all system dependant task operations.
- *	This interface can only be implemented typically on targets with an operating system.</p>
+ *  <p>The SysTask interface is projected to handle all system dependent task operations.
+ *  This interface can only be implemented typically on targets with an operating system.</p>
  *
- *	All task that are created by this interface must have the same prototype.
- *	Here are examples for implementing a cyclic task and example how to create and delete a task.
- *	
- *	1. TaskFrame:
- *
- *	1.1 Cyclic task that sets itself into sleep for cyclic execution:
- *
- *		int iTaskParameter = 123;
- *		RTS_RESULT Result;
- *		RTS_HANDLE hTask = CAL_SysTaskCreate("TestTask", TestTask, &iTaskParameter, TASKPRIO_HIGH_BASE, 0, 0, NULL, &Result);
- *		CAL_SysTaskResume(hTask);
- *
- *		void TestTask(SYS_TASK_PARAM *ptp)
- *		{
- *			RTS_HANDLE hTask = ptp->hTask;
- *			void *pParameter = (void *)ptp->pParam;
- *
- *			CAL_SysTaskEnter(hTask);
- *			while (!ptp->bExit)
- *			{
- *				// TODO: Task code
- *				CAL_SysTaskWaitSleep(hTask, 100);
- *			}
- *			CAL_SysTaskLeave(hTask);
- *			CAL_SysTaskEnd(hTask, 0);
- *		}
- *
- *	1.2 Cyclic task that uses the cyclic mechanism of the operating system
- *		for cyclic execution:
- *		
- *		int iTaskParameter = 123;
- *		RTS_RESULT Result;
- *		RTS_HANDLE hTask = CAL_SysTaskCreate("TestTask2", TestTask2, &iTaskParameter, TASKPRIO_HIGH_BASE, 1000, 0, NULL, &Result);
- *		CAL_SysTaskResume(hTask);
- *
- *		void TestTask2(SYS_TASK_PARAM *ptp)
- *		{
- *			RTS_HANDLE hTask = ptp->hTask;
- *			void *pParameter = (void *)ptp->pParam;
- *
- *			CAL_SysTaskEnter(hTask);
- *			while (!ptp->bExit)
- *			{
- *				// TODO: Task code
- *				CAL_SysTaskWaitInterval(hTask);
- *			}
- *			CAL_SysTaskLeave(hTask);
- *			CAL_SysTaskEnd(hTask, 0);
- *		}
- *
- *	2. Creating and deleting a task:
- *
- *	To create and delete a task you shoud use the following sequences: 
- *
- *	2.1 Creating a task:
- *		There are 2 different interface functions to create a task:
- *
- *		a) RTS_HANDLE CDECL SysTaskCreate(char* pszTaskName, PFSYS_TASK_FUNCTION pFunction, void *pParam, RTS_UI32 ulPriority, RTS_UI32 ulInterval, RTS_UI32 ulStackSize, PFTASKEXCEPTIONHANDLER pExceptionHandler, RTS_RESULT *pResult);
- *			This function creates a typical task. See intzerface descriptions for details.
- *
- *		b) RTS_HANDLE CDECL SysTaskCreate2(char* pszTaskName, char *pszTaskGroup, PFSYS_TASK_FUNCTION pFunction, void *pParam, RTS_UI32 ulPriority, RTS_UI32 ulInterval, RTS_UI32 ulStackSize, PFTASKEXCEPTIONHANDLER pExceptionHandler, RTS_RESULT *pResult);
- *			This function creates a task, which is automatically added to a so called taskgroup. See intzerface descriptions for details.
- *
- *	2.2 Deleting a task:
- *		There are 2 ways to delete a task:
- *
- *		a) Implicitly be the task itself:
- *			Here the task will release itself after callging SysTaskSetExit(). The task must be specified with the flag SYSTASK_FF_AUTORELEASEONEXIT by calling SysTaskAutoReleaseOnExit():
- *			Example:
- *				
- *				Create the task:
- *					RTS_HANDLE hTask = CAL_SysTaskCreate("MyTask", MyTaskFrame, NULL, TASKPRIO_NORMAL_BASE, 0, 0, NULL, NULL);
- *					CAL_SysTaskAutoReleaseOnExit(hTask);
- *
- *				Release the task:
- *					CAL_SysTaskSetExit(hTask);
- *
- *		b) Explicitly by the creator of a task:
- *				CAL_SysTaskSetExit(hTask);
- *				CAL_SysTaskExit(hTask, 10000);
- *			The timeout should be the double of the cycle time of the task, if it is a cyclic task.
+ *  <p>All task that are created by this interface must have the same prototype.
+ *  Here are examples for implementing a cyclic task and example how to create and delete a task.</p>
+ *  
+ *  <pre>
+ *       1.  TaskFrame
+ *      
+ *           - Cyclic task that sets itself into sleep for cyclic execution:
+ *      
+ *                   int iTaskParameter = 123;
+ *                   RTS_RESULT Result;
+ *                   RTS_HANDLE hTask = CAL_SysTaskCreate("TestTask", TestTask, &amp;iTaskParameter, TASKPRIO_HIGH_BASE, 0, 0, NULL, &amp;Result);
+ *                   CAL_SysTaskResume(hTask);
+ *      
+ *	        	        void TestTask(SYS_TASK_PARAM *ptp)
+ *	        	        {
+ *	        	        	RTS_HANDLE hTask = ptp-&gt;hTask;
+ *	        	        	void *pParameter = (void *)ptp-&gt;pParam;
+ *           
+ *	        	        	CAL_SysTaskEnter(hTask);
+ *	        	        	while (!ptp-&gt;bExit)
+ *	        	        	{
+ *	        	        		// TODO: Task code
+ *	        	        		CAL_SysTaskWaitSleep(hTask, 100);
+ *	        	        	}
+ *	        	        	CAL_SysTaskLeave(hTask);
+ *	        	        	CAL_SysTaskEnd(hTask, 0);
+ *	        	        }
+ *      
+ *           - Cyclic task that uses the cyclic mechanism of the operating system for cyclic execution:
+ *      
+ *                   int iTaskParameter = 123;
+ *                   RTS_RESULT Result;
+ *                   RTS_HANDLE hTask = CAL_SysTaskCreate("TestTask2", TestTask2, &amp;iTaskParameter, TASKPRIO_HIGH_BASE, 1000, 0, NULL, &amp;Result);
+ *                   CAL_SysTaskResume(hTask);
+ *           
+ *                   void TestTask2(SYS_TASK_PARAM *ptp)
+ *                   {
+ *                       RTS_HANDLE hTask = ptp-&gt;hTask;
+ *                       void *pParameter = (void *)ptp-&gt;pParam;
+ *           
+ *                       CAL_SysTaskEnter(hTask);
+ *                       while (!ptp-&gt;bExit)
+ *                       {
+ *                           // TODO: Task code
+ *                           CAL_SysTaskWaitInterval(hTask);
+ *                       }
+ *                       CAL_SysTaskLeave(hTask);
+ *                       CAL_SysTaskEnd(hTask, 0);
+ *                   }
+ *      
+ *       2.  Create and delete a task
+ *      
+ *           To create and delete a task you should use the following sequences 
+ *      
+ *           - Creating a task:
+ *             There are 2 different interface functions to create a task:
+ *       
+ *             a) This function creates a typical task. See interface descriptions for details:
+ *      
+ *                     RTS_HANDLE CDECL SysTaskCreate(char* pszTaskName, PFSYS_TASK_FUNCTION pFunction, void *pParam, RTS_UI32 ulPriority, RTS_UI32 ulInterval, RTS_UI32 ulStackSize, PFTASKEXCEPTIONHANDLER pExceptionHandler, RTS_RESULT *pResult);
+ *                
+ *             b) This function creates a task, which is automatically added to a so called task group. See interface descriptions for details:
+ *      
+ *                     RTS_HANDLE CDECL SysTaskCreate2(char* pszTaskName, char *pszTaskGroup, PFSYS_TASK_FUNCTION pFunction, void *pParam, RTS_UI32 ulPriority, RTS_UI32 ulInterval, RTS_UI32 ulStackSize, PFTASKEXCEPTIONHANDLER pExceptionHandler, RTS_RESULT *pResult);
+ *       
+ *           - Deleting a task:
+ *      
+ *             There are 2 ways to delete a task:
+ *       
+ *             a) Implicitly by the task itself:
+ *      
+ *                Here the task will release itself after calling SysTaskSetExit(). The task must be specified with the flag SYSTASK_FF_AUTORELEASEONEXIT by calling SysTaskAutoReleaseOnExit():
+ *      
+ *                Example:
+ *                       
+ *                   o Create the task:
+ *      
+ *                     RTS_HANDLE hTask = CAL_SysTaskCreate("MyTask", MyTaskFrame, NULL, TASKPRIO_NORMAL_BASE, 0, 0, NULL, NULL);
+ *                     CAL_SysTaskAutoReleaseOnExit(hTask);
+ *       
+ *                   o Release the task:
+ *      
+ *                     CAL_SysTaskSetExit(hTask);
+ *       
+ *             b) Explicitly by the creator of a task:
+ *      
+ *                Example:
+ *      
+ *                     CAL_SysTaskSetExit(hTask);
+ *                     CAL_SysTaskExit(hTask, 10000);
+ *      
+ *                The timeout should be the double of the cycle time of the task, if it is a cyclic task.
+ *  </pre> 
  *
  * </description>
- *	
+ *  
  * <copyright>
- * Copyright (c) 2017-2019 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -109,252 +121,276 @@
 
 
 #ifndef CDECL
-	#define CDECL
+    #define CDECL
 #endif
 
 #include "SysExceptItf.h"
 #include "SysTimeItf.h"
+#include "CMUtilsHashItf.h"
 
 /**
  * <category>Static defines</category>
  * <description>Maximum length of a task name</description>
  */
 #ifndef SYSTASK_MAX_NAME_LEN
-	#define SYSTASK_MAX_NAME_LEN	20
+    #define SYSTASK_MAX_NAME_LEN    20
 #endif
 
 /**
  * <category>Static defines</category>
  * <description>Number of static tasks</description>
  */
- #ifndef SYSTASK_NUM_OF_STATIC_TASKS
-	#define SYSTASK_NUM_OF_STATIC_TASKS	20
+#ifndef SYSTASK_NUM_OF_STATIC_TASKS
+    #define SYSTASK_NUM_OF_STATIC_TASKS 20
+#endif
+
+/**
+ * <category>Static defines</category>
+ * <description>Size of the hash table used to access thread local storage</description>
+ */
+#ifndef SYSTASK_THREAD_LOCAL_STORAGE_HASH_TABLE_SIZE
+    #define SYSTASK_THREAD_LOCAL_STORAGE_HASH_TABLE_SIZE 17
+#endif
+
+/**
+ * <category>Static defines</category>
+ * <description>Use atomic bit access for status changes on multi-core targets! Only in this case the bit field remains consistent.</description>
+ */
+#if !defined(SYSCPUMULTICORE_NOTIMPLEMENTED)
+    #define SYSTASK_USE_ATOMIC_BITACCESS
 #endif
 
 /**
  * <category>Task status definitions</category>
  * <description>Actual status of a task</description>
  */
-#define TS_NOT_CREATED		0x0000
-#define TS_VALID			0x0001
-#define TS_ACTIVE			0x0002
-#define TS_SUSPENDED		0x0004
-#define TS_DELETED			0x0008
-#define TS_EXCEPTION		0x0010
+#define TS_NOT_CREATED      0x0000
+#define TS_VALID            0x0001
+#define TS_ACTIVE           0x0002
+#define TS_SUSPENDED        0x0004
+#define TS_DELETED          0x0008
+#define TS_EXCEPTION        0x0010
 
 /**
  * <category>Task status bits</category>
  * <description></description>
  */
-#define TF_VALID			0
-#define TF_ACTIVE			1
-#define TF_SUSPENDED		2
-#define TF_DELETED			3
-#define TF_EXCEPTION		4
-
+#define TF_VALID            0
+#define TF_ACTIVE           1
+#define TF_SUSPENDED_       2
+#define TF_DELETED          3
+#define TF_EXCEPTION        4
+#if !defined(TF_SUSPENDED)
+    #define TF_SUSPENDED    TF_SUSPENDED_
+#endif
 
 /**
  * <category>Task status macros</category>
  */
-#define SysTaskIsValid(pTask)				(pTask->iState & TS_VALID)
-#define SysTaskIsActive(pTask)				(pTask->iState & TS_ACTIVE)
-#define SysTaskIsSuspended(pTask)			(pTask->iState & TS_SUSPENDED)
-#define SysTaskIsDeleted(pTask)				(pTask->iState & TS_DELETED)
-#define SysTaskIsException(pTask)			(pTask->iState & TS_EXCEPTION)
+#define SysTaskIsValid(pTask)               (pTask->iState & TS_VALID)
+#define SysTaskIsActive(pTask)              (pTask->iState & TS_ACTIVE)
+#define SysTaskIsSuspended(pTask)           (pTask->iState & TS_SUSPENDED)
+#define SysTaskIsDeleted(pTask)             (pTask->iState & TS_DELETED)
+#define SysTaskIsException(pTask)           (pTask->iState & TS_EXCEPTION)
 
 #if defined(SYSCPUHANDLING_NOTIMPLEMENTED) || defined(SYSCPUTESTANDSETBIT_NOTIMPLEMENTED) || !defined(SYSTASK_USE_ATOMIC_BITACCESS)
-	#define SysTaskSetValid(pTask)			(pTask->iState |= TS_VALID)
-	#define SysTaskSetInvalid(pTask)		(pTask->iState &= ~TS_VALID)
+    #define SysTaskSetValid(pTask)          (pTask->iState |= TS_VALID)
+    #define SysTaskSetInvalid(pTask)        (pTask->iState &= ~TS_VALID)
 
-	#define SysTaskSetActive(pTask)			(pTask->iState |= TS_ACTIVE)
-	#define SysTaskSetInactive(pTask)		(pTask->iState &= ~TS_ACTIVE)
+    #define SysTaskSetActive(pTask)         (pTask->iState |= TS_ACTIVE)
+    #define SysTaskSetInactive(pTask)       (pTask->iState &= ~TS_ACTIVE)
 
-	#define SysTaskSetSuspended(pTask)		(pTask->iState |= TS_SUSPENDED)
-	#define SysTaskSetResumed(pTask)		(pTask->iState &= ~TS_SUSPENDED)
+    #define SysTaskSetSuspended(pTask)      (pTask->iState |= TS_SUSPENDED)
+    #define SysTaskSetResumed(pTask)        (pTask->iState &= ~TS_SUSPENDED)
 
-	#define SysTaskSetDeleted(pTask)		(pTask->iState |= TS_DELETED)
+    #define SysTaskSetDeleted(pTask)        (pTask->iState |= TS_DELETED)
 
-	#define SysTaskSetException(pTask)		(pTask->iState |= TS_EXCEPTION)
-	#define SysTaskResetException(pTask)	(pTask->iState &= ~TS_EXCEPTION)
+    #define SysTaskSetException(pTask)      (pTask->iState |= TS_EXCEPTION)
+    #define SysTaskResetException(pTask)    (pTask->iState &= ~TS_EXCEPTION)
 #else
-	#define SysTaskSetValid(pTask)			{\
-												if (CHK_SysCpuTestAndSetBit)\
-													CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_VALID, 1);\
-												else\
-												pTask->iState |= TS_VALID;\
-											}
-	#define SysTaskSetInvalid(pTask)		{\
-												if (CHK_SysCpuTestAndSetBit)\
-													CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_VALID, 0);\
-												else\
-													pTask->iState &= ~TS_VALID;\
-											}
+    #define SysTaskSetValid(pTask)          {\
+                                                if (CHK_SysCpuTestAndSetBit)\
+                                                    CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_VALID, 1);\
+                                                else\
+                                                pTask->iState |= TS_VALID;\
+                                            }
+    #define SysTaskSetInvalid(pTask)        {\
+                                                if (CHK_SysCpuTestAndSetBit)\
+                                                    CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_VALID, 0);\
+                                                else\
+                                                    pTask->iState &= ~TS_VALID;\
+                                            }
 
-	#define SysTaskSetActive(pTask)			{\
-												if (CHK_SysCpuTestAndSetBit)\
-													CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_ACTIVE, 1);\
-												else\
-													pTask->iState |= TS_ACTIVE;\
-											}
-	#define SysTaskSetInactive(pTask)		{\
-												if (CHK_SysCpuTestAndSetBit)\
-													CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_ACTIVE, 0);\
-												else\
-													pTask->iState &= ~TS_ACTIVE;\
-											}
+    #define SysTaskSetActive(pTask)         {\
+                                                if (CHK_SysCpuTestAndSetBit)\
+                                                    CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_ACTIVE, 1);\
+                                                else\
+                                                    pTask->iState |= TS_ACTIVE;\
+                                            }
+    #define SysTaskSetInactive(pTask)       {\
+                                                if (CHK_SysCpuTestAndSetBit)\
+                                                    CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_ACTIVE, 0);\
+                                                else\
+                                                    pTask->iState &= ~TS_ACTIVE;\
+                                            }
 
-	#define SysTaskSetSuspended(pTask)		{\
-												if (CHK_SysCpuTestAndSetBit)\
-													CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_SUSPENDED, 1);\
-												else\
-													pTask->iState |= TS_SUSPENDED;\
-											}
-	#define SysTaskSetResumed(pTask)		{\
-												if (CHK_SysCpuTestAndSetBit)\
-													CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_SUSPENDED, 0);\
-												else\
-													pTask->iState &= ~TS_SUSPENDED;\
-											}
+    #define SysTaskSetSuspended(pTask)      {\
+                                                if (CHK_SysCpuTestAndSetBit)\
+                                                    CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_SUSPENDED_, 1);\
+                                                else\
+                                                    pTask->iState |= TS_SUSPENDED;\
+                                            }
+    #define SysTaskSetResumed(pTask)        {\
+                                                if (CHK_SysCpuTestAndSetBit)\
+                                                    CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_SUSPENDED_, 0);\
+                                                else\
+                                                    pTask->iState &= ~TS_SUSPENDED;\
+                                            }
 
-	#define SysTaskSetDeleted(pTask)		{\
-												if (CHK_SysCpuTestAndSetBit)\
-													CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_DELETED, 1);\
-												else\
-													pTask->iState |= TS_DELETED;\
-											}
+    #define SysTaskSetDeleted(pTask)        {\
+                                                if (CHK_SysCpuTestAndSetBit)\
+                                                    CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_DELETED, 1);\
+                                                else\
+                                                    pTask->iState |= TS_DELETED;\
+                                            }
 
-	#define SysTaskSetException(pTask)		{\
-												if (CHK_SysCpuTestAndSetBit)\
-													CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_EXCEPTION, 1);\
-												else\
-													pTask->iState |= TS_EXCEPTION;\
-											}
-	#define SysTaskResetException(pTask)	{\
-												if (CHK_SysCpuTestAndSetBit)\
-													CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_EXCEPTION, 0);\
-												else\
-													pTask->iState &= ~TS_EXCEPTION;\
-											}
+    #define SysTaskSetException(pTask)      {\
+                                                if (CHK_SysCpuTestAndSetBit)\
+                                                    CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_EXCEPTION, 1);\
+                                                else\
+                                                    pTask->iState |= TS_EXCEPTION;\
+                                            }
+    #define SysTaskResetException(pTask)    {\
+                                                if (CHK_SysCpuTestAndSetBit)\
+                                                    CAL_SysCpuTestAndSetBit(&pTask->iState, sizeof(pTask->iState), TF_EXCEPTION, 0);\
+                                                else\
+                                                    pTask->iState &= ~TS_EXCEPTION;\
+                                            }
 #endif
 
 
 /**
  * <category>Priority ranges</category>
  * <description>
- *	Task priorities can be set between 0..255.
- *	Each task priority is assigned to one of the following range:
- *	<ul>
- *		<li>TASKPRIO_SYSTEM: Runtime system management tasks, like scheduler</li>
- *		<li>TASKPRIO_REALTIME: Realtime tasks. Reserved for IEC-tasks</li>
- *		<li>TASKPRIO_HIGH: For tasks right below realtime tasks. Could be used e.g. for higher priority communication tasks</li>
- *		<li>TASKPRIO_ABOVENORMAL: For tasks below high tasks</li>
- *		<li>TASKPRIO_NORMAL: Normal tasks, like communication server tasks</li>
- *		<li>TASKPRIO_BELOWNORMAL: For tasks below normal tasks</li>
- *		<li>TASKPRIO_LOW: For tasks with low priority</li>
- *		<li>TASKPRIO_LOWEST: For tasks with lowest priority</li>
- *		<li>TASKPRIO_IDLE: For background or idle operations</li>
- *	</ul>
+ *  Task priorities can be set between 0..255.
+ *  Each task priority is assigned to one of the following range:
+ *  <ul>
+ *      <li>TASKPRIO_SYSTEM: Runtime system management tasks, like scheduler</li>
+ *      <li>TASKPRIO_REALTIME: Real time tasks. Reserved for IEC-tasks</li>
+ *      <li>TASKPRIO_HIGH: For tasks right below real time tasks. Could be used e.g. for higher priority communication tasks</li>
+ *      <li>TASKPRIO_ABOVENORMAL: For tasks below high tasks</li>
+ *      <li>TASKPRIO_NORMAL: Normal tasks, like communication server tasks</li>
+ *      <li>TASKPRIO_BELOWNORMAL: For tasks below normal tasks</li>
+ *      <li>TASKPRIO_LOW: For tasks with low priority</li>
+ *      <li>TASKPRIO_LOWEST: For tasks with lowest priority</li>
+ *      <li>TASKPRIO_IDLE: For background or idle operations</li>
+ *  </ul>
  * </description>
  */
-#define TASKPRIO_RANGE				255
-#define TASKPRIO_SEGMENT			32
+#define TASKPRIO_RANGE              255
+#define TASKPRIO_SEGMENT            32
 
-#define TASKPRIO_MAX				0
+#define TASKPRIO_MAX                0
 
 /* Task segment 1 */
-#define TASKPRIO_SYSTEM_BASE		0
-#define TASKPRIO_SYSTEM_END			31
+#define TASKPRIO_SYSTEM_BASE        0
+#define TASKPRIO_SYSTEM_END         31
 
 /* Task segment 2 */
-#define TASKPRIO_REALTIME_BASE		32
-#define TASKPRIO_REALTIME_END		63
+#define TASKPRIO_REALTIME_BASE      32
+#define TASKPRIO_REALTIME_END       63
 
 /* Task segment 3 */
-#define TASKPRIO_HIGH_BASE			64
-#define TASKPRIO_HIGH_END			95
+#define TASKPRIO_HIGH_BASE          64
+#define TASKPRIO_HIGH_END           95
 
 /* Task segment 4 */
-#define TASKPRIO_ABOVENORMAL_BASE	96
-#define TASKPRIO_ABOVENORMAL_END	127
+#define TASKPRIO_ABOVENORMAL_BASE   96
+#define TASKPRIO_ABOVENORMAL_END    127
 
 /* Task segment 5 */
-#define TASKPRIO_NORMAL_BASE		128
-#define TASKPRIO_NORMAL_END			159
+#define TASKPRIO_NORMAL_BASE        128
+#define TASKPRIO_NORMAL_END         159
 
 /* Task segment 6 */
-#define TASKPRIO_BELOWNORMAL_BASE	160
-#define TASKPRIO_BELOWNORMAL_END	191
+#define TASKPRIO_BELOWNORMAL_BASE   160
+#define TASKPRIO_BELOWNORMAL_END    191
 
 /* Task segment 7 */
-#define TASKPRIO_LOW_BASE			192
-#define TASKPRIO_LOW_END			223
+#define TASKPRIO_LOW_BASE           192
+#define TASKPRIO_LOW_END            223
 
 /* Task segment 8 */
-#define TASKPRIO_LOWEST_BASE		224
-#define TASKPRIO_LOWEST_END			255
+#define TASKPRIO_LOWEST_BASE        224
+#define TASKPRIO_LOWEST_END         255
 
-#define TASKPRIO_IDLE				255
-#define TASKPRIO_MIN				255
+#define TASKPRIO_IDLE               255
+#define TASKPRIO_MIN                255
 
 
 /**
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Mapping task priorities:
- *	Settings to shift task priority ranges to the appropriate area. This is done via calling the function SysTaskGetConfiguredPriority(). 
- *	The virtual priorities can be mapped to real operating system priorites with the following settings.
+ *  Mapping task priorities:
+ *  Settings to shift task priority ranges to the appropriate area. This is done via calling the function SysTaskGetConfiguredPriority(). 
+ *  The virtual priorities can be mapped to real operating system priorities with the following settings.
  *
- *	The mapping is done this way (pseudocode):
- *	if (taskPriority >= OSPriority.XXX.Base && TaskPriority <= OSPriority.XXX.Base)
- *		if (taskPriority > (OSPriority.XXX.End - OSPriority.XXX.Base))
- *				return OSPriority.XXX.End;
- *			return OSPriority.XXX.Base + taskPriority;
- *		return taskPriority;
+ *  The mapping is done this way (pseudo code):
+ *
+ *  <pre>
+ *      if (taskPriority >= OSPriority.XXX.Base &amp;&&amp; TaskPriority <= OSPriority.XXX.Base)
+ *      {
+ *          if (taskPriority > (OSPriority.XXX.End - OSPriority.XXX.Base))
+ *                  return OSPriority.XXX.End;
+ *              return OSPriority.XXX.Base + taskPriority;
+ *          return taskPriority;
+ *      }
+ *  </pre>
  * </description>
  */
-#define SYSTASKKEY_INT_PRIORITY_SYSTEM_BASE				"OSPriority.System.Base"
-#define SYSTASKVALUE_INT_PRIORITY_SYSTEM_BASE_DEFAULT	TASKPRIO_SYSTEM_BASE
-#define SYSTASKKEY_INT_PRIORITY_SYSTEM_END				"OSPriority.System.End"
-#define SYSTASKVALUE_INT_PRIORITY_SYSTEM_END_DEFAULT	TASKPRIO_SYSTEM_END
+#define SYSTASKKEY_INT_PRIORITY_SYSTEM_BASE             "OSPriority.System.Base"
+#define SYSTASKVALUE_INT_PRIORITY_SYSTEM_BASE_DEFAULT   TASKPRIO_SYSTEM_BASE
+#define SYSTASKKEY_INT_PRIORITY_SYSTEM_END              "OSPriority.System.End"
+#define SYSTASKVALUE_INT_PRIORITY_SYSTEM_END_DEFAULT    TASKPRIO_SYSTEM_END
 
-#define SYSTASKKEY_INT_PRIORITY_REALTIME_BASE			"OSPriority.Realtime.Base"
-#define SYSTASKVALUE_INT_PRIORITY_REALTIME_BASE_DEFAULT	TASKPRIO_REALTIME_BASE
-#define SYSTASKKEY_INT_PRIORITY_REALTIME_END			"OSPriority.Realtime.End"
-#define SYSTASKVALUE_INT_PRIORITY_REALTIME_END_DEFAULT	TASKPRIO_REALTIME_END
+#define SYSTASKKEY_INT_PRIORITY_REALTIME_BASE           "OSPriority.Realtime.Base"
+#define SYSTASKVALUE_INT_PRIORITY_REALTIME_BASE_DEFAULT TASKPRIO_REALTIME_BASE
+#define SYSTASKKEY_INT_PRIORITY_REALTIME_END            "OSPriority.Realtime.End"
+#define SYSTASKVALUE_INT_PRIORITY_REALTIME_END_DEFAULT  TASKPRIO_REALTIME_END
 
-#define SYSTASKKEY_INT_PRIORITY_HIGH_BASE				"OSPriority.High.Base"
-#define SYSTASKVALUE_INT_PRIORITY_HIGH_BASE_DEFAULT		TASKPRIO_HIGH_BASE
-#define SYSTASKKEY_INT_PRIORITY_HIGH_END				"OSPriority.High.End"
-#define SYSTASKVALUE_INT_PRIORITY_HIGH_END_DEFAULT		TASKPRIO_HIGH_END
+#define SYSTASKKEY_INT_PRIORITY_HIGH_BASE               "OSPriority.High.Base"
+#define SYSTASKVALUE_INT_PRIORITY_HIGH_BASE_DEFAULT     TASKPRIO_HIGH_BASE
+#define SYSTASKKEY_INT_PRIORITY_HIGH_END                "OSPriority.High.End"
+#define SYSTASKVALUE_INT_PRIORITY_HIGH_END_DEFAULT      TASKPRIO_HIGH_END
 
-#define SYSTASKKEY_INT_PRIORITY_ABOVENORMAL_BASE			"OSPriority.AboveNormal.Base"
-#define SYSTASKVALUE_INT_PRIORITY_ABOVENORMAL_BASE_DEFAULT	TASKPRIO_ABOVENORMAL_BASE
-#define SYSTASKKEY_INT_PRIORITY_ABOVENORMAL_END				"OSPriority.AboveNormal.End"
-#define SYSTASKVALUE_INT_PRIORITY_ABOVENORMAL_END_DEFAULT	TASKPRIO_ABOVENORMAL_END
+#define SYSTASKKEY_INT_PRIORITY_ABOVENORMAL_BASE            "OSPriority.AboveNormal.Base"
+#define SYSTASKVALUE_INT_PRIORITY_ABOVENORMAL_BASE_DEFAULT  TASKPRIO_ABOVENORMAL_BASE
+#define SYSTASKKEY_INT_PRIORITY_ABOVENORMAL_END             "OSPriority.AboveNormal.End"
+#define SYSTASKVALUE_INT_PRIORITY_ABOVENORMAL_END_DEFAULT   TASKPRIO_ABOVENORMAL_END
 
-#define SYSTASKKEY_INT_PRIORITY_NORMAL_BASE				"OSPriority.Normal.Base"
-#define SYSTASKVALUE_INT_PRIORITY_NORMAL_BASE_DEFAULT	TASKPRIO_NORMAL_BASE
-#define SYSTASKKEY_INT_PRIORITY_NORMAL_END				"OSPriority.Normal.End"
-#define SYSTASKVALUE_INT_PRIORITY_NORMAL_END_DEFAULT	TASKPRIO_NORMAL_END
+#define SYSTASKKEY_INT_PRIORITY_NORMAL_BASE             "OSPriority.Normal.Base"
+#define SYSTASKVALUE_INT_PRIORITY_NORMAL_BASE_DEFAULT   TASKPRIO_NORMAL_BASE
+#define SYSTASKKEY_INT_PRIORITY_NORMAL_END              "OSPriority.Normal.End"
+#define SYSTASKVALUE_INT_PRIORITY_NORMAL_END_DEFAULT    TASKPRIO_NORMAL_END
 
-#define SYSTASKKEY_INT_PRIORITY_BELOWNORMAL_BASE			"OSPriority.BelowNormal.Base"
-#define SYSTASKVALUE_INT_PRIORITY_BELOWNORMAL_BASE_DEFAULT	TASKPRIO_BELOWNORMAL_BASE
-#define SYSTASKKEY_INT_PRIORITY_BELOWNORMAL_END				"OSPriority.BelowNormal.End"
-#define SYSTASKVALUE_INT_PRIORITY_BELOWNORMAL_END_DEFAULT	TASKPRIO_BELOWNORMAL_END
+#define SYSTASKKEY_INT_PRIORITY_BELOWNORMAL_BASE            "OSPriority.BelowNormal.Base"
+#define SYSTASKVALUE_INT_PRIORITY_BELOWNORMAL_BASE_DEFAULT  TASKPRIO_BELOWNORMAL_BASE
+#define SYSTASKKEY_INT_PRIORITY_BELOWNORMAL_END             "OSPriority.BelowNormal.End"
+#define SYSTASKVALUE_INT_PRIORITY_BELOWNORMAL_END_DEFAULT   TASKPRIO_BELOWNORMAL_END
 
-#define SYSTASKKEY_INT_PRIORITY_LOW_BASE				"OSPriority.Low.Base"
-#define SYSTASKVALUE_INT_PRIORITY_LOW_BASE_DEFAULT		TASKPRIO_LOW_BASE
-#define SYSTASKKEY_INT_PRIORITY_LOW_END					"OSPriority.Low.End"
-#define SYSTASKVALUE_INT_PRIORITY_LOW_END_DEFAULT		TASKPRIO_LOW_END
+#define SYSTASKKEY_INT_PRIORITY_LOW_BASE                "OSPriority.Low.Base"
+#define SYSTASKVALUE_INT_PRIORITY_LOW_BASE_DEFAULT      TASKPRIO_LOW_BASE
+#define SYSTASKKEY_INT_PRIORITY_LOW_END                 "OSPriority.Low.End"
+#define SYSTASKVALUE_INT_PRIORITY_LOW_END_DEFAULT       TASKPRIO_LOW_END
 
-#define SYSTASKKEY_INT_PRIORITY_LOWEST_BASE				"OSPriority.Lowest.Base"
-#define SYSTASKVALUE_INT_PRIORITY_LOWEST_BASE_DEFAULT	TASKPRIO_LOWEST_BASE
-#define SYSTASKKEY_INT_PRIORITY_LOWEST_END				"OSPriority.Lowest.End"
-#define SYSTASKVALUE_INT_PRIORITY_LOWEST_END_DEFAULT	TASKPRIO_LOWEST_END
+#define SYSTASKKEY_INT_PRIORITY_LOWEST_BASE             "OSPriority.Lowest.Base"
+#define SYSTASKVALUE_INT_PRIORITY_LOWEST_BASE_DEFAULT   TASKPRIO_LOWEST_BASE
+#define SYSTASKKEY_INT_PRIORITY_LOWEST_END              "OSPriority.Lowest.End"
+#define SYSTASKVALUE_INT_PRIORITY_LOWEST_END_DEFAULT    TASKPRIO_LOWEST_END
 
-#define SYSTASKKEY_INT_VXWORKS_CPU					"VxWorks.CPU"
-#define SYSTASKVALUE_INT_VXWORKS_CPU_DEFAULT		0
+#define SYSTASKKEY_INT_VXWORKS_CPU                  "VxWorks.CPU"
+#define SYSTASKVALUE_INT_VXWORKS_CPU_DEFAULT        0
 
 /**
  * <category>Settings</category>
@@ -363,80 +399,80 @@
  * ATTENTION!!! Only intended for very special debug purposes!
  * Use this setting only, if this was requested by the 3S team!
  * Use this setting only in non-productive test environments!
- * When this is set, all task exceptions are unhandeled and the first exception will directly crash the runtime system!!!* 
+ * When this is set, all task exceptions are untreated and the first exception will directly crash the runtime system!!!* 
  * </description>
  */
-#define SYSTASKKEY_INT_WIN32_DEBUG_DISABLE_EXCEPTIONHANDLER				"Win32.DebuggingOnlyDisableExceptionHandler"
+#define SYSTASKKEY_INT_WIN32_DEBUG_DISABLE_EXCEPTIONHANDLER             "Win32.DebuggingOnlyDisableExceptionHandler"
 #ifndef SYSTASKKEY_INT_WIN32_DEBUG_DISABLE_EXCEPTIONHANDLER_DEFAULT
-	#define SYSTASKKEY_INT_WIN32_DEBUG_DISABLE_EXCEPTIONHANDLER_DEFAULT		0
+    #define SYSTASKKEY_INT_WIN32_DEBUG_DISABLE_EXCEPTIONHANDLER_DEFAULT     0
 #endif
 
 /**
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Setting to specify the OS specifiy task stacksize. For smaller embedded systems with tasks, this setting is necessary.
- *	NOTE:
- *	Actually this setting is only supported by Linux/QNX platforms!
+ *  Setting to specify the OS specify task stack-size. For smaller embedded systems with tasks, this setting is necessary.
+ *  NOTE:
+ *  Actually this setting is only supported by Linux/QNX platforms!
  * </description>
  */
-#define SYSTASKKEY_INT_TASK_STACKSIZE									"StackSize"
+#define SYSTASKKEY_INT_TASK_STACKSIZE                                   "StackSize"
 #ifndef SYSTASKVALUE_INT_TASK_STACKSIZE_DEFAULT
-	#define SYSTASKVALUE_INT_TASK_STACKSIZE_DEFAULT						0
+    #define SYSTASKVALUE_INT_TASK_STACKSIZE_DEFAULT                     0
 #endif
 
 /**
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	By default CODESYS doesn't change the clock period of the QNX system tick. To reduce the jitter of
- *	the tasks, or to support "distributed clocks", one might want to have a higher resolution of the
- *	timer. With this setting you can adjust the clock period at CODESYS startup.
- *	The period is defined in nanoseconds and is passed as is to the QNX neutrino function ClockPeriod().
+ *  By default CODESYS doesn't change the clock period of the QNX system tick. To reduce the jitter of
+ *  the tasks, or to support "distributed clocks", one might want to have a higher resolution of the
+ *  timer. With this setting you can adjust the clock period at CODESYS startup.
+ *  The period is defined in nanoseconds and is passed as is to the QNX neutrino function ClockPeriod().
  * </description>
  */
-#define SYSTASKKEY_INT_QNX_CLOCKPERIOD							"QNX.ClockPeriod"
+#define SYSTASKKEY_INT_QNX_CLOCKPERIOD                          "QNX.ClockPeriod"
 #ifndef SYSTASKVALUE_INT_QNX_CLOCKPERIOD_DEFAULT
-#define SYSTASKVALUE_INT_QNX_CLOCKPERIOD_DEFAULT			0
+#define SYSTASKVALUE_INT_QNX_CLOCKPERIOD_DEFAULT            0
 #endif
 
 /**
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	By default CODESYS aligns tasks to the QNX system tick to reduce task jitter and avoid lost IEC task cycles.
- *	These would occur as the QNX system tick may not be set to exact values, depending on the underlying hardware.
- *	When using "distributed clocks", this behavior is undesired as it leads to high deviations in the resulting
- *	DC sync window. With this setting you can modify this behavior so that the scheduler will not make any
- *	adjustments to a task's wakeup time and leave the exact tick up to the system. Please note that you should
- *	additionally decrease the QNX system tick for "distributed clocks".
- *	0: Default behavior, tasks are aligned to QNX system tick; recommended to minimize task jitter with low system tick rates
- *	1: Modified behavior, tasks are not aligned to QNX system tick; recommended when using "distributed clocks"
+ *  By default CODESYS aligns tasks to the QNX system tick to reduce task jitter and avoid lost IEC task cycles.
+ *  These would occur as the QNX system tick may not be set to exact values, depending on the underlying hardware.
+ *  When using "distributed clocks", this behavior is undesired as it leads to high deviations in the resulting
+ *  DC sync window. With this setting you can modify this behavior so that the scheduler will not make any
+ *  adjustments to a task's wakeup time and leave the exact tick up to the system. Please note that you should
+ *  additionally decrease the QNX system tick for "distributed clocks".
+ *  0: Default behavior, tasks are aligned to QNX system tick; recommended to minimize task jitter with low system tick rates
+ *  1: Modified behavior, tasks are not aligned to QNX system tick; recommended when using "distributed clocks"
  * </description>
  */
-#define SYSTASKKEY_INT_QNX_DISABLETICKBASEDSCHEDULER			"QNX.DisableTickBasedScheduler"
+#define SYSTASKKEY_INT_QNX_DISABLETICKBASEDSCHEDULER            "QNX.DisableTickBasedScheduler"
 #ifndef SYSTASKVALUE_INT_QNX_DISABLETICKBASEDSCHEDULER
-#define SYSTASKVALUE_INT_QNX_DISABLETICKBASEDSCHEDULER_DEFAULT	0
+#define SYSTASKVALUE_INT_QNX_DISABLETICKBASEDSCHEDULER_DEFAULT  0
 #endif
 
 /**
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	1:	If the computed starting time of the next task cycle is in the past this cycle will be skipped. The task will wait until the next starting time in the future.
- *	0(DEFAULT):	If the computed starting time of the next task cycle is in the past the task will be scheduled immediately.	
- *	NOTE:
- *	Actually this setting is only supported by Linux/QNX platforms!
+ *  1:  If the computed starting time of the next task cycle is in the past this cycle will be skipped. The task will wait until the next starting time in the future.
+ *  0(DEFAULT): If the computed starting time of the next task cycle is in the past the task will be scheduled immediately. 
+ *  NOTE:
+ *  Actually this setting is only supported by Linux/QNX platforms!
  * </description>
  */
-#define SYSTASKKEY_INT_LINUX_SKIPLOSTCYCLES						"Linux.SkipLostCycles"
+#define SYSTASKKEY_INT_LINUX_SKIPLOSTCYCLES                     "Linux.SkipLostCycles"
 #ifndef SYSTASKVALUE_INT_LINUX_SKIPLOSTCYCLES_DEFAULT
-	#define SYSTASKVALUE_INT_LINUX_SKIPLOSTCYCLES_DEFAULT		0
+    #define SYSTASKVALUE_INT_LINUX_SKIPLOSTCYCLES_DEFAULT       0
 #endif
 
 RTS_RESULT CDECL TaskExceptionHandler(RTS_HANDLE hTask, RTS_UI32 ulException, RegContext Context);
 typedef RTS_RESULT (CDECL *PFSYS_TASK_EXCEPTIONHANDLER)(RTS_HANDLE hTask, RTS_UI32 ulException, RegContext Context);
-#define PFTASKEXCEPTIONHANDLER		PFSYS_TASK_EXCEPTIONHANDLER
+#define PFTASKEXCEPTIONHANDLER      PFSYS_TASK_EXCEPTIONHANDLER
 
 
 /**
@@ -445,60 +481,60 @@ typedef RTS_RESULT (CDECL *PFSYS_TASK_EXCEPTIONHANDLER)(RTS_HANDLE hTask, RTS_UI
 im */
 typedef struct
 {
-	struct tagSYS_TASK_INFO *pSysTaskInfo;
+    struct tagSYS_TASK_INFO *pSysTaskInfo;
 } EVTPARAM_SysTask;
-#define EVTPARAMID_SysTask					0x0001
-#define EVTVERSION_SysTask					0x0001
+#define EVTPARAMID_SysTask                  0x0001
+#define EVTVERSION_SysTask                  0x0001
 
 /**
  * <category>Event parameter</category>
  * <element name="pSysTaskInfo" type="IN">Pointer to task info structure</element>
- * <element name="ui32PriorityOriginal" type="IN">Original task priority (virtual RTS task prio)</element>
- * <element name="ui32PriorityMapped" type="OUT">Mapped task priority (virtual RTS task prio)</element>
+ * <element name="ui32PriorityOriginal" type="IN">Original task priority (virtual RTS task priority)</element>
+ * <element name="ui32PriorityMapped" type="OUT">Mapped task priority (virtual RTS task priority)</element>
  * <element name="Result" type="OUT">Error code:
- *					 ERR_OK: Priority is mapped
- *					 Other:  Original mapping is used
+ *                   ERR_OK: Priority is mapped
+ *                   Other:  Original mapping is used
  * </element>
  */
 typedef struct
 {
-	struct tagSYS_TASK_INFO *pSysTaskInfo;
-	RTS_UI32 ui32PriorityOriginal;
-	RTS_UI32 ui32PriorityMapped;
-	RTS_RESULT Result;
+    struct tagSYS_TASK_INFO *pSysTaskInfo;
+    RTS_UI32 ui32PriorityOriginal;
+    RTS_UI32 ui32PriorityMapped;
+    RTS_RESULT Result;
 } EVTPARAM_SysTask_GetPriority;
-#define EVTPARAMID_SysTask_GetPriority			0x0002
-#define EVTVERSION_SysTask_GetPriority			0x0001
+#define EVTPARAMID_SysTask_GetPriority          0x0002
+#define EVTVERSION_SysTask_GetPriority          0x0001
 
 /**
  * <category>Events</category>
  * <description>Event is sent, if a new task was create</description>
  * <param name="pEventParam" type="IN">EVTPARAM_SysTask</param>
  */
-#define EVT_TaskCreate					MAKE_EVENTID(EVTCLASS_INFO, 1)
+#define EVT_TaskCreate                  MAKE_EVENTID(EVTCLASS_INFO, 1)
 
 /**
  * <category>Events</category>
  * <description>Event is sent, before a task will be deleted</description>
  * <param name="pEventParam" type="IN">EVTPARAM_SysTask</param>
  */
-#define EVT_TaskDelete					MAKE_EVENTID(EVTCLASS_INFO, 2)
+#define EVT_TaskDelete                  MAKE_EVENTID(EVTCLASS_INFO, 2)
 
 /**
  * <category>Events</category>
- * <description>Event is sent, whenever the task intervall is set (used for ECAT DC)</description>
+ * <description>Event is sent, whenever the task interval is set (used for ECAT DC)</description>
  * <param name="pEventParam" type="IN">EVTPARAM_SysTask</param>
  */
-#define EVT_TaskSetInterval				MAKE_EVENTID(EVTCLASS_INFO, 3)
-#define EVTPARAMID_SysTaskSetInterval		0x0002
-#define EVTVERSION_SysTaskSetInterval		0x0001
+#define EVT_TaskSetInterval             MAKE_EVENTID(EVTCLASS_INFO, 3)
+#define EVTPARAMID_SysTaskSetInterval       0x0002
+#define EVTVERSION_SysTaskSetInterval       0x0001
 
 /**
  * <category>Events</category>
  * <description>Event is sent for each task to map virtual RTS task priority</description>
  * <param name="pEventParam" type="IN">EVTPARAM_SysTask_GetPriority</param>
  */
-#define EVT_TaskGetPriority				MAKE_EVENTID(EVTCLASS_INFO, 4)
+#define EVT_TaskGetPriority             MAKE_EVENTID(EVTCLASS_INFO, 4)
 
 
 /**
@@ -506,7 +542,7 @@ typedef struct
  * <description>Event is sent when a task leaves. This event is called from the tasks context.</description>
  * <param name="pEventParam" type="IN">EVTPARAM_SysTask</param>
  */
-#define EVT_TaskLeave					MAKE_EVENTID(EVTCLASS_INFO, 5)
+#define EVT_TaskLeave                   MAKE_EVENTID(EVTCLASS_INFO, 5)
 
 
 /**
@@ -515,16 +551,16 @@ typedef struct
  */
 typedef struct
 {
-	struct tagsystasksetinterval_struct* pSysTaskSetInterval;
+    struct tagsystasksetinterval_struct* pSysTaskSetInterval;
 } EVTPARAM_SysTaskSetInterval;
 
 /**
  * <category>Feature flags</category>
  * <element name="pSysTaskInfo" type="IN">Pointer to task info structure</element>
  */
-#define SYSTASK_FF_NONE						0x00000000
-#define SYSTASK_FF_AUTORELEASEONEXIT		0x00000001
-
+#define SYSTASK_FF_NONE                     0x00000000
+#define SYSTASK_FF_AUTORELEASEONEXIT        0x00000001
+#define SYSTASK_FF_NONSYSTASK               0x00000002
 
 struct tagSYS_TASK_PARAM;
 typedef void CDECL SYS_TASK_FUNCTION(struct tagSYS_TASK_PARAM *);
@@ -535,10 +571,10 @@ typedef void (CDECL *PFSYS_TASK_FUNCTION)(struct tagSYS_TASK_PARAM *);
  */
 typedef struct tagSYS_TASK_PARAM
 {
-	RTS_IEC_HANDLE hTask;		/* <element name="hTask" type="IN">SysTask handle of the task</element> */
-	RTS_IEC_DINT bExit;		/* <element name="bExit" type="IN">bExit flag to exit the task loop</element> */
-	RTS_IEC_UDINT ulInterval;		/* <element name="ulInterval" type="IN">Specified interval of the task</element> */
-	void *pParam;		/* <element name="pParam" type="IN">User specific parameter for the task</element> */
+    RTS_IEC_HANDLE hTask;       /* <element name="hTask" type="IN">SysTask handle of the task</element> */
+    RTS_IEC_DINT bExit;     /* <element name="bExit" type="IN">bExit flag to exit the task loop</element> */
+    RTS_IEC_UDINT ulInterval;       /* <element name="ulInterval" type="IN">Specified interval of the task</element> */
+    void *pParam;       /* <element name="pParam" type="IN">User specific parameter for the task</element> */
 } SYS_TASK_PARAM;
 
 /**
@@ -546,26 +582,31 @@ typedef struct tagSYS_TASK_PARAM
  */
 typedef struct tagSYS_TASK_INFO
 {
-	RTS_IEC_HANDLE uiOSHandle;		/* <element name="uiOSHandle" type="IN">Operating system handle of a task</element> */
-	RTS_IEC_DINT iState;		/* <element name="iState" type="IN">Actual state of the task. See category "Task status definitions" for details.</element> */
-	RTS_IEC_DINT iOldState;		/* <element name="iOldState" type="IN">Previous state of the task</element> */
-	SYS_TASK_PARAM TP;		/* <element name="TP" type="IN">Task parameter, with which the task was created</element> */
-	RTS_IEC_UDINT ulCycleTime;		/* <element name="ulCycleTime" type="IN">Last cycle time</element> */
-	RTS_IEC_UDINT ulCycleStart;		/* <element name="ulCycleStart" type="IN">Start time of the cycle</element> */
-	RTS_IEC_UDINT ulPriority;		/* <element name="ulPriority" type="IN">RTS priority of the task (not OS priority)</element> */
-	RTS_IEC_UDINT ulOSPriority;		/* <element name="ulOSPriority" type="IN">Operating system priority of the task</element> */
-	RTS_IEC_UDINT ulInterval;		/* <element name="ulInterval" type="IN">Specified interval for the task</element> */
-	RTS_IEC_UDINT ulStackSize;		/* <element name="ulStackSize" type="IN">Specified stack size for the task</element> */
-	PFSYS_TASK_FUNCTION pFunction;		/* <element name="pFunction" type="IN">Function pointer of the task frame</element> */
-	RTS_IEC_STRING szName[SYSTASK_MAX_NAME_LEN];		/* <element name="szName" type="IN">Name of the task</element> */
-	PFSYS_TASK_EXCEPTIONHANDLER pExceptionHandler;		/* <element name="pExceptionHandler" type="IN">Specified exception handler of the task</element> */
-	RegContext Context;		/* <element name="Context" type="IN">Current context of the task, if the task is supended</element> */
-	RTS_IEC_BYTE *pCppInstance;		/* <element name="pCppInstance" type="IN">Internal usage for C++</element> */
-	RTS_IEC_BYTE *pOSSpecific;		/* <element name="pOSSpecific" type="IN">Optional pointer to operating system specific stuff</element> */
-	RTS_IEC_DWORD ulFeature;		/* <element name="ulFeature" type="IN">Features flags of the task. See category "FeatureFlags" for details.</element> */
-	SEHContext *pSEHContextHead;    /* <element name="pSEHContextHead" type="IN">Points to the head of the registered exception frames</element> */
-	RTS_IEC_STRING *pszLongName;	/* <element name="pszLongName" type="IN">Long name of the task</element> */
-	RTS_IEC_HANDLE hTaskGroup;		/* <element name="hTaskGroup" type="IN">Optional task group handle</element> */
+    RTS_IEC_HANDLE uiOSHandle;      /* <element name="uiOSHandle" type="IN">Operating system handle of a task</element> */
+    RTS_IEC_DINT iState;            /* <element name="iState" type="IN">Actual state of the task. See category "Task status definitions" for details.</element> */
+    RTS_IEC_DINT iOldState;         /* <element name="iOldState" type="IN">Previous state of the task</element> */
+    SYS_TASK_PARAM TP;              /* <element name="TP" type="IN">Task parameter, with which the task was created</element> */
+    RTS_IEC_UDINT ulCycleTime;      /* <element name="ulCycleTime" type="IN">Last cycle time</element> */
+    RTS_IEC_UDINT ulCycleStart;     /* <element name="ulCycleStart" type="IN">Start time of the cycle</element> */
+    RTS_IEC_UDINT ulPriority;       /* <element name="ulPriority" type="IN">RTS priority of the task (not OS priority)</element> */
+    RTS_IEC_UDINT ulOSPriority;     /* <element name="ulOSPriority" type="IN">Operating system priority of the task</element> */
+    RTS_IEC_UDINT ulInterval;       /* <element name="ulInterval" type="IN">Specified interval for the task</element> */
+    RTS_IEC_UDINT ulStackSize;      /* <element name="ulStackSize" type="IN">Specified stack size for the task</element> */
+    PFSYS_TASK_FUNCTION pFunction;      /* <element name="pFunction" type="IN">Function pointer of the task frame</element> */
+    RTS_IEC_STRING szName[SYSTASK_MAX_NAME_LEN];        /* <element name="szName" type="IN">Name of the task</element> */
+    PFSYS_TASK_EXCEPTIONHANDLER pExceptionHandler;      /* <element name="pExceptionHandler" type="IN">Specified exception handler of the task</element> */
+    RegContext Context;     /* <element name="Context" type="IN">Current context of the task, if the task is suspended</element> */
+    RTS_IEC_BYTE *pCppInstance;     /* <element name="pCppInstance" type="IN">Internal usage for C++</element> */
+    RTS_IEC_BYTE *pOSSpecific;      /* <element name="pOSSpecific" type="IN">Optional pointer to operating system specific stuff</element> */
+    RTS_IEC_DWORD ulFeature;        /* <element name="ulFeature" type="IN">Features flags of the task. See category "FeatureFlags" for details.</element> */
+    SEHContext *pSEHContextHead;    /* <element name="pSEHContextHead" type="IN">Points to the head of the registered exception frames</element> */
+    RTS_IEC_STRING *pszLongName;    /* <element name="pszLongName" type="IN">Long name of the task</element> */
+    RTS_IEC_HANDLE hTaskGroup;      /* <element name="hTaskGroup" type="IN">Optional task group handle</element> */
+#ifndef CMUTILSHASH_NOTIMPLEMENTED
+    CMUtlHashTable threadLocalStorage; /* <element name="threadLocalStorage" type="IN">Hash table used to access thread local storage</element> */
+    RTS_HANDLE hNonSysTaskHandle;   /* <element name="hNonSysTaskHandle" type="IN">Handle used to store non SysTask thread IDs.</element>*/
+    CMUtlHashEntry *apHashTableBuf[SYSTASK_THREAD_LOCAL_STORAGE_HASH_TABLE_SIZE]; /* <element name="apHashTableBuf" type="IN">Static buffer for the hash table used to access thread local storage</element> */
+#endif
 } SYS_TASK_INFO;
 
 /** EXTERN LIB SECTION BEGIN **/
@@ -577,13 +618,13 @@ extern "C" {
 
 /**
  * <description>The creator of a task can call this function to release the task object, if the task ends is execution. So the task is responsible itself to delete this object.
- *	NOTE: The task object must not be used from outside the task after calling this function!</description>
+ *  NOTE: The task object must not be used from outside the task after calling this function!</description>
  * <result><p>RESULT: Returns the runtime system error code (see CmpErrors.library).</p></result>
  */
 typedef struct tagsystaskautoreleaseonexit_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_RESULT SysTaskAutoReleaseOnExit;	/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_RESULT SysTaskAutoReleaseOnExit;    /* VAR_OUTPUT */    
 } systaskautoreleaseonexit_struct;
 
 void CDECL CDECL_EXT systaskautoreleaseonexit(systaskautoreleaseonexit_struct *p);
@@ -639,9 +680,9 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKAUTORELEASEONEXIT_IEC) (systaskautorelea
  */
 typedef struct tagsystaskcheckstack_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_UDINT *pulMaxDepth;			/* VAR_INPUT */	/* <param name="pulMaxDepth" type="OUT">Maximum stack depth</param> */
-	RTS_IEC_RESULT SysTaskCheckStack;	/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_UDINT *pulMaxDepth;         /* VAR_INPUT */ /* <param name="pulMaxDepth" type="OUT">Maximum stack depth</param> */
+    RTS_IEC_RESULT SysTaskCheckStack;   /* VAR_OUTPUT */    
 } systaskcheckstack_struct;
 
 void CDECL CDECL_EXT systaskcheckstack(systaskcheckstack_struct *p);
@@ -697,15 +738,15 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKCHECKSTACK_IEC) (systaskcheckstack_struc
  */
 typedef struct tagsystaskcreate_struct
 {
-	RTS_IEC_STRING *pszTaskName;		/* VAR_INPUT */	/* <param name="pszTaskName" type="IN">The name of the task</param> */
-	PFSYS_TASK_FUNCTION pFunction;		/* VAR_INPUT */	/* <param name="pFunction" type="IN">Function which implements the task: void func (SYS_TASK_PARAM/// pParam*)</param> */
-	SYS_TASK_PARAM *pParam;				/* VAR_INPUT */	/* <param name="pParam" type="IN">Pointer to the argument which is passed on entry, see SYS_TASK_PARAM->pParam</param> */
-	RTS_IEC_UDINT ulPriority;			/* VAR_INPUT */	/* <param name="ulPriority" type="IN">Priority of the task. Can be 0..255</param> */
-	RTS_IEC_UDINT ulInterval;			/* VAR_INPUT */	/* <param name="ulInterval" type="IN">Interval in microseconds</param> */
-	RTS_IEC_UDINT ulStackSize;			/* VAR_INPUT */	/* <param name="ulStackSize" type="IN">Stack size of task in bytes. 0=Default</param> */
-	PFSYS_TASK_EXCEPTIONHANDLER pExceptionHandler;	/* VAR_INPUT */	/* <param name="pExceptionHandler" type="IN">Function pointer to exception handler that is called after an exception has occurred in the task</param> */
-	RTS_IEC_HANDLE *phTaskHandle;		/* VAR_INPUT */	/* <param name="phTaskHandle" type="OUT">Handle to the created task</param> */
-	RTS_IEC_RESULT SysTaskCreate;		/* VAR_OUTPUT */	
+    RTS_IEC_STRING *pszTaskName;        /* VAR_INPUT */ /* <param name="pszTaskName" type="IN">The name of the task</param> */
+    PFSYS_TASK_FUNCTION pFunction;      /* VAR_INPUT */ /* <param name="pFunction" type="IN">Function which implements the task: void func (SYS_TASK_PARAM/// pParam*)</param> */
+    SYS_TASK_PARAM *pParam;             /* VAR_INPUT */ /* <param name="pParam" type="IN">Pointer to the argument which is passed on entry, see SYS_TASK_PARAM->pParam</param> */
+    RTS_IEC_UDINT ulPriority;           /* VAR_INPUT */ /* <param name="ulPriority" type="IN">Priority of the task. Can be 0..255</param> */
+    RTS_IEC_UDINT ulInterval;           /* VAR_INPUT */ /* <param name="ulInterval" type="IN">Interval in microseconds</param> */
+    RTS_IEC_UDINT ulStackSize;          /* VAR_INPUT */ /* <param name="ulStackSize" type="IN">Stack size of task in bytes. 0=Default</param> */
+    PFSYS_TASK_EXCEPTIONHANDLER pExceptionHandler;  /* VAR_INPUT */ /* <param name="pExceptionHandler" type="IN">Function pointer to exception handler that is called after an exception has occurred in the task</param> */
+    RTS_IEC_HANDLE *phTaskHandle;       /* VAR_INPUT */ /* <param name="phTaskHandle" type="OUT">Handle to the created task</param> */
+    RTS_IEC_RESULT SysTaskCreate;       /* VAR_OUTPUT */    
 } systaskcreate_struct;
 
 void CDECL CDECL_EXT systaskcreate(systaskcreate_struct *p);
@@ -761,15 +802,15 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKCREATE_IEC) (systaskcreate_struct *p);
  */
 typedef struct tagsystaskcreate2_struct
 {
-	RTS_IEC_STRING *pszTaskName;		/* VAR_INPUT */	/* <param name="pszTaskName" type="IN">The name of the task</param> */
-	PFSYS_TASK_FUNCTION pFunction;		/* VAR_INPUT */	/* <param name="pFunction" type="IN">Function which implements the task: void func (SYS_TASK_PARAM/// pParam*)</param> */
-	SYS_TASK_PARAM *pParam;				/* VAR_INPUT */	/* <param name="pParam" type="IN">Pointer to the argument which is passed on entry, see SYS_TASK_PARAM->pParam</param> */
-	RTS_IEC_UDINT ulPriority;			/* VAR_INPUT */	/* <param name="ulPriority" type="IN">Priority of the task. Can be 0..255</param> */
-	RTS_IEC_UDINT ulInterval;			/* VAR_INPUT */	/* <param name="ulInterval" type="IN">Interval in microseconds</param> */
-	RTS_IEC_UDINT ulStackSize;			/* VAR_INPUT */	/* <param name="ulStackSize" type="IN">Stack size of task in bytes. 0=Default</param> */
-	PFSYS_TASK_EXCEPTIONHANDLER pExceptionHandler;	/* VAR_INPUT */	/* <param name="pExceptionHandler" type="IN">Function pointer to exception handler that is called after an exception has occurred in the task</param> */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* <param name="pResult" type="OUT">Pointer to runtime system error code (see CmpErrors.library)</param> */
-	RTS_IEC_HANDLE SysTaskCreate2;		/* VAR_OUTPUT */	
+    RTS_IEC_STRING *pszTaskName;        /* VAR_INPUT */ /* <param name="pszTaskName" type="IN">The name of the task</param> */
+    PFSYS_TASK_FUNCTION pFunction;      /* VAR_INPUT */ /* <param name="pFunction" type="IN">Function which implements the task: void func (SYS_TASK_PARAM/// pParam*)</param> */
+    SYS_TASK_PARAM *pParam;             /* VAR_INPUT */ /* <param name="pParam" type="IN">Pointer to the argument which is passed on entry, see SYS_TASK_PARAM->pParam</param> */
+    RTS_IEC_UDINT ulPriority;           /* VAR_INPUT */ /* <param name="ulPriority" type="IN">Priority of the task. Can be 0..255</param> */
+    RTS_IEC_UDINT ulInterval;           /* VAR_INPUT */ /* <param name="ulInterval" type="IN">Interval in microseconds</param> */
+    RTS_IEC_UDINT ulStackSize;          /* VAR_INPUT */ /* <param name="ulStackSize" type="IN">Stack size of task in bytes. 0=Default</param> */
+    PFSYS_TASK_EXCEPTIONHANDLER pExceptionHandler;  /* VAR_INPUT */ /* <param name="pExceptionHandler" type="IN">Function pointer to exception handler that is called after an exception has occurred in the task</param> */
+    RTS_IEC_RESULT *pResult;            /* VAR_INPUT */ /* <param name="pResult" type="OUT">Pointer to runtime system error code (see CmpErrors.library)</param> */
+    RTS_IEC_HANDLE SysTaskCreate2;      /* VAR_OUTPUT */    
 } systaskcreate2_struct;
 
 void CDECL CDECL_EXT systaskcreate2(systaskcreate2_struct *p);
@@ -825,8 +866,8 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKCREATE2_IEC) (systaskcreate2_struct *p);
  */
 typedef struct tagsystaskdestroy_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_RESULT SysTaskDestroy;		/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_RESULT SysTaskDestroy;      /* VAR_OUTPUT */    
 } systaskdestroy_struct;
 
 void CDECL CDECL_EXT systaskdestroy(systaskdestroy_struct *p);
@@ -882,9 +923,9 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKDESTROY_IEC) (systaskdestroy_struct *p);
  */
 typedef struct tagsystaskend_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_UDINT ulExitCode;			/* VAR_INPUT */	/* <param name="ulExitCode" type="IN">Exit code of the task</param> */
-	RTS_IEC_RESULT SysTaskEnd;			/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_UDINT ulExitCode;           /* VAR_INPUT */ /* <param name="ulExitCode" type="IN">Exit code of the task</param> */
+    RTS_IEC_RESULT SysTaskEnd;          /* VAR_OUTPUT */    
 } systaskend_struct;
 
 void CDECL CDECL_EXT systaskend(systaskend_struct *p);
@@ -940,8 +981,8 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKEND_IEC) (systaskend_struct *p);
  */
 typedef struct tagsystaskenter_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_RESULT SysTaskEnter;		/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_RESULT SysTaskEnter;        /* VAR_OUTPUT */    
 } systaskenter_struct;
 
 void CDECL CDECL_EXT systaskenter(systaskenter_struct *p);
@@ -997,9 +1038,9 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKENTER_IEC) (systaskenter_struct *p);
  */
 typedef struct tagsystaskexit_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_UDINT ulTimeoutMs;			/* VAR_INPUT */	/* <param name="ulTimeoutMs" type="IN">Timeout in milliseconds</param> */
-	RTS_IEC_RESULT SysTaskExit;			/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_UDINT ulTimeoutMs;          /* VAR_INPUT */ /* <param name="ulTimeoutMs" type="IN">Timeout in milliseconds</param> */
+    RTS_IEC_RESULT SysTaskExit;         /* VAR_OUTPUT */    
 } systaskexit_struct;
 
 void CDECL CDECL_EXT systaskexit(systaskexit_struct *p);
@@ -1055,10 +1096,10 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKEXIT_IEC) (systaskexit_struct *p);
  */
 typedef struct tagsystaskgenerateexception_struct
 {
-	RTS_IEC_HANDLE ulTaskOSHandle;		/* VAR_INPUT */	/* <param name="ulTaskOSHandle" type="IN">Operating system handle of the task</param> */
-	RTS_IEC_UDINT ulException;			/* VAR_INPUT */	/* <param name="ulException" type="IN">Rts standard exception</param> */
-	RegContext Context;					/* VAR_INPUT */	/* <param name="Context" type="IN">Context to detect the code location where the exception occurred</param> */
-	RTS_IEC_RESULT SysTaskGenerateException;	/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE ulTaskOSHandle;      /* VAR_INPUT */ /* <param name="ulTaskOSHandle" type="IN">Operating system handle of the task</param> */
+    RTS_IEC_UDINT ulException;          /* VAR_INPUT */ /* <param name="ulException" type="IN">Runtime system standard exception</param> */
+    RegContext Context;                 /* VAR_INPUT */ /* <param name="Context" type="IN">Context to detect the code location where the exception occurred</param> */
+    RTS_IEC_RESULT SysTaskGenerateException;    /* VAR_OUTPUT */    
 } systaskgenerateexception_struct;
 
 void CDECL CDECL_EXT systaskgenerateexception(systaskgenerateexception_struct *p);
@@ -1114,9 +1155,9 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKGENERATEEXCEPTION_IEC) (systaskgeneratee
  */
 typedef struct tagsystaskgetcontext_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RegContext *pContext;				/* VAR_INPUT */	/* <param name="pContext" type="OUT">Pointer to context</param> */
-	RTS_IEC_RESULT SysTaskGetContext;	/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RegContext *pContext;               /* VAR_INPUT */ /* <param name="pContext" type="OUT">Pointer to context</param> */
+    RTS_IEC_RESULT SysTaskGetContext;   /* VAR_OUTPUT */    
 } systaskgetcontext_struct;
 
 void CDECL CDECL_EXT systaskgetcontext(systaskgetcontext_struct *p);
@@ -1172,8 +1213,8 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKGETCONTEXT_IEC) (systaskgetcontext_struc
  */
 typedef struct tagsystaskgetcurrent_struct
 {
-	RTS_IEC_HANDLE *phTask;				/* VAR_INPUT */	/* <param name="phTask" type="OUT">Pointer to task handle</param> */
-	RTS_IEC_RESULT SysTaskGetCurrent;	/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE *phTask;             /* VAR_INPUT */ /* <param name="phTask" type="OUT">Pointer to task handle</param> */
+    RTS_IEC_RESULT SysTaskGetCurrent;   /* VAR_OUTPUT */    
 } systaskgetcurrent_struct;
 
 void CDECL CDECL_EXT systaskgetcurrent(systaskgetcurrent_struct *p);
@@ -1229,8 +1270,8 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKGETCURRENT_IEC) (systaskgetcurrent_struc
  */
 typedef struct tagsystaskgetcurrentoshandle_struct
 {
-	RTS_IEC_HANDLE *puiTaskOSHandle;	/* VAR_INPUT */	/* <param name="puiTaskOSHandle" type="OUT">Pointer to operating system task handle</param> */
-	RTS_IEC_RESULT SysTaskGetCurrentOSHandle;	/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE *puiTaskOSHandle;    /* VAR_INPUT */ /* <param name="puiTaskOSHandle" type="OUT">Pointer to operating system task handle</param> */
+    RTS_IEC_RESULT SysTaskGetCurrentOSHandle;   /* VAR_OUTPUT */    
 } systaskgetcurrentoshandle_struct;
 
 void CDECL CDECL_EXT systaskgetcurrentoshandle(systaskgetcurrentoshandle_struct *p);
@@ -1286,9 +1327,9 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKGETCURRENTOSHANDLE_IEC) (systaskgetcurre
  */
 typedef struct tagsystaskgetinfo_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	SYS_TASK_INFO **ppInfo;				/* VAR_INPUT */	/* <param name="ppInfo" type="OUT">Pointer pointer to get task info structure</param> */
-	RTS_IEC_RESULT SysTaskGetInfo;		/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    SYS_TASK_INFO **ppInfo;             /* VAR_INPUT */ /* <param name="ppInfo" type="OUT">Pointer to pointer to get task info structure</param> */
+    RTS_IEC_RESULT SysTaskGetInfo;      /* VAR_OUTPUT */    
 } systaskgetinfo_struct;
 
 void CDECL CDECL_EXT systaskgetinfo(systaskgetinfo_struct *p);
@@ -1344,9 +1385,9 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKGETINFO_IEC) (systaskgetinfo_struct *p);
  */
 typedef struct tagsystaskgetinterval_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to the task</param> */
-	RTS_IEC_UDINT *pulInterval;			/* VAR_IN_OUT */	/* <param name="pulInterval" type="OUT">Interval of the task in microseconds!</param> */
-	RTS_IEC_RESULT SysTaskGetInterval;	/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to the task</param> */
+    RTS_IEC_UDINT *pulInterval;         /* VAR_IN_OUT */    /* <param name="pulInterval" type="OUT">Interval of the task in microseconds!</param> */
+    RTS_IEC_RESULT SysTaskGetInterval;  /* VAR_OUTPUT */    
 } systaskgetinterval_struct;
 
 void CDECL CDECL_EXT systaskgetinterval(systaskgetinterval_struct *p);
@@ -1402,9 +1443,9 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKGETINTERVAL_IEC) (systaskgetinterval_str
  */
 typedef struct tagsystaskgetname_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* <param name="pResult" type="OUT">Pointer to runtime system error code (see CmpErrors.library)</param> */
-	RTS_IEC_STRING *SysTaskGetName;		/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_RESULT *pResult;            /* VAR_INPUT */ /* <param name="pResult" type="OUT">Pointer to runtime system error code (see CmpErrors.library)</param> */
+    RTS_IEC_STRING *SysTaskGetName;     /* VAR_OUTPUT */    
 } systaskgetname_struct;
 
 void CDECL CDECL_EXT systaskgetname(systaskgetname_struct *p);
@@ -1460,8 +1501,8 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKGETNAME_IEC) (systaskgetname_struct *p);
  */
 typedef struct tagsystaskgetoshandle_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_HANDLE SysTaskGetOSHandle;	/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_HANDLE SysTaskGetOSHandle;  /* VAR_OUTPUT */    
 } systaskgetoshandle_struct;
 
 void CDECL CDECL_EXT systaskgetoshandle(systaskgetoshandle_struct *p);
@@ -1517,9 +1558,9 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKGETOSHANDLE_IEC) (systaskgetoshandle_str
  */
 typedef struct tagsystaskgetospriority_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_UDINT *pulOSPriority;		/* VAR_INPUT */	/* <param name="pulOSPriority" type="OUT">Pointer to get operating system priority</param> */
-	RTS_IEC_RESULT SysTaskGetOSPriority;	/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_UDINT *pulOSPriority;       /* VAR_INPUT */ /* <param name="pulOSPriority" type="OUT">Pointer to get operating system priority</param> */
+    RTS_IEC_RESULT SysTaskGetOSPriority;    /* VAR_OUTPUT */    
 } systaskgetospriority_struct;
 
 void CDECL CDECL_EXT systaskgetospriority(systaskgetospriority_struct *p);
@@ -1575,9 +1616,9 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKGETOSPRIORITY_IEC) (systaskgetospriority
  */
 typedef struct tagsystaskgetpriority_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" TYPE="IN">Handle to the task</param> */
-	RTS_IEC_UDINT *pulPriority;			/* VAR_INPUT */	/* <param name="pulPriority" type="OUT">Pointer to get priority</param> */
-	RTS_IEC_RESULT SysTaskGetPriority;	/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" TYPE="IN">Handle to the task</param> */
+    RTS_IEC_UDINT *pulPriority;         /* VAR_INPUT */ /* <param name="pulPriority" type="OUT">Pointer to get priority</param> */
+    RTS_IEC_RESULT SysTaskGetPriority;  /* VAR_OUTPUT */    
 } systaskgetpriority_struct;
 
 void CDECL CDECL_EXT systaskgetpriority(systaskgetpriority_struct *p);
@@ -1633,9 +1674,9 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKGETPRIORITY_IEC) (systaskgetpriority_str
  */
 typedef struct tagsystaskjoin_struct
 {
-	RTS_IEC_HANDLE hTaskToJoin;			/* VAR_INPUT */	/* <param name="hTaskToJoin" type="IN">Task to join</param> */
-	RTS_IEC_UDINT ulTimeoutMs;			/* VAR_INPUT */	/* <param name="ulTimeoutMs" type="IN">Timeout in milliseconds to wait for join task</param> */
-	RTS_IEC_RESULT SysTaskJoin;			/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTaskToJoin;         /* VAR_INPUT */ /* <param name="hTaskToJoin" type="IN">Task to join</param> */
+    RTS_IEC_UDINT ulTimeoutMs;          /* VAR_INPUT */ /* <param name="ulTimeoutMs" type="IN">Timeout in milliseconds to wait for join task</param> */
+    RTS_IEC_RESULT SysTaskJoin;         /* VAR_OUTPUT */    
 } systaskjoin_struct;
 
 void CDECL CDECL_EXT systaskjoin(systaskjoin_struct *p);
@@ -1691,8 +1732,8 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKJOIN_IEC) (systaskjoin_struct *p);
  */
 typedef struct tagsystaskleave_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_RESULT SysTaskLeave;		/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_RESULT SysTaskLeave;        /* VAR_OUTPUT */    
 } systaskleave_struct;
 
 void CDECL CDECL_EXT systaskleave(systaskleave_struct *p);
@@ -1748,8 +1789,8 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKLEAVE_IEC) (systaskleave_struct *p);
  */
 typedef struct tagsystaskresume_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_RESULT SysTaskResume;		/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_RESULT SysTaskResume;       /* VAR_OUTPUT */    
 } systaskresume_struct;
 
 void CDECL CDECL_EXT systaskresume(systaskresume_struct *p);
@@ -1805,8 +1846,8 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKRESUME_IEC) (systaskresume_struct *p);
  */
 typedef struct tagsystasksetexit_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_RESULT SysTaskSetExit;		/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_RESULT SysTaskSetExit;      /* VAR_OUTPUT */    
 } systasksetexit_struct;
 
 void CDECL CDECL_EXT systasksetexit(systasksetexit_struct *p);
@@ -1858,16 +1899,16 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKSETEXIT_IEC) (systasksetexit_struct *p);
 
 /**
  * <description>
- *	Set the actual interval of a cyclic task. If the specified task is no cyclic task, the function return an error.
- *	This interface can be used to synchronize a task to another task or to events.
+ *  Set the actual interval of a cyclic task. If the specified task is no cyclic task, the function return an error.
+ *  This interface can be used to synchronize a task to another task or to events.
  * </description>
  * <result><p>RESULT: Returns the runtime system error code (see CmpErrors.library).</p></result>
  */
 typedef struct tagsystasksetinterval_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to the task</param> */
-	RTS_IEC_UDINT ulInterval;			/* VAR_INPUT */	/* <param name="ulInterval" type="IN">New interval of the task in microseconds!</param> */
-	RTS_IEC_RESULT SysTaskSetInterval;	/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to the task</param> */
+    RTS_IEC_UDINT ulInterval;           /* VAR_INPUT */ /* <param name="ulInterval" type="IN">New interval of the task in microseconds!</param> */
+    RTS_IEC_RESULT SysTaskSetInterval;  /* VAR_OUTPUT */    
 } systasksetinterval_struct;
 
 void CDECL CDECL_EXT systasksetinterval(systasksetinterval_struct *p);
@@ -1925,9 +1966,9 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKSETINTERVAL_IEC) (systasksetinterval_str
  */
 typedef struct tagsystasksetpriority_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_UDINT ulPriority;			/* VAR_INPUT */	/* <param name="ulPriority" type="IN">Task priority to set. Is the virtual priority between 0(highest)..255(lowest) and will be mapped to OS priority</param> */
-	RTS_IEC_RESULT SysTaskSetPriority;	/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_UDINT ulPriority;           /* VAR_INPUT */ /* <param name="ulPriority" type="IN">Task priority to set. Is the virtual priority between 0(highest)..255(lowest) and will be mapped to OS priority</param> */
+    RTS_IEC_RESULT SysTaskSetPriority;  /* VAR_OUTPUT */    
 } systasksetpriority_struct;
 
 void CDECL CDECL_EXT systasksetpriority(systasksetpriority_struct *p);
@@ -1985,8 +2026,8 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKSETPRIORITY_IEC) (systasksetpriority_str
  */
 typedef struct tagsystasksuspend_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_RESULT SysTaskSuspend;		/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_RESULT SysTaskSuspend;      /* VAR_OUTPUT */    
 } systasksuspend_struct;
 
 void CDECL CDECL_EXT systasksuspend(systasksuspend_struct *p);
@@ -2044,8 +2085,8 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKSUSPEND_IEC) (systasksuspend_struct *p);
  */
 typedef struct tagsystaskwaitinterval_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_RESULT SysTaskWaitInterval;	/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_RESULT SysTaskWaitInterval; /* VAR_OUTPUT */    
 } systaskwaitinterval_struct;
 
 void CDECL CDECL_EXT systaskwaitinterval(systaskwaitinterval_struct *p);
@@ -2104,9 +2145,9 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKWAITINTERVAL_IEC) (systaskwaitinterval_s
  */
 typedef struct tagsystaskwaitsleep_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_UDINT ulMilliSeconds;		/* VAR_INPUT */	/* <param name="ulMilliSeconds" type="IN">Time in milliseconds to sleep</param> */
-	RTS_IEC_RESULT SysTaskWaitSleep;	/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_UDINT ulMilliSeconds;       /* VAR_INPUT */ /* <param name="ulMilliSeconds" type="IN">Time in milliseconds to sleep</param> */
+    RTS_IEC_RESULT SysTaskWaitSleep;    /* VAR_OUTPUT */    
 } systaskwaitsleep_struct;
 
 void CDECL CDECL_EXT systaskwaitsleep(systaskwaitsleep_struct *p);
@@ -2165,9 +2206,9 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKWAITSLEEP_IEC) (systaskwaitsleep_struct 
  */
 typedef struct tagsystaskwaitsleepus_struct
 {
-	RTS_IEC_HANDLE hTask;				/* VAR_INPUT */	/* <param name="hTask" type="IN">Handle to task</param> */
-	RTS_IEC_ULINT *ptSleepUs;			/* VAR_IN_OUT */	/* <param name="ptSleepUs" type="IN">Time in microseconds to sleep</param> */
-	RTS_IEC_RESULT SysTaskWaitSleepUs;	/* VAR_OUTPUT */	
+    RTS_IEC_HANDLE hTask;               /* VAR_INPUT */ /* <param name="hTask" type="IN">Handle to task</param> */
+    RTS_IEC_ULINT *ptSleepUs;           /* VAR_IN_OUT */    /* <param name="ptSleepUs" type="IN">Time in microseconds to sleep</param> */
+    RTS_IEC_RESULT SysTaskWaitSleepUs;  /* VAR_OUTPUT */    
 } systaskwaitsleepus_struct;
 
 void CDECL CDECL_EXT systaskwaitsleepus(systaskwaitsleepus_struct *p);
@@ -2228,7 +2269,7 @@ typedef void (CDECL CDECL_EXT* PFSYSTASKWAITSLEEPUS_IEC) (systaskwaitsleepus_str
 extern "C" {
 #endif
 
-/* Init routines for OS specific modules */
+/* Initialization routines for OS specific modules */
 RTS_RESULT CDECL SysTaskOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysTaskOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
@@ -2361,10 +2402,10 @@ typedef RTS_HANDLE (CDECL * PFSYSTASKGETNEXT) (RTS_HANDLE hPrevTask, RTS_RESULT 
 /**
  * <description>
  *  Is called to create a task in suspended mode.
- *	IMPLEMENTATION NOTE:
- *	The task must be created _suspended_! After creating a task, the task must be resumed manually to run the task.
- *	If the operating system does not support creating tasks in suspended mode, a task frame must be setup
- *	in the SysTaskOS implementation, where the first call does a SysTaskSuspend() on itself.
+ *  IMPLEMENTATION NOTE:
+ *  The task must be created _suspended_! After creating a task, the task must be resumed manually to run the task.
+ *  If the operating system does not support creating tasks in suspended mode, a task frame must be setup
+ *  in the SysTaskOS implementation, where the first call does a SysTaskSuspend() on itself.
  * </description>
  * <param name="pszTaskName" type="IN">The name of the task</param>
  * <param name="pFunction" type="IN">Function which implements the task</param>
@@ -2493,7 +2534,7 @@ typedef RTS_HANDLE (CDECL * PFSYSTASKCREATE2) (char* pszTaskName, char *pszTaskG
  * <errorcode name="RTS_RESULT" type="ERR_OK">Task exit gracefully</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Handle to task is invalid</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">Task does not exit and could not be deleted hard! After this, only a reboot of
- *												 the controller can heal this situation!</errorcode>
+ *                                               the controller can heal this situation!</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_TIMEOUT">Task does not exit within the timeout, but could be deleted hard. This is only a hint for the caller, but no serious error.</errorcode>
  */
 RTS_RESULT CDECL SysTaskExit(RTS_HANDLE hTask, RTS_UI32 ulTimeoutMs);
@@ -2604,7 +2645,7 @@ typedef RTS_RESULT (CDECL * PFSYSTASKSETEXIT) (RTS_HANDLE hTask);
 /**
  * <description>
  *  The creator of a task can call this function to release the task object, if the task ends is execution. So the task is responsible itself to delete this object.
- *	NOTE: The task object must not be used from outside the task after calling this function!
+ *  NOTE: The task object must not be used from outside the task after calling this function!
  * </description>
  * <param name="hTask" type="IN">Handle to task</param>
  * <result>error code</result>
@@ -2885,10 +2926,10 @@ typedef RTS_RESULT (CDECL * PFSYSTASKEND) (RTS_HANDLE hTask, RTS_UINTPTR ulExitC
 
 /**
  * <description>
- *  Prevents excecution of the current task and addresses the OS scheduler to resume
- *  excecution after the given time (ms). 
- *	IMPLEMENTATION NOTE:
- *	- Don't use hTask in the implementation! If you must have the task handle, get it with SysTaskGetCurrent!
+ *  Prevents execution of the current task and addresses the OS scheduler to resume
+ *  execution after the given time (ms). 
+ *  IMPLEMENTATION NOTE:
+ *  - Don't use hTask in the implementation! If you must have the task handle, get it with SysTaskGetCurrent!
  * </description>
  * <param name="hTask" type="IN">Obsolete: Should be removed in future versions! Handle to task. Can be RTS_INVALID_HANDLE.</param>
  * <param name="ulMilliSeconds" type="IN">Time in milliseconds to sleep</param>
@@ -2943,10 +2984,10 @@ typedef RTS_RESULT (CDECL * PFSYSTASKWAITSLEEP) (RTS_HANDLE hTask, RTS_UI32 ulMi
 
 /**
  * <description>
- *  Prevents excecution of the current task and addresses the OS scheduler to resume
- *  excecution after the given time (us). 
- *	IMPLEMENTATION NOTE:
- *	- Don't use hTask in the implementation! If you must have the task handle, get it with SysTaskGetCurrent!
+ *  Prevents execution of the current task and addresses the OS scheduler to resume
+ *  execution after the given time (us). 
+ *  IMPLEMENTATION NOTE:
+ *  - Don't use hTask in the implementation! If you must have the task handle, get it with SysTaskGetCurrent!
  * </description>
  * <param name="hTask" type="IN">Obsolete: Should be removed in future versions! Handle to task. Can be RTS_INVALID_HANDLE.</param>
  * <param name="ptSleepUs" type="IN">Time in microseconds to sleep</param>
@@ -3283,7 +3324,7 @@ typedef RTS_RESULT (CDECL * PFSYSTASKSETPRIORITY) (RTS_HANDLE hTask, RTS_UI32 ul
 
 /**
  * <description>
- *	Get the runtime system priority of the given task. 
+ *  Get the runtime system priority of the given task. 
  * </description>
  * <param name="hTask" type="IN">Handle to task</param>
  * <param name="pulPriority" type="OUT">Pointer to get priority</param>
@@ -3340,7 +3381,7 @@ typedef RTS_RESULT (CDECL * PFSYSTASKGETPRIORITY) (RTS_HANDLE hTask, RTS_UI32 *p
 
 /**
  * <description>
- *	Returns the operating system priority of the given task.
+ *  Returns the operating system priority of the given task.
  * </description>
  * <param name="hTask" type="IN">Handle to task</param>
  * <param name="pulOSPriority" type="OUT">Pointer to get operating system priority</param>
@@ -3397,10 +3438,10 @@ typedef RTS_RESULT (CDECL * PFSYSTASKGETOSPRIORITY) (RTS_HANDLE hTask, RTS_UI32 
 
 /**
  * <description>
- *	Returns the task info of the specified task.
+ *  Returns the task info of the specified task.
  * </description>
  * <param name="hTask" type="IN">Handle to task</param>
- * <param name="ppInfo" type="OUT">Pointer pointer to get task info structure</param>
+ * <param name="ppInfo" type="OUT">Pointer to pointer to get task info structure</param>
  * <result>error code</result>
  */
 RTS_RESULT CDECL SysTaskGetInfo(RTS_HANDLE hTask, SYS_TASK_INFO **ppInfo);
@@ -3454,7 +3495,7 @@ typedef RTS_RESULT (CDECL * PFSYSTASKGETINFO) (RTS_HANDLE hTask, SYS_TASK_INFO *
 
 /**
  * <description>
- *	Returns the task name of the specified task.
+ *  Returns the task name of the specified task.
  * </description>
  * <param name="hTask" type="IN">Handle to task</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
@@ -3857,7 +3898,7 @@ typedef RTS_HANDLE (CDECL * PFSYSTASKGETOSHANDLE) (RTS_HANDLE hTask);
  * OBSOLETE FUNCTION: Use SysTaskGetHandleByOSHandle() and SysTaskGetInfo() instead!
  *  Function to get the task handle specified by the operating system task handle.
  * </description>
- * <param name="uiTaskOSHandle" type="IN">Opertating system task handleHandle to task</param>
+ * <param name="uiTaskOSHandle" type="IN">Operating system task handleHandle to task</param>
  * <result>Pointer to SYS_TASK_INFO</result>
  */
 SYS_TASK_INFO * CDECL SysTaskGetByOSHandle(RTS_HANDLE uiTaskOSHandle);
@@ -3913,10 +3954,10 @@ typedef SYS_TASK_INFO * (CDECL * PFSYSTASKGETBYOSHANDLE) (RTS_HANDLE uiTaskOSHan
  * <description>
  *  Function to get the task handle specified by the operating system task handle.
  * </description>
- * <param name="uiTaskOSHandle" type="IN">Opertating system task handleHandle to task</param>
+ * <param name="uiTaskOSHandle" type="IN">Operating system task handleHandle to task</param>
  * <param name="pResult" type="OUT">Pointer to error code.
- *		ERR_OK: Ok
- *		ERR_FAILED: Task not found
+ *      ERR_OK: Ok
+ *      ERR_FAILED: Task not found
  * <result>Handle to the specified task</result>
  */
 RTS_HANDLE CDECL SysTaskGetHandleByOSHandle(RTS_HANDLE uiTaskOSHandle, RTS_RESULT *pResult);
@@ -3974,8 +4015,8 @@ typedef RTS_HANDLE (CDECL * PFSYSTASKGETHANDLEBYOSHANDLE) (RTS_HANDLE uiTaskOSHa
  * </description>
  * <param name="ulPriority" type="IN">Task priority</param>
  * <param name="pResult" type="OUT">Pointer to error code.
- *		ERR_OK: Priority is mapped
- *		ERR_FAILED: Original priority is returned, because no mapping is configured
+ *      ERR_OK: Priority is mapped
+ *      ERR_FAILED: Original priority is returned, because no mapping is configured
  * </param>
  * <result>Configured priority</result>
  */
@@ -4035,8 +4076,8 @@ typedef RTS_UI32 (CDECL * PFSYSTASKGETCONFIGUREDPRIORITY) (RTS_UI32 ulPriority, 
  * <param name="hTask" type="IN">Handle to the task</param>
  * <param name="ulPriority" type="IN">Task priority</param>
  * <param name="pResult" type="OUT">Pointer to error code.
- *		ERR_OK: Priority is mapped
- *		ERR_FAILED: Original priority is returned, because no mapping is configured
+ *      ERR_OK: Priority is mapped
+ *      ERR_FAILED: Original priority is returned, because no mapping is configured
  * </param>
  * <result>Configured priority</result>
  */
@@ -4091,7 +4132,7 @@ typedef RTS_UI32 (CDECL * PFSYSTASKGETCONFIGUREDPRIORITY2) (RTS_HANDLE hTask, RT
 
 /**
  * <description>
- *	Get the actual interval of a cyclic task. If the specified task is no cyclic task, the function return an error.
+ *  Get the actual interval of a cyclic task. If the specified task is no cyclic task, the function return an error.
  * </description>
  * <param name="hTask" type="IN">Handle to the task</param>
  * <param name="pulInterval" type="OUT">Pointer to the interval in microseconds!</param>
@@ -4148,8 +4189,8 @@ typedef RTS_RESULT (CDECL * PFSYSTASKGETINTERVAL) (RTS_HANDLE hTask, RTS_UI32 *p
 
 /**
  * <description>
- *	Set the actual interval of a cyclic task. If the specified task is no cyclic task, the function return an error.
- *	This interface can be used to synchronize a task to another task or to events.
+ *  Set the actual interval of a cyclic task. If the specified task is no cyclic task, the function return an error.
+ *  This interface can be used to synchronize a task to another task or to events.
  * </description>
  * <param name="hTask" type="IN">Handle to the task</param>
  * <param name="ulInterval" type="IN">New interval in microseconds!</param>
@@ -4205,11 +4246,347 @@ typedef RTS_RESULT (CDECL * PFSYSTASKSETINTERVAL) (RTS_HANDLE hTask, RTS_UI32 ul
 
 
 
+/**
+ * <description>Create a new key to access a specific thread local storage type</description>
+ * <param name="phKey" type="IN">New key to access the local storage.</param>
+ * <result>error code</result>
+ */
+RTS_RESULT CDECL SysTaskCreateThreadLocalStorageKey(RTS_HANDLE *phKey);
+typedef RTS_RESULT (CDECL * PFSYSTASKCREATETHREADLOCALSTORAGEKEY) (RTS_HANDLE *phKey);
+#if defined(SYSTASK_NOTIMPLEMENTED) || defined(SYSTASKCREATETHREADLOCALSTORAGEKEY_NOTIMPLEMENTED)
+	#define USE_SysTaskCreateThreadLocalStorageKey
+	#define EXT_SysTaskCreateThreadLocalStorageKey
+	#define GET_SysTaskCreateThreadLocalStorageKey(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_SysTaskCreateThreadLocalStorageKey(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_SysTaskCreateThreadLocalStorageKey  FALSE
+	#define EXP_SysTaskCreateThreadLocalStorageKey  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_SysTaskCreateThreadLocalStorageKey
+	#define EXT_SysTaskCreateThreadLocalStorageKey
+	#define GET_SysTaskCreateThreadLocalStorageKey(fl)  CAL_CMGETAPI( "SysTaskCreateThreadLocalStorageKey" ) 
+	#define CAL_SysTaskCreateThreadLocalStorageKey  SysTaskCreateThreadLocalStorageKey
+	#define CHK_SysTaskCreateThreadLocalStorageKey  TRUE
+	#define EXP_SysTaskCreateThreadLocalStorageKey  CAL_CMEXPAPI( "SysTaskCreateThreadLocalStorageKey" ) 
+#elif defined(MIXED_LINK) && !defined(SYSTASK_EXTERNAL)
+	#define USE_SysTaskCreateThreadLocalStorageKey
+	#define EXT_SysTaskCreateThreadLocalStorageKey
+	#define GET_SysTaskCreateThreadLocalStorageKey(fl)  CAL_CMGETAPI( "SysTaskCreateThreadLocalStorageKey" ) 
+	#define CAL_SysTaskCreateThreadLocalStorageKey  SysTaskCreateThreadLocalStorageKey
+	#define CHK_SysTaskCreateThreadLocalStorageKey  TRUE
+	#define EXP_SysTaskCreateThreadLocalStorageKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskCreateThreadLocalStorageKey", (RTS_UINTPTR)SysTaskCreateThreadLocalStorageKey, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysTaskSysTaskCreateThreadLocalStorageKey
+	#define EXT_SysTaskSysTaskCreateThreadLocalStorageKey
+	#define GET_SysTaskSysTaskCreateThreadLocalStorageKey  ERR_OK
+	#define CAL_SysTaskSysTaskCreateThreadLocalStorageKey pISysTask->ISysTaskCreateThreadLocalStorageKey
+	#define CHK_SysTaskSysTaskCreateThreadLocalStorageKey (pISysTask != NULL)
+	#define EXP_SysTaskSysTaskCreateThreadLocalStorageKey  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_SysTaskCreateThreadLocalStorageKey
+	#define EXT_SysTaskCreateThreadLocalStorageKey
+	#define GET_SysTaskCreateThreadLocalStorageKey(fl)  CAL_CMGETAPI( "SysTaskCreateThreadLocalStorageKey" ) 
+	#define CAL_SysTaskCreateThreadLocalStorageKey pISysTask->ISysTaskCreateThreadLocalStorageKey
+	#define CHK_SysTaskCreateThreadLocalStorageKey (pISysTask != NULL)
+	#define EXP_SysTaskCreateThreadLocalStorageKey  CAL_CMEXPAPI( "SysTaskCreateThreadLocalStorageKey" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_SysTaskCreateThreadLocalStorageKey  PFSYSTASKCREATETHREADLOCALSTORAGEKEY pfSysTaskCreateThreadLocalStorageKey;
+	#define EXT_SysTaskCreateThreadLocalStorageKey  extern PFSYSTASKCREATETHREADLOCALSTORAGEKEY pfSysTaskCreateThreadLocalStorageKey;
+	#define GET_SysTaskCreateThreadLocalStorageKey(fl)  s_pfCMGetAPI2( "SysTaskCreateThreadLocalStorageKey", (RTS_VOID_FCTPTR *)&pfSysTaskCreateThreadLocalStorageKey, (fl), 0, 0)
+	#define CAL_SysTaskCreateThreadLocalStorageKey  pfSysTaskCreateThreadLocalStorageKey
+	#define CHK_SysTaskCreateThreadLocalStorageKey  (pfSysTaskCreateThreadLocalStorageKey != NULL)
+	#define EXP_SysTaskCreateThreadLocalStorageKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskCreateThreadLocalStorageKey", (RTS_UINTPTR)SysTaskCreateThreadLocalStorageKey, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Delete a key used to access thread local storage. All entries are removed from the threads.</description>
+ * <param name="phKey" type="IN">Key to remove.</param>
+ * <result>error code</result>
+ */
+RTS_RESULT CDECL SysTaskDeleteThreadLocalStorageKey(RTS_HANDLE *phKey);
+typedef RTS_RESULT (CDECL * PFSYSTASKDELETETHREADLOCALSTORAGEKEY) (RTS_HANDLE *phKey);
+#if defined(SYSTASK_NOTIMPLEMENTED) || defined(SYSTASKDELETETHREADLOCALSTORAGEKEY_NOTIMPLEMENTED)
+	#define USE_SysTaskDeleteThreadLocalStorageKey
+	#define EXT_SysTaskDeleteThreadLocalStorageKey
+	#define GET_SysTaskDeleteThreadLocalStorageKey(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_SysTaskDeleteThreadLocalStorageKey(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_SysTaskDeleteThreadLocalStorageKey  FALSE
+	#define EXP_SysTaskDeleteThreadLocalStorageKey  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_SysTaskDeleteThreadLocalStorageKey
+	#define EXT_SysTaskDeleteThreadLocalStorageKey
+	#define GET_SysTaskDeleteThreadLocalStorageKey(fl)  CAL_CMGETAPI( "SysTaskDeleteThreadLocalStorageKey" ) 
+	#define CAL_SysTaskDeleteThreadLocalStorageKey  SysTaskDeleteThreadLocalStorageKey
+	#define CHK_SysTaskDeleteThreadLocalStorageKey  TRUE
+	#define EXP_SysTaskDeleteThreadLocalStorageKey  CAL_CMEXPAPI( "SysTaskDeleteThreadLocalStorageKey" ) 
+#elif defined(MIXED_LINK) && !defined(SYSTASK_EXTERNAL)
+	#define USE_SysTaskDeleteThreadLocalStorageKey
+	#define EXT_SysTaskDeleteThreadLocalStorageKey
+	#define GET_SysTaskDeleteThreadLocalStorageKey(fl)  CAL_CMGETAPI( "SysTaskDeleteThreadLocalStorageKey" ) 
+	#define CAL_SysTaskDeleteThreadLocalStorageKey  SysTaskDeleteThreadLocalStorageKey
+	#define CHK_SysTaskDeleteThreadLocalStorageKey  TRUE
+	#define EXP_SysTaskDeleteThreadLocalStorageKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskDeleteThreadLocalStorageKey", (RTS_UINTPTR)SysTaskDeleteThreadLocalStorageKey, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysTaskSysTaskDeleteThreadLocalStorageKey
+	#define EXT_SysTaskSysTaskDeleteThreadLocalStorageKey
+	#define GET_SysTaskSysTaskDeleteThreadLocalStorageKey  ERR_OK
+	#define CAL_SysTaskSysTaskDeleteThreadLocalStorageKey pISysTask->ISysTaskDeleteThreadLocalStorageKey
+	#define CHK_SysTaskSysTaskDeleteThreadLocalStorageKey (pISysTask != NULL)
+	#define EXP_SysTaskSysTaskDeleteThreadLocalStorageKey  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_SysTaskDeleteThreadLocalStorageKey
+	#define EXT_SysTaskDeleteThreadLocalStorageKey
+	#define GET_SysTaskDeleteThreadLocalStorageKey(fl)  CAL_CMGETAPI( "SysTaskDeleteThreadLocalStorageKey" ) 
+	#define CAL_SysTaskDeleteThreadLocalStorageKey pISysTask->ISysTaskDeleteThreadLocalStorageKey
+	#define CHK_SysTaskDeleteThreadLocalStorageKey (pISysTask != NULL)
+	#define EXP_SysTaskDeleteThreadLocalStorageKey  CAL_CMEXPAPI( "SysTaskDeleteThreadLocalStorageKey" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_SysTaskDeleteThreadLocalStorageKey  PFSYSTASKDELETETHREADLOCALSTORAGEKEY pfSysTaskDeleteThreadLocalStorageKey;
+	#define EXT_SysTaskDeleteThreadLocalStorageKey  extern PFSYSTASKDELETETHREADLOCALSTORAGEKEY pfSysTaskDeleteThreadLocalStorageKey;
+	#define GET_SysTaskDeleteThreadLocalStorageKey(fl)  s_pfCMGetAPI2( "SysTaskDeleteThreadLocalStorageKey", (RTS_VOID_FCTPTR *)&pfSysTaskDeleteThreadLocalStorageKey, (fl), 0, 0)
+	#define CAL_SysTaskDeleteThreadLocalStorageKey  pfSysTaskDeleteThreadLocalStorageKey
+	#define CHK_SysTaskDeleteThreadLocalStorageKey  (pfSysTaskDeleteThreadLocalStorageKey != NULL)
+	#define EXP_SysTaskDeleteThreadLocalStorageKey  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskDeleteThreadLocalStorageKey", (RTS_UINTPTR)SysTaskDeleteThreadLocalStorageKey, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Add a value to the current thread. Note: the caller is responsible to clean up the data if the key is removed.</description>
+ * <param name="phKey" type="IN">Key created with SysTaskCreateThreadLocalStorageKey</param>
+ * <result>error code</result>
+ */
+RTS_RESULT CDECL SysTaskSetThreadLocalStorage(RTS_HANDLE hKey, void *pData);
+typedef RTS_RESULT (CDECL * PFSYSTASKSETTHREADLOCALSTORAGE) (RTS_HANDLE hKey, void *pData);
+#if defined(SYSTASK_NOTIMPLEMENTED) || defined(SYSTASKSETTHREADLOCALSTORAGE_NOTIMPLEMENTED)
+	#define USE_SysTaskSetThreadLocalStorage
+	#define EXT_SysTaskSetThreadLocalStorage
+	#define GET_SysTaskSetThreadLocalStorage(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_SysTaskSetThreadLocalStorage(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_SysTaskSetThreadLocalStorage  FALSE
+	#define EXP_SysTaskSetThreadLocalStorage  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_SysTaskSetThreadLocalStorage
+	#define EXT_SysTaskSetThreadLocalStorage
+	#define GET_SysTaskSetThreadLocalStorage(fl)  CAL_CMGETAPI( "SysTaskSetThreadLocalStorage" ) 
+	#define CAL_SysTaskSetThreadLocalStorage  SysTaskSetThreadLocalStorage
+	#define CHK_SysTaskSetThreadLocalStorage  TRUE
+	#define EXP_SysTaskSetThreadLocalStorage  CAL_CMEXPAPI( "SysTaskSetThreadLocalStorage" ) 
+#elif defined(MIXED_LINK) && !defined(SYSTASK_EXTERNAL)
+	#define USE_SysTaskSetThreadLocalStorage
+	#define EXT_SysTaskSetThreadLocalStorage
+	#define GET_SysTaskSetThreadLocalStorage(fl)  CAL_CMGETAPI( "SysTaskSetThreadLocalStorage" ) 
+	#define CAL_SysTaskSetThreadLocalStorage  SysTaskSetThreadLocalStorage
+	#define CHK_SysTaskSetThreadLocalStorage  TRUE
+	#define EXP_SysTaskSetThreadLocalStorage  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskSetThreadLocalStorage", (RTS_UINTPTR)SysTaskSetThreadLocalStorage, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysTaskSysTaskSetThreadLocalStorage
+	#define EXT_SysTaskSysTaskSetThreadLocalStorage
+	#define GET_SysTaskSysTaskSetThreadLocalStorage  ERR_OK
+	#define CAL_SysTaskSysTaskSetThreadLocalStorage pISysTask->ISysTaskSetThreadLocalStorage
+	#define CHK_SysTaskSysTaskSetThreadLocalStorage (pISysTask != NULL)
+	#define EXP_SysTaskSysTaskSetThreadLocalStorage  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_SysTaskSetThreadLocalStorage
+	#define EXT_SysTaskSetThreadLocalStorage
+	#define GET_SysTaskSetThreadLocalStorage(fl)  CAL_CMGETAPI( "SysTaskSetThreadLocalStorage" ) 
+	#define CAL_SysTaskSetThreadLocalStorage pISysTask->ISysTaskSetThreadLocalStorage
+	#define CHK_SysTaskSetThreadLocalStorage (pISysTask != NULL)
+	#define EXP_SysTaskSetThreadLocalStorage  CAL_CMEXPAPI( "SysTaskSetThreadLocalStorage" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_SysTaskSetThreadLocalStorage  PFSYSTASKSETTHREADLOCALSTORAGE pfSysTaskSetThreadLocalStorage;
+	#define EXT_SysTaskSetThreadLocalStorage  extern PFSYSTASKSETTHREADLOCALSTORAGE pfSysTaskSetThreadLocalStorage;
+	#define GET_SysTaskSetThreadLocalStorage(fl)  s_pfCMGetAPI2( "SysTaskSetThreadLocalStorage", (RTS_VOID_FCTPTR *)&pfSysTaskSetThreadLocalStorage, (fl), 0, 0)
+	#define CAL_SysTaskSetThreadLocalStorage  pfSysTaskSetThreadLocalStorage
+	#define CHK_SysTaskSetThreadLocalStorage  (pfSysTaskSetThreadLocalStorage != NULL)
+	#define EXP_SysTaskSetThreadLocalStorage  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskSetThreadLocalStorage", (RTS_UINTPTR)SysTaskSetThreadLocalStorage, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>Get the value stored for that key within the threads local storage.</description>
+ * <param name="phKey" type="IN">Key created with SysTaskCreateThreadLocalStorageKey</param>
+ * <result>error code</result>
+ */
+void * CDECL SysTaskGetThreadLocalStorage(RTS_HANDLE hKey, RTS_RESULT *pResult);
+typedef void * (CDECL * PFSYSTASKGETTHREADLOCALSTORAGE) (RTS_HANDLE hKey, RTS_RESULT *pResult);
+#if defined(SYSTASK_NOTIMPLEMENTED) || defined(SYSTASKGETTHREADLOCALSTORAGE_NOTIMPLEMENTED)
+	#define USE_SysTaskGetThreadLocalStorage
+	#define EXT_SysTaskGetThreadLocalStorage
+	#define GET_SysTaskGetThreadLocalStorage(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_SysTaskGetThreadLocalStorage(p0,p1)  (void *)(RTS_SIZE)ERR_NOTIMPLEMENTED
+	#define CHK_SysTaskGetThreadLocalStorage  FALSE
+	#define EXP_SysTaskGetThreadLocalStorage  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_SysTaskGetThreadLocalStorage
+	#define EXT_SysTaskGetThreadLocalStorage
+	#define GET_SysTaskGetThreadLocalStorage(fl)  CAL_CMGETAPI( "SysTaskGetThreadLocalStorage" ) 
+	#define CAL_SysTaskGetThreadLocalStorage  SysTaskGetThreadLocalStorage
+	#define CHK_SysTaskGetThreadLocalStorage  TRUE
+	#define EXP_SysTaskGetThreadLocalStorage  CAL_CMEXPAPI( "SysTaskGetThreadLocalStorage" ) 
+#elif defined(MIXED_LINK) && !defined(SYSTASK_EXTERNAL)
+	#define USE_SysTaskGetThreadLocalStorage
+	#define EXT_SysTaskGetThreadLocalStorage
+	#define GET_SysTaskGetThreadLocalStorage(fl)  CAL_CMGETAPI( "SysTaskGetThreadLocalStorage" ) 
+	#define CAL_SysTaskGetThreadLocalStorage  SysTaskGetThreadLocalStorage
+	#define CHK_SysTaskGetThreadLocalStorage  TRUE
+	#define EXP_SysTaskGetThreadLocalStorage  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetThreadLocalStorage", (RTS_UINTPTR)SysTaskGetThreadLocalStorage, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysTaskSysTaskGetThreadLocalStorage
+	#define EXT_SysTaskSysTaskGetThreadLocalStorage
+	#define GET_SysTaskSysTaskGetThreadLocalStorage  ERR_OK
+	#define CAL_SysTaskSysTaskGetThreadLocalStorage pISysTask->ISysTaskGetThreadLocalStorage
+	#define CHK_SysTaskSysTaskGetThreadLocalStorage (pISysTask != NULL)
+	#define EXP_SysTaskSysTaskGetThreadLocalStorage  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_SysTaskGetThreadLocalStorage
+	#define EXT_SysTaskGetThreadLocalStorage
+	#define GET_SysTaskGetThreadLocalStorage(fl)  CAL_CMGETAPI( "SysTaskGetThreadLocalStorage" ) 
+	#define CAL_SysTaskGetThreadLocalStorage pISysTask->ISysTaskGetThreadLocalStorage
+	#define CHK_SysTaskGetThreadLocalStorage (pISysTask != NULL)
+	#define EXP_SysTaskGetThreadLocalStorage  CAL_CMEXPAPI( "SysTaskGetThreadLocalStorage" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_SysTaskGetThreadLocalStorage  PFSYSTASKGETTHREADLOCALSTORAGE pfSysTaskGetThreadLocalStorage;
+	#define EXT_SysTaskGetThreadLocalStorage  extern PFSYSTASKGETTHREADLOCALSTORAGE pfSysTaskGetThreadLocalStorage;
+	#define GET_SysTaskGetThreadLocalStorage(fl)  s_pfCMGetAPI2( "SysTaskGetThreadLocalStorage", (RTS_VOID_FCTPTR *)&pfSysTaskGetThreadLocalStorage, (fl), 0, 0)
+	#define CAL_SysTaskGetThreadLocalStorage  pfSysTaskGetThreadLocalStorage
+	#define CHK_SysTaskGetThreadLocalStorage  (pfSysTaskGetThreadLocalStorage != NULL)
+	#define EXP_SysTaskGetThreadLocalStorage  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetThreadLocalStorage", (RTS_UINTPTR)SysTaskGetThreadLocalStorage, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>
+ *	Check a task handle, if it is still valid and is not released, and lock the task.
+ *	If the check is successful, you have to unlock the task at the end of the usage with SysTaskUnlock().
+ *	NOTE:
+ *	In the background the complete task pool of the runtime system is locked. This prevents for example the creation of a new task. The lock therefore should be held very short!
+ * </description>
+ * <param name="hTask" type="IN">Handle to the task</param>
+ * <result>error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">hTask is valid and could be locked</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">hTask is an invalid handle</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">hTask could not be found</errorcode>
+ */
+RTS_RESULT CDECL SysTaskLock(RTS_HANDLE hTask);
+typedef RTS_RESULT (CDECL * PFSYSTASKLOCK) (RTS_HANDLE hTask);
+#if defined(SYSTASK_NOTIMPLEMENTED) || defined(SYSTASKLOCK_NOTIMPLEMENTED)
+	#define USE_SysTaskLock
+	#define EXT_SysTaskLock
+	#define GET_SysTaskLock(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_SysTaskLock(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_SysTaskLock  FALSE
+	#define EXP_SysTaskLock  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_SysTaskLock
+	#define EXT_SysTaskLock
+	#define GET_SysTaskLock(fl)  CAL_CMGETAPI( "SysTaskLock" ) 
+	#define CAL_SysTaskLock  SysTaskLock
+	#define CHK_SysTaskLock  TRUE
+	#define EXP_SysTaskLock  CAL_CMEXPAPI( "SysTaskLock" ) 
+#elif defined(MIXED_LINK) && !defined(SYSTASK_EXTERNAL)
+	#define USE_SysTaskLock
+	#define EXT_SysTaskLock
+	#define GET_SysTaskLock(fl)  CAL_CMGETAPI( "SysTaskLock" ) 
+	#define CAL_SysTaskLock  SysTaskLock
+	#define CHK_SysTaskLock  TRUE
+	#define EXP_SysTaskLock  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskLock", (RTS_UINTPTR)SysTaskLock, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysTaskSysTaskLock
+	#define EXT_SysTaskSysTaskLock
+	#define GET_SysTaskSysTaskLock  ERR_OK
+	#define CAL_SysTaskSysTaskLock(p0)		(p0 == RTS_INVALID_HANDLE || p0 == NULL ? pISysTask->ISysTaskLock() : ((ISysTask*)p0)->ISysTaskLock())
+	#define CHK_SysTaskSysTaskLock  (pISysTask != NULL)
+	#define EXP_SysTaskSysTaskLock  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_SysTaskLock
+	#define EXT_SysTaskLock
+	#define GET_SysTaskLock(fl)  CAL_CMGETAPI( "SysTaskLock" ) 
+	#define CAL_SysTaskLock(p0)		(p0 == RTS_INVALID_HANDLE || p0 == NULL ? pISysTask->ISysTaskLock() : ((ISysTask*)p0)->ISysTaskLock())
+	#define CHK_SysTaskLock  (pISysTask != NULL)
+	#define EXP_SysTaskLock  CAL_CMEXPAPI( "SysTaskLock" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_SysTaskLock  PFSYSTASKLOCK pfSysTaskLock;
+	#define EXT_SysTaskLock  extern PFSYSTASKLOCK pfSysTaskLock;
+	#define GET_SysTaskLock(fl)  s_pfCMGetAPI2( "SysTaskLock", (RTS_VOID_FCTPTR *)&pfSysTaskLock, (fl), 0, 0)
+	#define CAL_SysTaskLock  pfSysTaskLock
+	#define CHK_SysTaskLock  (pfSysTaskLock != NULL)
+	#define EXP_SysTaskLock  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskLock", (RTS_UINTPTR)SysTaskLock, 0, 0) 
+#endif
+
+
+
+
+/**
+ * <description>
+ *	Unlock the task previously locked by SysTaskLock.
+ * </description>
+ * <param name="hTask" type="IN">Handle to the task</param>
+ * <result>error code</result>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">hTask is valid and could unlocked</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">hTask is an invalid handle</errorcode>
+ */
+RTS_RESULT CDECL SysTaskUnlock(RTS_HANDLE hTask);
+typedef RTS_RESULT (CDECL * PFSYSTASKUNLOCK) (RTS_HANDLE hTask);
+#if defined(SYSTASK_NOTIMPLEMENTED) || defined(SYSTASKUNLOCK_NOTIMPLEMENTED)
+	#define USE_SysTaskUnlock
+	#define EXT_SysTaskUnlock
+	#define GET_SysTaskUnlock(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_SysTaskUnlock(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
+	#define CHK_SysTaskUnlock  FALSE
+	#define EXP_SysTaskUnlock  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_SysTaskUnlock
+	#define EXT_SysTaskUnlock
+	#define GET_SysTaskUnlock(fl)  CAL_CMGETAPI( "SysTaskUnlock" ) 
+	#define CAL_SysTaskUnlock  SysTaskUnlock
+	#define CHK_SysTaskUnlock  TRUE
+	#define EXP_SysTaskUnlock  CAL_CMEXPAPI( "SysTaskUnlock" ) 
+#elif defined(MIXED_LINK) && !defined(SYSTASK_EXTERNAL)
+	#define USE_SysTaskUnlock
+	#define EXT_SysTaskUnlock
+	#define GET_SysTaskUnlock(fl)  CAL_CMGETAPI( "SysTaskUnlock" ) 
+	#define CAL_SysTaskUnlock  SysTaskUnlock
+	#define CHK_SysTaskUnlock  TRUE
+	#define EXP_SysTaskUnlock  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskUnlock", (RTS_UINTPTR)SysTaskUnlock, 0, 0) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_SysTaskSysTaskUnlock
+	#define EXT_SysTaskSysTaskUnlock
+	#define GET_SysTaskSysTaskUnlock  ERR_OK
+	#define CAL_SysTaskSysTaskUnlock(p0)		(p0 == RTS_INVALID_HANDLE || p0 == NULL ? pISysTask->ISysTaskUnlock() : ((ISysTask*)p0)->ISysTaskUnlock())
+	#define CHK_SysTaskSysTaskUnlock  (pISysTask != NULL)
+	#define EXP_SysTaskSysTaskUnlock  ERR_OK
+#elif defined(CPLUSPLUS)
+	#define USE_SysTaskUnlock
+	#define EXT_SysTaskUnlock
+	#define GET_SysTaskUnlock(fl)  CAL_CMGETAPI( "SysTaskUnlock" ) 
+	#define CAL_SysTaskUnlock(p0)		(p0 == RTS_INVALID_HANDLE || p0 == NULL ? pISysTask->ISysTaskUnlock() : ((ISysTask*)p0)->ISysTaskUnlock())
+	#define CHK_SysTaskUnlock  (pISysTask != NULL)
+	#define EXP_SysTaskUnlock  CAL_CMEXPAPI( "SysTaskUnlock" ) 
+#else /* DYNAMIC_LINK */
+	#define USE_SysTaskUnlock  PFSYSTASKUNLOCK pfSysTaskUnlock;
+	#define EXT_SysTaskUnlock  extern PFSYSTASKUNLOCK pfSysTaskUnlock;
+	#define GET_SysTaskUnlock(fl)  s_pfCMGetAPI2( "SysTaskUnlock", (RTS_VOID_FCTPTR *)&pfSysTaskUnlock, (fl), 0, 0)
+	#define CAL_SysTaskUnlock  pfSysTaskUnlock
+	#define CHK_SysTaskUnlock  (pfSysTaskUnlock != NULL)
+	#define EXP_SysTaskUnlock  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskUnlock", (RTS_UINTPTR)SysTaskUnlock, 0, 0) 
+#endif
+
+
+
+
 /* Obsolete function. Can be removed in the future */
 typedef struct
 {
-	RTS_HANDLE hTask;
-	RTS_HANDLE out;
+    RTS_HANDLE hTask;
+    RTS_HANDLE out;
 }systaskgettaskhandle_struct ;
 void CDECL CDECL_EXT systaskgettaskhandle(systaskgettaskhandle_struct *p);
 typedef void (CDECL CDECL_EXT* PFSYSTASKGETTASKHANDLE_IEC) (systaskgettaskhandle_struct *p);
@@ -4300,6 +4677,12 @@ typedef struct
  	PFSYSTASKGETCONFIGUREDPRIORITY2 ISysTaskGetConfiguredPriority2;
  	PFSYSTASKGETINTERVAL ISysTaskGetInterval;
  	PFSYSTASKSETINTERVAL ISysTaskSetInterval;
+ 	PFSYSTASKCREATETHREADLOCALSTORAGEKEY ISysTaskCreateThreadLocalStorageKey;
+ 	PFSYSTASKDELETETHREADLOCALSTORAGEKEY ISysTaskDeleteThreadLocalStorageKey;
+ 	PFSYSTASKSETTHREADLOCALSTORAGE ISysTaskSetThreadLocalStorage;
+ 	PFSYSTASKGETTHREADLOCALSTORAGE ISysTaskGetThreadLocalStorage;
+ 	PFSYSTASKLOCK ISysTaskLock;
+ 	PFSYSTASKUNLOCK ISysTaskUnlock;
  } ISysTask_C;
 
 #ifdef CPLUSPLUS
@@ -4338,6 +4721,12 @@ class ISysTask : public IBase
 		virtual RTS_UI32 CDECL ISysTaskGetConfiguredPriority2(RTS_UI32 ulPriority, RTS_RESULT *pResult) =0;
 		virtual RTS_RESULT CDECL ISysTaskGetInterval(RTS_UI32 *pulInterval) =0;
 		virtual RTS_RESULT CDECL ISysTaskSetInterval(RTS_UI32 ulInterval) =0;
+		virtual RTS_RESULT CDECL ISysTaskCreateThreadLocalStorageKey(RTS_HANDLE *phKey) =0;
+		virtual RTS_RESULT CDECL ISysTaskDeleteThreadLocalStorageKey(RTS_HANDLE *phKey) =0;
+		virtual RTS_RESULT CDECL ISysTaskSetThreadLocalStorage(RTS_HANDLE hKey, void *pData) =0;
+		virtual void * CDECL ISysTaskGetThreadLocalStorage(RTS_HANDLE hKey, RTS_RESULT *pResult) =0;
+		virtual RTS_RESULT CDECL ISysTaskLock(void) =0;
+		virtual RTS_RESULT CDECL ISysTaskUnlock(void) =0;
 };
 	#ifndef ITF_SysTask
 		#define ITF_SysTask static ISysTask *pISysTask = NULL;

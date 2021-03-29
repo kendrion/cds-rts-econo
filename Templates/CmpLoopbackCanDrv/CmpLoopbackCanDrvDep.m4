@@ -3,7 +3,7 @@
  *  <description> 
  *  </description>
  *  <copyright>
- *  Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ *  Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
 SET_COMPONENT_NAME(`CmpLoopbackCanDrv')
@@ -11,7 +11,7 @@ COMPONENT_SOURCES(`CmpLoopbackCanDrv.c')
 #define CMPID_CmpLoopbackCanDrv 0x2000
 
 
-COMPONENT_VERSION(`0x03050E00')
+COMPONENT_VERSION(`0x03051000')
 COMPONENT_VENDORID(`RTS_VENDORID_3S')
 
 #include "CmpStd.h"

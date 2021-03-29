@@ -22,6 +22,13 @@
 #   - append LDFLAGS by setting "Platforms/Linux/LDFLAGS_FEATURES" (addListItem) -> use in features
 #   - remove LDFLAGS by setting "Platforms/Linux/LDFLAGS_FILTER"   (addListItem) -> use in features/profiles
 #
+# - CMPLDFLAGS:
+#   - append CMPLDFLAGS by setting "Platforms/Linux/CMPLDFLAGS_APPEND" (addListItem) -> use in profiles
+#   HINT: this is used for the linking stage for components
+#
+# - COMPILER_DEFINES:
+#   - append global COMPILER_DEFINES by setting "Platforms/All/COMPILER_DEFINES"	(addListItem)	-> use in profiles and features
+#
 # - CompilePrefix:
 #   - set prefix for crosscompiler via "Platforms/Linux/CompilePrefix" (setValue) -> use in profiles
 #
@@ -36,7 +43,7 @@
 #
 # - QTLibPrefix:
 #	- set Qt library prefix QTLibPrefix via "visualization/Linux/QTLibPrefix" (setValue) -> use in features/profiles
-#	  The default value is "Qt" and is used in QT_LIBS to link Qt libraries. 
+#	  The default value is "Qt" and is used in QT_LIBS to link Qt libraries.
 #
 # - QT_LIBS:
 #   - overload !all! QT_LIBS by setting "Platforms/Linux/QT_LIBS"  (setValue)    -> use in profiles
@@ -59,7 +66,7 @@
 #     set "Platforms/Linux/InputfilesAssessed" to a valid path to enable the check
 #     <setValue valueName="Platforms/Linux/InputfilesAssessed" value="/customer/3s/toolchain-amd64-stretch/inputfiles.assessed.txt" />
 #     then the build creates an additional file "inputfiles.checked.txt" with check results for all inputfiles
-#     
+#
 #
 #
 #############################################################################################
@@ -68,7 +75,7 @@ TARGET= codesyscontrol codesyscontrol.a
 
 #############################################################################################
 # section tools:
-COMPILE_PREFIX=/customer/kendrion_kuhnke/toolchains/2019_03_27/fs-toolchain-5.2.0-armv7ahf/bin/arm-linux-
+COMPILE_PREFIX=/opt/kendion_kuhnke/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-
 CC=${COMPILE_PREFIX}gcc
 CXX=${COMPILE_PREFIX}g++
 LD=${COMPILE_PREFIX}ld
@@ -78,96 +85,118 @@ AS=${COMPILE_PREFIX}as
 #############################################################################################
 # section includes:
 CFLAGS+= -I. -I../ -I../../../Components -I../Components
-CFLAGS+=-I../../../Components__CONFIDENTIAL__/CmpCodeMeter 
-CFLAGS+=-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/asn1\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/base\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/base_defs\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/bci\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/box\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/box/fileio\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/box/hid\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/box/spi\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/cert\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/cmact\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/cmact_lt\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/cmlan\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/coreapi\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/corecm\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/crypto_algorithms\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/file_handling\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/pkcs7\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/posix\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/wibucert\
--I../../../Components/CmpOpenSSL\
--I../../../Components/CmpOpenSSL/OpenSSL/include\
--I../../../Components/CmpOpenSSL/OpenSSL\
--I../../../Components/CmpOpenSSL/OpenSSL/crypto\
--I../../../Components/CmpOpenSSL/OpenSSL/crypto/asn1\
--I../../../Components/CmpOpenSSL/OpenSSL/crypto/evp\
--I../../../Components/CmpOpenSSL/OpenSSL/crypto/modes\
--I../../../Components/CmpOpenSSL/OpenSSL/crypto/des\
--I../../../Components/CmpOpenSSL/OpenSSL/ssl\
--I../../../Components__AddOns__/CmpOPCUAStack\
--I../../../Components__AddOns__/CmpOPCUAStack/CODESYSControlV3\
--I../../../Components__CONFIDENTIAL__/CmpOPCUA/Modified/source/core\
--I../../../Components__CONFIDENTIAL__/CmpOPCUA/Modified/source/proxystub/clientproxy\
--I../../../Components__CONFIDENTIAL__/CmpOPCUA/Modified/source/proxystub/serverstub\
--I../../../Components__CONFIDENTIAL__/CmpOPCUA/Modified/source/securechannel\
--I../../../Components__CONFIDENTIAL__/CmpOPCUA/Modified/source/stackcore\
--I../../../Components__CONFIDENTIAL__/CmpOPCUA/Modified/source/transport/tcp\
--I../../../Components__CONFIDENTIAL__/CmpOPCUA/Modified/source/transport/https\
--I../../../Components__AddOns__/CmpOPCUAProviderIecVarAccess\
+CFLAGS+=-I../../../Components__CONFIDENTIAL__/CmpCodeMeter -I../../../Components__AddOns__/CmpOPCUAStack -I../../../Components/CmpOpenSSL 
+CFLAGS+=-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/asn1\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/base\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/base_defs\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/bci\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/box\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/box/fileio\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/box/hid\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/box/spi\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/cert\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/cmact\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/cmact_lt\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/cmlan\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/coreapi\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/coreapi/cmlan\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/corecm\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/crypto_algorithms\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/file_handling\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/pkcs7\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/posix\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/wibucert\
 -I../../../Components__AddOns__/CmpOPCUAStack/include\
--I../../../Components__AddOns__/CmpOPCUAServer\
--I../../../Components__AddOns__/CmpOPCUAServer/CODESYSControlV3\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/core\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/platforms/CODESYSControlV3\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/platforms/win32\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/proxystub/clientproxy\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/proxystub/serverstub\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/securechannel\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/stackcore\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/transport/tcp\
 -I../../../Components__AddOns__/CmpOPCUAStack/include\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/core\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/platforms/CODESYSControlV3\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/platforms/win32\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/proxystub/clientproxy\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/proxystub/serverstub\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/securechannel\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/stackcore\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/transport/tcp\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/core\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/platforms/CODESYSControlV3\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/platforms/win32\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/proxystub/clientproxy\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/proxystub/serverstub\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/securechannel\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/stackcore\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/transport/tcp\
+-I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40\
+-I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40/crypto/ec/curve448\
+-I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40/crypto/ec/curve448/arch_32\
+-I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40/crypto/modes\
+-I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40/include\
+-I../../../../../../../Contrib/C-sources/expat/tags/rts/3.5.16.30\
+-I../../../../../../../Contrib/C-sources/expat/tags/rts/3.5.16.30/lib\
 
 CXXFLAGS+= -I. -I../ -I../../../Components -I../Components
-CXXFLAGS+=-I../../../Components__CONFIDENTIAL__/CmpCodeMeter 
-CXXFLAGS+=-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/asn1\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/base\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/base_defs\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/bci\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/box\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/box/fileio\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/box/hid\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/box/spi\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/cert\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/cmact\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/cmact_lt\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/cmlan\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/coreapi\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/corecm\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/crypto_algorithms\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/file_handling\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/pkcs7\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/posix\
--I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.13.0/wibucert\
--I../../../Components/CmpOpenSSL\
--I../../../Components/CmpOpenSSL/OpenSSL/include\
--I../../../Components/CmpOpenSSL/OpenSSL\
--I../../../Components/CmpOpenSSL/OpenSSL/crypto\
--I../../../Components/CmpOpenSSL/OpenSSL/crypto/asn1\
--I../../../Components/CmpOpenSSL/OpenSSL/crypto/evp\
--I../../../Components/CmpOpenSSL/OpenSSL/crypto/modes\
--I../../../Components/CmpOpenSSL/OpenSSL/crypto/des\
--I../../../Components/CmpOpenSSL/OpenSSL/ssl\
--I../../../Components__AddOns__/CmpOPCUAStack\
--I../../../Components__AddOns__/CmpOPCUAStack/CODESYSControlV3\
--I../../../Components__CONFIDENTIAL__/CmpOPCUA/Modified/source/core\
--I../../../Components__CONFIDENTIAL__/CmpOPCUA/Modified/source/proxystub/clientproxy\
--I../../../Components__CONFIDENTIAL__/CmpOPCUA/Modified/source/proxystub/serverstub\
--I../../../Components__CONFIDENTIAL__/CmpOPCUA/Modified/source/securechannel\
--I../../../Components__CONFIDENTIAL__/CmpOPCUA/Modified/source/stackcore\
--I../../../Components__CONFIDENTIAL__/CmpOPCUA/Modified/source/transport/tcp\
--I../../../Components__CONFIDENTIAL__/CmpOPCUA/Modified/source/transport/https\
--I../../../Components__AddOns__/CmpOPCUAProviderIecVarAccess\
+CXXFLAGS+=-I../../../Components__CONFIDENTIAL__/CmpCodeMeter -I../../../Components__AddOns__/CmpOPCUAStack -I../../../Components/CmpOpenSSL 
+CXXFLAGS+=-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/asn1\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/base\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/base_defs\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/bci\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/box\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/box/fileio\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/box/hid\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/box/spi\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/cert\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/cmact\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/cmact_lt\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/cmlan\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/coreapi\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/coreapi/cmlan\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/corecm\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/crypto_algorithms\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/file_handling\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/pkcs7\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/posix\
+-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/tags/rts/3.5.16.20/wibucert\
 -I../../../Components__AddOns__/CmpOPCUAStack/include\
--I../../../Components__AddOns__/CmpOPCUAServer\
--I../../../Components__AddOns__/CmpOPCUAServer/CODESYSControlV3\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/core\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/platforms/CODESYSControlV3\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/platforms/win32\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/proxystub/clientproxy\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/proxystub/serverstub\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/securechannel\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/stackcore\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/transport/tcp\
 -I../../../Components__AddOns__/CmpOPCUAStack/include\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/core\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/platforms/CODESYSControlV3\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/platforms/win32\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/proxystub/clientproxy\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/proxystub/serverstub\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/securechannel\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/stackcore\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/transport/tcp\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/core\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/platforms/CODESYSControlV3\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/platforms/win32\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/proxystub/clientproxy\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/proxystub/serverstub\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/securechannel\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/stackcore\
+-I../../../../../../../Contrib/C-sources/UA-AnsiC/tags/rts/3.5.16.40/Stack/transport/tcp\
+-I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40\
+-I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40/crypto/ec/curve448\
+-I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40/crypto/ec/curve448/arch_32\
+-I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40/crypto/modes\
+-I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40/include\
+-I../../../../../../../Contrib/C-sources/expat/tags/rts/3.5.16.30\
+-I../../../../../../../Contrib/C-sources/expat/tags/rts/3.5.16.30/lib\
 
 #############################################################################################
 # section default CFLAGS:
@@ -175,17 +204,17 @@ CFLAGS += -DPATHS_RELATIVE -DTRG_ARM
 CXXFLAGS += -DPATHS_RELATIVE -DTRG_ARM
 CFLAGS_STATIC = -DMIXED_LINK
 # DYNAMIC_LINK may not be set for dynamic components
-CFLAGS_DYNAMIC = 
+CFLAGS_DYNAMIC = -fPIC
 
-CFLAGS += -D_GNU_SOURCE -DCAALib -fno-ident -std=c99 -Wall -Wextra -Wno-unused -Wno-unused-parameter -Wstrict-prototypes -fshort-wchar -fsigned-char -g
+CFLAGS += -D_GNU_SOURCE -DCAALib -DLINUX -fno-ident -std=c99 -Wall -Wextra -Wno-unused -Wno-unused-parameter -Wstrict-prototypes -fshort-wchar -fsigned-char -g
 
-CXXFLAGS += -D_GNU_SOURCE -DCAALib -fno-ident -std=c++98 -Wall -Wno-unused -Wno-unused-parameter -fshort-wchar -fsigned-char -g -Wno-write-strings -DLINUX 
+CXXFLAGS += -D_GNU_SOURCE -DCAALib -fno-ident -std=c++98 -Wall -Wno-unused -Wno-unused-parameter -fshort-wchar -fsigned-char -g -Wno-write-strings -DLINUX
 CXXFLAGS += -DSTDCALL= -DCDECL= -D_REENTRANT= -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS
 #CXXFLAGS += -DNO_PI_MUTEXES -DNO_FENV -DNO_RS485_SUPPORT
 
 
 CFLAGS += -O0
-CXXFLAGS += -O0 
+CXXFLAGS += -O0
 
 #############################################################################################
 # section profile CFLAGS (appended):
@@ -195,16 +224,10 @@ CXXFLAGS += -O0
 
 #############################################################################################
 # section profile CFLAGS (appended from list):
-CFLAGS += -B/customer/kendrion_kuhnke/toolchains/2019_03_27/fs-toolchain-5.2.0-armv7ahf/libexec/gcc/arm-fs-linux-gnueabihf/5.2.0
-CFLAGS += -B/customer/kendrion_kuhnke/toolchains/2019_03_27/fs-toolchain-5.2.0-armv7ahf/bin
-CFLAGS += --sysroot=/customer/kendrion_kuhnke/toolchains/2019_03_27/fs-toolchain-5.2.0-armv7ahf/arm-fs-linux-gnueabihf/sysroot
-CFLAGS += -I/customer/kendrion_kuhnke/toolchains/2019_03_27/fs-toolchain-5.2.0-armv7ahf/arm-fs-linux-gnueabihf/sysroot/usr/include
-CFLAGS += -I/customer/kendrion_kuhnke/toolchains/2019_03_27/fs-toolchain-5.2.0-armv7ahf/lib/gcc/arm-fs-linux-gnueabihf/5.2.0/include-fixed
-CFLAGS += -D__linux__
-CFLAGS += -fshort-wchar
-CFLAGS += -mapcs
-CFLAGS += -std=c99
-CFLAGS += -I../visu/
+CFLAGS += --sysroot=/opt/kendion_kuhnke/sysroots/cortexa9hf-neon-poky-linux-gnueabi
+CFLAGS += -march=armv7-a -mfpu=neon -mfloat-abi=hard -mcpu=cortex-a9
+CFLAGS += -O2 -pipe -g -feliminate-unused-debug-types
+CFLAGS += -DHAVE_SYSMACROS_H
 
 #############################################################################################
 # section profile CXXFLAGS (appended from list):
@@ -223,22 +246,27 @@ CFLAGS +=
 # section component CXXFLAGS (appended from list):
 CXXFLAGS +=
 #############################################################################################
+# section profile global COMPILER_DEFINES (appended from list):
+
+#############################################################################################
 # section LDFLAGS (default or overloaded):
 LDFLAGS += -lm -lpthread -ldl -lrt
 
 #############################################################################################
 # section profile LDFLAGS (appended from list):
-LDFLAGS += -B/customer/kendrion_kuhnke/toolchains/2019_03_27/fs-toolchain-5.2.0-armv7ahf/libexec/gcc/arm-fs-linux-gnueabihf/5.2.0
-LDFLAGS += -B/customer/kendrion_kuhnke/toolchains/2019_03_27/fs-toolchain-5.2.0-armv7ahf/bin
-LDFLAGS += --sysroot=/customer/kendrion_kuhnke/toolchains/2019_03_27/fs-toolchain-5.2.0-armv7ahf/arm-fs-linux-gnueabihf/sysroot
-LDFLAGS += -L/customer/kendrion_kuhnke/toolchains/2019_03_27/fs-toolchain-5.2.0-armv7ahf/arm-fs-linux-gnueabihf/sysroot/lib
-LDFLAGS += -L/customer/kendrion_kuhnke/toolchains/2019_03_27/fs-toolchain-5.2.0-armv7ahf/arm-fs-linux-gnueabihf/sysroot/usr/lib
-LDFLAGS += -B/customer/kendrion_kuhnke/toolchains/2019_03_27/fs-toolchain-5.2.0-armv7ahf/arm-fs-linux-gnueabihf/sysroot/usr/lib
-LDFLAGS += -Wl,--allow-shlib-undefined
-LDFLAGS +=  -Wl,-no-wchar-size-warning
+LDFLAGS += --sysroot=/opt/kendion_kuhnke/sysroots/cortexa9hf-neon-poky-linux-gnueabi
+LDFLAGS += -mfloat-abi=hard -Wl,-O1 -Wl,--hash-style=gnu -Wl,--as-needed
+LDFLAGS += -Wl,--allow-shlib-undefined -Wl,--no-wchar-size-warning
 
 #############################################################################################
 # section feature LDFLAGS (appended from list):
+
+
+#############################################################################################
+# section feature CMPLDFLAGS (appended from list):
+
+# implicit for X86
+
 
 #############################################################################################
 # section targetvisu:
@@ -246,10 +274,10 @@ LDFLAGS +=  -Wl,-no-wchar-size-warning
 #############################################################################################
 # section static CFLAGS (Cmp<XYZ>_EXTERNAL):
 # In the runtime build, set the define XXX_EXTERNAL for every optional, dynamic component:
-CFLAGS_STATIC  += -DLINUX 
+CFLAGS_STATIC  += 
 #############################################################################################
 # section static and dynamic componentlists:
-COMPONENTS_STATIC += CmpUserDB.cmp.o CmpTraceMgr.cmp.o CmpBinTagUtil.cmp.o CmpIecTask.cmp.o CmpAsyncMgr.cmp.o CmpCAAAsyncMan.cmp.o CmpAppBP.cmp.o CmpNameServiceClientIec.cmp.o CmpEL6751CanDrv.cmp.o CmpRouter.cmp.o SysTarget.cmp.o SysSocket.cmp.o CmpDevice.cmp.o SysMutex.cmp.o CmpCAARealTimeClock.cmp.o SysSem.cmp.o CmpChannelClient.cmp.o SysProcess.cmp.o SysFile.cmp.o CmpCryptMD5.cmp.o CmpIoMgr.cmp.o SysInternalLib.cmp.o CmpCAASdoServer.cmp.o CmpCAATickUtil.cmp.o CmpBlkDrvTcp.cmp.o SysShm.cmp.o SysOut.cmp.o SysCpuHandling.cmp.o CmpApp.cmp.o CmpNameServiceServer.cmp.o SysEthernet.cmp.o CmpCAATick.cmp.o SysSemCount.cmp.o CmpCommunicationLib.cmp.o CmpCharDevice.cmp.o SysCom.cmp.o CmpCAASegBufferMan.cmp.o CmpCoreDump.cmp.o SysDir.cmp.o CmpSrv.cmp.o CmpCAADTUtil.cmp.o CmpCodeMeter.cmp.o SysTimer.cmp.o CmpRetain.cmp.o CmpUserMgr.cmp.o SysMem.cmp.o SysMsgQ.cmp.o CmpSettings.cmp.o CmpPlcShell.cmp.o CmpAppForce.cmp.o CmpAlarmManager.cmp.o CmpBinTagUtilIec.cmp.o CmpMonitor2.cmp.o CmpSchedule.cmp.o CmpChannelServer.cmp.o SysTask.cmp.o SysModule.cmp.o CmpFileTransfer.cmp.o CmpCAAFile.cmp.o SysExcept.cmp.o CmpCAAMemBlockMan.cmp.o CmpChecksum.cmp.o CmpCAACanL2.cmp.o SysCpuMultiCore.cmp.o CmpMemPool.cmp.o CM.cmp.o SysTimeRtc.cmp.o CmpUserDBObjects.cmp.o CmpCAANetBaseServices.cmp.o CmpCAASerialCom.cmp.o CmpCAATimer.cmp.o CmpOpenSSL.cmp.o SysEvent.cmp.o CmpNameServiceClient.cmp.o CmpIecVarAccess.cmp.o CmpLog.cmp.o CmpSecurityManager.cmp.o CmpOPCUAStack.cmp.o CmpOPCUAProviderIecVarAccess.cmp.o CmpIoDrvIec.cmp.o CmpCAATypes.cmp.o CmpChannelClientIec.cmp.o CmpCAABehaviourModel.cmp.o CmpCAASdoClient.cmp.o SysSemProcess.cmp.o CmpBlkDrvUdp.cmp.o CmpEventMgr.cmp.o CmpChannelMgr.cmp.o CmpSecureChannel.cmp.o CmpCAACallback.cmp.o CmpCAAStorage.cmp.o CmpOPCUAServer.cmp.o SysTime.cmp.o 
+COMPONENTS_STATIC += CM.cmp.o CmpAlarmManager.cmp.o CmpApp.cmp.o CmpAppBP.cmp.o CmpAppForce.cmp.o CmpAsyncMgr.cmp.o CmpBinTagUtil.cmp.o CmpBinTagUtilIec.cmp.o CmpBlkDrvTcp.cmp.o CmpBlkDrvUdp.cmp.o CmpCAAAsyncMan.cmp.o CmpCAABehaviourModel.cmp.o CmpCAACallback.cmp.o CmpCAACanL2.cmp.o CmpCAADTUtil.cmp.o CmpCAAFile.cmp.o CmpCAAMemBlockMan.cmp.o CmpCAANetBaseServices.cmp.o CmpCAARealTimeClock.cmp.o CmpCAASdoClient.cmp.o CmpCAASdoServer.cmp.o CmpCAASegBufferMan.cmp.o CmpCAASerialCom.cmp.o CmpCAAStorage.cmp.o CmpCAATick.cmp.o CmpCAATickUtil.cmp.o CmpCAATimer.cmp.o CmpCAATypes.cmp.o CmpChannelClient.cmp.o CmpChannelClientIec.cmp.o CmpChannelMgr.cmp.o CmpChannelServer.cmp.o CmpCharDevice.cmp.o CmpChecksum.cmp.o CmpCodeMeter.cmp.o CmpCommunicationLib.cmp.o CmpCoreDump.cmp.o CmpCryptMD5.cmp.o CmpDevice.cmp.o CmpEL6751CanDrv.cmp.o CmpEventMgr.cmp.o CmpFileTransfer.cmp.o CmpIecStringUtils.cmp.o CmpIecTask.cmp.o CmpIecVarAccess.cmp.o CmpIoDrvIec.cmp.o CmpIoMgr.cmp.o CmpLog.cmp.o CmpMemPool.cmp.o CmpMonitor2.cmp.o CmpNameServiceClient.cmp.o CmpNameServiceClientIec.cmp.o CmpNameServiceServer.cmp.o CmpOPCUAProviderIecVarAccess.cmp.o CmpOPCUAServer.cmp.o CmpOPCUAStack.cmp.o CmpOpenSSL.cmp.o CmpPlcShell.cmp.o CmpRetain.cmp.o CmpRouter.cmp.o CmpSchedule.cmp.o CmpSecureChannel.cmp.o CmpSecurityManager.cmp.o CmpSessionInformation.cmp.o CmpSettings.cmp.o CmpSocketCanDrv.cmp.o CmpSrv.cmp.o CmpTraceMgr.cmp.o CmpUserDBFile.cmp.o CmpUserGroupsDBFile.cmp.o CmpUserMgr.cmp.o CmpUserObjectsDBFile.cmp.o CmpXMLParser.cmp.o SysCom.cmp.o SysCpuHandling.cmp.o SysCpuMultiCore.cmp.o SysDir.cmp.o SysEthernet.cmp.o SysEvent.cmp.o SysExcept.cmp.o SysFile.cmp.o SysInternalLib.cmp.o SysMem.cmp.o SysModule.cmp.o SysMsgQ.cmp.o SysMutex.cmp.o SysOut.cmp.o SysProcess.cmp.o SysSem.cmp.o SysSemCount.cmp.o SysSemProcess.cmp.o SysShm.cmp.o SysSocket.cmp.o SysTarget.cmp.o SysTask.cmp.o SysTime.cmp.o SysTimeRtc.cmp.o SysTimer.cmp.o 
 COMPONENTS_DYNAMIC += 
 #############################################################################################
 # section linux platform objects
@@ -324,9 +352,11 @@ OBJECTS_DYNAMIC_SysNativeControl=../Sys/SysNativeControlLinux.so.o
 OBJECTS_STATIC_SysNativeCommonControls=../Sys/SysNativeCommonControlsLinux.a.o ../visu/SysNativeCommonControlsLinuxQt.app.o
 OBJECTS_DYNAMIC_SysNativeCommonControls=../Sys/SysNativeCommonControlsLinux.so.o ../visu/SysNativeCommonControlsLinuxQt.app.o
 
-
 OBJECTS_STATIC_SysCpuHandling=../Sys/SysCpuHandlingLinux.a.o ../Sys/SysCpuARM.a.o
 OBJECTS_DYNAMIC_SysCpuHandling=../Sys/SysCpuHandlingLinux.so.o ../Sys/SysCpuARM.so.o
+
+#############################################################################################
+# section profile/feature Additional objects for main binary (appended from list):
 
 #############################################################################################
 # input file assessment
@@ -334,6 +364,9 @@ TRACEFILE=inputfiles.txt
 
 TRACE?=0
 
+#############################################################################################
+# component optimization
+CmpOpenSSL.cmp.o: CFLAGS := $(subst -O0,-O2 -fno-guess-branch-probability,${CFLAGS})
 
 #############################################################################################
 # section CFLAGS, LDFLAGS and QT_LIBS modification:

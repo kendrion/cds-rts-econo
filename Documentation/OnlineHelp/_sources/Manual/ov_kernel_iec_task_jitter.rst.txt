@@ -1,0 +1,68 @@
+.. _ov_kernel_iec_task_jitter:
+
+Jitter of IEC Tasks
+~~~~~~~~~~~~~~~~~~~
+
+Definition of Terms
+...................
+
+**Latency** is the delay between the invocation of a task and the actual start of its execution (release).
+
+**The release jitter** is quantified by the difference between the maximum and minimum latency for all task calls.
+
+J_r is defined as L_max – L_min.
+
+In the case that L_max = L_min, the release jitter J_r of 0 results. This would correspond to a plain offset shift.
+
+**Periodic jitter**: J_per = T_per - T0
+
+In this case, T_per is the period duration of the task and T0 is the ideal period duration.
+
+Period jitter is the deviation of the cycle time of a task from the ideal period over a number of randomly selected cycles. When we are given a number of individual task periods, we can measure each one and calculate the average task period as well as the standard deviation and peak-to-peak value.
+
+Positive and negative values can occur in the case of the periodic jitter J_per. To prevent drift, the sum of all negative J_per values and the sum of all positive J_per values have to balance each other.
+
+**Jitter based on the deviation of the actual from the scheduled task start time**
+
+J_err_t = t_r – t_r_planned
+
+In this case, t_r is the task release time and t_r_planned is the planned task start time.
+
+The planned task start time t_r_planned corresponds to the time of invocation plus the expected ideal (jitter-free) latency.
+
+J_err_t is the deviation of the task start time from the scheduled task start time.
+
+Positive and negative values can occur in the case of  J_err_t.
+
+**Jitter based on the deviation of the current task start time from the target task start time based on the task start time with the maximum negative periodic jitter**
+
+As soon as a negative periodic jitter occurs, its task start time is used as the basis (= reference value) for all future target task start times. Until a negative periodic jitter occurs again, its task start time replaces the previous reference value. (As long as no negative periodic jitter has occurred, the first task start time is the reference value.)
+
+.. |U_DOT| unicode:: U+22C5 .. multiplication dot
+
+J_t_r_min = t_r - (t_r_min + n |U_DOT| T0)
+
+In this case, t_r is the current release time of the task, t_r_min is the task start time with the maximum negative periodic jitter, n |U_DOT| T0 is a multiple of the ideal period duration, and n is the number of cycles that have elapsed since setting the reference value t_r_min.
+
+J_t_r_min is the deviation of the actual task start time from the target task start time based on the task start time with the maximum negative periodic jitter.
+
+For J_t_r_min, negative values are the exception.
+
+Diagnostics
+...........
+
+IEC Task Jitter System Trace
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+If the SysCpuMultiCore and CmpTraceMgr components are integrated in the runtime system, there will be created a system trace (= device trace), which can be upload in CODESYS to see the IEC task jitter as a trace.
+
+To enable this, you have to add the following setting into your runtime configuration file (.cfg file):
+
+|
+
+    .. code-block:: C
+    
+        [CmpIecTask]
+        EnableTaskTrace=1
+
+To see the trace, you have to add a trace object under your device in CODESYS and with the command "upload" you can upload and start the trace with the name "IecTaskJitter.<AppName>.<TaskName>".

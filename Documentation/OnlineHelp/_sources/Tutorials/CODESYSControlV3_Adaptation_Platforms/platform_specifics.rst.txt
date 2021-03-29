@@ -1,0 +1,173 @@
+.. _platform_specifics:
+
+Platform specifics
+==================
+
+This chapter contains information about specifics of standard platforms.
+
+Build
+-----
+
+Linux
+~~~~~~~
+
+A toolchain must be provided to 3S, to be able to build the runtime.
+
+VxWorks
+~~~~~~~
+
+VxWorks runtime is delivered as a binary in several configurations, e.g.
+floating point support, PCI support, and interrupt support. The
+toolchain supported is GNU.
+
+CANopen
+-------
+
+To support CANopen fieldbus stack and communication, a CANMini driver is
+needed. On some platform, this driver is already available. In case a
+standard driver is not available for a platform, it has to be developed.
+
+
+Linux
+~~~~~
+
+A driver based on SocketCAN is included in the runtime toolkit.
+
+The SocketCAN driver must be installed and tested by the OEM.
+
+Windows CE
+~~~~~~~~~~
+
+A driver for SJA1000 controllers is available, the driver works with
+several PCI cards (Peak, Automata, … ) or can be configured through the
+settings file for systems without PCI.
+
+
+VxWorks
+~~~~~~~
+
+No standard driver available.
+
+QNX
+~~~
+
+No standard driver available.
+
+RTE
+~~~
+
+A driver for SJA1000 controllers is available, the driver works with
+several PCI cards (Peak, Automata, …) or can be configured through the
+settings file for systems without PCI.
+
+For cards currently not supported, please contact 3S.
+
+EtherCAT
+--------
+
+To support the EtherCAT fieldbus stack, an Ethernet driver is needed. On
+some platforms, this driver is already available:
+
+Linux, QNX
+~~~~~~~~~~
+
+No specific requirements.
+
+
+Windows CE
+~~~~~~~~~~
+
+| An NDIS based component for handling Ethernet frames is included with
+  the runtime system.
+| It is possible to replace this solution by a customer-specific driver
+  with direct access to the Ethernet controller, to achieve better
+  realtime behavior.
+
+For SoftMotion applications, the OEM has to extend the CE kernel by a
+microsecond timer (without this timer, EtherCAT distributed clocks and
+the entire SoftMotion cannot work).
+
+
+VxWorks
+~~~~~~~
+
+No specific requirements.
+
+
+RTE
+~~~
+
+Drivers for some cards (RTL8139, 8169, and compatible, and all Intel
+PRO100, PRO1000 based cards) are available.
+
+Target Visualization
+--------------------
+
+Linux, QNX
+~~~~~~~~~~
+          
+Qt Version 4 is required. These directories of the configured Qt
+installation have to be supplied to 3S:
+
+   - bin
+
+   - include
+
+   - lib
+
+
+Windows CE
+~~~~~~~~~~
+
+The CODESYS targetvisu uses the native GDI of Windows CE.
+
+Some features are not supported by the standard GDI, so they are only
+supported if the specific CE system provides additional functionality.
+This concerns ActiveX Controls, pictures in PNG format and gradient
+coloring.
+
+
+VxWorks
+~~~~~~~
+
+Frame buffer solution available. Adaptation by OEM required.
+
+
+RTE
+~~~
+
+No specific requirements.
+
+Web visualization
+-----------------
+
+The runtime contains a web server so that a Web client on a remote
+system like a PC or any other device with a browser supporting HTML5 can
+display the web visualization.
+
+
+Linux, QNX
+~~~~~~~~~~
+
+No specific requirements.
+
+
+Windows CE
+~~~~~~~~~~
+
+A different use case concerns Windows CE systems which should display
+the web visualization themselves!! In this case, the CE system cannot
+use the standard browser because of missing HTML5 support. The OEM has
+to include a HMTL5 browser in his system, e.g. web kit.
+
+
+VxWorks
+~~~~~~~
+
+No specific requirements.
+
+
+RTE
+~~~
+
+No specific requirements.

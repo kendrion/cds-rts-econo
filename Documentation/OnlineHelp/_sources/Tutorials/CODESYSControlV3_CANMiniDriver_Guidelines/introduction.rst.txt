@@ -1,0 +1,31 @@
+.. _introduction:
+
+Introduction
+============
+
+| CODESYS V3 provides a generic CAN L2 (CL2) layer for accessing the
+  CANbus.
+| It implements hardware-independent functions for both sending and
+  receiving messages and CANbus diagnosis. These functions are
+  accessible from C as well as IEC. All CAN-based I/O drivers (e.g.
+  CANopen Stack, J1939 Stack) are based on this layer.
+| The concrete access to the respective CAN chip is implemented by
+  CANMiniDrivers. At runtime start, a CANMiniDriver registers each CAN
+  interface at the CL2 layer.
+| Here a unique Network ID will be assigned and used for addressing the
+  interface later.
+| CODESYS V3 already provides ready-to-use CANMiniDriver implementations
+  for SJA 1000 (RTE), PCAN Basic (Control Win), SocketCAN (Linux), and
+  EL6751 (EtherCAT/CAN Gateway).
+| For other CAN chips and platforms, a specific CANMiniDriver component
+  has to be implemented.
+| This document serves as an implementation guideline for CANMiniDrivers
+  and describes basic concepts.
+
+
+|image1|
+  
+Figure 1: Overview
+
+.. |image1| image:: images/image1.png
+   :scale: 70

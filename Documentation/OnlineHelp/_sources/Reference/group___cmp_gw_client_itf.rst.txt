@@ -1,0 +1,2064 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_gw_client_itf:
+
+==============
+CmpGwClientItf
+==============
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpGwClient.
+
+Detailed Description
+--------------------
+
+Interface of the gateway client as an entry point in the PLC network.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Settings <group___cmp_gw_client_itf___settings>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpGwClient_C <struct_i_cmp_gw_client___c>`
+
+Macros
+------
+
+- #define :ref:`USE_GWClientRegisterCommDrv <group___cmp_gw_client_itf_1gaa94a97362d1161d7e6d87cdb84e81afe>` :ref:`PFGWCLIENTREGISTERCOMMDRV <group___cmp_gw_client_itf_1ga27fc3425334d09f4a14902196c4a3c85>` pfGWClientRegisterCommDrv;
+
+- #define :ref:`EXT_GWClientRegisterCommDrv <group___cmp_gw_client_itf_1ga4d64016cb2b3fbb6de98b97eb9cd8537>` extern :ref:`PFGWCLIENTREGISTERCOMMDRV <group___cmp_gw_client_itf_1ga27fc3425334d09f4a14902196c4a3c85>` pfGWClientRegisterCommDrv;
+
+- #define :ref:`GET_GWClientRegisterCommDrv <group___cmp_gw_client_itf_1ga88c7b036cb313c4c700ff7e52ca5c7c4>` s_pfCMGetAPI2( "GWClientRegisterCommDrv", (RTS_VOID_FCTPTR *)&pfGWClientRegisterCommDrv, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientRegisterCommDrv <group___cmp_gw_client_itf_1gae2aa5718a8ac2bb4dfeddb9a2c7a7b05>` pfGWClientRegisterCommDrv
+
+- #define :ref:`CHK_GWClientRegisterCommDrv <group___cmp_gw_client_itf_1ga75f9d7120a8df70606505f1ce44cc8f6>` (pfGWClientRegisterCommDrv != NULL)
+
+- #define :ref:`EXP_GWClientRegisterCommDrv <group___cmp_gw_client_itf_1ga91da244d2fb4e5fddd4f9f6190e4aa3b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientRegisterCommDrv", (RTS_UINTPTR) :ref:`GWClientRegisterCommDrv <group___cmp_gw_client_itf_1gab413c42037c31a13672077f759a3327a>` , 0, 0)
+
+- #define :ref:`USE_GWClientConnectionReady <group___cmp_gw_client_itf_1ga19639098824524d19aa88992bf23c061>` :ref:`PFGWCLIENTCONNECTIONREADY <group___cmp_gw_client_itf_1ga6fcb4901fd6f86041c8b39f2da991d92>` pfGWClientConnectionReady;
+
+- #define :ref:`EXT_GWClientConnectionReady <group___cmp_gw_client_itf_1ga3bf128ee608fe776e4372e4ad7d2a304>` extern :ref:`PFGWCLIENTCONNECTIONREADY <group___cmp_gw_client_itf_1ga6fcb4901fd6f86041c8b39f2da991d92>` pfGWClientConnectionReady;
+
+- #define :ref:`GET_GWClientConnectionReady <group___cmp_gw_client_itf_1ga4f6a125b1f3cf81ddd29eea85c68c102>` s_pfCMGetAPI2( "GWClientConnectionReady", (RTS_VOID_FCTPTR *)&pfGWClientConnectionReady, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientConnectionReady <group___cmp_gw_client_itf_1ga5f8832bd880dd2551999638c50d66958>` pfGWClientConnectionReady
+
+- #define :ref:`CHK_GWClientConnectionReady <group___cmp_gw_client_itf_1ga757480a61dc7017dedb7c3ea44d051ee>` (pfGWClientConnectionReady != NULL)
+
+- #define :ref:`EXP_GWClientConnectionReady <group___cmp_gw_client_itf_1gae5ad8506580d8ac3565ee021cbd6764a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientConnectionReady", (RTS_UINTPTR) :ref:`GWClientConnectionReady <group___cmp_gw_client_itf_1gac7dfdcc5f37e9b702c66730eae5c73d1>` , 0, 0)
+
+- #define :ref:`USE_GWClientGetInterfaceVersion <group___cmp_gw_client_itf_1ga21b5bf27560a162b6386f037c6015815>` :ref:`PFGWCLIENTGETINTERFACEVERSION <group___cmp_gw_client_itf_1ga87ed1cbc61aef8965c5a386582aa3f45>` pfGWClientGetInterfaceVersion;
+
+- #define :ref:`EXT_GWClientGetInterfaceVersion <group___cmp_gw_client_itf_1ga347debfdf435b3efc322ff532d29fac2>` extern :ref:`PFGWCLIENTGETINTERFACEVERSION <group___cmp_gw_client_itf_1ga87ed1cbc61aef8965c5a386582aa3f45>` pfGWClientGetInterfaceVersion;
+
+- #define :ref:`GET_GWClientGetInterfaceVersion <group___cmp_gw_client_itf_1gaa5f93d4c69eaa19e9850af568a2726b4>` s_pfCMGetAPI2( "GWClientGetInterfaceVersion", (RTS_VOID_FCTPTR *)&pfGWClientGetInterfaceVersion, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientGetInterfaceVersion <group___cmp_gw_client_itf_1ga109b38b3f49b74582c96a869fd609fc4>` pfGWClientGetInterfaceVersion
+
+- #define :ref:`CHK_GWClientGetInterfaceVersion <group___cmp_gw_client_itf_1gaa554dc43a62bc72f8a1c4784d21f8d87>` (pfGWClientGetInterfaceVersion != NULL)
+
+- #define :ref:`EXP_GWClientGetInterfaceVersion <group___cmp_gw_client_itf_1gac17c8264ad216a6a8160ef4d62b954fd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientGetInterfaceVersion", (RTS_UINTPTR) :ref:`GWClientGetInterfaceVersion <group___cmp_gw_client_itf_1ga1a47fa582bd621084d90b7e93efe7fdc>` , 0, 0)
+
+- #define :ref:`USE_GWClientEnumCommDrivers <group___cmp_gw_client_itf_1ga46958c87c6ef87dc8b69ca35b6db0ff1>` :ref:`PFGWCLIENTENUMCOMMDRIVERS <group___cmp_gw_client_itf_1gad2cea7c0b5eb974673b4f57172449610>` pfGWClientEnumCommDrivers;
+
+- #define :ref:`EXT_GWClientEnumCommDrivers <group___cmp_gw_client_itf_1ga1f373f5d7dd235a0964378fd16a3c76e>` extern :ref:`PFGWCLIENTENUMCOMMDRIVERS <group___cmp_gw_client_itf_1gad2cea7c0b5eb974673b4f57172449610>` pfGWClientEnumCommDrivers;
+
+- #define :ref:`GET_GWClientEnumCommDrivers <group___cmp_gw_client_itf_1gac2ac6649d5c0ff8ed2804379a7b3df84>` s_pfCMGetAPI2( "GWClientEnumCommDrivers", (RTS_VOID_FCTPTR *)&pfGWClientEnumCommDrivers, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientEnumCommDrivers <group___cmp_gw_client_itf_1gafe43c79722228ad1eca7650261262be4>` pfGWClientEnumCommDrivers
+
+- #define :ref:`CHK_GWClientEnumCommDrivers <group___cmp_gw_client_itf_1ga45247710286c51ce70dfa1e29e8cdb07>` (pfGWClientEnumCommDrivers != NULL)
+
+- #define :ref:`EXP_GWClientEnumCommDrivers <group___cmp_gw_client_itf_1ga9ccf4c7a7b7111ad22dff02b044d8288>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEnumCommDrivers", (RTS_UINTPTR) :ref:`GWClientEnumCommDrivers <group___cmp_gw_client_itf_1gabef29312a048de94f37828ba8541dc57>` , 0, 0)
+
+- #define :ref:`USE_GWClientEnumCommDrivers2 <group___cmp_gw_client_itf_1gaf7f8f79401af7a4e456690e35bf3c71f>` :ref:`PFGWCLIENTENUMCOMMDRIVERS2 <group___cmp_gw_client_itf_1ga83bc92ffbb96595a0c7a4b376e7806f7>` pfGWClientEnumCommDrivers2;
+
+- #define :ref:`EXT_GWClientEnumCommDrivers2 <group___cmp_gw_client_itf_1ga7103acddb9924fbb320870555e5fa405>` extern :ref:`PFGWCLIENTENUMCOMMDRIVERS2 <group___cmp_gw_client_itf_1ga83bc92ffbb96595a0c7a4b376e7806f7>` pfGWClientEnumCommDrivers2;
+
+- #define :ref:`GET_GWClientEnumCommDrivers2 <group___cmp_gw_client_itf_1gadec428ea4cb2e8b74757d6c47902aaff>` s_pfCMGetAPI2( "GWClientEnumCommDrivers2", (RTS_VOID_FCTPTR *)&pfGWClientEnumCommDrivers2, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientEnumCommDrivers2 <group___cmp_gw_client_itf_1gab6b2b92eeeb3327a0f41c8e7a4dc8204>` pfGWClientEnumCommDrivers2
+
+- #define :ref:`CHK_GWClientEnumCommDrivers2 <group___cmp_gw_client_itf_1ga16ee3b355739ddac04c5b4da8e97b6dc>` (pfGWClientEnumCommDrivers2 != NULL)
+
+- #define :ref:`EXP_GWClientEnumCommDrivers2 <group___cmp_gw_client_itf_1gab0c38d34443f8732b88456f8424128ed>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEnumCommDrivers2", (RTS_UINTPTR) :ref:`GWClientEnumCommDrivers2 <group___cmp_gw_client_itf_1gab3f9caa1f5412f548f9b655d334802e2>` , 0, 0)
+
+- #define :ref:`USE_GWClientBeginConnectToGateway <group___cmp_gw_client_itf_1gae88e3e20d500d6f67b68155cded75408>` :ref:`PFGWCLIENTBEGINCONNECTTOGATEWAY <group___cmp_gw_client_itf_1ga3217b4eed69a9fd6aec186f3ffd9e83a>` pfGWClientBeginConnectToGateway;
+
+- #define :ref:`EXT_GWClientBeginConnectToGateway <group___cmp_gw_client_itf_1ga683705c98f267071c6f1335b88ed685f>` extern :ref:`PFGWCLIENTBEGINCONNECTTOGATEWAY <group___cmp_gw_client_itf_1ga3217b4eed69a9fd6aec186f3ffd9e83a>` pfGWClientBeginConnectToGateway;
+
+- #define :ref:`GET_GWClientBeginConnectToGateway <group___cmp_gw_client_itf_1gade240d24f310a5d8c792be4e3f3beaea>` s_pfCMGetAPI2( "GWClientBeginConnectToGateway", (RTS_VOID_FCTPTR *)&pfGWClientBeginConnectToGateway, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientBeginConnectToGateway <group___cmp_gw_client_itf_1gac5a8ddeffba28efe2a85816ecbcbaf4d>` pfGWClientBeginConnectToGateway
+
+- #define :ref:`CHK_GWClientBeginConnectToGateway <group___cmp_gw_client_itf_1gac18e19d593cbe145c28824f0eb02e96b>` (pfGWClientBeginConnectToGateway != NULL)
+
+- #define :ref:`EXP_GWClientBeginConnectToGateway <group___cmp_gw_client_itf_1gad2512713b2bdbbdbaa320a0ffdef940e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginConnectToGateway", (RTS_UINTPTR) :ref:`GWClientBeginConnectToGateway <group___cmp_gw_client_itf_1gae50c53ac66dfd67bc1ee4292972a6910>` , 0, 0)
+
+- #define :ref:`USE_GWClientBeginConnectToGateway2 <group___cmp_gw_client_itf_1ga024d13b3fa482c0516c195460bc01f97>` :ref:`PFGWCLIENTBEGINCONNECTTOGATEWAY2 <group___cmp_gw_client_itf_1gacf36e4c7628047d6d2b9d501f944c16c>` pfGWClientBeginConnectToGateway2;
+
+- #define :ref:`EXT_GWClientBeginConnectToGateway2 <group___cmp_gw_client_itf_1gaede398dc7f3d4dc940d56a0ae82cdc4e>` extern :ref:`PFGWCLIENTBEGINCONNECTTOGATEWAY2 <group___cmp_gw_client_itf_1gacf36e4c7628047d6d2b9d501f944c16c>` pfGWClientBeginConnectToGateway2;
+
+- #define :ref:`GET_GWClientBeginConnectToGateway2 <group___cmp_gw_client_itf_1ga06249f96b58685992e774dd6bb54726e>` s_pfCMGetAPI2( "GWClientBeginConnectToGateway2", (RTS_VOID_FCTPTR *)&pfGWClientBeginConnectToGateway2, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientBeginConnectToGateway2 <group___cmp_gw_client_itf_1ga988391476e21a40f408088f0b5948065>` pfGWClientBeginConnectToGateway2
+
+- #define :ref:`CHK_GWClientBeginConnectToGateway2 <group___cmp_gw_client_itf_1ga7e99bf1b9c617adafc3b34e066041f8e>` (pfGWClientBeginConnectToGateway2 != NULL)
+
+- #define :ref:`EXP_GWClientBeginConnectToGateway2 <group___cmp_gw_client_itf_1gabefb8ac3076fbd99935bef944becad7f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginConnectToGateway2", (RTS_UINTPTR) :ref:`GWClientBeginConnectToGateway2 <group___cmp_gw_client_itf_1ga8e0ddbd6b117af34b4c5b459849f1ce2>` , 0, 0)
+
+- #define :ref:`USE_GWClientEndConnectToGateway <group___cmp_gw_client_itf_1ga4ae6bce577f989a098749dac26043afa>` :ref:`PFGWCLIENTENDCONNECTTOGATEWAY <group___cmp_gw_client_itf_1gaa8b29b54530086551be391a3a2cfc55c>` pfGWClientEndConnectToGateway;
+
+- #define :ref:`EXT_GWClientEndConnectToGateway <group___cmp_gw_client_itf_1gafdfb19d20ce96b8dfab0899aa78a93eb>` extern :ref:`PFGWCLIENTENDCONNECTTOGATEWAY <group___cmp_gw_client_itf_1gaa8b29b54530086551be391a3a2cfc55c>` pfGWClientEndConnectToGateway;
+
+- #define :ref:`GET_GWClientEndConnectToGateway <group___cmp_gw_client_itf_1ga82c2177847b3e71db5635cf8a53a1471>` s_pfCMGetAPI2( "GWClientEndConnectToGateway", (RTS_VOID_FCTPTR *)&pfGWClientEndConnectToGateway, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientEndConnectToGateway <group___cmp_gw_client_itf_1gac1a29692701d862de602110cc3c75b97>` pfGWClientEndConnectToGateway
+
+- #define :ref:`CHK_GWClientEndConnectToGateway <group___cmp_gw_client_itf_1ga4f3a816d04fb9ed4727babc7fbad58be>` (pfGWClientEndConnectToGateway != NULL)
+
+- #define :ref:`EXP_GWClientEndConnectToGateway <group___cmp_gw_client_itf_1ga7d5ba830f8be8183b8ead67b2062f8b8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndConnectToGateway", (RTS_UINTPTR) :ref:`GWClientEndConnectToGateway <group___cmp_gw_client_itf_1gaf32ce0c55e04e6b4fa3fdf3868d8956f>` , 0, 0)
+
+- #define :ref:`USE_GWClientDisconnectFromGateway <group___cmp_gw_client_itf_1ga3c93aaa1c3d07e74fc56538e720546b6>` :ref:`PFGWCLIENTDISCONNECTFROMGATEWAY <group___cmp_gw_client_itf_1ga7e2f5113c0652bcccc0a400a2c6a1a42>` pfGWClientDisconnectFromGateway;
+
+- #define :ref:`EXT_GWClientDisconnectFromGateway <group___cmp_gw_client_itf_1ga43eeb91b71eb7596168735bfeda2a09a>` extern :ref:`PFGWCLIENTDISCONNECTFROMGATEWAY <group___cmp_gw_client_itf_1ga7e2f5113c0652bcccc0a400a2c6a1a42>` pfGWClientDisconnectFromGateway;
+
+- #define :ref:`GET_GWClientDisconnectFromGateway <group___cmp_gw_client_itf_1ga4c398fc981e5e783e937bda67311d93a>` s_pfCMGetAPI2( "GWClientDisconnectFromGateway", (RTS_VOID_FCTPTR *)&pfGWClientDisconnectFromGateway, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientDisconnectFromGateway <group___cmp_gw_client_itf_1ga530277797f33a571e92148d3f3616c68>` pfGWClientDisconnectFromGateway
+
+- #define :ref:`CHK_GWClientDisconnectFromGateway <group___cmp_gw_client_itf_1gad3f4a2c183e7ee5060a7dfebb1789ec6>` (pfGWClientDisconnectFromGateway != NULL)
+
+- #define :ref:`EXP_GWClientDisconnectFromGateway <group___cmp_gw_client_itf_1gaf46df6c703dcea71c098e8383170d17b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientDisconnectFromGateway", (RTS_UINTPTR) :ref:`GWClientDisconnectFromGateway <group___cmp_gw_client_itf_1gab2ef94262cbe8ba2979ca8f95be39659>` , 0, 0)
+
+- #define :ref:`USE_GWClientBeginIncrementalResolveAllNodes <group___cmp_gw_client_itf_1ga8370c4173e1ce0d7dbbd019bee1307ae>` :ref:`PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES <group___cmp_gw_client_itf_1ga53bbb4861e509eb134dcf8d149eb83cb>` pfGWClientBeginIncrementalResolveAllNodes;
+
+- #define :ref:`EXT_GWClientBeginIncrementalResolveAllNodes <group___cmp_gw_client_itf_1gafe667ccb94de712f4d45299ad9277e73>` extern :ref:`PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES <group___cmp_gw_client_itf_1ga53bbb4861e509eb134dcf8d149eb83cb>` pfGWClientBeginIncrementalResolveAllNodes;
+
+- #define :ref:`GET_GWClientBeginIncrementalResolveAllNodes <group___cmp_gw_client_itf_1ga4293501b14eda626b9eadc3938c7373c>` s_pfCMGetAPI2( "GWClientBeginIncrementalResolveAllNodes", (RTS_VOID_FCTPTR *)&pfGWClientBeginIncrementalResolveAllNodes, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientBeginIncrementalResolveAllNodes <group___cmp_gw_client_itf_1ga94dd5526fdbbca952764d5c800a4215b>` pfGWClientBeginIncrementalResolveAllNodes
+
+- #define :ref:`CHK_GWClientBeginIncrementalResolveAllNodes <group___cmp_gw_client_itf_1gae0c79a40a5a4916155b81078d7082bee>` (pfGWClientBeginIncrementalResolveAllNodes != NULL)
+
+- #define :ref:`EXP_GWClientBeginIncrementalResolveAllNodes <group___cmp_gw_client_itf_1gaefacf62d9d7190f04d1048da5ce63af5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginIncrementalResolveAllNodes", (RTS_UINTPTR) :ref:`GWClientBeginIncrementalResolveAllNodes <group___cmp_gw_client_itf_1gae650fcf174cc943af83acf6516c5d28d>` , 0, 0)
+
+- #define :ref:`USE_GWClientBeginIncrementalResolveAllNodes2 <group___cmp_gw_client_itf_1ga992088481f8ed9560a66bb5256ca9999>` :ref:`PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES2 <group___cmp_gw_client_itf_1gaaffed80e69cdc2516f86bcf324531a32>` pfGWClientBeginIncrementalResolveAllNodes2;
+
+- #define :ref:`EXT_GWClientBeginIncrementalResolveAllNodes2 <group___cmp_gw_client_itf_1ga227c187e464f8d96f7366ed9a2768f6a>` extern :ref:`PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES2 <group___cmp_gw_client_itf_1gaaffed80e69cdc2516f86bcf324531a32>` pfGWClientBeginIncrementalResolveAllNodes2;
+
+- #define :ref:`GET_GWClientBeginIncrementalResolveAllNodes2 <group___cmp_gw_client_itf_1ga64b61e2cb2b2e2535a5429e5e2317b59>` s_pfCMGetAPI2( "GWClientBeginIncrementalResolveAllNodes2", (RTS_VOID_FCTPTR *)&pfGWClientBeginIncrementalResolveAllNodes2, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientBeginIncrementalResolveAllNodes2 <group___cmp_gw_client_itf_1ga8581c65ca0486a60dcb66a4582fd4676>` pfGWClientBeginIncrementalResolveAllNodes2
+
+- #define :ref:`CHK_GWClientBeginIncrementalResolveAllNodes2 <group___cmp_gw_client_itf_1gab58b0c08ba145e27583946cdd645c4ae>` (pfGWClientBeginIncrementalResolveAllNodes2 != NULL)
+
+- #define :ref:`EXP_GWClientBeginIncrementalResolveAllNodes2 <group___cmp_gw_client_itf_1ga381ea99f29ae3a180dbb3e2f8856d537>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginIncrementalResolveAllNodes2", (RTS_UINTPTR) :ref:`GWClientBeginIncrementalResolveAllNodes2 <group___cmp_gw_client_itf_1gab73cc1f8f57a9e5bbe275cc64b3aa32d>` , 0, 0)
+
+- #define :ref:`USE_GWClientBeginIncrementalResolveAllNodes3 <group___cmp_gw_client_itf_1gaf218460d1cdb1ddee13c7f230d1ffce0>` :ref:`PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES3 <group___cmp_gw_client_itf_1ga3cd6ceb2d43219ae4c88bae1d9025281>` pfGWClientBeginIncrementalResolveAllNodes3;
+
+- #define :ref:`EXT_GWClientBeginIncrementalResolveAllNodes3 <group___cmp_gw_client_itf_1gad081b78a9aafd84a1a85b40b15d8144e>` extern :ref:`PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES3 <group___cmp_gw_client_itf_1ga3cd6ceb2d43219ae4c88bae1d9025281>` pfGWClientBeginIncrementalResolveAllNodes3;
+
+- #define :ref:`GET_GWClientBeginIncrementalResolveAllNodes3 <group___cmp_gw_client_itf_1ga97ae04c9506b5cfada22a265c9935554>` s_pfCMGetAPI2( "GWClientBeginIncrementalResolveAllNodes3", (RTS_VOID_FCTPTR *)&pfGWClientBeginIncrementalResolveAllNodes3, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientBeginIncrementalResolveAllNodes3 <group___cmp_gw_client_itf_1gad3657f4b3fb9c700713f6d1576d19b60>` pfGWClientBeginIncrementalResolveAllNodes3
+
+- #define :ref:`CHK_GWClientBeginIncrementalResolveAllNodes3 <group___cmp_gw_client_itf_1gaae24738a11a96bd9af442a74a343aef1>` (pfGWClientBeginIncrementalResolveAllNodes3 != NULL)
+
+- #define :ref:`EXP_GWClientBeginIncrementalResolveAllNodes3 <group___cmp_gw_client_itf_1gacf5fd3196dd65c2434a5e82d9518571a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginIncrementalResolveAllNodes3", (RTS_UINTPTR) :ref:`GWClientBeginIncrementalResolveAllNodes3 <group___cmp_gw_client_itf_1ga9c59dffce2413a67633444cfc2e17d27>` , 0, 0)
+
+- #define :ref:`USE_GWClientAdjustIncrementalResolveAllNodesTimeout <group___cmp_gw_client_itf_1ga0e8155018aaaf7bb6f296a96214f9c14>` :ref:`PFGWCLIENTADJUSTINCREMENTALRESOLVEALLNODESTIMEOUT <group___cmp_gw_client_itf_1ga97ab63d849bcf01dd354fe870e3c150d>` pfGWClientAdjustIncrementalResolveAllNodesTimeout;
+
+- #define :ref:`EXT_GWClientAdjustIncrementalResolveAllNodesTimeout <group___cmp_gw_client_itf_1gad1235c3335fc078b2c26ed21464cab11>` extern :ref:`PFGWCLIENTADJUSTINCREMENTALRESOLVEALLNODESTIMEOUT <group___cmp_gw_client_itf_1ga97ab63d849bcf01dd354fe870e3c150d>` pfGWClientAdjustIncrementalResolveAllNodesTimeout;
+
+- #define :ref:`GET_GWClientAdjustIncrementalResolveAllNodesTimeout <group___cmp_gw_client_itf_1gaf8a7b5d085cd618315f5d152412037f7>` s_pfCMGetAPI2( "GWClientAdjustIncrementalResolveAllNodesTimeout", (RTS_VOID_FCTPTR *)&pfGWClientAdjustIncrementalResolveAllNodesTimeout, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientAdjustIncrementalResolveAllNodesTimeout <group___cmp_gw_client_itf_1ga40900f4248ee605997dfaf9a6c803e8c>` pfGWClientAdjustIncrementalResolveAllNodesTimeout
+
+- #define :ref:`CHK_GWClientAdjustIncrementalResolveAllNodesTimeout <group___cmp_gw_client_itf_1gaa8d5a07bee3fdec0c28bab43a2dce8bc>` (pfGWClientAdjustIncrementalResolveAllNodesTimeout != NULL)
+
+- #define :ref:`EXP_GWClientAdjustIncrementalResolveAllNodesTimeout <group___cmp_gw_client_itf_1ga2bbb696872627e047594b7f37ff79196>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientAdjustIncrementalResolveAllNodesTimeout", (RTS_UINTPTR) :ref:`GWClientAdjustIncrementalResolveAllNodesTimeout <group___cmp_gw_client_itf_1ga795a2d3bec0699ae7053aef69ebb57d1>` , 0, 0)
+
+- #define :ref:`USE_GWClientEndIncrementalResolveAllNodes <group___cmp_gw_client_itf_1ga5a720c3d7a11ddc48804eff3e6a18052>` :ref:`PFGWCLIENTENDINCREMENTALRESOLVEALLNODES <group___cmp_gw_client_itf_1ga458f9b4df827e37012446258ebe6df2a>` pfGWClientEndIncrementalResolveAllNodes;
+
+- #define :ref:`EXT_GWClientEndIncrementalResolveAllNodes <group___cmp_gw_client_itf_1ga947dc042f6270474c92c00b37abb5459>` extern :ref:`PFGWCLIENTENDINCREMENTALRESOLVEALLNODES <group___cmp_gw_client_itf_1ga458f9b4df827e37012446258ebe6df2a>` pfGWClientEndIncrementalResolveAllNodes;
+
+- #define :ref:`GET_GWClientEndIncrementalResolveAllNodes <group___cmp_gw_client_itf_1gaadc0e58cbed9ed181453525d2056ae2e>` s_pfCMGetAPI2( "GWClientEndIncrementalResolveAllNodes", (RTS_VOID_FCTPTR *)&pfGWClientEndIncrementalResolveAllNodes, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientEndIncrementalResolveAllNodes <group___cmp_gw_client_itf_1ga34a8ffe33c1fbb4ee53f479c2e976974>` pfGWClientEndIncrementalResolveAllNodes
+
+- #define :ref:`CHK_GWClientEndIncrementalResolveAllNodes <group___cmp_gw_client_itf_1gac9a265baae7d289c279e2ee89e1d0140>` (pfGWClientEndIncrementalResolveAllNodes != NULL)
+
+- #define :ref:`EXP_GWClientEndIncrementalResolveAllNodes <group___cmp_gw_client_itf_1ga5588ce7b090e5d3e2298245b0182542a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndIncrementalResolveAllNodes", (RTS_UINTPTR) :ref:`GWClientEndIncrementalResolveAllNodes <group___cmp_gw_client_itf_1gab9a297dbd3ef687baefc45ecd38f264e>` , 0, 0)
+
+- #define :ref:`USE_GWClientBeginIncrementalResolveName <group___cmp_gw_client_itf_1gab58117503c974b142bd2b2c7948dfa30>` :ref:`PFGWCLIENTBEGININCREMENTALRESOLVENAME <group___cmp_gw_client_itf_1ga71a32269b627fe87869b2e1b20198a8a>` pfGWClientBeginIncrementalResolveName;
+
+- #define :ref:`EXT_GWClientBeginIncrementalResolveName <group___cmp_gw_client_itf_1ga89bc0e4c9651d0a8be6a886aaa735f15>` extern :ref:`PFGWCLIENTBEGININCREMENTALRESOLVENAME <group___cmp_gw_client_itf_1ga71a32269b627fe87869b2e1b20198a8a>` pfGWClientBeginIncrementalResolveName;
+
+- #define :ref:`GET_GWClientBeginIncrementalResolveName <group___cmp_gw_client_itf_1ga933f19427033dd3f38289886a1cb87f1>` s_pfCMGetAPI2( "GWClientBeginIncrementalResolveName", (RTS_VOID_FCTPTR *)&pfGWClientBeginIncrementalResolveName, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientBeginIncrementalResolveName <group___cmp_gw_client_itf_1ga3e18486560399c66b45ce14eeb191114>` pfGWClientBeginIncrementalResolveName
+
+- #define :ref:`CHK_GWClientBeginIncrementalResolveName <group___cmp_gw_client_itf_1ga38091142591b3b6c4c74ccc730a81362>` (pfGWClientBeginIncrementalResolveName != NULL)
+
+- #define :ref:`EXP_GWClientBeginIncrementalResolveName <group___cmp_gw_client_itf_1gab17015de248f2b654ccddf7285e8b00e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginIncrementalResolveName", (RTS_UINTPTR) :ref:`GWClientBeginIncrementalResolveName <group___cmp_gw_client_itf_1ga8d466010dee855bb8bc1bf39aecb6964>` , 0, 0)
+
+- #define :ref:`USE_GWClientBeginIncrementalResolveName3 <group___cmp_gw_client_itf_1ga32ff66620dfb22602229d351d4bbd5cd>` :ref:`PFGWCLIENTBEGININCREMENTALRESOLVENAME3 <group___cmp_gw_client_itf_1ga42e588576e3bac4caa14a706af1f86f8>` pfGWClientBeginIncrementalResolveName3;
+
+- #define :ref:`EXT_GWClientBeginIncrementalResolveName3 <group___cmp_gw_client_itf_1ga1cbd866405fab7355043c4e5aaf54f3e>` extern :ref:`PFGWCLIENTBEGININCREMENTALRESOLVENAME3 <group___cmp_gw_client_itf_1ga42e588576e3bac4caa14a706af1f86f8>` pfGWClientBeginIncrementalResolveName3;
+
+- #define :ref:`GET_GWClientBeginIncrementalResolveName3 <group___cmp_gw_client_itf_1gaa86eb364860bc4ae0e1d6d9d50cdbd4e>` s_pfCMGetAPI2( "GWClientBeginIncrementalResolveName3", (RTS_VOID_FCTPTR *)&pfGWClientBeginIncrementalResolveName3, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientBeginIncrementalResolveName3 <group___cmp_gw_client_itf_1ga2e1470a37ffc0d4b36081c1199588e70>` pfGWClientBeginIncrementalResolveName3
+
+- #define :ref:`CHK_GWClientBeginIncrementalResolveName3 <group___cmp_gw_client_itf_1ga884e77f372dc424ca84c3b54fd6eeacb>` (pfGWClientBeginIncrementalResolveName3 != NULL)
+
+- #define :ref:`EXP_GWClientBeginIncrementalResolveName3 <group___cmp_gw_client_itf_1gab317a36d2274465087070870f598e8b1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginIncrementalResolveName3", (RTS_UINTPTR) :ref:`GWClientBeginIncrementalResolveName3 <group___cmp_gw_client_itf_1ga5edcc48c515d6a36b93e51a7e8aeef94>` , 0, 0)
+
+- #define :ref:`USE_GWClientAdjustIncrementalResolveNameTimeout <group___cmp_gw_client_itf_1ga3e58ef53a100601cbd97b377dfa436ff>` :ref:`PFGWCLIENTADJUSTINCREMENTALRESOLVENAMETIMEOUT <group___cmp_gw_client_itf_1ga3cfca9a757a63a32f6a00df92df407e6>` pfGWClientAdjustIncrementalResolveNameTimeout;
+
+- #define :ref:`EXT_GWClientAdjustIncrementalResolveNameTimeout <group___cmp_gw_client_itf_1gaea316824e5d1a7d9f69c05e5b0f6e651>` extern :ref:`PFGWCLIENTADJUSTINCREMENTALRESOLVENAMETIMEOUT <group___cmp_gw_client_itf_1ga3cfca9a757a63a32f6a00df92df407e6>` pfGWClientAdjustIncrementalResolveNameTimeout;
+
+- #define :ref:`GET_GWClientAdjustIncrementalResolveNameTimeout <group___cmp_gw_client_itf_1ga439f9dc0ac0b2112d3642d77fe88716d>` s_pfCMGetAPI2( "GWClientAdjustIncrementalResolveNameTimeout", (RTS_VOID_FCTPTR *)&pfGWClientAdjustIncrementalResolveNameTimeout, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientAdjustIncrementalResolveNameTimeout <group___cmp_gw_client_itf_1ga3fde9f3e55cc9ffb6ca762014989dd45>` pfGWClientAdjustIncrementalResolveNameTimeout
+
+- #define :ref:`CHK_GWClientAdjustIncrementalResolveNameTimeout <group___cmp_gw_client_itf_1gac41a1c3c3616ff989e3e60462b209e8e>` (pfGWClientAdjustIncrementalResolveNameTimeout != NULL)
+
+- #define :ref:`EXP_GWClientAdjustIncrementalResolveNameTimeout <group___cmp_gw_client_itf_1ga3b2e2c4ee7d81e23e6668c35e5b058f8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientAdjustIncrementalResolveNameTimeout", (RTS_UINTPTR) :ref:`GWClientAdjustIncrementalResolveNameTimeout <group___cmp_gw_client_itf_1ga2d05dcc89787236db629d8ff1be69d78>` , 0, 0)
+
+- #define :ref:`USE_GWClientEndIncrementalResolveName <group___cmp_gw_client_itf_1ga231a101d06bb36504be2948b76fc8c6f>` :ref:`PFGWCLIENTENDINCREMENTALRESOLVENAME <group___cmp_gw_client_itf_1ga40d1e6a924b2ca9cd0ad39c3f3057623>` pfGWClientEndIncrementalResolveName;
+
+- #define :ref:`EXT_GWClientEndIncrementalResolveName <group___cmp_gw_client_itf_1ga3cbd941094a5a5d89c18996803e06e31>` extern :ref:`PFGWCLIENTENDINCREMENTALRESOLVENAME <group___cmp_gw_client_itf_1ga40d1e6a924b2ca9cd0ad39c3f3057623>` pfGWClientEndIncrementalResolveName;
+
+- #define :ref:`GET_GWClientEndIncrementalResolveName <group___cmp_gw_client_itf_1gae25592bab604fc052f195c53eb51b00f>` s_pfCMGetAPI2( "GWClientEndIncrementalResolveName", (RTS_VOID_FCTPTR *)&pfGWClientEndIncrementalResolveName, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientEndIncrementalResolveName <group___cmp_gw_client_itf_1ga8f9ab8012e8d8420d4bf4974ac5e04d6>` pfGWClientEndIncrementalResolveName
+
+- #define :ref:`CHK_GWClientEndIncrementalResolveName <group___cmp_gw_client_itf_1ga3f34012383c816c50ba41883a17ef08a>` (pfGWClientEndIncrementalResolveName != NULL)
+
+- #define :ref:`EXP_GWClientEndIncrementalResolveName <group___cmp_gw_client_itf_1ga0e0b39e5e0b836dda0aaf27136582889>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndIncrementalResolveName", (RTS_UINTPTR) :ref:`GWClientEndIncrementalResolveName <group___cmp_gw_client_itf_1gae18436bc27002de842dcada6cac1727d>` , 0, 0)
+
+- #define :ref:`USE_GWClientBeginResolveBlockDriverAddress <group___cmp_gw_client_itf_1gaf0373734e86847a74761b5c0f338ba55>` :ref:`PFGWCLIENTBEGINRESOLVEBLOCKDRIVERADDRESS <group___cmp_gw_client_itf_1gaf8e328cdc38190ec823ae61eab8c09fa>` pfGWClientBeginResolveBlockDriverAddress;
+
+- #define :ref:`EXT_GWClientBeginResolveBlockDriverAddress <group___cmp_gw_client_itf_1ga5018a0b4dba4281f906e36455658a39f>` extern :ref:`PFGWCLIENTBEGINRESOLVEBLOCKDRIVERADDRESS <group___cmp_gw_client_itf_1gaf8e328cdc38190ec823ae61eab8c09fa>` pfGWClientBeginResolveBlockDriverAddress;
+
+- #define :ref:`GET_GWClientBeginResolveBlockDriverAddress <group___cmp_gw_client_itf_1ga4a3f0e0659c4db6019c0f8baa9938f7b>` s_pfCMGetAPI2( "GWClientBeginResolveBlockDriverAddress", (RTS_VOID_FCTPTR *)&pfGWClientBeginResolveBlockDriverAddress, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientBeginResolveBlockDriverAddress <group___cmp_gw_client_itf_1gac80d7caddeed662a1b54ada2740157c7>` pfGWClientBeginResolveBlockDriverAddress
+
+- #define :ref:`CHK_GWClientBeginResolveBlockDriverAddress <group___cmp_gw_client_itf_1ga1fb08c982440e701b16de7d3bbca9dd7>` (pfGWClientBeginResolveBlockDriverAddress != NULL)
+
+- #define :ref:`EXP_GWClientBeginResolveBlockDriverAddress <group___cmp_gw_client_itf_1ga322431102017980d9d11cf01aacb07f2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginResolveBlockDriverAddress", (RTS_UINTPTR) :ref:`GWClientBeginResolveBlockDriverAddress <group___cmp_gw_client_itf_1gad453e5d61f70eada48cf5fd06e74d810>` , 0, 0)
+
+- #define :ref:`USE_GWClientBeginResolveBlockDriverAddress3 <group___cmp_gw_client_itf_1ga3f70eec588d2ab3f7429a8b56a12c360>` :ref:`PFGWCLIENTBEGINRESOLVEBLOCKDRIVERADDRESS3 <group___cmp_gw_client_itf_1gaf2bc531da99926b6470655ddabc6fd40>` pfGWClientBeginResolveBlockDriverAddress3;
+
+- #define :ref:`EXT_GWClientBeginResolveBlockDriverAddress3 <group___cmp_gw_client_itf_1gaf8d66092e692927bc24b4447ee98b717>` extern :ref:`PFGWCLIENTBEGINRESOLVEBLOCKDRIVERADDRESS3 <group___cmp_gw_client_itf_1gaf2bc531da99926b6470655ddabc6fd40>` pfGWClientBeginResolveBlockDriverAddress3;
+
+- #define :ref:`GET_GWClientBeginResolveBlockDriverAddress3 <group___cmp_gw_client_itf_1ga964d9de9b9ba6ce08242a529012c1cad>` s_pfCMGetAPI2( "GWClientBeginResolveBlockDriverAddress3", (RTS_VOID_FCTPTR *)&pfGWClientBeginResolveBlockDriverAddress3, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientBeginResolveBlockDriverAddress3 <group___cmp_gw_client_itf_1ga3370912730c73f41225a8f9024510f61>` pfGWClientBeginResolveBlockDriverAddress3
+
+- #define :ref:`CHK_GWClientBeginResolveBlockDriverAddress3 <group___cmp_gw_client_itf_1gaa361b86b9843511c6a3b1e3ab51de072>` (pfGWClientBeginResolveBlockDriverAddress3 != NULL)
+
+- #define :ref:`EXP_GWClientBeginResolveBlockDriverAddress3 <group___cmp_gw_client_itf_1ga10da5e4c769b1351d85469d06710fdb6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginResolveBlockDriverAddress3", (RTS_UINTPTR) :ref:`GWClientBeginResolveBlockDriverAddress3 <group___cmp_gw_client_itf_1ga07213c7fc052fc5aeeb62ddfb561c6b9>` , 0, 0)
+
+- #define :ref:`USE_GWClientAdjustResolveBlockDriverAddressTimeout <group___cmp_gw_client_itf_1gaa601c69eddc3630eb56cd8fbc085cd6c>` :ref:`PFGWCLIENTADJUSTRESOLVEBLOCKDRIVERADDRESSTIMEOUT <group___cmp_gw_client_itf_1ga93537d83af6b1853f59fc1333c2f382c>` pfGWClientAdjustResolveBlockDriverAddressTimeout;
+
+- #define :ref:`EXT_GWClientAdjustResolveBlockDriverAddressTimeout <group___cmp_gw_client_itf_1ga897220fe5cd54e700781a59cac58bca5>` extern :ref:`PFGWCLIENTADJUSTRESOLVEBLOCKDRIVERADDRESSTIMEOUT <group___cmp_gw_client_itf_1ga93537d83af6b1853f59fc1333c2f382c>` pfGWClientAdjustResolveBlockDriverAddressTimeout;
+
+- #define :ref:`GET_GWClientAdjustResolveBlockDriverAddressTimeout <group___cmp_gw_client_itf_1ga63a8ecb2f5666fbb1ae8e54fe4693f0f>` s_pfCMGetAPI2( "GWClientAdjustResolveBlockDriverAddressTimeout", (RTS_VOID_FCTPTR *)&pfGWClientAdjustResolveBlockDriverAddressTimeout, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientAdjustResolveBlockDriverAddressTimeout <group___cmp_gw_client_itf_1ga35cd2b34c8b02191f81d0232283c5f55>` pfGWClientAdjustResolveBlockDriverAddressTimeout
+
+- #define :ref:`CHK_GWClientAdjustResolveBlockDriverAddressTimeout <group___cmp_gw_client_itf_1ga36d1afbc5bd748f95c46b8eff46b0085>` (pfGWClientAdjustResolveBlockDriverAddressTimeout != NULL)
+
+- #define :ref:`EXP_GWClientAdjustResolveBlockDriverAddressTimeout <group___cmp_gw_client_itf_1ga5a0f4676c42b5b61f63ac161c1c59d3c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientAdjustResolveBlockDriverAddressTimeout", (RTS_UINTPTR) :ref:`GWClientAdjustResolveBlockDriverAddressTimeout <group___cmp_gw_client_itf_1gaed4bc48b679905e385ee8522304269de>` , 0, 0)
+
+- #define :ref:`USE_GWClientEndResolveBlockDriverAddress <group___cmp_gw_client_itf_1gaf8542bdc493f173e2ae28ed405f13b5f>` :ref:`PFGWCLIENTENDRESOLVEBLOCKDRIVERADDRESS <group___cmp_gw_client_itf_1gac6ea12ffb994af550f78821065de4f56>` pfGWClientEndResolveBlockDriverAddress;
+
+- #define :ref:`EXT_GWClientEndResolveBlockDriverAddress <group___cmp_gw_client_itf_1gad7f5ee716ece9e43b591db518aee92d8>` extern :ref:`PFGWCLIENTENDRESOLVEBLOCKDRIVERADDRESS <group___cmp_gw_client_itf_1gac6ea12ffb994af550f78821065de4f56>` pfGWClientEndResolveBlockDriverAddress;
+
+- #define :ref:`GET_GWClientEndResolveBlockDriverAddress <group___cmp_gw_client_itf_1ga3c47ad53a08128c6cc31423c74d63841>` s_pfCMGetAPI2( "GWClientEndResolveBlockDriverAddress", (RTS_VOID_FCTPTR *)&pfGWClientEndResolveBlockDriverAddress, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientEndResolveBlockDriverAddress <group___cmp_gw_client_itf_1ga00c8afcd09b3335b024cd24fb6923cf8>` pfGWClientEndResolveBlockDriverAddress
+
+- #define :ref:`CHK_GWClientEndResolveBlockDriverAddress <group___cmp_gw_client_itf_1ga2014c7226019c1e0d945182baf9d8345>` (pfGWClientEndResolveBlockDriverAddress != NULL)
+
+- #define :ref:`EXP_GWClientEndResolveBlockDriverAddress <group___cmp_gw_client_itf_1ga203cfd07dc791c48e01a138b7b291532>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndResolveBlockDriverAddress", (RTS_UINTPTR) :ref:`GWClientEndResolveBlockDriverAddress <group___cmp_gw_client_itf_1ga5998a56e335d1210b8f9ee3a4261e508>` , 0, 0)
+
+- #define :ref:`USE_GWClientBeginResolveAddress <group___cmp_gw_client_itf_1ga109d1873bc3676b2e0c5238020378ebc>` :ref:`PFGWCLIENTBEGINRESOLVEADDRESS <group___cmp_gw_client_itf_1ga80a70079c439b9b1bf4d182c0d7a4b82>` pfGWClientBeginResolveAddress;
+
+- #define :ref:`EXT_GWClientBeginResolveAddress <group___cmp_gw_client_itf_1ga246b8f06d35484b3157c2cf1fd99c92d>` extern :ref:`PFGWCLIENTBEGINRESOLVEADDRESS <group___cmp_gw_client_itf_1ga80a70079c439b9b1bf4d182c0d7a4b82>` pfGWClientBeginResolveAddress;
+
+- #define :ref:`GET_GWClientBeginResolveAddress <group___cmp_gw_client_itf_1ga8463cdbe33d069c09d546bf1c681b3fa>` s_pfCMGetAPI2( "GWClientBeginResolveAddress", (RTS_VOID_FCTPTR *)&pfGWClientBeginResolveAddress, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientBeginResolveAddress <group___cmp_gw_client_itf_1ga9c3017d92a7befd3e382f6d4a36173ae>` pfGWClientBeginResolveAddress
+
+- #define :ref:`CHK_GWClientBeginResolveAddress <group___cmp_gw_client_itf_1gac55bee8cdb380dce5819c64ad1781db6>` (pfGWClientBeginResolveAddress != NULL)
+
+- #define :ref:`EXP_GWClientBeginResolveAddress <group___cmp_gw_client_itf_1ga79f047337f1b8bb2c572880369187f57>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginResolveAddress", (RTS_UINTPTR) :ref:`GWClientBeginResolveAddress <group___cmp_gw_client_itf_1ga1c3eecd333e8f769c74d2dc39670f15d>` , 0, 0)
+
+- #define :ref:`USE_GWClientBeginResolveAddress3 <group___cmp_gw_client_itf_1gadd789858475fc9674fd7bdcc0b137e58>` :ref:`PFGWCLIENTBEGINRESOLVEADDRESS3 <group___cmp_gw_client_itf_1gae00f8fe4b99f454beccd0c06cf749587>` pfGWClientBeginResolveAddress3;
+
+- #define :ref:`EXT_GWClientBeginResolveAddress3 <group___cmp_gw_client_itf_1ga01680126b786151818e7ae4206de427a>` extern :ref:`PFGWCLIENTBEGINRESOLVEADDRESS3 <group___cmp_gw_client_itf_1gae00f8fe4b99f454beccd0c06cf749587>` pfGWClientBeginResolveAddress3;
+
+- #define :ref:`GET_GWClientBeginResolveAddress3 <group___cmp_gw_client_itf_1ga5294dfcadb28a3f64edc6952db483fbd>` s_pfCMGetAPI2( "GWClientBeginResolveAddress3", (RTS_VOID_FCTPTR *)&pfGWClientBeginResolveAddress3, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientBeginResolveAddress3 <group___cmp_gw_client_itf_1ga59e08978d9cb5f5fdcb47f7ce66c9771>` pfGWClientBeginResolveAddress3
+
+- #define :ref:`CHK_GWClientBeginResolveAddress3 <group___cmp_gw_client_itf_1ga15fa2a3a8295100d762a8d9807f7be85>` (pfGWClientBeginResolveAddress3 != NULL)
+
+- #define :ref:`EXP_GWClientBeginResolveAddress3 <group___cmp_gw_client_itf_1ga1e446901165f890244bd1a3a70fadf80>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginResolveAddress3", (RTS_UINTPTR) :ref:`GWClientBeginResolveAddress3 <group___cmp_gw_client_itf_1gab1166752e9209a87beaac6692846336c>` , 0, 0)
+
+- #define :ref:`USE_GWClientAdjustResolveAddressTimeout <group___cmp_gw_client_itf_1ga3066df307001dece3547f3d3f9ba25a5>` :ref:`PFGWCLIENTADJUSTRESOLVEADDRESSTIMEOUT <group___cmp_gw_client_itf_1ga9bcc3d73c49678a24c3cde35512517ff>` pfGWClientAdjustResolveAddressTimeout;
+
+- #define :ref:`EXT_GWClientAdjustResolveAddressTimeout <group___cmp_gw_client_itf_1gaa2c4b992a7b35d0204b76c50051cec93>` extern :ref:`PFGWCLIENTADJUSTRESOLVEADDRESSTIMEOUT <group___cmp_gw_client_itf_1ga9bcc3d73c49678a24c3cde35512517ff>` pfGWClientAdjustResolveAddressTimeout;
+
+- #define :ref:`GET_GWClientAdjustResolveAddressTimeout <group___cmp_gw_client_itf_1ga19ee4c09b7fae940f247dd10b52c2e37>` s_pfCMGetAPI2( "GWClientAdjustResolveAddressTimeout", (RTS_VOID_FCTPTR *)&pfGWClientAdjustResolveAddressTimeout, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientAdjustResolveAddressTimeout <group___cmp_gw_client_itf_1ga930b0dcebb4c5eac49934953e832e8b6>` pfGWClientAdjustResolveAddressTimeout
+
+- #define :ref:`CHK_GWClientAdjustResolveAddressTimeout <group___cmp_gw_client_itf_1ga3888d1df4a695345263c538160c8be09>` (pfGWClientAdjustResolveAddressTimeout != NULL)
+
+- #define :ref:`EXP_GWClientAdjustResolveAddressTimeout <group___cmp_gw_client_itf_1ga725ab15fb3c7fd653367e0b345a3aa2d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientAdjustResolveAddressTimeout", (RTS_UINTPTR) :ref:`GWClientAdjustResolveAddressTimeout <group___cmp_gw_client_itf_1ga5d2884a0b3bb413675d0d73e2190d121>` , 0, 0)
+
+- #define :ref:`USE_GWClientEndResolveAddress <group___cmp_gw_client_itf_1gaee9ff86bc88d9ed8dbd5d7687bf82231>` :ref:`PFGWCLIENTENDRESOLVEADDRESS <group___cmp_gw_client_itf_1gaeec477de315edce75db1a5ff86d9597d>` pfGWClientEndResolveAddress;
+
+- #define :ref:`EXT_GWClientEndResolveAddress <group___cmp_gw_client_itf_1ga907a90aab0fe9985557677d305d8fe68>` extern :ref:`PFGWCLIENTENDRESOLVEADDRESS <group___cmp_gw_client_itf_1gaeec477de315edce75db1a5ff86d9597d>` pfGWClientEndResolveAddress;
+
+- #define :ref:`GET_GWClientEndResolveAddress <group___cmp_gw_client_itf_1gaadd74d0b146f2117966dc05279379c3c>` s_pfCMGetAPI2( "GWClientEndResolveAddress", (RTS_VOID_FCTPTR *)&pfGWClientEndResolveAddress, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientEndResolveAddress <group___cmp_gw_client_itf_1ga5f2e9a1ca5ea4259a885e26bb34ed76f>` pfGWClientEndResolveAddress
+
+- #define :ref:`CHK_GWClientEndResolveAddress <group___cmp_gw_client_itf_1gab48d627b2dde492b40098af573fc0899>` (pfGWClientEndResolveAddress != NULL)
+
+- #define :ref:`EXP_GWClientEndResolveAddress <group___cmp_gw_client_itf_1gad8726783f232af7ccbd4bf81a21a53e6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndResolveAddress", (RTS_UINTPTR) :ref:`GWClientEndResolveAddress <group___cmp_gw_client_itf_1ga43ba6e723afb4c2996e5eff408cb10f7>` , 0, 0)
+
+- #define :ref:`USE_GWClientBeginSendRequest <group___cmp_gw_client_itf_1ga5b91b0145e74c645a42d9809c5a77744>` :ref:`PFGWCLIENTBEGINSENDREQUEST <group___cmp_gw_client_itf_1ga27428f6f067c573b92a0c7767147cdae>` pfGWClientBeginSendRequest;
+
+- #define :ref:`EXT_GWClientBeginSendRequest <group___cmp_gw_client_itf_1gab576a00c7f624394e31f50c08ed51566>` extern :ref:`PFGWCLIENTBEGINSENDREQUEST <group___cmp_gw_client_itf_1ga27428f6f067c573b92a0c7767147cdae>` pfGWClientBeginSendRequest;
+
+- #define :ref:`GET_GWClientBeginSendRequest <group___cmp_gw_client_itf_1gae4f997f6f054acb7daca002221a98e6a>` s_pfCMGetAPI2( "GWClientBeginSendRequest", (RTS_VOID_FCTPTR *)&pfGWClientBeginSendRequest, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientBeginSendRequest <group___cmp_gw_client_itf_1gaf0a9a4ccf69a58c6b981e8f7cdbab963>` pfGWClientBeginSendRequest
+
+- #define :ref:`CHK_GWClientBeginSendRequest <group___cmp_gw_client_itf_1ga1ff51e5dd80e96488e6d5d9df62ac34d>` (pfGWClientBeginSendRequest != NULL)
+
+- #define :ref:`EXP_GWClientBeginSendRequest <group___cmp_gw_client_itf_1ga09f5837a2c54682a3365bdf322132b7d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginSendRequest", (RTS_UINTPTR) :ref:`GWClientBeginSendRequest <group___cmp_gw_client_itf_1ga7b7ad07b0de22921568fc5c0cb26d7e7>` , 0, 0)
+
+- #define :ref:`USE_GWClientEndSendRequest <group___cmp_gw_client_itf_1ga2edd9a769c4bfa5282e8384ef606441c>` :ref:`PFGWCLIENTENDSENDREQUEST <group___cmp_gw_client_itf_1gad28dea404135d60cff92e7ff899ca03a>` pfGWClientEndSendRequest;
+
+- #define :ref:`EXT_GWClientEndSendRequest <group___cmp_gw_client_itf_1ga8c12caf620f16fe047164926395afea7>` extern :ref:`PFGWCLIENTENDSENDREQUEST <group___cmp_gw_client_itf_1gad28dea404135d60cff92e7ff899ca03a>` pfGWClientEndSendRequest;
+
+- #define :ref:`GET_GWClientEndSendRequest <group___cmp_gw_client_itf_1ga90bccb0489f85587b03a813750a3d7d3>` s_pfCMGetAPI2( "GWClientEndSendRequest", (RTS_VOID_FCTPTR *)&pfGWClientEndSendRequest, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientEndSendRequest <group___cmp_gw_client_itf_1ga34ad5b841623e7e8e5d76629ada723f9>` pfGWClientEndSendRequest
+
+- #define :ref:`CHK_GWClientEndSendRequest <group___cmp_gw_client_itf_1gafa4f655d0e642d4e46847932a1631ace>` (pfGWClientEndSendRequest != NULL)
+
+- #define :ref:`EXP_GWClientEndSendRequest <group___cmp_gw_client_itf_1ga39b0fcd533e7fb8ddc97d7b09ac280ac>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndSendRequest", (RTS_UINTPTR) :ref:`GWClientEndSendRequest <group___cmp_gw_client_itf_1ga88a9d8f88f3c231e0ca6d141e23823e6>` , 0, 0)
+
+- #define :ref:`USE_GWClientGetRequestStatus <group___cmp_gw_client_itf_1ga77313f8b34acee565ae9a07d6f30af47>` :ref:`PFGWCLIENTGETREQUESTSTATUS <group___cmp_gw_client_itf_1gaa0a97cd08ffddb47b254c1bd46cbf71a>` pfGWClientGetRequestStatus;
+
+- #define :ref:`EXT_GWClientGetRequestStatus <group___cmp_gw_client_itf_1ga42f8e8c84c75aa52463b2bae4f08961b>` extern :ref:`PFGWCLIENTGETREQUESTSTATUS <group___cmp_gw_client_itf_1gaa0a97cd08ffddb47b254c1bd46cbf71a>` pfGWClientGetRequestStatus;
+
+- #define :ref:`GET_GWClientGetRequestStatus <group___cmp_gw_client_itf_1ga3e46f89c451c3b06a6313821aef2668a>` s_pfCMGetAPI2( "GWClientGetRequestStatus", (RTS_VOID_FCTPTR *)&pfGWClientGetRequestStatus, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientGetRequestStatus <group___cmp_gw_client_itf_1ga2795aa3b183a77887f2b63305b3500ca>` pfGWClientGetRequestStatus
+
+- #define :ref:`CHK_GWClientGetRequestStatus <group___cmp_gw_client_itf_1ga53454179ae6d61af6881cb4ee682cf8b>` (pfGWClientGetRequestStatus != NULL)
+
+- #define :ref:`EXP_GWClientGetRequestStatus <group___cmp_gw_client_itf_1ga794c8208321da68f50f26ea1b053edf5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientGetRequestStatus", (RTS_UINTPTR) :ref:`GWClientGetRequestStatus <group___cmp_gw_client_itf_1ga23b9dad49f519b4e30f4503b3cea64e6>` , 0, 0)
+
+- #define :ref:`USE_GWClientBeginOpenChannel <group___cmp_gw_client_itf_1gad1dbc070e43c9971ac0a69f0ccf85bdb>` :ref:`PFGWCLIENTBEGINOPENCHANNEL <group___cmp_gw_client_itf_1ga759b5782654abf9f282ef30852d6ba86>` pfGWClientBeginOpenChannel;
+
+- #define :ref:`EXT_GWClientBeginOpenChannel <group___cmp_gw_client_itf_1ga7a1ba497ae28dc081e76c07ff37568e5>` extern :ref:`PFGWCLIENTBEGINOPENCHANNEL <group___cmp_gw_client_itf_1ga759b5782654abf9f282ef30852d6ba86>` pfGWClientBeginOpenChannel;
+
+- #define :ref:`GET_GWClientBeginOpenChannel <group___cmp_gw_client_itf_1ga02a07b1b066a2b1c8cce5534298e86ef>` s_pfCMGetAPI2( "GWClientBeginOpenChannel", (RTS_VOID_FCTPTR *)&pfGWClientBeginOpenChannel, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientBeginOpenChannel <group___cmp_gw_client_itf_1gadab0c30bfed046a4e6d8f763f3c46ec9>` pfGWClientBeginOpenChannel
+
+- #define :ref:`CHK_GWClientBeginOpenChannel <group___cmp_gw_client_itf_1gabd2a04aaaf764e99429d059d6dd43c86>` (pfGWClientBeginOpenChannel != NULL)
+
+- #define :ref:`EXP_GWClientBeginOpenChannel <group___cmp_gw_client_itf_1ga9a573588ef68b7ad43efabf9b4dc1feb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginOpenChannel", (RTS_UINTPTR) :ref:`GWClientBeginOpenChannel <group___cmp_gw_client_itf_1ga6d40b8f8a8450a29cb8c9f0ca6752199>` , 0, 0)
+
+- #define :ref:`USE_GWClientBeginOpenChannel2 <group___cmp_gw_client_itf_1gac08dca9e2b9ea139af11ab79ed051f2b>` :ref:`PFGWCLIENTBEGINOPENCHANNEL2 <group___cmp_gw_client_itf_1ga0ac7a44d8d8343b7ae9825fb9dfa528a>` pfGWClientBeginOpenChannel2;
+
+- #define :ref:`EXT_GWClientBeginOpenChannel2 <group___cmp_gw_client_itf_1ga77627db0ae4daa2081a1908cb289762d>` extern :ref:`PFGWCLIENTBEGINOPENCHANNEL2 <group___cmp_gw_client_itf_1ga0ac7a44d8d8343b7ae9825fb9dfa528a>` pfGWClientBeginOpenChannel2;
+
+- #define :ref:`GET_GWClientBeginOpenChannel2 <group___cmp_gw_client_itf_1ga8c6aad8af965527a2330a1ff9ab18f11>` s_pfCMGetAPI2( "GWClientBeginOpenChannel2", (RTS_VOID_FCTPTR *)&pfGWClientBeginOpenChannel2, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientBeginOpenChannel2 <group___cmp_gw_client_itf_1ga68b650a131ae546fbb783229b479f340>` pfGWClientBeginOpenChannel2
+
+- #define :ref:`CHK_GWClientBeginOpenChannel2 <group___cmp_gw_client_itf_1ga949a1290a61d28852cbfceb7900daf7b>` (pfGWClientBeginOpenChannel2 != NULL)
+
+- #define :ref:`EXP_GWClientBeginOpenChannel2 <group___cmp_gw_client_itf_1ga62ce9c57779d332bb1818ffb2e320607>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginOpenChannel2", (RTS_UINTPTR) :ref:`GWClientBeginOpenChannel2 <group___cmp_gw_client_itf_1ga849d4771f1942151b8e84cb441c6b116>` , 0, 0)
+
+- #define :ref:`USE_GWClientEndOpenChannel <group___cmp_gw_client_itf_1ga32eb20fb7d26204c10f68d06171194d5>` :ref:`PFGWCLIENTENDOPENCHANNEL <group___cmp_gw_client_itf_1gaa0f1f3d164955631573915aa1882b06f>` pfGWClientEndOpenChannel;
+
+- #define :ref:`EXT_GWClientEndOpenChannel <group___cmp_gw_client_itf_1gac3ebe3d46a6222402238939ef737b0b5>` extern :ref:`PFGWCLIENTENDOPENCHANNEL <group___cmp_gw_client_itf_1gaa0f1f3d164955631573915aa1882b06f>` pfGWClientEndOpenChannel;
+
+- #define :ref:`GET_GWClientEndOpenChannel <group___cmp_gw_client_itf_1ga55d1174120fd6f0e728545c385ca1863>` s_pfCMGetAPI2( "GWClientEndOpenChannel", (RTS_VOID_FCTPTR *)&pfGWClientEndOpenChannel, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientEndOpenChannel <group___cmp_gw_client_itf_1ga8458d51a1c5598a9ebcdc85a0ff05cdc>` pfGWClientEndOpenChannel
+
+- #define :ref:`CHK_GWClientEndOpenChannel <group___cmp_gw_client_itf_1gae69152325540558a32e94672c1733342>` (pfGWClientEndOpenChannel != NULL)
+
+- #define :ref:`EXP_GWClientEndOpenChannel <group___cmp_gw_client_itf_1ga7d16884802a26fa2db5e485ec6de53d6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndOpenChannel", (RTS_UINTPTR) :ref:`GWClientEndOpenChannel <group___cmp_gw_client_itf_1gafa16ea33226f7ce46dc34d26e5de4ce5>` , 0, 0)
+
+- #define :ref:`USE_GWClientBeginCloseChannel <group___cmp_gw_client_itf_1gaeb0881a62aa76550470390b70d315f85>` :ref:`PFGWCLIENTBEGINCLOSECHANNEL <group___cmp_gw_client_itf_1ga6b45ace660d8158dc6040d7297e7f109>` pfGWClientBeginCloseChannel;
+
+- #define :ref:`EXT_GWClientBeginCloseChannel <group___cmp_gw_client_itf_1gada839e08999a51841a4753e91f99e852>` extern :ref:`PFGWCLIENTBEGINCLOSECHANNEL <group___cmp_gw_client_itf_1ga6b45ace660d8158dc6040d7297e7f109>` pfGWClientBeginCloseChannel;
+
+- #define :ref:`GET_GWClientBeginCloseChannel <group___cmp_gw_client_itf_1gad89e0d59f40792ed8216d60de9d32360>` s_pfCMGetAPI2( "GWClientBeginCloseChannel", (RTS_VOID_FCTPTR *)&pfGWClientBeginCloseChannel, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientBeginCloseChannel <group___cmp_gw_client_itf_1ga5178b914597a072417efdf7423990492>` pfGWClientBeginCloseChannel
+
+- #define :ref:`CHK_GWClientBeginCloseChannel <group___cmp_gw_client_itf_1gaf0dddd4bb5e86c30213bd6260349ddc4>` (pfGWClientBeginCloseChannel != NULL)
+
+- #define :ref:`EXP_GWClientBeginCloseChannel <group___cmp_gw_client_itf_1gaf070af1badc73fc15bbd3be65bb36ffd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginCloseChannel", (RTS_UINTPTR) :ref:`GWClientBeginCloseChannel <group___cmp_gw_client_itf_1gac8181a746136e6e8fffcccdecbb2be87>` , 0, 0)
+
+- #define :ref:`USE_GWClientEndCloseChannel <group___cmp_gw_client_itf_1ga7e52963da65da55764eec0d36d75c7ac>` :ref:`PFGWCLIENTENDCLOSECHANNEL <group___cmp_gw_client_itf_1ga3e53ff96a495bf18b63f0cbe63f80242>` pfGWClientEndCloseChannel;
+
+- #define :ref:`EXT_GWClientEndCloseChannel <group___cmp_gw_client_itf_1ga2b0126b3fc9192f7a09380b9f4e24b16>` extern :ref:`PFGWCLIENTENDCLOSECHANNEL <group___cmp_gw_client_itf_1ga3e53ff96a495bf18b63f0cbe63f80242>` pfGWClientEndCloseChannel;
+
+- #define :ref:`GET_GWClientEndCloseChannel <group___cmp_gw_client_itf_1ga66eddb010aabe551b2363d9b53cdf3a5>` s_pfCMGetAPI2( "GWClientEndCloseChannel", (RTS_VOID_FCTPTR *)&pfGWClientEndCloseChannel, (fl), 0, 0)
+
+- #define :ref:`CAL_GWClientEndCloseChannel <group___cmp_gw_client_itf_1gac36e73a18cb297acc614388fb5cfaedc>` pfGWClientEndCloseChannel
+
+- #define :ref:`CHK_GWClientEndCloseChannel <group___cmp_gw_client_itf_1ga045f7abd85fde38722bbbf11429d3003>` (pfGWClientEndCloseChannel != NULL)
+
+- #define :ref:`EXP_GWClientEndCloseChannel <group___cmp_gw_client_itf_1ga17dc816e326fc5bbd58e003afcd82c7b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndCloseChannel", (RTS_UINTPTR) :ref:`GWClientEndCloseChannel <group___cmp_gw_client_itf_1ga7c80c705e6dcb76fb44463fbb6d0c38c>` , 0, 0)
+
+- #define :ref:`ITF_CmpGwClient <group___cmp_gw_client_itf_1ga0b01b033bff09e468eefbc82dde402a8>`
+
+- #define :ref:`EXTITF_CmpGwClient <group___cmp_gw_client_itf_1ga0a97e7a5dd1beba9a39e7f7db17e74c5>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTREGISTERCOMMDRV <group___cmp_gw_client_itf_1ga27fc3425334d09f4a14902196c4a3c85>`)(COMMDRVITF *pItf, COMMDRVINFO *pDrvInfo, RTS_HANDLE *phDriverHandle)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTCONNECTIONREADY <group___cmp_gw_client_itf_1ga6fcb4901fd6f86041c8b39f2da991d92>`)(RTS_HANDLE hDriverHandle, RTS_HANDLE hConnHandle, RTS_I32 nAction)
+
+- typedef void(* :ref:`PFENUMCOMMDRVCALLBACK <group___cmp_gw_client_itf_1ga2add21a28a6c1f7c3c4b4a7a7530b1f7>`)(RTS_HANDLE hDriver, RTS_GUID *guid, RTS_WCHAR *pwszName, PARAMDEFLIST *pParams, RTS_I8 bLast, RTS_I32 nMinPingInterval)
+
+- typedef void(* :ref:`PFENUMCOMMDRVCALLBACK2 <group___cmp_gw_client_itf_1gac395085e440acf673f9f124829e4c555>`)(RTS_UINTPTR dwUser, RTS_HANDLE hDriver, RTS_GUID *guid, RTS_WCHAR *pwszName, PARAMDEFLIST *pParams, RTS_I8 bLast, RTS_I32 nMinPingInterval)
+
+- typedef void(* :ref:`PFNODEINFOCALLBACK <group___cmp_gw_client_itf_1ga44fe76010e1ceff3e2ecba168016024d>`)(RTS_UINTPTR dwUser, NODEADDRESS_OLD addrNode, NODEADDRESS_OLD addrParent, RTS_I32 nMaxChannels, RTS_UI32 dwTargetId, RTS_WCHAR *wszNodeName, RTS_WCHAR *wszTargetName)
+
+- typedef void(* :ref:`PFNODEINFOCALLBACK2 <group___cmp_gw_client_itf_1ga13f55892a429bfaffc88ffe8671c27f8>`)(RTS_UINTPTR dwUser, NODEADDRESS_OLD addrNode, NODEADDRESS_OLD addrParent, RTS_I32 nMaxChannels, RTS_UI32 dwTargetType, RTS_UI32 dwTargetId, RTS_UI32 dwTargetVersion, RTS_WCHAR *wszNodeName, RTS_WCHAR *wszDeviceName, RTS_WCHAR *wszVendorName)
+
+- typedef void(* :ref:`PFNODEINFOCALLBACK3 <group___cmp_gw_client_itf_1ga23339328fe78129ca866ab18c39b8451>`)(RTS_UINTPTR dwUser, NODEADDRESS_OLD addrNode, NODEADDRESS_OLD addrParent, GWCLIENTNODEINFO *pGwClientNodeInfo, RTS_WCHAR *wszNodeName, RTS_WCHAR *wszDeviceName, RTS_WCHAR *wszVendorName, RTS_CSTRING *pszSerialNumber, RTS_UI8 *pbyOemData, RTS_UI32 dwOemDataLength)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTGETINTERFACEVERSION <group___cmp_gw_client_itf_1ga87ed1cbc61aef8965c5a386582aa3f45>`)(RTS_UI16 *pwMajor, RTS_UI16 *pwMinor)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTENUMCOMMDRIVERS <group___cmp_gw_client_itf_1gad2cea7c0b5eb974673b4f57172449610>`)(PFENUMCOMMDRVCALLBACK pfCallback)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTENUMCOMMDRIVERS2 <group___cmp_gw_client_itf_1ga83bc92ffbb96595a0c7a4b376e7806f7>`)(PFENUMCOMMDRVCALLBACK2 pfCallback, RTS_UINTPTR dwUser)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTBEGINCONNECTTOGATEWAY <group___cmp_gw_client_itf_1ga3217b4eed69a9fd6aec186f3ffd9e83a>`)(RTS_HANDLE hDriver, RTS_I32 nNumParams, PARAMETER *pParams, RTS_HANDLE *phGateway, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTBEGINCONNECTTOGATEWAY2 <group___cmp_gw_client_itf_1gacf36e4c7628047d6d2b9d501f944c16c>`)(RTS_HANDLE hDriver, RTS_I32 nNumParams, PARAMETER *pParams, RTS_UI32 ui32GwInactivityTimeout, RTS_HANDLE *phGateway, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTENDCONNECTTOGATEWAY <group___cmp_gw_client_itf_1gaa8b29b54530086551be391a3a2cfc55c>`)(ASYNCRESULT *pAsyncRes, RTS_HANDLE *phGateway)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTDISCONNECTFROMGATEWAY <group___cmp_gw_client_itf_1ga7e2f5113c0652bcccc0a400a2c6a1a42>`)(RTS_HANDLE hGateway)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES <group___cmp_gw_client_itf_1ga53bbb4861e509eb134dcf8d149eb83cb>`)(RTS_HANDLE hGateway, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK pfCallback, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES2 <group___cmp_gw_client_itf_1gaaffed80e69cdc2516f86bcf324531a32>`)(RTS_HANDLE hGateway, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK2 pfCallback2, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES3 <group___cmp_gw_client_itf_1ga3cd6ceb2d43219ae4c88bae1d9025281>`)(RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK3 pfCallback3, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTADJUSTINCREMENTALRESOLVEALLNODESTIMEOUT <group___cmp_gw_client_itf_1ga97ab63d849bcf01dd354fe870e3c150d>`)(RTS_UI32 dwRemainingTimeout, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTENDINCREMENTALRESOLVEALLNODES <group___cmp_gw_client_itf_1ga458f9b4df827e37012446258ebe6df2a>`)(ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTBEGININCREMENTALRESOLVENAME <group___cmp_gw_client_itf_1ga71a32269b627fe87869b2e1b20198a8a>`)(const RTS_WCHAR *pwszNodeName, RTS_HANDLE hGateway, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK pfCallback, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTBEGININCREMENTALRESOLVENAME3 <group___cmp_gw_client_itf_1ga42e588576e3bac4caa14a706af1f86f8>`)(const RTS_WCHAR *pwszNodeName, RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_BOOL bFinishWithFirstNode, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK3 pfCallback3, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTADJUSTINCREMENTALRESOLVENAMETIMEOUT <group___cmp_gw_client_itf_1ga3cfca9a757a63a32f6a00df92df407e6>`)(RTS_UI32 dwRemainingTimeout, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTENDINCREMENTALRESOLVENAME <group___cmp_gw_client_itf_1ga40d1e6a924b2ca9cd0ad39c3f3057623>`)(ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTBEGINRESOLVEBLOCKDRIVERADDRESS <group___cmp_gw_client_itf_1gaf8e328cdc38190ec823ae61eab8c09fa>`)(RTS_UI8 byBlkDrvType, RTS_UI8 byBlkDrvFlags, RTS_UI8 byAddrBitLength, RTS_UI8 *pbyAddress, RTS_HANDLE hGateway, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK2 pfCallback, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTBEGINRESOLVEBLOCKDRIVERADDRESS3 <group___cmp_gw_client_itf_1gaf2bc531da99926b6470655ddabc6fd40>`)(RTS_UI8 byBlkDrvType, RTS_UI8 byBlkDrvFlags, RTS_UI8 byAddrBitLength, RTS_UI8 *pbyAddress, RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK3 pfCallback3, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTADJUSTRESOLVEBLOCKDRIVERADDRESSTIMEOUT <group___cmp_gw_client_itf_1ga93537d83af6b1853f59fc1333c2f382c>`)(RTS_UI32 dwRemainingTimeout, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTENDRESOLVEBLOCKDRIVERADDRESS <group___cmp_gw_client_itf_1gac6ea12ffb994af550f78821065de4f56>`)(ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTBEGINRESOLVEADDRESS <group___cmp_gw_client_itf_1ga80a70079c439b9b1bf4d182c0d7a4b82>`)(RTS_UI8 byAddrComponentLength, RTS_UI8 *pbyAddress, RTS_HANDLE hGateway, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK2 pfCallback, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTBEGINRESOLVEADDRESS3 <group___cmp_gw_client_itf_1gae00f8fe4b99f454beccd0c06cf749587>`)(RTS_UI8 byAddrComponentLength, RTS_UI8 *pbyAddress, RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK3 pfCallback3, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTADJUSTRESOLVEADDRESSTIMEOUT <group___cmp_gw_client_itf_1ga9bcc3d73c49678a24c3cde35512517ff>`)(RTS_UI32 dwRemainingTimeout, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTENDRESOLVEADDRESS <group___cmp_gw_client_itf_1gaeec477de315edce75db1a5ff86d9597d>`)(ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTBEGINSENDREQUEST <group___cmp_gw_client_itf_1ga27428f6f067c573b92a0c7767147cdae>`)(RTS_HANDLE hGateway, RTS_HANDLE hChannel, PROTOCOL_DATA_UNIT pduReq, PROTOCOL_DATA_UNIT *ppduResp, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTENDSENDREQUEST <group___cmp_gw_client_itf_1gad28dea404135d60cff92e7ff899ca03a>`)(ASYNCRESULT *pAsyncRes, PROTOCOL_DATA_UNIT *ppduResp)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTGETREQUESTSTATUS <group___cmp_gw_client_itf_1gaa0a97cd08ffddb47b254c1bd46cbf71a>`)(ASYNCRESULT *pAsyncRes, RTS_UI16 *pwStatus, RTS_UI8 *pbyScaling, RTS_I32 *pnItemsComplete, RTS_I32 *pnTotalItems)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTBEGINOPENCHANNEL <group___cmp_gw_client_itf_1ga759b5782654abf9f282ef30852d6ba86>`)(RTS_HANDLE hGateway, NODEADDRESS_OLD addrTo, CHANNELQOS qosChannel, RTS_HANDLE *phChannel, RTS_UI32 *pdwCommBufferSize, RTS_UI8 *pbBigEndianTarget, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTBEGINOPENCHANNEL2 <group___cmp_gw_client_itf_1ga0ac7a44d8d8343b7ae9825fb9dfa528a>`)(RTS_HANDLE hGateway, PEERADDRESS addrTo, CHANNELQOS qosChannel, RTS_HANDLE *phChannel, RTS_UI32 *pdwCommBufferSize, RTS_UI8 *pbBigEndianTarget, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTENDOPENCHANNEL <group___cmp_gw_client_itf_1gaa0f1f3d164955631573915aa1882b06f>`)(ASYNCRESULT *pAsyncRes, RTS_HANDLE *phChannel, RTS_UI32 *pdwCommBufferSize, RTS_UI8 *pbBigEndianTarget)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTBEGINCLOSECHANNEL <group___cmp_gw_client_itf_1ga6b45ace660d8158dc6040d7297e7f109>`)(RTS_HANDLE hGateway, RTS_HANDLE hChannel, ASYNCRESULT *pAsyncRes)
+
+- typedef RTS_RESULT(* :ref:`PFGWCLIENTENDCLOSECHANNEL <group___cmp_gw_client_itf_1ga3e53ff96a495bf18b63f0cbe63f80242>`)(ASYNCRESULT *pAsyncRes)
+
+- typedef :ref:`ICmpGwClient_C <struct_i_cmp_gw_client___c>` :ref:`ICmpGwClient <group___cmp_gw_client_itf_1ga94a17e1dfd883f50fc6a0f94a8ede46e>`
+
+Enumerations
+------------
+
+- enum :ref:`@7 <group___cmp_gw_client_itf_1ga0411cd49bb5b71852cecd93bcbf0ca2d>` { :ref:`COMMDRV_ACTION_SEND <group___cmp_gw_client_itf_1gga0411cd49bb5b71852cecd93bcbf0ca2da3253c8e1890d8b28cb60a4b2b2969cfc>`, :ref:`COMMDRV_ACTION_RECEIVE <group___cmp_gw_client_itf_1gga0411cd49bb5b71852cecd93bcbf0ca2dabc09813b740b4eacecab1ca5688809b7>` }
+
+Functions
+---------
+
+- RTS_RESULT :ref:`GWClientRegisterCommDrv <group___cmp_gw_client_itf_1gab413c42037c31a13672077f759a3327a>` (:ref:`COMMDRVITF <struct_c_o_m_m_d_r_v_i_t_f>` * pItf, :ref:`COMMDRVINFO <struct_c_o_m_m_d_r_v_i_n_f_o>` * pDrvInfo, RTS_HANDLE * phDriverHandle)
+
+- RTS_RESULT :ref:`GWClientConnectionReady <group___cmp_gw_client_itf_1gac7dfdcc5f37e9b702c66730eae5c73d1>` (RTS_HANDLE hDriverHandle, RTS_HANDLE hConnHandle, RTS_I32 nAction)
+
+- RTS_RESULT :ref:`GWClientGetInterfaceVersion <group___cmp_gw_client_itf_1ga1a47fa582bd621084d90b7e93efe7fdc>` (RTS_UI16 * pwMajor, RTS_UI16 * pwMinor)
+
+- RTS_RESULT :ref:`GWClientEnumCommDrivers <group___cmp_gw_client_itf_1gabef29312a048de94f37828ba8541dc57>` (:ref:`PFENUMCOMMDRVCALLBACK <group___cmp_gw_client_itf_1ga2add21a28a6c1f7c3c4b4a7a7530b1f7>`  pfCallback)
+
+- RTS_RESULT :ref:`GWClientEnumCommDrivers2 <group___cmp_gw_client_itf_1gab3f9caa1f5412f548f9b655d334802e2>` (:ref:`PFENUMCOMMDRVCALLBACK2 <group___cmp_gw_client_itf_1gac395085e440acf673f9f124829e4c555>`  pfCallback, RTS_UINTPTR dwUser)
+
+- RTS_RESULT :ref:`GWClientBeginConnectToGateway <group___cmp_gw_client_itf_1gae50c53ac66dfd67bc1ee4292972a6910>` (RTS_HANDLE hDriver, RTS_I32 nNumParams, :ref:`PARAMETER <struct_p_a_r_a_m_e_t_e_r>` * pParams, RTS_HANDLE * phGateway, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientBeginConnectToGateway2 <group___cmp_gw_client_itf_1ga8e0ddbd6b117af34b4c5b459849f1ce2>` (RTS_HANDLE hDriver, RTS_I32 nNumParams, :ref:`PARAMETER <struct_p_a_r_a_m_e_t_e_r>` * pParams, RTS_UI32 ui32GwInactivityTimeout, RTS_HANDLE * phGateway, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientEndConnectToGateway <group___cmp_gw_client_itf_1gaf32ce0c55e04e6b4fa3fdf3868d8956f>` (:ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes, RTS_HANDLE * phGateway)
+
+- RTS_RESULT :ref:`GWClientDisconnectFromGateway <group___cmp_gw_client_itf_1gab2ef94262cbe8ba2979ca8f95be39659>` (RTS_HANDLE hGateway)
+
+- RTS_RESULT :ref:`GWClientBeginIncrementalResolveAllNodes <group___cmp_gw_client_itf_1gae650fcf174cc943af83acf6516c5d28d>` (RTS_HANDLE hGateway, RTS_UINTPTR dwUser, :ref:`PFNODEINFOCALLBACK <group___cmp_gw_client_itf_1ga44fe76010e1ceff3e2ecba168016024d>`  pfCallback, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientBeginIncrementalResolveAllNodes2 <group___cmp_gw_client_itf_1gab73cc1f8f57a9e5bbe275cc64b3aa32d>` (RTS_HANDLE hGateway, RTS_UINTPTR dwUser, :ref:`PFNODEINFOCALLBACK2 <group___cmp_gw_client_itf_1ga13f55892a429bfaffc88ffe8671c27f8>`  pfCallback2, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientBeginIncrementalResolveAllNodes3 <group___cmp_gw_client_itf_1ga9c59dffce2413a67633444cfc2e17d27>` (RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_UINTPTR dwUser, :ref:`PFNODEINFOCALLBACK3 <group___cmp_gw_client_itf_1ga23339328fe78129ca866ab18c39b8451>`  pfCallback3, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientAdjustIncrementalResolveAllNodesTimeout <group___cmp_gw_client_itf_1ga795a2d3bec0699ae7053aef69ebb57d1>` (RTS_UI32 dwRemainingTimeout, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientEndIncrementalResolveAllNodes <group___cmp_gw_client_itf_1gab9a297dbd3ef687baefc45ecd38f264e>` (:ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientBeginIncrementalResolveName <group___cmp_gw_client_itf_1ga8d466010dee855bb8bc1bf39aecb6964>` (const RTS_WCHAR * pwszNodeName, RTS_HANDLE hGateway, RTS_UINTPTR dwUser, :ref:`PFNODEINFOCALLBACK <group___cmp_gw_client_itf_1ga44fe76010e1ceff3e2ecba168016024d>`  pfCallback, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientBeginIncrementalResolveName3 <group___cmp_gw_client_itf_1ga5edcc48c515d6a36b93e51a7e8aeef94>` (const RTS_WCHAR * pwszNodeName, RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_BOOL bFinishWithFirstNode, RTS_UINTPTR dwUser, :ref:`PFNODEINFOCALLBACK3 <group___cmp_gw_client_itf_1ga23339328fe78129ca866ab18c39b8451>`  pfCallback3, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientAdjustIncrementalResolveNameTimeout <group___cmp_gw_client_itf_1ga2d05dcc89787236db629d8ff1be69d78>` (RTS_UI32 dwRemainingTimeout, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientEndIncrementalResolveName <group___cmp_gw_client_itf_1gae18436bc27002de842dcada6cac1727d>` (:ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientBeginResolveBlockDriverAddress <group___cmp_gw_client_itf_1gad453e5d61f70eada48cf5fd06e74d810>` (RTS_UI8 byBlkDrvType, RTS_UI8 byBlkDrvFlags, RTS_UI8 byAddrBitLength, RTS_UI8 * pbyAddress, RTS_HANDLE hGateway, RTS_UINTPTR dwUser, :ref:`PFNODEINFOCALLBACK2 <group___cmp_gw_client_itf_1ga13f55892a429bfaffc88ffe8671c27f8>`  pfCallback, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientBeginResolveBlockDriverAddress3 <group___cmp_gw_client_itf_1ga07213c7fc052fc5aeeb62ddfb561c6b9>` (RTS_UI8 byBlkDrvType, RTS_UI8 byBlkDrvFlags, RTS_UI8 byAddrBitLength, RTS_UI8 * pbyAddress, RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_UINTPTR dwUser, :ref:`PFNODEINFOCALLBACK3 <group___cmp_gw_client_itf_1ga23339328fe78129ca866ab18c39b8451>`  pfCallback3, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientAdjustResolveBlockDriverAddressTimeout <group___cmp_gw_client_itf_1gaed4bc48b679905e385ee8522304269de>` (RTS_UI32 dwRemainingTimeout, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientEndResolveBlockDriverAddress <group___cmp_gw_client_itf_1ga5998a56e335d1210b8f9ee3a4261e508>` (:ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientBeginResolveAddress <group___cmp_gw_client_itf_1ga1c3eecd333e8f769c74d2dc39670f15d>` (RTS_UI8 byAddrComponentLength, RTS_UI8 * pbyAddress, RTS_HANDLE hGateway, RTS_UINTPTR dwUser, :ref:`PFNODEINFOCALLBACK2 <group___cmp_gw_client_itf_1ga13f55892a429bfaffc88ffe8671c27f8>`  pfCallback, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientBeginResolveAddress3 <group___cmp_gw_client_itf_1gab1166752e9209a87beaac6692846336c>` (RTS_UI8 byAddrComponentLength, RTS_UI8 * pbyAddress, RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_UINTPTR dwUser, :ref:`PFNODEINFOCALLBACK3 <group___cmp_gw_client_itf_1ga23339328fe78129ca866ab18c39b8451>`  pfCallback3, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientAdjustResolveAddressTimeout <group___cmp_gw_client_itf_1ga5d2884a0b3bb413675d0d73e2190d121>` (RTS_UI32 dwRemainingTimeout, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientEndResolveAddress <group___cmp_gw_client_itf_1ga43ba6e723afb4c2996e5eff408cb10f7>` (:ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientBeginSendRequest <group___cmp_gw_client_itf_1ga7b7ad07b0de22921568fc5c0cb26d7e7>` (RTS_HANDLE hGateway, RTS_HANDLE hChannel, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>`  pduReq, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>` * ppduResp, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientEndSendRequest <group___cmp_gw_client_itf_1ga88a9d8f88f3c231e0ca6d141e23823e6>` (:ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>` * ppduResp)
+
+- RTS_RESULT :ref:`GWClientGetRequestStatus <group___cmp_gw_client_itf_1ga23b9dad49f519b4e30f4503b3cea64e6>` (:ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes, RTS_UI16 * pwStatus, RTS_UI8 * pbyScaling, RTS_I32 * pnItemsComplete, RTS_I32 * pnTotalItems)
+
+- RTS_RESULT :ref:`GWClientBeginOpenChannel <group___cmp_gw_client_itf_1ga6d40b8f8a8450a29cb8c9f0ca6752199>` (RTS_HANDLE hGateway, :ref:`NODEADDRESS_OLD <struct_n_o_d_e_a_d_d_r_e_s_s___o_l_d>`  addrTo, :ref:`CHANNELQOS <struct_c_h_a_n_n_e_l_q_o_s>`  qosChannel, RTS_HANDLE * phChannel, RTS_UI32 * pdwCommBufferSize, RTS_UI8 * pbBigEndianTarget, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientBeginOpenChannel2 <group___cmp_gw_client_itf_1ga849d4771f1942151b8e84cb441c6b116>` (RTS_HANDLE hGateway, :ref:`PEERADDRESS <struct_p_e_e_r_a_d_d_r_e_s_s>`  addrTo, :ref:`CHANNELQOS <struct_c_h_a_n_n_e_l_q_o_s>`  qosChannel, RTS_HANDLE * phChannel, RTS_UI32 * pdwCommBufferSize, RTS_UI8 * pbBigEndianTarget, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientEndOpenChannel <group___cmp_gw_client_itf_1gafa16ea33226f7ce46dc34d26e5de4ce5>` (:ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes, RTS_HANDLE * phChannel, RTS_UI32 * pdwCommBufferSize, RTS_UI8 * pbBigEndianTarget)
+
+- RTS_RESULT :ref:`GWClientBeginCloseChannel <group___cmp_gw_client_itf_1gac8181a746136e6e8fffcccdecbb2be87>` (RTS_HANDLE hGateway, RTS_HANDLE hChannel, :ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+- RTS_RESULT :ref:`GWClientEndCloseChannel <group___cmp_gw_client_itf_1ga7c80c705e6dcb76fb44463fbb6d0c38c>` (:ref:`ASYNCRESULT <group___cmp_gw_client_itf___settings_1gab897b5448b842f1312593236871366ad>` * pAsyncRes)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_gw_client_itf_1gaa94a97362d1161d7e6d87cdb84e81afe:
+
+#define USE_GWClientRegisterCommDrv :ref:`PFGWCLIENTREGISTERCOMMDRV <group___cmp_gw_client_itf_1ga27fc3425334d09f4a14902196c4a3c85>` pfGWClientRegisterCommDrv;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga4d64016cb2b3fbb6de98b97eb9cd8537:
+
+#define EXT_GWClientRegisterCommDrv extern :ref:`PFGWCLIENTREGISTERCOMMDRV <group___cmp_gw_client_itf_1ga27fc3425334d09f4a14902196c4a3c85>` pfGWClientRegisterCommDrv;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga88c7b036cb313c4c700ff7e52ca5c7c4:
+
+#define GET_GWClientRegisterCommDrv s_pfCMGetAPI2( "GWClientRegisterCommDrv", (RTS_VOID_FCTPTR *)&pfGWClientRegisterCommDrv, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gae2aa5718a8ac2bb4dfeddb9a2c7a7b05:
+
+#define CAL_GWClientRegisterCommDrv pfGWClientRegisterCommDrv
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga75f9d7120a8df70606505f1ce44cc8f6:
+
+#define CHK_GWClientRegisterCommDrv (pfGWClientRegisterCommDrv != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga91da244d2fb4e5fddd4f9f6190e4aa3b:
+
+#define EXP_GWClientRegisterCommDrv s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientRegisterCommDrv", (RTS_UINTPTR) :ref:`GWClientRegisterCommDrv <group___cmp_gw_client_itf_1gab413c42037c31a13672077f759a3327a>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga19639098824524d19aa88992bf23c061:
+
+#define USE_GWClientConnectionReady :ref:`PFGWCLIENTCONNECTIONREADY <group___cmp_gw_client_itf_1ga6fcb4901fd6f86041c8b39f2da991d92>` pfGWClientConnectionReady;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3bf128ee608fe776e4372e4ad7d2a304:
+
+#define EXT_GWClientConnectionReady extern :ref:`PFGWCLIENTCONNECTIONREADY <group___cmp_gw_client_itf_1ga6fcb4901fd6f86041c8b39f2da991d92>` pfGWClientConnectionReady;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga4f6a125b1f3cf81ddd29eea85c68c102:
+
+#define GET_GWClientConnectionReady s_pfCMGetAPI2( "GWClientConnectionReady", (RTS_VOID_FCTPTR *)&pfGWClientConnectionReady, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga5f8832bd880dd2551999638c50d66958:
+
+#define CAL_GWClientConnectionReady pfGWClientConnectionReady
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga757480a61dc7017dedb7c3ea44d051ee:
+
+#define CHK_GWClientConnectionReady (pfGWClientConnectionReady != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gae5ad8506580d8ac3565ee021cbd6764a:
+
+#define EXP_GWClientConnectionReady s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientConnectionReady", (RTS_UINTPTR) :ref:`GWClientConnectionReady <group___cmp_gw_client_itf_1gac7dfdcc5f37e9b702c66730eae5c73d1>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga21b5bf27560a162b6386f037c6015815:
+
+#define USE_GWClientGetInterfaceVersion :ref:`PFGWCLIENTGETINTERFACEVERSION <group___cmp_gw_client_itf_1ga87ed1cbc61aef8965c5a386582aa3f45>` pfGWClientGetInterfaceVersion;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga347debfdf435b3efc322ff532d29fac2:
+
+#define EXT_GWClientGetInterfaceVersion extern :ref:`PFGWCLIENTGETINTERFACEVERSION <group___cmp_gw_client_itf_1ga87ed1cbc61aef8965c5a386582aa3f45>` pfGWClientGetInterfaceVersion;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaa5f93d4c69eaa19e9850af568a2726b4:
+
+#define GET_GWClientGetInterfaceVersion s_pfCMGetAPI2( "GWClientGetInterfaceVersion", (RTS_VOID_FCTPTR *)&pfGWClientGetInterfaceVersion, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga109b38b3f49b74582c96a869fd609fc4:
+
+#define CAL_GWClientGetInterfaceVersion pfGWClientGetInterfaceVersion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaa554dc43a62bc72f8a1c4784d21f8d87:
+
+#define CHK_GWClientGetInterfaceVersion (pfGWClientGetInterfaceVersion != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gac17c8264ad216a6a8160ef4d62b954fd:
+
+#define EXP_GWClientGetInterfaceVersion s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientGetInterfaceVersion", (RTS_UINTPTR) :ref:`GWClientGetInterfaceVersion <group___cmp_gw_client_itf_1ga1a47fa582bd621084d90b7e93efe7fdc>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga46958c87c6ef87dc8b69ca35b6db0ff1:
+
+#define USE_GWClientEnumCommDrivers :ref:`PFGWCLIENTENUMCOMMDRIVERS <group___cmp_gw_client_itf_1gad2cea7c0b5eb974673b4f57172449610>` pfGWClientEnumCommDrivers;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga1f373f5d7dd235a0964378fd16a3c76e:
+
+#define EXT_GWClientEnumCommDrivers extern :ref:`PFGWCLIENTENUMCOMMDRIVERS <group___cmp_gw_client_itf_1gad2cea7c0b5eb974673b4f57172449610>` pfGWClientEnumCommDrivers;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gac2ac6649d5c0ff8ed2804379a7b3df84:
+
+#define GET_GWClientEnumCommDrivers s_pfCMGetAPI2( "GWClientEnumCommDrivers", (RTS_VOID_FCTPTR *)&pfGWClientEnumCommDrivers, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gafe43c79722228ad1eca7650261262be4:
+
+#define CAL_GWClientEnumCommDrivers pfGWClientEnumCommDrivers
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga45247710286c51ce70dfa1e29e8cdb07:
+
+#define CHK_GWClientEnumCommDrivers (pfGWClientEnumCommDrivers != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga9ccf4c7a7b7111ad22dff02b044d8288:
+
+#define EXP_GWClientEnumCommDrivers s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEnumCommDrivers", (RTS_UINTPTR) :ref:`GWClientEnumCommDrivers <group___cmp_gw_client_itf_1gabef29312a048de94f37828ba8541dc57>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaf7f8f79401af7a4e456690e35bf3c71f:
+
+#define USE_GWClientEnumCommDrivers2 :ref:`PFGWCLIENTENUMCOMMDRIVERS2 <group___cmp_gw_client_itf_1ga83bc92ffbb96595a0c7a4b376e7806f7>` pfGWClientEnumCommDrivers2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga7103acddb9924fbb320870555e5fa405:
+
+#define EXT_GWClientEnumCommDrivers2 extern :ref:`PFGWCLIENTENUMCOMMDRIVERS2 <group___cmp_gw_client_itf_1ga83bc92ffbb96595a0c7a4b376e7806f7>` pfGWClientEnumCommDrivers2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gadec428ea4cb2e8b74757d6c47902aaff:
+
+#define GET_GWClientEnumCommDrivers2 s_pfCMGetAPI2( "GWClientEnumCommDrivers2", (RTS_VOID_FCTPTR *)&pfGWClientEnumCommDrivers2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gab6b2b92eeeb3327a0f41c8e7a4dc8204:
+
+#define CAL_GWClientEnumCommDrivers2 pfGWClientEnumCommDrivers2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga16ee3b355739ddac04c5b4da8e97b6dc:
+
+#define CHK_GWClientEnumCommDrivers2 (pfGWClientEnumCommDrivers2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gab0c38d34443f8732b88456f8424128ed:
+
+#define EXP_GWClientEnumCommDrivers2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEnumCommDrivers2", (RTS_UINTPTR) :ref:`GWClientEnumCommDrivers2 <group___cmp_gw_client_itf_1gab3f9caa1f5412f548f9b655d334802e2>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gae88e3e20d500d6f67b68155cded75408:
+
+#define USE_GWClientBeginConnectToGateway :ref:`PFGWCLIENTBEGINCONNECTTOGATEWAY <group___cmp_gw_client_itf_1ga3217b4eed69a9fd6aec186f3ffd9e83a>` pfGWClientBeginConnectToGateway;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga683705c98f267071c6f1335b88ed685f:
+
+#define EXT_GWClientBeginConnectToGateway extern :ref:`PFGWCLIENTBEGINCONNECTTOGATEWAY <group___cmp_gw_client_itf_1ga3217b4eed69a9fd6aec186f3ffd9e83a>` pfGWClientBeginConnectToGateway;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gade240d24f310a5d8c792be4e3f3beaea:
+
+#define GET_GWClientBeginConnectToGateway s_pfCMGetAPI2( "GWClientBeginConnectToGateway", (RTS_VOID_FCTPTR *)&pfGWClientBeginConnectToGateway, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gac5a8ddeffba28efe2a85816ecbcbaf4d:
+
+#define CAL_GWClientBeginConnectToGateway pfGWClientBeginConnectToGateway
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gac18e19d593cbe145c28824f0eb02e96b:
+
+#define CHK_GWClientBeginConnectToGateway (pfGWClientBeginConnectToGateway != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gad2512713b2bdbbdbaa320a0ffdef940e:
+
+#define EXP_GWClientBeginConnectToGateway s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginConnectToGateway", (RTS_UINTPTR) :ref:`GWClientBeginConnectToGateway <group___cmp_gw_client_itf_1gae50c53ac66dfd67bc1ee4292972a6910>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga024d13b3fa482c0516c195460bc01f97:
+
+#define USE_GWClientBeginConnectToGateway2 :ref:`PFGWCLIENTBEGINCONNECTTOGATEWAY2 <group___cmp_gw_client_itf_1gacf36e4c7628047d6d2b9d501f944c16c>` pfGWClientBeginConnectToGateway2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaede398dc7f3d4dc940d56a0ae82cdc4e:
+
+#define EXT_GWClientBeginConnectToGateway2 extern :ref:`PFGWCLIENTBEGINCONNECTTOGATEWAY2 <group___cmp_gw_client_itf_1gacf36e4c7628047d6d2b9d501f944c16c>` pfGWClientBeginConnectToGateway2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga06249f96b58685992e774dd6bb54726e:
+
+#define GET_GWClientBeginConnectToGateway2 s_pfCMGetAPI2( "GWClientBeginConnectToGateway2", (RTS_VOID_FCTPTR *)&pfGWClientBeginConnectToGateway2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga988391476e21a40f408088f0b5948065:
+
+#define CAL_GWClientBeginConnectToGateway2 pfGWClientBeginConnectToGateway2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga7e99bf1b9c617adafc3b34e066041f8e:
+
+#define CHK_GWClientBeginConnectToGateway2 (pfGWClientBeginConnectToGateway2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gabefb8ac3076fbd99935bef944becad7f:
+
+#define EXP_GWClientBeginConnectToGateway2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginConnectToGateway2", (RTS_UINTPTR) :ref:`GWClientBeginConnectToGateway2 <group___cmp_gw_client_itf_1ga8e0ddbd6b117af34b4c5b459849f1ce2>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga4ae6bce577f989a098749dac26043afa:
+
+#define USE_GWClientEndConnectToGateway :ref:`PFGWCLIENTENDCONNECTTOGATEWAY <group___cmp_gw_client_itf_1gaa8b29b54530086551be391a3a2cfc55c>` pfGWClientEndConnectToGateway;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gafdfb19d20ce96b8dfab0899aa78a93eb:
+
+#define EXT_GWClientEndConnectToGateway extern :ref:`PFGWCLIENTENDCONNECTTOGATEWAY <group___cmp_gw_client_itf_1gaa8b29b54530086551be391a3a2cfc55c>` pfGWClientEndConnectToGateway;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga82c2177847b3e71db5635cf8a53a1471:
+
+#define GET_GWClientEndConnectToGateway s_pfCMGetAPI2( "GWClientEndConnectToGateway", (RTS_VOID_FCTPTR *)&pfGWClientEndConnectToGateway, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gac1a29692701d862de602110cc3c75b97:
+
+#define CAL_GWClientEndConnectToGateway pfGWClientEndConnectToGateway
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga4f3a816d04fb9ed4727babc7fbad58be:
+
+#define CHK_GWClientEndConnectToGateway (pfGWClientEndConnectToGateway != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga7d5ba830f8be8183b8ead67b2062f8b8:
+
+#define EXP_GWClientEndConnectToGateway s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndConnectToGateway", (RTS_UINTPTR) :ref:`GWClientEndConnectToGateway <group___cmp_gw_client_itf_1gaf32ce0c55e04e6b4fa3fdf3868d8956f>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3c93aaa1c3d07e74fc56538e720546b6:
+
+#define USE_GWClientDisconnectFromGateway :ref:`PFGWCLIENTDISCONNECTFROMGATEWAY <group___cmp_gw_client_itf_1ga7e2f5113c0652bcccc0a400a2c6a1a42>` pfGWClientDisconnectFromGateway;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga43eeb91b71eb7596168735bfeda2a09a:
+
+#define EXT_GWClientDisconnectFromGateway extern :ref:`PFGWCLIENTDISCONNECTFROMGATEWAY <group___cmp_gw_client_itf_1ga7e2f5113c0652bcccc0a400a2c6a1a42>` pfGWClientDisconnectFromGateway;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga4c398fc981e5e783e937bda67311d93a:
+
+#define GET_GWClientDisconnectFromGateway s_pfCMGetAPI2( "GWClientDisconnectFromGateway", (RTS_VOID_FCTPTR *)&pfGWClientDisconnectFromGateway, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga530277797f33a571e92148d3f3616c68:
+
+#define CAL_GWClientDisconnectFromGateway pfGWClientDisconnectFromGateway
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gad3f4a2c183e7ee5060a7dfebb1789ec6:
+
+#define CHK_GWClientDisconnectFromGateway (pfGWClientDisconnectFromGateway != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaf46df6c703dcea71c098e8383170d17b:
+
+#define EXP_GWClientDisconnectFromGateway s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientDisconnectFromGateway", (RTS_UINTPTR) :ref:`GWClientDisconnectFromGateway <group___cmp_gw_client_itf_1gab2ef94262cbe8ba2979ca8f95be39659>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga8370c4173e1ce0d7dbbd019bee1307ae:
+
+#define USE_GWClientBeginIncrementalResolveAllNodes :ref:`PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES <group___cmp_gw_client_itf_1ga53bbb4861e509eb134dcf8d149eb83cb>` pfGWClientBeginIncrementalResolveAllNodes;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gafe667ccb94de712f4d45299ad9277e73:
+
+#define EXT_GWClientBeginIncrementalResolveAllNodes extern :ref:`PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES <group___cmp_gw_client_itf_1ga53bbb4861e509eb134dcf8d149eb83cb>` pfGWClientBeginIncrementalResolveAllNodes;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga4293501b14eda626b9eadc3938c7373c:
+
+#define GET_GWClientBeginIncrementalResolveAllNodes s_pfCMGetAPI2( "GWClientBeginIncrementalResolveAllNodes", (RTS_VOID_FCTPTR *)&pfGWClientBeginIncrementalResolveAllNodes, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga94dd5526fdbbca952764d5c800a4215b:
+
+#define CAL_GWClientBeginIncrementalResolveAllNodes pfGWClientBeginIncrementalResolveAllNodes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gae0c79a40a5a4916155b81078d7082bee:
+
+#define CHK_GWClientBeginIncrementalResolveAllNodes (pfGWClientBeginIncrementalResolveAllNodes != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaefacf62d9d7190f04d1048da5ce63af5:
+
+#define EXP_GWClientBeginIncrementalResolveAllNodes s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginIncrementalResolveAllNodes", (RTS_UINTPTR) :ref:`GWClientBeginIncrementalResolveAllNodes <group___cmp_gw_client_itf_1gae650fcf174cc943af83acf6516c5d28d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga992088481f8ed9560a66bb5256ca9999:
+
+#define USE_GWClientBeginIncrementalResolveAllNodes2 :ref:`PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES2 <group___cmp_gw_client_itf_1gaaffed80e69cdc2516f86bcf324531a32>` pfGWClientBeginIncrementalResolveAllNodes2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga227c187e464f8d96f7366ed9a2768f6a:
+
+#define EXT_GWClientBeginIncrementalResolveAllNodes2 extern :ref:`PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES2 <group___cmp_gw_client_itf_1gaaffed80e69cdc2516f86bcf324531a32>` pfGWClientBeginIncrementalResolveAllNodes2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga64b61e2cb2b2e2535a5429e5e2317b59:
+
+#define GET_GWClientBeginIncrementalResolveAllNodes2 s_pfCMGetAPI2( "GWClientBeginIncrementalResolveAllNodes2", (RTS_VOID_FCTPTR *)&pfGWClientBeginIncrementalResolveAllNodes2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga8581c65ca0486a60dcb66a4582fd4676:
+
+#define CAL_GWClientBeginIncrementalResolveAllNodes2 pfGWClientBeginIncrementalResolveAllNodes2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gab58b0c08ba145e27583946cdd645c4ae:
+
+#define CHK_GWClientBeginIncrementalResolveAllNodes2 (pfGWClientBeginIncrementalResolveAllNodes2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga381ea99f29ae3a180dbb3e2f8856d537:
+
+#define EXP_GWClientBeginIncrementalResolveAllNodes2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginIncrementalResolveAllNodes2", (RTS_UINTPTR) :ref:`GWClientBeginIncrementalResolveAllNodes2 <group___cmp_gw_client_itf_1gab73cc1f8f57a9e5bbe275cc64b3aa32d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaf218460d1cdb1ddee13c7f230d1ffce0:
+
+#define USE_GWClientBeginIncrementalResolveAllNodes3 :ref:`PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES3 <group___cmp_gw_client_itf_1ga3cd6ceb2d43219ae4c88bae1d9025281>` pfGWClientBeginIncrementalResolveAllNodes3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gad081b78a9aafd84a1a85b40b15d8144e:
+
+#define EXT_GWClientBeginIncrementalResolveAllNodes3 extern :ref:`PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES3 <group___cmp_gw_client_itf_1ga3cd6ceb2d43219ae4c88bae1d9025281>` pfGWClientBeginIncrementalResolveAllNodes3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga97ae04c9506b5cfada22a265c9935554:
+
+#define GET_GWClientBeginIncrementalResolveAllNodes3 s_pfCMGetAPI2( "GWClientBeginIncrementalResolveAllNodes3", (RTS_VOID_FCTPTR *)&pfGWClientBeginIncrementalResolveAllNodes3, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gad3657f4b3fb9c700713f6d1576d19b60:
+
+#define CAL_GWClientBeginIncrementalResolveAllNodes3 pfGWClientBeginIncrementalResolveAllNodes3
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaae24738a11a96bd9af442a74a343aef1:
+
+#define CHK_GWClientBeginIncrementalResolveAllNodes3 (pfGWClientBeginIncrementalResolveAllNodes3 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gacf5fd3196dd65c2434a5e82d9518571a:
+
+#define EXP_GWClientBeginIncrementalResolveAllNodes3 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginIncrementalResolveAllNodes3", (RTS_UINTPTR) :ref:`GWClientBeginIncrementalResolveAllNodes3 <group___cmp_gw_client_itf_1ga9c59dffce2413a67633444cfc2e17d27>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga0e8155018aaaf7bb6f296a96214f9c14:
+
+#define USE_GWClientAdjustIncrementalResolveAllNodesTimeout :ref:`PFGWCLIENTADJUSTINCREMENTALRESOLVEALLNODESTIMEOUT <group___cmp_gw_client_itf_1ga97ab63d849bcf01dd354fe870e3c150d>` pfGWClientAdjustIncrementalResolveAllNodesTimeout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gad1235c3335fc078b2c26ed21464cab11:
+
+#define EXT_GWClientAdjustIncrementalResolveAllNodesTimeout extern :ref:`PFGWCLIENTADJUSTINCREMENTALRESOLVEALLNODESTIMEOUT <group___cmp_gw_client_itf_1ga97ab63d849bcf01dd354fe870e3c150d>` pfGWClientAdjustIncrementalResolveAllNodesTimeout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaf8a7b5d085cd618315f5d152412037f7:
+
+#define GET_GWClientAdjustIncrementalResolveAllNodesTimeout s_pfCMGetAPI2( "GWClientAdjustIncrementalResolveAllNodesTimeout", (RTS_VOID_FCTPTR *)&pfGWClientAdjustIncrementalResolveAllNodesTimeout, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga40900f4248ee605997dfaf9a6c803e8c:
+
+#define CAL_GWClientAdjustIncrementalResolveAllNodesTimeout pfGWClientAdjustIncrementalResolveAllNodesTimeout
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaa8d5a07bee3fdec0c28bab43a2dce8bc:
+
+#define CHK_GWClientAdjustIncrementalResolveAllNodesTimeout (pfGWClientAdjustIncrementalResolveAllNodesTimeout != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga2bbb696872627e047594b7f37ff79196:
+
+#define EXP_GWClientAdjustIncrementalResolveAllNodesTimeout s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientAdjustIncrementalResolveAllNodesTimeout", (RTS_UINTPTR) :ref:`GWClientAdjustIncrementalResolveAllNodesTimeout <group___cmp_gw_client_itf_1ga795a2d3bec0699ae7053aef69ebb57d1>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga5a720c3d7a11ddc48804eff3e6a18052:
+
+#define USE_GWClientEndIncrementalResolveAllNodes :ref:`PFGWCLIENTENDINCREMENTALRESOLVEALLNODES <group___cmp_gw_client_itf_1ga458f9b4df827e37012446258ebe6df2a>` pfGWClientEndIncrementalResolveAllNodes;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga947dc042f6270474c92c00b37abb5459:
+
+#define EXT_GWClientEndIncrementalResolveAllNodes extern :ref:`PFGWCLIENTENDINCREMENTALRESOLVEALLNODES <group___cmp_gw_client_itf_1ga458f9b4df827e37012446258ebe6df2a>` pfGWClientEndIncrementalResolveAllNodes;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaadc0e58cbed9ed181453525d2056ae2e:
+
+#define GET_GWClientEndIncrementalResolveAllNodes s_pfCMGetAPI2( "GWClientEndIncrementalResolveAllNodes", (RTS_VOID_FCTPTR *)&pfGWClientEndIncrementalResolveAllNodes, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga34a8ffe33c1fbb4ee53f479c2e976974:
+
+#define CAL_GWClientEndIncrementalResolveAllNodes pfGWClientEndIncrementalResolveAllNodes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gac9a265baae7d289c279e2ee89e1d0140:
+
+#define CHK_GWClientEndIncrementalResolveAllNodes (pfGWClientEndIncrementalResolveAllNodes != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga5588ce7b090e5d3e2298245b0182542a:
+
+#define EXP_GWClientEndIncrementalResolveAllNodes s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndIncrementalResolveAllNodes", (RTS_UINTPTR) :ref:`GWClientEndIncrementalResolveAllNodes <group___cmp_gw_client_itf_1gab9a297dbd3ef687baefc45ecd38f264e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gab58117503c974b142bd2b2c7948dfa30:
+
+#define USE_GWClientBeginIncrementalResolveName :ref:`PFGWCLIENTBEGININCREMENTALRESOLVENAME <group___cmp_gw_client_itf_1ga71a32269b627fe87869b2e1b20198a8a>` pfGWClientBeginIncrementalResolveName;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga89bc0e4c9651d0a8be6a886aaa735f15:
+
+#define EXT_GWClientBeginIncrementalResolveName extern :ref:`PFGWCLIENTBEGININCREMENTALRESOLVENAME <group___cmp_gw_client_itf_1ga71a32269b627fe87869b2e1b20198a8a>` pfGWClientBeginIncrementalResolveName;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga933f19427033dd3f38289886a1cb87f1:
+
+#define GET_GWClientBeginIncrementalResolveName s_pfCMGetAPI2( "GWClientBeginIncrementalResolveName", (RTS_VOID_FCTPTR *)&pfGWClientBeginIncrementalResolveName, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3e18486560399c66b45ce14eeb191114:
+
+#define CAL_GWClientBeginIncrementalResolveName pfGWClientBeginIncrementalResolveName
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga38091142591b3b6c4c74ccc730a81362:
+
+#define CHK_GWClientBeginIncrementalResolveName (pfGWClientBeginIncrementalResolveName != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gab17015de248f2b654ccddf7285e8b00e:
+
+#define EXP_GWClientBeginIncrementalResolveName s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginIncrementalResolveName", (RTS_UINTPTR) :ref:`GWClientBeginIncrementalResolveName <group___cmp_gw_client_itf_1ga8d466010dee855bb8bc1bf39aecb6964>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga32ff66620dfb22602229d351d4bbd5cd:
+
+#define USE_GWClientBeginIncrementalResolveName3 :ref:`PFGWCLIENTBEGININCREMENTALRESOLVENAME3 <group___cmp_gw_client_itf_1ga42e588576e3bac4caa14a706af1f86f8>` pfGWClientBeginIncrementalResolveName3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga1cbd866405fab7355043c4e5aaf54f3e:
+
+#define EXT_GWClientBeginIncrementalResolveName3 extern :ref:`PFGWCLIENTBEGININCREMENTALRESOLVENAME3 <group___cmp_gw_client_itf_1ga42e588576e3bac4caa14a706af1f86f8>` pfGWClientBeginIncrementalResolveName3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaa86eb364860bc4ae0e1d6d9d50cdbd4e:
+
+#define GET_GWClientBeginIncrementalResolveName3 s_pfCMGetAPI2( "GWClientBeginIncrementalResolveName3", (RTS_VOID_FCTPTR *)&pfGWClientBeginIncrementalResolveName3, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga2e1470a37ffc0d4b36081c1199588e70:
+
+#define CAL_GWClientBeginIncrementalResolveName3 pfGWClientBeginIncrementalResolveName3
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga884e77f372dc424ca84c3b54fd6eeacb:
+
+#define CHK_GWClientBeginIncrementalResolveName3 (pfGWClientBeginIncrementalResolveName3 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gab317a36d2274465087070870f598e8b1:
+
+#define EXP_GWClientBeginIncrementalResolveName3 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginIncrementalResolveName3", (RTS_UINTPTR) :ref:`GWClientBeginIncrementalResolveName3 <group___cmp_gw_client_itf_1ga5edcc48c515d6a36b93e51a7e8aeef94>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3e58ef53a100601cbd97b377dfa436ff:
+
+#define USE_GWClientAdjustIncrementalResolveNameTimeout :ref:`PFGWCLIENTADJUSTINCREMENTALRESOLVENAMETIMEOUT <group___cmp_gw_client_itf_1ga3cfca9a757a63a32f6a00df92df407e6>` pfGWClientAdjustIncrementalResolveNameTimeout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaea316824e5d1a7d9f69c05e5b0f6e651:
+
+#define EXT_GWClientAdjustIncrementalResolveNameTimeout extern :ref:`PFGWCLIENTADJUSTINCREMENTALRESOLVENAMETIMEOUT <group___cmp_gw_client_itf_1ga3cfca9a757a63a32f6a00df92df407e6>` pfGWClientAdjustIncrementalResolveNameTimeout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga439f9dc0ac0b2112d3642d77fe88716d:
+
+#define GET_GWClientAdjustIncrementalResolveNameTimeout s_pfCMGetAPI2( "GWClientAdjustIncrementalResolveNameTimeout", (RTS_VOID_FCTPTR *)&pfGWClientAdjustIncrementalResolveNameTimeout, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3fde9f3e55cc9ffb6ca762014989dd45:
+
+#define CAL_GWClientAdjustIncrementalResolveNameTimeout pfGWClientAdjustIncrementalResolveNameTimeout
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gac41a1c3c3616ff989e3e60462b209e8e:
+
+#define CHK_GWClientAdjustIncrementalResolveNameTimeout (pfGWClientAdjustIncrementalResolveNameTimeout != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3b2e2c4ee7d81e23e6668c35e5b058f8:
+
+#define EXP_GWClientAdjustIncrementalResolveNameTimeout s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientAdjustIncrementalResolveNameTimeout", (RTS_UINTPTR) :ref:`GWClientAdjustIncrementalResolveNameTimeout <group___cmp_gw_client_itf_1ga2d05dcc89787236db629d8ff1be69d78>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga231a101d06bb36504be2948b76fc8c6f:
+
+#define USE_GWClientEndIncrementalResolveName :ref:`PFGWCLIENTENDINCREMENTALRESOLVENAME <group___cmp_gw_client_itf_1ga40d1e6a924b2ca9cd0ad39c3f3057623>` pfGWClientEndIncrementalResolveName;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3cbd941094a5a5d89c18996803e06e31:
+
+#define EXT_GWClientEndIncrementalResolveName extern :ref:`PFGWCLIENTENDINCREMENTALRESOLVENAME <group___cmp_gw_client_itf_1ga40d1e6a924b2ca9cd0ad39c3f3057623>` pfGWClientEndIncrementalResolveName;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gae25592bab604fc052f195c53eb51b00f:
+
+#define GET_GWClientEndIncrementalResolveName s_pfCMGetAPI2( "GWClientEndIncrementalResolveName", (RTS_VOID_FCTPTR *)&pfGWClientEndIncrementalResolveName, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga8f9ab8012e8d8420d4bf4974ac5e04d6:
+
+#define CAL_GWClientEndIncrementalResolveName pfGWClientEndIncrementalResolveName
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3f34012383c816c50ba41883a17ef08a:
+
+#define CHK_GWClientEndIncrementalResolveName (pfGWClientEndIncrementalResolveName != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga0e0b39e5e0b836dda0aaf27136582889:
+
+#define EXP_GWClientEndIncrementalResolveName s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndIncrementalResolveName", (RTS_UINTPTR) :ref:`GWClientEndIncrementalResolveName <group___cmp_gw_client_itf_1gae18436bc27002de842dcada6cac1727d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaf0373734e86847a74761b5c0f338ba55:
+
+#define USE_GWClientBeginResolveBlockDriverAddress :ref:`PFGWCLIENTBEGINRESOLVEBLOCKDRIVERADDRESS <group___cmp_gw_client_itf_1gaf8e328cdc38190ec823ae61eab8c09fa>` pfGWClientBeginResolveBlockDriverAddress;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga5018a0b4dba4281f906e36455658a39f:
+
+#define EXT_GWClientBeginResolveBlockDriverAddress extern :ref:`PFGWCLIENTBEGINRESOLVEBLOCKDRIVERADDRESS <group___cmp_gw_client_itf_1gaf8e328cdc38190ec823ae61eab8c09fa>` pfGWClientBeginResolveBlockDriverAddress;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga4a3f0e0659c4db6019c0f8baa9938f7b:
+
+#define GET_GWClientBeginResolveBlockDriverAddress s_pfCMGetAPI2( "GWClientBeginResolveBlockDriverAddress", (RTS_VOID_FCTPTR *)&pfGWClientBeginResolveBlockDriverAddress, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gac80d7caddeed662a1b54ada2740157c7:
+
+#define CAL_GWClientBeginResolveBlockDriverAddress pfGWClientBeginResolveBlockDriverAddress
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga1fb08c982440e701b16de7d3bbca9dd7:
+
+#define CHK_GWClientBeginResolveBlockDriverAddress (pfGWClientBeginResolveBlockDriverAddress != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga322431102017980d9d11cf01aacb07f2:
+
+#define EXP_GWClientBeginResolveBlockDriverAddress s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginResolveBlockDriverAddress", (RTS_UINTPTR) :ref:`GWClientBeginResolveBlockDriverAddress <group___cmp_gw_client_itf_1gad453e5d61f70eada48cf5fd06e74d810>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3f70eec588d2ab3f7429a8b56a12c360:
+
+#define USE_GWClientBeginResolveBlockDriverAddress3 :ref:`PFGWCLIENTBEGINRESOLVEBLOCKDRIVERADDRESS3 <group___cmp_gw_client_itf_1gaf2bc531da99926b6470655ddabc6fd40>` pfGWClientBeginResolveBlockDriverAddress3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaf8d66092e692927bc24b4447ee98b717:
+
+#define EXT_GWClientBeginResolveBlockDriverAddress3 extern :ref:`PFGWCLIENTBEGINRESOLVEBLOCKDRIVERADDRESS3 <group___cmp_gw_client_itf_1gaf2bc531da99926b6470655ddabc6fd40>` pfGWClientBeginResolveBlockDriverAddress3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga964d9de9b9ba6ce08242a529012c1cad:
+
+#define GET_GWClientBeginResolveBlockDriverAddress3 s_pfCMGetAPI2( "GWClientBeginResolveBlockDriverAddress3", (RTS_VOID_FCTPTR *)&pfGWClientBeginResolveBlockDriverAddress3, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3370912730c73f41225a8f9024510f61:
+
+#define CAL_GWClientBeginResolveBlockDriverAddress3 pfGWClientBeginResolveBlockDriverAddress3
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaa361b86b9843511c6a3b1e3ab51de072:
+
+#define CHK_GWClientBeginResolveBlockDriverAddress3 (pfGWClientBeginResolveBlockDriverAddress3 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga10da5e4c769b1351d85469d06710fdb6:
+
+#define EXP_GWClientBeginResolveBlockDriverAddress3 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginResolveBlockDriverAddress3", (RTS_UINTPTR) :ref:`GWClientBeginResolveBlockDriverAddress3 <group___cmp_gw_client_itf_1ga07213c7fc052fc5aeeb62ddfb561c6b9>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaa601c69eddc3630eb56cd8fbc085cd6c:
+
+#define USE_GWClientAdjustResolveBlockDriverAddressTimeout :ref:`PFGWCLIENTADJUSTRESOLVEBLOCKDRIVERADDRESSTIMEOUT <group___cmp_gw_client_itf_1ga93537d83af6b1853f59fc1333c2f382c>` pfGWClientAdjustResolveBlockDriverAddressTimeout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga897220fe5cd54e700781a59cac58bca5:
+
+#define EXT_GWClientAdjustResolveBlockDriverAddressTimeout extern :ref:`PFGWCLIENTADJUSTRESOLVEBLOCKDRIVERADDRESSTIMEOUT <group___cmp_gw_client_itf_1ga93537d83af6b1853f59fc1333c2f382c>` pfGWClientAdjustResolveBlockDriverAddressTimeout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga63a8ecb2f5666fbb1ae8e54fe4693f0f:
+
+#define GET_GWClientAdjustResolveBlockDriverAddressTimeout s_pfCMGetAPI2( "GWClientAdjustResolveBlockDriverAddressTimeout", (RTS_VOID_FCTPTR *)&pfGWClientAdjustResolveBlockDriverAddressTimeout, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga35cd2b34c8b02191f81d0232283c5f55:
+
+#define CAL_GWClientAdjustResolveBlockDriverAddressTimeout pfGWClientAdjustResolveBlockDriverAddressTimeout
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga36d1afbc5bd748f95c46b8eff46b0085:
+
+#define CHK_GWClientAdjustResolveBlockDriverAddressTimeout (pfGWClientAdjustResolveBlockDriverAddressTimeout != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga5a0f4676c42b5b61f63ac161c1c59d3c:
+
+#define EXP_GWClientAdjustResolveBlockDriverAddressTimeout s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientAdjustResolveBlockDriverAddressTimeout", (RTS_UINTPTR) :ref:`GWClientAdjustResolveBlockDriverAddressTimeout <group___cmp_gw_client_itf_1gaed4bc48b679905e385ee8522304269de>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaf8542bdc493f173e2ae28ed405f13b5f:
+
+#define USE_GWClientEndResolveBlockDriverAddress :ref:`PFGWCLIENTENDRESOLVEBLOCKDRIVERADDRESS <group___cmp_gw_client_itf_1gac6ea12ffb994af550f78821065de4f56>` pfGWClientEndResolveBlockDriverAddress;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gad7f5ee716ece9e43b591db518aee92d8:
+
+#define EXT_GWClientEndResolveBlockDriverAddress extern :ref:`PFGWCLIENTENDRESOLVEBLOCKDRIVERADDRESS <group___cmp_gw_client_itf_1gac6ea12ffb994af550f78821065de4f56>` pfGWClientEndResolveBlockDriverAddress;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3c47ad53a08128c6cc31423c74d63841:
+
+#define GET_GWClientEndResolveBlockDriverAddress s_pfCMGetAPI2( "GWClientEndResolveBlockDriverAddress", (RTS_VOID_FCTPTR *)&pfGWClientEndResolveBlockDriverAddress, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga00c8afcd09b3335b024cd24fb6923cf8:
+
+#define CAL_GWClientEndResolveBlockDriverAddress pfGWClientEndResolveBlockDriverAddress
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga2014c7226019c1e0d945182baf9d8345:
+
+#define CHK_GWClientEndResolveBlockDriverAddress (pfGWClientEndResolveBlockDriverAddress != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga203cfd07dc791c48e01a138b7b291532:
+
+#define EXP_GWClientEndResolveBlockDriverAddress s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndResolveBlockDriverAddress", (RTS_UINTPTR) :ref:`GWClientEndResolveBlockDriverAddress <group___cmp_gw_client_itf_1ga5998a56e335d1210b8f9ee3a4261e508>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga109d1873bc3676b2e0c5238020378ebc:
+
+#define USE_GWClientBeginResolveAddress :ref:`PFGWCLIENTBEGINRESOLVEADDRESS <group___cmp_gw_client_itf_1ga80a70079c439b9b1bf4d182c0d7a4b82>` pfGWClientBeginResolveAddress;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga246b8f06d35484b3157c2cf1fd99c92d:
+
+#define EXT_GWClientBeginResolveAddress extern :ref:`PFGWCLIENTBEGINRESOLVEADDRESS <group___cmp_gw_client_itf_1ga80a70079c439b9b1bf4d182c0d7a4b82>` pfGWClientBeginResolveAddress;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga8463cdbe33d069c09d546bf1c681b3fa:
+
+#define GET_GWClientBeginResolveAddress s_pfCMGetAPI2( "GWClientBeginResolveAddress", (RTS_VOID_FCTPTR *)&pfGWClientBeginResolveAddress, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga9c3017d92a7befd3e382f6d4a36173ae:
+
+#define CAL_GWClientBeginResolveAddress pfGWClientBeginResolveAddress
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gac55bee8cdb380dce5819c64ad1781db6:
+
+#define CHK_GWClientBeginResolveAddress (pfGWClientBeginResolveAddress != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga79f047337f1b8bb2c572880369187f57:
+
+#define EXP_GWClientBeginResolveAddress s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginResolveAddress", (RTS_UINTPTR) :ref:`GWClientBeginResolveAddress <group___cmp_gw_client_itf_1ga1c3eecd333e8f769c74d2dc39670f15d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gadd789858475fc9674fd7bdcc0b137e58:
+
+#define USE_GWClientBeginResolveAddress3 :ref:`PFGWCLIENTBEGINRESOLVEADDRESS3 <group___cmp_gw_client_itf_1gae00f8fe4b99f454beccd0c06cf749587>` pfGWClientBeginResolveAddress3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga01680126b786151818e7ae4206de427a:
+
+#define EXT_GWClientBeginResolveAddress3 extern :ref:`PFGWCLIENTBEGINRESOLVEADDRESS3 <group___cmp_gw_client_itf_1gae00f8fe4b99f454beccd0c06cf749587>` pfGWClientBeginResolveAddress3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga5294dfcadb28a3f64edc6952db483fbd:
+
+#define GET_GWClientBeginResolveAddress3 s_pfCMGetAPI2( "GWClientBeginResolveAddress3", (RTS_VOID_FCTPTR *)&pfGWClientBeginResolveAddress3, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga59e08978d9cb5f5fdcb47f7ce66c9771:
+
+#define CAL_GWClientBeginResolveAddress3 pfGWClientBeginResolveAddress3
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga15fa2a3a8295100d762a8d9807f7be85:
+
+#define CHK_GWClientBeginResolveAddress3 (pfGWClientBeginResolveAddress3 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga1e446901165f890244bd1a3a70fadf80:
+
+#define EXP_GWClientBeginResolveAddress3 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginResolveAddress3", (RTS_UINTPTR) :ref:`GWClientBeginResolveAddress3 <group___cmp_gw_client_itf_1gab1166752e9209a87beaac6692846336c>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3066df307001dece3547f3d3f9ba25a5:
+
+#define USE_GWClientAdjustResolveAddressTimeout :ref:`PFGWCLIENTADJUSTRESOLVEADDRESSTIMEOUT <group___cmp_gw_client_itf_1ga9bcc3d73c49678a24c3cde35512517ff>` pfGWClientAdjustResolveAddressTimeout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaa2c4b992a7b35d0204b76c50051cec93:
+
+#define EXT_GWClientAdjustResolveAddressTimeout extern :ref:`PFGWCLIENTADJUSTRESOLVEADDRESSTIMEOUT <group___cmp_gw_client_itf_1ga9bcc3d73c49678a24c3cde35512517ff>` pfGWClientAdjustResolveAddressTimeout;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga19ee4c09b7fae940f247dd10b52c2e37:
+
+#define GET_GWClientAdjustResolveAddressTimeout s_pfCMGetAPI2( "GWClientAdjustResolveAddressTimeout", (RTS_VOID_FCTPTR *)&pfGWClientAdjustResolveAddressTimeout, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga930b0dcebb4c5eac49934953e832e8b6:
+
+#define CAL_GWClientAdjustResolveAddressTimeout pfGWClientAdjustResolveAddressTimeout
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3888d1df4a695345263c538160c8be09:
+
+#define CHK_GWClientAdjustResolveAddressTimeout (pfGWClientAdjustResolveAddressTimeout != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga725ab15fb3c7fd653367e0b345a3aa2d:
+
+#define EXP_GWClientAdjustResolveAddressTimeout s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientAdjustResolveAddressTimeout", (RTS_UINTPTR) :ref:`GWClientAdjustResolveAddressTimeout <group___cmp_gw_client_itf_1ga5d2884a0b3bb413675d0d73e2190d121>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaee9ff86bc88d9ed8dbd5d7687bf82231:
+
+#define USE_GWClientEndResolveAddress :ref:`PFGWCLIENTENDRESOLVEADDRESS <group___cmp_gw_client_itf_1gaeec477de315edce75db1a5ff86d9597d>` pfGWClientEndResolveAddress;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga907a90aab0fe9985557677d305d8fe68:
+
+#define EXT_GWClientEndResolveAddress extern :ref:`PFGWCLIENTENDRESOLVEADDRESS <group___cmp_gw_client_itf_1gaeec477de315edce75db1a5ff86d9597d>` pfGWClientEndResolveAddress;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaadd74d0b146f2117966dc05279379c3c:
+
+#define GET_GWClientEndResolveAddress s_pfCMGetAPI2( "GWClientEndResolveAddress", (RTS_VOID_FCTPTR *)&pfGWClientEndResolveAddress, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga5f2e9a1ca5ea4259a885e26bb34ed76f:
+
+#define CAL_GWClientEndResolveAddress pfGWClientEndResolveAddress
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gab48d627b2dde492b40098af573fc0899:
+
+#define CHK_GWClientEndResolveAddress (pfGWClientEndResolveAddress != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gad8726783f232af7ccbd4bf81a21a53e6:
+
+#define EXP_GWClientEndResolveAddress s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndResolveAddress", (RTS_UINTPTR) :ref:`GWClientEndResolveAddress <group___cmp_gw_client_itf_1ga43ba6e723afb4c2996e5eff408cb10f7>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga5b91b0145e74c645a42d9809c5a77744:
+
+#define USE_GWClientBeginSendRequest :ref:`PFGWCLIENTBEGINSENDREQUEST <group___cmp_gw_client_itf_1ga27428f6f067c573b92a0c7767147cdae>` pfGWClientBeginSendRequest;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gab576a00c7f624394e31f50c08ed51566:
+
+#define EXT_GWClientBeginSendRequest extern :ref:`PFGWCLIENTBEGINSENDREQUEST <group___cmp_gw_client_itf_1ga27428f6f067c573b92a0c7767147cdae>` pfGWClientBeginSendRequest;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gae4f997f6f054acb7daca002221a98e6a:
+
+#define GET_GWClientBeginSendRequest s_pfCMGetAPI2( "GWClientBeginSendRequest", (RTS_VOID_FCTPTR *)&pfGWClientBeginSendRequest, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaf0a9a4ccf69a58c6b981e8f7cdbab963:
+
+#define CAL_GWClientBeginSendRequest pfGWClientBeginSendRequest
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga1ff51e5dd80e96488e6d5d9df62ac34d:
+
+#define CHK_GWClientBeginSendRequest (pfGWClientBeginSendRequest != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga09f5837a2c54682a3365bdf322132b7d:
+
+#define EXP_GWClientBeginSendRequest s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginSendRequest", (RTS_UINTPTR) :ref:`GWClientBeginSendRequest <group___cmp_gw_client_itf_1ga7b7ad07b0de22921568fc5c0cb26d7e7>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga2edd9a769c4bfa5282e8384ef606441c:
+
+#define USE_GWClientEndSendRequest :ref:`PFGWCLIENTENDSENDREQUEST <group___cmp_gw_client_itf_1gad28dea404135d60cff92e7ff899ca03a>` pfGWClientEndSendRequest;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga8c12caf620f16fe047164926395afea7:
+
+#define EXT_GWClientEndSendRequest extern :ref:`PFGWCLIENTENDSENDREQUEST <group___cmp_gw_client_itf_1gad28dea404135d60cff92e7ff899ca03a>` pfGWClientEndSendRequest;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga90bccb0489f85587b03a813750a3d7d3:
+
+#define GET_GWClientEndSendRequest s_pfCMGetAPI2( "GWClientEndSendRequest", (RTS_VOID_FCTPTR *)&pfGWClientEndSendRequest, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga34ad5b841623e7e8e5d76629ada723f9:
+
+#define CAL_GWClientEndSendRequest pfGWClientEndSendRequest
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gafa4f655d0e642d4e46847932a1631ace:
+
+#define CHK_GWClientEndSendRequest (pfGWClientEndSendRequest != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga39b0fcd533e7fb8ddc97d7b09ac280ac:
+
+#define EXP_GWClientEndSendRequest s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndSendRequest", (RTS_UINTPTR) :ref:`GWClientEndSendRequest <group___cmp_gw_client_itf_1ga88a9d8f88f3c231e0ca6d141e23823e6>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga77313f8b34acee565ae9a07d6f30af47:
+
+#define USE_GWClientGetRequestStatus :ref:`PFGWCLIENTGETREQUESTSTATUS <group___cmp_gw_client_itf_1gaa0a97cd08ffddb47b254c1bd46cbf71a>` pfGWClientGetRequestStatus;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga42f8e8c84c75aa52463b2bae4f08961b:
+
+#define EXT_GWClientGetRequestStatus extern :ref:`PFGWCLIENTGETREQUESTSTATUS <group___cmp_gw_client_itf_1gaa0a97cd08ffddb47b254c1bd46cbf71a>` pfGWClientGetRequestStatus;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3e46f89c451c3b06a6313821aef2668a:
+
+#define GET_GWClientGetRequestStatus s_pfCMGetAPI2( "GWClientGetRequestStatus", (RTS_VOID_FCTPTR *)&pfGWClientGetRequestStatus, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga2795aa3b183a77887f2b63305b3500ca:
+
+#define CAL_GWClientGetRequestStatus pfGWClientGetRequestStatus
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga53454179ae6d61af6881cb4ee682cf8b:
+
+#define CHK_GWClientGetRequestStatus (pfGWClientGetRequestStatus != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga794c8208321da68f50f26ea1b053edf5:
+
+#define EXP_GWClientGetRequestStatus s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientGetRequestStatus", (RTS_UINTPTR) :ref:`GWClientGetRequestStatus <group___cmp_gw_client_itf_1ga23b9dad49f519b4e30f4503b3cea64e6>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gad1dbc070e43c9971ac0a69f0ccf85bdb:
+
+#define USE_GWClientBeginOpenChannel :ref:`PFGWCLIENTBEGINOPENCHANNEL <group___cmp_gw_client_itf_1ga759b5782654abf9f282ef30852d6ba86>` pfGWClientBeginOpenChannel;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga7a1ba497ae28dc081e76c07ff37568e5:
+
+#define EXT_GWClientBeginOpenChannel extern :ref:`PFGWCLIENTBEGINOPENCHANNEL <group___cmp_gw_client_itf_1ga759b5782654abf9f282ef30852d6ba86>` pfGWClientBeginOpenChannel;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga02a07b1b066a2b1c8cce5534298e86ef:
+
+#define GET_GWClientBeginOpenChannel s_pfCMGetAPI2( "GWClientBeginOpenChannel", (RTS_VOID_FCTPTR *)&pfGWClientBeginOpenChannel, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gadab0c30bfed046a4e6d8f763f3c46ec9:
+
+#define CAL_GWClientBeginOpenChannel pfGWClientBeginOpenChannel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gabd2a04aaaf764e99429d059d6dd43c86:
+
+#define CHK_GWClientBeginOpenChannel (pfGWClientBeginOpenChannel != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga9a573588ef68b7ad43efabf9b4dc1feb:
+
+#define EXP_GWClientBeginOpenChannel s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginOpenChannel", (RTS_UINTPTR) :ref:`GWClientBeginOpenChannel <group___cmp_gw_client_itf_1ga6d40b8f8a8450a29cb8c9f0ca6752199>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gac08dca9e2b9ea139af11ab79ed051f2b:
+
+#define USE_GWClientBeginOpenChannel2 :ref:`PFGWCLIENTBEGINOPENCHANNEL2 <group___cmp_gw_client_itf_1ga0ac7a44d8d8343b7ae9825fb9dfa528a>` pfGWClientBeginOpenChannel2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga77627db0ae4daa2081a1908cb289762d:
+
+#define EXT_GWClientBeginOpenChannel2 extern :ref:`PFGWCLIENTBEGINOPENCHANNEL2 <group___cmp_gw_client_itf_1ga0ac7a44d8d8343b7ae9825fb9dfa528a>` pfGWClientBeginOpenChannel2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga8c6aad8af965527a2330a1ff9ab18f11:
+
+#define GET_GWClientBeginOpenChannel2 s_pfCMGetAPI2( "GWClientBeginOpenChannel2", (RTS_VOID_FCTPTR *)&pfGWClientBeginOpenChannel2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga68b650a131ae546fbb783229b479f340:
+
+#define CAL_GWClientBeginOpenChannel2 pfGWClientBeginOpenChannel2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga949a1290a61d28852cbfceb7900daf7b:
+
+#define CHK_GWClientBeginOpenChannel2 (pfGWClientBeginOpenChannel2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga62ce9c57779d332bb1818ffb2e320607:
+
+#define EXP_GWClientBeginOpenChannel2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginOpenChannel2", (RTS_UINTPTR) :ref:`GWClientBeginOpenChannel2 <group___cmp_gw_client_itf_1ga849d4771f1942151b8e84cb441c6b116>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga32eb20fb7d26204c10f68d06171194d5:
+
+#define USE_GWClientEndOpenChannel :ref:`PFGWCLIENTENDOPENCHANNEL <group___cmp_gw_client_itf_1gaa0f1f3d164955631573915aa1882b06f>` pfGWClientEndOpenChannel;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gac3ebe3d46a6222402238939ef737b0b5:
+
+#define EXT_GWClientEndOpenChannel extern :ref:`PFGWCLIENTENDOPENCHANNEL <group___cmp_gw_client_itf_1gaa0f1f3d164955631573915aa1882b06f>` pfGWClientEndOpenChannel;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga55d1174120fd6f0e728545c385ca1863:
+
+#define GET_GWClientEndOpenChannel s_pfCMGetAPI2( "GWClientEndOpenChannel", (RTS_VOID_FCTPTR *)&pfGWClientEndOpenChannel, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga8458d51a1c5598a9ebcdc85a0ff05cdc:
+
+#define CAL_GWClientEndOpenChannel pfGWClientEndOpenChannel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gae69152325540558a32e94672c1733342:
+
+#define CHK_GWClientEndOpenChannel (pfGWClientEndOpenChannel != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga7d16884802a26fa2db5e485ec6de53d6:
+
+#define EXP_GWClientEndOpenChannel s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndOpenChannel", (RTS_UINTPTR) :ref:`GWClientEndOpenChannel <group___cmp_gw_client_itf_1gafa16ea33226f7ce46dc34d26e5de4ce5>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaeb0881a62aa76550470390b70d315f85:
+
+#define USE_GWClientBeginCloseChannel :ref:`PFGWCLIENTBEGINCLOSECHANNEL <group___cmp_gw_client_itf_1ga6b45ace660d8158dc6040d7297e7f109>` pfGWClientBeginCloseChannel;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gada839e08999a51841a4753e91f99e852:
+
+#define EXT_GWClientBeginCloseChannel extern :ref:`PFGWCLIENTBEGINCLOSECHANNEL <group___cmp_gw_client_itf_1ga6b45ace660d8158dc6040d7297e7f109>` pfGWClientBeginCloseChannel;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gad89e0d59f40792ed8216d60de9d32360:
+
+#define GET_GWClientBeginCloseChannel s_pfCMGetAPI2( "GWClientBeginCloseChannel", (RTS_VOID_FCTPTR *)&pfGWClientBeginCloseChannel, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga5178b914597a072417efdf7423990492:
+
+#define CAL_GWClientBeginCloseChannel pfGWClientBeginCloseChannel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaf0dddd4bb5e86c30213bd6260349ddc4:
+
+#define CHK_GWClientBeginCloseChannel (pfGWClientBeginCloseChannel != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaf070af1badc73fc15bbd3be65bb36ffd:
+
+#define EXP_GWClientBeginCloseChannel s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientBeginCloseChannel", (RTS_UINTPTR) :ref:`GWClientBeginCloseChannel <group___cmp_gw_client_itf_1gac8181a746136e6e8fffcccdecbb2be87>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga7e52963da65da55764eec0d36d75c7ac:
+
+#define USE_GWClientEndCloseChannel :ref:`PFGWCLIENTENDCLOSECHANNEL <group___cmp_gw_client_itf_1ga3e53ff96a495bf18b63f0cbe63f80242>` pfGWClientEndCloseChannel;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga2b0126b3fc9192f7a09380b9f4e24b16:
+
+#define EXT_GWClientEndCloseChannel extern :ref:`PFGWCLIENTENDCLOSECHANNEL <group___cmp_gw_client_itf_1ga3e53ff96a495bf18b63f0cbe63f80242>` pfGWClientEndCloseChannel;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga66eddb010aabe551b2363d9b53cdf3a5:
+
+#define GET_GWClientEndCloseChannel s_pfCMGetAPI2( "GWClientEndCloseChannel", (RTS_VOID_FCTPTR *)&pfGWClientEndCloseChannel, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gac36e73a18cb297acc614388fb5cfaedc:
+
+#define CAL_GWClientEndCloseChannel pfGWClientEndCloseChannel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga045f7abd85fde38722bbbf11429d3003:
+
+#define CHK_GWClientEndCloseChannel (pfGWClientEndCloseChannel != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga17dc816e326fc5bbd58e003afcd82c7b:
+
+#define EXP_GWClientEndCloseChannel s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"GWClientEndCloseChannel", (RTS_UINTPTR) :ref:`GWClientEndCloseChannel <group___cmp_gw_client_itf_1ga7c80c705e6dcb76fb44463fbb6d0c38c>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga0b01b033bff09e468eefbc82dde402a8:
+
+#define ITF_CmpGwClient
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga0a97e7a5dd1beba9a39e7f7db17e74c5:
+
+#define EXTITF_CmpGwClient
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_gw_client_itf_1ga27fc3425334d09f4a14902196c4a3c85:
+
+typedef RTS_RESULT( *  PFGWCLIENTREGISTERCOMMDRV) (COMMDRVITF *pItf, COMMDRVINFO *pDrvInfo, RTS_HANDLE *phDriverHandle)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga6fcb4901fd6f86041c8b39f2da991d92:
+
+typedef RTS_RESULT( *  PFGWCLIENTCONNECTIONREADY) (RTS_HANDLE hDriverHandle, RTS_HANDLE hConnHandle, RTS_I32 nAction)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga2add21a28a6c1f7c3c4b4a7a7530b1f7:
+
+typedef void( * PFENUMCOMMDRVCALLBACK) (RTS_HANDLE hDriver, RTS_GUID *guid, RTS_WCHAR *pwszName, PARAMDEFLIST *pParams, RTS_I8 bLast, RTS_I32 nMinPingInterval)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gac395085e440acf673f9f124829e4c555:
+
+typedef void( * PFENUMCOMMDRVCALLBACK2) (RTS_UINTPTR dwUser, RTS_HANDLE hDriver, RTS_GUID *guid, RTS_WCHAR *pwszName, PARAMDEFLIST *pParams, RTS_I8 bLast, RTS_I32 nMinPingInterval)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga44fe76010e1ceff3e2ecba168016024d:
+
+typedef void( * PFNODEINFOCALLBACK) (RTS_UINTPTR dwUser, NODEADDRESS_OLD addrNode, NODEADDRESS_OLD addrParent, RTS_I32 nMaxChannels, RTS_UI32 dwTargetId, RTS_WCHAR *wszNodeName, RTS_WCHAR *wszTargetName)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga13f55892a429bfaffc88ffe8671c27f8:
+
+typedef void( * PFNODEINFOCALLBACK2) (RTS_UINTPTR dwUser, NODEADDRESS_OLD addrNode, NODEADDRESS_OLD addrParent, RTS_I32 nMaxChannels, RTS_UI32 dwTargetType, RTS_UI32 dwTargetId, RTS_UI32 dwTargetVersion, RTS_WCHAR *wszNodeName, RTS_WCHAR *wszDeviceName, RTS_WCHAR *wszVendorName)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga23339328fe78129ca866ab18c39b8451:
+
+typedef void( * PFNODEINFOCALLBACK3) (RTS_UINTPTR dwUser, NODEADDRESS_OLD addrNode, NODEADDRESS_OLD addrParent, GWCLIENTNODEINFO *pGwClientNodeInfo, RTS_WCHAR *wszNodeName, RTS_WCHAR *wszDeviceName, RTS_WCHAR *wszVendorName, RTS_CSTRING *pszSerialNumber, RTS_UI8 *pbyOemData, RTS_UI32 dwOemDataLength)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga87ed1cbc61aef8965c5a386582aa3f45:
+
+typedef RTS_RESULT( *  PFGWCLIENTGETINTERFACEVERSION) (RTS_UI16 *pwMajor, RTS_UI16 *pwMinor)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gad2cea7c0b5eb974673b4f57172449610:
+
+typedef RTS_RESULT( *  PFGWCLIENTENUMCOMMDRIVERS) (PFENUMCOMMDRVCALLBACK pfCallback)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga83bc92ffbb96595a0c7a4b376e7806f7:
+
+typedef RTS_RESULT( *  PFGWCLIENTENUMCOMMDRIVERS2) (PFENUMCOMMDRVCALLBACK2 pfCallback, RTS_UINTPTR dwUser)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3217b4eed69a9fd6aec186f3ffd9e83a:
+
+typedef RTS_RESULT( *  PFGWCLIENTBEGINCONNECTTOGATEWAY) (RTS_HANDLE hDriver, RTS_I32 nNumParams, PARAMETER *pParams, RTS_HANDLE *phGateway, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gacf36e4c7628047d6d2b9d501f944c16c:
+
+typedef RTS_RESULT( *  PFGWCLIENTBEGINCONNECTTOGATEWAY2) (RTS_HANDLE hDriver, RTS_I32 nNumParams, PARAMETER *pParams, RTS_UI32 ui32GwInactivityTimeout, RTS_HANDLE *phGateway, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaa8b29b54530086551be391a3a2cfc55c:
+
+typedef RTS_RESULT( *  PFGWCLIENTENDCONNECTTOGATEWAY) (ASYNCRESULT *pAsyncRes, RTS_HANDLE *phGateway)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga7e2f5113c0652bcccc0a400a2c6a1a42:
+
+typedef RTS_RESULT( *  PFGWCLIENTDISCONNECTFROMGATEWAY) (RTS_HANDLE hGateway)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga53bbb4861e509eb134dcf8d149eb83cb:
+
+typedef RTS_RESULT( *  PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES) (RTS_HANDLE hGateway, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK pfCallback, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaaffed80e69cdc2516f86bcf324531a32:
+
+typedef RTS_RESULT( *  PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES2) (RTS_HANDLE hGateway, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK2 pfCallback2, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3cd6ceb2d43219ae4c88bae1d9025281:
+
+typedef RTS_RESULT( *  PFGWCLIENTBEGININCREMENTALRESOLVEALLNODES3) (RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK3 pfCallback3, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga97ab63d849bcf01dd354fe870e3c150d:
+
+typedef RTS_RESULT( *  PFGWCLIENTADJUSTINCREMENTALRESOLVEALLNODESTIMEOUT) (RTS_UI32 dwRemainingTimeout, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga458f9b4df827e37012446258ebe6df2a:
+
+typedef RTS_RESULT( *  PFGWCLIENTENDINCREMENTALRESOLVEALLNODES) (ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga71a32269b627fe87869b2e1b20198a8a:
+
+typedef RTS_RESULT( *  PFGWCLIENTBEGININCREMENTALRESOLVENAME) (const RTS_WCHAR *pwszNodeName, RTS_HANDLE hGateway, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK pfCallback, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga42e588576e3bac4caa14a706af1f86f8:
+
+typedef RTS_RESULT( *  PFGWCLIENTBEGININCREMENTALRESOLVENAME3) (const RTS_WCHAR *pwszNodeName, RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_BOOL bFinishWithFirstNode, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK3 pfCallback3, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3cfca9a757a63a32f6a00df92df407e6:
+
+typedef RTS_RESULT( *  PFGWCLIENTADJUSTINCREMENTALRESOLVENAMETIMEOUT) (RTS_UI32 dwRemainingTimeout, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga40d1e6a924b2ca9cd0ad39c3f3057623:
+
+typedef RTS_RESULT( *  PFGWCLIENTENDINCREMENTALRESOLVENAME) (ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaf8e328cdc38190ec823ae61eab8c09fa:
+
+typedef RTS_RESULT( *  PFGWCLIENTBEGINRESOLVEBLOCKDRIVERADDRESS) (RTS_UI8 byBlkDrvType, RTS_UI8 byBlkDrvFlags, RTS_UI8 byAddrBitLength, RTS_UI8 *pbyAddress, RTS_HANDLE hGateway, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK2 pfCallback, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaf2bc531da99926b6470655ddabc6fd40:
+
+typedef RTS_RESULT( *  PFGWCLIENTBEGINRESOLVEBLOCKDRIVERADDRESS3) (RTS_UI8 byBlkDrvType, RTS_UI8 byBlkDrvFlags, RTS_UI8 byAddrBitLength, RTS_UI8 *pbyAddress, RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK3 pfCallback3, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga93537d83af6b1853f59fc1333c2f382c:
+
+typedef RTS_RESULT( *  PFGWCLIENTADJUSTRESOLVEBLOCKDRIVERADDRESSTIMEOUT) (RTS_UI32 dwRemainingTimeout, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gac6ea12ffb994af550f78821065de4f56:
+
+typedef RTS_RESULT( *  PFGWCLIENTENDRESOLVEBLOCKDRIVERADDRESS) (ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga80a70079c439b9b1bf4d182c0d7a4b82:
+
+typedef RTS_RESULT( *  PFGWCLIENTBEGINRESOLVEADDRESS) (RTS_UI8 byAddrComponentLength, RTS_UI8 *pbyAddress, RTS_HANDLE hGateway, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK2 pfCallback, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gae00f8fe4b99f454beccd0c06cf749587:
+
+typedef RTS_RESULT( *  PFGWCLIENTBEGINRESOLVEADDRESS3) (RTS_UI8 byAddrComponentLength, RTS_UI8 *pbyAddress, RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK3 pfCallback3, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga9bcc3d73c49678a24c3cde35512517ff:
+
+typedef RTS_RESULT( *  PFGWCLIENTADJUSTRESOLVEADDRESSTIMEOUT) (RTS_UI32 dwRemainingTimeout, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaeec477de315edce75db1a5ff86d9597d:
+
+typedef RTS_RESULT( *  PFGWCLIENTENDRESOLVEADDRESS) (ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga27428f6f067c573b92a0c7767147cdae:
+
+typedef RTS_RESULT( *  PFGWCLIENTBEGINSENDREQUEST) (RTS_HANDLE hGateway, RTS_HANDLE hChannel, PROTOCOL_DATA_UNIT pduReq, PROTOCOL_DATA_UNIT *ppduResp, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gad28dea404135d60cff92e7ff899ca03a:
+
+typedef RTS_RESULT( *  PFGWCLIENTENDSENDREQUEST) (ASYNCRESULT *pAsyncRes, PROTOCOL_DATA_UNIT *ppduResp)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaa0a97cd08ffddb47b254c1bd46cbf71a:
+
+typedef RTS_RESULT( *  PFGWCLIENTGETREQUESTSTATUS) (ASYNCRESULT *pAsyncRes, RTS_UI16 *pwStatus, RTS_UI8 *pbyScaling, RTS_I32 *pnItemsComplete, RTS_I32 *pnTotalItems)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga759b5782654abf9f282ef30852d6ba86:
+
+typedef RTS_RESULT( *  PFGWCLIENTBEGINOPENCHANNEL) (RTS_HANDLE hGateway, NODEADDRESS_OLD addrTo, CHANNELQOS qosChannel, RTS_HANDLE *phChannel, RTS_UI32 *pdwCommBufferSize, RTS_UI8 *pbBigEndianTarget, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga0ac7a44d8d8343b7ae9825fb9dfa528a:
+
+typedef RTS_RESULT( *  PFGWCLIENTBEGINOPENCHANNEL2) (RTS_HANDLE hGateway, PEERADDRESS addrTo, CHANNELQOS qosChannel, RTS_HANDLE *phChannel, RTS_UI32 *pdwCommBufferSize, RTS_UI8 *pbBigEndianTarget, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaa0f1f3d164955631573915aa1882b06f:
+
+typedef RTS_RESULT( *  PFGWCLIENTENDOPENCHANNEL) (ASYNCRESULT *pAsyncRes, RTS_HANDLE *phChannel, RTS_UI32 *pdwCommBufferSize, RTS_UI8 *pbBigEndianTarget)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga6b45ace660d8158dc6040d7297e7f109:
+
+typedef RTS_RESULT( *  PFGWCLIENTBEGINCLOSECHANNEL) (RTS_HANDLE hGateway, RTS_HANDLE hChannel, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga3e53ff96a495bf18b63f0cbe63f80242:
+
+typedef RTS_RESULT( *  PFGWCLIENTENDCLOSECHANNEL) (ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga94a17e1dfd883f50fc6a0f94a8ede46e:
+
+typedef ICmpGwClient_C ICmpGwClient
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Enumeration Type Documentation
+------------------------------
+
+.. _group___cmp_gw_client_itf_1ga0411cd49bb5b71852cecd93bcbf0ca2d:
+
+enum @7
+^^^^^^^
+
+
+**Enumerator:**
+
++------------------------+
+| COMMDRV_ACTION_SEND    |
++------------------------+
+| COMMDRV_ACTION_RECEIVE |
++------------------------+
+
+Function Documentation
+----------------------
+
+.. _group___cmp_gw_client_itf_1gab413c42037c31a13672077f759a3327a:
+
+RTS_RESULT GWClientRegisterCommDrv (COMMDRVITF *pItf, COMMDRVINFO *pDrvInfo, RTS_HANDLE *phDriverHandle)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Register a commdriver with the gateway client.
+
+**Parameters**
+
++---------+----------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pItf           | The interface functions of the comm driver.                                                                                                       |
++---------+----------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pDrvInfo       | Information about the driver. The hDriver field is unused in this call.                                                                           |
++---------+----------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | phDriverHandle | Will be set with the handle assigned to the communication-driver. The driver must use this handle in all callbacks (eg. GWClientConnectionReady). |
++---------+----------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_gw_client_itf_1gac7dfdcc5f37e9b702c66730eae5c73d1:
+
+RTS_RESULT GWClientConnectionReady (RTS_HANDLE hDriverHandle, RTS_HANDLE hConnHandle, RTS_I32 nAction)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+May be called by a commdriver if a connection is ready to send/receive. This function shall not signal a condition more then once without the gateway client reacting to that signal. E.g. if the commdriver signals that a connection is ready to send it shall not signal this situation again before the gateway client actually called "send". The gwclient must not rely on this function to be called but may use it to increase the performance of the connection.
+
+**Parameters**
+
++---------+---------------+-----------------------------------------------------------------------------------------------+
+| [in]    | hDriverHandle | The driver handle returned by GWClientRegisterCommDrv.                                        |
++---------+---------------+-----------------------------------------------------------------------------------------------+
+| [in]    | hConnHandle   | The handle to the connection.                                                                 |
++---------+---------------+-----------------------------------------------------------------------------------------------+
+| [in]    | nAction       | The action that is ready on this connection - eg. COMMDRV_ACTION_SEND, COMMDRV_ACTION_RECEIVE |
++---------+---------------+-----------------------------------------------------------------------------------------------+
+
+.. _group___cmp_gw_client_itf_1ga1a47fa582bd621084d90b7e93efe7fdc:
+
+RTS_RESULT GWClientGetInterfaceVersion (RTS_UI16 *pwMajor, RTS_UI16 *pwMinor)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gabef29312a048de94f37828ba8541dc57:
+
+RTS_RESULT GWClientEnumCommDrivers (PFENUMCOMMDRVCALLBACK pfCallback)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gab3f9caa1f5412f548f9b655d334802e2:
+
+RTS_RESULT GWClientEnumCommDrivers2 (PFENUMCOMMDRVCALLBACK2 pfCallback, RTS_UINTPTR dwUser)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gae50c53ac66dfd67bc1ee4292972a6910:
+
+RTS_RESULT GWClientBeginConnectToGateway (RTS_HANDLE hDriver, RTS_I32 nNumParams, PARAMETER *pParams, RTS_HANDLE *phGateway, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga8e0ddbd6b117af34b4c5b459849f1ce2:
+
+RTS_RESULT GWClientBeginConnectToGateway2 (RTS_HANDLE hDriver, RTS_I32 nNumParams, PARAMETER *pParams, RTS_UI32 ui32GwInactivityTimeout, RTS_HANDLE *phGateway, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaf32ce0c55e04e6b4fa3fdf3868d8956f:
+
+RTS_RESULT GWClientEndConnectToGateway (ASYNCRESULT *pAsyncRes, RTS_HANDLE *phGateway)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gab2ef94262cbe8ba2979ca8f95be39659:
+
+RTS_RESULT GWClientDisconnectFromGateway (RTS_HANDLE hGateway)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gae650fcf174cc943af83acf6516c5d28d:
+
+RTS_RESULT GWClientBeginIncrementalResolveAllNodes (RTS_HANDLE hGateway, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK pfCallback, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gab73cc1f8f57a9e5bbe275cc64b3aa32d:
+
+RTS_RESULT GWClientBeginIncrementalResolveAllNodes2 (RTS_HANDLE hGateway, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK2 pfCallback2, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga9c59dffce2413a67633444cfc2e17d27:
+
+RTS_RESULT GWClientBeginIncrementalResolveAllNodes3 (RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK3 pfCallback3, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga795a2d3bec0699ae7053aef69ebb57d1:
+
+RTS_RESULT GWClientAdjustIncrementalResolveAllNodesTimeout (RTS_UI32 dwRemainingTimeout, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gab9a297dbd3ef687baefc45ecd38f264e:
+
+RTS_RESULT GWClientEndIncrementalResolveAllNodes (ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga8d466010dee855bb8bc1bf39aecb6964:
+
+RTS_RESULT GWClientBeginIncrementalResolveName (const RTS_WCHAR *pwszNodeName, RTS_HANDLE hGateway, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK pfCallback, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga5edcc48c515d6a36b93e51a7e8aeef94:
+
+RTS_RESULT GWClientBeginIncrementalResolveName3 (const RTS_WCHAR *pwszNodeName, RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_BOOL bFinishWithFirstNode, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK3 pfCallback3, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga2d05dcc89787236db629d8ff1be69d78:
+
+RTS_RESULT GWClientAdjustIncrementalResolveNameTimeout (RTS_UI32 dwRemainingTimeout, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gae18436bc27002de842dcada6cac1727d:
+
+RTS_RESULT GWClientEndIncrementalResolveName (ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gad453e5d61f70eada48cf5fd06e74d810:
+
+RTS_RESULT GWClientBeginResolveBlockDriverAddress (RTS_UI8 byBlkDrvType, RTS_UI8 byBlkDrvFlags, RTS_UI8 byAddrBitLength, RTS_UI8 *pbyAddress, RTS_HANDLE hGateway, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK2 pfCallback, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga07213c7fc052fc5aeeb62ddfb561c6b9:
+
+RTS_RESULT GWClientBeginResolveBlockDriverAddress3 (RTS_UI8 byBlkDrvType, RTS_UI8 byBlkDrvFlags, RTS_UI8 byAddrBitLength, RTS_UI8 *pbyAddress, RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK3 pfCallback3, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gaed4bc48b679905e385ee8522304269de:
+
+RTS_RESULT GWClientAdjustResolveBlockDriverAddressTimeout (RTS_UI32 dwRemainingTimeout, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga5998a56e335d1210b8f9ee3a4261e508:
+
+RTS_RESULT GWClientEndResolveBlockDriverAddress (ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga1c3eecd333e8f769c74d2dc39670f15d:
+
+RTS_RESULT GWClientBeginResolveAddress (RTS_UI8 byAddrComponentLength, RTS_UI8 *pbyAddress, RTS_HANDLE hGateway, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK2 pfCallback, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gab1166752e9209a87beaac6692846336c:
+
+RTS_RESULT GWClientBeginResolveAddress3 (RTS_UI8 byAddrComponentLength, RTS_UI8 *pbyAddress, RTS_HANDLE hGateway, RTS_UI32 dwTimeout, RTS_UINTPTR dwUser, PFNODEINFOCALLBACK3 pfCallback3, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga5d2884a0b3bb413675d0d73e2190d121:
+
+RTS_RESULT GWClientAdjustResolveAddressTimeout (RTS_UI32 dwRemainingTimeout, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga43ba6e723afb4c2996e5eff408cb10f7:
+
+RTS_RESULT GWClientEndResolveAddress (ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga7b7ad07b0de22921568fc5c0cb26d7e7:
+
+RTS_RESULT GWClientBeginSendRequest (RTS_HANDLE hGateway, RTS_HANDLE hChannel, PROTOCOL_DATA_UNIT pduReq, PROTOCOL_DATA_UNIT *ppduResp, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga88a9d8f88f3c231e0ca6d141e23823e6:
+
+RTS_RESULT GWClientEndSendRequest (ASYNCRESULT *pAsyncRes, PROTOCOL_DATA_UNIT *ppduResp)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga23b9dad49f519b4e30f4503b3cea64e6:
+
+RTS_RESULT GWClientGetRequestStatus (ASYNCRESULT *pAsyncRes, RTS_UI16 *pwStatus, RTS_UI8 *pbyScaling, RTS_I32 *pnItemsComplete, RTS_I32 *pnTotalItems)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga6d40b8f8a8450a29cb8c9f0ca6752199:
+
+RTS_RESULT GWClientBeginOpenChannel (RTS_HANDLE hGateway, NODEADDRESS_OLD addrTo, CHANNELQOS qosChannel, RTS_HANDLE *phChannel, RTS_UI32 *pdwCommBufferSize, RTS_UI8 *pbBigEndianTarget, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga849d4771f1942151b8e84cb441c6b116:
+
+RTS_RESULT GWClientBeginOpenChannel2 (RTS_HANDLE hGateway, PEERADDRESS addrTo, CHANNELQOS qosChannel, RTS_HANDLE *phChannel, RTS_UI32 *pdwCommBufferSize, RTS_UI8 *pbBigEndianTarget, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gafa16ea33226f7ce46dc34d26e5de4ce5:
+
+RTS_RESULT GWClientEndOpenChannel (ASYNCRESULT *pAsyncRes, RTS_HANDLE *phChannel, RTS_UI32 *pdwCommBufferSize, RTS_UI8 *pbBigEndianTarget)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1gac8181a746136e6e8fffcccdecbb2be87:
+
+RTS_RESULT GWClientBeginCloseChannel (RTS_HANDLE hGateway, RTS_HANDLE hChannel, ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_gw_client_itf_1ga7c80c705e6dcb76fb44463fbb6d0c38c:
+
+RTS_RESULT GWClientEndCloseChannel (ASYNCRESULT *pAsyncRes)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

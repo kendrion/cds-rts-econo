@@ -1,0 +1,1747 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_int_itf:
+
+=========
+SysIntItf
+=========
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of SysInt.
+
+Detailed Description
+--------------------
+
+The SysInt interface is projected to get access to the hardware interrupts of the system.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Bus specific <group___sys_int_itf___busspecific>`
+
+- :ref:`Bus types <group___sys_int_itf___bustypes>`
+
+- :ref:`Event parameter <group___sys_int_itf___eventparameter>`
+
+- :ref:`Events <group___sys_int_itf___events>`
+
+- :ref:`Interrupt description <group___sys_int_itf___interruptdescription>`
+
+- :ref:`Interrupt handler <group___sys_int_itf___interrupthandler>`
+
+- :ref:`Interrupt handler type <group___sys_int_itf___interrupthandlertype>`
+
+- :ref:`Interrupt modes <group___sys_int_itf___interruptmodes>`
+
+- :ref:`Isa interrupt <group___sys_int_itf___isainterrupt>`
+
+- :ref:`Pci interrupt <group___sys_int_itf___pciinterrupt>`
+
+- :ref:`Settings <group___sys_int_itf___settings>`
+
+- :ref:`Static defines <group___sys_int_itf___staticdefines>`
+
+Data Structures
+---------------
+
+- struct :ref:`SYS_INT_CALLBACK_INFO <struct_s_y_s___i_n_t___c_a_l_l_b_a_c_k___i_n_f_o>`
+
+- struct :ref:`SYS_INT_INFO <struct_s_y_s___i_n_t___i_n_f_o>`
+
+- struct :ref:`tagsysintclose_struct <structtagsysintclose__struct>`
+
+- struct :ref:`tagsysintdisable_struct <structtagsysintdisable__struct>`
+
+- struct :ref:`tagsysintdisableall_struct <structtagsysintdisableall__struct>`
+
+- struct :ref:`tagsysintenable_struct <structtagsysintenable__struct>`
+
+- struct :ref:`tagsysintenableall_struct <structtagsysintenableall__struct>`
+
+- struct :ref:`tagsysintlevel_struct <structtagsysintlevel__struct>`
+
+- struct :ref:`tagsysintopen_struct <structtagsysintopen__struct>`
+
+- struct :ref:`tagsysintopenbyname_struct <structtagsysintopenbyname__struct>`
+
+- struct :ref:`tagsysintregister_struct <structtagsysintregister__struct>`
+
+- struct :ref:`tagsysintregisterinstance_struct <structtagsysintregisterinstance__struct>`
+
+- struct :ref:`tagsysintunregister_struct <structtagsysintunregister__struct>`
+
+- struct :ref:`tagsysintunregisterinstance_struct <structtagsysintunregisterinstance__struct>`
+
+- struct :ref:`ISysInt_C <struct_i_sys_int___c>`
+
+Macros
+------
+
+- #define :ref:`USE_sysintclose <group___sys_int_itf_1gaaad57e638a2f19c5a79eceb3c0751d22>` :ref:`PFSYSINTCLOSE_IEC <group___sys_int_itf_1ga76efc213bef076f0e07b00dbe2bf9ede>` pfsysintclose;
+
+- #define :ref:`EXT_sysintclose <group___sys_int_itf_1ga7dbd0d274c5e9179e6c991d0281f5855>` extern :ref:`PFSYSINTCLOSE_IEC <group___sys_int_itf_1ga76efc213bef076f0e07b00dbe2bf9ede>` pfsysintclose;
+
+- #define :ref:`GET_sysintclose <group___sys_int_itf_1ga7eca4d7cb31efec4932c1842cd970522>` s_pfCMGetAPI2( "sysintclose", (RTS_VOID_FCTPTR *)&pfsysintclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x0E05F037), 0x03050500)
+
+- #define :ref:`CAL_sysintclose <group___sys_int_itf_1ga6cb1608ab6e9606d9ee5142fa3ce4746>` pfsysintclose
+
+- #define :ref:`CHK_sysintclose <group___sys_int_itf_1ga44fd3f6387ce9c0219c4eafdc1949164>` (pfsysintclose != NULL)
+
+- #define :ref:`EXP_sysintclose <group___sys_int_itf_1ga3509935957fe4e917a89b5a070da9af7>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintclose", (RTS_UINTPTR) :ref:`sysintclose <group___sys_int_itf_1ga93bda4d467fc1b8902813c122a804aa3>` , 1, RTSITF_GET_SIGNATURE(0, 0x0E05F037), 0x03050500)
+
+- #define :ref:`USE_sysintdisable <group___sys_int_itf_1ga4c79f1ebde51a2ae1f37da6a09485e32>` :ref:`PFSYSINTDISABLE_IEC <group___sys_int_itf_1gaf59f106d7236814480b0cf3d8ef80917>` pfsysintdisable;
+
+- #define :ref:`EXT_sysintdisable <group___sys_int_itf_1ga092e0d17466876fe60652a25b32f7a56>` extern :ref:`PFSYSINTDISABLE_IEC <group___sys_int_itf_1gaf59f106d7236814480b0cf3d8ef80917>` pfsysintdisable;
+
+- #define :ref:`GET_sysintdisable <group___sys_int_itf_1ga75db3360ce8385fb11ee0042d402e8da>` s_pfCMGetAPI2( "sysintdisable", (RTS_VOID_FCTPTR *)&pfsysintdisable, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC9EC050C), 0x03050500)
+
+- #define :ref:`CAL_sysintdisable <group___sys_int_itf_1ga29ca570c7614130ff6ebca131d829c22>` pfsysintdisable
+
+- #define :ref:`CHK_sysintdisable <group___sys_int_itf_1gaf03023478dd7edb4b342a07f2f472fc4>` (pfsysintdisable != NULL)
+
+- #define :ref:`EXP_sysintdisable <group___sys_int_itf_1ga923a67c851a907e60d5b890ff8aea9c4>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintdisable", (RTS_UINTPTR) :ref:`sysintdisable <group___sys_int_itf_1ga18a9e94f4b3b6dc59580f1abb8a47d84>` , 1, RTSITF_GET_SIGNATURE(0, 0xC9EC050C), 0x03050500)
+
+- #define :ref:`USE_sysintdisableall <group___sys_int_itf_1ga2ee7240030d5e59d5785fe00f3c3a908>` :ref:`PFSYSINTDISABLEALL_IEC <group___sys_int_itf_1gaf1f5fb6eed12ba20ac140fb95ecea352>` pfsysintdisableall;
+
+- #define :ref:`EXT_sysintdisableall <group___sys_int_itf_1ga326c8aa6ef3cec0a7693ca836a700d75>` extern :ref:`PFSYSINTDISABLEALL_IEC <group___sys_int_itf_1gaf1f5fb6eed12ba20ac140fb95ecea352>` pfsysintdisableall;
+
+- #define :ref:`GET_sysintdisableall <group___sys_int_itf_1ga8acf343285a7e1b0db19c47dda5b2318>` s_pfCMGetAPI2( "sysintdisableall", (RTS_VOID_FCTPTR *)&pfsysintdisableall, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xBE4C0839), 0x03050500)
+
+- #define :ref:`CAL_sysintdisableall <group___sys_int_itf_1gab9f47d91447d1ab6ab629436c347c423>` pfsysintdisableall
+
+- #define :ref:`CHK_sysintdisableall <group___sys_int_itf_1gae15b342dd6ad24ba2f66559aafd3918d>` (pfsysintdisableall != NULL)
+
+- #define :ref:`EXP_sysintdisableall <group___sys_int_itf_1gae548cba61ba0e2fde889b67633ee7124>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintdisableall", (RTS_UINTPTR) :ref:`sysintdisableall <group___sys_int_itf_1ga0376da63c0dcdeefd54ba5b939cf1b09>` , 1, RTSITF_GET_SIGNATURE(0, 0xBE4C0839), 0x03050500)
+
+- #define :ref:`USE_sysintenable <group___sys_int_itf_1ga715604155314651e84b0738a8c279170>` :ref:`PFSYSINTENABLE_IEC <group___sys_int_itf_1gad73fda29d822886d5c1f7aeee28e5e7f>` pfsysintenable;
+
+- #define :ref:`EXT_sysintenable <group___sys_int_itf_1ga9c54f2be8ddd4890cfa4e74960094ebd>` extern :ref:`PFSYSINTENABLE_IEC <group___sys_int_itf_1gad73fda29d822886d5c1f7aeee28e5e7f>` pfsysintenable;
+
+- #define :ref:`GET_sysintenable <group___sys_int_itf_1ga47f8d21864c08cf92659bfe486d18bda>` s_pfCMGetAPI2( "sysintenable", (RTS_VOID_FCTPTR *)&pfsysintenable, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x30131B72), 0x03050500)
+
+- #define :ref:`CAL_sysintenable <group___sys_int_itf_1ga1845817f273e8d6f2133bacfa8ee5ab4>` pfsysintenable
+
+- #define :ref:`CHK_sysintenable <group___sys_int_itf_1gaef66845877aaef2df8270daeff079e10>` (pfsysintenable != NULL)
+
+- #define :ref:`EXP_sysintenable <group___sys_int_itf_1gaf06a7d443dd5b6273ed1e78d0c930a1d>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintenable", (RTS_UINTPTR) :ref:`sysintenable <group___sys_int_itf_1ga6608da804ef6070db93c3418e421e833>` , 1, RTSITF_GET_SIGNATURE(0, 0x30131B72), 0x03050500)
+
+- #define :ref:`USE_sysintenableall <group___sys_int_itf_1gaa4e636cb547fb4ba004162711bbd2a39>` :ref:`PFSYSINTENABLEALL_IEC <group___sys_int_itf_1ga9af4eb310db71c6a5c8ee589ee0d20d0>` pfsysintenableall;
+
+- #define :ref:`EXT_sysintenableall <group___sys_int_itf_1ga58d42b49e71a24c51eb4e4fed228d9b7>` extern :ref:`PFSYSINTENABLEALL_IEC <group___sys_int_itf_1ga9af4eb310db71c6a5c8ee589ee0d20d0>` pfsysintenableall;
+
+- #define :ref:`GET_sysintenableall <group___sys_int_itf_1ga14c6eb3ce8d5a22f23ace8e1821fb10e>` s_pfCMGetAPI2( "sysintenableall", (RTS_VOID_FCTPTR *)&pfsysintenableall, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xDE565CD4), 0x03050500)
+
+- #define :ref:`CAL_sysintenableall <group___sys_int_itf_1ga832218873998723bafc0c7e1dc458990>` pfsysintenableall
+
+- #define :ref:`CHK_sysintenableall <group___sys_int_itf_1ga81cb1161d62aba8f1d5e66c87f576cd7>` (pfsysintenableall != NULL)
+
+- #define :ref:`EXP_sysintenableall <group___sys_int_itf_1ga706b95524495b185f1ed916a23c7a38d>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintenableall", (RTS_UINTPTR) :ref:`sysintenableall <group___sys_int_itf_1gaa7f3dffec2c06b748d363c9116b1a1a2>` , 1, RTSITF_GET_SIGNATURE(0, 0xDE565CD4), 0x03050500)
+
+- #define :ref:`USE_sysintlevel <group___sys_int_itf_1ga9a510ef1f012aa26098ba29693027a1c>` :ref:`PFSYSINTLEVEL_IEC <group___sys_int_itf_1ga980ee108a31b4514ad60971e97b89612>` pfsysintlevel;
+
+- #define :ref:`EXT_sysintlevel <group___sys_int_itf_1ga74312ca5f583bf1676d414a92382eb90>` extern :ref:`PFSYSINTLEVEL_IEC <group___sys_int_itf_1ga980ee108a31b4514ad60971e97b89612>` pfsysintlevel;
+
+- #define :ref:`GET_sysintlevel <group___sys_int_itf_1gab83cae9042fd52e256bdffcc7592387f>` s_pfCMGetAPI2( "sysintlevel", (RTS_VOID_FCTPTR *)&pfsysintlevel, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xCA219D99), 0x03050500)
+
+- #define :ref:`CAL_sysintlevel <group___sys_int_itf_1gaa30c0a1c6d9b25862ec0298224b1bfd3>` pfsysintlevel
+
+- #define :ref:`CHK_sysintlevel <group___sys_int_itf_1ga7435659e8ff99cfa8a8e06cd1b6c550b>` (pfsysintlevel != NULL)
+
+- #define :ref:`EXP_sysintlevel <group___sys_int_itf_1ga0d412341bafe0061983b3e7fa79b63ed>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintlevel", (RTS_UINTPTR) :ref:`sysintlevel <group___sys_int_itf_1gac231038f55b1d3368ec934050b8ed27e>` , 1, RTSITF_GET_SIGNATURE(0, 0xCA219D99), 0x03050500)
+
+- #define :ref:`USE_sysintopen <group___sys_int_itf_1ga461ce130de6e31ed00e3f45084f3e95f>` :ref:`PFSYSINTOPEN_IEC <group___sys_int_itf_1ga45f56bc5bae7fdd54d1f1bdcfeac7d6b>` pfsysintopen;
+
+- #define :ref:`EXT_sysintopen <group___sys_int_itf_1gad383ec85977b8b824764b25fcf564c52>` extern :ref:`PFSYSINTOPEN_IEC <group___sys_int_itf_1ga45f56bc5bae7fdd54d1f1bdcfeac7d6b>` pfsysintopen;
+
+- #define :ref:`GET_sysintopen <group___sys_int_itf_1ga4d117bdc63d1969486b30ea9f1428d4a>` s_pfCMGetAPI2( "sysintopen", (RTS_VOID_FCTPTR *)&pfsysintopen, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB3D594FF), 0x03050500)
+
+- #define :ref:`CAL_sysintopen <group___sys_int_itf_1ga8ae8e54602a3be702d8ec43d41f96ae0>` pfsysintopen
+
+- #define :ref:`CHK_sysintopen <group___sys_int_itf_1ga7fac1b8f55d791a6e3553b908bb13729>` (pfsysintopen != NULL)
+
+- #define :ref:`EXP_sysintopen <group___sys_int_itf_1ga8afabf045efacb8d26bd09ab961b28aa>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintopen", (RTS_UINTPTR) :ref:`sysintopen <group___sys_int_itf_1ga0dcc8f143697e0c6cd639a296384d2ac>` , 1, RTSITF_GET_SIGNATURE(0, 0xB3D594FF), 0x03050500)
+
+- #define :ref:`USE_sysintopenbyname <group___sys_int_itf_1ga58a07f4dab17833fd68075771baffb77>` :ref:`PFSYSINTOPENBYNAME_IEC <group___sys_int_itf_1ga7d058141839fee69f1f86dbbf15369e2>` pfsysintopenbyname;
+
+- #define :ref:`EXT_sysintopenbyname <group___sys_int_itf_1gaf8c205e4ed4a1e3e17ce5ec3df160a52>` extern :ref:`PFSYSINTOPENBYNAME_IEC <group___sys_int_itf_1ga7d058141839fee69f1f86dbbf15369e2>` pfsysintopenbyname;
+
+- #define :ref:`GET_sysintopenbyname <group___sys_int_itf_1ga970092e72414dd8bd2b48a73d70d7ee7>` s_pfCMGetAPI2( "sysintopenbyname", (RTS_VOID_FCTPTR *)&pfsysintopenbyname, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x928117BD), 0x03050500)
+
+- #define :ref:`CAL_sysintopenbyname <group___sys_int_itf_1gaca55715248d9742cedea3fa20f5d5f2d>` pfsysintopenbyname
+
+- #define :ref:`CHK_sysintopenbyname <group___sys_int_itf_1gade9450e4e14ae5f18680a61b82981069>` (pfsysintopenbyname != NULL)
+
+- #define :ref:`EXP_sysintopenbyname <group___sys_int_itf_1ga7c5e97904b118c044f36b8f9a38f6880>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintopenbyname", (RTS_UINTPTR) :ref:`sysintopenbyname <group___sys_int_itf_1ga25c70b4078428222c79016e6aaf1a378>` , 1, RTSITF_GET_SIGNATURE(0, 0x928117BD), 0x03050500)
+
+- #define :ref:`USE_sysintregister <group___sys_int_itf_1ga0e29110a80fe34887b8bf97e4ea3ccac>` :ref:`PFSYSINTREGISTER_IEC <group___sys_int_itf_1ga69252cd7b0ccddaac885c5581dec4cce>` pfsysintregister;
+
+- #define :ref:`EXT_sysintregister <group___sys_int_itf_1ga4ee261b4ea34de63bfee04ce84bc4fdf>` extern :ref:`PFSYSINTREGISTER_IEC <group___sys_int_itf_1ga69252cd7b0ccddaac885c5581dec4cce>` pfsysintregister;
+
+- #define :ref:`GET_sysintregister <group___sys_int_itf_1gaa1133f087a107d08af4ba6033fa7fbfc>` s_pfCMGetAPI2( "sysintregister", (RTS_VOID_FCTPTR *)&pfsysintregister, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x63A36B82), 0x03050500)
+
+- #define :ref:`CAL_sysintregister <group___sys_int_itf_1ga27d38b71185d86463555ee8d41921d49>` pfsysintregister
+
+- #define :ref:`CHK_sysintregister <group___sys_int_itf_1ga3a4b056613ee0e1bef8144e607f59917>` (pfsysintregister != NULL)
+
+- #define :ref:`EXP_sysintregister <group___sys_int_itf_1ga51f66216b96ef60c02f91dc588e30cab>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintregister", (RTS_UINTPTR) :ref:`sysintregister <group___sys_int_itf_1gaa90f586cc1bd76a164582d00bfde602a>` , 1, RTSITF_GET_SIGNATURE(0, 0x63A36B82), 0x03050500)
+
+- #define :ref:`USE_sysintregisterinstance <group___sys_int_itf_1gab98121402d074889f2b544ffd3a7ae34>` :ref:`PFSYSINTREGISTERINSTANCE_IEC <group___sys_int_itf_1gaa404a093e0c22eb5afeac00b7a33d432>` pfsysintregisterinstance;
+
+- #define :ref:`EXT_sysintregisterinstance <group___sys_int_itf_1ga590f191de88e1e6863a8b00d1983c531>` extern :ref:`PFSYSINTREGISTERINSTANCE_IEC <group___sys_int_itf_1gaa404a093e0c22eb5afeac00b7a33d432>` pfsysintregisterinstance;
+
+- #define :ref:`GET_sysintregisterinstance <group___sys_int_itf_1ga7da8650a5ed71202fc14f6a3937b5f38>` s_pfCMGetAPI2( "sysintregisterinstance", (RTS_VOID_FCTPTR *)&pfsysintregisterinstance, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC0428DE2), 0x03050500)
+
+- #define :ref:`CAL_sysintregisterinstance <group___sys_int_itf_1ga74743b02829f795c0601cc6629d15440>` pfsysintregisterinstance
+
+- #define :ref:`CHK_sysintregisterinstance <group___sys_int_itf_1gab204918efbe073991f9f7c0b25c6c217>` (pfsysintregisterinstance != NULL)
+
+- #define :ref:`EXP_sysintregisterinstance <group___sys_int_itf_1ga3c057c05074d7af72347a01e40412eec>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintregisterinstance", (RTS_UINTPTR) :ref:`sysintregisterinstance <group___sys_int_itf_1ga69be356a5ce86044850ed62d0e6ea0b4>` , 1, RTSITF_GET_SIGNATURE(0, 0xC0428DE2), 0x03050500)
+
+- #define :ref:`USE_sysintunregister <group___sys_int_itf_1ga497637ef092a56b103bb61db2c680673>` :ref:`PFSYSINTUNREGISTER_IEC <group___sys_int_itf_1gacaf9321b3b03d70793b453678dfef437>` pfsysintunregister;
+
+- #define :ref:`EXT_sysintunregister <group___sys_int_itf_1ga4d865e2cd27edbbf41e0a63bfd601a9c>` extern :ref:`PFSYSINTUNREGISTER_IEC <group___sys_int_itf_1gacaf9321b3b03d70793b453678dfef437>` pfsysintunregister;
+
+- #define :ref:`GET_sysintunregister <group___sys_int_itf_1ga5fd1d71cb67375e7861ac8f9bba8d903>` s_pfCMGetAPI2( "sysintunregister", (RTS_VOID_FCTPTR *)&pfsysintunregister, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x9CA9B33A), 0x03050500)
+
+- #define :ref:`CAL_sysintunregister <group___sys_int_itf_1ga34aa51511dd5f8b8eb63566234a46af7>` pfsysintunregister
+
+- #define :ref:`CHK_sysintunregister <group___sys_int_itf_1ga4cb818776034131e723ee801b31c4987>` (pfsysintunregister != NULL)
+
+- #define :ref:`EXP_sysintunregister <group___sys_int_itf_1gad19f63b2c42a5743fff0caf9d362bfce>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintunregister", (RTS_UINTPTR) :ref:`sysintunregister <group___sys_int_itf_1ga80b2e372167b00927a4148f58e3b1ef0>` , 1, RTSITF_GET_SIGNATURE(0, 0x9CA9B33A), 0x03050500)
+
+- #define :ref:`USE_sysintunregisterinstance <group___sys_int_itf_1ga0b829c4841cbac64c070768f6574b636>` :ref:`PFSYSINTUNREGISTERINSTANCE_IEC <group___sys_int_itf_1gaacdf83df54c66e17b3080343d34c5381>` pfsysintunregisterinstance;
+
+- #define :ref:`EXT_sysintunregisterinstance <group___sys_int_itf_1gaa8a3ffb667607088d4c9fe93f8dd9e3a>` extern :ref:`PFSYSINTUNREGISTERINSTANCE_IEC <group___sys_int_itf_1gaacdf83df54c66e17b3080343d34c5381>` pfsysintunregisterinstance;
+
+- #define :ref:`GET_sysintunregisterinstance <group___sys_int_itf_1ga9381e998ec1645a6c893f35eaa590bba>` s_pfCMGetAPI2( "sysintunregisterinstance", (RTS_VOID_FCTPTR *)&pfsysintunregisterinstance, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA2A67F42), 0x03050500)
+
+- #define :ref:`CAL_sysintunregisterinstance <group___sys_int_itf_1ga7f862fdd4f948e55205e02941d558b00>` pfsysintunregisterinstance
+
+- #define :ref:`CHK_sysintunregisterinstance <group___sys_int_itf_1ga8ce3cd98f6615337845d87963853d16d>` (pfsysintunregisterinstance != NULL)
+
+- #define :ref:`EXP_sysintunregisterinstance <group___sys_int_itf_1ga364d95d8b8eefde1e865df30a23b1c2c>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintunregisterinstance", (RTS_UINTPTR) :ref:`sysintunregisterinstance <group___sys_int_itf_1gad29d9d8c5cb48fdf6c10f9a06fc2eb12>` , 1, RTSITF_GET_SIGNATURE(0, 0xA2A67F42), 0x03050500)
+
+- #define :ref:`USE_SysIntOpen <group___sys_int_itf_1gaff1e722033435e18e6a3b89b9d20c964>` :ref:`PFSYSINTOPEN <group___sys_int_itf_1ga05cc959ad418a7ed5f49ae5fd7179f23>` pfSysIntOpen;
+
+- #define :ref:`EXT_SysIntOpen <group___sys_int_itf_1ga2671cccc990bd7668d970f785928845c>` extern :ref:`PFSYSINTOPEN <group___sys_int_itf_1ga05cc959ad418a7ed5f49ae5fd7179f23>` pfSysIntOpen;
+
+- #define :ref:`GET_SysIntOpen <group___sys_int_itf_1ga192a2564b59e8d736442b6d6f3172044>` s_pfCMGetAPI2( "SysIntOpen", (RTS_VOID_FCTPTR *)&pfSysIntOpen, (fl), 0, 0)
+
+- #define :ref:`CAL_SysIntOpen <group___sys_int_itf_1gac515d48483bd865ec7f403c7c980c28f>` pfSysIntOpen
+
+- #define :ref:`CHK_SysIntOpen <group___sys_int_itf_1ga31d4c1922b8ddb6967ca13e0cd08e597>` (pfSysIntOpen != NULL)
+
+- #define :ref:`EXP_SysIntOpen <group___sys_int_itf_1ga0a483b856efd8c357b5fcf45e298dcce>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntOpen", (RTS_UINTPTR) :ref:`SysIntOpen <group___sys_int_itf_1ga3afe47f9882c9f6685a71ff66a888536>` , 0, 0)
+
+- #define :ref:`USE_SysIntOpenByName <group___sys_int_itf_1ga018a26dea6783154a5e54f88509f6edc>` :ref:`PFSYSINTOPENBYNAME <group___sys_int_itf_1ga9aa4d565bd349c7b446fc7078edad5b7>` pfSysIntOpenByName;
+
+- #define :ref:`EXT_SysIntOpenByName <group___sys_int_itf_1ga11f1cf07e77fed34d4a3737179c01ac5>` extern :ref:`PFSYSINTOPENBYNAME <group___sys_int_itf_1ga9aa4d565bd349c7b446fc7078edad5b7>` pfSysIntOpenByName;
+
+- #define :ref:`GET_SysIntOpenByName <group___sys_int_itf_1gaf74ad703c026cf09fdf9e2f8acb7119d>` s_pfCMGetAPI2( "SysIntOpenByName", (RTS_VOID_FCTPTR *)&pfSysIntOpenByName, (fl), 0, 0)
+
+- #define :ref:`CAL_SysIntOpenByName <group___sys_int_itf_1ga03fbf05c5aed1708baa2296f412d2f29>` pfSysIntOpenByName
+
+- #define :ref:`CHK_SysIntOpenByName <group___sys_int_itf_1ga3d9351b71f5ee376c41091f526690bac>` (pfSysIntOpenByName != NULL)
+
+- #define :ref:`EXP_SysIntOpenByName <group___sys_int_itf_1ga84c6532f1116c5dac66acba6451eed5a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntOpenByName", (RTS_UINTPTR) :ref:`SysIntOpenByName <group___sys_int_itf_1ga22c1d1f1555da8d6bfdb0c869004930e>` , 0, 0)
+
+- #define :ref:`USE_SysIntClose <group___sys_int_itf_1ga4dd3fcb1be5de0d198ab5162615c335e>` :ref:`PFSYSINTCLOSE <group___sys_int_itf_1gad1860e54cb72087b67bc41b64e481622>` pfSysIntClose;
+
+- #define :ref:`EXT_SysIntClose <group___sys_int_itf_1ga0372ca9c0abe2119028a4741069d72bf>` extern :ref:`PFSYSINTCLOSE <group___sys_int_itf_1gad1860e54cb72087b67bc41b64e481622>` pfSysIntClose;
+
+- #define :ref:`GET_SysIntClose <group___sys_int_itf_1gaec763ea0d3652635356ad5f8dcff6079>` s_pfCMGetAPI2( "SysIntClose", (RTS_VOID_FCTPTR *)&pfSysIntClose, (fl), 0, 0)
+
+- #define :ref:`CAL_SysIntClose <group___sys_int_itf_1gaf4f7475f0275d09507a9c33fbd1bd57d>` pfSysIntClose
+
+- #define :ref:`CHK_SysIntClose <group___sys_int_itf_1ga01b3d1f43eb41ebdb0943273ec32635b>` (pfSysIntClose != NULL)
+
+- #define :ref:`EXP_SysIntClose <group___sys_int_itf_1ga219573ec1eb661667d8c9d254e25a533>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntClose", (RTS_UINTPTR) :ref:`SysIntClose <group___sys_int_itf_1ga0ab998b4a0c53977608bd25b37953877>` , 0, 0)
+
+- #define :ref:`USE_SysIntEnable <group___sys_int_itf_1ga3e0ac638e950012cfd2689b70608dde7>` :ref:`PFSYSINTENABLE <group___sys_int_itf_1ga6cc67022f6c71a84f2e3a0d12f8d9c9c>` pfSysIntEnable;
+
+- #define :ref:`EXT_SysIntEnable <group___sys_int_itf_1gaedb668b365c484c9ad9dede0237edf69>` extern :ref:`PFSYSINTENABLE <group___sys_int_itf_1ga6cc67022f6c71a84f2e3a0d12f8d9c9c>` pfSysIntEnable;
+
+- #define :ref:`GET_SysIntEnable <group___sys_int_itf_1ga3e4793120d7337b57d48e0d6466d3b16>` s_pfCMGetAPI2( "SysIntEnable", (RTS_VOID_FCTPTR *)&pfSysIntEnable, (fl), 0, 0)
+
+- #define :ref:`CAL_SysIntEnable <group___sys_int_itf_1ga429b398c97a7b61d34d1a4d8e4acd6eb>` pfSysIntEnable
+
+- #define :ref:`CHK_SysIntEnable <group___sys_int_itf_1ga793174d564c0617e755436764b59b237>` (pfSysIntEnable != NULL)
+
+- #define :ref:`EXP_SysIntEnable <group___sys_int_itf_1ga67475504c02b2835662166229044087d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntEnable", (RTS_UINTPTR) :ref:`SysIntEnable <group___sys_int_itf_1gac5bf2b2cb995288f2b9ed5390230150e>` , 0, 0)
+
+- #define :ref:`USE_SysIntDisable <group___sys_int_itf_1gac4c821f12ebe22e93829bb3b57e646bc>` :ref:`PFSYSINTDISABLE <group___sys_int_itf_1gac1bfc15c951b5ac0653aa9936e116410>` pfSysIntDisable;
+
+- #define :ref:`EXT_SysIntDisable <group___sys_int_itf_1ga6636849216b4ac876db3721a0de8faf5>` extern :ref:`PFSYSINTDISABLE <group___sys_int_itf_1gac1bfc15c951b5ac0653aa9936e116410>` pfSysIntDisable;
+
+- #define :ref:`GET_SysIntDisable <group___sys_int_itf_1ga57e3ce57d1cdaccbf7e47d82da0e3e04>` s_pfCMGetAPI2( "SysIntDisable", (RTS_VOID_FCTPTR *)&pfSysIntDisable, (fl), 0, 0)
+
+- #define :ref:`CAL_SysIntDisable <group___sys_int_itf_1ga18fbc092bd671e58dfd9a87207e28c01>` pfSysIntDisable
+
+- #define :ref:`CHK_SysIntDisable <group___sys_int_itf_1ga25abbc19bf94a3b9e1d9e05d0d648c44>` (pfSysIntDisable != NULL)
+
+- #define :ref:`EXP_SysIntDisable <group___sys_int_itf_1ga4c419b96f0d88f7fa2f31b2044a8dc07>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntDisable", (RTS_UINTPTR) :ref:`SysIntDisable <group___sys_int_itf_1ga7436ec89781d4db899772c29cfaf0e49>` , 0, 0)
+
+- #define :ref:`USE_SysIntRegister <group___sys_int_itf_1ga1652289e1fe64d13e2c742caa20b8cc2>` :ref:`PFSYSINTREGISTER <group___sys_int_itf_1ga91c8d9c0e28f83da7e6775e06708e1af>` pfSysIntRegister;
+
+- #define :ref:`EXT_SysIntRegister <group___sys_int_itf_1gab650e3f6596089af03b14d45926adb3a>` extern :ref:`PFSYSINTREGISTER <group___sys_int_itf_1ga91c8d9c0e28f83da7e6775e06708e1af>` pfSysIntRegister;
+
+- #define :ref:`GET_SysIntRegister <group___sys_int_itf_1ga7ac6caa383fecfd12acd85ea61b2a1d9>` s_pfCMGetAPI2( "SysIntRegister", (RTS_VOID_FCTPTR *)&pfSysIntRegister, (fl), 0, 0)
+
+- #define :ref:`CAL_SysIntRegister <group___sys_int_itf_1ga5024e292ccd1f8c0f19dbdd3ab9d9f7f>` pfSysIntRegister
+
+- #define :ref:`CHK_SysIntRegister <group___sys_int_itf_1ga8072670d282acc5d13807ce7a182a554>` (pfSysIntRegister != NULL)
+
+- #define :ref:`EXP_SysIntRegister <group___sys_int_itf_1ga35d7165a7a64784ab0ac89e15d0af760>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntRegister", (RTS_UINTPTR) :ref:`SysIntRegister <group___sys_int_itf_1gadab3d192f67159aa71953a6335b38f81>` , 0, 0)
+
+- #define :ref:`USE_SysIntUnregister <group___sys_int_itf_1ga3c726bd033a8e9197d05c4c62ed033dd>` :ref:`PFSYSINTUNREGISTER <group___sys_int_itf_1ga701bcb7704cc8321b7ec9870aab37f40>` pfSysIntUnregister;
+
+- #define :ref:`EXT_SysIntUnregister <group___sys_int_itf_1gadbc1e43f194418ae5eee0e3b8c28a3af>` extern :ref:`PFSYSINTUNREGISTER <group___sys_int_itf_1ga701bcb7704cc8321b7ec9870aab37f40>` pfSysIntUnregister;
+
+- #define :ref:`GET_SysIntUnregister <group___sys_int_itf_1gae18e22702c0706786c7687f34762a1e1>` s_pfCMGetAPI2( "SysIntUnregister", (RTS_VOID_FCTPTR *)&pfSysIntUnregister, (fl), 0, 0)
+
+- #define :ref:`CAL_SysIntUnregister <group___sys_int_itf_1gab012e4a19f74d9746a7af86b4dbf6eaf>` pfSysIntUnregister
+
+- #define :ref:`CHK_SysIntUnregister <group___sys_int_itf_1ga1a9ca4d4fcfc6bd11c7f116226c7bb48>` (pfSysIntUnregister != NULL)
+
+- #define :ref:`EXP_SysIntUnregister <group___sys_int_itf_1gae010a61988408446311f7a6680bf86eb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntUnregister", (RTS_UINTPTR) :ref:`SysIntUnregister <group___sys_int_itf_1ga9a14d8cb4a530275ad77c578af5bef77>` , 0, 0)
+
+- #define :ref:`USE_SysIntEnableAll <group___sys_int_itf_1gabb9e51186786f00e247ef2a52a2e84dc>` :ref:`PFSYSINTENABLEALL <group___sys_int_itf_1ga39e0af79379db75c42874ce40dc895d4>` pfSysIntEnableAll;
+
+- #define :ref:`EXT_SysIntEnableAll <group___sys_int_itf_1ga9293c3f28bae479d1797994200af6dc5>` extern :ref:`PFSYSINTENABLEALL <group___sys_int_itf_1ga39e0af79379db75c42874ce40dc895d4>` pfSysIntEnableAll;
+
+- #define :ref:`GET_SysIntEnableAll <group___sys_int_itf_1gafb0e7c35b5d32bcc5d9d7dec7c869316>` s_pfCMGetAPI2( "SysIntEnableAll", (RTS_VOID_FCTPTR *)&pfSysIntEnableAll, (fl), 0, 0)
+
+- #define :ref:`CAL_SysIntEnableAll <group___sys_int_itf_1gaabc22809e3ef0dc1ac519810e2465a99>` pfSysIntEnableAll
+
+- #define :ref:`CHK_SysIntEnableAll <group___sys_int_itf_1ga3e8c2c9020f05f858bd54ed89de0a9a7>` (pfSysIntEnableAll != NULL)
+
+- #define :ref:`EXP_SysIntEnableAll <group___sys_int_itf_1gaeebd1d3376ab30403ae1a7d3d422c291>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntEnableAll", (RTS_UINTPTR) :ref:`SysIntEnableAll <group___sys_int_itf_1ga0b8176d1ae912edfc4441da6cfd563a0>` , 0, 0)
+
+- #define :ref:`USE_SysIntDisableAll <group___sys_int_itf_1ga5a9bc7697ac44af95de999d7b0c9aeac>` :ref:`PFSYSINTDISABLEALL <group___sys_int_itf_1ga0903c7230e05ccb4806a0845fcaad00f>` pfSysIntDisableAll;
+
+- #define :ref:`EXT_SysIntDisableAll <group___sys_int_itf_1ga6fc28c5f7d2a211dbec160d63118656c>` extern :ref:`PFSYSINTDISABLEALL <group___sys_int_itf_1ga0903c7230e05ccb4806a0845fcaad00f>` pfSysIntDisableAll;
+
+- #define :ref:`GET_SysIntDisableAll <group___sys_int_itf_1ga3bc77662abcea2f284cefa93b345c68d>` s_pfCMGetAPI2( "SysIntDisableAll", (RTS_VOID_FCTPTR *)&pfSysIntDisableAll, (fl), 0, 0)
+
+- #define :ref:`CAL_SysIntDisableAll <group___sys_int_itf_1ga2a9dcead16b117dff26df5a4b5f7ddda>` pfSysIntDisableAll
+
+- #define :ref:`CHK_SysIntDisableAll <group___sys_int_itf_1gaabad022e148253b6c82d7c480352bc3a>` (pfSysIntDisableAll != NULL)
+
+- #define :ref:`EXP_SysIntDisableAll <group___sys_int_itf_1gab5d716ff8413e90322b7079ebf8f6c3c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntDisableAll", (RTS_UINTPTR) :ref:`SysIntDisableAll <group___sys_int_itf_1ga943f7aa7b27a7860c4c7d5c227c5cbb6>` , 0, 0)
+
+- #define :ref:`USE_SysIntLevel <group___sys_int_itf_1ga54939ccfee5a1e2445b040cbbe49bc19>` :ref:`PFSYSINTLEVEL <group___sys_int_itf_1ga4d852dcff7127bd6d197f033f971e855>` pfSysIntLevel;
+
+- #define :ref:`EXT_SysIntLevel <group___sys_int_itf_1ga8da80bd0c3e0f03a0abe96017c25f2d5>` extern :ref:`PFSYSINTLEVEL <group___sys_int_itf_1ga4d852dcff7127bd6d197f033f971e855>` pfSysIntLevel;
+
+- #define :ref:`GET_SysIntLevel <group___sys_int_itf_1gafb2d92424449fe69f03b0e7b44f2352a>` s_pfCMGetAPI2( "SysIntLevel", (RTS_VOID_FCTPTR *)&pfSysIntLevel, (fl), 0, 0)
+
+- #define :ref:`CAL_SysIntLevel <group___sys_int_itf_1gafc103d305b8eb984f7bc79b2e2217e67>` pfSysIntLevel
+
+- #define :ref:`CHK_SysIntLevel <group___sys_int_itf_1ga42a3ac27209bd869b6a2fb8801c76e74>` (pfSysIntLevel != NULL)
+
+- #define :ref:`EXP_SysIntLevel <group___sys_int_itf_1ga47c4437f0698694aea9769bf09612d39>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntLevel", (RTS_UINTPTR) :ref:`SysIntLevel <group___sys_int_itf_1gaea7e2a1e6ec297b1ec5eec00dcde8438>` , 0, 0)
+
+- #define :ref:`ITF_SysInt <group___sys_int_itf_1ga471e19df9104f6d2783183f328d3ed9c>`
+
+- #define :ref:`EXTITF_SysInt <group___sys_int_itf_1ga33f1771f5396840fd66138bc5f4b540f>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagsysintclose_struct <structtagsysintclose__struct>` :ref:`sysintclose_struct <group___sys_int_itf_1ga8f5d99120e38c14848f62142eefba450>`
+
+- typedef void(* :ref:`PFSYSINTCLOSE_IEC <group___sys_int_itf_1ga76efc213bef076f0e07b00dbe2bf9ede>`)(sysintclose_struct *p)
+
+- typedef struct :ref:`tagsysintdisable_struct <structtagsysintdisable__struct>` :ref:`sysintdisable_struct <group___sys_int_itf_1ga026983969287a1a95f6fbcc0ea6317c9>`
+
+- typedef void(* :ref:`PFSYSINTDISABLE_IEC <group___sys_int_itf_1gaf59f106d7236814480b0cf3d8ef80917>`)(sysintdisable_struct *p)
+
+- typedef struct :ref:`tagsysintdisableall_struct <structtagsysintdisableall__struct>` :ref:`sysintdisableall_struct <group___sys_int_itf_1ga81ede26145ca817517ecedd4efa607c4>`
+
+- typedef void(* :ref:`PFSYSINTDISABLEALL_IEC <group___sys_int_itf_1gaf1f5fb6eed12ba20ac140fb95ecea352>`)(sysintdisableall_struct *p)
+
+- typedef struct :ref:`tagsysintenable_struct <structtagsysintenable__struct>` :ref:`sysintenable_struct <group___sys_int_itf_1gac8024050582a7b0e9922d4f08c3ce179>`
+
+- typedef void(* :ref:`PFSYSINTENABLE_IEC <group___sys_int_itf_1gad73fda29d822886d5c1f7aeee28e5e7f>`)(sysintenable_struct *p)
+
+- typedef struct :ref:`tagsysintenableall_struct <structtagsysintenableall__struct>` :ref:`sysintenableall_struct <group___sys_int_itf_1gae12e4eedaa9133ec8e3b9925cc950cd7>`
+
+- typedef void(* :ref:`PFSYSINTENABLEALL_IEC <group___sys_int_itf_1ga9af4eb310db71c6a5c8ee589ee0d20d0>`)(sysintenableall_struct *p)
+
+- typedef struct :ref:`tagsysintlevel_struct <structtagsysintlevel__struct>` :ref:`sysintlevel_struct <group___sys_int_itf_1gafbd86fe0f9c2af1931c236dce96ef80f>`
+
+- typedef void(* :ref:`PFSYSINTLEVEL_IEC <group___sys_int_itf_1ga980ee108a31b4514ad60971e97b89612>`)(sysintlevel_struct *p)
+
+- typedef struct :ref:`tagsysintopen_struct <structtagsysintopen__struct>` :ref:`sysintopen_struct <group___sys_int_itf_1gadebb9c6a2a5fd3f1ed283b35a4a9d265>`
+
+- typedef void(* :ref:`PFSYSINTOPEN_IEC <group___sys_int_itf_1ga45f56bc5bae7fdd54d1f1bdcfeac7d6b>`)(sysintopen_struct *p)
+
+- typedef struct :ref:`tagsysintopenbyname_struct <structtagsysintopenbyname__struct>` :ref:`sysintopenbyname_struct <group___sys_int_itf_1gac9b71f3b2d83e75f01af1c57b768331c>`
+
+- typedef void(* :ref:`PFSYSINTOPENBYNAME_IEC <group___sys_int_itf_1ga7d058141839fee69f1f86dbbf15369e2>`)(sysintopenbyname_struct *p)
+
+- typedef struct :ref:`tagsysintregister_struct <structtagsysintregister__struct>` :ref:`sysintregister_struct <group___sys_int_itf_1ga6dea7fb96556e4c76797385a19466bd0>`
+
+- typedef void(* :ref:`PFSYSINTREGISTER_IEC <group___sys_int_itf_1ga69252cd7b0ccddaac885c5581dec4cce>`)(sysintregister_struct *p)
+
+- typedef struct :ref:`tagsysintregisterinstance_struct <structtagsysintregisterinstance__struct>` :ref:`sysintregisterinstance_struct <group___sys_int_itf_1ga0bc215975fe5e99c0cbdb9f701ef8446>`
+
+- typedef void(* :ref:`PFSYSINTREGISTERINSTANCE_IEC <group___sys_int_itf_1gaa404a093e0c22eb5afeac00b7a33d432>`)(sysintregisterinstance_struct *p)
+
+- typedef struct :ref:`tagsysintunregister_struct <structtagsysintunregister__struct>` :ref:`sysintunregister_struct <group___sys_int_itf_1gae4b61006716c5cdb0b489d39e56f6319>`
+
+- typedef void(* :ref:`PFSYSINTUNREGISTER_IEC <group___sys_int_itf_1gacaf9321b3b03d70793b453678dfef437>`)(sysintunregister_struct *p)
+
+- typedef struct :ref:`tagsysintunregisterinstance_struct <structtagsysintunregisterinstance__struct>` :ref:`sysintunregisterinstance_struct <group___sys_int_itf_1gaa14c7fd643dfeb95025d71d2050f27fb>`
+
+- typedef void(* :ref:`PFSYSINTUNREGISTERINSTANCE_IEC <group___sys_int_itf_1gaacdf83df54c66e17b3080343d34c5381>`)(sysintunregisterinstance_struct *p)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSINTOPEN <group___sys_int_itf_1ga05cc959ad418a7ed5f49ae5fd7179f23>`)(unsigned long ulInterrupt, SYS_INT_DESCRIPTION *pIntDescription, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSINTOPENBYNAME <group___sys_int_itf_1ga9aa4d565bd349c7b446fc7078edad5b7>`)(char *pszIntName, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSINTCLOSE <group___sys_int_itf_1gad1860e54cb72087b67bc41b64e481622>`)(RTS_HANDLE hInt)
+
+- typedef RTS_RESULT(* :ref:`PFSYSINTENABLE <group___sys_int_itf_1ga6cc67022f6c71a84f2e3a0d12f8d9c9c>`)(RTS_HANDLE hInt)
+
+- typedef RTS_RESULT(* :ref:`PFSYSINTDISABLE <group___sys_int_itf_1gac1bfc15c951b5ac0653aa9936e116410>`)(RTS_HANDLE hInt)
+
+- typedef RTS_RESULT(* :ref:`PFSYSINTREGISTER <group___sys_int_itf_1ga91c8d9c0e28f83da7e6775e06708e1af>`)(RTS_HANDLE hInt, unsigned long ulType, SYS_INT_INTHANDLER pHandler, RTS_UINTPTR ulAdditionalInfo)
+
+- typedef RTS_RESULT(* :ref:`PFSYSINTUNREGISTER <group___sys_int_itf_1ga701bcb7704cc8321b7ec9870aab37f40>`)(RTS_HANDLE hInt, SYS_INT_INTHANDLER pHandler)
+
+- typedef RTS_RESULT(* :ref:`PFSYSINTENABLEALL <group___sys_int_itf_1ga39e0af79379db75c42874ce40dc895d4>`)(RTS_UINTPTR *pulParam)
+
+- typedef RTS_RESULT(* :ref:`PFSYSINTDISABLEALL <group___sys_int_itf_1ga0903c7230e05ccb4806a0845fcaad00f>`)(RTS_UINTPTR *pulParam)
+
+- typedef RTS_RESULT(* :ref:`PFSYSINTLEVEL <group___sys_int_itf_1ga4d852dcff7127bd6d197f033f971e855>`)(void)
+
+- typedef :ref:`ISysInt_C <struct_i_sys_int___c>` :ref:`ISysInt <group___sys_int_itf_1gad93c1ec0d33b9cfee8819835bd409749>`
+
+Functions
+---------
+
+- void :ref:`sysintclose <group___sys_int_itf_1ga93bda4d467fc1b8902813c122a804aa3>` (:ref:`sysintclose_struct <group___sys_int_itf_1ga8f5d99120e38c14848f62142eefba450>` * p)
+
+- void :ref:`sysintdisable <group___sys_int_itf_1ga18a9e94f4b3b6dc59580f1abb8a47d84>` (:ref:`sysintdisable_struct <group___sys_int_itf_1ga026983969287a1a95f6fbcc0ea6317c9>` * p)
+
+- void :ref:`sysintdisableall <group___sys_int_itf_1ga0376da63c0dcdeefd54ba5b939cf1b09>` (:ref:`sysintdisableall_struct <group___sys_int_itf_1ga81ede26145ca817517ecedd4efa607c4>` * p)
+
+- void :ref:`sysintenable <group___sys_int_itf_1ga6608da804ef6070db93c3418e421e833>` (:ref:`sysintenable_struct <group___sys_int_itf_1gac8024050582a7b0e9922d4f08c3ce179>` * p)
+
+- void :ref:`sysintenableall <group___sys_int_itf_1gaa7f3dffec2c06b748d363c9116b1a1a2>` (:ref:`sysintenableall_struct <group___sys_int_itf_1gae12e4eedaa9133ec8e3b9925cc950cd7>` * p)
+
+- void :ref:`sysintlevel <group___sys_int_itf_1gac231038f55b1d3368ec934050b8ed27e>` (:ref:`sysintlevel_struct <group___sys_int_itf_1gafbd86fe0f9c2af1931c236dce96ef80f>` * p)
+
+- void :ref:`sysintopen <group___sys_int_itf_1ga0dcc8f143697e0c6cd639a296384d2ac>` (:ref:`sysintopen_struct <group___sys_int_itf_1gadebb9c6a2a5fd3f1ed283b35a4a9d265>` * p)
+
+- void :ref:`sysintopenbyname <group___sys_int_itf_1ga25c70b4078428222c79016e6aaf1a378>` (:ref:`sysintopenbyname_struct <group___sys_int_itf_1gac9b71f3b2d83e75f01af1c57b768331c>` * p)
+
+- void :ref:`sysintregister <group___sys_int_itf_1gaa90f586cc1bd76a164582d00bfde602a>` (:ref:`sysintregister_struct <group___sys_int_itf_1ga6dea7fb96556e4c76797385a19466bd0>` * p)
+
+- void :ref:`sysintregisterinstance <group___sys_int_itf_1ga69be356a5ce86044850ed62d0e6ea0b4>` (:ref:`sysintregisterinstance_struct <group___sys_int_itf_1ga0bc215975fe5e99c0cbdb9f701ef8446>` * p)
+
+- void :ref:`sysintunregister <group___sys_int_itf_1ga80b2e372167b00927a4148f58e3b1ef0>` (:ref:`sysintunregister_struct <group___sys_int_itf_1gae4b61006716c5cdb0b489d39e56f6319>` * p)
+
+- void :ref:`sysintunregisterinstance <group___sys_int_itf_1gad29d9d8c5cb48fdf6c10f9a06fc2eb12>` (:ref:`sysintunregisterinstance_struct <group___sys_int_itf_1gaa14c7fd643dfeb95025d71d2050f27fb>` * p)
+
+- RTS_HANDLE :ref:`SysIntOpen <group___sys_int_itf_1ga3afe47f9882c9f6685a71ff66a888536>` (unsigned long ulInterrupt, :ref:`SYS_INT_DESCRIPTION <group___sys_int_itf___interruptdescription_1ga9489ef3e465ecbe098ef1ad5d33e1228>` * pIntDescription, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysIntOpenByName <group___sys_int_itf_1ga22c1d1f1555da8d6bfdb0c869004930e>` (char * pszIntName, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysIntClose <group___sys_int_itf_1ga0ab998b4a0c53977608bd25b37953877>` (RTS_HANDLE hInt)
+
+- RTS_RESULT :ref:`SysIntEnable <group___sys_int_itf_1gac5bf2b2cb995288f2b9ed5390230150e>` (RTS_HANDLE hInt)
+
+- RTS_RESULT :ref:`SysIntDisable <group___sys_int_itf_1ga7436ec89781d4db899772c29cfaf0e49>` (RTS_HANDLE hInt)
+
+- RTS_RESULT :ref:`SysIntRegister <group___sys_int_itf_1gadab3d192f67159aa71953a6335b38f81>` (RTS_HANDLE hInt, unsigned long ulType, :ref:`SYS_INT_INTHANDLER <group___sys_int_itf___interrupthandler_1ga48219c958801ad79752ae1f6bf64c8ba>`  pHandler, RTS_UINTPTR ulAdditionalInfo)
+
+- RTS_RESULT :ref:`SysIntUnregister <group___sys_int_itf_1ga9a14d8cb4a530275ad77c578af5bef77>` (RTS_HANDLE hInt, :ref:`SYS_INT_INTHANDLER <group___sys_int_itf___interrupthandler_1ga48219c958801ad79752ae1f6bf64c8ba>`  pHandler)
+
+- RTS_RESULT :ref:`SysIntEnableAll <group___sys_int_itf_1ga0b8176d1ae912edfc4441da6cfd563a0>` (RTS_UINTPTR * pulParam)
+
+- RTS_RESULT :ref:`SysIntDisableAll <group___sys_int_itf_1ga943f7aa7b27a7860c4c7d5c227c5cbb6>` (RTS_UINTPTR * pulParam)
+
+- RTS_RESULT :ref:`SysIntLevel <group___sys_int_itf_1gaea7e2a1e6ec297b1ec5eec00dcde8438>` (void)
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_int_itf_1gaaad57e638a2f19c5a79eceb3c0751d22:
+
+#define USE_sysintclose :ref:`PFSYSINTCLOSE_IEC <group___sys_int_itf_1ga76efc213bef076f0e07b00dbe2bf9ede>` pfsysintclose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga7dbd0d274c5e9179e6c991d0281f5855:
+
+#define EXT_sysintclose extern :ref:`PFSYSINTCLOSE_IEC <group___sys_int_itf_1ga76efc213bef076f0e07b00dbe2bf9ede>` pfsysintclose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga7eca4d7cb31efec4932c1842cd970522:
+
+#define GET_sysintclose s_pfCMGetAPI2( "sysintclose", (RTS_VOID_FCTPTR *)&pfsysintclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x0E05F037), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga6cb1608ab6e9606d9ee5142fa3ce4746:
+
+#define CAL_sysintclose pfsysintclose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga44fd3f6387ce9c0219c4eafdc1949164:
+
+#define CHK_sysintclose (pfsysintclose != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga3509935957fe4e917a89b5a070da9af7:
+
+#define EXP_sysintclose s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintclose", (RTS_UINTPTR) :ref:`sysintclose <group___sys_int_itf_1ga93bda4d467fc1b8902813c122a804aa3>` , 1, RTSITF_GET_SIGNATURE(0, 0x0E05F037), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga4c79f1ebde51a2ae1f37da6a09485e32:
+
+#define USE_sysintdisable :ref:`PFSYSINTDISABLE_IEC <group___sys_int_itf_1gaf59f106d7236814480b0cf3d8ef80917>` pfsysintdisable;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga092e0d17466876fe60652a25b32f7a56:
+
+#define EXT_sysintdisable extern :ref:`PFSYSINTDISABLE_IEC <group___sys_int_itf_1gaf59f106d7236814480b0cf3d8ef80917>` pfsysintdisable;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga75db3360ce8385fb11ee0042d402e8da:
+
+#define GET_sysintdisable s_pfCMGetAPI2( "sysintdisable", (RTS_VOID_FCTPTR *)&pfsysintdisable, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC9EC050C), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga29ca570c7614130ff6ebca131d829c22:
+
+#define CAL_sysintdisable pfsysintdisable
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaf03023478dd7edb4b342a07f2f472fc4:
+
+#define CHK_sysintdisable (pfsysintdisable != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga923a67c851a907e60d5b890ff8aea9c4:
+
+#define EXP_sysintdisable s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintdisable", (RTS_UINTPTR) :ref:`sysintdisable <group___sys_int_itf_1ga18a9e94f4b3b6dc59580f1abb8a47d84>` , 1, RTSITF_GET_SIGNATURE(0, 0xC9EC050C), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga2ee7240030d5e59d5785fe00f3c3a908:
+
+#define USE_sysintdisableall :ref:`PFSYSINTDISABLEALL_IEC <group___sys_int_itf_1gaf1f5fb6eed12ba20ac140fb95ecea352>` pfsysintdisableall;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga326c8aa6ef3cec0a7693ca836a700d75:
+
+#define EXT_sysintdisableall extern :ref:`PFSYSINTDISABLEALL_IEC <group___sys_int_itf_1gaf1f5fb6eed12ba20ac140fb95ecea352>` pfsysintdisableall;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga8acf343285a7e1b0db19c47dda5b2318:
+
+#define GET_sysintdisableall s_pfCMGetAPI2( "sysintdisableall", (RTS_VOID_FCTPTR *)&pfsysintdisableall, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xBE4C0839), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gab9f47d91447d1ab6ab629436c347c423:
+
+#define CAL_sysintdisableall pfsysintdisableall
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gae15b342dd6ad24ba2f66559aafd3918d:
+
+#define CHK_sysintdisableall (pfsysintdisableall != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gae548cba61ba0e2fde889b67633ee7124:
+
+#define EXP_sysintdisableall s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintdisableall", (RTS_UINTPTR) :ref:`sysintdisableall <group___sys_int_itf_1ga0376da63c0dcdeefd54ba5b939cf1b09>` , 1, RTSITF_GET_SIGNATURE(0, 0xBE4C0839), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga715604155314651e84b0738a8c279170:
+
+#define USE_sysintenable :ref:`PFSYSINTENABLE_IEC <group___sys_int_itf_1gad73fda29d822886d5c1f7aeee28e5e7f>` pfsysintenable;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga9c54f2be8ddd4890cfa4e74960094ebd:
+
+#define EXT_sysintenable extern :ref:`PFSYSINTENABLE_IEC <group___sys_int_itf_1gad73fda29d822886d5c1f7aeee28e5e7f>` pfsysintenable;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga47f8d21864c08cf92659bfe486d18bda:
+
+#define GET_sysintenable s_pfCMGetAPI2( "sysintenable", (RTS_VOID_FCTPTR *)&pfsysintenable, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x30131B72), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga1845817f273e8d6f2133bacfa8ee5ab4:
+
+#define CAL_sysintenable pfsysintenable
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaef66845877aaef2df8270daeff079e10:
+
+#define CHK_sysintenable (pfsysintenable != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaf06a7d443dd5b6273ed1e78d0c930a1d:
+
+#define EXP_sysintenable s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintenable", (RTS_UINTPTR) :ref:`sysintenable <group___sys_int_itf_1ga6608da804ef6070db93c3418e421e833>` , 1, RTSITF_GET_SIGNATURE(0, 0x30131B72), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaa4e636cb547fb4ba004162711bbd2a39:
+
+#define USE_sysintenableall :ref:`PFSYSINTENABLEALL_IEC <group___sys_int_itf_1ga9af4eb310db71c6a5c8ee589ee0d20d0>` pfsysintenableall;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga58d42b49e71a24c51eb4e4fed228d9b7:
+
+#define EXT_sysintenableall extern :ref:`PFSYSINTENABLEALL_IEC <group___sys_int_itf_1ga9af4eb310db71c6a5c8ee589ee0d20d0>` pfsysintenableall;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga14c6eb3ce8d5a22f23ace8e1821fb10e:
+
+#define GET_sysintenableall s_pfCMGetAPI2( "sysintenableall", (RTS_VOID_FCTPTR *)&pfsysintenableall, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xDE565CD4), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga832218873998723bafc0c7e1dc458990:
+
+#define CAL_sysintenableall pfsysintenableall
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga81cb1161d62aba8f1d5e66c87f576cd7:
+
+#define CHK_sysintenableall (pfsysintenableall != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga706b95524495b185f1ed916a23c7a38d:
+
+#define EXP_sysintenableall s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintenableall", (RTS_UINTPTR) :ref:`sysintenableall <group___sys_int_itf_1gaa7f3dffec2c06b748d363c9116b1a1a2>` , 1, RTSITF_GET_SIGNATURE(0, 0xDE565CD4), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga9a510ef1f012aa26098ba29693027a1c:
+
+#define USE_sysintlevel :ref:`PFSYSINTLEVEL_IEC <group___sys_int_itf_1ga980ee108a31b4514ad60971e97b89612>` pfsysintlevel;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga74312ca5f583bf1676d414a92382eb90:
+
+#define EXT_sysintlevel extern :ref:`PFSYSINTLEVEL_IEC <group___sys_int_itf_1ga980ee108a31b4514ad60971e97b89612>` pfsysintlevel;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gab83cae9042fd52e256bdffcc7592387f:
+
+#define GET_sysintlevel s_pfCMGetAPI2( "sysintlevel", (RTS_VOID_FCTPTR *)&pfsysintlevel, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xCA219D99), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaa30c0a1c6d9b25862ec0298224b1bfd3:
+
+#define CAL_sysintlevel pfsysintlevel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga7435659e8ff99cfa8a8e06cd1b6c550b:
+
+#define CHK_sysintlevel (pfsysintlevel != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga0d412341bafe0061983b3e7fa79b63ed:
+
+#define EXP_sysintlevel s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintlevel", (RTS_UINTPTR) :ref:`sysintlevel <group___sys_int_itf_1gac231038f55b1d3368ec934050b8ed27e>` , 1, RTSITF_GET_SIGNATURE(0, 0xCA219D99), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga461ce130de6e31ed00e3f45084f3e95f:
+
+#define USE_sysintopen :ref:`PFSYSINTOPEN_IEC <group___sys_int_itf_1ga45f56bc5bae7fdd54d1f1bdcfeac7d6b>` pfsysintopen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gad383ec85977b8b824764b25fcf564c52:
+
+#define EXT_sysintopen extern :ref:`PFSYSINTOPEN_IEC <group___sys_int_itf_1ga45f56bc5bae7fdd54d1f1bdcfeac7d6b>` pfsysintopen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga4d117bdc63d1969486b30ea9f1428d4a:
+
+#define GET_sysintopen s_pfCMGetAPI2( "sysintopen", (RTS_VOID_FCTPTR *)&pfsysintopen, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB3D594FF), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga8ae8e54602a3be702d8ec43d41f96ae0:
+
+#define CAL_sysintopen pfsysintopen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga7fac1b8f55d791a6e3553b908bb13729:
+
+#define CHK_sysintopen (pfsysintopen != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga8afabf045efacb8d26bd09ab961b28aa:
+
+#define EXP_sysintopen s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintopen", (RTS_UINTPTR) :ref:`sysintopen <group___sys_int_itf_1ga0dcc8f143697e0c6cd639a296384d2ac>` , 1, RTSITF_GET_SIGNATURE(0, 0xB3D594FF), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga58a07f4dab17833fd68075771baffb77:
+
+#define USE_sysintopenbyname :ref:`PFSYSINTOPENBYNAME_IEC <group___sys_int_itf_1ga7d058141839fee69f1f86dbbf15369e2>` pfsysintopenbyname;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaf8c205e4ed4a1e3e17ce5ec3df160a52:
+
+#define EXT_sysintopenbyname extern :ref:`PFSYSINTOPENBYNAME_IEC <group___sys_int_itf_1ga7d058141839fee69f1f86dbbf15369e2>` pfsysintopenbyname;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga970092e72414dd8bd2b48a73d70d7ee7:
+
+#define GET_sysintopenbyname s_pfCMGetAPI2( "sysintopenbyname", (RTS_VOID_FCTPTR *)&pfsysintopenbyname, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x928117BD), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaca55715248d9742cedea3fa20f5d5f2d:
+
+#define CAL_sysintopenbyname pfsysintopenbyname
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gade9450e4e14ae5f18680a61b82981069:
+
+#define CHK_sysintopenbyname (pfsysintopenbyname != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga7c5e97904b118c044f36b8f9a38f6880:
+
+#define EXP_sysintopenbyname s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintopenbyname", (RTS_UINTPTR) :ref:`sysintopenbyname <group___sys_int_itf_1ga25c70b4078428222c79016e6aaf1a378>` , 1, RTSITF_GET_SIGNATURE(0, 0x928117BD), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga0e29110a80fe34887b8bf97e4ea3ccac:
+
+#define USE_sysintregister :ref:`PFSYSINTREGISTER_IEC <group___sys_int_itf_1ga69252cd7b0ccddaac885c5581dec4cce>` pfsysintregister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga4ee261b4ea34de63bfee04ce84bc4fdf:
+
+#define EXT_sysintregister extern :ref:`PFSYSINTREGISTER_IEC <group___sys_int_itf_1ga69252cd7b0ccddaac885c5581dec4cce>` pfsysintregister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaa1133f087a107d08af4ba6033fa7fbfc:
+
+#define GET_sysintregister s_pfCMGetAPI2( "sysintregister", (RTS_VOID_FCTPTR *)&pfsysintregister, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x63A36B82), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga27d38b71185d86463555ee8d41921d49:
+
+#define CAL_sysintregister pfsysintregister
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga3a4b056613ee0e1bef8144e607f59917:
+
+#define CHK_sysintregister (pfsysintregister != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga51f66216b96ef60c02f91dc588e30cab:
+
+#define EXP_sysintregister s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintregister", (RTS_UINTPTR) :ref:`sysintregister <group___sys_int_itf_1gaa90f586cc1bd76a164582d00bfde602a>` , 1, RTSITF_GET_SIGNATURE(0, 0x63A36B82), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gab98121402d074889f2b544ffd3a7ae34:
+
+#define USE_sysintregisterinstance :ref:`PFSYSINTREGISTERINSTANCE_IEC <group___sys_int_itf_1gaa404a093e0c22eb5afeac00b7a33d432>` pfsysintregisterinstance;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga590f191de88e1e6863a8b00d1983c531:
+
+#define EXT_sysintregisterinstance extern :ref:`PFSYSINTREGISTERINSTANCE_IEC <group___sys_int_itf_1gaa404a093e0c22eb5afeac00b7a33d432>` pfsysintregisterinstance;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga7da8650a5ed71202fc14f6a3937b5f38:
+
+#define GET_sysintregisterinstance s_pfCMGetAPI2( "sysintregisterinstance", (RTS_VOID_FCTPTR *)&pfsysintregisterinstance, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC0428DE2), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga74743b02829f795c0601cc6629d15440:
+
+#define CAL_sysintregisterinstance pfsysintregisterinstance
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gab204918efbe073991f9f7c0b25c6c217:
+
+#define CHK_sysintregisterinstance (pfsysintregisterinstance != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga3c057c05074d7af72347a01e40412eec:
+
+#define EXP_sysintregisterinstance s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintregisterinstance", (RTS_UINTPTR) :ref:`sysintregisterinstance <group___sys_int_itf_1ga69be356a5ce86044850ed62d0e6ea0b4>` , 1, RTSITF_GET_SIGNATURE(0, 0xC0428DE2), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga497637ef092a56b103bb61db2c680673:
+
+#define USE_sysintunregister :ref:`PFSYSINTUNREGISTER_IEC <group___sys_int_itf_1gacaf9321b3b03d70793b453678dfef437>` pfsysintunregister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga4d865e2cd27edbbf41e0a63bfd601a9c:
+
+#define EXT_sysintunregister extern :ref:`PFSYSINTUNREGISTER_IEC <group___sys_int_itf_1gacaf9321b3b03d70793b453678dfef437>` pfsysintunregister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga5fd1d71cb67375e7861ac8f9bba8d903:
+
+#define GET_sysintunregister s_pfCMGetAPI2( "sysintunregister", (RTS_VOID_FCTPTR *)&pfsysintunregister, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x9CA9B33A), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga34aa51511dd5f8b8eb63566234a46af7:
+
+#define CAL_sysintunregister pfsysintunregister
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga4cb818776034131e723ee801b31c4987:
+
+#define CHK_sysintunregister (pfsysintunregister != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gad19f63b2c42a5743fff0caf9d362bfce:
+
+#define EXP_sysintunregister s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintunregister", (RTS_UINTPTR) :ref:`sysintunregister <group___sys_int_itf_1ga80b2e372167b00927a4148f58e3b1ef0>` , 1, RTSITF_GET_SIGNATURE(0, 0x9CA9B33A), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga0b829c4841cbac64c070768f6574b636:
+
+#define USE_sysintunregisterinstance :ref:`PFSYSINTUNREGISTERINSTANCE_IEC <group___sys_int_itf_1gaacdf83df54c66e17b3080343d34c5381>` pfsysintunregisterinstance;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaa8a3ffb667607088d4c9fe93f8dd9e3a:
+
+#define EXT_sysintunregisterinstance extern :ref:`PFSYSINTUNREGISTERINSTANCE_IEC <group___sys_int_itf_1gaacdf83df54c66e17b3080343d34c5381>` pfsysintunregisterinstance;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga9381e998ec1645a6c893f35eaa590bba:
+
+#define GET_sysintunregisterinstance s_pfCMGetAPI2( "sysintunregisterinstance", (RTS_VOID_FCTPTR *)&pfsysintunregisterinstance, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA2A67F42), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga7f862fdd4f948e55205e02941d558b00:
+
+#define CAL_sysintunregisterinstance pfsysintunregisterinstance
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga8ce3cd98f6615337845d87963853d16d:
+
+#define CHK_sysintunregisterinstance (pfsysintunregisterinstance != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga364d95d8b8eefde1e865df30a23b1c2c:
+
+#define EXP_sysintunregisterinstance s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysintunregisterinstance", (RTS_UINTPTR) :ref:`sysintunregisterinstance <group___sys_int_itf_1gad29d9d8c5cb48fdf6c10f9a06fc2eb12>` , 1, RTSITF_GET_SIGNATURE(0, 0xA2A67F42), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaff1e722033435e18e6a3b89b9d20c964:
+
+#define USE_SysIntOpen :ref:`PFSYSINTOPEN <group___sys_int_itf_1ga05cc959ad418a7ed5f49ae5fd7179f23>` pfSysIntOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga2671cccc990bd7668d970f785928845c:
+
+#define EXT_SysIntOpen extern :ref:`PFSYSINTOPEN <group___sys_int_itf_1ga05cc959ad418a7ed5f49ae5fd7179f23>` pfSysIntOpen;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga192a2564b59e8d736442b6d6f3172044:
+
+#define GET_SysIntOpen s_pfCMGetAPI2( "SysIntOpen", (RTS_VOID_FCTPTR *)&pfSysIntOpen, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gac515d48483bd865ec7f403c7c980c28f:
+
+#define CAL_SysIntOpen pfSysIntOpen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga31d4c1922b8ddb6967ca13e0cd08e597:
+
+#define CHK_SysIntOpen (pfSysIntOpen != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga0a483b856efd8c357b5fcf45e298dcce:
+
+#define EXP_SysIntOpen s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntOpen", (RTS_UINTPTR) :ref:`SysIntOpen <group___sys_int_itf_1ga3afe47f9882c9f6685a71ff66a888536>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga018a26dea6783154a5e54f88509f6edc:
+
+#define USE_SysIntOpenByName :ref:`PFSYSINTOPENBYNAME <group___sys_int_itf_1ga9aa4d565bd349c7b446fc7078edad5b7>` pfSysIntOpenByName;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga11f1cf07e77fed34d4a3737179c01ac5:
+
+#define EXT_SysIntOpenByName extern :ref:`PFSYSINTOPENBYNAME <group___sys_int_itf_1ga9aa4d565bd349c7b446fc7078edad5b7>` pfSysIntOpenByName;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaf74ad703c026cf09fdf9e2f8acb7119d:
+
+#define GET_SysIntOpenByName s_pfCMGetAPI2( "SysIntOpenByName", (RTS_VOID_FCTPTR *)&pfSysIntOpenByName, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga03fbf05c5aed1708baa2296f412d2f29:
+
+#define CAL_SysIntOpenByName pfSysIntOpenByName
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga3d9351b71f5ee376c41091f526690bac:
+
+#define CHK_SysIntOpenByName (pfSysIntOpenByName != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga84c6532f1116c5dac66acba6451eed5a:
+
+#define EXP_SysIntOpenByName s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntOpenByName", (RTS_UINTPTR) :ref:`SysIntOpenByName <group___sys_int_itf_1ga22c1d1f1555da8d6bfdb0c869004930e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga4dd3fcb1be5de0d198ab5162615c335e:
+
+#define USE_SysIntClose :ref:`PFSYSINTCLOSE <group___sys_int_itf_1gad1860e54cb72087b67bc41b64e481622>` pfSysIntClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga0372ca9c0abe2119028a4741069d72bf:
+
+#define EXT_SysIntClose extern :ref:`PFSYSINTCLOSE <group___sys_int_itf_1gad1860e54cb72087b67bc41b64e481622>` pfSysIntClose;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaec763ea0d3652635356ad5f8dcff6079:
+
+#define GET_SysIntClose s_pfCMGetAPI2( "SysIntClose", (RTS_VOID_FCTPTR *)&pfSysIntClose, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaf4f7475f0275d09507a9c33fbd1bd57d:
+
+#define CAL_SysIntClose pfSysIntClose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga01b3d1f43eb41ebdb0943273ec32635b:
+
+#define CHK_SysIntClose (pfSysIntClose != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga219573ec1eb661667d8c9d254e25a533:
+
+#define EXP_SysIntClose s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntClose", (RTS_UINTPTR) :ref:`SysIntClose <group___sys_int_itf_1ga0ab998b4a0c53977608bd25b37953877>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga3e0ac638e950012cfd2689b70608dde7:
+
+#define USE_SysIntEnable :ref:`PFSYSINTENABLE <group___sys_int_itf_1ga6cc67022f6c71a84f2e3a0d12f8d9c9c>` pfSysIntEnable;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaedb668b365c484c9ad9dede0237edf69:
+
+#define EXT_SysIntEnable extern :ref:`PFSYSINTENABLE <group___sys_int_itf_1ga6cc67022f6c71a84f2e3a0d12f8d9c9c>` pfSysIntEnable;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga3e4793120d7337b57d48e0d6466d3b16:
+
+#define GET_SysIntEnable s_pfCMGetAPI2( "SysIntEnable", (RTS_VOID_FCTPTR *)&pfSysIntEnable, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga429b398c97a7b61d34d1a4d8e4acd6eb:
+
+#define CAL_SysIntEnable pfSysIntEnable
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga793174d564c0617e755436764b59b237:
+
+#define CHK_SysIntEnable (pfSysIntEnable != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga67475504c02b2835662166229044087d:
+
+#define EXP_SysIntEnable s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntEnable", (RTS_UINTPTR) :ref:`SysIntEnable <group___sys_int_itf_1gac5bf2b2cb995288f2b9ed5390230150e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gac4c821f12ebe22e93829bb3b57e646bc:
+
+#define USE_SysIntDisable :ref:`PFSYSINTDISABLE <group___sys_int_itf_1gac1bfc15c951b5ac0653aa9936e116410>` pfSysIntDisable;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga6636849216b4ac876db3721a0de8faf5:
+
+#define EXT_SysIntDisable extern :ref:`PFSYSINTDISABLE <group___sys_int_itf_1gac1bfc15c951b5ac0653aa9936e116410>` pfSysIntDisable;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga57e3ce57d1cdaccbf7e47d82da0e3e04:
+
+#define GET_SysIntDisable s_pfCMGetAPI2( "SysIntDisable", (RTS_VOID_FCTPTR *)&pfSysIntDisable, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga18fbc092bd671e58dfd9a87207e28c01:
+
+#define CAL_SysIntDisable pfSysIntDisable
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga25abbc19bf94a3b9e1d9e05d0d648c44:
+
+#define CHK_SysIntDisable (pfSysIntDisable != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga4c419b96f0d88f7fa2f31b2044a8dc07:
+
+#define EXP_SysIntDisable s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntDisable", (RTS_UINTPTR) :ref:`SysIntDisable <group___sys_int_itf_1ga7436ec89781d4db899772c29cfaf0e49>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga1652289e1fe64d13e2c742caa20b8cc2:
+
+#define USE_SysIntRegister :ref:`PFSYSINTREGISTER <group___sys_int_itf_1ga91c8d9c0e28f83da7e6775e06708e1af>` pfSysIntRegister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gab650e3f6596089af03b14d45926adb3a:
+
+#define EXT_SysIntRegister extern :ref:`PFSYSINTREGISTER <group___sys_int_itf_1ga91c8d9c0e28f83da7e6775e06708e1af>` pfSysIntRegister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga7ac6caa383fecfd12acd85ea61b2a1d9:
+
+#define GET_SysIntRegister s_pfCMGetAPI2( "SysIntRegister", (RTS_VOID_FCTPTR *)&pfSysIntRegister, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga5024e292ccd1f8c0f19dbdd3ab9d9f7f:
+
+#define CAL_SysIntRegister pfSysIntRegister
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga8072670d282acc5d13807ce7a182a554:
+
+#define CHK_SysIntRegister (pfSysIntRegister != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga35d7165a7a64784ab0ac89e15d0af760:
+
+#define EXP_SysIntRegister s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntRegister", (RTS_UINTPTR) :ref:`SysIntRegister <group___sys_int_itf_1gadab3d192f67159aa71953a6335b38f81>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga3c726bd033a8e9197d05c4c62ed033dd:
+
+#define USE_SysIntUnregister :ref:`PFSYSINTUNREGISTER <group___sys_int_itf_1ga701bcb7704cc8321b7ec9870aab37f40>` pfSysIntUnregister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gadbc1e43f194418ae5eee0e3b8c28a3af:
+
+#define EXT_SysIntUnregister extern :ref:`PFSYSINTUNREGISTER <group___sys_int_itf_1ga701bcb7704cc8321b7ec9870aab37f40>` pfSysIntUnregister;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gae18e22702c0706786c7687f34762a1e1:
+
+#define GET_SysIntUnregister s_pfCMGetAPI2( "SysIntUnregister", (RTS_VOID_FCTPTR *)&pfSysIntUnregister, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gab012e4a19f74d9746a7af86b4dbf6eaf:
+
+#define CAL_SysIntUnregister pfSysIntUnregister
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga1a9ca4d4fcfc6bd11c7f116226c7bb48:
+
+#define CHK_SysIntUnregister (pfSysIntUnregister != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gae010a61988408446311f7a6680bf86eb:
+
+#define EXP_SysIntUnregister s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntUnregister", (RTS_UINTPTR) :ref:`SysIntUnregister <group___sys_int_itf_1ga9a14d8cb4a530275ad77c578af5bef77>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gabb9e51186786f00e247ef2a52a2e84dc:
+
+#define USE_SysIntEnableAll :ref:`PFSYSINTENABLEALL <group___sys_int_itf_1ga39e0af79379db75c42874ce40dc895d4>` pfSysIntEnableAll;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga9293c3f28bae479d1797994200af6dc5:
+
+#define EXT_SysIntEnableAll extern :ref:`PFSYSINTENABLEALL <group___sys_int_itf_1ga39e0af79379db75c42874ce40dc895d4>` pfSysIntEnableAll;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gafb0e7c35b5d32bcc5d9d7dec7c869316:
+
+#define GET_SysIntEnableAll s_pfCMGetAPI2( "SysIntEnableAll", (RTS_VOID_FCTPTR *)&pfSysIntEnableAll, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaabc22809e3ef0dc1ac519810e2465a99:
+
+#define CAL_SysIntEnableAll pfSysIntEnableAll
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga3e8c2c9020f05f858bd54ed89de0a9a7:
+
+#define CHK_SysIntEnableAll (pfSysIntEnableAll != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaeebd1d3376ab30403ae1a7d3d422c291:
+
+#define EXP_SysIntEnableAll s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntEnableAll", (RTS_UINTPTR) :ref:`SysIntEnableAll <group___sys_int_itf_1ga0b8176d1ae912edfc4441da6cfd563a0>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga5a9bc7697ac44af95de999d7b0c9aeac:
+
+#define USE_SysIntDisableAll :ref:`PFSYSINTDISABLEALL <group___sys_int_itf_1ga0903c7230e05ccb4806a0845fcaad00f>` pfSysIntDisableAll;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga6fc28c5f7d2a211dbec160d63118656c:
+
+#define EXT_SysIntDisableAll extern :ref:`PFSYSINTDISABLEALL <group___sys_int_itf_1ga0903c7230e05ccb4806a0845fcaad00f>` pfSysIntDisableAll;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga3bc77662abcea2f284cefa93b345c68d:
+
+#define GET_SysIntDisableAll s_pfCMGetAPI2( "SysIntDisableAll", (RTS_VOID_FCTPTR *)&pfSysIntDisableAll, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga2a9dcead16b117dff26df5a4b5f7ddda:
+
+#define CAL_SysIntDisableAll pfSysIntDisableAll
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaabad022e148253b6c82d7c480352bc3a:
+
+#define CHK_SysIntDisableAll (pfSysIntDisableAll != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gab5d716ff8413e90322b7079ebf8f6c3c:
+
+#define EXP_SysIntDisableAll s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntDisableAll", (RTS_UINTPTR) :ref:`SysIntDisableAll <group___sys_int_itf_1ga943f7aa7b27a7860c4c7d5c227c5cbb6>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga54939ccfee5a1e2445b040cbbe49bc19:
+
+#define USE_SysIntLevel :ref:`PFSYSINTLEVEL <group___sys_int_itf_1ga4d852dcff7127bd6d197f033f971e855>` pfSysIntLevel;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga8da80bd0c3e0f03a0abe96017c25f2d5:
+
+#define EXT_SysIntLevel extern :ref:`PFSYSINTLEVEL <group___sys_int_itf_1ga4d852dcff7127bd6d197f033f971e855>` pfSysIntLevel;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gafb2d92424449fe69f03b0e7b44f2352a:
+
+#define GET_SysIntLevel s_pfCMGetAPI2( "SysIntLevel", (RTS_VOID_FCTPTR *)&pfSysIntLevel, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gafc103d305b8eb984f7bc79b2e2217e67:
+
+#define CAL_SysIntLevel pfSysIntLevel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga42a3ac27209bd869b6a2fb8801c76e74:
+
+#define CHK_SysIntLevel (pfSysIntLevel != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga47c4437f0698694aea9769bf09612d39:
+
+#define EXP_SysIntLevel s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysIntLevel", (RTS_UINTPTR) :ref:`SysIntLevel <group___sys_int_itf_1gaea7e2a1e6ec297b1ec5eec00dcde8438>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga471e19df9104f6d2783183f328d3ed9c:
+
+#define ITF_SysInt
+^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga33f1771f5396840fd66138bc5f4b540f:
+
+#define EXTITF_SysInt
+^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___sys_int_itf_1ga8f5d99120e38c14848f62142eefba450:
+
+typedef struct tagsysintclose_struct  sysintclose_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Close an interrupt
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_int_itf_1ga76efc213bef076f0e07b00dbe2bf9ede:
+
+typedef void( *  PFSYSINTCLOSE_IEC) (sysintclose_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga026983969287a1a95f6fbcc0ea6317c9:
+
+typedef struct tagsysintdisable_struct  sysintdisable_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to disable an interrupt. By use of this function the interrupt specified by its handle gets deactivated (masked).
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_int_itf_1gaf59f106d7236814480b0cf3d8ef80917:
+
+typedef void( *  PFSYSINTDISABLE_IEC) (sysintdisable_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga81ede26145ca817517ecedd4efa607c4:
+
+typedef struct tagsysintdisableall_struct  sysintdisableall_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to disable all interrupts. By use of this functions all interrupts are deactivated (masked). A call of SysIntDisableAll has to be succeeded by a call to SysIntEnableAll!
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_int_itf_1gaf1f5fb6eed12ba20ac140fb95ecea352:
+
+typedef void( *  PFSYSINTDISABLEALL_IEC) (sysintdisableall_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gac8024050582a7b0e9922d4f08c3ce179:
+
+typedef struct tagsysintenable_struct  sysintenable_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to enable an interrupt. By use of this function the interrupt specified by its handle is activated.
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_int_itf_1gad73fda29d822886d5c1f7aeee28e5e7f:
+
+typedef void( *  PFSYSINTENABLE_IEC) (sysintenable_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gae12e4eedaa9133ec8e3b9925cc950cd7:
+
+typedef struct tagsysintenableall_struct  sysintenableall_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A call to this function will be done after a call of function SysIntDisableAll and will restore the situation preceding the execution of SysIntDisableAll. That means, all interrupts, having been activated before the call to SysIntDisableAll are activated again.
+
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_int_itf_1ga9af4eb310db71c6a5c8ee589ee0d20d0:
+
+typedef void( *  PFSYSINTENABLEALL_IEC) (sysintenableall_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gafbd86fe0f9c2af1931c236dce96ef80f:
+
+typedef struct tagsysintlevel_struct  sysintlevel_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function checks if the processor is actually executing an ISR. This information is necessary, as some functions of an operating system must not be called within the interrupt level.
+
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library):
+
+  - ERR_OK: We are still in an interrupt handler
+
+  - ERR_FAILED: not in interrupt context
+
+.. _group___sys_int_itf_1ga980ee108a31b4514ad60971e97b89612:
+
+typedef void( *  PFSYSINTLEVEL_IEC) (sysintlevel_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gadebb9c6a2a5fd3f1ed283b35a4a9d265:
+
+typedef struct tagsysintopen_struct  sysintopen_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Open a valid interrupt
+**Returns:**
+
+RESULT: Handle to the interrupt or RTS_INVALID_HANDLE if failed.
+
+.. _group___sys_int_itf_1ga45f56bc5bae7fdd54d1f1bdcfeac7d6b:
+
+typedef void( *  PFSYSINTOPEN_IEC) (sysintopen_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gac9b71f3b2d83e75f01af1c57b768331c:
+
+typedef struct tagsysintopenbyname_struct  sysintopenbyname_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Open a valid interrupt specified by name
+**Returns:**
+
+RESULT: Handle to the interrupt or RTS_INVALID_HANDLE if failed.
+
+.. _group___sys_int_itf_1ga7d058141839fee69f1f86dbbf15369e2:
+
+typedef void( *  PFSYSINTOPENBYNAME_IEC) (sysintopenbyname_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga6dea7fb96556e4c76797385a19466bd0:
+
+typedef struct tagsysintregister_struct  sysintregister_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to register an interrupt handler. By use of this function an interrupt handler (Interrupt Service Routine, ISR) for the interrupt specified by its handle gets registered. During registration, the start address of the function to be executed in case of the associated interrupt request is filled into the vector table on the target.
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_int_itf_1ga69252cd7b0ccddaac885c5581dec4cce:
+
+typedef void( *  PFSYSINTREGISTER_IEC) (sysintregister_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga0bc215975fe5e99c0cbdb9f701ef8446:
+
+typedef struct tagsysintregisterinstance_struct  sysintregisterinstance_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Still unsupported function!
+
+.. _group___sys_int_itf_1gaa404a093e0c22eb5afeac00b7a33d432:
+
+typedef void( *  PFSYSINTREGISTERINSTANCE_IEC) (sysintregisterinstance_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gae4b61006716c5cdb0b489d39e56f6319:
+
+typedef struct tagsysintunregister_struct  sysintunregister_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to unregister an interrupt handler
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_int_itf_1gacaf9321b3b03d70793b453678dfef437:
+
+typedef void( *  PFSYSINTUNREGISTER_IEC) (sysintunregister_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaa14c7fd643dfeb95025d71d2050f27fb:
+
+typedef struct tagsysintunregisterinstance_struct  sysintunregisterinstance_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Still unsupported function!
+
+.. _group___sys_int_itf_1gaacdf83df54c66e17b3080343d34c5381:
+
+typedef void( *  PFSYSINTUNREGISTERINSTANCE_IEC) (sysintunregisterinstance_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga05cc959ad418a7ed5f49ae5fd7179f23:
+
+typedef RTS_HANDLE( *  PFSYSINTOPEN) (unsigned long ulInterrupt, SYS_INT_DESCRIPTION *pIntDescription, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga9aa4d565bd349c7b446fc7078edad5b7:
+
+typedef RTS_HANDLE( *  PFSYSINTOPENBYNAME) (char *pszIntName, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gad1860e54cb72087b67bc41b64e481622:
+
+typedef RTS_RESULT( *  PFSYSINTCLOSE) (RTS_HANDLE hInt)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga6cc67022f6c71a84f2e3a0d12f8d9c9c:
+
+typedef RTS_RESULT( *  PFSYSINTENABLE) (RTS_HANDLE hInt)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gac1bfc15c951b5ac0653aa9936e116410:
+
+typedef RTS_RESULT( *  PFSYSINTDISABLE) (RTS_HANDLE hInt)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga91c8d9c0e28f83da7e6775e06708e1af:
+
+typedef RTS_RESULT( *  PFSYSINTREGISTER) (RTS_HANDLE hInt, unsigned long ulType, SYS_INT_INTHANDLER pHandler, RTS_UINTPTR ulAdditionalInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga701bcb7704cc8321b7ec9870aab37f40:
+
+typedef RTS_RESULT( *  PFSYSINTUNREGISTER) (RTS_HANDLE hInt, SYS_INT_INTHANDLER pHandler)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga39e0af79379db75c42874ce40dc895d4:
+
+typedef RTS_RESULT( *  PFSYSINTENABLEALL) (RTS_UINTPTR *pulParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga0903c7230e05ccb4806a0845fcaad00f:
+
+typedef RTS_RESULT( *  PFSYSINTDISABLEALL) (RTS_UINTPTR *pulParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga4d852dcff7127bd6d197f033f971e855:
+
+typedef RTS_RESULT( *  PFSYSINTLEVEL) (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gad93c1ec0d33b9cfee8819835bd409749:
+
+typedef ISysInt_C ISysInt
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___sys_int_itf_1ga93bda4d467fc1b8902813c122a804aa3:
+
+void sysintclose (sysintclose_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga18a9e94f4b3b6dc59580f1abb8a47d84:
+
+void sysintdisable (sysintdisable_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga0376da63c0dcdeefd54ba5b939cf1b09:
+
+void sysintdisableall (sysintdisableall_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga6608da804ef6070db93c3418e421e833:
+
+void sysintenable (sysintenable_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaa7f3dffec2c06b748d363c9116b1a1a2:
+
+void sysintenableall (sysintenableall_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gac231038f55b1d3368ec934050b8ed27e:
+
+void sysintlevel (sysintlevel_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga0dcc8f143697e0c6cd639a296384d2ac:
+
+void sysintopen (sysintopen_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga25c70b4078428222c79016e6aaf1a378:
+
+void sysintopenbyname (sysintopenbyname_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gaa90f586cc1bd76a164582d00bfde602a:
+
+void sysintregister (sysintregister_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga69be356a5ce86044850ed62d0e6ea0b4:
+
+void sysintregisterinstance (sysintregisterinstance_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga80b2e372167b00927a4148f58e3b1ef0:
+
+void sysintunregister (sysintunregister_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1gad29d9d8c5cb48fdf6c10f9a06fc2eb12:
+
+void sysintunregisterinstance (sysintunregisterinstance_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_int_itf_1ga3afe47f9882c9f6685a71ff66a888536:
+
+RTS_HANDLE SysIntOpen (unsigned long ulInterrupt, SYS_INT_DESCRIPTION *pIntDescription, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION END
+
+Open a valid interrupt
+
+**Parameters**
+
++---------+-----------------+---------------------------------------------------------------------------------------+
+| [in]    | ulInterrupt     | Interrupt number RANGE=[0,VALID_INT_NR,INVALID_INT_NR]                                |
++---------+-----------------+---------------------------------------------------------------------------------------+
+| [in]    | pIntDescription | Pointer to optional interrupt description RANGE=[0,VALID_INT_DESCR,INVALID_INT_DESCR] |
++---------+-----------------+---------------------------------------------------------------------------------------+
+| [out]   | pResult         | Pointer to result                                                                     |
++---------+-----------------+---------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+--------------------------------------------------------------+
+| ERR_OK        | Interrupt could be opened, a valid Handle is returned        |
++---------------+--------------------------------------------------------------+
+| ERR_FAILED    | Interrupt could not be opened, an invalid Handle is returned |
++---------------+--------------------------------------------------------------+
+| ERR_PARAMETER | Invalid ulInterrupt Parameter                                |
++---------------+--------------------------------------------------------------+
+
+**Returns:**
+
+Handle to interrupt, is RTS_INVALID_HANDLE if error occurred, see error codes.
+
+.. _group___sys_int_itf_1ga22c1d1f1555da8d6bfdb0c869004930e:
+
+RTS_HANDLE SysIntOpenByName (char *pszIntName, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Open a valid interrupt specified by name
+
+**Parameters**
+
++---------+------------+--------------------------------------------------------------------------------------------+
+| [in]    | pszIntName | Interrupt name defined in the settings component RANGE=[0,VALID_INT_NAMR,INVALID_INT_NAME] |
++---------+------------+--------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+--------------------------------------------------------------+
+| ERR_OK        | Interrupt could be opened, a valid Handle is returned        |
++---------------+--------------------------------------------------------------+
+| ERR_FAILED    | Interrupt could not be opened, an invalid Handle is returned |
++---------------+--------------------------------------------------------------+
+| ERR_PARAMETER | Parameter wrong, an invalid Handle is returned               |
++---------------+--------------------------------------------------------------+
+| ERR_NO_OBJECT | No Interrupt found for given Name                            |
++---------------+--------------------------------------------------------------+
+
+**Parameters**
+
++---------+---------+-------------------+
+| [out]   | pResult | Pointer to result |
++---------+---------+-------------------+
+
+**Returns:**
+
+Handle to interrupt
+
+.. _group___sys_int_itf_1ga0ab998b4a0c53977608bd25b37953877:
+
+RTS_RESULT SysIntClose (RTS_HANDLE hInt)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Close an interrupt
+
+**Parameters**
+
++---------+------+----------------------------------------------------------------+
+| [in]    | hInt | Interrupt handle RANGE=[RTS_INVALID_HANDLE,0,VALID_INT_HANDLE] |
++---------+------+----------------------------------------------------------------+
+
+**Return values**
+
++---------------+----------------------------------+
+| ERR_OK        | Interrupt could be closed        |
++---------------+----------------------------------+
+| ERR_FAILED    | Interrupt could not be closed    |
++---------------+----------------------------------+
+| ERR_NO_OBJECT | No Interrupt found for Parameter |
++---------------+----------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_int_itf_1gac5bf2b2cb995288f2b9ed5390230150e:
+
+RTS_RESULT SysIntEnable (RTS_HANDLE hInt)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to enable an interrupt
+
+**Parameters**
+
++---------+------+-----------------------------------------------------------------------+
+| [in]    | hInt | Handle to the interrupt RANGE=[RTS_INVALID_HANDLE,0,VALID_INT_HANDLE] |
++---------+------+-----------------------------------------------------------------------+
+
+**Return values**
+
++---------------+----------------------------------+
+| ERR_OK        | Interrupt could be enabled       |
++---------------+----------------------------------+
+| ERR_FAILED    | Interrupt could not be enabled   |
++---------------+----------------------------------+
+| ERR_NO_OBJECT | No Interrupt found for Parameter |
++---------------+----------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_int_itf_1ga7436ec89781d4db899772c29cfaf0e49:
+
+RTS_RESULT SysIntDisable (RTS_HANDLE hInt)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to disable an interrupt
+
+**Parameters**
+
++---------+------+-----------------------------------------------------------------------+
+| [in]    | hInt | Handle to the interrupt RANGE=[RTS_INVALID_HANDLE,0,VALID_INT_HANDLE] |
++---------+------+-----------------------------------------------------------------------+
+
+**Return values**
+
++---------------+----------------------------------+
+| ERR_OK        | Interrupt could be disabled      |
++---------------+----------------------------------+
+| ERR_FAILED    | Interrupt could not be disabled  |
++---------------+----------------------------------+
+| ERR_NO_OBJECT | No Interrupt found for Parameter |
++---------------+----------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_int_itf_1gadab3d192f67159aa71953a6335b38f81:
+
+RTS_RESULT SysIntRegister (RTS_HANDLE hInt, unsigned long ulType, SYS_INT_INTHANDLER pHandler, RTS_UINTPTR ulAdditionalInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to register an interrupt handler
+
+**Parameters**
+
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hInt             | Handle to the interrupt RANGE=[RTS_INVALID_HANDLE,0,VALID_INT_HANDLE]                                                      |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulType           | Type of interrupt handler. See category Interrupt handler type RANGE=[SYS_INT_NONE,SYS_INT_IEC,SYS_INT_C,INVALID_INT_TYPE] |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pHandler         | Interrupt handler RANGE=[0,VALID_INT_HANDLER,INVALID_INT_HANDLER]                                                          |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulAdditionalInfo | Info value that is transmitted to the interrupt handler RANGE=[0,VALID_INT_ADDINFO,INVALID_INT_ADDINFO]                    |
++---------+------------------+----------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+----------------------------------------------+
+| ERR_OK        | Interrupt Handler could be registered        |
++---------------+----------------------------------------------+
+| ERR_FAILED    | Interrupt Handler could not be registered    |
++---------------+----------------------------------------------+
+| ERR_NO_OBJECT | No Interrupt found for Parameter, Wrong Type |
++---------------+----------------------------------------------+
+| ERR_PARAMETER | pHandler may not be null                     |
++---------------+----------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_int_itf_1ga9a14d8cb4a530275ad77c578af5bef77:
+
+RTS_RESULT SysIntUnregister (RTS_HANDLE hInt, SYS_INT_INTHANDLER pHandler)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to unregister an interrupt handler
+
+**Parameters**
+
++---------+----------+-----------------------------------------------------------------------+
+| [in]    | hInt     | Handle to the interrupt RANGE=[RTS_INVALID_HANDLE,0,VALID_INT_HANDLE] |
++---------+----------+-----------------------------------------------------------------------+
+| [in]    | pHandler | Interrupt handler RANGE=[0,VALID_INT_HANDLER,INVALID_INT_HANDLER]     |
++---------+----------+-----------------------------------------------------------------------+
+
+**Return values**
+
++---------------+---------------------------------------------+
+| ERR_OK        | Interrupt Handler could be unregistered     |
++---------------+---------------------------------------------+
+| ERR_FAILED    | Interrupt Handler could not be unregistered |
++---------------+---------------------------------------------+
+| ERR_NO_OBJECT | No Interrupt found for hInt                 |
++---------------+---------------------------------------------+
+| ERR_PARAMETER | pHandler may not be null                    |
++---------------+---------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_int_itf_1ga0b8176d1ae912edfc4441da6cfd563a0:
+
+RTS_RESULT SysIntEnableAll (RTS_UINTPTR *pulParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to enable all interrupts
+
+**Parameters**
+
++---------+------------------+-------------------------------------------------------------------------------------------------------------+
+| [in]    | pulParam         | Parameter for enabling all interrupts RANGE=[NULL,VALID_PARAM,INVALID_PARAM_NONE,INVALID_PARAM_FULL]        |
++---------+------------------+-------------------------------------------------------------------------------------------------------------+
+| [out]   | bTimerOccured    | ***PSEUDO*** Specifies, if a timer was able to run, during the lock, or not RANGE=[TRUE,FALSE]              |
++---------+------------------+-------------------------------------------------------------------------------------------------------------+
+| [out]   | bWatchdogOccured | ***PSEUDO*** Specifies, if the watchdog handler was able to run, during the lock, or not RANGE=[TRUE,FALSE] |
++---------+------------------+-------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++--------------------+-----------------------------------------+
+| ERR_OK             | Interrupts could be enabled             |
++--------------------+-----------------------------------------+
+| ERR_NOTIMPLEMENTED | Function is not supported by the system |
++--------------------+-----------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_int_itf_1ga943f7aa7b27a7860c4c7d5c227c5cbb6:
+
+RTS_RESULT SysIntDisableAll (RTS_UINTPTR *pulParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to disable all interrupts
+
+**Parameters**
+
++---------+------------------+-------------------------------------------------------------------------------------------------------------+
+| [inout] | pulParam         | Parameter for disabling all interrupts RANGE=[NULL,VALID_PARAM]                                             |
++---------+------------------+-------------------------------------------------------------------------------------------------------------+
+| [out]   | bTimerOccured    | ***PSEUDO*** Specifies, if a timer was able to run, during the lock, or not RANGE=[TRUE,FALSE]              |
++---------+------------------+-------------------------------------------------------------------------------------------------------------+
+| [out]   | bWatchdogOccured | ***PSEUDO*** Specifies, if the watchdog handler was able to run, during the lock, or not RANGE=[TRUE,FALSE] |
++---------+------------------+-------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++--------------------+-----------------------------------------+
+| ERR_OK             | Interrupts could be disabled            |
++--------------------+-----------------------------------------+
+| ERR_NOTIMPLEMENTED | Function is not supported by the system |
++--------------------+-----------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_int_itf_1gaea7e2a1e6ec297b1ec5eec00dcde8438:
+
+RTS_RESULT SysIntLevel (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to check, if we are running actual in an interrupt context
+
+**Return values**
+
++------------+--------------------------------------+
+| ERR_OK     | We are still in an interrupt handler |
++------------+--------------------------------------+
+| ERR_FAILED | not in interrupt context             |
++------------+--------------------------------------+
+
+**Returns:**
+
+Returns ERR_OK if running in an interrupt handler, ERR_FAILED if not
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

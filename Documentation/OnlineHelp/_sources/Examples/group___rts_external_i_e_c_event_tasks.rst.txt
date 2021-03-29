@@ -1,0 +1,112 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___rts_external_i_e_c_event_tasks:
+
+========================
+RtsExternalIECEventTasks
+========================
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+Example to provide external IEC events / external IEC event triggered tasks.
+
+USAGE:
+
+  - InitExternalIECEventTasks(CH_INIT3) must be called out of CH_INIT3 hook
+
+  - InitExternalIECEventTasks(CH_INIT_TASKS) must be called out of CH_INIT_TASKS hook
+
+  - ExitExternalIECEventTasks(CH_EXIT_TASKS) must be called out of CH_EXIT_TASKS hook
+
+  - ExitExternalIECEventTasks(CH_EXIT3) must be called out of CH_EXIT3 hook
+
+Snipped for the device description to specify the external event:
+
+<DeviceDescription xmlns="http://www.3s-software.com/schemas/DeviceDescription-1.0.xsd"><Device><ExtendedSettings><ts:TargetSettings xmlns:ts="http://www.3s-software.com/schemas/TargetSettings-0.1.xsd"><ts:section name="taskconfiguration"><ts:setting access="visible" name="supportexternal" type="boolean"><ts:value>1</ts:value></ts:setting><ts:setting access="visible" name="maxexternalevents" type="integer"><ts:value>1</ts:value></ts:setting><ts:setting access="hidden" name="externalevents" type="cdata"><ts:value> <externalevents> <externalevent> <name>MyEvent</name> </externalevent> </externalevents> </ts:value></ts:setting></ts:section></ts:TargetSettings></ExtendedSettings></Device></DeviceDescription>
+**Copyright:**
+
+\(c) 2003-2019 3S-Smart Software Solutions
+
+Macros
+------
+
+- #define :ref:`MY_EXTERNAL_EVENT_NAME <group___rts_external_i_e_c_event_tasks_1gad05feb32a4dfe8571b90136add479867>` "MyEvent"
+
+Functions
+---------
+
+- void :ref:`MyEventTask <group___rts_external_i_e_c_event_tasks_1gaad1f3367efac12ef379eec4e9ef901d0>` (SYS_TASK_PARAM * ptp)
+
+- void :ref:`CBEventIecTasks <group___rts_external_i_e_c_event_tasks_1ga060e176f171f3b38ff0eab25c4b86cf8>` (EventParam * pEventParam)
+
+- RTS_RESULT :ref:`InitExternalIECEventTasks <group___rts_external_i_e_c_event_tasks_1ga1f88e837bfd0ac3cd1b983342d567426>` (RTS_UI32 ulHook)
+
+- RTS_RESULT :ref:`ExitExternalIECEventTasks <group___rts_external_i_e_c_event_tasks_1ga8eda93f3771115763ab836cad23884ec>` (RTS_UI32 ulHook)
+
+Macro Definition Documentation
+------------------------------
+.. _group___rts_external_i_e_c_event_tasks_1gad05feb32a4dfe8571b90136add479867:
+
+#define MY_EXTERNAL_EVENT_NAME "MyEvent"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___rts_external_i_e_c_event_tasks_1gaad1f3367efac12ef379eec4e9ef901d0:
+
+static void MyEventTask (SYS_TASK_PARAM *ptp)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to post/trigger the external event. USAGE:
+
+  - Must be called out of your external event context (interrupt, system task, etc.).
+
+.. _group___rts_external_i_e_c_event_tasks_1ga060e176f171f3b38ff0eab25c4b86cf8:
+
+static void CBEventIecTasks (EventParam *pEventParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Callback: This is optional and an example to get a callback in the external event task after reading inputs and before writing outputs!
+
+.. _group___rts_external_i_e_c_event_tasks_1ga1f88e837bfd0ac3cd1b983342d567426:
+
+static RTS_RESULT InitExternalIECEventTasks (RTS_UI32 ulHook)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to register the external event by name. USAGE:
+
+  - Must be called in CH_INIT3 and CH_INIT_TASKS out of component HookFunction()!
+
+**Returns:**
+
+error code
+
+.. _group___rts_external_i_e_c_event_tasks_1ga8eda93f3771115763ab836cad23884ec:
+
+static RTS_RESULT ExitExternalIECEventTasks (RTS_UI32 ulHook)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to unregister the external event USAGE:
+
+  - Must be called in CH_EXIT3 and CH_EXIT_TASKS out of component HookFunction()!
+
+**Returns:**
+
+error code
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

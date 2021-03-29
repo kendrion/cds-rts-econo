@@ -1,0 +1,38 @@
+.. _tutorial_cmpscheduleembedded:
+
+CmpScheduleEmbedded
+===================
+
+Introduction
+------------
+
+The embedded scheduler can be used on controllers without an operating system and without the availability of a CPU timer!
+
+The scheduling is done without an external timer event. The CPU is just polling for communication events or for an IEC
+“task” which needs to be executed and executes it if the time has come.
+
+.. note::
+
+    This is the worst way to schedule IEC tasks and so check before, if the features :ref:`feature_schedule_timer` or :ref:`feature_schedule_full` 
+    cannot be used instead!
+
+Feature
+-------
+
+:ref:`feature_schedule_embedded`
+
+Cooperative scheduling
+----------------------
+
+This is the only implemented scheduling mechanism of this feature / component! So all IEC tasks are scheduled in the order of their priority
+(from highest to lowest), one after the other without interrrupting each other!
+
+This means:
+
+-  As long as an IEC task is running, the communication hangs completely
+
+-  The IEC tasks cannot interrupt each other
+
+-  If one communication cycle takes a bit longer it can produce a jitter for the start of the IEC task.
+
+So in fact this scheduler can handle multiple, periodic IEC tasks but it is non deterministic.

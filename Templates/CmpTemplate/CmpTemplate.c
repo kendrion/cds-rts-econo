@@ -12,10 +12,10 @@
  *
  *  OPTIONAL FUNCTIONS:
  *  - CreateInstance() + DeleteInstance() + QueryInterface():
- *    Only for C++ Runtimes or if you implement at least a multiple instantiable interface (like CmpIoDrvItf or CmpLogBackendItf)
+ *    Only for C++ runtimes or if you implement at least a multiple instance interface (like CmpIoDrvItf or CmpLogBackendItf)
  * </description>
  *
- * <copyright>(c) 2003-2016 3S-Smart Software Solutions</copyright>
+ *  Copyright (c) 2017-2019 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  */
 
 #ifndef STATICITF_DEF
@@ -44,6 +44,7 @@
 
 USE_STMT
 
+#include "RtsAsyncOperation.c"
 #include "RtsDisableOperations.c"
 #include "RtsRunStopSwitch.c"
 #include "RtsPowerFail.c"
@@ -54,22 +55,20 @@ USE_STMT
 #include "RtsHardwareWatchdog.c"
 #include "RtsSupervisorOperation.c"
 #include "RtsMemPool.c"
+#include "RtsExternalIECEventTasks.c"
 
-static RTS_HANDLE s_hExternalEventTask = RTS_INVALID_HANDLE;
-
-/**
- * <description>Entry function of the component. Called at startup for each component. Used to exchange function pointers with the component manager.</description>
- * <param name="pInitStruct" type="IN">Pointer to structure with:
- *		pfExportFunctions	OUT Pointer to function that exports component functions
- *		pfImportFunctions	OUT Pointer to function that imports functions from other components
- *		pfGetVersion		OUT Pointer to function to get component version
- *		pfRegisterAPI		IN	Pointer to component mangager function to register a api function
- *		pfGetAPI			IN	Pointer to component mangager function to get a api function
- *		pfCallHook			IN	Pointer to component mangager function to call a hook function
- * </param> 
- * <result>ERR_OK if component could be initialized, else error code.</result>
- */
 DLL_DECL int CDECL ComponentEntry(INIT_STRUCT *pInitStruct)
+/*	Used to exchange function pointers between component manager and components.
+	Called at startup for each component.
+	pInitStruct:			IN	Pointer to structure with:
+		pfExportFunctions	OUT Pointer to function that exports component functions
+		pfImportFunctions	OUT Pointer to function that imports functions from other components
+		pfGetVersion		OUT Pointer to function to get component version
+		pfRegisterAPI		IN	Pointer to component manager function to register a API function
+		pfGetAPI			IN	Pointer to component manager function to get a API function
+		pfCallHook			IN	Pointer to component manager function to call a hook function
+	Return					ERR_OK if library could be initialized, else error code
+*/
 {
 #ifndef RTS_COMPACT_MICRO
 	pInitStruct->CmpId = COMPONENT_ID;
@@ -211,14 +210,17 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_
 #endif
 			break;
 		case CH_INIT:
-			/* First call at system startup. Compontents should initialize all local variables. */
+		{
+			/* First call at system startup. Components should initialize all local variables. */
 			/* Do not call other components here, use for internal init code only */
 			break;
+		}
 		case CH_INIT2:
 		{	
-			/* Called after CH_INIT. All components are initialized. Other components can be used.
+			/* Called after CH_INIT. All components are initialized. Other components can be used. */
 			/* NOTE: Events must be created by the provider in this init step! */
 			CreateEvents();
+			Init2HookHandleEvents();
 			break;
 		}
 		case CH_INIT3:
@@ -230,9 +232,9 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_
 			InitRunStopSwitch();
 			RegisterEventHandler();
 			InitServiceHandler();
-			s_hExternalEventTask = CAL_SchedRegisterExternalEvent("MyEvent", NULL);
 			InitLoginHandler();
 			RegisterSupervisor();
+			InitExternalIECEventTasks(ulHook);
 			break;
 		}
 		case CH_INIT_TASKS:
@@ -240,6 +242,7 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_
 			/* Called after CH_INIT_SYSTEM_TASKS. All components should start their tasks. */
 			/* NOTE: The IEC bootprojects are loaded here! */
 			StartHardwareWatchdog();
+			InitExternalIECEventTasks(ulHook);
 			break;
 		}
 		case CH_INIT_COMM:
@@ -250,7 +253,6 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_
 		case CH_COMM_CYCLE:
 		{
 			CyclicRunStopSwitch();
-			CAL_SchedPostExternalEvent(s_hExternalEventTask);
 			if (CHK_EventPost)
 			{
 				EventParam ep;
@@ -265,6 +267,7 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_
 			}
 			CyclicSupervisorOperations();
 			MemPoolExamples();
+			CyclicAsyncOperation();
  			break;
 		}
 		case CH_EXIT_COMM:
@@ -275,6 +278,7 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_
 		case CH_EXIT_TASKS:
 		{
 			StopHardwareWatchdog();
+			ExitExternalIECEventTasks(ulHook);
 			break;
 		}
 		case CH_EXIT3:
@@ -284,9 +288,9 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_
 			ExitDisableOperations();
 			UnregisterEventHandler();
 			ExitServiceHandler();
-			CAL_SchedUnregisterExternalEvent(s_hExternalEventTask);
 			ExitLoginHandler();
 			UnregisterSupervisor();
+			ExitExternalIECEventTasks(ulHook);
 			break;
 		}
 		case CH_EXIT2:

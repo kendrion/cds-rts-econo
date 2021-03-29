@@ -70,19 +70,18 @@ static IoDrvVerySimple s_IoDrvVerySimple;
 
 #ifndef RTS_COMPACT_MICRO
 
-/**
- * <description>Entry function of the component. Called at startup for each component. Used to exchange function pointers with the component manager.</description>
- * <param name="pInitStruct" type="IN">Pointer to structure with:
- *		pfExportFunctions	OUT Pointer to function that exports component functions
- *		pfImportFunctions	OUT Pointer to function that imports functions from other components
- *		pfGetVersion		OUT Pointer to function to get component version
- *		pfRegisterAPI		IN	Pointer to component mangager function to register a api function
- *		pfGetAPI			IN	Pointer to component mangager function to get a api function
- *		pfCallHook			IN	Pointer to component mangager function to call a hook function
- * </param> 
- * <result>ERR_OK if library could be initialized, else error code.</result>
- */
 DLL_DECL int CDECL ComponentEntry(INIT_STRUCT *pInitStruct)
+/*	Used to exchange function pointers between component manager and components.
+	Called at startup for each component.
+	pInitStruct:			IN	Pointer to structure with:
+		pfExportFunctions	OUT Pointer to function that exports component functions
+		pfImportFunctions	OUT Pointer to function that imports functions from other components
+		pfGetVersion		OUT Pointer to function to get component version
+		pfRegisterAPI		IN	Pointer to component manager function to register a API function
+		pfGetAPI			IN	Pointer to component manager function to get a API function
+		pfCallHook			IN	Pointer to component manager function to call a hook function
+	Return					ERR_OK if library could be initialized, else error code
+*/
 {
 	pInitStruct->CmpId = COMPONENT_ID;
 	pInitStruct->pfExportFunctions = ExportFunctions;
@@ -151,16 +150,20 @@ static void *CDECL QueryInterface(IBase *pBase, ITFID iid, RTS_RESULT *pResult)
 	{
 		IoDrvVerySimple *pC = (IoDrvVerySimple *)pBase;
 		pC->IoDrv.pBase = pBase;
+
 		pC->IoDrv.IIoDrvCreate = IoDrvCreate;
 		pC->IoDrv.IIoDrvDelete = IoDrvDelete;
 		pC->IoDrv.IIoDrvGetInfo = IoDrvGetInfo;
+		pC->IoDrv.IIoDrvGetModuleDiagnosis = IoDrvGetModuleDiagnosis;
+		pC->IoDrv.IIoDrvIdentify = IoDrvIdentify;
+		pC->IoDrv.IIoDrvReadInputs = IoDrvReadInputs;
+		pC->IoDrv.IIoDrvScanModules = IoDrvScanModules;
+		pC->IoDrv.IIoDrvStartBusCycle = IoDrvStartBusCycle;
 		pC->IoDrv.IIoDrvUpdateConfiguration = IoDrvUpdateConfiguration;
 		pC->IoDrv.IIoDrvUpdateMapping = IoDrvUpdateMapping;
-		pC->IoDrv.IIoDrvReadInputs = IoDrvReadInputs;
+		pC->IoDrv.IIoDrvWatchdogTrigger = IoDrvWatchdogTrigger;
 		pC->IoDrv.IIoDrvWriteOutputs = IoDrvWriteOutputs;
-		pC->IoDrv.IIoDrvStartBusCycle = IoDrvStartBusCycle;
-		pC->IoDrv.IIoDrvScanModules = IoDrvScanModules;
-		pC->IoDrv.IIoDrvGetModuleDiagnosis = IoDrvGetModuleDiagnosis;
+
 		pC->pIoDrv = &pC->IoDrv;
 		pC->Base.iRefCount++;
 		RTS_SETRESULT(pResult, ERR_OK);
@@ -300,7 +303,6 @@ STATICITF RTS_HANDLE CDECL IoDrvCreate(RTS_HANDLE hIIoDrv, CLASSID ClassId, int 
 	}
 
 	pIoDrvVerySimple = (IoDrvVerySimple *)hIIoDrv;
-	pIoDrvVerySimple->IoDrv.pBase = &pIoDrvVerySimple->Base;
 	pInfo = &pIoDrvVerySimple->Info;
 
 	pInfo->wId = (RTS_IEC_WORD)iId;

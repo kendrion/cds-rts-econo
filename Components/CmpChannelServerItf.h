@@ -1,12 +1,11 @@
  /**
+ * <interfacename>CmpChannelServer</interfacename>
  * <description>
- *  <p>
  *	Interface for the channel server.
- *  </p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -39,17 +38,21 @@
  * </description>
  */
 #define CHANNELSERVERKEY_INT_BUFFERSIZE								"BufferSize"
-#define CHANNELSERVERVALUE_INT_BUFFERSIZE_DEFAULT					NETSERVER_BUFFERSIZE
+#ifndef CHANNELSERVERVALUE_INT_BUFFERSIZE_DEFAULT		
+	#define CHANNELSERVERVALUE_INT_BUFFERSIZE_DEFAULT					NETSERVER_BUFFERSIZE
+#endif
 
 /**
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Number of communciation channels (concurrently client connections).  
+ *	Number of communication channels (concurrently client connections).  
  * </description>
  */
 #define CHANNELSERVERKEY_INT_MAXCHANNELS							"MaxChannels"
-#define CHANNELSERVERVALUE_INT_MAXCHANNELS_DEFAULT					NETSERVER_MAXCHANNELS
+#ifndef CHANNELSERVERVALUE_INT_MAXCHANNELS_DEFAULT		
+	#define CHANNELSERVERVALUE_INT_MAXCHANNELS_DEFAULT					NETSERVER_MAXCHANNELS
+#endif
 
  /**
  * <category>Static defines</category>
@@ -57,7 +60,8 @@
  */
 #define CHANNELSERVER_INVALID_CHANNEL_ID							RTS_UI16_MAX
 #define CHANNELSERVER_WEBSERVER_STATIC_CHANNEL_ID					(RTS_UI16_MAX-1)
-#define CHANNELSERVER_MAX_DYNAMIC_CHANNEL_ID						(RTS_UI16_MAX-2)
+#define CHANNELSERVER_REDUNDANCY_STATIC_CHANNEL_ID					(RTS_UI16_MAX-2)
+#define CHANNELSERVER_MAX_DYNAMIC_CHANNEL_ID						(RTS_UI16_MAX-3)
 
 
 /* -- Events triggered by the channel server. -- */
@@ -65,14 +69,14 @@
 /**
  * <category>Event parameter</category>
  * <element name="ulChannelHandle" type="IN">
- *   The channelhandle is always a combination of two words (16 bit).
+ *   The channel handle is always a combination of two words (16 bit).
  *   The low word (ulChannelHandle masked with 0xFFFF) is the id of 
  *   the "physical" channel. The highword is the id of the client using this channel
- *   (multiple clients may use the same channel in a round robbin manner).
+ *   (multiple clients may use the same channel in a round robin manner).
  *   A highword of 0xFFFF indicates, that the channel is completely closed
  *   and all clients have disconnected. In all other cases the channel is still
  *   open, only that client has disconnected.
- *   When attaching any resources to a specific channel (eg. open files, logins, ...)
+ *   When attaching any resources to a specific channel (e.g. open files, logins, ...)
  *   the component should release the resource when the client detaches as
  *   well as release all clients resources when the channel is completely closed.
  * </element>
@@ -88,7 +92,7 @@ typedef struct
 #define EVTPARAMID_CmpChS_ChannelClosed 0x0001
 #define EVTVERSION_CmpChS_ChannelClosed 0x0001
 
-/* Used for compatability reasons */
+/* Used for compatibility reasons */
 typedef EVTPARAM_CmpChS_ChannelClosed EVTPARAM_ChannelClosed;
 #define EVTPARAMID_CmpChannelServer EVTPARAMID_CmpChS_ChannelClosed
 #define EVTVERSION_CmpChannelServer EVTVERSION_CmpChS_ChannelClosed
@@ -96,14 +100,14 @@ typedef EVTPARAM_CmpChS_ChannelClosed EVTPARAM_ChannelClosed;
 /**
  * <category>Event parameter</category>
  * <element name="ulChannelHandle" type="IN">
- *   The channelhandle is always a combination of two words (16 bit).
+ *   The channel handle is always a combination of two words (16 bit).
  *   The low word (ulChannelHandle masked with 0xFFFF) is the id of 
  *   the "physical" channel. The highword is the id of the client using this channel
- *   (multiple clients may use the same channel in a round robbin manner).
+ *   (multiple clients may use the same channel in a round robin manner).
  *   A highword of 0xFFFF indicates, that the channel is completely closed
  *   and all clients have disconnected. In all other cases the channel is still
  *   open, only that client has disconnected.
- *   When attaching any resources to a specific channel (eg. open files, logins, ...)
+ *   When attaching any resources to a specific channel (e.g. open files, logins, ...)
  *   the component should release the resource when the client detaches as
  *   well as release all clients resources when the channel is completely closed.
  * </element>
@@ -128,6 +132,14 @@ typedef struct
  * <param name="pEventParam" type="IN">EVTPARAM_CmpChS_ChannelOpened</param>
  */
 #define EVT_ChSChannelOpened	MAKE_EVENTID(EVTCLASS_INFO, 2)
+
+/**
+ * <category>Events</category>
+ * <description> Event is sent after the EVT_ChSChannelClosed has been sent. Is only used internal by CmpDevice 
+ *   and must not be used by any other component (use EVT_ChSChannelClosed instead).</description>
+ * <param name="pEventParam" type="IN">EVTPARAM_CmpChS_ChannelClosed</param>
+ */
+#define EVT_ChSChannelClosedDone	MAKE_EVENTID(EVTCLASS_INFO, 3)
 
 /* -- Functions exported to the runtime system -- */
 
@@ -252,7 +264,7 @@ typedef RTS_RESULT (CDECL * PFNETSERVERGETMAXCHANNELBUFFERSIZE) (RTS_I32 *pi32Ma
 /** 
  * <description>
  *   OBSOLETE: Function will be removed in future versions!!! Use NetServerGetChannelInfoByIndex2 instead. 
- *   Retrieves general information for the specified server channel. This function is intended for information purpoeses only.
+ *   Retrieves general information for the specified server channel. This function is intended for information purposes only.
  * </description>
  * <param name="ui16ChannelIndex" type="IN">Index of the channel. Allowed range: 0..MaxChannels-1.</param>
  * <param name="pui32ServerState" type="OUT">State of the server channel, see category "channel server state" for CSSTATE_ values in CmpCommunicationLibItf.</param>
@@ -311,7 +323,7 @@ typedef RTS_RESULT (CDECL * PFNETSERVERGETCHANNELINFOBYINDEX) (RTS_UI16 ui16Chan
 
 /**
 * <description>
-*   Retrieves general information for the specified server channel. This function is intended for information purpoeses only.
+*   Retrieves general information for the specified server channel. This function is intended for information purposes only.
 * </description>
 * <param name="ui16ChannelIndex" type="IN">Index of the channel. Allowed range: 0..MaxChannels-1.</param>
 * <param name="pui32ServerState" type="OUT">State of the server channel, see category "channel server state" for CSSTATE_ values in CmpCommunicationLibItf.</param>
@@ -376,7 +388,7 @@ typedef RTS_RESULT (CDECL * PFNETSERVERGETCHANNELINFOBYINDEX2) (RTS_UI16 ui16Cha
  *		Id of the channel
  *	</param>
  *	<param name="pusStatus" type="OUT">
- *		Is set to the current progress state. The PROGRESS_xxx constants define valied values.
+ *		Is set to the current progress state. The PROGRESS_xxx constants define valid values.
  *	</param>
  *  <param name="pbyScalingFactor" type="OUT">
  *		Provides the scaling factor for pnItemsComplete and pnTotalItems. These values have been scaled
@@ -555,120 +567,6 @@ typedef RTS_RESULT (CDECL * PFNETSERVERFINISHREQUEST) (RTS_UI32 ulChannelHandle,
 
 
 
-/** 
- * <description>
- *   Stores the session id in the channel server status structure.  
- * </description>
- * <param name="ulChannelHandle" type="IN">Id of the channel for which the session id should be set.</param>
- * <param name="ulSessionId" type="IN">New session id fo the channel.</param>
- * <result>error code</result>
-*/
-RTS_RESULT CDECL NetServerSetSessionId(RTS_UI32 ulChannelHandle, RTS_UI32 ulSessionId);
-typedef RTS_RESULT (CDECL * PFNETSERVERSETSESSIONID) (RTS_UI32 ulChannelHandle, RTS_UI32 ulSessionId);
-#if defined(CMPCHANNELSERVER_NOTIMPLEMENTED) || defined(NETSERVERSETSESSIONID_NOTIMPLEMENTED)
-	#define USE_NetServerSetSessionId
-	#define EXT_NetServerSetSessionId
-	#define GET_NetServerSetSessionId(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_NetServerSetSessionId(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_NetServerSetSessionId  FALSE
-	#define EXP_NetServerSetSessionId  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_NetServerSetSessionId
-	#define EXT_NetServerSetSessionId
-	#define GET_NetServerSetSessionId(fl)  CAL_CMGETAPI( "NetServerSetSessionId" ) 
-	#define CAL_NetServerSetSessionId  NetServerSetSessionId
-	#define CHK_NetServerSetSessionId  TRUE
-	#define EXP_NetServerSetSessionId  CAL_CMEXPAPI( "NetServerSetSessionId" ) 
-#elif defined(MIXED_LINK) && !defined(CMPCHANNELSERVER_EXTERNAL)
-	#define USE_NetServerSetSessionId
-	#define EXT_NetServerSetSessionId
-	#define GET_NetServerSetSessionId(fl)  CAL_CMGETAPI( "NetServerSetSessionId" ) 
-	#define CAL_NetServerSetSessionId  NetServerSetSessionId
-	#define CHK_NetServerSetSessionId  TRUE
-	#define EXP_NetServerSetSessionId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetServerSetSessionId", (RTS_UINTPTR)NetServerSetSessionId, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpChannelServerNetServerSetSessionId
-	#define EXT_CmpChannelServerNetServerSetSessionId
-	#define GET_CmpChannelServerNetServerSetSessionId  ERR_OK
-	#define CAL_CmpChannelServerNetServerSetSessionId pICmpChannelServer->INetServerSetSessionId
-	#define CHK_CmpChannelServerNetServerSetSessionId (pICmpChannelServer != NULL)
-	#define EXP_CmpChannelServerNetServerSetSessionId  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_NetServerSetSessionId
-	#define EXT_NetServerSetSessionId
-	#define GET_NetServerSetSessionId(fl)  CAL_CMGETAPI( "NetServerSetSessionId" ) 
-	#define CAL_NetServerSetSessionId pICmpChannelServer->INetServerSetSessionId
-	#define CHK_NetServerSetSessionId (pICmpChannelServer != NULL)
-	#define EXP_NetServerSetSessionId  CAL_CMEXPAPI( "NetServerSetSessionId" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_NetServerSetSessionId  PFNETSERVERSETSESSIONID pfNetServerSetSessionId;
-	#define EXT_NetServerSetSessionId  extern PFNETSERVERSETSESSIONID pfNetServerSetSessionId;
-	#define GET_NetServerSetSessionId(fl)  s_pfCMGetAPI2( "NetServerSetSessionId", (RTS_VOID_FCTPTR *)&pfNetServerSetSessionId, (fl), 0, 0)
-	#define CAL_NetServerSetSessionId  pfNetServerSetSessionId
-	#define CHK_NetServerSetSessionId  (pfNetServerSetSessionId != NULL)
-	#define EXP_NetServerSetSessionId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetServerSetSessionId", (RTS_UINTPTR)NetServerSetSessionId, 0, 0) 
-#endif
-
-
-
-
-/** 
- * <description>
- *   Retrieves the stored session id from the channel server status structure.  
- * </description>
- * <param name="ulChannelHandle" type="IN">Id of the channel for which the session id should be read.</param>
- * <param name="pulSessionId" type="OUT">Pointer to return the session id.</param>
- * <result>error code</result>
-*/
-RTS_RESULT CDECL NetServerGetSessionId(RTS_UI32 ulChannelHandle, RTS_UI32 *pulSessionId);
-typedef RTS_RESULT (CDECL * PFNETSERVERGETSESSIONID) (RTS_UI32 ulChannelHandle, RTS_UI32 *pulSessionId);
-#if defined(CMPCHANNELSERVER_NOTIMPLEMENTED) || defined(NETSERVERGETSESSIONID_NOTIMPLEMENTED)
-	#define USE_NetServerGetSessionId
-	#define EXT_NetServerGetSessionId
-	#define GET_NetServerGetSessionId(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_NetServerGetSessionId(p0,p1)  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_NetServerGetSessionId  FALSE
-	#define EXP_NetServerGetSessionId  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_NetServerGetSessionId
-	#define EXT_NetServerGetSessionId
-	#define GET_NetServerGetSessionId(fl)  CAL_CMGETAPI( "NetServerGetSessionId" ) 
-	#define CAL_NetServerGetSessionId  NetServerGetSessionId
-	#define CHK_NetServerGetSessionId  TRUE
-	#define EXP_NetServerGetSessionId  CAL_CMEXPAPI( "NetServerGetSessionId" ) 
-#elif defined(MIXED_LINK) && !defined(CMPCHANNELSERVER_EXTERNAL)
-	#define USE_NetServerGetSessionId
-	#define EXT_NetServerGetSessionId
-	#define GET_NetServerGetSessionId(fl)  CAL_CMGETAPI( "NetServerGetSessionId" ) 
-	#define CAL_NetServerGetSessionId  NetServerGetSessionId
-	#define CHK_NetServerGetSessionId  TRUE
-	#define EXP_NetServerGetSessionId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetServerGetSessionId", (RTS_UINTPTR)NetServerGetSessionId, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpChannelServerNetServerGetSessionId
-	#define EXT_CmpChannelServerNetServerGetSessionId
-	#define GET_CmpChannelServerNetServerGetSessionId  ERR_OK
-	#define CAL_CmpChannelServerNetServerGetSessionId pICmpChannelServer->INetServerGetSessionId
-	#define CHK_CmpChannelServerNetServerGetSessionId (pICmpChannelServer != NULL)
-	#define EXP_CmpChannelServerNetServerGetSessionId  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_NetServerGetSessionId
-	#define EXT_NetServerGetSessionId
-	#define GET_NetServerGetSessionId(fl)  CAL_CMGETAPI( "NetServerGetSessionId" ) 
-	#define CAL_NetServerGetSessionId pICmpChannelServer->INetServerGetSessionId
-	#define CHK_NetServerGetSessionId (pICmpChannelServer != NULL)
-	#define EXP_NetServerGetSessionId  CAL_CMEXPAPI( "NetServerGetSessionId" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_NetServerGetSessionId  PFNETSERVERGETSESSIONID pfNetServerGetSessionId;
-	#define EXT_NetServerGetSessionId  extern PFNETSERVERGETSESSIONID pfNetServerGetSessionId;
-	#define GET_NetServerGetSessionId(fl)  s_pfCMGetAPI2( "NetServerGetSessionId", (RTS_VOID_FCTPTR *)&pfNetServerGetSessionId, (fl), 0, 0)
-	#define CAL_NetServerGetSessionId  pfNetServerGetSessionId
-	#define CHK_NetServerGetSessionId  (pfNetServerGetSessionId != NULL)
-	#define EXP_NetServerGetSessionId  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"NetServerGetSessionId", (RTS_UINTPTR)NetServerGetSessionId, 0, 0) 
-#endif
-
-
-
-
 
 /* -- Functions exported to the L4Base network component -- */
 
@@ -677,7 +575,7 @@ typedef RTS_RESULT (CDECL * PFNETSERVERGETSESSIONID) (RTS_UI32 ulChannelHandle, 
  *   Get the buffer for the specified channel id. 
  *
  *  NOTE:
- *  After usage the channelbuffer MUST be released by
+ *  After usage the channel buffer MUST be released by
  *  calling NetServerReleaseChannel. Failing to do so will prevent the channel
  *  from being closed and the server will eventually run out of channels.
  *  Nevertheless, this function DOES NOT provide exclusive access to the channel.
@@ -685,7 +583,7 @@ typedef RTS_RESULT (CDECL * PFNETSERVERGETSESSIONID) (RTS_UI32 ulChannelHandle, 
  * </description>
  * <param name = "addrPeer" type="IN">The second endpoint of the channel</param>
  *  <param name="wChannelId" type = "IN">The id of the channel.</param>
- *  <param name="ppChBuffer" type = "OUT">Is set to the channelbuffer, if the channel exists.</param>
+ *  <param name="ppChBuffer" type = "OUT">Is set to the channel buffer, if the channel exists.</param>
 */
 int CDECL NetServerGetChannel(PEERADDRESS addrPeer, unsigned short wChannelId, CHANNELBUFFER **ppChBuffer);
 typedef int (CDECL * PFNETSERVERGETCHANNEL) (PEERADDRESS addrPeer, unsigned short wChannelId, CHANNELBUFFER **ppChBuffer);
@@ -848,7 +746,7 @@ typedef int (CDECL * PFNETSERVERHANDLEMETAREQUEST) (RTS_HANDLE hRouter, PEERADDR
 
 /* Calls the pfChannelHandler once for each active server channel 
    pfChannelHandler IN     Function to be called for each channel
-   pParam           IN/OUT This param is passed to pfChannelHandler.
+   pParam           IN/OUT This parameter is passed to pfChannelHandler.
 */
 void CDECL NetServerForEachChannel(PFCHANNELHANDLER pfChannelHandler, void * pParam);
 typedef void (CDECL * PFNETSERVERFOREACHCHANNEL) (PFCHANNELHANDLER pfChannelHandler, void * pParam);
@@ -1009,12 +907,12 @@ typedef int (CDECL * PFNETSERVERMESSAGERECEIVED2) (RTS_HANDLE hRouter, CHANNELBU
  * <param name="pduData" type="IN">Content of the message. The data pointed to by will be valid only until 
  *  the reply has been passed to channel manager or the channel is closed.</param>
  * <param name="bFirstCall" type="IN">0: Tells the function, if it was already called for the same request before (0) or not (1).</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Received service was completely handeled.</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Received service was completely handled.</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PENDING">Received service will be handled asynchronously by the higher layers, 
  * but the caller has not to take care about this.</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_CALL_AGAIN">Received service will be handled asynchronously. 
  * To progress this function have to be called again for the same received service data with bFirstCall=0.</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Error occured, channel close has been triggered.</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Error occurred, channel close has been triggered.</errorcode>
  * <result>error code</result>
  */
 RTS_RESULT CDECL NetServerMessageReceived3(CHANNELBUFFER *pChBuffer, PROTOCOL_DATA_UNIT pduData, RTS_UI32 bFirstCall);
@@ -1136,8 +1034,6 @@ typedef struct
  	PFNETSERVERGETSTATUS INetServerGetStatus;
  	PFNETSERVERGETREQUEST INetServerGetRequest;
  	PFNETSERVERFINISHREQUEST INetServerFinishRequest;
- 	PFNETSERVERSETSESSIONID INetServerSetSessionId;
- 	PFNETSERVERGETSESSIONID INetServerGetSessionId;
  	PFNETSERVERGETCHANNEL INetServerGetChannel;
  	PFNETSERVERRELEASECHANNEL INetServerReleaseChannel;
  	PFNETSERVERHANDLEMETAREQUEST INetServerHandleMetaRequest;
@@ -1159,8 +1055,6 @@ class ICmpChannelServer : public IBase
 		virtual RTS_RESULT CDECL INetServerGetStatus(RTS_UI32 ulChannelHandle, RTS_UI16 *pusStatus, RTS_UI8 *pbyScalingFactor, RTS_I32 *pnItemsComplete, RTS_I32 *pnTotalItems) =0;
 		virtual RTS_RESULT CDECL INetServerGetRequest(RTS_UI32 ulChannelHandle, PROTOCOL_DATA_UNIT * ppduRequest, PROTOCOL_DATA_UNIT * ppduReplyBuffer) =0;
 		virtual RTS_RESULT CDECL INetServerFinishRequest(RTS_UI32 ulChannelHandle, PROTOCOL_DATA_UNIT pduData) =0;
-		virtual RTS_RESULT CDECL INetServerSetSessionId(RTS_UI32 ulChannelHandle, RTS_UI32 ulSessionId) =0;
-		virtual RTS_RESULT CDECL INetServerGetSessionId(RTS_UI32 ulChannelHandle, RTS_UI32 *pulSessionId) =0;
 		virtual int CDECL INetServerGetChannel(PEERADDRESS addrPeer, unsigned short wChannelId, CHANNELBUFFER **ppChBuffer) =0;
 		virtual int CDECL INetServerReleaseChannel(CHANNELBUFFER *pChBuffer) =0;
 		virtual int CDECL INetServerHandleMetaRequest(RTS_HANDLE hRouter, PEERADDRESS addrSender, PROTOCOL_DATA_UNIT pduData) =0;

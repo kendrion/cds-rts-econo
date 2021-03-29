@@ -1,0 +1,1312 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_user_mgr_itf_8h:
+
+==============================
+CmpUserMgrItf.h File Reference
+==============================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpBinTagUtilItf.h <_cmp_bin_tag_util_itf_8h>`"
+| #include ":ref:`CmpDeviceItf.h <_cmp_device_itf_8h>`"
+| #include ":ref:`CmpCommunicationLibItf.h <_cmp_communication_lib_itf_8h>`"
+| #include ":ref:`CmpItf.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`EVTPARAM_CmpUserMgrDatabaseChanged <struct_e_v_t_p_a_r_a_m___cmp_user_mgr_database_changed>`
+
+- struct :ref:`EVTPARAM_CmpUserMgrAdjustDatabase <struct_e_v_t_p_a_r_a_m___cmp_user_mgr_adjust_database>`
+
+- struct :ref:`UserMgrCredentials_Password <struct_user_mgr_credentials___password>`
+
+- struct :ref:`UserMgrCredentials_Store <union_user_mgr_credentials___store>`
+
+- struct :ref:`UserMgrCredentials <struct_user_mgr_credentials>`
+
+- struct :ref:`ICmpUserMgr_C <struct_i_cmp_user_mgr___c>`
+
+Macros
+------
+
+- #define :ref:`USERMGR_NUM_OF_STATIC_CREDENTIAL_CONTEXTS <group___cmp_user_mgr_itf___staticdefines_1ga71ac26c8f9dc1d751813bb2fce040880>` 4
+
+- #define :ref:`USERMGR_NUM_OF_STATIC_SESSIONS <group___cmp_user_mgr_itf___staticdefines_1ga85790f44d64a195f56892e365790f352>` 8
+
+- #define :ref:`USERMGR_MAX_PASSWORD_LEN <group___cmp_user_mgr_itf___staticdefines_1ga977c1915dc516e6ebdc1f497364ae040>` 60
+
+- #define :ref:`USERMGR_MAX_USERNAME_LEN <group___cmp_user_mgr_itf___staticdefines_1gae5c0a53400b730b90639c30e623aa853>` 60
+
+- #define :ref:`USERMGR_MAX_GROUPNAME_LEN <group___cmp_user_mgr_itf___staticdefines_1gaa21477118245efc1199cf016960ab427>` 60
+
+- #define :ref:`SRV_READ_USER_MGMT <group___cmp_user_mgr_itf___staticdefines_1gad7fdf3d74cb2532d65806ca9e2127d24>` 0x01
+
+- #define :ref:`SRV_WRITE_USER_MGMT <group___cmp_user_mgr_itf___staticdefines_1gac0cc47e71a4fbd1d0e5d6c92a598617a>` 0x02
+
+- #define :ref:`SRV_READ_USER_RIGHTS_MGMT <group___cmp_user_mgr_itf___onlineservices_1gacef4a7b224327f2cf1b04f4009ea24d0>` 0x03
+
+- #define :ref:`SRV_WRITE_USER_RIGHTS_MGMT <group___cmp_user_mgr_itf___onlineservices_1ga825249e308916a093df50b4419735f0f>` 0x04
+
+- #define :ref:`SRV_USER_ADD <group___cmp_user_mgr_itf___onlineservices_1gaf67f2fd059868948147be761490e735b>` 0x05
+
+- #define :ref:`SRV_USER_DELETE <group___cmp_user_mgr_itf___onlineservices_1gaedd0ea5f028d55c90905f839bcda8b33>` 0x06
+
+- #define :ref:`SRV_USER_CHANGE_PASSWORD <group___cmp_user_mgr_itf___onlineservices_1ga07728691eed1243773584b62dc62667f>` 0x07
+
+- #define :ref:`SRV_UPDATE_CURRENT_USER_CREDENTIALS <group___cmp_user_mgr_itf___onlineservices_1ga56597de1c1bbd8a5303a00a992acce4c>` 0x08
+
+- #define :ref:`SRV_ADD_USER <group___cmp_user_mgr_itf___onlineservices_1ga5bfcf46b41f87da099fc52c672778776>` 0x09
+
+- #define :ref:`SRV_REMOVE_USER <group___cmp_user_mgr_itf___onlineservices_1gade2d15e1b4e3a24d737a9629d13761d9>` 0x0A
+
+- #define :ref:`SRV_SET_USER_PROPERTY <group___cmp_user_mgr_itf___onlineservices_1ga3d54e00474f713a9d7dcdc3ee4c08d15>` 0x0B
+
+- #define :ref:`SRV_SET_CREDENTIALS_USER <group___cmp_user_mgr_itf___onlineservices_1ga6ea6ceb781d0fa6e59e52f0d0eb3bbcf>` 0x0C
+
+- #define :ref:`SRV_ADD_GROUP <group___cmp_user_mgr_itf___onlineservices_1ga0e4a58363c6c1bc8baeeefca7ff922ef>` 0x0D
+
+- #define :ref:`SRV_REMOVE_GROUP <group___cmp_user_mgr_itf___onlineservices_1gae5414064d86ebac211e9722c8df86f2a>` 0x0E
+
+- #define :ref:`SRV_SET_GROUP_CONFIG <group___cmp_user_mgr_itf___onlineservices_1ga53174818a134cf22025f4ff7dedf97d3>` 0x0F
+
+- #define :ref:`SRV_EXPORT_USER_MGMT <group___cmp_user_mgr_itf___onlineservices_1ga2f431b9d700f120c7e75da7abcd44159>` 0x10
+
+- #define :ref:`SRV_IMPORT_USER_MGMT <group___cmp_user_mgr_itf___onlineservices_1gadf4110acd3ab9a74deaed78f2fcf2212>` 0x11
+
+- #define :ref:`TAG_PROPERTY_USERS <group___cmp_user_mgr_itf___onlinetags_1ga2923de1227cc4d123e8ecd95fc34ab3a>` 0x01
+
+- #define :ref:`TAG_PROPERTY_GROUPS <group___cmp_user_mgr_itf___onlinetags_1gad2e4c45ef0bd88d745c3d5aa887af1b6>` 0x02
+
+- #define :ref:`TAG_NAME <group___cmp_user_mgr_itf___onlinetags_1gacaf0107154e1f04058703061baa14249>` 0x03
+
+- #define :ref:`TAG_PROPERTY <group___cmp_user_mgr_itf___onlinetags_1ga74ea9ca5362679191928863f2533c421>` 0x04
+
+- #define :ref:`TAG_PASSWORD <group___cmp_user_mgr_itf___onlinetags_1ga34dfc7a24e8378bbd5e2f1df223c7f7c>` 0x05
+
+- #define :ref:`TAG_GROUP_MEMBER <group___cmp_user_mgr_itf___onlinetags_1ga541b1322963460a13aacbb383660c485>` 0x06
+
+- #define :ref:`TAG_USER_MEMBER <group___cmp_user_mgr_itf___onlinetags_1ga2edb149cfa98ddd2ac37cb9cf9def494>` 0x07
+
+- #define :ref:`TAG_RIGHTS <group___cmp_user_mgr_itf___onlinetags_1gac31b697731796ad71971fc64d251e8c5>` 0x08
+
+- #define :ref:`TAG_DENIED_RIGHTS <group___cmp_user_mgr_itf___onlinetags_1gaaf7de57e66e294ef76ec5480a5427c44>` 0x09
+
+- #define :ref:`TAG_ID <group___cmp_user_mgr_itf___onlinetags_1ga26dcec3c1de1751e06647242d06d0842>` 0x0A
+
+- #define :ref:`TAG_PARENT_ID <group___cmp_user_mgr_itf___onlinetags_1gae8ad46dc8d43f160c825277829b241c9>` 0x0B
+
+- #define :ref:`TAG_OBJECT_HANDLE <group___cmp_user_mgr_itf___onlinetags_1ga3f62bd8d7f82d85ee555fd09bf768f9b>` 0x0C
+
+- #define :ref:`TAG_GROUP_HANDLE <group___cmp_user_mgr_itf___onlinetags_1ga217649a14450d95eaa1e96720609a764>` 0x0D
+
+- #define :ref:`TAG_USED_RIGHTS <group___cmp_user_mgr_itf___onlinetags_1gad07c2d0bf6f9262c4f5f3ef439163074>` 0x0E
+
+- #define :ref:`TAG_USRMGR_VERSION <group___cmp_user_mgr_itf___onlinetags_1ga921d19a71edc0ec5118dc2764d93b12b>` 0x0F
+
+- #define :ref:`TAG_USER <group___cmp_user_mgr_itf___onlinetags_1gae23ea4f3c8fb51b50cd155a6081a6e35>` 0x81
+
+- #define :ref:`TAG_GROUP <group___cmp_user_mgr_itf___onlinetags_1ga6905043628e19cbe0fcbb6ed94b63686>` 0x82
+
+- #define :ref:`TAG_OBJECT <group___cmp_user_mgr_itf___onlinetags_1ga91c3a6d0691deea84c362edfc48fa0cb>` 0x83
+
+- #define :ref:`TAG_USERMGR_CRYPT_TYPE <group___cmp_user_mgr_itf___onlinetags_1ga63310bee10da5dc840360eaf8a029add>` 0x22
+
+- #define :ref:`TAG_USERMGR_CRYPT_CHALLENGE <group___cmp_user_mgr_itf___onlinetags_1ga108dda96672833dfbf2ed9577fff6a7d>` 0x23
+
+- #define :ref:`TAG_USERMGR_CRYPT_STEP <group___cmp_user_mgr_itf___onlinetags_1ga47591b326f7fb68a61d81185bc672014>` 0x25
+
+- #define :ref:`TAG_USERMGR_CRYPT_NONCE <group___cmp_user_mgr_itf___onlinetags_1ga149dff259d508d49f9156e1c444e4795>` 0x26
+
+- #define :ref:`TAG_USERMGR_CRYPT_PUB_KEY <group___cmp_user_mgr_itf___onlinetags_1ga20d4e7ed733d71b232cbf4e4db626b96>` 0x27
+
+- #define :ref:`TAG_USERMGR_CRYPT_NONCE_NEW <group___cmp_user_mgr_itf___onlinetags_1ga19f7b514714b53261e4f76308b2fb3b6>` 0x28
+
+- #define :ref:`TAG_USERMGR_CRYPT_CHALLENGE_NEW <group___cmp_user_mgr_itf___onlinetags_1ga64ee67fef1f8f9daefe0f48b4373949f>` 0x29
+
+- #define :ref:`TAG_USRMGR_REPLY_LOGIN <group___cmp_user_mgr_itf___onlinetags_1ga3cf4516e0a02a154a9420493a37a1f90>` :ref:`TAG_DEV_REPLY_LOGIN <group___cmp_device_itf___onlineservicetags_1gae1f3a93e7ba0820e07bcbea566fed384>` /* 0x82*/
+
+- #define :ref:`TAG_USRMGR_REPLY_LOGIN_RESULT <group___cmp_user_mgr_itf___onlinetags_1gac46ffe57ee48cff7e463d643c8ee423c>` :ref:`TAG_DEV_REPLY_LOGIN_RESULT <group___cmp_device_itf___onlineservicetags_1ga3061ed03e370713360a4629675543b91>` /* 0x20 */
+
+- #define :ref:`TAG_USERMGR_CREDENTIALS <group___cmp_user_mgr_itf___onlinetags_1ga19499415c45cacf56b5e92aef3657b24>` 0x81
+
+- #define :ref:`TAG_USERMGR_USER <group___cmp_user_mgr_itf___onlinetags_1ga637619300e69740d7f7e45ed43fa3078>` 0x10
+
+- #define :ref:`TAG_USERMGR_PASSWORD <group___cmp_user_mgr_itf___onlinetags_1ga87df8c1a55b9261a8954ccefc8eaeef0>` 0x11
+
+- #define :ref:`TAG_USERMGR_NEW_PASSWORD <group___cmp_user_mgr_itf___onlinetags_1ga36a39c9be568f87b07315f84002cb346>` 0x12
+
+- #define :ref:`TAG_USERMGR_BACKUP_FILE <group___cmp_user_mgr_itf___onlinetags_1ga7553c000430460ffd2c8ff3f6fbf3a02>` 0x13
+
+- #define :ref:`USERMGR_CRYPT_INVALID <group___cmp_user_mgr_itf___crypttypes_1gad219814aaf4bd45d3fec67b744a01ea6>` 0x00000000
+
+- #define :ref:`USERMGR_CRYPT_XOR <group___cmp_user_mgr_itf___crypttypes_1ga2ddb3addb56f7bc055886cfd2a3106c0>` 0x00000001
+
+- #define :ref:`USERMGR_CRYPT_ASYMMETRIC <group___cmp_user_mgr_itf___crypttypes_1ga21ed4e8e89bfca104bce945b35e05e78>` 0x00000002
+
+- #define :ref:`USERDB_OBJECT_USERMGMT <group___cmp_user_mgr_itf___staticdefines_1gaea7d60d21db4109006f6798509efe090>` "Device.UserManagement"
+
+- #define :ref:`USERMGR_OLDDATABASE_ANNOUNCE <group___cmp_user_mgr_itf___olddatabaseannouncements_1gac7861993e5ae85a2017a89ed00bfdf08>` 0x00000001
+
+- #define :ref:`USERMGR_OLDDATABASE_FINISH <group___cmp_user_mgr_itf___olddatabaseannouncements_1ga8241296d50dbdef94a00566298669778>` 0x00000002
+
+- #define :ref:`EVTPARAMID_CmpUserMgrDatabaseChanged <group___cmp_user_mgr_itf___eventparameter_1ga4a98b1805c778a6025d5b2d4decf1896>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpUserMgrDatabaseChanged <group___cmp_user_mgr_itf___eventparameter_1ga040045998cecae34e846a155338516a4>` 0x0001
+
+- #define :ref:`EVT_UserMgrDatabaseChanged <group___cmp_user_mgr_itf___events_1gaad6d687107c0789a49c947449bbdf36f>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`EVTPARAMID_CmpUserMgrAdjustDatabase <group___cmp_user_mgr_itf___eventparameter_1ga11a8a1eee0e67c39dd804bdd0f0c85ce>` 0x0002
+
+- #define :ref:`EVTVERSION_CmpUserMgrAdjustDatabase <group___cmp_user_mgr_itf___eventparameter_1ga5190a593296f2d42bcd8d0c3cdda3211>` 0x0001
+
+- #define :ref:`EVT_UserMgrCreateDefaultDatabase <group___cmp_user_mgr_itf___events_1ga560e944f09d740fedf3cfcc4df143596>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+
+- #define :ref:`EVT_UserMgrConvertOldDatabaseAnnounce <group___cmp_user_mgr_itf___events_1ga57f6cee497b4e726d13e451036bd9c81>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 3)
+
+- #define :ref:`EVT_UserMgrConvertOldDatabaseFinish <group___cmp_user_mgr_itf___events_1gaaa5ac658e1772c1071ae691febac697d>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 4)
+
+- #define :ref:`USERMGR_ASYMMETRIC_KEY_UPDATE_INTERVAL <group___cmp_user_mgr_itf___staticdefines_1ga63b93a86251595172e97a030436494fb>` (24*60*60*1000)	/* 24h */
+
+- #define :ref:`USERMGRKEY_INT_FAST_KEY_STARTUP <group___cmp_user_mgr_itf___settings_1ga735bf761a0fb9bd0e9a761a3a63409fd>` "FastKeyStartup"
+
+- #define :ref:`USERMGRKEY_INT_FAST_KEY_STARTUP_DEFAULT <group___cmp_user_mgr_itf___settings_1ga76c1da6ec027c1586af627093d430252>` 1
+
+- #define :ref:`USERMGR_KEY_STRING_ASYMMETRIC_AUTH_KEY <group___cmp_user_mgr_itf___settings_1gadecb162910dabbdfd79a324ad5a5b721>` "AsymmetricAuthKey"
+
+- #define :ref:`CMPUSERMGR_KEY_STRING_LOGIN_AUTH_TYPE <group___cmp_user_mgr_itf___security_settings_1ga85b6e5a87f68441095e404abc9fa6172>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".UserLogin_AuthenticationType"
+
+- #define :ref:`CMPUSERMGR_KEY_STRING_LOGIN_AUTH_TYPE_DESC <group___cmp_user_mgr_itf___security_settings_1gac1fa63bb17a0f247321885daf338e0fe>` "Authentication algorithm"
+
+- #define :ref:`CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_ASYMM <group___cmp_user_mgr_itf___security_settings_1gad212d9d59827682b72f403d4ca49ed40>` "ONLY_ASYMMETRIC"
+
+- #define :ref:`CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_AUTO <group___cmp_user_mgr_itf___security_settings_1gabe49c3ef35ef09a6195331ecf371073b>` "AUTO_NEGOTIATE"
+
+- #define :ref:`CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_LEGACY <group___cmp_user_mgr_itf___security_settings_1ga6888451499bc09c1d6e6e9ec89249f58>` "ONLY_LEGACY"
+
+- #define :ref:`CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_DEFAULT <group___cmp_user_mgr_itf___security_settings_1gad111749cb5302dc4b432061a554ef845>` :ref:`CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_AUTO <group___cmp_user_mgr_itf___security_settings_1gabe49c3ef35ef09a6195331ecf371073b>`
+
+- #define :ref:`CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_LIST <group___cmp_user_mgr_itf___security_settings_1ga2bd20d8cf6d9b2227b8871f3d9befd47>` { \
+{(RTS_I32) :ref:`UserMgrLoginAuthType_Asymmetric <group___cmp_user_mgr_itf___security_settings_1gga59641a0d95aed372531a4c13f4a335f3a803feb0072286d46952c7e2810bc75ac>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_ASYMM <group___cmp_user_mgr_itf___security_settings_1gad212d9d59827682b72f403d4ca49ed40>` , "Password, asymmetric encryption"},\
+{(RTS_I32) :ref:`UserMgrLoginAuthType_Auto <group___cmp_user_mgr_itf___security_settings_1gga59641a0d95aed372531a4c13f4a335f3a44cb8c0f6899655961e198063b264368>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_AUTO <group___cmp_user_mgr_itf___security_settings_1gabe49c3ef35ef09a6195331ecf371073b>` , "Negotiate authentication algorithm"},\
+{(RTS_I32) :ref:`UserMgrLoginAuthType_Legacy <group___cmp_user_mgr_itf___security_settings_1gga59641a0d95aed372531a4c13f4a335f3ad36b2079d52ce7978c76a9cc64f0b36c>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPUSERMGR_VALUE_LOGIN_AUTH_TYPE_LEGACY <group___cmp_user_mgr_itf___security_settings_1ga6888451499bc09c1d6e6e9ec89249f58>` , "Password, legacy encryption"},\
+}
+
+- #define :ref:`CMPUSERMGR_KEY_INT_LOGIN_RSALEN <group___cmp_user_mgr_itf___security_settings_1ga3052c98e227b87218d2578dd44fe3a3f>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".UserLogin_RSAKeyLen"
+
+- #define :ref:`CMPUSERMGR_KEY_INT_LOGIN_RSALEN_DESC <group___cmp_user_mgr_itf___security_settings_1ga9c7da16c3dcb07ba0d259444f6877de0>` "RSA key length for asymmetric authentication algorithm"
+
+- #define :ref:`CMPUSERMGR_VALUE_LOGIN_RSALEN_DEFAULT <group___cmp_user_mgr_itf___security_settings_1gabf19654322819f00148ae9ea35d704bf>` 2048
+
+- #define :ref:`CMPUSERMGR_VALUE_LOGIN_RSALEN_MIN <group___cmp_user_mgr_itf___security_settings_1ga89db0fb3d52be20ccbdbe16eb7b547ca>` 1024
+
+- #define :ref:`CMPUSERMGR_KEY_STRING_ENFORCE <group___cmp_user_mgr_itf___security_settings_1ga82bc5ae97091166998dd55013203610c>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".UserMgmtEnforce"
+
+- #define :ref:`CMPUSERMGR_KEY_STRING_ENFORCE_DESC <group___cmp_user_mgr_itf___security_settings_1ga06e071531ac5020975a726838f05569b>` "Setting to enforce user management in general!"
+
+- #define :ref:`CMPUSERMGR_VALUE_ENFORCE_YES <group___cmp_user_mgr_itf___security_settings_1ga5f5c76f2e1f0754b31e13ea3a32fefcd>` "YES"
+
+- #define :ref:`CMPUSERMGR_VALUE_ENFORCE_NO <group___cmp_user_mgr_itf___security_settings_1ga50fd5802f75bb1bf623fbe1ee703e554>` "NO"
+
+- #define :ref:`CMPUSERMGR_VALUE_ENFORCE_DEFAULT <group___cmp_user_mgr_itf___security_settings_1ga84be1dbd2be4b7c5a33506a695944018>` :ref:`CMPUSERMGR_VALUE_ENFORCE_NO <group___cmp_user_mgr_itf___security_settings_1ga50fd5802f75bb1bf623fbe1ee703e554>`
+
+- #define :ref:`CMPUSERMGR_VALUE_ENFORCE_LIST <group___cmp_user_mgr_itf___security_settings_1ga0e117220e2dd12d99ec2a8e4e800b38d>` {\
+{(RTS_I32) :ref:`UserMgmtEnforce_Yes <group___cmp_user_mgr_itf___security_settings_1gga5d6584fa0a74a10bcaaa551792fd1995a29d9ec5cb3570dcdfa32a605f1e9704e>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPUSERMGR_VALUE_ENFORCE_YES <group___cmp_user_mgr_itf___security_settings_1ga5f5c76f2e1f0754b31e13ea3a32fefcd>` , "User management is enforced, i.e. no anonymous login possible"},\
+{(RTS_I32) :ref:`UserMgmtEnforce_No <group___cmp_user_mgr_itf___security_settings_1gga5d6584fa0a74a10bcaaa551792fd1995a3109663e4f2e014f15347a6040ca75a6>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPUSERMGR_VALUE_ENFORCE_NO <group___cmp_user_mgr_itf___security_settings_1ga50fd5802f75bb1bf623fbe1ee703e554>` , "User management is optional"}\
+}
+
+- #define :ref:`CMPUSERMGR_KEY_INT_EDITTIMEOUT <group___cmp_user_mgr_itf___security_settings_1ga7386fc4cdb70d8f666beee5a5bcb47a9>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".UserMgrEditTimeout"
+
+- #define :ref:`CMPUSERMGR_KEY_INT_EDITTIMEOUT_DESC <group___cmp_user_mgr_itf___security_settings_1ga171dfcacba39e8b76903ad9114f5d951>` "Maximum time in [s} between subsequent services calls to edit the user management. If the time is expired the user has to authenticate again."
+
+- #define :ref:`CMPUSERMGR_VALUE_EDITTIMEOUT_DEFAULT <group___cmp_user_mgr_itf___security_settings_1ga2c75f7d406f034c3a5a8565e203e2621>` 300
+
+- #define :ref:`USERDB_GROUP_ADMINISTRATOR <group___cmp_user_mgr_itf___security_settings_1ga941f4b5a4befd0010cb4098a5ea2357a>` "Administrator"
+
+- #define :ref:`USERDB_GROUP_DEVELOPER <group___cmp_user_mgr_itf___security_settings_1gae6d7a99a80126b544cc27d81b02f0130>` "Developer"
+
+- #define :ref:`USERDB_GROUP_SERVICE <group___cmp_user_mgr_itf___security_settings_1gaac90ae2de3084861f3f64daadb8ac1b7>` "Service"
+
+- #define :ref:`USERDB_GROUP_WATCH <group___cmp_user_mgr_itf___security_settings_1gaebdfee4013878449d543c262fceab776>` "Watch"
+
+- #define :ref:`USERDB_GROUP_EVERYONE <group___cmp_user_mgr_itf___security_settings_1gaafc0f43c93a464f6c64315555ef608ee>` "Everyone"
+
+- #define :ref:`USERDB_RIGHT_NONE <group___cmp_user_mgr_itf___userrights_1gafad1fef1af4b373aff9e6773e6dc9faf>` UINT32_C(0x00000000)
+
+- #define :ref:`USERDB_RIGHT_VIEW <group___cmp_user_mgr_itf___userrights_1ga7b2ac5f2b6dcf5a8df07e029c0d7fa91>` UINT32_C(0x00000001)
+
+- #define :ref:`USERDB_RIGHT_MODIFY <group___cmp_user_mgr_itf___userrights_1gaa9d27e26e946ac9a0e371929c0bce782>` UINT32_C(0x00000002)
+
+- #define :ref:`USERDB_RIGHT_EXECUTE <group___cmp_user_mgr_itf___userrights_1gaf3e7a45a8c967e9616470837aad48068>` UINT32_C(0x00000004)
+
+- #define :ref:`USERDB_RIGHT_ADD_REMOVE <group___cmp_user_mgr_itf___userrights_1gae6b4aa37808422481c76f165f4b42737>` UINT32_C(0x00000008)
+
+- #define :ref:`USERDB_RIGHT_OEM <group___cmp_user_mgr_itf___userrights_1gaaece45161c83ab82d1f0ffba8857b513>` UINT32_C(0xFF000000)
+
+- #define :ref:`USERDB_RIGHT_ALL <group___cmp_user_mgr_itf___userrights_1ga25e056428cf038f9e58221c8a9128b2a>` UINT32_C(0xFFFFFFFF)
+
+- #define :ref:`USERDB_HIDE_OBJECT <group___cmp_user_mgr_itf___properties_1ga94b7985cf7ed996b2ed5e386e1c7321e>` 1
+
+- #define :ref:`USERDB_EXPLICIT_RIGHTS <group___cmp_user_mgr_itf___properties_1ga25b0a003e4a93c1112437b4fdc4eed87>` 2
+
+- #define :ref:`USERMGR_ONLINE_PROP_PASSWORD_UP_TO_DATE <group___cmp_user_mgr_itf___userandgroupproperites_1gafe60e47d70bdee8b6b2f3b52dc85577d>` UINT32_C(0x00001000)
+
+- #define :ref:`USERMGR_ONLINE_PROP_PASSWORD_EDITABLE <group___cmp_user_mgr_itf___userandgroupproperites_1ga1c0ad4a750cf3c35716f115890b6085b>` UINT32_C(0x00002000)
+
+- #define :ref:`USERMGR_ONLINE_PROP_ALL <group___cmp_user_mgr_itf___userandgroupproperites_1gab2bb3d9551facc51d52bafa4e554bfd0>` UINT32_C(0xFFFFFF7F)
+
+- #define :ref:`USERMGR_USER_PROP_PASSWORD_EXPIRED <group___cmp_user_mgr_itf___userandgroupproperites_1ga206532f7ab049a07a9d6b0cc18ed79b6>` UINT32_C(0x00001000)
+
+- #define :ref:`USERMGR_USER_PROP_ALLOW_CHANGE_PASSWORD <group___cmp_user_mgr_itf___userandgroupproperites_1ga51b5c2c9be11f1894d52a3d95046381b>` UINT32_C(0x00002000)
+
+- #define :ref:`USERMGR_USER_PROP_DEFAULT <group___cmp_user_mgr_itf___userandgroupproperites_1ga0af2932bfc837942430d9d8516c8ee4c>` :ref:`USERMGR_USER_PROP_ALLOW_CHANGE_PASSWORD <group___cmp_user_mgr_itf___userandgroupproperites_1ga51b5c2c9be11f1894d52a3d95046381b>` | :ref:`USERMGR_USER_PROP_PASSWORD_EXPIRED <group___cmp_user_mgr_itf___userandgroupproperites_1ga206532f7ab049a07a9d6b0cc18ed79b6>`
+
+- #define :ref:`UserMgrCredentials_Type_Password <group___cmp_user_mgr_itf___loginprotocoltypes_1ga4750dbb3d803b6ed72abcce6a2d05d1a>` UINT32_C(1)
+
+- #define :ref:`USERMGR_DATAEXCHANGE_FOLDER <group___cmp_user_mgr_itf___loginprotocoltypes_1ga55b75df2d7469f30d7a151830fa11094>` "$UserMgr$"
+
+- #define :ref:`USERMGR_USERGROUPS_EXCHANGE_FILE <group___cmp_user_mgr_itf___loginprotocoltypes_1gafbe194d31b84cd66167e6b49b5f83126>` :ref:`USERMGR_DATAEXCHANGE_FOLDER <group___cmp_user_mgr_itf___loginprotocoltypes_1ga55b75df2d7469f30d7a151830fa11094>` "/Users_Groups_export.dum2"
+
+- #define :ref:`USERMGR_USERGROUPS_BACKUP_FILE <group___cmp_user_mgr_itf___loginprotocoltypes_1ga4fc4b92eaf1b0735761bd1cf5b69f666>` :ref:`USERMGR_DATAEXCHANGE_FOLDER <group___cmp_user_mgr_itf___loginprotocoltypes_1ga55b75df2d7469f30d7a151830fa11094>` "/Backup.dum2"
+
+- #define :ref:`USE_UserMgrRegisterUserDB <group___cmp_user_mgr_itf_1gafc7c0db5d97ba4bd5d30ab661543f9c5>` :ref:`PFUSERMGRREGISTERUSERDB <group___cmp_user_mgr_itf_1gaaa4c24ab281302b92ecbb16e69d406b7>` pfUserMgrRegisterUserDB;
+
+- #define :ref:`EXT_UserMgrRegisterUserDB <group___cmp_user_mgr_itf_1ga934d4f034e8294a33af920f9fa4d537f>` extern :ref:`PFUSERMGRREGISTERUSERDB <group___cmp_user_mgr_itf_1gaaa4c24ab281302b92ecbb16e69d406b7>` pfUserMgrRegisterUserDB;
+
+- #define :ref:`GET_UserMgrRegisterUserDB <group___cmp_user_mgr_itf_1gaabe7b497145e64a6b64f9f99d5a7859c>` s_pfCMGetAPI2( "UserMgrRegisterUserDB", (RTS_VOID_FCTPTR *)&pfUserMgrRegisterUserDB, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrRegisterUserDB <group___cmp_user_mgr_itf_1gacf00e41a53cf7ea20425d69db02dfd8b>` pfUserMgrRegisterUserDB
+
+- #define :ref:`CHK_UserMgrRegisterUserDB <group___cmp_user_mgr_itf_1ga36eb0a78fc8bc76db6f0e7bc22b1b891>` (pfUserMgrRegisterUserDB != NULL)
+
+- #define :ref:`EXP_UserMgrRegisterUserDB <group___cmp_user_mgr_itf_1gad473d4fce526e6becf9de74ce97032ed>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserDB", (RTS_UINTPTR) :ref:`UserMgrRegisterUserDB <group___cmp_user_mgr_itf_1ga269ec4966911ecf4171586b0396dd9f3>` , 0, 0)
+
+- #define :ref:`USE_UserMgrUnregisterUserDB <group___cmp_user_mgr_itf_1gaede948f468ae2d24a88210a03c50dbe9>` :ref:`PFUSERMGRUNREGISTERUSERDB <group___cmp_user_mgr_itf_1ga459f9d0e76aa8e4e67d3ed2260282c14>` pfUserMgrUnregisterUserDB;
+
+- #define :ref:`EXT_UserMgrUnregisterUserDB <group___cmp_user_mgr_itf_1ga7b3f35ce76da0872e2b88d97164b1002>` extern :ref:`PFUSERMGRUNREGISTERUSERDB <group___cmp_user_mgr_itf_1ga459f9d0e76aa8e4e67d3ed2260282c14>` pfUserMgrUnregisterUserDB;
+
+- #define :ref:`GET_UserMgrUnregisterUserDB <group___cmp_user_mgr_itf_1ga25343803bfa3d851b942d08a830b5716>` s_pfCMGetAPI2( "UserMgrUnregisterUserDB", (RTS_VOID_FCTPTR *)&pfUserMgrUnregisterUserDB, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrUnregisterUserDB <group___cmp_user_mgr_itf_1ga638be28564d585456624a81a64b83654>` pfUserMgrUnregisterUserDB
+
+- #define :ref:`CHK_UserMgrUnregisterUserDB <group___cmp_user_mgr_itf_1ga740e8aee8ec4dd68584097b26b4e7404>` (pfUserMgrUnregisterUserDB != NULL)
+
+- #define :ref:`EXP_UserMgrUnregisterUserDB <group___cmp_user_mgr_itf_1gac173c4da599cc331ece3d2b4487881bf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserDB", (RTS_UINTPTR) :ref:`UserMgrUnregisterUserDB <group___cmp_user_mgr_itf_1gabc4880247829c42711edd31316faa97a>` , 0, 0)
+
+- #define :ref:`USE_UserMgrRegisterUserDBConfig <group___cmp_user_mgr_itf_1ga9a430220a6b3b882557e6f26d1a1b225>` :ref:`PFUSERMGRREGISTERUSERDBCONFIG <group___cmp_user_mgr_itf_1ga836f59167e0ccce7338f4264db9d6370>` pfUserMgrRegisterUserDBConfig;
+
+- #define :ref:`EXT_UserMgrRegisterUserDBConfig <group___cmp_user_mgr_itf_1ga75b628e45c8cfcb79b36c3fafcf6a02b>` extern :ref:`PFUSERMGRREGISTERUSERDBCONFIG <group___cmp_user_mgr_itf_1ga836f59167e0ccce7338f4264db9d6370>` pfUserMgrRegisterUserDBConfig;
+
+- #define :ref:`GET_UserMgrRegisterUserDBConfig <group___cmp_user_mgr_itf_1gaca70deae505079fd3b11e90560f61d4f>` s_pfCMGetAPI2( "UserMgrRegisterUserDBConfig", (RTS_VOID_FCTPTR *)&pfUserMgrRegisterUserDBConfig, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrRegisterUserDBConfig <group___cmp_user_mgr_itf_1ga39bd762380461ffa8e137a9ef3cf307a>` pfUserMgrRegisterUserDBConfig
+
+- #define :ref:`CHK_UserMgrRegisterUserDBConfig <group___cmp_user_mgr_itf_1gaae36e581e89d17a1b1cdb7919e61ec2e>` (pfUserMgrRegisterUserDBConfig != NULL)
+
+- #define :ref:`EXP_UserMgrRegisterUserDBConfig <group___cmp_user_mgr_itf_1gab12106c9da0db1811f8ec8a631293acb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserDBConfig", (RTS_UINTPTR) :ref:`UserMgrRegisterUserDBConfig <group___cmp_user_mgr_itf_1gabd70a957878a22ac509b699e9ffea3ce>` , 0, 0)
+
+- #define :ref:`USE_UserMgrUnregisterUserDBConfig <group___cmp_user_mgr_itf_1gaaa8089006c9a758767d30cc88b6aa427>` :ref:`PFUSERMGRUNREGISTERUSERDBCONFIG <group___cmp_user_mgr_itf_1ga8587d8dcd49c08a041a893eaaafb8c93>` pfUserMgrUnregisterUserDBConfig;
+
+- #define :ref:`EXT_UserMgrUnregisterUserDBConfig <group___cmp_user_mgr_itf_1ga6a615be0b2aa38f9158fd5ad530e5e2d>` extern :ref:`PFUSERMGRUNREGISTERUSERDBCONFIG <group___cmp_user_mgr_itf_1ga8587d8dcd49c08a041a893eaaafb8c93>` pfUserMgrUnregisterUserDBConfig;
+
+- #define :ref:`GET_UserMgrUnregisterUserDBConfig <group___cmp_user_mgr_itf_1gaf2cd1e0a269930050d658825b2c5af9c>` s_pfCMGetAPI2( "UserMgrUnregisterUserDBConfig", (RTS_VOID_FCTPTR *)&pfUserMgrUnregisterUserDBConfig, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrUnregisterUserDBConfig <group___cmp_user_mgr_itf_1ga8841e7a092dcb3085ad748a97b1b678b>` pfUserMgrUnregisterUserDBConfig
+
+- #define :ref:`CHK_UserMgrUnregisterUserDBConfig <group___cmp_user_mgr_itf_1gaa1db88ef7d1092d8f8bee30389b7831e>` (pfUserMgrUnregisterUserDBConfig != NULL)
+
+- #define :ref:`EXP_UserMgrUnregisterUserDBConfig <group___cmp_user_mgr_itf_1gae2c988a08cd7598a5657ded8a91d874f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserDBConfig", (RTS_UINTPTR) :ref:`UserMgrUnregisterUserDBConfig <group___cmp_user_mgr_itf_1ga969ad6158dd2dd5afa8163411d6348ba>` , 0, 0)
+
+- #define :ref:`USE_UserMgrRegisterUserGroupsDB <group___cmp_user_mgr_itf_1gaefb20387f52b7dca5ca0dc1ce8769ab6>` :ref:`PFUSERMGRREGISTERUSERGROUPSDB <group___cmp_user_mgr_itf_1ga4c4f8f52a74e8281c46b9a6fb377ab3e>` pfUserMgrRegisterUserGroupsDB;
+
+- #define :ref:`EXT_UserMgrRegisterUserGroupsDB <group___cmp_user_mgr_itf_1gaa19061633d2fcec9a1df0eb9c50bbfdc>` extern :ref:`PFUSERMGRREGISTERUSERGROUPSDB <group___cmp_user_mgr_itf_1ga4c4f8f52a74e8281c46b9a6fb377ab3e>` pfUserMgrRegisterUserGroupsDB;
+
+- #define :ref:`GET_UserMgrRegisterUserGroupsDB <group___cmp_user_mgr_itf_1ga90a09cc6e9cb43c5f207f3ea3c8ea371>` s_pfCMGetAPI2( "UserMgrRegisterUserGroupsDB", (RTS_VOID_FCTPTR *)&pfUserMgrRegisterUserGroupsDB, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrRegisterUserGroupsDB <group___cmp_user_mgr_itf_1gaff155ebbd31b4a94c8b4a34274e82aab>` pfUserMgrRegisterUserGroupsDB
+
+- #define :ref:`CHK_UserMgrRegisterUserGroupsDB <group___cmp_user_mgr_itf_1gadd0afdff8a3405f2ebc9829ff6c7b13c>` (pfUserMgrRegisterUserGroupsDB != NULL)
+
+- #define :ref:`EXP_UserMgrRegisterUserGroupsDB <group___cmp_user_mgr_itf_1ga9ab4bcf0f5e71aba5b0d006206a04f8a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserGroupsDB", (RTS_UINTPTR) :ref:`UserMgrRegisterUserGroupsDB <group___cmp_user_mgr_itf_1ga2b5d4d518bde8ad54c1359cbaae4a32c>` , 0, 0)
+
+- #define :ref:`USE_UserMgrUnregisterUserGroupsDB <group___cmp_user_mgr_itf_1ga8930ac43396a5d52c4eac8980a80643d>` :ref:`PFUSERMGRUNREGISTERUSERGROUPSDB <group___cmp_user_mgr_itf_1gac63f15fe5fb44643e593f3cd35f15bb3>` pfUserMgrUnregisterUserGroupsDB;
+
+- #define :ref:`EXT_UserMgrUnregisterUserGroupsDB <group___cmp_user_mgr_itf_1ga37a9fe137b887221295d07775bb29b0c>` extern :ref:`PFUSERMGRUNREGISTERUSERGROUPSDB <group___cmp_user_mgr_itf_1gac63f15fe5fb44643e593f3cd35f15bb3>` pfUserMgrUnregisterUserGroupsDB;
+
+- #define :ref:`GET_UserMgrUnregisterUserGroupsDB <group___cmp_user_mgr_itf_1gae948038f30c036ba302f3124c31d88b0>` s_pfCMGetAPI2( "UserMgrUnregisterUserGroupsDB", (RTS_VOID_FCTPTR *)&pfUserMgrUnregisterUserGroupsDB, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrUnregisterUserGroupsDB <group___cmp_user_mgr_itf_1ga1c38a743595f3dd62be676bea3c33e03>` pfUserMgrUnregisterUserGroupsDB
+
+- #define :ref:`CHK_UserMgrUnregisterUserGroupsDB <group___cmp_user_mgr_itf_1gad56e8994b843bbbb7274ce79dea4979a>` (pfUserMgrUnregisterUserGroupsDB != NULL)
+
+- #define :ref:`EXP_UserMgrUnregisterUserGroupsDB <group___cmp_user_mgr_itf_1gab48d519d08a152675bfadb47b906e8d0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserGroupsDB", (RTS_UINTPTR) :ref:`UserMgrUnregisterUserGroupsDB <group___cmp_user_mgr_itf_1ga0bff02a4f58452221a63e3527f3384a5>` , 0, 0)
+
+- #define :ref:`USE_UserMgrRegisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1ga805ed15b1fa3ceef7ac809b0a5f3b598>` :ref:`PFUSERMGRREGISTERUSERGROUPSDBCONFIG <group___cmp_user_mgr_itf_1ga1ea031895db7fd6a89a225d0101826d8>` pfUserMgrRegisterUserGroupsDBConfig;
+
+- #define :ref:`EXT_UserMgrRegisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1gac6a81b47eee75a356db9cb50abb913ce>` extern :ref:`PFUSERMGRREGISTERUSERGROUPSDBCONFIG <group___cmp_user_mgr_itf_1ga1ea031895db7fd6a89a225d0101826d8>` pfUserMgrRegisterUserGroupsDBConfig;
+
+- #define :ref:`GET_UserMgrRegisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1gae56e9a833532123a8e1399403439dc17>` s_pfCMGetAPI2( "UserMgrRegisterUserGroupsDBConfig", (RTS_VOID_FCTPTR *)&pfUserMgrRegisterUserGroupsDBConfig, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrRegisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1gac9356d237fab716a6d4aa72ed2858049>` pfUserMgrRegisterUserGroupsDBConfig
+
+- #define :ref:`CHK_UserMgrRegisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1ga21604e2f2acd0fdd664383f1c12957ad>` (pfUserMgrRegisterUserGroupsDBConfig != NULL)
+
+- #define :ref:`EXP_UserMgrRegisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1ga6a4511a8b7e606f408a663a62a3116f9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserGroupsDBConfig", (RTS_UINTPTR) :ref:`UserMgrRegisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1ga1d8899e9039a759de40687eb517dd084>` , 0, 0)
+
+- #define :ref:`USE_UserMgrUnregisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1gaf7580cfe2f1e8c1ed466f6e8c5097771>` :ref:`PFUSERMGRUNREGISTERUSERGROUPSDBCONFIG <group___cmp_user_mgr_itf_1ga0e72d0c10db9f9d55e83e8de800166c4>` pfUserMgrUnregisterUserGroupsDBConfig;
+
+- #define :ref:`EXT_UserMgrUnregisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1ga92b641a51c9fc24db8fc01e3c8a8e54e>` extern :ref:`PFUSERMGRUNREGISTERUSERGROUPSDBCONFIG <group___cmp_user_mgr_itf_1ga0e72d0c10db9f9d55e83e8de800166c4>` pfUserMgrUnregisterUserGroupsDBConfig;
+
+- #define :ref:`GET_UserMgrUnregisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1ga7c775e15d7a7fae2de91de2c00eb5fe1>` s_pfCMGetAPI2( "UserMgrUnregisterUserGroupsDBConfig", (RTS_VOID_FCTPTR *)&pfUserMgrUnregisterUserGroupsDBConfig, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrUnregisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1gadf3753871461eccedd2e0ca5ec612941>` pfUserMgrUnregisterUserGroupsDBConfig
+
+- #define :ref:`CHK_UserMgrUnregisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1ga9ab0530715ed5bf88429f714fe75a43c>` (pfUserMgrUnregisterUserGroupsDBConfig != NULL)
+
+- #define :ref:`EXP_UserMgrUnregisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1ga57edd725190e4999f084425d5064d43d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserGroupsDBConfig", (RTS_UINTPTR) :ref:`UserMgrUnregisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1gad27ce20aec4b9832f7c63eedd45864b6>` , 0, 0)
+
+- #define :ref:`USE_UserMgrRegisterUserObjectsDB <group___cmp_user_mgr_itf_1ga22456261f4672c94f093de2190ffd0a0>` :ref:`PFUSERMGRREGISTERUSEROBJECTSDB <group___cmp_user_mgr_itf_1ga2e1de223cfe5cd33721dacccd7175669>` pfUserMgrRegisterUserObjectsDB;
+
+- #define :ref:`EXT_UserMgrRegisterUserObjectsDB <group___cmp_user_mgr_itf_1ga66c8ddc1764a028fb11a35c3c7ca6950>` extern :ref:`PFUSERMGRREGISTERUSEROBJECTSDB <group___cmp_user_mgr_itf_1ga2e1de223cfe5cd33721dacccd7175669>` pfUserMgrRegisterUserObjectsDB;
+
+- #define :ref:`GET_UserMgrRegisterUserObjectsDB <group___cmp_user_mgr_itf_1ga47e771ffc3e36a7319dd39dcacf657d5>` s_pfCMGetAPI2( "UserMgrRegisterUserObjectsDB", (RTS_VOID_FCTPTR *)&pfUserMgrRegisterUserObjectsDB, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrRegisterUserObjectsDB <group___cmp_user_mgr_itf_1ga9958550eea4a52d85051ce4872f23b0c>` pfUserMgrRegisterUserObjectsDB
+
+- #define :ref:`CHK_UserMgrRegisterUserObjectsDB <group___cmp_user_mgr_itf_1ga40762c576180dcb2f1e539ff6feb64e6>` (pfUserMgrRegisterUserObjectsDB != NULL)
+
+- #define :ref:`EXP_UserMgrRegisterUserObjectsDB <group___cmp_user_mgr_itf_1gad85871913dca689a1c1bc0af0e16570b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserObjectsDB", (RTS_UINTPTR) :ref:`UserMgrRegisterUserObjectsDB <group___cmp_user_mgr_itf_1ga89cb9d910584a5c25197712f19fd7882>` , 0, 0)
+
+- #define :ref:`USE_UserMgrUnregisterUserObjectsDB <group___cmp_user_mgr_itf_1ga5340c5495db281f21160759afb0357e5>` :ref:`PFUSERMGRUNREGISTERUSEROBJECTSDB <group___cmp_user_mgr_itf_1gad8a1ad177fa7ad0d73d48512dda39ae5>` pfUserMgrUnregisterUserObjectsDB;
+
+- #define :ref:`EXT_UserMgrUnregisterUserObjectsDB <group___cmp_user_mgr_itf_1ga1fe39890fbe7824b7b4640eae468d8df>` extern :ref:`PFUSERMGRUNREGISTERUSEROBJECTSDB <group___cmp_user_mgr_itf_1gad8a1ad177fa7ad0d73d48512dda39ae5>` pfUserMgrUnregisterUserObjectsDB;
+
+- #define :ref:`GET_UserMgrUnregisterUserObjectsDB <group___cmp_user_mgr_itf_1gac2beb800d9345612c7f4c4101bc107a7>` s_pfCMGetAPI2( "UserMgrUnregisterUserObjectsDB", (RTS_VOID_FCTPTR *)&pfUserMgrUnregisterUserObjectsDB, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrUnregisterUserObjectsDB <group___cmp_user_mgr_itf_1gaf39b97211fb9cba8a78238ffa47782e5>` pfUserMgrUnregisterUserObjectsDB
+
+- #define :ref:`CHK_UserMgrUnregisterUserObjectsDB <group___cmp_user_mgr_itf_1ga90369f582721f384dbe06f074b8aa948>` (pfUserMgrUnregisterUserObjectsDB != NULL)
+
+- #define :ref:`EXP_UserMgrUnregisterUserObjectsDB <group___cmp_user_mgr_itf_1ga56084f3d379dc451052a538b3d773680>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserObjectsDB", (RTS_UINTPTR) :ref:`UserMgrUnregisterUserObjectsDB <group___cmp_user_mgr_itf_1ga58e567ff12fee3d07f589929b5fb44d7>` , 0, 0)
+
+- #define :ref:`USE_UserMgrRegisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1gac92a81c38ba6b517e618940284f8d98e>` :ref:`PFUSERMGRREGISTERUSEROBJECTSDBCONFIG <group___cmp_user_mgr_itf_1gad24f73e996bd6eb065d776b9edf64937>` pfUserMgrRegisterUserObjectsDBConfig;
+
+- #define :ref:`EXT_UserMgrRegisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1ga64d546c7f7c16c3256e088a2cc5b9985>` extern :ref:`PFUSERMGRREGISTERUSEROBJECTSDBCONFIG <group___cmp_user_mgr_itf_1gad24f73e996bd6eb065d776b9edf64937>` pfUserMgrRegisterUserObjectsDBConfig;
+
+- #define :ref:`GET_UserMgrRegisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1ga10d48d907594c396733d6f609b2ccee3>` s_pfCMGetAPI2( "UserMgrRegisterUserObjectsDBConfig", (RTS_VOID_FCTPTR *)&pfUserMgrRegisterUserObjectsDBConfig, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrRegisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1ga20ae97dfca08583c6c8aaefa6d962583>` pfUserMgrRegisterUserObjectsDBConfig
+
+- #define :ref:`CHK_UserMgrRegisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1gab70bf2974e9262f0dde6e627742b55c4>` (pfUserMgrRegisterUserObjectsDBConfig != NULL)
+
+- #define :ref:`EXP_UserMgrRegisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1ga72c8f688e0e31d55a2ab6c99d3f6833e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRegisterUserObjectsDBConfig", (RTS_UINTPTR) :ref:`UserMgrRegisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1ga7fcf6478b654bc39400afb19a1812c86>` , 0, 0)
+
+- #define :ref:`USE_UserMgrUnregisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1ga0c1c8cffae99a48c333d060137791431>` :ref:`PFUSERMGRUNREGISTERUSEROBJECTSDBCONFIG <group___cmp_user_mgr_itf_1ga46b6c669bcbecc50d7dbed454d552228>` pfUserMgrUnregisterUserObjectsDBConfig;
+
+- #define :ref:`EXT_UserMgrUnregisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1gacd9e39746f35c12144644e4023489214>` extern :ref:`PFUSERMGRUNREGISTERUSEROBJECTSDBCONFIG <group___cmp_user_mgr_itf_1ga46b6c669bcbecc50d7dbed454d552228>` pfUserMgrUnregisterUserObjectsDBConfig;
+
+- #define :ref:`GET_UserMgrUnregisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1ga910bdf6b4964cb3d9062600291386120>` s_pfCMGetAPI2( "UserMgrUnregisterUserObjectsDBConfig", (RTS_VOID_FCTPTR *)&pfUserMgrUnregisterUserObjectsDBConfig, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrUnregisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1ga50014a065e9e41c8a19277fdc0a22293>` pfUserMgrUnregisterUserObjectsDBConfig
+
+- #define :ref:`CHK_UserMgrUnregisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1gaecbc9e36b38d55e2ada0ab142427a6e3>` (pfUserMgrUnregisterUserObjectsDBConfig != NULL)
+
+- #define :ref:`EXP_UserMgrUnregisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1ga854f61f9241310b815d76772598d3c78>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrUnregisterUserObjectsDBConfig", (RTS_UINTPTR) :ref:`UserMgrUnregisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1ga27dcb50febb8c259a858177443df9775>` , 0, 0)
+
+- #define :ref:`USE_UserMgrSelectAuthType <group___cmp_user_mgr_itf_1ga10ed833c6002029bd31248f913c7e8f3>` :ref:`PFUSERMGRSELECTAUTHTYPE <group___cmp_user_mgr_itf_1gaa9bb78cb7513487ce5e9983724df660b>` pfUserMgrSelectAuthType;
+
+- #define :ref:`EXT_UserMgrSelectAuthType <group___cmp_user_mgr_itf_1gadfae831e045791c5907d0c95a15f225c>` extern :ref:`PFUSERMGRSELECTAUTHTYPE <group___cmp_user_mgr_itf_1gaa9bb78cb7513487ce5e9983724df660b>` pfUserMgrSelectAuthType;
+
+- #define :ref:`GET_UserMgrSelectAuthType <group___cmp_user_mgr_itf_1gaa5dc146355ab665eda5f11542acdcfce>` s_pfCMGetAPI2( "UserMgrSelectAuthType", (RTS_VOID_FCTPTR *)&pfUserMgrSelectAuthType, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrSelectAuthType <group___cmp_user_mgr_itf_1ga5685067c119c951b9e076cb54f01fe7c>` pfUserMgrSelectAuthType
+
+- #define :ref:`CHK_UserMgrSelectAuthType <group___cmp_user_mgr_itf_1ga256022949d13fbcd120888887df65aba>` (pfUserMgrSelectAuthType != NULL)
+
+- #define :ref:`EXP_UserMgrSelectAuthType <group___cmp_user_mgr_itf_1ga18c68e3ede0865d09f82a25569285825>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrSelectAuthType", (RTS_UINTPTR) :ref:`UserMgrSelectAuthType <group___cmp_user_mgr_itf_1gad4ad28f31e67b2b57ebee07373dad601>` , 0, 0)
+
+- #define :ref:`USE_UserMgrHandleLoginService <group___cmp_user_mgr_itf_1ga40d636a6870445b589abed0ff22aaa9b>` :ref:`PFUSERMGRHANDLELOGINSERVICE <group___cmp_user_mgr_itf_1ga7442cb2d2e107e413aa8303408e4dca1>` pfUserMgrHandleLoginService;
+
+- #define :ref:`EXT_UserMgrHandleLoginService <group___cmp_user_mgr_itf_1gad4243ecc9a65ddbde2585420ee9b8b83>` extern :ref:`PFUSERMGRHANDLELOGINSERVICE <group___cmp_user_mgr_itf_1ga7442cb2d2e107e413aa8303408e4dca1>` pfUserMgrHandleLoginService;
+
+- #define :ref:`GET_UserMgrHandleLoginService <group___cmp_user_mgr_itf_1gac54cf46bce3544412752e7518e38aa0c>` s_pfCMGetAPI2( "UserMgrHandleLoginService", (RTS_VOID_FCTPTR *)&pfUserMgrHandleLoginService, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrHandleLoginService <group___cmp_user_mgr_itf_1ga8aaa7f79388dae66d3c602f439d404ac>` pfUserMgrHandleLoginService
+
+- #define :ref:`CHK_UserMgrHandleLoginService <group___cmp_user_mgr_itf_1ga667f05b02c7f697bfea86a0c25d17888>` (pfUserMgrHandleLoginService != NULL)
+
+- #define :ref:`EXP_UserMgrHandleLoginService <group___cmp_user_mgr_itf_1ga1e0465ad81b22abaeaea7669593d6d0e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrHandleLoginService", (RTS_UINTPTR) :ref:`UserMgrHandleLoginService <group___cmp_user_mgr_itf_1ga637c970f8bc0a5157d4935fe66d66a50>` , 0, 0)
+
+- #define :ref:`USE_UserMgrIsServiceAllowed <group___cmp_user_mgr_itf_1gafa7604aa5eee811d22df442b31f55db0>` :ref:`PFUSERMGRISSERVICEALLOWED <group___cmp_user_mgr_itf_1ga719a1c8a5641e18e36d3c2cff3a94dc8>` pfUserMgrIsServiceAllowed;
+
+- #define :ref:`EXT_UserMgrIsServiceAllowed <group___cmp_user_mgr_itf_1ga40fbdef5919feb32f3d3ae64c1399900>` extern :ref:`PFUSERMGRISSERVICEALLOWED <group___cmp_user_mgr_itf_1ga719a1c8a5641e18e36d3c2cff3a94dc8>` pfUserMgrIsServiceAllowed;
+
+- #define :ref:`GET_UserMgrIsServiceAllowed <group___cmp_user_mgr_itf_1ga4efd21524a933cc72faefc484758d2b1>` s_pfCMGetAPI2( "UserMgrIsServiceAllowed", (RTS_VOID_FCTPTR *)&pfUserMgrIsServiceAllowed, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrIsServiceAllowed <group___cmp_user_mgr_itf_1gacf7501bf657f2f2ea7c0a0944e25b516>` pfUserMgrIsServiceAllowed
+
+- #define :ref:`CHK_UserMgrIsServiceAllowed <group___cmp_user_mgr_itf_1gaa0854ff5eac4b6ba5522c0a6ef83f330>` (pfUserMgrIsServiceAllowed != NULL)
+
+- #define :ref:`EXP_UserMgrIsServiceAllowed <group___cmp_user_mgr_itf_1gacd0fea1d2beb8a220ad42b87ce403ae5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrIsServiceAllowed", (RTS_UINTPTR) :ref:`UserMgrIsServiceAllowed <group___cmp_user_mgr_itf_1gaf79dcf0c038d556b22d3d6daafa0e1a6>` , 0, 0)
+
+- #define :ref:`USE_UserMgrIsActive <group___cmp_user_mgr_itf_1ga0bee1896f3f5b00396a5e61368f86f30>` :ref:`PFUSERMGRISACTIVE <group___cmp_user_mgr_itf_1ga61ee6e07ea2fc1330b32099ae49a90eb>` pfUserMgrIsActive;
+
+- #define :ref:`EXT_UserMgrIsActive <group___cmp_user_mgr_itf_1ga90d66118e7b94e64f1a6cbea1d52d9fb>` extern :ref:`PFUSERMGRISACTIVE <group___cmp_user_mgr_itf_1ga61ee6e07ea2fc1330b32099ae49a90eb>` pfUserMgrIsActive;
+
+- #define :ref:`GET_UserMgrIsActive <group___cmp_user_mgr_itf_1ga8328ef11ecf169b6a918570d17f670d1>` s_pfCMGetAPI2( "UserMgrIsActive", (RTS_VOID_FCTPTR *)&pfUserMgrIsActive, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrIsActive <group___cmp_user_mgr_itf_1ga4e68cb706afc292510b93b7569a106f9>` pfUserMgrIsActive
+
+- #define :ref:`CHK_UserMgrIsActive <group___cmp_user_mgr_itf_1ga29cee77a4f8f338c4707e45bf2bb52a9>` (pfUserMgrIsActive != NULL)
+
+- #define :ref:`EXP_UserMgrIsActive <group___cmp_user_mgr_itf_1ga1cf098cec2a990cd98072ef8d18d3036>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrIsActive", (RTS_UINTPTR) :ref:`UserMgrIsActive <group___cmp_user_mgr_itf_1ga6956d1022666d5acb6dcd2e77e772690>` , 0, 0)
+
+- #define :ref:`USE_UserMgrLogin <group___cmp_user_mgr_itf_1ga292326b4c03bc086b1fc6fb600e4d643>` :ref:`PFUSERMGRLOGIN <group___cmp_user_mgr_itf_1gaed41945b3ddc5ff4fcfd08fb69643629>` pfUserMgrLogin;
+
+- #define :ref:`EXT_UserMgrLogin <group___cmp_user_mgr_itf_1ga7be3191811ae266f944d05432e53501e>` extern :ref:`PFUSERMGRLOGIN <group___cmp_user_mgr_itf_1gaed41945b3ddc5ff4fcfd08fb69643629>` pfUserMgrLogin;
+
+- #define :ref:`GET_UserMgrLogin <group___cmp_user_mgr_itf_1ga7143f6b2c6e17ed6544017b810926764>` s_pfCMGetAPI2( "UserMgrLogin", (RTS_VOID_FCTPTR *)&pfUserMgrLogin, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrLogin <group___cmp_user_mgr_itf_1gaf683ed43f4c8b5d76020931a7331617e>` pfUserMgrLogin
+
+- #define :ref:`CHK_UserMgrLogin <group___cmp_user_mgr_itf_1gad13252a39c9e878628d171ff769d77b6>` (pfUserMgrLogin != NULL)
+
+- #define :ref:`EXP_UserMgrLogin <group___cmp_user_mgr_itf_1ga7ab4e249a9360b45c6b9556addb3234b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrLogin", (RTS_UINTPTR) :ref:`UserMgrLogin <group___cmp_user_mgr_itf_1ga302a7c1de861d64ea2aae9d9aa3952aa>` , 0, 0)
+
+- #define :ref:`USE_UserMgrLogout <group___cmp_user_mgr_itf_1gac80c109516089dd1590629dfb0298de0>` :ref:`PFUSERMGRLOGOUT <group___cmp_user_mgr_itf_1ga44eb683c3343af3f3c687316a7cfe931>` pfUserMgrLogout;
+
+- #define :ref:`EXT_UserMgrLogout <group___cmp_user_mgr_itf_1gaa36bb3ff2ce01ec6391ef29039cc6fb0>` extern :ref:`PFUSERMGRLOGOUT <group___cmp_user_mgr_itf_1ga44eb683c3343af3f3c687316a7cfe931>` pfUserMgrLogout;
+
+- #define :ref:`GET_UserMgrLogout <group___cmp_user_mgr_itf_1ga217125b6f494eb24f774733c305c3f52>` s_pfCMGetAPI2( "UserMgrLogout", (RTS_VOID_FCTPTR *)&pfUserMgrLogout, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrLogout <group___cmp_user_mgr_itf_1gaf245be81fc091b1f240f6fb452a4f34c>` pfUserMgrLogout
+
+- #define :ref:`CHK_UserMgrLogout <group___cmp_user_mgr_itf_1ga26c0f7ee5a1b6ce0b586e4148c911f56>` (pfUserMgrLogout != NULL)
+
+- #define :ref:`EXP_UserMgrLogout <group___cmp_user_mgr_itf_1gaa498553fe09b017b57977d0893e366ba>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrLogout", (RTS_UINTPTR) :ref:`UserMgrLogout <group___cmp_user_mgr_itf_1ga8bafb4bb1c23e759da7b0132c588cd92>` , 0, 0)
+
+- #define :ref:`USE_UserMgrRelogin <group___cmp_user_mgr_itf_1ga36bb50fb51a3505b53057777a35e784a>` :ref:`PFUSERMGRRELOGIN <group___cmp_user_mgr_itf_1gaa5dcb2c2ab6bf58d6eaa708acd36ca87>` pfUserMgrRelogin;
+
+- #define :ref:`EXT_UserMgrRelogin <group___cmp_user_mgr_itf_1ga5408253f094f93a1fa3c201f167910e3>` extern :ref:`PFUSERMGRRELOGIN <group___cmp_user_mgr_itf_1gaa5dcb2c2ab6bf58d6eaa708acd36ca87>` pfUserMgrRelogin;
+
+- #define :ref:`GET_UserMgrRelogin <group___cmp_user_mgr_itf_1gafcd0c3c4823d7521b1687fbdcb6309d3>` s_pfCMGetAPI2( "UserMgrRelogin", (RTS_VOID_FCTPTR *)&pfUserMgrRelogin, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrRelogin <group___cmp_user_mgr_itf_1ga05af2a6491360f768899f05f1b6352f4>` pfUserMgrRelogin
+
+- #define :ref:`CHK_UserMgrRelogin <group___cmp_user_mgr_itf_1gae89bd4ceb8ecbaa5addff719d8db7bb5>` (pfUserMgrRelogin != NULL)
+
+- #define :ref:`EXP_UserMgrRelogin <group___cmp_user_mgr_itf_1ga78f2c420510f346813d7cae8a633bbca>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRelogin", (RTS_UINTPTR) :ref:`UserMgrRelogin <group___cmp_user_mgr_itf_1ga24f91b27de59e6a40eb8f617f96cd411>` , 0, 0)
+
+- #define :ref:`USE_UserMgrIsGroupMember <group___cmp_user_mgr_itf_1ga2b837aab5ad509ce8ffa1721e498d6ca>` :ref:`PFUSERMGRISGROUPMEMBER <group___cmp_user_mgr_itf_1ga893f2ecfdc2a8773a6507100e9bcb918>` pfUserMgrIsGroupMember;
+
+- #define :ref:`EXT_UserMgrIsGroupMember <group___cmp_user_mgr_itf_1gafa3eaebf9f3a003cd9f3ff6c4a2bc2ee>` extern :ref:`PFUSERMGRISGROUPMEMBER <group___cmp_user_mgr_itf_1ga893f2ecfdc2a8773a6507100e9bcb918>` pfUserMgrIsGroupMember;
+
+- #define :ref:`GET_UserMgrIsGroupMember <group___cmp_user_mgr_itf_1gaab7378b2c4fd579a1dfd05f37dff1bd1>` s_pfCMGetAPI2( "UserMgrIsGroupMember", (RTS_VOID_FCTPTR *)&pfUserMgrIsGroupMember, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrIsGroupMember <group___cmp_user_mgr_itf_1gadd79cb1923b9ddedbf0a0a7893c570e3>` pfUserMgrIsGroupMember
+
+- #define :ref:`CHK_UserMgrIsGroupMember <group___cmp_user_mgr_itf_1ga9b2f4396fac16231514f999475225a8a>` (pfUserMgrIsGroupMember != NULL)
+
+- #define :ref:`EXP_UserMgrIsGroupMember <group___cmp_user_mgr_itf_1ga6c2e6982d22e4e1cf5f65f4a763cd99d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrIsGroupMember", (RTS_UINTPTR) :ref:`UserMgrIsGroupMember <group___cmp_user_mgr_itf_1gae962249386d3a00accfd171770f20539>` , 0, 0)
+
+- #define :ref:`USE_UserMgrIsAdministrator <group___cmp_user_mgr_itf_1gab91d413591cfcd458b5c1c4c672f06be>` :ref:`PFUSERMGRISADMINISTRATOR <group___cmp_user_mgr_itf_1ga3a9b693f841fc30bb42bc8b88085aaea>` pfUserMgrIsAdministrator;
+
+- #define :ref:`EXT_UserMgrIsAdministrator <group___cmp_user_mgr_itf_1ga8e9c13876b64eabfbf4a2dd617ff9d11>` extern :ref:`PFUSERMGRISADMINISTRATOR <group___cmp_user_mgr_itf_1ga3a9b693f841fc30bb42bc8b88085aaea>` pfUserMgrIsAdministrator;
+
+- #define :ref:`GET_UserMgrIsAdministrator <group___cmp_user_mgr_itf_1ga2b6806c56e0df4a627eb6bce4db800f3>` s_pfCMGetAPI2( "UserMgrIsAdministrator", (RTS_VOID_FCTPTR *)&pfUserMgrIsAdministrator, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrIsAdministrator <group___cmp_user_mgr_itf_1ga00ef21bee44f51c422de38390262b09d>` pfUserMgrIsAdministrator
+
+- #define :ref:`CHK_UserMgrIsAdministrator <group___cmp_user_mgr_itf_1gaaafdf1c5e5a8e51c844af80203a3fe02>` (pfUserMgrIsAdministrator != NULL)
+
+- #define :ref:`EXP_UserMgrIsAdministrator <group___cmp_user_mgr_itf_1gacf5efe81df19f65109304eee78a65b61>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrIsAdministrator", (RTS_UINTPTR) :ref:`UserMgrIsAdministrator <group___cmp_user_mgr_itf_1ga421c378c6f7ca5da82ecda8b645d553a>` , 0, 0)
+
+- #define :ref:`USE_UserMgrHasAccessRights <group___cmp_user_mgr_itf_1ga522974ea76a6e99a7871d2b45806ba3a>` :ref:`PFUSERMGRHASACCESSRIGHTS <group___cmp_user_mgr_itf_1ga551b564e7d91718c59b859ffd5802def>` pfUserMgrHasAccessRights;
+
+- #define :ref:`EXT_UserMgrHasAccessRights <group___cmp_user_mgr_itf_1gab11f1fe8e32e5620034bb24bbf8bc71e>` extern :ref:`PFUSERMGRHASACCESSRIGHTS <group___cmp_user_mgr_itf_1ga551b564e7d91718c59b859ffd5802def>` pfUserMgrHasAccessRights;
+
+- #define :ref:`GET_UserMgrHasAccessRights <group___cmp_user_mgr_itf_1ga521ab65f6af46331b5780e43150618d4>` s_pfCMGetAPI2( "UserMgrHasAccessRights", (RTS_VOID_FCTPTR *)&pfUserMgrHasAccessRights, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrHasAccessRights <group___cmp_user_mgr_itf_1ga3d27b23b4ac98177069f4a5e8ac626cb>` pfUserMgrHasAccessRights
+
+- #define :ref:`CHK_UserMgrHasAccessRights <group___cmp_user_mgr_itf_1ga8d262f202eee5fc9d7cac65cb0f8bf9f>` (pfUserMgrHasAccessRights != NULL)
+
+- #define :ref:`EXP_UserMgrHasAccessRights <group___cmp_user_mgr_itf_1gae73c8b40ab2a448023874ee803945642>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrHasAccessRights", (RTS_UINTPTR) :ref:`UserMgrHasAccessRights <group___cmp_user_mgr_itf_1ga5d11a545de34d03cd0d6cc0f8e6733a4>` , 0, 0)
+
+- #define :ref:`USE_UserMgrGetAccessRights <group___cmp_user_mgr_itf_1ga1cf970d40ab73211c1c39aca21588948>` :ref:`PFUSERMGRGETACCESSRIGHTS <group___cmp_user_mgr_itf_1ga23a494f420df2344be3c81cafff33831>` pfUserMgrGetAccessRights;
+
+- #define :ref:`EXT_UserMgrGetAccessRights <group___cmp_user_mgr_itf_1ga7370016f555283d00709415480aa6933>` extern :ref:`PFUSERMGRGETACCESSRIGHTS <group___cmp_user_mgr_itf_1ga23a494f420df2344be3c81cafff33831>` pfUserMgrGetAccessRights;
+
+- #define :ref:`GET_UserMgrGetAccessRights <group___cmp_user_mgr_itf_1ga49dadff659f984f874fb3fe50705efbe>` s_pfCMGetAPI2( "UserMgrGetAccessRights", (RTS_VOID_FCTPTR *)&pfUserMgrGetAccessRights, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrGetAccessRights <group___cmp_user_mgr_itf_1gab8cba5a1019b2afb1ee14e2511af1d03>` pfUserMgrGetAccessRights
+
+- #define :ref:`CHK_UserMgrGetAccessRights <group___cmp_user_mgr_itf_1ga052248d96beab93ababdc57afddbfddf>` (pfUserMgrGetAccessRights != NULL)
+
+- #define :ref:`EXP_UserMgrGetAccessRights <group___cmp_user_mgr_itf_1gae92bd5afe47b432158a32f086443eab2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGetAccessRights", (RTS_UINTPTR) :ref:`UserMgrGetAccessRights <group___cmp_user_mgr_itf_1ga656e11e35075b93e09d2ca7a56967665>` , 0, 0)
+
+- #define :ref:`USE_UserMgrHasUserAccessRights <group___cmp_user_mgr_itf_1gabc0440378a543892040466e51400484f>` :ref:`PFUSERMGRHASUSERACCESSRIGHTS <group___cmp_user_mgr_itf_1ga9bc92ac40be9e92bd0e6f5ee9def8532>` pfUserMgrHasUserAccessRights;
+
+- #define :ref:`EXT_UserMgrHasUserAccessRights <group___cmp_user_mgr_itf_1gabb643fca41db2b2b0e5b21978485a83f>` extern :ref:`PFUSERMGRHASUSERACCESSRIGHTS <group___cmp_user_mgr_itf_1ga9bc92ac40be9e92bd0e6f5ee9def8532>` pfUserMgrHasUserAccessRights;
+
+- #define :ref:`GET_UserMgrHasUserAccessRights <group___cmp_user_mgr_itf_1ga3351953406869ade1db32f5b2fe2758e>` s_pfCMGetAPI2( "UserMgrHasUserAccessRights", (RTS_VOID_FCTPTR *)&pfUserMgrHasUserAccessRights, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrHasUserAccessRights <group___cmp_user_mgr_itf_1gaf50d1db419958525c63e46cc4533f198>` pfUserMgrHasUserAccessRights
+
+- #define :ref:`CHK_UserMgrHasUserAccessRights <group___cmp_user_mgr_itf_1ga2a2efa544758b9ee6f393bbff11db5ae>` (pfUserMgrHasUserAccessRights != NULL)
+
+- #define :ref:`EXP_UserMgrHasUserAccessRights <group___cmp_user_mgr_itf_1gaabc6459cb5937c71a39ee6c960203d2f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrHasUserAccessRights", (RTS_UINTPTR) :ref:`UserMgrHasUserAccessRights <group___cmp_user_mgr_itf_1ga3124c60fe0ff5fa27092bd4ceb122d10>` , 0, 0)
+
+- #define :ref:`USE_UserMgrGetUserAccessRights <group___cmp_user_mgr_itf_1ga256fefe3a07524109ed4e26eb35fbe4f>` :ref:`PFUSERMGRGETUSERACCESSRIGHTS <group___cmp_user_mgr_itf_1ga8e8ab282a2133dfb46677fb24f19c203>` pfUserMgrGetUserAccessRights;
+
+- #define :ref:`EXT_UserMgrGetUserAccessRights <group___cmp_user_mgr_itf_1ga3cb9a23af04ec7309a13bfce654abfa3>` extern :ref:`PFUSERMGRGETUSERACCESSRIGHTS <group___cmp_user_mgr_itf_1ga8e8ab282a2133dfb46677fb24f19c203>` pfUserMgrGetUserAccessRights;
+
+- #define :ref:`GET_UserMgrGetUserAccessRights <group___cmp_user_mgr_itf_1ga5fbfaced0937ac193bf9afb8cb6dca9e>` s_pfCMGetAPI2( "UserMgrGetUserAccessRights", (RTS_VOID_FCTPTR *)&pfUserMgrGetUserAccessRights, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrGetUserAccessRights <group___cmp_user_mgr_itf_1ga4e56237169120aad817eae51b6e64ec1>` pfUserMgrGetUserAccessRights
+
+- #define :ref:`CHK_UserMgrGetUserAccessRights <group___cmp_user_mgr_itf_1gaf0a7e426c122cce80622ae077c03cc8e>` (pfUserMgrGetUserAccessRights != NULL)
+
+- #define :ref:`EXP_UserMgrGetUserAccessRights <group___cmp_user_mgr_itf_1ga696ac58597a1de19028f55561fe94a86>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGetUserAccessRights", (RTS_UINTPTR) :ref:`UserMgrGetUserAccessRights <group___cmp_user_mgr_itf_1gac9c09641fa7fd6b39e09dcf3f39c433a>` , 0, 0)
+
+- #define :ref:`USE_UserMgrAddInfoToUser <group___cmp_user_mgr_itf_1gab042f1412dca5c54d3a2db16784c97d0>` :ref:`PFUSERMGRADDINFOTOUSER <group___cmp_user_mgr_itf_1gab6554a781189ef5eb3f4722c31e60007>` pfUserMgrAddInfoToUser;
+
+- #define :ref:`EXT_UserMgrAddInfoToUser <group___cmp_user_mgr_itf_1gafe8916064295b1c6ba189d4b01da9d92>` extern :ref:`PFUSERMGRADDINFOTOUSER <group___cmp_user_mgr_itf_1gab6554a781189ef5eb3f4722c31e60007>` pfUserMgrAddInfoToUser;
+
+- #define :ref:`GET_UserMgrAddInfoToUser <group___cmp_user_mgr_itf_1gac83dad45ae4db12f3c1c007adc8d4495>` s_pfCMGetAPI2( "UserMgrAddInfoToUser", (RTS_VOID_FCTPTR *)&pfUserMgrAddInfoToUser, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrAddInfoToUser <group___cmp_user_mgr_itf_1gaab3777e39206d3591e5fb46f1aaf42c4>` pfUserMgrAddInfoToUser
+
+- #define :ref:`CHK_UserMgrAddInfoToUser <group___cmp_user_mgr_itf_1ga54e1c467bb6241c1b972962465e27f35>` (pfUserMgrAddInfoToUser != NULL)
+
+- #define :ref:`EXP_UserMgrAddInfoToUser <group___cmp_user_mgr_itf_1ga7f7c39d8e056cd396700cf406df51906>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrAddInfoToUser", (RTS_UINTPTR) :ref:`UserMgrAddInfoToUser <group___cmp_user_mgr_itf_1ga621c9ce48b167c9aadf4bb7188c34d79>` , 0, 0)
+
+- #define :ref:`USE_UserMgrRemoveInfoFromUser <group___cmp_user_mgr_itf_1ga9f5a814beb264e73b5bfd77b21df133d>` :ref:`PFUSERMGRREMOVEINFOFROMUSER <group___cmp_user_mgr_itf_1ga91a31f43497d3cf1a59004026f070139>` pfUserMgrRemoveInfoFromUser;
+
+- #define :ref:`EXT_UserMgrRemoveInfoFromUser <group___cmp_user_mgr_itf_1ga71f9fe75dcb49dbb24b460065e277cf4>` extern :ref:`PFUSERMGRREMOVEINFOFROMUSER <group___cmp_user_mgr_itf_1ga91a31f43497d3cf1a59004026f070139>` pfUserMgrRemoveInfoFromUser;
+
+- #define :ref:`GET_UserMgrRemoveInfoFromUser <group___cmp_user_mgr_itf_1ga4313e109016fb0cfc609ecad4df78e09>` s_pfCMGetAPI2( "UserMgrRemoveInfoFromUser", (RTS_VOID_FCTPTR *)&pfUserMgrRemoveInfoFromUser, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrRemoveInfoFromUser <group___cmp_user_mgr_itf_1ga68dd726903d07075fcaef3c2be96663d>` pfUserMgrRemoveInfoFromUser
+
+- #define :ref:`CHK_UserMgrRemoveInfoFromUser <group___cmp_user_mgr_itf_1ga67e35601da05af50951853636f053c8c>` (pfUserMgrRemoveInfoFromUser != NULL)
+
+- #define :ref:`EXP_UserMgrRemoveInfoFromUser <group___cmp_user_mgr_itf_1gacf402618bd7c1118da305cb97e5357a5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRemoveInfoFromUser", (RTS_UINTPTR) :ref:`UserMgrRemoveInfoFromUser <group___cmp_user_mgr_itf_1ga086c3b0db90ac145d197f64c56c09810>` , 0, 0)
+
+- #define :ref:`USE_UserMgrRemoveInfoFromAllUsers <group___cmp_user_mgr_itf_1ga60419420230cc004cc949b92df8df851>` :ref:`PFUSERMGRREMOVEINFOFROMALLUSERS <group___cmp_user_mgr_itf_1ga52bfd1f785f28fc582c5ca38a3d01b56>` pfUserMgrRemoveInfoFromAllUsers;
+
+- #define :ref:`EXT_UserMgrRemoveInfoFromAllUsers <group___cmp_user_mgr_itf_1ga03a4d61473e7ed529dd4c007d8f46f7f>` extern :ref:`PFUSERMGRREMOVEINFOFROMALLUSERS <group___cmp_user_mgr_itf_1ga52bfd1f785f28fc582c5ca38a3d01b56>` pfUserMgrRemoveInfoFromAllUsers;
+
+- #define :ref:`GET_UserMgrRemoveInfoFromAllUsers <group___cmp_user_mgr_itf_1ga37e803f769ef28793d0ce14af493d2eb>` s_pfCMGetAPI2( "UserMgrRemoveInfoFromAllUsers", (RTS_VOID_FCTPTR *)&pfUserMgrRemoveInfoFromAllUsers, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrRemoveInfoFromAllUsers <group___cmp_user_mgr_itf_1ga498814ec961de6b51c882791739f7685>` pfUserMgrRemoveInfoFromAllUsers
+
+- #define :ref:`CHK_UserMgrRemoveInfoFromAllUsers <group___cmp_user_mgr_itf_1ga91d63d5e92312e7c5c813b6c06324600>` (pfUserMgrRemoveInfoFromAllUsers != NULL)
+
+- #define :ref:`EXP_UserMgrRemoveInfoFromAllUsers <group___cmp_user_mgr_itf_1ga8e9a93ff7c0d55534e6561950d96b6b6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRemoveInfoFromAllUsers", (RTS_UINTPTR) :ref:`UserMgrRemoveInfoFromAllUsers <group___cmp_user_mgr_itf_1ga894e70b5aefc4736c825943a9fdd7e26>` , 0, 0)
+
+- #define :ref:`USE_UserMgrGetInfoOfUser <group___cmp_user_mgr_itf_1ga32187c366d4e11f61662d3982d3b91a0>` :ref:`PFUSERMGRGETINFOOFUSER <group___cmp_user_mgr_itf_1ga82d94f01b0b23dc320ee5eda1cc7d996>` pfUserMgrGetInfoOfUser;
+
+- #define :ref:`EXT_UserMgrGetInfoOfUser <group___cmp_user_mgr_itf_1ga5948808ddf814dc876fe081832340047>` extern :ref:`PFUSERMGRGETINFOOFUSER <group___cmp_user_mgr_itf_1ga82d94f01b0b23dc320ee5eda1cc7d996>` pfUserMgrGetInfoOfUser;
+
+- #define :ref:`GET_UserMgrGetInfoOfUser <group___cmp_user_mgr_itf_1gaa1d09e8d06e2f9baddd750ef7136f267>` s_pfCMGetAPI2( "UserMgrGetInfoOfUser", (RTS_VOID_FCTPTR *)&pfUserMgrGetInfoOfUser, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrGetInfoOfUser <group___cmp_user_mgr_itf_1ga799fcfedcc15a2bb70c31d8bb5748252>` pfUserMgrGetInfoOfUser
+
+- #define :ref:`CHK_UserMgrGetInfoOfUser <group___cmp_user_mgr_itf_1ga203f2fa94602eebc48ce972fa21b8445>` (pfUserMgrGetInfoOfUser != NULL)
+
+- #define :ref:`EXP_UserMgrGetInfoOfUser <group___cmp_user_mgr_itf_1gaee7ce5bd8b786ae508095d8ca78d04e6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGetInfoOfUser", (RTS_UINTPTR) :ref:`UserMgrGetInfoOfUser <group___cmp_user_mgr_itf_1ga3248a60285c41178b795da5da760d013>` , 0, 0)
+
+- #define :ref:`USE_UserMgrGetUserName <group___cmp_user_mgr_itf_1gad5feec54ed8a5661a22a5baee153a4fa>` :ref:`PFUSERMGRGETUSERNAME <group___cmp_user_mgr_itf_1ga400987c13307aa15d5aa50f5fe07dda0>` pfUserMgrGetUserName;
+
+- #define :ref:`EXT_UserMgrGetUserName <group___cmp_user_mgr_itf_1gafef396425dd97c405a2c621f4733c95b>` extern :ref:`PFUSERMGRGETUSERNAME <group___cmp_user_mgr_itf_1ga400987c13307aa15d5aa50f5fe07dda0>` pfUserMgrGetUserName;
+
+- #define :ref:`GET_UserMgrGetUserName <group___cmp_user_mgr_itf_1ga1653ed0b19f63da1c44b7a0a5cce120a>` s_pfCMGetAPI2( "UserMgrGetUserName", (RTS_VOID_FCTPTR *)&pfUserMgrGetUserName, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrGetUserName <group___cmp_user_mgr_itf_1ga0c7fdeb229a0c30edcd4a9438490dae3>` pfUserMgrGetUserName
+
+- #define :ref:`CHK_UserMgrGetUserName <group___cmp_user_mgr_itf_1ga85df7edab0f4b4e4420c1daf408d29b8>` (pfUserMgrGetUserName != NULL)
+
+- #define :ref:`EXP_UserMgrGetUserName <group___cmp_user_mgr_itf_1gac3f88a4e56e39fa7067c8c2fb4761478>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGetUserName", (RTS_UINTPTR) :ref:`UserMgrGetUserName <group___cmp_user_mgr_itf_1ga46e12f46460c5a236103d26cbbb41520>` , 0, 0)
+
+- #define :ref:`USE_UserMgrGetGroup <group___cmp_user_mgr_itf_1ga372c3592d87f64399b70ac1a0884d522>` :ref:`PFUSERMGRGETGROUP <group___cmp_user_mgr_itf_1gab38cede7a2605e447f365b19ce090a03>` pfUserMgrGetGroup;
+
+- #define :ref:`EXT_UserMgrGetGroup <group___cmp_user_mgr_itf_1gaa808976083dbc00f188ad5da41cf37e6>` extern :ref:`PFUSERMGRGETGROUP <group___cmp_user_mgr_itf_1gab38cede7a2605e447f365b19ce090a03>` pfUserMgrGetGroup;
+
+- #define :ref:`GET_UserMgrGetGroup <group___cmp_user_mgr_itf_1ga4adeeca41f19853eacffaf24369d0770>` s_pfCMGetAPI2( "UserMgrGetGroup", (RTS_VOID_FCTPTR *)&pfUserMgrGetGroup, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrGetGroup <group___cmp_user_mgr_itf_1gae8472a8a5c4f20da11d1b39f859b2584>` pfUserMgrGetGroup
+
+- #define :ref:`CHK_UserMgrGetGroup <group___cmp_user_mgr_itf_1ga3f0348f1af578e21ce3cc3258acf52d8>` (pfUserMgrGetGroup != NULL)
+
+- #define :ref:`EXP_UserMgrGetGroup <group___cmp_user_mgr_itf_1gaaee83a70ef51052637bd1aa947b946d6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGetGroup", (RTS_UINTPTR) :ref:`UserMgrGetGroup <group___cmp_user_mgr_itf_1ga0793c9a235acc193206d0f41a03d491f>` , 0, 0)
+
+- #define :ref:`USE_UserMgrGroupHasUser <group___cmp_user_mgr_itf_1gab8b4e621ff228062fac94741ce7f2d9a>` :ref:`PFUSERMGRGROUPHASUSER <group___cmp_user_mgr_itf_1gaa1ef2e6d61a85a7ea93bbcddb28c8d50>` pfUserMgrGroupHasUser;
+
+- #define :ref:`EXT_UserMgrGroupHasUser <group___cmp_user_mgr_itf_1ga07c058ce68b09e2e9078ac574da6f42e>` extern :ref:`PFUSERMGRGROUPHASUSER <group___cmp_user_mgr_itf_1gaa1ef2e6d61a85a7ea93bbcddb28c8d50>` pfUserMgrGroupHasUser;
+
+- #define :ref:`GET_UserMgrGroupHasUser <group___cmp_user_mgr_itf_1gae96c6958a4f86721becb07dc56ede69d>` s_pfCMGetAPI2( "UserMgrGroupHasUser", (RTS_VOID_FCTPTR *)&pfUserMgrGroupHasUser, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrGroupHasUser <group___cmp_user_mgr_itf_1ga64cebbfcf0fa71d82583f8b33d841ca5>` pfUserMgrGroupHasUser
+
+- #define :ref:`CHK_UserMgrGroupHasUser <group___cmp_user_mgr_itf_1gaef7d48e33633b6b3559bf1e30bd4b1bd>` (pfUserMgrGroupHasUser != NULL)
+
+- #define :ref:`EXP_UserMgrGroupHasUser <group___cmp_user_mgr_itf_1ga9efaa5150c2860444e544e31bc508001>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGroupHasUser", (RTS_UINTPTR) :ref:`UserMgrGroupHasUser <group___cmp_user_mgr_itf_1ga4c9ed8db09dfe8af66a3f997755c187b>` , 0, 0)
+
+- #define :ref:`USE_UserMgrGroupGetName <group___cmp_user_mgr_itf_1ga109239bd7a68af5583f7e20b086db2a4>` :ref:`PFUSERMGRGROUPGETNAME <group___cmp_user_mgr_itf_1gabb55bdf2acf081eff708ee0c11c7fd98>` pfUserMgrGroupGetName;
+
+- #define :ref:`EXT_UserMgrGroupGetName <group___cmp_user_mgr_itf_1ga081535913dc85bc8657abc4ae8367668>` extern :ref:`PFUSERMGRGROUPGETNAME <group___cmp_user_mgr_itf_1gabb55bdf2acf081eff708ee0c11c7fd98>` pfUserMgrGroupGetName;
+
+- #define :ref:`GET_UserMgrGroupGetName <group___cmp_user_mgr_itf_1gad06aa659a11a6375262508f2c284a8d2>` s_pfCMGetAPI2( "UserMgrGroupGetName", (RTS_VOID_FCTPTR *)&pfUserMgrGroupGetName, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrGroupGetName <group___cmp_user_mgr_itf_1gaf145f05d0174f0b0a516a679c997106c>` pfUserMgrGroupGetName
+
+- #define :ref:`CHK_UserMgrGroupGetName <group___cmp_user_mgr_itf_1ga75482b5c5ce2de59d80492468ca11134>` (pfUserMgrGroupGetName != NULL)
+
+- #define :ref:`EXP_UserMgrGroupGetName <group___cmp_user_mgr_itf_1ga7b3a35f6f8fab08e1be38fa3fc0cab72>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGroupGetName", (RTS_UINTPTR) :ref:`UserMgrGroupGetName <group___cmp_user_mgr_itf_1ga6788213d789be24ff25eaa3ba25e690f>` , 0, 0)
+
+- #define :ref:`USE_UserMgrAddUser <group___cmp_user_mgr_itf_1gaca02d73b4ddd4d413ac064e5f73ff760>` :ref:`PFUSERMGRADDUSER <group___cmp_user_mgr_itf_1ga85a82e1959b4dccfbe6bc40407d2f329>` pfUserMgrAddUser;
+
+- #define :ref:`EXT_UserMgrAddUser <group___cmp_user_mgr_itf_1ga96299307c04eeebf3cc09817f390db6a>` extern :ref:`PFUSERMGRADDUSER <group___cmp_user_mgr_itf_1ga85a82e1959b4dccfbe6bc40407d2f329>` pfUserMgrAddUser;
+
+- #define :ref:`GET_UserMgrAddUser <group___cmp_user_mgr_itf_1ga20e74e67ca70e9ab4916ffe8afdf41e6>` s_pfCMGetAPI2( "UserMgrAddUser", (RTS_VOID_FCTPTR *)&pfUserMgrAddUser, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrAddUser <group___cmp_user_mgr_itf_1gacc56a11c9eecc06e6d39ff5940e03a48>` pfUserMgrAddUser
+
+- #define :ref:`CHK_UserMgrAddUser <group___cmp_user_mgr_itf_1ga2921cdd7807f5ece5452163cfceb19d4>` (pfUserMgrAddUser != NULL)
+
+- #define :ref:`EXP_UserMgrAddUser <group___cmp_user_mgr_itf_1gaf42480367cf6a17b80c82de6fe08285e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrAddUser", (RTS_UINTPTR) :ref:`UserMgrAddUser <group___cmp_user_mgr_itf_1gafec4497aa2740d284a00768dd752a6a4>` , 0, 0)
+
+- #define :ref:`USE_UserMgrRemoveUser <group___cmp_user_mgr_itf_1ga69bf12bd4acdd36b255d51be72f0fb34>` :ref:`PFUSERMGRREMOVEUSER <group___cmp_user_mgr_itf_1ga38ab9bcf918724601fa30ec5dc40f259>` pfUserMgrRemoveUser;
+
+- #define :ref:`EXT_UserMgrRemoveUser <group___cmp_user_mgr_itf_1gac23fa71aae4ec92f141d0b7b654ef28d>` extern :ref:`PFUSERMGRREMOVEUSER <group___cmp_user_mgr_itf_1ga38ab9bcf918724601fa30ec5dc40f259>` pfUserMgrRemoveUser;
+
+- #define :ref:`GET_UserMgrRemoveUser <group___cmp_user_mgr_itf_1ga21204919559fc257bb02b47cada92e10>` s_pfCMGetAPI2( "UserMgrRemoveUser", (RTS_VOID_FCTPTR *)&pfUserMgrRemoveUser, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrRemoveUser <group___cmp_user_mgr_itf_1ga8039b2226331b8f3cc797f2601a0a97f>` pfUserMgrRemoveUser
+
+- #define :ref:`CHK_UserMgrRemoveUser <group___cmp_user_mgr_itf_1ga7be3262579b2dff13ea301092836e6a3>` (pfUserMgrRemoveUser != NULL)
+
+- #define :ref:`EXP_UserMgrRemoveUser <group___cmp_user_mgr_itf_1gac4f4d5d653d3db70c55730a90475820e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRemoveUser", (RTS_UINTPTR) :ref:`UserMgrRemoveUser <group___cmp_user_mgr_itf_1ga28ceaed6a75118deb6e5ff6d2ec1ad7a>` , 0, 0)
+
+- #define :ref:`USE_UserMgrAddGroup <group___cmp_user_mgr_itf_1gadafe9e1014d2e0d9c818ebac299ff546>` :ref:`PFUSERMGRADDGROUP <group___cmp_user_mgr_itf_1ga0db1e5288317be3abcd0da227ed06697>` pfUserMgrAddGroup;
+
+- #define :ref:`EXT_UserMgrAddGroup <group___cmp_user_mgr_itf_1ga3d1dafc73e51fd3f0f45adff11ce34a0>` extern :ref:`PFUSERMGRADDGROUP <group___cmp_user_mgr_itf_1ga0db1e5288317be3abcd0da227ed06697>` pfUserMgrAddGroup;
+
+- #define :ref:`GET_UserMgrAddGroup <group___cmp_user_mgr_itf_1ga566da56391896e8052a1b0c234db867e>` s_pfCMGetAPI2( "UserMgrAddGroup", (RTS_VOID_FCTPTR *)&pfUserMgrAddGroup, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrAddGroup <group___cmp_user_mgr_itf_1ga794f4f9492e17a0a99f6fed0fb06a286>` pfUserMgrAddGroup
+
+- #define :ref:`CHK_UserMgrAddGroup <group___cmp_user_mgr_itf_1gac29ebf04a8aa6f165895428020453a1e>` (pfUserMgrAddGroup != NULL)
+
+- #define :ref:`EXP_UserMgrAddGroup <group___cmp_user_mgr_itf_1ga20f7feb603810588c69a7b0ad56b67e8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrAddGroup", (RTS_UINTPTR) :ref:`UserMgrAddGroup <group___cmp_user_mgr_itf_1ga6abf7e85e50be2a72c3748f9d27a2358>` , 0, 0)
+
+- #define :ref:`USE_UserMgrRemoveGroup <group___cmp_user_mgr_itf_1ga21b4e2fb1d816b9d0ca50acf240dc529>` :ref:`PFUSERMGRREMOVEGROUP <group___cmp_user_mgr_itf_1ga0727761c52a013c6d2d5c34341a9812a>` pfUserMgrRemoveGroup;
+
+- #define :ref:`EXT_UserMgrRemoveGroup <group___cmp_user_mgr_itf_1gaa2428024464ea9ebc720443f589f3f71>` extern :ref:`PFUSERMGRREMOVEGROUP <group___cmp_user_mgr_itf_1ga0727761c52a013c6d2d5c34341a9812a>` pfUserMgrRemoveGroup;
+
+- #define :ref:`GET_UserMgrRemoveGroup <group___cmp_user_mgr_itf_1gad040543e31e942ac4a4824c30c019494>` s_pfCMGetAPI2( "UserMgrRemoveGroup", (RTS_VOID_FCTPTR *)&pfUserMgrRemoveGroup, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrRemoveGroup <group___cmp_user_mgr_itf_1ga20f61a13e9e15f34c83a3cdf7e5e4f48>` pfUserMgrRemoveGroup
+
+- #define :ref:`CHK_UserMgrRemoveGroup <group___cmp_user_mgr_itf_1ga435f68c531af01878bafb0b27a3d0f2b>` (pfUserMgrRemoveGroup != NULL)
+
+- #define :ref:`EXP_UserMgrRemoveGroup <group___cmp_user_mgr_itf_1gab8ff8d79da78d32f93cddfcfb2e946c0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRemoveGroup", (RTS_UINTPTR) :ref:`UserMgrRemoveGroup <group___cmp_user_mgr_itf_1ga0c3c31cb3c52bfe1d2ed24396c20ee19>` , 0, 0)
+
+- #define :ref:`USE_UserMgrGroupAddUser <group___cmp_user_mgr_itf_1gaf961e27dc6dca66ef9e5eac5b2b6a7f7>` :ref:`PFUSERMGRGROUPADDUSER <group___cmp_user_mgr_itf_1gaf7a6c490923881fc833568bfdbf02c71>` pfUserMgrGroupAddUser;
+
+- #define :ref:`EXT_UserMgrGroupAddUser <group___cmp_user_mgr_itf_1gad53e57d0d43262cc76991465692e54a0>` extern :ref:`PFUSERMGRGROUPADDUSER <group___cmp_user_mgr_itf_1gaf7a6c490923881fc833568bfdbf02c71>` pfUserMgrGroupAddUser;
+
+- #define :ref:`GET_UserMgrGroupAddUser <group___cmp_user_mgr_itf_1ga28f0215fc34e66c39715c45c68e319f4>` s_pfCMGetAPI2( "UserMgrGroupAddUser", (RTS_VOID_FCTPTR *)&pfUserMgrGroupAddUser, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrGroupAddUser <group___cmp_user_mgr_itf_1ga27ce513fa94b27b9afe67216be95b2fb>` pfUserMgrGroupAddUser
+
+- #define :ref:`CHK_UserMgrGroupAddUser <group___cmp_user_mgr_itf_1gac1d13877327c7d3e38fd21ca04e4ba72>` (pfUserMgrGroupAddUser != NULL)
+
+- #define :ref:`EXP_UserMgrGroupAddUser <group___cmp_user_mgr_itf_1gadf1f0e26bcf94ee1f24f08562a800747>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGroupAddUser", (RTS_UINTPTR) :ref:`UserMgrGroupAddUser <group___cmp_user_mgr_itf_1gaff280e3fadbebbcfcde915ea02ea4a6e>` , 0, 0)
+
+- #define :ref:`USE_UserMgrGroupRemoveUser <group___cmp_user_mgr_itf_1ga57f4f5537c3c9e99dc69221799082eba>` :ref:`PFUSERMGRGROUPREMOVEUSER <group___cmp_user_mgr_itf_1gaada7015268f55ee52806f3426bab3d2a>` pfUserMgrGroupRemoveUser;
+
+- #define :ref:`EXT_UserMgrGroupRemoveUser <group___cmp_user_mgr_itf_1ga71a9fd12797fe9ae7776ac1ebc1abcf2>` extern :ref:`PFUSERMGRGROUPREMOVEUSER <group___cmp_user_mgr_itf_1gaada7015268f55ee52806f3426bab3d2a>` pfUserMgrGroupRemoveUser;
+
+- #define :ref:`GET_UserMgrGroupRemoveUser <group___cmp_user_mgr_itf_1ga9318dbc2e0f52ce390653ff49a8f56da>` s_pfCMGetAPI2( "UserMgrGroupRemoveUser", (RTS_VOID_FCTPTR *)&pfUserMgrGroupRemoveUser, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrGroupRemoveUser <group___cmp_user_mgr_itf_1gaa2bde75d5410d35f84baaa9be65b522f>` pfUserMgrGroupRemoveUser
+
+- #define :ref:`CHK_UserMgrGroupRemoveUser <group___cmp_user_mgr_itf_1ga4ffdf71ce77fdf212c70c112eb808000>` (pfUserMgrGroupRemoveUser != NULL)
+
+- #define :ref:`EXP_UserMgrGroupRemoveUser <group___cmp_user_mgr_itf_1ga8f325eaefdb8c03b6413c1b1880c5cfb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrGroupRemoveUser", (RTS_UINTPTR) :ref:`UserMgrGroupRemoveUser <group___cmp_user_mgr_itf_1gacf63e71bd7807bf03477a0e54958ef0d>` , 0, 0)
+
+- #define :ref:`USE_UserMgrAddOnlineAccessError <group___cmp_user_mgr_itf_1ga7508de7b81339f497cd0f0c73f1cb28d>` :ref:`PFUSERMGRADDONLINEACCESSERROR <group___cmp_user_mgr_itf_1gaa888857784005f982c84aaa39dbb9c12>` pfUserMgrAddOnlineAccessError;
+
+- #define :ref:`EXT_UserMgrAddOnlineAccessError <group___cmp_user_mgr_itf_1ga8ba24adaf0c15a46e729001c1b7cc192>` extern :ref:`PFUSERMGRADDONLINEACCESSERROR <group___cmp_user_mgr_itf_1gaa888857784005f982c84aaa39dbb9c12>` pfUserMgrAddOnlineAccessError;
+
+- #define :ref:`GET_UserMgrAddOnlineAccessError <group___cmp_user_mgr_itf_1ga305b18feaf6bc753c9ccaf1096b0963d>` s_pfCMGetAPI2( "UserMgrAddOnlineAccessError", (RTS_VOID_FCTPTR *)&pfUserMgrAddOnlineAccessError, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrAddOnlineAccessError <group___cmp_user_mgr_itf_1gae0002039dbd67d48785897cef521fdaf>` pfUserMgrAddOnlineAccessError
+
+- #define :ref:`CHK_UserMgrAddOnlineAccessError <group___cmp_user_mgr_itf_1ga2e67d361afd7b596e34b1f39f7ea4fc6>` (pfUserMgrAddOnlineAccessError != NULL)
+
+- #define :ref:`EXP_UserMgrAddOnlineAccessError <group___cmp_user_mgr_itf_1ga610a77046e2570f7dc2f6fb90b6c91f3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrAddOnlineAccessError", (RTS_UINTPTR) :ref:`UserMgrAddOnlineAccessError <group___cmp_user_mgr_itf_1gaddf08a12aea358635a4a9457681a7eaa>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectAdd <group___cmp_user_mgr_itf_1ga1ac108b68bc44f77f2c9b4b03a7af699>` :ref:`PFUSERMGROBJECTADD <group___cmp_user_mgr_itf_1ga707f78f3b36b77f2f34af94e1f0e8058>` pfUserMgrObjectAdd;
+
+- #define :ref:`EXT_UserMgrObjectAdd <group___cmp_user_mgr_itf_1gacb9fd1d5e2548e953a3f70bc3fa7baf7>` extern :ref:`PFUSERMGROBJECTADD <group___cmp_user_mgr_itf_1ga707f78f3b36b77f2f34af94e1f0e8058>` pfUserMgrObjectAdd;
+
+- #define :ref:`GET_UserMgrObjectAdd <group___cmp_user_mgr_itf_1ga080b632add7bd833b71e151fe0891eda>` s_pfCMGetAPI2( "UserMgrObjectAdd", (RTS_VOID_FCTPTR *)&pfUserMgrObjectAdd, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectAdd <group___cmp_user_mgr_itf_1gaf6fae3fca5c8b6a5f3f07750da1964d6>` pfUserMgrObjectAdd
+
+- #define :ref:`CHK_UserMgrObjectAdd <group___cmp_user_mgr_itf_1ga84c6bf096119e34cf597e1a054cf0407>` (pfUserMgrObjectAdd != NULL)
+
+- #define :ref:`EXP_UserMgrObjectAdd <group___cmp_user_mgr_itf_1gaf6c395a3ca19305772929c33be6de1e1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectAdd", (RTS_UINTPTR) :ref:`UserMgrObjectAdd <group___cmp_user_mgr_itf_1gaa021567cec09ab6cc29943be279b432e>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectRemove <group___cmp_user_mgr_itf_1gaa1ff6afc1c0ef349bad93562e0a8a976>` :ref:`PFUSERMGROBJECTREMOVE <group___cmp_user_mgr_itf_1ga17683e2baf02af40ef3638e05a5dfe75>` pfUserMgrObjectRemove;
+
+- #define :ref:`EXT_UserMgrObjectRemove <group___cmp_user_mgr_itf_1ga5dc90793d64ecbc052b7b359498d3da3>` extern :ref:`PFUSERMGROBJECTREMOVE <group___cmp_user_mgr_itf_1ga17683e2baf02af40ef3638e05a5dfe75>` pfUserMgrObjectRemove;
+
+- #define :ref:`GET_UserMgrObjectRemove <group___cmp_user_mgr_itf_1gab47ce25df3e36477e3ae02dae4a32960>` s_pfCMGetAPI2( "UserMgrObjectRemove", (RTS_VOID_FCTPTR *)&pfUserMgrObjectRemove, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectRemove <group___cmp_user_mgr_itf_1gaa978a0350ddb713171c22e2a671d3d05>` pfUserMgrObjectRemove
+
+- #define :ref:`CHK_UserMgrObjectRemove <group___cmp_user_mgr_itf_1ga65da24716e1e9819cba05d2c62af73d1>` (pfUserMgrObjectRemove != NULL)
+
+- #define :ref:`EXP_UserMgrObjectRemove <group___cmp_user_mgr_itf_1gaf3b1a322bc61e58ff83e609d7e8ce9ae>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectRemove", (RTS_UINTPTR) :ref:`UserMgrObjectRemove <group___cmp_user_mgr_itf_1ga363c3413dc5373024db05ce129bd3eb1>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectAddChild <group___cmp_user_mgr_itf_1ga5f963f6a28d0759f10f724eb06be6bf1>` :ref:`PFUSERMGROBJECTADDCHILD <group___cmp_user_mgr_itf_1gaf35639d5f5c21ed12dd7b22f8c00e95c>` pfUserMgrObjectAddChild;
+
+- #define :ref:`EXT_UserMgrObjectAddChild <group___cmp_user_mgr_itf_1gae08a39e177b14661f4caa2e672e1a7dc>` extern :ref:`PFUSERMGROBJECTADDCHILD <group___cmp_user_mgr_itf_1gaf35639d5f5c21ed12dd7b22f8c00e95c>` pfUserMgrObjectAddChild;
+
+- #define :ref:`GET_UserMgrObjectAddChild <group___cmp_user_mgr_itf_1ga92dec0ed20353231315ab1c7e32b33c2>` s_pfCMGetAPI2( "UserMgrObjectAddChild", (RTS_VOID_FCTPTR *)&pfUserMgrObjectAddChild, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectAddChild <group___cmp_user_mgr_itf_1gad8cc21849e13df9b6a37d1a808f015c7>` pfUserMgrObjectAddChild
+
+- #define :ref:`CHK_UserMgrObjectAddChild <group___cmp_user_mgr_itf_1ga74a4f56a13dcb9b535c18b4bc6ceae71>` (pfUserMgrObjectAddChild != NULL)
+
+- #define :ref:`EXP_UserMgrObjectAddChild <group___cmp_user_mgr_itf_1ga926afe331656fdd487a18a75c3fbdf3d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectAddChild", (RTS_UINTPTR) :ref:`UserMgrObjectAddChild <group___cmp_user_mgr_itf_1gaa1aec550d16f1101c2f0d5a556da640b>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectSetUsedRights <group___cmp_user_mgr_itf_1ga6ae4e2bb8294d71accd8cdd848d496f2>` :ref:`PFUSERMGROBJECTSETUSEDRIGHTS <group___cmp_user_mgr_itf_1gad31201da9f299783d44a260d6879795c>` pfUserMgrObjectSetUsedRights;
+
+- #define :ref:`EXT_UserMgrObjectSetUsedRights <group___cmp_user_mgr_itf_1gaf42611c9107811ca86f882d6d2b88d98>` extern :ref:`PFUSERMGROBJECTSETUSEDRIGHTS <group___cmp_user_mgr_itf_1gad31201da9f299783d44a260d6879795c>` pfUserMgrObjectSetUsedRights;
+
+- #define :ref:`GET_UserMgrObjectSetUsedRights <group___cmp_user_mgr_itf_1ga98d6599f63024778389c1c56c55ac36d>` s_pfCMGetAPI2( "UserMgrObjectSetUsedRights", (RTS_VOID_FCTPTR *)&pfUserMgrObjectSetUsedRights, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectSetUsedRights <group___cmp_user_mgr_itf_1ga3fc6237c616b4e9cd2ab4f1557338b67>` pfUserMgrObjectSetUsedRights
+
+- #define :ref:`CHK_UserMgrObjectSetUsedRights <group___cmp_user_mgr_itf_1ga722dbb076fbc2b78cdf3fdfe419d4253>` (pfUserMgrObjectSetUsedRights != NULL)
+
+- #define :ref:`EXP_UserMgrObjectSetUsedRights <group___cmp_user_mgr_itf_1gabc2f39dfcadc54448a53d2f144aec05c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectSetUsedRights", (RTS_UINTPTR) :ref:`UserMgrObjectSetUsedRights <group___cmp_user_mgr_itf_1ga1b6be0047e6d248e2004b175617ccbe1>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectGetUsedRights <group___cmp_user_mgr_itf_1ga38b3158cc191885d1fcc14c7d58fef6d>` :ref:`PFUSERMGROBJECTGETUSEDRIGHTS <group___cmp_user_mgr_itf_1gaea5456a2411c5c7a563acdb338a8cd9b>` pfUserMgrObjectGetUsedRights;
+
+- #define :ref:`EXT_UserMgrObjectGetUsedRights <group___cmp_user_mgr_itf_1ga5e22107ec2af1dc36a93b78f33d8c972>` extern :ref:`PFUSERMGROBJECTGETUSEDRIGHTS <group___cmp_user_mgr_itf_1gaea5456a2411c5c7a563acdb338a8cd9b>` pfUserMgrObjectGetUsedRights;
+
+- #define :ref:`GET_UserMgrObjectGetUsedRights <group___cmp_user_mgr_itf_1ga85d41ce7782c2e6bb68dbdc56e8c0083>` s_pfCMGetAPI2( "UserMgrObjectGetUsedRights", (RTS_VOID_FCTPTR *)&pfUserMgrObjectGetUsedRights, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectGetUsedRights <group___cmp_user_mgr_itf_1gab8aec4f21590169d3bc879de31add49b>` pfUserMgrObjectGetUsedRights
+
+- #define :ref:`CHK_UserMgrObjectGetUsedRights <group___cmp_user_mgr_itf_1ga2aec937e7d2c33b8bbdfd15c609ca691>` (pfUserMgrObjectGetUsedRights != NULL)
+
+- #define :ref:`EXP_UserMgrObjectGetUsedRights <group___cmp_user_mgr_itf_1gad933308c219a8ddfcbee61474ad0eaec>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetUsedRights", (RTS_UINTPTR) :ref:`UserMgrObjectGetUsedRights <group___cmp_user_mgr_itf_1gae57cc6e510589eb43c49d6787185e716>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectOpen <group___cmp_user_mgr_itf_1ga29a108944ca1fb5f164f6a3dd04a1a50>` :ref:`PFUSERMGROBJECTOPEN <group___cmp_user_mgr_itf_1gaef31e4b0a9729d1b4dbeaa8ed6009327>` pfUserMgrObjectOpen;
+
+- #define :ref:`EXT_UserMgrObjectOpen <group___cmp_user_mgr_itf_1ga3e088a0651675ebfe72552138b16456b>` extern :ref:`PFUSERMGROBJECTOPEN <group___cmp_user_mgr_itf_1gaef31e4b0a9729d1b4dbeaa8ed6009327>` pfUserMgrObjectOpen;
+
+- #define :ref:`GET_UserMgrObjectOpen <group___cmp_user_mgr_itf_1ga3def304bb4fd2970cd4741304b224855>` s_pfCMGetAPI2( "UserMgrObjectOpen", (RTS_VOID_FCTPTR *)&pfUserMgrObjectOpen, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectOpen <group___cmp_user_mgr_itf_1ga65613e000c1b0aec607aff93b3ae8c86>` pfUserMgrObjectOpen
+
+- #define :ref:`CHK_UserMgrObjectOpen <group___cmp_user_mgr_itf_1ga913661df3071e5293fef3efa9e69842c>` (pfUserMgrObjectOpen != NULL)
+
+- #define :ref:`EXP_UserMgrObjectOpen <group___cmp_user_mgr_itf_1ga9ee4d2c40b3ee26ed6fee9bdca091b81>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectOpen", (RTS_UINTPTR) :ref:`UserMgrObjectOpen <group___cmp_user_mgr_itf_1gac80d1200c4e35fa00cfda3d214216209>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectOpen2 <group___cmp_user_mgr_itf_1gaf1d29c2186640187f2a7354a6aadf8e6>` :ref:`PFUSERMGROBJECTOPEN2 <group___cmp_user_mgr_itf_1ga5fa97c68fbd90cc95f4f331192d0eaf0>` pfUserMgrObjectOpen2;
+
+- #define :ref:`EXT_UserMgrObjectOpen2 <group___cmp_user_mgr_itf_1ga6eaf6b989a7464ba837110a82bebf74f>` extern :ref:`PFUSERMGROBJECTOPEN2 <group___cmp_user_mgr_itf_1ga5fa97c68fbd90cc95f4f331192d0eaf0>` pfUserMgrObjectOpen2;
+
+- #define :ref:`GET_UserMgrObjectOpen2 <group___cmp_user_mgr_itf_1ga47c3952a9fa2f0cd34acc8ab4e8c0e87>` s_pfCMGetAPI2( "UserMgrObjectOpen2", (RTS_VOID_FCTPTR *)&pfUserMgrObjectOpen2, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectOpen2 <group___cmp_user_mgr_itf_1gaffd1a719da56760cb3de3e4ebccc79aa>` pfUserMgrObjectOpen2
+
+- #define :ref:`CHK_UserMgrObjectOpen2 <group___cmp_user_mgr_itf_1ga133caa080bae0434e6beacb9c67bacaf>` (pfUserMgrObjectOpen2 != NULL)
+
+- #define :ref:`EXP_UserMgrObjectOpen2 <group___cmp_user_mgr_itf_1gab0a1104e54843a054cb4f9ecb4849b06>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectOpen2", (RTS_UINTPTR) :ref:`UserMgrObjectOpen2 <group___cmp_user_mgr_itf_1ga53c3ea3e0dfae31bd085371b11caa6d5>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectClose <group___cmp_user_mgr_itf_1ga5e91ade7d02966b69e23a62bd392472d>` :ref:`PFUSERMGROBJECTCLOSE <group___cmp_user_mgr_itf_1gaa367dd8bc732b6faa8f02a71234b5c3d>` pfUserMgrObjectClose;
+
+- #define :ref:`EXT_UserMgrObjectClose <group___cmp_user_mgr_itf_1gadc19b792c5d08b3d4f4838fbf999554b>` extern :ref:`PFUSERMGROBJECTCLOSE <group___cmp_user_mgr_itf_1gaa367dd8bc732b6faa8f02a71234b5c3d>` pfUserMgrObjectClose;
+
+- #define :ref:`GET_UserMgrObjectClose <group___cmp_user_mgr_itf_1ga77f5c668a1040d1553043ccb0c9328a2>` s_pfCMGetAPI2( "UserMgrObjectClose", (RTS_VOID_FCTPTR *)&pfUserMgrObjectClose, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectClose <group___cmp_user_mgr_itf_1ga9034a7aefcae1e438a819d33a7c1ce2e>` pfUserMgrObjectClose
+
+- #define :ref:`CHK_UserMgrObjectClose <group___cmp_user_mgr_itf_1gab4ec3ca025c6805e27963a06eadee741>` (pfUserMgrObjectClose != NULL)
+
+- #define :ref:`EXP_UserMgrObjectClose <group___cmp_user_mgr_itf_1ga4c92146c4f0743131b4addcd40c3d0a3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectClose", (RTS_UINTPTR) :ref:`UserMgrObjectClose <group___cmp_user_mgr_itf_1ga183f82c9a2d5b08929bd5538ee6cc83c>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectAdd2 <group___cmp_user_mgr_itf_1ga36d7f1cf716d4656d8033cc7ee98399e>` :ref:`PFUSERMGROBJECTADD2 <group___cmp_user_mgr_itf_1ga0a41fd7ebba9355e3d753ae7257d63d1>` pfUserMgrObjectAdd2;
+
+- #define :ref:`EXT_UserMgrObjectAdd2 <group___cmp_user_mgr_itf_1ga912728596755a6580506dda008ab12ea>` extern :ref:`PFUSERMGROBJECTADD2 <group___cmp_user_mgr_itf_1ga0a41fd7ebba9355e3d753ae7257d63d1>` pfUserMgrObjectAdd2;
+
+- #define :ref:`GET_UserMgrObjectAdd2 <group___cmp_user_mgr_itf_1gac86f0b04d3304b37e18bf0e754016fed>` s_pfCMGetAPI2( "UserMgrObjectAdd2", (RTS_VOID_FCTPTR *)&pfUserMgrObjectAdd2, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectAdd2 <group___cmp_user_mgr_itf_1ga0a6c1a5fd1f9298a9cf7886d35ddef4b>` pfUserMgrObjectAdd2
+
+- #define :ref:`CHK_UserMgrObjectAdd2 <group___cmp_user_mgr_itf_1ga5a6d7123ba86b7765ba8dca8f8fdb2ff>` (pfUserMgrObjectAdd2 != NULL)
+
+- #define :ref:`EXP_UserMgrObjectAdd2 <group___cmp_user_mgr_itf_1gaccc5ea15a1aa0500ad7351df34d85a34>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectAdd2", (RTS_UINTPTR) :ref:`UserMgrObjectAdd2 <group___cmp_user_mgr_itf_1gaba4fc705d942645e49a171ca60a61cad>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectAddGroup <group___cmp_user_mgr_itf_1gae0933d75ea368c844d22d25c4136ee96>` :ref:`PFUSERMGROBJECTADDGROUP <group___cmp_user_mgr_itf_1ga4aa12f63cf7843746b7dcf47693319a6>` pfUserMgrObjectAddGroup;
+
+- #define :ref:`EXT_UserMgrObjectAddGroup <group___cmp_user_mgr_itf_1ga41cd06a5a8125ce76eb04779427ca3e0>` extern :ref:`PFUSERMGROBJECTADDGROUP <group___cmp_user_mgr_itf_1ga4aa12f63cf7843746b7dcf47693319a6>` pfUserMgrObjectAddGroup;
+
+- #define :ref:`GET_UserMgrObjectAddGroup <group___cmp_user_mgr_itf_1ga02b54d0755fe8b390e56071327f7ebe9>` s_pfCMGetAPI2( "UserMgrObjectAddGroup", (RTS_VOID_FCTPTR *)&pfUserMgrObjectAddGroup, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectAddGroup <group___cmp_user_mgr_itf_1gab4c1bc4ddfd749fb0383432e2d13fed2>` pfUserMgrObjectAddGroup
+
+- #define :ref:`CHK_UserMgrObjectAddGroup <group___cmp_user_mgr_itf_1ga7f8a43bf2c686020ab460100eaf79da0>` (pfUserMgrObjectAddGroup != NULL)
+
+- #define :ref:`EXP_UserMgrObjectAddGroup <group___cmp_user_mgr_itf_1gaa828238dc8a5def880cb563ca7948a3f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectAddGroup", (RTS_UINTPTR) :ref:`UserMgrObjectAddGroup <group___cmp_user_mgr_itf_1ga09ac2ba2fbe253e1e712e7b1db1f3c77>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectRemoveGroup <group___cmp_user_mgr_itf_1ga9397b7391ca5b4d1d3b26c9f3219b341>` :ref:`PFUSERMGROBJECTREMOVEGROUP <group___cmp_user_mgr_itf_1ga1ee9f1c1214028b5d967746e8ddc9228>` pfUserMgrObjectRemoveGroup;
+
+- #define :ref:`EXT_UserMgrObjectRemoveGroup <group___cmp_user_mgr_itf_1gae4970a8b59ceea86540314f4a3e90214>` extern :ref:`PFUSERMGROBJECTREMOVEGROUP <group___cmp_user_mgr_itf_1ga1ee9f1c1214028b5d967746e8ddc9228>` pfUserMgrObjectRemoveGroup;
+
+- #define :ref:`GET_UserMgrObjectRemoveGroup <group___cmp_user_mgr_itf_1gacb8a7732488cb64912c26f15ead3ae0d>` s_pfCMGetAPI2( "UserMgrObjectRemoveGroup", (RTS_VOID_FCTPTR *)&pfUserMgrObjectRemoveGroup, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectRemoveGroup <group___cmp_user_mgr_itf_1ga47dd25daa8184c9bbc0997ba3e251bb6>` pfUserMgrObjectRemoveGroup
+
+- #define :ref:`CHK_UserMgrObjectRemoveGroup <group___cmp_user_mgr_itf_1ga3d62a33883afd38468a9d3a8e53204f2>` (pfUserMgrObjectRemoveGroup != NULL)
+
+- #define :ref:`EXP_UserMgrObjectRemoveGroup <group___cmp_user_mgr_itf_1ga0ee507abdd31418b177263ba99770f67>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectRemoveGroup", (RTS_UINTPTR) :ref:`UserMgrObjectRemoveGroup <group___cmp_user_mgr_itf_1gaa386db71764c6fe3354effaf7adcb844>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectSetGroupRights <group___cmp_user_mgr_itf_1ga442904cd0deb4caec3bb09fe0666a4bf>` :ref:`PFUSERMGROBJECTSETGROUPRIGHTS <group___cmp_user_mgr_itf_1ga6fa4b86de1a5d66a7af2c1569f2100d0>` pfUserMgrObjectSetGroupRights;
+
+- #define :ref:`EXT_UserMgrObjectSetGroupRights <group___cmp_user_mgr_itf_1ga40327949c8d51b0a2ea2f336b32fb06f>` extern :ref:`PFUSERMGROBJECTSETGROUPRIGHTS <group___cmp_user_mgr_itf_1ga6fa4b86de1a5d66a7af2c1569f2100d0>` pfUserMgrObjectSetGroupRights;
+
+- #define :ref:`GET_UserMgrObjectSetGroupRights <group___cmp_user_mgr_itf_1ga88a6664a5510f1c4d94e4c4e4e308901>` s_pfCMGetAPI2( "UserMgrObjectSetGroupRights", (RTS_VOID_FCTPTR *)&pfUserMgrObjectSetGroupRights, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectSetGroupRights <group___cmp_user_mgr_itf_1gadcb7d5ddc235fab9f4f572a2cdc443fe>` pfUserMgrObjectSetGroupRights
+
+- #define :ref:`CHK_UserMgrObjectSetGroupRights <group___cmp_user_mgr_itf_1gad5d4cb33a2b53e94646ac5d22d3e03fe>` (pfUserMgrObjectSetGroupRights != NULL)
+
+- #define :ref:`EXP_UserMgrObjectSetGroupRights <group___cmp_user_mgr_itf_1gaae701e6255f2f7c61ce17aa6e8706fe7>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectSetGroupRights", (RTS_UINTPTR) :ref:`UserMgrObjectSetGroupRights <group___cmp_user_mgr_itf_1gaaf0604137efa7aae5a65a37b32f5d494>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectSetGroupDeniedRights <group___cmp_user_mgr_itf_1ga63dab54728ff2a08870004c8eaf512e8>` :ref:`PFUSERMGROBJECTSETGROUPDENIEDRIGHTS <group___cmp_user_mgr_itf_1ga276df04e29a654542291a95c91ec12c2>` pfUserMgrObjectSetGroupDeniedRights;
+
+- #define :ref:`EXT_UserMgrObjectSetGroupDeniedRights <group___cmp_user_mgr_itf_1ga2a8d2d6ccd10b7dccc97717aa29460bc>` extern :ref:`PFUSERMGROBJECTSETGROUPDENIEDRIGHTS <group___cmp_user_mgr_itf_1ga276df04e29a654542291a95c91ec12c2>` pfUserMgrObjectSetGroupDeniedRights;
+
+- #define :ref:`GET_UserMgrObjectSetGroupDeniedRights <group___cmp_user_mgr_itf_1gad7c267048c15f915fd1de47dd8e1ddcb>` s_pfCMGetAPI2( "UserMgrObjectSetGroupDeniedRights", (RTS_VOID_FCTPTR *)&pfUserMgrObjectSetGroupDeniedRights, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectSetGroupDeniedRights <group___cmp_user_mgr_itf_1ga286260fe6d44bc7ffa256dfcd1d19276>` pfUserMgrObjectSetGroupDeniedRights
+
+- #define :ref:`CHK_UserMgrObjectSetGroupDeniedRights <group___cmp_user_mgr_itf_1ga6e8e7d7b23d7a4a3779c5b1f0e632873>` (pfUserMgrObjectSetGroupDeniedRights != NULL)
+
+- #define :ref:`EXP_UserMgrObjectSetGroupDeniedRights <group___cmp_user_mgr_itf_1ga55aac310b2b96dd450cb5744dbdb4b47>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectSetGroupDeniedRights", (RTS_UINTPTR) :ref:`UserMgrObjectSetGroupDeniedRights <group___cmp_user_mgr_itf_1gae11333651aa6cfac90e5633daaae7b11>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectClearRights <group___cmp_user_mgr_itf_1ga8f8d030c67c3fe9d9b2379518cd3313c>` :ref:`PFUSERMGROBJECTCLEARRIGHTS <group___cmp_user_mgr_itf_1gaa31b221ae65b1c82ff3539753ba0c0e1>` pfUserMgrObjectClearRights;
+
+- #define :ref:`EXT_UserMgrObjectClearRights <group___cmp_user_mgr_itf_1ga4148d9b38f266f76428721e61fd9014c>` extern :ref:`PFUSERMGROBJECTCLEARRIGHTS <group___cmp_user_mgr_itf_1gaa31b221ae65b1c82ff3539753ba0c0e1>` pfUserMgrObjectClearRights;
+
+- #define :ref:`GET_UserMgrObjectClearRights <group___cmp_user_mgr_itf_1gaa5cd8c04db868237dc1552e12916bf2d>` s_pfCMGetAPI2( "UserMgrObjectClearRights", (RTS_VOID_FCTPTR *)&pfUserMgrObjectClearRights, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectClearRights <group___cmp_user_mgr_itf_1gae1784835873f30c3b53ad378c64f152c>` pfUserMgrObjectClearRights
+
+- #define :ref:`CHK_UserMgrObjectClearRights <group___cmp_user_mgr_itf_1ga0acab5b5c2b9df27a9787d7bbbd9b427>` (pfUserMgrObjectClearRights != NULL)
+
+- #define :ref:`EXP_UserMgrObjectClearRights <group___cmp_user_mgr_itf_1gaffba9f96fea76ad61cc0ff9a13b42c0b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectClearRights", (RTS_UINTPTR) :ref:`UserMgrObjectClearRights <group___cmp_user_mgr_itf_1ga99c5017c1ee92cf938b620eb0d24782c>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectGetName <group___cmp_user_mgr_itf_1ga91974f40b91683175c61028a3be00096>` :ref:`PFUSERMGROBJECTGETNAME <group___cmp_user_mgr_itf_1ga64bb8fe2ef69026d92edba313b159351>` pfUserMgrObjectGetName;
+
+- #define :ref:`EXT_UserMgrObjectGetName <group___cmp_user_mgr_itf_1ga11f5235773d3ff5cb7cdda0b758cc302>` extern :ref:`PFUSERMGROBJECTGETNAME <group___cmp_user_mgr_itf_1ga64bb8fe2ef69026d92edba313b159351>` pfUserMgrObjectGetName;
+
+- #define :ref:`GET_UserMgrObjectGetName <group___cmp_user_mgr_itf_1gafd9a67626e3714d1e9b2a9176f98d5e0>` s_pfCMGetAPI2( "UserMgrObjectGetName", (RTS_VOID_FCTPTR *)&pfUserMgrObjectGetName, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectGetName <group___cmp_user_mgr_itf_1ga77bd8937d2279cdf63b908e5994490d7>` pfUserMgrObjectGetName
+
+- #define :ref:`CHK_UserMgrObjectGetName <group___cmp_user_mgr_itf_1ga3d9837624a99ccce1be45ee7f83f400a>` (pfUserMgrObjectGetName != NULL)
+
+- #define :ref:`EXP_UserMgrObjectGetName <group___cmp_user_mgr_itf_1ga6753c136b41ea5376151d4eb4dd2a7dc>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetName", (RTS_UINTPTR) :ref:`UserMgrObjectGetName <group___cmp_user_mgr_itf_1ga64063b0503930213202147ab98b7c028>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectGetFirstChild <group___cmp_user_mgr_itf_1gab8a463206cfb4da3cbdecd55bde0aab8>` :ref:`PFUSERMGROBJECTGETFIRSTCHILD <group___cmp_user_mgr_itf_1ga02d0d8c4feead5abc8623e96d7d8696e>` pfUserMgrObjectGetFirstChild;
+
+- #define :ref:`EXT_UserMgrObjectGetFirstChild <group___cmp_user_mgr_itf_1ga8508adc695ba8505eb1bd243227a3b1a>` extern :ref:`PFUSERMGROBJECTGETFIRSTCHILD <group___cmp_user_mgr_itf_1ga02d0d8c4feead5abc8623e96d7d8696e>` pfUserMgrObjectGetFirstChild;
+
+- #define :ref:`GET_UserMgrObjectGetFirstChild <group___cmp_user_mgr_itf_1gad7cad7741c81fcb0c20b0f162ef8bb04>` s_pfCMGetAPI2( "UserMgrObjectGetFirstChild", (RTS_VOID_FCTPTR *)&pfUserMgrObjectGetFirstChild, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectGetFirstChild <group___cmp_user_mgr_itf_1ga8dfc94fa63c73d24d846c08b8f6837eb>` pfUserMgrObjectGetFirstChild
+
+- #define :ref:`CHK_UserMgrObjectGetFirstChild <group___cmp_user_mgr_itf_1gaf5c9bc240dcb64b7cc6cfb4ea0bdd177>` (pfUserMgrObjectGetFirstChild != NULL)
+
+- #define :ref:`EXP_UserMgrObjectGetFirstChild <group___cmp_user_mgr_itf_1gabe7ab1da26be6c0518e9e3bbe682e6d8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetFirstChild", (RTS_UINTPTR) :ref:`UserMgrObjectGetFirstChild <group___cmp_user_mgr_itf_1gab962262ed21bab6068b417b9976fe4cf>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectGetNextChild <group___cmp_user_mgr_itf_1ga4ebc669505d92e40839a38d5f433fe38>` :ref:`PFUSERMGROBJECTGETNEXTCHILD <group___cmp_user_mgr_itf_1gac68d6e2eeab0501529d7f24b0ebde202>` pfUserMgrObjectGetNextChild;
+
+- #define :ref:`EXT_UserMgrObjectGetNextChild <group___cmp_user_mgr_itf_1ga764e715d57945e60e3c82cb83010570f>` extern :ref:`PFUSERMGROBJECTGETNEXTCHILD <group___cmp_user_mgr_itf_1gac68d6e2eeab0501529d7f24b0ebde202>` pfUserMgrObjectGetNextChild;
+
+- #define :ref:`GET_UserMgrObjectGetNextChild <group___cmp_user_mgr_itf_1ga7ad2c45b6ad3582b2ccde6e41389707a>` s_pfCMGetAPI2( "UserMgrObjectGetNextChild", (RTS_VOID_FCTPTR *)&pfUserMgrObjectGetNextChild, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectGetNextChild <group___cmp_user_mgr_itf_1gadc0347ef628826130c3237270cff0009>` pfUserMgrObjectGetNextChild
+
+- #define :ref:`CHK_UserMgrObjectGetNextChild <group___cmp_user_mgr_itf_1gaf30b0b5dbcc826a0710096f5a31ec01b>` (pfUserMgrObjectGetNextChild != NULL)
+
+- #define :ref:`EXP_UserMgrObjectGetNextChild <group___cmp_user_mgr_itf_1ga4c5430dba4f9e29ad05962c3ddffc64d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetNextChild", (RTS_UINTPTR) :ref:`UserMgrObjectGetNextChild <group___cmp_user_mgr_itf_1gaaafb1dbf77f43c19f77389b7d1348e64>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectGetFirstGroup <group___cmp_user_mgr_itf_1ga143570909df5d6da37ea8520b65d83d8>` :ref:`PFUSERMGROBJECTGETFIRSTGROUP <group___cmp_user_mgr_itf_1gabaef578d2e656182a0fb78bdc20eece5>` pfUserMgrObjectGetFirstGroup;
+
+- #define :ref:`EXT_UserMgrObjectGetFirstGroup <group___cmp_user_mgr_itf_1ga68920fff99f5e31367ba8ecb6a4831e3>` extern :ref:`PFUSERMGROBJECTGETFIRSTGROUP <group___cmp_user_mgr_itf_1gabaef578d2e656182a0fb78bdc20eece5>` pfUserMgrObjectGetFirstGroup;
+
+- #define :ref:`GET_UserMgrObjectGetFirstGroup <group___cmp_user_mgr_itf_1ga6dc9c2f6474b38c0a1a6bd4fc62f02bc>` s_pfCMGetAPI2( "UserMgrObjectGetFirstGroup", (RTS_VOID_FCTPTR *)&pfUserMgrObjectGetFirstGroup, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectGetFirstGroup <group___cmp_user_mgr_itf_1ga5e709117cbddc6c2ee7faa394d62224b>` pfUserMgrObjectGetFirstGroup
+
+- #define :ref:`CHK_UserMgrObjectGetFirstGroup <group___cmp_user_mgr_itf_1ga8377e4d05bc7c5c0be98ae9f875dac5b>` (pfUserMgrObjectGetFirstGroup != NULL)
+
+- #define :ref:`EXP_UserMgrObjectGetFirstGroup <group___cmp_user_mgr_itf_1ga45fa2718aca1ae29208a4907d622382e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetFirstGroup", (RTS_UINTPTR) :ref:`UserMgrObjectGetFirstGroup <group___cmp_user_mgr_itf_1ga978419a8203cb33b4a3ccf9270ef0caa>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectGetNextGroup <group___cmp_user_mgr_itf_1ga8f920dd542d584fbd8e134af3beb2960>` :ref:`PFUSERMGROBJECTGETNEXTGROUP <group___cmp_user_mgr_itf_1ga94b079198c1702b1d6c7822f07881a9d>` pfUserMgrObjectGetNextGroup;
+
+- #define :ref:`EXT_UserMgrObjectGetNextGroup <group___cmp_user_mgr_itf_1ga70c276bcd7de2c7091da23c53edd1156>` extern :ref:`PFUSERMGROBJECTGETNEXTGROUP <group___cmp_user_mgr_itf_1ga94b079198c1702b1d6c7822f07881a9d>` pfUserMgrObjectGetNextGroup;
+
+- #define :ref:`GET_UserMgrObjectGetNextGroup <group___cmp_user_mgr_itf_1ga4e3a54d444fe796bad53cdd9f8b1853d>` s_pfCMGetAPI2( "UserMgrObjectGetNextGroup", (RTS_VOID_FCTPTR *)&pfUserMgrObjectGetNextGroup, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectGetNextGroup <group___cmp_user_mgr_itf_1ga3634b0270e9016f6c4dee2a92f1ffe64>` pfUserMgrObjectGetNextGroup
+
+- #define :ref:`CHK_UserMgrObjectGetNextGroup <group___cmp_user_mgr_itf_1ga1f1d0acfb4077bf966a873ebc6133876>` (pfUserMgrObjectGetNextGroup != NULL)
+
+- #define :ref:`EXP_UserMgrObjectGetNextGroup <group___cmp_user_mgr_itf_1ga063b663cfb06b0f4acc19ebcef1bdea9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetNextGroup", (RTS_UINTPTR) :ref:`UserMgrObjectGetNextGroup <group___cmp_user_mgr_itf_1ga2c65719cdb25ec06114024a627858381>` , 0, 0)
+
+- #define :ref:`USE_UserMgrObjectGetGroupRights <group___cmp_user_mgr_itf_1gac9fdd45971801dba88ab2614911157a9>` :ref:`PFUSERMGROBJECTGETGROUPRIGHTS <group___cmp_user_mgr_itf_1gab0bd7362c7c856e954b34bd5f0aac4c2>` pfUserMgrObjectGetGroupRights;
+
+- #define :ref:`EXT_UserMgrObjectGetGroupRights <group___cmp_user_mgr_itf_1gac8ea48058f51d63492b5ccd7b7af0e3f>` extern :ref:`PFUSERMGROBJECTGETGROUPRIGHTS <group___cmp_user_mgr_itf_1gab0bd7362c7c856e954b34bd5f0aac4c2>` pfUserMgrObjectGetGroupRights;
+
+- #define :ref:`GET_UserMgrObjectGetGroupRights <group___cmp_user_mgr_itf_1gae03a2619696eb39e47b3baf2c87b07ad>` s_pfCMGetAPI2( "UserMgrObjectGetGroupRights", (RTS_VOID_FCTPTR *)&pfUserMgrObjectGetGroupRights, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrObjectGetGroupRights <group___cmp_user_mgr_itf_1ga637aeff802a1b0b614ac01ac48cac347>` pfUserMgrObjectGetGroupRights
+
+- #define :ref:`CHK_UserMgrObjectGetGroupRights <group___cmp_user_mgr_itf_1ga7a94b1c8d53b10d807e648761cc629e3>` (pfUserMgrObjectGetGroupRights != NULL)
+
+- #define :ref:`EXP_UserMgrObjectGetGroupRights <group___cmp_user_mgr_itf_1ga9a0adc4c9d6d63dc448b77e2ba99ee92>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrObjectGetGroupRights", (RTS_UINTPTR) :ref:`UserMgrObjectGetGroupRights <group___cmp_user_mgr_itf_1gad6c21a32ef4b2a5274462bb379a943a5>` , 0, 0)
+
+- #define :ref:`USE_UserMgrRightsStore <group___cmp_user_mgr_itf_1ga8c1f178001704bb2ab2d73717fa5a4cf>` :ref:`PFUSERMGRRIGHTSSTORE <group___cmp_user_mgr_itf_1gad682dc67f7fe83f555faaa286665df50>` pfUserMgrRightsStore;
+
+- #define :ref:`EXT_UserMgrRightsStore <group___cmp_user_mgr_itf_1gac4755e48ca638f9371140995b64b540b>` extern :ref:`PFUSERMGRRIGHTSSTORE <group___cmp_user_mgr_itf_1gad682dc67f7fe83f555faaa286665df50>` pfUserMgrRightsStore;
+
+- #define :ref:`GET_UserMgrRightsStore <group___cmp_user_mgr_itf_1ga47c6ff41d5770ed3a058de6d2f937f06>` s_pfCMGetAPI2( "UserMgrRightsStore", (RTS_VOID_FCTPTR *)&pfUserMgrRightsStore, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrRightsStore <group___cmp_user_mgr_itf_1gaac59e977f0ae3808689851c92def1146>` pfUserMgrRightsStore
+
+- #define :ref:`CHK_UserMgrRightsStore <group___cmp_user_mgr_itf_1ga25324e931ac7502877be9488006b039f>` (pfUserMgrRightsStore != NULL)
+
+- #define :ref:`EXP_UserMgrRightsStore <group___cmp_user_mgr_itf_1gafe04274341c4029d46b8cd1e91578a6e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrRightsStore", (RTS_UINTPTR) :ref:`UserMgrRightsStore <group___cmp_user_mgr_itf_1gab031f2a37b83008b248ee7b416f8af55>` , 0, 0)
+
+- #define :ref:`USE_UserMgrCheckLen <group___cmp_user_mgr_itf_1gaa607ed88848cf7b816330de1eacdc823>` :ref:`PFUSERMGRCHECKLEN <group___cmp_user_mgr_itf_1ga8f4d62e6bb6a4cca059ff59be4949af7>` pfUserMgrCheckLen;
+
+- #define :ref:`EXT_UserMgrCheckLen <group___cmp_user_mgr_itf_1gaf4f35a6e691998a7d9e25f4696f36a40>` extern :ref:`PFUSERMGRCHECKLEN <group___cmp_user_mgr_itf_1ga8f4d62e6bb6a4cca059ff59be4949af7>` pfUserMgrCheckLen;
+
+- #define :ref:`GET_UserMgrCheckLen <group___cmp_user_mgr_itf_1gabbd67daa2ce7867cb4648b540158489d>` s_pfCMGetAPI2( "UserMgrCheckLen", (RTS_VOID_FCTPTR *)&pfUserMgrCheckLen, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrCheckLen <group___cmp_user_mgr_itf_1ga0b1888f7f38b531fcec7f354bc907eb9>` pfUserMgrCheckLen
+
+- #define :ref:`CHK_UserMgrCheckLen <group___cmp_user_mgr_itf_1gac347e8f6fba03a19cb2d3d9497fe67e5>` (pfUserMgrCheckLen != NULL)
+
+- #define :ref:`EXP_UserMgrCheckLen <group___cmp_user_mgr_itf_1ga060d3faa8d7ac1b6a6007eae4858a5fd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrCheckLen", (RTS_UINTPTR) :ref:`UserMgrCheckLen <group___cmp_user_mgr_itf_1gab0111189fa7ee7052d571fba5fbd55fe>` , 0, 0)
+
+- #define :ref:`USE_UserMgrAnnounceOldDatabase <group___cmp_user_mgr_itf_1ga84453475bdabf3b5367caaa8b15526a8>` :ref:`PFUSERMGRANNOUNCEOLDDATABASE <group___cmp_user_mgr_itf_1ga9b7a0c80afab019f6daee84d2231fbf6>` pfUserMgrAnnounceOldDatabase;
+
+- #define :ref:`EXT_UserMgrAnnounceOldDatabase <group___cmp_user_mgr_itf_1ga11b8ae6ad93edcf29ff50c382594dfac>` extern :ref:`PFUSERMGRANNOUNCEOLDDATABASE <group___cmp_user_mgr_itf_1ga9b7a0c80afab019f6daee84d2231fbf6>` pfUserMgrAnnounceOldDatabase;
+
+- #define :ref:`GET_UserMgrAnnounceOldDatabase <group___cmp_user_mgr_itf_1ga0af00d9a51ae7f3bb951503f76d68b6f>` s_pfCMGetAPI2( "UserMgrAnnounceOldDatabase", (RTS_VOID_FCTPTR *)&pfUserMgrAnnounceOldDatabase, (fl), 0, 0)
+
+- #define :ref:`CAL_UserMgrAnnounceOldDatabase <group___cmp_user_mgr_itf_1ga729391f532885a0c6d570be3c86f59ed>` pfUserMgrAnnounceOldDatabase
+
+- #define :ref:`CHK_UserMgrAnnounceOldDatabase <group___cmp_user_mgr_itf_1ga8a8510e4260439c0bc8d3658a22a55e0>` (pfUserMgrAnnounceOldDatabase != NULL)
+
+- #define :ref:`EXP_UserMgrAnnounceOldDatabase <group___cmp_user_mgr_itf_1gad6bfc3c0eb5134277efc9db5960a439d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"UserMgrAnnounceOldDatabase", (RTS_UINTPTR) :ref:`UserMgrAnnounceOldDatabase <group___cmp_user_mgr_itf_1gacbebe1eb0e031d30ed2cd8b74b602a54>` , 0, 0)
+
+- #define :ref:`ITF_CmpUserMgr <group___cmp_user_mgr_itf_1gab88f7c09dfe09a061e2e65e4956f1637>`
+
+- #define :ref:`EXTITF_CmpUserMgr <group___cmp_user_mgr_itf_1gacb0060492bf0f66e41ce1ab1b7f051fe>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRREGISTERUSERDB <group___cmp_user_mgr_itf_1gaaa4c24ab281302b92ecbb16e69d406b7>`)(RTS_HANDLE hDatabase, RTS_UI32 type)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRUNREGISTERUSERDB <group___cmp_user_mgr_itf_1ga459f9d0e76aa8e4e67d3ed2260282c14>`)(RTS_HANDLE hDatabase)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRREGISTERUSERDBCONFIG <group___cmp_user_mgr_itf_1ga836f59167e0ccce7338f4264db9d6370>`)(RTS_HANDLE hDatabase, RTS_UI32 type)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRUNREGISTERUSERDBCONFIG <group___cmp_user_mgr_itf_1ga8587d8dcd49c08a041a893eaaafb8c93>`)(RTS_HANDLE hDatabase)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRREGISTERUSERGROUPSDB <group___cmp_user_mgr_itf_1ga4c4f8f52a74e8281c46b9a6fb377ab3e>`)(RTS_HANDLE hDatabase)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRUNREGISTERUSERGROUPSDB <group___cmp_user_mgr_itf_1gac63f15fe5fb44643e593f3cd35f15bb3>`)(RTS_HANDLE hDatabase)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRREGISTERUSERGROUPSDBCONFIG <group___cmp_user_mgr_itf_1ga1ea031895db7fd6a89a225d0101826d8>`)(RTS_HANDLE hDatabase)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRUNREGISTERUSERGROUPSDBCONFIG <group___cmp_user_mgr_itf_1ga0e72d0c10db9f9d55e83e8de800166c4>`)(RTS_HANDLE hDatabase)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRREGISTERUSEROBJECTSDB <group___cmp_user_mgr_itf_1ga2e1de223cfe5cd33721dacccd7175669>`)(RTS_HANDLE hDatabase)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRUNREGISTERUSEROBJECTSDB <group___cmp_user_mgr_itf_1gad8a1ad177fa7ad0d73d48512dda39ae5>`)(RTS_HANDLE hDatabase)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRREGISTERUSEROBJECTSDBCONFIG <group___cmp_user_mgr_itf_1gad24f73e996bd6eb065d776b9edf64937>`)(RTS_HANDLE hDatabase)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRUNREGISTERUSEROBJECTSDBCONFIG <group___cmp_user_mgr_itf_1ga46b6c669bcbecc50d7dbed454d552228>`)(RTS_HANDLE hDatabase)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRSELECTAUTHTYPE <group___cmp_user_mgr_itf_1gaa9bb78cb7513487ce5e9983724df660b>`)(RTS_UI32 ui32ClientFlags, RTS_UI32 *pui32AuthType)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRHANDLELOGINSERVICE <group___cmp_user_mgr_itf_1ga7442cb2d2e107e413aa8303408e4dca1>`)(RTS_UI32 SessionId, RTS_UI32 SessionAuthType, RTS_UI32 SessionFlags, BINTAGWRITER *pWriter, BINTAGREADER *pReader, RTS_HANDLE *phUser)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRISSERVICEALLOWED <group___cmp_user_mgr_itf_1ga719a1c8a5641e18e36d3c2cff3a94dc8>`)(RTS_UI32 channelID, HEADER_TAG_EXT *pHeader, PROTOCOL_DATA_UNIT *pPduReply)
+
+- typedef RTS_BOOL(* :ref:`PFUSERMGRISACTIVE <group___cmp_user_mgr_itf_1ga61ee6e07ea2fc1330b32099ae49a90eb>`)(void)
+
+- typedef RTS_HANDLE(* :ref:`PFUSERMGRLOGIN <group___cmp_user_mgr_itf_1gaed41945b3ddc5ff4fcfd08fb69643629>`)(char *pszUser, char *pszPassword, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRLOGOUT <group___cmp_user_mgr_itf_1ga44eb683c3343af3f3c687316a7cfe931>`)(RTS_HANDLE hUser)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRRELOGIN <group___cmp_user_mgr_itf_1gaa5dcb2c2ab6bf58d6eaa708acd36ca87>`)(RTS_HANDLE hUser, char *pszUser, char *pszPassword)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRISGROUPMEMBER <group___cmp_user_mgr_itf_1ga893f2ecfdc2a8773a6507100e9bcb918>`)(char *pszGroup, RTS_HANDLE hUser)
+
+- typedef RTS_BOOL(* :ref:`PFUSERMGRISADMINISTRATOR <group___cmp_user_mgr_itf_1ga3a9b693f841fc30bb42bc8b88085aaea>`)(RTS_HANDLE hUser)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRHASACCESSRIGHTS <group___cmp_user_mgr_itf_1ga551b564e7d91718c59b859ffd5802def>`)(char *pszObject, RTS_UI32 ulSessionId, RTS_UI32 ulRequestedRights)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRGETACCESSRIGHTS <group___cmp_user_mgr_itf_1ga23a494f420df2344be3c81cafff33831>`)(char *pszObject, RTS_UI32 ulSessionId, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRHASUSERACCESSRIGHTS <group___cmp_user_mgr_itf_1ga9bc92ac40be9e92bd0e6f5ee9def8532>`)(char *pszObject, RTS_HANDLE hUser, RTS_UI32 ulRequestedRights)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRGETUSERACCESSRIGHTS <group___cmp_user_mgr_itf_1ga8e8ab282a2133dfb46677fb24f19c203>`)(char *pszObject, RTS_HANDLE hUser, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRADDINFOTOUSER <group___cmp_user_mgr_itf_1gab6554a781189ef5eb3f4722c31e60007>`)(RTS_HANDLE hUser, RTS_SIZE key, RTS_TYPEDVALUE *pValue)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRREMOVEINFOFROMUSER <group___cmp_user_mgr_itf_1ga91a31f43497d3cf1a59004026f070139>`)(RTS_HANDLE hUser, RTS_SIZE key)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRREMOVEINFOFROMALLUSERS <group___cmp_user_mgr_itf_1ga52bfd1f785f28fc582c5ca38a3d01b56>`)(RTS_SIZE key)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRGETINFOOFUSER <group___cmp_user_mgr_itf_1ga82d94f01b0b23dc320ee5eda1cc7d996>`)(RTS_HANDLE hUser, RTS_SIZE key, RTS_TYPEDVALUE *pValue)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRGETUSERNAME <group___cmp_user_mgr_itf_1ga400987c13307aa15d5aa50f5fe07dda0>`)(RTS_HANDLE hUser, char *pName, RTS_UI32 maxLen)
+
+- typedef RTS_HANDLE(* :ref:`PFUSERMGRGETGROUP <group___cmp_user_mgr_itf_1gab38cede7a2605e447f365b19ce090a03>`)(char *pszGroupName, RTS_RESULT *pResult)
+
+- typedef RTS_BOOL(* :ref:`PFUSERMGRGROUPHASUSER <group___cmp_user_mgr_itf_1gaa1ef2e6d61a85a7ea93bbcddb28c8d50>`)(RTS_HANDLE hGroup, RTS_HANDLE hUser)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRGROUPGETNAME <group___cmp_user_mgr_itf_1gabb55bdf2acf081eff708ee0c11c7fd98>`)(RTS_HANDLE hGroup, char *pName, RTS_UI32 maxLen)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRADDUSER <group___cmp_user_mgr_itf_1ga85a82e1959b4dccfbe6bc40407d2f329>`)(RTS_HANDLE hUser, char *pszUserName, UserMgrCredentials *pCredentials)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRREMOVEUSER <group___cmp_user_mgr_itf_1ga38ab9bcf918724601fa30ec5dc40f259>`)(RTS_HANDLE hUser, char *pszUserName)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRADDGROUP <group___cmp_user_mgr_itf_1ga0db1e5288317be3abcd0da227ed06697>`)(RTS_HANDLE hUser, char *pszGroupName)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRREMOVEGROUP <group___cmp_user_mgr_itf_1ga0727761c52a013c6d2d5c34341a9812a>`)(RTS_HANDLE hUser, char *pszGroupName)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRGROUPADDUSER <group___cmp_user_mgr_itf_1gaf7a6c490923881fc833568bfdbf02c71>`)(RTS_HANDLE hUser, char *pszGroupName, char *pszUserName)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRGROUPREMOVEUSER <group___cmp_user_mgr_itf_1gaada7015268f55ee52806f3426bab3d2a>`)(RTS_HANDLE hUser, char *pszGroupName, char *pszUserName)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRADDONLINEACCESSERROR <group___cmp_user_mgr_itf_1gaa888857784005f982c84aaa39dbb9c12>`)(BINTAGWRITER *pWriter, RTS_RESULT Result, char *pszObject, RTS_UI32 ulRequestedRights, RTS_UI32 ulSessionID)
+
+- typedef RTS_HANDLE(* :ref:`PFUSERMGROBJECTADD <group___cmp_user_mgr_itf_1ga707f78f3b36b77f2f34af94e1f0e8058>`)(char *pszObject, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGROBJECTREMOVE <group___cmp_user_mgr_itf_1ga17683e2baf02af40ef3638e05a5dfe75>`)(RTS_HANDLE hObject)
+
+- typedef RTS_HANDLE(* :ref:`PFUSERMGROBJECTADDCHILD <group___cmp_user_mgr_itf_1gaf35639d5f5c21ed12dd7b22f8c00e95c>`)(RTS_HANDLE hFatherObject, char *pszObject, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGROBJECTSETUSEDRIGHTS <group___cmp_user_mgr_itf_1gad31201da9f299783d44a260d6879795c>`)(RTS_HANDLE hObject, RTS_UI32 ulUsedRights)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGROBJECTGETUSEDRIGHTS <group___cmp_user_mgr_itf_1gaea5456a2411c5c7a563acdb338a8cd9b>`)(RTS_HANDLE hObject, RTS_UI32 *pulUsedRights)
+
+- typedef RTS_HANDLE(* :ref:`PFUSERMGROBJECTOPEN <group___cmp_user_mgr_itf_1gaef31e4b0a9729d1b4dbeaa8ed6009327>`)(char *pszObject, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFUSERMGROBJECTOPEN2 <group___cmp_user_mgr_itf_1ga5fa97c68fbd90cc95f4f331192d0eaf0>`)(char *pszObject, RTS_HANDLE hUser, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGROBJECTCLOSE <group___cmp_user_mgr_itf_1gaa367dd8bc732b6faa8f02a71234b5c3d>`)(RTS_HANDLE hObject)
+
+- typedef RTS_HANDLE(* :ref:`PFUSERMGROBJECTADD2 <group___cmp_user_mgr_itf_1ga0a41fd7ebba9355e3d753ae7257d63d1>`)(char *pszObject, RTS_UI32 properties, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGROBJECTADDGROUP <group___cmp_user_mgr_itf_1ga4aa12f63cf7843746b7dcf47693319a6>`)(RTS_HANDLE hObject, RTS_HANDLE hGroup)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGROBJECTREMOVEGROUP <group___cmp_user_mgr_itf_1ga1ee9f1c1214028b5d967746e8ddc9228>`)(RTS_HANDLE hObject, RTS_HANDLE hGroup)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGROBJECTSETGROUPRIGHTS <group___cmp_user_mgr_itf_1ga6fa4b86de1a5d66a7af2c1569f2100d0>`)(RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulRights)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGROBJECTSETGROUPDENIEDRIGHTS <group___cmp_user_mgr_itf_1ga276df04e29a654542291a95c91ec12c2>`)(RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulDeniedRights)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGROBJECTCLEARRIGHTS <group___cmp_user_mgr_itf_1gaa31b221ae65b1c82ff3539753ba0c0e1>`)(RTS_HANDLE hObject)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGROBJECTGETNAME <group___cmp_user_mgr_itf_1ga64bb8fe2ef69026d92edba313b159351>`)(RTS_HANDLE hObject, char *pszObject, int *piMaxLen)
+
+- typedef RTS_HANDLE(* :ref:`PFUSERMGROBJECTGETFIRSTCHILD <group___cmp_user_mgr_itf_1ga02d0d8c4feead5abc8623e96d7d8696e>`)(RTS_HANDLE hFatherObject, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFUSERMGROBJECTGETNEXTCHILD <group___cmp_user_mgr_itf_1gac68d6e2eeab0501529d7f24b0ebde202>`)(RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFUSERMGROBJECTGETFIRSTGROUP <group___cmp_user_mgr_itf_1gabaef578d2e656182a0fb78bdc20eece5>`)(RTS_HANDLE hObject, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFUSERMGROBJECTGETNEXTGROUP <group___cmp_user_mgr_itf_1ga94b079198c1702b1d6c7822f07881a9d>`)(RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGROBJECTGETGROUPRIGHTS <group___cmp_user_mgr_itf_1gab0bd7362c7c856e954b34bd5f0aac4c2>`)(RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 *pulRights, RTS_UI32 *pulDeniedRights)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRRIGHTSSTORE <group___cmp_user_mgr_itf_1gad682dc67f7fe83f555faaa286665df50>`)(void)
+
+- typedef RTS_BOOL(* :ref:`PFUSERMGRCHECKLEN <group___cmp_user_mgr_itf_1ga8f4d62e6bb6a4cca059ff59be4949af7>`)(char *psz, RTS_UI32 len)
+
+- typedef RTS_RESULT(* :ref:`PFUSERMGRANNOUNCEOLDDATABASE <group___cmp_user_mgr_itf_1ga9b7a0c80afab019f6daee84d2231fbf6>`)(RTS_UI32 info)
+
+- typedef :ref:`ICmpUserMgr_C <struct_i_cmp_user_mgr___c>` :ref:`ICmpUserMgr <group___cmp_user_mgr_itf_1ga69bbc71eafd986cdec3b69cd43bbb953>`
+
+Enumerations
+------------
+
+- enum :ref:`USERMGR_LOGIN_AUTH_TYPE <group___cmp_user_mgr_itf___security_settings_1ga59641a0d95aed372531a4c13f4a335f3>` { :ref:`UserMgrLoginAuthType_Asymmetric <group___cmp_user_mgr_itf___security_settings_1gga59641a0d95aed372531a4c13f4a335f3a803feb0072286d46952c7e2810bc75ac>`, :ref:`UserMgrLoginAuthType_Auto <group___cmp_user_mgr_itf___security_settings_1gga59641a0d95aed372531a4c13f4a335f3a44cb8c0f6899655961e198063b264368>`, :ref:`UserMgrLoginAuthType_Legacy <group___cmp_user_mgr_itf___security_settings_1gga59641a0d95aed372531a4c13f4a335f3ad36b2079d52ce7978c76a9cc64f0b36c>` }
+
+- enum :ref:`SECURITY_USERMGR_ENFORCE <group___cmp_user_mgr_itf___security_settings_1ga5d6584fa0a74a10bcaaa551792fd1995>` { :ref:`UserMgmtEnforce_Yes <group___cmp_user_mgr_itf___security_settings_1gga5d6584fa0a74a10bcaaa551792fd1995a29d9ec5cb3570dcdfa32a605f1e9704e>`, :ref:`UserMgmtEnforce_No <group___cmp_user_mgr_itf___security_settings_1gga5d6584fa0a74a10bcaaa551792fd1995a3109663e4f2e014f15347a6040ca75a6>` }
+
+Functions
+---------
+
+- RTS_RESULT :ref:`UserMgrRegisterUserDB <group___cmp_user_mgr_itf_1ga269ec4966911ecf4171586b0396dd9f3>` (RTS_HANDLE hDatabase, RTS_UI32 type)
+
+- RTS_RESULT :ref:`UserMgrUnregisterUserDB <group___cmp_user_mgr_itf_1gabc4880247829c42711edd31316faa97a>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserMgrRegisterUserDBConfig <group___cmp_user_mgr_itf_1gabd70a957878a22ac509b699e9ffea3ce>` (RTS_HANDLE hDatabase, RTS_UI32 type)
+
+- RTS_RESULT :ref:`UserMgrUnregisterUserDBConfig <group___cmp_user_mgr_itf_1ga969ad6158dd2dd5afa8163411d6348ba>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserMgrRegisterUserGroupsDB <group___cmp_user_mgr_itf_1ga2b5d4d518bde8ad54c1359cbaae4a32c>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserMgrUnregisterUserGroupsDB <group___cmp_user_mgr_itf_1ga0bff02a4f58452221a63e3527f3384a5>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserMgrRegisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1ga1d8899e9039a759de40687eb517dd084>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserMgrUnregisterUserGroupsDBConfig <group___cmp_user_mgr_itf_1gad27ce20aec4b9832f7c63eedd45864b6>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserMgrRegisterUserObjectsDB <group___cmp_user_mgr_itf_1ga89cb9d910584a5c25197712f19fd7882>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserMgrUnregisterUserObjectsDB <group___cmp_user_mgr_itf_1ga58e567ff12fee3d07f589929b5fb44d7>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserMgrRegisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1ga7fcf6478b654bc39400afb19a1812c86>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserMgrUnregisterUserObjectsDBConfig <group___cmp_user_mgr_itf_1ga27dcb50febb8c259a858177443df9775>` (RTS_HANDLE hDatabase)
+
+- RTS_RESULT :ref:`UserMgrSelectAuthType <group___cmp_user_mgr_itf_1gad4ad28f31e67b2b57ebee07373dad601>` (RTS_UI32 ui32ClientFlags, RTS_UI32 * pui32AuthType)
+
+- RTS_RESULT :ref:`UserMgrHandleLoginService <group___cmp_user_mgr_itf_1ga637c970f8bc0a5157d4935fe66d66a50>` (RTS_UI32 SessionId, RTS_UI32 SessionAuthType, RTS_UI32 SessionFlags, :ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, :ref:`BINTAGREADER <struct_b_i_n_t_a_g_r_e_a_d_e_r>` * pReader, RTS_HANDLE * phUser)
+
+- RTS_RESULT :ref:`UserMgrIsServiceAllowed <group___cmp_user_mgr_itf_1gaf79dcf0c038d556b22d3d6daafa0e1a6>` (RTS_UI32 channelID, :ref:`HEADER_TAG_EXT <struct_h_e_a_d_e_r___t_a_g___e_x_t>` * pHeader, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>` * pPduReply)
+
+- RTS_BOOL :ref:`UserMgrIsActive <group___cmp_user_mgr_itf_1ga6956d1022666d5acb6dcd2e77e772690>` (void)
+
+- RTS_HANDLE :ref:`UserMgrLogin <group___cmp_user_mgr_itf_1ga302a7c1de861d64ea2aae9d9aa3952aa>` (char * pszUser, char * pszPassword, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UserMgrLogout <group___cmp_user_mgr_itf_1ga8bafb4bb1c23e759da7b0132c588cd92>` (RTS_HANDLE hUser)
+
+- RTS_RESULT :ref:`UserMgrRelogin <group___cmp_user_mgr_itf_1ga24f91b27de59e6a40eb8f617f96cd411>` (RTS_HANDLE hUser, char * pszUser, char * pszPassword)
+
+- RTS_RESULT :ref:`UserMgrIsGroupMember <group___cmp_user_mgr_itf_1gae962249386d3a00accfd171770f20539>` (char * pszGroup, RTS_HANDLE hUser)
+
+- RTS_BOOL :ref:`UserMgrIsAdministrator <group___cmp_user_mgr_itf_1ga421c378c6f7ca5da82ecda8b645d553a>` (RTS_HANDLE hUser)
+
+- RTS_RESULT :ref:`UserMgrHasAccessRights <group___cmp_user_mgr_itf_1ga5d11a545de34d03cd0d6cc0f8e6733a4>` (char * pszObject, RTS_UI32 ulSessionId, RTS_UI32 ulRequestedRights)
+
+- RTS_RESULT :ref:`UserMgrGetAccessRights <group___cmp_user_mgr_itf_1ga656e11e35075b93e09d2ca7a56967665>` (char * pszObject, RTS_UI32 ulSessionId, RTS_UI32 * pulRights, RTS_UI32 * pulDeniedRights)
+
+- RTS_RESULT :ref:`UserMgrHasUserAccessRights <group___cmp_user_mgr_itf_1ga3124c60fe0ff5fa27092bd4ceb122d10>` (char * pszObject, RTS_HANDLE hUser, RTS_UI32 ulRequestedRights)
+
+- RTS_RESULT :ref:`UserMgrGetUserAccessRights <group___cmp_user_mgr_itf_1gac9c09641fa7fd6b39e09dcf3f39c433a>` (char * pszObject, RTS_HANDLE hUser, RTS_UI32 * pulRights, RTS_UI32 * pulDeniedRights)
+
+- RTS_RESULT :ref:`UserMgrAddInfoToUser <group___cmp_user_mgr_itf_1ga621c9ce48b167c9aadf4bb7188c34d79>` (RTS_HANDLE hUser, RTS_SIZE key, RTS_TYPEDVALUE * pValue)
+
+- RTS_RESULT :ref:`UserMgrRemoveInfoFromUser <group___cmp_user_mgr_itf_1ga086c3b0db90ac145d197f64c56c09810>` (RTS_HANDLE hUser, RTS_SIZE key)
+
+- RTS_RESULT :ref:`UserMgrRemoveInfoFromAllUsers <group___cmp_user_mgr_itf_1ga894e70b5aefc4736c825943a9fdd7e26>` (RTS_SIZE key)
+
+- RTS_RESULT :ref:`UserMgrGetInfoOfUser <group___cmp_user_mgr_itf_1ga3248a60285c41178b795da5da760d013>` (RTS_HANDLE hUser, RTS_SIZE key, RTS_TYPEDVALUE * pValue)
+
+- RTS_RESULT :ref:`UserMgrGetUserName <group___cmp_user_mgr_itf_1ga46e12f46460c5a236103d26cbbb41520>` (RTS_HANDLE hUser, char * pName, RTS_UI32 maxLen)
+
+- RTS_HANDLE :ref:`UserMgrGetGroup <group___cmp_user_mgr_itf_1ga0793c9a235acc193206d0f41a03d491f>` (char * pszGroupName, RTS_RESULT * pResult)
+
+- RTS_BOOL :ref:`UserMgrGroupHasUser <group___cmp_user_mgr_itf_1ga4c9ed8db09dfe8af66a3f997755c187b>` (RTS_HANDLE hGroup, RTS_HANDLE hUser)
+
+- RTS_RESULT :ref:`UserMgrGroupGetName <group___cmp_user_mgr_itf_1ga6788213d789be24ff25eaa3ba25e690f>` (RTS_HANDLE hGroup, char * pName, RTS_UI32 maxLen)
+
+- RTS_RESULT :ref:`UserMgrAddUser <group___cmp_user_mgr_itf_1gafec4497aa2740d284a00768dd752a6a4>` (RTS_HANDLE hUser, char * pszUserName, :ref:`UserMgrCredentials <struct_user_mgr_credentials>` * pCredentials)
+
+- RTS_RESULT :ref:`UserMgrRemoveUser <group___cmp_user_mgr_itf_1ga28ceaed6a75118deb6e5ff6d2ec1ad7a>` (RTS_HANDLE hUser, char * pszUserName)
+
+- RTS_RESULT :ref:`UserMgrAddGroup <group___cmp_user_mgr_itf_1ga6abf7e85e50be2a72c3748f9d27a2358>` (RTS_HANDLE hUser, char * pszGroupName)
+
+- RTS_RESULT :ref:`UserMgrRemoveGroup <group___cmp_user_mgr_itf_1ga0c3c31cb3c52bfe1d2ed24396c20ee19>` (RTS_HANDLE hUser, char * pszGroupName)
+
+- RTS_RESULT :ref:`UserMgrGroupAddUser <group___cmp_user_mgr_itf_1gaff280e3fadbebbcfcde915ea02ea4a6e>` (RTS_HANDLE hUser, char * pszGroupName, char * pszUserName)
+
+- RTS_RESULT :ref:`UserMgrGroupRemoveUser <group___cmp_user_mgr_itf_1gacf63e71bd7807bf03477a0e54958ef0d>` (RTS_HANDLE hUser, char * pszGroupName, char * pszUserName)
+
+- RTS_RESULT :ref:`UserMgrAddOnlineAccessError <group___cmp_user_mgr_itf_1gaddf08a12aea358635a4a9457681a7eaa>` (:ref:`BINTAGWRITER <struct_b_i_n_t_a_g_w_r_i_t_e_r>` * pWriter, RTS_RESULT Result, char * pszObject, RTS_UI32 ulRequestedRights, RTS_UI32 ulSessionID)
+
+- RTS_HANDLE :ref:`UserMgrObjectAdd <group___cmp_user_mgr_itf_1gaa021567cec09ab6cc29943be279b432e>` (char * pszObject, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UserMgrObjectRemove <group___cmp_user_mgr_itf_1ga363c3413dc5373024db05ce129bd3eb1>` (RTS_HANDLE hObject)
+
+- RTS_HANDLE :ref:`UserMgrObjectAddChild <group___cmp_user_mgr_itf_1gaa1aec550d16f1101c2f0d5a556da640b>` (RTS_HANDLE hFatherObject, char * pszObject, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UserMgrObjectSetUsedRights <group___cmp_user_mgr_itf_1ga1b6be0047e6d248e2004b175617ccbe1>` (RTS_HANDLE hObject, RTS_UI32 ulUsedRights)
+
+- RTS_RESULT :ref:`UserMgrObjectGetUsedRights <group___cmp_user_mgr_itf_1gae57cc6e510589eb43c49d6787185e716>` (RTS_HANDLE hObject, RTS_UI32 * pulUsedRights)
+
+- RTS_HANDLE :ref:`UserMgrObjectOpen <group___cmp_user_mgr_itf_1gac80d1200c4e35fa00cfda3d214216209>` (char * pszObject, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserMgrObjectOpen2 <group___cmp_user_mgr_itf_1ga53c3ea3e0dfae31bd085371b11caa6d5>` (char * pszObject, RTS_HANDLE hUser, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UserMgrObjectClose <group___cmp_user_mgr_itf_1ga183f82c9a2d5b08929bd5538ee6cc83c>` (RTS_HANDLE hObject)
+
+- RTS_HANDLE :ref:`UserMgrObjectAdd2 <group___cmp_user_mgr_itf_1gaba4fc705d942645e49a171ca60a61cad>` (char * pszObject, RTS_UI32 properties, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UserMgrObjectAddGroup <group___cmp_user_mgr_itf_1ga09ac2ba2fbe253e1e712e7b1db1f3c77>` (RTS_HANDLE hObject, RTS_HANDLE hGroup)
+
+- RTS_RESULT :ref:`UserMgrObjectRemoveGroup <group___cmp_user_mgr_itf_1gaa386db71764c6fe3354effaf7adcb844>` (RTS_HANDLE hObject, RTS_HANDLE hGroup)
+
+- RTS_RESULT :ref:`UserMgrObjectSetGroupRights <group___cmp_user_mgr_itf_1gaaf0604137efa7aae5a65a37b32f5d494>` (RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulRights)
+
+- RTS_RESULT :ref:`UserMgrObjectSetGroupDeniedRights <group___cmp_user_mgr_itf_1gae11333651aa6cfac90e5633daaae7b11>` (RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulDeniedRights)
+
+- RTS_RESULT :ref:`UserMgrObjectClearRights <group___cmp_user_mgr_itf_1ga99c5017c1ee92cf938b620eb0d24782c>` (RTS_HANDLE hObject)
+
+- RTS_RESULT :ref:`UserMgrObjectGetName <group___cmp_user_mgr_itf_1ga64063b0503930213202147ab98b7c028>` (RTS_HANDLE hObject, char * pszObject, int * piMaxLen)
+
+- RTS_HANDLE :ref:`UserMgrObjectGetFirstChild <group___cmp_user_mgr_itf_1gab962262ed21bab6068b417b9976fe4cf>` (RTS_HANDLE hFatherObject, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserMgrObjectGetNextChild <group___cmp_user_mgr_itf_1gaaafb1dbf77f43c19f77389b7d1348e64>` (RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserMgrObjectGetFirstGroup <group___cmp_user_mgr_itf_1ga978419a8203cb33b4a3ccf9270ef0caa>` (RTS_HANDLE hObject, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`UserMgrObjectGetNextGroup <group___cmp_user_mgr_itf_1ga2c65719cdb25ec06114024a627858381>` (RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`UserMgrObjectGetGroupRights <group___cmp_user_mgr_itf_1gad6c21a32ef4b2a5274462bb379a943a5>` (RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 * pulRights, RTS_UI32 * pulDeniedRights)
+
+- RTS_RESULT :ref:`UserMgrRightsStore <group___cmp_user_mgr_itf_1gab031f2a37b83008b248ee7b416f8af55>` (void)
+
+- RTS_BOOL :ref:`UserMgrCheckLen <group___cmp_user_mgr_itf_1gab0111189fa7ee7052d571fba5fbd55fe>` (char * psz, RTS_UI32 len)
+
+- RTS_RESULT :ref:`UserMgrAnnounceOldDatabase <group___cmp_user_mgr_itf_1gacbebe1eb0e031d30ed2cd8b74b602a54>` (RTS_UI32 info)
+
+Detailed Description
+--------------------
+
+Definition in file CmpUserMgrItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

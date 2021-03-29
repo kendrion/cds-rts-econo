@@ -1,0 +1,765 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_native_control_itf:
+
+===================
+SysNativeControlItf
+===================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of SysNativeControl.
+
+Detailed Description
+--------------------
+
+The SysNativeControl interface brings native controls into the visualization. All controls are created as child controls of the target-visualization.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Event parameter <group___sys_native_control_itf___eventparameter>`
+
+- :ref:`Events <group___sys_native_control_itf___events>`
+
+- :ref:`Native control create description <group___sys_native_control_itf___nativecontrolcreatedescription>`
+
+- :ref:`Static defines <group___sys_native_control_itf___staticdefines>`
+
+- :ref:`parameter <group___sys_native_control_itf__parameter>`
+
+Data Structures
+---------------
+
+- struct :ref:`ISysNativeControl_C <struct_i_sys_native_control___c>`
+
+Macros
+------
+
+- #define :ref:`NATIVE_CONTROL_SNCF_SHOW <group___sys_native_control_itf_1ga0294332858c29358044da993463cdd44>` 0x00000001
+
+- #define :ref:`NATIVE_CONTROL_SNCF_HIDE <group___sys_native_control_itf_1ga2f0c828e748e1af01fcea0c97b5d84aa>` 0x00000002
+
+- #define :ref:`NATIVE_CONTROL_SNCF_HIDE_AND_DESTROY <group___sys_native_control_itf_1ga4580f60b9c8c77257dabab8cfde9c08d>` 0x00000004
+
+- #define :ref:`NATIVE_CONTROL_CNCMF_WITHOUT_RESULT <group___sys_native_control_itf_1ga67d18fdc5b3b8787f7e7484a9abce7d5>` 0x00000001
+
+- #define :ref:`NATIVE_CONTROL_CNCMF_WITH_RESULT <group___sys_native_control_itf_1gaab43fc412f8a6be0caae8b80eee14ce7>` 0x00000002
+
+- #define :ref:`NATIVE_CONTROL_CNCMF_DYNAMIC_MEMORY_ALLOCATED <group___sys_native_control_itf_1ga1b75fa7dd075de2c8360bdf278b39cd2>` 0x00000004
+
+- #define :ref:`USE_SysNativeControlCreate <group___sys_native_control_itf_1ga8d3afd3e475bddb485943fc8afb0d849>` :ref:`PFSYSNATIVECONTROLCREATE <group___sys_native_control_itf_1ga1f545c04f3638cc07fc63c5d8cc67ed5>` pfSysNativeControlCreate;
+
+- #define :ref:`EXT_SysNativeControlCreate <group___sys_native_control_itf_1ga35bbc957676cf21e15ee7716036a7e12>` extern :ref:`PFSYSNATIVECONTROLCREATE <group___sys_native_control_itf_1ga1f545c04f3638cc07fc63c5d8cc67ed5>` pfSysNativeControlCreate;
+
+- #define :ref:`GET_SysNativeControlCreate <group___sys_native_control_itf_1ga011ee28b45c2fae24d8f9df194de0f47>` s_pfCMGetAPI2( "SysNativeControlCreate", (RTS_VOID_FCTPTR *)&pfSysNativeControlCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_SysNativeControlCreate <group___sys_native_control_itf_1gadcb5eb0dd9ceee0c9beb40c36d83b1cc>` pfSysNativeControlCreate
+
+- #define :ref:`CHK_SysNativeControlCreate <group___sys_native_control_itf_1ga7c30a4f36dbf330c617d697fe8b68508>` (pfSysNativeControlCreate != NULL)
+
+- #define :ref:`EXP_SysNativeControlCreate <group___sys_native_control_itf_1ga3ae84a143b07308b89d489de0144d059>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlCreate", (RTS_UINTPTR) :ref:`SysNativeControlCreate <group___sys_native_control_itf_1gaa7896e132439dbda20c1a910e45bf66a>` , 0, 0)
+
+- #define :ref:`USE_SysNativeControlCreate_ <group___sys_native_control_itf_1ga7b0a8aab6e33a091732c7494c56c67a8>` :ref:`PFSYSNATIVECONTROLCREATE_ <group___sys_native_control_itf_1ga64ecaf01cddae976566873c77de934d6>` pfSysNativeControlCreate_;
+
+- #define :ref:`EXT_SysNativeControlCreate_ <group___sys_native_control_itf_1ga8c2091407a01912b8abb14c27c7ee2c6>` extern :ref:`PFSYSNATIVECONTROLCREATE_ <group___sys_native_control_itf_1ga64ecaf01cddae976566873c77de934d6>` pfSysNativeControlCreate_;
+
+- #define :ref:`GET_SysNativeControlCreate_ <group___sys_native_control_itf_1ga0995d661217d558fffc31115d5108452>` s_pfCMGetAPI2( "SysNativeControlCreate_", (RTS_VOID_FCTPTR *)&pfSysNativeControlCreate_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysNativeControlCreate_ <group___sys_native_control_itf_1ga61e781fc5137cce43c726e880902aaec>` pfSysNativeControlCreate_
+
+- #define :ref:`CHK_SysNativeControlCreate_ <group___sys_native_control_itf_1ga1c39e95a823e1bdfd366a849bbc81258>` (pfSysNativeControlCreate_ != NULL)
+
+- #define :ref:`EXP_SysNativeControlCreate_ <group___sys_native_control_itf_1gaf1f1c19ce69569ef359589e08be05fdf>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlCreate_", (RTS_UINTPTR) :ref:`SysNativeControlCreate_ <group___sys_native_control_itf_1gacbd3a79504e9868325331a174346d628>` , 0, 0)
+
+- #define :ref:`USE_SysNativeControlDestroy <group___sys_native_control_itf_1ga7243c48f79ff3726a060af9a06b23843>` :ref:`PFSYSNATIVECONTROLDESTROY <group___sys_native_control_itf_1gaa99fc9dfc002ce39e92132e6fa47a8f3>` pfSysNativeControlDestroy;
+
+- #define :ref:`EXT_SysNativeControlDestroy <group___sys_native_control_itf_1ga915e94afc77bc27f172e0fbe8a1f842b>` extern :ref:`PFSYSNATIVECONTROLDESTROY <group___sys_native_control_itf_1gaa99fc9dfc002ce39e92132e6fa47a8f3>` pfSysNativeControlDestroy;
+
+- #define :ref:`GET_SysNativeControlDestroy <group___sys_native_control_itf_1gabd7f6eed17a2e8bc6c7ae9db4ad44e28>` s_pfCMGetAPI2( "SysNativeControlDestroy", (RTS_VOID_FCTPTR *)&pfSysNativeControlDestroy, (fl), 0, 0)
+
+- #define :ref:`CAL_SysNativeControlDestroy <group___sys_native_control_itf_1gab7b7d972519657074a290bc2fe32d9fe>` pfSysNativeControlDestroy
+
+- #define :ref:`CHK_SysNativeControlDestroy <group___sys_native_control_itf_1ga58d1e1392eb020b028b3729259efd2fe>` (pfSysNativeControlDestroy != NULL)
+
+- #define :ref:`EXP_SysNativeControlDestroy <group___sys_native_control_itf_1ga52e536fca3d998dadc560a3ec76793be>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlDestroy", (RTS_UINTPTR) :ref:`SysNativeControlDestroy <group___sys_native_control_itf_1gae409ab305661410dbdedefe7124d05ac>` , 0, 0)
+
+- #define :ref:`USE_SysNativeControlDestroy_ <group___sys_native_control_itf_1ga3d7367bed3935ef58ea5cf4e7954782a>` :ref:`PFSYSNATIVECONTROLDESTROY_ <group___sys_native_control_itf_1gac7c5f515207c8f4ea00a6ba2cd36a72c>` pfSysNativeControlDestroy_;
+
+- #define :ref:`EXT_SysNativeControlDestroy_ <group___sys_native_control_itf_1gae2d98286c4a0a7e22686d751a4258f02>` extern :ref:`PFSYSNATIVECONTROLDESTROY_ <group___sys_native_control_itf_1gac7c5f515207c8f4ea00a6ba2cd36a72c>` pfSysNativeControlDestroy_;
+
+- #define :ref:`GET_SysNativeControlDestroy_ <group___sys_native_control_itf_1ga9a4c6152a17945a453e0a4f8e1c85a9c>` s_pfCMGetAPI2( "SysNativeControlDestroy_", (RTS_VOID_FCTPTR *)&pfSysNativeControlDestroy_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysNativeControlDestroy_ <group___sys_native_control_itf_1ga61da8239506536e18eb75258adbf1cd8>` pfSysNativeControlDestroy_
+
+- #define :ref:`CHK_SysNativeControlDestroy_ <group___sys_native_control_itf_1ga31550bde0d312ba292e9700d8c09989b>` (pfSysNativeControlDestroy_ != NULL)
+
+- #define :ref:`EXP_SysNativeControlDestroy_ <group___sys_native_control_itf_1gaca86cdd0d85ed0d782dc816be53603e9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlDestroy_", (RTS_UINTPTR) :ref:`SysNativeControlDestroy_ <group___sys_native_control_itf_1gab665db78ffa64700ef88cdf63385d77d>` , 0, 0)
+
+- #define :ref:`USE_SysNativeControlCallMethod <group___sys_native_control_itf_1ga8da92514dceae49f22cbe11bf1394efe>` :ref:`PFSYSNATIVECONTROLCALLMETHOD <group___sys_native_control_itf_1ga3b64a63a14efc919df2660e3ebebd500>` pfSysNativeControlCallMethod;
+
+- #define :ref:`EXT_SysNativeControlCallMethod <group___sys_native_control_itf_1ga2298ddc87fa9d14192f70d91bf1e6892>` extern :ref:`PFSYSNATIVECONTROLCALLMETHOD <group___sys_native_control_itf_1ga3b64a63a14efc919df2660e3ebebd500>` pfSysNativeControlCallMethod;
+
+- #define :ref:`GET_SysNativeControlCallMethod <group___sys_native_control_itf_1gac69150dc17a8e71247f5ee4c8b6cd761>` s_pfCMGetAPI2( "SysNativeControlCallMethod", (RTS_VOID_FCTPTR *)&pfSysNativeControlCallMethod, (fl), 0, 0)
+
+- #define :ref:`CAL_SysNativeControlCallMethod <group___sys_native_control_itf_1gaeff19c9f34ab71bf2cba085022c28912>` pfSysNativeControlCallMethod
+
+- #define :ref:`CHK_SysNativeControlCallMethod <group___sys_native_control_itf_1ga544979476663be562fec142eada2fbd1>` (pfSysNativeControlCallMethod != NULL)
+
+- #define :ref:`EXP_SysNativeControlCallMethod <group___sys_native_control_itf_1ga44f11998afbf71ba78039fcebd9f9e6c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlCallMethod", (RTS_UINTPTR) :ref:`SysNativeControlCallMethod <group___sys_native_control_itf_1gaeb942389bdaa1cd5bb0b04adcade7748>` , 0, 0)
+
+- #define :ref:`USE_SysNativeControlCallMethod_ <group___sys_native_control_itf_1ga5a3aa7287a895feee9ef84bc0dd11b02>` :ref:`PFSYSNATIVECONTROLCALLMETHOD_ <group___sys_native_control_itf_1ga0842edda5451d0fcd7a1788b01c9d1ed>` pfSysNativeControlCallMethod_;
+
+- #define :ref:`EXT_SysNativeControlCallMethod_ <group___sys_native_control_itf_1ga7ba54084c9b613560140baadc34d3ce6>` extern :ref:`PFSYSNATIVECONTROLCALLMETHOD_ <group___sys_native_control_itf_1ga0842edda5451d0fcd7a1788b01c9d1ed>` pfSysNativeControlCallMethod_;
+
+- #define :ref:`GET_SysNativeControlCallMethod_ <group___sys_native_control_itf_1gae3fa1ff2024484ed9b2a374331abf1a2>` s_pfCMGetAPI2( "SysNativeControlCallMethod_", (RTS_VOID_FCTPTR *)&pfSysNativeControlCallMethod_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysNativeControlCallMethod_ <group___sys_native_control_itf_1ga0056cd5a948482778f5597b225732b5a>` pfSysNativeControlCallMethod_
+
+- #define :ref:`CHK_SysNativeControlCallMethod_ <group___sys_native_control_itf_1gad7257868ddb3325f41efe57451257750>` (pfSysNativeControlCallMethod_ != NULL)
+
+- #define :ref:`EXP_SysNativeControlCallMethod_ <group___sys_native_control_itf_1gaa9e197e26243cb18f62a1d1711fcba51>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlCallMethod_", (RTS_UINTPTR) :ref:`SysNativeControlCallMethod_ <group___sys_native_control_itf_1gad5b6ad223cefd8068b9a5ee981e5a977>` , 0, 0)
+
+- #define :ref:`USE_SysNativeControlMove <group___sys_native_control_itf_1gaf49e07380dd6aed5507e14a50d481474>` :ref:`PFSYSNATIVECONTROLMOVE <group___sys_native_control_itf_1gab453a35493628d5661d9feec2e805776>` pfSysNativeControlMove;
+
+- #define :ref:`EXT_SysNativeControlMove <group___sys_native_control_itf_1gae6ede869fe64458325169c66de8c80df>` extern :ref:`PFSYSNATIVECONTROLMOVE <group___sys_native_control_itf_1gab453a35493628d5661d9feec2e805776>` pfSysNativeControlMove;
+
+- #define :ref:`GET_SysNativeControlMove <group___sys_native_control_itf_1gad543f2c947fa022436b3a7df6a518ec2>` s_pfCMGetAPI2( "SysNativeControlMove", (RTS_VOID_FCTPTR *)&pfSysNativeControlMove, (fl), 0, 0)
+
+- #define :ref:`CAL_SysNativeControlMove <group___sys_native_control_itf_1ga60d0e84acdb32901d603a5fd0daae2c9>` pfSysNativeControlMove
+
+- #define :ref:`CHK_SysNativeControlMove <group___sys_native_control_itf_1gac4096b3c74b59cb133b3f1d366ae5638>` (pfSysNativeControlMove != NULL)
+
+- #define :ref:`EXP_SysNativeControlMove <group___sys_native_control_itf_1ga39429165dea62279c7fdbdac3768d1f2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlMove", (RTS_UINTPTR) :ref:`SysNativeControlMove <group___sys_native_control_itf_1ga56623b9ce4f6187636e2aab7ba9b340f>` , 0, 0)
+
+- #define :ref:`USE_SysNativeControlMove_ <group___sys_native_control_itf_1ga6b0e08b8dc85577203d6efe2e974d31f>` :ref:`PFSYSNATIVECONTROLMOVE_ <group___sys_native_control_itf_1ga3fee8a27a2cd8ad7a8c06aa018ef5370>` pfSysNativeControlMove_;
+
+- #define :ref:`EXT_SysNativeControlMove_ <group___sys_native_control_itf_1ga48b8dcd778bf7eb1861cd78bc4d380ef>` extern :ref:`PFSYSNATIVECONTROLMOVE_ <group___sys_native_control_itf_1ga3fee8a27a2cd8ad7a8c06aa018ef5370>` pfSysNativeControlMove_;
+
+- #define :ref:`GET_SysNativeControlMove_ <group___sys_native_control_itf_1ga6bf48ec4c6ffb0e57425e34af4817d18>` s_pfCMGetAPI2( "SysNativeControlMove_", (RTS_VOID_FCTPTR *)&pfSysNativeControlMove_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysNativeControlMove_ <group___sys_native_control_itf_1ga84554366f1701b1f9468cd3553a6ee85>` pfSysNativeControlMove_
+
+- #define :ref:`CHK_SysNativeControlMove_ <group___sys_native_control_itf_1ga668beca08ed31da38be0a8d559dffe59>` (pfSysNativeControlMove_ != NULL)
+
+- #define :ref:`EXP_SysNativeControlMove_ <group___sys_native_control_itf_1gafa06fcd373ac03ffa35c81559c988ad3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlMove_", (RTS_UINTPTR) :ref:`SysNativeControlMove_ <group___sys_native_control_itf_1ga0411907bca33a2bb8166a94f0691841a>` , 0, 0)
+
+- #define :ref:`USE_SysNativeControlShow <group___sys_native_control_itf_1ga7237b7589d28e1d90d27bd330dbc3e50>` :ref:`PFSYSNATIVECONTROLSHOW <group___sys_native_control_itf_1gac64cc2342b26b44770474a4bc65e33d2>` pfSysNativeControlShow;
+
+- #define :ref:`EXT_SysNativeControlShow <group___sys_native_control_itf_1gaffc264aba132ad70f19421d01b8d33c9>` extern :ref:`PFSYSNATIVECONTROLSHOW <group___sys_native_control_itf_1gac64cc2342b26b44770474a4bc65e33d2>` pfSysNativeControlShow;
+
+- #define :ref:`GET_SysNativeControlShow <group___sys_native_control_itf_1ga63d8ef0c251a69c85d35c2ef0d8bfd0a>` s_pfCMGetAPI2( "SysNativeControlShow", (RTS_VOID_FCTPTR *)&pfSysNativeControlShow, (fl), 0, 0)
+
+- #define :ref:`CAL_SysNativeControlShow <group___sys_native_control_itf_1ga97fdb47a151cefd096a22f8b664b9af6>` pfSysNativeControlShow
+
+- #define :ref:`CHK_SysNativeControlShow <group___sys_native_control_itf_1ga791177f552f274fc104ab1855e1a0081>` (pfSysNativeControlShow != NULL)
+
+- #define :ref:`EXP_SysNativeControlShow <group___sys_native_control_itf_1ga274e3937dcbe6763f6f1ab84c2587056>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlShow", (RTS_UINTPTR) :ref:`SysNativeControlShow <group___sys_native_control_itf_1gaaa74304b9a909d2ccaf683bb3e6a4ede>` , 0, 0)
+
+- #define :ref:`USE_SysNativeControlShow_ <group___sys_native_control_itf_1gace0433ad1d437f80cfb32ac6cd274bb8>` :ref:`PFSYSNATIVECONTROLSHOW_ <group___sys_native_control_itf_1gaefc6444ff61205e42a341dd537547923>` pfSysNativeControlShow_;
+
+- #define :ref:`EXT_SysNativeControlShow_ <group___sys_native_control_itf_1ga6d5aa9de6b79c75fe2d005250823d1c2>` extern :ref:`PFSYSNATIVECONTROLSHOW_ <group___sys_native_control_itf_1gaefc6444ff61205e42a341dd537547923>` pfSysNativeControlShow_;
+
+- #define :ref:`GET_SysNativeControlShow_ <group___sys_native_control_itf_1gae9e567c6c4fac851f556d09bfc4a71f5>` s_pfCMGetAPI2( "SysNativeControlShow_", (RTS_VOID_FCTPTR *)&pfSysNativeControlShow_, (fl), 0, 0)
+
+- #define :ref:`CAL_SysNativeControlShow_ <group___sys_native_control_itf_1gaa2252324e463b89085881259c323eb95>` pfSysNativeControlShow_
+
+- #define :ref:`CHK_SysNativeControlShow_ <group___sys_native_control_itf_1gaec7296c7f4af51438d8440143315fa36>` (pfSysNativeControlShow_ != NULL)
+
+- #define :ref:`EXP_SysNativeControlShow_ <group___sys_native_control_itf_1ga2e12cb67f813bedeb5b19faf4c1f8c2a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlShow_", (RTS_UINTPTR) :ref:`SysNativeControlShow_ <group___sys_native_control_itf_1gaec15a7576187844881f7063b479e7565>` , 0, 0)
+
+- #define :ref:`ITF_SysNativeControl <group___sys_native_control_itf_1gabc9410ec6189717fd460b45cac02b7c4>`
+
+- #define :ref:`EXTITF_SysNativeControl <group___sys_native_control_itf_1gade14c0703da94ee5caa09d7bb799fcef>`
+
+Typedefs
+--------
+
+- typedef RTS_HANDLE(* :ref:`PFSYSNATIVECONTROLCREATE <group___sys_native_control_itf_1ga1f545c04f3638cc07fc63c5d8cc67ed5>`)(SysNativeControlCreate_Struct *pCreate, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSNATIVECONTROLCREATE_ <group___sys_native_control_itf_1ga64ecaf01cddae976566873c77de934d6>`)(SysNativeControlCreate_Struct *pCreate, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSNATIVECONTROLDESTROY <group___sys_native_control_itf_1gaa99fc9dfc002ce39e92132e6fa47a8f3>`)(RTS_HANDLE hControl)
+
+- typedef RTS_RESULT(* :ref:`PFSYSNATIVECONTROLDESTROY_ <group___sys_native_control_itf_1gac7c5f515207c8f4ea00a6ba2cd36a72c>`)(RTS_HANDLE hControl)
+
+- typedef RTS_RESULT(* :ref:`PFSYSNATIVECONTROLCALLMETHOD <group___sys_native_control_itf_1ga3b64a63a14efc919df2660e3ebebd500>`)(RTS_HANDLE hControl, char *pszMethodName, NativeControlParam *params, RTS_SIZE iParamCount, NativeControlParam *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSNATIVECONTROLCALLMETHOD_ <group___sys_native_control_itf_1ga0842edda5451d0fcd7a1788b01c9d1ed>`)(RTS_HANDLE hControl, char *pszMethodName, NativeControlParam *params, RTS_SIZE iParamCount, NativeControlParam *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSNATIVECONTROLMOVE <group___sys_native_control_itf_1gab453a35493628d5661d9feec2e805776>`)(RTS_HANDLE hControl, RTS_Rectangle *pRect)
+
+- typedef RTS_RESULT(* :ref:`PFSYSNATIVECONTROLMOVE_ <group___sys_native_control_itf_1ga3fee8a27a2cd8ad7a8c06aa018ef5370>`)(RTS_HANDLE hControl, RTS_Rectangle *pRect)
+
+- typedef RTS_RESULT(* :ref:`PFSYSNATIVECONTROLSHOW <group___sys_native_control_itf_1gac64cc2342b26b44770474a4bc65e33d2>`)(RTS_HANDLE hControl, RTS_UI32 dwFlags)
+
+- typedef RTS_RESULT(* :ref:`PFSYSNATIVECONTROLSHOW_ <group___sys_native_control_itf_1gaefc6444ff61205e42a341dd537547923>`)(RTS_HANDLE hControl, RTS_UI32 dwFlags)
+
+- typedef :ref:`ISysNativeControl_C <struct_i_sys_native_control___c>` :ref:`ISysNativeControl <group___sys_native_control_itf_1gae172fcd0e25923b1ec8bcc9b8e6892f2>`
+
+Functions
+---------
+
+- RTS_HANDLE :ref:`SysNativeControlCreate <group___sys_native_control_itf_1gaa7896e132439dbda20c1a910e45bf66a>` (:ref:`SysNativeControlCreate_Struct <struct_sys_native_control_create___struct>` * pCreate, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysNativeControlCreate_ <group___sys_native_control_itf_1gacbd3a79504e9868325331a174346d628>` (:ref:`SysNativeControlCreate_Struct <struct_sys_native_control_create___struct>` * pCreate, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysNativeControlDestroy <group___sys_native_control_itf_1gae409ab305661410dbdedefe7124d05ac>` (RTS_HANDLE hControl)
+
+- RTS_RESULT :ref:`SysNativeControlDestroy_ <group___sys_native_control_itf_1gab665db78ffa64700ef88cdf63385d77d>` (RTS_HANDLE hControl)
+
+- RTS_RESULT :ref:`SysNativeControlCallMethod <group___sys_native_control_itf_1gaeb942389bdaa1cd5bb0b04adcade7748>` (RTS_HANDLE hControl, char * pszMethodName, :ref:`NativeControlParam <group___sys_native_control_itf___staticdefines_1ga41e888ce5eeffa88a16780d6829dcc46>` * params, RTS_SIZE iParamCount, :ref:`NativeControlParam <group___sys_native_control_itf___staticdefines_1ga41e888ce5eeffa88a16780d6829dcc46>` * pResult)
+
+- RTS_RESULT :ref:`SysNativeControlCallMethod_ <group___sys_native_control_itf_1gad5b6ad223cefd8068b9a5ee981e5a977>` (RTS_HANDLE hControl, char * pszMethodName, :ref:`NativeControlParam <group___sys_native_control_itf___staticdefines_1ga41e888ce5eeffa88a16780d6829dcc46>` * params, RTS_SIZE iParamCount, :ref:`NativeControlParam <group___sys_native_control_itf___staticdefines_1ga41e888ce5eeffa88a16780d6829dcc46>` * pResult)
+
+- RTS_RESULT :ref:`SysNativeControlMove <group___sys_native_control_itf_1ga56623b9ce4f6187636e2aab7ba9b340f>` (RTS_HANDLE hControl, RTS_Rectangle * pRect)
+
+- RTS_RESULT :ref:`SysNativeControlMove_ <group___sys_native_control_itf_1ga0411907bca33a2bb8166a94f0691841a>` (RTS_HANDLE hControl, RTS_Rectangle * pRect)
+
+- RTS_RESULT :ref:`SysNativeControlShow <group___sys_native_control_itf_1gaaa74304b9a909d2ccaf683bb3e6a4ede>` (RTS_HANDLE hControl, RTS_UI32 dwFlags)
+
+- RTS_RESULT :ref:`SysNativeControlShow_ <group___sys_native_control_itf_1gaec15a7576187844881f7063b479e7565>` (RTS_HANDLE hControl, RTS_UI32 dwFlags)
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_native_control_itf_1ga0294332858c29358044da993463cdd44:
+
+#define NATIVE_CONTROL_SNCF_SHOW 0x00000001
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga2f0c828e748e1af01fcea0c97b5d84aa:
+
+#define NATIVE_CONTROL_SNCF_HIDE 0x00000002
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga4580f60b9c8c77257dabab8cfde9c08d:
+
+#define NATIVE_CONTROL_SNCF_HIDE_AND_DESTROY 0x00000004
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga67d18fdc5b3b8787f7e7484a9abce7d5:
+
+#define NATIVE_CONTROL_CNCMF_WITHOUT_RESULT 0x00000001
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gaab43fc412f8a6be0caae8b80eee14ce7:
+
+#define NATIVE_CONTROL_CNCMF_WITH_RESULT 0x00000002
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga1b75fa7dd075de2c8360bdf278b39cd2:
+
+#define NATIVE_CONTROL_CNCMF_DYNAMIC_MEMORY_ALLOCATED 0x00000004
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga8d3afd3e475bddb485943fc8afb0d849:
+
+#define USE_SysNativeControlCreate :ref:`PFSYSNATIVECONTROLCREATE <group___sys_native_control_itf_1ga1f545c04f3638cc07fc63c5d8cc67ed5>` pfSysNativeControlCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga35bbc957676cf21e15ee7716036a7e12:
+
+#define EXT_SysNativeControlCreate extern :ref:`PFSYSNATIVECONTROLCREATE <group___sys_native_control_itf_1ga1f545c04f3638cc07fc63c5d8cc67ed5>` pfSysNativeControlCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga011ee28b45c2fae24d8f9df194de0f47:
+
+#define GET_SysNativeControlCreate s_pfCMGetAPI2( "SysNativeControlCreate", (RTS_VOID_FCTPTR *)&pfSysNativeControlCreate, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gadcb5eb0dd9ceee0c9beb40c36d83b1cc:
+
+#define CAL_SysNativeControlCreate pfSysNativeControlCreate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga7c30a4f36dbf330c617d697fe8b68508:
+
+#define CHK_SysNativeControlCreate (pfSysNativeControlCreate != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga3ae84a143b07308b89d489de0144d059:
+
+#define EXP_SysNativeControlCreate s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlCreate", (RTS_UINTPTR) :ref:`SysNativeControlCreate <group___sys_native_control_itf_1gaa7896e132439dbda20c1a910e45bf66a>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga7b0a8aab6e33a091732c7494c56c67a8:
+
+#define USE_SysNativeControlCreate_ :ref:`PFSYSNATIVECONTROLCREATE_ <group___sys_native_control_itf_1ga64ecaf01cddae976566873c77de934d6>` pfSysNativeControlCreate_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga8c2091407a01912b8abb14c27c7ee2c6:
+
+#define EXT_SysNativeControlCreate_ extern :ref:`PFSYSNATIVECONTROLCREATE_ <group___sys_native_control_itf_1ga64ecaf01cddae976566873c77de934d6>` pfSysNativeControlCreate_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga0995d661217d558fffc31115d5108452:
+
+#define GET_SysNativeControlCreate_ s_pfCMGetAPI2( "SysNativeControlCreate_", (RTS_VOID_FCTPTR *)&pfSysNativeControlCreate_, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga61e781fc5137cce43c726e880902aaec:
+
+#define CAL_SysNativeControlCreate_ pfSysNativeControlCreate_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga1c39e95a823e1bdfd366a849bbc81258:
+
+#define CHK_SysNativeControlCreate_ (pfSysNativeControlCreate_ != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gaf1f1c19ce69569ef359589e08be05fdf:
+
+#define EXP_SysNativeControlCreate_ s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlCreate_", (RTS_UINTPTR) :ref:`SysNativeControlCreate_ <group___sys_native_control_itf_1gacbd3a79504e9868325331a174346d628>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga7243c48f79ff3726a060af9a06b23843:
+
+#define USE_SysNativeControlDestroy :ref:`PFSYSNATIVECONTROLDESTROY <group___sys_native_control_itf_1gaa99fc9dfc002ce39e92132e6fa47a8f3>` pfSysNativeControlDestroy;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga915e94afc77bc27f172e0fbe8a1f842b:
+
+#define EXT_SysNativeControlDestroy extern :ref:`PFSYSNATIVECONTROLDESTROY <group___sys_native_control_itf_1gaa99fc9dfc002ce39e92132e6fa47a8f3>` pfSysNativeControlDestroy;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gabd7f6eed17a2e8bc6c7ae9db4ad44e28:
+
+#define GET_SysNativeControlDestroy s_pfCMGetAPI2( "SysNativeControlDestroy", (RTS_VOID_FCTPTR *)&pfSysNativeControlDestroy, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gab7b7d972519657074a290bc2fe32d9fe:
+
+#define CAL_SysNativeControlDestroy pfSysNativeControlDestroy
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga58d1e1392eb020b028b3729259efd2fe:
+
+#define CHK_SysNativeControlDestroy (pfSysNativeControlDestroy != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga52e536fca3d998dadc560a3ec76793be:
+
+#define EXP_SysNativeControlDestroy s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlDestroy", (RTS_UINTPTR) :ref:`SysNativeControlDestroy <group___sys_native_control_itf_1gae409ab305661410dbdedefe7124d05ac>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga3d7367bed3935ef58ea5cf4e7954782a:
+
+#define USE_SysNativeControlDestroy_ :ref:`PFSYSNATIVECONTROLDESTROY_ <group___sys_native_control_itf_1gac7c5f515207c8f4ea00a6ba2cd36a72c>` pfSysNativeControlDestroy_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gae2d98286c4a0a7e22686d751a4258f02:
+
+#define EXT_SysNativeControlDestroy_ extern :ref:`PFSYSNATIVECONTROLDESTROY_ <group___sys_native_control_itf_1gac7c5f515207c8f4ea00a6ba2cd36a72c>` pfSysNativeControlDestroy_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga9a4c6152a17945a453e0a4f8e1c85a9c:
+
+#define GET_SysNativeControlDestroy_ s_pfCMGetAPI2( "SysNativeControlDestroy_", (RTS_VOID_FCTPTR *)&pfSysNativeControlDestroy_, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga61da8239506536e18eb75258adbf1cd8:
+
+#define CAL_SysNativeControlDestroy_ pfSysNativeControlDestroy_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga31550bde0d312ba292e9700d8c09989b:
+
+#define CHK_SysNativeControlDestroy_ (pfSysNativeControlDestroy_ != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gaca86cdd0d85ed0d782dc816be53603e9:
+
+#define EXP_SysNativeControlDestroy_ s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlDestroy_", (RTS_UINTPTR) :ref:`SysNativeControlDestroy_ <group___sys_native_control_itf_1gab665db78ffa64700ef88cdf63385d77d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga8da92514dceae49f22cbe11bf1394efe:
+
+#define USE_SysNativeControlCallMethod :ref:`PFSYSNATIVECONTROLCALLMETHOD <group___sys_native_control_itf_1ga3b64a63a14efc919df2660e3ebebd500>` pfSysNativeControlCallMethod;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga2298ddc87fa9d14192f70d91bf1e6892:
+
+#define EXT_SysNativeControlCallMethod extern :ref:`PFSYSNATIVECONTROLCALLMETHOD <group___sys_native_control_itf_1ga3b64a63a14efc919df2660e3ebebd500>` pfSysNativeControlCallMethod;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gac69150dc17a8e71247f5ee4c8b6cd761:
+
+#define GET_SysNativeControlCallMethod s_pfCMGetAPI2( "SysNativeControlCallMethod", (RTS_VOID_FCTPTR *)&pfSysNativeControlCallMethod, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gaeff19c9f34ab71bf2cba085022c28912:
+
+#define CAL_SysNativeControlCallMethod pfSysNativeControlCallMethod
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga544979476663be562fec142eada2fbd1:
+
+#define CHK_SysNativeControlCallMethod (pfSysNativeControlCallMethod != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga44f11998afbf71ba78039fcebd9f9e6c:
+
+#define EXP_SysNativeControlCallMethod s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlCallMethod", (RTS_UINTPTR) :ref:`SysNativeControlCallMethod <group___sys_native_control_itf_1gaeb942389bdaa1cd5bb0b04adcade7748>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga5a3aa7287a895feee9ef84bc0dd11b02:
+
+#define USE_SysNativeControlCallMethod_ :ref:`PFSYSNATIVECONTROLCALLMETHOD_ <group___sys_native_control_itf_1ga0842edda5451d0fcd7a1788b01c9d1ed>` pfSysNativeControlCallMethod_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga7ba54084c9b613560140baadc34d3ce6:
+
+#define EXT_SysNativeControlCallMethod_ extern :ref:`PFSYSNATIVECONTROLCALLMETHOD_ <group___sys_native_control_itf_1ga0842edda5451d0fcd7a1788b01c9d1ed>` pfSysNativeControlCallMethod_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gae3fa1ff2024484ed9b2a374331abf1a2:
+
+#define GET_SysNativeControlCallMethod_ s_pfCMGetAPI2( "SysNativeControlCallMethod_", (RTS_VOID_FCTPTR *)&pfSysNativeControlCallMethod_, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga0056cd5a948482778f5597b225732b5a:
+
+#define CAL_SysNativeControlCallMethod_ pfSysNativeControlCallMethod_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gad7257868ddb3325f41efe57451257750:
+
+#define CHK_SysNativeControlCallMethod_ (pfSysNativeControlCallMethod_ != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gaa9e197e26243cb18f62a1d1711fcba51:
+
+#define EXP_SysNativeControlCallMethod_ s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlCallMethod_", (RTS_UINTPTR) :ref:`SysNativeControlCallMethod_ <group___sys_native_control_itf_1gad5b6ad223cefd8068b9a5ee981e5a977>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gaf49e07380dd6aed5507e14a50d481474:
+
+#define USE_SysNativeControlMove :ref:`PFSYSNATIVECONTROLMOVE <group___sys_native_control_itf_1gab453a35493628d5661d9feec2e805776>` pfSysNativeControlMove;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gae6ede869fe64458325169c66de8c80df:
+
+#define EXT_SysNativeControlMove extern :ref:`PFSYSNATIVECONTROLMOVE <group___sys_native_control_itf_1gab453a35493628d5661d9feec2e805776>` pfSysNativeControlMove;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gad543f2c947fa022436b3a7df6a518ec2:
+
+#define GET_SysNativeControlMove s_pfCMGetAPI2( "SysNativeControlMove", (RTS_VOID_FCTPTR *)&pfSysNativeControlMove, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga60d0e84acdb32901d603a5fd0daae2c9:
+
+#define CAL_SysNativeControlMove pfSysNativeControlMove
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gac4096b3c74b59cb133b3f1d366ae5638:
+
+#define CHK_SysNativeControlMove (pfSysNativeControlMove != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga39429165dea62279c7fdbdac3768d1f2:
+
+#define EXP_SysNativeControlMove s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlMove", (RTS_UINTPTR) :ref:`SysNativeControlMove <group___sys_native_control_itf_1ga56623b9ce4f6187636e2aab7ba9b340f>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga6b0e08b8dc85577203d6efe2e974d31f:
+
+#define USE_SysNativeControlMove_ :ref:`PFSYSNATIVECONTROLMOVE_ <group___sys_native_control_itf_1ga3fee8a27a2cd8ad7a8c06aa018ef5370>` pfSysNativeControlMove_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga48b8dcd778bf7eb1861cd78bc4d380ef:
+
+#define EXT_SysNativeControlMove_ extern :ref:`PFSYSNATIVECONTROLMOVE_ <group___sys_native_control_itf_1ga3fee8a27a2cd8ad7a8c06aa018ef5370>` pfSysNativeControlMove_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga6bf48ec4c6ffb0e57425e34af4817d18:
+
+#define GET_SysNativeControlMove_ s_pfCMGetAPI2( "SysNativeControlMove_", (RTS_VOID_FCTPTR *)&pfSysNativeControlMove_, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga84554366f1701b1f9468cd3553a6ee85:
+
+#define CAL_SysNativeControlMove_ pfSysNativeControlMove_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga668beca08ed31da38be0a8d559dffe59:
+
+#define CHK_SysNativeControlMove_ (pfSysNativeControlMove_ != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gafa06fcd373ac03ffa35c81559c988ad3:
+
+#define EXP_SysNativeControlMove_ s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlMove_", (RTS_UINTPTR) :ref:`SysNativeControlMove_ <group___sys_native_control_itf_1ga0411907bca33a2bb8166a94f0691841a>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga7237b7589d28e1d90d27bd330dbc3e50:
+
+#define USE_SysNativeControlShow :ref:`PFSYSNATIVECONTROLSHOW <group___sys_native_control_itf_1gac64cc2342b26b44770474a4bc65e33d2>` pfSysNativeControlShow;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gaffc264aba132ad70f19421d01b8d33c9:
+
+#define EXT_SysNativeControlShow extern :ref:`PFSYSNATIVECONTROLSHOW <group___sys_native_control_itf_1gac64cc2342b26b44770474a4bc65e33d2>` pfSysNativeControlShow;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga63d8ef0c251a69c85d35c2ef0d8bfd0a:
+
+#define GET_SysNativeControlShow s_pfCMGetAPI2( "SysNativeControlShow", (RTS_VOID_FCTPTR *)&pfSysNativeControlShow, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga97fdb47a151cefd096a22f8b664b9af6:
+
+#define CAL_SysNativeControlShow pfSysNativeControlShow
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga791177f552f274fc104ab1855e1a0081:
+
+#define CHK_SysNativeControlShow (pfSysNativeControlShow != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga274e3937dcbe6763f6f1ab84c2587056:
+
+#define EXP_SysNativeControlShow s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlShow", (RTS_UINTPTR) :ref:`SysNativeControlShow <group___sys_native_control_itf_1gaaa74304b9a909d2ccaf683bb3e6a4ede>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gace0433ad1d437f80cfb32ac6cd274bb8:
+
+#define USE_SysNativeControlShow_ :ref:`PFSYSNATIVECONTROLSHOW_ <group___sys_native_control_itf_1gaefc6444ff61205e42a341dd537547923>` pfSysNativeControlShow_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga6d5aa9de6b79c75fe2d005250823d1c2:
+
+#define EXT_SysNativeControlShow_ extern :ref:`PFSYSNATIVECONTROLSHOW_ <group___sys_native_control_itf_1gaefc6444ff61205e42a341dd537547923>` pfSysNativeControlShow_;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gae9e567c6c4fac851f556d09bfc4a71f5:
+
+#define GET_SysNativeControlShow_ s_pfCMGetAPI2( "SysNativeControlShow_", (RTS_VOID_FCTPTR *)&pfSysNativeControlShow_, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gaa2252324e463b89085881259c323eb95:
+
+#define CAL_SysNativeControlShow_ pfSysNativeControlShow_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gaec7296c7f4af51438d8440143315fa36:
+
+#define CHK_SysNativeControlShow_ (pfSysNativeControlShow_ != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga2e12cb67f813bedeb5b19faf4c1f8c2a:
+
+#define EXP_SysNativeControlShow_ s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysNativeControlShow_", (RTS_UINTPTR) :ref:`SysNativeControlShow_ <group___sys_native_control_itf_1gaec15a7576187844881f7063b479e7565>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gabc9410ec6189717fd460b45cac02b7c4:
+
+#define ITF_SysNativeControl
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gade14c0703da94ee5caa09d7bb799fcef:
+
+#define EXTITF_SysNativeControl
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___sys_native_control_itf_1ga1f545c04f3638cc07fc63c5d8cc67ed5:
+
+typedef RTS_HANDLE( *  PFSYSNATIVECONTROLCREATE) (SysNativeControlCreate_Struct *pCreate, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga64ecaf01cddae976566873c77de934d6:
+
+typedef RTS_HANDLE( *  PFSYSNATIVECONTROLCREATE_) (SysNativeControlCreate_Struct *pCreate, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gaa99fc9dfc002ce39e92132e6fa47a8f3:
+
+typedef RTS_RESULT( *  PFSYSNATIVECONTROLDESTROY) (RTS_HANDLE hControl)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gac7c5f515207c8f4ea00a6ba2cd36a72c:
+
+typedef RTS_RESULT( *  PFSYSNATIVECONTROLDESTROY_) (RTS_HANDLE hControl)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga3b64a63a14efc919df2660e3ebebd500:
+
+typedef RTS_RESULT( *  PFSYSNATIVECONTROLCALLMETHOD) (RTS_HANDLE hControl, char *pszMethodName, NativeControlParam *params, RTS_SIZE iParamCount, NativeControlParam *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga0842edda5451d0fcd7a1788b01c9d1ed:
+
+typedef RTS_RESULT( *  PFSYSNATIVECONTROLCALLMETHOD_) (RTS_HANDLE hControl, char *pszMethodName, NativeControlParam *params, RTS_SIZE iParamCount, NativeControlParam *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gab453a35493628d5661d9feec2e805776:
+
+typedef RTS_RESULT( *  PFSYSNATIVECONTROLMOVE) (RTS_HANDLE hControl, RTS_Rectangle *pRect)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga3fee8a27a2cd8ad7a8c06aa018ef5370:
+
+typedef RTS_RESULT( *  PFSYSNATIVECONTROLMOVE_) (RTS_HANDLE hControl, RTS_Rectangle *pRect)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gac64cc2342b26b44770474a4bc65e33d2:
+
+typedef RTS_RESULT( *  PFSYSNATIVECONTROLSHOW) (RTS_HANDLE hControl, RTS_UI32 dwFlags)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gaefc6444ff61205e42a341dd537547923:
+
+typedef RTS_RESULT( *  PFSYSNATIVECONTROLSHOW_) (RTS_HANDLE hControl, RTS_UI32 dwFlags)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gae172fcd0e25923b1ec8bcc9b8e6892f2:
+
+typedef ISysNativeControl_C ISysNativeControl
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___sys_native_control_itf_1gaa7896e132439dbda20c1a910e45bf66a:
+
+RTS_HANDLE SysNativeControlCreate (SysNativeControlCreate_Struct *pCreate, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to create a native control
+
+**Parameters**
+
++---------+---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pCreate | The structure that describes the native control that has to be created.                                                                                                                                                                                        |
++---------+---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulParam | A parameter that is dependent of the type of the native control. Might be a pointer pointing to a structure with further information for the creation of this native control. In case of a pointer, this pointer must be valid until the control is destroyed. |
++---------+---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult | Optionally returns an error code                                                                                                                                                                                                                               |
++---------+---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+The handle to the native display context or RTS_INVALID_HANDLE in case of errors.
+
+.. _group___sys_native_control_itf_1gacbd3a79504e9868325331a174346d628:
+
+RTS_HANDLE SysNativeControlCreate_ (SysNativeControlCreate_Struct *pCreate, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gae409ab305661410dbdedefe7124d05ac:
+
+RTS_RESULT SysNativeControlDestroy (RTS_HANDLE hControl)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to destroy a native control
+
+**Parameters**
+
++---------+----------+------------------------------+
+| [in]    | hControl | Handle to the native control |
++---------+----------+------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_native_control_itf_1gab665db78ffa64700ef88cdf63385d77d:
+
+RTS_RESULT SysNativeControlDestroy_ (RTS_HANDLE hControl)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gaeb942389bdaa1cd5bb0b04adcade7748:
+
+RTS_RESULT SysNativeControlCallMethod (RTS_HANDLE hControl, char *pszMethodName, NativeControlParam *params, RTS_SIZE iParamCount, NativeControlParam *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to destroy a native control
+
+**Parameters**
+
++---------+---------------+------------------------------------+
+| [in]    | hControl      | Handle to the native control       |
++---------+---------------+------------------------------------+
+| [in]    | pszMethodName | The name of the method call        |
++---------+---------------+------------------------------------+
+| [in]    | params        | The parameters for the method call |
++---------+---------------+------------------------------------+
+| [in]    | iParamCount   | The parameter count                |
++---------+---------------+------------------------------------+
+| [in]    | pResult       | The result parameter               |
++---------+---------------+------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_native_control_itf_1gad5b6ad223cefd8068b9a5ee981e5a977:
+
+RTS_RESULT SysNativeControlCallMethod_ (RTS_HANDLE hControl, char *pszMethodName, NativeControlParam *params, RTS_SIZE iParamCount, NativeControlParam *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1ga56623b9ce4f6187636e2aab7ba9b340f:
+
+RTS_RESULT SysNativeControlMove (RTS_HANDLE hControl, RTS_Rectangle *pRect)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to destroy a native control
+
+**Parameters**
+
++---------+----------+------------------------------+
+| [in]    | hControl | Handle to the native control |
++---------+----------+------------------------------+
+| [in]    | pRect    | The new position             |
++---------+----------+------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_native_control_itf_1ga0411907bca33a2bb8166a94f0691841a:
+
+RTS_RESULT SysNativeControlMove_ (RTS_HANDLE hControl, RTS_Rectangle *pRect)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_native_control_itf_1gaaa74304b9a909d2ccaf683bb3e6a4ede:
+
+RTS_RESULT SysNativeControlShow (RTS_HANDLE hControl, RTS_UI32 dwFlags)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to show or hide a native control
+
+**Parameters**
+
++---------+---------+------------------------------+
+| [in]    | hWindow | Handle to the native control |
++---------+---------+------------------------------+
+| [in]    | dwFlags | The show flags               |
++---------+---------+------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_native_control_itf_1gaec15a7576187844881f7063b479e7565:
+
+RTS_RESULT SysNativeControlShow_ (RTS_HANDLE hControl, RTS_UI32 dwFlags)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

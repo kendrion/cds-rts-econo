@@ -1,0 +1,1117 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_io_drv_itf:
+
+===========
+CmpIoDrvItf
+===========
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpIoDrv.
+
+Detailed Description
+--------------------
+
+Standard IO-driver interface.
+
+THis interface is used for I/O drivers written in C as well as I/O drivers written in IEC. IEC I/O drivers are typically written as a function block, which implements the IIoDrv Interface.
+
+To be able to access this IEC interface from C (which is for example necessary for the IoMgr), the component CmpIoDrvIec acts as a wrapper between C and IEC and implements exactly this interface.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Channel Map List Swapping Information <group___cmp_io_drv_itf___channel_map_list_swapping_information>`
+
+- :ref:`Connector flags <group___cmp_io_drv_itf___connectorflags>`
+
+- :ref:`Connector options <group___cmp_io_drv_itf___connectoroptions>`
+
+- :ref:`Connector types <group___cmp_io_drv_itf___connectortypes>`
+
+- :ref:`Driver property flags <group___cmp_io_drv_itf___driverpropertyflags>`
+
+- :ref:`Field-bus independent parameters <group___cmp_io_drv_itf___field-busindependentparameters>`
+
+- :ref:`Parameter value flags <group___cmp_io_drv_itf___parametervalueflags>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpIoDrv_C <struct_i_cmp_io_drv___c>`
+
+Macros
+------
+
+- #define :ref:`USE_IoDrvCreate <group___cmp_io_drv_itf_1ga54dd4b281df87f61eb30e0c314718172>`
+
+- #define :ref:`EXT_IoDrvCreate <group___cmp_io_drv_itf_1ga399e2055817cb3767a90431e9d42702f>`
+
+- #define :ref:`GET_IoDrvCreate <group___cmp_io_drv_itf_1ga2138c1872b464cea758a73b631f25656>` ERR_OK
+
+- #define :ref:`CAL_IoDrvCreate <group___cmp_io_drv_itf_1ga087e36defe8aa9cc62196a99ca5666ee>` p0 = (IBase *)s_pfCMCreateInstance(p1, NULL);\
+((IBase *)p0)->hInstance = (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)((IBase *)p0)->QueryInterface((IBase *)p0, ITFID_ICmpIoDrv, NULL))->IIoDrvCreate(p0,p1,p2,p3)
+
+- #define :ref:`CHK_IoDrvCreate <group___cmp_io_drv_itf_1ga6857e8a6589674ba27d98c1d2de389e1>` TRUE
+
+- #define :ref:`EXP_IoDrvCreate <group___cmp_io_drv_itf_1gac17478801b6c4639f5864e9635e174cc>` ERR_OK
+
+- #define :ref:`USE_IoDrvDelete <group___cmp_io_drv_itf_1gaee85c3cdd6e8bed9b94ff2f56a821703>`
+
+- #define :ref:`EXT_IoDrvDelete <group___cmp_io_drv_itf_1gae5d936fd0697f195b83a817abe5d1426>`
+
+- #define :ref:`GET_IoDrvDelete <group___cmp_io_drv_itf_1ga3913c1a767d0b3d7141f0f4586a7ecc9>` ERR_OK
+
+- #define :ref:`CAL_IoDrvDelete <group___cmp_io_drv_itf_1ga95d6164e94db2db9e977d2dcd8aa0914>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvDelete((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1))
+
+- #define :ref:`CHK_IoDrvDelete <group___cmp_io_drv_itf_1ga35d3bcfec3120d41eae2215d7d48381f>` TRUE
+
+- #define :ref:`EXP_IoDrvDelete <group___cmp_io_drv_itf_1ga971f5b910ef409e099ab2b13ac397e52>` ERR_OK
+
+- #define :ref:`USE_IoDrvGetInfo <group___cmp_io_drv_itf_1gac773104c34eab2aa92a31f4b59ef1cc0>`
+
+- #define :ref:`EXT_IoDrvGetInfo <group___cmp_io_drv_itf_1ga28e89f5ceb241b7033309e422aeb277f>`
+
+- #define :ref:`GET_IoDrvGetInfo <group___cmp_io_drv_itf_1gacd0bad89a574d3a4a111ab6524a192ee>` ERR_OK
+
+- #define :ref:`CAL_IoDrvGetInfo <group___cmp_io_drv_itf_1ga1697e56275f2a9ff43dfbc21e446beaf>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvGetInfo((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1))
+
+- #define :ref:`CHK_IoDrvGetInfo <group___cmp_io_drv_itf_1ga3e6b21e5dcbc8c110d46fafc8c8593ca>` TRUE
+
+- #define :ref:`EXP_IoDrvGetInfo <group___cmp_io_drv_itf_1ga25f2765faa283e59bf84c0ca81b9edb1>` ERR_OK
+
+- #define :ref:`USE_IoDrvGetModuleDiagnosis <group___cmp_io_drv_itf_1ga749868f4bb6c7d46126b2031ec87ea3d>`
+
+- #define :ref:`EXT_IoDrvGetModuleDiagnosis <group___cmp_io_drv_itf_1gadafdaab8bdfbaaed6c67df5455ba6973>`
+
+- #define :ref:`GET_IoDrvGetModuleDiagnosis <group___cmp_io_drv_itf_1ga826c47c0113c7eac83a3dc6a3868949f>` ERR_OK
+
+- #define :ref:`CAL_IoDrvGetModuleDiagnosis <group___cmp_io_drv_itf_1ga6083d5398418aa0ab8f6ae8eae721ccc>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvGetModuleDiagnosis((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1))
+
+- #define :ref:`CHK_IoDrvGetModuleDiagnosis <group___cmp_io_drv_itf_1ga9a53e551eaf505c3814e1d85cf236a16>` TRUE
+
+- #define :ref:`EXP_IoDrvGetModuleDiagnosis <group___cmp_io_drv_itf_1gaa80a6d6d02e85adc76c675dcf3493437>` ERR_OK
+
+- #define :ref:`USE_IoDrvIdentify <group___cmp_io_drv_itf_1ga2cda436e309e17b948a5bf7ea216d7b5>`
+
+- #define :ref:`EXT_IoDrvIdentify <group___cmp_io_drv_itf_1ga24628e951449f14e4adaca10c3d855f0>`
+
+- #define :ref:`GET_IoDrvIdentify <group___cmp_io_drv_itf_1ga9960ae2450d24de391843bf2adeb8268>` ERR_OK
+
+- #define :ref:`CAL_IoDrvIdentify <group___cmp_io_drv_itf_1ga14d918333d2b3c87e731150f3c0d4217>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvIdentify((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1))
+
+- #define :ref:`CHK_IoDrvIdentify <group___cmp_io_drv_itf_1gae3bc3b7effd5c25cce1ad7fa526604b1>` TRUE
+
+- #define :ref:`EXP_IoDrvIdentify <group___cmp_io_drv_itf_1ga8e0866675b02766f334c74c8908d5606>` ERR_OK
+
+- #define :ref:`USE_IoDrvReadInputs <group___cmp_io_drv_itf_1ga373f33315a83c6fb634d98897585a6b2>`
+
+- #define :ref:`EXT_IoDrvReadInputs <group___cmp_io_drv_itf_1ga800d1c97fbdfee27173ee7471a4854c4>`
+
+- #define :ref:`GET_IoDrvReadInputs <group___cmp_io_drv_itf_1ga30d33b8bcf5f5d55a97e8d3a04305fd0>` ERR_OK
+
+- #define :ref:`CAL_IoDrvReadInputs <group___cmp_io_drv_itf_1gaff02f91842e22aa3c40be567de3d4e34>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvReadInputs((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_IoDrvReadInputs <group___cmp_io_drv_itf_1ga7d974dfe01526f9b765968d3ffa2c1b9>` TRUE
+
+- #define :ref:`EXP_IoDrvReadInputs <group___cmp_io_drv_itf_1ga97de240ff2a3e2cac13b9b00212885bc>` ERR_OK
+
+- #define :ref:`USE_IoDrvScanModules <group___cmp_io_drv_itf_1gaea4cfeecda3fda627419a951b3e60ed3>`
+
+- #define :ref:`EXT_IoDrvScanModules <group___cmp_io_drv_itf_1ga69b42536284388d612ea04d46c810e94>`
+
+- #define :ref:`GET_IoDrvScanModules <group___cmp_io_drv_itf_1gad293f4467be3200c28a1568b559b3009>` ERR_OK
+
+- #define :ref:`CAL_IoDrvScanModules <group___cmp_io_drv_itf_1ga4c265eb789aabece1b187a50923136de>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvScanModules((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1,p2,p3))
+
+- #define :ref:`CHK_IoDrvScanModules <group___cmp_io_drv_itf_1gaecdddcabbcb3f8493bfcabb874271079>` TRUE
+
+- #define :ref:`EXP_IoDrvScanModules <group___cmp_io_drv_itf_1gaee21af387c35d8d7bd4f8ceb3020e89e>` ERR_OK
+
+- #define :ref:`USE_IoDrvStartBusCycle <group___cmp_io_drv_itf_1gabb7a6c29ed56b51df9a60235eb2d9e7d>`
+
+- #define :ref:`EXT_IoDrvStartBusCycle <group___cmp_io_drv_itf_1ga0a6b6e4a2aaee3f571be00da7b84f494>`
+
+- #define :ref:`GET_IoDrvStartBusCycle <group___cmp_io_drv_itf_1ga2c467143011371b1c4ee27af417e16cb>` ERR_OK
+
+- #define :ref:`CAL_IoDrvStartBusCycle <group___cmp_io_drv_itf_1gabb0b8dccfd7dccad634604305d3fe49d>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvStartBusCycle((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1))
+
+- #define :ref:`CHK_IoDrvStartBusCycle <group___cmp_io_drv_itf_1gaebad87ff7911baed4343db2ac0db1179>` TRUE
+
+- #define :ref:`EXP_IoDrvStartBusCycle <group___cmp_io_drv_itf_1ga5a8a61452bfd8b69fd173aaf3dba0130>` ERR_OK
+
+- #define :ref:`USE_IoDrvUpdateConfiguration <group___cmp_io_drv_itf_1ga9bdd6a1164b4334713d4622ac27a952c>`
+
+- #define :ref:`EXT_IoDrvUpdateConfiguration <group___cmp_io_drv_itf_1gadc514b9fe1f6a00f8862e1dc99ee5ec4>`
+
+- #define :ref:`GET_IoDrvUpdateConfiguration <group___cmp_io_drv_itf_1gaa57a811c9868c01b9c64b7d2ddb2b7ec>` ERR_OK
+
+- #define :ref:`CAL_IoDrvUpdateConfiguration <group___cmp_io_drv_itf_1ga36dbbd50331b057be7eec52ad9d3a86c>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvUpdateConfiguration((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_IoDrvUpdateConfiguration <group___cmp_io_drv_itf_1ga3b064fbff8f4b5da52b6eeb8837b41a0>` TRUE
+
+- #define :ref:`EXP_IoDrvUpdateConfiguration <group___cmp_io_drv_itf_1ga8e5cb8a5ca0637a05a67b1aa6f4cb11d>` ERR_OK
+
+- #define :ref:`USE_IoDrvUpdateMapping <group___cmp_io_drv_itf_1ga1820c830ecbd0b49d7053e35aee12700>`
+
+- #define :ref:`EXT_IoDrvUpdateMapping <group___cmp_io_drv_itf_1ga194b1693f1089dbf24a629abbafef7d6>`
+
+- #define :ref:`GET_IoDrvUpdateMapping <group___cmp_io_drv_itf_1ga43852f55cdbb99ff6d597c4a37371972>` ERR_OK
+
+- #define :ref:`CAL_IoDrvUpdateMapping <group___cmp_io_drv_itf_1ga64fc036826610b9f8b723d4ce610a709>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvUpdateMapping((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_IoDrvUpdateMapping <group___cmp_io_drv_itf_1gad4f19c9aa53dc973b368d43e9f66deff>` TRUE
+
+- #define :ref:`EXP_IoDrvUpdateMapping <group___cmp_io_drv_itf_1ga52184355b7fe0f9d37f40976ca82c812>` ERR_OK
+
+- #define :ref:`USE_IoDrvWatchdogTrigger <group___cmp_io_drv_itf_1gad6bd96727275eaf5bdfbd8b64fbd7223>`
+
+- #define :ref:`EXT_IoDrvWatchdogTrigger <group___cmp_io_drv_itf_1gac085d44f84010dfc3e1d1788e5413879>`
+
+- #define :ref:`GET_IoDrvWatchdogTrigger <group___cmp_io_drv_itf_1ga6bd25393756f5bd2376d51ba11086913>` ERR_OK
+
+- #define :ref:`CAL_IoDrvWatchdogTrigger <group___cmp_io_drv_itf_1gac365865aa886d053e009ddff91a62483>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvWatchdogTrigger((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1))
+
+- #define :ref:`CHK_IoDrvWatchdogTrigger <group___cmp_io_drv_itf_1gaf3f7c8b5879fae133e935687f7605805>` TRUE
+
+- #define :ref:`EXP_IoDrvWatchdogTrigger <group___cmp_io_drv_itf_1ga7bffa4c2660025481d80bed9b4e72b35>` ERR_OK
+
+- #define :ref:`USE_IoDrvWriteOutputs <group___cmp_io_drv_itf_1ga5ef87d1f9d6d110982c497eef2ff04b6>`
+
+- #define :ref:`EXT_IoDrvWriteOutputs <group___cmp_io_drv_itf_1ga29cdb68adba04165a37554ca8a1b6d21>`
+
+- #define :ref:`GET_IoDrvWriteOutputs <group___cmp_io_drv_itf_1ga60673ba57123296c50443b7d50fb932c>` ERR_OK
+
+- #define :ref:`CAL_IoDrvWriteOutputs <group___cmp_io_drv_itf_1ga74efaf398fd7e66180e3bd05bdbe9466>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvWriteOutputs((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_IoDrvWriteOutputs <group___cmp_io_drv_itf_1ga46c7b1aecf2b6863ff4c4450d3367f5c>` TRUE
+
+- #define :ref:`EXP_IoDrvWriteOutputs <group___cmp_io_drv_itf_1ga09b791452b56ddbe3440710d485262be>` ERR_OK
+
+- #define :ref:`ITF_CmpIoDrv <group___cmp_io_drv_itf_1gae60bebb04e3cc8f1209e2c974348f4f3>`
+
+- #define :ref:`EXTITF_CmpIoDrv <group___cmp_io_drv_itf_1ga040f11f7d7e580970fb2bf4fc2acf31e>`
+
+Typedefs
+--------
+
+- typedef RTS_HANDLE(* :ref:`PFIODRVCREATE <group___cmp_io_drv_itf_1ga231063ac509ec870afd1326daf67e34f>`)(RTS_HANDLE hIIoDrv, CLASSID ClassId, int iId, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFIODRVDELETE <group___cmp_io_drv_itf_1ga3338386aaad5d6eb6743d60e80d9947d>`)(RTS_HANDLE hIoDrv, RTS_HANDLE hIIoDrv)
+
+- typedef RTS_RESULT(* :ref:`PFIODRVGETINFO <group___cmp_io_drv_itf_1ga2d7765908f5cec10e6153a854282b502>`)(RTS_HANDLE hIoDrv, IoDrvInfo **ppIoDrv)
+
+- typedef RTS_RESULT(* :ref:`PFIODRVGETMODULEDIAGNOSIS <group___cmp_io_drv_itf_1gaaf41a71f221724913c6f34704d026619>`)(RTS_HANDLE hIoDrv, IoConfigConnector *pConnector)
+
+- typedef RTS_RESULT(* :ref:`PFIODRVIDENTIFY <group___cmp_io_drv_itf_1ga0744e87db6ac9477a993db2f42040719>`)(RTS_HANDLE hIoDrv, IoConfigConnector *pConnector)
+
+- typedef RTS_RESULT(* :ref:`PFIODRVREADINPUTS <group___cmp_io_drv_itf_1ga8b1c1e46f21c67aa5da509aaba000ce2>`)(RTS_HANDLE hIoDrv, IoConfigConnectorMap *pConnectorMapList, int nCount)
+
+- typedef RTS_RESULT(* :ref:`PFIODRVSCANMODULES <group___cmp_io_drv_itf_1ga768b9531a84ae3940585bb69a8beb610>`)(RTS_HANDLE hIoDrv, IoConfigConnector *pConnector, IoConfigConnector **ppConnectorList, int *pnCount)
+
+- typedef RTS_RESULT(* :ref:`PFIODRVSTARTBUSCYCLE <group___cmp_io_drv_itf_1gae4fed27fcfeb5d947a8dfbd7b34f960c>`)(RTS_HANDLE hIoDrv, IoConfigConnector *pConnector)
+
+- typedef RTS_RESULT(* :ref:`PFIODRVUPDATECONFIGURATION <group___cmp_io_drv_itf_1ga12771dffcab3ece981fb84b8e77accd6>`)(RTS_HANDLE hIoDrv, IoConfigConnector *pConnectorList, int nCount)
+
+- typedef RTS_RESULT(* :ref:`PFIODRVUPDATEMAPPING <group___cmp_io_drv_itf_1ga663c65020da7c52eab3432362980ae78>`)(RTS_HANDLE hIoDrv, IoConfigTaskMap *pTaskMapList, int nCount)
+
+- typedef RTS_RESULT(* :ref:`PFIODRVWATCHDOGTRIGGER <group___cmp_io_drv_itf_1gac285130b4f0050ca946e3c9b6b65bbff>`)(RTS_HANDLE hIoDrv, IoConfigConnector *pConnector)
+
+- typedef RTS_RESULT(* :ref:`PFIODRVWRITEOUTPUTS <group___cmp_io_drv_itf_1ga6ba2f8bafca7146326844fce59c8bbe1>`)(RTS_HANDLE hIoDrv, IoConfigConnectorMap *pConnectorMapList, int nCount)
+
+- typedef :ref:`ICmpIoDrv_C <struct_i_cmp_io_drv___c>` :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>`
+
+Functions
+---------
+
+- STATICITF_DEF RTS_HANDLE :ref:`IoDrvCreate <group___cmp_io_drv_itf_1ga47ade8ad65e79bc0200f687e84196fb6>` (RTS_HANDLE hIIoDrv, CLASSID ClassId, int iId, RTS_RESULT * pResult)
+
+- STATICITF_DEF RTS_RESULT :ref:`IoDrvDelete <group___cmp_io_drv_itf_1ga52b68304d7f829d8f27b3260c5c7abb2>` (RTS_HANDLE hIoDrv, RTS_HANDLE hIIoDrv)
+
+- STATICITF_DEF RTS_RESULT :ref:`IoDrvGetInfo <group___cmp_io_drv_itf_1gafbdbce2d49f32eb49c51857c6dbd14b7>` (RTS_HANDLE hIoDrv, :ref:`IoDrvInfo <group___cmp_io_drv_itf___channel_map_list_swapping_information_1gac069193c4451dbf1c092751626ad262a>` ** ppIoDrv)
+
+- STATICITF_DEF RTS_RESULT :ref:`IoDrvGetModuleDiagnosis <group___cmp_io_drv_itf_1gaca801830078ea9485613f2491e35575d>` (RTS_HANDLE hIoDrv, :ref:`IoConfigConnector <group___cmp_io_mgr_itf_1ga1c9f05476fb9e57a5583f645a12956be>` * pConnector)
+
+- STATICITF_DEF RTS_RESULT :ref:`IoDrvIdentify <group___cmp_io_drv_itf_1ga9edcf3040059d39a18629fd4633fd650>` (RTS_HANDLE hIoDrv, :ref:`IoConfigConnector <group___cmp_io_mgr_itf_1ga1c9f05476fb9e57a5583f645a12956be>` * pConnector)
+
+- STATICITF_DEF RTS_RESULT :ref:`IoDrvReadInputs <group___cmp_io_drv_itf_1ga48f414affb4bb84e803e08b48eaa1ea1>` (RTS_HANDLE hIoDrv, :ref:`IoConfigConnectorMap <group___cmp_io_mgr_itf_1ga17d944e4f292a8b9c38e44328f586e33>` * pConnectorMapList, int nCount)
+
+- STATICITF_DEF RTS_RESULT :ref:`IoDrvScanModules <group___cmp_io_drv_itf_1ga5f1ba7a16dc1fa5b8f588f1978a47503>` (RTS_HANDLE hIoDrv, :ref:`IoConfigConnector <group___cmp_io_mgr_itf_1ga1c9f05476fb9e57a5583f645a12956be>` * pConnector, :ref:`IoConfigConnector <group___cmp_io_mgr_itf_1ga1c9f05476fb9e57a5583f645a12956be>` ** ppConnectorList, int * pnCount)
+
+- STATICITF_DEF RTS_RESULT :ref:`IoDrvStartBusCycle <group___cmp_io_drv_itf_1ga7712716bf87ce241c22958db3aa19bcc>` (RTS_HANDLE hIoDrv, :ref:`IoConfigConnector <group___cmp_io_mgr_itf_1ga1c9f05476fb9e57a5583f645a12956be>` * pConnector)
+
+- STATICITF_DEF RTS_RESULT :ref:`IoDrvUpdateConfiguration <group___cmp_io_drv_itf_1ga56a1f59dfd7963c606c8289edc2c3b8b>` (RTS_HANDLE hIoDrv, :ref:`IoConfigConnector <group___cmp_io_mgr_itf_1ga1c9f05476fb9e57a5583f645a12956be>` * pConnectorList, int nCount)
+
+- STATICITF_DEF RTS_RESULT :ref:`IoDrvUpdateMapping <group___cmp_io_drv_itf_1ga39e0e4790272987e84b31f6b5fb5d99f>` (RTS_HANDLE hIoDrv, :ref:`IoConfigTaskMap <group___cmp_io_mgr_itf_1ga24e1b19811629d55c3187dd61411df95>` * pTaskMapList, int nCount)
+
+- STATICITF_DEF RTS_RESULT :ref:`IoDrvWatchdogTrigger <group___cmp_io_drv_itf_1ga7abe6c7aa98b08694b5676deb5ff79ab>` (RTS_HANDLE hIoDrv, :ref:`IoConfigConnector <group___cmp_io_mgr_itf_1ga1c9f05476fb9e57a5583f645a12956be>` * pConnector)
+
+- STATICITF_DEF RTS_RESULT :ref:`IoDrvWriteOutputs <group___cmp_io_drv_itf_1gae25ad6b1f53f6935b17125d9757aad45>` (RTS_HANDLE hIoDrv, :ref:`IoConfigConnectorMap <group___cmp_io_mgr_itf_1ga17d944e4f292a8b9c38e44328f586e33>` * pConnectorMapList, int nCount)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_io_drv_itf_1ga54dd4b281df87f61eb30e0c314718172:
+
+#define USE_IoDrvCreate
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga399e2055817cb3767a90431e9d42702f:
+
+#define EXT_IoDrvCreate
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga2138c1872b464cea758a73b631f25656:
+
+#define GET_IoDrvCreate ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga087e36defe8aa9cc62196a99ca5666ee:
+
+#define CAL_IoDrvCreate
+^^^^^^^^^^^^^^^^^^^^^^^
+
+**Value:**
+
+.. parsed-literal::
+
+    p0 = (IBase *)s_pfCMCreateInstance(p1, NULL);\\
+    ((IBase *)p0)->hInstance = (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)((IBase *)p0)->QueryInterface((IBase *)p0, ITFID_ICmpIoDrv, NULL))->IIoDrvCreate(p0,p1,p2,p3)
+
+.. _group___cmp_io_drv_itf_1ga6857e8a6589674ba27d98c1d2de389e1:
+
+#define CHK_IoDrvCreate TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gac17478801b6c4639f5864e9635e174cc:
+
+#define EXP_IoDrvCreate ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gaee85c3cdd6e8bed9b94ff2f56a821703:
+
+#define USE_IoDrvDelete
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gae5d936fd0697f195b83a817abe5d1426:
+
+#define EXT_IoDrvDelete
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga3913c1a767d0b3d7141f0f4586a7ecc9:
+
+#define GET_IoDrvDelete ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga95d6164e94db2db9e977d2dcd8aa0914:
+
+#define CAL_IoDrvDelete (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvDelete((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga35d3bcfec3120d41eae2215d7d48381f:
+
+#define CHK_IoDrvDelete TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga971f5b910ef409e099ab2b13ac397e52:
+
+#define EXP_IoDrvDelete ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gac773104c34eab2aa92a31f4b59ef1cc0:
+
+#define USE_IoDrvGetInfo
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga28e89f5ceb241b7033309e422aeb277f:
+
+#define EXT_IoDrvGetInfo
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gacd0bad89a574d3a4a111ab6524a192ee:
+
+#define GET_IoDrvGetInfo ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga1697e56275f2a9ff43dfbc21e446beaf:
+
+#define CAL_IoDrvGetInfo (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvGetInfo((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga3e6b21e5dcbc8c110d46fafc8c8593ca:
+
+#define CHK_IoDrvGetInfo TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga25f2765faa283e59bf84c0ca81b9edb1:
+
+#define EXP_IoDrvGetInfo ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga749868f4bb6c7d46126b2031ec87ea3d:
+
+#define USE_IoDrvGetModuleDiagnosis
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gadafdaab8bdfbaaed6c67df5455ba6973:
+
+#define EXT_IoDrvGetModuleDiagnosis
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga826c47c0113c7eac83a3dc6a3868949f:
+
+#define GET_IoDrvGetModuleDiagnosis ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga6083d5398418aa0ab8f6ae8eae721ccc:
+
+#define CAL_IoDrvGetModuleDiagnosis (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvGetModuleDiagnosis((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga9a53e551eaf505c3814e1d85cf236a16:
+
+#define CHK_IoDrvGetModuleDiagnosis TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gaa80a6d6d02e85adc76c675dcf3493437:
+
+#define EXP_IoDrvGetModuleDiagnosis ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga2cda436e309e17b948a5bf7ea216d7b5:
+
+#define USE_IoDrvIdentify
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga24628e951449f14e4adaca10c3d855f0:
+
+#define EXT_IoDrvIdentify
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga9960ae2450d24de391843bf2adeb8268:
+
+#define GET_IoDrvIdentify ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga14d918333d2b3c87e731150f3c0d4217:
+
+#define CAL_IoDrvIdentify (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvIdentify((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gae3bc3b7effd5c25cce1ad7fa526604b1:
+
+#define CHK_IoDrvIdentify TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga8e0866675b02766f334c74c8908d5606:
+
+#define EXP_IoDrvIdentify ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga373f33315a83c6fb634d98897585a6b2:
+
+#define USE_IoDrvReadInputs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga800d1c97fbdfee27173ee7471a4854c4:
+
+#define EXT_IoDrvReadInputs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga30d33b8bcf5f5d55a97e8d3a04305fd0:
+
+#define GET_IoDrvReadInputs ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gaff02f91842e22aa3c40be567de3d4e34:
+
+#define CAL_IoDrvReadInputs (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvReadInputs((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga7d974dfe01526f9b765968d3ffa2c1b9:
+
+#define CHK_IoDrvReadInputs TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga97de240ff2a3e2cac13b9b00212885bc:
+
+#define EXP_IoDrvReadInputs ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gaea4cfeecda3fda627419a951b3e60ed3:
+
+#define USE_IoDrvScanModules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga69b42536284388d612ea04d46c810e94:
+
+#define EXT_IoDrvScanModules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gad293f4467be3200c28a1568b559b3009:
+
+#define GET_IoDrvScanModules ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga4c265eb789aabece1b187a50923136de:
+
+#define CAL_IoDrvScanModules (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvScanModules((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1,p2,p3))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gaecdddcabbcb3f8493bfcabb874271079:
+
+#define CHK_IoDrvScanModules TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gaee21af387c35d8d7bd4f8ceb3020e89e:
+
+#define EXP_IoDrvScanModules ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gabb7a6c29ed56b51df9a60235eb2d9e7d:
+
+#define USE_IoDrvStartBusCycle
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga0a6b6e4a2aaee3f571be00da7b84f494:
+
+#define EXT_IoDrvStartBusCycle
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga2c467143011371b1c4ee27af417e16cb:
+
+#define GET_IoDrvStartBusCycle ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gabb0b8dccfd7dccad634604305d3fe49d:
+
+#define CAL_IoDrvStartBusCycle (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvStartBusCycle((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gaebad87ff7911baed4343db2ac0db1179:
+
+#define CHK_IoDrvStartBusCycle TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga5a8a61452bfd8b69fd173aaf3dba0130:
+
+#define EXP_IoDrvStartBusCycle ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga9bdd6a1164b4334713d4622ac27a952c:
+
+#define USE_IoDrvUpdateConfiguration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gadc514b9fe1f6a00f8862e1dc99ee5ec4:
+
+#define EXT_IoDrvUpdateConfiguration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gaa57a811c9868c01b9c64b7d2ddb2b7ec:
+
+#define GET_IoDrvUpdateConfiguration ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga36dbbd50331b057be7eec52ad9d3a86c:
+
+#define CAL_IoDrvUpdateConfiguration (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvUpdateConfiguration((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga3b064fbff8f4b5da52b6eeb8837b41a0:
+
+#define CHK_IoDrvUpdateConfiguration TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga8e5cb8a5ca0637a05a67b1aa6f4cb11d:
+
+#define EXP_IoDrvUpdateConfiguration ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga1820c830ecbd0b49d7053e35aee12700:
+
+#define USE_IoDrvUpdateMapping
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga194b1693f1089dbf24a629abbafef7d6:
+
+#define EXT_IoDrvUpdateMapping
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga43852f55cdbb99ff6d597c4a37371972:
+
+#define GET_IoDrvUpdateMapping ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga64fc036826610b9f8b723d4ce610a709:
+
+#define CAL_IoDrvUpdateMapping (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvUpdateMapping((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gad4f19c9aa53dc973b368d43e9f66deff:
+
+#define CHK_IoDrvUpdateMapping TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga52184355b7fe0f9d37f40976ca82c812:
+
+#define EXP_IoDrvUpdateMapping ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gad6bd96727275eaf5bdfbd8b64fbd7223:
+
+#define USE_IoDrvWatchdogTrigger
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gac085d44f84010dfc3e1d1788e5413879:
+
+#define EXT_IoDrvWatchdogTrigger
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga6bd25393756f5bd2376d51ba11086913:
+
+#define GET_IoDrvWatchdogTrigger ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gac365865aa886d053e009ddff91a62483:
+
+#define CAL_IoDrvWatchdogTrigger (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvWatchdogTrigger((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gaf3f7c8b5879fae133e935687f7605805:
+
+#define CHK_IoDrvWatchdogTrigger TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga7bffa4c2660025481d80bed9b4e72b35:
+
+#define EXP_IoDrvWatchdogTrigger ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga5ef87d1f9d6d110982c497eef2ff04b6:
+
+#define USE_IoDrvWriteOutputs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga29cdb68adba04165a37554ca8a1b6d21:
+
+#define EXT_IoDrvWriteOutputs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga60673ba57123296c50443b7d50fb932c:
+
+#define GET_IoDrvWriteOutputs ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga74efaf398fd7e66180e3bd05bdbe9466:
+
+#define CAL_IoDrvWriteOutputs (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->IIoDrvWriteOutputs((( :ref:`ICmpIoDrv <group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga46c7b1aecf2b6863ff4c4450d3367f5c:
+
+#define CHK_IoDrvWriteOutputs TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga09b791452b56ddbe3440710d485262be:
+
+#define EXP_IoDrvWriteOutputs ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gae60bebb04e3cc8f1209e2c974348f4f3:
+
+#define ITF_CmpIoDrv
+^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga040f11f7d7e580970fb2bf4fc2acf31e:
+
+#define EXTITF_CmpIoDrv
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_io_drv_itf_1ga231063ac509ec870afd1326daf67e34f:
+
+typedef RTS_HANDLE( *  PFIODRVCREATE) (RTS_HANDLE hIIoDrv, CLASSID ClassId, int iId, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga3338386aaad5d6eb6743d60e80d9947d:
+
+typedef RTS_RESULT( *  PFIODRVDELETE) (RTS_HANDLE hIoDrv, RTS_HANDLE hIIoDrv)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga2d7765908f5cec10e6153a854282b502:
+
+typedef RTS_RESULT( *  PFIODRVGETINFO) (RTS_HANDLE hIoDrv, IoDrvInfo **ppIoDrv)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gaaf41a71f221724913c6f34704d026619:
+
+typedef RTS_RESULT( *  PFIODRVGETMODULEDIAGNOSIS) (RTS_HANDLE hIoDrv, IoConfigConnector *pConnector)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga0744e87db6ac9477a993db2f42040719:
+
+typedef RTS_RESULT( *  PFIODRVIDENTIFY) (RTS_HANDLE hIoDrv, IoConfigConnector *pConnector)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga8b1c1e46f21c67aa5da509aaba000ce2:
+
+typedef RTS_RESULT( *  PFIODRVREADINPUTS) (RTS_HANDLE hIoDrv, IoConfigConnectorMap *pConnectorMapList, int nCount)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga768b9531a84ae3940585bb69a8beb610:
+
+typedef RTS_RESULT( *  PFIODRVSCANMODULES) (RTS_HANDLE hIoDrv, IoConfigConnector *pConnector, IoConfigConnector **ppConnectorList, int *pnCount)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gae4fed27fcfeb5d947a8dfbd7b34f960c:
+
+typedef RTS_RESULT( *  PFIODRVSTARTBUSCYCLE) (RTS_HANDLE hIoDrv, IoConfigConnector *pConnector)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga12771dffcab3ece981fb84b8e77accd6:
+
+typedef RTS_RESULT( *  PFIODRVUPDATECONFIGURATION) (RTS_HANDLE hIoDrv, IoConfigConnector *pConnectorList, int nCount)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga663c65020da7c52eab3432362980ae78:
+
+typedef RTS_RESULT( *  PFIODRVUPDATEMAPPING) (RTS_HANDLE hIoDrv, IoConfigTaskMap *pTaskMapList, int nCount)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gac285130b4f0050ca946e3c9b6b65bbff:
+
+typedef RTS_RESULT( *  PFIODRVWATCHDOGTRIGGER) (RTS_HANDLE hIoDrv, IoConfigConnector *pConnector)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1ga6ba2f8bafca7146326844fce59c8bbe1:
+
+typedef RTS_RESULT( *  PFIODRVWRITEOUTPUTS) (RTS_HANDLE hIoDrv, IoConfigConnectorMap *pConnectorMapList, int nCount)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_io_drv_itf_1gab333e1e4293fb90f7b94e89a21c321bb:
+
+typedef ICmpIoDrv_C ICmpIoDrv
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_io_drv_itf_1ga47ade8ad65e79bc0200f687e84196fb6:
+
+STATICITF_DEF RTS_HANDLE IoDrvCreate (RTS_HANDLE hIIoDrv, CLASSID ClassId, int iId, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Create a new I/O driver instance. Is typically internally used by the IO-driver itself
+
+**Parameters**
+
++---------+---------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hIIoDrv | Handle to the IO-driver interface. Must be 0 and is filled automatically by calling the :ref:`CAL_IoDrvCreate() <group___cmp_io_drv_itf_1ga087e36defe8aa9cc62196a99ca5666ee>` macro! |
++---------+---------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ClassId | ClassID of the driver. See "Class IDs" section in CmpItf.h or in the Dep.h file of the IO-driver.                                                                                    |
++---------+---------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | iId     | Instance number of the IO-driver                                                                                                                                                     |
++---------+---------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult | Pointer to error code                                                                                                                                                                |
++---------+---------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Should return RTS_INVALID_HANDLE
+
+.. _group___cmp_io_drv_itf_1ga52b68304d7f829d8f27b3260c5c7abb2:
+
+STATICITF_DEF RTS_RESULT IoDrvDelete (RTS_HANDLE hIoDrv, RTS_HANDLE hIIoDrv)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Delete an I/O driver instance. Is typically internally used by the IO-driver itself
+
+**Parameters**
+
++---------+---------+-----------------------------------------+
+| [in]    | hIoDrv  | Handle to the IO-driver instance        |
++---------+---------+-----------------------------------------+
+| [in]    | hIIoDrv | Handle of the ITFID_ICmpIoDrv interface |
++---------+---------+-----------------------------------------+
+
+**Returns:**
+
+Should return ERR_NOTIMPLEMENTED
+
+.. _group___cmp_io_drv_itf_1gafbdbce2d49f32eb49c51857c6dbd14b7:
+
+STATICITF_DEF RTS_RESULT IoDrvGetInfo (RTS_HANDLE hIoDrv, IoDrvInfo **ppIoDrv)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get a driver specific info structure.
+
+This structure contains IDs and names of the driver.
+
+**Parameters**
+
++---------+---------+-------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hIoDrv  | Handle to the IO-driver instance RANGE=[RTS_INVALID_HANDLE,VALID_IODRIVER]                                                                      |
++---------+---------+-------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | ppIoDrv | Pointer to pointer to the driver info. Pointer must be set by the driver to its internal driver info structure! RANGE=[NULL,VALID_IODRVIERINFO] |
++---------+---------+-------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++---------------+----------------------------------------------+
+| ERR_OK        | The info structure was returned successfully |
++---------------+----------------------------------------------+
+| ERR_PARAMETER | hIoDrv was invalid or ppIoDrv was NULL       |
++---------------+----------------------------------------------+
+| ERR_FAILED    | Internal Error                               |
++---------------+----------------------------------------------+
+
+.. _group___cmp_io_drv_itf_1gaca801830078ea9485613f2491e35575d:
+
+STATICITF_DEF RTS_RESULT IoDrvGetModuleDiagnosis (RTS_HANDLE hIoDrv, IoConfigConnector *pConnector)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Update Connector Flags in the device tree.
+
+The driver should write the current diagnostic information (available, no driver, bus error,...) with the function IoDrvSetModuleDiagnosis() to the I/O connector.
+
+This function can be used by other components or from the IEC application to update the diagnostic flags of the connector. To update the status from the driver, it has to call this function manually.
+
+**Parameters**
+
++---------+------------+------------------------------------------------------------------------+
+| [in]    | hIoDrv     | Handle to the IO-driver instance                                       |
++---------+------------+------------------------------------------------------------------------+
+| [in]    | pConnector | Pointer to the connector, that the diagnostic information is requested |
++---------+------------+------------------------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++---------------+-----+
+| ERR_PARAMETER | ... |
++---------------+-----+
+
+.. _group___cmp_io_drv_itf_1ga9edcf3040059d39a18629fd4633fd650:
+
+STATICITF_DEF RTS_RESULT IoDrvIdentify (RTS_HANDLE hIoDrv, IoConfigConnector *pConnector)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Identify pluggable I/O card or slave.
+
+If the field-bus editor supports scanning of modules, this function can be used our of a communication service to identify a module on the bus or locally on the PLC. This This might be done by a blinking LED or whatever the hardware supports.
+
+**Parameters**
+
++---------+------------+------------------------------------------------------------------+
+| [in]    | hIoDrv     | Handle to the IO-driver instance                                 |
++---------+------------+------------------------------------------------------------------+
+| [in]    | pConnector | Pointer to the connector, that should identify itself physically |
++---------+------------+------------------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++--------------------+----------------------------------------------+
+| ERR_OK             | Identification was sent                      |
++--------------------+----------------------------------------------+
+| ERR_PARAMETER      | hIoDrv was invalid or pConnector was NULL    |
++--------------------+----------------------------------------------+
+| ERR_FAILED         | Service not enabled (e.g. bus not connected) |
++--------------------+----------------------------------------------+
+| ERR_NOTIMPLEMENTED | Not provided by the driver                   |
++--------------------+----------------------------------------------+
+
+.. _group___cmp_io_drv_itf_1ga48f414affb4bb84e803e08b48eaa1ea1:
+
+STATICITF_DEF RTS_RESULT IoDrvReadInputs (RTS_HANDLE hIoDrv, IoConfigConnectorMap *pConnectorMapList, int nCount)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Read inputs for one task
+
+This function is called cyclically from every task that is using inputs. A part of the task map list, which contains only the data of one connector are passed to the driver (called connector map list).
+
+If a driver has registered one instance to more than one connector, it might get more than one call with a different subset of the task map list.
+
+The I/O driver should read the data from the local hardware or a buffer and write them to the corresponding IEC variables.
+
+**Parameters**
+
++---------+-------------------+---------------------------------------------+
+| [in]    | hIoDrv            | Handle to the IO-driver instance            |
++---------+-------------------+---------------------------------------------+
+| [in]    | pConnectorMapList | Pointer to the connector map list           |
++---------+-------------------+---------------------------------------------+
+| [in]    | nCount            | Number of entries in the connector map list |
++---------+-------------------+---------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++---------------------+------------------------------------------------+
+| ERR_OK              | ReadInputs was executed successfully.          |
++---------------------+------------------------------------------------+
+| ERR_PARAMETER       | hIoDrv was invalid or pConnectorList was NULL. |
++---------------------+------------------------------------------------+
+| ERR_FAILED          | Internal error                                 |
++---------------------+------------------------------------------------+
+| ERR_LICENSE_MISSING | No License                                     |
++---------------------+------------------------------------------------+
+
+.. _group___cmp_io_drv_itf_1ga5f1ba7a16dc1fa5b8f588f1978a47503:
+
+STATICITF_DEF RTS_RESULT IoDrvScanModules (RTS_HANDLE hIoDrv, IoConfigConnector *pConnector, IoConfigConnector **ppConnectorList, int *pnCount)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Scan for submodules of a connector.
+
+This function is executed when the driver is downloaded. It is called over a communication service.
+
+The I/O driver should search for connected submodules and return them via ppConnectorList.
+
+NOTE: This interface is called synchronously and the buffer for the connector list has to be allocated by the driver.
+
+The buffer might be freed at the next scan or at the next UpdateConfiguration.
+
+**Parameters**
+
++---------+-----------------+------------------------------------------------------------------+
+| [in]    | hIoDrv          | Handle to the IO-driver instance                                 |
++---------+-----------------+------------------------------------------------------------------+
+| [in]    | pConnector      | Pointer to the connector, which layout should be scanned         |
++---------+-----------------+------------------------------------------------------------------+
+| [in]    | ppConnectorList | Pointer to the scanned connectors (devices) to return            |
++---------+-----------------+------------------------------------------------------------------+
+| [in]    | pnCount         | Pointer to the number of entries in the connector list to return |
++---------+-----------------+------------------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++--------------------+-----------------------------------------------------------------------------------------------------------------------+
+| ERR_OK             | Scan for modules finished                                                                                             |
++--------------------+-----------------------------------------------------------------------------------------------------------------------+
+| ERR_PARAMETER      | hIoDrv was invalid, pConnector, ppConnectorList or pnCount was NULL                                                   |
++--------------------+-----------------------------------------------------------------------------------------------------------------------+
+| ERR_FAILED         | Internal error                                                                                                        |
++--------------------+-----------------------------------------------------------------------------------------------------------------------+
+| ERR_NOTIMPLEMENTED | Scan feature is not implemented                                                                                       |
++--------------------+-----------------------------------------------------------------------------------------------------------------------+
+| ERR_PENDING        | Scan still in progress. Function will be called again. ppConnectorList and pnCount may contain a partial scan result. |
++--------------------+-----------------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_io_drv_itf_1ga7712716bf87ce241c22958db3aa19bcc:
+
+STATICITF_DEF RTS_RESULT IoDrvStartBusCycle (RTS_HANDLE hIoDrv, IoConfigConnector *pConnector)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Start bus cycle for a specific connector.
+
+The bus cycle task is defined globally for the whole PLC or locally for a specific I/O connector in the CoDeSys project. This call can be used by the I/O driver to flush the I/O data if it was cached before.
+
+This way we can get a better and consistent timing on the bus. d
+
+Note: This function is called for every connector which has a registered I/O driver and "needsbuscycle" set in the device description (this means that it might also be called for children of the connector).
+
+Depending on the device description, this function might be executed at the beginning or at the end of the task cycle.
+
+**Parameters**
+
++---------+------------+--------------------------------------------------------------------+
+| [in]    | hIoDrv     | Handle to the IO-driver instance                                   |
++---------+------------+--------------------------------------------------------------------+
+| [in]    | pConnector | Pointer to the connector, on which the bus cycle must be triggered |
++---------+------------+--------------------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++---------------+---------------------------------------+
+| ERR_OK        | Bus cycle was triggered               |
++---------------+---------------------------------------+
+| ERR_PARAMETER | hIoDrv was invalid or pConnector NULL |
++---------------+---------------------------------------+
+| ERR_FAILED    | Internal Error                        |
++---------------+---------------------------------------+
+
+.. _group___cmp_io_drv_itf_1ga56a1f59dfd7963c606c8289edc2c3b8b:
+
+STATICITF_DEF RTS_RESULT IoDrvUpdateConfiguration (RTS_HANDLE hIoDrv, IoConfigConnector *pConnectorList, int nCount)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Propagate I/O configuration to the drivers.
+
+This call passes the I/O configuration (based on the configuration tree in the CoDeSys programming system) to all registered I/O drivers. Every driver has the chance to pass this tree and to register itself for a specific connector.
+
+The driver can use the I/O Manager Interface to iterate over the I/O Connectors and to read the I/O Parameters. If it decides to handle the I/Os of one of those connectors, it can register it's driver handle (IBase) to the connector in the member hIoDrv.
+
+This function is called when the application is initialized as well as when it is de- or reinitialized. In this case it is called with pConnectorList = NULL.
+
+**Parameters**
+
++---------+----------------+----------------------------------------+
+| [in]    | hIoDrv         | Handle to the IO-driver instance       |
++---------+----------------+----------------------------------------+
+| [in]    | pConnectorList | Pointer to the complete connector list |
++---------+----------------+----------------------------------------+
+
+NOTE: The function is called with pConnectorList = NULL to signalize the driver, that the IO-configuration will be deleted! In this case, the driver can cleanup its configuration, stop the bus etc.
+
+**Parameters**
+
++---------+--------+-----------------------------------------+
+| [in]    | nCount | Number of entries in the connector list |
++---------+--------+-----------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++----------------+----------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_OK         | UpdateConfiguration was successful and found a driver                                                                                  |
++----------------+----------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_NO_OBJECT  | No connector for this driver was found                                                                                                 |
++----------------+----------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_NO_LICENSE | No license for this driver                                                                                                             |
++----------------+----------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_EXCEPTION  | If a driver returns ERR_EXCEPTION, an RTSEXCPT_IO_CONFIG_ERROR exception is generated and all applications will go in exception state! |
++----------------+----------------------------------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_io_drv_itf_1ga39e0e4790272987e84b31f6b5fb5d99f:
+
+STATICITF_DEF RTS_RESULT IoDrvUpdateMapping (RTS_HANDLE hIoDrv, IoConfigTaskMap *pTaskMapList, int nCount)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Propagate the task map lists to the drivers.
+
+This functions gives the drivers a chance to optimize their internal data structures based on the real task map lists. The function is called on every initialization of the application (download, boot application,...).
+
+**Parameters**
+
++---------+--------------+------------------------------------------+
+| [in]    | hIoDrv       | Handle to the IO-driver instance         |
++---------+--------------+------------------------------------------+
+| [in]    | pTaskMapList | Pointer to the task map list of one task |
++---------+--------------+------------------------------------------+
+
+NOTE: The function is called with pTaskMapList = NULL to signalize the driver, that the IO-configuration will be deleted because of an exception in a :ref:`IoDrvUpdateMapping() <group___cmp_io_drv_itf_1ga39e0e4790272987e84b31f6b5fb5d99f>` of a driver!! In this case, the driver has to cleanup its stored mapping table!
+
+**Parameters**
+
++---------+--------+-----------------------------------+
+| [in]    | nCount | Number of entries in the map list |
++---------+--------+-----------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++--------------------+----------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_OK             | Default Result (mappings reorganized or nothing changed)                                                                               |
++--------------------+----------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_NOTIMPLEMENTED | UpdateMapping is not implemented                                                                                                       |
++--------------------+----------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_EXCEPTION      | If a driver returns ERR_EXCEPTION, an RTSEXCPT_IO_CONFIG_ERROR exception is generated and all applications will go in exception state! |
++--------------------+----------------------------------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_io_drv_itf_1ga7abe6c7aa98b08694b5676deb5ff79ab:
+
+STATICITF_DEF RTS_RESULT IoDrvWatchdogTrigger (RTS_HANDLE hIoDrv, IoConfigConnector *pConnector)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Trigger the hardware watchdog of this field-bus master / IO system.
+
+**Parameters**
+
++---------+------------+------------------------------------------------------------------------+
+| [in]    | hIoDrv     | Handle to the IO-driver instance                                       |
++---------+------------+------------------------------------------------------------------------+
+| [in]    | pConnector | Pointer to the connector, on which the watchdog should be re-triggered |
++---------+------------+------------------------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++--------------------+------------------------------------+
+| ERR_OK             | Watchdog successfully re-triggered |
++--------------------+------------------------------------+
+| ERR_NOT_SUPPORTED  | Watchdog not available             |
++--------------------+------------------------------------+
+| ERR_NOTIMPLEMENTED | Watchdog interface not implemented |
++--------------------+------------------------------------+
+
+.. _group___cmp_io_drv_itf_1gae25ad6b1f53f6935b17125d9757aad45:
+
+STATICITF_DEF RTS_RESULT IoDrvWriteOutputs (RTS_HANDLE hIoDrv, IoConfigConnectorMap *pConnectorMapList, int nCount)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Write outputs for one task
+
+This function is called cyclically from every task that is using outputs. A part of the task map list, which contains only the data of one connector are passed to the driver (called connector map list).
+
+If a driver has registered one instance to more than one connector, it might get more than one call with a different subset of the task map list.
+
+The I/O driver should write out the data to the local hardware, a buffer or a field-bus.
+
+**Parameters**
+
++---------+-------------------+---------------------------------------------+
+| [in]    | hIoDrv            | Handle to the IO-driver instance            |
++---------+-------------------+---------------------------------------------+
+| [in]    | pConnectorMapList | Pointer to the connector map list           |
++---------+-------------------+---------------------------------------------+
+| [in]    | nCount            | Number of entries in the connector map list |
++---------+-------------------+---------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++--------+------------------------------+
+| ERR_OK | Outputs successfully written |
++--------+------------------------------+
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -75,6 +75,30 @@ typedef struct tagForceVarDesc
 	VarValue Value;
 	VarValue OldValue;
 } ForceVarDesc;
+
+
+
+
+/**
+ * <category>Event parameter</category>
+ * <element name="pApp" type="IN">Pointer to the specified application description</element>
+ * <element name="bShutdown" type="IN">1=Runtime exits the application and so the force during shutdown, 0=else</element>
+ */
+typedef struct
+{
+	APPLICATION *pApp;
+	RTS_BOOL bShutdown;
+} EVTPARAM_AppForceReleaseAllForceValues;
+#define EVTPARAMID_AppForceReleaseAllForceValues		0x0001
+#define EVTVERSION_AppForceReleaseAllForceValues		0x0001
+
+/**
+ * <category>Events</category>
+ * <description>Event is sent before force list release</description>
+ * <param name="pEventParam" type="IN">EVTPARAM_CmpAppBP_SavePatch or for backward compatibility EVTPARAM_CmpAppBP_CodePatch</param>
+ */
+#define EVT_AppReleaseAllForceValues				MAKE_EVENTID(EVTCLASS_INFO, 1)
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -192,7 +216,7 @@ typedef RTS_RESULT (CDECL * PFAPPFORCEEXIT) (APPLICATION *pApp, int bShutdown);
 /**
  * <description>Add a new force value, that is forced in every task of the application</description>
  * <param name="pApp" type="IN">Pointer to the specified application description</param>
- * <param name="pDataRef" type="IN">Pointer to decription of the force variable</param>
+ * <param name="pDataRef" type="IN">Pointer to description of the force variable</param>
  * <param name="pValue" type="IN">Pointer to value of the force variable that will be hold</param>
  * <result>error code</result>
  */
@@ -248,7 +272,7 @@ typedef RTS_RESULT (CDECL * PFAPPADDFORCEVALUE) (APPLICATION* pApp, VarDataRef *
 /**
  * <description>Remove a single force value</description>
  * <param name="pApp" type="IN">Pointer to the specified application description</param>
- * <param name="pDataRef" type="IN">Pointer to decription of the force variable</param>
+ * <param name="pDataRef" type="IN">Pointer to description of the force variable</param>
  * <param name="bRestoreValue" type="IN">1=Restore old value before force. 0=Actual force value will not be modified</param>
  * <result>error code</result>
  */

@@ -1,0 +1,404 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_sem_count_itf:
+
+==============
+SysSemCountItf
+==============
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of SysSemaphore.
+
+Detailed Description
+--------------------
+
+The SysSemaphore interface is projected to handle synchronization objects for tasks and threads. The synchronization objects are called semaphores to synchronize concurrent access to single data resources.
+
+For example:
+
+Task1: ... SysSemaphoreEnter(hSem, timeval); [Here you can accessed the protected data] SysSemaphoreEnter(hSem); [After :ref:`SysSemLeave() <group___sys_sem_itf_1gabfa8bac50383f867e91954ee4d301868>` you must not access the protected data] ....
+
+IMPLEMENTATION NOTE: The semaphores must work recursive! That means, that a multiple call out of one task must not block the execution! For each SysSemaphoreEnter() call, a corresponding SysSemphoreLeave() must be used!
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Data Structures
+---------------
+
+- struct :ref:`ISysSemCount_C <struct_i_sys_sem_count___c>`
+
+Macros
+------
+
+- #define :ref:`RTS_SEMAPHORE_NOWAIT <group___sys_sem_count_itf_1ga9d53f026ee8dde1007558bbe2266113c>` 0x0			/* Unblocking behavior of the SysSemaphoreEnter function */
+
+- #define :ref:`RTS_SEMAPHORE_WAIT_INFINIT <group___sys_sem_count_itf_1ga37b1ad4f29ecdd012a30d55d07463dd0>` 0xFFFFFFFF	/* Blocking behavior of the SysSemaphoreEnter function */
+
+- #define :ref:`USE_SysSemCountCreate <group___sys_sem_count_itf_1ga356369a232d8435f0b9816cae17c50d9>` :ref:`PFSYSSEMCOUNTCREATE <group___sys_sem_count_itf_1ga0f578e65a65810fbf1d84ec7050805fb>` pfSysSemCountCreate;
+
+- #define :ref:`EXT_SysSemCountCreate <group___sys_sem_count_itf_1ga70dbeba1456829bed98c8aacc428e711>` extern :ref:`PFSYSSEMCOUNTCREATE <group___sys_sem_count_itf_1ga0f578e65a65810fbf1d84ec7050805fb>` pfSysSemCountCreate;
+
+- #define :ref:`GET_SysSemCountCreate <group___sys_sem_count_itf_1gaaea870968bbb7f5a816621defb4a248e>` s_pfCMGetAPI2( "SysSemCountCreate", (RTS_VOID_FCTPTR *)&pfSysSemCountCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSemCountCreate <group___sys_sem_count_itf_1gab14cd164c214615a3e8b3c270367609b>` pfSysSemCountCreate
+
+- #define :ref:`CHK_SysSemCountCreate <group___sys_sem_count_itf_1ga8adbe036df4e31995461cf5df20b8afa>` (pfSysSemCountCreate != NULL)
+
+- #define :ref:`EXP_SysSemCountCreate <group___sys_sem_count_itf_1ga0cd036d54514cc1526688edd8e589c57>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemCountCreate", (RTS_UINTPTR) :ref:`SysSemCountCreate <group___sys_sem_count_itf_1ga774eea13b58fa73a944a7c2596db6686>` , 0, 0)
+
+- #define :ref:`USE_SysSemCountDelete <group___sys_sem_count_itf_1gaf68ff67459e476ceee708ca3af718f12>` :ref:`PFSYSSEMCOUNTDELETE <group___sys_sem_count_itf_1ga9286a3e5b0e48959d20ca0ef9ae0c644>` pfSysSemCountDelete;
+
+- #define :ref:`EXT_SysSemCountDelete <group___sys_sem_count_itf_1ga30ae80a51ae005546046e0376e2f5abf>` extern :ref:`PFSYSSEMCOUNTDELETE <group___sys_sem_count_itf_1ga9286a3e5b0e48959d20ca0ef9ae0c644>` pfSysSemCountDelete;
+
+- #define :ref:`GET_SysSemCountDelete <group___sys_sem_count_itf_1gaccf417b2ec441021642d620f34ddb92e>` s_pfCMGetAPI2( "SysSemCountDelete", (RTS_VOID_FCTPTR *)&pfSysSemCountDelete, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSemCountDelete <group___sys_sem_count_itf_1gac533089404027fbf7f3121c2661cabda>` pfSysSemCountDelete
+
+- #define :ref:`CHK_SysSemCountDelete <group___sys_sem_count_itf_1gae9c6cb7d0e838f8b7f61dc6baa1b6438>` (pfSysSemCountDelete != NULL)
+
+- #define :ref:`EXP_SysSemCountDelete <group___sys_sem_count_itf_1ga9ca762b848521f65dc2cfe0d4580ca9c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemCountDelete", (RTS_UINTPTR) :ref:`SysSemCountDelete <group___sys_sem_count_itf_1ga71d229de94361478c512af44ae7ad0eb>` , 0, 0)
+
+- #define :ref:`USE_SysSemCountEnter <group___sys_sem_count_itf_1ga2d3f9611bdf25bc72141412daa35c7f0>` :ref:`PFSYSSEMCOUNTENTER <group___sys_sem_count_itf_1gaa27c8a42aa98d7b1a7d5f7d5b59caf59>` pfSysSemCountEnter;
+
+- #define :ref:`EXT_SysSemCountEnter <group___sys_sem_count_itf_1gac2f0e0d6f23b7902f7a07a8cdde7cce3>` extern :ref:`PFSYSSEMCOUNTENTER <group___sys_sem_count_itf_1gaa27c8a42aa98d7b1a7d5f7d5b59caf59>` pfSysSemCountEnter;
+
+- #define :ref:`GET_SysSemCountEnter <group___sys_sem_count_itf_1gae7a4fe769ca073c046621d30988b6f9a>` s_pfCMGetAPI2( "SysSemCountEnter", (RTS_VOID_FCTPTR *)&pfSysSemCountEnter, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSemCountEnter <group___sys_sem_count_itf_1gae5f6c83753bc30b93a9afe693f7412a7>` pfSysSemCountEnter
+
+- #define :ref:`CHK_SysSemCountEnter <group___sys_sem_count_itf_1ga29ef2f788a3c944d7ff74f0a49d35bdf>` (pfSysSemCountEnter != NULL)
+
+- #define :ref:`EXP_SysSemCountEnter <group___sys_sem_count_itf_1ga259a8ea61355657c9c550436cd324aa0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemCountEnter", (RTS_UINTPTR) :ref:`SysSemCountEnter <group___sys_sem_count_itf_1gaa9df357e76020329028ded517c668ac5>` , 0, 0)
+
+- #define :ref:`USE_SysSemCountLeave <group___sys_sem_count_itf_1ga058b355bcb16c0b6dfafb1fdca330da8>` :ref:`PFSYSSEMCOUNTLEAVE <group___sys_sem_count_itf_1ga510f84d69d0b8967dd5e4966271d3183>` pfSysSemCountLeave;
+
+- #define :ref:`EXT_SysSemCountLeave <group___sys_sem_count_itf_1gad67bc1d058b8bf55312cdf4dc92fb1a3>` extern :ref:`PFSYSSEMCOUNTLEAVE <group___sys_sem_count_itf_1ga510f84d69d0b8967dd5e4966271d3183>` pfSysSemCountLeave;
+
+- #define :ref:`GET_SysSemCountLeave <group___sys_sem_count_itf_1ga840d8c0cddcfc645aedf0a2a902d7022>` s_pfCMGetAPI2( "SysSemCountLeave", (RTS_VOID_FCTPTR *)&pfSysSemCountLeave, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSemCountLeave <group___sys_sem_count_itf_1gad6b7e1bd0f7f4dcfa81577ad4af89679>` pfSysSemCountLeave
+
+- #define :ref:`CHK_SysSemCountLeave <group___sys_sem_count_itf_1gad11b0d3b8b1853851a80d11083e9a863>` (pfSysSemCountLeave != NULL)
+
+- #define :ref:`EXP_SysSemCountLeave <group___sys_sem_count_itf_1ga0eefa19233dba8f90406c2a3c894600f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemCountLeave", (RTS_UINTPTR) :ref:`SysSemCountLeave <group___sys_sem_count_itf_1gae0ce2c4cb39aa56c444547e852ff9318>` , 0, 0)
+
+- #define :ref:`ITF_SysSemCount <group___sys_sem_count_itf_1gaf35c93ce28882b7a7ea009cd12f0c8d1>`
+
+- #define :ref:`EXTITF_SysSemCount <group___sys_sem_count_itf_1gaa2ca50a073f4ae6ee8021113b5be44a4>`
+
+Typedefs
+--------
+
+- typedef RTS_HANDLE(* :ref:`PFSYSSEMCOUNTCREATE <group___sys_sem_count_itf_1ga0f578e65a65810fbf1d84ec7050805fb>`)(RTS_UI32 ui32InitialValue, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSEMCOUNTDELETE <group___sys_sem_count_itf_1ga9286a3e5b0e48959d20ca0ef9ae0c644>`)(RTS_HANDLE hSemaphore)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSEMCOUNTENTER <group___sys_sem_count_itf_1gaa27c8a42aa98d7b1a7d5f7d5b59caf59>`)(RTS_HANDLE hSemaphore, RTS_UI32 ui32TimeoutMs)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSEMCOUNTLEAVE <group___sys_sem_count_itf_1ga510f84d69d0b8967dd5e4966271d3183>`)(RTS_HANDLE hSemaphore)
+
+- typedef :ref:`ISysSemCount_C <struct_i_sys_sem_count___c>` :ref:`ISysSemCount <group___sys_sem_count_itf_1ga1b5a0cd85294d58788427ee61fe59656>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`SysSemCountOSInit <group___sys_sem_count_itf_1gad3bb22866f64d9c23fa7531c4563b337>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysSemCountOSHookFunction <group___sys_sem_count_itf_1gaa4575f3380b5324d9048f3f5032440c6>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_HANDLE :ref:`SysSemCountCreate <group___sys_sem_count_itf_1ga774eea13b58fa73a944a7c2596db6686>` (RTS_UI32 ui32InitialValue, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysSemCountDelete <group___sys_sem_count_itf_1ga71d229de94361478c512af44ae7ad0eb>` (RTS_HANDLE hSemaphore)
+
+- RTS_RESULT :ref:`SysSemCountEnter <group___sys_sem_count_itf_1gaa9df357e76020329028ded517c668ac5>` (RTS_HANDLE hSemaphore, RTS_UI32 ui32TimeoutMs)
+
+- RTS_RESULT :ref:`SysSemCountLeave <group___sys_sem_count_itf_1gae0ce2c4cb39aa56c444547e852ff9318>` (RTS_HANDLE hSemaphore)
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_sem_count_itf_1ga9d53f026ee8dde1007558bbe2266113c:
+
+#define RTS_SEMAPHORE_NOWAIT 0x0			/* Unblocking behavior of the SysSemaphoreEnter function */
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga37b1ad4f29ecdd012a30d55d07463dd0:
+
+#define RTS_SEMAPHORE_WAIT_INFINIT 0xFFFFFFFF	/* Blocking behavior of the SysSemaphoreEnter function */
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga356369a232d8435f0b9816cae17c50d9:
+
+#define USE_SysSemCountCreate :ref:`PFSYSSEMCOUNTCREATE <group___sys_sem_count_itf_1ga0f578e65a65810fbf1d84ec7050805fb>` pfSysSemCountCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga70dbeba1456829bed98c8aacc428e711:
+
+#define EXT_SysSemCountCreate extern :ref:`PFSYSSEMCOUNTCREATE <group___sys_sem_count_itf_1ga0f578e65a65810fbf1d84ec7050805fb>` pfSysSemCountCreate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gaaea870968bbb7f5a816621defb4a248e:
+
+#define GET_SysSemCountCreate s_pfCMGetAPI2( "SysSemCountCreate", (RTS_VOID_FCTPTR *)&pfSysSemCountCreate, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gab14cd164c214615a3e8b3c270367609b:
+
+#define CAL_SysSemCountCreate pfSysSemCountCreate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga8adbe036df4e31995461cf5df20b8afa:
+
+#define CHK_SysSemCountCreate (pfSysSemCountCreate != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga0cd036d54514cc1526688edd8e589c57:
+
+#define EXP_SysSemCountCreate s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemCountCreate", (RTS_UINTPTR) :ref:`SysSemCountCreate <group___sys_sem_count_itf_1ga774eea13b58fa73a944a7c2596db6686>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gaf68ff67459e476ceee708ca3af718f12:
+
+#define USE_SysSemCountDelete :ref:`PFSYSSEMCOUNTDELETE <group___sys_sem_count_itf_1ga9286a3e5b0e48959d20ca0ef9ae0c644>` pfSysSemCountDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga30ae80a51ae005546046e0376e2f5abf:
+
+#define EXT_SysSemCountDelete extern :ref:`PFSYSSEMCOUNTDELETE <group___sys_sem_count_itf_1ga9286a3e5b0e48959d20ca0ef9ae0c644>` pfSysSemCountDelete;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gaccf417b2ec441021642d620f34ddb92e:
+
+#define GET_SysSemCountDelete s_pfCMGetAPI2( "SysSemCountDelete", (RTS_VOID_FCTPTR *)&pfSysSemCountDelete, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gac533089404027fbf7f3121c2661cabda:
+
+#define CAL_SysSemCountDelete pfSysSemCountDelete
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gae9c6cb7d0e838f8b7f61dc6baa1b6438:
+
+#define CHK_SysSemCountDelete (pfSysSemCountDelete != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga9ca762b848521f65dc2cfe0d4580ca9c:
+
+#define EXP_SysSemCountDelete s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemCountDelete", (RTS_UINTPTR) :ref:`SysSemCountDelete <group___sys_sem_count_itf_1ga71d229de94361478c512af44ae7ad0eb>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga2d3f9611bdf25bc72141412daa35c7f0:
+
+#define USE_SysSemCountEnter :ref:`PFSYSSEMCOUNTENTER <group___sys_sem_count_itf_1gaa27c8a42aa98d7b1a7d5f7d5b59caf59>` pfSysSemCountEnter;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gac2f0e0d6f23b7902f7a07a8cdde7cce3:
+
+#define EXT_SysSemCountEnter extern :ref:`PFSYSSEMCOUNTENTER <group___sys_sem_count_itf_1gaa27c8a42aa98d7b1a7d5f7d5b59caf59>` pfSysSemCountEnter;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gae7a4fe769ca073c046621d30988b6f9a:
+
+#define GET_SysSemCountEnter s_pfCMGetAPI2( "SysSemCountEnter", (RTS_VOID_FCTPTR *)&pfSysSemCountEnter, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gae5f6c83753bc30b93a9afe693f7412a7:
+
+#define CAL_SysSemCountEnter pfSysSemCountEnter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga29ef2f788a3c944d7ff74f0a49d35bdf:
+
+#define CHK_SysSemCountEnter (pfSysSemCountEnter != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga259a8ea61355657c9c550436cd324aa0:
+
+#define EXP_SysSemCountEnter s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemCountEnter", (RTS_UINTPTR) :ref:`SysSemCountEnter <group___sys_sem_count_itf_1gaa9df357e76020329028ded517c668ac5>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga058b355bcb16c0b6dfafb1fdca330da8:
+
+#define USE_SysSemCountLeave :ref:`PFSYSSEMCOUNTLEAVE <group___sys_sem_count_itf_1ga510f84d69d0b8967dd5e4966271d3183>` pfSysSemCountLeave;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gad67bc1d058b8bf55312cdf4dc92fb1a3:
+
+#define EXT_SysSemCountLeave extern :ref:`PFSYSSEMCOUNTLEAVE <group___sys_sem_count_itf_1ga510f84d69d0b8967dd5e4966271d3183>` pfSysSemCountLeave;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga840d8c0cddcfc645aedf0a2a902d7022:
+
+#define GET_SysSemCountLeave s_pfCMGetAPI2( "SysSemCountLeave", (RTS_VOID_FCTPTR *)&pfSysSemCountLeave, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gad6b7e1bd0f7f4dcfa81577ad4af89679:
+
+#define CAL_SysSemCountLeave pfSysSemCountLeave
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gad11b0d3b8b1853851a80d11083e9a863:
+
+#define CHK_SysSemCountLeave (pfSysSemCountLeave != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga0eefa19233dba8f90406c2a3c894600f:
+
+#define EXP_SysSemCountLeave s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSemCountLeave", (RTS_UINTPTR) :ref:`SysSemCountLeave <group___sys_sem_count_itf_1gae0ce2c4cb39aa56c444547e852ff9318>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gaf35c93ce28882b7a7ea009cd12f0c8d1:
+
+#define ITF_SysSemCount
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gaa2ca50a073f4ae6ee8021113b5be44a4:
+
+#define EXTITF_SysSemCount
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___sys_sem_count_itf_1ga0f578e65a65810fbf1d84ec7050805fb:
+
+typedef RTS_HANDLE( *  PFSYSSEMCOUNTCREATE) (RTS_UI32 ui32InitialValue, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga9286a3e5b0e48959d20ca0ef9ae0c644:
+
+typedef RTS_RESULT( *  PFSYSSEMCOUNTDELETE) (RTS_HANDLE hSemaphore)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gaa27c8a42aa98d7b1a7d5f7d5b59caf59:
+
+typedef RTS_RESULT( *  PFSYSSEMCOUNTENTER) (RTS_HANDLE hSemaphore, RTS_UI32 ui32TimeoutMs)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga510f84d69d0b8967dd5e4966271d3183:
+
+typedef RTS_RESULT( *  PFSYSSEMCOUNTLEAVE) (RTS_HANDLE hSemaphore)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga1b5a0cd85294d58788427ee61fe59656:
+
+typedef ISysSemCount_C ISysSemCount
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___sys_sem_count_itf_1gad3bb22866f64d9c23fa7531c4563b337:
+
+RTS_RESULT SysSemCountOSInit (INIT_STRUCT *pInit)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1gaa4575f3380b5324d9048f3f5032440c6:
+
+RTS_RESULT SysSemCountOSHookFunction (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_sem_count_itf_1ga774eea13b58fa73a944a7c2596db6686:
+
+RTS_HANDLE SysSemCountCreate (RTS_UI32 ui32InitialValue, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Create a new counting semaphore object
+
+**Parameters**
+
++---------+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ui32InitialValue | Initial semaphore value. Value is counted down by each :ref:`SysSemCountEnter() <group___sys_sem_count_itf_1gaa9df357e76020329028ded517c668ac5>` call and blocks, if internal counter is 0! At each :ref:`SysSemCountLeave() <group___sys_sem_count_itf_1gae0ce2c4cb39aa56c444547e852ff9318>` call, the counter is counting up. So the initial value is the number of critical sections, which can be entered at the same time! NOTE: A SysSemCount semaphore is typically not inversion safe and is not thread local (multiple enter in one task blocks the semaphore, if internal counter reaches 0)! |
++---------+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult          | One of: ERR_OK: The semaphore was created. ERR_PARAMETER: Error within the given parameters. ERR_NOMEMORY: The needed resources couldn't be allocated. ERR_FAILED: An internal error occurred.                                                                                                                                                                                                                                                                                                                                                                                                          |
++---------+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the semaphore. RTS_INVALIDHANDLE in case of an error.
+
+.. _group___sys_sem_count_itf_1ga71d229de94361478c512af44ae7ad0eb:
+
+RTS_RESULT SysSemCountDelete (RTS_HANDLE hSemaphore)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Delete a semaphore object
+
+**Parameters**
+
++---------+------------+--------------------------------------------------------------------+
+| [in]    | hSemaphore | Handle to the semaphore that is provided from SysSemaphoreCreate() |
++---------+------------+--------------------------------------------------------------------+
+
+**Returns:**
+
+One of: ERR_OK: The semaphore was deleted successful. ERR_INVALID_HANDLE: The given semaphore isn't a valid semaphore handle. ERR_FAILED: An internal error occurred.
+
+.. _group___sys_sem_count_itf_1gaa9df357e76020329028ded517c668ac5:
+
+RTS_RESULT SysSemCountEnter (RTS_HANDLE hSemaphore, RTS_UI32 ui32TimeoutMs)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Try to enter the semaphore. If semaphore is available, the function enters the semaphore and returns ERR_OK. If semaphore is not available, ERR_TIMEOUT is returned. The behavior of the function depends on the timeout value:
+
+  - RTS_TIMEOUT_NO_WAIT indicates that the function is nonblocking. If the semaphore is not available, the function will return immediately
+
+  - RTS_TIMEOUT_INFINITE indicates that the function is blocking. The thread will be suspended until the semaphore is available.
+
+  - Any other value: The Function will block until the semaphore is available, but will return after the timeout if the semaphore was not available. ERR_TIMEOUT will be returned in this case.
+
+**Parameters**
+
++---------+------------+------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hSemaphore | Handle to the semaphore that is provided from SysSemaphoreCreate() \paramui32TimeoutMs Timeout for the enter operation in ms |
++---------+------------+------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+e One of:
+
+  - ERR_OK: The semaphore was entered.
+
+  - ERR_FAILED: The semaphore couldn't be entered.
+
+  - ERR_TIMEOUT: The given timeout expired.
+
+  - ERR_INVALID_HANDLE: The given semaphore isn't a valid semaphore handle.
+
+  - ERR_PARAMETER: Error within the given parameters.
+
+.. _group___sys_sem_count_itf_1gae0ce2c4cb39aa56c444547e852ff9318:
+
+RTS_RESULT SysSemCountLeave (RTS_HANDLE hSemaphore)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Leave the given semaphore.
+
+**Parameters**
+
++---------+------+--------------------------------------------------------------------+
+| [in]    | hSem | Handle to the semaphore that is provided from SysSemaphoreCreate() |
++---------+------+--------------------------------------------------------------------+
+
+**Returns:**
+
+One of:
+
+  - ERR_OK: The operation was successful
+
+  - ERR_INVALID_HANDLE: The given semaphore isn't a valid semaphore handle.
+
+  - ERR_FAILED: The operation failed.
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

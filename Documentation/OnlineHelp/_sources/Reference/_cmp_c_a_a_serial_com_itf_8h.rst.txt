@@ -1,0 +1,142 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_c_a_a_serial_com_itf_8h:
+
+===================================
+CmpCAASerialComItf.h File Reference
+===================================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpItf.h`"
+| #include ":ref:`CAADefines.h`"
+| #include ":ref:`CAATypes.h`"
+| #include ":ref:`CAASerialCom.h`"
+| #include ":ref:`CAAAsyncMan.h`"
+| #include ":ref:`CAAMemBlockMan.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`tagcom_close_struct <structtagcom__close__struct>`
+
+- struct :ref:`ICmpCAASerialCom_C <struct_i_cmp_c_a_a_serial_com___c>`
+
+Macros
+------
+
+- #define :ref:`USE_COM_WorkerInit <_cmp_c_a_a_serial_com_itf_8h_1a2f780ae36e950b69b2f8de585e6f750a>` :ref:`PFCOM_WORKERINIT <_cmp_c_a_a_serial_com_itf_8h_1a5149ae5870241a9ff7bef08483a751e1>` pfCOM_WorkerInit;
+
+- #define :ref:`EXT_COM_WorkerInit <_cmp_c_a_a_serial_com_itf_8h_1adf4b6f804dc4f6547cccfdce858f0527>` extern :ref:`PFCOM_WORKERINIT <_cmp_c_a_a_serial_com_itf_8h_1a5149ae5870241a9ff7bef08483a751e1>` pfCOM_WorkerInit;
+
+- #define :ref:`GET_COM_WorkerInit <_cmp_c_a_a_serial_com_itf_8h_1a7d6e5c62492b49179fc80c11ec8ace94>` s_pfCMGetAPI2( "COM_WorkerInit", (RTS_VOID_FCTPTR *)&pfCOM_WorkerInit, (fl), 0, 0)
+
+- #define :ref:`CAL_COM_WorkerInit <_cmp_c_a_a_serial_com_itf_8h_1a4c64685f8caf9bcb9126901b34c30527>` pfCOM_WorkerInit
+
+- #define :ref:`CHK_COM_WorkerInit <_cmp_c_a_a_serial_com_itf_8h_1a2ac39d8ac5336d3b4d3826062722d0d5>` (pfCOM_WorkerInit != NULL)
+
+- #define :ref:`EXP_COM_WorkerInit <_cmp_c_a_a_serial_com_itf_8h_1a3e08daa93b80c54c59217673504a406c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"COM_WorkerInit", (RTS_UINTPTR) :ref:`COM_WorkerInit <_cmp_c_a_a_serial_com_itf_8h_1aefd5b7d820dc635304fc00b7e33e8257>` , 0, 0)
+
+- #define :ref:`USE_COM_WorkerExit <_cmp_c_a_a_serial_com_itf_8h_1af3f848213c9f9856de3c3777ec4b2bb2>` :ref:`PFCOM_WORKEREXIT <_cmp_c_a_a_serial_com_itf_8h_1a46402f8d29e8fd676b13cc24bf180905>` pfCOM_WorkerExit;
+
+- #define :ref:`EXT_COM_WorkerExit <_cmp_c_a_a_serial_com_itf_8h_1ae504e8aad5acf35e8e91cd778947eef0>` extern :ref:`PFCOM_WORKEREXIT <_cmp_c_a_a_serial_com_itf_8h_1a46402f8d29e8fd676b13cc24bf180905>` pfCOM_WorkerExit;
+
+- #define :ref:`GET_COM_WorkerExit <_cmp_c_a_a_serial_com_itf_8h_1a9576abc599f1b68b2dd38bdf99fa206d>` s_pfCMGetAPI2( "COM_WorkerExit", (RTS_VOID_FCTPTR *)&pfCOM_WorkerExit, (fl), 0, 0)
+
+- #define :ref:`CAL_COM_WorkerExit <_cmp_c_a_a_serial_com_itf_8h_1a606c8dad19f0bb7fccf20772cc950be9>` pfCOM_WorkerExit
+
+- #define :ref:`CHK_COM_WorkerExit <_cmp_c_a_a_serial_com_itf_8h_1a6fe33d65843c6d08eb70a08962f4d78c>` (pfCOM_WorkerExit != NULL)
+
+- #define :ref:`EXP_COM_WorkerExit <_cmp_c_a_a_serial_com_itf_8h_1a6eed3f8e399815c7e86923dc9c47a7eb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"COM_WorkerExit", (RTS_UINTPTR) :ref:`COM_WorkerExit <_cmp_c_a_a_serial_com_itf_8h_1a7b57480f9edc64d40b6e3cff9c17d3ac>` , 0, 0)
+
+- #define :ref:`COM_SETTINGS_PORT <_cmp_c_a_a_serial_com_itf_8h_1adc14b4da90c7e07b92a73cafdfa91d79>` 0x01
+
+- #define :ref:`COM_SETTINGS_STOPBIT <_cmp_c_a_a_serial_com_itf_8h_1ac429430fd708a591ed8d4f5c8cc0f36a>` 0x02
+
+- #define :ref:`COM_SETTINGS_PARITY <_cmp_c_a_a_serial_com_itf_8h_1ab8faaea6e584ab119ecf95c973fa46f9>` 0x03
+
+- #define :ref:`COM_SETTINGS_BAUDRATE <_cmp_c_a_a_serial_com_itf_8h_1a1b59a50d9e35c982636723266de0e1d7>` 0x04
+
+- #define :ref:`COM_SETTINGS_TIMEOUT <_cmp_c_a_a_serial_com_itf_8h_1a23a941d9387385c8a09b71b8f5428e29>` 0x05
+
+- #define :ref:`COM_SETTINGS_BUFFERSIZE <_cmp_c_a_a_serial_com_itf_8h_1a5843879efeb299d5eed38c78e2cda3c7>` 0x06
+
+- #define :ref:`COM_SETTINGS_BYTESIZE <_cmp_c_a_a_serial_com_itf_8h_1a55a0526d29929aefdd72f67af21aa4cc>` 0x07
+
+- #define :ref:`COM_SETTINGS_BINARY <_cmp_c_a_a_serial_com_itf_8h_1a1c9090122763f1334df9c8d1b84f06df>` 0x08
+
+- #define :ref:`COM_SETTINGS_OUTXCTSFLOW <_cmp_c_a_a_serial_com_itf_8h_1ae0831533aa570e4608316de340b6bd77>` 0x09
+
+- #define :ref:`COM_SETTINGS_OUTXDSRFLOW <_cmp_c_a_a_serial_com_itf_8h_1ab1315a09b84350649a9401ca1c05ced4>` 0x0A
+
+- #define :ref:`COM_SETTINGS_DTRCONTROL <_cmp_c_a_a_serial_com_itf_8h_1ab6bd53ced69d2c359cd3c65e2389e797>` 0x0B
+
+- #define :ref:`COM_SETTINGS_DSRSENSITIVITY <_cmp_c_a_a_serial_com_itf_8h_1aa27e405fa2e57c2de859d85b0d4e2e82>` 0x0C
+
+- #define :ref:`COM_SETTINGS_RTSCONTROL <_cmp_c_a_a_serial_com_itf_8h_1a13166cdf87aaca9fa84b6a39c7eef845>` 0x0D
+
+- #define :ref:`COM_SETTINGS_TXCONTINUEONXOFF <_cmp_c_a_a_serial_com_itf_8h_1a631a864c8b2b7085f471627c1747c9c2>` 0x0E
+
+- #define :ref:`COM_SETTINGS_OUTX <_cmp_c_a_a_serial_com_itf_8h_1ac50370b43c05da5ca98a0ece6098b8f6>` 0x0F
+
+- #define :ref:`COM_SETTINGS_INX <_cmp_c_a_a_serial_com_itf_8h_1a6a8fdadb3c67d6ee494294c3c597f730>` 0x10
+
+- #define :ref:`COM_SETTINGS_XONCHAR <_cmp_c_a_a_serial_com_itf_8h_1ae8d329a795f2e842451456e167168b02>` 0x11
+
+- #define :ref:`COM_SETTINGS_XOFFCHAR <_cmp_c_a_a_serial_com_itf_8h_1a92027366ddd7337a1a7d209745f03822>` 0x12
+
+- #define :ref:`COM_SETTINGS_XONLIM <_cmp_c_a_a_serial_com_itf_8h_1a8e0115a3d242ba965ed0d61975988a9c>` 0x13
+
+- #define :ref:`COM_SETTINGS_XOFFLIM <_cmp_c_a_a_serial_com_itf_8h_1a966ca471043a88513625d061d7bf1e2a>` 0x14
+
+- #define :ref:`USE_com_close <_cmp_c_a_a_serial_com_itf_8h_1a258e860d530c2d136a0583392c3997d6>` :ref:`PFCOM_CLOSE_IEC <_cmp_c_a_a_serial_com_itf_8h_1a7e0167ef8b6ecd8f91d82ca8035592b4>` pfcom_close;
+
+- #define :ref:`EXT_com_close <_cmp_c_a_a_serial_com_itf_8h_1ad8155300258d12c2b3e4784095240f8f>` extern :ref:`PFCOM_CLOSE_IEC <_cmp_c_a_a_serial_com_itf_8h_1a7e0167ef8b6ecd8f91d82ca8035592b4>` pfcom_close;
+
+- #define :ref:`GET_com_close <_cmp_c_a_a_serial_com_itf_8h_1a24a275278935ca781c23a227950a6dd5>` s_pfCMGetAPI2( "com_close", (RTS_VOID_FCTPTR *)&pfcom_close, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x14BED712, 0xE3A6D576), 0x03050600)
+
+- #define :ref:`CAL_com_close <_cmp_c_a_a_serial_com_itf_8h_1a5e2b341a72c3edb487add1e299de89ad>` pfcom_close
+
+- #define :ref:`CHK_com_close <_cmp_c_a_a_serial_com_itf_8h_1a25c868a6639274763db3f5af55a701a9>` (pfcom_close != NULL)
+
+- #define :ref:`EXP_com_close <_cmp_c_a_a_serial_com_itf_8h_1aade12d158c82fc5e998b3d5dbba3ac58>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"com_close", (RTS_UINTPTR) :ref:`com_close <_cmp_c_a_a_serial_com_itf_8h_1a75bcb13ab9ece73d7c1d0cb99a888e2c>` , 1, RTSITF_GET_SIGNATURE(0x14BED712, 0xE3A6D576), 0x03050600)
+
+- #define :ref:`ITF_CmpCAASerialCom <_cmp_c_a_a_serial_com_itf_8h_1a6de5f8bcaf675b7bfb6123c2b19dc285>`
+
+- #define :ref:`EXTITF_CmpCAASerialCom <_cmp_c_a_a_serial_com_itf_8h_1a680c5ceb61a70ac77412596c1695247e>`
+
+Typedefs
+--------
+
+- typedef CAA_ERROR(* :ref:`PFCOM_WORKERINIT <_cmp_c_a_a_serial_com_itf_8h_1a5149ae5870241a9ff7bef08483a751e1>`)(void)
+
+- typedef CAA_ERROR(* :ref:`PFCOM_WORKEREXIT <_cmp_c_a_a_serial_com_itf_8h_1a46402f8d29e8fd676b13cc24bf180905>`)(void)
+
+- typedef struct :ref:`tagcom_close_struct <structtagcom__close__struct>` :ref:`com_close_struct <_cmp_c_a_a_serial_com_itf_8h_1a11dfcc47f9d05a1f66484375b0a1acbb>`
+
+- typedef void(* :ref:`PFCOM_CLOSE_IEC <_cmp_c_a_a_serial_com_itf_8h_1a7e0167ef8b6ecd8f91d82ca8035592b4>`)(com_close_struct *p)
+
+- typedef :ref:`ICmpCAASerialCom_C <struct_i_cmp_c_a_a_serial_com___c>` :ref:`ICmpCAASerialCom <_cmp_c_a_a_serial_com_itf_8h_1aa17d170d8ddbc262c2e98fbba4db76a0>`
+
+Functions
+---------
+
+- CAA_ERROR :ref:`COM_WorkerInit <_cmp_c_a_a_serial_com_itf_8h_1aefd5b7d820dc635304fc00b7e33e8257>` (void)
+
+- CAA_ERROR :ref:`COM_WorkerExit <_cmp_c_a_a_serial_com_itf_8h_1a7b57480f9edc64d40b6e3cff9c17d3ac>` (void)
+
+- void :ref:`com_close <_cmp_c_a_a_serial_com_itf_8h_1a75bcb13ab9ece73d7c1d0cb99a888e2c>` (:ref:`com_close_struct <_cmp_c_a_a_serial_com_itf_8h_1a11dfcc47f9d05a1f66484375b0a1acbb>` * p)
+
+Detailed Description
+--------------------
+
+Definition in file CmpCAASerialComItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

@@ -9,13 +9,13 @@
  *  and this leads to one cycle of the EtherCAT master task. 
  *  </description>
  *  <copyright>
- *  (c) 2003-2018 CODESYS GmbH
+ *  (c) 2003-2018 CODESYS Development GmbH
  *  </copyright>
  */
 SET_COMPONENT_NAME(`CmpDC_Timer_WEC')
 COMPONENT_SOURCES(`CmpDC_Timer_WEC.c')
 
-COMPONENT_VERSION(`0x03050E00')
+COMPONENT_VERSION(`0x03051000')
 
 /* NOTE: REPLACE 0x0000 BY YOUR VENDORID */
 COMPONENT_VENDORID(`0x0000')

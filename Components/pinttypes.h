@@ -41,11 +41,14 @@
 #define PRI_X64		"llx"
 #elif RTS_REGISTER_WIDTH == 64
 #define PRI_I32		"d"
-#define PRI_I64		"d"
-
 #define PRI_UI32	"u"
-#define PRI_UI64	"u"
-
+#if SIZEOF_LONG < 8
+ #define PRI_I64	"lld"
+ #define PRI_UI64	"llu"
+#else
+ #define PRI_I64	"ld"
+ #define PRI_UI64	"lu"
+#endif
 #define PRI_X32		"x"
 #define PRI_X64		"x"
 #endif

@@ -1,0 +1,92 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_iec_var_access_itf___onlineservices:
+
+===============
+Online services
+===============
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Macros
+------
+
+- #define :ref:`SRV_IECVARACC_GET_SYMBOLSETS <group___cmp_iec_var_access_itf___onlineservices_1ga29b2ff14f5ab9d26d70fbde93243a641>` 0x0C
+
+- #define :ref:`SRV_IECVARACC_CONFIGURE_SYMBOLSET <group___cmp_iec_var_access_itf___onlineservices_1gabf16c8d04b42a14917f8211e1911a050>` 0x0D
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_iec_var_access_itf___onlineservices_1ga29b2ff14f5ab9d26d70fbde93243a641:
+
+#define SRV_IECVARACC_GET_SYMBOLSETS 0x0C
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_IEC_VAR_ACCESS
+
+Service: SRV_IECVARACC_GET_SYMBOLSETS
+
+Request tags:
+
+  - TAG_IECVARACC_SYMBOLSET (1..?)
+
+    - TAG_IECVARACC_SYMBOLSET_NAME (0..?) (String): Name of the last symbols set.
+
+    - TAG_IECVARACC_SYMBOLSET_APPLICATION (0..?) (String): Application name of the last symbol set.
+
+    - TAG_IECVARACC_SYBMOLSET_GROUP (0..?) (String): The last group that has been uploaded. If empty start with the first group.
+
+Response tags:
+
+  - TAG_IECVARACC_SYMBOLSET (1..?): This tag describes a symbol set. This tag may appear multiple times in this service.
+
+    - TAG_IECVARACC_SYMBOLSET_NAME (1..?) (String): Name of the symbols set.
+
+    - TAG_IECVARACC_SYMBOLSET_APPLICATION (1..?) (String): Name of the application where the symbol set was defined.
+
+    - TAG_IECVARACC_SYBMOLSET_GROUP (0..?) (String): Group(s) that have access to this symbol set. This tag may appear multiple times
+
+  - TAG_IECVARACC_SYMBOLSET_RESULT (1..?) (RTS_UI16): Result code of online operation
+
+.. _group___cmp_iec_var_access_itf___onlineservices_1gabf16c8d04b42a14917f8211e1911a050:
+
+#define SRV_IECVARACC_CONFIGURE_SYMBOLSET 0x0D
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Service group: SG_IEC_VAR_ACCESS
+
+Service: SRV_IECVARACC_CONFIGURE_SYMBOLSET
+
+Request tags:
+
+  - TAG_IECVARACC_SYMBOLSET (1..?)
+
+    - TAG_IECVARACC_SYMBOLSET_NAME (0..?) (String): Name of the last symbols set.
+
+    - TAG_IECVARACC_SYMBOLSET_APPLICATION (0..?) (String): Application name of the last symbol set.
+
+    - TAG_IECVARACC_SYMBOLSET_EXTEND_CONFIG (0..?) (BOOL): Switch to select if the configuration of this symbol set should be extended. If false the group assignment will be cleared before adding the groups.
+
+    - TAG_IECVARACC_SYBMOLSET_GROUP (0..?) (String): Group(s) that have access to this symbol set. This tag may appear multiple times
+
+Response tags:
+
+  - TAG_IECVARACC_SYMBOLSET_RESULT (1..?) (RTS_UI16): Result code of online operation
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

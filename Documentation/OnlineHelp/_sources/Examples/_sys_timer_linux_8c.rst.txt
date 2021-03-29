@@ -1,0 +1,95 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __sys_timer_linux_8c:
+
+==============================
+SysTimerLinux.c File Reference
+==============================
+
+| #include ":ref:`time.h`"
+| #include ":ref:`pthread.h`"
+| #include ":ref:`errno.h`"
+| #include ":ref:`sched.h`"
+| #include ":ref:`unistd.h`"
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`SysTimerDep.h`"
+| #include ":ref:`CmpScheduleItf.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`tagSysLinuxTimerInfo <structtag_sys_linux_timer_info>`
+
+Macros
+------
+
+- #define :ref:`MAX_TIMERS <_sys_timer_linux_8c_1a79fd3eac646964332ed33ec7dd40f208>` SYSTIMER_NUM_OF_STATIC_TIMER
+
+- #define :ref:`NSEC_PER_SEC <_sys_timer_linux_8c_1a0501e82515b2bdf36453c4cc80f5e0cc>` 1000000000
+
+- #define :ref:`SIL2_LINUX_PRIO_WATCHDOG <_sys_timer_linux_8c_1a8c05abd76893063d35bcaf16550194e1>` sched_get_priority_max(SCHED_FIFO) - 4
+
+- #define :ref:`SIL2_LINUX_MAX_PRIO_TIMER <_sys_timer_linux_8c_1ae90f073cd86da0c5512fd1124747a18a>` sched_get_priority_max(SCHED_FIFO) - 5
+
+- #define :ref:`SIL2_LINUX_MIN_PRIO_TIMER <_sys_timer_linux_8c_1a3dfed2ad279f43ec1ab444593dab6207>` sched_get_priority_min(SCHED_FIFO) + 1
+
+- #define :ref:`SIL2_LINUX_WATCHDOG_INTERVAL_NS <_sys_timer_linux_8c_1a4705c6260b5c9b6b4b4d02ae0f1fdb38>` 1000000
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagSysLinuxTimerInfo <structtag_sys_linux_timer_info>` :ref:`SysLinuxTimerInfo <_sys_timer_linux_8c_1a2c63208c9332158612a00f69bd163a35>`
+
+Functions
+---------
+
+- void * :ref:`watchdogthread <_sys_timer_linux_8c_1a2db15ade243acdc82f3e4ae048f2698c>` (void * p)
+
+- RTS_RESULT :ref:`SysTimerOSInit <_sys_timer_linux_8c_1a4b88c19e3cb50e4fb404b9840b3f4818>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysTimerOSHookFunction <_sys_timer_linux_8c_1ae41bca895d3668f705513c37ff58f360>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- void :ref:`SysTimerRestoreContextException <_sys_timer_linux_8c_1aa2a808feee59b62208fc2758b1a4933f>` (void)
+
+- void :ref:`timerfunction <_sys_timer_linux_8c_1af56a29ce93ff91636100a4133b7df3ec>` (int i)
+
+- RTS_HANDLE :ref:`SysTimerOpen <_sys_timer_linux_8c_1a81a4bda452cea19feeba1b8383cafcee>` (SYS_TIMER_INFO * pTimerInfo, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysTimerClose <_sys_timer_linux_8c_1aa9dc02593fd99db07c4db7eca43cf2ab>` (RTS_HANDLE hTimer)
+
+- RTS_RESULT :ref:`SysTimerStart <_sys_timer_linux_8c_1aab0e60e94bc15215f8cc59f0925d8111>` (RTS_HANDLE hTimer, unsigned long ulType)
+
+- RTS_RESULT :ref:`SysTimerStop <_sys_timer_linux_8c_1ae4193bd2879f8f1aa9a6b799069e1759>` (RTS_HANDLE hTimer)
+
+- RTS_RESULT :ref:`SysTimerGetInterval <_sys_timer_linux_8c_1a536aaa19cb9a505f566d1c8afb598124>` (RTS_HANDLE hTimer, RTS_SYSTIME * ptIntervalNs)
+
+- RTS_RESULT :ref:`SysTimerSetInterval <_sys_timer_linux_8c_1aec21d923ed57b06f68b032563b2af243>` (RTS_HANDLE hTimer, RTS_SYSTIME tIntervalNs)
+
+- RTS_RESULT :ref:`SysTimerMaxTimer <_sys_timer_linux_8c_1a1ac691c3724ffeb1de2add6f9891fe92>` (RTS_UI32 * pulMaxTimers)
+
+- RTS_RESULT :ref:`SysTimerGetMinResolution <_sys_timer_linux_8c_1af4319db131dab4fd0e26c159e3b112db>` (RTS_HANDLE hTimer, RTS_SYSTIME * ptMinResolutionNs)
+
+- RTS_RESULT :ref:`SysTimerGetContext <_sys_timer_linux_8c_1a1cf6549e1b5201bbf7914c9678ccfa09>` (RTS_HANDLE hTimer, RegContext * pContext)
+
+- unsigned int :ref:`SysTimerFitTimer <_sys_timer_linux_8c_1ac2815f89df55182c4bcb1572d9426e48>` (RTS_HANDLE hTimer, unsigned long ulPriority, RTS_SYSTIME tInterval, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysTimerGetTimeStamp <_sys_timer_linux_8c_1a921a7ac15d2223a29952722c2159aeaf>` (RTS_HANDLE hTimer, RTS_SYSTIME * ptTimestampNs)
+
+- RTS_RESULT :ref:`SysTimerRegisterBasePointer <_sys_timer_linux_8c_1ab11b25e015573472d6b997d9e1b3b81b>` (RTS_UINTPTR ulBP)
+
+- RTS_HANDLE :ref:`SysTimerGetCurrent <_sys_timer_linux_8c_1a806e51d55aa81bc515d93f14014b160f>` (RTS_RESULT * pResult)
+
+Detailed Description
+--------------------
+
+Definition in file SysTimerLinux.c
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

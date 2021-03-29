@@ -1,11 +1,11 @@
 /**
  * <interfacename>CmpVisuServer</interfacename>
  * <description> 
- *	Interface for the visu server.
+ *	Interface for the visualization server.
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -47,8 +47,8 @@ REF_ITF(`CmpBinTagUtilItf.m4')
 /**
  * <category>Event parameter</category>
  * <element name="pszApplName" type="IN">The name of the application, which has to process the request.</element>
- * <element name="udiUserDB" type="IN">The database id of the visu user management</element>
- * <element name="udiReqVersion" type="IN">The request version is used to handle different visu user mgmt library versions.</element>
+ * <element name="udiUserDB" type="IN">The database id of the visualization user management</element>
+ * <element name="udiReqVersion" type="IN">The request version is used to handle different visualization user management library versions.</element>
  * <element name="udiCount" type="OUT">The total number of users in the visualization user management</element>
  * <element name="udiError" type="OUT">Returns an error code indicating, whether the processing was successful or not</element>
  * <element name="bRequestHandled" type="OUT">Returns <c>TRUE</c> if the request has been handled, otherwise <c>FALSE</c></element>
@@ -77,7 +77,7 @@ typedef struct
  * <category>Event parameter</category>
  * <element name="pszApplName" type="IN">The name of the application, which has to process the request.</element>
  * <element name="udiUserDB" type="IN">The user database from which the user info is collected.</element>
- * <element name="udiReqVersion" type="IN">The request version is used to handle different visu user mgmt library versions.</element>
+ * <element name="udiReqVersion" type="IN">The request version is used to handle different visualization user management library versions.</element>
  * <element name="udiStartIndex" type="IN">The start index, where the search has to start.</element>
  * <element name="udiEndIndex" type="IN">The end index, where the search has to start.</element>
  * <element name="udiBufferSize" type="IN">The size of the communication buffer in byte</element>
@@ -102,7 +102,7 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent to the central visu user mgmt to get a list of users. </description>
+ * <description>Event is sent to the central visualization user management to get a list of users. </description>
  * <param name="pEventParam" type="IN">EVTPARAMID_VisuUserMgmtGetUsers</param>
  */
 #define EVT_VisuUserMgmtGetUsers					MAKE_EVENTID(EVTCLASS_INFO, 2)
@@ -110,8 +110,8 @@ typedef struct
 /**
  * <category>Event parameter</category>
  * <element name="pszApplName" type="IN">The name of the application, which has to process the request.</element>
- * <element name="udiUserDB" type="IN">The database id of the visu user management</element>
- * <element name="udiReqVersion" type="IN">The request version is used to handle different visu user mgmt library versions.</element>
+ * <element name="udiUserDB" type="IN">The database id of the visualization user management</element>
+ * <element name="udiReqVersion" type="IN">The request version is used to handle different visualization user management library versions.</element>
  * <element name="udiCheckChangeUserFlags" type="IN">The flags of this event</element>
  * <element name="udiCheckChangeUserType" type="IN">The change type</element>
  * <element name="udiCheckChangeUserIndex" type="IN">The user index</element>
@@ -140,7 +140,7 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent to get or set a temporary user mgmt database file in the visualization user management. </description>
+ * <description>Event is sent to get or set a temporary user management database file in the visualization user management. </description>
  * <param name="pEventParam" type="IN">EVTPARAMID_VisuUserMgmtCheckChangeUser</param>
  */
 #define EVT_VisuUserMgmtCheckChangeUser					MAKE_EVENTID(EVTCLASS_INFO, 3)
@@ -148,8 +148,8 @@ typedef struct
 /**
  * <category>Event parameter</category>
  * <element name="pszApplName" type="IN">The name of the application, which has to process the request.</element>
- * <element name="udiUserDB" type="IN">The database id of the visu user management</element>
- * <element name="udiReqVersion" type="IN">The request version is used to handle different visu user mgmt library versions.</element>
+ * <element name="udiUserDB" type="IN">The database id of the visualization user management</element>
+ * <element name="udiReqVersion" type="IN">The request version is used to handle different visualization user management library versions.</element>
  * <element name="udiGetSetDBFlags" type="IN">The flags of this event</element>
  * <element name="udiError" type="OUT">Returns an error code indicating, whether the processing was successful or not</element>
  * <element name="bRequestHandled" type="OUT">Returns <c>TRUE</c> if the request has been handled, otherwise <c>FALSE</c></element>
@@ -168,7 +168,7 @@ typedef struct
 
 /**
  * <category>Events</category>
- * <description>Event is sent to get or set a temporary user mgmt database file in the visualization user management. </description>
+ * <description>Event is sent to get or set a temporary user management database file in the visualization user management. </description>
  * <param name="pEventParam" type="IN">EVTPARAMID_VisuUserMgmtGetSetDB</param>
  */
 #define EVT_VisuUserMgmtGetSetDB					MAKE_EVENTID(EVTCLASS_INFO, 4)

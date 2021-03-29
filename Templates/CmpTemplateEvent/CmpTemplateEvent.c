@@ -2,7 +2,7 @@
  * <name>CmpTemplateEvent.c</name>
  * <description> 
  *	Very simple example about using runtime system events.
- *	Runtime system events are posted by various runtime components, and can be catched by other components. by registering a callback function.
+ *	Runtime system events are posted by various runtime components, and can be caught by other components. by registering a callback function.
  *	They can be used for communication between runtime system components. The communication using events is more flexible than function calls,
  *	because the component that posts the event needs not to know the components that register to the event.
  *	This example shows how to catch existing events, by registering a callback function to events from two different other components.
@@ -36,19 +36,18 @@ static RTS_HANDLE s_hEventPrepareWriteVariable = RTS_INVALID_HANDLE;
 
 USE_STMT
 
-/**
- * <description>Entry function of the component. Called at startup for each component. Used to exchange function pointers with the component manager.</description>
- * <param name="pInitStruct" type="IN">Pointer to structure with:
- *		pfExportFunctions	OUT Pointer to function that exports component functions
- *		pfImportFunctions	OUT Pointer to function that imports functions from other components
- *		pfGetVersion		OUT Pointer to function to get component version
- *		pfRegisterAPI		IN	Pointer to component mangager function to register a api function
- *		pfGetAPI			IN	Pointer to component mangager function to get a api function
- *		pfCallHook			IN	Pointer to component mangager function to call a hook function
- * </param> 
- * <result>ERR_OK if library could be initialized, else error code.</result>
- */
 DLL_DECL int CDECL ComponentEntry(INIT_STRUCT *pInitStruct)
+/*	Used to exchange function pointers between component manager and components.
+	Called at startup for each component.
+	pInitStruct:			IN	Pointer to structure with:
+		pfExportFunctions	OUT Pointer to function that exports component functions
+		pfImportFunctions	OUT Pointer to function that imports functions from other components
+		pfGetVersion		OUT Pointer to function to get component version
+		pfRegisterAPI		IN	Pointer to component manager function to register a API function
+		pfGetAPI			IN	Pointer to component manager function to get a API function
+		pfCallHook			IN	Pointer to component manager function to call a hook function
+	Return					ERR_OK if library could be initialized, else error code
+*/
 {
 	pInitStruct->CmpId = COMPONENT_ID;
 	pInitStruct->pfExportFunctions = ExportFunctions;

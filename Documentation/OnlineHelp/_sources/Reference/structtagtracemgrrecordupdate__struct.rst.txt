@@ -1,0 +1,65 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of struct.rst template
+
+.. _structtagtracemgrrecordupdate__struct:
+
+===============================================
+tagtracemgrrecordupdate_struct Struct Reference
+===============================================
+
+| #include ":ref:`CmpTraceMgrItf.h <_cmp_trace_mgr_itf_8h>`"
+
+Data Fields
+-----------
+
+- RTS_IEC_HANDLE :ref:`hPacket <group___cmp_trace_mgr_itf_1ga3a0962f728116a82e8c07699ec45e1dd>`
+- RTS_IEC_HANDLE :ref:`hRecord <group___cmp_trace_mgr_itf_1gafdf62e0adb0a1ebf64ed8929c00208c0>`
+- RTS_IEC_RESULT :ref:`TraceMgrRecordUpdate <group___cmp_trace_mgr_itf_1ga2ac81a9916e10a75ea3fad5f953d2c22>`
+
+Detailed Description
+--------------------
+
+Records the current value of the trace variable of a record together with the current time stamp.
+
+.. note:: This function is called cyclically by CmpTraceMgr. It should not be called by the application.
+
+:return: Returns the runtime system error code (see CmpErrors.library):
+
+  - ERR_PARAMETER if hPacket or hPrevRecord is not a valid handle
+
+  - ERR_NOTINITIALIZED if the packet is not currently recording (not started, trigger reached, ...)
+
+  - ERR_PENDING if no value is recorded for this cycle due to :ref:`TracePacketConfiguration.ulEveryNCycles <group___cmp_trace_mgr_itf_1ga29112671b73a99708fc7be47c372ba08>`
+
+  - ERR_FAILED if reading the value of the trace variable failed
+
+Field Documentation
+-------------------
+
+.. _group___cmp_trace_mgr_itf_1ga3a0962f728116a82e8c07699ec45e1dd:
+
+RTS_IEC_HANDLE tagtracemgrrecordupdate_struct::hPacket
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_trace_mgr_itf_1gafdf62e0adb0a1ebf64ed8929c00208c0:
+
+RTS_IEC_HANDLE tagtracemgrrecordupdate_struct::hRecord
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_trace_mgr_itf_1ga2ac81a9916e10a75ea3fad5f953d2c22:
+
+RTS_IEC_RESULT tagtracemgrrecordupdate_struct::TraceMgrRecordUpdate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The documentation for this struct was generated from the following file:
+------------------------------------------------------------------------
+
+CmpTraceMgrItf.h
+
+.. last line of struct.rst template
+.. last line of composition.rst template
+
+

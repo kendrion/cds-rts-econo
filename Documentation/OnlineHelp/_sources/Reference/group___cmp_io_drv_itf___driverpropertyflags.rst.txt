@@ -1,0 +1,128 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_io_drv_itf___driverpropertyflags:
+
+=====================
+Driver property flags
+=====================
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Macros
+------
+
+- #define :ref:`DRVPROP_CONSISTENCY <group___cmp_io_drv_itf___driverpropertyflags_1gaa3e04ff36d2a2cf6aea62fad77e24c07>` 0x0001
+
+- #define :ref:`DRVPROP_WATCHTDOG <group___cmp_io_drv_itf___driverpropertyflags_1gaff712cbe129f82c1bd771045505ef39e>` 0x0002
+
+- #define :ref:`DRVPROP_REDUNDANCY <group___cmp_io_drv_itf___driverpropertyflags_1ga46846c30e617154a238e40719d0f1df0>` 0x0004
+
+- #define :ref:`DRVPROP_ACTIVE <group___cmp_io_drv_itf___driverpropertyflags_1gac5b514c81b24eae88ac081c4b8a48548>` 0x0008
+
+- #define :ref:`DRVPROP_ERROR_ACTIVE <group___cmp_io_drv_itf___driverpropertyflags_1ga53bfdaf1086be80f8c6421b3707f3d1b>` 0x0010
+
+- #define :ref:`DRVPROP_ERROR_PASSIVE <group___cmp_io_drv_itf___driverpropertyflags_1gaf368665a0d4ce9c74095e9823b601ec2>` 0x0020
+
+- #define :ref:`DRVPROP_BACKGROUND_GETDIAG <group___cmp_io_drv_itf___driverpropertyflags_1ga9a0b5e607e510b0eccae6c975af5420e>` 0x0040
+
+- #define :ref:`DRVPROP_NO_SYNC <group___cmp_io_drv_itf___driverpropertyflags_1ga614d266cd71c32283e877639a5b960ea>` 0x0080
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_io_drv_itf___driverpropertyflags_1gaa3e04ff36d2a2cf6aea62fad77e24c07:
+
+#define DRVPROP_CONSISTENCY 0x0001
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+These property flags can be used by I/O drivers to influence the behavior of the I/O Manager.
+
+NOTE:
+
+The driver property flags DRVPROP_CONSISTENCY and DRVPROP_NO_SYNC influence the task synchronization behavior of the I/O Manager (CmpIoMgr):
+
+Case 1: Neither DRVPROP_CONSISTENCY nor DRVPROP_NO_SYNC is set:
+
+All calls of ReadInputs, WriteOutputs, and StartBusCycle are mutually locked with the same lock. No concurrent calls of these functions are possible at all.
+
+Case 2: DRVPROP_CONSISTENCY is set:
+
+Same lock as in case 1, but during the execution of ReadInputs further concurrent calls (only) of ReadInputs are allowed - analogous behavior with WriteOutputs.
+
+Case 3: DRVPROP_NO_SYNC is set:
+
+The I/O manager does not synchronize concurrent calls of ReadInputs, WriteOutputs, and StartBusCycle at all. The I/O driver can use the functions :ref:`IoMgrLockEnter() <group___cmp_io_mgr_itf_1ga6a3b8890a62765ebd5902a8219a4856b>` and :ref:`IoMgrLockLeave() <group___cmp_io_mgr_itf_1gad60fc91020763335cd2efea24e149b25>` for synchronization:
+
+  - IOMGR_LOCK_READ_INPUTS locks critical sections in :ref:`IoDrvReadInputs() <group___cmp_io_drv_itf_1ga48f414affb4bb84e803e08b48eaa1ea1>` and :ref:`IoDrvStartBusCycle() <group___cmp_io_drv_itf_1ga7712716bf87ce241c22958db3aa19bcc>` .
+
+  - IOMGR_LOCK_WRITE_OUTPUTS locks critical sections in :ref:`IoDrvWriteOutputs() <group___cmp_io_drv_itf_1gae25ad6b1f53f6935b17125d9757aad45>` and :ref:`IoDrvStartBusCycle() <group___cmp_io_drv_itf_1ga7712716bf87ce241c22958db3aa19bcc>` .
+
+IMPLEMENTATION NOTE: The behavior of the DRVPROP_CONSISTENCY and DRVPROP_NO_SYNC diver property flags can't be implemented on all platforms. Platforms without synchronization functionality may not be able to implement this behavior. IoMgrEmbedded of the CODESYSControlEmbedded runtime system for example can only disable and enable all interrupts.
+
+The I/O driver realizes bit-consistency by its own (atomic bit access). If this flag is 0, the I/O Manager takes care about the consistency.
+
+.. _group___cmp_io_drv_itf___driverpropertyflags_1gaff712cbe129f82c1bd771045505ef39e:
+
+#define DRVPROP_WATCHTDOG 0x0002
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The I/O driver needs a cyclic call to the IoDrvWatchdogTrigger interface function. This property is deprecated.
+
+.. _group___cmp_io_drv_itf___driverpropertyflags_1ga46846c30e617154a238e40719d0f1df0:
+
+#define DRVPROP_REDUNDANCY 0x0004
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The I/O driver is running in redundancy mode (passive)
+
+.. _group___cmp_io_drv_itf___driverpropertyflags_1gac5b514c81b24eae88ac081c4b8a48548:
+
+#define DRVPROP_ACTIVE 0x0008
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The I/O driver is running in redundancy mode (active).
+
+.. _group___cmp_io_drv_itf___driverpropertyflags_1ga53bfdaf1086be80f8c6421b3707f3d1b:
+
+#define DRVPROP_ERROR_ACTIVE 0x0010
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Inform the 3S redundancy Manager about an error of an active driver. This will lead to a switch between active and passive PLC.
+
+.. _group___cmp_io_drv_itf___driverpropertyflags_1gaf368665a0d4ce9c74095e9823b601ec2:
+
+#define DRVPROP_ERROR_PASSIVE 0x0020
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Inform the 3S redundancy Manager about an error of a passive driver.
+
+.. _group___cmp_io_drv_itf___driverpropertyflags_1ga9a0b5e607e510b0eccae6c975af5420e:
+
+#define DRVPROP_BACKGROUND_GETDIAG 0x0040
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If this property is set, the interface function :ref:`IoDrvGetModuleDiagnosis() <group___cmp_io_drv_itf_1gaca801830078ea9485613f2491e35575d>` of the driver is called cyclically from a background task. NOTE: In this case, IoDrvGetModuleDiagnosis is called with: IoDrvGetModuleDiagnosis(hIoDrv, NULL); This must be handled correctly in the IO-driver!
+
+.. _group___cmp_io_drv_itf___driverpropertyflags_1ga614d266cd71c32283e877639a5b960ea:
+
+#define DRVPROP_NO_SYNC 0x0080
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Disable synchronization for ReadInputs/WriteOutputs/StartBusCycle in the I/O Manager (CmpIoMgr). In this case the I/O driver has to implement the synchronization of these functions itself. CmpIoMgr provides the following functions that can be used by the I/O driver for synchronization: :ref:`IoMgrLockEnter() <group___cmp_io_mgr_itf_1ga6a3b8890a62765ebd5902a8219a4856b>` :ref:`IoMgrLockLeave() <group___cmp_io_mgr_itf_1gad60fc91020763335cd2efea24e149b25>`
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

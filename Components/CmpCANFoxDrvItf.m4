@@ -1,3 +1,14 @@
+/**
+ * <interfacename>CmpCANFoxDrv</interfacename>
+ * <description> 
+ *	Interface for the Sontheim CAN mini driver.
+ * </description>
+ *
+ * <copyright>
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * </copyright>
+ */
+
 SET_INTERFACE_NAME(`CmpCANFoxDrv')
 
 #include "CmpItf.h"

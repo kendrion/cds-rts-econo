@@ -13,9 +13,6 @@ $(error  "CDSDIR does not exist: $(CDSDIR)")
 endif
 
 
-TESTFRAMEWORKDIR=$(CDSDIR)/Test/Moduletests/Testframework/
-CFLAGS += -I$(TESTFRAMEWORKDIR) -I$(TESTFRAMEWORKDIR)/../Projects/Linux/Testframework/
-
 SIL2LINUXDIR=$(CDSDIR)/Templates/Sil2Linux/
 PRJDIR = $(SIL2LINUXDIR)/Project/
 CMPDIR = $(PRJDIR)/cmp
@@ -31,7 +28,7 @@ CFLAGS += -DLINUX  -D_GNU_SOURCE
 CFLAGS += $(DEBFLAGS)
 CFLAGS += -DCAALib -DNO_FENV -DSYSMEM_SIMULATE_FLASH
 CFLAGS += --coverage
-#CFLAGS += -DRTS_MODULETEST
+
 LDDFLAGS +=  -T $(PRJDIR)/linkerscript.txt -lm -lrt -m32 -lgcov -lpthread
 
 TARGET = codesyscontrol
@@ -66,6 +63,12 @@ cleanworkspace: clean
 
 
 
+### 
+### Consistency Checks
+###
+ifeq ("$(wildcard $(CDSDIR))","")
+$(error  "CDSDIR not set correctly or does not exist: $(CDSDIR)")
+endif
 
 
 

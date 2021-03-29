@@ -9,6 +9,16 @@
 
 #ifndef _RTSSIL2PSPITF_H_
 #define _RTSSIL2PSPITF_H_
+
+/* Include platform specific defines */
+#include "RTSSIL2PSPDefines.h"
+
+
+#ifndef SIL2PSP_MPUCONTEXT_T
+/* Default type for memory protection context and flags */
+#define SIL2PSP_MPUCONTEXT_T unsigned int
+#endif
+
  
 /**
  * <SIL2/>
@@ -498,49 +508,49 @@ SIL2PSP_RESULT SIL2PSP_ExceptionHandler2(SIL2PSPRegContext2 *pContext);
  * <description>
  * <p>Function is called to enter system context</p>
  * </description>
- * <param name="puiFlags" type="IN">Flags</param>
+ * <param name="pMpuContext" type="IN">Memory protection context or flags</param>
  * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_OK">Successfully entered system context</errorcode>
- * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_PARAMETER">pui32Flags is invalid</errorcode>
+ * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_PARAMETER">pMpuContext is invalid</errorcode>
  * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_FAILED">Failed entering system context</errorcode>
  * <result>error code</result>
  */
-SIL2PSP_RESULT SIL2PSP_EnterSystemContext(unsigned int *pui32Flags);
+SIL2PSP_RESULT SIL2PSP_EnterSystemContext(SIL2PSP_MPUCONTEXT_T *pMpuContext);
 
 /**
  * <description> 
  * <p>Function is called to enter safe context</p>
  * </description>
- * <param name="puiFlags" type="IN">Flags</param>
+ * <param name="pMpuContext" type="IN">Memory protection context or flags</param>
  * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_OK">Successfully entered safe context</errorcode>
- * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_PARAMETER">pui32Flags is invalid</errorcode>
+ * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_PARAMETER">pMpuContext is invalid</errorcode>
  * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_FAILED">Failed entering safe context</errorcode>
  * <result>error code</result>
  */
-SIL2PSP_RESULT SIL2PSP_EnterSafeContext(unsigned int *pui32Flags);
+SIL2PSP_RESULT SIL2PSP_EnterSafeContext(SIL2PSP_MPUCONTEXT_T *pMpuContext);
 
 /**
  * <description> 
  * <p>Function is called to enter unsafe context</p>
  * </description>
- * <param name="puiFlags" type="IN">Flags</param>
+ * <param name="pMpuContext" type="IN">Memory protection context or flags</param>
  * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_OK">Successfully entered unsafe context</errorcode>
- * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_PARAMETER">pui32Flags is invalid</errorcode>
+ * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_PARAMETER">pMpuContext is invalid</errorcode>
  * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_FAILED">Failed entering unsafe context</errorcode>
  * <result>error code</result>
  */
-SIL2PSP_RESULT SIL2PSP_EnterUnsafeContext(unsigned int *pui32Flags);
+SIL2PSP_RESULT SIL2PSP_EnterUnsafeContext(SIL2PSP_MPUCONTEXT_T *pMpuContext);
 
 /**
  * <description> 
  * <p>Function is called to leave current context and to return to last context</p>
  * </description>
- * <param name="puiFlags" type="IN">Flags</param>
+ * <param name="pMpuContext" type="IN">Memory protection context or flags</param>
  * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_OK">Successfully left context and switched to last context</errorcode>
- * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_PARAMETER">pui32Flags is invalid</errorcode>
+ * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_PARAMETER">pMpuContext is invalid</errorcode>
  * <errorcode name="SIL2PSP_RESULT pResult" type="SIL2PSP_ERR_FAILED">Failed leaving context</errorcode>
  * <result>error code</result>
  */
-SIL2PSP_RESULT SIL2PSP_LeaveContext(unsigned int *pui32Flags);
+SIL2PSP_RESULT SIL2PSP_LeaveContext(SIL2PSP_MPUCONTEXT_T *pMpuContext);
 
 /**
  * <description>

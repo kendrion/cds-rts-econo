@@ -3,13 +3,13 @@
  * <description> 
  *	<p>Interface for TLS encrypted communication over sockets and encrypted CODESYS communication</p>
  *	Limitations:
- *	- Component should only be used to support TLS within the sebserver. Validation of the peer certificate
+ *	- Component should only be used to support TLS within the web-server. Validation of the peer certificate
  *	is not available. So there is no secure way to establish a secure client connection.
  *	- The functions for secure CODESYS communication are only prototypes. They don't have to be used.
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
  
@@ -30,17 +30,48 @@
 #include "CmpSrvItf.h"
 #include "CmpCryptoItf.h"
 
+/** EXTERN LIB SECTION BEGIN **/
+/*  Comments are ignored for m4 compiler so restructured text can be used.  */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+ * <description>Enumeration: CmpTlsMethod</description>
+ */
+#define CMPTLSMETHOD_SSLV2_CLIENT    RTS_IEC_INT_C(0x0)	/* Not Available */
+#define CMPTLSMETHOD_SSLV3_CLIENT    RTS_IEC_INT_C(0x1)	/* SSL v3 Client */
+#define CMPTLSMETHOD_SSLV23_CLIENT    RTS_IEC_INT_C(0x2)	/* SSL Client accepting all versions but SSL v2 */
+#define CMPTLSMETHOD_TLSV1_CLIENT    RTS_IEC_INT_C(0x3)	/* TLS 1.1 Client */
+#define CMPTLSMETHOD_TLSV2_CLIENT    RTS_IEC_INT_C(0x4)	/* TLS 1.2 Client (Default for CmpTlsCreateContext) */
+#define CMPTLSMETHOD_SSLV2_SERVER    RTS_IEC_INT_C(0x5)	/* Not Available */
+#define CMPTLSMETHOD_SSLV3_SERVER    RTS_IEC_INT_C(0x6)	/* SSL v3 Server */
+#define CMPTLSMETHOD_SSLV23_SERVER    RTS_IEC_INT_C(0x7)	/* SSL Server accepting all versions but SSL v2 */
+#define CMPTLSMETHOD_TLSV1_SERVER    RTS_IEC_INT_C(0x8)	/* TLS 1.1 Server */
+#define CMPTLSMETHOD_TLSV2_SERVER    RTS_IEC_INT_C(0x9)	/* TLS 1.2 Server */
+#define CMPTLSMETHOD_TLSV3_CLIENT    RTS_IEC_INT_C(0xA)	/* TLS 1.3 Client */
+#define CMPTLSMETHOD_TLSV3_SERVER    RTS_IEC_INT_C(0xB)	/* TLS 1.3 Server */
+/* Typed enum definition */
+#define CMPTLSMETHOD    RTS_IEC_INT
+
+#ifdef __cplusplus
+}
+#endif
+
+/** EXTERN LIB SECTION END **/
+
 /* Availabe SSL / TLS versions */
-#define TLS_METHOD_SSLv2_CLIENT		0x00		/* Not compiled */
-#define TLS_METHOD_SSLv3_CLIENT		0x01
-#define TLS_METHOD_SSLv23_CLIENT	0x02
-#define TLS_METHOD_TLSv1_CLIENT		0x03
-#define TLS_METHOD_TLSv2_CLIENT		0x04
-#define TLS_METHOD_SSLv2_SERVER		0x05		/* Not compiled */
-#define TLS_METHOD_SSLv3_SERVER		0x06
-#define TLS_METHOD_SSLv23_SERVER	0x07
-#define TLS_METHOD_TLSv1_SERVER		0x08
-#define TLS_METHOD_TLSv2_SERVER		0x09
+#define TLS_METHOD_SSLv2_CLIENT		CMPTLSMETHOD_SSLV2_CLIENT		/* Not compiled */
+#define TLS_METHOD_SSLv3_CLIENT		CMPTLSMETHOD_SSLV3_CLIENT
+#define TLS_METHOD_SSLv23_CLIENT	CMPTLSMETHOD_SSLV23_CLIENT
+#define TLS_METHOD_TLSv1_CLIENT		CMPTLSMETHOD_TLSV1_CLIENT
+#define TLS_METHOD_TLSv2_CLIENT		CMPTLSMETHOD_TLSV2_CLIENT
+#define TLS_METHOD_SSLv2_SERVER		CMPTLSMETHOD_SSLV2_SERVER		/* Not compiled */
+#define TLS_METHOD_SSLv3_SERVER		CMPTLSMETHOD_SSLV3_SERVER
+#define TLS_METHOD_SSLv23_SERVER	CMPTLSMETHOD_SSLV23_SERVER
+#define TLS_METHOD_TLSv1_SERVER		CMPTLSMETHOD_TLSV1_SERVER
+#define TLS_METHOD_TLSv2_SERVER		CMPTLSMETHOD_TLSV2_SERVER
 #define TLS_METHOD_LAST_INDEX		0x0A
 
 
@@ -72,7 +103,7 @@
 
 /**
  * <category>Memory settings</category>
- * <description>Maximum number of allowed TLS contextes</description>
+ * <description>Maximum number of allowed TLS contexts</description>
  */
 #ifndef TLS_MAX_CONTEXT_COUNT
 	#define TLS_MAX_CONTEXT_COUNT					10
@@ -89,17 +120,17 @@
 	#define TLSVALUE_STR_CERT_STORE_BASE_DIR_DEFAULT	"./PKI/"
 #endif
 
-/* Folder structure inside the PKI infrastructre. Don't change these defines to avoid future compatability issues.*/
+/* Folder structure inside the PKI infrastructure. Don't change these defines to avoid future compatibility issues.*/
 #define TLS_CERT_STORE_CERT_DIR		"cert/"
 #define TLS_CERT_STORE_PRIVATE_DIR	"private/"
 #define TLS_CERT_STORE_TURESTED_DIR	"trusted/"
 #define TLS_CERT_STORE_CRL_DIR		"crl/"
 
 
-/* These settings are used as namespace settings. 
- * Use Namespace.Setting in the config file to set them.
+/* These settings are used as name space settings. 
+ * Use Namespace.Setting in the configuration file to set them.
  * If you create a context using the function TlsCreateContext, use the
- * Namespace used in the config file for your context. 
+ * Name space used in the configuration file for your context. 
  */
 
 /**
@@ -123,8 +154,8 @@
  * <category>Context settings</category>
  * <type>String</type>
  * <description>Certificate for a context. Value is the filename of the 
- * certificate inside the PKI/cert folder. Supported filetypes are BASE64 
- * encoding an DER encoding. See the manuel for support in generating a private key
+ * certificate inside the PKI/cert folder. Supported file types are BASE64 
+ * encoding an DER encoding. See the manual for support in generating a private key
  * and the corresponding certificate. (Default = server.cer)</description>
  */
 #define TLSKEY_STR_CTX_CERT_FILE						"Cert"
@@ -159,12 +190,9 @@
 
 /**
  * <category>Context settings</category>
- * <type>Str</type>
- * <description>A list of availabe cipher suites for the TLS Context.
+ * <type>String</type>
+ * <description>A list of available cipher suites for the TLS Context.
  * See notation for cipher selection at: http://www.openssl.org/docs/apps/ciphers.html
- * Default selection uses all cipher suites with DiffieHellman key exchange and strong encryption (HIGH+DH).
- * To support the Microsoft Internet Explorer as client this setting should be set to HIGH.
- * ECDH, ECDSA, ECRSA, IDEA, DES, 3DES, JPAKE, Kerberos 5, MD2, MD5 are not supported
  * </description>
  */
 #define TLSKEY_STR_CTX_CIPHER_LIST						"CipherList"
@@ -174,10 +202,10 @@
 
 /**
  * <category>Context settings</category>
- * <type>Str</type>
- * <description>Path to a file im pem format containing the diffie hellman parameters
- * used for DH key excange. These parameters are neede for secure Diffie Hellman key exchange.
- * These parameters may be generated on a seperate fast workstation. The generation will take a while.
+ * <type>String</type>
+ * <description>Path to a file in pem-format containing the Diffie-Hellman parameters
+ * used for DH key exchange. These parameters are needed for secure Diffie-Hellman key exchange.
+ * These parameters may be generated on a separate fast workstation. The generation will take a while.
  * Use the OpenSSL toolkit to generate these parameters. See the manual. The Value
  * is the filename of these parameters in the PKI/private folder.
  * </description>
@@ -197,7 +225,7 @@ extern "C" {
  * connections. A Context contains all the application specific information of the connection. New connections are 
  * initialized using a context.
  * ATTENTION: This function is deprecated. User TlsCreateContext2 or TlsCreateContext3 instead.</description>
- * <param name="pszNamespace" type="IN">Namespace of the context. Settings of the context are read from the config file.</param>
+ * <param name="pszNamespace" type="IN">Name space of the context. Settings of the context are read from the configuration file.</param>
  * <param name="pResult" type="OUT">Result of this operation.</param>
  * <result>Handle to the created TLS context.</result>
  */
@@ -313,7 +341,7 @@ typedef RTS_HANDLE (CDECL * PFTLSCREATECONTEXT2) (RTS_HANDLE hCert, RTS_UI32 ui3
 
 /**
  * <description>This callback is called after the peers certificate has been validated. You can use this callback to do some additional verification.
- * Return ERR_CERT_OK to signal the the verification is was OK. Return any other error code to cause the TLS connection to fail.</description>
+ * Return ERR_CERT_OK to signal the verification is was OK. Return any other error code to cause the TLS connection to fail.</description>
  * <param name="hCert" type="IN">Certificate sent by the peer. This needs to be verified.</param>
  * <param name="verifyResult" type="IN">The verify result of the X509CertStore.</param>
  * <param name="hConnection" type="IN">The handle of the TLS connection.</param>
@@ -331,7 +359,7 @@ typedef RTS_RESULT(CDECL *PFVERIFYCERTIFICATE)(RTS_HANDLE hCert, RTS_RESULT veri
  * <param name="ui32TlsMethod" type="IN">Mode of the TLS connections. See: TLS_METHOD_... macros</param>
  * <param name="szCipherList" type="IN">Cipher selection of the TLS connection. See CipherList setting for details. If NULL the default of the setting will be used.</param>
  * <param name="i32VerifyMode" type="IN">Verify mode of the TLS connection. See: TLS_VERIFY... macros. Default server: NONE; Default client: VERIFY_PEER.</param>
- * <param name="pfVerifyCallback" type="IN">Callback function to verify the certificate. This callback is called after the certificate has been prevalidated by the certificate store.</param>
+ * <param name="pfVerifyCallback" type="IN">Callback function to verify the certificate. This callback is called after the certificate has been pre-validated by the certificate store.</param>
  * <param name="pUserParameter" type="IN">A parameter that is passed to the pfVerifyCallback.</param>
  * <param name="pResult" type="IN">Result of the operation.</param>
  * <result>Handle to the created TLS context.</result>
@@ -958,7 +986,7 @@ typedef RTS_SSIZE (CDECL * PFTLSREAD) (RTS_HANDLE hTlsConn, RTS_UI8* pbyBuffer, 
  *		- ERR_TLS_IO_SYSTEM: An error in the underlaying IO system.
  *		- ERR_TLS_INTERNAL: An internal Error of the TLS Component
  *		- ERR_FAILED: Unknown error.</param>
- * <result>Number of bytes sent. 0 if an error occured.</result>
+ * <result>Number of bytes sent. 0 if an error occurred.</result>
  */
 RTS_SSIZE CDECL TlsWrite(RTS_HANDLE hTlsConn, RTS_UI8* pbyData, RTS_SSIZE ulDataSize, RTS_RESULT* pResult);
 typedef RTS_SSIZE (CDECL * PFTLSWRITE) (RTS_HANDLE hTlsConn, RTS_UI8* pbyData, RTS_SSIZE ulDataSize, RTS_RESULT* pResult);
@@ -1147,11 +1175,14 @@ typedef RTS_RESULT (CDECL * PFTLSCLOSE) (RTS_HANDLE hTlsConn);
   * <description>Add entropy to the PRNG (Pseudo Random Number Generator)of the underlaying TLS implementation.</description>
   * <param name="pui8Buffer" type="IN">Pointer to the data containing the random value</param>
   * <param name="i32BufferSize" type="IN">Size of the input buffer</param>
-  * <param name="dEntropy" type="IN">How many bytes of randomness are in the buffer.</param>
+  * <param name="r64Entropy" type="IN">An estimate of how much randomness is contained in pui8Buffer, in bytes,
+  and should be a number between zero and i32BufferSize.
+  "Randomness" is the term used for "entropy" in OpenSSL.
+  Details about sources of randomness and how to estimate their randomness can be found in the literature; for example [NIST SP 800-90B].</param>
   * <result>TRUE: If the channel has be secured already. FALSE: If the channel has net been secured already, or is not a valid channelID</result>
   */
-void CDECL TlsRandAdd(const RTS_UI8* pui8Buffer, RTS_I32 i32BufferSize, RTS_REAL64 r64Entroy);
-typedef void (CDECL * PFTLSRANDADD) (const RTS_UI8* pui8Buffer, RTS_I32 i32BufferSize, RTS_REAL64 r64Entroy);
+void CDECL TlsRandAdd(const RTS_UI8* pui8Buffer, RTS_I32 i32BufferSize, RTS_REAL64 r64Entropy);
+typedef void (CDECL * PFTLSRANDADD) (const RTS_UI8* pui8Buffer, RTS_I32 i32BufferSize, RTS_REAL64 r64Entropy);
 #if defined(CMPTLS_NOTIMPLEMENTED) || defined(TLSRANDADD_NOTIMPLEMENTED)
 	#define USE_TlsRandAdd
 	#define EXT_TlsRandAdd
@@ -1200,7 +1231,7 @@ typedef void (CDECL * PFTLSRANDADD) (const RTS_UI8* pui8Buffer, RTS_I32 i32Buffe
 
 
  /**
-  * <description>Check if the PRNG has enought entropy to work properly</description>
+  * <description>Check if the PRNG has enough entropy to work properly</description>
   * <param name="ui32ChannelId" type="IN"></param>
   * <result>TRUE: If the channel has be secured already. FALSE: If the channel has net been secured already, or is not a valid channelID</result>
   */
@@ -1257,836 +1288,6 @@ typedef RTS_BOOL (CDECL * PFTLSRANDCHECKSTATUS) (void);
 }
 #endif
 
-/** EXTERN LIB SECTION BEGIN **/
-/*  Comments are ignored for m4 compiler so restructured text can be used.  */
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/**
- * <description>Enum: CmpTlsMethod</description>
- */
-#define CMPTLSMETHOD_SSLV2_CLIENT    RTS_IEC_INT_C(0x0)	
-#define CMPTLSMETHOD_SSLV3_CLIENT    RTS_IEC_INT_C(0x1)	/* Not Available */
-#define CMPTLSMETHOD_SSLV23_CLIENT    RTS_IEC_INT_C(0x2)	/* SSL v3 Client */
-#define CMPTLSMETHOD_TLSV1_CLIENT    RTS_IEC_INT_C(0x3)	/* SSL Client accepting all versions but SSL v2 */
-#define CMPTLSMETHOD_TLSV2_CLIENT    RTS_IEC_INT_C(0x4)	/* TLS 1.1 Client */
-#define CMPTLSMETHOD_SSLV2_SERVER    RTS_IEC_INT_C(0x5)	/* TLS 1.2 Client (Default for CmpTlsCreateContext) */
-#define CMPTLSMETHOD_SSLV3_SERVER    RTS_IEC_INT_C(0x6)	/* Not Available */
-#define CMPTLSMETHOD_SSLV23_SERVER    RTS_IEC_INT_C(0x7)	/* SSL v3 Server */
-#define CMPTLSMETHOD_TLSV1_SERVER    RTS_IEC_INT_C(0x8)	/* SSL Server accepting all versions but SSL v2 */
-#define CMPTLSMETHOD_TLSV2_SERVER    RTS_IEC_INT_C(0x9)	/* TLS 1.1 Server
- TLS 1.2 Server */
-/* Typed enum definition */
-#define CMPTLSMETHOD    RTS_IEC_INT
-
-/**
- * Starts handshaking on the server side. The client has to initiate the handshaking.
- * This is the first function call on the serverside after establishing the unterlaying connection.
- * Data has to be received first. This function will is likley to read and write data.
- *
- * :return: Result of this operation. May be one of these values:
- *		- ERR_OK: No error. Everything worked as expected.
- *		- ERR_NOTINITIALIZED: The TLS component was not initialized proberly.
- *		- ERR_TLS_CONNECTION_CLOSED: The TLS connection is closed. Use TlsShutdown to shutdown locally.
- *     - ERR_TLS_WANT_READ: The operation needs TO read data FROM the IO system. There is no data available.
- *     - ERR_TLS_WANT_WRITE: The operation needs to write data to the IO system. This is not possible.
- *		- ERR_TLS_RETRY_OPERATION: Something went wrong. Try the same function call again
- *		- ERR_TLS_IO_SYSTEM: An error in the unterlaying IO system.
- *		- ERR_TLS_INTERNAL: An internal Error of the TLS Component
- *		- ERR_FAILED: Unknown error.
- */
-typedef struct tagcmptlsaccept_struct
-{
-	RTS_IEC_HANDLE hTlsConn;			/* VAR_INPUT */	/* Handle of the TLS connection, created with one of the TLSxxxOpen functions */
-	RTS_IEC_RESULT CmpTlsAccept;		/* VAR_OUTPUT */	
-} cmptlsaccept_struct;
-
-void CDECL CDECL_EXT cmptlsaccept(cmptlsaccept_struct *p);
-typedef void (CDECL CDECL_EXT* PFCMPTLSACCEPT_IEC) (cmptlsaccept_struct *p);
-#if defined(CMPTLS_NOTIMPLEMENTED) || defined(CMPTLSACCEPT_NOTIMPLEMENTED)
-	#define USE_cmptlsaccept
-	#define EXT_cmptlsaccept
-	#define GET_cmptlsaccept(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cmptlsaccept(p0) 
-	#define CHK_cmptlsaccept  FALSE
-	#define EXP_cmptlsaccept  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cmptlsaccept
-	#define EXT_cmptlsaccept
-	#define GET_cmptlsaccept(fl)  CAL_CMGETAPI( "cmptlsaccept" ) 
-	#define CAL_cmptlsaccept  cmptlsaccept
-	#define CHK_cmptlsaccept  TRUE
-	#define EXP_cmptlsaccept  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsaccept", (RTS_UINTPTR)cmptlsaccept, 1, 0xE5016190, 0x03050A00) 
-#elif defined(MIXED_LINK) && !defined(CMPTLS_EXTERNAL)
-	#define USE_cmptlsaccept
-	#define EXT_cmptlsaccept
-	#define GET_cmptlsaccept(fl)  CAL_CMGETAPI( "cmptlsaccept" ) 
-	#define CAL_cmptlsaccept  cmptlsaccept
-	#define CHK_cmptlsaccept  TRUE
-	#define EXP_cmptlsaccept  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsaccept", (RTS_UINTPTR)cmptlsaccept, 1, 0xE5016190, 0x03050A00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpTlscmptlsaccept
-	#define EXT_CmpTlscmptlsaccept
-	#define GET_CmpTlscmptlsaccept  ERR_OK
-	#define CAL_CmpTlscmptlsaccept  cmptlsaccept
-	#define CHK_CmpTlscmptlsaccept  TRUE
-	#define EXP_CmpTlscmptlsaccept  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsaccept", (RTS_UINTPTR)cmptlsaccept, 1, 0xE5016190, 0x03050A00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cmptlsaccept
-	#define EXT_cmptlsaccept
-	#define GET_cmptlsaccept(fl)  CAL_CMGETAPI( "cmptlsaccept" ) 
-	#define CAL_cmptlsaccept  cmptlsaccept
-	#define CHK_cmptlsaccept  TRUE
-	#define EXP_cmptlsaccept  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsaccept", (RTS_UINTPTR)cmptlsaccept, 1, 0xE5016190, 0x03050A00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cmptlsaccept  PFCMPTLSACCEPT_IEC pfcmptlsaccept;
-	#define EXT_cmptlsaccept  extern PFCMPTLSACCEPT_IEC pfcmptlsaccept;
-	#define GET_cmptlsaccept(fl)  s_pfCMGetAPI2( "cmptlsaccept", (RTS_VOID_FCTPTR *)&pfcmptlsaccept, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE5016190, 0x03050A00)
-	#define CAL_cmptlsaccept  pfcmptlsaccept
-	#define CHK_cmptlsaccept  (pfcmptlsaccept != NULL)
-	#define EXP_cmptlsaccept   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsaccept", (RTS_UINTPTR)cmptlsaccept, 1, 0xE5016190, 0x03050A00) 
-#endif
-
-
-/**
- * This function is used to indicate that the Rx buffer contains new TLS data. Call this function is new data have arrived. All data of the 
- * buffer has to be consumed by the TLS implementation before overwritting the existing data and calling this funciton. Call TlsRead until the corresponding 
- * error code is returned. If not all data is consumed the TLS stream will be broken and the data can't be decrypted anymore. The Rx buffer will not be changed.
- */
-typedef struct tagcmptlsbufferdatareceived_struct
-{
-	RTS_IEC_HANDLE hTlsConn;			/* VAR_INPUT */	/* Handle to the TLS connection. Must have been created with CmpTlsBufferOpen */
-	RTS_IEC_RESULT CmpTlsBufferDataReceived;	/* VAR_OUTPUT */	
-} cmptlsbufferdatareceived_struct;
-
-void CDECL CDECL_EXT cmptlsbufferdatareceived(cmptlsbufferdatareceived_struct *p);
-typedef void (CDECL CDECL_EXT* PFCMPTLSBUFFERDATARECEIVED_IEC) (cmptlsbufferdatareceived_struct *p);
-#if defined(CMPTLS_NOTIMPLEMENTED) || defined(CMPTLSBUFFERDATARECEIVED_NOTIMPLEMENTED)
-	#define USE_cmptlsbufferdatareceived
-	#define EXT_cmptlsbufferdatareceived
-	#define GET_cmptlsbufferdatareceived(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cmptlsbufferdatareceived(p0) 
-	#define CHK_cmptlsbufferdatareceived  FALSE
-	#define EXP_cmptlsbufferdatareceived  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cmptlsbufferdatareceived
-	#define EXT_cmptlsbufferdatareceived
-	#define GET_cmptlsbufferdatareceived(fl)  CAL_CMGETAPI( "cmptlsbufferdatareceived" ) 
-	#define CAL_cmptlsbufferdatareceived  cmptlsbufferdatareceived
-	#define CHK_cmptlsbufferdatareceived  TRUE
-	#define EXP_cmptlsbufferdatareceived  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferdatareceived", (RTS_UINTPTR)cmptlsbufferdatareceived, 1, 0x613BC278, 0x03050A00) 
-#elif defined(MIXED_LINK) && !defined(CMPTLS_EXTERNAL)
-	#define USE_cmptlsbufferdatareceived
-	#define EXT_cmptlsbufferdatareceived
-	#define GET_cmptlsbufferdatareceived(fl)  CAL_CMGETAPI( "cmptlsbufferdatareceived" ) 
-	#define CAL_cmptlsbufferdatareceived  cmptlsbufferdatareceived
-	#define CHK_cmptlsbufferdatareceived  TRUE
-	#define EXP_cmptlsbufferdatareceived  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferdatareceived", (RTS_UINTPTR)cmptlsbufferdatareceived, 1, 0x613BC278, 0x03050A00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpTlscmptlsbufferdatareceived
-	#define EXT_CmpTlscmptlsbufferdatareceived
-	#define GET_CmpTlscmptlsbufferdatareceived  ERR_OK
-	#define CAL_CmpTlscmptlsbufferdatareceived  cmptlsbufferdatareceived
-	#define CHK_CmpTlscmptlsbufferdatareceived  TRUE
-	#define EXP_CmpTlscmptlsbufferdatareceived  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferdatareceived", (RTS_UINTPTR)cmptlsbufferdatareceived, 1, 0x613BC278, 0x03050A00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cmptlsbufferdatareceived
-	#define EXT_cmptlsbufferdatareceived
-	#define GET_cmptlsbufferdatareceived(fl)  CAL_CMGETAPI( "cmptlsbufferdatareceived" ) 
-	#define CAL_cmptlsbufferdatareceived  cmptlsbufferdatareceived
-	#define CHK_cmptlsbufferdatareceived  TRUE
-	#define EXP_cmptlsbufferdatareceived  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferdatareceived", (RTS_UINTPTR)cmptlsbufferdatareceived, 1, 0x613BC278, 0x03050A00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cmptlsbufferdatareceived  PFCMPTLSBUFFERDATARECEIVED_IEC pfcmptlsbufferdatareceived;
-	#define EXT_cmptlsbufferdatareceived  extern PFCMPTLSBUFFERDATARECEIVED_IEC pfcmptlsbufferdatareceived;
-	#define GET_cmptlsbufferdatareceived(fl)  s_pfCMGetAPI2( "cmptlsbufferdatareceived", (RTS_VOID_FCTPTR *)&pfcmptlsbufferdatareceived, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x613BC278, 0x03050A00)
-	#define CAL_cmptlsbufferdatareceived  pfcmptlsbufferdatareceived
-	#define CHK_cmptlsbufferdatareceived  (pfcmptlsbufferdatareceived != NULL)
-	#define EXP_cmptlsbufferdatareceived   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferdatareceived", (RTS_UINTPTR)cmptlsbufferdatareceived, 1, 0x613BC278, 0x03050A00) 
-#endif
-
-
-/**
- * This function is used to indicate that the data written by the TLS implementation has been sent to the peer. If this function
- * is called the TLS implementation will start writing it's output at the beginning of the Tx buffer again. Call this function if the data of 
- * the Tx buffer has been sent. The length parameter of the Tx buffer will be set to 0.
- */
-typedef struct tagcmptlsbufferdatasent_struct
-{
-	RTS_IEC_HANDLE hTlsConn;			/* VAR_INPUT */	/* Handle to the TLS connection. Must have been created with CmpTlsBufferOpen */
-	RTS_IEC_RESULT CmpTlsBufferDataSent;	/* VAR_OUTPUT */	
-} cmptlsbufferdatasent_struct;
-
-void CDECL CDECL_EXT cmptlsbufferdatasent(cmptlsbufferdatasent_struct *p);
-typedef void (CDECL CDECL_EXT* PFCMPTLSBUFFERDATASENT_IEC) (cmptlsbufferdatasent_struct *p);
-#if defined(CMPTLS_NOTIMPLEMENTED) || defined(CMPTLSBUFFERDATASENT_NOTIMPLEMENTED)
-	#define USE_cmptlsbufferdatasent
-	#define EXT_cmptlsbufferdatasent
-	#define GET_cmptlsbufferdatasent(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cmptlsbufferdatasent(p0) 
-	#define CHK_cmptlsbufferdatasent  FALSE
-	#define EXP_cmptlsbufferdatasent  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cmptlsbufferdatasent
-	#define EXT_cmptlsbufferdatasent
-	#define GET_cmptlsbufferdatasent(fl)  CAL_CMGETAPI( "cmptlsbufferdatasent" ) 
-	#define CAL_cmptlsbufferdatasent  cmptlsbufferdatasent
-	#define CHK_cmptlsbufferdatasent  TRUE
-	#define EXP_cmptlsbufferdatasent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferdatasent", (RTS_UINTPTR)cmptlsbufferdatasent, 1, 0xA15919C8, 0x03050A00) 
-#elif defined(MIXED_LINK) && !defined(CMPTLS_EXTERNAL)
-	#define USE_cmptlsbufferdatasent
-	#define EXT_cmptlsbufferdatasent
-	#define GET_cmptlsbufferdatasent(fl)  CAL_CMGETAPI( "cmptlsbufferdatasent" ) 
-	#define CAL_cmptlsbufferdatasent  cmptlsbufferdatasent
-	#define CHK_cmptlsbufferdatasent  TRUE
-	#define EXP_cmptlsbufferdatasent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferdatasent", (RTS_UINTPTR)cmptlsbufferdatasent, 1, 0xA15919C8, 0x03050A00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpTlscmptlsbufferdatasent
-	#define EXT_CmpTlscmptlsbufferdatasent
-	#define GET_CmpTlscmptlsbufferdatasent  ERR_OK
-	#define CAL_CmpTlscmptlsbufferdatasent  cmptlsbufferdatasent
-	#define CHK_CmpTlscmptlsbufferdatasent  TRUE
-	#define EXP_CmpTlscmptlsbufferdatasent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferdatasent", (RTS_UINTPTR)cmptlsbufferdatasent, 1, 0xA15919C8, 0x03050A00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cmptlsbufferdatasent
-	#define EXT_cmptlsbufferdatasent
-	#define GET_cmptlsbufferdatasent(fl)  CAL_CMGETAPI( "cmptlsbufferdatasent" ) 
-	#define CAL_cmptlsbufferdatasent  cmptlsbufferdatasent
-	#define CHK_cmptlsbufferdatasent  TRUE
-	#define EXP_cmptlsbufferdatasent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferdatasent", (RTS_UINTPTR)cmptlsbufferdatasent, 1, 0xA15919C8, 0x03050A00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cmptlsbufferdatasent  PFCMPTLSBUFFERDATASENT_IEC pfcmptlsbufferdatasent;
-	#define EXT_cmptlsbufferdatasent  extern PFCMPTLSBUFFERDATASENT_IEC pfcmptlsbufferdatasent;
-	#define GET_cmptlsbufferdatasent(fl)  s_pfCMGetAPI2( "cmptlsbufferdatasent", (RTS_VOID_FCTPTR *)&pfcmptlsbufferdatasent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xA15919C8, 0x03050A00)
-	#define CAL_cmptlsbufferdatasent  pfcmptlsbufferdatasent
-	#define CHK_cmptlsbufferdatasent  (pfcmptlsbufferdatasent != NULL)
-	#define EXP_cmptlsbufferdatasent   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferdatasent", (RTS_UINTPTR)cmptlsbufferdatasent, 1, 0xA15919C8, 0x03050A00) 
-#endif
-
-
-/**
- * This function is called to determine if the tx buffer contains data which should be sent to the peer.
- */
-typedef struct tagcmptlsbufferdatatosendavailable_struct
-{
-	RTS_IEC_HANDLE hTlsConn;			/* VAR_INPUT */	/* Handle to the TLS connection. Must have been created with CmpTlsBufferOpen */
-	RTS_IEC_BOOL CmpTlsBufferDataToSendAvailable;	/* VAR_OUTPUT */	
-} cmptlsbufferdatatosendavailable_struct;
-
-void CDECL CDECL_EXT cmptlsbufferdatatosendavailable(cmptlsbufferdatatosendavailable_struct *p);
-typedef void (CDECL CDECL_EXT* PFCMPTLSBUFFERDATATOSENDAVAILABLE_IEC) (cmptlsbufferdatatosendavailable_struct *p);
-#if defined(CMPTLS_NOTIMPLEMENTED) || defined(CMPTLSBUFFERDATATOSENDAVAILABLE_NOTIMPLEMENTED)
-	#define USE_cmptlsbufferdatatosendavailable
-	#define EXT_cmptlsbufferdatatosendavailable
-	#define GET_cmptlsbufferdatatosendavailable(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cmptlsbufferdatatosendavailable(p0) 
-	#define CHK_cmptlsbufferdatatosendavailable  FALSE
-	#define EXP_cmptlsbufferdatatosendavailable  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cmptlsbufferdatatosendavailable
-	#define EXT_cmptlsbufferdatatosendavailable
-	#define GET_cmptlsbufferdatatosendavailable(fl)  CAL_CMGETAPI( "cmptlsbufferdatatosendavailable" ) 
-	#define CAL_cmptlsbufferdatatosendavailable  cmptlsbufferdatatosendavailable
-	#define CHK_cmptlsbufferdatatosendavailable  TRUE
-	#define EXP_cmptlsbufferdatatosendavailable  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferdatatosendavailable", (RTS_UINTPTR)cmptlsbufferdatatosendavailable, 1, 0xFC0521B2, 0x03050A00) 
-#elif defined(MIXED_LINK) && !defined(CMPTLS_EXTERNAL)
-	#define USE_cmptlsbufferdatatosendavailable
-	#define EXT_cmptlsbufferdatatosendavailable
-	#define GET_cmptlsbufferdatatosendavailable(fl)  CAL_CMGETAPI( "cmptlsbufferdatatosendavailable" ) 
-	#define CAL_cmptlsbufferdatatosendavailable  cmptlsbufferdatatosendavailable
-	#define CHK_cmptlsbufferdatatosendavailable  TRUE
-	#define EXP_cmptlsbufferdatatosendavailable  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferdatatosendavailable", (RTS_UINTPTR)cmptlsbufferdatatosendavailable, 1, 0xFC0521B2, 0x03050A00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpTlscmptlsbufferdatatosendavailable
-	#define EXT_CmpTlscmptlsbufferdatatosendavailable
-	#define GET_CmpTlscmptlsbufferdatatosendavailable  ERR_OK
-	#define CAL_CmpTlscmptlsbufferdatatosendavailable  cmptlsbufferdatatosendavailable
-	#define CHK_CmpTlscmptlsbufferdatatosendavailable  TRUE
-	#define EXP_CmpTlscmptlsbufferdatatosendavailable  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferdatatosendavailable", (RTS_UINTPTR)cmptlsbufferdatatosendavailable, 1, 0xFC0521B2, 0x03050A00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cmptlsbufferdatatosendavailable
-	#define EXT_cmptlsbufferdatatosendavailable
-	#define GET_cmptlsbufferdatatosendavailable(fl)  CAL_CMGETAPI( "cmptlsbufferdatatosendavailable" ) 
-	#define CAL_cmptlsbufferdatatosendavailable  cmptlsbufferdatatosendavailable
-	#define CHK_cmptlsbufferdatatosendavailable  TRUE
-	#define EXP_cmptlsbufferdatatosendavailable  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferdatatosendavailable", (RTS_UINTPTR)cmptlsbufferdatatosendavailable, 1, 0xFC0521B2, 0x03050A00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cmptlsbufferdatatosendavailable  PFCMPTLSBUFFERDATATOSENDAVAILABLE_IEC pfcmptlsbufferdatatosendavailable;
-	#define EXT_cmptlsbufferdatatosendavailable  extern PFCMPTLSBUFFERDATATOSENDAVAILABLE_IEC pfcmptlsbufferdatatosendavailable;
-	#define GET_cmptlsbufferdatatosendavailable(fl)  s_pfCMGetAPI2( "cmptlsbufferdatatosendavailable", (RTS_VOID_FCTPTR *)&pfcmptlsbufferdatatosendavailable, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xFC0521B2, 0x03050A00)
-	#define CAL_cmptlsbufferdatatosendavailable  pfcmptlsbufferdatatosendavailable
-	#define CHK_cmptlsbufferdatatosendavailable  (pfcmptlsbufferdatatosendavailable != NULL)
-	#define EXP_cmptlsbufferdatatosendavailable   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferdatatosendavailable", (RTS_UINTPTR)cmptlsbufferdatatosendavailable, 1, 0xFC0521B2, 0x03050A00) 
-#endif
-
-
-/**
- * Create a TLS connection around any existing transport media. There are two buffers needed: a send and a receive buffer. 
- * Put the data received from the peer to the Rx buffer. The data written by the TLS implementation 
- * will be put to the Tx buffer. This buffer has to be sent to the peer after calling the connect, accept or write functions. Maybe
- * after calling the read function the buffer has to be sent too. This depends on internal TLS protocol stuff (change of 
- * session keys etc) which may occur at any time. This will be indicated throuth the corresponding returned flag.
- * The TLS connection will be established explicit by calling TSLConnect, or on the server side by calling the Accept function.
- * If the handshaking hasn't finished the read and write functions will internally finish the handshaking until the connection is
- * established. The implementation will start writing at the beginning at each call. If the function indicated that the
- * the data must be sent the next call will overwrite the data in the Tx buffer. So the caller must handle the data before calling
- * the next TLS function. The buffers given here contain raw TLS protocol data. This data has to be transferred to the peer using
- * a reliable way. The packages have to arrive completely and in the right order. Otherwise TLS won't work. 
- * To read or to write the corresponding plaintext data use the TlsRead and TlsWrite functions.
- * Handling is done as follows:
- *    Received data: 
- *		- The bytestrings pointer will point to the beginning of the data.
- *     - The bytestrings max length will hold the buffers size
- *     - The bytestrings length will hold the current available amount of data.
- *     - The function ResetRx will not change any of the byte string. Only the internal read position will be set to the beginning of the buffer
- *
- *    Transmit data: 
- *		- The bytestrings pointer will point to the of the empty writing buffer.
- *     - The bytestrings max length will hold the buffer size
- *     - The bytestrings length will contain the amount of data written by the TLS implementation.
- *     - The function ResetTx will reset the internal write position. The length of the bytestring will be set to 0.
- *
- * :return: The handle to the created TLS connection, or RTS_INVALID_HANDLE, if operation failed.
- */
-typedef struct tagcmptlsbufferopen_struct
-{
-	RTS_IEC_HANDLE hTlsContext;			/* VAR_INPUT */	/* Handle to the TLS configuration context. Create by CmpTlsCreateContext */
-	RtsByteString *pRxBuffer;			/* VAR_INPUT */	/* Pointer to the buffer containing the data received from the peer. */
-	RtsByteString *pTxBuffer;			/* VAR_INPUT */	/* Pointer to the buffer containing the data to be sent to the peer. */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Result of this operation. Possible values:
-   - ERR_OK: The TLS connection was created successful.
-   - ERR_NOMEMORY: The TLS connection could not be created. No memory available
-   - ERR_INVALID_HANDLE: The TLS connection could not be created. The given context handle is invalid.
-   - ERR_PARAMETER: Some parameters where inconsistent or wrong. */
-	RTS_IEC_HANDLE CmpTlsBufferOpen;	/* VAR_OUTPUT */	
-} cmptlsbufferopen_struct;
-
-void CDECL CDECL_EXT cmptlsbufferopen(cmptlsbufferopen_struct *p);
-typedef void (CDECL CDECL_EXT* PFCMPTLSBUFFEROPEN_IEC) (cmptlsbufferopen_struct *p);
-#if defined(CMPTLS_NOTIMPLEMENTED) || defined(CMPTLSBUFFEROPEN_NOTIMPLEMENTED)
-	#define USE_cmptlsbufferopen
-	#define EXT_cmptlsbufferopen
-	#define GET_cmptlsbufferopen(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cmptlsbufferopen(p0) 
-	#define CHK_cmptlsbufferopen  FALSE
-	#define EXP_cmptlsbufferopen  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cmptlsbufferopen
-	#define EXT_cmptlsbufferopen
-	#define GET_cmptlsbufferopen(fl)  CAL_CMGETAPI( "cmptlsbufferopen" ) 
-	#define CAL_cmptlsbufferopen  cmptlsbufferopen
-	#define CHK_cmptlsbufferopen  TRUE
-	#define EXP_cmptlsbufferopen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferopen", (RTS_UINTPTR)cmptlsbufferopen, 1, 0x205777BB, 0x03050A00) 
-#elif defined(MIXED_LINK) && !defined(CMPTLS_EXTERNAL)
-	#define USE_cmptlsbufferopen
-	#define EXT_cmptlsbufferopen
-	#define GET_cmptlsbufferopen(fl)  CAL_CMGETAPI( "cmptlsbufferopen" ) 
-	#define CAL_cmptlsbufferopen  cmptlsbufferopen
-	#define CHK_cmptlsbufferopen  TRUE
-	#define EXP_cmptlsbufferopen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferopen", (RTS_UINTPTR)cmptlsbufferopen, 1, 0x205777BB, 0x03050A00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpTlscmptlsbufferopen
-	#define EXT_CmpTlscmptlsbufferopen
-	#define GET_CmpTlscmptlsbufferopen  ERR_OK
-	#define CAL_CmpTlscmptlsbufferopen  cmptlsbufferopen
-	#define CHK_CmpTlscmptlsbufferopen  TRUE
-	#define EXP_CmpTlscmptlsbufferopen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferopen", (RTS_UINTPTR)cmptlsbufferopen, 1, 0x205777BB, 0x03050A00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cmptlsbufferopen
-	#define EXT_cmptlsbufferopen
-	#define GET_cmptlsbufferopen(fl)  CAL_CMGETAPI( "cmptlsbufferopen" ) 
-	#define CAL_cmptlsbufferopen  cmptlsbufferopen
-	#define CHK_cmptlsbufferopen  TRUE
-	#define EXP_cmptlsbufferopen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferopen", (RTS_UINTPTR)cmptlsbufferopen, 1, 0x205777BB, 0x03050A00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cmptlsbufferopen  PFCMPTLSBUFFEROPEN_IEC pfcmptlsbufferopen;
-	#define EXT_cmptlsbufferopen  extern PFCMPTLSBUFFEROPEN_IEC pfcmptlsbufferopen;
-	#define GET_cmptlsbufferopen(fl)  s_pfCMGetAPI2( "cmptlsbufferopen", (RTS_VOID_FCTPTR *)&pfcmptlsbufferopen, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x205777BB, 0x03050A00)
-	#define CAL_cmptlsbufferopen  pfcmptlsbufferopen
-	#define CHK_cmptlsbufferopen  (pfcmptlsbufferopen != NULL)
-	#define EXP_cmptlsbufferopen   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsbufferopen", (RTS_UINTPTR)cmptlsbufferopen, 1, 0x205777BB, 0x03050A00) 
-#endif
-
-
-/**
- * lose the TLS connection. All data will be cleand up. The handle used for creating the connection will
- * be closed too. No shutdown is done here. This is allowed by the TLS protocol.
- *
- * :return: Result of this operation. May be one of these values:
- * 	- ERR_OK: No error. Everything worked as expected.
- * 	- ERR_FAILED: Unknown error.
- */
-typedef struct tagcmptlsclose_struct
-{
-	RTS_IEC_HANDLE hTlsConn;			/* VAR_INPUT */	/* Handle of the TLS connection, created with one of the TLSxxxOpen functions */
-	RTS_IEC_RESULT CmpTlsClose;			/* VAR_OUTPUT */	
-} cmptlsclose_struct;
-
-void CDECL CDECL_EXT cmptlsclose(cmptlsclose_struct *p);
-typedef void (CDECL CDECL_EXT* PFCMPTLSCLOSE_IEC) (cmptlsclose_struct *p);
-#if defined(CMPTLS_NOTIMPLEMENTED) || defined(CMPTLSCLOSE_NOTIMPLEMENTED)
-	#define USE_cmptlsclose
-	#define EXT_cmptlsclose
-	#define GET_cmptlsclose(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cmptlsclose(p0) 
-	#define CHK_cmptlsclose  FALSE
-	#define EXP_cmptlsclose  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cmptlsclose
-	#define EXT_cmptlsclose
-	#define GET_cmptlsclose(fl)  CAL_CMGETAPI( "cmptlsclose" ) 
-	#define CAL_cmptlsclose  cmptlsclose
-	#define CHK_cmptlsclose  TRUE
-	#define EXP_cmptlsclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsclose", (RTS_UINTPTR)cmptlsclose, 1, 0xBD50D496, 0x03050A00) 
-#elif defined(MIXED_LINK) && !defined(CMPTLS_EXTERNAL)
-	#define USE_cmptlsclose
-	#define EXT_cmptlsclose
-	#define GET_cmptlsclose(fl)  CAL_CMGETAPI( "cmptlsclose" ) 
-	#define CAL_cmptlsclose  cmptlsclose
-	#define CHK_cmptlsclose  TRUE
-	#define EXP_cmptlsclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsclose", (RTS_UINTPTR)cmptlsclose, 1, 0xBD50D496, 0x03050A00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpTlscmptlsclose
-	#define EXT_CmpTlscmptlsclose
-	#define GET_CmpTlscmptlsclose  ERR_OK
-	#define CAL_CmpTlscmptlsclose  cmptlsclose
-	#define CHK_CmpTlscmptlsclose  TRUE
-	#define EXP_CmpTlscmptlsclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsclose", (RTS_UINTPTR)cmptlsclose, 1, 0xBD50D496, 0x03050A00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cmptlsclose
-	#define EXT_cmptlsclose
-	#define GET_cmptlsclose(fl)  CAL_CMGETAPI( "cmptlsclose" ) 
-	#define CAL_cmptlsclose  cmptlsclose
-	#define CHK_cmptlsclose  TRUE
-	#define EXP_cmptlsclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsclose", (RTS_UINTPTR)cmptlsclose, 1, 0xBD50D496, 0x03050A00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cmptlsclose  PFCMPTLSCLOSE_IEC pfcmptlsclose;
-	#define EXT_cmptlsclose  extern PFCMPTLSCLOSE_IEC pfcmptlsclose;
-	#define GET_cmptlsclose(fl)  s_pfCMGetAPI2( "cmptlsclose", (RTS_VOID_FCTPTR *)&pfcmptlsclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xBD50D496, 0x03050A00)
-	#define CAL_cmptlsclose  pfcmptlsclose
-	#define CHK_cmptlsclose  (pfcmptlsclose != NULL)
-	#define EXP_cmptlsclose   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsclose", (RTS_UINTPTR)cmptlsclose, 1, 0xBD50D496, 0x03050A00) 
-#endif
-
-
-/**
- * Starts handshaking on the client side. This data is likley to read and write data.
- *
- * :return: Result of this operation. May be one of these values:
- *		- ERR_OK: No error. Everything worked as expected.
- *		- ERR_NOTINITIALIZED: The TLS component was not initialized proberly.
- *		- ERR_TLS_CONNECTION_CLOSED: The TLS connection is closed. Use TlsShutdown to shutdown locally.
- *     - ERR_TLS_WANT_READ: The operation needs TO read data FROM the IO system. There is no data available.
- *     - ERR_TLS_WANT_WRITE: The operation needs to write data to the IO system. This is not possible.
- *		- ERR_TLS_RETRY_OPERATION: Something went wrong. Try the same function call again
- *		- ERR_TLS_IO_SYSTEM: An error in the unterlaying IO system.
- *		- ERR_TLS_INTERNAL: An internal Error of the TLS Component
- *		- ERR_FAILED: Unknown error.
- */
-typedef struct tagcmptlsconnect_struct
-{
-	RTS_IEC_HANDLE hTlsConn;			/* VAR_INPUT */	/* Handle of the TLS connection, created with one of the TLSNewConn functions */
-	RTS_IEC_RESULT CmpTlsConnect;		/* VAR_OUTPUT */	
-} cmptlsconnect_struct;
-
-void CDECL CDECL_EXT cmptlsconnect(cmptlsconnect_struct *p);
-typedef void (CDECL CDECL_EXT* PFCMPTLSCONNECT_IEC) (cmptlsconnect_struct *p);
-#if defined(CMPTLS_NOTIMPLEMENTED) || defined(CMPTLSCONNECT_NOTIMPLEMENTED)
-	#define USE_cmptlsconnect
-	#define EXT_cmptlsconnect
-	#define GET_cmptlsconnect(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cmptlsconnect(p0) 
-	#define CHK_cmptlsconnect  FALSE
-	#define EXP_cmptlsconnect  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cmptlsconnect
-	#define EXT_cmptlsconnect
-	#define GET_cmptlsconnect(fl)  CAL_CMGETAPI( "cmptlsconnect" ) 
-	#define CAL_cmptlsconnect  cmptlsconnect
-	#define CHK_cmptlsconnect  TRUE
-	#define EXP_cmptlsconnect  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsconnect", (RTS_UINTPTR)cmptlsconnect, 1, 0xE8789C31, 0x03050A00) 
-#elif defined(MIXED_LINK) && !defined(CMPTLS_EXTERNAL)
-	#define USE_cmptlsconnect
-	#define EXT_cmptlsconnect
-	#define GET_cmptlsconnect(fl)  CAL_CMGETAPI( "cmptlsconnect" ) 
-	#define CAL_cmptlsconnect  cmptlsconnect
-	#define CHK_cmptlsconnect  TRUE
-	#define EXP_cmptlsconnect  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsconnect", (RTS_UINTPTR)cmptlsconnect, 1, 0xE8789C31, 0x03050A00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpTlscmptlsconnect
-	#define EXT_CmpTlscmptlsconnect
-	#define GET_CmpTlscmptlsconnect  ERR_OK
-	#define CAL_CmpTlscmptlsconnect  cmptlsconnect
-	#define CHK_CmpTlscmptlsconnect  TRUE
-	#define EXP_CmpTlscmptlsconnect  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsconnect", (RTS_UINTPTR)cmptlsconnect, 1, 0xE8789C31, 0x03050A00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cmptlsconnect
-	#define EXT_cmptlsconnect
-	#define GET_cmptlsconnect(fl)  CAL_CMGETAPI( "cmptlsconnect" ) 
-	#define CAL_cmptlsconnect  cmptlsconnect
-	#define CHK_cmptlsconnect  TRUE
-	#define EXP_cmptlsconnect  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsconnect", (RTS_UINTPTR)cmptlsconnect, 1, 0xE8789C31, 0x03050A00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cmptlsconnect  PFCMPTLSCONNECT_IEC pfcmptlsconnect;
-	#define EXT_cmptlsconnect  extern PFCMPTLSCONNECT_IEC pfcmptlsconnect;
-	#define GET_cmptlsconnect(fl)  s_pfCMGetAPI2( "cmptlsconnect", (RTS_VOID_FCTPTR *)&pfcmptlsconnect, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xE8789C31, 0x03050A00)
-	#define CAL_cmptlsconnect  pfcmptlsconnect
-	#define CHK_cmptlsconnect  (pfcmptlsconnect != NULL)
-	#define EXP_cmptlsconnect   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsconnect", (RTS_UINTPTR)cmptlsconnect, 1, 0xE8789C31, 0x03050A00) 
-#endif
-
-
-/**
- * This function create a TLS context. This context is needed to perform TLS communication
- * using the SysSocket2 library. The context contains all informaiton how to handle this
- * TLS connection.
- *
- *
- * :return: Handle to the new accepted socket or RTS_INVALID_HANDLE if failed.
- */
-typedef struct tagcmptlscreatecontext_struct
-{
-	RTS_IEC_HANDLE hCert;				/* VAR_INPUT */	/* Handle to a certificate. The private key of this certificate has to be available. 
- Can be RTS_INVALID_HANDLE for client connections. If the server requires a client
- certificate the connection will fail in these case. */
-	RTS_IEC_INT tlsMethod;				/* VAR_INPUT, Enum: CMPTLSMETHOD */
-	RTS_IEC_STRING *cipherList;			/* VAR_INPUT */	/* Allowed chipers used by this connection. Leave 0 to get default. Default will result in 
- ciphers with HIGH encryption strength and Diffie Hellman key exchange. */
-	RTS_IEC_DWORD verifyMode;			/* VAR_INPUT */	/* Set up how to verify the peer. The settings differ between client and server.
- See CmpTlsVerifyMode for details. Default results in: Client -> Verify the peer. Server -> Do not Verify Peer
- The options of CmpTlsConstans can be combined by adding them. */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Operations Result */
-	RTS_IEC_HANDLE CmpTlsCreateContext;	/* VAR_OUTPUT */	
-} cmptlscreatecontext_struct;
-
-void CDECL CDECL_EXT cmptlscreatecontext(cmptlscreatecontext_struct *p);
-typedef void (CDECL CDECL_EXT* PFCMPTLSCREATECONTEXT_IEC) (cmptlscreatecontext_struct *p);
-#if defined(CMPTLS_NOTIMPLEMENTED) || defined(CMPTLSCREATECONTEXT_NOTIMPLEMENTED)
-	#define USE_cmptlscreatecontext
-	#define EXT_cmptlscreatecontext
-	#define GET_cmptlscreatecontext(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cmptlscreatecontext(p0) 
-	#define CHK_cmptlscreatecontext  FALSE
-	#define EXP_cmptlscreatecontext  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cmptlscreatecontext
-	#define EXT_cmptlscreatecontext
-	#define GET_cmptlscreatecontext(fl)  CAL_CMGETAPI( "cmptlscreatecontext" ) 
-	#define CAL_cmptlscreatecontext  cmptlscreatecontext
-	#define CHK_cmptlscreatecontext  TRUE
-	#define EXP_cmptlscreatecontext  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlscreatecontext", (RTS_UINTPTR)cmptlscreatecontext, 1, 0x9BD4354C, 0x03050A00) 
-#elif defined(MIXED_LINK) && !defined(CMPTLS_EXTERNAL)
-	#define USE_cmptlscreatecontext
-	#define EXT_cmptlscreatecontext
-	#define GET_cmptlscreatecontext(fl)  CAL_CMGETAPI( "cmptlscreatecontext" ) 
-	#define CAL_cmptlscreatecontext  cmptlscreatecontext
-	#define CHK_cmptlscreatecontext  TRUE
-	#define EXP_cmptlscreatecontext  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlscreatecontext", (RTS_UINTPTR)cmptlscreatecontext, 1, 0x9BD4354C, 0x03050A00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpTlscmptlscreatecontext
-	#define EXT_CmpTlscmptlscreatecontext
-	#define GET_CmpTlscmptlscreatecontext  ERR_OK
-	#define CAL_CmpTlscmptlscreatecontext  cmptlscreatecontext
-	#define CHK_CmpTlscmptlscreatecontext  TRUE
-	#define EXP_CmpTlscmptlscreatecontext  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlscreatecontext", (RTS_UINTPTR)cmptlscreatecontext, 1, 0x9BD4354C, 0x03050A00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cmptlscreatecontext
-	#define EXT_cmptlscreatecontext
-	#define GET_cmptlscreatecontext(fl)  CAL_CMGETAPI( "cmptlscreatecontext" ) 
-	#define CAL_cmptlscreatecontext  cmptlscreatecontext
-	#define CHK_cmptlscreatecontext  TRUE
-	#define EXP_cmptlscreatecontext  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlscreatecontext", (RTS_UINTPTR)cmptlscreatecontext, 1, 0x9BD4354C, 0x03050A00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cmptlscreatecontext  PFCMPTLSCREATECONTEXT_IEC pfcmptlscreatecontext;
-	#define EXT_cmptlscreatecontext  extern PFCMPTLSCREATECONTEXT_IEC pfcmptlscreatecontext;
-	#define GET_cmptlscreatecontext(fl)  s_pfCMGetAPI2( "cmptlscreatecontext", (RTS_VOID_FCTPTR *)&pfcmptlscreatecontext, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x9BD4354C, 0x03050A00)
-	#define CAL_cmptlscreatecontext  pfcmptlscreatecontext
-	#define CHK_cmptlscreatecontext  (pfcmptlscreatecontext != NULL)
-	#define EXP_cmptlscreatecontext   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlscreatecontext", (RTS_UINTPTR)cmptlscreatecontext, 1, 0x9BD4354C, 0x03050A00) 
-#endif
-
-
-/**
- * This function cleans up the TLS context created with CmpTlsCreateContext.
- */
-typedef struct tagcmptlsfreecontext_struct
-{
-	RTS_IEC_HANDLE hTlsContext;			/* VAR_INPUT */	/* Handle to the context to clean up */
-	RTS_IEC_RESULT CmpTlsFreeContext;	/* VAR_OUTPUT */	
-} cmptlsfreecontext_struct;
-
-void CDECL CDECL_EXT cmptlsfreecontext(cmptlsfreecontext_struct *p);
-typedef void (CDECL CDECL_EXT* PFCMPTLSFREECONTEXT_IEC) (cmptlsfreecontext_struct *p);
-#if defined(CMPTLS_NOTIMPLEMENTED) || defined(CMPTLSFREECONTEXT_NOTIMPLEMENTED)
-	#define USE_cmptlsfreecontext
-	#define EXT_cmptlsfreecontext
-	#define GET_cmptlsfreecontext(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cmptlsfreecontext(p0) 
-	#define CHK_cmptlsfreecontext  FALSE
-	#define EXP_cmptlsfreecontext  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cmptlsfreecontext
-	#define EXT_cmptlsfreecontext
-	#define GET_cmptlsfreecontext(fl)  CAL_CMGETAPI( "cmptlsfreecontext" ) 
-	#define CAL_cmptlsfreecontext  cmptlsfreecontext
-	#define CHK_cmptlsfreecontext  TRUE
-	#define EXP_cmptlsfreecontext  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsfreecontext", (RTS_UINTPTR)cmptlsfreecontext, 1, 0x4FCCCE44, 0x03050A00) 
-#elif defined(MIXED_LINK) && !defined(CMPTLS_EXTERNAL)
-	#define USE_cmptlsfreecontext
-	#define EXT_cmptlsfreecontext
-	#define GET_cmptlsfreecontext(fl)  CAL_CMGETAPI( "cmptlsfreecontext" ) 
-	#define CAL_cmptlsfreecontext  cmptlsfreecontext
-	#define CHK_cmptlsfreecontext  TRUE
-	#define EXP_cmptlsfreecontext  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsfreecontext", (RTS_UINTPTR)cmptlsfreecontext, 1, 0x4FCCCE44, 0x03050A00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpTlscmptlsfreecontext
-	#define EXT_CmpTlscmptlsfreecontext
-	#define GET_CmpTlscmptlsfreecontext  ERR_OK
-	#define CAL_CmpTlscmptlsfreecontext  cmptlsfreecontext
-	#define CHK_CmpTlscmptlsfreecontext  TRUE
-	#define EXP_CmpTlscmptlsfreecontext  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsfreecontext", (RTS_UINTPTR)cmptlsfreecontext, 1, 0x4FCCCE44, 0x03050A00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cmptlsfreecontext
-	#define EXT_cmptlsfreecontext
-	#define GET_cmptlsfreecontext(fl)  CAL_CMGETAPI( "cmptlsfreecontext" ) 
-	#define CAL_cmptlsfreecontext  cmptlsfreecontext
-	#define CHK_cmptlsfreecontext  TRUE
-	#define EXP_cmptlsfreecontext  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsfreecontext", (RTS_UINTPTR)cmptlsfreecontext, 1, 0x4FCCCE44, 0x03050A00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cmptlsfreecontext  PFCMPTLSFREECONTEXT_IEC pfcmptlsfreecontext;
-	#define EXT_cmptlsfreecontext  extern PFCMPTLSFREECONTEXT_IEC pfcmptlsfreecontext;
-	#define GET_cmptlsfreecontext(fl)  s_pfCMGetAPI2( "cmptlsfreecontext", (RTS_VOID_FCTPTR *)&pfcmptlsfreecontext, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x4FCCCE44, 0x03050A00)
-	#define CAL_cmptlsfreecontext  pfcmptlsfreecontext
-	#define CHK_cmptlsfreecontext  (pfcmptlsfreecontext != NULL)
-	#define EXP_cmptlsfreecontext   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsfreecontext", (RTS_UINTPTR)cmptlsfreecontext, 1, 0x4FCCCE44, 0x03050A00) 
-#endif
-
-
-/**
- * Receive data from the encrypted channel. If the connection is not established yet, this will be done
- * transparent in the background. Normally only data is of the encrypted channel is consumed. In some cases (Handshaking has
- * not finished or renegotiation of the session keys) this function will also write data. If the unterlaying IO doens't write
- * automatically the need to send data will be indicated using the corresponding error code.
- *
- * :return: Number of bytes received. 0 if an error occured.
- */
-typedef struct tagcmptlsread_struct
-{
-	RTS_IEC_HANDLE hTlsConn;			/* VAR_INPUT */	/* Handle of the TLS connection, created with one of the TLSxxxOpen functions */
-	RTS_IEC_BYTE *pbyBuffer;			/* VAR_INPUT */	/* Pointer to a databuffer, where the received decrypted data should be written to. */
-	RTS_IEC_XINT xiBufferSize;			/* VAR_INPUT */	/* Size of pbyData. Maximum number of bytes, that could be received from the TLS connection. */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Result OF THIS operation. May be one OF these values:
- 	- ERR_OK: No error. Everything worked as expected.
- 	- ERR_NOTINITIALIZED: The TLS component was not initialized proberly.
- 	- ERR_TLS_CONNECTION_CLOSED: The TLS connection is closed. Use TlsShutdown to shutdown locally.
-     - ERR_TLS_WANT_READ: The operation needs TO read data FROM the IO system. There is no data available.
-     - ERR_TLS_WANT_WRITE: The operation needs to write data to the IO system. This is not possible.
- 	- ERR_TLS_RETRY_OPERATION: Something went wrong. Try the same function call again
- 	- ERR_TLS_IO_SYSTEM: An error in the unterlaying IO system.
- 	- ERR_TLS_INTERNAL: An internal Error of the TLS Component
- 	- ERR_FAILED: Unknown error. */
-	RTS_IEC_XINT CmpTlsRead;			/* VAR_OUTPUT */	
-} cmptlsread_struct;
-
-void CDECL CDECL_EXT cmptlsread(cmptlsread_struct *p);
-typedef void (CDECL CDECL_EXT* PFCMPTLSREAD_IEC) (cmptlsread_struct *p);
-#if defined(CMPTLS_NOTIMPLEMENTED) || defined(CMPTLSREAD_NOTIMPLEMENTED)
-	#define USE_cmptlsread
-	#define EXT_cmptlsread
-	#define GET_cmptlsread(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cmptlsread(p0) 
-	#define CHK_cmptlsread  FALSE
-	#define EXP_cmptlsread  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cmptlsread
-	#define EXT_cmptlsread
-	#define GET_cmptlsread(fl)  CAL_CMGETAPI( "cmptlsread" ) 
-	#define CAL_cmptlsread  cmptlsread
-	#define CHK_cmptlsread  TRUE
-	#define EXP_cmptlsread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsread", (RTS_UINTPTR)cmptlsread, 1, RTSITF_GET_SIGNATURE(0x7869515D, 0xC50DA073), 0x03050A00) 
-#elif defined(MIXED_LINK) && !defined(CMPTLS_EXTERNAL)
-	#define USE_cmptlsread
-	#define EXT_cmptlsread
-	#define GET_cmptlsread(fl)  CAL_CMGETAPI( "cmptlsread" ) 
-	#define CAL_cmptlsread  cmptlsread
-	#define CHK_cmptlsread  TRUE
-	#define EXP_cmptlsread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsread", (RTS_UINTPTR)cmptlsread, 1, RTSITF_GET_SIGNATURE(0x7869515D, 0xC50DA073), 0x03050A00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpTlscmptlsread
-	#define EXT_CmpTlscmptlsread
-	#define GET_CmpTlscmptlsread  ERR_OK
-	#define CAL_CmpTlscmptlsread  cmptlsread
-	#define CHK_CmpTlscmptlsread  TRUE
-	#define EXP_CmpTlscmptlsread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsread", (RTS_UINTPTR)cmptlsread, 1, RTSITF_GET_SIGNATURE(0x7869515D, 0xC50DA073), 0x03050A00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cmptlsread
-	#define EXT_cmptlsread
-	#define GET_cmptlsread(fl)  CAL_CMGETAPI( "cmptlsread" ) 
-	#define CAL_cmptlsread  cmptlsread
-	#define CHK_cmptlsread  TRUE
-	#define EXP_cmptlsread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsread", (RTS_UINTPTR)cmptlsread, 1, RTSITF_GET_SIGNATURE(0x7869515D, 0xC50DA073), 0x03050A00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cmptlsread  PFCMPTLSREAD_IEC pfcmptlsread;
-	#define EXT_cmptlsread  extern PFCMPTLSREAD_IEC pfcmptlsread;
-	#define GET_cmptlsread(fl)  s_pfCMGetAPI2( "cmptlsread", (RTS_VOID_FCTPTR *)&pfcmptlsread, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x7869515D, 0xC50DA073), 0x03050A00)
-	#define CAL_cmptlsread  pfcmptlsread
-	#define CHK_cmptlsread  (pfcmptlsread != NULL)
-	#define EXP_cmptlsread   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsread", (RTS_UINTPTR)cmptlsread, 1, RTSITF_GET_SIGNATURE(0x7869515D, 0xC50DA073), 0x03050A00) 
-#endif
-
-
-/**
- * There are two ways to shutdown the TLS connection:
- * bidirectional: The first call of TlsShutdown will send the shutdown message. The operation will return ERR_TLS_RETRY_OPERATION.
- *             Then the function has to be called again. If the acknowledge of the peer was received ERR_OK will be returned. If the
- *             acknowledge was not received yet the function will return ERR_TLS_WANT_READ.
- * unidirectional: The first call of TlsShutdown will send the shutdown message. The operation will return ERR_TLS_RETRY_OPERATION.
- *             Close the IO channel and clean up. Don't wait for the acknowledge of the peer.
- *
- * :return: Result of this operation. May be one of these values:
- *		- ERR_OK: No error. Everything worked as expected.
- *		- ERR_NOTINITIALIZED: The TLS component was not initialized proberly.
- *		- ERR_TLS_CONNECTION_CLOSED: The TLS connection is closed.
- *     - ERR_TLS_WANT_READ: The operation needs TO read data FROM the IO system. There is no data available.
- *     - ERR_TLS_WANT_WRITE: The operation needs to write data to the IO system. This is not possible.
- *		- ERR_TLS_RETRY_OPERATION: Something went wrong. Try the same function call again
- *		- ERR_TLS_IO_SYSTEM: An error in the unterlaying IO system.
- *		- ERR_TLS_INTERNAL: An internal Error of the TLS Component
- *		- ERR_FAILED: Unknown error.
- */
-typedef struct tagcmptlsshutdown_struct
-{
-	RTS_IEC_HANDLE hTlsConn;			/* VAR_INPUT */	/* Handle of the TLS connection, created with one of the TLSxxxOpen functions */
-	RTS_IEC_RESULT CmpTlsShutdown;		/* VAR_OUTPUT */	
-} cmptlsshutdown_struct;
-
-void CDECL CDECL_EXT cmptlsshutdown(cmptlsshutdown_struct *p);
-typedef void (CDECL CDECL_EXT* PFCMPTLSSHUTDOWN_IEC) (cmptlsshutdown_struct *p);
-#if defined(CMPTLS_NOTIMPLEMENTED) || defined(CMPTLSSHUTDOWN_NOTIMPLEMENTED)
-	#define USE_cmptlsshutdown
-	#define EXT_cmptlsshutdown
-	#define GET_cmptlsshutdown(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cmptlsshutdown(p0) 
-	#define CHK_cmptlsshutdown  FALSE
-	#define EXP_cmptlsshutdown  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cmptlsshutdown
-	#define EXT_cmptlsshutdown
-	#define GET_cmptlsshutdown(fl)  CAL_CMGETAPI( "cmptlsshutdown" ) 
-	#define CAL_cmptlsshutdown  cmptlsshutdown
-	#define CHK_cmptlsshutdown  TRUE
-	#define EXP_cmptlsshutdown  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsshutdown", (RTS_UINTPTR)cmptlsshutdown, 1, 0x2AA5307D, 0x03050A00) 
-#elif defined(MIXED_LINK) && !defined(CMPTLS_EXTERNAL)
-	#define USE_cmptlsshutdown
-	#define EXT_cmptlsshutdown
-	#define GET_cmptlsshutdown(fl)  CAL_CMGETAPI( "cmptlsshutdown" ) 
-	#define CAL_cmptlsshutdown  cmptlsshutdown
-	#define CHK_cmptlsshutdown  TRUE
-	#define EXP_cmptlsshutdown  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsshutdown", (RTS_UINTPTR)cmptlsshutdown, 1, 0x2AA5307D, 0x03050A00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpTlscmptlsshutdown
-	#define EXT_CmpTlscmptlsshutdown
-	#define GET_CmpTlscmptlsshutdown  ERR_OK
-	#define CAL_CmpTlscmptlsshutdown  cmptlsshutdown
-	#define CHK_CmpTlscmptlsshutdown  TRUE
-	#define EXP_CmpTlscmptlsshutdown  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsshutdown", (RTS_UINTPTR)cmptlsshutdown, 1, 0x2AA5307D, 0x03050A00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cmptlsshutdown
-	#define EXT_cmptlsshutdown
-	#define GET_cmptlsshutdown(fl)  CAL_CMGETAPI( "cmptlsshutdown" ) 
-	#define CAL_cmptlsshutdown  cmptlsshutdown
-	#define CHK_cmptlsshutdown  TRUE
-	#define EXP_cmptlsshutdown  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsshutdown", (RTS_UINTPTR)cmptlsshutdown, 1, 0x2AA5307D, 0x03050A00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cmptlsshutdown  PFCMPTLSSHUTDOWN_IEC pfcmptlsshutdown;
-	#define EXT_cmptlsshutdown  extern PFCMPTLSSHUTDOWN_IEC pfcmptlsshutdown;
-	#define GET_cmptlsshutdown(fl)  s_pfCMGetAPI2( "cmptlsshutdown", (RTS_VOID_FCTPTR *)&pfcmptlsshutdown, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x2AA5307D, 0x03050A00)
-	#define CAL_cmptlsshutdown  pfcmptlsshutdown
-	#define CHK_cmptlsshutdown  (pfcmptlsshutdown != NULL)
-	#define EXP_cmptlsshutdown   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlsshutdown", (RTS_UINTPTR)cmptlsshutdown, 1, 0x2AA5307D, 0x03050A00) 
-#endif
-
-
-/**
- * Send data over the encrypted channel. If the connection is not established yet, this will be done
- * transparent in the background. Normally only data is written to the unterlaying IO. In some cases data have to be read
- * (Handshaking has not finished or renegotiation of the session keys). If not data is for reading is available this will
- * be indicated through the corresponding error code.
- *
- * :return: Number of bytes sent. 0 if an error occured.
- */
-typedef struct tagcmptlswrite_struct
-{
-	RTS_IEC_HANDLE hTlsConn;			/* VAR_INPUT */	/* Handle of the TLS connection, created with one of the TLSxxxOpen functions */
-	RTS_IEC_BYTE *pbyData;				/* VAR_INPUT */	/* Pointer to data, that should be sent over the TLS connection */
-	RTS_IEC_XINT xiDataSize;			/* VAR_INPUT */	/* Size of pbyData. Number of bytes that should be sent over the TLS connection */
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Result OF THIS operation. May be one OF these values:
- 	- ERR_OK: No error. Everything worked as expected.
- 	- ERR_NOTINITIALIZED: The TLS component was not initialized proberly.
- 	- ERR_TLS_CONNECTION_CLOSED: The TLS connection is closed. Use TlsShutdown to shutdown locally.
-     - ERR_TLS_WANT_READ: The operation needs TO read data FROM the IO system. There is no data available.
-     - ERR_TLS_WANT_WRITE: The operation needs to write data to the IO system. This is not possible.
- 	- ERR_TLS_RETRY_OPERATION: Something went wrong. Try the same function call again
- 	- ERR_TLS_IO_SYSTEM: An error in the unterlaying IO system.
- 	- ERR_TLS_INTERNAL: An internal Error of the TLS Component
- 	- ERR_FAILED: Unknown error. */
-	RTS_IEC_XINT CmpTlsWrite;			/* VAR_OUTPUT */	
-} cmptlswrite_struct;
-
-void CDECL CDECL_EXT cmptlswrite(cmptlswrite_struct *p);
-typedef void (CDECL CDECL_EXT* PFCMPTLSWRITE_IEC) (cmptlswrite_struct *p);
-#if defined(CMPTLS_NOTIMPLEMENTED) || defined(CMPTLSWRITE_NOTIMPLEMENTED)
-	#define USE_cmptlswrite
-	#define EXT_cmptlswrite
-	#define GET_cmptlswrite(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_cmptlswrite(p0) 
-	#define CHK_cmptlswrite  FALSE
-	#define EXP_cmptlswrite  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_cmptlswrite
-	#define EXT_cmptlswrite
-	#define GET_cmptlswrite(fl)  CAL_CMGETAPI( "cmptlswrite" ) 
-	#define CAL_cmptlswrite  cmptlswrite
-	#define CHK_cmptlswrite  TRUE
-	#define EXP_cmptlswrite  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlswrite", (RTS_UINTPTR)cmptlswrite, 1, RTSITF_GET_SIGNATURE(0xA1D9E8A7, 0xF01B2E0C), 0x03050A00) 
-#elif defined(MIXED_LINK) && !defined(CMPTLS_EXTERNAL)
-	#define USE_cmptlswrite
-	#define EXT_cmptlswrite
-	#define GET_cmptlswrite(fl)  CAL_CMGETAPI( "cmptlswrite" ) 
-	#define CAL_cmptlswrite  cmptlswrite
-	#define CHK_cmptlswrite  TRUE
-	#define EXP_cmptlswrite  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlswrite", (RTS_UINTPTR)cmptlswrite, 1, RTSITF_GET_SIGNATURE(0xA1D9E8A7, 0xF01B2E0C), 0x03050A00) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpTlscmptlswrite
-	#define EXT_CmpTlscmptlswrite
-	#define GET_CmpTlscmptlswrite  ERR_OK
-	#define CAL_CmpTlscmptlswrite  cmptlswrite
-	#define CHK_CmpTlscmptlswrite  TRUE
-	#define EXP_CmpTlscmptlswrite  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlswrite", (RTS_UINTPTR)cmptlswrite, 1, RTSITF_GET_SIGNATURE(0xA1D9E8A7, 0xF01B2E0C), 0x03050A00) 
-#elif defined(CPLUSPLUS)
-	#define USE_cmptlswrite
-	#define EXT_cmptlswrite
-	#define GET_cmptlswrite(fl)  CAL_CMGETAPI( "cmptlswrite" ) 
-	#define CAL_cmptlswrite  cmptlswrite
-	#define CHK_cmptlswrite  TRUE
-	#define EXP_cmptlswrite  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlswrite", (RTS_UINTPTR)cmptlswrite, 1, RTSITF_GET_SIGNATURE(0xA1D9E8A7, 0xF01B2E0C), 0x03050A00) 
-#else /* DYNAMIC_LINK */
-	#define USE_cmptlswrite  PFCMPTLSWRITE_IEC pfcmptlswrite;
-	#define EXT_cmptlswrite  extern PFCMPTLSWRITE_IEC pfcmptlswrite;
-	#define GET_cmptlswrite(fl)  s_pfCMGetAPI2( "cmptlswrite", (RTS_VOID_FCTPTR *)&pfcmptlswrite, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0xA1D9E8A7, 0xF01B2E0C), 0x03050A00)
-	#define CAL_cmptlswrite  pfcmptlswrite
-	#define CHK_cmptlswrite  (pfcmptlswrite != NULL)
-	#define EXP_cmptlswrite   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cmptlswrite", (RTS_UINTPTR)cmptlswrite, 1, RTSITF_GET_SIGNATURE(0xA1D9E8A7, 0xF01B2E0C), 0x03050A00) 
-#endif
-
-
-#ifdef __cplusplus
-}
-#endif
-
-/** EXTERN LIB SECTION END **/
 
 
 
@@ -2131,7 +1332,7 @@ class ICmpTls : public IBase
 		virtual RTS_SSIZE CDECL ITlsWrite(RTS_HANDLE hTlsConn, RTS_UI8* pbyData, RTS_SSIZE ulDataSize, RTS_RESULT* pResult) =0;
 		virtual RTS_RESULT CDECL ITlsShutdown(RTS_HANDLE hTlsConn) =0;
 		virtual RTS_RESULT CDECL ITlsClose(RTS_HANDLE hTlsConn) =0;
-		virtual void CDECL ITlsRandAdd(const RTS_UI8* pui8Buffer, RTS_I32 i32BufferSize, RTS_REAL64 r64Entroy) =0;
+		virtual void CDECL ITlsRandAdd(const RTS_UI8* pui8Buffer, RTS_I32 i32BufferSize, RTS_REAL64 r64Entropy) =0;
 		virtual RTS_BOOL CDECL ITlsRandCheckStatus(void) =0;
 };
 	#ifndef ITF_CmpTls

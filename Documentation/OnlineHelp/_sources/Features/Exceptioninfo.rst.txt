@@ -1,0 +1,36 @@
+.. _feature__exceptioninfo:
+
+
+Exception Info
+==============
+
+This feature has two effects on platforms, where a stack frame in the runtime code is not available! This is typically the case on ARM CPUs!
+
+These are the two effects on external library calls:
+
+1. Callstack is available at an exception on an external library call
+
+2. If a watchdog exception occurs on an external library call, we have the possibility with the callstack to run gracefully out of the external
+   library call!
+
+   .. note::
+      This is an important aspect, because the runtime system remains in a consistent condition after a watchdog exception in IEC program!
+
+
+Required features
+-----------------
+
+- :ref:`feature__dev_desc`
+
+Required target settings
+------------------------
+
+The following target settings are necessary for this feature:
+
+- :ref:`codegenerator_breakpoint-mark-after-external-call`
+
+Compiler Defines
+----------------
+
+- codegenerator/compiler_defines: generate_exceptioninfo
+

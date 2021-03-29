@@ -1,0 +1,1562 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __sys_task_itf_8h:
+
+===========================
+SysTaskItf.h File Reference
+===========================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`SysExceptItf.h <_sys_except_itf_8h>`"
+| #include ":ref:`SysTimeItf.h <_sys_time_itf_8h>`"
+| #include ":ref:`CMUtilsHashItf.h <_c_m_utils_hash_itf_8h>`"
+
+Data Structures
+---------------
+
+- struct :ref:`EVTPARAM_SysTask <struct_e_v_t_p_a_r_a_m___sys_task>`
+
+- struct :ref:`EVTPARAM_SysTask_GetPriority <struct_e_v_t_p_a_r_a_m___sys_task___get_priority>`
+
+- struct :ref:`EVTPARAM_SysTaskSetInterval <struct_e_v_t_p_a_r_a_m___sys_task_set_interval>`
+
+- struct :ref:`tagSYS_TASK_PARAM <structtag_s_y_s___t_a_s_k___p_a_r_a_m>`
+
+- struct :ref:`tagSYS_TASK_INFO <structtag_s_y_s___t_a_s_k___i_n_f_o>`
+
+- struct :ref:`tagsystaskautoreleaseonexit_struct <structtagsystaskautoreleaseonexit__struct>`
+
+- struct :ref:`tagsystaskcheckstack_struct <structtagsystaskcheckstack__struct>`
+
+- struct :ref:`tagsystaskcreate_struct <structtagsystaskcreate__struct>`
+
+- struct :ref:`tagsystaskcreate2_struct <structtagsystaskcreate2__struct>`
+
+- struct :ref:`tagsystaskdestroy_struct <structtagsystaskdestroy__struct>`
+
+- struct :ref:`tagsystaskend_struct <structtagsystaskend__struct>`
+
+- struct :ref:`tagsystaskenter_struct <structtagsystaskenter__struct>`
+
+- struct :ref:`tagsystaskexit_struct <structtagsystaskexit__struct>`
+
+- struct :ref:`tagsystaskgenerateexception_struct <structtagsystaskgenerateexception__struct>`
+
+- struct :ref:`tagsystaskgetcontext_struct <structtagsystaskgetcontext__struct>`
+
+- struct :ref:`tagsystaskgetcurrent_struct <structtagsystaskgetcurrent__struct>`
+
+- struct :ref:`tagsystaskgetcurrentoshandle_struct <structtagsystaskgetcurrentoshandle__struct>`
+
+- struct :ref:`tagsystaskgetinfo_struct <structtagsystaskgetinfo__struct>`
+
+- struct :ref:`tagsystaskgetinterval_struct <structtagsystaskgetinterval__struct>`
+
+- struct :ref:`tagsystaskgetname_struct <structtagsystaskgetname__struct>`
+
+- struct :ref:`tagsystaskgetoshandle_struct <structtagsystaskgetoshandle__struct>`
+
+- struct :ref:`tagsystaskgetospriority_struct <structtagsystaskgetospriority__struct>`
+
+- struct :ref:`tagsystaskgetpriority_struct <structtagsystaskgetpriority__struct>`
+
+- struct :ref:`tagsystaskjoin_struct <structtagsystaskjoin__struct>`
+
+- struct :ref:`tagsystaskleave_struct <structtagsystaskleave__struct>`
+
+- struct :ref:`tagsystaskresume_struct <structtagsystaskresume__struct>`
+
+- struct :ref:`tagsystasksetexit_struct <structtagsystasksetexit__struct>`
+
+- struct :ref:`tagsystasksetinterval_struct <structtagsystasksetinterval__struct>`
+
+- struct :ref:`tagsystasksetpriority_struct <structtagsystasksetpriority__struct>`
+
+- struct :ref:`tagsystasksuspend_struct <structtagsystasksuspend__struct>`
+
+- struct :ref:`tagsystaskwaitinterval_struct <structtagsystaskwaitinterval__struct>`
+
+- struct :ref:`tagsystaskwaitsleep_struct <structtagsystaskwaitsleep__struct>`
+
+- struct :ref:`tagsystaskwaitsleepus_struct <structtagsystaskwaitsleepus__struct>`
+
+- struct :ref:`systaskgettaskhandle_struct <structsystaskgettaskhandle__struct>`
+
+- struct :ref:`ISysTask_C <struct_i_sys_task___c>`
+
+Macros
+------
+
+- #define :ref:`SYSTASK_MAX_NAME_LEN <group___sys_task_itf___staticdefines_1ga9566c7d82c25eba522f2ef4ffbd4f153>` 20
+
+- #define :ref:`SYSTASK_NUM_OF_STATIC_TASKS <group___sys_task_itf___staticdefines_1ga76ee847cc190bbfb9bc538d1ae9d5cf7>` 20
+
+- #define :ref:`SYSTASK_THREAD_LOCAL_STORAGE_HASH_TABLE_SIZE <group___sys_task_itf___staticdefines_1ga55d84d182320bf40cb23aa0dfa01e331>` 17
+
+- #define :ref:`SYSTASK_USE_ATOMIC_BITACCESS <group___sys_task_itf___staticdefines_1gab13a7ebc3b7d6881acd561d322834793>`
+
+- #define :ref:`TS_NOT_CREATED <group___sys_task_itf___taskstatusdefinitions_1gae847b3cea5514e710bbc7009e971cf54>` 0x0000
+
+- #define :ref:`TS_VALID <group___sys_task_itf___taskstatusdefinitions_1gac62ff3b243c6d68231568d5be1412465>` 0x0001
+
+- #define :ref:`TS_ACTIVE <group___sys_task_itf___taskstatusdefinitions_1ga45704fe8a7f8761020ef98a33f300351>` 0x0002
+
+- #define :ref:`TS_SUSPENDED <group___sys_task_itf___taskstatusdefinitions_1gab4d99a45db3a3284d6fcc90a12cc7354>` 0x0004
+
+- #define :ref:`TS_DELETED <group___sys_task_itf___taskstatusdefinitions_1gab548990fceafc3ddbf1295ce88e6f753>` 0x0008
+
+- #define :ref:`TS_EXCEPTION <group___sys_task_itf___taskstatusdefinitions_1gae7d768b8f9d1e1a8cbe0cb4429794590>` 0x0010
+
+- #define :ref:`TF_VALID <group___sys_task_itf___taskstatusbits_1ga3d81040cebe36bd673d3cbf00b0cf2dd>` 0
+
+- #define :ref:`TF_ACTIVE <group___sys_task_itf___taskstatusbits_1ga263cd7a4d97d1ef2cbbf6f3495b48d48>` 1
+
+- #define :ref:`TF_SUSPENDED_ <group___sys_task_itf___taskstatusbits_1gac496e70eb052547fadcd1e2c003e5db3>` 2
+
+- #define :ref:`TF_DELETED <group___sys_task_itf___taskstatusbits_1ga9aa3bae7a10716b895e8e7d3887c819f>` 3
+
+- #define :ref:`TF_EXCEPTION <group___sys_task_itf___taskstatusbits_1ga31b3a71d927b6335038f2c1aaacabb67>` 4
+
+- #define :ref:`TF_SUSPENDED <group___sys_task_itf___taskstatusbits_1ga550146f6ab128a265c3385ba5fd21967>` :ref:`TF_SUSPENDED_ <group___sys_task_itf___taskstatusbits_1gac496e70eb052547fadcd1e2c003e5db3>`
+
+- #define :ref:`SysTaskIsValid <group___sys_task_itf___taskstatusmacros_1ga831c84f076b2360bd111274e8e3c01dc>` (pTask->iState & :ref:`TS_VALID <group___sys_task_itf___taskstatusdefinitions_1gac62ff3b243c6d68231568d5be1412465>` )
+
+- #define :ref:`SysTaskIsActive <group___sys_task_itf___taskstatusmacros_1gaf1c3ca9ad3809ece556cb7bf1033e476>` (pTask->iState & :ref:`TS_ACTIVE <group___sys_task_itf___taskstatusdefinitions_1ga45704fe8a7f8761020ef98a33f300351>` )
+
+- #define :ref:`SysTaskIsSuspended <group___sys_task_itf___taskstatusmacros_1gae74dfee24d7769cfd2f7b339fdaa1e30>` (pTask->iState & :ref:`TS_SUSPENDED <group___sys_task_itf___taskstatusdefinitions_1gab4d99a45db3a3284d6fcc90a12cc7354>` )
+
+- #define :ref:`SysTaskIsDeleted <group___sys_task_itf___taskstatusmacros_1ga0533ec346488dc4bbcd31fb20f001607>` (pTask->iState & :ref:`TS_DELETED <group___sys_task_itf___taskstatusdefinitions_1gab548990fceafc3ddbf1295ce88e6f753>` )
+
+- #define :ref:`SysTaskIsException <group___sys_task_itf___taskstatusmacros_1ga206a1a1e4df6f72f117c2c429c800064>` (pTask->iState & :ref:`TS_EXCEPTION <group___sys_task_itf___taskstatusdefinitions_1gae7d768b8f9d1e1a8cbe0cb4429794590>` )
+
+- #define :ref:`SysTaskSetValid <group___sys_task_itf___taskstatusmacros_1gab6e63d5616ab20ce81b0e7b12124e04e>` {\
+if ( :ref:`CHK_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga8a14cc997e802c59386d81ba28bc2e16>` )\
+:ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_VALID <group___sys_task_itf___taskstatusbits_1ga3d81040cebe36bd673d3cbf00b0cf2dd>` , 1);\
+else\
+pTask->iState |= :ref:`TS_VALID <group___sys_task_itf___taskstatusdefinitions_1gac62ff3b243c6d68231568d5be1412465>` ;\
+}
+
+- #define :ref:`SysTaskSetInvalid <group___sys_task_itf___taskstatusmacros_1ga78b81c57203b340301e213c64115b188>` {\
+if ( :ref:`CHK_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga8a14cc997e802c59386d81ba28bc2e16>` )\
+:ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_VALID <group___sys_task_itf___taskstatusbits_1ga3d81040cebe36bd673d3cbf00b0cf2dd>` , 0);\
+else\
+pTask->iState &= ~ :ref:`TS_VALID <group___sys_task_itf___taskstatusdefinitions_1gac62ff3b243c6d68231568d5be1412465>` ;\
+}
+
+- #define :ref:`SysTaskSetActive <group___sys_task_itf___taskstatusmacros_1gac458c30452e6c6bc16766891c345bd8f>` {\
+if ( :ref:`CHK_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga8a14cc997e802c59386d81ba28bc2e16>` )\
+:ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_ACTIVE <group___sys_task_itf___taskstatusbits_1ga263cd7a4d97d1ef2cbbf6f3495b48d48>` , 1);\
+else\
+pTask->iState |= :ref:`TS_ACTIVE <group___sys_task_itf___taskstatusdefinitions_1ga45704fe8a7f8761020ef98a33f300351>` ;\
+}
+
+- #define :ref:`SysTaskSetInactive <group___sys_task_itf___taskstatusmacros_1ga821289a9adce8d02ea2143eaa8a645ea>` {\
+if ( :ref:`CHK_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga8a14cc997e802c59386d81ba28bc2e16>` )\
+:ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_ACTIVE <group___sys_task_itf___taskstatusbits_1ga263cd7a4d97d1ef2cbbf6f3495b48d48>` , 0);\
+else\
+pTask->iState &= ~ :ref:`TS_ACTIVE <group___sys_task_itf___taskstatusdefinitions_1ga45704fe8a7f8761020ef98a33f300351>` ;\
+}
+
+- #define :ref:`SysTaskSetSuspended <group___sys_task_itf___taskstatusmacros_1ga0a488b52118b93a4e0632b410f178d3d>` {\
+if ( :ref:`CHK_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga8a14cc997e802c59386d81ba28bc2e16>` )\
+:ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_SUSPENDED_ <group___sys_task_itf___taskstatusbits_1gac496e70eb052547fadcd1e2c003e5db3>` , 1);\
+else\
+pTask->iState |= :ref:`TS_SUSPENDED <group___sys_task_itf___taskstatusdefinitions_1gab4d99a45db3a3284d6fcc90a12cc7354>` ;\
+}
+
+- #define :ref:`SysTaskSetResumed <group___sys_task_itf___taskstatusmacros_1ga69a874faecf00fa0cf0e48d6994f21b6>` {\
+if ( :ref:`CHK_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga8a14cc997e802c59386d81ba28bc2e16>` )\
+:ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_SUSPENDED_ <group___sys_task_itf___taskstatusbits_1gac496e70eb052547fadcd1e2c003e5db3>` , 0);\
+else\
+pTask->iState &= ~ :ref:`TS_SUSPENDED <group___sys_task_itf___taskstatusdefinitions_1gab4d99a45db3a3284d6fcc90a12cc7354>` ;\
+}
+
+- #define :ref:`SysTaskSetDeleted <group___sys_task_itf___taskstatusmacros_1gaaa04a8b554d5fcb1438ac2eef71f8f3d>` {\
+if ( :ref:`CHK_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga8a14cc997e802c59386d81ba28bc2e16>` )\
+:ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_DELETED <group___sys_task_itf___taskstatusbits_1ga9aa3bae7a10716b895e8e7d3887c819f>` , 1);\
+else\
+pTask->iState |= :ref:`TS_DELETED <group___sys_task_itf___taskstatusdefinitions_1gab548990fceafc3ddbf1295ce88e6f753>` ;\
+}
+
+- #define :ref:`SysTaskSetException <group___sys_task_itf___taskstatusmacros_1ga3288fef0b4f8d95ffd47c6ea37188edd>` {\
+if ( :ref:`CHK_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga8a14cc997e802c59386d81ba28bc2e16>` )\
+:ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_EXCEPTION <group___sys_task_itf___taskstatusbits_1ga31b3a71d927b6335038f2c1aaacabb67>` , 1);\
+else\
+pTask->iState |= :ref:`TS_EXCEPTION <group___sys_task_itf___taskstatusdefinitions_1gae7d768b8f9d1e1a8cbe0cb4429794590>` ;\
+}
+
+- #define :ref:`SysTaskResetException <group___sys_task_itf___taskstatusmacros_1ga6cad0be62d1dbef8dfe185c36bd675d0>` {\
+if ( :ref:`CHK_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga8a14cc997e802c59386d81ba28bc2e16>` )\
+:ref:`CAL_SysCpuTestAndSetBit <group___sys_cpu_handling_itf_1ga0989435ed0355d58e885717db5d57a47>` (&pTask->iState, sizeof(pTask->iState), :ref:`TF_EXCEPTION <group___sys_task_itf___taskstatusbits_1ga31b3a71d927b6335038f2c1aaacabb67>` , 0);\
+else\
+pTask->iState &= ~ :ref:`TS_EXCEPTION <group___sys_task_itf___taskstatusdefinitions_1gae7d768b8f9d1e1a8cbe0cb4429794590>` ;\
+}
+
+- #define :ref:`TASKPRIO_RANGE <group___sys_task_itf___priorityranges_1ga908b6d0f29094f261632a057a778ef54>` 255
+
+- #define :ref:`TASKPRIO_SEGMENT <group___sys_task_itf___priorityranges_1ga49801bc96fe4e3415da88060a2145b42>` 32
+
+- #define :ref:`TASKPRIO_MAX <group___sys_task_itf___priorityranges_1ga23bbc69c7e5546dba7cb1725987d7378>` 0
+
+- #define :ref:`TASKPRIO_SYSTEM_BASE <group___sys_task_itf___priorityranges_1ga4b8c31dd85469ce66ed547ac0d79b05a>` 0
+
+- #define :ref:`TASKPRIO_SYSTEM_END <group___sys_task_itf___priorityranges_1ga1d8fe46e7ccd9464317a853a7955d95a>` 31
+
+- #define :ref:`TASKPRIO_REALTIME_BASE <group___sys_task_itf___priorityranges_1ga7b25f02b48aeef6d28b42bae29fe9632>` 32
+
+- #define :ref:`TASKPRIO_REALTIME_END <group___sys_task_itf___priorityranges_1ga41a92199c9b1b6fea84496f5cba70d9f>` 63
+
+- #define :ref:`TASKPRIO_HIGH_BASE <group___sys_task_itf___priorityranges_1gaaebec44d4389b527765791eebe222ecd>` 64
+
+- #define :ref:`TASKPRIO_HIGH_END <group___sys_task_itf___priorityranges_1ga01b6b431ab419f95eb0e3faf86ba88d5>` 95
+
+- #define :ref:`TASKPRIO_ABOVENORMAL_BASE <group___sys_task_itf___priorityranges_1ga8ec67f7115d1ad63bce939c679c1a3be>` 96
+
+- #define :ref:`TASKPRIO_ABOVENORMAL_END <group___sys_task_itf___priorityranges_1gaec971691601ad4a9ad387cb40521b4c6>` 127
+
+- #define :ref:`TASKPRIO_NORMAL_BASE <group___sys_task_itf___priorityranges_1gad3309945e422903c3631bd3703d99b13>` 128
+
+- #define :ref:`TASKPRIO_NORMAL_END <group___sys_task_itf___priorityranges_1gac444e7afb72999635bd2118c37e1ba96>` 159
+
+- #define :ref:`TASKPRIO_BELOWNORMAL_BASE <group___sys_task_itf___priorityranges_1gab32b3c86ea758c31840449d847f1ba43>` 160
+
+- #define :ref:`TASKPRIO_BELOWNORMAL_END <group___sys_task_itf___priorityranges_1ga2532d4c49303609310cd4b0a274efc7e>` 191
+
+- #define :ref:`TASKPRIO_LOW_BASE <group___sys_task_itf___priorityranges_1ga3c2d117cd52c91df5df1632cac005664>` 192
+
+- #define :ref:`TASKPRIO_LOW_END <group___sys_task_itf___priorityranges_1gad296f30e4104b82c832fe933fc8ffd69>` 223
+
+- #define :ref:`TASKPRIO_LOWEST_BASE <group___sys_task_itf___priorityranges_1ga7135ecd099ebb786a2e704943ced77e5>` 224
+
+- #define :ref:`TASKPRIO_LOWEST_END <group___sys_task_itf___priorityranges_1gac9136e4f8a47da26c8a36748158168e4>` 255
+
+- #define :ref:`TASKPRIO_IDLE <group___sys_task_itf___priorityranges_1ga3b4df50386a0218e7f2a6d9bb24700c2>` 255
+
+- #define :ref:`TASKPRIO_MIN <group___sys_task_itf___priorityranges_1ga04512027f6cbebdb7599b585e4286ce7>` 255
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_SYSTEM_BASE <group___sys_task_itf___priorityranges_1ga9ee9aceabddb67a6b5c3cf88ba9e6f74>` "OSPriority.System.Base"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_SYSTEM_BASE_DEFAULT <group___sys_task_itf___priorityranges_1gaf3b4bef0adb27279bd0474f2ab48874f>` :ref:`TASKPRIO_SYSTEM_BASE <group___sys_task_itf___priorityranges_1ga4b8c31dd85469ce66ed547ac0d79b05a>`
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_SYSTEM_END <group___sys_task_itf___priorityranges_1ga93b8e60a6212cc9b55767097b480bc27>` "OSPriority.System.End"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_SYSTEM_END_DEFAULT <group___sys_task_itf___priorityranges_1gaa62b1e6ef93c0e5e87db45140d760b43>` :ref:`TASKPRIO_SYSTEM_END <group___sys_task_itf___priorityranges_1ga1d8fe46e7ccd9464317a853a7955d95a>`
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_REALTIME_BASE <group___sys_task_itf___priorityranges_1ga35697f13c10a15b9b2ebf6f67bb9df45>` "OSPriority.Realtime.Base"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_REALTIME_BASE_DEFAULT <group___sys_task_itf___priorityranges_1ga4395d85a586b6acb4cb3dccad8fdee68>` :ref:`TASKPRIO_REALTIME_BASE <group___sys_task_itf___priorityranges_1ga7b25f02b48aeef6d28b42bae29fe9632>`
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_REALTIME_END <group___sys_task_itf___priorityranges_1ga2c9cd89ad2b122a0342b09093c4c7010>` "OSPriority.Realtime.End"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_REALTIME_END_DEFAULT <group___sys_task_itf___priorityranges_1gab3452287e9e20cf2187f533d20e16ff4>` :ref:`TASKPRIO_REALTIME_END <group___sys_task_itf___priorityranges_1ga41a92199c9b1b6fea84496f5cba70d9f>`
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_HIGH_BASE <group___sys_task_itf___priorityranges_1ga0d14a766826b5e75207a0c182ff7fdd7>` "OSPriority.High.Base"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_HIGH_BASE_DEFAULT <group___sys_task_itf___priorityranges_1ga595bdd41827797afab299e63d71c196a>` :ref:`TASKPRIO_HIGH_BASE <group___sys_task_itf___priorityranges_1gaaebec44d4389b527765791eebe222ecd>`
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_HIGH_END <group___sys_task_itf___priorityranges_1gaff3a337a5a26df27c30b0f22c0eb8140>` "OSPriority.High.End"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_HIGH_END_DEFAULT <group___sys_task_itf___priorityranges_1ga2350a217e6088d4c180a95f1d7549d8f>` :ref:`TASKPRIO_HIGH_END <group___sys_task_itf___priorityranges_1ga01b6b431ab419f95eb0e3faf86ba88d5>`
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_ABOVENORMAL_BASE <group___sys_task_itf___priorityranges_1ga6a05a56a81d3f4991684505638e6b9ff>` "OSPriority.AboveNormal.Base"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_ABOVENORMAL_BASE_DEFAULT <group___sys_task_itf___priorityranges_1ga1ff629c50fe85a3ffe3192ae6953f5ce>` :ref:`TASKPRIO_ABOVENORMAL_BASE <group___sys_task_itf___priorityranges_1ga8ec67f7115d1ad63bce939c679c1a3be>`
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_ABOVENORMAL_END <group___sys_task_itf___priorityranges_1ga973fdf9c196d927c2215c585f242a58d>` "OSPriority.AboveNormal.End"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_ABOVENORMAL_END_DEFAULT <group___sys_task_itf___priorityranges_1ga7053596b0c934b8b6f8bde0bf00f71c6>` :ref:`TASKPRIO_ABOVENORMAL_END <group___sys_task_itf___priorityranges_1gaec971691601ad4a9ad387cb40521b4c6>`
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_NORMAL_BASE <group___sys_task_itf___priorityranges_1ga0a52a07f9ef6ca4f14d86fc0dac32123>` "OSPriority.Normal.Base"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_NORMAL_BASE_DEFAULT <group___sys_task_itf___priorityranges_1gaad822e97a60252350c51a9f116855aaa>` :ref:`TASKPRIO_NORMAL_BASE <group___sys_task_itf___priorityranges_1gad3309945e422903c3631bd3703d99b13>`
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_NORMAL_END <group___sys_task_itf___priorityranges_1gad844696b9a92d8b72bc3324764a8a5cf>` "OSPriority.Normal.End"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_NORMAL_END_DEFAULT <group___sys_task_itf___priorityranges_1ga190e9fc6cf588144dda7dac95d8ad5d7>` :ref:`TASKPRIO_NORMAL_END <group___sys_task_itf___priorityranges_1gac444e7afb72999635bd2118c37e1ba96>`
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_BELOWNORMAL_BASE <group___sys_task_itf___priorityranges_1gacb4b5737bf17f9a7fd4cd05ee8083e8e>` "OSPriority.BelowNormal.Base"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_BELOWNORMAL_BASE_DEFAULT <group___sys_task_itf___priorityranges_1gae95a00fe3ea132b01b2875d1299d3ce9>` :ref:`TASKPRIO_BELOWNORMAL_BASE <group___sys_task_itf___priorityranges_1gab32b3c86ea758c31840449d847f1ba43>`
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_BELOWNORMAL_END <group___sys_task_itf___priorityranges_1ga5df9aa35529f63ea26d10c7558beff55>` "OSPriority.BelowNormal.End"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_BELOWNORMAL_END_DEFAULT <group___sys_task_itf___priorityranges_1gac731cfddd80cacd4b07f2eece3af6e9a>` :ref:`TASKPRIO_BELOWNORMAL_END <group___sys_task_itf___priorityranges_1ga2532d4c49303609310cd4b0a274efc7e>`
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_LOW_BASE <group___sys_task_itf___priorityranges_1ga3348615c10e93ce0e38d9168d0c4243a>` "OSPriority.Low.Base"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_LOW_BASE_DEFAULT <group___sys_task_itf___priorityranges_1gaf66cd9fe06f8b2d6174cfe075d6f831d>` :ref:`TASKPRIO_LOW_BASE <group___sys_task_itf___priorityranges_1ga3c2d117cd52c91df5df1632cac005664>`
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_LOW_END <group___sys_task_itf___priorityranges_1ga41d4a6ac622919cd25f39136d64c3040>` "OSPriority.Low.End"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_LOW_END_DEFAULT <group___sys_task_itf___priorityranges_1gaa48d5a5fbed841bf3c533b6092be7f68>` :ref:`TASKPRIO_LOW_END <group___sys_task_itf___priorityranges_1gad296f30e4104b82c832fe933fc8ffd69>`
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_LOWEST_BASE <group___sys_task_itf___priorityranges_1gaf54530c25071fd6a84142215724768cf>` "OSPriority.Lowest.Base"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_LOWEST_BASE_DEFAULT <group___sys_task_itf___priorityranges_1ga3d99d1cc101003b180dc7a70126e08d8>` :ref:`TASKPRIO_LOWEST_BASE <group___sys_task_itf___priorityranges_1ga7135ecd099ebb786a2e704943ced77e5>`
+
+- #define :ref:`SYSTASKKEY_INT_PRIORITY_LOWEST_END <group___sys_task_itf___priorityranges_1ga56a32d3b50d9388051fca7b81a07579f>` "OSPriority.Lowest.End"
+
+- #define :ref:`SYSTASKVALUE_INT_PRIORITY_LOWEST_END_DEFAULT <group___sys_task_itf___priorityranges_1ga053a89055fb008c85f3e72d783b65a12>` :ref:`TASKPRIO_LOWEST_END <group___sys_task_itf___priorityranges_1gac9136e4f8a47da26c8a36748158168e4>`
+
+- #define :ref:`SYSTASKKEY_INT_VXWORKS_CPU <group___sys_task_itf___priorityranges_1ga24e0d05fd25922e064608eac511b335d>` "VxWorks.CPU"
+
+- #define :ref:`SYSTASKVALUE_INT_VXWORKS_CPU_DEFAULT <group___sys_task_itf___priorityranges_1ga9f2519017ad93d6d74b7fc369a9a9aea>` 0
+
+- #define :ref:`SYSTASKKEY_INT_WIN32_DEBUG_DISABLE_EXCEPTIONHANDLER <group___sys_task_itf___settings_1ga54df903725c826995193effef2153a7a>` "Win32.DebuggingOnlyDisableExceptionHandler"
+
+- #define :ref:`SYSTASKKEY_INT_WIN32_DEBUG_DISABLE_EXCEPTIONHANDLER_DEFAULT <group___sys_task_itf___settings_1ga161d48a28463073155e4e89cf9ed5950>` 0
+
+- #define :ref:`SYSTASKKEY_INT_TASK_STACKSIZE <group___sys_task_itf___settings_1gaf3f4e9b276bf8dc6a13d0027f505911c>` "StackSize"
+
+- #define :ref:`SYSTASKVALUE_INT_TASK_STACKSIZE_DEFAULT <group___sys_task_itf___settings_1gac04ba49cdc3616978984f3c712eae00c>` 0
+
+- #define :ref:`SYSTASKKEY_INT_QNX_CLOCKPERIOD <group___sys_task_itf___settings_1ga9de461b46c688bb97a9099cc7ca2c028>` "QNX.ClockPeriod"
+
+- #define :ref:`SYSTASKVALUE_INT_QNX_CLOCKPERIOD_DEFAULT <group___sys_task_itf___settings_1gab881e98c3a30804d8f671b3103bb5160>` 0
+
+- #define :ref:`SYSTASKKEY_INT_QNX_DISABLETICKBASEDSCHEDULER <group___sys_task_itf___settings_1ga4b87d91db874b68d843038c142c39d39>` "QNX.DisableTickBasedScheduler"
+
+- #define :ref:`SYSTASKVALUE_INT_QNX_DISABLETICKBASEDSCHEDULER_DEFAULT <group___sys_task_itf___settings_1ga8398031777442a03f6a826a113246c79>` 0
+
+- #define :ref:`SYSTASKKEY_INT_LINUX_SKIPLOSTCYCLES <group___sys_task_itf___settings_1ga5b95647504c4dcd60755b3a6e189aecb>` "Linux.SkipLostCycles"
+
+- #define :ref:`SYSTASKVALUE_INT_LINUX_SKIPLOSTCYCLES_DEFAULT <group___sys_task_itf___settings_1gae0c1c990ca53529429d01564f48156fc>` 0
+
+- #define :ref:`PFTASKEXCEPTIONHANDLER <group___sys_task_itf___settings_1ga292ffd009d5a17d2499c8a6e2b14669b>` :ref:`PFSYS_TASK_EXCEPTIONHANDLER <group___sys_task_itf___settings_1gaa84d1f5aa1af833b600b448c3f41031e>`
+
+- #define :ref:`EVTPARAMID_SysTask <group___sys_task_itf___eventparameter_1gac3803b0c8a73c3127cfe940ebe7f0ed6>` 0x0001
+
+- #define :ref:`EVTVERSION_SysTask <group___sys_task_itf___eventparameter_1ga1181bbd69c7bb163e38906e625484269>` 0x0001
+
+- #define :ref:`EVTPARAMID_SysTask_GetPriority <group___sys_task_itf___eventparameter_1ga9fcb886eb072392f2431f8c80616bd01>` 0x0002
+
+- #define :ref:`EVTVERSION_SysTask_GetPriority <group___sys_task_itf___eventparameter_1ga61f6e11427e2147bc4662f6d54e63cbc>` 0x0001
+
+- #define :ref:`EVT_TaskCreate <group___sys_task_itf___events_1ga36e6cc7cabd3b8e9fa5ae0dbf5396f31>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`EVT_TaskDelete <group___sys_task_itf___events_1gad539c0604bb06261edd2d4c3a9ed0265>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+
+- #define :ref:`EVT_TaskSetInterval <group___sys_task_itf___events_1gad060d3202832a926be11870d2e81a06d>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 3)
+
+- #define :ref:`EVTPARAMID_SysTaskSetInterval <group___sys_task_itf___events_1gae0f77ac12ad86fda3d3fc8dc13b2692f>` 0x0002
+
+- #define :ref:`EVTVERSION_SysTaskSetInterval <group___sys_task_itf___events_1gaeb034f08b22a16c616f1a71124a54026>` 0x0001
+
+- #define :ref:`EVT_TaskGetPriority <group___sys_task_itf___events_1ga63b7d0b58625865c88ed3786493323a1>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 4)
+
+- #define :ref:`EVT_TaskLeave <group___sys_task_itf___events_1gae8c76d5cb446f3145242557205b7f8fb>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 5)
+
+- #define :ref:`SYSTASK_FF_NONE <group___sys_task_itf___featureflags_1ga65e5a60443192fb58934cdec607ef3a7>` 0x00000000
+
+- #define :ref:`SYSTASK_FF_AUTORELEASEONEXIT <group___sys_task_itf___featureflags_1ga158ef7ecd8a4b3e7541c9546fe9b657e>` 0x00000001
+
+- #define :ref:`SYSTASK_FF_NONSYSTASK <group___sys_task_itf___featureflags_1gaefe149d5c189f09a8f285feefe135406>` 0x00000002
+
+- #define :ref:`USE_systaskautoreleaseonexit <group___sys_task_itf_1ga7e6140babf8c161c4b9da6e318ba22f4>` :ref:`PFSYSTASKAUTORELEASEONEXIT_IEC <group___sys_task_itf_1ga5cdb6c20d874dae6f9d4e1fdec4ff078>` pfsystaskautoreleaseonexit;
+
+- #define :ref:`EXT_systaskautoreleaseonexit <group___sys_task_itf_1gad94c5a4160763fddae51a43d7d2a0fd5>` extern :ref:`PFSYSTASKAUTORELEASEONEXIT_IEC <group___sys_task_itf_1ga5cdb6c20d874dae6f9d4e1fdec4ff078>` pfsystaskautoreleaseonexit;
+
+- #define :ref:`GET_systaskautoreleaseonexit <group___sys_task_itf_1gaef7db59c5a4b581458e59937d46ad1b8>` s_pfCMGetAPI2( "systaskautoreleaseonexit", (RTS_VOID_FCTPTR *)&pfsystaskautoreleaseonexit, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x3A77FA5D, 0x03050A00)
+
+- #define :ref:`CAL_systaskautoreleaseonexit <group___sys_task_itf_1gad59d11ee7fb6d0223747f95d44222e1e>` pfsystaskautoreleaseonexit
+
+- #define :ref:`CHK_systaskautoreleaseonexit <group___sys_task_itf_1gab733e6d9b459f3a06d79009d3bb8731d>` (pfsystaskautoreleaseonexit != NULL)
+
+- #define :ref:`EXP_systaskautoreleaseonexit <group___sys_task_itf_1gab19a251a463d4865ee2c410c0d33060d>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskautoreleaseonexit", (RTS_UINTPTR) :ref:`systaskautoreleaseonexit <group___sys_task_itf_1gaca997b2130e8e4fdfe66428653050d55>` , 1, 0x3A77FA5D, 0x03050A00)
+
+- #define :ref:`USE_systaskcheckstack <group___sys_task_itf_1ga9a09db6f993f113361af6f0dcd971d58>` :ref:`PFSYSTASKCHECKSTACK_IEC <group___sys_task_itf_1gac17c20503faa154e72d0ffdaee328ea7>` pfsystaskcheckstack;
+
+- #define :ref:`EXT_systaskcheckstack <group___sys_task_itf_1ga8a16f635187f234841ff6c18e7d35779>` extern :ref:`PFSYSTASKCHECKSTACK_IEC <group___sys_task_itf_1gac17c20503faa154e72d0ffdaee328ea7>` pfsystaskcheckstack;
+
+- #define :ref:`GET_systaskcheckstack <group___sys_task_itf_1ga3c91294d4db7be59212f4bcbb0bb8457>` s_pfCMGetAPI2( "systaskcheckstack", (RTS_VOID_FCTPTR *)&pfsystaskcheckstack, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xF64957C9), 0x03050A00)
+
+- #define :ref:`CAL_systaskcheckstack <group___sys_task_itf_1ga19da3814e098448653ab582be671c3b0>` pfsystaskcheckstack
+
+- #define :ref:`CHK_systaskcheckstack <group___sys_task_itf_1ga1c05659190c0ba7f30ae3f8ed8807e7d>` (pfsystaskcheckstack != NULL)
+
+- #define :ref:`EXP_systaskcheckstack <group___sys_task_itf_1ga06b6b48e11bceb17fc46817544d01b02>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskcheckstack", (RTS_UINTPTR) :ref:`systaskcheckstack <group___sys_task_itf_1ga890107f30d9d3aac251a6303d95ed5e8>` , 1, RTSITF_GET_SIGNATURE(0, 0xF64957C9), 0x03050A00)
+
+- #define :ref:`USE_systaskcreate <group___sys_task_itf_1ga4c0d25be17d6f9956984974da79e1f06>` :ref:`PFSYSTASKCREATE_IEC <group___sys_task_itf_1ga0ec0667784c29058fc357c5da6cef7af>` pfsystaskcreate;
+
+- #define :ref:`EXT_systaskcreate <group___sys_task_itf_1ga17bdf3f996c5f952962a9e26c2333ae8>` extern :ref:`PFSYSTASKCREATE_IEC <group___sys_task_itf_1ga0ec0667784c29058fc357c5da6cef7af>` pfsystaskcreate;
+
+- #define :ref:`GET_systaskcreate <group___sys_task_itf_1ga1b2350f61bfa936c87a5147af47dd316>` s_pfCMGetAPI2( "systaskcreate", (RTS_VOID_FCTPTR *)&pfsystaskcreate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x6A30BC52), 0x03050A00)
+
+- #define :ref:`CAL_systaskcreate <group___sys_task_itf_1gae45f17b122c18feb94695980653b69af>` pfsystaskcreate
+
+- #define :ref:`CHK_systaskcreate <group___sys_task_itf_1ga270eb9d3fff569faa2dd2b5580233322>` (pfsystaskcreate != NULL)
+
+- #define :ref:`EXP_systaskcreate <group___sys_task_itf_1ga1828563e43a64748d7515820ce08d53a>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskcreate", (RTS_UINTPTR) :ref:`systaskcreate <group___sys_task_itf_1gab8e9d8edcade4832169edccd360c9622>` , 1, RTSITF_GET_SIGNATURE(0, 0x6A30BC52), 0x03050A00)
+
+- #define :ref:`USE_systaskcreate2 <group___sys_task_itf_1ga248e9f87cfe42b061dcb6dfe50099d98>` :ref:`PFSYSTASKCREATE2_IEC <group___sys_task_itf_1ga2190acf0bdfbb1b58543b7e37f1c1f50>` pfsystaskcreate2;
+
+- #define :ref:`EXT_systaskcreate2 <group___sys_task_itf_1ga4ebd54dcfec469b8664a1c57b6d3b0e6>` extern :ref:`PFSYSTASKCREATE2_IEC <group___sys_task_itf_1ga2190acf0bdfbb1b58543b7e37f1c1f50>` pfsystaskcreate2;
+
+- #define :ref:`GET_systaskcreate2 <group___sys_task_itf_1gacb4465b46d44a43387b6d9e474954394>` s_pfCMGetAPI2( "systaskcreate2", (RTS_VOID_FCTPTR *)&pfsystaskcreate2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x94FB2C1D), 0x03050A00)
+
+- #define :ref:`CAL_systaskcreate2 <group___sys_task_itf_1gaca86d370a6ca45155a5773b48bae120c>` pfsystaskcreate2
+
+- #define :ref:`CHK_systaskcreate2 <group___sys_task_itf_1gac284c36b22e14b8dfab25432b180a9b5>` (pfsystaskcreate2 != NULL)
+
+- #define :ref:`EXP_systaskcreate2 <group___sys_task_itf_1ga1d82ceb24556a7786a03d661c66ddee0>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskcreate2", (RTS_UINTPTR) :ref:`systaskcreate2 <group___sys_task_itf_1gac37f6f06d87c624397a141ca7334810e>` , 1, RTSITF_GET_SIGNATURE(0, 0x94FB2C1D), 0x03050A00)
+
+- #define :ref:`USE_systaskdestroy <group___sys_task_itf_1gae9d6d8fd7bd605f10974461a267e3c46>` :ref:`PFSYSTASKDESTROY_IEC <group___sys_task_itf_1ga401fc56a2281a9c62086f344d4f28b68>` pfsystaskdestroy;
+
+- #define :ref:`EXT_systaskdestroy <group___sys_task_itf_1ga1b844fcff73c5420e75ced0512766be8>` extern :ref:`PFSYSTASKDESTROY_IEC <group___sys_task_itf_1ga401fc56a2281a9c62086f344d4f28b68>` pfsystaskdestroy;
+
+- #define :ref:`GET_systaskdestroy <group___sys_task_itf_1gae80e9d086ebc5f94bd3e13b2395ceb25>` s_pfCMGetAPI2( "systaskdestroy", (RTS_VOID_FCTPTR *)&pfsystaskdestroy, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x23988B85), 0x03050A00)
+
+- #define :ref:`CAL_systaskdestroy <group___sys_task_itf_1ga24f307fa8facc58ff49b69bd426878a5>` pfsystaskdestroy
+
+- #define :ref:`CHK_systaskdestroy <group___sys_task_itf_1ga0d2ae5829e0bf9e7fb93f2ff7b6e5a69>` (pfsystaskdestroy != NULL)
+
+- #define :ref:`EXP_systaskdestroy <group___sys_task_itf_1ga96d1044d7f7bb3e2168dafc78e35dadb>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskdestroy", (RTS_UINTPTR) :ref:`systaskdestroy <group___sys_task_itf_1ga928f9807ce4c9a670aea0d110123a72e>` , 1, RTSITF_GET_SIGNATURE(0, 0x23988B85), 0x03050A00)
+
+- #define :ref:`USE_systaskend <group___sys_task_itf_1gabbdf7526e0eab1c44af26a29d281aedb>` :ref:`PFSYSTASKEND_IEC <group___sys_task_itf_1ga628ece84d2acdb30c1b2f90088628e62>` pfsystaskend;
+
+- #define :ref:`EXT_systaskend <group___sys_task_itf_1gad543eed5b3c71a13ce01e0d69616d121>` extern :ref:`PFSYSTASKEND_IEC <group___sys_task_itf_1ga628ece84d2acdb30c1b2f90088628e62>` pfsystaskend;
+
+- #define :ref:`GET_systaskend <group___sys_task_itf_1ga859682320df8294b7fe6b18ffece4394>` s_pfCMGetAPI2( "systaskend", (RTS_VOID_FCTPTR *)&pfsystaskend, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xE402950D), 0x03050A00)
+
+- #define :ref:`CAL_systaskend <group___sys_task_itf_1gaf77881e81c63c754169de7b4838db6c0>` pfsystaskend
+
+- #define :ref:`CHK_systaskend <group___sys_task_itf_1gad973a25b8587535240ebddec10845ecf>` (pfsystaskend != NULL)
+
+- #define :ref:`EXP_systaskend <group___sys_task_itf_1ga0aec5e26e0fa31a123b9aa87a7e5f595>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskend", (RTS_UINTPTR) :ref:`systaskend <group___sys_task_itf_1ga50f6434a04ea7e567efb9f95b945e0a7>` , 1, RTSITF_GET_SIGNATURE(0, 0xE402950D), 0x03050A00)
+
+- #define :ref:`USE_systaskenter <group___sys_task_itf_1gaf71d8b477cea560eeefab61a956fda49>` :ref:`PFSYSTASKENTER_IEC <group___sys_task_itf_1gac33771e51b2d908b8a241a42c9214bb0>` pfsystaskenter;
+
+- #define :ref:`EXT_systaskenter <group___sys_task_itf_1ga5600b98563de40abf45a626ace1246c3>` extern :ref:`PFSYSTASKENTER_IEC <group___sys_task_itf_1gac33771e51b2d908b8a241a42c9214bb0>` pfsystaskenter;
+
+- #define :ref:`GET_systaskenter <group___sys_task_itf_1gadd88b89d836e59c5319a1df373197c35>` s_pfCMGetAPI2( "systaskenter", (RTS_VOID_FCTPTR *)&pfsystaskenter, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x91B321BC), 0x03050A00)
+
+- #define :ref:`CAL_systaskenter <group___sys_task_itf_1gae60ab40dff19a682b44c529735e78514>` pfsystaskenter
+
+- #define :ref:`CHK_systaskenter <group___sys_task_itf_1gaa3b3f174639f080347fa9e9a015ba77b>` (pfsystaskenter != NULL)
+
+- #define :ref:`EXP_systaskenter <group___sys_task_itf_1ga2d2c59c8f7a3b9ca4cb3b2fef02b0637>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskenter", (RTS_UINTPTR) :ref:`systaskenter <group___sys_task_itf_1ga27776fbeb4358667c94762df8a9f0f42>` , 1, RTSITF_GET_SIGNATURE(0, 0x91B321BC), 0x03050A00)
+
+- #define :ref:`USE_systaskexit <group___sys_task_itf_1ga8e85a8f26865def6463d49d0a19d6f7b>` :ref:`PFSYSTASKEXIT_IEC <group___sys_task_itf_1ga02d365552d857b3a6e525e5346ec809d>` pfsystaskexit;
+
+- #define :ref:`EXT_systaskexit <group___sys_task_itf_1ga13a00ddcd59d17ae58a1d1d1ea34820f>` extern :ref:`PFSYSTASKEXIT_IEC <group___sys_task_itf_1ga02d365552d857b3a6e525e5346ec809d>` pfsystaskexit;
+
+- #define :ref:`GET_systaskexit <group___sys_task_itf_1ga6958604e39ff621752b44508cd88d517>` s_pfCMGetAPI2( "systaskexit", (RTS_VOID_FCTPTR *)&pfsystaskexit, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x643B6FFF), 0x03050A00)
+
+- #define :ref:`CAL_systaskexit <group___sys_task_itf_1ga1cba9467a5f48425dd3b6f51147a29ea>` pfsystaskexit
+
+- #define :ref:`CHK_systaskexit <group___sys_task_itf_1ga36d68fd7bcd5dff3786a605402fbf258>` (pfsystaskexit != NULL)
+
+- #define :ref:`EXP_systaskexit <group___sys_task_itf_1ga44c00eba794a31f3da7a12f3499bc52c>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskexit", (RTS_UINTPTR) :ref:`systaskexit <group___sys_task_itf_1ga796a20b0551f659f9cae443820458541>` , 1, RTSITF_GET_SIGNATURE(0, 0x643B6FFF), 0x03050A00)
+
+- #define :ref:`USE_systaskgenerateexception <group___sys_task_itf_1ga703fae1ad57e7a8f9afdb9cfb4977a45>` :ref:`PFSYSTASKGENERATEEXCEPTION_IEC <group___sys_task_itf_1ga49dcbfc5ac5be8936098153a7d513f83>` pfsystaskgenerateexception;
+
+- #define :ref:`EXT_systaskgenerateexception <group___sys_task_itf_1ga4684d90031f2af13a73db96d0470dab6>` extern :ref:`PFSYSTASKGENERATEEXCEPTION_IEC <group___sys_task_itf_1ga49dcbfc5ac5be8936098153a7d513f83>` pfsystaskgenerateexception;
+
+- #define :ref:`GET_systaskgenerateexception <group___sys_task_itf_1ga6253a24e545016891989b5587c64fa3d>` s_pfCMGetAPI2( "systaskgenerateexception", (RTS_VOID_FCTPTR *)&pfsystaskgenerateexception, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x38E403E6), 0x03050A00)
+
+- #define :ref:`CAL_systaskgenerateexception <group___sys_task_itf_1ga7c399776db70dc70bbe4097558aa9f58>` pfsystaskgenerateexception
+
+- #define :ref:`CHK_systaskgenerateexception <group___sys_task_itf_1ga5c5c2aeee8fdd1dfaaf6be6af656734e>` (pfsystaskgenerateexception != NULL)
+
+- #define :ref:`EXP_systaskgenerateexception <group___sys_task_itf_1ga09b1bff3d6d13f754d52cf3e196154ca>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskgenerateexception", (RTS_UINTPTR) :ref:`systaskgenerateexception <group___sys_task_itf_1gae208e286cb1b41f7cdbed34ce18fc78a>` , 1, RTSITF_GET_SIGNATURE(0, 0x38E403E6), 0x03050A00)
+
+- #define :ref:`USE_systaskgetcontext <group___sys_task_itf_1gace192e4dcc3ad42a58c39b6b01054cc9>` :ref:`PFSYSTASKGETCONTEXT_IEC <group___sys_task_itf_1gac82cc07b239ccda02487925ce1fcdb8b>` pfsystaskgetcontext;
+
+- #define :ref:`EXT_systaskgetcontext <group___sys_task_itf_1ga5218fb1693fa277d05bf8be4e8c60c29>` extern :ref:`PFSYSTASKGETCONTEXT_IEC <group___sys_task_itf_1gac82cc07b239ccda02487925ce1fcdb8b>` pfsystaskgetcontext;
+
+- #define :ref:`GET_systaskgetcontext <group___sys_task_itf_1gaa6791d7b9d45b111c7953f37d49cd852>` s_pfCMGetAPI2( "systaskgetcontext", (RTS_VOID_FCTPTR *)&pfsystaskgetcontext, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x57FAA367), 0x03050A00)
+
+- #define :ref:`CAL_systaskgetcontext <group___sys_task_itf_1gaed1f5eff732d47202a8fbf90df9ce2e1>` pfsystaskgetcontext
+
+- #define :ref:`CHK_systaskgetcontext <group___sys_task_itf_1ga0e97e40642ae5841efb36237e822053a>` (pfsystaskgetcontext != NULL)
+
+- #define :ref:`EXP_systaskgetcontext <group___sys_task_itf_1ga5f516df6940598c73ecd6a413dd106fa>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskgetcontext", (RTS_UINTPTR) :ref:`systaskgetcontext <group___sys_task_itf_1gaf078730d1e896f594ed2318b8677469e>` , 1, RTSITF_GET_SIGNATURE(0, 0x57FAA367), 0x03050A00)
+
+- #define :ref:`USE_systaskgetcurrent <group___sys_task_itf_1ga64e391a85bff225c6276b7cb275f55a5>` :ref:`PFSYSTASKGETCURRENT_IEC <group___sys_task_itf_1ga8875ea598d00613ccba6370678d7c057>` pfsystaskgetcurrent;
+
+- #define :ref:`EXT_systaskgetcurrent <group___sys_task_itf_1ga581cf70e5794660035df8f2aef81a9a0>` extern :ref:`PFSYSTASKGETCURRENT_IEC <group___sys_task_itf_1ga8875ea598d00613ccba6370678d7c057>` pfsystaskgetcurrent;
+
+- #define :ref:`GET_systaskgetcurrent <group___sys_task_itf_1ga5679dd2383268bfe41956127adfabd8b>` s_pfCMGetAPI2( "systaskgetcurrent", (RTS_VOID_FCTPTR *)&pfsystaskgetcurrent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x79AE7BFF), 0x03050A00)
+
+- #define :ref:`CAL_systaskgetcurrent <group___sys_task_itf_1ga90014f9f912a183720cb174767f63915>` pfsystaskgetcurrent
+
+- #define :ref:`CHK_systaskgetcurrent <group___sys_task_itf_1ga0f124af0d21c8f1cc3adcb4b5b461201>` (pfsystaskgetcurrent != NULL)
+
+- #define :ref:`EXP_systaskgetcurrent <group___sys_task_itf_1gaf97d60427e603d21e5b7d11774984675>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskgetcurrent", (RTS_UINTPTR) :ref:`systaskgetcurrent <group___sys_task_itf_1gacb330b8e1132735446b8fa3804926005>` , 1, RTSITF_GET_SIGNATURE(0, 0x79AE7BFF), 0x03050A00)
+
+- #define :ref:`USE_systaskgetcurrentoshandle <group___sys_task_itf_1gaf0d4b1edcae1eb187811bb8e325c346d>` :ref:`PFSYSTASKGETCURRENTOSHANDLE_IEC <group___sys_task_itf_1ga32155cc3028b6aff07dc06624548545e>` pfsystaskgetcurrentoshandle;
+
+- #define :ref:`EXT_systaskgetcurrentoshandle <group___sys_task_itf_1gabacbfe301e3779c7e0f543232fc220c5>` extern :ref:`PFSYSTASKGETCURRENTOSHANDLE_IEC <group___sys_task_itf_1ga32155cc3028b6aff07dc06624548545e>` pfsystaskgetcurrentoshandle;
+
+- #define :ref:`GET_systaskgetcurrentoshandle <group___sys_task_itf_1ga163c9d7db4ce008e8ab34c57d1978b45>` s_pfCMGetAPI2( "systaskgetcurrentoshandle", (RTS_VOID_FCTPTR *)&pfsystaskgetcurrentoshandle, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x9A7C0E47), 0x03050A00)
+
+- #define :ref:`CAL_systaskgetcurrentoshandle <group___sys_task_itf_1ga3511e5bf36cbe0b88ea98e58c14f3767>` pfsystaskgetcurrentoshandle
+
+- #define :ref:`CHK_systaskgetcurrentoshandle <group___sys_task_itf_1ga3038744430838a3e3c2c5d52432e55e7>` (pfsystaskgetcurrentoshandle != NULL)
+
+- #define :ref:`EXP_systaskgetcurrentoshandle <group___sys_task_itf_1ga51ab6aaf65ad6b5664b4af0a1e7caeb4>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskgetcurrentoshandle", (RTS_UINTPTR) :ref:`systaskgetcurrentoshandle <group___sys_task_itf_1gad51a8fbe1532676b1652f0ef3af2e8c1>` , 1, RTSITF_GET_SIGNATURE(0, 0x9A7C0E47), 0x03050A00)
+
+- #define :ref:`USE_systaskgetinfo <group___sys_task_itf_1gae8d19f219d5d5a49056b500903e93966>` :ref:`PFSYSTASKGETINFO_IEC <group___sys_task_itf_1ga76a66f31e382b69bc6f13af10907b7b5>` pfsystaskgetinfo;
+
+- #define :ref:`EXT_systaskgetinfo <group___sys_task_itf_1gaba4339b499a05b5f344c89c4a225519c>` extern :ref:`PFSYSTASKGETINFO_IEC <group___sys_task_itf_1ga76a66f31e382b69bc6f13af10907b7b5>` pfsystaskgetinfo;
+
+- #define :ref:`GET_systaskgetinfo <group___sys_task_itf_1gab84cb2cacbd2192061977be2f53e71ba>` s_pfCMGetAPI2( "systaskgetinfo", (RTS_VOID_FCTPTR *)&pfsystaskgetinfo, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB44E2B3F), 0x03050A00)
+
+- #define :ref:`CAL_systaskgetinfo <group___sys_task_itf_1ga141cd396cced4204e41bdf175a993838>` pfsystaskgetinfo
+
+- #define :ref:`CHK_systaskgetinfo <group___sys_task_itf_1gaf3c47ff54defd6a0a038e2c584e2966b>` (pfsystaskgetinfo != NULL)
+
+- #define :ref:`EXP_systaskgetinfo <group___sys_task_itf_1ga11ba62a74bf5ba09bcdecb157ffedb77>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskgetinfo", (RTS_UINTPTR) :ref:`systaskgetinfo <group___sys_task_itf_1ga4c3814d9f74aa60a293a9f54e46673d6>` , 1, RTSITF_GET_SIGNATURE(0, 0xB44E2B3F), 0x03050A00)
+
+- #define :ref:`USE_systaskgetinterval <group___sys_task_itf_1ga134737c8cd1dbfc1cf067db06534bb66>` :ref:`PFSYSTASKGETINTERVAL_IEC <group___sys_task_itf_1gaffe0d3fce04f34f58dd37d60d87903d8>` pfsystaskgetinterval;
+
+- #define :ref:`EXT_systaskgetinterval <group___sys_task_itf_1gae9f329998605ccf08fa6aa69f524f28f>` extern :ref:`PFSYSTASKGETINTERVAL_IEC <group___sys_task_itf_1gaffe0d3fce04f34f58dd37d60d87903d8>` pfsystaskgetinterval;
+
+- #define :ref:`GET_systaskgetinterval <group___sys_task_itf_1gaf9329b37bdca437a7f39bb54f0f39257>` s_pfCMGetAPI2( "systaskgetinterval", (RTS_VOID_FCTPTR *)&pfsystaskgetinterval, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x4CCFF91B), 0x03050A00)
+
+- #define :ref:`CAL_systaskgetinterval <group___sys_task_itf_1ga607826570d3a987f77405003687bd528>` pfsystaskgetinterval
+
+- #define :ref:`CHK_systaskgetinterval <group___sys_task_itf_1gadfb38b868bb6e92d54b95d34d6f79f0b>` (pfsystaskgetinterval != NULL)
+
+- #define :ref:`EXP_systaskgetinterval <group___sys_task_itf_1ga09539bc9dcf86629423f4155b97b0d63>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskgetinterval", (RTS_UINTPTR) :ref:`systaskgetinterval <group___sys_task_itf_1gacbd1d4a3ac15e57160a868b0c6be3b34>` , 1, RTSITF_GET_SIGNATURE(0, 0x4CCFF91B), 0x03050A00)
+
+- #define :ref:`USE_systaskgetname <group___sys_task_itf_1ga137935ce949b8f88b1bb8fc0463de644>` :ref:`PFSYSTASKGETNAME_IEC <group___sys_task_itf_1gabd0627954077a28884fe78c656cbedd4>` pfsystaskgetname;
+
+- #define :ref:`EXT_systaskgetname <group___sys_task_itf_1gaa90e1dcd60e61e65f6687fa0b463d965>` extern :ref:`PFSYSTASKGETNAME_IEC <group___sys_task_itf_1gabd0627954077a28884fe78c656cbedd4>` pfsystaskgetname;
+
+- #define :ref:`GET_systaskgetname <group___sys_task_itf_1ga42b46d5f0bc156fe39e28fe7a29a6525>` s_pfCMGetAPI2( "systaskgetname", (RTS_VOID_FCTPTR *)&pfsystaskgetname, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xC7690C59, 0x03050A00)
+
+- #define :ref:`CAL_systaskgetname <group___sys_task_itf_1ga8be4fbb5b92ccf216eacca6a1cd1eaef>` pfsystaskgetname
+
+- #define :ref:`CHK_systaskgetname <group___sys_task_itf_1ga2ea2e8708439e187fb73a3caf0904264>` (pfsystaskgetname != NULL)
+
+- #define :ref:`EXP_systaskgetname <group___sys_task_itf_1gab7e463725ea6c934e3b3caa18a659d80>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskgetname", (RTS_UINTPTR) :ref:`systaskgetname <group___sys_task_itf_1gab6fb43257a4c35957ac016cb14ddb43d>` , 1, 0xC7690C59, 0x03050A00)
+
+- #define :ref:`USE_systaskgetoshandle <group___sys_task_itf_1gaf6f7786a9523e5d07373de0271d91bf0>` :ref:`PFSYSTASKGETOSHANDLE_IEC <group___sys_task_itf_1gaad3fe70e31dd38038309475ee59b8d41>` pfsystaskgetoshandle;
+
+- #define :ref:`EXT_systaskgetoshandle <group___sys_task_itf_1ga59d4220599ea743d18bfe7bff07eb037>` extern :ref:`PFSYSTASKGETOSHANDLE_IEC <group___sys_task_itf_1gaad3fe70e31dd38038309475ee59b8d41>` pfsystaskgetoshandle;
+
+- #define :ref:`GET_systaskgetoshandle <group___sys_task_itf_1ga74babe015d72c33fa9400d529f7989e3>` s_pfCMGetAPI2( "systaskgetoshandle", (RTS_VOID_FCTPTR *)&pfsystaskgetoshandle, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xD55E19B5), 0x03050A00)
+
+- #define :ref:`CAL_systaskgetoshandle <group___sys_task_itf_1ga07597db947ed34e67142beda8f8396b2>` pfsystaskgetoshandle
+
+- #define :ref:`CHK_systaskgetoshandle <group___sys_task_itf_1gabf0af26d1c44f20a6ce06f873b778419>` (pfsystaskgetoshandle != NULL)
+
+- #define :ref:`EXP_systaskgetoshandle <group___sys_task_itf_1ga0afb2bfb8fc466db22e2bb28e3926eba>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskgetoshandle", (RTS_UINTPTR) :ref:`systaskgetoshandle <group___sys_task_itf_1ga3ba7815c9a1ee473c87fcfff93ddfd08>` , 1, RTSITF_GET_SIGNATURE(0, 0xD55E19B5), 0x03050A00)
+
+- #define :ref:`USE_systaskgetospriority <group___sys_task_itf_1ga47e40bc9b7bb8fbc933a2a7b4edf962a>` :ref:`PFSYSTASKGETOSPRIORITY_IEC <group___sys_task_itf_1ga64d72df13c3eb9bad4c13e77e946d1a5>` pfsystaskgetospriority;
+
+- #define :ref:`EXT_systaskgetospriority <group___sys_task_itf_1ga2a451ca8dc1325e4fd9cad0265d89810>` extern :ref:`PFSYSTASKGETOSPRIORITY_IEC <group___sys_task_itf_1ga64d72df13c3eb9bad4c13e77e946d1a5>` pfsystaskgetospriority;
+
+- #define :ref:`GET_systaskgetospriority <group___sys_task_itf_1ga6e96ee3b90e39a51fc84e777eeaf36ad>` s_pfCMGetAPI2( "systaskgetospriority", (RTS_VOID_FCTPTR *)&pfsystaskgetospriority, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x21E9C566), 0x03050A00)
+
+- #define :ref:`CAL_systaskgetospriority <group___sys_task_itf_1ga6564d9293c0358d1a822628eab539995>` pfsystaskgetospriority
+
+- #define :ref:`CHK_systaskgetospriority <group___sys_task_itf_1gaf7744dd12eb3b39ea80c6bf41b61f11a>` (pfsystaskgetospriority != NULL)
+
+- #define :ref:`EXP_systaskgetospriority <group___sys_task_itf_1ga7b74601a0ee4dbbe08e7f23c7fd2f2f0>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskgetospriority", (RTS_UINTPTR) :ref:`systaskgetospriority <group___sys_task_itf_1gab2a2948d80dd8ec36db908a160f5d395>` , 1, RTSITF_GET_SIGNATURE(0, 0x21E9C566), 0x03050A00)
+
+- #define :ref:`USE_systaskgetpriority <group___sys_task_itf_1ga051cb88eff49bf349149d0f0df730d15>` :ref:`PFSYSTASKGETPRIORITY_IEC <group___sys_task_itf_1gafb823d0d9d38aaef189617bd1f8987fc>` pfsystaskgetpriority;
+
+- #define :ref:`EXT_systaskgetpriority <group___sys_task_itf_1ga9f0633bdf44601e8f863b483a50fe501>` extern :ref:`PFSYSTASKGETPRIORITY_IEC <group___sys_task_itf_1gafb823d0d9d38aaef189617bd1f8987fc>` pfsystaskgetpriority;
+
+- #define :ref:`GET_systaskgetpriority <group___sys_task_itf_1ga2d66667d2c881411a004e5a104c0faa1>` s_pfCMGetAPI2( "systaskgetpriority", (RTS_VOID_FCTPTR *)&pfsystaskgetpriority, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB576F235), 0x03050A00)
+
+- #define :ref:`CAL_systaskgetpriority <group___sys_task_itf_1ga175784689b3b2a75eae1474f5ce2a12a>` pfsystaskgetpriority
+
+- #define :ref:`CHK_systaskgetpriority <group___sys_task_itf_1gae03ba2c22a792021027d5ce9cb33aa83>` (pfsystaskgetpriority != NULL)
+
+- #define :ref:`EXP_systaskgetpriority <group___sys_task_itf_1gaf4fab586464775a764a405b87ece8725>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskgetpriority", (RTS_UINTPTR) :ref:`systaskgetpriority <group___sys_task_itf_1gaa055154a1252922110dd40168fc6e850>` , 1, RTSITF_GET_SIGNATURE(0, 0xB576F235), 0x03050A00)
+
+- #define :ref:`USE_systaskjoin <group___sys_task_itf_1ga3e4c8a446bea5e393fc106de8b7963bd>` :ref:`PFSYSTASKJOIN_IEC <group___sys_task_itf_1ga068f0b47fa0bc5ffc69b188ef2bd3745>` pfsystaskjoin;
+
+- #define :ref:`EXT_systaskjoin <group___sys_task_itf_1ga23de521617bc344e6aa249e3f2ffbcf3>` extern :ref:`PFSYSTASKJOIN_IEC <group___sys_task_itf_1ga068f0b47fa0bc5ffc69b188ef2bd3745>` pfsystaskjoin;
+
+- #define :ref:`GET_systaskjoin <group___sys_task_itf_1ga65b4c3f046e3e2a1a5d56ba7a2d6c9d5>` s_pfCMGetAPI2( "systaskjoin", (RTS_VOID_FCTPTR *)&pfsystaskjoin, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x379A5B0D), 0x03050A00)
+
+- #define :ref:`CAL_systaskjoin <group___sys_task_itf_1ga06ca952f6b26f78923e0a47855c4dfe6>` pfsystaskjoin
+
+- #define :ref:`CHK_systaskjoin <group___sys_task_itf_1ga6d16457e6f8dc6b0b9a4462b498e8155>` (pfsystaskjoin != NULL)
+
+- #define :ref:`EXP_systaskjoin <group___sys_task_itf_1ga4a6723b7cfe58a40d1ec1a745ce045fa>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskjoin", (RTS_UINTPTR) :ref:`systaskjoin <group___sys_task_itf_1ga86d27078d2ddd30ce779a026b29841fe>` , 1, RTSITF_GET_SIGNATURE(0, 0x379A5B0D), 0x03050A00)
+
+- #define :ref:`USE_systaskleave <group___sys_task_itf_1gae9f4e050f07ddde82554f12236a3edd9>` :ref:`PFSYSTASKLEAVE_IEC <group___sys_task_itf_1ga9b44ad43b9e1f082a92f9978956acf72>` pfsystaskleave;
+
+- #define :ref:`EXT_systaskleave <group___sys_task_itf_1ga472756207e17aa31c0882d51d35d5d42>` extern :ref:`PFSYSTASKLEAVE_IEC <group___sys_task_itf_1ga9b44ad43b9e1f082a92f9978956acf72>` pfsystaskleave;
+
+- #define :ref:`GET_systaskleave <group___sys_task_itf_1ga4c9bb6417d54a8015810b1a3f041c2f5>` s_pfCMGetAPI2( "systaskleave", (RTS_VOID_FCTPTR *)&pfsystaskleave, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xE095052C), 0x03050A00)
+
+- #define :ref:`CAL_systaskleave <group___sys_task_itf_1gadce7bf216737d7e31c0a32101d24bd84>` pfsystaskleave
+
+- #define :ref:`CHK_systaskleave <group___sys_task_itf_1gab2bf1b8cd1d38a867e0041f22670ae04>` (pfsystaskleave != NULL)
+
+- #define :ref:`EXP_systaskleave <group___sys_task_itf_1ga69f74f77465f246613f32bf2cb64fbfe>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskleave", (RTS_UINTPTR) :ref:`systaskleave <group___sys_task_itf_1ga459e3e1d4e4a11fe595745b6b616a316>` , 1, RTSITF_GET_SIGNATURE(0, 0xE095052C), 0x03050A00)
+
+- #define :ref:`USE_systaskresume <group___sys_task_itf_1ga09c0be08d7cd4d4dd28ca742c9403d56>` :ref:`PFSYSTASKRESUME_IEC <group___sys_task_itf_1ga713f87236e40ab8a98bea3b626a8717d>` pfsystaskresume;
+
+- #define :ref:`EXT_systaskresume <group___sys_task_itf_1ga3f59fee0aba2cf680bb555970f0dd4e4>` extern :ref:`PFSYSTASKRESUME_IEC <group___sys_task_itf_1ga713f87236e40ab8a98bea3b626a8717d>` pfsystaskresume;
+
+- #define :ref:`GET_systaskresume <group___sys_task_itf_1gaccb0645765c71ebfe7a054b7abd3ed95>` s_pfCMGetAPI2( "systaskresume", (RTS_VOID_FCTPTR *)&pfsystaskresume, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x3C4C4CF9), 0x03050A00)
+
+- #define :ref:`CAL_systaskresume <group___sys_task_itf_1ga022e621ebbe84c0f1b6c1585361110bf>` pfsystaskresume
+
+- #define :ref:`CHK_systaskresume <group___sys_task_itf_1ga27668b96494621a831f484b996ce6538>` (pfsystaskresume != NULL)
+
+- #define :ref:`EXP_systaskresume <group___sys_task_itf_1ga6b247da0ba08ee76881baa9ea1065dd5>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskresume", (RTS_UINTPTR) :ref:`systaskresume <group___sys_task_itf_1gade600f7d23deb7a50eca1a7164fde0c6>` , 1, RTSITF_GET_SIGNATURE(0, 0x3C4C4CF9), 0x03050A00)
+
+- #define :ref:`USE_systasksetexit <group___sys_task_itf_1ga4e44245de33add85b2a737a32d3658d5>` :ref:`PFSYSTASKSETEXIT_IEC <group___sys_task_itf_1gaa030b2714d963f3f1ed144c2daa68ea2>` pfsystasksetexit;
+
+- #define :ref:`EXT_systasksetexit <group___sys_task_itf_1ga90d2853142b7632b28c7bf59245bf865>` extern :ref:`PFSYSTASKSETEXIT_IEC <group___sys_task_itf_1gaa030b2714d963f3f1ed144c2daa68ea2>` pfsystasksetexit;
+
+- #define :ref:`GET_systasksetexit <group___sys_task_itf_1gaee24557ae6084cd5902ea48d3c5dcdae>` s_pfCMGetAPI2( "systasksetexit", (RTS_VOID_FCTPTR *)&pfsystasksetexit, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x137693C1), 0x03050A00)
+
+- #define :ref:`CAL_systasksetexit <group___sys_task_itf_1gadf2ccf44f73416a74ab28aeec27cecd9>` pfsystasksetexit
+
+- #define :ref:`CHK_systasksetexit <group___sys_task_itf_1gae88444f66a7bd86d55d0d7eb9844e413>` (pfsystasksetexit != NULL)
+
+- #define :ref:`EXP_systasksetexit <group___sys_task_itf_1gaaa3efba439ae87df5e7f47f21434279e>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systasksetexit", (RTS_UINTPTR) :ref:`systasksetexit <group___sys_task_itf_1ga20566a65524a3ba5b7b6653ec4b5e681>` , 1, RTSITF_GET_SIGNATURE(0, 0x137693C1), 0x03050A00)
+
+- #define :ref:`USE_systasksetinterval <group___sys_task_itf_1gaa8d859ab3ba24615d7e13b53cd14d576>` :ref:`PFSYSTASKSETINTERVAL_IEC <group___sys_task_itf_1gad8d47622e63f52eb55c816e4e13b5d75>` pfsystasksetinterval;
+
+- #define :ref:`EXT_systasksetinterval <group___sys_task_itf_1ga7001b70eda292483bb01dbf8a7942c65>` extern :ref:`PFSYSTASKSETINTERVAL_IEC <group___sys_task_itf_1gad8d47622e63f52eb55c816e4e13b5d75>` pfsystasksetinterval;
+
+- #define :ref:`GET_systasksetinterval <group___sys_task_itf_1ga60aeb2a21b484b92a2d32bbe4e07d9fb>` s_pfCMGetAPI2( "systasksetinterval", (RTS_VOID_FCTPTR *)&pfsystasksetinterval, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xB855D3DE), 0x03050A00)
+
+- #define :ref:`CAL_systasksetinterval <group___sys_task_itf_1ga6e71a56b40f0fd403d51da61204a08ad>` pfsystasksetinterval
+
+- #define :ref:`CHK_systasksetinterval <group___sys_task_itf_1ga9fca6dd367c9f6c8acaf0ca6fb25101a>` (pfsystasksetinterval != NULL)
+
+- #define :ref:`EXP_systasksetinterval <group___sys_task_itf_1ga354b5e1c75bd03d3f1a0fc3316f1a8bb>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systasksetinterval", (RTS_UINTPTR) :ref:`systasksetinterval <group___sys_task_itf_1gacec5ccaad202823b8f522940b8a421f6>` , 1, RTSITF_GET_SIGNATURE(0, 0xB855D3DE), 0x03050A00)
+
+- #define :ref:`USE_systasksetpriority <group___sys_task_itf_1ga6b1ff2f57b3f37871e7215361a26f48c>` :ref:`PFSYSTASKSETPRIORITY_IEC <group___sys_task_itf_1gab83a0f3d2055cc38777cafa91e7186e1>` pfsystasksetpriority;
+
+- #define :ref:`EXT_systasksetpriority <group___sys_task_itf_1ga26d231d4953118eaf23f1d38d9c9098f>` extern :ref:`PFSYSTASKSETPRIORITY_IEC <group___sys_task_itf_1gab83a0f3d2055cc38777cafa91e7186e1>` pfsystasksetpriority;
+
+- #define :ref:`GET_systasksetpriority <group___sys_task_itf_1gaec7c1dcc5ebe966d9b0de42b006bcf90>` s_pfCMGetAPI2( "systasksetpriority", (RTS_VOID_FCTPTR *)&pfsystasksetpriority, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x421AD898), 0x03050A00)
+
+- #define :ref:`CAL_systasksetpriority <group___sys_task_itf_1ga200f538b4fd7689ca481b68789c599da>` pfsystasksetpriority
+
+- #define :ref:`CHK_systasksetpriority <group___sys_task_itf_1ga0c8d72bc904052159931bc5b8bd57bb4>` (pfsystasksetpriority != NULL)
+
+- #define :ref:`EXP_systasksetpriority <group___sys_task_itf_1ga352d0d02cac00ab7614a22903b7c03c9>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systasksetpriority", (RTS_UINTPTR) :ref:`systasksetpriority <group___sys_task_itf_1gae267a50e88b00b86ce6eb54fac433a44>` , 1, RTSITF_GET_SIGNATURE(0, 0x421AD898), 0x03050A00)
+
+- #define :ref:`USE_systasksuspend <group___sys_task_itf_1gaf9116b2d4139c1831b22b3927947c772>` :ref:`PFSYSTASKSUSPEND_IEC <group___sys_task_itf_1gada5b101d75f68566bd65611fb4387bd0>` pfsystasksuspend;
+
+- #define :ref:`EXT_systasksuspend <group___sys_task_itf_1gac17b1a54afde9af7574515cf5fe01c6d>` extern :ref:`PFSYSTASKSUSPEND_IEC <group___sys_task_itf_1gada5b101d75f68566bd65611fb4387bd0>` pfsystasksuspend;
+
+- #define :ref:`GET_systasksuspend <group___sys_task_itf_1ga375a37cd8648cf210438f5ce555f48c4>` s_pfCMGetAPI2( "systasksuspend", (RTS_VOID_FCTPTR *)&pfsystasksuspend, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x44E9CD9B), 0x03050A00)
+
+- #define :ref:`CAL_systasksuspend <group___sys_task_itf_1ga5dbcb956f4eb85dcd4580480097f3c06>` pfsystasksuspend
+
+- #define :ref:`CHK_systasksuspend <group___sys_task_itf_1gad2c26d424b37412c0ef9e097aaa18fee>` (pfsystasksuspend != NULL)
+
+- #define :ref:`EXP_systasksuspend <group___sys_task_itf_1ga25063b7527628b64524826e43d0bd5eb>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systasksuspend", (RTS_UINTPTR) :ref:`systasksuspend <group___sys_task_itf_1ga9bad6536a599bf81c3ff563957b47836>` , 1, RTSITF_GET_SIGNATURE(0, 0x44E9CD9B), 0x03050A00)
+
+- #define :ref:`USE_systaskwaitinterval <group___sys_task_itf_1ga7fb033e22c2d33f73cf131f143f6ff95>` :ref:`PFSYSTASKWAITINTERVAL_IEC <group___sys_task_itf_1gace1d36d47278b95eb0e390aa4c5b0298>` pfsystaskwaitinterval;
+
+- #define :ref:`EXT_systaskwaitinterval <group___sys_task_itf_1ga4cc3d7cd624e756c77951402b41ccfe9>` extern :ref:`PFSYSTASKWAITINTERVAL_IEC <group___sys_task_itf_1gace1d36d47278b95eb0e390aa4c5b0298>` pfsystaskwaitinterval;
+
+- #define :ref:`GET_systaskwaitinterval <group___sys_task_itf_1ga8adfad020076494be7c7bc5a45e68792>` s_pfCMGetAPI2( "systaskwaitinterval", (RTS_VOID_FCTPTR *)&pfsystaskwaitinterval, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x4FA22EBF), 0x03050A00)
+
+- #define :ref:`CAL_systaskwaitinterval <group___sys_task_itf_1ga65320c8d495a2e92068c15aa9648ebf6>` pfsystaskwaitinterval
+
+- #define :ref:`CHK_systaskwaitinterval <group___sys_task_itf_1ga4202b50015fd032fb7a9f497fb29dce9>` (pfsystaskwaitinterval != NULL)
+
+- #define :ref:`EXP_systaskwaitinterval <group___sys_task_itf_1ga93bce307b3b7e7f582cc4e079dcacbba>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskwaitinterval", (RTS_UINTPTR) :ref:`systaskwaitinterval <group___sys_task_itf_1ga49b984e3c2983df6fd721bd9f7f3788f>` , 1, RTSITF_GET_SIGNATURE(0, 0x4FA22EBF), 0x03050A00)
+
+- #define :ref:`USE_systaskwaitsleep <group___sys_task_itf_1ga1aa5ef5d7cfbf7a49331272bd6ca164f>` :ref:`PFSYSTASKWAITSLEEP_IEC <group___sys_task_itf_1ga24caa29c5c855411612983c23f504f57>` pfsystaskwaitsleep;
+
+- #define :ref:`EXT_systaskwaitsleep <group___sys_task_itf_1ga806bfacfa4cbfe03434665cd8a6f235f>` extern :ref:`PFSYSTASKWAITSLEEP_IEC <group___sys_task_itf_1ga24caa29c5c855411612983c23f504f57>` pfsystaskwaitsleep;
+
+- #define :ref:`GET_systaskwaitsleep <group___sys_task_itf_1gac0a71da97f74cfc66ffa278a07598726>` s_pfCMGetAPI2( "systaskwaitsleep", (RTS_VOID_FCTPTR *)&pfsystaskwaitsleep, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x1A10CA63), 0x03050A00)
+
+- #define :ref:`CAL_systaskwaitsleep <group___sys_task_itf_1gadc8fa298098f7f81661287c3da306c31>` pfsystaskwaitsleep
+
+- #define :ref:`CHK_systaskwaitsleep <group___sys_task_itf_1ga5442252a6e41d1bfed064f2a631691ab>` (pfsystaskwaitsleep != NULL)
+
+- #define :ref:`EXP_systaskwaitsleep <group___sys_task_itf_1gaeced6c2b30f5c08a973f403673799fb3>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskwaitsleep", (RTS_UINTPTR) :ref:`systaskwaitsleep <group___sys_task_itf_1ga3526657dc9eb09cb1ce73377471b641d>` , 1, RTSITF_GET_SIGNATURE(0, 0x1A10CA63), 0x03050A00)
+
+- #define :ref:`USE_systaskwaitsleepus <group___sys_task_itf_1ga680013700d6fea2dc969416d90e04ae4>` :ref:`PFSYSTASKWAITSLEEPUS_IEC <group___sys_task_itf_1ga74e7b8f086650956a7a7fecbd0fd9226>` pfsystaskwaitsleepus;
+
+- #define :ref:`EXT_systaskwaitsleepus <group___sys_task_itf_1gafcf70aa3f5e4d2634e362cac9228e4d1>` extern :ref:`PFSYSTASKWAITSLEEPUS_IEC <group___sys_task_itf_1ga74e7b8f086650956a7a7fecbd0fd9226>` pfsystaskwaitsleepus;
+
+- #define :ref:`GET_systaskwaitsleepus <group___sys_task_itf_1ga3858535ef7e88e982a663c30f507561e>` s_pfCMGetAPI2( "systaskwaitsleepus", (RTS_VOID_FCTPTR *)&pfsystaskwaitsleepus, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x3D82CA22), 0x03050A00)
+
+- #define :ref:`CAL_systaskwaitsleepus <group___sys_task_itf_1ga0ed8c23cc163cd45f0a475f133bd7f21>` pfsystaskwaitsleepus
+
+- #define :ref:`CHK_systaskwaitsleepus <group___sys_task_itf_1gad7cbb87c8862cc4f753dbac319f17dda>` (pfsystaskwaitsleepus != NULL)
+
+- #define :ref:`EXP_systaskwaitsleepus <group___sys_task_itf_1gafb401834f58d556df3a033da7ee03292>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"systaskwaitsleepus", (RTS_UINTPTR) :ref:`systaskwaitsleepus <group___sys_task_itf_1gad0330474bb431bd59e59dcf505c3db18>` , 1, RTSITF_GET_SIGNATURE(0, 0x3D82CA22), 0x03050A00)
+
+- #define :ref:`USE_SysTaskGetFirst <group___sys_task_itf_1ga4289645739c7aa6ba54df5ce32e48ea6>` :ref:`PFSYSTASKGETFIRST <group___sys_task_itf_1ga73d71737b2567bedb5c99236f231d35c>` pfSysTaskGetFirst;
+
+- #define :ref:`EXT_SysTaskGetFirst <group___sys_task_itf_1ga293d0321df2eafe572594470adf27592>` extern :ref:`PFSYSTASKGETFIRST <group___sys_task_itf_1ga73d71737b2567bedb5c99236f231d35c>` pfSysTaskGetFirst;
+
+- #define :ref:`GET_SysTaskGetFirst <group___sys_task_itf_1ga342591358640834e7d78296e164c1157>` s_pfCMGetAPI2( "SysTaskGetFirst", (RTS_VOID_FCTPTR *)&pfSysTaskGetFirst, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetFirst <group___sys_task_itf_1ga2fed5644287796c2043943978afeab84>` pfSysTaskGetFirst
+
+- #define :ref:`CHK_SysTaskGetFirst <group___sys_task_itf_1ga8050deb27328d557e2da9d650eba914b>` (pfSysTaskGetFirst != NULL)
+
+- #define :ref:`EXP_SysTaskGetFirst <group___sys_task_itf_1ga2b8c0fd20bd362285b6ccc8923c33c1e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetFirst", (RTS_UINTPTR) :ref:`SysTaskGetFirst <group___sys_task_itf_1ga418d035fe70121f226e59a13443cb8a4>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGetNext <group___sys_task_itf_1ga0cc5e91a24c4c6ae897e245201201252>` :ref:`PFSYSTASKGETNEXT <group___sys_task_itf_1ga0573498fdf66ddd3253cec83805ca1dd>` pfSysTaskGetNext;
+
+- #define :ref:`EXT_SysTaskGetNext <group___sys_task_itf_1gaf67564d1fcbd4b42f4e25ef768a43b0b>` extern :ref:`PFSYSTASKGETNEXT <group___sys_task_itf_1ga0573498fdf66ddd3253cec83805ca1dd>` pfSysTaskGetNext;
+
+- #define :ref:`GET_SysTaskGetNext <group___sys_task_itf_1ga533ea04c2dfb99dd6a732d3baa1f2b48>` s_pfCMGetAPI2( "SysTaskGetNext", (RTS_VOID_FCTPTR *)&pfSysTaskGetNext, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetNext <group___sys_task_itf_1ga714b38e630a990eea3c4dd1fbe00fa3f>` pfSysTaskGetNext
+
+- #define :ref:`CHK_SysTaskGetNext <group___sys_task_itf_1ga408c9d97f1fe5504da42b04ff2e454d2>` (pfSysTaskGetNext != NULL)
+
+- #define :ref:`EXP_SysTaskGetNext <group___sys_task_itf_1ga3bcabc876182a37921523eff016a634d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetNext", (RTS_UINTPTR) :ref:`SysTaskGetNext <group___sys_task_itf_1gaf8fa41b78f7346fc7bfeeebee2a6d07f>` , 0, 0)
+
+- #define :ref:`USE_SysTaskCreate <group___sys_task_itf_1ga8ab772fceadcada552a752eadb16b798>` :ref:`PFSYSTASKCREATE <group___sys_task_itf_1gab6482b133db4c638ec4d2b10a729d523>` pfSysTaskCreate;
+
+- #define :ref:`EXT_SysTaskCreate <group___sys_task_itf_1gae22e467ede50715ee906ca2cc2fc2847>` extern :ref:`PFSYSTASKCREATE <group___sys_task_itf_1gab6482b133db4c638ec4d2b10a729d523>` pfSysTaskCreate;
+
+- #define :ref:`GET_SysTaskCreate <group___sys_task_itf_1ga82dac90b3948862109bf5cf5407f6d1e>` s_pfCMGetAPI2( "SysTaskCreate", (RTS_VOID_FCTPTR *)&pfSysTaskCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskCreate <group___sys_task_itf_1gaca8a909f1db463ee777e984b16173c15>` pfSysTaskCreate
+
+- #define :ref:`CHK_SysTaskCreate <group___sys_task_itf_1gad81610e3863e8efcf6b264c630722089>` (pfSysTaskCreate != NULL)
+
+- #define :ref:`EXP_SysTaskCreate <group___sys_task_itf_1ga63f9beb4c3a601a751b8240ef5ed6bfc>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskCreate", (RTS_UINTPTR) :ref:`SysTaskCreate <group___sys_task_itf_1ga964f49e68d21683330d1b5cb0c691386>` , 0, 0)
+
+- #define :ref:`USE_SysTaskCreate2 <group___sys_task_itf_1ga8ab78b6ac45a196dee22848d0b3c9d23>` :ref:`PFSYSTASKCREATE2 <group___sys_task_itf_1gaf6f2a0d054256114a6c11aba61a6d746>` pfSysTaskCreate2;
+
+- #define :ref:`EXT_SysTaskCreate2 <group___sys_task_itf_1gaebd1f6e8d3917907d81af7b0a5998df6>` extern :ref:`PFSYSTASKCREATE2 <group___sys_task_itf_1gaf6f2a0d054256114a6c11aba61a6d746>` pfSysTaskCreate2;
+
+- #define :ref:`GET_SysTaskCreate2 <group___sys_task_itf_1gadb93971f566fc4b23bb5d4bb11a929c4>` s_pfCMGetAPI2( "SysTaskCreate2", (RTS_VOID_FCTPTR *)&pfSysTaskCreate2, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskCreate2 <group___sys_task_itf_1ga59c851c492a477b3be46437778ffb35e>` pfSysTaskCreate2
+
+- #define :ref:`CHK_SysTaskCreate2 <group___sys_task_itf_1gadd137cddc3424a4dc823572382a2f3b1>` (pfSysTaskCreate2 != NULL)
+
+- #define :ref:`EXP_SysTaskCreate2 <group___sys_task_itf_1ga01f1bdc44b5b217d1ab622f6b6a33e49>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskCreate2", (RTS_UINTPTR) :ref:`SysTaskCreate2 <group___sys_task_itf_1ga810499522c5e9821c5790298ff52d1cb>` , 0, 0)
+
+- #define :ref:`USE_SysTaskExit <group___sys_task_itf_1ga1cd374be108023e4ad4bfd48556636e0>` :ref:`PFSYSTASKEXIT <group___sys_task_itf_1ga23bb7b9eec5f2513a8c58eb1abad884c>` pfSysTaskExit;
+
+- #define :ref:`EXT_SysTaskExit <group___sys_task_itf_1ga4eaae3630ddb1ada30fd78c85c76899b>` extern :ref:`PFSYSTASKEXIT <group___sys_task_itf_1ga23bb7b9eec5f2513a8c58eb1abad884c>` pfSysTaskExit;
+
+- #define :ref:`GET_SysTaskExit <group___sys_task_itf_1ga20c6671cc036093e60f910bc06ed6ae1>` s_pfCMGetAPI2( "SysTaskExit", (RTS_VOID_FCTPTR *)&pfSysTaskExit, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskExit <group___sys_task_itf_1gaaf7a80a69591ea86dc483371b38b7daf>` pfSysTaskExit
+
+- #define :ref:`CHK_SysTaskExit <group___sys_task_itf_1ga80430e5b341473f1c3e57563b45d9f1c>` (pfSysTaskExit != NULL)
+
+- #define :ref:`EXP_SysTaskExit <group___sys_task_itf_1ga4ce8e1d898b54bf40adbe9415ffe157c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskExit", (RTS_UINTPTR) :ref:`SysTaskExit <group___sys_task_itf_1ga2b66d971cefdb0812f714cd2447727ce>` , 0, 0)
+
+- #define :ref:`USE_SysTaskSetExit <group___sys_task_itf_1ga18467163bd67780f96d1525f4b655905>` :ref:`PFSYSTASKSETEXIT <group___sys_task_itf_1gadfddcbb6be9c42d3b2c08f4dc0f71329>` pfSysTaskSetExit;
+
+- #define :ref:`EXT_SysTaskSetExit <group___sys_task_itf_1ga3f883683b0debe7c664ea55e602bda4d>` extern :ref:`PFSYSTASKSETEXIT <group___sys_task_itf_1gadfddcbb6be9c42d3b2c08f4dc0f71329>` pfSysTaskSetExit;
+
+- #define :ref:`GET_SysTaskSetExit <group___sys_task_itf_1ga7410affd85a167819f17b7cf68bd8f7e>` s_pfCMGetAPI2( "SysTaskSetExit", (RTS_VOID_FCTPTR *)&pfSysTaskSetExit, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskSetExit <group___sys_task_itf_1ga2c1a9eba8a2cb30ad69bd2b353bad93b>` pfSysTaskSetExit
+
+- #define :ref:`CHK_SysTaskSetExit <group___sys_task_itf_1gac6721ab56294b239bf8d32cf4c880cd7>` (pfSysTaskSetExit != NULL)
+
+- #define :ref:`EXP_SysTaskSetExit <group___sys_task_itf_1ga4a5e8d6f74f7087e74088862379ec523>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskSetExit", (RTS_UINTPTR) :ref:`SysTaskSetExit <group___sys_task_itf_1gaec87aea210bbfb32385673ce54827095>` , 0, 0)
+
+- #define :ref:`USE_SysTaskAutoReleaseOnExit <group___sys_task_itf_1gad5df6650fc52f16919aa8fb8b1f3e5b1>` :ref:`PFSYSTASKAUTORELEASEONEXIT <group___sys_task_itf_1ga3eb02cd5373c1ac1f0a0cfcfd785ae23>` pfSysTaskAutoReleaseOnExit;
+
+- #define :ref:`EXT_SysTaskAutoReleaseOnExit <group___sys_task_itf_1ga3944d1b22f565b4fb2d7f2078edebaf8>` extern :ref:`PFSYSTASKAUTORELEASEONEXIT <group___sys_task_itf_1ga3eb02cd5373c1ac1f0a0cfcfd785ae23>` pfSysTaskAutoReleaseOnExit;
+
+- #define :ref:`GET_SysTaskAutoReleaseOnExit <group___sys_task_itf_1ga6fdec58f394e54c31a01957cd66b67cd>` s_pfCMGetAPI2( "SysTaskAutoReleaseOnExit", (RTS_VOID_FCTPTR *)&pfSysTaskAutoReleaseOnExit, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskAutoReleaseOnExit <group___sys_task_itf_1ga5963efb45371858c1b4cc0a4f40d6c4d>` pfSysTaskAutoReleaseOnExit
+
+- #define :ref:`CHK_SysTaskAutoReleaseOnExit <group___sys_task_itf_1ga5977c538e13bebfbc37733a9772dca8c>` (pfSysTaskAutoReleaseOnExit != NULL)
+
+- #define :ref:`EXP_SysTaskAutoReleaseOnExit <group___sys_task_itf_1gab5d495077a3cec0db0108cd9be21ee5b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskAutoReleaseOnExit", (RTS_UINTPTR) :ref:`SysTaskAutoReleaseOnExit <group___sys_task_itf_1ga1ac643f351df0d476ad7d62d241855be>` , 0, 0)
+
+- #define :ref:`USE_SysTaskDestroy <group___sys_task_itf_1ga1456330e28f3f56f2fa8c66928b2e83b>` :ref:`PFSYSTASKDESTROY <group___sys_task_itf_1ga06d444ea812242e85fbcae6541f7f1c4>` pfSysTaskDestroy;
+
+- #define :ref:`EXT_SysTaskDestroy <group___sys_task_itf_1gaeed0d59cae8b88ce40d640d58595dea6>` extern :ref:`PFSYSTASKDESTROY <group___sys_task_itf_1ga06d444ea812242e85fbcae6541f7f1c4>` pfSysTaskDestroy;
+
+- #define :ref:`GET_SysTaskDestroy <group___sys_task_itf_1ga88d6a74eb90be1a8d2bb31931d20ca0b>` s_pfCMGetAPI2( "SysTaskDestroy", (RTS_VOID_FCTPTR *)&pfSysTaskDestroy, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskDestroy <group___sys_task_itf_1ga3b3a67fe11630612186eed0f96cbef55>` pfSysTaskDestroy
+
+- #define :ref:`CHK_SysTaskDestroy <group___sys_task_itf_1ga4dac42c714999a3d5586033e80cfc17e>` (pfSysTaskDestroy != NULL)
+
+- #define :ref:`EXP_SysTaskDestroy <group___sys_task_itf_1gae0e568fd1587facda260c911cace40ac>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskDestroy", (RTS_UINTPTR) :ref:`SysTaskDestroy <group___sys_task_itf_1ga2a983a3672fa81e2d097dea9c96af481>` , 0, 0)
+
+- #define :ref:`USE_SysTaskSuspend <group___sys_task_itf_1ga6baea6112a6b566333fa2f2fb1368ff9>` :ref:`PFSYSTASKSUSPEND <group___sys_task_itf_1ga9c28c2897978cb2bd66e5ac073e94058>` pfSysTaskSuspend;
+
+- #define :ref:`EXT_SysTaskSuspend <group___sys_task_itf_1ga3d259f824cbdf54e5614802c3a2ebbd0>` extern :ref:`PFSYSTASKSUSPEND <group___sys_task_itf_1ga9c28c2897978cb2bd66e5ac073e94058>` pfSysTaskSuspend;
+
+- #define :ref:`GET_SysTaskSuspend <group___sys_task_itf_1ga28ec7562b7e847777acba44fb324b0ef>` s_pfCMGetAPI2( "SysTaskSuspend", (RTS_VOID_FCTPTR *)&pfSysTaskSuspend, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskSuspend <group___sys_task_itf_1ga2f5099287a913bc8543e6e24fec4f008>` pfSysTaskSuspend
+
+- #define :ref:`CHK_SysTaskSuspend <group___sys_task_itf_1ga0bfa915181efc6fb463f56523637cebe>` (pfSysTaskSuspend != NULL)
+
+- #define :ref:`EXP_SysTaskSuspend <group___sys_task_itf_1gac50095445a9b6f6b9af83a9b41710ad0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskSuspend", (RTS_UINTPTR) :ref:`SysTaskSuspend <group___sys_task_itf_1ga62fd1dea620df347eab787499ff449eb>` , 0, 0)
+
+- #define :ref:`USE_SysTaskResume <group___sys_task_itf_1ga7bc714623f8ea2301b3c8788cdc38ea7>` :ref:`PFSYSTASKRESUME <group___sys_task_itf_1gac58028893d9fefa6c8e6cf3ba75c16b6>` pfSysTaskResume;
+
+- #define :ref:`EXT_SysTaskResume <group___sys_task_itf_1ga15755d55cc741ac7e5b5c801596e57a0>` extern :ref:`PFSYSTASKRESUME <group___sys_task_itf_1gac58028893d9fefa6c8e6cf3ba75c16b6>` pfSysTaskResume;
+
+- #define :ref:`GET_SysTaskResume <group___sys_task_itf_1ga35e9a19f03b1d67fc21122df0d2576a2>` s_pfCMGetAPI2( "SysTaskResume", (RTS_VOID_FCTPTR *)&pfSysTaskResume, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskResume <group___sys_task_itf_1ga23025b6eee8c8861bd6300cc167736ae>` pfSysTaskResume
+
+- #define :ref:`CHK_SysTaskResume <group___sys_task_itf_1gadd1cc211a79dc7e084636f307a9b9563>` (pfSysTaskResume != NULL)
+
+- #define :ref:`EXP_SysTaskResume <group___sys_task_itf_1ga588068a51897604401daaab5a847685a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskResume", (RTS_UINTPTR) :ref:`SysTaskResume <group___sys_task_itf_1gaaeb03111bb86bf6c1bff05bf7ca33068>` , 0, 0)
+
+- #define :ref:`USE_SysTaskEnd <group___sys_task_itf_1gadd80b4df19b23f8f5dcdaf7aab375fce>` :ref:`PFSYSTASKEND <group___sys_task_itf_1ga6871a910b3eed42b997e33bce97d09a2>` pfSysTaskEnd;
+
+- #define :ref:`EXT_SysTaskEnd <group___sys_task_itf_1gafeba32276d804d5647d31d82ca8fa195>` extern :ref:`PFSYSTASKEND <group___sys_task_itf_1ga6871a910b3eed42b997e33bce97d09a2>` pfSysTaskEnd;
+
+- #define :ref:`GET_SysTaskEnd <group___sys_task_itf_1ga568ff2b899ba8acbf55d02010e38d086>` s_pfCMGetAPI2( "SysTaskEnd", (RTS_VOID_FCTPTR *)&pfSysTaskEnd, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskEnd <group___sys_task_itf_1ga953117b11a38b6d4a810d40cf871dc3f>` pfSysTaskEnd
+
+- #define :ref:`CHK_SysTaskEnd <group___sys_task_itf_1ga67c5a9836e631ca266d56dc6a903c80d>` (pfSysTaskEnd != NULL)
+
+- #define :ref:`EXP_SysTaskEnd <group___sys_task_itf_1ga1c81a9d92e0ff6fc06f9d77c306b789d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskEnd", (RTS_UINTPTR) :ref:`SysTaskEnd <group___sys_task_itf_1ga6f6681092071f09c3de15110ffdb7ec1>` , 0, 0)
+
+- #define :ref:`USE_SysTaskWaitSleep <group___sys_task_itf_1gad3052bc1960547ba825c35df869ab8c0>` :ref:`PFSYSTASKWAITSLEEP <group___sys_task_itf_1ga3527057a1da36a828c9324e52e3b5707>` pfSysTaskWaitSleep;
+
+- #define :ref:`EXT_SysTaskWaitSleep <group___sys_task_itf_1ga637012b2a560f865636dd997493da3c5>` extern :ref:`PFSYSTASKWAITSLEEP <group___sys_task_itf_1ga3527057a1da36a828c9324e52e3b5707>` pfSysTaskWaitSleep;
+
+- #define :ref:`GET_SysTaskWaitSleep <group___sys_task_itf_1ga31ff0328eea78762509bcda92c31b4ad>` s_pfCMGetAPI2( "SysTaskWaitSleep", (RTS_VOID_FCTPTR *)&pfSysTaskWaitSleep, (fl), 0,0)
+
+- #define :ref:`CAL_SysTaskWaitSleep <group___sys_task_itf_1ga6a2f191e3b3111936b7ddc7068f79a58>` pfSysTaskWaitSleep
+
+- #define :ref:`CHK_SysTaskWaitSleep <group___sys_task_itf_1ga3216bb1237b823727e2df25fc467d39c>` (pfSysTaskWaitSleep != NULL)
+
+- #define :ref:`EXP_SysTaskWaitSleep <group___sys_task_itf_1gad6294da23c341a45fd1cf81acfcaae83>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskWaitSleep", (RTS_UINTPTR) :ref:`SysTaskWaitSleep <group___sys_task_itf_1ga2f3635e86d116bb6252ee60f0b83d301>` , 0, 0)
+
+- #define :ref:`USE_SysTaskWaitSleepUs <group___sys_task_itf_1ga4a0caedc74996421839a5bb35789c6ee>` :ref:`PFSYSTASKWAITSLEEPUS <group___sys_task_itf_1ga038386d42826ff225a37ce757297cfbe>` pfSysTaskWaitSleepUs;
+
+- #define :ref:`EXT_SysTaskWaitSleepUs <group___sys_task_itf_1ga5e4d1b1b04b016158107c4867e06781e>` extern :ref:`PFSYSTASKWAITSLEEPUS <group___sys_task_itf_1ga038386d42826ff225a37ce757297cfbe>` pfSysTaskWaitSleepUs;
+
+- #define :ref:`GET_SysTaskWaitSleepUs <group___sys_task_itf_1ga01a901cc1d435f00194b73f85beab060>` s_pfCMGetAPI2( "SysTaskWaitSleepUs", (RTS_VOID_FCTPTR *)&pfSysTaskWaitSleepUs, (fl), 0,0)
+
+- #define :ref:`CAL_SysTaskWaitSleepUs <group___sys_task_itf_1gac529931c5ef192c501a877253cdca14f>` pfSysTaskWaitSleepUs
+
+- #define :ref:`CHK_SysTaskWaitSleepUs <group___sys_task_itf_1ga9da93566ac53605e325edb9e479fcd01>` (pfSysTaskWaitSleepUs != NULL)
+
+- #define :ref:`EXP_SysTaskWaitSleepUs <group___sys_task_itf_1ga3b2c4e8cdb3e191023d0c037034d5406>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskWaitSleepUs", (RTS_UINTPTR) :ref:`SysTaskWaitSleepUs <group___sys_task_itf_1gad78859ce286d621f51d61c4059bafd4d>` , 0, 0)
+
+- #define :ref:`USE_SysTaskWaitInterval <group___sys_task_itf_1ga9bc859345a3cb3b348caabc6a6981691>` :ref:`PFSYSTASKWAITINTERVAL <group___sys_task_itf_1gab0c54da484a21aae444d27182d8818d5>` pfSysTaskWaitInterval;
+
+- #define :ref:`EXT_SysTaskWaitInterval <group___sys_task_itf_1ga47ac6a9a51cf660c22f4eca423932840>` extern :ref:`PFSYSTASKWAITINTERVAL <group___sys_task_itf_1gab0c54da484a21aae444d27182d8818d5>` pfSysTaskWaitInterval;
+
+- #define :ref:`GET_SysTaskWaitInterval <group___sys_task_itf_1ga1a01940ae53c455c385a3577b3ebc470>` s_pfCMGetAPI2( "SysTaskWaitInterval", (RTS_VOID_FCTPTR *)&pfSysTaskWaitInterval, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskWaitInterval <group___sys_task_itf_1ga27f484fdff04086172e4771942d8ed4b>` pfSysTaskWaitInterval
+
+- #define :ref:`CHK_SysTaskWaitInterval <group___sys_task_itf_1ga73319d0ac824575c05bea7bdd21d9476>` (pfSysTaskWaitInterval != NULL)
+
+- #define :ref:`EXP_SysTaskWaitInterval <group___sys_task_itf_1ga10bbd85727b86e849b1bfd0f22acd717>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskWaitInterval", (RTS_UINTPTR) :ref:`SysTaskWaitInterval <group___sys_task_itf_1gac6616866fefd142f6db517dbd178eead>` , 0, 0)
+
+- #define :ref:`USE_SysTaskJoin <group___sys_task_itf_1ga7663756199c1433905751735a6ccfbcd>` :ref:`PFSYSTASKJOIN <group___sys_task_itf_1gacd9655e8b2f1e145e35c59f6b98e8dd9>` pfSysTaskJoin;
+
+- #define :ref:`EXT_SysTaskJoin <group___sys_task_itf_1ga6ad485e86bc0c7f72783e3ad677ca7aa>` extern :ref:`PFSYSTASKJOIN <group___sys_task_itf_1gacd9655e8b2f1e145e35c59f6b98e8dd9>` pfSysTaskJoin;
+
+- #define :ref:`GET_SysTaskJoin <group___sys_task_itf_1ga5dd15e576ffa4f155d4a7fa00fe1f0f0>` s_pfCMGetAPI2( "SysTaskJoin", (RTS_VOID_FCTPTR *)&pfSysTaskJoin, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskJoin <group___sys_task_itf_1ga003ea52971a721c81f5ea5fa9066ad73>` pfSysTaskJoin
+
+- #define :ref:`CHK_SysTaskJoin <group___sys_task_itf_1gab7d1f6eef89c9837b894f5fc638011e2>` (pfSysTaskJoin != NULL)
+
+- #define :ref:`EXP_SysTaskJoin <group___sys_task_itf_1ga2d4539f36050af06baceafbe8e44d2d9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskJoin", (RTS_UINTPTR) :ref:`SysTaskJoin <group___sys_task_itf_1gad6bea13cd175ee0cff795704827bba00>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGetCurrent <group___sys_task_itf_1ga94a39522455a3b31f767e9d1db8369d9>` :ref:`PFSYSTASKGETCURRENT <group___sys_task_itf_1ga357cdfc9a552ac09c562ff366490f25d>` pfSysTaskGetCurrent;
+
+- #define :ref:`EXT_SysTaskGetCurrent <group___sys_task_itf_1ga66e14e6a17e18545231f6013a628d801>` extern :ref:`PFSYSTASKGETCURRENT <group___sys_task_itf_1ga357cdfc9a552ac09c562ff366490f25d>` pfSysTaskGetCurrent;
+
+- #define :ref:`GET_SysTaskGetCurrent <group___sys_task_itf_1ga27fca895e06c4c598e1fa666f01f000f>` s_pfCMGetAPI2( "SysTaskGetCurrent", (RTS_VOID_FCTPTR *)&pfSysTaskGetCurrent, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetCurrent <group___sys_task_itf_1gab2169454d801377228052b63f9d174f8>` pfSysTaskGetCurrent
+
+- #define :ref:`CHK_SysTaskGetCurrent <group___sys_task_itf_1ga407e057509dfc467c707ba15ccf7b934>` (pfSysTaskGetCurrent != NULL)
+
+- #define :ref:`EXP_SysTaskGetCurrent <group___sys_task_itf_1ga41ab7ac22ae0af2561ce5bf228b420f5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetCurrent", (RTS_UINTPTR) :ref:`SysTaskGetCurrent <group___sys_task_itf_1ga4bf4edfb681b2ec5363fcf38b27b1c4e>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGetCurrentOSHandle <group___sys_task_itf_1ga8a49b29c44be5c6a4896aea0ff5d7f0e>` :ref:`PFSYSTASKGETCURRENTOSHANDLE <group___sys_task_itf_1ga3ce0e9d54a48d514802f3c2525c425f6>` pfSysTaskGetCurrentOSHandle;
+
+- #define :ref:`EXT_SysTaskGetCurrentOSHandle <group___sys_task_itf_1ga28cce03d98704c215c24fa5e5ee17b2b>` extern :ref:`PFSYSTASKGETCURRENTOSHANDLE <group___sys_task_itf_1ga3ce0e9d54a48d514802f3c2525c425f6>` pfSysTaskGetCurrentOSHandle;
+
+- #define :ref:`GET_SysTaskGetCurrentOSHandle <group___sys_task_itf_1gac1e7009174927758030a5f247d4d3d75>` s_pfCMGetAPI2( "SysTaskGetCurrentOSHandle", (RTS_VOID_FCTPTR *)&pfSysTaskGetCurrentOSHandle, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetCurrentOSHandle <group___sys_task_itf_1ga054ee9ea9e3f4f3bcf5da19038685ce9>` pfSysTaskGetCurrentOSHandle
+
+- #define :ref:`CHK_SysTaskGetCurrentOSHandle <group___sys_task_itf_1ga48c65c5f377deb02e96a6de2579a7306>` (pfSysTaskGetCurrentOSHandle != NULL)
+
+- #define :ref:`EXP_SysTaskGetCurrentOSHandle <group___sys_task_itf_1gabe3e5d95f9779b2ff934a843ad8cba4b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetCurrentOSHandle", (RTS_UINTPTR) :ref:`SysTaskGetCurrentOSHandle <group___sys_task_itf_1ga1b3fb16f4617fc8bb60648015c037c7e>` , 0, 0)
+
+- #define :ref:`USE_SysTaskSetPriority <group___sys_task_itf_1ga6da13d8d4ec5d5c5db7f0ee34868c44d>` :ref:`PFSYSTASKSETPRIORITY <group___sys_task_itf_1gafb8d82f7f01cdff61fa330d8f8e6007f>` pfSysTaskSetPriority;
+
+- #define :ref:`EXT_SysTaskSetPriority <group___sys_task_itf_1ga9153342e0f0efbb9446b0f00ed780a30>` extern :ref:`PFSYSTASKSETPRIORITY <group___sys_task_itf_1gafb8d82f7f01cdff61fa330d8f8e6007f>` pfSysTaskSetPriority;
+
+- #define :ref:`GET_SysTaskSetPriority <group___sys_task_itf_1ga6fb10fa975d4f232ae6a056d70133a40>` s_pfCMGetAPI2( "SysTaskSetPriority", (RTS_VOID_FCTPTR *)&pfSysTaskSetPriority, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskSetPriority <group___sys_task_itf_1ga7b24f746b99d7eaaab5a23435836c5ea>` pfSysTaskSetPriority
+
+- #define :ref:`CHK_SysTaskSetPriority <group___sys_task_itf_1ga06552fd81c73cf1f2bb1a2706f74dc7c>` (pfSysTaskSetPriority != NULL)
+
+- #define :ref:`EXP_SysTaskSetPriority <group___sys_task_itf_1ga723e60e50a2d150043d389194ec88ef9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskSetPriority", (RTS_UINTPTR) :ref:`SysTaskSetPriority <group___sys_task_itf_1ga5f2932a1b0e4a2acb36c60a64164c268>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGetPriority <group___sys_task_itf_1ga9c75734ac8cc623d18a94d455b52e1ef>` :ref:`PFSYSTASKGETPRIORITY <group___sys_task_itf_1gaa7c54f92af97f98a6ef9344563584b2e>` pfSysTaskGetPriority;
+
+- #define :ref:`EXT_SysTaskGetPriority <group___sys_task_itf_1ga4e3b11c45c9b35c4f5b8d1d54eca126d>` extern :ref:`PFSYSTASKGETPRIORITY <group___sys_task_itf_1gaa7c54f92af97f98a6ef9344563584b2e>` pfSysTaskGetPriority;
+
+- #define :ref:`GET_SysTaskGetPriority <group___sys_task_itf_1ga697d549f21f28a3478f78752308a3832>` s_pfCMGetAPI2( "SysTaskGetPriority", (RTS_VOID_FCTPTR *)&pfSysTaskGetPriority, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetPriority <group___sys_task_itf_1ga7c7d554db9fb1e0cc70e27883037fc83>` pfSysTaskGetPriority
+
+- #define :ref:`CHK_SysTaskGetPriority <group___sys_task_itf_1ga6584ae4ecc7f3430203906beaef5a510>` (pfSysTaskGetPriority != NULL)
+
+- #define :ref:`EXP_SysTaskGetPriority <group___sys_task_itf_1gaaf32eaa73a4422bed5aaf84bce11afa0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetPriority", (RTS_UINTPTR) :ref:`SysTaskGetPriority <group___sys_task_itf_1ga1d2ce1ade37c9785566aa15676a1033a>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGetOSPriority <group___sys_task_itf_1ga19475a1e6964b7e2c432a0c73fdf7b6e>` :ref:`PFSYSTASKGETOSPRIORITY <group___sys_task_itf_1ga588626f5ee75476a18166d8cf1e590b1>` pfSysTaskGetOSPriority;
+
+- #define :ref:`EXT_SysTaskGetOSPriority <group___sys_task_itf_1ga8bcdbcc1d4a6c8dff91a4cd328bbc71b>` extern :ref:`PFSYSTASKGETOSPRIORITY <group___sys_task_itf_1ga588626f5ee75476a18166d8cf1e590b1>` pfSysTaskGetOSPriority;
+
+- #define :ref:`GET_SysTaskGetOSPriority <group___sys_task_itf_1ga830951a20e0e41b3752611897c948a16>` s_pfCMGetAPI2( "SysTaskGetOSPriority", (RTS_VOID_FCTPTR *)&pfSysTaskGetOSPriority, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetOSPriority <group___sys_task_itf_1ga8cbef187e1b2d3e76dd56ea48ed05a37>` pfSysTaskGetOSPriority
+
+- #define :ref:`CHK_SysTaskGetOSPriority <group___sys_task_itf_1ga39f327258d6b98c15fb61e010246d705>` (pfSysTaskGetOSPriority != NULL)
+
+- #define :ref:`EXP_SysTaskGetOSPriority <group___sys_task_itf_1ga23cb22ab6217513c1dc69ea5472c5bdc>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetOSPriority", (RTS_UINTPTR) :ref:`SysTaskGetOSPriority <group___sys_task_itf_1ga638d4e6cb0c942bb9962960052a4d622>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGetInfo <group___sys_task_itf_1ga88961966d458155d2210c6dced66781c>` :ref:`PFSYSTASKGETINFO <group___sys_task_itf_1ga1ea2b451ef479136b4386cc1d3748340>` pfSysTaskGetInfo;
+
+- #define :ref:`EXT_SysTaskGetInfo <group___sys_task_itf_1gaf836c26842dd08f4a6f9cc0abeba142d>` extern :ref:`PFSYSTASKGETINFO <group___sys_task_itf_1ga1ea2b451ef479136b4386cc1d3748340>` pfSysTaskGetInfo;
+
+- #define :ref:`GET_SysTaskGetInfo <group___sys_task_itf_1ga4ec71c56b90161aab62c4d00ea353c8a>` s_pfCMGetAPI2( "SysTaskGetInfo", (RTS_VOID_FCTPTR *)&pfSysTaskGetInfo, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetInfo <group___sys_task_itf_1gac4920a403fa26fc69ba92b9a2d8dbd2f>` pfSysTaskGetInfo
+
+- #define :ref:`CHK_SysTaskGetInfo <group___sys_task_itf_1ga1dd69179e904be031e64409dd626b118>` (pfSysTaskGetInfo != NULL)
+
+- #define :ref:`EXP_SysTaskGetInfo <group___sys_task_itf_1ga22638f4a9c25b5d00985a19fcaf6d059>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetInfo", (RTS_UINTPTR) :ref:`SysTaskGetInfo <group___sys_task_itf_1ga51aa7d470913f992cf02bef5bd7890c9>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGetName <group___sys_task_itf_1ga6a212519ab4494cf0f9a3f8c92173b8e>` :ref:`PFSYSTASKGETNAME <group___sys_task_itf_1ga48c464e62f4b57664ca65764cd01838b>` pfSysTaskGetName;
+
+- #define :ref:`EXT_SysTaskGetName <group___sys_task_itf_1gad0b5494f2305b985153558e79803087e>` extern :ref:`PFSYSTASKGETNAME <group___sys_task_itf_1ga48c464e62f4b57664ca65764cd01838b>` pfSysTaskGetName;
+
+- #define :ref:`GET_SysTaskGetName <group___sys_task_itf_1ga98153aad43ab834fcabc745fc2e157ef>` s_pfCMGetAPI2( "SysTaskGetName", (RTS_VOID_FCTPTR *)&pfSysTaskGetName, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetName <group___sys_task_itf_1ga6ce90d24e602d26b40c722944513de2e>` pfSysTaskGetName
+
+- #define :ref:`CHK_SysTaskGetName <group___sys_task_itf_1ga44f0fa042b59394f36b75b06d414f5cc>` (pfSysTaskGetName != NULL)
+
+- #define :ref:`EXP_SysTaskGetName <group___sys_task_itf_1ga55c067d9c13a7fded33ec4ec1921f96c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetName", (RTS_UINTPTR) :ref:`SysTaskGetName <group___sys_task_itf_1gabace98ead3c3841789aa6a630edb823b>` , 0, 0)
+
+- #define :ref:`USE_SysTaskEnter <group___sys_task_itf_1ga3862e6a8083cfb14a906dd155f076d1f>` :ref:`PFSYSTASKENTER <group___sys_task_itf_1gaff8b5b2855437d41d3296efcd7c940cd>` pfSysTaskEnter;
+
+- #define :ref:`EXT_SysTaskEnter <group___sys_task_itf_1gac513352b86b809534ad48cc3fddfb9d9>` extern :ref:`PFSYSTASKENTER <group___sys_task_itf_1gaff8b5b2855437d41d3296efcd7c940cd>` pfSysTaskEnter;
+
+- #define :ref:`GET_SysTaskEnter <group___sys_task_itf_1ga0ed65a4d255eb57e75c4c9c5723e71d5>` s_pfCMGetAPI2( "SysTaskEnter", (RTS_VOID_FCTPTR *)&pfSysTaskEnter, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskEnter <group___sys_task_itf_1ga97de287419ccf87894128a24491fcafa>` pfSysTaskEnter
+
+- #define :ref:`CHK_SysTaskEnter <group___sys_task_itf_1ga8f8cd8ff81f929a705af2d01fccf834a>` (pfSysTaskEnter != NULL)
+
+- #define :ref:`EXP_SysTaskEnter <group___sys_task_itf_1ga27064697eec0f86703e38594802181cd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskEnter", (RTS_UINTPTR) :ref:`SysTaskEnter <group___sys_task_itf_1ga3e38459b4d30a310ebf5e13bc91a9cb5>` , 0, 0)
+
+- #define :ref:`USE_SysTaskLeave <group___sys_task_itf_1ga2157970614d2509f4e46b44cf739d5e4>` :ref:`PFSYSTASKLEAVE <group___sys_task_itf_1gae80dacc93ae676cfb6d767700d1534c5>` pfSysTaskLeave;
+
+- #define :ref:`EXT_SysTaskLeave <group___sys_task_itf_1gace1ad4430fb4c2fda1366dcac797018e>` extern :ref:`PFSYSTASKLEAVE <group___sys_task_itf_1gae80dacc93ae676cfb6d767700d1534c5>` pfSysTaskLeave;
+
+- #define :ref:`GET_SysTaskLeave <group___sys_task_itf_1ga69d1723cda91da6eea40f336b2dc6b1c>` s_pfCMGetAPI2( "SysTaskLeave", (RTS_VOID_FCTPTR *)&pfSysTaskLeave, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskLeave <group___sys_task_itf_1ga7488b6bed8bec8897dad566c25da8759>` pfSysTaskLeave
+
+- #define :ref:`CHK_SysTaskLeave <group___sys_task_itf_1ga9d5064360e614c013d8b0b736a18d9e8>` (pfSysTaskLeave != NULL)
+
+- #define :ref:`EXP_SysTaskLeave <group___sys_task_itf_1gaa24b196a87d8bd1853e027e40f080d37>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskLeave", (RTS_UINTPTR) :ref:`SysTaskLeave <group___sys_task_itf_1gab2100b03694291cefc624ebd7013b914>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGetContext <group___sys_task_itf_1ga83f867439a9846b18658fb3847cb1d72>` :ref:`PFSYSTASKGETCONTEXT <group___sys_task_itf_1gac056c42051483dc38f8e238410e973d8>` pfSysTaskGetContext;
+
+- #define :ref:`EXT_SysTaskGetContext <group___sys_task_itf_1ga8708390812581b0ab16a9c88cf416122>` extern :ref:`PFSYSTASKGETCONTEXT <group___sys_task_itf_1gac056c42051483dc38f8e238410e973d8>` pfSysTaskGetContext;
+
+- #define :ref:`GET_SysTaskGetContext <group___sys_task_itf_1ga6f245e9d8ba618b77e5a26557a52461c>` s_pfCMGetAPI2( "SysTaskGetContext", (RTS_VOID_FCTPTR *)&pfSysTaskGetContext, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetContext <group___sys_task_itf_1gaeaaeb309fafa7edcabb998e6a14d1a47>` pfSysTaskGetContext
+
+- #define :ref:`CHK_SysTaskGetContext <group___sys_task_itf_1ga92cf19805e014d2452066266fe298988>` (pfSysTaskGetContext != NULL)
+
+- #define :ref:`EXP_SysTaskGetContext <group___sys_task_itf_1gafc45da7ea2287f87ef574b5fd9d0a94b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetContext", (RTS_UINTPTR) :ref:`SysTaskGetContext <group___sys_task_itf_1gaf02ab8edba2e75d7a71b085a8fd7414f>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGenerateException <group___sys_task_itf_1ga34a308a33d619300a43e5231bd6ae880>` :ref:`PFSYSTASKGENERATEEXCEPTION <group___sys_task_itf_1gaab761cf82814874f202b1384bedf015a>` pfSysTaskGenerateException;
+
+- #define :ref:`EXT_SysTaskGenerateException <group___sys_task_itf_1ga798f66a21122ef6ce66789d2b2ca3654>` extern :ref:`PFSYSTASKGENERATEEXCEPTION <group___sys_task_itf_1gaab761cf82814874f202b1384bedf015a>` pfSysTaskGenerateException;
+
+- #define :ref:`GET_SysTaskGenerateException <group___sys_task_itf_1ga26bae5fc60beea6667d0906ca7f5964a>` s_pfCMGetAPI2( "SysTaskGenerateException", (RTS_VOID_FCTPTR *)&pfSysTaskGenerateException, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGenerateException <group___sys_task_itf_1gab74a2a911abbfda4fb64d13af1174b43>` pfSysTaskGenerateException
+
+- #define :ref:`CHK_SysTaskGenerateException <group___sys_task_itf_1gab6e24e5afce455e0b105647cae871e54>` (pfSysTaskGenerateException != NULL)
+
+- #define :ref:`EXP_SysTaskGenerateException <group___sys_task_itf_1gae94a96e90f600f27413d581d0b82f5c9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGenerateException", (RTS_UINTPTR) :ref:`SysTaskGenerateException <group___sys_task_itf_1gaf83db6ecd6262b7ecfb0d52302c252e0>` , 0, 0)
+
+- #define :ref:`USE_SysTaskCheckStack <group___sys_task_itf_1ga09d8aa1fa38a7de5dea6558eaa1e2aff>` :ref:`PFSYSTASKCHECKSTACK <group___sys_task_itf_1gab804ea0a6ba753d75cf0951ac3ce41f4>` pfSysTaskCheckStack;
+
+- #define :ref:`EXT_SysTaskCheckStack <group___sys_task_itf_1ga6411a782fe5013e2d1f75dd5d1843f10>` extern :ref:`PFSYSTASKCHECKSTACK <group___sys_task_itf_1gab804ea0a6ba753d75cf0951ac3ce41f4>` pfSysTaskCheckStack;
+
+- #define :ref:`GET_SysTaskCheckStack <group___sys_task_itf_1ga22702804e253a131f56a86e7184f9947>` s_pfCMGetAPI2( "SysTaskCheckStack", (RTS_VOID_FCTPTR *)&pfSysTaskCheckStack, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskCheckStack <group___sys_task_itf_1ga2415d39a4fca2d9ac27bea556d133997>` pfSysTaskCheckStack
+
+- #define :ref:`CHK_SysTaskCheckStack <group___sys_task_itf_1gad2e07fdd01097bc8d57ca26be7bae369>` (pfSysTaskCheckStack != NULL)
+
+- #define :ref:`EXP_SysTaskCheckStack <group___sys_task_itf_1ga80eedcb3bea724884e332801d1d810e5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskCheckStack", (RTS_UINTPTR) :ref:`SysTaskCheckStack <group___sys_task_itf_1gac6624b70717fe6009900d3dbde865200>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGetOSHandle <group___sys_task_itf_1ga5c355a64c53a45a7b794e94dc55aa528>` :ref:`PFSYSTASKGETOSHANDLE <group___sys_task_itf_1ga01c76da9272a8de61028e118bd0800d5>` pfSysTaskGetOSHandle;
+
+- #define :ref:`EXT_SysTaskGetOSHandle <group___sys_task_itf_1ga8509b45ec4377870b3ebd4c048cc8ef3>` extern :ref:`PFSYSTASKGETOSHANDLE <group___sys_task_itf_1ga01c76da9272a8de61028e118bd0800d5>` pfSysTaskGetOSHandle;
+
+- #define :ref:`GET_SysTaskGetOSHandle <group___sys_task_itf_1ga49bfda1f41d7ad5817387c1fd15f54c5>` s_pfCMGetAPI2( "SysTaskGetOSHandle", (RTS_VOID_FCTPTR *)&pfSysTaskGetOSHandle, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetOSHandle <group___sys_task_itf_1ga4abe37830abff9604889b7e6538d8f22>` pfSysTaskGetOSHandle
+
+- #define :ref:`CHK_SysTaskGetOSHandle <group___sys_task_itf_1ga851474c7c92d817b795a6390a4c58341>` (pfSysTaskGetOSHandle != NULL)
+
+- #define :ref:`EXP_SysTaskGetOSHandle <group___sys_task_itf_1gab9c8041b2556624ebd8df2135bdb072c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetOSHandle", (RTS_UINTPTR) :ref:`SysTaskGetOSHandle <group___sys_task_itf_1gaaac494b00a673dd03535ebd95652ea42>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGetByOSHandle <group___sys_task_itf_1ga0f80a83a7f23f0f7928d5c91e59cef7b>` :ref:`PFSYSTASKGETBYOSHANDLE <group___sys_task_itf_1gac1c97cdf9d7aa56d8242d9f5988f705d>` pfSysTaskGetByOSHandle;
+
+- #define :ref:`EXT_SysTaskGetByOSHandle <group___sys_task_itf_1gafc1429f6f07fdd4832881164d3d6cd4e>` extern :ref:`PFSYSTASKGETBYOSHANDLE <group___sys_task_itf_1gac1c97cdf9d7aa56d8242d9f5988f705d>` pfSysTaskGetByOSHandle;
+
+- #define :ref:`GET_SysTaskGetByOSHandle <group___sys_task_itf_1ga5d925be5e528f2b8e12ca2c3ba811d02>` s_pfCMGetAPI2( "SysTaskGetByOSHandle", (RTS_VOID_FCTPTR *)&pfSysTaskGetByOSHandle, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetByOSHandle <group___sys_task_itf_1ga793488db2793493d2a7ee36b46eb72c6>` pfSysTaskGetByOSHandle
+
+- #define :ref:`CHK_SysTaskGetByOSHandle <group___sys_task_itf_1ga3c19ac7b67f8030edb787d23c55d4b75>` (pfSysTaskGetByOSHandle != NULL)
+
+- #define :ref:`EXP_SysTaskGetByOSHandle <group___sys_task_itf_1ga3306ea78291cc08083972683a3d5ba0b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetByOSHandle", (RTS_UINTPTR) :ref:`SysTaskGetByOSHandle <group___sys_task_itf_1ga0801e0abaab3b86bbfb16f20d0f31adb>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGetHandleByOSHandle <group___sys_task_itf_1gae37dc8a116961b5f78862f4a9872b4de>` :ref:`PFSYSTASKGETHANDLEBYOSHANDLE <group___sys_task_itf_1gaef0ea61f14874ffaa5bcaf53b66f5bfb>` pfSysTaskGetHandleByOSHandle;
+
+- #define :ref:`EXT_SysTaskGetHandleByOSHandle <group___sys_task_itf_1ga3637e2eb0dcf08a44c8b575157873c45>` extern :ref:`PFSYSTASKGETHANDLEBYOSHANDLE <group___sys_task_itf_1gaef0ea61f14874ffaa5bcaf53b66f5bfb>` pfSysTaskGetHandleByOSHandle;
+
+- #define :ref:`GET_SysTaskGetHandleByOSHandle <group___sys_task_itf_1gad17a75a4fe8d4f833a0af47d38eb0782>` s_pfCMGetAPI2( "SysTaskGetHandleByOSHandle", (RTS_VOID_FCTPTR *)&pfSysTaskGetHandleByOSHandle, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetHandleByOSHandle <group___sys_task_itf_1ga528ae0ca93a618815b4e8b0d873884bb>` pfSysTaskGetHandleByOSHandle
+
+- #define :ref:`CHK_SysTaskGetHandleByOSHandle <group___sys_task_itf_1ga410d2346d142a5ed8c716e0a45f5101f>` (pfSysTaskGetHandleByOSHandle != NULL)
+
+- #define :ref:`EXP_SysTaskGetHandleByOSHandle <group___sys_task_itf_1ga7b6ae08330cfd7505de884c7cc0f692f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetHandleByOSHandle", (RTS_UINTPTR) :ref:`SysTaskGetHandleByOSHandle <group___sys_task_itf_1ga39749ee9e8af11683911dccc6ffcbd3a>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGetConfiguredPriority <group___sys_task_itf_1ga2fe9f5e5cd09e47674f3258d4278bbbf>` :ref:`PFSYSTASKGETCONFIGUREDPRIORITY <group___sys_task_itf_1ga27fc35356598350b73e605ea60727d1b>` pfSysTaskGetConfiguredPriority;
+
+- #define :ref:`EXT_SysTaskGetConfiguredPriority <group___sys_task_itf_1gaec2f2dbc6ba6ff590691053326100faf>` extern :ref:`PFSYSTASKGETCONFIGUREDPRIORITY <group___sys_task_itf_1ga27fc35356598350b73e605ea60727d1b>` pfSysTaskGetConfiguredPriority;
+
+- #define :ref:`GET_SysTaskGetConfiguredPriority <group___sys_task_itf_1ga4fea820dd594c77f925b5b23cae15687>` s_pfCMGetAPI2( "SysTaskGetConfiguredPriority", (RTS_VOID_FCTPTR *)&pfSysTaskGetConfiguredPriority, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetConfiguredPriority <group___sys_task_itf_1gac5c3eba61ad7ff0777554c4fd2e291e5>` pfSysTaskGetConfiguredPriority
+
+- #define :ref:`CHK_SysTaskGetConfiguredPriority <group___sys_task_itf_1ga3dd6ced01d0076fc7779af208c0029d5>` (pfSysTaskGetConfiguredPriority != NULL)
+
+- #define :ref:`EXP_SysTaskGetConfiguredPriority <group___sys_task_itf_1ga2e980b3d52848729427076601707b8b0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetConfiguredPriority", (RTS_UINTPTR) :ref:`SysTaskGetConfiguredPriority <group___sys_task_itf_1ga0e3056a0ed732c59cc961b4419090ea4>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGetConfiguredPriority2 <group___sys_task_itf_1ga472a8c3a3125de73a56efcb3f8ca9dc8>` :ref:`PFSYSTASKGETCONFIGUREDPRIORITY2 <group___sys_task_itf_1ga54bc355b453c902ee5ea939c3d095115>` pfSysTaskGetConfiguredPriority2;
+
+- #define :ref:`EXT_SysTaskGetConfiguredPriority2 <group___sys_task_itf_1gae517d20557d85b7c98ded8e1defd68d6>` extern :ref:`PFSYSTASKGETCONFIGUREDPRIORITY2 <group___sys_task_itf_1ga54bc355b453c902ee5ea939c3d095115>` pfSysTaskGetConfiguredPriority2;
+
+- #define :ref:`GET_SysTaskGetConfiguredPriority2 <group___sys_task_itf_1ga26ba95cd7e6fcd1370037246f2713a1b>` s_pfCMGetAPI2( "SysTaskGetConfiguredPriority2", (RTS_VOID_FCTPTR *)&pfSysTaskGetConfiguredPriority2, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetConfiguredPriority2 <group___sys_task_itf_1ga36221a45d3d352f5b9a5acc5e9e8fbd5>` pfSysTaskGetConfiguredPriority2
+
+- #define :ref:`CHK_SysTaskGetConfiguredPriority2 <group___sys_task_itf_1ga57015b5552d2cdd6aee1a81849f84efa>` (pfSysTaskGetConfiguredPriority2 != NULL)
+
+- #define :ref:`EXP_SysTaskGetConfiguredPriority2 <group___sys_task_itf_1ga0b4ce49fe19e5421a3ab672bfbd8a573>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetConfiguredPriority2", (RTS_UINTPTR) :ref:`SysTaskGetConfiguredPriority2 <group___sys_task_itf_1gab0ddef665955b2133c6486846808a86e>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGetInterval <group___sys_task_itf_1ga1ca2d259a92bdefbae4f3fe0507f7c1e>` :ref:`PFSYSTASKGETINTERVAL <group___sys_task_itf_1ga6b50da7572bc4aaeaa193d88aa1bff98>` pfSysTaskGetInterval;
+
+- #define :ref:`EXT_SysTaskGetInterval <group___sys_task_itf_1ga19976f00f44566438e744eb8710f9a9b>` extern :ref:`PFSYSTASKGETINTERVAL <group___sys_task_itf_1ga6b50da7572bc4aaeaa193d88aa1bff98>` pfSysTaskGetInterval;
+
+- #define :ref:`GET_SysTaskGetInterval <group___sys_task_itf_1ga263da22b381759ac8fad4f83a8e08966>` s_pfCMGetAPI2( "SysTaskGetInterval", (RTS_VOID_FCTPTR *)&pfSysTaskGetInterval, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetInterval <group___sys_task_itf_1ga32136471872a1f6a2ffc1baf4a585443>` pfSysTaskGetInterval
+
+- #define :ref:`CHK_SysTaskGetInterval <group___sys_task_itf_1ga9a9be2ec23e6d93cc00c196765ec9356>` (pfSysTaskGetInterval != NULL)
+
+- #define :ref:`EXP_SysTaskGetInterval <group___sys_task_itf_1ga09a9d9d0ad22720960097979e18f61c4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetInterval", (RTS_UINTPTR) :ref:`SysTaskGetInterval <group___sys_task_itf_1gae33ba87e92e7f9da4e0c08612c3470a7>` , 0, 0)
+
+- #define :ref:`USE_SysTaskSetInterval <group___sys_task_itf_1ga996ba8631e966973de3b5020bbd1ab46>` :ref:`PFSYSTASKSETINTERVAL <group___sys_task_itf_1ga144b5d5b7143e816b8582436a5cb774f>` pfSysTaskSetInterval;
+
+- #define :ref:`EXT_SysTaskSetInterval <group___sys_task_itf_1ga108b9bf170ba7bb4b08fa3cbe96bdae3>` extern :ref:`PFSYSTASKSETINTERVAL <group___sys_task_itf_1ga144b5d5b7143e816b8582436a5cb774f>` pfSysTaskSetInterval;
+
+- #define :ref:`GET_SysTaskSetInterval <group___sys_task_itf_1ga45979120dc1d70467a9eb0f978cede5f>` s_pfCMGetAPI2( "SysTaskSetInterval", (RTS_VOID_FCTPTR *)&pfSysTaskSetInterval, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskSetInterval <group___sys_task_itf_1gaad0caeb3a040c630a92b3267dacb0e12>` pfSysTaskSetInterval
+
+- #define :ref:`CHK_SysTaskSetInterval <group___sys_task_itf_1ga03601ebbc4b0d2776e0f524c8cd411d2>` (pfSysTaskSetInterval != NULL)
+
+- #define :ref:`EXP_SysTaskSetInterval <group___sys_task_itf_1ga09137f5e631daf747f80aa99ec0bbf8e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskSetInterval", (RTS_UINTPTR) :ref:`SysTaskSetInterval <group___sys_task_itf_1ga2c12856462591ad81cbfaaf615a18252>` , 0, 0)
+
+- #define :ref:`USE_SysTaskCreateThreadLocalStorageKey <group___sys_task_itf_1ga91f7e9cea2184b416a588a2802908a2a>` :ref:`PFSYSTASKCREATETHREADLOCALSTORAGEKEY <group___sys_task_itf_1gab5bead2900630f6e0a94f69ff2c4d72a>` pfSysTaskCreateThreadLocalStorageKey;
+
+- #define :ref:`EXT_SysTaskCreateThreadLocalStorageKey <group___sys_task_itf_1ga1fa9697935b8d45829b303f142912132>` extern :ref:`PFSYSTASKCREATETHREADLOCALSTORAGEKEY <group___sys_task_itf_1gab5bead2900630f6e0a94f69ff2c4d72a>` pfSysTaskCreateThreadLocalStorageKey;
+
+- #define :ref:`GET_SysTaskCreateThreadLocalStorageKey <group___sys_task_itf_1ga972a7b49155d36564ab351f7a13447e6>` s_pfCMGetAPI2( "SysTaskCreateThreadLocalStorageKey", (RTS_VOID_FCTPTR *)&pfSysTaskCreateThreadLocalStorageKey, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskCreateThreadLocalStorageKey <group___sys_task_itf_1gac9ca2d96591f63c27a6346e13984aff6>` pfSysTaskCreateThreadLocalStorageKey
+
+- #define :ref:`CHK_SysTaskCreateThreadLocalStorageKey <group___sys_task_itf_1ga2ea2c4f4c2fbe811f5770cea3ff51a18>` (pfSysTaskCreateThreadLocalStorageKey != NULL)
+
+- #define :ref:`EXP_SysTaskCreateThreadLocalStorageKey <group___sys_task_itf_1ga895341881acc5e4cea51240be61253e9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskCreateThreadLocalStorageKey", (RTS_UINTPTR) :ref:`SysTaskCreateThreadLocalStorageKey <group___sys_task_itf_1ga251525eebcdac5e230e453773abe51d4>` , 0, 0)
+
+- #define :ref:`USE_SysTaskDeleteThreadLocalStorageKey <group___sys_task_itf_1ga4b5d2a538480b726cfb666a7ac414ec0>` :ref:`PFSYSTASKDELETETHREADLOCALSTORAGEKEY <group___sys_task_itf_1ga9aa95ea5abe7ab87a87f66ce975bfa1a>` pfSysTaskDeleteThreadLocalStorageKey;
+
+- #define :ref:`EXT_SysTaskDeleteThreadLocalStorageKey <group___sys_task_itf_1ga6c8514ee18b9e4f0683cc629d1c65214>` extern :ref:`PFSYSTASKDELETETHREADLOCALSTORAGEKEY <group___sys_task_itf_1ga9aa95ea5abe7ab87a87f66ce975bfa1a>` pfSysTaskDeleteThreadLocalStorageKey;
+
+- #define :ref:`GET_SysTaskDeleteThreadLocalStorageKey <group___sys_task_itf_1ga5122e826ddcfe33adad49886aa159f92>` s_pfCMGetAPI2( "SysTaskDeleteThreadLocalStorageKey", (RTS_VOID_FCTPTR *)&pfSysTaskDeleteThreadLocalStorageKey, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskDeleteThreadLocalStorageKey <group___sys_task_itf_1ga92b496f04fb6714ade88f5299148562d>` pfSysTaskDeleteThreadLocalStorageKey
+
+- #define :ref:`CHK_SysTaskDeleteThreadLocalStorageKey <group___sys_task_itf_1gadb376484914154f6befa7ed18313141b>` (pfSysTaskDeleteThreadLocalStorageKey != NULL)
+
+- #define :ref:`EXP_SysTaskDeleteThreadLocalStorageKey <group___sys_task_itf_1ga9d025ddb8b1378576b5e4641ecd213d2>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskDeleteThreadLocalStorageKey", (RTS_UINTPTR) :ref:`SysTaskDeleteThreadLocalStorageKey <group___sys_task_itf_1gaf4fed918e8a7dd6b8e53f985cc15ea6e>` , 0, 0)
+
+- #define :ref:`USE_SysTaskSetThreadLocalStorage <group___sys_task_itf_1gac3a5d3abdb1f96259338b13a7a791350>` :ref:`PFSYSTASKSETTHREADLOCALSTORAGE <group___sys_task_itf_1gac09036176b55afb52f6a522919c53eb0>` pfSysTaskSetThreadLocalStorage;
+
+- #define :ref:`EXT_SysTaskSetThreadLocalStorage <group___sys_task_itf_1gadfaf8f8e3152c565b83dee53878f20ad>` extern :ref:`PFSYSTASKSETTHREADLOCALSTORAGE <group___sys_task_itf_1gac09036176b55afb52f6a522919c53eb0>` pfSysTaskSetThreadLocalStorage;
+
+- #define :ref:`GET_SysTaskSetThreadLocalStorage <group___sys_task_itf_1gaaf874fd8ea59b87f0c414a49671868f4>` s_pfCMGetAPI2( "SysTaskSetThreadLocalStorage", (RTS_VOID_FCTPTR *)&pfSysTaskSetThreadLocalStorage, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskSetThreadLocalStorage <group___sys_task_itf_1ga7cd4411cfa58a32a6113a2309c20bab5>` pfSysTaskSetThreadLocalStorage
+
+- #define :ref:`CHK_SysTaskSetThreadLocalStorage <group___sys_task_itf_1gaae6d5e3dce9541af0bd74921efb427ca>` (pfSysTaskSetThreadLocalStorage != NULL)
+
+- #define :ref:`EXP_SysTaskSetThreadLocalStorage <group___sys_task_itf_1ga23bf5fb03917550532c924a1745b1640>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskSetThreadLocalStorage", (RTS_UINTPTR) :ref:`SysTaskSetThreadLocalStorage <group___sys_task_itf_1ga9bf30d9498870f238ec2b75a7bd4c1d0>` , 0, 0)
+
+- #define :ref:`USE_SysTaskGetThreadLocalStorage <group___sys_task_itf_1gaf5e54ba2b896ec06cc220eb619bbf8ce>` :ref:`PFSYSTASKGETTHREADLOCALSTORAGE <group___sys_task_itf_1gae2c1cf4b0bd8e97a8c33ff32bf8398c2>` pfSysTaskGetThreadLocalStorage;
+
+- #define :ref:`EXT_SysTaskGetThreadLocalStorage <group___sys_task_itf_1gac7dab270802fe465d7494e8784b7e725>` extern :ref:`PFSYSTASKGETTHREADLOCALSTORAGE <group___sys_task_itf_1gae2c1cf4b0bd8e97a8c33ff32bf8398c2>` pfSysTaskGetThreadLocalStorage;
+
+- #define :ref:`GET_SysTaskGetThreadLocalStorage <group___sys_task_itf_1gaed4bbb12244e63971937ce16cbe97d4d>` s_pfCMGetAPI2( "SysTaskGetThreadLocalStorage", (RTS_VOID_FCTPTR *)&pfSysTaskGetThreadLocalStorage, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskGetThreadLocalStorage <group___sys_task_itf_1ga288b8ca10839a6959118b1111fe1ae26>` pfSysTaskGetThreadLocalStorage
+
+- #define :ref:`CHK_SysTaskGetThreadLocalStorage <group___sys_task_itf_1gabb1c71c53ff2ded0cf1cc85ec56553ad>` (pfSysTaskGetThreadLocalStorage != NULL)
+
+- #define :ref:`EXP_SysTaskGetThreadLocalStorage <group___sys_task_itf_1ga28abef7bff2beb508b2bd09e64e131e9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskGetThreadLocalStorage", (RTS_UINTPTR) :ref:`SysTaskGetThreadLocalStorage <group___sys_task_itf_1ga51e2dc8c503bb9b62459d74b95ac1ced>` , 0, 0)
+
+- #define :ref:`USE_SysTaskLock <group___sys_task_itf_1gaa39e6a0cea78e7720ca56bdd501d5f0e>` :ref:`PFSYSTASKLOCK <group___sys_task_itf_1gac1169ecbc09ef8174b2b406752f518e5>` pfSysTaskLock;
+
+- #define :ref:`EXT_SysTaskLock <group___sys_task_itf_1gaa09c83d18f832f9657d6a8702af6fba0>` extern :ref:`PFSYSTASKLOCK <group___sys_task_itf_1gac1169ecbc09ef8174b2b406752f518e5>` pfSysTaskLock;
+
+- #define :ref:`GET_SysTaskLock <group___sys_task_itf_1gae135d7de80395a5acd04f2b04e189ad4>` s_pfCMGetAPI2( "SysTaskLock", (RTS_VOID_FCTPTR *)&pfSysTaskLock, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskLock <group___sys_task_itf_1ga042cac03516351d00c94a359c1c1a57e>` pfSysTaskLock
+
+- #define :ref:`CHK_SysTaskLock <group___sys_task_itf_1ga7786314084edff23f619c15c039b9c57>` (pfSysTaskLock != NULL)
+
+- #define :ref:`EXP_SysTaskLock <group___sys_task_itf_1gaf7050485e9780e940c9397d53f20eea8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskLock", (RTS_UINTPTR) :ref:`SysTaskLock <group___sys_task_itf_1gaccd15b15d6d69d065edd8c0c213081ae>` , 0, 0)
+
+- #define :ref:`USE_SysTaskUnlock <group___sys_task_itf_1ga94552a4559f7c7b3472f8e6d58f0a6c7>` :ref:`PFSYSTASKUNLOCK <group___sys_task_itf_1ga244d1f606eb131ff985ef1dae1e52658>` pfSysTaskUnlock;
+
+- #define :ref:`EXT_SysTaskUnlock <group___sys_task_itf_1ga9b82bfeeb59ca6d0f72e42b75a18c489>` extern :ref:`PFSYSTASKUNLOCK <group___sys_task_itf_1ga244d1f606eb131ff985ef1dae1e52658>` pfSysTaskUnlock;
+
+- #define :ref:`GET_SysTaskUnlock <group___sys_task_itf_1ga90f6998d6626e9a870dde9c65da3f9c5>` s_pfCMGetAPI2( "SysTaskUnlock", (RTS_VOID_FCTPTR *)&pfSysTaskUnlock, (fl), 0, 0)
+
+- #define :ref:`CAL_SysTaskUnlock <group___sys_task_itf_1ga39b9e3ff8e820235e951493ef19205c1>` pfSysTaskUnlock
+
+- #define :ref:`CHK_SysTaskUnlock <group___sys_task_itf_1ga56476cddfb7514c17c0de4a5c1fe7f51>` (pfSysTaskUnlock != NULL)
+
+- #define :ref:`EXP_SysTaskUnlock <group___sys_task_itf_1ga6988a9bee15ddd807625d5708cb19116>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysTaskUnlock", (RTS_UINTPTR) :ref:`SysTaskUnlock <group___sys_task_itf_1ga40aaedad6b0eea642e562889c7b6c023>` , 0, 0)
+
+- #define :ref:`USE_systaskgettaskhandle <group___sys_task_itf_1ga24b02d8399a1d64388d88fefc0420a0d>` :ref:`PFSYSTASKGETTASKHANDLE_IEC <group___sys_task_itf_1ga80141c73dca61e77c23df55a02ad7b39>` pfsystaskgettaskhandle;
+
+- #define :ref:`EXT_systaskgettaskhandle <group___sys_task_itf_1ga8f692c460e8c3525c44ed16329bb93db>` extern :ref:`PFSYSTASKGETTASKHANDLE_IEC <group___sys_task_itf_1ga80141c73dca61e77c23df55a02ad7b39>` pfsystaskgettaskhandle;
+
+- #define :ref:`GET_systaskgettaskhandle <group___sys_task_itf_1ga1ff85629e105ec4ec2ef4ad36c5a85da>` s_pfCMGetAPI2( "systaskgettaskhandle", (RTS_VOID_FCTPTR *)&pfsystaskgettaskhandle, (fl), 0, 0)
+
+- #define :ref:`CAL_systaskgettaskhandle <group___sys_task_itf_1gad1b4b2cf1cd4fc78dd32685457c80abe>` pfsystaskgettaskhandle
+
+- #define :ref:`CHK_systaskgettaskhandle <group___sys_task_itf_1ga58d8c390c4140ead411116f8aace6470>` (pfsystaskgettaskhandle != NULL)
+
+- #define :ref:`EXP_systaskgettaskhandle <group___sys_task_itf_1ga5d5f961e0c417b9e595828277f3cbc8d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"systaskgettaskhandle", (RTS_UINTPTR) :ref:`systaskgettaskhandle <group___sys_task_itf_1gaf203fa3d47acde5002ed17a1b9f92b2a>` , 1, 0)
+
+- #define :ref:`ITF_SysTask <group___sys_task_itf_1gadbda13c20a288aa7602135d08d0e96f8>`
+
+- #define :ref:`EXTITF_SysTask <group___sys_task_itf_1gaf308fca1518925f53ec30eb1a2c5fc8e>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFSYS_TASK_EXCEPTIONHANDLER <group___sys_task_itf___settings_1gaa84d1f5aa1af833b600b448c3f41031e>`)(RTS_HANDLE hTask, RTS_UI32 ulException, RegContext Context)
+
+- typedef void :ref:`SYS_TASK_FUNCTION <group___sys_task_itf___featureflags_1gaabbd4d448bc85342b9443bb410100f9c>` ()
+
+- typedef void(* :ref:`PFSYS_TASK_FUNCTION <group___sys_task_itf___featureflags_1ga36dbe93cf57db1c10f93be8ac6e2bc4d>`)(struct tagSYS_TASK_PARAM *)
+
+- typedef struct :ref:`tagSYS_TASK_PARAM <structtag_s_y_s___t_a_s_k___p_a_r_a_m>` :ref:`SYS_TASK_PARAM <group___sys_task_itf_1ga25b4c7c3c4fbfde69512a84298791658>`
+
+- typedef struct :ref:`tagSYS_TASK_INFO <structtag_s_y_s___t_a_s_k___i_n_f_o>` :ref:`SYS_TASK_INFO <group___sys_task_itf_1ga9483fcdb600821ff56a2cb7cb7847219>`
+
+- typedef struct :ref:`tagsystaskautoreleaseonexit_struct <structtagsystaskautoreleaseonexit__struct>` :ref:`systaskautoreleaseonexit_struct <group___sys_task_itf_1ga7f38fdd151779cb9931f6f2ac92c7c75>`
+
+- typedef void(* :ref:`PFSYSTASKAUTORELEASEONEXIT_IEC <group___sys_task_itf_1ga5cdb6c20d874dae6f9d4e1fdec4ff078>`)(systaskautoreleaseonexit_struct *p)
+
+- typedef struct :ref:`tagsystaskcheckstack_struct <structtagsystaskcheckstack__struct>` :ref:`systaskcheckstack_struct <group___sys_task_itf_1ga1f9f62871821e6aefe7fc6e20cfef40a>`
+
+- typedef void(* :ref:`PFSYSTASKCHECKSTACK_IEC <group___sys_task_itf_1gac17c20503faa154e72d0ffdaee328ea7>`)(systaskcheckstack_struct *p)
+
+- typedef struct :ref:`tagsystaskcreate_struct <structtagsystaskcreate__struct>` :ref:`systaskcreate_struct <group___sys_task_itf_1gafcf93a3f93ec2a6446f9a881606e1feb>`
+
+- typedef void(* :ref:`PFSYSTASKCREATE_IEC <group___sys_task_itf_1ga0ec0667784c29058fc357c5da6cef7af>`)(systaskcreate_struct *p)
+
+- typedef struct :ref:`tagsystaskcreate2_struct <structtagsystaskcreate2__struct>` :ref:`systaskcreate2_struct <group___sys_task_itf_1ga32ba46b8dae14c4a5af66a5975f0ee45>`
+
+- typedef void(* :ref:`PFSYSTASKCREATE2_IEC <group___sys_task_itf_1ga2190acf0bdfbb1b58543b7e37f1c1f50>`)(systaskcreate2_struct *p)
+
+- typedef struct :ref:`tagsystaskdestroy_struct <structtagsystaskdestroy__struct>` :ref:`systaskdestroy_struct <group___sys_task_itf_1ga4541832ccb9f92bb824d213284aafdc7>`
+
+- typedef void(* :ref:`PFSYSTASKDESTROY_IEC <group___sys_task_itf_1ga401fc56a2281a9c62086f344d4f28b68>`)(systaskdestroy_struct *p)
+
+- typedef struct :ref:`tagsystaskend_struct <structtagsystaskend__struct>` :ref:`systaskend_struct <group___sys_task_itf_1ga8092bbf35ce489e3fb263488803fe809>`
+
+- typedef void(* :ref:`PFSYSTASKEND_IEC <group___sys_task_itf_1ga628ece84d2acdb30c1b2f90088628e62>`)(systaskend_struct *p)
+
+- typedef struct :ref:`tagsystaskenter_struct <structtagsystaskenter__struct>` :ref:`systaskenter_struct <group___sys_task_itf_1ga5a12f919072b8d7870ca0d2042eaeefc>`
+
+- typedef void(* :ref:`PFSYSTASKENTER_IEC <group___sys_task_itf_1gac33771e51b2d908b8a241a42c9214bb0>`)(systaskenter_struct *p)
+
+- typedef struct :ref:`tagsystaskexit_struct <structtagsystaskexit__struct>` :ref:`systaskexit_struct <group___sys_task_itf_1gae43a0f4ea21e48cfa17729fffa57217d>`
+
+- typedef void(* :ref:`PFSYSTASKEXIT_IEC <group___sys_task_itf_1ga02d365552d857b3a6e525e5346ec809d>`)(systaskexit_struct *p)
+
+- typedef struct :ref:`tagsystaskgenerateexception_struct <structtagsystaskgenerateexception__struct>` :ref:`systaskgenerateexception_struct <group___sys_task_itf_1ga633304e61eec9bb40643691501c8c578>`
+
+- typedef void(* :ref:`PFSYSTASKGENERATEEXCEPTION_IEC <group___sys_task_itf_1ga49dcbfc5ac5be8936098153a7d513f83>`)(systaskgenerateexception_struct *p)
+
+- typedef struct :ref:`tagsystaskgetcontext_struct <structtagsystaskgetcontext__struct>` :ref:`systaskgetcontext_struct <group___sys_task_itf_1ga9ee14e4f81bbb5002e602f420fd04d91>`
+
+- typedef void(* :ref:`PFSYSTASKGETCONTEXT_IEC <group___sys_task_itf_1gac82cc07b239ccda02487925ce1fcdb8b>`)(systaskgetcontext_struct *p)
+
+- typedef struct :ref:`tagsystaskgetcurrent_struct <structtagsystaskgetcurrent__struct>` :ref:`systaskgetcurrent_struct <group___sys_task_itf_1gaa51d5695075091f02db7ac800a16cad2>`
+
+- typedef void(* :ref:`PFSYSTASKGETCURRENT_IEC <group___sys_task_itf_1ga8875ea598d00613ccba6370678d7c057>`)(systaskgetcurrent_struct *p)
+
+- typedef struct :ref:`tagsystaskgetcurrentoshandle_struct <structtagsystaskgetcurrentoshandle__struct>` :ref:`systaskgetcurrentoshandle_struct <group___sys_task_itf_1gaeae2d5ba40daeb25e14b9b8f6eaae4ae>`
+
+- typedef void(* :ref:`PFSYSTASKGETCURRENTOSHANDLE_IEC <group___sys_task_itf_1ga32155cc3028b6aff07dc06624548545e>`)(systaskgetcurrentoshandle_struct *p)
+
+- typedef struct :ref:`tagsystaskgetinfo_struct <structtagsystaskgetinfo__struct>` :ref:`systaskgetinfo_struct <group___sys_task_itf_1ga36da00da66e022e85e247527f1c6003d>`
+
+- typedef void(* :ref:`PFSYSTASKGETINFO_IEC <group___sys_task_itf_1ga76a66f31e382b69bc6f13af10907b7b5>`)(systaskgetinfo_struct *p)
+
+- typedef struct :ref:`tagsystaskgetinterval_struct <structtagsystaskgetinterval__struct>` :ref:`systaskgetinterval_struct <group___sys_task_itf_1gaaf6f9ad86a032982ccb51981cd65014e>`
+
+- typedef void(* :ref:`PFSYSTASKGETINTERVAL_IEC <group___sys_task_itf_1gaffe0d3fce04f34f58dd37d60d87903d8>`)(systaskgetinterval_struct *p)
+
+- typedef struct :ref:`tagsystaskgetname_struct <structtagsystaskgetname__struct>` :ref:`systaskgetname_struct <group___sys_task_itf_1gaaf6d75b3ccd6ac35209ffb5dd3d6b61b>`
+
+- typedef void(* :ref:`PFSYSTASKGETNAME_IEC <group___sys_task_itf_1gabd0627954077a28884fe78c656cbedd4>`)(systaskgetname_struct *p)
+
+- typedef struct :ref:`tagsystaskgetoshandle_struct <structtagsystaskgetoshandle__struct>` :ref:`systaskgetoshandle_struct <group___sys_task_itf_1gabdde52d8e8d3a41476b0ac9601065ef5>`
+
+- typedef void(* :ref:`PFSYSTASKGETOSHANDLE_IEC <group___sys_task_itf_1gaad3fe70e31dd38038309475ee59b8d41>`)(systaskgetoshandle_struct *p)
+
+- typedef struct :ref:`tagsystaskgetospriority_struct <structtagsystaskgetospriority__struct>` :ref:`systaskgetospriority_struct <group___sys_task_itf_1gac6c64504a409581be4150ca2bf1c19d9>`
+
+- typedef void(* :ref:`PFSYSTASKGETOSPRIORITY_IEC <group___sys_task_itf_1ga64d72df13c3eb9bad4c13e77e946d1a5>`)(systaskgetospriority_struct *p)
+
+- typedef struct :ref:`tagsystaskgetpriority_struct <structtagsystaskgetpriority__struct>` :ref:`systaskgetpriority_struct <group___sys_task_itf_1gaea837c1ddac5961f630652b4b2de6dca>`
+
+- typedef void(* :ref:`PFSYSTASKGETPRIORITY_IEC <group___sys_task_itf_1gafb823d0d9d38aaef189617bd1f8987fc>`)(systaskgetpriority_struct *p)
+
+- typedef struct :ref:`tagsystaskjoin_struct <structtagsystaskjoin__struct>` :ref:`systaskjoin_struct <group___sys_task_itf_1gac42280e865793347ff2c3a868ec5388a>`
+
+- typedef void(* :ref:`PFSYSTASKJOIN_IEC <group___sys_task_itf_1ga068f0b47fa0bc5ffc69b188ef2bd3745>`)(systaskjoin_struct *p)
+
+- typedef struct :ref:`tagsystaskleave_struct <structtagsystaskleave__struct>` :ref:`systaskleave_struct <group___sys_task_itf_1ga4d2f91e698b0b538852f02709dbaf25c>`
+
+- typedef void(* :ref:`PFSYSTASKLEAVE_IEC <group___sys_task_itf_1ga9b44ad43b9e1f082a92f9978956acf72>`)(systaskleave_struct *p)
+
+- typedef struct :ref:`tagsystaskresume_struct <structtagsystaskresume__struct>` :ref:`systaskresume_struct <group___sys_task_itf_1ga30a91132f57f670a2c5ec3ce65699583>`
+
+- typedef void(* :ref:`PFSYSTASKRESUME_IEC <group___sys_task_itf_1ga713f87236e40ab8a98bea3b626a8717d>`)(systaskresume_struct *p)
+
+- typedef struct :ref:`tagsystasksetexit_struct <structtagsystasksetexit__struct>` :ref:`systasksetexit_struct <group___sys_task_itf_1ga728deea7295335ed6ac952c9add6945a>`
+
+- typedef void(* :ref:`PFSYSTASKSETEXIT_IEC <group___sys_task_itf_1gaa030b2714d963f3f1ed144c2daa68ea2>`)(systasksetexit_struct *p)
+
+- typedef struct :ref:`tagsystasksetinterval_struct <structtagsystasksetinterval__struct>` :ref:`systasksetinterval_struct <group___sys_task_itf_1gae239ecb8a86ba38fa910a884d0f43de4>`
+
+- typedef void(* :ref:`PFSYSTASKSETINTERVAL_IEC <group___sys_task_itf_1gad8d47622e63f52eb55c816e4e13b5d75>`)(systasksetinterval_struct *p)
+
+- typedef struct :ref:`tagsystasksetpriority_struct <structtagsystasksetpriority__struct>` :ref:`systasksetpriority_struct <group___sys_task_itf_1ga3f25f5044ad5d52bed4c92edb09631c2>`
+
+- typedef void(* :ref:`PFSYSTASKSETPRIORITY_IEC <group___sys_task_itf_1gab83a0f3d2055cc38777cafa91e7186e1>`)(systasksetpriority_struct *p)
+
+- typedef struct :ref:`tagsystasksuspend_struct <structtagsystasksuspend__struct>` :ref:`systasksuspend_struct <group___sys_task_itf_1gacd81113792962945a3580f71ba62b3c0>`
+
+- typedef void(* :ref:`PFSYSTASKSUSPEND_IEC <group___sys_task_itf_1gada5b101d75f68566bd65611fb4387bd0>`)(systasksuspend_struct *p)
+
+- typedef struct :ref:`tagsystaskwaitinterval_struct <structtagsystaskwaitinterval__struct>` :ref:`systaskwaitinterval_struct <group___sys_task_itf_1gabd6449b23641bfef9357a1a88c7a26cd>`
+
+- typedef void(* :ref:`PFSYSTASKWAITINTERVAL_IEC <group___sys_task_itf_1gace1d36d47278b95eb0e390aa4c5b0298>`)(systaskwaitinterval_struct *p)
+
+- typedef struct :ref:`tagsystaskwaitsleep_struct <structtagsystaskwaitsleep__struct>` :ref:`systaskwaitsleep_struct <group___sys_task_itf_1gabab00c76212a0ea89b130615a0feebd0>`
+
+- typedef void(* :ref:`PFSYSTASKWAITSLEEP_IEC <group___sys_task_itf_1ga24caa29c5c855411612983c23f504f57>`)(systaskwaitsleep_struct *p)
+
+- typedef struct :ref:`tagsystaskwaitsleepus_struct <structtagsystaskwaitsleepus__struct>` :ref:`systaskwaitsleepus_struct <group___sys_task_itf_1ga0bb62b23c35846a188de097357fae229>`
+
+- typedef void(* :ref:`PFSYSTASKWAITSLEEPUS_IEC <group___sys_task_itf_1ga74e7b8f086650956a7a7fecbd0fd9226>`)(systaskwaitsleepus_struct *p)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSTASKOSGETOSHANDLEFROMTASKINFO <group___sys_task_itf_1ga08b75f41a20d9a30b1a252c3f76fc740>`)(SYS_TASK_INFO *pTask)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSTASKGETFIRST <group___sys_task_itf_1ga73d71737b2567bedb5c99236f231d35c>`)(RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSTASKGETNEXT <group___sys_task_itf_1ga0573498fdf66ddd3253cec83805ca1dd>`)(RTS_HANDLE hPrevTask, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSTASKCREATE <group___sys_task_itf_1gab6482b133db4c638ec4d2b10a729d523>`)(char *pszTaskName, PFSYS_TASK_FUNCTION pFunction, void *pParam, RTS_UI32 ulPriority, RTS_UI32 ulInterval, RTS_UI32 ulStackSize, PFSYS_TASK_EXCEPTIONHANDLER pExceptionHandler, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSTASKCREATE2 <group___sys_task_itf_1gaf6f2a0d054256114a6c11aba61a6d746>`)(char *pszTaskName, char *pszTaskGroup, PFSYS_TASK_FUNCTION pFunction, void *pParam, RTS_UI32 ulPriority, RTS_UI32 ulInterval, RTS_UI32 ulStackSize, PFSYS_TASK_EXCEPTIONHANDLER pExceptionHandler, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKEXIT <group___sys_task_itf_1ga23bb7b9eec5f2513a8c58eb1abad884c>`)(RTS_HANDLE hTask, RTS_UI32 ulTimeoutMs)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKSETEXIT <group___sys_task_itf_1gadfddcbb6be9c42d3b2c08f4dc0f71329>`)(RTS_HANDLE hTask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKAUTORELEASEONEXIT <group___sys_task_itf_1ga3eb02cd5373c1ac1f0a0cfcfd785ae23>`)(RTS_HANDLE hTask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKDESTROY <group___sys_task_itf_1ga06d444ea812242e85fbcae6541f7f1c4>`)(RTS_HANDLE hTask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKSUSPEND <group___sys_task_itf_1ga9c28c2897978cb2bd66e5ac073e94058>`)(RTS_HANDLE hTask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKRESUME <group___sys_task_itf_1gac58028893d9fefa6c8e6cf3ba75c16b6>`)(RTS_HANDLE hTask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKEND <group___sys_task_itf_1ga6871a910b3eed42b997e33bce97d09a2>`)(RTS_HANDLE hTask, RTS_UINTPTR ulExitCode)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKWAITSLEEP <group___sys_task_itf_1ga3527057a1da36a828c9324e52e3b5707>`)(RTS_HANDLE hTask, RTS_UI32 ulMilliSeconds)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKWAITSLEEPUS <group___sys_task_itf_1ga038386d42826ff225a37ce757297cfbe>`)(RTS_HANDLE hTask, RTS_SYSTIME *ptSleepUs)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKWAITINTERVAL <group___sys_task_itf_1gab0c54da484a21aae444d27182d8818d5>`)(RTS_HANDLE hTask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKJOIN <group___sys_task_itf_1gacd9655e8b2f1e145e35c59f6b98e8dd9>`)(RTS_HANDLE hTaskToJoin, RTS_UI32 ulTimeoutMs)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKGETCURRENT <group___sys_task_itf_1ga357cdfc9a552ac09c562ff366490f25d>`)(RTS_HANDLE *phTask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKGETCURRENTOSHANDLE <group___sys_task_itf_1ga3ce0e9d54a48d514802f3c2525c425f6>`)(RTS_HANDLE *puiTaskOSHandle)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKSETPRIORITY <group___sys_task_itf_1gafb8d82f7f01cdff61fa330d8f8e6007f>`)(RTS_HANDLE hTask, RTS_UI32 ulPriority)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKGETPRIORITY <group___sys_task_itf_1gaa7c54f92af97f98a6ef9344563584b2e>`)(RTS_HANDLE hTask, RTS_UI32 *pulPriority)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKGETOSPRIORITY <group___sys_task_itf_1ga588626f5ee75476a18166d8cf1e590b1>`)(RTS_HANDLE hTask, RTS_UI32 *pulOSPriority)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKGETINFO <group___sys_task_itf_1ga1ea2b451ef479136b4386cc1d3748340>`)(RTS_HANDLE hTask, SYS_TASK_INFO **ppInfo)
+
+- typedef char *(* :ref:`PFSYSTASKGETNAME <group___sys_task_itf_1ga48c464e62f4b57664ca65764cd01838b>`)(RTS_HANDLE hTask, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKENTER <group___sys_task_itf_1gaff8b5b2855437d41d3296efcd7c940cd>`)(RTS_HANDLE hTask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKLEAVE <group___sys_task_itf_1gae80dacc93ae676cfb6d767700d1534c5>`)(RTS_HANDLE hTask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKGETCONTEXT <group___sys_task_itf_1gac056c42051483dc38f8e238410e973d8>`)(RTS_HANDLE hTask, RegContext *pContext)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKGENERATEEXCEPTION <group___sys_task_itf_1gaab761cf82814874f202b1384bedf015a>`)(RTS_HANDLE uiTaskOSHandle, RTS_UI32 ulException, RegContext Context)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKCHECKSTACK <group___sys_task_itf_1gab804ea0a6ba753d75cf0951ac3ce41f4>`)(RTS_HANDLE hTask, RTS_UI32 *pulMaxDepth)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSTASKGETOSHANDLE <group___sys_task_itf_1ga01c76da9272a8de61028e118bd0800d5>`)(RTS_HANDLE hTask)
+
+- typedef :ref:`SYS_TASK_INFO <group___sys_task_itf_1ga9483fcdb600821ff56a2cb7cb7847219>` *(* :ref:`PFSYSTASKGETBYOSHANDLE <group___sys_task_itf_1gac1c97cdf9d7aa56d8242d9f5988f705d>`)(RTS_HANDLE uiTaskOSHandle)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSTASKGETHANDLEBYOSHANDLE <group___sys_task_itf_1gaef0ea61f14874ffaa5bcaf53b66f5bfb>`)(RTS_HANDLE uiTaskOSHandle, RTS_RESULT *pResult)
+
+- typedef RTS_UI32(* :ref:`PFSYSTASKGETCONFIGUREDPRIORITY <group___sys_task_itf_1ga27fc35356598350b73e605ea60727d1b>`)(RTS_UI32 ulPriority, RTS_RESULT *pResult)
+
+- typedef RTS_UI32(* :ref:`PFSYSTASKGETCONFIGUREDPRIORITY2 <group___sys_task_itf_1ga54bc355b453c902ee5ea939c3d095115>`)(RTS_HANDLE hTask, RTS_UI32 ulPriority, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKGETINTERVAL <group___sys_task_itf_1ga6b50da7572bc4aaeaa193d88aa1bff98>`)(RTS_HANDLE hTask, RTS_UI32 *pulInterval)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKSETINTERVAL <group___sys_task_itf_1ga144b5d5b7143e816b8582436a5cb774f>`)(RTS_HANDLE hTask, RTS_UI32 ulInterval)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKCREATETHREADLOCALSTORAGEKEY <group___sys_task_itf_1gab5bead2900630f6e0a94f69ff2c4d72a>`)(RTS_HANDLE *phKey)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKDELETETHREADLOCALSTORAGEKEY <group___sys_task_itf_1ga9aa95ea5abe7ab87a87f66ce975bfa1a>`)(RTS_HANDLE *phKey)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKSETTHREADLOCALSTORAGE <group___sys_task_itf_1gac09036176b55afb52f6a522919c53eb0>`)(RTS_HANDLE hKey, void *pData)
+
+- typedef void *(* :ref:`PFSYSTASKGETTHREADLOCALSTORAGE <group___sys_task_itf_1gae2c1cf4b0bd8e97a8c33ff32bf8398c2>`)(RTS_HANDLE hKey, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKLOCK <group___sys_task_itf_1gac1169ecbc09ef8174b2b406752f518e5>`)(RTS_HANDLE hTask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSTASKUNLOCK <group___sys_task_itf_1ga244d1f606eb131ff985ef1dae1e52658>`)(RTS_HANDLE hTask)
+
+- typedef void(* :ref:`PFSYSTASKGETTASKHANDLE_IEC <group___sys_task_itf_1ga80141c73dca61e77c23df55a02ad7b39>`)(systaskgettaskhandle_struct *p)
+
+- typedef :ref:`ISysTask_C <struct_i_sys_task___c>` :ref:`ISysTask <group___sys_task_itf_1ga2abf737cc224663ecbc8ed38692b02aa>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`TaskExceptionHandler <group___sys_task_itf___settings_1ga93074b9493638418e35baf05a4fcf2f2>` (RTS_HANDLE hTask, RTS_UI32 ulException, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>`  Context)
+
+- void :ref:`systaskautoreleaseonexit <group___sys_task_itf_1gaca997b2130e8e4fdfe66428653050d55>` (:ref:`systaskautoreleaseonexit_struct <group___sys_task_itf_1ga7f38fdd151779cb9931f6f2ac92c7c75>` * p)
+
+- void :ref:`systaskcheckstack <group___sys_task_itf_1ga890107f30d9d3aac251a6303d95ed5e8>` (:ref:`systaskcheckstack_struct <group___sys_task_itf_1ga1f9f62871821e6aefe7fc6e20cfef40a>` * p)
+
+- void :ref:`systaskcreate <group___sys_task_itf_1gab8e9d8edcade4832169edccd360c9622>` (:ref:`systaskcreate_struct <group___sys_task_itf_1gafcf93a3f93ec2a6446f9a881606e1feb>` * p)
+
+- void :ref:`systaskcreate2 <group___sys_task_itf_1gac37f6f06d87c624397a141ca7334810e>` (:ref:`systaskcreate2_struct <group___sys_task_itf_1ga32ba46b8dae14c4a5af66a5975f0ee45>` * p)
+
+- void :ref:`systaskdestroy <group___sys_task_itf_1ga928f9807ce4c9a670aea0d110123a72e>` (:ref:`systaskdestroy_struct <group___sys_task_itf_1ga4541832ccb9f92bb824d213284aafdc7>` * p)
+
+- void :ref:`systaskend <group___sys_task_itf_1ga50f6434a04ea7e567efb9f95b945e0a7>` (:ref:`systaskend_struct <group___sys_task_itf_1ga8092bbf35ce489e3fb263488803fe809>` * p)
+
+- void :ref:`systaskenter <group___sys_task_itf_1ga27776fbeb4358667c94762df8a9f0f42>` (:ref:`systaskenter_struct <group___sys_task_itf_1ga5a12f919072b8d7870ca0d2042eaeefc>` * p)
+
+- void :ref:`systaskexit <group___sys_task_itf_1ga796a20b0551f659f9cae443820458541>` (:ref:`systaskexit_struct <group___sys_task_itf_1gae43a0f4ea21e48cfa17729fffa57217d>` * p)
+
+- void :ref:`systaskgenerateexception <group___sys_task_itf_1gae208e286cb1b41f7cdbed34ce18fc78a>` (:ref:`systaskgenerateexception_struct <group___sys_task_itf_1ga633304e61eec9bb40643691501c8c578>` * p)
+
+- void :ref:`systaskgetcontext <group___sys_task_itf_1gaf078730d1e896f594ed2318b8677469e>` (:ref:`systaskgetcontext_struct <group___sys_task_itf_1ga9ee14e4f81bbb5002e602f420fd04d91>` * p)
+
+- void :ref:`systaskgetcurrent <group___sys_task_itf_1gacb330b8e1132735446b8fa3804926005>` (:ref:`systaskgetcurrent_struct <group___sys_task_itf_1gaa51d5695075091f02db7ac800a16cad2>` * p)
+
+- void :ref:`systaskgetcurrentoshandle <group___sys_task_itf_1gad51a8fbe1532676b1652f0ef3af2e8c1>` (:ref:`systaskgetcurrentoshandle_struct <group___sys_task_itf_1gaeae2d5ba40daeb25e14b9b8f6eaae4ae>` * p)
+
+- void :ref:`systaskgetinfo <group___sys_task_itf_1ga4c3814d9f74aa60a293a9f54e46673d6>` (:ref:`systaskgetinfo_struct <group___sys_task_itf_1ga36da00da66e022e85e247527f1c6003d>` * p)
+
+- void :ref:`systaskgetinterval <group___sys_task_itf_1gacbd1d4a3ac15e57160a868b0c6be3b34>` (:ref:`systaskgetinterval_struct <group___sys_task_itf_1gaaf6f9ad86a032982ccb51981cd65014e>` * p)
+
+- void :ref:`systaskgetname <group___sys_task_itf_1gab6fb43257a4c35957ac016cb14ddb43d>` (:ref:`systaskgetname_struct <group___sys_task_itf_1gaaf6d75b3ccd6ac35209ffb5dd3d6b61b>` * p)
+
+- void :ref:`systaskgetoshandle <group___sys_task_itf_1ga3ba7815c9a1ee473c87fcfff93ddfd08>` (:ref:`systaskgetoshandle_struct <group___sys_task_itf_1gabdde52d8e8d3a41476b0ac9601065ef5>` * p)
+
+- void :ref:`systaskgetospriority <group___sys_task_itf_1gab2a2948d80dd8ec36db908a160f5d395>` (:ref:`systaskgetospriority_struct <group___sys_task_itf_1gac6c64504a409581be4150ca2bf1c19d9>` * p)
+
+- void :ref:`systaskgetpriority <group___sys_task_itf_1gaa055154a1252922110dd40168fc6e850>` (:ref:`systaskgetpriority_struct <group___sys_task_itf_1gaea837c1ddac5961f630652b4b2de6dca>` * p)
+
+- void :ref:`systaskjoin <group___sys_task_itf_1ga86d27078d2ddd30ce779a026b29841fe>` (:ref:`systaskjoin_struct <group___sys_task_itf_1gac42280e865793347ff2c3a868ec5388a>` * p)
+
+- void :ref:`systaskleave <group___sys_task_itf_1ga459e3e1d4e4a11fe595745b6b616a316>` (:ref:`systaskleave_struct <group___sys_task_itf_1ga4d2f91e698b0b538852f02709dbaf25c>` * p)
+
+- void :ref:`systaskresume <group___sys_task_itf_1gade600f7d23deb7a50eca1a7164fde0c6>` (:ref:`systaskresume_struct <group___sys_task_itf_1ga30a91132f57f670a2c5ec3ce65699583>` * p)
+
+- void :ref:`systasksetexit <group___sys_task_itf_1ga20566a65524a3ba5b7b6653ec4b5e681>` (:ref:`systasksetexit_struct <group___sys_task_itf_1ga728deea7295335ed6ac952c9add6945a>` * p)
+
+- void :ref:`systasksetinterval <group___sys_task_itf_1gacec5ccaad202823b8f522940b8a421f6>` (:ref:`systasksetinterval_struct <group___sys_task_itf_1gae239ecb8a86ba38fa910a884d0f43de4>` * p)
+
+- void :ref:`systasksetpriority <group___sys_task_itf_1gae267a50e88b00b86ce6eb54fac433a44>` (:ref:`systasksetpriority_struct <group___sys_task_itf_1ga3f25f5044ad5d52bed4c92edb09631c2>` * p)
+
+- void :ref:`systasksuspend <group___sys_task_itf_1ga9bad6536a599bf81c3ff563957b47836>` (:ref:`systasksuspend_struct <group___sys_task_itf_1gacd81113792962945a3580f71ba62b3c0>` * p)
+
+- void :ref:`systaskwaitinterval <group___sys_task_itf_1ga49b984e3c2983df6fd721bd9f7f3788f>` (:ref:`systaskwaitinterval_struct <group___sys_task_itf_1gabd6449b23641bfef9357a1a88c7a26cd>` * p)
+
+- void :ref:`systaskwaitsleep <group___sys_task_itf_1ga3526657dc9eb09cb1ce73377471b641d>` (:ref:`systaskwaitsleep_struct <group___sys_task_itf_1gabab00c76212a0ea89b130615a0feebd0>` * p)
+
+- void :ref:`systaskwaitsleepus <group___sys_task_itf_1gad0330474bb431bd59e59dcf505c3db18>` (:ref:`systaskwaitsleepus_struct <group___sys_task_itf_1ga0bb62b23c35846a188de097357fae229>` * p)
+
+- RTS_RESULT :ref:`SysTaskOSInit <group___sys_task_itf_1gaf36e81ef1e02bf8052697f77861a1255>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysTaskOSHookFunction <group___sys_task_itf_1gaa0fe7987fd2eb8f20247f5c9733f00c0>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_HANDLE :ref:`SysTaskOSGetOSHandleFromTaskInfo <group___sys_task_itf_1ga216bd5b882e544ca32bf37ab4f523f34>` (:ref:`SYS_TASK_INFO <group___sys_task_itf_1ga9483fcdb600821ff56a2cb7cb7847219>` * pTask)
+
+- RTS_RESULT :ref:`SysTaskRegisterGetOSHandleFromTaskInfo <group___sys_task_itf_1ga5275286e9b63eb63b986da0d5e81e6bb>` (:ref:`PFSYSTASKOSGETOSHANDLEFROMTASKINFO <group___sys_task_itf_1ga08b75f41a20d9a30b1a252c3f76fc740>`  pfSysTaskOSGetOSHandleFromTaskInfo)
+
+- RTS_HANDLE :ref:`SysTaskGetFirst <group___sys_task_itf_1ga418d035fe70121f226e59a13443cb8a4>` (RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysTaskGetNext <group___sys_task_itf_1gaf8fa41b78f7346fc7bfeeebee2a6d07f>` (RTS_HANDLE hPrevTask, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysTaskCreate <group___sys_task_itf_1ga964f49e68d21683330d1b5cb0c691386>` (char * pszTaskName, :ref:`PFSYS_TASK_FUNCTION <group___sys_task_itf___featureflags_1ga36dbe93cf57db1c10f93be8ac6e2bc4d>`  pFunction, void * pParam, RTS_UI32 ulPriority, RTS_UI32 ulInterval, RTS_UI32 ulStackSize, :ref:`PFSYS_TASK_EXCEPTIONHANDLER <group___sys_task_itf___settings_1gaa84d1f5aa1af833b600b448c3f41031e>`  pExceptionHandler, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysTaskCreate2 <group___sys_task_itf_1ga810499522c5e9821c5790298ff52d1cb>` (char * pszTaskName, char * pszTaskGroup, :ref:`PFSYS_TASK_FUNCTION <group___sys_task_itf___featureflags_1ga36dbe93cf57db1c10f93be8ac6e2bc4d>`  pFunction, void * pParam, RTS_UI32 ulPriority, RTS_UI32 ulInterval, RTS_UI32 ulStackSize, :ref:`PFSYS_TASK_EXCEPTIONHANDLER <group___sys_task_itf___settings_1gaa84d1f5aa1af833b600b448c3f41031e>`  pExceptionHandler, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysTaskExit <group___sys_task_itf_1ga2b66d971cefdb0812f714cd2447727ce>` (RTS_HANDLE hTask, RTS_UI32 ulTimeoutMs)
+
+- RTS_RESULT :ref:`SysTaskSetExit <group___sys_task_itf_1gaec87aea210bbfb32385673ce54827095>` (RTS_HANDLE hTask)
+
+- RTS_RESULT :ref:`SysTaskAutoReleaseOnExit <group___sys_task_itf_1ga1ac643f351df0d476ad7d62d241855be>` (RTS_HANDLE hTask)
+
+- RTS_RESULT :ref:`SysTaskDestroy <group___sys_task_itf_1ga2a983a3672fa81e2d097dea9c96af481>` (RTS_HANDLE hTask)
+
+- RTS_RESULT :ref:`SysTaskSuspend <group___sys_task_itf_1ga62fd1dea620df347eab787499ff449eb>` (RTS_HANDLE hTask)
+
+- RTS_RESULT :ref:`SysTaskResume <group___sys_task_itf_1gaaeb03111bb86bf6c1bff05bf7ca33068>` (RTS_HANDLE hTask)
+
+- RTS_RESULT :ref:`SysTaskEnd <group___sys_task_itf_1ga6f6681092071f09c3de15110ffdb7ec1>` (RTS_HANDLE hTask, RTS_UINTPTR ulExitCode)
+
+- RTS_RESULT :ref:`SysTaskWaitSleep <group___sys_task_itf_1ga2f3635e86d116bb6252ee60f0b83d301>` (RTS_HANDLE hTask, RTS_UI32 ulMilliSeconds)
+
+- RTS_RESULT :ref:`SysTaskWaitSleepUs <group___sys_task_itf_1gad78859ce286d621f51d61c4059bafd4d>` (RTS_HANDLE hTask, :ref:`RTS_SYSTIME <group___sys_time_itf_1ga10c9d9a4c57129d83432fb02923858bf>` * ptSleepUs)
+
+- RTS_RESULT :ref:`SysTaskWaitInterval <group___sys_task_itf_1gac6616866fefd142f6db517dbd178eead>` (RTS_HANDLE hTask)
+
+- RTS_RESULT :ref:`SysTaskJoin <group___sys_task_itf_1gad6bea13cd175ee0cff795704827bba00>` (RTS_HANDLE hTaskToJoin, RTS_UI32 ulTimeoutMs)
+
+- RTS_RESULT :ref:`SysTaskGetCurrent <group___sys_task_itf_1ga4bf4edfb681b2ec5363fcf38b27b1c4e>` (RTS_HANDLE * phTask)
+
+- RTS_RESULT :ref:`SysTaskGetCurrentOSHandle <group___sys_task_itf_1ga1b3fb16f4617fc8bb60648015c037c7e>` (RTS_HANDLE * puiTaskOSHandle)
+
+- RTS_RESULT :ref:`SysTaskSetPriority <group___sys_task_itf_1ga5f2932a1b0e4a2acb36c60a64164c268>` (RTS_HANDLE hTask, RTS_UI32 ulPriority)
+
+- RTS_RESULT :ref:`SysTaskGetPriority <group___sys_task_itf_1ga1d2ce1ade37c9785566aa15676a1033a>` (RTS_HANDLE hTask, RTS_UI32 * pulPriority)
+
+- RTS_RESULT :ref:`SysTaskGetOSPriority <group___sys_task_itf_1ga638d4e6cb0c942bb9962960052a4d622>` (RTS_HANDLE hTask, RTS_UI32 * pulOSPriority)
+
+- RTS_RESULT :ref:`SysTaskGetInfo <group___sys_task_itf_1ga51aa7d470913f992cf02bef5bd7890c9>` (RTS_HANDLE hTask, :ref:`SYS_TASK_INFO <group___sys_task_itf_1ga9483fcdb600821ff56a2cb7cb7847219>` ** ppInfo)
+
+- char * :ref:`SysTaskGetName <group___sys_task_itf_1gabace98ead3c3841789aa6a630edb823b>` (RTS_HANDLE hTask, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysTaskEnter <group___sys_task_itf_1ga3e38459b4d30a310ebf5e13bc91a9cb5>` (RTS_HANDLE hTask)
+
+- RTS_RESULT :ref:`SysTaskLeave <group___sys_task_itf_1gab2100b03694291cefc624ebd7013b914>` (RTS_HANDLE hTask)
+
+- RTS_RESULT :ref:`SysTaskGetContext <group___sys_task_itf_1gaf02ab8edba2e75d7a71b085a8fd7414f>` (RTS_HANDLE hTask, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>` * pContext)
+
+- RTS_RESULT :ref:`SysTaskGenerateException <group___sys_task_itf_1gaf83db6ecd6262b7ecfb0d52302c252e0>` (RTS_HANDLE uiTaskOSHandle, RTS_UI32 ulException, :ref:`RegContext <group___sys_except_itf___exceptioncontext_1gab00884ef66266dc256618d479aade118>`  Context)
+
+- RTS_RESULT :ref:`SysTaskCheckStack <group___sys_task_itf_1gac6624b70717fe6009900d3dbde865200>` (RTS_HANDLE hTask, RTS_UI32 * pulMaxDepth)
+
+- RTS_HANDLE :ref:`SysTaskGetOSHandle <group___sys_task_itf_1gaaac494b00a673dd03535ebd95652ea42>` (RTS_HANDLE hTask)
+
+- :ref:`SYS_TASK_INFO <group___sys_task_itf_1ga9483fcdb600821ff56a2cb7cb7847219>` * :ref:`SysTaskGetByOSHandle <group___sys_task_itf_1ga0801e0abaab3b86bbfb16f20d0f31adb>` (RTS_HANDLE uiTaskOSHandle)
+
+- RTS_HANDLE :ref:`SysTaskGetHandleByOSHandle <group___sys_task_itf_1ga39749ee9e8af11683911dccc6ffcbd3a>` (RTS_HANDLE uiTaskOSHandle, RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`SysTaskGetConfiguredPriority <group___sys_task_itf_1ga0e3056a0ed732c59cc961b4419090ea4>` (RTS_UI32 ulPriority, RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`SysTaskGetConfiguredPriority2 <group___sys_task_itf_1gab0ddef665955b2133c6486846808a86e>` (RTS_HANDLE hTask, RTS_UI32 ulPriority, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysTaskGetInterval <group___sys_task_itf_1gae33ba87e92e7f9da4e0c08612c3470a7>` (RTS_HANDLE hTask, RTS_UI32 * pulInterval)
+
+- RTS_RESULT :ref:`SysTaskSetInterval <group___sys_task_itf_1ga2c12856462591ad81cbfaaf615a18252>` (RTS_HANDLE hTask, RTS_UI32 ulInterval)
+
+- RTS_RESULT :ref:`SysTaskCreateThreadLocalStorageKey <group___sys_task_itf_1ga251525eebcdac5e230e453773abe51d4>` (RTS_HANDLE * phKey)
+
+- RTS_RESULT :ref:`SysTaskDeleteThreadLocalStorageKey <group___sys_task_itf_1gaf4fed918e8a7dd6b8e53f985cc15ea6e>` (RTS_HANDLE * phKey)
+
+- RTS_RESULT :ref:`SysTaskSetThreadLocalStorage <group___sys_task_itf_1ga9bf30d9498870f238ec2b75a7bd4c1d0>` (RTS_HANDLE hKey, void * pData)
+
+- void * :ref:`SysTaskGetThreadLocalStorage <group___sys_task_itf_1ga51e2dc8c503bb9b62459d74b95ac1ced>` (RTS_HANDLE hKey, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysTaskLock <group___sys_task_itf_1gaccd15b15d6d69d065edd8c0c213081ae>` (RTS_HANDLE hTask)
+
+- RTS_RESULT :ref:`SysTaskUnlock <group___sys_task_itf_1ga40aaedad6b0eea642e562889c7b6c023>` (RTS_HANDLE hTask)
+
+- void :ref:`systaskgettaskhandle <group___sys_task_itf_1gaf203fa3d47acde5002ed17a1b9f92b2a>` (:ref:`systaskgettaskhandle_struct <structsystaskgettaskhandle__struct>` * p)
+
+Detailed Description
+--------------------
+
+Definition in file SysTaskItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

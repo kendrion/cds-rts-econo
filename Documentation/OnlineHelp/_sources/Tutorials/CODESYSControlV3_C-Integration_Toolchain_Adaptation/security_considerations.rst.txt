@@ -1,0 +1,29 @@
+.. _security_considerations
+
+
+Security considerations
+=======================
+
+Before enabling the C-Integration on PLC runtimes there are certain
+security considerations to be made. Read the following notices carefully
+and be sure to understand the consequences before actually enabling this
+feature for PLCs.
+
+Since a C Integration Module is mostly loaded like any other runtime
+component, it makes its API visible and accessible through the component
+manager. It will not be possible though to override any other system
+functions exported by other runtime components. It will also not be
+possible to override any other externally implemented IEC library
+functions.
+
+This is achieved by marking C Modules as such for the component manager.
+This allows the component manager to implement strict policies regarding
+the handling of API functions exported by Modules from the C
+Integration.
+
+Nevertheless this feature will enable users to easily write and execute
+C code on the PLC which has full access to the OS and system library
+APIs. This means for example that accessing files can be done without
+the wrapping layer of SysFile by directly using OS functions. Runtime
+settings like the IecFilePath will not affect this file access and users
+will be able to work outside of any sandboxes defined.

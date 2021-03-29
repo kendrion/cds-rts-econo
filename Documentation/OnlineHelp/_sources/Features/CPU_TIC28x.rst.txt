@@ -1,0 +1,43 @@
+.. _feature__c_p_u__t_i_c28x:
+
+
+
+TI C28x Codegenerator 
+=====================
+
+SysCpuHandling implementation notes
+-----------------------------------
+
+- SysCpuGetInstancePointer():
+
+Function to get the instance pointer on the basis of the base pointer. Both the instance pointer and the base pointer are only valid and used in the CODESYS application context. 
+The offset is specific to the platform and is 12 byte for the TI C28x codegenerator.        
+
+An example implementation may be found in Platforms/SysTemplates/Sys/SysCpuHandlingOS.c of the runtime system toolkit.
+
+
+
+Required features
+-----------------
+
+- :ref:`feature__c_p_u`
+
+Required target settings
+------------------------
+
+The following target settings are necessary for this feature:
+
+- :ref:`runtime_features_set_next_statement_supported`
+
+- :ref:`codegenerator_CPU`
+
+- :ref:`codegenerator_codegenerator-guid`
+
+- :ref:`codegenerator_check_misaligned_address`
+
+- :ref:`codegenerator_byte-support`
+
+- :ref:`codegenerator_dp-register-addressing`
+
+- :ref:`memory-layout_pack-mode`
+

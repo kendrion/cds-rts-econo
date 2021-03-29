@@ -1,0 +1,33 @@
+.. _create_library_basic_concepts:
+
+Basic Concepts
+==============
+
+Please also look into CODESYSControlV3_Manual, chapter 10.5 Libraries.
+
+CODESYS libraries can contain “internal” and “external” functions.
+Internal functions are implemented in IEC code and do not require any
+extension of the runtime system. External functions are implemented in C
+code. They are implemented inside a runtime system component.
+
+The following drawing illustrates the structure of a runtime component
+implementing some external library functions:
+
+|image5|
+
+This is an extension of the concept explained in chapter 2.
+
+The CODESYS library contains the interfaces of the external functions.
+Using the menu command “Generate runtime system files”, CODESYS will
+create
+
+-  definitions that will be part of the Itf.m4 file, and
+
+-  code that can be used as a template for the C implementation.
+
+This helps to create components that contain the C functions exactly
+matching the interfaces defined in IEC..
+   
+
+.. |image5| image:: images/image5.png
+   :scale: 50

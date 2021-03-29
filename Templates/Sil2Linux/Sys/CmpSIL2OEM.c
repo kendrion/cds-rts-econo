@@ -25,22 +25,9 @@ USE_STMT
 	#define SIL2OEMCTXSTACKSIZE	20
 #endif
 
-/**
- * <category>Static defines</category>
- * <description>Maximum depth of context switches</description>
- */
-#ifndef SIL2OEMASSUMEDSTACKSIZE
-	#define SIL2OEMASSUMEDSTACKSIZE 0x10000
-#endif
-
 RTS_SIL2_OPMODE g_Sil2OpMode RTS_SIL2_ATTRIBUTE = RTS_SIL2_OPMODE_SAFE;
 static RTS_UI16 s_abyCtxStack[SIL2OEMCTXSTACKSIZE] RTS_SIL2_ATTRIBUTE = {RTS_SIL2_CALLERCTX_SAFE};
 static RTS_UI8 s_byCtxStackDepth RTS_SIL2_ATTRIBUTE = 0;
-
-/* Stack handling */
-register void *esp __asm__ ("esp");
-static RTS_UI8 *s_pbyInitialSP = 0;
-static RTS_UI32 s_uiStackSize = SIL2OEMASSUMEDSTACKSIZE;
 
 /* Memory handling */
 extern void *g_dataarea_startaddress;
@@ -93,7 +80,7 @@ RTS_RESULT CDECL CmpSIL2OEMHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, R
 	{
 		case CH_INIT:		
 		{
-			s_pbyInitialSP = esp;
+			break;
 		}
 		case CH_INIT2:
 		{
@@ -207,13 +194,8 @@ RTS_RESULT CDECL SIL2OEMEnterDebugMode(void)
 
 RTS_RESULT CDECL SIL2OEMStackIsValid(void)
 {
-	RTS_UI8* pbyCurrentSP = esp;
-
-	if(pbyCurrentSP < s_pbyInitialSP || 
-	   pbyCurrentSP > (s_pbyInitialSP + s_uiStackSize))
-		return ERR_FAILED;
-	else
-		return ERR_OK;
+	/* The interface function is obsolete and must return ERR_NOT_IMPLEMENTED */
+	return ERR_NOTIMPLEMENTED;
 }
 
 

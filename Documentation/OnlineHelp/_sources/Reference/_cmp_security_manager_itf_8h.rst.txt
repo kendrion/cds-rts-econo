@@ -1,0 +1,280 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_security_manager_itf_8h:
+
+======================================
+CmpSecurityManagerItf.h File Reference
+======================================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpX509CertItf.h <_cmp_x509_cert_itf_8h>`"
+| #include ":ref:`CmpSettingsItf.h <_cmp_settings_itf_8h>`"
+
+Data Structures
+---------------
+
+- struct :ref:`EVTPARAM_CmpSecMan_ConfigChanged <struct_e_v_t_p_a_r_a_m___cmp_sec_man___config_changed>`
+
+- struct :ref:`_SecuritySetting <struct___security_setting>`
+
+- struct :ref:`_SecuritySelectableSetting <struct___security_selectable_setting>`
+
+- struct :ref:`_SecuritySettingValue <union___security_setting_value>`
+
+- struct :ref:`_SecurityEditableSetting <struct___security_editable_setting>`
+
+- struct :ref:`ICmpSecurityManager_C <struct_i_cmp_security_manager___c>`
+
+Macros
+------
+
+- #define :ref:`RTS_SECMAN_NUMOF_STATIC_SETTINGS <group___cmp_security_manager_itf___staticdefines_1gad2b0a1dc9d94c0d02239a2e222646f36>` 10
+
+- #define :ref:`EVTPARAMID_CmpSecMan_ConfigChanged <group___cmp_security_manager_itf___eventparameter_1ga01c90d5fb2c54188b4ec195d99094748>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpSecMan_ConfigChanged <group___cmp_security_manager_itf___eventparameter_1ga7e9803d546793614d024100fc1cf92a7>` 0x0001
+
+- #define :ref:`EVT_CmpSecMan_ConfigurationChanged <group___cmp_security_manager_itf___events_1ga959ff4f70ebb229b7b49f3968e31a28a>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`CMPSECMAN_FLAGS_NONE <group___cmp_security_manager_itf___security_setting_flags_1ga936df906a0b2f9bd74bd686c30d03a4f>` 0
+
+- #define :ref:`CMPSECMAN_FLAGS_SELECTABLE <group___cmp_security_manager_itf___security_setting_flags_1ga6a2e6ca64e55c6b9a7235b59d8741057>` :ref:`CMPSETTINGS_FLAGS_SELECTABLE <group___cmp_settings_itf___setting_flags_1ga8146c3170232bb6db6e09b2b9e87d3ac>`
+
+- #define :ref:`CMPSECMAN_FLAGS_EDITABLE <group___cmp_security_manager_itf___security_setting_flags_1ga57a45a0a7d66a4aceca6187b2af0f6df>` :ref:`CMPSETTINGS_FLAGS_EDITABLE <group___cmp_settings_itf___setting_flags_1ga54914f63d4c5a20e70956651791976fd>`
+
+- #define :ref:`CMPSECMAN_FLAGS_SETTING_FROM_FILE <group___cmp_security_manager_itf___security_setting_flags_1gad81f3e865aa0b4459bc72b95d46ca93c>` 0x00000010
+
+- #define :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` :ref:`CMPSECMAN_FLAGS_NONE <group___cmp_security_manager_itf___security_setting_flags_1ga936df906a0b2f9bd74bd686c30d03a4f>`
+
+- #define :ref:`CMPSECMAN_EFLAGS_EDITABLE_STRING <group___cmp_security_manager_itf___security_editable_flags_1ga276b3b939b2e05ff270fd9ecd9f53f3f>` :ref:`CMPSETTINGS_EFLAGS_EDITABLE_STRING <group___cmp_settings_itf___editable_flags_1gacd4320127c82662f31f65c33be0ed42a>`
+
+- #define :ref:`CMPSECMAN_EFLAGS_EDITABLE_INT <group___cmp_security_manager_itf___security_editable_flags_1ga3a9d4103e68656319184a3dffd804a97>` :ref:`CMPSETTINGS_EFLAGS_EDITABLE_INT <group___cmp_settings_itf___editable_flags_1gacad2163e74790035f1db5a38ad55c8b0>`
+
+- #define :ref:`SECURITY_KEY_STRING_CREATE_SELFSIGNED_CERT <group___cmp_security_manager_itf___security_settings_1ga9330fc7a6be540dc887bf7a8dbf012a0>` :ref:`CMPSETTINGS_CATEGORY_SECURITY <group___cmp_settings_itf___staticdefines_1gad95afdc82c9205104a5fa22217839b37>` ".CreateSelfSignedCert"
+
+- #define :ref:`SECURITY_KEY_STRING_CREATE_SELFSIGNED_CERT_DESC <group___cmp_security_manager_itf___security_settings_1gad148eb2a46b97cb4d10d392d69c48da0>` "Specifies if self signed certificate should automatically be created during startup!"
+
+- #define :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_YES <group___cmp_security_manager_itf___security_settings_1ga6165135e114cdddf74e347d97ef33084>` "YES"
+
+- #define :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_NO <group___cmp_security_manager_itf___security_settings_1gadb37ab51f0a2f28dc40698556341930f>` "NO"
+
+- #define :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_DEFAULT <group___cmp_security_manager_itf___security_settings_1ga76e48da32b4652eab197e5c98066ddaa>` :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_NO <group___cmp_security_manager_itf___security_settings_1gadb37ab51f0a2f28dc40698556341930f>`
+
+- #define :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_LIST <group___cmp_security_manager_itf_1ga35939aaaf3fa5936143cdba336a6296a>` {\
+{(RTS_I32) :ref:`CREATE_SELFSIGNED_CERT_YES <group___cmp_security_manager_itf_1ggaf936bfb1da8d8e891c8f75cec7e827faae78d10739cde48314e4b64310857aedb>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_YES <group___cmp_security_manager_itf___security_settings_1ga6165135e114cdddf74e347d97ef33084>` , "Create a self-signed cert"},\
+{(RTS_I32) :ref:`CREATE_SELFSIGNED_CERT_NO <group___cmp_security_manager_itf_1ggaf936bfb1da8d8e891c8f75cec7e827faa4ae0110527fddceb670cbb793e994ead>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_NO <group___cmp_security_manager_itf___security_settings_1gadb37ab51f0a2f28dc40698556341930f>` , "Don't create a self-signed cert"}\
+}
+
+- #define :ref:`SECURITYMANAGER_KEY_INT_CREATE_ALL_ON_STARTUP <group___cmp_security_manager_itf___settings_1gab1cd885a3f818879283b38afcff8250a>` "CreateAllOnStartup"
+
+- #define :ref:`SECURITYMANAGER_VALUE_INT_CREATE_ALL_ON_STARTUP_DEFAULT <group___cmp_security_manager_itf___settings_1ga82b77be26ebca2ce64bf561e4fc5348c>` 0
+
+- #define :ref:`SRV_SECMAN_READ_SETTINGS <group___cmp_security_manager_itf___onlineservices_1gaecd4487ce830d67ed6d5baa606cfbd06>` 0x01
+
+- #define :ref:`SRV_SECMAN_WRITE_SETTINGS <group___cmp_security_manager_itf___onlineservices_1ga46e70a3781c88e21d74264388a5ef992>` 0x02
+
+- #define :ref:`TAGNEST_SECURITY_ENTRY <group___cmp_security_manager_itf___onlineservices_1ga3c0a00d5dbba9fffa20ffbc976ce984d>` 0x81
+
+- #define :ref:`TAGNEST_SECURITY_ENTRY_INFO <group___cmp_security_manager_itf___onlineservices_1gaf6ef91e67cb652d422d589c9e830b5c9>` 0x82
+
+- #define :ref:`TAG_RESULT <group___cmp_security_manager_itf___onlineservices_1ga5177e0b86bb50227f6a3fb8bac19c64f>` 0x01
+
+- #define :ref:`TAG_SECURITY_COMPONENT_ID <group___cmp_security_manager_itf___onlineservices_1ga90b96dcaf2a51cd3a4cb74a9a3dfbeef>` 0x10
+
+- #define :ref:`TAG_SECURITY_ID <group___cmp_security_manager_itf___onlineservices_1gae269eedffe795e2712ba51f4fdb7f678>` 0x11
+
+- #define :ref:`TAG_SECURITY_NAME <group___cmp_security_manager_itf___onlineservices_1gaddb0f9050960c457f607b11b18197c52>` 0x12
+
+- #define :ref:`TAG_SECURITY_DESCRIPTION <group___cmp_security_manager_itf___onlineservices_1ga4dac871ec70894b36ba9559f7c24def7>` 0x13
+
+- #define :ref:`TAG_SECURITY_FLAGS <group___cmp_security_manager_itf___onlineservices_1gacd77185f57a367edb4fd69be601028a4>` 0x14
+
+- #define :ref:`TAG_SECURITY_SETTING_ID_SELECTED <group___cmp_security_manager_itf___onlineservices_1ga98f2ea1b9445460b7cb7510ed6320b4b>` 0x15
+
+- #define :ref:`TAG_SECURITY_NUM_OF_SETTINGS <group___cmp_security_manager_itf___onlineservices_1gaed98640c2e9e00d1cf627d455a5efb28>` 0x16
+
+- #define :ref:`TAGNEST_SECURITY_SETTING_SELECTABLE <group___cmp_security_manager_itf___onlineservices_1gae63fd8fc05acf56d4ad559a48511eff5>` 0x83
+
+- #define :ref:`TAG_SECURITY_SETTING_ID <group___cmp_security_manager_itf___onlineservices_1gac694a068d2d7a7c366c21b4f609f3906>` 0x20
+
+- #define :ref:`TAG_SECURITY_SETTING_FLAGS <group___cmp_security_manager_itf___onlineservices_1ga55bee6f84abb5951e2fa5ebdc29a0613>` 0x21
+
+- #define :ref:`TAG_SECURITY_SETTING_NAME <group___cmp_security_manager_itf___onlineservices_1gabe0bb560f379198d814be01d87fe0979>` 0x22
+
+- #define :ref:`TAG_SECURITY_SETTING_DESCRIPTION <group___cmp_security_manager_itf___onlineservices_1ga2a0b8c01a68d1ad1edcddb736d8fbfb5>` 0x23
+
+- #define :ref:`TAGNEST_SECURITY_SETTING_EDITABLE <group___cmp_security_manager_itf___onlineservices_1gafed95c5f2bd0e20d0292efddfc5e2b30>` 0x84
+
+- #define :ref:`TAG_SECURITY_SETTING_VALUE_INT <group___cmp_security_manager_itf___onlineservices_1gae467561de453d9803cbd260785beeae9>` 0x30
+
+- #define :ref:`TAG_SECURITY_SETTING_DEFAULTVALUE_INT <group___cmp_security_manager_itf___onlineservices_1ga77368c18ad720307e6a02185d43c9f05>` 0x31
+
+- #define :ref:`TAG_SECURITY_SETTING_VALUE_STRING <group___cmp_security_manager_itf___onlineservices_1ga960ef7aaabd9a826cc90079169849c0a>` 0x32
+
+- #define :ref:`TAG_SECURITY_SETTING_DEFAULTVALUE_STRING <group___cmp_security_manager_itf___onlineservices_1gabbf5143c2ed2e3bf20b156ff7918366f>` 0x33
+
+- #define :ref:`USE_SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1ga570498e6606ebd9db966a1783fc3151b>` :ref:`PFSECMANREGISTERSELECTABLESETTING <group___cmp_security_manager_itf_1ga88611cd16cd6131f6e9a786764816383>` pfSecManRegisterSelectableSetting;
+
+- #define :ref:`EXT_SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1gabb5ea91909860a4f851691b286e65ff9>` extern :ref:`PFSECMANREGISTERSELECTABLESETTING <group___cmp_security_manager_itf_1ga88611cd16cd6131f6e9a786764816383>` pfSecManRegisterSelectableSetting;
+
+- #define :ref:`GET_SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1gae8ab600fd91811dc73fd75e331d79004>` s_pfCMGetAPI2( "SecManRegisterSelectableSetting", (RTS_VOID_FCTPTR *)&pfSecManRegisterSelectableSetting, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1ga843308af9a6ca67988233d4a300273f5>` pfSecManRegisterSelectableSetting
+
+- #define :ref:`CHK_SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1ga1a47527d7359f45b6e7b6132e4615afe>` (pfSecManRegisterSelectableSetting != NULL)
+
+- #define :ref:`EXP_SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1ga39306ef38694d99175390b2c453d07ee>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManRegisterSelectableSetting", (RTS_UINTPTR) :ref:`SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1gaf76f47f0adf081fe1df891172f801f1c>` , 0, 0)
+
+- #define :ref:`USE_SecManRegisterEditableSetting <group___cmp_security_manager_itf_1gaf6ddbbf5fa555a17fd14f565de4400c6>` :ref:`PFSECMANREGISTEREDITABLESETTING <group___cmp_security_manager_itf_1ga9f18ea91c01f0a1ac2ff0c429bc02a82>` pfSecManRegisterEditableSetting;
+
+- #define :ref:`EXT_SecManRegisterEditableSetting <group___cmp_security_manager_itf_1ga0550c9ef8c63dc7989402568d80eec9b>` extern :ref:`PFSECMANREGISTEREDITABLESETTING <group___cmp_security_manager_itf_1ga9f18ea91c01f0a1ac2ff0c429bc02a82>` pfSecManRegisterEditableSetting;
+
+- #define :ref:`GET_SecManRegisterEditableSetting <group___cmp_security_manager_itf_1ga203e4019e39fc73e1cccc915c51192c8>` s_pfCMGetAPI2( "SecManRegisterEditableSetting", (RTS_VOID_FCTPTR *)&pfSecManRegisterEditableSetting, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManRegisterEditableSetting <group___cmp_security_manager_itf_1gafbf787dd1fd5ea88db603da05ec4b41b>` pfSecManRegisterEditableSetting
+
+- #define :ref:`CHK_SecManRegisterEditableSetting <group___cmp_security_manager_itf_1gac8dc09bbb44f7ae233e0a9501c0f0e60>` (pfSecManRegisterEditableSetting != NULL)
+
+- #define :ref:`EXP_SecManRegisterEditableSetting <group___cmp_security_manager_itf_1gaa3bcb8ce3ecbc4e9808831fa8334c0de>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManRegisterEditableSetting", (RTS_UINTPTR) :ref:`SecManRegisterEditableSetting <group___cmp_security_manager_itf_1ga463715ff698601288f82a1614d708012>` , 0, 0)
+
+- #define :ref:`USE_SecManUnregisterSetting <group___cmp_security_manager_itf_1ga1832e46a229cd9d52bda548447e97e41>` :ref:`PFSECMANUNREGISTERSETTING <group___cmp_security_manager_itf_1ga975a7fe30e9e9cbb4a11a38652427100>` pfSecManUnregisterSetting;
+
+- #define :ref:`EXT_SecManUnregisterSetting <group___cmp_security_manager_itf_1ga01564123d1f0a0e17d4f7727a9ccde62>` extern :ref:`PFSECMANUNREGISTERSETTING <group___cmp_security_manager_itf_1ga975a7fe30e9e9cbb4a11a38652427100>` pfSecManUnregisterSetting;
+
+- #define :ref:`GET_SecManUnregisterSetting <group___cmp_security_manager_itf_1gad44956bb82f89785e1ad036384f3f5f2>` s_pfCMGetAPI2( "SecManUnregisterSetting", (RTS_VOID_FCTPTR *)&pfSecManUnregisterSetting, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManUnregisterSetting <group___cmp_security_manager_itf_1ga4a16bcfc9274ab1a7996fb2cc7ab31af>` pfSecManUnregisterSetting
+
+- #define :ref:`CHK_SecManUnregisterSetting <group___cmp_security_manager_itf_1gad707646448dd9b1d047741ceed76ddff>` (pfSecManUnregisterSetting != NULL)
+
+- #define :ref:`EXP_SecManUnregisterSetting <group___cmp_security_manager_itf_1ga20456e615a605a817dcfcc9f3f7391d3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManUnregisterSetting", (RTS_UINTPTR) :ref:`SecManUnregisterSetting <group___cmp_security_manager_itf_1gaa8aeb0dbc5985248b43b53bfdf037d63>` , 0, 0)
+
+- #define :ref:`USE_SecManFindSetting <group___cmp_security_manager_itf_1ga27784b05224adda779a4950d1730d8eb>` :ref:`PFSECMANFINDSETTING <group___cmp_security_manager_itf_1ga315b3f28e1573604111d4829636dbd94>` pfSecManFindSetting;
+
+- #define :ref:`EXT_SecManFindSetting <group___cmp_security_manager_itf_1gaac562ef87b08bff00174f61d2beb8d79>` extern :ref:`PFSECMANFINDSETTING <group___cmp_security_manager_itf_1ga315b3f28e1573604111d4829636dbd94>` pfSecManFindSetting;
+
+- #define :ref:`GET_SecManFindSetting <group___cmp_security_manager_itf_1gabde2e5e40846549e79b35817619ea017>` s_pfCMGetAPI2( "SecManFindSetting", (RTS_VOID_FCTPTR *)&pfSecManFindSetting, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManFindSetting <group___cmp_security_manager_itf_1gafadcbd952f4f4510b9550f61e178ac42>` pfSecManFindSetting
+
+- #define :ref:`CHK_SecManFindSetting <group___cmp_security_manager_itf_1gacdd7d7bbd43f6836fb903e053b4349a5>` (pfSecManFindSetting != NULL)
+
+- #define :ref:`EXP_SecManFindSetting <group___cmp_security_manager_itf_1ga343953406be9ac2ea8cc295af44dd350>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManFindSetting", (RTS_UINTPTR) :ref:`SecManFindSetting <group___cmp_security_manager_itf_1ga60689d648cafeaf6a7ca8db7740abaa6>` , 0, 0)
+
+- #define :ref:`USE_SecManGetSelectableSetting <group___cmp_security_manager_itf_1ga7e390651f75d499a08d2031f61643d4d>` :ref:`PFSECMANGETSELECTABLESETTING <group___cmp_security_manager_itf_1gad9dfeb0362be5ef1280bffbcc26142c8>` pfSecManGetSelectableSetting;
+
+- #define :ref:`EXT_SecManGetSelectableSetting <group___cmp_security_manager_itf_1ga4c30997eababe42234001489030df92f>` extern :ref:`PFSECMANGETSELECTABLESETTING <group___cmp_security_manager_itf_1gad9dfeb0362be5ef1280bffbcc26142c8>` pfSecManGetSelectableSetting;
+
+- #define :ref:`GET_SecManGetSelectableSetting <group___cmp_security_manager_itf_1ga7b6fa50373a5dbf456fa54faf776100c>` s_pfCMGetAPI2( "SecManGetSelectableSetting", (RTS_VOID_FCTPTR *)&pfSecManGetSelectableSetting, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManGetSelectableSetting <group___cmp_security_manager_itf_1ga32d775d2e6297fa93da19403cf16f3bf>` pfSecManGetSelectableSetting
+
+- #define :ref:`CHK_SecManGetSelectableSetting <group___cmp_security_manager_itf_1gab0601ac96e802666034145a55ce73f3e>` (pfSecManGetSelectableSetting != NULL)
+
+- #define :ref:`EXP_SecManGetSelectableSetting <group___cmp_security_manager_itf_1gac3829125dd3302255d8483e85f4a853f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManGetSelectableSetting", (RTS_UINTPTR) :ref:`SecManGetSelectableSetting <group___cmp_security_manager_itf_1ga7c32a95c317e180c6346bc4a675e34e3>` , 0, 0)
+
+- #define :ref:`USE_SecManGetEditableSetting <group___cmp_security_manager_itf_1gabcdeb00469122d73d52a7fc59145eeab>` :ref:`PFSECMANGETEDITABLESETTING <group___cmp_security_manager_itf_1ga1bf37c94aeb24264a4db192863c4123e>` pfSecManGetEditableSetting;
+
+- #define :ref:`EXT_SecManGetEditableSetting <group___cmp_security_manager_itf_1gad997828298ff4f1a63031795fc66fbdf>` extern :ref:`PFSECMANGETEDITABLESETTING <group___cmp_security_manager_itf_1ga1bf37c94aeb24264a4db192863c4123e>` pfSecManGetEditableSetting;
+
+- #define :ref:`GET_SecManGetEditableSetting <group___cmp_security_manager_itf_1ga4ec2ae7d77643bf5e91a46a92f108b32>` s_pfCMGetAPI2( "SecManGetEditableSetting", (RTS_VOID_FCTPTR *)&pfSecManGetEditableSetting, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManGetEditableSetting <group___cmp_security_manager_itf_1gaf43c2a37f86736551fd71e489a7fcebd>` pfSecManGetEditableSetting
+
+- #define :ref:`CHK_SecManGetEditableSetting <group___cmp_security_manager_itf_1ga83983d0cce4a6c2b10fcdc63acc82407>` (pfSecManGetEditableSetting != NULL)
+
+- #define :ref:`EXP_SecManGetEditableSetting <group___cmp_security_manager_itf_1ga4f89f7dfc61968ab337cc87b1a541c83>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManGetEditableSetting", (RTS_UINTPTR) :ref:`SecManGetEditableSetting <group___cmp_security_manager_itf_1gac609e6d32c1ce75d98e0c71e22023221>` , 0, 0)
+
+- #define :ref:`USE_SecManFillCertificateInfo <group___cmp_security_manager_itf_1ga5c7e81fdc79586efefae035e863e9c0e>` :ref:`PFSECMANFILLCERTIFICATEINFO <group___cmp_security_manager_itf_1ga59cd2b6ef621c29fbdc289709a10f613>` pfSecManFillCertificateInfo;
+
+- #define :ref:`EXT_SecManFillCertificateInfo <group___cmp_security_manager_itf_1ga5028004dccf7f4d0ba6f96ae2a6a6d87>` extern :ref:`PFSECMANFILLCERTIFICATEINFO <group___cmp_security_manager_itf_1ga59cd2b6ef621c29fbdc289709a10f613>` pfSecManFillCertificateInfo;
+
+- #define :ref:`GET_SecManFillCertificateInfo <group___cmp_security_manager_itf_1ga435fa1151ad1d65e71e6f6e5ec35beae>` s_pfCMGetAPI2( "SecManFillCertificateInfo", (RTS_VOID_FCTPTR *)&pfSecManFillCertificateInfo, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManFillCertificateInfo <group___cmp_security_manager_itf_1ga6725f364406c47e8bfa997aa70063c0f>` pfSecManFillCertificateInfo
+
+- #define :ref:`CHK_SecManFillCertificateInfo <group___cmp_security_manager_itf_1ga9cd998364a1f187ab41248254612700a>` (pfSecManFillCertificateInfo != NULL)
+
+- #define :ref:`EXP_SecManFillCertificateInfo <group___cmp_security_manager_itf_1gaa44a8cb2e44511e7297af91b77cc6e6b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManFillCertificateInfo", (RTS_UINTPTR) :ref:`SecManFillCertificateInfo <group___cmp_security_manager_itf_1ga9358c64f6efe1568056e2b031d01a091>` , 0, 0)
+
+- #define :ref:`USE_SecManCheckTlsContext <group___cmp_security_manager_itf_1ga56a49ea4f2395b8e25ea452b327cdac4>` :ref:`PFSECMANCHECKTLSCONTEXT <group___cmp_security_manager_itf_1ga55952535fa6c9cf41d55a3c36e93492a>` pfSecManCheckTlsContext;
+
+- #define :ref:`EXT_SecManCheckTlsContext <group___cmp_security_manager_itf_1ga43c7767a0d335209dbccb213a983ff1f>` extern :ref:`PFSECMANCHECKTLSCONTEXT <group___cmp_security_manager_itf_1ga55952535fa6c9cf41d55a3c36e93492a>` pfSecManCheckTlsContext;
+
+- #define :ref:`GET_SecManCheckTlsContext <group___cmp_security_manager_itf_1ga871e4369948d7ba2a206b51e45e6cfa7>` s_pfCMGetAPI2( "SecManCheckTlsContext", (RTS_VOID_FCTPTR *)&pfSecManCheckTlsContext, (fl), 0, 0)
+
+- #define :ref:`CAL_SecManCheckTlsContext <group___cmp_security_manager_itf_1gaf44c5b136f515132998a3edcd180ee96>` pfSecManCheckTlsContext
+
+- #define :ref:`CHK_SecManCheckTlsContext <group___cmp_security_manager_itf_1ga5e8de9e022128672f009f8969dd5d5e4>` (pfSecManCheckTlsContext != NULL)
+
+- #define :ref:`EXP_SecManCheckTlsContext <group___cmp_security_manager_itf_1ga46d7ec3175de9f265a082b1a7a8ecbf0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SecManCheckTlsContext", (RTS_UINTPTR) :ref:`SecManCheckTlsContext <group___cmp_security_manager_itf_1ga7c5a289e7d7c8a907da11f7480f5d72e>` , 0, 0)
+
+- #define :ref:`ITF_CmpSecurityManager <group___cmp_security_manager_itf_1gabb8559ed66b1ca13dd086babf0f2f536>`
+
+- #define :ref:`EXTITF_CmpSecurityManager <group___cmp_security_manager_itf_1gad28f8c197d677a8154c5311d6692743f>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`_SecuritySetting <struct___security_setting>` :ref:`SecuritySetting <group___cmp_security_manager_itf_1ga2f1b7f04346c3edc9ea7f6466034dde6>`
+
+- typedef struct :ref:`_SecuritySelectableSetting <struct___security_selectable_setting>` :ref:`SecuritySelectableSetting <group___cmp_security_manager_itf_1ga88fb4838e84e3e4a0fb5335b3dae82a5>`
+
+- typedef union :ref:`_SecuritySettingValue <union___security_setting_value>` :ref:`SecuritySettingValue <group___cmp_security_manager_itf_1gac5532c61f8490e8516c74d9ecbdce621>`
+
+- typedef struct :ref:`_SecurityEditableSetting <struct___security_editable_setting>` :ref:`SecurityEditableSetting <group___cmp_security_manager_itf_1ga67af4a9d927839a7122ae38e56266cbb>`
+
+- typedef RTS_HANDLE(* :ref:`PFSECMANREGISTERSELECTABLESETTING <group___cmp_security_manager_itf_1ga88611cd16cd6131f6e9a786764816383>`)(CMPID cmpId, const char *pszKey, const char *pszDescription, const char *pszDefaultSecName, const SecuritySelectableSetting *pList, RTS_UI32 ui32Settings, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSECMANREGISTEREDITABLESETTING <group___cmp_security_manager_itf_1ga9f18ea91c01f0a1ac2ff0c429bc02a82>`)(CMPID cmpId, const char *pszKey, const char *pszDescription, SecurityEditableSetting setting, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSECMANUNREGISTERSETTING <group___cmp_security_manager_itf_1ga975a7fe30e9e9cbb4a11a38652427100>`)(RTS_HANDLE hSecuritySetting)
+
+- typedef RTS_HANDLE(* :ref:`PFSECMANFINDSETTING <group___cmp_security_manager_itf_1ga315b3f28e1573604111d4829636dbd94>`)(CMPID cmpId, const char *pszKey, RTS_RESULT *pResult)
+
+- typedef :ref:`SecurityEditableSetting <group___cmp_security_manager_itf_1ga67af4a9d927839a7122ae38e56266cbb>` *(* :ref:`PFSECMANGETEDITABLESETTING <group___cmp_security_manager_itf_1ga1bf37c94aeb24264a4db192863c4123e>`)(RTS_HANDLE hSecuritySetting, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSECMANFILLCERTIFICATEINFO <group___cmp_security_manager_itf_1ga59cd2b6ef621c29fbdc289709a10f613>`)(CMPID cmpId, RtsX509CertInfo *pCertInfo)
+
+- typedef RTS_RESULT(* :ref:`PFSECMANCHECKTLSCONTEXT <group___cmp_security_manager_itf_1ga55952535fa6c9cf41d55a3c36e93492a>`)(RTS_UI32 ui32TlsMethod, char *pszCipherList, RTS_I32 i32VerifyMode)
+
+- typedef :ref:`ICmpSecurityManager_C <struct_i_cmp_security_manager___c>` :ref:`ICmpSecurityManager <group___cmp_security_manager_itf_1gaa1fb4c1920957a44b230de3a550debee>`
+
+Enumerations
+------------
+
+- enum :ref:`SECURITY_CREATESELFSIGNEDCERT_IDS <group___cmp_security_manager_itf_1gaf936bfb1da8d8e891c8f75cec7e827fa>` { :ref:`CREATE_SELFSIGNED_CERT_YES <group___cmp_security_manager_itf_1ggaf936bfb1da8d8e891c8f75cec7e827faae78d10739cde48314e4b64310857aedb>`, :ref:`CREATE_SELFSIGNED_CERT_NO <group___cmp_security_manager_itf_1ggaf936bfb1da8d8e891c8f75cec7e827faa4ae0110527fddceb670cbb793e994ead>` }
+
+Functions
+---------
+
+- RTS_HANDLE :ref:`SecManRegisterSelectableSetting <group___cmp_security_manager_itf_1gaf76f47f0adf081fe1df891172f801f1c>` (CMPID cmpId, const char * pszKey, const char * pszDescription, const char * pszDefaultSecName, const :ref:`SecuritySelectableSetting <group___cmp_security_manager_itf_1ga88fb4838e84e3e4a0fb5335b3dae82a5>` * pList, RTS_UI32 ui32Settings, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SecManRegisterEditableSetting <group___cmp_security_manager_itf_1ga463715ff698601288f82a1614d708012>` (CMPID cmpId, const char * pszKey, const char * pszDescription, :ref:`SecurityEditableSetting <group___cmp_security_manager_itf_1ga67af4a9d927839a7122ae38e56266cbb>`  setting, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SecManUnregisterSetting <group___cmp_security_manager_itf_1gaa8aeb0dbc5985248b43b53bfdf037d63>` (RTS_HANDLE hSecuritySetting)
+
+- RTS_HANDLE :ref:`SecManFindSetting <group___cmp_security_manager_itf_1ga60689d648cafeaf6a7ca8db7740abaa6>` (CMPID cmpId, const char * pszKey, RTS_RESULT * pResult)
+
+- const :ref:`SecuritySelectableSetting <group___cmp_security_manager_itf_1ga88fb4838e84e3e4a0fb5335b3dae82a5>` * :ref:`SecManGetSelectableSetting <group___cmp_security_manager_itf_1ga7c32a95c317e180c6346bc4a675e34e3>` (RTS_HANDLE hSecuritySetting, RTS_RESULT * pResult)
+
+- :ref:`SecurityEditableSetting <group___cmp_security_manager_itf_1ga67af4a9d927839a7122ae38e56266cbb>` * :ref:`SecManGetEditableSetting <group___cmp_security_manager_itf_1gac609e6d32c1ce75d98e0c71e22023221>` (RTS_HANDLE hSecuritySetting, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SecManFillCertificateInfo <group___cmp_security_manager_itf_1ga9358c64f6efe1568056e2b031d01a091>` (CMPID cmpId, :ref:`RtsX509CertInfo <group___cmp_x509_cert_itf_1ga96114d4c034d1905d83ce6d9a53c9a16>` * pCertInfo)
+
+- RTS_RESULT :ref:`SecManCheckTlsContext <group___cmp_security_manager_itf_1ga7c5a289e7d7c8a907da11f7480f5d72e>` (RTS_UI32 ui32TlsMethod, char * pszCipherList, RTS_I32 i32VerifyMode)
+
+Detailed Description
+--------------------
+
+Definition in file CmpSecurityManagerItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

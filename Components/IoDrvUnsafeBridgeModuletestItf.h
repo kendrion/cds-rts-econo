@@ -9,7 +9,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -230,7 +230,7 @@ typedef RTS_RESULT (CDECL * PFIODRVGETINFO) (RTS_HANDLE hIoDrv, IoDrvInfo **ppIn
  * driver, it has to call this function manually.</p>
  * <p>The IoDrvUnsafeBridge implementation calls the corresponding unsafe IO driver, which
  * is responsible for the given connector, with the corresponding copied IO configuration
- * via SIL2OEMExecuteNonSafetyJob function and copies the updated flags to the original
+ * via SIL2OEMExecuteNonSafetyJob2() function and copies the updated flags to the original
  * configuration afterwards.</p>
  * </description>
  * <param name="hIoDrv" type="IN" range="[RTS_INVALID_HANDLE,VALID_IODRIVER_HANDLE]">Handle to the IO-driver instance</param> 
@@ -817,9 +817,9 @@ typedef RTS_RESULT (CDECL * PFIODRVWATCHDOGTRIGGER) (RTS_HANDLE hIoDrv, IoConfig
  * than one connector, it might get more than one call with
  * a different subset of the task map list.</p>
  * <p>The I/O driver should write out the data to the local
- * hardware, a buffer or a fieldbus.</p>
+ * hardware, a buffer or a field-bus.</p>
  * <p>The IoDrvUnsafeBridgeImplementation copies the output values to unsafe 
- * memory and passes this call to the corresponding unsafe io driver with the
+ * memory and passes this call to the corresponding unsafe IO driver with the
  * copied connector list.</p>
  * </description>
  * <param name="hIoDrv" type="IN" range="[RTS_INVALID_HANDLE,VALID_IODRIVER_HANDLE]">Handle to the IO-driver instance</param> 

@@ -1,0 +1,304 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_user_d_b_itf:
+
+============
+CmpUserDBItf
+============
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpUserDB.
+
+Detailed Description
+--------------------
+
+This interface provides the minimal set of functions that must be implemented to replace the default CODESYS user database. The main part is the possibility to authenticate users with different protocols. There may be several components that implement this interface. A component which implements this interface has to register at the CmpUserMgr to be called during the login process.
+
+Calls to AuthenticateUser grant or deny access of a user within the login process.
+
+IMPLEMENTATION NOTE: The implementation of AuthenticateUser affects the security of the login process itself. Pay attention to the following aspects: 1. The result of the Login process should not allow any hints if the user identifier or the credentials are wrong. Just return a binary result. 2. The complete protocol must be done even if a user does not exist. Fill the protocol with random data if a user does not exist to prevent timing based side channel attacks. E.g. do not immediately return ERR_ACCESS_DENIED if a user does not exist.
+
+**Copyright:**
+
+Copyright (c) 2019 CODESYS Development GmbH. All rights reserved.
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpUserDB_C <struct_i_cmp_user_d_b___c>`
+
+Macros
+------
+
+- #define :ref:`USE_UserDBAuthenticate <group___cmp_user_d_b_itf_1ga570194322e0551483905fe88fd1ae1dd>`
+
+- #define :ref:`EXT_UserDBAuthenticate <group___cmp_user_d_b_itf_1ga9dc5b0677c7e7bf120cc6c7c880c1bd8>`
+
+- #define :ref:`GET_UserDBAuthenticate <group___cmp_user_d_b_itf_1gabb341d30be4e49624964aeaf8ba0cb60>` ERR_OK
+
+- #define :ref:`CAL_UserDBAuthenticate <group___cmp_user_d_b_itf_1ga68f8d8cdfa94da681de954b6103e2031>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserDB <group___cmp_user_d_b_itf_1gacfbe54e170156b44b8a61ff41bfdb230>` *)p0)->IUserDBAuthenticate((( :ref:`ICmpUserDB <group___cmp_user_d_b_itf_1gacfbe54e170156b44b8a61ff41bfdb230>` *)p0)->pBase->hInstance,p1,p2,p3))
+
+- #define :ref:`CHK_UserDBAuthenticate <group___cmp_user_d_b_itf_1ga842bb01080c9f65aa41bbad15e02c721>` TRUE
+
+- #define :ref:`EXP_UserDBAuthenticate <group___cmp_user_d_b_itf_1ga8c655f90f1143d978e1b89affa513005>` ERR_OK
+
+- #define :ref:`USE_UserDBGetFirstUser <group___cmp_user_d_b_itf_1ga9dd83c30731752c3c6c3ad7c56870fbf>`
+
+- #define :ref:`EXT_UserDBGetFirstUser <group___cmp_user_d_b_itf_1ga617c7a8927103cfe481b5fc04ef9296d>`
+
+- #define :ref:`GET_UserDBGetFirstUser <group___cmp_user_d_b_itf_1ga597fa3d5f0f61523827bd036ffbac657>` ERR_OK
+
+- #define :ref:`CAL_UserDBGetFirstUser <group___cmp_user_d_b_itf_1ga0a1671cdcabaa027046229cf61c7cb91>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? 0 : (( :ref:`ICmpUserDB <group___cmp_user_d_b_itf_1gacfbe54e170156b44b8a61ff41bfdb230>` *)p0)->IUserDBGetFirstUser((( :ref:`ICmpUserDB <group___cmp_user_d_b_itf_1gacfbe54e170156b44b8a61ff41bfdb230>` *)p0)->pBase->hInstance,p1,p2,p3))
+
+- #define :ref:`CHK_UserDBGetFirstUser <group___cmp_user_d_b_itf_1ga7e1b989b131fb70d2a68fe52c1ee19b5>` TRUE
+
+- #define :ref:`EXP_UserDBGetFirstUser <group___cmp_user_d_b_itf_1gaa10f89ce9eb8b9733c25fb85772c1cd9>` ERR_OK
+
+- #define :ref:`USE_UserDBGetNextUser <group___cmp_user_d_b_itf_1ga2f3f2cc0a90a5d29acc84b980e0800ba>`
+
+- #define :ref:`EXT_UserDBGetNextUser <group___cmp_user_d_b_itf_1ga8db93f46bfcfb477a55c897e7c141379>`
+
+- #define :ref:`GET_UserDBGetNextUser <group___cmp_user_d_b_itf_1ga0998016a8689f230bdf361037d02ac06>` ERR_OK
+
+- #define :ref:`CAL_UserDBGetNextUser <group___cmp_user_d_b_itf_1ga51bb20a8c754ae2d5af9bd7efcdeb317>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? 0 : (( :ref:`ICmpUserDB <group___cmp_user_d_b_itf_1gacfbe54e170156b44b8a61ff41bfdb230>` *)p0)->IUserDBGetNextUser((( :ref:`ICmpUserDB <group___cmp_user_d_b_itf_1gacfbe54e170156b44b8a61ff41bfdb230>` *)p0)->pBase->hInstance,p1,p2,p3))
+
+- #define :ref:`CHK_UserDBGetNextUser <group___cmp_user_d_b_itf_1ga3344fd8727c316e9fc6d48344b07f02d>` TRUE
+
+- #define :ref:`EXP_UserDBGetNextUser <group___cmp_user_d_b_itf_1ga7e5c0a85d3cc7147edc305bb131ef5fe>` ERR_OK
+
+- #define :ref:`ITF_CmpUserDB <group___cmp_user_d_b_itf_1gabb53395a6a984a913f911edb18b6ec1b>`
+
+- #define :ref:`EXTITF_CmpUserDB <group___cmp_user_d_b_itf_1ga8b7950f1d381f98051d500246a570700>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFUSERDBAUTHENTICATE <group___cmp_user_d_b_itf_1gab32f534466baecd171fd08afedc147a3>`)(RTS_HANDLE hDatabase, char *pszUser, UserMgrCredentials *pCredentials, RTS_UI32 *pUserProperty)
+
+- typedef char *(* :ref:`PFUSERDBGETFIRSTUSER <group___cmp_user_d_b_itf_1gaec05f7320e0393c246f9b856e5119125>`)(RTS_HANDLE hDatabase, RTS_HANDLE *hIterator, RTS_UI32 *pUserProperty, RTS_RESULT *pResult)
+
+- typedef char *(* :ref:`PFUSERDBGETNEXTUSER <group___cmp_user_d_b_itf_1ga8fcdcc77dd78ee69fcbf12ecdaa58366>`)(RTS_HANDLE hDatabase, RTS_HANDLE *hIterator, RTS_UI32 *pUserProperty, RTS_RESULT *pResult)
+
+- typedef :ref:`ICmpUserDB_C <struct_i_cmp_user_d_b___c>` :ref:`ICmpUserDB <group___cmp_user_d_b_itf_1gacfbe54e170156b44b8a61ff41bfdb230>`
+
+Functions
+---------
+
+- STATICITF_DEF RTS_RESULT :ref:`UserDBAuthenticate <group___cmp_user_d_b_itf_1ga3aea3c5c98932d06b5083cfde5709944>` (RTS_HANDLE hDatabase, char * pszUser, :ref:`UserMgrCredentials <struct_user_mgr_credentials>` * pCredentials, RTS_UI32 * pUserProperty)
+
+- STATICITF_DEF char * :ref:`UserDBGetFirstUser <group___cmp_user_d_b_itf_1gac6c583adcf10b05f5a5325b69df9fa92>` (RTS_HANDLE hDatabase, RTS_HANDLE * hIterator, RTS_UI32 * pUserProperty, RTS_RESULT * pResult)
+
+- STATICITF_DEF char * :ref:`UserDBGetNextUser <group___cmp_user_d_b_itf_1gaf00d10c7dc5376d37cf79fa03e041068>` (RTS_HANDLE hDatabase, RTS_HANDLE * hIterator, RTS_UI32 * pUserProperty, RTS_RESULT * pResult)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_user_d_b_itf_1ga570194322e0551483905fe88fd1ae1dd:
+
+#define USE_UserDBAuthenticate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga9dc5b0677c7e7bf120cc6c7c880c1bd8:
+
+#define EXT_UserDBAuthenticate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1gabb341d30be4e49624964aeaf8ba0cb60:
+
+#define GET_UserDBAuthenticate ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga68f8d8cdfa94da681de954b6103e2031:
+
+#define CAL_UserDBAuthenticate (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserDB <group___cmp_user_d_b_itf_1gacfbe54e170156b44b8a61ff41bfdb230>` *)p0)->IUserDBAuthenticate((( :ref:`ICmpUserDB <group___cmp_user_d_b_itf_1gacfbe54e170156b44b8a61ff41bfdb230>` *)p0)->pBase->hInstance,p1,p2,p3))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga842bb01080c9f65aa41bbad15e02c721:
+
+#define CHK_UserDBAuthenticate TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga8c655f90f1143d978e1b89affa513005:
+
+#define EXP_UserDBAuthenticate ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga9dd83c30731752c3c6c3ad7c56870fbf:
+
+#define USE_UserDBGetFirstUser
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga617c7a8927103cfe481b5fc04ef9296d:
+
+#define EXT_UserDBGetFirstUser
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga597fa3d5f0f61523827bd036ffbac657:
+
+#define GET_UserDBGetFirstUser ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga0a1671cdcabaa027046229cf61c7cb91:
+
+#define CAL_UserDBGetFirstUser (p0 == RTS_INVALID_HANDLE || p0 == NULL ? 0 : (( :ref:`ICmpUserDB <group___cmp_user_d_b_itf_1gacfbe54e170156b44b8a61ff41bfdb230>` *)p0)->IUserDBGetFirstUser((( :ref:`ICmpUserDB <group___cmp_user_d_b_itf_1gacfbe54e170156b44b8a61ff41bfdb230>` *)p0)->pBase->hInstance,p1,p2,p3))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga7e1b989b131fb70d2a68fe52c1ee19b5:
+
+#define CHK_UserDBGetFirstUser TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1gaa10f89ce9eb8b9733c25fb85772c1cd9:
+
+#define EXP_UserDBGetFirstUser ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga2f3f2cc0a90a5d29acc84b980e0800ba:
+
+#define USE_UserDBGetNextUser
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga8db93f46bfcfb477a55c897e7c141379:
+
+#define EXT_UserDBGetNextUser
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga0998016a8689f230bdf361037d02ac06:
+
+#define GET_UserDBGetNextUser ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga51bb20a8c754ae2d5af9bd7efcdeb317:
+
+#define CAL_UserDBGetNextUser (p0 == RTS_INVALID_HANDLE || p0 == NULL ? 0 : (( :ref:`ICmpUserDB <group___cmp_user_d_b_itf_1gacfbe54e170156b44b8a61ff41bfdb230>` *)p0)->IUserDBGetNextUser((( :ref:`ICmpUserDB <group___cmp_user_d_b_itf_1gacfbe54e170156b44b8a61ff41bfdb230>` *)p0)->pBase->hInstance,p1,p2,p3))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga3344fd8727c316e9fc6d48344b07f02d:
+
+#define CHK_UserDBGetNextUser TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga7e5c0a85d3cc7147edc305bb131ef5fe:
+
+#define EXP_UserDBGetNextUser ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1gabb53395a6a984a913f911edb18b6ec1b:
+
+#define ITF_CmpUserDB
+^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga8b7950f1d381f98051d500246a570700:
+
+#define EXTITF_CmpUserDB
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_user_d_b_itf_1gab32f534466baecd171fd08afedc147a3:
+
+typedef RTS_RESULT( *  PFUSERDBAUTHENTICATE) (RTS_HANDLE hDatabase, char *pszUser, UserMgrCredentials *pCredentials, RTS_UI32 *pUserProperty)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1gaec05f7320e0393c246f9b856e5119125:
+
+typedef char*( *  PFUSERDBGETFIRSTUSER) (RTS_HANDLE hDatabase, RTS_HANDLE *hIterator, RTS_UI32 *pUserProperty, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1ga8fcdcc77dd78ee69fcbf12ecdaa58366:
+
+typedef char*( *  PFUSERDBGETNEXTUSER) (RTS_HANDLE hDatabase, RTS_HANDLE *hIterator, RTS_UI32 *pUserProperty, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_d_b_itf_1gacfbe54e170156b44b8a61ff41bfdb230:
+
+typedef ICmpUserDB_C ICmpUserDB
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_user_d_b_itf_1ga3aea3c5c98932d06b5083cfde5709944:
+
+STATICITF_DEF RTS_RESULT UserDBAuthenticate (RTS_HANDLE hDatabase, char *pszUser, UserMgrCredentials *pCredentials, RTS_UI32 *pUserProperty)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Authenticates a user. Depending the protocol implementation this function must be called several times to finish the login process. Pay attention to pass the same data structure to all these calles.
+
+**Parameters**
+
++---------+---------------+---------------------------------------+
+| [inout] | pLoginContext | Context of the current login process. |
++---------+---------------+---------------------------------------+
+| [out]   | pUserProperty | The properites of the user.           |
++---------+---------------+---------------------------------------+
+
+**Return values**
+
++-------------------+--------------------------------------------------------------------------------------+
+| ERR_OK            | The login process has finished without an error. Authentication successful.          |
++-------------------+--------------------------------------------------------------------------------------+
+| ERR_ACCESS_DENIED | The login process has finished without an error. Authentication not successful.      |
++-------------------+--------------------------------------------------------------------------------------+
+| ERR_PENDING       | The login process has not finished yet.                                              |
++-------------------+--------------------------------------------------------------------------------------+
+| ERR_PARAMETER     | pLoginContext was NULL, or the login type can not be handled by this implementation. |
++-------------------+--------------------------------------------------------------------------------------+
+
+.. _group___cmp_user_d_b_itf_1gac6c583adcf10b05f5a5325b69df9fa92:
+
+STATICITF_DEF char* UserDBGetFirstUser (RTS_HANDLE hDatabase, RTS_HANDLE *hIterator, RTS_UI32 *pUserProperty, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Authenticates a user. Depending the protocol implementation this function must be called several times to finish the login process. Pay attention to pass the same data structure to all these calles.
+
+**Parameters**
+
++---------+---------------+---------------------------------------+
+| [inout] | pLoginContext | Context of the current login process. |
++---------+---------------+---------------------------------------+
+
+**Return values**
+
++---------------+------------------------------------------------------------------------------------------------------------+
+| ERR_OK        | The login process has finished without an error. Check pLoginContext->bAccessGranted of access is granted. |
++---------------+------------------------------------------------------------------------------------------------------------+
+| ERR_PENDING   | The login process has not finished yet. Is equal to pLoginContext->bProtocolFinished                       |
++---------------+------------------------------------------------------------------------------------------------------------+
+| ERR_PARAMETER | pLoginContext was NULL, or the login type can not be handled by this implementation.                       |
++---------------+------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_user_d_b_itf_1gaf00d10c7dc5376d37cf79fa03e041068:
+
+STATICITF_DEF char* UserDBGetNextUser (RTS_HANDLE hDatabase, RTS_HANDLE *hIterator, RTS_UI32 *pUserProperty, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Authenticates a user. Depending the protocol implementation this function must be called several times to finish the login process. Pay attention to pass the same data structure to all these calles.
+
+**Parameters**
+
++---------+---------------+---------------------------------------+
+| [inout] | pLoginContext | Context of the current login process. |
++---------+---------------+---------------------------------------+
+
+**Return values**
+
++---------------+------------------------------------------------------------------------------------------------------------+
+| ERR_OK        | The login process has finished without an error. Check pLoginContext->bAccessGranted of access is granted. |
++---------------+------------------------------------------------------------------------------------------------------------+
+| ERR_PENDING   | The login process has not finished yet. Is equal to pLoginContext->bProtocolFinished                       |
++---------------+------------------------------------------------------------------------------------------------------------+
+| ERR_PARAMETER | pLoginContext was NULL, or the login type can not be handled by this implementation.                       |
++---------------+------------------------------------------------------------------------------------------------------------+
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

@@ -1,0 +1,146 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Basic Concepts &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/theme.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Create an I/O Driver" href="create_io_driver_create_driver.html" />
+    <link rel="prev" title="6.2.3.5. Create an I/O Driver in C" href="create_io_driver.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="create_io_driver_create_driver.html" title="Create an I/O Driver"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="create_io_driver.html" title="6.2.3.5. Create an I/O Driver in C"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >6. Tutorials / HowTos</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >6.2.3. Creating Runtime System Components, Libraries and I/O Drivers</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="create_io_driver.html" accesskey="U">6.2.3.5. Create an I/O Driver in C</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="create_io_driver.html"
+                        title="previous chapter">6.2.3.5. Create an I/O Driver in C</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="create_io_driver_create_driver.html"
+                        title="next chapter">Create an I/O Driver</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="basic-concepts">
+<span id="create-io-driver-basic-concept"></span><h1>Basic Concepts<a class="headerlink" href="#basic-concepts" title="Permalink to this headline">¶</a></h1>
+<p>A CODESYS I/O Driver in C is, in general, just like a normal runtime
+component. So we are using the component from the previous chapter as a
+starting point for our I/O driver. You can also use templates for I/O
+Drivers, like IoDrvSimple or IoDrvVerySimple.</p>
+<p>Every I/O driver must have a corresponding device description file
+(<a href="#id1"><span class="problematic" id="id2">*</span></a>.devdesc.xml). This file defines connectors, parameters and I/O
+channels. Every element is identified by an unique id. The corresponding
+I/O driver must know these unique ids.</p>
+<p>For more information about device description files, see also
+CODESYS_DeviceDescriptions_en.pptx.</p>
+<p>For more information about device description files and I/O drivers, see
+also CODESYSControlV3_Manual.pdf, chapter 7 Device- / I/O Configuration
+and chapter 8 I/O Drivers.</p>
+<p>The I/O Driver component will use additional interfaces. They will be
+added to the USE_ITF section of the dep.m4 file:</p>
+<ul class="simple">
+<li><p>CmpIoMgr: We need to register our driver at the I/O Manager.</p></li>
+<li><p>SysMem: We need to allocate some memory dynamically for our driver
+instance.</p></li>
+<li><p>SysCpuHandling: We want to allow bit access and use
+SysCpuTestAndSet() for this.</p></li>
+</ul>
+<p>Additionally to this, we also need to implement some predefined
+interfaces in our component. They will be added to the IMPLEMENT_ITF
+statement of the dep.m4 file:</p>
+<ul class="simple">
+<li><p>CmpIoDrvItf: This is the I/O driver interface and defines functions
+like „IoDrvReadInputs()“, „IoDrvWriteOutputs()“ or
+„IoDrvUpdateConfiguration()“. This is the main interface between an
+IEC task and our I/O driver.</p></li>
+<li><p>CmpIoDrvParameterItf: This is just a small interface. It allows the
+I/O Manager to read parameters from the I/O Driver. Implementing this
+interface is optional.</p></li>
+</ul>
+<p>These interfaces are already defined in CmpIoDrvItf.m4 and
+CmpIoDrvParameterItf.m4. We don’t need to define new interfaces, in
+contrary to libraries described above. We also don’t need to create a
+new CODESYS library for an I/O driver written in C.</p>
+<p>In the runtime system core, the component I/O Manager (CmpIoMgr) manages
+all I/O drivers. Calls to the I/O drivers are made through this
+component. They are not made directly from the IEC code to the IO
+driver.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="create_io_driver_create_driver.html" title="Create an I/O Driver"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="create_io_driver.html" title="6.2.3.5. Create an I/O Driver in C"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >6. Tutorials / HowTos</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >6.2.3. Creating Runtime System Components, Libraries and I/O Drivers</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="create_io_driver.html" >6.2.3.5. Create an I/O Driver in C</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

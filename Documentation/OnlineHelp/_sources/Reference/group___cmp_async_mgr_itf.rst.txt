@@ -1,0 +1,1026 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_async_mgr_itf:
+
+==============
+CmpAsyncMgrItf
+==============
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpAsyncMgr.
+
+Detailed Description
+--------------------
+
+Interface of the asynchronous job manager. This job manager enables, to execute synchronous jobs asynchronously.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Asynchronous job info 2 <group___cmp_async_mgr_itf___asynchronousjobinfo2>`
+
+- :ref:`Settings <group___cmp_async_mgr_itf___settings>`
+
+Data Structures
+---------------
+
+- struct :ref:`ASYNCJOB_IECCALLPARAM_METH <struct_a_s_y_n_c_j_o_b___i_e_c_c_a_l_l_p_a_r_a_m___m_e_t_h>`
+
+- struct :ref:`ASYNCJOB_IECCALLPARAM_FUNC <struct_a_s_y_n_c_j_o_b___i_e_c_c_a_l_l_p_a_r_a_m___f_u_n_c>`
+
+- struct :ref:`ASYNCJOB_TASKPARAM <struct_a_s_y_n_c_j_o_b___t_a_s_k_p_a_r_a_m>`
+
+- struct :ref:`ASYNCJOB_EVENTPARAM <struct_a_s_y_n_c_j_o_b___e_v_e_n_t_p_a_r_a_m>`
+
+- struct :ref:`ASYNCJOB_HOOKPARAM <struct_a_s_y_n_c_j_o_b___h_o_o_k_p_a_r_a_m>`
+
+- struct :ref:`ASYNCJOB_PARAM <union_a_s_y_n_c_j_o_b___p_a_r_a_m>`
+
+- struct :ref:`ASYNCJOB_INFO <struct_a_s_y_n_c_j_o_b___i_n_f_o>`
+
+- struct :ref:`tagasyncadd_struct <structtagasyncadd__struct>`
+
+- struct :ref:`tagasyncgetjobreturnvalue_struct <structtagasyncgetjobreturnvalue__struct>`
+
+- struct :ref:`tagasynckill_struct <structtagasynckill__struct>`
+
+- struct :ref:`tagasyncremove_struct <structtagasyncremove__struct>`
+
+- struct :ref:`tagasyncremoveall_struct <structtagasyncremoveall__struct>`
+
+- struct :ref:`ICmpAsyncMgr_C <struct_i_cmp_async_mgr___c>`
+
+Macros
+------
+
+- #define :ref:`ASYNCJOB_TASK <group___cmp_async_mgr_itf_1gafa67fc3007b68f7a21e1f6d19d983c81>` 0
+
+- #define :ref:`ASYNCJOB_EVENT <group___cmp_async_mgr_itf_1ga7852434d943b0eee3da975283bb6fc0b>` 1
+
+- #define :ref:`ASYNCJOB_HOOK <group___cmp_async_mgr_itf_1gac12ac56ee47beb5c99629e43d80b43ce>` 2
+
+- #define :ref:`ASYNCSTATE_INVALID <group___cmp_async_mgr_itf_1gab90db1a6d169237ed73795b574e2976e>` UINT32_MAX
+
+- #define :ref:`ASYNCSTATE_PENDING <group___cmp_async_mgr_itf_1gada06dd26cee553fe42c73cbc37aaea91>` 0
+
+- #define :ref:`ASYNCSTATE_ACTIVE <group___cmp_async_mgr_itf_1ga00509d3207121697bf73806d77e7c13d>` 1
+
+- #define :ref:`ASYNCSTATE_READY <group___cmp_async_mgr_itf_1ga498801d0bcdbe4e35acd30f1b349fb8b>` 2
+
+- #define :ref:`ASYNCSTATE_ERROR <group___cmp_async_mgr_itf_1ga020d9ca4ac98807de8d33186edb9142a>` 3
+
+- #define :ref:`ASYNCSTATE_TIMEOUT <group___cmp_async_mgr_itf_1ga199c49dcdf48afb03757d1a753728971>` 4
+
+- #define :ref:`ASYNCSTATE_CANCELED <group___cmp_async_mgr_itf_1ga0973a0840c5b5e7e85ecec017c88a9ee>` 6
+
+- #define :ref:`ASYNC_TIMEOUT_INFINITE <group___cmp_async_mgr_itf_1gaeb9731a10800e60ff81b506a53ed21a4>` 0
+
+- #define :ref:`ASYNCMGR_NUM_OF_STATIC_JOBS <group___cmp_async_mgr_itf_1ga3c30a6cc51e34cf5c0ea9fcbdf675e7a>` 10
+
+- #define :ref:`USE_asyncadd <group___cmp_async_mgr_itf_1ga31cd03bd0ecc8f315ecb8616d040825a>` :ref:`PFASYNCADD_IEC <group___cmp_async_mgr_itf_1ga58b2793006152a546b81e071e351d238>` pfasyncadd;
+
+- #define :ref:`EXT_asyncadd <group___cmp_async_mgr_itf_1ga15dcfd62712df310a2dc54b4155e8a99>` extern :ref:`PFASYNCADD_IEC <group___cmp_async_mgr_itf_1ga58b2793006152a546b81e071e351d238>` pfasyncadd;
+
+- #define :ref:`GET_asyncadd <group___cmp_async_mgr_itf_1gab4796bf315b51f76b30d4d876e80f96d>` s_pfCMGetAPI2( "asyncadd", (RTS_VOID_FCTPTR *)&pfasyncadd, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x10FA73A4), 0x03050500)
+
+- #define :ref:`CAL_asyncadd <group___cmp_async_mgr_itf_1ga844eccbeb7663a4fc075db2125b24419>` pfasyncadd
+
+- #define :ref:`CHK_asyncadd <group___cmp_async_mgr_itf_1ga2493c9d7102b7cf7149b8ee418217bb7>` (pfasyncadd != NULL)
+
+- #define :ref:`EXP_asyncadd <group___cmp_async_mgr_itf_1ga9057ed1a12908dc3327ccd313bdb6910>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"asyncadd", (RTS_UINTPTR) :ref:`asyncadd <group___cmp_async_mgr_itf_1gac2e6ab56bb020fee27c981107300b853>` , 1, RTSITF_GET_SIGNATURE(0, 0x10FA73A4), 0x03050500)
+
+- #define :ref:`USE_asyncgetjobreturnvalue <group___cmp_async_mgr_itf_1gade67540a777648bba92c10a2898a68dc>` :ref:`PFASYNCGETJOBRETURNVALUE_IEC <group___cmp_async_mgr_itf_1ga65ca307efc372470edd2fa7079d01b81>` pfasyncgetjobreturnvalue;
+
+- #define :ref:`EXT_asyncgetjobreturnvalue <group___cmp_async_mgr_itf_1ga0ab62fa439f2ab5de879371dedb668fc>` extern :ref:`PFASYNCGETJOBRETURNVALUE_IEC <group___cmp_async_mgr_itf_1ga65ca307efc372470edd2fa7079d01b81>` pfasyncgetjobreturnvalue;
+
+- #define :ref:`GET_asyncgetjobreturnvalue <group___cmp_async_mgr_itf_1ga1d6036040e9cc198dc3b16286e5e9313>` s_pfCMGetAPI2( "asyncgetjobreturnvalue", (RTS_VOID_FCTPTR *)&pfasyncgetjobreturnvalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xFD4D0A88), 0x03050500)
+
+- #define :ref:`CAL_asyncgetjobreturnvalue <group___cmp_async_mgr_itf_1gac1c914ac2a6cf908754990baf8749670>` pfasyncgetjobreturnvalue
+
+- #define :ref:`CHK_asyncgetjobreturnvalue <group___cmp_async_mgr_itf_1ga998b7dd0c31a0d05450e0a7f6dab5e61>` (pfasyncgetjobreturnvalue != NULL)
+
+- #define :ref:`EXP_asyncgetjobreturnvalue <group___cmp_async_mgr_itf_1gabdf6763b99e6aa4d2d83ce1b6ab62fa0>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"asyncgetjobreturnvalue", (RTS_UINTPTR) :ref:`asyncgetjobreturnvalue <group___cmp_async_mgr_itf_1ga202890e297a053926f91dce76f824dde>` , 1, RTSITF_GET_SIGNATURE(0, 0xFD4D0A88), 0x03050500)
+
+- #define :ref:`USE_asynckill <group___cmp_async_mgr_itf_1ga728584ced320e761924fafc1595ada55>` :ref:`PFASYNCKILL_IEC <group___cmp_async_mgr_itf_1ga70a65c70c546bb1f6e06ee9e2b36c415>` pfasynckill;
+
+- #define :ref:`EXT_asynckill <group___cmp_async_mgr_itf_1ga681437ecfdb6f0ba92236e678e2908a2>` extern :ref:`PFASYNCKILL_IEC <group___cmp_async_mgr_itf_1ga70a65c70c546bb1f6e06ee9e2b36c415>` pfasynckill;
+
+- #define :ref:`GET_asynckill <group___cmp_async_mgr_itf_1gad147d4d05b1441d70d61c048412a2631>` s_pfCMGetAPI2( "asynckill", (RTS_VOID_FCTPTR *)&pfasynckill, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xAE42472A), 0x03050500)
+
+- #define :ref:`CAL_asynckill <group___cmp_async_mgr_itf_1ga2ac86f60c4f3dba01ad6c818a78b5f7b>` pfasynckill
+
+- #define :ref:`CHK_asynckill <group___cmp_async_mgr_itf_1gad7c432c2d10d01e45bbc95bde535f474>` (pfasynckill != NULL)
+
+- #define :ref:`EXP_asynckill <group___cmp_async_mgr_itf_1ga1c13d7b33f79167692582d1ae7e93db5>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"asynckill", (RTS_UINTPTR) :ref:`asynckill <group___cmp_async_mgr_itf_1ga6d218296ba91527196414f73da64e00c>` , 1, RTSITF_GET_SIGNATURE(0, 0xAE42472A), 0x03050500)
+
+- #define :ref:`USE_asyncremove <group___cmp_async_mgr_itf_1ga90bb6d7f0fc83e082f3165456e8a97b8>` :ref:`PFASYNCREMOVE_IEC <group___cmp_async_mgr_itf_1gaddbebefdd5cd17bc21cdaa5d291ce771>` pfasyncremove;
+
+- #define :ref:`EXT_asyncremove <group___cmp_async_mgr_itf_1gaae1c6e26dcd99f2860f03ae0ce1a4e55>` extern :ref:`PFASYNCREMOVE_IEC <group___cmp_async_mgr_itf_1gaddbebefdd5cd17bc21cdaa5d291ce771>` pfasyncremove;
+
+- #define :ref:`GET_asyncremove <group___cmp_async_mgr_itf_1ga493bea1f365a21d50c006b1d6d91e114>` s_pfCMGetAPI2( "asyncremove", (RTS_VOID_FCTPTR *)&pfasyncremove, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xCD84446E), 0x03050500)
+
+- #define :ref:`CAL_asyncremove <group___cmp_async_mgr_itf_1ga133d3859fba090b316d35a29b826abad>` pfasyncremove
+
+- #define :ref:`CHK_asyncremove <group___cmp_async_mgr_itf_1gabaae861108abb562e5c277f7b5f42942>` (pfasyncremove != NULL)
+
+- #define :ref:`EXP_asyncremove <group___cmp_async_mgr_itf_1ga918162305ad6c5b0cc8620dd2fa5c3ab>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"asyncremove", (RTS_UINTPTR) :ref:`asyncremove <group___cmp_async_mgr_itf_1ga4e61b5815488be707003af108189f82d>` , 1, RTSITF_GET_SIGNATURE(0, 0xCD84446E), 0x03050500)
+
+- #define :ref:`USE_asyncremoveall <group___cmp_async_mgr_itf_1ga5e995d5468521924b5d975a2ce09836a>` :ref:`PFASYNCREMOVEALL_IEC <group___cmp_async_mgr_itf_1ga91c489a56ac0aaa0032ceb7423ad1d34>` pfasyncremoveall;
+
+- #define :ref:`EXT_asyncremoveall <group___cmp_async_mgr_itf_1ga6acef9594098665ade8791f7533da3f2>` extern :ref:`PFASYNCREMOVEALL_IEC <group___cmp_async_mgr_itf_1ga91c489a56ac0aaa0032ceb7423ad1d34>` pfasyncremoveall;
+
+- #define :ref:`GET_asyncremoveall <group___cmp_async_mgr_itf_1gae0499f759038f7e22e8b9574d5c38f69>` s_pfCMGetAPI2( "asyncremoveall", (RTS_VOID_FCTPTR *)&pfasyncremoveall, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x17DBEEFC), 0x03050500)
+
+- #define :ref:`CAL_asyncremoveall <group___cmp_async_mgr_itf_1ga760d94f58c9efd9bba4f61628542fa97>` pfasyncremoveall
+
+- #define :ref:`CHK_asyncremoveall <group___cmp_async_mgr_itf_1gaf00de220dcf1050a1eb5e7e2cc03244b>` (pfasyncremoveall != NULL)
+
+- #define :ref:`EXP_asyncremoveall <group___cmp_async_mgr_itf_1ga620d7231dbfef58f6aa0c726c7880673>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"asyncremoveall", (RTS_UINTPTR) :ref:`asyncremoveall <group___cmp_async_mgr_itf_1ga28fc734fee6c02c6607011ee673c810f>` , 1, RTSITF_GET_SIGNATURE(0, 0x17DBEEFC), 0x03050500)
+
+- #define :ref:`USE_AsyncAdd <group___cmp_async_mgr_itf_1gad8d9640f904cf9b5449663113279e0ef>` :ref:`PFASYNCADD <group___cmp_async_mgr_itf_1ga0112dbf1913b2662d414562599ac91b4>` pfAsyncAdd;
+
+- #define :ref:`EXT_AsyncAdd <group___cmp_async_mgr_itf_1gad46c8106377b938c5fe193e56f9094ba>` extern :ref:`PFASYNCADD <group___cmp_async_mgr_itf_1ga0112dbf1913b2662d414562599ac91b4>` pfAsyncAdd;
+
+- #define :ref:`GET_AsyncAdd <group___cmp_async_mgr_itf_1ga84f6b3d6619c3be5571ed30aa4df4e4e>` s_pfCMGetAPI2( "AsyncAdd", (RTS_VOID_FCTPTR *)&pfAsyncAdd, (fl), 0, 0)
+
+- #define :ref:`CAL_AsyncAdd <group___cmp_async_mgr_itf_1ga406d36afcf54d3e38edd638c6f2b5f70>` pfAsyncAdd
+
+- #define :ref:`CHK_AsyncAdd <group___cmp_async_mgr_itf_1gacaf16d69336353afc9f9b925006131ba>` (pfAsyncAdd != NULL)
+
+- #define :ref:`EXP_AsyncAdd <group___cmp_async_mgr_itf_1ga60ddaccdd84dd3bf91fdbf3de8f0e167>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AsyncAdd", (RTS_UINTPTR) :ref:`AsyncAdd <group___cmp_async_mgr_itf_1ga24a8861cf4e1ab703c05b50a3c57fc2d>` , 0, 0)
+
+- #define :ref:`USE_AsyncAdd2 <group___cmp_async_mgr_itf_1gad046d44276de45ea11553b805dc0b6fd>` :ref:`PFASYNCADD2 <group___cmp_async_mgr_itf_1gabe9e34cf57330964630e0a77b39db4f8>` pfAsyncAdd2;
+
+- #define :ref:`EXT_AsyncAdd2 <group___cmp_async_mgr_itf_1gacaea8afb46df7a10e8d44a96481d94f2>` extern :ref:`PFASYNCADD2 <group___cmp_async_mgr_itf_1gabe9e34cf57330964630e0a77b39db4f8>` pfAsyncAdd2;
+
+- #define :ref:`GET_AsyncAdd2 <group___cmp_async_mgr_itf_1ga859427bc652a8482a9b3c22f5f62821f>` s_pfCMGetAPI2( "AsyncAdd2", (RTS_VOID_FCTPTR *)&pfAsyncAdd2, (fl), 0, 0)
+
+- #define :ref:`CAL_AsyncAdd2 <group___cmp_async_mgr_itf_1gacd4e9b371dae5c440abb272411b868f3>` pfAsyncAdd2
+
+- #define :ref:`CHK_AsyncAdd2 <group___cmp_async_mgr_itf_1gac3ceb1386df6aab45a61d4265dfce741>` (pfAsyncAdd2 != NULL)
+
+- #define :ref:`EXP_AsyncAdd2 <group___cmp_async_mgr_itf_1ga8b7e900aae1acc30fe35bdcc50bb6d7e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AsyncAdd2", (RTS_UINTPTR) :ref:`AsyncAdd2 <group___cmp_async_mgr_itf_1ga1eaf8d0b636628842f328bd6db34e36e>` , 0, 0)
+
+- #define :ref:`USE_AsyncAdd3 <group___cmp_async_mgr_itf_1ga8300cd5372e00e018db6ded33c3c5b11>` :ref:`PFASYNCADD3 <group___cmp_async_mgr_itf_1ga3e34101f8a48c478615f8e79d3b224ef>` pfAsyncAdd3;
+
+- #define :ref:`EXT_AsyncAdd3 <group___cmp_async_mgr_itf_1ga189affd45bccf1512f1432d1df98ef6a>` extern :ref:`PFASYNCADD3 <group___cmp_async_mgr_itf_1ga3e34101f8a48c478615f8e79d3b224ef>` pfAsyncAdd3;
+
+- #define :ref:`GET_AsyncAdd3 <group___cmp_async_mgr_itf_1ga35af99a2bdd27a35545de0207ef1ab5a>` s_pfCMGetAPI2( "AsyncAdd3", (RTS_VOID_FCTPTR *)&pfAsyncAdd3, (fl), 0, 0)
+
+- #define :ref:`CAL_AsyncAdd3 <group___cmp_async_mgr_itf_1ga3f402e75d26e527c558fe4c6255e0fb5>` pfAsyncAdd3
+
+- #define :ref:`CHK_AsyncAdd3 <group___cmp_async_mgr_itf_1ga6a28d32235ca2dd15dc1500d531a7aeb>` (pfAsyncAdd3 != NULL)
+
+- #define :ref:`EXP_AsyncAdd3 <group___cmp_async_mgr_itf_1ga741930ab9540dfa583e760c069ec252d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AsyncAdd3", (RTS_UINTPTR) :ref:`AsyncAdd3 <group___cmp_async_mgr_itf_1ga22e67fdfd4c239d83636642389640d40>` , 0, 0)
+
+- #define :ref:`USE_AsyncRemove <group___cmp_async_mgr_itf_1gadabb85030ae320541cc1144b718193b3>` :ref:`PFASYNCREMOVE <group___cmp_async_mgr_itf_1ga77871643e57d6273d5f26e2e46bb5323>` pfAsyncRemove;
+
+- #define :ref:`EXT_AsyncRemove <group___cmp_async_mgr_itf_1ga94cff56a4c3bce7b657cce541e7d0f90>` extern :ref:`PFASYNCREMOVE <group___cmp_async_mgr_itf_1ga77871643e57d6273d5f26e2e46bb5323>` pfAsyncRemove;
+
+- #define :ref:`GET_AsyncRemove <group___cmp_async_mgr_itf_1gafc46e4a75dbf450ef3d7e8be3c495f8f>` s_pfCMGetAPI2( "AsyncRemove", (RTS_VOID_FCTPTR *)&pfAsyncRemove, (fl), 0, 0)
+
+- #define :ref:`CAL_AsyncRemove <group___cmp_async_mgr_itf_1gaf5987654cf8ddfb0c676c118179dc18d>` pfAsyncRemove
+
+- #define :ref:`CHK_AsyncRemove <group___cmp_async_mgr_itf_1gaf4be920f85523be43d00a7dfd5224c7c>` (pfAsyncRemove != NULL)
+
+- #define :ref:`EXP_AsyncRemove <group___cmp_async_mgr_itf_1ga2ac247dd45f3ae98497d4640fe8b4343>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AsyncRemove", (RTS_UINTPTR) :ref:`AsyncRemove <group___cmp_async_mgr_itf_1gaa8908f5354a8722d127fdbf24b11ba5f>` , 0, 0)
+
+- #define :ref:`USE_AsyncRemoveAll <group___cmp_async_mgr_itf_1ga66d3ea9a6d2fbfb1544d05a708124780>` :ref:`PFASYNCREMOVEALL <group___cmp_async_mgr_itf_1gacb188b4524b1a70afa5deda86399948c>` pfAsyncRemoveAll;
+
+- #define :ref:`EXT_AsyncRemoveAll <group___cmp_async_mgr_itf_1ga033fd6ca815afc69784776d7c21e8e33>` extern :ref:`PFASYNCREMOVEALL <group___cmp_async_mgr_itf_1gacb188b4524b1a70afa5deda86399948c>` pfAsyncRemoveAll;
+
+- #define :ref:`GET_AsyncRemoveAll <group___cmp_async_mgr_itf_1gadf87edcd5c02be690bf6bc3b7ee2f3b5>` s_pfCMGetAPI2( "AsyncRemoveAll", (RTS_VOID_FCTPTR *)&pfAsyncRemoveAll, (fl), 0, 0)
+
+- #define :ref:`CAL_AsyncRemoveAll <group___cmp_async_mgr_itf_1ga991520c301745168e807d12570808301>` pfAsyncRemoveAll
+
+- #define :ref:`CHK_AsyncRemoveAll <group___cmp_async_mgr_itf_1ga2f8fe48889d050e3f9272a9935d005f0>` (pfAsyncRemoveAll != NULL)
+
+- #define :ref:`EXP_AsyncRemoveAll <group___cmp_async_mgr_itf_1gaf17a000bb0b93b4dc06861a63287ed27>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AsyncRemoveAll", (RTS_UINTPTR) :ref:`AsyncRemoveAll <group___cmp_async_mgr_itf_1gae0ad2181694b2be591ccc1ce24ae4a47>` , 0, 0)
+
+- #define :ref:`USE_AsyncGetJobReturnValue <group___cmp_async_mgr_itf_1ga21c37fabdc306bb37fdbfc89aae5b607>` :ref:`PFASYNCGETJOBRETURNVALUE <group___cmp_async_mgr_itf_1ga3d2e91891708d782de63c6afe1c1c724>` pfAsyncGetJobReturnValue;
+
+- #define :ref:`EXT_AsyncGetJobReturnValue <group___cmp_async_mgr_itf_1gabd328efe543d458f2a914a39d4642086>` extern :ref:`PFASYNCGETJOBRETURNVALUE <group___cmp_async_mgr_itf_1ga3d2e91891708d782de63c6afe1c1c724>` pfAsyncGetJobReturnValue;
+
+- #define :ref:`GET_AsyncGetJobReturnValue <group___cmp_async_mgr_itf_1ga8702dbcf556d8460fce9816c7ddbe02d>` s_pfCMGetAPI2( "AsyncGetJobReturnValue", (RTS_VOID_FCTPTR *)&pfAsyncGetJobReturnValue, (fl), 0, 0)
+
+- #define :ref:`CAL_AsyncGetJobReturnValue <group___cmp_async_mgr_itf_1gaca01e4cd3587779c972f1ceffc83c030>` pfAsyncGetJobReturnValue
+
+- #define :ref:`CHK_AsyncGetJobReturnValue <group___cmp_async_mgr_itf_1ga44b048b8f58f53b2fe26fd3b870e904b>` (pfAsyncGetJobReturnValue != NULL)
+
+- #define :ref:`EXP_AsyncGetJobReturnValue <group___cmp_async_mgr_itf_1ga1984e3de5b047cdc07014647f5551f0b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AsyncGetJobReturnValue", (RTS_UINTPTR) :ref:`AsyncGetJobReturnValue <group___cmp_async_mgr_itf_1ga7ffda2a2970b1e07ca8c76ef20ce66a1>` , 0, 0)
+
+- #define :ref:`USE_AsyncKill <group___cmp_async_mgr_itf_1ga24b1d669b450dc2bc7c6e3f5e02822b5>` :ref:`PFASYNCKILL <group___cmp_async_mgr_itf_1gaac6985312a4caafbe2515cea440a7205>` pfAsyncKill;
+
+- #define :ref:`EXT_AsyncKill <group___cmp_async_mgr_itf_1ga9b553b3e29a3b36f0d5d3999f43b9ae2>` extern :ref:`PFASYNCKILL <group___cmp_async_mgr_itf_1gaac6985312a4caafbe2515cea440a7205>` pfAsyncKill;
+
+- #define :ref:`GET_AsyncKill <group___cmp_async_mgr_itf_1gab26a9ff08c5c4b793e56c3edfef30200>` s_pfCMGetAPI2( "AsyncKill", (RTS_VOID_FCTPTR *)&pfAsyncKill, (fl), 0, 0)
+
+- #define :ref:`CAL_AsyncKill <group___cmp_async_mgr_itf_1ga3fa0003d18ac08c60bf9c8cc503e87aa>` pfAsyncKill
+
+- #define :ref:`CHK_AsyncKill <group___cmp_async_mgr_itf_1gacfc5c65cd987178c33d062466b625989>` (pfAsyncKill != NULL)
+
+- #define :ref:`EXP_AsyncKill <group___cmp_async_mgr_itf_1gacff7b67a689d9e8029ae8406ba0d4ada>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AsyncKill", (RTS_UINTPTR) :ref:`AsyncKill <group___cmp_async_mgr_itf_1ga33766e6e792a69156f2c97200fd5367b>` , 0, 0)
+
+- #define :ref:`ITF_CmpAsyncMgr <group___cmp_async_mgr_itf_1gaa54366a207d4045fc0e9cd0585e95dca>`
+
+- #define :ref:`EXTITF_CmpAsyncMgr <group___cmp_async_mgr_itf_1ga7a38bdcb893b0735f774acf71e283bc0>`
+
+Typedefs
+--------
+
+- typedef void(* :ref:`PFASYNCMGREXCEPTIONHANDLER <group___cmp_async_mgr_itf_1ga09c0352a7a7751f3a73ec88653f566e0>`)(PFASYNCJOBFUNCTION pAsynFunction, void *pParam, RTS_UI32 ulException, RegContext Context)
+
+- typedef struct :ref:`tagasyncadd_struct <structtagasyncadd__struct>` :ref:`asyncadd_struct <group___cmp_async_mgr_itf_1ga805857f13b7b05e1a4cabca1d7946148>`
+
+- typedef void(* :ref:`PFASYNCADD_IEC <group___cmp_async_mgr_itf_1ga58b2793006152a546b81e071e351d238>`)(asyncadd_struct *p)
+
+- typedef struct :ref:`tagasyncgetjobreturnvalue_struct <structtagasyncgetjobreturnvalue__struct>` :ref:`asyncgetjobreturnvalue_struct <group___cmp_async_mgr_itf_1gaafba9cbd181eb3e2a7eb8f2abf7ec059>`
+
+- typedef void(* :ref:`PFASYNCGETJOBRETURNVALUE_IEC <group___cmp_async_mgr_itf_1ga65ca307efc372470edd2fa7079d01b81>`)(asyncgetjobreturnvalue_struct *p)
+
+- typedef struct :ref:`tagasynckill_struct <structtagasynckill__struct>` :ref:`asynckill_struct <group___cmp_async_mgr_itf_1ga8f4ebbd7b1794042d00ab89470634b5f>`
+
+- typedef void(* :ref:`PFASYNCKILL_IEC <group___cmp_async_mgr_itf_1ga70a65c70c546bb1f6e06ee9e2b36c415>`)(asynckill_struct *p)
+
+- typedef struct :ref:`tagasyncremove_struct <structtagasyncremove__struct>` :ref:`asyncremove_struct <group___cmp_async_mgr_itf_1ga3eede7c640d808d56b27235a4e1a990b>`
+
+- typedef void(* :ref:`PFASYNCREMOVE_IEC <group___cmp_async_mgr_itf_1gaddbebefdd5cd17bc21cdaa5d291ce771>`)(asyncremove_struct *p)
+
+- typedef struct :ref:`tagasyncremoveall_struct <structtagasyncremoveall__struct>` :ref:`asyncremoveall_struct <group___cmp_async_mgr_itf_1gaf4821b290613076a766c62561ffccc71>`
+
+- typedef void(* :ref:`PFASYNCREMOVEALL_IEC <group___cmp_async_mgr_itf_1ga91c489a56ac0aaa0032ceb7423ad1d34>`)(asyncremoveall_struct *p)
+
+- typedef RTS_HANDLE(* :ref:`PFASYNCADD <group___cmp_async_mgr_itf_1ga0112dbf1913b2662d414562599ac91b4>`)(PFASYNCJOBFUNCTION pfAsyncJobFunc, void *pParam, void *pInstance, RTS_UI32 *pulState, RTS_I32 bIecFunc, RTS_UI32 ulType, RTS_UI32 ulTimeout, ASYNCJOB_PARAM *pAsyncJobParam, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFASYNCADD2 <group___cmp_async_mgr_itf_1gabe9e34cf57330964630e0a77b39db4f8>`)(ASYNCJOB_INFO2 *pJob)
+
+- typedef RTS_RESULT(* :ref:`PFASYNCADD3 <group___cmp_async_mgr_itf_1ga3e34101f8a48c478615f8e79d3b224ef>`)(ASYNCJOB_INFO3 *pJob)
+
+- typedef RTS_RESULT(* :ref:`PFASYNCREMOVE <group___cmp_async_mgr_itf_1ga77871643e57d6273d5f26e2e46bb5323>`)(RTS_HANDLE hJob)
+
+- typedef RTS_RESULT(* :ref:`PFASYNCREMOVEALL <group___cmp_async_mgr_itf_1gacb188b4524b1a70afa5deda86399948c>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFASYNCGETJOBRETURNVALUE <group___cmp_async_mgr_itf_1ga3d2e91891708d782de63c6afe1c1c724>`)(RTS_HANDLE hJob, RTS_UI32 *pulRetVal)
+
+- typedef RTS_RESULT(* :ref:`PFASYNCKILL <group___cmp_async_mgr_itf_1gaac6985312a4caafbe2515cea440a7205>`)(RTS_HANDLE hJob)
+
+- typedef :ref:`ICmpAsyncMgr_C <struct_i_cmp_async_mgr___c>` :ref:`ICmpAsyncMgr <group___cmp_async_mgr_itf_1ga82af510067da2833d66a51e44bb90872>`
+
+Functions
+---------
+
+- void :ref:`asyncadd <group___cmp_async_mgr_itf_1gac2e6ab56bb020fee27c981107300b853>` (:ref:`asyncadd_struct <group___cmp_async_mgr_itf_1ga805857f13b7b05e1a4cabca1d7946148>` * p)
+
+- void :ref:`asyncgetjobreturnvalue <group___cmp_async_mgr_itf_1ga202890e297a053926f91dce76f824dde>` (:ref:`asyncgetjobreturnvalue_struct <group___cmp_async_mgr_itf_1gaafba9cbd181eb3e2a7eb8f2abf7ec059>` * p)
+
+- void :ref:`asynckill <group___cmp_async_mgr_itf_1ga6d218296ba91527196414f73da64e00c>` (:ref:`asynckill_struct <group___cmp_async_mgr_itf_1ga8f4ebbd7b1794042d00ab89470634b5f>` * p)
+
+- void :ref:`asyncremove <group___cmp_async_mgr_itf_1ga4e61b5815488be707003af108189f82d>` (:ref:`asyncremove_struct <group___cmp_async_mgr_itf_1ga3eede7c640d808d56b27235a4e1a990b>` * p)
+
+- void :ref:`asyncremoveall <group___cmp_async_mgr_itf_1ga28fc734fee6c02c6607011ee673c810f>` (:ref:`asyncremoveall_struct <group___cmp_async_mgr_itf_1gaf4821b290613076a766c62561ffccc71>` * p)
+
+- RTS_HANDLE :ref:`AsyncAdd <group___cmp_async_mgr_itf_1ga24a8861cf4e1ab703c05b50a3c57fc2d>` (:ref:`PFASYNCJOBFUNCTION <group___cmp_async_mgr_itf___settings_1gabcc43f52a641ac404460670ed66ebb3a>`  pfAsyncJobFunc, void * pParam, void * pInstance, RTS_UI32 * pulState, RTS_I32 bIecFunc, RTS_UI32 ulType, RTS_UI32 ulTimeout, :ref:`ASYNCJOB_PARAM <union_a_s_y_n_c_j_o_b___p_a_r_a_m>` * pAsyncJobParam, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`AsyncAdd2 <group___cmp_async_mgr_itf_1ga1eaf8d0b636628842f328bd6db34e36e>` (:ref:`ASYNCJOB_INFO2 <struct_a_s_y_n_c_j_o_b___i_n_f_o2>` * pJob)
+
+- RTS_RESULT :ref:`AsyncAdd3 <group___cmp_async_mgr_itf_1ga22e67fdfd4c239d83636642389640d40>` (:ref:`ASYNCJOB_INFO3 <struct_a_s_y_n_c_j_o_b___i_n_f_o3>` * pJob)
+
+- RTS_RESULT :ref:`AsyncRemove <group___cmp_async_mgr_itf_1gaa8908f5354a8722d127fdbf24b11ba5f>` (RTS_HANDLE hJob)
+
+- RTS_RESULT :ref:`AsyncRemoveAll <group___cmp_async_mgr_itf_1gae0ad2181694b2be591ccc1ce24ae4a47>` (void)
+
+- RTS_RESULT :ref:`AsyncGetJobReturnValue <group___cmp_async_mgr_itf_1ga7ffda2a2970b1e07ca8c76ef20ce66a1>` (RTS_HANDLE hJob, RTS_UI32 * pulRetVal)
+
+- RTS_RESULT :ref:`AsyncKill <group___cmp_async_mgr_itf_1ga33766e6e792a69156f2c97200fd5367b>` (RTS_HANDLE hJob)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_async_mgr_itf_1gafa67fc3007b68f7a21e1f6d19d983c81:
+
+#define ASYNCJOB_TASK 0
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga7852434d943b0eee3da975283bb6fc0b:
+
+#define ASYNCJOB_EVENT 1
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gac12ac56ee47beb5c99629e43d80b43ce:
+
+#define ASYNCJOB_HOOK 2
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gab90db1a6d169237ed73795b574e2976e:
+
+#define ASYNCSTATE_INVALID UINT32_MAX
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gada06dd26cee553fe42c73cbc37aaea91:
+
+#define ASYNCSTATE_PENDING 0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga00509d3207121697bf73806d77e7c13d:
+
+#define ASYNCSTATE_ACTIVE 1
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga498801d0bcdbe4e35acd30f1b349fb8b:
+
+#define ASYNCSTATE_READY 2
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga020d9ca4ac98807de8d33186edb9142a:
+
+#define ASYNCSTATE_ERROR 3
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga199c49dcdf48afb03757d1a753728971:
+
+#define ASYNCSTATE_TIMEOUT 4
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga0973a0840c5b5e7e85ecec017c88a9ee:
+
+#define ASYNCSTATE_CANCELED 6
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gaeb9731a10800e60ff81b506a53ed21a4:
+
+#define ASYNC_TIMEOUT_INFINITE 0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga3c30a6cc51e34cf5c0ea9fcbdf675e7a:
+
+#define ASYNCMGR_NUM_OF_STATIC_JOBS 10
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga31cd03bd0ecc8f315ecb8616d040825a:
+
+#define USE_asyncadd :ref:`PFASYNCADD_IEC <group___cmp_async_mgr_itf_1ga58b2793006152a546b81e071e351d238>` pfasyncadd;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga15dcfd62712df310a2dc54b4155e8a99:
+
+#define EXT_asyncadd extern :ref:`PFASYNCADD_IEC <group___cmp_async_mgr_itf_1ga58b2793006152a546b81e071e351d238>` pfasyncadd;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gab4796bf315b51f76b30d4d876e80f96d:
+
+#define GET_asyncadd s_pfCMGetAPI2( "asyncadd", (RTS_VOID_FCTPTR *)&pfasyncadd, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x10FA73A4), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga844eccbeb7663a4fc075db2125b24419:
+
+#define CAL_asyncadd pfasyncadd
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga2493c9d7102b7cf7149b8ee418217bb7:
+
+#define CHK_asyncadd (pfasyncadd != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga9057ed1a12908dc3327ccd313bdb6910:
+
+#define EXP_asyncadd s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"asyncadd", (RTS_UINTPTR) :ref:`asyncadd <group___cmp_async_mgr_itf_1gac2e6ab56bb020fee27c981107300b853>` , 1, RTSITF_GET_SIGNATURE(0, 0x10FA73A4), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gade67540a777648bba92c10a2898a68dc:
+
+#define USE_asyncgetjobreturnvalue :ref:`PFASYNCGETJOBRETURNVALUE_IEC <group___cmp_async_mgr_itf_1ga65ca307efc372470edd2fa7079d01b81>` pfasyncgetjobreturnvalue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga0ab62fa439f2ab5de879371dedb668fc:
+
+#define EXT_asyncgetjobreturnvalue extern :ref:`PFASYNCGETJOBRETURNVALUE_IEC <group___cmp_async_mgr_itf_1ga65ca307efc372470edd2fa7079d01b81>` pfasyncgetjobreturnvalue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga1d6036040e9cc198dc3b16286e5e9313:
+
+#define GET_asyncgetjobreturnvalue s_pfCMGetAPI2( "asyncgetjobreturnvalue", (RTS_VOID_FCTPTR *)&pfasyncgetjobreturnvalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xFD4D0A88), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gac1c914ac2a6cf908754990baf8749670:
+
+#define CAL_asyncgetjobreturnvalue pfasyncgetjobreturnvalue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga998b7dd0c31a0d05450e0a7f6dab5e61:
+
+#define CHK_asyncgetjobreturnvalue (pfasyncgetjobreturnvalue != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gabdf6763b99e6aa4d2d83ce1b6ab62fa0:
+
+#define EXP_asyncgetjobreturnvalue s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"asyncgetjobreturnvalue", (RTS_UINTPTR) :ref:`asyncgetjobreturnvalue <group___cmp_async_mgr_itf_1ga202890e297a053926f91dce76f824dde>` , 1, RTSITF_GET_SIGNATURE(0, 0xFD4D0A88), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga728584ced320e761924fafc1595ada55:
+
+#define USE_asynckill :ref:`PFASYNCKILL_IEC <group___cmp_async_mgr_itf_1ga70a65c70c546bb1f6e06ee9e2b36c415>` pfasynckill;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga681437ecfdb6f0ba92236e678e2908a2:
+
+#define EXT_asynckill extern :ref:`PFASYNCKILL_IEC <group___cmp_async_mgr_itf_1ga70a65c70c546bb1f6e06ee9e2b36c415>` pfasynckill;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gad147d4d05b1441d70d61c048412a2631:
+
+#define GET_asynckill s_pfCMGetAPI2( "asynckill", (RTS_VOID_FCTPTR *)&pfasynckill, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xAE42472A), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga2ac86f60c4f3dba01ad6c818a78b5f7b:
+
+#define CAL_asynckill pfasynckill
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gad7c432c2d10d01e45bbc95bde535f474:
+
+#define CHK_asynckill (pfasynckill != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga1c13d7b33f79167692582d1ae7e93db5:
+
+#define EXP_asynckill s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"asynckill", (RTS_UINTPTR) :ref:`asynckill <group___cmp_async_mgr_itf_1ga6d218296ba91527196414f73da64e00c>` , 1, RTSITF_GET_SIGNATURE(0, 0xAE42472A), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga90bb6d7f0fc83e082f3165456e8a97b8:
+
+#define USE_asyncremove :ref:`PFASYNCREMOVE_IEC <group___cmp_async_mgr_itf_1gaddbebefdd5cd17bc21cdaa5d291ce771>` pfasyncremove;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gaae1c6e26dcd99f2860f03ae0ce1a4e55:
+
+#define EXT_asyncremove extern :ref:`PFASYNCREMOVE_IEC <group___cmp_async_mgr_itf_1gaddbebefdd5cd17bc21cdaa5d291ce771>` pfasyncremove;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga493bea1f365a21d50c006b1d6d91e114:
+
+#define GET_asyncremove s_pfCMGetAPI2( "asyncremove", (RTS_VOID_FCTPTR *)&pfasyncremove, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xCD84446E), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga133d3859fba090b316d35a29b826abad:
+
+#define CAL_asyncremove pfasyncremove
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gabaae861108abb562e5c277f7b5f42942:
+
+#define CHK_asyncremove (pfasyncremove != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga918162305ad6c5b0cc8620dd2fa5c3ab:
+
+#define EXP_asyncremove s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"asyncremove", (RTS_UINTPTR) :ref:`asyncremove <group___cmp_async_mgr_itf_1ga4e61b5815488be707003af108189f82d>` , 1, RTSITF_GET_SIGNATURE(0, 0xCD84446E), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga5e995d5468521924b5d975a2ce09836a:
+
+#define USE_asyncremoveall :ref:`PFASYNCREMOVEALL_IEC <group___cmp_async_mgr_itf_1ga91c489a56ac0aaa0032ceb7423ad1d34>` pfasyncremoveall;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga6acef9594098665ade8791f7533da3f2:
+
+#define EXT_asyncremoveall extern :ref:`PFASYNCREMOVEALL_IEC <group___cmp_async_mgr_itf_1ga91c489a56ac0aaa0032ceb7423ad1d34>` pfasyncremoveall;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gae0499f759038f7e22e8b9574d5c38f69:
+
+#define GET_asyncremoveall s_pfCMGetAPI2( "asyncremoveall", (RTS_VOID_FCTPTR *)&pfasyncremoveall, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x17DBEEFC), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga760d94f58c9efd9bba4f61628542fa97:
+
+#define CAL_asyncremoveall pfasyncremoveall
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gaf00de220dcf1050a1eb5e7e2cc03244b:
+
+#define CHK_asyncremoveall (pfasyncremoveall != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga620d7231dbfef58f6aa0c726c7880673:
+
+#define EXP_asyncremoveall s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"asyncremoveall", (RTS_UINTPTR) :ref:`asyncremoveall <group___cmp_async_mgr_itf_1ga28fc734fee6c02c6607011ee673c810f>` , 1, RTSITF_GET_SIGNATURE(0, 0x17DBEEFC), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gad8d9640f904cf9b5449663113279e0ef:
+
+#define USE_AsyncAdd :ref:`PFASYNCADD <group___cmp_async_mgr_itf_1ga0112dbf1913b2662d414562599ac91b4>` pfAsyncAdd;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gad46c8106377b938c5fe193e56f9094ba:
+
+#define EXT_AsyncAdd extern :ref:`PFASYNCADD <group___cmp_async_mgr_itf_1ga0112dbf1913b2662d414562599ac91b4>` pfAsyncAdd;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga84f6b3d6619c3be5571ed30aa4df4e4e:
+
+#define GET_AsyncAdd s_pfCMGetAPI2( "AsyncAdd", (RTS_VOID_FCTPTR *)&pfAsyncAdd, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga406d36afcf54d3e38edd638c6f2b5f70:
+
+#define CAL_AsyncAdd pfAsyncAdd
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gacaf16d69336353afc9f9b925006131ba:
+
+#define CHK_AsyncAdd (pfAsyncAdd != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga60ddaccdd84dd3bf91fdbf3de8f0e167:
+
+#define EXP_AsyncAdd s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AsyncAdd", (RTS_UINTPTR) :ref:`AsyncAdd <group___cmp_async_mgr_itf_1ga24a8861cf4e1ab703c05b50a3c57fc2d>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gad046d44276de45ea11553b805dc0b6fd:
+
+#define USE_AsyncAdd2 :ref:`PFASYNCADD2 <group___cmp_async_mgr_itf_1gabe9e34cf57330964630e0a77b39db4f8>` pfAsyncAdd2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gacaea8afb46df7a10e8d44a96481d94f2:
+
+#define EXT_AsyncAdd2 extern :ref:`PFASYNCADD2 <group___cmp_async_mgr_itf_1gabe9e34cf57330964630e0a77b39db4f8>` pfAsyncAdd2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga859427bc652a8482a9b3c22f5f62821f:
+
+#define GET_AsyncAdd2 s_pfCMGetAPI2( "AsyncAdd2", (RTS_VOID_FCTPTR *)&pfAsyncAdd2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gacd4e9b371dae5c440abb272411b868f3:
+
+#define CAL_AsyncAdd2 pfAsyncAdd2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gac3ceb1386df6aab45a61d4265dfce741:
+
+#define CHK_AsyncAdd2 (pfAsyncAdd2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga8b7e900aae1acc30fe35bdcc50bb6d7e:
+
+#define EXP_AsyncAdd2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AsyncAdd2", (RTS_UINTPTR) :ref:`AsyncAdd2 <group___cmp_async_mgr_itf_1ga1eaf8d0b636628842f328bd6db34e36e>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga8300cd5372e00e018db6ded33c3c5b11:
+
+#define USE_AsyncAdd3 :ref:`PFASYNCADD3 <group___cmp_async_mgr_itf_1ga3e34101f8a48c478615f8e79d3b224ef>` pfAsyncAdd3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga189affd45bccf1512f1432d1df98ef6a:
+
+#define EXT_AsyncAdd3 extern :ref:`PFASYNCADD3 <group___cmp_async_mgr_itf_1ga3e34101f8a48c478615f8e79d3b224ef>` pfAsyncAdd3;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga35af99a2bdd27a35545de0207ef1ab5a:
+
+#define GET_AsyncAdd3 s_pfCMGetAPI2( "AsyncAdd3", (RTS_VOID_FCTPTR *)&pfAsyncAdd3, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga3f402e75d26e527c558fe4c6255e0fb5:
+
+#define CAL_AsyncAdd3 pfAsyncAdd3
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga6a28d32235ca2dd15dc1500d531a7aeb:
+
+#define CHK_AsyncAdd3 (pfAsyncAdd3 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga741930ab9540dfa583e760c069ec252d:
+
+#define EXP_AsyncAdd3 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AsyncAdd3", (RTS_UINTPTR) :ref:`AsyncAdd3 <group___cmp_async_mgr_itf_1ga22e67fdfd4c239d83636642389640d40>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gadabb85030ae320541cc1144b718193b3:
+
+#define USE_AsyncRemove :ref:`PFASYNCREMOVE <group___cmp_async_mgr_itf_1ga77871643e57d6273d5f26e2e46bb5323>` pfAsyncRemove;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga94cff56a4c3bce7b657cce541e7d0f90:
+
+#define EXT_AsyncRemove extern :ref:`PFASYNCREMOVE <group___cmp_async_mgr_itf_1ga77871643e57d6273d5f26e2e46bb5323>` pfAsyncRemove;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gafc46e4a75dbf450ef3d7e8be3c495f8f:
+
+#define GET_AsyncRemove s_pfCMGetAPI2( "AsyncRemove", (RTS_VOID_FCTPTR *)&pfAsyncRemove, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gaf5987654cf8ddfb0c676c118179dc18d:
+
+#define CAL_AsyncRemove pfAsyncRemove
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gaf4be920f85523be43d00a7dfd5224c7c:
+
+#define CHK_AsyncRemove (pfAsyncRemove != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga2ac247dd45f3ae98497d4640fe8b4343:
+
+#define EXP_AsyncRemove s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AsyncRemove", (RTS_UINTPTR) :ref:`AsyncRemove <group___cmp_async_mgr_itf_1gaa8908f5354a8722d127fdbf24b11ba5f>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga66d3ea9a6d2fbfb1544d05a708124780:
+
+#define USE_AsyncRemoveAll :ref:`PFASYNCREMOVEALL <group___cmp_async_mgr_itf_1gacb188b4524b1a70afa5deda86399948c>` pfAsyncRemoveAll;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga033fd6ca815afc69784776d7c21e8e33:
+
+#define EXT_AsyncRemoveAll extern :ref:`PFASYNCREMOVEALL <group___cmp_async_mgr_itf_1gacb188b4524b1a70afa5deda86399948c>` pfAsyncRemoveAll;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gadf87edcd5c02be690bf6bc3b7ee2f3b5:
+
+#define GET_AsyncRemoveAll s_pfCMGetAPI2( "AsyncRemoveAll", (RTS_VOID_FCTPTR *)&pfAsyncRemoveAll, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga991520c301745168e807d12570808301:
+
+#define CAL_AsyncRemoveAll pfAsyncRemoveAll
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga2f8fe48889d050e3f9272a9935d005f0:
+
+#define CHK_AsyncRemoveAll (pfAsyncRemoveAll != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gaf17a000bb0b93b4dc06861a63287ed27:
+
+#define EXP_AsyncRemoveAll s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AsyncRemoveAll", (RTS_UINTPTR) :ref:`AsyncRemoveAll <group___cmp_async_mgr_itf_1gae0ad2181694b2be591ccc1ce24ae4a47>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga21c37fabdc306bb37fdbfc89aae5b607:
+
+#define USE_AsyncGetJobReturnValue :ref:`PFASYNCGETJOBRETURNVALUE <group___cmp_async_mgr_itf_1ga3d2e91891708d782de63c6afe1c1c724>` pfAsyncGetJobReturnValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gabd328efe543d458f2a914a39d4642086:
+
+#define EXT_AsyncGetJobReturnValue extern :ref:`PFASYNCGETJOBRETURNVALUE <group___cmp_async_mgr_itf_1ga3d2e91891708d782de63c6afe1c1c724>` pfAsyncGetJobReturnValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga8702dbcf556d8460fce9816c7ddbe02d:
+
+#define GET_AsyncGetJobReturnValue s_pfCMGetAPI2( "AsyncGetJobReturnValue", (RTS_VOID_FCTPTR *)&pfAsyncGetJobReturnValue, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gaca01e4cd3587779c972f1ceffc83c030:
+
+#define CAL_AsyncGetJobReturnValue pfAsyncGetJobReturnValue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga44b048b8f58f53b2fe26fd3b870e904b:
+
+#define CHK_AsyncGetJobReturnValue (pfAsyncGetJobReturnValue != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga1984e3de5b047cdc07014647f5551f0b:
+
+#define EXP_AsyncGetJobReturnValue s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AsyncGetJobReturnValue", (RTS_UINTPTR) :ref:`AsyncGetJobReturnValue <group___cmp_async_mgr_itf_1ga7ffda2a2970b1e07ca8c76ef20ce66a1>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga24b1d669b450dc2bc7c6e3f5e02822b5:
+
+#define USE_AsyncKill :ref:`PFASYNCKILL <group___cmp_async_mgr_itf_1gaac6985312a4caafbe2515cea440a7205>` pfAsyncKill;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga9b553b3e29a3b36f0d5d3999f43b9ae2:
+
+#define EXT_AsyncKill extern :ref:`PFASYNCKILL <group___cmp_async_mgr_itf_1gaac6985312a4caafbe2515cea440a7205>` pfAsyncKill;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gab26a9ff08c5c4b793e56c3edfef30200:
+
+#define GET_AsyncKill s_pfCMGetAPI2( "AsyncKill", (RTS_VOID_FCTPTR *)&pfAsyncKill, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga3fa0003d18ac08c60bf9c8cc503e87aa:
+
+#define CAL_AsyncKill pfAsyncKill
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gacfc5c65cd987178c33d062466b625989:
+
+#define CHK_AsyncKill (pfAsyncKill != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gacff7b67a689d9e8029ae8406ba0d4ada:
+
+#define EXP_AsyncKill s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"AsyncKill", (RTS_UINTPTR) :ref:`AsyncKill <group___cmp_async_mgr_itf_1ga33766e6e792a69156f2c97200fd5367b>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gaa54366a207d4045fc0e9cd0585e95dca:
+
+#define ITF_CmpAsyncMgr
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga7a38bdcb893b0735f774acf71e283bc0:
+
+#define EXTITF_CmpAsyncMgr
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_async_mgr_itf_1ga09c0352a7a7751f3a73ec88653f566e0:
+
+typedef void( * PFASYNCMGREXCEPTIONHANDLER) (PFASYNCJOBFUNCTION pAsynFunction, void *pParam, RTS_UI32 ulException, RegContext Context)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Callback if the asynchronous job caused an exception.
+
+**Parameters**
+
++---------+---------------+-----------------------------------------------------------------------+
+| [in]    | pAsynFunction | Function pointer of the asynchronous job.                             |
++---------+---------------+-----------------------------------------------------------------------+
+| [in]    | pParam        | Parameter used by the asynchronous job causing the exception.         |
++---------+---------------+-----------------------------------------------------------------------+
+| [in]    | ulException   | Exception caused by the asynchronous job. See SysTaskItf for details. |
++---------+---------------+-----------------------------------------------------------------------+
+| [in]    | Context       | Context of the exception. See SysTaskItf for details.                 |
++---------+---------------+-----------------------------------------------------------------------+
+
+.. _group___cmp_async_mgr_itf_1ga805857f13b7b05e1a4cabca1d7946148:
+
+typedef struct tagasyncadd_struct  asyncadd_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION BEGIN
+
+asyncadd
+
+.. _group___cmp_async_mgr_itf_1ga58b2793006152a546b81e071e351d238:
+
+typedef void( *  PFASYNCADD_IEC) (asyncadd_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gaafba9cbd181eb3e2a7eb8f2abf7ec059:
+
+typedef struct tagasyncgetjobreturnvalue_struct  asyncgetjobreturnvalue_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+asyncgetjobreturnvalue
+
+.. _group___cmp_async_mgr_itf_1ga65ca307efc372470edd2fa7079d01b81:
+
+typedef void( *  PFASYNCGETJOBRETURNVALUE_IEC) (asyncgetjobreturnvalue_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga8f4ebbd7b1794042d00ab89470634b5f:
+
+typedef struct tagasynckill_struct  asynckill_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+asynckill
+
+.. _group___cmp_async_mgr_itf_1ga70a65c70c546bb1f6e06ee9e2b36c415:
+
+typedef void( *  PFASYNCKILL_IEC) (asynckill_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga3eede7c640d808d56b27235a4e1a990b:
+
+typedef struct tagasyncremove_struct  asyncremove_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+asyncremove
+
+.. _group___cmp_async_mgr_itf_1gaddbebefdd5cd17bc21cdaa5d291ce771:
+
+typedef void( *  PFASYNCREMOVE_IEC) (asyncremove_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gaf4821b290613076a766c62561ffccc71:
+
+typedef struct tagasyncremoveall_struct  asyncremoveall_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+asyncremoveall
+
+.. _group___cmp_async_mgr_itf_1ga91c489a56ac0aaa0032ceb7423ad1d34:
+
+typedef void( *  PFASYNCREMOVEALL_IEC) (asyncremoveall_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga0112dbf1913b2662d414562599ac91b4:
+
+typedef RTS_HANDLE( *  PFASYNCADD) (PFASYNCJOBFUNCTION pfAsyncJobFunc, void *pParam, void *pInstance, RTS_UI32 *pulState, RTS_I32 bIecFunc, RTS_UI32 ulType, RTS_UI32 ulTimeout, ASYNCJOB_PARAM *pAsyncJobParam, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gabe9e34cf57330964630e0a77b39db4f8:
+
+typedef RTS_RESULT( *  PFASYNCADD2) (ASYNCJOB_INFO2 *pJob)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga3e34101f8a48c478615f8e79d3b224ef:
+
+typedef RTS_RESULT( *  PFASYNCADD3) (ASYNCJOB_INFO3 *pJob)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga77871643e57d6273d5f26e2e46bb5323:
+
+typedef RTS_RESULT( *  PFASYNCREMOVE) (RTS_HANDLE hJob)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gacb188b4524b1a70afa5deda86399948c:
+
+typedef RTS_RESULT( *  PFASYNCREMOVEALL) (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga3d2e91891708d782de63c6afe1c1c724:
+
+typedef RTS_RESULT( *  PFASYNCGETJOBRETURNVALUE) (RTS_HANDLE hJob, RTS_UI32 *pulRetVal)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1gaac6985312a4caafbe2515cea440a7205:
+
+typedef RTS_RESULT( *  PFASYNCKILL) (RTS_HANDLE hJob)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga82af510067da2833d66a51e44bb90872:
+
+typedef ICmpAsyncMgr_C ICmpAsyncMgr
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_async_mgr_itf_1gac2e6ab56bb020fee27c981107300b853:
+
+void asyncadd (asyncadd_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga202890e297a053926f91dce76f824dde:
+
+void asyncgetjobreturnvalue (asyncgetjobreturnvalue_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga6d218296ba91527196414f73da64e00c:
+
+void asynckill (asynckill_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga4e61b5815488be707003af108189f82d:
+
+void asyncremove (asyncremove_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga28fc734fee6c02c6607011ee673c810f:
+
+void asyncremoveall (asyncremoveall_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_async_mgr_itf_1ga24a8861cf4e1ab703c05b50a3c57fc2d:
+
+RTS_HANDLE AsyncAdd (PFASYNCJOBFUNCTION pfAsyncJobFunc, void *pParam, void *pInstance, RTS_UI32 *pulState, RTS_I32 bIecFunc, RTS_UI32 ulType, RTS_UI32 ulTimeout, ASYNCJOB_PARAM *pAsyncJobParam, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION END
+
+This function adds a new asynchronous job in a job queue
+
+**Parameters**
+
++---------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pfAsyncJobFunc | Pointer to the job function, which is executed asynchronously                                                                                                                                          |
++---------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pParam         | Pointer to the parameters for the function                                                                                                                                                             |
++---------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pInstance      | Optional instance point, if the callback is an IEC function block                                                                                                                                      |
++---------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pulState       | Pointer to actual state of the asynchronous job. NOTE: Can be NULL for fire and forget jobs, which are released automatically at the end of job execution!                                             |
++---------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bIECFunc       | TRUE=pfAsyncJobFunc is an IEC function, FALSE=pfAsyncJobFunc is a C-function                                                                                                                           |
++---------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulType         | Type of asynchronous job (task, event or hook driven)                                                                                                                                                  |
++---------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulTimeout      | Timeout in [milliseconds], until the job must be started! If the job is not started within this timeout, the state of the job is marked with ASYNCSTATE_TIMEOUT and the job is removed from the queue. |
++---------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pAsyncJobParam | Pointer to specific parameter for the context of the job execution (task, event or hook driven)                                                                                                        |
++---------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult        | Error code                                                                                                                                                                                             |
++---------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the job object
+
+.. _group___cmp_async_mgr_itf_1ga1eaf8d0b636628842f328bd6db34e36e:
+
+RTS_RESULT AsyncAdd2 (ASYNCJOB_INFO2 *pJob)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function adds a new asynchronous job in a job queue. This function must be used, if the job is removed in the job handler!
+
+**Parameters**
+
++---------+------+----------------------------------------------------+
+| [in]    | pJob | Pointer to job info2 structure with all parameters |
++---------+------+----------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_async_mgr_itf_1ga22e67fdfd4c239d83636642389640d40:
+
+RTS_RESULT AsyncAdd3 (ASYNCJOB_INFO3 *pJob)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function adds a new asynchronous job in a job queue. This function must be used, if the job is removed in the job handler!
+
+**Parameters**
+
++---------+------+----------------------------------------------------+
+| [in]    | pJob | Pointer to job info3 structure with all parameters |
++---------+------+----------------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_async_mgr_itf_1gaa8908f5354a8722d127fdbf24b11ba5f:
+
+RTS_RESULT AsyncRemove (RTS_HANDLE hJob)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function removes on asynchronous job of a job queue
+
+**Parameters**
+
++---------+------+-------------------+
+| [in]    | hJob | Handle to the job |
++---------+------+-------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_async_mgr_itf_1gae0ad2181694b2be591ccc1ce24ae4a47:
+
+RTS_RESULT AsyncRemoveAll (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function removes on asynchronous job of a job queue
+**Returns:**
+
+error code
+
+.. _group___cmp_async_mgr_itf_1ga7ffda2a2970b1e07ca8c76ef20ce66a1:
+
+RTS_RESULT AsyncGetJobReturnValue (RTS_HANDLE hJob, RTS_UI32 *pulRetVal)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function retrieves the return value of the job function
+
+**Parameters**
+
++---------+--------------+-----------------------------+
+| [in]    | hJob         | Handle to the job           |
++---------+--------------+-----------------------------+
+| [in]    | pulReturnVal | Pointer to the return value |
++---------+--------------+-----------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_async_mgr_itf_1ga33766e6e792a69156f2c97200fd5367b:
+
+RTS_RESULT AsyncKill (RTS_HANDLE hJob)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This function kills a job in any case. Be careful, this could lead to a unsafe condition. This functionality is available for tasks only. NOTE: After killing the job, AsyncRemove must be called to remove the job from the management!
+
+**Parameters**
+
++---------+------+-------------------+
+| [in]    | hJob | Handle to the job |
++---------+------+-------------------+
+
+**Returns:**
+
+error code
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

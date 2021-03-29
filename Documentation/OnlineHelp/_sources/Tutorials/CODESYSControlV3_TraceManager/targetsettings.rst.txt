@@ -1,0 +1,42 @@
+
+.. _targetsettings:
+.. index:: Trace Manager target settings
+.. index:: CmpTraceMgr
+
+
+Target Settings for the device description
+==========================================
+
+Enable Trace Manager
+--------------------
+
+An entry in the device description file defines whether the device will
+use the functionality of the trace manager or of the internal IEC trace.
+
+For using the Trace Manager, the ``CmpTraceMgr`` must be integrated in the
+runtime system and the following target setting must be added to the
+device description:
+
+::
+
+ <section name="trace">
+  <setting name="tracemanager" type="boolean" access="visible">
+ 	<value>1</value>
+  <setting>
+ </section>
+
+System Tasks
+------------
+
+Additionally, task names for using system tasks as trace tasks can be defined In the
+target description. Then the names are available in the configuration
+dialog of the programming system for configuring a trace packet:
+
+::
+
+ <ts:section name="trace">
+ …
+   <ts:setting name="systemtasks" type="string" access="visible">
+ 	<ts:value>SystemTask1,SystemTask2,SystemTask3</ts:value>
+   </ts:setting>
+ </ts:section>

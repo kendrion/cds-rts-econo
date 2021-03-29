@@ -1,0 +1,132 @@
+.. _coding_guide_c++_runtime:
+
+C++ Runtime
+-----------
+
+If a component is bounded in a C++ runtime, this should be tansparent
+for its interface. But in the component itself, there are some issues
+that must be implemented to support in C++ Runtimes.
+
+In the following examples, "MyClass" can be replaced by the name of your component/class.
+
+Register your ClassID at the component manager in ComponentEntry()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: C
+
+   if (pInitStruct->pfCMRegisterClass != NULL)
+   {
+        RTS_HANDLE hClass = pInitStruct->pfCMRegisterClass(COMPONENT_ID, CLASSID_CMyClass);
+        if (hClass == RTS_INVALID_HANDLE)
+            return ERR_FAILED;
+   }
+
+Implement CreateInstance() and DeleteInstance() functions:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*For singleton classes:*
+
+.. code-block:: C
+
+    #ifdef CPLUSPLUS
+       static CMyClass *s_pCMyClass = NULL;
+    #endif
+    static IBase* CDECL CreateInstance(CLASSID cid, RTS_RESULT *pResult)
+    {
+       #ifdef CPLUSPLUS
+           if (cid == CLASSID_CMyClass)
+           {
+              if (s_pCMyClass == NULL)
+                  s_pCMyClass = static_cast<CMyClass *>(new CMyClass());
+              return (IBase*)s_pCMyClass->QueryInterface(s_pCMyClass, ITFID_IBase, pResult);
+           }
+       #endif
+       return NULL;
+    }
+    static RTS_RESULT CDECL DeleteInstance(IBase *pIBase)
+    {
+       #ifdef CPLUSPLUS
+           if (pIBase->Release() == 0)
+               s_pCMyClass = NULL;
+           return ERR_OK;
+       #else
+           return ERR_NOTIMPLEMENTED;
+       #endif
+    }
+
+*For free instantiable classes:*
+
+.. code-block:: C
+
+    static IBase* CDECL CreateInstance(CLASSID cid, RTS_RESULT *pResult)
+    {
+        #ifdef CPLUSPLUS
+           if (cid == CLASSID_CMyClass)
+           {
+               CMyClass *pCMyClass = static_cast<CMyClass *>(new CMyClass());
+               return (IBase*)pCMyClass->QueryInterface(pCMyClass, ITFID_IBase, pResult);
+           }
+        #endif
+        return NULL;
+    }
+    static RTS_RESULT CDECL DeleteInstance(IBase *pIBase)
+    {
+        #ifdef CPLUSPLUS
+           pIBase->Release();
+           return ERR_OK;
+        #else
+           return ERR_NOTIMPLEMENTED;
+        #endif
+    }
+
+Usage of special generated macros in Dep.h:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Usage of new generated macro INIT\_LOCALS\_STMT in ComponentEntry():
+
+.. code-block:: C
+
+    #ifdef CPLUSPLUS
+        INIT_LOCALS_STMT;
+    #endif
+
+Initialize local instance pointer for singleton objects in
+ComponentEntry() (instance pointer that are created in
+CreateInstance()), e.g.:
+
+.. code-block:: C
+
+    #ifdef CPLUSPLUS
+        INIT_LOCALS_STMT;
+        s_p<MyClass> = NULL;
+    #endif
+
+Usage of new generated macro EXIT\_STMT:
+
+There is a new macro EXIT\_STMT generated via the new m4-Compiler in
+the Dep.h File of every component. This macro should be used in
+every component. But it is empty for C-Runtimes and has only a
+relevance for C++ Runtimes!
+
+This EXIT\_STMT must be called in every CH\_EXIT hook of a standard
+component or in CH\_EXIT\_SYSTEM in every system component:
+
+Standard-Component:
+
+.. code-block:: C
+
+    case CH_EXIT:
+    {
+        EXIT_STMT;
+        break;
+    }
+
+System-Component:
+
+.. code-block:: C
+
+    case CH_EXIT_SYSTEM:
+    {
+        EXIT_STMT;
+        break;
+    }

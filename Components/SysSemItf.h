@@ -1,7 +1,7 @@
  /**
  * <interfacename>SysSem</interfacename>
  * <description> 
- *	<p>The SysSem interface is projected to handle synchonization objects for tasks and threads.
+ *	<p>The SysSem interface is projected to handle synchronization objects for tasks and threads.
  *	The synchronization objects are called semaphores to synchronize concurrent access to single
  *	data resources.</p>
  *	<p>For example:</p>
@@ -18,12 +18,12 @@
  *		The semaphores must work recursive! That means, that a multiple call out of one task
  *		must not block the execution! For each SysSemEnter() call, a corresponding SysSemLeave()
  *		must be used!
- *		For this feature, binary sempahores are typically used.
+ *		For this feature, binary semaphores are typically used.
  *	</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -50,296 +50,6 @@
 extern "C" {
 #endif
 
-/**
- *This function can be used to create a semaphore (synchronization object)
- * RETURN: Handle to the semaphore or RTS_INVALID_HANDLE if failed
- */
-typedef struct tagsyssemcreate_struct
-{
-	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* Pointer to runtime system error code (see CmpErrors.library) */
-	RTS_IEC_HANDLE SysSemCreate;		/* VAR_OUTPUT */	
-} syssemcreate_struct;
-
-void CDECL CDECL_EXT syssemcreate(syssemcreate_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSSEMCREATE_IEC) (syssemcreate_struct *p);
-#if defined(SYSSEM_NOTIMPLEMENTED) || defined(SYSSEMCREATE_NOTIMPLEMENTED)
-	#define USE_syssemcreate
-	#define EXT_syssemcreate
-	#define GET_syssemcreate(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_syssemcreate(p0) 
-	#define CHK_syssemcreate  FALSE
-	#define EXP_syssemcreate  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_syssemcreate
-	#define EXT_syssemcreate
-	#define GET_syssemcreate(fl)  CAL_CMGETAPI( "syssemcreate" ) 
-	#define CAL_syssemcreate  syssemcreate
-	#define CHK_syssemcreate  TRUE
-	#define EXP_syssemcreate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemcreate", (RTS_UINTPTR)syssemcreate, 1, RTSITF_GET_SIGNATURE(0, 0x9344C747), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSSEM_EXTERNAL)
-	#define USE_syssemcreate
-	#define EXT_syssemcreate
-	#define GET_syssemcreate(fl)  CAL_CMGETAPI( "syssemcreate" ) 
-	#define CAL_syssemcreate  syssemcreate
-	#define CHK_syssemcreate  TRUE
-	#define EXP_syssemcreate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemcreate", (RTS_UINTPTR)syssemcreate, 1, RTSITF_GET_SIGNATURE(0, 0x9344C747), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysSemsyssemcreate
-	#define EXT_SysSemsyssemcreate
-	#define GET_SysSemsyssemcreate  ERR_OK
-	#define CAL_SysSemsyssemcreate  syssemcreate
-	#define CHK_SysSemsyssemcreate  TRUE
-	#define EXP_SysSemsyssemcreate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemcreate", (RTS_UINTPTR)syssemcreate, 1, RTSITF_GET_SIGNATURE(0, 0x9344C747), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_syssemcreate
-	#define EXT_syssemcreate
-	#define GET_syssemcreate(fl)  CAL_CMGETAPI( "syssemcreate" ) 
-	#define CAL_syssemcreate  syssemcreate
-	#define CHK_syssemcreate  TRUE
-	#define EXP_syssemcreate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemcreate", (RTS_UINTPTR)syssemcreate, 1, RTSITF_GET_SIGNATURE(0, 0x9344C747), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_syssemcreate  PFSYSSEMCREATE_IEC pfsyssemcreate;
-	#define EXT_syssemcreate  extern PFSYSSEMCREATE_IEC pfsyssemcreate;
-	#define GET_syssemcreate(fl)  s_pfCMGetAPI2( "syssemcreate", (RTS_VOID_FCTPTR *)&pfsyssemcreate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x9344C747), 0x03050500)
-	#define CAL_syssemcreate  pfsyssemcreate
-	#define CHK_syssemcreate  (pfsyssemcreate != NULL)
-	#define EXP_syssemcreate   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemcreate", (RTS_UINTPTR)syssemcreate, 1, RTSITF_GET_SIGNATURE(0, 0x9344C747), 0x03050500) 
-#endif
-
-
-/**
- * This function deletes the semaphore which is identified by its handle
- * RETURN: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsyssemdelete_struct
-{
-	RTS_IEC_HANDLE hSem;				/* VAR_INPUT */	/* Handle of the semaphore */
-	RTS_IEC_RESULT SysSemDelete;		/* VAR_OUTPUT */	
-} syssemdelete_struct;
-
-void CDECL CDECL_EXT syssemdelete(syssemdelete_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSSEMDELETE_IEC) (syssemdelete_struct *p);
-#if defined(SYSSEM_NOTIMPLEMENTED) || defined(SYSSEMDELETE_NOTIMPLEMENTED)
-	#define USE_syssemdelete
-	#define EXT_syssemdelete
-	#define GET_syssemdelete(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_syssemdelete(p0) 
-	#define CHK_syssemdelete  FALSE
-	#define EXP_syssemdelete  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_syssemdelete
-	#define EXT_syssemdelete
-	#define GET_syssemdelete(fl)  CAL_CMGETAPI( "syssemdelete" ) 
-	#define CAL_syssemdelete  syssemdelete
-	#define CHK_syssemdelete  TRUE
-	#define EXP_syssemdelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemdelete", (RTS_UINTPTR)syssemdelete, 1, RTSITF_GET_SIGNATURE(0, 0x88B7C7F6), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSSEM_EXTERNAL)
-	#define USE_syssemdelete
-	#define EXT_syssemdelete
-	#define GET_syssemdelete(fl)  CAL_CMGETAPI( "syssemdelete" ) 
-	#define CAL_syssemdelete  syssemdelete
-	#define CHK_syssemdelete  TRUE
-	#define EXP_syssemdelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemdelete", (RTS_UINTPTR)syssemdelete, 1, RTSITF_GET_SIGNATURE(0, 0x88B7C7F6), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysSemsyssemdelete
-	#define EXT_SysSemsyssemdelete
-	#define GET_SysSemsyssemdelete  ERR_OK
-	#define CAL_SysSemsyssemdelete  syssemdelete
-	#define CHK_SysSemsyssemdelete  TRUE
-	#define EXP_SysSemsyssemdelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemdelete", (RTS_UINTPTR)syssemdelete, 1, RTSITF_GET_SIGNATURE(0, 0x88B7C7F6), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_syssemdelete
-	#define EXT_syssemdelete
-	#define GET_syssemdelete(fl)  CAL_CMGETAPI( "syssemdelete" ) 
-	#define CAL_syssemdelete  syssemdelete
-	#define CHK_syssemdelete  TRUE
-	#define EXP_syssemdelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemdelete", (RTS_UINTPTR)syssemdelete, 1, RTSITF_GET_SIGNATURE(0, 0x88B7C7F6), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_syssemdelete  PFSYSSEMDELETE_IEC pfsyssemdelete;
-	#define EXT_syssemdelete  extern PFSYSSEMDELETE_IEC pfsyssemdelete;
-	#define GET_syssemdelete(fl)  s_pfCMGetAPI2( "syssemdelete", (RTS_VOID_FCTPTR *)&pfsyssemdelete, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x88B7C7F6), 0x03050500)
-	#define CAL_syssemdelete  pfsyssemdelete
-	#define CHK_syssemdelete  (pfsyssemdelete != NULL)
-	#define EXP_syssemdelete   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemdelete", (RTS_UINTPTR)syssemdelete, 1, RTSITF_GET_SIGNATURE(0, 0x88B7C7F6), 0x03050500) 
-#endif
-
-
-/**
- * This function must be called before a task accesses data which also are used by other tasks.
- * Thus the data will be bocked for other tasks, which also use SysSemEnter until by function SysSemLeave the semaphore
- * will be set free again. The semaphore is identified by its handle.</description>
- * RETURN: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsyssementer_struct
-{
-	RTS_IEC_HANDLE hSem;				/* VAR_INPUT */	/* Handle of the semaphore */
-	RTS_IEC_RESULT SysSemEnter;			/* VAR_OUTPUT */	
-} syssementer_struct;
-
-void CDECL CDECL_EXT syssementer(syssementer_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSSEMENTER_IEC) (syssementer_struct *p);
-#if defined(SYSSEM_NOTIMPLEMENTED) || defined(SYSSEMENTER_NOTIMPLEMENTED)
-	#define USE_syssementer
-	#define EXT_syssementer
-	#define GET_syssementer(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_syssementer(p0) 
-	#define CHK_syssementer  FALSE
-	#define EXP_syssementer  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_syssementer
-	#define EXT_syssementer
-	#define GET_syssementer(fl)  CAL_CMGETAPI( "syssementer" ) 
-	#define CAL_syssementer  syssementer
-	#define CHK_syssementer  TRUE
-	#define EXP_syssementer  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssementer", (RTS_UINTPTR)syssementer, 1, RTSITF_GET_SIGNATURE(0, 0x85E1C5F9), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSSEM_EXTERNAL)
-	#define USE_syssementer
-	#define EXT_syssementer
-	#define GET_syssementer(fl)  CAL_CMGETAPI( "syssementer" ) 
-	#define CAL_syssementer  syssementer
-	#define CHK_syssementer  TRUE
-	#define EXP_syssementer  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssementer", (RTS_UINTPTR)syssementer, 1, RTSITF_GET_SIGNATURE(0, 0x85E1C5F9), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysSemsyssementer
-	#define EXT_SysSemsyssementer
-	#define GET_SysSemsyssementer  ERR_OK
-	#define CAL_SysSemsyssementer  syssementer
-	#define CHK_SysSemsyssementer  TRUE
-	#define EXP_SysSemsyssementer  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssementer", (RTS_UINTPTR)syssementer, 1, RTSITF_GET_SIGNATURE(0, 0x85E1C5F9), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_syssementer
-	#define EXT_syssementer
-	#define GET_syssementer(fl)  CAL_CMGETAPI( "syssementer" ) 
-	#define CAL_syssementer  syssementer
-	#define CHK_syssementer  TRUE
-	#define EXP_syssementer  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssementer", (RTS_UINTPTR)syssementer, 1, RTSITF_GET_SIGNATURE(0, 0x85E1C5F9), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_syssementer  PFSYSSEMENTER_IEC pfsyssementer;
-	#define EXT_syssementer  extern PFSYSSEMENTER_IEC pfsyssementer;
-	#define GET_syssementer(fl)  s_pfCMGetAPI2( "syssementer", (RTS_VOID_FCTPTR *)&pfsyssementer, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x85E1C5F9), 0x03050500)
-	#define CAL_syssementer  pfsyssementer
-	#define CHK_syssementer  (pfsyssementer != NULL)
-	#define EXP_syssementer   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssementer", (RTS_UINTPTR)syssementer, 1, RTSITF_GET_SIGNATURE(0, 0x85E1C5F9), 0x03050500) 
-#endif
-
-
-/**
- * This function must be called after an access on data which are also used by other tasks.
- * This is necessary to release the semaphore, which has been blocked before the access by function SysSemEnter.
- * The semaphore is identified by its handle.</description>
- * RETURN: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsyssemleave_struct
-{
-	RTS_IEC_HANDLE hSem;				/* VAR_INPUT */	/* Handle of the semaphore */
-	RTS_IEC_RESULT SysSemLeave;			/* VAR_OUTPUT */	
-} syssemleave_struct;
-
-void CDECL CDECL_EXT syssemleave(syssemleave_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSSEMLEAVE_IEC) (syssemleave_struct *p);
-#if defined(SYSSEM_NOTIMPLEMENTED) || defined(SYSSEMLEAVE_NOTIMPLEMENTED)
-	#define USE_syssemleave
-	#define EXT_syssemleave
-	#define GET_syssemleave(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_syssemleave(p0) 
-	#define CHK_syssemleave  FALSE
-	#define EXP_syssemleave  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_syssemleave
-	#define EXT_syssemleave
-	#define GET_syssemleave(fl)  CAL_CMGETAPI( "syssemleave" ) 
-	#define CAL_syssemleave  syssemleave
-	#define CHK_syssemleave  TRUE
-	#define EXP_syssemleave  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemleave", (RTS_UINTPTR)syssemleave, 1, RTSITF_GET_SIGNATURE(0, 0x2AA5DCFF), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSSEM_EXTERNAL)
-	#define USE_syssemleave
-	#define EXT_syssemleave
-	#define GET_syssemleave(fl)  CAL_CMGETAPI( "syssemleave" ) 
-	#define CAL_syssemleave  syssemleave
-	#define CHK_syssemleave  TRUE
-	#define EXP_syssemleave  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemleave", (RTS_UINTPTR)syssemleave, 1, RTSITF_GET_SIGNATURE(0, 0x2AA5DCFF), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysSemsyssemleave
-	#define EXT_SysSemsyssemleave
-	#define GET_SysSemsyssemleave  ERR_OK
-	#define CAL_SysSemsyssemleave  syssemleave
-	#define CHK_SysSemsyssemleave  TRUE
-	#define EXP_SysSemsyssemleave  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemleave", (RTS_UINTPTR)syssemleave, 1, RTSITF_GET_SIGNATURE(0, 0x2AA5DCFF), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_syssemleave
-	#define EXT_syssemleave
-	#define GET_syssemleave(fl)  CAL_CMGETAPI( "syssemleave" ) 
-	#define CAL_syssemleave  syssemleave
-	#define CHK_syssemleave  TRUE
-	#define EXP_syssemleave  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemleave", (RTS_UINTPTR)syssemleave, 1, RTSITF_GET_SIGNATURE(0, 0x2AA5DCFF), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_syssemleave  PFSYSSEMLEAVE_IEC pfsyssemleave;
-	#define EXT_syssemleave  extern PFSYSSEMLEAVE_IEC pfsyssemleave;
-	#define GET_syssemleave(fl)  s_pfCMGetAPI2( "syssemleave", (RTS_VOID_FCTPTR *)&pfsyssemleave, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x2AA5DCFF), 0x03050500)
-	#define CAL_syssemleave  pfsyssemleave
-	#define CHK_syssemleave  (pfsyssemleave != NULL)
-	#define EXP_syssemleave   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemleave", (RTS_UINTPTR)syssemleave, 1, RTSITF_GET_SIGNATURE(0, 0x2AA5DCFF), 0x03050500) 
-#endif
-
-
-/**
- * This function can be used to check whether a semaphore currently is occupied by another task (via SysSemEnter).
- * The semaphore is identified by its handle.</description>
- * RETURN: Returns the runtime system error code (see CmpErrors.library)
- */
-typedef struct tagsyssemtry_struct
-{
-	RTS_IEC_HANDLE hSem;				/* VAR_INPUT */	/* Handle of the semaphore */
-	RTS_IEC_RESULT SysSemTry;			/* VAR_OUTPUT */	
-} syssemtry_struct;
-
-void CDECL CDECL_EXT syssemtry(syssemtry_struct *p);
-typedef void (CDECL CDECL_EXT* PFSYSSEMTRY_IEC) (syssemtry_struct *p);
-#if defined(SYSSEM_NOTIMPLEMENTED) || defined(SYSSEMTRY_NOTIMPLEMENTED)
-	#define USE_syssemtry
-	#define EXT_syssemtry
-	#define GET_syssemtry(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_syssemtry(p0) 
-	#define CHK_syssemtry  FALSE
-	#define EXP_syssemtry  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_syssemtry
-	#define EXT_syssemtry
-	#define GET_syssemtry(fl)  CAL_CMGETAPI( "syssemtry" ) 
-	#define CAL_syssemtry  syssemtry
-	#define CHK_syssemtry  TRUE
-	#define EXP_syssemtry  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemtry", (RTS_UINTPTR)syssemtry, 1, RTSITF_GET_SIGNATURE(0, 0x14382CB4), 0x03050500) 
-#elif defined(MIXED_LINK) && !defined(SYSSEM_EXTERNAL)
-	#define USE_syssemtry
-	#define EXT_syssemtry
-	#define GET_syssemtry(fl)  CAL_CMGETAPI( "syssemtry" ) 
-	#define CAL_syssemtry  syssemtry
-	#define CHK_syssemtry  TRUE
-	#define EXP_syssemtry  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemtry", (RTS_UINTPTR)syssemtry, 1, RTSITF_GET_SIGNATURE(0, 0x14382CB4), 0x03050500) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_SysSemsyssemtry
-	#define EXT_SysSemsyssemtry
-	#define GET_SysSemsyssemtry  ERR_OK
-	#define CAL_SysSemsyssemtry  syssemtry
-	#define CHK_SysSemsyssemtry  TRUE
-	#define EXP_SysSemsyssemtry  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemtry", (RTS_UINTPTR)syssemtry, 1, RTSITF_GET_SIGNATURE(0, 0x14382CB4), 0x03050500) 
-#elif defined(CPLUSPLUS)
-	#define USE_syssemtry
-	#define EXT_syssemtry
-	#define GET_syssemtry(fl)  CAL_CMGETAPI( "syssemtry" ) 
-	#define CAL_syssemtry  syssemtry
-	#define CHK_syssemtry  TRUE
-	#define EXP_syssemtry  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemtry", (RTS_UINTPTR)syssemtry, 1, RTSITF_GET_SIGNATURE(0, 0x14382CB4), 0x03050500) 
-#else /* DYNAMIC_LINK */
-	#define USE_syssemtry  PFSYSSEMTRY_IEC pfsyssemtry;
-	#define EXT_syssemtry  extern PFSYSSEMTRY_IEC pfsyssemtry;
-	#define GET_syssemtry(fl)  s_pfCMGetAPI2( "syssemtry", (RTS_VOID_FCTPTR *)&pfsyssemtry, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x14382CB4), 0x03050500)
-	#define CAL_syssemtry  pfsyssemtry
-	#define CHK_syssemtry  (pfsyssemtry != NULL)
-	#define EXP_syssemtry   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syssemtry", (RTS_UINTPTR)syssemtry, 1, RTSITF_GET_SIGNATURE(0, 0x14382CB4), 0x03050500) 
-#endif
-
-
 #ifdef __cplusplus
 }
 #endif
@@ -351,7 +61,7 @@ typedef void (CDECL CDECL_EXT* PFSYSSEMTRY_IEC) (syssemtry_struct *p);
 extern "C" {
 #endif
 
-/* Init routines for OS specific modules */
+/* Initialization routines for OS specific modules */
 RTS_RESULT CDECL SysSemOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysSemOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
@@ -526,7 +236,7 @@ typedef RTS_RESULT (CDECL * PFSYSSEMTRY) (RTS_HANDLE hSem);
 
 /**
  * <description>
- *  Enter the given semaphore. If the semahore is still entered by another task1, the actual task2 will be blocked,
+ *  Enter the given semaphore. If the semaphore is still entered by another task1, the actual task2 will be blocked,
  *	until the task1 has called SysSemLeave().
  *
  *	IMPLEMENTATION NOTE:

@@ -1,0 +1,69 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of struct.rst template
+
+.. _structtagsyssocksetdefaultgateway__struct:
+
+===================================================
+tagsyssocksetdefaultgateway_struct Struct Reference
+===================================================
+
+| #include ":ref:`SysSocket_ImplementationItf.h <_sys_socket___implementation_itf_8h>`"
+
+Data Fields
+-----------
+
+- RTS_IEC_WSTRING * :ref:`wsAdapterName <group___sys_socket___implementation_itf_1ga642e6403158415ad81568c42e9d7d367>`
+- :ref:`INADDR <struct_i_n_a_d_d_r>` * :ref:`GatewayAddr <group___sys_socket___implementation_itf_1ga59c98402d9899b275c3f49996c6db254>`
+- RTS_IEC_RESULT :ref:`SysSockSetDefaultGateway <group___sys_socket___implementation_itf_1gae8f1c18241f534d4de149a1f6f886038>`
+
+Detailed Description
+--------------------
+
+Set default gateway address an adapter. It depends on the device, whether the new gateway address is reset during reboot or if it is retained. In general the caller should consider this as volatile. The gateway address = 0.0.0.0 can be used to remove the gateway address from the adapter. After this there is not routing to other subnets possible.
+
+.. note:: The default gateway can only be changed if the adapter containing the current default gateway is whitelisted in the CODESYSControl.cfg. This function will not change the default gateway of any other adapter.
+
+:return: Returns the runtime system error code (see CmpErrors.library):
+
+  - ERR_PARAMETER: At least one of the passed pointers is NULL.
+
+  - ERR_OPERATION_DENIED: Adapter is not in white list or the operation was denied by the event EVT_SysSocket_BeforeSetGateway.
+
+  - ERR_NO_OBJECT: Adapter with the specified name does not exist.
+
+  - ERR_NO_CHANGE: There is a default gateway set on an adapter that is not whitelisted.
+
+  - ERR_FAILED: Default gateway could not be set.
+
+  - ERR_OK: Default gateway was set successfully.
+
+Field Documentation
+-------------------
+
+.. _group___sys_socket___implementation_itf_1ga642e6403158415ad81568c42e9d7d367:
+
+RTS_IEC_WSTRING* tagsyssocksetdefaultgateway_struct::wsAdapterName
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_socket___implementation_itf_1ga59c98402d9899b275c3f49996c6db254:
+
+INADDR* tagsyssocksetdefaultgateway_struct::GatewayAddr
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_socket___implementation_itf_1gae8f1c18241f534d4de149a1f6f886038:
+
+RTS_IEC_RESULT tagsyssocksetdefaultgateway_struct::SysSockSetDefaultGateway
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The documentation for this struct was generated from the following file:
+------------------------------------------------------------------------
+
+SysSocket_ImplementationItf.h
+
+.. last line of struct.rst template
+.. last line of composition.rst template
+
+

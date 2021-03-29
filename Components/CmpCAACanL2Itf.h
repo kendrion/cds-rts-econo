@@ -1,4 +1,13 @@
- 
+ /**
+ * <interfacename>CmpCAACanL2</interfacename>
+ * <description>
+ * </description>
+ *
+ * <copyright>
+ *  Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * </copyright>
+ */
+
 	
 	
 #ifndef _CMPCAACANL2ITF_H_
@@ -58,8 +67,8 @@ extern "C" {
 
 
 /* Basic Functions */
-CAA_HANDLE CDECL CL2_DriverOpenH(unsigned char ucNetId, unsigned short usBaudrate, CAA_BOOL xSupport29Bit, CAA_COUNT ctMessages, CAA_ERROR* peError);
-typedef CAA_HANDLE (CDECL * PFCL2_DRIVEROPENH) (unsigned char ucNetId, unsigned short usBaudrate, CAA_BOOL xSupport29Bit, CAA_COUNT ctMessages, CAA_ERROR* peError);
+CAA_HANDLE CDECL CL2_DriverOpenH(unsigned char ucNetId, CAA_UINT usBaudrate, CAA_BOOL xSupport29Bit, CAA_COUNT ctMessages, CAA_ERROR* peError);
+typedef CAA_HANDLE (CDECL * PFCL2_DRIVEROPENH) (unsigned char ucNetId, CAA_UINT usBaudrate, CAA_BOOL xSupport29Bit, CAA_COUNT ctMessages, CAA_ERROR* peError);
 #if defined(CMPCAACANL2_NOTIMPLEMENTED) || defined(CL2_DRIVEROPENH_NOTIMPLEMENTED)
 	#define USE_CL2_DriverOpenH
 	#define EXT_CL2_DriverOpenH
@@ -154,8 +163,8 @@ typedef CAA_SIZE (CDECL * PFCL2_DRIVERGETSIZE) (unsigned char ucNetId, CAA_BOOL 
 
 
 
-CAA_HANDLE CDECL CL2_DriverOpenP(unsigned char ucNetId, unsigned short usBaudrate, CAA_BOOL xSupport29Bit, CAA_SIZE szMemSize, CAA_PVOID pMemory, CAA_ERROR* peError);
-typedef CAA_HANDLE (CDECL * PFCL2_DRIVEROPENP) (unsigned char ucNetId, unsigned short usBaudrate, CAA_BOOL xSupport29Bit, CAA_SIZE szMemSize, CAA_PVOID pMemory, CAA_ERROR* peError);
+CAA_HANDLE CDECL CL2_DriverOpenP(unsigned char ucNetId, CAA_UINT usBaudrate, CAA_BOOL xSupport29Bit, CAA_SIZE szMemSize, CAA_PVOID pMemory, CAA_ERROR* peError);
+typedef CAA_HANDLE (CDECL * PFCL2_DRIVEROPENP) (unsigned char ucNetId, CAA_UINT usBaudrate, CAA_BOOL xSupport29Bit, CAA_SIZE szMemSize, CAA_PVOID pMemory, CAA_ERROR* peError);
 #if defined(CMPCAACANL2_NOTIMPLEMENTED) || defined(CL2_DRIVEROPENP_NOTIMPLEMENTED)
 	#define USE_CL2_DriverOpenP
 	#define EXT_CL2_DriverOpenP
@@ -924,8 +933,8 @@ typedef CAA_ERROR (CDECL * PFCL2_WRITE) (CAA_HANDLE hDriver, CAA_HANDLE hMessage
 
 
 /* Cyclic Custom Services */
-CAA_HANDLE CDECL CL2_CstCycleOpen(CAA_HANDLE hDriver, CAA_ENUM eCstEvent, unsigned short usPrio, CAA_BOOL xEnableSyncWindow, CAA_UDINT ulCstCycle, CAA_UDINT ulCstForewarnTime, CAA_ERROR* peError);
-typedef CAA_HANDLE (CDECL * PFCL2_CSTCYCLEOPEN) (CAA_HANDLE hDriver, CAA_ENUM eCstEvent, unsigned short usPrio, CAA_BOOL xEnableSyncWindow, CAA_UDINT ulCstCycle, CAA_UDINT ulCstForewarnTime, CAA_ERROR* peError);
+CAA_HANDLE CDECL CL2_CstCycleOpen(CAA_HANDLE hDriver, CAA_ENUM eCstEvent, CAA_USINT usPrio, CAA_BOOL xEnableSyncWindow, CAA_UDINT ulCstCycle, CAA_UDINT ulCstForewarnTime, CAA_ERROR* peError);
+typedef CAA_HANDLE (CDECL * PFCL2_CSTCYCLEOPEN) (CAA_HANDLE hDriver, CAA_ENUM eCstEvent, CAA_USINT usPrio, CAA_BOOL xEnableSyncWindow, CAA_UDINT ulCstCycle, CAA_UDINT ulCstForewarnTime, CAA_ERROR* peError);
 #if defined(CMPCAACANL2_NOTIMPLEMENTED) || defined(CL2_CSTCYCLEOPEN_NOTIMPLEMENTED)
 	#define USE_CL2_CstCycleOpen
 	#define EXT_CL2_CstCycleOpen
@@ -1166,13 +1175,13 @@ typedef CAA_HANDLE (CDECL * PFCL2_CSTCYCLECLOSE) (CAA_HANDLE hCstCycle, CAA_ERRO
 
 
 /* Diagnostic Information */
-unsigned short CDECL CL2_GetBaudrate(CAA_HANDLE hDriver, CAA_ERROR* peError);
-typedef unsigned short (CDECL * PFCL2_GETBAUDRATE) (CAA_HANDLE hDriver, CAA_ERROR* peError);
+CAA_UINT CDECL CL2_GetBaudrate(CAA_HANDLE hDriver, CAA_ERROR* peError);
+typedef CAA_UINT (CDECL * PFCL2_GETBAUDRATE) (CAA_HANDLE hDriver, CAA_ERROR* peError);
 #if defined(CMPCAACANL2_NOTIMPLEMENTED) || defined(CL2_GETBAUDRATE_NOTIMPLEMENTED)
 	#define USE_CL2_GetBaudrate
 	#define EXT_CL2_GetBaudrate
 	#define GET_CL2_GetBaudrate(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_CL2_GetBaudrate(p0,p1)  (unsigned short)ERR_NOTIMPLEMENTED
+	#define CAL_CL2_GetBaudrate(p0,p1)  (CAA_UINT)ERR_NOTIMPLEMENTED
 	#define CHK_CL2_GetBaudrate  FALSE
 	#define EXP_CL2_GetBaudrate  ERR_OK
 #elif defined(STATIC_LINK)
@@ -1214,13 +1223,13 @@ typedef unsigned short (CDECL * PFCL2_GETBAUDRATE) (CAA_HANDLE hDriver, CAA_ERRO
 
 
 
-unsigned short CDECL CL2_GetBusload(CAA_HANDLE hDriver, CAA_ERROR* peError);
-typedef unsigned short (CDECL * PFCL2_GETBUSLOAD) (CAA_HANDLE hDriver, CAA_ERROR* peError);
+CAA_USINT CDECL CL2_GetBusload(CAA_HANDLE hDriver, CAA_ERROR* peError);
+typedef CAA_USINT (CDECL * PFCL2_GETBUSLOAD) (CAA_HANDLE hDriver, CAA_ERROR* peError);
 #if defined(CMPCAACANL2_NOTIMPLEMENTED) || defined(CL2_GETBUSLOAD_NOTIMPLEMENTED)
 	#define USE_CL2_GetBusload
 	#define EXT_CL2_GetBusload
 	#define GET_CL2_GetBusload(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_CL2_GetBusload(p0,p1)  (unsigned short)ERR_NOTIMPLEMENTED
+	#define CAL_CL2_GetBusload(p0,p1)  (CAA_USINT)ERR_NOTIMPLEMENTED
 	#define CHK_CL2_GetBusload  FALSE
 	#define EXP_CL2_GetBusload  ERR_OK
 #elif defined(STATIC_LINK)
@@ -2710,8 +2719,8 @@ typedef CAA_ERROR (CDECL * PFCL2_SETCIASTATE) (CAA_HANDLE hDriver, unsigned char
 
 
 /* Properties */
-CAA_UDINT CDECL CL2_GetProperty(unsigned short usPropery);
-typedef CAA_UDINT (CDECL * PFCL2_GETPROPERTY) (unsigned short usPropery);
+CAA_UDINT CDECL CL2_GetProperty(CAA_UINT usPropery);
+typedef CAA_UDINT (CDECL * PFCL2_GETPROPERTY) (CAA_UINT usPropery);
 #if defined(CMPCAACANL2_NOTIMPLEMENTED) || defined(CL2_GETPROPERTY_NOTIMPLEMENTED)
 	#define USE_CL2_GetProperty
 	#define EXT_CL2_GetProperty
@@ -3287,13 +3296,13 @@ typedef CAA_HANDLE (CDECL * PFCL2_MSGCLONE) (unsigned char ucNetId, CAA_HANDLE h
 
 
 
-unsigned short CDECL CL2_GetSupplierVersion(CAA_BOOL xDummy);
-typedef unsigned short (CDECL * PFCL2_GETSUPPLIERVERSION) (CAA_BOOL xDummy);
+CAA_WORD CDECL CL2_GetSupplierVersion(CAA_BOOL xDummy);
+typedef CAA_WORD (CDECL * PFCL2_GETSUPPLIERVERSION) (CAA_BOOL xDummy);
 #if defined(CMPCAACANL2_NOTIMPLEMENTED) || defined(CL2_GETSUPPLIERVERSION_NOTIMPLEMENTED)
 	#define USE_CL2_GetSupplierVersion
 	#define EXT_CL2_GetSupplierVersion
 	#define GET_CL2_GetSupplierVersion(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_CL2_GetSupplierVersion(p0)  (unsigned short)ERR_NOTIMPLEMENTED
+	#define CAL_CL2_GetSupplierVersion(p0)  (CAA_WORD)ERR_NOTIMPLEMENTED
 	#define CHK_CL2_GetSupplierVersion  FALSE
 	#define EXP_CL2_GetSupplierVersion  ERR_OK
 #elif defined(STATIC_LINK)
@@ -3334,6 +3343,62 @@ typedef unsigned short (CDECL * PFCL2_GETSUPPLIERVERSION) (CAA_BOOL xDummy);
 #endif
 
 
+
+
+typedef struct tagcl2_drivergetsize_struct
+{
+	RTS_IEC_USINT usiNetId;				/* VAR_INPUT */	
+	CAA_BOOL xSupport29Bit;				/* VAR_INPUT */	
+	CAA_COUNT ctMessages;				/* VAR_INPUT */	
+	CAA_ERROR* peError;					/* VAR_INPUT */	
+	CAA_SIZE cl2_drivergetsize;			/* VAR_OUTPUT */	
+} cl2_drivergetsize_struct;
+
+void CDECL CDECL_EXT cl2_drivergetsize(cl2_drivergetsize_struct *p);
+typedef void (CDECL CDECL_EXT* PFCL2_DRIVERGETSIZE_IEC) (cl2_drivergetsize_struct *p);
+#if defined(CMPCAACANL2_NOTIMPLEMENTED) || defined(CL2_DRIVERGETSIZE_NOTIMPLEMENTED)
+	#define USE_cl2_drivergetsize
+	#define EXT_cl2_drivergetsize
+	#define GET_cl2_drivergetsize(fl)  ERR_NOTIMPLEMENTED
+	#define CAL_cl2_drivergetsize(p0) 
+	#define CHK_cl2_drivergetsize  FALSE
+	#define EXP_cl2_drivergetsize  ERR_OK
+#elif defined(STATIC_LINK)
+	#define USE_cl2_drivergetsize
+	#define EXT_cl2_drivergetsize
+	#define GET_cl2_drivergetsize(fl)  CAL_CMGETAPI( "cl2_drivergetsize" ) 
+	#define CAL_cl2_drivergetsize  cl2_drivergetsize
+	#define CHK_cl2_drivergetsize  TRUE
+	#define EXP_cl2_drivergetsize  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cl2_drivergetsize", (RTS_UINTPTR)cl2_drivergetsize, 1, RTSITF_GET_SIGNATURE(0x744E99DF, 0xF26CF0AA), 0x03050F00) 
+#elif defined(MIXED_LINK) && !defined(CMPCAACANL2_EXTERNAL)
+	#define USE_cl2_drivergetsize
+	#define EXT_cl2_drivergetsize
+	#define GET_cl2_drivergetsize(fl)  CAL_CMGETAPI( "cl2_drivergetsize" ) 
+	#define CAL_cl2_drivergetsize  cl2_drivergetsize
+	#define CHK_cl2_drivergetsize  TRUE
+	#define EXP_cl2_drivergetsize  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cl2_drivergetsize", (RTS_UINTPTR)cl2_drivergetsize, 1, RTSITF_GET_SIGNATURE(0x744E99DF, 0xF26CF0AA), 0x03050F00) 
+#elif defined(CPLUSPLUS_ONLY)
+	#define USE_CmpCAACanL2cl2_drivergetsize
+	#define EXT_CmpCAACanL2cl2_drivergetsize
+	#define GET_CmpCAACanL2cl2_drivergetsize  ERR_OK
+	#define CAL_CmpCAACanL2cl2_drivergetsize  cl2_drivergetsize
+	#define CHK_CmpCAACanL2cl2_drivergetsize  TRUE
+	#define EXP_CmpCAACanL2cl2_drivergetsize  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cl2_drivergetsize", (RTS_UINTPTR)cl2_drivergetsize, 1, RTSITF_GET_SIGNATURE(0x744E99DF, 0xF26CF0AA), 0x03050F00) 
+#elif defined(CPLUSPLUS)
+	#define USE_cl2_drivergetsize
+	#define EXT_cl2_drivergetsize
+	#define GET_cl2_drivergetsize(fl)  CAL_CMGETAPI( "cl2_drivergetsize" ) 
+	#define CAL_cl2_drivergetsize  cl2_drivergetsize
+	#define CHK_cl2_drivergetsize  TRUE
+	#define EXP_cl2_drivergetsize  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cl2_drivergetsize", (RTS_UINTPTR)cl2_drivergetsize, 1, RTSITF_GET_SIGNATURE(0x744E99DF, 0xF26CF0AA), 0x03050F00) 
+#else /* DYNAMIC_LINK */
+	#define USE_cl2_drivergetsize  PFCL2_DRIVERGETSIZE_IEC pfcl2_drivergetsize;
+	#define EXT_cl2_drivergetsize  extern PFCL2_DRIVERGETSIZE_IEC pfcl2_drivergetsize;
+	#define GET_cl2_drivergetsize(fl)  s_pfCMGetAPI2( "cl2_drivergetsize", (RTS_VOID_FCTPTR *)&pfcl2_drivergetsize, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0x744E99DF, 0xF26CF0AA), 0x03050F00)
+	#define CAL_cl2_drivergetsize  pfcl2_drivergetsize
+	#define CHK_cl2_drivergetsize  (pfcl2_drivergetsize != NULL)
+	#define EXP_cl2_drivergetsize   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"cl2_drivergetsize", (RTS_UINTPTR)cl2_drivergetsize, 1, RTSITF_GET_SIGNATURE(0x744E99DF, 0xF26CF0AA), 0x03050F00) 
+#endif
 
 
 /**
@@ -4630,7 +4695,7 @@ typedef struct tagcl2_getbusload_struct
 {
 	CAA_HANDLE hDriver;					/* VAR_INPUT */
 	CAA_ERROR* peError;					/* VAR_INPUT */
-	unsigned short GetBusload;			/* VAR_OUTPUT */
+	CAA_USINT GetBusload;				/* VAR_OUTPUT */
 } cl2_getbusload_struct;
 
 void CDECL CDECL_EXT cl2_getbusload(cl2_getbusload_struct *p);
@@ -6657,9 +6722,9 @@ typedef struct
 class ICmpCAACanL2 : public IBase
 {
 	public:
-		virtual CAA_HANDLE CDECL ICL2_DriverOpenH(unsigned char ucNetId, unsigned short usBaudrate, CAA_BOOL xSupport29Bit, CAA_COUNT ctMessages, CAA_ERROR* peError) =0;
+		virtual CAA_HANDLE CDECL ICL2_DriverOpenH(unsigned char ucNetId, CAA_UINT usBaudrate, CAA_BOOL xSupport29Bit, CAA_COUNT ctMessages, CAA_ERROR* peError) =0;
 		virtual CAA_SIZE CDECL ICL2_DriverGetSize(unsigned char ucNetId, CAA_BOOL xSupport29Bit, CAA_COUNT ctMessages, CAA_ERROR* peError) =0;
-		virtual CAA_HANDLE CDECL ICL2_DriverOpenP(unsigned char ucNetId, unsigned short usBaudrate, CAA_BOOL xSupport29Bit, CAA_SIZE szMemSize, CAA_PVOID pMemory, CAA_ERROR* peError) =0;
+		virtual CAA_HANDLE CDECL ICL2_DriverOpenP(unsigned char ucNetId, CAA_UINT usBaudrate, CAA_BOOL xSupport29Bit, CAA_SIZE szMemSize, CAA_PVOID pMemory, CAA_ERROR* peError) =0;
 		virtual CAA_ERROR CDECL ICL2_DriverClose(CAA_HANDLE hDriver) =0;
 		virtual CAA_HANDLE CDECL ICL2_CreateMessage(CAA_HANDLE hDriver, CL2I_COBID cobId, unsigned char ucLength, CAA_BOOL xRTR, CAA_BOOL x29BitId, CAA_ERROR* peError) =0;
 		virtual CAA_ERROR CDECL ICL2_FreeMessage(CAA_HANDLE hMessage) =0;
@@ -6675,13 +6740,13 @@ class ICmpCAACanL2 : public IBase
 		virtual CAA_HANDLE CDECL ICL2_Read(CAA_HANDLE hReceiverId, CAA_COUNT* pctMsgLeft, CAA_ERROR* peError) =0;
 		virtual CAA_HANDLE CDECL ICL2_ReadArrayReceiver(CAA_HANDLE hArrayReceiver, CAA_COUNT ctIndex, CAA_COUNT* pctMsgLeft, CAA_ERROR* peError) =0;
 		virtual CAA_ERROR CDECL ICL2_Write(CAA_HANDLE hDriver, CAA_HANDLE hMessage, unsigned char ucPrio, CAA_BOOL xEnableSyncWindow) =0;
-		virtual CAA_HANDLE CDECL ICL2_CstCycleOpen(CAA_HANDLE hDriver, CAA_ENUM eCstEvent, unsigned short usPrio, CAA_BOOL xEnableSyncWindow, CAA_UDINT ulCstCycle, CAA_UDINT ulCstForewarnTime, CAA_ERROR* peError) =0;
+		virtual CAA_HANDLE CDECL ICL2_CstCycleOpen(CAA_HANDLE hDriver, CAA_ENUM eCstEvent, CAA_USINT usPrio, CAA_BOOL xEnableSyncWindow, CAA_UDINT ulCstCycle, CAA_UDINT ulCstForewarnTime, CAA_ERROR* peError) =0;
 		virtual CAA_HANDLE CDECL ICL2_CstCycleUpdate(CAA_HANDLE hCstCycle, CAA_HANDLE hMessage, CAA_ERROR* peError) =0;
 		virtual CAA_ERROR CDECL ICL2_CstCycleStart(CAA_HANDLE hCstCycle) =0;
 		virtual CAA_ERROR CDECL ICL2_CstCycleStop(CAA_HANDLE hCstCycle) =0;
 		virtual CAA_HANDLE CDECL ICL2_CstCycleClose(CAA_HANDLE hCstCycle, CAA_ERROR* peError) =0;
-		virtual unsigned short CDECL ICL2_GetBaudrate(CAA_HANDLE hDriver, CAA_ERROR* peError) =0;
-		virtual unsigned short CDECL ICL2_GetBusload(CAA_HANDLE hDriver, CAA_ERROR* peError) =0;
+		virtual CAA_UINT CDECL ICL2_GetBaudrate(CAA_HANDLE hDriver, CAA_ERROR* peError) =0;
+		virtual CAA_USINT CDECL ICL2_GetBusload(CAA_HANDLE hDriver, CAA_ERROR* peError) =0;
 		virtual CAA_ENUM CDECL ICL2_GetBusState(CAA_HANDLE hDriver, CAA_ERROR* peError) =0;
 		virtual CAA_COUNT CDECL ICL2_GetReceiveCounter(CAA_HANDLE hDriver, CAA_ERROR* peError) =0;
 		virtual CAA_COUNT CDECL ICL2_GetLostCounter(CAA_HANDLE hDriver, CAA_ERROR* peError) =0;
@@ -6712,7 +6777,7 @@ class ICmpCAACanL2 : public IBase
 		virtual CAA_COUNT CDECL ICL2_GetMsgCount(CAA_HANDLE hReceiverId, CAA_ERROR* peError) =0;
 		virtual unsigned char CDECL ICL2_GetCiAState(CAA_HANDLE hDriver, CAA_ERROR* peError) =0;
 		virtual CAA_ERROR CDECL ICL2_SetCiAState(CAA_HANDLE hDriver, unsigned char byState) =0;
-		virtual CAA_UDINT CDECL ICL2_GetProperty(unsigned short usPropery) =0;
+		virtual CAA_UDINT CDECL ICL2_GetProperty(CAA_UINT usPropery) =0;
 		virtual CAA_ERROR CDECL ICL2_CmdRegister(unsigned char ucNetId, CMD_CMDRV* pCMDRV, CAA_COUNT ctMessages, CL2I_INFO** ppInfo) =0;
 		virtual CAA_ERROR CDECL ICL2_CmdUnRegister(unsigned char ucNetId) =0;
 		virtual CAA_COUNT CDECL ICL2_GetTxQueueLength(unsigned char ucNetId, CAA_ERROR* peError) =0;
@@ -6723,7 +6788,7 @@ class ICmpCAACanL2 : public IBase
 		virtual CAA_ERROR CDECL ICL2_MsgSendAcknNoIRQ(unsigned char ucNetId, CAA_HANDLE hBlock) =0;
 		virtual CAA_ERROR CDECL ICL2_MsgPutRQueue(unsigned char ucNetId, CAA_HANDLE hBlock) =0;
 		virtual CAA_HANDLE CDECL ICL2_MsgClone(unsigned char ucNetId, CAA_HANDLE hBlock, CAA_ERROR* peError) =0;
-		virtual unsigned short CDECL ICL2_GetSupplierVersion(CAA_BOOL xDummy) =0;
+		virtual CAA_WORD CDECL ICL2_GetSupplierVersion(CAA_BOOL xDummy) =0;
 };
 	#ifndef ITF_CmpCAACanL2
 		#define ITF_CmpCAACanL2 static ICmpCAACanL2 *pICmpCAACanL2 = NULL;

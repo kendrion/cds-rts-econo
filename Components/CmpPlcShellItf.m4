@@ -4,7 +4,7 @@
  * This interface enables foreign components or an IEC Application, to register
  * a command handler and to send the output of the handler back to the PLC Shell.
  *
- * If the output of the command is big and has to be devided into several chunks
+ * If the output of the command is big and has to be divided into several chunks
  * to be sent to the programming system, there are two possibilities to do that:
  *
  * 1) The command handler is dump and just sends the whole output, every time it
@@ -36,7 +36,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -171,7 +171,7 @@ DEF_API(`void',`CDECL',`plcshellappend',`(plcshellappend_struct *p)',1,0x5F41CE4
  * 
  * Note: For the ease of use, you can also derive your Command
  * Handler from the FB "CommandHandler" in this library. This
- * helps you in the registration and deregistration of the
+ * helps you in the registration and de-registration of the
  * handler.
  * RETURN: Returns the runtime system error code (see CmpErrors.library)
  */
@@ -203,7 +203,7 @@ DEF_API(`void',`CDECL',`plcshellseteof',`(plcshellseteof_struct *p)',1,0x1C411A5
  * Skip a number of blocks in the output.
  * 
  * If a Command Handler sends a huge amount of output, it
- * might be necessary, that this output is splitted into
+ * might be necessary, that this output is divided into
  * several blocks by the communication layer. When this
  * happens, the communication layer will discard everything,
  * but the current block from the output and recall the

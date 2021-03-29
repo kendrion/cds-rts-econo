@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -46,7 +46,7 @@ typedef struct
 /**
  * <category>Events</category>
  * <description>Event is sent when a the NameServiceServer retrieves the information put into the OEM field of the naming response.
- * Note: The information put here are not evaluted by the default Automation Platform. A OEM plug in is needed to handle this data in the Automation Platform.
+ * Note: The information put here are not evaluated by the default Automation Platform. A OEM plug in is needed to handle this data in the Automation Platform.
  * Note: The event is sent twice. The first time pData is NULL and ui8OemDataLen is 0. This is used to get the needed length of the OEM data.The OEM should 
  *       fill up the needed length into the ui8OemDataLen. 
  *       The second time the pData is available an can be filled up. ui8OemDataLen should be filled up with the actual written length.

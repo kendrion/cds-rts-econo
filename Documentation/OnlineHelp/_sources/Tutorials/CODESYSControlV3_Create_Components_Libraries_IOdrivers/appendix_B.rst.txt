@@ -1,0 +1,160 @@
+.. _tutorial_creating_components_libraries_iodrivers_appendix_b:
+
+B: [Step by Step] Compiling a Component
+=======================================
+
+How to compile your component exactly depends hardly on the
+Platform/toolchain you are using. We cannot describe every IDE or
+Makefile mechanism here, but we picked up a few examples.
+
+-  Create a new project to compile the source files of our new
+   component:
+
+   a. VxWorks / Tornado:
+
+      i.   *File -> New Project*
+
+      ii.  Select „Create downloadable application modules for VxWorks“
+
+      iii. Finish the Wizard
+
+      iv.  *Right click on new Project -> Add files ...*
+
+      v.   Select your Source file (CmpTest.c)
+
+   b. VxWorks / Workbench:
+
+      i.   *File -> New -> VxWorks Downloadable Kernel Module Project*
+
+      ii.  Finish the Wizard
+
+      iii. Delete second build-target named <project-name>_partialImage
+
+      iv.   Delete reference to <project-name>_partialImage from first
+            build target
+
+      v.    Copy your Component folder under your newly created project.
+
+      vi.   *Right click on the project -> Refresh*
+
+      vii.  *Right click on the build target -> Edit content*
+
+      viii. Select your source file (CmpTest.c) and press „Add“
+
+      ix.   *Right click on the project -> Build Options -> Set Active Build Spec...*
+
+      x.    | Select the corresponding build specification for your platforms
+            | (Note, that we only support the GNU compiler)
+
+   c. Visual Studio 2015:
+
+      i.    File -> New -> Project
+
+      ii.   Visual C++ -> Win32 and here select a “Win32 Project”
+
+      iii.  Select a name and the path for the project and solution
+
+      iv.   Select in the Wizard “Application Settings” and select here “DLL”
+
+      v.    Check “Empty project” and uncheck “Precompiled header”
+
+      vi.   Uncheck optional “Security Development Lifecycle (SDL) checks” if not necessary
+
+      vii.  Finish the Wizard
+
+      viii. Change to „Solution Explorer“ Tab
+
+      ix.   *Right click on „Source Files“ -> Add -> Existing Item…*
+
+      x.    Select you source file (CmpTest.c)
+
+      xi.   *Right click on „Header Files“ -> Add -> Existing Item…*
+
+      xii.  Select your header files (\*Itf.h and \*Dep.h) and both M4 files
+
+      xiii. Right click on each m4 file and select *Properties*
+
+      xiv.  Go to category *General* and select in “Excluded From Build” the option “Yes”
+
+      xv.   Close the property dialog with saving the changes
+
+   d. Linux:
+
+      i. Use the supported makefile under Templates/CmpTemplate/Linux as a basis for your component
+
+-  | Add Compiler Defines and Include Paths:
+   | The most essential preprocessor defines are:
+   | STATIC_LINK, DYNAMIC_LINK and for some RISC CPUs also
+     NO_PRAGMA_PACK
+
+   a. VxWorks / Tornado:
+
+      i.   Change to the „Builds“ Tab
+
+      ii.  *Right click on the „Build Spec“ under your project ->
+           Properties*
+
+      iii. Change to the „C/C++ Compiler“ Tab
+
+      iv.  Add the following compiler flags:
+
+           1. -DMIXED_LINK (that’s always necessary in VxWorks)
+
+           2. -I<path-to-runtime-interfaces>/Components
+
+           3. -I<path-to-runtime-interfaces>/Platforms/VxWorks
+
+   b. VxWorks / Workbench:
+
+      i.    *Right click on build target -> Properties*
+
+      ii.   Change to „Build Macros“ Tab
+
+      iii.  Add the following Define:
+
+            1. -DMIXED_LINK (that’s always necessary in VxWorks)
+
+      iv. Change to „Build Paths“ Tab
+
+      v.   Add the following Build Paths to your configuration:
+
+            1. -I<path-to-runtime-interfaces>/Components
+
+            2. -I<path-to-runtime-interfaces>/Platforms/VxWorks
+
+   c. Visual Studio 2015:
+
+      i.    *Project -> Properties*
+
+      ii.   Change to „C/C++“ Category
+
+      iii.  Select Category „General“
+
+      iv. Add the following paths, comma separated to „Additional
+            Include Directories“:
+
+            1. <path-to-runtime-interfaces>/Components
+
+            2. <path-to-runtime-interfaces>/Platforms/Windows
+
+   d. Linux:
+
+    i. Additional hints:
+
+       -  The template makefile requires the tools “m4” and “to/fromdos”
+          installed to work properly, usually they are included in your
+          Linux derivate, or at least installable via the default package
+          mechanism.
+
+    ii. Adopt and check the following variables in the makefile:
+
+       -  TARGET: should be the component name (without lib prefix and
+          without “.so” extension): “CmpTemplate” is the default
+          (this leads to an object called “libCmpTemplate.so”).
+
+       -  INCLUDE: should include all required include paths for compilation
+
+       -  CXXFLAGS
+
+          -->  TRG\_ define: at least one “TRG\_” define is required: choose the correct one from “TRG_X86 \| TRG_PPC \| TRG_ARM \| TRG_CORTEX”.
+

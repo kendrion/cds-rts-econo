@@ -3,7 +3,7 @@
  * <description>
  *	<p>Interface for a generic locking mechanism</p>
  *	<p>If both SysSem and SysInt components are implemented in the runtime system,
- *	a global int-lock implementation can be choosen with CMLOCK_PREFER_SYSINT macro.
+ *	a global int-lock implementation can be chosen with CMLOCK_PREFER_SYSINT macro.
  *	Otherwise, a mutex-based implementation is automatically selected.</p>
  *	<p>If either SysSem or SysInt component is implemented only, then
  *	the CMLock implementation is based on an existing component.</p>
@@ -30,7 +30,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 

@@ -227,11 +227,53 @@
 	#endif
 
 	#ifndef CL2_NRXMSG
-		#define CL2_NRXMSG 100  /* Max. Number of RX-Messages in Rx-Pool */
+		#define CL2_NRXMSG 100  /* Max. Number of RX-Messages in Rx-Pool ==> will be dynamically extended if CL2_QUEUE_ADAPTION is set to 1. */
+	#endif
+
+	#ifndef CL2_NRDRVCTX
+		/* Number of driver contexts which should be allocated in static memory. 
+		Each DriverOpenH needs one driver context. 
+		Set this define to a number greater or equal 0. 
+		If number of driver context is not sufficient DriverOpenH will allocate further memory. */
+		#define CL2_NRDRVCTX 0
+	#endif
+
+	#ifndef CL2_NREVENTTABLE
+		/*Number of Event Tables (round about 16k per table) which should be allocated in static memory. 
+		An event table is only required if CAA Callback is present and application uses receiver events (Fieldbus stacks work without events). 
+		At most one Event Table per physical CAN network (CL2_NNET) is required. 
+		If not enough memory is allocated in static memory, 
+		memory will be allocated dynamically when application uses events the first time (CreateReceiver with eEvent != 0). 
+		*/
+		#define CL2_NREVENTTABLE 0
+	#endif
+
+	#ifndef CL2_NRMASKTABLE
+		/* Number of Mask Tables (round about 264 byte per table) which should be allocated in static memory.
+		   A Mask table is used by an Area Receiver or Array Receiver.
+		   If not enough memory is allocated in static memory, 
+		   memory will be allocated dynamically for each Area or Array Receiver. */
+		#define CL2_NRMASKTABLE 0
 	#endif
 
 	#ifndef CL2_SZRIDP
-		#define CL2_SZRIDP 4096 /* RegId Pool Size */
+		/* Receiver context pool size in byte (one receiver needs one receiver context with roundabout 32 byte on 32 bit targets) 
+		==> will be dynamically extended if needed (CreateReceiver). */
+		#if defined(TRG_64BIT)
+			#define CL2_SZRIDP 4096
+		#else	
+			#define CL2_SZRIDP 2048
+		#endif
+	#endif
+
+	#ifndef CL2_SZRECEIVER_QUEUE
+		/* static memory for receiver queues in byte (for receivers with xAlwaysNewest=FALSE, one receiver queue needs roundabout 44 byte on 32 bit targets) 
+		==> will be dynamically extended if needed (CreateReceiver). */
+		#if defined(TRG_64BIT)
+			#define CL2_SZRECEIVER_QUEUE 4096
+		#else
+			#define CL2_SZRECEIVER_QUEUE 2048
+		#endif
 	#endif
 
 	#ifndef CL2_QUEUE_ADAPTION

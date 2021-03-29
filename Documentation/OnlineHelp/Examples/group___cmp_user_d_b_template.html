@@ -1,0 +1,518 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>CmpUserDBTemplate &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/theme.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="cmpuserdbtemplate">
+<span id="group-cmp-user-d-b-template"></span><h1>CmpUserDBTemplate<a class="headerlink" href="#cmpuserdbtemplate" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#detailed-description" id="id179">Detailed Description</a></p></li>
+<li><p><a class="reference internal" href="#data-structures" id="id180">Data Structures</a></p></li>
+<li><p><a class="reference internal" href="#macros" id="id181">Macros</a></p></li>
+<li><p><a class="reference internal" href="#typedefs" id="id182">Typedefs</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id183">Functions</a></p></li>
+<li><p><a class="reference internal" href="#macro-definition-documentation" id="id184">Macro Definition Documentation</a></p></li>
+<li><p><a class="reference internal" href="#typedef-documentation" id="id185">Typedef Documentation</a></p></li>
+<li><p><a class="reference internal" href="#function-documentation" id="id186">Function Documentation</a></p></li>
+</ul>
+</div>
+<div class="section" id="detailed-description">
+<h2><a class="toc-backref" href="#id179">Detailed Description</a><a class="headerlink" href="#detailed-description" title="Permalink to this headline">¶</a></h2>
+<p>An example on how to implement the user, group, and object databases and their configuration for the user management.</p>
+<p>Configuration interfaces are optional and in case they are not needed, they do not need to be initialized, registered and the whole implementation section can be removed.</p>
+<p>To change a password, at least CmpUserDBConfig interface must be implemented.</p>
+<p><strong>Copyright:</strong></p>
+<p>Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.</p>
+</div>
+<div class="section" id="data-structures">
+<h2><a class="toc-backref" href="#id180">Data Structures</a><a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>struct <a class="reference internal" href="structtag_user_d_b_entry.html#structtag-user-d-b-entry"><span class="std std-ref">tagUserDBEntry</span></a></p></li>
+<li><p>struct <a class="reference internal" href="structtag_group_d_b_entry.html#structtag-group-d-b-entry"><span class="std std-ref">tagGroupDBEntry</span></a></p></li>
+<li><p>struct <a class="reference internal" href="structtag_group_rights_entry.html#structtag-group-rights-entry"><span class="std std-ref">tagGroupRightsEntry</span></a></p></li>
+<li><p>struct <a class="reference internal" href="structtag_object_entry.html#structtag-object-entry"><span class="std std-ref">tagObjectEntry</span></a></p></li>
+<li><p>struct <a class="reference internal" href="struct_user_d_b_template___c.html#struct-user-d-b-template-c"><span class="std std-ref">UserDBTemplate_C</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="macros">
+<h2><a class="toc-backref" href="#id181">Macros</a><a class="headerlink" href="#macros" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>#define <a class="reference internal" href="#group-cmp-user-d-b-template-1ga819be70ac9e7f8924fecb7b6db48cc4e"><span class="std std-ref">STATICITF_DEF</span></a> static</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-d-b-template-1ga3cd6b7e9d8bf36acee07edeb6a94c9f2"><span class="std std-ref">DIM</span></a> (sizeof(a)/sizeof(a[0]))</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-d-b-template-1ga1f2a038ea0f5ff45e9e2dcb9fb04fe9a"><span class="std std-ref">PWFNAME</span></a> SYSFILE_INVISIBLE_FILENAME_PREFIX “pwhash.dat”</p></li>
+<li><p>#define <a class="reference internal" href="#group-cmp-user-d-b-template-1gaf5e947d3291ead7f1acdbd827c072a2e"><span class="std std-ref">USERDB_TEMPLATE_USERLIST</span></a> {</p></li>
+</ul>
+<p>{ “Administrator”, “Administrator” },{ “Developer”, “Developer”},{ “Service”, “Service”},{ “Watch”, “Watch”},{NULL, NULL} }</p>
+</div>
+<div class="section" id="typedefs">
+<h2><a class="toc-backref" href="#id182">Typedefs</a><a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>typedef struct <a class="reference internal" href="structtag_user_d_b_entry.html#structtag-user-d-b-entry"><span class="std std-ref">tagUserDBEntry</span></a> <a class="reference internal" href="#group-cmp-user-d-b-template-1gaec7a42f3930d152254c31c5b09ffb3b4"><span class="std std-ref">UserDBEntry</span></a></p></li>
+<li><p>typedef struct <a class="reference internal" href="structtag_group_d_b_entry.html#structtag-group-d-b-entry"><span class="std std-ref">tagGroupDBEntry</span></a> <a class="reference internal" href="#group-cmp-user-d-b-template-1ga05f9c90c0b2e36c056a465a106552294"><span class="std std-ref">GroupDBEntry</span></a></p></li>
+<li><p>typedef struct <a class="reference internal" href="structtag_group_rights_entry.html#structtag-group-rights-entry"><span class="std std-ref">tagGroupRightsEntry</span></a> <a class="reference internal" href="#group-cmp-user-d-b-template-1gad899c2967b9ce71a690ab444c47094d4"><span class="std std-ref">GroupRightsEntry</span></a></p></li>
+<li><p>typedef struct <a class="reference internal" href="structtag_object_entry.html#structtag-object-entry"><span class="std std-ref">tagObjectEntry</span></a> <a class="reference internal" href="#group-cmp-user-d-b-template-1gac84c69be9898222f75f9d955e5682111"><span class="std std-ref">ObjectEntry</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2><a class="toc-backref" href="#id183">Functions</a><a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>USE_STMT int <a class="reference internal" href="#group-cmp-user-d-b-template-1gaf2517c16f20cb565086f0b91c168e16c"><span class="std std-ref">IsAdministatorGroup</span></a> (RTS_HANDLE hGroup)</p></li>
+<li><p>IMPLEMENT_ADDREF IMPLEMENT_RELEASE static DECLARE_QUERYINTERFACE IBase * <a class="reference internal" href="#group-cmp-user-d-b-template-1gab32049c3b5e4e204734e4ca7d5c54743"><span class="std std-ref">CreateInstance</span></a> (CLASSID cid, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga943bdf9b0e320026633f0a53e0595660"><span class="std std-ref">DeleteInstance</span></a> (IBase * pIBase)</p></li>
+<li><p>void * <a class="reference internal" href="#group-cmp-user-d-b-template-1gab87fa7a07023ff0e1939f5da37252041"><span class="std std-ref">QueryInterface</span></a> (IBase * pBase, ITFID iid, RTS_RESULT * pResult)</p></li>
+<li><p>DLL_DECL int <a class="reference internal" href="#group-cmp-user-d-b-template-1ga428e512ef9d385507218f5cb410ecf22"><span class="std std-ref">ComponentEntry</span></a> (INIT_STRUCT * pInitStruct)</p></li>
+<li><p>int <a class="reference internal" href="#group-cmp-user-d-b-template-1ga9b0700711be53a466c6c8494343a465a"><span class="std std-ref">ExportFunctions</span></a> (void)</p></li>
+<li><p>int <a class="reference internal" href="#group-cmp-user-d-b-template-1ga87d62c8eb63af9f15a122c28448733bf"><span class="std std-ref">ImportFunctions</span></a> (void)</p></li>
+<li><p>RTS_UI32 <a class="reference internal" href="#group-cmp-user-d-b-template-1gacf72d3e99274b04feca13b139859c539"><span class="std std-ref">CmpGetVersion</span></a> (void)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gaadccedd8abe0a74c30bd3fe8c1b14e35"><span class="std std-ref">MakeHash</span></a> (char * pszPassword, RTS_UI8 * pbyHash, RTS_SIZE iLenHash, RTS_UI32 * pulSessionId)</p></li>
+<li><p>void <a class="reference internal" href="#group-cmp-user-d-b-template-1gab9c6566e6daa4662503eefcf842f1a0b"><span class="std std-ref">InitialHashes</span></a> (void)</p></li>
+<li><p>void <a class="reference internal" href="#group-cmp-user-d-b-template-1ga96faafadf14c6e2fd9bc18f6dbd63409"><span class="std std-ref">CBResetOriginDevice</span></a> (EventParam * pEventParam)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga0b2ad195d710768e5fa78879787cd805"><span class="std std-ref">HookFunction</span></a> (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gab861916929111e432ed4c2111c5f94f6"><span class="std std-ref">UserDBAuthenticate</span></a> (RTS_HANDLE hDatabase, char * pszUser, UserMgrCredentials * pCredentials, RTS_UI32 * pUserProperty)</p></li>
+<li><p>char * <a class="reference internal" href="#group-cmp-user-d-b-template-1ga8465cd56b9a59767f58379f29b5e86e0"><span class="std std-ref">UserDBGetFirstUser</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE * hIterator, RTS_UI32 * pUserProperty, RTS_RESULT * pResult)</p></li>
+<li><p>char * <a class="reference internal" href="#group-cmp-user-d-b-template-1ga0db241a332e91f25995abc8839fcc924"><span class="std std-ref">UserDBGetNextUser</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE * hIterator, RTS_UI32 * pUserProperty, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga6afef81dbab71a52c0d1c411456b34cf"><span class="std std-ref">UserDBConfigRelease</span></a> (RTS_HANDLE hDatabase)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga8b94682ecca3dee34fafe1e14647e004"><span class="std std-ref">UserDBConfigImport</span></a> (RTS_HANDLE hDatabase, RTS_UI8 * pData, RTS_SIZE dataSize)</p></li>
+<li><p>RTS_SIZE <a class="reference internal" href="#group-cmp-user-d-b-template-1gab3544789d4f87afe3593ff0343944614"><span class="std std-ref">UserDBConfigExport</span></a> (RTS_HANDLE hDatabase, RTS_UI8 * pData, RTS_SIZE maxSize, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gaac5ef60d769779161b3405287aca6182"><span class="std std-ref">UserDBConfigAddUser</span></a> (RTS_HANDLE hDatabase, char * pszUser, UserMgrCredentials * pCredentials)</p></li>
+<li><p>RTS_BOOL <a class="reference internal" href="#group-cmp-user-d-b-template-1ga594742bdb5f6b3f998d935ec60ff81a3"><span class="std std-ref">UserDBConfigExistsUser</span></a> (RTS_HANDLE hDatabase, char * pszUser)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gaafe5de3748bd4383d7f3140649655b87"><span class="std std-ref">UserDBConfigRemoveUser</span></a> (RTS_HANDLE hDatabase, char * pszUser)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga2de815686a9ae42e24baa70a59a7df7f"><span class="std std-ref">UserDBConfigSetUserCredentials</span></a> (RTS_HANDLE hDatabase, char * pszUser, UserMgrCredentials * pCredentials)</p></li>
+<li><p>RTS_UI32 <a class="reference internal" href="#group-cmp-user-d-b-template-1ga6cbd645bb0663f04fe3e59201bb9beab"><span class="std std-ref">UserDBConfigGetUserProperty</span></a> (RTS_HANDLE hDatabase, char * pszUser, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga27134018b22432fb567fa70cd6e05592"><span class="std std-ref">UserDBConfigSetUserProperty</span></a> (RTS_HANDLE hDatabase, char * pszUser, RTS_UI32 property)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga18eb4475427c674f20798afd98766e05"><span class="std std-ref">UserGroupsDBGetGroup</span></a> (RTS_HANDLE hDatabase, char * pszGroupName, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga3d0dc11b6ba4b61fd9c29cede3e9d404"><span class="std std-ref">UserGroupsDBGetFirstGroup</span></a> (RTS_HANDLE hDatabase, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga9cf95e86bf2f06facc2a4fa12699d22f"><span class="std std-ref">UserGroupsDBGetNextGroup</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hPrevGroup, RTS_RESULT * pResult)</p></li>
+<li><p>char * <a class="reference internal" href="#group-cmp-user-d-b-template-1ga681ab9bece3d501bbc0f7b1d3790cb7d"><span class="std std-ref">UserGroupsDBGetName</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_UI32 <a class="reference internal" href="#group-cmp-user-d-b-template-1gab7b5b9a713a074e8b0e75697585feec1"><span class="std std-ref">UserGroupsDBGetProperty</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga5610388aa4920aaa6ea1d989ad7e292f"><span class="std std-ref">UserGroupsDBGroupHasUser</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, char * pszUser)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga977ab91966f96e128673f5e7b1e93caf"><span class="std std-ref">UserGroupsDBGroupHasMember</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE hGroupMember)</p></li>
+<li><p>char * <a class="reference internal" href="#group-cmp-user-d-b-template-1gac2fa22b0bd446e0b2b534863c128beb7"><span class="std std-ref">UserGroupsDBGetFirstUser</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE * phIterator, RTS_RESULT * pResult)</p></li>
+<li><p>char * <a class="reference internal" href="#group-cmp-user-d-b-template-1gacc40a7c332b9eb157c9b1ec054196cc7"><span class="std std-ref">UserGroupsDBGetNextUser</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE * phIterator, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga16012f099b7ca51109ad12df7acd1eeb"><span class="std std-ref">UserGroupsDBGetFirstGroupMember</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga9868e76f00a820aae4528c01f33f0529"><span class="std std-ref">UserGroupsDBGetNextGroupMember</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE hPrevMember, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gaa35cdae6f80fc027f2a0ad5ac45f2c10"><span class="std std-ref">UserGroupsDBConfigRelease</span></a> (RTS_HANDLE hDatabase)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga67814d5335d40a4f4c67a83e0cdd36e5"><span class="std std-ref">UserGroupsDBConfigImport</span></a> (RTS_HANDLE hDatabase, RTS_UI8 * pData, RTS_SIZE dataSize)</p></li>
+<li><p>RTS_SIZE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga9f7987d5c8421f746447367cef0689cc"><span class="std std-ref">UserGroupsDBConfigExport</span></a> (RTS_HANDLE hDatabase, RTS_UI8 * pData, RTS_SIZE maxSize, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gade38203718437c62a1a170124c97007c"><span class="std std-ref">UserGroupsDBConfigAdd</span></a> (RTS_HANDLE hDatabase, char * pszGroup)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga60670fac7a69e4e515f593d822f9b4f8"><span class="std std-ref">UserGroupsDBConfigRemove</span></a> (RTS_HANDLE hDatabase, char * pszGroup)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga51d19cbcfc6ba8021c2f973c176f2eaa"><span class="std std-ref">UserGroupsDBConfigSetProperty</span></a> (RTS_HANDLE hDatabase, char * pszGroup, RTS_UI32 ulProperty)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gabd0c9aaa2278d52c368f5e7609af17cc"><span class="std std-ref">UserGroupsDBConfigAddUser</span></a> (RTS_HANDLE hDatabase, char * pszGroup, char * pszUser)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gaf40b8db1a228dc9713739a98438fbd40"><span class="std std-ref">UserGroupsDBConfigRemoveUser</span></a> (RTS_HANDLE hDatabase, char * pszGroup, char * pszUser)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gaf8c4098457988215b6c2e42d3d8fed9d"><span class="std std-ref">UserGroupsDBConfigAddMember</span></a> (RTS_HANDLE hDatabase, char * pszGroup, char * pszGroupToAdd)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga46e08479cd72c30860860b848a56be2a"><span class="std std-ref">UserGroupsDBConfigRemoveMember</span></a> (RTS_HANDLE hDatabase, char * pszGroup, char * pszGroupToRemove)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gaa5ee74b96fe4b1b446e838f6c4fed7eb"><span class="std std-ref">UserDBEnforce</span></a> (RTS_HANDLE hDatabase)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga933ea4517c383800479e0e10ca5a8473"><span class="std std-ref">UserObjectsDBGetUsedRights</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 * pulUsedRights)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga729e652b6df6895648ddbe5567694781"><span class="std std-ref">UserObjectsDBGetProperties</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 * pulProperties)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga872a9c872084a26f25decd96a1a376c8"><span class="std std-ref">UserObjectsDBGetID</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 * pulID)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga94b0692adee0d500cd58165da86861a9"><span class="std std-ref">UserObjectsDBGetFirst</span></a> (RTS_HANDLE hDatabase, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga5aac58b7d106bb39ab91f838b232f576"><span class="std std-ref">UserObjectsDBGetNext</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hPrevObject, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga56195ee4a3769e9f779915347abea75c"><span class="std std-ref">UserObjectsDBGetFirstChild</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1gafba0a9c77366db2f82facf219f8ab7cc"><span class="std std-ref">UserObjectsDBGetNextChild</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga1a519cd37e1f1d28a7d5bb6199ce5909"><span class="std std-ref">UserObjectsDBGetFather</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hChildObject, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga606ff966cdbaac3acaa8f02183bf7afa"><span class="std std-ref">UserObjectsDBGetFirstGroup</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga31b45646c2b05a5631908450a9414be2"><span class="std std-ref">UserObjectsDBGetNextGroup</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga643e111d4c0f4203c6e01ad90f39906e"><span class="std std-ref">FindObject</span></a> (char * pszObject, int nLen, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga9e65e4c8d10c2af445178de4d999fba5"><span class="std std-ref">UserObjectsDBOpen</span></a> (RTS_HANDLE hDatabase, char * pszObject, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga92066bb0699ff52753ba8fc98a291622"><span class="std std-ref">UserObjectsDBClose</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gaf01883f23e8451e1b889935155eb78f3"><span class="std std-ref">UserObjectsDBGetName</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char * pszObject, int * piMaxLen)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga4be2fb97b4713a235a556bacb94f1d2c"><span class="std std-ref">UserObjectsDBGetPath</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char * pszObject, int * piMaxLen)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga8eed9d5a3e06532331371e6f5af7f8da"><span class="std std-ref">UserObjectsDBGetGroupRights</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 * pulRights, RTS_UI32 * pulDeniedRights)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gaddbace6ca247db256c3c411cec1c7125"><span class="std std-ref">CheckAccessRights</span></a> (RTS_UI32 ulRequestedRights, RTS_UI32 ulObjectRights, RTS_UI32 ulObjectDeniedRights)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga12277666e1bc3f58322c1e3582f031e7"><span class="std std-ref">UserObjectsDBHasRights</span></a> (RTS_HANDLE hDatabase, char * pszObject, RTS_HANDLE hUser, RTS_UI32 ulRights)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gae35fc1b8c0da9b2b0a695276ff2de080"><span class="std std-ref">ObjectGetRights</span></a> (RTS_HANDLE hObject, RTS_HANDLE hUser, RTS_UI32 * pulRights, RTS_UI32 * pulDeniedRights)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga8b7ebaea3f15dbe56112b7f617e1908a"><span class="std std-ref">UserObjectsDBGetRights</span></a> (RTS_HANDLE hDatabase, char * pszObject, RTS_HANDLE hUser, RTS_UI32 * pulRights, RTS_UI32 * pulDeniedRights)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gaf6c646e2aace81352b9884ac545894eb"><span class="std std-ref">UserObjectsDBActivate</span></a> (RTS_HANDLE hDatabase)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga730687b4590eba55244e1fe2e0a728df"><span class="std std-ref">UserObjectsDBConfigLoad</span></a> (RTS_HANDLE hDatabase)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga66d8a5bd4ac027243a7078a794f9fde8"><span class="std std-ref">UserObjectsDBConfigStore</span></a> (RTS_HANDLE hDatabase)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga6261626be05289e3ebac6ccf5633e367"><span class="std std-ref">UserObjectsDBConfigReleaseRights</span></a> (RTS_HANDLE hDatabase)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga43b3b31445af3d65e64f488c466188ab"><span class="std std-ref">UserObjectsDBConfigRelease</span></a> (RTS_HANDLE hDatabase)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1gabefd112fccae722e2321258a3ac202c4"><span class="std std-ref">UserObjectsDBConfigAdd</span></a> (RTS_HANDLE hDatabase, char * pszObject, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga0be998d0c9dd02abff2353255697aed0"><span class="std std-ref">UserObjectsDBConfigAdd2</span></a> (RTS_HANDLE hDatabase, char * pszObject, RTS_UI32 properties, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gac6d9599b682043da54f62dffea0c1636"><span class="std std-ref">UserObjectsDBConfigRemove</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject)</p></li>
+<li><p>RTS_HANDLE <a class="reference internal" href="#group-cmp-user-d-b-template-1ga75aaa162612c946d2d5021918c35e4eb"><span class="std std-ref">UserObjectsDBConfigAddChild</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, char * pszObject, RTS_RESULT * pResult)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga9f9366eff8e4f71ded2ed66152723136"><span class="std std-ref">UserObjectsDBConfigSetUsedRights</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 ulUsedRights)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gaf6466cde3af285c1e1a11133ab1864a5"><span class="std std-ref">UserObjectsDBConfigSetID</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 ulID)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga0aeaea801c2848c8ba360f1592d13702"><span class="std std-ref">UserObjectsDBConfigAddGroup</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga7f6d2f0eb19a27b43e72b22a02ba87dc"><span class="std std-ref">UserObjectsDBConfigRemoveGroup</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1ga276a8fd111138ac03cb4e4835c8724f4"><span class="std std-ref">UserObjectsDBConfigSetGroupRights</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulRights)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gae17458f7126afe255f6b9c6a4fa83e62"><span class="std std-ref">UserObjectsDBConfigSetGroupDeniedRights</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulDeniedRights)</p></li>
+<li><p>RTS_RESULT <a class="reference internal" href="#group-cmp-user-d-b-template-1gab6da566412032d5b928c514bce6e3882"><span class="std std-ref">UserObjectsDBConfigClearRights</span></a> (RTS_HANDLE hDatabase, RTS_HANDLE hObject)</p></li>
+</ul>
+</div>
+<div class="section" id="macro-definition-documentation">
+<h2><a class="toc-backref" href="#id184">Macro Definition Documentation</a><a class="headerlink" href="#macro-definition-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="define-staticitf-def-static">
+<span id="group-cmp-user-d-b-template-1ga819be70ac9e7f8924fecb7b6db48cc4e"></span><h3>#define STATICITF_DEF static<a class="headerlink" href="#define-staticitf-def-static" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-dim-sizeof-a-sizeof-a-0">
+<span id="group-cmp-user-d-b-template-1ga3cd6b7e9d8bf36acee07edeb6a94c9f2"></span><h3>#define DIM (sizeof(a)/sizeof(a[0]))<a class="headerlink" href="#define-dim-sizeof-a-sizeof-a-0" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-pwfname-sysfile-invisible-filename-prefix-pwhash-dat">
+<span id="group-cmp-user-d-b-template-1ga1f2a038ea0f5ff45e9e2dcb9fb04fe9a"></span><h3>#define PWFNAME SYSFILE_INVISIBLE_FILENAME_PREFIX “pwhash.dat”<a class="headerlink" href="#define-pwfname-sysfile-invisible-filename-prefix-pwhash-dat" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-userdb-template-userlist">
+<span id="group-cmp-user-d-b-template-1gaf5e947d3291ead7f1acdbd827c072a2e"></span><h3>#define USERDB_TEMPLATE_USERLIST<a class="headerlink" href="#define-userdb-template-userlist" title="Permalink to this headline">¶</a></h3>
+<p><strong>Value:</strong></p>
+<pre class="literal-block">{\
+{ &quot;Administrator&quot;, &quot;Administrator&quot; },\
+{ &quot;Developer&quot;, &quot;Developer&quot;},\
+{ &quot;Service&quot;, &quot;Service&quot;},\
+{ &quot;Watch&quot;, &quot;Watch&quot;},\
+{NULL, NULL} \
+}</pre>
+</div>
+</div>
+<div class="section" id="typedef-documentation">
+<h2><a class="toc-backref" href="#id185">Typedef Documentation</a><a class="headerlink" href="#typedef-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="typedef-struct-taguserdbentry-userdbentry">
+<span id="group-cmp-user-d-b-template-1gaec7a42f3930d152254c31c5b09ffb3b4"></span><h3>typedef struct tagUserDBEntry  UserDBEntry<a class="headerlink" href="#typedef-struct-taguserdbentry-userdbentry" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-struct-taggroupdbentry-groupdbentry">
+<span id="group-cmp-user-d-b-template-1ga05f9c90c0b2e36c056a465a106552294"></span><h3>typedef struct tagGroupDBEntry  GroupDBEntry<a class="headerlink" href="#typedef-struct-taggroupdbentry-groupdbentry" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-struct-taggrouprightsentry-grouprightsentry">
+<span id="group-cmp-user-d-b-template-1gad899c2967b9ce71a690ab444c47094d4"></span><h3>typedef struct tagGroupRightsEntry  GroupRightsEntry<a class="headerlink" href="#typedef-struct-taggrouprightsentry-grouprightsentry" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="typedef-struct-tagobjectentry-objectentry">
+<span id="group-cmp-user-d-b-template-1gac84c69be9898222f75f9d955e5682111"></span><h3>typedef struct tagObjectEntry  ObjectEntry<a class="headerlink" href="#typedef-struct-tagobjectentry-objectentry" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="function-documentation">
+<h2><a class="toc-backref" href="#id186">Function Documentation</a><a class="headerlink" href="#function-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="static-int-isadministatorgroup-rts-handle-hgroup">
+<span id="group-cmp-user-d-b-template-1gaf2517c16f20cb565086f0b91c168e16c"></span><h3>static int IsAdministatorGroup (RTS_HANDLE hGroup)<a class="headerlink" href="#static-int-isadministatorgroup-rts-handle-hgroup" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="implement-addref-implement-release-static-declare-queryinterface-ibase-createinstance-classid-cid-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1gab32049c3b5e4e204734e4ca7d5c54743"></span><h3>IMPLEMENT_ADDREF IMPLEMENT_RELEASE static DECLARE_QUERYINTERFACE IBase* CreateInstance (CLASSID cid, RTS_RESULT <a href="#id1"><span class="problematic" id="id2">*</span></a>pResult)<a class="headerlink" href="#implement-addref-implement-release-static-declare-queryinterface-ibase-createinstance-classid-cid-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-deleteinstance-ibase-pibase">
+<span id="group-cmp-user-d-b-template-1ga943bdf9b0e320026633f0a53e0595660"></span><h3>static RTS_RESULT DeleteInstance (IBase <a href="#id3"><span class="problematic" id="id4">*</span></a>pIBase)<a class="headerlink" href="#static-rts-result-deleteinstance-ibase-pibase" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-void-queryinterface-ibase-pbase-itfid-iid-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1gab87fa7a07023ff0e1939f5da37252041"></span><h3>static void* QueryInterface (IBase <a href="#id5"><span class="problematic" id="id6">*</span></a>pBase, ITFID iid, RTS_RESULT <a href="#id7"><span class="problematic" id="id8">*</span></a>pResult)<a class="headerlink" href="#static-void-queryinterface-ibase-pbase-itfid-iid-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="dll-decl-int-componententry-init-struct-pinitstruct">
+<span id="group-cmp-user-d-b-template-1ga428e512ef9d385507218f5cb410ecf22"></span><h3>DLL_DECL int ComponentEntry (INIT_STRUCT <a href="#id9"><span class="problematic" id="id10">*</span></a>pInitStruct)<a class="headerlink" href="#dll-decl-int-componententry-init-struct-pinitstruct" title="Permalink to this headline">¶</a></h3>
+<p>Entry function of the component. Called at startup for each component. Used to exchange function pointers with the component manager.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 2%" />
+<col style="width: 3%" />
+<col style="width: 96%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>[in]</p></td>
+<td><p>pInitStruct</p></td>
+<td><p>Pointer to structure with: pfExportFunctions OUT Pointer to function that exports component functions pfImportFunctions OUT Pointer to function that imports functions from other components pfGetVersion OUT Pointer to function to get component version pfRegisterAPI IN Pointer to component mangager function to register a api function pfGetAPI IN Pointer to component mangager function to get a api function pfCallHook IN Pointer to component mangager function to call a hook function</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>ERR_OK if component could be initialized, else error code.</p>
+</div>
+<div class="section" id="static-int-exportfunctions-void">
+<span id="group-cmp-user-d-b-template-1ga9b0700711be53a466c6c8494343a465a"></span><h3>static int ExportFunctions (void)<a class="headerlink" href="#static-int-exportfunctions-void" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-int-importfunctions-void">
+<span id="group-cmp-user-d-b-template-1ga87d62c8eb63af9f15a122c28448733bf"></span><h3>static int ImportFunctions (void)<a class="headerlink" href="#static-int-importfunctions-void" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-ui32-cmpgetversion-void">
+<span id="group-cmp-user-d-b-template-1gacf72d3e99274b04feca13b139859c539"></span><h3>static RTS_UI32 CmpGetVersion (void)<a class="headerlink" href="#static-rts-ui32-cmpgetversion-void" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-makehash-char-pszpassword-rts-ui8-pbyhash-rts-size-ilenhash-rts-ui32-pulsessionid">
+<span id="group-cmp-user-d-b-template-1gaadccedd8abe0a74c30bd3fe8c1b14e35"></span><h3>static RTS_RESULT MakeHash (char <a href="#id11"><span class="problematic" id="id12">*</span></a>pszPassword, RTS_UI8 <a href="#id13"><span class="problematic" id="id14">*</span></a>pbyHash, RTS_SIZE iLenHash, RTS_UI32 <a href="#id15"><span class="problematic" id="id16">*</span></a>pulSessionId)<a class="headerlink" href="#static-rts-result-makehash-char-pszpassword-rts-ui8-pbyhash-rts-size-ilenhash-rts-ui32-pulsessionid" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-void-initialhashes-void">
+<span id="group-cmp-user-d-b-template-1gab9c6566e6daa4662503eefcf842f1a0b"></span><h3>static void InitialHashes (void)<a class="headerlink" href="#static-void-initialhashes-void" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-void-cbresetorigindevice-eventparam-peventparam">
+<span id="group-cmp-user-d-b-template-1ga96faafadf14c6e2fd9bc18f6dbd63409"></span><h3>static void CBResetOriginDevice (EventParam <a href="#id17"><span class="problematic" id="id18">*</span></a>pEventParam)<a class="headerlink" href="#static-void-cbresetorigindevice-eventparam-peventparam" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-hookfunction-rts-ui32-ulhook-rts-uintptr-ulparam1-rts-uintptr-ulparam2">
+<span id="group-cmp-user-d-b-template-1ga0b2ad195d710768e5fa78879787cd805"></span><h3>static RTS_RESULT HookFunction (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)<a class="headerlink" href="#static-rts-result-hookfunction-rts-ui32-ulhook-rts-uintptr-ulparam1-rts-uintptr-ulparam2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userdbauthenticate-rts-handle-hdatabase-char-pszuser-usermgrcredentials-pcredentials-rts-ui32-puserproperty">
+<span id="group-cmp-user-d-b-template-1gab861916929111e432ed4c2111c5f94f6"></span><h3>static RTS_RESULT UserDBAuthenticate (RTS_HANDLE hDatabase, char <a href="#id19"><span class="problematic" id="id20">*</span></a>pszUser, UserMgrCredentials <a href="#id21"><span class="problematic" id="id22">*</span></a>pCredentials, RTS_UI32 <a href="#id23"><span class="problematic" id="id24">*</span></a>pUserProperty)<a class="headerlink" href="#static-rts-result-userdbauthenticate-rts-handle-hdatabase-char-pszuser-usermgrcredentials-pcredentials-rts-ui32-puserproperty" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-char-userdbgetfirstuser-rts-handle-hdatabase-rts-handle-hiterator-rts-ui32-puserproperty-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga8465cd56b9a59767f58379f29b5e86e0"></span><h3>static char* UserDBGetFirstUser (RTS_HANDLE hDatabase, RTS_HANDLE <a href="#id25"><span class="problematic" id="id26">*</span></a>hIterator, RTS_UI32 <a href="#id27"><span class="problematic" id="id28">*</span></a>pUserProperty, RTS_RESULT <a href="#id29"><span class="problematic" id="id30">*</span></a>pResult)<a class="headerlink" href="#static-char-userdbgetfirstuser-rts-handle-hdatabase-rts-handle-hiterator-rts-ui32-puserproperty-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-char-userdbgetnextuser-rts-handle-hdatabase-rts-handle-hiterator-rts-ui32-puserproperty-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga0db241a332e91f25995abc8839fcc924"></span><h3>static char* UserDBGetNextUser (RTS_HANDLE hDatabase, RTS_HANDLE <a href="#id31"><span class="problematic" id="id32">*</span></a>hIterator, RTS_UI32 <a href="#id33"><span class="problematic" id="id34">*</span></a>pUserProperty, RTS_RESULT <a href="#id35"><span class="problematic" id="id36">*</span></a>pResult)<a class="headerlink" href="#static-char-userdbgetnextuser-rts-handle-hdatabase-rts-handle-hiterator-rts-ui32-puserproperty-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userdbconfigrelease-rts-handle-hdatabase">
+<span id="group-cmp-user-d-b-template-1ga6afef81dbab71a52c0d1c411456b34cf"></span><h3>static RTS_RESULT UserDBConfigRelease (RTS_HANDLE hDatabase)<a class="headerlink" href="#static-rts-result-userdbconfigrelease-rts-handle-hdatabase" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userdbconfigimport-rts-handle-hdatabase-rts-ui8-pdata-rts-size-datasize">
+<span id="group-cmp-user-d-b-template-1ga8b94682ecca3dee34fafe1e14647e004"></span><h3>static RTS_RESULT UserDBConfigImport (RTS_HANDLE hDatabase, RTS_UI8 <a href="#id37"><span class="problematic" id="id38">*</span></a>pData, RTS_SIZE dataSize)<a class="headerlink" href="#static-rts-result-userdbconfigimport-rts-handle-hdatabase-rts-ui8-pdata-rts-size-datasize" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-size-userdbconfigexport-rts-handle-hdatabase-rts-ui8-pdata-rts-size-maxsize-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1gab3544789d4f87afe3593ff0343944614"></span><h3>static RTS_SIZE UserDBConfigExport (RTS_HANDLE hDatabase, RTS_UI8 <a href="#id39"><span class="problematic" id="id40">*</span></a>pData, RTS_SIZE maxSize, RTS_RESULT <a href="#id41"><span class="problematic" id="id42">*</span></a>pResult)<a class="headerlink" href="#static-rts-size-userdbconfigexport-rts-handle-hdatabase-rts-ui8-pdata-rts-size-maxsize-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userdbconfigadduser-rts-handle-hdatabase-char-pszuser-usermgrcredentials-pcredentials">
+<span id="group-cmp-user-d-b-template-1gaac5ef60d769779161b3405287aca6182"></span><h3>static RTS_RESULT UserDBConfigAddUser (RTS_HANDLE hDatabase, char <a href="#id43"><span class="problematic" id="id44">*</span></a>pszUser, UserMgrCredentials <a href="#id45"><span class="problematic" id="id46">*</span></a>pCredentials)<a class="headerlink" href="#static-rts-result-userdbconfigadduser-rts-handle-hdatabase-char-pszuser-usermgrcredentials-pcredentials" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-bool-userdbconfigexistsuser-rts-handle-hdatabase-char-pszuser">
+<span id="group-cmp-user-d-b-template-1ga594742bdb5f6b3f998d935ec60ff81a3"></span><h3>static RTS_BOOL UserDBConfigExistsUser (RTS_HANDLE hDatabase, char <a href="#id47"><span class="problematic" id="id48">*</span></a>pszUser)<a class="headerlink" href="#static-rts-bool-userdbconfigexistsuser-rts-handle-hdatabase-char-pszuser" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userdbconfigremoveuser-rts-handle-hdatabase-char-pszuser">
+<span id="group-cmp-user-d-b-template-1gaafe5de3748bd4383d7f3140649655b87"></span><h3>static RTS_RESULT UserDBConfigRemoveUser (RTS_HANDLE hDatabase, char <a href="#id49"><span class="problematic" id="id50">*</span></a>pszUser)<a class="headerlink" href="#static-rts-result-userdbconfigremoveuser-rts-handle-hdatabase-char-pszuser" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userdbconfigsetusercredentials-rts-handle-hdatabase-char-pszuser-usermgrcredentials-pcredentials">
+<span id="group-cmp-user-d-b-template-1ga2de815686a9ae42e24baa70a59a7df7f"></span><h3>static RTS_RESULT UserDBConfigSetUserCredentials (RTS_HANDLE hDatabase, char <a href="#id51"><span class="problematic" id="id52">*</span></a>pszUser, UserMgrCredentials <a href="#id53"><span class="problematic" id="id54">*</span></a>pCredentials)<a class="headerlink" href="#static-rts-result-userdbconfigsetusercredentials-rts-handle-hdatabase-char-pszuser-usermgrcredentials-pcredentials" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-ui32-userdbconfiggetuserproperty-rts-handle-hdatabase-char-pszuser-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga6cbd645bb0663f04fe3e59201bb9beab"></span><h3>static RTS_UI32 UserDBConfigGetUserProperty (RTS_HANDLE hDatabase, char <a href="#id55"><span class="problematic" id="id56">*</span></a>pszUser, RTS_RESULT <a href="#id57"><span class="problematic" id="id58">*</span></a>pResult)<a class="headerlink" href="#static-rts-ui32-userdbconfiggetuserproperty-rts-handle-hdatabase-char-pszuser-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userdbconfigsetuserproperty-rts-handle-hdatabase-char-pszuser-rts-ui32-property">
+<span id="group-cmp-user-d-b-template-1ga27134018b22432fb567fa70cd6e05592"></span><h3>static RTS_RESULT UserDBConfigSetUserProperty (RTS_HANDLE hDatabase, char <a href="#id59"><span class="problematic" id="id60">*</span></a>pszUser, RTS_UI32 property)<a class="headerlink" href="#static-rts-result-userdbconfigsetuserproperty-rts-handle-hdatabase-char-pszuser-rts-ui32-property" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-usergroupsdbgetgroup-rts-handle-hdatabase-char-pszgroupname-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga18eb4475427c674f20798afd98766e05"></span><h3>static RTS_HANDLE UserGroupsDBGetGroup (RTS_HANDLE hDatabase, char <a href="#id61"><span class="problematic" id="id62">*</span></a>pszGroupName, RTS_RESULT <a href="#id63"><span class="problematic" id="id64">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-usergroupsdbgetgroup-rts-handle-hdatabase-char-pszgroupname-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-usergroupsdbgetfirstgroup-rts-handle-hdatabase-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga3d0dc11b6ba4b61fd9c29cede3e9d404"></span><h3>static RTS_HANDLE UserGroupsDBGetFirstGroup (RTS_HANDLE hDatabase, RTS_RESULT <a href="#id65"><span class="problematic" id="id66">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-usergroupsdbgetfirstgroup-rts-handle-hdatabase-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-usergroupsdbgetnextgroup-rts-handle-hdatabase-rts-handle-hprevgroup-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga9cf95e86bf2f06facc2a4fa12699d22f"></span><h3>static RTS_HANDLE UserGroupsDBGetNextGroup (RTS_HANDLE hDatabase, RTS_HANDLE hPrevGroup, RTS_RESULT <a href="#id67"><span class="problematic" id="id68">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-usergroupsdbgetnextgroup-rts-handle-hdatabase-rts-handle-hprevgroup-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-char-usergroupsdbgetname-rts-handle-hdatabase-rts-handle-hgroup-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga681ab9bece3d501bbc0f7b1d3790cb7d"></span><h3>static char* UserGroupsDBGetName (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_RESULT <a href="#id69"><span class="problematic" id="id70">*</span></a>pResult)<a class="headerlink" href="#static-char-usergroupsdbgetname-rts-handle-hdatabase-rts-handle-hgroup-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-ui32-usergroupsdbgetproperty-rts-handle-hdatabase-rts-handle-hgroup-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1gab7b5b9a713a074e8b0e75697585feec1"></span><h3>static RTS_UI32 UserGroupsDBGetProperty (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_RESULT <a href="#id71"><span class="problematic" id="id72">*</span></a>pResult)<a class="headerlink" href="#static-rts-ui32-usergroupsdbgetproperty-rts-handle-hdatabase-rts-handle-hgroup-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-usergroupsdbgrouphasuser-rts-handle-hdatabase-rts-handle-hgroup-char-pszuser">
+<span id="group-cmp-user-d-b-template-1ga5610388aa4920aaa6ea1d989ad7e292f"></span><h3>static RTS_RESULT UserGroupsDBGroupHasUser (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, char <a href="#id73"><span class="problematic" id="id74">*</span></a>pszUser)<a class="headerlink" href="#static-rts-result-usergroupsdbgrouphasuser-rts-handle-hdatabase-rts-handle-hgroup-char-pszuser" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-usergroupsdbgrouphasmember-rts-handle-hdatabase-rts-handle-hgroup-rts-handle-hgroupmember">
+<span id="group-cmp-user-d-b-template-1ga977ab91966f96e128673f5e7b1e93caf"></span><h3>static RTS_RESULT UserGroupsDBGroupHasMember (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE hGroupMember)<a class="headerlink" href="#static-rts-result-usergroupsdbgrouphasmember-rts-handle-hdatabase-rts-handle-hgroup-rts-handle-hgroupmember" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-char-usergroupsdbgetfirstuser-rts-handle-hdatabase-rts-handle-hgroup-rts-handle-phiterator-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1gac2fa22b0bd446e0b2b534863c128beb7"></span><h3>static char* UserGroupsDBGetFirstUser (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE <a href="#id75"><span class="problematic" id="id76">*</span></a>phIterator, RTS_RESULT <a href="#id77"><span class="problematic" id="id78">*</span></a>pResult)<a class="headerlink" href="#static-char-usergroupsdbgetfirstuser-rts-handle-hdatabase-rts-handle-hgroup-rts-handle-phiterator-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-char-usergroupsdbgetnextuser-rts-handle-hdatabase-rts-handle-hgroup-rts-handle-phiterator-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1gacc40a7c332b9eb157c9b1ec054196cc7"></span><h3>static char* UserGroupsDBGetNextUser (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE <a href="#id79"><span class="problematic" id="id80">*</span></a>phIterator, RTS_RESULT <a href="#id81"><span class="problematic" id="id82">*</span></a>pResult)<a class="headerlink" href="#static-char-usergroupsdbgetnextuser-rts-handle-hdatabase-rts-handle-hgroup-rts-handle-phiterator-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-usergroupsdbgetfirstgroupmember-rts-handle-hdatabase-rts-handle-hgroup-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga16012f099b7ca51109ad12df7acd1eeb"></span><h3>static RTS_HANDLE UserGroupsDBGetFirstGroupMember (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_RESULT <a href="#id83"><span class="problematic" id="id84">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-usergroupsdbgetfirstgroupmember-rts-handle-hdatabase-rts-handle-hgroup-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-usergroupsdbgetnextgroupmember-rts-handle-hdatabase-rts-handle-hgroup-rts-handle-hprevmember-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga9868e76f00a820aae4528c01f33f0529"></span><h3>static RTS_HANDLE UserGroupsDBGetNextGroupMember (RTS_HANDLE hDatabase, RTS_HANDLE hGroup, RTS_HANDLE hPrevMember, RTS_RESULT <a href="#id85"><span class="problematic" id="id86">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-usergroupsdbgetnextgroupmember-rts-handle-hdatabase-rts-handle-hgroup-rts-handle-hprevmember-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-usergroupsdbconfigrelease-rts-handle-hdatabase">
+<span id="group-cmp-user-d-b-template-1gaa35cdae6f80fc027f2a0ad5ac45f2c10"></span><h3>static RTS_RESULT UserGroupsDBConfigRelease (RTS_HANDLE hDatabase)<a class="headerlink" href="#static-rts-result-usergroupsdbconfigrelease-rts-handle-hdatabase" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-usergroupsdbconfigimport-rts-handle-hdatabase-rts-ui8-pdata-rts-size-datasize">
+<span id="group-cmp-user-d-b-template-1ga67814d5335d40a4f4c67a83e0cdd36e5"></span><h3>static RTS_RESULT UserGroupsDBConfigImport (RTS_HANDLE hDatabase, RTS_UI8 <a href="#id87"><span class="problematic" id="id88">*</span></a>pData, RTS_SIZE dataSize)<a class="headerlink" href="#static-rts-result-usergroupsdbconfigimport-rts-handle-hdatabase-rts-ui8-pdata-rts-size-datasize" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-size-usergroupsdbconfigexport-rts-handle-hdatabase-rts-ui8-pdata-rts-size-maxsize-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga9f7987d5c8421f746447367cef0689cc"></span><h3>static RTS_SIZE UserGroupsDBConfigExport (RTS_HANDLE hDatabase, RTS_UI8 <a href="#id89"><span class="problematic" id="id90">*</span></a>pData, RTS_SIZE maxSize, RTS_RESULT <a href="#id91"><span class="problematic" id="id92">*</span></a>pResult)<a class="headerlink" href="#static-rts-size-usergroupsdbconfigexport-rts-handle-hdatabase-rts-ui8-pdata-rts-size-maxsize-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-usergroupsdbconfigadd-rts-handle-hdatabase-char-pszgroup">
+<span id="group-cmp-user-d-b-template-1gade38203718437c62a1a170124c97007c"></span><h3>static RTS_RESULT UserGroupsDBConfigAdd (RTS_HANDLE hDatabase, char <a href="#id93"><span class="problematic" id="id94">*</span></a>pszGroup)<a class="headerlink" href="#static-rts-result-usergroupsdbconfigadd-rts-handle-hdatabase-char-pszgroup" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-usergroupsdbconfigremove-rts-handle-hdatabase-char-pszgroup">
+<span id="group-cmp-user-d-b-template-1ga60670fac7a69e4e515f593d822f9b4f8"></span><h3>static RTS_RESULT UserGroupsDBConfigRemove (RTS_HANDLE hDatabase, char <a href="#id95"><span class="problematic" id="id96">*</span></a>pszGroup)<a class="headerlink" href="#static-rts-result-usergroupsdbconfigremove-rts-handle-hdatabase-char-pszgroup" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-usergroupsdbconfigsetproperty-rts-handle-hdatabase-char-pszgroup-rts-ui32-ulproperty">
+<span id="group-cmp-user-d-b-template-1ga51d19cbcfc6ba8021c2f973c176f2eaa"></span><h3>static RTS_RESULT UserGroupsDBConfigSetProperty (RTS_HANDLE hDatabase, char <a href="#id97"><span class="problematic" id="id98">*</span></a>pszGroup, RTS_UI32 ulProperty)<a class="headerlink" href="#static-rts-result-usergroupsdbconfigsetproperty-rts-handle-hdatabase-char-pszgroup-rts-ui32-ulproperty" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-usergroupsdbconfigadduser-rts-handle-hdatabase-char-pszgroup-char-pszuser">
+<span id="group-cmp-user-d-b-template-1gabd0c9aaa2278d52c368f5e7609af17cc"></span><h3>static RTS_RESULT UserGroupsDBConfigAddUser (RTS_HANDLE hDatabase, char <a href="#id99"><span class="problematic" id="id100">*</span></a>pszGroup, char <a href="#id101"><span class="problematic" id="id102">*</span></a>pszUser)<a class="headerlink" href="#static-rts-result-usergroupsdbconfigadduser-rts-handle-hdatabase-char-pszgroup-char-pszuser" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-usergroupsdbconfigremoveuser-rts-handle-hdatabase-char-pszgroup-char-pszuser">
+<span id="group-cmp-user-d-b-template-1gaf40b8db1a228dc9713739a98438fbd40"></span><h3>static RTS_RESULT UserGroupsDBConfigRemoveUser (RTS_HANDLE hDatabase, char <a href="#id103"><span class="problematic" id="id104">*</span></a>pszGroup, char <a href="#id105"><span class="problematic" id="id106">*</span></a>pszUser)<a class="headerlink" href="#static-rts-result-usergroupsdbconfigremoveuser-rts-handle-hdatabase-char-pszgroup-char-pszuser" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-usergroupsdbconfigaddmember-rts-handle-hdatabase-char-pszgroup-char-pszgrouptoadd">
+<span id="group-cmp-user-d-b-template-1gaf8c4098457988215b6c2e42d3d8fed9d"></span><h3>static RTS_RESULT UserGroupsDBConfigAddMember (RTS_HANDLE hDatabase, char <a href="#id107"><span class="problematic" id="id108">*</span></a>pszGroup, char <a href="#id109"><span class="problematic" id="id110">*</span></a>pszGroupToAdd)<a class="headerlink" href="#static-rts-result-usergroupsdbconfigaddmember-rts-handle-hdatabase-char-pszgroup-char-pszgrouptoadd" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-usergroupsdbconfigremovemember-rts-handle-hdatabase-char-pszgroup-char-pszgrouptoremove">
+<span id="group-cmp-user-d-b-template-1ga46e08479cd72c30860860b848a56be2a"></span><h3>static RTS_RESULT UserGroupsDBConfigRemoveMember (RTS_HANDLE hDatabase, char <a href="#id111"><span class="problematic" id="id112">*</span></a>pszGroup, char <a href="#id113"><span class="problematic" id="id114">*</span></a>pszGroupToRemove)<a class="headerlink" href="#static-rts-result-usergroupsdbconfigremovemember-rts-handle-hdatabase-char-pszgroup-char-pszgrouptoremove" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userdbenforce-rts-handle-hdatabase">
+<span id="group-cmp-user-d-b-template-1gaa5ee74b96fe4b1b446e838f6c4fed7eb"></span><h3>static RTS_RESULT UserDBEnforce (RTS_HANDLE hDatabase)<a class="headerlink" href="#static-rts-result-userdbenforce-rts-handle-hdatabase" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbgetusedrights-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulusedrights">
+<span id="group-cmp-user-d-b-template-1ga933ea4517c383800479e0e10ca5a8473"></span><h3>static RTS_RESULT UserObjectsDBGetUsedRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 <a href="#id115"><span class="problematic" id="id116">*</span></a>pulUsedRights)<a class="headerlink" href="#static-rts-result-userobjectsdbgetusedrights-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulusedrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbgetproperties-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulproperties">
+<span id="group-cmp-user-d-b-template-1ga729e652b6df6895648ddbe5567694781"></span><h3>static RTS_RESULT UserObjectsDBGetProperties (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 <a href="#id117"><span class="problematic" id="id118">*</span></a>pulProperties)<a class="headerlink" href="#static-rts-result-userobjectsdbgetproperties-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulproperties" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbgetid-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulid">
+<span id="group-cmp-user-d-b-template-1ga872a9c872084a26f25decd96a1a376c8"></span><h3>static RTS_RESULT UserObjectsDBGetID (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 <a href="#id119"><span class="problematic" id="id120">*</span></a>pulID)<a class="headerlink" href="#static-rts-result-userobjectsdbgetid-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-pulid" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-userobjectsdbgetfirst-rts-handle-hdatabase-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga94b0692adee0d500cd58165da86861a9"></span><h3>static RTS_HANDLE UserObjectsDBGetFirst (RTS_HANDLE hDatabase, RTS_RESULT <a href="#id121"><span class="problematic" id="id122">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-userobjectsdbgetfirst-rts-handle-hdatabase-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-userobjectsdbgetnext-rts-handle-hdatabase-rts-handle-hprevobject-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga5aac58b7d106bb39ab91f838b232f576"></span><h3>static RTS_HANDLE UserObjectsDBGetNext (RTS_HANDLE hDatabase, RTS_HANDLE hPrevObject, RTS_RESULT <a href="#id123"><span class="problematic" id="id124">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-userobjectsdbgetnext-rts-handle-hdatabase-rts-handle-hprevobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-userobjectsdbgetfirstchild-rts-handle-hdatabase-rts-handle-hfatherobject-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga56195ee4a3769e9f779915347abea75c"></span><h3>static RTS_HANDLE UserObjectsDBGetFirstChild (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_RESULT <a href="#id125"><span class="problematic" id="id126">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-userobjectsdbgetfirstchild-rts-handle-hdatabase-rts-handle-hfatherobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-userobjectsdbgetnextchild-rts-handle-hdatabase-rts-handle-hfatherobject-rts-handle-hprevchildobject-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1gafba0a9c77366db2f82facf219f8ab7cc"></span><h3>static RTS_HANDLE UserObjectsDBGetNextChild (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, RTS_HANDLE hPrevChildObject, RTS_RESULT <a href="#id127"><span class="problematic" id="id128">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-userobjectsdbgetnextchild-rts-handle-hdatabase-rts-handle-hfatherobject-rts-handle-hprevchildobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-userobjectsdbgetfather-rts-handle-hdatabase-rts-handle-hchildobject-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga1a519cd37e1f1d28a7d5bb6199ce5909"></span><h3>static RTS_HANDLE UserObjectsDBGetFather (RTS_HANDLE hDatabase, RTS_HANDLE hChildObject, RTS_RESULT <a href="#id129"><span class="problematic" id="id130">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-userobjectsdbgetfather-rts-handle-hdatabase-rts-handle-hchildobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-userobjectsdbgetfirstgroup-rts-handle-hdatabase-rts-handle-hobject-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga606ff966cdbaac3acaa8f02183bf7afa"></span><h3>static RTS_HANDLE UserObjectsDBGetFirstGroup (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_RESULT <a href="#id131"><span class="problematic" id="id132">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-userobjectsdbgetfirstgroup-rts-handle-hdatabase-rts-handle-hobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-userobjectsdbgetnextgroup-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hprevgroup-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga31b45646c2b05a5631908450a9414be2"></span><h3>static RTS_HANDLE UserObjectsDBGetNextGroup (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hPrevGroup, RTS_RESULT <a href="#id133"><span class="problematic" id="id134">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-userobjectsdbgetnextgroup-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hprevgroup-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-findobject-char-pszobject-int-nlen-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga643e111d4c0f4203c6e01ad90f39906e"></span><h3>static RTS_HANDLE FindObject (char <a href="#id135"><span class="problematic" id="id136">*</span></a>pszObject, int nLen, RTS_RESULT <a href="#id137"><span class="problematic" id="id138">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-findobject-char-pszobject-int-nlen-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-userobjectsdbopen-rts-handle-hdatabase-char-pszobject-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga9e65e4c8d10c2af445178de4d999fba5"></span><h3>static RTS_HANDLE UserObjectsDBOpen (RTS_HANDLE hDatabase, char <a href="#id139"><span class="problematic" id="id140">*</span></a>pszObject, RTS_RESULT <a href="#id141"><span class="problematic" id="id142">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-userobjectsdbopen-rts-handle-hdatabase-char-pszobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbclose-rts-handle-hdatabase-rts-handle-hobject">
+<span id="group-cmp-user-d-b-template-1ga92066bb0699ff52753ba8fc98a291622"></span><h3>static RTS_RESULT UserObjectsDBClose (RTS_HANDLE hDatabase, RTS_HANDLE hObject)<a class="headerlink" href="#static-rts-result-userobjectsdbclose-rts-handle-hdatabase-rts-handle-hobject" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbgetname-rts-handle-hdatabase-rts-handle-hobject-char-pszobject-int-pimaxlen">
+<span id="group-cmp-user-d-b-template-1gaf01883f23e8451e1b889935155eb78f3"></span><h3>static RTS_RESULT UserObjectsDBGetName (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char <a href="#id143"><span class="problematic" id="id144">*</span></a>pszObject, int <a href="#id145"><span class="problematic" id="id146">*</span></a>piMaxLen)<a class="headerlink" href="#static-rts-result-userobjectsdbgetname-rts-handle-hdatabase-rts-handle-hobject-char-pszobject-int-pimaxlen" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbgetpath-rts-handle-hdatabase-rts-handle-hobject-char-pszobject-int-pimaxlen">
+<span id="group-cmp-user-d-b-template-1ga4be2fb97b4713a235a556bacb94f1d2c"></span><h3>static RTS_RESULT UserObjectsDBGetPath (RTS_HANDLE hDatabase, RTS_HANDLE hObject, char <a href="#id147"><span class="problematic" id="id148">*</span></a>pszObject, int <a href="#id149"><span class="problematic" id="id150">*</span></a>piMaxLen)<a class="headerlink" href="#static-rts-result-userobjectsdbgetpath-rts-handle-hdatabase-rts-handle-hobject-char-pszobject-int-pimaxlen" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbgetgrouprights-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hgroup-rts-ui32-pulrights-rts-ui32-puldeniedrights">
+<span id="group-cmp-user-d-b-template-1ga8eed9d5a3e06532331371e6f5af7f8da"></span><h3>static RTS_RESULT UserObjectsDBGetGroupRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 <a href="#id151"><span class="problematic" id="id152">*</span></a>pulRights, RTS_UI32 <a href="#id153"><span class="problematic" id="id154">*</span></a>pulDeniedRights)<a class="headerlink" href="#static-rts-result-userobjectsdbgetgrouprights-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hgroup-rts-ui32-pulrights-rts-ui32-puldeniedrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-checkaccessrights-rts-ui32-ulrequestedrights-rts-ui32-ulobjectrights-rts-ui32-ulobjectdeniedrights">
+<span id="group-cmp-user-d-b-template-1gaddbace6ca247db256c3c411cec1c7125"></span><h3>static RTS_RESULT CheckAccessRights (RTS_UI32 ulRequestedRights, RTS_UI32 ulObjectRights, RTS_UI32 ulObjectDeniedRights)<a class="headerlink" href="#static-rts-result-checkaccessrights-rts-ui32-ulrequestedrights-rts-ui32-ulobjectrights-rts-ui32-ulobjectdeniedrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbhasrights-rts-handle-hdatabase-char-pszobject-rts-handle-huser-rts-ui32-ulrights">
+<span id="group-cmp-user-d-b-template-1ga12277666e1bc3f58322c1e3582f031e7"></span><h3>static RTS_RESULT UserObjectsDBHasRights (RTS_HANDLE hDatabase, char <a href="#id155"><span class="problematic" id="id156">*</span></a>pszObject, RTS_HANDLE hUser, RTS_UI32 ulRights)<a class="headerlink" href="#static-rts-result-userobjectsdbhasrights-rts-handle-hdatabase-char-pszobject-rts-handle-huser-rts-ui32-ulrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-objectgetrights-rts-handle-hobject-rts-handle-huser-rts-ui32-pulrights-rts-ui32-puldeniedrights">
+<span id="group-cmp-user-d-b-template-1gae35fc1b8c0da9b2b0a695276ff2de080"></span><h3>static RTS_RESULT ObjectGetRights (RTS_HANDLE hObject, RTS_HANDLE hUser, RTS_UI32 <a href="#id157"><span class="problematic" id="id158">*</span></a>pulRights, RTS_UI32 <a href="#id159"><span class="problematic" id="id160">*</span></a>pulDeniedRights)<a class="headerlink" href="#static-rts-result-objectgetrights-rts-handle-hobject-rts-handle-huser-rts-ui32-pulrights-rts-ui32-puldeniedrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbgetrights-rts-handle-hdatabase-char-pszobject-rts-handle-huser-rts-ui32-pulrights-rts-ui32-puldeniedrights">
+<span id="group-cmp-user-d-b-template-1ga8b7ebaea3f15dbe56112b7f617e1908a"></span><h3>static RTS_RESULT UserObjectsDBGetRights (RTS_HANDLE hDatabase, char <a href="#id161"><span class="problematic" id="id162">*</span></a>pszObject, RTS_HANDLE hUser, RTS_UI32 <a href="#id163"><span class="problematic" id="id164">*</span></a>pulRights, RTS_UI32 <a href="#id165"><span class="problematic" id="id166">*</span></a>pulDeniedRights)<a class="headerlink" href="#static-rts-result-userobjectsdbgetrights-rts-handle-hdatabase-char-pszobject-rts-handle-huser-rts-ui32-pulrights-rts-ui32-puldeniedrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbactivate-rts-handle-hdatabase">
+<span id="group-cmp-user-d-b-template-1gaf6c646e2aace81352b9884ac545894eb"></span><h3>static RTS_RESULT UserObjectsDBActivate (RTS_HANDLE hDatabase)<a class="headerlink" href="#static-rts-result-userobjectsdbactivate-rts-handle-hdatabase" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbconfigload-rts-handle-hdatabase">
+<span id="group-cmp-user-d-b-template-1ga730687b4590eba55244e1fe2e0a728df"></span><h3>static RTS_RESULT UserObjectsDBConfigLoad (RTS_HANDLE hDatabase)<a class="headerlink" href="#static-rts-result-userobjectsdbconfigload-rts-handle-hdatabase" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbconfigstore-rts-handle-hdatabase">
+<span id="group-cmp-user-d-b-template-1ga66d8a5bd4ac027243a7078a794f9fde8"></span><h3>static RTS_RESULT UserObjectsDBConfigStore (RTS_HANDLE hDatabase)<a class="headerlink" href="#static-rts-result-userobjectsdbconfigstore-rts-handle-hdatabase" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbconfigreleaserights-rts-handle-hdatabase">
+<span id="group-cmp-user-d-b-template-1ga6261626be05289e3ebac6ccf5633e367"></span><h3>static RTS_RESULT UserObjectsDBConfigReleaseRights (RTS_HANDLE hDatabase)<a class="headerlink" href="#static-rts-result-userobjectsdbconfigreleaserights-rts-handle-hdatabase" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbconfigrelease-rts-handle-hdatabase">
+<span id="group-cmp-user-d-b-template-1ga43b3b31445af3d65e64f488c466188ab"></span><h3>static RTS_RESULT UserObjectsDBConfigRelease (RTS_HANDLE hDatabase)<a class="headerlink" href="#static-rts-result-userobjectsdbconfigrelease-rts-handle-hdatabase" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-userobjectsdbconfigadd-rts-handle-hdatabase-char-pszobject-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1gabefd112fccae722e2321258a3ac202c4"></span><h3>static RTS_HANDLE UserObjectsDBConfigAdd (RTS_HANDLE hDatabase, char <a href="#id167"><span class="problematic" id="id168">*</span></a>pszObject, RTS_RESULT <a href="#id169"><span class="problematic" id="id170">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-userobjectsdbconfigadd-rts-handle-hdatabase-char-pszobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-userobjectsdbconfigadd2-rts-handle-hdatabase-char-pszobject-rts-ui32-properties-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga0be998d0c9dd02abff2353255697aed0"></span><h3>static RTS_HANDLE UserObjectsDBConfigAdd2 (RTS_HANDLE hDatabase, char <a href="#id171"><span class="problematic" id="id172">*</span></a>pszObject, RTS_UI32 properties, RTS_RESULT <a href="#id173"><span class="problematic" id="id174">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-userobjectsdbconfigadd2-rts-handle-hdatabase-char-pszobject-rts-ui32-properties-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbconfigremove-rts-handle-hdatabase-rts-handle-hobject">
+<span id="group-cmp-user-d-b-template-1gac6d9599b682043da54f62dffea0c1636"></span><h3>static RTS_RESULT UserObjectsDBConfigRemove (RTS_HANDLE hDatabase, RTS_HANDLE hObject)<a class="headerlink" href="#static-rts-result-userobjectsdbconfigremove-rts-handle-hdatabase-rts-handle-hobject" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-handle-userobjectsdbconfigaddchild-rts-handle-hdatabase-rts-handle-hfatherobject-char-pszobject-rts-result-presult">
+<span id="group-cmp-user-d-b-template-1ga75aaa162612c946d2d5021918c35e4eb"></span><h3>static RTS_HANDLE UserObjectsDBConfigAddChild (RTS_HANDLE hDatabase, RTS_HANDLE hFatherObject, char <a href="#id175"><span class="problematic" id="id176">*</span></a>pszObject, RTS_RESULT <a href="#id177"><span class="problematic" id="id178">*</span></a>pResult)<a class="headerlink" href="#static-rts-handle-userobjectsdbconfigaddchild-rts-handle-hdatabase-rts-handle-hfatherobject-char-pszobject-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbconfigsetusedrights-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-ulusedrights">
+<span id="group-cmp-user-d-b-template-1ga9f9366eff8e4f71ded2ed66152723136"></span><h3>static RTS_RESULT UserObjectsDBConfigSetUsedRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 ulUsedRights)<a class="headerlink" href="#static-rts-result-userobjectsdbconfigsetusedrights-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-ulusedrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbconfigsetid-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-ulid">
+<span id="group-cmp-user-d-b-template-1gaf6466cde3af285c1e1a11133ab1864a5"></span><h3>static RTS_RESULT UserObjectsDBConfigSetID (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_UI32 ulID)<a class="headerlink" href="#static-rts-result-userobjectsdbconfigsetid-rts-handle-hdatabase-rts-handle-hobject-rts-ui32-ulid" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbconfigaddgroup-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hgroup">
+<span id="group-cmp-user-d-b-template-1ga0aeaea801c2848c8ba360f1592d13702"></span><h3>static RTS_RESULT UserObjectsDBConfigAddGroup (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup)<a class="headerlink" href="#static-rts-result-userobjectsdbconfigaddgroup-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hgroup" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbconfigremovegroup-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hgroup">
+<span id="group-cmp-user-d-b-template-1ga7f6d2f0eb19a27b43e72b22a02ba87dc"></span><h3>static RTS_RESULT UserObjectsDBConfigRemoveGroup (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup)<a class="headerlink" href="#static-rts-result-userobjectsdbconfigremovegroup-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hgroup" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbconfigsetgrouprights-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hgroup-rts-ui32-ulrights">
+<span id="group-cmp-user-d-b-template-1ga276a8fd111138ac03cb4e4835c8724f4"></span><h3>static RTS_RESULT UserObjectsDBConfigSetGroupRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulRights)<a class="headerlink" href="#static-rts-result-userobjectsdbconfigsetgrouprights-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hgroup-rts-ui32-ulrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbconfigsetgroupdeniedrights-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hgroup-rts-ui32-uldeniedrights">
+<span id="group-cmp-user-d-b-template-1gae17458f7126afe255f6b9c6a4fa83e62"></span><h3>static RTS_RESULT UserObjectsDBConfigSetGroupDeniedRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject, RTS_HANDLE hGroup, RTS_UI32 ulDeniedRights)<a class="headerlink" href="#static-rts-result-userobjectsdbconfigsetgroupdeniedrights-rts-handle-hdatabase-rts-handle-hobject-rts-handle-hgroup-rts-ui32-uldeniedrights" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-rts-result-userobjectsdbconfigclearrights-rts-handle-hdatabase-rts-handle-hobject">
+<span id="group-cmp-user-d-b-template-1gab6da566412032d5b928c514bce6e3882"></span><h3>static RTS_RESULT UserObjectsDBConfigClearRights (RTS_HANDLE hDatabase, RTS_HANDLE hObject)<a class="headerlink" href="#static-rts-result-userobjectsdbconfigclearrights-rts-handle-hdatabase-rts-handle-hobject" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

@@ -2,11 +2,11 @@
  * <interfacename>SysNativeControl</interfacename>
  * <description> 
  *	<p>The SysNativeControl interface brings native controls into the visualization. All
-	controls are created as child controls of the targetvisualization. </p>
+	controls are created as child controls of the target-visualization. </p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -252,7 +252,7 @@ int CDECL SysNativeControlOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, 
  *	Function to create a native control
  * </description>
  * <param name="pCreate" type="IN">The structure that describes the native control that has to be created.</param>
- * <param name="ulParam" type="IN">A parameter that is dependant of the type of the native control. Might be a 
+ * <param name="ulParam" type="IN">A parameter that is dependent of the type of the native control. Might be a 
  *	pointer pointing to a structure with further information for the creation of this native control. In case
  *	of a pointer, this pointer must be valid until the control is destroyed.</param>
  * <param name="pResult" type="OUT">Optionally returns an error code</param>

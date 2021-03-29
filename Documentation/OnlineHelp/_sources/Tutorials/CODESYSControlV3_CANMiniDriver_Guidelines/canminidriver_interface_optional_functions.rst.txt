@@ -1,0 +1,305 @@
+.. _canminidriver_interface_optional_functions:
+
+
+Optional Functions
+------------------
+
+The following chapter describes all optional functions of a
+CANMiniDriver.
+
+Diagnosis
+~~~~~~~~~
+
+| Bus diagnosis is an optional functionality. In general, a driver will
+  also work without implementing it. But it is highly recommended to
+  implement it. With diagnosis information about the CAN bus, a CAN
+  application (e.g. CANopen stack) can react to bus errors and give
+  diagnosis feedback to the user.
+| If a driver registers at CL2, then a pointer to a CL2I_Info structure
+  is returned. This structure contains diagnosis counters and other
+  diagnosis information, such as bus state.
+
+|image13|
+
+Figure 13: Diagnosis structure
+
+Diagnostic Counter
+^^^^^^^^^^^^^^^^^^
+
+The following diagnostic counters are defined (see also Figure 13:
+Diagnosis structure):
+
+-  | **ctMessagesSend:** 
+   | should be incremented when a message was successfully sent.
+   | Should be set to 0 when driver will be disposed.
+   | For drivers with Tx IRQ: Increment it in TX IRQ handler;
+   | For drivers without IRQ: Increment it in CMD_Send
+
+-  | **ctMessagesReceived:**
+   | Should be incremented when a message was successfully received and passed to CL2 by calling MsgPutRQueue.
+
+-  | **ctRxErrors:**
+   | Should be set to the value of the CAN chip's Rx Error register.
+
+-  | **ctTxErrors:**
+   | Should be set to the value of the CAN chip's Tx Error register.
+
+-  | **ctDataOverruns:**
+   | Number of dismissed receive messages.
+   | Should be incremented when message was received by chip, but no
+     message handle could be allocated and if the chip signals a data
+     overrun situation (if supported).
+
+-  | **usiBusLoad:**
+   | Current bus load in percent.
+   | Currently not implemented on drivers provided by CODESYS.
+
+Bus State
+^^^^^^^^^
+
+Another very important component of the CL2I_INFO structure is the
+variable byBusState. It holds the current state of the associated
+CANbus. The following values can be set by the CANMiniDriver
+implementation:
+
+|image14|
+
+Figure 14: Bus State
+
+
+-  | **UNKNOWN**
+   | The state of the network is not known or the bus state is not
+     implemented by driver.
+
+-  | **ERR_FREE**
+   | No occurrence of CANbus errors so far. The error counters of the
+     chip are zero.
+
+-  | **ACTIVE**
+   | Only a few CANbus errors so far. The error counters of the chip
+     are below the warning level.
+
+-  | **WARNING**
+   | Occurrence of some CANbus errors. The error counters are above
+     the warning level.
+
+-  | **PASSIVE**
+   | Too many CANbus errors. The error counters are above the error
+     level.
+
+-  | **BUSOFF**
+   | The node has been separated from the CANbus. The error counter has
+     exceeded the permitted maximum.
+
+CMD_ResetAlarm: Bus Alarm Handling
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+| A CANMiniDriver should detect bus alarm events such as Bus Off. A bus
+  alarm is an error situation which cannot be resolved without
+  reinitializing the chip. A CANMiniDriver signals a bus alarm to the
+  higher software layers by incrementing uiBusAlarm variable of
+  CL2I_INFO structure. An application calls CL2.GetBusAlarm which
+  returns the result of the Boolean expression: uiBusAlarm > 0.
+| An application can try to fix the bus alarm by calling
+  CL2.ResetBusAlarm which leads to a call of CMD_ResetAlarm. The
+  CANMiniDriver should initialize the CAN chip to normal operating mode.
+  If a bus alarm is fixed, then uiBusAlarm should be set to 0 by
+  CANMiniDriver.
+| Note:
+
+-  A CANopenStack calls ResetAlarm each bus cycle as long as GetBusAlarm
+   returns true. This has to be considered when implementing ResetAlarm.
+
+-  | If a CANMiniDriver supports the detection of bus alarms and
+     CMD_ResetAlarm is implemented, then set CMD_SUPPORT_BUSALARM flag
+     in CMD_GetInfo.
+   | Otherwise, CMD_ResetAlarm has to return CMD_NOT_IMPLEMENTED.
+
+| Example:
+| This is an example of a driver without IRQ. There are many different
+  ways to implement bus alarm handling. This is just one of many
+  possible solutions.
+
+.. code-block:: C#
+  
+   static CAA_ERROR CMD_ResetAlarm(CL2I_BYTE byNet)
+   {
+     CAA_BYTE byDriver = s_byDriver[byNet];
+     CL2I_INFO* pInfo = s_pInfo[byDriver];
+     XXX_INFO pDriver = &xxxDriverContext[byDriver]
+
+     if (!pInfo)
+     {
+       return CMD_SETUP_ERROR;
+     }
+     /* This driver */
+     xxxDriverContext[byDriver].reset_current = CAL_SysTimeGetMs();
+     if (pDriver->reset_last != 0 && (pDriver->reset_current - pDriver->reset_last) < 1000)
+     {
+       return CMD_NO_ERROR;
+     }
+     if (pInfo->uiBusAlarm > 0)
+     {
+       pDriver->reset_last = pDriver->reset_current;
+       /* This is just an example for getting a driver into normal operating mode */
+       CMD_Dispose(byNet);
+       CMD_Init(byNet, pDriver->wBaudrate);
+       /*
+       For drivers without IRQ: Empty Tx Queue after bus alarm.
+       For IRQ driver: Call MsgSendAcknIRQ in IRQ Handler when bus error is fixed.
+       */
+       CAL_CL2_MsgSendAcknNoIRQ(byNet, CAA_hINVALID);
+     }
+     pInfo->uiBusAlarm = 0;
+     return CMD_NO_ERROR;
+   }
+
+CMD_SetStatus: LEDs
+^^^^^^^^^^^^^^^^^^^
+
+| A CANMiniDriver may implement LEDs according to CiA 303-3 indicator
+  specification. This can be signaled in CMD_GetInfo by setting the
+  CMD_SUPPORT_STATUSLED flag.
+| If CL2 detects a LED state change, then CL2 calls CMD_SetStatus:
+
+| |image15|
+| byIndicator contains information for two LEDs:
+
+|image16|
+
+Figure 16: LED flags
+
+CMD_SetBlock, CMD_SetCycle
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+| A CANMiniDriver may support the cyclic sending of CAN messages.
+  Therefore, CL2 provides two functions: one for setting a specific
+  transmit message handle (SetBlock) and one for activating cyclic
+  sending for this handle (SetCycle). These two function calls are
+  redirected to the corresponding CANMiniDriver implementation.
+| This feature can be used for CANopenStack to get a better jitter for
+  Sync messages (see the next section).
+| If a CANMiniDriver supports this function, then CMD_GetInfo has to
+  return the CMD_SUPPORT_SETCYCLE flag and the number of supported
+  messages (for byMaxCycleIndex, see also 2.1.1).
+
+|image17|
+
+| **byIndex:** It is possible to register several transmit messages.
+  They are identified by an index starting with 0.
+| **hBlock:** The message handle.
+| **peError:** Optional pointer to an error enumeration. Return
+  CMD_NOT_IMPLEMENTED if function is not supported.
+
+|image18|
+
+| **byIndex:** Index of message
+| **dwCycle:** cycle time for message in microseconds.
+
+Return CMD_NOT_IMPLEMENTED if function is not supported.
+
+Usage of CMD_SetBlock, CMD_SetCycle for CANopen Sync messages
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+By default, CANopen Sync messages are sent cyclically from the IEC bus
+cycle task. This means that, under poor circumstances, the CANopen Sync
+messages will have a jitter that is equal to the jitter of this
+cyclically called task.
+
+In order to generate a more accurate sync signal, it is possible to
+generate those packets externally from a hardware timer and to trigger
+the CAN task from this timer.
+
+|image19|
+
+Figure 19: External Sync Overview
+
+When sync is enabled in a CANopen project, the 3S CANopen stack attempts
+to enable the external sync mechanism of the CAN driver. This will be
+successful if the driver implements the following two functions of the
+CAN L2 driver API:
+
+-  CMD_SetBlock()
+
+-  CMD_SetCycle()
+
+The function CMD_SetBlock() is called to pass the sync message to the
+driver. CMD_SetBlock() receives a block handle from a message block that
+contains the sync message. This function takes control of the passed
+block handle. This control is given back to the calling function at the
+next call of CMD_SetBlock().
+
+The function CMD_SetCycle() is called by CL2 to define the cycle time in
+which a sync packet will be generated. This time value is given in
+microseconds and should be used to program a hardware timer.
+
+Within the timer ISR, the CAN driver needs to send the packet to the
+CAN. After a send interrupt has signaled that the sync packet was sent,
+the driver needs to send an event to the motion task.
+
+|image20|
+
+Figure 20: Timer ISR
+
+**CAN Timer ISR example:**
+
+.. code-block:: c#
+
+   s_pClonedSyncBlock = CAL_CL2_MsgClone( CanNet, pSavedSyncBlock,&error );
+
+   if(error == CL2_NO_ERROR)
+   {
+     CMD_Send( CanNet, s_pClonedSyncBlock, 0, 0);
+   }
+
+**CAN Send ISR:**
+
+.. code-block:: c#
+
+   if(s_pSyncBlockCloned == hBlock)
+   {
+     /* Wake up the Motion Task */
+     if((s_hEventCanSync != RTS_INVALID_HANDLE))
+     {
+       CAL_SysEventSet(s_hEventCanSync);
+     }
+
+   }
+
+When you are using a target with external sync, you are creating a
+motion task which is triggered by an external event. But this also means
+that you will not define a cycle time for this task. This time will be
+implicitly defined with the external sync period.
+
+However, because the SoftMotion stack needs to know the cycle time of
+the task on which it is running, you need to set this time within your
+CAN driver manually. This can be done directly in the function
+CMD_SetCycle() because you get the sync period in this function.
+
+To get the task handle of the motion task, as well as the sync event,
+you need to register on the event "TaskCreateDone" of "CmpSchedule". You
+should search for your event name and save a handle to this event, as
+well as to the task handle, in a static variable of the driver.
+
+**Example of CMD_SetCycle():**
+
+.. code-block:: c#
+
+   /* set cycle time of IEC task */
+
+   if(s_hTaskCanSyncInfo != NULL)
+
+   s_hTaskCanSyncInfo->tInterval = dwCycle;
+
+   /* program hardware timer */
+
+   /* xxx */
+
+.. |image13| image:: images/image13.png
+.. |image14| image:: images/image14.png
+.. |image15| image:: images/image15.png
+.. |image16| image:: images/image16.png
+.. |image17| image:: images/image17.png
+.. |image18| image:: images/image18.png
+.. |image19| image:: images/image19.png
+.. |image20| image:: images/image20.png

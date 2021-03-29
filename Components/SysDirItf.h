@@ -1,12 +1,12 @@
  /**
  * <interfacename>SysDir</interfacename>
  * <description> 
- *	<p>The SysDir interface is projected to handle all system dependant directory operations.
- *	If there is no filesystem on the target, the interface functions ERR_NOTIMPLEMENTED.</p>
+ *	<p>The SysDir interface is projected to handle all system dependent directory operations.
+ *	If there is no file system on the target, the interface functions ERR_NOTIMPLEMENTED.</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -110,35 +110,35 @@ typedef void (CDECL CDECL_EXT* PFSYSDIRCLOSE_IEC) (sysdirclose_struct *p);
 	#define GET_sysdirclose(fl)  CAL_CMGETAPI( "sysdirclose" ) 
 	#define CAL_sysdirclose  sysdirclose
 	#define CHK_sysdirclose  TRUE
-	#define EXP_sysdirclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirclose", (RTS_UINTPTR)sysdirclose, 1, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050C00) 
+	#define EXP_sysdirclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirclose", (RTS_UINTPTR)sysdirclose, 1, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(SYSDIR_EXTERNAL)
 	#define USE_sysdirclose
 	#define EXT_sysdirclose
 	#define GET_sysdirclose(fl)  CAL_CMGETAPI( "sysdirclose" ) 
 	#define CAL_sysdirclose  sysdirclose
 	#define CHK_sysdirclose  TRUE
-	#define EXP_sysdirclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirclose", (RTS_UINTPTR)sysdirclose, 1, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050C00) 
+	#define EXP_sysdirclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirclose", (RTS_UINTPTR)sysdirclose, 1, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_SysDirsysdirclose
 	#define EXT_SysDirsysdirclose
 	#define GET_SysDirsysdirclose  ERR_OK
 	#define CAL_SysDirsysdirclose  sysdirclose
 	#define CHK_SysDirsysdirclose  TRUE
-	#define EXP_SysDirsysdirclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirclose", (RTS_UINTPTR)sysdirclose, 1, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050C00) 
+	#define EXP_SysDirsysdirclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirclose", (RTS_UINTPTR)sysdirclose, 1, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_sysdirclose
 	#define EXT_sysdirclose
 	#define GET_sysdirclose(fl)  CAL_CMGETAPI( "sysdirclose" ) 
 	#define CAL_sysdirclose  sysdirclose
 	#define CHK_sysdirclose  TRUE
-	#define EXP_sysdirclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirclose", (RTS_UINTPTR)sysdirclose, 1, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050C00) 
+	#define EXP_sysdirclose  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirclose", (RTS_UINTPTR)sysdirclose, 1, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_sysdirclose  PFSYSDIRCLOSE_IEC pfsysdirclose;
 	#define EXT_sysdirclose  extern PFSYSDIRCLOSE_IEC pfsysdirclose;
-	#define GET_sysdirclose(fl)  s_pfCMGetAPI2( "sysdirclose", (RTS_VOID_FCTPTR *)&pfsysdirclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050C00)
+	#define GET_sysdirclose(fl)  s_pfCMGetAPI2( "sysdirclose", (RTS_VOID_FCTPTR *)&pfsysdirclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050F00)
 	#define CAL_sysdirclose  pfsysdirclose
 	#define CHK_sysdirclose  (pfsysdirclose != NULL)
-	#define EXP_sysdirclose   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirclose", (RTS_UINTPTR)sysdirclose, 1, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050C00) 
+	#define EXP_sysdirclose   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirclose", (RTS_UINTPTR)sysdirclose, 1, RTSITF_GET_SIGNATURE(0, 0x7985F4ED), 0x03050F00) 
 #endif
 
 
@@ -173,35 +173,35 @@ typedef void (CDECL CDECL_EXT* PFSYSDIRCOPY_IEC) (sysdircopy_struct *p);
 	#define GET_sysdircopy(fl)  CAL_CMGETAPI( "sysdircopy" ) 
 	#define CAL_sysdircopy  sysdircopy
 	#define CHK_sysdircopy  TRUE
-	#define EXP_sysdircopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircopy", (RTS_UINTPTR)sysdircopy, 1, 0xDCC4B146, 0x03050C00) 
+	#define EXP_sysdircopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircopy", (RTS_UINTPTR)sysdircopy, 1, 0xDCC4B146, 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(SYSDIR_EXTERNAL)
 	#define USE_sysdircopy
 	#define EXT_sysdircopy
 	#define GET_sysdircopy(fl)  CAL_CMGETAPI( "sysdircopy" ) 
 	#define CAL_sysdircopy  sysdircopy
 	#define CHK_sysdircopy  TRUE
-	#define EXP_sysdircopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircopy", (RTS_UINTPTR)sysdircopy, 1, 0xDCC4B146, 0x03050C00) 
+	#define EXP_sysdircopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircopy", (RTS_UINTPTR)sysdircopy, 1, 0xDCC4B146, 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_SysDirsysdircopy
 	#define EXT_SysDirsysdircopy
 	#define GET_SysDirsysdircopy  ERR_OK
 	#define CAL_SysDirsysdircopy  sysdircopy
 	#define CHK_SysDirsysdircopy  TRUE
-	#define EXP_SysDirsysdircopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircopy", (RTS_UINTPTR)sysdircopy, 1, 0xDCC4B146, 0x03050C00) 
+	#define EXP_SysDirsysdircopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircopy", (RTS_UINTPTR)sysdircopy, 1, 0xDCC4B146, 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_sysdircopy
 	#define EXT_sysdircopy
 	#define GET_sysdircopy(fl)  CAL_CMGETAPI( "sysdircopy" ) 
 	#define CAL_sysdircopy  sysdircopy
 	#define CHK_sysdircopy  TRUE
-	#define EXP_sysdircopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircopy", (RTS_UINTPTR)sysdircopy, 1, 0xDCC4B146, 0x03050C00) 
+	#define EXP_sysdircopy  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircopy", (RTS_UINTPTR)sysdircopy, 1, 0xDCC4B146, 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_sysdircopy  PFSYSDIRCOPY_IEC pfsysdircopy;
 	#define EXT_sysdircopy  extern PFSYSDIRCOPY_IEC pfsysdircopy;
-	#define GET_sysdircopy(fl)  s_pfCMGetAPI2( "sysdircopy", (RTS_VOID_FCTPTR *)&pfsysdircopy, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xDCC4B146, 0x03050C00)
+	#define GET_sysdircopy(fl)  s_pfCMGetAPI2( "sysdircopy", (RTS_VOID_FCTPTR *)&pfsysdircopy, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xDCC4B146, 0x03050F00)
 	#define CAL_sysdircopy  pfsysdircopy
 	#define CHK_sysdircopy  (pfsysdircopy != NULL)
-	#define EXP_sysdircopy   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircopy", (RTS_UINTPTR)sysdircopy, 1, 0xDCC4B146, 0x03050C00) 
+	#define EXP_sysdircopy   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircopy", (RTS_UINTPTR)sysdircopy, 1, 0xDCC4B146, 0x03050F00) 
 #endif
 
 
@@ -230,35 +230,35 @@ typedef void (CDECL CDECL_EXT* PFSYSDIRCREATE_IEC) (sysdircreate_struct *p);
 	#define GET_sysdircreate(fl)  CAL_CMGETAPI( "sysdircreate" ) 
 	#define CAL_sysdircreate  sysdircreate
 	#define CHK_sysdircreate  TRUE
-	#define EXP_sysdircreate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate", (RTS_UINTPTR)sysdircreate, 1, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050C00) 
+	#define EXP_sysdircreate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate", (RTS_UINTPTR)sysdircreate, 1, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(SYSDIR_EXTERNAL)
 	#define USE_sysdircreate
 	#define EXT_sysdircreate
 	#define GET_sysdircreate(fl)  CAL_CMGETAPI( "sysdircreate" ) 
 	#define CAL_sysdircreate  sysdircreate
 	#define CHK_sysdircreate  TRUE
-	#define EXP_sysdircreate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate", (RTS_UINTPTR)sysdircreate, 1, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050C00) 
+	#define EXP_sysdircreate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate", (RTS_UINTPTR)sysdircreate, 1, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_SysDirsysdircreate
 	#define EXT_SysDirsysdircreate
 	#define GET_SysDirsysdircreate  ERR_OK
 	#define CAL_SysDirsysdircreate  sysdircreate
 	#define CHK_SysDirsysdircreate  TRUE
-	#define EXP_SysDirsysdircreate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate", (RTS_UINTPTR)sysdircreate, 1, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050C00) 
+	#define EXP_SysDirsysdircreate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate", (RTS_UINTPTR)sysdircreate, 1, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_sysdircreate
 	#define EXT_sysdircreate
 	#define GET_sysdircreate(fl)  CAL_CMGETAPI( "sysdircreate" ) 
 	#define CAL_sysdircreate  sysdircreate
 	#define CHK_sysdircreate  TRUE
-	#define EXP_sysdircreate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate", (RTS_UINTPTR)sysdircreate, 1, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050C00) 
+	#define EXP_sysdircreate  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate", (RTS_UINTPTR)sysdircreate, 1, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_sysdircreate  PFSYSDIRCREATE_IEC pfsysdircreate;
 	#define EXT_sysdircreate  extern PFSYSDIRCREATE_IEC pfsysdircreate;
-	#define GET_sysdircreate(fl)  s_pfCMGetAPI2( "sysdircreate", (RTS_VOID_FCTPTR *)&pfsysdircreate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050C00)
+	#define GET_sysdircreate(fl)  s_pfCMGetAPI2( "sysdircreate", (RTS_VOID_FCTPTR *)&pfsysdircreate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050F00)
 	#define CAL_sysdircreate  pfsysdircreate
 	#define CHK_sysdircreate  (pfsysdircreate != NULL)
-	#define EXP_sysdircreate   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate", (RTS_UINTPTR)sysdircreate, 1, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050C00) 
+	#define EXP_sysdircreate   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate", (RTS_UINTPTR)sysdircreate, 1, RTSITF_GET_SIGNATURE(0, 0xC775A9FA), 0x03050F00) 
 #endif
 
 
@@ -289,35 +289,35 @@ typedef void (CDECL CDECL_EXT* PFSYSDIRCREATE2_IEC) (sysdircreate2_struct *p);
 	#define GET_sysdircreate2(fl)  CAL_CMGETAPI( "sysdircreate2" ) 
 	#define CAL_sysdircreate2  sysdircreate2
 	#define CHK_sysdircreate2  TRUE
-	#define EXP_sysdircreate2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate2", (RTS_UINTPTR)sysdircreate2, 1, 0x03802B43, 0x03050C00) 
+	#define EXP_sysdircreate2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate2", (RTS_UINTPTR)sysdircreate2, 1, 0x03802B43, 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(SYSDIR_EXTERNAL)
 	#define USE_sysdircreate2
 	#define EXT_sysdircreate2
 	#define GET_sysdircreate2(fl)  CAL_CMGETAPI( "sysdircreate2" ) 
 	#define CAL_sysdircreate2  sysdircreate2
 	#define CHK_sysdircreate2  TRUE
-	#define EXP_sysdircreate2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate2", (RTS_UINTPTR)sysdircreate2, 1, 0x03802B43, 0x03050C00) 
+	#define EXP_sysdircreate2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate2", (RTS_UINTPTR)sysdircreate2, 1, 0x03802B43, 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_SysDirsysdircreate2
 	#define EXT_SysDirsysdircreate2
 	#define GET_SysDirsysdircreate2  ERR_OK
 	#define CAL_SysDirsysdircreate2  sysdircreate2
 	#define CHK_SysDirsysdircreate2  TRUE
-	#define EXP_SysDirsysdircreate2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate2", (RTS_UINTPTR)sysdircreate2, 1, 0x03802B43, 0x03050C00) 
+	#define EXP_SysDirsysdircreate2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate2", (RTS_UINTPTR)sysdircreate2, 1, 0x03802B43, 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_sysdircreate2
 	#define EXT_sysdircreate2
 	#define GET_sysdircreate2(fl)  CAL_CMGETAPI( "sysdircreate2" ) 
 	#define CAL_sysdircreate2  sysdircreate2
 	#define CHK_sysdircreate2  TRUE
-	#define EXP_sysdircreate2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate2", (RTS_UINTPTR)sysdircreate2, 1, 0x03802B43, 0x03050C00) 
+	#define EXP_sysdircreate2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate2", (RTS_UINTPTR)sysdircreate2, 1, 0x03802B43, 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_sysdircreate2  PFSYSDIRCREATE2_IEC pfsysdircreate2;
 	#define EXT_sysdircreate2  extern PFSYSDIRCREATE2_IEC pfsysdircreate2;
-	#define GET_sysdircreate2(fl)  s_pfCMGetAPI2( "sysdircreate2", (RTS_VOID_FCTPTR *)&pfsysdircreate2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x03802B43, 0x03050C00)
+	#define GET_sysdircreate2(fl)  s_pfCMGetAPI2( "sysdircreate2", (RTS_VOID_FCTPTR *)&pfsysdircreate2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x03802B43, 0x03050F00)
 	#define CAL_sysdircreate2  pfsysdircreate2
 	#define CHK_sysdircreate2  (pfsysdircreate2 != NULL)
-	#define EXP_sysdircreate2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate2", (RTS_UINTPTR)sysdircreate2, 1, 0x03802B43, 0x03050C00) 
+	#define EXP_sysdircreate2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdircreate2", (RTS_UINTPTR)sysdircreate2, 1, 0x03802B43, 0x03050F00) 
 #endif
 
 
@@ -346,42 +346,42 @@ typedef void (CDECL CDECL_EXT* PFSYSDIRDELETE_IEC) (sysdirdelete_struct *p);
 	#define GET_sysdirdelete(fl)  CAL_CMGETAPI( "sysdirdelete" ) 
 	#define CAL_sysdirdelete  sysdirdelete
 	#define CHK_sysdirdelete  TRUE
-	#define EXP_sysdirdelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete", (RTS_UINTPTR)sysdirdelete, 1, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050C00) 
+	#define EXP_sysdirdelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete", (RTS_UINTPTR)sysdirdelete, 1, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(SYSDIR_EXTERNAL)
 	#define USE_sysdirdelete
 	#define EXT_sysdirdelete
 	#define GET_sysdirdelete(fl)  CAL_CMGETAPI( "sysdirdelete" ) 
 	#define CAL_sysdirdelete  sysdirdelete
 	#define CHK_sysdirdelete  TRUE
-	#define EXP_sysdirdelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete", (RTS_UINTPTR)sysdirdelete, 1, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050C00) 
+	#define EXP_sysdirdelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete", (RTS_UINTPTR)sysdirdelete, 1, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_SysDirsysdirdelete
 	#define EXT_SysDirsysdirdelete
 	#define GET_SysDirsysdirdelete  ERR_OK
 	#define CAL_SysDirsysdirdelete  sysdirdelete
 	#define CHK_SysDirsysdirdelete  TRUE
-	#define EXP_SysDirsysdirdelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete", (RTS_UINTPTR)sysdirdelete, 1, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050C00) 
+	#define EXP_SysDirsysdirdelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete", (RTS_UINTPTR)sysdirdelete, 1, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_sysdirdelete
 	#define EXT_sysdirdelete
 	#define GET_sysdirdelete(fl)  CAL_CMGETAPI( "sysdirdelete" ) 
 	#define CAL_sysdirdelete  sysdirdelete
 	#define CHK_sysdirdelete  TRUE
-	#define EXP_sysdirdelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete", (RTS_UINTPTR)sysdirdelete, 1, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050C00) 
+	#define EXP_sysdirdelete  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete", (RTS_UINTPTR)sysdirdelete, 1, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_sysdirdelete  PFSYSDIRDELETE_IEC pfsysdirdelete;
 	#define EXT_sysdirdelete  extern PFSYSDIRDELETE_IEC pfsysdirdelete;
-	#define GET_sysdirdelete(fl)  s_pfCMGetAPI2( "sysdirdelete", (RTS_VOID_FCTPTR *)&pfsysdirdelete, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050C00)
+	#define GET_sysdirdelete(fl)  s_pfCMGetAPI2( "sysdirdelete", (RTS_VOID_FCTPTR *)&pfsysdirdelete, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050F00)
 	#define CAL_sysdirdelete  pfsysdirdelete
 	#define CHK_sysdirdelete  (pfsysdirdelete != NULL)
-	#define EXP_sysdirdelete   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete", (RTS_UINTPTR)sysdirdelete, 1, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050C00) 
+	#define EXP_sysdirdelete   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete", (RTS_UINTPTR)sysdirdelete, 1, RTSITF_GET_SIGNATURE(0, 0x3E032B8B), 0x03050F00) 
 #endif
 
 
 /**
  * Deletes a directory with the specified name
  *
- * If xRecursive is set, a whole folder tree can be deleted, i.e. all subfolders and files are deleted.
+ * If xRecursive is set, a whole folder tree can be deleted, i.e. all sub-folders and files are deleted.
  * If xRecursive and xKeepDir are set, the folder is kept but its contents is deleted.
  * :return: Returns the runtime system error code (see CmpErrors_Itf.library)
  */
@@ -408,35 +408,35 @@ typedef void (CDECL CDECL_EXT* PFSYSDIRDELETE2_IEC) (sysdirdelete2_struct *p);
 	#define GET_sysdirdelete2(fl)  CAL_CMGETAPI( "sysdirdelete2" ) 
 	#define CAL_sysdirdelete2  sysdirdelete2
 	#define CHK_sysdirdelete2  TRUE
-	#define EXP_sysdirdelete2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete2", (RTS_UINTPTR)sysdirdelete2, 1, 0xB8EF3C3D, 0x03050C00) 
+	#define EXP_sysdirdelete2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete2", (RTS_UINTPTR)sysdirdelete2, 1, 0xB8EF3C3D, 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(SYSDIR_EXTERNAL)
 	#define USE_sysdirdelete2
 	#define EXT_sysdirdelete2
 	#define GET_sysdirdelete2(fl)  CAL_CMGETAPI( "sysdirdelete2" ) 
 	#define CAL_sysdirdelete2  sysdirdelete2
 	#define CHK_sysdirdelete2  TRUE
-	#define EXP_sysdirdelete2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete2", (RTS_UINTPTR)sysdirdelete2, 1, 0xB8EF3C3D, 0x03050C00) 
+	#define EXP_sysdirdelete2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete2", (RTS_UINTPTR)sysdirdelete2, 1, 0xB8EF3C3D, 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_SysDirsysdirdelete2
 	#define EXT_SysDirsysdirdelete2
 	#define GET_SysDirsysdirdelete2  ERR_OK
 	#define CAL_SysDirsysdirdelete2  sysdirdelete2
 	#define CHK_SysDirsysdirdelete2  TRUE
-	#define EXP_SysDirsysdirdelete2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete2", (RTS_UINTPTR)sysdirdelete2, 1, 0xB8EF3C3D, 0x03050C00) 
+	#define EXP_SysDirsysdirdelete2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete2", (RTS_UINTPTR)sysdirdelete2, 1, 0xB8EF3C3D, 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_sysdirdelete2
 	#define EXT_sysdirdelete2
 	#define GET_sysdirdelete2(fl)  CAL_CMGETAPI( "sysdirdelete2" ) 
 	#define CAL_sysdirdelete2  sysdirdelete2
 	#define CHK_sysdirdelete2  TRUE
-	#define EXP_sysdirdelete2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete2", (RTS_UINTPTR)sysdirdelete2, 1, 0xB8EF3C3D, 0x03050C00) 
+	#define EXP_sysdirdelete2  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete2", (RTS_UINTPTR)sysdirdelete2, 1, 0xB8EF3C3D, 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_sysdirdelete2  PFSYSDIRDELETE2_IEC pfsysdirdelete2;
 	#define EXT_sysdirdelete2  extern PFSYSDIRDELETE2_IEC pfsysdirdelete2;
-	#define GET_sysdirdelete2(fl)  s_pfCMGetAPI2( "sysdirdelete2", (RTS_VOID_FCTPTR *)&pfsysdirdelete2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xB8EF3C3D, 0x03050C00)
+	#define GET_sysdirdelete2(fl)  s_pfCMGetAPI2( "sysdirdelete2", (RTS_VOID_FCTPTR *)&pfsysdirdelete2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xB8EF3C3D, 0x03050F00)
 	#define CAL_sysdirdelete2  pfsysdirdelete2
 	#define CHK_sysdirdelete2  (pfsysdirdelete2 != NULL)
-	#define EXP_sysdirdelete2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete2", (RTS_UINTPTR)sysdirdelete2, 1, 0xB8EF3C3D, 0x03050C00) 
+	#define EXP_sysdirdelete2   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirdelete2", (RTS_UINTPTR)sysdirdelete2, 1, 0xB8EF3C3D, 0x03050F00) 
 #endif
 
 
@@ -446,8 +446,8 @@ typedef void (CDECL CDECL_EXT* PFSYSDIRDELETE2_IEC) (sysdirdelete2_struct *p);
  */
 typedef struct tagsysdirgetcurrent_struct
 {
-	RTS_IEC_STRING *szDir;				/* VAR_INPUT */	/* OUT_PARAMETER: Name of current directory */
-	RTS_IEC_DINT diMaxDirLen;			/* VAR_INPUT */	/* Max lenght of directory buffer */
+	RTS_IEC_STRING *szDir;				/* VAR_IN_OUT */	/* OUT_PARAMETER: Name of current directory */
+	RTS_IEC_DINT diMaxDirLen;			/* VAR_INPUT */	/* Max length of directory buffer */
 	RTS_IEC_RESULT SysDirGetCurrent;	/* VAR_OUTPUT */	
 } sysdirgetcurrent_struct;
 
@@ -466,50 +466,52 @@ typedef void (CDECL CDECL_EXT* PFSYSDIRGETCURRENT_IEC) (sysdirgetcurrent_struct 
 	#define GET_sysdirgetcurrent(fl)  CAL_CMGETAPI( "sysdirgetcurrent" ) 
 	#define CAL_sysdirgetcurrent  sysdirgetcurrent
 	#define CHK_sysdirgetcurrent  TRUE
-	#define EXP_sysdirgetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirgetcurrent", (RTS_UINTPTR)sysdirgetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050C00) 
+	#define EXP_sysdirgetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirgetcurrent", (RTS_UINTPTR)sysdirgetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(SYSDIR_EXTERNAL)
 	#define USE_sysdirgetcurrent
 	#define EXT_sysdirgetcurrent
 	#define GET_sysdirgetcurrent(fl)  CAL_CMGETAPI( "sysdirgetcurrent" ) 
 	#define CAL_sysdirgetcurrent  sysdirgetcurrent
 	#define CHK_sysdirgetcurrent  TRUE
-	#define EXP_sysdirgetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirgetcurrent", (RTS_UINTPTR)sysdirgetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050C00) 
+	#define EXP_sysdirgetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirgetcurrent", (RTS_UINTPTR)sysdirgetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_SysDirsysdirgetcurrent
 	#define EXT_SysDirsysdirgetcurrent
 	#define GET_SysDirsysdirgetcurrent  ERR_OK
 	#define CAL_SysDirsysdirgetcurrent  sysdirgetcurrent
 	#define CHK_SysDirsysdirgetcurrent  TRUE
-	#define EXP_SysDirsysdirgetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirgetcurrent", (RTS_UINTPTR)sysdirgetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050C00) 
+	#define EXP_SysDirsysdirgetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirgetcurrent", (RTS_UINTPTR)sysdirgetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_sysdirgetcurrent
 	#define EXT_sysdirgetcurrent
 	#define GET_sysdirgetcurrent(fl)  CAL_CMGETAPI( "sysdirgetcurrent" ) 
 	#define CAL_sysdirgetcurrent  sysdirgetcurrent
 	#define CHK_sysdirgetcurrent  TRUE
-	#define EXP_sysdirgetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirgetcurrent", (RTS_UINTPTR)sysdirgetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050C00) 
+	#define EXP_sysdirgetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirgetcurrent", (RTS_UINTPTR)sysdirgetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_sysdirgetcurrent  PFSYSDIRGETCURRENT_IEC pfsysdirgetcurrent;
 	#define EXT_sysdirgetcurrent  extern PFSYSDIRGETCURRENT_IEC pfsysdirgetcurrent;
-	#define GET_sysdirgetcurrent(fl)  s_pfCMGetAPI2( "sysdirgetcurrent", (RTS_VOID_FCTPTR *)&pfsysdirgetcurrent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050C00)
+	#define GET_sysdirgetcurrent(fl)  s_pfCMGetAPI2( "sysdirgetcurrent", (RTS_VOID_FCTPTR *)&pfsysdirgetcurrent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050F00)
 	#define CAL_sysdirgetcurrent  pfsysdirgetcurrent
 	#define CHK_sysdirgetcurrent  (pfsysdirgetcurrent != NULL)
-	#define EXP_sysdirgetcurrent   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirgetcurrent", (RTS_UINTPTR)sysdirgetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050C00) 
+	#define EXP_sysdirgetcurrent   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirgetcurrent", (RTS_UINTPTR)sysdirgetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x0376B53C), 0x03050F00) 
 #endif
 
 
 /**
- * Opens a specified directory and returns a handle and the first directory entry
+ * | Opens a specified directory and returns a handle and the first directory entry.
+ * | szDirEntry is expected to provide enough space to write the directory entry to.
+ * | In case szDirEntry is 0, the first directory entry may be retrieved with SysDirRead.
  * :return: Returns the runtime system error code (see CmpErrors.library)
  */
 typedef struct tagsysdiropen_struct
 {
-	RTS_IEC_STRING *szDir;				/* VAR_INPUT */	/* Directory entry as string
+	RTS_IEC_STRING *szDir;				/* VAR_INPUT */	/* Name of directory.
 
  .. note:: Empty string ('') is the request for the current working directory. */
-	RTS_IEC_STRING *szDirEntry;			/* VAR_INPUT */	/* OUT_PARAMETER: Directory entry as string */
-	RTS_IEC_DINT diMaxDirEntry;			/* VAR_INPUT */	/* OUT_PARAMETER: Max number of bytes to write in pszDirEntry */
-	DirInfo *pDirInfo;					/* VAR_INPUT */	/* OUT_PARAMETER: Directory information */
+	RTS_IEC_STRING *szDirEntry;			/* VAR_INPUT */	/* OUT_PARAMETER, optional: Directory entry as string, may be 0 */
+	RTS_IEC_DINT diMaxDirEntry;			/* VAR_INPUT */	/* OUT_PARAMETER, optional: Max number of bytes to write in pszDirEntry */
+	DirInfo *pDirInfo;					/* VAR_INPUT */	/* OUT_PARAMETER, optional: Directory information, may be 0 */
 	RTS_IEC_RESULT *pResult;			/* VAR_INPUT */	/* OUT_PARAMETER: Pointer to runtime system error code (see CmpErrors.library) */
 	RTS_IEC_HANDLE SysDirOpen;			/* VAR_OUTPUT */	
 } sysdiropen_struct;
@@ -529,35 +531,35 @@ typedef void (CDECL CDECL_EXT* PFSYSDIROPEN_IEC) (sysdiropen_struct *p);
 	#define GET_sysdiropen(fl)  CAL_CMGETAPI( "sysdiropen" ) 
 	#define CAL_sysdiropen  sysdiropen
 	#define CHK_sysdiropen  TRUE
-	#define EXP_sysdiropen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdiropen", (RTS_UINTPTR)sysdiropen, 1, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050C00) 
+	#define EXP_sysdiropen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdiropen", (RTS_UINTPTR)sysdiropen, 1, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(SYSDIR_EXTERNAL)
 	#define USE_sysdiropen
 	#define EXT_sysdiropen
 	#define GET_sysdiropen(fl)  CAL_CMGETAPI( "sysdiropen" ) 
 	#define CAL_sysdiropen  sysdiropen
 	#define CHK_sysdiropen  TRUE
-	#define EXP_sysdiropen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdiropen", (RTS_UINTPTR)sysdiropen, 1, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050C00) 
+	#define EXP_sysdiropen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdiropen", (RTS_UINTPTR)sysdiropen, 1, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_SysDirsysdiropen
 	#define EXT_SysDirsysdiropen
 	#define GET_SysDirsysdiropen  ERR_OK
 	#define CAL_SysDirsysdiropen  sysdiropen
 	#define CHK_SysDirsysdiropen  TRUE
-	#define EXP_SysDirsysdiropen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdiropen", (RTS_UINTPTR)sysdiropen, 1, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050C00) 
+	#define EXP_SysDirsysdiropen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdiropen", (RTS_UINTPTR)sysdiropen, 1, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_sysdiropen
 	#define EXT_sysdiropen
 	#define GET_sysdiropen(fl)  CAL_CMGETAPI( "sysdiropen" ) 
 	#define CAL_sysdiropen  sysdiropen
 	#define CHK_sysdiropen  TRUE
-	#define EXP_sysdiropen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdiropen", (RTS_UINTPTR)sysdiropen, 1, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050C00) 
+	#define EXP_sysdiropen  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdiropen", (RTS_UINTPTR)sysdiropen, 1, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_sysdiropen  PFSYSDIROPEN_IEC pfsysdiropen;
 	#define EXT_sysdiropen  extern PFSYSDIROPEN_IEC pfsysdiropen;
-	#define GET_sysdiropen(fl)  s_pfCMGetAPI2( "sysdiropen", (RTS_VOID_FCTPTR *)&pfsysdiropen, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050C00)
+	#define GET_sysdiropen(fl)  s_pfCMGetAPI2( "sysdiropen", (RTS_VOID_FCTPTR *)&pfsysdiropen, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050F00)
 	#define CAL_sysdiropen  pfsysdiropen
 	#define CHK_sysdiropen  (pfsysdiropen != NULL)
-	#define EXP_sysdiropen   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdiropen", (RTS_UINTPTR)sysdiropen, 1, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050C00) 
+	#define EXP_sysdiropen   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdiropen", (RTS_UINTPTR)sysdiropen, 1, RTSITF_GET_SIGNATURE(0, 0x05CA15A4), 0x03050F00) 
 #endif
 
 
@@ -570,12 +572,12 @@ typedef void (CDECL CDECL_EXT* PFSYSDIROPEN_IEC) (sysdiropen_struct *p);
  *		+ ERR_PARAMETER: If one of the parameters is invalid
  *		+ ERR_BUFFERSIZE: If iMaxDirEntry is too short to get the complete directory entry string
  *
- * .. note:: Typically after error ``ERR_BUFFERSIZE``, the dir-handle is set to the next entry, so this entry will be missed!
+ * .. note:: Typically after error ``ERR_BUFFERSIZE``, the directory-handle is set to the next entry, so this entry will be missed!
  */
 typedef struct tagsysdirread_struct
 {
 	RTS_IEC_HANDLE hDir;				/* VAR_INPUT */	/* Handle to directory opened with SysDirOpen */
-	RTS_IEC_STRING *szDirEntry;			/* VAR_INPUT */	/* OUT_PARAMETER: Directory entry as string */
+	RTS_IEC_STRING *szDirEntry;			/* VAR_IN_OUT */	/* OUT_PARAMETER: Directory entry as string */
 	RTS_IEC_DINT diMaxDirEntry;			/* VAR_INPUT */	/* OUT_PARAMETER: Max number of bytes to write in pszDirEntry */
 	DirInfo *pDirInfo;					/* VAR_INPUT */	/* OUT_PARAMETER: Directory information
  NOTE: Can be 0 (so only directory name is provided in pszDirEntry) */
@@ -597,35 +599,35 @@ typedef void (CDECL CDECL_EXT* PFSYSDIRREAD_IEC) (sysdirread_struct *p);
 	#define GET_sysdirread(fl)  CAL_CMGETAPI( "sysdirread" ) 
 	#define CAL_sysdirread  sysdirread
 	#define CHK_sysdirread  TRUE
-	#define EXP_sysdirread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirread", (RTS_UINTPTR)sysdirread, 1, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050C00) 
+	#define EXP_sysdirread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirread", (RTS_UINTPTR)sysdirread, 1, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(SYSDIR_EXTERNAL)
 	#define USE_sysdirread
 	#define EXT_sysdirread
 	#define GET_sysdirread(fl)  CAL_CMGETAPI( "sysdirread" ) 
 	#define CAL_sysdirread  sysdirread
 	#define CHK_sysdirread  TRUE
-	#define EXP_sysdirread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirread", (RTS_UINTPTR)sysdirread, 1, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050C00) 
+	#define EXP_sysdirread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirread", (RTS_UINTPTR)sysdirread, 1, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_SysDirsysdirread
 	#define EXT_SysDirsysdirread
 	#define GET_SysDirsysdirread  ERR_OK
 	#define CAL_SysDirsysdirread  sysdirread
 	#define CHK_SysDirsysdirread  TRUE
-	#define EXP_SysDirsysdirread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirread", (RTS_UINTPTR)sysdirread, 1, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050C00) 
+	#define EXP_SysDirsysdirread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirread", (RTS_UINTPTR)sysdirread, 1, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_sysdirread
 	#define EXT_sysdirread
 	#define GET_sysdirread(fl)  CAL_CMGETAPI( "sysdirread" ) 
 	#define CAL_sysdirread  sysdirread
 	#define CHK_sysdirread  TRUE
-	#define EXP_sysdirread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirread", (RTS_UINTPTR)sysdirread, 1, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050C00) 
+	#define EXP_sysdirread  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirread", (RTS_UINTPTR)sysdirread, 1, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_sysdirread  PFSYSDIRREAD_IEC pfsysdirread;
 	#define EXT_sysdirread  extern PFSYSDIRREAD_IEC pfsysdirread;
-	#define GET_sysdirread(fl)  s_pfCMGetAPI2( "sysdirread", (RTS_VOID_FCTPTR *)&pfsysdirread, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050C00)
+	#define GET_sysdirread(fl)  s_pfCMGetAPI2( "sysdirread", (RTS_VOID_FCTPTR *)&pfsysdirread, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050F00)
 	#define CAL_sysdirread  pfsysdirread
 	#define CHK_sysdirread  (pfsysdirread != NULL)
-	#define EXP_sysdirread   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirread", (RTS_UINTPTR)sysdirread, 1, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050C00) 
+	#define EXP_sysdirread   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirread", (RTS_UINTPTR)sysdirread, 1, RTSITF_GET_SIGNATURE(0, 0xCF257171), 0x03050F00) 
 #endif
 
 
@@ -655,35 +657,35 @@ typedef void (CDECL CDECL_EXT* PFSYSDIRRENAME_IEC) (sysdirrename_struct *p);
 	#define GET_sysdirrename(fl)  CAL_CMGETAPI( "sysdirrename" ) 
 	#define CAL_sysdirrename  sysdirrename
 	#define CHK_sysdirrename  TRUE
-	#define EXP_sysdirrename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirrename", (RTS_UINTPTR)sysdirrename, 1, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050C00) 
+	#define EXP_sysdirrename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirrename", (RTS_UINTPTR)sysdirrename, 1, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(SYSDIR_EXTERNAL)
 	#define USE_sysdirrename
 	#define EXT_sysdirrename
 	#define GET_sysdirrename(fl)  CAL_CMGETAPI( "sysdirrename" ) 
 	#define CAL_sysdirrename  sysdirrename
 	#define CHK_sysdirrename  TRUE
-	#define EXP_sysdirrename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirrename", (RTS_UINTPTR)sysdirrename, 1, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050C00) 
+	#define EXP_sysdirrename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirrename", (RTS_UINTPTR)sysdirrename, 1, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_SysDirsysdirrename
 	#define EXT_SysDirsysdirrename
 	#define GET_SysDirsysdirrename  ERR_OK
 	#define CAL_SysDirsysdirrename  sysdirrename
 	#define CHK_SysDirsysdirrename  TRUE
-	#define EXP_SysDirsysdirrename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirrename", (RTS_UINTPTR)sysdirrename, 1, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050C00) 
+	#define EXP_SysDirsysdirrename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirrename", (RTS_UINTPTR)sysdirrename, 1, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_sysdirrename
 	#define EXT_sysdirrename
 	#define GET_sysdirrename(fl)  CAL_CMGETAPI( "sysdirrename" ) 
 	#define CAL_sysdirrename  sysdirrename
 	#define CHK_sysdirrename  TRUE
-	#define EXP_sysdirrename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirrename", (RTS_UINTPTR)sysdirrename, 1, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050C00) 
+	#define EXP_sysdirrename  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirrename", (RTS_UINTPTR)sysdirrename, 1, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_sysdirrename  PFSYSDIRRENAME_IEC pfsysdirrename;
 	#define EXT_sysdirrename  extern PFSYSDIRRENAME_IEC pfsysdirrename;
-	#define GET_sysdirrename(fl)  s_pfCMGetAPI2( "sysdirrename", (RTS_VOID_FCTPTR *)&pfsysdirrename, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050C00)
+	#define GET_sysdirrename(fl)  s_pfCMGetAPI2( "sysdirrename", (RTS_VOID_FCTPTR *)&pfsysdirrename, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050F00)
 	#define CAL_sysdirrename  pfsysdirrename
 	#define CHK_sysdirrename  (pfsysdirrename != NULL)
-	#define EXP_sysdirrename   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirrename", (RTS_UINTPTR)sysdirrename, 1, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050C00) 
+	#define EXP_sysdirrename   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirrename", (RTS_UINTPTR)sysdirrename, 1, RTSITF_GET_SIGNATURE(0, 0xA2EF5E53), 0x03050F00) 
 #endif
 
 
@@ -714,35 +716,35 @@ typedef void (CDECL CDECL_EXT* PFSYSDIRSETCURRENT_IEC) (sysdirsetcurrent_struct 
 	#define GET_sysdirsetcurrent(fl)  CAL_CMGETAPI( "sysdirsetcurrent" ) 
 	#define CAL_sysdirsetcurrent  sysdirsetcurrent
 	#define CHK_sysdirsetcurrent  TRUE
-	#define EXP_sysdirsetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirsetcurrent", (RTS_UINTPTR)sysdirsetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050C00) 
+	#define EXP_sysdirsetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirsetcurrent", (RTS_UINTPTR)sysdirsetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050F00) 
 #elif defined(MIXED_LINK) && !defined(SYSDIR_EXTERNAL)
 	#define USE_sysdirsetcurrent
 	#define EXT_sysdirsetcurrent
 	#define GET_sysdirsetcurrent(fl)  CAL_CMGETAPI( "sysdirsetcurrent" ) 
 	#define CAL_sysdirsetcurrent  sysdirsetcurrent
 	#define CHK_sysdirsetcurrent  TRUE
-	#define EXP_sysdirsetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirsetcurrent", (RTS_UINTPTR)sysdirsetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050C00) 
+	#define EXP_sysdirsetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirsetcurrent", (RTS_UINTPTR)sysdirsetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050F00) 
 #elif defined(CPLUSPLUS_ONLY)
 	#define USE_SysDirsysdirsetcurrent
 	#define EXT_SysDirsysdirsetcurrent
 	#define GET_SysDirsysdirsetcurrent  ERR_OK
 	#define CAL_SysDirsysdirsetcurrent  sysdirsetcurrent
 	#define CHK_SysDirsysdirsetcurrent  TRUE
-	#define EXP_SysDirsysdirsetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirsetcurrent", (RTS_UINTPTR)sysdirsetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050C00) 
+	#define EXP_SysDirsysdirsetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirsetcurrent", (RTS_UINTPTR)sysdirsetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050F00) 
 #elif defined(CPLUSPLUS)
 	#define USE_sysdirsetcurrent
 	#define EXT_sysdirsetcurrent
 	#define GET_sysdirsetcurrent(fl)  CAL_CMGETAPI( "sysdirsetcurrent" ) 
 	#define CAL_sysdirsetcurrent  sysdirsetcurrent
 	#define CHK_sysdirsetcurrent  TRUE
-	#define EXP_sysdirsetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirsetcurrent", (RTS_UINTPTR)sysdirsetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050C00) 
+	#define EXP_sysdirsetcurrent  s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirsetcurrent", (RTS_UINTPTR)sysdirsetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050F00) 
 #else /* DYNAMIC_LINK */
 	#define USE_sysdirsetcurrent  PFSYSDIRSETCURRENT_IEC pfsysdirsetcurrent;
 	#define EXT_sysdirsetcurrent  extern PFSYSDIRSETCURRENT_IEC pfsysdirsetcurrent;
-	#define GET_sysdirsetcurrent(fl)  s_pfCMGetAPI2( "sysdirsetcurrent", (RTS_VOID_FCTPTR *)&pfsysdirsetcurrent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050C00)
+	#define GET_sysdirsetcurrent(fl)  s_pfCMGetAPI2( "sysdirsetcurrent", (RTS_VOID_FCTPTR *)&pfsysdirsetcurrent, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050F00)
 	#define CAL_sysdirsetcurrent  pfsysdirsetcurrent
 	#define CHK_sysdirsetcurrent  (pfsysdirsetcurrent != NULL)
-	#define EXP_sysdirsetcurrent   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirsetcurrent", (RTS_UINTPTR)sysdirsetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050C00) 
+	#define EXP_sysdirsetcurrent   s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sysdirsetcurrent", (RTS_UINTPTR)sysdirsetcurrent, 1, RTSITF_GET_SIGNATURE(0, 0x92FA36CD), 0x03050F00) 
 #endif
 
 
@@ -762,16 +764,17 @@ RTS_RESULT CDECL SysDirOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysDirOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
 /**
- * <description>Opens a specified directory and returns a handle and the first directory entry</description>
+ * <description>Opens a specified directory and returns a handle and the first directory entry.
+ * In case pszDirEntry is NULL, the first directory entry may be retrieved with SysDirRead.</description>
  * <param name="pszDir" type="IN">Name of directory.
- * IMPLEMENTATION NOTE: Empty string ("") is the request for the current working directory.</param>
+ * NOTE: Empty string ("") is the request for the current working directory.</param>
  * <param name="pszDirEntry" type="OUT">Optional: Directory entry as string. Can be NULL.</param>
  * <param name="iMaxDirEntry" type="IN">Optional: Max number of bytes to write in pszDirEntry</param>
- * <param name="pDirInfo" type="OUT">Directory information</param>
+ * <param name="pDirInfo" type="OUT">Optional: Directory information. Can be NULL.</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Directory can be opened and a directory info can be retrieved</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Directory cannot be opened. An invalid handle is returned.</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_END_OF_OBJECT">Directory can be opened, but _no_ pszDirEntry can be retrieved (direcory is empty or end reached)!
+ * <errorcode name="RTS_RESULT pResult" type="ERR_END_OF_OBJECT">Directory can be opened, but _no_ pszDirEntry can be retrieved (directory is empty or end reached)!
  *		NOTE:
  *		A valid handle is returned with this error and so the directory must be closed after usage!
  * </errorcode>
@@ -830,17 +833,18 @@ typedef RTS_HANDLE (CDECL * PFSYSDIROPEN) (char *pszDir, char *pszDirEntry, int 
 
 /**
  * <description>Opens a specified directory and returns a handle and the first directory entry. No standard path will be added.
+ * In case pszDirEntry is NULL, the first directory entry may be retrieved with SysDirRead.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant! Optimizations can be done here.</description>
+ *	This interface function is implemented operating system dependent! Optimizations can be done here.</description>
  * <param name="pszDir" type="IN">Name of directory.
  * IMPLEMENTATION NOTE: Empty string ("") is the request for the current working directory.</param>
  * <param name="pszDirEntry" type="OUT">Optional: Directory entry as string. Can be NULL.</param>
  * <param name="iMaxDirEntry" type="IN">Optional: Max number of bytes to write in pszDirEntry</param>
- * <param name="pDirInfo" type="OUT">Directory information</param>
+ * <param name="pDirInfo" type="OUT">Optional: Directory information. Can be NULL</param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Directory can be opened and a directory info can be retrieved</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Directory cannot be opened. An invalid handle is returned.</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_END_OF_OBJECT">Directory can be opened, but _no_ pszDirEntry can be retrieved (direcory is empty or end reached)!
+ * <errorcode name="RTS_RESULT pResult" type="ERR_END_OF_OBJECT">Directory can be opened, but _no_ pszDirEntry can be retrieved (directory is empty or end reached)!
  *		NOTE:
  *		A valid handle is returned with this error and so the directory must be closed after usage!
  * </errorcode>
@@ -953,7 +957,7 @@ typedef RTS_RESULT (CDECL * PFSYSDIRCLOSE) (RTS_HANDLE hDir);
 /**
  * <description>Close an open directory.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant! Optimizations can be done here.</description>
+ *	This interface function is implemented operating system dependent! Optimizations can be done here.</description>
  * <param name="hDir" type="IN">Handle to directory opened with SysDirOpen</param>
  * <result>error code</result>
  */
@@ -1076,7 +1080,7 @@ typedef RTS_RESULT (CDECL * PFSYSDIRREAD) (RTS_HANDLE hDir, char *pszDirEntry, i
 /**
  * <description>Read next directory entry. Writes the entry in pszDirEntry.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant! Optimizations can be done here.</description>
+ *	This interface function is implemented operating system dependent! Optimizations can be done here.</description>
  * <param name="hDir" type="IN">Handle to directory opened with SysDirOpen</param>
  * <param name="pszDirEntry" type="OUT">Directory entry as string</param>
  * <param name="iMaxDirEntry" type="OUT">Max number of bytes to write in pszDirEntry</param>
@@ -1255,7 +1259,7 @@ typedef RTS_RESULT (CDECL * PFSYSDIRCREATE2) (char *pszDir, RTS_BOOL bRecursive)
 /**
  * <description>Creates a new directory with the specified name. No standard path will be added.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant! Optimizations can be done here.</description>
+ *	This interface function is implemented operating system dependent! Optimizations can be done here.</description>
  * <param name="pszDir" type="IN">Name of directory</param>
  * <result>error code</result>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Directory was created successfully</errorcode>
@@ -1368,7 +1372,7 @@ typedef RTS_RESULT (CDECL * PFSYSDIRDELETE) (char *pszDir);
 
 /**
  * <description>Deletes a directory with the specified name
- * If bRecursive is set, a whole folder tree can be deleted, i.e. all subfolders and files are deleted.
+ * If bRecursive is set, a whole folder tree can be deleted, i.e. all sub-folders and files are deleted.
  * If bRecursive and bKeepDir are set, the folder is kept but its contents is deleted.</description>
  * <param name="pszDir" type="IN">Name of directory</param>
  * <param name="bRecursive" type="IN">Delete a whole folder tree</param>
@@ -1427,7 +1431,7 @@ typedef RTS_RESULT (CDECL * PFSYSDIRDELETE2) (char *pszDir, RTS_BOOL bRecursive,
 /**
  * <description>Deletes a directory with the specified name. No standard path will be added.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant! Optimizations can be done here.</description>
+ *	This interface function is implemented operating system dependent! Optimizations can be done here.</description>
  * <param name="pszDir" type="IN">Name of directory</param>
  * <result>error code</result>
  */
@@ -1538,7 +1542,7 @@ typedef RTS_RESULT (CDECL * PFSYSDIRRENAME) (char *pszOldDir, char *pszNewDir);
 /**
  * <description>Rename directory. No standard path will be added.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant! Optimizations can be done here.</description>
+ *	This interface function is implemented operating system dependent! Optimizations can be done here.</description>
  * <param name="pszOldDir" type="IN">Name of existing directory</param>
  * <param name="pszNewDir" type="IN">New name</param>
  * <result>error code</result>
@@ -1597,7 +1601,7 @@ typedef RTS_RESULT (CDECL * PFSYSDIRRENAME_) (char *pszOldDir, char *pszNewDir);
  * To obtain the working directory of the underlying file system use SysDirGetCurrent_.
  * </description>
  * <param name="pszDir" type="OUT">Name of current directory</param>
- * <param name="iMaxDirLen" type="IN">Max lenght of directory buffer</param>
+ * <param name="iMaxDirLen" type="IN">Max length of directory buffer</param>
  * <result>error code</result>
  */
 RTS_RESULT CDECL SysDirGetCurrent(char *pszDir, int iMaxDirLen);
@@ -1652,9 +1656,9 @@ typedef RTS_RESULT (CDECL * PFSYSDIRGETCURRENT) (char *pszDir, int iMaxDirLen);
 /**
  * <description>Get current working directory of the underlying file system. No standard path will be added.
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant!</description>
+ *	This interface function is implemented operating system dependent!</description>
  * <param name="pszDir" type="OUT">Name of current directory</param>
- * <param name="iMaxDirLen" type="IN">Max lenght of directory buffer</param>
+ * <param name="iMaxDirLen" type="IN">Max length of directory buffer</param>
  * <result>error code</result>
  */
 RTS_RESULT CDECL SysDirGetCurrent_(char *pszDir, int iMaxDirLen);
@@ -1770,7 +1774,7 @@ typedef RTS_RESULT (CDECL * PFSYSDIRSETCURRENT) (char *pszDir);
  * call and restore the path as soon as possible. Otherwise the whole runtime system may not work any more!
  * ATTENTION: Reset Origin does not affect this setting. The runtime system has to be restarted!
  *	IMPLEMENTATION NOTE:
- *	This interface function is implemented operating system dependant!</description>
+ *	This interface function is implemented operating system dependent!</description>
  * <param name="pszDir" type="IN">Name of current directory</param>
  * <result>error code</result>
  */
@@ -1826,16 +1830,17 @@ typedef RTS_RESULT (CDECL * PFSYSDIRSETCURRENT_) (char *pszDir);
 /**
  * <description> Copies the contents of pszSourceDir to pszDestDir.
  * Depending of the parameters, all subdirectories and its content will be copied too, and existing files will be overwritten.
- * NOTE: Empty direcories will be copied if bRecursive is TRUE.
+ * Non-existing destination path will be created.
+ * NOTE: Empty directories will be copied if bRecursive is TRUE.
  * </description>
  * <param name="pszDestDir" type="IN">Name of destination directory</param>
  * <param name="pszSourceDir" type="IN">Name of source directory</param>
  * <param name="bRecursive" type="IN">TRUE: all subdirectories and their contents are copied, FALSE: subdirectories are omitted</param>
  * <param name="bOverwrite" type="IN">TRUE: existing files are overwritten, FALSE: existing files are left untouched</param>
  * <result>error code</result>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OK">The contents of the source direcory was successfully copied to the destination direcory</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">The contents of the source directory was successfully copied to the destination directory</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_NO_OBJECT">There were no files to copy, the destination directory is nevertheless created if need be</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_OPERATION_DENIED">Source or destination direcory is not accessible</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OPERATION_DENIED">Source or destination directory is not accessible</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">System error</errorcode>
  */
 RTS_RESULT CDECL SysDirCopy(char *pszDestDir, char *pszSourceDir, RTS_BOOL bRecursive, RTS_BOOL bOverwrite);

@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -64,7 +64,7 @@ REF_ITF(`SysCpuMultiCoreItf.m4')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Enable the processor load measurement of all plc tasks. If the processor load should be limited, you can conifure this with the setting "ProcessorLoad.Maximum". 
+ *	Enable the processor load measurement of all PLC tasks. If the processor load should be limited, you can configure this with the setting "ProcessorLoad.Maximum". 
  * </description>
  */
 #define SCHEDULEKEY_INT_PROCESSOR_LOAD_ENABLE					"ProcessorLoad.Enable"
@@ -76,10 +76,10 @@ REF_ITF(`SysCpuMultiCoreItf.m4')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Set maximum processor load of all plc tasks.
+ *	Set maximum processor load of all PLC tasks.
  *  If maximum is reached, either a watchdog exception is generated (default) or
- *  timelicing is started (see setting [Timelicing.StartOnProcessorLoad]).
- *  Value: 10..100% possible. 0: feature is diabled.
+ *  timeslicing is started (see setting [Timelicing.StartOnProcessorLoad]).
+ *  Value: 10..100% possible. 0: feature is disabled.
  *  Default: 0 (Disabled)
  * </description>
  */
@@ -92,7 +92,7 @@ REF_ITF(`SysCpuMultiCoreItf.m4')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *	Set the interval of the processor load measurement in milliseconds. During this interval, the processorload
+ *	Set the interval of the processor load measurement in milliseconds. During this interval, the processor load
  *	will be added up.
  * </description>
  */
@@ -120,8 +120,8 @@ REF_ITF(`SysCpuMultiCoreItf.m4')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *  Setting to set a fix timeslice in % for all plc tasks
- *  Value: 10..90% possible. 0: feature is diabled.
+ *  Setting to set a fix timeslice in % for all PLC tasks
+ *  Value: 10..90% possible. 0: feature is disabled.
  *  Default: 0 (disabled)
  * </description>
  */
@@ -132,8 +132,8 @@ REF_ITF(`SysCpuMultiCoreItf.m4')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- *  Setting to set a fix timeslice in microseconds for all plc tasks
- *  0: feature is diabled (default)
+ *  Setting to set a fix timeslice in microseconds for all PLC tasks
+ *  0: feature is disabled (default)
  * </description>
  */
 #define SCHEDULEKEY_INT_TIMESLICING_PLCSLICE_US			"Timeslicing.PlcSliceUs"
@@ -144,7 +144,7 @@ REF_ITF(`SysCpuMultiCoreItf.m4')
  * <description>
  *  Setting to set an option, if timeslicing should be started automatically,
  *  after the MaxProcessorLoad is reached (see setting [MaxProcessorLoad])
- *  0: Feature is diabled, 1: Feature is enabled
+ *  0: Feature is disabled, 1: Feature is enabled
  *  Default: 0 (disabled)
  * </description>
  */
@@ -182,7 +182,7 @@ REF_ITF(`SysCpuMultiCoreItf.m4')
  *	-> 20% of 10ms is the sleep time => 2ms sleep at the end of its cycle
  *	NOTE:
  *	Can be configured to 0 only in combination with internal or external timeslicing! In this case, the task can be running forever, but is
- *	interrupted only by timeslicing. Be shure, that no other IEC task is running at a lower priority as this task!
+ *	interrupted only by timeslicing. Be sure, that no other IEC task is running at a lower priority as this task!
  * </description>
  */
 #define SCHEDULEKEY_INT_FREEWHEELING_CYCLETIME_US			"Task.Freewheeling.Cycletime"
@@ -215,7 +215,7 @@ REF_ITF(`SysCpuMultiCoreItf.m4')
  * o MicroSecond: Microsecond scheduling is used [Default]
  * o Tick: Tick based scheduling (no usage of microseconds).
  *		NOTE: In this case, the scheduler interval must be correctly specified in setting [SchedulerInterval]!
- * o OSScheduler: The operating system scheduler can schedule the cyclic tasks in realtime. In this case the RTS-scheduler does nothing.
+ * o OSScheduler: The operating system scheduler can schedule the cyclic tasks in real-time. In this case the RTS-scheduler does nothing.
  *		The RTS-scheduler supervises only the iEC tasks for an endless loop by default (see setting Scheduling.TaskSupervisor=ScheduleTick).
  *		To disable the RTS-scheduler completely, use the corresponding setting Scheduling.TaskSupervisor=WatchdogTimer.
  * </description>
@@ -235,7 +235,7 @@ REF_ITF(`SysCpuMultiCoreItf.m4')
  * Scheduling task supervisor mode. Is used only for CmpSchedule (not supported in CmpScheduleEmbedded and CmpScheduleTimer)!
  * o ScheduleTick: The scheduler supervises all IEC tasks at every schedule tick for an expired watchdog [Default]. Scheduler runs in a timer.
  * o ScheduleTickTask: The scheduler supervises all IEC tasks at every schedule tick for an expired watchdog. Here the scheduler is running in a task.
- * o WatchdogTimer: All IEC tasks are supervised by a watchdog timer. So the RTS-schedule tick is disabled and does not consume any resources (tickless)
+ * o WatchdogTimer: All IEC tasks are supervised by a watchdog timer. So the RTS-schedule tick is disabled and does not consume any resources (tick-less)
  * </description>
  */
 #define SCHEDULEKEY_STRING_SCHEDULING_TASKSUPERVISOR					"Scheduling.TaskSupervisor"
@@ -255,10 +255,10 @@ REF_ITF(`SysCpuMultiCoreItf.m4')
  * <category>Settings</category>
  * <type>Int</type>
  * <description>
- * Setting to disable the new watchdog feature to detected omitted cycles of a task. THis can be activated for backward compatibility, if feature
+ * Setting to disable the new watchdog feature to detected omitted cycles of a task. This can be activated for backward compatibility, if feature
  * makes a problem in existing systems.
  * NOTE:
- * Setting is ony available for CmpSchedule (not in CmpScheduleTimer and CmpScheduleEmbedded)!
+ * Setting is only available for CmpSchedule (not in CmpScheduleTimer and CmpScheduleEmbedded)!
  *  0: Omitted cycle watchdog is enabled [Default]
  *  1: Disable omitted cycle watchdog
  * </description>
@@ -279,7 +279,7 @@ REF_ITF(`SysCpuMultiCoreItf.m4')
  *	Setting must only be used for systems, that has sometimes a serious problem with watchdog exception during OnlineChange, but the specified jitter can be accepted!
  *
  * NOTES:
- * - Setting is ony available for CmpSchedule (not in CmpScheduleTimer and CmpScheduleEmbedded)!
+ * - Setting is only available for CmpSchedule (not in CmpScheduleTimer and CmpScheduleEmbedded)!
  * - 0=Standard omitted cycle watchdog time is used
  * </description>
  */
@@ -340,8 +340,8 @@ REF_ITF(`SysCpuMultiCoreItf.m4')
  * <category>Static defines</category>
  * <description>There is a new feature to avoid possible deadlocks in external library calls if a watchdog exception occurred.
  *	This feature can be activated in the device description by the following setting:
- *		Targetsetting:  "codegenerator\\breakpoint-mark-after-external-call"
- *	If you activate this feature we do not suspend the IecTask directly in the exernal library call, but we set a breakpoint right after returning from this external library
+ *		Target setting:  "codegenerator\\breakpoint-mark-after-external-call"
+ *	If you activate this feature we do not suspend the IecTask directly in the external library call, but we set a breakpoint right after returning from this external library
  *	call to driver out of this code in a defined way.
  *  And this define is the number of code bytes after returning from the external library call to look maximum for the NOP code.
  * </description>
@@ -491,7 +491,7 @@ DEF_API(`void',`CDECL',`schedgetcurrenttask',`(schedgetcurrenttask_struct *p)',1
 
 /**
  *  <description>
- * 	Is called to get the number of all registerd IEC tasks in the scheduler.
+ * 	Is called to get the number of all registered IEC tasks in the scheduler.
  *  </description>	
  *  <param name="pApp" type="IN">If an application is specified, only the tasks of this application is returned.
  * 	If NULL, number of all tasks is returned.
@@ -523,7 +523,7 @@ DEF_API(`void',`CDECL',`schedgetprocessorload',`(schedgetprocessorload_struct *p
 
 /**
  *  <description>
- * 	Function returns the handle to the task event. With this event a task can be activaed externally,
+ * 	Function returns the handle to the task event. With this event a task can be activated externally,
  * 	e.g. for external triggered event tasks. The event can be sent by SysEventSet(EventHandle);
  *  </description>	
  *  <param name="hSchedTask" type="IN">Scheduler task handle</param>
@@ -598,7 +598,7 @@ DEF_API(`void',`CDECL',`schedgettaskinterval',`(schedgettaskinterval_struct *p)'
  * <p>Execute all tasks, that are registered for the given
  * event. The execution context may vary depending on the
  * scheduler type. It might be executed synchronously in the
- * context of the caller, or a system task (e.g. ontop of an
+ * context of the caller, or a system task (e.g. on-top of an
  * OS) is just signaled to execute the task code.</p>
  * <p>Note, that the result ERR_NO_OBJECT might not be a
  * real error. Depending on the system it might be OK, that
@@ -693,7 +693,7 @@ DEF_API(`void',`CDECL',`schedtasksuspend',`(schedtasksuspend_struct *p)',1,0x3BC
  * <p>Valid Hook: CH_EXIT2</p>
  * </description>
  * <param name="hExtEvent" type="IN">Handle to the external event, that should be unregistered.</param>
- * <errorcode name="RTS_IEC_RESULT" type="ERR_OK">Event was deregistered successfully</errorcode>
+ * <errorcode name="RTS_IEC_RESULT" type="ERR_OK">Event was de-registered successfully</errorcode>
  * <errorcode name="RTS_IEC_RESULT" type="ERR_PARAMETER">The event handle was not registered before</errorcode>
  * <result>Error code</result>
  */
@@ -785,7 +785,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SchedHasFeature',`(unsigned long ulFeatures)')
  * <errorcode name="RTS_RESULT" type="ERR_OK">Task was created successfully</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pTask was NULL</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOMEMORY">Not enough memory to create the task.</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_FAILED">Scheduler specific error. Most likely the scheduler was unable to create a required ressource.</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_FAILED">Scheduler specific error. Most likely the scheduler was unable to create a required resource.</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">The configured task type is not supported by this scheduler</errorcode>
  */
 DEF_ITF_API(`RTS_HANDLE', `CDECL', `SchedAddTask', `(Task_Desc *pTask, RTS_RESULT *pResult)')
@@ -834,7 +834,7 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SchedRemoveTask2', `(RTS_HANDLE hSchedTask, 
  * <param name="iCmd" type="IN" range="[CMD_TICK,CMD_DEBUG_LOOP,INVALID_CMD]">Type of schedule command</param>
  * <parampseudo name="bSIL2SafetyMode" type="IN" range="[0,1]">Type of schedule command</parampseudo>
  * <parampseudo name="bWatchdogSleep" type="IN" range="[0,1]">Watchdog sleep to check if Exception occurs</parampseudo>
- * <parampseudo name="bException" type="OUT">Is only allowed in SIL2 Runtime in Debugmode</parampseudo>
+ * <parampseudo name="bException" type="OUT">Is only allowed in SIL2 Runtime in debug mode</parampseudo>
  * <result>error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">Command executed successfully</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_NOT_SUPPORTED">Command is not supported</errorcode>
@@ -912,7 +912,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SchedGetContext',`(RTS_HANDLE hSchedTask, RegC
 
 /**
  * <description>
- *	Is called to get the number of all registerd IEC tasks in the scheduler.
+ *	Is called to get the number of all registered IEC tasks in the scheduler.
  * </description>
  * <param name="pApp" type="IN">If an application is specified, only the tasks of this application is returned.
  *	If NULL, number of all tasks is returned.
@@ -968,7 +968,7 @@ DEF_ITF_API(`RTS_HANDLE',`CDECL',`SchedGetTaskHandleByName',`(char *pszTaskName,
 
 /**
  * <description>
- *	Function returns the handle to the task event. With this event a task can be activaed externally,
+ *	Function returns the handle to the task event. With this event a task can be activated externally,
  *	e.g. for external triggered event tasks. The event can be sent by SysEventSet(EventHandle);
  * </description>
  * <param name="hSchedTask" type="IN">Scheduler task handle</param>
@@ -978,7 +978,7 @@ DEF_ITF_API(`RTS_HANDLE',`CDECL',`SchedGetTaskHandleByName',`(char *pszTaskName,
 DEF_ITF_API(`RTS_HANDLE',`CDECL',`SchedGetTaskEventByHandle',`(RTS_HANDLE hSchedTask, RTS_RESULT *pResult)')
 
 /**
- * <description>Begin of the plc timeslice. Can be called by an external component, if external timselicing
+ * <description>Begin of the PLC timeslice. Can be called by an external component, if external timeslicing
  *	is enabled.
  * </description>
  * <result>error code</result>
@@ -986,7 +986,7 @@ DEF_ITF_API(`RTS_HANDLE',`CDECL',`SchedGetTaskEventByHandle',`(RTS_HANDLE hSched
 DEF_ITF_API(`RTS_RESULT',`CDECL',`SchedTimeslicePlcBegin',`(void)')
 
 /**
- * <description>End of the plc timeslice. Can be called by an external component, if external timselicing
+ * <description>End of the PLC timeslice. Can be called by an external component, if external timeslicing
  *	is enabled.
  * </description>
  * <result>error code</result>
@@ -1008,7 +1008,7 @@ DEF_ITF_API(`unsigned long',`CDECL',`SchedGetProcessorLoad',`(RTS_RESULT *pResul
  *	This feature must be enabled with the setting "ProcessorLoad.Maximum" > 0.</description>
  * <param name="uCoreID" type="IN">Identifies a single core. Starting with 0=first core, ...
  *	NOTE:
- *	If uCoreID=RTS_UI32_MAX, average plc load over all cores in percent is returned (see SchedGetProcessorLoad())!
+ *	If uCoreID=RTS_UI32_MAX, average PLC load over all cores in percent is returned (see SchedGetProcessorLoad())!
  * </param>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <result>Processor load in percent</result>
@@ -1123,7 +1123,7 @@ DEF_ITF_API(`RTS_HANDLE',`CDECL',`SchedRegisterExternalEvent',`(const char *pszE
  * <p>Valid Hook: CH_EXIT2</p>
  * </description>
  * <param name="hExtEvent" type="IN">Handle to the external event, that should be unregistered.</param>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Event was deregistered successfully</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Event was de-registered successfully</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">The event handle was not registered before</errorcode>
  * <result>Error code</result>
  */
@@ -1150,12 +1150,12 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`SchedPostExternalEvent',`(RTS_HANDLE hExtEvent
 
 /**
  * <description>
- * Get the task handle of the backend interface
+ * Get the task handle of the back-end interface
  * </description>
  * <param name="hSchedTask" type="IN">Scheduler task handle</param>
- * <param name="pCmpIdBackend" type="IN">Pointer to the resulting backend componentID</param>
+ * <param name="pCmpIdBackend" type="IN">Pointer to the resulting back-end componentID</param>
  * <param name="pResult" type="IN">Pointer to the resulting error code</param>
- * <errorcode name="RTS_RESULT" type="ERR_OK">Backend task handle was successfully retrieved</errorcode>
+ * <errorcode name="RTS_RESULT" type="ERR_OK">Back-end task handle was successfully retrieved</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">Invalid handle hSchedTask</errorcode>
  * <result>Task handle</result>
  */
@@ -1178,6 +1178,15 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `SchedTaskSuspend', `(RTS_HANDLE hSchedTask)'
  * <result>Error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `SchedTaskResume', `(RTS_HANDLE hSchedTask)')
+
+/** <description>
+*   Wait until task is stopped or timout is expired
+* </description>
+* <param name="hSchedTask" type="IN">Scheduler task handle</param>
+ * <param name="timeoutUs" type="IN">Timeout in microseconds</param>
+ * <result>Error code</result>
+*/
+DEF_ITF_API(`RTS_RESULT', `CDECL', `SchedTaskWaitForStop', `(RTS_HANDLE hSchedTask, RTS_SYSTIME timeoutUs)')
 
 #ifdef __cplusplus
 }

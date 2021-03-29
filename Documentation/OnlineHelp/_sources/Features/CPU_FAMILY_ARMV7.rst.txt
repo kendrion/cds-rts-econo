@@ -1,0 +1,46 @@
+.. _feature__c_p_u__f_a_m_i_l_y__a_r_m_v7:
+
+
+====================
+_`CPU Family ARMv7`
+====================
+
+General Information
+===================
+This feature should characterize the common features, all ARMv7 should support. This is relevant for ARM32 and Thumb2 instruction set.
+
+
+TargetSettings
+==============
+
+1. Memory-Barrier:
+   - instruction: DMB
+   - supported on ARMv7 ARMv6-M 
+
+2. Atomic read write 64:
+   - instruction: STRD, LDRD
+   - supported on ARMv5TE, ARMv6*, and ARMv7
+
+3. Load store register exclusive:
+   - instruction: LDREX, STREX
+   - supported on LDREX, STREX: ARMv6* (except ARMv6-M), ARMv7
+
+
+
+
+Required features
+-----------------
+
+- :ref:`feature__dev_desc`
+
+Required target settings
+------------------------
+
+The following target settings are necessary for this feature:
+
+- :ref:`codegenerator_memory_barrier`
+
+- :ref:`codegenerator_atomic_read_write_64`
+
+- :ref:`codegenerator_load_store_register_exclusive`
+

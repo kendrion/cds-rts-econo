@@ -1,0 +1,46 @@
+.. _feature__operation_mode:
+
+
+_`Operation Mode`
+=================
+
+The operation mode describes the global operation mode of a PLC. By default a PLC is in debug mode. In this mode all online operations like download, debugging and so on are allowed. 
+Other modes restrict some online services to prevent unintended changes by the user on a running machine.
+
+If this feature is enabled in the device description (see :ref:`runtime_features_operational_mode_supported`), the end user can specify the operation mode in the programming system with the menu commands Online / Operating Mode.
+
+Here the available operation modes:
+
+- **DEBUG**: Device is in debug mode: All operations are allowed
+
+- **LOCKED** [optional]: Device is locked: Previously set breakpoints and forced variables are further active, (file-)download and OnlineChange is blocked. 
+
+  HINT: Target setting :ref:`runtime_features_locked_mode_supported` must be enabled in the device description of the target to use this feature!
+
+- **OPERATIONAL**: Device is operational: Debug, force, (file-)download and OnlineChange actions are blocked. This should be the operation mode of a machine in the production process! 
+
+.. note::
+    To change the operation mode online on the controller, the onlineuser need the MODIFY right on the "Device" node (typically Administrator rights)!    
+
+
+Required features
+-----------------
+
+- :ref:`feature__user_mgr`
+
+Required target settings
+------------------------
+
+The following target settings are necessary for this feature:
+
+- :ref:`runtime_features_operational_mode_supported`
+
+- :ref:`runtime_features_locked_mode_supported`
+
+Required components
+-------------------
+
+The following runtime system components are necessary for this feature:
+
+- :ref:`CmpDevice <group___cmp_device_dep>`
+

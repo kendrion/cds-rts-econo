@@ -1,12 +1,12 @@
  /**
  * <interfacename>CmpSettings</interfacename>
  * <description> 
- *	Interface for the settings component. The settings component can have different backend
- *	components, to realise different sources for the settings (e.g. ini-File, hardcoded, XML, etc.).
+ *	Interface for the settings component. The settings component can have different back-end
+ *	components, to realize different sources for the settings (e.g. INI-File, hard-coded, XML, etc.).
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -48,7 +48,7 @@
 
 /**
  * <category>Static defines</category>
- * <description>Delimiter for the end of line, if a settings file is used as backend.
+ * <description>Delimiter for the end of line, if a settings file is used as back-end.
  * </description>
  */
 #ifndef FILE_END_OF_LINE_DELIMITER
@@ -66,7 +66,7 @@
 
 /**
  * <category>Static defines</category>
- * <description>Name of the master configuration file, if standard config file could not be opened</description>
+ * <description>Name of the master configuration file, if standard configuration file could not be opened</description>
  */
 #ifndef CMPSETTINGS_MASTER_CONFIG
 	#define CMPSETTINGS_MASTER_CONFIG			"Master.cfg"
@@ -85,14 +85,14 @@
 /**
  * <category>Settings</category>
  * <description>
- *	Setting for the settings component to specify, if the each component has its own settings database file.
- *	1: Split database files
- *	0: All settings in one database file
+ *	Optional setting to specify, if the main config file is writeprotected.
+ *	1: writeprotected, file attributes are not checked
+ *	0: file attributes are checked (default)
  * </description>
  */
-#define CMPSETTINGS_KEY_INT_SPLIT_DATABASES					"SplitDatabases"
-#ifndef CMPSETTINGS_KEY_INT_SPLIT_DATABASES_DEFAULT
-	#define CMPSETTINGS_KEY_INT_SPLIT_DATABASES_DEFAULT		0
+#define CMPSETTINGS_KEY_INT_IS_WRITEPROTECTED					"IsWriteProtected"
+#ifndef CMPSETTINGS_KEY_INT_IS_WRITEPROTECTED_DEFAULT
+	#define CMPSETTINGS_KEY_INT_IS_WRITEPROTECTED_DEFAULT		0
 #endif
 
 /**
@@ -100,11 +100,16 @@
  * <description>
  *	Setting to specify external configuration files:
  *	File reference list must be indexed, started with 0 or 1, e.g.:
- *	FileReference.0=[Configurationfile.cfg]
+ *	FileReference.0=ExtraConfigurationfile.cfg
+ *	FileReference.1=/tmp/ExtraConfigurationfile2.cfg
  *
+ *	The filenames must be unique, but a path may be added.
  *	If the file does not exist, the file is created.
  *  You can specify sections, that should be created in this referenced file, by a comma separated list. e.g.:
- *	FileReference.0=[Configurationfile.cfg], CmpApp
+ *	FileReference.0=ExtraConfigurationfile.cfg, CmpApp, CmpDevice
+ *
+ * There is an optional atrribute to writeprotect an extra configuration file (the same effect as the setting for the main file, see above):
+ *	FileReference.0.IsWriteProtected=1
  * </description>
  */
 #define CMPSETTINGS_KEY_STRING_FILE_REFERENCE				"FileReference"
@@ -144,7 +149,7 @@
 
 /**
  * <description>
- *	Entry of one slectable setting.
+ *	Entry of one selectable setting.
  * </description>
  * <element name="id" type="IN">ID of the selectable setting. Must be unique within this set of selectable settings!</element>
  * <element name="flags" type="IN">Flags of the entry. See "SelectableSettingEntryFlags" for details.</element>
@@ -161,7 +166,7 @@ typedef struct _SelectableSettingEntry
 
 /**
  * <description>
- *	This structure stores a single entry of a selectable setting. pList is an array of selctable entries!
+ *	This structure stores a single entry of a selectable setting. pList is an array of selectable entries!
   * </description>
  * <element name="pszValueSelected" type="IN">Name of the setting, which is currently selected</element>
  * <element name="ui32Settings" type="IN">Number of selectable settings in pList</element>
@@ -204,7 +209,7 @@ typedef union
  * <description>
  *	This structure is to transmit an editable setting.
  * </description>
- * <element name="valueLen" type="IN">Lenght of the value (if it is a string or wstring without trailing 0!)</element>
+ * <element name="valueLen" type="IN">Length of the value (if it is a string or wstring without trailing 0!)</element>
  * <element name="value" type="IN">Current value</element>
  * <element name="valueDefault" type="IN">Default value</element>
  * <element name="flags" type="IN">Flags of the entry. See "EditableFlags" for details.</element>
@@ -284,7 +289,7 @@ typedef struct _EVTPARAM_SettgReadSettings
 {
 	char *pszCategory;
 	RTS_UI32 ulSessionID;
-	RTS_HANDLE hMemPool;	/* ATTENTION: This is a pool created with a list of SettingEntry structs! So pool entries that matched the selected category. */
+	RTS_HANDLE hMemPool;	/* ATTENTION: This is a pool created with a list of SettingEntry structures! So pool entries that matched the selected category. */
 } EVTPARAM_SettgReadSettings;
 #define EVTPARAMID_CmpSettings_ReadSettings				0x0003
 #define EVTVERSION_CmpSettings_ReadSettings				0x0001
@@ -312,6 +317,114 @@ typedef struct _EVTPARAM_SettgReadSettings
 
 /**
  * <category>Online services</category>
+ * <service group="SG_SETTINGS" id="SRV_SETTG_READ_SETTINGS" name="Read settings"
+ *  description="Online service to read all security setting.">
+ *	<request>
+ *		<tag id="TAG_SETTG_CATEGORY" name="Category" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *		 description="TODO"/>
+ *		<complextag id="TAGNEST_SETTING_INFO" name="Info" cardinality="0..?"
+ *		 description="Is only sent, if previous service sent result ERR_ENTRIES_REMAINING!">
+ *			<tag id="TAG_SETTG_COMPONENT" name="Component" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *			 description="TODO"/>
+ *			<tag id="TAG_SETTG_KEY" name="Key" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *			 description="TODO"/>
+ *		</complextag>
+ *	</request>
+ *	<response>
+ *		<complextag id="TAGNEST_SETTINGS" name="Settings" cardinality="1..n"
+ *		 description="TODO">
+ *			<complextag id="TAGNEST_SETTING_INFO" name="Info" cardinality="1..?"
+ *			 description="TODO">
+ *				<tag id="TAG_SETTG_COMPONENT" name="" cardinality="1..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SETTG_KEY" name="" cardinality="1..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SETTG_DESCRIPTION" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SETTG_FLAGS" name="" cardinality="1..?" type="RTS_UI32"
+ *				 description="TODO"/>
+ *			</complextag>
+ *			<complextag id="TAGNEST_SETTG_SETTING_SELECTABLE" name="Selectable setting" cardinality="0..n" alternate="true"
+ *			 description="TODO">
+ *				<tag id="TAG_SETTG_SELECTED" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SETTG_NUM_OF_SETTINGS" name="" cardinality="1..?" type="RTS_UI32"
+ *				 description="TODO"/>
+ *				<complextag id="TAGNEST_SETTG_SETTING_SELECTABLE_ENTRY" name="" cardinality="1..n"
+ *				 description="">
+ *					<tag id="TAG_SETTG_SETTING_FLAGS" name="" cardinality="1..?" type="RTS_UI32"
+ *					 description="TODO"/>
+ *					<tag id="TAG_SETTG_SETTING_NAME" name="" cardinality="1..?" type="RTS_CSTRING::UTF-8"
+ *					 description="TODO"/>
+ *					<tag id="TAG_SETTG_SETTING_DESCRIPTION" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *					 description="TODO"/>
+ *				</complextag>
+ *			</complextag>
+ *			<complextag id="TAGNEST_SETTG_SETTING_EDITABLE" name="Editable setting" cardinality="0..?" alternate="true"
+ *			 description="TODO">
+ *				<tag id="TAG_SETTG_SETTING_FLAGS" name="" cardinality="1..?" type="RTS_UI32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SETTG_SETTING_NAME" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SETTG_SETTING_DESCRIPTION" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SETTG_SETTING_VALUE_INT" name="" cardinality="0..?" type="RTS_I32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SETTG_SETTING_DEFAULTVALUE_INT" name="" cardinality="0..?" type="RTS_I32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SETTG_SETTING_VALUE_STRING" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SETTG_SETTING_DEFAULTVALUE_STRING" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *			</complextag>
+ *		</complextag>
+ *		<tag id="TAG_SETTG_RESULT" name="" cardinality="1..?" type="RTS_I16"
+ *		 description="Result code of the complete operation"/>
+ *	</response>
+ * </service>
+ */
+#define SRV_SETTG_READ_SETTINGS 0x06
+
+/**
+ * <category>Online services</category>
+ * <service group="SG_SETTINGS" id="SRV_SETTG_WRITE_SETTINGS" name=""
+ *  description="Online service to write changed security settings.">
+ *	<request>
+ *		<tag id="TAG_SETTG_CATEGORY" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *		 description="TODO"/>
+ *		<complextag id="TAGNEST_SETTINGS" name="" cardinality="1..n"
+ *		 description="">
+ *			<complextag id="TAGNEST_SETTING_INFO" name="" cardinality="1..?"
+ *			 description="">
+ *				<tag id="TAG_SETTG_COMPONENT" name="" cardinality="1..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SETTG_KEY" name="" cardinality="1..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *			</complextag>
+ *			<complextag id="TAGNEST_SETTG_SETTING_SELECTABLE" name="" cardinality="0..?" alternate="true"
+ *			 description="">
+ *				<tag id="TAG_SETTG_SELECTED" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *				 description="Is only sent, if it is a selectable setting!"/>
+ *			</complextag>
+ *			<complextag id="TAGNEST_SETTG_SETTING_EDITABLE" name="" cardinality="0..?" alternate="true"
+ *			 description="">
+ *				<tag id="TAG_SETTG_SETTING_VALUE_INT" name="" cardinality="0..?" type="RTS_I32"
+ *				 description="TODO"/>
+ *				<tag id="TAG_SETTG_SETTING_VALUE_STRING" name="" cardinality="0..?" type="RTS_CSTRING::UTF-8"
+ *				 description="TODO"/>
+ *			</complextag>
+ *		</complextag>
+ *	</request>
+ *	<response>
+ *		<tag id="TAG_SETTG_RESULT" name="" cardinality="1..n" type="RTS_I16"
+ *		 description="Result code of each write operation"/>
+ *	</response>
+ * </service>
+ */
+#define SRV_SETTG_WRITE_SETTINGS 0x07
+
+/**
+ * <category>Online services</category>
  * <description>
  *	Online services for the settings.
  * </description>
@@ -322,8 +435,6 @@ typedef struct _EVTPARAM_SettgReadSettings
 #define SRV_SETTG_GET_STRING_VALUE					0x03
 #define SRV_SETTG_SET_STRING_VALUE					0x04
 #define SRV_SETTG_REMOVE_KEY						0x05
-#define SRV_SETTG_READ_SETTINGS						0x06
-#define SRV_SETTG_WRITE_SETTINGS					0x07
 
 /* Tags */
 #define TAGNEST_SETTG_GET_INT_VALUE					0x81
@@ -372,78 +483,6 @@ typedef struct _EVTPARAM_SettgReadSettings
 
 
 
-/**
- * <category>Online services</category>
- * <description>
- *	Online service to read all security setting.
- * </description>
- * <servicegroup name="SG_SETTINGS">0x0006</servicegroup>
- * <service name="SRV_SETTG_READ_SETTINGS">
- *	<Request>
- *		<tag name="TAG_SETTG_CATEGORY" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *		<tag name="TAGNEST_SETTING_INFO" required="optional">Complex tag: Is only sent, if previous service sent result ERR_ENTRIES_REMAINING!</tag>
- *			<tag name="TAG_SETTG_COMPONENT" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *			<tag name="TAG_SETTG_KEY" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *	</Request>
- *	<Response>
- *		<tag[] name="TAGNEST_SETTINGS" required="mandatory">Complex tag</tag>
- *			<tag name="TAGNEST_SETTING_INFO" required="mandatory">Complex tag</tag>
- *				<tag name="TAG_SETTG_COMPONENT" required="mandatory">[RTS_CSTRING::UTF-8]: TODO</tag>
- *				<tag name="TAG_SETTG_KEY" required="mandatory">[RTS_CSTRING::UTF-8]: TODO</tag>
- *				<tag name="TAG_SETTG_DESCRIPTION" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *				<tag name="TAG_SETTG_FLAGS" required="mandatory">[RTS_UI32]: TODO</tag>
- *
- *			<alternate tag[] name="TAGNEST_SETTG_SETTING_SELECTABLE" required="optional">Complex tag</tag>
- *				<tag name="TAG_SETTG_SELECTED" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *				<tag name="TAG_SETTG_NUM_OF_SETTINGS" required="mandatory">[RTS_UI32]: TODO</tag>
- 
- *				<tag[] name="TAGNEST_SETTG_SETTING_SELECTABLE_ENTRY" required="mandatory">Complex tag</tag>
- *					<tag name="TAG_SETTG_SETTING_FLAGS" required="mandatory">[RTS_UI32]: TODO</tag>
- *					<tag name="TAG_SETTG_SETTING_NAME" required="mandatory">[RTS_CSTRING::UTF-8]: TODO</tag>
- *					<tag name="TAG_SETTG_SETTING_DESCRIPTION" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *
- *			<alternate tag name="TAGNEST_SETTG_SETTING_EDITABLE" required="optional">Complex tag</tag>
- *				<tag name="TAG_SETTG_SETTING_FLAGS" required="mandatory">[RTS_UI32]: TODO</tag>
- *				<tag name="TAG_SETTG_SETTING_NAME" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *				<tag name="TAG_SETTG_SETTING_DESCRIPTION" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *				<tag name="TAG_SETTG_SETTING_VALUE_INT" required="optional">[RTS_I32]: TODO</tag>
- *				<tag name="TAG_SETTG_SETTING_DEFAULTVALUE_INT" required="optional">[RTS_I32]: TODO</tag>
- *				<tag name="TAG_SETTG_SETTING_VALUE_STRING" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *				<tag name="TAG_SETTG_SETTING_DEFAULTVALUE_STRING" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *
- *		<tag name="TAG_SETTG_RESULT" required="mandatory">[RTS_I16]: Result code of the complete operation</tag>
- *	</Response>
- * </service>
- */
-
-/**
- * <category>Online services</category>
- * <description>
- *	Online service to write changed security settings.
- * </description>
- * <servicegroup name="SG_SETTINGS">0x0006</servicegroup>
- * <service name="SRV_SETTG_WRITE_SETTINGS">
- *	<Request>
- *		<tag name="TAG_SETTG_CATEGORY" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *		<tag[] name="TAGNEST_SETTINGS" required="mandatory">Complex tag</tag>
- *			<tag name="TAGNEST_SETTING_INFO" required="mandatory">Complex tag</tag>
- *				<tag name="TAG_SETTG_COMPONENT" required="mandatory">[RTS_CSTRING::UTF-8]: TODO</tag>
- *				<tag name="TAG_SETTG_KEY" required="mandatory">[RTS_CSTRING::UTF-8]: TODO</tag>
- *
- *			<alternate tag name="TAGNEST_SETTG_SETTING_SELECTABLE" required="optional">Complex tag</tag>
- *				<tag name="TAG_SETTG_SELECTED" required="optional">[RTS_CSTRING::UTF-8]: Is only sent, if it is a selectable setting!</tag>
- *
- *			<alternate tag name="TAGNEST_SETTG_SETTING_EDITABLE" required="optional">Complex tag</tag>
- *				<tag name="TAG_SETTG_SETTING_VALUE_INT" required="optional">[RTS_I32]: TODO</tag>
- *				<tag name="TAG_SETTG_SETTING_VALUE_STRING" required="optional">[RTS_CSTRING::UTF-8]: TODO</tag>
- *	</Request>
- *	<Response>
- *		<tag[] name="TAG_SETTG_RESULT" required="mandatory">[RTS_I16]: Result code of each write operation</tag>
- *	</Response>
- * </service>
- */
-
-
 /** EXTERN LIB SECTION BEGIN **/
 /*  Comments are ignored for m4 compiler so restructured text can be used.  */
 
@@ -454,7 +493,7 @@ extern "C" {
 /**
  * | Function to block writing settings to database file until |SettgEndUpdate| is called! But the settings cache is updated.
  * | NOTE:
- * | - Funcion can be called nested, so only at the last call of |SettgEndUpdate|, the database is written!
+ * | - Function can be called nested, so only at the last call of |SettgEndUpdate|, the database is written!
  * | - Always call SettgBeginUpdate() and SettgEndUpdate() symmetric!!!
  * :return: Runtime system error code (see CmpErrors.library).
  */
@@ -1061,7 +1100,7 @@ typedef RTS_RESULT (CDECL * PFSETTGSETDATABASENAME) (char *pszName);
 /**
  * <description>Get database name for all settings</description>
  * <param name="pszName" type="OUT">Name of settings file. Can be *.cfg or *.ini</param>
- * <param name="nNameLen" type="IN">Lenght of the name buffer in bytes</param>
+ * <param name="nNameLen" type="IN">Length of the name buffer in bytes</param>
  * <result>Error code</result>
  */
 RTS_RESULT CDECL SettgGetDatabaseName(char *pszName, RTS_SIZE nNameLen);
@@ -1116,7 +1155,7 @@ typedef RTS_RESULT (CDECL * PFSETTGGETDATABASENAME) (char *pszName, RTS_SIZE nNa
 /**
  * <description>Function to block writing settings to database file until SettgEndUpdate() is called! But the settings cache is updated. 
  * NOTE:
- * - Funcion can be called nested, so only at the last call of SettgEndUpdate(), the database is written!
+ * - Function can be called nested, so only at the last call of SettgEndUpdate(), the database is written!
  * - Always call SettgBeginUpdate() and SettgEndUpdate() symmetric!!!
  * </description>
  * <result>Error code</result>
@@ -1174,7 +1213,7 @@ typedef RTS_RESULT (CDECL * PFSETTGBEGINUPDATE) (void);
 /**
  * <description>Function to initiate writing settings to database file, if settings are modified after SettgBeginUpdate() was called.</description>
  * NOTE:
- * - Funcion can be called nested, so only at the last call of SettgEndUpdate(), the database is written!
+ * - Function can be called nested, so only at the last call of SettgEndUpdate(), the database is written!
  * - Always call SettgBeginUpdate() and SettgEndUpdate() symmetric!!!
  * <result>Error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">Database could be written</errorcode>
@@ -1232,12 +1271,12 @@ typedef RTS_RESULT (CDECL * PFSETTGENDUPDATE) (void);
 
 
 /**
- * <description>Internal function to get the accesscounter value which is incremented by every call of SettgBeginUpdate() and is decremented 
+ * <description>Internal function to get the access counter value which is incremented by every call of SettgBeginUpdate() and is decremented 
  *	by every call of SettgEndUpdate().
  * </description>
  * <param name="pResult" type="OUT">Pointer to error code</param>
  * <errorcode name="pResult" type="ERR_OK">Access counter can be retrieved</errorcode>
- * <result>Actual accesscounter value</result>
+ * <result>Actual access counter value</result>
  */
 RTS_I32 CDECL SettgGetAccessCounter_(RTS_RESULT *pResult);
 typedef RTS_I32 (CDECL * PFSETTGGETACCESSCOUNTER_) (RTS_RESULT *pResult);
@@ -1283,114 +1322,6 @@ typedef RTS_I32 (CDECL * PFSETTGGETACCESSCOUNTER_) (RTS_RESULT *pResult);
 	#define CAL_SettgGetAccessCounter_  pfSettgGetAccessCounter_
 	#define CHK_SettgGetAccessCounter_  (pfSettgGetAccessCounter_ != NULL)
 	#define EXP_SettgGetAccessCounter_  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgGetAccessCounter_", (RTS_UINTPTR)SettgGetAccessCounter_, 0, 0) 
-#endif
-
-
-
-
-/**
- * <description>Set optional settings</description>
- * <param name="bSeparateDatabases" type="IN">If bSeparateDatabases=1, split settings file into
- *	each file per component</param>
- * <result>ERR_OK</result>
- */
-RTS_RESULT CDECL SettgSetOptions(int bSplitDatabases);
-typedef RTS_RESULT (CDECL * PFSETTGSETOPTIONS) (int bSplitDatabases);
-#if defined(CMPSETTINGS_NOTIMPLEMENTED) || defined(SETTGSETOPTIONS_NOTIMPLEMENTED)
-	#define USE_SettgSetOptions
-	#define EXT_SettgSetOptions
-	#define GET_SettgSetOptions(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_SettgSetOptions(p0)  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_SettgSetOptions  FALSE
-	#define EXP_SettgSetOptions  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_SettgSetOptions
-	#define EXT_SettgSetOptions
-	#define GET_SettgSetOptions(fl)  CAL_CMGETAPI( "SettgSetOptions" ) 
-	#define CAL_SettgSetOptions  SettgSetOptions
-	#define CHK_SettgSetOptions  TRUE
-	#define EXP_SettgSetOptions  CAL_CMEXPAPI( "SettgSetOptions" ) 
-#elif defined(MIXED_LINK) && !defined(CMPSETTINGS_EXTERNAL)
-	#define USE_SettgSetOptions
-	#define EXT_SettgSetOptions
-	#define GET_SettgSetOptions(fl)  CAL_CMGETAPI( "SettgSetOptions" ) 
-	#define CAL_SettgSetOptions  SettgSetOptions
-	#define CHK_SettgSetOptions  TRUE
-	#define EXP_SettgSetOptions  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgSetOptions", (RTS_UINTPTR)SettgSetOptions, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpSettingsSettgSetOptions
-	#define EXT_CmpSettingsSettgSetOptions
-	#define GET_CmpSettingsSettgSetOptions  ERR_OK
-	#define CAL_CmpSettingsSettgSetOptions pICmpSettings->ISettgSetOptions
-	#define CHK_CmpSettingsSettgSetOptions (pICmpSettings != NULL)
-	#define EXP_CmpSettingsSettgSetOptions  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_SettgSetOptions
-	#define EXT_SettgSetOptions
-	#define GET_SettgSetOptions(fl)  CAL_CMGETAPI( "SettgSetOptions" ) 
-	#define CAL_SettgSetOptions pICmpSettings->ISettgSetOptions
-	#define CHK_SettgSetOptions (pICmpSettings != NULL)
-	#define EXP_SettgSetOptions  CAL_CMEXPAPI( "SettgSetOptions" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_SettgSetOptions  PFSETTGSETOPTIONS pfSettgSetOptions;
-	#define EXT_SettgSetOptions  extern PFSETTGSETOPTIONS pfSettgSetOptions;
-	#define GET_SettgSetOptions(fl)  s_pfCMGetAPI2( "SettgSetOptions", (RTS_VOID_FCTPTR *)&pfSettgSetOptions, (fl), 0, 0)
-	#define CAL_SettgSetOptions  pfSettgSetOptions
-	#define CHK_SettgSetOptions  (pfSettgSetOptions != NULL)
-	#define EXP_SettgSetOptions  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgSetOptions", (RTS_UINTPTR)SettgSetOptions, 0, 0) 
-#endif
-
-
-
-
-/**
- * <description>Is option set to split all settings databases into each file per component</description>
- * <result>ERR_OK</result>
- */
-RTS_RESULT CDECL SettgIsOptionSplitDatabases(void);
-typedef RTS_RESULT (CDECL * PFSETTGISOPTIONSPLITDATABASES) (void);
-#if defined(CMPSETTINGS_NOTIMPLEMENTED) || defined(SETTGISOPTIONSPLITDATABASES_NOTIMPLEMENTED)
-	#define USE_SettgIsOptionSplitDatabases
-	#define EXT_SettgIsOptionSplitDatabases
-	#define GET_SettgIsOptionSplitDatabases(fl)  ERR_NOTIMPLEMENTED
-	#define CAL_SettgIsOptionSplitDatabases()  (RTS_RESULT)ERR_NOTIMPLEMENTED
-	#define CHK_SettgIsOptionSplitDatabases  FALSE
-	#define EXP_SettgIsOptionSplitDatabases  ERR_OK
-#elif defined(STATIC_LINK)
-	#define USE_SettgIsOptionSplitDatabases
-	#define EXT_SettgIsOptionSplitDatabases
-	#define GET_SettgIsOptionSplitDatabases(fl)  CAL_CMGETAPI( "SettgIsOptionSplitDatabases" ) 
-	#define CAL_SettgIsOptionSplitDatabases  SettgIsOptionSplitDatabases
-	#define CHK_SettgIsOptionSplitDatabases  TRUE
-	#define EXP_SettgIsOptionSplitDatabases  CAL_CMEXPAPI( "SettgIsOptionSplitDatabases" ) 
-#elif defined(MIXED_LINK) && !defined(CMPSETTINGS_EXTERNAL)
-	#define USE_SettgIsOptionSplitDatabases
-	#define EXT_SettgIsOptionSplitDatabases
-	#define GET_SettgIsOptionSplitDatabases(fl)  CAL_CMGETAPI( "SettgIsOptionSplitDatabases" ) 
-	#define CAL_SettgIsOptionSplitDatabases  SettgIsOptionSplitDatabases
-	#define CHK_SettgIsOptionSplitDatabases  TRUE
-	#define EXP_SettgIsOptionSplitDatabases  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgIsOptionSplitDatabases", (RTS_UINTPTR)SettgIsOptionSplitDatabases, 0, 0) 
-#elif defined(CPLUSPLUS_ONLY)
-	#define USE_CmpSettingsSettgIsOptionSplitDatabases
-	#define EXT_CmpSettingsSettgIsOptionSplitDatabases
-	#define GET_CmpSettingsSettgIsOptionSplitDatabases  ERR_OK
-	#define CAL_CmpSettingsSettgIsOptionSplitDatabases pICmpSettings->ISettgIsOptionSplitDatabases
-	#define CHK_CmpSettingsSettgIsOptionSplitDatabases (pICmpSettings != NULL)
-	#define EXP_CmpSettingsSettgIsOptionSplitDatabases  ERR_OK
-#elif defined(CPLUSPLUS)
-	#define USE_SettgIsOptionSplitDatabases
-	#define EXT_SettgIsOptionSplitDatabases
-	#define GET_SettgIsOptionSplitDatabases(fl)  CAL_CMGETAPI( "SettgIsOptionSplitDatabases" ) 
-	#define CAL_SettgIsOptionSplitDatabases pICmpSettings->ISettgIsOptionSplitDatabases
-	#define CHK_SettgIsOptionSplitDatabases (pICmpSettings != NULL)
-	#define EXP_SettgIsOptionSplitDatabases  CAL_CMEXPAPI( "SettgIsOptionSplitDatabases" ) 
-#else /* DYNAMIC_LINK */
-	#define USE_SettgIsOptionSplitDatabases  PFSETTGISOPTIONSPLITDATABASES pfSettgIsOptionSplitDatabases;
-	#define EXT_SettgIsOptionSplitDatabases  extern PFSETTGISOPTIONSPLITDATABASES pfSettgIsOptionSplitDatabases;
-	#define GET_SettgIsOptionSplitDatabases(fl)  s_pfCMGetAPI2( "SettgIsOptionSplitDatabases", (RTS_VOID_FCTPTR *)&pfSettgIsOptionSplitDatabases, (fl), 0, 0)
-	#define CAL_SettgIsOptionSplitDatabases  pfSettgIsOptionSplitDatabases
-	#define CHK_SettgIsOptionSplitDatabases  (pfSettgIsOptionSplitDatabases != NULL)
-	#define EXP_SettgIsOptionSplitDatabases  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SettgIsOptionSplitDatabases", (RTS_UINTPTR)SettgIsOptionSplitDatabases, 0, 0) 
 #endif
 
 
@@ -1591,7 +1522,7 @@ typedef RTS_RESULT (CDECL * PFSETTGGETSTRINGVALUE) (const char *pszComponent, co
  * <result>ERR_PARAMETER: Invalid parameter given</result>
  * <result>ERR_NOTINITIALIZED: Component has not been initialized yet</result>
  * <result>ERR_NOMEMORY: Not enough memory to handle the settings cache</result> 
- * <result>ERR_NOT_SUPPORTED: Unsupported character in key value: '=', '[', ']' or control character 0x00-0x1F, 0x7F</result>
+ * <result>ERR_NOT_SUPPORTED: Unsupported character in key value: '[', ']' or control character 0x00-0x1F, 0x7F</result>
  * <result>ERR_NO_ACCESS_RIGHTS: No write access rights to corresponding settings file</result>
  * <result>ERR_FAILED: Any other reason for failure</result>
  */
@@ -1649,10 +1580,10 @@ typedef RTS_RESULT (CDECL * PFSETTGSETSTRINGVALUE) (const char *pszComponent, co
  *  Get a WSTRING value from settings.
  *  The storage format is conform to UTF-16, that means one character consists of 2 byte values like "\ab\cd".
  *  Plain ASCII characters can also be represented in a mixed way in order to keep the readability of the string, e.g. "a\00".
- *  The value is interpreted depending on the target byteorder, e.g:
+ *  The value is interpreted depending on the target byte-order, e.g:
  *   - INTEL: NodeNameUnicode="T\00e\00s\00t\00"
  *   - MOTOROLA: NodeNameUnicode="\00T\00e\00s\00t"
- *  Example: The unicode character 'DEGREE CELSIUS' (U+2103) is stored as 
+ *  Example: The Unicode character 'DEGREE CELSIUS' (U+2103) is stored as 
  *   - INTEL: "\03\21"
  *   - MOTOROLA: "\21\03"
  *	The following parameter sets are typical use cases:
@@ -1728,10 +1659,10 @@ typedef RTS_RESULT (CDECL * PFSETTGGETWSTRINGVALUE) (const char *pszComponent, c
  *	Write a WSTRING value to settings.
  *  The storage format is conform to UTF-16, that means one character consists of 2 byte values like "\ab\cd".
  *  Plain ASCII characters can also be represented in a mixed way in order to keep the readability of the string, e.g. "a\00".
- *  The value is interpreted depending on the target byteorder, e.g:
+ *  The value is interpreted depending on the target byte-order, e.g:
  *   - INTEL: NodeNameUnicode="T\00e\00s\00t\00"
  *   - MOTOROLA: NodeNameUnicode="\00T\00e\00s\00t"
- *  Example: The unicode character 'DEGREE CELSIUS' (U+2103) is stored as 
+ *  Example: The Unicode character 'DEGREE CELSIUS' (U+2103) is stored as 
  *   - INTEL: "\03\21"
  *   - MOTOROLA: "\21\03"
  * </description>
@@ -1913,8 +1844,6 @@ typedef struct
  	PFSETTGBEGINUPDATE ISettgBeginUpdate;
  	PFSETTGENDUPDATE ISettgEndUpdate;
  	PFSETTGGETACCESSCOUNTER_ ISettgGetAccessCounter_;
- 	PFSETTGSETOPTIONS ISettgSetOptions;
- 	PFSETTGISOPTIONSPLITDATABASES ISettgIsOptionSplitDatabases;
  	PFSETTGGETINTVALUE ISettgGetIntValue;
  	PFSETTGSETINTVALUE ISettgSetIntValue;
  	PFSETTGGETSTRINGVALUE ISettgGetStringValue;
@@ -1934,8 +1863,6 @@ class ICmpSettings : public IBase
 		virtual RTS_RESULT CDECL ISettgBeginUpdate(void) =0;
 		virtual RTS_RESULT CDECL ISettgEndUpdate(void) =0;
 		virtual RTS_I32 CDECL ISettgGetAccessCounter_(RTS_RESULT *pResult) =0;
-		virtual RTS_RESULT CDECL ISettgSetOptions(int bSplitDatabases) =0;
-		virtual RTS_RESULT CDECL ISettgIsOptionSplitDatabases(void) =0;
 		virtual RTS_RESULT CDECL ISettgGetIntValue(const char *pszComponent, const char *pszKey, RTS_I32 *piValue, int iDefault, int bCached) =0;
 		virtual RTS_RESULT CDECL ISettgSetIntValue(const char *pszComponent, const char *pszKey, RTS_I32 iValue, int iBase) =0;
 		virtual RTS_RESULT CDECL ISettgGetStringValue(const char *pszComponent, const char *pszKey, char *pszValue, RTS_I32 *piLen, char *pszDefault, int bCached) =0;

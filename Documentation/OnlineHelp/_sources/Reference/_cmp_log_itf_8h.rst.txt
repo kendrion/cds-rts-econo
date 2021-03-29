@@ -1,0 +1,865 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_log_itf_8h:
+
+==========================
+CmpLogItf.h File Reference
+==========================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`stdarg.h`"
+| #include ":ref:`CmpLogBackendItf.h <_cmp_log_backend_itf_8h>`"
+| #include ":ref:`SysTimeRtcItf.h <_sys_time_rtc_itf_8h>`"
+
+Data Structures
+---------------
+
+- struct :ref:`EVTPARAM_CmpLogAdd <struct_e_v_t_p_a_r_a_m___cmp_log_add>`
+
+- struct :ref:`tagLogOptions <structtag_log_options>`
+
+- struct :ref:`LogTimestamp <union_log_timestamp>`
+
+- struct :ref:`tagLogEntry <structtag_log_entry>`
+
+- struct :ref:`LogItf <struct_log_itf>`
+
+- struct :ref:`Logger <struct_logger>`
+
+- struct :ref:`LogFilter <struct_log_filter>`
+
+- struct :ref:`taglogadd_struct <structtaglogadd__struct>`
+
+- struct :ref:`taglogadd2_struct <structtaglogadd2__struct>`
+
+- struct :ref:`taglogclose_struct <structtaglogclose__struct>`
+
+- struct :ref:`taglogcreate_struct <structtaglogcreate__struct>`
+
+- struct :ref:`taglogdelete_struct <structtaglogdelete__struct>`
+
+- struct :ref:`taglogopen_struct <structtaglogopen__struct>`
+
+- struct :ref:`ICmpLog_C <struct_i_cmp_log___c>`
+
+Macros
+------
+
+- #define :ref:`LOG_TEXT <group___cmp_log_itf_1ga98f942fa322554eeb848d30a7fce8ca0>` s
+
+- #define :ref:`LOG_DEFAULT_NUM_OF_LOGGER <group___cmp_log_itf_1ga0afb7f32ccabb4c1095cb2d86eac18e6>` 1		/* Default number of loggers */
+
+- #define :ref:`LOG_DEFAULT_NUM_OF_ITF <group___cmp_log_itf_1ga680dd59d9e0e2883cbd8f575071d2252>` 3		/* Default number of logger interfaces per logger */
+
+- #define :ref:`LOGKEY_LOGGER_PREFIX <group___cmp_log_itf_1gaa40841c37b37669c300704e42a7db00d>` "Logger"
+
+- #define :ref:`LOGKEY_STRING_NAME <group___cmp_log_itf___settings_1gaab602e02fed56374d5625f53117ccfa4>` "Name"
+
+- #define :ref:`LOGKEY_INT_ENABLE <group___cmp_log_itf___settings_1gaba6320e2f014f5a1c433c111d82d4192>` "Enable"
+
+- #define :ref:`LOGKEY_INT_FILTER <group___cmp_log_itf___settings_1ga0054fd500df8300b896eadd64b1156dd>` "Filter"
+
+- #define :ref:`LOGKEY_INT_MASK <group___cmp_log_itf___settings_1ga6f22c533b611f789aaff7f29a0e79249>` "Mask"
+
+- #define :ref:`LOGKEY_INT_TYPE <group___cmp_log_itf___settings_1ga598976a2cd18169d7a9c01b27b6c4a1f>` "Type"
+
+- #define :ref:`LOGKEY_INT_MAXENTRIES <group___cmp_log_itf___settings_1gad30a4bebe61421369e8d5895213a6201>` "MaxEntries"
+
+- #define :ref:`LOGKEY_MINLIMIT_MAXENTRIES <group___cmp_log_itf___staticdefines_1gadb962e4d387a7a1a263dc29893b4bb69>` 1
+
+- #define :ref:`LOGKEY_MAXLIMIT_MAXENTRIES <group___cmp_log_itf___staticdefines_1ga156c7e6684ba0bc5fb069110256f3aae>` 100000
+
+- #define :ref:`LOGKEY_INT_MAXFILESIZE <group___cmp_log_itf___settings_1ga894b3dc18ddf3aab69e05361dce52987>` "MaxFileSize"
+
+- #define :ref:`LOGKEY_INT_MAXFILES <group___cmp_log_itf___settings_1gaf0d3e2af8b0415f4bc97660dcb4aca4d>` "MaxFiles"
+
+- #define :ref:`LOGKEY_BACKEND <group___cmp_log_itf___settings_1ga30db21783f41564255ba402fb01b464a>` "Backend"
+
+- #define :ref:`LOGKEY_INT_CLASSID <group___cmp_log_itf___settings_1gac192fe4cd27223cfb068876dc73efc67>` "ClassId"
+
+- #define :ref:`LT_HIGHSPEED <group___cmp_log_itf___logtypes_1gabcf8ed4295ae462633d0912d2aa3e08b>` UINT32_C(0x00000001)
+
+- #define :ref:`LT_SAFE <group___cmp_log_itf___logtypes_1ga3e94dfc64b8406f6904d7009857b02b3>` UINT32_C(0x00000002)
+
+- #define :ref:`LT_NORMAL <group___cmp_log_itf___logtypes_1ga35c5fbf510e9962187c3709cc341a570>` UINT32_C(0x00000004)
+
+- #define :ref:`LT_TS_BACKEND_LOCALTIME <group___cmp_log_itf___logtypes_1ga5d53a51943df7edcd162c1240306d063>` UINT32_C(0x00000008)
+
+- #define :ref:`LT_TIMESTAMP_RTC <group___cmp_log_itf___logtypes_1gae53e229dedf8ac46d58e969bf795d763>` UINT32_C(0x00000010)
+
+- #define :ref:`LT_TIMESTAMP_RTC_HIGHRES <group___cmp_log_itf___logtypes_1ga7a38a39c737179a9f67a6e7d4935f7df>` UINT32_C(0x00002000)
+
+- #define :ref:`LT_TIMESTAMP_MS <group___cmp_log_itf___logtypes_1ga6c0d7ab3e05829d3ffd618213378b234>` UINT32_C(0x00000020)
+
+- #define :ref:`LT_TIMESTAMP_US <group___cmp_log_itf___logtypes_1gaec8b0813f2ffe29474879ca508b9379e>` UINT32_C(0x00000040)
+
+- #define :ref:`LT_TIMESTAMP_NS <group___cmp_log_itf___logtypes_1ga0b6c5cab16d3f23092901676bbaf126f>` UINT32_C(0x00000080)
+
+- #define :ref:`LT_NO_DISABLE <group___cmp_log_itf___logtypes_1gacd3d8e8826be6810685745a7ded11bb7>` UINT32_C(0x00000100)
+
+- #define :ref:`LT_DUMP_ASYNC <group___cmp_log_itf___logtypes_1gaeea137704689ea807c91bce43f70f714>` UINT32_C(0x00000200)
+
+- #define :ref:`LT_DUMP_ALWAYS <group___cmp_log_itf___logtypes_1gaeacac141af919d0788fb7a634d34ee6c>` UINT32_C(0x00000400)
+
+- #define :ref:`LT_DUMP_ON_CLOSE <group___cmp_log_itf___logtypes_1ga258c79f1645a664cdf4b17bdbbfaa853>` UINT32_C(0x00000800)
+
+- #define :ref:`LT_DUMP_ON_REQUEST <group___cmp_log_itf___logtypes_1gad71ec9ca97a7380566b2da0f84fcda3f>` UINT32_C(0x00001000)
+
+- #define :ref:`LT_DUMP_FORMAT2 <group___cmp_log_itf___logtypes_1gab32e63539ee22010df3113e62636bd13>` UINT32_C(0x00004000)
+
+- #define :ref:`LT_DUMP_SYSFILE_FLUSH <group___cmp_log_itf___logtypes_1ga1634811d6372b68b7d5dba8e994d183d>` UINT32_C(0x00008000)
+
+- #define :ref:`LT_STD_TYPE <group___cmp_log_itf___logtypes_1gad988471662cf869e63d294d460351878>` :ref:`LT_NORMAL <group___cmp_log_itf___logtypes_1ga35c5fbf510e9962187c3709cc341a570>`
+
+- #define :ref:`LT_STD_TIMESTAMP <group___cmp_log_itf___logtypes_1ga5e298cf51020be3e022db1edc7557331>` :ref:`LT_TIMESTAMP_RTC_HIGHRES <group___cmp_log_itf___logtypes_1ga7a38a39c737179a9f67a6e7d4935f7df>`
+
+- #define :ref:`LT_STD_DUMP <group___cmp_log_itf___logtypes_1ga435b664783325ba06b1e1dd49438609b>` :ref:`LT_DUMP_ASYNC <group___cmp_log_itf___logtypes_1gaeea137704689ea807c91bce43f70f714>`
+
+- #define :ref:`LT_STD <group___cmp_log_itf___logtypes_1ga63595be546137da9d0eba4d858f1f77a>` ( :ref:`LT_STD_TYPE <group___cmp_log_itf___logtypes_1gad988471662cf869e63d294d460351878>` | :ref:`LT_STD_TIMESTAMP <group___cmp_log_itf___logtypes_1ga5e298cf51020be3e022db1edc7557331>` | :ref:`LT_NO_DISABLE <group___cmp_log_itf___logtypes_1gacd3d8e8826be6810685745a7ded11bb7>` | :ref:`LT_STD_DUMP <group___cmp_log_itf___logtypes_1ga435b664783325ba06b1e1dd49438609b>` )
+
+- #define :ref:`LT_HAS_TYPE <group___cmp_log_itf___logtypes_1ga3d342c47562497b6b543a938908c0de9>` (pLogger->lo.iType & Type)
+
+- #define :ref:`LOG_NONE <group___cmp_log_itf___logclass_1ga1632479322efa3952798f98177b54471>` INT32_C(0x00000000)
+
+- #define :ref:`LOG_INFO <group___cmp_log_itf___logclass_1gaeb4f36db01bd128c7afeac5889dac311>` INT32_C(0x00000001)
+
+- #define :ref:`LOG_WARNING <group___cmp_log_itf___logclass_1gadf4476a6a4ea6c74231c826e899d7189>` INT32_C(0x00000002)
+
+- #define :ref:`LOG_ERROR <group___cmp_log_itf___logclass_1gaced66975c154ea0e2a8ec3bc818b4e08>` INT32_C(0x00000004)
+
+- #define :ref:`LOG_EXCEPTION <group___cmp_log_itf___logclass_1ga35fc5fd3a3a9459e2ecbdb7a25953e45>` INT32_C(0x00000008)
+
+- #define :ref:`LOG_DEBUG <group___cmp_log_itf___logclass_1ga6ff63e8955665c4a58b1598f2b07c51a>` INT32_C(0x00000010)
+
+- #define :ref:`LOG_PRINTF <group___cmp_log_itf___logclass_1ga350faf27eab9b713d024166325445e23>` INT32_C(0x00000020)
+
+- #define :ref:`LOG_COM <group___cmp_log_itf___logclass_1ga3951bb0a8e51c20332ffebf0ba53a0a2>` INT32_C(0x00000040)
+
+- #define :ref:`LOG_INFO_TIMESTAMP_RELATIVE <group___cmp_log_itf___logclass_1ga08e907a0daa3388832ecf289fa2e4df5>` INT32_C(0x00000080)
+
+- #define :ref:`LOG_CRIT_SEC <group___cmp_log_itf___logclass_1ga9e07f69472d2ada1293c8e5bd29f736a>` INT32_C(0x00000100)
+
+- #define :ref:`LOG_USER_NOTIFY <group___cmp_log_itf___logclass_1ga87b892e3bf1cc3ecb7928de5d389aeec>` INT32_C(0x00010000)
+
+- #define :ref:`LOG_ALL <group___cmp_log_itf___logfilter_1ga7574ce4aa047de1f4a564c9b441e69dc>` INT32_MAX
+
+- #define :ref:`LOG_STD <group___cmp_log_itf___logfilter_1ga1cd74f7b1f5c88bf1897fa197f2711f7>` ( :ref:`LOG_INFO <group___cmp_log_itf___logclass_1gaeb4f36db01bd128c7afeac5889dac311>` | :ref:`LOG_WARNING <group___cmp_log_itf___logclass_1gadf4476a6a4ea6c74231c826e899d7189>` | :ref:`LOG_ERROR <group___cmp_log_itf___logclass_1gaced66975c154ea0e2a8ec3bc818b4e08>` | :ref:`LOG_EXCEPTION <group___cmp_log_itf___logclass_1ga35fc5fd3a3a9459e2ecbdb7a25953e45>` | :ref:`LOG_PRINTF <group___cmp_log_itf___logclass_1ga350faf27eab9b713d024166325445e23>` | :ref:`LOG_USER_NOTIFY <group___cmp_log_itf___logclass_1ga87b892e3bf1cc3ecb7928de5d389aeec>` )
+
+- #define :ref:`ToLog <group___cmp_log_itf___logfilter_1ga4328fef1c7a0ca85cb2a0ce149058430>` (Class & Filter)
+
+- #define :ref:`USERDB_OBJECT_LOGGER <group___cmp_log_itf___staticdefines_1gae1ec47d0c8043f738b024718aa3d85fe>` "Device.Logger"
+
+- #define :ref:`LOG_INFOID_NONE <group___cmp_log_itf___staticdefines_1gaa62db35fef59a5d88c972210e59d32c6>` 0x00000000
+
+- #define :ref:`STD_LOGGER <group___cmp_log_itf___staticdefines_1ga53f192a380a9243f092dceb434814486>` 0
+
+- #define :ref:`STD_LOGGER_NAME <group___cmp_log_itf___staticdefines_1ga54112e7d1fffbc75b043a051b74feb18>` "PlcLog"
+
+- #define :ref:`COMM_LOGGER_NAME <group___cmp_log_itf___staticdefines_1gaac1b28a6d6624918f2cf8a205a931033>` "CommLog"
+
+- #define :ref:`STD_LOGFILE_ENDING <group___cmp_log_itf___staticdefines_1ga8657e8fff2f9932b8b48c9e19918566f>` ".csv"
+
+- #define :ref:`LOG_STD_MAX_NUM_OF_ENTRIES <group___cmp_log_itf___staticdefines_1ga071d15c16f2cfd8aae0632629b42bf9d>` 500
+
+- #define :ref:`LOG_STD_MAX_NUM_OF_FILES <group___cmp_log_itf___staticdefines_1gae186c93a67260c846eb170f33f722633>` 3
+
+- #define :ref:`LOG_STD_MAX_FILE_SIZE <group___cmp_log_itf___staticdefines_1ga7ed79016824cdf871693dff91227367e>` 100000
+
+- #define :ref:`LOG_MAX_INFO_LEN <group___cmp_log_itf___staticdefines_1gac905bb6d67f022412fbd7ce4dbda238a>` 128
+
+- #define :ref:`EVTPARAMID_CmpLogAdd <group___cmp_log_itf___eventparameter_1ga7a4ac632195a1af96dceb9d674a2b40a>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpLogAdd <group___cmp_log_itf___eventparameter_1ga3feba5b83129b3d0c04d48bede6bf4e8>` 0x0002
+
+- #define :ref:`EVT_LogAdd <group___cmp_log_itf___events_1ga124f68f47955c48f48bef03b948e0cc7>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`LOG_GET_ENTRIES <group___cmp_log_itf___events_1ga5186a8c973830442e5db83937f5f6f92>` 0x01
+
+- #define :ref:`LOG_GET_COMPONENT_NAMES <group___cmp_log_itf___events_1gae84522f178e821693a4a87b5544d0718>` 0x02
+
+- #define :ref:`LOG_GET_LOGGER_LIST <group___cmp_log_itf___events_1ga74bf9a402f7d6d8030552a092d527ffa>` 0x03
+
+- #define :ref:`TAG_LOGGER_NAME <group___cmp_log_itf___onlineservicetags_1gabc9b802cb73d66ec800c98c6ac387976>` 0x01
+
+- #define :ref:`TAG_START_HANDLE <group___cmp_log_itf___onlineservicetags_1ga46988b6c6661229e8949b9cf2226f913>` 0x02
+
+- #define :ref:`TAG_START_TIMESTAMP <group___cmp_log_itf___onlineservicetags_1ga70bbbba4a46737c4e7013d291a359e6d>` 0x03
+
+- #define :ref:`TAG_NUM_OF_ENTRIES <group___cmp_log_itf___onlineservicetags_1ga24d1d219c56f9f3131e6ff1b75363b49>` 0x04
+
+- #define :ref:`TAG_COMPONENT_ID <group___cmp_log_itf___onlineservicetags_1gaae9a68a215d63f8717011b425f5df015>` 0x05
+
+- #define :ref:`TAG_LOG_REPLY_ERROR <group___cmp_log_itf___onlineservicetags_1gab7474e57bfc31f387fee6e051f751c59>` 0x01
+
+- #define :ref:`TAG_REPLY_LOGENTRY <group___cmp_log_itf___onlineservicetags_1gaa91ae6bda1a6e65e382797732d65e676>` 0x82
+
+- #define :ref:`TAG_ENTRY_HANDLE <group___cmp_log_itf___onlineservicetags_1ga1612e80a5dfd120da7d320d195c5b863>` 0x01
+
+- #define :ref:`TAG_TIMESTAMP_UTC <group___cmp_log_itf___onlineservicetags_1gaa36ef388e8c004b1fa54254e2032be84>` 0x02
+
+- #define :ref:`TAG_LOG_ENTRY <group___cmp_log_itf___onlineservicetags_1ga536993833179ba9db48309252ba40d55>` 0x03
+
+- #define :ref:`TAG_LOG_INFO <group___cmp_log_itf___onlineservicetags_1ga5a21a68fb550cbee6109edcb54df7cf4>` 0x04
+
+- #define :ref:`TAG_COMPONENT_NAME <group___cmp_log_itf___onlineservicetags_1ga1356472b3fd0f1b6de0023a98710472b>` 0x05
+
+- #define :ref:`TAG_TIMESTAMP_MS <group___cmp_log_itf___onlineservicetags_1ga7e5ad7b8f58546b4834008601bf758d7>` 0x06
+
+- #define :ref:`TAG_TIMESTAMP_US <group___cmp_log_itf___onlineservicetags_1gac59fb8b200ec15f7d7b1c37f30189dd6>` 0x07
+
+- #define :ref:`TAG_TIMESTAMP_NS <group___cmp_log_itf___onlineservicetags_1gae7c6368ef8bd707b3842d3d37dfa466d>` 0x08
+
+- #define :ref:`TAG_TIMESTAMP_UTC_HIGH_RES <group___cmp_log_itf___onlineservicetags_1ga333c2184f31c92f789238c1db9a7d09d>` 0x09
+
+- #define :ref:`LOG_IS_FILTER_SET <group___cmp_log_itf___logfilter_1ga1e520762f4358a75ac5784aee1c465ee>` (((( :ref:`LogFilter <struct_log_filter>` *)pLogFilter)->iClassFilter & classFilter) != 0 ? (((( :ref:`LogFilter <struct_log_filter>` *)pLogFilter)->iMask & mask) != 0 ? 1 : 0): 0)
+
+- #define :ref:`USE_logadd <group___cmp_log_itf_1gaeab6d60ed339a12b00b195d5ff541b39>` :ref:`PFLOGADD_IEC <group___cmp_log_itf_1gabfbdc9e3fdb774658276fb1590f527a5>` pflogadd;
+
+- #define :ref:`EXT_logadd <group___cmp_log_itf_1ga71bfe85d55d17171f24bba4f4e3a3794>` extern :ref:`PFLOGADD_IEC <group___cmp_log_itf_1gabfbdc9e3fdb774658276fb1590f527a5>` pflogadd;
+
+- #define :ref:`GET_logadd <group___cmp_log_itf_1ga4aced67091fc282215c1abef28e20374>` s_pfCMGetAPI2( "logadd", (RTS_VOID_FCTPTR *)&pflogadd, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x23C1D811), 0x03051000)
+
+- #define :ref:`CAL_logadd <group___cmp_log_itf_1gad083de2d9a6ff804a71f3a4bcddacb19>` pflogadd
+
+- #define :ref:`CHK_logadd <group___cmp_log_itf_1gacceb6f1db15e04966997a3c42c08dcf4>` (pflogadd != NULL)
+
+- #define :ref:`EXP_logadd <group___cmp_log_itf_1ga7109c9346ee48c1360e4e8dd4181d3d4>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"logadd", (RTS_UINTPTR) :ref:`logadd <group___cmp_log_itf_1gada65f6e3b2007e0b6aac7787d95ca415>` , 1, RTSITF_GET_SIGNATURE(0, 0x23C1D811), 0x03051000)
+
+- #define :ref:`USE_logadd2 <group___cmp_log_itf_1gae0114244931aef4118d51eaa9130c113>` :ref:`PFLOGADD2_IEC <group___cmp_log_itf_1ga04a2a0aa00ca05bd659d6f267f8f1406>` pflogadd2;
+
+- #define :ref:`EXT_logadd2 <group___cmp_log_itf_1gaeba43424cd64efcf168e4b27301b492c>` extern :ref:`PFLOGADD2_IEC <group___cmp_log_itf_1ga04a2a0aa00ca05bd659d6f267f8f1406>` pflogadd2;
+
+- #define :ref:`GET_logadd2 <group___cmp_log_itf_1ga24028f0e8430768d34e85843e2a3e56e>` s_pfCMGetAPI2( "logadd2", (RTS_VOID_FCTPTR *)&pflogadd2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x317F5220), 0x03051000)
+
+- #define :ref:`CAL_logadd2 <group___cmp_log_itf_1ga30a1e7230cf15ce2419a1e6eb966acf2>` pflogadd2
+
+- #define :ref:`CHK_logadd2 <group___cmp_log_itf_1ga5dcb85d90db7a01209ee55a0ce83931a>` (pflogadd2 != NULL)
+
+- #define :ref:`EXP_logadd2 <group___cmp_log_itf_1gafcda3d8b2f47c690d0462bda7219f2a4>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"logadd2", (RTS_UINTPTR) :ref:`logadd2 <group___cmp_log_itf_1ga30e2ddae29a8ddead33df49cfee827c2>` , 1, RTSITF_GET_SIGNATURE(0, 0x317F5220), 0x03051000)
+
+- #define :ref:`USE_logclose <group___cmp_log_itf_1gaf8a65e1faa1f8e7ff4ec0ad339635a31>` :ref:`PFLOGCLOSE_IEC <group___cmp_log_itf_1gabcad451687b57582060f353625ee9ceb>` pflogclose;
+
+- #define :ref:`EXT_logclose <group___cmp_log_itf_1gaa43d8080d9b33318c1c50b0729bbb9c4>` extern :ref:`PFLOGCLOSE_IEC <group___cmp_log_itf_1gabcad451687b57582060f353625ee9ceb>` pflogclose;
+
+- #define :ref:`GET_logclose <group___cmp_log_itf_1ga3c1ef3617f1537d64843a448de15ddd5>` s_pfCMGetAPI2( "logclose", (RTS_VOID_FCTPTR *)&pflogclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xD950850C), 0x03051000)
+
+- #define :ref:`CAL_logclose <group___cmp_log_itf_1gac029e1f019100beac3d92ff6da6bd1cc>` pflogclose
+
+- #define :ref:`CHK_logclose <group___cmp_log_itf_1ga252fc34668d20941ed1d9a8ff795368b>` (pflogclose != NULL)
+
+- #define :ref:`EXP_logclose <group___cmp_log_itf_1ga51b6a73b4ae4b10034400ffce2801d88>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"logclose", (RTS_UINTPTR) :ref:`logclose <group___cmp_log_itf_1ga523681642db159b24b65b16c689c2358>` , 1, RTSITF_GET_SIGNATURE(0, 0xD950850C), 0x03051000)
+
+- #define :ref:`USE_logcreate <group___cmp_log_itf_1ga3c33177f3f06e37ef0f10d555fb1c4e9>` :ref:`PFLOGCREATE_IEC <group___cmp_log_itf_1ga2eba362d425bc3bc188fcdcbc6c5e26f>` pflogcreate;
+
+- #define :ref:`EXT_logcreate <group___cmp_log_itf_1gaf5af98de605e81a44a7dc54a318282bc>` extern :ref:`PFLOGCREATE_IEC <group___cmp_log_itf_1ga2eba362d425bc3bc188fcdcbc6c5e26f>` pflogcreate;
+
+- #define :ref:`GET_logcreate <group___cmp_log_itf_1gacff6faa52d43baa07fa073736625d8fd>` s_pfCMGetAPI2( "logcreate", (RTS_VOID_FCTPTR *)&pflogcreate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x428C258C), 0x03051000)
+
+- #define :ref:`CAL_logcreate <group___cmp_log_itf_1ga501ac73ad28edc871ca2246f58468633>` pflogcreate
+
+- #define :ref:`CHK_logcreate <group___cmp_log_itf_1gab3232f24da3463f035985ee5f6270b97>` (pflogcreate != NULL)
+
+- #define :ref:`EXP_logcreate <group___cmp_log_itf_1ga09c7fa0c8422e9914429ccccf0a4e277>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"logcreate", (RTS_UINTPTR) :ref:`logcreate <group___cmp_log_itf_1ga6530e0ccd739cd0cd2656b8127218b7a>` , 1, RTSITF_GET_SIGNATURE(0, 0x428C258C), 0x03051000)
+
+- #define :ref:`USE_logdelete <group___cmp_log_itf_1gaeec11e0b5402717377e15cb1141b6241>` :ref:`PFLOGDELETE_IEC <group___cmp_log_itf_1ga13e096cd61a7cbeb4267ace4e089b7a5>` pflogdelete;
+
+- #define :ref:`EXT_logdelete <group___cmp_log_itf_1gad08d4261b061d3048e2ab6871fcdb320>` extern :ref:`PFLOGDELETE_IEC <group___cmp_log_itf_1ga13e096cd61a7cbeb4267ace4e089b7a5>` pflogdelete;
+
+- #define :ref:`GET_logdelete <group___cmp_log_itf_1ga0bb9cb87f520ef2a835b8098fd217cca>` s_pfCMGetAPI2( "logdelete", (RTS_VOID_FCTPTR *)&pflogdelete, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x676DF4F9), 0x03051000)
+
+- #define :ref:`CAL_logdelete <group___cmp_log_itf_1ga55903c3d132e83c9db72dc7b6738df93>` pflogdelete
+
+- #define :ref:`CHK_logdelete <group___cmp_log_itf_1ga6cb277b01dcfad544fdf1a507aaf6ae2>` (pflogdelete != NULL)
+
+- #define :ref:`EXP_logdelete <group___cmp_log_itf_1ga5c72a2d25184a20ec967150c6c0fa742>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"logdelete", (RTS_UINTPTR) :ref:`logdelete <group___cmp_log_itf_1ga42b4dc58d925c0d39023715071db502b>` , 1, RTSITF_GET_SIGNATURE(0, 0x676DF4F9), 0x03051000)
+
+- #define :ref:`USE_logopen <group___cmp_log_itf_1ga1aa73281aa950b2be801da9352d9368f>` :ref:`PFLOGOPEN_IEC <group___cmp_log_itf_1ga345602cc4de4e57aee5db25280086a4f>` pflogopen;
+
+- #define :ref:`EXT_logopen <group___cmp_log_itf_1ga2e50f0cee88bddbb1b997c5766cb0621>` extern :ref:`PFLOGOPEN_IEC <group___cmp_log_itf_1ga345602cc4de4e57aee5db25280086a4f>` pflogopen;
+
+- #define :ref:`GET_logopen <group___cmp_log_itf_1ga80603f10f78663b66b65d4817ccc66c4>` s_pfCMGetAPI2( "logopen", (RTS_VOID_FCTPTR *)&pflogopen, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xABBDCC4F), 0x03051000)
+
+- #define :ref:`CAL_logopen <group___cmp_log_itf_1ga46369c4b68e94ac616968fe60128cf5d>` pflogopen
+
+- #define :ref:`CHK_logopen <group___cmp_log_itf_1gaa0ba7c57da51a9a18453321642aed540>` (pflogopen != NULL)
+
+- #define :ref:`EXP_logopen <group___cmp_log_itf_1gae9ac1c3880152616883ff5ca8ddfc9ba>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"logopen", (RTS_UINTPTR) :ref:`logopen <group___cmp_log_itf_1ga678885e89c7959c889280ede86a9976d>` , 1, RTSITF_GET_SIGNATURE(0, 0xABBDCC4F), 0x03051000)
+
+- #define :ref:`USE_LogCreate <group___cmp_log_itf_1gabb000077c512975e8b96c1ac1d1575ca>` :ref:`PFLOGCREATE <group___cmp_log_itf_1ga79f8d5b023ea728d4e77bb10c74c07e4>` pfLogCreate;
+
+- #define :ref:`EXT_LogCreate <group___cmp_log_itf_1ga00648ef3fb068d9bdf4efb653186a30e>` extern :ref:`PFLOGCREATE <group___cmp_log_itf_1ga79f8d5b023ea728d4e77bb10c74c07e4>` pfLogCreate;
+
+- #define :ref:`GET_LogCreate <group___cmp_log_itf_1gabc2114b6d60ac351ae7f7288a5d0f532>` s_pfCMGetAPI2( "LogCreate", (RTS_VOID_FCTPTR *)&pfLogCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_LogCreate <group___cmp_log_itf_1gac63b4ed5f904d5e9aba94b3d0839a85f>` pfLogCreate
+
+- #define :ref:`CHK_LogCreate <group___cmp_log_itf_1ga073307b57e6fbacc4236e5d40534e52c>` (pfLogCreate != NULL)
+
+- #define :ref:`EXP_LogCreate <group___cmp_log_itf_1ga6a9f2c153d570d1d0bea15859e2437c3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogCreate", (RTS_UINTPTR) :ref:`LogCreate <group___cmp_log_itf_1gaddf553596536474e216ce11239ee82cb>` , 0, 0)
+
+- #define :ref:`USE_LogOpen <group___cmp_log_itf_1ga2c85ff01db8aa8cbe8abb6ffa7133446>` :ref:`PFLOGOPEN <group___cmp_log_itf_1ga1668a2fdb9502595ec0c94774361e316>` pfLogOpen;
+
+- #define :ref:`EXT_LogOpen <group___cmp_log_itf_1ga012091cc4663aa0b672cf0ecb68fa330>` extern :ref:`PFLOGOPEN <group___cmp_log_itf_1ga1668a2fdb9502595ec0c94774361e316>` pfLogOpen;
+
+- #define :ref:`GET_LogOpen <group___cmp_log_itf_1ga596300f61fbe59917283b6dbaa945bd9>` s_pfCMGetAPI2( "LogOpen", (RTS_VOID_FCTPTR *)&pfLogOpen, (fl), 0, 0)
+
+- #define :ref:`CAL_LogOpen <group___cmp_log_itf_1ga1831d5f3ace91c2df31a124dfafd82ed>` pfLogOpen
+
+- #define :ref:`CHK_LogOpen <group___cmp_log_itf_1ga4620b1d3f607f0c1560d757ea3825843>` (pfLogOpen != NULL)
+
+- #define :ref:`EXP_LogOpen <group___cmp_log_itf_1ga2c9f190909e6a6629af95297ea8fb2fb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogOpen", (RTS_UINTPTR) :ref:`LogOpen <group___cmp_log_itf_1gae23e3a9bcedee4de3397199e6ddf4d21>` , 0, 0)
+
+- #define :ref:`USE_LogClose <group___cmp_log_itf_1gafc3d7bb0eb04c3e5c70e75607186f451>` :ref:`PFLOGCLOSE <group___cmp_log_itf_1ga9757f78cbeb58a5a2b565aad88d3a893>` pfLogClose;
+
+- #define :ref:`EXT_LogClose <group___cmp_log_itf_1ga5c78822826bfdea43546c0f9f6993ad3>` extern :ref:`PFLOGCLOSE <group___cmp_log_itf_1ga9757f78cbeb58a5a2b565aad88d3a893>` pfLogClose;
+
+- #define :ref:`GET_LogClose <group___cmp_log_itf_1ga42768f89e9edff53744d1eeda5123e24>` s_pfCMGetAPI2( "LogClose", (RTS_VOID_FCTPTR *)&pfLogClose, (fl), 0, 0)
+
+- #define :ref:`CAL_LogClose <group___cmp_log_itf_1ga2753275c5d1dd98d149e41f4ccce651e>` pfLogClose
+
+- #define :ref:`CHK_LogClose <group___cmp_log_itf_1gaf59fec28bd6b0814d77664466c86f9d3>` (pfLogClose != NULL)
+
+- #define :ref:`EXP_LogClose <group___cmp_log_itf_1ga1ce5b906de41e201b08cb390e945a779>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogClose", (RTS_UINTPTR) :ref:`LogClose <group___cmp_log_itf_1ga4688eb53fde913086da5815190a6fddc>` , 0, 0)
+
+- #define :ref:`USE_LogDelete <group___cmp_log_itf_1gae509a8fa53c7fb3bdd5d229676b1f6bf>` :ref:`PFLOGDELETE <group___cmp_log_itf_1ga9108bdafad815cf6e78a007c77e2747e>` pfLogDelete;
+
+- #define :ref:`EXT_LogDelete <group___cmp_log_itf_1ga6cedc057cabddb8596d70dcbb3b7e144>` extern :ref:`PFLOGDELETE <group___cmp_log_itf_1ga9108bdafad815cf6e78a007c77e2747e>` pfLogDelete;
+
+- #define :ref:`GET_LogDelete <group___cmp_log_itf_1ga640d6857e40173d59a7294e0683f0e28>` s_pfCMGetAPI2( "LogDelete", (RTS_VOID_FCTPTR *)&pfLogDelete, (fl), 0, 0)
+
+- #define :ref:`CAL_LogDelete <group___cmp_log_itf_1gab188f1b55b263621462aa8a7921a610b>` pfLogDelete
+
+- #define :ref:`CHK_LogDelete <group___cmp_log_itf_1ga4f0ac7e3a1d8be5ca13e844c7f39040d>` (pfLogDelete != NULL)
+
+- #define :ref:`EXP_LogDelete <group___cmp_log_itf_1gaa486fdbf4796f3acc99e4872bbb53145>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogDelete", (RTS_UINTPTR) :ref:`LogDelete <group___cmp_log_itf_1ga7e80acd5a08d481c0b507f3908b73301>` , 0, 0)
+
+- #define :ref:`USE_LogGetOptions <group___cmp_log_itf_1gad697ea58a6a8012cbe97bfd0f350b4a4>` :ref:`PFLOGGETOPTIONS <group___cmp_log_itf_1gacfc972c1fd4bb02dc5b97d9dac37f429>` pfLogGetOptions;
+
+- #define :ref:`EXT_LogGetOptions <group___cmp_log_itf_1gaa68d341ecb1650a92809a209709edc66>` extern :ref:`PFLOGGETOPTIONS <group___cmp_log_itf_1gacfc972c1fd4bb02dc5b97d9dac37f429>` pfLogGetOptions;
+
+- #define :ref:`GET_LogGetOptions <group___cmp_log_itf_1ga35b630968a0e6c601ab49d35bea9e18a>` s_pfCMGetAPI2( "LogGetOptions", (RTS_VOID_FCTPTR *)&pfLogGetOptions, (fl), 0, 0)
+
+- #define :ref:`CAL_LogGetOptions <group___cmp_log_itf_1ga8e934a07b1b7a5d3fcf0e9ab118c2ad2>` pfLogGetOptions
+
+- #define :ref:`CHK_LogGetOptions <group___cmp_log_itf_1ga6738505b8579ab8a29419a1237f21468>` (pfLogGetOptions != NULL)
+
+- #define :ref:`EXP_LogGetOptions <group___cmp_log_itf_1ga539bd94d1ade8136bd15ce9e1f32a40f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogGetOptions", (RTS_UINTPTR) :ref:`LogGetOptions <group___cmp_log_itf_1ga8250cab022701d3defcb0e558a3e53f0>` , 0, 0)
+
+- #define :ref:`USE_LogEnable <group___cmp_log_itf_1ga6349952714a3428238f007ccef0daa36>` :ref:`PFLOGENABLE <group___cmp_log_itf_1ga49d74c7916b5c5b8503b269536bd2c66>` pfLogEnable;
+
+- #define :ref:`EXT_LogEnable <group___cmp_log_itf_1gac9038cb4b0301bf401bc457fe89c71c1>` extern :ref:`PFLOGENABLE <group___cmp_log_itf_1ga49d74c7916b5c5b8503b269536bd2c66>` pfLogEnable;
+
+- #define :ref:`GET_LogEnable <group___cmp_log_itf_1ga611969edc5a85b91aa011010388d0ead>` s_pfCMGetAPI2( "LogEnable", (RTS_VOID_FCTPTR *)&pfLogEnable, (fl), 0, 0)
+
+- #define :ref:`CAL_LogEnable <group___cmp_log_itf_1gac8744e1e8fe1efafe7847b6507c4d51e>` pfLogEnable
+
+- #define :ref:`CHK_LogEnable <group___cmp_log_itf_1gaa46b34b3df1879d4e5985336e3321952>` (pfLogEnable != NULL)
+
+- #define :ref:`EXP_LogEnable <group___cmp_log_itf_1gabf28a420d45dfa26ca4cf2ff5f040fdb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogEnable", (RTS_UINTPTR) :ref:`LogEnable <group___cmp_log_itf_1ga75b83176de130c0c2dbe7cd5c60a8276>` , 0, 0)
+
+- #define :ref:`USE_LogDisable <group___cmp_log_itf_1ga57f1fdb39567a8886860c215c82db0cc>` :ref:`PFLOGDISABLE <group___cmp_log_itf_1ga657ac89d858859b670373bef39668b60>` pfLogDisable;
+
+- #define :ref:`EXT_LogDisable <group___cmp_log_itf_1ga37225150c5855ecf5ee2b6d4d68840a0>` extern :ref:`PFLOGDISABLE <group___cmp_log_itf_1ga657ac89d858859b670373bef39668b60>` pfLogDisable;
+
+- #define :ref:`GET_LogDisable <group___cmp_log_itf_1gabfe4ae9d65185f12f6edb5c34dac5737>` s_pfCMGetAPI2( "LogDisable", (RTS_VOID_FCTPTR *)&pfLogDisable, (fl), 0, 0)
+
+- #define :ref:`CAL_LogDisable <group___cmp_log_itf_1ga0a12ca63d17fcf7a3b389380b1f71e37>` pfLogDisable
+
+- #define :ref:`CHK_LogDisable <group___cmp_log_itf_1gaf0ec4e6d299f3c634542a4c2e3744bf0>` (pfLogDisable != NULL)
+
+- #define :ref:`EXP_LogDisable <group___cmp_log_itf_1ga3dd9bff166148dd4ee96dcc7cc44c913>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogDisable", (RTS_UINTPTR) :ref:`LogDisable <group___cmp_log_itf_1gade9511572c43d83af0c21fdbad382d67>` , 0, 0)
+
+- #define :ref:`USE_LogSetFilter <group___cmp_log_itf_1ga9f49ccb4c82368f952354f379f1eb5b5>` :ref:`PFLOGSETFILTER <group___cmp_log_itf_1gadddbc613001d79f1b746f9deced73ac6>` pfLogSetFilter;
+
+- #define :ref:`EXT_LogSetFilter <group___cmp_log_itf_1gab9eadab9178cbf973d35a5608a2f9356>` extern :ref:`PFLOGSETFILTER <group___cmp_log_itf_1gadddbc613001d79f1b746f9deced73ac6>` pfLogSetFilter;
+
+- #define :ref:`GET_LogSetFilter <group___cmp_log_itf_1ga7f4249404104a4abdf70761bda1ec95e>` s_pfCMGetAPI2( "LogSetFilter", (RTS_VOID_FCTPTR *)&pfLogSetFilter, (fl), 0, 0)
+
+- #define :ref:`CAL_LogSetFilter <group___cmp_log_itf_1ga1ed9b023382e2c659decb7bf9148d30f>` pfLogSetFilter
+
+- #define :ref:`CHK_LogSetFilter <group___cmp_log_itf_1ga5faf3d3bb45dabbafeee86df4074a606>` (pfLogSetFilter != NULL)
+
+- #define :ref:`EXP_LogSetFilter <group___cmp_log_itf_1ga1772ef475da613a639f2c832dbe6f5ea>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogSetFilter", (RTS_UINTPTR) :ref:`LogSetFilter <group___cmp_log_itf_1gaef0a9bc49749aa614d2646e1505140d3>` , 0, 0)
+
+- #define :ref:`USE_LogGetFilter <group___cmp_log_itf_1gaa3ca94e108e106368d6ffe6d95268455>` :ref:`PFLOGGETFILTER <group___cmp_log_itf_1ga89beb4b5a957d4ddf543e272818ebfd5>` pfLogGetFilter;
+
+- #define :ref:`EXT_LogGetFilter <group___cmp_log_itf_1ga171a3ec4a9ea4a6e12ac8a3e011d3952>` extern :ref:`PFLOGGETFILTER <group___cmp_log_itf_1ga89beb4b5a957d4ddf543e272818ebfd5>` pfLogGetFilter;
+
+- #define :ref:`GET_LogGetFilter <group___cmp_log_itf_1gabee2d7a7c6971a74689ec7f566339165>` s_pfCMGetAPI2( "LogGetFilter", (RTS_VOID_FCTPTR *)&pfLogGetFilter, (fl), 0, 0)
+
+- #define :ref:`CAL_LogGetFilter <group___cmp_log_itf_1gafce738429534e8f8d9a4bae7f5471b89>` pfLogGetFilter
+
+- #define :ref:`CHK_LogGetFilter <group___cmp_log_itf_1ga549b87a19d966d17a9243afb5ee419d4>` (pfLogGetFilter != NULL)
+
+- #define :ref:`EXP_LogGetFilter <group___cmp_log_itf_1ga5352e1bcd787a0be9bee5d233c50b980>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogGetFilter", (RTS_UINTPTR) :ref:`LogGetFilter <group___cmp_log_itf_1ga387451d3508eb698a59f8d1952e64c2e>` , 0, 0)
+
+- #define :ref:`USE_LogGetFilter2 <group___cmp_log_itf_1gac07cac725f631342791025123de519b6>` :ref:`PFLOGGETFILTER2 <group___cmp_log_itf_1gaa7aa03227f8cd007f469783724b0b258>` pfLogGetFilter2;
+
+- #define :ref:`EXT_LogGetFilter2 <group___cmp_log_itf_1ga3297026c484d3d4a0c601552aecdcd6c>` extern :ref:`PFLOGGETFILTER2 <group___cmp_log_itf_1gaa7aa03227f8cd007f469783724b0b258>` pfLogGetFilter2;
+
+- #define :ref:`GET_LogGetFilter2 <group___cmp_log_itf_1gac652f0588d3e95e8fe07e24bcb20e207>` s_pfCMGetAPI2( "LogGetFilter2", (RTS_VOID_FCTPTR *)&pfLogGetFilter2, (fl), 0, 0)
+
+- #define :ref:`CAL_LogGetFilter2 <group___cmp_log_itf_1ga9aca51ba3ed37b3a762114d39be482b7>` pfLogGetFilter2
+
+- #define :ref:`CHK_LogGetFilter2 <group___cmp_log_itf_1ga84124589b3d0d3a990bbeb52bb42d35b>` (pfLogGetFilter2 != NULL)
+
+- #define :ref:`EXP_LogGetFilter2 <group___cmp_log_itf_1gaeda0c028bfa519e651e57be29d68a6c8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogGetFilter2", (RTS_UINTPTR) :ref:`LogGetFilter2 <group___cmp_log_itf_1ga3a54911ec68af4dd2ccd205d0ea987d3>` , 0, 0)
+
+- #define :ref:`USE_LogAdd <group___cmp_log_itf_1gab0f6505443c3af809c7d1917d24de972>` :ref:`PFLOGADD <group___cmp_log_itf_1ga38814ae2d130269dd47b477753abb4d7>` pfLogAdd;
+
+- #define :ref:`EXT_LogAdd <group___cmp_log_itf_1ga7c59b71e6989822ece0cebd77db8b94b>` extern :ref:`PFLOGADD <group___cmp_log_itf_1ga38814ae2d130269dd47b477753abb4d7>` pfLogAdd;
+
+- #define :ref:`GET_LogAdd <group___cmp_log_itf_1gacc653ee5bff66b322f345b7ad8b37f05>` s_pfCMGetAPI2( "LogAdd", (RTS_VOID_FCTPTR *)&pfLogAdd, (fl), 0, 0)
+
+- #define :ref:`CAL_LogAdd <group___cmp_log_itf_1ga3dfb869732625775f2a570dbc52d5250>` pfLogAdd
+
+- #define :ref:`CHK_LogAdd <group___cmp_log_itf_1gad0a6a209ec2aa8229db608fb6b3e41ec>` (pfLogAdd != NULL)
+
+- #define :ref:`EXP_LogAdd <group___cmp_log_itf_1ga86c740c39736a71cbc036d7df8bb56c6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogAdd", (RTS_UINTPTR) :ref:`LogAdd <group___cmp_log_itf_1gab55f6b8920a58f0a186805072d77c308>` , 0, 0)
+
+- #define :ref:`USE_LogAdd2 <group___cmp_log_itf_1gabe0e3da885e132253e404322f705d13f>` :ref:`PFLOGADD2 <group___cmp_log_itf_1gadeac26556c9b4e74ae1607bbb9d872ef>` pfLogAdd2;
+
+- #define :ref:`EXT_LogAdd2 <group___cmp_log_itf_1gadefe523b70379c72e4776b3666751e8e>` extern :ref:`PFLOGADD2 <group___cmp_log_itf_1gadeac26556c9b4e74ae1607bbb9d872ef>` pfLogAdd2;
+
+- #define :ref:`GET_LogAdd2 <group___cmp_log_itf_1gad621f9822fcf6004724f830d4ef76c17>` s_pfCMGetAPI2( "LogAdd2", (RTS_VOID_FCTPTR *)&pfLogAdd2, (fl), 0, 0)
+
+- #define :ref:`CAL_LogAdd2 <group___cmp_log_itf_1ga4e471d219bc83914a165e3a516e2e5a6>` pfLogAdd2
+
+- #define :ref:`CHK_LogAdd2 <group___cmp_log_itf_1ga882c8e8510ba6c95757a40c0c8b61a43>` (pfLogAdd2 != NULL)
+
+- #define :ref:`EXP_LogAdd2 <group___cmp_log_itf_1ga42e8ab67d2a2e398f8cbfd787b268c81>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogAdd2", (RTS_UINTPTR) :ref:`LogAdd2 <group___cmp_log_itf_1ga19a79608b5222548da156e18df01ea4b>` , 0, 0)
+
+- #define :ref:`USE_LogAdd3 <group___cmp_log_itf_1ga07f71bc9b747ac41002fc268730add82>` :ref:`PFLOGADD3 <group___cmp_log_itf_1ga7227337ea04c99e0d211d266ac630a04>` pfLogAdd3;
+
+- #define :ref:`EXT_LogAdd3 <group___cmp_log_itf_1ga905f002618f38a0a0f8d7b38a80c6409>` extern :ref:`PFLOGADD3 <group___cmp_log_itf_1ga7227337ea04c99e0d211d266ac630a04>` pfLogAdd3;
+
+- #define :ref:`GET_LogAdd3 <group___cmp_log_itf_1ga88b1bf07596c928d33670a53d4586d71>` s_pfCMGetAPI2( "LogAdd3", (RTS_VOID_FCTPTR *)&pfLogAdd3, (fl), 0, 0)
+
+- #define :ref:`CAL_LogAdd3 <group___cmp_log_itf_1gaff3f613c8a02191d407d6479e1cf5d60>` pfLogAdd3
+
+- #define :ref:`CHK_LogAdd3 <group___cmp_log_itf_1ga211b4a6d128238a85aa883269446a6b6>` (pfLogAdd3 != NULL)
+
+- #define :ref:`EXP_LogAdd3 <group___cmp_log_itf_1gada91ea8914c6bae03b361a4124f45485>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogAdd3", (RTS_UINTPTR) :ref:`LogAdd3 <group___cmp_log_itf_1ga228f6c707f74d5c5ef7d6919d8e82366>` , 0, 0)
+
+- #define :ref:`USE_LogAddArg <group___cmp_log_itf_1ga10fc0dd67ce2fd9a589a244178c1dd8d>` :ref:`PFLOGADDARG <group___cmp_log_itf_1ga6ba3686e4ee1a6a4b9de7b28db2e0175>` pfLogAddArg;
+
+- #define :ref:`EXT_LogAddArg <group___cmp_log_itf_1ga2b6f06f9b2738ff6275d955ff92dc0dd>` extern :ref:`PFLOGADDARG <group___cmp_log_itf_1ga6ba3686e4ee1a6a4b9de7b28db2e0175>` pfLogAddArg;
+
+- #define :ref:`GET_LogAddArg <group___cmp_log_itf_1ga6259eca2c1916f40ab83dcbd00753d31>` s_pfCMGetAPI2( "LogAddArg", (RTS_VOID_FCTPTR *)&pfLogAddArg, (fl), 0, 0)
+
+- #define :ref:`CAL_LogAddArg <group___cmp_log_itf_1ga8411c9ab1398d5628a376ec7a2916c48>` pfLogAddArg
+
+- #define :ref:`CHK_LogAddArg <group___cmp_log_itf_1ga2e9193d38fd8f1b98c09bad28be97c72>` (pfLogAddArg != NULL)
+
+- #define :ref:`EXP_LogAddArg <group___cmp_log_itf_1ga4f902e8af1ea2afdcefe572a8eb4e0b3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogAddArg", (RTS_UINTPTR) :ref:`LogAddArg <group___cmp_log_itf_1ga23a372f83768f93916234383aeece9f4>` , 0, 0)
+
+- #define :ref:`USE_LogAdd2Arg <group___cmp_log_itf_1gaf5e77d3972f7b712980cc4ad5f812a58>` :ref:`PFLOGADD2ARG <group___cmp_log_itf_1ga80700e2d16d41a3400655457f9892a5d>` pfLogAdd2Arg;
+
+- #define :ref:`EXT_LogAdd2Arg <group___cmp_log_itf_1gaf6aa35aac64b3ca10db577e9dd4b787f>` extern :ref:`PFLOGADD2ARG <group___cmp_log_itf_1ga80700e2d16d41a3400655457f9892a5d>` pfLogAdd2Arg;
+
+- #define :ref:`GET_LogAdd2Arg <group___cmp_log_itf_1ga64295dd459276f3ddb51459a12a05d30>` s_pfCMGetAPI2( "LogAdd2Arg", (RTS_VOID_FCTPTR *)&pfLogAdd2Arg, (fl), 0, 0)
+
+- #define :ref:`CAL_LogAdd2Arg <group___cmp_log_itf_1ga7086288e4d7fc045643e8cfa3b7f4fd8>` pfLogAdd2Arg
+
+- #define :ref:`CHK_LogAdd2Arg <group___cmp_log_itf_1ga07351a3289ce3141277919edf0cda209>` (pfLogAdd2Arg != NULL)
+
+- #define :ref:`EXP_LogAdd2Arg <group___cmp_log_itf_1ga3e1bc1cca29c1b6a1ba93539475ef71b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogAdd2Arg", (RTS_UINTPTR) :ref:`LogAdd2Arg <group___cmp_log_itf_1ga25080676b08f61ac41ed2c23c466a5a1>` , 0, 0)
+
+- #define :ref:`USE_LogAdd3Arg <group___cmp_log_itf_1ga8cc28084e227eb63b2fd0836ca063438>` :ref:`PFLOGADD3ARG <group___cmp_log_itf_1ga5f21de3ccab78ec7641203dd90aa6039>` pfLogAdd3Arg;
+
+- #define :ref:`EXT_LogAdd3Arg <group___cmp_log_itf_1ga2186398d70f2e1c9ad207f98180f4097>` extern :ref:`PFLOGADD3ARG <group___cmp_log_itf_1ga5f21de3ccab78ec7641203dd90aa6039>` pfLogAdd3Arg;
+
+- #define :ref:`GET_LogAdd3Arg <group___cmp_log_itf_1gae3dd5f6e78a0a1de0f80224c42b04aa8>` s_pfCMGetAPI2( "LogAdd3Arg", (RTS_VOID_FCTPTR *)&pfLogAdd3Arg, (fl), 0, 0)
+
+- #define :ref:`CAL_LogAdd3Arg <group___cmp_log_itf_1gaef389120215ff56d55b6185eb36914db>` pfLogAdd3Arg
+
+- #define :ref:`CHK_LogAdd3Arg <group___cmp_log_itf_1ga32564d68d7d2b8dcfea0969804a97542>` (pfLogAdd3Arg != NULL)
+
+- #define :ref:`EXP_LogAdd3Arg <group___cmp_log_itf_1gaca8d2aa42d1615ede0c96b7a71bc0243>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogAdd3Arg", (RTS_UINTPTR) :ref:`LogAdd3Arg <group___cmp_log_itf_1gacde01ae8ad788c003f1e1286dbb35038>` , 0, 0)
+
+- #define :ref:`USE_LogDumpAll <group___cmp_log_itf_1ga0c8a2541cfcb46b80d192e4db82d167e>` :ref:`PFLOGDUMPALL <group___cmp_log_itf_1ga69b701f77fd4414a0f93df969fa2fd38>` pfLogDumpAll;
+
+- #define :ref:`EXT_LogDumpAll <group___cmp_log_itf_1gad9b2e38f9e4b10abffaeb139d2f0bbc1>` extern :ref:`PFLOGDUMPALL <group___cmp_log_itf_1ga69b701f77fd4414a0f93df969fa2fd38>` pfLogDumpAll;
+
+- #define :ref:`GET_LogDumpAll <group___cmp_log_itf_1ga9429ec83cde4b52f83a190314b88d80e>` s_pfCMGetAPI2( "LogDumpAll", (RTS_VOID_FCTPTR *)&pfLogDumpAll, (fl), 0, 0)
+
+- #define :ref:`CAL_LogDumpAll <group___cmp_log_itf_1gae5e31084af17825acbff11334dbb6fa3>` pfLogDumpAll
+
+- #define :ref:`CHK_LogDumpAll <group___cmp_log_itf_1ga331ef8fad4f552e5a47f9dc901dd612b>` (pfLogDumpAll != NULL)
+
+- #define :ref:`EXP_LogDumpAll <group___cmp_log_itf_1ga511897d1c2cd2324bd05cacad67fc33c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogDumpAll", (RTS_UINTPTR) :ref:`LogDumpAll <group___cmp_log_itf_1ga5862fee1364447aa2feae07e375f0e94>` , 0, 0)
+
+- #define :ref:`USE_LogDumpEntries <group___cmp_log_itf_1gaceea1735be3d37b169d132a14066d197>` :ref:`PFLOGDUMPENTRIES <group___cmp_log_itf_1ga6912e46ab126e4714fd3e59b39dfb94b>` pfLogDumpEntries;
+
+- #define :ref:`EXT_LogDumpEntries <group___cmp_log_itf_1gaf9ca4d1dd7895c78d1d28b0c9225b423>` extern :ref:`PFLOGDUMPENTRIES <group___cmp_log_itf_1ga6912e46ab126e4714fd3e59b39dfb94b>` pfLogDumpEntries;
+
+- #define :ref:`GET_LogDumpEntries <group___cmp_log_itf_1ga836f14050f5f508ff269dfb65945be44>` s_pfCMGetAPI2( "LogDumpEntries", (RTS_VOID_FCTPTR *)&pfLogDumpEntries, (fl), 0, 0)
+
+- #define :ref:`CAL_LogDumpEntries <group___cmp_log_itf_1gad5298c61d0adbd0f2dd51999f9ae0ac8>` pfLogDumpEntries
+
+- #define :ref:`CHK_LogDumpEntries <group___cmp_log_itf_1ga5bb1c0762ebfbbe35e066d2fa61765ab>` (pfLogDumpEntries != NULL)
+
+- #define :ref:`EXP_LogDumpEntries <group___cmp_log_itf_1ga0f13603fe93d7c9b52f7215ff97a6c56>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogDumpEntries", (RTS_UINTPTR) :ref:`LogDumpEntries <group___cmp_log_itf_1ga64a7c9bb8e41346d850e073f145174ad>` , 0, 0)
+
+- #define :ref:`USE_LogRegisterInterface <group___cmp_log_itf_1gaefeb4f0aff55aebc59e7e4ae83914a70>` :ref:`PFLOGREGISTERINTERFACE <group___cmp_log_itf_1gaa7ead3c293532b3166b5d2cb646ac175>` pfLogRegisterInterface;
+
+- #define :ref:`EXT_LogRegisterInterface <group___cmp_log_itf_1ga149b9e79381c8e74e50f4cdeb1295387>` extern :ref:`PFLOGREGISTERINTERFACE <group___cmp_log_itf_1gaa7ead3c293532b3166b5d2cb646ac175>` pfLogRegisterInterface;
+
+- #define :ref:`GET_LogRegisterInterface <group___cmp_log_itf_1ga1587be628b4a405909da98fe41c50634>` s_pfCMGetAPI2( "LogRegisterInterface", (RTS_VOID_FCTPTR *)&pfLogRegisterInterface, (fl), 0, 0)
+
+- #define :ref:`CAL_LogRegisterInterface <group___cmp_log_itf_1ga3cc65d6e89f10b264cf3a61333d1e103>` pfLogRegisterInterface
+
+- #define :ref:`CHK_LogRegisterInterface <group___cmp_log_itf_1gad3110618f1b9d1170d263a51cdd18a75>` (pfLogRegisterInterface != NULL)
+
+- #define :ref:`EXP_LogRegisterInterface <group___cmp_log_itf_1gab6b829835470d00501ecdbe6a23a2730>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogRegisterInterface", (RTS_UINTPTR) :ref:`LogRegisterInterface <group___cmp_log_itf_1ga8167c1ce7661241ded0640984fbb4c18>` , 0, 0)
+
+- #define :ref:`USE_LogUnregisterInterface <group___cmp_log_itf_1gab2114bdeb8df3da7a979117598685dc4>` :ref:`PFLOGUNREGISTERINTERFACE <group___cmp_log_itf_1ga920bd43c4d4c444c649cb957bf6bc944>` pfLogUnregisterInterface;
+
+- #define :ref:`EXT_LogUnregisterInterface <group___cmp_log_itf_1ga5a2a0c4cc42ea7481ebbc18d6edc0e28>` extern :ref:`PFLOGUNREGISTERINTERFACE <group___cmp_log_itf_1ga920bd43c4d4c444c649cb957bf6bc944>` pfLogUnregisterInterface;
+
+- #define :ref:`GET_LogUnregisterInterface <group___cmp_log_itf_1gafec3147ddc2bfff4127aa8b4aeb59a18>` s_pfCMGetAPI2( "LogUnregisterInterface", (RTS_VOID_FCTPTR *)&pfLogUnregisterInterface, (fl), 0, 0)
+
+- #define :ref:`CAL_LogUnregisterInterface <group___cmp_log_itf_1gaa9e088b22680decc78b0bc22aef1eedb>` pfLogUnregisterInterface
+
+- #define :ref:`CHK_LogUnregisterInterface <group___cmp_log_itf_1ga65d949ed420f8def42c0f781f70a1a75>` (pfLogUnregisterInterface != NULL)
+
+- #define :ref:`EXP_LogUnregisterInterface <group___cmp_log_itf_1gad873995386d0b427d3774ddf0e10f926>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogUnregisterInterface", (RTS_UINTPTR) :ref:`LogUnregisterInterface <group___cmp_log_itf_1gab7d7284e19e30aec24cb7c905ab421cf>` , 0, 0)
+
+- #define :ref:`USE_LogRegisterBackend <group___cmp_log_itf_1ga4579127f124ea18a2cfbd46aae60c5fb>` :ref:`PFLOGREGISTERBACKEND <group___cmp_log_itf_1gaa0912474c444adfa787bef7e71a49b4d>` pfLogRegisterBackend;
+
+- #define :ref:`EXT_LogRegisterBackend <group___cmp_log_itf_1gad0681d1caa90236c95729f38110ca024>` extern :ref:`PFLOGREGISTERBACKEND <group___cmp_log_itf_1gaa0912474c444adfa787bef7e71a49b4d>` pfLogRegisterBackend;
+
+- #define :ref:`GET_LogRegisterBackend <group___cmp_log_itf_1ga8f8f21f88b61f596f3192c1083b93e81>` s_pfCMGetAPI2( "LogRegisterBackend", (RTS_VOID_FCTPTR *)&pfLogRegisterBackend, (fl), 0, 0)
+
+- #define :ref:`CAL_LogRegisterBackend <group___cmp_log_itf_1gaa4d2641408de7f234ffa3b5f38bbe070>` pfLogRegisterBackend
+
+- #define :ref:`CHK_LogRegisterBackend <group___cmp_log_itf_1ga685d33d69eb06cc28e57ebf5b263c0a7>` (pfLogRegisterBackend != NULL)
+
+- #define :ref:`EXP_LogRegisterBackend <group___cmp_log_itf_1gaf556afe90d8877a5d8a246ac306f3570>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogRegisterBackend", (RTS_UINTPTR) :ref:`LogRegisterBackend <group___cmp_log_itf_1gae10d012f267465935fef5e449155d562>` , 0, 0)
+
+- #define :ref:`USE_LogUnregisterBackend <group___cmp_log_itf_1ga4391c8a23ef54d60dcb55454e7d915d3>` :ref:`PFLOGUNREGISTERBACKEND <group___cmp_log_itf_1ga08ad5cf897100a27f88edf46e7fcc1a2>` pfLogUnregisterBackend;
+
+- #define :ref:`EXT_LogUnregisterBackend <group___cmp_log_itf_1ga6e23acc18034953dada734eb14f405d0>` extern :ref:`PFLOGUNREGISTERBACKEND <group___cmp_log_itf_1ga08ad5cf897100a27f88edf46e7fcc1a2>` pfLogUnregisterBackend;
+
+- #define :ref:`GET_LogUnregisterBackend <group___cmp_log_itf_1gafd4dddb7ebe8d2febba8139a0097e779>` s_pfCMGetAPI2( "LogUnregisterBackend", (RTS_VOID_FCTPTR *)&pfLogUnregisterBackend, (fl), 0, 0)
+
+- #define :ref:`CAL_LogUnregisterBackend <group___cmp_log_itf_1ga611a6fe678d2a0890369951ca5d03824>` pfLogUnregisterBackend
+
+- #define :ref:`CHK_LogUnregisterBackend <group___cmp_log_itf_1ga5669ed1e71103e13e66592730895c754>` (pfLogUnregisterBackend != NULL)
+
+- #define :ref:`EXP_LogUnregisterBackend <group___cmp_log_itf_1gacea2d8ed954f078cf6b83bdbfe042858>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogUnregisterBackend", (RTS_UINTPTR) :ref:`LogUnregisterBackend <group___cmp_log_itf_1gab161d93550659d44e84301971e6474e4>` , 0, 0)
+
+- #define :ref:`USE_LogGetEntryByIndex <group___cmp_log_itf_1ga76596f29120aa8255d43cece9de76f39>` :ref:`PFLOGGETENTRYBYINDEX <group___cmp_log_itf_1ga8fee07c43030b54aa7b2c05536561f19>` pfLogGetEntryByIndex;
+
+- #define :ref:`EXT_LogGetEntryByIndex <group___cmp_log_itf_1ga592d08a9fea21d36bb1b674cadc97cd7>` extern :ref:`PFLOGGETENTRYBYINDEX <group___cmp_log_itf_1ga8fee07c43030b54aa7b2c05536561f19>` pfLogGetEntryByIndex;
+
+- #define :ref:`GET_LogGetEntryByIndex <group___cmp_log_itf_1ga6e08461984a07872bfe6636deb3efe4a>` s_pfCMGetAPI2( "LogGetEntryByIndex", (RTS_VOID_FCTPTR *)&pfLogGetEntryByIndex, (fl), 0, 0)
+
+- #define :ref:`CAL_LogGetEntryByIndex <group___cmp_log_itf_1ga8248c7681606034f5208e09d78cf163f>` pfLogGetEntryByIndex
+
+- #define :ref:`CHK_LogGetEntryByIndex <group___cmp_log_itf_1ga72879046f3b03ae6ba00e2ac8d5186ea>` (pfLogGetEntryByIndex != NULL)
+
+- #define :ref:`EXP_LogGetEntryByIndex <group___cmp_log_itf_1ga08a6f1d93e3771ac6d9fb112a1dcbe8d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogGetEntryByIndex", (RTS_UINTPTR) :ref:`LogGetEntryByIndex <group___cmp_log_itf_1ga6c02147201f60a045c1547f55771e511>` , 0, 0)
+
+- #define :ref:`USE_LogGetEntryByQueueIndex <group___cmp_log_itf_1gad5a971762b3e16acfa6f559d0735983f>` :ref:`PFLOGGETENTRYBYQUEUEINDEX <group___cmp_log_itf_1ga42ad93b801cef3c2575f39e7877b9bf6>` pfLogGetEntryByQueueIndex;
+
+- #define :ref:`EXT_LogGetEntryByQueueIndex <group___cmp_log_itf_1ga528dbd9e52be156c9bf6cf413cfd9022>` extern :ref:`PFLOGGETENTRYBYQUEUEINDEX <group___cmp_log_itf_1ga42ad93b801cef3c2575f39e7877b9bf6>` pfLogGetEntryByQueueIndex;
+
+- #define :ref:`GET_LogGetEntryByQueueIndex <group___cmp_log_itf_1gae24d87e91d7752965df5f5a74a4e09ff>` s_pfCMGetAPI2( "LogGetEntryByQueueIndex", (RTS_VOID_FCTPTR *)&pfLogGetEntryByQueueIndex, (fl), 0, 0)
+
+- #define :ref:`CAL_LogGetEntryByQueueIndex <group___cmp_log_itf_1ga5e8e70d197ba7c5125997a715a759ed8>` pfLogGetEntryByQueueIndex
+
+- #define :ref:`CHK_LogGetEntryByQueueIndex <group___cmp_log_itf_1ga369c2e213eeb59a270306169ab195680>` (pfLogGetEntryByQueueIndex != NULL)
+
+- #define :ref:`EXP_LogGetEntryByQueueIndex <group___cmp_log_itf_1gac5f6aa0977216b869633364e1f264e61>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogGetEntryByQueueIndex", (RTS_UINTPTR) :ref:`LogGetEntryByQueueIndex <group___cmp_log_itf_1gaddd8773192bb7c1c0498117860035953>` , 0, 0)
+
+- #define :ref:`USE_LogGetFirstEntry <group___cmp_log_itf_1gaf45d6a3aed6b5642f0a2784e7c427ef3>` :ref:`PFLOGGETFIRSTENTRY <group___cmp_log_itf_1ga499cad903aa273380c1f1ababb62901d>` pfLogGetFirstEntry;
+
+- #define :ref:`EXT_LogGetFirstEntry <group___cmp_log_itf_1ga8473ed5dca09a177ae08ec8780e05236>` extern :ref:`PFLOGGETFIRSTENTRY <group___cmp_log_itf_1ga499cad903aa273380c1f1ababb62901d>` pfLogGetFirstEntry;
+
+- #define :ref:`GET_LogGetFirstEntry <group___cmp_log_itf_1gade1f148e6c79d4f67cd108b79ea17be8>` s_pfCMGetAPI2( "LogGetFirstEntry", (RTS_VOID_FCTPTR *)&pfLogGetFirstEntry, (fl), 0, 0)
+
+- #define :ref:`CAL_LogGetFirstEntry <group___cmp_log_itf_1ga07b68776bf97cf23530b38aeb843058a>` pfLogGetFirstEntry
+
+- #define :ref:`CHK_LogGetFirstEntry <group___cmp_log_itf_1gab6371c1c21cd70c4245d72a2cf317894>` (pfLogGetFirstEntry != NULL)
+
+- #define :ref:`EXP_LogGetFirstEntry <group___cmp_log_itf_1gaa66818ed0838f3cce68886161e9abc3a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogGetFirstEntry", (RTS_UINTPTR) :ref:`LogGetFirstEntry <group___cmp_log_itf_1ga8e006a946f2f5382e19e8e48ae381021>` , 0, 0)
+
+- #define :ref:`USE_LogGetNextEntry <group___cmp_log_itf_1gae5764c2815ad055cf08efc8ab3d6dd61>` :ref:`PFLOGGETNEXTENTRY <group___cmp_log_itf_1ga60794ec163dfbf8f811a774f7d846423>` pfLogGetNextEntry;
+
+- #define :ref:`EXT_LogGetNextEntry <group___cmp_log_itf_1ga8707dce8a0ed1908142ce4774e5c4e28>` extern :ref:`PFLOGGETNEXTENTRY <group___cmp_log_itf_1ga60794ec163dfbf8f811a774f7d846423>` pfLogGetNextEntry;
+
+- #define :ref:`GET_LogGetNextEntry <group___cmp_log_itf_1ga982d2760c07ad662e6119455166e65e3>` s_pfCMGetAPI2( "LogGetNextEntry", (RTS_VOID_FCTPTR *)&pfLogGetNextEntry, (fl), 0, 0)
+
+- #define :ref:`CAL_LogGetNextEntry <group___cmp_log_itf_1ga18b9804cfb49655b0af3d41853979f2b>` pfLogGetNextEntry
+
+- #define :ref:`CHK_LogGetNextEntry <group___cmp_log_itf_1gad904a7eb5fa7e8f0b21759cbb060a75e>` (pfLogGetNextEntry != NULL)
+
+- #define :ref:`EXP_LogGetNextEntry <group___cmp_log_itf_1gaaa7f37f8c142e538997dc1f60fe63894>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogGetNextEntry", (RTS_UINTPTR) :ref:`LogGetNextEntry <group___cmp_log_itf_1ga21c522a6b15b6c11a9acc8e841503ad3>` , 0, 0)
+
+- #define :ref:`USE_LogGetEntry <group___cmp_log_itf_1gac46c7f9685bf0b05d2a21c284b1f29f6>` :ref:`PFLOGGETENTRY <group___cmp_log_itf_1gafa6ff817d1f3c8dd16a579ef3342ef28>` pfLogGetEntry;
+
+- #define :ref:`EXT_LogGetEntry <group___cmp_log_itf_1ga209d36d939c52951752de9528c39a03a>` extern :ref:`PFLOGGETENTRY <group___cmp_log_itf_1gafa6ff817d1f3c8dd16a579ef3342ef28>` pfLogGetEntry;
+
+- #define :ref:`GET_LogGetEntry <group___cmp_log_itf_1ga6cf6af1562cc5eda69fdc0805e9e4d8c>` s_pfCMGetAPI2( "LogGetEntry", (RTS_VOID_FCTPTR *)&pfLogGetEntry, (fl), 0, 0)
+
+- #define :ref:`CAL_LogGetEntry <group___cmp_log_itf_1gaadeb4e61d86d7c249c0b128332a7ba9e>` pfLogGetEntry
+
+- #define :ref:`CHK_LogGetEntry <group___cmp_log_itf_1gab8d279f6c161743257fed2ac6d8db5e2>` (pfLogGetEntry != NULL)
+
+- #define :ref:`EXP_LogGetEntry <group___cmp_log_itf_1ga3e77c51c64cefb4eabd163c44a67fe16>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogGetEntry", (RTS_UINTPTR) :ref:`LogGetEntry <group___cmp_log_itf_1ga7938f7e5a29bc8edab5cb3cf80b7fb29>` , 0, 0)
+
+- #define :ref:`USE_LogGetFirstLogger <group___cmp_log_itf_1ga19e787759b38831428f8091a49bfb6d3>` :ref:`PFLOGGETFIRSTLOGGER <group___cmp_log_itf_1ga46a94bc63bc51d19b17c8d304861c3de>` pfLogGetFirstLogger;
+
+- #define :ref:`EXT_LogGetFirstLogger <group___cmp_log_itf_1gaa9911e2dec41b182493a6ed332409467>` extern :ref:`PFLOGGETFIRSTLOGGER <group___cmp_log_itf_1ga46a94bc63bc51d19b17c8d304861c3de>` pfLogGetFirstLogger;
+
+- #define :ref:`GET_LogGetFirstLogger <group___cmp_log_itf_1ga36a4e4b3b2080949272bdae92ad67c22>` s_pfCMGetAPI2( "LogGetFirstLogger", (RTS_VOID_FCTPTR *)&pfLogGetFirstLogger, (fl), 0, 0)
+
+- #define :ref:`CAL_LogGetFirstLogger <group___cmp_log_itf_1ga6e84346fe3833a278c08241d3cb05f5a>` pfLogGetFirstLogger
+
+- #define :ref:`CHK_LogGetFirstLogger <group___cmp_log_itf_1gac699e99ccc521e14520e1607a9ce9f6d>` (pfLogGetFirstLogger != NULL)
+
+- #define :ref:`EXP_LogGetFirstLogger <group___cmp_log_itf_1gae4d90e8dfce0026acb6959a2b4930fe0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogGetFirstLogger", (RTS_UINTPTR) :ref:`LogGetFirstLogger <group___cmp_log_itf_1ga45c0b9e734c0f25143e09b79855902f2>` , 0, 0)
+
+- #define :ref:`USE_LogGetNextLogger <group___cmp_log_itf_1ga9dd6935bb4e9d3124ef800ff60314bd7>` :ref:`PFLOGGETNEXTLOGGER <group___cmp_log_itf_1ga5cda37b6eac7837441113cda17e574f5>` pfLogGetNextLogger;
+
+- #define :ref:`EXT_LogGetNextLogger <group___cmp_log_itf_1ga6d243c239182687cc1e75b2568554443>` extern :ref:`PFLOGGETNEXTLOGGER <group___cmp_log_itf_1ga5cda37b6eac7837441113cda17e574f5>` pfLogGetNextLogger;
+
+- #define :ref:`GET_LogGetNextLogger <group___cmp_log_itf_1gaa42d86d6c0c39bdaba6f230d991b3b63>` s_pfCMGetAPI2( "LogGetNextLogger", (RTS_VOID_FCTPTR *)&pfLogGetNextLogger, (fl), 0, 0)
+
+- #define :ref:`CAL_LogGetNextLogger <group___cmp_log_itf_1ga8cf5e37a37bbe0a00c94dff98a6bd610>` pfLogGetNextLogger
+
+- #define :ref:`CHK_LogGetNextLogger <group___cmp_log_itf_1ga340f762352b87dbfae9982a9a8251d0b>` (pfLogGetNextLogger != NULL)
+
+- #define :ref:`EXP_LogGetNextLogger <group___cmp_log_itf_1gac0a8c765bba5b27ed762b60940e916c8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogGetNextLogger", (RTS_UINTPTR) :ref:`LogGetNextLogger <group___cmp_log_itf_1ga5802e8a77c0af4a63f01b84143b10e18>` , 0, 0)
+
+- #define :ref:`USE_LogGetName <group___cmp_log_itf_1ga944c15394b36492944a63d19a0787e78>` :ref:`PFLOGGETNAME <group___cmp_log_itf_1ga5be661fe4ec2dcdb8d78d3f9ff023eeb>` pfLogGetName;
+
+- #define :ref:`EXT_LogGetName <group___cmp_log_itf_1gaacf3def40cf5d24fb0b7008121e81cf4>` extern :ref:`PFLOGGETNAME <group___cmp_log_itf_1ga5be661fe4ec2dcdb8d78d3f9ff023eeb>` pfLogGetName;
+
+- #define :ref:`GET_LogGetName <group___cmp_log_itf_1ga0df5648af6c3b6abe9dfdd45ab4993e0>` s_pfCMGetAPI2( "LogGetName", (RTS_VOID_FCTPTR *)&pfLogGetName, (fl), 0, 0)
+
+- #define :ref:`CAL_LogGetName <group___cmp_log_itf_1gac3112c2a059dd3f7cb9376fd67b8456d>` pfLogGetName
+
+- #define :ref:`CHK_LogGetName <group___cmp_log_itf_1ga6d1e5315bf246c51e5d1cd83dc78abe8>` (pfLogGetName != NULL)
+
+- #define :ref:`EXP_LogGetName <group___cmp_log_itf_1gafbe0c60551b320850174c6d70b887fe5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogGetName", (RTS_UINTPTR) :ref:`LogGetName <group___cmp_log_itf_1ga6b72d5007defca9563b32de9b5ebd34e>` , 0, 0)
+
+- #define :ref:`USE_LogGetUserNotify <group___cmp_log_itf_1gadae1a6eeb38b23f036ef9d6edbe7079d>` :ref:`PFLOGGETUSERNOTIFY <group___cmp_log_itf_1ga40128482832c1792f1a66e73580e5931>` pfLogGetUserNotify;
+
+- #define :ref:`EXT_LogGetUserNotify <group___cmp_log_itf_1ga8c2d7551854aff13795861affdc1bef8>` extern :ref:`PFLOGGETUSERNOTIFY <group___cmp_log_itf_1ga40128482832c1792f1a66e73580e5931>` pfLogGetUserNotify;
+
+- #define :ref:`GET_LogGetUserNotify <group___cmp_log_itf_1gabf2402ba25b9d864d7f75c09480859a7>` s_pfCMGetAPI2( "LogGetUserNotify", (RTS_VOID_FCTPTR *)&pfLogGetUserNotify, (fl), 0, 0)
+
+- #define :ref:`CAL_LogGetUserNotify <group___cmp_log_itf_1ga98f884ad56df7b1b20da8ec3e942f202>` pfLogGetUserNotify
+
+- #define :ref:`CHK_LogGetUserNotify <group___cmp_log_itf_1ga35baa249f0e1858539f197c61d82abd3>` (pfLogGetUserNotify != NULL)
+
+- #define :ref:`EXP_LogGetUserNotify <group___cmp_log_itf_1gaf06496ea707907534fa8e785e1336dad>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogGetUserNotify", (RTS_UINTPTR) :ref:`LogGetUserNotify <group___cmp_log_itf_1gad39c25bf124b3eb6e6819c9b297a27c2>` , 0, 0)
+
+- #define :ref:`USE_LogConvertTimestamp <group___cmp_log_itf_1gab6a00f4e502ed9b96815a719f137a889>` :ref:`PFLOGCONVERTTIMESTAMP <group___cmp_log_itf_1gac9c76cef01527c0b6e686abe3c174f4e>` pfLogConvertTimestamp;
+
+- #define :ref:`EXT_LogConvertTimestamp <group___cmp_log_itf_1ga9cad0e3952fd4a2e17d214f071a517a1>` extern :ref:`PFLOGCONVERTTIMESTAMP <group___cmp_log_itf_1gac9c76cef01527c0b6e686abe3c174f4e>` pfLogConvertTimestamp;
+
+- #define :ref:`GET_LogConvertTimestamp <group___cmp_log_itf_1gab9abe248a6d32eaec254136a8a9a6e5e>` s_pfCMGetAPI2( "LogConvertTimestamp", (RTS_VOID_FCTPTR *)&pfLogConvertTimestamp, (fl), 0, 0)
+
+- #define :ref:`CAL_LogConvertTimestamp <group___cmp_log_itf_1gabe01d94aca219162ee33576f025e7e0c>` pfLogConvertTimestamp
+
+- #define :ref:`CHK_LogConvertTimestamp <group___cmp_log_itf_1ga17de62cc28494adf2ad5cc36783754f1>` (pfLogConvertTimestamp != NULL)
+
+- #define :ref:`EXP_LogConvertTimestamp <group___cmp_log_itf_1ga729fa64edae70f1109b69aa8278e0582>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"LogConvertTimestamp", (RTS_UINTPTR) :ref:`LogConvertTimestamp <group___cmp_log_itf_1ga8a3829f7bb504e0ed969cc67429e3b72>` , 0, 0)
+
+- #define :ref:`ITF_CmpLog <group___cmp_log_itf_1gae75aaa635b6226ef0ea851e78753d9bb>`
+
+- #define :ref:`EXTITF_CmpLog <group___cmp_log_itf_1ga9568bef59f6120bf41bf8b47f100a8a2>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagLogOptions <structtag_log_options>` :ref:`LogOptions <group___cmp_log_itf___logger_1ga0327ffeedb0153418de81ea6cb995c84>`
+
+- typedef struct :ref:`tagLogEntry <structtag_log_entry>` :ref:`LogEntry <group___cmp_log_itf___logger_1ga160e4cd161c7cb4b77aa51764bbb4514>`
+
+- typedef struct :ref:`taglogadd_struct <structtaglogadd__struct>` :ref:`logadd_struct <group___cmp_log_itf_1ga3f6ff8913954c07810745f0fc90c347c>`
+
+- typedef void(* :ref:`PFLOGADD_IEC <group___cmp_log_itf_1gabfbdc9e3fdb774658276fb1590f527a5>`)(logadd_struct *p)
+
+- typedef struct :ref:`taglogadd2_struct <structtaglogadd2__struct>` :ref:`logadd2_struct <group___cmp_log_itf_1ga4c4d1c3825b7eeb168fb5e2c84d527d7>`
+
+- typedef void(* :ref:`PFLOGADD2_IEC <group___cmp_log_itf_1ga04a2a0aa00ca05bd659d6f267f8f1406>`)(logadd2_struct *p)
+
+- typedef struct :ref:`taglogclose_struct <structtaglogclose__struct>` :ref:`logclose_struct <group___cmp_log_itf_1gae5bb5de73b3400e49e4f4782dc343851>`
+
+- typedef void(* :ref:`PFLOGCLOSE_IEC <group___cmp_log_itf_1gabcad451687b57582060f353625ee9ceb>`)(logclose_struct *p)
+
+- typedef struct :ref:`taglogcreate_struct <structtaglogcreate__struct>` :ref:`logcreate_struct <group___cmp_log_itf_1ga3c9260fac6bfa01f7e7ecaacbf038b3a>`
+
+- typedef void(* :ref:`PFLOGCREATE_IEC <group___cmp_log_itf_1ga2eba362d425bc3bc188fcdcbc6c5e26f>`)(logcreate_struct *p)
+
+- typedef struct :ref:`taglogdelete_struct <structtaglogdelete__struct>` :ref:`logdelete_struct <group___cmp_log_itf_1ga846a6b8e92480af2c36288cfa4766349>`
+
+- typedef void(* :ref:`PFLOGDELETE_IEC <group___cmp_log_itf_1ga13e096cd61a7cbeb4267ace4e089b7a5>`)(logdelete_struct *p)
+
+- typedef struct :ref:`taglogopen_struct <structtaglogopen__struct>` :ref:`logopen_struct <group___cmp_log_itf_1ga741016eaab853866a0fcd6b971ba45e0>`
+
+- typedef void(* :ref:`PFLOGOPEN_IEC <group___cmp_log_itf_1ga345602cc4de4e57aee5db25280086a4f>`)(logopen_struct *p)
+
+- typedef RTS_HANDLE(* :ref:`PFLOGCREATE <group___cmp_log_itf_1ga79f8d5b023ea728d4e77bb10c74c07e4>`)(LogOptions *pOptions, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFLOGOPEN <group___cmp_log_itf_1ga1668a2fdb9502595ec0c94774361e316>`)(char *pszName, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFLOGCLOSE <group___cmp_log_itf_1ga9757f78cbeb58a5a2b565aad88d3a893>`)(RTS_HANDLE hLog)
+
+- typedef RTS_RESULT(* :ref:`PFLOGDELETE <group___cmp_log_itf_1ga9108bdafad815cf6e78a007c77e2747e>`)(RTS_HANDLE hLog)
+
+- typedef RTS_RESULT(* :ref:`PFLOGGETOPTIONS <group___cmp_log_itf_1gacfc972c1fd4bb02dc5b97d9dac37f429>`)(RTS_HANDLE hLog, LogOptions **ppOptions)
+
+- typedef RTS_RESULT(* :ref:`PFLOGENABLE <group___cmp_log_itf_1ga49d74c7916b5c5b8503b269536bd2c66>`)(RTS_HANDLE hLog)
+
+- typedef RTS_RESULT(* :ref:`PFLOGDISABLE <group___cmp_log_itf_1ga657ac89d858859b670373bef39668b60>`)(RTS_HANDLE hLog)
+
+- typedef RTS_RESULT(* :ref:`PFLOGSETFILTER <group___cmp_log_itf_1gadddbc613001d79f1b746f9deced73ac6>`)(RTS_HANDLE hLog, RTS_I32 iFilter)
+
+- typedef RTS_I32(* :ref:`PFLOGGETFILTER <group___cmp_log_itf_1ga89beb4b5a957d4ddf543e272818ebfd5>`)(RTS_HANDLE hLog)
+
+- typedef :ref:`LogFilter <struct_log_filter>` (* :ref:`PFLOGGETFILTER2 <group___cmp_log_itf_1gaa7aa03227f8cd007f469783724b0b258>`)(RTS_HANDLE hLog, CMPID cmpId, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFLOGADD <group___cmp_log_itf_1ga38814ae2d130269dd47b477753abb4d7>`)(RTS_HANDLE hLog, CMPID CmpId, RTS_I32 iClassID, RTS_RESULT iErrorID, RTS_I32 iInfoID, char *pszInfo,...)
+
+- typedef RTS_RESULT(* :ref:`PFLOGADD2 <group___cmp_log_itf_1gadeac26556c9b4e74ae1607bbb9d872ef>`)(LogFilter filter, RTS_I32 iClassID, RTS_RESULT iErrorID, RTS_I32 iInfoID, char *pszInfo,...)
+
+- typedef RTS_RESULT(* :ref:`PFLOGADD3 <group___cmp_log_itf_1ga7227337ea04c99e0d211d266ac630a04>`)(LogFilter filter, RTS_I32 iClassID, RTS_I32 iMask, RTS_RESULT iErrorID, RTS_I32 iInfoID, char *pszInfo,...)
+
+- typedef RTS_RESULT(* :ref:`PFLOGADDARG <group___cmp_log_itf_1ga6ba3686e4ee1a6a4b9de7b28db2e0175>`)(RTS_HANDLE hLog, CMPID CmpId, RTS_I32 iClassID, RTS_RESULT iErrorID, RTS_I32 iInfoID, char *pszInfo, va_list *pargList)
+
+- typedef RTS_RESULT(* :ref:`PFLOGADD2ARG <group___cmp_log_itf_1ga80700e2d16d41a3400655457f9892a5d>`)(LogFilter filter, RTS_I32 iClassID, RTS_RESULT iErrorID, RTS_I32 iInfoID, char *pszInfo, va_list *pargList)
+
+- typedef RTS_RESULT(* :ref:`PFLOGADD3ARG <group___cmp_log_itf_1ga5f21de3ccab78ec7641203dd90aa6039>`)(LogFilter filter, RTS_I32 iClassID, RTS_I32 iMask, RTS_RESULT iErrorID, RTS_I32 iInfoID, char *pszInfo, va_list *pargList)
+
+- typedef RTS_RESULT(* :ref:`PFLOGDUMPALL <group___cmp_log_itf_1ga69b701f77fd4414a0f93df969fa2fd38>`)(int iOptions)
+
+- typedef RTS_RESULT(* :ref:`PFLOGDUMPENTRIES <group___cmp_log_itf_1ga6912e46ab126e4714fd3e59b39dfb94b>`)(RTS_HANDLE hLog)
+
+- typedef RTS_RESULT(* :ref:`PFLOGREGISTERINTERFACE <group___cmp_log_itf_1gaa7ead3c293532b3166b5d2cb646ac175>`)(RTS_HANDLE hLog, CLASSID ClassId, ICmpLogBackend *pIBackend)
+
+- typedef RTS_RESULT(* :ref:`PFLOGUNREGISTERINTERFACE <group___cmp_log_itf_1ga920bd43c4d4c444c649cb957bf6bc944>`)(RTS_HANDLE hLog, ICmpLogBackend *pIBackend)
+
+- typedef RTS_RESULT(* :ref:`PFLOGREGISTERBACKEND <group___cmp_log_itf_1gaa0912474c444adfa787bef7e71a49b4d>`)(RTS_HANDLE hLog, CLASSID ClassId)
+
+- typedef RTS_RESULT(* :ref:`PFLOGUNREGISTERBACKEND <group___cmp_log_itf_1ga08ad5cf897100a27f88edf46e7fcc1a2>`)(RTS_HANDLE hLog, CLASSID ClassId)
+
+- typedef RTS_HANDLE(* :ref:`PFLOGGETENTRYBYINDEX <group___cmp_log_itf_1ga8fee07c43030b54aa7b2c05536561f19>`)(RTS_HANDLE hLog, int iIndex, LogEntry *pLogEntry, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFLOGGETENTRYBYQUEUEINDEX <group___cmp_log_itf_1ga42ad93b801cef3c2575f39e7877b9bf6>`)(RTS_HANDLE hLog, int iQueueIndex, LogEntry *pLogEntry, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFLOGGETFIRSTENTRY <group___cmp_log_itf_1ga499cad903aa273380c1f1ababb62901d>`)(RTS_HANDLE hLog, LogEntry *pLogEntry, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFLOGGETNEXTENTRY <group___cmp_log_itf_1ga60794ec163dfbf8f811a774f7d846423>`)(RTS_HANDLE hLog, RTS_HANDLE hEntry, LogEntry *pLogEntry, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFLOGGETENTRY <group___cmp_log_itf_1gafa6ff817d1f3c8dd16a579ef3342ef28>`)(RTS_HANDLE hLog, RTS_HANDLE hEntry, LogEntry *pLogEntry)
+
+- typedef RTS_HANDLE(* :ref:`PFLOGGETFIRSTLOGGER <group___cmp_log_itf_1ga46a94bc63bc51d19b17c8d304861c3de>`)(RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFLOGGETNEXTLOGGER <group___cmp_log_itf_1ga5cda37b6eac7837441113cda17e574f5>`)(RTS_HANDLE hLogger, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFLOGGETNAME <group___cmp_log_itf_1ga5be661fe4ec2dcdb8d78d3f9ff023eeb>`)(RTS_HANDLE hLog, char *pszLoggerName, int nMaxLen)
+
+- typedef RTS_RESULT(* :ref:`PFLOGGETUSERNOTIFY <group___cmp_log_itf_1ga40128482832c1792f1a66e73580e5931>`)(LogEntry **ppLogEntryUserNotify)
+
+- typedef RTS_UI32(* :ref:`PFLOGCONVERTTIMESTAMP <group___cmp_log_itf_1gac9c76cef01527c0b6e686abe3c174f4e>`)(RTS_HANDLE hLog, LogTimestamp tTimestamp, RTS_SYSTIMEDATE *pDate, RTS_RESULT *pResult)
+
+- typedef :ref:`ICmpLog_C <struct_i_cmp_log___c>` :ref:`ICmpLog <group___cmp_log_itf_1gaa09727f8b0191bc3ff5107fc04a78555>`
+
+Functions
+---------
+
+- void :ref:`logadd <group___cmp_log_itf_1gada65f6e3b2007e0b6aac7787d95ca415>` (:ref:`logadd_struct <group___cmp_log_itf_1ga3f6ff8913954c07810745f0fc90c347c>` * p)
+
+- void :ref:`logadd2 <group___cmp_log_itf_1ga30e2ddae29a8ddead33df49cfee827c2>` (:ref:`logadd2_struct <group___cmp_log_itf_1ga4c4d1c3825b7eeb168fb5e2c84d527d7>` * p)
+
+- void :ref:`logclose <group___cmp_log_itf_1ga523681642db159b24b65b16c689c2358>` (:ref:`logclose_struct <group___cmp_log_itf_1gae5bb5de73b3400e49e4f4782dc343851>` * p)
+
+- void :ref:`logcreate <group___cmp_log_itf_1ga6530e0ccd739cd0cd2656b8127218b7a>` (:ref:`logcreate_struct <group___cmp_log_itf_1ga3c9260fac6bfa01f7e7ecaacbf038b3a>` * p)
+
+- void :ref:`logdelete <group___cmp_log_itf_1ga42b4dc58d925c0d39023715071db502b>` (:ref:`logdelete_struct <group___cmp_log_itf_1ga846a6b8e92480af2c36288cfa4766349>` * p)
+
+- void :ref:`logopen <group___cmp_log_itf_1ga678885e89c7959c889280ede86a9976d>` (:ref:`logopen_struct <group___cmp_log_itf_1ga741016eaab853866a0fcd6b971ba45e0>` * p)
+
+- RTS_HANDLE :ref:`LogCreate <group___cmp_log_itf_1gaddf553596536474e216ce11239ee82cb>` (:ref:`LogOptions <group___cmp_log_itf___logger_1ga0327ffeedb0153418de81ea6cb995c84>` * pOptions, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`LogOpen <group___cmp_log_itf_1gae23e3a9bcedee4de3397199e6ddf4d21>` (char * pszName, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`LogClose <group___cmp_log_itf_1ga4688eb53fde913086da5815190a6fddc>` (RTS_HANDLE hLog)
+
+- RTS_RESULT :ref:`LogDelete <group___cmp_log_itf_1ga7e80acd5a08d481c0b507f3908b73301>` (RTS_HANDLE hLog)
+
+- RTS_RESULT :ref:`LogGetOptions <group___cmp_log_itf_1ga8250cab022701d3defcb0e558a3e53f0>` (RTS_HANDLE hLog, :ref:`LogOptions <group___cmp_log_itf___logger_1ga0327ffeedb0153418de81ea6cb995c84>` ** ppOptions)
+
+- RTS_RESULT :ref:`LogEnable <group___cmp_log_itf_1ga75b83176de130c0c2dbe7cd5c60a8276>` (RTS_HANDLE hLog)
+
+- RTS_RESULT :ref:`LogDisable <group___cmp_log_itf_1gade9511572c43d83af0c21fdbad382d67>` (RTS_HANDLE hLog)
+
+- RTS_RESULT :ref:`LogSetFilter <group___cmp_log_itf_1gaef0a9bc49749aa614d2646e1505140d3>` (RTS_HANDLE hLog, RTS_I32 iFilter)
+
+- RTS_I32 :ref:`LogGetFilter <group___cmp_log_itf_1ga387451d3508eb698a59f8d1952e64c2e>` (RTS_HANDLE hLog)
+
+- :ref:`LogFilter <struct_log_filter>` :ref:`LogGetFilter2 <group___cmp_log_itf_1ga3a54911ec68af4dd2ccd205d0ea987d3>` (RTS_HANDLE hLog, CMPID cmpId, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`LogAdd <group___cmp_log_itf_1gab55f6b8920a58f0a186805072d77c308>` (RTS_HANDLE hLog, CMPID CmpId, RTS_I32 iClassID, RTS_RESULT iErrorID, RTS_I32 iInfoID, char * pszInfo, ...)
+
+- RTS_RESULT :ref:`LogAdd2 <group___cmp_log_itf_1ga19a79608b5222548da156e18df01ea4b>` (:ref:`LogFilter <struct_log_filter>`  filter, RTS_I32 iClassID, RTS_RESULT iErrorID, RTS_I32 iInfoID, char * pszInfo, ...)
+
+- RTS_RESULT :ref:`LogAdd3 <group___cmp_log_itf_1ga228f6c707f74d5c5ef7d6919d8e82366>` (:ref:`LogFilter <struct_log_filter>`  filter, RTS_I32 iClassID, RTS_I32 iMask, RTS_RESULT iErrorID, RTS_I32 iInfoID, char * pszInfo, ...)
+
+- RTS_RESULT :ref:`LogAddArg <group___cmp_log_itf_1ga23a372f83768f93916234383aeece9f4>` (RTS_HANDLE hLog, CMPID CmpId, RTS_I32 iClassID, RTS_RESULT iErrorID, RTS_I32 iInfoID, char * pszInfo, va_list * pargList)
+
+- RTS_RESULT :ref:`LogAdd2Arg <group___cmp_log_itf_1ga25080676b08f61ac41ed2c23c466a5a1>` (:ref:`LogFilter <struct_log_filter>`  filter, RTS_I32 iClassID, RTS_RESULT iErrorID, RTS_I32 iInfoID, char * pszInfo, va_list * pargList)
+
+- RTS_RESULT :ref:`LogAdd3Arg <group___cmp_log_itf_1gacde01ae8ad788c003f1e1286dbb35038>` (:ref:`LogFilter <struct_log_filter>`  filter, RTS_I32 iClassID, RTS_I32 iMask, RTS_RESULT iErrorID, RTS_I32 iInfoID, char * pszInfo, va_list * pargList)
+
+- RTS_RESULT :ref:`LogDumpAll <group___cmp_log_itf_1ga5862fee1364447aa2feae07e375f0e94>` (int iOptions)
+
+- RTS_RESULT :ref:`LogDumpEntries <group___cmp_log_itf_1ga64a7c9bb8e41346d850e073f145174ad>` (RTS_HANDLE hLog)
+
+- RTS_RESULT :ref:`LogRegisterInterface <group___cmp_log_itf_1ga8167c1ce7661241ded0640984fbb4c18>` (RTS_HANDLE hLog, CLASSID ClassId, :ref:`ICmpLogBackend <group___cmp_log_backend_itf_1ga8a75c550e8aaffbbd38b4d99e4d5dd29>` * pIBackend)
+
+- RTS_RESULT :ref:`LogUnregisterInterface <group___cmp_log_itf_1gab7d7284e19e30aec24cb7c905ab421cf>` (RTS_HANDLE hLog, :ref:`ICmpLogBackend <group___cmp_log_backend_itf_1ga8a75c550e8aaffbbd38b4d99e4d5dd29>` * pIBackend)
+
+- RTS_RESULT :ref:`LogRegisterBackend <group___cmp_log_itf_1gae10d012f267465935fef5e449155d562>` (RTS_HANDLE hLog, CLASSID ClassId)
+
+- RTS_RESULT :ref:`LogUnregisterBackend <group___cmp_log_itf_1gab161d93550659d44e84301971e6474e4>` (RTS_HANDLE hLog, CLASSID ClassId)
+
+- RTS_HANDLE :ref:`LogGetEntryByIndex <group___cmp_log_itf_1ga6c02147201f60a045c1547f55771e511>` (RTS_HANDLE hLog, int iIndex, :ref:`LogEntry <group___cmp_log_itf___logger_1ga160e4cd161c7cb4b77aa51764bbb4514>` * pLogEntry, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`LogGetEntryByQueueIndex <group___cmp_log_itf_1gaddd8773192bb7c1c0498117860035953>` (RTS_HANDLE hLog, int iQueueIndex, :ref:`LogEntry <group___cmp_log_itf___logger_1ga160e4cd161c7cb4b77aa51764bbb4514>` * pLogEntry, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`LogGetFirstEntry <group___cmp_log_itf_1ga8e006a946f2f5382e19e8e48ae381021>` (RTS_HANDLE hLog, :ref:`LogEntry <group___cmp_log_itf___logger_1ga160e4cd161c7cb4b77aa51764bbb4514>` * pLogEntry, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`LogGetNextEntry <group___cmp_log_itf_1ga21c522a6b15b6c11a9acc8e841503ad3>` (RTS_HANDLE hLog, RTS_HANDLE hEntry, :ref:`LogEntry <group___cmp_log_itf___logger_1ga160e4cd161c7cb4b77aa51764bbb4514>` * pLogEntry, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`LogGetEntry <group___cmp_log_itf_1ga7938f7e5a29bc8edab5cb3cf80b7fb29>` (RTS_HANDLE hLog, RTS_HANDLE hEntry, :ref:`LogEntry <group___cmp_log_itf___logger_1ga160e4cd161c7cb4b77aa51764bbb4514>` * pLogEntry)
+
+- RTS_HANDLE :ref:`LogGetFirstLogger <group___cmp_log_itf_1ga45c0b9e734c0f25143e09b79855902f2>` (RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`LogGetNextLogger <group___cmp_log_itf_1ga5802e8a77c0af4a63f01b84143b10e18>` (RTS_HANDLE hLogger, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`LogGetName <group___cmp_log_itf_1ga6b72d5007defca9563b32de9b5ebd34e>` (RTS_HANDLE hLog, char * pszLoggerName, int nMaxLen)
+
+- RTS_RESULT :ref:`LogGetUserNotify <group___cmp_log_itf_1gad39c25bf124b3eb6e6819c9b297a27c2>` (:ref:`LogEntry <group___cmp_log_itf___logger_1ga160e4cd161c7cb4b77aa51764bbb4514>` ** ppLogEntryUserNotify)
+
+- RTS_UI32 :ref:`LogConvertTimestamp <group___cmp_log_itf_1ga8a3829f7bb504e0ed969cc67429e3b72>` (RTS_HANDLE hLog, :ref:`LogTimestamp <union_log_timestamp>`  tTimestamp, :ref:`RTS_SYSTIMEDATE <group___sys_time_rtc_itf_1gadd4e44fc89e9fcca9880b48cf57137a4>` * pDate, RTS_RESULT * pResult)
+
+Detailed Description
+--------------------
+
+Definition in file CmpLogItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

@@ -220,7 +220,7 @@ define(`CREATE_EXPORT_STMT',dnl
 #endif',`#define EXPORT_EXTREF2_STMT')
 'dnl
 `ifdef(`__EXPORTS',dnl
-`#if !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
+`#if !defined(_UPPERCASE(_COMPONENT_NAME)_DISABLE_CMPITF) && !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
 #define EXPORT_CMPITF_STMT \
     {\
         ADD_EXPORTS\
@@ -424,6 +424,11 @@ CREATE_INIT_STMT
 % Generate an "#include " directive, 
 % replacing the extension ".m4" with ".h"
 % -----------------------------
+define(`GET_INCLUDE_FILE', `ifelse(`-1',regexp(`$1',`\.m4$'),`error(`m4:'__file__`('__line__`):The first parameter "'$1`" is not a .m4 file')',dnl
+`/**
+ * \file 'patsubst(`$1',`\.m4$',`\.h')`
+ */')')
+
 define(`GEN_INCLUDE', dnl
 `ifelse(`-1',regexp(`$1',`\.m4$'), dnl
         `error(`m4:'__file__`('__line__`):The first parameter "'$1`" is not a .m4 file
@@ -713,7 +718,9 @@ ifelse($3,`',`', `#ifndef RTS_TASKGROUP_`'_UPPERCASE($1)
 % Get all interfaces, which are implemented by this component.
 % Differentiate between C++ and C Interfaces.
 % -----------------------------
-define(`DO_IMPLEMENT_ITF',`GEN_INCLUDE($1)
+define(`DO_IMPLEMENT_ITF',`
+GET_INCLUDE_FILE($1)
+GEN_INCLUDE($1)
 ifelse(`$#',1,`',`DO_IMPLEMENT_ITF(shift($@))')
 divert(-1)
 include($1)

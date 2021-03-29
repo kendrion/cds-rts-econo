@@ -1,12 +1,12 @@
  /**
  * <interfacename>CmpMgrBasicChecks</interfacename>
  * <description>
- *	<p>Interface to check the runtime environment. Here things like datatype size and
+ *	<p>Interface to check the runtime environment. Here things like data type size and
  *	byte order are checked, before the runtime system was started.</p>
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 

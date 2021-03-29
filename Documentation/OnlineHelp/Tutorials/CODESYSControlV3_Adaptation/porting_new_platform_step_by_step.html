@@ -1,0 +1,867 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Step by Step &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/theme.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Testing the communication" href="porting_new_platform_testing.html" />
+    <link rel="prev" title="6.2.2.2. Porting to a new Platform" href="porting_new_platform.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="porting_new_platform_testing.html" title="Testing the communication"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="porting_new_platform.html" title="6.2.2.2. Porting to a new Platform"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >6. Tutorials / HowTos</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >6.2.2. CODESYS Control V3 - Porting to a new platform</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="porting_new_platform.html" accesskey="U">6.2.2.2. Porting to a new Platform</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="porting_new_platform.html"
+                        title="previous chapter">6.2.2.2. Porting to a new Platform</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="porting_new_platform_testing.html"
+                        title="next chapter">Testing the communication</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="step-by-step">
+<span id="porting-new-platform-step-by-step"></span><h1>Step by Step<a class="headerlink" href="#step-by-step" title="Permalink to this headline">¶</a></h1>
+<p>To follow this step-by-step tutorial, we assume that you have a specific
+project layout. For simplicity, we call the new Platform „MyPlat“. So
+you should replace this name everywhere with the name of your specific
+CPU-, OS- or Boardname.</p>
+<p>We don’t want to focus on a specific compiler or a specific platform. So
+most of the descriptions are kept very neutral in respect to this.
+Depending on your specific hardware, there might be some more steps
+involved, which are not mentioned here.</p>
+<p>The expected file layout looks like this:</p>
+<ul>
+<li><div class="line-block">
+<div class="line"><strong>Components</strong></div>
+<div class="line">Here you will find all generic code of our runtime core. You should
+never change any of those files for your adaptation. If you really
+have the need to change something here, you should copy this
+specific component to your platform directory, rename it and adopt
+it for your project.</div>
+<div class="line"><strong>Note:</strong> Renaming is essential, because otherwise the component
+will be faulty marked as a 3S component!</div>
+</div>
+</li>
+<li><p><strong>Platforms</strong></p>
+<ul>
+<li><p><strong>Native</strong></p>
+<ul>
+<li><p><strong>MyPlat</strong></p>
+<ul>
+<li><div class="line-block">
+<div class="line"><strong>rtsconfig</strong></div>
+<div class="line">This folder contains the configuration of the runtime
+which we create with our „RtsConfigurator“.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><strong>Sys</strong></div>
+<div class="line">This folder will keep all source files, which need to be
+adopted for our platform.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><strong>Projects</strong></div>
+<div class="line">Here, you should place your project-/makefiles for your
+specific compiler.</div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="section" id="configure-your-runtime-using-the-rtsconfigurator">
+<h2>Configure your Runtime, using the RtsConfigurator<a class="headerlink" href="#configure-your-runtime-using-the-rtsconfigurator" title="Permalink to this headline">¶</a></h2>
+<p>The RtsConfigurator is used to manage a collection of Components that
+build up a CODESYS Control runtime system. In this process, the
+RtsConfigurator helps you in resolving the dependencies between the
+components dynamically. You can select the components in the top left
+field by categories or in the bottom left field from a sorted list. If
+the currently selected components have unresolved dependencies, they are
+displayed on the right. There you can decide, how you want to resolve
+them.</p>
+<p><strong>Note:</strong> Optional dependencies and implicit dependencies are not
+resolved. Such an implicit dependency might be: <em>CmpBlkDrvCan</em> needs a
+<em>CAN-Mini-Driver</em> to work. But because this Mini-Driver has registers
+itself at the CANL2 layer and not the other way, the dependency to the
+Mini-Driver is not known</p>
+<ul>
+<li><div class="line-block">
+<div class="line">Before we can start the RtsConfigurator, we have to create the file
+structure, like it is described in section 2.1:</div>
+<div class="line"><img alt="image2" src="../../_images/image2.jpeg" /></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">Start the RtsConfigurator from <em>RtsConfigurator -&gt; Bin</em>:</div>
+<div class="line"><img alt="image3" src="../../_images/image3.jpeg" /></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">Select Components Folder:</div>
+<div class="line"><img alt="image4" src="../../_images/image4.jpeg" /></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">Select the System Folder</div>
+<div class="line"><img alt="image5" src="../../_images/image5.jpeg" /></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">Set OS Prefix</div>
+<div class="line"><img alt="image6" src="../../_images/image6.jpeg" /></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">Add the following components to your project by selecting them in
+the bottom left list:</div>
+<div class="line">CmpAppEmbedded</div>
+<div class="line">CmpBinTagUtil</div>
+<div class="line">CmpBlkDrvCom</div>
+<div class="line">CmpChannelMgrEmbedded</div>
+<div class="line">CmpChannelServerEmbedded</div>
+<div class="line">CmpChecksum</div>
+<div class="line">CmpCommunicationLib</div>
+<div class="line">CmpDevice</div>
+<div class="line">CmpEventMgr</div>
+<div class="line">CmpIecTask</div>
+<div class="line">CmpIoMgrEmbedded</div>
+<div class="line">CmpLogEmbedded</div>
+<div class="line">CmpMemPool</div>
+<div class="line">CmpMonitor</div>
+<div class="line">CmpNameServiceServer</div>
+<div class="line">CmpRetain</div>
+<div class="line">CmpRouterEmbedded</div>
+<div class="line">CmpScheduleEmbedded</div>
+<div class="line">CmpSettingsEmbedded</div>
+<div class="line">CmpSrv</div>
+<div class="line">SysCom</div>
+<div class="line">SysCpuHandling</div>
+<div class="line">SysExcept</div>
+<div class="line">SysFileFlash</div>
+<div class="line">SysFlash</div>
+<div class="line">SysInternalLib</div>
+<div class="line">SysMem</div>
+<div class="line">SysTarget</div>
+<div class="line">SysTime</div>
+</div>
+<p><strong>Note:</strong> If your Runtime is newer than the version described in this
+document, you might encounter some new dependencies. Please resolve
+them manually if necessary.</p>
+</li>
+<li><div class="line-block">
+<div class="line">After that, you will see the following list of errors in the
+“Messages” window:</div>
+<div class="line"><img alt="image7" src="../../_images/image7.jpeg" /></div>
+<div class="line">This gives you a list of files, that you need to implement, to
+adopt the CODESYS Control Runtime with the current settings to your
+new platform. The adaptation will be done in section 2.1.5 and
+2.1.7. Now we will leave the RtsConfigurator open in the background
+and start copying the required files…</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="get-all-necessary-source-files-from-systemplates">
+<h2>Get all necessary source files from SysTemplates<a class="headerlink" href="#get-all-necessary-source-files-from-systemplates" title="Permalink to this headline">¶</a></h2>
+<p>The Folder <em>Platform -&gt; SysTemplates</em> of the StarterPackage contains
+some examples and scaffolds to build up your own adaptation files. Based
+on the list printed by the RtsConfigurator in section 2.1.1, you should
+copy and rename all necessary files from “<em>Platforms -&gt; SysTemplates”</em>
+to “<em>Platforms -&gt; Native -&gt; MyPlat -&gt; Sys”</em>.</p>
+<p>You might notice, that all files in the SysTemplates folder have the
+postfix “OS”. This will be replaced by our own name. In our example this
+is “MyPlat”, but you should use your own description here.</p>
+<div class="line-block">
+<div class="line">SysTemplates/SysFlashOS.c -&gt; Native/MyPlat/Sys/SysFlashMyPlat.c</div>
+<div class="line">SysTemplates/SysExceptOS.c -&gt; Native/MyPlat/Sys/SysExceptMyPlat.c</div>
+<div class="line">SysTemplates/SysComOS.c -&gt; Native/MyPlat/Sys/SysComMyPlat.c</div>
+<div class="line">SysTemplates/SysTimeOS.c -&gt; Native/MyPlat/Sys/SysTimeMyPlat.c</div>
+<div class="line">SysTemplates/MainOS.c -&gt; Native/MyPlat/Sys/MainMyPlat.c</div>
+<div class="line">SysTemplates/SysMemOS.c -&gt; Native/MyPlat/Sys/SysMemMyPlat.c</div>
+<div class="line">SysTemplates/SysCpuHandlingOS.c -&gt;
+Native/MyPlat/Sys/SysCpuHandlingMyPlat.c</div>
+<div class="line">SysTemplates/SysTargetOS.c -&gt; Native/MyPlat/Sys/SysTargetMyPlat.c</div>
+</div>
+<p>Additionally to this, you should also copy some header files from the
+SysTemplates. We will place those files not to the “Sys”-Folder, but
+outside, so that they are clearly seperated from the sources. Those
+header files are containing the configuration of the runtime as well as
+some platformspecific definitions.</p>
+<div class="line-block">
+<div class="line">SysTemplates/sysspecific.h -&gt; Native/MyPlat/sysspecific.h</div>
+<div class="line">SysTemplates/sysdefines.h -&gt; Native/MyPlat/sysdefines.h</div>
+</div>
+</div>
+<div class="section" id="finish-configuration-with-rtsconfigurator">
+<h2>Finish Configuration with RtsConfigurator<a class="headerlink" href="#finish-configuration-with-rtsconfigurator" title="Permalink to this headline">¶</a></h2>
+<p>Go back to the RtsConfigurator and open the menu <em>Options -&gt; Folders of
+system components</em> just to close it again. This way, the RtsConfigurator
+is doing a new scan for the files and the error messages from the
+“Messages” window should disappear.</p>
+<p><strong>Note:</strong> If there are still some error messages, please check the that
+you selected the correct paths and that the “OS Prefix”, selected in the
+<em>Options -&gt; Project options</em> is the same as the postfix of the files,
+which you copied to your folder (postfix = the name with which you
+substituted the postfix “OS” from the default filename. In our example
+this is “MyPlat”).</p>
+<div class="line-block">
+<div class="line">Now you can save the project file in the following path:</div>
+<div class="line"><em>Platforms -&gt; Native -&gt; MyPlat -&gt; rtsconfig</em></div>
+</div>
+<p>We recommend to name it <strong>“compact.rcp”</strong>, because this is the
+configuration of our compact runtime. This name will be used to generate
+some header files, which we are including later.</p>
+<p>Now, that we saved everything, we can also change the paths in our
+RtsConfigurator Project from absolute to relative:</p>
+<ul>
+<li><div class="line-block">
+<div class="line">Options -&gt; Component folders</div>
+<div class="line"><img alt="image8" src="../../_images/image8.jpeg" /></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">Options -&gt; Folders for system components</div>
+<div class="line"><img alt="image9" src="../../_images/image9.jpeg" /></div>
+</div>
+</li>
+<li><p>Save again!</p></li>
+</ul>
+<p><strong>Note:</strong> This is a good time to check everything in into your version
+control system. Later on I will only refer to files, which need to be
+added explicitly, based on this version.</p>
+<ul>
+<li><div class="line-block">
+<div class="line">After you saved the project, you can generate the output files:</div>
+<div class="line"><em>Output -&gt; Generate all output files</em></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">The most important files for us are the following:</div>
+<div class="line"><em>compact.c_
+compact.h
+compact_NotImpl.h</em></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="create-project-to-compile">
+<h2>Create Project to Compile<a class="headerlink" href="#create-project-to-compile" title="Permalink to this headline">¶</a></h2>
+<p>Now you should create a new project, using your compiler and maybe the
+IDE which comes with it. How this works exactly depends heavily on your
+compiler and is not covered here. But there are a few settings, which
+will be necessary in any way:</p>
+<ul>
+<li><p>Save the Project under: Platforms -&gt; Native -&gt; MyPlat -&gt; Projects</p></li>
+<li><div class="line-block">
+<div class="line">Set the Include Paths to (if possible with relative paths):</div>
+<div class="line">Components</div>
+<div class="line">Platforms -&gt; Native -&gt; MyPlat</div>
+</div>
+</li>
+<li><p>On systems with less then 32Bit address width, you should set your
+memory model to s.th. like “huge” or “large” (please check your
+compiler manual). Because we might need to address buffers, which
+might be more far away as the segment size of your processor.</p></li>
+<li><p>Add all C-Files, which are listed in the file compact.c_ to your
+project.</p></li>
+</ul>
+<p>If you now try to compile, it depends on your toolchain if it works or
+not. But in general you should encounter only some small issues, like
+unnecessary include directives. Just remove them as necessary.</p>
+</div>
+<div class="section" id="adapting-all-files-for-communication">
+<h2>Adapting all files for communication<a class="headerlink" href="#adapting-all-files-for-communication" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mainmyplat-c">
+<h3>MainMyPlat.c<a class="headerlink" href="#mainmyplat-c" title="Permalink to this headline">¶</a></h3>
+<p>This file should contain your “main” entry point. On an embedded
+platform, you will usually have another processor entry in which you
+need to setup some of the basic peripherals or memory mappings. It’s up
+to you if you integrate this to this file or not. We will assume that
+your entry begins in a C-Function, called “main()”.</p>
+<p>At the top of this file, there is an include statement for
+<em>“myPlatform.h”</em>. You need to change this to <em>“rtsconfig/compact.h”</em>.
+This file contains basically a list of all configured components, which
+we will pass to CMInit() to initialise our system.</p>
+<p>For now we will not load the configuration settings from a file, but we
+will configure the system statically (see 2.1.5.5). So we will pass NULL
+as the name of the configuration file. The minimal version of our main()
+function will look like this:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">RTS_RESULT</span> <span class="n">Result</span><span class="p">;</span>
+  <span class="n">Result</span> <span class="p">=</span> <span class="n">CMInit</span><span class="p">(</span><span class="n">NULL</span><span class="p">,</span> <span class="n">s_ComponentList</span><span class="p">);</span>
+  <span class="k">while</span><span class="p">(!</span><span class="n">s_bExitLoop</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CMCallHook</span><span class="p">(</span> <span class="n">CH_COMM_CYCLE</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> MainLoadComponent() and MainUnloadComponent() can be used for
+dynamically linked systems, to load new components dynamically at system
+startup. This is not necessary for our small runtime, because we will
+link our system statically.</p>
+</div>
+<div class="section" id="syscommyplat-c">
+<h3>SysComMyPlat.c<a class="headerlink" href="#syscommyplat-c" title="Permalink to this headline">¶</a></h3>
+<p>The communication between CODESYS and CODESYS Control will be done over
+a serial link. The driver for the serial interface needs to be
+implemented in this component.</p>
+<p>The general driver scheme which is necessary is as follows:</p>
+<ul>
+<li><div class="line-block">
+<div class="line">SysComOpen()</div>
+<div class="line">Just make a wrapper for SysComOpen2().</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysComOpen2()</div>
+<div class="line">Setup the serial interface with our configuration settings.
+Especially set the baudrate of the interface.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysComClose()</div>
+<div class="line">Disable the serial interface. Especially you should disable the
+hardware interrupts.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysComSetSettings() / SysComGetSettings()</div>
+<div class="line">These functions are not used in our communication layer, so you can
+leave them blank for now.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">InterruptHandler()</div>
+<div class="line">Register your own interrupt handler for send- and receive
+interrupts. Use the buffers “sendBuf” and “recvBuf”, which are
+already declared in this file for your send and receive packets.</div>
+</div>
+</li>
+<li><p>On a receive interrupt: read byte(s) and write it to the “recvBuf”.</p></li>
+<li><p>On send interrupt: check if there is something left in the “sendBuf”
+and write it to the chip.</p></li>
+<li><div class="line-block">
+<div class="line">SysComRead()</div>
+<div class="line">Read as much as you can from the “recvBuf” and return it to the
+user. For simplicity it is also possible to return only one byte at
+a time, but this will produce more system overhead and is only
+recommended for the first tests.</div>
+</div>
+</li>
+<li><p>SysComWrite()</p>
+<ul class="simple">
+<li><p>If “sendBuf” is empty, write first character directly to the chip
+and fill the rest into the “sendBuf”.</p></li>
+<li><p>If “sendBuf” is full, just append everything to “sendBuf”.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Note:</strong> Remember to disable interrupts during manipulation of the
+buffers!</p>
+</div>
+<div class="section" id="systargetmyplat-c">
+<h3>SysTargetMyPlat.c<a class="headerlink" href="#systargetmyplat-c" title="Permalink to this headline">¶</a></h3>
+<p>This component returns the target identification, like: TargetID,
+VendorID, NodeName, Serial Number, … . Most of the parameters are
+already returned by the higher-level component, and are taken from the
+file “targetdefines.h”, which is part of your delivery (see 2.1.5.5).</p>
+<p>In this file, you just have to return the NodeName, which is displayed
+in the Device Scan Dialog. But for the first tests you can leave it as
+is.</p>
+</div>
+<div class="section" id="systimemyplat-c">
+<h3>SysTimeMyPlat.c<a class="headerlink" href="#systimemyplat-c" title="Permalink to this headline">¶</a></h3>
+<p>This component provides some basic functions for the runtime to measure
+relative timings. The time values returned by the functions from this
+file have no relations to a realworld time, so for example they can not
+be converted directly to a fix UTC time. Usually the time is measured
+since the system startup and that’s enough, because the functions are
+just used to measure relative times.</p>
+<ul>
+<li><div class="line-block">
+<div class="line">SysTimeGetMs()</div>
+<div class="line">Returns a relative timestamp in milliseconds.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTimeGetUs()</div>
+<div class="line">Returns a relative timestamp in microseconds.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">SysTimeGetNs()</div>
+<div class="line">Returns a relative timestamp in nanoseconds.</div>
+</div>
+</li>
+</ul>
+<p>Depending on your hardware, you can use a free programmable system timer
+or a timestamp counter to determine this time. Examples for some sources
+in some architectures:</p>
+<ul>
+<li><div class="line-block">
+<div class="line">X86: Timestamp Counter (TSC):</div>
+<div class="line">With every processor cycle the x86 increments this counter by one.
+So you get the number of processor cycles since system startup.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">PPC: Timebase register (TB):</div>
+<div class="line">This counter is incremented with the frequency of the bus. You need
+to check your hardware manual to determine the exact frequency.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">ARM and others:</div>
+<div class="line">If no such counter is available, you can program a periodic timer
+to get a high-precision system time. Note, that you don’t have to
+generate interrupts, but in most cases you can just read the
+current value of the timer. That’s much more efficient then
+generating permanently interrupts and counting these.</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="sysdefines-h-sysspecific-h">
+<h3>sysdefines.h / sysspecific.h<a class="headerlink" href="#sysdefines-h-sysspecific-h" title="Permalink to this headline">¶</a></h3>
+<p>For the Platformspecific configuration, we differentiate between those
+two include files. Both files are included in every source file, which
+is built in the CODESYS Control Runtime. But anyway, they are both
+playing different roles in the configuration:</p>
+<ul>
+<li><div class="line-block">
+<div class="line">sysdefines.h</div>
+<div class="line">This file contains and includes everything which belongs to the
+configuration of the runtime system. In the end it should really be
+a collection of defines and configuration entries, which are
+configuring the system.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">sysspecific.h</div>
+<div class="line">In contrary to sysdefines.h this file should only define some
+compiler-, OS- or CPU-specific things which are necessary on this
+platform. For example: HUGE_PTR, CDECL, …</div>
+</div>
+</li>
+</ul>
+<p>Because the <strong>sysdefines.h</strong> contains the configuration of the system,
+we also include the header file, generated by the RtsConfigurator here.
+You should add an include statement for “rtsconfig/compact_NotImpl.h”:</p>
+<blockquote>
+<div><p>#include &lt;rtsconfig/compact_NotImpl.h&gt;</p>
+</div></blockquote>
+<p>This file is important, because it defines which components are not
+contained in our system. Some of our runtime system components have
+optional dependencies. And to disable those dependencies in a statically
+linked application, we need to set those defines.</p>
+<p>You should also add a include statement for the file “targetdefines.h”,
+which was included in our SDK. This file contains your VendorID,
+TargetID, Target Signature, … . Just copy it to <em>Platforms -&gt; Native
+-&gt; MyPlat</em>:</p>
+<blockquote>
+<div><p>#include &lt;targetdefines.h&gt;</p>
+</div></blockquote>
+<p>Because we have no Filesystem, yet, we cannot load any configuration
+file. Therefore we included the component CmpSettingsEmbedded instead of
+CmpSettings in our configuration of the compact runtime. The full
+component CmpSettings is reading and writing the configuration entries
+from and to a file on the filesystem. The embedded version of this
+component implements the exact same interface but uses the configuration
+settings which are set in sysdefines.h:</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line-block">
+<div class="line">/**</div>
+<div class="line">* Defines, used only in CmpSettingsEmbedded.</div>
+<div class="line">* Defines the configuration settings, as well as free spaces,</div>
+<div class="line">* to add new settings.</div>
+<div class="line">* The format is:</div>
+<div class="line">* “ComponentName”, “KeyName”, Value</div>
+<div class="line">* If the “KeyName” is 0, this slot is reserved for new keys,</div>
+<div class="line">* which might be added to this component.</div>
+<div class="line">*/</div>
+</div>
+<div class="line">#define SETTG_ENTRIES_INT \</div>
+<div class="line-block">
+<div class="line">{“CmpRouter”, “NumRouters”, 1}, \</div>
+<div class="line">{“CmpBlkDrvCom”, “Com.0.Port”, 1}, \</div>
+<div class="line">{“CmpBlkDrvCom”, “Com.0.Baudrate”, 115200}, \</div>
+<div class="line">{“CmpMy”, 0, 0}, \</div>
+<div class="line">{0, 0, 0}</div>
+</div>
+<div class="line">#define SETTG_ENTRIES_STRING \</div>
+<div class="line-block">
+<div class="line">{“CmpRouter”, “0.MainNet”, “MyCom”}, \</div>
+<div class="line">{“CmpBlkDrvCom”, “Com.0.Name”, “MyCom”}, \</div>
+<div class="line">{“CmpMy”, 0, 0}, \</div>
+<div class="line">{0, 0, 0}</div>
+</div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="gateway-cfg">
+<h3>Gateway.cfg<a class="headerlink" href="#gateway-cfg" title="Permalink to this headline">¶</a></h3>
+<p>This is a configuration file on your development host. It is used to
+configure the CODESYS Gateway. Specifically we want to add our serial
+port as a new communication interface to it.</p>
+<ol class="arabic">
+<li><p>First you should find out which serial port your target is connected
+to. If you have a target that’s connected using a USB link, you may
+want to check the device manager of Windows to find out which com
+port is assigned to your device.</p></li>
+<li><p>Got to your <em>CODESYS installation directory -&gt; GatewayPLC</em> and open
+the file gateway.cfg.</p></li>
+<li><div class="line-block">
+<div class="line">Add the component “CmpBlkDrvCom” to the list of components:</div>
+<div class="line">[ComponentManager]</div>
+<div class="line">Component.1=CmpBlkDrvCom</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">Add a new Router instance:</div>
+<div class="line">[CmpRouter]</div>
+<div class="line">1.MainNet=MyCom</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">Configure the serial port:</div>
+<div class="line">[CmpBlkDrvCom]</div>
+<div class="line">Com.0.Port=19</div>
+<div class="line">Com.0.Name=MyCom</div>
+<div class="line">Com.0.Baudrate=115200</div>
+<div class="line">Com.0.EnableAutoAddressing=1</div>
+</div>
+</li>
+</ol>
+<p>Please restart your Gateway (using the systray icon
+<img alt="image10" src="../../_images/image10.jpeg" />).</p>
+<p>To check if the communication works, you can use the tool “portmon” from
+sysinternals to monitor the traffic on your serial port. After you made
+the configuration settings above, you should see some packets sent by
+the Gateway if you try to scan the network with CODESYS.</p>
+</div>
+</div>
+<div class="section" id="test-the-communication">
+<h2>Test the communication<a class="headerlink" href="#test-the-communication" title="Permalink to this headline">¶</a></h2>
+<p>After you made all the adaptations above, you should already see the
+device in the scan dialog:</p>
+<p><img alt="image11" src="../../_images/image11.jpeg" /></p>
+<p>If not, check the section 2.3.2 for some tipps how to debug the problem.</p>
+</div>
+<div class="section" id="adapt-all-files-for-a-first-download">
+<h2>Adapt all files for a first download<a class="headerlink" href="#adapt-all-files-for-a-first-download" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="myplat-devdesc-xml">
+<h3>MyPlat.devdesc.xml<a class="headerlink" href="#myplat-devdesc-xml" title="Permalink to this headline">¶</a></h3>
+<p>You should create a so called “device description” for your device. As a
+starting point, you should check out the files in <em>Templates -&gt; Devices</em>
+of your CODESYS Control SDK. There you will find templates for various
+architectures and various configurations. Go to the folder of your
+target CPU and take one of the device descriptions with the prefix
+“<a href="#id1"><span class="problematic" id="id2">Compact_</span></a>” as a starting point.</p>
+<p>The device description should already have the correct compiler
+settings. For the first tests, you should only change the device name:</p>
+<ul class="simple">
+<li><p>DeviceDescription -&gt; Device -&gt; DeviceIdentification</p>
+<ul>
+<li><p><strong>Type:</strong> The default is 4096 and this is suitable for every
+logical PLC.</p></li>
+<li><p><strong>Id:</strong> This is a combination of your VendorID and your TargetID.
+This should already match your settings.</p></li>
+<li><p><strong>Version:</strong> The version can be used by you to force the user to
+use a device description that matches your Firmware.</p></li>
+</ul>
+</li>
+<li><p>DeviceDescription -&gt; Device -&gt; DeviceInfo</p>
+<ul>
+<li><p><strong>Name:</strong> The name of your PLC when you select it in CODESYS.</p></li>
+<li><p><strong>Description:</strong> Description which is displayed when you select
+your PLC.</p></li>
+<li><p><strong>Vendor:</strong> Your Vendor Name</p></li>
+<li><p><strong>Icon:</strong> Reference to an Icon that is displayed in the device
+tree (*.ico, 32x32).</p></li>
+<li><p><strong>Image:</strong> Image, which is displayed near the description, when
+you select your PLC in CODESYS (*.png, *.jpg, full-sized image,
+auto-scaled).</p></li>
+</ul>
+</li>
+</ul>
+<p>To select your PLC in CODESYS, you need to install it first. Go to
+<em>Tools -&gt; Device Repository -&gt; Install</em> and select your Device
+Description. After you pressed “OK”, you should find your newly
+installed device with the name that you specified in the device
+description in the device list.</p>
+</div>
+<div class="section" id="syscpuhandlingmyplat-c">
+<h3>SysCpuHandlingMyPlat.c<a class="headerlink" href="#syscpuhandlingmyplat-c" title="Permalink to this headline">¶</a></h3>
+<p>This component contains some CPU-specific low level functionality. It
+usually consists of much assembler code, which is dependant on the CPU
+and the C-Compiler. Before you start implementing this functionality
+from scratch, you should contact your first level support at <em>3S – Smart
+Software Solutions</em> to get an example for your CPU. Even if it doesn’t
+match the syntax of your Assembler it should be easier to port it than
+to start from scratch.</p>
+<p>If your platform is too different and you need to start from scratch,
+you should start with the function <em>SysCpuCallIecFuncWithParams()</em> and
+implement it similar to this:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">CDECL</span> <span class="n">SysCpuCallIecFuncWithParams</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">pfIECFunc</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">pParam</span><span class="p">,</span><span class="kt">int</span> <span class="n">iSize</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">pfFunc</span><span class="p">)();</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">pStack</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">iStackSize</span> <span class="o">=</span> <span class="p">(</span><span class="n">iStackSize</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mi">3</span><span class="p">;</span>
+  <span class="n">pfFunc</span> <span class="o">=</span> <span class="n">pfIECFunc</span><span class="p">;</span>
+  <span class="n">fun</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFFUNCWITHPARAMS</span><span class="p">)</span><span class="n">pfIECFunc</span><span class="p">;</span>
+  <span class="kr">__asm</span> <span class="p">{</span>
+     <span class="n">sub</span> <span class="n">SP</span><span class="p">,</span> <span class="n">iStackSize</span>
+     <span class="n">mov</span> <span class="n">pStack</span><span class="p">,</span> <span class="n">SP</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">memcpy</span><span class="p">(</span><span class="n">pStack</span><span class="p">,</span> <span class="n">pParam</span><span class="p">,</span> <span class="n">iSize</span><span class="p">);</span>
+  <span class="n">pfFunc</span><span class="p">();</span>
+  <span class="n">memcpy</span><span class="p">(</span><span class="n">pParam</span><span class="p">,</span> <span class="n">pStack</span><span class="p">,</span> <span class="n">iSize</span><span class="p">);</span>
+  <span class="kr">__asm</span> <span class="p">{</span>
+     <span class="n">add</span> <span class="n">SP</span><span class="p">,</span> <span class="n">iStackSize</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">ERR_OK</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Note</strong>, that this code only works, if your compiler doesn’t place the
+local variables on the stack, but keeps them in callee save registers.</p>
+<p>The function <em>SysCpuGetCallstackEntry()</em> and is used to unwind the
+callstack when debugging or in case of an exception. This code is pretty
+similar on most platforms, as most callstacks are just saved in form of
+linked lists on the stack. The function <em>SysCPUGetCallstackEntry2()</em> is
+just an extended version, which differenciates between a C and an IEC
+context. That’s only important if your C-Compiler uses a different stack
+layout as the IEC Compiler of CODESYS. The unwinding code should look
+something like this:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">stack</span> <span class="p">{</span>
+  <span class="k">struct</span> <span class="nc">stack</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">eip</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">stack_t</span><span class="p">;</span>
+<span class="n">RTS_RESULT</span> <span class="n">CDECL</span> <span class="n">SysCpuGetCallstackEntry</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="o">*</span><span class="n">pulBP</span><span class="p">,</span> <span class="kt">void</span> <span class="o">**</span><span class="n">ppAddress</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">stack_t</span> <span class="o">*</span><span class="n">tStackEntry</span> <span class="o">=</span> <span class="p">(</span><span class="n">stack_t</span><span class="o">*</span><span class="p">)</span><span class="n">pulBP</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">pulBP</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="o">||</span> <span class="o">*</span><span class="n">pulBP</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">ppAddress</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+
+     <span class="k">if</span> <span class="p">(</span><span class="n">ppAddress</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+       <span class="o">*</span><span class="n">ppAddress</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+     <span class="k">return</span> <span class="n">ERR_PARAMETER</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="n">CAL_SysMemIsValidPointer</span><span class="p">((</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">tStackEntry</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">||</span>
+      <span class="o">!</span><span class="n">CAL_SysMemIsValidPointer</span><span class="p">((</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">tStackEntry</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">||</span>
+      <span class="o">!</span><span class="n">CAL_SysMemIsValidPointer</span><span class="p">((</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">tStackEntry</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">eip</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+  <span class="p">{</span>
+     <span class="o">*</span><span class="n">ppAddress</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+     <span class="k">return</span> <span class="n">ERR_FAILED</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">*</span><span class="n">ppAddress</span> <span class="o">=</span> <span class="n">tStackEntry</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">eip</span><span class="p">;</span>
+  <span class="o">*</span><span class="n">pulBP</span> <span class="o">=</span> <span class="n">tStackEntry</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="n">ERR_OK</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>There are two additional functions, which are used for atomic access of
+bits. These are called <em>SysCpuTestAndSet()</em> and <em>SysCpuTestAndReset()</em>.
+On nearly every CPU architecture, it should be possible to do an atomic
+read-modify-write operation or even an atomic bit-operation. If it is
+possible on your CPU, you should implement this API function
+accordingly. If it is not possible, or you just want to do this later,
+you can use the base implementation, which is just doing an interrupt
+lock around the read-modify-write operation:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">RTS_RESULT</span> <span class="n">CDECL</span> <span class="n">SysCpuTestAndSet</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="o">*</span> <span class="n">pul</span><span class="p">,</span> <span class="kt">int</span> <span class="n">iBit</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="nf">SysCpuTestAndSetBase</span><span class="p">(</span><span class="n">pul</span><span class="p">,</span> <span class="n">iBit</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">RTS_RESULT</span> <span class="n">CDECL</span> <span class="n">SysCpuTestAndReset</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="o">*</span> <span class="n">pul</span><span class="p">,</span> <span class="kt">int</span> <span class="n">iBit</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="nf">SysCpuTestAndResetBase</span><span class="p">(</span><span class="n">pul</span><span class="p">,</span> <span class="n">iBit</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>All other functions are only for debugging. They are discussed in
+section 3.3.1.</p>
+</div>
+<div class="section" id="sysexceptmyplat-c">
+<h3>SysExceptMyPlat.c<a class="headerlink" href="#sysexceptmyplat-c" title="Permalink to this headline">¶</a></h3>
+<p>Beside the two install and exit functions, this API contains only one
+API function which you need to install, that is called
+<em>SysExceptMapException()</em>. This function simply maps the exception
+number, which is reported by your CPU to the Exception IDs which are
+known by CODESYS. For a list of the available exception IDs, have a look
+in <em>SysExceptItf.m4</em>. There is a list of defines, starting with
+RTSEXCEPT_*.</p>
+<p>To handle an exception, you need to install an exception handler on your
+hardware. How this works depends pretty much on the hardware or on the
+fact if an OS is used or not. But in general, you should try to catch
+the exception as soon as possible.</p>
+<p>After you caught the exception, you need to be able to get the cause of
+the exception. The cause of the exception will be later expressed by an
+exception code, which is a 32Bit number. Additionally you have to
+determine the code location where the exception occurred and the
+base-pointer to unwind the call-stack later.</p>
+<p>For example – if the exception state was pushed on the stack, your code
+may look something like this:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">SysExceptHandler</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">RegContext</span> <span class="n">reg</span><span class="p">;</span>
+  <span class="kt">unsigned</span> <span class="kt">long</span> <span class="o">*</span><span class="n">pStack</span><span class="p">;</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">pSP</span><span class="p">;</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">pBP</span><span class="p">;</span>
+  <span class="kr">__asm</span> <span class="p">{</span>
+
+    <span class="n">mov</span> <span class="n">pStack</span><span class="p">,</span> <span class="n">SP</span><span class="p">;</span>
+    <span class="n">mov</span> <span class="n">pSP</span><span class="p">,</span> <span class="n">SP</span><span class="p">;</span>
+    <span class="n">mov</span> <span class="n">pBP</span><span class="p">,</span> <span class="n">BP</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">reg</span><span class="p">.</span><span class="n">IP</span> <span class="o">=</span> <span class="n">pStack</span><span class="p">[</span><span class="n">EXC_IP_IDX</span><span class="p">];</span>
+  <span class="n">reg</span><span class="p">.</span><span class="n">SP</span> <span class="o">=</span> <span class="n">pSP</span><span class="p">;</span>
+  <span class="n">reg</span><span class="p">.</span><span class="n">BP</span> <span class="o">=</span> <span class="n">pBP</span><span class="p">;</span>
+  <span class="n">CAL_SysExceptGenerateException</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pStack</span><span class="p">[</span><span class="n">EXC_TYPE_IDX</span><span class="p">],</span> <span class="n">reg</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sysmemmyplat-c">
+<h3>SysMemMyPlat.c<a class="headerlink" href="#sysmemmyplat-c" title="Permalink to this headline">¶</a></h3>
+<p><em>SysMem</em> provides an API for the runtime and the IEC Application to
+allocate or free two different kinds of data:</p>
+<ol class="arabic simple">
+<li><p><strong>Data:</strong> This is used to manage general heap data of the runtime and
+the application.</p></li>
+<li><p><strong>Areas:</strong> The areas are used to store the code, data, retain data
+and I/Os of the IEC Application.</p></li>
+</ol>
+<p>On most systems your C-Library will provide some malloc and free
+functions for you. If so, you should use them to implement
+<em>SysMemAllocData()</em>, <em>SysMemReallocData()</em> and <em>SysMemFreeData()</em>.</p>
+<p>If you like, you can place the areas of your IEC Application at a
+specific address. For this, you need to tell your linker that this
+memory range is reserved:</p>
+<ul class="simple">
+<li><p>Keil uVision: “Options for …” -&gt; “LXXX Misc” -&gt; Reserve</p></li>
+<li><p>TASKING.VX-Toolset: Add a new memory section to &lt;projectname&gt;.lsl and
+mark it as “Reserved”.</p></li>
+<li><p>GNU Linker: Reserve Memory area in the linker script.</p></li>
+</ul>
+<p>If you made sure that your C compiler doesn’t use the memory area
+anymore, you can just return the fix address in SysMemAllocArea(). In
+SysMemFreeArea() you can either zero the whole area, or you can just do
+nothing.</p>
+<p>Alternatively, you can just forward the call to SysMemAllocData() and
+SysMemFreeData():</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="o">*</span> <span class="n">CDECL</span> <span class="n">SysMemAllocArea</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">pszComponentName</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">short</span>
+<span class="n">usType</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">ulSize</span><span class="p">,</span> <span class="n">RTS_RESULT</span> <span class="o">*</span><span class="n">pResult</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="nf">SysMemAllocData</span><span class="p">(</span><span class="n">pszComponentName</span><span class="p">,</span> <span class="n">ulSize</span><span class="p">,</span> <span class="n">pResult</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">RTS_RESULT</span> <span class="n">CDECL</span> <span class="n">SysMemFreeArea</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">pszComponentName</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">pCode</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="nf">SysMemFreeData</span><span class="p">(</span><span class="n">pszComponentName</span><span class="p">,</span> <span class="n">pCode</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>As long as the CODESYS Codegenerator supports code relocation for your
+target, you can leave <em>SysMemAllocCode()</em> and <em>SysMemFreeCode()</em> at the
+default implementation, which falls back to <em>SysMemAllocData()</em> and
+<em>SysMemFreeData()</em>. If it doesn’t, you need to use a fix address in the
+Runtime as well as a fix start-address for the areas in your Device
+Description. So if your target doesn’t support relocation, go to your
+device description and check that it has a statement like that:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ts:setting</span> <span class="na">name=</span><span class="s">”start-address”</span> <span class="na">type=</span><span class="s">”integer”</span> <span class="na">access=</span><span class="s">”visible”</span>
+<span class="na">xmlns:ts=</span><span class="s">”http://www.3s-software.com/schemas/TargetSettings-0.1.xsd”</span><span class="nt">&gt;</span>
+<span class="nt">&lt;ts:value&gt;</span>0xE04000<span class="nt">&lt;/ts:value&gt;</span>
+<span class="nt">&lt;/ts:setting&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="porting_new_platform_testing.html" title="Testing the communication"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="porting_new_platform.html" title="6.2.2.2. Porting to a new Platform"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >6. Tutorials / HowTos</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >6.2.2. CODESYS Control V3 - Porting to a new platform</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="porting_new_platform.html" >6.2.2.2. Porting to a new Platform</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

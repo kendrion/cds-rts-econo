@@ -11,7 +11,7 @@
  *  which are intended to be used for anything. Use at your own risk.
  *  </description>
  *  <copyright>
- *  Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ *  Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
 #ifndef _IODRVTARGETDEP_H_
@@ -26,9 +26,9 @@
 
 
 
-#define CMP_VERSION         UINT32_C(0x03050E00)
-#define CMP_VERSION_STRING "3.5.14.0"
-#define CMP_VERSION_RC      3,5,14,0
+#define CMP_VERSION         UINT32_C(0x03051000)
+#define CMP_VERSION_STRING "3.5.16.0"
+#define CMP_VERSION_RC      3,5,16,0
 #define CMP_VENDORID       RTS_VENDORID_3S
 
 #ifndef WIN32_RESOURCES
@@ -65,9 +65,25 @@
 
 
 
+
+/**
+ * \file CmpIoDrvItf.h
+ */
 #include "CmpIoDrvItf.h"
+
+/**
+ * \file CmpIoDrvParameterItf.h
+ */
 #include "CmpIoDrvParameterItf.h"
+
+/**
+ * \file CmpIoDrvDPV1C1MasterItf.h
+ */
 #include "CmpIoDrvDPV1C1MasterItf.h"
+
+/**
+ * \file CmpIoDrvDPV1C1SlaveItf.h
+ */
 #include "CmpIoDrvDPV1C1SlaveItf.h"
 
 
@@ -417,7 +433,7 @@
 #else
 #define EXPORT_EXTREF2_STMT
 #endif
-#if !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
+#if !defined(IODRVTARGET_DISABLE_CMPITF) && !defined(STATIC_LINK) && !defined(CPLUSPLUS) && !defined(CPLUSPLUS_ONLY)
 #define EXPORT_CMPITF_STMT \
     {\
                                                         \

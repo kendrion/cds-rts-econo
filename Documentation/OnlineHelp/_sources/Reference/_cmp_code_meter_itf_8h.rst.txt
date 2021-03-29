@@ -1,0 +1,670 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_code_meter_itf_8h:
+
+================================
+CmpCodeMeterItf.h File Reference
+================================
+
+| #include ":ref:`CmpStd.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`tagRTS_CODEMETER_INFO <structtag_r_t_s___c_o_d_e_m_e_t_e_r___i_n_f_o>`
+
+- struct :ref:`tagRTS_CMBOXENTRY <structtag_r_t_s___c_m_b_o_x_e_n_t_r_y>`
+
+- struct :ref:`tagcodemclose_struct <structtagcodemclose__struct>`
+
+- struct :ref:`tagcodemdecrypt_struct <structtagcodemdecrypt__struct>`
+
+- struct :ref:`tagcodemencrypt_struct <structtagcodemencrypt__struct>`
+
+- struct :ref:`tagcodemgetcontentbyfirmcode2_struct <structtagcodemgetcontentbyfirmcode2__struct>`
+
+- struct :ref:`tagcodemgetexpirationtime_struct <structtagcodemgetexpirationtime__struct>`
+
+- struct :ref:`tagcodemgetfirst_struct <structtagcodemgetfirst__struct>`
+
+- struct :ref:`tagcodemgetinfo_struct <structtagcodemgetinfo__struct>`
+
+- struct :ref:`tagcodemgetname_struct <structtagcodemgetname__struct>`
+
+- struct :ref:`tagcodemgetnext_struct <structtagcodemgetnext__struct>`
+
+- struct :ref:`tagcodemgetquantity_struct <structtagcodemgetquantity__struct>`
+
+- struct :ref:`tagcodemgetunitcounter_struct <structtagcodemgetunitcounter__struct>`
+
+- struct :ref:`tagcodemopen_struct <structtagcodemopen__struct>`
+
+- struct :ref:`ICmpCodeMeter_C <struct_i_cmp_code_meter___c>`
+
+Macros
+------
+
+- #define :ref:`RTS_CM_PUBLIC_KEY_LEN <group___cmp_code_meter_itf_1gaa15c68897eadf3699d91bb2a5dd4ec11>` 64
+
+- #define :ref:`RTS_CM_RUNTIME_MIN_MAJOR_VER <group___cmp_code_meter_itf___code_meter_versions_1ga2bab148d03873c28dcd22981ab52487e>` (7)
+
+- #define :ref:`RTS_CM_RUNTIME_MIN_MINOR_VER <group___cmp_code_meter_itf___code_meter_versions_1ga7a143a5118f33a3cade1be67f5f27bc9>` (10)
+
+- #define :ref:`RTS_CM_RUNTIME_MIN_BUILD <group___cmp_code_meter_itf___code_meter_versions_1ga2abb0a7894464d5ad94a8482ef70f867>` (4196)
+
+- #define :ref:`RTS_CODEMETER_UNIVERSAL_FIRMCODE <group___cmp_code_meter_itf_1ga2aa0c7604f814517a349d00cb3e996a8>` 6000437
+
+- #define :ref:`RTS_CODEMETER_SOFTLICENSES_FIRMCODE <group___cmp_code_meter_itf_1gae9d907e7253b05911affedd46e9a2209>` 5000304
+
+- #define :ref:`RTS_CODEMETER_LICENSES_FIRMCODE <group___cmp_code_meter_itf_1ga62ee71003e4327591e6432b3ece96708>` 101597
+
+- #define :ref:`RTS_CODEMETER_ACCESS_PROT_FIRMCODE <group___cmp_code_meter_itf_1ga0f60f442c3eedf3c84be51b290a9a6ac>` 101598
+
+- #define :ref:`RTS_CODEMETER_ENCRYPTION_FIRMCODE <group___cmp_code_meter_itf_1gaebb61d5a7991a31cd76a5418ba324948>` 101599
+
+- #define :ref:`USERDB_OBJECT_CODEMETER <group___cmp_code_meter_itf___staticdefines_1ga0a7327f5332b8dc3136b3a1ca44176ac>` "Device.CodeMeter"
+
+- #define :ref:`CODEMKEY_STRING_INIT_LICENSE_FILE <group___cmp_code_meter_itf___settings_1gac85124b615682b84d03624da3a28bc38>` "InitLicenseFile."
+
+- #define :ref:`CODEM_3S_INIT_LICENSE_FILE <group___cmp_code_meter_itf_1ga710c50525b3eefc83b93306be0ac06a8>` "3SLicense.wbb"
+
+- #define :ref:`CODEMKEY_STRING_ACTLICENSE_DIRECTORY <group___cmp_code_meter_itf_1gab6e68f421fcba089e476e2c4b21406df>` "ActLicenseDirectory"
+
+- #define :ref:`CODEMVALUE_STRING_ACTLICENSE_DIRECTORY_DEFAULT <group___cmp_code_meter_itf_1ga678cbbacdec049816c4bb048dfd4ea44>` "./cmact_licenses"
+
+- #define :ref:`CODEMKEY_INT_INSTALL_CMACT_CONTAINER <group___cmp_code_meter_itf_1ga393a3fa8accb978f3848e610b0163832>` "InstallCmActContainer"
+
+- #define :ref:`CODEMVALUE_INT_CMACT_CONTAINER <group___cmp_code_meter_itf_1gae1f094a867267b96084494c6cde5df6d>` 0
+
+- #define :ref:`CODEMKEY_STRING_LICENSE_SERVER <group___cmp_code_meter_itf_1gac5bbf91b40a5bff90b640d82e4e71d3e>` "LicenseServer"
+
+- #define :ref:`CODEMVALUE_STRING_LICENSE_SERVER_DEFAULT <group___cmp_code_meter_itf_1ga47aa87a8169d114df79dd39418ffff55>` ""
+
+- #define :ref:`SRV_CODEMETER_READ_DONGLE_LIST <group___cmp_code_meter_itf___onlineservices_1ga08e47d3e34f3b6ac6296cdde32dab39a>` 0x01
+
+- #define :ref:`TAG_CM_NUM_OF_DONGLES <group___cmp_code_meter_itf___onlineservices_1ga8f4e489626aeea877944f11587b3ae9d>` 0x01
+
+- #define :ref:`TAG_CM_CMPLX_DONGLE <group___cmp_code_meter_itf___onlineservices_1gaccf9b802ca8231b8363c5e2519346d16>` 0x81
+
+- #define :ref:`TAG_CM_DONGLE_HANDLE <group___cmp_code_meter_itf___onlineservices_1ga012378745fc254f4d617199096ef23e1>` 0x01
+
+- #define :ref:`TAG_CM_DONGLE_INFOSTRING <group___cmp_code_meter_itf___onlineservices_1ga8d5055665b681ceaf871ea09f7388bcf>` 0x02
+
+- #define :ref:`SRV_CODEMETER_READ_LIC_PER_DONGLE <group___cmp_code_meter_itf___onlineservices_1ga882df3b0e11c79554eaf560eef5e5880>` 0x02
+
+- #define :ref:`TAG_CMREQ_DONGLE_HANDLE <group___cmp_code_meter_itf___onlineservices_1gac7c30bd76b4f26e8b28370cfc7c800e7>` 0x01
+
+- #define :ref:`TAG_CM_NUM_OF_LICS <group___cmp_code_meter_itf___onlineservices_1ga704972375f9a5fc88753e329d323c901>` 0x01
+
+- #define :ref:`TAG_CM_CMPLX_LICDESC <group___cmp_code_meter_itf___onlineservices_1gac2fb360be1fdc60c5331c7e0733e54c3>` 0x81
+
+- #define :ref:`TAG_CM_LIC_NAME <group___cmp_code_meter_itf___onlineservices_1ga019d2c4fff82e0d901c81e61501c1a34>` 0x01
+
+- #define :ref:`TAG_CM_LIC_COMPANY <group___cmp_code_meter_itf___onlineservices_1gad2c73ce11cd86c196f42fbb96e367cd1>` 0x02
+
+- #define :ref:`TAG_CM_LIC_FIRMCODE <group___cmp_code_meter_itf___onlineservices_1ga6a9b82de0457a73e2de5e476a824d3c2>` 0x03
+
+- #define :ref:`TAG_CM_LIC_PRODUCTCODE <group___cmp_code_meter_itf___onlineservices_1gadd7e9e503116d61840212aa820ab1ce3>` 0x04
+
+- #define :ref:`TAG_CM_LIC_FEATUREMAP <group___cmp_code_meter_itf___onlineservices_1ga75bb5eb2ac768f57839c45afa3feadd4>` 0x05
+
+- #define :ref:`TAG_CM_LIC_LICSTATE <group___cmp_code_meter_itf___onlineservices_1gab7cbde944fb6c3d01a34601e18c42fe9>` 0x06
+
+- #define :ref:`TAG_CM_LIC_ACTIVATIONURL <group___cmp_code_meter_itf___onlineservices_1ga3911375b759d0ccbcd1508dd0bfb6ab8>` 0x07
+
+- #define :ref:`TAG_CM_LIC_DESCRIPTION <group___cmp_code_meter_itf___onlineservices_1ga9b8587e45ec00f4476be9859b5f3e820>` 0x08
+
+- #define :ref:`SRV_CODEMETER_CREATE_CONTEXT_FILE <group___cmp_code_meter_itf___onlineservices_1ga71ebd3faab24735b1f2aeebc9b99fb85>` 0x03
+
+- #define :ref:`TAG_CMREQ_NUM_FIRMCODE <group___cmp_code_meter_itf___onlineservices_1gacce8effd7b5cccf8182c549eb0b62aea>` 0x02
+
+- #define :ref:`TAG_CMREQ_FIRMCODE <group___cmp_code_meter_itf___onlineservices_1ga7fedbeebc3bac8652b1768ee71c930ea>` 0x03
+
+- #define :ref:`TAG_CM_CONTEXT_FILE_NAME <group___cmp_code_meter_itf___onlineservices_1gaf964d764a94758aafd4f94e1b382cbc8>` 0x01
+
+- #define :ref:`SRV_CODEMETER_ACTIVATE_UPD_CTXT_FILE <group___cmp_code_meter_itf___onlineservices_1gaf3d9d4b4980b48381bf3b97ef4bb44a2>` 0x04
+
+- #define :ref:`TAG_CMREQ_CTXT_FILENAME <group___cmp_code_meter_itf___onlineservices_1gaf2343afc662f44626836ec7024843b16>` 0x01
+
+- #define :ref:`TAG_CMREQ_CTXT_DONGLEHANDLE <group___cmp_code_meter_itf___onlineservices_1gaebe17e64fc52e2082629a07c06499e45>` 0x02
+
+- #define :ref:`TAG_CM_ERROR_RTS_ERROR <group___cmp_code_meter_itf___onlineservices_1ga968980c0aa9df3c39c9e201ebb50c807>` 0x01
+
+- #define :ref:`TAG_CM_ERROR_CM_ERROR <group___cmp_code_meter_itf___onlineservices_1ga8edcdd1c1885aac2a84d4723a3917188>` 0x02
+
+- #define :ref:`TAG_CM_ERROR_CM_ERROR_TEXT <group___cmp_code_meter_itf___onlineservices_1gaabe3def6ef5ef3e27dda3f030894f3e1>` 0x03
+
+- #define :ref:`USE_codemclose <_cmp_code_meter_itf_8h_1aff4937aa209ba89726bdb1886140974a>` :ref:`PFCODEMCLOSE_IEC <_cmp_code_meter_itf_8h_1abccaa25b12b49395eda03b297d7404f6>` pfcodemclose;
+
+- #define :ref:`EXT_codemclose <_cmp_code_meter_itf_8h_1a37af1d93146df740ea7f83a18ba04c0e>` extern :ref:`PFCODEMCLOSE_IEC <_cmp_code_meter_itf_8h_1abccaa25b12b49395eda03b297d7404f6>` pfcodemclose;
+
+- #define :ref:`GET_codemclose <_cmp_code_meter_itf_8h_1a24e7d222bce38d4f7015c1d578230cf4>` s_pfCMGetAPI2( "codemclose", (RTS_VOID_FCTPTR *)&pfcodemclose, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x3CEA9D8D, 0x03050500)
+
+- #define :ref:`CAL_codemclose <_cmp_code_meter_itf_8h_1a7fa937f90dfb5f2fabd63b9b3f49c6df>` pfcodemclose
+
+- #define :ref:`CHK_codemclose <_cmp_code_meter_itf_8h_1a0968707bbb8240bd055dd80458cb3ed9>` (pfcodemclose != NULL)
+
+- #define :ref:`EXP_codemclose <_cmp_code_meter_itf_8h_1a1e5a01d7984c0cc22681dd370ba7b4af>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"codemclose", (RTS_UINTPTR) :ref:`codemclose <_cmp_code_meter_itf_8h_1a61cd687b8019cf57f78b1bef4344ac3f>` , 1, 0x3CEA9D8D, 0x03050500)
+
+- #define :ref:`USE_codemdecrypt <_cmp_code_meter_itf_8h_1a4d4203f2fab53cb8463f607b10a7d79c>` :ref:`PFCODEMDECRYPT_IEC <_cmp_code_meter_itf_8h_1a67dfa3562974ba608cc95c76fcfd24aa>` pfcodemdecrypt;
+
+- #define :ref:`EXT_codemdecrypt <_cmp_code_meter_itf_8h_1a88aaf2275e245ce5f9a5ba139bc2ca21>` extern :ref:`PFCODEMDECRYPT_IEC <_cmp_code_meter_itf_8h_1a67dfa3562974ba608cc95c76fcfd24aa>` pfcodemdecrypt;
+
+- #define :ref:`GET_codemdecrypt <_cmp_code_meter_itf_8h_1a9663cc5f79da0097cb185b5350dfcd78>` s_pfCMGetAPI2( "codemdecrypt", (RTS_VOID_FCTPTR *)&pfcodemdecrypt, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0xBB35024D), 0x03050500)
+
+- #define :ref:`CAL_codemdecrypt <_cmp_code_meter_itf_8h_1a6b65b55b2c1d46c658e84e81687c0184>` pfcodemdecrypt
+
+- #define :ref:`CHK_codemdecrypt <_cmp_code_meter_itf_8h_1a37819d86199e7ff82aab7091899548d6>` (pfcodemdecrypt != NULL)
+
+- #define :ref:`EXP_codemdecrypt <_cmp_code_meter_itf_8h_1a154cc0c01f999096208885ba31a5e73b>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"codemdecrypt", (RTS_UINTPTR) :ref:`codemdecrypt <_cmp_code_meter_itf_8h_1a995db1b65340cf035977a6e737ac1231>` , 1, RTSITF_GET_SIGNATURE(0, 0xBB35024D), 0x03050500)
+
+- #define :ref:`USE_codemencrypt <_cmp_code_meter_itf_8h_1aa4cf8210e2c49c66c637c6a63360d79b>` :ref:`PFCODEMENCRYPT_IEC <_cmp_code_meter_itf_8h_1a9ca3ce38f93148786b3bb69063ef4ca8>` pfcodemencrypt;
+
+- #define :ref:`EXT_codemencrypt <_cmp_code_meter_itf_8h_1a1f2bf9c72de2590e6c79fe469aab7ef1>` extern :ref:`PFCODEMENCRYPT_IEC <_cmp_code_meter_itf_8h_1a9ca3ce38f93148786b3bb69063ef4ca8>` pfcodemencrypt;
+
+- #define :ref:`GET_codemencrypt <_cmp_code_meter_itf_8h_1a615d96dd17016e723e95fc2c78cab4f7>` s_pfCMGetAPI2( "codemencrypt", (RTS_VOID_FCTPTR *)&pfcodemencrypt, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x33A9B633), 0x03050500)
+
+- #define :ref:`CAL_codemencrypt <_cmp_code_meter_itf_8h_1a99817711febbe412b7130fbbab4c0cca>` pfcodemencrypt
+
+- #define :ref:`CHK_codemencrypt <_cmp_code_meter_itf_8h_1a44f7e942bb3ec26a11dea7229b208ca7>` (pfcodemencrypt != NULL)
+
+- #define :ref:`EXP_codemencrypt <_cmp_code_meter_itf_8h_1afe7da1389aa1f607673b185f4c496425>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"codemencrypt", (RTS_UINTPTR) :ref:`codemencrypt <_cmp_code_meter_itf_8h_1ad367ea6fd4c051708e807d8b679c23ea>` , 1, RTSITF_GET_SIGNATURE(0, 0x33A9B633), 0x03050500)
+
+- #define :ref:`USE_codemgetcontentbyfirmcode2 <_cmp_code_meter_itf_8h_1a08fc73e9b285f5d7b7a45ac1f17bd7da>` :ref:`PFCODEMGETCONTENTBYFIRMCODE2_IEC <_cmp_code_meter_itf_8h_1acba51a31d1f1f4a10832b2701d3f9d26>` pfcodemgetcontentbyfirmcode2;
+
+- #define :ref:`EXT_codemgetcontentbyfirmcode2 <_cmp_code_meter_itf_8h_1a0cf6ae18c49fe86648770de1077465e8>` extern :ref:`PFCODEMGETCONTENTBYFIRMCODE2_IEC <_cmp_code_meter_itf_8h_1acba51a31d1f1f4a10832b2701d3f9d26>` pfcodemgetcontentbyfirmcode2;
+
+- #define :ref:`GET_codemgetcontentbyfirmcode2 <_cmp_code_meter_itf_8h_1abd08f69aa6057661b4acf36bb6df9b19>` s_pfCMGetAPI2( "codemgetcontentbyfirmcode2", (RTS_VOID_FCTPTR *)&pfcodemgetcontentbyfirmcode2, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xDCB38C4D, 0x03050500)
+
+- #define :ref:`CAL_codemgetcontentbyfirmcode2 <_cmp_code_meter_itf_8h_1a86bdce4ef2f96fd2a79bbf31de9c1b72>` pfcodemgetcontentbyfirmcode2
+
+- #define :ref:`CHK_codemgetcontentbyfirmcode2 <_cmp_code_meter_itf_8h_1acf44d8dce651682d44eacfac27c5c44b>` (pfcodemgetcontentbyfirmcode2 != NULL)
+
+- #define :ref:`EXP_codemgetcontentbyfirmcode2 <_cmp_code_meter_itf_8h_1a4f3e155fc6fd0368b1d21ec857c98310>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"codemgetcontentbyfirmcode2", (RTS_UINTPTR) :ref:`codemgetcontentbyfirmcode2 <_cmp_code_meter_itf_8h_1af9c3ed106f5c9b2bd4d1c2df353d7ae9>` , 1, 0xDCB38C4D, 0x03050500)
+
+- #define :ref:`USE_codemgetexpirationtime <_cmp_code_meter_itf_8h_1aa53b1102fc01315d6b0588619c808249>` :ref:`PFCODEMGETEXPIRATIONTIME_IEC <_cmp_code_meter_itf_8h_1a3c215ad9ad90e6e0ba10d1d2db38eb49>` pfcodemgetexpirationtime;
+
+- #define :ref:`EXT_codemgetexpirationtime <_cmp_code_meter_itf_8h_1a96ad743d66c87fe06a9211b7513d65f3>` extern :ref:`PFCODEMGETEXPIRATIONTIME_IEC <_cmp_code_meter_itf_8h_1a3c215ad9ad90e6e0ba10d1d2db38eb49>` pfcodemgetexpirationtime;
+
+- #define :ref:`GET_codemgetexpirationtime <_cmp_code_meter_itf_8h_1a3afd7ce907912dc386025fd16d1168de>` s_pfCMGetAPI2( "codemgetexpirationtime", (RTS_VOID_FCTPTR *)&pfcodemgetexpirationtime, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x9CC99260, 0x03050500)
+
+- #define :ref:`CAL_codemgetexpirationtime <_cmp_code_meter_itf_8h_1abad5da51481507ba6796d3ecc3c7b4e3>` pfcodemgetexpirationtime
+
+- #define :ref:`CHK_codemgetexpirationtime <_cmp_code_meter_itf_8h_1ae42e1633fe68d7b48baacc0c2fc52a2f>` (pfcodemgetexpirationtime != NULL)
+
+- #define :ref:`EXP_codemgetexpirationtime <_cmp_code_meter_itf_8h_1a138cd39d7033171d78068521d567147d>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"codemgetexpirationtime", (RTS_UINTPTR) :ref:`codemgetexpirationtime <_cmp_code_meter_itf_8h_1a547bd6131f4ecf26a1fef9f9116db684>` , 1, 0x9CC99260, 0x03050500)
+
+- #define :ref:`USE_codemgetfirst <_cmp_code_meter_itf_8h_1a88ef67cd521242daa833d41814cada66>` :ref:`PFCODEMGETFIRST_IEC <_cmp_code_meter_itf_8h_1a73b6d23743700daed8f32f3109265aa9>` pfcodemgetfirst;
+
+- #define :ref:`EXT_codemgetfirst <_cmp_code_meter_itf_8h_1a3b658670324124db6ff14f41cb7e412d>` extern :ref:`PFCODEMGETFIRST_IEC <_cmp_code_meter_itf_8h_1a73b6d23743700daed8f32f3109265aa9>` pfcodemgetfirst;
+
+- #define :ref:`GET_codemgetfirst <_cmp_code_meter_itf_8h_1a56c424e904f10257242a406a0f99d24f>` s_pfCMGetAPI2( "codemgetfirst", (RTS_VOID_FCTPTR *)&pfcodemgetfirst, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x0276119A, 0x03050500)
+
+- #define :ref:`CAL_codemgetfirst <_cmp_code_meter_itf_8h_1ae000b6d6411607f73b27ad15e7944909>` pfcodemgetfirst
+
+- #define :ref:`CHK_codemgetfirst <_cmp_code_meter_itf_8h_1ac652e78b38c1f4fb3ec071db5f06c487>` (pfcodemgetfirst != NULL)
+
+- #define :ref:`EXP_codemgetfirst <_cmp_code_meter_itf_8h_1a1d814cf901772319bae17cadf5ef80c3>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"codemgetfirst", (RTS_UINTPTR) :ref:`codemgetfirst <_cmp_code_meter_itf_8h_1a9d843d4bc4f14eca730abd4fd39f61cd>` , 1, 0x0276119A, 0x03050500)
+
+- #define :ref:`USE_codemgetinfo <_cmp_code_meter_itf_8h_1a891d8fed5fe5c9220e12bf51f1821a59>` :ref:`PFCODEMGETINFO_IEC <_cmp_code_meter_itf_8h_1a06e48c43cfcee20bfbef591c1a8aaaf3>` pfcodemgetinfo;
+
+- #define :ref:`EXT_codemgetinfo <_cmp_code_meter_itf_8h_1a707336429f4994b01344239885f2659c>` extern :ref:`PFCODEMGETINFO_IEC <_cmp_code_meter_itf_8h_1a06e48c43cfcee20bfbef591c1a8aaaf3>` pfcodemgetinfo;
+
+- #define :ref:`GET_codemgetinfo <_cmp_code_meter_itf_8h_1a40a30d720d702d7648e85b53b6f70fb6>` s_pfCMGetAPI2( "codemgetinfo", (RTS_VOID_FCTPTR *)&pfcodemgetinfo, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x1CD05996, 0x03050500)
+
+- #define :ref:`CAL_codemgetinfo <_cmp_code_meter_itf_8h_1a523e470b195a654d7fa31877a5848507>` pfcodemgetinfo
+
+- #define :ref:`CHK_codemgetinfo <_cmp_code_meter_itf_8h_1abf1ee67b9d4d808aed2fdc5be53e97a8>` (pfcodemgetinfo != NULL)
+
+- #define :ref:`EXP_codemgetinfo <_cmp_code_meter_itf_8h_1a2f4c006aa9cb6c8a1aff89233e590b89>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"codemgetinfo", (RTS_UINTPTR) :ref:`codemgetinfo <_cmp_code_meter_itf_8h_1aac24b2b14b91c0de949ddb5aaf019c00>` , 1, 0x1CD05996, 0x03050500)
+
+- #define :ref:`USE_codemgetname <_cmp_code_meter_itf_8h_1a5f48ba2d754e1d0d46600ec205cb7f2f>` :ref:`PFCODEMGETNAME_IEC <_cmp_code_meter_itf_8h_1af86105c244f3fdd73b5d60a89c8c2d75>` pfcodemgetname;
+
+- #define :ref:`EXT_codemgetname <_cmp_code_meter_itf_8h_1a5ce281d60f43e968b2d3ff6bb90d4030>` extern :ref:`PFCODEMGETNAME_IEC <_cmp_code_meter_itf_8h_1af86105c244f3fdd73b5d60a89c8c2d75>` pfcodemgetname;
+
+- #define :ref:`GET_codemgetname <_cmp_code_meter_itf_8h_1a022097774c86c95a30815f1c254ee8df>` s_pfCMGetAPI2( "codemgetname", (RTS_VOID_FCTPTR *)&pfcodemgetname, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xC0E6AE1E, 0x03050500)
+
+- #define :ref:`CAL_codemgetname <_cmp_code_meter_itf_8h_1ad237b0dfe54e5717db41c6ffa2ab5bac>` pfcodemgetname
+
+- #define :ref:`CHK_codemgetname <_cmp_code_meter_itf_8h_1a9bc42e57b087e44abc2e41ca36c95161>` (pfcodemgetname != NULL)
+
+- #define :ref:`EXP_codemgetname <_cmp_code_meter_itf_8h_1a46b280b162f9f3ba2aa87e96fc7e4069>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"codemgetname", (RTS_UINTPTR) :ref:`codemgetname <_cmp_code_meter_itf_8h_1a554d95c170a11d81a9df69b241755f0e>` , 1, 0xC0E6AE1E, 0x03050500)
+
+- #define :ref:`USE_codemgetnext <_cmp_code_meter_itf_8h_1a159d44a80614a8841b6c27e4dc86b4a0>` :ref:`PFCODEMGETNEXT_IEC <_cmp_code_meter_itf_8h_1a97e79ef15a51180ef3ccc6dcc109ae7b>` pfcodemgetnext;
+
+- #define :ref:`EXT_codemgetnext <_cmp_code_meter_itf_8h_1a28777ace5b494fb83b5597ab1b08e722>` extern :ref:`PFCODEMGETNEXT_IEC <_cmp_code_meter_itf_8h_1a97e79ef15a51180ef3ccc6dcc109ae7b>` pfcodemgetnext;
+
+- #define :ref:`GET_codemgetnext <_cmp_code_meter_itf_8h_1aeed2f33ffd5dd3401447c386b522a645>` s_pfCMGetAPI2( "codemgetnext", (RTS_VOID_FCTPTR *)&pfcodemgetnext, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x1E179338, 0x03050500)
+
+- #define :ref:`CAL_codemgetnext <_cmp_code_meter_itf_8h_1a15d98c837460ff4bec96f55e68cd3e5d>` pfcodemgetnext
+
+- #define :ref:`CHK_codemgetnext <_cmp_code_meter_itf_8h_1a95996d898722b0eecc0d2d6ccebd756e>` (pfcodemgetnext != NULL)
+
+- #define :ref:`EXP_codemgetnext <_cmp_code_meter_itf_8h_1addc19145537c5e4bee0de3c87a82ff65>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"codemgetnext", (RTS_UINTPTR) :ref:`codemgetnext <_cmp_code_meter_itf_8h_1a3aecc5460d95f5f4916200773b69846d>` , 1, 0x1E179338, 0x03050500)
+
+- #define :ref:`USE_codemgetquantity <_cmp_code_meter_itf_8h_1a6d22ce11bea31c30cdf567573d68760b>` :ref:`PFCODEMGETQUANTITY_IEC <_cmp_code_meter_itf_8h_1aac7398b3d562be4a6db448cf28e821e1>` pfcodemgetquantity;
+
+- #define :ref:`EXT_codemgetquantity <_cmp_code_meter_itf_8h_1abc34bbefca4abd6a6ccf27ade82ef65a>` extern :ref:`PFCODEMGETQUANTITY_IEC <_cmp_code_meter_itf_8h_1aac7398b3d562be4a6db448cf28e821e1>` pfcodemgetquantity;
+
+- #define :ref:`GET_codemgetquantity <_cmp_code_meter_itf_8h_1af43ed8e4f9470d07995bd50effc133d2>` s_pfCMGetAPI2( "codemgetquantity", (RTS_VOID_FCTPTR *)&pfcodemgetquantity, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x82616ACF, 0x03050500)
+
+- #define :ref:`CAL_codemgetquantity <_cmp_code_meter_itf_8h_1a97cf97e2b6dc3d57b95abd161cfbfd1d>` pfcodemgetquantity
+
+- #define :ref:`CHK_codemgetquantity <_cmp_code_meter_itf_8h_1aba80daa5957e506a6c522b9393fe837f>` (pfcodemgetquantity != NULL)
+
+- #define :ref:`EXP_codemgetquantity <_cmp_code_meter_itf_8h_1a0e982d7c51a423172269b68b4ce15bf0>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"codemgetquantity", (RTS_UINTPTR) :ref:`codemgetquantity <_cmp_code_meter_itf_8h_1ade171504ae5bee7120ad082a6ab9ef73>` , 1, 0x82616ACF, 0x03050500)
+
+- #define :ref:`USE_codemgetunitcounter <_cmp_code_meter_itf_8h_1aaf0b40d49e0407223eeac36a056a9db4>` :ref:`PFCODEMGETUNITCOUNTER_IEC <_cmp_code_meter_itf_8h_1a8f31f143f3245fba660133db4dfe1456>` pfcodemgetunitcounter;
+
+- #define :ref:`EXT_codemgetunitcounter <_cmp_code_meter_itf_8h_1a75f6510e54e503de53661f69b7392eeb>` extern :ref:`PFCODEMGETUNITCOUNTER_IEC <_cmp_code_meter_itf_8h_1a8f31f143f3245fba660133db4dfe1456>` pfcodemgetunitcounter;
+
+- #define :ref:`GET_codemgetunitcounter <_cmp_code_meter_itf_8h_1a8f552bf7b56b364b9041569e6762871b>` s_pfCMGetAPI2( "codemgetunitcounter", (RTS_VOID_FCTPTR *)&pfcodemgetunitcounter, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xEDA602B2, 0x03050500)
+
+- #define :ref:`CAL_codemgetunitcounter <_cmp_code_meter_itf_8h_1a6332fe502d084d584fb10a2e83003b28>` pfcodemgetunitcounter
+
+- #define :ref:`CHK_codemgetunitcounter <_cmp_code_meter_itf_8h_1a0f1099b5b16441ea7acf419409f8db88>` (pfcodemgetunitcounter != NULL)
+
+- #define :ref:`EXP_codemgetunitcounter <_cmp_code_meter_itf_8h_1a71a0856b41228e4193ed401fd432478e>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"codemgetunitcounter", (RTS_UINTPTR) :ref:`codemgetunitcounter <_cmp_code_meter_itf_8h_1a9bd946cd6b8242a5baf865dbaecb46c4>` , 1, 0xEDA602B2, 0x03050500)
+
+- #define :ref:`USE_codemopen <_cmp_code_meter_itf_8h_1a9f9efd50475e8c820b187e017a8d63de>` :ref:`PFCODEMOPEN_IEC <_cmp_code_meter_itf_8h_1a46d28658c478fdcc4c19aa6088d0b8ed>` pfcodemopen;
+
+- #define :ref:`EXT_codemopen <_cmp_code_meter_itf_8h_1a02b423dd7fede66c082a647e50279627>` extern :ref:`PFCODEMOPEN_IEC <_cmp_code_meter_itf_8h_1a46d28658c478fdcc4c19aa6088d0b8ed>` pfcodemopen;
+
+- #define :ref:`GET_codemopen <_cmp_code_meter_itf_8h_1a582487e52a9aea3b9f081f46f1b2c58f>` s_pfCMGetAPI2( "codemopen", (RTS_VOID_FCTPTR *)&pfcodemopen, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x290D791C, 0x03050500)
+
+- #define :ref:`CAL_codemopen <_cmp_code_meter_itf_8h_1afc498626d6fef0e59d098aef58dd52a7>` pfcodemopen
+
+- #define :ref:`CHK_codemopen <_cmp_code_meter_itf_8h_1a0239a3e12cb7331b624ababc9316fed7>` (pfcodemopen != NULL)
+
+- #define :ref:`EXP_codemopen <_cmp_code_meter_itf_8h_1ae17ff45982b01b37dcd33093d04e77e1>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"codemopen", (RTS_UINTPTR) :ref:`codemopen <_cmp_code_meter_itf_8h_1a5306bef012cf92eac4cdb992e96ba82c>` , 1, 0x290D791C, 0x03050500)
+
+- #define :ref:`USE_CodeMGetFirst <_cmp_code_meter_itf_8h_1a168f9f37ff14a9fdf40675ff7f5b047b>` :ref:`PFCODEMGETFIRST <_cmp_code_meter_itf_8h_1ab42bdd1454bac1044487947ba36880ec>` pfCodeMGetFirst;
+
+- #define :ref:`EXT_CodeMGetFirst <_cmp_code_meter_itf_8h_1ae843e8bc5605bcf6646f677bd134f094>` extern :ref:`PFCODEMGETFIRST <_cmp_code_meter_itf_8h_1ab42bdd1454bac1044487947ba36880ec>` pfCodeMGetFirst;
+
+- #define :ref:`GET_CodeMGetFirst <_cmp_code_meter_itf_8h_1a38e19d71f2f0a46fcbb64c69bf341567>` s_pfCMGetAPI2( "CodeMGetFirst", (RTS_VOID_FCTPTR *)&pfCodeMGetFirst, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMGetFirst <_cmp_code_meter_itf_8h_1a1fcbb232bfc36ccd273c5ba6ef2c4b3e>` pfCodeMGetFirst
+
+- #define :ref:`CHK_CodeMGetFirst <_cmp_code_meter_itf_8h_1aac3384205191848878a5ada3ab7c26c0>` (pfCodeMGetFirst != NULL)
+
+- #define :ref:`EXP_CodeMGetFirst <_cmp_code_meter_itf_8h_1a8084a88a412f4fc051cb001b19ee6d39>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMGetFirst", (RTS_UINTPTR) :ref:`CodeMGetFirst <_cmp_code_meter_itf_8h_1adae99310b0f1df51f1083a9413eeb9b1>` , 0, 0)
+
+- #define :ref:`USE_CodeMGetNext <_cmp_code_meter_itf_8h_1addc36f519e689997787bc7481b4f3648>` :ref:`PFCODEMGETNEXT <_cmp_code_meter_itf_8h_1ae68e6dfe22a406a030ca472955b5fbfd>` pfCodeMGetNext;
+
+- #define :ref:`EXT_CodeMGetNext <_cmp_code_meter_itf_8h_1a9ca73cac37461b4bb1b6aa2006bbf726>` extern :ref:`PFCODEMGETNEXT <_cmp_code_meter_itf_8h_1ae68e6dfe22a406a030ca472955b5fbfd>` pfCodeMGetNext;
+
+- #define :ref:`GET_CodeMGetNext <_cmp_code_meter_itf_8h_1ac4a933f815089f151d94c2e7e5ac4675>` s_pfCMGetAPI2( "CodeMGetNext", (RTS_VOID_FCTPTR *)&pfCodeMGetNext, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMGetNext <_cmp_code_meter_itf_8h_1aaf9c65bd19b7576f35ed8955207aaf3e>` pfCodeMGetNext
+
+- #define :ref:`CHK_CodeMGetNext <_cmp_code_meter_itf_8h_1a25ec722de62799c5dd7543bca8fcea61>` (pfCodeMGetNext != NULL)
+
+- #define :ref:`EXP_CodeMGetNext <_cmp_code_meter_itf_8h_1ad45aa6c402286537dd9222c0b4f7aa74>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMGetNext", (RTS_UINTPTR) :ref:`CodeMGetNext <_cmp_code_meter_itf_8h_1a45cf54448ef25c299be17ca43d4cb228>` , 0, 0)
+
+- #define :ref:`USE_CodeMOpen <_cmp_code_meter_itf_8h_1acc73ebd0102527c21d24177246efcd0b>` :ref:`PFCODEMOPEN <_cmp_code_meter_itf_8h_1a705b0c7394ba6309b274f65b6d116b58>` pfCodeMOpen;
+
+- #define :ref:`EXT_CodeMOpen <_cmp_code_meter_itf_8h_1a339955cc7113e3016033f73144076d8a>` extern :ref:`PFCODEMOPEN <_cmp_code_meter_itf_8h_1a705b0c7394ba6309b274f65b6d116b58>` pfCodeMOpen;
+
+- #define :ref:`GET_CodeMOpen <_cmp_code_meter_itf_8h_1ac2ee459be91e9041e8fd97516c02be7f>` s_pfCMGetAPI2( "CodeMOpen", (RTS_VOID_FCTPTR *)&pfCodeMOpen, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMOpen <_cmp_code_meter_itf_8h_1a25cbd6a3c5613566dd5deab94f5ce3d8>` pfCodeMOpen
+
+- #define :ref:`CHK_CodeMOpen <_cmp_code_meter_itf_8h_1a34567b23fba03ce46f319b74dc419eb9>` (pfCodeMOpen != NULL)
+
+- #define :ref:`EXP_CodeMOpen <_cmp_code_meter_itf_8h_1a0b2b06c0c607bcdba370907885d0775b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMOpen", (RTS_UINTPTR) :ref:`CodeMOpen <_cmp_code_meter_itf_8h_1ad4451c26f936ec4e1ea78736f0d193f6>` , 0, 0)
+
+- #define :ref:`USE_CodeMClose <_cmp_code_meter_itf_8h_1a2dc26b2ebea0bdf690d993cf0f4d971a>` :ref:`PFCODEMCLOSE <_cmp_code_meter_itf_8h_1aedeb33a6efd2e25de72325935bcc90c5>` pfCodeMClose;
+
+- #define :ref:`EXT_CodeMClose <_cmp_code_meter_itf_8h_1aac3869b2fee0d15c8a29a9a11fb0c1d3>` extern :ref:`PFCODEMCLOSE <_cmp_code_meter_itf_8h_1aedeb33a6efd2e25de72325935bcc90c5>` pfCodeMClose;
+
+- #define :ref:`GET_CodeMClose <_cmp_code_meter_itf_8h_1a96f9ca68ee6263908df168a45b57e631>` s_pfCMGetAPI2( "CodeMClose", (RTS_VOID_FCTPTR *)&pfCodeMClose, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMClose <_cmp_code_meter_itf_8h_1aaeae9bcc9727c1f39323feff8b79dcc3>` pfCodeMClose
+
+- #define :ref:`CHK_CodeMClose <_cmp_code_meter_itf_8h_1affe64eb645bdff91e2e49f346f002a7b>` (pfCodeMClose != NULL)
+
+- #define :ref:`EXP_CodeMClose <_cmp_code_meter_itf_8h_1a041e549c9fa531cca2552a3f4a84934e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMClose", (RTS_UINTPTR) :ref:`CodeMClose <_cmp_code_meter_itf_8h_1aab749a4491bf749099ab9e2f06713439>` , 0, 0)
+
+- #define :ref:`USE_CodeMGetInfo <_cmp_code_meter_itf_8h_1aa2c0d90d053abc6ceeb366c78c5d0534>` :ref:`PFCODEMGETINFO <_cmp_code_meter_itf_8h_1afa88e5086d8ec50b0bed9d8d32ce7b64>` pfCodeMGetInfo;
+
+- #define :ref:`EXT_CodeMGetInfo <_cmp_code_meter_itf_8h_1a7d929ab432c8b39fb3b39351e863f8bd>` extern :ref:`PFCODEMGETINFO <_cmp_code_meter_itf_8h_1afa88e5086d8ec50b0bed9d8d32ce7b64>` pfCodeMGetInfo;
+
+- #define :ref:`GET_CodeMGetInfo <_cmp_code_meter_itf_8h_1a8c9442336fd544120b91941902517dab>` s_pfCMGetAPI2( "CodeMGetInfo", (RTS_VOID_FCTPTR *)&pfCodeMGetInfo, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMGetInfo <_cmp_code_meter_itf_8h_1a103c7db658b3d87bdde03ccebfbc97fd>` pfCodeMGetInfo
+
+- #define :ref:`CHK_CodeMGetInfo <_cmp_code_meter_itf_8h_1a18fe9918524bcfd75a7120a2328f70e6>` (pfCodeMGetInfo != NULL)
+
+- #define :ref:`EXP_CodeMGetInfo <_cmp_code_meter_itf_8h_1aafbf928346e4e326b288bb95fe606015>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMGetInfo", (RTS_UINTPTR) :ref:`CodeMGetInfo <_cmp_code_meter_itf_8h_1a5d47b49c40e495b46cd2d69f798ae4d8>` , 0, 0)
+
+- #define :ref:`USE_CodeMGetExpirationTime <_cmp_code_meter_itf_8h_1a157b0855b1bb78d21d78f5bcef0886a7>` :ref:`PFCODEMGETEXPIRATIONTIME <_cmp_code_meter_itf_8h_1a965b9cdf18e30e71feefbb30f47f1149>` pfCodeMGetExpirationTime;
+
+- #define :ref:`EXT_CodeMGetExpirationTime <_cmp_code_meter_itf_8h_1a2724562069424032e62d5709e30fd670>` extern :ref:`PFCODEMGETEXPIRATIONTIME <_cmp_code_meter_itf_8h_1a965b9cdf18e30e71feefbb30f47f1149>` pfCodeMGetExpirationTime;
+
+- #define :ref:`GET_CodeMGetExpirationTime <_cmp_code_meter_itf_8h_1ae57f3984a4b9b31fc373e1103b0daedf>` s_pfCMGetAPI2( "CodeMGetExpirationTime", (RTS_VOID_FCTPTR *)&pfCodeMGetExpirationTime, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMGetExpirationTime <_cmp_code_meter_itf_8h_1aae8a00965fce0526c48c2b49721b4584>` pfCodeMGetExpirationTime
+
+- #define :ref:`CHK_CodeMGetExpirationTime <_cmp_code_meter_itf_8h_1a275a02ee549a7da5d1d7e8c048e75e40>` (pfCodeMGetExpirationTime != NULL)
+
+- #define :ref:`EXP_CodeMGetExpirationTime <_cmp_code_meter_itf_8h_1a7a8fcc329bd76dba946b6d4fbc35242c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMGetExpirationTime", (RTS_UINTPTR) :ref:`CodeMGetExpirationTime <_cmp_code_meter_itf_8h_1aa142989d1420835292932e98239aad49>` , 0, 0)
+
+- #define :ref:`USE_CodeMGetName <_cmp_code_meter_itf_8h_1a44bdb8b61872e15f09a3fbc1b51e6bff>` :ref:`PFCODEMGETNAME <_cmp_code_meter_itf_8h_1abbb51287e4e1d5bea09530c08396ba87>` pfCodeMGetName;
+
+- #define :ref:`EXT_CodeMGetName <_cmp_code_meter_itf_8h_1ac74c52565fdc872efc9471dea0e13a59>` extern :ref:`PFCODEMGETNAME <_cmp_code_meter_itf_8h_1abbb51287e4e1d5bea09530c08396ba87>` pfCodeMGetName;
+
+- #define :ref:`GET_CodeMGetName <_cmp_code_meter_itf_8h_1a7ef8ef6921378e9adfc6bdbfd424b168>` s_pfCMGetAPI2( "CodeMGetName", (RTS_VOID_FCTPTR *)&pfCodeMGetName, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMGetName <_cmp_code_meter_itf_8h_1aeb0e87fa6925fe9a8b8a3677fd530676>` pfCodeMGetName
+
+- #define :ref:`CHK_CodeMGetName <_cmp_code_meter_itf_8h_1aad7b9d7dd8dd9492e5ee4f1d0c778f7e>` (pfCodeMGetName != NULL)
+
+- #define :ref:`EXP_CodeMGetName <_cmp_code_meter_itf_8h_1a1a07ff842b648ec83189881af90129ff>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMGetName", (RTS_UINTPTR) :ref:`CodeMGetName <_cmp_code_meter_itf_8h_1a45eeaafdefa08b2735c47ff36c1aa7fc>` , 0, 0)
+
+- #define :ref:`USE_CodeMGetUnitCounter <_cmp_code_meter_itf_8h_1a78434e3072be073ec92b68cb1827308c>` :ref:`PFCODEMGETUNITCOUNTER <_cmp_code_meter_itf_8h_1a57c83aa659b21efcb4f5d0c93e8f7d36>` pfCodeMGetUnitCounter;
+
+- #define :ref:`EXT_CodeMGetUnitCounter <_cmp_code_meter_itf_8h_1a07d121c033140aaab11e5754c319c9a1>` extern :ref:`PFCODEMGETUNITCOUNTER <_cmp_code_meter_itf_8h_1a57c83aa659b21efcb4f5d0c93e8f7d36>` pfCodeMGetUnitCounter;
+
+- #define :ref:`GET_CodeMGetUnitCounter <_cmp_code_meter_itf_8h_1a6abb0b4a6d64b920e072c341b57ff74b>` s_pfCMGetAPI2( "CodeMGetUnitCounter", (RTS_VOID_FCTPTR *)&pfCodeMGetUnitCounter, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMGetUnitCounter <_cmp_code_meter_itf_8h_1ace62ffc72e5d71234a77044eb6bc1845>` pfCodeMGetUnitCounter
+
+- #define :ref:`CHK_CodeMGetUnitCounter <_cmp_code_meter_itf_8h_1ae28639e297ffb96f45cd2da61d8605d7>` (pfCodeMGetUnitCounter != NULL)
+
+- #define :ref:`EXP_CodeMGetUnitCounter <_cmp_code_meter_itf_8h_1a33c99b5d7b58d0ea1edcbcb168bee2a0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMGetUnitCounter", (RTS_UINTPTR) :ref:`CodeMGetUnitCounter <_cmp_code_meter_itf_8h_1abdf82a19d6ae03bb006d5f470c523608>` , 0, 0)
+
+- #define :ref:`USE_CodeMEncrypt <_cmp_code_meter_itf_8h_1ab6e77ff4cd6b6b4507435255880d2f67>` :ref:`PFCODEMENCRYPT <_cmp_code_meter_itf_8h_1a8001259154503dbd6ef6dad581cd02fc>` pfCodeMEncrypt;
+
+- #define :ref:`EXT_CodeMEncrypt <_cmp_code_meter_itf_8h_1aebfed7b4e0eeab1ddc7ebe1d4a204960>` extern :ref:`PFCODEMENCRYPT <_cmp_code_meter_itf_8h_1a8001259154503dbd6ef6dad581cd02fc>` pfCodeMEncrypt;
+
+- #define :ref:`GET_CodeMEncrypt <_cmp_code_meter_itf_8h_1a25668ed441d4b599d52bb36710f35304>` s_pfCMGetAPI2( "CodeMEncrypt", (RTS_VOID_FCTPTR *)&pfCodeMEncrypt, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMEncrypt <_cmp_code_meter_itf_8h_1a002e1d0fe10e220406b26a599f828ed3>` pfCodeMEncrypt
+
+- #define :ref:`CHK_CodeMEncrypt <_cmp_code_meter_itf_8h_1a0773df2d8a068289c96480dd9bf7ad6a>` (pfCodeMEncrypt != NULL)
+
+- #define :ref:`EXP_CodeMEncrypt <_cmp_code_meter_itf_8h_1a4046f3d0432d53b474f274ecc8516a0c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMEncrypt", (RTS_UINTPTR) :ref:`CodeMEncrypt <_cmp_code_meter_itf_8h_1a5a57355d2af987bdccb89cf32beaceee>` , 0, 0)
+
+- #define :ref:`USE_CodeMDecrypt <_cmp_code_meter_itf_8h_1a36987cb967ceac5bf3aba5287bbbbb28>` :ref:`PFCODEMDECRYPT <_cmp_code_meter_itf_8h_1a5b80264b02788ac1794c799cbb645c2d>` pfCodeMDecrypt;
+
+- #define :ref:`EXT_CodeMDecrypt <_cmp_code_meter_itf_8h_1aeb4d571ef08e4c3de8373d7db0659e02>` extern :ref:`PFCODEMDECRYPT <_cmp_code_meter_itf_8h_1a5b80264b02788ac1794c799cbb645c2d>` pfCodeMDecrypt;
+
+- #define :ref:`GET_CodeMDecrypt <_cmp_code_meter_itf_8h_1ac8be571465db1531c9e699a7983805a4>` s_pfCMGetAPI2( "CodeMDecrypt", (RTS_VOID_FCTPTR *)&pfCodeMDecrypt, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMDecrypt <_cmp_code_meter_itf_8h_1abadd711197a32e7cd073bf0a931ff0d5>` pfCodeMDecrypt
+
+- #define :ref:`CHK_CodeMDecrypt <_cmp_code_meter_itf_8h_1a580dbc5a30735b95e136c0f8f236a283>` (pfCodeMDecrypt != NULL)
+
+- #define :ref:`EXP_CodeMDecrypt <_cmp_code_meter_itf_8h_1af55a0c3317d1a8aea067034a71f1a3c9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMDecrypt", (RTS_UINTPTR) :ref:`CodeMDecrypt <_cmp_code_meter_itf_8h_1a911884588e625f03b097a3eec2421d53>` , 0, 0)
+
+- #define :ref:`USE_CodeMEncryptDirect <_cmp_code_meter_itf_8h_1acb37fde5837db16018b6e156068d676e>` :ref:`PFCODEMENCRYPTDIRECT <_cmp_code_meter_itf_8h_1ab066f1f9aac96c3ca7b473256549dd9a>` pfCodeMEncryptDirect;
+
+- #define :ref:`EXT_CodeMEncryptDirect <_cmp_code_meter_itf_8h_1a6292ce43a93c9d3750cdbf4fc9750939>` extern :ref:`PFCODEMENCRYPTDIRECT <_cmp_code_meter_itf_8h_1ab066f1f9aac96c3ca7b473256549dd9a>` pfCodeMEncryptDirect;
+
+- #define :ref:`GET_CodeMEncryptDirect <_cmp_code_meter_itf_8h_1ae3fd1865871ae87aad1c1c4b5095e5d8>` s_pfCMGetAPI2( "CodeMEncryptDirect", (RTS_VOID_FCTPTR *)&pfCodeMEncryptDirect, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMEncryptDirect <_cmp_code_meter_itf_8h_1afccb1863e6c7ce97669359ec94dc3859>` pfCodeMEncryptDirect
+
+- #define :ref:`CHK_CodeMEncryptDirect <_cmp_code_meter_itf_8h_1afe8ab526cf87637bcf187e81abf1aa52>` (pfCodeMEncryptDirect != NULL)
+
+- #define :ref:`EXP_CodeMEncryptDirect <_cmp_code_meter_itf_8h_1ab59ac86dfdb85824a2613891126a98c4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMEncryptDirect", (RTS_UINTPTR) :ref:`CodeMEncryptDirect <_cmp_code_meter_itf_8h_1adef7836f3f39dd726e76ae86c77d0964>` , 0, 0)
+
+- #define :ref:`USE_CodeMDecryptDirect <_cmp_code_meter_itf_8h_1a303e226420e43c14f0583e75158ab468>` :ref:`PFCODEMDECRYPTDIRECT <_cmp_code_meter_itf_8h_1a685361c50811b37081ad3ecf2eee1ded>` pfCodeMDecryptDirect;
+
+- #define :ref:`EXT_CodeMDecryptDirect <_cmp_code_meter_itf_8h_1ae113cf13b36d50dd08cfdc0e099b985c>` extern :ref:`PFCODEMDECRYPTDIRECT <_cmp_code_meter_itf_8h_1a685361c50811b37081ad3ecf2eee1ded>` pfCodeMDecryptDirect;
+
+- #define :ref:`GET_CodeMDecryptDirect <_cmp_code_meter_itf_8h_1aef1220807137e7a4b09a486b882c894a>` s_pfCMGetAPI2( "CodeMDecryptDirect", (RTS_VOID_FCTPTR *)&pfCodeMDecryptDirect, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMDecryptDirect <_cmp_code_meter_itf_8h_1a6676759cbbd062e6c4e1c2931cae4471>` pfCodeMDecryptDirect
+
+- #define :ref:`CHK_CodeMDecryptDirect <_cmp_code_meter_itf_8h_1a9939e29a3c516bb8eb47d73e9e113dc5>` (pfCodeMDecryptDirect != NULL)
+
+- #define :ref:`EXP_CodeMDecryptDirect <_cmp_code_meter_itf_8h_1ab1999edc96e598512eb041cdc938702a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMDecryptDirect", (RTS_UINTPTR) :ref:`CodeMDecryptDirect <_cmp_code_meter_itf_8h_1a6cee3ff4a3955f71e4a9723a1208ec5f>` , 0, 0)
+
+- #define :ref:`USE_CodeMGenerateLicenseFile <_cmp_code_meter_itf_8h_1a7687183a6e18eb129431196f471623a3>` :ref:`PFCODEMGENERATELICENSEFILE <_cmp_code_meter_itf_8h_1aff61fe512c04aee945b887b7964afda4>` pfCodeMGenerateLicenseFile;
+
+- #define :ref:`EXT_CodeMGenerateLicenseFile <_cmp_code_meter_itf_8h_1a82c537faf58dac6be13f745b0e1e7694>` extern :ref:`PFCODEMGENERATELICENSEFILE <_cmp_code_meter_itf_8h_1aff61fe512c04aee945b887b7964afda4>` pfCodeMGenerateLicenseFile;
+
+- #define :ref:`GET_CodeMGenerateLicenseFile <_cmp_code_meter_itf_8h_1a19905911fa3b7d6e31618547726cd27f>` s_pfCMGetAPI2( "CodeMGenerateLicenseFile", (RTS_VOID_FCTPTR *)&pfCodeMGenerateLicenseFile, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMGenerateLicenseFile <_cmp_code_meter_itf_8h_1ad8d5f61711ef5d23552e9021b7bd0577>` pfCodeMGenerateLicenseFile
+
+- #define :ref:`CHK_CodeMGenerateLicenseFile <_cmp_code_meter_itf_8h_1ab156d4903052c905a28b31b5c696202f>` (pfCodeMGenerateLicenseFile != NULL)
+
+- #define :ref:`EXP_CodeMGenerateLicenseFile <_cmp_code_meter_itf_8h_1a8b1bb7258db41a466601ed532a7b1837>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMGenerateLicenseFile", (RTS_UINTPTR) :ref:`CodeMGenerateLicenseFile <_cmp_code_meter_itf_8h_1a5d0936605fb3f6ce0e495d4f4b24c1b8>` , 0, 0)
+
+- #define :ref:`USE_CodeMWriteLicenseFile <_cmp_code_meter_itf_8h_1abfe4626a0b7627041267172ce4571a85>` :ref:`PFCODEMWRITELICENSEFILE <_cmp_code_meter_itf_8h_1a34a981f341f6c5348a4e1c9965d2c612>` pfCodeMWriteLicenseFile;
+
+- #define :ref:`EXT_CodeMWriteLicenseFile <_cmp_code_meter_itf_8h_1a5496a31ab028d10b04deac73f27f28f0>` extern :ref:`PFCODEMWRITELICENSEFILE <_cmp_code_meter_itf_8h_1a34a981f341f6c5348a4e1c9965d2c612>` pfCodeMWriteLicenseFile;
+
+- #define :ref:`GET_CodeMWriteLicenseFile <_cmp_code_meter_itf_8h_1aedbfeccbb25ee06779dc7beb1a3e2862>` s_pfCMGetAPI2( "CodeMWriteLicenseFile", (RTS_VOID_FCTPTR *)&pfCodeMWriteLicenseFile, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMWriteLicenseFile <_cmp_code_meter_itf_8h_1a98b077c07190784f0d521238098dc83e>` pfCodeMWriteLicenseFile
+
+- #define :ref:`CHK_CodeMWriteLicenseFile <_cmp_code_meter_itf_8h_1a8a014c8573d7857230be0dee87edd1f8>` (pfCodeMWriteLicenseFile != NULL)
+
+- #define :ref:`EXP_CodeMWriteLicenseFile <_cmp_code_meter_itf_8h_1a57d46e7807a8b54dee592bb6a329f883>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMWriteLicenseFile", (RTS_UINTPTR) :ref:`CodeMWriteLicenseFile <_cmp_code_meter_itf_8h_1a791c01a25802e799512dc38556f8f769>` , 0, 0)
+
+- #define :ref:`USE_CodeMGetContentByFirmcode <_cmp_code_meter_itf_8h_1a739f2476d6567f7226e2d5b4c8674dcd>` :ref:`PFCODEMGETCONTENTBYFIRMCODE <_cmp_code_meter_itf_8h_1a5c7f53f81849d2863545ae0adffb7398>` pfCodeMGetContentByFirmcode;
+
+- #define :ref:`EXT_CodeMGetContentByFirmcode <_cmp_code_meter_itf_8h_1a636e9d6016399b048417da678bb5b013>` extern :ref:`PFCODEMGETCONTENTBYFIRMCODE <_cmp_code_meter_itf_8h_1a5c7f53f81849d2863545ae0adffb7398>` pfCodeMGetContentByFirmcode;
+
+- #define :ref:`GET_CodeMGetContentByFirmcode <_cmp_code_meter_itf_8h_1a381c0164bf9c2d1e2d79cf84deeb4768>` s_pfCMGetAPI2( "CodeMGetContentByFirmcode", (RTS_VOID_FCTPTR *)&pfCodeMGetContentByFirmcode, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMGetContentByFirmcode <_cmp_code_meter_itf_8h_1a8d4fc2a069ba681acf874117358489c4>` pfCodeMGetContentByFirmcode
+
+- #define :ref:`CHK_CodeMGetContentByFirmcode <_cmp_code_meter_itf_8h_1acdf0ba37dd08805ded2deebbdca336dc>` (pfCodeMGetContentByFirmcode != NULL)
+
+- #define :ref:`EXP_CodeMGetContentByFirmcode <_cmp_code_meter_itf_8h_1a3b575f501107f13eae7ddee723334df6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMGetContentByFirmcode", (RTS_UINTPTR) :ref:`CodeMGetContentByFirmcode <_cmp_code_meter_itf_8h_1a201908d5a84d1f2b586afc57d5b0dbd8>` , 0, 0)
+
+- #define :ref:`USE_CodeMGetContentByFirmcode2 <_cmp_code_meter_itf_8h_1a3465e17af47a528d1fc65372bfbb062a>` :ref:`PFCODEMGETCONTENTBYFIRMCODE2 <_cmp_code_meter_itf_8h_1a40096c139188730b5b775d33f19053b2>` pfCodeMGetContentByFirmcode2;
+
+- #define :ref:`EXT_CodeMGetContentByFirmcode2 <_cmp_code_meter_itf_8h_1a4f39175c3f5ce2638084447635572edb>` extern :ref:`PFCODEMGETCONTENTBYFIRMCODE2 <_cmp_code_meter_itf_8h_1a40096c139188730b5b775d33f19053b2>` pfCodeMGetContentByFirmcode2;
+
+- #define :ref:`GET_CodeMGetContentByFirmcode2 <_cmp_code_meter_itf_8h_1ac2a7f4676a22e54a174c1ff491d52dd2>` s_pfCMGetAPI2( "CodeMGetContentByFirmcode2", (RTS_VOID_FCTPTR *)&pfCodeMGetContentByFirmcode2, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMGetContentByFirmcode2 <_cmp_code_meter_itf_8h_1aa8b5ff020cbc703ee808d48674a6356e>` pfCodeMGetContentByFirmcode2
+
+- #define :ref:`CHK_CodeMGetContentByFirmcode2 <_cmp_code_meter_itf_8h_1a17be4bea361a38a2a932b4c4c62a2058>` (pfCodeMGetContentByFirmcode2 != NULL)
+
+- #define :ref:`EXP_CodeMGetContentByFirmcode2 <_cmp_code_meter_itf_8h_1ae31ef343fe53d166a5bb73502ca4f17b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMGetContentByFirmcode2", (RTS_UINTPTR) :ref:`CodeMGetContentByFirmcode2 <_cmp_code_meter_itf_8h_1a9666a717d881896597b6d2634be6dc7e>` , 0, 0)
+
+- #define :ref:`USE_CodeMGetContentByFirmcode3 <_cmp_code_meter_itf_8h_1a6e05764bb06cb96678d5b120d9908b1e>` :ref:`PFCODEMGETCONTENTBYFIRMCODE3 <_cmp_code_meter_itf_8h_1a1e718976fe3391e2b3fc45dc77e0bb3d>` pfCodeMGetContentByFirmcode3;
+
+- #define :ref:`EXT_CodeMGetContentByFirmcode3 <_cmp_code_meter_itf_8h_1a29c5fb714360bc8b6e840575dbff4afb>` extern :ref:`PFCODEMGETCONTENTBYFIRMCODE3 <_cmp_code_meter_itf_8h_1a1e718976fe3391e2b3fc45dc77e0bb3d>` pfCodeMGetContentByFirmcode3;
+
+- #define :ref:`GET_CodeMGetContentByFirmcode3 <_cmp_code_meter_itf_8h_1ab66df729112be62c6c3093fec56d283c>` s_pfCMGetAPI2( "CodeMGetContentByFirmcode3", (RTS_VOID_FCTPTR *)&pfCodeMGetContentByFirmcode3, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMGetContentByFirmcode3 <_cmp_code_meter_itf_8h_1a2aa066a9bad16444cd721d7ea8588728>` pfCodeMGetContentByFirmcode3
+
+- #define :ref:`CHK_CodeMGetContentByFirmcode3 <_cmp_code_meter_itf_8h_1a5cea960e54b6b368b828f7e333364198>` (pfCodeMGetContentByFirmcode3 != NULL)
+
+- #define :ref:`EXP_CodeMGetContentByFirmcode3 <_cmp_code_meter_itf_8h_1a07bab434cc379ed9308df34222e2e978>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMGetContentByFirmcode3", (RTS_UINTPTR) :ref:`CodeMGetContentByFirmcode3 <_cmp_code_meter_itf_8h_1a0be126a0f54023739136657e55c0c74b>` , 0, 0)
+
+- #define :ref:`USE_CodeMGetContentByFirmcodeNet <_cmp_code_meter_itf_8h_1a6c9c066566513e7842f55da137c223aa>` :ref:`PFCODEMGETCONTENTBYFIRMCODENET <_cmp_code_meter_itf_8h_1a009e95832f4999091fa00ea7bd963e8a>` pfCodeMGetContentByFirmcodeNet;
+
+- #define :ref:`EXT_CodeMGetContentByFirmcodeNet <_cmp_code_meter_itf_8h_1a1221e524f7551c162d0567dbd14339d6>` extern :ref:`PFCODEMGETCONTENTBYFIRMCODENET <_cmp_code_meter_itf_8h_1a009e95832f4999091fa00ea7bd963e8a>` pfCodeMGetContentByFirmcodeNet;
+
+- #define :ref:`GET_CodeMGetContentByFirmcodeNet <_cmp_code_meter_itf_8h_1aa18fb8ff13ae9d78fb698f3b1c2ff091>` s_pfCMGetAPI2( "CodeMGetContentByFirmcodeNet", (RTS_VOID_FCTPTR *)&pfCodeMGetContentByFirmcodeNet, (fl), 0, 0)
+
+- #define :ref:`CAL_CodeMGetContentByFirmcodeNet <_cmp_code_meter_itf_8h_1a3d84fab822f5e029b3a0a670358e6732>` pfCodeMGetContentByFirmcodeNet
+
+- #define :ref:`CHK_CodeMGetContentByFirmcodeNet <_cmp_code_meter_itf_8h_1ac071168d54bbff2fac51fafcbd36e53d>` (pfCodeMGetContentByFirmcodeNet != NULL)
+
+- #define :ref:`EXP_CodeMGetContentByFirmcodeNet <_cmp_code_meter_itf_8h_1a6ef9fc8ec8b78822dd10b44431e7e3bb>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"CodeMGetContentByFirmcodeNet", (RTS_UINTPTR) :ref:`CodeMGetContentByFirmcodeNet <_cmp_code_meter_itf_8h_1aa81b835e56c60e17b9e7f94e43484366>` , 0, 0)
+
+- #define :ref:`ITF_CmpCodeMeter <_cmp_code_meter_itf_8h_1ab2e0849346ce14119433e9df104900df>`
+
+- #define :ref:`EXTITF_CmpCodeMeter <_cmp_code_meter_itf_8h_1aba3640b6a62c2cc6c5d5e1234af6f42e>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagRTS_CODEMETER_INFO <structtag_r_t_s___c_o_d_e_m_e_t_e_r___i_n_f_o>` :ref:`RTS_CODEMETER_INFO <_cmp_code_meter_itf_8h_1a4afddf85087b30df10677e8bdd4e758c>`
+
+- typedef struct :ref:`tagRTS_CMBOXENTRY <structtag_r_t_s___c_m_b_o_x_e_n_t_r_y>` :ref:`RTS_CMBOXENTRY <_cmp_code_meter_itf_8h_1a1c1f914fe6600097ef0eb8fe81e80c2d>`
+
+- typedef struct :ref:`tagcodemclose_struct <structtagcodemclose__struct>` :ref:`codemclose_struct <_cmp_code_meter_itf_8h_1acb634826eda841a9de1970b41433fdf5>`
+
+- typedef void(* :ref:`PFCODEMCLOSE_IEC <_cmp_code_meter_itf_8h_1abccaa25b12b49395eda03b297d7404f6>`)(codemclose_struct *p)
+
+- typedef struct :ref:`tagcodemdecrypt_struct <structtagcodemdecrypt__struct>` :ref:`codemdecrypt_struct <_cmp_code_meter_itf_8h_1a4294102cbe4d6f32ee6e82fa001d6fec>`
+
+- typedef void(* :ref:`PFCODEMDECRYPT_IEC <_cmp_code_meter_itf_8h_1a67dfa3562974ba608cc95c76fcfd24aa>`)(codemdecrypt_struct *p)
+
+- typedef struct :ref:`tagcodemencrypt_struct <structtagcodemencrypt__struct>` :ref:`codemencrypt_struct <_cmp_code_meter_itf_8h_1ab36ddad3dedcf043efa2d3d33a28a1db>`
+
+- typedef void(* :ref:`PFCODEMENCRYPT_IEC <_cmp_code_meter_itf_8h_1a9ca3ce38f93148786b3bb69063ef4ca8>`)(codemencrypt_struct *p)
+
+- typedef struct :ref:`tagcodemgetcontentbyfirmcode2_struct <structtagcodemgetcontentbyfirmcode2__struct>` :ref:`codemgetcontentbyfirmcode2_struct <_cmp_code_meter_itf_8h_1a8be08aa3a81199ea5d19f01e101b1bf4>`
+
+- typedef void(* :ref:`PFCODEMGETCONTENTBYFIRMCODE2_IEC <_cmp_code_meter_itf_8h_1acba51a31d1f1f4a10832b2701d3f9d26>`)(codemgetcontentbyfirmcode2_struct *p)
+
+- typedef struct :ref:`tagcodemgetexpirationtime_struct <structtagcodemgetexpirationtime__struct>` :ref:`codemgetexpirationtime_struct <_cmp_code_meter_itf_8h_1aae79fb105bcb880007e0d6689f2d20e8>`
+
+- typedef void(* :ref:`PFCODEMGETEXPIRATIONTIME_IEC <_cmp_code_meter_itf_8h_1a3c215ad9ad90e6e0ba10d1d2db38eb49>`)(codemgetexpirationtime_struct *p)
+
+- typedef struct :ref:`tagcodemgetfirst_struct <structtagcodemgetfirst__struct>` :ref:`codemgetfirst_struct <_cmp_code_meter_itf_8h_1a144c3d6eb6528b459793ed548f999192>`
+
+- typedef void(* :ref:`PFCODEMGETFIRST_IEC <_cmp_code_meter_itf_8h_1a73b6d23743700daed8f32f3109265aa9>`)(codemgetfirst_struct *p)
+
+- typedef struct :ref:`tagcodemgetinfo_struct <structtagcodemgetinfo__struct>` :ref:`codemgetinfo_struct <_cmp_code_meter_itf_8h_1a60c573540655221cdc43e46ffa5f2846>`
+
+- typedef void(* :ref:`PFCODEMGETINFO_IEC <_cmp_code_meter_itf_8h_1a06e48c43cfcee20bfbef591c1a8aaaf3>`)(codemgetinfo_struct *p)
+
+- typedef struct :ref:`tagcodemgetname_struct <structtagcodemgetname__struct>` :ref:`codemgetname_struct <_cmp_code_meter_itf_8h_1af97922dbe54cd88734feceb1b79344bc>`
+
+- typedef void(* :ref:`PFCODEMGETNAME_IEC <_cmp_code_meter_itf_8h_1af86105c244f3fdd73b5d60a89c8c2d75>`)(codemgetname_struct *p)
+
+- typedef struct :ref:`tagcodemgetnext_struct <structtagcodemgetnext__struct>` :ref:`codemgetnext_struct <_cmp_code_meter_itf_8h_1a8f91dfd6e91167ebe8b64bb1480092f4>`
+
+- typedef void(* :ref:`PFCODEMGETNEXT_IEC <_cmp_code_meter_itf_8h_1a97e79ef15a51180ef3ccc6dcc109ae7b>`)(codemgetnext_struct *p)
+
+- typedef struct :ref:`tagcodemgetquantity_struct <structtagcodemgetquantity__struct>` :ref:`codemgetquantity_struct <_cmp_code_meter_itf_8h_1a29d1759322154ec81a62e997a27ce0d1>`
+
+- typedef void(* :ref:`PFCODEMGETQUANTITY_IEC <_cmp_code_meter_itf_8h_1aac7398b3d562be4a6db448cf28e821e1>`)(codemgetquantity_struct *p)
+
+- typedef struct :ref:`tagcodemgetunitcounter_struct <structtagcodemgetunitcounter__struct>` :ref:`codemgetunitcounter_struct <_cmp_code_meter_itf_8h_1af2846dff8e7483c3af501e38dc596491>`
+
+- typedef void(* :ref:`PFCODEMGETUNITCOUNTER_IEC <_cmp_code_meter_itf_8h_1a8f31f143f3245fba660133db4dfe1456>`)(codemgetunitcounter_struct *p)
+
+- typedef struct :ref:`tagcodemopen_struct <structtagcodemopen__struct>` :ref:`codemopen_struct <_cmp_code_meter_itf_8h_1ade797c0bf8bb35b056e65bcc969e92c1>`
+
+- typedef void(* :ref:`PFCODEMOPEN_IEC <_cmp_code_meter_itf_8h_1a46d28658c478fdcc4c19aa6088d0b8ed>`)(codemopen_struct *p)
+
+- typedef RTS_HANDLE(* :ref:`PFCODEMGETFIRST <_cmp_code_meter_itf_8h_1ab42bdd1454bac1044487947ba36880ec>`)(RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFCODEMGETNEXT <_cmp_code_meter_itf_8h_1ae68e6dfe22a406a030ca472955b5fbfd>`)(RTS_HANDLE hPrevCodeMeter, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFCODEMOPEN <_cmp_code_meter_itf_8h_1a705b0c7394ba6309b274f65b6d116b58>`)(RTS_UI32 ulFirmCode, RTS_UI32 ulProductCode, RTS_UI32 ulFeatureCode, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFCODEMCLOSE <_cmp_code_meter_itf_8h_1aedeb33a6efd2e25de72325935bcc90c5>`)(RTS_HANDLE hCodeMeter)
+
+- typedef RTS_RESULT(* :ref:`PFCODEMGETINFO <_cmp_code_meter_itf_8h_1afa88e5086d8ec50b0bed9d8d32ce7b64>`)(RTS_HANDLE hCodeMeter, RTS_CODEMETER_INFO *pInfo)
+
+- typedef RTS_RESULT(* :ref:`PFCODEMGETEXPIRATIONTIME <_cmp_code_meter_itf_8h_1a965b9cdf18e30e71feefbb30f47f1149>`)(RTS_HANDLE hCodeMeter, RTS_UI32 *ptExpirationTime)
+
+- typedef RTS_RESULT(* :ref:`PFCODEMGETNAME <_cmp_code_meter_itf_8h_1abbb51287e4e1d5bea09530c08396ba87>`)(RTS_HANDLE hCodeMeter, RTS_WCHAR *pwszName, RTS_UI32 nLenBytes)
+
+- typedef RTS_RESULT(* :ref:`PFCODEMGETUNITCOUNTER <_cmp_code_meter_itf_8h_1a57c83aa659b21efcb4f5d0c93e8f7d36>`)(RTS_HANDLE hCodeMeter, RTS_UI32 *pulUnitCount)
+
+- typedef RTS_RESULT(* :ref:`PFCODEMENCRYPT <_cmp_code_meter_itf_8h_1a8001259154503dbd6ef6dad581cd02fc>`)(RTS_HANDLE hCodeMeter, RTS_UI32 ulEncryptionCode, RTS_UI32 *pulCRC, RTS_UI8 *pbyData, RTS_SIZE ulDataLen)
+
+- typedef RTS_RESULT(* :ref:`PFCODEMDECRYPT <_cmp_code_meter_itf_8h_1a5b80264b02788ac1794c799cbb645c2d>`)(RTS_HANDLE hCodeMeter, RTS_UI32 ulEncryptionCode, RTS_UI32 ulCRC, RTS_UI8 *pbyData, RTS_SIZE ulDataLen)
+
+- typedef RTS_RESULT(* :ref:`PFCODEMENCRYPTDIRECT <_cmp_code_meter_itf_8h_1ab066f1f9aac96c3ca7b473256549dd9a>`)(RTS_UI8 *pKey, RTS_UI32 ulLeyLen, RTS_UI8 *pbyData, RTS_UI32 ulDataLen)
+
+- typedef RTS_RESULT(* :ref:`PFCODEMDECRYPTDIRECT <_cmp_code_meter_itf_8h_1a685361c50811b37081ad3ecf2eee1ded>`)(RTS_UI8 *pKey, RTS_UI32 ulLeyLen, RTS_UI8 *pbyData, RTS_UI32 ulDataLen)
+
+- typedef RTS_RESULT(* :ref:`PFCODEMGENERATELICENSEFILE <_cmp_code_meter_itf_8h_1aff61fe512c04aee945b887b7964afda4>`)(RTS_UI32 ui32SerialNumber, RTS_UI32 *paulFirmCodes, RTS_UI32 ulFirmCodes, const char *pszLicenseFile)
+
+- typedef RTS_RESULT(* :ref:`PFCODEMWRITELICENSEFILE <_cmp_code_meter_itf_8h_1a34a981f341f6c5348a4e1c9965d2c612>`)(RTS_UI32 ui32SerialNumber, const char *pszLicenseFile)
+
+- typedef RTS_RESULT(* :ref:`PFCODEMGETCONTENTBYFIRMCODE <_cmp_code_meter_itf_8h_1a5c7f53f81849d2863545ae0adffb7398>`)(RTS_UI32 ulFirmcode, RTS_CMBOXENTRY *paEntry, RTS_UI32 *pnEntries)
+
+- typedef RTS_RESULT(* :ref:`PFCODEMGETCONTENTBYFIRMCODE2 <_cmp_code_meter_itf_8h_1a40096c139188730b5b775d33f19053b2>`)(RTS_UI32 ulFirmcode, RTS_UI32 ulProductcode, RTS_CMBOXENTRY *paEntry)
+
+- typedef RTS_RESULT(* :ref:`PFCODEMGETCONTENTBYFIRMCODE3 <_cmp_code_meter_itf_8h_1a1e718976fe3391e2b3fc45dc77e0bb3d>`)(RTS_UI32 ulFirmcode, RTS_UI32 ulProductcode, RTS_BOOL bReleaseLicense, RTS_CMBOXENTRY *paEntry)
+
+- typedef RTS_RESULT(* :ref:`PFCODEMGETCONTENTBYFIRMCODENET <_cmp_code_meter_itf_8h_1a009e95832f4999091fa00ea7bd963e8a>`)(RTS_UI32 ulFirmcode, RTS_UI32 ulProductcode, RTS_CMBOXENTRY *paEntry, char *pszServer, int bNoRelease, RTS_HANDLE *phEntry)
+
+- typedef :ref:`ICmpCodeMeter_C <struct_i_cmp_code_meter___c>` :ref:`ICmpCodeMeter <_cmp_code_meter_itf_8h_1a8ac385bd7827ae7c288bcac803d3f299>`
+
+Functions
+---------
+
+- void :ref:`codemclose <_cmp_code_meter_itf_8h_1a61cd687b8019cf57f78b1bef4344ac3f>` (:ref:`codemclose_struct <_cmp_code_meter_itf_8h_1acb634826eda841a9de1970b41433fdf5>` * p)
+
+- void :ref:`codemdecrypt <_cmp_code_meter_itf_8h_1a995db1b65340cf035977a6e737ac1231>` (:ref:`codemdecrypt_struct <_cmp_code_meter_itf_8h_1a4294102cbe4d6f32ee6e82fa001d6fec>` * p)
+
+- void :ref:`codemencrypt <_cmp_code_meter_itf_8h_1ad367ea6fd4c051708e807d8b679c23ea>` (:ref:`codemencrypt_struct <_cmp_code_meter_itf_8h_1ab36ddad3dedcf043efa2d3d33a28a1db>` * p)
+
+- void :ref:`codemgetcontentbyfirmcode2 <_cmp_code_meter_itf_8h_1af9c3ed106f5c9b2bd4d1c2df353d7ae9>` (:ref:`codemgetcontentbyfirmcode2_struct <_cmp_code_meter_itf_8h_1a8be08aa3a81199ea5d19f01e101b1bf4>` * p)
+
+- void :ref:`codemgetexpirationtime <_cmp_code_meter_itf_8h_1a547bd6131f4ecf26a1fef9f9116db684>` (:ref:`codemgetexpirationtime_struct <_cmp_code_meter_itf_8h_1aae79fb105bcb880007e0d6689f2d20e8>` * p)
+
+- void :ref:`codemgetfirst <_cmp_code_meter_itf_8h_1a9d843d4bc4f14eca730abd4fd39f61cd>` (:ref:`codemgetfirst_struct <_cmp_code_meter_itf_8h_1a144c3d6eb6528b459793ed548f999192>` * p)
+
+- void :ref:`codemgetinfo <_cmp_code_meter_itf_8h_1aac24b2b14b91c0de949ddb5aaf019c00>` (:ref:`codemgetinfo_struct <_cmp_code_meter_itf_8h_1a60c573540655221cdc43e46ffa5f2846>` * p)
+
+- void :ref:`codemgetname <_cmp_code_meter_itf_8h_1a554d95c170a11d81a9df69b241755f0e>` (:ref:`codemgetname_struct <_cmp_code_meter_itf_8h_1af97922dbe54cd88734feceb1b79344bc>` * p)
+
+- void :ref:`codemgetnext <_cmp_code_meter_itf_8h_1a3aecc5460d95f5f4916200773b69846d>` (:ref:`codemgetnext_struct <_cmp_code_meter_itf_8h_1a8f91dfd6e91167ebe8b64bb1480092f4>` * p)
+
+- void :ref:`codemgetquantity <_cmp_code_meter_itf_8h_1ade171504ae5bee7120ad082a6ab9ef73>` (:ref:`codemgetquantity_struct <_cmp_code_meter_itf_8h_1a29d1759322154ec81a62e997a27ce0d1>` * p)
+
+- void :ref:`codemgetunitcounter <_cmp_code_meter_itf_8h_1a9bd946cd6b8242a5baf865dbaecb46c4>` (:ref:`codemgetunitcounter_struct <_cmp_code_meter_itf_8h_1af2846dff8e7483c3af501e38dc596491>` * p)
+
+- void :ref:`codemopen <_cmp_code_meter_itf_8h_1a5306bef012cf92eac4cdb992e96ba82c>` (:ref:`codemopen_struct <_cmp_code_meter_itf_8h_1ade797c0bf8bb35b056e65bcc969e92c1>` * p)
+
+- RTS_HANDLE :ref:`CodeMGetFirst <_cmp_code_meter_itf_8h_1adae99310b0f1df51f1083a9413eeb9b1>` (RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`CodeMGetNext <_cmp_code_meter_itf_8h_1a45cf54448ef25c299be17ca43d4cb228>` (RTS_HANDLE hPrevCodeMeter, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`CodeMOpen <_cmp_code_meter_itf_8h_1ad4451c26f936ec4e1ea78736f0d193f6>` (RTS_UI32 ulFirmCode, RTS_UI32 ulProductCode, RTS_UI32 ulFeatureCode, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`CodeMClose <_cmp_code_meter_itf_8h_1aab749a4491bf749099ab9e2f06713439>` (RTS_HANDLE hCodeMeter)
+
+- RTS_RESULT :ref:`CodeMGetInfo <_cmp_code_meter_itf_8h_1a5d47b49c40e495b46cd2d69f798ae4d8>` (RTS_HANDLE hCodeMeter, :ref:`RTS_CODEMETER_INFO <_cmp_code_meter_itf_8h_1a4afddf85087b30df10677e8bdd4e758c>` * pInfo)
+
+- RTS_RESULT :ref:`CodeMGetExpirationTime <_cmp_code_meter_itf_8h_1aa142989d1420835292932e98239aad49>` (RTS_HANDLE hCodeMeter, RTS_UI32 * ptExpirationTime)
+
+- RTS_RESULT :ref:`CodeMGetName <_cmp_code_meter_itf_8h_1a45eeaafdefa08b2735c47ff36c1aa7fc>` (RTS_HANDLE hCodeMeter, RTS_WCHAR * pwszName, RTS_UI32 nLenBytes)
+
+- RTS_RESULT :ref:`CodeMGetUnitCounter <_cmp_code_meter_itf_8h_1abdf82a19d6ae03bb006d5f470c523608>` (RTS_HANDLE hCodeMeter, RTS_UI32 * pulUnitCount)
+
+- RTS_RESULT :ref:`CodeMEncrypt <_cmp_code_meter_itf_8h_1a5a57355d2af987bdccb89cf32beaceee>` (RTS_HANDLE hCodeMeter, RTS_UI32 ulEncryptionCode, RTS_UI32 * pulCRC, RTS_UI8 * pbyData, RTS_SIZE ulDataLen)
+
+- RTS_RESULT :ref:`CodeMDecrypt <_cmp_code_meter_itf_8h_1a911884588e625f03b097a3eec2421d53>` (RTS_HANDLE hCodeMeter, RTS_UI32 ulEncryptionCode, RTS_UI32 ulCRC, RTS_UI8 * pbyData, RTS_SIZE ulDataLen)
+
+- RTS_RESULT :ref:`CodeMEncryptDirect <_cmp_code_meter_itf_8h_1adef7836f3f39dd726e76ae86c77d0964>` (RTS_UI8 * pKey, RTS_UI32 ulLeyLen, RTS_UI8 * pbyData, RTS_UI32 ulDataLen)
+
+- RTS_RESULT :ref:`CodeMDecryptDirect <_cmp_code_meter_itf_8h_1a6cee3ff4a3955f71e4a9723a1208ec5f>` (RTS_UI8 * pKey, RTS_UI32 ulLeyLen, RTS_UI8 * pbyData, RTS_UI32 ulDataLen)
+
+- RTS_RESULT :ref:`CodeMGenerateLicenseFile <_cmp_code_meter_itf_8h_1a5d0936605fb3f6ce0e495d4f4b24c1b8>` (RTS_UI32 ui32SerialNumber, RTS_UI32 * paulFirmCodes, RTS_UI32 ulFirmCodes, const char * pszLicenseFile)
+
+- RTS_RESULT :ref:`CodeMWriteLicenseFile <_cmp_code_meter_itf_8h_1a791c01a25802e799512dc38556f8f769>` (RTS_UI32 ui32SerialNumber, const char * pszLicenseFile)
+
+- RTS_RESULT :ref:`CodeMGetContentByFirmcode <_cmp_code_meter_itf_8h_1a201908d5a84d1f2b586afc57d5b0dbd8>` (RTS_UI32 ulFirmcode, :ref:`RTS_CMBOXENTRY <_cmp_code_meter_itf_8h_1a1c1f914fe6600097ef0eb8fe81e80c2d>` * paEntry, RTS_UI32 * pnEntries)
+
+- RTS_RESULT :ref:`CodeMGetContentByFirmcode2 <_cmp_code_meter_itf_8h_1a9666a717d881896597b6d2634be6dc7e>` (RTS_UI32 ulFirmcode, RTS_UI32 ulProductcode, :ref:`RTS_CMBOXENTRY <_cmp_code_meter_itf_8h_1a1c1f914fe6600097ef0eb8fe81e80c2d>` * paEntry)
+
+- RTS_RESULT :ref:`CodeMGetContentByFirmcode3 <_cmp_code_meter_itf_8h_1a0be126a0f54023739136657e55c0c74b>` (RTS_UI32 ulFirmcode, RTS_UI32 ulProductcode, RTS_BOOL bReleaseLicense, :ref:`RTS_CMBOXENTRY <_cmp_code_meter_itf_8h_1a1c1f914fe6600097ef0eb8fe81e80c2d>` * paEntry)
+
+- RTS_RESULT :ref:`CodeMGetContentByFirmcodeNet <_cmp_code_meter_itf_8h_1aa81b835e56c60e17b9e7f94e43484366>` (RTS_UI32 ulFirmcode, RTS_UI32 ulProductcode, :ref:`RTS_CMBOXENTRY <_cmp_code_meter_itf_8h_1a1c1f914fe6600097ef0eb8fe81e80c2d>` * paEntry, char * pszServer, int bNoRelease, RTS_HANDLE * phEntry)
+
+Detailed Description
+--------------------
+
+Definition in file CmpCodeMeterItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

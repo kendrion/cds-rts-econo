@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -13,6 +13,7 @@ SET_INTERFACE_NAME(`SysTimer')
 
 #include "CmpItf.h"
 REF_ITF(`SysTimeItf.m4')
+REF_ITF(`SysExceptItf.m4')
 
 /**
  * <category>Timer error codes</category>
@@ -65,7 +66,7 @@ typedef RTS_RESULT (CDECL *PFTIMEREXCEPTIONHANDLER)(RTS_HANDLE hTimerHandle, RTS
  * Possible type of a Timer:
  * RTS_TIMER_NONE: Not Defined
  * RTS_TIMER_PERIODIC: Periodical timer
- * RTS_TIMER_ONESHOT: Oneshot timer
+ * RTS_TIMER_ONESHOT: One-shot timer
  * </description>
  */
 #define RTS_TIMER_NONE			0
@@ -115,34 +116,49 @@ typedef RTS_RESULT (CDECL *PFTIMEREXCEPTIONHANDLER)(RTS_HANDLE hTimerHandle, RTS
  * <category>Settings</category>
  * <type>String</type>
  * <description>
- * Setting to get timer (schedule) tick:
- * Auxiliary: AuxiliaryClock is used
- * System: SystemClock is used
- * Task: A high priority task is used
+ * Setting to set VxWorks timer(s) used to get timer (schedule) tick:
+ * Auxiliary: AuxiliaryClock is used: needed for Distributed Clock  
+ * System: SystemClock is used; scheduling is based on system ticks 
  * </description>
  */
 #define SYSTIMERKEY_STRING_VXWORKS_TIMERSOURCE                  "VxWorks.TimerSource"
 #define SYSTIMERVALUE_STRING_VXWORKS_TIMERSOURCE_AUXILIARY      "Auxiliary"
 #define SYSTIMERVALUE_STRING_VXWORKS_TIMERSOURCE_SYSTEM         "System"
-#define SYSTIMERVALUE_STRING_VXWORKS_TIMERSOURCE_TASK           "Task"
 #ifndef SYSTIMERVALUE_STRING_VXWORKS_TIMERSOURCE_DEFAULT
-  #define SYSTIMERVALUE_STRING_VXWORKS_TIMERSOURCE_DEFAULT      SYSTIMERVALUE_STRING_VXWORKS_TIMERSOURCE_TASK
+  #define SYSTIMERVALUE_STRING_VXWORKS_TIMERSOURCE_DEFAULT      SYSTIMERVALUE_STRING_VXWORKS_TIMERSOURCE_SYSTEM
 #endif
 
 /**
  * <category>Settings</category>
  * <type>String</type>
  * <description>
- * Setting to set the timer mode:
- * Periodic: Use a periodic HW Timer, which is programmed once.
- * OneShot: Use a one shot timer, which is reprogrammed on every tick.
+ * Setting used to determine the VxWorks timestamps mode. Needed for scheduling ticks and 
+ * get RTS time
+ * Unknown      : not yet initialized: the RTS will automatically determine timestamps mode,
+ *                depending on available VxWorks timers in the kernel image (VIP)
+ * NoTick 		: No VxWorks timestamps are used. 
+ *                Scheduling and RTS time is based on VxWorks system ticks
+ * Periodic 	: Scheduling is based on VxWorks System ticks. 
+ *                RTS time base is a combination of 32bit (or fewer) timestamps and system ticks.
+ * Continuous    : Depending on the used VxWorks.TimerSource, scheduling is based on 
+ *                system or auxiliary ticks. RTS time is based on continuously counting 32-bit 
+ *                (or fewer) VxWorks timestamps timer
+ * Continuous64  : Depending on the used VxWorks.TimerSource, scheduling is based on 
+ *                system or auxiliary ticks. RTS time is based on continuously counting 64-bit 
+ *                timestamps timer (e.g. Intel HPET)
+ * TimestampPeriodic : Scheduling is based on a timestamp timer rollover count and timestamp 
+ *                timer value. The mode is set, if the timestamp period equals one system tick
  * </description>
  */
-#define SYSTIMERKEY_STRING_VXWORKS_TIMERMODE                   "VxWorks.TimerMode"
-#define SYSTIMERVALUE_STRING_VXWORKS_TIMERMODE_PERIODIC        "Periodic"
-#define SYSTIMERVALUE_STRING_VXWORKS_TIMERMODE_ONESHOT         "OneShot"
-#ifndef SYSTIMERVALUE_STRING_VXWORKS_TIMERMODE_DEFAULT
-  #define SYSTIMERVALUE_STRING_VXWORKS_TIMERMODE_DEFAULT       SYSTIMERVALUE_STRING_VXWORKS_TIMERMODE_PERIODIC
+#define SYSTIMERKEY_STRING_VXWORKS_TIMESTAMP_MODE				"VxWorks.TimeStampMode"
+#define SYSTIMERVALUE_STRING_VXWORKS_TIMESTAMP_UNKNOWN        	"Unknown"
+#define SYSTIMERVALUE_STRING_VXWORKS_TIMESTAMP_NO_TICK        	"NoTick"
+#define SYSTIMERVALUE_STRING_VXWORKS_TIMESTAMP_TICK_PERIODIC    "TickPeriodic"
+#define SYSTIMERVALUE_STRING_VXWORKS_TIMESTAMP_CONTINUOUS       "Continuous"
+#define SYSTIMERVALUE_STRING_VXWORKS_TIMESTAMP_CONTINUOUS64     "Continuous64"
+#define SYSTIMERVALUE_STRING_VXWORKS_TIMESTAMP_TS_PERIODIC      "TimestampPeriodic"
+#ifndef SYSTIMERVALUE_STRING_VXWORKS_TIMESTAMP_DEFAULT
+  #define SYSTIMERVALUE_STRING_VXWORKS_TIMESTAMP_DEFAULT       SYSTIMERVALUE_STRING_VXWORKS_TIMESTAMP_UNKNOWN
 #endif
 
 /**
@@ -221,7 +237,7 @@ typedef struct
 /**
  * <category>Timer info structure</category>
  * <description>
- *	Timer information structure that contains all information for the SysTimerOS implementation to handle one sepcific timer object.
+ *	Timer information structure that contains all information for the SysTimerOS implementation to handle one specific timer object.
  * </description>
  * <element name="pfTimerCallback" type="IN">Function pointer to the timer callback, that must be executed in the timer event</element>
  * <element name="pfExceptionHandler" type="IN">Function pointer to an exception handler, that must be called, if an exception occurred in the corresponding timer callback function</element>
@@ -232,7 +248,7 @@ typedef struct
  * <element name="tStartTime" type="IN">Start time of the timer event, when the callback is called</element>
  * <element name="tLastExecuteNs" type="IN">Last execution time of the timer</element>
  * <element name="ulType" type="IN">Timer type. See corresponding category.</element>
- * <element name="ulPriority" type="IN">Piority of the timer object. Typically between [0..SYSTIMER_NUM_OF_TIMER_PRIOS - 1]: 0=highest prio, 255=lowest prio</element>
+ * <element name="ulPriority" type="IN">Priority of the timer object. Typically between [0..SYSTIMER_NUM_OF_TIMER_PRIOS - 1]: 0=highest priority, 255=lowest priority</element>
  * <element name="tCallContext" type="IN">Actual register context of the calling callback. Can be used to make a context switch.</element>
  * <element name="tBPContext" type="IN">Actual register context of the actual breakpoint position</element>
  * <element name="bIECFunction" type="IN">Flag to mark, if callback function is an IEC function</element>
@@ -427,14 +443,14 @@ extern "C" {
 #endif
 
 
-/* Init routines for OS specific modules */
+/* Initialization routines for OS specific modules */
 RTS_RESULT CDECL SysTimerOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysTimerOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 
 /**
  * <description> This function creates a timer and sets an event </description>
  * <param name="hEvent" type="IN" range="[RTS_INVALID_HANDLE,NULL,VALID_EVENTHANDLE]">Handle to the event that is sent after the interval expires</param>
- * <param name="tIntervalNs" type="IN" range="[0,MIN_INTERVAL,MAX_INTERVAL,1000000]">Period of the timer (timebase = 1 ns)</param>
+ * <param name="tIntervalNs" type="IN" range="[0,MIN_INTERVAL,MAX_INTERVAL,1000000]">Period of the timer (timebase = 1 [ns])</param>
  * <param name="ulPriority" type="IN" range="[0..(SYSTIMER_NUM_OF_TIMER_PRIOS - 1),SYSTIMER_NUM_OF_TIMER_PRIOS]">Priority of the timer object</param>
  * <param name="pfExceptionHandler" type="IN" range="[NULL,VALID_PFEXCEPTIONHANDLER]">Pointer to an optional exception handler. Can be NULL.</param>
  * <param name="pResult" type="OUT">Result pointer containing the error code. Might be NULL. </param>
@@ -478,20 +494,20 @@ DEF_CREATEITF_API(`RTS_HANDLE',`CDECL',`SysTimerCreateCallback',`(PFTIMERCALLBAC
  * <p>This callback has to be of type PFTIMERCALLBACK and gets a the handle 
  * which is specified by hParam passed on every call.</p>
  * <p>Supported are timers with a different behavior (e.g. cyclic timers and
- * one-shot timers). They are specified in the categorie "Timer type"</p>
+ * one-shot timers). They are specified in the category "Timer type"</p>
  * <p>The supported timer intervals may be limited by the hardware and/or
  * underlying operating systems. For one-shot timers, the interval just
  * specifies the time for the next shot.</p>
  * <p>For the case, that the underlying operating system supports only exception
  * handling based on tasks, you can pass a task as an exception handler with
  * the parameter pfExceptionHandler.</p>
- * <p>Timers are priorized like IEC Tasks. There may be 256 Priorities, but
+ * <p>Timers are prioritized like IEC Tasks. There may be 256 Priorities, but
  * this number is in fact limited by the system adaptation.</p>
  * </description>
  *
  * <param name="pfTimerCallback" type="IN" range="[NULL,VALID_PFTIMERCALLBACK]">
  *   Pointer for the Timer callback. This callback is called when ever the timer
- *   event occured.
+ *   event occurred.
  * </param>
  * <param name="hParam" type="IN" range="[NULL,VALID_HPARAM]">
  *   Parameter that is passed to the timer callback.
@@ -501,20 +517,20 @@ DEF_CREATEITF_API(`RTS_HANDLE',`CDECL',`SysTimerCreateCallback',`(PFTIMERCALLBAC
  *   is only used internally and may be 0 in most cases.
  * </param>
  * <param name="tIntervalNs" type="IN" range="[0,MIN_INTERVAL,MAX_INTERVAL,1000000]">
- *   Interval of the timer (timebase = 1 ns). The resolution may vary because
+ *   Interval of the timer (timebase = 1 [ns]). The resolution may vary because
  *   of limitations from the hardware or underlying operating system.
  * </param>
  * <param name="ulPriority" type="IN" range="[0..(SYSTIMER_NUM_OF_TIMER_PRIOS - 1),SYSTIMER_NUM_OF_TIMER_PRIOS]">Priority of the timer object</param>
  * <param name="ulType" type="IN" range="[RTS_TIMER_NONE,RTS_TIMER_PERIODIC]">
  *   Not all timers from the category "Timer type" might be supported by the 
- *   system. The only relyable timer is the periodic timer.
+ *   system. The only reliable timer is the periodic timer.
  * </param>
  * <param name="pfExceptionHandler" type="IN" range="[NULL,VALID_PFEXCEPTIONHANDLER]">
  *   Pointer to an optional exception handler. Can be NULL.
  * </param>
  * <param name="pResult" type="OUT">Result pointer containing the error code. Might be NULL. </param>
  * <parampseudo name="bFullMemPool" type="IN" range="[TRUE,FALSE]">Indicates whether the internal used MemPool is full.</parampseudo>
- * <parampseudo name="_bIECFunction" type="OUT">if bIECFunction Input is set, IEC Func is called with SysCpuCallIECFuncWithParams, else directly</parampseudo>
+ * <parampseudo name="_bIECFunction" type="OUT">if bIECFunction Input is set, IEC function is called with SysCpuCallIECFuncWithParams, else directly</parampseudo>
  * <parampseudo name="_hParam" type="OUT">hParam from pfTimerCallback must be same value as INPUT hParam</parampseudo>
  * <parampseudo name="_tIntervalNs" type="OUT">Interval in which pfTimerCallback is called must be equal to INPUT tIntervalNs</parampseudo>
  * <parampseudo name="bFullTimer" type="IN" range="[TRUE,FALSE]">Indicates whether all timer used.</parampseudo>
@@ -522,7 +538,7 @@ DEF_CREATEITF_API(`RTS_HANDLE',`CDECL',`SysTimerCreateCallback',`(PFTIMERCALLBAC
  * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">Timer could not be opened, SysTimerOpen returned not ERR_OK, RTS_INVALID_HANDLE is returned</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pfTimerCallback was invalid, RTS_INVALID_HANDLE is returned</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OUT_OF_LIMITS">Number of static timers exceeds Limit: SYSTIMER_NUM_OF_STATIC_TIMER, RTS_INVALID_HANDLE is returned</errorcode>
- * <errorcode name="RTS_RESULT pResult" type="ERR_NO_MEMORY">Could not get Timerinfo from MemPool, RTS_INVALID_HANDLE is returned</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_NO_MEMORY">Could not get timer-info from MemPool, RTS_INVALID_HANDLE is returned</errorcode>
  * <result>
  *   Handle of the timer or RTS_INVALID_HANDLE if there was an error.
  * </result> 
@@ -546,7 +562,7 @@ DEF_DELETEITF_API(`RTS_RESULT',`CDECL',`SysTimerDelete',`(RTS_HANDLE hTimer)')
  * <param name="pResult" type="OUT">Result pointer containing the error code. Might be NULL. </param>
  * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pTimerInfo is invalid</errorcode>
  * <errorcode name="RTS_RESULT pResult" type="ERR_OK">Timer was opened</errorcode>
- * <result>Handle of the timerinfo or RTS_INVALID_HANDLE</result>
+ * <result>Handle of the timer-info or RTS_INVALID_HANDLE</result>
  */
 DEF_CREATEITF_API(`RTS_HANDLE',`CDECL',`SysTimerOpen',`(SYS_TIMER_INFO *pTimerInfo, RTS_RESULT *pResult)')
 
@@ -613,9 +629,9 @@ DEF_HANDLEITF_API(`RTS_RESULT',`CDECL',`SysTimerSetInterval',`(RTS_HANDLE hTimer
  * <param name="hTimer" type="IN" range="[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE]">Handle of the timer</param>
  * <param name="ptTimestampNs" type="OUT">Timestamp in nanoseconds</param>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">hTimer or ptTimestampNs is invalid</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">Timestap returned successfully</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">Timestamp returned successfully</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Timestamp could not be returned</errorcode>
- * <errorcode name="RTS_RESULT Result" type="ERR_OVERFLOW">Overflow detected since Timerstart</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OVERFLOW">Overflow detected since timer start</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_NOTIMPLEMENTED">Feature is not implemented</errorcode>
  * <result>Error code</result>
  */
@@ -706,7 +722,7 @@ DEF_HANDLEITF_API(`RTS_RESULT',`CDECL',`SysTimerSetCallbackParameter',`(RTS_HAND
 /**
  * <description> With this function the specified function is reseted (Needed for CmpScheduleTimer) </description>
  * <param name="hTimer" type="IN" range="[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE]">Handle of the timer to reset</param>
- * <errorcode name="RTS_RESULT Result" type="ERR_OK">No error occured</errorcode>
+ * <errorcode name="RTS_RESULT Result" type="ERR_OK">No error occurred</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_FAILED">Setting Priority failed</errorcode>
  * <errorcode name="RTS_RESULT Result" type="ERR_PARAMETER">hTimer invalid</errorcode>
  * <result>Error code</result>
@@ -745,8 +761,8 @@ DEF_ITF_API2(`RTS_HANDLE',`CDECL',`SysTimerGetNext',`(RTS_HANDLE hTimerPrev, RTS
 
 /**
  * <description>Call the registered callback handler with the corresponding hParam. IEC- and C-handlers are supported.</description>
- * <param name="hTimer" type="IN" range="[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE]">Secified timer object</param>
- * <parampseudo name="pTimer->bIECFunction" type="IN" range="[RTS_RANGE_OF_INT]">Secified timer object</parampseudo>
+ * <param name="hTimer" type="IN" range="[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE]">Specified timer object</param>
+ * <parampseudo name="pTimer->bIECFunction" type="IN" range="[RTS_RANGE_OF_INT]">Specified timer object</parampseudo>
  * <parampseudo name="bFuncCalled" type="OUT">Function call expected</parampseudo>
  * <result></result>
  */
@@ -769,7 +785,7 @@ DEF_ITF_API(`RTS_HANDLE',`CDECL',`SysTimerGetCurrent',`(RTS_RESULT *pResult)')
  * <description>
  * <p>Returns the timer info of the specified timer</p>
  * </description> 
- * <param name="hTimer" type="IN" range="[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE]">Secified timer object</param>
+ * <param name="hTimer" type="IN" range="[RTS_INVALID_HANDLE,NULL,VALID_TIMERHANDLE]">Specified timer object</param>
  * <param name="pResult" type="OUT">Result pointer containing the error code. Might be NULL. </param> 
  * <result>Pointer to the SYS_TIMER_INFO structure or NULL if failed</result>
  * 

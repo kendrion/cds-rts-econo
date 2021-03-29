@@ -1,0 +1,834 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_user_groups_d_b_configuration_itf:
+
+===============================
+CmpUserGroupsDBConfigurationItf
+===============================
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpUserGroupsDBConfiguration.
+
+Detailed Description
+--------------------
+
+This interface is used to configure the user groups of the a user management.
+
+If a user group database is not configurable (e.g. the implementation depends on the operating system) this interface must not be implemented by the user group database component. This allows only the authentication of users from different clients but not the configuration of user groups using the CODESYS online services.
+
+**Copyright:**
+
+Copyright (c) 2019 CODESYS Development GmbH. All rights reserved.
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpUserGroupsDBConfiguration_C <struct_i_cmp_user_groups_d_b_configuration___c>`
+
+Macros
+------
+
+- #define :ref:`USE_UserGroupsDBConfigRelease <group___cmp_user_groups_d_b_configuration_itf_1gae2af9d27ae56958aafcc62cf12728295>`
+
+- #define :ref:`EXT_UserGroupsDBConfigRelease <group___cmp_user_groups_d_b_configuration_itf_1gae3eb1adda987d7849f718b7bba4b0776>`
+
+- #define :ref:`GET_UserGroupsDBConfigRelease <group___cmp_user_groups_d_b_configuration_itf_1ga928bbca7d5af5b6f14e65f8ddaf7ca85>` ERR_OK
+
+- #define :ref:`CAL_UserGroupsDBConfigRelease <group___cmp_user_groups_d_b_configuration_itf_1ga077631d9fffc867361bbe041eb4948d5>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigRelease((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance))
+
+- #define :ref:`CHK_UserGroupsDBConfigRelease <group___cmp_user_groups_d_b_configuration_itf_1gaa7474396a67d3bc35b4691e18b27748b>` TRUE
+
+- #define :ref:`EXP_UserGroupsDBConfigRelease <group___cmp_user_groups_d_b_configuration_itf_1gac44a98ae6bbbb3e65b074ecb45b07f91>` ERR_OK
+
+- #define :ref:`USE_UserGroupsDBConfigImport <group___cmp_user_groups_d_b_configuration_itf_1ga5b763325593c402817ace55454a222a4>`
+
+- #define :ref:`EXT_UserGroupsDBConfigImport <group___cmp_user_groups_d_b_configuration_itf_1ga76cb1fe3c5d62e733e2c0ec9bf901265>`
+
+- #define :ref:`GET_UserGroupsDBConfigImport <group___cmp_user_groups_d_b_configuration_itf_1ga1343b3c6dab6525bc0011f2798fa6c6d>` ERR_OK
+
+- #define :ref:`CAL_UserGroupsDBConfigImport <group___cmp_user_groups_d_b_configuration_itf_1gaf34a62e4ae2bb3132df40d17bbb10cf9>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigImport((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_UserGroupsDBConfigImport <group___cmp_user_groups_d_b_configuration_itf_1ga6f2cfad27d40b4481977b43eae65a636>` TRUE
+
+- #define :ref:`EXP_UserGroupsDBConfigImport <group___cmp_user_groups_d_b_configuration_itf_1ga25ea40363b1ed0c4db0f83df48a1cef6>` ERR_OK
+
+- #define :ref:`USE_UserGroupsDBConfigExport <group___cmp_user_groups_d_b_configuration_itf_1gafb9133b1c0860f1bcbae742536b20345>`
+
+- #define :ref:`EXT_UserGroupsDBConfigExport <group___cmp_user_groups_d_b_configuration_itf_1gaa6489d9cdd612a3e504d8af33385b757>`
+
+- #define :ref:`GET_UserGroupsDBConfigExport <group___cmp_user_groups_d_b_configuration_itf_1ga85f95f7eaa024ac0a2ed230cddf0f271>` ERR_OK
+
+- #define :ref:`CAL_UserGroupsDBConfigExport <group___cmp_user_groups_d_b_configuration_itf_1ga38f6367140742ba66d76286208b3e015>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? 0 : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigExport((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1,p2,p3))
+
+- #define :ref:`CHK_UserGroupsDBConfigExport <group___cmp_user_groups_d_b_configuration_itf_1ga10222b2fcbfe2026c139974bf65e5a6b>` TRUE
+
+- #define :ref:`EXP_UserGroupsDBConfigExport <group___cmp_user_groups_d_b_configuration_itf_1gaffb4e4496507b42bdc20dfb26a23604e>` ERR_OK
+
+- #define :ref:`USE_UserGroupsDBConfigAdd <group___cmp_user_groups_d_b_configuration_itf_1ga3cd1b10b3c6ba5086ac2d5965d8a29d7>`
+
+- #define :ref:`EXT_UserGroupsDBConfigAdd <group___cmp_user_groups_d_b_configuration_itf_1ga9bc8f82ec874c03800adec2d9f845481>`
+
+- #define :ref:`GET_UserGroupsDBConfigAdd <group___cmp_user_groups_d_b_configuration_itf_1gaca7615f19c264e6531426710391c534c>` ERR_OK
+
+- #define :ref:`CAL_UserGroupsDBConfigAdd <group___cmp_user_groups_d_b_configuration_itf_1gab0704c6809ec92ee065790cb7909a611>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigAdd((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1))
+
+- #define :ref:`CHK_UserGroupsDBConfigAdd <group___cmp_user_groups_d_b_configuration_itf_1gaf1148038e4b14460c2176c086bd4b78c>` TRUE
+
+- #define :ref:`EXP_UserGroupsDBConfigAdd <group___cmp_user_groups_d_b_configuration_itf_1gae75d756ece46fef0b85581cc3b2dca2b>` ERR_OK
+
+- #define :ref:`USE_UserGroupsDBConfigRemove <group___cmp_user_groups_d_b_configuration_itf_1ga031347628e111ef10fb4876660de1bf6>`
+
+- #define :ref:`EXT_UserGroupsDBConfigRemove <group___cmp_user_groups_d_b_configuration_itf_1gad1b21431cfa0c17952338e2afab64e87>`
+
+- #define :ref:`GET_UserGroupsDBConfigRemove <group___cmp_user_groups_d_b_configuration_itf_1gad0a0affdc4d92709511637d06566e1d1>` ERR_OK
+
+- #define :ref:`CAL_UserGroupsDBConfigRemove <group___cmp_user_groups_d_b_configuration_itf_1ga7eddeb7245a3321a18f64cb3106dc850>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigRemove((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1))
+
+- #define :ref:`CHK_UserGroupsDBConfigRemove <group___cmp_user_groups_d_b_configuration_itf_1ga9ffb0af94a3675848e3ef8686ea15fba>` TRUE
+
+- #define :ref:`EXP_UserGroupsDBConfigRemove <group___cmp_user_groups_d_b_configuration_itf_1ga7f90a287ed4f035734b3e1afa64b0faa>` ERR_OK
+
+- #define :ref:`USE_UserGroupsDBConfigSetProperty <group___cmp_user_groups_d_b_configuration_itf_1ga48339d2af6a4a46f5e9424ec02234166>`
+
+- #define :ref:`EXT_UserGroupsDBConfigSetProperty <group___cmp_user_groups_d_b_configuration_itf_1gaff46ab3536b26e3cce23fa0ecb10e561>`
+
+- #define :ref:`GET_UserGroupsDBConfigSetProperty <group___cmp_user_groups_d_b_configuration_itf_1ga054438544060a9cee0c5c81e8b4b4130>` ERR_OK
+
+- #define :ref:`CAL_UserGroupsDBConfigSetProperty <group___cmp_user_groups_d_b_configuration_itf_1gaf4a3f058e7ee2b6b5769ffeb34112193>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigSetProperty((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_UserGroupsDBConfigSetProperty <group___cmp_user_groups_d_b_configuration_itf_1gac3f4837f367f11d4af778fb1bfac6f0d>` TRUE
+
+- #define :ref:`EXP_UserGroupsDBConfigSetProperty <group___cmp_user_groups_d_b_configuration_itf_1ga5b468a10ffff186184ce9772baa8a702>` ERR_OK
+
+- #define :ref:`USE_UserGroupsDBConfigAddUser <group___cmp_user_groups_d_b_configuration_itf_1gae994bb591893e9294d88e74a5fb101a1>`
+
+- #define :ref:`EXT_UserGroupsDBConfigAddUser <group___cmp_user_groups_d_b_configuration_itf_1ga812b45ba3d2404bbbc745a8ab1f580ee>`
+
+- #define :ref:`GET_UserGroupsDBConfigAddUser <group___cmp_user_groups_d_b_configuration_itf_1ga991a8cacf4fb6d926c3fac9c3888cfed>` ERR_OK
+
+- #define :ref:`CAL_UserGroupsDBConfigAddUser <group___cmp_user_groups_d_b_configuration_itf_1ga2ad5f5c60b8dde5a46bd75f54866c78a>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigAddUser((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_UserGroupsDBConfigAddUser <group___cmp_user_groups_d_b_configuration_itf_1ga54f778994e5ed8fc7943efa467c7f8a9>` TRUE
+
+- #define :ref:`EXP_UserGroupsDBConfigAddUser <group___cmp_user_groups_d_b_configuration_itf_1ga4f5046ae8b41bad58963efecb83d1af8>` ERR_OK
+
+- #define :ref:`USE_UserGroupsDBConfigRemoveUser <group___cmp_user_groups_d_b_configuration_itf_1ga17aad41f667c6a817f56d62124e2fd5a>`
+
+- #define :ref:`EXT_UserGroupsDBConfigRemoveUser <group___cmp_user_groups_d_b_configuration_itf_1ga060f997758e01fadbe684b821a0aeddb>`
+
+- #define :ref:`GET_UserGroupsDBConfigRemoveUser <group___cmp_user_groups_d_b_configuration_itf_1ga3f6084f2f917fa93163c2bd47ee45ac1>` ERR_OK
+
+- #define :ref:`CAL_UserGroupsDBConfigRemoveUser <group___cmp_user_groups_d_b_configuration_itf_1ga2be1dffa06984ee827997e704b1a78ff>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigRemoveUser((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_UserGroupsDBConfigRemoveUser <group___cmp_user_groups_d_b_configuration_itf_1gad232e0126519212e13f427b6f5d30e24>` TRUE
+
+- #define :ref:`EXP_UserGroupsDBConfigRemoveUser <group___cmp_user_groups_d_b_configuration_itf_1ga78e5b942d4e405826d85fa98e0176c1c>` ERR_OK
+
+- #define :ref:`USE_UserGroupsDBConfigAddMember <group___cmp_user_groups_d_b_configuration_itf_1gab5e482766903ae3ee89dea7ca14d70db>`
+
+- #define :ref:`EXT_UserGroupsDBConfigAddMember <group___cmp_user_groups_d_b_configuration_itf_1gaf45ff2b6364473034a77638893be80c5>`
+
+- #define :ref:`GET_UserGroupsDBConfigAddMember <group___cmp_user_groups_d_b_configuration_itf_1ga0eb0688ab4fe9044e6151a3dffe4e9f4>` ERR_OK
+
+- #define :ref:`CAL_UserGroupsDBConfigAddMember <group___cmp_user_groups_d_b_configuration_itf_1ga1eff36e19dc3e3d98f5b040d76167064>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigAddMember((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_UserGroupsDBConfigAddMember <group___cmp_user_groups_d_b_configuration_itf_1ga7615e30785998d705375ac7cee67ace7>` TRUE
+
+- #define :ref:`EXP_UserGroupsDBConfigAddMember <group___cmp_user_groups_d_b_configuration_itf_1ga8a1c5448e6d422bf8bea0a797b810803>` ERR_OK
+
+- #define :ref:`USE_UserGroupsDBConfigRemoveMember <group___cmp_user_groups_d_b_configuration_itf_1ga3d7ea5c3dbdf457e43aa9023c05f3c8c>`
+
+- #define :ref:`EXT_UserGroupsDBConfigRemoveMember <group___cmp_user_groups_d_b_configuration_itf_1ga0508a89fc8f19767eebdac623046c33e>`
+
+- #define :ref:`GET_UserGroupsDBConfigRemoveMember <group___cmp_user_groups_d_b_configuration_itf_1ga3300837913b1379d2193bdd38e7e084b>` ERR_OK
+
+- #define :ref:`CAL_UserGroupsDBConfigRemoveMember <group___cmp_user_groups_d_b_configuration_itf_1ga6012ab689bdbc659fe536a78927d20fe>` (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigRemoveMember((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1,p2))
+
+- #define :ref:`CHK_UserGroupsDBConfigRemoveMember <group___cmp_user_groups_d_b_configuration_itf_1ga326a43c1358e1833c15b36ef09b5048b>` TRUE
+
+- #define :ref:`EXP_UserGroupsDBConfigRemoveMember <group___cmp_user_groups_d_b_configuration_itf_1gacd94cb23d0cfaa999808e1d3049c3858>` ERR_OK
+
+- #define :ref:`ITF_CmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1ga1caaa96f7bea3301244bc9375473271d>`
+
+- #define :ref:`EXTITF_CmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1ga362ab7a3ea6eed0290e43ae9fc168b11>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFUSERGROUPSDBCONFIGRELEASE <group___cmp_user_groups_d_b_configuration_itf_1gaef733c1df0cf903da14bb8d462d94f67>`)(RTS_HANDLE hDatabase)
+
+- typedef RTS_RESULT(* :ref:`PFUSERGROUPSDBCONFIGIMPORT <group___cmp_user_groups_d_b_configuration_itf_1gac5bf0a5cbc51533d57d4cadff4242d19>`)(RTS_HANDLE hDatabase, RTS_UI8 *pData, RTS_SIZE dataSize)
+
+- typedef RTS_SIZE(* :ref:`PFUSERGROUPSDBCONFIGEXPORT <group___cmp_user_groups_d_b_configuration_itf_1gace2ba004719ceb30c28b74b513109cc7>`)(RTS_HANDLE hDatabase, RTS_UI8 *pData, RTS_SIZE maxSize, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFUSERGROUPSDBCONFIGADD <group___cmp_user_groups_d_b_configuration_itf_1ga8e5dd8d7f165a9f4c2b63c1414ef5a21>`)(RTS_HANDLE hDatabase, char *pszGroup)
+
+- typedef RTS_RESULT(* :ref:`PFUSERGROUPSDBCONFIGREMOVE <group___cmp_user_groups_d_b_configuration_itf_1ga4df8a1e8be18d2dac5a2b50300ebe47a>`)(RTS_HANDLE hDatabase, char *pszGroup)
+
+- typedef RTS_RESULT(* :ref:`PFUSERGROUPSDBCONFIGSETPROPERTY <group___cmp_user_groups_d_b_configuration_itf_1ga5dac2ffd8e57513d34841bc09fd8bf50>`)(RTS_HANDLE hDatabase, char *pszGroup, RTS_UI32 ulProperty)
+
+- typedef RTS_RESULT(* :ref:`PFUSERGROUPSDBCONFIGADDUSER <group___cmp_user_groups_d_b_configuration_itf_1ga0d09963e7f3301196dbbdbc47cc69d78>`)(RTS_HANDLE hDatabase, char *pszGroup, char *pszUser)
+
+- typedef RTS_RESULT(* :ref:`PFUSERGROUPSDBCONFIGREMOVEUSER <group___cmp_user_groups_d_b_configuration_itf_1ga2213225f7aa43168a9118eb08870fbdb>`)(RTS_HANDLE hDatabase, char *pszGroup, char *pszUser)
+
+- typedef RTS_RESULT(* :ref:`PFUSERGROUPSDBCONFIGADDMEMBER <group___cmp_user_groups_d_b_configuration_itf_1gaf5247b69eae08f4d58d97e9917ef37f6>`)(RTS_HANDLE hDatabase, char *pszGroup, char *pszGroupToAdd)
+
+- typedef RTS_RESULT(* :ref:`PFUSERGROUPSDBCONFIGREMOVEMEMBER <group___cmp_user_groups_d_b_configuration_itf_1gabca5504f428859a6d9f7e7f96913b17f>`)(RTS_HANDLE hDatabase, char *pszGroup, char *pszGroupToRemove)
+
+- typedef :ref:`ICmpUserGroupsDBConfiguration_C <struct_i_cmp_user_groups_d_b_configuration___c>` :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>`
+
+Functions
+---------
+
+- STATICITF_DEF RTS_RESULT :ref:`UserGroupsDBConfigRelease <group___cmp_user_groups_d_b_configuration_itf_1ga4cf750b55f7711e726f39501b907f029>` (RTS_HANDLE hDatabase)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserGroupsDBConfigImport <group___cmp_user_groups_d_b_configuration_itf_1ga663e00343ae731b00093323eb32068e9>` (RTS_HANDLE hDatabase, RTS_UI8 * pData, RTS_SIZE dataSize)
+
+- STATICITF_DEF RTS_SIZE :ref:`UserGroupsDBConfigExport <group___cmp_user_groups_d_b_configuration_itf_1ga9cfed0517a32fd7581a68f7261d00361>` (RTS_HANDLE hDatabase, RTS_UI8 * pData, RTS_SIZE maxSize, RTS_RESULT * pResult)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserGroupsDBConfigAdd <group___cmp_user_groups_d_b_configuration_itf_1gad2a63896e26f47db46360d6d92fce3a3>` (RTS_HANDLE hDatabase, char * pszGroup)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserGroupsDBConfigRemove <group___cmp_user_groups_d_b_configuration_itf_1gad44719c4ae54a7916ade85295e4b3a66>` (RTS_HANDLE hDatabase, char * pszGroup)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserGroupsDBConfigSetProperty <group___cmp_user_groups_d_b_configuration_itf_1gaac839694a975486fb13f49c294715de5>` (RTS_HANDLE hDatabase, char * pszGroup, RTS_UI32 ulProperty)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserGroupsDBConfigAddUser <group___cmp_user_groups_d_b_configuration_itf_1ga404df4ce77c44ced3942f4a96b3746ff>` (RTS_HANDLE hDatabase, char * pszGroup, char * pszUser)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserGroupsDBConfigRemoveUser <group___cmp_user_groups_d_b_configuration_itf_1ga0037252d120110f04dcf05f8b092203e>` (RTS_HANDLE hDatabase, char * pszGroup, char * pszUser)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserGroupsDBConfigAddMember <group___cmp_user_groups_d_b_configuration_itf_1gab11176bf52b3f332b9a4694f51e5edaf>` (RTS_HANDLE hDatabase, char * pszGroup, char * pszGroupToAdd)
+
+- STATICITF_DEF RTS_RESULT :ref:`UserGroupsDBConfigRemoveMember <group___cmp_user_groups_d_b_configuration_itf_1gacf3e06c59b5ef55a8975a67b7f9cbfac>` (RTS_HANDLE hDatabase, char * pszGroup, char * pszGroupToRemove)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_user_groups_d_b_configuration_itf_1gae2af9d27ae56958aafcc62cf12728295:
+
+#define USE_UserGroupsDBConfigRelease
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gae3eb1adda987d7849f718b7bba4b0776:
+
+#define EXT_UserGroupsDBConfigRelease
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga928bbca7d5af5b6f14e65f8ddaf7ca85:
+
+#define GET_UserGroupsDBConfigRelease ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga077631d9fffc867361bbe041eb4948d5:
+
+#define CAL_UserGroupsDBConfigRelease (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigRelease((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gaa7474396a67d3bc35b4691e18b27748b:
+
+#define CHK_UserGroupsDBConfigRelease TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gac44a98ae6bbbb3e65b074ecb45b07f91:
+
+#define EXP_UserGroupsDBConfigRelease ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga5b763325593c402817ace55454a222a4:
+
+#define USE_UserGroupsDBConfigImport
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga76cb1fe3c5d62e733e2c0ec9bf901265:
+
+#define EXT_UserGroupsDBConfigImport
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga1343b3c6dab6525bc0011f2798fa6c6d:
+
+#define GET_UserGroupsDBConfigImport ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gaf34a62e4ae2bb3132df40d17bbb10cf9:
+
+#define CAL_UserGroupsDBConfigImport (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigImport((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga6f2cfad27d40b4481977b43eae65a636:
+
+#define CHK_UserGroupsDBConfigImport TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga25ea40363b1ed0c4db0f83df48a1cef6:
+
+#define EXP_UserGroupsDBConfigImport ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gafb9133b1c0860f1bcbae742536b20345:
+
+#define USE_UserGroupsDBConfigExport
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gaa6489d9cdd612a3e504d8af33385b757:
+
+#define EXT_UserGroupsDBConfigExport
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga85f95f7eaa024ac0a2ed230cddf0f271:
+
+#define GET_UserGroupsDBConfigExport ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga38f6367140742ba66d76286208b3e015:
+
+#define CAL_UserGroupsDBConfigExport (p0 == RTS_INVALID_HANDLE || p0 == NULL ? 0 : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigExport((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1,p2,p3))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga10222b2fcbfe2026c139974bf65e5a6b:
+
+#define CHK_UserGroupsDBConfigExport TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gaffb4e4496507b42bdc20dfb26a23604e:
+
+#define EXP_UserGroupsDBConfigExport ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga3cd1b10b3c6ba5086ac2d5965d8a29d7:
+
+#define USE_UserGroupsDBConfigAdd
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga9bc8f82ec874c03800adec2d9f845481:
+
+#define EXT_UserGroupsDBConfigAdd
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gaca7615f19c264e6531426710391c534c:
+
+#define GET_UserGroupsDBConfigAdd ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gab0704c6809ec92ee065790cb7909a611:
+
+#define CAL_UserGroupsDBConfigAdd (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigAdd((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gaf1148038e4b14460c2176c086bd4b78c:
+
+#define CHK_UserGroupsDBConfigAdd TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gae75d756ece46fef0b85581cc3b2dca2b:
+
+#define EXP_UserGroupsDBConfigAdd ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga031347628e111ef10fb4876660de1bf6:
+
+#define USE_UserGroupsDBConfigRemove
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gad1b21431cfa0c17952338e2afab64e87:
+
+#define EXT_UserGroupsDBConfigRemove
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gad0a0affdc4d92709511637d06566e1d1:
+
+#define GET_UserGroupsDBConfigRemove ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga7eddeb7245a3321a18f64cb3106dc850:
+
+#define CAL_UserGroupsDBConfigRemove (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigRemove((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga9ffb0af94a3675848e3ef8686ea15fba:
+
+#define CHK_UserGroupsDBConfigRemove TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga7f90a287ed4f035734b3e1afa64b0faa:
+
+#define EXP_UserGroupsDBConfigRemove ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga48339d2af6a4a46f5e9424ec02234166:
+
+#define USE_UserGroupsDBConfigSetProperty
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gaff46ab3536b26e3cce23fa0ecb10e561:
+
+#define EXT_UserGroupsDBConfigSetProperty
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga054438544060a9cee0c5c81e8b4b4130:
+
+#define GET_UserGroupsDBConfigSetProperty ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gaf4a3f058e7ee2b6b5769ffeb34112193:
+
+#define CAL_UserGroupsDBConfigSetProperty (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigSetProperty((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gac3f4837f367f11d4af778fb1bfac6f0d:
+
+#define CHK_UserGroupsDBConfigSetProperty TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga5b468a10ffff186184ce9772baa8a702:
+
+#define EXP_UserGroupsDBConfigSetProperty ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gae994bb591893e9294d88e74a5fb101a1:
+
+#define USE_UserGroupsDBConfigAddUser
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga812b45ba3d2404bbbc745a8ab1f580ee:
+
+#define EXT_UserGroupsDBConfigAddUser
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga991a8cacf4fb6d926c3fac9c3888cfed:
+
+#define GET_UserGroupsDBConfigAddUser ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga2ad5f5c60b8dde5a46bd75f54866c78a:
+
+#define CAL_UserGroupsDBConfigAddUser (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigAddUser((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga54f778994e5ed8fc7943efa467c7f8a9:
+
+#define CHK_UserGroupsDBConfigAddUser TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga4f5046ae8b41bad58963efecb83d1af8:
+
+#define EXP_UserGroupsDBConfigAddUser ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga17aad41f667c6a817f56d62124e2fd5a:
+
+#define USE_UserGroupsDBConfigRemoveUser
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga060f997758e01fadbe684b821a0aeddb:
+
+#define EXT_UserGroupsDBConfigRemoveUser
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga3f6084f2f917fa93163c2bd47ee45ac1:
+
+#define GET_UserGroupsDBConfigRemoveUser ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga2be1dffa06984ee827997e704b1a78ff:
+
+#define CAL_UserGroupsDBConfigRemoveUser (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigRemoveUser((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gad232e0126519212e13f427b6f5d30e24:
+
+#define CHK_UserGroupsDBConfigRemoveUser TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga78e5b942d4e405826d85fa98e0176c1c:
+
+#define EXP_UserGroupsDBConfigRemoveUser ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gab5e482766903ae3ee89dea7ca14d70db:
+
+#define USE_UserGroupsDBConfigAddMember
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gaf45ff2b6364473034a77638893be80c5:
+
+#define EXT_UserGroupsDBConfigAddMember
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga0eb0688ab4fe9044e6151a3dffe4e9f4:
+
+#define GET_UserGroupsDBConfigAddMember ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga1eff36e19dc3e3d98f5b040d76167064:
+
+#define CAL_UserGroupsDBConfigAddMember (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigAddMember((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga7615e30785998d705375ac7cee67ace7:
+
+#define CHK_UserGroupsDBConfigAddMember TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga8a1c5448e6d422bf8bea0a797b810803:
+
+#define EXP_UserGroupsDBConfigAddMember ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga3d7ea5c3dbdf457e43aa9023c05f3c8c:
+
+#define USE_UserGroupsDBConfigRemoveMember
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga0508a89fc8f19767eebdac623046c33e:
+
+#define EXT_UserGroupsDBConfigRemoveMember
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga3300837913b1379d2193bdd38e7e084b:
+
+#define GET_UserGroupsDBConfigRemoveMember ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga6012ab689bdbc659fe536a78927d20fe:
+
+#define CAL_UserGroupsDBConfigRemoveMember (p0 == RTS_INVALID_HANDLE || p0 == NULL ? (RTS_RESULT)ERR_PARAMETER : (( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->IUserGroupsDBConfigRemoveMember((( :ref:`ICmpUserGroupsDBConfiguration <group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261>` *)p0)->pBase->hInstance,p1,p2))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga326a43c1358e1833c15b36ef09b5048b:
+
+#define CHK_UserGroupsDBConfigRemoveMember TRUE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gacd94cb23d0cfaa999808e1d3049c3858:
+
+#define EXP_UserGroupsDBConfigRemoveMember ERR_OK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga1caaa96f7bea3301244bc9375473271d:
+
+#define ITF_CmpUserGroupsDBConfiguration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga362ab7a3ea6eed0290e43ae9fc168b11:
+
+#define EXTITF_CmpUserGroupsDBConfiguration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gaef733c1df0cf903da14bb8d462d94f67:
+
+typedef RTS_RESULT( *  PFUSERGROUPSDBCONFIGRELEASE) (RTS_HANDLE hDatabase)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gac5bf0a5cbc51533d57d4cadff4242d19:
+
+typedef RTS_RESULT( *  PFUSERGROUPSDBCONFIGIMPORT) (RTS_HANDLE hDatabase, RTS_UI8 *pData, RTS_SIZE dataSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gace2ba004719ceb30c28b74b513109cc7:
+
+typedef RTS_SIZE( *  PFUSERGROUPSDBCONFIGEXPORT) (RTS_HANDLE hDatabase, RTS_UI8 *pData, RTS_SIZE maxSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga8e5dd8d7f165a9f4c2b63c1414ef5a21:
+
+typedef RTS_RESULT( *  PFUSERGROUPSDBCONFIGADD) (RTS_HANDLE hDatabase, char *pszGroup)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga4df8a1e8be18d2dac5a2b50300ebe47a:
+
+typedef RTS_RESULT( *  PFUSERGROUPSDBCONFIGREMOVE) (RTS_HANDLE hDatabase, char *pszGroup)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga5dac2ffd8e57513d34841bc09fd8bf50:
+
+typedef RTS_RESULT( *  PFUSERGROUPSDBCONFIGSETPROPERTY) (RTS_HANDLE hDatabase, char *pszGroup, RTS_UI32 ulProperty)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga0d09963e7f3301196dbbdbc47cc69d78:
+
+typedef RTS_RESULT( *  PFUSERGROUPSDBCONFIGADDUSER) (RTS_HANDLE hDatabase, char *pszGroup, char *pszUser)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga2213225f7aa43168a9118eb08870fbdb:
+
+typedef RTS_RESULT( *  PFUSERGROUPSDBCONFIGREMOVEUSER) (RTS_HANDLE hDatabase, char *pszGroup, char *pszUser)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gaf5247b69eae08f4d58d97e9917ef37f6:
+
+typedef RTS_RESULT( *  PFUSERGROUPSDBCONFIGADDMEMBER) (RTS_HANDLE hDatabase, char *pszGroup, char *pszGroupToAdd)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gabca5504f428859a6d9f7e7f96913b17f:
+
+typedef RTS_RESULT( *  PFUSERGROUPSDBCONFIGREMOVEMEMBER) (RTS_HANDLE hDatabase, char *pszGroup, char *pszGroupToRemove)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gad65c2449b35472a78cdf7f2f41c99261:
+
+typedef ICmpUserGroupsDBConfiguration_C ICmpUserGroupsDBConfiguration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga4cf750b55f7711e726f39501b907f029:
+
+STATICITF_DEF RTS_RESULT UserGroupsDBConfigRelease (RTS_HANDLE hDatabase)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga663e00343ae731b00093323eb32068e9:
+
+STATICITF_DEF RTS_RESULT UserGroupsDBConfigImport (RTS_HANDLE hDatabase, RTS_UI8 *pData, RTS_SIZE dataSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Import the user group database from a backup.
+**Returns:**
+
+Error code
+
+**Return values**
+
++------------+----------------------------------+
+| ERR_OK     | Succeeded                        |
++------------+----------------------------------+
+| ERR_FAILED | Failed releasing user management |
++------------+----------------------------------+
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga9cfed0517a32fd7581a68f7261d00361:
+
+STATICITF_DEF RTS_SIZE UserGroupsDBConfigExport (RTS_HANDLE hDatabase, RTS_UI8 *pData, RTS_SIZE maxSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Export the user group database into a backup.
+**Returns:**
+
+Error code
+
+**Return values**
+
++------------+----------------------------------+
+| ERR_OK     | Succeeded                        |
++------------+----------------------------------+
+| ERR_FAILED | Failed releasing user management |
++------------+----------------------------------+
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gad2a63896e26f47db46360d6d92fce3a3:
+
+STATICITF_DEF RTS_RESULT UserGroupsDBConfigAdd (RTS_HANDLE hDatabase, char *pszGroup)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add a new user group to the user database
+
+**Parameters**
+
++---------+----------+-----------------------+
+| [in]    | pszGroup | Group name            |
++---------+----------+-----------------------+
+| [out]   | pResult  | Pointer to error code |
++---------+----------+-----------------------+
+
+**Return values**
+
++--------------------+----------------------------------------------------------------+
+| ERR_OK             | Group could be added                                           |
++--------------------+----------------------------------------------------------------+
+| ERR_DUPLICATE      | Group already exists                                           |
++--------------------+----------------------------------------------------------------+
+| ERR_PARAMETER      | Invalid parameter. pszGroup = NULL or empty                    |
++--------------------+----------------------------------------------------------------+
+| ERR_NOMEMORY       | No memory available to store new group                         |
++--------------------+----------------------------------------------------------------+
+| ERR_NOTINITIALIZED | The user management is not initialized or it is not loaded yet |
++--------------------+----------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the added group or RTS_INVALID_HANDLE if failed
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gad44719c4ae54a7916ade85295e4b3a66:
+
+STATICITF_DEF RTS_RESULT UserGroupsDBConfigRemove (RTS_HANDLE hDatabase, char *pszGroup)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Remove user group from the user database
+
+**Parameters**
+
++---------+--------+---------------------+
+| [in]    | hGroup | Handle to the group |
++---------+--------+---------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++---------------+------------------------+
+| ERR_OK        | Group could be removed |
++---------------+------------------------+
+| ERR_PARAMETER | Invalid group handle   |
++---------------+------------------------+
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gaac839694a975486fb13f49c294715de5:
+
+STATICITF_DEF RTS_RESULT UserGroupsDBConfigSetProperty (RTS_HANDLE hDatabase, char *pszGroup, RTS_UI32 ulProperty)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Set properties of a group
+
+**Parameters**
+
++---------+-------------+-----------------------------------------------------------------------------+
+| [in]    | hGroup      | Handle to the group                                                         |
++---------+-------------+-----------------------------------------------------------------------------+
+| [in]    | pulProperty | Pointer to set the properties. For details see category "UserDB properties" |
++---------+-------------+-----------------------------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++---------------+-----------------------------------------------+
+| ERR_OK        | Properties could be set                       |
++---------------+-----------------------------------------------+
+| ERR_PARAMETER | Invalid user group or property pointer = NULL |
++---------------+-----------------------------------------------+
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga404df4ce77c44ced3942f4a96b3746ff:
+
+STATICITF_DEF RTS_RESULT UserGroupsDBConfigAddUser (RTS_HANDLE hDatabase, char *pszGroup, char *pszUser)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add a new user to a group NOTE: The required user handle is not compatible with a handle from the UserMgr, and these handles must not be mixed. A UserMgr handle can be converted to a UserDB handle by using UserMgrGetUserDBHandle().
+
+**Parameters**
+
++---------+--------+---------------------+
+| [in]    | hGroup | Handle to the group |
++---------+--------+---------------------+
+| [in]    | hUser  | Handle to the user  |
++---------+--------+---------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++--------------------+----------------------------------------------------------------+
+| ERR_OK             | User could be added or is already added                        |
++--------------------+----------------------------------------------------------------+
+| ERR_PARAMETER      | Invalid parameter. hGroup or hUser invalid                     |
++--------------------+----------------------------------------------------------------+
+| ERR_NOMEMORY       | No memory available to add user to group                       |
++--------------------+----------------------------------------------------------------+
+| ERR_NOTINITIALIZED | The user management is not initialized or it is not loaded yet |
++--------------------+----------------------------------------------------------------+
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1ga0037252d120110f04dcf05f8b092203e:
+
+STATICITF_DEF RTS_RESULT UserGroupsDBConfigRemoveUser (RTS_HANDLE hDatabase, char *pszGroup, char *pszUser)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Remove a user from a group NOTE: The required user handle is not compatible with a handle from the UserMgr, and these handles must not be mixed. A UserMgr handle can be converted to a UserDB handle by using UserMgrGetUserDBHandle().
+
+**Parameters**
+
++---------+--------+---------------------+
+| [in]    | hGroup | Handle to the group |
++---------+--------+---------------------+
+| [in]    | hUser  | Handle to the user  |
++---------+--------+---------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++--------------------+----------------------------------------------------------------+
+| ERR_OK             | User could be removed                                          |
++--------------------+----------------------------------------------------------------+
+| ERR_PARAMETER      | Invalid parameter. hGroup or hUser invalid                     |
++--------------------+----------------------------------------------------------------+
+| ERR_NOTINITIALIZED | The user management is not initialized or it is not loaded yet |
++--------------------+----------------------------------------------------------------+
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gab11176bf52b3f332b9a4694f51e5edaf:
+
+STATICITF_DEF RTS_RESULT UserGroupsDBConfigAddMember (RTS_HANDLE hDatabase, char *pszGroup, char *pszGroupToAdd)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add a group as a member to another group. So that group is derived from the first one
+
+**Parameters**
+
++---------+--------------+--------------------------------------------------------------------------------------+
+| [in]    | hGroup       | First group to derive from                                                           |
++---------+--------------+--------------------------------------------------------------------------------------+
+| [in]    | hGroupMember | New member group which is derived from the first group (hGroup) after this operation |
++---------+--------------+--------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++--------------------+----------------------------------------------------------------+
+| ERR_OK             | Group could be added                                           |
++--------------------+----------------------------------------------------------------+
+| ERR_DUPLICATE      | Group is already added                                         |
++--------------------+----------------------------------------------------------------+
+| ERR_PARAMETER      | Invalid parameter. hGroup or hGroupMember invalid              |
++--------------------+----------------------------------------------------------------+
+| ERR_NOMEMORY       | No memory available to add group to another group              |
++--------------------+----------------------------------------------------------------+
+| ERR_NOTINITIALIZED | The user management is not initialized or it is not loaded yet |
++--------------------+----------------------------------------------------------------+
+
+.. _group___cmp_user_groups_d_b_configuration_itf_1gacf3e06c59b5ef55a8975a67b7f9cbfac:
+
+STATICITF_DEF RTS_RESULT UserGroupsDBConfigRemoveMember (RTS_HANDLE hDatabase, char *pszGroup, char *pszGroupToRemove)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Remove a group as a member from another group. So the group is no longer derived from the first one
+
+**Parameters**
+
++---------+--------------+--------------------------------------------------------------------------------------------+
+| [in]    | hGroup       | First group to remove the derived group from                                               |
++---------+--------------+--------------------------------------------------------------------------------------------+
+| [in]    | hGroupMember | Member group which is no longer derived from the first group (hGroup) after this operation |
++---------+--------------+--------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++--------------------+----------------------------------------------------------------+
+| ERR_OK             | Group could be removed                                         |
++--------------------+----------------------------------------------------------------+
+| ERR_PARAMETER      | Invalid parameter. hGroup or hGroupMember invalid              |
++--------------------+----------------------------------------------------------------+
+| ERR_NOTINITIALIZED | The user management is not initialized or it is not loaded yet |
++--------------------+----------------------------------------------------------------+
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

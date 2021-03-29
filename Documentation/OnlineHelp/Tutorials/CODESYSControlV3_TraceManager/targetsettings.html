@@ -1,0 +1,131 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>6.3.7.3. Target Settings for the device description &#8212; RuntimeSystemDocumentation V3.5.16.40</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/theme.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6.3.7.4. Glossary" href="glossary.html" />
+    <link rel="prev" title="Specification of the Memory Format of the Trace File" href="fileformat.html" /> 
+  </head><body>
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="glossary.html" title="6.3.7.4. Glossary"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="fileformat.html" title="Specification of the Memory Format of the Trace File"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >6. Tutorials / HowTos</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">6.3.7. Trace Manager</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="fileformat.html"
+                        title="previous chapter">Specification of the Memory Format of the Trace File</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="glossary.html"
+                        title="next chapter">6.3.7.4. Glossary</a></p>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <span class="target" id="targetsettings"></span><span class="target" id="index-0"></span><div class="section" id="target-settings-for-the-device-description">
+<span id="index-1"></span><h1>6.3.7.3. Target Settings for the device description<a class="headerlink" href="#target-settings-for-the-device-description" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="enable-trace-manager">
+<h2>Enable Trace Manager<a class="headerlink" href="#enable-trace-manager" title="Permalink to this headline">¶</a></h2>
+<p>An entry in the device description file defines whether the device will
+use the functionality of the trace manager or of the internal IEC trace.</p>
+<p>For using the Trace Manager, the <code class="docutils literal notranslate"><span class="pre">CmpTraceMgr</span></code> must be integrated in the
+runtime system and the following target setting must be added to the
+device description:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">section</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;trace&quot;</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="n">setting</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;tracemanager&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;boolean&quot;</span> <span class="n">access</span><span class="o">=</span><span class="s2">&quot;visible&quot;</span><span class="o">&gt;</span>
+       <span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">value</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="n">setting</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">section</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="system-tasks">
+<h2>System Tasks<a class="headerlink" href="#system-tasks" title="Permalink to this headline">¶</a></h2>
+<p>Additionally, task names for using system tasks as trace tasks can be defined In the
+target description. Then the names are available in the configuration
+dialog of the programming system for configuring a trace packet:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;ts:section name=&quot;trace&quot;&gt;
+…
+  &lt;ts:setting name=&quot;systemtasks&quot; type=&quot;string&quot; access=&quot;visible&quot;&gt;
+       &lt;ts:value&gt;SystemTask1,SystemTask2,SystemTask3&lt;/ts:value&gt;
+  &lt;/ts:setting&gt;
+&lt;/ts:section&gt;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="glossary.html" title="6.3.7.4. Glossary"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="fileformat.html" title="Specification of the Memory Format of the Trace File"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RuntimeSystemDocumentation V3.5.16.40</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >6. Tutorials / HowTos</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >6.3.7. Trace Manager</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, 3S-Smart Software Solutions GmbH. This document is confidential. Unauthorized copying, disclosure or distribution of this document and the information contained herein is strictly forbidden.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

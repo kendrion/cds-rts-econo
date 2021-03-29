@@ -9,7 +9,7 @@
  * nor can they be calculated from one to each other.</p>
  * <p>Implementation Notes:</p>
  * <ul>
- *   <li>All three different timers need their own handling of wrap arounds,
+ *   <li>All three different timers need their own handling of a wrap around,
  *   because they have a wrap around at different points in time at different
  *   boundaries. In practice, this implies the need for an own, static offset
  *   counter for every timer.</li>
@@ -24,7 +24,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -74,7 +74,7 @@
 /**
  * <category>Settings</category>
  * <type>String</type>
- * <description>Setting to specify a customerspecific function for SysTimeGetUs (VxWorks only).</description>
+ * <description>Setting to specify a customer specific function for SysTimeGetUs (VxWorks only).</description>
  */
 #define SYSTIMEKEY_INT_VXWORKS_CUSTOMSYSTIMEGETUS				"VxWorks.CustomSysTimeGetUs"
 #define SYSTIMEVALUE_INT_VXWORKS_CUSTOMSYSTIMEGETUS				""
@@ -82,7 +82,7 @@
 /**
  * <category>Settings</category>
  * <type>String</type>
- * <description>Setting to specify a customerspecific function for SysTimeGetNs (VxWorks only).</description>
+ * <description>Setting to specify a customer specific function for SysTimeGetNs (VxWorks only).</description>
  */
 #define SYSTIMEKEY_INT_VXWORKS_CUSTOMSYSTIMEGETNS				"VxWorks.CustomSysTimeGetNs"
 #define SYSTIMEVALUE_INT_VXWORKS_CUSTOMSYSTIMEGETNS				""
@@ -90,7 +90,7 @@
 /**
  * <category>Settings</category>
  * <type>Int</type>
- * <description>Setting to allow CODESYS usage of Timestamp (VxWorks only).</description>
+ * <description>Setting to allow CODESYS usage of timestamp (VxWorks only).</description>
  */
 #define SYSTIMEKEY_INT_VXWORKS_USE_TIMESTAMP				"VxWorks.UseTimestamp"
 #define SYSTIMEKEY_INT_VXWORKS_USE_TIMESTAMP_DEFAULT 		1
@@ -105,7 +105,7 @@ extern "C" {
  * <SIL2/>
  * Returns a monotonic rising millisecond tick. This tick can be used for timeout and
  * relative time measurements.
- * NOTE: The realtime clock is not influencing this tick!
+ * NOTE: The real-time clock is not influencing this tick!
  * RETURN: Returns the millisecond tick
  */
 typedef struct tagsystimegetms_struct
@@ -164,7 +164,7 @@ typedef void (CDECL CDECL_EXT* PFSYSTIMEGETMS_IEC) (systimegetms_struct *p);
  * <SIL2/>
  * Returns a monotonic rising nanosecond tick. This tick can be used for very high
  * resolution time measurements
- * NOTE: The realtime clock does not influences this tick!
+ * NOTE: The real-time clock does not influences this tick!
  * RETURN: Returns the runtime system error code (see CmpErrors.library)
  */
 typedef struct tagsystimegetns_struct
@@ -224,7 +224,7 @@ typedef void (CDECL CDECL_EXT* PFSYSTIMEGETNS_IEC) (systimegetns_struct *p);
  * <SIL2/>
  * Returns a monotonic rising microsecond tick. This tick can be used for timeout and
  * high resolution time measurements.
- * NOTE: The realtime clock does not influences this tick!
+ * NOTE: The real-time clock does not influences this tick!
  * RETURN: Returns the runtime system error code (see CmpErrors.library)
  */
 typedef struct tagsystimegetus_struct
@@ -291,7 +291,7 @@ typedef void (CDECL CDECL_EXT* PFSYSTIMEGETUS_IEC) (systimegetus_struct *p);
 extern "C" {
 #endif
 
-/* Init routines for OS specific modules */
+/* Initialization routines for OS specific modules */
 RTS_RESULT CDECL SysTimeOSInit(INIT_STRUCT *pInit);
 RTS_RESULT CDECL SysTimeOSHookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2);
 

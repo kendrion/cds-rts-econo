@@ -1,0 +1,33 @@
+.. _manage_license_files:
+
+Manage the License Files
+========================
+
+Every field bus that you are using on your PLC, needs to have a valid
+license from 3S. Additionally there are a few features, like the Target
+Visualization or Soft Motion, which are secured by a license on the
+target.
+
+All those licenses are contained in a file, called 3S.dat. This file
+needs to be accessible from IEC on your target. You can do this like
+this:
+
+  | [SysFile]
+  | FilePath.1=ide0:/root
+
+Alternatively, you can place only files with the extension \*.dat to a
+special folder:
+
+  | [SysFile]
+  | FilePath.1=ide0:/root
+  | FilePath.2=ide0:/license, \*.dat
+
+If you have an embedded system, where you don’t have a file system, but
+you are using SysFileFlash to manage your files, you can use the tool
+„ConvertFileToArray“, which you will find in the CODESYS Control
+Delivery. This tool will output a C-Preprocessor define, that you can
+copy to your „sysdefines.h“. Just name the define like this:
+
+  | #define LICENSEFILE_DAT {\\
+  | 0xd0,0x4e,0x7f,0x23,0xe6,0xba,0x82,0xa3,0xf8,0x22,\\
+  | ...

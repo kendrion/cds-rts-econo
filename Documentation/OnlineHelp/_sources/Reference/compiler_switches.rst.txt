@@ -1,0 +1,218 @@
+.. _compiler_switches:
+
+=================
+Compiler switches
+=================
+
+CmpAppBPItf
+^^^^^^^^^^^
+
+=================================  =======================================================================================================================================================================================================
+Switch                             Description                                                                                                                                                                                            
+=================================  =======================================================================================================================================================================================================
+APPBP_DISABLE_FLOWCONTROL          Switch to disable the feature :ref:`FlowControl <struct_flow_control>` . Can be used to reduce code size.                                                                                              
+APPBP_SHOW_ALWAYS_SOURCE_POSITION  Switch to enable showing the actual source position in the programing system for long running tasks. This makes only sense for very long running tasks that are used blocking calls or sleep functions.
+=================================  =======================================================================================================================================================================================================
+
+CmpAppForceItf
+^^^^^^^^^^^^^^
+
+=================================  ==================================
+Switch                             Description                       
+=================================  ==================================
+APPFORCE_DISABLE_PERSISTENT_FORCE  Switch to disable persistent force
+=================================  ==================================
+
+CmpCodeMeterItf
+^^^^^^^^^^^^^^^
+
+===================================  =======================================================================================================================================================================================================================================================================================================================
+Switch                               Description                                                                                                                                                                                                                                                                                                            
+===================================  =======================================================================================================================================================================================================================================================================================================================
+RTS_CODEMETER_EMBEDDED               Switch to enable CmCompact on an embedded device.    - WIBU USB Dongles are supported, if they are implemented in the platform specific part (actually VxWorks, Linux and WIndows CE                                                                                                                                   
+RTS_CODEMETER_SOFTLICENSING          Switch to enable CmActLicense / SoftLicense based on the binding value from :ref:`SysTargetGetSerialNumber_Secure() <group___sys_target_itf_1ga503e51ec613c5f128a6fa17b96cbe5c1>` . NOTE: This switch must only be set if the target supports a secure serial number that is appropriate for single target licensing!!!
+RTS_CODEMETER_DISABLE_USB            Switch to disable WIBU USB dongle support                                                                                                                                                                                                                                                                              
+RTS_CODEMETER_DISABLE_CMCARD         Switch to disable WIBU CF/SD card support                                                                                                                                                                                                                                                                              
+RTS_CODEMETER_DISABLE_LICENSE_CACHE  Switch to disable WIBU license cache feature                                                                                                                                                                                                                                                                           
+===================================  =======================================================================================================================================================================================================================================================================================================================
+
+CmpCAAStorageItf
+^^^^^^^^^^^^^^^^
+
+=================  ===================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
+Switch             Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+=================  ===================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
+SQLITE_OS_OTHER    The option causes SQLite to omit its built-in operating system interfaces for Unix, Windows, and OS/2. The resulting component will have the CoDeSys RTS operating system interface.                                                                                                                                                                                                                                                                                                                                               
+SQLITE_THREADSAFE  This option controls whether or not code is included in SQLite to enable it to operate safely in a multithreaded environment. The default is SQLITE_THREADSAFE=1 which is safe for use in a multithreaded environment. When compiled with SQLITE_THREADSAFE=0 all mutexing code is omitted and it is unsafe to use SQLite in a multithreaded program. When compiled with SQLITE_THREADSAFE=2, SQLite can be used in a multithreaded program so long as no two threads attempt to use the same database connection at the same time.
+=================  ===================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
+
+CmpDeviceManagementItf
+^^^^^^^^^^^^^^^^^^^^^^
+
+==============================  =================================================================================================================================
+Switch                          Description                                                                                                                      
+==============================  =================================================================================================================================
+CMPDEVICEMANAGEMENT_STANDALONE  Component is included in a standalone runtime                                                                                    
+CMPDEVICEMANAGEMENT_CLIENT      Runtime is one client of the DeviceManagementService! NOTE: DeviceManagementService must be compiled without any compiler switch!
+==============================  =================================================================================================================================
+
+CmpHilscherCIFXItf
+^^^^^^^^^^^^^^^^^^
+
+============================  ==================================================================================================================================================================
+Switch                        Description                                                                                                                                                       
+============================  ==================================================================================================================================================================
+CIFX_TOOLKIT_DMA              Switch to enable DMA transfer mode                                                                                                                                
+CIFX_TOOLKIT_ENABLE_DSR_LOCK  Interrupt lock must be enabled to use interrupt mode to synchronize the interrupt handler against the DSR task! If not, you got race conditions on multicore CPUs!
+CIFX_TOOLKIT_3S               Switch to build the component with the HILSCHER toolkit source based on the 3S-OS-Abstraction layer                                                               
+CIFX_LIB                      Switch to build the component based on the cifX library from HILSCHER                                                                                             
+============================  ==================================================================================================================================================================
+
+CmpIecTaskItf
+^^^^^^^^^^^^^
+
+=========================================  =======================================================================================================================================================================================================================================================================================================================================================================================
+Switch                                     Description                                                                                                                                                                                                                                                                                                                                                                            
+=========================================  =======================================================================================================================================================================================================================================================================================================================================================================================
+RTS_STRUCTURED_EXCEPTION_HANDLING          To enable the structured exception handling                                                                                                                                                                                                                                                                                                                                            
+RTS_IECTASK_STRUCTURED_EXCEPTION_HANDLING  To enable structured exception handling for all IecTasks. If RTS_STRUCTURED_EXCEPTION_HANDLING is enable and RTS_IECTASK_STRUCTURED_EXCEPTION_HANDLING is disabled, the structured exception handling out of the IEC program can be used via the SysExcept.library (unusual used feature).                                                                                             
+RTS_IECTASK_ENABLE_TASK_TRACE              Enable IEC task trace feature. This feature creates a CODESYS system trace with all IEC-tasks to trace the timing. NOTES: 1. To really activate the task trace, you have to set the setting "EnableTaskTrace=1" in the configuration! 2. CmpSchedule must be built with the same compiler switch to activate additional tracing of the SchedulerTick and optional SchedulerTimeslicing!
+RTS_IECTASK_ENABLE_DEBUG_SYSTASK           Enable IEC debug systask feature. This feature allows to debug IEC code of callbacks from system-tasks.                                                                                                                                                                                                                                                                                
+CMPIECTASK_STACK_SIZE                      Define to specify the stack size for all IEC tasks. Default size = 1MB.                                                                                                                                                                                                                                                                                                                
+CMPIECTASK_STACK_SIZE_ADDITIONAL           Define to specify the additional stack size for all IEC tasks (depends on the platform). Default: 0.                                                                                                                                                                                                                                                                                   
+CMPIECTASK_SYNCHRONIZATION_USE_SYSSEM      Use semaphores (SysSem) instead of using SysReadWriteLock by default! This is because SysReadWriteLock could have priority inversion problems on some platforms and so we use SysSem as a better alternative by default!                                                                                                                                                               
+=========================================  =======================================================================================================================================================================================================================================================================================================================================================================================
+
+CmpIecVarAccessItf
+^^^^^^^^^^^^^^^^^^
+
+=========================================  =====================================================================================================================================================
+Switch                                     Description                                                                                                                                          
+=========================================  =====================================================================================================================================================
+CMPIECVARACCESS_INVALIDATENODE_SYNC        Compiler switch to activate synchronous invalidating nodes at online change. This is only for backward compatibility to the behavior before v3.5.5.0.
+CMPIECVARACCESS_NUM_OF_STATIC_VARLISTS     Number of static variable lists statically allocated                                                                                                 
+CMPIECVARACCESS_NUM_OF_STATIC_VARS         Number of static variables statically allocated                                                                                                      
+CMPIECVARACCESS_NUM_OF_STATIC_BROWSEINFOS  Number of static browse infos statically allocated                                                                                                   
+=========================================  =====================================================================================================================================================
+
+CmpIoMgrItf
+^^^^^^^^^^^
+
+===============================================  ===========================================================================================================================================================================================================================================================================
+Switch                                           Description                                                                                                                                                                                                                                                                
+===============================================  ===========================================================================================================================================================================================================================================================================
+CMPIECTASK_DONT_REGISTER_WATCHDOG_AT_SUPERVISOR  Switch to disable registering all hardware supported field-bus watchdogs (e.g. HILSCHER CIFX masters) at the CmpSupervisor! If this defined is set, the hardware supported field-bus watchdogs are always enabled and cannot selectively be disabled via the CmpSupervisor!
+===============================================  ===========================================================================================================================================================================================================================================================================
+
+CmpMemPoolItf
+^^^^^^^^^^^^^
+
+===========================  =============================================================================================
+Switch                       Description                                                                                  
+===========================  =============================================================================================
+MEMPOOL_DISABLE_HEAP_MEMORY  Switch to disable dynamic memory                                                             
+MEMPOOL_8BYTE_ALIGNED        Force 8 byte alignment of blocks. Note, that this doesn't affect the alignment of the header.
+===========================  =============================================================================================
+
+CmpScheduleItf
+^^^^^^^^^^^^^^
+
+============================================  =====================================================================================================
+Switch                                        Description                                                                                          
+============================================  =====================================================================================================
+CMPSCHEDULE_DISABLE_TASK_WAKEUP_ON_CYCLE_END  Switch to disable calling the scheduler at each IEC task cycle end once more to reduce processor load
+============================================  =====================================================================================================
+
+CmpSecurityManagerItf
+^^^^^^^^^^^^^^^^^^^^^
+
+=============================================  ==================================================================
+Switch                                         Description                                                       
+=============================================  ==================================================================
+CMPSECURITYMANAGER_SET_SECURITY_LEVEL_MAXIMUM  Set security level to maximum for all available security features!
+=============================================  ==================================================================
+
+CmpTraceMgrItf
+^^^^^^^^^^^^^^
+
+===================================  ===============================================================================================================
+Switch                               Description                                                                                                    
+===================================  ===============================================================================================================
+TRACEMGR_DISABLE_PERSISTENT_STORAGE  Switch to disable persistent storing of trace configuration in file                                            
+TRACEMGR_DISABLE_SYMBOLIC_VARACCESS  Switch to disable support for symbolic access of variables (see address flag TRACE_VAR_ADDRESS_FLAGS_SYMBOLIC))
+===================================  ===============================================================================================================
+
+CmpVisuHandlerRemoteItf
+^^^^^^^^^^^^^^^^^^^^^^^
+
+===============================  ====================================================================================================================================================================================================================================================================================================================
+Switch                           Description                                                                                                                                                                                                                                                                                                         
+===============================  ====================================================================================================================================================================================================================================================================================================================
+VISH_REMOTE_START_IN_COMM_CYCLE  Usually the remote target-visualization starts it's communication in the component manager hook CH_INIT_TASKS. When this define is active, then this startup is delayed until the first call of the hook CH_COMM_CYCLE. Typically this can be used if other components (or startup code) want to attach to the event
+===============================  ====================================================================================================================================================================================================================================================================================================================
+
+CMItf
+^^^^^
+
+===========================================  ==============================================================================================================================================================================================================================================================================================================================================
+Switch                                       Description                                                                                                                                                                                                                                                                                                                                   
+===========================================  ==============================================================================================================================================================================================================================================================================================================================================
+STATIC_LINK                                  All components are linked statically to the component manager during compile time. All components call each other via C-function calls.                                                                                                                                                                                                       
+MIXED_LINK                                   All components are linked static, but can be extended by dynamically linked components. All static components call each other via C-function. All dynamically linked components are called and call the kernel components via function pointers.                                                                                              
+DYNAMIC_LINK                                 [Default] All components exists as separate compiled modules. So this modules can be loaded dynamically. All components call each other via function pointers. NOTE: If DYNAMIC_LINK is specified explicitly in a runtime system that is linked static, all component functions (also the kernel components) are called via function pointers!
+CPLUSPLUS                                    All components are linked together via C++ classes. All components call each other via C++ method calls. Internally, the components calls itself via C-function calls.                                                                                                                                                                        
+EXTERNAL_LIB_PACKMODE                        Define the alignment of the CODESYS Compiler: 2=2Byte alignment ("pack-mode"=2) 4=4Byte alignment ("pack-mode"=4) 8=8Byte alignment [default] ("pack-mode"=8)                                                                                                                                                                                 
+CM_SYSTARGET_DISABLE_OVERLOADABLE_FUNCTIONS  Switch to disable the possibility to overload the SysTarget functions                                                                                                                                                                                                                                                                         
+CM_DISABLE_API_SIGNATURE_CHECK               Switch to disable the signature check of all API functions                                                                                                                                                                                                                                                                                    
+CM_DISABLE_API_VERSION_CHECK                 Switch to disable the version check of all API functions                                                                                                                                                                                                                                                                                      
+CM_NO_EXIT                                   Switch to disable definite exit or shutdown process of the runtime system                                                                                                                                                                                                                                                                     
+CM_NO_DYNAMIC_COMPONENTS                     Switch to disable dynamic loadable components                                                                                                                                                                                                                                                                                                 
+===========================================  ==============================================================================================================================================================================================================================================================================================================================================
+
+SysExceptItf
+^^^^^^^^^^^^
+
+=================================  ===================================================================================
+Switch                             Description                                                                        
+=================================  ===================================================================================
+RTS_STRUCTURED_EXCEPTION_HANDLING  Switch to enabled structured exception handling. See rts_try/rts_catch for details.
+=================================  ===================================================================================
+
+SysMsgQItf
+^^^^^^^^^^
+
+======================  ==============================================================================================================================================================================
+Switch                  Description                                                                                                                                                                   
+======================  ==============================================================================================================================================================================
+SYSMSGQ_OS_IMPLEMENTED  Switch to disable generic implementation of message queues in CmpSysMsgQ.c! So it can be used to implement OS specific (if the OS provides own message queue implementations).
+======================  ==============================================================================================================================================================================
+
+SysReadWriteLockItf
+^^^^^^^^^^^^^^^^^^^
+
+========================  ==========================================
+Switch                    Description                               
+========================  ==========================================
+SYSREADWRITELOCK_GENERIC  This switch may be defined in sysdefines.h
+========================  ==========================================
+
+SysSocketItf
+^^^^^^^^^^^^
+
+========================  ===================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
+Switch                    Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+========================  ===================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
+SYSSOCKET_DISABLE_SYSLOG  Switch to disable the feature completely, that all logger entries are transmitted via sysLog messages. The system log messages are based on standard RFC5424 ( http://tools.ietf.org/html/rfc5424). A system log message is typically sent via UDP to "localhost" and on port 514. Both parameters can be specified (see corresponding settings). NOTE: To activate the sysLog feature, you have to specify the corresponding back-end at the assigned logger, e.g.: [CmpLog] Logger.0.Backend.0.ClassId=0x00000135
+========================  ===================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
+
+SysTargetItf
+^^^^^^^^^^^^
+
+=========  ===============
+Switch     Description    
+=========  ===============
+TRG_16BIT  16 Bit platform
+TRG_32BIT  32 Bit platform
+TRG_64BIT  64 Bit platform
+=========  ===============
+

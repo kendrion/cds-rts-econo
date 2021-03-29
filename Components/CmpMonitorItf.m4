@@ -2,10 +2,15 @@
  * <interfacename>CmpMonitor</interfacename>
  * <description> 
  *	Interface of the monitoring component, that provides monitoring of IEC variables.
+ * 
+ *	NOTE:
+ *  - Use CmpMonitor2 instead
+ *	- If you have to support previous CODESYS version before v3.5.0.0, this component must be integrated in parallel to CmpMonitor2!
+ *
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -406,7 +411,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`MonitoringReadValue2',`(APPLICATION* pappl, BI
 
 /**
  * <description>
- *	Routine to writa a value via a monitoring service.
+ *	Routine to write a value via a monitoring service.
  *  Note: this function is equivalent to calling MonitoringWriteValue2 with bIec = 0.
  * </description>
  * <param name="pappl" type="IN">Pointer to application.</param>
@@ -419,7 +424,7 @@ DEF_ITF_API(`RTS_RESULT',`CDECL',`MonitoringWriteValue',`(APPLICATION* pappl, BI
 
 /**
  * <description>
- *	Routine to writa a value via a monitoring service.
+ *	Routine to write a value via a monitoring service.
  * </description>
  * <param name="pappl" type="IN">Pointer to application.</param>
  * <param name="preader" type="IN">the reader specifying the location of the value to write.</param>

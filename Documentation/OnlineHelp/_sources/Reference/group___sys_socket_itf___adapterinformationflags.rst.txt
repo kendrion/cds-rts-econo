@@ -1,0 +1,102 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_socket_itf___adapterinformationflags:
+
+=========================
+Adapter information flags
+=========================
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+
+Detailed Description
+--------------------
+
+
+
+Macros
+------
+
+- #define :ref:`SOCK_AIF_NONE <group___sys_socket_itf___adapterinformationflags_1ga54a573fb7efe1e80df1a8d799fe98fbb>` UINT32_C(0x00000000)	/* no flag set */
+
+- #define :ref:`SOCK_AIF_INACTIVE <group___sys_socket_itf___adapterinformationflags_1gaae602e77e9ce485cb055460390ddb356>` UINT32_C(0x00000001)	/* interface not ready for IP communication (no driver, no IP address, no link, ...) */
+
+- #define :ref:`SOCK_AIF_ALIAS_IP <group___sys_socket_itf___adapterinformationflags_1gacf307d8d8f555aa61fb821dcad564700>` UINT32_C(0x00000002)	/* further IP (aka alias address) of adapter */
+
+- #define :ref:`SOCK_AIF_DYNAMIC_IP <group___sys_socket_itf___adapterinformationflags_1ga4556a7e7d097a93ad76bc1e2a7e7b50b>` UINT32_C(0x00000004)	/* dynamic IP address, provided by DHCP, BOOTP, etc. Cannot be changed by :ref:`SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1ga96779e5ea363ffe3eb12e8c196f50348>` () */
+
+- #define :ref:`SOCK_AIF_FIX_IP <group___sys_socket_itf___adapterinformationflags_1gacc2ffb5e81f4913318f382c3550b2fd4>` UINT32_C(0x00000008)	/* fix (e. g. hard coded) IP address. Cannot be changed by :ref:`SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1ga96779e5ea363ffe3eb12e8c196f50348>` () */
+
+- #define :ref:`SOCK_AIF_IP_CHANGE_ALLOWED <group___sys_socket_itf___adapterinformationflags_1ga62d58d6650bf72c38d16c26af2f7458a>` UINT32_C(0x00000010)	/* adapter is white listed to allow address changes. IP address can be likely changed by :ref:`SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1ga96779e5ea363ffe3eb12e8c196f50348>` () */
+
+- #define :ref:`SOCK_AIF_GATEWAY_INFO_VALID <group___sys_socket_itf___adapterinformationflags_1ga10f3b4512c537bdfb17b0746648f4e0b>` UINT32_C(0x00000020)	/* DefaultGateway address is valid. Must not be set, if no Gateway information is provided by the system. */
+
+- #define :ref:`SOCK_AIF_DNS_INFO_VALID <group___sys_socket_itf___adapterinformationflags_1gabef31e1e344274cbc97dfe6396837120>` UINT32_C(0x00000040)	/* DNS address and suffix is valid. Is not set, if no DNS information is provided by the system. */
+
+- #define :ref:`SOCK_AIF_DHCP_INFO_VALID <group___sys_socket_itf___adapterinformationflags_1ga7f3453066805d23c4b4cb96d21e90a22>` UINT32_C(0x00000080)	/* DHCP address is valid. Is not set, if no DHCP information is provided by the system. */
+
+- #define :ref:`SOCK_AIF_INFO_VALID <group___sys_socket_itf___adapterinformationflags_1ga3e44088feb9cd13175286ccf859f0010>` UINT32_C(0x00008000)	/* Adapter is valid - only valid adapters are returned by :ref:`SysSockGetFirstAdapterInfo <group___sys_socket_itf_1gaa992602fbfb135cbb8e1439ad48a9d2b>` () or :ref:`SysSockGetNextAdapterInfo <group___sys_socket_itf_1ga959799c8f03d346c9578ec85e50cbc5c>` () */
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_socket_itf___adapterinformationflags_1ga54a573fb7efe1e80df1a8d799fe98fbb:
+
+#define SOCK_AIF_NONE UINT32_C(0x00000000)	/* no flag set */
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_socket_itf___adapterinformationflags_1gaae602e77e9ce485cb055460390ddb356:
+
+#define SOCK_AIF_INACTIVE UINT32_C(0x00000001)	/* interface not ready for IP communication (no driver, no IP address, no link, ...) */
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_socket_itf___adapterinformationflags_1gacf307d8d8f555aa61fb821dcad564700:
+
+#define SOCK_AIF_ALIAS_IP UINT32_C(0x00000002)	/* further IP (aka alias address) of adapter */
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_socket_itf___adapterinformationflags_1ga4556a7e7d097a93ad76bc1e2a7e7b50b:
+
+#define SOCK_AIF_DYNAMIC_IP UINT32_C(0x00000004)	/* dynamic IP address, provided by DHCP, BOOTP, etc. Cannot be changed by :ref:`SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1ga96779e5ea363ffe3eb12e8c196f50348>` () */
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_socket_itf___adapterinformationflags_1gacc2ffb5e81f4913318f382c3550b2fd4:
+
+#define SOCK_AIF_FIX_IP UINT32_C(0x00000008)	/* fix (e. g. hard coded) IP address. Cannot be changed by :ref:`SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1ga96779e5ea363ffe3eb12e8c196f50348>` () */
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_socket_itf___adapterinformationflags_1ga62d58d6650bf72c38d16c26af2f7458a:
+
+#define SOCK_AIF_IP_CHANGE_ALLOWED UINT32_C(0x00000010)	/* adapter is white listed to allow address changes. IP address can be likely changed by :ref:`SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1ga96779e5ea363ffe3eb12e8c196f50348>` () */
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_socket_itf___adapterinformationflags_1ga10f3b4512c537bdfb17b0746648f4e0b:
+
+#define SOCK_AIF_GATEWAY_INFO_VALID UINT32_C(0x00000020)	/* DefaultGateway address is valid. Must not be set, if no Gateway information is provided by the system. */
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_socket_itf___adapterinformationflags_1gabef31e1e344274cbc97dfe6396837120:
+
+#define SOCK_AIF_DNS_INFO_VALID UINT32_C(0x00000040)	/* DNS address and suffix is valid. Is not set, if no DNS information is provided by the system. */
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_socket_itf___adapterinformationflags_1ga7f3453066805d23c4b4cb96d21e90a22:
+
+#define SOCK_AIF_DHCP_INFO_VALID UINT32_C(0x00000080)	/* DHCP address is valid. Is not set, if no DHCP information is provided by the system. */
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_socket_itf___adapterinformationflags_1ga3e44088feb9cd13175286ccf859f0010:
+
+#define SOCK_AIF_INFO_VALID UINT32_C(0x00008000)	/* Adapter is valid - only valid adapters are returned by :ref:`SysSockGetFirstAdapterInfo <group___sys_socket_itf_1gaa992602fbfb135cbb8e1439ad48a9d2b>` () or :ref:`SysSockGetNextAdapterInfo <group___sys_socket_itf_1ga959799c8f03d346c9578ec85e50cbc5c>` () */
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

@@ -6,7 +6,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -27,19 +27,19 @@
 
 #include "CmpItf.h"
 
-/* Type of an async job*/
+/* Type of an asynchronous job */
 #define ASYNCJOB_TASK					0
 #define ASYNCJOB_EVENT					1
 #define ASYNCJOB_HOOK					2
 
-/* State of an async job*/
+/* State of an asynchronous job */
 #define ASYNCSTATE_INVALID				UINT32_MAX
 #define ASYNCSTATE_PENDING				0
 #define ASYNCSTATE_ACTIVE				1
 #define ASYNCSTATE_READY				2
 #define ASYNCSTATE_ERROR				3
 #define ASYNCSTATE_TIMEOUT				4
-/*#define ASYNCSTATE_READY_TO_REMOVE		5	*//* Do not use! Will be removed again in future! */
+/*#define ASYNCSTATE_READY_TO_REMOVE	5	*/ /* Do not use! Will be removed again in future! */
 #define ASYNCSTATE_CANCELED				6
 
 #define ASYNC_TIMEOUT_INFINITE			0 
@@ -66,10 +66,10 @@
 typedef void HUGEPTR(CDECL *PFASYNCJOBFUNCTION)(void *pParam);
 
 /**
- * <description>Callback if the asyncjob caused an exception.</description>
- * <param name="pAsynFunction" type="IN">Functionpointer of the asyncjob.</param>
- * <param name="pParam" type="IN">Parameter used by the asynyjob causing the exception.</param>
- * <param name="ulException" type="IN">Exception caused by the asyncjob. See SysTaskItf for details.</param>
+ * <description>Callback if the asynchronous job caused an exception.</description>
+ * <param name="pAsynFunction" type="IN">Function pointer of the asynchronous job.</param>
+ * <param name="pParam" type="IN">Parameter used by the asynchronous job causing the exception.</param>
+ * <param name="ulException" type="IN">Exception caused by the asynchronous job. See SysTaskItf for details.</param>
  * <param name="Context" type="IN">Context of the exception. See SysTaskItf for details.</param>
  */
 typedef void (CDECL *PFASYNCMGREXCEPTIONHANDLER)(PFASYNCJOBFUNCTION pAsynFunction, void* pParam, RTS_UI32 ulException, RegContext Context);
@@ -132,15 +132,16 @@ typedef struct
 } ASYNCJOB_INFO;
 
 /**
- * <category>Async job info 2</category>
+ * <category>Asynchronous job info 2</category>
  * <element name="pfJob" type="IN">Pointer to the job function, which is executed asynchronously</element>
  * <element name="pParam" type="IN">Pointer to the parameters for the function</element>
  * <element name="pInstance" type="IN">Optional pointer to the instance (IEC function block or class). Can be NULL.</element>
- * <element name="pulState" type="IN">Pointer to actual state of the async job. 
+ * <element name="pulState" type="IN">Pointer to actual state of the asynchronous job. 
  *									  NOTE: Can be NULL for fire and forget jobs, which are released automatically at the end of job execution</element>
  * <element name="bIECFunc" type="IN">TRUE=pfJob is an IEC function, FALSE=pfJob is a C-function</element>
- * <element name="ulType" type="IN">Type of async job (task, event or hook driven)</element>
- * <element name="ulTimeout" type="IN">Timeout for executing the job</element>
+ * <element name="ulType" type="IN">Type of asynchronous job (task, event or hook driven)</element>
+ * <element name="ulTimeout" type="IN">Timeout in [milliseconds], until the job must be started! If the job is not started within this timeout, the state of the job is marked with ASYNCSTATE_TIMEOUT and the
+ *	job is removed from the queue.</element>
  * <element name="pJobParam" type="IN">Specific Parameters for the job types (task, event or hook driven)</element>
  * <element name="ulJobReturnVal" type="IN">Return code of the job if finished</element>
  * <element name="ulStartTime" type="IN">Start time of the job (in ms by SysTimeGetMs)</element>
@@ -164,15 +165,16 @@ typedef struct
 } ASYNCJOB_INFO2;
 
 /**
- * <category>Async job info 2</category>
+ * <category>Asynchronous job info 2</category>
  * <element name="pfJob" type="IN">Pointer to the job function, which is executed asynchronously</element>
  * <element name="pParam" type="IN">Pointer to the parameters for the function</element>
  * <element name="pInstance" type="IN">Optional pointer to the instance (IEC function block or class). Can be NULL.</element>
- * <element name="pulState" type="IN">Pointer to actual state of the async job. 
+ * <element name="pulState" type="IN">Pointer to actual state of the asynchronous job. 
  *									  NOTE: Can be NULL for fire and forget jobs, which are released automatically at the end of job execution</element>
  * <element name="bIECFunc" type="IN">TRUE=pfJob is an IEC function, FALSE=pfJob is a C-function</element>
- * <element name="ulType" type="IN">Type of async job (task, event or hook driven)</element>
- * <element name="ulTimeout" type="IN">Timeout for executing the job</element>
+ * <element name="ulType" type="IN">Type of asynchronous job (task, event or hook driven)</element>
+ * <element name="ulTimeout" type="IN">Timeout in [milliseconds], until the job must be started! If the job is not started within this timeout, the state of the job is marked with ASYNCSTATE_TIMEOUT and the
+ *	job is removed from the queue.</element>
  * <element name="pJobParam" type="IN">Specific Parameters for the job types (task, event or hook driven)</element>
  * <element name="ulJobReturnVal" type="IN">Return code of the job if finished</element>
  * <element name="ulStartTime" type="IN">Start time of the job (in ms by SysTimeGetMs)</element>
@@ -504,16 +506,20 @@ extern "C" {
 #endif
 
 /**
- * <description> This function adds a new async job in a jobqueue</description>
- * <param name="pfAsyncJobFunc" type="IN">Pointer to the job function, which is executed asynchronously</param>
+ * <description> This function adds a new asynchronous job in a job queue</description>
+ * <param name="pfAsyncJobFunc" type="IN">Pointer to the job function, which is executed asynchronously</param> 
  * <param name="pParam" type="IN">Pointer to the parameters for the function</param>
- * <param name="pulState" type="IN">Pointer to actual state of the async job. 
+ * <param name="pInstance" type="IN">Optional instance point, if the callback is an IEC function block</param>
+ * <param name="pulState" type="IN">Pointer to actual state of the asynchronous job. 
  *									NOTE: Can be NULL for fire and forget jobs, which are released automatically at the end of job execution!</param>
  * <param name="bIECFunc" type="IN">TRUE=pfAsyncJobFunc is an IEC function, FALSE=pfAsyncJobFunc is a C-function</param>
- * <param name="ulType" type="IN">Type of Async Job (task, event or hook driven)</param>
- * <param name="tAsyncJobParam" type="IN">Specific Parameters for the job types (task, event or hook driven)</param>
+ * <param name="ulType" type="IN">Type of asynchronous job (task, event or hook driven)</param>
+ * <param name="ulTimeout" type="IN">Timeout in [milliseconds], until the job must be started! If the job is not started within this timeout, the state of the job is marked with ASYNCSTATE_TIMEOUT and the
+ *	job is removed from the queue.
+ * </param>
+ * <param name="pAsyncJobParam" type="IN">Pointer to specific parameter for the context of the job execution (task, event or hook driven)</param>
  * <param name="pResult" type="OUT">Error code</param>
- * <result>Handle to the jog object</result>
+ * <result>Handle to the job object</result>
  */
 RTS_HANDLE CDECL AsyncAdd(PFASYNCJOBFUNCTION pfAsyncJobFunc, void* pParam, void* pInstance, RTS_UI32* pulState, RTS_I32 bIecFunc, RTS_UI32 ulType, RTS_UI32 ulTimeout, ASYNCJOB_PARAM* pAsyncJobParam, RTS_RESULT *pResult);
 typedef RTS_HANDLE (CDECL * PFASYNCADD) (PFASYNCJOBFUNCTION pfAsyncJobFunc, void* pParam, void* pInstance, RTS_UI32* pulState, RTS_I32 bIecFunc, RTS_UI32 ulType, RTS_UI32 ulTimeout, ASYNCJOB_PARAM* pAsyncJobParam, RTS_RESULT *pResult);
@@ -565,9 +571,8 @@ typedef RTS_HANDLE (CDECL * PFASYNCADD) (PFASYNCJOBFUNCTION pfAsyncJobFunc, void
 
 
 /**
- * <description> This function adds a new async job in a jobqueue. This function must be used, if the job is removed in the job handler!</description>
- * <param name="pJobInfo" type="IN">Pointer to job info with all parameters</param>
- * <param name="phJob" type="OUT">Job handle</param>
+ * <description> This function adds a new asynchronous job in a job queue. This function must be used, if the job is removed in the job handler!</description>
+ * <param name="pJob" type="IN">Pointer to job info2 structure with all parameters</param>
  * <result>error code</result>
  */
 RTS_RESULT CDECL AsyncAdd2(ASYNCJOB_INFO2 *pJob);
@@ -620,9 +625,8 @@ typedef RTS_RESULT (CDECL * PFASYNCADD2) (ASYNCJOB_INFO2 *pJob);
 
 
 /**
- * <description> This function adds a new async job in a jobqueue. This function must be used, if the job is removed in the job handler!</description>
- * <param name="pJobInfo" type="IN">Pointer to job info with all parameters</param>
- * <param name="phJob" type="OUT">Job handle</param>
+ * <description> This function adds a new asynchronous job in a job queue. This function must be used, if the job is removed in the job handler!</description>
+ * <param name="pJob" type="IN">Pointer to job info3 structure with all parameters</param>
  * <result>error code</result>
  */
 RTS_RESULT CDECL AsyncAdd3(ASYNCJOB_INFO3 *pJob);
@@ -675,7 +679,7 @@ typedef RTS_RESULT (CDECL * PFASYNCADD3) (ASYNCJOB_INFO3 *pJob);
 
 
 /**
- * <description> This function removes on async job of a job queue</description>
+ * <description> This function removes on asynchronous job of a job queue</description>
  * <param name="hJob" type="IN">Handle to the job</param>
  * <result>error code</result>
  */
@@ -729,7 +733,7 @@ typedef RTS_RESULT (CDECL * PFASYNCREMOVE) (RTS_HANDLE hJob);
 
 
 /**
- * <description> This function removes on async job of a job queue</description>
+ * <description> This function removes on asynchronous job of a job queue</description>
  * <result>error code</result>
  */
 RTS_RESULT CDECL AsyncRemoveAll(void);

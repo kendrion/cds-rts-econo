@@ -1,0 +1,450 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __cmp_device_itf_8h:
+
+=============================
+CmpDeviceItf.h File Reference
+=============================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`CmpCommunicationLibItf.h <_cmp_communication_lib_itf_8h>`"
+| #include ":ref:`CmpBinTagUtilItf.h <_cmp_bin_tag_util_itf_8h>`"
+
+Data Structures
+---------------
+
+- struct :ref:`EVTPARAM_CmpDevice_InteractiveLogin <struct_e_v_t_p_a_r_a_m___cmp_device___interactive_login>`
+
+- struct :ref:`EVTPARAM_CmpDevice_ResetOrigin <struct_e_v_t_p_a_r_a_m___cmp_device___reset_origin>`
+
+- struct :ref:`EVTPARAM_CmpDevice_SetOperationMode <struct_e_v_t_p_a_r_a_m___cmp_device___set_operation_mode>`
+
+- struct :ref:`EVTPARAM_CmpDevice_ResetOriginGetConfig <struct_e_v_t_p_a_r_a_m___cmp_device___reset_origin_get_config>`
+
+- struct :ref:`RTS_ROC_TO_DESC_ <struct_r_t_s___r_o_c___t_o___d_e_s_c__>`
+
+- struct :ref:`DeviceSession <struct_device_session>`
+
+- struct :ref:`TargetIdent <struct_target_ident>`
+
+- struct :ref:`DeviceIdentification <struct_device_identification>`
+
+- struct :ref:`ICmpDevice_C <struct_i_cmp_device___c>`
+
+Macros
+------
+
+- #define :ref:`DEVKEY_INT_OPERATION_MODE <group___cmp_device_itf___settings_1ga5ae408b8e06b5153ff6952299af16eb8>` "OperationMode"
+
+- #define :ref:`DEVVALUE_INT_OPERATION_MODE_DEFAULT <group___cmp_device_itf___settings_1gab454f2c664ed3a0096973dacb5740984>` :ref:`DEV_OM_DEBUG <group___cmp_device_itf___deviceoperationmode_1ga5e1b394c5d2125a0bbe43c9aeb82ed30>`
+
+- #define :ref:`DEVKEY_INT_OPERATION_MODE_CHECK <group___cmp_device_itf___settings_1ga8effb49eecb204803059f510c1867b44>` "OperationModeCheck"
+
+- #define :ref:`OP_DEVICE_SET_OPERATION_MODE <group___cmp_device_itf___operations_1gac3d2bf0065a82e491cefed7611ff4349>` 1
+
+- #define :ref:`DEV_OM_NONE <group___cmp_device_itf___deviceoperationmode_1ga91414beeb8b9ef6a2c0e4950e3f2e3e2>` UINT32_C(0x00000000)
+
+- #define :ref:`DEV_OM_DEBUG <group___cmp_device_itf___deviceoperationmode_1ga5e1b394c5d2125a0bbe43c9aeb82ed30>` UINT32_C(0x00000001)
+
+- #define :ref:`DEV_OM_LOCKED <group___cmp_device_itf___deviceoperationmode_1gaced3dea4bdd7e6f47e229472a4362d99>` UINT32_C(0x00000002)
+
+- #define :ref:`DEV_OM_OPERATIONAL <group___cmp_device_itf___deviceoperationmode_1ga4a2511a78890e6e2130e54e1d8f3d3d1>` UINT32_C(0x00000003)
+
+- #define :ref:`DEV_ILC_NONE <group___cmp_device_itf___interactivelogincommands_1ga50e5c3e0544c5c62cc6d3ffda8723f57>` UINT32_C(0x00000000)
+
+- #define :ref:`DEV_ILC_IDENTIFY <group___cmp_device_itf___interactivelogincommands_1gafce853c30f3affad161337d45f597d43>` UINT32_C(0x00000001)
+
+- #define :ref:`DEV_ILC_LOGIN_REQUEST <group___cmp_device_itf___interactivelogincommands_1gade4da869cbfe350016ae245e3b3ed20b>` UINT32_C(0x00000002)
+
+- #define :ref:`DEV_ILC_LOGIN_POLL_RESULT <group___cmp_device_itf___interactivelogincommands_1ga2796d894b750c4471ecbca955b85db12>` UINT32_C(0x00000003)
+
+- #define :ref:`DEV_ILC_LOGIN_CANCEL <group___cmp_device_itf___interactivelogincommands_1gaf0315713309bcc395efaf55d34cfa100>` UINT32_C(0x00000004)
+
+- #define :ref:`DEV_ILMF_NONE <group___cmp_device_itf___interactiveloginmodeflags_1ga97b8a75095ec157bc8663551eb1119e8>` UINT32_C(0x00000000)
+
+- #define :ref:`DEV_ILMF_ID <group___cmp_device_itf___interactiveloginmodeflags_1gad6998128907f1ec7dd1b3ce4fcef6a43>` UINT32_C(0x00000001)
+
+- #define :ref:`DEV_ILMF_KEY_PRESS <group___cmp_device_itf___interactiveloginmodeflags_1ga75ab59171e756c45ed7bfc4bba3e35fc>` UINT32_C(0x00000002)
+
+- #define :ref:`DEV_ILMF_BLINK <group___cmp_device_itf___interactiveloginmodeflags_1ga5465ddd8b2a9c31ddb3d21cfb55f6766>` UINT32_C(0x00000004)
+
+- #define :ref:`DEV_ILMF_VERIFY_ID <group___cmp_device_itf___interactiveloginmodeflags_1ga262f2974b138d659c0f3eb8c0afae2ed>` UINT32_C(0x80000000)
+
+- #define :ref:`RTS_DEV_SRV_SESSION_FLAG_NONE <group___cmp_device_itf___dev_srv_sessionflags_1ga1c4c61d5e2643afd9969a8701b49f769>` 0x00000000
+
+- #define :ref:`RTS_DEV_SRV_SESSION_FLAG_IMPLICIT <group___cmp_device_itf___dev_srv_sessionflags_1ga5625e7d8c9a3f811d38e7fbc80deb87c>` 0x00000001
+
+- #define :ref:`RTS_DEV_SRV_SESSION_FLAG_EXPLICIT <group___cmp_device_itf___dev_srv_sessionflags_1gae6629dec586bfb6bfebe56808fbfcc09>` 0x00000002
+
+- #define :ref:`RTS_DEV_SRV_SESSION_LOGGED_IN <group___cmp_device_itf___dev_srv_sessionflags_1ga7cc032197072b546a1e721ade02a4d89>` 0x00000004
+
+- #define :ref:`DEV_SRV_SESSION_ID_EMPTY <group___cmp_device_itf_1ga97dd15775944de44d5f65b33fdb821b4>` 0x00000000
+
+- #define :ref:`DEV_SRV_SESSION_ID_INVALID <group___cmp_device_itf_1gacf06b1834c934132f357ff46cb8ac81f>` 0x00000001
+
+- #define :ref:`DEV_SRV_SESSION_ID_INITAL_REQUEST <group___cmp_device_itf_1ga920f29287a4c1389ad17d91cf5dd5c82>` 0x00000011
+
+- #define :ref:`DEV_SRV_SESSION_ID_REMOTE_VISU_CLIENT <group___cmp_device_itf_1gaa5c6987d8242522ad7c286f24cb87515>` 0x00000815
+
+- #define :ref:`DEV_SRV_SESSION_ID_WEBSERVER <group___cmp_device_itf_1gaeac39c4b2ba3430b1e2cf96363453946>` 0x0000ABCD
+
+- #define :ref:`DEV_SRV_SESSION_ID_VALIDATION_BIT <group___cmp_device_itf_1ga1bda1039f5d77ccb500884a7370881ef>` 0x80000000
+
+- #define :ref:`TAG_DEV_REPLY_IDENTIFICATION <group___cmp_device_itf___onlineservicetags_1ga681a9a51c0741761288f84f03597a674>` 0x01
+
+- #define :ref:`TAG_DEV_REPLY_DEVICE_NAME <group___cmp_device_itf___onlineservicetags_1ga23240dfea1c262e8f22f500dd4471379>` 0x02
+
+- #define :ref:`TAG_DEV_REPLY_VENDOR_NAME <group___cmp_device_itf___onlineservicetags_1ga11bd353fd2a70aad65b29c12d60bd3b6>` 0x03
+
+- #define :ref:`TAG_DEV_REPLY_NODE_NAME <group___cmp_device_itf___onlineservicetags_1ga151d6f60fb66737230ef0ed2adee8ffd>` 0x04
+
+- #define :ref:`TAG_DEV_REPLY <group___cmp_device_itf___onlineservicetags_1ga7611eda390f45ee423b4f4aa516f4c28>` 0x05
+
+- #define :ref:`TAG_DEV_REPLY_RTS_VERSION <group___cmp_device_itf___onlineservicetags_1ga2d853751653eb084dfed07b10721c7eb>` 0x06
+
+- #define :ref:`TAG_DEV_REPLY_FLAGS <group___cmp_device_itf___onlineservicetags_1ga539fd7ecf5d6741fe2755d638426eb9d>` 0x07
+
+- #define :ref:`TAG_DEV_REPLY_NUM_CHANNELS <group___cmp_device_itf___onlineservicetags_1ga913598060efd6c2331e86b8c6912f420>` 0x08
+
+- #define :ref:`TAG_DEV_REPLY_SERIAL_NUMBER <group___cmp_device_itf___onlineservicetags_1ga60cf62b380e349a00c7be325de33ea3e>` 0x09
+
+- #define :ref:`TAG_DEV_REPLY_IP_ADDR_INFO <group___cmp_device_itf___onlineservicetags_1ga19404a158991f42b77258b82575c3b4f>` 0x0A
+
+- #define :ref:`TAG_DEV_REPLY_LOGIN <group___cmp_device_itf___onlineservicetags_1gae1f3a93e7ba0820e07bcbea566fed384>` 0x82
+
+- #define :ref:`TAG_DEV_REPLY_LOGIN_RESULT <group___cmp_device_itf___onlineservicetags_1ga3061ed03e370713360a4629675543b91>` 0x20
+
+- #define :ref:`TAG_DEV_REPLY_LOGIN_SESSIONID <group___cmp_device_itf___onlineservicetags_1ga2273d25695a789b4fb170b0a81b52f75>` 0x21
+
+- #define :ref:`TAG_DEV_REPLY_SETTINGS <group___cmp_device_itf___onlineservicetags_1ga9659549e15a55c3a623ec056a4e9253c>` 0x24  /* further tags used by :ref:`SRV_DEV_LOGIN <group___cmp_device_itf___onlineservices_1gaef83d2ddb032a165b8f74f856ee84007>` service are defined in CmpUserMgrItf */
+
+- #define :ref:`TAG_DEV_RESET_ORIGIN_CONFIG <group___cmp_device_itf___onlineservicetags_1ga5e2ed2a093b4d98de113e9e6f6423e59>` 0x31
+
+- #define :ref:`TAG_DEV_RESET_ORIGIN_CONFIG_OPTIONS <group___cmp_device_itf___onlineservicetags_1ga0620c90ed3486cfffa627013a77ade80>` 0x32
+
+- #define :ref:`TAG_DEV_RESET_ORIGIN_RESULTS <group___cmp_device_itf___onlineservicetags_1gabb33962ed927ac5876cf79e50bd2b320>` 0x33
+
+- #define :ref:`TAG_DEV_RESET_ORIGIN_CONFIG_RIGHTS <group___cmp_device_itf___onlineservicetags_1ga6285d65f6b72c10a82a03247161dcb17>` 0x34
+
+- #define :ref:`TAG_DEV_RESET_ORIGIN_CONFIG_DESCS <group___cmp_device_itf___onlineservicetags_1gaed50e765d73579f67659085bfa6cfc9a>` 0x84
+
+- #define :ref:`TAG_DEV_RESET_ORIGIN_CONFIG_NUM_DESCS <group___cmp_device_itf___onlineservicetags_1ga26d9a641455be7be96c970c65ab170db>` 0x35
+
+- #define :ref:`TAG_DEV_RESET_ORIGIN_CONFIG_DESC <group___cmp_device_itf___onlineservicetags_1gabbf5bfc2c2362ae44ea5f0a4f835445d>` 0x36
+
+- #define :ref:`TAG_DEV_REPLY_LOGOUT <group___cmp_device_itf___onlineservicetags_1ga83ad514f94f752de6a04e0f4e3ef7905>` 0x00
+
+- #define :ref:`TAG_DEV_SESSIONID <group___cmp_device_itf___onlineservicetags_1ga25ef3a2c20134418df2181f1e0805538>` 0x01
+
+- #define :ref:`TAG_DEV_ECHO_REQUEST_DATA_LEN <group___cmp_device_itf___onlineservicetags_1gad4bbeac7707c9c42dbe58f895cb86b22>` 0x51
+
+- #define :ref:`TAG_DEV_ECHO_REPLY_DATA_LEN <group___cmp_device_itf___onlineservicetags_1gaade084e3bfd4a9a6887b5f477f3f57e8>` 0x52
+
+- #define :ref:`TAG_DEV_ECHO_DATA <group___cmp_device_itf___onlineservicetags_1ga8a2f607131cba2e0272f4732a47af766>` 0x53
+
+- #define :ref:`TAG_DEV_OPERATION_MODE <group___cmp_device_itf___onlineservicetags_1gaa7c9cf41d8da24de45eefa0281fb3320>` 0x54
+
+- #define :ref:`TAG_DEV_INTERACTIVE_LOGIN_MODE <group___cmp_device_itf___onlineservicetags_1ga07f879b128b3d6f033b6d01c0814b079>` 0x55
+
+- #define :ref:`TAG_DEV_INTERACTIVE_LOGIN_DATA <group___cmp_device_itf___onlineservicetags_1ga0661ab89a0a0f62d9e5eb7cf7bd1ea19>` 0x56
+
+- #define :ref:`TAG_DEV_INTERACTIVE_LOGIN_COMMAND <group___cmp_device_itf___onlineservicetags_1gacaef0819c11be9c6574bf0900979b085>` 0x57
+
+- #define :ref:`TAG_DEV_NODE_NAME <group___cmp_device_itf___onlineservicetags_1ga577df5215c6169a43cfe76652b9a591d>` 0x58
+
+- #define :ref:`TAG_DEV_CLIENT_IDENTIFIER <group___cmp_device_itf___onlineservicetags_1ga48adffd30e823290870e2f8dc5c7aad0>` 0x83
+
+- #define :ref:`TAG_DEV_CLIENT_TYPE <group___cmp_device_itf___onlineservicetags_1ga75d2707cd630f6c9bc2b42673a621672>` 0x40
+
+- #define :ref:`TAG_DEV_CLIENT_NAME <group___cmp_device_itf___onlineservicetags_1ga8d166b9303bff83ae3517d8c38a170bf>` 0x41
+
+- #define :ref:`TAG_DEV_CLIENT_VENDOR <group___cmp_device_itf___onlineservicetags_1gaff6a13314d351dc7ab881dfb2d56de8c>` 0x42
+
+- #define :ref:`TAG_DEV_CLIENT_HOSTNAME <group___cmp_device_itf___onlineservicetags_1ga174b51ce0942180467c458688de01cbe>` 0x43
+
+- #define :ref:`TAG_DEV_CLIENT_VERSION <group___cmp_device_itf___onlineservicetags_1ga11f1bced9e4efc34d3ace0a17c0e0a43>` 0x44
+
+- #define :ref:`TAG_DEV_CLIENT_CDS_VERSION <group___cmp_device_itf___onlineservicetags_1ga89522a9c79137459bcf901431ec37b7c>` 0x45
+
+- #define :ref:`TAG_DEV_CLIENT_AUTH_TYPE <group___cmp_device_itf___onlineservicetags_1gad09e9a3eb0dd6a84d07f6a819a966404>` 0x46
+
+- #define :ref:`SRV_DEV_GET_TARGET_IDENT <group___cmp_device_itf___onlineservices_1ga905e8e4f79a012a484277d81cadcf866>` 0x01
+
+- #define :ref:`SRV_DEV_LOGIN <group___cmp_device_itf___onlineservices_1gaef83d2ddb032a165b8f74f856ee84007>` 0x02
+
+- #define :ref:`SRV_DEV_LOGOUT <group___cmp_device_itf___onlineservices_1gaf0fb81601a94d139ea766bdb7771ea67>` 0x03
+
+- #define :ref:`SRV_DEV_RESET_ORIGIN <group___cmp_device_itf___onlineservices_1gabe79b13b20a7987ea0907fa347928034>` 0x04
+
+- #define :ref:`SRV_DEV_ECHO <group___cmp_device_itf___onlineservices_1gad3a0a87cf87dbf9489baa2f6a7e34abb>` 0x05
+
+- #define :ref:`SRV_DEV_SET_OPERATION_MODE <group___cmp_device_itf___onlineservices_1ga94c01fa7efe235346f01b673086b3fd8>` 0x06
+
+- #define :ref:`SRV_DEV_GET_OPERATION_MODE <group___cmp_device_itf___onlineservices_1ga7594d990375db90f2bee0f33510b7a80>` 0x07
+
+- #define :ref:`SRV_DEV_INTERACTIVE_LOGIN <group___cmp_device_itf___onlineservices_1ga25f206746a21e2f38ba45361ec734c36>` 0x08
+
+- #define :ref:`SRV_DEV_SET_NODE_NAME <group___cmp_device_itf___onlineservices_1gaf29726567eb55d26d7537f1de32e1e29>` 0x09
+
+- #define :ref:`SRV_DEV_SESSION_CREATE <group___cmp_device_itf___onlineservices_1gaab29618e00b732b21d5b852d75890f7d>` 0x0A
+
+- #define :ref:`SRV_DEV_RESET_ORIGIN_GET_CONFIG <group___cmp_device_itf___onlineservices_1ga80d481edca6b5ab887d9a4dfae4c7267>` 0x0B
+
+- #define :ref:`EVTPARAMID_CmpDevice_InteractiveLogin <group___cmp_device_itf___eventparameter_1ga48dbb3389dc1e9bf19be24184a44addc>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpDevice_InteractiveLogin <group___cmp_device_itf___eventparameter_1gace7f62d4c836154bea9b4f445fd953f1>` 0x0001
+
+- #define :ref:`EVTPARAMID_CmpDevice_ResetOrigin <group___cmp_device_itf___eventparameter_1gaf9c17550524587e4221712ef2c05f324>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpDevice_ResetOrigin <group___cmp_device_itf___eventparameter_1ga36536be3d583511b1b2f1c57106c7f8f>` 0x0002
+
+- #define :ref:`EVTPARAMID_CmpDevice_SetOperationMode <group___cmp_device_itf___eventparameter_1gadeb683b21674fbc2c572634231b9a06d>` 0x0001
+
+- #define :ref:`EVTVERSION_CmpDevice_SetOperationMode <group___cmp_device_itf___eventparameter_1gad4d88f5c580e436cec86e08f09a00837>` 0x0001
+
+- #define :ref:`EVTPARAMID_CmpDevice_ResetOriginGetConfig <group___cmp_device_itf___eventparameter_1gae4538763c8232bb580e4c3b49a855378>` 0x0002
+
+- #define :ref:`EVTVERSION_CmpDevice_ResetOriginGetConfig <group___cmp_device_itf___eventparameter_1ga05a2456a66b695b5af6be239534a0528>` 0x0001
+
+- #define :ref:`DEV_ROC_RESET_ALL <group___cmp_device_itf___reset_origin_configuration_1ga43c444c93c221ef9e7a4862d603f4ad3>` 0x00000000
+
+- #define :ref:`DEV_ROC_USERMGMT <group___cmp_device_itf___reset_origin_configuration_1ga55840d7b149ec8c6dff306da15d50d11>` 0x00000001
+
+- #define :ref:`DEV_ROC_KEEP_USERDB <group___cmp_device_itf___reset_origin_configuration_1ga4f604d4cc051d44e501fab6ff5addad0>` :ref:`DEV_ROC_USERMGMT <group___cmp_device_itf___reset_origin_configuration_1ga55840d7b149ec8c6dff306da15d50d11>`
+
+- #define :ref:`DEV_ROC_PLCLOGIC <group___cmp_device_itf___reset_origin_configuration_1ga418fe512fac480e00a548133047e7fca>` 0x00000002
+
+- #define :ref:`DEV_ROC_CERTS <group___cmp_device_itf___reset_origin_configuration_1ga7531e7817c01838488adabfcea6c3501>` 0x00000004
+
+- #define :ref:`DEV_ROC_DESCS <group___cmp_device_itf___reset_origin_configuration_descriptions_1ga118534b1b534518a20328d3e9bfcf455>` {\
+{ :ref:`DEV_ROC_USERMGMT <group___cmp_device_itf___reset_origin_configuration_1ga55840d7b149ec8c6dff306da15d50d11>` ,	"User Management" }, \
+{ DEV_ROC_PLCLOGIC,	"PlcLogic" }, \
+{ DEV_ROC_CERTS,	"Certificates" }, \
+}
+
+- #define :ref:`EVT_CmpDevice_InteractiveLogin <group___cmp_device_itf___events_1ga85e5a7b9e08c76fff32899bf2802c699>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`EVT_CmpDevice_ResetOrigin <group___cmp_device_itf___events_1gadaf26af896f9f2f9bfb6dd0832608b94>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+
+- #define :ref:`EVT_CmpDevice_SetOperationMode <group___cmp_device_itf___events_1gac2b71cb5db9a8da266bac34aa65e6995>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 3)
+
+- #define :ref:`EVT_CmpDevice_ResetOriginGetConfig <group___cmp_device_itf___events_1gae0151c9d8e942f659a15ea5059a4f61d>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 4)
+
+- #define :ref:`SETTINGS_FLAG_KILLTASKONRESET <group___cmp_device_itf___settingsflags_1ga1851ab863ad2d0f3bde3d6f9efb07428>` 0x01
+
+- #define :ref:`SETTINGS_FLAG_COMPLEXMONITORING <group___cmp_device_itf___settingsflags_1gac72acf2fc43adbd1517ca33a9c1b6351>` 0x02
+
+- #define :ref:`SETTINGS_FLAG_MONITORING2 <group___cmp_device_itf___settingsflags_1ga79200b4efef8e32e0557f962090c1495>` 0x04
+
+- #define :ref:`SETTINGS_FLAG_TRACE_SUPPORTS_MONITORING2 <group___cmp_device_itf___settingsflags_1ga311c1204861fa508ac79c9b69ec1e401>` 0x08
+
+- #define :ref:`SETTINGS_FLAG_EDGE_GATEWAY <group___cmp_device_itf___settingsflags_1gade142e9405f3a9c1bde7b5584f9a88b1>` 0x10
+
+- #define :ref:`SETTINGS_FLAG_EDGE_GATEWAY_CONFIGURABLE <group___cmp_device_itf___settingsflags_1ga71b67a0dc20990ae8de3fdf73ff7f50d>` 0x20
+
+- #define :ref:`USERDB_OBJECT_DEVICE <group___cmp_device_itf___staticdefines_1gaa0332ab5f6b3c68b232bb9d5a7cdfb56>` "Device"
+
+- #define :ref:`USE_DevGetIdent <group___cmp_device_itf_1gafb5fe42b6cc66fcc5b6446a63f2013d8>` :ref:`PFDEVGETIDENT <group___cmp_device_itf_1ga874a05966636d08e3dd2300066006430>` pfDevGetIdent;
+
+- #define :ref:`EXT_DevGetIdent <group___cmp_device_itf_1ga172514cada7fb619e7f6143e9cce7bde>` extern :ref:`PFDEVGETIDENT <group___cmp_device_itf_1ga874a05966636d08e3dd2300066006430>` pfDevGetIdent;
+
+- #define :ref:`GET_DevGetIdent <group___cmp_device_itf_1gaaae67f251130ddbb36473e72869f10dd>` s_pfCMGetAPI2( "DevGetIdent", (RTS_VOID_FCTPTR *)&pfDevGetIdent, (fl), 0, 0)
+
+- #define :ref:`CAL_DevGetIdent <group___cmp_device_itf_1ga1f3fae2dfd94d3437ca9d48d1c2f12e4>` pfDevGetIdent
+
+- #define :ref:`CHK_DevGetIdent <group___cmp_device_itf_1ga96465ef36cf9b0a4aa6f33a389c9c863>` (pfDevGetIdent != NULL)
+
+- #define :ref:`EXP_DevGetIdent <group___cmp_device_itf_1gadddc1d17de0ea204ffe031c8e2d68178>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetIdent", (RTS_UINTPTR) :ref:`DevGetIdent <group___cmp_device_itf_1ga7e038012152c3ae365e69a885947f614>` , 0, 0)
+
+- #define :ref:`USE_DevCheckTargetIdent <group___cmp_device_itf_1ga0ad3e50a2b80100b5007dfedcb55f814>` :ref:`PFDEVCHECKTARGETIDENT <group___cmp_device_itf_1gab2dc397ec30519f673b0b0e4fc17e3d6>` pfDevCheckTargetIdent;
+
+- #define :ref:`EXT_DevCheckTargetIdent <group___cmp_device_itf_1ga8375b870a0a364d6d6bc08cdba150e6d>` extern :ref:`PFDEVCHECKTARGETIDENT <group___cmp_device_itf_1gab2dc397ec30519f673b0b0e4fc17e3d6>` pfDevCheckTargetIdent;
+
+- #define :ref:`GET_DevCheckTargetIdent <group___cmp_device_itf_1ga5f6ed2aed1937b24646716e6c5a0cb90>` s_pfCMGetAPI2( "DevCheckTargetIdent", (RTS_VOID_FCTPTR *)&pfDevCheckTargetIdent, (fl), 0, 0)
+
+- #define :ref:`CAL_DevCheckTargetIdent <group___cmp_device_itf_1ga5b2d2fab7b50e7cae1d41848958ee461>` pfDevCheckTargetIdent
+
+- #define :ref:`CHK_DevCheckTargetIdent <group___cmp_device_itf_1ga8367fdd5302b9932a56614be17f46ff4>` (pfDevCheckTargetIdent != NULL)
+
+- #define :ref:`EXP_DevCheckTargetIdent <group___cmp_device_itf_1ga5523b4740e144d442660ab61e586a07a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevCheckTargetIdent", (RTS_UINTPTR) :ref:`DevCheckTargetIdent <group___cmp_device_itf_1gaf0f698f604236df7b31a3111690d680c>` , 0, 0)
+
+- #define :ref:`USE_DevSetOperationMode <group___cmp_device_itf_1gacd134e73c41e844c0ca1a7c150d4ce84>` :ref:`PFDEVSETOPERATIONMODE <group___cmp_device_itf_1ga3d0523aca8e07219e8dbe44b7bb33f34>` pfDevSetOperationMode;
+
+- #define :ref:`EXT_DevSetOperationMode <group___cmp_device_itf_1gaa9a5d1e339ce379a24e22c5d154ce3af>` extern :ref:`PFDEVSETOPERATIONMODE <group___cmp_device_itf_1ga3d0523aca8e07219e8dbe44b7bb33f34>` pfDevSetOperationMode;
+
+- #define :ref:`GET_DevSetOperationMode <group___cmp_device_itf_1gadb958ea1c07ad39c7abde0b6346de61a>` s_pfCMGetAPI2( "DevSetOperationMode", (RTS_VOID_FCTPTR *)&pfDevSetOperationMode, (fl), 0, 0)
+
+- #define :ref:`CAL_DevSetOperationMode <group___cmp_device_itf_1gae51c614fca7799db49182a0d79c98867>` pfDevSetOperationMode
+
+- #define :ref:`CHK_DevSetOperationMode <group___cmp_device_itf_1ga91d8de59566f526c00a59a9cc040fee1>` (pfDevSetOperationMode != NULL)
+
+- #define :ref:`EXP_DevSetOperationMode <group___cmp_device_itf_1gab3d296c63af3e63009d21daa2dfcd3bd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevSetOperationMode", (RTS_UINTPTR) :ref:`DevSetOperationMode <group___cmp_device_itf_1gaa0cf71c2add8bce1463fd231501212bb>` , 0, 0)
+
+- #define :ref:`USE_DevGetOperationMode <group___cmp_device_itf_1gaac3096af26570b364b7239344a27eca4>` :ref:`PFDEVGETOPERATIONMODE <group___cmp_device_itf_1ga97766b1af6d9ff29f3f6e8c0410a371f>` pfDevGetOperationMode;
+
+- #define :ref:`EXT_DevGetOperationMode <group___cmp_device_itf_1ga8d3a5846e8ee393477eaa37791ffb57a>` extern :ref:`PFDEVGETOPERATIONMODE <group___cmp_device_itf_1ga97766b1af6d9ff29f3f6e8c0410a371f>` pfDevGetOperationMode;
+
+- #define :ref:`GET_DevGetOperationMode <group___cmp_device_itf_1ga7c8bc6947e7dd57c529145c8f6c0e35f>` s_pfCMGetAPI2( "DevGetOperationMode", (RTS_VOID_FCTPTR *)&pfDevGetOperationMode, (fl), 0, 0)
+
+- #define :ref:`CAL_DevGetOperationMode <group___cmp_device_itf_1ga5cdf1ea553cb0cb3a197a22e7f8cedc8>` pfDevGetOperationMode
+
+- #define :ref:`CHK_DevGetOperationMode <group___cmp_device_itf_1gae7aa3a3db6a5fbf8cf20c83f0fd0ab7b>` (pfDevGetOperationMode != NULL)
+
+- #define :ref:`EXP_DevGetOperationMode <group___cmp_device_itf_1ga0a428c34cf3b4b10f8bdfacf21ec06cd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetOperationMode", (RTS_UINTPTR) :ref:`DevGetOperationMode <group___cmp_device_itf_1ga755258387b6981d8e151b4cfe0182350>` , 0, 0)
+
+- #define :ref:`USE_DevGetSessionId <group___cmp_device_itf_1ga9cebd9215075ccf7af69849af32e7a67>` :ref:`PFDEVGETSESSIONID <group___cmp_device_itf_1ga81d0aa13d40c29b190bec02b698294ef>` pfDevGetSessionId;
+
+- #define :ref:`EXT_DevGetSessionId <group___cmp_device_itf_1ga28ea7472aa231e7b4c241e6f9d9a74f5>` extern :ref:`PFDEVGETSESSIONID <group___cmp_device_itf_1ga81d0aa13d40c29b190bec02b698294ef>` pfDevGetSessionId;
+
+- #define :ref:`GET_DevGetSessionId <group___cmp_device_itf_1gadbd8a2d5720ba7ec3f129aba328dc98b>` s_pfCMGetAPI2( "DevGetSessionId", (RTS_VOID_FCTPTR *)&pfDevGetSessionId, (fl), 0, 0)
+
+- #define :ref:`CAL_DevGetSessionId <group___cmp_device_itf_1ga9b0e05841bbe43f35f1a28348e29ce58>` pfDevGetSessionId
+
+- #define :ref:`CHK_DevGetSessionId <group___cmp_device_itf_1gaead4b9b8361c9a0b11b5abb5a0631c64>` (pfDevGetSessionId != NULL)
+
+- #define :ref:`EXP_DevGetSessionId <group___cmp_device_itf_1ga0bff68e7a57c9b2ca6873b621de5d453>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetSessionId", (RTS_UINTPTR) :ref:`DevGetSessionId <group___cmp_device_itf_1gac59c464cacd0ed223fc678d838e4d6b2>` , 0, 0)
+
+- #define :ref:`USE_DevGetSessionUser <group___cmp_device_itf_1ga77a1608a1b1fd760fa9b6a665ae4a104>` :ref:`PFDEVGETSESSIONUSER <group___cmp_device_itf_1ga7460af1c2a1cdea783ea28df779b4e66>` pfDevGetSessionUser;
+
+- #define :ref:`EXT_DevGetSessionUser <group___cmp_device_itf_1ga8ad9b3ac886ab88d8132cedf07e64790>` extern :ref:`PFDEVGETSESSIONUSER <group___cmp_device_itf_1ga7460af1c2a1cdea783ea28df779b4e66>` pfDevGetSessionUser;
+
+- #define :ref:`GET_DevGetSessionUser <group___cmp_device_itf_1ga8f7c60f7f0eae13fc600670027236efa>` s_pfCMGetAPI2( "DevGetSessionUser", (RTS_VOID_FCTPTR *)&pfDevGetSessionUser, (fl), 0, 0)
+
+- #define :ref:`CAL_DevGetSessionUser <group___cmp_device_itf_1ga6eeac7ecbb87a3847e88fafa0b738386>` pfDevGetSessionUser
+
+- #define :ref:`CHK_DevGetSessionUser <group___cmp_device_itf_1ga58a4a997ec6607303f1e70972cf55c02>` (pfDevGetSessionUser != NULL)
+
+- #define :ref:`EXP_DevGetSessionUser <group___cmp_device_itf_1ga783070c696a762d27cd94bb09d43a32d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetSessionUser", (RTS_UINTPTR) :ref:`DevGetSessionUser <group___cmp_device_itf_1ga6b6a2121a2c903d3d24663e8afed5bc3>` , 0, 0)
+
+- #define :ref:`USE_DevGetSessionAuthType <group___cmp_device_itf_1ga990f9181f25130bb6afa4f60fb717ee7>` :ref:`PFDEVGETSESSIONAUTHTYPE <group___cmp_device_itf_1ga91a6b113cf061fc0ae7e7e0d740e9dec>` pfDevGetSessionAuthType;
+
+- #define :ref:`EXT_DevGetSessionAuthType <group___cmp_device_itf_1ga16c590f27107b3d7a57ac8761375ed5c>` extern :ref:`PFDEVGETSESSIONAUTHTYPE <group___cmp_device_itf_1ga91a6b113cf061fc0ae7e7e0d740e9dec>` pfDevGetSessionAuthType;
+
+- #define :ref:`GET_DevGetSessionAuthType <group___cmp_device_itf_1ga106b9f98262a934983497ea6556d0a9f>` s_pfCMGetAPI2( "DevGetSessionAuthType", (RTS_VOID_FCTPTR *)&pfDevGetSessionAuthType, (fl), 0, 0)
+
+- #define :ref:`CAL_DevGetSessionAuthType <group___cmp_device_itf_1ga8ac4f4e7669671c88e7dc536f33e12ec>` pfDevGetSessionAuthType
+
+- #define :ref:`CHK_DevGetSessionAuthType <group___cmp_device_itf_1gac2252910f6f716c8dcee64780d0f7cb9>` (pfDevGetSessionAuthType != NULL)
+
+- #define :ref:`EXP_DevGetSessionAuthType <group___cmp_device_itf_1ga4b5a194b936c0bee7c0eee7358c04296>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetSessionAuthType", (RTS_UINTPTR) :ref:`DevGetSessionAuthType <group___cmp_device_itf_1ga7b088b1e8c9c7131297fe9c04470666e>` , 0, 0)
+
+- #define :ref:`USE_DevGetSessionFlags <group___cmp_device_itf_1ga85bcbcaa2df9182004f4b1169cdc83d3>` :ref:`PFDEVGETSESSIONFLAGS <group___cmp_device_itf_1ga60002bcd53e4f98a7f31336f8c6aba13>` pfDevGetSessionFlags;
+
+- #define :ref:`EXT_DevGetSessionFlags <group___cmp_device_itf_1ga0fc42c8e559bbdb63b0100e0d050edba>` extern :ref:`PFDEVGETSESSIONFLAGS <group___cmp_device_itf_1ga60002bcd53e4f98a7f31336f8c6aba13>` pfDevGetSessionFlags;
+
+- #define :ref:`GET_DevGetSessionFlags <group___cmp_device_itf_1gaed2a8a45583b9228211ac7e64edc52d7>` s_pfCMGetAPI2( "DevGetSessionFlags", (RTS_VOID_FCTPTR *)&pfDevGetSessionFlags, (fl), 0, 0)
+
+- #define :ref:`CAL_DevGetSessionFlags <group___cmp_device_itf_1ga41d1e7aee95c12a9f4c21233c1bb1934>` pfDevGetSessionFlags
+
+- #define :ref:`CHK_DevGetSessionFlags <group___cmp_device_itf_1ga43f544d00392c203769aaaa4552d14e8>` (pfDevGetSessionFlags != NULL)
+
+- #define :ref:`EXP_DevGetSessionFlags <group___cmp_device_itf_1gae4ad8b71f550aa5fff75958c1f7540b4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevGetSessionFlags", (RTS_UINTPTR) :ref:`DevGetSessionFlags <group___cmp_device_itf_1ga2749a6bdc512ab3e18e0b30bf3cea9b3>` , 0, 0)
+
+- #define :ref:`USE_DevIsValidRequest <group___cmp_device_itf_1gadee9db7c8cee6ee642bc2a4fab904bb4>` :ref:`PFDEVISVALIDREQUEST <group___cmp_device_itf_1ga6a607e9882c1bba3d94343355543bbef>` pfDevIsValidRequest;
+
+- #define :ref:`EXT_DevIsValidRequest <group___cmp_device_itf_1gafdc6ec96e206b127efbed15c00ad4f1f>` extern :ref:`PFDEVISVALIDREQUEST <group___cmp_device_itf_1ga6a607e9882c1bba3d94343355543bbef>` pfDevIsValidRequest;
+
+- #define :ref:`GET_DevIsValidRequest <group___cmp_device_itf_1gaf77acf873da3bdd234ddff41ad106de6>` s_pfCMGetAPI2( "DevIsValidRequest", (RTS_VOID_FCTPTR *)&pfDevIsValidRequest, (fl), 0, 0)
+
+- #define :ref:`CAL_DevIsValidRequest <group___cmp_device_itf_1gaee6c11ec5e6ef1edb0a7dca1ea4fe84a>` pfDevIsValidRequest
+
+- #define :ref:`CHK_DevIsValidRequest <group___cmp_device_itf_1ga9c187653e14c558e56290b2bd862dc69>` (pfDevIsValidRequest != NULL)
+
+- #define :ref:`EXP_DevIsValidRequest <group___cmp_device_itf_1ga666c7bbd7e6a13e51670fced45207a92>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevIsValidRequest", (RTS_UINTPTR) :ref:`DevIsValidRequest <group___cmp_device_itf_1gaeebf4a3f354b6c4293ad27314b525ba6>` , 0, 0)
+
+- #define :ref:`USE_DevResetOrigin <group___cmp_device_itf_1gaf7fc89f072a670a82c8d70926ce8e38c>` :ref:`PFDEVRESETORIGIN <group___cmp_device_itf_1gada6db8c03258aba5fc3b20aec9ee9d34>` pfDevResetOrigin;
+
+- #define :ref:`EXT_DevResetOrigin <group___cmp_device_itf_1ga2128b05af51d25388536c4d91ca2424f>` extern :ref:`PFDEVRESETORIGIN <group___cmp_device_itf_1gada6db8c03258aba5fc3b20aec9ee9d34>` pfDevResetOrigin;
+
+- #define :ref:`GET_DevResetOrigin <group___cmp_device_itf_1ga61cf19774b75ee07c3d4b5c1cc93abba>` s_pfCMGetAPI2( "DevResetOrigin", (RTS_VOID_FCTPTR *)&pfDevResetOrigin, (fl), 0, 0)
+
+- #define :ref:`CAL_DevResetOrigin <group___cmp_device_itf_1ga9a98eb6a1078270fef8bcf844fcaee4e>` pfDevResetOrigin
+
+- #define :ref:`CHK_DevResetOrigin <group___cmp_device_itf_1ga111f2f400247c78a951958c009a80d0e>` (pfDevResetOrigin != NULL)
+
+- #define :ref:`EXP_DevResetOrigin <group___cmp_device_itf_1ga7a4637360b4d424ebf188d263203bc44>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevResetOrigin", (RTS_UINTPTR) :ref:`DevResetOrigin <group___cmp_device_itf_1gad4b80db094b020326925f45f437d378a>` , 0, 0)
+
+- #define :ref:`USE_DevResetOriginGetConfig <group___cmp_device_itf_1ga858f9854794c9e825feff0e042c969dd>` :ref:`PFDEVRESETORIGINGETCONFIG <group___cmp_device_itf_1gafa65466359610f73ae49910d5db06f38>` pfDevResetOriginGetConfig;
+
+- #define :ref:`EXT_DevResetOriginGetConfig <group___cmp_device_itf_1gae4e6e7b9ecb6610d6dbf1e2c1ed155b6>` extern :ref:`PFDEVRESETORIGINGETCONFIG <group___cmp_device_itf_1gafa65466359610f73ae49910d5db06f38>` pfDevResetOriginGetConfig;
+
+- #define :ref:`GET_DevResetOriginGetConfig <group___cmp_device_itf_1gab13ae6369e6610eec3d29168efd29739>` s_pfCMGetAPI2( "DevResetOriginGetConfig", (RTS_VOID_FCTPTR *)&pfDevResetOriginGetConfig, (fl), 0, 0)
+
+- #define :ref:`CAL_DevResetOriginGetConfig <group___cmp_device_itf_1ga0acb6e1cebb24f7cc41a05314503f3d9>` pfDevResetOriginGetConfig
+
+- #define :ref:`CHK_DevResetOriginGetConfig <group___cmp_device_itf_1ga5338382f3785a06279fc26c3199dcc41>` (pfDevResetOriginGetConfig != NULL)
+
+- #define :ref:`EXP_DevResetOriginGetConfig <group___cmp_device_itf_1ga0c6cf83022b84ca42c00adfb001986af>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"DevResetOriginGetConfig", (RTS_UINTPTR) :ref:`DevResetOriginGetConfig <group___cmp_device_itf_1ga0ecec541d502361695d4bcbafeab380e>` , 0, 0)
+
+- #define :ref:`ITF_CmpDevice <group___cmp_device_itf_1gac5d20fb8566ac06e86ba607e73175f34>`
+
+- #define :ref:`EXTITF_CmpDevice <group___cmp_device_itf_1gaeea2cebbbd0315af60ed3cd8a021abdc>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`RTS_ROC_TO_DESC_ <struct_r_t_s___r_o_c___t_o___d_e_s_c__>` :ref:`RTS_ROC_TO_DESC <group___cmp_device_itf___reset_origin_configuration_descriptions_1gaa4e8fbbfa3f18c74151e731dc3527f5d>`
+
+- typedef RTS_RESULT(* :ref:`PFDEVGETIDENT <group___cmp_device_itf_1ga874a05966636d08e3dd2300066006430>`)(DeviceIdentification *pDevIdent)
+
+- typedef RTS_RESULT(* :ref:`PFDEVCHECKTARGETIDENT <group___cmp_device_itf_1gab2dc397ec30519f673b0b0e4fc17e3d6>`)(TargetIdent *pTargetIdentReq, TargetIdent *pTargetIdent)
+
+- typedef RTS_RESULT(* :ref:`PFDEVSETOPERATIONMODE <group___cmp_device_itf_1ga3d0523aca8e07219e8dbe44b7bb33f34>`)(RTS_UI32 ui32OperationMode, CMPID *pCmpIdDisabled)
+
+- typedef RTS_RESULT(* :ref:`PFDEVGETOPERATIONMODE <group___cmp_device_itf_1ga97766b1af6d9ff29f3f6e8c0410a371f>`)(RTS_UI32 *pui32OperationMode)
+
+- typedef RTS_RESULT(* :ref:`PFDEVGETSESSIONID <group___cmp_device_itf_1ga81d0aa13d40c29b190bec02b698294ef>`)(RTS_UI32 ulChannelHandle, RTS_UI32 *pulSessionId)
+
+- typedef RTS_HANDLE(* :ref:`PFDEVGETSESSIONUSER <group___cmp_device_itf_1ga7460af1c2a1cdea783ea28df779b4e66>`)(RTS_UI32 ui32SessionId, RTS_RESULT *pResult)
+
+- typedef RTS_UI32(* :ref:`PFDEVGETSESSIONAUTHTYPE <group___cmp_device_itf_1ga91a6b113cf061fc0ae7e7e0d740e9dec>`)(RTS_UI32 ui32SessionId, RTS_RESULT *pResult)
+
+- typedef RTS_UI32(* :ref:`PFDEVGETSESSIONFLAGS <group___cmp_device_itf_1ga60002bcd53e4f98a7f31336f8c6aba13>`)(RTS_UI32 ui32SessionId, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFDEVISVALIDREQUEST <group___cmp_device_itf_1ga6a607e9882c1bba3d94343355543bbef>`)(RTS_UI32 ulChannelHandle, HEADER_TAG_EXT *pHeaderTag, PROTOCOL_DATA_UNIT *pPduReply)
+
+- typedef RTS_RESULT(* :ref:`PFDEVRESETORIGIN <group___cmp_device_itf_1gada6db8c03258aba5fc3b20aec9ee9d34>`)(RTS_HANDLE hUser, RTS_UI32 ui32ResetOriginConfig, RTS_UI32 *pui32ResetOriginResults)
+
+- typedef RTS_RESULT(* :ref:`PFDEVRESETORIGINGETCONFIG <group___cmp_device_itf_1gafa65466359610f73ae49910d5db06f38>`)(RTS_HANDLE hUser, RTS_UI32 *pui32ResetOriginConfigOptions, RTS_UI32 *pui32ResetOriginConfigRights)
+
+- typedef :ref:`ICmpDevice_C <struct_i_cmp_device___c>` :ref:`ICmpDevice <group___cmp_device_itf_1gaa258f9635c2734d26d8b1401f85b40d1>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`DevGetIdent <group___cmp_device_itf_1ga7e038012152c3ae365e69a885947f614>` (:ref:`DeviceIdentification <struct_device_identification>` * pDevIdent)
+
+- RTS_RESULT :ref:`DevCheckTargetIdent <group___cmp_device_itf_1gaf0f698f604236df7b31a3111690d680c>` (:ref:`TargetIdent <struct_target_ident>` * pTargetIdentReq, :ref:`TargetIdent <struct_target_ident>` * pTargetIdent)
+
+- RTS_RESULT :ref:`DevSetOperationMode <group___cmp_device_itf_1gaa0cf71c2add8bce1463fd231501212bb>` (RTS_UI32 ui32OperationMode, CMPID * pCmpIdDisabled)
+
+- RTS_RESULT :ref:`DevGetOperationMode <group___cmp_device_itf_1ga755258387b6981d8e151b4cfe0182350>` (RTS_UI32 * pui32OperationMode)
+
+- RTS_RESULT :ref:`DevGetSessionId <group___cmp_device_itf_1gac59c464cacd0ed223fc678d838e4d6b2>` (RTS_UI32 ulChannelHandle, RTS_UI32 * pulSessionId)
+
+- RTS_HANDLE :ref:`DevGetSessionUser <group___cmp_device_itf_1ga6b6a2121a2c903d3d24663e8afed5bc3>` (RTS_UI32 ui32SessionId, RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`DevGetSessionAuthType <group___cmp_device_itf_1ga7b088b1e8c9c7131297fe9c04470666e>` (RTS_UI32 ui32SessionId, RTS_RESULT * pResult)
+
+- RTS_UI32 :ref:`DevGetSessionFlags <group___cmp_device_itf_1ga2749a6bdc512ab3e18e0b30bf3cea9b3>` (RTS_UI32 ui32SessionId, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`DevIsValidRequest <group___cmp_device_itf_1gaeebf4a3f354b6c4293ad27314b525ba6>` (RTS_UI32 ulChannelHandle, :ref:`HEADER_TAG_EXT <struct_h_e_a_d_e_r___t_a_g___e_x_t>` * pHeaderTag, :ref:`PROTOCOL_DATA_UNIT <struct_p_r_o_t_o_c_o_l___d_a_t_a___u_n_i_t>` * pPduReply)
+
+- RTS_RESULT :ref:`DevResetOrigin <group___cmp_device_itf_1gad4b80db094b020326925f45f437d378a>` (RTS_HANDLE hUser, RTS_UI32 ui32ResetOriginConfig, RTS_UI32 * pui32ResetOriginResults)
+
+- RTS_RESULT :ref:`DevResetOriginGetConfig <group___cmp_device_itf_1ga0ecec541d502361695d4bcbafeab380e>` (RTS_HANDLE hUser, RTS_UI32 * pui32ResetOriginConfigOptions, RTS_UI32 * pui32ResetOriginConfigRights)
+
+Detailed Description
+--------------------
+
+Definition in file CmpDeviceItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

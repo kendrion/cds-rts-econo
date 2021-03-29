@@ -1,0 +1,834 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___sys_pci_itf:
+
+=========
+SysPciItf
+=========
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of SysPci.
+
+Detailed Description
+--------------------
+
+The SysPci interface is projected to get access to the PCI bus on a target. This interface can only be used on architectures with a PCI bus.
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`PCI_INFO <group___sys_pci_itf___p_c_i___i_n_f_o>`
+
+- :ref:`Settings <group___sys_pci_itf___settings>`
+
+- :ref:`Static defines <group___sys_pci_itf___staticdefines>`
+
+Data Structures
+---------------
+
+- struct :ref:`tagsyspcigetcardinfo_struct <structtagsyspcigetcardinfo__struct>`
+
+- struct :ref:`tagsyspcigetconfigentry_struct <structtagsyspcigetconfigentry__struct>`
+
+- struct :ref:`tagsyspcireadvalue_struct <structtagsyspcireadvalue__struct>`
+
+- struct :ref:`tagsyspcisetconfigentry_struct <structtagsyspcisetconfigentry__struct>`
+
+- struct :ref:`tagsyspciwritevalue_struct <structtagsyspciwritevalue__struct>`
+
+- struct :ref:`ISysPci_C <struct_i_sys_pci___c>`
+
+Macros
+------
+
+- #define :ref:`USE_syspcigetcardinfo <group___sys_pci_itf_1ga664b885fdd4d6f2e67386df4de5fc23c>` :ref:`PFSYSPCIGETCARDINFO_IEC <group___sys_pci_itf_1ga3a0d4a7597cf5d3e2cd79a609abdb480>` pfsyspcigetcardinfo;
+
+- #define :ref:`EXT_syspcigetcardinfo <group___sys_pci_itf_1ga68437c541f7c15415f9926c32f7dd400>` extern :ref:`PFSYSPCIGETCARDINFO_IEC <group___sys_pci_itf_1ga3a0d4a7597cf5d3e2cd79a609abdb480>` pfsyspcigetcardinfo;
+
+- #define :ref:`GET_syspcigetcardinfo <group___sys_pci_itf_1ga40d2d8966d1fd7a19ada988bcde99404>` s_pfCMGetAPI2( "syspcigetcardinfo", (RTS_VOID_FCTPTR *)&pfsyspcigetcardinfo, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x4D7CD8E3), 0x03050500)
+
+- #define :ref:`CAL_syspcigetcardinfo <group___sys_pci_itf_1ga7b6744ce98046ae28c0987e18e6c8758>` pfsyspcigetcardinfo
+
+- #define :ref:`CHK_syspcigetcardinfo <group___sys_pci_itf_1ga5926d71de2926002427da52d5a695d30>` (pfsyspcigetcardinfo != NULL)
+
+- #define :ref:`EXP_syspcigetcardinfo <group___sys_pci_itf_1ga4f76638ca8ffeb26466b764ac8c724c0>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syspcigetcardinfo", (RTS_UINTPTR) :ref:`syspcigetcardinfo <group___sys_pci_itf_1ga35199310ecb9821d041eb849e59190f4>` , 1, RTSITF_GET_SIGNATURE(0, 0x4D7CD8E3), 0x03050500)
+
+- #define :ref:`USE_syspcigetconfigentry <group___sys_pci_itf_1ga97c46d33afeb3165bfe2791379e229b1>` :ref:`PFSYSPCIGETCONFIGENTRY_IEC <group___sys_pci_itf_1ga39f2e2267aeaccb0843a4c933c8b5cff>` pfsyspcigetconfigentry;
+
+- #define :ref:`EXT_syspcigetconfigentry <group___sys_pci_itf_1gacdbbecee7ff0dca282a344a104f337a1>` extern :ref:`PFSYSPCIGETCONFIGENTRY_IEC <group___sys_pci_itf_1ga39f2e2267aeaccb0843a4c933c8b5cff>` pfsyspcigetconfigentry;
+
+- #define :ref:`GET_syspcigetconfigentry <group___sys_pci_itf_1gaeaae966fd6ca262a889c44d4a783a104>` s_pfCMGetAPI2( "syspcigetconfigentry", (RTS_VOID_FCTPTR *)&pfsyspcigetconfigentry, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x1B98EF98), 0x03050500)
+
+- #define :ref:`CAL_syspcigetconfigentry <group___sys_pci_itf_1ga33b4e0254f30ed9eb7ad097e92d72295>` pfsyspcigetconfigentry
+
+- #define :ref:`CHK_syspcigetconfigentry <group___sys_pci_itf_1ga699f8dc03fbfc7d758db2889a370c9c6>` (pfsyspcigetconfigentry != NULL)
+
+- #define :ref:`EXP_syspcigetconfigentry <group___sys_pci_itf_1ga721d3e781512708a066659874be63b1f>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syspcigetconfigentry", (RTS_UINTPTR) :ref:`syspcigetconfigentry <group___sys_pci_itf_1gadc51899130bbf0325a8496abb6ee3856>` , 1, RTSITF_GET_SIGNATURE(0, 0x1B98EF98), 0x03050500)
+
+- #define :ref:`USE_syspcireadvalue <group___sys_pci_itf_1ga1d16d64ba566c9ecf08b5f5702d4b993>` :ref:`PFSYSPCIREADVALUE_IEC <group___sys_pci_itf_1gaeaa28b8c24c5d73835d3000250c5d054>` pfsyspcireadvalue;
+
+- #define :ref:`EXT_syspcireadvalue <group___sys_pci_itf_1gaf7da2b96160df9452479a06bf8dc07d0>` extern :ref:`PFSYSPCIREADVALUE_IEC <group___sys_pci_itf_1gaeaa28b8c24c5d73835d3000250c5d054>` pfsyspcireadvalue;
+
+- #define :ref:`GET_syspcireadvalue <group___sys_pci_itf_1gad2ed978218ea5ef8c572038957aad861>` s_pfCMGetAPI2( "syspcireadvalue", (RTS_VOID_FCTPTR *)&pfsyspcireadvalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x622E6E70), 0x03050500)
+
+- #define :ref:`CAL_syspcireadvalue <group___sys_pci_itf_1gab60f3a599fcc803668ffa753dead16d0>` pfsyspcireadvalue
+
+- #define :ref:`CHK_syspcireadvalue <group___sys_pci_itf_1ga0def5c4ef2ae22aeda305fcb7bb2cfa8>` (pfsyspcireadvalue != NULL)
+
+- #define :ref:`EXP_syspcireadvalue <group___sys_pci_itf_1gaacd01249a1a1978c0089c5df940bdd52>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syspcireadvalue", (RTS_UINTPTR) :ref:`syspcireadvalue <group___sys_pci_itf_1ga91922372903a846c6ac440a09b5b3660>` , 1, RTSITF_GET_SIGNATURE(0, 0x622E6E70), 0x03050500)
+
+- #define :ref:`USE_syspcisetconfigentry <group___sys_pci_itf_1ga371cfd8a53cf2e4379548157dd592814>` :ref:`PFSYSPCISETCONFIGENTRY_IEC <group___sys_pci_itf_1gab768054bcb9e0600a7535852043f69a4>` pfsyspcisetconfigentry;
+
+- #define :ref:`EXT_syspcisetconfigentry <group___sys_pci_itf_1gae0b6db1ee80810a6a71dfcb8654aa677>` extern :ref:`PFSYSPCISETCONFIGENTRY_IEC <group___sys_pci_itf_1gab768054bcb9e0600a7535852043f69a4>` pfsyspcisetconfigentry;
+
+- #define :ref:`GET_syspcisetconfigentry <group___sys_pci_itf_1ga9561466e7a5e6e09495e5b53874959d0>` s_pfCMGetAPI2( "syspcisetconfigentry", (RTS_VOID_FCTPTR *)&pfsyspcisetconfigentry, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x7E2EC6CB), 0x03050500)
+
+- #define :ref:`CAL_syspcisetconfigentry <group___sys_pci_itf_1ga47a8a3e3a762e58f27e26ba0b9f77007>` pfsyspcisetconfigentry
+
+- #define :ref:`CHK_syspcisetconfigentry <group___sys_pci_itf_1ga9a683df963a3b4ddf9f224092b1b09bb>` (pfsyspcisetconfigentry != NULL)
+
+- #define :ref:`EXP_syspcisetconfigentry <group___sys_pci_itf_1gad34c1de4b75c2e6a20ea4e1bd13b6929>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syspcisetconfigentry", (RTS_UINTPTR) :ref:`syspcisetconfigentry <group___sys_pci_itf_1ga23050543550a249029f73e12bba89576>` , 1, RTSITF_GET_SIGNATURE(0, 0x7E2EC6CB), 0x03050500)
+
+- #define :ref:`USE_syspciwritevalue <group___sys_pci_itf_1ga2f14c8542600846a62d0821cc96a8609>` :ref:`PFSYSPCIWRITEVALUE_IEC <group___sys_pci_itf_1gacf5d6d65b160447ca631e1e6be99cf25>` pfsyspciwritevalue;
+
+- #define :ref:`EXT_syspciwritevalue <group___sys_pci_itf_1gaaedb1e9caa132cbff2adbf08882a37a9>` extern :ref:`PFSYSPCIWRITEVALUE_IEC <group___sys_pci_itf_1gacf5d6d65b160447ca631e1e6be99cf25>` pfsyspciwritevalue;
+
+- #define :ref:`GET_syspciwritevalue <group___sys_pci_itf_1gae50ed07d5bd90375396504cb33237251>` s_pfCMGetAPI2( "syspciwritevalue", (RTS_VOID_FCTPTR *)&pfsyspciwritevalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x2ABCA03C), 0x03050500)
+
+- #define :ref:`CAL_syspciwritevalue <group___sys_pci_itf_1ga284e02851f21d854d47598db07bd7443>` pfsyspciwritevalue
+
+- #define :ref:`CHK_syspciwritevalue <group___sys_pci_itf_1ga0fc237bbf3d85567af68feeacaf01f91>` (pfsyspciwritevalue != NULL)
+
+- #define :ref:`EXP_syspciwritevalue <group___sys_pci_itf_1ga2183ff6d223969b53fb181b1bf2ff9ae>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syspciwritevalue", (RTS_UINTPTR) :ref:`syspciwritevalue <group___sys_pci_itf_1ga5a89d8898154a71120c9f20cdc440317>` , 1, RTSITF_GET_SIGNATURE(0, 0x2ABCA03C), 0x03050500)
+
+- #define :ref:`USE_SysPciGetCardInfo <group___sys_pci_itf_1ga596108961a00e21552706e8e2cd419a4>` :ref:`PFSYSPCIGETCARDINFO <group___sys_pci_itf_1gae959b9e3c5eff09e634bccd050f00603>` pfSysPciGetCardInfo;
+
+- #define :ref:`EXT_SysPciGetCardInfo <group___sys_pci_itf_1ga5ac907d9ea9ccee110b51195046457f6>` extern :ref:`PFSYSPCIGETCARDINFO <group___sys_pci_itf_1gae959b9e3c5eff09e634bccd050f00603>` pfSysPciGetCardInfo;
+
+- #define :ref:`GET_SysPciGetCardInfo <group___sys_pci_itf_1ga4fa95430039159ff0678dd514a922593>` s_pfCMGetAPI2( "SysPciGetCardInfo", (RTS_VOID_FCTPTR *)&pfSysPciGetCardInfo, (fl), 0, 0)
+
+- #define :ref:`CAL_SysPciGetCardInfo <group___sys_pci_itf_1ga0860ac7ea69da337e713b3873d741797>` pfSysPciGetCardInfo
+
+- #define :ref:`CHK_SysPciGetCardInfo <group___sys_pci_itf_1gaa34372e70cc7066990d68ccd3bc1f746>` (pfSysPciGetCardInfo != NULL)
+
+- #define :ref:`EXP_SysPciGetCardInfo <group___sys_pci_itf_1ga36728b4a3f462f39a932f142cec8548f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysPciGetCardInfo", (RTS_UINTPTR) :ref:`SysPciGetCardInfo <group___sys_pci_itf_1ga701df9befb17a2f027996fec4456e45a>` , 0, 0)
+
+- #define :ref:`USE_SysPciGetConfigEntry <group___sys_pci_itf_1gaca1051aa653553de7860017b329f3f43>` :ref:`PFSYSPCIGETCONFIGENTRY <group___sys_pci_itf_1ga8d6b30ff732248c723d3be4d03fcbbae>` pfSysPciGetConfigEntry;
+
+- #define :ref:`EXT_SysPciGetConfigEntry <group___sys_pci_itf_1ga15d0dd82c6bf86aacc38f2313ce3a769>` extern :ref:`PFSYSPCIGETCONFIGENTRY <group___sys_pci_itf_1ga8d6b30ff732248c723d3be4d03fcbbae>` pfSysPciGetConfigEntry;
+
+- #define :ref:`GET_SysPciGetConfigEntry <group___sys_pci_itf_1ga6e0d5c16f34ccaaf4277e38f9bf2fa07>` s_pfCMGetAPI2( "SysPciGetConfigEntry", (RTS_VOID_FCTPTR *)&pfSysPciGetConfigEntry, (fl), 0, 0)
+
+- #define :ref:`CAL_SysPciGetConfigEntry <group___sys_pci_itf_1gaaf0e913db1892f3d88fa7892de291a06>` pfSysPciGetConfigEntry
+
+- #define :ref:`CHK_SysPciGetConfigEntry <group___sys_pci_itf_1ga18521118d8b5d89668a3d840656ed12f>` (pfSysPciGetConfigEntry != NULL)
+
+- #define :ref:`EXP_SysPciGetConfigEntry <group___sys_pci_itf_1gaf6f5fbab58953621eadf8287f8d05689>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysPciGetConfigEntry", (RTS_UINTPTR) :ref:`SysPciGetConfigEntry <group___sys_pci_itf_1ga9fb67b125d5734a51d082f31433d1215>` , 0, 0)
+
+- #define :ref:`USE_SysPciSetConfigEntry <group___sys_pci_itf_1ga452ed1cf70af85d05c24e99a328ee689>` :ref:`PFSYSPCISETCONFIGENTRY <group___sys_pci_itf_1gad5a48a4dd29895a318d69f4d457b7fbf>` pfSysPciSetConfigEntry;
+
+- #define :ref:`EXT_SysPciSetConfigEntry <group___sys_pci_itf_1ga889f48f4e0dbbae1b956f6143323184f>` extern :ref:`PFSYSPCISETCONFIGENTRY <group___sys_pci_itf_1gad5a48a4dd29895a318d69f4d457b7fbf>` pfSysPciSetConfigEntry;
+
+- #define :ref:`GET_SysPciSetConfigEntry <group___sys_pci_itf_1ga5461e6388743304f3abe8ef92288a967>` s_pfCMGetAPI2( "SysPciSetConfigEntry", (RTS_VOID_FCTPTR *)&pfSysPciSetConfigEntry, (fl), 0, 0)
+
+- #define :ref:`CAL_SysPciSetConfigEntry <group___sys_pci_itf_1gadbf3112ac12825cb8027f9cee8b0a9b7>` pfSysPciSetConfigEntry
+
+- #define :ref:`CHK_SysPciSetConfigEntry <group___sys_pci_itf_1ga2f6cd5a20eac8e86287272d6a457db3c>` (pfSysPciSetConfigEntry != NULL)
+
+- #define :ref:`EXP_SysPciSetConfigEntry <group___sys_pci_itf_1ga1b29be82577ed7e07309db455629bd43>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysPciSetConfigEntry", (RTS_UINTPTR) :ref:`SysPciSetConfigEntry <group___sys_pci_itf_1gace0e47c9fa9d4b07b04cad155b687629>` , 0, 0)
+
+- #define :ref:`USE_SysPciWriteValue <group___sys_pci_itf_1ga4545946dca471f6b43cbcb07a7835bf1>` :ref:`PFSYSPCIWRITEVALUE <group___sys_pci_itf_1ga732a3f5251aa59d1df88877aa7f942e2>` pfSysPciWriteValue;
+
+- #define :ref:`EXT_SysPciWriteValue <group___sys_pci_itf_1ga4d768126f60676a8aafd4862e596bcba>` extern :ref:`PFSYSPCIWRITEVALUE <group___sys_pci_itf_1ga732a3f5251aa59d1df88877aa7f942e2>` pfSysPciWriteValue;
+
+- #define :ref:`GET_SysPciWriteValue <group___sys_pci_itf_1gaffb68ccacd268a14e82cf736d10f4b1c>` s_pfCMGetAPI2( "SysPciWriteValue", (RTS_VOID_FCTPTR *)&pfSysPciWriteValue, (fl), 0, 0)
+
+- #define :ref:`CAL_SysPciWriteValue <group___sys_pci_itf_1ga2b3694074428b7f51b99de09a83ef3de>` pfSysPciWriteValue
+
+- #define :ref:`CHK_SysPciWriteValue <group___sys_pci_itf_1ga0a9e9612648f28acfb1c9277be3b1fdd>` (pfSysPciWriteValue != NULL)
+
+- #define :ref:`EXP_SysPciWriteValue <group___sys_pci_itf_1gae783c0e002bfe6b85fc5aaab133615c0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysPciWriteValue", (RTS_UINTPTR) :ref:`SysPciWriteValue <group___sys_pci_itf_1gada82541621c4fab66735cdb00e3720f3>` , 0, 0)
+
+- #define :ref:`USE_SysPciReadValue <group___sys_pci_itf_1gada23f0f8d4212068789fddee6faf12da>` :ref:`PFSYSPCIREADVALUE <group___sys_pci_itf_1ga1d2f8fa9e3a0e972ef701dace5193710>` pfSysPciReadValue;
+
+- #define :ref:`EXT_SysPciReadValue <group___sys_pci_itf_1ga3c55cb6e7189d74b9e3af86702927baf>` extern :ref:`PFSYSPCIREADVALUE <group___sys_pci_itf_1ga1d2f8fa9e3a0e972ef701dace5193710>` pfSysPciReadValue;
+
+- #define :ref:`GET_SysPciReadValue <group___sys_pci_itf_1gacb4e846e6da59fd0c20bd53ac002175a>` s_pfCMGetAPI2( "SysPciReadValue", (RTS_VOID_FCTPTR *)&pfSysPciReadValue, (fl), 0, 0)
+
+- #define :ref:`CAL_SysPciReadValue <group___sys_pci_itf_1ga57575d250bbf35896f2b60ddb9bd083a>` pfSysPciReadValue
+
+- #define :ref:`CHK_SysPciReadValue <group___sys_pci_itf_1gab04af3adb7bb3e2037c963de440ecd8d>` (pfSysPciReadValue != NULL)
+
+- #define :ref:`EXP_SysPciReadValue <group___sys_pci_itf_1ga5e357febb7fe8c8ec08896009fa81d74>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysPciReadValue", (RTS_UINTPTR) :ref:`SysPciReadValue <group___sys_pci_itf_1gae96b9d709b4d611fd56f2214e8de797f>` , 0, 0)
+
+- #define :ref:`ITF_SysPci <group___sys_pci_itf_1gaae6dcdb15b7d9fe060529c7d1a196bc5>`
+
+- #define :ref:`EXTITF_SysPci <group___sys_pci_itf_1gaca862454545f1190204e7594b1a5a06b>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`tagsyspcigetcardinfo_struct <structtagsyspcigetcardinfo__struct>` :ref:`syspcigetcardinfo_struct <group___sys_pci_itf_1ga6292de9be1cdd46fdcf89683eabac42c>`
+
+- typedef void(* :ref:`PFSYSPCIGETCARDINFO_IEC <group___sys_pci_itf_1ga3a0d4a7597cf5d3e2cd79a609abdb480>`)(syspcigetcardinfo_struct *p)
+
+- typedef struct :ref:`tagsyspcigetconfigentry_struct <structtagsyspcigetconfigentry__struct>` :ref:`syspcigetconfigentry_struct <group___sys_pci_itf_1ga9cb8f3151f93585bcf6296ec62e4be8b>`
+
+- typedef void(* :ref:`PFSYSPCIGETCONFIGENTRY_IEC <group___sys_pci_itf_1ga39f2e2267aeaccb0843a4c933c8b5cff>`)(syspcigetconfigentry_struct *p)
+
+- typedef struct :ref:`tagsyspcireadvalue_struct <structtagsyspcireadvalue__struct>` :ref:`syspcireadvalue_struct <group___sys_pci_itf_1ga44d101393a4dd9fe548328b9720e5087>`
+
+- typedef void(* :ref:`PFSYSPCIREADVALUE_IEC <group___sys_pci_itf_1gaeaa28b8c24c5d73835d3000250c5d054>`)(syspcireadvalue_struct *p)
+
+- typedef struct :ref:`tagsyspcisetconfigentry_struct <structtagsyspcisetconfigentry__struct>` :ref:`syspcisetconfigentry_struct <group___sys_pci_itf_1ga3e5c864c1733f2cb9a8f30436d10e930>`
+
+- typedef void(* :ref:`PFSYSPCISETCONFIGENTRY_IEC <group___sys_pci_itf_1gab768054bcb9e0600a7535852043f69a4>`)(syspcisetconfigentry_struct *p)
+
+- typedef struct :ref:`tagsyspciwritevalue_struct <structtagsyspciwritevalue__struct>` :ref:`syspciwritevalue_struct <group___sys_pci_itf_1ga03537fbab9fed237d6708e6abdcec786>`
+
+- typedef void(* :ref:`PFSYSPCIWRITEVALUE_IEC <group___sys_pci_itf_1gacf5d6d65b160447ca631e1e6be99cf25>`)(syspciwritevalue_struct *p)
+
+- typedef RTS_RESULT(* :ref:`PFSYSPCIGETCARDINFO <group___sys_pci_itf_1gae959b9e3c5eff09e634bccd050f00603>`)(unsigned short usVendorId, unsigned short usDeviceId, unsigned short usCardIndex, PCI_INFO *pPciInfo)
+
+- typedef RTS_RESULT(* :ref:`PFSYSPCIGETCONFIGENTRY <group___sys_pci_itf_1ga8d6b30ff732248c723d3be4d03fcbbae>`)(unsigned short usBus, unsigned short usDevice, unsigned short usFunction, PCI_INFO *pPciInfo)
+
+- typedef RTS_RESULT(* :ref:`PFSYSPCISETCONFIGENTRY <group___sys_pci_itf_1gad5a48a4dd29895a318d69f4d457b7fbf>`)(unsigned short usBus, unsigned short usDevice, unsigned short usFunction, PCI_INFO *pPciInfo)
+
+- typedef RTS_RESULT(* :ref:`PFSYSPCIWRITEVALUE <group___sys_pci_itf_1ga732a3f5251aa59d1df88877aa7f942e2>`)(unsigned short usBus, unsigned short usDevice, unsigned short usFunction, unsigned short usPciOffset, unsigned char *pbyData, unsigned short usSize)
+
+- typedef RTS_RESULT(* :ref:`PFSYSPCIREADVALUE <group___sys_pci_itf_1ga1d2f8fa9e3a0e972ef701dace5193710>`)(unsigned short usBus, unsigned short usDevice, unsigned short usFunction, unsigned short usPciOffset, unsigned char *pbyData, unsigned short usSize)
+
+- typedef :ref:`ISysPci_C <struct_i_sys_pci___c>` :ref:`ISysPci <group___sys_pci_itf_1gabc431428ede90a107db480999568fcdb>`
+
+Functions
+---------
+
+- void :ref:`syspcigetcardinfo <group___sys_pci_itf_1ga35199310ecb9821d041eb849e59190f4>` (:ref:`syspcigetcardinfo_struct <group___sys_pci_itf_1ga6292de9be1cdd46fdcf89683eabac42c>` * p)
+
+- void :ref:`syspcigetconfigentry <group___sys_pci_itf_1gadc51899130bbf0325a8496abb6ee3856>` (:ref:`syspcigetconfigentry_struct <group___sys_pci_itf_1ga9cb8f3151f93585bcf6296ec62e4be8b>` * p)
+
+- void :ref:`syspcireadvalue <group___sys_pci_itf_1ga91922372903a846c6ac440a09b5b3660>` (:ref:`syspcireadvalue_struct <group___sys_pci_itf_1ga44d101393a4dd9fe548328b9720e5087>` * p)
+
+- void :ref:`syspcisetconfigentry <group___sys_pci_itf_1ga23050543550a249029f73e12bba89576>` (:ref:`syspcisetconfigentry_struct <group___sys_pci_itf_1ga3e5c864c1733f2cb9a8f30436d10e930>` * p)
+
+- void :ref:`syspciwritevalue <group___sys_pci_itf_1ga5a89d8898154a71120c9f20cdc440317>` (:ref:`syspciwritevalue_struct <group___sys_pci_itf_1ga03537fbab9fed237d6708e6abdcec786>` * p)
+
+- RTS_RESULT :ref:`SysPciOSInit <group___sys_pci_itf_1ga6f117919f89a847aa224db50a80a25d8>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysPciOSHookFunction <group___sys_pci_itf_1ga4f1cadc5ba6a706e09fa19e005b60039>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_RESULT :ref:`SysPciGetCardInfo <group___sys_pci_itf_1ga701df9befb17a2f027996fec4456e45a>` (unsigned short usVendorId, unsigned short usDeviceId, unsigned short usCardIndex, :ref:`PCI_INFO <group___sys_pci_itf___p_c_i___i_n_f_o_1gaed5948d035c6175ad9ef38cd4bc25d21>` * pPciInfo)
+
+- RTS_RESULT :ref:`SysPciGetConfigEntry <group___sys_pci_itf_1ga9fb67b125d5734a51d082f31433d1215>` (unsigned short usBus, unsigned short usDevice, unsigned short usFunction, :ref:`PCI_INFO <group___sys_pci_itf___p_c_i___i_n_f_o_1gaed5948d035c6175ad9ef38cd4bc25d21>` * pPciInfo)
+
+- RTS_RESULT :ref:`SysPciSetConfigEntry <group___sys_pci_itf_1gace0e47c9fa9d4b07b04cad155b687629>` (unsigned short usBus, unsigned short usDevice, unsigned short usFunction, :ref:`PCI_INFO <group___sys_pci_itf___p_c_i___i_n_f_o_1gaed5948d035c6175ad9ef38cd4bc25d21>` * pPciInfo)
+
+- RTS_RESULT :ref:`SysPciWriteValue <group___sys_pci_itf_1gada82541621c4fab66735cdb00e3720f3>` (unsigned short usBus, unsigned short usDevice, unsigned short usFunction, unsigned short usPciOffset, unsigned char * pbyData, unsigned short usSize)
+
+- RTS_RESULT :ref:`SysPciReadValue <group___sys_pci_itf_1gae96b9d709b4d611fd56f2214e8de797f>` (unsigned short usBus, unsigned short usDevice, unsigned short usFunction, unsigned short usPciOffset, unsigned char * pbyData, unsigned short usSize)
+
+Macro Definition Documentation
+------------------------------
+.. _group___sys_pci_itf_1ga664b885fdd4d6f2e67386df4de5fc23c:
+
+#define USE_syspcigetcardinfo :ref:`PFSYSPCIGETCARDINFO_IEC <group___sys_pci_itf_1ga3a0d4a7597cf5d3e2cd79a609abdb480>` pfsyspcigetcardinfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga68437c541f7c15415f9926c32f7dd400:
+
+#define EXT_syspcigetcardinfo extern :ref:`PFSYSPCIGETCARDINFO_IEC <group___sys_pci_itf_1ga3a0d4a7597cf5d3e2cd79a609abdb480>` pfsyspcigetcardinfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga40d2d8966d1fd7a19ada988bcde99404:
+
+#define GET_syspcigetcardinfo s_pfCMGetAPI2( "syspcigetcardinfo", (RTS_VOID_FCTPTR *)&pfsyspcigetcardinfo, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x4D7CD8E3), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga7b6744ce98046ae28c0987e18e6c8758:
+
+#define CAL_syspcigetcardinfo pfsyspcigetcardinfo
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga5926d71de2926002427da52d5a695d30:
+
+#define CHK_syspcigetcardinfo (pfsyspcigetcardinfo != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga4f76638ca8ffeb26466b764ac8c724c0:
+
+#define EXP_syspcigetcardinfo s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syspcigetcardinfo", (RTS_UINTPTR) :ref:`syspcigetcardinfo <group___sys_pci_itf_1ga35199310ecb9821d041eb849e59190f4>` , 1, RTSITF_GET_SIGNATURE(0, 0x4D7CD8E3), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga97c46d33afeb3165bfe2791379e229b1:
+
+#define USE_syspcigetconfigentry :ref:`PFSYSPCIGETCONFIGENTRY_IEC <group___sys_pci_itf_1ga39f2e2267aeaccb0843a4c933c8b5cff>` pfsyspcigetconfigentry;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gacdbbecee7ff0dca282a344a104f337a1:
+
+#define EXT_syspcigetconfigentry extern :ref:`PFSYSPCIGETCONFIGENTRY_IEC <group___sys_pci_itf_1ga39f2e2267aeaccb0843a4c933c8b5cff>` pfsyspcigetconfigentry;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gaeaae966fd6ca262a889c44d4a783a104:
+
+#define GET_syspcigetconfigentry s_pfCMGetAPI2( "syspcigetconfigentry", (RTS_VOID_FCTPTR *)&pfsyspcigetconfigentry, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x1B98EF98), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga33b4e0254f30ed9eb7ad097e92d72295:
+
+#define CAL_syspcigetconfigentry pfsyspcigetconfigentry
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga699f8dc03fbfc7d758db2889a370c9c6:
+
+#define CHK_syspcigetconfigentry (pfsyspcigetconfigentry != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga721d3e781512708a066659874be63b1f:
+
+#define EXP_syspcigetconfigentry s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syspcigetconfigentry", (RTS_UINTPTR) :ref:`syspcigetconfigentry <group___sys_pci_itf_1gadc51899130bbf0325a8496abb6ee3856>` , 1, RTSITF_GET_SIGNATURE(0, 0x1B98EF98), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga1d16d64ba566c9ecf08b5f5702d4b993:
+
+#define USE_syspcireadvalue :ref:`PFSYSPCIREADVALUE_IEC <group___sys_pci_itf_1gaeaa28b8c24c5d73835d3000250c5d054>` pfsyspcireadvalue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gaf7da2b96160df9452479a06bf8dc07d0:
+
+#define EXT_syspcireadvalue extern :ref:`PFSYSPCIREADVALUE_IEC <group___sys_pci_itf_1gaeaa28b8c24c5d73835d3000250c5d054>` pfsyspcireadvalue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gad2ed978218ea5ef8c572038957aad861:
+
+#define GET_syspcireadvalue s_pfCMGetAPI2( "syspcireadvalue", (RTS_VOID_FCTPTR *)&pfsyspcireadvalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x622E6E70), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gab60f3a599fcc803668ffa753dead16d0:
+
+#define CAL_syspcireadvalue pfsyspcireadvalue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga0def5c4ef2ae22aeda305fcb7bb2cfa8:
+
+#define CHK_syspcireadvalue (pfsyspcireadvalue != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gaacd01249a1a1978c0089c5df940bdd52:
+
+#define EXP_syspcireadvalue s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syspcireadvalue", (RTS_UINTPTR) :ref:`syspcireadvalue <group___sys_pci_itf_1ga91922372903a846c6ac440a09b5b3660>` , 1, RTSITF_GET_SIGNATURE(0, 0x622E6E70), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga371cfd8a53cf2e4379548157dd592814:
+
+#define USE_syspcisetconfigentry :ref:`PFSYSPCISETCONFIGENTRY_IEC <group___sys_pci_itf_1gab768054bcb9e0600a7535852043f69a4>` pfsyspcisetconfigentry;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gae0b6db1ee80810a6a71dfcb8654aa677:
+
+#define EXT_syspcisetconfigentry extern :ref:`PFSYSPCISETCONFIGENTRY_IEC <group___sys_pci_itf_1gab768054bcb9e0600a7535852043f69a4>` pfsyspcisetconfigentry;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga9561466e7a5e6e09495e5b53874959d0:
+
+#define GET_syspcisetconfigentry s_pfCMGetAPI2( "syspcisetconfigentry", (RTS_VOID_FCTPTR *)&pfsyspcisetconfigentry, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x7E2EC6CB), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga47a8a3e3a762e58f27e26ba0b9f77007:
+
+#define CAL_syspcisetconfigentry pfsyspcisetconfigentry
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga9a683df963a3b4ddf9f224092b1b09bb:
+
+#define CHK_syspcisetconfigentry (pfsyspcisetconfigentry != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gad34c1de4b75c2e6a20ea4e1bd13b6929:
+
+#define EXP_syspcisetconfigentry s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syspcisetconfigentry", (RTS_UINTPTR) :ref:`syspcisetconfigentry <group___sys_pci_itf_1ga23050543550a249029f73e12bba89576>` , 1, RTSITF_GET_SIGNATURE(0, 0x7E2EC6CB), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga2f14c8542600846a62d0821cc96a8609:
+
+#define USE_syspciwritevalue :ref:`PFSYSPCIWRITEVALUE_IEC <group___sys_pci_itf_1gacf5d6d65b160447ca631e1e6be99cf25>` pfsyspciwritevalue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gaaedb1e9caa132cbff2adbf08882a37a9:
+
+#define EXT_syspciwritevalue extern :ref:`PFSYSPCIWRITEVALUE_IEC <group___sys_pci_itf_1gacf5d6d65b160447ca631e1e6be99cf25>` pfsyspciwritevalue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gae50ed07d5bd90375396504cb33237251:
+
+#define GET_syspciwritevalue s_pfCMGetAPI2( "syspciwritevalue", (RTS_VOID_FCTPTR *)&pfsyspciwritevalue, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, RTSITF_GET_SIGNATURE(0, 0x2ABCA03C), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga284e02851f21d854d47598db07bd7443:
+
+#define CAL_syspciwritevalue pfsyspciwritevalue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga0fc237bbf3d85567af68feeacaf01f91:
+
+#define CHK_syspciwritevalue (pfsyspciwritevalue != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga2183ff6d223969b53fb181b1bf2ff9ae:
+
+#define EXP_syspciwritevalue s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"syspciwritevalue", (RTS_UINTPTR) :ref:`syspciwritevalue <group___sys_pci_itf_1ga5a89d8898154a71120c9f20cdc440317>` , 1, RTSITF_GET_SIGNATURE(0, 0x2ABCA03C), 0x03050500)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga596108961a00e21552706e8e2cd419a4:
+
+#define USE_SysPciGetCardInfo :ref:`PFSYSPCIGETCARDINFO <group___sys_pci_itf_1gae959b9e3c5eff09e634bccd050f00603>` pfSysPciGetCardInfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga5ac907d9ea9ccee110b51195046457f6:
+
+#define EXT_SysPciGetCardInfo extern :ref:`PFSYSPCIGETCARDINFO <group___sys_pci_itf_1gae959b9e3c5eff09e634bccd050f00603>` pfSysPciGetCardInfo;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga4fa95430039159ff0678dd514a922593:
+
+#define GET_SysPciGetCardInfo s_pfCMGetAPI2( "SysPciGetCardInfo", (RTS_VOID_FCTPTR *)&pfSysPciGetCardInfo, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga0860ac7ea69da337e713b3873d741797:
+
+#define CAL_SysPciGetCardInfo pfSysPciGetCardInfo
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gaa34372e70cc7066990d68ccd3bc1f746:
+
+#define CHK_SysPciGetCardInfo (pfSysPciGetCardInfo != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga36728b4a3f462f39a932f142cec8548f:
+
+#define EXP_SysPciGetCardInfo s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysPciGetCardInfo", (RTS_UINTPTR) :ref:`SysPciGetCardInfo <group___sys_pci_itf_1ga701df9befb17a2f027996fec4456e45a>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gaca1051aa653553de7860017b329f3f43:
+
+#define USE_SysPciGetConfigEntry :ref:`PFSYSPCIGETCONFIGENTRY <group___sys_pci_itf_1ga8d6b30ff732248c723d3be4d03fcbbae>` pfSysPciGetConfigEntry;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga15d0dd82c6bf86aacc38f2313ce3a769:
+
+#define EXT_SysPciGetConfigEntry extern :ref:`PFSYSPCIGETCONFIGENTRY <group___sys_pci_itf_1ga8d6b30ff732248c723d3be4d03fcbbae>` pfSysPciGetConfigEntry;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga6e0d5c16f34ccaaf4277e38f9bf2fa07:
+
+#define GET_SysPciGetConfigEntry s_pfCMGetAPI2( "SysPciGetConfigEntry", (RTS_VOID_FCTPTR *)&pfSysPciGetConfigEntry, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gaaf0e913db1892f3d88fa7892de291a06:
+
+#define CAL_SysPciGetConfigEntry pfSysPciGetConfigEntry
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga18521118d8b5d89668a3d840656ed12f:
+
+#define CHK_SysPciGetConfigEntry (pfSysPciGetConfigEntry != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gaf6f5fbab58953621eadf8287f8d05689:
+
+#define EXP_SysPciGetConfigEntry s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysPciGetConfigEntry", (RTS_UINTPTR) :ref:`SysPciGetConfigEntry <group___sys_pci_itf_1ga9fb67b125d5734a51d082f31433d1215>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga452ed1cf70af85d05c24e99a328ee689:
+
+#define USE_SysPciSetConfigEntry :ref:`PFSYSPCISETCONFIGENTRY <group___sys_pci_itf_1gad5a48a4dd29895a318d69f4d457b7fbf>` pfSysPciSetConfigEntry;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga889f48f4e0dbbae1b956f6143323184f:
+
+#define EXT_SysPciSetConfigEntry extern :ref:`PFSYSPCISETCONFIGENTRY <group___sys_pci_itf_1gad5a48a4dd29895a318d69f4d457b7fbf>` pfSysPciSetConfigEntry;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga5461e6388743304f3abe8ef92288a967:
+
+#define GET_SysPciSetConfigEntry s_pfCMGetAPI2( "SysPciSetConfigEntry", (RTS_VOID_FCTPTR *)&pfSysPciSetConfigEntry, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gadbf3112ac12825cb8027f9cee8b0a9b7:
+
+#define CAL_SysPciSetConfigEntry pfSysPciSetConfigEntry
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga2f6cd5a20eac8e86287272d6a457db3c:
+
+#define CHK_SysPciSetConfigEntry (pfSysPciSetConfigEntry != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga1b29be82577ed7e07309db455629bd43:
+
+#define EXP_SysPciSetConfigEntry s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysPciSetConfigEntry", (RTS_UINTPTR) :ref:`SysPciSetConfigEntry <group___sys_pci_itf_1gace0e47c9fa9d4b07b04cad155b687629>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga4545946dca471f6b43cbcb07a7835bf1:
+
+#define USE_SysPciWriteValue :ref:`PFSYSPCIWRITEVALUE <group___sys_pci_itf_1ga732a3f5251aa59d1df88877aa7f942e2>` pfSysPciWriteValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga4d768126f60676a8aafd4862e596bcba:
+
+#define EXT_SysPciWriteValue extern :ref:`PFSYSPCIWRITEVALUE <group___sys_pci_itf_1ga732a3f5251aa59d1df88877aa7f942e2>` pfSysPciWriteValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gaffb68ccacd268a14e82cf736d10f4b1c:
+
+#define GET_SysPciWriteValue s_pfCMGetAPI2( "SysPciWriteValue", (RTS_VOID_FCTPTR *)&pfSysPciWriteValue, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga2b3694074428b7f51b99de09a83ef3de:
+
+#define CAL_SysPciWriteValue pfSysPciWriteValue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga0a9e9612648f28acfb1c9277be3b1fdd:
+
+#define CHK_SysPciWriteValue (pfSysPciWriteValue != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gae783c0e002bfe6b85fc5aaab133615c0:
+
+#define EXP_SysPciWriteValue s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysPciWriteValue", (RTS_UINTPTR) :ref:`SysPciWriteValue <group___sys_pci_itf_1gada82541621c4fab66735cdb00e3720f3>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gada23f0f8d4212068789fddee6faf12da:
+
+#define USE_SysPciReadValue :ref:`PFSYSPCIREADVALUE <group___sys_pci_itf_1ga1d2f8fa9e3a0e972ef701dace5193710>` pfSysPciReadValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga3c55cb6e7189d74b9e3af86702927baf:
+
+#define EXT_SysPciReadValue extern :ref:`PFSYSPCIREADVALUE <group___sys_pci_itf_1ga1d2f8fa9e3a0e972ef701dace5193710>` pfSysPciReadValue;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gacb4e846e6da59fd0c20bd53ac002175a:
+
+#define GET_SysPciReadValue s_pfCMGetAPI2( "SysPciReadValue", (RTS_VOID_FCTPTR *)&pfSysPciReadValue, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga57575d250bbf35896f2b60ddb9bd083a:
+
+#define CAL_SysPciReadValue pfSysPciReadValue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gab04af3adb7bb3e2037c963de440ecd8d:
+
+#define CHK_SysPciReadValue (pfSysPciReadValue != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga5e357febb7fe8c8ec08896009fa81d74:
+
+#define EXP_SysPciReadValue s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysPciReadValue", (RTS_UINTPTR) :ref:`SysPciReadValue <group___sys_pci_itf_1gae96b9d709b4d611fd56f2214e8de797f>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gaae6dcdb15b7d9fe060529c7d1a196bc5:
+
+#define ITF_SysPci
+^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gaca862454545f1190204e7594b1a5a06b:
+
+#define EXTITF_SysPci
+^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___sys_pci_itf_1ga6292de9be1cdd46fdcf89683eabac42c:
+
+typedef struct tagsyspcigetcardinfo_struct  syspcigetcardinfo_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION BEGIN
+
+Get PCI info of a specified card. This function retrieves information on a PCI card that is identified by its vendor ID, its device ID and its card index. Therefore, SysPciGetCardInfo returns a pointer to a variable of type PCI_INFO containing the information on the PCI card.
+
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_pci_itf_1ga3a0d4a7597cf5d3e2cd79a609abdb480:
+
+typedef void( *  PFSYSPCIGETCARDINFO_IEC) (syspcigetcardinfo_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga9cb8f3151f93585bcf6296ec62e4be8b:
+
+typedef struct tagsyspcigetconfigentry_struct  syspcigetconfigentry_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get one PCI config entry. This function allows to read the configuration data of a PCI card. The data is stored in a structure of type PCI_INFO and filled into the PCI bus. By means of the bus, device and function number SysPciGetConfigEntry identifies the associated bus entry and returns a pointer to it.
+
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_pci_itf_1ga39f2e2267aeaccb0843a4c933c8b5cff:
+
+typedef void( *  PFSYSPCIGETCONFIGENTRY_IEC) (syspcigetconfigentry_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga44d101393a4dd9fe548328b9720e5087:
+
+typedef struct tagsyspcireadvalue_struct  syspcireadvalue_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Read one PCI configuration value This function allows to read single configuration values of a PCI card by returning a pointer on the associated memory address (pbyData). Thereby the associated bus entry is identified via the bus, device and function number. The component to be read out is indicated by the PciOffset.
+
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_pci_itf_1gaeaa28b8c24c5d73835d3000250c5d054:
+
+typedef void( *  PFSYSPCIREADVALUE_IEC) (syspcireadvalue_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga3e5c864c1733f2cb9a8f30436d10e930:
+
+typedef struct tagsyspcisetconfigentry_struct  syspcisetconfigentry_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Set one PCI configuration entry. This function allows to write an entry to the PCI bus. The entry is a structure of type PCI-INFO and is transmitted to the function SysPciSetConfigEntry via a pointer on it. The structure contains the configuration data of the PCI card being identified by the bus, device and function number.
+
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_pci_itf_1gab768054bcb9e0600a7535852043f69a4:
+
+typedef void( *  PFSYSPCISETCONFIGENTRY_IEC) (syspcisetconfigentry_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga03537fbab9fed237d6708e6abdcec786:
+
+typedef struct tagsyspciwritevalue_struct  syspciwritevalue_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Write one PCI config value This function allows to set single configuration values of a PCI card via a pointer on the corresponding memory address (pbyData). Therefore the bus entry associated to the PCI card is identified via the bus, device and function number. The bus entry is a structure of type PCI_INFO. The component to be read out is indicated by PciOffset.
+
+**Returns:**
+
+RESULT: Returns the runtime system error code (see CmpErrors.library).
+
+.. _group___sys_pci_itf_1gacf5d6d65b160447ca631e1e6be99cf25:
+
+typedef void( *  PFSYSPCIWRITEVALUE_IEC) (syspciwritevalue_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gae959b9e3c5eff09e634bccd050f00603:
+
+typedef RTS_RESULT( *  PFSYSPCIGETCARDINFO) (unsigned short usVendorId, unsigned short usDeviceId, unsigned short usCardIndex, PCI_INFO *pPciInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga8d6b30ff732248c723d3be4d03fcbbae:
+
+typedef RTS_RESULT( *  PFSYSPCIGETCONFIGENTRY) (unsigned short usBus, unsigned short usDevice, unsigned short usFunction, PCI_INFO *pPciInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gad5a48a4dd29895a318d69f4d457b7fbf:
+
+typedef RTS_RESULT( *  PFSYSPCISETCONFIGENTRY) (unsigned short usBus, unsigned short usDevice, unsigned short usFunction, PCI_INFO *pPciInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga732a3f5251aa59d1df88877aa7f942e2:
+
+typedef RTS_RESULT( *  PFSYSPCIWRITEVALUE) (unsigned short usBus, unsigned short usDevice, unsigned short usFunction, unsigned short usPciOffset, unsigned char *pbyData, unsigned short usSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga1d2f8fa9e3a0e972ef701dace5193710:
+
+typedef RTS_RESULT( *  PFSYSPCIREADVALUE) (unsigned short usBus, unsigned short usDevice, unsigned short usFunction, unsigned short usPciOffset, unsigned char *pbyData, unsigned short usSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gabc431428ede90a107db480999568fcdb:
+
+typedef ISysPci_C ISysPci
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___sys_pci_itf_1ga35199310ecb9821d041eb849e59190f4:
+
+void syspcigetcardinfo (syspcigetcardinfo_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1gadc51899130bbf0325a8496abb6ee3856:
+
+void syspcigetconfigentry (syspcigetconfigentry_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga91922372903a846c6ac440a09b5b3660:
+
+void syspcireadvalue (syspcireadvalue_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga23050543550a249029f73e12bba89576:
+
+void syspcisetconfigentry (syspcisetconfigentry_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga5a89d8898154a71120c9f20cdc440317:
+
+void syspciwritevalue (syspciwritevalue_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga6f117919f89a847aa224db50a80a25d8:
+
+RTS_RESULT SysPciOSInit (INIT_STRUCT *pInit)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+EXTERN LIB SECTION END
+
+.. _group___sys_pci_itf_1ga4f1cadc5ba6a706e09fa19e005b60039:
+
+RTS_RESULT SysPciOSHookFunction (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___sys_pci_itf_1ga701df9befb17a2f027996fec4456e45a:
+
+RTS_RESULT SysPciGetCardInfo (unsigned short usVendorId, unsigned short usDeviceId, unsigned short usCardIndex, PCI_INFO *pPciInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get PCI info of a specified card
+
+**Parameters**
+
++---------+-------------+-------------------+
+| [in]    | usVendorId  | PCI vendor number |
++---------+-------------+-------------------+
+| [in]    | usDeviceId  | PCI device Id     |
++---------+-------------+-------------------+
+| [in]    | usCardIndex | Card index number |
++---------+-------------+-------------------+
+| [out]   | pPciInfo    | PCI entry         |
++---------+-------------+-------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_pci_itf_1ga9fb67b125d5734a51d082f31433d1215:
+
+RTS_RESULT SysPciGetConfigEntry (unsigned short usBus, unsigned short usDevice, unsigned short usFunction, PCI_INFO *pPciInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get one PCI configuration entry
+
+**Parameters**
+
++---------+------------+-----------------------------+
+| [in]    | usBus      | PCI bus number (index)      |
++---------+------------+-----------------------------+
+| [in]    | usDevice   | PCI device number (index)   |
++---------+------------+-----------------------------+
+| [in]    | usFunction | PCI function number (index) |
++---------+------------+-----------------------------+
+| [out]   | pPciInfo   | PCI entry                   |
++---------+------------+-----------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_pci_itf_1gace0e47c9fa9d4b07b04cad155b687629:
+
+RTS_RESULT SysPciSetConfigEntry (unsigned short usBus, unsigned short usDevice, unsigned short usFunction, PCI_INFO *pPciInfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Set one PCI configuration entry
+
+**Parameters**
+
++---------+------------+-----------------------------+
+| [in]    | usBus      | PCI bus number (index)      |
++---------+------------+-----------------------------+
+| [in]    | usDevice   | PCI device number (index)   |
++---------+------------+-----------------------------+
+| [in]    | usFunction | PCI function number (index) |
++---------+------------+-----------------------------+
+| [in]    | pPciInfo   | PCI entry                   |
++---------+------------+-----------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_pci_itf_1gada82541621c4fab66735cdb00e3720f3:
+
+RTS_RESULT SysPciWriteValue (unsigned short usBus, unsigned short usDevice, unsigned short usFunction, unsigned short usPciOffset, unsigned char *pbyData, unsigned short usSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Write one PCI configuration value
+
+**Parameters**
+
++---------+-------------+---------------------------------------+
+| [in]    | usBus       | PCI bus number (index)                |
++---------+-------------+---------------------------------------+
+| [in]    | usDevice    | PCI device number (index)             |
++---------+-------------+---------------------------------------+
+| [in]    | usFunction  | PCI function number (index)           |
++---------+-------------+---------------------------------------+
+| [in]    | usPciOffset | Offset in the PCI configuration entry |
++---------+-------------+---------------------------------------+
+| [in]    | pbyData     | Pointer to data to write to PCI       |
++---------+-------------+---------------------------------------+
+| [in]    | usSize      | Size in byte of data to write         |
++---------+-------------+---------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___sys_pci_itf_1gae96b9d709b4d611fd56f2214e8de797f:
+
+RTS_RESULT SysPciReadValue (unsigned short usBus, unsigned short usDevice, unsigned short usFunction, unsigned short usPciOffset, unsigned char *pbyData, unsigned short usSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Read one PCI configuration value
+
+**Parameters**
+
++---------+-------------+---------------------------------------+
+| [in]    | usBus       | PCI bus number (index)                |
++---------+-------------+---------------------------------------+
+| [in]    | usDevice    | PCI device number (index)             |
++---------+-------------+---------------------------------------+
+| [in]    | usFunction  | PCI function number (index)           |
++---------+-------------+---------------------------------------+
+| [in]    | usPciOffset | Offset in the PCI configuration entry |
++---------+-------------+---------------------------------------+
+| [out]   | pbyData     | Pointer to data to read to PCI        |
++---------+-------------+---------------------------------------+
+| [in]    | usSize      | Size in byte of data to read          |
++---------+-------------+---------------------------------------+
+
+**Returns:**
+
+error code
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

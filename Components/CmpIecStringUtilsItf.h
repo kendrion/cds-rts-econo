@@ -1,4 +1,15 @@
- 
+ /**
+ * <interfacename>CmpIecStringUtils</interfacename>
+ * <description>
+ *	Interface of external string utility implementation for the CODESYS compiler.
+ * </description>
+ *
+ * <copyright>
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * </copyright>
+ */
+
+
 	
 	
 #ifndef _CMPIECSTRINGUTILSITF_H_
@@ -26,9 +37,9 @@ extern "C" {
  */
 typedef struct tagstusprintf_struct
 {
-	RTS_IEC_STRING *pstFormat;			/* VAR_INPUT */	/* the formatstring */
+	RTS_IEC_STRING *pstFormat;			/* VAR_INPUT */	/* the format string */
 	RTS_IEC_DWORD *pVarAdr;				/* VAR_INPUT */	/* the address of the variable that shall be printed */
-	RTS_IEC_DWORD udiVarType;			/* VAR_INPUT, Enum: TYPE_CLASS */
+	RTS_IEC_DWORD udiVarType;			/* VAR_INPUT, Enumeration: TYPE_CLASS */
 	RTS_IEC_BYTE *pBuffer;				/* VAR_INPUT */	/* the buffer where the text is to be printed */
 	RTS_IEC_UDINT dwBufferSize;			/* VAR_INPUT */	/* the size of the buffer in bytes */
 	RTS_IEC_INT StuSprintf;				/* VAR_OUTPUT */	
@@ -86,9 +97,9 @@ typedef void (CDECL CDECL_EXT* PFSTUSPRINTF_IEC) (stusprintf_struct *p);
  */
 typedef struct tagstusprintfw_struct
 {
-	RTS_IEC_WSTRING *wstFormat;			/* VAR_INPUT */	/* the formatstring */
+	RTS_IEC_WSTRING *wstFormat;			/* VAR_INPUT */	/* the format string */
 	RTS_IEC_DWORD *pVarAdr;				/* VAR_INPUT */	/* the address of the variable that shall be printed */
-	RTS_IEC_DWORD udiVarType;			/* VAR_INPUT, Enum: TYPE_CLASS */
+	RTS_IEC_DWORD udiVarType;			/* VAR_INPUT, Enumeration: TYPE_CLASS */
 	RTS_IEC_BYTE *pBuffer;				/* VAR_INPUT */	/* the buffer where the text is to be printed */
 	RTS_IEC_UDINT dwBufferSize;			/* VAR_INPUT */	/* the size of the buffer in bytes, not in wstring characters! */
 	RTS_IEC_INT StuSprintfW;			/* VAR_OUTPUT */	

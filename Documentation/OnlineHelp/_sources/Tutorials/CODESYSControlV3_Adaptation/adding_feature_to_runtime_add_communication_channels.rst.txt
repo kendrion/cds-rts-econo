@@ -1,0 +1,167 @@
+.. _adding_feature_to_runtime_add_communication_channels:
+
+Add Communication Channels
+--------------------------
+
+Serial
+~~~~~~
+
+The serial block driver is the default one, which we support with our
+compact runtime. So you might already use this as a communication
+method.
+
+UDP
+~~~
+
+Additional Components:
+
+-  CmpBlkDrvUdp
+
+Dependencies:
+
+-  SysSocket
+
+The SysSocket interface is based on the BSD socket interface and awaits
+a similar behaviour. The API is very big. That’s why it isn’t described
+here in detail. Instead here are the most essential functions, which are
+used from our Communication Interface (CmpBlkDrvUdp):
+
+-  SysSockSelect
+
+-  SysSockGetOption
+
+-  SysSockCreate
+
+-  SysSockClose
+
+-  SysSockSetOption
+
+-  SysSockBind
+
+-  SysSockGetHostName
+
+-  SysSockGetHostByName
+
+-  SysSockNtohl
+
+-  SysSockHtonl
+
+-  SysSockNtohs
+
+-  SysSockHtons
+
+-  SysSockSendTo
+
+-  SysSockRecvFrom
+
+-  SysSockIoctl
+
+-  SysSockInetNtoa
+
+-  SysSockInetAddr
+
+-  SysSockGetOSHandle
+
+CAN
+~~~
+
+Additional Components:
+
+-  CmpBlkDrvCanClient
+
+-  CmpBlkDrvCanServer
+
+Dependencies:
+
+-  CmpCAACanL2
+
+-  CmpCAAMemBlockMan
+
+-  CmpCAASdoClient
+
+-  CmpCAASdoServer
+
+-  CmpCAATick
+
+-  CmpCAATickUtil
+
+Required:
+
+-  CAN-Mini-Driver
+
+For a basic CAN-Mini-Driver, you just need to implement the following
+functionality:
+
+-  | Initialization:
+   | Call CL2_CmdRegister() with a list of all CAN Layer 2 Interface
+     functions.
+
+-  | CMD_Init():
+   | Setup your chip in this function.
+
+-  | CMD_Send():
+   | Send Data to the bus. The control about the buffer is given back to
+     CL2 with CL2_MsgSendAckn() within your send interrupt.
+
+-  | CMD_Receive():
+   | Read a message from the bus and write it into the passed message
+     handle. The regular use of this function will be asynchronous, when
+     you call it by your own within the **receive interrupt**:
+   | CL2_MsgAlloc()
+   | CMD_Receive()
+   | CL2_MsgPutRQueue()
+
+USB
+~~~
+
+Additional Components:
+
+-  CmpBlkDrvUsb
+
+Required:
+
+-  USB-Mini-Driver
+
+The USB-Mini-Driver needs to provide the following API:
+
+-  | OpenDevice()
+   | Search for a specific device, with VendorID and DeviceID and open
+     it.
+
+-  | Read()
+   | Read in Bulk mode from an opened USB device.
+
+-  | Write()
+   | Write in Bulk mode to an opened USB device.
+
+-  | CloseDevice()
+   | Close the connection to an opened USB device.
+
+SHM
+~~~
+
+Additional Components:
+
+-  CmpBlkDrvShm
+
+Dependencies:
+
+-  SysEvent
+
+-  SysSemProcess
+
+-  SysShm
+
+This block driver can be used, if you have two different processes
+running on the same processor, which should communicate with each other.
+Note, that you need some support for global, named Events, Semaphores
+and Shared Memory segments. Those mechanisms might be already provided
+from your operating system. If not, you have provide it by your own.
+
+For example:
+
+If an Event, called “myevent” is created two times from two different
+processes, the first one will create the event in the context of the
+operating system and the second one will just retrieve the already
+created event.
+

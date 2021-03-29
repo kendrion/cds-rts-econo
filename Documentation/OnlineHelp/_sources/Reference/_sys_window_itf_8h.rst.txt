@@ -1,0 +1,808 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __sys_window_itf_8h:
+
+=============================
+SysWindowItf.h File Reference
+=============================
+
+| #include ":ref:`CmpStd.h`"
+| #include ":ref:`SysGraphicBase.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`SysWindowCreate_Struct <struct_sys_window_create___struct>`
+
+- struct :ref:`EVTPARAM_SysWindowOnInvokeInWindowTask <struct_e_v_t_p_a_r_a_m___sys_window_on_invoke_in_window_task>`
+
+- struct :ref:`EVTPARAM_SysWindowCreate <struct_e_v_t_p_a_r_a_m___sys_window_create>`
+
+- struct :ref:`EVTPARAM_SysWindowAfterCreate <struct_e_v_t_p_a_r_a_m___sys_window_after_create>`
+
+- struct :ref:`ISysWindow_C <struct_i_sys_window___c>`
+
+Macros
+------
+
+- #define :ref:`ERR_TOOMANYWINDOWS <group___sys_window_itf_1ga9fb4a9594dc14d6989b2571f8f6a13c8>` 0x0001
+
+- #define :ref:`ERR_TOOMANYCALLBACKS <group___sys_window_itf_1ga66b928101b307ac5b689a7be95b9d9fb>` 0x0002
+
+- #define :ref:`ERR_WINDOWNOTCREATED <group___sys_window_itf_1ga794f02e506475185425006d1bc2bdde6>` 0x0003
+
+- #define :ref:`ERR_WINDOWNOTREGISTERED <group___sys_window_itf_1ga7e89d20a250231c5cbb6ac97dee1b6cf>` 0x0004
+
+- #define :ref:`WINDOW_TYPE_TITLE_FRAME <group___sys_window_itf_1gae05f691f72be4aff8c288e70c7841883>` 0x0000
+
+- #define :ref:`WINDOW_TYPE_FRAME <group___sys_window_itf_1ga065a52d1e11985b06d52395b307dbef8>` 0x0001
+
+- #define :ref:`WINDOW_TYPE_NONE <group___sys_window_itf_1ga23c3de1f7eb30f839c0db4f6e1a8c136>` 0x0002
+
+- #define :ref:`WINDOW_TYPE_TITLE_FRAME_CLIENT_SIZE <group___sys_window_itf_1ga00a2c5a9d3df473c0394fdf38dc7726f>` 0x0003
+
+- #define :ref:`WINDOW_TYPE_FRAME_CLIENT_SIZE <group___sys_window_itf_1ga84d55e9b618d5f80b322ec104978ccb8>` 0x0004
+
+- #define :ref:`SYSWINCREATE_FLAGS_NONE <group___sys_window_itf___window_creation_flags_1gac336baa5eba64185c4f26d2918fd6de4>` 0x00000000
+
+- #define :ref:`SYSWINCREATE_FLAGS_PARENTISOSHANDLE <group___sys_window_itf___window_creation_flags_1ga66cda37954778f7e656a4af68f8a48b4>` 0x00000001
+
+- #define :ref:`SYSWINCREATE_FLAGS_TEXT_ALIGN_LEFT <group___sys_window_itf___window_creation_flags_1ga4d799070ef4c449a712733fcf7222046>` 0x00000002
+
+- #define :ref:`SYSWINCREATE_FLAGS_TEXT_ALIGN_HCENTER <group___sys_window_itf___window_creation_flags_1ga55425e21e4fa2846908b1404f3aef49d>` 0x00000004
+
+- #define :ref:`SYSWINCREATE_FLAGS_TEXT_ALIGN_RIGHT <group___sys_window_itf___window_creation_flags_1gadcf5f22aacd04e680e229cfb0d086b12>` 0x00000008
+
+- #define :ref:`SYSWINCREATE_FLAGS_TOUCHHANDLING_ACTIVE <group___sys_window_itf___window_creation_flags_1gacf9d5a65548f407cc4b0ccc71d5ff4ae>` 0x00000010
+
+- #define :ref:`SYSWINCREATE_FLAGS_CREATE_HIDDEN <group___sys_window_itf___window_creation_flags_1gacd36185d16c7ad7471180d89445e5cc4>` 0x00000020
+
+- #define :ref:`SYSWINCREATE_FLAGS_TRANSPARENT_BACKGROUND <group___sys_window_itf___window_creation_flags_1gad0a62348a46ac9553e7bb002b36c6691>` 0x00000080
+
+- #define :ref:`EVTPARAMID_SysWindowOnInvokeInWindowTask <group___sys_window_itf___eventparameter_1ga34714abf9d96a6b048561f6a92603541>` 0x0001
+
+- #define :ref:`EVTVERSION_SysWindowOnInvokeInWindowTask <group___sys_window_itf___eventparameter_1ga26cfa64fbe6657a59aa96fecdec91f26>` 0x0001
+
+- #define :ref:`EVT_SysWindow_OnInvokeInWindowTask <group___sys_window_itf___events_1ga87b697da98ee874d34d42da59388ced5>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`EVTPARAMID_SysWindowCreateInfo <group___sys_window_itf___eventparameter_1ga0608adf434345996ab3e0d40b4ca0081>` 0x0002
+
+- #define :ref:`EVTVERSION_SysWindowCreateInfo <group___sys_window_itf___eventparameter_1gad4fdd6301bf6b7af5dd4aab907bcb80c>` 0x0001
+
+- #define :ref:`EVTPARAMID_SysWindowAfterCreateInfo <group___sys_window_itf___eventparameter_1ga09e2e43db101a7e44fc882057cf6a502>` 0x0003
+
+- #define :ref:`EVTVERSION_SysWindowAfterCreateInfo <group___sys_window_itf___eventparameter_1gaa059e586809fb43ee213ef9c0776b24f>` 0x0001
+
+- #define :ref:`EVT_SysWindow_BeforeCreate <group___sys_window_itf___events_1ga55b7c72b7254cee12c242f20b94c0c39>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+
+- #define :ref:`EVT_SysWindow_AfterCreate <group___sys_window_itf___events_1gab58aa9f0d90f813c2ad409d539b37e35>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 3)
+
+- #define :ref:`SYSWIN_FLAGS_NONE <group___sys_window_itf___window_flags_1gaddbc472c92767c3ae4a0aff47f901c46>` 0x00000000
+
+- #define :ref:`SYSWIN_FLAGS_PASSWORD <group___sys_window_itf___window_flags_1ga411ab187b490f34b928e7a8b4d7ceb59>` 0x00000001
+
+- #define :ref:`SYSWIN_FLAGS_WSTRING <group___sys_window_itf___window_flags_1ga24f00fc7d905350cbfc5ea40de59943f>` 0x00000020
+
+- #define :ref:`SYSWINDOW_INT_WINDOWS_SINGLETASKING <group___sys_window_itf___settings_1ga3c5a924d4444b80da080832bc818716a>` "Windows.SingleTaskingWindows"
+
+- #define :ref:`SYSWINDOW_INT_WINDOWS_SINGLETASKING_DEFAULT <group___sys_window_itf___settings_1gaee6f488c4543228b2492d9a371325563>` 0
+
+- #define :ref:`SYSWINDOW_INT_WINDOWS_ALLOWCLOSING_WITH_ALT_F4 <group___sys_window_itf___settings_1gaf8daa8991e86c95faf2f38147cb3e976>` "Windows.CloseOnAltF4"
+
+- #define :ref:`SYSWINDOW_INT_WINDOWS_ALLOWCLOSING_WITH_ALT_F4_DEFAULT <group___sys_window_itf___settings_1ga53945aefe51cc29251981d2284c9f831>` 1
+
+- #define :ref:`SYSWINDOW_INT_WINDOWS_ALLOWCLOSING_BY_WM_CLOSE <group___sys_window_itf___settings_1ga2e3511090548e35abe196600632b8b8e>` "Windows.CloseOnWM_CLOSE"
+
+- #define :ref:`SYSWINDOW_INT_WINDOWS_ALLOWCLOSING_BY_WM_CLOSE_DEFAULT <group___sys_window_itf___settings_1ga7f8a3cfc86a6b4b42ceedeb911d569ce>` 1
+
+- #define :ref:`SYSWINDOW_INT_WINDOWS_BRING_WINDOW_TO_FRONT <group___sys_window_itf___settings_1ga4b30c507ee1903871e2b93376b5e833d>` "Windows.BringWindowToFront"
+
+- #define :ref:`SYSWINDOW_INT_WINDOWS_BRING_WINDOW_TO_FRONT_DEFAULT <group___sys_window_itf___settings_1ga8b98ce49b5e564029f406e4579df261c>` -1
+
+- #define :ref:`SYSWINDOW_INT_WINDOWS_BRING_WINDOW_TO_FRONT_CYCLE_TIME <group___sys_window_itf___settings_1ga1883420a42bbe57b70029752b55a0aea>` "Windows.BringWindowToFrontCycleTime"
+
+- #define :ref:`SYSWINDOW_INT_WINDOWS_BRING_WINDOW_TO_FRONT_CYCLE_TIME_DEFAULT <group___sys_window_itf___settings_1ga4ad729a18b93d2b0029cf0418c71f246>` 1000
+
+- #define :ref:`SYSWINDOW_INT_WINCE_SETCARETBLINKTIME <group___sys_window_itf___settings_1ga016bdc514855e12777704414846791bd>` "WinCE.SetCaretBlinkTime"
+
+- #define :ref:`SYSWINDOW_INT_WINCE_SETCARETBLINKTIME_DEFAULT <group___sys_window_itf___settings_1gaf340a460b472679e85fbade13b806ae3>` 0
+
+- #define :ref:`SYSWINDOW_INT_LINUX_KEEPMAINWINDOWOPEN <group___sys_window_itf___settings_1gac53681ecfa8c814d332522995e80b0b6>` "Linux.KeepMainWindowOpen"
+
+- #define :ref:`SYSWINDOW_INT_LINUX_KEEPMAINWINDOWOPEN_DEFAULT <group___sys_window_itf___settings_1gac9fd0aea606c49ddb9747ef0bee22e1a>` 0
+
+- #define :ref:`SYSWINDOW_INT_LINUX_KEEPMAINWINDOWOPEN_SHOW_IMMEDIATELY <group___sys_window_itf___settings_1ga4d63e5d40517ebe946f232f44e1883cc>` "Linux.KeepMainWindowOpenShowImmediately"
+
+- #define :ref:`SYSWINDOW_INT_LINUX_KEEPMAINWINDOWOPEN_SHOW_IMMEDIATELY_DEFAULT <group___sys_window_itf___settings_1gaecb1c17fe3e233a5d3fedca982789734>` 1
+
+- #define :ref:`SYSWINDOW_NOTIFICATION_REFRESH_REQUESTED <group___sys_window_itf_1gafcd7e29aeb730c803ee83a2cd5ef2d9e>` 1
+
+- #define :ref:`USE_SysWindowSupportsSeveralTasks <group___sys_window_itf_1ga5bc00a3ff79e044f78d6f9f368caad24>` :ref:`PFSYSWINDOWSUPPORTSSEVERALTASKS <group___sys_window_itf_1gafdb4eb519bc90e09dd0bd791dafa5fc7>` pfSysWindowSupportsSeveralTasks;
+
+- #define :ref:`EXT_SysWindowSupportsSeveralTasks <group___sys_window_itf_1gaa8be22f36b094b47d35f5b7d5d29241c>` extern :ref:`PFSYSWINDOWSUPPORTSSEVERALTASKS <group___sys_window_itf_1gafdb4eb519bc90e09dd0bd791dafa5fc7>` pfSysWindowSupportsSeveralTasks;
+
+- #define :ref:`GET_SysWindowSupportsSeveralTasks <group___sys_window_itf_1ga18ae7c9126025a14090819b9d07bf579>` s_pfCMGetAPI2( "SysWindowSupportsSeveralTasks", (RTS_VOID_FCTPTR *)&pfSysWindowSupportsSeveralTasks, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowSupportsSeveralTasks <group___sys_window_itf_1ga4616a7baec3f3650e1d65184b152c28b>` pfSysWindowSupportsSeveralTasks
+
+- #define :ref:`CHK_SysWindowSupportsSeveralTasks <group___sys_window_itf_1ga369b8fa0bf52ed094ec0d53a5ccbb200>` (pfSysWindowSupportsSeveralTasks != NULL)
+
+- #define :ref:`EXP_SysWindowSupportsSeveralTasks <group___sys_window_itf_1ga8498e098e861df4d80dea50de358f3f5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowSupportsSeveralTasks", (RTS_UINTPTR) :ref:`SysWindowSupportsSeveralTasks <group___sys_window_itf_1gaa4f51bfc1c630c9dd035c8068b1762a6>` , 0, 0)
+
+- #define :ref:`USE_SysWindowInvokeInWindowTask <group___sys_window_itf_1ga750a7a4cb5630f0bf6dbcb57c34f28ca>` :ref:`PFSYSWINDOWINVOKEINWINDOWTASK <group___sys_window_itf_1ga5f075d66be7f779ef4ced571c95a29c3>` pfSysWindowInvokeInWindowTask;
+
+- #define :ref:`EXT_SysWindowInvokeInWindowTask <group___sys_window_itf_1gab7e303b8f1611cee72ee628e4f819b12>` extern :ref:`PFSYSWINDOWINVOKEINWINDOWTASK <group___sys_window_itf_1ga5f075d66be7f779ef4ced571c95a29c3>` pfSysWindowInvokeInWindowTask;
+
+- #define :ref:`GET_SysWindowInvokeInWindowTask <group___sys_window_itf_1ga864bc1b01f005a8b05d2a39c500723c1>` s_pfCMGetAPI2( "SysWindowInvokeInWindowTask", (RTS_VOID_FCTPTR *)&pfSysWindowInvokeInWindowTask, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowInvokeInWindowTask <group___sys_window_itf_1ga5a49f7b3a434b35e186ac5abb0864dc3>` pfSysWindowInvokeInWindowTask
+
+- #define :ref:`CHK_SysWindowInvokeInWindowTask <group___sys_window_itf_1ga9edca93912d6c77e1a4df27fb074d594>` (pfSysWindowInvokeInWindowTask != NULL)
+
+- #define :ref:`EXP_SysWindowInvokeInWindowTask <group___sys_window_itf_1ga424ad9cf481700e7343f5b507d2f048e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowInvokeInWindowTask", (RTS_UINTPTR) :ref:`SysWindowInvokeInWindowTask <group___sys_window_itf_1ga5297e60d129b4649370ace53e8abfc04>` , 0, 0)
+
+- #define :ref:`SYSWINDOW_CLASS_TARGETVISU_WINDOW <group___sys_window_itf_1gaca76736df3c8d55525f04cd1bfb37ee6>` "TargetVisu_Window"
+
+- #define :ref:`SYSWINDOW_CLASS_TARGETVISU_EDITCONTROL <group___sys_window_itf_1ga89b87eef7a7a44b58178b0592b35469f>` "TargetVisu_EditControl"
+
+- #define :ref:`WCB_RETURN_ABORT <group___sys_window_itf_1gaf2a9807f2730f6c4be645358174571d3>` 0x0001		/* if a callback returns this, the window will be killed and the message loop leaved */
+
+- #define :ref:`USE_SysWindowCreate <group___sys_window_itf_1ga6d61a7491922e04498217ba33e947294>` :ref:`PFSYSWINDOWCREATE <group___sys_window_itf_1ga6e6911cb886d3ca16f804a315d5ffd92>` pfSysWindowCreate;
+
+- #define :ref:`EXT_SysWindowCreate <group___sys_window_itf_1gad983d9937ceaba903e5790ea937c3cd3>` extern :ref:`PFSYSWINDOWCREATE <group___sys_window_itf_1ga6e6911cb886d3ca16f804a315d5ffd92>` pfSysWindowCreate;
+
+- #define :ref:`GET_SysWindowCreate <group___sys_window_itf_1ga2fac89af5ca611f52a53917d83110f59>` s_pfCMGetAPI2( "SysWindowCreate", (RTS_VOID_FCTPTR *)&pfSysWindowCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowCreate <group___sys_window_itf_1ga70b7907d0966be1d0e297a57539b83db>` pfSysWindowCreate
+
+- #define :ref:`CHK_SysWindowCreate <group___sys_window_itf_1ga989a4d01c2a3186953c44c4953e807c8>` (pfSysWindowCreate != NULL)
+
+- #define :ref:`EXP_SysWindowCreate <group___sys_window_itf_1gaa4e4e50c3fdb491d78a61709218b62b0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowCreate", (RTS_UINTPTR) :ref:`SysWindowCreate <group___sys_window_itf_1ga88f45561dfa65e04b47c00ff1f35ac84>` , 0, 0)
+
+- #define :ref:`USE_SysWindowDestroy <group___sys_window_itf_1gafb4caa1da432e190d65775247ea870c8>` :ref:`PFSYSWINDOWDESTROY <group___sys_window_itf_1ga3d915a9d227b87262e97bc2ebcc6eefe>` pfSysWindowDestroy;
+
+- #define :ref:`EXT_SysWindowDestroy <group___sys_window_itf_1ga4323e586f3fac1d95c412e7a96ae8573>` extern :ref:`PFSYSWINDOWDESTROY <group___sys_window_itf_1ga3d915a9d227b87262e97bc2ebcc6eefe>` pfSysWindowDestroy;
+
+- #define :ref:`GET_SysWindowDestroy <group___sys_window_itf_1ga971433702363e152078646676be494ba>` s_pfCMGetAPI2( "SysWindowDestroy", (RTS_VOID_FCTPTR *)&pfSysWindowDestroy, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowDestroy <group___sys_window_itf_1gabb4a72f71c0cb3d3423b0a88c21052b9>` pfSysWindowDestroy
+
+- #define :ref:`CHK_SysWindowDestroy <group___sys_window_itf_1gae2da2fb2e7b00b90c9db6de8aa222f07>` (pfSysWindowDestroy != NULL)
+
+- #define :ref:`EXP_SysWindowDestroy <group___sys_window_itf_1ga9c5c54813a37399b552efd1d3d4c26d0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowDestroy", (RTS_UINTPTR) :ref:`SysWindowDestroy <group___sys_window_itf_1gae27eeb9853600629d88b3be4ddda91fb>` , 0, 0)
+
+- #define :ref:`USE_SysWindowSetUserData <group___sys_window_itf_1gacfd55177e68628ceb7baeb4a570605b4>` :ref:`PFSYSWINDOWSETUSERDATA <group___sys_window_itf_1gab2f7ea352001ae8f51c9608e7e9a770e>` pfSysWindowSetUserData;
+
+- #define :ref:`EXT_SysWindowSetUserData <group___sys_window_itf_1gac62203300030da20aa01e0db69aa95ae>` extern :ref:`PFSYSWINDOWSETUSERDATA <group___sys_window_itf_1gab2f7ea352001ae8f51c9608e7e9a770e>` pfSysWindowSetUserData;
+
+- #define :ref:`GET_SysWindowSetUserData <group___sys_window_itf_1ga90b6fc4a64f544457dfe8de4d26aaadf>` s_pfCMGetAPI2( "SysWindowSetUserData", (RTS_VOID_FCTPTR *)&pfSysWindowSetUserData, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowSetUserData <group___sys_window_itf_1ga021017b84bcad4e00e0cf4d49ed8ea9a>` pfSysWindowSetUserData
+
+- #define :ref:`CHK_SysWindowSetUserData <group___sys_window_itf_1gaedddc5eb570e3c6fd32d419c9bcbee2d>` (pfSysWindowSetUserData != NULL)
+
+- #define :ref:`EXP_SysWindowSetUserData <group___sys_window_itf_1ga331f6e9d33737c32085c868685746ebd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowSetUserData", (RTS_UINTPTR) :ref:`SysWindowSetUserData <group___sys_window_itf_1gaea11dc12815ff6c3b8ba4cd7815b581e>` , 0, 0)
+
+- #define :ref:`USE_SysWindowShow <group___sys_window_itf_1ga639ed76a0a46a6f6a84ced85bcd64441>` :ref:`PFSYSWINDOWSHOW <group___sys_window_itf_1ga233f9597006f69a970191fbdb5d301ec>` pfSysWindowShow;
+
+- #define :ref:`EXT_SysWindowShow <group___sys_window_itf_1ga0bb4c7f3b2140d3e7b43f3e85407350a>` extern :ref:`PFSYSWINDOWSHOW <group___sys_window_itf_1ga233f9597006f69a970191fbdb5d301ec>` pfSysWindowShow;
+
+- #define :ref:`GET_SysWindowShow <group___sys_window_itf_1ga3b72e83ef7faf57caaeca49837d45f83>` s_pfCMGetAPI2( "SysWindowShow", (RTS_VOID_FCTPTR *)&pfSysWindowShow, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowShow <group___sys_window_itf_1ga9c0d188faf49d79254a7b13a9fa4db57>` pfSysWindowShow
+
+- #define :ref:`CHK_SysWindowShow <group___sys_window_itf_1ga71dfdc5175b5ad0612faa952c17ce608>` (pfSysWindowShow != NULL)
+
+- #define :ref:`EXP_SysWindowShow <group___sys_window_itf_1ga0215ef22aee7e3b75b6dbf98d2ac9bb6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowShow", (RTS_UINTPTR) :ref:`SysWindowShow <group___sys_window_itf_1ga2e72f7503948a09e60d7c1294ffa9b71>` , 0, 0)
+
+- #define :ref:`USE_SysWindowGetUserData <group___sys_window_itf_1gaac783add35735c6d643e500cec16cf4e>` :ref:`PFSYSWINDOWGETUSERDATA <group___sys_window_itf_1ga67aad66e47fb3e3c14adea606f516a61>` pfSysWindowGetUserData;
+
+- #define :ref:`EXT_SysWindowGetUserData <group___sys_window_itf_1gae303bb7cae346e3d27416ec5edc10955>` extern :ref:`PFSYSWINDOWGETUSERDATA <group___sys_window_itf_1ga67aad66e47fb3e3c14adea606f516a61>` pfSysWindowGetUserData;
+
+- #define :ref:`GET_SysWindowGetUserData <group___sys_window_itf_1ga7c044e26dabf94727470ba996ec39b70>` s_pfCMGetAPI2( "SysWindowGetUserData", (RTS_VOID_FCTPTR *)&pfSysWindowGetUserData, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowGetUserData <group___sys_window_itf_1gae54323f609b5398d7ccf06a833cea9ec>` pfSysWindowGetUserData
+
+- #define :ref:`CHK_SysWindowGetUserData <group___sys_window_itf_1ga1e20642a7aaff9ef08d3925839424a31>` (pfSysWindowGetUserData != NULL)
+
+- #define :ref:`EXP_SysWindowGetUserData <group___sys_window_itf_1gaeeddf7f7d16189633e341f4fc3807615>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowGetUserData", (RTS_UINTPTR) :ref:`SysWindowGetUserData <group___sys_window_itf_1ga184db829788face1c39842fcad3d1f5d>` , 0, 0)
+
+- #define :ref:`USE_SysWindowSetCallback <group___sys_window_itf_1gae86e5f895117b992230a8da0a38d6280>` :ref:`PFSYSWINDOWSETCALLBACK <group___sys_window_itf_1ga6756e7ead7c9713ba79887b90842830b>` pfSysWindowSetCallback;
+
+- #define :ref:`EXT_SysWindowSetCallback <group___sys_window_itf_1gafd1b9a280fd2a96373ae4337b0eb0513>` extern :ref:`PFSYSWINDOWSETCALLBACK <group___sys_window_itf_1ga6756e7ead7c9713ba79887b90842830b>` pfSysWindowSetCallback;
+
+- #define :ref:`GET_SysWindowSetCallback <group___sys_window_itf_1ga0e6b02fd89316353738683d418508731>` s_pfCMGetAPI2( "SysWindowSetCallback", (RTS_VOID_FCTPTR *)&pfSysWindowSetCallback, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowSetCallback <group___sys_window_itf_1ga9445a372acb82473775d28cbd6e949c7>` pfSysWindowSetCallback
+
+- #define :ref:`CHK_SysWindowSetCallback <group___sys_window_itf_1ga1dc9bd0673931fa090d3090af9ebf0ee>` (pfSysWindowSetCallback != NULL)
+
+- #define :ref:`EXP_SysWindowSetCallback <group___sys_window_itf_1gaeea6f3cfb520d120e9a20e72e394962b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowSetCallback", (RTS_UINTPTR) :ref:`SysWindowSetCallback <group___sys_window_itf_1ga78c038d4e9c3361915f6b88f5fe36413>` , 0, 0)
+
+- #define :ref:`USE_SysWindowMessageLoop <group___sys_window_itf_1ga70ff9be7a3eb27127d8911a59a997330>` :ref:`PFSYSWINDOWMESSAGELOOP <group___sys_window_itf_1ga61ab8ff69de64f912372ffb3426bb7ed>` pfSysWindowMessageLoop;
+
+- #define :ref:`EXT_SysWindowMessageLoop <group___sys_window_itf_1ga919087f2f287b64ac5c774215d6f9716>` extern :ref:`PFSYSWINDOWMESSAGELOOP <group___sys_window_itf_1ga61ab8ff69de64f912372ffb3426bb7ed>` pfSysWindowMessageLoop;
+
+- #define :ref:`GET_SysWindowMessageLoop <group___sys_window_itf_1gae9b8591b29e0f20ee37ad496a7121875>` s_pfCMGetAPI2( "SysWindowMessageLoop", (RTS_VOID_FCTPTR *)&pfSysWindowMessageLoop, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowMessageLoop <group___sys_window_itf_1gaf82f00cc848f1644b07dc8b7fb436278>` pfSysWindowMessageLoop
+
+- #define :ref:`CHK_SysWindowMessageLoop <group___sys_window_itf_1ga15d73bf446eee94548f834eb046b927f>` (pfSysWindowMessageLoop != NULL)
+
+- #define :ref:`EXP_SysWindowMessageLoop <group___sys_window_itf_1gaef08a569d08200439f52ea9648e8accc>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowMessageLoop", (RTS_UINTPTR) :ref:`SysWindowMessageLoop <group___sys_window_itf_1gaf80ada640c7ae58af28a9499973310a8>` , 0, 0)
+
+- #define :ref:`USE_SysWindowRegisterCallback <group___sys_window_itf_1ga5a2a356cfcd4a72543140da2841b8f8d>` :ref:`PFSYSWINDOWREGISTERCALLBACK <group___sys_window_itf_1gab52921553c1036274ddc9b1fc254e075>` pfSysWindowRegisterCallback;
+
+- #define :ref:`EXT_SysWindowRegisterCallback <group___sys_window_itf_1gad42afc0add64b0e74caf4935b960d86c>` extern :ref:`PFSYSWINDOWREGISTERCALLBACK <group___sys_window_itf_1gab52921553c1036274ddc9b1fc254e075>` pfSysWindowRegisterCallback;
+
+- #define :ref:`GET_SysWindowRegisterCallback <group___sys_window_itf_1gab56f2739d2e2909a97b73037d8db15a5>` s_pfCMGetAPI2( "SysWindowRegisterCallback", (RTS_VOID_FCTPTR *)&pfSysWindowRegisterCallback, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowRegisterCallback <group___sys_window_itf_1ga687a652f9da9c503c1c8718e836aff86>` pfSysWindowRegisterCallback
+
+- #define :ref:`CHK_SysWindowRegisterCallback <group___sys_window_itf_1ga744017a7dd3649767cf803ce6a7b231f>` (pfSysWindowRegisterCallback != NULL)
+
+- #define :ref:`EXP_SysWindowRegisterCallback <group___sys_window_itf_1ga5f88490b393163272710ad27355b2a51>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowRegisterCallback", (RTS_UINTPTR) :ref:`SysWindowRegisterCallback <group___sys_window_itf_1ga6836ccc60c62058bd7218ae164d566fb>` , 0, 0)
+
+- #define :ref:`USE_SysWindowUnregisterCallback <group___sys_window_itf_1ga388e48c283f16c58ccad64625e6431ff>` :ref:`PFSYSWINDOWUNREGISTERCALLBACK <group___sys_window_itf_1ga509461abe7c5ac0bdd0798f246fa0fac>` pfSysWindowUnregisterCallback;
+
+- #define :ref:`EXT_SysWindowUnregisterCallback <group___sys_window_itf_1ga9b533527497772340cec05f0bf29d05b>` extern :ref:`PFSYSWINDOWUNREGISTERCALLBACK <group___sys_window_itf_1ga509461abe7c5ac0bdd0798f246fa0fac>` pfSysWindowUnregisterCallback;
+
+- #define :ref:`GET_SysWindowUnregisterCallback <group___sys_window_itf_1ga3fe91f8b972903874fcc4289de1ec9f0>` s_pfCMGetAPI2( "SysWindowUnregisterCallback", (RTS_VOID_FCTPTR *)&pfSysWindowUnregisterCallback, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowUnregisterCallback <group___sys_window_itf_1ga42cc69607dd3c47692668381735c5a2c>` pfSysWindowUnregisterCallback
+
+- #define :ref:`CHK_SysWindowUnregisterCallback <group___sys_window_itf_1ga863eb18011772d23be000192757d0b05>` (pfSysWindowUnregisterCallback != NULL)
+
+- #define :ref:`EXP_SysWindowUnregisterCallback <group___sys_window_itf_1ga8c01cec74dd16ca3e232818818c26e7b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowUnregisterCallback", (RTS_UINTPTR) :ref:`SysWindowUnregisterCallback <group___sys_window_itf_1gafdd358333e7d45da733650a3844ac30a>` , 0, 0)
+
+- #define :ref:`USE_SysWindowInvalidateRectangle <group___sys_window_itf_1ga189391815acea10fbf0d161696c64ab1>` :ref:`PFSYSWINDOWINVALIDATERECTANGLE <group___sys_window_itf_1gac023b4cfdb7e1f13aaf97589053a86cf>` pfSysWindowInvalidateRectangle;
+
+- #define :ref:`EXT_SysWindowInvalidateRectangle <group___sys_window_itf_1gae482e101d2578a4918240cea9ffca804>` extern :ref:`PFSYSWINDOWINVALIDATERECTANGLE <group___sys_window_itf_1gac023b4cfdb7e1f13aaf97589053a86cf>` pfSysWindowInvalidateRectangle;
+
+- #define :ref:`GET_SysWindowInvalidateRectangle <group___sys_window_itf_1ga458d13e2faa4526a6d4af456b2960270>` s_pfCMGetAPI2( "SysWindowInvalidateRectangle", (RTS_VOID_FCTPTR *)&pfSysWindowInvalidateRectangle, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowInvalidateRectangle <group___sys_window_itf_1gad0cc93bc28d775b3669ce88c8b837430>` pfSysWindowInvalidateRectangle
+
+- #define :ref:`CHK_SysWindowInvalidateRectangle <group___sys_window_itf_1gaa6199cefb1fe2a792d27b40031fa5d51>` (pfSysWindowInvalidateRectangle != NULL)
+
+- #define :ref:`EXP_SysWindowInvalidateRectangle <group___sys_window_itf_1gaa072334df251734cc3fc01ff2271797c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowInvalidateRectangle", (RTS_UINTPTR) :ref:`SysWindowInvalidateRectangle <group___sys_window_itf_1ga254f949393701470b3a907689a476ca6>` , 0, 0)
+
+- #define :ref:`USE_SysWindowUpdate <group___sys_window_itf_1ga0bc48f83898638323df6abaf8d7bc98d>` :ref:`PFSYSWINDOWUPDATE <group___sys_window_itf_1gaae6bdc7041102ffacb5ebc323c6b6b3e>` pfSysWindowUpdate;
+
+- #define :ref:`EXT_SysWindowUpdate <group___sys_window_itf_1ga45936c1fce396258835a22a485df13c3>` extern :ref:`PFSYSWINDOWUPDATE <group___sys_window_itf_1gaae6bdc7041102ffacb5ebc323c6b6b3e>` pfSysWindowUpdate;
+
+- #define :ref:`GET_SysWindowUpdate <group___sys_window_itf_1gacfe96a7d5c1ef3f7d890b4d3b846186d>` s_pfCMGetAPI2( "SysWindowUpdate", (RTS_VOID_FCTPTR *)&pfSysWindowUpdate, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowUpdate <group___sys_window_itf_1gaae71628b077b000a45f94fae39cde7cb>` pfSysWindowUpdate
+
+- #define :ref:`CHK_SysWindowUpdate <group___sys_window_itf_1ga0cb8efd51140969a4e48830b488803f7>` (pfSysWindowUpdate != NULL)
+
+- #define :ref:`EXP_SysWindowUpdate <group___sys_window_itf_1gacd55716690f762eae93c3e56670aed1e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowUpdate", (RTS_UINTPTR) :ref:`SysWindowUpdate <group___sys_window_itf_1gaae05753abbd60c589f520e83ab48addb>` , 0, 0)
+
+- #define :ref:`USE_SysWindowForceUpdate <group___sys_window_itf_1ga71cfff5a97f045448d1b65a8af7c7a42>` :ref:`PFSYSWINDOWFORCEUPDATE <group___sys_window_itf_1ga47a0044917b90361968b049be145a585>` pfSysWindowForceUpdate;
+
+- #define :ref:`EXT_SysWindowForceUpdate <group___sys_window_itf_1ga82ee05530ce425fd56ffa1aa6ef0c7c0>` extern :ref:`PFSYSWINDOWFORCEUPDATE <group___sys_window_itf_1ga47a0044917b90361968b049be145a585>` pfSysWindowForceUpdate;
+
+- #define :ref:`GET_SysWindowForceUpdate <group___sys_window_itf_1gae49c01944e0e40f3d9e4a1427a825c16>` s_pfCMGetAPI2( "SysWindowForceUpdate", (RTS_VOID_FCTPTR *)&pfSysWindowForceUpdate, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowForceUpdate <group___sys_window_itf_1gae96db6cb0a5372c715e3baad5caac4fe>` pfSysWindowForceUpdate
+
+- #define :ref:`CHK_SysWindowForceUpdate <group___sys_window_itf_1ga27ac2e9aae3ee2c0b1c9ea9284fe812a>` (pfSysWindowForceUpdate != NULL)
+
+- #define :ref:`EXP_SysWindowForceUpdate <group___sys_window_itf_1gad946703ab74a0e5091caef5721578d27>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowForceUpdate", (RTS_UINTPTR) :ref:`SysWindowForceUpdate <group___sys_window_itf_1ga54bf277584d63747a87aa73f537ab2d8>` , 0, 0)
+
+- #define :ref:`USE_SysWindowGetPos <group___sys_window_itf_1ga674ac1b36a9efd44915e9c0017a05fd9>` :ref:`PFSYSWINDOWGETPOS <group___sys_window_itf_1ga9da0c139e9911d37864f6aa1eda4c513>` pfSysWindowGetPos;
+
+- #define :ref:`EXT_SysWindowGetPos <group___sys_window_itf_1ga8a1cda0eac87cf8f038dca7fa380a475>` extern :ref:`PFSYSWINDOWGETPOS <group___sys_window_itf_1ga9da0c139e9911d37864f6aa1eda4c513>` pfSysWindowGetPos;
+
+- #define :ref:`GET_SysWindowGetPos <group___sys_window_itf_1ga199549709442a90fb2e502ec0a40e5b1>` s_pfCMGetAPI2( "SysWindowGetPos", (RTS_VOID_FCTPTR *)&pfSysWindowGetPos, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowGetPos <group___sys_window_itf_1ga047fed567eea8787946459d86edf385a>` pfSysWindowGetPos
+
+- #define :ref:`CHK_SysWindowGetPos <group___sys_window_itf_1ga5e15adb69f8280cb711e0744c12eb265>` (pfSysWindowGetPos != NULL)
+
+- #define :ref:`EXP_SysWindowGetPos <group___sys_window_itf_1ga8d9eee68746f410766dc5171a99c87c8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowGetPos", (RTS_UINTPTR) :ref:`SysWindowGetPos <group___sys_window_itf_1ga24eb4acab705a238443333bf879c26a3>` , 0, 0)
+
+- #define :ref:`USE_SysWindowSetPos <group___sys_window_itf_1gaa8f6773bf18cce4cea35c013c58cfacf>` :ref:`PFSYSWINDOWSETPOS <group___sys_window_itf_1ga268249481d9c9459e95b04cad84b90d2>` pfSysWindowSetPos;
+
+- #define :ref:`EXT_SysWindowSetPos <group___sys_window_itf_1ga758a9e9f30927da5d473ce459fb8de3e>` extern :ref:`PFSYSWINDOWSETPOS <group___sys_window_itf_1ga268249481d9c9459e95b04cad84b90d2>` pfSysWindowSetPos;
+
+- #define :ref:`GET_SysWindowSetPos <group___sys_window_itf_1gac9d99285dac3bc715c8cd92ceb924aa1>` s_pfCMGetAPI2( "SysWindowSetPos", (RTS_VOID_FCTPTR *)&pfSysWindowSetPos, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowSetPos <group___sys_window_itf_1ga0076cfe986bcec5a1aae170b4201b8e2>` pfSysWindowSetPos
+
+- #define :ref:`CHK_SysWindowSetPos <group___sys_window_itf_1ga14733901d4d4f1b3b87d847d56718c25>` (pfSysWindowSetPos != NULL)
+
+- #define :ref:`EXP_SysWindowSetPos <group___sys_window_itf_1ga4c536515fa62ae48035a92a16699072a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowSetPos", (RTS_UINTPTR) :ref:`SysWindowSetPos <group___sys_window_itf_1ga89ff154a97860ae2e85a9cba0430d1a6>` , 0, 0)
+
+- #define :ref:`USE_SysWindowGetClientRectangle <group___sys_window_itf_1ga6e7d2170c3cb0a959a02f124fc3959bf>` :ref:`PFSYSWINDOWGETCLIENTRECTANGLE <group___sys_window_itf_1gaa15a3a40e3f341b14a32ab33aa4a7e77>` pfSysWindowGetClientRectangle;
+
+- #define :ref:`EXT_SysWindowGetClientRectangle <group___sys_window_itf_1ga13c714c4d0f71b78a1d6cb8f3515429d>` extern :ref:`PFSYSWINDOWGETCLIENTRECTANGLE <group___sys_window_itf_1gaa15a3a40e3f341b14a32ab33aa4a7e77>` pfSysWindowGetClientRectangle;
+
+- #define :ref:`GET_SysWindowGetClientRectangle <group___sys_window_itf_1gac04135ba7308c7898b0812d84af5be4b>` s_pfCMGetAPI2( "SysWindowGetClientRectangle", (RTS_VOID_FCTPTR *)&pfSysWindowGetClientRectangle, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowGetClientRectangle <group___sys_window_itf_1gad373c986cc4616c25c7b8cbdea34fc9c>` pfSysWindowGetClientRectangle
+
+- #define :ref:`CHK_SysWindowGetClientRectangle <group___sys_window_itf_1ga785b5199dee852ec3f5ed88c51a8820b>` (pfSysWindowGetClientRectangle != NULL)
+
+- #define :ref:`EXP_SysWindowGetClientRectangle <group___sys_window_itf_1gaf68e3fbf4ea90279c6bed8ec1e2b0242>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowGetClientRectangle", (RTS_UINTPTR) :ref:`SysWindowGetClientRectangle <group___sys_window_itf_1gad18e301af5acf723ba5084fff8d30c72>` , 0, 0)
+
+- #define :ref:`USE_SysWindowSetFont <group___sys_window_itf_1gaada93163019ad8695d3cbcc23c1327dd>` :ref:`PFSYSWINDOWSETFONT <group___sys_window_itf_1ga35f9f8f88d43959a3094c709454b7b90>` pfSysWindowSetFont;
+
+- #define :ref:`EXT_SysWindowSetFont <group___sys_window_itf_1ga8b24bfa19bdb1c51eb964b10331f1c22>` extern :ref:`PFSYSWINDOWSETFONT <group___sys_window_itf_1ga35f9f8f88d43959a3094c709454b7b90>` pfSysWindowSetFont;
+
+- #define :ref:`GET_SysWindowSetFont <group___sys_window_itf_1ga57da8ca01048394f73ddc8cebc12285c>` s_pfCMGetAPI2( "SysWindowSetFont", (RTS_VOID_FCTPTR *)&pfSysWindowSetFont, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowSetFont <group___sys_window_itf_1gacbf08893e150b7a230a6080918146bc5>` pfSysWindowSetFont
+
+- #define :ref:`CHK_SysWindowSetFont <group___sys_window_itf_1ga2974a0fd33fde87313cc58c0a2b19b3e>` (pfSysWindowSetFont != NULL)
+
+- #define :ref:`EXP_SysWindowSetFont <group___sys_window_itf_1ga614b58e3c09d7f8bb4ac67dd1a6ec507>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowSetFont", (RTS_UINTPTR) :ref:`SysWindowSetFont <group___sys_window_itf_1gada99402106422dc2254c035d5ce78a8c>` , 0, 0)
+
+- #define :ref:`USE_SysWindowGetFont <group___sys_window_itf_1ga11de12cc248bc20419a15d554ce90b4b>` :ref:`PFSYSWINDOWGETFONT <group___sys_window_itf_1ga4b90b0a4da7323d3a5460bffa94e9e6b>` pfSysWindowGetFont;
+
+- #define :ref:`EXT_SysWindowGetFont <group___sys_window_itf_1gac195f58acda26ca1d5041a5997b20aba>` extern :ref:`PFSYSWINDOWGETFONT <group___sys_window_itf_1ga4b90b0a4da7323d3a5460bffa94e9e6b>` pfSysWindowGetFont;
+
+- #define :ref:`GET_SysWindowGetFont <group___sys_window_itf_1ga1a71f9b72d2a8e420264b2121048d904>` s_pfCMGetAPI2( "SysWindowGetFont", (RTS_VOID_FCTPTR *)&pfSysWindowGetFont, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowGetFont <group___sys_window_itf_1gadaba5096ca25562df0ff1363df4bf1d0>` pfSysWindowGetFont
+
+- #define :ref:`CHK_SysWindowGetFont <group___sys_window_itf_1ga94056e64a951ee911021c9fbe8ab26e9>` (pfSysWindowGetFont != NULL)
+
+- #define :ref:`EXP_SysWindowGetFont <group___sys_window_itf_1ga43681b2320d1f157e6526c3406ea6bf6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowGetFont", (RTS_UINTPTR) :ref:`SysWindowGetFont <group___sys_window_itf_1ga1f4d0edaa8b25a00b46f1ea1884456cb>` , 0, 0)
+
+- #define :ref:`USE_SysWindowGetText <group___sys_window_itf_1ga361e68b49386455d476bfcef8052be88>` :ref:`PFSYSWINDOWGETTEXT <group___sys_window_itf_1ga7e3bb286aa9c57599c377fda0b52be7f>` pfSysWindowGetText;
+
+- #define :ref:`EXT_SysWindowGetText <group___sys_window_itf_1ga9f2ba383b39cc07283b27fdcae3b079d>` extern :ref:`PFSYSWINDOWGETTEXT <group___sys_window_itf_1ga7e3bb286aa9c57599c377fda0b52be7f>` pfSysWindowGetText;
+
+- #define :ref:`GET_SysWindowGetText <group___sys_window_itf_1ga34d9ea2b771cf1eb8b4b2b417d3d78e1>` s_pfCMGetAPI2( "SysWindowGetText", (RTS_VOID_FCTPTR *)&pfSysWindowGetText, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowGetText <group___sys_window_itf_1gac08c77131924c7c2766dbecd53db4202>` pfSysWindowGetText
+
+- #define :ref:`CHK_SysWindowGetText <group___sys_window_itf_1ga83668de620a63b36ba863a29f283c5b1>` (pfSysWindowGetText != NULL)
+
+- #define :ref:`EXP_SysWindowGetText <group___sys_window_itf_1ga9ff1613db933b253687bfde0e3d633ed>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowGetText", (RTS_UINTPTR) :ref:`SysWindowGetText <group___sys_window_itf_1ga1d65c900096da0234073812d0557d593>` , 0, 0)
+
+- #define :ref:`USE_SysWindowSetText <group___sys_window_itf_1gad7c87f9e2fb873637cf16659743d378b>` :ref:`PFSYSWINDOWSETTEXT <group___sys_window_itf_1ga1b8ceebbe6a842b2abac8a1c0bb83eaa>` pfSysWindowSetText;
+
+- #define :ref:`EXT_SysWindowSetText <group___sys_window_itf_1gaa2fbf666f99958fd430d3ebd9e0f3a8a>` extern :ref:`PFSYSWINDOWSETTEXT <group___sys_window_itf_1ga1b8ceebbe6a842b2abac8a1c0bb83eaa>` pfSysWindowSetText;
+
+- #define :ref:`GET_SysWindowSetText <group___sys_window_itf_1gae1d77b36bd409cb3f9ccfe9cfee86faa>` s_pfCMGetAPI2( "SysWindowSetText", (RTS_VOID_FCTPTR *)&pfSysWindowSetText, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowSetText <group___sys_window_itf_1gab4aa127cb180a07ae34a546fe4cd19f8>` pfSysWindowSetText
+
+- #define :ref:`CHK_SysWindowSetText <group___sys_window_itf_1ga443ab3d60d33be156b16f0975e1d1572>` (pfSysWindowSetText != NULL)
+
+- #define :ref:`EXP_SysWindowSetText <group___sys_window_itf_1gab11c4c156909b8b56154f73086e6d724>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowSetText", (RTS_UINTPTR) :ref:`SysWindowSetText <group___sys_window_itf_1gacf78302757637ecd780cc0b91cb37e7c>` , 0, 0)
+
+- #define :ref:`USE_SysWindowSetTextW <group___sys_window_itf_1gae04bc3628e7d7719d873c0bf0fdd944b>` :ref:`PFSYSWINDOWSETTEXTW <group___sys_window_itf_1ga24227a26f9601ab1fda3443d0c1304e4>` pfSysWindowSetTextW;
+
+- #define :ref:`EXT_SysWindowSetTextW <group___sys_window_itf_1ga28bf2a408f47e02a293a89735f22cfc0>` extern :ref:`PFSYSWINDOWSETTEXTW <group___sys_window_itf_1ga24227a26f9601ab1fda3443d0c1304e4>` pfSysWindowSetTextW;
+
+- #define :ref:`GET_SysWindowSetTextW <group___sys_window_itf_1gaec467fef05029b316a772521a9dabae4>` s_pfCMGetAPI2( "SysWindowSetTextW", (RTS_VOID_FCTPTR *)&pfSysWindowSetTextW, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowSetTextW <group___sys_window_itf_1ga80dd9a3253e77a3ea3eef59a4fd7276b>` pfSysWindowSetTextW
+
+- #define :ref:`CHK_SysWindowSetTextW <group___sys_window_itf_1gaf8abf22a69b81f4599a54f909570796d>` (pfSysWindowSetTextW != NULL)
+
+- #define :ref:`EXP_SysWindowSetTextW <group___sys_window_itf_1ga3f8f4cc4e109b819d8bed7925ed47dc5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowSetTextW", (RTS_UINTPTR) :ref:`SysWindowSetTextW <group___sys_window_itf_1ga2b8f3d41aad7d34fd71398949c9d509a>` , 0, 0)
+
+- #define :ref:`USE_SysWindowSetFocus <group___sys_window_itf_1ga18166e382a604214d8469804607649be>` :ref:`PFSYSWINDOWSETFOCUS <group___sys_window_itf_1ga7c20571586f926d8ff4a0b30775531df>` pfSysWindowSetFocus;
+
+- #define :ref:`EXT_SysWindowSetFocus <group___sys_window_itf_1ga16bfe37fb723104aa8c7bb9912731594>` extern :ref:`PFSYSWINDOWSETFOCUS <group___sys_window_itf_1ga7c20571586f926d8ff4a0b30775531df>` pfSysWindowSetFocus;
+
+- #define :ref:`GET_SysWindowSetFocus <group___sys_window_itf_1ga72b456831eceb7c194032e88f28d5471>` s_pfCMGetAPI2( "SysWindowSetFocus", (RTS_VOID_FCTPTR *)&pfSysWindowSetFocus, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowSetFocus <group___sys_window_itf_1gaa8a6e07ca15f14e7f3a9f9b80a0a13ae>` pfSysWindowSetFocus
+
+- #define :ref:`CHK_SysWindowSetFocus <group___sys_window_itf_1ga28ef7bc2cc51b4279075a597d9296419>` (pfSysWindowSetFocus != NULL)
+
+- #define :ref:`EXP_SysWindowSetFocus <group___sys_window_itf_1ga76c04b2d6bbde05e6bdd85ba0607de57>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowSetFocus", (RTS_UINTPTR) :ref:`SysWindowSetFocus <group___sys_window_itf_1ga06b2476dcb398947e295ae189bb40beb>` , 0, 0)
+
+- #define :ref:`USE_SysWindowSetSelection <group___sys_window_itf_1ga806092548360a4629e12ce4a3468944e>` :ref:`PFSYSWINDOWSETSELECTION <group___sys_window_itf_1gab4f4c89babfcee4bfa09387dd49d95a2>` pfSysWindowSetSelection;
+
+- #define :ref:`EXT_SysWindowSetSelection <group___sys_window_itf_1gab94cbf54cb690c4d61c11af6c709c2e2>` extern :ref:`PFSYSWINDOWSETSELECTION <group___sys_window_itf_1gab4f4c89babfcee4bfa09387dd49d95a2>` pfSysWindowSetSelection;
+
+- #define :ref:`GET_SysWindowSetSelection <group___sys_window_itf_1gaf14cd94ae879c409a46971e79d849552>` s_pfCMGetAPI2( "SysWindowSetSelection", (RTS_VOID_FCTPTR *)&pfSysWindowSetSelection, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowSetSelection <group___sys_window_itf_1ga000e831a802865e75ca079078a2fe041>` pfSysWindowSetSelection
+
+- #define :ref:`CHK_SysWindowSetSelection <group___sys_window_itf_1gad4ac23a6503b9ffc7170239b8ba35dfb>` (pfSysWindowSetSelection != NULL)
+
+- #define :ref:`EXP_SysWindowSetSelection <group___sys_window_itf_1ga160a6be531950d1c976c38fe9ec567f9>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowSetSelection", (RTS_UINTPTR) :ref:`SysWindowSetSelection <group___sys_window_itf_1ga47774e65652fbf5a72317d6dd597cca3>` , 0, 0)
+
+- #define :ref:`USE_SysWindowSetCursor <group___sys_window_itf_1gafb2a0fae617c9f283882f8473f4e5887>` :ref:`PFSYSWINDOWSETCURSOR <group___sys_window_itf_1gadfea5c070d5e2df78eb958dc6e874cd5>` pfSysWindowSetCursor;
+
+- #define :ref:`EXT_SysWindowSetCursor <group___sys_window_itf_1ga93779f3c4b6450b3b57da7522b6a3d38>` extern :ref:`PFSYSWINDOWSETCURSOR <group___sys_window_itf_1gadfea5c070d5e2df78eb958dc6e874cd5>` pfSysWindowSetCursor;
+
+- #define :ref:`GET_SysWindowSetCursor <group___sys_window_itf_1gaa45cac7e4f68ee39874152a1e95e6640>` s_pfCMGetAPI2( "SysWindowSetCursor", (RTS_VOID_FCTPTR *)&pfSysWindowSetCursor, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowSetCursor <group___sys_window_itf_1gaa11f7b3bea742ff78c378fb663c3dad4>` pfSysWindowSetCursor
+
+- #define :ref:`CHK_SysWindowSetCursor <group___sys_window_itf_1ga378c353f28c8a323891e862e4b42f12e>` (pfSysWindowSetCursor != NULL)
+
+- #define :ref:`EXP_SysWindowSetCursor <group___sys_window_itf_1gabd0b1ddc32a789d155254fb3c94d4a80>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowSetCursor", (RTS_UINTPTR) :ref:`SysWindowSetCursor <group___sys_window_itf_1ga0a80e04166d137e1a0701540a6f4af6f>` , 0, 0)
+
+- #define :ref:`USE_SysWindowSetFlags <group___sys_window_itf_1ga77543ef25483d14b27ee0d1ea951ec8e>` :ref:`PFSYSWINDOWSETFLAGS <group___sys_window_itf_1gacd66584318b133d714da5cd1fc73f0a1>` pfSysWindowSetFlags;
+
+- #define :ref:`EXT_SysWindowSetFlags <group___sys_window_itf_1ga07b16e293dce04755e7917965a0a7906>` extern :ref:`PFSYSWINDOWSETFLAGS <group___sys_window_itf_1gacd66584318b133d714da5cd1fc73f0a1>` pfSysWindowSetFlags;
+
+- #define :ref:`GET_SysWindowSetFlags <group___sys_window_itf_1ga53658629a6c641f87ff5f6b64968ecac>` s_pfCMGetAPI2( "SysWindowSetFlags", (RTS_VOID_FCTPTR *)&pfSysWindowSetFlags, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowSetFlags <group___sys_window_itf_1ga36696fa61862b6ec7b3e921df0a5f374>` pfSysWindowSetFlags
+
+- #define :ref:`CHK_SysWindowSetFlags <group___sys_window_itf_1gab7f48f4ab73f7daf70766769f87d8cff>` (pfSysWindowSetFlags != NULL)
+
+- #define :ref:`EXP_SysWindowSetFlags <group___sys_window_itf_1ga2e72d6addd5c80c0d2156592e0973e81>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowSetFlags", (RTS_UINTPTR) :ref:`SysWindowSetFlags <group___sys_window_itf_1ga9a7cd26b046120a42164b76575f0957b>` , 0, 0)
+
+- #define :ref:`USE_SysWindowPrint <group___sys_window_itf_1ga69f1e2719ee7c5147287f21e9ec8f7af>` :ref:`PFSYSWINDOWPRINT <group___sys_window_itf_1ga7e6d9227ee6c6b0a64188497c7d62c12>` pfSysWindowPrint;
+
+- #define :ref:`EXT_SysWindowPrint <group___sys_window_itf_1ga65ccce9861e5aa3ee0e9b257da93ebfa>` extern :ref:`PFSYSWINDOWPRINT <group___sys_window_itf_1ga7e6d9227ee6c6b0a64188497c7d62c12>` pfSysWindowPrint;
+
+- #define :ref:`GET_SysWindowPrint <group___sys_window_itf_1gabd4d91c469b82917bc84a3634c9e78ac>` s_pfCMGetAPI2( "SysWindowPrint", (RTS_VOID_FCTPTR *)&pfSysWindowPrint, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowPrint <group___sys_window_itf_1ga4f6a1a385fc37f84cd010e7be14dfa41>` pfSysWindowPrint
+
+- #define :ref:`CHK_SysWindowPrint <group___sys_window_itf_1ga503dab31d384fa9774de08b8ae3a3ff5>` (pfSysWindowPrint != NULL)
+
+- #define :ref:`EXP_SysWindowPrint <group___sys_window_itf_1gabb5c7d5047abb2b471c9dadea911b420>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowPrint", (RTS_UINTPTR) :ref:`SysWindowPrint <group___sys_window_itf_1ga8842622915f0615dbeeb398ac570c9d5>` , 0, 0)
+
+- #define :ref:`USE_SysWindowPrintStart <group___sys_window_itf_1gae6e5de92dca518ea2e79836055a9bdea>` :ref:`PFSYSWINDOWPRINTSTART <group___sys_window_itf_1gafbffe7b141b04eb62a0b3bd3f2256936>` pfSysWindowPrintStart;
+
+- #define :ref:`EXT_SysWindowPrintStart <group___sys_window_itf_1gaa989252a7d427df001ce887adb13801d>` extern :ref:`PFSYSWINDOWPRINTSTART <group___sys_window_itf_1gafbffe7b141b04eb62a0b3bd3f2256936>` pfSysWindowPrintStart;
+
+- #define :ref:`GET_SysWindowPrintStart <group___sys_window_itf_1gae5b281fd01c46e40670d0a642ddd35f1>` s_pfCMGetAPI2( "SysWindowPrintStart", (RTS_VOID_FCTPTR *)&pfSysWindowPrintStart, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowPrintStart <group___sys_window_itf_1ga2b77a7adcf420309cc425a11e977360f>` pfSysWindowPrintStart
+
+- #define :ref:`CHK_SysWindowPrintStart <group___sys_window_itf_1gada4114f090a0947363d6056ad64dc4a0>` (pfSysWindowPrintStart != NULL)
+
+- #define :ref:`EXP_SysWindowPrintStart <group___sys_window_itf_1gaf2f72adc7d124c113483f7ec79903d54>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowPrintStart", (RTS_UINTPTR) :ref:`SysWindowPrintStart <group___sys_window_itf_1ga2d3db9efcef1f9c97bf933a2d7aa6968>` , 0, 0)
+
+- #define :ref:`USE_SysWindowPrintStartDocument <group___sys_window_itf_1gab558b2854341c6d83d54be15766324c1>` :ref:`PFSYSWINDOWPRINTSTARTDOCUMENT <group___sys_window_itf_1ga61b06daf2a3f488ef550a776efea0733>` pfSysWindowPrintStartDocument;
+
+- #define :ref:`EXT_SysWindowPrintStartDocument <group___sys_window_itf_1ga5225f45a74e0ee64ef1b09c8d679f090>` extern :ref:`PFSYSWINDOWPRINTSTARTDOCUMENT <group___sys_window_itf_1ga61b06daf2a3f488ef550a776efea0733>` pfSysWindowPrintStartDocument;
+
+- #define :ref:`GET_SysWindowPrintStartDocument <group___sys_window_itf_1gabfcfe079dbd2b8467363e0515295772d>` s_pfCMGetAPI2( "SysWindowPrintStartDocument", (RTS_VOID_FCTPTR *)&pfSysWindowPrintStartDocument, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowPrintStartDocument <group___sys_window_itf_1gae86915dd6411feb14f6c94fdf56eacfe>` pfSysWindowPrintStartDocument
+
+- #define :ref:`CHK_SysWindowPrintStartDocument <group___sys_window_itf_1ga0546c304818d5c61b630da539a8d5e52>` (pfSysWindowPrintStartDocument != NULL)
+
+- #define :ref:`EXP_SysWindowPrintStartDocument <group___sys_window_itf_1ga2ebb210bc7568a36d3b4889f65142d37>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowPrintStartDocument", (RTS_UINTPTR) :ref:`SysWindowPrintStartDocument <group___sys_window_itf_1ga5bb724fcd1054e0df13da45c9de68b95>` , 0, 0)
+
+- #define :ref:`USE_SysWindowPrintEndDocument <group___sys_window_itf_1gaf08dbb995c6715b9322a9ee5252aaeb9>` :ref:`PFSYSWINDOWPRINTENDDOCUMENT <group___sys_window_itf_1ga27c41753b7f0a2a7878ebefd59262126>` pfSysWindowPrintEndDocument;
+
+- #define :ref:`EXT_SysWindowPrintEndDocument <group___sys_window_itf_1ga20f1034854d6aac7f112147447783b24>` extern :ref:`PFSYSWINDOWPRINTENDDOCUMENT <group___sys_window_itf_1ga27c41753b7f0a2a7878ebefd59262126>` pfSysWindowPrintEndDocument;
+
+- #define :ref:`GET_SysWindowPrintEndDocument <group___sys_window_itf_1ga70e3a156d9d69f16cd7fa214b631d7f7>` s_pfCMGetAPI2( "SysWindowPrintEndDocument", (RTS_VOID_FCTPTR *)&pfSysWindowPrintEndDocument, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowPrintEndDocument <group___sys_window_itf_1ga0570d41dc9d1b1cc7c12308a5536d52f>` pfSysWindowPrintEndDocument
+
+- #define :ref:`CHK_SysWindowPrintEndDocument <group___sys_window_itf_1ga8c2209c328701452a6170001ba6baf7e>` (pfSysWindowPrintEndDocument != NULL)
+
+- #define :ref:`EXP_SysWindowPrintEndDocument <group___sys_window_itf_1ga95a0230e35f26e52b4b19c7be8ddab97>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowPrintEndDocument", (RTS_UINTPTR) :ref:`SysWindowPrintEndDocument <group___sys_window_itf_1ga8a3b64c737f944e8381969c7e00550b9>` , 0, 0)
+
+- #define :ref:`USE_SysWindowPrintRelease <group___sys_window_itf_1ga340c03ffd0a64fcaac5f64c3a5ed5698>` :ref:`PFSYSWINDOWPRINTRELEASE <group___sys_window_itf_1gaf1d231980dc12f818083f1d3a7ed7c29>` pfSysWindowPrintRelease;
+
+- #define :ref:`EXT_SysWindowPrintRelease <group___sys_window_itf_1ga3509244ca3e901a35002567f6a128b67>` extern :ref:`PFSYSWINDOWPRINTRELEASE <group___sys_window_itf_1gaf1d231980dc12f818083f1d3a7ed7c29>` pfSysWindowPrintRelease;
+
+- #define :ref:`GET_SysWindowPrintRelease <group___sys_window_itf_1ga0d917036fc36cf9d6da8822821613a36>` s_pfCMGetAPI2( "SysWindowPrintRelease", (RTS_VOID_FCTPTR *)&pfSysWindowPrintRelease, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowPrintRelease <group___sys_window_itf_1ga10016ba39fb509c85acb3c142986cf6c>` pfSysWindowPrintRelease
+
+- #define :ref:`CHK_SysWindowPrintRelease <group___sys_window_itf_1gafa82922d190a8cf4a7edcf32b71a253b>` (pfSysWindowPrintRelease != NULL)
+
+- #define :ref:`EXP_SysWindowPrintRelease <group___sys_window_itf_1gab1885e16c09fe02ac251033d6565d7bd>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowPrintRelease", (RTS_UINTPTR) :ref:`SysWindowPrintRelease <group___sys_window_itf_1gae0f1a75fec82bfb7466f4a9e94fd2cec>` , 0, 0)
+
+- #define :ref:`USE_SysWindowNotify <group___sys_window_itf_1ga7e548f6c38dd2b8d1810f8a4d0486977>` :ref:`PFSYSWINDOWNOTIFY <group___sys_window_itf_1ga9e2163840bd7b918bc9aba8e812791d7>` pfSysWindowNotify;
+
+- #define :ref:`EXT_SysWindowNotify <group___sys_window_itf_1ga4f51c2b38407d6983e2247abc7392f60>` extern :ref:`PFSYSWINDOWNOTIFY <group___sys_window_itf_1ga9e2163840bd7b918bc9aba8e812791d7>` pfSysWindowNotify;
+
+- #define :ref:`GET_SysWindowNotify <group___sys_window_itf_1gac64083e8794014b036ea2dfa05bdab9c>` s_pfCMGetAPI2( "SysWindowNotify", (RTS_VOID_FCTPTR *)&pfSysWindowNotify, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowNotify <group___sys_window_itf_1gaa08215558235c7bfc195da315bb4738f>` pfSysWindowNotify
+
+- #define :ref:`CHK_SysWindowNotify <group___sys_window_itf_1ga602fd32e19d4e9ec060bba61fe69d13d>` (pfSysWindowNotify != NULL)
+
+- #define :ref:`EXP_SysWindowNotify <group___sys_window_itf_1ga8d8ee4cfb515a78bf13410f1551f9da3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowNotify", (RTS_UINTPTR) :ref:`SysWindowNotify <group___sys_window_itf_1ga887f1e4910868167dd7543c1e768f1aa>` , 0, 0)
+
+- #define :ref:`SYSWINSUPPORT_FLAG_NONE <group___sys_window_itf___windowsupportflags_1ga48119b891302fa699ce4737ccadc81ad>` 0
+
+- #define :ref:`SYSWINSUPPORT_FLAG_TOUCH <group___sys_window_itf___windowsupportflags_1ga0189e5ffa8bd5228bb191de0d4cedb6a>` 1
+
+- #define :ref:`SYSWINSUPPORT_FLAG_MULTITOUCH <group___sys_window_itf___windowsupportflags_1ga57c5b3dd59847b1b34ee0492017f350a>` 2
+
+- #define :ref:`SYSWINSUPPORT_FLAG_TRANSPARENT_BACKGROUND <group___sys_window_itf___windowsupportflags_1ga1dc5b34debccf5dc886cf43f7ff2a82d>` 4
+
+- #define :ref:`USE_SysWindowSupportInfo <group___sys_window_itf_1ga146f1330614b2cd6a996b2b16c431c4d>` :ref:`PFSYSWINDOWSUPPORTINFO <group___sys_window_itf_1gac3c21deea37c4fd5a51b7905ffaa085d>` pfSysWindowSupportInfo;
+
+- #define :ref:`EXT_SysWindowSupportInfo <group___sys_window_itf_1gacc3c67f1f81d14d16905748a3c11b2ab>` extern :ref:`PFSYSWINDOWSUPPORTINFO <group___sys_window_itf_1gac3c21deea37c4fd5a51b7905ffaa085d>` pfSysWindowSupportInfo;
+
+- #define :ref:`GET_SysWindowSupportInfo <group___sys_window_itf_1ga21a4333e6d47f0a878491d7895736c3b>` s_pfCMGetAPI2( "SysWindowSupportInfo", (RTS_VOID_FCTPTR *)&pfSysWindowSupportInfo, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowSupportInfo <group___sys_window_itf_1ga37f82be875ec12f884cf4263fa2d61e8>` pfSysWindowSupportInfo
+
+- #define :ref:`CHK_SysWindowSupportInfo <group___sys_window_itf_1ga25dc2ed5511aa9106de8013f8f212e28>` (pfSysWindowSupportInfo != NULL)
+
+- #define :ref:`EXP_SysWindowSupportInfo <group___sys_window_itf_1gac5b6c58a9e854116c4db3c6c5cf709fc>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowSupportInfo", (RTS_UINTPTR) :ref:`SysWindowSupportInfo <group___sys_window_itf_1ga9ae5a6595c61b0ee8901f0e365a23092>` , 0, 0)
+
+- #define :ref:`USE_SysWindowCreateTimer <group___sys_window_itf_1ga6544a63370670c0396da03ac9dea5922>` :ref:`PFSYSWINDOWCREATETIMER <group___sys_window_itf_1ga6bca1b97a26d542efc031d55199fa8d5>` pfSysWindowCreateTimer;
+
+- #define :ref:`EXT_SysWindowCreateTimer <group___sys_window_itf_1ga9f7392b56ca166e3ee217e26ba7a1309>` extern :ref:`PFSYSWINDOWCREATETIMER <group___sys_window_itf_1ga6bca1b97a26d542efc031d55199fa8d5>` pfSysWindowCreateTimer;
+
+- #define :ref:`GET_SysWindowCreateTimer <group___sys_window_itf_1ga8219e2681eee79454e7a6283b3bc520a>` s_pfCMGetAPI2( "SysWindowCreateTimer", (RTS_VOID_FCTPTR *)&pfSysWindowCreateTimer, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowCreateTimer <group___sys_window_itf_1gab6f604b6ccfed7bda86ec6bbb67fa7a0>` pfSysWindowCreateTimer
+
+- #define :ref:`CHK_SysWindowCreateTimer <group___sys_window_itf_1gaeb8c555b856fa975f0c6e90c70751b39>` (pfSysWindowCreateTimer != NULL)
+
+- #define :ref:`EXP_SysWindowCreateTimer <group___sys_window_itf_1ga816bee4ad6eb90dddbc3b44ee20fd8ac>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowCreateTimer", (RTS_UINTPTR) :ref:`SysWindowCreateTimer <group___sys_window_itf_1ga42684268921b6cdc67e87954a3d5e9e3>` , 0, 0)
+
+- #define :ref:`USE_SysWindowDestroyTimer <group___sys_window_itf_1ga09f799dd45bf9da0a74b1b49cd5afeeb>` :ref:`PFSYSWINDOWDESTROYTIMER <group___sys_window_itf_1ga91dbc7ff0ae7807e9a059b94f26968c7>` pfSysWindowDestroyTimer;
+
+- #define :ref:`EXT_SysWindowDestroyTimer <group___sys_window_itf_1ga0e15fe51ef8db8b221cf3d771a3ba17a>` extern :ref:`PFSYSWINDOWDESTROYTIMER <group___sys_window_itf_1ga91dbc7ff0ae7807e9a059b94f26968c7>` pfSysWindowDestroyTimer;
+
+- #define :ref:`GET_SysWindowDestroyTimer <group___sys_window_itf_1ga22098a6b0708b65a3980a5aba6332a0c>` s_pfCMGetAPI2( "SysWindowDestroyTimer", (RTS_VOID_FCTPTR *)&pfSysWindowDestroyTimer, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowDestroyTimer <group___sys_window_itf_1gafe81901127dcd1ae4abdddd4be8e7af1>` pfSysWindowDestroyTimer
+
+- #define :ref:`CHK_SysWindowDestroyTimer <group___sys_window_itf_1gada9175c8f421087f6526b5ea559ed5d6>` (pfSysWindowDestroyTimer != NULL)
+
+- #define :ref:`EXP_SysWindowDestroyTimer <group___sys_window_itf_1ga7d9b06bdada29700f6f63ea319c9754f>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowDestroyTimer", (RTS_UINTPTR) :ref:`SysWindowDestroyTimer <group___sys_window_itf_1gaa2fc98c8609b731d99da73554f362153>` , 0, 0)
+
+- #define :ref:`USE_SysWindowOpenMessageBox <group___sys_window_itf_1gad70f966b30a529f2f87c85b025d18fc8>` :ref:`PFSYSWINDOWOPENMESSAGEBOX <group___sys_window_itf_1ga317ff8b0c39a24b83577ec20efc225f0>` pfSysWindowOpenMessageBox;
+
+- #define :ref:`EXT_SysWindowOpenMessageBox <group___sys_window_itf_1ga204c4e3e68ad814a2de8d66f4a540acb>` extern :ref:`PFSYSWINDOWOPENMESSAGEBOX <group___sys_window_itf_1ga317ff8b0c39a24b83577ec20efc225f0>` pfSysWindowOpenMessageBox;
+
+- #define :ref:`GET_SysWindowOpenMessageBox <group___sys_window_itf_1gafafaef6e6fc8483fe8d725dbd245a4c6>` s_pfCMGetAPI2( "SysWindowOpenMessageBox", (RTS_VOID_FCTPTR *)&pfSysWindowOpenMessageBox, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowOpenMessageBox <group___sys_window_itf_1gaa5a38da6493cc3fa28786d19ff13a34e>` pfSysWindowOpenMessageBox
+
+- #define :ref:`CHK_SysWindowOpenMessageBox <group___sys_window_itf_1gae709a207f5d9f2050a8308c396776096>` (pfSysWindowOpenMessageBox != NULL)
+
+- #define :ref:`EXP_SysWindowOpenMessageBox <group___sys_window_itf_1ga9796409c591bb815438599b51f4c7f04>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowOpenMessageBox", (RTS_UINTPTR) :ref:`SysWindowOpenMessageBox <group___sys_window_itf_1gabd8b2d4b675054524047824d8bf64fc6>` , 0, 0)
+
+- #define :ref:`USE_SysWindowOpenMessageBoxW <group___sys_window_itf_1ga69217e9e5129a0a3c5025f89315d726f>` :ref:`PFSYSWINDOWOPENMESSAGEBOXW <group___sys_window_itf_1ga072702a6f075d3ae3750b6f077720206>` pfSysWindowOpenMessageBoxW;
+
+- #define :ref:`EXT_SysWindowOpenMessageBoxW <group___sys_window_itf_1gabd96adb805a7bd94cd08f6090fb740c7>` extern :ref:`PFSYSWINDOWOPENMESSAGEBOXW <group___sys_window_itf_1ga072702a6f075d3ae3750b6f077720206>` pfSysWindowOpenMessageBoxW;
+
+- #define :ref:`GET_SysWindowOpenMessageBoxW <group___sys_window_itf_1ga9ffa023e0339bd60bc2e62b139b4afae>` s_pfCMGetAPI2( "SysWindowOpenMessageBoxW", (RTS_VOID_FCTPTR *)&pfSysWindowOpenMessageBoxW, (fl), 0, 0)
+
+- #define :ref:`CAL_SysWindowOpenMessageBoxW <group___sys_window_itf_1ga3c69fdce8a8e8d2475a22afe0087ade6>` pfSysWindowOpenMessageBoxW
+
+- #define :ref:`CHK_SysWindowOpenMessageBoxW <group___sys_window_itf_1ga466c77f9b34f876ddb09fb9bc0ef57c2>` (pfSysWindowOpenMessageBoxW != NULL)
+
+- #define :ref:`EXP_SysWindowOpenMessageBoxW <group___sys_window_itf_1gae12e618292911b8dd7aef579c921bb47>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysWindowOpenMessageBoxW", (RTS_UINTPTR) :ref:`SysWindowOpenMessageBoxW <group___sys_window_itf_1gaa18975023b51d7de146080c69162f20c>` , 0, 0)
+
+- #define :ref:`MB_TYPE_OK <group___sys_window_itf_1gae30c23b06698cd2cded32aa7096294b0>` 0x0000
+
+- #define :ref:`MB_TYPE_OKCANCEL <group___sys_window_itf_1ga5707769e2b56c7dab32db60e6f63bf14>` 0x0001
+
+- #define :ref:`MB_TYPE_ABORTRETRYIGNORE <group___sys_window_itf_1ga64c6696007d4fc07336d2ea1076cd797>` 0x0002
+
+- #define :ref:`MB_TYPE_YESNOCANCEL <group___sys_window_itf_1gab33281584e6b708a3dfb115f2ea3d6b9>` 0x0003
+
+- #define :ref:`MB_TYPE_YESNO <group___sys_window_itf_1ga2cfda5f0396f1f5e287dd031f85f43f7>` 0x0004
+
+- #define :ref:`MB_TYPE_RETRYCANCEL <group___sys_window_itf_1ga7549dba7eaa85aef07abe0e6b3c66102>` 0x0005
+
+- #define :ref:`MB_TYPE_ICONERROR <group___sys_window_itf_1ga225320aa59c4d8cbc0106657737a92da>` 0x0010
+
+- #define :ref:`MB_TYPE_ICONQUESTION <group___sys_window_itf_1ga83b9b46378d5cbf7e5961113e9b9c938>` 0x0020
+
+- #define :ref:`MB_TYPE_ICONWARNING <group___sys_window_itf_1ga08b3e231dbfc36d1ebddda769878c0bf>` 0x0030
+
+- #define :ref:`MB_TYPE_ICONINFORMATION <group___sys_window_itf_1ga2ea9fda75ddc2f77dbf15c8531755fe3>` 0x0040
+
+- #define :ref:`MB_TYPE_DEFBUTTON1 <group___sys_window_itf_1gaad1b4adb540fab2cd5c842732727db27>` 0x0000
+
+- #define :ref:`MB_TYPE_DEFBUTTON2 <group___sys_window_itf_1gad6f7311903ffe2d5ec5724ac632ab3ec>` 0x0100
+
+- #define :ref:`MB_TYPE_DEFBUTTON3 <group___sys_window_itf_1gaeeb01e2274b239040e35bf9547936e47>` 0x0200
+
+- #define :ref:`MB_TYPE_DEFBUTTON4 <group___sys_window_itf_1ga239288d6f5f25d539a28f2f867e50da3>` 0x0300
+
+- #define :ref:`MB_RESULT_OK <group___sys_window_itf_1ga1cb19c31af2c39f46ea4f54d0dd0ff24>` 0x0001
+
+- #define :ref:`MB_RESULT_CANCEL <group___sys_window_itf_1gada79ee03c18c5d475571e348b7a7f55a>` 0x0002
+
+- #define :ref:`MB_RESULT_ABORT <group___sys_window_itf_1gac57b31a8554d8a0bc1bc979193265143>` 0x0003
+
+- #define :ref:`MB_RESULT_RETRY <group___sys_window_itf_1ga5e81b403d255b89415bdee455d44989e>` 0x0004
+
+- #define :ref:`MB_RESULT_IGNORE <group___sys_window_itf_1gab9921dc7bbe0dfda7b3d3a2975be6d6d>` 0x0005
+
+- #define :ref:`MB_RESULT_YES <group___sys_window_itf_1ga006c6e93af5f722bdd72f169c720fecc>` 0x0006
+
+- #define :ref:`MB_RESULT_NO <group___sys_window_itf_1ga79b41081ed6bbf1afd7f804876d12e97>` 0x0007
+
+- #define :ref:`ITF_SysWindow <group___sys_window_itf_1ga00f0defeb6e8911e8e0de9ffc1132a0d>`
+
+- #define :ref:`EXTITF_SysWindow <group___sys_window_itf_1ga9240c541674517e2744eeee6d2631e87>`
+
+Typedefs
+--------
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWSUPPORTSSEVERALTASKS <group___sys_window_itf_1gafdb4eb519bc90e09dd0bd791dafa5fc7>`)(void)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWINVOKEINWINDOWTASK <group___sys_window_itf_1ga5f075d66be7f779ef4ced571c95a29c3>`)(PFINVOKEINWINDOWTASK pfToCall, RTS_UINTPTR ulParam)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSWINDOWCREATE <group___sys_window_itf_1ga6e6911cb886d3ca16f804a315d5ffd92>`)(SysWindowCreate_Struct *pCreate, RTS_UINTPTR ulParam, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWDESTROY <group___sys_window_itf_1ga3d915a9d227b87262e97bc2ebcc6eefe>`)(RTS_HANDLE hWindow)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWSETUSERDATA <group___sys_window_itf_1gab2f7ea352001ae8f51c9608e7e9a770e>`)(RTS_HANDLE hWindow, RTS_UINTPTR ulData)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWSHOW <group___sys_window_itf_1ga233f9597006f69a970191fbdb5d301ec>`)(RTS_HANDLE hWindow, RTS_UI32 ulData)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWGETUSERDATA <group___sys_window_itf_1ga67aad66e47fb3e3c14adea606f516a61>`)(RTS_HANDLE hWindow, RTS_UINTPTR *pulData)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWSETCALLBACK <group___sys_window_itf_1ga6756e7ead7c9713ba79887b90842830b>`)(RTS_HANDLE hWindow, unsigned long ulCallback, unsigned long *pulOldCallback)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWMESSAGELOOP <group___sys_window_itf_1ga61ab8ff69de64f912372ffb3426bb7ed>`)(RTS_HANDLE hWindow)
+
+- typedef int(* :ref:`PFWINDOWCALLBACK <group___sys_window_itf_1gab1644a745bf4161b226317a24044fabc>`)(RTS_HANDLE hWindow, WindowCallbacks wcb, RTS_UINTPTR ulCallbackParam, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWREGISTERCALLBACK <group___sys_window_itf_1gab52921553c1036274ddc9b1fc254e075>`)(RTS_HANDLE hWindow, WindowCallbacks wcb, PFWINDOWCALLBACK callback, RTS_UINTPTR ulParam)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWUNREGISTERCALLBACK <group___sys_window_itf_1ga509461abe7c5ac0bdd0798f246fa0fac>`)(RTS_HANDLE hWindow, WindowCallbacks wcb, PFWINDOWCALLBACK callback)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWINVALIDATERECTANGLE <group___sys_window_itf_1gac023b4cfdb7e1f13aaf97589053a86cf>`)(RTS_HANDLE hWindow, RTS_Rectangle rect)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWUPDATE <group___sys_window_itf_1gaae6bdc7041102ffacb5ebc323c6b6b3e>`)(RTS_HANDLE hWindow)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWFORCEUPDATE <group___sys_window_itf_1ga47a0044917b90361968b049be145a585>`)(RTS_HANDLE hWindow)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWGETPOS <group___sys_window_itf_1ga9da0c139e9911d37864f6aa1eda4c513>`)(RTS_HANDLE hWindow, RTS_Rectangle *pRect)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWSETPOS <group___sys_window_itf_1ga268249481d9c9459e95b04cad84b90d2>`)(RTS_HANDLE hWindow, RTS_Rectangle rect)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWGETCLIENTRECTANGLE <group___sys_window_itf_1gaa15a3a40e3f341b14a32ab33aa4a7e77>`)(RTS_HANDLE hWindow, RTS_Rectangle *pRect)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWSETFONT <group___sys_window_itf_1ga35f9f8f88d43959a3094c709454b7b90>`)(RTS_HANDLE hWindow, RTS_HANDLE hFont)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWGETFONT <group___sys_window_itf_1ga4b90b0a4da7323d3a5460bffa94e9e6b>`)(RTS_HANDLE hWindow, RTS_HANDLE *phFont)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWGETTEXT <group___sys_window_itf_1ga7e3bb286aa9c57599c377fda0b52be7f>`)(RTS_HANDLE hWindow, char *pszValue, RTS_SIZE *piLen)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWSETTEXT <group___sys_window_itf_1ga1b8ceebbe6a842b2abac8a1c0bb83eaa>`)(RTS_HANDLE hWindow, char *pszText)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWSETTEXTW <group___sys_window_itf_1ga24227a26f9601ab1fda3443d0c1304e4>`)(RTS_HANDLE hWindow, RTS_WCHAR *pwsText)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWSETFOCUS <group___sys_window_itf_1ga7c20571586f926d8ff4a0b30775531df>`)(RTS_HANDLE hWindow)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWSETSELECTION <group___sys_window_itf_1gab4f4c89babfcee4bfa09387dd49d95a2>`)(RTS_HANDLE hWindow, char *pszClassName, RTS_I32 dwParam1, RTS_I32 dwParam2)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWSETCURSOR <group___sys_window_itf_1gadfea5c070d5e2df78eb958dc6e874cd5>`)(RTS_HANDLE hWindow, RTS_UI16 usCursor)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWSETFLAGS <group___sys_window_itf_1gacd66584318b133d714da5cd1fc73f0a1>`)(RTS_HANDLE hWindow, RTS_UI32 uiFlag, RTS_BOOL bValue)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWPRINT <group___sys_window_itf_1ga7e6d9227ee6c6b0a64188497c7d62c12>`)(RTS_HANDLE hWindow, char *pszTitle)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWPRINTSTART <group___sys_window_itf_1gafbffe7b141b04eb62a0b3bd3f2256936>`)(RTS_HANDLE hWindow, char *pszTitle, char *pszPrinter)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWPRINTSTARTDOCUMENT <group___sys_window_itf_1ga61b06daf2a3f488ef550a776efea0733>`)(RTS_HANDLE hWindow)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWPRINTENDDOCUMENT <group___sys_window_itf_1ga27c41753b7f0a2a7878ebefd59262126>`)(RTS_HANDLE hWindow)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWPRINTRELEASE <group___sys_window_itf_1gaf1d231980dc12f818083f1d3a7ed7c29>`)(RTS_HANDLE hWindow)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWNOTIFY <group___sys_window_itf_1ga9e2163840bd7b918bc9aba8e812791d7>`)(RTS_HANDLE hWindow, RTS_UI32 notificationCode, void *notificationParam)
+
+- typedef RTS_UI32(* :ref:`PFSYSWINDOWSUPPORTINFO <group___sys_window_itf_1gac3c21deea37c4fd5a51b7905ffaa085d>`)(RTS_HANDLE hWindow, RTS_RESULT *pResult)
+
+- typedef void(* :ref:`SysWindowTimerCallback <group___sys_window_itf_1ga13abef4a1e9323aed64eb93ba5d8c4de>`)(RTS_HANDLE hWindow, void *pParams)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSWINDOWCREATETIMER <group___sys_window_itf_1ga6bca1b97a26d542efc031d55199fa8d5>`)(RTS_HANDLE hWindow, RTS_UI32 interval, SysWindowTimerCallback callback, void *pCallbackParams, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWDESTROYTIMER <group___sys_window_itf_1ga91dbc7ff0ae7807e9a059b94f26968c7>`)(RTS_HANDLE hWindow, RTS_HANDLE hTimer)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWOPENMESSAGEBOX <group___sys_window_itf_1ga317ff8b0c39a24b83577ec20efc225f0>`)(RTS_HANDLE hWindow, char *pszText, char *pszCaption, RTS_UI32 uiType)
+
+- typedef RTS_RESULT(* :ref:`PFSYSWINDOWOPENMESSAGEBOXW <group___sys_window_itf_1ga072702a6f075d3ae3750b6f077720206>`)(RTS_HANDLE hWindow, RTS_WCHAR *pwsText, RTS_WCHAR *pwsCaption, RTS_UI32 uiType)
+
+- typedef :ref:`ISysWindow_C <struct_i_sys_window___c>` :ref:`ISysWindow <group___sys_window_itf_1ga779fd14943d2899a472eafbfb6af432a>`
+
+Enumerations
+------------
+
+- enum :ref:`SysWindowCursor <group___sys_window_itf_1ga9557b1508c8bb6261701f2f10ca6e2d9>` { :ref:`SYSWINCUR_DEFAULT <group___sys_window_itf_1gga9557b1508c8bb6261701f2f10ca6e2d9ab5c10c368762c2b4e4ad1a0e6e8a81b3>`, :ref:`SYSWINCUR_ARROW <group___sys_window_itf_1gga9557b1508c8bb6261701f2f10ca6e2d9a03a2c70995298c85cac438bb55ee3288>`, :ref:`SYSWINCUR_HAND <group___sys_window_itf_1gga9557b1508c8bb6261701f2f10ca6e2d9ac5f2c2dd86e07c532d53b40c8c57b85d>`, :ref:`SYSWINCUR_WAIT <group___sys_window_itf_1gga9557b1508c8bb6261701f2f10ca6e2d9a3891f625a72ab5100492feca28ec7b93>`, :ref:`SYSWINCUR_IBEAM <group___sys_window_itf_1gga9557b1508c8bb6261701f2f10ca6e2d9aa1bac1d52f361afa43797897835781c9>`, :ref:`SYSWINCUR_CROSS <group___sys_window_itf_1gga9557b1508c8bb6261701f2f10ca6e2d9af648f3a952d35fc903b6915bee129e66>`, :ref:`SYSWINCUR_HELP <group___sys_window_itf_1gga9557b1508c8bb6261701f2f10ca6e2d9a6b98945041c09c8e2e5d18c84a1151fd>`, :ref:`SYSWINCUR_HSPLIT <group___sys_window_itf_1gga9557b1508c8bb6261701f2f10ca6e2d9a4dd0f9f2091af4f97b270a54ba3c0f8f>`, :ref:`SYSWINCUR_VSPLIT <group___sys_window_itf_1gga9557b1508c8bb6261701f2f10ca6e2d9a486dff149a51814edaeff5a2f660f822>`, :ref:`SYSWINCUR_SIZENWSE <group___sys_window_itf_1gga9557b1508c8bb6261701f2f10ca6e2d9a5e475b3e37e06ea982abea1f6abaf6d1>`, :ref:`SYSWINCUR_SIZENESW <group___sys_window_itf_1gga9557b1508c8bb6261701f2f10ca6e2d9acdab362d17199df25f935cf283800524>`, :ref:`SYSWINCUR_SIZEWE <group___sys_window_itf_1gga9557b1508c8bb6261701f2f10ca6e2d9af1e5fbad057f92a9bb0a022ab382c1e4>`, :ref:`SYSWINCUR_SIZENS <group___sys_window_itf_1gga9557b1508c8bb6261701f2f10ca6e2d9a8338ce6a9ce71d39571052a1e811b053>`, :ref:`SYSWINCUR_SIZEALL <group___sys_window_itf_1gga9557b1508c8bb6261701f2f10ca6e2d9a1494b28a984fc1bfa2b6838e6d9e78a3>`, :ref:`SYSWINCUR_INVISIBLE <group___sys_window_itf_1gga9557b1508c8bb6261701f2f10ca6e2d9aa4cbf6e92443bf1abd4649029be5f692>` }
+
+Functions
+---------
+
+- RTS_RESULT :ref:`SysWindowOSInit <group___sys_window_itf_1ga27bc9666d3e4ebffb102f8facfed4b3e>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysWindowOSHookFunction <group___sys_window_itf_1ga95094a3811f55142264d3d8446c39150>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_RESULT :ref:`SysWindowCyclicCall <group___sys_window_itf_1ga55e84310ecfa2721f6b66aa2f5a3a10c>` (void)
+
+- RTS_RESULT :ref:`SysWindowSupportsSeveralTasks <group___sys_window_itf_1gaa4f51bfc1c630c9dd035c8068b1762a6>` (void)
+
+- RTS_RESULT :ref:`SysWindowInvokeInWindowTask <group___sys_window_itf_1ga5297e60d129b4649370ace53e8abfc04>` (PFINVOKEINWINDOWTASK pfToCall, RTS_UINTPTR ulParam)
+
+- RTS_HANDLE :ref:`SysWindowCreate <group___sys_window_itf_1ga88f45561dfa65e04b47c00ff1f35ac84>` (:ref:`SysWindowCreate_Struct <struct_sys_window_create___struct>` * pCreate, RTS_UINTPTR ulParam, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysWindowDestroy <group___sys_window_itf_1gae27eeb9853600629d88b3be4ddda91fb>` (RTS_HANDLE hWindow)
+
+- RTS_RESULT :ref:`SysWindowSetUserData <group___sys_window_itf_1gaea11dc12815ff6c3b8ba4cd7815b581e>` (RTS_HANDLE hWindow, RTS_UINTPTR ulData)
+
+- RTS_RESULT :ref:`SysWindowShow <group___sys_window_itf_1ga2e72f7503948a09e60d7c1294ffa9b71>` (RTS_HANDLE hWindow, RTS_UI32 ulData)
+
+- RTS_RESULT :ref:`SysWindowGetUserData <group___sys_window_itf_1ga184db829788face1c39842fcad3d1f5d>` (RTS_HANDLE hWindow, RTS_UINTPTR * pulData)
+
+- RTS_RESULT :ref:`SysWindowSetCallback <group___sys_window_itf_1ga78c038d4e9c3361915f6b88f5fe36413>` (RTS_HANDLE hWindow, unsigned long ulCallback, unsigned long * pulOldCallback)
+
+- RTS_RESULT :ref:`SysWindowMessageLoop <group___sys_window_itf_1gaf80ada640c7ae58af28a9499973310a8>` (RTS_HANDLE hWindow)
+
+- RTS_RESULT :ref:`SysWindowRegisterCallback <group___sys_window_itf_1ga6836ccc60c62058bd7218ae164d566fb>` (RTS_HANDLE hWindow, WindowCallbacks wcb, :ref:`PFWINDOWCALLBACK <group___sys_window_itf_1gab1644a745bf4161b226317a24044fabc>`  callback, RTS_UINTPTR ulParam)
+
+- RTS_RESULT :ref:`SysWindowUnregisterCallback <group___sys_window_itf_1gafdd358333e7d45da733650a3844ac30a>` (RTS_HANDLE hWindow, WindowCallbacks wcb, :ref:`PFWINDOWCALLBACK <group___sys_window_itf_1gab1644a745bf4161b226317a24044fabc>`  callback)
+
+- RTS_RESULT :ref:`SysWindowInvalidateRectangle <group___sys_window_itf_1ga254f949393701470b3a907689a476ca6>` (RTS_HANDLE hWindow, RTS_Rectangle rect)
+
+- RTS_RESULT :ref:`SysWindowUpdate <group___sys_window_itf_1gaae05753abbd60c589f520e83ab48addb>` (RTS_HANDLE hWindow)
+
+- RTS_RESULT :ref:`SysWindowForceUpdate <group___sys_window_itf_1ga54bf277584d63747a87aa73f537ab2d8>` (RTS_HANDLE hWindow)
+
+- RTS_RESULT :ref:`SysWindowGetPos <group___sys_window_itf_1ga24eb4acab705a238443333bf879c26a3>` (RTS_HANDLE hWindow, RTS_Rectangle * pRect)
+
+- RTS_RESULT :ref:`SysWindowSetPos <group___sys_window_itf_1ga89ff154a97860ae2e85a9cba0430d1a6>` (RTS_HANDLE hWindow, RTS_Rectangle rect)
+
+- RTS_RESULT :ref:`SysWindowGetClientRectangle <group___sys_window_itf_1gad18e301af5acf723ba5084fff8d30c72>` (RTS_HANDLE hWindow, RTS_Rectangle * pRect)
+
+- RTS_RESULT :ref:`SysWindowSetFont <group___sys_window_itf_1gada99402106422dc2254c035d5ce78a8c>` (RTS_HANDLE hWindow, RTS_HANDLE hFont)
+
+- RTS_RESULT :ref:`SysWindowGetFont <group___sys_window_itf_1ga1f4d0edaa8b25a00b46f1ea1884456cb>` (RTS_HANDLE hWindow, RTS_HANDLE * phFont)
+
+- RTS_RESULT :ref:`SysWindowGetText <group___sys_window_itf_1ga1d65c900096da0234073812d0557d593>` (RTS_HANDLE hWindow, char * pszValue, RTS_SIZE * piLen)
+
+- RTS_RESULT :ref:`SysWindowSetText <group___sys_window_itf_1gacf78302757637ecd780cc0b91cb37e7c>` (RTS_HANDLE hWindow, char * pszText)
+
+- RTS_RESULT :ref:`SysWindowSetTextW <group___sys_window_itf_1ga2b8f3d41aad7d34fd71398949c9d509a>` (RTS_HANDLE hWindow, RTS_WCHAR * pwsText)
+
+- RTS_RESULT :ref:`SysWindowSetFocus <group___sys_window_itf_1ga06b2476dcb398947e295ae189bb40beb>` (RTS_HANDLE hWindow)
+
+- RTS_RESULT :ref:`SysWindowSetSelection <group___sys_window_itf_1ga47774e65652fbf5a72317d6dd597cca3>` (RTS_HANDLE hWindow, char * pszClassName, RTS_I32 dwParam1, RTS_I32 dwParam2)
+
+- RTS_RESULT :ref:`SysWindowSetCursor <group___sys_window_itf_1ga0a80e04166d137e1a0701540a6f4af6f>` (RTS_HANDLE hWindow, RTS_UI16 usCursor)
+
+- RTS_RESULT :ref:`SysWindowSetFlags <group___sys_window_itf_1ga9a7cd26b046120a42164b76575f0957b>` (RTS_HANDLE hWindow, RTS_UI32 uiFlag, RTS_BOOL bValue)
+
+- RTS_RESULT :ref:`SysWindowPrint <group___sys_window_itf_1ga8842622915f0615dbeeb398ac570c9d5>` (RTS_HANDLE hWindow, char * pszTitle)
+
+- RTS_RESULT :ref:`SysWindowPrintStart <group___sys_window_itf_1ga2d3db9efcef1f9c97bf933a2d7aa6968>` (RTS_HANDLE hWindow, char * pszTitle, char * pszPrinter)
+
+- RTS_RESULT :ref:`SysWindowPrintStartDocument <group___sys_window_itf_1ga5bb724fcd1054e0df13da45c9de68b95>` (RTS_HANDLE hWindow)
+
+- RTS_RESULT :ref:`SysWindowPrintEndDocument <group___sys_window_itf_1ga8a3b64c737f944e8381969c7e00550b9>` (RTS_HANDLE hWindow)
+
+- RTS_RESULT :ref:`SysWindowPrintRelease <group___sys_window_itf_1gae0f1a75fec82bfb7466f4a9e94fd2cec>` (RTS_HANDLE hWindow)
+
+- RTS_RESULT :ref:`SysWindowNotify <group___sys_window_itf_1ga887f1e4910868167dd7543c1e768f1aa>` (RTS_HANDLE hWindow, RTS_UI32 notificationCode, void * notificationParam)
+
+- RTS_UI32 :ref:`SysWindowSupportInfo <group___sys_window_itf_1ga9ae5a6595c61b0ee8901f0e365a23092>` (RTS_HANDLE hWindow, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysWindowCreateTimer <group___sys_window_itf_1ga42684268921b6cdc67e87954a3d5e9e3>` (RTS_HANDLE hWindow, RTS_UI32 interval, :ref:`SysWindowTimerCallback <group___sys_window_itf_1ga13abef4a1e9323aed64eb93ba5d8c4de>`  callback, void * pCallbackParams, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysWindowDestroyTimer <group___sys_window_itf_1gaa2fc98c8609b731d99da73554f362153>` (RTS_HANDLE hWindow, RTS_HANDLE hTimer)
+
+- RTS_RESULT :ref:`SysWindowOpenMessageBox <group___sys_window_itf_1gabd8b2d4b675054524047824d8bf64fc6>` (RTS_HANDLE hWindow, char * pszText, char * pszCaption, RTS_UI32 uiType)
+
+- RTS_RESULT :ref:`SysWindowOpenMessageBoxW <group___sys_window_itf_1gaa18975023b51d7de146080c69162f20c>` (RTS_HANDLE hWindow, RTS_WCHAR * pwsText, RTS_WCHAR * pwsCaption, RTS_UI32 uiType)
+
+Detailed Description
+--------------------
+
+Definition in file SysWindowItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

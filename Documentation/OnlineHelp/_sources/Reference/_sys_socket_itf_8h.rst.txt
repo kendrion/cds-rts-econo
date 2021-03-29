@@ -1,0 +1,1118 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of file.rst template
+
+.. __sys_socket_itf_8h:
+
+=============================
+SysSocketItf.h File Reference
+=============================
+
+| #include ":ref:`CmpStd.h`"
+
+Data Structures
+---------------
+
+- struct :ref:`INADDR <struct_i_n_a_d_d_r>`
+
+- struct :ref:`SOCKADDRESS <struct_s_o_c_k_a_d_d_r_e_s_s>`
+
+- struct :ref:`RTS_SOCKET_SO_VALUE_TCP_KEEPALIVE_T <struct_r_t_s___s_o_c_k_e_t___s_o___v_a_l_u_e___t_c_p___k_e_e_p_a_l_i_v_e___t>`
+
+- struct :ref:`SOCKOPT_LINGER <struct_s_o_c_k_o_p_t___l_i_n_g_e_r>`
+
+- struct :ref:`RTS_SOCKET_SO_VALUE_IP_MREQ_T <struct_r_t_s___s_o_c_k_e_t___s_o___v_a_l_u_e___i_p___m_r_e_q___t>`
+
+- struct :ref:`SOCKET_FD_SET <struct_s_o_c_k_e_t___f_d___s_e_t>`
+
+- struct :ref:`SOCKET_TIMEVAL <struct_s_o_c_k_e_t___t_i_m_e_v_a_l>`
+
+- struct :ref:`SOCK_HOSTENT <struct_s_o_c_k___h_o_s_t_e_n_t>`
+
+- struct :ref:`tagSOCK_ADAPTER_INFO <structtag_s_o_c_k___a_d_a_p_t_e_r___i_n_f_o>`
+
+- struct :ref:`UDP_REPLYtag <struct_u_d_p___r_e_p_l_ytag>`
+
+- struct :ref:`EVTPARAM_SysSocket_SetIpAndMask <struct_e_v_t_p_a_r_a_m___sys_socket___set_ip_and_mask>`
+
+- struct :ref:`EVTPARAM_SysSocket_SetGateway <struct_e_v_t_p_a_r_a_m___sys_socket___set_gateway>`
+
+- struct :ref:`EVTPARAM_SysSocket_GetAdditionalAdapterInfo <struct_e_v_t_p_a_r_a_m___sys_socket___get_additional_adapter_info>`
+
+- struct :ref:`tagSOCK_ADAPTER_INFORMATION <structtag_s_o_c_k___a_d_a_p_t_e_r___i_n_f_o_r_m_a_t_i_o_n>`
+
+- struct :ref:`tagSOCK_ADAPTER_INFORMATION2 <structtag_s_o_c_k___a_d_a_p_t_e_r___i_n_f_o_r_m_a_t_i_o_n2>`
+
+- struct :ref:`tagSOCK_ADAPTER_INFO_INT <structtag_s_o_c_k___a_d_a_p_t_e_r___i_n_f_o___i_n_t>`
+
+- struct :ref:`ISysSocket_C <struct_i_sys_socket___c>`
+
+Macros
+------
+
+- #define :ref:`SOCKET_AF_UNSPEC <group___sys_socket_itf___address_family_1ga723007dbfa6e622f70650dce72fe4949>` 0			/* unspecified */
+
+- #define :ref:`SOCKET_AF_LOCAL <group___sys_socket_itf___address_family_1ga82cbc2d4f182c84eaa4b81b61cb370a7>` 1			/* local to host (pipes, portals) */
+
+- #define :ref:`SOCKET_AF_UNIX <group___sys_socket_itf___address_family_1gaf26b9f671650b58e0bd264a71ec3cbfa>` :ref:`SOCKET_AF_LOCAL <group___sys_socket_itf___address_family_1ga82cbc2d4f182c84eaa4b81b61cb370a7>` /* backward compatibility */
+
+- #define :ref:`SOCKET_AF_INET <group___sys_socket_itf___address_family_1ga04ce265041d74932e7d3354651fd0a79>` 2			/* internetwork: UDP, TCP, etc. */
+
+- #define :ref:`SOCKET_AF_IMPLINK <group___sys_socket_itf___address_family_1ga0d847e7cab68abbf1c37d8a8f2490b9b>` 3			/* Arpanet imp addresses */
+
+- #define :ref:`SOCKET_AF_PUP <group___sys_socket_itf___address_family_1ga6f7e0252fbfbc19ee211283d7b974eb1>` 4			/* pup protocols: e.g. BSP */
+
+- #define :ref:`SOCKET_AF_CHAOS <group___sys_socket_itf___address_family_1ga3c425bec5aee7584f25566fb2713e070>` 5			/* MIT CHAOS protocols */
+
+- #define :ref:`SOCKET_AF_NS <group___sys_socket_itf___address_family_1gab46c491a2f75ddbc2030adce908dd42f>` 6			/* XEROX NS protocols */
+
+- #define :ref:`SOCKET_AF_ISO <group___sys_socket_itf___address_family_1gac134815b4fe4fc4012ca9f0ae07d1a01>` 7			/* ISO protocols */
+
+- #define :ref:`SOCKET_AF_OSI <group___sys_socket_itf___address_family_1ga67f9079343d57c2891bdff933ea81942>` :ref:`SOCKET_AF_ISO <group___sys_socket_itf___address_family_1gac134815b4fe4fc4012ca9f0ae07d1a01>`
+
+- #define :ref:`SOCKET_AF_ECMA <group___sys_socket_itf___address_family_1ga525e3b6399956f81ad792572c4cb0f61>` 8			/* European computer manufacturers */
+
+- #define :ref:`SOCKET_AF_DATAKIT <group___sys_socket_itf___address_family_1ga673aca69618c462ba927be119168eaba>` 9			/* Data kit protocols */
+
+- #define :ref:`SOCKET_AF_CCITT <group___sys_socket_itf___address_family_1ga97ba0b59dc3f374fa8138bbe9cbaf99d>` 10			/* CCITT protocols, X.25 etc */
+
+- #define :ref:`SOCKET_AF_SNA <group___sys_socket_itf___address_family_1ga5700e961d75d5796154c692213e758a5>` 11			/* IBM SNA */
+
+- #define :ref:`SOCKET_AF_DECnet <group___sys_socket_itf___address_family_1gaa0fd3250f78ae46ebea20e5b12f936fb>` 12			/* DECnet */
+
+- #define :ref:`SOCKET_AF_DLI <group___sys_socket_itf___address_family_1ga35ab6791753221b6bc0705775c68c9fd>` 13			/* DEC Direct data link interface */
+
+- #define :ref:`SOCKET_AF_LAT <group___sys_socket_itf___address_family_1gaf01215275cbd4a4d9204a06c8b724147>` 14			/* LAT */
+
+- #define :ref:`SOCKET_AF_HYLINK <group___sys_socket_itf___address_family_1gaba5a67d85c4ae08e114f9d93f62e6716>` 15			/* NSC Hyper channel */
+
+- #define :ref:`SOCKET_AF_APPLETALK <group___sys_socket_itf___address_family_1ga7ee603e11a4d2dccaf5c29c83df6cf60>` 16			/* Apple Talk */
+
+- #define :ref:`SOCKET_AF_ROUTE <group___sys_socket_itf___address_family_1ga6fe80d4efe1b83b20825b0d306ec5c22>` 17			/* Internal Routing Protocol */
+
+- #define :ref:`SOCKET_AF_LINK <group___sys_socket_itf___address_family_1ga248cd8f33e622d6e26774f8cdb9d15d3>` 18			/* Link layer interface */
+
+- #define :ref:`SOCKET_pseudo_AF_XTP <group___sys_socket_itf___address_family_1gaf560630fb071343582f8b82d1b1d6792>` 19			/* eXpress Transfer Protocol (no AF) */
+
+- #define :ref:`SOCKET_AF_COIP <group___sys_socket_itf___address_family_1ga5a73d68eafb709f91181caea508912e7>` 20			/* connection-oriented IP, aka ST II */
+
+- #define :ref:`SOCKET_AF_CNT <group___sys_socket_itf___address_family_1gabdce47f72ce8a0b23c20fd284593cc63>` 21			/* Computer Network Technology */
+
+- #define :ref:`SOCKET_pseudo_AF_RTIP <group___sys_socket_itf___address_family_1ga12950d3add63a9c6abab1ae0d71852fc>` 22			/* Help Identify RTIP packets */
+
+- #define :ref:`SOCKET_AF_IPX <group___sys_socket_itf___address_family_1gae88af6e69be795bb7fbfb88edc4e8bc2>` 23			/* Novell Internet Protocol */
+
+- #define :ref:`SOCKET_AF_SIP <group___sys_socket_itf___address_family_1gae5d7ea02956402c557d3750a62dac6ca>` 24			/* Simple Internet Protocol */
+
+- #define :ref:`SOCKET_pseudo_AF_PIP <group___sys_socket_itf___address_family_1ga972049b43fe571b3324aef2b91a80abb>` 25			/* Help Identify PIP packets */
+
+- #define :ref:`SOCKET_AF_MAX <group___sys_socket_itf___address_family_1ga33258534e2b3873197a232e2aa60d3a5>` 26
+
+- #define :ref:`SOCKET_AF_INET_BSD <group___sys_socket_itf___address_family_1gac52fb72a3c9509eb4475ba3b8d36018d>` 100			/* BSD-specific INET */
+
+- #define :ref:`SOCKET_AF_INET_STREAMS <group___sys_socket_itf___address_family_1ga2e12534642729885ded27786653db80d>` 101			/* STREAMS-specific INET */
+
+- #define :ref:`SOCKET_IPPROTO_IP <group___sys_socket_itf___socketprotocols_1gaf4deb45fce6ccd9618225ad46d6c414b>` 0		/* IP level */
+
+- #define :ref:`SOCKET_IPPROTO_ICMP <group___sys_socket_itf___socketprotocols_1ga657c13b69bc27be1af31d09c895da5aa>` 1		/* control message protocol */
+
+- #define :ref:`SOCKET_IPPROTO_IGMP <group___sys_socket_itf___socketprotocols_1ga54712de14f5e9e319060f66ea6196dfb>` 2		/* group management protocol */
+
+- #define :ref:`SOCKET_IPPROTO_GGP <group___sys_socket_itf___socketprotocols_1ga987448736794604bc95ca8adba4657c5>` 3		/* gateway^2 (deprecated) */
+
+- #define :ref:`SOCKET_IPPROTO_TCP <group___sys_socket_itf___socketprotocols_1ga23ac52f2e8e200798e44cdbf8704096b>` 6		/* TCP */
+
+- #define :ref:`SOCKET_IPPROTO_PUP <group___sys_socket_itf___socketprotocols_1ga86526bff4802e5c0b76fae766184bf6b>` 12		/* pup */
+
+- #define :ref:`SOCKET_IPPROTO_UDP <group___sys_socket_itf___socketprotocols_1gaffc1bd28b038fdf084f3363167b1f4f4>` 17		/* user datagram protocol */
+
+- #define :ref:`SOCKET_IPPROTO_IDP <group___sys_socket_itf___socketprotocols_1ga48739ca104e82a60ed026a095e64ab58>` 22		/* XNS IDP */
+
+- #define :ref:`SOCKET_IPPROTO_ND <group___sys_socket_itf___socketprotocols_1gaaffc49d5b07ac8286287ffb6c741841c>` 77		/* UNOFFICIAL net disk protocol */
+
+- #define :ref:`SOCKET_IPPROTO_TLS <group___sys_socket_itf___socketprotocols_1gad46162dcb9dcf057be67bd4427d784f8>` 254		/* UNOFFICIAL TCP / TLS protocol */
+
+- #define :ref:`SOCKET_IPPROTO_RAW <group___sys_socket_itf___socketprotocols_1gada197409b41d2f68a261d05462d38187>` 255		/* raw IP packet */
+
+- #define :ref:`SOCKET_IPPROTO_MAX <group___sys_socket_itf___socketprotocols_1ga7bb02cd3eb6c92e7cd786390361d040a>` 256
+
+- #define :ref:`SOCKET_SOL <group___sys_socket_itf___socketlevel_1gac47e9e62fb9a9e8935b54a4418feec3a>` 0xffff	/* level for socket itself in the same numbering space as IPPROTO_TCP, IPPROTO_IP, etc. */
+
+- #define :ref:`SOCKET_SO_DEBUG <group___sys_socket_itf___socketoptions_1ga3c585b83c9f42c4aa2b49e2f529c4c56>` 0x0001		/* turn on debugging info recording */
+
+- #define :ref:`SOCKET_SO_ACCEPTCONN <group___sys_socket_itf___socketoptions_1ga0e7bf90689c0ea10bc43e3b1f61ea6c1>` 0x0002		/* socket has had listen() */
+
+- #define :ref:`SOCKET_SO_REUSEADDR <group___sys_socket_itf___socketoptions_1ga7a238f64c49ef6c7aea7cfe16d1e0ac5>` 0x0004		/* allow local address reuse */
+
+- #define :ref:`SOCKET_SO_KEEPALIVE <group___sys_socket_itf___socketoptions_1ga0f7074b869b88f5fb750473b41e6eb5e>` 0x0008		/* keep connections alive. See category "TCP keep-alive options" for extended parameters for this option. */
+
+- #define :ref:`SOCKET_SO_DONTROUTE <group___sys_socket_itf___socketoptions_1gaea99d6bc0fab2a4e53992caba45cfbc2>` 0x0010		/* just use interface addresses */
+
+- #define :ref:`SOCKET_SO_BROADCAST <group___sys_socket_itf___socketoptions_1ga1d16a51106f47efdc76e1495f3cf9ead>` 0x0020		/* permit sending of broadcast messages */
+
+- #define :ref:`SOCKET_SO_USELOOPBACK <group___sys_socket_itf___socketoptions_1gaee4eb6bef4e6330861bfa77188c621c6>` 0x0040		/* bypass hardware when possible */
+
+- #define :ref:`SOCKET_SO_LINGER <group___sys_socket_itf___socketoptions_1ga5f97760841af9a43926bd207a2a32715>` 0x0080		/* linger on close if data present. See category "Linger on close options" for extended parameters for this option. */
+
+- #define :ref:`SOCKET_SO_OOBINLINE <group___sys_socket_itf___socketoptions_1ga9090fa5bb126e17af5bfc9642524416f>` 0x0100		/* leave received OOB data in line */
+
+- #define :ref:`SOCKET_SO_REUSEPORT <group___sys_socket_itf___socketoptions_1gaa677c5c4c9fb9c2901f59bae61218989>` 0x0200		/* allow local address & port reuse */
+
+- #define :ref:`SOCKET_SO_SNDBUF <group___sys_socket_itf___socketoptions_1ga458bafdef6d2bfdd698d25935a9a05a8>` 0x1001		/* send buffer size */
+
+- #define :ref:`SOCKET_SO_RCVBUF <group___sys_socket_itf___socketoptions_1ga057781fff8a16936f1d2f81e639d17e9>` 0x1002		/* receive buffer size */
+
+- #define :ref:`SOCKET_SO_SNDLOWAT <group___sys_socket_itf___socketoptions_1ga1aed1c2d25abea12ea5a9c5d8a11d0a1>` 0x1003		/* send low-water mark */
+
+- #define :ref:`SOCKET_SO_RCVLOWAT <group___sys_socket_itf___socketoptions_1ga37349a289abe68853fd3f6706358c61e>` 0x1004		/* receive low-water mark */
+
+- #define :ref:`SOCKET_SO_SNDTIMEO <group___sys_socket_itf___socketoptions_1ga4e79c5dbef56609cfb2ca32a5cf82257>` 0x1005		/* send timeout */
+
+- #define :ref:`SOCKET_SO_RCVTIMEO <group___sys_socket_itf___socketoptions_1gae523e4269e9d3d8d811d9b201cd22bda>` 0x1006		/* receive timeout */
+
+- #define :ref:`SOCKET_SO_ERROR <group___sys_socket_itf___socketoptions_1ga2950a8731d02bbaf9ed6a1be4864638e>` 0x1007		/* get error status and clear */
+
+- #define :ref:`SOCKET_SO_TYPE <group___sys_socket_itf___socketoptions_1ga5f92b5db6137482c64bee7c26063f267>` 0x1008		/* get socket type */
+
+- #define :ref:`SOCKET_SO_PROTOTYPE <group___sys_socket_itf___socketoptions_1gad7116f81233bc37fdd32bcdd6e942d46>` 0x1009		/* get/set protocol type */
+
+- #define :ref:`SOCKET_SO_HOSTNAME <group___sys_socket_itf___socketoptions_1gabce31cf4970098583317a6c2bc45f0d6>` 0x2001		/* get/set the host-name for TLS connections. Needed for SNI support */
+
+- #define :ref:`SOCKET_SO_STARTTLS <group___sys_socket_itf___socketoptions_1ga7f459d6ef5a0628c68d149a59e529211>` 0x3001		/* Upgrade standard socket to TLS! Works only on sockets with socket type SYSSOCK_TYPE_STARTTLS! */
+
+- #define :ref:`SOCKET_TCP_NODELAY <group___sys_socket_itf___socket_t_c_poptions_1ga50e904b0adcc6c319bc93af43aa172ee>` 0x0001		/* don't delay send to coalesce packets */
+
+- #define :ref:`SOCKET_TCP_MAXSEG <group___sys_socket_itf___socket_t_c_poptions_1ga808212fa35666622998c32fb021c6f2c>` 0x0002		/* set maximum segment size */
+
+- #define :ref:`SOCKET_IP_MULTICAST_IF <group___sys_socket_itf___i_pmulticastoptions_1ga6d19718ef05498902aa51622540d20f8>` 0x0009		/* IP multi-cast interface */
+
+- #define :ref:`SOCKET_SO_MULTICAST_IF <group___sys_socket_itf___i_pmulticastoptions_1gabc86ffe48cec3dfe81c9151410cb6ab7>` :ref:`SOCKET_IP_MULTICAST_IF <group___sys_socket_itf___i_pmulticastoptions_1ga6d19718ef05498902aa51622540d20f8>` /* backward compatibility */
+
+- #define :ref:`SOCKET_IP_MULTICAST_TTL <group___sys_socket_itf___i_pmulticastoptions_1gad33677b3b212300d6dc0db853cc323ba>` 0x000A		/* IP multi-cast TTL (hop limit) */
+
+- #define :ref:`SOCKET_IP_MULTICAST_LOOP <group___sys_socket_itf___i_pmulticastoptions_1gab122141ddb5d37ff334be16c245f70a0>` 0x000B		/* IP multi-cast loop-back */
+
+- #define :ref:`SOCKET_IP_ADD_MEMBERSHIP <group___sys_socket_itf___i_pmulticastoptions_1ga3a982d41e0cbfea982c0ee35cab78ae3>` 0x000C		/* Add an IP group membership. See category "IP multi-cast options" for extended parameters for this option. */
+
+- #define :ref:`SOCKET_IP_DROP_MEMBERSHIP <group___sys_socket_itf___i_pmulticastoptions_1ga057793cb88e55bf92024c4c36e81a9e5>` 0x000D		/* Drop an IP group membership. See category "IP multi-cast options" for extended parameters for this option. */
+
+- #define :ref:`SOCKET_IP_DONTFRAGMENT <group___sys_socket_itf___i_pmulticastoptions_1gaa59f39211e2b45f2db8ea6673cbcfd62>` 0x000E		/* Indicates that data should not be fragmented regardless of the local MTU. Valid only for message oriented protocols (UDP etc). */
+
+- #define :ref:`SOCKET_STREAM <group___sys_socket_itf___sockettypes_1ga4ee3bbfd0004627b06c48b19905e40b7>` 1			/* stream socket */
+
+- #define :ref:`SOCKET_DGRAM <group___sys_socket_itf___sockettypes_1ga338907fc94b5c2375739c125f0be29cd>` 2			/* datagram socket */
+
+- #define :ref:`SOCKET_RAW <group___sys_socket_itf___sockettypes_1gaa879bcf72a37c52c0106fd402a8d2f74>` 3			/* raw-protocol interface */
+
+- #define :ref:`SOCKET_RDM <group___sys_socket_itf___sockettypes_1gaa2c69391d10d72ede548291768e0b7a4>` 4			/* reliably-delivered message */
+
+- #define :ref:`SOCKET_SEQPACKET <group___sys_socket_itf___sockettypes_1ga7b21449a1f98b250b6c8a945b688c9a9>` 5			/* sequenced packet stream */
+
+- #define :ref:`SOCKET_IN_CLASSA <group___sys_socket_itf___socketclasshandling_1ga9760d2fe9d74d9c11a049a1d7daccaa2>` (((RTS_UI32)(i) & UINT32_C(0x80000000)) == 0)
+
+- #define :ref:`SOCKET_IN_CLASSA_NET <group___sys_socket_itf___socketclasshandling_1ga8b6369d637d0144a60b5efa397ee3774>` UINT32_C(0xff000000)
+
+- #define :ref:`SOCKET_IN_CLASSA_NSHIFT <group___sys_socket_itf___socketclasshandling_1ga3d85d14ac41468d4cf2a9d73fd9f96dc>` 24
+
+- #define :ref:`SOCKET_IN_CLASSA_HOST <group___sys_socket_itf___socketclasshandling_1ga9b9414d84499d3a3bd80c07d52a38841>` UINT32_C(0x00ffffff)
+
+- #define :ref:`SOCKET_IN_CLASSA_MAX <group___sys_socket_itf___socketclasshandling_1ga949cd0ceed0b68725091b70c92e7d9b6>` 128
+
+- #define :ref:`SOCKET_IN_CLASSB <group___sys_socket_itf___socketclasshandling_1ga9fe593e70fa988c6247c9f324e4aceb9>` (((RTS_UI32)(i) & UINT32_C(0xc0000000)) == UINT32_C(0x80000000))
+
+- #define :ref:`SOCKET_IN_CLASSB_NET <group___sys_socket_itf___socketclasshandling_1gaef54300cf1fa576587311eaa60ce2556>` UINT32_C(0xffff0000)
+
+- #define :ref:`SOCKET_IN_CLASSB_NSHIFT <group___sys_socket_itf___socketclasshandling_1gae7c0a1ba50e357a0623083f30fd293a2>` 16
+
+- #define :ref:`SOCKET_IN_CLASSB_HOST <group___sys_socket_itf___socketclasshandling_1gab1ea4edf1896eaaa9f45aca544ebd690>` UINT32_C(0x0000ffff)
+
+- #define :ref:`SOCKET_IN_CLASSB_MAX <group___sys_socket_itf___socketclasshandling_1ga3ee4e191d763373e00d5a48af41a233b>` 65536
+
+- #define :ref:`SOCKET_IN_CLASSC <group___sys_socket_itf___socketclasshandling_1ga7c93069166fda650699d49185c50c866>` (((RTS_UI32)(i) & UINT32_C(0xe0000000)) == UINT32_C(0xc0000000))
+
+- #define :ref:`SOCKET_IN_CLASSC_NET <group___sys_socket_itf___socketclasshandling_1ga21ac796ff258dfe46e99747cfaf21450>` UINT32_C(0xffffff00)
+
+- #define :ref:`SOCKET_IN_CLASSC_NSHIFT <group___sys_socket_itf___socketclasshandling_1gada66517ad79b8e1e1ac0fed2d4cf42e3>` 8
+
+- #define :ref:`SOCKET_IN_CLASSC_HOST <group___sys_socket_itf___socketclasshandling_1ga31d51628464864dabfbcaba849b470db>` UINT32_C(0x000000ff)
+
+- #define :ref:`SOCKET_INADDR_ANY <group___sys_socket_itf___socketclasshandling_1ga0405dbe0dacf7d992ebb6bf866792610>` UINT32_C(0x00000000)
+
+- #define :ref:`SOCKET_INADDR_LOOPBACK <group___sys_socket_itf___socketclasshandling_1gaa4c029302bea75b89beeed7d426b4779>` UINT32_C(0x7f000001)
+
+- #define :ref:`SOCKET_INADDR_BROADCAST <group___sys_socket_itf___socketclasshandling_1gad1aa55f6d0c076f2dafd7b8283c255fa>` UINT32_C(0xffffffff)
+
+- #define :ref:`SOCKET_INADDR_NONE <group___sys_socket_itf___socketclasshandling_1gab8e10fb944213240a8a9a01a327e4b8f>` UINT32_C(0xffffffff)
+
+- #define :ref:`SOCKET_FIONREAD <group___sys_socket_itf___ioctlcommands_1ga094914e0ee64e174bdd7f88a8c9fdb63>` 1		/* use to determine the amount of data pending in the network's input buffer */
+
+- #define :ref:`SOCKET_FIONBIO <group___sys_socket_itf___ioctlcommands_1ga7f1ddc412f17fc91e04ddddafbb057e1>` 2		/* set socket to non-blocking; argument must be non zero */
+
+- #define :ref:`SOCKET_MSG_NONE <group___sys_socket_itf___t_c_pflags_1ga55e4bba195fc66cab484e8e572f1fa6a>` 0x00
+
+- #define :ref:`SOCKET_MSG_OOB <group___sys_socket_itf___t_c_pflags_1gaa148818246961e8a30d0421f256dfff2>` 0x01				/* process out-of-band data */
+
+- #define :ref:`SOCKET_MSG_PEEK <group___sys_socket_itf___t_c_pflags_1ga8976856a31a25eb870b0a5e1e408cf6f>` 0x02				/* peek at incoming message */
+
+- #define :ref:`SOCKET_MSG_DONTROUTE <group___sys_socket_itf___t_c_pflags_1ga4677525282f79c8324036b25deb9b620>` 0x04				/* send without using routing tables */
+
+- #define :ref:`SOCKET_MSG_DONTWAIT <group___sys_socket_itf___t_c_pflags_1gaadb5dba2959fe52075e3529271c61dcb>` 0x08				/* send TCP frame directly without blocking */
+
+- #define :ref:`SOCKET_SD_RECEIVE <group___sys_socket_itf___shutdownflags_1ga9684bc4c994ad4fea1adc5d220bd9a42>` 0x00
+
+- #define :ref:`SOCKET_SD_SEND <group___sys_socket_itf___shutdownflags_1ga4b03efba2f0780d8426876fe02073073>` 0x01
+
+- #define :ref:`SOCKET_SD_BOTH <group___sys_socket_itf___shutdownflags_1ga17c2d9562a397271ecf3cbdd729689e0>` 0x02
+
+- #define :ref:`SOCKET_FD_SETSIZE <group___sys_socket_itf___i_pmulti-castoptions_1gabec33c20ceacd3f14e31c4ed7a5061a8>` 64
+
+- #define :ref:`SOCKET_FD_INIT <group___sys_socket_itf___i_pmulti-castoptions_1ga226706b87a7dbe49a2df6adb3e18ec4b>` :ref:`CAL_SysSockFdInit <group___sys_socket_itf_1ga88545d004983eac6ed14b017cad21373>` (fd, set)
+
+- #define :ref:`SOCKET_FD_ISSET <group___sys_socket_itf___i_pmulti-castoptions_1ga07c50794be1ec032c16d061ba1b3ffaa>` :ref:`CAL_SysSockFdIsset <group___sys_socket_itf_1ga0244faec2d097e5c8079ac16ea3fafc6>` (fd, set)
+
+- #define :ref:`SOCKET_FD_ZERO <group___sys_socket_itf___i_pmulti-castoptions_1ga4001a62dd29d7af3ff69bff265f3363d>` :ref:`CAL_SysSockFdZero <group___sys_socket_itf_1gaebe806c76cf553b35113ef593cc62b1d>` (set)
+
+- #define :ref:`SOCKET_ZERO_FD <group___sys_socket_itf___i_pmulti-castoptions_1ga0ed808b3798f03cbfc3c7b5d372781e1>` :ref:`CAL_SysSockFdZero <group___sys_socket_itf_1gaebe806c76cf553b35113ef593cc62b1d>` (set)
+
+- #define :ref:`h_addr <group___sys_socket_itf_1ga4d04a8261523c8f3473946257c12ce5b>` h_addr_list[0]   /* address, for backward compatibility */
+
+- #define :ref:`SOCK_AIT_ETHERNET <group___sys_socket_itf___adaptertypes_1ga4b1a098509144cfebdb8b4dac0f26815>` 1	/* generic Ethernet adapter - default, if nothing else matches*/
+
+- #define :ref:`SOCK_AIT_LOCALHOST <group___sys_socket_itf___adaptertypes_1ga52382d78aad55c7efa20992570e2a547>` 2	/* localhost adapter */
+
+- #define :ref:`SOCK_AIT_PPP <group___sys_socket_itf___adaptertypes_1gafbe811c2be168732e213d94fad7206de>` 3	/* PPP adapter - broadcasts are not supported */
+
+- #define :ref:`SOCK_AIT_WIRELESS <group___sys_socket_itf___adaptertypes_1ga5706de566b2ca52aa2acdc621cb0e6f8>` 4	/* wireless (e. g. WLAN) network adapter */
+
+- #define :ref:`SOCK_AIF_NONE <group___sys_socket_itf___adapterinformationflags_1ga54a573fb7efe1e80df1a8d799fe98fbb>` UINT32_C(0x00000000)	/* no flag set */
+
+- #define :ref:`SOCK_AIF_INACTIVE <group___sys_socket_itf___adapterinformationflags_1gaae602e77e9ce485cb055460390ddb356>` UINT32_C(0x00000001)	/* interface not ready for IP communication (no driver, no IP address, no link, ...) */
+
+- #define :ref:`SOCK_AIF_ALIAS_IP <group___sys_socket_itf___adapterinformationflags_1gacf307d8d8f555aa61fb821dcad564700>` UINT32_C(0x00000002)	/* further IP (aka alias address) of adapter */
+
+- #define :ref:`SOCK_AIF_DYNAMIC_IP <group___sys_socket_itf___adapterinformationflags_1ga4556a7e7d097a93ad76bc1e2a7e7b50b>` UINT32_C(0x00000004)	/* dynamic IP address, provided by DHCP, BOOTP, etc. Cannot be changed by :ref:`SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1ga96779e5ea363ffe3eb12e8c196f50348>` () */
+
+- #define :ref:`SOCK_AIF_FIX_IP <group___sys_socket_itf___adapterinformationflags_1gacc2ffb5e81f4913318f382c3550b2fd4>` UINT32_C(0x00000008)	/* fix (e. g. hard coded) IP address. Cannot be changed by :ref:`SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1ga96779e5ea363ffe3eb12e8c196f50348>` () */
+
+- #define :ref:`SOCK_AIF_IP_CHANGE_ALLOWED <group___sys_socket_itf___adapterinformationflags_1ga62d58d6650bf72c38d16c26af2f7458a>` UINT32_C(0x00000010)	/* adapter is white listed to allow address changes. IP address can be likely changed by :ref:`SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1ga96779e5ea363ffe3eb12e8c196f50348>` () */
+
+- #define :ref:`SOCK_AIF_GATEWAY_INFO_VALID <group___sys_socket_itf___adapterinformationflags_1ga10f3b4512c537bdfb17b0746648f4e0b>` UINT32_C(0x00000020)	/* DefaultGateway address is valid. Must not be set, if no Gateway information is provided by the system. */
+
+- #define :ref:`SOCK_AIF_DNS_INFO_VALID <group___sys_socket_itf___adapterinformationflags_1gabef31e1e344274cbc97dfe6396837120>` UINT32_C(0x00000040)	/* DNS address and suffix is valid. Is not set, if no DNS information is provided by the system. */
+
+- #define :ref:`SOCK_AIF_DHCP_INFO_VALID <group___sys_socket_itf___adapterinformationflags_1ga7f3453066805d23c4b4cb96d21e90a22>` UINT32_C(0x00000080)	/* DHCP address is valid. Is not set, if no DHCP information is provided by the system. */
+
+- #define :ref:`SOCK_AIF_INFO_VALID <group___sys_socket_itf___adapterinformationflags_1ga3e44088feb9cd13175286ccf859f0010>` UINT32_C(0x00008000)	/* Adapter is valid - only valid adapters are returned by :ref:`SysSockGetFirstAdapterInfo <group___sys_socket_itf_1gaa992602fbfb135cbb8e1439ad48a9d2b>` () or :ref:`SysSockGetNextAdapterInfo <group___sys_socket_itf_1ga959799c8f03d346c9578ec85e50cbc5c>` () */
+
+- #define :ref:`ADAPTER_INFO_STRUCT_VERSION <group___sys_socket_itf___staticdefinesforadapterinformation_1gaa53ab71c1d4dd728758cb8d5edb65383>` 1	/* version number of structure, to be increased on changes */
+
+- #define :ref:`ADAPTER_INFO_STRUCT2_VERSION <group___sys_socket_itf___staticdefinesforadapterinformation_1ga8d9d6bc7e743babcb9885f56737acf5f>` 2	/* version number of structure with DNS and DHCP info, to be increased on changes */
+
+- #define :ref:`ADAPTER_INFO_MAC_ADDR_LENGTH <group___sys_socket_itf___staticdefinesforadapterinformation_1gae50a726ea1eb8d03799c6126baf54773>` 6	/* byte length of MAC address; fix value */
+
+- #define :ref:`ADAPTER_INFO_NAME_LEN <group___sys_socket_itf___staticdefinesforadapterinformation_1ga4fd66cac7a229cd56d95f74f1448f808>` 256	/* max. length of adapter name */
+
+- #define :ref:`ADAPTER_INFO_DESC_LEN <group___sys_socket_itf___staticdefinesforadapterinformation_1ga2d06c3489218908924139f782fb5dd07>` 256	/* max. length of adapter description */
+
+- #define :ref:`ADAPTER_INFO_DNSSUFFIX_LEN <group___sys_socket_itf___staticdefinesforadapterinformation_1ga547810e18ca0489b8ce93d9f0b07c11d>` 256	/* max. length of DNS suffix */
+
+- #define :ref:`UDP_REPLY2 <group___sys_socket_itf___u_d_preply_1ga55cd869e61ceeb34ea37ab2fa83019a5>` :ref:`UDP_REPLY <group___sys_socket_itf___u_d_preply_1gab8deb524ce5b39df867774a0fc5e1576>`
+
+- #define :ref:`SYSSOCKET_ADAPTER_PREFIX <group___sys_socket_itf___settings_1ga2ced40a6a3486ce2056d3b4f8eae2b01>` "Adapter"
+
+- #define :ref:`SYSSOCKETKEY_WSTRING_NAME_UNICODE <group___sys_socket_itf___settings_1ga7c2bd56b2fa2f237dc0cef91fc413cb1>` "NameUnicode"
+
+- #define :ref:`SYSSOCKETKEY_STRING_NAME <group___sys_socket_itf___settings_1gaf70423df6d051558ba0cc45d4b14ebc9>` "Name"
+
+- #define :ref:`SYSSOCKETKEY_INT_ENABLE_SETIPANDMASK <group___sys_socket_itf___settings_1ga820af6f0e30e50b47b6bd901e1862fa8>` "EnableSetIpAndMask"
+
+- #define :ref:`SYSSOCKETVALUE_INT_ENABLE_SETIPANDMASK_DEFAULT <group___sys_socket_itf___settings_1gae94f2930413e146cc3b0dfa12e1b9df0>` 0
+
+- #define :ref:`SYSSOCKETKEY_STRING_QNX_ITFNAME <group___sys_socket_itf___settings_1gac7104e1e883f2e2ad54d100837299f6b>` "QNX.ItfName"
+
+- #define :ref:`SYSSOCKETKEY_STRING_IPADDRESS <group___sys_socket_itf___settings_1ga6e9662f49ec8392e220c296c6113e663>` "ipaddress"
+
+- #define :ref:`SYSSOCKETKEY_STRING_SUBNETMASK <group___sys_socket_itf___settings_1ga2422e7764035e656ba004fb894672103>` "subnetmask"
+
+- #define :ref:`SYSSOCKETKEY_STRING_GATEWAY <group___sys_socket_itf___settings_1gac07e06cd39e1c6fc9280b215a5730afc>` "gateway"
+
+- #define :ref:`SYSSOCKETKEY_STRING_SYSLOG_IPADDRESS <group___sys_socket_itf___settings_1gae80d374eb33295660c9c5b622acd9dd2>` "sysLog.IPAddress"
+
+- #define :ref:`SYSSOCKETVALUE_STRING_SYSLOG_IPADDRESS_DEFAULT <group___sys_socket_itf___settings_1ga030c22bd0a6395ab7fbc9d5481983eec>` "127.0.0.1"
+
+- #define :ref:`SYSSOCKETKEY_INT_SYSLOG_PORT <group___sys_socket_itf___settings_1ga25d8eeb383b100b9c5f8ba4902831b94>` "sysLog.Port"
+
+- #define :ref:`SYSSOCKETVALUE_INT_SYSLOG_PORT_DEFAULT <group___sys_socket_itf___settings_1ga99d0f78e7b6faeb27ba85405af7b2bfa>` 514
+
+- #define :ref:`SYSSOCKET_NUM_OF_STATIC_ADAPTER_INFOS <group___sys_socket_itf___staticdefines_1ga92eeb672cb375772f14023899402edb4>` 1
+
+- #define :ref:`SOCKET_MTU_SIZE <group___sys_socket_itf___staticdefines_1ga1f987d80c8ae62020f55e8da16c3bd52>` 1500
+
+- #define :ref:`SOCKET_BUFFER_SIZE <group___sys_socket_itf___staticdefines_1ga39bd9346967d7f7bad6f917eb4f0fbbd>` ( :ref:`SOCKET_MTU_SIZE <group___sys_socket_itf___staticdefines_1ga1f987d80c8ae62020f55e8da16c3bd52>` *3)
+
+- #define :ref:`SYSSOCKET_NUM_OF_STATIC_SOCKETS <group___sys_socket_itf___staticdefines_1ga2c42fb0e5e90f6ed1b6854a703a4f8cf>` 1
+
+- #define :ref:`SYSSOCKET_NUM_OF_STATIC_ARP_ENTRIES <group___sys_socket_itf___staticdefines_1ga3c889a420a9dc8be2ebc4478e39e050f>` 5
+
+- #define :ref:`SYSSOCKET_DEFAULT_IP <group___sys_socket_itf___staticdefines_1gaba8af76c80635541434abac482476337>` UINT32_C(0xc0a80102) /* 192.168.1.2 */
+
+- #define :ref:`SYSSOCKET_DEFAULT_SUBNET <group___sys_socket_itf___staticdefines_1gad5c287e419a7c4b4e5cd7327d4a429a1>` UINT32_C(0xFFFFFF00) /* 255.255.255.0 */
+
+- #define :ref:`EVTPARAMID_SysSocket_SetIpAndMask <group___sys_socket_itf___eventparameter_1ga1ea636fb6d3cfe908cfeaa235e94065e>` 0x0001
+
+- #define :ref:`EVTVERSION_SysSocket_SetIpAndMask <group___sys_socket_itf___eventparameter_1ga601d43337a26bd5cf678128c68605a3f>` 0x0001
+
+- #define :ref:`EVTPARAMID_SysSocket_SetGateway <group___sys_socket_itf___eventparameter_1gaf6dd0121d206f7b7d07b4b9dee8f5761>` 0x0002
+
+- #define :ref:`EVTVERSION_SysSocket_SetGateway <group___sys_socket_itf___eventparameter_1ga5168774d9a65be0fe7031d26e9dab386>` 0x0001
+
+- #define :ref:`EVTPARAMID_SysSocket_GetAdditionalAdapterInfo <group___sys_socket_itf___eventparameter_1ga1bc235657460166f772b604e769c804a>` 0x0003
+
+- #define :ref:`EVTVERSION_SysSocket_GetAdditionalAdapterInfo <group___sys_socket_itf___eventparameter_1ga7f614cddc2c42ce4e912e72e3ec54095>` 0x0001
+
+- #define :ref:`EVT_SysSocket_BeforeSetIpAndMask <group___sys_socket_itf___events_1gaad79aa95a240e7e622ff4c3736ab0908>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 1)
+
+- #define :ref:`EVT_SysSocket_AfterSetIpAndMask <group___sys_socket_itf___events_1gadcbb320f2007bf523d645b80447afee2>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 2)
+
+- #define :ref:`EVT_SysSocket_BeforeSetGateway <group___sys_socket_itf___events_1gaff317909512a1be12df9781c619163bc>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 3)
+
+- #define :ref:`EVT_SysSocket_AfterSetGateway <group___sys_socket_itf___events_1ga832cd8dc2a6cc8c36d2490a4e46f3e21>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 4)
+
+- #define :ref:`EVT_SysSocket_GetAdditionalAdapterInfo <group___sys_socket_itf___events_1gaf2cf218233ac181bfb970a7ed8cccf09>` :ref:`MAKE_EVENTID <group___cmp_event_mgr_itf___convertmacro_1ga8f45ad6798a634d4e00140c12039007e>` ( :ref:`EVTCLASS_INFO <group___cmp_event_mgr_itf___eventclasses_1ga711863810010aec40693ca7c4643a025>` , 5)
+
+- #define :ref:`SOCK_IFLAG_AF_INETFOUND <group___sys_socket_itf___internalflagsforadaptermanagement_1ga08cf3718e0f3ea11f7bb96639ef919cd>` 0x00000001	/* Adapter information for AF_INET already found - to be used internally in SysSocketOS implementation */
+
+- #define :ref:`SOCK_IFLAG_IN_PROGRESS <group___sys_socket_itf___internalflagsforadaptermanagement_1gad232211ba87034a4fbd14072d186363b>` 0x00000002	/* Adapter information is currently checked for update - to be used internally in SysSocketOS implementation */
+
+- #define :ref:`SOCK_IFLAG_FREE_STRINGS_ON_EXIT <group___sys_socket_itf___internalflagsforadaptermanagement_1gaa55851c4dd9fea81ef533c09c443cc6f>` 0x00000004	/* On shutdown SysSocket.c checks this flag and if set it frees all referenced strings by calling :ref:`SysMemFree <group___sys_mem_itf_1ga3349e87a867a5e3c63cd8aa2ecccc5ca>` () */
+
+- #define :ref:`SOCK_IFLAG_FREE_HOSSPECIFIC_ON_EXIT <group___sys_socket_itf___internalflagsforadaptermanagement_1gadf6fe665b9bde109d659e6db8e29529a>` 0x00000008	/* On shutdown SysSocket.c checks this flag and if set it frees hOsSpecific by calling :ref:`SysMemFree <group___sys_mem_itf_1ga3349e87a867a5e3c63cd8aa2ecccc5ca>` () */
+
+- #define :ref:`USE_SysSockCreate <group___sys_socket_itf_1ga5cd71ecb109a6cca5c73776ba14c501c>` :ref:`PFSYSSOCKCREATE <group___sys_socket_itf_1ga8c8e55ad5ecaf842dc936ccf529bb8aa>` pfSysSockCreate;
+
+- #define :ref:`EXT_SysSockCreate <group___sys_socket_itf_1ga0e31281a5ff58bcba0f5f6cc1d0f5104>` extern :ref:`PFSYSSOCKCREATE <group___sys_socket_itf_1ga8c8e55ad5ecaf842dc936ccf529bb8aa>` pfSysSockCreate;
+
+- #define :ref:`GET_SysSockCreate <group___sys_socket_itf_1ga2b76024b8b8b76f6004e2f8dc9e523f2>` s_pfCMGetAPI2( "SysSockCreate", (RTS_VOID_FCTPTR *)&pfSysSockCreate, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockCreate <group___sys_socket_itf_1ga2a10534e10479900c28930fc8daedf43>` pfSysSockCreate
+
+- #define :ref:`CHK_SysSockCreate <group___sys_socket_itf_1gaaad3bfb9cd7345eefb9d1d40bc27edb0>` (pfSysSockCreate != NULL)
+
+- #define :ref:`EXP_SysSockCreate <group___sys_socket_itf_1ga7433653c39cfbef0a1750fb136811689>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockCreate", (RTS_UINTPTR) :ref:`SysSockCreate <group___sys_socket_itf_1ga3812315581d7ea7f717ad035145b8a33>` , 0, 0)
+
+- #define :ref:`USE_SysSockClose <group___sys_socket_itf_1ga44efc07cac08d084ffdac153a5ec3573>` :ref:`PFSYSSOCKCLOSE <group___sys_socket_itf_1gaf2919e0d53e0261a6217421cf753d197>` pfSysSockClose;
+
+- #define :ref:`EXT_SysSockClose <group___sys_socket_itf_1gafdedb17806ac492770d1ae887503a14c>` extern :ref:`PFSYSSOCKCLOSE <group___sys_socket_itf_1gaf2919e0d53e0261a6217421cf753d197>` pfSysSockClose;
+
+- #define :ref:`GET_SysSockClose <group___sys_socket_itf_1ga3b7bf52abc520bafa799874efa51d597>` s_pfCMGetAPI2( "SysSockClose", (RTS_VOID_FCTPTR *)&pfSysSockClose, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockClose <group___sys_socket_itf_1gae3ad9de20a7746c0d8e825f14c32615f>` pfSysSockClose
+
+- #define :ref:`CHK_SysSockClose <group___sys_socket_itf_1ga2ea4476d681dd3ac0b251c535ae4892b>` (pfSysSockClose != NULL)
+
+- #define :ref:`EXP_SysSockClose <group___sys_socket_itf_1gab35f33ae8cd56f7f3354a8b1d91bdbb6>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockClose", (RTS_UINTPTR) :ref:`SysSockClose <group___sys_socket_itf_1gac706d50aeb2b2bb678da100f8a726c73>` , 0, 0)
+
+- #define :ref:`USE_SysSockSetOption <group___sys_socket_itf_1ga4d48b857854a7f5383810b3d95a01b07>` :ref:`PFSYSSOCKSETOPTION <group___sys_socket_itf_1ga9568887cf984627b1f2419092f25090e>` pfSysSockSetOption;
+
+- #define :ref:`EXT_SysSockSetOption <group___sys_socket_itf_1ga2dec1555bc74771497fe3771eca9e2a0>` extern :ref:`PFSYSSOCKSETOPTION <group___sys_socket_itf_1ga9568887cf984627b1f2419092f25090e>` pfSysSockSetOption;
+
+- #define :ref:`GET_SysSockSetOption <group___sys_socket_itf_1gaacac94810f2cd182050bdf44bd83c9e7>` s_pfCMGetAPI2( "SysSockSetOption", (RTS_VOID_FCTPTR *)&pfSysSockSetOption, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockSetOption <group___sys_socket_itf_1ga8be02d6ac46b7f9dc11fd8870bd876ee>` pfSysSockSetOption
+
+- #define :ref:`CHK_SysSockSetOption <group___sys_socket_itf_1ga9d07375b1576c15318f2f8cf1b4ba613>` (pfSysSockSetOption != NULL)
+
+- #define :ref:`EXP_SysSockSetOption <group___sys_socket_itf_1ga1b57d6d0a68bce4c4cf0ec274371bdb1>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockSetOption", (RTS_UINTPTR) :ref:`SysSockSetOption <group___sys_socket_itf_1gaa342277e920cba3eda31a65cfd54c5b2>` , 0, 0)
+
+- #define :ref:`USE_SysSockGetOption <group___sys_socket_itf_1gafc41f252e3f2e2980a143a2e8a9e754a>` :ref:`PFSYSSOCKGETOPTION <group___sys_socket_itf_1ga665a3539a3fcd9c8ba7023df5540e567>` pfSysSockGetOption;
+
+- #define :ref:`EXT_SysSockGetOption <group___sys_socket_itf_1gab60d93c0a9287ee8b447372c5319ae9f>` extern :ref:`PFSYSSOCKGETOPTION <group___sys_socket_itf_1ga665a3539a3fcd9c8ba7023df5540e567>` pfSysSockGetOption;
+
+- #define :ref:`GET_SysSockGetOption <group___sys_socket_itf_1ga7c7ce5f7b310f2559efe1da4bef33f5a>` s_pfCMGetAPI2( "SysSockGetOption", (RTS_VOID_FCTPTR *)&pfSysSockGetOption, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockGetOption <group___sys_socket_itf_1ga826bf074f2d28da73a9c25a2162ffcdd>` pfSysSockGetOption
+
+- #define :ref:`CHK_SysSockGetOption <group___sys_socket_itf_1ga2488c6ffb163ca2410054d0d5812ff67>` (pfSysSockGetOption != NULL)
+
+- #define :ref:`EXP_SysSockGetOption <group___sys_socket_itf_1ga82c6ac2535ec18a9ea624dce1b806aa0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockGetOption", (RTS_UINTPTR) :ref:`SysSockGetOption <group___sys_socket_itf_1gaa829c944c9a90d3028fb16112787a1bc>` , 0, 0)
+
+- #define :ref:`USE_SysSockBind <group___sys_socket_itf_1ga072bafafc9e6822ca53130394d295f49>` :ref:`PFSYSSOCKBIND <group___sys_socket_itf_1ga4d21c7f362d3d82cb19c3ea718fe4db7>` pfSysSockBind;
+
+- #define :ref:`EXT_SysSockBind <group___sys_socket_itf_1gac24cbd7b2ec05e593cd8b829abce25d5>` extern :ref:`PFSYSSOCKBIND <group___sys_socket_itf_1ga4d21c7f362d3d82cb19c3ea718fe4db7>` pfSysSockBind;
+
+- #define :ref:`GET_SysSockBind <group___sys_socket_itf_1ga0291d47731a8cf918025abd50d1ae47d>` s_pfCMGetAPI2( "SysSockBind", (RTS_VOID_FCTPTR *)&pfSysSockBind, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockBind <group___sys_socket_itf_1ga1aa701e3445824ea578bd4c7ab23dba8>` pfSysSockBind
+
+- #define :ref:`CHK_SysSockBind <group___sys_socket_itf_1ga7aa5f7d77c4734b3298b68bed07cc13d>` (pfSysSockBind != NULL)
+
+- #define :ref:`EXP_SysSockBind <group___sys_socket_itf_1ga4151e82525cf9b9bd62c8035cde8baa8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockBind", (RTS_UINTPTR) :ref:`SysSockBind <group___sys_socket_itf_1ga29e3bffcd92e01492d111ef9a43d7524>` , 0, 0)
+
+- #define :ref:`USE_SysSockGetHostName <group___sys_socket_itf_1gacd6ea8cd9735adfe67062c6167670780>` :ref:`PFSYSSOCKGETHOSTNAME <group___sys_socket_itf_1gaf8264b7d05b1048e573121bf89b51449>` pfSysSockGetHostName;
+
+- #define :ref:`EXT_SysSockGetHostName <group___sys_socket_itf_1ga364c39dea93cb78c895c2901699c350c>` extern :ref:`PFSYSSOCKGETHOSTNAME <group___sys_socket_itf_1gaf8264b7d05b1048e573121bf89b51449>` pfSysSockGetHostName;
+
+- #define :ref:`GET_SysSockGetHostName <group___sys_socket_itf_1gaa2e633a235d445b412f77c1a3b50a3bc>` s_pfCMGetAPI2( "SysSockGetHostName", (RTS_VOID_FCTPTR *)&pfSysSockGetHostName, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockGetHostName <group___sys_socket_itf_1ga8362b59953d110c81fe167938a3a873c>` pfSysSockGetHostName
+
+- #define :ref:`CHK_SysSockGetHostName <group___sys_socket_itf_1gaf927f0275cc5e298fa7c1553689daf77>` (pfSysSockGetHostName != NULL)
+
+- #define :ref:`EXP_SysSockGetHostName <group___sys_socket_itf_1ga5a4b367f15b14e97b7000f49507e262d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockGetHostName", (RTS_UINTPTR) :ref:`SysSockGetHostName <group___sys_socket_itf_1gaa6b108a6afc007184d272b6e4f829e80>` , 0, 0)
+
+- #define :ref:`USE_SysSockGetHostByName <group___sys_socket_itf_1gaf441086c67cea14f32c7268557f5625d>` :ref:`PFSYSSOCKGETHOSTBYNAME <group___sys_socket_itf_1ga1d502756a6d5e2ed70387edb872658db>` pfSysSockGetHostByName;
+
+- #define :ref:`EXT_SysSockGetHostByName <group___sys_socket_itf_1ga96a12bd378989355d3cc4fcf9ad8fadc>` extern :ref:`PFSYSSOCKGETHOSTBYNAME <group___sys_socket_itf_1ga1d502756a6d5e2ed70387edb872658db>` pfSysSockGetHostByName;
+
+- #define :ref:`GET_SysSockGetHostByName <group___sys_socket_itf_1ga9e4c9eab578efe9b7c564c1725e07eae>` s_pfCMGetAPI2( "SysSockGetHostByName", (RTS_VOID_FCTPTR *)&pfSysSockGetHostByName, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockGetHostByName <group___sys_socket_itf_1ga9013066515cae9d9a7b30a519eadf693>` pfSysSockGetHostByName
+
+- #define :ref:`CHK_SysSockGetHostByName <group___sys_socket_itf_1ga1bdfe1f493fd487677f85c547a0e4abd>` (pfSysSockGetHostByName != NULL)
+
+- #define :ref:`EXP_SysSockGetHostByName <group___sys_socket_itf_1ga5c8cb56789082ce18920c892f77365ac>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockGetHostByName", (RTS_UINTPTR) :ref:`SysSockGetHostByName <group___sys_socket_itf_1ga741ac269edaaa88c597a48a2a577a854>` , 0, 0)
+
+- #define :ref:`USE_SysSockInetNtoa <group___sys_socket_itf_1gaf7a297a1a962b83906905e43bb370ffd>` :ref:`PFSYSSOCKINETNTOA <group___sys_socket_itf_1gaa1f10ecfbc06713d9b9a3d281c405b00>` pfSysSockInetNtoa;
+
+- #define :ref:`EXT_SysSockInetNtoa <group___sys_socket_itf_1ga6962578e9c13e28e00e7492aa70545e5>` extern :ref:`PFSYSSOCKINETNTOA <group___sys_socket_itf_1gaa1f10ecfbc06713d9b9a3d281c405b00>` pfSysSockInetNtoa;
+
+- #define :ref:`GET_SysSockInetNtoa <group___sys_socket_itf_1ga9443faf0a0238040ff96988372347c3a>` s_pfCMGetAPI2( "SysSockInetNtoa", (RTS_VOID_FCTPTR *)&pfSysSockInetNtoa, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockInetNtoa <group___sys_socket_itf_1gaefc414a0a0a8ec32f3d0249db09c2e99>` pfSysSockInetNtoa
+
+- #define :ref:`CHK_SysSockInetNtoa <group___sys_socket_itf_1gacbdd17d35410face7096fc89879934a0>` (pfSysSockInetNtoa != NULL)
+
+- #define :ref:`EXP_SysSockInetNtoa <group___sys_socket_itf_1ga038369909f080406258215ce81ae71b7>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockInetNtoa", (RTS_UINTPTR) :ref:`SysSockInetNtoa <group___sys_socket_itf_1gab2dcaa62d371c38ebf9c6b94b7a8fe46>` , 0, 0)
+
+- #define :ref:`USE_SysSockInetAddr <group___sys_socket_itf_1gadbf706319ac1c8e8b6e2f3dcfdeb92de>` :ref:`PFSYSSOCKINETADDR <group___sys_socket_itf_1ga797d994009cc8dacfc0add14469e4ebc>` pfSysSockInetAddr;
+
+- #define :ref:`EXT_SysSockInetAddr <group___sys_socket_itf_1gaead4999e760a0845f63c7cd469edc0c7>` extern :ref:`PFSYSSOCKINETADDR <group___sys_socket_itf_1ga797d994009cc8dacfc0add14469e4ebc>` pfSysSockInetAddr;
+
+- #define :ref:`GET_SysSockInetAddr <group___sys_socket_itf_1ga47b562e010b9bc3c56b6209aa536799d>` s_pfCMGetAPI2( "SysSockInetAddr", (RTS_VOID_FCTPTR *)&pfSysSockInetAddr, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockInetAddr <group___sys_socket_itf_1gab4acd1b017956515514ee3042682aca0>` pfSysSockInetAddr
+
+- #define :ref:`CHK_SysSockInetAddr <group___sys_socket_itf_1ga27dd8603fbd9dc20285248a271c1cf90>` (pfSysSockInetAddr != NULL)
+
+- #define :ref:`EXP_SysSockInetAddr <group___sys_socket_itf_1gab38ffca6aabf5b534c4876ea2f7aca73>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockInetAddr", (RTS_UINTPTR) :ref:`SysSockInetAddr <group___sys_socket_itf_1gabe4395c7a8a33830c7b6378261e1a0dd>` , 0, 0)
+
+- #define :ref:`USE_SysSockHtons <group___sys_socket_itf_1ga41d6ef48a1e69540881ba808783ec1dc>` :ref:`PFSYSSOCKHTONS <group___sys_socket_itf_1ga8e761cdc4bbd6b46e4462079f5371a68>` pfSysSockHtons;
+
+- #define :ref:`EXT_SysSockHtons <group___sys_socket_itf_1ga14b668b63cc014265b80fa5a905fd3d7>` extern :ref:`PFSYSSOCKHTONS <group___sys_socket_itf_1ga8e761cdc4bbd6b46e4462079f5371a68>` pfSysSockHtons;
+
+- #define :ref:`GET_SysSockHtons <group___sys_socket_itf_1ga272c86750d84a289bb2d7da7f1ab87f2>` s_pfCMGetAPI2( "SysSockHtons", (RTS_VOID_FCTPTR *)&pfSysSockHtons, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockHtons <group___sys_socket_itf_1ga7674ec7a2c182c7d8dfcfb743eea975f>` pfSysSockHtons
+
+- #define :ref:`CHK_SysSockHtons <group___sys_socket_itf_1ga9391293846b5cf7083edb9d42a9282b2>` (pfSysSockHtons != NULL)
+
+- #define :ref:`EXP_SysSockHtons <group___sys_socket_itf_1gaccfdd60a473cac815843eb3588c17b29>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockHtons", (RTS_UINTPTR) :ref:`SysSockHtons <group___sys_socket_itf_1ga48c7c4a743b8dc34a2ed85f3b11b8555>` , 0, 0)
+
+- #define :ref:`USE_SysSockHtonl <group___sys_socket_itf_1gafde589b029d37371aa53d52a859267ed>` :ref:`PFSYSSOCKHTONL <group___sys_socket_itf_1ga3201eb5814de521b902de648d92fd88f>` pfSysSockHtonl;
+
+- #define :ref:`EXT_SysSockHtonl <group___sys_socket_itf_1ga7689ecdd5ac4d7ad69f3c33fcc40a2ad>` extern :ref:`PFSYSSOCKHTONL <group___sys_socket_itf_1ga3201eb5814de521b902de648d92fd88f>` pfSysSockHtonl;
+
+- #define :ref:`GET_SysSockHtonl <group___sys_socket_itf_1gaaf1bc29220d804f598cdbc2927ff7f14>` s_pfCMGetAPI2( "SysSockHtonl", (RTS_VOID_FCTPTR *)&pfSysSockHtonl, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockHtonl <group___sys_socket_itf_1ga68e29c01663650591ea370f7d4cdfdb1>` pfSysSockHtonl
+
+- #define :ref:`CHK_SysSockHtonl <group___sys_socket_itf_1ga16c1a736d0d2bc9e93b168fc5280d7f6>` (pfSysSockHtonl != NULL)
+
+- #define :ref:`EXP_SysSockHtonl <group___sys_socket_itf_1ga1255487a9f0d0cc866311d0989d3d694>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockHtonl", (RTS_UINTPTR) :ref:`SysSockHtonl <group___sys_socket_itf_1ga334941a933b7045c7c0064e7cd026a18>` , 0, 0)
+
+- #define :ref:`USE_SysSockNtohs <group___sys_socket_itf_1gafad9d98edec020d9c3ce67d3fac16014>` :ref:`PFSYSSOCKNTOHS <group___sys_socket_itf_1gadb9ddc8aade9790ae5e58493a38ded48>` pfSysSockNtohs;
+
+- #define :ref:`EXT_SysSockNtohs <group___sys_socket_itf_1ga51b51dac3118eebc015ec865708edc76>` extern :ref:`PFSYSSOCKNTOHS <group___sys_socket_itf_1gadb9ddc8aade9790ae5e58493a38ded48>` pfSysSockNtohs;
+
+- #define :ref:`GET_SysSockNtohs <group___sys_socket_itf_1gab3bc88cda6d15072cc271f671947cd15>` s_pfCMGetAPI2( "SysSockNtohs", (RTS_VOID_FCTPTR *)&pfSysSockNtohs, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockNtohs <group___sys_socket_itf_1ga75ae239414c5b2b72d000f08ac5022aa>` pfSysSockNtohs
+
+- #define :ref:`CHK_SysSockNtohs <group___sys_socket_itf_1ga35dea730404a41f9d86c1d161cbae501>` (pfSysSockNtohs != NULL)
+
+- #define :ref:`EXP_SysSockNtohs <group___sys_socket_itf_1ga00bd50c7bed780ac75af8c01ca20e952>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockNtohs", (RTS_UINTPTR) :ref:`SysSockNtohs <group___sys_socket_itf_1gacf86310d1e3904062afbb0971cb5f979>` , 0, 0)
+
+- #define :ref:`USE_SysSockNtohl <group___sys_socket_itf_1ga864343b73431cd023ee2177ae9945221>` :ref:`PFSYSSOCKNTOHL <group___sys_socket_itf_1ga16274e5ae1c471ed4008dc84e27fbf09>` pfSysSockNtohl;
+
+- #define :ref:`EXT_SysSockNtohl <group___sys_socket_itf_1gac67374b5a920fc6d74b7787bbb6693f9>` extern :ref:`PFSYSSOCKNTOHL <group___sys_socket_itf_1ga16274e5ae1c471ed4008dc84e27fbf09>` pfSysSockNtohl;
+
+- #define :ref:`GET_SysSockNtohl <group___sys_socket_itf_1ga16ba65833df9a60884752b725a31a43b>` s_pfCMGetAPI2( "SysSockNtohl", (RTS_VOID_FCTPTR *)&pfSysSockNtohl, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockNtohl <group___sys_socket_itf_1ga6cf1ca70f5925ad5dc089e723dd6eb2f>` pfSysSockNtohl
+
+- #define :ref:`CHK_SysSockNtohl <group___sys_socket_itf_1gaffc0d638abf493a022b92ddb9e74342e>` (pfSysSockNtohl != NULL)
+
+- #define :ref:`EXP_SysSockNtohl <group___sys_socket_itf_1ga5a9b887667aefdaf9207121b21680c82>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockNtohl", (RTS_UINTPTR) :ref:`SysSockNtohl <group___sys_socket_itf_1ga96695eeec93c83897efacad462aacb39>` , 0, 0)
+
+- #define :ref:`USE_SysSockListen <group___sys_socket_itf_1ga7b529187722eb688f435c672f2d5ff2d>` :ref:`PFSYSSOCKLISTEN <group___sys_socket_itf_1ga38a34be40fb3ae9e9f29ffa71c278a10>` pfSysSockListen;
+
+- #define :ref:`EXT_SysSockListen <group___sys_socket_itf_1gaa248790e91a9e921af7c5f85415466c1>` extern :ref:`PFSYSSOCKLISTEN <group___sys_socket_itf_1ga38a34be40fb3ae9e9f29ffa71c278a10>` pfSysSockListen;
+
+- #define :ref:`GET_SysSockListen <group___sys_socket_itf_1ga316875be85430becbfc05222e490da31>` s_pfCMGetAPI2( "SysSockListen", (RTS_VOID_FCTPTR *)&pfSysSockListen, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockListen <group___sys_socket_itf_1ga0209633b5f8e68757b92bd58b62d49cb>` pfSysSockListen
+
+- #define :ref:`CHK_SysSockListen <group___sys_socket_itf_1ga77961d31b738df7f46d33de7d1e68a53>` (pfSysSockListen != NULL)
+
+- #define :ref:`EXP_SysSockListen <group___sys_socket_itf_1gaf4b798f86fcee268d5714371e5154a8d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockListen", (RTS_UINTPTR) :ref:`SysSockListen <group___sys_socket_itf_1ga9a0d7e8f58402c0e10db8000c2084362>` , 0, 0)
+
+- #define :ref:`USE_SysSockAccept <group___sys_socket_itf_1ga61156052e69c6521b39617cc8b4357ce>` :ref:`PFSYSSOCKACCEPT <group___sys_socket_itf_1gab42a806041690648ea9aa0bd565775b2>` pfSysSockAccept;
+
+- #define :ref:`EXT_SysSockAccept <group___sys_socket_itf_1ga8066b6717989081e3a96569b4f667b97>` extern :ref:`PFSYSSOCKACCEPT <group___sys_socket_itf_1gab42a806041690648ea9aa0bd565775b2>` pfSysSockAccept;
+
+- #define :ref:`GET_SysSockAccept <group___sys_socket_itf_1gad92d9849f6c4bcc82e75721a4f78484f>` s_pfCMGetAPI2( "SysSockAccept", (RTS_VOID_FCTPTR *)&pfSysSockAccept, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockAccept <group___sys_socket_itf_1gaa62fda445d123fd9811bd450852f2569>` pfSysSockAccept
+
+- #define :ref:`CHK_SysSockAccept <group___sys_socket_itf_1gad2ab4d31c74c931014cab69ddae9640d>` (pfSysSockAccept != NULL)
+
+- #define :ref:`EXP_SysSockAccept <group___sys_socket_itf_1gac6eeb28baee00085fadfac3033332856>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockAccept", (RTS_UINTPTR) :ref:`SysSockAccept <group___sys_socket_itf_1gade1d1c37602754237e75971d7bc00186>` , 0, 0)
+
+- #define :ref:`USE_SysSockSetIPAddress <group___sys_socket_itf_1ga51577694cb42819c26e94428731db8ab>` :ref:`PFSYSSOCKSETIPADDRESS <group___sys_socket_itf_1ga138174cf985b7b1ed7ae1370602267e6>` pfSysSockSetIPAddress;
+
+- #define :ref:`EXT_SysSockSetIPAddress <group___sys_socket_itf_1ga126d68d00dcc39481c721ad0972da30d>` extern :ref:`PFSYSSOCKSETIPADDRESS <group___sys_socket_itf_1ga138174cf985b7b1ed7ae1370602267e6>` pfSysSockSetIPAddress;
+
+- #define :ref:`GET_SysSockSetIPAddress <group___sys_socket_itf_1gae9b6e02dd89fd5a30abd8b796d63f5c1>` s_pfCMGetAPI2( "SysSockSetIPAddress", (RTS_VOID_FCTPTR *)&pfSysSockSetIPAddress, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockSetIPAddress <group___sys_socket_itf_1ga3ec94c9c162f72f6af7b6a40ae46d43d>` pfSysSockSetIPAddress
+
+- #define :ref:`CHK_SysSockSetIPAddress <group___sys_socket_itf_1ga1404d540e686bfa392779cecc7f4be1c>` (pfSysSockSetIPAddress != NULL)
+
+- #define :ref:`EXP_SysSockSetIPAddress <group___sys_socket_itf_1gae8e208037471bb41838068882ec176f5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockSetIPAddress", (RTS_UINTPTR) :ref:`SysSockSetIPAddress <group___sys_socket_itf_1gac9df27adc7dee251a49276325cb38c4c>` , 0, 0)
+
+- #define :ref:`USE_SysSockConnect <group___sys_socket_itf_1ga54a0b24e7d74697885436c550f86d6c7>` :ref:`PFSYSSOCKCONNECT <group___sys_socket_itf_1ga82e0a671752b2130bb09d4091c66cc33>` pfSysSockConnect;
+
+- #define :ref:`EXT_SysSockConnect <group___sys_socket_itf_1ga2f6f12c1d0c84cc6cbcd37db75fd34f0>` extern :ref:`PFSYSSOCKCONNECT <group___sys_socket_itf_1ga82e0a671752b2130bb09d4091c66cc33>` pfSysSockConnect;
+
+- #define :ref:`GET_SysSockConnect <group___sys_socket_itf_1gaa232d2b41d84e4fe6aad0576c8834df7>` s_pfCMGetAPI2( "SysSockConnect", (RTS_VOID_FCTPTR *)&pfSysSockConnect, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockConnect <group___sys_socket_itf_1ga80f521766debb513b953cfdbd514ba5d>` pfSysSockConnect
+
+- #define :ref:`CHK_SysSockConnect <group___sys_socket_itf_1gaa117e76ae48f7050d47e9f5fe33c11a0>` (pfSysSockConnect != NULL)
+
+- #define :ref:`EXP_SysSockConnect <group___sys_socket_itf_1gaa73962377a71265f9cdb4db588e25b57>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockConnect", (RTS_UINTPTR) :ref:`SysSockConnect <group___sys_socket_itf_1ga395884b5c3d46ae74b24f44bb900ea45>` , 0, 0)
+
+- #define :ref:`USE_SysSockSelect <group___sys_socket_itf_1gaf43f17fd98d80ad6be8489ccc815539d>` :ref:`PFSYSSOCKSELECT <group___sys_socket_itf_1ga8a2f20001b60433278d4d1ed36be2336>` pfSysSockSelect;
+
+- #define :ref:`EXT_SysSockSelect <group___sys_socket_itf_1ga8a948b7f460e68a914eb527b60c2d12a>` extern :ref:`PFSYSSOCKSELECT <group___sys_socket_itf_1ga8a2f20001b60433278d4d1ed36be2336>` pfSysSockSelect;
+
+- #define :ref:`GET_SysSockSelect <group___sys_socket_itf_1ga00bd3402f7644ff1970ef79af394719f>` s_pfCMGetAPI2( "SysSockSelect", (RTS_VOID_FCTPTR *)&pfSysSockSelect, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockSelect <group___sys_socket_itf_1gad47e07b04b8dd2e404b402d66fdc3ae1>` pfSysSockSelect
+
+- #define :ref:`CHK_SysSockSelect <group___sys_socket_itf_1ga53e2d2eb270ac3d5962bad18b7d33a3a>` (pfSysSockSelect != NULL)
+
+- #define :ref:`EXP_SysSockSelect <group___sys_socket_itf_1gaaf2485c39f7e928b9cdef5dd2e2148c8>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockSelect", (RTS_UINTPTR) :ref:`SysSockSelect <group___sys_socket_itf_1ga8f7ac1d6d8e1cb0a2906f25896b0d95e>` , 0, 0)
+
+- #define :ref:`USE_SysSockShutdown <group___sys_socket_itf_1ga8724fe7297e0daa246c110982bb2e8d0>` :ref:`PFSYSSOCKSHUTDOWN <group___sys_socket_itf_1gac6a9a5b8ea371d10371b1a99745d389f>` pfSysSockShutdown;
+
+- #define :ref:`EXT_SysSockShutdown <group___sys_socket_itf_1gacc862ad929b2808430a051577c01fec1>` extern :ref:`PFSYSSOCKSHUTDOWN <group___sys_socket_itf_1gac6a9a5b8ea371d10371b1a99745d389f>` pfSysSockShutdown;
+
+- #define :ref:`GET_SysSockShutdown <group___sys_socket_itf_1ga0446a4f0b9fbb2c6332dab299934a651>` s_pfCMGetAPI2( "SysSockShutdown", (RTS_VOID_FCTPTR *)&pfSysSockShutdown, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockShutdown <group___sys_socket_itf_1gab7145996a01dc789c4fc80315b94dd6b>` pfSysSockShutdown
+
+- #define :ref:`CHK_SysSockShutdown <group___sys_socket_itf_1ga0d28e14a47aed3e2e8d2256f898af341>` (pfSysSockShutdown != NULL)
+
+- #define :ref:`EXP_SysSockShutdown <group___sys_socket_itf_1ga562d894d98503ccb006b98ecaadd1145>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockShutdown", (RTS_UINTPTR) :ref:`SysSockShutdown <group___sys_socket_itf_1ga6ce6f321fb09784e033bc41824ce55d7>` , 0, 0)
+
+- #define :ref:`USE_SysSockIoctl <group___sys_socket_itf_1gaf7396b04de03291ba81a289399be06d6>` :ref:`PFSYSSOCKIOCTL <group___sys_socket_itf_1ga3c8b96a50e84ca4046f81768ae81bc57>` pfSysSockIoctl;
+
+- #define :ref:`EXT_SysSockIoctl <group___sys_socket_itf_1ga27a13beb3e35b15804a6538cb9c45fac>` extern :ref:`PFSYSSOCKIOCTL <group___sys_socket_itf_1ga3c8b96a50e84ca4046f81768ae81bc57>` pfSysSockIoctl;
+
+- #define :ref:`GET_SysSockIoctl <group___sys_socket_itf_1ga13a7b6dcf6eaee9f390505d28bffaac5>` s_pfCMGetAPI2( "SysSockIoctl", (RTS_VOID_FCTPTR *)&pfSysSockIoctl, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockIoctl <group___sys_socket_itf_1gaaa09f8b1e59fd95bdeb4c23eaa265e77>` pfSysSockIoctl
+
+- #define :ref:`CHK_SysSockIoctl <group___sys_socket_itf_1ga756a1c676cac771c845a7f2349fcda22>` (pfSysSockIoctl != NULL)
+
+- #define :ref:`EXP_SysSockIoctl <group___sys_socket_itf_1gab6f4c6af9714780e0295370ee46dd941>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockIoctl", (RTS_UINTPTR) :ref:`SysSockIoctl <group___sys_socket_itf_1ga2ea1074c433fd58a2c2f8e493f8fd0c2>` , 0, 0)
+
+- #define :ref:`USE_SysSockRecv <group___sys_socket_itf_1ga6ffdc44d8940257d9db91b760daa086d>` :ref:`PFSYSSOCKRECV <group___sys_socket_itf_1gaef96e32802d75bdd399d1e2ce87c0283>` pfSysSockRecv;
+
+- #define :ref:`EXT_SysSockRecv <group___sys_socket_itf_1gab326d8a9509111fe035c116e0d3276f5>` extern :ref:`PFSYSSOCKRECV <group___sys_socket_itf_1gaef96e32802d75bdd399d1e2ce87c0283>` pfSysSockRecv;
+
+- #define :ref:`GET_SysSockRecv <group___sys_socket_itf_1ga29f57777c0027e773a10bec9d9f11024>` s_pfCMGetAPI2( "SysSockRecv", (RTS_VOID_FCTPTR *)&pfSysSockRecv, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockRecv <group___sys_socket_itf_1ga516e3ce41639e95ae3b04ae22dd700f0>` pfSysSockRecv
+
+- #define :ref:`CHK_SysSockRecv <group___sys_socket_itf_1ga382675c41dd9098c12cc39117385e84f>` (pfSysSockRecv != NULL)
+
+- #define :ref:`EXP_SysSockRecv <group___sys_socket_itf_1ga1a91e797cac7cdc225c443486c25cc2a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockRecv", (RTS_UINTPTR) :ref:`SysSockRecv <group___sys_socket_itf_1gaf4208b02b587eb1ecddf5acc257bef12>` , 0, 0)
+
+- #define :ref:`USE_SysSockSend <group___sys_socket_itf_1ga2a2733a8abfb0a81f0f04003dff17d69>` :ref:`PFSYSSOCKSEND <group___sys_socket_itf_1ga5e096e7d7cd720363d4d0d4dc699d412>` pfSysSockSend;
+
+- #define :ref:`EXT_SysSockSend <group___sys_socket_itf_1gac22dad66b6f941003ebefa1a2b5a3aba>` extern :ref:`PFSYSSOCKSEND <group___sys_socket_itf_1ga5e096e7d7cd720363d4d0d4dc699d412>` pfSysSockSend;
+
+- #define :ref:`GET_SysSockSend <group___sys_socket_itf_1ga011ffe3ffefa03e5ddd5fb1cea188568>` s_pfCMGetAPI2( "SysSockSend", (RTS_VOID_FCTPTR *)&pfSysSockSend, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockSend <group___sys_socket_itf_1gaf0d2ee60d6d081f2e6ed8b1b8f26d18c>` pfSysSockSend
+
+- #define :ref:`CHK_SysSockSend <group___sys_socket_itf_1gaecb7ce0479c44f6d64b26950533d9d37>` (pfSysSockSend != NULL)
+
+- #define :ref:`EXP_SysSockSend <group___sys_socket_itf_1gac1b841e63248cf0248f5108ff4384a68>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockSend", (RTS_UINTPTR) :ref:`SysSockSend <group___sys_socket_itf_1gaf5571ac3d75d30147438179f7ace24bb>` , 0, 0)
+
+- #define :ref:`USE_SysSockRecvFrom <group___sys_socket_itf_1ga5152d92b77a06ce80ef0cd8182158322>` :ref:`PFSYSSOCKRECVFROM <group___sys_socket_itf_1ga5c441239ec80b3eccb87c78651dfb683>` pfSysSockRecvFrom;
+
+- #define :ref:`EXT_SysSockRecvFrom <group___sys_socket_itf_1gaf9f8bdd36aac008785da2d8b79dcc98e>` extern :ref:`PFSYSSOCKRECVFROM <group___sys_socket_itf_1ga5c441239ec80b3eccb87c78651dfb683>` pfSysSockRecvFrom;
+
+- #define :ref:`GET_SysSockRecvFrom <group___sys_socket_itf_1ga601f1b09ee3fb354810d5a704acf600a>` s_pfCMGetAPI2( "SysSockRecvFrom", (RTS_VOID_FCTPTR *)&pfSysSockRecvFrom, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockRecvFrom <group___sys_socket_itf_1ga1b6b0a65436615475a47950dca5d7b20>` pfSysSockRecvFrom
+
+- #define :ref:`CHK_SysSockRecvFrom <group___sys_socket_itf_1gaa0de4ab82304234394378c1b3bcb99c8>` (pfSysSockRecvFrom != NULL)
+
+- #define :ref:`EXP_SysSockRecvFrom <group___sys_socket_itf_1ga13677f8aad08cb46e51f445642dddff0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockRecvFrom", (RTS_UINTPTR) :ref:`SysSockRecvFrom <group___sys_socket_itf_1gafc6423dcd1cb655bb511fc0a22ff99df>` , 0, 0)
+
+- #define :ref:`USE_SysSockSendTo <group___sys_socket_itf_1gaa95ce3badcf81c7cf1ffadbf3edd2f59>` :ref:`PFSYSSOCKSENDTO <group___sys_socket_itf_1ga5ba34084585d43d1fbe08fd09c6eaf80>` pfSysSockSendTo;
+
+- #define :ref:`EXT_SysSockSendTo <group___sys_socket_itf_1ga30fc24122607d8ceec9cf2af01b0cd67>` extern :ref:`PFSYSSOCKSENDTO <group___sys_socket_itf_1ga5ba34084585d43d1fbe08fd09c6eaf80>` pfSysSockSendTo;
+
+- #define :ref:`GET_SysSockSendTo <group___sys_socket_itf_1ga3d750e1576cc16cd73852323b60ea489>` s_pfCMGetAPI2( "SysSockSendTo", (RTS_VOID_FCTPTR *)&pfSysSockSendTo, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockSendTo <group___sys_socket_itf_1ga654ca999ec003320f18b4cd32a39b091>` pfSysSockSendTo
+
+- #define :ref:`CHK_SysSockSendTo <group___sys_socket_itf_1ga6bd4dffc81bef6a251586aca6236a209>` (pfSysSockSendTo != NULL)
+
+- #define :ref:`EXP_SysSockSendTo <group___sys_socket_itf_1gaf9d1c82560cbee275aaea254f349191a>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockSendTo", (RTS_UINTPTR) :ref:`SysSockSendTo <group___sys_socket_itf_1ga839f42059e06ab467178705cddc97028>` , 0, 0)
+
+- #define :ref:`USE_SysSockCreateUdp <group___sys_socket_itf_1ga899c220ce759d620fdebf489ce3f60d0>` :ref:`PFSYSSOCKCREATEUDP <group___sys_socket_itf_1ga35790c28de5cfac8fc2a572cb5cf252a>` pfSysSockCreateUdp;
+
+- #define :ref:`EXT_SysSockCreateUdp <group___sys_socket_itf_1ga81c4fa8df010c4b9a1119dbb2d4fb4cc>` extern :ref:`PFSYSSOCKCREATEUDP <group___sys_socket_itf_1ga35790c28de5cfac8fc2a572cb5cf252a>` pfSysSockCreateUdp;
+
+- #define :ref:`GET_SysSockCreateUdp <group___sys_socket_itf_1gafe43e819e6808b35779e1bc7f4660133>` s_pfCMGetAPI2( "SysSockCreateUdp", (RTS_VOID_FCTPTR *)&pfSysSockCreateUdp, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockCreateUdp <group___sys_socket_itf_1ga1062f1b42a512ee0c6fb13d0a32cbf96>` pfSysSockCreateUdp
+
+- #define :ref:`CHK_SysSockCreateUdp <group___sys_socket_itf_1ga48c79f7d2b92b83b775ca575303d7b43>` (pfSysSockCreateUdp != NULL)
+
+- #define :ref:`EXP_SysSockCreateUdp <group___sys_socket_itf_1gac323cdc66174e5e3c6b74d4252c4d0a4>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockCreateUdp", (RTS_UINTPTR) :ref:`SysSockCreateUdp <group___sys_socket_itf_1ga3fb94cb55780cd712f853a045c832210>` , 0, 0)
+
+- #define :ref:`USE_SysSockCloseUdp <group___sys_socket_itf_1ga6a5b76e23af82075b61fc94b84e7e0ae>` :ref:`PFSYSSOCKCLOSEUDP <group___sys_socket_itf_1gabac34ea6c147d1b7f5b6126f84ecc023>` pfSysSockCloseUdp;
+
+- #define :ref:`EXT_SysSockCloseUdp <group___sys_socket_itf_1ga68d7513eb31baac2d184175ae0d2bc28>` extern :ref:`PFSYSSOCKCLOSEUDP <group___sys_socket_itf_1gabac34ea6c147d1b7f5b6126f84ecc023>` pfSysSockCloseUdp;
+
+- #define :ref:`GET_SysSockCloseUdp <group___sys_socket_itf_1ga4a7d8a451daa66b9f2f5253f0316f5ac>` s_pfCMGetAPI2( "SysSockCloseUdp", (RTS_VOID_FCTPTR *)&pfSysSockCloseUdp, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockCloseUdp <group___sys_socket_itf_1ga1eb64c0bb66b7fee49bfb8e20a26dafb>` pfSysSockCloseUdp
+
+- #define :ref:`CHK_SysSockCloseUdp <group___sys_socket_itf_1ga708e3fc3b2eb9137a33edcba525349c0>` (pfSysSockCloseUdp != NULL)
+
+- #define :ref:`EXP_SysSockCloseUdp <group___sys_socket_itf_1gab2452b77160366bccc9c7bc1852a89af>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockCloseUdp", (RTS_UINTPTR) :ref:`SysSockCloseUdp <group___sys_socket_itf_1gaff95e6bbc266fa30cd8e8b5397f0bb38>` , 0, 0)
+
+- #define :ref:`USE_SysSockSendToUdp <group___sys_socket_itf_1gafffa191fc9f13373595eaf2a45627dc6>` :ref:`PFSYSSOCKSENDTOUDP <group___sys_socket_itf_1gac1f84233710985182bbf5fbc276aefa0>` pfSysSockSendToUdp;
+
+- #define :ref:`EXT_SysSockSendToUdp <group___sys_socket_itf_1gae147f2674ff861610010574235659b8b>` extern :ref:`PFSYSSOCKSENDTOUDP <group___sys_socket_itf_1gac1f84233710985182bbf5fbc276aefa0>` pfSysSockSendToUdp;
+
+- #define :ref:`GET_SysSockSendToUdp <group___sys_socket_itf_1gadc403e04e4660d0a30960273c746ec27>` s_pfCMGetAPI2( "SysSockSendToUdp", (RTS_VOID_FCTPTR *)&pfSysSockSendToUdp, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockSendToUdp <group___sys_socket_itf_1gabb157ff7daaa26175e45a7b0d14e19f9>` pfSysSockSendToUdp
+
+- #define :ref:`CHK_SysSockSendToUdp <group___sys_socket_itf_1gaf8f65dccfe61ff4c811a9ed47e18adac>` (pfSysSockSendToUdp != NULL)
+
+- #define :ref:`EXP_SysSockSendToUdp <group___sys_socket_itf_1ga3a0ea596583fb33eec4596df9cd563e0>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockSendToUdp", (RTS_UINTPTR) :ref:`SysSockSendToUdp <group___sys_socket_itf_1gaab703c5099298f9ac2970854b607c36e>` , 0, 0)
+
+- #define :ref:`USE_SysSockRecvFromUdp <group___sys_socket_itf_1gacb6068d913336937106b979bb290bbcf>` :ref:`PFSYSSOCKRECVFROMUDP <group___sys_socket_itf_1ga966017f13431164f610b794ed9c40ad3>` pfSysSockRecvFromUdp;
+
+- #define :ref:`EXT_SysSockRecvFromUdp <group___sys_socket_itf_1ga66a22967cb434ac3602540aaebe3a432>` extern :ref:`PFSYSSOCKRECVFROMUDP <group___sys_socket_itf_1ga966017f13431164f610b794ed9c40ad3>` pfSysSockRecvFromUdp;
+
+- #define :ref:`GET_SysSockRecvFromUdp <group___sys_socket_itf_1ga1bac7ddc232d5e0b4d1417d670408528>` s_pfCMGetAPI2( "SysSockRecvFromUdp", (RTS_VOID_FCTPTR *)&pfSysSockRecvFromUdp, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockRecvFromUdp <group___sys_socket_itf_1ga5d9f069ce9acdddc7813ad7403bbe87a>` pfSysSockRecvFromUdp
+
+- #define :ref:`CHK_SysSockRecvFromUdp <group___sys_socket_itf_1gab7616d1e11ee54e5bb0755ddf63cbc33>` (pfSysSockRecvFromUdp != NULL)
+
+- #define :ref:`EXP_SysSockRecvFromUdp <group___sys_socket_itf_1ga9a633672804a196a5cb7ffbb5f049639>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockRecvFromUdp", (RTS_UINTPTR) :ref:`SysSockRecvFromUdp <group___sys_socket_itf_1ga69279f5109dfa81e718ab90dca666093>` , 0, 0)
+
+- #define :ref:`USE_SysSockGetRecvSizeUdp <group___sys_socket_itf_1ga387f3d2527c444e68bdc4d1d07fca325>` :ref:`PFSYSSOCKGETRECVSIZEUDP <group___sys_socket_itf_1ga2f36a44dc99fa30691d6c3dc9db4bd39>` pfSysSockGetRecvSizeUdp;
+
+- #define :ref:`EXT_SysSockGetRecvSizeUdp <group___sys_socket_itf_1ga5cdd32a9bc0936aa429bf7626ed4bf9b>` extern :ref:`PFSYSSOCKGETRECVSIZEUDP <group___sys_socket_itf_1ga2f36a44dc99fa30691d6c3dc9db4bd39>` pfSysSockGetRecvSizeUdp;
+
+- #define :ref:`GET_SysSockGetRecvSizeUdp <group___sys_socket_itf_1ga3207c584c7295aa65dc8161e38320539>` s_pfCMGetAPI2( "SysSockGetRecvSizeUdp", (RTS_VOID_FCTPTR *)&pfSysSockGetRecvSizeUdp, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockGetRecvSizeUdp <group___sys_socket_itf_1ga39cbf03060b92046bdbb8503ddfa88e1>` pfSysSockGetRecvSizeUdp
+
+- #define :ref:`CHK_SysSockGetRecvSizeUdp <group___sys_socket_itf_1ga0628ff9084c2c5b016b19f6845542224>` (pfSysSockGetRecvSizeUdp != NULL)
+
+- #define :ref:`EXP_SysSockGetRecvSizeUdp <group___sys_socket_itf_1gabedc18ad32bbfe54531cc21f1ee3b805>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockGetRecvSizeUdp", (RTS_UINTPTR) :ref:`SysSockGetRecvSizeUdp <group___sys_socket_itf_1gaa82080006ab3af320f6f602c2322cb1d>` , 0, 0)
+
+- #define :ref:`USE_SysSockGetOSHandle <group___sys_socket_itf_1ga9d0e1ba7ea27aa886d36878dd7c2440e>` :ref:`PFSYSSOCKGETOSHANDLE <group___sys_socket_itf_1gaf3de3d32b3815ad959a93a5254574186>` pfSysSockGetOSHandle;
+
+- #define :ref:`EXT_SysSockGetOSHandle <group___sys_socket_itf_1gaa921e6d568968c89676d2bb2a3d65bce>` extern :ref:`PFSYSSOCKGETOSHANDLE <group___sys_socket_itf_1gaf3de3d32b3815ad959a93a5254574186>` pfSysSockGetOSHandle;
+
+- #define :ref:`GET_SysSockGetOSHandle <group___sys_socket_itf_1ga6bd6c6b02c36c6225d3245c1d73bef2b>` s_pfCMGetAPI2( "SysSockGetOSHandle", (RTS_VOID_FCTPTR *)&pfSysSockGetOSHandle, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockGetOSHandle <group___sys_socket_itf_1gaa80872ff468ebfabae7caf56a92285fd>` pfSysSockGetOSHandle
+
+- #define :ref:`CHK_SysSockGetOSHandle <group___sys_socket_itf_1gaa718981be70efdecdf5a7ea1195798b7>` (pfSysSockGetOSHandle != NULL)
+
+- #define :ref:`EXP_SysSockGetOSHandle <group___sys_socket_itf_1ga81efa25574fefe5f21c3fd428595531d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockGetOSHandle", (RTS_UINTPTR) :ref:`SysSockGetOSHandle <group___sys_socket_itf_1ga0bea4921ffa6d0cf7e9662a725f38259>` , 0, 0)
+
+- #define :ref:`USE_SysSockPing <group___sys_socket_itf_1gaa4932ab96ac1e6718495e23dcb418409>` :ref:`PFSYSSOCKPING <group___sys_socket_itf_1gab03d31c827565e93dc7c38d131713afe>` pfSysSockPing;
+
+- #define :ref:`EXT_SysSockPing <group___sys_socket_itf_1ga5f9378a0bf8fbf7bc8ede0c6dfeef341>` extern :ref:`PFSYSSOCKPING <group___sys_socket_itf_1gab03d31c827565e93dc7c38d131713afe>` pfSysSockPing;
+
+- #define :ref:`GET_SysSockPing <group___sys_socket_itf_1gaeefa3a6e0843778712bc7f8340878024>` s_pfCMGetAPI2( "SysSockPing", (RTS_VOID_FCTPTR *)&pfSysSockPing, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockPing <group___sys_socket_itf_1gad74f2c7f801c0eb675cd0ae846780084>` pfSysSockPing
+
+- #define :ref:`CHK_SysSockPing <group___sys_socket_itf_1gac6e2cb1b49e66a8b08249abf49092316>` (pfSysSockPing != NULL)
+
+- #define :ref:`EXP_SysSockPing <group___sys_socket_itf_1gac0c22322baf4d6fc3588096aece95e23>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockPing", (RTS_UINTPTR) :ref:`SysSockPing <group___sys_socket_itf_1ga1185abeb377391a84562baa46f1c54cb>` , 0, 0)
+
+- #define :ref:`USE_SysSockSetSubnetMask <group___sys_socket_itf_1ga0933dff39604901217c858d4b978f404>` :ref:`PFSYSSOCKSETSUBNETMASK <group___sys_socket_itf_1ga04bacc7a1c3026606b1c936ff9f67b6c>` pfSysSockSetSubnetMask;
+
+- #define :ref:`EXT_SysSockSetSubnetMask <group___sys_socket_itf_1gab648de9f7f08c518fbd4a5a2115219c0>` extern :ref:`PFSYSSOCKSETSUBNETMASK <group___sys_socket_itf_1ga04bacc7a1c3026606b1c936ff9f67b6c>` pfSysSockSetSubnetMask;
+
+- #define :ref:`GET_SysSockSetSubnetMask <group___sys_socket_itf_1ga828df8a4650707e46d44822167009307>` s_pfCMGetAPI2( "SysSockSetSubnetMask", (RTS_VOID_FCTPTR *)&pfSysSockSetSubnetMask, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockSetSubnetMask <group___sys_socket_itf_1ga665ce2d26b11b267d43428f61a9d633a>` pfSysSockSetSubnetMask
+
+- #define :ref:`CHK_SysSockSetSubnetMask <group___sys_socket_itf_1ga4830f0ff55fb46f37fa197ede87615d6>` (pfSysSockSetSubnetMask != NULL)
+
+- #define :ref:`EXP_SysSockSetSubnetMask <group___sys_socket_itf_1gac2605a52e7716682bad946a5cb4c286e>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockSetSubnetMask", (RTS_UINTPTR) :ref:`SysSockSetSubnetMask <group___sys_socket_itf_1gabb69f4209169d1fcd77f059587927930>` , 0, 0)
+
+- #define :ref:`USE_SysSockGetSubnetMask <group___sys_socket_itf_1ga6b1f46d035fedc9085bb0e76982309cc>` :ref:`PFSYSSOCKGETSUBNETMASK <group___sys_socket_itf_1ga89e48741a9e9b960f66c3ec055465144>` pfSysSockGetSubnetMask;
+
+- #define :ref:`EXT_SysSockGetSubnetMask <group___sys_socket_itf_1ga38ed4a76e017c0beab4d6e666773a4d7>` extern :ref:`PFSYSSOCKGETSUBNETMASK <group___sys_socket_itf_1ga89e48741a9e9b960f66c3ec055465144>` pfSysSockGetSubnetMask;
+
+- #define :ref:`GET_SysSockGetSubnetMask <group___sys_socket_itf_1ga90048f7f746d51cfc3763be054f323db>` s_pfCMGetAPI2( "SysSockGetSubnetMask", (RTS_VOID_FCTPTR *)&pfSysSockGetSubnetMask, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockGetSubnetMask <group___sys_socket_itf_1ga871428478be224d377c48962bffd72ae>` pfSysSockGetSubnetMask
+
+- #define :ref:`CHK_SysSockGetSubnetMask <group___sys_socket_itf_1gac496f02ea386e041b3f86a81bc7608f1>` (pfSysSockGetSubnetMask != NULL)
+
+- #define :ref:`EXP_SysSockGetSubnetMask <group___sys_socket_itf_1ga3f7c3043e712761f491924e4cc612744>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockGetSubnetMask", (RTS_UINTPTR) :ref:`SysSockGetSubnetMask <group___sys_socket_itf_1ga73f7926ef4683cd6ea34c690c05caeea>` , 0, 0)
+
+- #define :ref:`USE_SysSockFdIsset <group___sys_socket_itf_1gad2752707c055bbd3b633ff3acdebfed9>` :ref:`PFSYSSOCKFDISSET <group___sys_socket_itf_1gad567fde068db0ebac0558c7b50395cac>` pfSysSockFdIsset;
+
+- #define :ref:`EXT_SysSockFdIsset <group___sys_socket_itf_1gaaf7df09b65108505c2389a49b8e55122>` extern :ref:`PFSYSSOCKFDISSET <group___sys_socket_itf_1gad567fde068db0ebac0558c7b50395cac>` pfSysSockFdIsset;
+
+- #define :ref:`GET_SysSockFdIsset <group___sys_socket_itf_1gac7383832b10e6fb6eacad7af31a63e98>` s_pfCMGetAPI2( "SysSockFdIsset", (RTS_VOID_FCTPTR *)&pfSysSockFdIsset, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockFdIsset <group___sys_socket_itf_1ga0244faec2d097e5c8079ac16ea3fafc6>` pfSysSockFdIsset
+
+- #define :ref:`CHK_SysSockFdIsset <group___sys_socket_itf_1ga0049a0da5b6a21da5d113cca7e9b079f>` (pfSysSockFdIsset != NULL)
+
+- #define :ref:`EXP_SysSockFdIsset <group___sys_socket_itf_1gaea0b9b4fd599bd853ecb87afa7954c37>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockFdIsset", (RTS_UINTPTR) :ref:`SysSockFdIsset <group___sys_socket_itf_1ga58476dd56a31e3e4590f3079a71d73a0>` , 0, 0)
+
+- #define :ref:`USE_SysSockFdInit <group___sys_socket_itf_1ga2459d31e58ce5427d2fbc5fc6bd3bcc0>` :ref:`PFSYSSOCKFDINIT <group___sys_socket_itf_1ga082be07cf11cd1919583a5921d866545>` pfSysSockFdInit;
+
+- #define :ref:`EXT_SysSockFdInit <group___sys_socket_itf_1ga246a12df07a9d5002b2625fb726f17e0>` extern :ref:`PFSYSSOCKFDINIT <group___sys_socket_itf_1ga082be07cf11cd1919583a5921d866545>` pfSysSockFdInit;
+
+- #define :ref:`GET_SysSockFdInit <group___sys_socket_itf_1ga7b28a24526c316dc7b72800a821190c4>` s_pfCMGetAPI2( "SysSockFdInit", (RTS_VOID_FCTPTR *)&pfSysSockFdInit, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockFdInit <group___sys_socket_itf_1ga88545d004983eac6ed14b017cad21373>` pfSysSockFdInit
+
+- #define :ref:`CHK_SysSockFdInit <group___sys_socket_itf_1ga0be1561394d105c96326a41fe8102f58>` (pfSysSockFdInit != NULL)
+
+- #define :ref:`EXP_SysSockFdInit <group___sys_socket_itf_1ga8405ee4b0924e08e22f4fbf89b34bd54>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockFdInit", (RTS_UINTPTR) :ref:`SysSockFdInit <group___sys_socket_itf_1ga872ffb0f3d3de58cc6bad492d6b26e8e>` , 0, 0)
+
+- #define :ref:`USE_SysSockFdZero <group___sys_socket_itf_1gaaba0889882c12dd70d12a6916deb09f5>` :ref:`PFSYSSOCKFDZERO <group___sys_socket_itf_1ga099138950697e9c6fc9331ce3edd31cd>` pfSysSockFdZero;
+
+- #define :ref:`EXT_SysSockFdZero <group___sys_socket_itf_1ga47143ff63ace69d4b8462e66ef19b335>` extern :ref:`PFSYSSOCKFDZERO <group___sys_socket_itf_1ga099138950697e9c6fc9331ce3edd31cd>` pfSysSockFdZero;
+
+- #define :ref:`GET_SysSockFdZero <group___sys_socket_itf_1gaeb9428e72d55dddcd20be735d27bd026>` s_pfCMGetAPI2( "SysSockFdZero", (RTS_VOID_FCTPTR *)&pfSysSockFdZero, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockFdZero <group___sys_socket_itf_1gaebe806c76cf553b35113ef593cc62b1d>` pfSysSockFdZero
+
+- #define :ref:`CHK_SysSockFdZero <group___sys_socket_itf_1ga29081371b2601a84ebe119ec96b7b695>` (pfSysSockFdZero != NULL)
+
+- #define :ref:`EXP_SysSockFdZero <group___sys_socket_itf_1ga4f7beb4f6fc7bfd6bf6cd083f0d216a5>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockFdZero", (RTS_UINTPTR) :ref:`SysSockFdZero <group___sys_socket_itf_1gab96fa043b69eca9f1121722131c6de16>` , 0, 0)
+
+- #define :ref:`USE_SysSockGetFirstAdapterInfo <group___sys_socket_itf_1ga1759ce10095ff5c9e3c8c2998a629d3c>` :ref:`PFSYSSOCKGETFIRSTADAPTERINFO <group___sys_socket_itf_1gada2f14cf027a7cc6ab74f07d348c6a23>` pfSysSockGetFirstAdapterInfo;
+
+- #define :ref:`EXT_SysSockGetFirstAdapterInfo <group___sys_socket_itf_1ga734f9bef0ebc6ddbb018b94f467afee3>` extern :ref:`PFSYSSOCKGETFIRSTADAPTERINFO <group___sys_socket_itf_1gada2f14cf027a7cc6ab74f07d348c6a23>` pfSysSockGetFirstAdapterInfo;
+
+- #define :ref:`GET_SysSockGetFirstAdapterInfo <group___sys_socket_itf_1gac296e89c2d005bb80940e73289565846>` s_pfCMGetAPI2( "SysSockGetFirstAdapterInfo", (RTS_VOID_FCTPTR *)&pfSysSockGetFirstAdapterInfo, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockGetFirstAdapterInfo <group___sys_socket_itf_1ga94db8c50881d07d5682baaa81ab6bf50>` pfSysSockGetFirstAdapterInfo
+
+- #define :ref:`CHK_SysSockGetFirstAdapterInfo <group___sys_socket_itf_1ga0ff10286ab18f4a0327fd34b0808fc39>` (pfSysSockGetFirstAdapterInfo != NULL)
+
+- #define :ref:`EXP_SysSockGetFirstAdapterInfo <group___sys_socket_itf_1gaa7e66d0e621f5a24cf13184771fa43ac>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockGetFirstAdapterInfo", (RTS_UINTPTR) :ref:`SysSockGetFirstAdapterInfo <group___sys_socket_itf_1gaa992602fbfb135cbb8e1439ad48a9d2b>` , 0, 0)
+
+- #define :ref:`USE_SysSockGetNextAdapterInfo <group___sys_socket_itf_1ga45aae71db08ecf50fb3e908faf5d7021>` :ref:`PFSYSSOCKGETNEXTADAPTERINFO <group___sys_socket_itf_1ga3371a32d8d050b71c3855411dd0ee805>` pfSysSockGetNextAdapterInfo;
+
+- #define :ref:`EXT_SysSockGetNextAdapterInfo <group___sys_socket_itf_1gadf7eecb2fed591b0c0959a9ee5ad593c>` extern :ref:`PFSYSSOCKGETNEXTADAPTERINFO <group___sys_socket_itf_1ga3371a32d8d050b71c3855411dd0ee805>` pfSysSockGetNextAdapterInfo;
+
+- #define :ref:`GET_SysSockGetNextAdapterInfo <group___sys_socket_itf_1ga0e9284d70945dac1950481f167179423>` s_pfCMGetAPI2( "SysSockGetNextAdapterInfo", (RTS_VOID_FCTPTR *)&pfSysSockGetNextAdapterInfo, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockGetNextAdapterInfo <group___sys_socket_itf_1ga7cfcc88f97bcd5a680e488e65333fa65>` pfSysSockGetNextAdapterInfo
+
+- #define :ref:`CHK_SysSockGetNextAdapterInfo <group___sys_socket_itf_1gafdf1b1f6cdcef292cba468415e733fa7>` (pfSysSockGetNextAdapterInfo != NULL)
+
+- #define :ref:`EXP_SysSockGetNextAdapterInfo <group___sys_socket_itf_1ga01187693413fd8adf084a11ed6ba4d76>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockGetNextAdapterInfo", (RTS_UINTPTR) :ref:`SysSockGetNextAdapterInfo <group___sys_socket_itf_1ga959799c8f03d346c9578ec85e50cbc5c>` , 0, 0)
+
+- #define :ref:`USE_SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1gae8d3263ee0564044c6fe1398a79c2473>` :ref:`PFSYSSOCKSETIPADDRESSANDNETMASK <group___sys_socket_itf_1ga7cfcbea8d78c10240925f1b9139ee571>` pfSysSockSetIpAddressAndNetMask;
+
+- #define :ref:`EXT_SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1ga7ab9db5663ddff9deede595d42513059>` extern :ref:`PFSYSSOCKSETIPADDRESSANDNETMASK <group___sys_socket_itf_1ga7cfcbea8d78c10240925f1b9139ee571>` pfSysSockSetIpAddressAndNetMask;
+
+- #define :ref:`GET_SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1ga10583a083019163987fcc529865d4324>` s_pfCMGetAPI2( "SysSockSetIpAddressAndNetMask", (RTS_VOID_FCTPTR *)&pfSysSockSetIpAddressAndNetMask, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1gae4553d0b5f4d01ae3288e46093fb0192>` pfSysSockSetIpAddressAndNetMask
+
+- #define :ref:`CHK_SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1ga8d2453c7eaf87a63d369ee265685295c>` (pfSysSockSetIpAddressAndNetMask != NULL)
+
+- #define :ref:`EXP_SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1ga0092da8e67479207c25c3cf957cb184d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockSetIpAddressAndNetMask", (RTS_UINTPTR) :ref:`SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1ga96779e5ea363ffe3eb12e8c196f50348>` , 0, 0)
+
+- #define :ref:`USE_SysSockSetDefaultGateway <group___sys_socket_itf_1gac1d4e99e1c360ee0c0effc3a4d19d47e>` :ref:`PFSYSSOCKSETDEFAULTGATEWAY <group___sys_socket_itf_1ga6c81a8e5cac055a6b9b91b8c5bb0d3b3>` pfSysSockSetDefaultGateway;
+
+- #define :ref:`EXT_SysSockSetDefaultGateway <group___sys_socket_itf_1ga86146da7ce0567d80b32339f1f842a8f>` extern :ref:`PFSYSSOCKSETDEFAULTGATEWAY <group___sys_socket_itf_1ga6c81a8e5cac055a6b9b91b8c5bb0d3b3>` pfSysSockSetDefaultGateway;
+
+- #define :ref:`GET_SysSockSetDefaultGateway <group___sys_socket_itf_1ga113cb8051d73ff43a634f3e175447f69>` s_pfCMGetAPI2( "SysSockSetDefaultGateway", (RTS_VOID_FCTPTR *)&pfSysSockSetDefaultGateway, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockSetDefaultGateway <group___sys_socket_itf_1gaee2c018be8cce8507e5519c0148ed4ab>` pfSysSockSetDefaultGateway
+
+- #define :ref:`CHK_SysSockSetDefaultGateway <group___sys_socket_itf_1gac09f4a739a2e455279c2bc947b13d706>` (pfSysSockSetDefaultGateway != NULL)
+
+- #define :ref:`EXP_SysSockSetDefaultGateway <group___sys_socket_itf_1gabc142f1c2afff0e67611ec07d8aeaa69>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockSetDefaultGateway", (RTS_UINTPTR) :ref:`SysSockSetDefaultGateway <group___sys_socket_itf_1ga3b10789b8104c8ce6e1ab4462c18012b>` , 0, 0)
+
+- #define :ref:`USE_SysSockGetPeerName <group___sys_socket_itf_1ga52a80dbd7c89445cf9ef04f52b02b895>` :ref:`PFSYSSOCKGETPEERNAME <group___sys_socket_itf_1ga7b1bf77291fcda864f5ddffe480da8c9>` pfSysSockGetPeerName;
+
+- #define :ref:`EXT_SysSockGetPeerName <group___sys_socket_itf_1ga88c8bcc5a82f554724ba1a4725744c62>` extern :ref:`PFSYSSOCKGETPEERNAME <group___sys_socket_itf_1ga7b1bf77291fcda864f5ddffe480da8c9>` pfSysSockGetPeerName;
+
+- #define :ref:`GET_SysSockGetPeerName <group___sys_socket_itf_1ga8a553daea35be0fc95a385119c70abfd>` s_pfCMGetAPI2( "SysSockGetPeerName", (RTS_VOID_FCTPTR *)&pfSysSockGetPeerName, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockGetPeerName <group___sys_socket_itf_1ga79d48b4067e810b566b503f6b2a1338c>` pfSysSockGetPeerName
+
+- #define :ref:`CHK_SysSockGetPeerName <group___sys_socket_itf_1ga0d3d95cf4fe0f13faa8ea5dffcfaf415>` (pfSysSockGetPeerName != NULL)
+
+- #define :ref:`EXP_SysSockGetPeerName <group___sys_socket_itf_1ga9fd254b8ee388c3588962777b147ff21>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockGetPeerName", (RTS_UINTPTR) :ref:`SysSockGetPeerName <group___sys_socket_itf_1gabd0c66f29391fd460120f56e5baa22fa>` , 0, 0)
+
+- #define :ref:`USE_SysSockGetSockName <group___sys_socket_itf_1ga515f1798de19ef6819ce91b55c5063c0>` :ref:`PFSYSSOCKGETSOCKNAME <group___sys_socket_itf_1ga12dd1de70295b1147996aa2b3b40a88a>` pfSysSockGetSockName;
+
+- #define :ref:`EXT_SysSockGetSockName <group___sys_socket_itf_1ga28a570d4306eca54de90fa202fcfdad9>` extern :ref:`PFSYSSOCKGETSOCKNAME <group___sys_socket_itf_1ga12dd1de70295b1147996aa2b3b40a88a>` pfSysSockGetSockName;
+
+- #define :ref:`GET_SysSockGetSockName <group___sys_socket_itf_1gab827d36adf3f5a49c4f8f57d8fe1dc76>` s_pfCMGetAPI2( "SysSockGetSockName", (RTS_VOID_FCTPTR *)&pfSysSockGetSockName, (fl), 0, 0)
+
+- #define :ref:`CAL_SysSockGetSockName <group___sys_socket_itf_1gac0c354a3c69501aaa9741294f24b73c5>` pfSysSockGetSockName
+
+- #define :ref:`CHK_SysSockGetSockName <group___sys_socket_itf_1ga5fafe14b07c1f2361bb201ae3e59d8dd>` (pfSysSockGetSockName != NULL)
+
+- #define :ref:`EXP_SysSockGetSockName <group___sys_socket_itf_1ga6265f031aeb0c1c7d861cc36982e936b>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SysSockGetSockName", (RTS_UINTPTR) :ref:`SysSockGetSockName <group___sys_socket_itf_1ga9ce1adfc26e46f9047af1c9d49f59b2a>` , 0, 0)
+
+- #define :ref:`ITF_SysSocket <group___sys_socket_itf_1gaea6072d56d23af9704b3878c7b5f4f96>`
+
+- #define :ref:`EXTITF_SysSocket <group___sys_socket_itf_1ga9a69c37655c7b960bbe419ec3ec0f11b>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`RTS_SOCKET_SO_VALUE_TCP_KEEPALIVE_T <struct_r_t_s___s_o_c_k_e_t___s_o___v_a_l_u_e___t_c_p___k_e_e_p_a_l_i_v_e___t>` :ref:`RTS_SOCKET_SO_VALUE_TCP_KEEPALIVE <group___sys_socket_itf___t_c_pkeep-aliveoptions_1ga0a7507248603f49efdeafa146e4bf024>`
+
+- typedef struct :ref:`RTS_SOCKET_SO_VALUE_IP_MREQ_T <struct_r_t_s___s_o_c_k_e_t___s_o___v_a_l_u_e___i_p___m_r_e_q___t>` :ref:`RTS_SOCKET_SO_VALUE_IP_MREQ <group___sys_socket_itf___i_pmulti-castoptions_1ga7017b130df769ce0e5fb1d31e654784a>`
+
+- typedef struct :ref:`tagSOCK_ADAPTER_INFO <structtag_s_o_c_k___a_d_a_p_t_e_r___i_n_f_o>` :ref:`SOCK_ADAPTER_INFO <group___sys_socket_itf___sys_socketadapterinformation_1ga46aa76ddd87db2c78b2ce731b8447a9e>`
+
+- typedef struct :ref:`UDP_REPLYtag <struct_u_d_p___r_e_p_l_ytag>` :ref:`UDP_REPLY <group___sys_socket_itf___u_d_preply_1gab8deb524ce5b39df867774a0fc5e1576>`
+
+- typedef struct :ref:`tagSOCK_ADAPTER_INFORMATION <structtag_s_o_c_k___a_d_a_p_t_e_r___i_n_f_o_r_m_a_t_i_o_n>` :ref:`SOCK_ADAPTER_INFORMATION <group___sys_socket_itf_1gabbdd106cd2f96d10f6487aac0bdb9f38>`
+
+- typedef struct :ref:`tagSOCK_ADAPTER_INFORMATION2 <structtag_s_o_c_k___a_d_a_p_t_e_r___i_n_f_o_r_m_a_t_i_o_n2>` :ref:`SOCK_ADAPTER_INFORMATION2 <group___sys_socket_itf_1ga19d50e6ee5a4388f4a37292d47bc0ff2>`
+
+- typedef struct :ref:`tagSOCK_ADAPTER_INFO_INT <structtag_s_o_c_k___a_d_a_p_t_e_r___i_n_f_o___i_n_t>` :ref:`SOCK_ADAPTER_INFO_INT <group___sys_socket_itf___internal_sys_socketadapterinformation_1ga5daf857364f72c30cef5da67a3bb30c9>`
+
+- typedef RTS_HANDLE(* :ref:`PFSYSSOCKCREATE <group___sys_socket_itf_1ga8c8e55ad5ecaf842dc936ccf529bb8aa>`)(int iAddressFamily, int iType, int iProtocol, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKCLOSE <group___sys_socket_itf_1gaf2919e0d53e0261a6217421cf753d197>`)(RTS_HANDLE hSocket)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKSETOPTION <group___sys_socket_itf_1ga9568887cf984627b1f2419092f25090e>`)(RTS_HANDLE hSocket, int iLevel, int iOption, char *pcOptionValue, int iOptionLen)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKGETOPTION <group___sys_socket_itf_1ga665a3539a3fcd9c8ba7023df5540e567>`)(RTS_HANDLE hSocket, int iLevel, int iOption, char *pcOptionValue, int *piOptionLen)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKBIND <group___sys_socket_itf_1ga4d21c7f362d3d82cb19c3ea718fe4db7>`)(RTS_HANDLE hSocket, SOCKADDRESS *pSockAddr, int iSockAddrSize)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKGETHOSTNAME <group___sys_socket_itf_1gaf8264b7d05b1048e573121bf89b51449>`)(char *pszHostName, int iNameLength)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKGETHOSTBYNAME <group___sys_socket_itf_1ga1d502756a6d5e2ed70387edb872658db>`)(char *pszHostName, SOCK_HOSTENT *pHost)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKINETNTOA <group___sys_socket_itf_1gaa1f10ecfbc06713d9b9a3d281c405b00>`)(INADDR *pInAddr, char *pszIPAddr, int iIPAddrSize)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKINETADDR <group___sys_socket_itf_1ga797d994009cc8dacfc0add14469e4ebc>`)(char *pszIPAddress, RTS_UI32 *pInAddr)
+
+- typedef unsigned short(* :ref:`PFSYSSOCKHTONS <group___sys_socket_itf_1ga8e761cdc4bbd6b46e4462079f5371a68>`)(unsigned short usHost)
+
+- typedef RTS_UI32(* :ref:`PFSYSSOCKHTONL <group___sys_socket_itf_1ga3201eb5814de521b902de648d92fd88f>`)(RTS_UI32 ulHost)
+
+- typedef unsigned short(* :ref:`PFSYSSOCKNTOHS <group___sys_socket_itf_1gadb9ddc8aade9790ae5e58493a38ded48>`)(unsigned short usNet)
+
+- typedef RTS_UI32(* :ref:`PFSYSSOCKNTOHL <group___sys_socket_itf_1ga16274e5ae1c471ed4008dc84e27fbf09>`)(RTS_UI32 ulNet)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKLISTEN <group___sys_socket_itf_1ga38a34be40fb3ae9e9f29ffa71c278a10>`)(RTS_HANDLE hSocket, int iMaxConnections)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSSOCKACCEPT <group___sys_socket_itf_1gab42a806041690648ea9aa0bd565775b2>`)(RTS_HANDLE hSocket, SOCKADDRESS *pSockAddr, int *piSockAddrSize, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKSETIPADDRESS <group___sys_socket_itf_1ga138174cf985b7b1ed7ae1370602267e6>`)(char *pszCard, char *pszIPAddress)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKCONNECT <group___sys_socket_itf_1ga82e0a671752b2130bb09d4091c66cc33>`)(RTS_HANDLE hSocket, SOCKADDRESS *pSockAddr, int iSockAddrSize)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKSELECT <group___sys_socket_itf_1ga8a2f20001b60433278d4d1ed36be2336>`)(int iWidth, SOCKET_FD_SET *fdRead, SOCKET_FD_SET *fdWrite, SOCKET_FD_SET *fdExcept, SOCKET_TIMEVAL *ptvTimeout, int *pnReady)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKSHUTDOWN <group___sys_socket_itf_1gac6a9a5b8ea371d10371b1a99745d389f>`)(RTS_HANDLE hSocket, int iHow)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKIOCTL <group___sys_socket_itf_1ga3c8b96a50e84ca4046f81768ae81bc57>`)(RTS_HANDLE hSocket, int iCommand, int *piParameter)
+
+- typedef RTS_SSIZE(* :ref:`PFSYSSOCKRECV <group___sys_socket_itf_1gaef96e32802d75bdd399d1e2ce87c0283>`)(RTS_HANDLE hSocket, char *pbyBuffer, RTS_SSIZE iBufferSize, int iFlags, RTS_RESULT *pResult)
+
+- typedef RTS_SSIZE(* :ref:`PFSYSSOCKSEND <group___sys_socket_itf_1ga5e096e7d7cd720363d4d0d4dc699d412>`)(RTS_HANDLE hSocket, char *pbyBuffer, RTS_SSIZE iBufferSize, int iFlags, RTS_RESULT *pResult)
+
+- typedef RTS_SSIZE(* :ref:`PFSYSSOCKRECVFROM <group___sys_socket_itf_1ga5c441239ec80b3eccb87c78651dfb683>`)(RTS_HANDLE hSocket, char *pbyBuffer, RTS_SSIZE iBufferSize, int iFlags, SOCKADDRESS *pSockAddr, int iSockAddrSize, RTS_RESULT *pResult)
+
+- typedef RTS_SSIZE(* :ref:`PFSYSSOCKSENDTO <group___sys_socket_itf_1ga5ba34084585d43d1fbe08fd09c6eaf80>`)(RTS_HANDLE hSocket, char *pbyBuffer, RTS_SSIZE iBufferSize, int iFlags, SOCKADDRESS *pSockAddr, int iSockAddrSize, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSSOCKCREATEUDP <group___sys_socket_itf_1ga35790c28de5cfac8fc2a572cb5cf252a>`)(int iSendPort, int iRecvPort, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKCLOSEUDP <group___sys_socket_itf_1gabac34ea6c147d1b7f5b6126f84ecc023>`)(RTS_HANDLE hSocket)
+
+- typedef RTS_SSIZE(* :ref:`PFSYSSOCKSENDTOUDP <group___sys_socket_itf_1gac1f84233710985182bbf5fbc276aefa0>`)(RTS_HANDLE hSocket, int iPort, char *pszDestAddress, unsigned char *pbyData, RTS_SSIZE iDataSize, RTS_RESULT *pResult)
+
+- typedef RTS_SSIZE(* :ref:`PFSYSSOCKRECVFROMUDP <group___sys_socket_itf_1ga966017f13431164f610b794ed9c40ad3>`)(RTS_HANDLE hSocket, unsigned char *pbyData, RTS_SSIZE iDataSize, UDP_REPLY *pReply, RTS_RESULT *pResult)
+
+- typedef RTS_SSIZE(* :ref:`PFSYSSOCKGETRECVSIZEUDP <group___sys_socket_itf_1ga2f36a44dc99fa30691d6c3dc9db4bd39>`)(RTS_HANDLE hSocket, int iTimeout, RTS_RESULT *pResult)
+
+- typedef RTS_HANDLE(* :ref:`PFSYSSOCKGETOSHANDLE <group___sys_socket_itf_1gaf3de3d32b3815ad959a93a5254574186>`)(RTS_HANDLE hSocket)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKPING <group___sys_socket_itf_1gab03d31c827565e93dc7c38d131713afe>`)(char *pszIPAddress, RTS_UI32 ulTimeout, RTS_UI32 *pulReplyTime)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKSETSUBNETMASK <group___sys_socket_itf_1ga04bacc7a1c3026606b1c936ff9f67b6c>`)(char *pszIPAddress, char *pszSubnetMask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKGETSUBNETMASK <group___sys_socket_itf_1ga89e48741a9e9b960f66c3ec055465144>`)(char *pszIPAddress, char *pszSubnetMask, int iMaxSubnetMask)
+
+- typedef RTS_BOOL(* :ref:`PFSYSSOCKFDISSET <group___sys_socket_itf_1gad567fde068db0ebac0558c7b50395cac>`)(RTS_HANDLE hSocket, SOCKET_FD_SET *pfs)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKFDINIT <group___sys_socket_itf_1ga082be07cf11cd1919583a5921d866545>`)(RTS_HANDLE hSocket, SOCKET_FD_SET *pfs)
+
+- typedef void(* :ref:`PFSYSSOCKFDZERO <group___sys_socket_itf_1ga099138950697e9c6fc9331ce3edd31cd>`)(SOCKET_FD_SET *pfs)
+
+- typedef :ref:`SOCK_ADAPTER_INFO <group___sys_socket_itf___sys_socketadapterinformation_1ga46aa76ddd87db2c78b2ce731b8447a9e>` *(* :ref:`PFSYSSOCKGETFIRSTADAPTERINFO <group___sys_socket_itf_1gada2f14cf027a7cc6ab74f07d348c6a23>`)(RTS_RESULT *pResult)
+
+- typedef :ref:`SOCK_ADAPTER_INFO <group___sys_socket_itf___sys_socketadapterinformation_1ga46aa76ddd87db2c78b2ce731b8447a9e>` *(* :ref:`PFSYSSOCKGETNEXTADAPTERINFO <group___sys_socket_itf_1ga3371a32d8d050b71c3855411dd0ee805>`)(SOCK_ADAPTER_INFO *pPrevAdapter, RTS_RESULT *pResult)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKSETIPADDRESSANDNETMASK <group___sys_socket_itf_1ga7cfcbea8d78c10240925f1b9139ee571>`)(RTS_WCHAR *pwszAdapterName, INADDR *pIpAddr, INADDR *pNetMask)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKSETDEFAULTGATEWAY <group___sys_socket_itf_1ga6c81a8e5cac055a6b9b91b8c5bb0d3b3>`)(RTS_WCHAR *pwszAdapterName, INADDR *pGatewayAddr)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKGETPEERNAME <group___sys_socket_itf_1ga7b1bf77291fcda864f5ddffe480da8c9>`)(RTS_HANDLE hSocket, SOCKADDRESS *pSockAddr, RTS_I32 *piSockAddrSize)
+
+- typedef RTS_RESULT(* :ref:`PFSYSSOCKGETSOCKNAME <group___sys_socket_itf_1ga12dd1de70295b1147996aa2b3b40a88a>`)(RTS_HANDLE hSocket, SOCKADDRESS *pSockAddr, RTS_I32 *piSockAddrSize)
+
+- typedef :ref:`ISysSocket_C <struct_i_sys_socket___c>` :ref:`ISysSocket <group___sys_socket_itf_1ga12ef1098da76b55747e8416845db309d>`
+
+Functions
+---------
+
+- :ref:`SOCK_ADAPTER_INFO_INT <group___sys_socket_itf___internal_sys_socketadapterinformation_1ga5daf857364f72c30cef5da67a3bb30c9>` * :ref:`SysSockGetAdapterInfoBlockInternal <group___sys_socket_itf_1gac008ce7e4651e84ef9eed8394ed46dd6>` (RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysSockAppendAdapterInfoBlockInternal <group___sys_socket_itf_1ga21cfbfb337d9d594c457b31a92fa0291>` (:ref:`SOCK_ADAPTER_INFO_INT <group___sys_socket_itf___internal_sys_socketadapterinformation_1ga5daf857364f72c30cef5da67a3bb30c9>` * pAdapter)
+
+- :ref:`SOCK_ADAPTER_INFO_INT <group___sys_socket_itf___internal_sys_socketadapterinformation_1ga5daf857364f72c30cef5da67a3bb30c9>` * :ref:`SysSockGetFirstAdapterInfoInternal <group___sys_socket_itf_1ga9f2d8d16ee1029f9a19913c2475df85a>` (RTS_RESULT * pResult)
+
+- :ref:`SOCK_ADAPTER_INFO_INT <group___sys_socket_itf___internal_sys_socketadapterinformation_1ga5daf857364f72c30cef5da67a3bb30c9>` * :ref:`SysSockGetNextAdapterInfoInternal <group___sys_socket_itf_1gab902db990855b0a0f4abb1134ac8d742>` (:ref:`SOCK_ADAPTER_INFO_INT <group___sys_socket_itf___internal_sys_socketadapterinformation_1ga5daf857364f72c30cef5da67a3bb30c9>` * pPrevAdapter, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysSockOSUpdateNetworkAdapterInfo <group___sys_socket_itf_1ga514024819e7578b82d46dbebcf6d307e>` (void)
+
+- RTS_RESULT :ref:`SysSockOSSetIpAddressAndNetMask <group___sys_socket_itf_1gad10602c684857d0ca791cccc819fd4ac>` (RTS_WCHAR * pwszAdapterName, :ref:`INADDR <struct_i_n_a_d_d_r>` * pIpAddr, :ref:`INADDR <struct_i_n_a_d_d_r>` * pNetMask)
+
+- RTS_RESULT :ref:`SysSockOSSetDefaultGateway <group___sys_socket_itf_1gaa5719074285dc843802ebd397c623aa1>` (RTS_WCHAR * pwszAdapterName, :ref:`INADDR <struct_i_n_a_d_d_r>` * pGatewayAddr)
+
+- RTS_RESULT :ref:`SysSockOSInit <group___sys_socket_itf_1ga07e8a1ad2a644b9c7b8cd0652a0a25d5>` (INIT_STRUCT * pInit)
+
+- RTS_RESULT :ref:`SysSockOSHookFunction <group___sys_socket_itf_1ga9945b3686d655e211fc1e5e5077b818b>` (RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)
+
+- RTS_HANDLE :ref:`SysSockCreate <group___sys_socket_itf_1ga3812315581d7ea7f717ad035145b8a33>` (int iAddressFamily, int iType, int iProtocol, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysSockClose <group___sys_socket_itf_1gac706d50aeb2b2bb678da100f8a726c73>` (RTS_HANDLE hSocket)
+
+- RTS_RESULT :ref:`SysSockSetOption <group___sys_socket_itf_1gaa342277e920cba3eda31a65cfd54c5b2>` (RTS_HANDLE hSocket, int iLevel, int iOption, char * pcOptionValue, int iOptionLen)
+
+- RTS_RESULT :ref:`SysSockGetOption <group___sys_socket_itf_1gaa829c944c9a90d3028fb16112787a1bc>` (RTS_HANDLE hSocket, int iLevel, int iOption, char * pcOptionValue, int * piOptionLen)
+
+- RTS_RESULT :ref:`SysSockBind <group___sys_socket_itf_1ga29e3bffcd92e01492d111ef9a43d7524>` (RTS_HANDLE hSocket, :ref:`SOCKADDRESS <struct_s_o_c_k_a_d_d_r_e_s_s>` * pSockAddr, int iSockAddrSize)
+
+- RTS_RESULT :ref:`SysSockGetHostName <group___sys_socket_itf_1gaa6b108a6afc007184d272b6e4f829e80>` (char * pszHostName, int iNameLength)
+
+- RTS_RESULT :ref:`SysSockGetHostByName <group___sys_socket_itf_1ga741ac269edaaa88c597a48a2a577a854>` (char * pszHostName, :ref:`SOCK_HOSTENT <struct_s_o_c_k___h_o_s_t_e_n_t>` * pHost)
+
+- RTS_RESULT :ref:`SysSockInetNtoa <group___sys_socket_itf_1gab2dcaa62d371c38ebf9c6b94b7a8fe46>` (:ref:`INADDR <struct_i_n_a_d_d_r>` * pInAddr, char * pszIPAddr, int iIPAddrSize)
+
+- RTS_RESULT :ref:`SysSockInetAddr <group___sys_socket_itf_1gabe4395c7a8a33830c7b6378261e1a0dd>` (char * pszIPAddress, RTS_UI32 * pInAddr)
+
+- unsigned short :ref:`SysSockHtons <group___sys_socket_itf_1ga48c7c4a743b8dc34a2ed85f3b11b8555>` (unsigned short usHost)
+
+- RTS_UI32 :ref:`SysSockHtonl <group___sys_socket_itf_1ga334941a933b7045c7c0064e7cd026a18>` (RTS_UI32 ulHost)
+
+- unsigned short :ref:`SysSockNtohs <group___sys_socket_itf_1gacf86310d1e3904062afbb0971cb5f979>` (unsigned short usNet)
+
+- RTS_UI32 :ref:`SysSockNtohl <group___sys_socket_itf_1ga96695eeec93c83897efacad462aacb39>` (RTS_UI32 ulNet)
+
+- RTS_RESULT :ref:`SysSockListen <group___sys_socket_itf_1ga9a0d7e8f58402c0e10db8000c2084362>` (RTS_HANDLE hSocket, int iMaxConnections)
+
+- RTS_HANDLE :ref:`SysSockAccept <group___sys_socket_itf_1gade1d1c37602754237e75971d7bc00186>` (RTS_HANDLE hSocket, :ref:`SOCKADDRESS <struct_s_o_c_k_a_d_d_r_e_s_s>` * pSockAddr, int * piSockAddrSize, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysSockSetIPAddress <group___sys_socket_itf_1gac9df27adc7dee251a49276325cb38c4c>` (char * pszCard, char * pszIPAddress)
+
+- RTS_RESULT :ref:`SysSockConnect <group___sys_socket_itf_1ga395884b5c3d46ae74b24f44bb900ea45>` (RTS_HANDLE hSocket, :ref:`SOCKADDRESS <struct_s_o_c_k_a_d_d_r_e_s_s>` * pSockAddr, int iSockAddrSize)
+
+- RTS_RESULT :ref:`SysSockSelect <group___sys_socket_itf_1ga8f7ac1d6d8e1cb0a2906f25896b0d95e>` (int iWidth, :ref:`SOCKET_FD_SET <struct_s_o_c_k_e_t___f_d___s_e_t>` * fdRead, :ref:`SOCKET_FD_SET <struct_s_o_c_k_e_t___f_d___s_e_t>` * fdWrite, :ref:`SOCKET_FD_SET <struct_s_o_c_k_e_t___f_d___s_e_t>` * fdExcept, :ref:`SOCKET_TIMEVAL <struct_s_o_c_k_e_t___t_i_m_e_v_a_l>` * ptvTimeout, int * pnReady)
+
+- RTS_RESULT :ref:`SysSockShutdown <group___sys_socket_itf_1ga6ce6f321fb09784e033bc41824ce55d7>` (RTS_HANDLE hSocket, int iHow)
+
+- RTS_RESULT :ref:`SysSockIoctl <group___sys_socket_itf_1ga2ea1074c433fd58a2c2f8e493f8fd0c2>` (RTS_HANDLE hSocket, int iCommand, int * piParameter)
+
+- RTS_SSIZE :ref:`SysSockRecv <group___sys_socket_itf_1gaf4208b02b587eb1ecddf5acc257bef12>` (RTS_HANDLE hSocket, char * pbyBuffer, RTS_SSIZE iBufferSize, int iFlags, RTS_RESULT * pResult)
+
+- RTS_SSIZE :ref:`SysSockSend <group___sys_socket_itf_1gaf5571ac3d75d30147438179f7ace24bb>` (RTS_HANDLE hSocket, char * pbyBuffer, RTS_SSIZE iBufferSize, int iFlags, RTS_RESULT * pResult)
+
+- RTS_SSIZE :ref:`SysSockRecvFrom <group___sys_socket_itf_1gafc6423dcd1cb655bb511fc0a22ff99df>` (RTS_HANDLE hSocket, char * pbyBuffer, RTS_SSIZE iBufferSize, int iFlags, :ref:`SOCKADDRESS <struct_s_o_c_k_a_d_d_r_e_s_s>` * pSockAddr, int iSockAddrSize, RTS_RESULT * pResult)
+
+- RTS_SSIZE :ref:`SysSockSendTo <group___sys_socket_itf_1ga839f42059e06ab467178705cddc97028>` (RTS_HANDLE hSocket, char * pbyBuffer, RTS_SSIZE iBufferSize, int iFlags, :ref:`SOCKADDRESS <struct_s_o_c_k_a_d_d_r_e_s_s>` * pSockAddr, int iSockAddrSize, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysSockCreateUdp <group___sys_socket_itf_1ga3fb94cb55780cd712f853a045c832210>` (int iSendPort, int iRecvPort, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysSockCloseUdp <group___sys_socket_itf_1gaff95e6bbc266fa30cd8e8b5397f0bb38>` (RTS_HANDLE hSocket)
+
+- RTS_SSIZE :ref:`SysSockSendToUdp <group___sys_socket_itf_1gaab703c5099298f9ac2970854b607c36e>` (RTS_HANDLE hSocket, int iPort, char * pszDestAddress, unsigned char * pbyData, RTS_SSIZE iDataSize, RTS_RESULT * pResult)
+
+- RTS_SSIZE :ref:`SysSockRecvFromUdp <group___sys_socket_itf_1ga69279f5109dfa81e718ab90dca666093>` (RTS_HANDLE hSocket, unsigned char * pbyData, RTS_SSIZE iDataSize, :ref:`UDP_REPLY <group___sys_socket_itf___u_d_preply_1gab8deb524ce5b39df867774a0fc5e1576>` * pReply, RTS_RESULT * pResult)
+
+- RTS_SSIZE :ref:`SysSockGetRecvSizeUdp <group___sys_socket_itf_1gaa82080006ab3af320f6f602c2322cb1d>` (RTS_HANDLE hSocket, int iTimeout, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`SysSockGetOSHandle <group___sys_socket_itf_1ga0bea4921ffa6d0cf7e9662a725f38259>` (RTS_HANDLE hSocket)
+
+- RTS_RESULT :ref:`SysSockPing <group___sys_socket_itf_1ga1185abeb377391a84562baa46f1c54cb>` (char * pszIPAddress, RTS_UI32 ulTimeout, RTS_UI32 * pulReplyTime)
+
+- RTS_RESULT :ref:`SysSockSetSubnetMask <group___sys_socket_itf_1gabb69f4209169d1fcd77f059587927930>` (char * pszIPAddress, char * pszSubnetMask)
+
+- RTS_RESULT :ref:`SysSockGetSubnetMask <group___sys_socket_itf_1ga73f7926ef4683cd6ea34c690c05caeea>` (char * pszIPAddress, char * pszSubnetMask, int iMaxSubnetMask)
+
+- RTS_BOOL :ref:`SysSockFdIsset <group___sys_socket_itf_1ga58476dd56a31e3e4590f3079a71d73a0>` (RTS_HANDLE hSocket, :ref:`SOCKET_FD_SET <struct_s_o_c_k_e_t___f_d___s_e_t>` * pfs)
+
+- RTS_RESULT :ref:`SysSockFdInit <group___sys_socket_itf_1ga872ffb0f3d3de58cc6bad492d6b26e8e>` (RTS_HANDLE hSocket, :ref:`SOCKET_FD_SET <struct_s_o_c_k_e_t___f_d___s_e_t>` * pfs)
+
+- void :ref:`SysSockFdZero <group___sys_socket_itf_1gab96fa043b69eca9f1121722131c6de16>` (:ref:`SOCKET_FD_SET <struct_s_o_c_k_e_t___f_d___s_e_t>` * pfs)
+
+- :ref:`SOCK_ADAPTER_INFO <group___sys_socket_itf___sys_socketadapterinformation_1ga46aa76ddd87db2c78b2ce731b8447a9e>` * :ref:`SysSockGetFirstAdapterInfo <group___sys_socket_itf_1gaa992602fbfb135cbb8e1439ad48a9d2b>` (RTS_RESULT * pResult)
+
+- :ref:`SOCK_ADAPTER_INFO <group___sys_socket_itf___sys_socketadapterinformation_1ga46aa76ddd87db2c78b2ce731b8447a9e>` * :ref:`SysSockGetNextAdapterInfo <group___sys_socket_itf_1ga959799c8f03d346c9578ec85e50cbc5c>` (:ref:`SOCK_ADAPTER_INFO <group___sys_socket_itf___sys_socketadapterinformation_1ga46aa76ddd87db2c78b2ce731b8447a9e>` * pPrevAdapter, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`SysSockSetIpAddressAndNetMask <group___sys_socket_itf_1ga96779e5ea363ffe3eb12e8c196f50348>` (RTS_WCHAR * pwszAdapterName, :ref:`INADDR <struct_i_n_a_d_d_r>` * pIpAddr, :ref:`INADDR <struct_i_n_a_d_d_r>` * pNetMask)
+
+- RTS_RESULT :ref:`SysSockSetDefaultGateway <group___sys_socket_itf_1ga3b10789b8104c8ce6e1ab4462c18012b>` (RTS_WCHAR * pwszAdapterName, :ref:`INADDR <struct_i_n_a_d_d_r>` * pGatewayAddr)
+
+- RTS_RESULT :ref:`SysSockGetPeerName <group___sys_socket_itf_1gabd0c66f29391fd460120f56e5baa22fa>` (RTS_HANDLE hSocket, :ref:`SOCKADDRESS <struct_s_o_c_k_a_d_d_r_e_s_s>` * pSockAddr, RTS_I32 * piSockAddrSize)
+
+- RTS_RESULT :ref:`SysSockGetSockName <group___sys_socket_itf_1ga9ce1adfc26e46f9047af1c9d49f59b2a>` (RTS_HANDLE hSocket, :ref:`SOCKADDRESS <struct_s_o_c_k_a_d_d_r_e_s_s>` * pSockAddr, RTS_I32 * piSockAddrSize)
+
+Detailed Description
+--------------------
+
+Definition in file SysSocketItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

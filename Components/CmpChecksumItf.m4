@@ -5,7 +5,7 @@
  * </description>
  *
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -113,15 +113,15 @@ extern "C" {
 /**
  * <description>
  *	Implementation of a 16-Bit CRC. The CRC is based on the 
- *  CCITT polynom x^16 + x^12 + x^5 + 1.
+ *  CCITT polynomial x^16 + x^12 + x^5 + 1.
  *  Since there seem to be different opinions about "the" CCITT CRC-16,
- *  here a description of the options used in this api:
+ *  here a description of the options used in this API:
  *  - Bits are shifted in with MSB first
  *  - Input bytes are NOT reversed
  *  - The final CRC is NOT reversed
  *  - Initial value is 0xFFFF
  *  - 16 Zero-bits are implicitly appended to the end of the message
- *  - The "checkvalue" is 0xE5CC (ie. the CRC of the ASCII string '123456789')
+ *  - The "check value" is 0xE5CC (i.e. the CRC of the ASCII string '123456789')
  * </description>
  */
 DEF_API(`RTS_UI16',`CDECL',`CRC16Init',`(void)')
@@ -132,17 +132,17 @@ DEF_API(`RTS_UI16',`CDECL',`CRC16Init',`(void)')
  *   CRC by calling CRC16Init.
  * </description>
  * <param name="usCRC" type="IN">
- *   The previous value of the crc as returned by the last call to CRC16Init or 
+ *   The previous value of the CRC as returned by the last call to CRC16Init or 
  *   CRC16Update.
  * </param>
  * <param name="pData" type="IN">
- *   Points at the data which should be added to the crc.
+ *   Points at the data which should be added to the CRC.
  * </param>
  * <param name="ulSize" type="IN">
  *   The number of bytes in pData.
  * </param>
  * <result>
- *   Returns the updated crc.
+ *   Returns the updated CRC.
  * </result>
  */
 DEF_API(`RTS_UI16',`CDECL',`CRC16Update',`(RTS_UI16 usCRC, const unsigned char * pData, RTS_SIZE ulSize)')
@@ -153,7 +153,7 @@ DEF_API(`RTS_UI16',`CDECL',`CRC16Update',`(RTS_UI16 usCRC, const unsigned char *
  *   Use this as the last step during calculating your CRC.
  * </description>
  * <param name="usCRC" type="IN">
- *  The current value of the crc to be finished.
+ *  The current value of the CRC to be finished.
  * </param>
  * <result>
  *	 The checksum over all data passed in via CRC16Update.
@@ -171,14 +171,14 @@ DEF_API(`RTS_UI32',`CDECL',`CRC32Init',`(void)')
 /**
  * 
  * <description>
- * <p>Obsolete: Use CRC32Update2 instead!</p>
+ * <p>OBSOLETE: Use CRC32Update2 instead!</p>
  * <p>Update the CRC with a block of data. Before the first call you have to initialize the
- *   crc by calling CRC32Init. Must only be used, if the CRC is calculated in one step and not
+ *   CRC by calling CRC32Init. Must only be used, if the CRC is calculated in one step and not
  *   using several calls of CRC32Update for adding data to the CRC.</p>
  *	 <p>ATTENTION: You have to finish the CRC with the function CRC32Finish()!</p>
  * </description>
  * <param name="ulCRC" type="IN">
- *   The previous value of the crc as returned by the last call to CRC32Init.
+ *   The previous value of the CRC as returned by the last call to CRC32Init.
  * </param>
  * <param name="pData" type="IN">
  *   Points at the data for which the CRC should be calculated.
@@ -194,7 +194,7 @@ DEF_API(`RTS_UI32',`CDECL',`CRC32Update',`(RTS_UI32 ulCRC, const unsigned char *
 
 /**
  * <description>
- * <p>Obsolete: Use CRC32Finish2 instead!</p>
+ * <p>OBSOLETE: Use CRC32Finish2 instead!</p>
  * <p>For the CRC to be valid it has to be finished after it is updated with all data.
  *   Use this as the last step during calculating your CRC.</p>
  *   <p>In opposite to the other CRC algorithms, the resulting CRC is swapped to IntelByteOrder.</p>

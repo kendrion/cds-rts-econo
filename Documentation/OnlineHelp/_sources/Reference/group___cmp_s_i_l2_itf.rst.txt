@@ -1,0 +1,1976 @@
+.. first line of composition.rst template
+
+:orphan:
+
+.. first line of group.rst template
+
+.. _group___cmp_s_i_l2_itf:
+
+==========
+CmpSIL2Itf
+==========
+
+.. contents::
+    :local:
+    :depth: 1
+
+Interface of CmpSIL2.
+
+Detailed Description
+--------------------
+
+This is the interface of the SIL2 component. The CmpSIL2 is used to implement several savety related feates, which are (in this form) only necessary in safety PLCs, following the Safety SIL2 concept of 3S.
+
+These features include the following:
+
+  - Safe loading of a bootproject
+
+  - Selftest Hooks
+
+  - Switch between safe- and unsafe contexts
+
+  - Safe logger interface
+
+  - Check functions, to determine the current context and operation mode
+
+  - Control Flow
+
+1) Bootproject
+
+In CoDeSys Control SIL2, the bootproject is always loaded from flash, and from there, only in the "compact download format", as it is used by CmpAppEmbedded. In a standard CoDeSys Control Runtime, the bootproject is implicitely loaded, by CmpApp/CmpAppEmbedded within an init hook, that is executed during the call of :ref:`CMInit() <group___c_m_itf_1gaf05b74542b88e19cba42aaf6048429a4>` at startup.
+
+In CoDeSys Control SIL2, this implicite loading is deactivated. Instead, the OEM customer has to call :ref:`SIL2AppBoot() <group___cmp_s_i_l2_itf_1gad9316cce5790b2528afef1d6a4ecf0ac>` after :ref:`CMInit() <group___c_m_itf_1gaf05b74542b88e19cba42aaf6048429a4>` .
+
+The reason for this constraint is, that the function :ref:`SIL2AppBoot() <group___cmp_s_i_l2_itf_1gad9316cce5790b2528afef1d6a4ecf0ac>` can make sure that the application is loaded with the constraints that are defined for a CoDeSys Control SIL2 system. Additionally, it is more safe to load the application after system startup is completed, because no unsafe init code is executed anymore after the application is loaded.
+
+2) Selftest Hooks
+
+Virtually every safety system needs some kind of self tests, which are either executed in every Safety Process Cycle, or within a specific time frame in the background.
+
+While the selftests in the background need to be seperated into small chunks, which are executed in the COMM-Cycle (= Super Loop), the selftests at startup need to be executed at once, to prohibit the execution of the application when there is an error in the hardware or firmware.
+
+3) Switches between safe, unsafe and system contexts
+
+The current execution context is managed by the OEM customer. But, to have a clear interface to switch between the contexts in a higher level, and to be able to execute unsafe code when coming from a safe context.
+
+4) Safe logger interface
+
+The standard monitoring of CoDeSys as well as the standard logger are not safe. Therefore, they may not be usable for the Endcustomer in some circumstances.
+
+To have a safe interface to transport messages and data from the CoDeSys Control Runtiem to the programming and debugging system, the component CmpSIL2 provides it's own logger interface, which secures the data from unintended modifications with a checksum.
+
+4) Check functions
+
+The CmpSIL2 interface specifies a few functions, which need to be implemented by the OEM customer to determine the current context or operation mode. This is mainly necessary to restrict the execution of several functions, but there might also be other use-cases in which those functions migth be helpful for the OEM himself.
+
+5) Control Flow
+
+The component CmpSIL2, provides a control flow logging mechanism, that is used for diagnostic purposes, to check the control flow of the IEC tasks, before they are passing their outputs to the I/O drivers.
+
+This interface is generically designed, and may therefore also be used by the OEM customer, to log and check his own control flow of his subsystems.
+::
+    *				 Example usage:
+    *				 SIL2_CONTROLFLOW s_IoMgrControlFlow[3];
+    *				 SIL2ControlFlowLog(s_IoMgrControlFlow, 0);
+    *				 SIL2ControlFlowLog(s_IoMgrControlFlow, 1);
+    *				 SIL2ControlFlowLog(s_IoMgrControlFlow, 2);
+    *				 SIL2ControlFlowCheck(s_IoMgrControlFlow, 3);
+    *
+
+**Copyright:**
+
+Copyright (c) 2017-2020 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Modules
+-------
+
+- :ref:`Buffer sizes <group___cmp_s_i_l2_itf___buffersizes>`
+
+- :ref:`Exceptions <group___cmp_s_i_l2_itf___exceptions>`
+
+- :ref:`Typedef <group___cmp_s_i_l2_itf___typedef>`
+
+Data Structures
+---------------
+
+- struct :ref:`tagsil2checkcallercontext_struct <structtagsil2checkcallercontext__struct>`
+
+- struct :ref:`tagsil2copycodeguid_struct <structtagsil2copycodeguid__struct>`
+
+- struct :ref:`tagsil2copydataguid_struct <structtagsil2copydataguid__struct>`
+
+- struct :ref:`tagsil2oemexception_struct <structtagsil2oemexception__struct>`
+
+- struct :ref:`tagsil2addlog_struct <structtagsil2addlog__struct>`
+
+- struct :ref:`tagsil2oemgetoperationmode_struct <structtagsil2oemgetoperationmode__struct>`
+
+- struct :ref:`tagsil2oemgetcallercontext_struct <structtagsil2oemgetcallercontext__struct>`
+
+- struct :ref:`tagsil2oemgetmemorystate_struct <structtagsil2oemgetmemorystate__struct>`
+
+- struct :ref:`tagsil2oemstackisvalid_struct <structtagsil2oemstackisvalid__struct>`
+
+- struct :ref:`tagsil2executenonsafetyjob_struct <structtagsil2executenonsafetyjob__struct>`
+
+- struct :ref:`ICmpSIL2_C <struct_i_cmp_s_i_l2___c>`
+
+Macros
+------
+
+- #define :ref:`USE_SIL2AppBoot <group___cmp_s_i_l2_itf_1ga161d48a6569262fb52f7e28b42046fb1>` :ref:`PFSIL2APPBOOT <group___cmp_s_i_l2_itf_1gaf36eeab696b27f721103e1a8944f2519>` pfSIL2AppBoot;
+
+- #define :ref:`EXT_SIL2AppBoot <group___cmp_s_i_l2_itf_1gac2e0757a7c246bbdb304be48e19c43c0>` extern :ref:`PFSIL2APPBOOT <group___cmp_s_i_l2_itf_1gaf36eeab696b27f721103e1a8944f2519>` pfSIL2AppBoot;
+
+- #define :ref:`GET_SIL2AppBoot <group___cmp_s_i_l2_itf_1ga4cc0eed2aedb68bf3b03b3452d4df4d7>` s_pfCMGetAPI2( "SIL2AppBoot", (RTS_VOID_FCTPTR *)&pfSIL2AppBoot, (fl), 0, 0)
+
+- #define :ref:`CAL_SIL2AppBoot <group___cmp_s_i_l2_itf_1ga25e10c51c2ac40ea7f6bc21310a02449>` pfSIL2AppBoot
+
+- #define :ref:`CHK_SIL2AppBoot <group___cmp_s_i_l2_itf_1ga9b81610e680ad125f1b333f9ce6a7077>` (pfSIL2AppBoot != NULL)
+
+- #define :ref:`EXP_SIL2AppBoot <group___cmp_s_i_l2_itf_1ga45187d9e8968c27dbde8fdfa6d72f866>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2AppBoot", (RTS_UINTPTR) :ref:`SIL2AppBoot <group___cmp_s_i_l2_itf_1gad9316cce5790b2528afef1d6a4ecf0ac>` , 0, 0)
+
+- #define :ref:`USE_SIL2CheckCallerContext <group___cmp_s_i_l2_itf_1ga830e12451fc5fee6c226d817338cecf4>` :ref:`PFSIL2CHECKCALLERCONTEXT <group___cmp_s_i_l2_itf_1ga03ca67749222fb49fafc04104b25a0ee>` pfSIL2CheckCallerContext;
+
+- #define :ref:`EXT_SIL2CheckCallerContext <group___cmp_s_i_l2_itf_1gafc8718818e8c11ad3779aa312b87d1d4>` extern :ref:`PFSIL2CHECKCALLERCONTEXT <group___cmp_s_i_l2_itf_1ga03ca67749222fb49fafc04104b25a0ee>` pfSIL2CheckCallerContext;
+
+- #define :ref:`GET_SIL2CheckCallerContext <group___cmp_s_i_l2_itf_1gae43cd19f6c8b31d26618643a670e6c0b>` s_pfCMGetAPI2( "SIL2CheckCallerContext", (RTS_VOID_FCTPTR *)&pfSIL2CheckCallerContext, (fl), 0, 0)
+
+- #define :ref:`CAL_SIL2CheckCallerContext <group___cmp_s_i_l2_itf_1ga3de12b9c4a09e0d8f6c6a183d8cda683>` pfSIL2CheckCallerContext
+
+- #define :ref:`CHK_SIL2CheckCallerContext <group___cmp_s_i_l2_itf_1ga44cea09f15336fd3e1157d79b41b774b>` (pfSIL2CheckCallerContext != NULL)
+
+- #define :ref:`EXP_SIL2CheckCallerContext <group___cmp_s_i_l2_itf_1gaa34eb9ecec5e815ee83ef519c3836cd3>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2CheckCallerContext", (RTS_UINTPTR) :ref:`SIL2CheckCallerContext <group___cmp_s_i_l2_itf_1gadfab76ab0d96e0384b79b59a6e52d1a5>` , 0, 0)
+
+- #define :ref:`USE_sil2checkcallercontext <group___cmp_s_i_l2_itf_1gae919e63285a23f1b85235e9d83871af4>` :ref:`PFSIL2CHECKCALLERCONTEXT_IEC <group___cmp_s_i_l2_itf_1ga2f2bfcad76d3d47b2726d9cbde4b3b00>` pfsil2checkcallercontext;
+
+- #define :ref:`EXT_sil2checkcallercontext <group___cmp_s_i_l2_itf_1gaaf97454d025c8d7617abc326694e09c8>` extern :ref:`PFSIL2CHECKCALLERCONTEXT_IEC <group___cmp_s_i_l2_itf_1ga2f2bfcad76d3d47b2726d9cbde4b3b00>` pfsil2checkcallercontext;
+
+- #define :ref:`GET_sil2checkcallercontext <group___cmp_s_i_l2_itf_1ga313a4a6e7060391f8ae1ff5b4ebc8dcb>` s_pfCMGetAPI2( "sil2checkcallercontext", (RTS_VOID_FCTPTR *)&pfsil2checkcallercontext, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x829BB451, 0x03050400)
+
+- #define :ref:`CAL_sil2checkcallercontext <group___cmp_s_i_l2_itf_1ga0209f83311de4071ddfc4c4f496cf05c>` pfsil2checkcallercontext
+
+- #define :ref:`CHK_sil2checkcallercontext <group___cmp_s_i_l2_itf_1ga15f0c9aba5f551a52e6b35b0c2aadf39>` (pfsil2checkcallercontext != NULL)
+
+- #define :ref:`EXP_sil2checkcallercontext <group___cmp_s_i_l2_itf_1gaf87dfe01a2fd82395fb88d6c17f14645>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2checkcallercontext", (RTS_UINTPTR) :ref:`sil2checkcallercontext <group___cmp_s_i_l2_itf_1ga4d1664aa0eb2634f7aeffcf2c1a5187a>` , 1, 0x829BB451, 0x03050400)
+
+- #define :ref:`USE_sil2copycodeguid <group___cmp_s_i_l2_itf_1gad4ab8e058c9c928914a57ca99fc64842>` :ref:`PFSIL2COPYCODEGUID_IEC <group___cmp_s_i_l2_itf_1ga5dcd52be80efb3f599e9d7463caa42e5>` pfsil2copycodeguid;
+
+- #define :ref:`EXT_sil2copycodeguid <group___cmp_s_i_l2_itf_1ga2efeefed2e0af297607c38e67a06f94d>` extern :ref:`PFSIL2COPYCODEGUID_IEC <group___cmp_s_i_l2_itf_1ga5dcd52be80efb3f599e9d7463caa42e5>` pfsil2copycodeguid;
+
+- #define :ref:`GET_sil2copycodeguid <group___cmp_s_i_l2_itf_1gabafd4ce1f99d5012ccb7714292372d26>` s_pfCMGetAPI2( "sil2copycodeguid", (RTS_VOID_FCTPTR *)&pfsil2copycodeguid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x638D4565, 0x03050400)
+
+- #define :ref:`CAL_sil2copycodeguid <group___cmp_s_i_l2_itf_1ga226caf3a361b45850437b8a8a7d29c0c>` pfsil2copycodeguid
+
+- #define :ref:`CHK_sil2copycodeguid <group___cmp_s_i_l2_itf_1gae98739141734d5b34a22872ab09c1902>` (pfsil2copycodeguid != NULL)
+
+- #define :ref:`EXP_sil2copycodeguid <group___cmp_s_i_l2_itf_1ga4c37b2d7b779b730e46f053f3bc57c8a>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2copycodeguid", (RTS_UINTPTR) :ref:`sil2copycodeguid <group___cmp_s_i_l2_itf_1ga91f7dcfcbc0f78d10bb89b7c881ac5f5>` , 1, 0x638D4565, 0x03050400)
+
+- #define :ref:`USE_sil2copydataguid <group___cmp_s_i_l2_itf_1ga2b722257967e408060d6cda397ad32e4>` :ref:`PFSIL2COPYDATAGUID_IEC <group___cmp_s_i_l2_itf_1gacb12384306096ab4377ea8eabce6ff6c>` pfsil2copydataguid;
+
+- #define :ref:`EXT_sil2copydataguid <group___cmp_s_i_l2_itf_1gacdddb8fdaf65bc7663a1bc979bd387c2>` extern :ref:`PFSIL2COPYDATAGUID_IEC <group___cmp_s_i_l2_itf_1gacb12384306096ab4377ea8eabce6ff6c>` pfsil2copydataguid;
+
+- #define :ref:`GET_sil2copydataguid <group___cmp_s_i_l2_itf_1gae40992257fafc8744300329f78f3aa38>` s_pfCMGetAPI2( "sil2copydataguid", (RTS_VOID_FCTPTR *)&pfsil2copydataguid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x44F9CD8A, 0x03050400)
+
+- #define :ref:`CAL_sil2copydataguid <group___cmp_s_i_l2_itf_1ga298631a66751dc888a682a8712e2560d>` pfsil2copydataguid
+
+- #define :ref:`CHK_sil2copydataguid <group___cmp_s_i_l2_itf_1gae5b1218320c76d71e006aef0cacbdc22>` (pfsil2copydataguid != NULL)
+
+- #define :ref:`EXP_sil2copydataguid <group___cmp_s_i_l2_itf_1ga273f6458dd34f6256881ed8267d9f2d4>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2copydataguid", (RTS_UINTPTR) :ref:`sil2copydataguid <group___cmp_s_i_l2_itf_1ga25b16f1d0d03c5b686a8834e8da7ea5f>` , 1, 0x44F9CD8A, 0x03050400)
+
+- #define :ref:`USE_SIL2OEMEnterDebugMode <group___cmp_s_i_l2_itf_1ga1af34e8eb772e8655e34972504373c90>` :ref:`PFSIL2OEMENTERDEBUGMODE <group___cmp_s_i_l2_itf_1ga6ec5ce2ca6a3597bc4ef861cac4918f1>` pfSIL2OEMEnterDebugMode;
+
+- #define :ref:`EXT_SIL2OEMEnterDebugMode <group___cmp_s_i_l2_itf_1ga347f2963b222c19bb62588a303797543>` extern :ref:`PFSIL2OEMENTERDEBUGMODE <group___cmp_s_i_l2_itf_1ga6ec5ce2ca6a3597bc4ef861cac4918f1>` pfSIL2OEMEnterDebugMode;
+
+- #define :ref:`GET_SIL2OEMEnterDebugMode <group___cmp_s_i_l2_itf_1gaee56d0cb9d2689111fa2a61d5ac8d739>` s_pfCMGetAPI2( "SIL2OEMEnterDebugMode", (RTS_VOID_FCTPTR *)&pfSIL2OEMEnterDebugMode, (fl), 0, 0)
+
+- #define :ref:`CAL_SIL2OEMEnterDebugMode <group___cmp_s_i_l2_itf_1ga2b46527ab997b9b4d1263c73bf818e0d>` pfSIL2OEMEnterDebugMode
+
+- #define :ref:`CHK_SIL2OEMEnterDebugMode <group___cmp_s_i_l2_itf_1ga520a05582ab310ccd89e0fa66aae41e3>` (pfSIL2OEMEnterDebugMode != NULL)
+
+- #define :ref:`EXP_SIL2OEMEnterDebugMode <group___cmp_s_i_l2_itf_1ga1834f4160b13970869a369de6dff6f74>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMEnterDebugMode", (RTS_UINTPTR) :ref:`SIL2OEMEnterDebugMode <group___cmp_s_i_l2_itf_1ga62576d17b76bd27547fddc0f0f7f5665>` , 0, 0)
+
+- #define :ref:`USE_SIL2OEMException <group___cmp_s_i_l2_itf_1ga68965ae5c644ecce1e320cdc1ec8ddb7>` :ref:`PFSIL2OEMEXCEPTION <group___cmp_s_i_l2_itf_1gab6718874b0b3120fdedae1bf6f3218a9>` pfSIL2OEMException;
+
+- #define :ref:`EXT_SIL2OEMException <group___cmp_s_i_l2_itf_1ga9e0f6ef70906289eafa1a05525ace34c>` extern :ref:`PFSIL2OEMEXCEPTION <group___cmp_s_i_l2_itf_1gab6718874b0b3120fdedae1bf6f3218a9>` pfSIL2OEMException;
+
+- #define :ref:`GET_SIL2OEMException <group___cmp_s_i_l2_itf_1ga12942dfa34e76313de93cbd8e019013d>` s_pfCMGetAPI2( "SIL2OEMException", (RTS_VOID_FCTPTR *)&pfSIL2OEMException, (fl), 0, 0)
+
+- #define :ref:`CAL_SIL2OEMException <group___cmp_s_i_l2_itf_1ga93e3034d04773a4a994a47bc460552e6>` pfSIL2OEMException
+
+- #define :ref:`CHK_SIL2OEMException <group___cmp_s_i_l2_itf_1ga62534e703206111fcc58332b4b90564b>` (pfSIL2OEMException != NULL)
+
+- #define :ref:`EXP_SIL2OEMException <group___cmp_s_i_l2_itf_1gac8c0f0fee6eb27608adc87a1e8faf028>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMException", (RTS_UINTPTR) :ref:`SIL2OEMException <group___cmp_s_i_l2_itf_1ga18773ad5b541c2d47a6b9c6321379f77>` , 0, 0)
+
+- #define :ref:`USE_sil2oemexception <group___cmp_s_i_l2_itf_1ga721c0df5a35cb1db60e0db78848888a5>` :ref:`PFSIL2OEMEXCEPTION_IEC <group___cmp_s_i_l2_itf_1ga649ca3ddf9bf22f6a85fdfb0740e5cbd>` pfsil2oemexception;
+
+- #define :ref:`EXT_sil2oemexception <group___cmp_s_i_l2_itf_1ga3d37aec6b9627dc08688e65c2c85e21f>` extern :ref:`PFSIL2OEMEXCEPTION_IEC <group___cmp_s_i_l2_itf_1ga649ca3ddf9bf22f6a85fdfb0740e5cbd>` pfsil2oemexception;
+
+- #define :ref:`GET_sil2oemexception <group___cmp_s_i_l2_itf_1ga3a2c4e000fd29290a7f6d7ce909677f4>` s_pfCMGetAPI2( "sil2oemexception", (RTS_VOID_FCTPTR *)&pfsil2oemexception, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xA54830DE, 0x03050400)
+
+- #define :ref:`CAL_sil2oemexception <group___cmp_s_i_l2_itf_1gaecdf726c20099f1415ecfb1f411eb506>` pfsil2oemexception
+
+- #define :ref:`CHK_sil2oemexception <group___cmp_s_i_l2_itf_1ga1341bade21ac95edeb2a8d94f3c37a7c>` (pfsil2oemexception != NULL)
+
+- #define :ref:`EXP_sil2oemexception <group___cmp_s_i_l2_itf_1ga6c62ead5c6ec324574a1536902b47c0a>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2oemexception", (RTS_UINTPTR) :ref:`sil2oemexception <group___cmp_s_i_l2_itf_1gadf1587656481bdac7afb3f2f5ba571b0>` , 1, 0xA54830DE, 0x03050400)
+
+- #define :ref:`USE_SIL2AddLog <group___cmp_s_i_l2_itf_1ga75fbd4d19c8e700d00e43aa06ef3a46e>` :ref:`PFSIL2ADDLOG <group___cmp_s_i_l2_itf_1ga9852c355c2bf3485fb153f7684ae38b4>` pfSIL2AddLog;
+
+- #define :ref:`EXT_SIL2AddLog <group___cmp_s_i_l2_itf_1ga7311a28142b38e8a27c2e146d25c9857>` extern :ref:`PFSIL2ADDLOG <group___cmp_s_i_l2_itf_1ga9852c355c2bf3485fb153f7684ae38b4>` pfSIL2AddLog;
+
+- #define :ref:`GET_SIL2AddLog <group___cmp_s_i_l2_itf_1gae50fc5ca818097a5de9db5ce68350903>` s_pfCMGetAPI2( "SIL2AddLog", (RTS_VOID_FCTPTR *)&pfSIL2AddLog, (fl), 0, 0)
+
+- #define :ref:`CAL_SIL2AddLog <group___cmp_s_i_l2_itf_1ga5dc223d1233b7528d03f6fbda634e0ce>` pfSIL2AddLog
+
+- #define :ref:`CHK_SIL2AddLog <group___cmp_s_i_l2_itf_1gaec24522119db1eb4ff92c16fbcadb96b>` (pfSIL2AddLog != NULL)
+
+- #define :ref:`EXP_SIL2AddLog <group___cmp_s_i_l2_itf_1ga109bd473ce87843bb06af097b251f430>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2AddLog", (RTS_UINTPTR) :ref:`SIL2AddLog <group___cmp_s_i_l2_itf_1ga5f306b85e84cd1cb52c10f077489967f>` , 0, 0)
+
+- #define :ref:`USE_sil2addlog <group___cmp_s_i_l2_itf_1gac1c20537c23d00e870f37d9c68106152>` :ref:`PFSIL2ADDLOG_IEC <group___cmp_s_i_l2_itf_1ga47832dc40a3eb08e3f396432a17bab91>` pfsil2addlog;
+
+- #define :ref:`EXT_sil2addlog <group___cmp_s_i_l2_itf_1gad446249fbf5d9c08b56d7467a89f50fb>` extern :ref:`PFSIL2ADDLOG_IEC <group___cmp_s_i_l2_itf_1ga47832dc40a3eb08e3f396432a17bab91>` pfsil2addlog;
+
+- #define :ref:`GET_sil2addlog <group___cmp_s_i_l2_itf_1gae84775eaa18f2edd4b40d7c55d6e6aca>` s_pfCMGetAPI2( "sil2addlog", (RTS_VOID_FCTPTR *)&pfsil2addlog, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x742BC625, 0x03050400)
+
+- #define :ref:`CAL_sil2addlog <group___cmp_s_i_l2_itf_1gaee2017251767bfb98a7f68a0569ff083>` pfsil2addlog
+
+- #define :ref:`CHK_sil2addlog <group___cmp_s_i_l2_itf_1ga06d8cf19f7e913a9490ced4ca2dbc850>` (pfsil2addlog != NULL)
+
+- #define :ref:`EXP_sil2addlog <group___cmp_s_i_l2_itf_1gad487f4d7e6fc042f9d799ce83df65ddb>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2addlog", (RTS_UINTPTR) :ref:`sil2addlog <group___cmp_s_i_l2_itf_1ga58dd0a10a47331ec3e336ffdcc6864cb>` , 1, 0x742BC625, 0x03050400)
+
+- #define :ref:`USE_SIL2OEMGetOperationMode <group___cmp_s_i_l2_itf_1ga5b66e8b282d3bf7382e8670dcedbd7e2>` :ref:`PFSIL2OEMGETOPERATIONMODE <group___cmp_s_i_l2_itf_1ga78829bdc99fba185d99662fe8d302749>` pfSIL2OEMGetOperationMode;
+
+- #define :ref:`EXT_SIL2OEMGetOperationMode <group___cmp_s_i_l2_itf_1ga788e62e6bf05be2b6df3da5d85ff5e9d>` extern :ref:`PFSIL2OEMGETOPERATIONMODE <group___cmp_s_i_l2_itf_1ga78829bdc99fba185d99662fe8d302749>` pfSIL2OEMGetOperationMode;
+
+- #define :ref:`GET_SIL2OEMGetOperationMode <group___cmp_s_i_l2_itf_1gabecd16a6bd8c6b08877814da9ebba04a>` s_pfCMGetAPI2( "SIL2OEMGetOperationMode", (RTS_VOID_FCTPTR *)&pfSIL2OEMGetOperationMode, (fl), 0, 0)
+
+- #define :ref:`CAL_SIL2OEMGetOperationMode <group___cmp_s_i_l2_itf_1gab441becb97c407d3c0c68282dfbfa93f>` pfSIL2OEMGetOperationMode
+
+- #define :ref:`CHK_SIL2OEMGetOperationMode <group___cmp_s_i_l2_itf_1ga25a297ee11c9f3a5a06e7251e209e91c>` (pfSIL2OEMGetOperationMode != NULL)
+
+- #define :ref:`EXP_SIL2OEMGetOperationMode <group___cmp_s_i_l2_itf_1ga44a3fd58b0531c68b4dcf0e6a318188d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMGetOperationMode", (RTS_UINTPTR) :ref:`SIL2OEMGetOperationMode <group___cmp_s_i_l2_itf_1gadf5a291c36c5b17da4958b7f32710d7b>` , 0, 0)
+
+- #define :ref:`USE_sil2oemgetoperationmode <group___cmp_s_i_l2_itf_1ga1c8e1e163fa2a280ca6745d2b0f59b36>` :ref:`PFSIL2OEMGETOPERATIONMODE_IEC <group___cmp_s_i_l2_itf_1ga81011063706683538642a0c899752f03>` pfsil2oemgetoperationmode;
+
+- #define :ref:`EXT_sil2oemgetoperationmode <group___cmp_s_i_l2_itf_1gad76e81c5366448036ffdca1dfda72461>` extern :ref:`PFSIL2OEMGETOPERATIONMODE_IEC <group___cmp_s_i_l2_itf_1ga81011063706683538642a0c899752f03>` pfsil2oemgetoperationmode;
+
+- #define :ref:`GET_sil2oemgetoperationmode <group___cmp_s_i_l2_itf_1ga52fbf42d119f9e33eff533895c5780a6>` s_pfCMGetAPI2( "sil2oemgetoperationmode", (RTS_VOID_FCTPTR *)&pfsil2oemgetoperationmode, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xB292F534, 0x03050400)
+
+- #define :ref:`CAL_sil2oemgetoperationmode <group___cmp_s_i_l2_itf_1ga9d1e7a684921e202042fdf655190227a>` pfsil2oemgetoperationmode
+
+- #define :ref:`CHK_sil2oemgetoperationmode <group___cmp_s_i_l2_itf_1ga73ce81d7aa76d6d073f1955b4ed4de5c>` (pfsil2oemgetoperationmode != NULL)
+
+- #define :ref:`EXP_sil2oemgetoperationmode <group___cmp_s_i_l2_itf_1ga7945bda457c34610309f7c4e4d40b624>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2oemgetoperationmode", (RTS_UINTPTR) :ref:`sil2oemgetoperationmode <group___cmp_s_i_l2_itf_1ga88779429f4950703112f5e8621a0e90a>` , 1, 0xB292F534, 0x03050400)
+
+- #define :ref:`USE_SIL2OEMGetCallerContext <group___cmp_s_i_l2_itf_1ga1c724e10b2b1f87a84f651856a057706>` :ref:`PFSIL2OEMGETCALLERCONTEXT <group___cmp_s_i_l2_itf_1ga66d3afd70afce160d4b8d0a83b103e58>` pfSIL2OEMGetCallerContext;
+
+- #define :ref:`EXT_SIL2OEMGetCallerContext <group___cmp_s_i_l2_itf_1ga529e72b01d8de7f41573f77f55fc8981>` extern :ref:`PFSIL2OEMGETCALLERCONTEXT <group___cmp_s_i_l2_itf_1ga66d3afd70afce160d4b8d0a83b103e58>` pfSIL2OEMGetCallerContext;
+
+- #define :ref:`GET_SIL2OEMGetCallerContext <group___cmp_s_i_l2_itf_1ga8773bf9e24a06a7cbb12fb4d8506d2a6>` s_pfCMGetAPI2( "SIL2OEMGetCallerContext", (RTS_VOID_FCTPTR *)&pfSIL2OEMGetCallerContext, (fl), 0, 0)
+
+- #define :ref:`CAL_SIL2OEMGetCallerContext <group___cmp_s_i_l2_itf_1gab49491fe5a383d39792ad2ec8d81cec6>` pfSIL2OEMGetCallerContext
+
+- #define :ref:`CHK_SIL2OEMGetCallerContext <group___cmp_s_i_l2_itf_1ga7a6d28b29c73c96e7c3b9a9aa05f6806>` (pfSIL2OEMGetCallerContext != NULL)
+
+- #define :ref:`EXP_SIL2OEMGetCallerContext <group___cmp_s_i_l2_itf_1ga9f7eac6369e82f2132a8586d52d81968>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMGetCallerContext", (RTS_UINTPTR) :ref:`SIL2OEMGetCallerContext <group___cmp_s_i_l2_itf_1ga7430aa78af60c412d55bbda4af49bae1>` , 0, 0)
+
+- #define :ref:`USE_sil2oemgetcallercontext <group___cmp_s_i_l2_itf_1gaf0b9f4d1d3a07fa4ad476bc6a35a1825>` :ref:`PFSIL2OEMGETCALLERCONTEXT_IEC <group___cmp_s_i_l2_itf_1gad7169ec82c58a6a33cbf64fa5d4d817e>` pfsil2oemgetcallercontext;
+
+- #define :ref:`EXT_sil2oemgetcallercontext <group___cmp_s_i_l2_itf_1ga6dbbb22e5e7cdcd625ab1120f617a9d0>` extern :ref:`PFSIL2OEMGETCALLERCONTEXT_IEC <group___cmp_s_i_l2_itf_1gad7169ec82c58a6a33cbf64fa5d4d817e>` pfsil2oemgetcallercontext;
+
+- #define :ref:`GET_sil2oemgetcallercontext <group___cmp_s_i_l2_itf_1ga421a3fc9f9f1aa59396e8d672f967a48>` s_pfCMGetAPI2( "sil2oemgetcallercontext", (RTS_VOID_FCTPTR *)&pfsil2oemgetcallercontext, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x2A37A2FD, 0x03050400)
+
+- #define :ref:`CAL_sil2oemgetcallercontext <group___cmp_s_i_l2_itf_1gae920c9c4ddf04f334ab77e0677b20258>` pfsil2oemgetcallercontext
+
+- #define :ref:`CHK_sil2oemgetcallercontext <group___cmp_s_i_l2_itf_1ga21bb633823bd6b4e3956745da82e7a22>` (pfsil2oemgetcallercontext != NULL)
+
+- #define :ref:`EXP_sil2oemgetcallercontext <group___cmp_s_i_l2_itf_1ga8b99b058ba5cff38de3c6a40bfadf26d>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2oemgetcallercontext", (RTS_UINTPTR) :ref:`sil2oemgetcallercontext <group___cmp_s_i_l2_itf_1ga565da012eaba510c94321df0c231b388>` , 1, 0x2A37A2FD, 0x03050400)
+
+- #define :ref:`USE_SIL2OEMGetMemoryState <group___cmp_s_i_l2_itf_1ga0209c5adc1bfcef633b136291bc34220>` :ref:`PFSIL2OEMGETMEMORYSTATE <group___cmp_s_i_l2_itf_1gabbc1153a61f4bc9f2f683e2f35d2119a>` pfSIL2OEMGetMemoryState;
+
+- #define :ref:`EXT_SIL2OEMGetMemoryState <group___cmp_s_i_l2_itf_1gad6c93bb6eff28a75788c4a828df640ad>` extern :ref:`PFSIL2OEMGETMEMORYSTATE <group___cmp_s_i_l2_itf_1gabbc1153a61f4bc9f2f683e2f35d2119a>` pfSIL2OEMGetMemoryState;
+
+- #define :ref:`GET_SIL2OEMGetMemoryState <group___cmp_s_i_l2_itf_1ga004e5f99ac33365f5adc669d0c8c0104>` s_pfCMGetAPI2( "SIL2OEMGetMemoryState", (RTS_VOID_FCTPTR *)&pfSIL2OEMGetMemoryState, (fl), 0, 0)
+
+- #define :ref:`CAL_SIL2OEMGetMemoryState <group___cmp_s_i_l2_itf_1ga3962f5b8b16f900666d73d217049dee9>` pfSIL2OEMGetMemoryState
+
+- #define :ref:`CHK_SIL2OEMGetMemoryState <group___cmp_s_i_l2_itf_1gab34387ac59162137f722d988ab7a3436>` (pfSIL2OEMGetMemoryState != NULL)
+
+- #define :ref:`EXP_SIL2OEMGetMemoryState <group___cmp_s_i_l2_itf_1ga74b7ab4c60b7dc50e8287e5d2af3ca14>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMGetMemoryState", (RTS_UINTPTR) :ref:`SIL2OEMGetMemoryState <group___cmp_s_i_l2_itf_1ga12c8a7ab6630ef4eb56b0e12947abec9>` , 0, 0)
+
+- #define :ref:`USE_sil2oemgetmemorystate <group___cmp_s_i_l2_itf_1ga0f0a8ea585c336fb75679742efa439a2>` :ref:`PFSIL2OEMGETMEMORYSTATE_IEC <group___cmp_s_i_l2_itf_1ga4a75f9a149e64bf8cdc5be04a2ce4de0>` pfsil2oemgetmemorystate;
+
+- #define :ref:`EXT_sil2oemgetmemorystate <group___cmp_s_i_l2_itf_1ga896234e30496de67a0c54e65554eaaca>` extern :ref:`PFSIL2OEMGETMEMORYSTATE_IEC <group___cmp_s_i_l2_itf_1ga4a75f9a149e64bf8cdc5be04a2ce4de0>` pfsil2oemgetmemorystate;
+
+- #define :ref:`GET_sil2oemgetmemorystate <group___cmp_s_i_l2_itf_1ga609472f6a6fdfcb53a45baefa8748376>` s_pfCMGetAPI2( "sil2oemgetmemorystate", (RTS_VOID_FCTPTR *)&pfsil2oemgetmemorystate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x2FE5CB14, 0x03050400)
+
+- #define :ref:`CAL_sil2oemgetmemorystate <group___cmp_s_i_l2_itf_1ga7cee743418c78af71c7cb8de6bd1f23e>` pfsil2oemgetmemorystate
+
+- #define :ref:`CHK_sil2oemgetmemorystate <group___cmp_s_i_l2_itf_1ga6c629c114d0af26e9f491187c4a0c636>` (pfsil2oemgetmemorystate != NULL)
+
+- #define :ref:`EXP_sil2oemgetmemorystate <group___cmp_s_i_l2_itf_1gaf7a291a0ebce49d1ca3e159322c2b4fd>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2oemgetmemorystate", (RTS_UINTPTR) :ref:`sil2oemgetmemorystate <group___cmp_s_i_l2_itf_1ga389453b9ba1ef8fa37b6b0f0d8c6e3db>` , 1, 0x2FE5CB14, 0x03050400)
+
+- #define :ref:`USE_SIL2OEMStackIsValid <group___cmp_s_i_l2_itf_1gab964b31a3e3105c99db2a1c729f146ca>` :ref:`PFSIL2OEMSTACKISVALID <group___cmp_s_i_l2_itf_1ga6f7ce258e9d586fe1198f6dad9b09d70>` pfSIL2OEMStackIsValid;
+
+- #define :ref:`EXT_SIL2OEMStackIsValid <group___cmp_s_i_l2_itf_1ga0776e769099dd9155968660474b2ff9c>` extern :ref:`PFSIL2OEMSTACKISVALID <group___cmp_s_i_l2_itf_1ga6f7ce258e9d586fe1198f6dad9b09d70>` pfSIL2OEMStackIsValid;
+
+- #define :ref:`GET_SIL2OEMStackIsValid <group___cmp_s_i_l2_itf_1gafeaaae2dc708659a1ea2936d669a8e58>` s_pfCMGetAPI2( "SIL2OEMStackIsValid", (RTS_VOID_FCTPTR *)&pfSIL2OEMStackIsValid, (fl), 0, 0)
+
+- #define :ref:`CAL_SIL2OEMStackIsValid <group___cmp_s_i_l2_itf_1ga91c4c44e2d59e074aafb42db9fe05f4f>` pfSIL2OEMStackIsValid
+
+- #define :ref:`CHK_SIL2OEMStackIsValid <group___cmp_s_i_l2_itf_1gaee17f335c84094d80dac938a65418262>` (pfSIL2OEMStackIsValid != NULL)
+
+- #define :ref:`EXP_SIL2OEMStackIsValid <group___cmp_s_i_l2_itf_1gacf962c65ba8b9ddb6b485d036525ec0c>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMStackIsValid", (RTS_UINTPTR) :ref:`SIL2OEMStackIsValid <group___cmp_s_i_l2_itf_1ga255fd372de5d2411332f0ba94bc8cc41>` , 0, 0)
+
+- #define :ref:`USE_sil2oemstackisvalid <group___cmp_s_i_l2_itf_1ga5c2ede6c22eab6091710e5afa0666831>` :ref:`PFSIL2OEMSTACKISVALID_IEC <group___cmp_s_i_l2_itf_1gaf93fc36b1512c626f80b13435628f924>` pfsil2oemstackisvalid;
+
+- #define :ref:`EXT_sil2oemstackisvalid <group___cmp_s_i_l2_itf_1gaa6ba6353ad5818d2805645006dceb5c0>` extern :ref:`PFSIL2OEMSTACKISVALID_IEC <group___cmp_s_i_l2_itf_1gaf93fc36b1512c626f80b13435628f924>` pfsil2oemstackisvalid;
+
+- #define :ref:`GET_sil2oemstackisvalid <group___cmp_s_i_l2_itf_1gab407701636e69a43788ec2bcc87a9123>` s_pfCMGetAPI2( "sil2oemstackisvalid", (RTS_VOID_FCTPTR *)&pfsil2oemstackisvalid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x56A27207, 0x03050400)
+
+- #define :ref:`CAL_sil2oemstackisvalid <group___cmp_s_i_l2_itf_1gac246ed9331f50e7c51c00cf36bfb8195>` pfsil2oemstackisvalid
+
+- #define :ref:`CHK_sil2oemstackisvalid <group___cmp_s_i_l2_itf_1gadfcda6ded631d76f51d2396bceaef196>` (pfsil2oemstackisvalid != NULL)
+
+- #define :ref:`EXP_sil2oemstackisvalid <group___cmp_s_i_l2_itf_1ga788aad8e8f7ba0ae4257be226d07778b>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2oemstackisvalid", (RTS_UINTPTR) :ref:`sil2oemstackisvalid <group___cmp_s_i_l2_itf_1ga8695b89346da1c066f61b361fe120167>` , 1, 0x56A27207, 0x03050400)
+
+- #define :ref:`USE_SIL2OEMExecuteNonSafetyJob <group___cmp_s_i_l2_itf_1gacc162840577f63fd3055502824ad1aac>` :ref:`PFSIL2OEMEXECUTENONSAFETYJOB <group___cmp_s_i_l2_itf_1ga5b6af9feec7a11d1d45c2d2cf2d9710b>` pfSIL2OEMExecuteNonSafetyJob;
+
+- #define :ref:`EXT_SIL2OEMExecuteNonSafetyJob <group___cmp_s_i_l2_itf_1gad912f9d8719395078d95f99a218b09b1>` extern :ref:`PFSIL2OEMEXECUTENONSAFETYJOB <group___cmp_s_i_l2_itf_1ga5b6af9feec7a11d1d45c2d2cf2d9710b>` pfSIL2OEMExecuteNonSafetyJob;
+
+- #define :ref:`GET_SIL2OEMExecuteNonSafetyJob <group___cmp_s_i_l2_itf_1ga953e3a02c62bffb2de392211279462d2>` s_pfCMGetAPI2( "SIL2OEMExecuteNonSafetyJob", (RTS_VOID_FCTPTR *)&pfSIL2OEMExecuteNonSafetyJob, (fl), 0, 0)
+
+- #define :ref:`CAL_SIL2OEMExecuteNonSafetyJob <group___cmp_s_i_l2_itf_1ga9990a9695a01b16ad3fe1d10252f7012>` pfSIL2OEMExecuteNonSafetyJob
+
+- #define :ref:`CHK_SIL2OEMExecuteNonSafetyJob <group___cmp_s_i_l2_itf_1gab566aed7e0f3928f7f7bf3983c08e099>` (pfSIL2OEMExecuteNonSafetyJob != NULL)
+
+- #define :ref:`EXP_SIL2OEMExecuteNonSafetyJob <group___cmp_s_i_l2_itf_1ga086b3b04d3e7374cb28b0008916230fc>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMExecuteNonSafetyJob", (RTS_UINTPTR) :ref:`SIL2OEMExecuteNonSafetyJob <group___cmp_s_i_l2_itf_1gaa56ac50fb0426a44a8691acb560d6b31>` , 0, 0)
+
+- #define :ref:`USE_SIL2OEMExecuteNonSafetyJob2 <group___cmp_s_i_l2_itf_1ga45ba3c4dfe9b9a2c5d76b53ea821d115>` :ref:`PFSIL2OEMEXECUTENONSAFETYJOB2 <group___cmp_s_i_l2_itf_1ga2d2d5fcd62b0cceed18e82c8910756e8>` pfSIL2OEMExecuteNonSafetyJob2;
+
+- #define :ref:`EXT_SIL2OEMExecuteNonSafetyJob2 <group___cmp_s_i_l2_itf_1ga113566cd816f36d1a0fe7acfe9859ff1>` extern :ref:`PFSIL2OEMEXECUTENONSAFETYJOB2 <group___cmp_s_i_l2_itf_1ga2d2d5fcd62b0cceed18e82c8910756e8>` pfSIL2OEMExecuteNonSafetyJob2;
+
+- #define :ref:`GET_SIL2OEMExecuteNonSafetyJob2 <group___cmp_s_i_l2_itf_1ga7ae1d4c02d90897adf587908103d27f2>` s_pfCMGetAPI2( "SIL2OEMExecuteNonSafetyJob2", (RTS_VOID_FCTPTR *)&pfSIL2OEMExecuteNonSafetyJob2, (fl), 0, 0)
+
+- #define :ref:`CAL_SIL2OEMExecuteNonSafetyJob2 <group___cmp_s_i_l2_itf_1ga3a4f6702047e94c8f0604de4525e2621>` pfSIL2OEMExecuteNonSafetyJob2
+
+- #define :ref:`CHK_SIL2OEMExecuteNonSafetyJob2 <group___cmp_s_i_l2_itf_1ga0d7eec1e4577a2306a8e0c54d03e623d>` (pfSIL2OEMExecuteNonSafetyJob2 != NULL)
+
+- #define :ref:`EXP_SIL2OEMExecuteNonSafetyJob2 <group___cmp_s_i_l2_itf_1ga39fa349243e3145eab6a7a331810f12d>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMExecuteNonSafetyJob2", (RTS_UINTPTR) :ref:`SIL2OEMExecuteNonSafetyJob2 <group___cmp_s_i_l2_itf_1ga28aabdcbbe7f639607257f717d8f21a4>` , 0, 0)
+
+- #define :ref:`USE_sil2executenonsafetyjob <group___cmp_s_i_l2_itf_1ga3760ea09bcc4f3f1ff7339edff83c38f>` :ref:`PFSIL2EXECUTENONSAFETYJOB_IEC <group___cmp_s_i_l2_itf_1gaf2bc2847465eb128b54c1a70e16e051b>` pfsil2executenonsafetyjob;
+
+- #define :ref:`EXT_sil2executenonsafetyjob <group___cmp_s_i_l2_itf_1ga2d8c2dc95a523c9b7a25a6c50ea6eddf>` extern :ref:`PFSIL2EXECUTENONSAFETYJOB_IEC <group___cmp_s_i_l2_itf_1gaf2bc2847465eb128b54c1a70e16e051b>` pfsil2executenonsafetyjob;
+
+- #define :ref:`GET_sil2executenonsafetyjob <group___cmp_s_i_l2_itf_1ga0c6d6e091a4b84999c27e371039dd6ec>` s_pfCMGetAPI2( "sil2executenonsafetyjob", (RTS_VOID_FCTPTR *)&pfsil2executenonsafetyjob, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x142EECAE, 0x03050400)
+
+- #define :ref:`CAL_sil2executenonsafetyjob <group___cmp_s_i_l2_itf_1gacf548d4e2fae179ff2d22bd246db8fbd>` pfsil2executenonsafetyjob
+
+- #define :ref:`CHK_sil2executenonsafetyjob <group___cmp_s_i_l2_itf_1gad2a39df73281629ed106ff02de55e457>` (pfsil2executenonsafetyjob != NULL)
+
+- #define :ref:`EXP_sil2executenonsafetyjob <group___cmp_s_i_l2_itf_1ga7345e66f322e7b006a26537df28fd34e>` s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2executenonsafetyjob", (RTS_UINTPTR) :ref:`sil2executenonsafetyjob <group___cmp_s_i_l2_itf_1gae02f2394cc394e0d4c125df523cf10c7>` , 1, 0x142EECAE, 0x03050400)
+
+- #define :ref:`USE_SIL2ControlFlowLog <group___cmp_s_i_l2_itf_1gad7c6edbe07d087c5d387d6d33c8bfc70>` :ref:`PFSIL2CONTROLFLOWLOG <group___cmp_s_i_l2_itf_1gafcdc4b9b598d62eab5363d62e712b2f4>` pfSIL2ControlFlowLog;
+
+- #define :ref:`EXT_SIL2ControlFlowLog <group___cmp_s_i_l2_itf_1gaae5fb2c8beb382ef005d96b1f256a147>` extern :ref:`PFSIL2CONTROLFLOWLOG <group___cmp_s_i_l2_itf_1gafcdc4b9b598d62eab5363d62e712b2f4>` pfSIL2ControlFlowLog;
+
+- #define :ref:`GET_SIL2ControlFlowLog <group___cmp_s_i_l2_itf_1gabf81cc4bc34e5441a10f168294d8d494>` s_pfCMGetAPI2( "SIL2ControlFlowLog", (RTS_VOID_FCTPTR *)&pfSIL2ControlFlowLog, (fl), 0, 0)
+
+- #define :ref:`CAL_SIL2ControlFlowLog <group___cmp_s_i_l2_itf_1gaabf35cfcfddf3c8bbc4670e07506ca76>` pfSIL2ControlFlowLog
+
+- #define :ref:`CHK_SIL2ControlFlowLog <group___cmp_s_i_l2_itf_1ga9d253be973242d1a5156dcdf55790356>` (pfSIL2ControlFlowLog != NULL)
+
+- #define :ref:`EXP_SIL2ControlFlowLog <group___cmp_s_i_l2_itf_1gaaf9e51d4c25d3b646874b55b8c9bf204>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2ControlFlowLog", (RTS_UINTPTR) :ref:`SIL2ControlFlowLog <group___cmp_s_i_l2_itf_1gac3c32bd11a71214ccc8890229375eff0>` , 0, 0)
+
+- #define :ref:`USE_SIL2ControlFlowCheck <group___cmp_s_i_l2_itf_1gab2be2d136f4fe28fecad89cab7cdd594>` :ref:`PFSIL2CONTROLFLOWCHECK <group___cmp_s_i_l2_itf_1ga6fa1921e7db1fff0aa47c044e747a7f5>` pfSIL2ControlFlowCheck;
+
+- #define :ref:`EXT_SIL2ControlFlowCheck <group___cmp_s_i_l2_itf_1ga3cd9ef014347a1b13e968fa6eaf20b86>` extern :ref:`PFSIL2CONTROLFLOWCHECK <group___cmp_s_i_l2_itf_1ga6fa1921e7db1fff0aa47c044e747a7f5>` pfSIL2ControlFlowCheck;
+
+- #define :ref:`GET_SIL2ControlFlowCheck <group___cmp_s_i_l2_itf_1ga81304aeac25e3f2f20a085b71a35cac1>` s_pfCMGetAPI2( "SIL2ControlFlowCheck", (RTS_VOID_FCTPTR *)&pfSIL2ControlFlowCheck, (fl), 0, 0)
+
+- #define :ref:`CAL_SIL2ControlFlowCheck <group___cmp_s_i_l2_itf_1gafc68f9153fcbe927df1b45dccb6ef2b9>` pfSIL2ControlFlowCheck
+
+- #define :ref:`CHK_SIL2ControlFlowCheck <group___cmp_s_i_l2_itf_1gaa6f3cb62e07bd491d327dfb577c25377>` (pfSIL2ControlFlowCheck != NULL)
+
+- #define :ref:`EXP_SIL2ControlFlowCheck <group___cmp_s_i_l2_itf_1ga493a5d5288604a370b37c69147de8c67>` s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2ControlFlowCheck", (RTS_UINTPTR) :ref:`SIL2ControlFlowCheck <group___cmp_s_i_l2_itf_1gaf37d65396d1dd8280b55256036da7599>` , 0, 0)
+
+- #define :ref:`ITF_CmpSIL2 <group___cmp_s_i_l2_itf_1gacbb2abee3cdc282355427b83dbe0f1b1>`
+
+- #define :ref:`EXTITF_CmpSIL2 <group___cmp_s_i_l2_itf_1gae7a193f13df22d8b25f28d4b467dabef>`
+
+Typedefs
+--------
+
+- typedef RTS_UI32 :ref:`RTS_SIL2_EXCEPTION <group___cmp_s_i_l2_itf_1ga098d3dc4b940bfe744ca4ddf62030ba4>`
+
+- typedef RTS_UI32 :ref:`RTS_SIL2_OPMODE <group___cmp_s_i_l2_itf_1ga8ec0d1beda77d67a16f176efc93f82ff>`
+
+- typedef RTS_UI32 :ref:`RTS_SIL2_ADDRESSSTATE <group___cmp_s_i_l2_itf_1ga7c42f135fc3d77984fe85ab00867964d>`
+
+- typedef RTS_RESULT(* :ref:`PFSIL2APPBOOT <group___cmp_s_i_l2_itf_1gaf36eeab696b27f721103e1a8944f2519>`)(void)
+
+- typedef struct :ref:`tagsil2checkcallercontext_struct <structtagsil2checkcallercontext__struct>` :ref:`sil2checkcallercontext_struct <group___cmp_s_i_l2_itf_1ga6930a286f5ce0a7fd755d30685e8bf01>`
+
+- typedef RTS_RESULT(* :ref:`PFSIL2CHECKCALLERCONTEXT <group___cmp_s_i_l2_itf_1ga03ca67749222fb49fafc04104b25a0ee>`)(RTS_UI32 ulCallerContextExpected)
+
+- typedef void(* :ref:`PFSIL2CHECKCALLERCONTEXT_IEC <group___cmp_s_i_l2_itf_1ga2f2bfcad76d3d47b2726d9cbde4b3b00>`)(sil2checkcallercontext_struct *p)
+
+- typedef struct :ref:`tagsil2copycodeguid_struct <structtagsil2copycodeguid__struct>` :ref:`sil2copycodeguid_struct <group___cmp_s_i_l2_itf_1gac221eea67a0e3e178f3b24fd47e7445e>`
+
+- typedef void(* :ref:`PFSIL2COPYCODEGUID_IEC <group___cmp_s_i_l2_itf_1ga5dcd52be80efb3f599e9d7463caa42e5>`)(sil2copycodeguid_struct *p)
+
+- typedef struct :ref:`tagsil2copydataguid_struct <structtagsil2copydataguid__struct>` :ref:`sil2copydataguid_struct <group___cmp_s_i_l2_itf_1ga84e6aa1fc9ed4aaf32f5dce090aac9c2>`
+
+- typedef void(* :ref:`PFSIL2COPYDATAGUID_IEC <group___cmp_s_i_l2_itf_1gacb12384306096ab4377ea8eabce6ff6c>`)(sil2copydataguid_struct *p)
+
+- typedef RTS_RESULT(* :ref:`PFSIL2OEMENTERDEBUGMODE <group___cmp_s_i_l2_itf_1ga6ec5ce2ca6a3597bc4ef861cac4918f1>`)(void)
+
+- typedef struct :ref:`tagsil2oemexception_struct <structtagsil2oemexception__struct>` :ref:`sil2oemexception_struct <group___cmp_s_i_l2_itf_1ga004979c693756139d3dd40cc6bb4a4f2>`
+
+- typedef void(* :ref:`PFSIL2OEMEXCEPTION <group___cmp_s_i_l2_itf_1gab6718874b0b3120fdedae1bf6f3218a9>`)(RTS_SIL2_EXCEPTION Exception)
+
+- typedef void(* :ref:`PFSIL2OEMEXCEPTION_IEC <group___cmp_s_i_l2_itf_1ga649ca3ddf9bf22f6a85fdfb0740e5cbd>`)(sil2oemexception_struct *p)
+
+- typedef struct :ref:`tagsil2addlog_struct <structtagsil2addlog__struct>` :ref:`sil2addlog_struct <group___cmp_s_i_l2_itf_1gafb55a0585024ff62223068638f5ddae5>`
+
+- typedef RTS_RESULT(* :ref:`PFSIL2ADDLOG <group___cmp_s_i_l2_itf_1ga9852c355c2bf3485fb153f7684ae38b4>`)(char *pszMessage, RTS_UI32 ulLogId)
+
+- typedef void(* :ref:`PFSIL2ADDLOG_IEC <group___cmp_s_i_l2_itf_1ga47832dc40a3eb08e3f396432a17bab91>`)(sil2addlog_struct *p)
+
+- typedef struct :ref:`tagsil2oemgetoperationmode_struct <structtagsil2oemgetoperationmode__struct>` :ref:`sil2oemgetoperationmode_struct <group___cmp_s_i_l2_itf_1gaec5ca53d349f0ef78b1418c8eb39a038>`
+
+- typedef :ref:`RTS_SIL2_OPMODE <group___cmp_s_i_l2_itf_1ga8ec0d1beda77d67a16f176efc93f82ff>` (* :ref:`PFSIL2OEMGETOPERATIONMODE <group___cmp_s_i_l2_itf_1ga78829bdc99fba185d99662fe8d302749>`)(void)
+
+- typedef void(* :ref:`PFSIL2OEMGETOPERATIONMODE_IEC <group___cmp_s_i_l2_itf_1ga81011063706683538642a0c899752f03>`)(sil2oemgetoperationmode_struct *p)
+
+- typedef struct :ref:`tagsil2oemgetcallercontext_struct <structtagsil2oemgetcallercontext__struct>` :ref:`sil2oemgetcallercontext_struct <group___cmp_s_i_l2_itf_1gadac65b6cbdf425a2ca9adfe4a5739f54>`
+
+- typedef RTS_UI32(* :ref:`PFSIL2OEMGETCALLERCONTEXT <group___cmp_s_i_l2_itf_1ga66d3afd70afce160d4b8d0a83b103e58>`)(void)
+
+- typedef void(* :ref:`PFSIL2OEMGETCALLERCONTEXT_IEC <group___cmp_s_i_l2_itf_1gad7169ec82c58a6a33cbf64fa5d4d817e>`)(sil2oemgetcallercontext_struct *p)
+
+- typedef struct :ref:`tagsil2oemgetmemorystate_struct <structtagsil2oemgetmemorystate__struct>` :ref:`sil2oemgetmemorystate_struct <group___cmp_s_i_l2_itf_1ga5831096105e4dea679c5f815c586b571>`
+
+- typedef :ref:`RTS_SIL2_ADDRESSSTATE <group___cmp_s_i_l2_itf_1ga7c42f135fc3d77984fe85ab00867964d>` (* :ref:`PFSIL2OEMGETMEMORYSTATE <group___cmp_s_i_l2_itf_1gabbc1153a61f4bc9f2f683e2f35d2119a>`)(RTS_UI8 *pAddress, RTS_UI32 ulLength)
+
+- typedef void(* :ref:`PFSIL2OEMGETMEMORYSTATE_IEC <group___cmp_s_i_l2_itf_1ga4a75f9a149e64bf8cdc5be04a2ce4de0>`)(sil2oemgetmemorystate_struct *p)
+
+- typedef struct :ref:`tagsil2oemstackisvalid_struct <structtagsil2oemstackisvalid__struct>` :ref:`sil2oemstackisvalid_struct <group___cmp_s_i_l2_itf_1gacb3ec2a1fea7432ae15bf315f5cf7f2c>`
+
+- typedef RTS_RESULT(* :ref:`PFSIL2OEMSTACKISVALID <group___cmp_s_i_l2_itf_1ga6f7ce258e9d586fe1198f6dad9b09d70>`)(void)
+
+- typedef void(* :ref:`PFSIL2OEMSTACKISVALID_IEC <group___cmp_s_i_l2_itf_1gaf93fc36b1512c626f80b13435628f924>`)(sil2oemstackisvalid_struct *p)
+
+- typedef RTS_RESULT(* :ref:`PFSIL2OEMEXECUTENONSAFETYJOB <group___cmp_s_i_l2_itf_1ga5b6af9feec7a11d1d45c2d2cf2d9710b>`)(void(*pfNonSafetyJob)(void *pParam), void *pParam)
+
+- typedef struct :ref:`tagsil2executenonsafetyjob_struct <structtagsil2executenonsafetyjob__struct>` :ref:`sil2executenonsafetyjob_struct <group___cmp_s_i_l2_itf_1ga1f91d834f29f4032e422738171ea7cdb>`
+
+- typedef RTS_RESULT(* :ref:`PFSIL2OEMEXECUTENONSAFETYJOB2 <group___cmp_s_i_l2_itf_1ga2d2d5fcd62b0cceed18e82c8910756e8>`)(void(*pfNonSafetyJob)(void *pParam), void *pParam, RTS_SIZE iSize)
+
+- typedef void(* :ref:`PFSIL2EXECUTENONSAFETYJOB_IEC <group___cmp_s_i_l2_itf_1gaf2bc2847465eb128b54c1a70e16e051b>`)(sil2executenonsafetyjob_struct *p)
+
+- typedef RTS_RESULT(* :ref:`PFSIL2CONTROLFLOWLOG <group___cmp_s_i_l2_itf_1gafcdc4b9b598d62eab5363d62e712b2f4>`)(SIL2_CONTROLFLOW *pControlFlow, RTS_UI8 uiCurrID)
+
+- typedef RTS_RESULT(* :ref:`PFSIL2CONTROLFLOWCHECK <group___cmp_s_i_l2_itf_1ga6fa1921e7db1fff0aa47c044e747a7f5>`)(SIL2_CONTROLFLOW *pControlFlow, RTS_UI8 uiTotalNr)
+
+- typedef :ref:`ICmpSIL2_C <struct_i_cmp_s_i_l2___c>` :ref:`ICmpSIL2 <group___cmp_s_i_l2_itf_1gadaf7d8c1f3474d7c29f66ffeb1065ee9>`
+
+Functions
+---------
+
+- RTS_RESULT :ref:`SIL2AppBoot <group___cmp_s_i_l2_itf_1gad9316cce5790b2528afef1d6a4ecf0ac>` (void)
+
+- RTS_RESULT :ref:`SIL2CheckCallerContext <group___cmp_s_i_l2_itf_1gadfab76ab0d96e0384b79b59a6e52d1a5>` (RTS_UI32 ulCallerContextExpected)
+
+- void :ref:`sil2checkcallercontext <group___cmp_s_i_l2_itf_1ga4d1664aa0eb2634f7aeffcf2c1a5187a>` (:ref:`sil2checkcallercontext_struct <group___cmp_s_i_l2_itf_1ga6930a286f5ce0a7fd755d30685e8bf01>` * p)
+
+- void :ref:`sil2copycodeguid <group___cmp_s_i_l2_itf_1ga91f7dcfcbc0f78d10bb89b7c881ac5f5>` (:ref:`sil2copycodeguid_struct <group___cmp_s_i_l2_itf_1gac221eea67a0e3e178f3b24fd47e7445e>` * p)
+
+- void :ref:`sil2copydataguid <group___cmp_s_i_l2_itf_1ga25b16f1d0d03c5b686a8834e8da7ea5f>` (:ref:`sil2copydataguid_struct <group___cmp_s_i_l2_itf_1ga84e6aa1fc9ed4aaf32f5dce090aac9c2>` * p)
+
+- RTS_RESULT :ref:`SIL2OEMEnterDebugMode <group___cmp_s_i_l2_itf_1ga62576d17b76bd27547fddc0f0f7f5665>` (void)
+
+- void :ref:`SIL2OEMException <group___cmp_s_i_l2_itf_1ga18773ad5b541c2d47a6b9c6321379f77>` (:ref:`RTS_SIL2_EXCEPTION <group___cmp_s_i_l2_itf_1ga098d3dc4b940bfe744ca4ddf62030ba4>`  Exception)
+
+- void :ref:`sil2oemexception <group___cmp_s_i_l2_itf_1gadf1587656481bdac7afb3f2f5ba571b0>` (:ref:`sil2oemexception_struct <group___cmp_s_i_l2_itf_1ga004979c693756139d3dd40cc6bb4a4f2>` * p)
+
+- RTS_RESULT :ref:`SIL2AddLog <group___cmp_s_i_l2_itf_1ga5f306b85e84cd1cb52c10f077489967f>` (char * pszMessage, RTS_UI32 ulLogId)
+
+- void :ref:`sil2addlog <group___cmp_s_i_l2_itf_1ga58dd0a10a47331ec3e336ffdcc6864cb>` (:ref:`sil2addlog_struct <group___cmp_s_i_l2_itf_1gafb55a0585024ff62223068638f5ddae5>` * p)
+
+- :ref:`RTS_SIL2_OPMODE <group___cmp_s_i_l2_itf_1ga8ec0d1beda77d67a16f176efc93f82ff>` :ref:`SIL2OEMGetOperationMode <group___cmp_s_i_l2_itf_1gadf5a291c36c5b17da4958b7f32710d7b>` (void)
+
+- void :ref:`sil2oemgetoperationmode <group___cmp_s_i_l2_itf_1ga88779429f4950703112f5e8621a0e90a>` (:ref:`sil2oemgetoperationmode_struct <group___cmp_s_i_l2_itf_1gaec5ca53d349f0ef78b1418c8eb39a038>` * p)
+
+- RTS_UI32 :ref:`SIL2OEMGetCallerContext <group___cmp_s_i_l2_itf_1ga7430aa78af60c412d55bbda4af49bae1>` (void)
+
+- void :ref:`sil2oemgetcallercontext <group___cmp_s_i_l2_itf_1ga565da012eaba510c94321df0c231b388>` (:ref:`sil2oemgetcallercontext_struct <group___cmp_s_i_l2_itf_1gadac65b6cbdf425a2ca9adfe4a5739f54>` * p)
+
+- :ref:`RTS_SIL2_ADDRESSSTATE <group___cmp_s_i_l2_itf_1ga7c42f135fc3d77984fe85ab00867964d>` :ref:`SIL2OEMGetMemoryState <group___cmp_s_i_l2_itf_1ga12c8a7ab6630ef4eb56b0e12947abec9>` (RTS_UI8 * pAddress, RTS_UI32 ulLength)
+
+- void :ref:`sil2oemgetmemorystate <group___cmp_s_i_l2_itf_1ga389453b9ba1ef8fa37b6b0f0d8c6e3db>` (:ref:`sil2oemgetmemorystate_struct <group___cmp_s_i_l2_itf_1ga5831096105e4dea679c5f815c586b571>` * p)
+
+- RTS_RESULT :ref:`SIL2OEMStackIsValid <group___cmp_s_i_l2_itf_1ga255fd372de5d2411332f0ba94bc8cc41>` (void)
+
+- void :ref:`sil2oemstackisvalid <group___cmp_s_i_l2_itf_1ga8695b89346da1c066f61b361fe120167>` (:ref:`sil2oemstackisvalid_struct <group___cmp_s_i_l2_itf_1gacb3ec2a1fea7432ae15bf315f5cf7f2c>` * p)
+
+- RTS_RESULT :ref:`SIL2OEMExecuteNonSafetyJob <group___cmp_s_i_l2_itf_1gaa56ac50fb0426a44a8691acb560d6b31>` (void(*)(void *pParam) pfNonSafetyJob, void * pParam)
+
+- RTS_RESULT :ref:`SIL2OEMExecuteNonSafetyJob2 <group___cmp_s_i_l2_itf_1ga28aabdcbbe7f639607257f717d8f21a4>` (void(*)(void *pParam) pfNonSafetyJob, void * pParam, RTS_SIZE iSize)
+
+- void :ref:`sil2executenonsafetyjob <group___cmp_s_i_l2_itf_1gae02f2394cc394e0d4c125df523cf10c7>` (:ref:`sil2executenonsafetyjob_struct <group___cmp_s_i_l2_itf_1ga1f91d834f29f4032e422738171ea7cdb>` * p)
+
+- RTS_RESULT :ref:`SIL2ControlFlowLog <group___cmp_s_i_l2_itf_1gac3c32bd11a71214ccc8890229375eff0>` (:ref:`SIL2_CONTROLFLOW <struct_s_i_l2___c_o_n_t_r_o_l_f_l_o_w>` * pControlFlow, RTS_UI8 uiCurrID)
+
+- RTS_RESULT :ref:`SIL2ControlFlowCheck <group___cmp_s_i_l2_itf_1gaf37d65396d1dd8280b55256036da7599>` (:ref:`SIL2_CONTROLFLOW <struct_s_i_l2___c_o_n_t_r_o_l_f_l_o_w>` * pControlFlow, RTS_UI8 uiTotalNr)
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_s_i_l2_itf_1ga161d48a6569262fb52f7e28b42046fb1:
+
+#define USE_SIL2AppBoot :ref:`PFSIL2APPBOOT <group___cmp_s_i_l2_itf_1gaf36eeab696b27f721103e1a8944f2519>` pfSIL2AppBoot;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gac2e0757a7c246bbdb304be48e19c43c0:
+
+#define EXT_SIL2AppBoot extern :ref:`PFSIL2APPBOOT <group___cmp_s_i_l2_itf_1gaf36eeab696b27f721103e1a8944f2519>` pfSIL2AppBoot;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga4cc0eed2aedb68bf3b03b3452d4df4d7:
+
+#define GET_SIL2AppBoot s_pfCMGetAPI2( "SIL2AppBoot", (RTS_VOID_FCTPTR *)&pfSIL2AppBoot, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga25e10c51c2ac40ea7f6bc21310a02449:
+
+#define CAL_SIL2AppBoot pfSIL2AppBoot
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga9b81610e680ad125f1b333f9ce6a7077:
+
+#define CHK_SIL2AppBoot (pfSIL2AppBoot != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga45187d9e8968c27dbde8fdfa6d72f866:
+
+#define EXP_SIL2AppBoot s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2AppBoot", (RTS_UINTPTR) :ref:`SIL2AppBoot <group___cmp_s_i_l2_itf_1gad9316cce5790b2528afef1d6a4ecf0ac>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga830e12451fc5fee6c226d817338cecf4:
+
+#define USE_SIL2CheckCallerContext :ref:`PFSIL2CHECKCALLERCONTEXT <group___cmp_s_i_l2_itf_1ga03ca67749222fb49fafc04104b25a0ee>` pfSIL2CheckCallerContext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gafc8718818e8c11ad3779aa312b87d1d4:
+
+#define EXT_SIL2CheckCallerContext extern :ref:`PFSIL2CHECKCALLERCONTEXT <group___cmp_s_i_l2_itf_1ga03ca67749222fb49fafc04104b25a0ee>` pfSIL2CheckCallerContext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gae43cd19f6c8b31d26618643a670e6c0b:
+
+#define GET_SIL2CheckCallerContext s_pfCMGetAPI2( "SIL2CheckCallerContext", (RTS_VOID_FCTPTR *)&pfSIL2CheckCallerContext, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga3de12b9c4a09e0d8f6c6a183d8cda683:
+
+#define CAL_SIL2CheckCallerContext pfSIL2CheckCallerContext
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga44cea09f15336fd3e1157d79b41b774b:
+
+#define CHK_SIL2CheckCallerContext (pfSIL2CheckCallerContext != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaa34eb9ecec5e815ee83ef519c3836cd3:
+
+#define EXP_SIL2CheckCallerContext s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2CheckCallerContext", (RTS_UINTPTR) :ref:`SIL2CheckCallerContext <group___cmp_s_i_l2_itf_1gadfab76ab0d96e0384b79b59a6e52d1a5>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gae919e63285a23f1b85235e9d83871af4:
+
+#define USE_sil2checkcallercontext :ref:`PFSIL2CHECKCALLERCONTEXT_IEC <group___cmp_s_i_l2_itf_1ga2f2bfcad76d3d47b2726d9cbde4b3b00>` pfsil2checkcallercontext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaaf97454d025c8d7617abc326694e09c8:
+
+#define EXT_sil2checkcallercontext extern :ref:`PFSIL2CHECKCALLERCONTEXT_IEC <group___cmp_s_i_l2_itf_1ga2f2bfcad76d3d47b2726d9cbde4b3b00>` pfsil2checkcallercontext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga313a4a6e7060391f8ae1ff5b4ebc8dcb:
+
+#define GET_sil2checkcallercontext s_pfCMGetAPI2( "sil2checkcallercontext", (RTS_VOID_FCTPTR *)&pfsil2checkcallercontext, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x829BB451, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga0209f83311de4071ddfc4c4f496cf05c:
+
+#define CAL_sil2checkcallercontext pfsil2checkcallercontext
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga15f0c9aba5f551a52e6b35b0c2aadf39:
+
+#define CHK_sil2checkcallercontext (pfsil2checkcallercontext != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaf87dfe01a2fd82395fb88d6c17f14645:
+
+#define EXP_sil2checkcallercontext s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2checkcallercontext", (RTS_UINTPTR) :ref:`sil2checkcallercontext <group___cmp_s_i_l2_itf_1ga4d1664aa0eb2634f7aeffcf2c1a5187a>` , 1, 0x829BB451, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gad4ab8e058c9c928914a57ca99fc64842:
+
+#define USE_sil2copycodeguid :ref:`PFSIL2COPYCODEGUID_IEC <group___cmp_s_i_l2_itf_1ga5dcd52be80efb3f599e9d7463caa42e5>` pfsil2copycodeguid;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga2efeefed2e0af297607c38e67a06f94d:
+
+#define EXT_sil2copycodeguid extern :ref:`PFSIL2COPYCODEGUID_IEC <group___cmp_s_i_l2_itf_1ga5dcd52be80efb3f599e9d7463caa42e5>` pfsil2copycodeguid;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gabafd4ce1f99d5012ccb7714292372d26:
+
+#define GET_sil2copycodeguid s_pfCMGetAPI2( "sil2copycodeguid", (RTS_VOID_FCTPTR *)&pfsil2copycodeguid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x638D4565, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga226caf3a361b45850437b8a8a7d29c0c:
+
+#define CAL_sil2copycodeguid pfsil2copycodeguid
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gae98739141734d5b34a22872ab09c1902:
+
+#define CHK_sil2copycodeguid (pfsil2copycodeguid != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga4c37b2d7b779b730e46f053f3bc57c8a:
+
+#define EXP_sil2copycodeguid s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2copycodeguid", (RTS_UINTPTR) :ref:`sil2copycodeguid <group___cmp_s_i_l2_itf_1ga91f7dcfcbc0f78d10bb89b7c881ac5f5>` , 1, 0x638D4565, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga2b722257967e408060d6cda397ad32e4:
+
+#define USE_sil2copydataguid :ref:`PFSIL2COPYDATAGUID_IEC <group___cmp_s_i_l2_itf_1gacb12384306096ab4377ea8eabce6ff6c>` pfsil2copydataguid;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gacdddb8fdaf65bc7663a1bc979bd387c2:
+
+#define EXT_sil2copydataguid extern :ref:`PFSIL2COPYDATAGUID_IEC <group___cmp_s_i_l2_itf_1gacb12384306096ab4377ea8eabce6ff6c>` pfsil2copydataguid;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gae40992257fafc8744300329f78f3aa38:
+
+#define GET_sil2copydataguid s_pfCMGetAPI2( "sil2copydataguid", (RTS_VOID_FCTPTR *)&pfsil2copydataguid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x44F9CD8A, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga298631a66751dc888a682a8712e2560d:
+
+#define CAL_sil2copydataguid pfsil2copydataguid
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gae5b1218320c76d71e006aef0cacbdc22:
+
+#define CHK_sil2copydataguid (pfsil2copydataguid != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga273f6458dd34f6256881ed8267d9f2d4:
+
+#define EXP_sil2copydataguid s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2copydataguid", (RTS_UINTPTR) :ref:`sil2copydataguid <group___cmp_s_i_l2_itf_1ga25b16f1d0d03c5b686a8834e8da7ea5f>` , 1, 0x44F9CD8A, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga1af34e8eb772e8655e34972504373c90:
+
+#define USE_SIL2OEMEnterDebugMode :ref:`PFSIL2OEMENTERDEBUGMODE <group___cmp_s_i_l2_itf_1ga6ec5ce2ca6a3597bc4ef861cac4918f1>` pfSIL2OEMEnterDebugMode;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga347f2963b222c19bb62588a303797543:
+
+#define EXT_SIL2OEMEnterDebugMode extern :ref:`PFSIL2OEMENTERDEBUGMODE <group___cmp_s_i_l2_itf_1ga6ec5ce2ca6a3597bc4ef861cac4918f1>` pfSIL2OEMEnterDebugMode;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaee56d0cb9d2689111fa2a61d5ac8d739:
+
+#define GET_SIL2OEMEnterDebugMode s_pfCMGetAPI2( "SIL2OEMEnterDebugMode", (RTS_VOID_FCTPTR *)&pfSIL2OEMEnterDebugMode, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga2b46527ab997b9b4d1263c73bf818e0d:
+
+#define CAL_SIL2OEMEnterDebugMode pfSIL2OEMEnterDebugMode
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga520a05582ab310ccd89e0fa66aae41e3:
+
+#define CHK_SIL2OEMEnterDebugMode (pfSIL2OEMEnterDebugMode != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga1834f4160b13970869a369de6dff6f74:
+
+#define EXP_SIL2OEMEnterDebugMode s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMEnterDebugMode", (RTS_UINTPTR) :ref:`SIL2OEMEnterDebugMode <group___cmp_s_i_l2_itf_1ga62576d17b76bd27547fddc0f0f7f5665>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga68965ae5c644ecce1e320cdc1ec8ddb7:
+
+#define USE_SIL2OEMException :ref:`PFSIL2OEMEXCEPTION <group___cmp_s_i_l2_itf_1gab6718874b0b3120fdedae1bf6f3218a9>` pfSIL2OEMException;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga9e0f6ef70906289eafa1a05525ace34c:
+
+#define EXT_SIL2OEMException extern :ref:`PFSIL2OEMEXCEPTION <group___cmp_s_i_l2_itf_1gab6718874b0b3120fdedae1bf6f3218a9>` pfSIL2OEMException;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga12942dfa34e76313de93cbd8e019013d:
+
+#define GET_SIL2OEMException s_pfCMGetAPI2( "SIL2OEMException", (RTS_VOID_FCTPTR *)&pfSIL2OEMException, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga93e3034d04773a4a994a47bc460552e6:
+
+#define CAL_SIL2OEMException pfSIL2OEMException
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga62534e703206111fcc58332b4b90564b:
+
+#define CHK_SIL2OEMException (pfSIL2OEMException != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gac8c0f0fee6eb27608adc87a1e8faf028:
+
+#define EXP_SIL2OEMException s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMException", (RTS_UINTPTR) :ref:`SIL2OEMException <group___cmp_s_i_l2_itf_1ga18773ad5b541c2d47a6b9c6321379f77>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga721c0df5a35cb1db60e0db78848888a5:
+
+#define USE_sil2oemexception :ref:`PFSIL2OEMEXCEPTION_IEC <group___cmp_s_i_l2_itf_1ga649ca3ddf9bf22f6a85fdfb0740e5cbd>` pfsil2oemexception;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga3d37aec6b9627dc08688e65c2c85e21f:
+
+#define EXT_sil2oemexception extern :ref:`PFSIL2OEMEXCEPTION_IEC <group___cmp_s_i_l2_itf_1ga649ca3ddf9bf22f6a85fdfb0740e5cbd>` pfsil2oemexception;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga3a2c4e000fd29290a7f6d7ce909677f4:
+
+#define GET_sil2oemexception s_pfCMGetAPI2( "sil2oemexception", (RTS_VOID_FCTPTR *)&pfsil2oemexception, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xA54830DE, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaecdf726c20099f1415ecfb1f411eb506:
+
+#define CAL_sil2oemexception pfsil2oemexception
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga1341bade21ac95edeb2a8d94f3c37a7c:
+
+#define CHK_sil2oemexception (pfsil2oemexception != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga6c62ead5c6ec324574a1536902b47c0a:
+
+#define EXP_sil2oemexception s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2oemexception", (RTS_UINTPTR) :ref:`sil2oemexception <group___cmp_s_i_l2_itf_1gadf1587656481bdac7afb3f2f5ba571b0>` , 1, 0xA54830DE, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga75fbd4d19c8e700d00e43aa06ef3a46e:
+
+#define USE_SIL2AddLog :ref:`PFSIL2ADDLOG <group___cmp_s_i_l2_itf_1ga9852c355c2bf3485fb153f7684ae38b4>` pfSIL2AddLog;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga7311a28142b38e8a27c2e146d25c9857:
+
+#define EXT_SIL2AddLog extern :ref:`PFSIL2ADDLOG <group___cmp_s_i_l2_itf_1ga9852c355c2bf3485fb153f7684ae38b4>` pfSIL2AddLog;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gae50fc5ca818097a5de9db5ce68350903:
+
+#define GET_SIL2AddLog s_pfCMGetAPI2( "SIL2AddLog", (RTS_VOID_FCTPTR *)&pfSIL2AddLog, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga5dc223d1233b7528d03f6fbda634e0ce:
+
+#define CAL_SIL2AddLog pfSIL2AddLog
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaec24522119db1eb4ff92c16fbcadb96b:
+
+#define CHK_SIL2AddLog (pfSIL2AddLog != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga109bd473ce87843bb06af097b251f430:
+
+#define EXP_SIL2AddLog s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2AddLog", (RTS_UINTPTR) :ref:`SIL2AddLog <group___cmp_s_i_l2_itf_1ga5f306b85e84cd1cb52c10f077489967f>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gac1c20537c23d00e870f37d9c68106152:
+
+#define USE_sil2addlog :ref:`PFSIL2ADDLOG_IEC <group___cmp_s_i_l2_itf_1ga47832dc40a3eb08e3f396432a17bab91>` pfsil2addlog;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gad446249fbf5d9c08b56d7467a89f50fb:
+
+#define EXT_sil2addlog extern :ref:`PFSIL2ADDLOG_IEC <group___cmp_s_i_l2_itf_1ga47832dc40a3eb08e3f396432a17bab91>` pfsil2addlog;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gae84775eaa18f2edd4b40d7c55d6e6aca:
+
+#define GET_sil2addlog s_pfCMGetAPI2( "sil2addlog", (RTS_VOID_FCTPTR *)&pfsil2addlog, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x742BC625, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaee2017251767bfb98a7f68a0569ff083:
+
+#define CAL_sil2addlog pfsil2addlog
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga06d8cf19f7e913a9490ced4ca2dbc850:
+
+#define CHK_sil2addlog (pfsil2addlog != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gad487f4d7e6fc042f9d799ce83df65ddb:
+
+#define EXP_sil2addlog s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2addlog", (RTS_UINTPTR) :ref:`sil2addlog <group___cmp_s_i_l2_itf_1ga58dd0a10a47331ec3e336ffdcc6864cb>` , 1, 0x742BC625, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga5b66e8b282d3bf7382e8670dcedbd7e2:
+
+#define USE_SIL2OEMGetOperationMode :ref:`PFSIL2OEMGETOPERATIONMODE <group___cmp_s_i_l2_itf_1ga78829bdc99fba185d99662fe8d302749>` pfSIL2OEMGetOperationMode;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga788e62e6bf05be2b6df3da5d85ff5e9d:
+
+#define EXT_SIL2OEMGetOperationMode extern :ref:`PFSIL2OEMGETOPERATIONMODE <group___cmp_s_i_l2_itf_1ga78829bdc99fba185d99662fe8d302749>` pfSIL2OEMGetOperationMode;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gabecd16a6bd8c6b08877814da9ebba04a:
+
+#define GET_SIL2OEMGetOperationMode s_pfCMGetAPI2( "SIL2OEMGetOperationMode", (RTS_VOID_FCTPTR *)&pfSIL2OEMGetOperationMode, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gab441becb97c407d3c0c68282dfbfa93f:
+
+#define CAL_SIL2OEMGetOperationMode pfSIL2OEMGetOperationMode
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga25a297ee11c9f3a5a06e7251e209e91c:
+
+#define CHK_SIL2OEMGetOperationMode (pfSIL2OEMGetOperationMode != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga44a3fd58b0531c68b4dcf0e6a318188d:
+
+#define EXP_SIL2OEMGetOperationMode s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMGetOperationMode", (RTS_UINTPTR) :ref:`SIL2OEMGetOperationMode <group___cmp_s_i_l2_itf_1gadf5a291c36c5b17da4958b7f32710d7b>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga1c8e1e163fa2a280ca6745d2b0f59b36:
+
+#define USE_sil2oemgetoperationmode :ref:`PFSIL2OEMGETOPERATIONMODE_IEC <group___cmp_s_i_l2_itf_1ga81011063706683538642a0c899752f03>` pfsil2oemgetoperationmode;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gad76e81c5366448036ffdca1dfda72461:
+
+#define EXT_sil2oemgetoperationmode extern :ref:`PFSIL2OEMGETOPERATIONMODE_IEC <group___cmp_s_i_l2_itf_1ga81011063706683538642a0c899752f03>` pfsil2oemgetoperationmode;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga52fbf42d119f9e33eff533895c5780a6:
+
+#define GET_sil2oemgetoperationmode s_pfCMGetAPI2( "sil2oemgetoperationmode", (RTS_VOID_FCTPTR *)&pfsil2oemgetoperationmode, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0xB292F534, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga9d1e7a684921e202042fdf655190227a:
+
+#define CAL_sil2oemgetoperationmode pfsil2oemgetoperationmode
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga73ce81d7aa76d6d073f1955b4ed4de5c:
+
+#define CHK_sil2oemgetoperationmode (pfsil2oemgetoperationmode != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga7945bda457c34610309f7c4e4d40b624:
+
+#define EXP_sil2oemgetoperationmode s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2oemgetoperationmode", (RTS_UINTPTR) :ref:`sil2oemgetoperationmode <group___cmp_s_i_l2_itf_1ga88779429f4950703112f5e8621a0e90a>` , 1, 0xB292F534, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga1c724e10b2b1f87a84f651856a057706:
+
+#define USE_SIL2OEMGetCallerContext :ref:`PFSIL2OEMGETCALLERCONTEXT <group___cmp_s_i_l2_itf_1ga66d3afd70afce160d4b8d0a83b103e58>` pfSIL2OEMGetCallerContext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga529e72b01d8de7f41573f77f55fc8981:
+
+#define EXT_SIL2OEMGetCallerContext extern :ref:`PFSIL2OEMGETCALLERCONTEXT <group___cmp_s_i_l2_itf_1ga66d3afd70afce160d4b8d0a83b103e58>` pfSIL2OEMGetCallerContext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga8773bf9e24a06a7cbb12fb4d8506d2a6:
+
+#define GET_SIL2OEMGetCallerContext s_pfCMGetAPI2( "SIL2OEMGetCallerContext", (RTS_VOID_FCTPTR *)&pfSIL2OEMGetCallerContext, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gab49491fe5a383d39792ad2ec8d81cec6:
+
+#define CAL_SIL2OEMGetCallerContext pfSIL2OEMGetCallerContext
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga7a6d28b29c73c96e7c3b9a9aa05f6806:
+
+#define CHK_SIL2OEMGetCallerContext (pfSIL2OEMGetCallerContext != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga9f7eac6369e82f2132a8586d52d81968:
+
+#define EXP_SIL2OEMGetCallerContext s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMGetCallerContext", (RTS_UINTPTR) :ref:`SIL2OEMGetCallerContext <group___cmp_s_i_l2_itf_1ga7430aa78af60c412d55bbda4af49bae1>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaf0b9f4d1d3a07fa4ad476bc6a35a1825:
+
+#define USE_sil2oemgetcallercontext :ref:`PFSIL2OEMGETCALLERCONTEXT_IEC <group___cmp_s_i_l2_itf_1gad7169ec82c58a6a33cbf64fa5d4d817e>` pfsil2oemgetcallercontext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga6dbbb22e5e7cdcd625ab1120f617a9d0:
+
+#define EXT_sil2oemgetcallercontext extern :ref:`PFSIL2OEMGETCALLERCONTEXT_IEC <group___cmp_s_i_l2_itf_1gad7169ec82c58a6a33cbf64fa5d4d817e>` pfsil2oemgetcallercontext;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga421a3fc9f9f1aa59396e8d672f967a48:
+
+#define GET_sil2oemgetcallercontext s_pfCMGetAPI2( "sil2oemgetcallercontext", (RTS_VOID_FCTPTR *)&pfsil2oemgetcallercontext, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x2A37A2FD, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gae920c9c4ddf04f334ab77e0677b20258:
+
+#define CAL_sil2oemgetcallercontext pfsil2oemgetcallercontext
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga21bb633823bd6b4e3956745da82e7a22:
+
+#define CHK_sil2oemgetcallercontext (pfsil2oemgetcallercontext != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga8b99b058ba5cff38de3c6a40bfadf26d:
+
+#define EXP_sil2oemgetcallercontext s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2oemgetcallercontext", (RTS_UINTPTR) :ref:`sil2oemgetcallercontext <group___cmp_s_i_l2_itf_1ga565da012eaba510c94321df0c231b388>` , 1, 0x2A37A2FD, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga0209c5adc1bfcef633b136291bc34220:
+
+#define USE_SIL2OEMGetMemoryState :ref:`PFSIL2OEMGETMEMORYSTATE <group___cmp_s_i_l2_itf_1gabbc1153a61f4bc9f2f683e2f35d2119a>` pfSIL2OEMGetMemoryState;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gad6c93bb6eff28a75788c4a828df640ad:
+
+#define EXT_SIL2OEMGetMemoryState extern :ref:`PFSIL2OEMGETMEMORYSTATE <group___cmp_s_i_l2_itf_1gabbc1153a61f4bc9f2f683e2f35d2119a>` pfSIL2OEMGetMemoryState;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga004e5f99ac33365f5adc669d0c8c0104:
+
+#define GET_SIL2OEMGetMemoryState s_pfCMGetAPI2( "SIL2OEMGetMemoryState", (RTS_VOID_FCTPTR *)&pfSIL2OEMGetMemoryState, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga3962f5b8b16f900666d73d217049dee9:
+
+#define CAL_SIL2OEMGetMemoryState pfSIL2OEMGetMemoryState
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gab34387ac59162137f722d988ab7a3436:
+
+#define CHK_SIL2OEMGetMemoryState (pfSIL2OEMGetMemoryState != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga74b7ab4c60b7dc50e8287e5d2af3ca14:
+
+#define EXP_SIL2OEMGetMemoryState s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMGetMemoryState", (RTS_UINTPTR) :ref:`SIL2OEMGetMemoryState <group___cmp_s_i_l2_itf_1ga12c8a7ab6630ef4eb56b0e12947abec9>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga0f0a8ea585c336fb75679742efa439a2:
+
+#define USE_sil2oemgetmemorystate :ref:`PFSIL2OEMGETMEMORYSTATE_IEC <group___cmp_s_i_l2_itf_1ga4a75f9a149e64bf8cdc5be04a2ce4de0>` pfsil2oemgetmemorystate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga896234e30496de67a0c54e65554eaaca:
+
+#define EXT_sil2oemgetmemorystate extern :ref:`PFSIL2OEMGETMEMORYSTATE_IEC <group___cmp_s_i_l2_itf_1ga4a75f9a149e64bf8cdc5be04a2ce4de0>` pfsil2oemgetmemorystate;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga609472f6a6fdfcb53a45baefa8748376:
+
+#define GET_sil2oemgetmemorystate s_pfCMGetAPI2( "sil2oemgetmemorystate", (RTS_VOID_FCTPTR *)&pfsil2oemgetmemorystate, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x2FE5CB14, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga7cee743418c78af71c7cb8de6bd1f23e:
+
+#define CAL_sil2oemgetmemorystate pfsil2oemgetmemorystate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga6c629c114d0af26e9f491187c4a0c636:
+
+#define CHK_sil2oemgetmemorystate (pfsil2oemgetmemorystate != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaf7a291a0ebce49d1ca3e159322c2b4fd:
+
+#define EXP_sil2oemgetmemorystate s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2oemgetmemorystate", (RTS_UINTPTR) :ref:`sil2oemgetmemorystate <group___cmp_s_i_l2_itf_1ga389453b9ba1ef8fa37b6b0f0d8c6e3db>` , 1, 0x2FE5CB14, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gab964b31a3e3105c99db2a1c729f146ca:
+
+#define USE_SIL2OEMStackIsValid :ref:`PFSIL2OEMSTACKISVALID <group___cmp_s_i_l2_itf_1ga6f7ce258e9d586fe1198f6dad9b09d70>` pfSIL2OEMStackIsValid;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga0776e769099dd9155968660474b2ff9c:
+
+#define EXT_SIL2OEMStackIsValid extern :ref:`PFSIL2OEMSTACKISVALID <group___cmp_s_i_l2_itf_1ga6f7ce258e9d586fe1198f6dad9b09d70>` pfSIL2OEMStackIsValid;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gafeaaae2dc708659a1ea2936d669a8e58:
+
+#define GET_SIL2OEMStackIsValid s_pfCMGetAPI2( "SIL2OEMStackIsValid", (RTS_VOID_FCTPTR *)&pfSIL2OEMStackIsValid, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga91c4c44e2d59e074aafb42db9fe05f4f:
+
+#define CAL_SIL2OEMStackIsValid pfSIL2OEMStackIsValid
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaee17f335c84094d80dac938a65418262:
+
+#define CHK_SIL2OEMStackIsValid (pfSIL2OEMStackIsValid != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gacf962c65ba8b9ddb6b485d036525ec0c:
+
+#define EXP_SIL2OEMStackIsValid s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMStackIsValid", (RTS_UINTPTR) :ref:`SIL2OEMStackIsValid <group___cmp_s_i_l2_itf_1ga255fd372de5d2411332f0ba94bc8cc41>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga5c2ede6c22eab6091710e5afa0666831:
+
+#define USE_sil2oemstackisvalid :ref:`PFSIL2OEMSTACKISVALID_IEC <group___cmp_s_i_l2_itf_1gaf93fc36b1512c626f80b13435628f924>` pfsil2oemstackisvalid;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaa6ba6353ad5818d2805645006dceb5c0:
+
+#define EXT_sil2oemstackisvalid extern :ref:`PFSIL2OEMSTACKISVALID_IEC <group___cmp_s_i_l2_itf_1gaf93fc36b1512c626f80b13435628f924>` pfsil2oemstackisvalid;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gab407701636e69a43788ec2bcc87a9123:
+
+#define GET_sil2oemstackisvalid s_pfCMGetAPI2( "sil2oemstackisvalid", (RTS_VOID_FCTPTR *)&pfsil2oemstackisvalid, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x56A27207, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gac246ed9331f50e7c51c00cf36bfb8195:
+
+#define CAL_sil2oemstackisvalid pfsil2oemstackisvalid
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gadfcda6ded631d76f51d2396bceaef196:
+
+#define CHK_sil2oemstackisvalid (pfsil2oemstackisvalid != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga788aad8e8f7ba0ae4257be226d07778b:
+
+#define EXP_sil2oemstackisvalid s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2oemstackisvalid", (RTS_UINTPTR) :ref:`sil2oemstackisvalid <group___cmp_s_i_l2_itf_1ga8695b89346da1c066f61b361fe120167>` , 1, 0x56A27207, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gacc162840577f63fd3055502824ad1aac:
+
+#define USE_SIL2OEMExecuteNonSafetyJob :ref:`PFSIL2OEMEXECUTENONSAFETYJOB <group___cmp_s_i_l2_itf_1ga5b6af9feec7a11d1d45c2d2cf2d9710b>` pfSIL2OEMExecuteNonSafetyJob;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gad912f9d8719395078d95f99a218b09b1:
+
+#define EXT_SIL2OEMExecuteNonSafetyJob extern :ref:`PFSIL2OEMEXECUTENONSAFETYJOB <group___cmp_s_i_l2_itf_1ga5b6af9feec7a11d1d45c2d2cf2d9710b>` pfSIL2OEMExecuteNonSafetyJob;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga953e3a02c62bffb2de392211279462d2:
+
+#define GET_SIL2OEMExecuteNonSafetyJob s_pfCMGetAPI2( "SIL2OEMExecuteNonSafetyJob", (RTS_VOID_FCTPTR *)&pfSIL2OEMExecuteNonSafetyJob, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga9990a9695a01b16ad3fe1d10252f7012:
+
+#define CAL_SIL2OEMExecuteNonSafetyJob pfSIL2OEMExecuteNonSafetyJob
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gab566aed7e0f3928f7f7bf3983c08e099:
+
+#define CHK_SIL2OEMExecuteNonSafetyJob (pfSIL2OEMExecuteNonSafetyJob != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga086b3b04d3e7374cb28b0008916230fc:
+
+#define EXP_SIL2OEMExecuteNonSafetyJob s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMExecuteNonSafetyJob", (RTS_UINTPTR) :ref:`SIL2OEMExecuteNonSafetyJob <group___cmp_s_i_l2_itf_1gaa56ac50fb0426a44a8691acb560d6b31>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga45ba3c4dfe9b9a2c5d76b53ea821d115:
+
+#define USE_SIL2OEMExecuteNonSafetyJob2 :ref:`PFSIL2OEMEXECUTENONSAFETYJOB2 <group___cmp_s_i_l2_itf_1ga2d2d5fcd62b0cceed18e82c8910756e8>` pfSIL2OEMExecuteNonSafetyJob2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga113566cd816f36d1a0fe7acfe9859ff1:
+
+#define EXT_SIL2OEMExecuteNonSafetyJob2 extern :ref:`PFSIL2OEMEXECUTENONSAFETYJOB2 <group___cmp_s_i_l2_itf_1ga2d2d5fcd62b0cceed18e82c8910756e8>` pfSIL2OEMExecuteNonSafetyJob2;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga7ae1d4c02d90897adf587908103d27f2:
+
+#define GET_SIL2OEMExecuteNonSafetyJob2 s_pfCMGetAPI2( "SIL2OEMExecuteNonSafetyJob2", (RTS_VOID_FCTPTR *)&pfSIL2OEMExecuteNonSafetyJob2, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga3a4f6702047e94c8f0604de4525e2621:
+
+#define CAL_SIL2OEMExecuteNonSafetyJob2 pfSIL2OEMExecuteNonSafetyJob2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga0d7eec1e4577a2306a8e0c54d03e623d:
+
+#define CHK_SIL2OEMExecuteNonSafetyJob2 (pfSIL2OEMExecuteNonSafetyJob2 != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga39fa349243e3145eab6a7a331810f12d:
+
+#define EXP_SIL2OEMExecuteNonSafetyJob2 s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2OEMExecuteNonSafetyJob2", (RTS_UINTPTR) :ref:`SIL2OEMExecuteNonSafetyJob2 <group___cmp_s_i_l2_itf_1ga28aabdcbbe7f639607257f717d8f21a4>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga3760ea09bcc4f3f1ff7339edff83c38f:
+
+#define USE_sil2executenonsafetyjob :ref:`PFSIL2EXECUTENONSAFETYJOB_IEC <group___cmp_s_i_l2_itf_1gaf2bc2847465eb128b54c1a70e16e051b>` pfsil2executenonsafetyjob;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga2d8c2dc95a523c9b7a25a6c50ea6eddf:
+
+#define EXT_sil2executenonsafetyjob extern :ref:`PFSIL2EXECUTENONSAFETYJOB_IEC <group___cmp_s_i_l2_itf_1gaf2bc2847465eb128b54c1a70e16e051b>` pfsil2executenonsafetyjob;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga0c6d6e091a4b84999c27e371039dd6ec:
+
+#define GET_sil2executenonsafetyjob s_pfCMGetAPI2( "sil2executenonsafetyjob", (RTS_VOID_FCTPTR *)&pfsil2executenonsafetyjob, (fl) | CM_IMPORT_EXTERNAL_LIB_FUNCTION, 0x142EECAE, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gacf548d4e2fae179ff2d22bd246db8fbd:
+
+#define CAL_sil2executenonsafetyjob pfsil2executenonsafetyjob
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gad2a39df73281629ed106ff02de55e457:
+
+#define CHK_sil2executenonsafetyjob (pfsil2executenonsafetyjob != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga7345e66f322e7b006a26537df28fd34e:
+
+#define EXP_sil2executenonsafetyjob s_pfCMRegisterAPI2( (const CMP_EXT_FUNCTION_REF*)"sil2executenonsafetyjob", (RTS_UINTPTR) :ref:`sil2executenonsafetyjob <group___cmp_s_i_l2_itf_1gae02f2394cc394e0d4c125df523cf10c7>` , 1, 0x142EECAE, 0x03050400)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gad7c6edbe07d087c5d387d6d33c8bfc70:
+
+#define USE_SIL2ControlFlowLog :ref:`PFSIL2CONTROLFLOWLOG <group___cmp_s_i_l2_itf_1gafcdc4b9b598d62eab5363d62e712b2f4>` pfSIL2ControlFlowLog;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaae5fb2c8beb382ef005d96b1f256a147:
+
+#define EXT_SIL2ControlFlowLog extern :ref:`PFSIL2CONTROLFLOWLOG <group___cmp_s_i_l2_itf_1gafcdc4b9b598d62eab5363d62e712b2f4>` pfSIL2ControlFlowLog;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gabf81cc4bc34e5441a10f168294d8d494:
+
+#define GET_SIL2ControlFlowLog s_pfCMGetAPI2( "SIL2ControlFlowLog", (RTS_VOID_FCTPTR *)&pfSIL2ControlFlowLog, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaabf35cfcfddf3c8bbc4670e07506ca76:
+
+#define CAL_SIL2ControlFlowLog pfSIL2ControlFlowLog
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga9d253be973242d1a5156dcdf55790356:
+
+#define CHK_SIL2ControlFlowLog (pfSIL2ControlFlowLog != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaaf9e51d4c25d3b646874b55b8c9bf204:
+
+#define EXP_SIL2ControlFlowLog s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2ControlFlowLog", (RTS_UINTPTR) :ref:`SIL2ControlFlowLog <group___cmp_s_i_l2_itf_1gac3c32bd11a71214ccc8890229375eff0>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gab2be2d136f4fe28fecad89cab7cdd594:
+
+#define USE_SIL2ControlFlowCheck :ref:`PFSIL2CONTROLFLOWCHECK <group___cmp_s_i_l2_itf_1ga6fa1921e7db1fff0aa47c044e747a7f5>` pfSIL2ControlFlowCheck;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga3cd9ef014347a1b13e968fa6eaf20b86:
+
+#define EXT_SIL2ControlFlowCheck extern :ref:`PFSIL2CONTROLFLOWCHECK <group___cmp_s_i_l2_itf_1ga6fa1921e7db1fff0aa47c044e747a7f5>` pfSIL2ControlFlowCheck;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga81304aeac25e3f2f20a085b71a35cac1:
+
+#define GET_SIL2ControlFlowCheck s_pfCMGetAPI2( "SIL2ControlFlowCheck", (RTS_VOID_FCTPTR *)&pfSIL2ControlFlowCheck, (fl), 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gafc68f9153fcbe927df1b45dccb6ef2b9:
+
+#define CAL_SIL2ControlFlowCheck pfSIL2ControlFlowCheck
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaa6f3cb62e07bd491d327dfb577c25377:
+
+#define CHK_SIL2ControlFlowCheck (pfSIL2ControlFlowCheck != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga493a5d5288604a370b37c69147de8c67:
+
+#define EXP_SIL2ControlFlowCheck s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"SIL2ControlFlowCheck", (RTS_UINTPTR) :ref:`SIL2ControlFlowCheck <group___cmp_s_i_l2_itf_1gaf37d65396d1dd8280b55256036da7599>` , 0, 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gacbb2abee3cdc282355427b83dbe0f1b1:
+
+#define ITF_CmpSIL2
+^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gae7a193f13df22d8b25f28d4b467dabef:
+
+#define EXTITF_CmpSIL2
+^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_s_i_l2_itf_1ga098d3dc4b940bfe744ca4ddf62030ba4:
+
+typedef RTS_UI32 RTS_SIL2_EXCEPTION
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga8ec0d1beda77d67a16f176efc93f82ff:
+
+typedef RTS_UI32 RTS_SIL2_OPMODE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga7c42f135fc3d77984fe85ab00867964d:
+
+typedef RTS_UI32 RTS_SIL2_ADDRESSSTATE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaf36eeab696b27f721103e1a8944f2519:
+
+typedef RTS_RESULT( *  PFSIL2APPBOOT) (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga6930a286f5ce0a7fd755d30685e8bf01:
+
+typedef struct tagsil2checkcallercontext_struct  sil2checkcallercontext_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<SIL2>
+
+sil2checkcallercontext
+
+.. _group___cmp_s_i_l2_itf_1ga03ca67749222fb49fafc04104b25a0ee:
+
+typedef RTS_RESULT( *  PFSIL2CHECKCALLERCONTEXT) (RTS_UI32 ulCallerContextExpected)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga2f2bfcad76d3d47b2726d9cbde4b3b00:
+
+typedef void( *  PFSIL2CHECKCALLERCONTEXT_IEC) (sil2checkcallercontext_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gac221eea67a0e3e178f3b24fd47e7445e:
+
+typedef struct tagsil2copycodeguid_struct  sil2copycodeguid_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<SIL2>
+
+Function to copy the current CodeGuid to a given location (by Pointer)
+
+Size is always 16 BYTES! The caller must provided this much space.
+
+**Parameters**
+
++---------+--------------+-----------------------------------------------------------------------------+
+| [in]    | pDstCodeGuid | Pointer where the guid should be copied to. RANGE=[NULL,VALID_PDSTCODEGUID] |
++---------+--------------+-----------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+-------------------------------+
+| ERR_OK        | Copy was ok                   |
++---------------+-------------------------------+
+| ERR_FAILED    | Could not get requested Guid. |
++---------------+-------------------------------+
+| ERR_PARAMETER | Pointer invalid               |
++---------------+-------------------------------+
+
+.. _group___cmp_s_i_l2_itf_1ga5dcd52be80efb3f599e9d7463caa42e5:
+
+typedef void( *  PFSIL2COPYCODEGUID_IEC) (sil2copycodeguid_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga84e6aa1fc9ed4aaf32f5dce090aac9c2:
+
+typedef struct tagsil2copydataguid_struct  sil2copydataguid_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<SIL2>
+
+Function to copy the current DataGuid to a given location (by Pointer)
+
+Size is always 16 BYTES! The caller must provided this much space.
+
+**Parameters**
+
++---------+--------------+-----------------------------------------------------------------------------+
+| [in]    | pDstCodeGuid | Pointer where the guid should be copied to. RANGE=[NULL,VALID_PDSTDATAGUID] |
++---------+--------------+-----------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+-------------------------------+
+| ERR_OK        | Copy was ok                   |
++---------------+-------------------------------+
+| ERR_FAILED    | Could not get requested Guid. |
++---------------+-------------------------------+
+| ERR_PARAMETER | Pointer invalid               |
++---------------+-------------------------------+
+
+.. _group___cmp_s_i_l2_itf_1gacb12384306096ab4377ea8eabce6ff6c:
+
+typedef void( *  PFSIL2COPYDATAGUID_IEC) (sil2copydataguid_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga6ec5ce2ca6a3597bc4ef861cac4918f1:
+
+typedef RTS_RESULT( *  PFSIL2OEMENTERDEBUGMODE) (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga004979c693756139d3dd40cc6bb4a4f2:
+
+typedef struct tagsil2oemexception_struct  sil2oemexception_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<SIL2>
+
+sil2oemexception
+
+.. _group___cmp_s_i_l2_itf_1gab6718874b0b3120fdedae1bf6f3218a9:
+
+typedef void( *  PFSIL2OEMEXCEPTION) (RTS_SIL2_EXCEPTION Exception)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga649ca3ddf9bf22f6a85fdfb0740e5cbd:
+
+typedef void( *  PFSIL2OEMEXCEPTION_IEC) (sil2oemexception_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gafb55a0585024ff62223068638f5ddae5:
+
+typedef struct tagsil2addlog_struct  sil2addlog_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<SIL2>
+
+sil2addlog
+
+.. _group___cmp_s_i_l2_itf_1ga9852c355c2bf3485fb153f7684ae38b4:
+
+typedef RTS_RESULT( *  PFSIL2ADDLOG) (char *pszMessage, RTS_UI32 ulLogId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga47832dc40a3eb08e3f396432a17bab91:
+
+typedef void( *  PFSIL2ADDLOG_IEC) (sil2addlog_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaec5ca53d349f0ef78b1418c8eb39a038:
+
+typedef struct tagsil2oemgetoperationmode_struct  sil2oemgetoperationmode_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<SIL2>
+
+sil2oemgetoperationmode
+
+.. _group___cmp_s_i_l2_itf_1ga78829bdc99fba185d99662fe8d302749:
+
+typedef RTS_SIL2_OPMODE( *  PFSIL2OEMGETOPERATIONMODE) (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga81011063706683538642a0c899752f03:
+
+typedef void( *  PFSIL2OEMGETOPERATIONMODE_IEC) (sil2oemgetoperationmode_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gadac65b6cbdf425a2ca9adfe4a5739f54:
+
+typedef struct tagsil2oemgetcallercontext_struct  sil2oemgetcallercontext_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<SIL2>
+
+sil2oemgetcallercontext
+
+.. _group___cmp_s_i_l2_itf_1ga66d3afd70afce160d4b8d0a83b103e58:
+
+typedef RTS_UI32( *  PFSIL2OEMGETCALLERCONTEXT) (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gad7169ec82c58a6a33cbf64fa5d4d817e:
+
+typedef void( *  PFSIL2OEMGETCALLERCONTEXT_IEC) (sil2oemgetcallercontext_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga5831096105e4dea679c5f815c586b571:
+
+typedef struct tagsil2oemgetmemorystate_struct  sil2oemgetmemorystate_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<SIL2>
+
+sil2oemgetmemorystate
+
+.. _group___cmp_s_i_l2_itf_1gabbc1153a61f4bc9f2f683e2f35d2119a:
+
+typedef RTS_SIL2_ADDRESSSTATE( *  PFSIL2OEMGETMEMORYSTATE) (RTS_UI8 *pAddress, RTS_UI32 ulLength)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga4a75f9a149e64bf8cdc5be04a2ce4de0:
+
+typedef void( *  PFSIL2OEMGETMEMORYSTATE_IEC) (sil2oemgetmemorystate_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gacb3ec2a1fea7432ae15bf315f5cf7f2c:
+
+typedef struct tagsil2oemstackisvalid_struct  sil2oemstackisvalid_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<SIL2>
+
+sil2oemstackisvalid
+
+.. _group___cmp_s_i_l2_itf_1ga6f7ce258e9d586fe1198f6dad9b09d70:
+
+typedef RTS_RESULT( *  PFSIL2OEMSTACKISVALID) (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaf93fc36b1512c626f80b13435628f924:
+
+typedef void( *  PFSIL2OEMSTACKISVALID_IEC) (sil2oemstackisvalid_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga5b6af9feec7a11d1d45c2d2cf2d9710b:
+
+typedef RTS_RESULT( *  PFSIL2OEMEXECUTENONSAFETYJOB) (void(*pfNonSafetyJob)(void *pParam), void *pParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga1f91d834f29f4032e422738171ea7cdb:
+
+typedef struct tagsil2executenonsafetyjob_struct  sil2executenonsafetyjob_struct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<SIL2>
+
+sil2executenonsafetyjob
+
+.. _group___cmp_s_i_l2_itf_1ga2d2d5fcd62b0cceed18e82c8910756e8:
+
+typedef RTS_RESULT( *  PFSIL2OEMEXECUTENONSAFETYJOB2) (void(*pfNonSafetyJob)(void *pParam), void *pParam, RTS_SIZE iSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaf2bc2847465eb128b54c1a70e16e051b:
+
+typedef void( *  PFSIL2EXECUTENONSAFETYJOB_IEC) (sil2executenonsafetyjob_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gafcdc4b9b598d62eab5363d62e712b2f4:
+
+typedef RTS_RESULT( *  PFSIL2CONTROLFLOWLOG) (SIL2_CONTROLFLOW *pControlFlow, RTS_UI8 uiCurrID)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga6fa1921e7db1fff0aa47c044e747a7f5:
+
+typedef RTS_RESULT( *  PFSIL2CONTROLFLOWCHECK) (SIL2_CONTROLFLOW *pControlFlow, RTS_UI8 uiTotalNr)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gadaf7d8c1f3474d7c29f66ffeb1065ee9:
+
+typedef ICmpSIL2_C ICmpSIL2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_s_i_l2_itf_1gad9316cce5790b2528afef1d6a4ecf0ac:
+
+RTS_RESULT SIL2AppBoot (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to load and start a Bootproject from Flash
+
+Application Note: The caller must ensure that this function is called only within a safe context!
+
+The SIL2 Component only loads bootprojects, which are in the "compact download format" format, and those only from flash. This format includes an checksum to check the consistency of that bootproject. Before loading the bootproject the CmpSIL2 checks this CRC to make sure that the bootproject was not corrupted after CoDeSys Programming System created it. As the data-initialization is done from bootproject-code, the CRC also covers the data in the bootproject. The main steps of loading the bootproject are:
+
+  - Create an application with the given name
+
+  - Get the Startaddress of the Bootproject in Flash
+
+  - Allocate Application Areas (Code - Flash, Data - :ref:`SysMemAllocArea() <group___sys_mem_itf_1ga7ba42e875fb5a4b94adf7a98597675d8>` )
+
+  - Check the Bootproject (Bootproject Type, Target ID, Type, Version) and create GUIDs
+
+  - Call the Data-Initialization-Code from the bootproject (Relocation, Code Init, Download POU, Global Init, Global Exit)
+
+  - Set the Application State to loaded
+
+  - If everything is correct, start the Application
+
+Function has no function parameter, but behavior is also dependant on state of bootproject
+
+**Parameters**
+
++---------+------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bExtFuncsAreValid      | ***PSEUDO*** Specifies if the application references an unsafe or non-existent external function. RANGE=[TRUE,FALSE]                                                                                                                                                                                                                                                                    |
++---------+------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bAreaIsValid           | ***PSEUDO*** Specifies if the Areas of the bootapplication are valid or not. RANGE=[TRUE,FALSE]                                                                                                                                                                                                                                                                                         |
++---------+------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | Bootproject.CRC        | ***PSEUDO*** Bootproject in flash, States: valid CRC, invalid CRC RANGE=[BOOTP_NO_PROJECT,BOOTP_VALID_CRC,BOOTP_INVALID_CRC]                                                                                                                                                                                                                                                            |
++---------+------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | Bootproject.Code       | ***PSEUDO*** valid Code, idle Code (harmless), invalid Code producing Exception RANGE=[INVALID_AREA,INVALID_DEV_VERSION,RELOC_VALID,RELOC_IDLE,RELOC_EXCEPTION,CODEINIT_VALID,CODEINIT_IDLE,CODEINIT_EXCEPTION,GLOBALINIT_VALID,GLOBALINIT_IDLE,GLOBALINIT_EXCEPTION,DOWNLOAD_POU_VALID,DOWNLOAD_POU_IDLE,DOWNLOAD_POU_EXCEPTION,GLOBALEXIT_VALID,GLOBALEXIT_IDLE,GLOBALEXIT_EXCEPTION] |
++---------+------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | Bootproject.TargetType | ***PSEUDO*** Target Type RANGE=[INVALID_TARGET_TYPE,VALID_TARGET_TYPE]                                                                                                                                                                                                                                                                                                                  |
++---------+------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | Bootproject.TargetID   | ***PSEUDO*** Target ID RANGE=[INVALID_TARGET_ID,VALID_TARGET_ID]                                                                                                                                                                                                                                                                                                                        |
++---------+------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | bExceptionGenerated    | ***PSEUDO*** TRUE, when an exception occured, during execution RANGE=[FALSE,TRUE]                                                                                                                                                                                                                                                                                                       |
++---------+------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_OK               | Load Bootproject successful                                                                                                                                                                      |
++----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_NO_OBJECT        | No Bootproject in Flash                                                                                                                                                                          |
++----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_FAILED           | Error while loading Bootapp (memory area could not be allocated, CRC was invalid, or an external function, which was referenced by the application, is not listed in the list of safe functions) |
++----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_TYPE_MISMATCH    | wrong DeviceType in Bootproject                                                                                                                                                                  |
++----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_ID_MISMATCH      | wrong DeviceId in Bootproject                                                                                                                                                                    |
++----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_VERSION_MISMATCH | wrong DeviceVersion in Bootproject                                                                                                                                                               |
++----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Result of loading bootproject
+
+.. _group___cmp_s_i_l2_itf_1gadfab76ab0d96e0384b79b59a6e52d1a5:
+
+RTS_RESULT SIL2CheckCallerContext (RTS_UI32 ulCallerContextExpected)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to check the current Caller Context of the Runtime
+
+Expected Context is checked vs the current context, and an exception is thrown if they are different.
+
+**Parameters**
+
++---------+-------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulCallerContextExpected | Expected Context, that is checked against current context. RANGE=[RTS_SIL2_CALLERCTX_SAFE,RTS_SIL2_CALLERCTX_UNSAFE,RTS_SIL2_CALLERCTX_ERROR] |
++---------+-------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | bSafeContext            | ***PSEUDO*** Specifies if the current context is safe (TRUE) or unsafe (FALSE). RANGE=[TRUE,FALSE]                                            |
++---------+-------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+-----------------------------------------------------------------------+
+| ERR_OK        | Context is ok                                                         |
++---------------+-----------------------------------------------------------------------+
+| ERR_FAILED    | Context could not be checked successfully, an internal error occured. |
++---------------+-----------------------------------------------------------------------+
+| ERR_EXCEPTION | Contexts are different                                                |
++---------------+-----------------------------------------------------------------------+
+
+**Returns:**
+
+Returns if comparision was ok or not, or if problem occured.
+
+.. _group___cmp_s_i_l2_itf_1ga4d1664aa0eb2634f7aeffcf2c1a5187a:
+
+void sil2checkcallercontext (sil2checkcallercontext_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga91f7dcfcbc0f78d10bb89b7c881ac5f5:
+
+void sil2copycodeguid (sil2copycodeguid_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga25b16f1d0d03c5b686a8834e8da7ea5f:
+
+void sil2copydataguid (sil2copydataguid_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga62576d17b76bd27547fddc0f0f7f5665:
+
+RTS_RESULT SIL2OEMEnterDebugMode (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<SIL2>
+
+Function to set Runtime to DebugMode
+
+This function is called from save context after receiving an "EnterDebugMode" online service to set runtime to debug mode
+
+As this function is only called from within save context no further check is required
+
+**Parameters**
+
++---------+-----------------------+-----------------------------------------------------------------------------------------------------------------+
+| [in]    | SIL2OpMode            | ***PSEUDO*** Specifies the current operation mode of the PLC RANGE=[RTS_SIL2_OPMODE_SAFE,RTS_SIL2_OPMODE_DEBUG] |
++---------+-----------------------+-----------------------------------------------------------------------------------------------------------------+
+| [in]    | SIL2PollOnlineService | ***PSEUDO*** Specifies if the function PollOnlineServices is called or not RANGE=[TRUE,FALSE]                   |
++---------+-----------------------+-----------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+---------------------------------------+
+| ERR_OK        | Runtime could be set to Debugmode     |
++---------------+---------------------------------------+
+| ERR_NO_CHANGE | Runtime was already set to Debugmode  |
++---------------+---------------------------------------+
+| ERR_FAILED    | Runtime could not be set to Debugmode |
++---------------+---------------------------------------+
+
+**Returns:**
+
+Result of Setting Mode
+
+.. _group___cmp_s_i_l2_itf_1ga18773ad5b541c2d47a6b9c6321379f77:
+
+void SIL2OEMException (RTS_SIL2_EXCEPTION Exception)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to set Runtime into Exception-Mode
+
+Whenever the runtime detects invalid behaviour, values or states, it calls this function with a specific Exception Code.
+
+Depending on the implementation this function may not return!
+
+**Parameters**
+
++---------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | Exception           | Exception Code RANGE=[RTS_SIL2_EXCEPTION_LOADBOOTPROJECT,RTS_SIL2_EXCEPTION_BOOTPROJECT_INVALID,RTS_SIL2_EXCEPTION_COMPACTPREPARECODE,RTS_SIL2_EXCEPTION_COMPACTFINISH,RTS_SIL2_EXCEPTION_EXTREFS,RTS_SIL2_EXCEPTION_RUNAFTERDOWNLOAD,RTS_SIL2_EXCEPTION_MEMORY,RTS_SIL2_EXCEPTION_RUNTIME_INIT,RTS_SIL2_EXCEPTION_SCHED_WD,RTS_SIL2_EXCEPTION_CRC_CYCLIC,RTS_SIL2_EXCEPTION_CRC_COMPLETE,RTS_SIL2_EXCEPTION_CRC_INIT,RTS_SIL2_EXCEPTION_LIFE_COUNTER,RTS_SIL2_EXCEPTION_CALLERCONTEXT] |
++---------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | bExceptionGenerated | ***PSEUDO*** TRUE, when an exception occured, during execution RANGE=[FALSE,TRUE]                                                                                                                                                                                                                                                                                                                                                                                                       |
++---------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_s_i_l2_itf_1gadf1587656481bdac7afb3f2f5ba571b0:
+
+void sil2oemexception (sil2oemexception_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga5f306b85e84cd1cb52c10f077489967f:
+
+RTS_RESULT SIL2AddLog (char *pszMessage, RTS_UI32 ulLogId)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to add a secure Logentry
+
+These secure logentries don't use the standard Logging mechanism! With this function it is possible to add secure messages to a Messagequeue within CmpSIL2. This Messagequeue can be fetched by an Onlineservice from the SIL2 Programmingsystemplugin. The messages are stored and transmitted with a CRC to provide a secure logging. The maximal length of the string is restricted (CMPSIL2_LOGADD_MAX_STRLEN).
+
+**Return values**
+
++---------------+--------------------------------------------------------------------------------+
+| ERR_FAILED    | Entry could not be added to log                                                |
++---------------+--------------------------------------------------------------------------------+
+| ERR_PARAMETER | Message pointer was NULL, or message was longer than CMPSIL2_LOGADD_MAX_STRLEN |
++---------------+--------------------------------------------------------------------------------+
+| ERR_OK        | Entry could be added to log correctly                                          |
++---------------+--------------------------------------------------------------------------------+
+
+**Parameters**
+
++---------+------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pszMessage | String containing the message, must not be longer than CMPSIL2_LOGADD_MAX_STRLEN RANGE=[NULL,VALID_STRING,LONG_STRING] |
++---------+------------+------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulLogId    | Id for own Identification purposes RANGE=[RTS_RANGE_OF_ULONG]                                                          |
++---------+------------+------------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Result of adding secure Logentry
+
+.. _group___cmp_s_i_l2_itf_1ga58dd0a10a47331ec3e336ffdcc6864cb:
+
+void sil2addlog (sil2addlog_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gadf5a291c36c5b17da4958b7f32710d7b:
+
+RTS_SIL2_OPMODE SIL2OEMGetOperationMode (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to get the Operationmode of the Runtime
+
+Returns RTS_SIL2_OPMODE_DEBUG or RTS_SIL2_OPMODE_SAFE depending on Operationmode, returns RTS_SIL2_OPMODE_ERROR if error occured or if in unknown state
+
+**Parameters**
+
++---------+------------+-----------------------------------------------------------------------------------------------------------------+
+| [in]    | SIL2OpMode | ***PSEUDO*** Specifies the current operation mode of the PLC RANGE=[RTS_SIL2_OPMODE_SAFE,RTS_SIL2_OPMODE_DEBUG] |
++---------+------------+-----------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Returns SIL2 Operation Mode: RTS_SIL2_OPMODE_DEBUG or RTS_SIL2_OPMODE_SAFE if operation was successful, RTS_SIL2_OPMODE_ERROR if error occured or if in unknown state!
+
+.. _group___cmp_s_i_l2_itf_1ga88779429f4950703112f5e8621a0e90a:
+
+void sil2oemgetoperationmode (sil2oemgetoperationmode_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga7430aa78af60c412d55bbda4af49bae1:
+
+RTS_UI32 SIL2OEMGetCallerContext (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to get the current Caller Context of the Runtime
+
+Expected return the current context, and an exception is thrown if they are different.
+
+**Parameters**
+
++---------+------------+------------------------------------------------------------------------+
+| [in]    | bDebugMode | ***PSEUDO*** Specifies if run in debug mode or not. RANGE=[TRUE,FALSE] |
++---------+------------+------------------------------------------------------------------------+
+
+**Return values**
+
++------------+-----------------------------------------------------------------------+
+| ERR_OK     | Context is ok                                                         |
++------------+-----------------------------------------------------------------------+
+| ERR_FAILED | Context could not be checked successfully, an internal error occured. |
++------------+-----------------------------------------------------------------------+
+
+**Returns:**
+
+Returns if comparision was ok or not.
+
+.. _group___cmp_s_i_l2_itf_1ga565da012eaba510c94321df0c231b388:
+
+void sil2oemgetcallercontext (sil2oemgetcallercontext_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga12c8a7ab6630ef4eb56b0e12947abec9:
+
+RTS_SIL2_ADDRESSSTATE SIL2OEMGetMemoryState (RTS_UI8 *pAddress, RTS_UI32 ulLength)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to get the MemoryState (safe/unsafe) for a specific Memoryrange
+
+The Addressrange where pAddress points to with the length of ulLength is checked and the corresponding RTS_SIL2_ADDRESSSTATE is returned: RTS_SIL2_ADDRESS_SAFE or RTS_SIL2_ADDRESS_UNSAFE
+
+**Parameters**
+
++---------+----------+--------------------------------------------------------------------------------------------+
+| [in]    | pAddress | Pointer to Addressrange to check for Addressstate RANGE=[NULL,SAFE_POINTER,UNSAFE_POINTER] |
++---------+----------+--------------------------------------------------------------------------------------------+
+| [in]    | ulLength | Length of Addressrange to check for Addressstate RANGE=[0,VALID_POINTER_SIZE,ULONG_MAX]    |
++---------+----------+--------------------------------------------------------------------------------------------+
+
+**Return values**
+
++-------------------------+--------------------------------------+
+| RTS_SIL2_ADDRESS_SAFE   | This Addressrange is in Safe Range   |
++-------------------------+--------------------------------------+
+| RTS_SIL2_ADDRESS_UNSAFE | This Addressrange is in Unsafe Range |
++-------------------------+--------------------------------------+
+
+**Returns:**
+
+Result for Memoryaddress check
+
+.. _group___cmp_s_i_l2_itf_1ga389453b9ba1ef8fa37b6b0f0d8c6e3db:
+
+void sil2oemgetmemorystate (sil2oemgetmemorystate_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1ga255fd372de5d2411332f0ba94bc8cc41:
+
+RTS_RESULT SIL2OEMStackIsValid (void)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+OBSOLETE FUNCTION
+
+Function to check if stack is valid.
+
+The function is not called by the runtime nor by the SIL2 plugin. Platforms may implement this function for backwards compatibility.
+
+**Parameters**
+
++---------+---------------+-----------------------------------------------------------------------+
+| [in]    | bStackIsValid | ***PSEUDO*** Define if the current stack is valid. RANGE=[FALSE,TRUE] |
++---------+---------------+-----------------------------------------------------------------------+
+
+**Return values**
+
++--------------------+----------------------------------------------------------+
+| ERR_NOTIMPLEMENTED | Obsolete function not implemented                        |
++--------------------+----------------------------------------------------------+
+| ERR_OK             | Platform specific definition for backwards compatibility |
++--------------------+----------------------------------------------------------+
+| ERR_FAILED         | Platform specific definition for backwards compatibility |
++--------------------+----------------------------------------------------------+
+
+**Returns:**
+
+Result of stack check
+
+.. _group___cmp_s_i_l2_itf_1ga8695b89346da1c066f61b361fe120167:
+
+void sil2oemstackisvalid (sil2oemstackisvalid_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gaa56ac50fb0426a44a8691acb560d6b31:
+
+RTS_RESULT SIL2OEMExecuteNonSafetyJob (void(*pfNonSafetyJob)(void *pParam), void *pParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+OBSOLETE FUNCTION: Use :ref:`SIL2OEMExecuteNonSafetyJob2() <group___cmp_s_i_l2_itf_1ga28aabdcbbe7f639607257f717d8f21a4>` instead.
+
+Function to delegate a Non-Safety Job
+
+This function can be used to delegate a non-safety job from within the safe-context to be executed from the Unsafe context
+
+The function pfNonSafetyJob has to be called from Unsafe Context with pParam as argument
+
+**Parameters**
+
++---------+----------------+------------------------------------------------------------------------------------------------------------+
+| [in]    | pfNonSafetyJob | Function Pointer to NonSafety Job RANGE=[NULL,VALID_NONSAFETY_FUNCTION]                                    |
++---------+----------------+------------------------------------------------------------------------------------------------------------+
+| [in]    | pParam         | Pointer to Parameter for NonSafety Job RANGE=[NULL,VALID_POINTER]                                          |
++---------+----------------+------------------------------------------------------------------------------------------------------------+
+| [in]    | uiCallerCtx    | ***PSEUDO*** Specifies the context of the caller RANGE=[RTS_SIL2_CALLERCTX_SAFE,RTS_SIL2_CALLERCTX_UNSAFE] |
++---------+----------------+------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++------------+------------------------+
+| ERR_OK     | Job was done correctly |
++------------+------------------------+
+| ERR_FAILED | Job could not be done  |
++------------+------------------------+
+
+**Returns:**
+
+Result of delegating a Non-Safety Job
+
+.. _group___cmp_s_i_l2_itf_1ga28aabdcbbe7f639607257f717d8f21a4:
+
+RTS_RESULT SIL2OEMExecuteNonSafetyJob2 (void(*pfNonSafetyJob)(void *pParam), void *pParam, RTS_SIZE iSize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to delegate a Non-Safety Job
+
+Delegate a non-safety job from within the safe-context to be executed from the unsafe context.
+
+The function pfNonSafetyJob shall be called from unsafe context with pParam as argument. iSize provides the size of pParam.
+
+Thus, the parameter can be copied temporarily to a shared memory, message box or a different stack.
+
+**Parameters**
+
++---------+----------------+------------------------------------------------------------------------------------------------------------+
+| [in]    | pfNonSafetyJob | Function Pointer to NonSafety Job RANGE=[NULL,VALID_NONSAFETY_FUNCTION]                                    |
++---------+----------------+------------------------------------------------------------------------------------------------------------+
+| [in]    | pParam         | Pointer to Parameter for NonSafety Job RANGE=[NULL,VALID_POINTER]                                          |
++---------+----------------+------------------------------------------------------------------------------------------------------------+
+| [in]    | iSize          | Size of Parameter for NonSafety Job RANGE=[0..VALID_PARAM_SIZE]                                            |
++---------+----------------+------------------------------------------------------------------------------------------------------------+
+| [in]    | uiCallerCtx    | ***PSEUDO*** Specifies the context of the caller RANGE=[RTS_SIL2_CALLERCTX_SAFE,RTS_SIL2_CALLERCTX_UNSAFE] |
++---------+----------------+------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+-----------------------------------------------------------------------------+
+| ERR_OK        | Job was done correctly                                                      |
++---------------+-----------------------------------------------------------------------------+
+| ERR_PARAMETER | A parameter was passed, but the size is 0 or parameter is NULL and size > 0 |
++---------------+-----------------------------------------------------------------------------+
+| ERR_FAILED    | Job could not be done                                                       |
++---------------+-----------------------------------------------------------------------------+
+
+**Returns:**
+
+Result of delegating a Non-Safety Job
+
+.. _group___cmp_s_i_l2_itf_1gae02f2394cc394e0d4c125df523cf10c7:
+
+void sil2executenonsafetyjob (sil2executenonsafetyjob_struct *p)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_s_i_l2_itf_1gac3c32bd11a71214ccc8890229375eff0:
+
+RTS_RESULT SIL2ControlFlowLog (SIL2_CONTROLFLOW *pControlFlow, RTS_UI8 uiCurrID)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to log the program flow
+
+The caller is responsible for providing buffer for storing the control flow data. After having logged, the function SIL2ControlFlowCheck can be used to check if all control positions have been logged in the correct order.
+
+The Log IDs may not be out of range of the specified log buffer.
+
+**Parameters**
+
++---------+--------------+----------------------------------------------------------------------------+
+| [in]    | pControlFlow | Buffer to store control flow data in RANGE=[NULL,VALID_CONTROLFLOW_BUFFER] |
++---------+--------------+----------------------------------------------------------------------------+
+| [in]    | uiCurrID     | Current Log Nr RANGE=[0..NUM_OF_CONTROLFLOW_LOGENTRIES]                    |
++---------+--------------+----------------------------------------------------------------------------+
+
+**Return values**
+
++--------------+---------------------------------------------+
+| ERR_OK       | successfully added logentry to control flow |
++--------------+---------------------------------------------+
+| ERR_NOBUFFER | pControlFlow was NULL                       |
++--------------+---------------------------------------------+
+
+**Returns:**
+
+Result of Log to control-flow
+
+.. _group___cmp_s_i_l2_itf_1gaf37d65396d1dd8280b55256036da7599:
+
+RTS_RESULT SIL2ControlFlowCheck (SIL2_CONTROLFLOW *pControlFlow, RTS_UI8 uiTotalNr)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to check the previously logged program flow
+
+The caller is responsible for providing buffer for storing the control flow data. After having logged, the function SIL2ControlFlowCheck can be used to check if all control positions have been logged in the correct order.
+
+The number of IDs may not be out of range of the specified log buffer.
+
+**Parameters**
+
++---------+--------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | pControlFlow | Buffer to store control flow data in RANGE=[NULL,VALID_CONTROLFLOW_BUFFER,INVALID_CONTROLFLOW_BUFFER] |
++---------+--------------+-------------------------------------------------------------------------------------------------------+
+| [in]    | uiTotalNr    | Nr of Logs expected or to check RANGE=[0,NUM_OF_CONTROLFLOW_LOGENTRIES]                               |
++---------+--------------+-------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++-------------------+-------------------------------------------------------------------+
+| ERR_OK            | all logentries were added in the correct order, check successfull |
++-------------------+-------------------------------------------------------------------+
+| ERR_OUT_OF_LIMITS | uiTotalNr exceeds buffersize                                      |
++-------------------+-------------------------------------------------------------------+
+| ERR_NOBUFFER      | pControlFlow is NULL                                              |
++-------------------+-------------------------------------------------------------------+
+| ERR_FAILED        | check failed, order wrong or not all logentries correct           |
++-------------------+-------------------------------------------------------------------+
+
+**Returns:**
+
+Result of control-flow check
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

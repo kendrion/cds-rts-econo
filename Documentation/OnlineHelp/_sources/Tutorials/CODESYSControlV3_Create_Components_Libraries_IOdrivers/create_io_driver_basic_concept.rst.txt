@@ -1,0 +1,55 @@
+.. _create_io_driver_basic_concept:
+
+Basic Concepts
+--------------
+
+A CODESYS I/O Driver in C is, in general, just like a normal runtime
+component. So we are using the component from the previous chapter as a
+starting point for our I/O driver. You can also use templates for I/O
+Drivers, like IoDrvSimple or IoDrvVerySimple.
+
+Every I/O driver must have a corresponding device description file
+(*.devdesc.xml). This file defines connectors, parameters and I/O
+channels. Every element is identified by an unique id. The corresponding
+I/O driver must know these unique ids.
+
+For more information about device description files, see also
+CODESYS_DeviceDescriptions_en.pptx.
+
+For more information about device description files and I/O drivers, see
+also CODESYSControlV3_Manual.pdf, chapter 7 Device- / I/O Configuration
+and chapter 8 I/O Drivers.
+
+The I/O Driver component will use additional interfaces. They will be
+added to the USE_ITF section of the dep.m4 file:
+
+-  CmpIoMgr: We need to register our driver at the I/O Manager.
+
+-  SysMem: We need to allocate some memory dynamically for our driver
+   instance.
+
+-  SysCpuHandling: We want to allow bit access and use
+   SysCpuTestAndSet() for this.
+
+Additionally to this, we also need to implement some predefined
+interfaces in our component. They will be added to the IMPLEMENT_ITF
+statement of the dep.m4 file:
+
+-  CmpIoDrvItf: This is the I/O driver interface and defines functions
+   like „IoDrvReadInputs()“, „IoDrvWriteOutputs()“ or
+   „IoDrvUpdateConfiguration()“. This is the main interface between an
+   IEC task and our I/O driver.
+
+-  CmpIoDrvParameterItf: This is just a small interface. It allows the
+   I/O Manager to read parameters from the I/O Driver. Implementing this
+   interface is optional.
+
+These interfaces are already defined in CmpIoDrvItf.m4 and
+CmpIoDrvParameterItf.m4. We don’t need to define new interfaces, in
+contrary to libraries described above. We also don’t need to create a
+new CODESYS library for an I/O driver written in C.
+
+In the runtime system core, the component I/O Manager (CmpIoMgr) manages
+all I/O drivers. Calls to the I/O drivers are made through this
+component. They are not made directly from the IEC code to the IO
+driver.

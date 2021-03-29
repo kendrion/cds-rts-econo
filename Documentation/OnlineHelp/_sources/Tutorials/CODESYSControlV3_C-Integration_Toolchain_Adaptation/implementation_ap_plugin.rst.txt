@@ -1,0 +1,129 @@
+.. _implementation_ap_plugin:
+
+Implementation of an AP Plug-In for building C modules
+======================================================
+
+A Plug-In able to build a C module for a certain device needs to
+implement specific interfaces. They can be found in the interface
+Plug-In +CSourceComponentBuilder.
+
+The most important interface is the ICSourceComponentBuilder. An
+instance of the class implementing this interface will be created for a
+build process.
+
+The build progresses in the following order:
+
+1. An Instance of ICSourceComponentBuilder is created and the Configure
+   method is called
+
+2. A temporary directory on the filesystem will be created
+
+3. All sources from the project are exported into that folder
+
+4. The method ICSourceComponentBuilder.CreateDynamicObject is called
+
+Creation of a CSourceComponentBuilder instance
+----------------------------------------------
+
+Every PlugIn providing an implementation of an ICSourceComponentBuilder
+also needs to provide a factory implementing the interface
+ICSourceComponentBuilderFactory.
+
+When an instance of the component builder needs to be created, each
+factory available will be asked if it supports a given device (calling
+of the method **AcceptsDevice**). If the factory returns true, the
+**Create** method will be called to receive an initialized instance.
+
+Description of the methods in ICSourceComponentBuilder
+------------------------------------------------------
+
+Configure
+~~~~~~~~~
+
+This method is passed an instance of IBuildConfigurator as parameter.
+That interface contains all relevant information necessary to setup a
+build. For example it contains a list of all source and headers files
+part of this C module. It also contains any additional configuration
+like include and library paths.
+
+This method should be used to set additional paths and defines in the
+IBuildConfiguration instance which are specific to the build process for
+the given device. The remaining steps in the build process will then be
+able to make use of this information.
+
+CreateDynamicObject
+~~~~~~~~~~~~~~~~~~~
+
+This method executes the build itsself. If the build is successfull, it
+returns the created dynamic object to CODESYS. Any build or project
+files (e.g. Makefiles) required for the build process are also created
+in this method.
+
+The build action should output meaningfull information and errors to the
+users. For this it can use the event ShowBuildMessage. CODESYS
+subscribes to this event and will store and output all information
+passed through this event in the message window.
+
+**Note:** It is up to the Plug-In to do the filtering of its messages.
+
+Property BuildConfig
+~~~~~~~~~~~~~~~~~~~~
+
+The Plug-In does not only receive build information from CODESYS through
+the interface IBuildConfigurator, but does also provide information to
+CODESYS through the interface IBuildConfiguration. An example of such an
+information ist the location of the temporary build folder.
+
+An important part of the interface is the dictionary
+**DatatypeMapping**. This dictionary is used by CODESYS when scanning a
+C header file for functions and datatypes to export.
+
+In contrast to IEC the actual sizes of datatypes are compiler dependant
+in C. So the mapping of basic C datatypes, like integer or float, to a
+corresponding IEC datatype depends on the compiler used later on to
+create the dynamic module. Therefore only the device specific Plug-In
+for building the C module can provide a correct mapping of C to IEC
+datatypes.
+
+The key of the dictionary is a C datatype as defined in the enum
+TypeClassC. The value returned by the dictionary is a value from the
+enum TypeClass defined in the core LanguageModel interface in CODESYS.
+
+OpenProjectInIDE
+~~~~~~~~~~~~~~~~
+
+Since CODESYS does not provide any advanced editing features for C
+sources it provides the possibility to open a C module in a dedicated
+external IDE.
+
+If a user calls the corresponding command, CODESYS will create an
+instance of the ICSourceComponentBuilder and call this method. Before
+doing that, it will check the property **IDESupported.** If that
+property returns false the user is informed that this feature is not
+supported and no further actions are executed.
+
+It is important that the IDE is opened non-blocking in a new process.
+CODESYS can then be informed through the event IDEClosed that the user
+finished editing the module outside of CODESYS. The C sources will then
+be checked and updated inside the project, if necessary.
+
+Environment specific settings
+-----------------------------
+
+If the Plug-In for building the C module requires settings or
+configurations of any kind it is free to provide the required dialogs
+and checks itself through the usual means in CODESYS. The interfaces for
+the C Integration do not provide any additional means for this.
+
+Error handling
+--------------
+
+The handling of errors is generally up to the Plug-In. Build errors
+(e.g. compile errors) can be output through the mechanism for build
+messages. More urgent or fatal errors can also be displayed through the
+MessageService of CODESYS as popups.
+
+Aborting the build when detecting fatal errors in SetupBuild or
+CreateDynamicObject can be done by throwing Exceptions. Every exception
+will be catched by CODESYS and lead to the abortion of the build
+process.

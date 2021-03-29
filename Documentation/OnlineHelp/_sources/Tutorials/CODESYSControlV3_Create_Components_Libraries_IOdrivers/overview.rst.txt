@@ -1,0 +1,47 @@
+.. _overview:
+
+Overview
+========
+
+The CODESYS runtime system is component based. With the CODESYS Runtime
+Toolkit, device manufacturers (OEM customers) can extend the CODEYS
+runtime system by creating additional OEM specific runtime components.
+
+These additional components live inside the runtime system, like all the
+other runtime system components supplied by 3S. The additional
+components can use the same interfaces as the other runtime components,
+so this is a quite powerful feature.
+
+The additional components can be grouped like this:
+
+-  Components that just use the functions of other runtime components,
+   for example react on runtime system events.
+
+-  Components that implement a CODESYS library with external functions
+   and function blocks. These componenets realize a library written in C
+   code. You can also integrate your existing C code functions to such a
+   component.
+
+-  Components that implement the CODESYS IODriver interface. These
+   components realize an IODriver written in C code.
+
+Components can also be a mix of the above types.
+
+Writing components must follow the basic concepts of the CODESYS runtime
+system. The basic concepts are
+
+-  Component based architecture
+
+-  Single source and m4
+
+-  Macros for function calls
+
+The component based architecture requires some functions that are used
+as frame code. These functions are part of every component.
+
+Single source requires macros when calling functions from other
+components. These macros allow using the same code in different compile
+scenarios.
+
+These concepts are described in more detail in the runtime manual. The
+implications are explained in the following chapters.
