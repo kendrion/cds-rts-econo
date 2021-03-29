@@ -75,7 +75,7 @@ TARGET= codesyscontrol codesyscontrol.a
 
 #############################################################################################
 # section tools:
-COMPILE_PREFIX=/opt/kendion_kuhnke/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-
+COMPILE_PREFIX=/opt/kendrion_kuhnke/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-
 CC=${COMPILE_PREFIX}gcc
 CXX=${COMPILE_PREFIX}g++
 LD=${COMPILE_PREFIX}ld
@@ -138,8 +138,6 @@ CFLAGS+=-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded/t
 -I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40/crypto/ec/curve448/arch_32\
 -I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40/crypto/modes\
 -I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40/include\
--I../../../../../../../Contrib/C-sources/expat/tags/rts/3.5.16.30\
--I../../../../../../../Contrib/C-sources/expat/tags/rts/3.5.16.30/lib\
 
 CXXFLAGS+= -I. -I../ -I../../../Components -I../Components
 CXXFLAGS+=-I../../../Components__CONFIDENTIAL__/CmpCodeMeter -I../../../Components__AddOns__/CmpOPCUAStack -I../../../Components/CmpOpenSSL 
@@ -195,8 +193,6 @@ CXXFLAGS+=-I../../../../../../../ContribConfidential/C-sources/CodeMeterEmbedded
 -I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40/crypto/ec/curve448/arch_32\
 -I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40/crypto/modes\
 -I../../../../../../../Contrib/C-sources/OpenSSL/tags/rts/3.5.16.40/include\
--I../../../../../../../Contrib/C-sources/expat/tags/rts/3.5.16.30\
--I../../../../../../../Contrib/C-sources/expat/tags/rts/3.5.16.30/lib\
 
 #############################################################################################
 # section default CFLAGS:
@@ -224,10 +220,11 @@ CXXFLAGS += -O0
 
 #############################################################################################
 # section profile CFLAGS (appended from list):
-CFLAGS += --sysroot=/opt/kendion_kuhnke/sysroots/cortexa9hf-neon-poky-linux-gnueabi
+CFLAGS += --sysroot=/opt/kendrion_kuhnke/sysroots/cortexa9hf-neon-poky-linux-gnueabi
 CFLAGS += -march=armv7-a -mfpu=neon -mfloat-abi=hard -mcpu=cortex-a9
 CFLAGS += -O2 -pipe -g -feliminate-unused-debug-types
 CFLAGS += -DHAVE_SYSMACROS_H
+CFLAGS += -I../visu
 
 #############################################################################################
 # section profile CXXFLAGS (appended from list):
@@ -254,7 +251,7 @@ LDFLAGS += -lm -lpthread -ldl -lrt
 
 #############################################################################################
 # section profile LDFLAGS (appended from list):
-LDFLAGS += --sysroot=/opt/kendion_kuhnke/sysroots/cortexa9hf-neon-poky-linux-gnueabi
+LDFLAGS += --sysroot=/opt/kendrion_kuhnke/sysroots/cortexa9hf-neon-poky-linux-gnueabi
 LDFLAGS += -mfloat-abi=hard -Wl,-O1 -Wl,--hash-style=gnu -Wl,--as-needed
 LDFLAGS += -Wl,--allow-shlib-undefined -Wl,--no-wchar-size-warning
 
@@ -270,6 +267,43 @@ LDFLAGS += -Wl,--allow-shlib-undefined -Wl,--no-wchar-size-warning
 
 #############################################################################################
 # section targetvisu:
+# Targetvisu Linux uses QT some specific flags here
+QT_INSTALL_PATH=/opt/qt5
+QT_INCLUDES += -I$(QT_INSTALL_PATH)/include/QtCore \
+-I$(QT_INSTALL_PATH)/include/QtGui \
+-I$(QT_INSTALL_PATH)/include/QtNetwork \
+-I$(QT_INSTALL_PATH)/include/QtSvg \
+-I$(QT_INSTALL_PATH)/include/QtWebKit \
+-I$(QT_INSTALL_PATH)/include \
+-I$(QT_INSTALL_PATH)/include/Qt \
+-I$(QT_INSTALL_PATH)/ \
+-I$(QT_INSTALL_PATH)/QtGui \
+-I$(QT_INSTALL_PATH)/QtCore \
+-I$(QT_INSTALL_PATH)/QtNetwork \
+-I$(QT_INSTALL_PATH)/QtSvg \
+-I$(QT_INSTALL_PATH)/QtWebKit
+
+QT_DEFINES = -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_SHARED -DQT_TEST_LIB -DQT_TARGET_VISU
+
+QT_LIBS = -lQt5Core
+QT_LIBS += -lQt5Gui
+QT_LIBS += -lQt5Network
+QT_LIBS += -lQt5WebKit
+QT_LIBS += -lstdc++
+
+#additional libs for QT5
+QT_LIBS += -lQt5Widgets -lQt5WebKitWidgets
+
+
+
+CFLAGS += -DQT_TARGET_VISU
+CXXFLAGS += -DQT_TARGET_VISU
+
+# differenciate between static and dynamic build.
+# On dynamic build, we are seperating all Qt stuff to one library,
+# which can be shared.
+LDFLAGS += $(QT_LIBS)
+
 
 #############################################################################################
 # section static CFLAGS (Cmp<XYZ>_EXTERNAL):
@@ -277,7 +311,7 @@ LDFLAGS += -Wl,--allow-shlib-undefined -Wl,--no-wchar-size-warning
 CFLAGS_STATIC  += 
 #############################################################################################
 # section static and dynamic componentlists:
-COMPONENTS_STATIC += CM.cmp.o CmpAlarmManager.cmp.o CmpApp.cmp.o CmpAppBP.cmp.o CmpAppForce.cmp.o CmpAsyncMgr.cmp.o CmpBinTagUtil.cmp.o CmpBinTagUtilIec.cmp.o CmpBlkDrvTcp.cmp.o CmpBlkDrvUdp.cmp.o CmpCAAAsyncMan.cmp.o CmpCAABehaviourModel.cmp.o CmpCAACallback.cmp.o CmpCAACanL2.cmp.o CmpCAADTUtil.cmp.o CmpCAAFile.cmp.o CmpCAAMemBlockMan.cmp.o CmpCAANetBaseServices.cmp.o CmpCAARealTimeClock.cmp.o CmpCAASdoClient.cmp.o CmpCAASdoServer.cmp.o CmpCAASegBufferMan.cmp.o CmpCAASerialCom.cmp.o CmpCAAStorage.cmp.o CmpCAATick.cmp.o CmpCAATickUtil.cmp.o CmpCAATimer.cmp.o CmpCAATypes.cmp.o CmpChannelClient.cmp.o CmpChannelClientIec.cmp.o CmpChannelMgr.cmp.o CmpChannelServer.cmp.o CmpCharDevice.cmp.o CmpChecksum.cmp.o CmpCodeMeter.cmp.o CmpCommunicationLib.cmp.o CmpCoreDump.cmp.o CmpCryptMD5.cmp.o CmpDevice.cmp.o CmpEL6751CanDrv.cmp.o CmpEventMgr.cmp.o CmpFileTransfer.cmp.o CmpIecStringUtils.cmp.o CmpIecTask.cmp.o CmpIecVarAccess.cmp.o CmpIoDrvIec.cmp.o CmpIoMgr.cmp.o CmpLog.cmp.o CmpMemPool.cmp.o CmpMonitor2.cmp.o CmpNameServiceClient.cmp.o CmpNameServiceClientIec.cmp.o CmpNameServiceServer.cmp.o CmpOPCUAProviderIecVarAccess.cmp.o CmpOPCUAServer.cmp.o CmpOPCUAStack.cmp.o CmpOpenSSL.cmp.o CmpPlcShell.cmp.o CmpRetain.cmp.o CmpRouter.cmp.o CmpSchedule.cmp.o CmpSecureChannel.cmp.o CmpSecurityManager.cmp.o CmpSessionInformation.cmp.o CmpSettings.cmp.o CmpSocketCanDrv.cmp.o CmpSrv.cmp.o CmpTraceMgr.cmp.o CmpUserDBFile.cmp.o CmpUserGroupsDBFile.cmp.o CmpUserMgr.cmp.o CmpUserObjectsDBFile.cmp.o CmpXMLParser.cmp.o SysCom.cmp.o SysCpuHandling.cmp.o SysCpuMultiCore.cmp.o SysDir.cmp.o SysEthernet.cmp.o SysEvent.cmp.o SysExcept.cmp.o SysFile.cmp.o SysInternalLib.cmp.o SysMem.cmp.o SysModule.cmp.o SysMsgQ.cmp.o SysMutex.cmp.o SysOut.cmp.o SysProcess.cmp.o SysSem.cmp.o SysSemCount.cmp.o SysSemProcess.cmp.o SysShm.cmp.o SysSocket.cmp.o SysTarget.cmp.o SysTask.cmp.o SysTime.cmp.o SysTimeRtc.cmp.o SysTimer.cmp.o 
+COMPONENTS_STATIC += CM.cmp.o CmpAlarmManager.cmp.o CmpApp.cmp.o CmpAppBP.cmp.o CmpAppForce.cmp.o CmpAsyncMgr.cmp.o CmpBinTagUtil.cmp.o CmpBinTagUtilIec.cmp.o CmpBitmapPool.cmp.o CmpBlkDrvTcp.cmp.o CmpBlkDrvUdp.cmp.o CmpCAAAsyncMan.cmp.o CmpCAABehaviourModel.cmp.o CmpCAACallback.cmp.o CmpCAACanL2.cmp.o CmpCAADTUtil.cmp.o CmpCAAFile.cmp.o CmpCAAMemBlockMan.cmp.o CmpCAANetBaseServices.cmp.o CmpCAARealTimeClock.cmp.o CmpCAASdoClient.cmp.o CmpCAASdoServer.cmp.o CmpCAASegBufferMan.cmp.o CmpCAASerialCom.cmp.o CmpCAAStorage.cmp.o CmpCAATick.cmp.o CmpCAATickUtil.cmp.o CmpCAATimer.cmp.o CmpCAATypes.cmp.o CmpChannelClient.cmp.o CmpChannelClientIec.cmp.o CmpChannelMgr.cmp.o CmpChannelServer.cmp.o CmpCharDevice.cmp.o CmpChecksum.cmp.o CmpCodeMeter.cmp.o CmpCommunicationLib.cmp.o CmpCoreDump.cmp.o CmpCryptMD5.cmp.o CmpDevice.cmp.o CmpDynamicText.cmp.o CmpEL6751CanDrv.cmp.o CmpEventMgr.cmp.o CmpFileTransfer.cmp.o CmpIecStringUtils.cmp.o CmpIecTask.cmp.o CmpIecVarAccess.cmp.o CmpIoDrvIec.cmp.o CmpIoMgr.cmp.o CmpIpc.cmp.o CmpLog.cmp.o CmpMemPool.cmp.o CmpMonitor2.cmp.o CmpNameServiceClient.cmp.o CmpNameServiceClientIec.cmp.o CmpNameServiceServer.cmp.o CmpOPCUAProviderIecVarAccess.cmp.o CmpOPCUAServer.cmp.o CmpOPCUAStack.cmp.o CmpOpenSSL.cmp.o CmpPlcShell.cmp.o CmpRetain.cmp.o CmpRouter.cmp.o CmpSchedule.cmp.o CmpSecureChannel.cmp.o CmpSecurityManager.cmp.o CmpSessionInformation.cmp.o CmpSettings.cmp.o CmpSocketCanDrv.cmp.o CmpSrv.cmp.o CmpTargetVisu.cmp.o CmpTraceMgr.cmp.o CmpUserDBFile.cmp.o CmpUserGroupsDBFile.cmp.o CmpUserMgr.cmp.o CmpUserObjectsDBFile.cmp.o CmpVisuClientControllerHost.cmp.o CmpVisuHandler.cmp.o CmpVisuServer.cmp.o CmpWebServer.cmp.o CmpWebServerHandlerV3.cmp.o SysCom.cmp.o SysCpuHandling.cmp.o SysCpuMultiCore.cmp.o SysDir.cmp.o SysEthernet.cmp.o SysEvent.cmp.o SysExcept.cmp.o SysFile.cmp.o SysGraphic.cmp.o SysInternalLib.cmp.o SysMem.cmp.o SysModule.cmp.o SysMsgQ.cmp.o SysMutex.cmp.o SysNativeControl.cmp.o SysOut.cmp.o SysProcess.cmp.o SysSem.cmp.o SysSemCount.cmp.o SysSemProcess.cmp.o SysShm.cmp.o SysSocket.cmp.o SysTarget.cmp.o SysTask.cmp.o SysTime.cmp.o SysTimeRtc.cmp.o SysTimer.cmp.o SysWindow.cmp.o SysWindowFileDialog.cmp.o 
 COMPONENTS_DYNAMIC += 
 #############################################################################################
 # section linux platform objects
@@ -373,6 +407,7 @@ CmpOpenSSL.cmp.o: CFLAGS := $(subst -O0,-O2 -fno-guess-branch-probability,${CFLA
 
 
 
+QT_LIBS := $(filter-out -lQt5WebKit -lQt5WebKitWidgets,$(QT_LIBS))
 
 #
 # HINT: This section must be at the end of the file or the filter mechanism will not work!

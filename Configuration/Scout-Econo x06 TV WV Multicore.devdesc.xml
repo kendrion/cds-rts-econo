@@ -5,12 +5,12 @@
   <Files namespace="local"/>
   <Device>
     <DeviceIdentification>
-      <Type>4102</Type>
-      <Id>10a4 0062</Id>
+      <Type>4096</Type>
+      <Id>10a4 0064</Id>
       <Version>3.5.16.40</Version>
     </DeviceIdentification>
     <DeviceInfo>
-      <Name name="local:typename">ECONO 206-Multicore</Name>
+      <Name name="local:typename">Scout-Econo x06 TV WV Multicore</Name>
       <Description name="local:typedescription">CODESYS Control from Kendrion Kuhnke </Description>
       <Vendor name="local:3S">Kendrion Kuhnke Automation</Vendor>
       <OrderNumber>???</OrderNumber>
@@ -770,9 +770,6 @@
               <ts:value>low linux default priority (SCHED OTHER 20)</ts:value>
             </ts:setting>
           </ts:section>
-          <ts:setting name="cycletimedefault" type="string" access="visible">
-            <ts:value>t#4ms</ts:value>
-          </ts:setting>
           <ts:section name="taskgroups">
             <ts:setting name="taskgroups-editable" type="boolean" access="visible">
               <ts:value>1</ts:value>
@@ -780,6 +777,9 @@
           </ts:section>
           <ts:setting name="multicore-cores" type="string" access="visible">
             <ts:value>-2,0</ts:value>
+          </ts:setting>
+          <ts:setting name="cycletimedefault" type="string" access="visible">
+            <ts:value>t#4ms</ts:value>
           </ts:setting>
         </ts:section>
         <ts:section name="library-management">
@@ -1373,17 +1373,17 @@
           <ts:setting name="load-store-register-exclusive" type="boolean" access="visible">
             <ts:value>1</ts:value>
           </ts:setting>
-          <ts:setting name="support-system-applications" type="boolean" access="visible">
-            <ts:value>1</ts:value>
-          </ts:setting>
-          <ts:setting name="ltick" type="boolean" access="visible">
-            <ts:value>1</ts:value>
-          </ts:setting>
           <ts:setting name="rts-operating-system" type="string" access="visible">
             <ts:value>LINUX</ts:value>
           </ts:setting>
           <ts:setting name="operating-system" type="string" access="visible">
             <ts:value>Linux</ts:value>
+          </ts:setting>
+          <ts:setting name="support-system-applications" type="boolean" access="visible">
+            <ts:value>1</ts:value>
+          </ts:setting>
+          <ts:setting name="ltick" type="boolean" access="visible">
+            <ts:value>1</ts:value>
           </ts:setting>
           <ts:setting name="CPU" type="codegenerators" access="edit">
             <ts:value>ARM</ts:value>
@@ -1394,13 +1394,64 @@
         </ts:section>
         <ts:section name="visualization">
           <ts:section name="targetsupport">
-            <ts:setting name="targetvisualization" type="boolean" access="visible">
-              <ts:value>0</ts:value>
+            <ts:setting name="supportslocalvisualizationfiles" type="boolean" access="visible">
+              <ts:value>1</ts:value>
             </ts:setting>
-            <ts:setting name="targetvisualization_insertbydefault" type="boolean" access="visible">
-              <ts:value>0</ts:value>
+            <ts:setting name="targetvisualization_antialiasing" type="boolean" access="visible">
+              <ts:value>1</ts:value>
+            </ts:setting>
+            <ts:setting name="targetvisualization_antialiasing_default" type="boolean" access="visible">
+              <ts:value>1</ts:value>
+            </ts:setting>
+            <ts:setting name="targetvisualization_supportskeyboard" type="boolean" access="visible">
+              <ts:value>1</ts:value>
+            </ts:setting>
+            <ts:setting name="webvisualization" type="boolean" access="visible">
+              <ts:value>1</ts:value>
+            </ts:setting>
+            <ts:setting name="webvisualization_insertbydefault" type="boolean" access="visible">
+              <ts:value>1</ts:value>
+            </ts:setting>
+            <ts:setting name="integratedwebserver" type="boolean" access="visible">
+              <ts:value>1</ts:value>
             </ts:setting>
           </ts:section>
+          <ts:section name="TargetConstraints">
+            <ts:setting name="TargetImageFormats" type="string" access="visible">
+              <ts:value>*.bmp|*.jpg|*.emf|*.gif|*.png|*.tif|*.ico</ts:value>
+            </ts:setting>
+            <ts:setting name="SupportGradientFill" type="boolean" access="visible">
+              <ts:value>1</ts:value>
+            </ts:setting>
+            <ts:setting name="SupportSemiTransparentDrawing" type="boolean" access="visible">
+              <ts:value>1</ts:value>
+            </ts:setting>
+            <ts:setting name="SupportRealPaintCommands" type="boolean" access="visible">
+              <ts:value>1</ts:value>
+            </ts:setting>
+            <ts:setting name="SupportButtonImagePosition" type="boolean" access="visible">
+              <ts:value>1</ts:value>
+            </ts:setting>
+            <ts:section name="TargetVisualElements">
+              <ts:setting name="AvailableElements" type="string" access="visible">
+                <ts:value>NativeControl</ts:value>
+              </ts:setting>
+              <ts:setting name="AdditionalAvailableElements" type="string" access="visible">
+                <ts:value>NativeControl|BrowserControl</ts:value>
+              </ts:setting>
+            </ts:section>
+            <ts:setting name="InteriorRotationElements" type="string" access="visible">
+              <ts:value>Rectangle|Rounded Rectangle|Ellipse|Image</ts:value>
+            </ts:setting>
+          </ts:section>
+        </ts:section>
+        <ts:section name="dataserver">
+          <ts:setting name="supportedbydevice" type="boolean" access="visible">
+            <ts:value>1</ts:value>
+          </ts:setting>
+          <ts:setting name="protocolsupport" type="string" access="visible">
+            <ts:value>3S_Symbolic,3S_Addresses</ts:value>
+          </ts:setting>
         </ts:section>
         <ts:section name="alarmmanager">
           <ts:setting name="alarms" type="boolean" access="visible">
@@ -1440,14 +1491,6 @@
               </ts:setting>
             </ts:section>
           </ts:section>
-        </ts:section>
-        <ts:section name="dataserver">
-          <ts:setting name="supportedbydevice" type="boolean" access="visible">
-            <ts:value>1</ts:value>
-          </ts:setting>
-          <ts:setting name="protocolsupport" type="string" access="visible">
-            <ts:value>3S_Symbolic,3S_Addresses</ts:value>
-          </ts:setting>
         </ts:section>
       </ts:TargetSettings>
     </ExtendedSettings>

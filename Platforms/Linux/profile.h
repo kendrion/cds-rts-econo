@@ -21,6 +21,7 @@ int CmpAppForce__Entry(INIT_STRUCT *pInitStruct); \
 int CmpAsyncMgr__Entry(INIT_STRUCT *pInitStruct); \
 int CmpBinTagUtil__Entry(INIT_STRUCT *pInitStruct); \
 int CmpBinTagUtilIec__Entry(INIT_STRUCT *pInitStruct); \
+int CmpBitmapPool__Entry(INIT_STRUCT *pInitStruct); \
 int CmpBlkDrvTcp__Entry(INIT_STRUCT *pInitStruct); \
 int CmpBlkDrvUdp__Entry(INIT_STRUCT *pInitStruct); \
 int CmpCAAAsyncMan__Entry(INIT_STRUCT *pInitStruct); \
@@ -52,6 +53,7 @@ int CmpCommunicationLib__Entry(INIT_STRUCT *pInitStruct); \
 int CmpCoreDump__Entry(INIT_STRUCT *pInitStruct); \
 int CmpCryptMD5__Entry(INIT_STRUCT *pInitStruct); \
 int CmpDevice__Entry(INIT_STRUCT *pInitStruct); \
+int CmpDynamicText__Entry(INIT_STRUCT *pInitStruct); \
 int CmpEL6751CanDrv__Entry(INIT_STRUCT *pInitStruct); \
 int CmpEventMgr__Entry(INIT_STRUCT *pInitStruct); \
 int CmpFileTransfer__Entry(INIT_STRUCT *pInitStruct); \
@@ -60,6 +62,7 @@ int CmpIecTask__Entry(INIT_STRUCT *pInitStruct); \
 int CmpIecVarAccess__Entry(INIT_STRUCT *pInitStruct); \
 int CmpIoDrvIec__Entry(INIT_STRUCT *pInitStruct); \
 int CmpIoMgr__Entry(INIT_STRUCT *pInitStruct); \
+int CmpIpc__Entry(INIT_STRUCT *pInitStruct); \
 int CmpLog__Entry(INIT_STRUCT *pInitStruct); \
 int CmpMemPool__Entry(INIT_STRUCT *pInitStruct); \
 int CmpMonitor2__Entry(INIT_STRUCT *pInitStruct); \
@@ -80,12 +83,17 @@ int CmpSessionInformation__Entry(INIT_STRUCT *pInitStruct); \
 int CmpSettings__Entry(INIT_STRUCT *pInitStruct); \
 int CmpSocketCanDrv__Entry(INIT_STRUCT *pInitStruct); \
 int CmpSrv__Entry(INIT_STRUCT *pInitStruct); \
+int CmpTargetVisu__Entry(INIT_STRUCT *pInitStruct); \
 int CmpTraceMgr__Entry(INIT_STRUCT *pInitStruct); \
 int CmpUserDBFile__Entry(INIT_STRUCT *pInitStruct); \
 int CmpUserGroupsDBFile__Entry(INIT_STRUCT *pInitStruct); \
 int CmpUserMgr__Entry(INIT_STRUCT *pInitStruct); \
 int CmpUserObjectsDBFile__Entry(INIT_STRUCT *pInitStruct); \
-int CmpXMLParser__Entry(INIT_STRUCT *pInitStruct); \
+int CmpVisuClientControllerHost__Entry(INIT_STRUCT *pInitStruct); \
+int CmpVisuHandler__Entry(INIT_STRUCT *pInitStruct); \
+int CmpVisuServer__Entry(INIT_STRUCT *pInitStruct); \
+int CmpWebServer__Entry(INIT_STRUCT *pInitStruct); \
+int CmpWebServerHandlerV3__Entry(INIT_STRUCT *pInitStruct); \
 int SysCom__Entry(INIT_STRUCT *pInitStruct); \
 int SysCpuHandling__Entry(INIT_STRUCT *pInitStruct); \
 int SysCpuMultiCore__Entry(INIT_STRUCT *pInitStruct); \
@@ -94,11 +102,13 @@ int SysEthernet__Entry(INIT_STRUCT *pInitStruct); \
 int SysEvent__Entry(INIT_STRUCT *pInitStruct); \
 int SysExcept__Entry(INIT_STRUCT *pInitStruct); \
 int SysFile__Entry(INIT_STRUCT *pInitStruct); \
+int SysGraphic__Entry(INIT_STRUCT *pInitStruct); \
 int SysInternalLib__Entry(INIT_STRUCT *pInitStruct); \
 int SysMem__Entry(INIT_STRUCT *pInitStruct); \
 int SysModule__Entry(INIT_STRUCT *pInitStruct); \
 int SysMsgQ__Entry(INIT_STRUCT *pInitStruct); \
 int SysMutex__Entry(INIT_STRUCT *pInitStruct); \
+int SysNativeControl__Entry(INIT_STRUCT *pInitStruct); \
 int SysOut__Entry(INIT_STRUCT *pInitStruct); \
 int SysProcess__Entry(INIT_STRUCT *pInitStruct); \
 int SysSem__Entry(INIT_STRUCT *pInitStruct); \
@@ -110,7 +120,9 @@ int SysTarget__Entry(INIT_STRUCT *pInitStruct); \
 int SysTask__Entry(INIT_STRUCT *pInitStruct); \
 int SysTime__Entry(INIT_STRUCT *pInitStruct); \
 int SysTimeRtc__Entry(INIT_STRUCT *pInitStruct); \
-int SysTimer__Entry(INIT_STRUCT *pInitStruct);
+int SysTimer__Entry(INIT_STRUCT *pInitStruct); \
+int SysWindow__Entry(INIT_STRUCT *pInitStruct); \
+int SysWindowFileDialog__Entry(INIT_STRUCT *pInitStruct);
 
 
 #define COMPO_INIT_LIST \
@@ -122,6 +134,7 @@ int SysTimer__Entry(INIT_STRUCT *pInitStruct);
 {"CmpAsyncMgr", CmpAsyncMgr__Entry, 0}, \
 {"CmpBinTagUtil", CmpBinTagUtil__Entry, 0}, \
 {"CmpBinTagUtilIec", CmpBinTagUtilIec__Entry, 0}, \
+{"CmpBitmapPool", CmpBitmapPool__Entry, 0}, \
 {"CmpBlkDrvTcp", CmpBlkDrvTcp__Entry, 0}, \
 {"CmpBlkDrvUdp", CmpBlkDrvUdp__Entry, 0}, \
 {"CmpCAAAsyncMan", CmpCAAAsyncMan__Entry, 0}, \
@@ -153,6 +166,7 @@ int SysTimer__Entry(INIT_STRUCT *pInitStruct);
 {"CmpCoreDump", CmpCoreDump__Entry, 0}, \
 {"CmpCryptMD5", CmpCryptMD5__Entry, 0}, \
 {"CmpDevice", CmpDevice__Entry, 0}, \
+{"CmpDynamicText", CmpDynamicText__Entry, 0}, \
 {"CmpEL6751CanDrv", CmpEL6751CanDrv__Entry, 0}, \
 {"CmpEventMgr", CmpEventMgr__Entry, 0}, \
 {"CmpFileTransfer", CmpFileTransfer__Entry, 0}, \
@@ -161,6 +175,7 @@ int SysTimer__Entry(INIT_STRUCT *pInitStruct);
 {"CmpIecVarAccess", CmpIecVarAccess__Entry, 0}, \
 {"CmpIoDrvIec", CmpIoDrvIec__Entry, 0}, \
 {"CmpIoMgr", CmpIoMgr__Entry, 0}, \
+{"CmpIpc", CmpIpc__Entry, 0}, \
 {"CmpLog", CmpLog__Entry, 0}, \
 {"CmpMemPool", CmpMemPool__Entry, 0}, \
 {"CmpMonitor2", CmpMonitor2__Entry, 0}, \
@@ -181,12 +196,17 @@ int SysTimer__Entry(INIT_STRUCT *pInitStruct);
 {"CmpSettings", CmpSettings__Entry, 0}, \
 {"CmpSocketCanDrv", CmpSocketCanDrv__Entry, 0}, \
 {"CmpSrv", CmpSrv__Entry, 0}, \
+{"CmpTargetVisu", CmpTargetVisu__Entry, 0}, \
 {"CmpTraceMgr", CmpTraceMgr__Entry, 0}, \
 {"CmpUserDBFile", CmpUserDBFile__Entry, 0}, \
 {"CmpUserGroupsDBFile", CmpUserGroupsDBFile__Entry, 0}, \
 {"CmpUserMgr", CmpUserMgr__Entry, 0}, \
 {"CmpUserObjectsDBFile", CmpUserObjectsDBFile__Entry, 0}, \
-{"CmpXMLParser", CmpXMLParser__Entry, 0}, \
+{"CmpVisuClientControllerHost", CmpVisuClientControllerHost__Entry, 0}, \
+{"CmpVisuHandler", CmpVisuHandler__Entry, 0}, \
+{"CmpVisuServer", CmpVisuServer__Entry, 0}, \
+{"CmpWebServer", CmpWebServer__Entry, 0}, \
+{"CmpWebServerHandlerV3", CmpWebServerHandlerV3__Entry, 0}, \
 {"SysCom", SysCom__Entry, 0}, \
 {"SysCpuHandling", SysCpuHandling__Entry, 0}, \
 {"SysCpuMultiCore", SysCpuMultiCore__Entry, 0}, \
@@ -195,11 +215,13 @@ int SysTimer__Entry(INIT_STRUCT *pInitStruct);
 {"SysEvent", SysEvent__Entry, 0}, \
 {"SysExcept", SysExcept__Entry, 0}, \
 {"SysFile", SysFile__Entry, 0}, \
+{"SysGraphic", SysGraphic__Entry, 0}, \
 {"SysInternalLib", SysInternalLib__Entry, 0}, \
 {"SysMem", SysMem__Entry, 0}, \
 {"SysModule", SysModule__Entry, 0}, \
 {"SysMsgQ", SysMsgQ__Entry, 0}, \
 {"SysMutex", SysMutex__Entry, 0}, \
+{"SysNativeControl", SysNativeControl__Entry, 0}, \
 {"SysOut", SysOut__Entry, 0}, \
 {"SysProcess", SysProcess__Entry, 0}, \
 {"SysSem", SysSem__Entry, 0}, \
@@ -211,7 +233,9 @@ int SysTimer__Entry(INIT_STRUCT *pInitStruct);
 {"SysTask", SysTask__Entry, 0}, \
 {"SysTime", SysTime__Entry, 0}, \
 {"SysTimeRtc", SysTimeRtc__Entry, 0}, \
-{"SysTimer", SysTimer__Entry, 0}
+{"SysTimer", SysTimer__Entry, 0}, \
+{"SysWindow", SysWindow__Entry, 0}, \
+{"SysWindowFileDialog", SysWindowFileDialog__Entry, 0}
 
 
 
@@ -222,10 +246,13 @@ int SysTimer__Entry(INIT_STRUCT *pInitStruct);
 #define CMPOBJECTMGR_NOTIMPLEMENTED
 #define CMPSIL2_NOTIMPLEMENTED
 #define CMPSUPERVISOR_NOTIMPLEMENTED
+#define CMPXMLPARSER_NOTIMPLEMENTED
 #define SYSCPUBREAKPOINTS_NOTIMPLEMENTED
 #define SYSFLASH_NOTIMPLEMENTED
+#define SYSGRAPHICNATIVE_NOTIMPLEMENTED
 #define SYSINT_NOTIMPLEMENTED
 #define SYSREADWRITELOCK_NOTIMPLEMENTED
+#define SYSWINDOWNATIVE_NOTIMPLEMENTED
 
 
 
